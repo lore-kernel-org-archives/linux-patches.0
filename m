@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47C070CCB;
-	Mon,  8 Apr 2024 13:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11D37F49C;
+	Mon,  8 Apr 2024 13:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583555; cv=none; b=eXUU9VM/stX1Ikn2evGJPhJluhvpoSAelo2sx9qrwFrS35fPK6kLUJ5eMowuFZWkeRMCDPNzlNluWpBVl6FI4GgmoPPz2NKXFqad1A2Vc81nGImZPAIHSQqup5IxCGvpK549VihuFxZfSQnfW15L3mTuxJ/ScZaD6mEF/ZPkbWM=
+	t=1712583558; cv=none; b=PfIs0t0LA2KZSE+XPmDCXLi2JnhYcuFRXSPbV0tb/TQ4du5EergDq2bgJjJGtTie5LLAlfq2bI0GAQ+yhcBp9Ac3Ijjovj0MdFXSSFkH4NI+nKILjNUvEMc2RB8eD5eSlNIpf2iumKYQYb7RJeSSVMUhkT1/Vt/x+KkNti2t9r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583555; c=relaxed/simple;
-	bh=AxqKgJh8wGFEXdiDhYYcvaXfrx2zG/K/1wTZ0+r46rw=;
+	s=arc-20240116; t=1712583558; c=relaxed/simple;
+	bh=YMpLFdEEsyL4b0f54XwPn93heYZHZEOZnqhT7L8A1ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CVl5U0Y96XzSrnnruZFlqfySl+Bvzerbagjhq3+TTkrZ0h1YXXC8YR0itHsx9ry8NCXM5ylTheUNL9qL0ok4upzKzhBlUPVAqPwPgKIaG1VwU/mg9a9H52jA9Wk165ZzfXcIoLfBB4ViDUNZaOwrzAw1Tt6g0f7nxPxW0rht88k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1F4QNjV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QXTBe3sm5BL/HBdMWmBhRU7h7KszNd4tPcP8msfPAF/vVdPF/B7wbuLg0kfSeLVjvzJKtKkVS65VX4ok0BQph1fMswM0q8kbphtMeVD5kkGAX6SQN/MPnz+Tfg8Tm47lde6EcGHq48zCtrmz6bjmT1momJVo9OWgabWFpzEYkoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hC7rIBEJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1F4QNjV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BAFDC43390;
-	Mon,  8 Apr 2024 13:39:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hC7rIBEJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260BDC433C7;
+	Mon,  8 Apr 2024 13:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583555;
-	bh=AxqKgJh8wGFEXdiDhYYcvaXfrx2zG/K/1wTZ0+r46rw=;
+	s=korg; t=1712583558;
+	bh=YMpLFdEEsyL4b0f54XwPn93heYZHZEOZnqhT7L8A1ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R1F4QNjVRozEzU+Y0AuU/gFJgJ0xrh2rSNW/PwzTRZEXTPb/spSAyGjn9B8t8UVXQ
-	 ZXnxikTGSr7a7RH5czExS/Jyacl4gahQNlJeYhHv5AizuIBfQc5RwmXuio0Ody6Cnc
-	 P0cu4BuRk8uU6X6ycbPAtBhssUuSEIh5IsbM3zQk=
+	b=hC7rIBEJfjLS0CGpVy+Orc3v+zCnpJMOtAHweJeIgzyUff1LTuvqInSft/WxFn39S
+	 hEXGw8tDoMHSx3WWMexb84m2a2AzIpmPK/pX7RiQY3h3b09VWUQ3Ae/3iFeesvwQXm
+	 iT3fwA6B0oC/TRZEmE3x2TYXPpbyxHO6TDAMUbbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Benes <vbenes@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 191/273] nfsd: hold a lighter-weight client reference over CB_RECALL_ANY
-Date: Mon,  8 Apr 2024 14:57:46 +0200
-Message-ID: <20240408125315.237854390@linuxfoundation.org>
+	I Gede Agastya Darma Laksana <gedeagas22@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 208/252] ALSA: hda/realtek: Update Panasonic CF-SZ6 quirk to support headset with microphone
+Date: Mon,  8 Apr 2024 14:58:27 +0200
+Message-ID: <20240408125313.105919973@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,69 +46,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: I Gede Agastya Darma Laksana <gedeagas22@gmail.com>
 
-[ Upstream commit 10396f4df8b75ff6ab0aa2cd74296565466f2c8d ]
+commit 1576f263ee2147dc395531476881058609ad3d38 upstream.
 
-Currently the CB_RECALL_ANY job takes a cl_rpc_users reference to the
-client. While a callback job is technically an RPC that counter is
-really more for client-driven RPCs, and this has the effect of
-preventing the client from being unhashed until the callback completes.
+This patch addresses an issue with the Panasonic CF-SZ6's existing quirk,
+specifically its headset microphone functionality. Previously, the quirk
+used ALC269_FIXUP_HEADSET_MODE, which does not support the CF-SZ6's design
+of a single 3.5mm jack for both mic and audio output effectively. The
+device uses pin 0x19 for the headset mic without jack detection.
 
-If nfsd decides to send a CB_RECALL_ANY just as the client reboots, we
-can end up in a situation where the callback can't complete on the (now
-dead) callback channel, but the new client can't connect because the old
-client can't be unhashed. This usually manifests as a NFS4ERR_DELAY
-return on the CREATE_SESSION operation.
+Following verification on the CF-SZ6 and discussions with the original
+patch author, i determined that the update to
+ALC269_FIXUP_ASPIRE_HEADSET_MIC is the appropriate solution. This change
+is custom-designed for the CF-SZ6's unique hardware setup, which includes
+a single 3.5mm jack for both mic and audio output, connecting the headset
+microphone to pin 0x19 without the use of jack detection.
 
-The job is only holding a reference to the client so it can clear a flag
-after the RPC completes. Fix this by having CB_RECALL_ANY instead hold a
-reference to the cl_nfsdfs.cl_ref. Typically we only take that sort of
-reference when dealing with the nfsdfs info files, but it should work
-appropriately here to ensure that the nfs4_client doesn't disappear.
-
-Fixes: 44df6f439a17 ("NFSD: add delegation reaper to react to low memory condition")
-Reported-by: Vladimir Benes <vbenes@redhat.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0fca97a29b83 ("ALSA: hda/realtek - Add Panasonic CF-SZ6 headset jack quirk")
+Signed-off-by: I Gede Agastya Darma Laksana <gedeagas22@gmail.com>
+Cc: <stable@vger.kernel.org>
+Message-ID: <20240401174602.14133-1-gedeagas22@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ sound/pci/hda/patch_realtek.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 7d6c657e0409d..692ede488254a 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -2888,12 +2888,9 @@ static void
- nfsd4_cb_recall_any_release(struct nfsd4_callback *cb)
- {
- 	struct nfs4_client *clp = cb->cb_clp;
--	struct nfsd_net *nn = net_generic(clp->net, nfsd_net_id);
- 
--	spin_lock(&nn->client_lock);
- 	clear_bit(NFSD4_CLIENT_CB_RECALL_ANY, &clp->cl_flags);
--	put_client_renew_locked(clp);
--	spin_unlock(&nn->client_lock);
-+	drop_client(clp);
- }
- 
- static const struct nfsd4_callback_ops nfsd4_cb_recall_any_ops = {
-@@ -6274,7 +6271,7 @@ deleg_reaper(struct nfsd_net *nn)
- 		list_add(&clp->cl_ra_cblist, &cblist);
- 
- 		/* release in nfsd4_cb_recall_any_release */
--		atomic_inc(&clp->cl_rpc_users);
-+		kref_get(&clp->cl_nfsdfs.cl_ref);
- 		set_bit(NFSD4_CLIENT_CB_RECALL_ANY, &clp->cl_flags);
- 		clp->cl_ra_time = ktime_get_boottime_seconds();
- 	}
--- 
-2.43.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10072,7 +10072,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x10ec, 0x1252, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0x10ec, 0x1254, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0x10ec, 0x12cc, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+-	SND_PCI_QUIRK(0x10f7, 0x8338, "Panasonic CF-SZ6", ALC269_FIXUP_HEADSET_MODE),
++	SND_PCI_QUIRK(0x10f7, 0x8338, "Panasonic CF-SZ6", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x144d, 0xc109, "Samsung Ativ book 9 (NP900X3G)", ALC269_FIXUP_INV_DMIC),
+ 	SND_PCI_QUIRK(0x144d, 0xc169, "Samsung Notebook 9 Pen (NP930SBE-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc176, "Samsung Notebook 9 Pro (NP930MBE-K04US)", ALC298_FIXUP_SAMSUNG_AMP),
 
 
