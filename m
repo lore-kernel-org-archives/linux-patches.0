@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082036D1A9;
-	Mon,  8 Apr 2024 13:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2146D1A9;
+	Mon,  8 Apr 2024 13:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583547; cv=none; b=Vxc0Pdg0Akuf6BrhvZt1aMkJVQD3zvtEcER+mUukz3qQ6/ggxU26KDw8WNAw9bFLlmt1beokjorr6R2H6ivDF59cubuj29bHdoGH34yv/P6LhSOBpYynVvnmfKY9+Xd+46vUbNwYd5ijMbgqhI/rD9ajJQKApm3mG3UK26gsi9Q=
+	t=1712583550; cv=none; b=TiqhLk3W9KHTEbOi0L3/Tnpqqpr5mz2qnUR2NcrmRr4tkgYD6pDGzb4/o8P+UJ+6Sra7lXl0n7wTPo4orfMsRsPJAkovtyhT4pdQU0O4aoOx/RWHzUtL5z0KAc5yKr1DA7jBI4Erf5eImPku0gblrkx1SLJmKF099jV8LRyBz1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583547; c=relaxed/simple;
-	bh=dNjQ0CnRXkdBr2J71NHb/+jdRWtBMBQL2elgFPZRrtM=;
+	s=arc-20240116; t=1712583550; c=relaxed/simple;
+	bh=K+nQGlhHonBNpLq4NMQR6bNywHNXPpuIYKDftVcZA6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=razYxZZS2I0c+U9KMpZhOQ0gfrpyVIJaWCl1Y25yh3qHv3zG3Ay1rx3TguSRRZsKVSPPn1azgEyWJnxN0UOVP+3mXZiaonjcTLw+TQBaWR4jQ0xSNkiH5CtqvtPuZybvNGKWL7E7JL8sWIT5aXzjCrWt/ypgv4awidT9hBStjbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCDwifWL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HRrfKCbVjc7GthYAt0oEmAMiKcon6kp3RoZLqn3PbPZCElvV6VXkiJNbQi2ner8+BtDHGsjST0yzGq0BDiI9HLPsEFtIYeRJt/mOZBpIDEHdPdMpVV03PRrhqYaOET5gRm+dDgRIlMH9Rk+wxPb3JQz96kbJtmW/0ZTrgLhH3KA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4Qw+miz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCDwifWL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF39C433C7;
-	Mon,  8 Apr 2024 13:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4Qw+miz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65711C433C7;
+	Mon,  8 Apr 2024 13:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583546;
-	bh=dNjQ0CnRXkdBr2J71NHb/+jdRWtBMBQL2elgFPZRrtM=;
+	s=korg; t=1712583549;
+	bh=K+nQGlhHonBNpLq4NMQR6bNywHNXPpuIYKDftVcZA6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YCDwifWLl8Zqttuk1yLU3purOG/2PF6guPGZjTpDUC9Zl8bA4oBlWiNas4TcVxuDA
-	 zBzBipq/yBe5kYxe3VOFIZd9Ro0KNKVTbBr5kDI3pVmi/qNgGJ//W6ax1Vq9OfEYDZ
-	 xZjfdJGrrxtUPwCORdRH3wXS1loNDR+CtC1WvXHY=
+	b=d4Qw+mizV3YU0LSNgzxd7g3/oOOoTbBhdpTmb1uV/HDjhG9lhT7nCT/vbgH8aamYC
+	 n9Yan5yBp5l5GXcWx/7g0vr9G+sTYoiEjO5N4nsdJTm6HeMLTtNNc9Pg4FVopTl+2n
+	 O3lueepcng/sVHhjgJiJ/RSOJH/PzrhEhzLdtVZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <andrea@rivosinc.com>,
-	Andy Chiu <andy.chiu@sifive.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Puranjay Mohan <puranjay12@gmail.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 190/273] riscv: Disable preemption when using patch_map()
-Date: Mon,  8 Apr 2024 14:57:45 +0200
-Message-ID: <20240408125315.200973830@linuxfoundation.org>
+	Christoffer Sandberg <cs@tuxedo.de>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 207/252] ALSA: hda/realtek - Fix inactive headset mic jack
+Date: Mon,  8 Apr 2024 14:58:26 +0200
+Message-ID: <20240408125313.074626350@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,83 +47,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Christoffer Sandberg <cs@tuxedo.de>
 
-[ Upstream commit a370c2419e4680a27382d9231edcf739d5d74efc ]
+commit daf6c4681a74034d5723e2fb761e0d7f3a1ca18f upstream.
 
-patch_map() uses fixmap mappings to circumvent the non-writability of
-the kernel text mapping.
+This patch adds the existing fixup to certain TF platforms implementing
+the ALC274 codec with a headset jack. It fixes/activates the inactive
+microphone of the headset.
 
-The __set_fixmap() function only flushes the current cpu tlb, it does
-not emit an IPI so we must make sure that while we use a fixmap mapping,
-the current task is not migrated on another cpu which could miss the
-newly introduced fixmap mapping.
-
-So in order to avoid any task migration, disable the preemption.
-
-Reported-by: Andrea Parri <andrea@rivosinc.com>
-Closes: https://lore.kernel.org/all/ZcS+GAaM25LXsBOl@andrea/
-Reported-by: Andy Chiu <andy.chiu@sifive.com>
-Closes: https://lore.kernel.org/linux-riscv/CABgGipUMz3Sffu-CkmeUB1dKVwVQ73+7=sgC45-m0AE9RCjOZg@mail.gmail.com/
-Fixes: cad539baa48f ("riscv: implement a memset like function for text")
-Fixes: 0ff7c3b33127 ("riscv: Use text_mutex instead of patch_lock")
-Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
-Signed-off-by: Andy Chiu <andy.chiu@sifive.com>
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Acked-by: Puranjay Mohan <puranjay12@gmail.com>
-Link: https://lore.kernel.org/r/20240326203017.310422-3-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Cc: <stable@vger.kernel.org>
+Message-ID: <20240328102757.50310-1-wse@tuxedocomputers.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/patch.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/riscv/kernel/patch.c b/arch/riscv/kernel/patch.c
-index 37e87fdcf6a00..30e12b310cab7 100644
---- a/arch/riscv/kernel/patch.c
-+++ b/arch/riscv/kernel/patch.c
-@@ -80,6 +80,8 @@ static int __patch_insn_set(void *addr, u8 c, size_t len)
- 	 */
- 	lockdep_assert_held(&text_mutex);
- 
-+	preempt_disable();
-+
- 	if (across_pages)
- 		patch_map(addr + PAGE_SIZE, FIX_TEXT_POKE1);
- 
-@@ -92,6 +94,8 @@ static int __patch_insn_set(void *addr, u8 c, size_t len)
- 	if (across_pages)
- 		patch_unmap(FIX_TEXT_POKE1);
- 
-+	preempt_enable();
-+
- 	return 0;
- }
- NOKPROBE_SYMBOL(__patch_insn_set);
-@@ -122,6 +126,8 @@ static int __patch_insn_write(void *addr, const void *insn, size_t len)
- 	if (!riscv_patch_in_stop_machine)
- 		lockdep_assert_held(&text_mutex);
- 
-+	preempt_disable();
-+
- 	if (across_pages)
- 		patch_map(addr + PAGE_SIZE, FIX_TEXT_POKE1);
- 
-@@ -134,6 +140,8 @@ static int __patch_insn_write(void *addr, const void *insn, size_t len)
- 	if (across_pages)
- 		patch_unmap(FIX_TEXT_POKE1);
- 
-+	preempt_enable();
-+
- 	return ret;
- }
- NOKPROBE_SYMBOL(__patch_insn_write);
--- 
-2.43.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10302,6 +10302,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1d05, 0x1147, "TongFang GMxTGxx", ALC269_FIXUP_NO_SHUTUP),
+ 	SND_PCI_QUIRK(0x1d05, 0x115c, "TongFang GMxTGxx", ALC269_FIXUP_NO_SHUTUP),
+ 	SND_PCI_QUIRK(0x1d05, 0x121b, "TongFang GMxAGxx", ALC269_FIXUP_NO_SHUTUP),
++	SND_PCI_QUIRK(0x1d05, 0x1387, "TongFang GMxIXxx", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
 
 
