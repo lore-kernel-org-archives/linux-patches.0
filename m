@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41997A15C;
-	Mon,  8 Apr 2024 13:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3E93A1C7;
+	Mon,  8 Apr 2024 13:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584632; cv=none; b=QIzu7mH2cmo4PlbpnzLc7YoOjks8CEGp9Ppmh04548IBmFd1r1K5+hgP4fh5uqFt5EaHKe8WRdqMRHCVyTqn1AuUBQ+CdtK1sEamnOpjX+yt93Rbd1KJcPIwls4S7VSVTJk7pQtvxEbg8cBl69H+bmU8dVhLSQ/2RiiB3o5ho3g=
+	t=1712584635; cv=none; b=MB1OA2jJ3y207X38qhfkVmNtk+PWIrWBqo9KuVuNIROKd5KfYaUNJBG85jTlMsx0ezvgmvbWkgeFaSmNI/bAoHnujlUvN2v53zsqmacWoPvqMzVxJuncJLkVZiITHeByY5yxdJ0Ij7nCmKu69Jz0EGUPFEXabN2s2wZbP9JfMe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584632; c=relaxed/simple;
-	bh=yLQpUj3Jc3djj4T2r+ISJUPcpI5fIWeGq2glROi9ECk=;
+	s=arc-20240116; t=1712584635; c=relaxed/simple;
+	bh=7sgHijQMU3gqRkqzIhMA77+CZHNcO5+MZupRbkj0xLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bSra/c+XPo1WVPlZSubGzeQ3ZJKCEZyIaJTg6x4IE28RDCFIxb4tw1Ad49w7BDG7tMUztg43DX1DmVlPE7BGvlKktPX0wJpyKmL0/X1lFLw4xmiiQslZuKqR/hR88K34a+QGtA2E1vtpBQkAcHCgPwh2TuE1CJdop/pTVgsGB2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4GG7Smy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EEpYNZLr9wmJDwnQhFiayQB297K3w90tiaItba5Wgz/xP3tYb3BR0Od+c/j/wCK93zbIZA76DwmZQ939e8LIYvONGzLk3IhglJWnaxGzkQu6airkeY3F5w1t2OkXbyf617AhQdSXla/SPNe8rfvVVetTk9u4plqmH8BftMjxUV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJgksKVm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4GG7Smy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD893C433F1;
-	Mon,  8 Apr 2024 13:57:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJgksKVm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F45C433C7;
+	Mon,  8 Apr 2024 13:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584632;
-	bh=yLQpUj3Jc3djj4T2r+ISJUPcpI5fIWeGq2glROi9ECk=;
+	s=korg; t=1712584635;
+	bh=7sgHijQMU3gqRkqzIhMA77+CZHNcO5+MZupRbkj0xLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a4GG7Smyof9zPPf7OhgVDlj8SSThqji1c+l0Sw9RD1cL6TMOSjqtJ6Ut0VYgDKKV4
-	 S921uSIv7BKjOuZHT/8MXzQmlMrLguYpc4SH0ltexCGG7iXhbu5gaHA6tBtf6+v4pQ
-	 PbB3cCXRTxtBhwKVqFkGC+K0OUZkN3wtdPkSksUw=
+	b=bJgksKVmYqNmFu6W465HSThKsUBFyof49WFSGieJXiGi8gzw1UPq6fqdOQ0qElYCW
+	 9Pa0/Ql7yVJ8kNxFoBMBz36+odUkr4QjNssfOAedo0FlhPfHFsJI8Ood4/ls7PIUjS
+	 wVk617I73vqrdlTzzF/u52EC3u4LwsbOZ/y7Snp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dai Ngo <dai.ngo@oracle.com>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 504/690] NFSD: add support for sending CB_RECALL_ANY
-Date: Mon,  8 Apr 2024 14:56:10 +0200
-Message-ID: <20240408125417.898928527@linuxfoundation.org>
+Subject: [PATCH 5.15 505/690] NFSD: add delegation reaper to react to low memory condition
+Date: Mon,  8 Apr 2024 14:56:11 +0200
+Message-ID: <20240408125417.929810845@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,171 +52,208 @@ Content-Transfer-Encoding: 8bit
 
 From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit 3959066b697b5dfbb7141124ae9665337d4bc638 ]
+[ Upstream commit 44df6f439a1790a5f602e3842879efa88f346672 ]
 
-Add XDR encode and decode function for CB_RECALL_ANY.
+The delegation reaper is called by nfsd memory shrinker's on
+the 'count' callback. It scans the client list and sends the
+courtesy CB_RECALL_ANY to the clients that hold delegations.
+
+To avoid flooding the clients with CB_RECALL_ANY requests, the
+delegation reaper sends only one CB_RECALL_ANY request to each
+client per 5 seconds.
 
 Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+[ cel: moved definition of RCA4_TYPE_MASK_RDATA_DLG ]
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs4callback.c | 72 ++++++++++++++++++++++++++++++++++++++++++
- fs/nfsd/state.h        |  1 +
- fs/nfsd/xdr4.h         |  5 +++
- fs/nfsd/xdr4cb.h       |  6 ++++
- 4 files changed, 84 insertions(+)
+ fs/nfsd/nfs4state.c  | 88 ++++++++++++++++++++++++++++++++++++++++++--
+ fs/nfsd/state.h      |  5 +++
+ include/linux/nfs4.h | 13 +++++++
+ 3 files changed, 102 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
-index 39989c14c8a1e..4eae2c5af2edf 100644
---- a/fs/nfsd/nfs4callback.c
-+++ b/fs/nfsd/nfs4callback.c
-@@ -76,6 +76,17 @@ static __be32 *xdr_encode_empty_array(__be32 *p)
-  * 1 Protocol"
-  */
- 
-+static void encode_uint32(struct xdr_stream *xdr, u32 n)
-+{
-+	WARN_ON_ONCE(xdr_stream_encode_u32(xdr, n) < 0);
-+}
-+
-+static void encode_bitmap4(struct xdr_stream *xdr, const __u32 *bitmap,
-+			   size_t len)
-+{
-+	WARN_ON_ONCE(xdr_stream_encode_uint32_array(xdr, bitmap, len) < 0);
-+}
-+
- /*
-  *	nfs_cb_opnum4
-  *
-@@ -328,6 +339,24 @@ static void encode_cb_recall4args(struct xdr_stream *xdr,
- 	hdr->nops++;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 34ae4a3d86f3e..1705aeb2a1b8e 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -2144,6 +2144,7 @@ static void __free_client(struct kref *k)
+ 	kfree(clp->cl_nii_domain.data);
+ 	kfree(clp->cl_nii_name.data);
+ 	idr_destroy(&clp->cl_stateids);
++	kfree(clp->cl_ra);
+ 	kmem_cache_free(client_slab, clp);
  }
  
-+/*
-+ * CB_RECALLANY4args
-+ *
-+ *	struct CB_RECALLANY4args {
-+ *		uint32_t	craa_objects_to_keep;
-+ *		bitmap4		craa_type_mask;
-+ *	};
-+ */
-+static void
-+encode_cb_recallany4args(struct xdr_stream *xdr,
-+	struct nfs4_cb_compound_hdr *hdr, struct nfsd4_cb_recall_any *ra)
-+{
-+	encode_nfs_cb_opnum4(xdr, OP_CB_RECALL_ANY);
-+	encode_uint32(xdr, ra->ra_keep);
-+	encode_bitmap4(xdr, ra->ra_bmval, ARRAY_SIZE(ra->ra_bmval));
-+	hdr->nops++;
-+}
-+
- /*
-  * CB_SEQUENCE4args
-  *
-@@ -482,6 +511,26 @@ static void nfs4_xdr_enc_cb_recall(struct rpc_rqst *req, struct xdr_stream *xdr,
- 	encode_cb_nops(&hdr);
- }
- 
-+/*
-+ * 20.6. Operation 8: CB_RECALL_ANY - Keep Any N Recallable Objects
-+ */
-+static void
-+nfs4_xdr_enc_cb_recall_any(struct rpc_rqst *req,
-+		struct xdr_stream *xdr, const void *data)
-+{
-+	const struct nfsd4_callback *cb = data;
-+	struct nfsd4_cb_recall_any *ra;
-+	struct nfs4_cb_compound_hdr hdr = {
-+		.ident = cb->cb_clp->cl_cb_ident,
-+		.minorversion = cb->cb_clp->cl_minorversion,
-+	};
-+
-+	ra = container_of(cb, struct nfsd4_cb_recall_any, ra_cb);
-+	encode_cb_compound4args(xdr, &hdr);
-+	encode_cb_sequence4args(xdr, cb, &hdr);
-+	encode_cb_recallany4args(xdr, &hdr, ra);
-+	encode_cb_nops(&hdr);
-+}
- 
- /*
-  * NFSv4.0 and NFSv4.1 XDR decode functions
-@@ -520,6 +569,28 @@ static int nfs4_xdr_dec_cb_recall(struct rpc_rqst *rqstp,
- 	return decode_cb_op_status(xdr, OP_CB_RECALL, &cb->cb_status);
- }
- 
-+/*
-+ * 20.6. Operation 8: CB_RECALL_ANY - Keep Any N Recallable Objects
-+ */
-+static int
-+nfs4_xdr_dec_cb_recall_any(struct rpc_rqst *rqstp,
-+				  struct xdr_stream *xdr,
-+				  void *data)
-+{
-+	struct nfsd4_callback *cb = data;
-+	struct nfs4_cb_compound_hdr hdr;
-+	int status;
-+
-+	status = decode_cb_compound4res(xdr, &hdr);
-+	if (unlikely(status))
-+		return status;
-+	status = decode_cb_sequence4res(xdr, cb);
-+	if (unlikely(status || cb->cb_seq_status))
-+		return status;
-+	status =  decode_cb_op_status(xdr, OP_CB_RECALL_ANY, &cb->cb_status);
-+	return status;
-+}
-+
- #ifdef CONFIG_NFSD_PNFS
- /*
-  * CB_LAYOUTRECALL4args
-@@ -783,6 +854,7 @@ static const struct rpc_procinfo nfs4_cb_procedures[] = {
- #endif
- 	PROC(CB_NOTIFY_LOCK,	COMPOUND,	cb_notify_lock,	cb_notify_lock),
- 	PROC(CB_OFFLOAD,	COMPOUND,	cb_offload,	cb_offload),
-+	PROC(CB_RECALL_ANY,	COMPOUND,	cb_recall_any,	cb_recall_any),
+@@ -2871,6 +2872,36 @@ static const struct tree_descr client_files[] = {
+ 	[3] = {""},
  };
  
- static unsigned int nfs4_cb_counts[ARRAY_SIZE(nfs4_cb_procedures)];
++static int
++nfsd4_cb_recall_any_done(struct nfsd4_callback *cb,
++				struct rpc_task *task)
++{
++	switch (task->tk_status) {
++	case -NFS4ERR_DELAY:
++		rpc_delay(task, 2 * HZ);
++		return 0;
++	default:
++		return 1;
++	}
++}
++
++static void
++nfsd4_cb_recall_any_release(struct nfsd4_callback *cb)
++{
++	struct nfs4_client *clp = cb->cb_clp;
++	struct nfsd_net *nn = net_generic(clp->net, nfsd_net_id);
++
++	spin_lock(&nn->client_lock);
++	clear_bit(NFSD4_CLIENT_CB_RECALL_ANY, &clp->cl_flags);
++	put_client_renew_locked(clp);
++	spin_unlock(&nn->client_lock);
++}
++
++static const struct nfsd4_callback_ops nfsd4_cb_recall_any_ops = {
++	.done		= nfsd4_cb_recall_any_done,
++	.release	= nfsd4_cb_recall_any_release,
++};
++
+ static struct nfs4_client *create_client(struct xdr_netobj name,
+ 		struct svc_rqst *rqstp, nfs4_verifier *verf)
+ {
+@@ -2908,6 +2939,14 @@ static struct nfs4_client *create_client(struct xdr_netobj name,
+ 		free_client(clp);
+ 		return NULL;
+ 	}
++	clp->cl_ra = kzalloc(sizeof(*clp->cl_ra), GFP_KERNEL);
++	if (!clp->cl_ra) {
++		free_client(clp);
++		return NULL;
++	}
++	clp->cl_ra_time = 0;
++	nfsd4_init_cb(&clp->cl_ra->ra_cb, clp, &nfsd4_cb_recall_any_ops,
++			NFSPROC4_CLNT_CB_RECALL_ANY);
+ 	return clp;
+ }
+ 
+@@ -4363,14 +4402,16 @@ nfsd4_init_slabs(void)
+ static unsigned long
+ nfsd4_state_shrinker_count(struct shrinker *shrink, struct shrink_control *sc)
+ {
+-	int cnt;
++	int count;
+ 	struct nfsd_net *nn = container_of(shrink,
+ 			struct nfsd_net, nfsd_client_shrinker);
+ 
+-	cnt = atomic_read(&nn->nfsd_courtesy_clients);
+-	if (cnt > 0)
++	count = atomic_read(&nn->nfsd_courtesy_clients);
++	if (!count)
++		count = atomic_long_read(&num_delegations);
++	if (count)
+ 		mod_delayed_work(laundry_wq, &nn->nfsd_shrinker_work, 0);
+-	return (unsigned long)cnt;
++	return (unsigned long)count;
+ }
+ 
+ static unsigned long
+@@ -6159,6 +6200,44 @@ courtesy_client_reaper(struct nfsd_net *nn)
+ 	nfs4_process_client_reaplist(&reaplist);
+ }
+ 
++static void
++deleg_reaper(struct nfsd_net *nn)
++{
++	struct list_head *pos, *next;
++	struct nfs4_client *clp;
++	struct list_head cblist;
++
++	INIT_LIST_HEAD(&cblist);
++	spin_lock(&nn->client_lock);
++	list_for_each_safe(pos, next, &nn->client_lru) {
++		clp = list_entry(pos, struct nfs4_client, cl_lru);
++		if (clp->cl_state != NFSD4_ACTIVE ||
++			list_empty(&clp->cl_delegations) ||
++			atomic_read(&clp->cl_delegs_in_recall) ||
++			test_bit(NFSD4_CLIENT_CB_RECALL_ANY, &clp->cl_flags) ||
++			(ktime_get_boottime_seconds() -
++				clp->cl_ra_time < 5)) {
++			continue;
++		}
++		list_add(&clp->cl_ra_cblist, &cblist);
++
++		/* release in nfsd4_cb_recall_any_release */
++		atomic_inc(&clp->cl_rpc_users);
++		set_bit(NFSD4_CLIENT_CB_RECALL_ANY, &clp->cl_flags);
++		clp->cl_ra_time = ktime_get_boottime_seconds();
++	}
++	spin_unlock(&nn->client_lock);
++
++	while (!list_empty(&cblist)) {
++		clp = list_first_entry(&cblist, struct nfs4_client,
++					cl_ra_cblist);
++		list_del_init(&clp->cl_ra_cblist);
++		clp->cl_ra->ra_keep = 0;
++		clp->cl_ra->ra_bmval[0] = BIT(RCA4_TYPE_MASK_RDATA_DLG);
++		nfsd4_run_cb(&clp->cl_ra->ra_cb);
++	}
++}
++
+ static void
+ nfsd4_state_shrinker_worker(struct work_struct *work)
+ {
+@@ -6167,6 +6246,7 @@ nfsd4_state_shrinker_worker(struct work_struct *work)
+ 				nfsd_shrinker_work);
+ 
+ 	courtesy_client_reaper(nn);
++	deleg_reaper(nn);
+ }
+ 
+ static inline __be32 nfs4_check_fh(struct svc_fh *fhp, struct nfs4_stid *stp)
 diff --git a/fs/nfsd/state.h b/fs/nfsd/state.h
-index eadd7f465bf52..e30882f8b8516 100644
+index e30882f8b8516..e94634d305912 100644
 --- a/fs/nfsd/state.h
 +++ b/fs/nfsd/state.h
-@@ -636,6 +636,7 @@ enum nfsd4_cb_op {
- 	NFSPROC4_CLNT_CB_OFFLOAD,
- 	NFSPROC4_CLNT_CB_SEQUENCE,
- 	NFSPROC4_CLNT_CB_NOTIFY_LOCK,
-+	NFSPROC4_CLNT_CB_RECALL_ANY,
+@@ -368,6 +368,7 @@ struct nfs4_client {
+ #define NFSD4_CLIENT_UPCALL_LOCK	(5)	/* upcall serialization */
+ #define NFSD4_CLIENT_CB_FLAG_MASK	(1 << NFSD4_CLIENT_CB_UPDATE | \
+ 					 1 << NFSD4_CLIENT_CB_KILL)
++#define NFSD4_CLIENT_CB_RECALL_ANY	(6)
+ 	unsigned long		cl_flags;
+ 	const struct cred	*cl_cb_cred;
+ 	struct rpc_clnt		*cl_cb_client;
+@@ -411,6 +412,10 @@ struct nfs4_client {
+ 
+ 	unsigned int		cl_state;
+ 	atomic_t		cl_delegs_in_recall;
++
++	struct nfsd4_cb_recall_any	*cl_ra;
++	time64_t		cl_ra_time;
++	struct list_head	cl_ra_cblist;
  };
  
- /* Returns true iff a is later than b: */
-diff --git a/fs/nfsd/xdr4.h b/fs/nfsd/xdr4.h
-index 0eb00105d845b..4fd2cf6d1d2dc 100644
---- a/fs/nfsd/xdr4.h
-+++ b/fs/nfsd/xdr4.h
-@@ -896,5 +896,10 @@ struct nfsd4_operation {
- 			union nfsd4_op_u *);
+ /* struct nfs4_client_reset
+diff --git a/include/linux/nfs4.h b/include/linux/nfs4.h
+index 5662d8be04eb0..8e2b532919e0d 100644
+--- a/include/linux/nfs4.h
++++ b/include/linux/nfs4.h
+@@ -730,4 +730,17 @@ enum nfs4_setxattr_options {
+ 	SETXATTR4_CREATE	= 1,
+ 	SETXATTR4_REPLACE	= 2,
  };
- 
-+struct nfsd4_cb_recall_any {
-+	struct nfsd4_callback	ra_cb;
-+	u32			ra_keep;
-+	u32			ra_bmval[1];
++
++enum {
++	RCA4_TYPE_MASK_RDATA_DLG	= 0,
++	RCA4_TYPE_MASK_WDATA_DLG	= 1,
++	RCA4_TYPE_MASK_DIR_DLG		= 2,
++	RCA4_TYPE_MASK_FILE_LAYOUT	= 3,
++	RCA4_TYPE_MASK_BLK_LAYOUT	= 4,
++	RCA4_TYPE_MASK_OBJ_LAYOUT_MIN	= 8,
++	RCA4_TYPE_MASK_OBJ_LAYOUT_MAX	= 9,
++	RCA4_TYPE_MASK_OTHER_LAYOUT_MIN	= 12,
++	RCA4_TYPE_MASK_OTHER_LAYOUT_MAX	= 15,
 +};
- 
++
  #endif
-diff --git a/fs/nfsd/xdr4cb.h b/fs/nfsd/xdr4cb.h
-index 547cf07cf4e08..0d39af1b00a0f 100644
---- a/fs/nfsd/xdr4cb.h
-+++ b/fs/nfsd/xdr4cb.h
-@@ -48,3 +48,9 @@
- #define NFS4_dec_cb_offload_sz		(cb_compound_dec_hdr_sz  +      \
- 					cb_sequence_dec_sz +            \
- 					op_dec_sz)
-+#define NFS4_enc_cb_recall_any_sz	(cb_compound_enc_hdr_sz +       \
-+					cb_sequence_enc_sz +            \
-+					1 + 1 + 1)
-+#define NFS4_dec_cb_recall_any_sz	(cb_compound_dec_hdr_sz  +      \
-+					cb_sequence_dec_sz +            \
-+					op_dec_sz)
 -- 
 2.43.0
 
