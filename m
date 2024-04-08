@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241D96FE35;
-	Mon,  8 Apr 2024 13:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCF87EF00;
+	Mon,  8 Apr 2024 13:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583888; cv=none; b=Nw3tWHD/G4j7Ii3Vnf7Sjjw3JgMpJiU74iTO1IbwtQMmPACf5PwvIigZZi4MhPMXITb2VlbKB7dtZepppLsrFFl0QKZeBtMU87w9Ixm8bGogrwwuWBHSmpK2Ngz9oj8GZM4wtqdVpGC+bCbg+xaus3+wP8ze/v6Z7L5mbeWxckU=
+	t=1712583891; cv=none; b=DkJQsb9QAKy7yKY7uzen/YlU1rpZID8phpaFLZ//VhfFrOx/151zV2kKwcIuZObyoAXbyBdC6ashj0A8Rs2BbC8x7tdMho6G+zgtgUmTaD4xV12GoXzJLGWxy5tmQSmMFWQGxusWkCR7p4kEGCgdiqr2eLOXdMtFE6wafb0THJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583888; c=relaxed/simple;
-	bh=qrf9yYzFB0n3KFsbz0hgkGlDtTs7C7hV+XCLKXpKJtg=;
+	s=arc-20240116; t=1712583891; c=relaxed/simple;
+	bh=E1YqlCmK4jSMEkV989iv98aqXVvikZT379EQ3ctjvKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rUPAm2L+WDHOh/kU9caYnzuIZXGjqiSk3HL9g1hetLjmUtj54IzbXdpeT7VgPVosiyMjS7AYbhKSy7EfSPhMN0wHqFrOx367LGBUyDGk37xWykVRAZbtmR1kFpx6XxRtgAVhY4m0Hkhn3eCOFvXdm96EqlsKnu/n6LhYMNqnH1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szsEdFji; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gWbJCo6Ch94VmGVDmMRHmSpJ24W0p8m3eAtD/vMV2o6299vC6zOZ64XsZ+Nr7NsxoylWJ01ReyApX1UMcfAqiA00nligdD5u4utnjPSyUp9k0i5whHP17AeU7buCZfpkhcDNo/G3eal+XCtaq1zpDob/4CCwPoQp2OH1h7kPNF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nyw3x5yb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szsEdFji"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16ACC433C7;
-	Mon,  8 Apr 2024 13:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nyw3x5yb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871D4C433C7;
+	Mon,  8 Apr 2024 13:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583888;
-	bh=qrf9yYzFB0n3KFsbz0hgkGlDtTs7C7hV+XCLKXpKJtg=;
+	s=korg; t=1712583890;
+	bh=E1YqlCmK4jSMEkV989iv98aqXVvikZT379EQ3ctjvKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=szsEdFjim+cR8s9skKAoODpM5WiKKZhOOr5majwBYBLZhkgITwEvgUSCONwpJOVp0
-	 AwbeHLE/vDQs2i35PwY/1j3wlXfCtXm4VAzDCygkPtfgBdrP7zx8rx0dAjI/qxw0zx
-	 JapAQUkD0YOr9oiLvmjj8VDJcRR8JahlckH5sk1g=
+	b=Nyw3x5ybd0/nplNzkva6y9PyoBgerjbxcJvNmYIgnJYtt7drCiwyQDMKHvUG3461F
+	 KZ7iITQ34IgFvvhx3mHWPIWO3T+NQyos83AepD9zvX5kKDUJeevl2UMvKw5RWWyJ3U
+	 YgYGshh6uxnNBCy47s4GYehtfW4rCvWE1nNR/V5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 299/690] fanotify: factor out helper fanotify_mark_update_flags()
-Date: Mon,  8 Apr 2024 14:52:45 +0200
-Message-ID: <20240408125410.434725905@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.6 246/252] bpf: put uprobe links path and task in release callback
+Date: Mon,  8 Apr 2024 14:59:05 +0200
+Message-ID: <20240408125314.293365955@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,133 +46,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 8998d110835e3781ccd3f1ae061a590b4aaba911 ]
+commit e9c856cabefb71d47b2eeb197f72c9c88e9b45b0 upstream.
 
-Handle FAN_MARK_IGNORED_SURV_MODIFY flag change in a helper that
-is called after updating the mark mask.
+There is no need to delay putting either path or task to deallocation
+step. It can be done right after bpf_uprobe_unregister. Between release
+and dealloc, there could be still some running BPF programs, but they
+don't access either task or path, only data in link->uprobes, so it is
+safe to do.
 
-Replace the added and removed return values and help variables with
-bool recalc return values and help variable, which makes the code a
-bit easier to follow.
+On the other hand, doing path_put() in dealloc callback makes this
+dealloc sleepable because path_put() itself might sleep. Which is
+problematic due to the need to call uprobe's dealloc through call_rcu(),
+which is what is done in the next bug fix patch. So solve the problem by
+releasing these resources early.
 
-Rename flags argument to fan_flags to emphasize the difference from
-mark->flags.
-
-Link: https://lore.kernel.org/r/20220422120327.3459282-14-amir73il@gmail.com
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20240328052426.3042617-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 47 ++++++++++++++++--------------
- 1 file changed, 25 insertions(+), 22 deletions(-)
+ kernel/trace/bpf_trace.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index f23326be0d371..0ea0047c6340a 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1077,42 +1077,45 @@ static int fanotify_remove_inode_mark(struct fsnotify_group *group,
- 				    flags, umask);
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -3065,6 +3065,9 @@ static void bpf_uprobe_multi_link_releas
+ 
+ 	umulti_link = container_of(link, struct bpf_uprobe_multi_link, link);
+ 	bpf_uprobe_unregister(&umulti_link->path, umulti_link->uprobes, umulti_link->cnt);
++	if (umulti_link->task)
++		put_task_struct(umulti_link->task);
++	path_put(&umulti_link->path);
  }
  
--static void fanotify_mark_add_ignored_mask(struct fsnotify_mark *fsn_mark,
--					   __u32 mask, unsigned int flags,
--					   __u32 *removed)
-+static bool fanotify_mark_update_flags(struct fsnotify_mark *fsn_mark,
-+				       unsigned int fan_flags)
- {
--	fsn_mark->ignored_mask |= mask;
-+	bool recalc = false;
+ static void bpf_uprobe_multi_link_dealloc(struct bpf_link *link)
+@@ -3072,9 +3075,6 @@ static void bpf_uprobe_multi_link_deallo
+ 	struct bpf_uprobe_multi_link *umulti_link;
  
- 	/*
- 	 * Setting FAN_MARK_IGNORED_SURV_MODIFY for the first time may lead to
- 	 * the removal of the FS_MODIFY bit in calculated mask if it was set
- 	 * because of an ignored mask that is now going to survive FS_MODIFY.
- 	 */
--	if ((flags & FAN_MARK_IGNORED_SURV_MODIFY) &&
-+	if ((fan_flags & FAN_MARK_IGNORED_MASK) &&
-+	    (fan_flags & FAN_MARK_IGNORED_SURV_MODIFY) &&
- 	    !(fsn_mark->flags & FSNOTIFY_MARK_FLAG_IGNORED_SURV_MODIFY)) {
- 		fsn_mark->flags |= FSNOTIFY_MARK_FLAG_IGNORED_SURV_MODIFY;
- 		if (!(fsn_mark->mask & FS_MODIFY))
--			*removed = FS_MODIFY;
-+			recalc = true;
- 	}
-+
-+	return recalc;
+ 	umulti_link = container_of(link, struct bpf_uprobe_multi_link, link);
+-	if (umulti_link->task)
+-		put_task_struct(umulti_link->task);
+-	path_put(&umulti_link->path);
+ 	kvfree(umulti_link->uprobes);
+ 	kfree(umulti_link);
  }
- 
--static __u32 fanotify_mark_add_to_mask(struct fsnotify_mark *fsn_mark,
--				       __u32 mask, unsigned int flags,
--				       __u32 *removed)
-+static bool fanotify_mark_add_to_mask(struct fsnotify_mark *fsn_mark,
-+				      __u32 mask, unsigned int fan_flags)
- {
--	__u32 oldmask, newmask;
-+	bool recalc;
- 
- 	spin_lock(&fsn_mark->lock);
--	oldmask = fsnotify_calc_mask(fsn_mark);
--	if (!(flags & FAN_MARK_IGNORED_MASK)) {
-+	if (!(fan_flags & FAN_MARK_IGNORED_MASK))
- 		fsn_mark->mask |= mask;
--	} else {
--		fanotify_mark_add_ignored_mask(fsn_mark, mask, flags, removed);
--	}
--	newmask = fsnotify_calc_mask(fsn_mark);
-+	else
-+		fsn_mark->ignored_mask |= mask;
-+
-+	recalc = fsnotify_calc_mask(fsn_mark) &
-+		~fsnotify_conn_mask(fsn_mark->connector);
-+
-+	recalc |= fanotify_mark_update_flags(fsn_mark, fan_flags);
- 	spin_unlock(&fsn_mark->lock);
- 
--	return newmask & ~oldmask;
-+	return recalc;
- }
- 
- static struct fsnotify_mark *fanotify_add_new_mark(struct fsnotify_group *group,
-@@ -1166,11 +1169,11 @@ static int fanotify_group_init_error_pool(struct fsnotify_group *group)
- 
- static int fanotify_add_mark(struct fsnotify_group *group,
- 			     fsnotify_connp_t *connp, unsigned int obj_type,
--			     __u32 mask, unsigned int flags,
-+			     __u32 mask, unsigned int fan_flags,
- 			     __kernel_fsid_t *fsid)
- {
- 	struct fsnotify_mark *fsn_mark;
--	__u32 added, removed = 0;
-+	bool recalc;
- 	int ret = 0;
- 
- 	mutex_lock(&group->mark_mutex);
-@@ -1187,14 +1190,14 @@ static int fanotify_add_mark(struct fsnotify_group *group,
- 	 * Error events are pre-allocated per group, only if strictly
- 	 * needed (i.e. FAN_FS_ERROR was requested).
- 	 */
--	if (!(flags & FAN_MARK_IGNORED_MASK) && (mask & FAN_FS_ERROR)) {
-+	if (!(fan_flags & FAN_MARK_IGNORED_MASK) && (mask & FAN_FS_ERROR)) {
- 		ret = fanotify_group_init_error_pool(group);
- 		if (ret)
- 			goto out;
- 	}
- 
--	added = fanotify_mark_add_to_mask(fsn_mark, mask, flags, &removed);
--	if (removed || (added & ~fsnotify_conn_mask(fsn_mark->connector)))
-+	recalc = fanotify_mark_add_to_mask(fsn_mark, mask, fan_flags);
-+	if (recalc)
- 		fsnotify_recalc_mask(fsn_mark->connector);
- 
- out:
--- 
-2.43.0
-
 
 
