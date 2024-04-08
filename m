@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B236376413;
-	Mon,  8 Apr 2024 13:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB6336F08E;
+	Mon,  8 Apr 2024 13:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582398; cv=none; b=uHDgRf6WIVleQoqJwCeJzqOxyCfDZ4PUuzci+jKmL2Q5mmHVX2vx/AvsucJQksMheMyNZRNOMAxKPUJ+oNAroE3IFCURU4CPvNxnhvOfd+ahtCiu/KWZ/yKMi7cIWNwLqEnwqSa2kkilt7C6IMC2YlI2QEq+iolkIRiX6CXMpB4=
+	t=1712582402; cv=none; b=gqGfEeX2ojEd7H8lGU/6WkrnKeZtnTFksUPJFAHziaYBKKvnQA/LB/wCmbf3ecOvkadbMhsT7qTOSIsU+a4oPmoLfVttFvGfJIPQHc3tyVyWCStr82bFp/W0fHA2eYRidYJvFgI68YcRA6e3DQkgIXdB2aKDvHN+cEcZURC2zeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582398; c=relaxed/simple;
-	bh=Nyrey9Gwv3foM57Y+pF3CuY0RVm5EHjZqS35yOa31YQ=;
+	s=arc-20240116; t=1712582402; c=relaxed/simple;
+	bh=7LIMZ7coKxjCn/D48AiCmROpN9kjVapI8MxnGYO/+zE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VJkkfgixOXLALnM8q0RvYzOCaqeKGEtYi3kwajkq/MxMhf45P2fZcdezqwvdfDUKTDAdAUMH4BfJxqxigGx/R/8ulYcT5DOT0Rw8U5zEqX44r1xq110LekPZFOrlMRywjQOZvekzFHrIpgxYH41L/8DWpPxqYuw4TJByEJYKojk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwJpp5YI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BSzgTulno6fyHxIEJ4s+xYbBWEd/pnXKLPL3iAICXres74fI1jCA6AzTwt8Gb8YtKJ+T3GTRhzMoisfxuTpWULpGRnGjN7cZx8lwtgNUPIX/ynG5XuELsGwWdYHeZwfxXrrERYn+XCemz3xzl5BS1ms/Sdl6Vpry5a91/y7N1TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQ17MxbT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwJpp5YI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3270BC433C7;
-	Mon,  8 Apr 2024 13:19:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQ17MxbT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B87C433F1;
+	Mon,  8 Apr 2024 13:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582398;
-	bh=Nyrey9Gwv3foM57Y+pF3CuY0RVm5EHjZqS35yOa31YQ=;
+	s=korg; t=1712582401;
+	bh=7LIMZ7coKxjCn/D48AiCmROpN9kjVapI8MxnGYO/+zE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hwJpp5YIQTpJuD4uwf3817+wss2/4J8NO72F4a4Ki8XZi/XCMwlSTG8BN2zpoYsq5
-	 hbgQ64bZYqu5/UXSTPAq/ZlrfERAfOJrx2wtmHAU/5D1iih5NGJm2V19RfzLeXy3ay
-	 huUn/vJdB8LhOg5GyMoYly7iPibRFW/HNRNQGlBY=
+	b=yQ17MxbTZuzWwg01n9YFpkAUF9nreRxKmGk3NOWd0rAnmsu3DhRTAfDnYE9hYNXzJ
+	 GUG8HUTe1CoTWnyu/QSvluYekqqxSFs/KlF6s81SpeEg28/9aRO8N2/T+TlO3krVFm
+	 HQuo6LdFc7qnvA2ESRI1F0MFPvsqhj15xThqTv/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.8 071/273] x86/cpufeatures: Add CPUID_LNX_5 to track recently added Linux-defined word
-Date: Mon,  8 Apr 2024 14:55:46 +0200
-Message-ID: <20240408125311.507161910@linuxfoundation.org>
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 102/138] s390/pai: rename structure member users to active_events
+Date: Mon,  8 Apr 2024 14:58:36 +0200
+Message-ID: <20240408125259.404630852@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,63 +48,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-commit 8cb4a9a82b21623dbb4b3051dd30d98356cf95bc upstream.
+[ Upstream commit 58354c7d35d35dd119ada18ff84a6686ccc8743f ]
 
-Add CPUID_LNX_5 to track cpufeatures' word 21, and add the appropriate
-compile-time assert in KVM to prevent direct lookups on the features in
-CPUID_LNX_5.  KVM uses X86_FEATURE_* flags to manage guest CPUID, and so
-must translate features that are scattered by Linux from the Linux-defined
-bit to the hardware-defined bit, i.e. should never try to directly access
-scattered features in guest CPUID.
+Rename structure member users to active_events to make it consistent
+with PMU pai_ext. Also use the same prefix syntax for increment and
+decrement operators in both PMUs.
 
-Opportunistically add NR_CPUID_WORDS to enum cpuid_leafs, along with a
-compile-time assert in KVM's CPUID infrastructure to ensure that future
-additions update cpuid_leafs along with NCAPINTS.
-
-No functional change intended.
-
-Fixes: 7f274e609f3d ("x86/cpufeatures: Add new word for scattered features")
-Cc: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Acked-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Stable-dep-of: e9f3af02f639 ("s390/pai: fix sampling event removal for PMU device driver")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/cpufeature.h |    2 ++
- arch/x86/kvm/reverse_cpuid.h      |    2 ++
- 2 files changed, 4 insertions(+)
+ arch/s390/kernel/perf_pai_crypto.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/arch/x86/include/asm/cpufeature.h
-+++ b/arch/x86/include/asm/cpufeature.h
-@@ -33,6 +33,8 @@ enum cpuid_leafs
- 	CPUID_7_EDX,
- 	CPUID_8000_001F_EAX,
- 	CPUID_8000_0021_EAX,
-+	CPUID_LNX_5,
-+	NR_CPUID_WORDS,
- };
+diff --git a/arch/s390/kernel/perf_pai_crypto.c b/arch/s390/kernel/perf_pai_crypto.c
+index 68a6132937f3e..a7e815563f411 100644
+--- a/arch/s390/kernel/perf_pai_crypto.c
++++ b/arch/s390/kernel/perf_pai_crypto.c
+@@ -35,7 +35,7 @@ struct pai_userdata {
+ struct paicrypt_map {
+ 	unsigned long *page;		/* Page for CPU to store counters */
+ 	struct pai_userdata *save;	/* Page to store no-zero counters */
+-	unsigned int users;		/* # of PAI crypto users */
++	unsigned int active_events;	/* # of PAI crypto users */
+ 	unsigned int refcnt;		/* Reference count mapped buffers */
+ 	enum paievt_mode mode;		/* Type of event */
+ 	struct perf_event *event;	/* Perf event for sampling */
+@@ -58,8 +58,8 @@ static void paicrypt_event_destroy(struct perf_event *event)
+ 	mutex_lock(&pai_reserve_mutex);
+ 	debug_sprintf_event(cfm_dbg, 5, "%s event %#llx cpu %d users %d"
+ 			    " mode %d refcnt %d\n", __func__,
+-			    event->attr.config, event->cpu, cpump->users,
+-			    cpump->mode, cpump->refcnt);
++			    event->attr.config, event->cpu,
++			    cpump->active_events, cpump->mode, cpump->refcnt);
+ 	if (!--cpump->refcnt) {
+ 		debug_sprintf_event(cfm_dbg, 4, "%s page %#lx save %p\n",
+ 				    __func__, (unsigned long)cpump->page,
+@@ -174,7 +174,7 @@ static int paicrypt_busy(struct perf_event_attr *a, struct paicrypt_map *cpump)
+ 	}
+ 	debug_sprintf_event(cfm_dbg, 5, "%s sample_period %#llx users %d"
+ 			    " mode %d refcnt %d page %#lx save %p rc %d\n",
+-			    __func__, a->sample_period, cpump->users,
++			    __func__, a->sample_period, cpump->active_events,
+ 			    cpump->mode, cpump->refcnt,
+ 			    (unsigned long)cpump->page, cpump->save, rc);
+ 	mutex_unlock(&pai_reserve_mutex);
+@@ -260,7 +260,7 @@ static int paicrypt_add(struct perf_event *event, int flags)
+ 	struct paicrypt_map *cpump = this_cpu_ptr(&paicrypt_map);
+ 	unsigned long ccd;
  
- #define X86_CAP_FMT_NUM "%d:%d"
---- a/arch/x86/kvm/reverse_cpuid.h
-+++ b/arch/x86/kvm/reverse_cpuid.h
-@@ -102,10 +102,12 @@ static const struct cpuid_reg reverse_cp
-  */
- static __always_inline void reverse_cpuid_check(unsigned int x86_leaf)
- {
-+	BUILD_BUG_ON(NR_CPUID_WORDS != NCAPINTS);
- 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_1);
- 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_2);
- 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_3);
- 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_4);
-+	BUILD_BUG_ON(x86_leaf == CPUID_LNX_5);
- 	BUILD_BUG_ON(x86_leaf >= ARRAY_SIZE(reverse_cpuid));
- 	BUILD_BUG_ON(reverse_cpuid[x86_leaf].function == 0);
- }
+-	if (cpump->users++ == 0) {
++	if (++cpump->active_events == 1) {
+ 		ccd = virt_to_phys(cpump->page) | PAI_CRYPTO_KERNEL_OFFSET;
+ 		WRITE_ONCE(S390_lowcore.ccd, ccd);
+ 		__ctl_set_bit(0, 50);
+@@ -291,7 +291,7 @@ static void paicrypt_del(struct perf_event *event, int flags)
+ 	if (!event->attr.sample_period)
+ 		/* Only counting needs to read counter */
+ 		paicrypt_stop(event, PERF_EF_UPDATE);
+-	if (cpump->users-- == 1) {
++	if (--cpump->active_events == 0) {
+ 		__ctl_clear_bit(0, 50);
+ 		WRITE_ONCE(S390_lowcore.ccd, 0);
+ 	}
+-- 
+2.43.0
+
 
 
