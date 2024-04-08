@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18BA680639;
-	Mon,  8 Apr 2024 13:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D9E8061F;
+	Mon,  8 Apr 2024 13:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583614; cv=none; b=YydVvT81jd/LnPiQW+u4FIgc+r0NW5J3TCo7+7TCFKQ1kB1bPXzH9J1g0UjaxKQ51igZEnMzt898sJGz5io6fFegD5G7OyLJAkpEBoLpcGbdN8Tk0dqC4BvSBavDwUQeCCdMNfd5dd4hLBRZb9Kdte0q1739i9raZ0wVBOIIyfk=
+	t=1712583617; cv=none; b=TAF5cQ1fBzILXXc9+N8FOw5hnQGfKcmgTNhKl2OVbpmNcxU1/LDI2yYklkRAbi2wHS3zcGr/8MvTaCeif4ygm66+wGIsdzBBCx9KfgL/eZnWgq2RawlsOD1tOhmoWryUpF8CerADoj8WVEEMzj9n/TK7TCx1pfOpvY39FXD/xRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583614; c=relaxed/simple;
-	bh=6m1TG3Wx+brqWHzfbn4WMNZtXJaI4DkkW+S0bFl9zhY=;
+	s=arc-20240116; t=1712583617; c=relaxed/simple;
+	bh=oFepeX86pvylI+KE3BcPJcSTbAv5jTOEzJb8QX3rVzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X64HVS85aAhs0Cte7oxXcTcfAOuTCdmCqAYVohZBO7XQI7ndHxPYPZqqwYBhU2UmIYhnz8jjpsuNP1MK8nRbw+6W5D2wlu3foiFAnEmk9AnlSrfUq0G+r92zbJt/sJ4AWduLLupSjAv85Y7EPLu3wB5hmKGQi1+Gizejcz+5rUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0UXiRMr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YST3Zns0xL7jbeyAuvVJJMw6h5+du2BPZ09SvfUKWyDjUHfGNT71BqFW+QlIZy+rrJztvSGfHdosAkdiMJYsGp7CFGijZUPN50IhdIQX3qBPexVYWQ/9SB7zPcqBDHDIw0D0ewBockLT1ckmh/ENFOUW1gGryC++duEPC+we2lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkyM1nI0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0UXiRMr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E02C433C7;
-	Mon,  8 Apr 2024 13:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkyM1nI0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84586C433F1;
+	Mon,  8 Apr 2024 13:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583614;
-	bh=6m1TG3Wx+brqWHzfbn4WMNZtXJaI4DkkW+S0bFl9zhY=;
+	s=korg; t=1712583616;
+	bh=oFepeX86pvylI+KE3BcPJcSTbAv5jTOEzJb8QX3rVzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W0UXiRMrSP4c5yXnH06ic1GJI1hWro8IW1FFh1eqvQrbEkibsiujcxNEV+VIcrfsb
-	 KPZsv+YPYsjdRBfu4ln4iglrM07mr7HDRhotCnWBlbgPlwCwLDlLSZthREKaZPk4Ik
-	 8jUON27/CYlTLUWcz0IRKdwWF8sX5s+Zo6rM3AGE=
+	b=HkyM1nI03fElwyTWXXsGUkzDstRDu5lk7Xi80lSMK8GQbZ1p4ivNmXEQk4u8kmz5p
+	 uDFYijaNkEj67H67rbtM5gIpmyM8PlmOSSygelBqR/RdPfs6ChVjcwucIkUQ4uOuuU
+	 p9005zF/o8QeHVPH1wkI4WfDxK52aY+dewATzpuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.8 201/273] ALSA: hda: Add pplcllpl/u members to hdac_ext_stream
-Date: Mon,  8 Apr 2024 14:57:56 +0200
-Message-ID: <20240408125315.566234771@linuxfoundation.org>
+	Bruce Fields <bfields@fieldses.org>,
+	Ondrej Valousek <ondrej.valousek.xm@renesas.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 267/690] nfsd: Add support for the birth time attribute
+Date: Mon,  8 Apr 2024 14:52:13 +0200
+Message-ID: <20240408125409.291227022@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,49 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Ondrej Valousek <ondrej.valousek.xm@renesas.com>
 
-commit f9eeb6bb13fb5d7af1ea5b74a10b1f8ead962540 upstream.
+[ Upstream commit e377a3e698fb56cb63f6bddbebe7da76dc37e316 ]
 
-The pplcllpl/u can be used to save the Link Connection Linear Link
-Position register value to be used for compensation of the LLP register
-value in case the counter is not reset (after pause/resume or
-stop/start without closing the stream).
+For filesystems that supports "btime" timestamp (i.e. most modern
+filesystems do) we share it via kernel nfsd. Btime support for NFS
+client has already been added by Trond recently.
 
-The LLP can be used along with PPHCLDP to calculate delay caused by the DSP
-processing for HDA links.
-
-Cc: stable@vger.kernel.org # 6.8
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://msgid.link/r/20240321130814.4412-17-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Bruce Fields <bfields@fieldses.org>
+Signed-off-by: Ondrej Valousek <ondrej.valousek.xm@renesas.com>
+[ cel: addressed some whitespace/checkpatch nits ]
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- include/sound/hdaudio_ext.h | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/nfsd/nfs4xdr.c | 10 ++++++++++
+ fs/nfsd/nfsd.h    |  2 +-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/include/sound/hdaudio_ext.h b/include/sound/hdaudio_ext.h
-index a8bebac1e4b2..957295364a5e 100644
---- a/include/sound/hdaudio_ext.h
-+++ b/include/sound/hdaudio_ext.h
-@@ -56,6 +56,9 @@ struct hdac_ext_stream {
- 	u32 pphcldpl;
- 	u32 pphcldpu;
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index 19ddd80239944..771d3057577ef 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -2851,6 +2851,9 @@ nfsd4_encode_fattr(struct xdr_stream *xdr, struct svc_fh *fhp,
+ 	err = vfs_getattr(&path, &stat, STATX_BASIC_STATS, AT_STATX_SYNC_AS_STAT);
+ 	if (err)
+ 		goto out_nfserr;
++	if (!(stat.result_mask & STATX_BTIME))
++		/* underlying FS does not offer btime so we can't share it */
++		bmval1 &= ~FATTR4_WORD1_TIME_CREATE;
+ 	if ((bmval0 & (FATTR4_WORD0_FILES_AVAIL | FATTR4_WORD0_FILES_FREE |
+ 			FATTR4_WORD0_FILES_TOTAL | FATTR4_WORD0_MAXNAME)) ||
+ 	    (bmval1 & (FATTR4_WORD1_SPACE_AVAIL | FATTR4_WORD1_SPACE_FREE |
+@@ -3251,6 +3254,13 @@ nfsd4_encode_fattr(struct xdr_stream *xdr, struct svc_fh *fhp,
+ 		p = xdr_encode_hyper(p, (s64)stat.mtime.tv_sec);
+ 		*p++ = cpu_to_be32(stat.mtime.tv_nsec);
+ 	}
++	if (bmval1 & FATTR4_WORD1_TIME_CREATE) {
++		p = xdr_reserve_space(xdr, 12);
++		if (!p)
++			goto out_resource;
++		p = xdr_encode_hyper(p, (s64)stat.btime.tv_sec);
++		*p++ = cpu_to_be32(stat.btime.tv_nsec);
++	}
+ 	if (bmval1 & FATTR4_WORD1_MOUNTED_ON_FILEID) {
+ 		struct kstat parent_stat;
+ 		u64 ino = stat.ino;
+diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
+index 3e5008b475ff0..4fc1fd639527a 100644
+--- a/fs/nfsd/nfsd.h
++++ b/fs/nfsd/nfsd.h
+@@ -364,7 +364,7 @@ void		nfsd_lockd_shutdown(void);
+  | FATTR4_WORD1_OWNER	        | FATTR4_WORD1_OWNER_GROUP  | FATTR4_WORD1_RAWDEV           \
+  | FATTR4_WORD1_SPACE_AVAIL     | FATTR4_WORD1_SPACE_FREE   | FATTR4_WORD1_SPACE_TOTAL      \
+  | FATTR4_WORD1_SPACE_USED      | FATTR4_WORD1_TIME_ACCESS  | FATTR4_WORD1_TIME_ACCESS_SET  \
+- | FATTR4_WORD1_TIME_DELTA   | FATTR4_WORD1_TIME_METADATA    \
++ | FATTR4_WORD1_TIME_DELTA      | FATTR4_WORD1_TIME_METADATA   | FATTR4_WORD1_TIME_CREATE      \
+  | FATTR4_WORD1_TIME_MODIFY     | FATTR4_WORD1_TIME_MODIFY_SET | FATTR4_WORD1_MOUNTED_ON_FILEID)
  
-+	u32 pplcllpl;
-+	u32 pplcllpu;
-+
- 	bool decoupled:1;
- 	bool link_locked:1;
- 	bool link_prepared;
+ #define NFSD4_SUPPORTED_ATTRS_WORD2 0
 -- 
-2.44.0
+2.43.0
 
 
 
