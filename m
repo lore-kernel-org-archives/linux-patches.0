@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2E26FE35;
-	Mon,  8 Apr 2024 13:32:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450E46CDA9;
+	Mon,  8 Apr 2024 13:32:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583130; cv=none; b=ZcHxcjZ0jZ6XB4glVMYELX9Ng7GmKrKdzBKWHigAMSY4FljgxRh/z4uqDdtcNAL4CpxipS7+uWkKOqQcESaCXzVUE+ayWS+XVsN8uV1P647lF9PVpEpMdbAa47Tjobi5W6xCnHlBOki/lIq3KLmo+DhYzEkZxYOohm7r4/BmqUs=
+	t=1712583133; cv=none; b=Rahb2rUhRhOmC+9TCgnSBJzCy/cK6tizxWaLwRglcRIoWr23xhkXi/vQeF9NLCh8tq2F13Froc/GAve582RKuAsvh5+BlFKtDaIWxakWpG1rbq2TTeo66D1LEVvidpUISSIgONlsDZxRnyU68BN4/hswLtl6ard2JMrVS5KicsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583130; c=relaxed/simple;
-	bh=yR8AElbDfOT6dQ3Hr2zh9Nbex6HEyXnNfnGsbu/VlDs=;
+	s=arc-20240116; t=1712583133; c=relaxed/simple;
+	bh=eN5+eRJ8vFUx4fa2H2jyOCsn2hlBQO4q8lM+UjtmllY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJmvkm6o4Zf1atcxRlzOGwvo1qybB7DkxDOvMmALIk2r9AKLBwY5QshiUyLImkwODwwQrei7dLiouKQ/BRW+9C4LIg9ZHS0mzkWgmJSW5S4AUFp1j4p/LWN/sfZsLPXUgnZjn9IGAnnYGJa+J+Va/JkW32FN4qsny6QjhwucnfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ns92A5HC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BeeJpsYUs8zJ7JNMXEae970hjPYD0JJ6OGkA9tlgV/LgRWE+Gvef6pLGPBL5hUhHX7QhTL6LkyfbsaaV8rdXe08PR2TCq3Fnc1mOGec4otHMtnN5uu4ea7+MBeZSEKFYzIQPloueQCaSf/9lGT0MFcsrS0I2TPLlz5/3ZqBZNu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wdOsH4rv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ns92A5HC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47E5C433F1;
-	Mon,  8 Apr 2024 13:32:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wdOsH4rv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2541C433F1;
+	Mon,  8 Apr 2024 13:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583130;
-	bh=yR8AElbDfOT6dQ3Hr2zh9Nbex6HEyXnNfnGsbu/VlDs=;
+	s=korg; t=1712583133;
+	bh=eN5+eRJ8vFUx4fa2H2jyOCsn2hlBQO4q8lM+UjtmllY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ns92A5HCzKiXDzKfurTYnZ9ZeG2xsOAOs6NrQLZb07Vv6gvMBpWcCGqco01AZbe7V
-	 q17QxBQnwJNbe0Qhqckh7QPmlPHoYlHx6MxwfUgtHhtNay2Nd3UGhgB4dT44Sy8d72
-	 7NZXckXcQuRJS5uXsRlZaVJPkg3F1aeOYnGjXF3o=
+	b=wdOsH4rvGl/G9Ms7SHUpsUv0FxFJU0I+glXu9cLa6PL3nR0Axt6guXlime3pzpOU1
+	 M6kpSHBFwahW7HoV9Fpd4my7g069iUnPZQJlCYTtqALk+l4t7M6YJRflwrb8FbkOfI
+	 LtBLWZ+spq8KbRI8gDeaTsgcz0g9Vvi4HaqEoYDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.6 139/252] i40e: Remove _t suffix from enum type names
-Date: Mon,  8 Apr 2024 14:57:18 +0200
-Message-ID: <20240408125310.960597039@linuxfoundation.org>
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 160/252] ASoC: wm_adsp: Fix missing mutex_lock in wm_adsp_write_ctl()
+Date: Mon,  8 Apr 2024 14:57:39 +0200
+Message-ID: <20240408125311.619391592@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
 References: <20240408125306.643546457@linuxfoundation.org>
@@ -54,103 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit addca9175e5f74cf29e8ad918c38c09b8663b5b8 ]
+[ Upstream commit f193957b0fbbba397c8bddedf158b3bf7e4850fc ]
 
-Enum type names should not be suffixed by '_t'. Either to use
-'typedef enum name name_t' to so plain 'name_t var' instead of
-'enum name_t var'.
+wm_adsp_write_ctl() must hold the pwr_lock mutex when calling
+cs_dsp_get_ctl().
 
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20231113231047.548659-6-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: ea558de7238b ("i40e: Enforce software interrupt during busy-poll exit")
+This was previously partially fixed by commit 781118bc2fc1
+("ASoC: wm_adsp: Fix missing locking in wm_adsp_[read|write]_ctl()")
+but this only put locking around the call to cs_dsp_coeff_write_ctrl(),
+missing the call to cs_dsp_get_ctl().
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 781118bc2fc1 ("ASoC: wm_adsp: Fix missing locking in wm_adsp_[read|write]_ctl()")
+Link: https://msgid.link/r/20240307110227.41421-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e.h      | 4 ++--
- drivers/net/ethernet/intel/i40e/i40e_ptp.c  | 6 +++---
- drivers/net/ethernet/intel/i40e/i40e_txrx.h | 4 ++--
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ sound/soc/codecs/wm_adsp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e.h b/drivers/net/ethernet/intel/i40e/i40e.h
-index 55bb0b5310d5b..bc353da3ed41d 100644
---- a/drivers/net/ethernet/intel/i40e/i40e.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e.h
-@@ -108,7 +108,7 @@
- #define I40E_MAX_BW_INACTIVE_ACCUM	4 /* accumulate 4 credits max */
- 
- /* driver state flags */
--enum i40e_state_t {
-+enum i40e_state {
- 	__I40E_TESTING,
- 	__I40E_CONFIG_BUSY,
- 	__I40E_CONFIG_DONE,
-@@ -156,7 +156,7 @@ enum i40e_state_t {
- 	BIT_ULL(__I40E_PF_RESET_AND_REBUILD_REQUESTED)
- 
- /* VSI state flags */
--enum i40e_vsi_state_t {
-+enum i40e_vsi_state {
- 	__I40E_VSI_DOWN,
- 	__I40E_VSI_NEEDS_RESTART,
- 	__I40E_VSI_SYNCING_FILTERS,
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_ptp.c b/drivers/net/ethernet/intel/i40e/i40e_ptp.c
-index 8a26811140b47..cac9584debb1d 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_ptp.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_ptp.c
-@@ -34,7 +34,7 @@ enum i40e_ptp_pin {
- 	GPIO_4
- };
- 
--enum i40e_can_set_pins_t {
-+enum i40e_can_set_pins {
- 	CANT_DO_PINS = -1,
- 	CAN_SET_PINS,
- 	CAN_DO_PINS
-@@ -192,7 +192,7 @@ static bool i40e_is_ptp_pin_dev(struct i40e_hw *hw)
-  * return CAN_DO_PINS if pins can be manipulated within a NIC or
-  * return CANT_DO_PINS otherwise.
-  **/
--static enum i40e_can_set_pins_t i40e_can_set_pins(struct i40e_pf *pf)
-+static enum i40e_can_set_pins i40e_can_set_pins(struct i40e_pf *pf)
+diff --git a/sound/soc/codecs/wm_adsp.c b/sound/soc/codecs/wm_adsp.c
+index 72b90a7ee4b68..b9c20e29fe63e 100644
+--- a/sound/soc/codecs/wm_adsp.c
++++ b/sound/soc/codecs/wm_adsp.c
+@@ -683,11 +683,12 @@ static void wm_adsp_control_remove(struct cs_dsp_coeff_ctl *cs_ctl)
+ int wm_adsp_write_ctl(struct wm_adsp *dsp, const char *name, int type,
+ 		      unsigned int alg, void *buf, size_t len)
  {
- 	if (!i40e_is_ptp_pin_dev(&pf->hw)) {
- 		dev_warn(&pf->pdev->dev,
-@@ -1070,7 +1070,7 @@ static void i40e_ptp_set_pins_hw(struct i40e_pf *pf)
- static int i40e_ptp_set_pins(struct i40e_pf *pf,
- 			     struct i40e_ptp_pins_settings *pins)
- {
--	enum i40e_can_set_pins_t pin_caps = i40e_can_set_pins(pf);
-+	enum i40e_can_set_pins pin_caps = i40e_can_set_pins(pf);
- 	int i = 0;
+-	struct cs_dsp_coeff_ctl *cs_ctl = cs_dsp_get_ctl(&dsp->cs_dsp, name, type, alg);
++	struct cs_dsp_coeff_ctl *cs_ctl;
+ 	struct wm_coeff_ctl *ctl;
+ 	int ret;
  
- 	if (pin_caps == CANT_DO_PINS)
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.h b/drivers/net/ethernet/intel/i40e/i40e_txrx.h
-index 900b0d9ede9f5..84e4dacde6f58 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_txrx.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.h
-@@ -57,7 +57,7 @@ static inline u16 i40e_intrl_usec_to_reg(int intrl)
-  * mentioning ITR_INDX, ITR_NONE cannot be used as an index 'n' into any
-  * register but instead is a special value meaning "don't update" ITR0/1/2.
-  */
--enum i40e_dyn_idx_t {
-+enum i40e_dyn_idx {
- 	I40E_IDX_ITR0 = 0,
- 	I40E_IDX_ITR1 = 1,
- 	I40E_IDX_ITR2 = 2,
-@@ -305,7 +305,7 @@ struct i40e_rx_queue_stats {
- 	u64 page_busy_count;
- };
+ 	mutex_lock(&dsp->cs_dsp.pwr_lock);
++	cs_ctl = cs_dsp_get_ctl(&dsp->cs_dsp, name, type, alg);
+ 	ret = cs_dsp_coeff_write_ctrl(cs_ctl, 0, buf, len);
+ 	mutex_unlock(&dsp->cs_dsp.pwr_lock);
  
--enum i40e_ring_state_t {
-+enum i40e_ring_state {
- 	__I40E_TX_FDIR_INIT_DONE,
- 	__I40E_TX_XPS_INIT_DONE,
- 	__I40E_RING_STATE_NBITS /* must be last */
 -- 
 2.43.0
 
