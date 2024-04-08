@@ -1,41 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C741C7C098;
-	Mon,  8 Apr 2024 13:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C067174BF5;
+	Mon,  8 Apr 2024 13:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581884; cv=none; b=ENCOFH1R7An/OFhQfIc25830x08NH8ZhbF/q1RVAYBsfdGkI0Pg4Xa3wx7Aj+G20i22H0kHF3nyLiJhrmN6R9t/Ay1lhAXe8wKwznrkf4JtrmikDx5wK/lNEAc6U3XMIa0XX6bjSCdDI18kd4+L0vlMkRuuD8a7GgRWTZaS+jxk=
+	t=1712581887; cv=none; b=j/+6m+NPLQMoExv89WFa4jlj2cS8bNo+V63w4ldL/pZApSqqR4DnsYfafriPKQYFd5KkTdxRLSqMribDz31uQzq7tsggtjC4gfPP1lTMgSznnMybvn1G0QGS8cqsfpeMOQe7VPJEotqD92bYUyYn+zVoGawgOrM8wFh9UxCbyWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581884; c=relaxed/simple;
-	bh=APSgdtPkUyBelO096cON3JQdcxwtD0DVeK4rNDTy9UI=;
+	s=arc-20240116; t=1712581887; c=relaxed/simple;
+	bh=crPQFB4PTScj6pCxuA8fxZDRUb74o/R9bGHmtW0QDk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bf9Z6Yr/rJ7xW6VNJ1wS50vKvRA2YDo+ezRUorzbkSzT4cgxKAm5KdZtXQdkpfTSM3j2ADPLrZDSx6qVipVndxUXmg/3fg7GuBUqAtnKGip9ITqbS0PneiGNeuWWMkatzATRKvQg7AS54dcBxkCcPRnBNPhflsGWEw9S/PnNSVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XX1w/JtY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B2X2XS1t0p7RHaviqoEo9bJuvvZ6HnUQ1MCQ+GE538ke6hKpUKqZNYSunmj1176SliUBfHhtqDFYrHP0hz7SL05zwZ7tDzES7hiAfQMo/9D3ofRq8+R/OMq88OHONSGs7BdkzvC5/9c4bYAT4o6K/5/qknL+SFlyIenaSerd4/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9+iCm/U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XX1w/JtY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB53C433F1;
-	Mon,  8 Apr 2024 13:11:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9+iCm/U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F47C433F1;
+	Mon,  8 Apr 2024 13:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581884;
-	bh=APSgdtPkUyBelO096cON3JQdcxwtD0DVeK4rNDTy9UI=;
+	s=korg; t=1712581887;
+	bh=crPQFB4PTScj6pCxuA8fxZDRUb74o/R9bGHmtW0QDk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XX1w/JtYAalISwwFG0GixwrugvqVACU5rcv4ckc8yA7iRTPQGTlJLeL9GLMOg43CN
-	 GcwIdOCEEMVSQ2pfChg+5sah1HSsNRrZZdEYkdSPfwzpGjrX8Bg3oJcVgn5Yj/lX1I
-	 oay9hn7nif2EX6SDAw9aNt2qty6dtDBbbuPXnwBo=
+	b=W9+iCm/U6S+qvoYCga2pnJwxGVOWwkOthOf/kGNKMwafEelv+2UTMhgm8paz/EVN4
+	 P7agjc2JnOX+6VILfIRYDuvlsfSR+cBFwFVPe4s+2dGjciULEQ7CQcfyJt3uTOgGdl
+	 gmpQbZZUrgqJam5+XA2wxrKg/xLcgtp40vw86EGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	linke li <lilinke99@qq.com>,
+	Rabin Vincent <rabin@rab.in>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/252] drm/i915: Replace several IS_METEORLAKE with proper IP version checks
-Date: Mon,  8 Apr 2024 14:55:46 +0200
-Message-ID: <20240408125308.097539150@linuxfoundation.org>
+Subject: [PATCH 5.15 090/690] ring-buffer: Use wait_event_interruptible() in ring_buffer_wait()
+Date: Mon,  8 Apr 2024 14:49:16 +0200
+Message-ID: <20240408125402.745845470@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,167 +53,205 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 14128d64090fa88445376cb8ccf91c50c08bd410 ]
+[ Upstream commit 7af9ded0c2caac0a95f33df5cb04706b0f502588 ]
 
-Many of the IS_METEORLAKE conditions throughout the driver are supposed
-to be checks for Xe_LPG and/or Xe_LPM+ IP, not for the MTL platform
-specifically.  Update those checks to ensure that the code will still
-operate properly if/when these IP versions show up on future platforms.
+Convert ring_buffer_wait() over to wait_event_interruptible(). The default
+condition is to execute the wait loop inside __wait_event() just once.
 
-v2:
- - Update two more conditions (one for pg_enable, one for MTL HuC
-   compatibility).
-v3:
- - Don't change GuC/HuC compatibility check, which sounds like it truly
-   is specific to the MTL platform.  (Gustavo)
- - Drop a non-lineage workaround number for the OA timestamp frequency
-   workaround.  (Gustavo)
+This does not change the ring_buffer_wait() prototype yet, but
+restructures the code so that it can take a "cond" and "data" parameter
+and will call wait_event_interruptible() with a helper function as the
+condition.
 
-Cc: Gustavo Sousa <gustavo.sousa@intel.com>
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230821180619.650007-20-matthew.d.roper@intel.com
-Stable-dep-of: 186bce682772 ("drm/i915/mtl: Update workaround 14018575942")
+The helper function (rb_wait_cond) takes the cond function and data
+parameters. It will first check if the buffer hit the watermark defined by
+the "full" parameter and then call the passed in condition parameter. If
+either are true, it returns true.
+
+If rb_wait_cond() does not return true, it will set the appropriate
+"waiters_pending" flag and returns false.
+
+Link: https://lore.kernel.org/linux-trace-kernel/CAHk-=wgsNgewHFxZAJiAQznwPMqEtQmi1waeS2O1v6L4c_Um5A@mail.gmail.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20240312121703.399598519@goodmis.org
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: linke li <lilinke99@qq.com>
+Cc: Rabin Vincent <rabin@rab.in>
+Fixes: f3ddb74ad0790 ("tracing: Wake up ring buffer waiters on closing of the file")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_create.c |  4 ++--
- drivers/gpu/drm/i915/gt/intel_engine_pm.c  |  2 +-
- drivers/gpu/drm/i915/gt/intel_mocs.c       |  2 +-
- drivers/gpu/drm/i915/gt/intel_rc6.c        |  2 +-
- drivers/gpu/drm/i915/gt/intel_reset.c      |  2 +-
- drivers/gpu/drm/i915/gt/intel_rps.c        |  2 +-
- drivers/gpu/drm/i915/i915_debugfs.c        |  2 +-
- drivers/gpu/drm/i915/i915_perf.c           | 11 +++++------
- 8 files changed, 13 insertions(+), 14 deletions(-)
+ include/linux/ring_buffer.h |   1 +
+ kernel/trace/ring_buffer.c  | 116 +++++++++++++++++++++---------------
+ 2 files changed, 69 insertions(+), 48 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_create.c b/drivers/gpu/drm/i915/gem/i915_gem_create.c
-index d24c0ce8805c7..19156ba4b9ef4 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_create.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_create.c
-@@ -405,8 +405,8 @@ static int ext_set_pat(struct i915_user_extension __user *base, void *data)
- 	BUILD_BUG_ON(sizeof(struct drm_i915_gem_create_ext_set_pat) !=
- 		     offsetofend(struct drm_i915_gem_create_ext_set_pat, rsvd));
+diff --git a/include/linux/ring_buffer.h b/include/linux/ring_buffer.h
+index 3c7d295746f67..3e7bfc0f65aee 100644
+--- a/include/linux/ring_buffer.h
++++ b/include/linux/ring_buffer.h
+@@ -98,6 +98,7 @@ __ring_buffer_alloc(unsigned long size, unsigned flags, struct lock_class_key *k
+ 	__ring_buffer_alloc((size), (flags), &__key);	\
+ })
  
--	/* Limiting the extension only to Meteor Lake */
--	if (!IS_METEORLAKE(i915))
-+	/* Limiting the extension only to Xe_LPG and beyond */
-+	if (GRAPHICS_VER_FULL(i915) < IP_VER(12, 70))
- 		return -ENODEV;
++typedef bool (*ring_buffer_cond_fn)(void *data);
+ int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full);
+ __poll_t ring_buffer_poll_wait(struct trace_buffer *buffer, int cpu,
+ 			  struct file *filp, poll_table *poll_table, int full);
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 4ffedcd255b3e..80ec515ae81e7 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -960,43 +960,15 @@ static bool rb_watermark_hit(struct trace_buffer *buffer, int cpu, int full)
+ 	return ret;
+ }
  
- 	if (copy_from_user(&ext, base, sizeof(ext)))
-diff --git a/drivers/gpu/drm/i915/gt/intel_engine_pm.c b/drivers/gpu/drm/i915/gt/intel_engine_pm.c
-index a95615b345cd7..5a3a5b29d1507 100644
---- a/drivers/gpu/drm/i915/gt/intel_engine_pm.c
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_pm.c
-@@ -21,7 +21,7 @@ static void intel_gsc_idle_msg_enable(struct intel_engine_cs *engine)
+-/**
+- * ring_buffer_wait - wait for input to the ring buffer
+- * @buffer: buffer to wait on
+- * @cpu: the cpu buffer to wait on
+- * @full: wait until the percentage of pages are available, if @cpu != RING_BUFFER_ALL_CPUS
+- *
+- * If @cpu == RING_BUFFER_ALL_CPUS then the task will wake up as soon
+- * as data is added to any of the @buffer's cpu buffers. Otherwise
+- * it will wait for data to be added to a specific cpu buffer.
+- */
+-int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full)
++static inline bool
++rb_wait_cond(struct rb_irq_work *rbwork, struct trace_buffer *buffer,
++	     int cpu, int full, ring_buffer_cond_fn cond, void *data)
  {
- 	struct drm_i915_private *i915 = engine->i915;
- 
--	if (IS_METEORLAKE(i915) && engine->id == GSC0) {
-+	if (MEDIA_VER(i915) >= 13 && engine->id == GSC0) {
- 		intel_uncore_write(engine->gt->uncore,
- 				   RC_PSMI_CTRL_GSCCS,
- 				   _MASKED_BIT_DISABLE(IDLE_MSG_DISABLE));
-diff --git a/drivers/gpu/drm/i915/gt/intel_mocs.c b/drivers/gpu/drm/i915/gt/intel_mocs.c
-index bf8b42d2d3279..07269ff3be136 100644
---- a/drivers/gpu/drm/i915/gt/intel_mocs.c
-+++ b/drivers/gpu/drm/i915/gt/intel_mocs.c
-@@ -495,7 +495,7 @@ static unsigned int get_mocs_settings(const struct drm_i915_private *i915,
- 	memset(table, 0, sizeof(struct drm_i915_mocs_table));
- 
- 	table->unused_entries_index = I915_MOCS_PTE;
--	if (IS_METEORLAKE(i915)) {
-+	if (IS_GFX_GT_IP_RANGE(&i915->gt0, IP_VER(12, 70), IP_VER(12, 71))) {
- 		table->size = ARRAY_SIZE(mtl_mocs_table);
- 		table->table = mtl_mocs_table;
- 		table->n_entries = MTL_NUM_MOCS_ENTRIES;
-diff --git a/drivers/gpu/drm/i915/gt/intel_rc6.c b/drivers/gpu/drm/i915/gt/intel_rc6.c
-index b8c9338176bd6..9e113e9473260 100644
---- a/drivers/gpu/drm/i915/gt/intel_rc6.c
-+++ b/drivers/gpu/drm/i915/gt/intel_rc6.c
-@@ -123,7 +123,7 @@ static void gen11_rc6_enable(struct intel_rc6 *rc6)
- 	 * temporary wa and should be removed after fixing real cause
- 	 * of forcewake timeouts.
- 	 */
--	if (IS_METEORLAKE(gt->i915))
-+	if (IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 71)))
- 		pg_enable =
- 			GEN9_MEDIA_PG_ENABLE |
- 			GEN11_MEDIA_SAMPLER_PG_ENABLE;
-diff --git a/drivers/gpu/drm/i915/gt/intel_reset.c b/drivers/gpu/drm/i915/gt/intel_reset.c
-index 63d0892d3c45a..13fb8e5042c58 100644
---- a/drivers/gpu/drm/i915/gt/intel_reset.c
-+++ b/drivers/gpu/drm/i915/gt/intel_reset.c
-@@ -705,7 +705,7 @@ static int __reset_guc(struct intel_gt *gt)
- 
- static bool needs_wa_14015076503(struct intel_gt *gt, intel_engine_mask_t engine_mask)
- {
--	if (!IS_METEORLAKE(gt->i915) || !HAS_ENGINE(gt, GSC0))
-+	if (MEDIA_VER_FULL(gt->i915) != IP_VER(13, 0) || !HAS_ENGINE(gt, GSC0))
- 		return false;
- 
- 	if (!__HAS_ENGINE(engine_mask, GSC0))
-diff --git a/drivers/gpu/drm/i915/gt/intel_rps.c b/drivers/gpu/drm/i915/gt/intel_rps.c
-index 092542f53aad9..4feef874e6d69 100644
---- a/drivers/gpu/drm/i915/gt/intel_rps.c
-+++ b/drivers/gpu/drm/i915/gt/intel_rps.c
-@@ -1161,7 +1161,7 @@ void gen6_rps_get_freq_caps(struct intel_rps *rps, struct intel_rps_freq_caps *c
- {
- 	struct drm_i915_private *i915 = rps_to_i915(rps);
- 
--	if (IS_METEORLAKE(i915))
-+	if (GRAPHICS_VER_FULL(i915) >= IP_VER(12, 70))
- 		return mtl_get_freq_caps(rps, caps);
- 	else
- 		return __gen6_rps_get_freq_caps(rps, caps);
-diff --git a/drivers/gpu/drm/i915/i915_debugfs.c b/drivers/gpu/drm/i915/i915_debugfs.c
-index 4de44cf1026dc..7a90a2e32c9f1 100644
---- a/drivers/gpu/drm/i915/i915_debugfs.c
-+++ b/drivers/gpu/drm/i915/i915_debugfs.c
-@@ -144,7 +144,7 @@ static const char *i915_cache_level_str(struct drm_i915_gem_object *obj)
- {
- 	struct drm_i915_private *i915 = obj_to_i915(obj);
- 
--	if (IS_METEORLAKE(i915)) {
-+	if (IS_GFX_GT_IP_RANGE(to_gt(i915), IP_VER(12, 70), IP_VER(12, 71))) {
- 		switch (obj->pat_index) {
- 		case 0: return " WB";
- 		case 1: return " WT";
-diff --git a/drivers/gpu/drm/i915/i915_perf.c b/drivers/gpu/drm/i915/i915_perf.c
-index 8f4a25d2cfc24..48ea17b49b3a0 100644
---- a/drivers/gpu/drm/i915/i915_perf.c
-+++ b/drivers/gpu/drm/i915/i915_perf.c
-@@ -3255,11 +3255,10 @@ get_sseu_config(struct intel_sseu *out_sseu,
-  */
- u32 i915_perf_oa_timestamp_frequency(struct drm_i915_private *i915)
- {
+-	struct ring_buffer_per_cpu *cpu_buffer;
+-	DEFINE_WAIT(wait);
+-	struct rb_irq_work *work;
+-	int ret = 0;
+-
 -	/*
--	 * Wa_18013179988:dg2
--	 * Wa_14015846243:mtl
+-	 * Depending on what the caller is waiting for, either any
+-	 * data in any cpu buffer, or a specific buffer, put the
+-	 * caller on the appropriate wait queue.
 -	 */
--	if (IS_DG2(i915) || IS_METEORLAKE(i915)) {
-+	struct intel_gt *gt = to_gt(i915);
-+
-+	/* Wa_18013179988 */
-+	if (IS_DG2(i915) || IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 71))) {
- 		intel_wakeref_t wakeref;
- 		u32 reg, shift;
+-	if (cpu == RING_BUFFER_ALL_CPUS) {
+-		work = &buffer->irq_work;
+-		/* Full only makes sense on per cpu reads */
+-		full = 0;
+-	} else {
+-		if (!cpumask_test_cpu(cpu, buffer->cpumask))
+-			return -ENODEV;
+-		cpu_buffer = buffer->buffers[cpu];
+-		work = &cpu_buffer->irq_work;
+-	}
++	if (rb_watermark_hit(buffer, cpu, full))
++		return true;
  
-@@ -4564,7 +4563,7 @@ static bool xehp_is_valid_b_counter_addr(struct i915_perf *perf, u32 addr)
+-	if (full)
+-		prepare_to_wait(&work->full_waiters, &wait, TASK_INTERRUPTIBLE);
+-	else
+-		prepare_to_wait(&work->waiters, &wait, TASK_INTERRUPTIBLE);
++	if (cond(data))
++		return true;
  
- static bool gen12_is_valid_mux_addr(struct i915_perf *perf, u32 addr)
- {
--	if (IS_METEORLAKE(perf->i915))
-+	if (GRAPHICS_VER_FULL(perf->i915) >= IP_VER(12, 70))
- 		return reg_in_range_table(addr, mtl_oa_mux_regs);
+ 	/*
+ 	 * The events can happen in critical sections where
+@@ -1019,27 +991,75 @@ int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full)
+ 	 * a task has been queued. It's OK for spurious wake ups.
+ 	 */
+ 	if (full)
+-		work->full_waiters_pending = true;
++		rbwork->full_waiters_pending = true;
  	else
- 		return reg_in_range_table(addr, gen12_oa_mux_regs);
+-		work->waiters_pending = true;
++		rbwork->waiters_pending = true;
+ 
+-	if (rb_watermark_hit(buffer, cpu, full))
+-		goto out;
++	return false;
++}
+ 
+-	if (signal_pending(current)) {
+-		ret = -EINTR;
+-		goto out;
++/*
++ * The default wait condition for ring_buffer_wait() is to just to exit the
++ * wait loop the first time it is woken up.
++ */
++static bool rb_wait_once(void *data)
++{
++	long *once = data;
++
++	/* wait_event() actually calls this twice before scheduling*/
++	if (*once > 1)
++		return true;
++
++	(*once)++;
++	return false;
++}
++
++/**
++ * ring_buffer_wait - wait for input to the ring buffer
++ * @buffer: buffer to wait on
++ * @cpu: the cpu buffer to wait on
++ * @full: wait until the percentage of pages are available, if @cpu != RING_BUFFER_ALL_CPUS
++ *
++ * If @cpu == RING_BUFFER_ALL_CPUS then the task will wake up as soon
++ * as data is added to any of the @buffer's cpu buffers. Otherwise
++ * it will wait for data to be added to a specific cpu buffer.
++ */
++int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full)
++{
++	struct ring_buffer_per_cpu *cpu_buffer;
++	struct wait_queue_head *waitq;
++	ring_buffer_cond_fn cond;
++	struct rb_irq_work *rbwork;
++	void *data;
++	long once = 0;
++	int ret = 0;
++
++	cond = rb_wait_once;
++	data = &once;
++
++	/*
++	 * Depending on what the caller is waiting for, either any
++	 * data in any cpu buffer, or a specific buffer, put the
++	 * caller on the appropriate wait queue.
++	 */
++	if (cpu == RING_BUFFER_ALL_CPUS) {
++		rbwork = &buffer->irq_work;
++		/* Full only makes sense on per cpu reads */
++		full = 0;
++	} else {
++		if (!cpumask_test_cpu(cpu, buffer->cpumask))
++			return -ENODEV;
++		cpu_buffer = buffer->buffers[cpu];
++		rbwork = &cpu_buffer->irq_work;
+ 	}
+ 
+-	schedule();
+- out:
+ 	if (full)
+-		finish_wait(&work->full_waiters, &wait);
++		waitq = &rbwork->full_waiters;
+ 	else
+-		finish_wait(&work->waiters, &wait);
++		waitq = &rbwork->waiters;
+ 
+-	if (!ret && !rb_watermark_hit(buffer, cpu, full) && signal_pending(current))
+-		ret = -EINTR;
++	ret = wait_event_interruptible((*waitq),
++				rb_wait_cond(rbwork, buffer, cpu, full, cond, data));
+ 
+ 	return ret;
+ }
 -- 
 2.43.0
 
