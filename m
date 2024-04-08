@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7512E62C;
-	Mon,  8 Apr 2024 13:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67EE2DF73;
+	Mon,  8 Apr 2024 13:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581694; cv=none; b=uAcRns48mIE4bWTSo1gfDbILzhAuJ8eZEbqi+d03+3PmVIy4AWvxMjPd7i0/JD7iEeekAePg28m6N9QmNVMQQaWeF+aNpuGaEwMcyNFm6UemjrNxfQOyu8GfA/Xp1lNkvtOmPCRcKjSk5ked7KPR3qRgNhLQh9g1Y9hQcTD5GG4=
+	t=1712581697; cv=none; b=LXpMy/JCjTW/SNJqEB4At/VYB8OktCSmUBRb1wkbox5C+cPyHToW6nuGJ1NGToIaguFyV+HKOd7uG35jNQ8VbGr/lvtyOFQPpQxYVl/nafNA5kLzWlbUyJLsLpo6hc1CXDGeTGGU9sSgZUtJ9SOnjUTAlC5uDRUx/Y2kVyCUHwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581694; c=relaxed/simple;
-	bh=FvnAiMW/Y4UaG3i2Gt6Fv6WhaJQeJ+oemJkdDNg6by0=;
+	s=arc-20240116; t=1712581697; c=relaxed/simple;
+	bh=i7/ey5LouSwJ9NtlaksfL/crOslbTIrxN9uhw9vv7Bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OBgX3YZGOnNIA0A297CfHdvxUzOUOHBLuc7A9wFKeparMCgo2GlA4afbeUgLBxq7BYdFc4m6qjmCji7FqHMvn7JRyaPykm/3CUNVdu40Ij+EL6mvRYJOkiDC5J0/E9S1KbUKHyyFqQ9sHG6DV4Zw8U+664pinFX0qYyKa2qHAH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O51S5O54; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qzFKMo4LcUMqWcUxAGBHA5pz3Flwq17q1ZIaXv0D2DIF1HRfhYmPTnRjBNDs5m83lM4TVXc4WN3MPTHov0x4cT7AIwfINfo2MIwc4KReEhgJ5ZQdtuQaF/j1DUnsNnJsOhra+kC9XtlBASZLubtF71sHhjnZD+CX3zc5aenvPio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9sd/8Gf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O51S5O54"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B326C433C7;
-	Mon,  8 Apr 2024 13:08:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9sd/8Gf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484BAC433C7;
+	Mon,  8 Apr 2024 13:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581694;
-	bh=FvnAiMW/Y4UaG3i2Gt6Fv6WhaJQeJ+oemJkdDNg6by0=;
+	s=korg; t=1712581697;
+	bh=i7/ey5LouSwJ9NtlaksfL/crOslbTIrxN9uhw9vv7Bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O51S5O542LNz7pTQYzLxQ9XHtYZmhSIHdvxoAZNXEJ9NjCP+tsA7H/AOnj30OVjHp
-	 tzXOCh4pVJZiKmEGvjslNvm2Anb1LnVcMT8PZJZzFZDZN40Wmix7PQZ3fQ7hihDGaI
-	 ZAuYrAeOTbXzwXo2o+ERQxdtzpwVGEf9BILz0KXI=
+	b=H9sd/8GfDBlpeUVTgHBC4FfMsp1V632BpEnU91w2fwnNqq39ef7HWWhoWRAhoggfa
+	 wpnpwjGMiReVXVBhY/hJBA573TEQUXqMrUNtAyprJbhK9Qcigrs6SgmawPqy2lPkds
+	 U7dj4AX0Pqt8rG4BpK6NzF+IJABpJ3/O1Pmn7Cjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 075/690] nvmem: meson-efuse: fix function pointer type mismatch
-Date: Mon,  8 Apr 2024 14:49:01 +0200
-Message-ID: <20240408125402.233225410@linuxfoundation.org>
+Subject: [PATCH 6.8 013/273] wifi: iwlwifi: mvm: include link ID when releasing frames
+Date: Mon,  8 Apr 2024 14:54:48 +0200
+Message-ID: <20240408125309.698212556@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,82 +49,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit cbd38332c140829ab752ba4e727f98be5c257f18 ]
+[ Upstream commit e78d7877308989ef91b64a3c746ae31324c07caa ]
 
-clang-16 warns about casting functions to incompatible types, as is done
-here to call clk_disable_unprepare:
+When releasing frames from the reorder buffer, the link ID was not
+included in the RX status information. This subsequently led mac80211 to
+drop the frame. Change it so that the link information is set
+immediately when possible so that it doesn't not need to be filled in
+anymore when submitting the frame to mac80211.
 
-drivers/nvmem/meson-efuse.c:78:12: error: cast from 'void (*)(struct clk *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
-   78 |                                        (void(*)(void *))clk_disable_unprepare,
-
-The pattern of getting, enabling and setting a disable callback for a
-clock can be replaced with devm_clk_get_enabled(), which also fixes
-this warning.
-
-Fixes: 611fbca1c861 ("nvmem: meson-efuse: add peripheral clock")
-Cc: Stable@vger.kernel.org
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Justin Stitt <justinstitt@google.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20240224114023.85535-2-srinivas.kandagatla@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b8a85a1d42d7 ("wifi: iwlwifi: mvm: rxmq: report link ID to mac80211")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Tested-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240320232419.bbbd5e9bfe80.Iec1bf5c884e371f7bc5ea2534ed9ea8d3f2c0bf6@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/meson-efuse.c | 25 +++----------------------
- 1 file changed, 3 insertions(+), 22 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c | 20 ++++++++-----------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/nvmem/meson-efuse.c b/drivers/nvmem/meson-efuse.c
-index d6b533497ce1a..ba2714bef8d0e 100644
---- a/drivers/nvmem/meson-efuse.c
-+++ b/drivers/nvmem/meson-efuse.c
-@@ -47,7 +47,6 @@ static int meson_efuse_probe(struct platform_device *pdev)
- 	struct nvmem_config *econfig;
- 	struct clk *clk;
- 	unsigned int size;
--	int ret;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
+index 7bf2a5947e5e9..481dfbbe46162 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
+@@ -236,21 +236,13 @@ static void iwl_mvm_add_rtap_sniffer_config(struct iwl_mvm *mvm,
+ static void iwl_mvm_pass_packet_to_mac80211(struct iwl_mvm *mvm,
+ 					    struct napi_struct *napi,
+ 					    struct sk_buff *skb, int queue,
+-					    struct ieee80211_sta *sta,
+-					    struct ieee80211_link_sta *link_sta)
++					    struct ieee80211_sta *sta)
+ {
+ 	if (unlikely(iwl_mvm_check_pn(mvm, skb, queue, sta))) {
+ 		kfree_skb(skb);
+ 		return;
+ 	}
  
- 	sm_np = of_parse_phandle(pdev->dev.of_node, "secure-monitor", 0);
- 	if (!sm_np) {
-@@ -60,27 +59,9 @@ static int meson_efuse_probe(struct platform_device *pdev)
- 	if (!fw)
- 		return -EPROBE_DEFER;
- 
--	clk = devm_clk_get(dev, NULL);
--	if (IS_ERR(clk)) {
--		ret = PTR_ERR(clk);
--		if (ret != -EPROBE_DEFER)
--			dev_err(dev, "failed to get efuse gate");
--		return ret;
+-	if (sta && sta->valid_links && link_sta) {
+-		struct ieee80211_rx_status *rx_status = IEEE80211_SKB_RXCB(skb);
+-
+-		rx_status->link_valid = 1;
+-		rx_status->link_id = link_sta->link_id;
 -	}
 -
--	ret = clk_prepare_enable(clk);
--	if (ret) {
--		dev_err(dev, "failed to enable gate");
--		return ret;
--	}
--
--	ret = devm_add_action_or_reset(dev,
--				       (void(*)(void *))clk_disable_unprepare,
--				       clk);
--	if (ret) {
--		dev_err(dev, "failed to add disable callback");
--		return ret;
--	}
-+	clk = devm_clk_get_enabled(dev, NULL);
-+	if (IS_ERR(clk))
-+		return dev_err_probe(dev, PTR_ERR(clk), "failed to get efuse gate");
+ 	ieee80211_rx_napi(mvm->hw, sta, skb, napi);
+ }
  
- 	if (meson_sm_call(fw, SM_EFUSE_USER_MAX, &size, 0, 0, 0, 0, 0) < 0) {
- 		dev_err(dev, "failed to get max user");
+@@ -587,7 +579,7 @@ static void iwl_mvm_release_frames(struct iwl_mvm *mvm,
+ 		while ((skb = __skb_dequeue(skb_list))) {
+ 			iwl_mvm_pass_packet_to_mac80211(mvm, napi, skb,
+ 							reorder_buf->queue,
+-							sta, NULL /* FIXME */);
++							sta);
+ 			reorder_buf->num_stored--;
+ 		}
+ 	}
+@@ -2214,6 +2206,11 @@ void iwl_mvm_rx_mpdu_mq(struct iwl_mvm *mvm, struct napi_struct *napi,
+ 			if (IS_ERR(sta))
+ 				sta = NULL;
+ 			link_sta = rcu_dereference(mvm->fw_id_to_link_sta[id]);
++
++			if (sta && sta->valid_links && link_sta) {
++				rx_status->link_valid = 1;
++				rx_status->link_id = link_sta->link_id;
++			}
+ 		}
+ 	} else if (!is_multicast_ether_addr(hdr->addr2)) {
+ 		/*
+@@ -2357,8 +2354,7 @@ void iwl_mvm_rx_mpdu_mq(struct iwl_mvm *mvm, struct napi_struct *napi,
+ 		    !(desc->amsdu_info & IWL_RX_MPDU_AMSDU_LAST_SUBFRAME))
+ 			rx_status->flag |= RX_FLAG_AMSDU_MORE;
+ 
+-		iwl_mvm_pass_packet_to_mac80211(mvm, napi, skb, queue, sta,
+-						link_sta);
++		iwl_mvm_pass_packet_to_mac80211(mvm, napi, skb, queue, sta);
+ 	}
+ out:
+ 	rcu_read_unlock();
 -- 
 2.43.0
 
