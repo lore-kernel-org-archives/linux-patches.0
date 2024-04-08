@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627307C08F;
-	Mon,  8 Apr 2024 13:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB8D2DF73;
+	Mon,  8 Apr 2024 13:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582451; cv=none; b=AekOEGC7mKgqdhr81B1l3qi5nAl7ZrpdWkSMq4fWLd0bvfs2BasjGa68EvPKRqSkebO1VO5dblkwvmvSHPku+Ke5GdZ9LJkoS6NSn16l/5kAl0LY4QkkWKvmP6QcQ33ChAo607Of3fTX/2J7HJGpVDHJ0nemBTCOscYnuab9XKY=
+	t=1712582454; cv=none; b=cx1u6jtkaMv/2scavMwmVPkaFCeq+YHiOHRrtpU9U1pKzJ27NgOiACRrZH1tBQK3xWtwCSKInT9QI/cgjEdiGkm++VvWQHRHUTPLdA/T40P7WaQt3xn++gS8CYqWLpdo9HMCiJ7M18zzDq+P3E5o3UsNSqpTKYlc7w6i2SnYG5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582451; c=relaxed/simple;
-	bh=pUyfJKOnwtsriFbQgx90W/48ypcCYvqOrJTXrU/vqwE=;
+	s=arc-20240116; t=1712582454; c=relaxed/simple;
+	bh=S2OMhON8lkV04L2UiCZtO3BB+a2keVDyX6PQiUfRJFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKoFcIvRc/xB2CjFxG5PlxelBwYhN1VrxX22NGRwZM0WF1Ws5s2RwbaFfcwEL4DPAv5auOeqXcfMcOtGvbvSpPZq09gFe6hQEsQmxkQq6otrDRYMufy8j9a9qKcxl/Neh1gBVvcobJOCKZysbiLI6zB0wKyYa0hRnHW/SrvueQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0LvPYjr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JGSoglJrXZo34Ft2wkg541mPIJ2xI2PwCcsZ5vjn6yuqa9yQEEEJkP+3PIph/ilchI/j8aJsmOT4DdW+foO8SRsPCaLclXMC2n+zyOH8gqGhJACbcVZlarImNe6zGAf8CRMD6Evf9P0BO4vYWfFxUXA+J+6Y3zSkkfkDLrEdd9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fs04fZW0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0LvPYjr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C91C433C7;
-	Mon,  8 Apr 2024 13:20:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fs04fZW0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77E3C433C7;
+	Mon,  8 Apr 2024 13:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582451;
-	bh=pUyfJKOnwtsriFbQgx90W/48ypcCYvqOrJTXrU/vqwE=;
+	s=korg; t=1712582454;
+	bh=S2OMhON8lkV04L2UiCZtO3BB+a2keVDyX6PQiUfRJFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d0LvPYjri59t+P/n+Y/2UI8Fsn6TRMcKZOCB7C0RMLlbg0J45DLF6M1bxVoNFlMVM
-	 nF2dAUGbpvFr8TfYTie1B+XAYT8BsNSlVpafzfIkPKtjr/ZouBeiVjXMFFcX73gVR9
-	 oDmbtjxZwOVuTRXCbGtePvVRGmpgl3ajy2TUaVFc=
+	b=Fs04fZW0QJu+9EnfXXGDx3WeBEwzy+ebCYHL82BilA2s1Gij4e4ptNvaSNMqP0Skh
+	 ZY7fDPpK6I9eqCL8xmIq4chOXSHC7EOo+f0mORvx1QnlmVn3Q0NVpgQRG1ChBLiTF1
+	 Ki0vRtEQBA0Mf8zBOKs+H2qDZ3+LgsLY9UAW23aI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.garry@huawei.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 143/690] dma-mapping: add dma_opt_mapping_size()
-Date: Mon,  8 Apr 2024 14:50:09 +0200
-Message-ID: <20240408125404.695212862@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.6 094/252] netfilter: nf_tables: reject new basechain after table flag update
+Date: Mon,  8 Apr 2024 14:56:33 +0200
+Message-ID: <20240408125309.572599815@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,120 +45,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Garry <john.garry@huawei.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit a229cc14f3395311b899e5e582b71efa8dd01df0 ]
+commit 994209ddf4f430946f6247616b2e33d179243769 upstream.
 
-Streaming DMA mapping involving an IOMMU may be much slower for larger
-total mapping size. This is because every IOMMU DMA mapping requires an
-IOVA to be allocated and freed. IOVA sizes above a certain limit are not
-cached, which can have a big impact on DMA mapping performance.
+When dormant flag is toggled, hooks are disabled in the commit phase by
+iterating over current chains in table (existing and new).
 
-Provide an API for device drivers to know this "optimal" limit, such that
-they may try to produce mapping which don't exceed it.
+The following configuration allows for an inconsistent state:
 
-Signed-off-by: John Garry <john.garry@huawei.com>
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Acked-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Stable-dep-of: afc5aa46ed56 ("iommu/dma: Force swiotlb_max_mapping_size on an untrusted device")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  add table x
+  add chain x y { type filter hook input priority 0; }
+  add table x { flags dormant; }
+  add chain x w { type filter hook input priority 1; }
+
+which triggers the following warning when trying to unregister chain w
+which is already unregistered.
+
+[  127.322252] WARNING: CPU: 7 PID: 1211 at net/netfilter/core.c:50                                                                     1 __nf_unregister_net_hook+0x21a/0x260
+[...]
+[  127.322519] Call Trace:
+[  127.322521]  <TASK>
+[  127.322524]  ? __warn+0x9f/0x1a0
+[  127.322531]  ? __nf_unregister_net_hook+0x21a/0x260
+[  127.322537]  ? report_bug+0x1b1/0x1e0
+[  127.322545]  ? handle_bug+0x3c/0x70
+[  127.322552]  ? exc_invalid_op+0x17/0x40
+[  127.322556]  ? asm_exc_invalid_op+0x1a/0x20
+[  127.322563]  ? kasan_save_free_info+0x3b/0x60
+[  127.322570]  ? __nf_unregister_net_hook+0x6a/0x260
+[  127.322577]  ? __nf_unregister_net_hook+0x21a/0x260
+[  127.322583]  ? __nf_unregister_net_hook+0x6a/0x260
+[  127.322590]  ? __nf_tables_unregister_hook+0x8a/0xe0 [nf_tables]
+[  127.322655]  nft_table_disable+0x75/0xf0 [nf_tables]
+[  127.322717]  nf_tables_commit+0x2571/0x2620 [nf_tables]
+
+Fixes: 179d9ba5559a ("netfilter: nf_tables: fix table flag updates")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/core-api/dma-api.rst | 14 ++++++++++++++
- include/linux/dma-map-ops.h        |  1 +
- include/linux/dma-mapping.h        |  5 +++++
- kernel/dma/mapping.c               | 12 ++++++++++++
- 4 files changed, 32 insertions(+)
+ net/netfilter/nf_tables_api.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/Documentation/core-api/dma-api.rst b/Documentation/core-api/dma-api.rst
-index 6d6d0edd2d278..829f20a193cab 100644
---- a/Documentation/core-api/dma-api.rst
-+++ b/Documentation/core-api/dma-api.rst
-@@ -204,6 +204,20 @@ Returns the maximum size of a mapping for the device. The size parameter
- of the mapping functions like dma_map_single(), dma_map_page() and
- others should not be larger than the returned value.
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -2439,6 +2439,9 @@ static int nf_tables_addchain(struct nft
+ 		struct nft_stats __percpu *stats = NULL;
+ 		struct nft_chain_hook hook = {};
  
-+::
++		if (table->flags & __NFT_TABLE_F_UPDATE)
++			return -EINVAL;
 +
-+	size_t
-+	dma_opt_mapping_size(struct device *dev);
-+
-+Returns the maximum optimal size of a mapping for the device.
-+
-+Mapping larger buffers may take much longer in certain scenarios. In
-+addition, for high-rate short-lived streaming mappings, the upfront time
-+spent on the mapping may account for an appreciable part of the total
-+request lifetime. As such, if splitting larger requests incurs no
-+significant performance penalty, then device drivers are advised to
-+limit total DMA streaming mappings length to the returned value.
-+
- ::
+ 		if (flags & NFT_CHAIN_BINDING)
+ 			return -EOPNOTSUPP;
  
- 	bool
-diff --git a/include/linux/dma-map-ops.h b/include/linux/dma-map-ops.h
-index bfffe494356ad..2ff55ec902f48 100644
---- a/include/linux/dma-map-ops.h
-+++ b/include/linux/dma-map-ops.h
-@@ -69,6 +69,7 @@ struct dma_map_ops {
- 	int (*dma_supported)(struct device *dev, u64 mask);
- 	u64 (*get_required_mask)(struct device *dev);
- 	size_t (*max_mapping_size)(struct device *dev);
-+	size_t (*opt_mapping_size)(void);
- 	unsigned long (*get_merge_boundary)(struct device *dev);
- };
- 
-diff --git a/include/linux/dma-mapping.h b/include/linux/dma-mapping.h
-index dca2b1355bb13..fe3849434b2a2 100644
---- a/include/linux/dma-mapping.h
-+++ b/include/linux/dma-mapping.h
-@@ -144,6 +144,7 @@ int dma_set_mask(struct device *dev, u64 mask);
- int dma_set_coherent_mask(struct device *dev, u64 mask);
- u64 dma_get_required_mask(struct device *dev);
- size_t dma_max_mapping_size(struct device *dev);
-+size_t dma_opt_mapping_size(struct device *dev);
- bool dma_need_sync(struct device *dev, dma_addr_t dma_addr);
- unsigned long dma_get_merge_boundary(struct device *dev);
- struct sg_table *dma_alloc_noncontiguous(struct device *dev, size_t size,
-@@ -266,6 +267,10 @@ static inline size_t dma_max_mapping_size(struct device *dev)
- {
- 	return 0;
- }
-+static inline size_t dma_opt_mapping_size(struct device *dev)
-+{
-+	return 0;
-+}
- static inline bool dma_need_sync(struct device *dev, dma_addr_t dma_addr)
- {
- 	return false;
-diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
-index 9478eccd1c8e6..c9dbc8f5812b8 100644
---- a/kernel/dma/mapping.c
-+++ b/kernel/dma/mapping.c
-@@ -777,6 +777,18 @@ size_t dma_max_mapping_size(struct device *dev)
- }
- EXPORT_SYMBOL_GPL(dma_max_mapping_size);
- 
-+size_t dma_opt_mapping_size(struct device *dev)
-+{
-+	const struct dma_map_ops *ops = get_dma_ops(dev);
-+	size_t size = SIZE_MAX;
-+
-+	if (ops && ops->opt_mapping_size)
-+		size = ops->opt_mapping_size();
-+
-+	return min(dma_max_mapping_size(dev), size);
-+}
-+EXPORT_SYMBOL_GPL(dma_opt_mapping_size);
-+
- bool dma_need_sync(struct device *dev, dma_addr_t dma_addr)
- {
- 	const struct dma_map_ops *ops = get_dma_ops(dev);
--- 
-2.43.0
-
 
 
