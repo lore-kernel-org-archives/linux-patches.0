@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9366D7F7C6;
-	Mon,  8 Apr 2024 13:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DACF7C086;
+	Mon,  8 Apr 2024 13:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582302; cv=none; b=fkNXBFpI3PbpNXfFMzKaq6XolhslerC0tf4y1NasXIilrq6/iSzcXpgkCHIp1h/nvIdwdzrCgV5GJCR92EKtCjbJpKSIvoFA3lp7Vh4PlSpcczRm/+7l+KZV0URBB+8h4Tiy5oikoYfn9sNzG7FX1no2pnoRZr346xQBrWAnoCg=
+	t=1712582305; cv=none; b=Ju/L47qY8v4hJ5vmZ3I6IYGDHSn/YCe8/9K1zdDap+kl4ZvfH+2pZA8IKqdUg3/i22lEBSlA7qDRLg0Cj9eIpCHeqTqdQIJoeZAfEjQ1Cp0yc0zGz8RFXY7ovGC+z0aFBs2KsUYiLjxq6iTLV46F7mswiFyMc6dWg72OJYRmhps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582302; c=relaxed/simple;
-	bh=89mvpY1HKVY/RjHmw0ysPMDD7DCzjqH6uIaK8nZTY+A=;
+	s=arc-20240116; t=1712582305; c=relaxed/simple;
+	bh=FpSLF5MZJCoCVO9PZPdj7xiZ9Q9IBeqpaaqmAadca8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EV2hQsmTPngRfhqGMC3YPmcfQvhAs87F6zrJsGHulUFdmLAg/DXlJZ06cfBy8ujglGNqAcNfNgKwqsjjXoKOef2AXFp5ve+qefyAHv6tdoQ4/BX0bZMCGjNPI41sh/9CXrKPFnaUXhw62XZubKoneGDwzgtP4Oy1goHaLSjZCFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=isjtGDHq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dBKfcJGECxXw7VPas7L3FDhNKb9f1ZSNMF2WNX45Gefb1upot+lyIo3YTp8HBCWZwOHVY1654p/gbOWekI2dwnKbIG/eeLdHRuAjwKMQqBOYpy+b5KLuG8rLJAY86JCuUrQjdFME38ESaqkWoZ2d1lgUNZurwXMfQ+lj8cBAzyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6uXB7Tw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="isjtGDHq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED0CC433F1;
-	Mon,  8 Apr 2024 13:18:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6uXB7Tw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B5EC433F1;
+	Mon,  8 Apr 2024 13:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582302;
-	bh=89mvpY1HKVY/RjHmw0ysPMDD7DCzjqH6uIaK8nZTY+A=;
+	s=korg; t=1712582305;
+	bh=FpSLF5MZJCoCVO9PZPdj7xiZ9Q9IBeqpaaqmAadca8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=isjtGDHqQL3e/ISnOuO9if1miFsnVG3cvmMsk3m66ZohC0Owd/cEXUikjpNaBKT97
-	 vDZ1ghSRd+UtNm+eOND3JGYAnQJ5hm2LlaVF7ARCFTXntxfY+tYxp6kU82kKcJjLbb
-	 FlkG/0UkODTKME+j9P7wcyUdZBn5ISpSrJ0huqhQ=
+	b=I6uXB7TwsGCsaQW+yILhvP8Zt27W7v6tS86MQX7XbP8B/xjta1VeTCVjqhckV3YRa
+	 Qf5mYVzFVwON70RjeoUGiWPdiiM091GXf+uaXRiYnyeyFvfx9WJY6lmNs16/pWY2Vg
+	 MMbHwqg8Q3mjC6Z456htdzsPgkax2YsFcjc8JsgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.6 082/252] netfilter: nf_tables: release batch on table validation from abort path
-Date: Mon,  8 Apr 2024 14:56:21 +0200
-Message-ID: <20240408125309.183689463@linuxfoundation.org>
+	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Tomas Winkler <tomas.winkler@intel.com>
+Subject: [PATCH 5.15 131/690] mei: me: add arrow lake point S DID
+Date: Mon,  8 Apr 2024 14:49:57 +0200
+Message-ID: <20240408125404.280998491@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,83 +46,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit a45e6889575c2067d3c0212b6bc1022891e65b91 upstream.
+commit 7a9b9012043e126f6d6f4683e67409312d1b707b upstream.
 
-Unlike early commit path stage which triggers a call to abort, an
-explicit release of the batch is required on abort, otherwise mutex is
-released and commit_list remains in place.
-
-Add WARN_ON_ONCE to ensure commit_list is empty from the abort path
-before releasing the mutex.
-
-After this patch, commit_list is always assumed to be empty before
-grabbing the mutex, therefore
-
-  03c1f1ef1584 ("netfilter: Cleanup nft_net->module_list from nf_tables_exit_net()")
-
-only needs to release the pending modules for registration.
+Add Arrow Lake S device id.
 
 Cc: stable@vger.kernel.org
-Fixes: c0391b6ab810 ("netfilter: nf_tables: missing validation from the abort path")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
+Link: https://lore.kernel.org/r/20240211103912.117105-1-tomas.winkler@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/misc/mei/hw-me-regs.h |    1 +
+ drivers/misc/mei/pci-me.c     |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -10326,10 +10326,11 @@ static int __nf_tables_abort(struct net
- 	struct nft_trans *trans, *next;
- 	LIST_HEAD(set_update_list);
- 	struct nft_trans_elem *te;
-+	int err = 0;
+--- a/drivers/misc/mei/hw-me-regs.h
++++ b/drivers/misc/mei/hw-me-regs.h
+@@ -112,6 +112,7 @@
+ #define MEI_DEV_ID_RPL_S      0x7A68  /* Raptor Lake Point S */
  
- 	if (action == NFNL_ABORT_VALIDATE &&
- 	    nf_tables_validate(net) < 0)
--		return -EAGAIN;
-+		err = -EAGAIN;
+ #define MEI_DEV_ID_MTL_M      0x7E70  /* Meteor Lake Point M */
++#define MEI_DEV_ID_ARL_S      0x7F68  /* Arrow Lake Point S */
  
- 	list_for_each_entry_safe_reverse(trans, next, &nft_net->commit_list,
- 					 list) {
-@@ -10522,7 +10523,7 @@ static int __nf_tables_abort(struct net
- 	else
- 		nf_tables_module_autoload_cleanup(net);
+ /*
+  * MEI HW Section
+--- a/drivers/misc/mei/pci-me.c
++++ b/drivers/misc/mei/pci-me.c
+@@ -118,6 +118,7 @@ static const struct pci_device_id mei_me
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_RPL_S, MEI_ME_PCH15_CFG)},
  
--	return 0;
-+	return err;
- }
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_MTL_M, MEI_ME_PCH15_CFG)},
++	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_S, MEI_ME_PCH15_CFG)},
  
- static int nf_tables_abort(struct net *net, struct sk_buff *skb,
-@@ -10535,6 +10536,9 @@ static int nf_tables_abort(struct net *n
- 	gc_seq = nft_gc_seq_begin(nft_net);
- 	ret = __nf_tables_abort(net, action);
- 	nft_gc_seq_end(nft_net, gc_seq);
-+
-+	WARN_ON_ONCE(!list_empty(&nft_net->commit_list));
-+
- 	mutex_unlock(&nft_net->commit_mutex);
- 
- 	return ret;
-@@ -11335,9 +11339,10 @@ static void __net_exit nf_tables_exit_ne
- 
- 	gc_seq = nft_gc_seq_begin(nft_net);
- 
--	if (!list_empty(&nft_net->commit_list) ||
--	    !list_empty(&nft_net->module_list))
--		__nf_tables_abort(net, NFNL_ABORT_NONE);
-+	WARN_ON_ONCE(!list_empty(&nft_net->commit_list));
-+
-+	if (!list_empty(&nft_net->module_list))
-+		nf_tables_module_autoload_cleanup(net);
- 
- 	__nft_release_tables(net);
- 
+ 	/* required last entry */
+ 	{0, }
 
 
