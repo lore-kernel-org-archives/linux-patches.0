@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3217BAE7;
-	Mon,  8 Apr 2024 13:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647F47D091;
+	Mon,  8 Apr 2024 13:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583707; cv=none; b=AVCk85IGslPmNwsmPXTOKWs7M8oOn19DqxHj5m0Lmo1TpkuTWIrTRkIZf4DU3rGOG09gQUR8HWo0yxtLl/9fKmJaIvyjLa/2JN8o9yIvOzomGvj2BIz0BdpXQqQ/Bcn3cKlhO4mgyoUB7+qNMG0put98fAwUnbmw60Pn1pM+gF8=
+	t=1712583710; cv=none; b=N1d9V3uL9TpWXfN3g7MY2/npOfKnW0w+X1JNw4ALrPgr14MBdPfccexNIIHBf7ESsMUjIC+0+mk5sQKc/Q+CGlO1aWoEpPCdNzZ1qD46hjt6kYvvWpOBrDvhzqBQILGcxRe+Rq++3fRDXbByFuNE0VVoZ0SglUZu0YphyKiov7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583707; c=relaxed/simple;
-	bh=VUgW+zaxbAv9aubgxoj7OfEiF6q4JYbqtwlL2Cjkdh8=;
+	s=arc-20240116; t=1712583710; c=relaxed/simple;
+	bh=B8gkt2hV06x7DQZXXRneoKufbaipLGRCGKQoIl9yWWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZd0fh17JaemiDyrWq1W2G0Nxu614AbNp8SF/VHyuw6WIJqQSsJla+yNV7S9ffOMj6MngyfRGf2OthzmJQ3bPxXoh9OYs+UrxBEDlnkI9aUjR4HYHK1R6V3OpocR04PNK03E8T5DluadreT3K9UXopJibbW9yHelI798svBA5TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgDG8Wga; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D2GBRunbqZHaVTzAkgkgwu3SWNBvXi+mjuIBy9iWp32zFKykvaqfiO8zKRlphwmpHokMbtUiSu0nrhvV0WLAiOsniNprY3+Ki2Xb8jHIhYG+Rl/+youowXcpprC2wkh4o2A+/GwkFEGAufmXqsUVd8nHLfjQE0d02eYyJwW7Zws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=th0ZisY9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgDG8Wga"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01AD5C43390;
-	Mon,  8 Apr 2024 13:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="th0ZisY9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1844C43390;
+	Mon,  8 Apr 2024 13:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583707;
-	bh=VUgW+zaxbAv9aubgxoj7OfEiF6q4JYbqtwlL2Cjkdh8=;
+	s=korg; t=1712583710;
+	bh=B8gkt2hV06x7DQZXXRneoKufbaipLGRCGKQoIl9yWWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgDG8WgasIvie492YRhlHjBnHeYtwrQbhGBzlmMC9I/GycPiiB/RiVDaw3BOj8WWg
-	 yGW1NmzmRkzv2ucrbxh2i4VqHOPvxp6NFE/c95K/ZMm2mFXv3Wwav9uNC02DvxlTBE
-	 +W7BROODuzG8OWWQFul1P1aoZVVl+wWODQV+Hy1s=
+	b=th0ZisY95oqkXi4sWO3IVbgLSmVciHXkfJ3QvjJiSLGsWo6DGe8npVWR3Mt0tGaS7
+	 wG/0S9IS0lj0wJ45aPos7oR3krfGw0S1GEXrYZFAC4YOyPwKTblqOJmm0p238MqEdK
+	 KNAdyBzPgmTIIJ/mb/mv2ABiAxG+JpGe2PX7HxCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan ORear <sorear@fastmail.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.6 225/252] riscv: process: Fix kernel gp leakage
-Date: Mon,  8 Apr 2024 14:58:44 +0200
-Message-ID: <20240408125313.639952849@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.8 211/273] io_uring/kbuf: hold io_buffer_list reference over mmap
+Date: Mon,  8 Apr 2024 14:58:06 +0200
+Message-ID: <20240408125315.910064424@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,84 +45,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan O'Rear <sorear@fastmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit d14fa1fcf69db9d070e75f1c4425211fa619dfc8 upstream.
+commit 561e4f9451d65fc2f7eef564e0064373e3019793 upstream.
 
-childregs represents the registers which are active for the new thread
-in user context. For a kernel thread, childregs->gp is never used since
-the kernel gp is not touched by switch_to. For a user mode helper, the
-gp value can be observed in user space after execve or possibly by other
-means.
+If we look up the kbuf, ensure that it doesn't get unregistered until
+after we're done with it. Since we're inside mmap, we cannot safely use
+the io_uring lock. Rely on the fact that we can lookup the buffer list
+under RCU now and grab a reference to it, preventing it from being
+unregistered until we're done with it. The lookup returns the
+io_buffer_list directly with it referenced.
 
-[From the email thread]
-
-The /* Kernel thread */ comment is somewhat inaccurate in that it is also used
-for user_mode_helper threads, which exec a user process, e.g. /sbin/init or
-when /proc/sys/kernel/core_pattern is a pipe. Such threads do not have
-PF_KTHREAD set and are valid targets for ptrace etc. even before they exec.
-
-childregs is the *user* context during syscall execution and it is observable
-from userspace in at least five ways:
-
-1. kernel_execve does not currently clear integer registers, so the starting
-   register state for PID 1 and other user processes started by the kernel has
-   sp = user stack, gp = kernel __global_pointer$, all other integer registers
-   zeroed by the memset in the patch comment.
-
-   This is a bug in its own right, but I'm unwilling to bet that it is the only
-   way to exploit the issue addressed by this patch.
-
-2. ptrace(PTRACE_GETREGSET): you can PTRACE_ATTACH to a user_mode_helper thread
-   before it execs, but ptrace requires SIGSTOP to be delivered which can only
-   happen at user/kernel boundaries.
-
-3. /proc/*/task/*/syscall: this is perfectly happy to read pt_regs for
-   user_mode_helpers before the exec completes, but gp is not one of the
-   registers it returns.
-
-4. PERF_SAMPLE_REGS_USER: LOCKDOWN_PERF normally prevents access to kernel
-   addresses via PERF_SAMPLE_REGS_INTR, but due to this bug kernel addresses
-   are also exposed via PERF_SAMPLE_REGS_USER which is permitted under
-   LOCKDOWN_PERF. I have not attempted to write exploit code.
-
-5. Much of the tracing infrastructure allows access to user registers. I have
-   not attempted to determine which forms of tracing allow access to user
-   registers without already allowing access to kernel registers.
-
-Fixes: 7db91e57a0ac ("RISC-V: Task implementation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Stefan O'Rear <sorear@fastmail.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20240327061258.2370291-1-sorear@fastmail.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: stable@vger.kernel.org # v6.4+
+Fixes: 5cf4f52e6d8a ("io_uring: free io_buffer_list entries via RCU")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/process.c |    3 ---
- 1 file changed, 3 deletions(-)
+ io_uring/io_uring.c |   11 ++++++-----
+ io_uring/kbuf.c     |   31 +++++++++++++++++++++++++------
+ io_uring/kbuf.h     |    4 +++-
+ 3 files changed, 34 insertions(+), 12 deletions(-)
 
---- a/arch/riscv/kernel/process.c
-+++ b/arch/riscv/kernel/process.c
-@@ -26,8 +26,6 @@
- #include <asm/cpuidle.h>
- #include <asm/vector.h>
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3422,14 +3422,15 @@ static void *io_uring_validate_mmap_requ
+ 		ptr = ctx->sq_sqes;
+ 		break;
+ 	case IORING_OFF_PBUF_RING: {
++		struct io_buffer_list *bl;
+ 		unsigned int bgid;
  
--register unsigned long gp_in_global __asm__("gp");
--
- #if defined(CONFIG_STACKPROTECTOR) && !defined(CONFIG_STACKPROTECTOR_PER_TASK)
- #include <linux/stackprotector.h>
- unsigned long __stack_chk_guard __read_mostly;
-@@ -186,7 +184,6 @@ int copy_thread(struct task_struct *p, c
- 	if (unlikely(args->fn)) {
- 		/* Kernel thread */
- 		memset(childregs, 0, sizeof(struct pt_regs));
--		childregs->gp = gp_in_global;
- 		/* Supervisor/Machine, irqs on: */
- 		childregs->status = SR_PP | SR_PIE;
+ 		bgid = (offset & ~IORING_OFF_MMAP_MASK) >> IORING_OFF_PBUF_SHIFT;
+-		rcu_read_lock();
+-		ptr = io_pbuf_get_address(ctx, bgid);
+-		rcu_read_unlock();
+-		if (!ptr)
+-			return ERR_PTR(-EINVAL);
++		bl = io_pbuf_get_bl(ctx, bgid);
++		if (IS_ERR(bl))
++			return bl;
++		ptr = bl->buf_ring;
++		io_put_bl(ctx, bl);
+ 		break;
+ 		}
+ 	default:
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -275,7 +275,7 @@ static int __io_remove_buffers(struct io
+ 	return i;
+ }
  
+-static void io_put_bl(struct io_ring_ctx *ctx, struct io_buffer_list *bl)
++void io_put_bl(struct io_ring_ctx *ctx, struct io_buffer_list *bl)
+ {
+ 	if (atomic_dec_and_test(&bl->refs)) {
+ 		__io_remove_buffers(ctx, bl, -1U);
+@@ -728,16 +728,35 @@ int io_register_pbuf_status(struct io_ri
+ 	return 0;
+ }
+ 
+-void *io_pbuf_get_address(struct io_ring_ctx *ctx, unsigned long bgid)
++struct io_buffer_list *io_pbuf_get_bl(struct io_ring_ctx *ctx,
++				      unsigned long bgid)
+ {
+ 	struct io_buffer_list *bl;
++	bool ret;
+ 
+-	bl = __io_buffer_get_list(ctx, bgid);
++	/*
++	 * We have to be a bit careful here - we're inside mmap and cannot grab
++	 * the uring_lock. This means the buffer_list could be simultaneously
++	 * going away, if someone is trying to be sneaky. Look it up under rcu
++	 * so we know it's not going away, and attempt to grab a reference to
++	 * it. If the ref is already zero, then fail the mapping. If successful,
++	 * the caller will call io_put_bl() to drop the the reference at at the
++	 * end. This may then safely free the buffer_list (and drop the pages)
++	 * at that point, vm_insert_pages() would've already grabbed the
++	 * necessary vma references.
++	 */
++	rcu_read_lock();
++	bl = xa_load(&ctx->io_bl_xa, bgid);
++	/* must be a mmap'able buffer ring and have pages */
++	ret = false;
++	if (bl && bl->is_mmap)
++		ret = atomic_inc_not_zero(&bl->refs);
++	rcu_read_unlock();
+ 
+-	if (!bl || !bl->is_mmap)
+-		return NULL;
++	if (ret)
++		return bl;
+ 
+-	return bl->buf_ring;
++	return ERR_PTR(-EINVAL);
+ }
+ 
+ /*
+--- a/io_uring/kbuf.h
++++ b/io_uring/kbuf.h
+@@ -61,7 +61,9 @@ unsigned int __io_put_kbuf(struct io_kio
+ 
+ bool io_kbuf_recycle_legacy(struct io_kiocb *req, unsigned issue_flags);
+ 
+-void *io_pbuf_get_address(struct io_ring_ctx *ctx, unsigned long bgid);
++void io_put_bl(struct io_ring_ctx *ctx, struct io_buffer_list *bl);
++struct io_buffer_list *io_pbuf_get_bl(struct io_ring_ctx *ctx,
++				      unsigned long bgid);
+ 
+ static inline bool io_kbuf_recycle_ring(struct io_kiocb *req)
+ {
 
 
