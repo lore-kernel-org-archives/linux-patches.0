@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E66B7F7CB;
-	Mon,  8 Apr 2024 13:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B5181724;
+	Mon,  8 Apr 2024 13:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581844; cv=none; b=u2DfTzmu6+/ImXlC09a5P7S4Xcn57X73F9rbnezRU3pvPcIR6l3A9k8SKObHa7GGQUJ3fO3RrxQI4/IOTmXM2xTtQ6q2V7SVaYjiY8Zs4MUt+dXXfrpd5OV2N4LiuoAz8AGjR+i4E+sG+HiMzItgVxJXlpF8ypKvfdq7VL+cAS8=
+	t=1712581847; cv=none; b=qavPixNWwDUSlCpZxykpSGeUU/DqKw0Rz0AG2QnjCgpPzRgO+20y8oOO0Y2UOSj5SNn2t3o6kybhHlewUR9XJoVrFLhLKqVPCv5u08kPLVTm8l2NPrGGHSdyHz47xp67l67vHhombfjwRVgaLGaz9NJfSQl23Ao2h6tDFYajLuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581844; c=relaxed/simple;
-	bh=RxaPcp7Rs9brI6VOzeF4dIy/cnBDfbkfcN5zTEcyiZc=;
+	s=arc-20240116; t=1712581847; c=relaxed/simple;
+	bh=JlnRkrpMZJZUj1q5VoQ9OlVSMF6cw4JZO6AcFGswBEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EoMAqf01zOrgVfaPLVhQeF0Mk7RZSqNNknGg4RL8WM91tc6AH1+8TtxICAD/YKCSzqBCzt3jWtcqV1Jz2TOd3Cr0TO7kg53pph6eSGyXn+s7mMZqPR0W19G6UC7rgO2BNRKR9kInclCahx/bEdtIyjhw/aIz0PLSoYT90NHxe9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkFG5kLP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EKrFCcbskENYHJVq5sUm+BCh+WQbPRX3nXVxwbeZ6POfDK4tjhOhxoZn+adCDDG2qeM/Gri5TJhsci2LNci0Yq7cL4OA/qGe1dfk5HkLx2ly1ZBuzccRyRTmz/wrGamyV8taiZ1GFfk2a9sNsXuB9iZaNicAxOjVjdSHVzhjpTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNQbB8lv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkFG5kLP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA46C43399;
-	Mon,  8 Apr 2024 13:10:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNQbB8lv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDDEC433C7;
+	Mon,  8 Apr 2024 13:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581843;
-	bh=RxaPcp7Rs9brI6VOzeF4dIy/cnBDfbkfcN5zTEcyiZc=;
+	s=korg; t=1712581846;
+	bh=JlnRkrpMZJZUj1q5VoQ9OlVSMF6cw4JZO6AcFGswBEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkFG5kLP8QO1z5Ap1vwuZR4jnwbLLxpCzvEStd5SeQ96ZDM/sL9wiQ3MyLdPTLWcL
-	 SGD8LM067Pb0iigmzZR3olbEdnQJRske0+jCJqcR/F4nwPRoTjiZyVBfoElBnlLyN+
-	 tI5T0qNYe/HQhlaZkSTz5U6JCQJ5BKLjRueb/z18=
+	b=PNQbB8lvcvHcbPteogb8S5iA0A/QoSf4F+jWLpRH1iyJ8Z/QBgcSEFKs49g7T9Um0
+	 gczp1g/t+28cfFBI8v6w+Tn/O+hq/4+JHq1lKJh2tGI74DTB6PE2Zq6xmC+bdRzV0P
+	 iYqtZzxcafRmDPkHx6yMLjcUVoQCL6q3SXG4I1es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 044/252] drm/i915: Consolidate condition for Wa_22011802037
-Date: Mon,  8 Apr 2024 14:55:43 +0200
-Message-ID: <20240408125308.005822053@linuxfoundation.org>
+Subject: [PATCH 5.15 087/690] ring-buffer: Do not set shortest_full when full target is hit
+Date: Mon,  8 Apr 2024 14:49:13 +0200
+Message-ID: <20240408125402.636612952@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,133 +48,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 28c46feec7f8760683ef08f12746630a3598173e ]
+[ Upstream commit 761d9473e27f0c8782895013a3e7b52a37c8bcfc ]
 
-The workaround bounds for Wa_22011802037 are somewhat complex and are
-replicated in several places throughout the code.  Pull the condition
-out to a helper function to prevent mistakes if this condition needs to
-change again in the future.
+The rb_watermark_hit() checks if the amount of data in the ring buffer is
+above the percentage level passed in by the "full" variable. If it is, it
+returns true.
 
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230821180619.650007-12-matthew.d.roper@intel.com
-Stable-dep-of: 186bce682772 ("drm/i915/mtl: Update workaround 14018575942")
+But it also sets the "shortest_full" field of the cpu_buffer that informs
+writers that it needs to call the irq_work if the amount of data on the
+ring buffer is above the requested amount.
+
+The rb_watermark_hit() always sets the shortest_full even if the amount in
+the ring buffer is what it wants. As it is not going to wait, because it
+has what it wants, there's no reason to set shortest_full.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240312115641.6aa8ba08@gandalf.local.home
+
+Cc: stable@vger.kernel.org
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: 42fb0a1e84ff5 ("tracing/ring-buffer: Have polling block on watermark")
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_engine_cs.c      |  4 +---
- .../drm/i915/gt/intel_execlists_submission.c   |  4 +---
- drivers/gpu/drm/i915/gt/intel_reset.c          | 18 ++++++++++++++++++
- drivers/gpu/drm/i915/gt/intel_reset.h          |  2 ++
- drivers/gpu/drm/i915/gt/uc/intel_guc.c         |  4 +---
- .../gpu/drm/i915/gt/uc/intel_guc_submission.c  |  4 +---
- 6 files changed, 24 insertions(+), 12 deletions(-)
+ kernel/trace/ring_buffer.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_engine_cs.c b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
-index e85d70a62123f..84a75c95f3f7d 100644
---- a/drivers/gpu/drm/i915/gt/intel_engine_cs.c
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
-@@ -1616,9 +1616,7 @@ static int __intel_engine_stop_cs(struct intel_engine_cs *engine,
- 	 * Wa_22011802037: Prior to doing a reset, ensure CS is
- 	 * stopped, set ring stop bit and prefetch disable bit to halt CS
- 	 */
--	if (IS_MTL_GRAPHICS_STEP(engine->i915, M, STEP_A0, STEP_B0) ||
--	    (GRAPHICS_VER(engine->i915) >= 11 &&
--	    GRAPHICS_VER_FULL(engine->i915) < IP_VER(12, 70)))
-+	if (intel_engine_reset_needs_wa_22011802037(engine->gt))
- 		intel_uncore_write_fw(uncore, RING_MODE_GEN7(engine->mmio_base),
- 				      _MASKED_BIT_ENABLE(GEN12_GFX_PREFETCH_DISABLE));
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 15067de333497..c942c3e990a3d 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -940,9 +940,10 @@ static bool rb_watermark_hit(struct trace_buffer *buffer, int cpu, int full)
+ 		pagebusy = cpu_buffer->reader_page == cpu_buffer->commit_page;
+ 		ret = !pagebusy && full_hit(buffer, cpu, full);
  
-diff --git a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
-index 5a720e2523126..42e09f1589205 100644
---- a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
-+++ b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
-@@ -3001,9 +3001,7 @@ static void execlists_reset_prepare(struct intel_engine_cs *engine)
- 	 * Wa_22011802037: In addition to stopping the cs, we need
- 	 * to wait for any pending mi force wakeups
- 	 */
--	if (IS_MTL_GRAPHICS_STEP(engine->i915, M, STEP_A0, STEP_B0) ||
--	    (GRAPHICS_VER(engine->i915) >= 11 &&
--	    GRAPHICS_VER_FULL(engine->i915) < IP_VER(12, 70)))
-+	if (intel_engine_reset_needs_wa_22011802037(engine->gt))
- 		intel_engine_wait_for_pending_mi_fw(engine);
- 
- 	engine->execlists.reset_ccid = active_ccid(engine);
-diff --git a/drivers/gpu/drm/i915/gt/intel_reset.c b/drivers/gpu/drm/i915/gt/intel_reset.c
-index 5fa57a34cf4bb..3a3f71ce3cb77 100644
---- a/drivers/gpu/drm/i915/gt/intel_reset.c
-+++ b/drivers/gpu/drm/i915/gt/intel_reset.c
-@@ -1632,6 +1632,24 @@ void __intel_fini_wedge(struct intel_wedge_me *w)
- 	w->gt = NULL;
- }
- 
-+/*
-+ * Wa_22011802037 requires that we (or the GuC) ensure that no command
-+ * streamers are executing MI_FORCE_WAKE while an engine reset is initiated.
-+ */
-+bool intel_engine_reset_needs_wa_22011802037(struct intel_gt *gt)
-+{
-+	if (GRAPHICS_VER(gt->i915) < 11)
-+		return false;
-+
-+	if (IS_MTL_GRAPHICS_STEP(gt->i915, M, STEP_A0, STEP_B0))
-+		return true;
-+
-+	if (GRAPHICS_VER_FULL(gt->i915) >= IP_VER(12, 70))
-+		return false;
-+
-+	return true;
-+}
-+
- #if IS_ENABLED(CONFIG_DRM_I915_SELFTEST)
- #include "selftest_reset.c"
- #include "selftest_hangcheck.c"
-diff --git a/drivers/gpu/drm/i915/gt/intel_reset.h b/drivers/gpu/drm/i915/gt/intel_reset.h
-index 25c975b6e8fc0..f615b30b81c59 100644
---- a/drivers/gpu/drm/i915/gt/intel_reset.h
-+++ b/drivers/gpu/drm/i915/gt/intel_reset.h
-@@ -78,4 +78,6 @@ void __intel_fini_wedge(struct intel_wedge_me *w);
- bool intel_has_gpu_reset(const struct intel_gt *gt);
- bool intel_has_reset_engine(const struct intel_gt *gt);
- 
-+bool intel_engine_reset_needs_wa_22011802037(struct intel_gt *gt);
-+
- #endif /* I915_RESET_H */
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc.c b/drivers/gpu/drm/i915/gt/uc/intel_guc.c
-index 82a2ecc12b212..da967938fea58 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc.c
-@@ -288,9 +288,7 @@ static u32 guc_ctl_wa_flags(struct intel_guc *guc)
- 		flags |= GUC_WA_DUAL_QUEUE;
- 
- 	/* Wa_22011802037: graphics version 11/12 */
--	if (IS_MTL_GRAPHICS_STEP(gt->i915, M, STEP_A0, STEP_B0) ||
--	    (GRAPHICS_VER(gt->i915) >= 11 &&
--	    GRAPHICS_VER_FULL(gt->i915) < IP_VER(12, 70)))
-+	if (intel_engine_reset_needs_wa_22011802037(gt))
- 		flags |= GUC_WA_PRE_PARSER;
- 
- 	/*
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-index 836e4d9d65ef6..7a3e02ea56639 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-@@ -1690,9 +1690,7 @@ static void guc_engine_reset_prepare(struct intel_engine_cs *engine)
- 	 * Wa_22011802037: In addition to stopping the cs, we need
- 	 * to wait for any pending mi force wakeups
- 	 */
--	if (IS_MTL_GRAPHICS_STEP(engine->i915, M, STEP_A0, STEP_B0) ||
--	    (GRAPHICS_VER(engine->i915) >= 11 &&
--	     GRAPHICS_VER_FULL(engine->i915) < IP_VER(12, 70))) {
-+	if (intel_engine_reset_needs_wa_22011802037(engine->gt)) {
- 		intel_engine_stop_cs(engine);
- 		intel_engine_wait_for_pending_mi_fw(engine);
+-		if (!cpu_buffer->shortest_full ||
+-		    cpu_buffer->shortest_full > full)
+-			cpu_buffer->shortest_full = full;
++		if (!ret && (!cpu_buffer->shortest_full ||
++			     cpu_buffer->shortest_full > full)) {
++		    cpu_buffer->shortest_full = full;
++		}
+ 		raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
  	}
+ 	return ret;
 -- 
 2.43.0
 
