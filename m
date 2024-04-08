@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5A9762F7;
-	Mon,  8 Apr 2024 13:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E66B7F7CB;
+	Mon,  8 Apr 2024 13:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581841; cv=none; b=PGLW5E8YTCJ7IVTEi0OIwJhLfFa1iaM5bQHKBaiSECxWMWXVz6SLSymtt5eDBXBYmIGqta2lpcqdnR8ttWwtVBrBc6xlSoIXA33yAP3G7vx+DY9hv2cDKuNCEk/n1dFEpXef5rBeNBSD83ewr6++STmNym/6wSym1GiHXKMXzmk=
+	t=1712581844; cv=none; b=u2DfTzmu6+/ImXlC09a5P7S4Xcn57X73F9rbnezRU3pvPcIR6l3A9k8SKObHa7GGQUJ3fO3RrxQI4/IOTmXM2xTtQ6q2V7SVaYjiY8Zs4MUt+dXXfrpd5OV2N4LiuoAz8AGjR+i4E+sG+HiMzItgVxJXlpF8ypKvfdq7VL+cAS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581841; c=relaxed/simple;
-	bh=KcH7ZdJhistoat/AcwL2VZHBhnNTArlmsDnKWV1kdIg=;
+	s=arc-20240116; t=1712581844; c=relaxed/simple;
+	bh=RxaPcp7Rs9brI6VOzeF4dIy/cnBDfbkfcN5zTEcyiZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fCEqqn6LOO21150YH173uw5g/dCtQK+a9C6EqhziGMD2zmy/fKfUGoMT29NxLT/O1cDBPQgHZJFVNrBT+bsYkjtX9wPgRaagRFeRnhiLNo1VCZ4B7xFQ3wIZHCYLIqS8yMohjEQgUetNwei0uBT6YoMrB44FBTQtOiAt+JHl8WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sbSJRuAq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EoMAqf01zOrgVfaPLVhQeF0Mk7RZSqNNknGg4RL8WM91tc6AH1+8TtxICAD/YKCSzqBCzt3jWtcqV1Jz2TOd3Cr0TO7kg53pph6eSGyXn+s7mMZqPR0W19G6UC7rgO2BNRKR9kInclCahx/bEdtIyjhw/aIz0PLSoYT90NHxe9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkFG5kLP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbSJRuAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76E9C433A6;
-	Mon,  8 Apr 2024 13:10:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkFG5kLP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA46C43399;
+	Mon,  8 Apr 2024 13:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581841;
-	bh=KcH7ZdJhistoat/AcwL2VZHBhnNTArlmsDnKWV1kdIg=;
+	s=korg; t=1712581843;
+	bh=RxaPcp7Rs9brI6VOzeF4dIy/cnBDfbkfcN5zTEcyiZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sbSJRuAqx2Im+DRgHrXbswLwihJSNbGFMYgNijKN51P/9awNOqaS0Km69NXDwh9HN
-	 GMh7OMZAJVpcIYiMtY/dnZkTFDF+mrbWD1E5SeCxy9MCyBRLE3AFYUFk6cv7MxpHlE
-	 O6+J1uanJJlNrUDPWNf8a64oKaewMCzVM3iHcPcM=
+	b=pkFG5kLP8QO1z5Ap1vwuZR4jnwbLLxpCzvEStd5SeQ96ZDM/sL9wiQ3MyLdPTLWcL
+	 SGD8LM067Pb0iigmzZR3olbEdnQJRske0+jCJqcR/F4nwPRoTjiZyVBfoElBnlLyN+
+	 tI5T0qNYe/HQhlaZkSTz5U6JCQJ5BKLjRueb/z18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1c1cf138518bf0c53d68@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 056/138] erspan: make sure erspan_base_hdr is present in skb->head
-Date: Mon,  8 Apr 2024 14:57:50 +0200
-Message-ID: <20240408125257.965015416@linuxfoundation.org>
+	Matt Roper <matthew.d.roper@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 044/252] drm/i915: Consolidate condition for Wa_22011802037
+Date: Mon,  8 Apr 2024 14:55:43 +0200
+Message-ID: <20240408125308.005822053@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,125 +47,135 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Matt Roper <matthew.d.roper@intel.com>
 
-commit 17af420545a750f763025149fa7b833a4fc8b8f0 upstream.
+[ Upstream commit 28c46feec7f8760683ef08f12746630a3598173e ]
 
-syzbot reported a problem in ip6erspan_rcv() [1]
+The workaround bounds for Wa_22011802037 are somewhat complex and are
+replicated in several places throughout the code.  Pull the condition
+out to a helper function to prevent mistakes if this condition needs to
+change again in the future.
 
-Issue is that ip6erspan_rcv() (and erspan_rcv()) no longer make
-sure erspan_base_hdr is present in skb linear part (skb->head)
-before getting @ver field from it.
-
-Add the missing pskb_may_pull() calls.
-
-v2: Reload iph pointer in erspan_rcv() after pskb_may_pull()
-    because skb->head might have changed.
-
-[1]
-
- BUG: KMSAN: uninit-value in pskb_may_pull_reason include/linux/skbuff.h:2742 [inline]
- BUG: KMSAN: uninit-value in pskb_may_pull include/linux/skbuff.h:2756 [inline]
- BUG: KMSAN: uninit-value in ip6erspan_rcv net/ipv6/ip6_gre.c:541 [inline]
- BUG: KMSAN: uninit-value in gre_rcv+0x11f8/0x1930 net/ipv6/ip6_gre.c:610
-  pskb_may_pull_reason include/linux/skbuff.h:2742 [inline]
-  pskb_may_pull include/linux/skbuff.h:2756 [inline]
-  ip6erspan_rcv net/ipv6/ip6_gre.c:541 [inline]
-  gre_rcv+0x11f8/0x1930 net/ipv6/ip6_gre.c:610
-  ip6_protocol_deliver_rcu+0x1d4c/0x2ca0 net/ipv6/ip6_input.c:438
-  ip6_input_finish net/ipv6/ip6_input.c:483 [inline]
-  NF_HOOK include/linux/netfilter.h:314 [inline]
-  ip6_input+0x15d/0x430 net/ipv6/ip6_input.c:492
-  ip6_mc_input+0xa7e/0xc80 net/ipv6/ip6_input.c:586
-  dst_input include/net/dst.h:460 [inline]
-  ip6_rcv_finish+0x955/0x970 net/ipv6/ip6_input.c:79
-  NF_HOOK include/linux/netfilter.h:314 [inline]
-  ipv6_rcv+0xde/0x390 net/ipv6/ip6_input.c:310
-  __netif_receive_skb_one_core net/core/dev.c:5538 [inline]
-  __netif_receive_skb+0x1da/0xa00 net/core/dev.c:5652
-  netif_receive_skb_internal net/core/dev.c:5738 [inline]
-  netif_receive_skb+0x58/0x660 net/core/dev.c:5798
-  tun_rx_batched+0x3ee/0x980 drivers/net/tun.c:1549
-  tun_get_user+0x5566/0x69e0 drivers/net/tun.c:2002
-  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
-  call_write_iter include/linux/fs.h:2108 [inline]
-  new_sync_write fs/read_write.c:497 [inline]
-  vfs_write+0xb63/0x1520 fs/read_write.c:590
-  ksys_write+0x20f/0x4c0 fs/read_write.c:643
-  __do_sys_write fs/read_write.c:655 [inline]
-  __se_sys_write fs/read_write.c:652 [inline]
-  __x64_sys_write+0x93/0xe0 fs/read_write.c:652
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:3804 [inline]
-  slab_alloc_node mm/slub.c:3845 [inline]
-  kmem_cache_alloc_node+0x613/0xc50 mm/slub.c:3888
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:577
-  __alloc_skb+0x35b/0x7a0 net/core/skbuff.c:668
-  alloc_skb include/linux/skbuff.h:1318 [inline]
-  alloc_skb_with_frags+0xc8/0xbf0 net/core/skbuff.c:6504
-  sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2795
-  tun_alloc_skb drivers/net/tun.c:1525 [inline]
-  tun_get_user+0x209a/0x69e0 drivers/net/tun.c:1846
-  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
-  call_write_iter include/linux/fs.h:2108 [inline]
-  new_sync_write fs/read_write.c:497 [inline]
-  vfs_write+0xb63/0x1520 fs/read_write.c:590
-  ksys_write+0x20f/0x4c0 fs/read_write.c:643
-  __do_sys_write fs/read_write.c:655 [inline]
-  __se_sys_write fs/read_write.c:652 [inline]
-  __x64_sys_write+0x93/0xe0 fs/read_write.c:652
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-CPU: 1 PID: 5045 Comm: syz-executor114 Not tainted 6.9.0-rc1-syzkaller-00021-g962490525cff #0
-
-Fixes: cb73ee40b1b3 ("net: ip_gre: use erspan key field for tunnel lookup")
-Reported-by: syzbot+1c1cf138518bf0c53d68@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/000000000000772f2c0614b66ef7@google.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://lore.kernel.org/r/20240328112248.1101491-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230821180619.650007-12-matthew.d.roper@intel.com
+Stable-dep-of: 186bce682772 ("drm/i915/mtl: Update workaround 14018575942")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c  |    5 +++++
- net/ipv6/ip6_gre.c |    3 +++
- 2 files changed, 8 insertions(+)
+ drivers/gpu/drm/i915/gt/intel_engine_cs.c      |  4 +---
+ .../drm/i915/gt/intel_execlists_submission.c   |  4 +---
+ drivers/gpu/drm/i915/gt/intel_reset.c          | 18 ++++++++++++++++++
+ drivers/gpu/drm/i915/gt/intel_reset.h          |  2 ++
+ drivers/gpu/drm/i915/gt/uc/intel_guc.c         |  4 +---
+ .../gpu/drm/i915/gt/uc/intel_guc_submission.c  |  4 +---
+ 6 files changed, 24 insertions(+), 12 deletions(-)
 
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -280,8 +280,13 @@ static int erspan_rcv(struct sk_buff *sk
- 					  tpi->flags | TUNNEL_NO_KEY,
- 					  iph->saddr, iph->daddr, 0);
- 	} else {
-+		if (unlikely(!pskb_may_pull(skb,
-+					    gre_hdr_len + sizeof(*ershdr))))
-+			return PACKET_REJECT;
-+
- 		ershdr = (struct erspan_base_hdr *)(skb->data + gre_hdr_len);
- 		ver = ershdr->ver;
-+		iph = ip_hdr(skb);
- 		tunnel = ip_tunnel_lookup(itn, skb->dev->ifindex,
- 					  tpi->flags | TUNNEL_KEY,
- 					  iph->saddr, iph->daddr, tpi->key);
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -528,6 +528,9 @@ static int ip6erspan_rcv(struct sk_buff
- 	struct ip6_tnl *tunnel;
- 	u8 ver;
+diff --git a/drivers/gpu/drm/i915/gt/intel_engine_cs.c b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
+index e85d70a62123f..84a75c95f3f7d 100644
+--- a/drivers/gpu/drm/i915/gt/intel_engine_cs.c
++++ b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
+@@ -1616,9 +1616,7 @@ static int __intel_engine_stop_cs(struct intel_engine_cs *engine,
+ 	 * Wa_22011802037: Prior to doing a reset, ensure CS is
+ 	 * stopped, set ring stop bit and prefetch disable bit to halt CS
+ 	 */
+-	if (IS_MTL_GRAPHICS_STEP(engine->i915, M, STEP_A0, STEP_B0) ||
+-	    (GRAPHICS_VER(engine->i915) >= 11 &&
+-	    GRAPHICS_VER_FULL(engine->i915) < IP_VER(12, 70)))
++	if (intel_engine_reset_needs_wa_22011802037(engine->gt))
+ 		intel_uncore_write_fw(uncore, RING_MODE_GEN7(engine->mmio_base),
+ 				      _MASKED_BIT_ENABLE(GEN12_GFX_PREFETCH_DISABLE));
  
-+	if (unlikely(!pskb_may_pull(skb, sizeof(*ershdr))))
-+		return PACKET_REJECT;
+diff --git a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
+index 5a720e2523126..42e09f1589205 100644
+--- a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
++++ b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
+@@ -3001,9 +3001,7 @@ static void execlists_reset_prepare(struct intel_engine_cs *engine)
+ 	 * Wa_22011802037: In addition to stopping the cs, we need
+ 	 * to wait for any pending mi force wakeups
+ 	 */
+-	if (IS_MTL_GRAPHICS_STEP(engine->i915, M, STEP_A0, STEP_B0) ||
+-	    (GRAPHICS_VER(engine->i915) >= 11 &&
+-	    GRAPHICS_VER_FULL(engine->i915) < IP_VER(12, 70)))
++	if (intel_engine_reset_needs_wa_22011802037(engine->gt))
+ 		intel_engine_wait_for_pending_mi_fw(engine);
+ 
+ 	engine->execlists.reset_ccid = active_ccid(engine);
+diff --git a/drivers/gpu/drm/i915/gt/intel_reset.c b/drivers/gpu/drm/i915/gt/intel_reset.c
+index 5fa57a34cf4bb..3a3f71ce3cb77 100644
+--- a/drivers/gpu/drm/i915/gt/intel_reset.c
++++ b/drivers/gpu/drm/i915/gt/intel_reset.c
+@@ -1632,6 +1632,24 @@ void __intel_fini_wedge(struct intel_wedge_me *w)
+ 	w->gt = NULL;
+ }
+ 
++/*
++ * Wa_22011802037 requires that we (or the GuC) ensure that no command
++ * streamers are executing MI_FORCE_WAKE while an engine reset is initiated.
++ */
++bool intel_engine_reset_needs_wa_22011802037(struct intel_gt *gt)
++{
++	if (GRAPHICS_VER(gt->i915) < 11)
++		return false;
 +
- 	ipv6h = ipv6_hdr(skb);
- 	ershdr = (struct erspan_base_hdr *)skb->data;
- 	ver = ershdr->ver;
++	if (IS_MTL_GRAPHICS_STEP(gt->i915, M, STEP_A0, STEP_B0))
++		return true;
++
++	if (GRAPHICS_VER_FULL(gt->i915) >= IP_VER(12, 70))
++		return false;
++
++	return true;
++}
++
+ #if IS_ENABLED(CONFIG_DRM_I915_SELFTEST)
+ #include "selftest_reset.c"
+ #include "selftest_hangcheck.c"
+diff --git a/drivers/gpu/drm/i915/gt/intel_reset.h b/drivers/gpu/drm/i915/gt/intel_reset.h
+index 25c975b6e8fc0..f615b30b81c59 100644
+--- a/drivers/gpu/drm/i915/gt/intel_reset.h
++++ b/drivers/gpu/drm/i915/gt/intel_reset.h
+@@ -78,4 +78,6 @@ void __intel_fini_wedge(struct intel_wedge_me *w);
+ bool intel_has_gpu_reset(const struct intel_gt *gt);
+ bool intel_has_reset_engine(const struct intel_gt *gt);
+ 
++bool intel_engine_reset_needs_wa_22011802037(struct intel_gt *gt);
++
+ #endif /* I915_RESET_H */
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc.c b/drivers/gpu/drm/i915/gt/uc/intel_guc.c
+index 82a2ecc12b212..da967938fea58 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc.c
+@@ -288,9 +288,7 @@ static u32 guc_ctl_wa_flags(struct intel_guc *guc)
+ 		flags |= GUC_WA_DUAL_QUEUE;
+ 
+ 	/* Wa_22011802037: graphics version 11/12 */
+-	if (IS_MTL_GRAPHICS_STEP(gt->i915, M, STEP_A0, STEP_B0) ||
+-	    (GRAPHICS_VER(gt->i915) >= 11 &&
+-	    GRAPHICS_VER_FULL(gt->i915) < IP_VER(12, 70)))
++	if (intel_engine_reset_needs_wa_22011802037(gt))
+ 		flags |= GUC_WA_PRE_PARSER;
+ 
+ 	/*
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
+index 836e4d9d65ef6..7a3e02ea56639 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
+@@ -1690,9 +1690,7 @@ static void guc_engine_reset_prepare(struct intel_engine_cs *engine)
+ 	 * Wa_22011802037: In addition to stopping the cs, we need
+ 	 * to wait for any pending mi force wakeups
+ 	 */
+-	if (IS_MTL_GRAPHICS_STEP(engine->i915, M, STEP_A0, STEP_B0) ||
+-	    (GRAPHICS_VER(engine->i915) >= 11 &&
+-	     GRAPHICS_VER_FULL(engine->i915) < IP_VER(12, 70))) {
++	if (intel_engine_reset_needs_wa_22011802037(engine->gt)) {
+ 		intel_engine_stop_cs(engine);
+ 		intel_engine_wait_for_pending_mi_fw(engine);
+ 	}
+-- 
+2.43.0
+
 
 
