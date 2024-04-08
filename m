@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EEE768F0;
-	Mon,  8 Apr 2024 13:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5244768F0;
+	Mon,  8 Apr 2024 13:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582802; cv=none; b=Wb5ktZ0v+C0VDBkOs+AwyQaZDI8Vf0RjSbL44vIw9xa157Y/fNnZh2KcMpBbK4AhUf5CUCyI1G9BiGk6giHo28El0U3m3yOTburM3HVL2iTXROIKwRvgpZUgp+XDwXaT4squzo8g1dMiJqEJNJDoePTL/00tcPXs9Ti4u/2VCYM=
+	t=1712582804; cv=none; b=bg1Y1tE1UQ3rz6jtVfI9/OeV41tELjqXkbfDLIWLTSQv+yxA2y0Y/k/8k394v6wfYMVAAQoFER5EyLz+C6ZTYa512EF68xSSX0uZHx2a7kxDRYGQOymeod7A2HkTN+xWGFI3bHjD+Uv9yDlG8jPTtnP5MR964wpU8WYjSacjdVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582802; c=relaxed/simple;
-	bh=Ce2wzsgrvi0irEpaiWBiPibYCP35NBY3zuIv4abL1aA=;
+	s=arc-20240116; t=1712582804; c=relaxed/simple;
+	bh=6BhjOJE5/AFteU3rXNAmsY3wMnYPZ/8+059sNYFviTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o17WYjL7X9yURcFnAPn0PbqkX3f0eowQXVjs8H4gUE+1EIOSa79jsTlG6fO0YA2jTBQWIVBbmtMHhCxtVy80GxKSSoisTYUxVMIxVj7dyHVtudQLBm5TKSClTuabpJGXVLLgpuNBfXnmav0HuIkqmA/lFUiCjJb0y7b8e7x9bJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehoeorfD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R0Q+4BUfCCA00sOKQPjJeLOeCaC2ODtVafE30xGBsNWc8KGc03NbB8WZzmrJ4D7d1xD+K78rAePoBVsO7cWe9cTlv7Ck0QJAAZcGMGGZbreZiX1XzEoHj4/+TxihDPMRd8Ii743DpObatxWV4jO/amD+UVr+xkUKinSwihK6LQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUUsdarU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehoeorfD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6667CC433A6;
-	Mon,  8 Apr 2024 13:26:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUUsdarU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BDD7C433F1;
+	Mon,  8 Apr 2024 13:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582801;
-	bh=Ce2wzsgrvi0irEpaiWBiPibYCP35NBY3zuIv4abL1aA=;
+	s=korg; t=1712582804;
+	bh=6BhjOJE5/AFteU3rXNAmsY3wMnYPZ/8+059sNYFviTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ehoeorfDJMrFnhhKLrVujW+B8OMOBFHDdpE9m6MK4Otv9mO1Jl4nuhe8TfXv5WFnG
-	 /zPu/CeVdTNTud1dVJT8bS8ycV36m7E9EbpyWkrz0R9+ByIHsiY1jvmVXmNJuq68cq
-	 eTxp4wDHzchB6mCBtQz3lkmzCH8dDulO6IU4hI64=
+	b=qUUsdarU/53EjPO2Y4Qn0UUxxji8upBwiWmrlRTDPfPyRzYxBrnn80/qqxdI9Kzjz
+	 ILJU3TPGh96z+2jlWoApgq1or52t+b7atXzkD3NlIqibZmnuJrdyA2nG+JFGTqewQy
+	 u5ccHdgOe70dG9an0p9V4jHSskRrJ3dEeWknM1go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Krummsdorf <michael.krummsdorf@tq-group.com>,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.8 106/273] net: dsa: mv88e6xxx: fix usable ports on 88e6020
-Date: Mon,  8 Apr 2024 14:56:21 +0200
-Message-ID: <20240408125312.598654044@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Antoine Tenart <atenart@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.6 125/252] udp: prevent local UDP tunnel packets from being GROed
+Date: Mon,  8 Apr 2024 14:57:04 +0200
+Message-ID: <20240408125310.503605951@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,44 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Krummsdorf <michael.krummsdorf@tq-group.com>
+From: Antoine Tenart <atenart@kernel.org>
 
-commit 625aefac340f45a4fc60908da763f437599a0d6f upstream.
+commit 64235eabc4b5b18c507c08a1f16cdac6c5661220 upstream.
 
-The switch has 4 ports with 2 internal PHYs, but ports are numbered up
-to 6, with ports 0, 1, 5 and 6 being usable.
+GRO has a fundamental issue with UDP tunnel packets as it can't detect
+those in a foolproof way and GRO could happen before they reach the
+tunnel endpoint. Previous commits have fixed issues when UDP tunnel
+packets come from a remote host, but if those packets are issued locally
+they could run into checksum issues.
 
-Fixes: 71d94a432a15 ("net: dsa: mv88e6xxx: add support for MV88E6020 switch")
-Signed-off-by: Michael Krummsdorf <michael.krummsdorf@tq-group.com>
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240326123655.40666-1-matthias.schiffer@ew.tq-group.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+If the inner packet has a partial checksum the information will be lost
+in the GRO logic, either in udp4/6_gro_complete or in
+udp_gro_complete_segment and packets will have an invalid checksum when
+leaving the host.
+
+Prevent local UDP tunnel packets from ever being GROed at the outer UDP
+level.
+
+Due to skb->encapsulation being wrongly used in some drivers this is
+actually only preventing UDP tunnel packets with a partial checksum to
+be GROed (see iptunnel_handle_offloads) but those were also the packets
+triggering issues so in practice this should be sufficient.
+
+Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
+Fixes: 36707061d6ba ("udp: allow forwarding of plain (non-fraglisted) UDP GRO packets")
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/ipv4/udp_offload.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -5500,8 +5500,12 @@ static const struct mv88e6xxx_info mv88e
- 		.family = MV88E6XXX_FAMILY_6250,
- 		.name = "Marvell 88E6020",
- 		.num_databases = 64,
--		.num_ports = 4,
-+		/* Ports 2-4 are not routed to pins
-+		 * => usable ports 0, 1, 5, 6
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -559,6 +559,12 @@ struct sk_buff *udp_gro_receive(struct l
+ 	 */
+ 	NAPI_GRO_CB(skb)->is_flist = 0;
+ 	if (!sk || !udp_sk(sk)->gro_receive) {
++		/* If the packet was locally encapsulated in a UDP tunnel that
++		 * wasn't detected above, do not GRO.
 +		 */
-+		.num_ports = 7,
- 		.num_internal_phys = 2,
-+		.invalid_port_mask = BIT(2) | BIT(3) | BIT(4),
- 		.max_vid = 4095,
- 		.port_base_addr = 0x8,
- 		.phy_base_addr = 0x0,
++		if (skb->encapsulation)
++			goto out;
++
+ 		if (skb->dev->features & NETIF_F_GRO_FRAGLIST)
+ 			NAPI_GRO_CB(skb)->is_flist = sk ? !udp_test_bit(GRO_ENABLED, sk) : 1;
+ 
 
 
