@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1653B7F48D;
-	Mon,  8 Apr 2024 13:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9977D7BB0C;
+	Mon,  8 Apr 2024 13:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583092; cv=none; b=gsMJsJf8wT76mwJk3ZzM6Ca7AKbCcSUIy8oIPjIT2sEG8IKSL58UUEBtXVUzrYnVntZnQ9lsBIaPopblfEKJiD2Io3GFyGiJp5YyjaUHh9bIDeLJvEnSRpGqwuM548xu8PF4/ZnnW/XasvUtpe27CiWCHI4DF2ac+ZMsbPPS22s=
+	t=1712583095; cv=none; b=bzVlVyeEvIonDBKOiYGDL9JpYvbFrTkiar8ynfeFfHv9aYyfoSq9oFHilXjv0L5omC7F9PKSg8dG+eDeClca9v9C6dQK65o8FOUDJ7jYkctlprMUhs9YLd4KiGQFAB8pK4hz2waWDME9kGjeB8gYgNillLImCaLKmC7MbD7MNCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583092; c=relaxed/simple;
-	bh=RxuSQdjS5NIulvVYgQzZa9oX7LUi4alrSfwR3/gBASo=;
+	s=arc-20240116; t=1712583095; c=relaxed/simple;
+	bh=g/eB/UJyhaoH+WIoGSCjIbGP2y6dkLRBYKRuIcYedw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O15OtS7SJzX6FU8Iy01JU1yJH4Ge8ueLeiSkepUav/LEETcAej4BIqhYDHaA8sTm4V4wWyA2iajt990WfECapuDu8WNoFEeVOKDpba+hWx8VO+zXuc+yEmPIRe/IY98hF15NF0Q+GLVmrn03z02Byw4MOef3hWcJk4kZyC0dLHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YN7SbAS+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WuTDPu+1lfWcxfN66ciTEmOOazZ60Ds44PV0ZcEsJgiAPN8bD0/OQgPl4Q4+t/WPf5Km2l4/wilBodLGawHUhROcafcS+OSWbNO/jucDRTYHnayLjKqmE58lM7lubXrxYgVS5J4cSBN2LbHC3lZ+nGHvtzr9yxGRsPLYqAM5E7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/1iuY6W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YN7SbAS+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E95C433F1;
-	Mon,  8 Apr 2024 13:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/1iuY6W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12C1C433C7;
+	Mon,  8 Apr 2024 13:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583092;
-	bh=RxuSQdjS5NIulvVYgQzZa9oX7LUi4alrSfwR3/gBASo=;
+	s=korg; t=1712583095;
+	bh=g/eB/UJyhaoH+WIoGSCjIbGP2y6dkLRBYKRuIcYedw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YN7SbAS+GBMGTk20X12E4Qg6TttQvdULHlIA7/ViwEa4Fr2m9S9Tgwdnkq4+j3r3K
-	 7mZcPiUANHtRRX8BglUZxvxhONgtJIrJxshu9ck0U7eZm+qk5ucXjB/DjhyqhZ93wT
-	 vp4xk8u95XNSpWp2PoMD3eoBdiS//7WwkEtN0OWM=
+	b=E/1iuY6WNZ+Z5jYCS1XeHp1frfWwGYFkCFwpZ0U9NLTYxg93dB8iwxFinKmzqDGzv
+	 3867OqlywZChCqyfbC4CWhCN1zPtuQAbGCdB+I4hX2jm13dCiluxxb8ErVUf9pIgSt
+	 Zgq4Y/t2yGiAsWjRTR1SvJasaIn0sQioGe/nvYEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tom Lendacky <thomas.lendacky@amd.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 156/252] KVM: SVM: Use unsigned integers when dealing with ASIDs
-Date: Mon,  8 Apr 2024 14:57:35 +0200
-Message-ID: <20240408125311.499365139@linuxfoundation.org>
+Subject: [PATCH 6.8 139/273] KVM: SVM: Use unsigned integers when dealing with ASIDs
+Date: Mon,  8 Apr 2024 14:56:54 +0200
+Message-ID: <20240408125313.606996769@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,7 +47,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -78,7 +78,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  2 files changed, 15 insertions(+), 13 deletions(-)
 
 diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-index e86231c3b8a54..ea68a08cc89c2 100644
+index a8ce5226b3b57..4c841610277dc 100644
 --- a/arch/x86/kvm/svm/sev.c
 +++ b/arch/x86/kvm/svm/sev.c
 @@ -84,9 +84,10 @@ struct enc_region {
@@ -133,7 +133,7 @@ index e86231c3b8a54..ea68a08cc89c2 100644
  	int ret;
  
  	/* activate ASID on the given handle */
-@@ -2314,7 +2316,7 @@ int sev_cpu_init(struct svm_cpu_data *sd)
+@@ -2317,7 +2319,7 @@ int sev_cpu_init(struct svm_cpu_data *sd)
   */
  static void sev_flush_encrypted_page(struct kvm_vcpu *vcpu, void *va)
  {
@@ -142,7 +142,7 @@ index e86231c3b8a54..ea68a08cc89c2 100644
  
  	/*
  	 * Note!  The address must be a kernel address, as regular page walk
-@@ -2632,7 +2634,7 @@ void sev_es_unmap_ghcb(struct vcpu_svm *svm)
+@@ -2635,7 +2637,7 @@ void sev_es_unmap_ghcb(struct vcpu_svm *svm)
  void pre_sev_run(struct vcpu_svm *svm, int cpu)
  {
  	struct svm_cpu_data *sd = per_cpu_ptr(&svm_data, cpu);
