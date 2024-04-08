@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E3D7E110;
-	Mon,  8 Apr 2024 13:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EDF7D07D;
+	Mon,  8 Apr 2024 13:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582834; cv=none; b=iRrHf+nEUPUy0IsZqAjke97igYZBAUolLijvvdhjgZGCI5Vj4wIcw2zNlrjVXQHLisEfMnEV4QTBn5qZPsvczZpDpqG+s3saIoUM31MqBJgPDAYE4B2sBPeo+hJ9xawbh8f2YHJdcwsZVnGYzdEwYYy4nA5UA1Wn8ry/ayGcEW8=
+	t=1712582837; cv=none; b=r9GRvvV1AaAhdUmHik6dYEv0ucVrAztEZdMezhmNba2ubOJjU6v1BnLUsaYf0kZmTZfxKlSawou39BkR6iT9wM9vnoTROd51rMApq4cMuk62RYKAx3mRuw4uKLhoyJ6rG1C75LqQXXxIVOQmL8uA977OB6Q2G1iwJpd3eDILhCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582834; c=relaxed/simple;
-	bh=iSQ7hOWbxt5AfpWrNC3D56u5STPjv2juOm9tLasZCMw=;
+	s=arc-20240116; t=1712582837; c=relaxed/simple;
+	bh=OJvyWPFM+Uisvzvkv5POpUlVz8xXncqH5N7PQ1UPico=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hl8yIfm6ZNVc37aEFRCP+a33nrTtALtkVUe6DPyIN1c3MIcJ5gZQ/1UqG+ph022pXfzDfnXUxNsMWMkofh00RSDwjrN49rSHbxa0dqxX3KzStNbPdHmuOHEgmZal30Lq4PP4CL2LSxaDRuO96z8aL69D05DutydDfR0Y0wVT7sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZppYmU8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fOAg90KHMwhzZD4XUj5mPVtdithy7Dz9+lS74lj77W+6e1dot1OF6hu2BWUJCghPdDkkWWpCxUVw7pGUj5tf8uG6xIa8W3Voq5J+Rp59NkzhnyMdIm/vmONXXj9PANvW++IieI2d/8dRREtEMRj9MzlhL1efK9NBCX7dB0wZr/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZkvMJeNo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZppYmU8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8429AC433F1;
-	Mon,  8 Apr 2024 13:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZkvMJeNo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70716C433F1;
+	Mon,  8 Apr 2024 13:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582833;
-	bh=iSQ7hOWbxt5AfpWrNC3D56u5STPjv2juOm9tLasZCMw=;
+	s=korg; t=1712582836;
+	bh=OJvyWPFM+Uisvzvkv5POpUlVz8xXncqH5N7PQ1UPico=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KZppYmU8VcUMvfkFUokFWPLzaNrJSfvGEEqO67Inb7tf883ywHLjdA0BCRGUiB1Rr
-	 08KKrKXI5Q5uT9hMKFRkIlJ2yk1iTe1v3ycOfLYZRmKRX8dUkDzP03UnFCeJ3oQF2I
-	 4jXHQ16TXwpn6wdwdHYBY+vNcmM0qCrJf25YYZ6Y=
+	b=ZkvMJeNorwAL14OJGg5YZZA+Oq1aWFvMxSJ6alMlraTAc7viQrc+rIv7MdI4azQLE
+	 if5WVFXGIQCJPM9Q65J4yHwSF5iYwWUXJNAE+Ha+uioE9wKxa1s23B65vJDublyiG7
+	 tke9sY46bUJOinqcN4dmZGd4WR6Ks+6JHbYm90dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Gabriel Krisman Bertazi <krisman@collabora.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 179/690] fanotify: Allow file handle encoding for unhashed events
-Date: Mon,  8 Apr 2024 14:50:45 +0200
-Message-ID: <20240408125406.048869760@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	xingwei lee <xrivendell7@gmail.com>,
+	yue sun <samsun1006219@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Lorenzo Stoakes <lstoakes@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Miklos Szeredi <miklos@szeredi.hu>
+Subject: [PATCH 6.1 137/138] mm/secretmem: fix GUP-fast succeeding on secretmem folios
+Date: Mon,  8 Apr 2024 14:59:11 +0200
+Message-ID: <20240408125300.488795726@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +52,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@collabora.com>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit 74fe4734897a2da2ae2a665a5e622cd490d36eaf ]
+commit 65291dcfcf8936e1b23cfd7718fdfde7cfaf7706 upstream.
 
-Allow passing a NULL hash to fanotify_encode_fh and avoid calculating
-the hash if not needed.
+folio_is_secretmem() currently relies on secretmem folios being LRU
+folios, to save some cycles.
 
-Link: https://lore.kernel.org/r/20211025192746.66445-15-krisman@collabora.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+However, folios might reside in a folio batch without the LRU flag set, or
+temporarily have their LRU flag cleared.  Consequently, the LRU flag is
+unreliable for this purpose.
+
+In particular, this is the case when secretmem_fault() allocates a fresh
+page and calls filemap_add_folio()->folio_add_lru().  The folio might be
+added to the per-cpu folio batch and won't get the LRU flag set until the
+batch was drained using e.g., lru_add_drain().
+
+Consequently, folio_is_secretmem() might not detect secretmem folios and
+GUP-fast can succeed in grabbing a secretmem folio, crashing the kernel
+when we would later try reading/writing to the folio, because the folio
+has been unmapped from the directmap.
+
+Fix it by removing that unreliable check.
+
+Link: https://lkml.kernel.org/r/20240326143210.291116-2-david@redhat.com
+Fixes: 1507f51255c9 ("mm: introduce memfd_secret system call to create "secret" memory areas")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reported-by: xingwei lee <xrivendell7@gmail.com>
+Reported-by: yue sun <samsun1006219@gmail.com>
+Closes: https://lore.kernel.org/lkml/CABOYnLyevJeravW=QrH0JUPYEcDN160aZFb7kwndm-J2rmz0HQ@mail.gmail.com/
+Debugged-by: Miklos Szeredi <miklos@szeredi.hu>
+Tested-by: Miklos Szeredi <mszeredi@redhat.com>
+Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Cc: Lorenzo Stoakes <lstoakes@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fanotify/fanotify.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/linux/secretmem.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index 397ee623ff1e8..ec84fee7ad01c 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -403,8 +403,12 @@ static int fanotify_encode_fh(struct fanotify_fh *fh, struct inode *inode,
- 	fh->type = type;
- 	fh->len = fh_len;
+--- a/include/linux/secretmem.h
++++ b/include/linux/secretmem.h
+@@ -14,10 +14,10 @@ static inline bool page_is_secretmem(str
+ 	 * Using page_mapping() is quite slow because of the actual call
+ 	 * instruction and repeated compound_head(page) inside the
+ 	 * page_mapping() function.
+-	 * We know that secretmem pages are not compound and LRU so we can
++	 * We know that secretmem pages are not compound, so we can
+ 	 * save a couple of cycles here.
+ 	 */
+-	if (PageCompound(page) || !PageLRU(page))
++	if (PageCompound(page))
+ 		return false;
  
--	/* Mix fh into event merge key */
--	*hash ^= fanotify_hash_fh(fh);
-+	/*
-+	 * Mix fh into event merge key.  Hash might be NULL in case of
-+	 * unhashed FID events (i.e. FAN_FS_ERROR).
-+	 */
-+	if (hash)
-+		*hash ^= fanotify_hash_fh(fh);
- 
- 	return FANOTIFY_FH_HDR_LEN + fh_len;
- 
--- 
-2.43.0
-
+ 	mapping = (struct address_space *)
 
 
