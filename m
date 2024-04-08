@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF1C7D417;
-	Mon,  8 Apr 2024 13:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCC17D401;
+	Mon,  8 Apr 2024 13:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583344; cv=none; b=Z+LbYwohIf/COpCjMGHN9ojCqOFGUKuLmQSLNGNxCnrUIVcsUH6It74Rj70S0tCND4NqrO7LAklJGyWFd/BhDdAmcPh1ntFZVB/Wg3Egh0NDOilYCSeQCBsmMBDtQY5mAQrfdlhMi/mb5C6gnjlEMv3AZWbUsr6pUAquqztvjtc=
+	t=1712583346; cv=none; b=dx+mgpIH5HgzdCMfQRq4qakqVCo/+RKhdRJnQ1lVfMPBVuuy060+Rpf3tRMJ3fqn+GP5cd+Dlom/5fjF2uOMBTorpwpCF0N+5C5IuHmqhcGvjT5VUqXkV6PqolNMpDmipWZVGQs7lXPJYhqBMBDKKFVgoAbz28SbBYgogY08pOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583344; c=relaxed/simple;
-	bh=hkyzYiT/J1uzTOr7t8tefRAB6Ide0NZ3Q0huVqOR5SQ=;
+	s=arc-20240116; t=1712583346; c=relaxed/simple;
+	bh=g3IxR/V1WRB+ObeqX3zOi+My7XYKIzN14RrrdMyfKXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WSHLZaqIq7ywe2PLEXMsnq5kQmPyIkKxRWMXkq7PANns0p+yHBHyIVW/64QomBIvSWDRXahb4gl2FtG2WsVnRDCvLVaR/DCS6p4YZnXWWWs9BjSwcziF3bd+ugmAh8wwfyguS8lNgU+7113uKRJ23iGZ11Anb8aGLFTCOlpo2y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2wckF2F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tqVhsMnrCzrcdKNTD/cVRqsZvUc3jzFi/aCgmZ4pr3RIAgTX5Hdvx7bZhbT39zdNLnrvu2bpL1m/y3hiQPL9fcql2ddiF2Mwx57rbbFvJy04yaG6I79B1EnC0kG+KPUX2xuNpeYgq+KNzgJ6qQssdzUCsdsbRlL5TSvqZ3ZARNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1q1pjyh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2wckF2F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1623DC433F1;
-	Mon,  8 Apr 2024 13:35:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1q1pjyh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C3FC433F1;
+	Mon,  8 Apr 2024 13:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583343;
-	bh=hkyzYiT/J1uzTOr7t8tefRAB6Ide0NZ3Q0huVqOR5SQ=;
+	s=korg; t=1712583346;
+	bh=g3IxR/V1WRB+ObeqX3zOi+My7XYKIzN14RrrdMyfKXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w2wckF2FOnYfGrPxrETczw4sD2ebbzfdBQA5wVu9W1vO/AEzfyVJyt8ZyhAG+fUX8
-	 BpMqGw6mBx659jnJeFi39rnOg4eJ+TwmihfgvLsINugH/Nuz2upS8+PkjwlBVRyJoC
-	 x7RTURGd1BG8u/LdxEEIQyzSWZwjvahkkOWcq7Hw=
+	b=V1q1pjyhBGNPoaysHr3Df0vInH2g6ZV4z6dLazDYu/G+XQmsHCIkM8dUHHF3bxF2h
+	 oVDE2ko1tBb+MsTgma3gZOaKd8+UiATpeSX2xHla/AuauevWLxzgmqDPFpgvMYNAGx
+	 5Ujele0hp0r/e2qQgjARXGCTeQ8jrQ+eN+WnySOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 166/273] spi: s3c64xx: explicitly include <linux/bits.h>
-Date: Mon,  8 Apr 2024 14:57:21 +0200
-Message-ID: <20240408125314.421965144@linuxfoundation.org>
+Subject: [PATCH 6.6 184/252] ata: sata_sx4: fix pdc20621_get_from_dimm() on 64-bit
+Date: Mon,  8 Apr 2024 14:58:03 +0200
+Message-ID: <20240408125312.375958017@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +47,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 4568fa574fcef3811a8140702979f076ef0f5bc0 ]
+[ Upstream commit 52f80bb181a9a1530ade30bc18991900bbb9697f ]
 
-The driver uses GENMASK() but does not include <linux/bits.h>.
+gcc warns about a memcpy() with overlapping pointers because of an
+incorrect size calculation:
 
-It is good practice to directly include all headers used, it avoids
-implicit dependencies and spurious breakage if someone rearranges
-headers and causes the implicit include to vanish.
+In file included from include/linux/string.h:369,
+                 from drivers/ata/sata_sx4.c:66:
+In function 'memcpy_fromio',
+    inlined from 'pdc20621_get_from_dimm.constprop' at drivers/ata/sata_sx4.c:962:2:
+include/linux/fortify-string.h:97:33: error: '__builtin_memcpy' accessing 4294934464 bytes at offsets 0 and [16, 16400] overlaps 6442385281 bytes at offset -2147450817 [-Werror=restrict]
+   97 | #define __underlying_memcpy     __builtin_memcpy
+      |                                 ^
+include/linux/fortify-string.h:620:9: note: in expansion of macro '__underlying_memcpy'
+  620 |         __underlying_##op(p, q, __fortify_size);                        \
+      |         ^~~~~~~~~~~~~
+include/linux/fortify-string.h:665:26: note: in expansion of macro '__fortify_memcpy_chk'
+  665 | #define memcpy(p, q, s)  __fortify_memcpy_chk(p, q, s,                  \
+      |                          ^~~~~~~~~~~~~~~~~~~~
+include/asm-generic/io.h:1184:9: note: in expansion of macro 'memcpy'
+ 1184 |         memcpy(buffer, __io_virt(addr), size);
+      |         ^~~~~~
 
-Include the missing header.
+The problem here is the overflow of an unsigned 32-bit number to a
+negative that gets converted into a signed 'long', keeping a large
+positive number.
 
-Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Link: https://lore.kernel.org/r/20240207120431.2766269-4-tudor.ambarus@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: a3d3eab627bb ("spi: s3c64xx: Use DMA mode from fifo size")
+Replace the complex calculation with a more readable min() variant
+that avoids the warning.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-s3c64xx.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/ata/sata_sx4.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
-index 26d389d95af92..1e519b1537e71 100644
---- a/drivers/spi/spi-s3c64xx.c
-+++ b/drivers/spi/spi-s3c64xx.c
-@@ -3,6 +3,7 @@
- // Copyright (c) 2009 Samsung Electronics Co., Ltd.
- //      Jaswinder Singh <jassi.brar@samsung.com>
+diff --git a/drivers/ata/sata_sx4.c b/drivers/ata/sata_sx4.c
+index b51d7a9d0d90c..a482741eb181f 100644
+--- a/drivers/ata/sata_sx4.c
++++ b/drivers/ata/sata_sx4.c
+@@ -957,8 +957,7 @@ static void pdc20621_get_from_dimm(struct ata_host *host, void *psource,
  
-+#include <linux/bits.h>
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/dma-mapping.h>
+ 	offset -= (idx * window_size);
+ 	idx++;
+-	dist = ((long) (window_size - (offset + size))) >= 0 ? size :
+-		(long) (window_size - offset);
++	dist = min(size, window_size - offset);
+ 	memcpy_fromio(psource, dimm_mmio + offset / 4, dist);
+ 
+ 	psource += dist;
+@@ -1005,8 +1004,7 @@ static void pdc20621_put_to_dimm(struct ata_host *host, void *psource,
+ 	readl(mmio + PDC_DIMM_WINDOW_CTLR);
+ 	offset -= (idx * window_size);
+ 	idx++;
+-	dist = ((long)(s32)(window_size - (offset + size))) >= 0 ? size :
+-		(long) (window_size - offset);
++	dist = min(size, window_size - offset);
+ 	memcpy_toio(dimm_mmio + offset / 4, psource, dist);
+ 	writel(0x01, mmio + PDC_GENERAL_CTLR);
+ 	readl(mmio + PDC_GENERAL_CTLR);
 -- 
 2.43.0
 
