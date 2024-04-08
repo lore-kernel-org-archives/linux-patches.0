@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADE47BAF4;
-	Mon,  8 Apr 2024 13:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D003B7BAF4;
+	Mon,  8 Apr 2024 13:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582675; cv=none; b=VFUe6tTy90kO6aKWHIbJBxMIrS2DmanGPOdFAoXmPSSSSsrt8c0A1UHJTEmKqP4l9hC0xLVxpaWmQWt1kl0hQna+mudiWMDF0NTUMG+bdgHi0O0j9MkzBzj/FQ5BbD73vg/FOYJA1BqwbuOGTxwIIZl0BzAuumOcj6Wws5dyHzw=
+	t=1712582678; cv=none; b=L6y3hZk/5w3LfJAJ7/uzvt7VS+AwfJ5+xqAv3dQgSQEqARkrcgwnj2N+8JDiFmGxQdl6UhuTHFLtsEP2FoGhRRCtbtrCCrXUmVPdsF/2MJ+tjME3ozoTbJ73egfjyAFtw6jiSJdWgLZr56cE4UmlCLGMdSRDMGQC1tByffGCr5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582675; c=relaxed/simple;
-	bh=cPOSeFu2o20HZPPdE2IOxrha5ka2X4OF4zhL8efGMKY=;
+	s=arc-20240116; t=1712582678; c=relaxed/simple;
+	bh=ddrxBgtjb2ub+SZuiQPZcvRSfEvXdKBYcRQtUZtByFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iToZuIwTmCzRKfKVRr8a/HahaM7CnQ6kpLHlj4QBgzmpTqAuq3OfZFmGusv7A8xHk4b+6K1AQgyCw/1sEohnll9c5EYSENOhmhQRzIFyCbZ71RsuI6ocq7HdBe0xoX/ZCRiewOIu+FnAE1HG0VRrCKcvy8791HYuTouapcNRKFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUOjHaKM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nDE6eDEnsndpSkp7UXpZEgjeqCaB4u4Ck2+vG14BTsb2/wF4Ku52KgWUKfv94B7hHwxVOkkWv2KfWhgGz71qwdRpquok+HzwbGlkC6q1qpPd5nyGfGR9vXwejGYn5ajY1SFRZe7b9zH+kXWPfO+ZvVKTmEeNauQqMPgL8e4E9go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Dd4OpUX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUOjHaKM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617D7C433A6;
-	Mon,  8 Apr 2024 13:24:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Dd4OpUX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F59DC433C7;
+	Mon,  8 Apr 2024 13:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582675;
-	bh=cPOSeFu2o20HZPPdE2IOxrha5ka2X4OF4zhL8efGMKY=;
+	s=korg; t=1712582678;
+	bh=ddrxBgtjb2ub+SZuiQPZcvRSfEvXdKBYcRQtUZtByFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OUOjHaKMWzJhQgj+ELRf0FKe0RxftN94Gfc1axjzv+UNPnAvYTmRxahrf0qmxSf88
-	 OxfwPMtPrykkizKPju/2uSB2FVmC2koyOUj1z/h8/e4bGHWqn5FsUWjG+jcrtA/2ei
-	 6Te+m/0adG60+FyJ/kiOecDArCEnBRkGUHqS5coE=
+	b=2Dd4OpUXsLDGW1ZpCWaSK+0p2CzpwpVDM8TYmojW+sOcKvByb8NIc6uCz0u/jXjOp
+	 hKrozBK6LBtIxUdXa6tprBLZVK18i6wgJ2PpFZgR8a8MezS4U1EmrJGEQS26iosZkc
+	 Ru7xy3ZXCcHs7Y3Tq6ybGxyV9S+DGZpYVGAYUugE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Hui Wang <hui.wang@canonical.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.8 077/273] Bluetooth: hci_event: set the conn encrypted before conn establishes
-Date: Mon,  8 Apr 2024 14:55:52 +0200
-Message-ID: <20240408125311.695951074@linuxfoundation.org>
+	kernel test robot <oliver.sang@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.8 095/273] x86/retpoline: Do the necessary fixup to the Zen3/4 srso return thunk for !SRSO
+Date: Mon,  8 Apr 2024 14:56:10 +0200
+Message-ID: <20240408125312.249831350@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
 References: <20240408125309.280181634@linuxfoundation.org>
@@ -52,108 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Wang <hui.wang@canonical.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit c569242cd49287d53b73a94233db40097d838535 upstream.
+commit 0e110732473e14d6520e49d75d2c88ef7d46fe67 upstream.
 
-We have a BT headset (Lenovo Thinkplus XT99), the pairing and
-connecting has no problem, once this headset is paired, bluez will
-remember this device and will auto re-connect it whenever the device
-is powered on. The auto re-connecting works well with Windows and
-Android, but with Linux, it always fails. Through debugging, we found
-at the rfcomm connection stage, the bluetooth stack reports
-"Connection refused - security block (0x0003)".
+The srso_alias_untrain_ret() dummy thunk in the !CONFIG_MITIGATION_SRSO
+case is there only for the altenative in CALL_UNTRAIN_RET to have
+a symbol to resolve.
 
-For this device, the re-connecting negotiation process is different
-from other BT headsets, it sends the Link_KEY_REQUEST command before
-the CONNECT_REQUEST completes, and it doesn't send ENCRYPT_CHANGE
-command during the negotiation. When the device sends the "connect
-complete" to hci, the ev->encr_mode is 1.
+However, testing with kernels which don't have CONFIG_MITIGATION_SRSO
+enabled, leads to the warning in patch_return() to fire:
 
-So here in the conn_complete_evt(), if ev->encr_mode is 1, link type
-is ACL and HCI_CONN_ENCRYPT is not set, we set HCI_CONN_ENCRYPT to
-this conn, and update conn->enc_key_size accordingly.
+  missing return thunk: srso_alias_untrain_ret+0x0/0x10-0x0: eb 0e 66 66 2e
+  WARNING: CPU: 0 PID: 0 at arch/x86/kernel/alternative.c:826 apply_returns (arch/x86/kernel/alternative.c:826
 
-After this change, this BT headset could re-connect with Linux
-successfully. This is the btmon log after applying the patch, after
-receiving the "Connect Complete" with "Encryption: Enabled", will send
-the command to read encryption key size:
-> HCI Event: Connect Request (0x04) plen 10
-        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
-        Class: 0x240404
-          Major class: Audio/Video (headset, speaker, stereo, video, vcr)
-          Minor class: Wearable Headset Device
-          Rendering (Printing, Speaker)
-          Audio (Speaker, Microphone, Headset)
-        Link type: ACL (0x01)
-...
-> HCI Event: Link Key Request (0x17) plen 6
-        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
-< HCI Command: Link Key Request Reply (0x01|0x000b) plen 22
-        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
-        Link key: ${32-hex-digits-key}
-...
-> HCI Event: Connect Complete (0x03) plen 11
-        Status: Success (0x00)
-        Handle: 256
-        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
-        Link type: ACL (0x01)
-        Encryption: Enabled (0x01)
-< HCI Command: Read Encryption Key... (0x05|0x0008) plen 2
-        Handle: 256
-< ACL Data TX: Handle 256 flags 0x00 dlen 10
-      L2CAP: Information Request (0x0a) ident 1 len 2
-        Type: Extended features supported (0x0002)
-> HCI Event: Command Complete (0x0e) plen 7
-      Read Encryption Key Size (0x05|0x0008) ncmd 1
-        Status: Success (0x00)
-        Handle: 256
-        Key size: 16
+Put in a plain "ret" there so that gcc doesn't put a return thunk in
+in its place which special and gets checked.
 
-Cc: stable@vger.kernel.org
-Link: https://github.com/bluez/bluez/issues/704
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Signed-off-by: Hui Wang <hui.wang@canonical.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+In addition:
+
+  ERROR: modpost: "srso_alias_untrain_ret" [arch/x86/kvm/kvm-amd.ko] undefined!
+  make[2]: *** [scripts/Makefile.modpost:145: Module.symvers] Chyba 1
+  make[1]: *** [/usr/src/linux-6.8.3/Makefile:1873: modpost] Chyba 2
+  make: *** [Makefile:240: __sub-make] Chyba 2
+
+since !SRSO builds would use the dummy return thunk as reported by
+petr.pisar@atlas.cz, https://bugzilla.kernel.org/show_bug.cgi?id=218679.
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202404020901.da75a60f-oliver.sang@intel.com
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/all/202404020901.da75a60f-oliver.sang@intel.com/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |   25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ arch/x86/lib/retpoline.S |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3219,6 +3219,31 @@ static void hci_conn_complete_evt(struct
- 		if (test_bit(HCI_ENCRYPT, &hdev->flags))
- 			set_bit(HCI_CONN_ENCRYPT, &conn->flags);
+--- a/arch/x86/lib/retpoline.S
++++ b/arch/x86/lib/retpoline.S
+@@ -229,8 +229,11 @@ SYM_CODE_END(srso_return_thunk)
+ #define JMP_SRSO_UNTRAIN_RET "ud2"
+ /* Dummy for the alternative in CALL_UNTRAIN_RET. */
+ SYM_CODE_START(srso_alias_untrain_ret)
+-	RET
++	ANNOTATE_UNRET_SAFE
++	ret
++	int3
+ SYM_FUNC_END(srso_alias_untrain_ret)
++__EXPORT_THUNK(srso_alias_untrain_ret)
+ #endif /* CONFIG_CPU_SRSO */
  
-+		/* "Link key request" completed ahead of "connect request" completes */
-+		if (ev->encr_mode == 1 && !test_bit(HCI_CONN_ENCRYPT, &conn->flags) &&
-+		    ev->link_type == ACL_LINK) {
-+			struct link_key *key;
-+			struct hci_cp_read_enc_key_size cp;
-+
-+			key = hci_find_link_key(hdev, &ev->bdaddr);
-+			if (key) {
-+				set_bit(HCI_CONN_ENCRYPT, &conn->flags);
-+
-+				if (!(hdev->commands[20] & 0x10)) {
-+					conn->enc_key_size = HCI_LINK_KEY_SIZE;
-+				} else {
-+					cp.handle = cpu_to_le16(conn->handle);
-+					if (hci_send_cmd(hdev, HCI_OP_READ_ENC_KEY_SIZE,
-+							 sizeof(cp), &cp)) {
-+						bt_dev_err(hdev, "sending read key size failed");
-+						conn->enc_key_size = HCI_LINK_KEY_SIZE;
-+					}
-+				}
-+
-+				hci_encrypt_cfm(conn, ev->status);
-+			}
-+		}
-+
- 		/* Get remote features */
- 		if (conn->type == ACL_LINK) {
- 			struct hci_cp_read_remote_features cp;
+ #ifdef CONFIG_CPU_UNRET_ENTRY
 
 
