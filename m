@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792787D074;
-	Mon,  8 Apr 2024 13:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639577D074;
+	Mon,  8 Apr 2024 13:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583523; cv=none; b=UvScgoyt8ODlH4zB9Hk1ZpD9XBQ95vgQgCg0vBQE7IBWz9Gh5WgZM+vWQwvO28MSPc18IYF+nZQH7PufdilBickFBZk7BHwFachusMnqGen69N9uvDKVSOUNL8MF5Shh3uV+MBUkhs60+w5HwOjwvYbdKxxIsQy9jGUgYRRogiA=
+	t=1712583526; cv=none; b=Bsbi3yFP3qFMWavb5dwhEbR5Lbr9EcH3WcLZudn8XvWijppyBRezRQxaosWmj2noJ52Q6788/U5ApfUZpn1asFt/eHV5JGPGxUiLEoswbCesCkzDjrDwZpw3lHq9DsiteZpMOh0YCO3rkF/9r/Uo3Xoe/dj6yVFozZ+qsuW3Uk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583523; c=relaxed/simple;
-	bh=HjnMS+nk7a/XLqIsgMgYXJo25fEuCzyLMofd8jOoaHY=;
+	s=arc-20240116; t=1712583526; c=relaxed/simple;
+	bh=+0pDmkOV3j7V8e00X6TxZEpW/DIDcA6vgMtAVVZPnVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gh2h2NxyWKN4tHHzbTJTnRjCAVvBH2Su0DMJkwP+SHWXd7JENoGNMEO4/G5ZcLy4lqdx2j3G+Y+c8ZZWgrDT3alpRh8PU8v4GUt3x00qHIXZt2/BN43GsU0XbDdxEETqUvaod8CJZ1Ixs2L6HvkLMKu3gdfrFTCrt4I4Xs85H84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqtK+YNY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AOsTBl+9KRYvpJ/3fay0QNbAuafnfNRRpcgBXMCi7VLLmScsdFSIwO14+FtfNAMSNX5KcL5eF7QWimsihNw/LRTk9Vjufw7dyAxDZ7S1e7tW4AcZgA8lkAjssQWSvEyC+XrcTCr5qidDSsZVVfjTiZJry/TWbhAIG8+0IF63OSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pghfxaa+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqtK+YNY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F64C433F1;
-	Mon,  8 Apr 2024 13:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pghfxaa+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE339C433C7;
+	Mon,  8 Apr 2024 13:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583523;
-	bh=HjnMS+nk7a/XLqIsgMgYXJo25fEuCzyLMofd8jOoaHY=;
+	s=korg; t=1712583526;
+	bh=+0pDmkOV3j7V8e00X6TxZEpW/DIDcA6vgMtAVVZPnVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gqtK+YNYVJPudYUFsVXhA4wqVJ5z3tG540xrXP/6kuN1qIeIixzHhHNPOKg6dPtJM
-	 c+Q6QXt70phpcSsW2D17Fi07Pxx8hGgImbFDPDIOr2gf0be/g/PIQN2yewrSMEyzsB
-	 q3CSq+AfRjevjqLsK5QP3az7fXBn+0iAIUynQW3k=
+	b=pghfxaa+Nuae3HhI4xQAuC8nGDx0wf2HDhX+zst3KWcqlNmWQiRFdXrEZ04qC6dzB
+	 FsYbAgHnvn4HeMxoNxyKfgbypqXNJXjXKh48/+jxvtoTk/x3g2oyipVNCJT6SX+yOL
+	 TqpChyLjWj6LKlSNY4TldbhzHZPtDIGi0ZoARXE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jeff.layton@primarydata.com>,
-	Lance Shelton <lance.shelton@hammerspace.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 256/690] nfsd: Retry once in nfsd_open on an -EOPENSTALE return
-Date: Mon,  8 Apr 2024 14:52:02 +0200
-Message-ID: <20240408125408.887864948@linuxfoundation.org>
+	Andreas Schwab <schwab@suse.de>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Yunhui Cui <cuiyunhui@bytedance.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 188/273] riscv: use KERN_INFO in do_trap
+Date: Mon,  8 Apr 2024 14:57:43 +0200
+Message-ID: <20240408125315.129745497@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +50,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Layton <jeff.layton@primarydata.com>
+From: Andreas Schwab <schwab@suse.de>
 
-[ Upstream commit 12bcbd40fd931472c7fc9cf3bfe66799ece93ed8 ]
+[ Upstream commit dd33e5dc7247041b565014f66286c9566b0e32b6 ]
 
-If we get back -EOPENSTALE from an NFSv4 open, then we either got some
-unhandled error or the inode we got back was not the same as the one
-associated with the dentry.
+Print the instruction dump with info instead of emergency level.  The
+unhandled signal message is only for informational purpose.
 
-We really have no recourse in that situation other than to retry the
-open, and if it fails to just return nfserr_stale back to the client.
-
-Signed-off-by: Jeff Layton <jeff.layton@primarydata.com>
-Signed-off-by: Lance Shelton <lance.shelton@hammerspace.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: b8a03a634129 ("riscv: add userland instruction dump to RISC-V splats")
+Signed-off-by: Andreas Schwab <schwab@suse.de>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Reviewed-by: Yunhui Cui <cuiyunhui@bytedance.com>
+Link: https://lore.kernel.org/r/mvmy1aegrhm.fsf@suse.de
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfsproc.c |  1 +
- fs/nfsd/vfs.c     | 10 +++++++++-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ arch/riscv/kernel/traps.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfsproc.c b/fs/nfsd/nfsproc.c
-index 406dc50fea7ba..f65eba938a57d 100644
---- a/fs/nfsd/nfsproc.c
-+++ b/fs/nfsd/nfsproc.c
-@@ -875,6 +875,7 @@ nfserrno (int errno)
- 		{ nfserr_serverfault, -ESERVERFAULT },
- 		{ nfserr_serverfault, -ENFILE },
- 		{ nfserr_io, -EREMOTEIO },
-+		{ nfserr_stale, -EOPENSTALE },
- 		{ nfserr_io, -EUCLEAN },
- 		{ nfserr_perm, -ENOKEY },
- 		{ nfserr_no_grace, -ENOGRACE},
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index 925aa08ca1075..bc025fe5a595b 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -791,6 +791,7 @@ nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
- 		int may_flags, struct file **filp)
- {
- 	__be32 err;
-+	bool retried = false;
+diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
+index a1b9be3c4332d..142f5f5168fb1 100644
+--- a/arch/riscv/kernel/traps.c
++++ b/arch/riscv/kernel/traps.c
+@@ -121,7 +121,7 @@ void do_trap(struct pt_regs *regs, int signo, int code, unsigned long addr)
+ 		print_vma_addr(KERN_CONT " in ", instruction_pointer(regs));
+ 		pr_cont("\n");
+ 		__show_regs(regs);
+-		dump_instr(KERN_EMERG, regs);
++		dump_instr(KERN_INFO, regs);
+ 	}
  
- 	validate_process_creds();
- 	/*
-@@ -806,9 +807,16 @@ nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
- 	 */
- 	if (type == S_IFREG)
- 		may_flags |= NFSD_MAY_OWNER_OVERRIDE;
-+retry:
- 	err = fh_verify(rqstp, fhp, type, may_flags);
--	if (!err)
-+	if (!err) {
- 		err = __nfsd_open(rqstp, fhp, type, may_flags, filp);
-+		if (err == nfserr_stale && !retried) {
-+			retried = true;
-+			fh_put(fhp);
-+			goto retry;
-+		}
-+	}
- 	validate_process_creds();
- 	return err;
- }
+ 	force_sig_fault(signo, code, (void __user *)addr);
 -- 
 2.43.0
 
