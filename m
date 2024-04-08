@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF527F499;
-	Mon,  8 Apr 2024 14:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299B77F47E;
+	Mon,  8 Apr 2024 14:02:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584973; cv=none; b=jJy4M87RbibK561Tqws/olPqxLqXu/VSCdxXIjx8b8j0wJPLysh+0Q4gF3dXI5m7T0MW6Rhnq8yKURIIQGP8PWajsGaIcerHP+eE9C11w33gCRENLgl9hI9duThjcFarfK15N4HFZyHeCSv8iFUTeUlGE6OAWoZwswU2qJOUQ7g=
+	t=1712584976; cv=none; b=sVQ7bHDitxUG7gStmS988Grj4Nm2WIQIdq54HkwGOlVOCM40V6xtANOfJHWyNGllwfFej4/6qKcUneW3S5eqaZsDgRp6ko2JRZ+a7rrr8AEp1v7zEHY9tENq9Pnq4EHVnsAPaqCfJ+pfQ7qeQS9o3Gvx5FcFdbZhBZQ81yYfCsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584973; c=relaxed/simple;
-	bh=/TYVNtY1C1XGsRQZaaMq1IsN3METX0rWkMa2HOSKdX0=;
+	s=arc-20240116; t=1712584976; c=relaxed/simple;
+	bh=tIyMiilCakTcREAAMw92VTc0GP8yqyJERcxqY3ZqC60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N4SKb/LZsUeJrJf7NoXINWpHbY/otWOYFnDThCsjsxJmZ40V1k2vhJ/8SVLvQEKH7SajkqD6sLJZBKOAywZV5Np2txKmjkKrn7v+qXckvnfBDHnNbQmiN7fdds8R0OzkBr7JIu+/rIfBF+xqdBl053DDCCkd7dlSo2tXCRsL7eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N1fl7M9E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FhaAAA/jskv7KVH0fHCai4nzcvHXLJYUEHfV2V9I2rbueXp3MGDxdcUKH+n1x1OiuigFlrizYQlzXm9eOrjZmJeNmyNegid6k/hPlRLl4EdpxZk6BuGIhP4MuQRksGUJ8jcvsnX6Ba8dg32H5TXtEpbjDENOGEtVoBmCLCCodig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f1DYimfG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1fl7M9E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB6EC433C7;
-	Mon,  8 Apr 2024 14:02:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1DYimfG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63F2C433C7;
+	Mon,  8 Apr 2024 14:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584973;
-	bh=/TYVNtY1C1XGsRQZaaMq1IsN3METX0rWkMa2HOSKdX0=;
+	s=korg; t=1712584976;
+	bh=tIyMiilCakTcREAAMw92VTc0GP8yqyJERcxqY3ZqC60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1fl7M9EgXO2373a4h86f0lYcFZo3OpzLyMoQy8Tg00eTifgqYOuk5/gKmytydNvJ
-	 xmjNLMPdMQWFVOayh8ZySScohCxTho09UHWml9G8Ne6+3geEMw+OYjOqd/bZKgNEkU
-	 DZwfnWAZiswfuVfP4zXefsoBvbMcfjF8rOT4bYuE=
+	b=f1DYimfGLUdFMRFzV1/7DulHeyjmGkuX4vox8ETpT0qS0BZ3x4D2gFk15VRdvjsiN
+	 M54SZLguhuiDA3r5dTQdB6tcd6dVmbTlqx2BLZ/oMrusM4FFxlbaLtskecnjjX87iw
+	 nsu55Babv85cNPg8Y0SA5J2u0G+sTocOLFjJ3ieY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Leo Li <sunpeng.li@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	amd-gfx@lists.freedesktop.org,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 579/690] drm/amdgpu: Use drm_mode_copy()
-Date: Mon,  8 Apr 2024 14:57:25 +0200
-Message-ID: <20240408125420.579306553@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.15 613/690] ixgbe: avoid sleeping allocation in ixgbe_ipsec_vf_add_sa()
+Date: Mon,  8 Apr 2024 14:57:59 +0200
+Message-ID: <20240408125421.823464374@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -49,134 +49,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit 426c89aa203bcec9d9cf6eea36735eafa1b1f099 ]
+[ Upstream commit aec806fb4afba5fe80b09e29351379a4292baa43 ]
 
-struct drm_display_mode embeds a list head, so overwriting
-the full struct with another one will corrupt the list
-(if the destination mode is on a list). Use drm_mode_copy()
-instead which explicitly preserves the list head of
-the destination mode.
+Change kzalloc() flags used in ixgbe_ipsec_vf_add_sa() to GFP_ATOMIC, to
+avoid sleeping in IRQ context.
 
-Even if we know the destination mode is not on any list
-using drm_mode_copy() seems decent as it sets a good
-example. Bad examples of not using it might eventually
-get copied into code where preserving the list head
-actually matters.
+Dan Carpenter, with the help of Smatch, has found following issue:
+The patch eda0333ac293: "ixgbe: add VF IPsec management" from Aug 13,
+2018 (linux-next), leads to the following Smatch static checker
+warning: drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c:917 ixgbe_ipsec_vf_add_sa()
+	warn: sleeping in IRQ context
 
-Obviously one case not covered here is when the mode
-itself is embedded in a larger structure and the whole
-structure is copied. But if we are careful when copying
-into modes embedded in structures I think we can be a
-little more reassured that bogus list heads haven't been
-propagated in.
+The call tree that Smatch is worried about is:
+ixgbe_msix_other() <- IRQ handler
+-> ixgbe_msg_task()
+   -> ixgbe_rcv_msg_from_vf()
+      -> ixgbe_ipsec_vf_add_sa()
 
-@is_mode_copy@
-@@
-drm_mode_copy(...)
-{
-...
-}
-
-@depends on !is_mode_copy@
-struct drm_display_mode *mode;
-expression E, S;
-@@
-(
-- *mode = E
-+ drm_mode_copy(mode, &E)
-|
-- memcpy(mode, E, S)
-+ drm_mode_copy(mode, E)
-)
-
-@depends on !is_mode_copy@
-struct drm_display_mode mode;
-expression E;
-@@
-(
-- mode = E
-+ drm_mode_copy(&mode, &E)
-|
-- memcpy(&mode, E, S)
-+ drm_mode_copy(&mode, E)
-)
-
-@@
-struct drm_display_mode *mode;
-@@
-- &*mode
-+ mode
-
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Leo Li <sunpeng.li@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: amd-gfx@lists.freedesktop.org
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 79f3e38f60e5 ("drm/amd/display: Preserve original aspect ratio in create stream")
+Fixes: eda0333ac293 ("ixgbe: add VF IPsec management")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/intel-wired-lan/db31a0b0-4d9f-4e6b-aed8-88266eb5665c@moroto.mountain
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c    | 4 ++--
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 6 +++---
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
-index c777aff164b76..654f99f4107ea 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
-@@ -625,7 +625,7 @@ amdgpu_connector_fixup_lcd_native_mode(struct drm_encoder *encoder,
- 		if (mode->type & DRM_MODE_TYPE_PREFERRED) {
- 			if (mode->hdisplay != native_mode->hdisplay ||
- 			    mode->vdisplay != native_mode->vdisplay)
--				memcpy(native_mode, mode, sizeof(*mode));
-+				drm_mode_copy(native_mode, mode);
- 		}
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c
+index 69d11ff7677d6..ac198c00b44f5 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c
+@@ -909,7 +909,13 @@ int ixgbe_ipsec_vf_add_sa(struct ixgbe_adapter *adapter, u32 *msgbuf, u32 vf)
+ 		goto err_out;
  	}
  
-@@ -634,7 +634,7 @@ amdgpu_connector_fixup_lcd_native_mode(struct drm_encoder *encoder,
- 		list_for_each_entry_safe(mode, t, &connector->probed_modes, head) {
- 			if (mode->hdisplay == native_mode->hdisplay &&
- 			    mode->vdisplay == native_mode->vdisplay) {
--				*native_mode = *mode;
-+				drm_mode_copy(native_mode, mode);
- 				drm_mode_set_crtcinfo(native_mode, CRTC_INTERLACE_HALVE_V);
- 				DRM_DEBUG_KMS("Determined LVDS native mode details from EDID\n");
- 				break;
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 7385efe699f88..9356decd14513 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -6219,7 +6219,7 @@ get_highest_refresh_rate_mode(struct amdgpu_dm_connector *aconnector,
- 		}
- 	}
+-	xs = kzalloc(sizeof(*xs), GFP_KERNEL);
++	algo = xfrm_aead_get_byname(aes_gcm_name, IXGBE_IPSEC_AUTH_BITS, 1);
++	if (unlikely(!algo)) {
++		err = -ENOENT;
++		goto err_out;
++	}
++
++	xs = kzalloc(sizeof(*xs), GFP_ATOMIC);
+ 	if (unlikely(!xs)) {
+ 		err = -ENOMEM;
+ 		goto err_out;
+@@ -925,14 +931,8 @@ int ixgbe_ipsec_vf_add_sa(struct ixgbe_adapter *adapter, u32 *msgbuf, u32 vf)
+ 		memcpy(&xs->id.daddr.a4, sam->addr, sizeof(xs->id.daddr.a4));
+ 	xs->xso.dev = adapter->netdev;
  
--	aconnector->freesync_vid_base = *m_pref;
-+	drm_mode_copy(&aconnector->freesync_vid_base, m_pref);
- 	return m_pref;
- }
- 
-@@ -6333,8 +6333,8 @@ create_stream_for_sink(struct amdgpu_dm_connector *aconnector,
- 				 is_freesync_video_mode(&mode, aconnector);
- 		if (recalculate_timing) {
- 			freesync_mode = get_highest_refresh_rate_mode(aconnector, false);
--			saved_mode = mode;
--			mode = *freesync_mode;
-+			drm_mode_copy(&saved_mode, &mode);
-+			drm_mode_copy(&mode, freesync_mode);
- 		} else {
- 			decide_crtc_timing_for_drm_display_mode(
- 				&mode, preferred_mode, scale);
+-	algo = xfrm_aead_get_byname(aes_gcm_name, IXGBE_IPSEC_AUTH_BITS, 1);
+-	if (unlikely(!algo)) {
+-		err = -ENOENT;
+-		goto err_xs;
+-	}
+-
+ 	aead_len = sizeof(*xs->aead) + IXGBE_IPSEC_KEY_BITS / 8;
+-	xs->aead = kzalloc(aead_len, GFP_KERNEL);
++	xs->aead = kzalloc(aead_len, GFP_ATOMIC);
+ 	if (unlikely(!xs->aead)) {
+ 		err = -ENOMEM;
+ 		goto err_xs;
 -- 
 2.43.0
 
