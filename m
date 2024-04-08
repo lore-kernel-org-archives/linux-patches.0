@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8B97C6CA;
-	Mon,  8 Apr 2024 13:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054AE79F0;
+	Mon,  8 Apr 2024 13:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584682; cv=none; b=cH8l1VOtndgcY5o+qmpPkMpdPvKES/aT6FuL1NOX33U9puAu9xyokYN+VHGLHdEYLCihFTx6O4QFq3HwqVs4xI2VdmoyoF55yKO/XljPyBCqui59DR+pZMvDjvCUuhQu6efZMzYjwUfKAIxMKmk22+9DNR0VBb0iMDiRcSm4sMc=
+	t=1712584686; cv=none; b=ua1qZhvvT5x4W675w+sJzytspJSz/2W+qxOmF1TeQH2MGUIjpGsMOlqvAWvm1crTjWfFGA5oymeZQ3CXfqyyqDS2tMMpYMPaQb0XsKZ7/pRfND1Nx7OqA9LWlh/991Roy9DEwDkWYp/mtOPXS9+SYEhrPAlJ3M2EusnRCoC/b2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584682; c=relaxed/simple;
-	bh=ZXTev4ayTHSJQYKGuS6Oh94GJ8+V95M7ypfWSMQTvvw=;
+	s=arc-20240116; t=1712584686; c=relaxed/simple;
+	bh=//dVmfkLb0H6/WiA0WDwH9/cvZfhOLbSuDLndDDA6gM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bhkcQT4oC3NYqLzgMFP/s+f+bUXOK7Rni4fuiJHYwQ5HqMx8HhQveaardQnuGpsgoOZ72gZRknKAnmJX3CTKjN4DZTqFrQMhQWHmMaS/jB7wf/nkepp1MstCIFp1Het1hAuEsmYUohqRtcQf79pgA4UXiuPp8wUuOaJ6fz0FbPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qP+X0y+j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WDB6mMxEcJXh4QFhymWPR+6K8Kx5fvPFTWxG+Iuv+CVpgB8hwtTykjwBF6IHdyHhc7e/AnvZ/NzYZBmBQB7ZcsYFuJKjAd4PVX36LS3LLjYCVt+HQ7OjSJt/RDAUtU9jrTtYKlfVIP/lzmNoEGfB17dL41/pilmYutvXmr1S/E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qOhdFX8p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qP+X0y+j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0654FC433C7;
-	Mon,  8 Apr 2024 13:58:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qOhdFX8p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15BFEC433F1;
+	Mon,  8 Apr 2024 13:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584682;
-	bh=ZXTev4ayTHSJQYKGuS6Oh94GJ8+V95M7ypfWSMQTvvw=;
+	s=korg; t=1712584685;
+	bh=//dVmfkLb0H6/WiA0WDwH9/cvZfhOLbSuDLndDDA6gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qP+X0y+jMZptZcxjb7m8MdAzrySxnj3wrKQb0KxxL2ke4qixKsR6GrG/HMmpbY0kA
-	 16FO2VmvxUfWrX9jzIYrdNH3fWRg6z2AoBIGVGzodY3OUxr7OxWEj3mOnXiQKNaQO2
-	 eUUi1zDFNESQt/oLCjZrDBz+cTI0c+WumHRciba4=
+	b=qOhdFX8pM6KKS7tBqf1ISRU9sDxdf/YZl07hG2/5cwH0Xmz+tRVnIgKkrjfTX8Uje
+	 i8H9ryQj0pFciLkLx6nnFBIS8GKfBQG4LHi3wm/sjeLqADVgS7TdDQAeG8h1rbEb0m
+	 JoubE4pSQ7j7trykfqZa+SGbFEFVi2k2uv9WMly8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
+	=?UTF-8?q?=E5=BC=B5=E6=99=BA=E8=AB=BA?= <cc85nod@gmail.com>,
 	Jeff Layton <jlayton@kernel.org>,
+	Dai Ngo <dai.ngo@oracle.com>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 514/690] NFSD: replace delayed_work with work_struct for nfsd_client_shrinker
-Date: Mon,  8 Apr 2024 14:56:20 +0200
-Message-ID: <20240408125418.272557376@linuxfoundation.org>
+Subject: [PATCH 5.15 523/690] nfsd: fix courtesy client with deny mode handling in nfs4_upgrade_open
+Date: Mon,  8 Apr 2024 14:56:29 +0200
+Message-ID: <20240408125418.585982298@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -45,83 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 7c24fa225081f31bc6da6a355c1ba801889ab29a ]
+[ Upstream commit dcd779dc46540e174a6ac8d52fbed23593407317 ]
 
-Since nfsd4_state_shrinker_count always calls mod_delayed_work with
-0 delay, we can replace delayed_work with work_struct to save some
-space and overhead.
+The nested if statements here make no sense, as you can never reach
+"else" branch in the nested statement. Fix the error handling for
+when there is a courtesy client that holds a conflicting deny mode.
 
-Also add the call to cancel_work after unregister the shrinker
-in nfs4_state_shutdown_net.
-
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Fixes: 3d6942715180 ("NFSD: add support for share reservation conflict to courteous server")
+Reported-by: 張智諺 <cc85nod@gmail.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Dai Ngo <dai.ngo@oracle.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/netns.h     | 2 +-
- fs/nfsd/nfs4state.c | 8 ++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ fs/nfsd/nfs4state.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
-index 8c854ba3285bb..51a4b7885cae2 100644
---- a/fs/nfsd/netns.h
-+++ b/fs/nfsd/netns.h
-@@ -195,7 +195,7 @@ struct nfsd_net {
- 
- 	atomic_t		nfsd_courtesy_clients;
- 	struct shrinker		nfsd_client_shrinker;
--	struct delayed_work	nfsd_shrinker_work;
-+	struct work_struct	nfsd_shrinker_work;
- };
- 
- /* Simple check to find out if a given net was properly initialized */
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index ca0a1816500c3..22799f5ce686e 100644
+index fab5805b3ca74..69bc4622a95a4 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -4411,7 +4411,7 @@ nfsd4_state_shrinker_count(struct shrinker *shrink, struct shrink_control *sc)
- 	if (!count)
- 		count = atomic_long_read(&num_delegations);
- 	if (count)
--		mod_delayed_work(laundry_wq, &nn->nfsd_shrinker_work, 0);
-+		queue_work(laundry_wq, &nn->nfsd_shrinker_work);
- 	return (unsigned long)count;
- }
- 
-@@ -6228,8 +6228,7 @@ deleg_reaper(struct nfsd_net *nn)
- static void
- nfsd4_state_shrinker_worker(struct work_struct *work)
- {
--	struct delayed_work *dwork = to_delayed_work(work);
--	struct nfsd_net *nn = container_of(dwork, struct nfsd_net,
-+	struct nfsd_net *nn = container_of(work, struct nfsd_net,
- 				nfsd_shrinker_work);
- 
- 	courtesy_client_reaper(nn);
-@@ -8057,7 +8056,7 @@ static int nfs4_state_create_net(struct net *net)
- 	INIT_LIST_HEAD(&nn->blocked_locks_lru);
- 
- 	INIT_DELAYED_WORK(&nn->laundromat_work, laundromat_main);
--	INIT_DELAYED_WORK(&nn->nfsd_shrinker_work, nfsd4_state_shrinker_worker);
-+	INIT_WORK(&nn->nfsd_shrinker_work, nfsd4_state_shrinker_worker);
- 	get_net(net);
- 
- 	nn->nfsd_client_shrinker.scan_objects = nfsd4_state_shrinker_scan;
-@@ -8164,6 +8163,7 @@ nfs4_state_shutdown_net(struct net *net)
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
- 
- 	unregister_shrinker(&nn->nfsd_client_shrinker);
-+	cancel_work(&nn->nfsd_shrinker_work);
- 	cancel_delayed_work_sync(&nn->laundromat_work);
- 	locks_end_grace(&nn->nfsd4_manager);
+@@ -5300,16 +5300,17 @@ nfs4_upgrade_open(struct svc_rqst *rqstp, struct nfs4_file *fp,
+ 	/* test and set deny mode */
+ 	spin_lock(&fp->fi_lock);
+ 	status = nfs4_file_check_deny(fp, open->op_share_deny);
+-	if (status == nfs_ok) {
+-		if (status != nfserr_share_denied) {
+-			set_deny(open->op_share_deny, stp);
+-			fp->fi_share_deny |=
+-				(open->op_share_deny & NFS4_SHARE_DENY_BOTH);
+-		} else {
+-			if (nfs4_resolve_deny_conflicts_locked(fp, false,
+-					stp, open->op_share_deny, false))
+-				status = nfserr_jukebox;
+-		}
++	switch (status) {
++	case nfs_ok:
++		set_deny(open->op_share_deny, stp);
++		fp->fi_share_deny |=
++			(open->op_share_deny & NFS4_SHARE_DENY_BOTH);
++		break;
++	case nfserr_share_denied:
++		if (nfs4_resolve_deny_conflicts_locked(fp, false,
++				stp, open->op_share_deny, false))
++			status = nfserr_jukebox;
++		break;
+ 	}
+ 	spin_unlock(&fp->fi_lock);
  
 -- 
 2.43.0
