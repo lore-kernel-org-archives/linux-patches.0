@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC207C098;
-	Mon,  8 Apr 2024 13:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B3274BE8;
+	Mon,  8 Apr 2024 13:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581879; cv=none; b=IYrcivKiWAHNq9lrXdqbHLx/kzK40nc3oHb/wWekLkxFyjuTDB2j8P/pehSR5PxmAIiPriG48FA54eIInsOKCeaEQNspWDMaqcXyeWUcPA85wPmFkrtLcO+alhokotRGYG8C5KUSTJkQQx8oQUyCjRZPsS2wNd93YWJU5su/NUk=
+	t=1712581882; cv=none; b=H6LaVuESxiTiQmXg7DY8cetGv4dN2f+7AJp1kUI6bF69LKPaSvdZUdvSkwF50aPLrrHb98ZsQEPQGLJJuIo7OWQpuGVCnuyBaxsm1ZxYkptifAfsULW7chilxBFre/QUSJSlwIAV8noH226wrcaQs0hTAQ/hDF8AKeBRi8U3Yaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581879; c=relaxed/simple;
-	bh=TZMhkWGRuMnfxfYVlMXp6niT82dzSo4Tr1paTDpWXRQ=;
+	s=arc-20240116; t=1712581882; c=relaxed/simple;
+	bh=O2RQ8UoGZeRqPocfXoIN5zyKgqJlBw8JopgmA/ed5XY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sa2+FeX2z4ImtG7zFR9nw1XlTUjMX6k8k+c4S1ghrTa2uFFo880YBl+06jQRN7XY9p3Gua3LXyizMQCjluU3z8nxa5qyyFgLzCcbKEr5zj2JKCBLxJKdFZKN6nnufbduT3efUoCrwNHPjuB/H7WMC96l9nFo506F0VxMoU5diVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rN1zcveq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OnXRoGRJb0AXQyoV7oCccpgjbQbWMqI/4uPrfShg0WDA4OdXORHLTrYKeInKjOGxKPozjDUwyA7EfbmOSHg3mxOJQnElL5DAdvkiBosBEJCqix7DLtms+odZkj1MqQGBgoMUTqmTWK4sxZ4b6vvvM94cIiksrUir4pSsUR/90WM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnTRQqOX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rN1zcveq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F295C43390;
-	Mon,  8 Apr 2024 13:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnTRQqOX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B01AC433F1;
+	Mon,  8 Apr 2024 13:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581878;
-	bh=TZMhkWGRuMnfxfYVlMXp6niT82dzSo4Tr1paTDpWXRQ=;
+	s=korg; t=1712581881;
+	bh=O2RQ8UoGZeRqPocfXoIN5zyKgqJlBw8JopgmA/ed5XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rN1zcveq/tXiLgN1iAduGq9dyIVZ+oCC26mJPC+WVRrdwfIbMmci6RdrUCy0wv8da
-	 b/ruldu/eeic7w9UX66cq4/d9nI3VBKdU6eUgWpbMzBhA95yzqAFUvRxb21iL2kzgz
-	 ZPvxq0/a2vK2iBz6ezTMvd4J8gwnb9oKvjyghKQI=
+	b=MnTRQqOXWPGFNJFtyKcys2/ZboeHAZO+CmNh8eFkQhCnguJCphQb3vYfMF2NYx3L6
+	 ZRHR96B1zvGmgMxb/UkRKyCAbNNtN2jYYq1nA7qTyMbuhNjooeL87gsdYxKA2mTfdE
+	 r9vb283vTi5/lnbTfd0FxNJiAIa08e65EU7xoZPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Thompson <davthompson@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 059/138] mlxbf_gige: stop interface during shutdown
-Date: Mon,  8 Apr 2024 14:57:53 +0200
-Message-ID: <20240408125258.057785145@linuxfoundation.org>
+	Maximilian Heyne <mheyne@amazon.de>,
+	Srivathsa Dara <srivathsa.d.dara@oracle.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 074/690] ext4: fix corruption during on-line resize
+Date: Mon,  8 Apr 2024 14:49:00 +0200
+Message-ID: <20240408125402.199205226@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,113 +48,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Thompson <davthompson@nvidia.com>
+From: Maximilian Heyne <mheyne@amazon.de>
 
-commit 09ba28e1cd3cf715daab1fca6e1623e22fd754a6 upstream.
+[ Upstream commit a6b3bfe176e8a5b05ec4447404e412c2a3fc92cc ]
 
-The mlxbf_gige driver intermittantly encounters a NULL pointer
-exception while the system is shutting down via "reboot" command.
-The mlxbf_driver will experience an exception right after executing
-its shutdown() method.  One example of this exception is:
+We observed a corruption during on-line resize of a file system that is
+larger than 16 TiB with 4k block size. With having more then 2^32 blocks
+resize_inode is turned off by default by mke2fs. The issue can be
+reproduced on a smaller file system for convenience by explicitly
+turning off resize_inode. An on-line resize across an 8 GiB boundary (the
+size of a meta block group in this setup) then leads to a corruption:
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000070
-Mem abort info:
-  ESR = 0x0000000096000004
-  EC = 0x25: DABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x04: level 0 translation fault
-Data abort info:
-  ISV = 0, ISS = 0x00000004
-  CM = 0, WnR = 0
-user pgtable: 4k pages, 48-bit VAs, pgdp=000000011d373000
-[0000000000000070] pgd=0000000000000000, p4d=0000000000000000
-Internal error: Oops: 96000004 [#1] SMP
-CPU: 0 PID: 13 Comm: ksoftirqd/0 Tainted: G S         OE     5.15.0-bf.6.gef6992a #1
-Hardware name: https://www.mellanox.com BlueField SoC/BlueField SoC, BIOS 4.0.2.12669 Apr 21 2023
-pstate: 20400009 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : mlxbf_gige_handle_tx_complete+0xc8/0x170 [mlxbf_gige]
-lr : mlxbf_gige_poll+0x54/0x160 [mlxbf_gige]
-sp : ffff8000080d3c10
-x29: ffff8000080d3c10 x28: ffffcce72cbb7000 x27: ffff8000080d3d58
-x26: ffff0000814e7340 x25: ffff331cd1a05000 x24: ffffcce72c4ea008
-x23: ffff0000814e4b40 x22: ffff0000814e4d10 x21: ffff0000814e4128
-x20: 0000000000000000 x19: ffff0000814e4a80 x18: ffffffffffffffff
-x17: 000000000000001c x16: ffffcce72b4553f4 x15: ffff80008805b8a7
-x14: 0000000000000000 x13: 0000000000000030 x12: 0101010101010101
-x11: 7f7f7f7f7f7f7f7f x10: c2ac898b17576267 x9 : ffffcce720fa5404
-x8 : ffff000080812138 x7 : 0000000000002e9a x6 : 0000000000000080
-x5 : ffff00008de3b000 x4 : 0000000000000000 x3 : 0000000000000001
-x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
-Call trace:
- mlxbf_gige_handle_tx_complete+0xc8/0x170 [mlxbf_gige]
- mlxbf_gige_poll+0x54/0x160 [mlxbf_gige]
- __napi_poll+0x40/0x1c8
- net_rx_action+0x314/0x3a0
- __do_softirq+0x128/0x334
- run_ksoftirqd+0x54/0x6c
- smpboot_thread_fn+0x14c/0x190
- kthread+0x10c/0x110
- ret_from_fork+0x10/0x20
-Code: 8b070000 f9000ea0 f95056c0 f86178a1 (b9407002)
----[ end trace 7cc3941aa0d8e6a4 ]---
-Kernel panic - not syncing: Oops: Fatal exception in interrupt
-Kernel Offset: 0x4ce722520000 from 0xffff800008000000
-PHYS_OFFSET: 0x80000000
-CPU features: 0x000005c1,a3330e5a
-Memory Limit: none
----[ end Kernel panic - not syncing: Oops: Fatal exception in interrupt ]---
+  dev=/dev/<some_dev> # should be >= 16 GiB
+  mkdir -p /corruption
+  /sbin/mke2fs -t ext4 -b 4096 -O ^resize_inode $dev $((2 * 2**21 - 2**15))
+  mount -t ext4 $dev /corruption
 
-During system shutdown, the mlxbf_gige driver's shutdown() is always executed.
-However, the driver's stop() method will only execute if networking interface
-configuration logic within the Linux distribution has been setup to do so.
+  dd if=/dev/zero bs=4096 of=/corruption/test count=$((2*2**21 - 4*2**15))
+  sha1sum /corruption/test
+  # 79d2658b39dcfd77274e435b0934028adafaab11  /corruption/test
 
-If shutdown() executes but stop() does not execute, NAPI remains enabled
-and this can lead to an exception if NAPI is scheduled while the hardware
-interface has only been partially deinitialized.
+  /sbin/resize2fs $dev $((2*2**21))
+  # drop page cache to force reload the block from disk
+  echo 1 > /proc/sys/vm/drop_caches
 
-The networking interface managed by the mlxbf_gige driver must be properly
-stopped during system shutdown so that IFF_UP is cleared, the hardware
-interface is put into a clean state, and NAPI is fully deinitialized.
+  sha1sum /corruption/test
+  # 3c2abc63cbf1a94c9e6977e0fbd72cd832c4d5c3  /corruption/test
 
-Fixes: f92e1869d74e ("Add Mellanox BlueField Gigabit Ethernet driver")
-Signed-off-by: David Thompson <davthompson@nvidia.com>
-Link: https://lore.kernel.org/r/20240325210929.25362-1-davthompson@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+2^21 = 2^15*2^6 equals 8 GiB whereof 2^15 is the number of blocks per
+block group and 2^6 are the number of block groups that make a meta
+block group.
+
+The last checksum might be different depending on how the file is laid
+out across the physical blocks. The actual corruption occurs at physical
+block 63*2^15 = 2064384 which would be the location of the backup of the
+meta block group's block descriptor. During the on-line resize the file
+system will be converted to meta_bg starting at s_first_meta_bg which is
+2 in the example - meaning all block groups after 16 GiB. However, in
+ext4_flex_group_add we might add block groups that are not part of the
+first meta block group yet. In the reproducer we achieved this by
+substracting the size of a whole block group from the point where the
+meta block group would start. This must be considered when updating the
+backup block group descriptors to follow the non-meta_bg layout. The fix
+is to add a test whether the group to add is already part of the meta
+block group or not.
+
+Fixes: 01f795f9e0d67 ("ext4: add online resizing support for meta_bg and 64-bit file systems")
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
+Tested-by: Srivathsa Dara <srivathsa.d.dara@oracle.com>
+Reviewed-by: Srivathsa Dara <srivathsa.d.dara@oracle.com>
+Link: https://lore.kernel.org/r/20240215155009.94493-1-mheyne@amazon.de
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/ext4/resize.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
-+++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
-@@ -14,6 +14,7 @@
- #include <linux/module.h>
- #include <linux/phy.h>
- #include <linux/platform_device.h>
-+#include <linux/rtnetlink.h>
- #include <linux/skbuff.h>
- 
- #include "mlxbf_gige.h"
-@@ -417,8 +418,13 @@ static void mlxbf_gige_shutdown(struct p
- {
- 	struct mlxbf_gige *priv = platform_get_drvdata(pdev);
- 
--	writeq(0, priv->base + MLXBF_GIGE_INT_EN);
--	mlxbf_gige_clean_port(priv);
-+	rtnl_lock();
-+	netif_device_detach(priv->netdev);
-+
-+	if (netif_running(priv->netdev))
-+		dev_close(priv->netdev);
-+
-+	rtnl_unlock();
- }
- 
- static const struct acpi_device_id __maybe_unused mlxbf_gige_acpi_match[] = {
+diff --git a/fs/ext4/resize.c b/fs/ext4/resize.c
+index 70d4f6e3aaa7f..4687d5972074d 100644
+--- a/fs/ext4/resize.c
++++ b/fs/ext4/resize.c
+@@ -1559,7 +1559,8 @@ static int ext4_flex_group_add(struct super_block *sb,
+ 		int gdb_num = group / EXT4_DESC_PER_BLOCK(sb);
+ 		int gdb_num_end = ((group + flex_gd->count - 1) /
+ 				   EXT4_DESC_PER_BLOCK(sb));
+-		int meta_bg = ext4_has_feature_meta_bg(sb);
++		int meta_bg = ext4_has_feature_meta_bg(sb) &&
++			      gdb_num >= le32_to_cpu(es->s_first_meta_bg);
+ 		sector_t padding_blocks = meta_bg ? 0 : sbi->s_sbh->b_blocknr -
+ 					 ext4_group_first_block_no(sb, 0);
+ 		sector_t old_gdb = 0;
+-- 
+2.43.0
+
 
 
