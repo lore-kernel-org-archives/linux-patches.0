@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00032524AF;
-	Mon,  8 Apr 2024 13:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E090B524AF;
+	Mon,  8 Apr 2024 13:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584381; cv=none; b=oD0FzytVg2wmHf7kuU+Y97Yp4wPM0yA1wmrgbWovG4E10wfy8WgsX/vs6mDQAbYYCeFYjtYlICa5msIFSZe+THQfG2p1qNjcYfnvm/B73itvCCLqXvgd3t5ZFXvBL1DWQ8/rjIhIpPJXJ6TkymRDl0XGmbZ7z2oiHiOB7if/RxE=
+	t=1712584384; cv=none; b=aP5bO5zmmIKnYH96+XMw9Rnyn4vn74S+eMtECmpSu5mU0N2z2VDJy6+GiCoZYQnBS/HcePfIOH6Mj68zBB2jSgykhM7U8SHuPG1U8NKlUrJikQfospLEhxtHZe/UhIZoCvs84akI5YmQogcYQmmN58wR5DwAsBU2TZIe+geozcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584381; c=relaxed/simple;
-	bh=7Z3sLThTzMYdbOLQCchYe4wXWWlu59kNPg1601IwKKg=;
+	s=arc-20240116; t=1712584384; c=relaxed/simple;
+	bh=kKx6AAikZjNH+zTvXT1+A/fdXuN7VNJk9K2K3CQuWy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WR1XCoz5b4EX4xtV2DZnCmr4ociEfMP4z6QTzMV+3mH0VGBOVGcXCoxjNHRLSO5xz3XFGc14GNiId30Sl+OiW5NDv1Wof+GJDfAM3Sx5Dxcj38cXDFPL3M/FH7TieOSpl/oTyCaeseSDLh+voW+pYI/yMatWmNAjMkpKkYJc4YY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNF6QjPo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ghLuexWVDc5MpfX7qe9odRB1wO4M/UqADTR6D1DnR406b5PA5AgPvvxKtVwI0T6KdPo7xmLVFEjwnvuqcWcrGLVmbgpeoDoS5LOWcIekFNB9YysYw0Tuxjwk/LZXTXWGKPd5EMGN+JQR4YO0BNg1K+2SibeKxtG2KRdfpPvWWUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWo4rG90; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNF6QjPo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2E0C433F1;
-	Mon,  8 Apr 2024 13:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWo4rG90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A39C433F1;
+	Mon,  8 Apr 2024 13:53:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584380;
-	bh=7Z3sLThTzMYdbOLQCchYe4wXWWlu59kNPg1601IwKKg=;
+	s=korg; t=1712584383;
+	bh=kKx6AAikZjNH+zTvXT1+A/fdXuN7VNJk9K2K3CQuWy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YNF6QjPouphkXUPQk4iuplUCNpTxoEbr/jd8Ozoi8bnJ6/Nvd1SpKQXtpxgcDo50p
-	 iQZ9i7OBwyQj8MlExX+LT6IbLUHiUf06lLTkLfkqXGT1yl7keKCNm4lbRS/XxZapZr
-	 pGPQUlO9A+rfEaiZUBXRO5PaXx5SxgHGNtUe9YOY=
+	b=LWo4rG90xhkB5Ix8p0kJkGcJvkhmaZ26CQ3VdcLCL+642LItgKY8OjROK9Ga03jC3
+	 jaPvhVAGqN3ygS5O3GoEb95B7VWcJac6Eab7OVK/zL3DFrpN72z3c++8hfziK1nEQT
+	 taYo90DLkfdnlWwzDCVtekg2SMbOdj18Ls6Hdydk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 387/690] NFSD: Clean up nfsd4_encode_readlink()
-Date: Mon,  8 Apr 2024 14:54:13 +0200
-Message-ID: <20240408125413.550489066@linuxfoundation.org>
+Subject: [PATCH 5.15 388/690] NFSD: Fix strncpy() fortify warning
+Date: Mon,  8 Apr 2024 14:54:14 +0200
+Message-ID: <20240408125413.597667801@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -44,6 +43,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -52,62 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 99b002a1fa00d90e66357315757e7277447ce973 ]
+[ Upstream commit 5304877936c0a67e1a01464d113bae4c81eacdb6 ]
 
-Similar changes to nfsd4_encode_readv(), all bundled into a single
-patch.
+In function ‘strncpy’,
+    inlined from ‘nfsd4_ssc_setup_dul’ at /home/cel/src/linux/manet/fs/nfsd/nfs4proc.c:1392:3,
+    inlined from ‘nfsd4_interssc_connect’ at /home/cel/src/linux/manet/fs/nfsd/nfs4proc.c:1489:11:
+/home/cel/src/linux/manet/include/linux/fortify-string.h:52:33: warning: ‘__builtin_strncpy’ specified bound 63 equals destination size [-Wstringop-truncation]
+   52 | #define __underlying_strncpy    __builtin_strncpy
+      |                                 ^
+/home/cel/src/linux/manet/include/linux/fortify-string.h:89:16: note: in expansion of macro ‘__underlying_strncpy’
+   89 |         return __underlying_strncpy(p, q, size);
+      |                ^~~~~~~~~~~~~~~~~~~~
 
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs4xdr.c | 24 +++++++++---------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+ fs/nfsd/nfs4proc.c      | 2 +-
+ include/linux/nfs_ssc.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 88e8192f9a75d..a5ab6ea475423 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -4016,16 +4016,13 @@ nfsd4_encode_read(struct nfsd4_compoundres *resp, __be32 nfserr,
- static __be32
- nfsd4_encode_readlink(struct nfsd4_compoundres *resp, __be32 nfserr, struct nfsd4_readlink *readlink)
- {
--	int maxcount;
--	__be32 wire_count;
--	int zero = 0;
-+	__be32 *p, *maxcount_p, zero = xdr_zero;
- 	struct xdr_stream *xdr = resp->xdr;
- 	int length_offset = xdr->buf->len;
--	int status;
--	__be32 *p;
-+	int maxcount, status;
- 
--	p = xdr_reserve_space(xdr, 4);
--	if (!p)
-+	maxcount_p = xdr_reserve_space(xdr, XDR_UNIT);
-+	if (!maxcount_p)
- 		return nfserr_resource;
- 	maxcount = PAGE_SIZE;
- 
-@@ -4050,14 +4047,11 @@ nfsd4_encode_readlink(struct nfsd4_compoundres *resp, __be32 nfserr, struct nfsd
- 		nfserr = nfserrno(status);
- 		goto out_err;
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 15991eb9b8d8c..5dce18fe99085 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1392,7 +1392,7 @@ static __be32 nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
+ 		return 0;
  	}
--
--	wire_count = htonl(maxcount);
--	write_bytes_to_xdr_buf(xdr->buf, length_offset, &wire_count, 4);
--	xdr_truncate_encode(xdr, length_offset + 4 + ALIGN(maxcount, 4));
--	if (maxcount & 3)
--		write_bytes_to_xdr_buf(xdr->buf, length_offset + 4 + maxcount,
--						&zero, 4 - (maxcount&3));
--	return 0;
-+	*maxcount_p = cpu_to_be32(maxcount);
-+	xdr_truncate_encode(xdr, length_offset + 4 + xdr_align_size(maxcount));
-+	write_bytes_to_xdr_buf(xdr->buf, length_offset + 4 + maxcount, &zero,
-+			       xdr_pad_size(maxcount));
-+	return nfs_ok;
+ 	if (work) {
+-		strncpy(work->nsui_ipaddr, ipaddr, sizeof(work->nsui_ipaddr));
++		strlcpy(work->nsui_ipaddr, ipaddr, sizeof(work->nsui_ipaddr) - 1);
+ 		refcount_set(&work->nsui_refcnt, 2);
+ 		work->nsui_busy = true;
+ 		list_add_tail(&work->nsui_list, &nn->nfsd_ssc_mount_list);
+diff --git a/include/linux/nfs_ssc.h b/include/linux/nfs_ssc.h
+index 222ae8883e854..75843c00f326a 100644
+--- a/include/linux/nfs_ssc.h
++++ b/include/linux/nfs_ssc.h
+@@ -64,7 +64,7 @@ struct nfsd4_ssc_umount_item {
+ 	refcount_t nsui_refcnt;
+ 	unsigned long nsui_expire;
+ 	struct vfsmount *nsui_vfsmount;
+-	char nsui_ipaddr[RPC_MAX_ADDRBUFLEN];
++	char nsui_ipaddr[RPC_MAX_ADDRBUFLEN + 1];
+ };
+ #endif
  
- out_err:
- 	xdr_truncate_encode(xdr, length_offset);
 -- 
 2.43.0
 
