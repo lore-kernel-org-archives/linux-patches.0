@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9477C0A6;
-	Mon,  8 Apr 2024 13:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362282DF73;
+	Mon,  8 Apr 2024 13:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582457; cv=none; b=hd/++Tt+a0ic1t1gGAcRPXlPiUCaHjLa9lHoXUeInTI6PH0i4Pj9krgsVWax378TaOX5En5wxB2eDxIhtb0rRnTASNyLkI8CynlxwU/uuJkcyfjkPbetrP8NOgymoQ331qCp0LI6O+iUAviJxweMHOwwZsvOr4UDd7CqExE8c6U=
+	t=1712582460; cv=none; b=sZuLbbG5FwfNZBPEwysIHEepmTzBYIwyBQre0UrWrvSUgBCsyzzeUw2gFeCt9Ty1TUZSlBk6x/yAm1rkrJpI9tpd1GyinLCzmdw4VJKC5y+yiw4pF/JnpeWV6enjiAlg80fQ70lKezwlRELT8wuEnYd580qYFfsPCsXj9dbkEhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582457; c=relaxed/simple;
-	bh=hS7mWQJBRZcixIxnsgqdNstf8WybhjBvycj5fg1q8kk=;
+	s=arc-20240116; t=1712582460; c=relaxed/simple;
+	bh=DAWfp3pVypxaYaTxJIkRW0sheVno3zg9DVClXrmXneg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XIbqNwmDCRL4KGccc5+9iAEkIZSVwIcDqnwD5dKZo2VTuHYyD/3h42d2gyE+9jfVHjJihxPd12p2zFDfhvpXMp6ypUsaMw32rK5WAmnmWRPLpcvFYPPUuXGmgNBfUBrcRymS0bVTNRvLTXZSLLxAKlW63lDG+rmeefSZeeNqQcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgfEV0E9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UfHUiNcOYitUDKzsHdQSc2PPpM4FBl5oxEMrycjQvgC53YYeXv9ppzC145TYRcm5wan4oNJ18E44QN6IsArXwnUbhKS0erDFQvKrZoNh4t/1tLPDefel67lvpdaiYAyFGEKPqxmkQiHRSfl34O6KUjKd9aVhrR1gAjD6fPSUJUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5kEGrj/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgfEV0E9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7326C433F1;
-	Mon,  8 Apr 2024 13:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5kEGrj/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60BFC433C7;
+	Mon,  8 Apr 2024 13:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582457;
-	bh=hS7mWQJBRZcixIxnsgqdNstf8WybhjBvycj5fg1q8kk=;
+	s=korg; t=1712582460;
+	bh=DAWfp3pVypxaYaTxJIkRW0sheVno3zg9DVClXrmXneg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RgfEV0E9qYxMygOj5HVwNJdExvIUaOkNJ2fdGTQMIV9y1jz7dzezExWUfAn4hHAXy
-	 zv1XdEINAtySxepLDdFDUCY2dG9pfbZLuhdZ8E4BQZ/vcqD/YODZcZK9wweP3x4Fde
-	 C25cJcGRrqITEKffWCSXNFcj075VgL1HIbpHgqmY=
+	b=o5kEGrj/zHQwYWDZiDnFdHowuKiGrSZG79yNihbzivupZP6yDONjpDnmOSs8QJ249
+	 q4S6u3VzY62FoPtDpcacmhXMhk6zFMtEuQFKpIPmbsVdXPxGD9FppzMzF39C6kx6u7
+	 9kbl3hgid1J/6UIaxqQ6QuosHvj8FfJTusXwh6Cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Rickard x Andersson <rickaran@axis.com>,
-	Christoph Niedermaier <cniedermaier@dh-electronics.com>
-Subject: [PATCH 5.15 147/690] tty: serial: imx: Fix broken RS485
-Date: Mon,  8 Apr 2024 14:50:13 +0200
-Message-ID: <20240408125404.838576463@linuxfoundation.org>
+	Gui-Dong Han <2045gemini@gmail.com>,
+	Bastien Nocera <hadess@hadess.net>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.8 078/273] Bluetooth: Fix TOCTOU in HCI debugfs implementation
+Date: Mon,  8 Apr 2024 14:55:53 +0200
+Message-ID: <20240408125311.726244335@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,89 +47,196 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rickard x Andersson <rickaran@axis.com>
+From: Bastien Nocera <hadess@hadess.net>
 
-commit 672448ccf9b6a676f96f9352cbf91f4d35f4084a upstream.
+commit 7835fcfd132eb88b87e8eb901f88436f63ab60f7 upstream.
 
-When about to transmit the function imx_uart_start_tx is called and in
-some RS485 configurations this function will call imx_uart_stop_rx. The
-problem is that imx_uart_stop_rx will enable loopback in order to
-release the RS485 bus, but when loopback is enabled transmitted data
-will just be looped to RX.
+struct hci_dev members conn_info_max_age, conn_info_min_age,
+le_conn_max_interval, le_conn_min_interval, le_adv_max_interval,
+and le_adv_min_interval can be modified from the HCI core code, as well
+through debugfs.
 
-This patch fixes the above problem by not enabling loopback when about
-to transmit.
+The debugfs implementation, that's only available to privileged users,
+will check for boundaries, making sure that the minimum value being set
+is strictly above the maximum value that already exists, and vice-versa.
 
-This driver now works well when used for RS485 half duplex master
-configurations.
+However, as both minimum and maximum values can be changed concurrently
+to us modifying them, we need to make sure that the value we check is
+the value we end up using.
 
-Fixes: 79d0224f6bf2 ("tty: serial: imx: Handle RS485 DE signal active high")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Rickard x Andersson <rickaran@axis.com>
-Tested-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
-Link: https://lore.kernel.org/r/20240221115304.509811-1-rickaran@axis.com
-Signed-off-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+For example, with ->conn_info_max_age set to 10, conn_info_min_age_set()
+gets called from vfs handlers to set conn_info_min_age to 8.
+
+In conn_info_min_age_set(), this goes through:
+	if (val == 0 || val > hdev->conn_info_max_age)
+		return -EINVAL;
+
+Concurrently, conn_info_max_age_set() gets called to set to set the
+conn_info_max_age to 7:
+	if (val == 0 || val > hdev->conn_info_max_age)
+		return -EINVAL;
+That check will also pass because we used the old value (10) for
+conn_info_max_age.
+
+After those checks that both passed, the struct hci_dev access
+is mutex-locked, disabling concurrent access, but that does not matter
+because the invalid value checks both passed, and we'll end up with
+conn_info_min_age = 8 and conn_info_max_age = 7
+
+To fix this problem, we need to lock the structure access before so the
+check and assignment are not interrupted.
+
+This fix was originally devised by the BassCheck[1] team, and
+considered the problem to be an atomicity one. This isn't the case as
+there aren't any concerns about the variable changing while we check it,
+but rather after we check it parallel to another change.
+
+This patch fixes CVE-2024-24858 and CVE-2024-24857.
+
+[1] https://sites.google.com/view/basscheck/
+
+Co-developed-by: Gui-Dong Han <2045gemini@gmail.com>
+Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
+Link: https://lore.kernel.org/linux-bluetooth/20231222161317.6255-1-2045gemini@gmail.com/
+Link: https://nvd.nist.gov/vuln/detail/CVE-2024-24858
+Link: https://lore.kernel.org/linux-bluetooth/20231222162931.6553-1-2045gemini@gmail.com/
+Link: https://lore.kernel.org/linux-bluetooth/20231222162310.6461-1-2045gemini@gmail.com/
+Link: https://nvd.nist.gov/vuln/detail/CVE-2024-24857
+Fixes: 31ad169148df ("Bluetooth: Add conn info lifetime parameters to debugfs")
+Fixes: 729a1051da6f ("Bluetooth: Expose default LE advertising interval via debugfs")
+Fixes: 71c3b60ec6d2 ("Bluetooth: Move BR/EDR debugfs file creation into hci_debugfs.c")
+Signed-off-by: Bastien Nocera <hadess@hadess.net>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/imx.c |   22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_debugfs.c |   48 +++++++++++++++++++++++++++++---------------
+ 1 file changed, 32 insertions(+), 16 deletions(-)
 
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -491,8 +491,7 @@ static void imx_uart_stop_tx(struct uart
- 	}
- }
- 
--/* called with port.lock taken and irqs off */
--static void imx_uart_stop_rx(struct uart_port *port)
-+static void imx_uart_stop_rx_with_loopback_ctrl(struct uart_port *port, bool loopback)
+--- a/net/bluetooth/hci_debugfs.c
++++ b/net/bluetooth/hci_debugfs.c
+@@ -218,10 +218,12 @@ static int conn_info_min_age_set(void *d
  {
- 	struct imx_port *sport = (struct imx_port *)port;
- 	u32 ucr1, ucr2, ucr4, uts;
-@@ -514,7 +513,7 @@ static void imx_uart_stop_rx(struct uart
- 	/* See SER_RS485_ENABLED/UTS_LOOP comment in imx_uart_probe() */
- 	if (port->rs485.flags & SER_RS485_ENABLED &&
- 	    port->rs485.flags & SER_RS485_RTS_ON_SEND &&
--	    sport->have_rtscts && !sport->have_rtsgpio) {
-+	    sport->have_rtscts && !sport->have_rtsgpio && loopback) {
- 		uts = imx_uart_readl(sport, imx_uart_uts_reg(sport));
- 		uts |= UTS_LOOP;
- 		imx_uart_writel(sport, uts, imx_uart_uts_reg(sport));
-@@ -527,6 +526,16 @@ static void imx_uart_stop_rx(struct uart
- }
+ 	struct hci_dev *hdev = data;
  
- /* called with port.lock taken and irqs off */
-+static void imx_uart_stop_rx(struct uart_port *port)
-+{
-+	/*
-+	 * Stop RX and enable loopback in order to make sure RS485 bus
-+	 * is not blocked. Se comment in imx_uart_probe().
-+	 */
-+	imx_uart_stop_rx_with_loopback_ctrl(port, true);
-+}
-+
-+/* called with port.lock taken and irqs off */
- static void imx_uart_enable_ms(struct uart_port *port)
+-	if (val == 0 || val > hdev->conn_info_max_age)
++	hci_dev_lock(hdev);
++	if (val == 0 || val > hdev->conn_info_max_age) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->conn_info_min_age = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -246,10 +248,12 @@ static int conn_info_max_age_set(void *d
  {
- 	struct imx_port *sport = (struct imx_port *)port;
-@@ -714,8 +723,13 @@ static void imx_uart_start_tx(struct uar
- 				imx_uart_rts_inactive(sport, &ucr2);
- 			imx_uart_writel(sport, ucr2, UCR2);
+ 	struct hci_dev *hdev = data;
  
-+			/*
-+			 * Since we are about to transmit we can not stop RX
-+			 * with loopback enabled because that will make our
-+			 * transmitted data being just looped to RX.
-+			 */
- 			if (!(port->rs485.flags & SER_RS485_RX_DURING_TX))
--				imx_uart_stop_rx(port);
-+				imx_uart_stop_rx_with_loopback_ctrl(port, false);
+-	if (val == 0 || val < hdev->conn_info_min_age)
++	hci_dev_lock(hdev);
++	if (val == 0 || val < hdev->conn_info_min_age) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
  
- 			sport->tx_state = WAIT_AFTER_RTS;
- 			start_hrtimer_ms(&sport->trigger_start_tx,
+-	hci_dev_lock(hdev);
+ 	hdev->conn_info_max_age = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -567,10 +571,12 @@ static int sniff_min_interval_set(void *
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val == 0 || val % 2 || val > hdev->sniff_max_interval)
++	hci_dev_lock(hdev);
++	if (val == 0 || val % 2 || val > hdev->sniff_max_interval) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->sniff_min_interval = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -595,10 +601,12 @@ static int sniff_max_interval_set(void *
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val == 0 || val % 2 || val < hdev->sniff_min_interval)
++	hci_dev_lock(hdev);
++	if (val == 0 || val % 2 || val < hdev->sniff_min_interval) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->sniff_max_interval = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -850,10 +858,12 @@ static int conn_min_interval_set(void *d
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val < 0x0006 || val > 0x0c80 || val > hdev->le_conn_max_interval)
++	hci_dev_lock(hdev);
++	if (val < 0x0006 || val > 0x0c80 || val > hdev->le_conn_max_interval) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->le_conn_min_interval = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -878,10 +888,12 @@ static int conn_max_interval_set(void *d
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val < 0x0006 || val > 0x0c80 || val < hdev->le_conn_min_interval)
++	hci_dev_lock(hdev);
++	if (val < 0x0006 || val > 0x0c80 || val < hdev->le_conn_min_interval) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->le_conn_max_interval = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -990,10 +1002,12 @@ static int adv_min_interval_set(void *da
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val < 0x0020 || val > 0x4000 || val > hdev->le_adv_max_interval)
++	hci_dev_lock(hdev);
++	if (val < 0x0020 || val > 0x4000 || val > hdev->le_adv_max_interval) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->le_adv_min_interval = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -1018,10 +1032,12 @@ static int adv_max_interval_set(void *da
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val < 0x0020 || val > 0x4000 || val < hdev->le_adv_min_interval)
++	hci_dev_lock(hdev);
++	if (val < 0x0020 || val > 0x4000 || val < hdev->le_adv_min_interval) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->le_adv_max_interval = val;
+ 	hci_dev_unlock(hdev);
+ 
 
 
