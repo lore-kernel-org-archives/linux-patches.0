@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D782DF73;
-	Mon,  8 Apr 2024 13:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A391F2DF73;
+	Mon,  8 Apr 2024 13:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581662; cv=none; b=Hr7BId38hvxK3S/yyizo9oEtTOTMB1fAoFs94lLnSCencgENDyqV/S/gbzXZzO12RGp2LbPgKhQJ72jSrSf2EtzuGpP+3vaN89nXqOC2NrwQIn1gAHKairSVv+niRUNe1bMjP240YuY2iacNCiFVJax+kkt0lPYYAyi63X1ByG0=
+	t=1712581665; cv=none; b=QZs64urGK8Dbmm4BZxtrFAyVkOTIYxqOoDDfJEwgH79loY3zJm3rgYr6STDDKCr+jYOFJxkDqss0AbbjQgdprfBaDGGnBuvdTykTFD9nwvc9sLSLztZyM7cJA8zgSD1iSujqKKoc6kwJup9Bab+i63jAM7RPVIWhufWlgFSgMi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581662; c=relaxed/simple;
-	bh=RAbQW4PvDT8Hr+6UNtacFEER65GiaNyZx4nS5H87ul4=;
+	s=arc-20240116; t=1712581665; c=relaxed/simple;
+	bh=kTS1yH+O4ga5knILrZ1annxfQcwEP7vkLcJCC+27ON4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t51oILWP9KelCIv8NmAV6Eui1813FaxT82Qf847ZsOoU8B5hH4+SolSgPsPghEPpT9mEe+IPH3jjTh3+xnwJXvRMHlO8tg9jZ1QYarcFZgEz05atMbiwcBe/+pdq9iJORGVaZIf7vM8FwCC96ZBeipctKHi16zv1S8qKHIL92Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CvUF28T+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bAt18flcevMVFXeTC4cTrsye0RV9cXu21XoEumFcJuQgAJaWVFkFVkXRWlQla5VKWzuBC6P+F6K+v28Xy+g29QOKoKMc8EKAYxAB18fOLI/P9QdplZK30OnnKJKfIP3XO/pyEZj8QGBsHgEqLZiUdkISoOAiEF0RKEa7Mo0uQ8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taUusbAk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvUF28T+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4902FC43141;
-	Mon,  8 Apr 2024 13:07:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taUusbAk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2B6C433C7;
+	Mon,  8 Apr 2024 13:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581662;
-	bh=RAbQW4PvDT8Hr+6UNtacFEER65GiaNyZx4nS5H87ul4=;
+	s=korg; t=1712581665;
+	bh=kTS1yH+O4ga5knILrZ1annxfQcwEP7vkLcJCC+27ON4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CvUF28T+MDFWpy9TU6bWVSRQALSawRMuUwK5DgbV4BUuIkc4Norgo3jvb00dX1mo6
-	 yAsmSZRFtxHiUrp/RJ7MUh7PQktn9C8PRnEuaMWhcVohAHYz0GrnPPZdu5pIuyJfms
-	 JtSPRtho1GFza9q5ht93i9f7YSlNdilNO6hDZQEg=
+	b=taUusbAkgMjmQhUVXlV74BVRCoujokjOhpAhx5S4p0cMIBIp5uFy0OQHU7I9k/DcL
+	 26QP1ngO7735ncBmTJCBZHs3g/xG2/FV32+5oBVz/7DrlhK4D/YtUO/gdVPjsQppGy
+	 R9WTm7bdqJX+pXTFczeHO0WJ35l9wCJrxqMIwZ2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/690] drm/etnaviv: Restore some id values
-Date: Mon,  8 Apr 2024 14:48:57 +0200
-Message-ID: <20240408125402.090400436@linuxfoundation.org>
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 042/138] netfilter: nf_tables: Fix potential data-race in __nft_flowtable_type_get()
+Date: Mon,  8 Apr 2024 14:57:36 +0200
+Message-ID: <20240408125257.537747327@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,79 +46,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Gmeiner <cgmeiner@igalia.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit b735ee173f84d5d0d0733c53946a83c12d770d05 ]
+commit 24225011d81b471acc0e1e315b7d9905459a6304 upstream.
 
-The hwdb selection logic as a feature that allows it to mark some fields
-as 'don't care'. If we match with such a field we memcpy(..)
-the current etnaviv_chip_identity into ident.
+nft_unregister_flowtable_type() within nf_flow_inet_module_exit() can
+concurrent with __nft_flowtable_type_get() within nf_tables_newflowtable().
+And thhere is not any protection when iterate over nf_tables_flowtables
+list in __nft_flowtable_type_get(). Therefore, there is pertential
+data-race of nf_tables_flowtables list entry.
 
-This step can overwrite some id values read from the GPU with the
-'don't care' value.
+Use list_for_each_entry_rcu() to iterate over nf_tables_flowtables list
+in __nft_flowtable_type_get(), and use rcu_read_lock() in the caller
+nft_flowtable_type_get() to protect the entire type query process.
 
-Fix this issue by restoring the affected values after the memcpy(..).
-
-As this is crucial for user space to know when this feature works as
-expected increment the minor version too.
-
-Fixes: 4078a1186dd3 ("drm/etnaviv: update hwdb selection logic")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Gmeiner <cgmeiner@igalia.com>
-Reviewed-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3b49e2e94e6e ("netfilter: nf_tables: add flow table netlink frontend")
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_drv.c  | 2 +-
- drivers/gpu/drm/etnaviv/etnaviv_hwdb.c | 9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_drv.c b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
-index 7dcc6392792df..c45e5158fdff9 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_drv.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
-@@ -488,7 +488,7 @@ static const struct drm_driver etnaviv_drm_driver = {
- 	.desc               = "etnaviv DRM",
- 	.date               = "20151214",
- 	.major              = 1,
--	.minor              = 3,
-+	.minor              = 4,
- };
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -7841,11 +7841,12 @@ static int nft_flowtable_parse_hook(cons
+ 	return err;
+ }
  
- /*
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_hwdb.c b/drivers/gpu/drm/etnaviv/etnaviv_hwdb.c
-index f2fc645c79569..212e7050c4ba6 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_hwdb.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_hwdb.c
-@@ -135,6 +135,9 @@ static const struct etnaviv_chip_identity etnaviv_chip_identities[] = {
- bool etnaviv_fill_identity_from_hwdb(struct etnaviv_gpu *gpu)
++/* call under rcu_read_lock */
+ static const struct nf_flowtable_type *__nft_flowtable_type_get(u8 family)
  {
- 	struct etnaviv_chip_identity *ident = &gpu->identity;
-+	const u32 product_id = ident->product_id;
-+	const u32 customer_id = ident->customer_id;
-+	const u32 eco_id = ident->eco_id;
- 	int i;
+ 	const struct nf_flowtable_type *type;
  
- 	for (i = 0; i < ARRAY_SIZE(etnaviv_chip_identities); i++) {
-@@ -148,6 +151,12 @@ bool etnaviv_fill_identity_from_hwdb(struct etnaviv_gpu *gpu)
- 			 etnaviv_chip_identities[i].eco_id == ~0U)) {
- 			memcpy(ident, &etnaviv_chip_identities[i],
- 			       sizeof(*ident));
-+
-+			/* Restore some id values as ~0U aka 'don't care' might been used. */
-+			ident->product_id = product_id;
-+			ident->customer_id = customer_id;
-+			ident->eco_id = eco_id;
-+
- 			return true;
- 		}
+-	list_for_each_entry(type, &nf_tables_flowtables, list) {
++	list_for_each_entry_rcu(type, &nf_tables_flowtables, list) {
+ 		if (family == type->family)
+ 			return type;
  	}
--- 
-2.43.0
-
+@@ -7857,9 +7858,13 @@ nft_flowtable_type_get(struct net *net,
+ {
+ 	const struct nf_flowtable_type *type;
+ 
++	rcu_read_lock();
+ 	type = __nft_flowtable_type_get(family);
+-	if (type != NULL && try_module_get(type->owner))
++	if (type != NULL && try_module_get(type->owner)) {
++		rcu_read_unlock();
+ 		return type;
++	}
++	rcu_read_unlock();
+ 
+ 	lockdep_nfnl_nft_mutex_not_held();
+ #ifdef CONFIG_MODULES
 
 
