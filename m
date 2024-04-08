@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3DB7B3E5;
-	Mon,  8 Apr 2024 13:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5753881ABE;
+	Mon,  8 Apr 2024 13:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582979; cv=none; b=K3TuFaBHLmTOZUzQMI+fV2VmsHjFnuwdNcNV+8RVUzIpRNdmNWRjqkjvSlEo4wmE5gX2hemcy27nZwkE8qiGf2CyQOZB+NjoJc+jcBKGA+i1WjCr8Ow+OKu9dbmeEiJNyaYkxzExpP8F/fbTih6VaNqjmxPU8m/qLW1UqE8y934=
+	t=1712582982; cv=none; b=U9489q68x7gjifYyPWkHntw69lZW5Gr0TPCO0biA5pFeHiJZp7y2mQpDYBdyOgR1CZ11YMvUN+V4n5bRgR9DQ1qsfg42hw3vlDLvY/edO80OaBJb4hu0cjU2yGW+OJGo7icUfyDCan6lm362Y7oxP/Vd9ziu2vdHadL6XeW1R3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582979; c=relaxed/simple;
-	bh=TfooKK2tNTB3FE4hhVI6ehSbTNx2/7XCnb7TA4E/nbg=;
+	s=arc-20240116; t=1712582982; c=relaxed/simple;
+	bh=6P0sDAWc9fnBXTghOHbRcMT2BWvrkt3RkGwVmmk605Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OmxSFXxkYPQKvYxTg0LYwDnFCx/4fzjMP+P7UJ+XBF7a0F4aYgtT0RKLPTZLzHM4XqowaDM4pMa1lLtkCcoKcR6dWEeGO+Y4clHjTumqfDXteIH2Cn1z9daoxcJuyl+o1JhR7mm4pjzzEZREd4ToocPZZ6ENaV9zwoH62Phf2fE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZryHwrf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KrJ5Ig5EgQTYCgeyfV916+9U2kpJvEBtv4xT51TR/9QbJ+gpFaSddTo+rbxJujapQp3jbOTiiQgFRXZXIlHQZetH7xR7JI+weSFx6zKaa8RNEJpLYlzcJ3Gqdzz6BY8+mLIdHoZa+zBKT1R6vkmO0wDDQvzKmrATOORSj4bi+34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cbfv0+7Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZryHwrf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E66C43394;
-	Mon,  8 Apr 2024 13:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cbfv0+7Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41B8C43390;
+	Mon,  8 Apr 2024 13:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582979;
-	bh=TfooKK2tNTB3FE4hhVI6ehSbTNx2/7XCnb7TA4E/nbg=;
+	s=korg; t=1712582982;
+	bh=6P0sDAWc9fnBXTghOHbRcMT2BWvrkt3RkGwVmmk605Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AZryHwrfzSLHmmmbtcaIqL3ojZ7wYMTMXqqOfOnovz5gPGhZ3sAtZtOqt+ZF/31TA
-	 8G18qeb3mfEp9O8xtVvr2m9/h+gcEUGhm+T+7I3atI5XSMpl6+QMGkO7oaIj7FrdeW
-	 qF/tjidSTaB7h/B+F0+xDvCLjOpTH7jEGwtKGBcA=
+	b=Cbfv0+7QvyZzit5kq2DA/iNiq74yk9tOJqP1FnSXoeq7WxOPJeXtPZsxSnStR0/yx
+	 nuUPvkMtkozsUKRVYgALlFiHuRSAie0r4XnX/zeihjEgpBcNQoOml3YQuuh8l7ZnnH
+	 0jOQWDIz2ikTzakS/P/5QmIbFYb/wC6n8+YD3x9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.8 127/273] i40e: fix i40e_count_filters() to count only active/new filters
-Date: Mon,  8 Apr 2024 14:56:42 +0200
-Message-ID: <20240408125313.236777435@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 5.15 195/690] NFS: Remove unnecessary TRACE_DEFINE_ENUM()s
+Date: Mon,  8 Apr 2024 14:51:01 +0200
+Message-ID: <20240408125406.621546589@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,48 +46,133 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit eb58c598ce45b7e787568fe27016260417c3d807 upstream.
+[ Upstream commit 8e09650f5ec68858f4b8b67cdef9e2ece9b208f3 ]
 
-The bug usually affects untrusted VFs, because they are limited to 18 MACs,
-it affects them badly, not letting to create MAC all filters.
-Not stable to reproduce, it happens when VF user creates MAC filters
-when other MACVLAN operations are happened in parallel.
-But consequence is that VF can't receive desired traffic.
+Clean up: TRACE_DEFINE_ENUM is unnecessary because the target
+symbols are all C macros, not enums.
 
-Fix counter to be bumped only for new or active filters.
-
-Fixes: 621650cabee5 ("i40e: Refactoring VF MAC filters counting to make more reliable")
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/nfs/nfstrace.h | 68 -----------------------------------------------
+ 1 file changed, 68 deletions(-)
 
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -1257,8 +1257,11 @@ int i40e_count_filters(struct i40e_vsi *
- 	int bkt;
- 	int cnt = 0;
+diff --git a/fs/nfs/nfstrace.h b/fs/nfs/nfstrace.h
+index 8a224871be74c..589f32fdbe637 100644
+--- a/fs/nfs/nfstrace.h
++++ b/fs/nfs/nfstrace.h
+@@ -11,16 +11,6 @@
+ #include <linux/tracepoint.h>
+ #include <linux/iversion.h>
  
--	hash_for_each_safe(vsi->mac_filter_hash, bkt, h, f, hlist)
--		++cnt;
-+	hash_for_each_safe(vsi->mac_filter_hash, bkt, h, f, hlist) {
-+		if (f->state == I40E_FILTER_NEW ||
-+		    f->state == I40E_FILTER_ACTIVE)
-+			++cnt;
-+	}
+-TRACE_DEFINE_ENUM(DT_UNKNOWN);
+-TRACE_DEFINE_ENUM(DT_FIFO);
+-TRACE_DEFINE_ENUM(DT_CHR);
+-TRACE_DEFINE_ENUM(DT_DIR);
+-TRACE_DEFINE_ENUM(DT_BLK);
+-TRACE_DEFINE_ENUM(DT_REG);
+-TRACE_DEFINE_ENUM(DT_LNK);
+-TRACE_DEFINE_ENUM(DT_SOCK);
+-TRACE_DEFINE_ENUM(DT_WHT);
+-
+ #define nfs_show_file_type(ftype) \
+ 	__print_symbolic(ftype, \
+ 			{ DT_UNKNOWN, "UNKNOWN" }, \
+@@ -33,24 +23,6 @@ TRACE_DEFINE_ENUM(DT_WHT);
+ 			{ DT_SOCK, "SOCK" }, \
+ 			{ DT_WHT, "WHT" })
  
- 	return cnt;
- }
+-TRACE_DEFINE_ENUM(NFS_INO_INVALID_DATA);
+-TRACE_DEFINE_ENUM(NFS_INO_INVALID_ATIME);
+-TRACE_DEFINE_ENUM(NFS_INO_INVALID_ACCESS);
+-TRACE_DEFINE_ENUM(NFS_INO_INVALID_ACL);
+-TRACE_DEFINE_ENUM(NFS_INO_REVAL_PAGECACHE);
+-TRACE_DEFINE_ENUM(NFS_INO_REVAL_FORCED);
+-TRACE_DEFINE_ENUM(NFS_INO_INVALID_LABEL);
+-TRACE_DEFINE_ENUM(NFS_INO_INVALID_CHANGE);
+-TRACE_DEFINE_ENUM(NFS_INO_INVALID_CTIME);
+-TRACE_DEFINE_ENUM(NFS_INO_INVALID_MTIME);
+-TRACE_DEFINE_ENUM(NFS_INO_INVALID_SIZE);
+-TRACE_DEFINE_ENUM(NFS_INO_INVALID_OTHER);
+-TRACE_DEFINE_ENUM(NFS_INO_DATA_INVAL_DEFER);
+-TRACE_DEFINE_ENUM(NFS_INO_INVALID_BLOCKS);
+-TRACE_DEFINE_ENUM(NFS_INO_INVALID_XATTR);
+-TRACE_DEFINE_ENUM(NFS_INO_INVALID_NLINK);
+-TRACE_DEFINE_ENUM(NFS_INO_INVALID_MODE);
+-
+ #define nfs_show_cache_validity(v) \
+ 	__print_flags(v, "|", \
+ 			{ NFS_INO_INVALID_DATA, "INVALID_DATA" }, \
+@@ -71,17 +43,6 @@ TRACE_DEFINE_ENUM(NFS_INO_INVALID_MODE);
+ 			{ NFS_INO_INVALID_NLINK, "INVALID_NLINK" }, \
+ 			{ NFS_INO_INVALID_MODE, "INVALID_MODE" })
+ 
+-TRACE_DEFINE_ENUM(NFS_INO_ADVISE_RDPLUS);
+-TRACE_DEFINE_ENUM(NFS_INO_STALE);
+-TRACE_DEFINE_ENUM(NFS_INO_ACL_LRU_SET);
+-TRACE_DEFINE_ENUM(NFS_INO_INVALIDATING);
+-TRACE_DEFINE_ENUM(NFS_INO_FSCACHE);
+-TRACE_DEFINE_ENUM(NFS_INO_FSCACHE_LOCK);
+-TRACE_DEFINE_ENUM(NFS_INO_LAYOUTCOMMIT);
+-TRACE_DEFINE_ENUM(NFS_INO_LAYOUTCOMMITTING);
+-TRACE_DEFINE_ENUM(NFS_INO_LAYOUTSTATS);
+-TRACE_DEFINE_ENUM(NFS_INO_ODIRECT);
+-
+ #define nfs_show_nfsi_flags(v) \
+ 	__print_flags(v, "|", \
+ 			{ BIT(NFS_INO_ADVISE_RDPLUS), "ADVISE_RDPLUS" }, \
+@@ -270,19 +231,6 @@ TRACE_EVENT(nfs_access_exit,
+ 		)
+ );
+ 
+-TRACE_DEFINE_ENUM(LOOKUP_FOLLOW);
+-TRACE_DEFINE_ENUM(LOOKUP_DIRECTORY);
+-TRACE_DEFINE_ENUM(LOOKUP_AUTOMOUNT);
+-TRACE_DEFINE_ENUM(LOOKUP_PARENT);
+-TRACE_DEFINE_ENUM(LOOKUP_REVAL);
+-TRACE_DEFINE_ENUM(LOOKUP_RCU);
+-TRACE_DEFINE_ENUM(LOOKUP_OPEN);
+-TRACE_DEFINE_ENUM(LOOKUP_CREATE);
+-TRACE_DEFINE_ENUM(LOOKUP_EXCL);
+-TRACE_DEFINE_ENUM(LOOKUP_RENAME_TARGET);
+-TRACE_DEFINE_ENUM(LOOKUP_EMPTY);
+-TRACE_DEFINE_ENUM(LOOKUP_DOWN);
+-
+ #define show_lookup_flags(flags) \
+ 	__print_flags(flags, "|", \
+ 			{ LOOKUP_FOLLOW, "FOLLOW" }, \
+@@ -392,22 +340,6 @@ DEFINE_NFS_LOOKUP_EVENT_DONE(nfs_lookup_exit);
+ DEFINE_NFS_LOOKUP_EVENT(nfs_lookup_revalidate_enter);
+ DEFINE_NFS_LOOKUP_EVENT_DONE(nfs_lookup_revalidate_exit);
+ 
+-TRACE_DEFINE_ENUM(O_WRONLY);
+-TRACE_DEFINE_ENUM(O_RDWR);
+-TRACE_DEFINE_ENUM(O_CREAT);
+-TRACE_DEFINE_ENUM(O_EXCL);
+-TRACE_DEFINE_ENUM(O_NOCTTY);
+-TRACE_DEFINE_ENUM(O_TRUNC);
+-TRACE_DEFINE_ENUM(O_APPEND);
+-TRACE_DEFINE_ENUM(O_NONBLOCK);
+-TRACE_DEFINE_ENUM(O_DSYNC);
+-TRACE_DEFINE_ENUM(O_DIRECT);
+-TRACE_DEFINE_ENUM(O_LARGEFILE);
+-TRACE_DEFINE_ENUM(O_DIRECTORY);
+-TRACE_DEFINE_ENUM(O_NOFOLLOW);
+-TRACE_DEFINE_ENUM(O_NOATIME);
+-TRACE_DEFINE_ENUM(O_CLOEXEC);
+-
+ #define show_open_flags(flags) \
+ 	__print_flags(flags, "|", \
+ 		{ O_WRONLY, "O_WRONLY" }, \
+-- 
+2.43.0
+
 
 
