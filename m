@@ -1,104 +1,104 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D16128826;
-	Tue,  9 Apr 2024 11:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A624F883;
+	Tue,  9 Apr 2024 12:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712663719; cv=none; b=qkpLWU9XaZ1gOrL6fnJycEWdEC1IYclnQFIgfugAWoR3s4AcqQuniwfXvGN6oC8/tZywvoGZxoQNndNgjUXzeeEGHfDZgJUK2pmtENQMwmVEYyuzvkTRMGYwPjHoPZjgPuLfCXL0yLDNjruDLcney7YLvdUQLUqX3vxqOKCuJus=
+	t=1712665055; cv=none; b=qY/u6LkJnOp9bc7WJai7SSuPWapMljuvAupFnpKQScD9WvFF92Ic9g//gfkCiL0kmE+U0Z3qh4pzHRXKyStSD8/zEGkZ8TpvFIGOesK1qyL7pPXcib5lW4SJZ8ZHZHLIsJRMawJ5nztdPbyv/HXmsWu75Js/i4bJDaMX8yGlfEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712663719; c=relaxed/simple;
-	bh=scdbxbgPLUxnACHLCarB1DGbiD0xhDlyeS1PSLZ+6/g=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=KooaOQ/GDSUg4LCYuPF58EBdfK1l12EqzGdrnMyA7Tboe8XUX6QjvHXH37T1ne9g8O4eoairo3BTCNfmrZZV8B/eEXVgiX8oBD+piHnJY4pZZZTHfBAe9AGh79FLqpN+W5GLDA40RMqpDU6gHSAp5q0jqj+n0sQoDcYzeIo7UKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jJUuUUiH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712665055; c=relaxed/simple;
+	bh=fH+pqInuqCP8bPr3hH0Y8Q86LVIvkMeVKXe0pif5V9c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jLws1CWK3JJ8GVC3bQTiPBwMbIYaLgZ27zs+WrA/a+BkktBKHFSRajp3K+HX8RIc+g/6h8hg7T6mN188fjAkS01RCY9PdjUROLC6knZlNBvNgIeC9jmUk0dcHd8Iark9reFMO/8d3sEH7dQqOqivQtZq0oIog+bDqaE6uDz2lQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0EWtxBMo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jJUuUUiH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556A4C433C7;
-	Tue,  9 Apr 2024 11:55:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712663718;
-	bh=scdbxbgPLUxnACHLCarB1DGbiD0xhDlyeS1PSLZ+6/g=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=jJUuUUiHOEu9bts8I6ePvqW7e9BYs/4iyEclGOFfg661+yiwsyUiWSYxnTBJWK/Ml
-	 HmGrjB5nAnJsMlsL/Hshp/R5qAhpi9IVUIHh0T4fie2MjKZG2nHz+9k0TDLJbw3/hX
-	 tW+qboleyWZPwJEkIwEWUthoL0SEanLBKEUpg0MeWIZVa6FQ8dmXc9+9bVKyBkNLEI
-	 5BqNWUQDWPA8DwXz5Pa2o6dFy4bv5+3SFUS6Mskuw7olJRmnvYPdBa32Mwk5sdQDy8
-	 1YjYt650Q4wcvXixeF/oOo+DLrnsjBX7TYKqlpIRQMeSJQFBXSp+8YjJ0HB2i/WeBt
-	 TlYAlQN6d+xQA==
-Message-ID: <306af49fd69707feccb640d02dc4fbc5.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0EWtxBMo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DB4C433F1;
+	Tue,  9 Apr 2024 12:17:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1712665054;
+	bh=fH+pqInuqCP8bPr3hH0Y8Q86LVIvkMeVKXe0pif5V9c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=0EWtxBMoqzphz7amkYmvLeLupc2mz5UF6CXnZt1n6bkV5RlOez9HF4pe9jifCU4Fh
+	 a5ihOtuJpxsDI9TX2knf3Nl2NS9d4dQJlGOfeCLqmqVvKhp6XAQlOehOvPz7x0awI9
+	 TUiUYJzJ18gZh9Unq9ncbHzICF+PO9DDY+A5SAgY=
+Date: Tue, 9 Apr 2024 14:17:31 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>, linux-s390@vger.kernel.org
+Subject: Re: [PATCH 6.6 000/252] 6.6.26-rc1 review
+Message-ID: <2024040912-item-nearby-d068@gregkh>
+References: <20240408125306.643546457@linuxfoundation.org>
+ <CA+G9fYsvgN2ixfmDKc_x8yFnZ3SfrmSV5Ck1QC5KfmYN89CFYQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAPDyKFoGxxSzykQ-=o08LD_P_=8m=KRm4SHK_grBFgXNNv4OVw@mail.gmail.com>
-References: <20240325184204.745706-1-sboyd@kernel.org> <20240325184204.745706-5-sboyd@kernel.org> <c1dc0e4c1d4c9ba2b5e9c0fc207db267.sboyd@kernel.org> <CAPDyKFoGxxSzykQ-=o08LD_P_=8m=KRm4SHK_grBFgXNNv4OVw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/5] clk: Get runtime PM before walking tree during disable_unused
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, linux-arm-msm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>, Marek Szyprowski <m.szyprowski@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>
-To: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 09 Apr 2024 04:55:16 -0700
-User-Agent: alot/0.10
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+G9fYsvgN2ixfmDKc_x8yFnZ3SfrmSV5Ck1QC5KfmYN89CFYQ@mail.gmail.com>
 
-Quoting Ulf Hansson (2024-04-09 03:32:04)
->=20
-> Apologies for not being able to review this, it got lost in my email
-> filters. Looks like you manage to solve the locking order for the clk
-> disable unused thing - great!
->=20
-> However I think the main problem we are seeing with these kind of
-> locking issues is that we are holding a global lock while calling into
-> pm_runtime_get|put*(). Similar problems have also been reported in the
-> past. It's been on my todo list for quite some time to have a closer
-> look, but I haven't reached it yet.
->=20
-> Without going into too much detail, let me just ask a related
-> question. Would it not be possible to call pm_runtime_get/put() within
-> the clock framework, without *always* keeping the clock prepare lock
-> acquired? I assume a clock can't be unregistered, as long as there is
-> reference taken for it, right? Wouldn't that be a sufficient guarantee
-> that it's okay to runtime_resume|suspend its corresponding device?
+On Mon, Apr 08, 2024 at 10:45:44PM +0530, Naresh Kamboju wrote:
+> On Mon, 8 Apr 2024 at 18:30, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 6.6.26 release.
+> > There are 252 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Wed, 10 Apr 2024 12:52:23 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.26-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+> 
+> The s390 defconfig build failed with gcc-13 and clang-17 due following
+> build warning / errors on Linux stable-rc linux-6.6.y.
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> Build error:
+> --------
+> arch/s390/kernel/perf_pai_crypto.c: In function 'paicrypt_stop':
+> arch/s390/kernel/perf_pai_crypto.c:280:51: error: 'paicrypt_root'
+> undeclared (first use in this function); did you mean 'paicrypt_stop'?
+>   280 |         struct paicrypt_mapptr *mp = this_cpu_ptr(paicrypt_root.mapptr);
+>       |                                                   ^~~~~~~~~~~~~
+> 
+> Commit detail,
+>   s390/pai: fix sampling event removal for PMU device driver
+>   [ Upstream commit e9f3af02f63909f41b43c28330434cc437639c5c ]
+> 
+> Steps to reproduce:
+> # tuxmake --runtime podman --target-arch s390 --toolchain gcc-13
+> --kconfig defconfig
+> 
+> Links:
+>   - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.25-253-gec59b99017e9/testrun/23347738/suite/build/test/gcc-13-defconfig/log
+>   - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.25-253-gec59b99017e9/testrun/23347738/suite/build/test/gcc-13-defconfig/details/
+>   - https://storage.tuxsuite.com/public/linaro/lkft/builds/2eozoS8GQGxb94EUWNTPuXvYjVU/
 
-The problem is that the clk tree is being walked with the prepare_lock
-held and during that walk pm_runtime_get() is called on different
-devices. We hold the prepare_lock while walking the tree because we
-don't want the tree topology to change while walking. The prepare_lock
-is also a topology lock.
+Thanks, I'll go drop a bunch of s390 patches from this tree and push out
+a -rc2 later tonight.
 
-If we could walk the tree, figure out what all clks will change, drop
-the prepare_lock, pm_runtime_get() all of those devices, regrab the
-prepare_lock, check the topology to make sure topology hasn't changed,
-and then make all the clk_ops calls, it would work because we have
-extracted the runtime PM calls out of the prepare_lock. Dropping and
-regrabbing the lock is probably a bad idea though, because we may never
-make progress because we're preempted by another task that changes the
-topology.
-
-I was also wondering if we get stuck again if the clk driver
-implementing the clk_ops is on some bus like i2c or spi, that runtime PM
-resumes the bus controller for register writes from the clk_ops, and
-that resume function calls clk operations, and that happens in another
-thread. Maybe that isn't a problem though because the runtime resume of
-the device will also runtime resume the parent which is spi or i2c?=20
-
-Either way, it really seems like we need a per-clk prepare_lock. That
-would let us know for sure the topology isn't changing while we walk the
-tree and figure out what we're going to do. Anything that calls into the
-clk framework again hopefully gets a different prepare lock for a
-different clk.
-
-BTW, I don't think lockdep is aware that runtime PM is waiting like
-this for a parallel resume in another thread. Probably we need to add
-annotations so that any locks held while waiting for the resume or
-suspend to finish are chained to a pseudo read lock and the actual
-resume/suspend operation is a pseudo write lock.
-
->=20
-> Or maybe I should just send a patch. :-)
->=20
-
-Sure! ;-)
+greg k-h
