@@ -1,85 +1,99 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19597F469
-	for <patches@lists.linux.dev>; Tue,  9 Apr 2024 07:32:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454A97EEE2;
+	Tue,  9 Apr 2024 08:28:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712647978; cv=none; b=Imv3GDo6no69kblN4RcLoq8utBg2QlFruO8Cs7LwP/7ZBsc18nYYOYaasSNmHli4hVaHboz+FxNyrzTxr0YWsa2FgBLMhhSaf/m1QbVzsP4xFHbvkYUPokZm/nIt9RxZCbAxeVNp/u5JDs/UUfepwY6WArBW0UpTBErZldCttFw=
+	t=1712651299; cv=none; b=NjQT73+At4wZUX+6yxJsf9ssJg98c8zg1JOyJhOw+omdTerYFBBkAcOjy4zEepsAfj1rjQPPJ2QqBIeR2vC+bRUOZLYZubPSHYDD6C+lJazlOlpVCx6nvsCh6aqVYvJIozmi1tqOtDnSbnt+1CLUg+aBUCNFXv7j8KpLvHmyS2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712647978; c=relaxed/simple;
-	bh=9tPBSm7SC7rcjr+Fa4Gnnzk5ouIqti3bmwbVvtKlieI=;
+	s=arc-20240116; t=1712651299; c=relaxed/simple;
+	bh=ASLvvOePDleOf+pXb7ZVJAJfugVJzvD2suH9zumY0Yw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iUl/E8OvqCJiQkP+j0sLWhOdaoX1XT3OrDXgh43gAPtDbezIZe2QCtnW7T0y38SONCZjqMVXJ+5tXP3eN2pl02cwmrBiKaRxzzH8VK06/jqWsByuDP8zp2iLAzM7nLDPSQLhNh6rg+l1HAoVreZeXh30xahvXET+hzNiMe6kilk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 160401C007B; Tue,  9 Apr 2024 09:32:54 +0200 (CEST)
-Date: Tue, 9 Apr 2024 09:32:53 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=EtEUnxTMj7uvkuyhm+R8hZfKhxw/1kfa2+mDLIdUUPTnjnvFXYX3vl6O+CuSkU6nYpN1U9A1EtO4fvGTusmprNX4GmQ4791pdKd0g61+ftUrnxSm6r3JXZ5C6FOJ2uII9si4YJABbJe1+Bk8wrbyDY98NqBkYhotmKwoa7KRZT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k95b24Ij; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k95b24Ij"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B724C433F1;
+	Tue,  9 Apr 2024 08:28:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1712651298;
+	bh=ASLvvOePDleOf+pXb7ZVJAJfugVJzvD2suH9zumY0Yw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=k95b24IjitYBjwM+G6cdvNNkeOem6vVIpko8PCrmdo3bguUFWXE7YSRJEJ7GyTUo2
+	 o898PolXumgKYmJJ2PbpHah4eeO3KqtDFZRTCwA4dYH0ggV/54EZfUPa2CwJ4+k65J
+	 xd40PXfJzuFJQRCJ7/OhoHAXzEyvu7CgwWvLrNmc=
+Date: Tue, 9 Apr 2024 08:53:33 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Petr Vorel <pvorel@suse.cz>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.1 000/138] 6.1.85-rc1 review
-Message-ID: <ZhTvJXlWJ2TjIQ1a@duo.ucw.cz>
-References: <20240408125256.218368873@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: Re: [PATCH 5.15 463/690] nfsd: fix net-namespace logic in
+ __nfsd_file_cache_purge
+Message-ID: <2024040933-patio-impotent-7a0a@gregkh>
+References: <20240408125359.506372836@linuxfoundation.org>
+ <20240408125416.405210374@linuxfoundation.org>
+ <20240409064222.GA83048@pevik>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="oZRkL5METsbvE8ng"
-Content-Disposition: inline
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-
-
---oZRkL5METsbvE8ng
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240409064222.GA83048@pevik>
 
-Hi!
+On Tue, Apr 09, 2024 at 08:42:22AM +0200, Petr Vorel wrote:
+> Hi all,
+> 
+> > 5.15-stable review patch.  If anyone has any objections, please let me know.
+> 
+> > ------------------
+> 
+> > From: Jeff Layton <jlayton@kernel.org>
+> 
+> > [ Upstream commit d3aefd2b29ff5ffdeb5c06a7d3191a027a18cdb8 ]
+> 
+> > If the namespace doesn't match the one in "net", then we'll continue,
+> > but that doesn't cause another rhashtable_walk_next call, so it will
+> > loop infinitely.
+> 
+> > Fixes: ce502f81ba88 ("NFSD: Convert the filecache to use rhashtable")
+> > Reported-by: Petr Vorel <pvorel@suse.cz>
+> > Link: https://lore.kernel.org/ltp/Y1%2FP8gDAcWC%2F+VR3@pevik/
+> > Signed-off-by: Jeff Layton <jlayton@kernel.org>
+> > Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+> > ---
+> >  fs/nfsd/filecache.c | 5 ++---
+> >  1 file changed, 2 insertions(+), 3 deletions(-)
+> 
+> > diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
+> > index 0b19eb015c6c8..024adcbe67e95 100644
+> > --- a/fs/nfsd/filecache.c
+> > +++ b/fs/nfsd/filecache.c
+> > @@ -892,9 +892,8 @@ __nfsd_file_cache_purge(struct net *net)
+> 
+> >  		nf = rhashtable_walk_next(&iter);
+> >  		while (!IS_ERR_OR_NULL(nf)) {
+> > -			if (net && nf->nf_net != net)
+> > -				continue;
+> > -			nfsd_file_unhash_and_dispose(nf, &dispose);
+> I don't know the context (whether the fix is needed for 5.15 and older), but
+> patch does not apply because nfsd_file_unhash_and_dispose() was introduced in
+> ce502f81ba88 ("NFSD: Convert the filecache to use rhashtable") in v6.0-rc1.  It
+> was actually renamed from nfsd_file_unhash_and_release_locked() in that commit.
+> Also the context changed - nfsd_file_unhash_and_dispose() was introduced in the
+> commit which is supposed to be fixed in this commit, one would say that this fix
+> is not needed in older kernels (5.15, 5.10 and 5.4; 4.19 has completely
+> different code). But that's a question for Jeff or Chuck.
 
-> This is the start of the stable review cycle for the 6.1.85 release.
-> There are 138 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+This is part of a very large backport of nfsd patches to 5.15 to resolve
+a lot of reported issues, so that might be why it looks odd here.  It
+does seem to compile and boot ok for me, so maybe it's not an issue here
+as you aren't seeing the other patches in this series?
 
-CIP testing did not find any problems here:
+thanks,
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.1.y
-
-No problems detected here, either:
-
-Linux 6.6.26-rc1 (ec59b99017e9)
-Linux 6.8.5-rc1 (51d60edf2813)
-Linux 5.15.154-rc1 (bfeab055fa43)
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---oZRkL5METsbvE8ng
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZhTvJQAKCRAw5/Bqldv6
-8hwkAKCbN7dcJdR6eKxnpdlsxr+lx6SW3QCdHuq/0kq5iJoTHnUCx0gB9ltgCEE=
-=wBoT
------END PGP SIGNATURE-----
-
---oZRkL5METsbvE8ng--
+greg k-h
