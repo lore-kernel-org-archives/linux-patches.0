@@ -1,169 +1,218 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F967FBC0
-	for <patches@lists.linux.dev>; Tue,  9 Apr 2024 09:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D635FEED
+	for <patches@lists.linux.dev>; Tue,  9 Apr 2024 10:32:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712654901; cv=none; b=d63IdL7/QqZBwz2BCPeka2mKh+caV0apSsLmxhl3uHnwPUuuwVWZK9YrvqCntJ7ekb+txKbBRj54gmYMnnpx0+59h7exdbgQ8MSF/0w2ioKJ7PBymlIHYy/QzQp2QzEJqLtvm6Wzm9jPRoCqL1zY45cdE4ScDkmzM17+9kFS0Js=
+	t=1712658764; cv=none; b=oCTqq7quh0nS4ZVejmhgubiuHn/ihQHEdkYQ00BUvM7cc3JP8NXCWmkOjIAIQ2uhnoUekjOjV4OKEwiffV06fDw7NF9cxyRORnceodpFi/LJ2MA2Foin+N/E38LZPR5gITbEy2l9Q9iwcEpsjuXxrgALT/TSeZaNyef78JQlYoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712654901; c=relaxed/simple;
-	bh=Z1Ml2k0JBvU/PRR+0Q8mkqwSS2bS8163enZmu/THs7c=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=FYbN7cA9ANahzBXGTmWA5wRwGThcmTCD7EMASCXwwTFMwSn0ROyVGQ3rodCa8dqiELBJ7sH2w9TQwBnGRHxF1lCCE/IfQEoLW7UEaHrdZ2av8Ljh4WXj01KYbTaEbcCBTvuNAN7xGjO3UObGfOUE0jXnZzY+5qkufP1aNUvJoDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=snu.ac.kr; spf=pass smtp.mailfrom=suse.cz; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=snu.ac.kr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id CE2F6338E6
-	for <patches@lists.linux.dev>; Tue,  9 Apr 2024 09:28:17 +0000 (UTC)
-Authentication-Results: smtp-out1.suse.de;
-	none
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C6A22136D9
-	for <patches@lists.linux.dev>; Tue,  9 Apr 2024 09:28:17 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id xp0cMDEKFWYDXAAAD6G6ig
-	(envelope-from <vbabka@suse.cz>)
-	for <patches@lists.linux.dev>; Tue, 09 Apr 2024 09:28:17 +0000
-Resent-From: Vlastimil Babka <vbabka@suse.cz>
-Resent-To: "patches@lists.linux.dev" <patches@lists.linux.dev>
-Resent-Date: Tue, 9 Apr 2024 11:28:17 +0200
-Resent-Message-ID: <5c58b627-4471-46ba-a893-ced8c29d071c@suse.cz>
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-	by imap2.dmz-prg2.suse.org with LMTPS
-	id aLy7FZb9EGbeWwAAn2gu4w
-	(envelope-from <sangyun.kim@snu.ac.kr>)
-	for <vbabka>; Sat, 06 Apr 2024 07:45:26 +0000
-Received: from smtp-in1.suse.de ([10.150.64.33])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-	by dovecot-director2.suse.de with LMTPS
-	id KGoIFZb9EGYQEgAAxW7PVg
-	(envelope-from <sangyun.kim@snu.ac.kr>)
-	for <vbabka@imap.suse.de>; Sat, 06 Apr 2024 07:45:26 +0000
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-384) server-digest SHA384)
-	(No client certificate requested)
-	by smtp-in1.suse.de (Postfix) with ESMTPS id 4VBS7k4NppzZvG
-	for <vbabka@suse.cz>; Sat,  6 Apr 2024 07:45:22 +0000 (UTC)
-Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1e3ca546d40so9421425ad.3
-        for <vbabka@suse.cz>; Sat, 06 Apr 2024 00:45:22 -0700 (PDT)
+	s=arc-20240116; t=1712658764; c=relaxed/simple;
+	bh=5czf5Adh9rovAzlSJfAJI8FiDCtAO2TmwPWLd9haL8c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cGrgOwWcpuL/gNSsUu3ZEAc5BtxgUfovlE8Xt/E+ooKQtvUwSspWNP8tjSdHvM7D3JJnxyN9zJRsrYN250RfLkWwMjrPdmT0DCAZZlrayWF2udUPUMcc4HVnPOPRCx6RheFcGHtxxwemq1XV13bDKQEaqjmJ6DGIg0aFr4FEG2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZStySFz5; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZStySFz5"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-617e6c873f3so30947457b3.2
+        for <patches@lists.linux.dev>; Tue, 09 Apr 2024 03:32:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712658761; x=1713263561; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ywMqPmvjfuSg7K+puQLhP8JMKU69QDDCjZnvVUw25RU=;
+        b=ZStySFz5J6u6sdr5rmj9eXwkws5rrmBeETbSDetP0+rlQMTrQCJjIc3fNSKukdlUpL
+         wqmNOISVm198UkgtlBmuOH8RcsoqrVeSaPi0WgdCw5RO09nXWVr/bx7T0Vc+8sB+kOCg
+         KDBZeN+u5aOHirbSnPVcEDtx5Tk/UVLX2f7o2CzsX05J5rJRhV5xFvb92axiut1vshUT
+         z8FlYkjoLcAvd6D2/xOzKBpZHBOLzNwv/Kh/KqRXuupQRWyRHy0L+YgSVqhp776bKuSr
+         cN1yAgGcevabbfc5BmkV/GMY2uoFnLAFvj+8ZfH/S13RNzOMAFGIuHU2dWHNqMAi4SKA
+         CIzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712389520; x=1712994320;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1712658761; x=1713263561;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=FfM6bwCPNBuCVqt7hQupQZM7S7lz7NOtLge1I68/si4=;
-        b=mJwOvArRiivSJWu+oM6n3rQz4I0YVnF385Sfpemev3gi+haAcm7gR2WRXfjuntZLmM
-         S20HUqeSsysxm2FsU6jfoGIbj3XrW4WyUqq5wWd5r6ubSnHM413uraIREtdIkBa9fNYS
-         0Mqic2N5ELS4jq03fONLpJ7LFOvtoPiEAaZG5R8FDRSZRLXphOThzXPu52zLKJ9eDbg+
-         VbMiefzWJzyrJDmAB66Qz4hdTH3XPR0Mlcl3Q/nBbntcpQ0fXILd4Zlf6330x9rWnEgB
-         zpqv5m1xDdTuMT+eWSNNhofM4w9QpW/2vGNYkyr8ihcFlYbyNttLmxwkWwjMb3o62BlO
-         PcpA==
-X-Forwarded-Encrypted: i=1; AJvYcCXdhy8qkNkHeJtkI5m/peO4u5bFmHbdxuwSfOlFTvuxogW8hG/xLmgobsTHvIhbYtlgXxgZkAMDrUSHjyfQzg==
-X-Gm-Message-State: AOJu0Yzcy/fB4VyA2u4MtCxadYSZLUs9Vpf2je+YwgXObcylCYwW10HC
-	RL2rEhIdjb/DLANgPfPhlgtnIzL+5alKPXZM1kwUxYYIwoFnEOuaE6abDAs/G+I=
-X-Google-Smtp-Source: AGHT+IF0SbuzsPcYrTB4Y6YXPcTY+8eHxJFRWS02s+dPaoex+DdT+h7M6b+lXcTfQQsXmKTLXSFiUA==
-X-Received: by 2002:a17:902:f813:b0:1dd:c288:899f with SMTP id ix19-20020a170902f81300b001ddc288899fmr3037152plb.18.1712389520316;
-        Sat, 06 Apr 2024 00:45:20 -0700 (PDT)
-Received: from localhost.localdomain ([147.46.121.48])
-        by smtp.gmail.com with ESMTPSA id n8-20020a170902e54800b001e26b7a6785sm2844232plf.86.2024.04.06.00.45.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Apr 2024 00:45:19 -0700 (PDT)
-From: Sangyun Kim <sangyun.kim@snu.ac.kr>
-To: linux-mm@kvack.org
-Cc: Christoph Lameter <cl@linux.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Hyunmin Lee <hyunminlr@gmail.com>,
-	Jeungwoo Yoo <casionwoo@gmail.com>,
-	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
-Subject: [PATCH] mm/slub: remove duplicate initialization for early_kmem_cache_node_alloc()
-Date: Sat,  6 Apr 2024 16:44:49 +0900
-Message-Id: <20240406074449.563704-1-sangyun.kim@snu.ac.kr>
-X-Mailer: git-send-email 2.25.1
+        bh=ywMqPmvjfuSg7K+puQLhP8JMKU69QDDCjZnvVUw25RU=;
+        b=sAwC+QCrOymgr35aA+HC1PSdCT5zbWo2B+1baSuuvgbYW6u7ERXuOuhdoX5bg1xuwX
+         G8IG5fhJN/ifVEuTG58IeK96C4FmUWl/SCCrQjC3Zsw2x2oKOCk1Yre1lb4+XPjxKtiu
+         LHTXL+vBkqPU4txCEkhId8be94SCHVA4D9OGKq+HnK/AGen8aO6kY3dFK0SfTXgnIt1a
+         Bdl6BpGGR8IjYeIC5yIANCJA9KnvNhLkfxhcFC8SA2We1PP7L+AUimRpZh/5i46cPan9
+         Msi8WF8+Ud1m+Psv0xqsolVJ7OOdNctWLtUk9O5ePEK0PhKgduPo5kv6x4tp5IIsS8/D
+         ZvjQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVRHtFa9o2EmDp6QDH+budKFFYCU7so54YacnZT3xUoWTcEwWZfYfmO6vc6UCUPtSBRPtRPk4dyJSIrAKDcLqpXA7B7geucNQ==
+X-Gm-Message-State: AOJu0YzhabshwrtLbnlyoTAx5aYRb1H5DztSujNTWbGSxofiotZzkXvl
+	UNfLEiIgQq76LBXB4bLt22wUa5ZQcgv0Rc27rxntmmSoqA+7GjhSskKdTxsD8SAplj3uN6znx8u
+	5unyu+VIMGgUCf6/9zVNN61nUUQAgjixdaIcLHg==
+X-Google-Smtp-Source: AGHT+IE6ld1LxqfQn0k5e9/PewJ6aOPe+V7Ds69yIjXtT1hudq7zrLPCAyY5v5qOBVfHKUCnvM/mlhNjl+kN+3CdkGA=
+X-Received: by 2002:a25:e20b:0:b0:dcd:6c0:da64 with SMTP id
+ h11-20020a25e20b000000b00dcd06c0da64mr9426728ybe.58.1712658761139; Tue, 09
+ Apr 2024 03:32:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: +
-X-Rspamd-Queue-Id: 4VBS7k4NppzZvG
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spam-Score: 5.09
-X-Spam-Level: *****
-X-Spamd-Result: default: False [5.09 / 50.00];
-	FORGED_RECIPIENTS(2.00)[m:linux-mm@kvack.org,m:cl@linux.com,m:penberg@kernel.org,m:rientjes@google.com,m:iamjoonsoo.kim@lge.com,m:akpm@linux-foundation.org,m:vbabka@suse.cz,m:roman.gushchin@linux.dev,m:42.hyeyoo@gmail.com,m:sangyun.kim@snu.ac.kr,m:hyunminlr@gmail.com,m:casionwoo@gmail.com,m:gwan-gyeong.mun@intel.com,m:42hyeyoo@gmail.com,s:patches@lists.linux.dev];
-	SUSPICIOUS_RECIPS(1.50)[];
-	DATE_IN_PAST(1.00)[73];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	FORGED_SENDER(0.30)[sangyun.kim@snu.ac.kr,vbabka@suse.cz];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	FROM_NEQ_ENVFROM(0.10)[sangyun.kim@snu.ac.kr,vbabka@suse.cz];
-	BAYES_HAM(-0.01)[47.41%];
-	FROM_HAS_DN(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[];
-	FREEMAIL_CC(0.00)[linux.com,kernel.org,google.com,lge.com,linux-foundation.org,suse.cz,linux.dev,gmail.com,snu.ac.kr,intel.com];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,snu.ac.kr:email];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+References: <20240325184204.745706-1-sboyd@kernel.org> <20240325184204.745706-5-sboyd@kernel.org>
+ <c1dc0e4c1d4c9ba2b5e9c0fc207db267.sboyd@kernel.org>
+In-Reply-To: <c1dc0e4c1d4c9ba2b5e9c0fc207db267.sboyd@kernel.org>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Tue, 9 Apr 2024 12:32:04 +0200
+Message-ID: <CAPDyKFoGxxSzykQ-=o08LD_P_=8m=KRm4SHK_grBFgXNNv4OVw@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] clk: Get runtime PM before walking tree during disable_unused
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
+	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-The struct track for every object in a new slab is already set up by
-new_slab(),
-so remove the duplicate initialization in early_kmem_cache_node_alloc().
+On Mon, 8 Apr 2024 at 04:36, Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> Quoting Stephen Boyd (2024-03-25 11:41:58)
+> > Doug reported [1] the following hung task:
+> >
+> >  INFO: task swapper/0:1 blocked for more than 122 seconds.
+> >        Not tainted 5.15.149-21875-gf795ebc40eb8 #1
+> >  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+> >  task:swapper/0       state:D stack:    0 pid:    1 ppid:     0 flags:0x00000008
+> >  Call trace:
+> >   __switch_to+0xf4/0x1f4
+> >   __schedule+0x418/0xb80
+> >   schedule+0x5c/0x10c
+> >   rpm_resume+0xe0/0x52c
+> >   rpm_resume+0x178/0x52c
+> >   __pm_runtime_resume+0x58/0x98
+> >   clk_pm_runtime_get+0x30/0xb0
+> >   clk_disable_unused_subtree+0x58/0x208
+> >   clk_disable_unused_subtree+0x38/0x208
+> >   clk_disable_unused_subtree+0x38/0x208
+> >   clk_disable_unused_subtree+0x38/0x208
+> >   clk_disable_unused_subtree+0x38/0x208
+> >   clk_disable_unused+0x4c/0xe4
+> >   do_one_initcall+0xcc/0x2d8
+> >   do_initcall_level+0xa4/0x148
+> >   do_initcalls+0x5c/0x9c
+> >   do_basic_setup+0x24/0x30
+> >   kernel_init_freeable+0xec/0x164
+> >   kernel_init+0x28/0x120
+> >   ret_from_fork+0x10/0x20
+> >  INFO: task kworker/u16:0:9 blocked for more than 122 seconds.
+> >        Not tainted 5.15.149-21875-gf795ebc40eb8 #1
+> >  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+> >  task:kworker/u16:0   state:D stack:    0 pid:    9 ppid:     2 flags:0x00000008
+> >  Workqueue: events_unbound deferred_probe_work_func
+> >  Call trace:
+> >   __switch_to+0xf4/0x1f4
+> >   __schedule+0x418/0xb80
+> >   schedule+0x5c/0x10c
+> >   schedule_preempt_disabled+0x2c/0x48
+> >   __mutex_lock+0x238/0x488
+> >   __mutex_lock_slowpath+0x1c/0x28
+> >   mutex_lock+0x50/0x74
+> >   clk_prepare_lock+0x7c/0x9c
+> >   clk_core_prepare_lock+0x20/0x44
+> >   clk_prepare+0x24/0x30
+> >   clk_bulk_prepare+0x40/0xb0
+> >   mdss_runtime_resume+0x54/0x1c8
+> >   pm_generic_runtime_resume+0x30/0x44
+> >   __genpd_runtime_resume+0x68/0x7c
+> >   genpd_runtime_resume+0x108/0x1f4
+> >   __rpm_callback+0x84/0x144
+> >   rpm_callback+0x30/0x88
+> >   rpm_resume+0x1f4/0x52c
+> >   rpm_resume+0x178/0x52c
+> >   __pm_runtime_resume+0x58/0x98
+> >   __device_attach+0xe0/0x170
+> >   device_initial_probe+0x1c/0x28
+> >   bus_probe_device+0x3c/0x9c
+> >   device_add+0x644/0x814
+> >   mipi_dsi_device_register_full+0xe4/0x170
+> >   devm_mipi_dsi_device_register_full+0x28/0x70
+> >   ti_sn_bridge_probe+0x1dc/0x2c0
+> >   auxiliary_bus_probe+0x4c/0x94
+> >   really_probe+0xcc/0x2c8
+> >   __driver_probe_device+0xa8/0x130
+> >   driver_probe_device+0x48/0x110
+> >   __device_attach_driver+0xa4/0xcc
+> >   bus_for_each_drv+0x8c/0xd8
+> >   __device_attach+0xf8/0x170
+> >   device_initial_probe+0x1c/0x28
+> >   bus_probe_device+0x3c/0x9c
+> >   deferred_probe_work_func+0x9c/0xd8
+> >   process_one_work+0x148/0x518
+> >   worker_thread+0x138/0x350
+> >   kthread+0x138/0x1e0
+> >   ret_from_fork+0x10/0x20
+> >
+> > The first thread is walking the clk tree and calling
+> > clk_pm_runtime_get() to power on devices required to read the clk
+> > hardware via struct clk_ops::is_enabled(). This thread holds the clk
+> > prepare_lock, and is trying to runtime PM resume a device, when it finds
+> > that the device is in the process of resuming so the thread schedule()s
+> > away waiting for the device to finish resuming before continuing. The
+> > second thread is runtime PM resuming the same device, but the runtime
+> > resume callback is calling clk_prepare(), trying to grab the
+> > prepare_lock waiting on the first thread.
+> >
+> > This is a classic ABBA deadlock. To properly fix the deadlock, we must
+> > never runtime PM resume or suspend a device with the clk prepare_lock
+> > held. Actually doing that is near impossible today because the global
+> > prepare_lock would have to be dropped in the middle of the tree, the
+> > device runtime PM resumed/suspended, and then the prepare_lock grabbed
+> > again to ensure consistency of the clk tree topology. If anything
+> > changes with the clk tree in the meantime, we've lost and will need to
+> > start the operation all over again.
+> >
+> > Luckily, most of the time we're simply incrementing or decrementing the
+> > runtime PM count on an active device, so we don't have the chance to
+> > schedule away with the prepare_lock held. Let's fix this immediate
+> > problem that can be triggered more easily by simply booting on Qualcomm
+> > sc7180.
+> >
+> > Introduce a list of clk_core structures that have been registered, or
+> > are in the process of being registered, that require runtime PM to
+> > operate. Iterate this list and call clk_pm_runtime_get() on each of them
+> > without holding the prepare_lock during clk_disable_unused(). This way
+> > we can be certain that the runtime PM state of the devices will be
+> > active and resumed so we can't schedule away while walking the clk tree
+> > with the prepare_lock held. Similarly, call clk_pm_runtime_put() without
+> > the prepare_lock held to properly drop the runtime PM reference. We
+> > remove the calls to clk_pm_runtime_{get,put}() in this path because
+> > they're superfluous now that we know the devices are runtime resumed.
+> >
+> > Reported-by: Douglas Anderson <dianders@chromium.org>
+> > Closes: https://lore.kernel.org/all/20220922084322.RFC.2.I375b6b9e0a0a5348962f004beb3dafee6a12dfbb@changeid/ [1]
+> > Closes: https://issuetracker.google.com/328070191
+> > Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+> > Cc: Ulf Hansson <ulf.hansson@linaro.org>
+> > Cc: Krzysztof Kozlowski <krzk@kernel.org>
+> > Fixes: 9a34b45397e5 ("clk: Add support for runtime PM")
+> > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> > ---
+>
+> Applied to clk-fixes
 
-Signed-off-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Apologies for not being able to review this, it got lost in my email
+filters. Looks like you manage to solve the locking order for the clk
+disable unused thing - great!
 
-Co-developed-by: Hyunmin Lee <hyunminlr@gmail.com>
-Signed-off-by: Hyunmin Lee <hyunminlr@gmail.com>
+However I think the main problem we are seeing with these kind of
+locking issues is that we are holding a global lock while calling into
+pm_runtime_get|put*(). Similar problems have also been reported in the
+past. It's been on my todo list for quite some time to have a closer
+look, but I haven't reached it yet.
 
-Co-developed-by: Jeungwoo Yoo <casionwoo@gmail.com>
-Signed-off-by: Jeungwoo Yoo <casionwoo@gmail.com>
+Without going into too much detail, let me just ask a related
+question. Would it not be possible to call pm_runtime_get/put() within
+the clock framework, without *always* keeping the clock prepare lock
+acquired? I assume a clock can't be unregistered, as long as there is
+reference taken for it, right? Wouldn't that be a sufficient guarantee
+that it's okay to runtime_resume|suspend its corresponding device?
 
-Cc: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
----
- mm/slub.c | 1 -
- 1 file changed, 1 deletion(-)
+Or maybe I should just send a patch. :-)
 
-diff --git a/mm/slub.c b/mm/slub.c
-index 0dfc0c18a78b..5ffe46843b36 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -4938,7 +4938,6 @@ static void early_kmem_cache_node_alloc(int node)
- 	BUG_ON(!n);
- #ifdef CONFIG_SLUB_DEBUG
- 	init_object(kmem_cache_node, n, SLUB_RED_ACTIVE);
--	init_tracking(kmem_cache_node, n);
- #endif
- 	n = kasan_slab_alloc(kmem_cache_node, n, GFP_KERNEL, false);
- 	slab->freelist = get_freepointer(kmem_cache_node, n);
--- 
-2.25.1
-
+Kind regards
+Uffe
