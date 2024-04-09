@@ -1,284 +1,172 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B9012D210
-	for <patches@lists.linux.dev>; Tue,  9 Apr 2024 15:03:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712674990; cv=none; b=OONyA3/k23qRItPhFZTZvfGEEcmUNQh7m2xx+n4fC8B6DldPs0u6jGZsOrOTlM1jIY02TWr/Y4zVI9ldURCOa5FFRwRDsylcGtfG/OnjR+e8+uesTrRabPYM9/E4dx7mALKyL0Ki/moJknqxGH2ikoOq/mCCwB1xUzLeCjPb3UU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712674990; c=relaxed/simple;
-	bh=7Pli8mbYdTy25PLJf6La0wc+s9jWwupaI8bdrmGO1fE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MHHYJO/f5CK344MWtBvZwexdLXl2moUdezTvJ+2UNRWX9gwjN6qqYED23u9cH+2a+t0wBe0bhpa8SkPPRvGQxOKMFF7HMN9wpoc+dQ1pEYRl5Txfkj65jWRwkpHLEsDAiBmRZ0CuFbHh1I9IvBv+7p/kKxFdzbD7hH1Ud+uEgW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zc/gK+oc; arc=none smtp.client-ip=209.85.219.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20B012FF93
+	for <patches@lists.linux.dev>; Tue,  9 Apr 2024 15:12:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712675529; cv=fail; b=cc9ZEI/6lvj6KCR5T/OdHYm4XxNh7WYdT+rqlVyDzelmcb4LimABcAY7qOcLMoZhUVvUuFOuJfytTLrT/rbwqWuTRE9H/m5PaSZJWpPm43kQIFRCIi6JyRq1Ukdh5cpZy9i+GNEvlyeC6lzIXNCBVy44mYxjX6mw/jZ0FjRHLw0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712675529; c=relaxed/simple;
+	bh=IaL9LVArVF8Ccyyf/JLwRIZsc8nekmIFW1Xd8T6iR4w=;
+	h=To:Cc:Subject:From:In-Reply-To:Message-ID:References:Date:
+	 Content-Type:MIME-Version; b=iBu1TKsUs6PpikDWWbxjTxcu6DIXidXVUxlFG0SQTu8UBYa+PEXQ+pllwHtmkqGZhigR0TMqcUe5FqhHMdlPYyQFb1XI3nOoNf7LBOsYuRzXktbN6tK2egyROjiUGTDk2DChjcjHkilGlcNOSn3qJ3HcKufWRTXs/2QC7ghaOx8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=chw1H8nw; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=c5rhrnZx; arc=fail smtp.client-ip=205.220.165.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zc/gK+oc"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-69b2f6d31c1so1449396d6.0
-        for <patches@lists.linux.dev>; Tue, 09 Apr 2024 08:03:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="chw1H8nw";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="c5rhrnZx"
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 439BYsFP004461;
+	Tue, 9 Apr 2024 15:11:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : in-reply-to : message-id : references : date : content-type :
+ mime-version; s=corp-2023-11-20;
+ bh=HgGPOMHNGysPXKS5s4T+4Nx0CgRhP4NXdwni67kByxY=;
+ b=chw1H8nwu5wFVcy0q3mH9NmDcG1Kz2t6g5x8gWNZVfQE6/bE6fmUEohae4J1YSi43cC1
+ DuEa5Nkw6GSpo4RHAfeq7NWyqPMjT3IHwuAHo4/OoxutMLFma8iHkA2kpR+bdf4ErFFe
+ lDEP9GrosfzMfJJrCmHg9W7rRlllahXYton5MJdMCfxpaKpRVGgqHReNDTKFGgDPfG+G
+ 4AWqJO/czXs+7a/Lwf7mAtmWLcNGp/gZnrnsmxzPIsYSiDpWp4L/KQpP2Pbwa5NCCWj0
+ iddLjPRdNNOdF8GFzG9/af5p7g2yDiXwYLGekekDhtGN3Udt3rpP/PwVGKXk/3MC/Dqa Aw== 
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xaxxvd77d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 09 Apr 2024 15:11:48 +0000
+Received: from pps.filterd (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 439F98oN039976;
+	Tue, 9 Apr 2024 15:11:47 GMT
+Received: from nam10-mw2-obe.outbound.protection.outlook.com (mail-mw2nam10lp2100.outbound.protection.outlook.com [104.47.55.100])
+	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3xavud4eyh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 09 Apr 2024 15:11:47 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=AJsySVe8oEjOzdobAhv5OO5mUjSkWxJ5nOt5wTeU2dbrotNcywOvqbP7+V4zaj2mDTLOi57ePyMMH8xkbrhrkGZABW7NZc3t/8EnFRAwNUDW7uBCJuhEtOOqkRaQeIh1ja4Z5ApMkrd3sNhpiwHeCu/ysK5IxAPITFNOvM610CwEux46otsW7g36sEPUOl3e+Ef38FplzHL+RemhCoclKnVT7Vxb+tt9w2TV4rdMvGoPy9Cuhytj4TBx0YH1yk60ouDnqvvqeaFsrxtn3glxKWeoESulxO6n7fRODuRtFFvff2OCyYP0fh1Ekf3cpLqiFYXvTH9PiZtcvpihYOTyfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HgGPOMHNGysPXKS5s4T+4Nx0CgRhP4NXdwni67kByxY=;
+ b=g8x7/xIHbXc8LXFNfm27jbBAlIRaGJ/KjMbpSgK8e0GbCT6HfYh5IBFt4/6x7765MnQsTyt4IT9qe0grQDCcIlchBDbe9Du3xd+uFYmZiFlLHHFmLl8NIJLMtEBsZ7lJ5tAbJEemqyKPaR9U+CEA4v2oILJnXGi8CUq3afupaBuObmyC6Zh6qXP4D157zczodyK2HQV/flHKEWvtTpDDP8takPWxYBVOB8FUKaBG4St/JvTadY203egrE5tKh5UVTCrFXYjHygFr9ktHzNhs+5I/XV4Jjw28yEvAwAQfX+k39UShcBgUQSCkxmea6uC0UDC7UyOmdWWIu59jfVn0dA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712674987; x=1713279787; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=y+XDk1cLK4NPYhK11Tcj+zbN7BAXH1rZn8LVf3IXTLo=;
-        b=zc/gK+oc+GuDggNWNnvKUP73FpjYlDP2HELeCbErrLS4UzuuH+EWAPFvhFsUilrDLg
-         Fn1koiNhQSvf8XFY30ENrSBfrG8Z07VD6/SL2kIIm4/AgarsCDVbYsKZ/fUQMMkFFbHI
-         sKXaiWFLbkowGtt6Y8CIoFMl/RmMtwyQZ/OqpBt78nB+1iKInTxasmKX0QO4WQjd/8Or
-         NWgoNFXnq84xJ78yrpC79FgdeDDyGn4oTSZRx6kZW6hEYlSO0BMgyOa16yIDHCV7fquQ
-         nnCoSGCnojEngRe5Z+1UDMIHnTDzPU8NnfaMEJfDqVaRGHOqcf/VyUzU0hUFWovpKJ8T
-         0obQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712674987; x=1713279787;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=y+XDk1cLK4NPYhK11Tcj+zbN7BAXH1rZn8LVf3IXTLo=;
-        b=WGDcs8cpuceZ5X5Dx4nBfFhXtyJlvEA9nnFpcjsegn1HN0YMaNn17Ck+bDOhvek9On
-         AlqJPBtjcVz8EXMKfB+CemlRMP5Hln2Z5nLcgf4tUT6EXVkkH79hv6uo9g+9tmEDwk4U
-         0we4w0cvYujb6zB5Qf3nnEOKcZ8mEevrs9wro0U92gVpkc7/BZQA+Oqpd6uB7TvxChvc
-         U2JBiqIPKwZ48MU9ArxNT9MhPHT2Z7ziTnfH4n3uLau4lX+JC5T4e4bEQGRVAuFHnW2W
-         nemInvMBVTyHP74nOYwwn2ILrhcD644rWVuHkFEMOOJX2mOCYF3GqUF/1utn24DgkdFH
-         ZayQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXrHLtRbS68NV9wdgeU7AgZTlkqq6LIiTSHYfHMxHFrnF+GXT9sM2Q1wCjh0Hgdcsy/0fvnKHROrMIjTzymkhbr53v4NuJgjA==
-X-Gm-Message-State: AOJu0YzlizHFk/p0LeHet8m/+FoIy58rJJqXNH5i67fuzTA91AgKQ3Vw
-	B+PO3zumi48tD7KGS8LwZOwQH8iIJWpV41S6jbAyd1Qh8OTxeGtJokX2hKM/SzH3ZeXD9yCFImv
-	88dfTWSdvIzKFNX1TZsGCM8ZBVjXTnXT3aSIbPA==
-X-Google-Smtp-Source: AGHT+IEHbOrG/9DH09j60Pe7SxKUOq9Ym1Y7VnToNV102gwrT9SVtmfrVuhTOUUNdqXEbQ9n5Uq3zUZDf7JEYq59ICg=
-X-Received: by 2002:a05:6214:1bcc:b0:69b:2664:cda2 with SMTP id
- m12-20020a0562141bcc00b0069b2664cda2mr3821192qvc.8.1712674987177; Tue, 09 Apr
- 2024 08:03:07 -0700 (PDT)
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HgGPOMHNGysPXKS5s4T+4Nx0CgRhP4NXdwni67kByxY=;
+ b=c5rhrnZxPxcfVx9cn7Q8EtXgVgfBdgyyT+n8D3Rr/0ADZBLzK1xsEOfv68cGE7ef0BtPTY8Atp6COyhwxFKwhy6+mQ0elCuK8qpK7BcYACfofDrqLGcY9hM4AW8nZ9FmuUzSobC8UbtPoZ6MpNO7hBN568m+EMBtt0Khzi+o1nA=
+Received: from PH0PR10MB4759.namprd10.prod.outlook.com (2603:10b6:510:3d::12)
+ by IA0PR10MB6747.namprd10.prod.outlook.com (2603:10b6:208:43d::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Tue, 9 Apr
+ 2024 15:11:43 +0000
+Received: from PH0PR10MB4759.namprd10.prod.outlook.com
+ ([fe80::7856:8db7:c1f6:fc59]) by PH0PR10MB4759.namprd10.prod.outlook.com
+ ([fe80::7856:8db7:c1f6:fc59%4]) with mapi id 15.20.7409.042; Tue, 9 Apr 2024
+ 15:11:43 +0000
+To: Anders Roxell <anders.roxell@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+        patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+        torvalds@linux-foundation.org, akpm@linux-foundation.org,
+        linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+        lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+        f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+        rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com,
+        broonie@kernel.org, "Martin K. Petersen"
+ <martin.petersen@oracle.com>,
+        bvanassche@acm.org, Alexander@wetzel-home.de
+Subject: Re: [PATCH 6.8 000/273] 6.8.5-rc1 review
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+In-Reply-To: <CADYN=9KoZSBy_sbKR9ZTzcUXuUgA+PwdhAMuA5BEHP-BHjdnNg@mail.gmail.com>
+	(Anders Roxell's message of "Tue, 9 Apr 2024 15:07:24 +0200")
+Organization: Oracle Corporation
+Message-ID: <yq1cyqyo9o3.fsf@ca-mkp.ca.oracle.com>
+References: <20240408125309.280181634@linuxfoundation.org>
+	<CADYN=9KoZSBy_sbKR9ZTzcUXuUgA+PwdhAMuA5BEHP-BHjdnNg@mail.gmail.com>
+Date: Tue, 09 Apr 2024 11:11:41 -0400
+Content-Type: text/plain
+X-ClientProxiedBy: SJ0PR03CA0112.namprd03.prod.outlook.com
+ (2603:10b6:a03:333::27) To PH0PR10MB4759.namprd10.prod.outlook.com
+ (2603:10b6:510:3d::12)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240408125306.643546457@linuxfoundation.org>
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-From: Anders Roxell <anders.roxell@linaro.org>
-Date: Tue, 9 Apr 2024 17:02:55 +0200
-Message-ID: <CADYN=9L6PFLhfC9cKAgTEAxzQO_J4ymp_DibEKoJZoLC8eaRVQ@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/252] 6.6.26-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org, Alexander@wetzel-home.de, bvanassche@acm.org, 
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-
-On Mon, 8 Apr 2024 at 15:00, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.6.26 release.
-> There are 252 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 10 Apr 2024 12:52:23 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.26-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
-
-Results from Linaro's test farm.
-Regressions on x86_64, and i386.
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-Following kernel warnings have been noticed on x86_64, qemu-x86_64 and
-qemu-i386 while running LTP cve ioctl_sg01 tests the kernel with stable-rc
-6.6.26-rc1 and 6.8.5-rc1.
-
-Reverted this patch and I couldn't see the repoted warning.
-scsi: sg: Avoid sg device teardown race
-[ Upstream commit 27f58c04a8f438078583041468ec60597841284d ]
-
-This has been reported on stable-rc 6.6.24-rc1 [1].
-
-------------[ cut here ]------------
-[  839.268407] WARNING: CPU: 0 PID: 92507 at drivers/scsi/sg.c:2237
-sg_remove_sfp_usercontext+0x145/0x150
-[  839.277715] Modules linked in: algif_hash x86_pkg_temp_thermal
-[  839.284952] CPU: 0 PID: 92507 Comm: kworker/0:0 Not tainted 6.6.26-rc1 #1
-[  839.293108] Hardware name: Supermicro SYS-5019S-ML/X11SSH-F, BIOS
-2.7 12/07/2021
-[  839.300514] Workqueue: events sg_remove_sfp_usercontext
-[  839.307122] RIP: 0010:sg_remove_sfp_usercontext+0x145/0x150
-
-<trim>
-
-[  839.415941] Call Trace:
-[  839.419788]  <TASK>
-[  839.421924]  ? show_regs+0x69/0x80
-[  839.425337]  ? __warn+0x8d/0x150
-[  839.429950]  ? sg_remove_sfp_usercontext+0x145/0x150
-[  839.434923]  ? report_bug+0x171/0x1a0
-[  839.439968]  ? handle_bug+0x42/0x80
-[  839.443466]  ? exc_invalid_op+0x1c/0x70
-[  839.448688]  ? asm_exc_invalid_op+0x1f/0x30
-[  839.452878]  ? call_rcu+0x12/0x20
-[  839.457579]  ? sg_remove_sfp_usercontext+0x145/0x150
-[  839.462551]  process_one_work+0x13e/0x300
-[  839.467946]  worker_thread+0x2f6/0x430
-[  839.471704]  ? _raw_spin_unlock_irqrestore+0x22/0x50
-[  839.478049]  ? __pfx_worker_thread+0x10/0x10
-[  839.482326]  kthread+0x102/0x140
-[  839.486942]  ? __pfx_kthread+0x10/0x10
-[  839.490699]  ret_from_fork+0x3e/0x60
-[  839.495658]  ? __pfx_kthread+0x10/0x10
-[  839.499419]  ret_from_fork_asm+0x1b/0x30
-[  839.504727]  </TASK>
-[  839.506923] ---[ end trace 0000000000000000 ]---
-
-[1]
- - https://lore.kernel.org/stable/CA+G9fYs5MZaPV+tTukfUbJtdztQMExfixo=ZwbBr1A6Oga+OLQ@mail.gmail.com/
-
-[2]
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.25-253-gec59b99017e9/testrun/23360303/suite/log-parser-test/tests/
-
-## Build
-* kernel: 6.6.26-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-6.6.y
-* git commit: ec59b99017e96d3bc8a6d5b87c01f47ec5a9bcb9
-* git describe: v6.6.25-253-gec59b99017e9
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.25-253-gec59b99017e9
-
-## Test result summary
-total: 165396, pass: 142577, fail: 2173, skip: 20493, xfail: 153
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 131 total, 131 passed, 0 failed
-* arm64: 39 total, 39 passed, 0 failed
-* i386: 31 total, 31 passed, 0 failed
-* mips: 24 total, 24 passed, 0 failed
-* parisc: 3 total, 3 passed, 0 failed
-* powerpc: 34 total, 34 passed, 0 failed
-* riscv: 16 total, 16 passed, 0 failed
-* s390: 12 total, 8 passed, 4 failed
-* sh: 10 total, 10 passed, 0 failed
-* sparc: 6 total, 6 passed, 0 failed
-* x86_64: 35 total, 35 passed, 0 failed
-
-## Test suites summary
-* boot
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-filesystems-epoll
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mm
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-watchdog
-* kselftest-x86
-* kselftest-zram
-* kunit
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-smoketest
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR10MB4759:EE_|IA0PR10MB6747:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	oigkfdSs4lX6RuybLaeyl6P1FxFN0KO+GXefXFp3r6RSFWkxlQdJotqaa2sqPjqvfUchgDbAEGnqn8YlBYVAi0JVgBRXSYBabCIzhJg+oxeZZJc0k0NY27J7LmwB9JhctyelMrEbl28u3rqhN+I9q3V/3urb63XJJwKUTM/wYGMy95tdtS0l4QPDga2fyQG9xumnS65Xh5ScnPZkF4DMArtC+7zd1Zr8e+XwAKlnaVyaWgOMby1eNy8LxDmk1rLlhhvRNPhipy3lfjcK1ir4/liQxbEiEQAfzCEU3bfZojojMCkhav/9SyglviDIW/lvcC0LPQN/JBPuwZCmv2SaIRmY4dgaKPBVm9aY+Fg1FlQ6AuLJj4TIJF+y+cG4lF/Gw+4F5oVXa86PWEBts+K8uyl72CLkxZ/Pwoe7EF1r/S9+qhTzZqx750jNten+bRaBrggJnMGF8LzpTnjlZqNZiqz41SUcdMZlbIDm26XLvrI/SAvqnzAFiy1FrllBI2aQhnv261ZJ9NP4Wtej0tY0x188P4WkR8byv9tE2dAyd6GaGKET/aAe3769BGRHtrpcXkfEe9+cXMSsrZpHrPESneKJf/IBaMxLx4QGMUSkbUmLPCWxxC/xM2EoLLBnvAQZUfjka49q8lptXhbwoUw4xOd9XAo2Zp8antmS2qBh8Yw=
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR10MB4759.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(7416005)(1800799015)(376005)(366007);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?us-ascii?Q?euRU7B1tnvL5bqw5ROun10vyebAoW7sHUcfEaNPxauUCJu4UmA0fUMKiWNAA?=
+ =?us-ascii?Q?YBZz7v6/Q5XZlz9nrqWdLjKb29O99CziW7dbIcjawxFoBa0sa+fgwM5Jiuaf?=
+ =?us-ascii?Q?qjCmiNY4kSgJXF2R16l8dkSzmh488d8WCa6MV0TayI418B5JQQ5Vqioz+GIe?=
+ =?us-ascii?Q?V+GeuNKy+RBvZZ/8TVowra49aOYLAoYBPqzS86jL3A7ha8kNhAWTX1WtinGk?=
+ =?us-ascii?Q?JM46nWCsL2yV6t6TwZlcWluQ7NtXygGRbveX8uhI+XqpqeTSDs8Def8W/T1Z?=
+ =?us-ascii?Q?4pBsQfy+hgCdxwxTOl6LuEn/ZBaBosmvamO+pJseW0kcG1vBlYTqN+uiW/Fz?=
+ =?us-ascii?Q?JR6VOV4Jw6z1OBS72N7SduTyvLwdya56LGcQ1Ok7vD2YEilLkjuq+c/RxFIy?=
+ =?us-ascii?Q?AE0GjDgZ0v4nQqyOHPryymr/5f9fmbzXTJLGFUc+sYvymdXGeP5RXW9uzrV7?=
+ =?us-ascii?Q?8Qfi5CjXptIsi3OICHbKBBnQJENnys7VaBssfbsUq5pD2f2tMy3XUcNuCWyh?=
+ =?us-ascii?Q?VfIgLJ1rWm7GPrLx3HJnJ6qS6+XgudLBo1AS0DPIwC+2d2y/2+5wTplPuGpV?=
+ =?us-ascii?Q?0aOq8vcROGGVF9vwe7HmAY4wmmR55lKbf9eAoptFA3c6P939Y8tZh7SZXggx?=
+ =?us-ascii?Q?TrvLzvvuK1NZ803I7y5mBCLFI8p5WEu9ZNFLp361rNyaIWqt/m5YOl8F0f7e?=
+ =?us-ascii?Q?xr3To9wcHLPLzq42w/XBL6pVjOiDtOEVaJKCxS61XDJ9jjFDORkqY0dosQRY?=
+ =?us-ascii?Q?tXYCzPYQwLLaQc621Uit6pbTbIVr9PvspDGB31S5CWaBaiNuUp11NwsAC72q?=
+ =?us-ascii?Q?iPYCGgyBj9GxSbaceIi7OodS/B0Hx9bwwzB0Pgi9eA2ZC9Ae4MYRNWqdAHTM?=
+ =?us-ascii?Q?9GYvm1E5vv/udCEF1A2AJXvwokJxbuI/Gli0SGUGnq4x3glqIYU0eC86/WG/?=
+ =?us-ascii?Q?0Uu/trs7x/aSpk+Ck9LCU1+ro/lZl3GFRV3hySWapUFVJ70Gxmg0DQgT7P81?=
+ =?us-ascii?Q?F6X+4XBgpSStBdzZXUisjdE8mS/HMADjYkeksj4krSdZdm7rd+MEeTdS4XN4?=
+ =?us-ascii?Q?BnfgWqCHhkYBzbXwOsfYAht09846Vm40HRr5880unyjIXVgZ7atsHt/EH9l3?=
+ =?us-ascii?Q?ahVeFMfUxkIkbA+I+N6Jq+Hwhd9XhKztC1uX/EYCskM1i5F4goNz3r5jx4g3?=
+ =?us-ascii?Q?qYDKxaL9J9fRWoCIZOr50KS1Efv4yAdc2SH1v9CxtfpEyNo8l+GedIh2hP+B?=
+ =?us-ascii?Q?ijC130ba3w0yiCeGNG5SyN4ljmftstVqk/HU19PRf5WCMsmA1L4ofP/nb6+9?=
+ =?us-ascii?Q?GZz6oAUjyE8dZTQBQOC7o1+/+wwU+cxgBcaUbifQbJQfK4MGyN1BloR1GEfM?=
+ =?us-ascii?Q?ca4RFx1YA6Bim5bWVoMCpm1tjaHGUz5rif1LDePOXRqLg10ckcASEjUw4TK/?=
+ =?us-ascii?Q?aQcbPSPQQ1Uate+4KvJXhlsCuztCSHYW4Met5LfFHs63vtUl9sPE663YrNat?=
+ =?us-ascii?Q?JVtC80vx/uE0594YLNdOOsAKW/gyFoUXXptIKX63gMkMV54j5XiZV7XRFb3K?=
+ =?us-ascii?Q?8qXiVOCGQp52UBLw8TUNC/Pdmtz0YRCrzTDfO6MO5G+4Zb8GJ8IBZO20unZU?=
+ =?us-ascii?Q?eg=3D=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
+	vFMZgqxv+sNUfUgD1bLQ0TNBKjeHIRvhlWEhtXcg9BTPjj/iXu12h8LKNg9OZMZohLwYl4cciJ10ETplnasAZzkDg0oG7DKOgj9Z0tTCCW2VYiqGindch0yQ96dBsHMIGCZZFFND8PW065i+tSBOncL6/kAZAXzr1+WsfieieS3WnWwS+uaGhy5UNkCUvffqeVTvdFH5y6BQXqz2Y1y9JfQWlhI4sZ+XdyZRyQGpdQua1jP6SmpWMGldsk3QcTqfkNzWKcwfOv8RI08nDWL10RjVymmbde2N0GAZmerzRJ/JtXmIaA34NMKt5AZMIWBA7+DeIpvVXIb6B0ZFrF+9EFILuEK6VRMgtO8Vq07wIumcoZQeGkc0VN68zS4TQGsq+gD+aOapOaQZs4cJBtpVUh0OOdMT0WIIlwgTC0EW8ukNUtZ0bqjjbVNyF6kHVTL0gheWN347QoTMxghozjzMwBcLOWMQV61JJO9MzU9ZOXt3aMzJYrSNKaJ7Ft+p1VXnNxDnQqicEnkwfbXaVp/eoNiDDfDWRBz00PTwOmw3PTVir0FJlFkUQJv852Giiu6shc8KpCoN8pNxR7q9xo/gmj8lyUvrlIbTStTby2KFlpg=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8883515a-5447-43f1-eb54-08dc58a75dce
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4759.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Apr 2024 15:11:43.7487
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xlvLTb4RJJ9lpkw/8bq/W3wj3VTjBSU0InB3+qLNM87uvaW7G5kgpdI9Dc3xyEv9lUq7Jncjc/qP87hmQugraKMY4uDG3Nibuyj5FNxIxO0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR10MB6747
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-09_10,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 mlxscore=0 mlxlogscore=771
+ bulkscore=0 suspectscore=0 adultscore=0 spamscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2404010000
+ definitions=main-2404090099
+X-Proofpoint-ORIG-GUID: LHKKIe8x_3sjHPpH1rS_7CD2FKSLVlnx
+X-Proofpoint-GUID: LHKKIe8x_3sjHPpH1rS_7CD2FKSLVlnx
 
 
+Anders,
 
---
-Linaro LKFT
-https://lkft.linaro.org
+> Reverted this patch and I couldn't see the repoted warning.
+> scsi: sg: Avoid sg device teardown race
+> [ Upstream commit 27f58c04a8f438078583041468ec60597841284d ]
+
+Fix is here:
+
+  https://git.kernel.org/mkp/scsi/c/d4e655c49f47
+
+-- 
+Martin K. Petersen	Oracle Linux Engineering
