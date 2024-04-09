@@ -1,180 +1,182 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2119.outbound.protection.outlook.com [40.107.223.119])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714683A1C7
-	for <patches@lists.linux.dev>; Tue,  9 Apr 2024 06:42:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712644948; cv=none; b=fK2CAosUHQ1Q7ycAELnaSFmO0oL4/K4+XXb7hMr+Y60zfe2JlxQQEKH2PTfah1x+FGoGOLx/kA56X09aelFXoAbx055f7pucPjiQiYr+k5LIMMTKi96Exz5RtEEkD/+tAmDpfsIr53PonU4MaP3BytSclslSJ3ovY+n8qXQkf38=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712644948; c=relaxed/simple;
-	bh=2UWzZU3OGus20bi2QNQyPyLmKfS/WdjFHRdIB5PJHkE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eo0BBxTRhxGiY+AY1tROEwVfoxneoaMBWCk5Qi2ZF0m953sPUPDgP78Bi+YYL9xOXsIb++F/FZp3cjn3Qf1k+0GsITbL5nSSfhjIoa/GElK2sgVLGmMD4HrQx7o09dT+Ux2Z86R388x5Oa4ohvlbKTT9y9PfU6RrC4oTHax7FyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=UfucgPxI; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=EMEJyXjC; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=e3tjHwKv; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=sagsR/lQ; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9321DFD1
+	for <patches@lists.linux.dev>; Tue,  9 Apr 2024 06:53:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.119
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712645607; cv=fail; b=DIxRKB/dLoJ+DBlR++qfWPVzSBa5o/wMyTwRjvXumACJblkeyliX1LI4YDbXWRhAxovR0Yqxr2Sj63SjMhtYna2nqLCQ1fNOre6hHioqeeYPc87mV5KcpiO4WExH6yae9CdH2PYAtl/8w2nBLDQ/pokwUohhje486D1m8Aj5Ojo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712645607; c=relaxed/simple;
+	bh=X1p9Baj6NTX5sidZwGVJnuxGaSPbU5ijSEskn7W5HQg=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=smfKVV+bVgyobG1aLeYNWhWIFx364bHEIiNa6pcuVEdSSNkp5LWyHMvwsMbvv//zTqMT+gnf77SkD6O9qmq8kHQ51tkQ797CzWlhmeCao0+ZWK/s0am65+7wJ4KxjLRs8HknV8f68XKhRQF7xgTdbX6DlrzML1gOlGvIUiAlML0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=rTbsJq/W; arc=fail smtp.client-ip=40.107.223.119
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="UfucgPxI";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="EMEJyXjC";
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="e3tjHwKv";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="sagsR/lQ"
-Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:98])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 879792081C;
-	Tue,  9 Apr 2024 06:42:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1712644944;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gW640Tnn4Pgl8BZXIbzNI+gNPREqrCBZDNR4tdFxVhU=;
-	b=UfucgPxIYHsVeGMkR4aCD5ThpZ0cbOaHxhgiGD7wVMK97qaJZ8F1kUjHar+DWTIHEe1UHu
-	rnizqLI9ckrrX0ZPHZwRAT5miQJYzoqTIdba+VVLAfup0Q80DsEZvneNhrL3LaNzbvyi6b
-	avflrRaRGmj61LeKiIe/4xEs+ZfglkA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1712644944;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gW640Tnn4Pgl8BZXIbzNI+gNPREqrCBZDNR4tdFxVhU=;
-	b=EMEJyXjCJRahYmWphIV4cW4METhi1cKHXLY3JT+irX/4z//4tqE2WFnC9TebmZHgJjlaLk
-	B6Q3Ct6KGf17gDAg==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=e3tjHwKv;
-	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b="sagsR/lQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1712644943;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gW640Tnn4Pgl8BZXIbzNI+gNPREqrCBZDNR4tdFxVhU=;
-	b=e3tjHwKvyZ644QwQVJrSV4FV0CPtgBGC76T7ZkyT2ju5iSWscczuZBZcst0z2QiYUT9rBc
-	4M/ipgYZ67AWKfFIBHje9pz8kfoy8iCRZ9lECJiWm0KbQkvc9T2hHdVAVOBiW6t50eAujP
-	56wMe2D0bPz65mJgdwbDWniKhXqK3JE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1712644943;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gW640Tnn4Pgl8BZXIbzNI+gNPREqrCBZDNR4tdFxVhU=;
-	b=sagsR/lQsc0Jo6L+iXzmESqdjRYHmlcJAhLgjnl3W5fuw1yIeJtBWwnx8Ofjz/SeY5OGuK
-	HE9+a4Q7h9upi5CA==
-Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id 6805D13253;
-	Tue,  9 Apr 2024 06:42:23 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
-	by imap2.dmz-prg2.suse.org with ESMTPSA
-	id YqlHGE/jFGajIgAAn2gu4w
-	(envelope-from <pvorel@suse.cz>); Tue, 09 Apr 2024 06:42:23 +0000
-Date: Tue, 9 Apr 2024 08:42:22 +0200
-From: Petr Vorel <pvorel@suse.cz>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: Re: [PATCH 5.15 463/690] nfsd: fix net-namespace logic in
- __nfsd_file_cache_purge
-Message-ID: <20240409064222.GA83048@pevik>
-Reply-To: Petr Vorel <pvorel@suse.cz>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="rTbsJq/W"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=AuwDol7s0jrWVF3dlcIbs5zFrRhj+y5Tiy/8MvRe7DOCixg5oqsliUJ/Lb+VvQ3tEpuHOcbPZW7FrSxVIoMuL+Se5zETlmSjit7vDuOsQu6QrRJXNHJ9+cZyWqN7txBmrQgyURibBzrBFP6bHyCy1umiUmD3jlk5vZJsVymD0yIbXDYMEBcc+9leNGS1lrcuNLketw933nZZAubg6JCjia3Rzza5r185JfMQAdeGjkEj55+UvY7urUWP1kxCdsb5Xbk8qLsLhOR31Ei9dAT+mRu1CK3yFpi2GUdefrK4zHS8Sna0N+zVqdCzQ/rnCCZUJ3ZPmht9DIo2vityUBDDMA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GdxMMm929M6Fg5A5NEjpCrLWrk7+s0Fb29+00XzHuiU=;
+ b=M20/QjbMgKSsU8Gmv9ZeN11hKf+3DUXGTTxrUibfFTRl4F91U3VaJ6/bhvRH5Oi4EzxlsDQucXz58BTMew2U8TZplWISnmBX3UWW9Mt51ESOZn77Wlj26OGsF6j0YuY37r3vHXhafwX9OWRJLFIx4fyvCzaiwT0qQW7Jfo/zFtFS2x6Re5FvjzzqHui6rIpPEGs8Ro7UjF9P4BYIj/0Jf+8wkejQWrH0MRMiL13H9svv6Pdku12H0kmts6ZQilljvvakorvVP0WveFqRY/Fko5ScnQanQxAjzC2xtC/iEN+LnFJtl9SGpgPtz5S/FlO2AZtA91oSutb70OmZMz3nxA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GdxMMm929M6Fg5A5NEjpCrLWrk7+s0Fb29+00XzHuiU=;
+ b=rTbsJq/WPjeaLuBP0yfYoQ+yqGZeN1JLjybApk9LD2IhNMdxRfgt/59tegluLRxe4XQjDgXvQZNNeHfnCiv5qBAB14wWDwd22OEm1PENdlGasYWqKL4FgoCZGdszbDKISkpAvmoK1LEws+GHoQlibM9mMLGtzRQGw+ERKhZ0t6IYhW4BzdGh4dbYKPCPMbrXOyajxMn8i1tI5TxeBttHtepIqpONwR+ku9eySg1I43Gk4EwaohJxnqsZCTYNL544wB2pWcS8AvtOEzMy2rbmVMiDldy8KujAMi3PxLEHzahyfYXFi6Q8ZYdVUGwCogx244lyOoZYnIi0vpCJT+gsVg==
+Received: from CO6PR12MB5444.namprd12.prod.outlook.com (2603:10b6:5:35e::8) by
+ DM6PR12MB4482.namprd12.prod.outlook.com (2603:10b6:5:2a8::23) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7409.46; Tue, 9 Apr 2024 06:53:22 +0000
+Received: from CO6PR12MB5444.namprd12.prod.outlook.com
+ ([fe80::ae68:3461:c09b:e6e3]) by CO6PR12MB5444.namprd12.prod.outlook.com
+ ([fe80::ae68:3461:c09b:e6e3%4]) with mapi id 15.20.7409.053; Tue, 9 Apr 2024
+ 06:53:22 +0000
+Message-ID: <04151fac-3bf6-4199-a822-2fbaaef8b77b@nvidia.com>
+Date: Tue, 9 Apr 2024 07:53:14 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.15 000/690] 5.15.154-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, f.fainelli@gmail.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+ "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
 References: <20240408125359.506372836@linuxfoundation.org>
- <20240408125416.405210374@linuxfoundation.org>
+From: Jon Hunter <jonathanh@nvidia.com>
+Content-Language: en-US
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO4P123CA0095.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:191::10) To CO6PR12MB5444.namprd12.prod.outlook.com
+ (2603:10b6:5:35e::8)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240408125416.405210374@linuxfoundation.org>
-X-Spam-Level: 
-X-Spamd-Result: default: False [-3.71 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_RHS_NOT_FQDN(0.50)[];
-	HAS_REPLYTO(0.30)[pvorel@suse.cz];
-	R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:98:from];
-	ARC_NA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:98:from];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap2.dmz-prg2.suse.org:helo,imap2.dmz-prg2.suse.org:rdns,suse.cz:dkim,suse.cz:replyto,suse.cz:email,oracle.com:email];
-	RCPT_COUNT_FIVE(0.00)[5];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:98:from];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.cz:+];
-	REPLYTO_EQ_FROM(0.00)[]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 879792081C
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spam-Flag: NO
-X-Spam-Score: -3.71
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO6PR12MB5444:EE_|DM6PR12MB4482:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	7t8U6NKO/VyxjMbY9xBBoS5XGORZUZEdy4hsfE9m+M07iLYCpanzi/313xvxC/VJAP6GlSXe3Nw9WXCCpPhyr9U00yz4ksy6sVFbL8D8HzVygL5bZEeguOKM/MuAPgBKFDPc+o57BB5dEm7pUIb8xs5dcVUaTRkcv2jW3mFSowM8nukVnDLps+wPfpcIS52oYyv/O9ErDWhnyPFkMgZNoV5XgIA96LY6TEnLOSdPouweiX/4xDvbUQB7GTz1BExyFQPzj0RP0qRn/C0Jornm4eOL6yL33F8E0Ft6RdYlhnJfLFdpiV52f0fEgWk+yt4Tl67vJQS+JFdiKXD93dO1hZn9/TW4p7YJL134LAznyW1YSDEoIXOZzvhPhv+Fm5o6GQzeqdYPLxMoaCwXLbSo6MvOjN8NSiiBnohpLFxdzoZDW1v3G8RSiM2EazzZ1wm50fxbJHUitEraHj932kZ+xVvwClKXWHhQMtxQeeKqOK3Ob1UySJ4u/jomf7QkK1IRyHCnJ8IZNsS+dS8p/GgbmXX3QYIiiUM6jpHbuYInzSOUpFZ0YwUr2nNlok7rO59jggs1yqHLFf36mHJS8oEFpsgM4WAxflpDv+/k13d5a4zQqXuFb+n5w2NYLyHFKxeEI55vJqxhCT+ilpdhQCEvkXSeX2OkOztdUgHZ5dSDFMM=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5444.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(7416005)(376005)(1800799015)(366007);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?ekdnQjlxTWRJeDhJenNHY2xpWThNd1dBcWh4SHZvME12d1hOYTNTR1ZVVGV3?=
+ =?utf-8?B?VDhnVE9zUHVBb1IrWnpESk9qakFDTzU2dzZEZ1NkTmFrR1BjM3h3U08vSDZH?=
+ =?utf-8?B?UnZ0d0pwVGRGUEdOd3lsakQzVitaWkxIRzkvbkIzK0c3bTZURkZkYnoxRk9m?=
+ =?utf-8?B?dC9TTUR6N3ZtVS9QV3VFMXJpNlpTbjF3V2VJQ3huZjRVNFFHYXFWWWFHNWFQ?=
+ =?utf-8?B?cVI5clRZTUJoWFdnYSt2c0Nab1I1U0Z1Y0hVRUFRZWlWRkcycmEremhvVmFu?=
+ =?utf-8?B?OW9OVU9EUkxmazZ4WEp6eVJ1QngzY3lON29nZExSb1pmL0dsL2ZlRmozK0Vu?=
+ =?utf-8?B?aWlLMzVJQnN0d0pKMGJ6K0RnZXhQQ3VGYzZSTHZuZ1VTSmlxNjM2M3J5bGox?=
+ =?utf-8?B?a3g4ZzRRemFrWXJSR2NYZDBZeUZ2SytPQ0RtZ0F6a2cwL1FaWWZZc3BoM1p1?=
+ =?utf-8?B?aXNWenExZVp3VysrRFNIRWhWMDFqYVllS3dUS0pyYm5zems0UVNSSUpFa1l2?=
+ =?utf-8?B?K0dvd0pZekFsVTMvWkZ5MllvOUhFYldDblFLaUpEVlZ6enVBYTRjODR5cFdZ?=
+ =?utf-8?B?eGx5elRLSmR0S1lVdk45NS92ZEtKTUVMS0FOeGdodmdOa1dlYkZsa0NubVNM?=
+ =?utf-8?B?ZWtsMlU1VVN2U3FCWVRmTnZCdlVvbWhhV0QxNWlVZHpkODhMdjYvb2taTUZC?=
+ =?utf-8?B?WWhKNmlrNWw0eUdlRTNuWUpwQmJqNUZWSEtvZWl4R2hsOVFSQW5LeW5DYmdk?=
+ =?utf-8?B?ODF2WTQyNEVpSXpqTk9xaVFRMUIvME01bVcyNnRYWDI1cVR2S1RNb0M5Z2VT?=
+ =?utf-8?B?ZFlaQlF1MWZlS1NDNTY2QWpIU2ZKRnZRbTUxN1hjK1hnUTZIWEk5bU9hSjVl?=
+ =?utf-8?B?THAySnZ3RDFsaUN3VkFzTXpkWVIvcmcyZ2FYTlpqNE9kNFZTa2tXaTljN2dE?=
+ =?utf-8?B?SzA1Q1FkNVNlTWtSRzJIdk83Um15RzVNZUZuV1BGKzBmY2Q3RlNQcjBqYm1t?=
+ =?utf-8?B?bzdCMUdZMGdsNDZFcGFCdGpacWNuM0wrTFA3U1dreVNQdEtyZnJCUFpEUmxJ?=
+ =?utf-8?B?VmVmcEVPa3VMNnR0S280RXZXMUxMcVZGWmJVbnJTaDdHQnRxTXRCQVY3U3Jn?=
+ =?utf-8?B?b2xTT243a0NoMWtSQTVxUlkyeUlOYXQwYUJ1WC9PdWh5Njk5b1ZlZlJVeitR?=
+ =?utf-8?B?aUh0S0ZEdk5lM0JBNzZjcWhjUVlKWlNJbDFLRHR1SldXeUFURy9BTWVXWVRG?=
+ =?utf-8?B?SVg5OE9NWUs2TE1NOTFYVlJlaWtaUTJZWnN2OFRMZGRtNzdYeTJIS1ZseDJL?=
+ =?utf-8?B?TmpSbC9kZE5ZY0RIclZ3bU1KZnF3b2pTYWcxaDY1MGppanFpSzdZeGw4RGVj?=
+ =?utf-8?B?K01GOWsrM1hzRE9qcG4wTmZCSDNReFhiQzZ2dldLZ0Iyc1F0bis2RXZjc0dX?=
+ =?utf-8?B?U3pTQnpkakxiZXhldmsvUHVWdG1BSE9rcGRwbU54SEdFaGZYSXZ4dEJmalI1?=
+ =?utf-8?B?bGN0OWVyN0pEUmVJTDlKbktwWDhPek1rNmxGYzVyM0FwbUhHMldRMldLck1z?=
+ =?utf-8?B?Y3k5cnhWOENIQ3pxeGVRWk1XRWE5Y0ttMFpvenl6Z2wzcyt3SnlkbDFndHF6?=
+ =?utf-8?B?MkYwcVNKZUs4SVUyRTdUaURyNjlkbXFvb2ZCMVJ6U0NOTzgvQ0xhSitNRTBY?=
+ =?utf-8?B?VWRla3JEcE5aTDlmKy9rWXd3Y2FJSkJ5eDArd2UzKzh0VnpwVjVnSDVvZC9z?=
+ =?utf-8?B?ODBZcWNDOVgycHBJVkNMa3dqK09aUWxsR2tXNys1RDU3OEZERUhpMXJGQjl6?=
+ =?utf-8?B?dng0aHVGd1JTZ05GNDBDUmdrTkROaHFoNkdsZXoxUDE1c2RMaVczTWpSS2s3?=
+ =?utf-8?B?b21BR00yeS9rays0OHZQRGlZc0VCYmVXVVpvelc4ZmNPSDNFN2RHQTk5Wk4y?=
+ =?utf-8?B?TDRJdEpYUnY5TTBhWk1uMTBYejUrKzd4U2ZBQW01SDByY1RJcndsc1NLdHdz?=
+ =?utf-8?B?ZG5TQ0JJZURvb09iUisrQVh5SzBpbTRHSTUvb1k3NTZUaHNhd2RxOTJyUnBU?=
+ =?utf-8?B?TFdDZ3BIQ2haaEVONGF1b1ZLdVBJY1EzNjF4ZVFNbEtnQnc3MjlxempDblRi?=
+ =?utf-8?B?dW0vTWhGLzlZa0tOVndleWZtMVNlOFpTM3BQYTBzNmN1STNXMFZGc2w4QXlu?=
+ =?utf-8?Q?mg/jVWlVUWkk+l/dv/E07aQXygx4viXw3tUkYEoVYoWo?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4d6b18f6-5831-4354-8ee5-08dc5861bee3
+X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5444.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Apr 2024 06:53:21.9894
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1nNs3e9bHLMTyKGpHLJu4sumMnce6Mv6Mop66PO/nLUBheUaETbb4zcfs9l7qKzoLHIxk9qsfc1wVlwYtVwD0A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4482
 
-Hi all,
+Hi Greg,
 
-> 5.15-stable review patch.  If anyone has any objections, please let me know.
+On 08/04/2024 13:47, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.154 release.
+> There are 690 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 10 Apr 2024 12:52:23 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.154-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-> ------------------
 
-> From: Jeff Layton <jlayton@kernel.org>
+I am seeing a suspend regression on Tegra186 and Tegra194 ...
 
-> [ Upstream commit d3aefd2b29ff5ffdeb5c06a7d3191a027a18cdb8 ]
+Test results for stable-v5.15:
+     10 builds:	10 pass, 0 fail
+     26 boots:	26 pass, 0 fail
+     102 tests:	100 pass, 2 fail
 
-> If the namespace doesn't match the one in "net", then we'll continue,
-> but that doesn't cause another rhashtable_walk_next call, so it will
-> loop infinitely.
+Linux version:	5.15.154-rc1-gbfeab055fa43
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                 tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                 tegra20-ventana, tegra210-p2371-2180,
+                 tegra210-p3450-0000, tegra30-cardhu-a04
 
-> Fixes: ce502f81ba88 ("NFSD: Convert the filecache to use rhashtable")
-> Reported-by: Petr Vorel <pvorel@suse.cz>
-> Link: https://lore.kernel.org/ltp/Y1%2FP8gDAcWC%2F+VR3@pevik/
-> Signed-off-by: Jeff Layton <jlayton@kernel.org>
-> Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-> ---
->  fs/nfsd/filecache.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
+Test failures:	tegra186-p2771-0000: pm-system-suspend.sh
+                 tegra194-p2972-0000: pm-system-suspend.sh
 
-> diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-> index 0b19eb015c6c8..024adcbe67e95 100644
-> --- a/fs/nfsd/filecache.c
-> +++ b/fs/nfsd/filecache.c
-> @@ -892,9 +892,8 @@ __nfsd_file_cache_purge(struct net *net)
 
->  		nf = rhashtable_walk_next(&iter);
->  		while (!IS_ERR_OR_NULL(nf)) {
-> -			if (net && nf->nf_net != net)
-> -				continue;
-> -			nfsd_file_unhash_and_dispose(nf, &dispose);
-I don't know the context (whether the fix is needed for 5.15 and older), but
-patch does not apply because nfsd_file_unhash_and_dispose() was introduced in
-ce502f81ba88 ("NFSD: Convert the filecache to use rhashtable") in v6.0-rc1.  It
-was actually renamed from nfsd_file_unhash_and_release_locked() in that commit.
-Also the context changed - nfsd_file_unhash_and_dispose() was introduced in the
-commit which is supposed to be fixed in this commit, one would say that this fix
-is not needed in older kernels (5.15, 5.10 and 5.4; 4.19 has completely
-different code). But that's a question for Jeff or Chuck.
+Bisect is pointing to the following commit and reverting this fixes it ...
 
-Kind regards,
-Petr
+ > NeilBrown <neilb@suse.de>
+ >      nfsd: don't allow nfsd threads to be signalled.
 
-> +			if (!net || nf->nf_net == net)
-> +				nfsd_file_unhash_and_dispose(nf, &dispose);
->  			nf = rhashtable_walk_next(&iter);
->  		}
+
+When suspend fails, I see the following error message ...
+
+  Freezing of tasks failed after 20.006 seconds (1 tasks refusing to
+  freeze, wq_busy=0):
+
+Jon
+
+-- 
+nvpublic
