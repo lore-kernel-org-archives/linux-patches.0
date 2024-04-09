@@ -1,81 +1,69 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C0C7EEE2;
-	Tue,  9 Apr 2024 08:28:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095037E101;
+	Tue,  9 Apr 2024 08:57:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=150.107.74.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712651308; cv=none; b=idUkIuYpA0gfmrEi2+aPaybNsNuhYGMIdcnkt3BicWIYc9n5Crzo0cT5PJM8dJ943+mNZQL0oCAIScGXs7XpoSch7RPUIislyvvHLPY/N1wjVSO/csPEqxczeaRIM7Q0Ias4nUujoAgV+vu3Y88w2Xr/C4LqphOtKJBIet03zgE=
+	t=1712653081; cv=none; b=Uf59cGaKjUqD7pUy3yBD6AgNtv4jzm1H6ObPoKHwsR+Fbqw7Kcft3IVIv81tg/PcR6Y9G0konBddPgEpkVGleL5YpSztbfGytvj0JvfSxQ16QgklGbc8fmfAEoRtLr9rKpBa7vm5V8ZHcD2RChYsfqZXkqhQYTyCCXC53ncqyic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712651308; c=relaxed/simple;
-	bh=W42QOMw1jdxfH3ToIuTAwLUWtrNMpSOB1/ZirGy7eB8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FFSNmqNz12c/jYm8skxo4ytAy++g7AvHOc+1uVpnhvULqktqIPyJga31U062h+EK3lptAgrfIh6mvTEgI/rlyhzR41sJb0Zh/TmudiInuNnqtrXr8fNWUKjEpKd8jWKbtdfIRlgsvlH54f5nNag4yo71gNMiuRPzDhygAZAhcnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDPDETnb; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712653081; c=relaxed/simple;
+	bh=SrPS1SoFdFAOpaMBtOJKXgICKkkVwjju2OEbJERQvXM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Dd7FvVZXbmEmZEep2ZmxxY+44ffo68CKi0vHKPHjZkdpW6XuLhpRNKpHnVBTnz+nuGkNm6tH24sH/AsEo7z6zfhdH2ruE3YeBMmSGU2FsWOyrOnooV8Sgd9OFK7dL4KctZQw87XlcPUS+lQeh5HqJLlQluAmrwnNLYjLdeNGTg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ellerman.id.au; spf=pass smtp.mailfrom=ellerman.id.au; dkim=pass (2048-bit key) header.d=ellerman.id.au header.i=@ellerman.id.au header.b=rOGIeJ6l; arc=none smtp.client-ip=150.107.74.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ellerman.id.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ellerman.id.au
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDPDETnb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63552C433C7;
-	Tue,  9 Apr 2024 08:28:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712651307;
-	bh=W42QOMw1jdxfH3ToIuTAwLUWtrNMpSOB1/ZirGy7eB8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IDPDETnbbN27IMju1OsYpPIdAf6EvPEB5Z3fgXFPBrIt6Fdbiz/srk7fMZ8LGT+bh
-	 /nLhDbZ1Ivai7q2lOfQbla7pvL/kKAoG8LrAGdd+jhYx+aFwH1CL7B02lxOpUPYEAw
-	 hQ4oKF+H053e9bLmZ6DuU5xT3ikpIa0B/QxkfX+c=
-Date: Tue, 9 Apr 2024 09:12:46 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: "Christian A. Ehrhardt" <lk@c--e.de>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 6.8 131/273] usb: typec: ucsi: Check for notifications
- after init
-Message-ID: <2024040929-twitter-reenter-0935@gregkh>
-References: <20240408125309.280181634@linuxfoundation.org>
- <20240408125313.358936582@linuxfoundation.org>
- <ZhQc+AoLGkrJB1to@cae.in-ulm.de>
+	dkim=pass (2048-bit key) header.d=ellerman.id.au header.i=@ellerman.id.au header.b="rOGIeJ6l"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
+	s=201909; t=1712653077;
+	bh=P0pjqDL1fQu8o32YoyNBzlgTnO0AyBJXTa6E6xDr6hU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=rOGIeJ6l4xVwwk0XjnOyhmsxAhk7452CumvunomtGki62pburr68/pa/bAyB/8fmF
+	 sNBzAUR42JbhUXWhVXbSl28qOaua/fy5NL1L0K2XHQGpOANWVSHklb2zO1G9Y6X7i3
+	 ypyHOH/Mo06MNu0WmgAY4hPn3bch9mLTYJdfQ7cBbiUi4oxqb9o3+0ErOkr6B+gEAo
+	 G8EQqAz40W3Cs4TgP1wNqZmADkG7nAk8gWgQpmrL9aPyP/i0vNCJA9P+laAuamvYHb
+	 YjAsmd31TKmB1CUd7Sx33GqTIYdGiyR+Miy+KK3Mxpha836sJKXKK1UOsSLjEEHdqE
+	 rex1j5CzXFJJQ==
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.ozlabs.org (Postfix) with ESMTPSA id 4VDKc519mMz4wqM;
+	Tue,  9 Apr 2024 18:57:57 +1000 (AEST)
+From: Michael Ellerman <mpe@ellerman.id.au>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: morbo@google.com, justinstitt@google.com, ajd@linux.ibm.com,
+ bgray@linux.ibm.com, linuxppc-dev@lists.ozlabs.org, llvm@lists.linux.dev,
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+Subject: Re: [PATCH] powerpc: Fix fatal warnings flag for LLVM's integrated
+ assembler
+In-Reply-To: <20240405-ppc-fix-wa-fatal-warnings-clang-v1-1-bdcd969f2ef0@kernel.org>
+References: <20240405-ppc-fix-wa-fatal-warnings-clang-v1-1-bdcd969f2ef0@kernel.org>
+Date: Tue, 09 Apr 2024 18:57:56 +1000
+Message-ID: <87y19map63.fsf@mail.lhotse>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZhQc+AoLGkrJB1to@cae.in-ulm.de>
+Content-Type: text/plain
 
-On Mon, Apr 08, 2024 at 06:36:08PM +0200, Christian A. Ehrhardt wrote:
-> 
-> Hi Greg,
-> 
-> On Mon, Apr 08, 2024 at 02:56:46PM +0200, Greg Kroah-Hartman wrote:
-> > 6.8-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Christian A. Ehrhardt <lk@c--e.de>
-> > 
-> > [ Upstream commit 808a8b9e0b87bbc72bcc1f7ddfe5d04746e7ce56 ]
-> > 
-> > The completion notification for the final SET_NOTIFICATION_ENABLE
-> > command during initialization can include a connector change
-> > notification.  However, at the time this completion notification is
-> > processed, the ucsi struct is not ready to handle this notification.
-> > As a result the notification is ignored and the controller
-> > never sends an interrupt again.
-> > 
-> > Re-check CCI for a pending connector state change after
-> > initialization is complete. Adjust the corresponding debug
-> > message accordingly.
-> 
-> As discussed previously, this one should not go into the stable
-> trees without the follow up fix that is in you usb-linus tree but
-> not yet in mainline. This applies to all stable branches. Let me
-> know if you want a separate mail for each branch.
+Nathan Chancellor <nathan@kernel.org> writes:
+> When building with LLVM_IAS=1, there is an error because
+> '-fatal-warnings' is not recognized as a valid flag:
+>
+>   clang: error: unsupported argument '-fatal-warnings' to option '-Wa,'
+>
+> Use the double hyphen version of the flag, '--fatal-warnings', which
+> works with both the GNU assembler and LLVM's integrated assembler.
+>
+> Fixes: 608d4a5ca563 ("powerpc: Error on assembly warnings")
 
-No need, thanks for catching this, again, our fault.  Now dropped from
-everywhere.
+Thanks.
 
-greg k-h
+I guess I need to do some of my clang builds with LLVM_IAS=1 :}
+
+cheers
