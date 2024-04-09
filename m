@@ -1,100 +1,265 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD43384;
-	Tue,  9 Apr 2024 12:55:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF70E12E1E7
+	for <patches@lists.linux.dev>; Tue,  9 Apr 2024 13:07:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712667308; cv=none; b=pEpN4fJyGsD0V+g46HelZTI4YXcESH8RTM+44D0X9qWVl1NNfdqAIJXN3J1e5VBcZaExHEDIQ7Sd/aFUkOVXcUhSWtl1LChpU67VnQt8p7vCmrdJ4oF6SosTE0KGGaesU5Y8f4p8nCLdkRtdTEnsp9/0baoWlcG5pbPQWs2D5tQ=
+	t=1712668058; cv=none; b=lXM9WORZOEgR9pD6cajlPg80wX1AvKsB3kIvmhOlJJECLDLSnQoIYCCaX5YxjZM/UroLnZa0ENKG2biJo21qJCwbIHxATE2lwFL/F4iD1+YNABhdSjNq6X22Rc+aHMHSr/j7ikqdN9ZatTcG+id8DRNZtF8hq8jlul+xC0lcIMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712667308; c=relaxed/simple;
-	bh=buB17AEIHw4RKpCZSUmtgyTvF/xyD0a0CGkVGXfyPc4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hTSFAdDn3sjqsZTh3hS8xjPDWqlJq8xYzBaPAslW/9brsefbTEQYthLuK+4Y7E+ta1TSslRE/kakHXo5AUMwxs67Ic5uBA45lurW3dLEZOk/WVR4m0ZgaNPyn0rW80BhfQnS3i+pRYXV/gZxBPClyhv3OcJy45T6ltEuZwrpbfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XCktcI/B; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712668058; c=relaxed/simple;
+	bh=G3jbVa1nPrSiku3hJVPy36PZnzjb2nMSty0D8FL1iGs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=o8iNUEkpWkwUcMWnSnLSWSCc5dRsb03oFHWOyEnQYlKBn8/bBzGyIVNtyUnvdTUFL5MwyTUgmu7RCS914eSOXC2pnwvArhTmgQNdleBC4jJMaHCYEAhwuvqkarVRj/MDy28LyfYLeZclnaUBKUC2RWoJYnVhn8mEfXdwb6CzkN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fSiq/INZ; arc=none smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XCktcI/B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97067C433F1;
-	Tue,  9 Apr 2024 12:55:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712667307;
-	bh=buB17AEIHw4RKpCZSUmtgyTvF/xyD0a0CGkVGXfyPc4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XCktcI/BVRTkZcsyFuo1AwSGJ3iM1uFSgBAkVbf1sWmBikl5VWTvQQGMUoGrXKopN
-	 /xFcRQfk/Twc4dEiQpFF8Qa8nQ7acIcXAE0n0mcLgxZAwPMeDZ2lrYN4V5cqa9hwZ7
-	 HzKXA8SvEfYM7D11Aic1x8UztrFxcRJsxSYQTecNgRpY1JvYS8+Ixpn4s2oUtkYKEI
-	 iiw657mQGbNZKMfqNRH3lqG0yz3WHOh6clGyvaiaeDo1VDzoOvPxUyO3HkZubjEG3S
-	 JjA+9sqHIamJv530gUAzvKAxUoVO0VMZaJi4gY2FPGkZGkUtrMit8bJv9aHyfzVHt4
-	 NA95QCQ1d0daA==
-From: Will Deacon <will@kernel.org>
-To: iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>
-Cc: catalin.marinas@arm.com,
-	kernel-team@android.com,
-	Will Deacon <will@kernel.org>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Joerg Roedel <jroedel@suse.de>,
-	Kevin Tian <kevin.tian@intel.com>,
-	kernel test robot <lkp@intel.com>,
-	Moritz Fischer <mdf@kernel.org>,
-	Moritz Fischer <moritzf@google.com>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	patches@lists.linux.dev,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Tony Zhu <tony.zhu@intel.com>,
-	Yi Liu <yi.l.liu@intel.com>,
-	Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH v6 00/29] Update SMMUv3 to the modern iommu API (part 2/3)
-Date: Tue,  9 Apr 2024 13:54:59 +0100
-Message-Id: <171266271384.1465008.12517206202208996339.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <0-v6-228e7adf25eb+4155-smmuv3_newapi_p2_jgg@nvidia.com>
-References: <0-v6-228e7adf25eb+4155-smmuv3_newapi_p2_jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fSiq/INZ"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-696315c9da5so46480246d6.2
+        for <patches@lists.linux.dev>; Tue, 09 Apr 2024 06:07:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712668056; x=1713272856; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Xx6iswnEmfLHSA6533FOJGeKIsKx3ue2M+OGxVH6aHA=;
+        b=fSiq/INZCcmNEyyF9ykNjAKB3f+c6NkJ8L1yvJTcDMnb8qknGlvArlbew+Db07i9M5
+         b9Cu80+Pz/kizZDLB16jG2Iu4/FJAOSGg9Uthw6Rv68wuhf6pieKEHie8SQUnR8qxnGL
+         8rylmmStxhuVf3YtURO9OvTr4BQF/wdorhnn8rgeyMu3Eu2DQx79Dw7FVL4WyyqaAeFu
+         lxDjBTk7HeOhuA4zr4MR3lCdfX/AT07YIGvrDQHXyN5+r9f3PZZwBYaq3v7rGEwjZEfc
+         Fdp4UcXCROmNm5EPmL2RiSIWpf+AHxk/ZmE3uvBvzdO3f14TwBeHF8Gt7sCPMCjaKoRF
+         t+lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712668056; x=1713272856;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Xx6iswnEmfLHSA6533FOJGeKIsKx3ue2M+OGxVH6aHA=;
+        b=I0RmDvY8BB8x8/uT6LCZX1G1yXvCsa3Gd+7ElU96Ln2P2JDdstWYctSQ+J4yerOQ+2
+         OUq6B1ocCBNzZAZPmxpHu/070mDnDVNNQqplzQGB8ukLNQY7wwyWDpmiyyB4vV3vEz5P
+         izsqsKgCN1oDrVBrU0VZuwqtwAOeBqc7rZRmoqj6IvVBOYTwEDoN/3bXy+LP0ZI1XsOO
+         tvuueRv8W/aTVHGb0auxgNIW8qHbaHfG3GQuTALO8CWr/sqN4D2FXKquDEGygs4xlnyY
+         liHBLMHhbBp+E8Jewza4tVL9f+zNxi8FALQPmfN8Fygsch+Yd3n0FKx0ACj2t/g0VzMi
+         +C3g==
+X-Forwarded-Encrypted: i=1; AJvYcCXlojMF6MJBBJMouYxmxsfo8EDRt3aP1w05zDF02NIs8F8aCPb51eL0E0ywm3PxTo2kxb882KI8JBZSEhoKwV2u5DWkskfwrA==
+X-Gm-Message-State: AOJu0YyczwCIjhlU6FOm4ME2WipXHn7faM5ZNLgwsmyNpvii5tWikUPU
+	+9Z5JBrP/e6iX9CQowM3czWvuIjBNhA6ZIxP9tPowYNMmchnf+Hq6d0wSFsnnkz+08z3EGJcxbm
+	Qt6f5KCX2qw5DaXCcUt99WIXiaOpYp/JWNeqbRA==
+X-Google-Smtp-Source: AGHT+IELKVLoxp4BdP2Pp63hR/9HZLVoc3REPE9/2r7IFJMyKZvh+BKa08KlhiCXdL3Nk+SwD4ToJ3np3su3u+WMsGk=
+X-Received: by 2002:a05:6214:4106:b0:69b:247b:a4f9 with SMTP id
+ kc6-20020a056214410600b0069b247ba4f9mr3745285qvb.6.1712668055704; Tue, 09 Apr
+ 2024 06:07:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+From: Anders Roxell <anders.roxell@linaro.org>
+Date: Tue, 9 Apr 2024 15:07:24 +0200
+Message-ID: <CADYN=9KoZSBy_sbKR9ZTzcUXuUgA+PwdhAMuA5BEHP-BHjdnNg@mail.gmail.com>
+Subject: Re: [PATCH 6.8 000/273] 6.8.5-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org, "Martin K. Petersen" <martin.petersen@oracle.com>, bvanassche@acm.org, 
+	Alexander@wetzel-home.de
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 27 Mar 2024 15:07:46 -0300, Jason Gunthorpe wrote:
-> Continuing the work of part 1 this focuses on the CD, PASID and SVA
-> components:
-> 
->  - attach_dev failure does not change the HW configuration.
-> 
->  - Full PASID API support including:
->     - S1/SVA domains attached to PASIDs
->     - IDENTITY/BLOCKED/S1 attached to RID
->     - Change of the RID domain while PASIDs are attached
-> 
-> [...]
+On Mon, 8 Apr 2024 at 15:00, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.8.5 release.
+> There are 273 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 10 Apr 2024 12:52:23 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.5-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-In the interests of making a dent (albeit a tiny one!) in this series
-while review is ongoing, I've picked up 3-5 as they look ready to go.
+Results from Linaro's test farm.
+Regressions on x86_64, and i386.
 
-Applied 3-5 to will (for-joerg/arm-smmu/updates), thanks!
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-[03/29] iommu/arm-smmu-v3: Do not allow a SVA domain to be set on the wrong PASID
-        https://git.kernel.org/will/c/fdc69d39e77f
-[04/29] iommu/arm-smmu-v3: Do not ATC invalidate the entire domain
-        https://git.kernel.org/will/c/86e5ca098dd9
-[05/29] iommu/arm-smmu-v3: Add a type for the CD entry
-        https://git.kernel.org/will/c/e8e4398d53f9
+Following kernel warnings have been noticed on  x86_64, qemu-x86_64 and
+qemu-i386 while running LTP cve ioctl_sg01 tests the kernel with stable-rc
+6.6.26-rc1 and 6.8.5-rc1.
 
-Cheers,
--- 
-Will
+Reverted this patch and I couldn't see the repoted warning.
+scsi: sg: Avoid sg device teardown race
+[ Upstream commit 27f58c04a8f438078583041468ec60597841284d ]
 
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+This has been reported on stable-rc 6.8.3-rc1 [1].
+
+
+tst_test.c:1709: TINFO: LTP version: 20240129
+tst_test.c:1593: TINFO: Timeout per run is 1h 02m 30s
+<4>[   47.841092] ------------[ cut here ]------------
+<4>[   47.846033] WARNING: CPU: 1 PID: 23 at drivers/scsi/sg.c:2236
+sg_remove_sfp_usercontext+0x146/0x150
+<4>[   47.848749] Modules linked in:
+<4>[   47.851081] CPU: 1 PID: 23 Comm: kworker/1:0 Not tainted 6.8.5-rc1 #1
+<4>[   47.852690] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009),
+BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+<4>[   47.854570] Workqueue: events sg_remove_sfp_usercontext
+<4>[   47.855851] RIP: 0010:sg_remove_sfp_usercontext+0x146/0x150
+
+<trim>
+
+<4>[   47.867679] Call Trace:
+<4>[   47.868114]  <TASK>
+<4>[   47.868608]  ? show_regs+0x69/0x80
+<4>[   47.869035]  ? __warn+0x8d/0x150
+<4>[   47.869454]  ? sg_remove_sfp_usercontext+0x146/0x150
+<4>[   47.869882]  ? report_bug+0x171/0x1a0
+<4>[   47.870386]  ? handle_bug+0x43/0x80
+<4>[   47.870720]  ? exc_invalid_op+0x1c/0x80
+<4>[   47.871046]  ? asm_exc_invalid_op+0x1f/0x30
+<4>[   47.871537]  ? __call_rcu_common.constprop.0+0x281/0x3c0
+<4>[   47.872033]  ? sg_remove_sfp_usercontext+0x146/0x150
+<4>[   47.872643]  process_one_work+0x143/0x300
+<4>[   47.873029]  worker_thread+0x2f6/0x440
+<4>[   47.873507]  ? __pfx_worker_thread+0x10/0x10
+<4>[   47.873855]  kthread+0xf4/0x120
+<4>[   47.874274]  ? __pfx_kthread+0x10/0x10
+<4>[   47.874612]  ret_from_fork+0x41/0x60
+<4>[   47.874952]  ? __pfx_kthread+0x10/0x10
+<4>[   47.875412]  ret_from_fork_asm+0x1b/0x30
+<4>[   47.875865]  </TASK>
+<4>[   47.876335] ---[ end trace 0000000000000000 ]---
+ioctl_sg01.c:81: TINFO: Found SCSI device /dev/sg0
+ioctl_sg01.c:122: TPASS: Output buffer is empty, no data leaked
+
+
+[1]
+ - https://lore.kernel.org/stable/CA+G9fYs5MZaPV+tTukfUbJtdztQMExfixo=ZwbBr1A6Oga+OLQ@mail.gmail.com/
+
+[2]
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.8.y/build/v6.8.4-274-g51d60edf2813/testrun/23350725/suite/log-parser-test/test/check-kernel-warning-baa412705664036587615ec565701ad300aa78b0e977d057b0a9de2be870cf86/log
+
+## Build
+* kernel: 6.8.5-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.8.y
+* git commit: 51d60edf281355bf4653c327050d7a5aeedb9b0d
+* git describe: v6.8.4-274-g51d60edf2813
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.8.y/build/v6.8.4-274-g51d60edf2813
+
+## Test result summary
+total: 173708, pass: 150838, fail: 2030, skip: 20672, xfail: 168
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 126 total, 126 passed, 0 failed
+* arm64: 37 total, 37 passed, 0 failed
+* i386: 28 total, 28 passed, 0 failed
+* mips: 24 total, 24 passed, 0 failed
+* parisc: 3 total, 3 passed, 0 failed
+* powerpc: 34 total, 34 passed, 0 failed
+* riscv: 15 total, 15 passed, 0 failed
+* s390: 12 total, 12 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 32 total, 32 passed, 0 failed
+
+## Test suites summary
+* boot
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-kvm
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-watchdog
+* kselftest-x86
+* kunit
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-sm[
+* ltp-smoke
+* ltp-smoketest
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
