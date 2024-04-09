@@ -1,104 +1,82 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5D7129A7B;
-	Tue,  9 Apr 2024 12:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F5258119;
+	Tue,  9 Apr 2024 12:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712665401; cv=none; b=OqPOggGGEeXUffdn2e/h4E5wS/0uZNA0tdSPB7817aeHjxp1qNdu6Xz0K6vJ2vHn792hB41vNL2IgtMmdRbSSWaNw+gNxpezLS3GpVLDmGvcaDichDwyAeqOU4wr4vTI2z2sfJotgKOTsbFSVs8/5t2/5ay6QPBvALWVxVhKers=
+	t=1712665602; cv=none; b=CItz4xod8XMRNfWlaYMNOIisvft8A9dtB1iSXosI/iApJtz20+pi+RO6BoWVx8dPWFrI19F6nAUjEzpSFBIUFzODcOYwQyd1y4h4W8NICST82IYd5lVC5ORMy4AA232CfpK+t8msGHleoTn0kxzZoKToTzjw7Kno9D0QFizCK5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712665401; c=relaxed/simple;
-	bh=NycTO7793+mfVmUiuwrixveuDF/iXTzH2p2ZKDi6sAQ=;
+	s=arc-20240116; t=1712665602; c=relaxed/simple;
+	bh=wqKD1B52YH/JhDRGOE9j56coaM/D+7JEAsq+fMNNxIY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UhkB/pSPtBbYqtpU86Hm/fFSAvXunpIaxRKV9qJZYY5qhhxzxorff0WEfuZIud2Qdn43GgnisKUa/ECNkPBYj7gTJqioFRiHmU4xTS0hlJYqvQ07x0nnPKZhhxlpqpMcpahw2Lyu7QutSaZpF9bcSBqs1mQJ1RbPqhIf32KUexo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBDTJIn2; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=W/Tk1aoZ5naOk0Y4yiT8BRronAHfdqOKsKwUPmePJ8G2YKcZttHf812zmrZr12tK30WZpwAvWSwZYebrSYHxbMpJTZMU89T90BU4ETn+Die0ZzK+jlba/lnugyHYETKnCl+/RIDdscUoHeKYx2xV7AxzGJS/Lapyuxm6A7Bu5MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YZGUMMnV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBDTJIn2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6503AC433F1;
-	Tue,  9 Apr 2024 12:23:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712665401;
-	bh=NycTO7793+mfVmUiuwrixveuDF/iXTzH2p2ZKDi6sAQ=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YZGUMMnV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6004DC433F1;
+	Tue,  9 Apr 2024 12:26:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712665602;
+	bh=wqKD1B52YH/JhDRGOE9j56coaM/D+7JEAsq+fMNNxIY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mBDTJIn2guxxOb42ddF31Oq2kE55NEuY/9V60CA49z/+O5gBZv67yiKLkQ79YyR9O
-	 AdX1eMhyhsEQXS0RbqtTTQyTognxO/i4ASDA20yS3fcstV5VNeRPbg+z/jwLbshR2h
-	 7tU0Su+ms1z0nXKmc9bYuqKlK+d+Qoe92YYcXlQc=
-Date: Tue, 9 Apr 2024 14:23:17 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jon Hunter <jonathanh@nvidia.com>
+	b=YZGUMMnV+rUz/Q5qMykXPzBpND1OrRT/gZYyJlvcqNYbCNBg8ScRgkAtBb4JEeWaS
+	 sTxTKkwGutDlNNTAfaK+GZG844dTpcvZo3K/gLqpVyf4gDHzj1vfsocIE1Mj7SF/dU
+	 4s+nw9QI4I2pNpQNRdx1FMF4NSqeFf8gqtlWb4HmxolXnVgMwZdz5qJ2ExLo6OfWgG
+	 Q1ukz3H43+5Wbr25XetJLtO0VOJqz9e2A1c3U11KHmfSQ69PWhnbmGHlcNeoS3rsEi
+	 WF/B+OsgoVG2wiARkWbwi5ywRqL9NRU2o5pf+2figuSnI3Mig+aL8y8wharHVn0wPC
+	 CNoQ5gjvTeSEA==
+Date: Tue, 9 Apr 2024 13:26:30 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, broonie@kernel.org,
-	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 5.15 000/690] 5.15.154-rc1 review
-Message-ID: <2024040953-eclipse-recount-dda9@gregkh>
-References: <20240408125359.506372836@linuxfoundation.org>
- <04151fac-3bf6-4199-a822-2fbaaef8b77b@nvidia.com>
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 6.8 000/273] 6.8.5-rc1 review
+Message-ID: <3f68721b-ac34-4160-8c66-1c67483ff46c@sirena.org.uk>
+References: <20240408125309.280181634@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6q1JIj3x0B4eshAY"
+Content-Disposition: inline
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+X-Cookie: Everything you know is wrong!
+
+
+--6q1JIj3x0B4eshAY
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <04151fac-3bf6-4199-a822-2fbaaef8b77b@nvidia.com>
 
-On Tue, Apr 09, 2024 at 07:53:14AM +0100, Jon Hunter wrote:
-> Hi Greg,
-> 
-> On 08/04/2024 13:47, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.15.154 release.
-> > There are 690 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Wed, 10 Apr 2024 12:52:23 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.154-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> 
-> 
-> I am seeing a suspend regression on Tegra186 and Tegra194 ...
-> 
-> Test results for stable-v5.15:
->     10 builds:	10 pass, 0 fail
->     26 boots:	26 pass, 0 fail
->     102 tests:	100 pass, 2 fail
-> 
-> Linux version:	5.15.154-rc1-gbfeab055fa43
-> Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
->                 tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
->                 tegra20-ventana, tegra210-p2371-2180,
->                 tegra210-p3450-0000, tegra30-cardhu-a04
-> 
-> Test failures:	tegra186-p2771-0000: pm-system-suspend.sh
->                 tegra194-p2972-0000: pm-system-suspend.sh
-> 
-> 
-> Bisect is pointing to the following commit and reverting this fixes it ...
-> 
-> > NeilBrown <neilb@suse.de>
-> >      nfsd: don't allow nfsd threads to be signalled.
-> 
-> 
-> When suspend fails, I see the following error message ...
-> 
->  Freezing of tasks failed after 20.006 seconds (1 tasks refusing to
->  freeze, wq_busy=0):
+On Mon, Apr 08, 2024 at 02:54:35PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.8.5 release.
+> There are 273 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Odd.  I'll go drop this commit now, thanks for testing and bisecting!
+Tested-by: Mark Brown <broonie@kernel.org>
 
-greg k-h
+--6q1JIj3x0B4eshAY
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmYVM/UACgkQJNaLcl1U
+h9Bq3Af+Mge2/NHsz6NFBhqZhm80Kclx8Gg8qwW3tIbDpFCV3Q+8rt51KKztNTN1
+G5jevvxgy3FQfRk5VpicPeBkDbSfpeTsZbPgzF82aBJz0PMVIuwLt+z+UheDyl79
+5uMA7dSF77wzME5+CiDOO/QV2wa8j99mn6vL3ZtxkG3Xla1nAcwRHCzdZK1qfaEk
+Rkze4lTKcniWHOXE4i1Xn7jNnMMBA07IRuZmv2/VvD5eK9ltzgQRLI61KZ3ZrWy/
+KTuzRX74ffq63GEe0VRWWIwDd5ViVGWtqDbqNXG0HmDsb8VBTxAJY6EusyNfyoq3
+9/itSMzIuq15Tn32mj2Ho8IY0a4Cmg==
+=qzz7
+-----END PGP SIGNATURE-----
+
+--6q1JIj3x0B4eshAY--
