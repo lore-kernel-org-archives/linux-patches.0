@@ -1,106 +1,104 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278ED86269;
-	Tue,  9 Apr 2024 11:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D16128826;
+	Tue,  9 Apr 2024 11:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712662264; cv=none; b=paCMH/ICHq0pQDkFDvsMp3+0z2mqeedS8yEafbcrRY1PSLGXjZ/94YnYJuZyB3XpFLOzJvCa4IvDMMGffpbkjQkSfXLMTSjtMv8Tlc+KtKZND9KL+xoq7PbKYCrU0OmPoXZD0dZc0lSAmP9Dip5vkt1xKN8HHM3hQKx7ExYI2HE=
+	t=1712663719; cv=none; b=qkpLWU9XaZ1gOrL6fnJycEWdEC1IYclnQFIgfugAWoR3s4AcqQuniwfXvGN6oC8/tZywvoGZxoQNndNgjUXzeeEGHfDZgJUK2pmtENQMwmVEYyuzvkTRMGYwPjHoPZjgPuLfCXL0yLDNjruDLcney7YLvdUQLUqX3vxqOKCuJus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712662264; c=relaxed/simple;
-	bh=o7n4wqg2Y9p0Uni/nKyeds+zg1zOiA+aNEQQSeIs3mM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fdEZcrfzm/txBCJS5hwkQZWf6I1PbY2nA0w7qOBp6K3hSMMdqNF8y5C2r45rGb9cXlfPkNzgV6w5kZbPePPtB08niUJyQe+29ZhCTDU4Eg9CLuUbEIOYDGBWn4du/RaXC/hQTkGaifmteUO0CIcXcGWWxw0UOlgBPwUMHLDc258=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qOeaC/Zb; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712663719; c=relaxed/simple;
+	bh=scdbxbgPLUxnACHLCarB1DGbiD0xhDlyeS1PSLZ+6/g=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=KooaOQ/GDSUg4LCYuPF58EBdfK1l12EqzGdrnMyA7Tboe8XUX6QjvHXH37T1ne9g8O4eoairo3BTCNfmrZZV8B/eEXVgiX8oBD+piHnJY4pZZZTHfBAe9AGh79FLqpN+W5GLDA40RMqpDU6gHSAp5q0jqj+n0sQoDcYzeIo7UKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jJUuUUiH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qOeaC/Zb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A9CC433C7;
-	Tue,  9 Apr 2024 11:31:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712662263;
-	bh=o7n4wqg2Y9p0Uni/nKyeds+zg1zOiA+aNEQQSeIs3mM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qOeaC/ZbZHLthcE8m01gwyI0o3SlQzI4nxTsPx7HwIiDdoh6RMr079dnTlVOM1eOz
-	 Pm7vlBT9tjrYfgI87EeyYydosi7o/nkh2FAGgXx2lfo2bz4KGuAbtFSDgjTxf7T2yj
-	 CPX1K5sm1GdA+rQChvKBvhzW+pKJtAyMumVj0zbE=
-Date: Tue, 9 Apr 2024 13:31:00 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Petr Vorel <pvorel@suse.cz>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: Re: [PATCH 5.15 463/690] nfsd: fix net-namespace logic in
- __nfsd_file_cache_purge
-Message-ID: <2024040952-riches-railcar-40bd@gregkh>
-References: <20240408125359.506372836@linuxfoundation.org>
- <20240408125416.405210374@linuxfoundation.org>
- <20240409064222.GA83048@pevik>
- <2024040933-patio-impotent-7a0a@gregkh>
- <20240409103621.GA110810@pevik>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jJUuUUiH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556A4C433C7;
+	Tue,  9 Apr 2024 11:55:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712663718;
+	bh=scdbxbgPLUxnACHLCarB1DGbiD0xhDlyeS1PSLZ+6/g=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=jJUuUUiHOEu9bts8I6ePvqW7e9BYs/4iyEclGOFfg661+yiwsyUiWSYxnTBJWK/Ml
+	 HmGrjB5nAnJsMlsL/Hshp/R5qAhpi9IVUIHh0T4fie2MjKZG2nHz+9k0TDLJbw3/hX
+	 tW+qboleyWZPwJEkIwEWUthoL0SEanLBKEUpg0MeWIZVa6FQ8dmXc9+9bVKyBkNLEI
+	 5BqNWUQDWPA8DwXz5Pa2o6dFy4bv5+3SFUS6Mskuw7olJRmnvYPdBa32Mwk5sdQDy8
+	 1YjYt650Q4wcvXixeF/oOo+DLrnsjBX7TYKqlpIRQMeSJQFBXSp+8YjJ0HB2i/WeBt
+	 TlYAlQN6d+xQA==
+Message-ID: <306af49fd69707feccb640d02dc4fbc5.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240409103621.GA110810@pevik>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAPDyKFoGxxSzykQ-=o08LD_P_=8m=KRm4SHK_grBFgXNNv4OVw@mail.gmail.com>
+References: <20240325184204.745706-1-sboyd@kernel.org> <20240325184204.745706-5-sboyd@kernel.org> <c1dc0e4c1d4c9ba2b5e9c0fc207db267.sboyd@kernel.org> <CAPDyKFoGxxSzykQ-=o08LD_P_=8m=KRm4SHK_grBFgXNNv4OVw@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] clk: Get runtime PM before walking tree during disable_unused
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, linux-arm-msm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>, Marek Szyprowski <m.szyprowski@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>
+To: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Tue, 09 Apr 2024 04:55:16 -0700
+User-Agent: alot/0.10
 
-On Tue, Apr 09, 2024 at 12:36:21PM +0200, Petr Vorel wrote:
-> > On Tue, Apr 09, 2024 at 08:42:22AM +0200, Petr Vorel wrote:
-> > > Hi all,
-> 
-> > > > 5.15-stable review patch.  If anyone has any objections, please let me know.
-> 
-> > > > ------------------
-> 
-> > > > From: Jeff Layton <jlayton@kernel.org>
-> 
-> > > > [ Upstream commit d3aefd2b29ff5ffdeb5c06a7d3191a027a18cdb8 ]
-> 
-> > > > If the namespace doesn't match the one in "net", then we'll continue,
-> > > > but that doesn't cause another rhashtable_walk_next call, so it will
-> > > > loop infinitely.
-> 
-> > > > Fixes: ce502f81ba88 ("NFSD: Convert the filecache to use rhashtable")
-> > > > Reported-by: Petr Vorel <pvorel@suse.cz>
-> > > > Link: https://lore.kernel.org/ltp/Y1%2FP8gDAcWC%2F+VR3@pevik/
-> > > > Signed-off-by: Jeff Layton <jlayton@kernel.org>
-> > > > Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-> > > > ---
-> > > >  fs/nfsd/filecache.c | 5 ++---
-> > > >  1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> > > > diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-> > > > index 0b19eb015c6c8..024adcbe67e95 100644
-> > > > --- a/fs/nfsd/filecache.c
-> > > > +++ b/fs/nfsd/filecache.c
-> > > > @@ -892,9 +892,8 @@ __nfsd_file_cache_purge(struct net *net)
-> 
-> > > >  		nf = rhashtable_walk_next(&iter);
-> > > >  		while (!IS_ERR_OR_NULL(nf)) {
-> > > > -			if (net && nf->nf_net != net)
-> > > > -				continue;
-> > > > -			nfsd_file_unhash_and_dispose(nf, &dispose);
-> > > I don't know the context (whether the fix is needed for 5.15 and older), but
-> > > patch does not apply because nfsd_file_unhash_and_dispose() was introduced in
-> > > ce502f81ba88 ("NFSD: Convert the filecache to use rhashtable") in v6.0-rc1.  It
-> > > was actually renamed from nfsd_file_unhash_and_release_locked() in that commit.
-> > > Also the context changed - nfsd_file_unhash_and_dispose() was introduced in the
-> > > commit which is supposed to be fixed in this commit, one would say that this fix
-> > > is not needed in older kernels (5.15, 5.10 and 5.4; 4.19 has completely
-> > > different code). But that's a question for Jeff or Chuck.
-> 
-> > This is part of a very large backport of nfsd patches to 5.15 to resolve
-> > a lot of reported issues, so that might be why it looks odd here.  It
-> > does seem to compile and boot ok for me, so maybe it's not an issue here
-> > as you aren't seeing the other patches in this series?
-> 
-> Hi Greg,
-> 
-> I'm sorry, I should realize that one of the 462 previous patches might have
-> changed the context. If it compiles and boots as whole it should be ok. I'm
-> sorry for the noise.
+Quoting Ulf Hansson (2024-04-09 03:32:04)
+>=20
+> Apologies for not being able to review this, it got lost in my email
+> filters. Looks like you manage to solve the locking order for the clk
+> disable unused thing - great!
+>=20
+> However I think the main problem we are seeing with these kind of
+> locking issues is that we are holding a global lock while calling into
+> pm_runtime_get|put*(). Similar problems have also been reported in the
+> past. It's been on my todo list for quite some time to have a closer
+> look, but I haven't reached it yet.
+>=20
+> Without going into too much detail, let me just ask a related
+> question. Would it not be possible to call pm_runtime_get/put() within
+> the clock framework, without *always* keeping the clock prepare lock
+> acquired? I assume a clock can't be unregistered, as long as there is
+> reference taken for it, right? Wouldn't that be a sufficient guarantee
+> that it's okay to runtime_resume|suspend its corresponding device?
 
-No noise at all, reviews are good!
+The problem is that the clk tree is being walked with the prepare_lock
+held and during that walk pm_runtime_get() is called on different
+devices. We hold the prepare_lock while walking the tree because we
+don't want the tree topology to change while walking. The prepare_lock
+is also a topology lock.
+
+If we could walk the tree, figure out what all clks will change, drop
+the prepare_lock, pm_runtime_get() all of those devices, regrab the
+prepare_lock, check the topology to make sure topology hasn't changed,
+and then make all the clk_ops calls, it would work because we have
+extracted the runtime PM calls out of the prepare_lock. Dropping and
+regrabbing the lock is probably a bad idea though, because we may never
+make progress because we're preempted by another task that changes the
+topology.
+
+I was also wondering if we get stuck again if the clk driver
+implementing the clk_ops is on some bus like i2c or spi, that runtime PM
+resumes the bus controller for register writes from the clk_ops, and
+that resume function calls clk operations, and that happens in another
+thread. Maybe that isn't a problem though because the runtime resume of
+the device will also runtime resume the parent which is spi or i2c?=20
+
+Either way, it really seems like we need a per-clk prepare_lock. That
+would let us know for sure the topology isn't changing while we walk the
+tree and figure out what we're going to do. Anything that calls into the
+clk framework again hopefully gets a different prepare lock for a
+different clk.
+
+BTW, I don't think lockdep is aware that runtime PM is waiting like
+this for a parallel resume in another thread. Probably we need to add
+annotations so that any locks held while waiting for the resume or
+suspend to finish are chained to a pseudo read lock and the actual
+resume/suspend operation is a pseudo write lock.
+
+>=20
+> Or maybe I should just send a patch. :-)
+>=20
+
+Sure! ;-)
