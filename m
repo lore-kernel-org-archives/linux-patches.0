@@ -1,82 +1,86 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8382C15FA70;
-	Wed, 10 Apr 2024 14:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6542AF16;
+	Wed, 10 Apr 2024 14:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712757886; cv=none; b=tR8uIfZCo7wjltO6C7oI3bs59MS1vZPO1CHyP86u5bMT70pgFAWC0Ex4v13h2a3HsJVyKSmTwUNOGgDSl7KrNRyarYmPnTxv0A3ue48+Mv/NvibKJ+tJ+yLXgeiqxBT25qQiSohUG5ed2aZf8ovSB8mK9GB+Tl/sjKlqjAF5ufk=
+	t=1712758287; cv=none; b=g90mVm5VBO6h/QpBhh7sLVVSIeMJkjt2kThUme6SJ/QPfIU4CIDgoMF3k+13HEX1EWjXVhuxUWS4GWrKeS3/jtXaTFZGhYQZJ+D/i6J+AXUt4DAHwEyEgAQy7lNlqQufSDUsDGewzcT5OoOC5ThuydE9m8dPBJ/wx0jxnyPk+Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712757886; c=relaxed/simple;
-	bh=2Ee6VxmQF9g8f0LmaCVx8vRGoE+C18QfSdQPQQCGErg=;
+	s=arc-20240116; t=1712758287; c=relaxed/simple;
+	bh=iC8pANLoVkXWOBffF7q0ttCOLYpuhzCv8jeK3aUilqA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fDs9nprMkOaAHBGYJR43nPQkguCRA01Dp4tPUCyfjlRc5P2ukB9JO/rfpVCTfd/cUJKdpdZkbHUZ19eu4hQV4Hd00yA4OJ/rMNFn+xkyDp9hbutouZc/Ts72yxBbW4JAY1qF8iq1bxhCg1sMOY2WjuZcwzxlCBHomT5DFMpYYgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CEJR4GRI; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=K8OP7Jj5a901jjj9ES14HRgzNnuf+jAp9YdRdT/qVDSnjAdVe/jgO0siL0/O/Gt5kHjx81BLIoCbXC92GDBHhjqCWNh5UzgAysFysBoTqxRl5dcfIb5NDddn20MEtCUUi49jtj680AGF804hKbFDqmEA+NvVALzaObXbjRrZW48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1LA7jIl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CEJR4GRI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1AAC433F1;
-	Wed, 10 Apr 2024 14:04:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712757886;
-	bh=2Ee6VxmQF9g8f0LmaCVx8vRGoE+C18QfSdQPQQCGErg=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1LA7jIl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C37C433C7;
+	Wed, 10 Apr 2024 14:11:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1712758287;
+	bh=iC8pANLoVkXWOBffF7q0ttCOLYpuhzCv8jeK3aUilqA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CEJR4GRIPMvqWu51gIvJyJWdB3DMiu0Rhgvo1tttKHBypDrYORerT5yAZZXO8VG0A
-	 Se9uFTdOGIzoUB4yLajtOjVI1VoV7vkuwOOlQf24pYVq8QlZNA1Ajf+NABvPRosVwo
-	 EMZMB73T3LLD341QHRqTiXPO9J8/rbSgpUotJ1peRmp2N32jG7K+x+n6g/qk9BGyhI
-	 XVUie04K+CINu0QVrrD9zINisOp9PxzQNcZ/GZN73ENH08h8EGlCEI5s/d/rBzhey/
-	 5lsBj7S4AGaf0Hktood4bS1ybm5+k/dUOsUCgj2MhU5F/hbJPqx73cb7h3kfRF7pmW
-	 bhwUnTIGMdgwQ==
-Date: Wed, 10 Apr 2024 15:04:39 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.8 000/280] 6.8.5-rc3 review
-Message-ID: <93fcf557-3ff8-49bc-857a-e72b035320a3@sirena.org.uk>
-References: <20240409173543.596615037@linuxfoundation.org>
+	b=T1LA7jIlEiFcGu5A5ozvtKDHhJKFY38pL2KVSAMfF7nTB6JXEFsDvffriSJb2OAnf
+	 X7Hmrse8/FT+mptd+nvk6FTp1L6QAlDKdaHV61B0Wd4i8W0AdeVIRKdzVTCPlv92Gi
+	 D56tOGn70mQO7lHq4ku6aiS3DKwrfIzA4WELLVCw=
+Date: Wed, 10 Apr 2024 16:11:24 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Ard Biesheuvel <ardb@kernel.org>
+Cc: Borislav Petkov <bp@alien8.de>, Pascal Ernster <git@hardfalcon.net>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	Tom Lendacky <thomas.lendacky@amd.com>
+Subject: Re: [PATCH 6.8 271/273] x86/sme: Move early SME kernel encryption
+ handling into .head.text
+Message-ID: <2024041047-upright-smudgy-c380@gregkh>
+References: <20240408125309.280181634@linuxfoundation.org>
+ <20240408125317.917032769@linuxfoundation.org>
+ <76489f58-6b60-4afd-9585-9f56960f7759@hardfalcon.net>
+ <20240410053433.GAZhYk6Q8Ybk_DyGbi@fat_crate.local>
+ <2024041024-boney-sputter-6b71@gregkh>
+ <CAMj1kXHjwJnfjVgm=cOaJtJ=mF-mTLaoDM0wQyvvjL3ps9JEog@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ForRB/nIHOwguZwy"
-Content-Disposition: inline
-In-Reply-To: <20240409173543.596615037@linuxfoundation.org>
-X-Cookie: A bachelor is an unaltared male.
-
-
---ForRB/nIHOwguZwy
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <CAMj1kXHjwJnfjVgm=cOaJtJ=mF-mTLaoDM0wQyvvjL3ps9JEog@mail.gmail.com>
 
-On Tue, Apr 09, 2024 at 07:44:48PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.8.5 release.
-> There are 280 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Apr 10, 2024 at 08:43:24AM +0200, Ard Biesheuvel wrote:
+> On Wed, 10 Apr 2024 at 07:46, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > On Wed, Apr 10, 2024 at 07:34:33AM +0200, Borislav Petkov wrote:
+> > > On Tue, Apr 09, 2024 at 06:38:53PM +0200, Pascal Ernster wrote:
+> > > > Just to make sure this doesn't get lost: This patch causes the kernel to not
+> > > > boot on several x86_64 VMs of mine (I haven't tested it on a bare metal
+> > > > machine). For details and a kernel config to reproduce the issue, see https://lore.kernel.org/stable/fd186a2b-0c62-4942-bed3-a27d72930310@hardfalcon.net/
+> > >
+> > > I see your .config there. How are you booting the VMs? qemu cmdline?
+> > >
+> > > Ard, anything missing in the backport?
+> > >
+> > > I'm busy and won't be able to look in the next couple of days...
+> >
+> > As reverting seems to resolve this, I'll go do that after my morning
+> > coffee kicks in...
+> 
+> Fair enough. I'll look into this today, but I guess you're on a tight
+> schedule with this release.
+> 
+> Please drop the subsequent patch as well:
+> 
+> x86/efistub: Remap kernel text read-only before dropping NX attribute
+> 
+> as it assumes that all code reachable from the startup entrypoint is
+> in .head.text and this will no longer be the case.
 
-Tested-by: Mark Brown <broonie@kernel.org>
+Given this is the only report, and it seems to be with an "odd" linker,
+I'll leave it in for now to keep in sync with 6.9-rc.  If this is a
+problem, we can revert the commits in a later release at any time.
 
---ForRB/nIHOwguZwy
-Content-Type: application/pgp-signature; name="signature.asc"
+thanks,
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmYWnHYACgkQJNaLcl1U
-h9CBZwf7BOFIW8Y16Y4Hyv1AtXeKb8kECa+qWTuWi+huSK7eQSvFGWaZh8vj+Q2s
-d6Sav4SzhmBiK2CWXyF3OJPVK7+MDgH+JWjT++bcNSf1HH6GX55Ubu/nqMT7Ox1D
-wKmE/XRZZJPllydNg/tuqq+0ydoKLeZ9r5r849aZt+s48lWZpiilJEmjrvNvs8ff
-2Cm7YDUiAni5Sn/U6UtWB9q2vLxoEK+eQ0fJKhO/35HM8onh7EMWe/4bIlBlmwab
-hYoM/I5Rr5GN+l3IhDbnE+FTwT7BD/mEW+3z1L1cflzyjesEi3QkyXV01ugXxPyF
-o6h2ItmcnBVtjbt1fxcFbZ5pPKLaTg==
-=4uMY
------END PGP SIGNATURE-----
-
---ForRB/nIHOwguZwy--
+greg k-h
