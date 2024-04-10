@@ -1,28 +1,28 @@
 Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B912A158210
-	for <patches@lists.linux.dev>; Wed, 10 Apr 2024 08:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520C813D274
+	for <patches@lists.linux.dev>; Wed, 10 Apr 2024 08:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712738674; cv=none; b=rCC8IHrNRT4cwMPct6VaPZJ6WIXb9y9ql9pVzuCf3Lg8O+KPaO0nR/x7IifWgIg33qC91MHXQLtba79+bf/8CfP9MdNFB2h6wLab+fzCJVuxP/jnq7P0gB/pOfayE0k4SmiOr7qRulHW1KwhOYMVZ7PfozM9wtWfsHITWfeCsCg=
+	t=1712738783; cv=none; b=MHwgH+C3vSEGUtYZoUbHZkHYmjnU+xr9TOhECgVtNpTF/Zx7DmwYsZLemgflyHM4NtQWOmCLpiH+esSwBG8p49snMDniZU5nKUioP3WS5jYg+u0TvBiymy4FSphgDJSe5NDZ81lzb69LmF9pNiScnyWwChMuRqYUt1PZQxs21Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712738674; c=relaxed/simple;
-	bh=jObAB9SuCF4+h2GbtDz7KIEP21tJ4jsDgL10qVI0/tQ=;
+	s=arc-20240116; t=1712738783; c=relaxed/simple;
+	bh=90hWQ+ubNEuCYKT0GJY7VybLwzVVSh8JhjHzzsQRa88=;
 	h=From:In-Reply-To:Content-Type:References:Date:Cc:To:MIME-Version:
-	 Message-ID:Subject; b=QraSEiTbRRyFxvc4GGdzaJtZIxjtAA8rOwuqimmMRaisIxlY8RTkRoCQHe87aWZrvvFHm5if9rIJw0MC1N4pU+Dr44HzeXofd9rIVMYarqdfV5BhxT9+Pap4RbQm8FHtpY7KO1081fbMzES1iodLfp37P8N9uVY0LT4iETb92LY=
+	 Message-ID:Subject; b=YTgRD76Hx4LiWlyqns242PTksGYXd+nAQ84CKIqlhkd5FensZ8997EZR43rGjMvv+CWUy8JSLT/cNhoronDFccaky+0QDi84Q5kO+ZzD5Lxy7jRPSKzCZKCkgXCv8q1H6xRF9LjZQIePQ4MesddlT6s98sDkqnNLochh16tIDxU=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; arc=none smtp.client-ip=46.235.227.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Received: from harlem.collaboradmins.com (harlem.collaboradmins.com [IPv6:2a01:4f8:1c0c:5936::1])
-	by madrid.collaboradmins.com (Postfix) with ESMTP id 59E183781453;
-	Wed, 10 Apr 2024 08:44:29 +0000 (UTC)
+	by madrid.collaboradmins.com (Postfix) with ESMTP id C91BB3781453;
+	Wed, 10 Apr 2024 08:46:18 +0000 (UTC)
 From: "Shreeya Patel" <shreeya.patel@collabora.com>
-In-Reply-To: <20240409172805.638917723@linuxfoundation.org>
+In-Reply-To: <20240409172821.820897593@linuxfoundation.org>
 Content-Type: text/plain; charset="utf-8"
 X-Forward: 127.0.0.1
-References: <20240409172805.638917723@linuxfoundation.org>
-Date: Wed, 10 Apr 2024 09:44:29 +0100
+References: <20240409172821.820897593@linuxfoundation.org>
+Date: Wed, 10 Apr 2024 09:46:18 +0100
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org, "Gustavo Padovan" <gustavo.padovan@collabora.com>, "kernelci-regressions mailing list" <kernelci-regressions@lists.collabora.co.uk>
 To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
 Precedence: bulk
@@ -31,17 +31,17 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <3c0c9c-66165180-b-194ac52@218875419>
-Subject: =?utf-8?q?Re=3A?= [PATCH =?utf-8?q?6=2E1?= 000/137] 
- =?utf-8?q?6=2E1=2E85-rc2?= review
+Message-ID: <3c0c9c-66165200-11-194ac52@218875518>
+Subject: =?utf-8?q?Re=3A?= [PATCH =?utf-8?q?6=2E6?= 000/254] 
+ =?utf-8?q?6=2E6=2E26-rc2?= review
 User-Agent: SOGoMail 5.10.0
 Content-Transfer-Encoding: quoted-printable
 
 On Tuesday, April 09, 2024 23:00 IST, Greg Kroah-Hartman <gregkh@linuxf=
 oundation.org> wrote:
 
-> This is the start of the stable review cycle for the 6.1.85 release.
-> There are 137 patches in this series, all will be posted as a respons=
+> This is the start of the stable review cycle for the 6.6.26 release.
+> There are 254 patches in this series, all will be posted as a respons=
 e
 > to this one.  If anyone has any issues with these being applied, plea=
 se
@@ -51,24 +51,26 @@ se
 > Anything received after that time might be too late.
 >=20
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1=
-.85-rc2.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6=
+.26-rc2.gz
 > or in the git tree and branch at:
 > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc=
-.git linux-6.1.y
+.git linux-6.6.y
 > and the diffstat can be found below.
 >=20
 
-## stable-rc HEAD for linux-6.1.y:
-Date: 2024-04-10
+KernelCI report for stable-rc/linux-6.6.y for this week :-
+
+## stable-rc HEAD for linux-6.6.y:
+Date: 2024-04-08
 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.=
-git/log/?h=3D9b31003bbfa73ce6dd6722b8b44180e2f2cb0745
+git/log/?h=3Dec59b99017e96d3bc8a6d5b87c01f47ec5a9bcb9
 
 ## Build failures:
-No build failures seen for the stable-rc/linux-6.1.y commit head \o/
+No build failures seen for the stable-rc/linux-6.6.y commit head \o/
 
 ## Boot failures:
-No **new** boot failures seen for the stable-rc/linux-6.1.y commit head=
+No **new** boot failures seen for the stable-rc/linux-6.6.y commit head=
  \o/
 
 Tested-by: kernelci.org bot <bot@kernelci.org>
