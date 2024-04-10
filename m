@@ -1,108 +1,118 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CB013D274
-	for <patches@lists.linux.dev>; Wed, 10 Apr 2024 10:07:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736211E893
+	for <patches@lists.linux.dev>; Wed, 10 Apr 2024 10:48:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712743630; cv=none; b=uXZ5UEwoB3/ORHG7hWFQOYrDAgR4QpBhzYBa4RdKqBk1u//Q7xiTUpV67KOIRS1NIjVerOKuLx5pQQJpj19MmSpbbAn4EQ2bd8L6qYsSwV606Rd1HtPGNywCLeaGXcdaT/dvNRMiXN4y44xVUn7eC5BuZbDSwg95/v2gAyZvoFw=
+	t=1712746099; cv=none; b=NNBEYTxTQ50wHWVTopPqiotkKwLam/2wGCn++HKp+prma4AgWvW1S5BlXLatfu3GyKW+zWVX62K4x/qvoPe/dXp9MRg2wWJomW5uUncZgENtFxFzGH2GEonKb9JYrUdf4MdenP8Td0UvFSQiUqe4fQvmxsb19+VHLGawPPD3Tvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712743630; c=relaxed/simple;
-	bh=jVFXTtoIsCHs1LGCkwm03l0CPibiGnB9Sy77par42Cg=;
+	s=arc-20240116; t=1712746099; c=relaxed/simple;
+	bh=eik9m6cp2uZohOzU8Oz+3bZ4OUinbaNDJ9WanhK7KSg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VKU9Y40CrMvjQHMfLnb0SB0JVfoxF7dWEQoew5+lFNspnnLF1srPOB3+lhmXCR9eG+jf9H/W9zoZh0prIyX5pv9aYfHzP8kL4suHC7yj2pB9/Kh1nwr2rgfQQAOmcxRUAcJr/5RubVsC9bpHDJG7bug9pPFWRdeqXN7+kLWbT3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H/a0qGXu; arc=none smtp.client-ip=10.30.226.201
+	 To:Cc:Content-Type; b=srZGwe0TC+Op3lwxX4mND4AEEmZrmqfwMCDJii6GSNMYyTWG1vJgqlpDJzoBp1m7Y7ClQ2r3VarEy8/HCy0cNJz1iqIjZdD+ifQHIbYO+zfWh5ECDDp3hDjn9vbztdOecIE64VxTgy+7NF6liapByzDzbvauq7W3xNr96v1z4L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=3a2Xa+FS; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H/a0qGXu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1618FC433F1
-	for <patches@lists.linux.dev>; Wed, 10 Apr 2024 10:07:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712743630;
-	bh=jVFXTtoIsCHs1LGCkwm03l0CPibiGnB9Sy77par42Cg=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=H/a0qGXu71+qOLts4ARm4rkViTLTHKFMlB8VbCFuBX5NKm/j3ZhH3ARdznssVwtWd
-	 AyJzgt0lJONz2LHoxOePMF9253I+NWpFCdN7q94nt7R+GurpLurCWqzvuY/SMu3FP6
-	 q4iZ/kbg/AZuJJmyGmiYb4hFpU7sx9PW0zUWtL3W0AMz6L7QqH10ua3hEvn0E08NH1
-	 cpZNrxhLStx0gV8aAd5cjVHTs5c3WzQ9p8JchHv958QVWZPp0iRtyeYJ7+tOVplJr8
-	 uPZTTpLW4VMs8Au9+6QguEFis0v60OkX9R3gMOGZftTfQlk4tsERiN3SgNZnLhAyq1
-	 dxB9YnKdw2pJg==
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2d88a869ce6so41359011fa.3
-        for <patches@lists.linux.dev>; Wed, 10 Apr 2024 03:07:09 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCU1etGYNxQMul29q4gzjG+jbJrBPPDe5U8JOcUstMP5cbYbYuRSLE800iRNHmjACJ2aYMlfu3Cn/Gk+aZA/8XIK+Eu+ScXW2w==
-X-Gm-Message-State: AOJu0YwC8tYUCJVRVIktOhHVJuITZhYeY7yg4l8gAz/W959NpXmjgrU3
-	e3rwrA9X1rqlXhz4lOK9tLgIQQD+jITqzNUYyuXvv3V4xlcRi1FQYTIzC+4RTlXp1oJZvh1iXMY
-	HqCTRjJCatirZzlgalS3a/nAe5iM=
-X-Google-Smtp-Source: AGHT+IHasx9lD5GCRyGJOnhoKeTPAOoFb6vPovztqjE0Lsblr642CycU4gpEXEi4TgchkiVscbdEdQuXWWsGcHyuXVQ=
-X-Received: by 2002:a2e:9296:0:b0:2d8:a98d:197 with SMTP id
- d22-20020a2e9296000000b002d8a98d0197mr1559485ljh.30.1712743628323; Wed, 10
- Apr 2024 03:07:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="3a2Xa+FS"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1e0b889901bso53412905ad.1
+        for <patches@lists.linux.dev>; Wed, 10 Apr 2024 03:48:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1712746097; x=1713350897; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MNqD10j5CZpBny7jQPfQMEvtKqWfKf6kWfbDUoXBuJM=;
+        b=3a2Xa+FSiX0rX8HX35R34bi8V5IHOYZPffiNOvcnuXDc1g+s2gqkCYrr/1ZPNG7lEG
+         ErTLs9EzoRYdOY8uE5GpbUS4U9tZz1uFZtkJANhSQ3KHiYlhdj0fiPUh2nClxAx7wLBT
+         ZSqu2U5pELpKm0xTtqeikMahGGfHyYNsAtUzcR6jAA0HvYVHcDg9QMh4lvzFm7pVrtC8
+         AsKhJRYZKsp73/jAGDk7K9pELuJVEOCZuZKfvlkZGQk7210xP3g5My14T1D1T1eSDOB+
+         Tr/r6LkMI1q4IKt6XEVPr3VYqKnf07tzsSO4FN5Hsf53CPxZ4IgPsSXidH4fr8z7Cq8l
+         RIgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712746097; x=1713350897;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MNqD10j5CZpBny7jQPfQMEvtKqWfKf6kWfbDUoXBuJM=;
+        b=BF1rsaVcFg7DFsh+KFi1t5U2XFFCSX1ByKs6lZiSppDC0eGNc9Vjy/NhTaRXQUSbtq
+         L/obPD4tRhKYLqMEJW++NkswIxqvO2/0WAs8XMKCG7utXqV2PZi2FbbGdq/orQXoLjIe
+         kCNnMKHkwsV9C/sfsgf/D1JZfO+9pgKbf2ovcBfho7ceRsi+5Y4H1u8bGG95SKXjEvlI
+         mDWtQEQr/hyXYJ2uFzIgKtRQUkQW5iCiR9TYvZqG5fIJHu/qBL5hCRHUI9f6ZxCgKyso
+         6NWOV27F/24klpux/iHFiF6WE752dkcbNsK2SFeXoX+ZBCcmFN7vRNTRtRY4ay3ATg8O
+         vobw==
+X-Forwarded-Encrypted: i=1; AJvYcCW/GnMVV0kj3wK1GJE/RAp19HAuwa+JU9Q6tooiCIW7ZjaFAisdVaMe1MQaO86P2iqv2L9ZQV5P5FRwoR0lowZEAWxAZCQ7+Q==
+X-Gm-Message-State: AOJu0YzWFPWw1Yoiy2C+sqcDrmTqiZCG9QyTY4u4Ov6ER17bSxDa5XfI
+	cin/1leieInYk0g/JZy4CUcejlCYijYtQPWf1et0+NBz0IosBOwAWzWIRNU1kXj4YxDYCj7SlP/
+	yBOILSRNeMAy8Xz56bevKiOWKpMwykpukk1uXsw==
+X-Google-Smtp-Source: AGHT+IEOi7A+jM3agseYiE2tgGFF/lIKAomfhvj5GEMdbiDzHPEJRuS+/3WJ05h17I71ATBjBeaOThBJ5VRShOGE6pM=
+X-Received: by 2002:a17:90a:6b07:b0:2a5:3438:a31b with SMTP id
+ v7-20020a17090a6b0700b002a53438a31bmr2111883pjj.37.1712746097485; Wed, 10 Apr
+ 2024 03:48:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240408125309.280181634@linuxfoundation.org> <20240408125317.917032769@linuxfoundation.org>
- <76489f58-6b60-4afd-9585-9f56960f7759@hardfalcon.net> <20240410053433.GAZhYk6Q8Ybk_DyGbi@fat_crate.local>
- <25704cce-2d6e-4904-a42d-47c96056459d@hardfalcon.net> <CAMj1kXH+xOB3cLHL5XHAxMHeN8oOXYaqdExx2+Tij6vwZwhkiQ@mail.gmail.com>
-In-Reply-To: <CAMj1kXH+xOB3cLHL5XHAxMHeN8oOXYaqdExx2+Tij6vwZwhkiQ@mail.gmail.com>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Wed, 10 Apr 2024 12:06:57 +0200
-X-Gmail-Original-Message-ID: <CAMj1kXFQfgAOSdPd1aYW8TDi8mkExK9G4buviysu85YsQaQPdw@mail.gmail.com>
-Message-ID: <CAMj1kXFQfgAOSdPd1aYW8TDi8mkExK9G4buviysu85YsQaQPdw@mail.gmail.com>
-Subject: Re: [PATCH 6.8 271/273] x86/sme: Move early SME kernel encryption
- handling into .head.text
-To: Pascal Ernster <git@hardfalcon.net>
-Cc: Borislav Petkov <bp@alien8.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, Tom Lendacky <thomas.lendacky@amd.com>
+References: <20240409173540.185904475@linuxfoundation.org>
+In-Reply-To: <20240409173540.185904475@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Wed, 10 Apr 2024 19:48:06 +0900
+Message-ID: <CAKL4bV4Ltkhh=jBBoy4CbnLOG25Eb4eEpLC5usBmeJFXZEf28w@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/255] 6.6.26-rc3 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 10 Apr 2024 at 11:03, Ard Biesheuvel <ardb@kernel.org> wrote:
+Hi Greg
+
+On Wed, Apr 10, 2024 at 2:44=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> On Wed, 10 Apr 2024 at 09:00, Pascal Ernster <git@hardfalcon.net> wrote:
-> >
-> > [2024-04-10 07:34] Borislav Petkov:
-> > > On Tue, Apr 09, 2024 at 06:38:53PM +0200, Pascal Ernster wrote:
-> > >> Just to make sure this doesn't get lost: This patch causes the kernel to not
-> > >> boot on several x86_64 VMs of mine (I haven't tested it on a bare metal
-> > >> machine). For details and a kernel config to reproduce the issue, see https://lore.kernel.org/stable/fd186a2b-0c62-4942-bed3-a27d72930310@hardfalcon.net/
-> > >
+> This is the start of the stable review cycle for the 6.6.26 release.
+> There are 255 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 11 Apr 2024 17:35:00 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.26-rc3.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 >
 
-Based on your XML description, I have extracted the command line
-below, to boot a kernel built from the config you provided (but not
-using the arch build scripts). I am using the same x86 initramfs I use
-for all my boot testing, but that shouldn't make a difference here.
+6.6.26-rc3 tested.
 
-Both your 'working' and 'broken' kernels work fine for me, both with
-and without OVMF firmware, so I'm a bit stuck here. Could you please
-try to reproduce using the command line below?
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
 
-/usr/bin/qemu-system-x86_64 -name guest=kernel_issue,debug-threads=on
--machine pc-q35-8.2,usb=off,smm=on,dump-guest-core=off,memory-backend=pc.ram,hpet=off,acpi=on
--accel kvm -cpu host,migratable=on -m size=2097152k -object
-'{"qom-type":"memory-backend-ram","id":"pc.ram","size":2147483648}'
--overcommit mem-lock=off -smp 1,sockets=1,cores=1,threads=1 -uuid
-3ef94585-9ed2-464c-97ca-546fe9b42e2d -display none -no-user-config
--nodefaults  -rtc base=utc,driftfix=slew -global
-kvm-pit.lost_tick_policy=delay -no-shutdown -global
-ICH9-LPC.disable_s3=1 -global ICH9-LPC.disable_s4=1 -boot strict=on
--kernel /usr/local/google/home/ardb/linux-build/arch/x86/boot/bzImage
--initrd /usr/local/google/home/ardb/rootfs-x86.cpio.gz -append
-'console=ttyS0,115200 intel_iommu=on lockdown=confidentiality
-ia32_emulation=0 usbcore.nousb loglevel=7
-earlyprintk=serial,ttyS0,115200' -device
-'{"driver":"pcie-root-port","port":8,"chassis":1,"id":"pci.1","bus":"pcie.0","multifunction":true,"addr":"0x1"}'
--device '{"driver":"pcie-root-port","port":9,"chassis":2,"id":"pci.2","bus":"pcie.0","addr":"0x1.0x1"}'
--device '{"driver":"pcie-root-port","port":10,"chassis":3,"id":"pci.3","bus":"pcie.0","addr":"0x1.0x2"}'
--device '{"driver":"pcie-root-port","port":11,"chassis":4,"id":"pci.4","bus":"pcie.0","addr":"0x1.0x3"}'
--device '{"driver":"pcie-root-port","port":12,"chassis":5,"id":"pci.5","bus":"pcie.0","addr":"0x1.0x4"}'
--device '{"driver":"pcie-root-port","port":13,"chassis":6,"id":"pci.6","bus":"pcie.0","addr":"0x1.0x5"}'
--chardev stdio,id=charserial0 -device
-'{"driver":"isa-serial","chardev":"charserial0","id":"serial0","index":0}'
--audiodev '{"id":"audio1","driver":"none"}' -global
-ICH9-LPC.noreboot=off -watchdog-action reset -device
-'{"driver":"virtio-balloon-pci","id":"balloon0","bus":"pci.4","addr":"0x0"}'
--sandbox on,obsolete=deny,elevateprivileges=deny,spawn=deny,resourcecontrol=deny
--msg timestamp=on
+[    0.000000] Linux version 6.6.26-rc3rv
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 13.2.1 20230801, GNU ld (GNU
+Binutils) 2.42.0) #1 SMP PREEMPT_DYNAMIC Wed Apr 10 18:40:29 JST 2024
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
