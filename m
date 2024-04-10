@@ -1,166 +1,244 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83360172BA3
-	for <patches@lists.linux.dev>; Wed, 10 Apr 2024 14:45:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852DD16E865
+	for <patches@lists.linux.dev>; Wed, 10 Apr 2024 15:21:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712760352; cv=none; b=JXzu7YZaoIcDuHUcMRolosUdWeLp8qZuMP8i2nZmYEuYF9+dKOBceajIVnQ3GxcQoeX47oGAkk/aKlRFwEkk4BGDLgE5iVWw/HOvReEDwe0IcQSYJFAKXccfu0OGQJZtaIT/2MFuomTTRl1NU31E2/eRRPFR91Q84AXlExpAEo4=
+	t=1712762521; cv=none; b=NpmFKz1cj/BsGySc6Cr7sKWrI5QOuOtSy3RoExn7fcSNPjdb5SVXeKWqChYRYI9Uu8mO3oyf1eFVaZaDOV0GCfnTzfGW/PNg0iLFhw+jpggvdzvvMq1s27xVje06m4bQSGhqCJQ2nn78nW0mMaGjPsKpUfLco+xSswGlFhrzeHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712760352; c=relaxed/simple;
-	bh=/LpV/NSlELhYNs91+VUWaqfz1SJEzpM+9qAGyGg3cJg=;
+	s=arc-20240116; t=1712762521; c=relaxed/simple;
+	bh=wBuC0Illl84xEqp/FbzFcOry0Ue7T9qc2B0qD8mOj9Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZUa7PH/ZdsQ1MR4SsyfG4Oyk1fuwrgA4paIm+tXFAxhllwJJvrI7lyIZy1XfGQDyhXWYcESEWgdU9/jJ073+hrpxPyAgc1UjvMC5GbmiZ2xGb/9TSVx/PA/t33l1pO02omoR4um4Rb26haCGAuSS7Y0wF5CIIwr9NFwRA+GyJdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KGxAbC6m; arc=none smtp.client-ip=10.30.226.201
+	 To:Cc:Content-Type; b=Ua+OoI1DWBw3JJfANoEwz9G/5qaKX/7t/DwNsBxN92E2B0bic3AyddLcq9OSxMcHZYoNgU+vxCq6xPrXSbVZAEjlnv6qQ3eVZWo641pRYfBsTau8W1aBq9WkaS40u2r2fnpt3DKUn6KehF5IbLHGCLGae+x6gMVC69o0X5Uz900=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TlsDAbCi; arc=none smtp.client-ip=209.85.167.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KGxAbC6m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B760C433C7
-	for <patches@lists.linux.dev>; Wed, 10 Apr 2024 14:45:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712760352;
-	bh=/LpV/NSlELhYNs91+VUWaqfz1SJEzpM+9qAGyGg3cJg=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=KGxAbC6mHliHfDdiAgjypbsT3F1biW7zflpoSeofgGrm94ilCX6BnvF9i5reKPz7x
-	 aV0L92gfRqDA8pdVI0v/qlpjPynTNtoYfDcTocVU9Jn1RLQRiCQGnsjLvyK26KwyTU
-	 Y58GQSlbH0xZo2J9LFyULTrddIfH4Pmgflh14MfhsiiosIcRHG4ydSZnNMIxeuv5l8
-	 j12Ewml/d9L4RIcktHnFgzpVKm6H9QuELeZTV15KUuqteoU6DLBQV7oWrK33MBhR5P
-	 H67mRsZOi+9z3OClb7IEmT0ycWySZQpcuGbLUVmzVNux1THrwWeTAgdrE5vKr+n/Af
-	 C/4tP4MLYnD6w==
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2d8b4778f5fso13520681fa.3
-        for <patches@lists.linux.dev>; Wed, 10 Apr 2024 07:45:52 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCU23rmZLae9mjCY+byhRQL6mgG9/ak+SBhta/GvFxEhOAbl0KZ4Mh/bgf1u2zzvAIr9JxrfJZxxbcawfPKq3pEEqlaFb2+dkw==
-X-Gm-Message-State: AOJu0YwdLrTh9VW4988U6Y6gd8Lz7l1grCzkO6W99WWLUsR3X43x99ES
-	cjESK8RebnaRRYJl153MBHWIq0lewQ3mpMAGL5wJY+JkTSYkX3oI1/Sz4TxawfbaAssbOHEXmZz
-	nMrrDSf9yCeBmZspD1/89g2k+lIk=
-X-Google-Smtp-Source: AGHT+IEoo2sjT11HlsMdC3qu72n6ZmWXyQWbTkM5kKXp7547HmGrE6sDFnbNlP4c2eLK1VyJPJlP8nPmFpN5w2vT1Do=
-X-Received: by 2002:a2e:a7ca:0:b0:2d8:9fd7:859a with SMTP id
- x10-20020a2ea7ca000000b002d89fd7859amr3083153ljp.34.1712760350427; Wed, 10
- Apr 2024 07:45:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TlsDAbCi"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3c60e308067so70511b6e.3
+        for <patches@lists.linux.dev>; Wed, 10 Apr 2024 08:21:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1712762518; x=1713367318; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Vh/+kENzI9+iNwdhm7uqEGlO03O1/nvUgo6PDioMQQE=;
+        b=TlsDAbCiBvH/900k7hEj5fn1ca5DyMNq1Sy+Z6DptDlBqy2uVm8eqM/IpUZ5z9Je3n
+         Anz5JbREWUHJ/V7SZTVKdWF+SZiL8LO+8GuCZ4WQ4ATgt9MFAHflAPZhKb0x/65MRNg1
+         HE5Q5szh5c83N2yb273jovk21R9r63cMH1P5o8BTc84k1psCedQdbKw9+AXCNFHG7qEX
+         fo4BFPyrDO9kTsBor1Tg4mtQYRYtBQjqOQwSotYovx9ctVwdmH3nJ5FmdcMOLq25hHWv
+         yHXN6dJLt0zVZPC6uTx6G2SGTQeTBKxjf45b2TKmEse2OxsXZsRmcYnNxKZ2uUPlnPCl
+         kf5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712762518; x=1713367318;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Vh/+kENzI9+iNwdhm7uqEGlO03O1/nvUgo6PDioMQQE=;
+        b=VDVAEHRJByT3AnBY5MZ52o4weGuALxa8L8HXE1uwiUszaCu8C8SvQ/YvM6YQLg04mT
+         piMax8G7aGkMjLMqR6wm24n4H6sF0yZqZjZHjzlPsdddFCaiMMr86wA+Qzekmj1bFLGH
+         xjnmt/VO60l6+yrKAxN8d+VON+aMsPxzhUFje8XE+hcy/L2oTVi6wZ+V3AJrGUk64jKD
+         MQj9qAtoeFhVlcP8qefQwIyUtITdL7kBxV1uBMnsOskN5cgG/YWAdMUkUC83+pmhI0Bc
+         uMhOLOt7yp2qgM2xMluBlee7QD2T9JQ/s4UnrtIb7JDm7ajCuh92i5rzi0YWlP6ifw2e
+         oihw==
+X-Forwarded-Encrypted: i=1; AJvYcCW+JQyJO6uEcrYkIlAeZSYrNYj5+hoI+pskpgLZf2hGXFcpI4nT7p4dAUXNOYFtNlPU/My6WuGTnoLl8183OpaFXTRCjKHG2Q==
+X-Gm-Message-State: AOJu0Yz9KZS17CfQTAf4s0tKKSG3mgnZdCYgQqh17TVZyQZZd252EEsw
+	4WvVuxzDS5WwNG9Ca2NPzjM+tLLm6RL+ufEwj7UGw3QKgN1liuCvDx6bs+PUaiu9T8e22rM4+rU
+	oB3AT4AIfDA2Q4H3nLI1PxN6z3VRlO5vQXZ/MwA==
+X-Google-Smtp-Source: AGHT+IHs1rMwruPktCfgMf42wwout+1xiC6AIC+tzXJFoyH3OJnndfX/9PeFn8BiOrx62T7JXVLcseVgv5m84290LxQ=
+X-Received: by 2002:a05:6808:2a67:b0:3c6:6c3:76e9 with SMTP id
+ fu7-20020a0568082a6700b003c606c376e9mr2564860oib.50.1712762517818; Wed, 10
+ Apr 2024 08:21:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240408125309.280181634@linuxfoundation.org> <20240408125317.917032769@linuxfoundation.org>
- <76489f58-6b60-4afd-9585-9f56960f7759@hardfalcon.net> <20240410053433.GAZhYk6Q8Ybk_DyGbi@fat_crate.local>
- <25704cce-2d6e-4904-a42d-47c96056459d@hardfalcon.net> <CAMj1kXH+xOB3cLHL5XHAxMHeN8oOXYaqdExx2+Tij6vwZwhkiQ@mail.gmail.com>
- <CAMj1kXFQfgAOSdPd1aYW8TDi8mkExK9G4buviysu85YsQaQPdw@mail.gmail.com> <3ef518a6-6c9b-42f0-a3e0-22a306185a9a@hardfalcon.net>
-In-Reply-To: <3ef518a6-6c9b-42f0-a3e0-22a306185a9a@hardfalcon.net>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Wed, 10 Apr 2024 16:45:39 +0200
-X-Gmail-Original-Message-ID: <CAMj1kXE-Yt+zVgZ5Y=jEssrna+pUYAOOEr5cXLiXMkmRqEKwhQ@mail.gmail.com>
-Message-ID: <CAMj1kXE-Yt+zVgZ5Y=jEssrna+pUYAOOEr5cXLiXMkmRqEKwhQ@mail.gmail.com>
-Subject: Re: [PATCH 6.8 271/273] x86/sme: Move early SME kernel encryption
- handling into .head.text
-To: Pascal Ernster <git@hardfalcon.net>
-Cc: Borislav Petkov <bp@alien8.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, Tom Lendacky <thomas.lendacky@amd.com>
+References: <20240409173540.185904475@linuxfoundation.org>
+In-Reply-To: <20240409173540.185904475@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 10 Apr 2024 20:51:46 +0530
+Message-ID: <CA+G9fYuYu=8ih7B++PxDhNar4Vkzdxj8PbO-VRNvk+EPVAd+vQ@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/255] 6.6.26-rc3 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 10 Apr 2024 at 16:30, Pascal Ernster <git@hardfalcon.net> wrote:
+On Tue, 9 Apr 2024 at 23:14, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> [2024-04-10 12:06] Ard Biesheuvel:
-> > On Wed, 10 Apr 2024 at 11:03, Ard Biesheuvel <ardb@kernel.org> wrote:
-> >>
-> >> On Wed, 10 Apr 2024 at 09:00, Pascal Ernster <git@hardfalcon.net> wrote:
-> >>>
-> >>> [2024-04-10 07:34] Borislav Petkov:
-> >>>> On Tue, Apr 09, 2024 at 06:38:53PM +0200, Pascal Ernster wrote:
-> >>>>> Just to make sure this doesn't get lost: This patch causes the kernel to not
-> >>>>> boot on several x86_64 VMs of mine (I haven't tested it on a bare metal
-> >>>>> machine). For details and a kernel config to reproduce the issue, see https://lore.kernel.org/stable/fd186a2b-0c62-4942-bed3-a27d72930310@hardfalcon.net/
-> >>>>
-> >>
-> >
-> > Based on your XML description, I have extracted the command line
-> > below, to boot a kernel built from the config you provided (but not
-> > using the arch build scripts). I am using the same x86 initramfs I use
-> > for all my boot testing, but that shouldn't make a difference here.
-> >
-> > Both your 'working' and 'broken' kernels work fine for me, both with
-> > and without OVMF firmware, so I'm a bit stuck here. Could you please
-> > try to reproduce using the command line below?
-> >
-> >
-> > /usr/bin/qemu-system-x86_64 -name guest=kernel_issue,debug-threads=on
-> > -machine pc-q35-8.2,usb=off,smm=on,dump-guest-core=off,memory-backend=pc.ram,hpet=off,acpi=on
-> > -accel kvm -cpu host,migratable=on -m size=2097152k -object
-> > '{"qom-type":"memory-backend-ram","id":"pc.ram","size":2147483648}'
-> > -overcommit mem-lock=off -smp 1,sockets=1,cores=1,threads=1 -uuid
-> > 3ef94585-9ed2-464c-97ca-546fe9b42e2d -display none -no-user-config
-> > -nodefaults  -rtc base=utc,driftfix=slew -global
-> > kvm-pit.lost_tick_policy=delay -no-shutdown -global
-> > ICH9-LPC.disable_s3=1 -global ICH9-LPC.disable_s4=1 -boot strict=on
-> > -kernel /usr/local/google/home/ardb/linux-build/arch/x86/boot/bzImage
-> > -initrd /usr/local/google/home/ardb/rootfs-x86.cpio.gz -append
-> > 'console=ttyS0,115200 intel_iommu=on lockdown=confidentiality
-> > ia32_emulation=0 usbcore.nousb loglevel=7
-> > earlyprintk=serial,ttyS0,115200' -device
-> > '{"driver":"pcie-root-port","port":8,"chassis":1,"id":"pci.1","bus":"pcie.0","multifunction":true,"addr":"0x1"}'
-> > -device '{"driver":"pcie-root-port","port":9,"chassis":2,"id":"pci.2","bus":"pcie.0","addr":"0x1.0x1"}'
-> > -device '{"driver":"pcie-root-port","port":10,"chassis":3,"id":"pci.3","bus":"pcie.0","addr":"0x1.0x2"}'
-> > -device '{"driver":"pcie-root-port","port":11,"chassis":4,"id":"pci.4","bus":"pcie.0","addr":"0x1.0x3"}'
-> > -device '{"driver":"pcie-root-port","port":12,"chassis":5,"id":"pci.5","bus":"pcie.0","addr":"0x1.0x4"}'
-> > -device '{"driver":"pcie-root-port","port":13,"chassis":6,"id":"pci.6","bus":"pcie.0","addr":"0x1.0x5"}'
-> > -chardev stdio,id=charserial0 -device
-> > '{"driver":"isa-serial","chardev":"charserial0","id":"serial0","index":0}'
-> > -audiodev '{"id":"audio1","driver":"none"}' -global
-> > ICH9-LPC.noreboot=off -watchdog-action reset -device
-> > '{"driver":"virtio-balloon-pci","id":"balloon0","bus":"pci.4","addr":"0x0"}'
-> > -sandbox on,obsolete=deny,elevateprivileges=deny,spawn=deny,resourcecontrol=deny
-> > -msg timestamp=on
+> This is the start of the stable review cycle for the 6.6.26 release.
+> There are 255 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
+> Responses should be made by Thu, 11 Apr 2024 17:35:00 +0000.
+> Anything received after that time might be too late.
 >
-> The error also seems to occur with the /usr/bin/qemu-system-x86_64
-> command you posted. I can't see the serial output, but I can see the
-> persistent 100% CPU load that only occurs with the broken kernel but not
-> with the kernel where your patch was reverted.
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.26-rc3.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
+> and the diffstat can be found below.
 >
-> I've written a shell script that should allow you to reproduce
-> everything, and I've trimmed down the kernel config (included within the
-> shell script) even further to reduce compile times. Whilst writing the
-> script, I've found that the issue seems to only occur when I boot
-> bzImage, but not when I boot the vmlinux image.
+> thanks,
 >
-> Regarding the linker used: When building the kernel using my PKGBUILD, I
-> used mold as linker, but when writing the attached reproducer script, I
-> used the "normal" ld from the Archlinux binutils 2.42-2 package, and I
-> can confirm that the issue also does also occur when binutils is used
-> instead of mold.
->
-> Running the script in tmpfs takes about 10-15 minutes on an Intel i5
-> 8500 with sufficient RAM, and it compiles both the "normal" version of
-> the kernel and a version with your patch reverted.
->
+> greg k-h
 
-Thanks, this is very helpful.
 
-However, both bzImage-fixed and bzImage-broken boot happily for me.
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-I am using
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-$ gcc -v
-Using built-in specs.
-COLLECT_GCC=gcc
-COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
-OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
-OFFLOAD_TARGET_DEFAULT=1
-Target: x86_64-linux-gnu
-Configured with: ../src/configure -v --with-pkgversion='Debian
-13.2.0-10' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs
---enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2
---prefix=/usr --with-gc6
-Thread model: posix
-Supported LTO compression algorithms: zlib zstd
-gcc version 13.2.0 (Debian 13.2.0-10)
+## Build
+* kernel: 6.6.26-rc3
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.6.y
+* git commit: 63547075e080d3f850b89cf107e49946c3b7c4eb
+* git describe: v6.6.25-256-g63547075e080
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.2=
+5-256-g63547075e080
 
-$ ld -v
-GNU ld (GNU Binutils for Debian) 2.41.90.20240122
+## Test Regressions (compared to v6.6.25)
 
-$ qemu-system-x86_64 --version
-QEMU emulator version 8.2.1 (Debian 1:8.2.1+ds-1)
-Copyright (c) 2003-2023 Fabrice Bellard and the QEMU Project developers
+## Metric Regressions (compared to v6.6.25)
 
-You can grab my bzImage here:
-http://files.workofard.com/bzImage-broken
+## Test Fixes (compared to v6.6.25)
+
+## Metric Fixes (compared to v6.6.25)
+
+## Test result summary
+total: 173151, pass: 149294, fail: 2238, skip: 21459, xfail: 160
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 129 total, 129 passed, 0 failed
+* arm64: 38 total, 38 passed, 0 failed
+* i386: 29 total, 29 passed, 0 failed
+* mips: 24 total, 24 passed, 0 failed
+* parisc: 3 total, 3 passed, 0 failed
+* powerpc: 34 total, 34 passed, 0 failed
+* riscv: 16 total, 16 passed, 0 failed
+* s390: 12 total, 12 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 33 total, 33 passed, 0 failed
+
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mm
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-smoketest
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
