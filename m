@@ -1,108 +1,101 @@
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75946158851
-	for <patches@lists.linux.dev>; Tue,  9 Apr 2024 23:55:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455FA372
+	for <patches@lists.linux.dev>; Wed, 10 Apr 2024 00:20:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712706957; cv=none; b=CtSiADxu/raz1WCeM3FVZQUJF6vXoHVUsfiJRkvuvKaWkbG6+ePLX6CIaaxPfEYNQPVaAlvLQGZEDZvv1wBrC18AyNF5XCZOAQsFg/lqWpI/FspvFSikU5Gw9tqLgx1tIJA5e6ClBDrVbcv1Xoh209DpZO6gY97BQZd73BuuC9M=
+	t=1712708413; cv=none; b=tLmo+67aaSTZ1a5enZ5HHN/pD5p+IBW8A4CH9VmfIM07twxrHDyOHqtq2zLdas+HEmcW9SSSZAxqkyHk/yFh9j0i/FnkOIRVLqXtR4GsXKEkin9kqYBbjAi1ItJj5OQ/b45R3rGzUKx7IOfoT4N/GnoE6lXEkL0eM6OuyXWB+04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712706957; c=relaxed/simple;
-	bh=321TzPyHJOoa7QwEruJfOZHt+XT8j4jg+EEfdfywmW8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nWxyNUaIMVcUly3o2dTALga632N9f9ja7vDFzckfe9psFeJQ5no5Q1evdr2k9AfF17cLjRBFmYsCf4jNXsBggF/I5BHuMpGmaujlam+XEZ+Paj2iyXhWeW9j6nK7V/27YvFBAxVx1IM/zieR0rQrv3C5UqOcZxMKr7izUv+K7o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca; spf=pass smtp.mailfrom=ziepe.ca; dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b=OACxO0xY; arc=none smtp.client-ip=209.85.217.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
+	s=arc-20240116; t=1712708413; c=relaxed/simple;
+	bh=5uXvHxjZzirfDvkIRhOsYYDI7XACucJRqQE4OGn03HA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Kwt5sY4tN5ZujKZ58z7cuXnw0F0RZxLgz20Z+iuTacZEAPW8HN4ktH33um28nRTiWbwUqIGneeieRhRWXfdfsSjuZvd6uDao3u9azAYSIAqrHQN1Y/nUgazEQAjZ5VYg9CavlTj/6XxBashMqn9nfdUv+iC4E2l6OKCtY0oDvP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XK9+YfsA; arc=none smtp.client-ip=209.85.166.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b="OACxO0xY"
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-479de65e08fso1367774137.1
-        for <patches@lists.linux.dev>; Tue, 09 Apr 2024 16:55:56 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XK9+YfsA"
+Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-7d6112ba6baso25446039f.1
+        for <patches@lists.linux.dev>; Tue, 09 Apr 2024 17:20:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google; t=1712706955; x=1713311755; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xfUNEVtV0yx/ZQ+K5WxkeBL8109QuuNv0IDRponNoQ0=;
-        b=OACxO0xYwU9QpuWfOvlzlL1hKTafWgrRuSphYWNZgvZassw6dCFpBQbQO3UHKJmRAK
-         s+Phb+VfjT5yOCFC7CTPcZleicdAzRfNEKbvNmypCMbqMoU9rpFVrEtCLXijSOyfVBdg
-         VF6MECwtIiYmL6x0Zqy1/9hkp3Wb9vn8pTYfXQdWDG7lzyMsCrPM63WkBA1wIIDCjRkg
-         8dy//0zDMKpnJX/x68KAQNkjcbZZr1WbgDRdUispPJmK5N4jewFNOHowD8nAgJNwjFD6
-         eAFKDM3EUVmgRWoVRsRHLJrIKsEkn1CxH+0CreHKL5Hak1/iE15vzc0NxGMZpshbZ3p9
-         hL4A==
+        d=linuxfoundation.org; s=google; t=1712708411; x=1713313211; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8dH1sOx8AuuAIwyitTYp4fQEkYb8QaLWM8FC1wyKIYw=;
+        b=XK9+YfsAJ5TYGpz1MfDNJgEsJiTqbKUrZRwe0ebQ9Fnchj/8GM2VjGnqw7bQcKe39D
+         mcd/HYvtcRR+LzCY83gLkKAxwc3053FB9gBV8G4OIJmOSwYiph69hiAvhASdZrHTiUUJ
+         CHRuqryO3ajKrwYxt+dOcfM14P0bI392yaCHs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712706955; x=1713311755;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xfUNEVtV0yx/ZQ+K5WxkeBL8109QuuNv0IDRponNoQ0=;
-        b=DTqX7kV4EptxagdiljWcNeN/7B4PYG/JOXuV8UqROEz230uHtbEnqAu5NGrRVTJUJV
-         ySP4lYzTafPVJBV7CzetQ0GpSMuLBQ6IVoyEJnHYfkQc/VayN2McC0c/u4utTGvp6idI
-         35C5ACv7y8pJWf/+cpEfhSMao0yfTn4t79pqJd8FASAlMylNnMcWCcpnzbukxkNKzTIh
-         n011Cp49fIieZqd3YbClP0O+9B9twuOHyZKL8BXxrz26I9dNpIAz5yt/TB5oHJJkzdLF
-         7lrxiHWw66IHf6UFjY6GljxHedITgvgctwsmxxIV8tlRr8N+0d9w3jIqO2I3txMEMxkg
-         tSgA==
-X-Forwarded-Encrypted: i=1; AJvYcCUAfVfvtqjFwwOLG3dnZqPw3vCxnUEmKBzs86scUaEJALgmRWa4b9ngDvpLLP19E35JU08d+XQEa9nRRzw4YF/oe141FfovbA==
-X-Gm-Message-State: AOJu0YySmRd1EWJ+pK3UpP8s5upC+tIRj9RlLOrby0sNh8XlZ8fvkP93
-	h2hVSBZFEQZ/Y3Nfp+tZa1uWoIEzXBdNIfasNPKByKl3gA54uCtPomENr5DF3ns=
-X-Google-Smtp-Source: AGHT+IHCM+hZR8ArA2JpZ0mrLMCJxtFfNrlM1FvyYPtyphykyiqNIf3P1dO+1u2Sqb81u+sEchyXgQ==
-X-Received: by 2002:a05:6102:3582:b0:47a:247c:f714 with SMTP id h2-20020a056102358200b0047a247cf714mr365854vsu.8.1712706955422;
-        Tue, 09 Apr 2024 16:55:55 -0700 (PDT)
-Received: from ziepe.ca (hlfxns017vw-142-68-80-239.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.68.80.239])
-        by smtp.gmail.com with ESMTPSA id fo8-20020ad45f08000000b0069b1e2f3074sm2083947qvb.98.2024.04.09.16.55.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Apr 2024 16:55:54 -0700 (PDT)
-Received: from jgg by wakko with local (Exim 4.95)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1ruLJi-007Gn1-9k;
-	Tue, 09 Apr 2024 20:55:54 -0300
-Date: Tue, 9 Apr 2024 20:55:54 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Will Deacon <will@kernel.org>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>, catalin.marinas@arm.com,
-	kernel-team@android.com, Lu Baolu <baolu.lu@linux.intel.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
-	kernel test robot <lkp@intel.com>, Moritz Fischer <mdf@kernel.org>,
-	Moritz Fischer <moritzf@google.com>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Mostafa Saleh <smostafa@google.com>, Tony Zhu <tony.zhu@intel.com>,
-	Yi Liu <yi.l.liu@intel.com>, Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH v6 00/29] Update SMMUv3 to the modern iommu API (part 2/3)
-Message-ID: <20240409235554.GE223006@ziepe.ca>
-References: <0-v6-228e7adf25eb+4155-smmuv3_newapi_p2_jgg@nvidia.com>
- <171266271384.1465008.12517206202208996339.b4-ty@kernel.org>
+        d=1e100.net; s=20230601; t=1712708411; x=1713313211;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8dH1sOx8AuuAIwyitTYp4fQEkYb8QaLWM8FC1wyKIYw=;
+        b=xD6xuESMO7bWDPmz5DUFrYPfRRWo3CudN7n/K/qvPyjab/1SYdGay4KBwgi5DnnBGC
+         CCoWnJCGtOXAMIUBgXFwGwLwvda0FXKyNYDNv8kM1ZKtOVGGOCR/53zVAPOtqWqc7gZ6
+         2hhgwye5VbYe5+XaeXxqIe7gkRXUtn0ODoK34/jtLOlTyIx1Jl0R1pgcmpZ2V+0lFlTL
+         ZvidnSAfSTUxNtwIbNyalRgN4jcndFf79PQ6AgddRsUFfM6opTkU/a8FTn+SWL7vQP0D
+         ssR118+Tkhv0ddt8tyU08T1SQzgnmTXT1JR2VIgEn/xhidRaQYTC1lN0pL54tVDkqNGb
+         EygA==
+X-Gm-Message-State: AOJu0YwpxKSnMmdys1cc/eppCysfersMAS0IQ1v3sjXQ2jkb//TkSCVB
+	Z7absESc0EqSfaSpP8K/5Xc275ZhnX/zg5LE8KirxsReYXvBb+8iaxJ28hc5njM=
+X-Google-Smtp-Source: AGHT+IHbvOdT7cqb6UgFwLcn1UkETQPFfzLOFngW91YpGcYtJrG5Zk7Dp6VMjSouo+2g5OCmxYqkyw==
+X-Received: by 2002:a05:6e02:1fcb:b0:368:efa4:be12 with SMTP id dj11-20020a056e021fcb00b00368efa4be12mr1803875ilb.3.1712708411222;
+        Tue, 09 Apr 2024 17:20:11 -0700 (PDT)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id p11-20020a92d68b000000b00368c37480ffsm2854540iln.82.2024.04.09.17.20.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Apr 2024 17:20:10 -0700 (PDT)
+Message-ID: <a07a6abd-47d4-4646-805b-ae170b0540a8@linuxfoundation.org>
+Date: Tue, 9 Apr 2024 18:20:10 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <171266271384.1465008.12517206202208996339.b4-ty@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.8 000/273] 6.8.5-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Apr 09, 2024 at 01:54:59PM +0100, Will Deacon wrote:
-> On Wed, 27 Mar 2024 15:07:46 -0300, Jason Gunthorpe wrote:
-> > Continuing the work of part 1 this focuses on the CD, PASID and SVA
-> > components:
-> > 
-> >  - attach_dev failure does not change the HW configuration.
-> > 
-> >  - Full PASID API support including:
-> >     - S1/SVA domains attached to PASIDs
-> >     - IDENTITY/BLOCKED/S1 attached to RID
-> >     - Change of the RID domain while PASIDs are attached
-> > 
-> > [...]
+On 4/8/24 06:54, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.8.5 release.
+> There are 273 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> In the interests of making a dent (albeit a tiny one!) in this series
-> while review is ongoing, I've picked up 3-5 as they look ready to go.
+> Responses should be made by Wed, 10 Apr 2024 12:52:23 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.5-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-Great, thanks!
+Compiled and booted on my test system. No dmesg regressions.
 
-Jason
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+
+thanks,
+-- Shuah
