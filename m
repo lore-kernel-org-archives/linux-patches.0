@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497FD79FD;
-	Thu, 11 Apr 2024 10:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3579379FD;
+	Thu, 11 Apr 2024 10:40:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832020; cv=none; b=RwAR93Lkcj1J4owdvtqFp7Yq7JjrF+1faBVBBYMEWt9B1t+HDooIn1WHcPLkxwaCNP6EZ1QKLOrf1+N7ziw9kVKiXYfMpAlnIh119XgGdrzAFyR4TQ59xUmMRf/RaBhhqvF5LkR97CsuWvi4n0byxsyzDSqRV61yhZ6YluehgQo=
+	t=1712832023; cv=none; b=VNrwNZAxT2I3v9N5GiDPcX0RS0mWjJzsgT66j/YWi/yJMz2EnnXhsllR1RvkcbPzFlvml9N2qA9Z+CqVl9eWMA907zG7ML6qdyhcndH6m5TEFSUMJqYxpamIdOFTD0Q9+Fg4UOormxTUTlmfyml/wqnln3yCL4t69yYjLBdFZcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832020; c=relaxed/simple;
-	bh=zatITTH7SlHF4vFRn8XYShOPzODiubIgSYTz2JTJbp0=;
+	s=arc-20240116; t=1712832023; c=relaxed/simple;
+	bh=eQadKMUqpSpV9e0rKjTk0PFvdkPFBeng1k+sP5kPPKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZLxEJyQiRxpqcPrCL2I9c+guw/49Cm0TgAoHiu+/6tAxWKxZMX523YbC4DAeXksM/3DISpAoMFlzZ3vW9saLIkAV8mqF8VTJSuNb8PJ4jEKWyQnqNKMP/7JWOZOTVxY5whh9i6n3mD31iIiCiNMQpFiBikGeUsJ9HaLeLuXhbH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZwynZDb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DQX6CT+8+Dx6afE7RS1NKX84MXlyozmKfzfMlVp9VRoFDh8VOM0kmLNzLHrM4RZUtbf3H9jX4AD16kiy0yEIsTJCT/v64XF0jPzOLVROuzTzAljWFFwUFvHbGi6KBs2VPQJG2Gf7XNhlESNh38o9A1ODEmrAvd2EMJPdEYvcEaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JyUYBml; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZwynZDb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF67AC433F1;
-	Thu, 11 Apr 2024 10:40:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JyUYBml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEAB4C433F1;
+	Thu, 11 Apr 2024 10:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832020;
-	bh=zatITTH7SlHF4vFRn8XYShOPzODiubIgSYTz2JTJbp0=;
+	s=korg; t=1712832023;
+	bh=eQadKMUqpSpV9e0rKjTk0PFvdkPFBeng1k+sP5kPPKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZwynZDbEZaSpMXlRtGeHm1jShLhVAp+nRur8I4X2VRrL1YexqUqE8vBVJYudVuRE
-	 e6QdZcRC4oTNDD5XU0bjDwifbucWc5mhMwxHz0bYB9bxpkk7Wez6nOaHVsbaNVjy5f
-	 2qW14eWhTvrYG6rd2iiTAUAP07yiEGPlLgFvroas=
+	b=1JyUYBml5jtFVOoMtF+Ic5NUs/C7iNpQ33hF0GeymAOQdl+QAq5u02/pGMrYo5k8Q
+	 PXpbo5ViRiDNywqsi47rtB/6Bgwk+CXB7y1AfNLBSUutKm/8dCHsxoab2kXMOkOcG9
+	 gTmJNUYtTGv9kX91AKzirjpIoMD365EY7tRiOxxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Wen <puwen@hygon.cn>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Min Li <min15.li@samsung.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Ashwin Dayanand Kamat <ashwin.kamat@broadcom.com>
-Subject: [PATCH 5.10 204/294] x86/srso: Add SRSO mitigation for Hygon processors
-Date: Thu, 11 Apr 2024 11:56:07 +0200
-Message-ID: <20240411095441.744549245@linuxfoundation.org>
+Subject: [PATCH 5.10 205/294] block: add check that partition length needs to be aligned with block size
+Date: Thu, 11 Apr 2024 11:56:08 +0200
+Message-ID: <20240411095441.773298614@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -52,34 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Wen <puwen@hygon.cn>
+From: Min Li <min15.li@samsung.com>
 
-commit a5ef7d68cea1344cf524f04981c2b3f80bedbb0d upstream.
+commit 6f64f866aa1ae6975c95d805ed51d7e9433a0016 upstream.
 
-Add mitigation for the speculative return stack overflow vulnerability
-which exists on Hygon processors too.
+Before calling add partition or resize partition, there is no check
+on whether the length is aligned with the logical block size.
+If the logical block size of the disk is larger than 512 bytes,
+then the partition size maybe not the multiple of the logical block size,
+and when the last sector is read, bio_truncate() will adjust the bio size,
+resulting in an IO error if the size of the read command is smaller than
+the logical block size.If integrity data is supported, this will also
+result in a null pointer dereference when calling bio_integrity_free.
 
-Signed-off-by: Pu Wen <puwen@hygon.cn>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/tencent_4A14812842F104E93AA722EC939483CEFF05@qq.com
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Min Li <min15.li@samsung.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230629142517.121241-1-min15.li@samsung.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Ashwin Dayanand Kamat <ashwin.kamat@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/common.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/ioctl.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1177,7 +1177,7 @@ static const struct x86_cpu_id cpu_vuln_
- 	VULNBL_AMD(0x15, RETBLEED),
- 	VULNBL_AMD(0x16, RETBLEED),
- 	VULNBL_AMD(0x17, RETBLEED | SRSO),
--	VULNBL_HYGON(0x18, RETBLEED),
-+	VULNBL_HYGON(0x18, RETBLEED | SRSO),
- 	VULNBL_AMD(0x19, SRSO),
- 	{}
- };
+--- a/block/ioctl.c
++++ b/block/ioctl.c
+@@ -17,7 +17,7 @@ static int blkpg_do_ioctl(struct block_d
+ 			  struct blkpg_partition __user *upart, int op)
+ {
+ 	struct blkpg_partition p;
+-	long long start, length;
++	sector_t start, length;
+ 
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		return -EACCES;
+@@ -32,6 +32,12 @@ static int blkpg_do_ioctl(struct block_d
+ 	if (op == BLKPG_DEL_PARTITION)
+ 		return bdev_del_partition(bdev, p.pno);
+ 
++	if (p.start < 0 || p.length <= 0 || p.start + p.length < 0)
++		return -EINVAL;
++	/* Check that the partition is aligned to the block size */
++	if (!IS_ALIGNED(p.start | p.length, bdev_logical_block_size(bdev)))
++		return -EINVAL;
++
+ 	start = p.start >> SECTOR_SHIFT;
+ 	length = p.length >> SECTOR_SHIFT;
+ 
+@@ -46,9 +52,6 @@ static int blkpg_do_ioctl(struct block_d
+ 
+ 	switch (op) {
+ 	case BLKPG_ADD_PARTITION:
+-		/* check if partition is aligned to blocksize */
+-		if (p.start & (bdev_logical_block_size(bdev) - 1))
+-			return -EINVAL;
+ 		return bdev_add_partition(bdev, p.pno, start, length);
+ 	case BLKPG_RESIZE_PARTITION:
+ 		return bdev_resize_partition(bdev, p.pno, start, length);
 
 
