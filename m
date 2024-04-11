@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DC8145FED;
-	Thu, 11 Apr 2024 10:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612041448F3;
+	Thu, 11 Apr 2024 10:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830004; cv=none; b=rxBeLsoIfd05jL5knfDLSzz54wSSkbIJYUaUQVwcBw9pN2qCJD2v7eEH31ROd46OzvhqKZ2XJOFlKehlN72q11qpQHQovY7e1Rlgk2cwabgTugQJgrcJ5rBPScM6T4eAk493EZDEa7g0jDvQTmOL+qs8au3bkjh3Sl6OMdMWgNA=
+	t=1712830007; cv=none; b=FtYl9z9A/EC6Xx1JDazwq8SPPaWSxrPXURNcoNlfLmpE8G/lMqd25L1+qhLSUGzZJTSyGDbhZ9NtRlwTyZabREO3qD94iOXUAkXAMMD/7Uz0Gu1tNyE87ELn+0ipnVSABtBd3C5sDVSF0Gx92iWoSvQr97c6C/8nsJ4m4FdlBpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830004; c=relaxed/simple;
-	bh=Q80JWwhUAiJQmskF9gKLNznvqvuubr3Oy21DcRHbhgk=;
+	s=arc-20240116; t=1712830007; c=relaxed/simple;
+	bh=BVVNbrhk2MKN6Tpeh5g4ewAAh7XjlFTm48OKSNFSBjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfSJmGJUdc15PJyIXhkNFqes41bjjVcyUfZprFBEHdTOv+tSc6i7qMdTR2wa0z9+l8rJBjUBTChFTHZrisMuEQkO0BmidddjBRw+pP08K6sM4+yqYM6T6viy4R0aVsgsLUcy0X+zlhi2ZgA9wErZ+p0vYELTEdcK6Y6WG6sMtew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfYFNTrc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Djw732GcOZKyuNoHkhwwD2h3jr4FtWd0uvRFcjDg68v1Zhk3Vj7ytrC9eDUoObmesyVlHBuRAaFAY4isVJ/jnxGcVtHmi1DXzBHRmKrxpIEV7HZJ1N/M1PXTe5TD1D1ht4QOpPCbg3JBB/7tK/3/Ijm4sbwPRkKfBbtM5Ca+u0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmP9SflK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfYFNTrc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0908C433C7;
-	Thu, 11 Apr 2024 10:06:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmP9SflK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9BC3C433F1;
+	Thu, 11 Apr 2024 10:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830004;
-	bh=Q80JWwhUAiJQmskF9gKLNznvqvuubr3Oy21DcRHbhgk=;
+	s=korg; t=1712830007;
+	bh=BVVNbrhk2MKN6Tpeh5g4ewAAh7XjlFTm48OKSNFSBjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CfYFNTrcJ1NF3zk4a+tGP55QS7CsYXj2QYIcuARW8A2+GRUT2nu++PI+x+nxvZDs+
-	 J6fCsAp7sRCKtHtUbHzSFtCrC0Ce05dJp+UWH+m5NyU33Rd59y/BDe00u3B9OemSq9
-	 y00TyEP+FyhOV4NzFdE8CmQhJjMlCjWxA4AzPg5E=
+	b=kmP9SflKHlY+9/1QvuhcZ8/bX7Ah/7zuzAHMR3Ip0Mhu4bQuP/jCfDQmlXp05RSU9
+	 ZSFiyNkRjMpgYiegbNWYmwBP3NrOT8g20Vekn+vtITVAcNl2xx1ZNbfTr9KDIXYizV
+	 O6CEMj6i4dlHga6DZZDCGEjhYPSvUZv1Z+N0BlLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Smirnov <r.smirnov@omp.ru>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Helge Deller <deller@gmx.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 166/175] fbmon: prevent division by zero in fb_videomode_from_videomode()
-Date: Thu, 11 Apr 2024 11:56:29 +0200
-Message-ID: <20240411095424.562108599@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+Subject: [PATCH 4.19 167/175] tty: n_gsm: require CAP_NET_ADMIN to attach N_GSM0710 ldisc
+Date: Thu, 11 Apr 2024 11:56:30 +0200
+Message-ID: <20240411095424.591801181@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,51 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Smirnov <r.smirnov@omp.ru>
+From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
 
-[ Upstream commit c2d953276b8b27459baed1277a4fdd5dd9bd4126 ]
+commit 67c37756898a5a6b2941a13ae7260c89b54e0d88 upstream.
 
-The expression htotal * vtotal can have a zero value on
-overflow. It is necessary to prevent division by zero like in
-fb_var_to_videomode().
+Any unprivileged user can attach N_GSM0710 ldisc, but it requires
+CAP_NET_ADMIN to create a GSM network anyway.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
+Require initial namespace CAP_NET_ADMIN to do that.
 
-Signed-off-by: Roman Smirnov <r.smirnov@omp.ru>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+Link: https://lore.kernel.org/r/20230731185942.279611-1-cascardo@canonical.com
+From: Salvatore Bonaccorso <carnil@debian.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbmon.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/tty/n_gsm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/video/fbdev/core/fbmon.c b/drivers/video/fbdev/core/fbmon.c
-index 8607439d69328..e4040fb860bbc 100644
---- a/drivers/video/fbdev/core/fbmon.c
-+++ b/drivers/video/fbdev/core/fbmon.c
-@@ -1309,7 +1309,7 @@ int fb_get_mode(int flags, u32 val, struct fb_var_screeninfo *var, struct fb_inf
- int fb_videomode_from_videomode(const struct videomode *vm,
- 				struct fb_videomode *fbmode)
- {
--	unsigned int htotal, vtotal;
-+	unsigned int htotal, vtotal, total;
+--- a/drivers/tty/n_gsm.c
++++ b/drivers/tty/n_gsm.c
+@@ -2435,6 +2435,9 @@ static int gsmld_open(struct tty_struct
+ 	struct gsm_mux *gsm;
+ 	int ret;
  
- 	fbmode->xres = vm->hactive;
- 	fbmode->left_margin = vm->hback_porch;
-@@ -1342,8 +1342,9 @@ int fb_videomode_from_videomode(const struct videomode *vm,
- 	vtotal = vm->vactive + vm->vfront_porch + vm->vback_porch +
- 		 vm->vsync_len;
- 	/* prevent division by zero */
--	if (htotal && vtotal) {
--		fbmode->refresh = vm->pixelclock / (htotal * vtotal);
-+	total = htotal * vtotal;
-+	if (total) {
-+		fbmode->refresh = vm->pixelclock / total;
- 	/* a mode must have htotal and vtotal != 0 or it is invalid */
- 	} else {
- 		fbmode->refresh = 0;
--- 
-2.43.0
-
++	if (!capable(CAP_NET_ADMIN))
++		return -EPERM;
++
+ 	if (tty->ops->write == NULL)
+ 		return -EINVAL;
+ 
 
 
