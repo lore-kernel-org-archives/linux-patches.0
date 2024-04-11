@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06D0144D34;
-	Thu, 11 Apr 2024 10:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19CA145FFB;
+	Thu, 11 Apr 2024 10:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830231; cv=none; b=kRHesa32Dho6dD7PTRVl1s4DS2CA+g41HW0NYCKlwfhuNi9++xE9Ti8EjKehTvMytmRhQJ4ghDmrCIqEiga3qlqzGy30C0vVenbAktxhbT6bPVc+mEcwnJAW/Vg6vQA11GPrUHGDZIHH+5wQRpnvqSdMpSFuhn0bWasdp4eMSso=
+	t=1712830234; cv=none; b=LKUFfmrO3E6s4azauNQyQJJd9odh1pmkJ26xLmQ0tbzUAe7NnuYzLsH0XHGbJYErtydNLXthEftZp2QejzaBl41eSYQXP0JUsetb5nrzIkE1AL+izUqI2USHMdvnWiB6iGBucx1c68eMg6VJQJbN+WpMRdSmkwDm6c5rbKex35E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830231; c=relaxed/simple;
-	bh=la6xAYIMM2eTAQd4v44zRDD0woJA7ENMWwl/Dw2oPZ4=;
+	s=arc-20240116; t=1712830234; c=relaxed/simple;
+	bh=uM/ZAgFedWYvnNVVqlAYqBfgZ8pCgq1HEqvcQnS3yhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bDIZB4I5K+I82qcYCzYMOb0tvKxHgmk5KuhigBUU6W8y3zIQf2MZIUow+CN6oxAqHeYrNR/Xa1h5gO/oTAinrefX+n7vZCT/p6UdtakfedpAhyKtpRyYltSw7u8J7hYZwGkhOcsFIQ96KYchpSRwkiosWMz/gYDfsKDk1GXMGpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gfopb2KZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=o9Nmvj+ZRi+9y3GYKM45yP5DoJBaI2DsRV+EmVdt9qLIIrJxyb2ZPEwLNleJCLfCOKiOSjF6vQk5UWK6U8lbDekwnF0V5lSLTRzscMrFVYvfZEZ5QmuZn88dwwiZb9bIBV4PnaklrOBw+0OXR1ElJrAmrmHDWe353N/lZ1asnGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZO7jmwI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gfopb2KZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D11C433F1;
-	Thu, 11 Apr 2024 10:10:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZO7jmwI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D142CC43394;
+	Thu, 11 Apr 2024 10:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830231;
-	bh=la6xAYIMM2eTAQd4v44zRDD0woJA7ENMWwl/Dw2oPZ4=;
+	s=korg; t=1712830234;
+	bh=uM/ZAgFedWYvnNVVqlAYqBfgZ8pCgq1HEqvcQnS3yhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gfopb2KZlkrSxXcpW0SVPUqj3jhlBR4DxvY+Mt3P+ewGCEQMXoF3FhCWLhOSKve7a
-	 XKupKEtvJ6foV+u00mqf257fl7Sp3Mo+ZoOjuJ2SOyE+MYR2XFQLLzho138oLHp6n4
-	 qMjbKnxLYgR3BZC06JqDqP7yroRpzz25JT4q4p04=
+	b=dZO7jmwI5sGzqXuvHPmeXdZgIDwMaakDYeZAZZWI0+Or/cj/WcVcwUKjTIB9NkOvH
+	 doLCvWuAMxWwmRYm/VR2cZd3PlX73XJ5QVnCPed0fqqpoa3kIlzJDkLglPlIkYx87k
+	 kb38teCn0dMrSPrcs3L1p+0LStJhFrvZfETVQ648=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 079/143] x86/vdso: Fix rethunk patching for vdso-image-{32,64}.o
-Date: Thu, 11 Apr 2024 11:55:47 +0200
-Message-ID: <20240411095423.291849264@linuxfoundation.org>
+Subject: [PATCH 6.8 080/143] ASoC: Intel: avs: Populate board selection with new I2S entries
+Date: Thu, 11 Apr 2024 11:55:48 +0200
+Message-ID: <20240411095423.321828395@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -46,109 +46,134 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit b388e57d4628eb22782bdad4cd5b83ca87a1b7c9 ]
+[ Upstream commit 5b417fe0cded0b5917683398e6519aae8045cd40 ]
 
-For CONFIG_RETHUNK kernels, objtool annotates all the function return
-sites so they can be patched during boot.  By design, after
-apply_returns() is called, all tail-calls to the compiler-generated
-default return thunk (__x86_return_thunk) should be patched out and
-replaced with whatever's needed for any mitigations (or lack thereof).
+Update board selection with tables specifying supported I2S
+configurations. DMIC/HDAudio board selection require no update as
+dmic/hdaudio machine boards are generic and not tied to any specific
+codec.
 
-The commit
-
-  4461438a8405 ("x86/retpoline: Ensure default return thunk isn't used at runtime")
-
-adds a runtime check and a WARN_ONCE() if the default return thunk ever
-gets executed after alternatives have been applied.  This warning is
-a sanity check to make sure objtool and apply_returns() are doing their
-job.
-
-As Nathan reported, that check found something:
-
-  Unpatched return thunk in use. This should not happen!
-  WARNING: CPU: 0 PID: 1 at arch/x86/kernel/cpu/bugs.c:2856 __warn_thunk+0x27/0x40
-  RIP: 0010:__warn_thunk+0x27/0x40
-  Call Trace:
-   <TASK>
-   ? show_regs
-   ? __warn
-   ? __warn_thunk
-   ? report_bug
-   ? console_unlock
-   ? handle_bug
-   ? exc_invalid_op
-   ? asm_exc_invalid_op
-   ? ia32_binfmt_init
-   ? __warn_thunk
-   warn_thunk_thunk
-   do_one_initcall
-   kernel_init_freeable
-   ? __pfx_kernel_init
-   kernel_init
-   ret_from_fork
-   ? __pfx_kernel_init
-   ret_from_fork_asm
-   </TASK>
-
-Boris debugged to find that the unpatched return site was in
-init_vdso_image_64(), and its translation unit wasn't being analyzed by
-objtool, so it never got annotated.  So it got ignored by
-apply_returns().
-
-This is only a minor issue, as this function is only called during boot.
-Still, objtool needs full visibility to the kernel.  Fix it by enabling
-objtool on vdso-image-{32,64}.o.
-
-Note this problem can only be seen with !CONFIG_X86_KERNEL_IBT, as that
-requires objtool to run individually on all translation units rather on
-vmlinux.o.
-
-  [ bp: Massage commit message. ]
-
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20240215032049.GA3944823@dev-arch.thelio-3990X
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://msgid.link/r/20240220115035.770402-11-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/entry/vdso/Makefile | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/soc/intel/avs/board_selection.c | 85 +++++++++++++++++++++++++++
+ 1 file changed, 85 insertions(+)
 
-diff --git a/arch/x86/entry/vdso/Makefile b/arch/x86/entry/vdso/Makefile
-index b1b8dd1608f7e..4ee59121b9053 100644
---- a/arch/x86/entry/vdso/Makefile
-+++ b/arch/x86/entry/vdso/Makefile
-@@ -34,8 +34,12 @@ obj-y					+= vma.o extable.o
- KASAN_SANITIZE_vma.o			:= y
- UBSAN_SANITIZE_vma.o			:= y
- KCSAN_SANITIZE_vma.o			:= y
--OBJECT_FILES_NON_STANDARD_vma.o		:= n
--OBJECT_FILES_NON_STANDARD_extable.o	:= n
+diff --git a/sound/soc/intel/avs/board_selection.c b/sound/soc/intel/avs/board_selection.c
+index 8e91eece992db..8360ce557401c 100644
+--- a/sound/soc/intel/avs/board_selection.c
++++ b/sound/soc/intel/avs/board_selection.c
+@@ -236,6 +236,82 @@ static struct snd_soc_acpi_mach avs_gml_i2s_machines[] = {
+ 	{},
+ };
+ 
++static struct snd_soc_acpi_mach avs_cnl_i2s_machines[] = {
++	{
++		.id = "INT34C2",
++		.drv_name = "avs_rt274",
++		.mach_params = {
++			.i2s_link_mask = AVS_SSP(0),
++		},
++		.tplg_filename = "rt274-tplg.bin",
++	},
++	{
++		.id = "10EC5682",
++		.drv_name = "avs_rt5682",
++		.mach_params = {
++			.i2s_link_mask = AVS_SSP(1),
++		},
++		.tplg_filename = "rt5682-tplg.bin",
++	},
++	{},
++};
 +
-+OBJECT_FILES_NON_STANDARD_extable.o		:= n
-+OBJECT_FILES_NON_STANDARD_vdso-image-32.o 	:= n
-+OBJECT_FILES_NON_STANDARD_vdso-image-64.o 	:= n
-+OBJECT_FILES_NON_STANDARD_vdso32-setup.o	:= n
-+OBJECT_FILES_NON_STANDARD_vma.o			:= n
++static struct snd_soc_acpi_mach avs_icl_i2s_machines[] = {
++	{
++		.id = "INT343A",
++		.drv_name = "avs_rt298",
++		.mach_params = {
++			.i2s_link_mask = AVS_SSP(0),
++		},
++		.tplg_filename = "rt298-tplg.bin",
++	},
++	{
++		.id = "INT34C2",
++		.drv_name = "avs_rt274",
++		.mach_params = {
++			.i2s_link_mask = AVS_SSP(0),
++		},
++		.tplg_filename = "rt274-tplg.bin",
++	},
++	{},
++};
++
++static struct snd_soc_acpi_mach avs_tgl_i2s_machines[] = {
++	{
++		.id = "INT34C2",
++		.drv_name = "avs_rt274",
++		.mach_params = {
++			.i2s_link_mask = AVS_SSP(0),
++		},
++		.tplg_filename = "rt274-tplg.bin",
++	},
++	{
++		.id = "10EC0298",
++		.drv_name = "avs_rt298",
++		.mach_params = {
++			.i2s_link_mask = AVS_SSP(0),
++		},
++		.tplg_filename = "rt298-tplg.bin",
++	},
++	{
++		.id = "10EC1308",
++		.drv_name = "avs_rt1308",
++		.mach_params = {
++			.i2s_link_mask = AVS_SSP(1),
++		},
++		.tplg_filename = "rt1308-tplg.bin",
++	},
++	{
++		.id = "ESSX8336",
++		.drv_name = "avs_es8336",
++		.mach_params = {
++			.i2s_link_mask = AVS_SSP(0),
++		},
++		.tplg_filename = "es8336-tplg.bin",
++	},
++	{},
++};
++
+ static struct snd_soc_acpi_mach avs_test_i2s_machines[] = {
+ 	{
+ 		.drv_name = "avs_i2s_test",
+@@ -296,6 +372,15 @@ static const struct avs_acpi_boards i2s_boards[] = {
+ 	AVS_MACH_ENTRY(HDA_KBL_LP, avs_kbl_i2s_machines),
+ 	AVS_MACH_ENTRY(HDA_APL, avs_apl_i2s_machines),
+ 	AVS_MACH_ENTRY(HDA_GML, avs_gml_i2s_machines),
++	AVS_MACH_ENTRY(HDA_CNL_LP,	avs_cnl_i2s_machines),
++	AVS_MACH_ENTRY(HDA_CNL_H,	avs_cnl_i2s_machines),
++	AVS_MACH_ENTRY(HDA_CML_LP,	avs_cnl_i2s_machines),
++	AVS_MACH_ENTRY(HDA_ICL_LP,	avs_icl_i2s_machines),
++	AVS_MACH_ENTRY(HDA_TGL_LP,	avs_tgl_i2s_machines),
++	AVS_MACH_ENTRY(HDA_EHL_0,	avs_tgl_i2s_machines),
++	AVS_MACH_ENTRY(HDA_ADL_P,	avs_tgl_i2s_machines),
++	AVS_MACH_ENTRY(HDA_RPL_P_0,	avs_tgl_i2s_machines),
++	AVS_MACH_ENTRY(HDA_RPL_M,	avs_tgl_i2s_machines),
+ 	{},
+ };
  
- # vDSO images to build
- vdso_img-$(VDSO64-y)		+= 64
-@@ -43,7 +47,6 @@ vdso_img-$(VDSOX32-y)		+= x32
- vdso_img-$(VDSO32-y)		+= 32
- 
- obj-$(VDSO32-y)				 += vdso32-setup.o
--OBJECT_FILES_NON_STANDARD_vdso32-setup.o := n
- 
- vobjs := $(foreach F,$(vobjs-y),$(obj)/$F)
- vobjs32 := $(foreach F,$(vobjs32-y),$(obj)/$F)
 -- 
 2.43.0
 
