@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D498142624;
-	Thu, 11 Apr 2024 10:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C99B147C77;
+	Thu, 11 Apr 2024 10:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831880; cv=none; b=UsnxPjjdmKP8eghxK9Ejt4LK5N+JBe/cipAe4rVJQWYgKsVpTffEC5pX0E2+XEtSDaqm4B2A16T6yCvG5Hw+J0H27igbn+UBjMOa50swwBvl/WT4/9ukDmnAv9hCmSXlV6VC6N7o0j6U+nQHnCEop2GHCSt2okiZwSSMosCiHq8=
+	t=1712831883; cv=none; b=AhbhwfOh41CgBrm4ZOnJz3jk6pN7eAtV64EWn5cUFvaL8ZtjdmO1loGQwlmXlk1BeMj6ODZ+VmA1i+PfQAYnhtzvu9ZtEta9lWgF0N1vKVQ7nlqq9aKpkA1R28NlIBSUssfV1LmlTn9yJ8jEMkNXfM6W13rH/k6gxytW3nFX5M8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831880; c=relaxed/simple;
-	bh=NSANQM59KvpSvPmMQBuYNcM8/ix1ZSQ1LVJTZq0QFTk=;
+	s=arc-20240116; t=1712831883; c=relaxed/simple;
+	bh=TWTdz9UB2bmVNHFUURcfYV900+M5bp+fwPzhUOD8NO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lgeoG/DvdOrEeSE+eFCNb/oaDAsJgYe19+CDkDfByLXSRI3CXutG1o+kTMvMzpxg01rAeVPCaD+ygTDCwzZiu5WXtXYLWK5vRp9yST+mWDrLNrOZWvIqX0BMZ37cCfVqVAfJMKI17ShpI0kW7cG2+qPcTrqWIrddeHlQ67VVaAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JD70yol8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LP2VC9c//8GtwkUt4UXRINGKQJ9oTpXOydW6k0U2hKakRFsUfAroTQSH2X3IuK/IqEtTOX1/nF8DCnlpQP349BeM4BuiP1TkLJBTbOO2Gbm9Qyo9YokhIUiJRUxQU/pP7sEp675AV4IuAOwp0/zw4WpwRChz9Z4KYF37s+UBPus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lodfxJT5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JD70yol8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DB9C433C7;
-	Thu, 11 Apr 2024 10:37:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lodfxJT5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C21C433F1;
+	Thu, 11 Apr 2024 10:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831880;
-	bh=NSANQM59KvpSvPmMQBuYNcM8/ix1ZSQ1LVJTZq0QFTk=;
+	s=korg; t=1712831883;
+	bh=TWTdz9UB2bmVNHFUURcfYV900+M5bp+fwPzhUOD8NO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JD70yol8ZU+dRrn6uTdsog9JFTZk8hifLvZ37z9Wf/2zxIcPM8VY+nbG1xPlfTzaM
-	 ePM1AtakfilozTcRM7ZBheU6/QIR4WrEIZVx5hdrCCnwrZ9h8mxyVnuew7PimCLf12
-	 50p2+0LtetQ8xf39vfKcSzQTj1fQp5334FcNGK14=
+	b=lodfxJT5WeEH6+GA1V1yIEyT7l3aS9tIpsFVzgGgpj59CjmcXX9+TAZQQ/GXBX/fS
+	 Mzvkoz65eBYH0dusXf76EaJZMU92bZWiebkhUxy1zJVkknlyBhJlWDA6KShuoOsJ1C
+	 yKriFxdfwJ9dplqEGDYOltBKf7grCvL11NuVlIuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Brian Cain <bcain@quicinc.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 158/294] hexagon: vmlinux.lds.S: handle attributes section
-Date: Thu, 11 Apr 2024 11:55:21 +0200
-Message-ID: <20240411095440.403382161@linuxfoundation.org>
+	Mikko Rapeli <mikko.rapeli@linaro.org>,
+	Avri Altman <avri.altman@wdc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 159/294] mmc: core: Initialize mmc_blk_ioc_data
+Date: Thu, 11 Apr 2024 11:55:22 +0200
+Message-ID: <20240411095440.432793746@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -54,43 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Mikko Rapeli <mikko.rapeli@linaro.org>
 
-commit 549aa9678a0b3981d4821bf244579d9937650562 upstream.
+commit 0cdfe5b0bf295c0dee97436a8ed13336933a0211 upstream.
 
-After the linked LLVM change, the build fails with
-CONFIG_LD_ORPHAN_WARN_LEVEL="error", which happens with allmodconfig:
+Commit 4d0c8d0aef63 ("mmc: core: Use mrq.sbc in close-ended ffu") adds
+flags uint to struct mmc_blk_ioc_data, but it does not get initialized for
+RPMB ioctls which now fails.
 
-  ld.lld: error: vmlinux.a(init/main.o):(.hexagon.attributes) is being placed in '.hexagon.attributes'
+Let's fix this by always initializing the struct and flags to zero.
 
-Handle the attributes section in a similar manner as arm and riscv by
-adding it after the primary ELF_DETAILS grouping in vmlinux.lds.S, which
-fixes the error.
-
-Link: https://lkml.kernel.org/r/20240319-hexagon-handle-attributes-section-vmlinux-lds-s-v1-1-59855dab8872@kernel.org
-Fixes: 113616ec5b64 ("hexagon: select ARCH_WANT_LD_ORPHAN_WARN")
-Link: https://github.com/llvm/llvm-project/commit/31f4b329c8234fab9afa59494d7f8bdaeaefeaad
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Brian Cain <bcain@quicinc.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4d0c8d0aef63 ("mmc: core: Use mrq.sbc in close-ended ffu")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218587
+Link: https://lore.kernel.org/all/20231129092535.3278-1-avri.altman@wdc.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Mikko Rapeli <mikko.rapeli@linaro.org>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://lore.kernel.org/r/20240313133744.2405325-1-mikko.rapeli@linaro.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/hexagon/kernel/vmlinux.lds.S |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/core/block.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/hexagon/kernel/vmlinux.lds.S
-+++ b/arch/hexagon/kernel/vmlinux.lds.S
-@@ -64,6 +64,7 @@ SECTIONS
- 	STABS_DEBUG
- 	DWARF_DEBUG
- 	ELF_DETAILS
-+	.hexagon.attributes 0 : { *(.hexagon.attributes) }
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -359,7 +359,7 @@ static struct mmc_blk_ioc_data *mmc_blk_
+ 	struct mmc_blk_ioc_data *idata;
+ 	int err;
  
- 	DISCARDS
- }
+-	idata = kmalloc(sizeof(*idata), GFP_KERNEL);
++	idata = kzalloc(sizeof(*idata), GFP_KERNEL);
+ 	if (!idata) {
+ 		err = -ENOMEM;
+ 		goto out;
 
 
