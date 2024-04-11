@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C8914600A;
-	Thu, 11 Apr 2024 10:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E1B2EAE5;
+	Thu, 11 Apr 2024 10:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830704; cv=none; b=jTWFjxUhq5IdcbdhVpTgoaaEwhVX68i513/oBOcCuZ8CTfWo3Gv0F5LEqiypXrLOxmLZTsRyv2Jizm03ogRji6ZmlyFsFvqvnOYAP29Uo3E71n3DKoUKSKMFWcKOZj/idS3pnf+PX73L5iICgPjJRjqFDvgg5TgbkAHqTqPNc4g=
+	t=1712830706; cv=none; b=Ncc6sKpwNQvM1labAdm/+1BRC1yAs1oMXmDmMRWSrBkpHoI/iil9pOivluTwy+1LHC8tNw9pbzGS7ddrxbfZGdKzSmDpgCeQ4kFAFhkqMlCu/aIHigPpcu6sB5BN1zhZSKfips9dDW6l4nETIl6ZGsGZEKAgRisAyodpEu7/Qbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830704; c=relaxed/simple;
-	bh=p1A78RP+hfrpaMcF8pKqjzFoEhynTJztsw+dVVg3fUI=;
+	s=arc-20240116; t=1712830706; c=relaxed/simple;
+	bh=Az+xdoN7RAbH9KXSDloEMmYqakirdLnTHBUwq0dn6B4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sSjOjL0fNJASzJ1P3UuBcnJ6FBVNtgFraMz77xND2EPeV9O/NZ+Vsst/igOR5/guTY34P9DORupJUONWMeB+Hi1iUpCk2jKgH24QBUHeFp//vOain3AYS9x4KDC54nqf/+9SB/QMK8R4a7EobbLfDVnG2efLaRFcAoUsIzn6ZN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rxjlMhC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ps32wQZj76kW5/A8leYYr7uDmqbdWkAuy/1/nBvBIT627EqMpD/bKug7lL/ZR1pUgaKsqlwEnaG6oqFS1y/nn90Fwxhox575FIalmjee9hyoRJ0EQpefcS2Cterh+t9TVichxmT+F5Mib5QZU/bA0ovqAgZ7KAiwPkj2XO0osbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ya2G0yyh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rxjlMhC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66318C43394;
-	Thu, 11 Apr 2024 10:18:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ya2G0yyh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561F1C433C7;
+	Thu, 11 Apr 2024 10:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830703;
-	bh=p1A78RP+hfrpaMcF8pKqjzFoEhynTJztsw+dVVg3fUI=;
+	s=korg; t=1712830706;
+	bh=Az+xdoN7RAbH9KXSDloEMmYqakirdLnTHBUwq0dn6B4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1rxjlMhCJ8w/fQGB3aisYBDNDeRlbgmDNy80Pu+A31vSSArpX++w7G7ctV4j1ymml
-	 e3cv4VC+dsy/StwKIkd/Qxjw2HT/tW0I92HueY9NzPyWJbpOkU21Nxtnt8HlQmrZU4
-	 CvJXqhFYGZDJAomlwIBSv5EuKFP6/+AFm56h6g0I=
+	b=ya2G0yyhAHvaiFQaleNM/DLHGXCodbCPvzPMnxGnBsBUvy8baDqNWUKzrSkff1mg6
+	 dheKBYBRyhJjhoNscj4sDRLvqy4n8hiHT/mibJ1+ZFf/N0CAftiUn5yN8Sp4AhBOv2
+	 UXUGxZHODEiMs27GAAiDuriPRb+HXowOlPjjrhr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sherry Sun <sherry.sun@nxp.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Subject: [PATCH 5.4 089/215] tty: serial: fsl_lpuart: avoid idle preamble pending if CTS is enabled
-Date: Thu, 11 Apr 2024 11:54:58 +0200
-Message-ID: <20240411095427.579489581@linuxfoundation.org>
+	Nicolas Pitre <nico@fluxnic.net>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.4 090/215] vt: fix unicode buffer corruption when deleting characters
+Date: Thu, 11 Apr 2024 11:54:59 +0200
+Message-ID: <20240411095427.609005595@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -45,56 +44,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sherry Sun <sherry.sun@nxp.com>
+From: Nicolas Pitre <nico@fluxnic.net>
 
-commit 74cb7e0355fae9641f825afa389d3fba3b617714 upstream.
+commit 1581dafaf0d34bc9c428a794a22110d7046d186d upstream.
 
-If the remote uart device is not connected or not enabled after booting
-up, the CTS line is high by default. At this time, if we enable the flow
-control when opening the device(for example, using “stty -F /dev/ttyLP4
-crtscts” command), there will be a pending idle preamble(first writing 0
-and then writing 1 to UARTCTRL_TE will queue an idle preamble) that
-cannot be sent out, resulting in the uart port fail to close(waiting for
-TX empty), so the user space stty will have to wait for a long time or
-forever.
+This is the same issue that was fixed for the VGA text buffer in commit
+39cdb68c64d8 ("vt: fix memory overlapping when deleting chars in the
+buffer"). The cure is also the same i.e. replace memcpy() with memmove()
+due to the overlaping buffers.
 
-This is an LPUART IP bug(idle preamble has higher priority than CTS),
-here add a workaround patch to enable TX CTS after enabling UARTCTRL_TE,
-so that the idle preamble does not get stuck due to CTS is deasserted.
-
-Fixes: 380c966c093e ("tty: serial: fsl_lpuart: add 32-bit register interface support")
+Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
+Fixes: 81732c3b2fed ("tty vt: Fix line garbage in virtual console on command line edition")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://lore.kernel.org/r/20240305015706.1050769-1-sherry.sun@nxp.com
+Link: https://lore.kernel.org/r/sn184on2-3p0q-0qrq-0218-895349s4753o@syhkavp.arg
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/fsl_lpuart.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/tty/vt/vt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -2025,9 +2025,12 @@ lpuart32_set_termios(struct uart_port *p
- 		       UARTCTRL);
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -405,7 +405,7 @@ static void vc_uniscr_delete(struct vc_d
+ 		char32_t *ln = uniscr->lines[vc->vc_y];
+ 		unsigned int x = vc->vc_x, cols = vc->vc_cols;
  
- 	lpuart32_serial_setbrg(sport, baud);
--	lpuart32_write(&sport->port, modem, UARTMODIR);
--	lpuart32_write(&sport->port, ctrl, UARTCTRL);
-+	/* disable CTS before enabling UARTCTRL_TE to avoid pending idle preamble */
-+	lpuart32_write(&sport->port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
- 	/* restore control register */
-+	lpuart32_write(&sport->port, ctrl, UARTCTRL);
-+	/* re-enable the CTS if needed */
-+	lpuart32_write(&sport->port, modem, UARTMODIR);
- 
- 	if (old && sport->lpuart_dma_rx_use) {
- 		if (!lpuart_start_rx_dma(sport))
+-		memcpy(&ln[x], &ln[x + nr], (cols - x - nr) * sizeof(*ln));
++		memmove(&ln[x], &ln[x + nr], (cols - x - nr) * sizeof(*ln));
+ 		memset32(&ln[cols - nr], ' ', nr);
+ 	}
+ }
 
 
