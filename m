@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A3E13F452;
-	Thu, 11 Apr 2024 10:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B297145FF0;
+	Thu, 11 Apr 2024 10:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830537; cv=none; b=IFQy3AEyhmKov9cS2D6GrE6/yIuCtQgR+ye+00XDhDwVCXHoS3mkQso+1JElS1aACegVOJI3JEkxQOXugkXooCVx5/qdkmHkuCtT+f42JdmBmQwc/HpQXYqQ8b+RNZ5EQBqWwYLypPuoEkASWF6OnJG2RfRIwE/BjJ6tmcL0ZYc=
+	t=1712830540; cv=none; b=T2nmvdBtff6ezFz2v6poBs1OXo7abCoGAc0n41oQTfgf6okUQ7m5R8wcs70RXulwt57E/Cg7wT++JbY4vHYtDmKFgxJXoel+Ux3SRvYFeQJOUIInd+92bkQvlwvCcpnjWEgOaVYtdFhAChrVfaWrxuM57H4KxsTP/GqZFtOSBGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830537; c=relaxed/simple;
-	bh=Ey/ILJ4nKH5WqkaNuW4oVrDjPMSOQAyASv+xionvu0U=;
+	s=arc-20240116; t=1712830540; c=relaxed/simple;
+	bh=lzXy1O7N/JUlfj00r1jDwuapNf/O1AXmjxPPj/aYfZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KgRKooaWYaFH+q2jdxPQTgPmlfc9KYt/OGXsaphL8Zgh9PQouvBfq8w64bOLbR291qVn5jKyCy878OYQsKU773MmBo6Cvc6fEqLB/srIPN3M5QDYYU4eBZfC3CsTxft9bSuzGsHYdL44+0/1jgQJwR/8WyMfv25duaUXKtubHg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EF26cW7C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jHbIgHNlA8YUJuGqY1If5QQI5fakAmeiTNz+1SfZx77XRRP2eriofL+2u5l0/CL7/B9Ri3gdbocEep5v0oXdvsNb9ZCVvlCkibtuVWRlCl7668RLecppkfpzza2wjX8H4RojkET0JCG2I4siWDhKPeBRbpw65dpTZY/WLRSswUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ss+l6IwW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EF26cW7C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7373CC433F1;
-	Thu, 11 Apr 2024 10:15:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ss+l6IwW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F3CC433C7;
+	Thu, 11 Apr 2024 10:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830537;
-	bh=Ey/ILJ4nKH5WqkaNuW4oVrDjPMSOQAyASv+xionvu0U=;
+	s=korg; t=1712830540;
+	bh=lzXy1O7N/JUlfj00r1jDwuapNf/O1AXmjxPPj/aYfZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EF26cW7CrfUL9A1P0ew08xv+dPd7ZGT/SOgVmW03JRn8NsRhrcXwcJvKCGXea67VS
-	 Yw/ALrO29GxrUvlnPUG/4ej4g+eGtNqy1WfjCSwWvlQRWS6i7ZKtubTXhqymDv8E5M
-	 rb1gplK7ybPMY/x1EL0HAWtEBNLCAgcWP8inoTwk=
+	b=Ss+l6IwWtdg3DmOZM7Boq5BYeIhDrguv9GUAcYd3lKyT7O4X6BSF39rZdkTBgAEzh
+	 SQf826zW2GYoMWCu5jap54sZv0KZrawjvpsu8oGFajK9cewa8iTh1gv4mUrodtwDpq
+	 qHanjs+bZLgJr1aoy6czBIrnPzXJjUw2+mFwzqTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 034/215] clk: qcom: gcc-ipq8074: fix terminating of frequency table arrays
-Date: Thu, 11 Apr 2024 11:54:03 +0200
-Message-ID: <20240411095425.924180203@linuxfoundation.org>
+Subject: [PATCH 5.4 035/215] clk: qcom: mmcc-apq8084: fix terminating of frequency table arrays
+Date: Thu, 11 Apr 2024 11:54:04 +0200
+Message-ID: <20240411095425.953441049@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 1040ef5ed95d6fd2628bad387d78a61633e09429 ]
+[ Upstream commit a903cfd38d8dee7e754fb89fd1bebed99e28003d ]
 
 The frequency table arrays are supposed to be terminated with an
 empty element. Add such entry to the end of the arrays where it
@@ -64,37 +64,37 @@ qcom_find_freq_floor().
 
 Only compile tested.
 
-Fixes: 9607f6224b39 ("clk: qcom: ipq8074: add PCIE, USB and SDCC clocks")
+Fixes: 2b46cd23a5a2 ("clk: qcom: Add APQ8084 Multimedia Clock Controller (MMCC) support")
 Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 Reviewed-by: Stephen Boyd <sboyd@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240229-freq-table-terminator-v1-3-074334f0905c@gmail.com
+Link: https://lore.kernel.org/r/20240229-freq-table-terminator-v1-6-074334f0905c@gmail.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq8074.c | 2 ++
+ drivers/clk/qcom/mmcc-apq8084.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
-index 052e168d2a2ac..b10ecfde21c87 100644
---- a/drivers/clk/qcom/gcc-ipq8074.c
-+++ b/drivers/clk/qcom/gcc-ipq8074.c
-@@ -972,6 +972,7 @@ static struct clk_rcg2 pcie0_axi_clk_src = {
- 
- static const struct freq_tbl ftbl_pcie_aux_clk_src[] = {
- 	F(19200000, P_XO, 1, 0, 0),
+diff --git a/drivers/clk/qcom/mmcc-apq8084.c b/drivers/clk/qcom/mmcc-apq8084.c
+index fbfcf00067394..c2fd0e8f4bc09 100644
+--- a/drivers/clk/qcom/mmcc-apq8084.c
++++ b/drivers/clk/qcom/mmcc-apq8084.c
+@@ -333,6 +333,7 @@ static struct freq_tbl ftbl_mmss_axi_clk[] = {
+ 	F(333430000, P_MMPLL1, 3.5, 0, 0),
+ 	F(400000000, P_MMPLL0, 2, 0, 0),
+ 	F(466800000, P_MMPLL1, 2.5, 0, 0),
 +	{ }
  };
  
- static struct clk_rcg2 pcie0_aux_clk_src = {
-@@ -1077,6 +1078,7 @@ static const struct freq_tbl ftbl_sdcc_ice_core_clk_src[] = {
- 	F(19200000, P_XO, 1, 0, 0),
- 	F(160000000, P_GPLL0, 5, 0, 0),
- 	F(308570000, P_GPLL6, 3.5, 0, 0),
+ static struct clk_rcg2 mmss_axi_clk_src = {
+@@ -357,6 +358,7 @@ static struct freq_tbl ftbl_ocmemnoc_clk[] = {
+ 	F(150000000, P_GPLL0, 4, 0, 0),
+ 	F(228570000, P_MMPLL0, 3.5, 0, 0),
+ 	F(320000000, P_MMPLL0, 2.5, 0, 0),
 +	{ }
  };
  
- static struct clk_rcg2 sdcc1_ice_core_clk_src = {
+ static struct clk_rcg2 ocmemnoc_clk_src = {
 -- 
 2.43.0
 
