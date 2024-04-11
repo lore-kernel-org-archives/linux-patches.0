@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F2F13E897;
-	Thu, 11 Apr 2024 10:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321A7146A64;
+	Thu, 11 Apr 2024 10:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830686; cv=none; b=exNTCgFgAqUdmnCINYQH+VmWkR/XEKY6Qr4eztb2hkaVwsWpwN/axahcVeBMeAuK3g3DdW1IMswjl4P87i99aqTW19EC1T6Xy1gicPmv+qmjHDW7p7/XsBsjIk2WlE+NHQsiyML1VJ9nWSq/0XJNTR3mkLTmOKV/1d3vPaM+5Z4=
+	t=1712830689; cv=none; b=CxRU2v3W3Y5zaybASfU448yTwWhikzHQ7IoEP5jWENzw1FZvp02MaZxZT2QxCqlOmHTgZF0B88CMeYQ66St4I3apEs+SgtISCHON1p6pHU95rtBpiTkX5qJE2QaSVVf66Q/iNS/SM2PChvA9GoioQAFLtJXRJyeIytlIKFD/oRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830686; c=relaxed/simple;
-	bh=oPDJdsW3MKIv5b4ACCp3xP5/8GVmG6Y7/i0qCvDiezY=;
+	s=arc-20240116; t=1712830689; c=relaxed/simple;
+	bh=6eY/sj7M+AUAx8I9ZsdU3Uk+pYZqWilBfbmAxsS/TZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OyA4X0pAkeJVShEwBuun1qmw5LWcuLJnvc4j/iS/F5U5m15Wa0bPf1AeNuwoLWghSwOzqM+OSQPybV6gWjAGWluMk6TQV5Kal87T0fDpTM9BEl8ujsY5ld9fJvbcd3t7uWBpQU47PFhQ7Lf3ChMCUy6rOXjWM4C0ihUaDQtZl20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=un9+lBzT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=szZZRY7JqqPWTI8xfEsPnvpqT8g/h+OnJyuqQ3WJpd7G2Miq2Jq9KKRMYE6uOsxcq46yBGlU29kj1s5GKFdcJ4XE1wlpbIdMCo7K4AxHDemzD1JSiYfS6TM3lFNOLkBtuSbNZAGM75/DJCysBwruzSRa8Vip5OFfu80Mg4e2yBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YwpRX1sI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="un9+lBzT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE97C43390;
-	Thu, 11 Apr 2024 10:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YwpRX1sI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6164DC433C7;
+	Thu, 11 Apr 2024 10:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830685;
-	bh=oPDJdsW3MKIv5b4ACCp3xP5/8GVmG6Y7/i0qCvDiezY=;
+	s=korg; t=1712830688;
+	bh=6eY/sj7M+AUAx8I9ZsdU3Uk+pYZqWilBfbmAxsS/TZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=un9+lBzTdf9dD6ePxNwvkgbFQWRGKpJaDsgp2clKSczyvVADpYVdU3G2pPyaOWh6V
-	 QOGlgBYsnjgWE7x4ekj/ppbIpm0qdPsMjHZ9RgzkWrL3kFzpY8+X9KXuwP0STwsgS3
-	 G3+4kM9ktYI8we1mV/wSyF4JZMC1SuZHQS3mWdgI=
+	b=YwpRX1sIB9/doVmFL8jjU+9pcojtCZVBNqKrQIiLLXI63S12yo7tsVw+KrbsOWjps
+	 uDhN47WoyLjpBLO43TpSGxbegoEfGX/tevyDCkXprYXU/h+bt2GRjYSDC23Mgr06Er
+	 7Z9tKWytYnJqg0tAMSuJs8fDOMI7ZEBeq2NGBhwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@seco.com>,
-	Camelia Groza <camelia.groza@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 066/215] soc: fsl: qbman: Add CGR update function
-Date: Thu, 11 Apr 2024 11:54:35 +0200
-Message-ID: <20240411095426.882339796@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 5.4 084/215] xfrm: Avoid clang fortify warning in copy_to_user_tmpl()
+Date: Thu, 11 Apr 2024 11:54:53 +0200
+Message-ID: <20240411095427.432219749@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -52,107 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@seco.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 914f8b228ede709274b8c80514b352248ec9da00 ]
+commit 1a807e46aa93ebad1dfbed4f82dc3bf779423a6e upstream.
 
-This adds a function to update a CGR with new parameters. qman_create_cgr
-can almost be used for this (with flags=0), but it's not suitable because
-it also registers the callback function. The _safe variant was modeled off
-of qman_cgr_delete_safe. However, we handle multiple arguments and a return
-value.
+After a couple recent changes in LLVM, there is a warning (or error with
+CONFIG_WERROR=y or W=e) from the compile time fortify source routines,
+specifically the memset() in copy_to_user_tmpl().
 
-Signed-off-by: Sean Anderson <sean.anderson@seco.com>
-Acked-by: Camelia Groza <camelia.groza@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: fbec4e7fed89 ("soc: fsl: qbman: Use raw spinlock for cgr_lock")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  In file included from net/xfrm/xfrm_user.c:14:
+  ...
+  include/linux/fortify-string.h:438:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+    438 |                         __write_overflow_field(p_size_field, size);
+        |                         ^
+  1 error generated.
+
+While ->xfrm_nr has been validated against XFRM_MAX_DEPTH when its value
+is first assigned in copy_templates() by calling validate_tmpl() first
+(so there should not be any issue in practice), LLVM/clang cannot really
+deduce that across the boundaries of these functions. Without that
+knowledge, it cannot assume that the loop stops before i is greater than
+XFRM_MAX_DEPTH, which would indeed result a stack buffer overflow in the
+memset().
+
+To make the bounds of ->xfrm_nr clear to the compiler and add additional
+defense in case copy_to_user_tmpl() is ever used in a path where
+->xfrm_nr has not been properly validated against XFRM_MAX_DEPTH first,
+add an explicit bound check and early return, which clears up the
+warning.
+
+Cc: stable@vger.kernel.org
+Link: https://github.com/ClangBuiltLinux/linux/issues/1985
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/fsl/qbman/qman.c | 48 ++++++++++++++++++++++++++++++++++++
- include/soc/fsl/qman.h       |  9 +++++++
- 2 files changed, 57 insertions(+)
+ net/xfrm/xfrm_user.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
-index e31d33d000526..52327f0dab986 100644
---- a/drivers/soc/fsl/qbman/qman.c
-+++ b/drivers/soc/fsl/qbman/qman.c
-@@ -2566,6 +2566,54 @@ void qman_delete_cgr_safe(struct qman_cgr *cgr)
- }
- EXPORT_SYMBOL(qman_delete_cgr_safe);
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -1704,6 +1704,9 @@ static int copy_to_user_tmpl(struct xfrm
+ 	if (xp->xfrm_nr == 0)
+ 		return 0;
  
-+static int qman_update_cgr(struct qman_cgr *cgr, struct qm_mcc_initcgr *opts)
-+{
-+	int ret;
-+	unsigned long irqflags;
-+	struct qman_portal *p = qman_cgr_get_affine_portal(cgr);
++	if (xp->xfrm_nr > XFRM_MAX_DEPTH)
++		return -ENOBUFS;
 +
-+	if (!p)
-+		return -EINVAL;
-+
-+	spin_lock_irqsave(&p->cgr_lock, irqflags);
-+	ret = qm_modify_cgr(cgr, 0, opts);
-+	spin_unlock_irqrestore(&p->cgr_lock, irqflags);
-+	put_affine_portal();
-+	return ret;
-+}
-+
-+struct update_cgr_params {
-+	struct qman_cgr *cgr;
-+	struct qm_mcc_initcgr *opts;
-+	int ret;
-+};
-+
-+static void qman_update_cgr_smp_call(void *p)
-+{
-+	struct update_cgr_params *params = p;
-+
-+	params->ret = qman_update_cgr(params->cgr, params->opts);
-+}
-+
-+int qman_update_cgr_safe(struct qman_cgr *cgr, struct qm_mcc_initcgr *opts)
-+{
-+	struct update_cgr_params params = {
-+		.cgr = cgr,
-+		.opts = opts,
-+	};
-+
-+	preempt_disable();
-+	if (qman_cgr_cpus[cgr->cgrid] != smp_processor_id())
-+		smp_call_function_single(qman_cgr_cpus[cgr->cgrid],
-+					 qman_update_cgr_smp_call, &params,
-+					 true);
-+	else
-+		params.ret = qman_update_cgr(cgr, opts);
-+	preempt_enable();
-+	return params.ret;
-+}
-+EXPORT_SYMBOL(qman_update_cgr_safe);
-+
- /* Cleanup FQs */
- 
- static int _qm_mr_consume_and_match_verb(struct qm_portal *p, int v)
-diff --git a/include/soc/fsl/qman.h b/include/soc/fsl/qman.h
-index aa31c05a103ad..f9c622027d852 100644
---- a/include/soc/fsl/qman.h
-+++ b/include/soc/fsl/qman.h
-@@ -1159,6 +1159,15 @@ int qman_delete_cgr(struct qman_cgr *cgr);
-  */
- void qman_delete_cgr_safe(struct qman_cgr *cgr);
- 
-+/**
-+ * qman_update_cgr_safe - Modifies a congestion group object from any CPU
-+ * @cgr: the 'cgr' object to modify
-+ * @opts: state of the CGR settings
-+ *
-+ * This will select the proper CPU and modify the CGR settings.
-+ */
-+int qman_update_cgr_safe(struct qman_cgr *cgr, struct qm_mcc_initcgr *opts);
-+
- /**
-  * qman_query_cgr_congested - Queries CGR's congestion status
-  * @cgr: the 'cgr' object to query
--- 
-2.43.0
-
+ 	for (i = 0; i < xp->xfrm_nr; i++) {
+ 		struct xfrm_user_tmpl *up = &vec[i];
+ 		struct xfrm_tmpl *kp = &xp->xfrm_vec[i];
 
 
