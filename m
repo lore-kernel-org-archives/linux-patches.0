@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8204B146D79;
-	Thu, 11 Apr 2024 10:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9B91474B4;
+	Thu, 11 Apr 2024 10:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831927; cv=none; b=qe5MRcoNQqUlYEKaSCQq8SO5GWppxXLBl2AayI9XQQMVaqrY8vvlLkV0gcrwlzSYNGEAQuvwZYBBtqTxC1AAYxgCnBDzoRdKWRag5Y1EKB5xpJFubFEzAmYCgonKHxsnq/elpHcHfAG5JPqV/5eTTSCaKc+PPt5RcOYQeUF3yjE=
+	t=1712831930; cv=none; b=ijt1Ox0pofrc4iET1qZnUbOHbLVlip+rdYpbcqbq6RYj51fi1oVh3eIjwOgjPOodZP8XAX1cImfBZiuTAAqt7EoAcpbDwGER1NaF4IaEkyARnAilIbwl+c41LkhcF2P/sTsAIb0DwB9jYaGXrY1dE9qUn1DzDhVKno99PNDEkbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831927; c=relaxed/simple;
-	bh=Veum3n/AR0Pd/k1GZzxTybdNESjBmz7GWcQY6pLFfZI=;
+	s=arc-20240116; t=1712831930; c=relaxed/simple;
+	bh=I6ABjbBaFjpWrF29IDj66s7NxWZYvx6MYqYJXshtFxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rULCvAUwr0pa9nbfZ3GaPIMWuryXRe2qUqxpifL8S9HdUUHIeY5VtKK0h0dKjwVMz7HXhu6FbUgEXnm8vVaH/YG/LRKxlKzihEwWQYakwDpIrTuvspcHQK+sh87iEcMT1Zs6Uw9lfoCdj7duL2Jj0W9MAH4OfbOt2DpojIIDHMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGtHfXej; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KfX0nJ3+CGNyte88q02rl84n/HgN3247SfclhZ26vc6KOaWaOoVUr3vEO6w5ektSYsKzKvHY/0P1Ie2wIWqjPNAW44v0McUL9dJUV+lQ5rEDUtM6uY9gi9vT8Z9veVZm1aZTHQH1X0kqA4qZ+FmWoDJyneF32kciihaR+HhJiO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HcEApB4y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGtHfXej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019B6C433F1;
-	Thu, 11 Apr 2024 10:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HcEApB4y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF33EC433F1;
+	Thu, 11 Apr 2024 10:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831927;
-	bh=Veum3n/AR0Pd/k1GZzxTybdNESjBmz7GWcQY6pLFfZI=;
+	s=korg; t=1712831930;
+	bh=I6ABjbBaFjpWrF29IDj66s7NxWZYvx6MYqYJXshtFxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PGtHfXejeUihDb45fkNsYCS9wbOoWKPqRLK0kVB8Oql3prOT/rJSwZJGtOGSZuEjK
-	 SoFkIWUS/ODdWmJ51civylKZHwuPkN8UkUvvDRjPkhXESCxq1Pt2RVJBcxUweiYqQX
-	 g1Kv1xtsAhh0NU7T48+mlg8sHIq0zGSaxtEFOUsI=
+	b=HcEApB4ytX7Q5LloOEnvafibsaIeM6/QERHKy7brJ9l3kdbvj3DlZFLvri7ilpuYj
+	 eudhSM1vjYoajWSLEYL+tjbVTCONTeBipMaB23fKyxYuEnGP2UCXQh1INWyF2BR8MU
+	 tk8XwaaG2x92NlOHsngHGMdCi5wITzVy445Tnz2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	yuan linyu <yuanlinyu@hihonor.com>
-Subject: [PATCH 5.10 172/294] usb: udc: remove warning when queue disabled ep
-Date: Thu, 11 Apr 2024 11:55:35 +0200
-Message-ID: <20240411095440.810896569@linuxfoundation.org>
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	stable <stable@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 5.10 173/294] usb: typec: ucsi: Ack unsupported commands
+Date: Thu, 11 Apr 2024 11:55:36 +0200
+Message-ID: <20240411095440.839552358@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -50,44 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: yuan linyu <yuanlinyu@hihonor.com>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit 2a587a035214fa1b5ef598aea0b81848c5b72e5e upstream.
+commit 6b5c85ddeea77d18c4b69e3bda60e9374a20c304 upstream.
 
-It is possible trigger below warning message from mass storage function,
+If a command completes the OPM must send an ack. This applies
+to unsupported commands, too.
 
-WARNING: CPU: 6 PID: 3839 at drivers/usb/gadget/udc/core.c:294 usb_ep_queue+0x7c/0x104
-pc : usb_ep_queue+0x7c/0x104
-lr : fsg_main_thread+0x494/0x1b3c
+Send the required ACK for unsupported commands.
 
-Root cause is mass storage function try to queue request from main thread,
-but other thread may already disable ep when function disable.
-
-As there is no function failure in the driver, in order to avoid effort
-to fix warning, change WARN_ON_ONCE() in usb_ep_queue() to pr_debug().
-
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Cc: stable@vger.kernel.org
-Signed-off-by: yuan linyu <yuanlinyu@hihonor.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20240315020144.2715575-1-yuanlinyu@hihonor.com
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+Cc: stable <stable@kernel.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Link: https://lore.kernel.org/r/20240320073927.1641788-4-lk@c--e.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -273,7 +273,9 @@ int usb_ep_queue(struct usb_ep *ep,
- {
- 	int ret = 0;
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -138,8 +138,12 @@ static int ucsi_exec_command(struct ucsi
+ 	if (!(cci & UCSI_CCI_COMMAND_COMPLETE))
+ 		return -EIO;
  
--	if (WARN_ON_ONCE(!ep->enabled && ep->address)) {
-+	if (!ep->enabled && ep->address) {
-+		pr_debug("USB gadget: queue request to disabled ep 0x%x (%s)\n",
-+				 ep->address, ep->name);
- 		ret = -ESHUTDOWN;
- 		goto out;
- 	}
+-	if (cci & UCSI_CCI_NOT_SUPPORTED)
++	if (cci & UCSI_CCI_NOT_SUPPORTED) {
++		if (ucsi_acknowledge_command(ucsi) < 0)
++			dev_err(ucsi->dev,
++				"ACK of unsupported command failed\n");
+ 		return -EOPNOTSUPP;
++	}
+ 
+ 	if (cci & UCSI_CCI_ERROR) {
+ 		if (cmd == UCSI_GET_ERROR_STATUS)
 
 
