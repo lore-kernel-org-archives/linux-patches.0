@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C59149DFF;
-	Thu, 11 Apr 2024 10:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E467B149DFF;
+	Thu, 11 Apr 2024 10:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831934; cv=none; b=JQGjkN8MRR+pBA9QBjV0CwkWYIkqU3gtBdnNA/z0JejGM5UA1iHg/h9oNSZA+2gMI5un46u0fsVPVYC9zFtZEttFIcwTIGkBcC9MAg88MRag8KsdbQFDqkzK5aw7uxR88Y7ruRJvMWnOfD1z6r8L9mnquKkarktQw/3NVK4SRTQ=
+	t=1712831937; cv=none; b=vADq1vgp30FxSNTyqo2Bc3dOGK1O3DwYdiQzLvWODST+kiIp+n5B6UcWkW02TWA3dQwwRA5QAQ+ppqc+xN+K1n0NduNC87CBnMQg3Ke05ZoBt2phkrPV3dndsgjklhjPXJmbzW5HMypIPZmiZmDf8QHRuStSn/Fz1BcEME2SzgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831934; c=relaxed/simple;
-	bh=Ifv23XTXARN9Tx/NtRjf0rzT/6A9ZX4wZNbBr+p6Ie0=;
+	s=arc-20240116; t=1712831937; c=relaxed/simple;
+	bh=5WEgseugbwKy+DjQl7tHuxIWuOmR5c8iAyltBSNY0/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N3f84aCjYaYKRxd/r4fA8GSbeFJIltS57Q9B9sKXupsISmCFfzy0L1zYdSNRYDnI7BROP5UNIGNKKSYA2aHKJO/knJuL0oe3WLoqlSdg2pVPyVwGxGU1snkjxZUATSuO4c7q10Hjp8qFelYAPfPpmAhlU69vBWyErZX71cmGC9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwwCuy9N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fjufx+dSEED069jJXPN/Sb415ouaqXeX4H8GrNNqd0nreYPpKyPvWRIdUDSRsqpxDAsOt0kRRCjB1Oo0zvu0CcQBj0/B1NMf2O8EQLOHoWLsrTJH+mbr9ujD1OkeKq8BDthhQ21wvgdYUpB8PcTEZ5sdqWYT/PJw8DiXJQeUZcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5bd04JP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwwCuy9N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087EDC43390;
-	Thu, 11 Apr 2024 10:38:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5bd04JP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28AC6C433C7;
+	Thu, 11 Apr 2024 10:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831933;
-	bh=Ifv23XTXARN9Tx/NtRjf0rzT/6A9ZX4wZNbBr+p6Ie0=;
+	s=korg; t=1712831936;
+	bh=5WEgseugbwKy+DjQl7tHuxIWuOmR5c8iAyltBSNY0/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MwwCuy9NCVUrBlEZTkUWDCbCYIreZNagyKKadgqwib3wl8xTgEbjsqpksCpHCxBUr
-	 ooVeytnCzT2xeg9Vny5QqmRPUjUxMTeT0WkiySVpnBE800Iq7nw/JMEsD7vYU/S415
-	 WX5G1GTPM0T/KOt5X8FA8F6ZfQ57JbRmNCWjPT78=
+	b=L5bd04JPf7h7v9RXNXCIlBE0ZVz1f+AshICy94JREoVc0gO6y3LkRAe5BETjD+5k7
+	 T9nC8eK4GWJtT11MNHPrpqPTvpi2Tk6A4/bE9kYx5o4hhOFZhatm7xcIxMT0KK8OcK
+	 1C85eTX6QzcxmEVWlgO/BUKJDMhOgboRok0rR6mY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 5.10 174/294] usb: typec: ucsi: Clear UCSI_CCI_RESET_COMPLETE before reset
-Date: Thu, 11 Apr 2024 11:55:37 +0200
-Message-ID: <20240411095440.869372471@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.10 175/294] scsi: qla2xxx: Split FCE|EFT trace control
+Date: Thu, 11 Apr 2024 11:55:38 +0200
+Message-ID: <20240411095440.899147482@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -52,74 +53,224 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Quinn Tran <qutran@marvell.com>
 
-commit 3de4f996a0b5412aa451729008130a488f71563e upstream.
+commit 76a192e1a566e15365704b9f8fb3b70825f85064 upstream.
 
-Check the UCSI_CCI_RESET_COMPLETE complete flag before starting
-another reset. Use a UCSI_SET_NOTIFICATION_ENABLE command to clear
-the flag if it is set.
+Current code combines the allocation of FCE|EFT trace buffers and enables
+the features all in 1 step.
 
-Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Link: https://lore.kernel.org/r/20240320073927.1641788-6-lk@c--e.de
+Split this step into separate steps in preparation for follow-on patch to
+allow user to have a choice to enable / disable FCE trace feature.
+
+Cc: stable@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240227164127.36465-4-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |   36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_init.c |  102 ++++++++++++++++------------------------
+ 1 file changed, 41 insertions(+), 61 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -852,13 +852,47 @@ static int ucsi_reset_connector(struct u
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -2280,6 +2280,40 @@ exit:
+ 	return rval;
+ }
  
- static int ucsi_reset_ppm(struct ucsi *ucsi)
- {
--	u64 command = UCSI_PPM_RESET;
-+	u64 command;
- 	unsigned long tmo;
- 	u32 cci;
- 	int ret;
- 
- 	mutex_lock(&ucsi->ppm_lock);
- 
-+	ret = ucsi->ops->read(ucsi, UCSI_CCI, &cci, sizeof(cci));
-+	if (ret < 0)
-+		goto out;
++static void qla_enable_fce_trace(scsi_qla_host_t *vha)
++{
++	int rval;
++	struct qla_hw_data *ha = vha->hw;
 +
-+	/*
-+	 * If UCSI_CCI_RESET_COMPLETE is already set we must clear
-+	 * the flag before we start another reset. Send a
-+	 * UCSI_SET_NOTIFICATION_ENABLE command to achieve this.
-+	 * Ignore a timeout and try the reset anyway if this fails.
-+	 */
-+	if (cci & UCSI_CCI_RESET_COMPLETE) {
-+		command = UCSI_SET_NOTIFICATION_ENABLE;
-+		ret = ucsi->ops->async_write(ucsi, UCSI_CONTROL, &command,
-+					     sizeof(command));
-+		if (ret < 0)
-+			goto out;
++	if (ha->fce) {
++		ha->flags.fce_enabled = 1;
++		memset(ha->fce, 0, fce_calc_size(ha->fce_bufs));
++		rval = qla2x00_enable_fce_trace(vha,
++		    ha->fce_dma, ha->fce_bufs, ha->fce_mb, &ha->fce_bufs);
 +
-+		tmo = jiffies + msecs_to_jiffies(UCSI_TIMEOUT_MS);
-+		do {
-+			ret = ucsi->ops->read(ucsi, UCSI_CCI,
-+					      &cci, sizeof(cci));
-+			if (ret < 0)
-+				goto out;
-+			if (cci & UCSI_CCI_COMMAND_COMPLETE)
-+				break;
-+			if (time_is_before_jiffies(tmo))
-+				break;
-+			msleep(20);
-+		} while (1);
-+
-+		WARN_ON(cci & UCSI_CCI_RESET_COMPLETE);
++		if (rval) {
++			ql_log(ql_log_warn, vha, 0x8033,
++			    "Unable to reinitialize FCE (%d).\n", rval);
++			ha->flags.fce_enabled = 0;
++		}
 +	}
++}
 +
-+	command = UCSI_PPM_RESET;
- 	ret = ucsi->ops->async_write(ucsi, UCSI_CONTROL, &command,
- 				     sizeof(command));
- 	if (ret < 0)
++static void qla_enable_eft_trace(scsi_qla_host_t *vha)
++{
++	int rval;
++	struct qla_hw_data *ha = vha->hw;
++
++	if (ha->eft) {
++		memset(ha->eft, 0, EFT_SIZE);
++		rval = qla2x00_enable_eft_trace(vha, ha->eft_dma, EFT_NUM_BUFFERS);
++
++		if (rval) {
++			ql_log(ql_log_warn, vha, 0x8034,
++			    "Unable to reinitialize EFT (%d).\n", rval);
++		}
++	}
++}
+ /*
+ * qla2x00_initialize_adapter
+ *      Initialize board.
+@@ -3230,9 +3264,8 @@ qla24xx_chip_diag(scsi_qla_host_t *vha)
+ }
+ 
+ static void
+-qla2x00_init_fce_trace(scsi_qla_host_t *vha)
++qla2x00_alloc_fce_trace(scsi_qla_host_t *vha)
+ {
+-	int rval;
+ 	dma_addr_t tc_dma;
+ 	void *tc;
+ 	struct qla_hw_data *ha = vha->hw;
+@@ -3261,27 +3294,17 @@ qla2x00_init_fce_trace(scsi_qla_host_t *
+ 		return;
+ 	}
+ 
+-	rval = qla2x00_enable_fce_trace(vha, tc_dma, FCE_NUM_BUFFERS,
+-					ha->fce_mb, &ha->fce_bufs);
+-	if (rval) {
+-		ql_log(ql_log_warn, vha, 0x00bf,
+-		       "Unable to initialize FCE (%d).\n", rval);
+-		dma_free_coherent(&ha->pdev->dev, FCE_SIZE, tc, tc_dma);
+-		return;
+-	}
+-
+ 	ql_dbg(ql_dbg_init, vha, 0x00c0,
+ 	       "Allocated (%d KB) for FCE...\n", FCE_SIZE / 1024);
+ 
+-	ha->flags.fce_enabled = 1;
+ 	ha->fce_dma = tc_dma;
+ 	ha->fce = tc;
++	ha->fce_bufs = FCE_NUM_BUFFERS;
+ }
+ 
+ static void
+-qla2x00_init_eft_trace(scsi_qla_host_t *vha)
++qla2x00_alloc_eft_trace(scsi_qla_host_t *vha)
+ {
+-	int rval;
+ 	dma_addr_t tc_dma;
+ 	void *tc;
+ 	struct qla_hw_data *ha = vha->hw;
+@@ -3306,14 +3329,6 @@ qla2x00_init_eft_trace(scsi_qla_host_t *
+ 		return;
+ 	}
+ 
+-	rval = qla2x00_enable_eft_trace(vha, tc_dma, EFT_NUM_BUFFERS);
+-	if (rval) {
+-		ql_log(ql_log_warn, vha, 0x00c2,
+-		       "Unable to initialize EFT (%d).\n", rval);
+-		dma_free_coherent(&ha->pdev->dev, EFT_SIZE, tc, tc_dma);
+-		return;
+-	}
+-
+ 	ql_dbg(ql_dbg_init, vha, 0x00c3,
+ 	       "Allocated (%d KB) EFT ...\n", EFT_SIZE / 1024);
+ 
+@@ -3321,13 +3336,6 @@ qla2x00_init_eft_trace(scsi_qla_host_t *
+ 	ha->eft = tc;
+ }
+ 
+-static void
+-qla2x00_alloc_offload_mem(scsi_qla_host_t *vha)
+-{
+-	qla2x00_init_fce_trace(vha);
+-	qla2x00_init_eft_trace(vha);
+-}
+-
+ void
+ qla2x00_alloc_fw_dump(scsi_qla_host_t *vha)
+ {
+@@ -3382,10 +3390,10 @@ qla2x00_alloc_fw_dump(scsi_qla_host_t *v
+ 		if (ha->tgt.atio_ring)
+ 			mq_size += ha->tgt.atio_q_length * sizeof(request_t);
+ 
+-		qla2x00_init_fce_trace(vha);
++		qla2x00_alloc_fce_trace(vha);
+ 		if (ha->fce)
+ 			fce_size = sizeof(struct qla2xxx_fce_chain) + FCE_SIZE;
+-		qla2x00_init_eft_trace(vha);
++		qla2x00_alloc_eft_trace(vha);
+ 		if (ha->eft)
+ 			eft_size = EFT_SIZE;
+ 	}
+@@ -3784,7 +3792,6 @@ qla2x00_setup_chip(scsi_qla_host_t *vha)
+ 	struct qla_hw_data *ha = vha->hw;
+ 	struct device_reg_2xxx __iomem *reg = &ha->iobase->isp;
+ 	unsigned long flags;
+-	uint16_t fw_major_version;
+ 	int done_once = 0;
+ 
+ 	if (IS_P3P_TYPE(ha)) {
+@@ -3851,7 +3858,6 @@ execute_fw_with_lr:
+ 					goto failed;
+ 
+ enable_82xx_npiv:
+-				fw_major_version = ha->fw_major_version;
+ 				if (IS_P3P_TYPE(ha))
+ 					qla82xx_check_md_needed(vha);
+ 				else
+@@ -3880,12 +3886,11 @@ enable_82xx_npiv:
+ 				if (rval != QLA_SUCCESS)
+ 					goto failed;
+ 
+-				if (!fw_major_version && !(IS_P3P_TYPE(ha)))
+-					qla2x00_alloc_offload_mem(vha);
+-
+ 				if (ql2xallocfwdump && !(IS_P3P_TYPE(ha)))
+ 					qla2x00_alloc_fw_dump(vha);
+ 
++				qla_enable_fce_trace(vha);
++				qla_enable_eft_trace(vha);
+ 			} else {
+ 				goto failed;
+ 			}
+@@ -7012,7 +7017,6 @@ qla2x00_abort_isp_cleanup(scsi_qla_host_
+ int
+ qla2x00_abort_isp(scsi_qla_host_t *vha)
+ {
+-	int rval;
+ 	uint8_t        status = 0;
+ 	struct qla_hw_data *ha = vha->hw;
+ 	struct scsi_qla_host *vp;
+@@ -7100,31 +7104,7 @@ qla2x00_abort_isp(scsi_qla_host_t *vha)
+ 
+ 			if (IS_QLA81XX(ha) || IS_QLA8031(ha))
+ 				qla2x00_get_fw_version(vha);
+-			if (ha->fce) {
+-				ha->flags.fce_enabled = 1;
+-				memset(ha->fce, 0,
+-				    fce_calc_size(ha->fce_bufs));
+-				rval = qla2x00_enable_fce_trace(vha,
+-				    ha->fce_dma, ha->fce_bufs, ha->fce_mb,
+-				    &ha->fce_bufs);
+-				if (rval) {
+-					ql_log(ql_log_warn, vha, 0x8033,
+-					    "Unable to reinitialize FCE "
+-					    "(%d).\n", rval);
+-					ha->flags.fce_enabled = 0;
+-				}
+-			}
+ 
+-			if (ha->eft) {
+-				memset(ha->eft, 0, EFT_SIZE);
+-				rval = qla2x00_enable_eft_trace(vha,
+-				    ha->eft_dma, EFT_NUM_BUFFERS);
+-				if (rval) {
+-					ql_log(ql_log_warn, vha, 0x8034,
+-					    "Unable to reinitialize EFT "
+-					    "(%d).\n", rval);
+-				}
+-			}
+ 		} else {	/* failed the ISP abort */
+ 			vha->flags.online = 1;
+ 			if (test_bit(ISP_ABORT_RETRY, &vha->dpc_flags)) {
 
 
