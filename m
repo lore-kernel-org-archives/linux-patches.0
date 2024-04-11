@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1153E13E897;
-	Thu, 11 Apr 2024 10:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150A813E897;
+	Thu, 11 Apr 2024 10:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830650; cv=none; b=EEMHW5CgmDT5Iixa3vHUdQAMEkol5cfZTFB5NA8GzjB7TkSIFw7CUR5rVhiim3/wijqEChQoQyIgRDY8adHM6FNw1biqGoXd/kQg8tUaQWFH1ppCoseEV+2w39JDe7UEK1GzaF8kPosm/qfKbu75IKv4XlEH5seTOn1Jx6fD78w=
+	t=1712830653; cv=none; b=HgDxliL38Nf43+wocobT7NM0lIltv1Lm4C+aq5+9FjAYZnQq2pYcpsLYQc29vBsU+ripvgpH7LN6WPQsrhTqqgb1YORTUEGwahZI1mi3VsOwYrHpALRUVYZBz16TRWtkxzFpemC+Br6MNuWKnfWAIQTmENT5/YlpOUJC/bpfCMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830650; c=relaxed/simple;
-	bh=NeaZaGHnxfD28dAQ16+ER401emNDcKwCNTWsCxVPrWA=;
+	s=arc-20240116; t=1712830653; c=relaxed/simple;
+	bh=itagJ48jM26u6sdaKymkIdmUMll1s4uBBumzZxcEc/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tb2Kbr1dn/CxCNNN/biT8X98Uf677hfXy2amPojzUGGy83yxMyFatkp3TPqSQcTa1oH3U/vmTuUUZXgom/nYleMDtq836j37fzVnJaNP8nMH3Fzp1G9qBbWBFtnTAwwfS1+r+Dc7Bogc5r1kH6PAPHoPPwrzZuXQEoDYl6QTsr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3D5BoQh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=olIVc7qn2AMFk7BvSSm1SdMT7kt4lz5UWXB/vNUvWUS4HKKxFkSKiESfd0cYEWWhSpBaqK4kS+TAkDZ6vXL0Zxlx8Hpt1W7BsX/xoDjsIxVr3uYDluTBkou6OP0K5HHZfHEIOBl7Sr6HSaFJEsRe1iTOdKEKpRECEjiICcnDq7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBbItpV0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3D5BoQh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3F4C433C7;
-	Thu, 11 Apr 2024 10:17:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBbItpV0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CD3C433F1;
+	Thu, 11 Apr 2024 10:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830649;
-	bh=NeaZaGHnxfD28dAQ16+ER401emNDcKwCNTWsCxVPrWA=;
+	s=korg; t=1712830652;
+	bh=itagJ48jM26u6sdaKymkIdmUMll1s4uBBumzZxcEc/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G3D5BoQhJeRuItbBSbgETnFb59ZGR5w8AtrW81HR7k7r62HAPER9hrNH8cpvXGDGF
-	 hYt3pyRP/4sCA8leGctETzZ55IErcZ/MfM6DKEUgXDA1A0mNdfY+WbGjqS1/bu9XX4
-	 XhV20WrvbQ0H0YDKwoCtKYQmgxYFqzPIUHV84dzA=
+	b=ZBbItpV0oqM8r74mitlT4OAevZcNm/wvDzh9poc2XlQ0SBMFTF7Qn1hDG+ezqfpaK
+	 LDwmqzZU7F6TOO2XbYnGeLm0PwdPNMZwa39RqtVyNelUY557zu6M8cjbAAFK/CR004
+	 /fMojjvxZKy3bhq4WUugrSf1px3kLCgPwl5rbruw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	yangerkun <yangerkun@huawei.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Sean Anderson <sean.anderson@seco.com>,
+	Camelia Groza <camelia.groza@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 022/215] ext4: correct best extent lstart adjustment logic
-Date: Thu, 11 Apr 2024 11:53:51 +0200
-Message-ID: <20240411095425.551449165@linuxfoundation.org>
+Subject: [PATCH 5.4 065/215] soc: fsl: qbman: Add helper for sanity checking cgr ops
+Date: Thu, 11 Apr 2024 11:54:34 +0200
+Message-ID: <20240411095426.851569781@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -55,93 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Sean Anderson <sean.anderson@seco.com>
 
-[ Upstream commit 4fbf8bc733d14bceb16dda46a3f5e19c6a9621c5 ]
+[ Upstream commit d0e17a4653cebc2c8a20251c837dd1fcec5014d9 ]
 
-When yangerkun review commit 93cdf49f6eca ("ext4: Fix best extent lstart
-adjustment logic in ext4_mb_new_inode_pa()"), it was found that the best
-extent did not completely cover the original request after adjusting the
-best extent lstart in ext4_mb_new_inode_pa() as follows:
+This breaks out/combines get_affine_portal and the cgr sanity check in
+preparation for the next commit. No functional change intended.
 
-  original request: 2/10(8)
-  normalized request: 0/64(64)
-  best extent: 0/9(9)
-
-When we check if best ex can be kept at start of goal, ac_o_ex.fe_logical
-is 2 less than the adjusted best extent logical end 9, so we think the
-adjustment is done. But obviously 0/9(9) doesn't cover 2/10(8), so we
-should determine here if the original request logical end is less than or
-equal to the adjusted best extent logical end.
-
-In addition, add a comment stating when adjusted best_ex will not cover
-the original request, and remove the duplicate assertion because adjusting
-lstart makes no change to b_ex.fe_len.
-
-Link: https://lore.kernel.org/r/3630fa7f-b432-7afd-5f79-781bc3b2c5ea@huawei.com
-Fixes: 93cdf49f6eca ("ext4: Fix best extent lstart adjustment logic in ext4_mb_new_inode_pa()")
-Cc:  <stable@kernel.org>
-Signed-off-by: yangerkun <yangerkun@huawei.com>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240201141845.1879253-1-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Sean Anderson <sean.anderson@seco.com>
+Acked-by: Camelia Groza <camelia.groza@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: fbec4e7fed89 ("soc: fsl: qbman: Use raw spinlock for cgr_lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/soc/fsl/qbman/qman.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index e823731110e3e..b2e7b1907d410 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3692,10 +3692,16 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
- 			.fe_len = ac->ac_g_ex.fe_len,
- 		};
- 		loff_t orig_goal_end = extent_logical_end(sbi, &ex);
-+		loff_t o_ex_end = extent_logical_end(sbi, &ac->ac_o_ex);
+diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
+index 53b4cd0fb662d..e31d33d000526 100644
+--- a/drivers/soc/fsl/qbman/qman.c
++++ b/drivers/soc/fsl/qbman/qman.c
+@@ -2481,13 +2481,8 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
+ }
+ EXPORT_SYMBOL(qman_create_cgr);
  
--		/* we can't allocate as much as normalizer wants.
--		 * so, found space must get proper lstart
--		 * to cover original request */
-+		/*
-+		 * We can't allocate as much as normalizer wants, so we try
-+		 * to get proper lstart to cover the original request, except
-+		 * when the goal doesn't cover the original request as below:
-+		 *
-+		 * orig_ex:2045/2055(10), isize:8417280 -> normalized:0/2048
-+		 * best_ex:0/200(200) -> adjusted: 1848/2048(200)
-+		 */
- 		BUG_ON(ac->ac_g_ex.fe_logical > ac->ac_o_ex.fe_logical);
- 		BUG_ON(ac->ac_g_ex.fe_len < ac->ac_o_ex.fe_len);
+-int qman_delete_cgr(struct qman_cgr *cgr)
++static struct qman_portal *qman_cgr_get_affine_portal(struct qman_cgr *cgr)
+ {
+-	unsigned long irqflags;
+-	struct qm_mcr_querycgr cgr_state;
+-	struct qm_mcc_initcgr local_opts;
+-	int ret = 0;
+-	struct qman_cgr *i;
+ 	struct qman_portal *p = get_affine_portal();
  
-@@ -3707,7 +3713,7 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
- 		 * 1. Check if best ex can be kept at end of goal and still
- 		 *    cover original start
- 		 * 2. Else, check if best ex can be kept at start of goal and
--		 *    still cover original start
-+		 *    still cover original end
- 		 * 3. Else, keep the best ex at start of original request.
- 		 */
- 		ex.fe_len = ac->ac_b_ex.fe_len;
-@@ -3717,7 +3723,7 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
- 			goto adjust_bex;
- 
- 		ex.fe_logical = ac->ac_g_ex.fe_logical;
--		if (ac->ac_o_ex.fe_logical < extent_logical_end(sbi, &ex))
-+		if (o_ex_end <= extent_logical_end(sbi, &ex))
- 			goto adjust_bex;
- 
- 		ex.fe_logical = ac->ac_o_ex.fe_logical;
-@@ -3725,7 +3731,6 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
- 		ac->ac_b_ex.fe_logical = ex.fe_logical;
- 
- 		BUG_ON(ac->ac_o_ex.fe_logical < ac->ac_b_ex.fe_logical);
--		BUG_ON(ac->ac_o_ex.fe_len > ac->ac_b_ex.fe_len);
- 		BUG_ON(extent_logical_end(sbi, &ex) > orig_goal_end);
+ 	if (cgr->chan != p->config->channel) {
+@@ -2495,10 +2490,25 @@ int qman_delete_cgr(struct qman_cgr *cgr)
+ 		dev_err(p->config->dev, "CGR not owned by current portal");
+ 		dev_dbg(p->config->dev, " create 0x%x, delete 0x%x\n",
+ 			cgr->chan, p->config->channel);
+-
+-		ret = -EINVAL;
+-		goto put_portal;
++		put_affine_portal();
++		return NULL;
  	}
- 
++
++	return p;
++}
++
++int qman_delete_cgr(struct qman_cgr *cgr)
++{
++	unsigned long irqflags;
++	struct qm_mcr_querycgr cgr_state;
++	struct qm_mcc_initcgr local_opts;
++	int ret = 0;
++	struct qman_cgr *i;
++	struct qman_portal *p = qman_cgr_get_affine_portal(cgr);
++
++	if (!p)
++		return -EINVAL;
++
+ 	memset(&local_opts, 0, sizeof(struct qm_mcc_initcgr));
+ 	spin_lock_irqsave(&p->cgr_lock, irqflags);
+ 	list_del(&cgr->node);
+@@ -2526,7 +2536,6 @@ int qman_delete_cgr(struct qman_cgr *cgr)
+ 		list_add(&cgr->node, &p->cgr_cbs);
+ release_lock:
+ 	spin_unlock_irqrestore(&p->cgr_lock, irqflags);
+-put_portal:
+ 	put_affine_portal();
+ 	return ret;
+ }
 -- 
 2.43.0
 
