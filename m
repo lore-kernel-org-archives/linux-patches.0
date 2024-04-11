@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B56149C59;
-	Thu, 11 Apr 2024 10:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2580F149C7F;
+	Thu, 11 Apr 2024 10:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831800; cv=none; b=kSBjohd/ylFOfPxAbdvRznTB6XSt3CVTHjqO0ykYAOMiGpU9Lpap+/K4IAhEw3VY5GDerQHzrgb6FnJ9y7autMGUs6cLFFefumRdxp0fshSs41M1iMU587OV29yFsYMNYSrEEFVin00HgUBfbrPYFJ3Ty8MFRlZQCIxVliizQeM=
+	t=1712831803; cv=none; b=YGkEwCghVOPx6Aaw6wK2ZHTloKG0ZP0zY5VDLfwFK75QZIK3ASdaNiJpprXSrKE92Da/wD9/bEQAPnBcc9IWbOMQXQx4XC1+q/cl30K+MkRxD89qniC7YMbYjZ6MbQcKS0RcTpahCwnuDgpHiR8sL0vrLtVUQfdoXQZneAJTXl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831800; c=relaxed/simple;
-	bh=4b5mEgfBxld4wS9Yny8g26gryR+JypXwJuYmMSgknm8=;
+	s=arc-20240116; t=1712831803; c=relaxed/simple;
+	bh=LKXVCi6/COgxcFi3/vzW+5vClJtbgopADyjWuVsBDF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iQ6ZjYsOeBYiv5oZMuNGm2p0vX6SMQ3Qf1bzsF0JmDRZiJWJmXAJ/X7uhuMzO4Nq5eXM5gpyjn14ERqz6libJ7VC1vS+rUT2dGoSvkw5556BXqW58B+pEqCSiShUDO/w8Rc43xpq911xicNFerXuK+oF2w2j0GCYj1Tj8O7HS18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvdmMwxK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dstHb9q96c4GsrPQGVFQitK7BNOEFX+yL7AFb3YWwrN//4atMsCtcK5+XTQPIj0NlXsiMCAPe8hGYbahCy6On0wH4N3e0vEuaslD2BXvc1OOjnmUaI/WgygTZqmDiuagKYfZMMDNJCH35HRsfDmTOg4jcSKiPNQlqN2I9ESb1FM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THOQhq68; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvdmMwxK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C8CC433C7;
-	Thu, 11 Apr 2024 10:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THOQhq68"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E018C433C7;
+	Thu, 11 Apr 2024 10:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831800;
-	bh=4b5mEgfBxld4wS9Yny8g26gryR+JypXwJuYmMSgknm8=;
+	s=korg; t=1712831803;
+	bh=LKXVCi6/COgxcFi3/vzW+5vClJtbgopADyjWuVsBDF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvdmMwxKB2PYpXrc5HZyNn8hlNrgMqZX3LP94uJtc1CvjSCUxXnWB5XI+Tj7Y+sjV
-	 jz0IG0XLtRIPgvbmgc9egaNmGMBWu1j+Pc8mzlzl6PzNg3E0uap4TRm8QGmruiWFLF
-	 gD+g3cRcCvR5jBbgk3TEEs4Exezunl5PKGbYj0gs=
+	b=THOQhq68aG5EJDh9SbDG8GdLQVq81btH2B/Fpf9W/s59oM+98vy+nhVaij6EKDoo4
+	 xXn/M9Y0DNWzHKu/mdf7nCIGAGSMrPPGsNC+Ecy7Rq9By4eBGhTFt9+eMDLNxCgcTq
+	 uMZ2qPc66AG2CCeOcJW3q/wwM8XeK8HuADntQ/Q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Tomas Winkler <tomas.winkler@intel.com>
-Subject: [PATCH 5.10 130/294] mei: me: add arrow lake point S DID
-Date: Thu, 11 Apr 2024 11:54:53 +0200
-Message-ID: <20240411095439.574812772@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 104/294] x86/CPU/AMD: Update the Zenbleed microcode revisions
+Date: Thu, 11 Apr 2024 11:54:27 +0200
+Message-ID: <20240411095438.804005380@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -50,41 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit 7a9b9012043e126f6d6f4683e67409312d1b707b upstream.
+[ Upstream commit 5c84b051bd4e777cf37aaff983277e58c99618d5 ]
 
-Add Arrow Lake S device id.
+Update them to the correct revision numbers.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20240211103912.117105-1-tomas.winkler@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    1 +
- drivers/misc/mei/pci-me.c     |    1 +
- 2 files changed, 2 insertions(+)
+ arch/x86/kernel/cpu/amd.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -112,6 +112,7 @@
- #define MEI_DEV_ID_RPL_S      0x7A68  /* Raptor Lake Point S */
+diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
+index f29c6bed9d657..3b02cb8b05338 100644
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1049,11 +1049,11 @@ static bool cpu_has_zenbleed_microcode(void)
+ 	u32 good_rev = 0;
  
- #define MEI_DEV_ID_MTL_M      0x7E70  /* Meteor Lake Point M */
-+#define MEI_DEV_ID_ARL_S      0x7F68  /* Arrow Lake Point S */
+ 	switch (boot_cpu_data.x86_model) {
+-	case 0x30 ... 0x3f: good_rev = 0x0830107a; break;
+-	case 0x60 ... 0x67: good_rev = 0x0860010b; break;
+-	case 0x68 ... 0x6f: good_rev = 0x08608105; break;
+-	case 0x70 ... 0x7f: good_rev = 0x08701032; break;
+-	case 0xa0 ... 0xaf: good_rev = 0x08a00008; break;
++	case 0x30 ... 0x3f: good_rev = 0x0830107b; break;
++	case 0x60 ... 0x67: good_rev = 0x0860010c; break;
++	case 0x68 ... 0x6f: good_rev = 0x08608107; break;
++	case 0x70 ... 0x7f: good_rev = 0x08701033; break;
++	case 0xa0 ... 0xaf: good_rev = 0x08a00009; break;
  
- /*
-  * MEI HW Section
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -118,6 +118,7 @@ static const struct pci_device_id mei_me
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_RPL_S, MEI_ME_PCH15_CFG)},
- 
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_MTL_M, MEI_ME_PCH15_CFG)},
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_S, MEI_ME_PCH15_CFG)},
- 
- 	/* required last entry */
- 	{0, }
+ 	default:
+ 		return false;
+-- 
+2.43.0
+
 
 
