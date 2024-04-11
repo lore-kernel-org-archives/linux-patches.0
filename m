@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B347513F452;
-	Thu, 11 Apr 2024 10:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EBF145FFA;
+	Thu, 11 Apr 2024 10:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830756; cv=none; b=SuT8QGgslzmbO9pgnfV/7hvHeT1Hlc0BBtCeppGQQh1TABeSsFxvr10doPQr8SepKzXnNlqbNViA+gsquUs4T7ZzL7DuSniRAa2aINuMn/31u9190uODaLQDKKw2UAPZAhgqdZMDBA4y5sbDkK1sZg+tpw2Wyo1Lv9DrJej5Rn0=
+	t=1712830759; cv=none; b=m/G8iFmFqLTRntB+caE92ALO2vh1yU1Bd5icTc9Ty/S/COoGXeDpmfDvMdIHJP0w6Rw6eyQyPWOn6YqxXv4zVj3FWrhRYvn0xtJ4hpLkIyzKTRvZo65PQJA+Og2YrsGWO2bF69mCG4rbqaf/1pJCnPDXFDNNd9fjpkwtKHMLOIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830756; c=relaxed/simple;
-	bh=GB+Y9Jhydztnu51Xyr7FXrJX15I4963HMyISMpLb498=;
+	s=arc-20240116; t=1712830759; c=relaxed/simple;
+	bh=TCQm7PZFcH4Eh1EzIipOF46gX3+6O6dp9Sy29+El5qM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ko7GBNUap7MRRoV2fsJz1gaBsQ0qDr+9UrnzVc2g95mypWAQn/8H5MZJteR68+aCnq1950ibmLBEBnUtsmePUStZozDHaHC2YgiCEl/QNLSJpqvleXaiLPN5TsZi3IsV+3h7geZZ9gDqD3ak4h5PNjl4ltWQ5VJpH0pSp59l3xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wNUe4AY/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SkUKW6bWcieRV/FUlKuRxIApzo9Q69Q71S+lXzW3gKXp4y05r+22aP4LqCrFD+sBTItWnqiiwHF6x3Ic8nUPZ5uRqhWEdVk1OCxz0qJjERBeiW+pNzzH/pv9nYTr3J/Mhs6J8HYXReBiAZ7y2CGMftTnukS5QxDezRFlKq/4Oy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2GMg92B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wNUe4AY/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B93C433F1;
-	Thu, 11 Apr 2024 10:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2GMg92B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F52EC433F1;
+	Thu, 11 Apr 2024 10:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830756;
-	bh=GB+Y9Jhydztnu51Xyr7FXrJX15I4963HMyISMpLb498=;
+	s=korg; t=1712830759;
+	bh=TCQm7PZFcH4Eh1EzIipOF46gX3+6O6dp9Sy29+El5qM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wNUe4AY/hRUAMFa5sXAk7y4F+zMirBQ+v9OvUFj8t7P9uuuH1588gCf2u3oAzJNYf
-	 8z+MIb91QlR4TWeYVAntm1OtRl11oMJ6S5wVpcVphdh7AYpxnc429DMiPZL9Hb1O3M
-	 ElpF58+4/NQg/wzrkX4z8rtSGPD5wrMBZFpsggkc=
+	b=h2GMg92BDU0+YkKnGvrS+XGLsMe4MgF+SIsGXFvjfMXvZ0DEa2vuBv+kWnK2rKejU
+	 alp3/7Gct1O7RhecQ+sG2xbXfw1rFhRPZWQVGjsFoN0CU6CdEi9ETbDOJ0khWxwA7D
+	 IYjDDAxxKMJ6vM4T6sdBepfQGjaBb/T6l+oPDLb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inki Dae <inki.dae@samsung.com>,
-	Seung-Woo Kim <sw0312.kim@samsung.com>,
-	Kyungmin Park <kyungmin.park@samsung.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 069/215] drm/exynos: do not return negative values from .get_modes()
-Date: Thu, 11 Apr 2024 11:54:38 +0200
-Message-ID: <20240411095426.973963547@linuxfoundation.org>
+Subject: [PATCH 5.4 070/215] drm/imx/ipuv3: do not return negative values from .get_modes()
+Date: Thu, 11 Apr 2024 11:54:39 +0200
+Message-ID: <20240411095427.004299136@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -56,63 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 13d5b040363c7ec0ac29c2de9cf661a24a8aa531 ]
+[ Upstream commit c2da9ada64962fcd2e6395ed9987b9874ea032d3 ]
 
 The .get_modes() hooks aren't supposed to return negative error
 codes. Return 0 for no modes, whatever the reason.
 
-Cc: Inki Dae <inki.dae@samsung.com>
-Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
-Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
 Cc: stable@vger.kernel.org
+Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
 Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/d8665f620d9c252aa7d5a4811ff6b16e773903a2.1709913674.git.jani.nikula@intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/311f6eec96d47949b16a670529f4d89fcd97aefa.1709913674.git.jani.nikula@intel.com
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_vidi.c | 4 ++--
- drivers/gpu/drm/exynos/exynos_hdmi.c     | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/imx/parallel-display.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-index d882a22dfd6e6..46fc472be3068 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-@@ -308,14 +308,14 @@ static int vidi_get_modes(struct drm_connector *connector)
- 	 */
- 	if (!ctx->raw_edid) {
- 		DRM_DEV_DEBUG_KMS(ctx->dev, "raw_edid is null.\n");
--		return -EFAULT;
-+		return 0;
- 	}
+diff --git a/drivers/gpu/drm/imx/parallel-display.c b/drivers/gpu/drm/imx/parallel-display.c
+index e24272428744c..2165ad545a382 100644
+--- a/drivers/gpu/drm/imx/parallel-display.c
++++ b/drivers/gpu/drm/imx/parallel-display.c
+@@ -63,14 +63,14 @@ static int imx_pd_connector_get_modes(struct drm_connector *connector)
+ 		int ret;
  
- 	edid_len = (1 + ctx->raw_edid->extensions) * EDID_LENGTH;
- 	edid = kmemdup(ctx->raw_edid, edid_len, GFP_KERNEL);
- 	if (!edid) {
- 		DRM_DEV_DEBUG_KMS(ctx->dev, "failed to allocate edid\n");
--		return -ENOMEM;
-+		return 0;
- 	}
+ 		if (!mode)
+-			return -EINVAL;
++			return 0;
  
- 	drm_connector_update_edid_property(connector, edid);
-diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
-index 93b2af4936d0e..0e2e1dfcd9ce5 100644
---- a/drivers/gpu/drm/exynos/exynos_hdmi.c
-+++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
-@@ -876,11 +876,11 @@ static int hdmi_get_modes(struct drm_connector *connector)
- 	int ret;
+ 		ret = of_get_drm_display_mode(np, &imxpd->mode,
+ 					      &imxpd->bus_flags,
+ 					      OF_USE_NATIVE_MODE);
+ 		if (ret) {
+ 			drm_mode_destroy(connector->dev, mode);
+-			return ret;
++			return 0;
+ 		}
  
- 	if (!hdata->ddc_adpt)
--		return -ENODEV;
-+		return 0;
- 
- 	edid = drm_get_edid(connector, hdata->ddc_adpt);
- 	if (!edid)
--		return -ENODEV;
-+		return 0;
- 
- 	hdata->dvi_mode = !drm_detect_hdmi_monitor(edid);
- 	DRM_DEV_DEBUG_KMS(hdata->dev, "%s : width[%d] x height[%d]\n",
+ 		drm_mode_copy(mode, &imxpd->mode);
 -- 
 2.43.0
 
