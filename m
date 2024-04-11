@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B53145FEF;
-	Thu, 11 Apr 2024 10:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595F214535A;
+	Thu, 11 Apr 2024 10:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829873; cv=none; b=Ich724LZY44iRnKxzoD0fmla8GWO97T4uvw8fMckul10IWb6d0DrJSwgjlzdX0w2dGQI2kZrlSSfE3GOqRcYubsDWVpM3PUE6OOLcgSNbpDzQO0z1hIUE3XiqT/SRA/2IWA0hKZoH4mE36mnL+HS0lOxqEaEZg4T0l+QfvZ8XPg=
+	t=1712829876; cv=none; b=FIzfY9oUkldePFsIqHnExW/qP893wBjXzJArOtU1atP7CxpgYAkjlAJ+bNDeHJEXBQBBRC7WAEAcrDzhZy0XRkF3xm4FFaM5PBNK4P5MaJj+pPLNr5cC3NVRpuUsvkymd7q/1qn6DQLnuZugOosgNFneqBpg7Y0zXhq6Ib42s2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829873; c=relaxed/simple;
-	bh=ihakqqCV2wdjCnXZPvpLUvjwiw8TM9+14bnckk/x8jY=;
+	s=arc-20240116; t=1712829876; c=relaxed/simple;
+	bh=gVVtfFTkA9elJkUD5++T+i/A/mShFpZegP0EdbeqxIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RgJSMwQ2upJB7nfsO9FSojWnem+HWSpd5XcNfLb/CKRlUhR5CuYxkWVrMEmQ2RPB10LxvzmTPMX05v71cmH6MbjIG6lCJbzwGaqZFK+Z6hXrMbv3VgeZA73lEdBABqC/l1ubLxF01AZzE3l+0/hNKGhJ/+aLsLays+m/wFf1tGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCG9cIqV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tybxu6ige4iX9J2/YPWTA7cYJsMq5fEcODqDehidJA8Ih0QljmEPhhLVkAIZY8LFm20BuJ47S7q8+HabiY4P84pAsQQBUXQMQaykIvItrmK6OiPc5vr1UidKS+49W+dqeG5GB38PX/YbsZ8CsVr8HN1OmaTvPNmA82AS3DL5ji0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLdJE4vS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCG9cIqV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5F9C433C7;
-	Thu, 11 Apr 2024 10:04:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLdJE4vS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59CCC433F1;
+	Thu, 11 Apr 2024 10:04:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829873;
-	bh=ihakqqCV2wdjCnXZPvpLUvjwiw8TM9+14bnckk/x8jY=;
+	s=korg; t=1712829876;
+	bh=gVVtfFTkA9elJkUD5++T+i/A/mShFpZegP0EdbeqxIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WCG9cIqVPCFFgChgpvZUac8VLXSLFg0VySZft4iG5vo6h4Y69UzYF9Ntrh136tbzn
-	 z16FHOM7ip4PZBEXQeY7Q7bWI+GHMEHyl4Cu4p2ZD8qQOHo8/U4wzqzuja38pppYgA
-	 XnZf/kmUE6IVSC2RBoqTSC/RA9LVyoz/fJCKiWvc=
+	b=kLdJE4vS/tWxIr2777tM5FbjYFIMCTjeGXDNPvSxMxzP312YtML1jcVpF0Jy0hGko
+	 Ra+yF5bqLK6ym+yt6cmJSNXAU7NoD312uijMRKi3j+ApJFpGhQsuuKd0uWXvWpuLQE
+	 gxuLW/QTLQ0BVb7qn4dwa4QKlEbpUt+MvjWwu4ZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 135/175] fs: add a vfs_fchmod helper
-Date: Thu, 11 Apr 2024 11:55:58 +0200
-Message-ID: <20240411095423.629223160@linuxfoundation.org>
+Subject: [PATCH 4.19 136/175] initramfs: switch initramfs unpacking to struct file based APIs
+Date: Thu, 11 Apr 2024 11:55:59 +0200
+Message-ID: <20240411095423.659342089@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -53,57 +53,127 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 9e96c8c0e94eea2f69a9705f5d0f51928ea26c17 ]
+[ Upstream commit bf6419e4d5440c6d414a320506c5488857a5b001 ]
 
-Add a helper for struct file based chmode operations.  To be used by
-the initramfs code soon.
+There is no good reason to mess with file descriptors from in-kernel
+code, switch the initramfs unpacking to struct file based write
+instead.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
 Stable-dep-of: 4624b346cf67 ("init: open /initrd.image with O_LARGEFILE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/open.c          | 9 +++++++--
- include/linux/fs.h | 1 +
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ init/initramfs.c | 47 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 26 insertions(+), 21 deletions(-)
 
-diff --git a/fs/open.c b/fs/open.c
-index e072e86003f56..fc634ab5af0d6 100644
---- a/fs/open.c
-+++ b/fs/open.c
-@@ -569,14 +569,19 @@ static int chmod_common(const struct path *path, umode_t mode)
- 	return error;
+diff --git a/init/initramfs.c b/init/initramfs.c
+index 7103edf44436c..e378d15a949e0 100644
+--- a/init/initramfs.c
++++ b/init/initramfs.c
+@@ -11,13 +11,14 @@
+ #include <linux/utime.h>
+ #include <linux/file.h>
+ 
+-static ssize_t __init xwrite(int fd, const char *p, size_t count)
++static ssize_t __init xwrite(struct file *file, const char *p, size_t count,
++		loff_t *pos)
+ {
+ 	ssize_t out = 0;
+ 
+ 	/* sys_write only can write MAX_RW_COUNT aka 2G-4K bytes at most */
+ 	while (count) {
+-		ssize_t rv = ksys_write(fd, p, count);
++		ssize_t rv = kernel_write(file, p, count, pos);
+ 
+ 		if (rv < 0) {
+ 			if (rv == -EINTR || rv == -EAGAIN)
+@@ -315,7 +316,8 @@ static int __init maybe_link(void)
+ 	return 0;
  }
  
-+int vfs_fchmod(struct file *file, umode_t mode)
-+{
-+	audit_file(file);
-+	return chmod_common(&file->f_path, mode);
-+}
-+
- int ksys_fchmod(unsigned int fd, umode_t mode)
+-static __initdata int wfd;
++static __initdata struct file *wfile;
++static __initdata loff_t wfile_pos;
+ 
+ static int __init do_name(void)
  {
- 	struct fd f = fdget(fd);
- 	int err = -EBADF;
+@@ -332,16 +334,17 @@ static int __init do_name(void)
+ 			int openflags = O_WRONLY|O_CREAT;
+ 			if (ml != 1)
+ 				openflags |= O_TRUNC;
+-			wfd = ksys_open(collected, openflags, mode);
+-
+-			if (wfd >= 0) {
+-				ksys_fchown(wfd, uid, gid);
+-				ksys_fchmod(wfd, mode);
+-				if (body_len)
+-					ksys_ftruncate(wfd, body_len);
+-				vcollected = kstrdup(collected, GFP_KERNEL);
+-				state = CopyFile;
+-			}
++			wfile = filp_open(collected, openflags, mode);
++			if (IS_ERR(wfile))
++				return 0;
++			wfile_pos = 0;
++
++			vfs_fchown(wfile, uid, gid);
++			vfs_fchmod(wfile, mode);
++			if (body_len)
++				vfs_truncate(&wfile->f_path, body_len);
++			vcollected = kstrdup(collected, GFP_KERNEL);
++			state = CopyFile;
+ 		}
+ 	} else if (S_ISDIR(mode)) {
+ 		ksys_mkdir(collected, mode);
+@@ -363,16 +366,16 @@ static int __init do_name(void)
+ static int __init do_copy(void)
+ {
+ 	if (byte_count >= body_len) {
+-		if (xwrite(wfd, victim, body_len) != body_len)
++		if (xwrite(wfile, victim, body_len, &wfile_pos) != body_len)
+ 			error("write error");
+-		ksys_close(wfd);
++		fput(wfile);
+ 		do_utime(vcollected, mtime);
+ 		kfree(vcollected);
+ 		eat(body_len);
+ 		state = SkipIt;
+ 		return 0;
+ 	} else {
+-		if (xwrite(wfd, victim, byte_count) != byte_count)
++		if (xwrite(wfile, victim, byte_count, &wfile_pos) != byte_count)
+ 			error("write error");
+ 		body_len -= byte_count;
+ 		eat(byte_count);
+@@ -603,21 +606,23 @@ static void __init clean_rootfs(void)
+ static void populate_initrd_image(char *err)
+ {
+ 	ssize_t written;
+-	int fd;
++	struct file *file;
++	loff_t pos = 0;
  
- 	if (f.file) {
--		audit_file(f.file);
--		err = chmod_common(&f.file->f_path, mode);
-+		err = vfs_fchmod(f.file, mode);
- 		fdput(f);
- 	}
- 	return err;
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 7d93d22ad1062..95e35e0740117 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -1661,6 +1661,7 @@ int vfs_mkobj(struct dentry *, umode_t,
- 		void *);
+ 	unpack_to_rootfs(__initramfs_start, __initramfs_size);
  
- int vfs_fchown(struct file *file, uid_t user, gid_t group);
-+int vfs_fchmod(struct file *file, umode_t mode);
+ 	printk(KERN_INFO "rootfs image is not initramfs (%s); looks like an initrd\n",
+ 			err);
+-	fd = ksys_open("/initrd.image", O_WRONLY | O_CREAT, 0700);
+-	if (fd < 0)
++	file = filp_open("/initrd.image", O_WRONLY | O_CREAT, 0700);
++	if (IS_ERR(file))
+ 		return;
  
- extern long vfs_ioctl(struct file *file, unsigned int cmd, unsigned long arg);
+-	written = xwrite(fd, (char *)initrd_start, initrd_end - initrd_start);
++	written = xwrite(file, (char *)initrd_start, initrd_end - initrd_start,
++			&pos);
+ 	if (written != initrd_end - initrd_start)
+ 		pr_err("/initrd.image: incomplete write (%zd != %ld)\n",
+ 		       written, initrd_end - initrd_start);
+-	ksys_close(fd);
++	fput(file);
+ }
+ #endif /* CONFIG_BLK_DEV_RAM */
  
 -- 
 2.43.0
