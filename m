@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C3779FD;
-	Thu, 11 Apr 2024 10:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DCD6BB29;
+	Thu, 11 Apr 2024 10:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832511; cv=none; b=vEUzqc7d4Toktl++S4GmGUOxMKgy20Pm7soz9grqe42IkKF3MmgOtRE9kw9xf0UI+xAEEUePW9Rto2zDKgZ1BisQG9xm7Y58Ra/b8SL8/HtxT92pnHqlcGP/uYzrOLu+TGnnpNxEUvVgpxTKTxM6KO7eMDWv9gXzE3LXGwVDGqU=
+	t=1712832514; cv=none; b=qFLR4Ape0fGPKRPkoKbC1H3Vr1slay4UCB3iX+Nb9an/fhMludSgOP05ngbX0ikuUtZgsLFVtmpQHkMPXfn0YACQOnVndKxXn2Edwx6Ki2zc057F6AT2bU/IIl6b9pNxxw3xiLreU1lfuEcPlcj20RFWDa6onX0l1uetHz1TGyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832511; c=relaxed/simple;
-	bh=pToZaE/5nPHzTqhdj9ZXpTAM4a0t3sgKzzuTcv2Wpo4=;
+	s=arc-20240116; t=1712832514; c=relaxed/simple;
+	bh=/xbFUqzX0fHMluL8yejKpnJWZ2cZBQ/XW/LjTcLIHDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A4pc2qaqkNaeIYxAne6wTALlw/c7IkHHwAZbH1VCwE0roq1DMRR3BHEivaxkyuOZXxfyMHd2KrF38CyOwU8Fl52GUud7v4Wazw0lXJQDjL8gc69ValrNKUrCw84W6UrgoalJGpqba9QXEvypQQgjl7D0UwlHU3PGz1UGD31m2UY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLvHBN6/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aOjHcjJ88+7n0MSq0LB6z1McTIAUYDpJtP0YiH/KJiRqjMJEdIUNEJVGm1CLUwcXfeNtHE29pDFbjjfhhsQzK6wrs/U7IHTJVr/QvNBYKmuNofwfO22pqRl9GsTpK7vnTrCuNaQGO2JaEy4IpbYDpo4JZneKwWJGpder8LHsW2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5TaFxFV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLvHBN6/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7684EC433C7;
-	Thu, 11 Apr 2024 10:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5TaFxFV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 737A4C433F1;
+	Thu, 11 Apr 2024 10:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832510;
-	bh=pToZaE/5nPHzTqhdj9ZXpTAM4a0t3sgKzzuTcv2Wpo4=;
+	s=korg; t=1712832513;
+	bh=/xbFUqzX0fHMluL8yejKpnJWZ2cZBQ/XW/LjTcLIHDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XLvHBN6/0B+QwaQ57Ncxd6Ha4p0IOpCJ9GNZl0hWe3bXa6KDJtdIooCIvhNb4RkAI
-	 jSuCw8YhIM8ZbsoANzMukxS/4I0okmcWB+2PwgNw7ml4iR81Io0JTWT00YRW3E+aIw
-	 qdU65VIcgW4gTo3Nt0kh5esT4Nj9gFeNvA0otA8g=
+	b=t5TaFxFVPZU8nlGy9DgmgQ15oHJFaohzdZXZ0bv9Xh2qcLUYEQBFsueQCHMOAOfpq
+	 IJej88vDFu8tpHcteOO6YzrZbrFpnPC+sw6ODbvWKc/suU6KOiga86kG+zAd9B3/vr
+	 KgEJqEjrx6cEFHcysSqTzC9LhDAJgooFKPuSYFkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-Subject: [PATCH 6.1 72/83] tty: n_gsm: require CAP_NET_ADMIN to attach N_GSM0710 ldisc
-Date: Thu, 11 Apr 2024 11:57:44 +0200
-Message-ID: <20240411095414.852374870@linuxfoundation.org>
+	Steven Rostedt <rostedt@goodmis.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 37/83] rcu-tasks: Repair RCU Tasks Trace quiescence check
+Date: Thu, 11 Apr 2024 11:57:09 +0200
+Message-ID: <20240411095413.800405614@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -49,34 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-commit 67c37756898a5a6b2941a13ae7260c89b54e0d88 upstream.
+[ Upstream commit 2eb52fa8900e642b3b5054c4bf9776089d2a935f ]
 
-Any unprivileged user can attach N_GSM0710 ldisc, but it requires
-CAP_NET_ADMIN to create a GSM network anyway.
+The context-switch-time check for RCU Tasks Trace quiescence expects
+current->trc_reader_special.b.need_qs to be zero, and if so, updates
+it to TRC_NEED_QS_CHECKED.  This is backwards, because if this value
+is zero, there is no RCU Tasks Trace grace period in flight, an thus
+no need for a quiescent state.  Instead, when a grace period starts,
+this field is set to TRC_NEED_QS.
 
-Require initial namespace CAP_NET_ADMIN to do that.
+This commit therefore changes the check from zero to TRC_NEED_QS.
 
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-Link: https://lore.kernel.org/r/20230731185942.279611-1-cascardo@canonical.com
-From: Salvatore Bonaccorso <carnil@debian.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Tested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/n_gsm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/rcupdate.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -2969,6 +2969,9 @@ static int gsmld_open(struct tty_struct
- {
- 	struct gsm_mux *gsm;
- 
-+	if (!capable(CAP_NET_ADMIN))
-+		return -EPERM;
-+
- 	if (tty->ops->write == NULL)
- 		return -EINVAL;
- 
+diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
+index 319698087d66a..6858cae98da9e 100644
+--- a/include/linux/rcupdate.h
++++ b/include/linux/rcupdate.h
+@@ -205,9 +205,9 @@ void rcu_tasks_trace_qs_blkd(struct task_struct *t);
+ 	do {									\
+ 		int ___rttq_nesting = READ_ONCE((t)->trc_reader_nesting);	\
+ 										\
+-		if (likely(!READ_ONCE((t)->trc_reader_special.b.need_qs)) &&	\
++		if (unlikely(READ_ONCE((t)->trc_reader_special.b.need_qs) == TRC_NEED_QS) &&	\
+ 		    likely(!___rttq_nesting)) {					\
+-			rcu_trc_cmpxchg_need_qs((t), 0,	TRC_NEED_QS_CHECKED);	\
++			rcu_trc_cmpxchg_need_qs((t), TRC_NEED_QS, TRC_NEED_QS_CHECKED);	\
+ 		} else if (___rttq_nesting && ___rttq_nesting != INT_MIN &&	\
+ 			   !READ_ONCE((t)->trc_reader_special.b.blocked)) {	\
+ 			rcu_tasks_trace_qs_blkd(t);				\
+-- 
+2.43.0
+
 
 
