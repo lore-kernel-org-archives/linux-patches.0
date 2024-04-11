@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46FD13F452;
-	Thu, 11 Apr 2024 10:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBBD13F452;
+	Thu, 11 Apr 2024 10:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830554; cv=none; b=D1iF73oKSE5WNBTtT4pKY1/74b3AHEPq2JepPAiKbRWIav3bBmsvGDBH1DuIX0HRCDJ6lfgw83XVDS/7lQRwVmMUSdKgTvpK8hYwgbfXSGg6fwx42l9nbZSAW7Jl5rR7pTZSF4Ar3oUBlol9UUa5AZqMKGFP//815hKC7GtKks4=
+	t=1712830557; cv=none; b=BebYeyoWGPL3e3oHo0/TpXVTz+/kCfS4j4gzqwB7zZ6IOePtDAQCVftA3Mcb6NahzefPGlDbTDAxwrUyJKZpyJ63JFNVUutnHhRXQOm+C8nLHwZ2sMFcPLdemfhX33f33ncsB3CuDjwXcyDMQ7LPNePvvTo3bC9FJopChWjMeeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830554; c=relaxed/simple;
-	bh=unEQYijzmM5PCgZcQepmRjZrG1Yq3emQ0x7pMDoqyAg=;
+	s=arc-20240116; t=1712830557; c=relaxed/simple;
+	bh=8lP4QgphKpzpmMaaaBVH1peAI+pwvbH9mtHHnxBc2zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hspt0aIT4Dxwt9FZJI6C34S/z5swslG+QMxc+xQkSJVGgKjqkNjuOuj//sWjSHBlQn0ByCxknq3vf5JqvW3rtf63RmFELwK78rCu1jzxcTaM1kY8ySG5t6dLgoT681iWkO9uLhAUTx29QSXP7U3/CaDG4vTmKLYNLlceA1uD8Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtJaQR+j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JmCZOCSH2dvp2FoaSVtlhGah43m7lst9ylxApC0vZPvD9Q3ayXljLbjbEXFFqX34EevI+EdIPi8l1Ll7ykVYN6esSJcI43rl+nNmcle+tAFV0oCJO9dqByj2XFxTbqQIwzOr1iL+E8IBaeP/jFUmn4s3BIkic1O3UURPRUm7Gcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vw4y06Xu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtJaQR+j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE31C433C7;
-	Thu, 11 Apr 2024 10:15:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vw4y06Xu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34487C433F1;
+	Thu, 11 Apr 2024 10:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830554;
-	bh=unEQYijzmM5PCgZcQepmRjZrG1Yq3emQ0x7pMDoqyAg=;
+	s=korg; t=1712830557;
+	bh=8lP4QgphKpzpmMaaaBVH1peAI+pwvbH9mtHHnxBc2zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CtJaQR+j0Cu3HwYIRXjXsPraqkpuaolrFQi5+u/R9wjG8+j98RmkTPXZSCflDamYN
-	 QELg82D3+JNFdAUsWZOWm3B3R/9psB07zisZjLLIT6qOyqAkammXIW3i6O8RZgEf6L
-	 szpNFZi6PYDbQ0uSOMUBa/AQjJntkFJ0+fvMGk7Q=
+	b=vw4y06XuZeOx6tIdV9xMDD3NP+Zckz1KSlkE3hEKxSk7iQQSP7H1dCShEDPROUSha
+	 Eynu/sNaSbG1fra0F7ajyUW/2EVEvv0g/PIvxukeR9R8SXDboxjfLRpEJ2sNkXHZo6
+	 VexRfY+kjw1tfgBOkffNEXBjbjXW68PJQ9vm6H5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20H=C3=A4ggstr=C3=B6m?= <christian.haggstrom@orexplore.com>,
+	=?UTF-8?q?Aur=C3=A9lien=20Jacobs?= <aurel@gnuage.org>,
 	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 040/215] USB: serial: cp210x: add ID for MGP Instruments PDS100
-Date: Thu, 11 Apr 2024 11:54:09 +0200
-Message-ID: <20240411095426.100613042@linuxfoundation.org>
+Subject: [PATCH 5.4 041/215] USB: serial: option: add MeiG Smart SLM320 product
+Date: Thu, 11 Apr 2024 11:54:10 +0200
+Message-ID: <20240411095426.130024167@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -52,39 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Häggström <christian.haggstrom@orexplore.com>
+From: Aurélien Jacobs <aurel@gnuage.org>
 
-[ Upstream commit a0d9d868491a362d421521499d98308c8e3a0398 ]
+[ Upstream commit 46809c51565b83881aede6cdf3b0d25254966a41 ]
 
-The radiation meter has the text MGP Instruments PDS-100G or PDS-100GN
-produced by Mirion Technologies. Tested by forcing the driver
-association with
+Update the USB serial option driver to support MeiG Smart SLM320.
 
-  echo 10c4 863c > /sys/bus/usb-serial/drivers/cp210x/new_id
+ID 2dee:4d41 UNISOC UNISOC-8910
 
-and then setting the serial port in 115200 8N1 mode. The device
-announces ID_USB_VENDOR_ENC=Silicon\x20Labs and ID_USB_MODEL_ENC=PDS100
+T: Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 9 Spd=480 MxCh= 0
+D: Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs= 1
+P: Vendor=2dee ProdID=4d41 Rev=00.00
+S: Manufacturer=UNISOC
+S: Product=UNISOC-8910
+C: #Ifs= 8 Cfg#= 1 Atr=e0 MxPwr=400mA
+I: If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I: If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I: If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I: If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I: If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I: If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I: If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I: If#= 7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=08(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Signed-off-by: Christian Häggström <christian.haggstrom@orexplore.com>
+Tested successfully a PPP LTE connection using If#= 0.
+Not sure of the purpose of every other serial interfaces.
+
+Signed-off-by: Aurélien Jacobs <aurel@gnuage.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/cp210x.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/serial/option.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/usb/serial/cp210x.c b/drivers/usb/serial/cp210x.c
-index 015dcaf58047c..88659a75f30f9 100644
---- a/drivers/usb/serial/cp210x.c
-+++ b/drivers/usb/serial/cp210x.c
-@@ -145,6 +145,7 @@ static const struct usb_device_id id_table[] = {
- 	{ USB_DEVICE(0x10C4, 0x85EA) }, /* AC-Services IBUS-IF */
- 	{ USB_DEVICE(0x10C4, 0x85EB) }, /* AC-Services CIS-IBUS */
- 	{ USB_DEVICE(0x10C4, 0x85F8) }, /* Virtenio Preon32 */
-+	{ USB_DEVICE(0x10C4, 0x863C) }, /* MGP Instruments PDS100 */
- 	{ USB_DEVICE(0x10C4, 0x8664) }, /* AC-Services CAN-IF */
- 	{ USB_DEVICE(0x10C4, 0x8665) }, /* AC-Services OBD-IF */
- 	{ USB_DEVICE(0x10C4, 0x87ED) }, /* IMST USB-Stick for Smart Meter */
+diff --git a/drivers/usb/serial/option.c b/drivers/usb/serial/option.c
+index 406cfd5ad9f48..17c3044c2d26a 100644
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -613,6 +613,11 @@ static void option_instat_callback(struct urb *urb);
+ /* Luat Air72*U series based on UNISOC UIS8910 uses UNISOC's vendor ID */
+ #define LUAT_PRODUCT_AIR720U			0x4e00
+ 
++/* MeiG Smart Technology products */
++#define MEIGSMART_VENDOR_ID			0x2dee
++/* MeiG Smart SLM320 based on UNISOC UIS8910 */
++#define MEIGSMART_PRODUCT_SLM320		0x4d41
++
+ /* Device flags */
+ 
+ /* Highest interface number which can be used with NCTRL() and RSVD() */
+@@ -2282,6 +2287,7 @@ static const struct usb_device_id option_ids[] = {
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM320, 0xff, 0, 0) },
+ 	{ } /* Terminating entry */
+ };
+ MODULE_DEVICE_TABLE(usb, option_ids);
 -- 
 2.43.0
 
