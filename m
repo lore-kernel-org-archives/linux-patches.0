@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1866145FF0;
-	Thu, 11 Apr 2024 10:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86ACD146A64;
+	Thu, 11 Apr 2024 10:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830894; cv=none; b=M/HGBbp/LOuSGkaFFYKdp43SpvRSgLJtmXyw0ONxHxv7dD18PbCtyvajNPtJap+Dau9ZbQO99h1i893dfb6qovrNNF5JwvRpl7Y1Lz5oq7qAlDj9qookkRN1F1g84ZkaHo84R6iiDKA3/cjivWSMvdxkvEFRbRWW1u4LUhPkFAw=
+	t=1712830897; cv=none; b=EVFT/OwkTH5uYQqv8qimcFYG08iua2T29VZVvTHjYgA4WU7nVIK0casYPSTvszzXjJ+ODo4gWsgQw4V/yD/rq9udSfduwaZcyztysoVe8CmSDKdb1kHECKzFU0HVv6cJI/oa5y6EX+TYdv1KUFsZRvmKXIO1zN/eP152KqEvUeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830894; c=relaxed/simple;
-	bh=RfWiLf27DVxH0WA456qgesdsKHyhM1odIIw8tJMGNoI=;
+	s=arc-20240116; t=1712830897; c=relaxed/simple;
+	bh=txH5MTRqTzwg5USM772XgNmNA9FYsnEw0kej+zQwiwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FJ+O9kmkyaIHTB58cXByhPoyl4nQsjfGQZxNE/3EeXelpGH1EMnIejEhw/QJxjTR5WKTtXkRssJDo9kTmHOo4P+eZ2R3zELJu87euAM5Kh5+KAjKkKfSf2XtBoISfJ8QGQ53B+n+ha2cA1FyYIKK0wHweJuo+GDCR/W9SVRLDc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0rPCa+E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fe5DNn+Li5K3oGUxEIGUCXseKQt8gyN53HSPiUZqeMIJfVHHqWferuUG6tIsKNh26V2/8AL45hofZo733//m8FUtPF972V7tOO5Ixr47bPw+Gd/xkhikvFxaX73wOeUZ7+jlku41/vKc+p+K2MkwxrzdvdRFGqlFa/N3/nVwxeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PzMnaRW3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0rPCa+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFBDC433C7;
-	Thu, 11 Apr 2024 10:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PzMnaRW3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C459C433F1;
+	Thu, 11 Apr 2024 10:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830894;
-	bh=RfWiLf27DVxH0WA456qgesdsKHyhM1odIIw8tJMGNoI=;
+	s=korg; t=1712830897;
+	bh=txH5MTRqTzwg5USM772XgNmNA9FYsnEw0kej+zQwiwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R0rPCa+ENkKayGXFDgdewXwc5g6dv07Aaw0/3nWLaRwcHKdueAokePB7EMEJ81S2k
-	 nuYZgXJ0TrT6CvP1x9iIY4hxlkeneaAxx+uXKwX9DrHw+jKm+0FQYHY20yYxqODXed
-	 j/jVRIWCRGyZ229WcWS0AJFw69SoUcgCpjXDed2E=
+	b=PzMnaRW3Ou8gsYTqQR6VaqEgRNBCPV9T0854EAhrR4J6fMA+U0BVeM5BAt47zRKa1
+	 GxlLW1r06d2alciVloih7Xp1YqXEZq42kHxa62zUU6Qqy6TvkAD1MBVWQqDOfOI7aB
+	 xovy8GWZpGnqcEAP0NNxUIOHP4hregXWUqLEqf6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhong Jinghua <zhongjinghua@huawei.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Genjian Zhang <zhanggenjian@kylinos.cn>
-Subject: [PATCH 5.4 105/215] loop: loop_set_status_from_info() check before assignment
-Date: Thu, 11 Apr 2024 11:55:14 +0200
-Message-ID: <20240411095428.067634346@linuxfoundation.org>
+	xingwei lee <xrivendell7@gmail.com>,
+	yue sun <samsun1006219@gmail.com>,
+	syzbot+bc922f476bd65abbd466@syzkaller.appspotmail.com,
+	syzbot+d4066896495db380182e@syzkaller.appspotmail.com,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>
+Subject: [PATCH 5.4 148/215] bpf, sockmap: Prevent lock inversion deadlock in map delete elem
+Date: Thu, 11 Apr 2024 11:55:57 +0200
+Message-ID: <20240411095429.335429578@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -52,55 +55,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhong Jinghua <zhongjinghua@huawei.com>
+From: Jakub Sitnicki <jakub@cloudflare.com>
 
-[ Upstream commit 9f6ad5d533d1c71e51bdd06a5712c4fbc8768dfa ]
+commit ff91059932401894e6c86341915615c5eb0eca48 upstream.
 
-In loop_set_status_from_info(), lo->lo_offset and lo->lo_sizelimit should
-be checked before reassignment, because if an overflow error occurs, the
-original correct value will be changed to the wrong value, and it will not
-be changed back.
+syzkaller started using corpuses where a BPF tracing program deletes
+elements from a sockmap/sockhash map. Because BPF tracing programs can be
+invoked from any interrupt context, locks taken during a map_delete_elem
+operation must be hardirq-safe. Otherwise a deadlock due to lock inversion
+is possible, as reported by lockdep:
 
-More, the original patch did not solve the problem, the value was set and
-ioctl returned an error, but the subsequent io used the value in the loop
-driver, which still caused an alarm:
+       CPU0                    CPU1
+       ----                    ----
+  lock(&htab->buckets[i].lock);
+                               local_irq_disable();
+                               lock(&host->lock);
+                               lock(&htab->buckets[i].lock);
+  <Interrupt>
+    lock(&host->lock);
 
-loop_handle_cmd
- do_req_filebacked
-  loff_t pos = ((loff_t) blk_rq_pos(rq) << 9) + lo->lo_offset;
-  lo_rw_aio
-   cmd->iocb.ki_pos = pos
+Locks in sockmap are hardirq-unsafe by design. We expects elements to be
+deleted from sockmap/sockhash only in task (normal) context with interrupts
+enabled, or in softirq context.
 
-Fixes: c490a0b5a4f3 ("loop: Check for overflow while configuring loop")
-Signed-off-by: Zhong Jinghua <zhongjinghua@huawei.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://lore.kernel.org/r/20230221095027.3656193-1-zhongjinghua@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
+Detect when map_delete_elem operation is invoked from a context which is
+_not_ hardirq-unsafe, that is interrupts are disabled, and bail out with an
+error.
+
+Note that map updates are not affected by this issue. BPF verifier does not
+allow updating sockmap/sockhash from a BPF tracing program today.
+
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Reported-by: xingwei lee <xrivendell7@gmail.com>
+Reported-by: yue sun <samsun1006219@gmail.com>
+Reported-by: syzbot+bc922f476bd65abbd466@syzkaller.appspotmail.com
+Reported-by: syzbot+d4066896495db380182e@syzkaller.appspotmail.com
+Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: syzbot+d4066896495db380182e@syzkaller.appspotmail.com
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=d4066896495db380182e
+Closes: https://syzkaller.appspot.com/bug?extid=bc922f476bd65abbd466
+Link: https://lore.kernel.org/bpf/20240402104621.1050319-1-jakub@cloudflare.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/loop.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/core/sock_map.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -1296,13 +1296,13 @@ loop_set_status_from_info(struct loop_de
- 	if (err)
- 		return err;
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -321,6 +321,9 @@ static int __sock_map_delete(struct bpf_
+ 	struct sock *sk;
+ 	int err = 0;
  
-+	/* Avoid assigning overflow values */
-+	if (info->lo_offset > LLONG_MAX || info->lo_sizelimit > LLONG_MAX)
-+		return -EOVERFLOW;
++	if (irqs_disabled())
++		return -EOPNOTSUPP; /* locks here are hardirq-unsafe */
 +
- 	lo->lo_offset = info->lo_offset;
- 	lo->lo_sizelimit = info->lo_sizelimit;
+ 	raw_spin_lock_bh(&stab->lock);
+ 	sk = *psk;
+ 	if (!sk_test || sk_test == sk)
+@@ -654,6 +657,9 @@ static int sock_hash_delete_elem(struct
+ 	struct bpf_htab_elem *elem;
+ 	int ret = -ENOENT;
  
--	/* loff_t vars have been assigned __u64 */
--	if (lo->lo_offset < 0 || lo->lo_sizelimit < 0)
--		return -EOVERFLOW;
--
- 	memcpy(lo->lo_file_name, info->lo_file_name, LO_NAME_SIZE);
- 	memcpy(lo->lo_crypt_name, info->lo_crypt_name, LO_NAME_SIZE);
- 	lo->lo_file_name[LO_NAME_SIZE-1] = 0;
++	if (irqs_disabled())
++		return -EOPNOTSUPP; /* locks here are hardirq-unsafe */
++
+ 	hash = sock_hash_bucket_hash(key, key_size);
+ 	bucket = sock_hash_select_bucket(htab, hash);
+ 
 
 
