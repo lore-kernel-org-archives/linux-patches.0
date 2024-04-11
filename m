@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124631422C4;
-	Thu, 11 Apr 2024 10:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93FAB1422C4;
+	Thu, 11 Apr 2024 10:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829750; cv=none; b=P6gt24R+dQcVgz++LcyVPqIS+zZULUYWxTk40t+VIvBfSemtKfM7BHJ8WCiejMK0TZEIMWTYR1mwVgOpKjed3lF/96wHjLKRP9OeKLRZf16tAw578Q3iEOEmLMHpJBEQz4OUR5FsLts9og3L3wYugZpYUNk44AcLYAAsWDBC/50=
+	t=1712829752; cv=none; b=HZ1oPidDkvbxOxAj6aEBXwihU0M3hR0aHcAu/QZ3h7IpYnOQW4vbKUCcquam3yLUDJoUyviOu8jbT+SJ3Rfrgbk6V9zCBAJMQAAH+jsjscWtCYRQtSR3N+nbxQzZljChURYyh/SMI1O7XkmK0ic+eMGEmwbfDbLqlOR+9h7U3YM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829750; c=relaxed/simple;
-	bh=+oeTTC3ALWwMkt2MKi9kwo2aMtZxtlLh59KrYjM7l/Y=;
+	s=arc-20240116; t=1712829752; c=relaxed/simple;
+	bh=8XgUmww3pfBUb+mBWk44Va54apCXWGTtubu4tL3TOGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYk180LkzMzm1ZivOJB3sIbs/LhZ4oJ+VMd8eCzt1MMggqEfQ6FQbmmjs83QHAueJJytV1stwmcW5I3500Z6iBeF9P/se/IE//Al6QtLSlXIGcRZ1q8JG1INkrusKElqVtOevfL8KTa+0RBLgbgcolu8gmOfR1I2JbfQOwOxaZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LceuyRTo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BX7mG+3vwqvejZRDEV3eQDr7yfw+axlx/J4WVhn74lHEq9H9ti5vRCwcAeI4g5Fv5xbIPXhO1OIbOQoHnv/sfXwML9H9IE7AJigSZ57ra3TV732nUi3V2bu3zDlYYo/5v+2HR2Y5w60neUiTZGif6bvQ3+5ZUDs6bTMDBJU7cUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMC8bcmG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LceuyRTo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C00C433C7;
-	Thu, 11 Apr 2024 10:02:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMC8bcmG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A198C43390;
+	Thu, 11 Apr 2024 10:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829749;
-	bh=+oeTTC3ALWwMkt2MKi9kwo2aMtZxtlLh59KrYjM7l/Y=;
+	s=korg; t=1712829752;
+	bh=8XgUmww3pfBUb+mBWk44Va54apCXWGTtubu4tL3TOGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LceuyRToM23y0KWPiX2zO/cXoYY9v7Z53uc8HOpx9dWH+mZ14o5gyWx7nVqz+p3LA
-	 5BFTxc+GPfyNyY244cTqnA8zm0lu492Mwc/4XLi2iVlPL4GC+RMKwJ3DlhrP48Ih50
-	 BlHTvWVb5XRknkA8mWFiT1iQgN1Xj6fAJaNMBFps=
+	b=qMC8bcmGmjZBe9hHdRJ+PLMPB9g4dsxPP22GKSezGm1swxuR0a8Mn831FF0ahO/2p
+	 Bq5PMp3i3fEYCfdMC/+lgtvGuE2bXpSLOtbzRBdAjmmxyGel0Tkefva/gQQoqprGOI
+	 QqT8eqEd+izkLRDC1eHNfJOP96o7djscm3tjaPlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martijn Coenen <maco@android.com>,
-	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
+	linux-block@vger.kernel.org,
+	holger@applied-asynchrony.com,
+	=?UTF-8?q?Holger=20Hoffst=E4tte?= <holger.hoffstaette@googlemail.com>,
+	Gwendal Grignou <gwendal@chromium.org>,
+	Benjamin Gordon <bmgordon@chromium.org>,
+	Guenter Roeck <groeck@chromium.org>,
 	Genjian Zhang <zhanggenjian@kylinos.cn>
-Subject: [PATCH 4.19 093/175] loop: Refactor loop_set_status() size calculation
-Date: Thu, 11 Apr 2024 11:55:16 +0200
-Message-ID: <20240411095422.366009816@linuxfoundation.org>
+Subject: [PATCH 4.19 094/175] loop: properly observe rotational flag of underlying device
+Date: Thu, 11 Apr 2024 11:55:17 +0200
+Message-ID: <20240411095422.396299495@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -46,116 +50,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martijn Coenen <maco@android.com>
+From: Holger Hoffstätte <holger.hoffstaette@googlemail.com>
 
-[ Upstream commit b0bd158dd630bd47640e0e418c062cda1e0da5ad ]
+[ Upstream commit 56a85fd8376ef32458efb6ea97a820754e12f6bb ]
 
-figure_loop_size() calculates the loop size based on the passed in
-parameters, but at the same time it updates the offset and sizelimit
-parameters in the loop device configuration. That is a somewhat
-unexpected side effect of a function with this name, and it is only only
-needed by one of the two callers of this function - loop_set_status().
+The loop driver always declares the rotational flag of its device as
+rotational, even when the device of the mapped file is nonrotational,
+as is the case with SSDs or on tmpfs. This can confuse filesystem tools
+which are SSD-aware; in my case I frequently forget to tell mkfs.btrfs
+that my loop device on tmpfs is nonrotational, and that I really don't
+need any automatic metadata redundancy.
 
-Move the lo_offset and lo_sizelimit assignment back into loop_set_status(),
-and use the newly factored out functions to validate and apply the newly
-calculated size. This allows us to get rid of figure_loop_size() in a
-follow-up commit.
+The attached patch fixes this by introspecting the rotational flag of the
+mapped file's underlying block device, if it exists. If the mapped file's
+filesystem has no associated block device - as is the case on e.g. tmpfs -
+we assume nonrotational storage. If there is a better way to identify such
+non-devices I'd love to hear them.
 
-Signed-off-by: Martijn Coenen <maco@android.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: linux-block@vger.kernel.org
+Cc: holger@applied-asynchrony.com
+Signed-off-by: Holger Hoffstätte <holger.hoffstaette@googlemail.com>
+Signed-off-by: Gwendal Grignou <gwendal@chromium.org>
+Signed-off-by: Benjamin Gordon <bmgordon@chromium.org>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/loop.c |   37 +++++++++++++++++++------------------
- 1 file changed, 19 insertions(+), 18 deletions(-)
+ drivers/block/loop.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
 --- a/drivers/block/loop.c
 +++ b/drivers/block/loop.c
-@@ -248,11 +248,6 @@ figure_loop_size(struct loop_device *lo,
- {
- 	loff_t size = get_size(offset, sizelimit, lo->lo_backing_file);
- 
--	if (lo->lo_offset != offset)
--		lo->lo_offset = offset;
--	if (lo->lo_sizelimit != sizelimit)
--		lo->lo_sizelimit = sizelimit;
--
- 	loop_set_size(lo, size);
+@@ -940,6 +940,24 @@ static int loop_prepare_queue(struct loo
+ 	return 0;
  }
  
-@@ -1225,6 +1220,7 @@ loop_set_status(struct loop_device *lo,
- 	kuid_t uid = current_uid();
- 	struct block_device *bdev;
- 	bool partscan = false;
-+	bool size_changed = false;
- 
- 	err = mutex_lock_killable(&loop_ctl_mutex);
- 	if (err)
-@@ -1246,6 +1242,7 @@ loop_set_status(struct loop_device *lo,
- 
- 	if (lo->lo_offset != info->lo_offset ||
- 	    lo->lo_sizelimit != info->lo_sizelimit) {
-+		size_changed = true;
- 		sync_blockdev(lo->lo_device);
- 		invalidate_bdev(lo->lo_device);
- 	}
-@@ -1253,6 +1250,15 @@ loop_set_status(struct loop_device *lo,
- 	/* I/O need to be drained during transfer transition */
- 	blk_mq_freeze_queue(lo->lo_queue);
- 
-+	if (size_changed && lo->lo_device->bd_inode->i_mapping->nrpages) {
-+		/* If any pages were dirtied after invalidate_bdev(), try again */
-+		err = -EAGAIN;
-+		pr_warn("%s: loop%d (%s) has still dirty pages (nrpages=%lu)\n",
-+			__func__, lo->lo_number, lo->lo_file_name,
-+			lo->lo_device->bd_inode->i_mapping->nrpages);
-+		goto out_unfreeze;
-+	}
++static void loop_update_rotational(struct loop_device *lo)
++{
++	struct file *file = lo->lo_backing_file;
++	struct inode *file_inode = file->f_mapping->host;
++	struct block_device *file_bdev = file_inode->i_sb->s_bdev;
++	struct request_queue *q = lo->lo_queue;
++	bool nonrot = true;
 +
- 	err = loop_release_xfer(lo);
- 	if (err)
- 		goto out_unfreeze;
-@@ -1276,19 +1282,8 @@ loop_set_status(struct loop_device *lo,
- 	if (err)
- 		goto out_unfreeze;
- 
--	if (lo->lo_offset != info->lo_offset ||
--	    lo->lo_sizelimit != info->lo_sizelimit) {
--		/* kill_bdev should have truncated all the pages */
--		if (lo->lo_device->bd_inode->i_mapping->nrpages) {
--			err = -EAGAIN;
--			pr_warn("%s: loop%d (%s) has still dirty pages (nrpages=%lu)\n",
--				__func__, lo->lo_number, lo->lo_file_name,
--				lo->lo_device->bd_inode->i_mapping->nrpages);
--			goto out_unfreeze;
--		}
--		figure_loop_size(lo, info->lo_offset, info->lo_sizelimit);
--	}
--
-+	lo->lo_offset = info->lo_offset;
-+	lo->lo_sizelimit = info->lo_sizelimit;
- 	memcpy(lo->lo_file_name, info->lo_file_name, LO_NAME_SIZE);
- 	memcpy(lo->lo_crypt_name, info->lo_crypt_name, LO_NAME_SIZE);
- 	lo->lo_file_name[LO_NAME_SIZE-1] = 0;
-@@ -1312,6 +1307,12 @@ loop_set_status(struct loop_device *lo,
- 		lo->lo_key_owner = uid;
- 	}
- 
-+	if (size_changed) {
-+		loff_t new_size = get_size(lo->lo_offset, lo->lo_sizelimit,
-+					   lo->lo_backing_file);
-+		loop_set_size(lo, new_size);
-+	}
++	/* not all filesystems (e.g. tmpfs) have a sb->s_bdev */
++	if (file_bdev)
++		nonrot = blk_queue_nonrot(bdev_get_queue(file_bdev));
 +
- 	loop_config_discard(lo);
++	if (nonrot)
++		blk_queue_flag_set(QUEUE_FLAG_NONROT, q);
++	else
++		blk_queue_flag_clear(QUEUE_FLAG_NONROT, q);
++}
++
+ static int loop_set_fd(struct loop_device *lo, fmode_t mode,
+ 		       struct block_device *bdev, unsigned int arg)
+ {
+@@ -1001,6 +1019,7 @@ static int loop_set_fd(struct loop_devic
+ 	if (!(lo_flags & LO_FLAGS_READ_ONLY) && file->f_op->fsync)
+ 		blk_queue_write_cache(lo->lo_queue, true, false);
  
- 	/* update dio if lo_offset or transfer is changed */
++	loop_update_rotational(lo);
+ 	loop_update_dio(lo);
+ 	loop_sysfs_init(lo);
+ 	loop_set_size(lo, size);
 
 
