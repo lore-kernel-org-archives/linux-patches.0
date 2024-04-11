@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838E1146A82;
-	Thu, 11 Apr 2024 10:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628EB146A71;
+	Thu, 11 Apr 2024 10:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831310; cv=none; b=QVDVCuzrDItsQg2lS02hobL5wAdiwJ0RpKgGCzStYZ/TeQW9p6J204ZDfO8ZLFizRgLWINy2zEogUabJRWDx4q3Zhkmh5O2TjyL/g3Q+7TJoEH/jXBfNQPWBvp2NbgzccReqCwZXMvOjRRvgtSy/J0JO5gUVE8nN91fo+f27UXE=
+	t=1712831313; cv=none; b=XEgLiiztetqFPF2UC14ZH/OCdSZKOsL21RLqbZ/3t0tqm4wuE8zcE0v46UVP8np4p00or+6x6w9OMendvO/H4nycz9c5dcWpzkTrCLwBlTd7ZIx66YNDCiL/EYK8+9SbjqXpBZJDT8yDGQdSCFjbPVCr+IPKK0YUvGJPHBaqGBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831310; c=relaxed/simple;
-	bh=CUkSKDcYIpkxoFrF7fJiSCobBbngAWLUyDDOdXJKTh8=;
+	s=arc-20240116; t=1712831313; c=relaxed/simple;
+	bh=ur5XYLMQIeNEfu7kqJbPOLTgWN/vAcoNJVK3VqJLHDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=me8Dl8wzj3ar21DDKHparcsCdHhaLu51g1rsMt2j5qg4yUQ/BWHvcF3R57W5XtJpcywsd/bAel3afbWWGzgHI/1lDudlu9oSo5lRdKYzEmErhlsGFVlEZPQ2w7R2pj88KXiyySnIfP+9FhE4oX8j9I2jYthZDj2bZDkwIg4MJ+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QM2wZeb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aZ5ZIQeK1RZfVbrHnPUbk44tNGCe+lwH9WSy7MYFPPnkpXdjVYa+NvQvgSjKlS3JoQWnIcYhc6jOhdiAGbQfgRC5m6EPndhaejgZyT5LtBgfdWJkSBTlAmmWNCNov5kSeesXHJGt8g4a5sDGMiMl5BOCRHQeIK82BdJ8Yo0n+co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MuPRWULJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QM2wZeb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D996C433F1;
-	Thu, 11 Apr 2024 10:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuPRWULJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDAD0C433F1;
+	Thu, 11 Apr 2024 10:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831310;
-	bh=CUkSKDcYIpkxoFrF7fJiSCobBbngAWLUyDDOdXJKTh8=;
+	s=korg; t=1712831313;
+	bh=ur5XYLMQIeNEfu7kqJbPOLTgWN/vAcoNJVK3VqJLHDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1QM2wZeb3J3uNYJtFLLJY86p5+/f2WuJ4TBDCU6FfcB1w2QpDTfVYKEgsnQujAC6+
-	 2x8VDsa9gZcyWuxTXjaxCRpvu6l8y4KB790A8/Pd1XiX1YEglfeTGNJUSnyCaGQUSc
-	 X/IkaEi5OLnf7e0+Q0k/YZWST/wjHRKlGX+LeOts=
+	b=MuPRWULJoZNI0I2VhRhMZxTzWWg/n+u52paqcnuFFps8eW8fhPtwFMU6ZGqo6lDJH
+	 rpBrzxJYIaaZOUqj0lL87SozByiTqQxDSwRjxJNvT2LqdqzG6xr4XqpJFXEMCWui5q
+	 s9ZEX/d8m3FjaTxvjDq12HeK8Jg4m1qzyRSNYV5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alban=20Boy=C3=A9?= <alban.boye@protonmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Ye Bin <yebin10@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/114] platform/x86: touchscreen_dmi: Add an extra entry for a variant of the Chuwi Vi8 tablet
-Date: Thu, 11 Apr 2024 11:56:47 +0200
-Message-ID: <20240411095419.303392502@linuxfoundation.org>
+Subject: [PATCH 6.6 063/114] ext4: forbid commit inconsistent quota data when errors=remount-ro
+Date: Thu, 11 Apr 2024 11:56:30 +0200
+Message-ID: <20240411095418.788725203@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095416.853744210@linuxfoundation.org>
 References: <20240411095416.853744210@linuxfoundation.org>
@@ -45,46 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alban Boyé <alban.boye@protonmail.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 1266e2efb7512dbf20eac820ca2ed34de6b1c3e7 ]
+[ Upstream commit d8b945fa475f13d787df00c26a6dc45a3e2e1d1d ]
 
-Signed-off-by: Alban Boyé <alban.boye@protonmail.com>
-Link: https://lore.kernel.org/r/20240227223919.11587-1-alban.boye@protonmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+There's issue as follows When do IO fault injection test:
+Quota error (device dm-3): find_block_dqentry: Quota for id 101 referenced but not present
+Quota error (device dm-3): qtree_read_dquot: Can't read quota structure for id 101
+Quota error (device dm-3): do_check_range: Getting block 2021161007 out of range 1-186
+Quota error (device dm-3): qtree_read_dquot: Can't read quota structure for id 661
+
+Now, ext4_write_dquot()/ext4_acquire_dquot()/ext4_release_dquot() may commit
+inconsistent quota data even if process failed. This may lead to filesystem
+corruption.
+To ensure filesystem consistent when errors=remount-ro there is need to call
+ext4_handle_error() to abort journal.
+
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240119062908.3598806-1-yebin10@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ext4/super.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index 969477c83e56e..630ed0515b1e9 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -1222,6 +1222,15 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_BIOS_VERSION, "CHUWI.D86JLBNR"),
- 		},
- 	},
-+	{
-+		/* Chuwi Vi8 dual-boot (CWI506) */
-+		.driver_data = (void *)&chuwi_vi8_data,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Insyde"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "i86"),
-+			DMI_MATCH(DMI_BIOS_VERSION, "CHUWI2.D86JHBNR02"),
-+		},
-+	},
- 	{
- 		/* Chuwi Vi8 Plus (CWI519) */
- 		.driver_data = (void *)&chuwi_vi8_plus_data,
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 3ea4d8f11e7bb..83fc3f092a0c7 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -6865,6 +6865,10 @@ static int ext4_write_dquot(struct dquot *dquot)
+ 	if (IS_ERR(handle))
+ 		return PTR_ERR(handle);
+ 	ret = dquot_commit(dquot);
++	if (ret < 0)
++		ext4_error_err(dquot->dq_sb, -ret,
++			       "Failed to commit dquot type %d",
++			       dquot->dq_id.type);
+ 	err = ext4_journal_stop(handle);
+ 	if (!ret)
+ 		ret = err;
+@@ -6881,6 +6885,10 @@ static int ext4_acquire_dquot(struct dquot *dquot)
+ 	if (IS_ERR(handle))
+ 		return PTR_ERR(handle);
+ 	ret = dquot_acquire(dquot);
++	if (ret < 0)
++		ext4_error_err(dquot->dq_sb, -ret,
++			      "Failed to acquire dquot type %d",
++			      dquot->dq_id.type);
+ 	err = ext4_journal_stop(handle);
+ 	if (!ret)
+ 		ret = err;
+@@ -6900,6 +6908,10 @@ static int ext4_release_dquot(struct dquot *dquot)
+ 		return PTR_ERR(handle);
+ 	}
+ 	ret = dquot_release(dquot);
++	if (ret < 0)
++		ext4_error_err(dquot->dq_sb, -ret,
++			       "Failed to release dquot type %d",
++			       dquot->dq_id.type);
+ 	err = ext4_journal_stop(handle);
+ 	if (!ret)
+ 		ret = err;
 -- 
 2.43.0
 
