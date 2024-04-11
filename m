@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99211134CC2;
-	Thu, 11 Apr 2024 10:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F35145B13;
+	Thu, 11 Apr 2024 10:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832174; cv=none; b=C5iBdYGGzvGe5X0exIZnMnGQOjrvDNVQrXChnQLitIF7ysuzqhc+52uIv8pzpZYH0TRVYn5a+45nYnfOrih4vniDqGdufM1eaahtFSkwR+ca4emIBDKQz9NIVI00nndZ6KDIujRstchymE1siM8WH1736Y5RmAfxRI07mE45Atg=
+	t=1712832177; cv=none; b=NTeY9fqiz0jb8yzXg9UmYVO8KqNnsjnCinngYhghl/gVY7qOyQb5/+nM42Gj63ByI/mheLg7sbvrrrD+HAN839eJNgXZjGbku/FQynxnFNynScSsSlNCmpjg9Faq/TPbuGbtheCSiDWDPdpKgK9Dydd29NIJTJVszGRrtN0kea0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832174; c=relaxed/simple;
-	bh=j3KSu96KPrAkTkxb21YG+pVVdfDeonY/J0zBAgvcHpU=;
+	s=arc-20240116; t=1712832177; c=relaxed/simple;
+	bh=Q9n2GJrQuqzYvJOdiXmk9gPAEfwScV/epO5Nb2QPrFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AYcJOiHfMuYtumS8XHcdBFsuarb9PTlBDiU+Drhy9w9wstvj5cNPB93b9xnhsuFWdC6ebAPYCRs1XIngBCmPo5lnYsGRBxVu9UZpWEFwjdfStsSjVZgCTgUCpQavoPokTqgs+MNfhdxL0A9lDRoBpciHunIIIT3+H/2waQ3ZYvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wlbIhEzz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XwhXf2bs8dRzNbQGzMLYM/ZaaZiddcuEC8Oeo7ofrKY45XY9z7xaiKOPHu5SP8FeOJazHrf+9drtuSB7W150rkqY2ZgtOYUai6gkvT+kgGZPJ/Yx9a/DqHAh6ldYsCFwMvF79L+puC1wfzwf7P5aRCBniE/t7TmIowKArHf47a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MtKdMlnp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wlbIhEzz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228C3C433C7;
-	Thu, 11 Apr 2024 10:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtKdMlnp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11CAFC433F1;
+	Thu, 11 Apr 2024 10:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832174;
-	bh=j3KSu96KPrAkTkxb21YG+pVVdfDeonY/J0zBAgvcHpU=;
+	s=korg; t=1712832177;
+	bh=Q9n2GJrQuqzYvJOdiXmk9gPAEfwScV/epO5Nb2QPrFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wlbIhEzz/KJ2ldZpX8c8tFd9jE6v31iUxykbfnTlidUmMWwZZ9ujaIlStrKn/XyL2
-	 hZBwOuVeJwMuemdlpLvJgh9JwEIRMWaUnoUFA4XMJmwZDVtXZ4H9QutAs9mR83eVeu
-	 ncp5rZcrWRFkyaXFC3tYaZodSQPfz/H5bmwEK/tU=
+	b=MtKdMlnpEvEI6bj8fe8Jzrr+Bchp8QtQhh1c65g61bJtMSgsBU6nao7f1DpaRtchA
+	 e7Nh4cUBWlKOupK3lRLKD/R65INpngaSsigHvljwFN2eipu+if4QYEQodanu/yriXK
+	 hrsuuRs51JG6Yl4op9lGCeN3JUv6WbJREspzBRIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Anand Jain <anand.jain@oracle.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 254/294] btrfs: export: handle invalid inode or root reference in btrfs_get_parent()
-Date: Thu, 11 Apr 2024 11:56:57 +0200
-Message-ID: <20240411095443.212563583@linuxfoundation.org>
+Subject: [PATCH 5.10 255/294] btrfs: send: handle path ref underflow in header iterate_inode_ref()
+Date: Thu, 11 Apr 2024 11:56:58 +0200
+Message-ID: <20240411095443.241491571@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -54,43 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 26b66d1d366a375745755ca7365f67110bbf6bd5 ]
+[ Upstream commit 3c6ee34c6f9cd12802326da26631232a61743501 ]
 
-The get_parent handler looks up a parent of a given dentry, this can be
-either a subvolume or a directory. The search is set up with offset -1
-but it's never expected to find such item, as it would break allowed
-range of inode number or a root id. This means it's a corruption (ext4
-also returns this error code).
+Change BUG_ON to proper error handling if building the path buffer
+fails. The pointers are not printed so we don't accidentally leak kernel
+addresses.
 
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/export.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/btrfs/send.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/export.c b/fs/btrfs/export.c
-index bfa2bf44529c2..d908afa1f313c 100644
---- a/fs/btrfs/export.c
-+++ b/fs/btrfs/export.c
-@@ -161,8 +161,15 @@ struct dentry *btrfs_get_parent(struct dentry *child)
- 	ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
- 	if (ret < 0)
- 		goto fail;
-+	if (ret == 0) {
-+		/*
-+		 * Key with offset of -1 found, there would have to exist an
-+		 * inode with such number or a root with such id.
-+		 */
-+		ret = -EUCLEAN;
-+		goto fail;
-+	}
- 
--	BUG_ON(ret == 0); /* Key with offset of -1 found */
- 	if (path->slots[0] == 0) {
- 		ret = -ENOENT;
- 		goto fail;
+diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
+index 0b04adfd4a4a4..0519a3557697a 100644
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -966,7 +966,15 @@ static int iterate_inode_ref(struct btrfs_root *root, struct btrfs_path *path,
+ 					ret = PTR_ERR(start);
+ 					goto out;
+ 				}
+-				BUG_ON(start < p->buf);
++				if (unlikely(start < p->buf)) {
++					btrfs_err(root->fs_info,
++			"send: path ref buffer underflow for key (%llu %u %llu)",
++						  found_key->objectid,
++						  found_key->type,
++						  found_key->offset);
++					ret = -EINVAL;
++					goto out;
++				}
+ 			}
+ 			p->start = start;
+ 		} else {
 -- 
 2.43.0
 
