@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6132EAE5;
-	Thu, 11 Apr 2024 10:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D9D145B04;
+	Thu, 11 Apr 2024 10:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829950; cv=none; b=S6zqG1QbLH2BbM5bsV7xxGzpTeV50dxm2OB6zQ4FUP4jBoioijwYjw8opxxo2Cnync/GvJuUNu42mlir4xAjrXM1ZP++JLnTL5aJl+eFD7RrKXm0jG9OVrmgqg4Ii5CxGMLLlEtdpWrFnGFyvaK8yMzg8eALujCN/uRUNNuFHRA=
+	t=1712829953; cv=none; b=e4M0Y1ov/OFB6eTqsLcKlksG44YDch8IjfLsqXv6uFuRpsh2/QcqcN3PWZg9y10FuOtIi64z6Aj/DBwQOOg5oDeQIt3kxcwtGlasjfdHyrWAjVhRxjBtH9/F8cvfw2Spla3Dhz59jjr/0NhXlb6ICDlvu/FoJAej4TxkpAT6SU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829950; c=relaxed/simple;
-	bh=5A75gWcdm7NUliMQMye0Kz7Ql4jhAtfj9A0o3O74Vzg=;
+	s=arc-20240116; t=1712829953; c=relaxed/simple;
+	bh=EKLjOxEYEeDVd1H2iEXqJTJr3Ta+XeuqLky5kn6G53U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s9dzWOPtVF9GP5Lxtxz8lTL38U8OlHZG7f/ezun/DLM/fp7A81y1SURYPA5Mi1Sd4+zTKGSaswzBZdQfqKD87bGzu+oNVGqIgC6/muDtQu6WoUwjqwr574YlYooG0C7Q+xTvG5OrF7SWIE1GFFNLCBm32h00mLg8NfHUCMBWsL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kd/5CX5e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ff+91BFovdyfh2eJ9+sBWNCL6ueeLEvlRbcMiMiy97GhukC7BPakoHWO0hJT4Jvb3/4XgBdRLHaR0QzBCfif09kANGu/UFXt0Y19gvSpGh/Fb/y11H6UrfZDZtf3A2FPQTH2sQ2gtYs4ss32VHh9+mpCFWb4vogoob64z33OOE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwTUkWZT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kd/5CX5e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45D9C433C7;
-	Thu, 11 Apr 2024 10:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwTUkWZT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB413C433C7;
+	Thu, 11 Apr 2024 10:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829950;
-	bh=5A75gWcdm7NUliMQMye0Kz7Ql4jhAtfj9A0o3O74Vzg=;
+	s=korg; t=1712829953;
+	bh=EKLjOxEYEeDVd1H2iEXqJTJr3Ta+XeuqLky5kn6G53U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kd/5CX5eiSFs6WngfcsLfQY9GnxeiOOF7ZxmAaWDl3QlVVF2BZ8YtzbnDL7hmbdk0
-	 Hq1xN3BJzw7I/VTIjeyy76QXEsY2gHY1nihAP1acSadLhSkulUZIItb9+0ItIqeR5d
-	 YiMjuFbEHs4nmDfusbnsvSIrE1IVWlen8Nj3Jv3w=
+	b=KwTUkWZTbnAYXV0XLx5DzVLtIfemadKW9iv2HE7yG9XRBY5ei+Bbg+iyfXpUuno+c
+	 frJl73PoBA+WiCHyOmphofxenrswCz0XocVKYhImcl9B2XM1a3LLGsKvlbdKccX3m+
+	 xxIzdGYFA9mQNtmE+4VVQI7b9yeCMTs0kYlZf/Fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 159/175] SUNRPC: increase size of rpc_wait_queue.qlen from unsigned short to unsigned int
-Date: Thu, 11 Apr 2024 11:56:22 +0200
-Message-ID: <20240411095424.351916196@linuxfoundation.org>
+	Piotr Wejman <piotrwejman90@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 124/175] net: stmmac: fix rx queue priority assignment
+Date: Thu, 11 Apr 2024 11:55:47 +0200
+Message-ID: <20240411095423.299287402@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,86 +50,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Piotr Wejman <piotrwejman90@gmail.com>
 
-[ Upstream commit 2c35f43b5a4b9cdfaa6fdd946f5a212615dac8eb ]
+commit b3da86d432b7cd65b025a11f68613e333d2483db upstream.
 
-When the NFS client is under extreme load the rpc_wait_queue.qlen counter
-can be overflowed. Here is an instant of the backlog queue overflow in a
-real world environment shown by drgn helper:
+The driver should ensure that same priority is not mapped to multiple
+rx queues. From DesignWare Cores Ethernet Quality-of-Service
+Databook, section 17.1.29 MAC_RxQ_Ctrl2:
+"[...]The software must ensure that the content of this field is
+mutually exclusive to the PSRQ fields for other queues, that is,
+the same priority is not mapped to multiple Rx queues[...]"
 
-rpc_task_stats(rpc_clnt):
--------------------------
-rpc_clnt: 0xffff92b65d2bae00
-rpc_xprt: 0xffff9275db64f000
-  Queue:  sending[64887] pending[524] backlog[30441] binding[0]
-XMIT task: 0xffff925c6b1d8e98
-     WRITE: 750654
-        __dta_call_status_580: 65463
-        __dta_call_transmit_status_579: 1
-        call_reserveresult: 685189
-        nfs_client_init_is_complete: 1
-    COMMIT: 584
-        call_reserveresult: 573
-        __dta_call_status_580: 11
-    ACCESS: 1
-        __dta_call_status_580: 1
-   GETATTR: 10
-        __dta_call_status_580: 4
-        call_reserveresult: 6
-751249 tasks for server 111.222.333.444
-Total tasks: 751249
+Previously rx_queue_priority() function was:
+- clearing all priorities from a queue
+- adding new priorities to that queue
+After this patch it will:
+- first assign new priorities to a queue
+- then remove those priorities from all other queues
+- keep other priorities previously assigned to that queue
 
-count_rpc_wait_queues(xprt):
-----------------------------
-**** rpc_xprt: 0xffff9275db64f000 num_reqs: 65511
-wait_queue: xprt_binding[0] cnt: 0
-wait_queue: xprt_binding[1] cnt: 0
-wait_queue: xprt_binding[2] cnt: 0
-wait_queue: xprt_binding[3] cnt: 0
-rpc_wait_queue[xprt_binding].qlen: 0 maxpriority: 0
-wait_queue: xprt_sending[0] cnt: 0
-wait_queue: xprt_sending[1] cnt: 64887
-wait_queue: xprt_sending[2] cnt: 0
-wait_queue: xprt_sending[3] cnt: 0
-rpc_wait_queue[xprt_sending].qlen: 64887 maxpriority: 3
-wait_queue: xprt_pending[0] cnt: 524
-wait_queue: xprt_pending[1] cnt: 0
-wait_queue: xprt_pending[2] cnt: 0
-wait_queue: xprt_pending[3] cnt: 0
-rpc_wait_queue[xprt_pending].qlen: 524 maxpriority: 0
-wait_queue: xprt_backlog[0] cnt: 0
-wait_queue: xprt_backlog[1] cnt: 685801
-wait_queue: xprt_backlog[2] cnt: 0
-wait_queue: xprt_backlog[3] cnt: 0
-rpc_wait_queue[xprt_backlog].qlen: 30441 maxpriority: 3 [task cnt mismatch]
-
-There is no effect on operations when this overflow occurs. However
-it causes confusion when trying to diagnose the performance problem.
-
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a8f5102af2a7 ("net: stmmac: TX and RX queue priority configuration")
+Fixes: 2142754f8b9c ("net: stmmac: Add MAC related callbacks for XGMAC2")
+Signed-off-by: Piotr Wejman <piotrwejman90@gmail.com>
+Link: https://lore.kernel.org/r/20240401192239.33942-1-piotrwejman90@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sunrpc/sched.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c   |   40 +++++++++++++++-----
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c |   38 +++++++++++++++----
+ 2 files changed, 62 insertions(+), 16 deletions(-)
 
-diff --git a/include/linux/sunrpc/sched.h b/include/linux/sunrpc/sched.h
-index 96837ae07822b..ca0a568fd8244 100644
---- a/include/linux/sunrpc/sched.h
-+++ b/include/linux/sunrpc/sched.h
-@@ -190,7 +190,7 @@ struct rpc_wait_queue {
- 	unsigned char		maxpriority;		/* maximum priority (0 if queue is not a priority queue) */
- 	unsigned char		priority;		/* current priority */
- 	unsigned char		nr;			/* # tasks remaining for cookie */
--	unsigned short		qlen;			/* total # tasks waiting in queue */
-+	unsigned int		qlen;			/* total # tasks waiting in queue */
- 	struct rpc_timer	timer_list;
- #if IS_ENABLED(CONFIG_SUNRPC_DEBUG) || IS_ENABLED(CONFIG_TRACEPOINTS)
- 	const char *		name;
--- 
-2.43.0
-
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+@@ -84,19 +84,41 @@ static void dwmac4_rx_queue_priority(str
+ 				     u32 prio, u32 queue)
+ {
+ 	void __iomem *ioaddr = hw->pcsr;
+-	u32 base_register;
+-	u32 value;
++	u32 clear_mask = 0;
++	u32 ctrl2, ctrl3;
++	int i;
+ 
+-	base_register = (queue < 4) ? GMAC_RXQ_CTRL2 : GMAC_RXQ_CTRL3;
+-	if (queue >= 4)
+-		queue -= 4;
++	ctrl2 = readl(ioaddr + GMAC_RXQ_CTRL2);
++	ctrl3 = readl(ioaddr + GMAC_RXQ_CTRL3);
++
++	/* The software must ensure that the same priority
++	 * is not mapped to multiple Rx queues
++	 */
++	for (i = 0; i < 4; i++)
++		clear_mask |= ((prio << GMAC_RXQCTRL_PSRQX_SHIFT(i)) &
++						GMAC_RXQCTRL_PSRQX_MASK(i));
+ 
+-	value = readl(ioaddr + base_register);
++	ctrl2 &= ~clear_mask;
++	ctrl3 &= ~clear_mask;
+ 
+-	value &= ~GMAC_RXQCTRL_PSRQX_MASK(queue);
+-	value |= (prio << GMAC_RXQCTRL_PSRQX_SHIFT(queue)) &
++	/* First assign new priorities to a queue, then
++	 * clear them from others queues
++	 */
++	if (queue < 4) {
++		ctrl2 |= (prio << GMAC_RXQCTRL_PSRQX_SHIFT(queue)) &
+ 						GMAC_RXQCTRL_PSRQX_MASK(queue);
+-	writel(value, ioaddr + base_register);
++
++		writel(ctrl2, ioaddr + GMAC_RXQ_CTRL2);
++		writel(ctrl3, ioaddr + GMAC_RXQ_CTRL3);
++	} else {
++		queue -= 4;
++
++		ctrl3 |= (prio << GMAC_RXQCTRL_PSRQX_SHIFT(queue)) &
++						GMAC_RXQCTRL_PSRQX_MASK(queue);
++
++		writel(ctrl3, ioaddr + GMAC_RXQ_CTRL3);
++		writel(ctrl2, ioaddr + GMAC_RXQ_CTRL2);
++	}
+ }
+ 
+ static void dwmac4_tx_queue_priority(struct mac_device_info *hw,
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+@@ -103,17 +103,41 @@ static void dwxgmac2_rx_queue_prio(struc
+ 				   u32 queue)
+ {
+ 	void __iomem *ioaddr = hw->pcsr;
+-	u32 value, reg;
++	u32 clear_mask = 0;
++	u32 ctrl2, ctrl3;
++	int i;
+ 
+-	reg = (queue < 4) ? XGMAC_RXQ_CTRL2 : XGMAC_RXQ_CTRL3;
+-	if (queue >= 4)
++	ctrl2 = readl(ioaddr + XGMAC_RXQ_CTRL2);
++	ctrl3 = readl(ioaddr + XGMAC_RXQ_CTRL3);
++
++	/* The software must ensure that the same priority
++	 * is not mapped to multiple Rx queues
++	 */
++	for (i = 0; i < 4; i++)
++		clear_mask |= ((prio << XGMAC_PSRQ_SHIFT(i)) &
++						XGMAC_PSRQ(i));
++
++	ctrl2 &= ~clear_mask;
++	ctrl3 &= ~clear_mask;
++
++	/* First assign new priorities to a queue, then
++	 * clear them from others queues
++	 */
++	if (queue < 4) {
++		ctrl2 |= (prio << XGMAC_PSRQ_SHIFT(queue)) &
++						XGMAC_PSRQ(queue);
++
++		writel(ctrl2, ioaddr + XGMAC_RXQ_CTRL2);
++		writel(ctrl3, ioaddr + XGMAC_RXQ_CTRL3);
++	} else {
+ 		queue -= 4;
+ 
+-	value = readl(ioaddr + reg);
+-	value &= ~XGMAC_PSRQ(queue);
+-	value |= (prio << XGMAC_PSRQ_SHIFT(queue)) & XGMAC_PSRQ(queue);
++		ctrl3 |= (prio << XGMAC_PSRQ_SHIFT(queue)) &
++						XGMAC_PSRQ(queue);
+ 
+-	writel(value, ioaddr + reg);
++		writel(ctrl3, ioaddr + XGMAC_RXQ_CTRL3);
++		writel(ctrl2, ioaddr + XGMAC_RXQ_CTRL2);
++	}
+ }
+ 
+ static void dwxgmac2_prog_mtl_rx_algorithms(struct mac_device_info *hw,
 
 
