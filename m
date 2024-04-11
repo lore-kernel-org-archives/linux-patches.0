@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3EC1F5FA;
-	Thu, 11 Apr 2024 10:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94152145B2C;
+	Thu, 11 Apr 2024 10:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830176; cv=none; b=U+Jn+QQpc8DpMBuRLZ92GwD5jwwNVbkW0OUOLYIRscey7llCghpgBxRNeaL9/niXFull8msO4YwpQNE8ywPABajQwLaZTpxKa4xezyS8DSjucP2sxgXcXexbOZxsBKyS6EsLW5/VdYXw6Pcav+uFnmUMVUA/rKLBFB5A3/nV0co=
+	t=1712830178; cv=none; b=X8fuzSRCDohvmqNNUKjV38pkW1imsb/OQuz9nQ6vwq1XbmngYwamGmflNSlSrRoxMp5YklsQLJU/ylf17y7xdXAXEaPs5dX4ne1xJHG6wZpY/Yit9H/syQQ2QCrlSyrAP66u/5ctJZV6K+lzoURyyHnxzM2JpUBrWYf9GS7B2Qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830176; c=relaxed/simple;
-	bh=64rRGBh0U7WPm7dJXLrCU7fWIyklEjCke5RsfDOjpD8=;
+	s=arc-20240116; t=1712830178; c=relaxed/simple;
+	bh=zTKbr0AbXMdykA1JRZvxkDGdiF8REl2liAiXkNXhO/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GduoG4MiR868x3z89m3OatRL3lwbUgsv7kNLBRNaDQj9955f1WuznOj76UFTGKqoYrurpwwRYj4+KHUbzlY8dGSqh0iucFGSdWg9dxB3zxfCEkMeuB+AydqaUq5Ak41rFdSUYVmjdY7jXizBdVZdv8NcPAu9Bsv2mS3fSq+n8II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTAmlzhR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g2dkx7mi2IwH56squXq5Z5RTHcSmnqXu9VXziLO5t/RYz9U+gzIlRhvO3GfSBrXgqauBkY6c0MNIq+aWFJ9y9eyEXsW3+fpfV4G1TCtKl77iHE2jvY3kj6gwTRD0N8oIeR7BX/bsktOBECii7f2UDo7RSNAa4AKo8BDEidAsCGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrcNCXe9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTAmlzhR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A53AC433C7;
-	Thu, 11 Apr 2024 10:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrcNCXe9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17985C43390;
+	Thu, 11 Apr 2024 10:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830175;
-	bh=64rRGBh0U7WPm7dJXLrCU7fWIyklEjCke5RsfDOjpD8=;
+	s=korg; t=1712830178;
+	bh=zTKbr0AbXMdykA1JRZvxkDGdiF8REl2liAiXkNXhO/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HTAmlzhRkXyXAJSjGLc5E4GZzdEmDlJP3M/4QvTBv6KcpbhEtlKHdgdDQWL+Ki7KU
-	 vATz2FjmE22KEG2rur80eWTnSm9Zacdy+eEIvBWaJaRdUja3qCu+OOgVa/eqTIHzb7
-	 toeKThKi+7RHreVgAqQNPYAHeGssOzV1NSEiyMc4=
+	b=UrcNCXe95ofIJHPZZQUfgl5o4Yj8PAHF6kz0fK64+8gWalE+E9qaz9VXwdrPqUGF/
+	 e2bE4og+Bx+3SN0pu4WI+6Q/kPuBLRrnzqIrpS36a+5QWclzsdcdE5Aick0csiYLcf
+	 fN8Ez94V5iK4xh4xlS6rz7iGqflOkoOJ+dOAOfjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Emil Velikov <emil.velikov@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 053/143] netdev: let netlink core handle -EMSGSIZE errors
-Date: Thu, 11 Apr 2024 11:55:21 +0200
-Message-ID: <20240411095422.513084889@linuxfoundation.org>
+Subject: [PATCH 6.8 062/143] ASoC: SOF: amd: Optimize quirk for Valve Galileo
+Date: Thu, 11 Apr 2024 11:55:30 +0200
+Message-ID: <20240411095422.782041282@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -53,85 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 0b11b1c5c320555483e8a94c44549db24c289987 ]
+[ Upstream commit a13f0c3c0e8fb3e61fbfd99c6b350cf9be0c4660 ]
 
-Previous change added -EMSGSIZE handling to af_netlink, we don't
-have to hide these errors any longer.
+Valve's Steam Deck OLED is uniquely identified by vendor and product
+name (Galileo) DMI fields.
 
-Theoretically the error handling changes from:
- if (err == -EMSGSIZE)
-to
- if (err == -EMSGSIZE && skb->len)
+Simplify the quirk by removing the unnecessary match on product family.
 
-everywhere, but in practice it doesn't matter.
-All messages fit into NLMSG_GOODSIZE, so overflow of an empty
-skb cannot happen.
+Additionally, fix the related comment as it points to the old product
+variant.
 
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Reviewed-by: Emil Velikov <emil.velikov@collabora.com>
+Link: https://msgid.link/r/20231219030728.2431640-7-cristian.ciocaltea@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netdev-genl.c    | 15 +++------------
- net/core/page_pool_user.c |  2 --
- 2 files changed, 3 insertions(+), 14 deletions(-)
+ sound/soc/sof/amd/acp.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/core/netdev-genl.c b/net/core/netdev-genl.c
-index fd98936da3aec..918b109e0cf40 100644
---- a/net/core/netdev-genl.c
-+++ b/net/core/netdev-genl.c
-@@ -152,10 +152,7 @@ int netdev_nl_dev_get_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
- 	}
- 	rtnl_unlock();
+diff --git a/sound/soc/sof/amd/acp.c b/sound/soc/sof/amd/acp.c
+index 2c242ef9f23c1..1b6f5724c82b0 100644
+--- a/sound/soc/sof/amd/acp.c
++++ b/sound/soc/sof/amd/acp.c
+@@ -31,11 +31,10 @@ static struct acp_quirk_entry quirk_valve_galileo = {
  
--	if (err != -EMSGSIZE)
--		return err;
--
--	return skb->len;
-+	return err;
- }
- 
- static int
-@@ -287,10 +284,7 @@ int netdev_nl_napi_get_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
- 	}
- 	rtnl_unlock();
- 
--	if (err != -EMSGSIZE)
--		return err;
--
--	return skb->len;
-+	return err;
- }
- 
- static int
-@@ -463,10 +457,7 @@ int netdev_nl_queue_get_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
- 	}
- 	rtnl_unlock();
- 
--	if (err != -EMSGSIZE)
--		return err;
--
--	return skb->len;
-+	return err;
- }
- 
- static int netdev_genl_netdevice_event(struct notifier_block *nb,
-diff --git a/net/core/page_pool_user.c b/net/core/page_pool_user.c
-index 278294aca66ab..3a3277ba167b1 100644
---- a/net/core/page_pool_user.c
-+++ b/net/core/page_pool_user.c
-@@ -103,8 +103,6 @@ netdev_nl_page_pool_get_dump(struct sk_buff *skb, struct netlink_callback *cb,
- 	mutex_unlock(&page_pools_lock);
- 	rtnl_unlock();
- 
--	if (skb->len && err == -EMSGSIZE)
--		return skb->len;
- 	return err;
- }
- 
+ const struct dmi_system_id acp_sof_quirk_table[] = {
+ 	{
+-		/* Valve Jupiter device */
++		/* Steam Deck OLED device */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Valve"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Galileo"),
+-			DMI_MATCH(DMI_PRODUCT_FAMILY, "Sephiroth"),
+ 		},
+ 		.driver_data = &quirk_valve_galileo,
+ 	},
 -- 
 2.43.0
 
