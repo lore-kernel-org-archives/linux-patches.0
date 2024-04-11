@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F961D558;
-	Thu, 11 Apr 2024 10:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C71964CC0;
+	Thu, 11 Apr 2024 10:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831468; cv=none; b=lTagoxtYwsYAAq6FA+O2w+EQv48sP/3IOLzAbfrBbAZLR4DwnmdVIFkiyL6DOvoNo8kqaspa8h1VfSEPLAwmO+2SkJQEzuB02kpzpwpjzi4eoiyIIz0ieBhb4R1w611bNduTL7ulbGwkpSefOJ5xmKS5aVkAcZMXT09viC8p3oI=
+	t=1712831471; cv=none; b=uyGewPAUaYCR5yCbFyAQ4FqiWKu88h5Bp9rrx7jCPvZtEfe8NJ63c2h4EzucLrwboSZm5tahkith1BD0uvLObU5Kfqp9O0SYCq/TBVO0dvw7CE6DnM8SvKgagAbOfS2N1qvUIblkG8eYLJIkaA4cFUiycqUwnpS8vtbnbWw17KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831468; c=relaxed/simple;
-	bh=1TFVLGueVGlN4DMtbl8WJ1S5wq2YamsR0S+VsMAw6t0=;
+	s=arc-20240116; t=1712831471; c=relaxed/simple;
+	bh=V4Kga9SfaoP3HYH8QBoWrXnpq5mOsGCKNQXl7sUjeHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tr+EIoN8hdVreY3Y0SDLemDGYW/vO1U6LO8gIPFfPOmlaZSkD2gBMF2yJXAIOOQHubBomgA28QpiC8otBje78xHOa/iwLuBdkXJwa/slwhAp642CheOAJXDM86T6fi48cPFGRV5dkkbAio1j0L24Hf1/zsCg1RJF6OkDB84BbSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgovJ7ED; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g8rmzYI+WJ1uId7LwbTUs/ZthV66TZwFjikJJd6yDkJgHCNEOkcho+2TUzvevEPzK4khgquuIKhLr5fHVFH7rMmmytQrUEet2PgQNcSyWERhsGfTqi0opd1shCM3fW94euUz/bAEg2EmzgXrltMmW82nui5Tv2x0Y9jqYdhW1Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZyUoMSg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgovJ7ED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C128CC43394;
-	Thu, 11 Apr 2024 10:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZyUoMSg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A19C433C7;
+	Thu, 11 Apr 2024 10:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831468;
-	bh=1TFVLGueVGlN4DMtbl8WJ1S5wq2YamsR0S+VsMAw6t0=;
+	s=korg; t=1712831471;
+	bh=V4Kga9SfaoP3HYH8QBoWrXnpq5mOsGCKNQXl7sUjeHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OgovJ7EDPQbMgyjNEIEchhyqI7Ggk+ve3wqIp1bCfShjSxAFOFTO+wnMB27+Qi/rp
-	 lXhCfS9Spg9riezNl+BUCuEb4JFrhS2qAk1N9q754Q3C4HxHm/VAObtJnpYyTNId2T
-	 9rnvaGodGBCbqVeu2tncw9YwwqYLqq847cJwp8YA=
+	b=zZyUoMSguqYxOyI29oD9lkC7x/XQiUzTSfCVlLIpZFJpXbqqgGMu5C3XScKHRJ3v/
+	 sTNpQ9DriEFvmQzR0u8bwHj50AgBkjzKPKTn9aBTCX7rDML2duK6jWATegWFWGxSeu
+	 EAoZKLHSGEAkpXw+AQ3yAjUF++U82ELEkhda85Go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@suse.de>
-Subject: [PATCH 5.10 003/294] x86/bugs: Use sysfs_emit()
-Date: Thu, 11 Apr 2024 11:52:46 +0200
-Message-ID: <20240411095435.741440247@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 004/294] timers: Update kernel-doc for various functions
+Date: Thu, 11 Apr 2024 11:52:47 +0200
+Message-ID: <20240411095435.770664574@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -49,231 +53,265 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov <bp@suse.de>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 1d30800c0c0ae1d086ffad2bdf0ba4403370f132 upstream.
+[ Upstream commit 14f043f1340bf30bc60af127bff39f55889fef26 ]
 
-Those mitigations are very talkative; use the printing helper which pays
-attention to the buffer size.
+The kernel-doc of timer related functions is partially uncomprehensible
+word salad. Rewrite it to make it useful.
 
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Link: https://lore.kernel.org/r/20220809153419.10182-1-bp@alien8.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
+Link: https://lore.kernel.org/r/20221123201624.828703870@linutronix.de
+Stable-dep-of: 0f7352557a35 ("wifi: brcmfmac: Fix use-after-free bug in brcmf_cfg80211_detach")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/bugs.c |  105 ++++++++++++++++++++++-----------------------
- 1 file changed, 52 insertions(+), 53 deletions(-)
+ kernel/time/timer.c | 148 +++++++++++++++++++++++++++-----------------
+ 1 file changed, 90 insertions(+), 58 deletions(-)
 
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -2436,74 +2436,74 @@ static const char * const l1tf_vmx_state
- static ssize_t l1tf_show_state(char *buf)
- {
- 	if (l1tf_vmx_mitigation == VMENTER_L1D_FLUSH_AUTO)
--		return sprintf(buf, "%s\n", L1TF_DEFAULT_MSG);
-+		return sysfs_emit(buf, "%s\n", L1TF_DEFAULT_MSG);
- 
- 	if (l1tf_vmx_mitigation == VMENTER_L1D_FLUSH_EPT_DISABLED ||
- 	    (l1tf_vmx_mitigation == VMENTER_L1D_FLUSH_NEVER &&
- 	     sched_smt_active())) {
--		return sprintf(buf, "%s; VMX: %s\n", L1TF_DEFAULT_MSG,
--			       l1tf_vmx_states[l1tf_vmx_mitigation]);
-+		return sysfs_emit(buf, "%s; VMX: %s\n", L1TF_DEFAULT_MSG,
-+				  l1tf_vmx_states[l1tf_vmx_mitigation]);
- 	}
- 
--	return sprintf(buf, "%s; VMX: %s, SMT %s\n", L1TF_DEFAULT_MSG,
--		       l1tf_vmx_states[l1tf_vmx_mitigation],
--		       sched_smt_active() ? "vulnerable" : "disabled");
-+	return sysfs_emit(buf, "%s; VMX: %s, SMT %s\n", L1TF_DEFAULT_MSG,
-+			  l1tf_vmx_states[l1tf_vmx_mitigation],
-+			  sched_smt_active() ? "vulnerable" : "disabled");
+diff --git a/kernel/time/timer.c b/kernel/time/timer.c
+index e87e638c31bdf..3157a6434a615 100644
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -1068,14 +1068,16 @@ __mod_timer(struct timer_list *timer, unsigned long expires, unsigned int option
  }
  
- static ssize_t itlb_multihit_show_state(char *buf)
+ /**
+- * mod_timer_pending - modify a pending timer's timeout
+- * @timer: the pending timer to be modified
+- * @expires: new timeout in jiffies
++ * mod_timer_pending - Modify a pending timer's timeout
++ * @timer:	The pending timer to be modified
++ * @expires:	New absolute timeout in jiffies
+  *
+- * mod_timer_pending() is the same for pending timers as mod_timer(),
+- * but will not re-activate and modify already deleted timers.
++ * mod_timer_pending() is the same for pending timers as mod_timer(), but
++ * will not activate inactive timers.
+  *
+- * It is useful for unserialized use of timers.
++ * Return:
++ * * %0 - The timer was inactive and not modified
++ * * %1 - The timer was active and requeued to expire at @expires
+  */
+ int mod_timer_pending(struct timer_list *timer, unsigned long expires)
  {
- 	if (!boot_cpu_has(X86_FEATURE_MSR_IA32_FEAT_CTL) ||
- 	    !boot_cpu_has(X86_FEATURE_VMX))
--		return sprintf(buf, "KVM: Mitigation: VMX unsupported\n");
-+		return sysfs_emit(buf, "KVM: Mitigation: VMX unsupported\n");
- 	else if (!(cr4_read_shadow() & X86_CR4_VMXE))
--		return sprintf(buf, "KVM: Mitigation: VMX disabled\n");
-+		return sysfs_emit(buf, "KVM: Mitigation: VMX disabled\n");
- 	else if (itlb_multihit_kvm_mitigation)
--		return sprintf(buf, "KVM: Mitigation: Split huge pages\n");
-+		return sysfs_emit(buf, "KVM: Mitigation: Split huge pages\n");
- 	else
--		return sprintf(buf, "KVM: Vulnerable\n");
-+		return sysfs_emit(buf, "KVM: Vulnerable\n");
- }
- #else
- static ssize_t l1tf_show_state(char *buf)
+@@ -1084,24 +1086,27 @@ int mod_timer_pending(struct timer_list *timer, unsigned long expires)
+ EXPORT_SYMBOL(mod_timer_pending);
+ 
+ /**
+- * mod_timer - modify a timer's timeout
+- * @timer: the timer to be modified
+- * @expires: new timeout in jiffies
+- *
+- * mod_timer() is a more efficient way to update the expire field of an
+- * active timer (if the timer is inactive it will be activated)
++ * mod_timer - Modify a timer's timeout
++ * @timer:	The timer to be modified
++ * @expires:	New absolute timeout in jiffies
+  *
+  * mod_timer(timer, expires) is equivalent to:
+  *
+  *     del_timer(timer); timer->expires = expires; add_timer(timer);
+  *
++ * mod_timer() is more efficient than the above open coded sequence. In
++ * case that the timer is inactive, the del_timer() part is a NOP. The
++ * timer is in any case activated with the new expiry time @expires.
++ *
+  * Note that if there are multiple unserialized concurrent users of the
+  * same timer, then mod_timer() is the only safe way to modify the timeout,
+  * since add_timer() cannot modify an already running timer.
+  *
+- * The function returns whether it has modified a pending timer or not.
+- * (ie. mod_timer() of an inactive timer returns 0, mod_timer() of an
+- * active timer returns 1.)
++ * Return:
++ * * %0 - The timer was inactive and started
++ * * %1 - The timer was active and requeued to expire at @expires or
++ *	  the timer was active and not modified because @expires did
++ *	  not change the effective expiry time
+  */
+ int mod_timer(struct timer_list *timer, unsigned long expires)
  {
--	return sprintf(buf, "%s\n", L1TF_DEFAULT_MSG);
-+	return sysfs_emit(buf, "%s\n", L1TF_DEFAULT_MSG);
- }
- 
- static ssize_t itlb_multihit_show_state(char *buf)
+@@ -1112,11 +1117,18 @@ EXPORT_SYMBOL(mod_timer);
+ /**
+  * timer_reduce - Modify a timer's timeout if it would reduce the timeout
+  * @timer:	The timer to be modified
+- * @expires:	New timeout in jiffies
++ * @expires:	New absolute timeout in jiffies
+  *
+  * timer_reduce() is very similar to mod_timer(), except that it will only
+- * modify a running timer if that would reduce the expiration time (it will
+- * start a timer that isn't running).
++ * modify an enqueued timer if that would reduce the expiration time. If
++ * @timer is not enqueued it starts the timer.
++ *
++ * Return:
++ * * %0 - The timer was inactive and started
++ * * %1 - The timer was active and requeued to expire at @expires or
++ *	  the timer was active and not modified because @expires
++ *	  did not change the effective expiry time such that the
++ *	  timer would expire earlier than already scheduled
+  */
+ int timer_reduce(struct timer_list *timer, unsigned long expires)
  {
--	return sprintf(buf, "Processor vulnerable\n");
-+	return sysfs_emit(buf, "Processor vulnerable\n");
- }
- #endif
+@@ -1125,18 +1137,21 @@ int timer_reduce(struct timer_list *timer, unsigned long expires)
+ EXPORT_SYMBOL(timer_reduce);
  
- static ssize_t mds_show_state(char *buf)
+ /**
+- * add_timer - start a timer
+- * @timer: the timer to be added
++ * add_timer - Start a timer
++ * @timer:	The timer to be started
+  *
+- * The kernel will do a ->function(@timer) callback from the
+- * timer interrupt at the ->expires point in the future. The
+- * current time is 'jiffies'.
++ * Start @timer to expire at @timer->expires in the future. @timer->expires
++ * is the absolute expiry time measured in 'jiffies'. When the timer expires
++ * timer->function(timer) will be invoked from soft interrupt context.
+  *
+- * The timer's ->expires, ->function fields must be set prior calling this
+- * function.
++ * The @timer->expires and @timer->function fields must be set prior
++ * to calling this function.
++ *
++ * If @timer->expires is already in the past @timer will be queued to
++ * expire at the next timer tick.
+  *
+- * Timers with an ->expires field in the past will be executed in the next
+- * timer tick.
++ * This can only operate on an inactive timer. Attempts to invoke this on
++ * an active timer are rejected with a warning.
+  */
+ void add_timer(struct timer_list *timer)
  {
- 	if (boot_cpu_has(X86_FEATURE_HYPERVISOR)) {
--		return sprintf(buf, "%s; SMT Host state unknown\n",
--			       mds_strings[mds_mitigation]);
-+		return sysfs_emit(buf, "%s; SMT Host state unknown\n",
-+				  mds_strings[mds_mitigation]);
- 	}
+@@ -1146,11 +1161,13 @@ void add_timer(struct timer_list *timer)
+ EXPORT_SYMBOL(add_timer);
  
- 	if (boot_cpu_has(X86_BUG_MSBDS_ONLY)) {
--		return sprintf(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
--			       (mds_mitigation == MDS_MITIGATION_OFF ? "vulnerable" :
--			        sched_smt_active() ? "mitigated" : "disabled"));
-+		return sysfs_emit(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
-+				  (mds_mitigation == MDS_MITIGATION_OFF ? "vulnerable" :
-+				   sched_smt_active() ? "mitigated" : "disabled"));
- 	}
- 
--	return sprintf(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
--		       sched_smt_active() ? "vulnerable" : "disabled");
-+	return sysfs_emit(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
-+			  sched_smt_active() ? "vulnerable" : "disabled");
- }
- 
- static ssize_t tsx_async_abort_show_state(char *buf)
+ /**
+- * add_timer_on - start a timer on a particular CPU
+- * @timer: the timer to be added
+- * @cpu: the CPU to start it on
++ * add_timer_on - Start a timer on a particular CPU
++ * @timer:	The timer to be started
++ * @cpu:	The CPU to start it on
++ *
++ * Same as add_timer() except that it starts the timer on the given CPU.
+  *
+- * This is not very scalable on SMP. Double adds are not possible.
++ * See add_timer() for further details.
+  */
+ void add_timer_on(struct timer_list *timer, int cpu)
  {
- 	if ((taa_mitigation == TAA_MITIGATION_TSX_DISABLED) ||
- 	    (taa_mitigation == TAA_MITIGATION_OFF))
--		return sprintf(buf, "%s\n", taa_strings[taa_mitigation]);
-+		return sysfs_emit(buf, "%s\n", taa_strings[taa_mitigation]);
+@@ -1185,15 +1202,18 @@ void add_timer_on(struct timer_list *timer, int cpu)
+ EXPORT_SYMBOL_GPL(add_timer_on);
  
- 	if (boot_cpu_has(X86_FEATURE_HYPERVISOR)) {
--		return sprintf(buf, "%s; SMT Host state unknown\n",
--			       taa_strings[taa_mitigation]);
-+		return sysfs_emit(buf, "%s; SMT Host state unknown\n",
-+				  taa_strings[taa_mitigation]);
- 	}
- 
--	return sprintf(buf, "%s; SMT %s\n", taa_strings[taa_mitigation],
--		       sched_smt_active() ? "vulnerable" : "disabled");
-+	return sysfs_emit(buf, "%s; SMT %s\n", taa_strings[taa_mitigation],
-+			  sched_smt_active() ? "vulnerable" : "disabled");
- }
- 
- static ssize_t mmio_stale_data_show_state(char *buf)
-@@ -2571,47 +2571,46 @@ static char *pbrsb_eibrs_state(void)
- static ssize_t spectre_v2_show_state(char *buf)
+ /**
+- * del_timer - deactivate a timer.
+- * @timer: the timer to be deactivated
+- *
+- * del_timer() deactivates a timer - this works on both active and inactive
+- * timers.
+- *
+- * The function returns whether it has deactivated a pending timer or not.
+- * (ie. del_timer() of an inactive timer returns 0, del_timer() of an
+- * active timer returns 1.)
++ * del_timer - Deactivate a timer.
++ * @timer:	The timer to be deactivated
++ *
++ * The function only deactivates a pending timer, but contrary to
++ * del_timer_sync() it does not take into account whether the timer's
++ * callback function is concurrently executed on a different CPU or not.
++ * It neither prevents rearming of the timer. If @timer can be rearmed
++ * concurrently then the return value of this function is meaningless.
++ *
++ * Return:
++ * * %0 - The timer was not pending
++ * * %1 - The timer was pending and deactivated
+  */
+ int del_timer(struct timer_list *timer)
  {
- 	if (spectre_v2_enabled == SPECTRE_V2_LFENCE)
--		return sprintf(buf, "Vulnerable: LFENCE\n");
-+		return sysfs_emit(buf, "Vulnerable: LFENCE\n");
+@@ -1215,10 +1235,19 @@ EXPORT_SYMBOL(del_timer);
  
- 	if (spectre_v2_enabled == SPECTRE_V2_EIBRS && unprivileged_ebpf_enabled())
--		return sprintf(buf, "Vulnerable: eIBRS with unprivileged eBPF\n");
-+		return sysfs_emit(buf, "Vulnerable: eIBRS with unprivileged eBPF\n");
- 
- 	if (sched_smt_active() && unprivileged_ebpf_enabled() &&
- 	    spectre_v2_enabled == SPECTRE_V2_EIBRS_LFENCE)
--		return sprintf(buf, "Vulnerable: eIBRS+LFENCE with unprivileged eBPF and SMT\n");
-+		return sysfs_emit(buf, "Vulnerable: eIBRS+LFENCE with unprivileged eBPF and SMT\n");
- 
--	return sprintf(buf, "%s%s%s%s%s%s%s\n",
--		       spectre_v2_strings[spectre_v2_enabled],
--		       ibpb_state(),
--		       boot_cpu_has(X86_FEATURE_USE_IBRS_FW) ? ", IBRS_FW" : "",
--		       stibp_state(),
--		       boot_cpu_has(X86_FEATURE_RSB_CTXSW) ? ", RSB filling" : "",
--		       pbrsb_eibrs_state(),
--		       spectre_v2_module_string());
-+	return sysfs_emit(buf, "%s%s%s%s%s%s%s\n",
-+			  spectre_v2_strings[spectre_v2_enabled],
-+			  ibpb_state(),
-+			  boot_cpu_has(X86_FEATURE_USE_IBRS_FW) ? ", IBRS_FW" : "",
-+			  stibp_state(),
-+			  boot_cpu_has(X86_FEATURE_RSB_CTXSW) ? ", RSB filling" : "",
-+			  pbrsb_eibrs_state(),
-+			  spectre_v2_module_string());
- }
- 
- static ssize_t srbds_show_state(char *buf)
+ /**
+  * try_to_del_timer_sync - Try to deactivate a timer
+- * @timer: timer to delete
++ * @timer:	Timer to deactivate
++ *
++ * This function tries to deactivate a timer. On success the timer is not
++ * queued and the timer callback function is not running on any CPU.
+  *
+- * This function tries to deactivate a timer. Upon successful (ret >= 0)
+- * exit the timer is not queued and the handler is not running on any CPU.
++ * This function does not guarantee that the timer cannot be rearmed right
++ * after dropping the base lock. That needs to be prevented by the calling
++ * code if necessary.
++ *
++ * Return:
++ * * %0  - The timer was not pending
++ * * %1  - The timer was pending and deactivated
++ * * %-1 - The timer callback function is running on a different CPU
+  */
+ int try_to_del_timer_sync(struct timer_list *timer)
  {
--	return sprintf(buf, "%s\n", srbds_strings[srbds_mitigation]);
-+	return sysfs_emit(buf, "%s\n", srbds_strings[srbds_mitigation]);
- }
+@@ -1314,23 +1343,19 @@ static inline void del_timer_wait_running(struct timer_list *timer) { }
  
- static ssize_t retbleed_show_state(char *buf)
+ #if defined(CONFIG_SMP) || defined(CONFIG_PREEMPT_RT)
+ /**
+- * del_timer_sync - deactivate a timer and wait for the handler to finish.
+- * @timer: the timer to be deactivated
+- *
+- * This function only differs from del_timer() on SMP: besides deactivating
+- * the timer it also makes sure the handler has finished executing on other
+- * CPUs.
++ * del_timer_sync - Deactivate a timer and wait for the handler to finish.
++ * @timer:	The timer to be deactivated
+  *
+  * Synchronization rules: Callers must prevent restarting of the timer,
+  * otherwise this function is meaningless. It must not be called from
+  * interrupt contexts unless the timer is an irqsafe one. The caller must
+- * not hold locks which would prevent completion of the timer's
+- * handler. The timer's handler must not call add_timer_on(). Upon exit the
+- * timer is not queued and the handler is not running on any CPU.
++ * not hold locks which would prevent completion of the timer's callback
++ * function. The timer's handler must not call add_timer_on(). Upon exit
++ * the timer is not queued and the handler is not running on any CPU.
+  *
+- * Note: For !irqsafe timers, you must not hold locks that are held in
+- *   interrupt context while calling this function. Even if the lock has
+- *   nothing to do with the timer in question.  Here's why::
++ * For !irqsafe timers, the caller must not hold locks that are held in
++ * interrupt context. Even if the lock has nothing to do with the timer in
++ * question.  Here's why::
+  *
+  *    CPU0                             CPU1
+  *    ----                             ----
+@@ -1344,10 +1369,17 @@ static inline void del_timer_wait_running(struct timer_list *timer) { }
+  *    while (base->running_timer == mytimer);
+  *
+  * Now del_timer_sync() will never return and never release somelock.
+- * The interrupt on the other CPU is waiting to grab somelock but
+- * it has interrupted the softirq that CPU0 is waiting to finish.
++ * The interrupt on the other CPU is waiting to grab somelock but it has
++ * interrupted the softirq that CPU0 is waiting to finish.
++ *
++ * This function cannot guarantee that the timer is not rearmed again by
++ * some concurrent or preempting code, right after it dropped the base
++ * lock. If there is the possibility of a concurrent rearm then the return
++ * value of the function is meaningless.
+  *
+- * The function returns whether it has deactivated a pending timer or not.
++ * Return:
++ * * %0	- The timer was not pending
++ * * %1	- The timer was pending and deactivated
+  */
+ int del_timer_sync(struct timer_list *timer)
  {
- 	if (retbleed_mitigation == RETBLEED_MITIGATION_UNRET ||
- 	    retbleed_mitigation == RETBLEED_MITIGATION_IBPB) {
--	    if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD &&
--		boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
--		    return sprintf(buf, "Vulnerable: untrained return thunk / IBPB on non-AMD based uarch\n");
--
--	    return sprintf(buf, "%s; SMT %s\n",
--			   retbleed_strings[retbleed_mitigation],
--			   !sched_smt_active() ? "disabled" :
--			   spectre_v2_user_stibp == SPECTRE_V2_USER_STRICT ||
--			   spectre_v2_user_stibp == SPECTRE_V2_USER_STRICT_PREFERRED ?
--			   "enabled with STIBP protection" : "vulnerable");
-+		if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD &&
-+		    boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
-+			return sysfs_emit(buf, "Vulnerable: untrained return thunk / IBPB on non-AMD based uarch\n");
-+
-+		return sysfs_emit(buf, "%s; SMT %s\n", retbleed_strings[retbleed_mitigation],
-+				  !sched_smt_active() ? "disabled" :
-+				  spectre_v2_user_stibp == SPECTRE_V2_USER_STRICT ||
-+				  spectre_v2_user_stibp == SPECTRE_V2_USER_STRICT_PREFERRED ?
-+				  "enabled with STIBP protection" : "vulnerable");
- 	}
- 
--	return sprintf(buf, "%s\n", retbleed_strings[retbleed_mitigation]);
-+	return sysfs_emit(buf, "%s\n", retbleed_strings[retbleed_mitigation]);
- }
- 
- static ssize_t gds_show_state(char *buf)
-@@ -2633,26 +2632,26 @@ static ssize_t cpu_show_common(struct de
- 			       char *buf, unsigned int bug)
- {
- 	if (!boot_cpu_has_bug(bug))
--		return sprintf(buf, "Not affected\n");
-+		return sysfs_emit(buf, "Not affected\n");
- 
- 	switch (bug) {
- 	case X86_BUG_CPU_MELTDOWN:
- 		if (boot_cpu_has(X86_FEATURE_PTI))
--			return sprintf(buf, "Mitigation: PTI\n");
-+			return sysfs_emit(buf, "Mitigation: PTI\n");
- 
- 		if (hypervisor_is_type(X86_HYPER_XEN_PV))
--			return sprintf(buf, "Unknown (XEN PV detected, hypervisor mitigation required)\n");
-+			return sysfs_emit(buf, "Unknown (XEN PV detected, hypervisor mitigation required)\n");
- 
- 		break;
- 
- 	case X86_BUG_SPECTRE_V1:
--		return sprintf(buf, "%s\n", spectre_v1_strings[spectre_v1_mitigation]);
-+		return sysfs_emit(buf, "%s\n", spectre_v1_strings[spectre_v1_mitigation]);
- 
- 	case X86_BUG_SPECTRE_V2:
- 		return spectre_v2_show_state(buf);
- 
- 	case X86_BUG_SPEC_STORE_BYPASS:
--		return sprintf(buf, "%s\n", ssb_strings[ssb_mode]);
-+		return sysfs_emit(buf, "%s\n", ssb_strings[ssb_mode]);
- 
- 	case X86_BUG_L1TF:
- 		if (boot_cpu_has(X86_FEATURE_L1TF_PTEINV))
-@@ -2688,7 +2687,7 @@ static ssize_t cpu_show_common(struct de
- 		break;
- 	}
- 
--	return sprintf(buf, "Vulnerable\n");
-+	return sysfs_emit(buf, "Vulnerable\n");
- }
- 
- ssize_t cpu_show_meltdown(struct device *dev, struct device_attribute *attr, char *buf)
+-- 
+2.43.0
+
 
 
