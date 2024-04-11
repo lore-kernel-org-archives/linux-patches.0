@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1925C145B28;
-	Thu, 11 Apr 2024 10:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00824145B28;
+	Thu, 11 Apr 2024 10:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830437; cv=none; b=UFSOSTVZQuR6PSz5hSY6tVdBHby4mHNeoCp56cRposyB5ZffWH/Zi3MLQQ3dQr8ossAyQjDiAFlYppYXD21Y+dsePByoV8JXClF3VmY3J+lzwd3sBSG7fS/R1ZbXr9XCEFbCGVnxbImiktqotEONBRIGytTc1yHIvfA5EnlV5Z8=
+	t=1712830440; cv=none; b=IBIM+PI/IRtWKzv/FQSwAJkx1j1X3XTVEG+REyIFMu31LDQyGSksKvEkAWNcl9hbBt7kiG8zZWhNeMgk73zlMuO6IYQIPZeM3WdUHItlRyFs0fIGhJecUwGTWzdaGBRhFy7ISyST/f1KU3ojGflbiGkjz+YrMcazlJ/O3mKDEGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830437; c=relaxed/simple;
-	bh=MyU0IAWzR6C2RY3EXP2BPALFUp0kNTMtwHMuwlYE2/M=;
+	s=arc-20240116; t=1712830440; c=relaxed/simple;
+	bh=GZq4rqym54EtBSV+8bz2DQxfuoWQ1JV86bmH3jgYm9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pvx2kh1cd9LeXD0g054lFC7G0+TE76OBPYAxDr5P6l9vSOVplY5FOyxZQb8drGUZrJlvC/7eNlL8Kl380qWhljjlfNnBmEBj7tnyTWNVxKhIXQn3TVrqptCUNDUXoaaWyoXib9mcHyu4wGZD7JK3gF77yrE2vrpsbRVVlhKL0Ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hir788aC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sAHlzTL/UVzMLzJ6Gba7vhO+F8SOxGHc/gzOWuy5qJOcwL11IZC2pMJUD1/atzPWRkfws7jDupeUjYoPuwwt0WerYf0MInENRdBpWkBIr73BWH89voFo6Ptp9AjwiqL+oKzG85YddZOnjATAh093ykahv9LG0z+K2RtU4+z9T+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QopCVghZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hir788aC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B8DC433C7;
-	Thu, 11 Apr 2024 10:13:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QopCVghZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D5AFC433C7;
+	Thu, 11 Apr 2024 10:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830437;
-	bh=MyU0IAWzR6C2RY3EXP2BPALFUp0kNTMtwHMuwlYE2/M=;
+	s=korg; t=1712830439;
+	bh=GZq4rqym54EtBSV+8bz2DQxfuoWQ1JV86bmH3jgYm9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hir788aCsOXCpXquQLM2h1GFf0cMeUU8afkXTAqEH0wraKmYs3e+ba+sYA63OmKMl
-	 lpZ9HVXQoSMO9YqYVFawwTjzpIe24BVLTSADGjz5AqHUrbAOaJvRzFtBkwf0e7JTSu
-	 tzjSib7fFgvNmQtk58CeW06Rv0OAixOnk7JDbbG8=
+	b=QopCVghZMojqyRkzAdHHG12DTMr33pvP5uT42P5e1REYfqWBRB7gb3YVzCVAXlMeh
+	 chp5WzxojymKYWAh8M+JXCW+v6ZS0jFFSIZpk2gYSsuA8zXp04VWHYCd4H6GSP5OPE
+	 BN+eud/1iOwRTD4ErO9NkqskOjUHR8v94MiR589M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@redhat.com>,
-	Dave Airlie <airlied@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 138/143] nouveau: fix devinit paths to only handle display on GSP.
-Date: Thu, 11 Apr 2024 11:56:46 +0200
-Message-ID: <20240411095425.054960679@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.8 139/143] Bluetooth: btintel: Fixe build regression
+Date: Thu, 11 Apr 2024 11:56:47 +0200
+Message-ID: <20240411095425.083974307@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -51,74 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 718c4fb221dbeff9072810841b949413c5ffc345 ]
+commit 6e62ebfb49eb65bdcbfc5797db55e0ce7f79c3dd upstream.
 
-This reverts:
-nouveau/gsp: don't check devinit disable on GSP.
-and applies a further fix.
+This fixes the following build regression:
 
-It turns out the open gpu driver, checks this register,
-but only for display.
+drivers-bluetooth-btintel.c-btintel_read_version()-warn:
+passing-zero-to-PTR_ERR
 
-Match that behaviour and in the turing path only disable
-the display block. (ampere already only does displays).
-
-Fixes: 5d4e8ae6e57b ("nouveau/gsp: don't check devinit disable on GSP.")
-Reviewed-by: Danilo Krummrich <dakr@redhat.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240408064243.2219527-1-airlied@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b79e04091010 ("Bluetooth: btintel: Fix null ptr deref in btintel_read_version")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gm107.c | 12 ++++++++----
- drivers/gpu/drm/nouveau/nvkm/subdev/devinit/r535.c  |  1 +
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/bluetooth/btintel.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gm107.c b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gm107.c
-index 7bcbc4895ec22..271bfa038f5bc 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gm107.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gm107.c
-@@ -25,6 +25,7 @@
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -435,13 +435,13 @@ int btintel_read_version(struct hci_dev
+ 	struct sk_buff *skb;
  
- #include <subdev/bios.h>
- #include <subdev/bios/init.h>
-+#include <subdev/gsp.h>
+ 	skb = __hci_cmd_sync(hdev, 0xfc05, 0, NULL, HCI_CMD_TIMEOUT);
+-	if (IS_ERR_OR_NULL(skb)) {
++	if (IS_ERR(skb)) {
+ 		bt_dev_err(hdev, "Reading Intel version information failed (%ld)",
+ 			   PTR_ERR(skb));
+ 		return PTR_ERR(skb);
+ 	}
  
- void
- gm107_devinit_disable(struct nvkm_devinit *init)
-@@ -33,10 +34,13 @@ gm107_devinit_disable(struct nvkm_devinit *init)
- 	u32 r021c00 = nvkm_rd32(device, 0x021c00);
- 	u32 r021c04 = nvkm_rd32(device, 0x021c04);
- 
--	if (r021c00 & 0x00000001)
--		nvkm_subdev_disable(device, NVKM_ENGINE_CE, 0);
--	if (r021c00 & 0x00000004)
--		nvkm_subdev_disable(device, NVKM_ENGINE_CE, 2);
-+	/* gsp only wants to enable/disable display */
-+	if (!nvkm_gsp_rm(device->gsp)) {
-+		if (r021c00 & 0x00000001)
-+			nvkm_subdev_disable(device, NVKM_ENGINE_CE, 0);
-+		if (r021c00 & 0x00000004)
-+			nvkm_subdev_disable(device, NVKM_ENGINE_CE, 2);
-+	}
- 	if (r021c04 & 0x00000001)
- 		nvkm_subdev_disable(device, NVKM_ENGINE_DISP, 0);
- }
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/r535.c b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/r535.c
-index 11b4c9c274a1a..666eb93b1742c 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/r535.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/r535.c
-@@ -41,6 +41,7 @@ r535_devinit_new(const struct nvkm_devinit_func *hw,
- 
- 	rm->dtor = r535_devinit_dtor;
- 	rm->post = hw->post;
-+	rm->disable = hw->disable;
- 
- 	ret = nv50_devinit_new_(rm, device, type, inst, pdevinit);
- 	if (ret)
--- 
-2.43.0
-
+-	if (skb->len != sizeof(*ver)) {
++	if (!skb || skb->len != sizeof(*ver)) {
+ 		bt_dev_err(hdev, "Intel version event size mismatch");
+ 		kfree_skb(skb);
+ 		return -EILSEQ;
 
 
