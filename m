@@ -1,113 +1,142 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622E714600E
-	for <patches@lists.linux.dev>; Thu, 11 Apr 2024 10:38:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D069F13CF89;
+	Thu, 11 Apr 2024 10:38:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831914; cv=none; b=GiPOM0BQFNZOVJ3Fa12avCDhkb55/s+8os5jKM6+tRH26fmWqkJnsAKsOH0PXoz7X5mQNIgBRdRFUYvSTIrdiuZShPXUhDBLTodZkanOzkJnNNquDWBGC8X+wvM/eTJiEdcwdIOR5T4t35I7UVgyckBswViGrGWsAy659sm3qJs=
+	t=1712831915; cv=none; b=ZIdJfU61H+vT3I74gh+mkiEbAiJoeUnlUWjV4GpTDekP0vkBwL3gz8Meq08I0/GRfliVlaW3fiGkHvXKi9sDstXOW7yf3H86gr5VA53eJ4NvyvdwCSjHAhq3tvd92+ba1znN2TFZSLVtoQEENULasrWpvu1IsJgXUEwO2kK0a6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831914; c=relaxed/simple;
-	bh=MESeRDHPunaASxUaHAPetHb9HjlSRtpxTfy9NZaixs4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tW+ZCpqO+mwwZZbnoPqu8YP52+0rOhdZBsomiX7on/6hX8ssgWeEcoFXUS6IDcTvQJT4cvCqlKy2Vv30VXnsAFWAkBJWb+L8xtA2Svd7W9erT0Los0q+VyyHP8ODPWzL5radXDjCyiuudGGqAeRVv9WnrZ8nYvEt0e2ZU94lKdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=UpLQosfD; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1712831915; c=relaxed/simple;
+	bh=gbVmAJkn+m4RiigbWiPAKsix54Net+kEib7IFMbe7/k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=C4N8qzG434+ogEFLROxkRUOz523kPg2aoHk66iwVl+WdnkgSUO8+UcBbH5r/L1LCIpM1CBfLnxTjA/yi8oEA/UNJqGXnqZSaUxJz+9F5h4/yHdCdVFagieDkxizkZAYjy7aIBZW4cf9PENaOn43lrt+oWG1j/sxTfAU9zUWaAvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHeFVx82; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="UpLQosfD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1712831911;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0eR5GNV+l4scBem2kbMM6ywL7pC+HMBlFnK+oKg3nC0=;
-	b=UpLQosfDjC8ippZZ9n5tEodGUI0ylRULt1NtTjTOzbnF9elMAx3v3J1agCmRGmwobVAknw
-	SCnI5GqGTt6yUoWJFX/rttkLfxrxeMHBzRTLDEHUb7N1ouSGqL07ndL5Z0FctVcvRrC1eY
-	jyQgBuDQUK/QucblSXGfPh7ghykS6ps=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-297-xl4CTr1qPRaGTyNHWWFMlw-1; Thu, 11 Apr 2024 06:38:30 -0400
-X-MC-Unique: xl4CTr1qPRaGTyNHWWFMlw-1
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-2a4fc4cf54dso4283613a91.1
-        for <patches@lists.linux.dev>; Thu, 11 Apr 2024 03:38:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712831909; x=1713436709;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0eR5GNV+l4scBem2kbMM6ywL7pC+HMBlFnK+oKg3nC0=;
-        b=CusqRdiiV+1cI+Df3gq6fpVaPA73quVbsq0/yJkdF5sTLB1XYrRurCCGFbC/+p1oA7
-         aGPEKKV/wGVgHQQcjwgCqVpQ1KL5hAJ/pIRKzKuGK34PHVNr8xZD/NcQJLQdgYEix+9L
-         IkiQHX5dO0bPqExGxscubhRCC2B/FvOuIZBiEDaSCl0o+NSEsqtlK2Q2DSgHdftajt9e
-         4YGAe7N32nV7cyvCgiME4knIEseKMV4CZ2fibCgdHNV46tRNo8Af4FgxXgvJ5CFHwVOS
-         28s556y2JFBsqwH89pW7rFjJSwIFbTT/il5OPUKweiZptS/dRwSrDmAqapZeMr+k47AI
-         lPnw==
-X-Forwarded-Encrypted: i=1; AJvYcCVGnjh6LZtrGCvsZDgsuflKqCqE4h/yyjWZbtB96lJQBZ7x9utTPypkAw01i/hUS9XyIjmIW+6N7fHnVvmcQarJFIsc9AQlaw==
-X-Gm-Message-State: AOJu0YwKdN2ZuuQjzgp48PzLE4LzTK3DOx3AeUNbVxIOY+pcwWR9aK7K
-	hYgCtYCr+rCjoEMqCOeCHvF0sX6NdammMBQGU3H/yKadjWGztBudDgJtY552Q5QzX52YZLYMquR
-	CSNnq6artTLQuMPwV/ifiZpLG4RWUkjV2ajjTKH2jCMpprcW1uTSdlk02QeYqjTJTFouUZE2eZY
-	1+CD0c0VbHy3Tf8kQN2S0HuS+yDL5kHA==
-X-Received: by 2002:a17:90a:fe8c:b0:2a4:ad2e:1c5a with SMTP id co12-20020a17090afe8c00b002a4ad2e1c5amr5444735pjb.35.1712831909030;
-        Thu, 11 Apr 2024 03:38:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFYG81oDiN+wTKwCsGUjBQEW5injtojjDmF1lTGqvLT/7uNsSF/5crOEW6Z3A5mh2Rjwp8eO8wI6YZpwsipvhA=
-X-Received: by 2002:a17:90a:fe8c:b0:2a4:ad2e:1c5a with SMTP id
- co12-20020a17090afe8c00b002a4ad2e1c5amr5444724pjb.35.1712831908682; Thu, 11
- Apr 2024 03:38:28 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHeFVx82"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5549BC433F1;
+	Thu, 11 Apr 2024 10:38:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1712831915;
+	bh=gbVmAJkn+m4RiigbWiPAKsix54Net+kEib7IFMbe7/k=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=HHeFVx82T9hSCkzVqAE939WxBYyenqetIZJqdm7rnwzfk6gK+xwcVxsRwCDMswwu9
+	 KE9Nn9q/VyyNcZneC1NHQixrqVQu0i08bx+uTT5fi0ulmoO4r8fVxJaW77HiKC67EX
+	 EqtiqUaMSKYXjiovCxs6CeheQwZLNYcXXHVzB4SY=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Subject: [PATCH 5.10 169/294] usb: dwc2: host: Fix hibernation flow
+Date: Thu, 11 Apr 2024 11:55:32 +0200
+Message-ID: <20240411095440.723838096@linuxfoundation.org>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
+References: <20240411095435.633465671@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240411095424.875421572@linuxfoundation.org> <20240411095426.249853460@linuxfoundation.org>
-In-Reply-To: <20240411095426.249853460@linuxfoundation.org>
-From: Miklos Szeredi <mszeredi@redhat.com>
-Date: Thu, 11 Apr 2024 12:38:17 +0200
-Message-ID: <CAOssrKfFgJcKK1RGbo4bDy0DkQ57Fe3Q9H89Jwgjh9yVj3qwJg@mail.gmail.com>
-Subject: Re: [PATCH 5.4 045/215] fuse: store fuse_conn in fuse_req
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Max Reitz <mreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, Sasha Levin <sashal@kernel.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, Apr 11, 2024 at 12:16=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> 5.4-stable review patch.  If anyone has any objections, please let me kno=
-w.
->
-> ------------------
->
-> From: Max Reitz <mreitz@redhat.com>
->
-> [ Upstream commit 24754db2728a87c513cc480c70c09072a7a40ba6 ]
->
-> Every fuse_req belongs to a fuse_conn.  Right now, we always know which
-> fuse_conn that is based on the respective device, but we want to allow
-> multiple (sub)mounts per single connection, and then the corresponding
-> filesystem is not going to be so trivial to obtain.
->
-> Storing a pointer to the associated fuse_conn in every fuse_req will
-> allow us to trivially find any request's superblock (and thus
-> filesystem) even then.
->
-> Signed-off-by: Max Reitz <mreitz@redhat.com>
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-> Stable-dep-of: b1fe686a765e ("fuse: don't unhash root")
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-Why are this and the following patch marked as dependencies of
-b1fe686a765e ("fuse: don't unhash root")?
+------------------
 
-I think they are completely independent.   While backporting them is
-probably harmless, it should not be needed.
+From: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
 
-Thanks,
-Miklos
+commit 3c7b9856a82227db01a20171d2e24c7ce305d59b upstream.
+
+Added to backup/restore registers HFLBADDR, HCCHARi, HCSPLTi,
+HCTSIZi, HCDMAi and HCDMABi.
+
+Fixes: 58e52ff6a6c3 ("usb: dwc2: Move register save and restore functions")
+Fixes: d17ee77b3044 ("usb: dwc2: add controller hibernation support")
+CC: stable@vger.kernel.org
+Signed-off-by: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Link: https://lore.kernel.org/r/c2d10ee6098b9b009a8e94191e046004747d3bdd.1708945444.git.Minas.Harutyunyan@synopsys.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/usb/dwc2/core.h |   12 ++++++++++++
+ drivers/usb/dwc2/hcd.c  |   18 ++++++++++++++++--
+ 2 files changed, 28 insertions(+), 2 deletions(-)
+
+--- a/drivers/usb/dwc2/core.h
++++ b/drivers/usb/dwc2/core.h
+@@ -748,8 +748,14 @@ struct dwc2_dregs_backup {
+  * struct dwc2_hregs_backup - Holds host registers state before
+  * entering partial power down
+  * @hcfg:		Backup of HCFG register
++ * @hflbaddr:		Backup of HFLBADDR register
+  * @haintmsk:		Backup of HAINTMSK register
++ * @hcchar:		Backup of HCCHAR register
++ * @hcsplt:		Backup of HCSPLT register
+  * @hcintmsk:		Backup of HCINTMSK register
++ * @hctsiz:		Backup of HCTSIZ register
++ * @hdma:		Backup of HCDMA register
++ * @hcdmab:		Backup of HCDMAB register
+  * @hprt0:		Backup of HPTR0 register
+  * @hfir:		Backup of HFIR register
+  * @hptxfsiz:		Backup of HPTXFSIZ register
+@@ -757,8 +763,14 @@ struct dwc2_dregs_backup {
+  */
+ struct dwc2_hregs_backup {
+ 	u32 hcfg;
++	u32 hflbaddr;
+ 	u32 haintmsk;
++	u32 hcchar[MAX_EPS_CHANNELS];
++	u32 hcsplt[MAX_EPS_CHANNELS];
+ 	u32 hcintmsk[MAX_EPS_CHANNELS];
++	u32 hctsiz[MAX_EPS_CHANNELS];
++	u32 hcidma[MAX_EPS_CHANNELS];
++	u32 hcidmab[MAX_EPS_CHANNELS];
+ 	u32 hprt0;
+ 	u32 hfir;
+ 	u32 hptxfsiz;
+--- a/drivers/usb/dwc2/hcd.c
++++ b/drivers/usb/dwc2/hcd.c
+@@ -5319,9 +5319,16 @@ int dwc2_backup_host_registers(struct dw
+ 	/* Backup Host regs */
+ 	hr = &hsotg->hr_backup;
+ 	hr->hcfg = dwc2_readl(hsotg, HCFG);
++	hr->hflbaddr = dwc2_readl(hsotg, HFLBADDR);
+ 	hr->haintmsk = dwc2_readl(hsotg, HAINTMSK);
+-	for (i = 0; i < hsotg->params.host_channels; ++i)
++	for (i = 0; i < hsotg->params.host_channels; ++i) {
++		hr->hcchar[i] = dwc2_readl(hsotg, HCCHAR(i));
++		hr->hcsplt[i] = dwc2_readl(hsotg, HCSPLT(i));
+ 		hr->hcintmsk[i] = dwc2_readl(hsotg, HCINTMSK(i));
++		hr->hctsiz[i] = dwc2_readl(hsotg, HCTSIZ(i));
++		hr->hcidma[i] = dwc2_readl(hsotg, HCDMA(i));
++		hr->hcidmab[i] = dwc2_readl(hsotg, HCDMAB(i));
++	}
+ 
+ 	hr->hprt0 = dwc2_read_hprt0(hsotg);
+ 	hr->hfir = dwc2_readl(hsotg, HFIR);
+@@ -5355,10 +5362,17 @@ int dwc2_restore_host_registers(struct d
+ 	hr->valid = false;
+ 
+ 	dwc2_writel(hsotg, hr->hcfg, HCFG);
++	dwc2_writel(hsotg, hr->hflbaddr, HFLBADDR);
+ 	dwc2_writel(hsotg, hr->haintmsk, HAINTMSK);
+ 
+-	for (i = 0; i < hsotg->params.host_channels; ++i)
++	for (i = 0; i < hsotg->params.host_channels; ++i) {
++		dwc2_writel(hsotg, hr->hcchar[i], HCCHAR(i));
++		dwc2_writel(hsotg, hr->hcsplt[i], HCSPLT(i));
+ 		dwc2_writel(hsotg, hr->hcintmsk[i], HCINTMSK(i));
++		dwc2_writel(hsotg, hr->hctsiz[i], HCTSIZ(i));
++		dwc2_writel(hsotg, hr->hcidma[i], HCDMA(i));
++		dwc2_writel(hsotg, hr->hcidmab[i], HCDMAB(i));
++	}
+ 
+ 	dwc2_writel(hsotg, hr->hprt0, HPRT0);
+ 	dwc2_writel(hsotg, hr->hfir, HFIR);
+
 
