@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AC8142624;
-	Thu, 11 Apr 2024 10:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF663146D52;
+	Thu, 11 Apr 2024 10:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832375; cv=none; b=U+cfUUngN4+p1yJjh1VqG7YuEJcVKoLK5WG2mSiVrImgYbL30atw4yJvXRshtsWa4xyZVHQWjQ5jsBl6clDQMyq8u6zVtPimHBqU3ymPzxEkDgi6Ts2bqgolzCZl2P3agiEk4xVQO3jaKAnOlCTIRh40z/O+jI8sQyhb+htqDKU=
+	t=1712832378; cv=none; b=Z0enGj5+EnSSaHhsA91FAKkvV50G0J13DlRovtolYoLz6xh/zJPV7v5wv0mKmkKnYg+GtBwgckkV0tbG53jurkoXl2lUE64r9jrABTi88QJnjg0S/BU7B9kiObPGYCQaRxZpm02YV7P3jl/bIoT89cqr8HeuJQbYwxSWLsLEOlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832375; c=relaxed/simple;
-	bh=6sythqzJ2xsLx+P8uIZeymCkq/HN/UF1mGufEmIooNM=;
+	s=arc-20240116; t=1712832378; c=relaxed/simple;
+	bh=hQ9D75srD9U6bMn4kG8eFiIGYu8k2/L+HaGYUuO7uds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhUCoBNKPXqmQaIp5dl/UE0PPixluhfexXqIf5LnmLyOJRCnHKJAAvYxfUkAyFzGq9Z0buVEK44sEpdJzWFDe6i/ACJijKV34QeSceLxjH/bKCuYEghoXQEQQfRMS9/3nGwTcICgtUtfbuVuYtqP/7R8WSFEC3m1z9mkRuOP2CI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHwwSRAM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bUPC+Ht8XR3qczz/aVr6ZcVDfDbNyzTBj7446HhzZcpWK0txZkyeGXRLMlySkbyXA2L54Kv+IgveDBNkFPjq43KX4jqrmadaQvqQuDpHbENbiUQ+RE1ElaZcmeCBWQwLNzyeQM12bnIzy3mXEBs5Cu64aAJkaGl4dVCkWjQRBnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqzUNnKw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHwwSRAM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E23C433F1;
-	Thu, 11 Apr 2024 10:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqzUNnKw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75BF9C43399;
+	Thu, 11 Apr 2024 10:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832374;
-	bh=6sythqzJ2xsLx+P8uIZeymCkq/HN/UF1mGufEmIooNM=;
+	s=korg; t=1712832377;
+	bh=hQ9D75srD9U6bMn4kG8eFiIGYu8k2/L+HaGYUuO7uds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GHwwSRAMZj2jz9iNln04iArEJO+JSyYAVDLvKBvPmz0B6PUSIJ0BpCoNnKg6ODBNa
-	 FuxGUVrHmdA2iEh0eHwjRkwEd0kf/zhvfiCca3CvHsUuCeJLuBGou6S/Yy7TmFIFM6
-	 cKNUdEwrOhTIMNcJWBWqfyl00+tLVSXvO+GxFRBs=
+	b=NqzUNnKwHujCKGv+YzU3iES//psKpoS7meYOI47gF7u8u0wxtxacDH/ElmNtdCFs8
+	 7Dog2DgVYVXuFDg5Bte0tQa0puvrUG7ZnYGrDsXdZkNktYrVzr6AeIzpn1vnGeUwJs
+	 Ahz/A4LAFF0T9o4xOJtUYso5K4rtLQQ4aKb2yMpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+830d9e3fa61968246abd@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 27/83] Bluetooth: btintel: Fix null ptr deref in btintel_read_version
-Date: Thu, 11 Apr 2024 11:56:59 +0200
-Message-ID: <20240411095413.495433512@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 28/83] Bluetooth: btmtk: Add MODULE_FIRMWARE() for MT7922
+Date: Thu, 11 Apr 2024 11:57:00 +0200
+Message-ID: <20240411095413.525049026@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -52,34 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit b79e040910101b020931ba0c9a6b77e81ab7f645 ]
+[ Upstream commit 3e465a07cdf444140f16bc57025c23fcafdde997 ]
 
-If hci_cmd_sync_complete() is triggered and skb is NULL, then
-hdev->req_skb is NULL, which will cause this issue.
+Since dracut refers to the module info for defining the required
+firmware files and btmtk driver doesn't provide the firmware info for
+MT7922, the generate initrd misses the firmware, resulting in the
+broken Bluetooth.
 
-Reported-and-tested-by: syzbot+830d9e3fa61968246abd@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+This patch simply adds the MODULE_FIRMWARE() for the missing entry
+for covering that.
+
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1214133
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btmtk.c | 1 +
+ drivers/bluetooth/btmtk.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index bbad1207cdfd8..c77c06b84d86c 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -405,7 +405,7 @@ int btintel_read_version(struct hci_dev *hdev, struct intel_version *ver)
- 	struct sk_buff *skb;
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 809762d64fc65..b77e337778a44 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -288,4 +288,5 @@ MODULE_LICENSE("GPL");
+ MODULE_FIRMWARE(FIRMWARE_MT7622);
+ MODULE_FIRMWARE(FIRMWARE_MT7663);
+ MODULE_FIRMWARE(FIRMWARE_MT7668);
++MODULE_FIRMWARE(FIRMWARE_MT7922);
+ MODULE_FIRMWARE(FIRMWARE_MT7961);
+diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
+index 2a88ea8e475e8..ee0b1d27aa5c0 100644
+--- a/drivers/bluetooth/btmtk.h
++++ b/drivers/bluetooth/btmtk.h
+@@ -4,6 +4,7 @@
+ #define FIRMWARE_MT7622		"mediatek/mt7622pr2h.bin"
+ #define FIRMWARE_MT7663		"mediatek/mt7663pr2h.bin"
+ #define FIRMWARE_MT7668		"mediatek/mt7668pr2h.bin"
++#define FIRMWARE_MT7922		"mediatek/BT_RAM_CODE_MT7922_1_1_hdr.bin"
+ #define FIRMWARE_MT7961		"mediatek/BT_RAM_CODE_MT7961_1_2_hdr.bin"
  
- 	skb = __hci_cmd_sync(hdev, 0xfc05, 0, NULL, HCI_CMD_TIMEOUT);
--	if (IS_ERR(skb)) {
-+	if (IS_ERR_OR_NULL(skb)) {
- 		bt_dev_err(hdev, "Reading Intel version information failed (%ld)",
- 			   PTR_ERR(skb));
- 		return PTR_ERR(skb);
+ #define HCI_EV_WMT 0xe4
 -- 
 2.43.0
 
