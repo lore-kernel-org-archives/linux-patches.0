@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BD62EAE5;
-	Thu, 11 Apr 2024 10:52:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983EB2EAE5;
+	Thu, 11 Apr 2024 10:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832720; cv=none; b=eFae+VvvBIgZWKup7JDXepMTUz+pdiNe68+VSBdQ7gGdxEZebaz+w7Xwfh+rBCihgXbexVUBa9oP+y/I3eA4MuJ2eFKO+BZzM3/1kTt8lBdmmO7y8FDoavtKEDy/AJC5t0Thy4OAI0SN+bzOeMO+KM+vOkx8vUH6/I95SxoyxG0=
+	t=1712832723; cv=none; b=EOZ1cU7Hbwk0B+2rCiVYm+Rsnb6kM/VNGHUIdXGR/c84P8P//XyF2EX3pn36ViwmggwPe0i5LkRASGxZnjhOk/9Sg/aBRF9J352F7AkJjOegCtTYHhvdBJXCUy1bTUVxOgZoyCwYsaap/e3s7Z049/S5e45xjTDCA5zdYUDGn14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832720; c=relaxed/simple;
-	bh=1J93E/afZNCthVmeH02jAU9Cr86qqRVQTHWLCPzcr3M=;
+	s=arc-20240116; t=1712832723; c=relaxed/simple;
+	bh=AWc2Lplb5bhlV97fYLWA6MnntRnOn/GWvAqxN6rTvSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l2rbRVJTVUG8B0D5dZ4gsUFScbwScgqM5xeJ0Zu5Ma/gFkkRe5ZJ0X1kjR3C+aRIKU+nz1s8koqrTK7el+PaCkXWjQHy99JPafgvuKQuReyOC2yy+QtBzlmzXa7/xGr7zFr3to9Ys35E1gSITWz4fuJEPY3vs7UTbqZRmaWzGH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYG7bMU4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hsQyBJUSVcmX5XFggrOo7fBnEpcvV0yuQmsuyhwuayHh8Zqmvy5K1qX+qJeSR0SYf8NCMsKci5JO3ncczKW9Kqy9yThUd1pLErf0RarxtAhgE7rWSMyrsotwP/TqmsqCZPj9Z7IOWxgljbotCwYDF/DfKOqbLk5lmuS0JtyaX3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P669n9Ek; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYG7bMU4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F70CC433F1;
-	Thu, 11 Apr 2024 10:52:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P669n9Ek"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6EAC433F1;
+	Thu, 11 Apr 2024 10:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832720;
-	bh=1J93E/afZNCthVmeH02jAU9Cr86qqRVQTHWLCPzcr3M=;
+	s=korg; t=1712832723;
+	bh=AWc2Lplb5bhlV97fYLWA6MnntRnOn/GWvAqxN6rTvSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pYG7bMU43cdkAAdhlH5QoEzt2sTuZbq10wWmNeG+QlLzToA4OV0WvgA7aZBda6TEZ
-	 plTvOrPq7OJGhcwTPhMhlWNktONWP5njCZY/7mJHQ0eKK5eJx9WiqipFD+XL4DW0K7
-	 PSvG1IpqNL0GotufhJQXvuxOsAcMsdQSGfzg7Anc=
+	b=P669n9EkKp2+Y5erNuU0DJ3pLgpLKKT2UFwWxj6KUBtPw2HnscFjtJ/LFEiXs17ng
+	 AixrDJtUlRU+f/Ua0Ah0hg84JixbIlhKYtG0CiKkaDdIYONz5f/nIYDT0UFuVqa7TS
+	 P+IxcsmJfBGVTa5XUIWJNhoQsvCCoDy5FK8A8MUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	syzbot <syzbot+69b40dc5fd40f32c199f@syzkaller.appspotmail.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 21/57] pinctrl: renesas: checker: Limit cfg reg enum checks to provided IDs
-Date: Thu, 11 Apr 2024 11:57:29 +0200
-Message-ID: <20240411095408.637703245@linuxfoundation.org>
+Subject: [PATCH 5.15 22/57] sysv: dont call sb_bread() with pointers_lock held
+Date: Thu, 11 Apr 2024 11:57:30 +0200
+Message-ID: <20240411095408.667173438@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095407.982258070@linuxfoundation.org>
 References: <20240411095407.982258070@linuxfoundation.org>
@@ -50,47 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 3803584a4e9b65bb5b013f862f55c5055aa86c25 ]
+[ Upstream commit f123dc86388cb669c3d6322702dc441abc35c31e ]
 
-If the number of provided enum IDs in a variable width config register
-description does not match the expected number, the checker uses the
-expected number for validating the individual enum IDs.
+syzbot is reporting sleep in atomic context in SysV filesystem [1], for
+sb_bread() is called with rw_spinlock held.
 
-However, this may cause out-of-bounds accesses on the array holding the
-enum IDs, leading to bogus enum_id conflict warnings.  Worse, if the bug
-is an incorrect bit field description (e.g. accidentally using "12"
-instead of "-12" for a reserved field), thousands of warnings may be
-printed, overflowing the kernel log buffer.
+A "write_lock(&pointers_lock) => read_lock(&pointers_lock) deadlock" bug
+and a "sb_bread() with write_lock(&pointers_lock)" bug were introduced by
+"Replace BKL for chain locking with sysvfs-private rwlock" in Linux 2.5.12.
 
-Fix this by limiting the enum ID check to the number of provided enum
-IDs.
+Then, "[PATCH] err1-40: sysvfs locking fix" in Linux 2.6.8 fixed the
+former bug by moving pointers_lock lock to the callers, but instead
+introduced a "sb_bread() with read_lock(&pointers_lock)" bug (which made
+this problem easier to hit).
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/c7385f44f2faebb8856bcbb4e908d846fc1531fb.1705930809.git.geert+renesas@glider.be
+Al Viro suggested that why not to do like get_branch()/get_block()/
+find_shared() in Minix filesystem does. And doing like that is almost a
+revert of "[PATCH] err1-40: sysvfs locking fix" except that get_branch()
+ from with find_shared() is called without write_lock(&pointers_lock).
+
+Reported-by: syzbot <syzbot+69b40dc5fd40f32c199f@syzkaller.appspotmail.com>
+Link: https://syzkaller.appspot.com/bug?extid=69b40dc5fd40f32c199f
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://lore.kernel.org/r/0d195f93-a22a-49a2-0020-103534d6f7f6@I-love.SAKURA.ne.jp
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/sysv/itree.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/core.c b/drivers/pinctrl/renesas/core.c
-index 75fc420b6bdf1..8d3b75231f39e 100644
---- a/drivers/pinctrl/renesas/core.c
-+++ b/drivers/pinctrl/renesas/core.c
-@@ -868,9 +868,11 @@ static void __init sh_pfc_check_cfg_reg(const char *drvname,
- 		sh_pfc_err("reg 0x%x: var_field_width declares %u instead of %u bits\n",
- 			   cfg_reg->reg, rw, cfg_reg->reg_width);
+diff --git a/fs/sysv/itree.c b/fs/sysv/itree.c
+index 1e9c520411f84..5800cb065ca58 100644
+--- a/fs/sysv/itree.c
++++ b/fs/sysv/itree.c
+@@ -82,9 +82,6 @@ static inline sysv_zone_t *block_end(struct buffer_head *bh)
+ 	return (sysv_zone_t*)((char*)bh->b_data + bh->b_size);
+ }
  
--	if (n != cfg_reg->nr_enum_ids)
-+	if (n != cfg_reg->nr_enum_ids) {
- 		sh_pfc_err("reg 0x%x: enum_ids[] has %u instead of %u values\n",
- 			   cfg_reg->reg, cfg_reg->nr_enum_ids, n);
-+		n = cfg_reg->nr_enum_ids;
-+	}
+-/*
+- * Requires read_lock(&pointers_lock) or write_lock(&pointers_lock)
+- */
+ static Indirect *get_branch(struct inode *inode,
+ 			    int depth,
+ 			    int offsets[],
+@@ -104,15 +101,18 @@ static Indirect *get_branch(struct inode *inode,
+ 		bh = sb_bread(sb, block);
+ 		if (!bh)
+ 			goto failure;
++		read_lock(&pointers_lock);
+ 		if (!verify_chain(chain, p))
+ 			goto changed;
+ 		add_chain(++p, bh, (sysv_zone_t*)bh->b_data + *++offsets);
++		read_unlock(&pointers_lock);
+ 		if (!p->key)
+ 			goto no_block;
+ 	}
+ 	return NULL;
  
- check_enum_ids:
- 	sh_pfc_check_reg_enums(drvname, cfg_reg->reg, cfg_reg->enum_ids, n);
+ changed:
++	read_unlock(&pointers_lock);
+ 	brelse(bh);
+ 	*err = -EAGAIN;
+ 	goto no_block;
+@@ -218,9 +218,7 @@ static int get_block(struct inode *inode, sector_t iblock, struct buffer_head *b
+ 		goto out;
+ 
+ reread:
+-	read_lock(&pointers_lock);
+ 	partial = get_branch(inode, depth, offsets, chain, &err);
+-	read_unlock(&pointers_lock);
+ 
+ 	/* Simplest case - block found, no allocation needed */
+ 	if (!partial) {
+@@ -290,9 +288,9 @@ static Indirect *find_shared(struct inode *inode,
+ 	*top = 0;
+ 	for (k = depth; k > 1 && !offsets[k-1]; k--)
+ 		;
++	partial = get_branch(inode, k, offsets, chain, &err);
+ 
+ 	write_lock(&pointers_lock);
+-	partial = get_branch(inode, k, offsets, chain, &err);
+ 	if (!partial)
+ 		partial = chain + k-1;
+ 	/*
 -- 
 2.43.0
 
