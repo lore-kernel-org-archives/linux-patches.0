@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB871E48E;
-	Thu, 11 Apr 2024 10:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47551E48E;
+	Thu, 11 Apr 2024 10:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832670; cv=none; b=lfw2FHHOxI/bQ7j8fy494zc2+ChsFUU8fM0LT0up/6tuOlMmaM0tWVxRELPyKMnLkXpukQK0AV6wlPY2gemgsL4oR5pQvP4rGPOoVzWFc8cotOu3vxrFDxLPSmSR4NfpEV6kxEjPG8vW2APFn4HvP27KqPNgoixDU8ja841wknM=
+	t=1712832673; cv=none; b=MnFHlCh/7VRgxKZXnu+TUQuNuq6TTM4AZJz0aBIdbely7eJvF6avfvDyGrYzleoogzPmmyHDiU03+fnpQdQJLdqHlDbYiOEdWlD9eEX08huhSQ4Plu8Vxro5n9zWCHfkrgzQJnApPlkVBJIUbbB9nLBpRPIdrmZOrDLe2QfOMLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832670; c=relaxed/simple;
-	bh=4HuwDXwpHqrq/bxqbKJzHaJXnFiuPkQRQAKQWOTFgaE=;
+	s=arc-20240116; t=1712832673; c=relaxed/simple;
+	bh=m5jcdx1dw3mOz2H6q3YfRnP5gNMD8Kl8FNtqOQ3XvqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GLyjYPrY5aZ4tmWeydCGyq+c58OykGGZ825eoPk8e+U2d3fZGECk6oPie8myow4IZt3RyCDxVgjfo68wTujSWCdDucAw7UOfQ+72ggEE4QXL9BK0HZeCsZZbGcEaZzOg+8ZIN4eOtSwQ7ror9/RPyPq0vz9fjUzX6BuuvH0Ci4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxSBhib3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p3I/YTrawsZPKv5pp8EYhTpanwRxFSmk2xs4gub8nPPo7lCD0hq/d1RTkK0ER/DoBymJxYkDIanfJyXObavf2kaayipFDBjii24bnPtgVZM5Nm7dRVVl+5Lq6ZEc0evOgKwR/wHYua6xV0L/uaZ9o9XWt41jR/eLiHB+ZkEguMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYYm3FBN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxSBhib3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BC7C433C7;
-	Thu, 11 Apr 2024 10:51:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYYm3FBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47092C433C7;
+	Thu, 11 Apr 2024 10:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832670;
-	bh=4HuwDXwpHqrq/bxqbKJzHaJXnFiuPkQRQAKQWOTFgaE=;
+	s=korg; t=1712832673;
+	bh=m5jcdx1dw3mOz2H6q3YfRnP5gNMD8Kl8FNtqOQ3XvqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxSBhib3NFTDUifuLxR+z3DyIjhupZrU6ZlzVyfzb/UYcZd8izONer+mPY5wOcjQd
-	 PiWNjYcWhDjvCgKmna7Ic+8i8iztROQdl9aE3p/Avjba1C8eWlVKqEKImMS83+R7Is
-	 0mmK5gXDC4ct9oOlQ4dwShdR4TcN7e/cV/XxqvS8=
+	b=KYYm3FBNDTicp9QWPIgge+weA0INN/HohmNuf1SNKFuA25nP2QVJVrgvUgwB9YvqG
+	 dY0OFuDX9iUMlWLja3o/mWJezC/Y7GreQUwPi+zuScXauDwm3RhJdN0tfNEa23zbpJ
+	 XdE2m7Kt5QJn7cefCFGe+r3cPJNo+Lyi0A/neHI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>,
+	Aleksandr Burakov <a.burakov@rosalinux.ru>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 16/57] btrfs: export: handle invalid inode or root reference in btrfs_get_parent()
-Date: Thu, 11 Apr 2024 11:57:24 +0200
-Message-ID: <20240411095408.486192422@linuxfoundation.org>
+Subject: [PATCH 5.15 43/57] fbdev: viafb: fix typo in hw_bitblt_1 and hw_bitblt_2
+Date: Thu, 11 Apr 2024 11:57:51 +0200
+Message-ID: <20240411095409.294268181@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095407.982258070@linuxfoundation.org>
 References: <20240411095407.982258070@linuxfoundation.org>
@@ -52,45 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Aleksandr Burakov <a.burakov@rosalinux.ru>
 
-[ Upstream commit 26b66d1d366a375745755ca7365f67110bbf6bd5 ]
+[ Upstream commit bc87bb342f106a0402186bcb588fcbe945dced4b ]
 
-The get_parent handler looks up a parent of a given dentry, this can be
-either a subvolume or a directory. The search is set up with offset -1
-but it's never expected to find such item, as it would break allowed
-range of inode number or a root id. This means it's a corruption (ext4
-also returns this error code).
+There are some actions with value 'tmp' but 'dst_addr' is checked instead.
+It is obvious that a copy-paste error was made here and the value
+of variable 'tmp' should be checked here.
 
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Aleksandr Burakov <a.burakov@rosalinux.ru>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/export.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/via/accel.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/export.c b/fs/btrfs/export.c
-index fab7eb76e53b2..58b0f04d7123f 100644
---- a/fs/btrfs/export.c
-+++ b/fs/btrfs/export.c
-@@ -161,8 +161,15 @@ struct dentry *btrfs_get_parent(struct dentry *child)
- 	ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
- 	if (ret < 0)
- 		goto fail;
-+	if (ret == 0) {
-+		/*
-+		 * Key with offset of -1 found, there would have to exist an
-+		 * inode with such number or a root with such id.
-+		 */
-+		ret = -EUCLEAN;
-+		goto fail;
-+	}
+diff --git a/drivers/video/fbdev/via/accel.c b/drivers/video/fbdev/via/accel.c
+index 0a1bc7a4d7853..1e04026f08091 100644
+--- a/drivers/video/fbdev/via/accel.c
++++ b/drivers/video/fbdev/via/accel.c
+@@ -115,7 +115,7 @@ static int hw_bitblt_1(void __iomem *engine, u8 op, u32 width, u32 height,
  
--	BUG_ON(ret == 0); /* Key with offset of -1 found */
- 	if (path->slots[0] == 0) {
- 		ret = -ENOENT;
- 		goto fail;
+ 	if (op != VIA_BITBLT_FILL) {
+ 		tmp = src_mem ? 0 : src_addr;
+-		if (dst_addr & 0xE0000007) {
++		if (tmp & 0xE0000007) {
+ 			printk(KERN_WARNING "hw_bitblt_1: Unsupported source "
+ 				"address %X\n", tmp);
+ 			return -EINVAL;
+@@ -260,7 +260,7 @@ static int hw_bitblt_2(void __iomem *engine, u8 op, u32 width, u32 height,
+ 		writel(tmp, engine + 0x18);
+ 
+ 		tmp = src_mem ? 0 : src_addr;
+-		if (dst_addr & 0xE0000007) {
++		if (tmp & 0xE0000007) {
+ 			printk(KERN_WARNING "hw_bitblt_2: Unsupported source "
+ 				"address %X\n", tmp);
+ 			return -EINVAL;
 -- 
 2.43.0
 
