@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A981813BACD;
-	Thu, 11 Apr 2024 10:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40F7140366;
+	Thu, 11 Apr 2024 10:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831838; cv=none; b=VhNT+rWziigKv4ck5DxZmwyZoSdzmpcStg+hVeIV8SGSHLDKrZrDxwdOuRPLAaosDoZLbTS6UbhnXscx6OyHGrsgo/3Ds4CdnjJzQJ53zw7PO9JM6lrsCIqE2IlJK2+/aqNDdyW0OEfY7bvFD16wrvvSdeBYAWPt49US27SuAsA=
+	t=1712831841; cv=none; b=t2hg1tZKz+0dZyAxh16iyI2oCZqN7IKAZDw8iQM+iE6OKleBcT9bzy7G3Du52tpc9RYjvLha1unqmyJ4zTdtQ1YG19IiFGCF3gKfxuGOCgve409n5kXO0XkcLZGhaWZJNfx5HnBhaKJ0u5bCL/bND4/oI/g6PZqclHXLXJg3G7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831838; c=relaxed/simple;
-	bh=k4IhuJ1BdEjDrB/D7niM3qjICCxMUlpuw6KQsChOKeU=;
+	s=arc-20240116; t=1712831841; c=relaxed/simple;
+	bh=bMixFMMfX0jWy17fpwiEGEmJ34zdLXxmM3H0SyL5cQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jXzviAj1ns1VqF4hoAcoCbb1H8Xli99uoU2cC62hunum18thwNd/qq9RJbAbubzQut4l3u7lKS1uqXpxtY5fw5Xf1a+LXvc1DIpixjr2MSPfLuTWY6xAPoaqLTxImrXrGibxZ+s0BGKAU40lg0Xy0HZMhnrX1uHCZL1az9jn0hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVJZciFs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Edi/NpJk2RFSKAdSo1XPd9t3KzTOjyP3E3z9nd8iPO0zhaRC4coAyhm5W/SbLXfJTBd7A80bbya41RDPuoxgzDslTIiqXCIHS9cSVanFDEDyXh4V+aq3/vRqG9U4pGTEXuRCPsG78EgTwpiFvqWxDnk6ILNNWhN2cpyKUGTn6Eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A7xCQVmJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVJZciFs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31064C433F1;
-	Thu, 11 Apr 2024 10:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7xCQVmJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E82C433C7;
+	Thu, 11 Apr 2024 10:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831838;
-	bh=k4IhuJ1BdEjDrB/D7niM3qjICCxMUlpuw6KQsChOKeU=;
+	s=korg; t=1712831841;
+	bh=bMixFMMfX0jWy17fpwiEGEmJ34zdLXxmM3H0SyL5cQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TVJZciFsuKtprsgFVQemjYrTRx1OUuJA3cUU5UqqVWuf0R4iSO+E7v5tIJ4xbKF+y
-	 StWBwnRQTJqiOOiFjm1tKNg5rM1H0rbP/8/gi2NBfNvKCrfRv8paKdWErko+gzrkza
-	 YEBGvBXnEk+Di0XNc0VvS+mzRFs842FtwSnBW7Sc=
+	b=A7xCQVmJTbSo6jWznfe4KcPxVeF9HMgxjMUh0Tx+CcuVFKegFJodwlx1nYPFY15l+
+	 uag7KXNSAYDNTQ4oRl7iKReFV/sufg5WXfdMLziIKehr9fta2bXGTnTgCCPCbjquEj
+	 MDoM56ZbLVzwHZGjXB7X2d/7zjJFCYFcyeqLJMj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Subject: [PATCH 5.10 141/294] x86/entry_32: Add VERW just before userspace transition
-Date: Thu, 11 Apr 2024 11:55:04 +0200
-Message-ID: <20240411095439.902266498@linuxfoundation.org>
+	Lillian Berry <lillian@star-ark.net>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 106/294] wireguard: netlink: check for dangling peer via is_dead instead of empty list
+Date: Thu, 11 Apr 2024 11:54:29 +0200
+Message-ID: <20240411095438.862667211@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -50,46 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit a0e2dab44d22b913b4c228c8b52b2a104434b0b3 upstream.
+[ Upstream commit 55b6c738673871c9b0edae05d0c97995c1ff08c4 ]
 
-As done for entry_64, add support for executing VERW late in exit to
-user path for 32-bit mode.
+If all peers are removed via wg_peer_remove_all(), rather than setting
+peer_list to empty, the peer is added to a temporary list with a head on
+the stack of wg_peer_remove_all(). If a netlink dump is resumed and the
+cursored peer is one that has been removed via wg_peer_remove_all(), it
+will iterate from that peer and then attempt to dump freed peers.
 
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/all/20240213-delay-verw-v8-3-a6216d83edb7%40linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by instead checking peer->is_dead, which was explictly created
+for this purpose. Also move up the device_update_lock lockdep assertion,
+since reading is_dead relies on that.
+
+It can be reproduced by a small script like:
+
+    echo "Setting config..."
+    ip link add dev wg0 type wireguard
+    wg setconf wg0 /big-config
+    (
+            while true; do
+                    echo "Showing config..."
+                    wg showconf wg0 > /dev/null
+            done
+    ) &
+    sleep 4
+    wg setconf wg0 <(printf "[Peer]\nPublicKey=$(wg genkey)\n")
+
+Resulting in:
+
+    BUG: KASAN: slab-use-after-free in __lock_acquire+0x182a/0x1b20
+    Read of size 8 at addr ffff88811956ec70 by task wg/59
+    CPU: 2 PID: 59 Comm: wg Not tainted 6.8.0-rc2-debug+ #5
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x47/0x70
+     print_address_description.constprop.0+0x2c/0x380
+     print_report+0xab/0x250
+     kasan_report+0xba/0xf0
+     __lock_acquire+0x182a/0x1b20
+     lock_acquire+0x191/0x4b0
+     down_read+0x80/0x440
+     get_peer+0x140/0xcb0
+     wg_get_device_dump+0x471/0x1130
+
+Cc: stable@vger.kernel.org
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Reported-by: Lillian Berry <lillian@star-ark.net>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/entry/entry_32.S |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireguard/netlink.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/x86/entry/entry_32.S
-+++ b/arch/x86/entry/entry_32.S
-@@ -949,6 +949,7 @@ SYM_FUNC_START(entry_SYSENTER_32)
- 	BUG_IF_WRONG_CR3 no_user_check=1
- 	popfl
- 	popl	%eax
-+	CLEAR_CPU_BUFFERS
- 
- 	/*
- 	 * Return back to the vDSO, which will pop ecx and edx.
-@@ -1021,6 +1022,7 @@ restore_all_switch_stack:
- 
- 	/* Restore user state */
- 	RESTORE_REGS pop=4			# skip orig_eax/error_code
-+	CLEAR_CPU_BUFFERS
- .Lirq_return:
- 	/*
- 	 * ARCH_HAS_MEMBARRIER_SYNC_CORE rely on IRET core serialization
-@@ -1219,6 +1221,7 @@ SYM_CODE_START(asm_exc_nmi)
- 
- 	/* Not on SYSENTER stack. */
- 	call	exc_nmi
-+	CLEAR_CPU_BUFFERS
- 	jmp	.Lnmi_return
- 
- .Lnmi_from_sysenter_stack:
+diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
+index f5bc279c9a8c2..6523f9d5a1527 100644
+--- a/drivers/net/wireguard/netlink.c
++++ b/drivers/net/wireguard/netlink.c
+@@ -255,17 +255,17 @@ static int wg_get_device_dump(struct sk_buff *skb, struct netlink_callback *cb)
+ 	if (!peers_nest)
+ 		goto out;
+ 	ret = 0;
+-	/* If the last cursor was removed via list_del_init in peer_remove, then
++	lockdep_assert_held(&wg->device_update_lock);
++	/* If the last cursor was removed in peer_remove or peer_remove_all, then
+ 	 * we just treat this the same as there being no more peers left. The
+ 	 * reason is that seq_nr should indicate to userspace that this isn't a
+ 	 * coherent dump anyway, so they'll try again.
+ 	 */
+ 	if (list_empty(&wg->peer_list) ||
+-	    (ctx->next_peer && list_empty(&ctx->next_peer->peer_list))) {
++	    (ctx->next_peer && ctx->next_peer->is_dead)) {
+ 		nla_nest_cancel(skb, peers_nest);
+ 		goto out;
+ 	}
+-	lockdep_assert_held(&wg->device_update_lock);
+ 	peer = list_prepare_entry(ctx->next_peer, &wg->peer_list, peer_list);
+ 	list_for_each_entry_continue(peer, &wg->peer_list, peer_list) {
+ 		if (get_peer(peer, skb, ctx)) {
+-- 
+2.43.0
+
 
 
