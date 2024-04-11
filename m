@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5BB64CC0;
-	Thu, 11 Apr 2024 10:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90BE2EAE5;
+	Thu, 11 Apr 2024 10:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832186; cv=none; b=OIXgvRMzvMVpws0mKpo3K3nYaVdSBq0YXoRB08kHw/QxxdazOzTxiYE5Rk46XJ130LROXYp7qMM75dn0SIoecYEzDx/1iNF2UDdK3vi1aThD4WdpMU1ebhCmUS+OUIZK8nocRvOwXFZIXA22FAkWqds22XcQuZdq+MJyVNqfXGI=
+	t=1712832189; cv=none; b=pE4fPTFfmzPIofC75HLOsHy0KnOCitfr5LhBD3gms1UuDKhg0JkZRk7OZoqsElxKoZQyOQyhS3zed2lX2i0m5g8bA2sXGq5g6XwPHjBSJ+zelCk0iwkTvTtO11UX6/NzUyBu1QKBNoDntdZw8JoSMo51MT1iV7iZLMIU0Nf+jKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832186; c=relaxed/simple;
-	bh=9lwNW/4Cc3uwJ3RGysPBbavd4GFrNEVbncNlTXJPpws=;
+	s=arc-20240116; t=1712832189; c=relaxed/simple;
+	bh=KMUTfiKxC85lXeCSWJ+iMGBSkkOZ8FIjjkMjmt3/Pss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IE8Pol5GFjXRHpUA2DXGk8UA4YYPBvnj5/PupD0VNvkDYLMlAary8WQaQfr7ddhS4tEgMqiu5JD7ltbM4B2fh2FX9QsnrFdu6gMfVTvTufe6k6+4bHFmqD7XeFJ4qREaOfMU5wP6koKIwDk3TJZtIx/ODD/vRS2LGyetzhtp6TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MjH6Fajc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TUPYH1wcMjUOA3Co+HBYNg+DSLwk7aaMwiQvXV3gzJtM31U/kf6dH/wBLc0J1Bf8PwAeuoPHQt3P0pQjnBDXlfoJLRr3j3nyItljRFslm2JMWVzsH6VXYR3PLUq2lJilMrzWMzKuSW6aZtfePG2s/M4n9fRmJPu8ChRSbzeV78s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHBPYm2p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MjH6Fajc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D04D3C433C7;
-	Thu, 11 Apr 2024 10:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHBPYm2p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01DEC433F1;
+	Thu, 11 Apr 2024 10:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832186;
-	bh=9lwNW/4Cc3uwJ3RGysPBbavd4GFrNEVbncNlTXJPpws=;
+	s=korg; t=1712832189;
+	bh=KMUTfiKxC85lXeCSWJ+iMGBSkkOZ8FIjjkMjmt3/Pss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MjH6FajcUVkETsLlfNzfPcEfCiG3XywOrKoJK7IYYIbbXTAxYC3Uw4TtXquuNfu8Y
-	 YgohJUQgsTKqau628HMR/KXSDI8FcA0nJ/0ZnueS9qcw0+KRaZl0jTpR1Nc8G4JTKA
-	 sNn7IS/7Zk3uj3FM6fA4i01WRqLiaZr6FXT2EGeA=
+	b=ZHBPYm2peWDNDZS9ZvO6pNrOUGfUItkej5mYnZojX7TOac0g9NoLp05VhVhFp/MVz
+	 3cRfR1EAOs4wjyttFtsZHxM4aq5+yD+1oJZouQPjy173/zIA5Hlmi9YDqGE7n7FglE
+	 KzFA0VTAxdAO/z1d45ZEB01Zs7EwfTwl2aG2wRtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+830d9e3fa61968246abd@syzkaller.appspotmail.com
-Subject: [PATCH 5.10 257/294] Bluetooth: btintel: Fix null ptr deref in btintel_read_version
-Date: Thu, 11 Apr 2024 11:57:00 +0200
-Message-ID: <20240411095443.300424600@linuxfoundation.org>
+	Kunwu Chan <chentao@kylinos.cn>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 258/294] Input: synaptics-rmi4 - fail probing if memory allocation for "phys" fails
+Date: Thu, 11 Apr 2024 11:57:01 +0200
+Message-ID: <20240411095443.331024277@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -52,34 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit b79e040910101b020931ba0c9a6b77e81ab7f645 ]
+[ Upstream commit bc4996184d56cfaf56d3811ac2680c8a0e2af56e ]
 
-If hci_cmd_sync_complete() is triggered and skb is NULL, then
-hdev->req_skb is NULL, which will cause this issue.
+While input core can work with input->phys set to NULL userspace might
+depend on it, so better fail probing if allocation fails. The system must
+be in a pretty bad shape for it to happen anyway.
 
-Reported-and-tested-by: syzbot+830d9e3fa61968246abd@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Link: https://lore.kernel.org/r/20240117073124.143636-1-chentao@kylinos.cn
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/rmi4/rmi_driver.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 88ce5f0ffc4ba..e1daf6ebd3ada 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -344,7 +344,7 @@ int btintel_read_version(struct hci_dev *hdev, struct intel_version *ver)
- 	struct sk_buff *skb;
+diff --git a/drivers/input/rmi4/rmi_driver.c b/drivers/input/rmi4/rmi_driver.c
+index 258d5fe3d395c..aa32371f04af6 100644
+--- a/drivers/input/rmi4/rmi_driver.c
++++ b/drivers/input/rmi4/rmi_driver.c
+@@ -1196,7 +1196,11 @@ static int rmi_driver_probe(struct device *dev)
+ 		}
+ 		rmi_driver_set_input_params(rmi_dev, data->input);
+ 		data->input->phys = devm_kasprintf(dev, GFP_KERNEL,
+-						"%s/input0", dev_name(dev));
++						   "%s/input0", dev_name(dev));
++		if (!data->input->phys) {
++			retval = -ENOMEM;
++			goto err;
++		}
+ 	}
  
- 	skb = __hci_cmd_sync(hdev, 0xfc05, 0, NULL, HCI_CMD_TIMEOUT);
--	if (IS_ERR(skb)) {
-+	if (IS_ERR_OR_NULL(skb)) {
- 		bt_dev_err(hdev, "Reading Intel version information failed (%ld)",
- 			   PTR_ERR(skb));
- 		return PTR_ERR(skb);
+ 	retval = rmi_init_functions(data);
 -- 
 2.43.0
 
