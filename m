@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAF3134CC2;
-	Thu, 11 Apr 2024 10:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1509C64CC0;
+	Thu, 11 Apr 2024 10:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832201; cv=none; b=KeMfKZWS5dUSYQQ9c2EOLJC2YhWVYfXvmEMMhaadwmcfv9jikxHgJT7JUdsP5ohdLZh4a2nalX+/IqNG3Wc/QXZ0l0szA7Q3+UCSrnaPhN2x2V0LEQwNlcGa8mucPmhnEiePwXw4TAwyqXD/0Bn6momc37RZymfKyewR6YAkG6I=
+	t=1712832204; cv=none; b=ehrKCsyek+prTX2d4k9dl9zBH6zUprseVdlcNSJoLmy4u5eMrsW57LLl9NTJ9d7mC7NmVgo0xvlmmhxlrJkU4Onz2Zg7nu6JiB77Z5X4tUJeG2ifP1qklIbm1ZYm+9xfA6kReALfYk+0SVEx9KsQ46VqNPdmTQ+5WIgeOzsLR0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832201; c=relaxed/simple;
-	bh=Q4p4NMM7W5/4+97H7EoNof2SDuKUz4C0dePzD0r2eHE=;
+	s=arc-20240116; t=1712832204; c=relaxed/simple;
+	bh=5KrGVtxZ001BmcSdcXLmjqN+y302wayJMnRh7IXao2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4jB8FWn/p10t829rqPtQNf4qooGGyCe7nUWy/sbj+vRCJT7yCgSv0xXWQgEJZ/YltNZBCM5zJrjF/CGpKeGl3fD5WFFUohk/gttVwOfsBnTqmUwujVVfFE916/sHdpUlU1vRyi+Trl9tTifmNGiL7qWwqHpZeyyvF/GIOvVTrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v11+b8ab; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bTnHkSRp+hv8Ni4kvvbwwMtaPv8PLigWPLz3HAk6XQj/fUlu4+OPGtuMHOtbLloA83vHgjJkz3bcMvWVkvkqTpzDCi9pbzT35gkJnJm26wLnF0FC2Gk8lt7q9sZyfz88lUOnA7MA2YFJRMvI7qPJZAW6NydbFNbckuiBqTqmtkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdwGg5nf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v11+b8ab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA04C43390;
-	Thu, 11 Apr 2024 10:43:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdwGg5nf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ECE6C433F1;
+	Thu, 11 Apr 2024 10:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832201;
-	bh=Q4p4NMM7W5/4+97H7EoNof2SDuKUz4C0dePzD0r2eHE=;
+	s=korg; t=1712832204;
+	bh=5KrGVtxZ001BmcSdcXLmjqN+y302wayJMnRh7IXao2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v11+b8abY74SUdDIOfpwfZrWjg3tZAzeQN7Y5ycVczzEZh7w3mIGRruOdzogw0Dif
-	 jbsgWZZjbxzSpVVDIjvFCPTeiEyrITZ/WkZRh80oWgTsc5amhjU3VlmDrXWuxLMYoa
-	 pTwFU0MiiWt+llFbDtOYNPPGddJfL4oXudm/6eHE=
+	b=tdwGg5nfBiMOy5UmVj1Yv+2AUUI9821e7sFSrwK4t5TlLWS5v0fr6HU+yna7W+/Jy
+	 eXS8MvuMYXte8AS5iGBlP8Y8cjsHRzCRR9ZF1W3g1LY6rIDKN2xPPeDddLx5Xjy+VM
+	 ZBW5m8yDfiLmBBWHuwfsHnwpIRx5v8ATh9MT8DYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 262/294] isofs: handle CDs with bad root inode but good Joliet root directory
-Date: Thu, 11 Apr 2024 11:57:05 +0200
-Message-ID: <20240411095443.446202053@linuxfoundation.org>
+Subject: [PATCH 5.10 263/294] media: sta2x11: fix irq handler cast
+Date: Thu, 11 Apr 2024 11:57:06 +0200
+Message-ID: <20240411095443.475139372@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -51,58 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Henrie <alexhenrie24@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 4243bf80c79211a8ca2795401add9c4a3b1d37ca ]
+[ Upstream commit 3de49ae81c3a0f83a554ecbce4c08e019f30168e ]
 
-I have a CD copy of the original Tom Clancy's Ghost Recon game from
-2001. The disc mounts without error on Windows, but on Linux mounting
-fails with the message "isofs_fill_super: get root inode failed". The
-error originates in isofs_read_inode, which returns -EIO because de_len
-is 0. The superblock on this disc appears to be intentionally corrupt as
-a form of copy protection.
+clang-16 warns about casting incompatible function pointers:
 
-When the root inode is unusable, instead of giving up immediately, try
-to continue with the Joliet file table. This fixes the Ghost Recon CD
-and probably other copy-protected CDs too.
+drivers/media/pci/sta2x11/sta2x11_vip.c:1057:6: error: cast from 'irqreturn_t (*)(int, struct sta2x11_vip *)' (aka 'enum irqreturn (*)(int, struct sta2x11_vip *)') to 'irq_handler_t' (aka 'enum irqreturn (*)(int, void *)') converts to incompatible function type [-Werror,-Wcast-function-type-strict]
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20240208022134.451490-1-alexhenrie24@gmail.com>
+Change the prototype of the irq handler to the regular version with a
+local variable to adjust the argument type.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+[hverkuil: update argument documentation]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/inode.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/media/pci/sta2x11/sta2x11_vip.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/fs/isofs/inode.c b/fs/isofs/inode.c
-index f62b5a5015668..4c763f573faf3 100644
---- a/fs/isofs/inode.c
-+++ b/fs/isofs/inode.c
-@@ -907,8 +907,22 @@ static int isofs_fill_super(struct super_block *s, void *data, int silent)
- 	 * we then decide whether to use the Joliet descriptor.
- 	 */
- 	inode = isofs_iget(s, sbi->s_firstdatazone, 0);
--	if (IS_ERR(inode))
--		goto out_no_root;
-+
-+	/*
-+	 * Fix for broken CDs with a corrupt root inode but a correct Joliet
-+	 * root directory.
-+	 */
-+	if (IS_ERR(inode)) {
-+		if (joliet_level && sbi->s_firstdatazone != first_data_zone) {
-+			printk(KERN_NOTICE
-+			       "ISOFS: root inode is unusable. "
-+			       "Disabling Rock Ridge and switching to Joliet.");
-+			sbi->s_rock = 0;
-+			inode = NULL;
-+		} else {
-+			goto out_no_root;
-+		}
-+	}
+diff --git a/drivers/media/pci/sta2x11/sta2x11_vip.c b/drivers/media/pci/sta2x11/sta2x11_vip.c
+index 336df65c8af11..01ca940aecc2d 100644
+--- a/drivers/media/pci/sta2x11/sta2x11_vip.c
++++ b/drivers/media/pci/sta2x11/sta2x11_vip.c
+@@ -760,7 +760,7 @@ static const struct video_device video_dev_template = {
+ /**
+  * vip_irq - interrupt routine
+  * @irq: Number of interrupt ( not used, correct number is assumed )
+- * @vip: local data structure containing all information
++ * @data: local data structure containing all information
+  *
+  * check for both frame interrupts set ( top and bottom ).
+  * check FIFO overflow, but limit number of log messages after open.
+@@ -770,8 +770,9 @@ static const struct video_device video_dev_template = {
+  *
+  * IRQ_HANDLED, interrupt done.
+  */
+-static irqreturn_t vip_irq(int irq, struct sta2x11_vip *vip)
++static irqreturn_t vip_irq(int irq, void *data)
+ {
++	struct sta2x11_vip *vip = data;
+ 	unsigned int status;
  
- 	/*
- 	 * Fix for broken CDs with Rock Ridge and empty ISO root directory but
+ 	status = reg_read(vip, DVP_ITS);
+@@ -1053,9 +1054,7 @@ static int sta2x11_vip_init_one(struct pci_dev *pdev,
+ 
+ 	spin_lock_init(&vip->slock);
+ 
+-	ret = request_irq(pdev->irq,
+-			  (irq_handler_t) vip_irq,
+-			  IRQF_SHARED, KBUILD_MODNAME, vip);
++	ret = request_irq(pdev->irq, vip_irq, IRQF_SHARED, KBUILD_MODNAME, vip);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "request_irq failed\n");
+ 		ret = -ENODEV;
 -- 
 2.43.0
 
