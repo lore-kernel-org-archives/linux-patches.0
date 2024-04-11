@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E52E140E3D;
-	Thu, 11 Apr 2024 10:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596A6140E3D;
+	Thu, 11 Apr 2024 10:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830727; cv=none; b=P0CEl6JgNr2F/Pt2s27973BWBt4A29+koZzrZu9lVaYrhqNkB5pouywgN3jquMZaUSFkO1t/5hbnN1jSMOTgFW9nZNHZjKINkETTb73EnQ5iV30nfincQPZYZDSXOoLYjVlUU+FVIBxnNQ/lnEhknPOT1+KshowV6dc+GCMbjMc=
+	t=1712830730; cv=none; b=TrprqOB55QhxCY6avEoZP8chk94Wf14IFnzMDcZefdHCKGOdDynFH2mfna3VU17HOicTpZXDoWpAu4GFYDbPfy5sTD7sOt/WkaDJQmpwQGbKnk+QnE5gsIWnEBW1yYAFeIMEHftFJBGltCLqQU4wQUTl/xCRw+axjQ0758U0S2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830727; c=relaxed/simple;
-	bh=hgl3E0tupiuzSLFq45IhqZwz5LHpYUitZ/XcrUzGREw=;
+	s=arc-20240116; t=1712830730; c=relaxed/simple;
+	bh=UtbJF9Esk7sePNK0YPnoIi/kCqaZLrVE/M8tTPfcrkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RKoRNCuNzY9W23atFU5bLgSQbzweB2t6IO2ckSugprFfzYgs8WPoWn3DJxDFT+pE3SSNRoBgDqDRarnWCed88zgApOQyEH+f3urqYnimhDVl+sv8Le+CahzaM+pYyxrEcRC1eY3cXUQKP49h2fMJ6bqHIM2JAlIZwcWJa2VSYkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VP6dqYdX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dA8XTwMTAXtH9oqJsTt/sx5x430NrbxayvWjxlo/rWjwRcSHE8REOEBYdrI4qPiCEWaVKZK4DU/qn+pZ6AB2Zb6s5dzahMFBgvPWZ7iUHTlByqXzxUymL5GEhxMM2sf16rbhmgydEozp3H+9XxEZej3WPBgpmlDt3DyZGC6f4Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JrZp0GGr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VP6dqYdX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E99C433F1;
-	Thu, 11 Apr 2024 10:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrZp0GGr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA141C433F1;
+	Thu, 11 Apr 2024 10:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830727;
-	bh=hgl3E0tupiuzSLFq45IhqZwz5LHpYUitZ/XcrUzGREw=;
+	s=korg; t=1712830730;
+	bh=UtbJF9Esk7sePNK0YPnoIi/kCqaZLrVE/M8tTPfcrkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VP6dqYdXgUrnMJGR3yYZgmm6Rbr9BHX9rYGxgRomR3h81M1FlQkcasnWq8I9ZrtBh
-	 FTe0Mo7Je58gnoi7F4rVUo+0QjzAoYMhQf+N6/8HSVDVTnUnTlAPHH+6BgS2Ragfka
-	 58CcpfCdZ1DBTtCdHJTV/SnEP25hf2k2dU3zBbKc=
+	b=JrZp0GGrrF8D7YBN73f9l5nDmrx3oIWi6VPpouY6CrV8M6d8kNDpqCME/6MVKENHY
+	 Uy2UYiDyD+Eq2eK1pYYLpUhnsCaForuSE3TMG06AEmkdxrlBs0PUeIwBcdn36Db+pb
+	 6NDbpxArtjF2sZB8yHpiUlFl+S42Sf88JnEyHME0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 096/215] printk: Update @console_may_schedule in console_trylock_spinning()
-Date: Thu, 11 Apr 2024 11:55:05 +0200
-Message-ID: <20240411095427.785439974@linuxfoundation.org>
+	Anand Jain <anand.jain@oracle.com>,
+	Goldwyn Rodrigues <rgoldwyn@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Maximilian Heyne <mheyne@amazon.de>
+Subject: [PATCH 5.4 097/215] btrfs: allocate btrfs_ioctl_defrag_range_args on stack
+Date: Thu, 11 Apr 2024 11:55:06 +0200
+Message-ID: <20240411095427.815637343@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -52,46 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Goldwyn Rodrigues <rgoldwyn@suse.com>
 
-[ Upstream commit 8076972468584d4a21dab9aa50e388b3ea9ad8c7 ]
+commit c853a5783ebe123847886d432354931874367292 upstream.
 
-console_trylock_spinning() may takeover the console lock from a
-schedulable context. Update @console_may_schedule to make sure it
-reflects a trylock acquire.
+Instead of using kmalloc() to allocate btrfs_ioctl_defrag_range_args,
+allocate btrfs_ioctl_defrag_range_args on stack, the size is reasonably
+small and ioctls are called in process context.
 
-Reported-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Closes: https://lore.kernel.org/lkml/20240222090538.23017-1-quic_mojha@quicinc.com
-Fixes: dbdda842fe96 ("printk: Add console owner and waiter logic to load balance console writes")
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/875xybmo2z.fsf@jogness.linutronix.de
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+sizeof(btrfs_ioctl_defrag_range_args) = 48
+
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ This patch is needed to fix a memory leak of "range" that was
+introduced when commit 173431b274a9 ("btrfs: defrag: reject unknown
+flags of btrfs_ioctl_defrag_range_args") was backported to kernels
+lacking this patch. Now with these two patches applied in reverse order,
+range->flags needed to change back to range.flags.
+This bug was discovered and resolved using Coverity Static Analysis
+Security Testing (SAST) by Synopsys, Inc.]
+Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/printk/printk.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/btrfs/ioctl.c |   25 ++++++++-----------------
+ 1 file changed, 8 insertions(+), 17 deletions(-)
 
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index bb2198b40756d..ae1a97dd0c3cb 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -1787,6 +1787,12 @@ static int console_trylock_spinning(void)
- 	 */
- 	mutex_acquire(&console_lock_dep_map, 0, 1, _THIS_IP_);
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -3057,7 +3057,7 @@ static int btrfs_ioctl_defrag(struct fil
+ {
+ 	struct inode *inode = file_inode(file);
+ 	struct btrfs_root *root = BTRFS_I(inode)->root;
+-	struct btrfs_ioctl_defrag_range_args *range;
++	struct btrfs_ioctl_defrag_range_args range = {0};
+ 	int ret;
  
-+	/*
-+	 * Update @console_may_schedule for trylock because the previous
-+	 * owner may have been schedulable.
-+	 */
-+	console_may_schedule = 0;
-+
- 	return 1;
- }
+ 	ret = mnt_want_write_file(file);
+@@ -3089,37 +3089,28 @@ static int btrfs_ioctl_defrag(struct fil
+ 			goto out;
+ 		}
  
--- 
-2.43.0
-
+-		range = kzalloc(sizeof(*range), GFP_KERNEL);
+-		if (!range) {
+-			ret = -ENOMEM;
+-			goto out;
+-		}
+-
+ 		if (argp) {
+-			if (copy_from_user(range, argp,
+-					   sizeof(*range))) {
++			if (copy_from_user(&range, argp, sizeof(range))) {
+ 				ret = -EFAULT;
+-				kfree(range);
+ 				goto out;
+ 			}
+-			if (range->flags & ~BTRFS_DEFRAG_RANGE_FLAGS_SUPP) {
++			if (range.flags & ~BTRFS_DEFRAG_RANGE_FLAGS_SUPP) {
+ 				ret = -EOPNOTSUPP;
+ 				goto out;
+ 			}
+ 			/* compression requires us to start the IO */
+-			if ((range->flags & BTRFS_DEFRAG_RANGE_COMPRESS)) {
+-				range->flags |= BTRFS_DEFRAG_RANGE_START_IO;
+-				range->extent_thresh = (u32)-1;
++			if ((range.flags & BTRFS_DEFRAG_RANGE_COMPRESS)) {
++				range.flags |= BTRFS_DEFRAG_RANGE_START_IO;
++				range.extent_thresh = (u32)-1;
+ 			}
+ 		} else {
+ 			/* the rest are all set to zero by kzalloc */
+-			range->len = (u64)-1;
++			range.len = (u64)-1;
+ 		}
+ 		ret = btrfs_defrag_file(file_inode(file), file,
+-					range, BTRFS_OLDEST_GENERATION, 0);
++					&range, BTRFS_OLDEST_GENERATION, 0);
+ 		if (ret > 0)
+ 			ret = 0;
+-		kfree(range);
+ 		break;
+ 	default:
+ 		ret = -EINVAL;
 
 
