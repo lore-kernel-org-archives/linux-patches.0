@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6331448EF;
-	Thu, 11 Apr 2024 09:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3BC13DDDD;
+	Thu, 11 Apr 2024 09:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829563; cv=none; b=Y7aDm/hJebkHcquxoJ1fMXkGDwSJzdD2WqL41kq4G8MakwVFlc3G49hgEyLPPSJIzA5TuFSBDkVbZ8aalSFAFAIfhCnnhNObsisTNufK8ZmtKwhfE3NpKZ9o3I2iqXb6nNMPzPqGu6GNC0Mn2Uq5KcsTUAubAAKm+2QIPlQr0YU=
+	t=1712829566; cv=none; b=IXCPdOsAtB6CRy4QV1f6uRWyxULpx5YCYYJ1FYSKAGE7+QsTXFnALRHP6NSMyIPte5CVDNCfa8SeoedOnzN/xYk+Q25Itsc7hcqTpf5EZroEUVxyN14h/sbM+HPurnZ9Vx0Ky4MdDNy+nM54/qhjnsmV7zDwVnZi/GLWNeT2/Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829563; c=relaxed/simple;
-	bh=Pbqd50hhva8+5ICKiCHVXhxbsBpXIl8osTcmOuFOyfI=;
+	s=arc-20240116; t=1712829566; c=relaxed/simple;
+	bh=asvnJddpC5jFrjDsV3qMgq90h2uoC/vycIiBy00QAa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mk9/pEfiVaG1j6tTVM4BSPDmfTAIYbrIUm1wpOZumABkUPGXErOVEW+YO2SUyXLUeEUG61SfLipq6uTY2KnuoFQ9lMsPlsTgqNIlvoZjgM48EZxULZC5bGX/PPX3iOCYZ+uPVDxHsfh6a9b66ZHhnVS1blh6gMOWX12rwl9X4QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LK4KOLit; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SxbE8ELeROPvlZmKWOGhza2paqj89FDEpRgd/2jkYKTb5dGnaH58lC5vWElD6VLaEm5Jfm0blxW0+qL5VlH85YgI//ixzhMcFm2zeCTHA0EYgtAUgaL2p0AOhIUdZ+n+zwpV1DYwQ3OyBf3w3tPquNYKezeDHO+31dCAKeIRDKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rre67j2D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LK4KOLit"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EB1C433F1;
-	Thu, 11 Apr 2024 09:59:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rre67j2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CE0C433F1;
+	Thu, 11 Apr 2024 09:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829563;
-	bh=Pbqd50hhva8+5ICKiCHVXhxbsBpXIl8osTcmOuFOyfI=;
+	s=korg; t=1712829566;
+	bh=asvnJddpC5jFrjDsV3qMgq90h2uoC/vycIiBy00QAa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LK4KOLitVo2aHWQBoX8O+3S6gxuTPizfRX6lvxAfcWYvqJ48bOYukSDNYfVPrkigq
-	 Aezl/trXva/WrGIRBX+D3X1VVWzzpBy7jwQYX/NaQmXmudCsJCdTvOrsmv92ZEZOWZ
-	 AjLiJBrTCnWMyJtSQhQEXe7TWORgGOPXdOiOBXiY=
+	b=rre67j2D2qtLxMKi3fSG3VTzjMVvnsPSZ+emtP48qXeh2XBQgnII+ejPOTqvv2jgq
+	 +LsoUFOzUwmBqLvpn1wgobcDkEOjgmJgQWHk98jlX9UbVs8BGuhsQjBxwRofM38x3T
+	 j2t0VrTdtBEVuYjisX0u7+8ffwenNeLPFqebjGUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 029/175] parisc: Strip upper 32 bit of sum in csum_ipv6_magic for 64-bit builds
-Date: Thu, 11 Apr 2024 11:54:12 +0200
-Message-ID: <20240411095420.434283088@linuxfoundation.org>
+	Borislav Petkov <bp@suse.de>
+Subject: [PATCH 4.19 003/175] x86/bugs: Use sysfs_emit()
+Date: Thu, 11 Apr 2024 11:53:46 +0200
+Message-ID: <20240411095419.640981625@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -51,54 +49,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Borislav Petkov <bp@suse.de>
 
-[ Upstream commit 0568b6f0d863643db2edcc7be31165740c89fa82 ]
+commit 1d30800c0c0ae1d086ffad2bdf0ba4403370f132 upstream.
 
-IPv6 checksum tests with unaligned addresses on 64-bit builds result
-in unexpected failures.
+Those mitigations are very talkative; use the printing helper which pays
+attention to the buffer size.
 
-Expected expected == csum_result, but
-    expected == 46591 (0xb5ff)
-    csum_result == 46381 (0xb52d)
-with alignment offset 1
-
-Oddly enough, the problem disappeared after adding test code into
-the beginning of csum_ipv6_magic().
-
-As it turns out, the 'sum' parameter of csum_ipv6_magic() is declared as
-__wsum, which is a 32-bit variable. However, it is treated as 64-bit
-variable in the 64-bit assembler code. Tests showed that the upper 32 bit
-of the register used to pass the variable are _not_ cleared when entering
-the function. This can result in checksum calculation errors.
-
-Clearing the upper 32 bit of 'sum' as first operation in the assembler
-code fixes the problem.
-
-Acked-by: Helge Deller <deller@gmx.de>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Link: https://lore.kernel.org/r/20220809153419.10182-1-bp@alien8.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/asm/checksum.h | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/cpu/bugs.c |   82 ++++++++++++++++++++++-----------------------
+ 1 file changed, 41 insertions(+), 41 deletions(-)
 
-diff --git a/arch/parisc/include/asm/checksum.h b/arch/parisc/include/asm/checksum.h
-index 7861d365ba1e2..ef34e8f839d55 100644
---- a/arch/parisc/include/asm/checksum.h
-+++ b/arch/parisc/include/asm/checksum.h
-@@ -141,6 +141,7 @@ static __inline__ __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
- 	** Try to keep 4 registers with "live" values ahead of the ALU.
- 	*/
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -2137,69 +2137,69 @@ static const char * const l1tf_vmx_state
+ static ssize_t l1tf_show_state(char *buf)
+ {
+ 	if (l1tf_vmx_mitigation == VMENTER_L1D_FLUSH_AUTO)
+-		return sprintf(buf, "%s\n", L1TF_DEFAULT_MSG);
++		return sysfs_emit(buf, "%s\n", L1TF_DEFAULT_MSG);
  
-+"	depdi		0, 31, 32, %0\n"/* clear upper half of incoming checksum */
- "	ldd,ma		8(%1), %4\n"	/* get 1st saddr word */
- "	ldd,ma		8(%2), %5\n"	/* get 1st daddr word */
- "	add		%4, %0, %0\n"
--- 
-2.43.0
-
+ 	if (l1tf_vmx_mitigation == VMENTER_L1D_FLUSH_EPT_DISABLED ||
+ 	    (l1tf_vmx_mitigation == VMENTER_L1D_FLUSH_NEVER &&
+ 	     sched_smt_active())) {
+-		return sprintf(buf, "%s; VMX: %s\n", L1TF_DEFAULT_MSG,
+-			       l1tf_vmx_states[l1tf_vmx_mitigation]);
++		return sysfs_emit(buf, "%s; VMX: %s\n", L1TF_DEFAULT_MSG,
++				  l1tf_vmx_states[l1tf_vmx_mitigation]);
+ 	}
+ 
+-	return sprintf(buf, "%s; VMX: %s, SMT %s\n", L1TF_DEFAULT_MSG,
+-		       l1tf_vmx_states[l1tf_vmx_mitigation],
+-		       sched_smt_active() ? "vulnerable" : "disabled");
++	return sysfs_emit(buf, "%s; VMX: %s, SMT %s\n", L1TF_DEFAULT_MSG,
++			  l1tf_vmx_states[l1tf_vmx_mitigation],
++			  sched_smt_active() ? "vulnerable" : "disabled");
+ }
+ 
+ static ssize_t itlb_multihit_show_state(char *buf)
+ {
+ 	if (itlb_multihit_kvm_mitigation)
+-		return sprintf(buf, "KVM: Mitigation: Split huge pages\n");
++		return sysfs_emit(buf, "KVM: Mitigation: Split huge pages\n");
+ 	else
+-		return sprintf(buf, "KVM: Vulnerable\n");
++		return sysfs_emit(buf, "KVM: Vulnerable\n");
+ }
+ #else
+ static ssize_t l1tf_show_state(char *buf)
+ {
+-	return sprintf(buf, "%s\n", L1TF_DEFAULT_MSG);
++	return sysfs_emit(buf, "%s\n", L1TF_DEFAULT_MSG);
+ }
+ 
+ static ssize_t itlb_multihit_show_state(char *buf)
+ {
+-	return sprintf(buf, "Processor vulnerable\n");
++	return sysfs_emit(buf, "Processor vulnerable\n");
+ }
+ #endif
+ 
+ static ssize_t mds_show_state(char *buf)
+ {
+ 	if (boot_cpu_has(X86_FEATURE_HYPERVISOR)) {
+-		return sprintf(buf, "%s; SMT Host state unknown\n",
+-			       mds_strings[mds_mitigation]);
++		return sysfs_emit(buf, "%s; SMT Host state unknown\n",
++				  mds_strings[mds_mitigation]);
+ 	}
+ 
+ 	if (boot_cpu_has(X86_BUG_MSBDS_ONLY)) {
+-		return sprintf(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
+-			       (mds_mitigation == MDS_MITIGATION_OFF ? "vulnerable" :
+-			        sched_smt_active() ? "mitigated" : "disabled"));
++		return sysfs_emit(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
++				  (mds_mitigation == MDS_MITIGATION_OFF ? "vulnerable" :
++				   sched_smt_active() ? "mitigated" : "disabled"));
+ 	}
+ 
+-	return sprintf(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
+-		       sched_smt_active() ? "vulnerable" : "disabled");
++	return sysfs_emit(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
++			  sched_smt_active() ? "vulnerable" : "disabled");
+ }
+ 
+ static ssize_t tsx_async_abort_show_state(char *buf)
+ {
+ 	if ((taa_mitigation == TAA_MITIGATION_TSX_DISABLED) ||
+ 	    (taa_mitigation == TAA_MITIGATION_OFF))
+-		return sprintf(buf, "%s\n", taa_strings[taa_mitigation]);
++		return sysfs_emit(buf, "%s\n", taa_strings[taa_mitigation]);
+ 
+ 	if (boot_cpu_has(X86_FEATURE_HYPERVISOR)) {
+-		return sprintf(buf, "%s; SMT Host state unknown\n",
+-			       taa_strings[taa_mitigation]);
++		return sysfs_emit(buf, "%s; SMT Host state unknown\n",
++				  taa_strings[taa_mitigation]);
+ 	}
+ 
+-	return sprintf(buf, "%s; SMT %s\n", taa_strings[taa_mitigation],
+-		       sched_smt_active() ? "vulnerable" : "disabled");
++	return sysfs_emit(buf, "%s; SMT %s\n", taa_strings[taa_mitigation],
++			  sched_smt_active() ? "vulnerable" : "disabled");
+ }
+ 
+ static ssize_t mmio_stale_data_show_state(char *buf)
+@@ -2267,33 +2267,33 @@ static char *pbrsb_eibrs_state(void)
+ static ssize_t spectre_v2_show_state(char *buf)
+ {
+ 	if (spectre_v2_enabled == SPECTRE_V2_LFENCE)
+-		return sprintf(buf, "Vulnerable: LFENCE\n");
++		return sysfs_emit(buf, "Vulnerable: LFENCE\n");
+ 
+ 	if (spectre_v2_enabled == SPECTRE_V2_EIBRS && unprivileged_ebpf_enabled())
+-		return sprintf(buf, "Vulnerable: eIBRS with unprivileged eBPF\n");
++		return sysfs_emit(buf, "Vulnerable: eIBRS with unprivileged eBPF\n");
+ 
+ 	if (sched_smt_active() && unprivileged_ebpf_enabled() &&
+ 	    spectre_v2_enabled == SPECTRE_V2_EIBRS_LFENCE)
+-		return sprintf(buf, "Vulnerable: eIBRS+LFENCE with unprivileged eBPF and SMT\n");
++		return sysfs_emit(buf, "Vulnerable: eIBRS+LFENCE with unprivileged eBPF and SMT\n");
+ 
+-	return sprintf(buf, "%s%s%s%s%s%s%s\n",
+-		       spectre_v2_strings[spectre_v2_enabled],
+-		       ibpb_state(),
+-		       boot_cpu_has(X86_FEATURE_USE_IBRS_FW) ? ", IBRS_FW" : "",
+-		       stibp_state(),
+-		       boot_cpu_has(X86_FEATURE_RSB_CTXSW) ? ", RSB filling" : "",
+-		       pbrsb_eibrs_state(),
+-		       spectre_v2_module_string());
++	return sysfs_emit(buf, "%s%s%s%s%s%s%s\n",
++			  spectre_v2_strings[spectre_v2_enabled],
++			  ibpb_state(),
++			  boot_cpu_has(X86_FEATURE_USE_IBRS_FW) ? ", IBRS_FW" : "",
++			  stibp_state(),
++			  boot_cpu_has(X86_FEATURE_RSB_CTXSW) ? ", RSB filling" : "",
++			  pbrsb_eibrs_state(),
++			  spectre_v2_module_string());
+ }
+ 
+ static ssize_t srbds_show_state(char *buf)
+ {
+-	return sprintf(buf, "%s\n", srbds_strings[srbds_mitigation]);
++	return sysfs_emit(buf, "%s\n", srbds_strings[srbds_mitigation]);
+ }
+ 
+ static ssize_t retbleed_show_state(char *buf)
+ {
+-	return sprintf(buf, "%s\n", retbleed_strings[retbleed_mitigation]);
++	return sysfs_emit(buf, "%s\n", retbleed_strings[retbleed_mitigation]);
+ }
+ 
+ static ssize_t gds_show_state(char *buf)
+@@ -2305,26 +2305,26 @@ static ssize_t cpu_show_common(struct de
+ 			       char *buf, unsigned int bug)
+ {
+ 	if (!boot_cpu_has_bug(bug))
+-		return sprintf(buf, "Not affected\n");
++		return sysfs_emit(buf, "Not affected\n");
+ 
+ 	switch (bug) {
+ 	case X86_BUG_CPU_MELTDOWN:
+ 		if (boot_cpu_has(X86_FEATURE_PTI))
+-			return sprintf(buf, "Mitigation: PTI\n");
++			return sysfs_emit(buf, "Mitigation: PTI\n");
+ 
+ 		if (hypervisor_is_type(X86_HYPER_XEN_PV))
+-			return sprintf(buf, "Unknown (XEN PV detected, hypervisor mitigation required)\n");
++			return sysfs_emit(buf, "Unknown (XEN PV detected, hypervisor mitigation required)\n");
+ 
+ 		break;
+ 
+ 	case X86_BUG_SPECTRE_V1:
+-		return sprintf(buf, "%s\n", spectre_v1_strings[spectre_v1_mitigation]);
++		return sysfs_emit(buf, "%s\n", spectre_v1_strings[spectre_v1_mitigation]);
+ 
+ 	case X86_BUG_SPECTRE_V2:
+ 		return spectre_v2_show_state(buf);
+ 
+ 	case X86_BUG_SPEC_STORE_BYPASS:
+-		return sprintf(buf, "%s\n", ssb_strings[ssb_mode]);
++		return sysfs_emit(buf, "%s\n", ssb_strings[ssb_mode]);
+ 
+ 	case X86_BUG_L1TF:
+ 		if (boot_cpu_has(X86_FEATURE_L1TF_PTEINV))
+@@ -2357,7 +2357,7 @@ static ssize_t cpu_show_common(struct de
+ 		break;
+ 	}
+ 
+-	return sprintf(buf, "Vulnerable\n");
++	return sysfs_emit(buf, "Vulnerable\n");
+ }
+ 
+ ssize_t cpu_show_meltdown(struct device *dev, struct device_attribute *attr, char *buf)
 
 
