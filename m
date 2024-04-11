@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E833B6BB29;
-	Thu, 11 Apr 2024 10:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57556BB29;
+	Thu, 11 Apr 2024 10:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832210; cv=none; b=E6Yu0WwXwOSPvvaGBj5mq+QBfA3Py4npClD18dh/4iIO0Z3jg3e9YrFGlBwL1McwBMbOo7tgX/oz2mnDPKWVBnHK5iRgr6jykOZBezY6T/bweiiAQAOkM71Z+FytAwk7/951H1u1yn/nydyNriVfnpN2gx3Cc20Nsw7c5Xb59AU=
+	t=1712832212; cv=none; b=NlI8NGk/x8ZbGC4sNb/IR8evVA06iTXmjBV8viT16xqXFgBtcXrCf/l6RbfVCVtOQy9zHWq0IpYH1wxxknVnE+pzgMak63lgc06zcbhwYftloZ79Lr3GN92C42APXITPX01fo3NDpVTtFZm40FeOONS+RNkFmUiKuOfRjDKzU4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832210; c=relaxed/simple;
-	bh=L+bPlZagvwu7i3VHR4dHEtxgmzK/3VmQ+763kpHN9Ww=;
+	s=arc-20240116; t=1712832212; c=relaxed/simple;
+	bh=wT7ecDMSLLcdI91XgzVo/SUa2zPUwqDg/DZ1Ft0x61M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1cCDl/fxVJmqAWtrBV3e77csusKOnVuGpFiDxHUupuw1AU/4wAuwUa/zHSIrjcA7tFG50CrmR34upfUXhTNMtuSFwzZIjxUuuraZbcsdk1LhDzQbUAMKCkhOpF/jEqSLIc8cXNZaFkHTPcehrWSMAlSspodG2+jjq/P8DTeqKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILZw/j7X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iMDYPzyWM97X1aVd20gsPQ6/Wp6Ku87aDxvJy+bHzG8nlzpqaOebpZYQja/9kC9MmcjezwFVsf3tXwPRlBwgjTwZc+jath5RW4uvRnX30vkz7tLiQdMHHosDb2SOBVoOvwPFYnpbq/ytv3BzCv6KHAlJlMIzR90ZeYD4q2XmeM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftVIaip0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILZw/j7X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703A0C433C7;
-	Thu, 11 Apr 2024 10:43:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftVIaip0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6042DC433C7;
+	Thu, 11 Apr 2024 10:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832209;
-	bh=L+bPlZagvwu7i3VHR4dHEtxgmzK/3VmQ+763kpHN9Ww=;
+	s=korg; t=1712832212;
+	bh=wT7ecDMSLLcdI91XgzVo/SUa2zPUwqDg/DZ1Ft0x61M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ILZw/j7X2NS+DGc1JBtJGIKIexrLN1rbNrIaLOi9fM0yhpFOHSHcHebn7j88vcMFC
-	 WPV6z1bA9aop0EyHyP5Yh8+7IL7Bc/fByf7odo8mCMmuXH7A4naijPB3F06sAXDknY
-	 SlI2KByOb4IVU4nmE3e02Cd0DgtwrnrKLBhkpaAU=
+	b=ftVIaip07AI8ekUHLWAic2i47BM9c1va1KVSYcM1PbPXlTylHrYumvodv6rchbKvE
+	 1fSaI9h5ii88s3mSRIfdLUJTVptDw7jGDA32GVoUEF63JDJrtDT9kozSR2+kHwciuS
+	 8wusw9Pz6kEkrRXUbBrfDpKOoTvPAL2XsjRmYkXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Hannes Reinecke <hare@suse.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 265/294] ext4: forbid commit inconsistent quota data when errors=remount-ro
-Date: Thu, 11 Apr 2024 11:57:08 +0200
-Message-ID: <20240411095443.533732732@linuxfoundation.org>
+Subject: [PATCH 5.10 230/294] scsi: mylex: Fix sysfs buffer lengths
+Date: Thu, 11 Apr 2024 11:56:33 +0200
+Message-ID: <20240411095442.509006742@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -52,68 +52,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit d8b945fa475f13d787df00c26a6dc45a3e2e1d1d ]
+[ Upstream commit 1197c5b2099f716b3de327437fb50900a0b936c9 ]
 
-There's issue as follows When do IO fault injection test:
-Quota error (device dm-3): find_block_dqentry: Quota for id 101 referenced but not present
-Quota error (device dm-3): qtree_read_dquot: Can't read quota structure for id 101
-Quota error (device dm-3): do_check_range: Getting block 2021161007 out of range 1-186
-Quota error (device dm-3): qtree_read_dquot: Can't read quota structure for id 661
+The myrb and myrs drivers use an odd way of implementing their sysfs files,
+calling snprintf() with a fixed length of 32 bytes to print into a page
+sized buffer. One of the strings is actually longer than 32 bytes, which
+clang can warn about:
 
-Now, ext4_write_dquot()/ext4_acquire_dquot()/ext4_release_dquot() may commit
-inconsistent quota data even if process failed. This may lead to filesystem
-corruption.
-To ensure filesystem consistent when errors=remount-ro there is need to call
-ext4_handle_error() to abort journal.
+drivers/scsi/myrb.c:1906:10: error: 'snprintf' will always be truncated; specified size is 32, but format string expands to at least 34 [-Werror,-Wformat-truncation]
+drivers/scsi/myrs.c:1089:10: error: 'snprintf' will always be truncated; specified size is 32, but format string expands to at least 34 [-Werror,-Wformat-truncation]
 
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240119062908.3598806-1-yebin10@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+These could all be plain sprintf() without a length as the buffer is always
+long enough. On the other hand, sysfs files should not be overly long
+either, so just double the length to make sure the longest strings don't
+get truncated here.
+
+Fixes: 77266186397c ("scsi: myrs: Add Mylex RAID controller (SCSI interface)")
+Fixes: 081ff398c56c ("scsi: myrb: Add Mylex RAID controller (block interface)")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240326223825.4084412-8-arnd@kernel.org
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/scsi/myrb.c | 20 ++++++++++----------
+ drivers/scsi/myrs.c | 24 ++++++++++++------------
+ 2 files changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index e386d67cff9d1..0149d3c2cfd78 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -6205,6 +6205,10 @@ static int ext4_write_dquot(struct dquot *dquot)
- 	if (IS_ERR(handle))
- 		return PTR_ERR(handle);
- 	ret = dquot_commit(dquot);
-+	if (ret < 0)
-+		ext4_error_err(dquot->dq_sb, -ret,
-+			       "Failed to commit dquot type %d",
-+			       dquot->dq_id.type);
- 	err = ext4_journal_stop(handle);
- 	if (!ret)
- 		ret = err;
-@@ -6221,6 +6225,10 @@ static int ext4_acquire_dquot(struct dquot *dquot)
- 	if (IS_ERR(handle))
- 		return PTR_ERR(handle);
- 	ret = dquot_acquire(dquot);
-+	if (ret < 0)
-+		ext4_error_err(dquot->dq_sb, -ret,
-+			      "Failed to acquire dquot type %d",
-+			      dquot->dq_id.type);
- 	err = ext4_journal_stop(handle);
- 	if (!ret)
- 		ret = err;
-@@ -6240,6 +6248,10 @@ static int ext4_release_dquot(struct dquot *dquot)
- 		return PTR_ERR(handle);
+diff --git a/drivers/scsi/myrb.c b/drivers/scsi/myrb.c
+index ad17c2beaacad..d4c3f00faf1ba 100644
+--- a/drivers/scsi/myrb.c
++++ b/drivers/scsi/myrb.c
+@@ -1803,9 +1803,9 @@ static ssize_t raid_state_show(struct device *dev,
+ 
+ 		name = myrb_devstate_name(ldev_info->state);
+ 		if (name)
+-			ret = snprintf(buf, 32, "%s\n", name);
++			ret = snprintf(buf, 64, "%s\n", name);
+ 		else
+-			ret = snprintf(buf, 32, "Invalid (%02X)\n",
++			ret = snprintf(buf, 64, "Invalid (%02X)\n",
+ 				       ldev_info->state);
+ 	} else {
+ 		struct myrb_pdev_state *pdev_info = sdev->hostdata;
+@@ -1824,9 +1824,9 @@ static ssize_t raid_state_show(struct device *dev,
+ 		else
+ 			name = myrb_devstate_name(pdev_info->state);
+ 		if (name)
+-			ret = snprintf(buf, 32, "%s\n", name);
++			ret = snprintf(buf, 64, "%s\n", name);
+ 		else
+-			ret = snprintf(buf, 32, "Invalid (%02X)\n",
++			ret = snprintf(buf, 64, "Invalid (%02X)\n",
+ 				       pdev_info->state);
  	}
- 	ret = dquot_release(dquot);
-+	if (ret < 0)
-+		ext4_error_err(dquot->dq_sb, -ret,
-+			       "Failed to release dquot type %d",
-+			       dquot->dq_id.type);
- 	err = ext4_journal_stop(handle);
- 	if (!ret)
- 		ret = err;
+ 	return ret;
+@@ -1914,11 +1914,11 @@ static ssize_t raid_level_show(struct device *dev,
+ 
+ 		name = myrb_raidlevel_name(ldev_info->raid_level);
+ 		if (!name)
+-			return snprintf(buf, 32, "Invalid (%02X)\n",
++			return snprintf(buf, 64, "Invalid (%02X)\n",
+ 					ldev_info->state);
+-		return snprintf(buf, 32, "%s\n", name);
++		return snprintf(buf, 64, "%s\n", name);
+ 	}
+-	return snprintf(buf, 32, "Physical Drive\n");
++	return snprintf(buf, 64, "Physical Drive\n");
+ }
+ static DEVICE_ATTR_RO(raid_level);
+ 
+@@ -1931,15 +1931,15 @@ static ssize_t rebuild_show(struct device *dev,
+ 	unsigned char status;
+ 
+ 	if (sdev->channel < myrb_logical_channel(sdev->host))
+-		return snprintf(buf, 32, "physical device - not rebuilding\n");
++		return snprintf(buf, 64, "physical device - not rebuilding\n");
+ 
+ 	status = myrb_get_rbld_progress(cb, &rbld_buf);
+ 
+ 	if (rbld_buf.ldev_num != sdev->id ||
+ 	    status != MYRB_STATUS_SUCCESS)
+-		return snprintf(buf, 32, "not rebuilding\n");
++		return snprintf(buf, 64, "not rebuilding\n");
+ 
+-	return snprintf(buf, 32, "rebuilding block %u of %u\n",
++	return snprintf(buf, 64, "rebuilding block %u of %u\n",
+ 			rbld_buf.ldev_size - rbld_buf.blocks_left,
+ 			rbld_buf.ldev_size);
+ }
+diff --git a/drivers/scsi/myrs.c b/drivers/scsi/myrs.c
+index e6a6678967e52..857a73e856a14 100644
+--- a/drivers/scsi/myrs.c
++++ b/drivers/scsi/myrs.c
+@@ -950,9 +950,9 @@ static ssize_t raid_state_show(struct device *dev,
+ 
+ 		name = myrs_devstate_name(ldev_info->dev_state);
+ 		if (name)
+-			ret = snprintf(buf, 32, "%s\n", name);
++			ret = snprintf(buf, 64, "%s\n", name);
+ 		else
+-			ret = snprintf(buf, 32, "Invalid (%02X)\n",
++			ret = snprintf(buf, 64, "Invalid (%02X)\n",
+ 				       ldev_info->dev_state);
+ 	} else {
+ 		struct myrs_pdev_info *pdev_info;
+@@ -961,9 +961,9 @@ static ssize_t raid_state_show(struct device *dev,
+ 		pdev_info = sdev->hostdata;
+ 		name = myrs_devstate_name(pdev_info->dev_state);
+ 		if (name)
+-			ret = snprintf(buf, 32, "%s\n", name);
++			ret = snprintf(buf, 64, "%s\n", name);
+ 		else
+-			ret = snprintf(buf, 32, "Invalid (%02X)\n",
++			ret = snprintf(buf, 64, "Invalid (%02X)\n",
+ 				       pdev_info->dev_state);
+ 	}
+ 	return ret;
+@@ -1069,13 +1069,13 @@ static ssize_t raid_level_show(struct device *dev,
+ 		ldev_info = sdev->hostdata;
+ 		name = myrs_raid_level_name(ldev_info->raid_level);
+ 		if (!name)
+-			return snprintf(buf, 32, "Invalid (%02X)\n",
++			return snprintf(buf, 64, "Invalid (%02X)\n",
+ 					ldev_info->dev_state);
+ 
+ 	} else
+ 		name = myrs_raid_level_name(MYRS_RAID_PHYSICAL);
+ 
+-	return snprintf(buf, 32, "%s\n", name);
++	return snprintf(buf, 64, "%s\n", name);
+ }
+ static DEVICE_ATTR_RO(raid_level);
+ 
+@@ -1089,7 +1089,7 @@ static ssize_t rebuild_show(struct device *dev,
+ 	unsigned char status;
+ 
+ 	if (sdev->channel < cs->ctlr_info->physchan_present)
+-		return snprintf(buf, 32, "physical device - not rebuilding\n");
++		return snprintf(buf, 64, "physical device - not rebuilding\n");
+ 
+ 	ldev_info = sdev->hostdata;
+ 	ldev_num = ldev_info->ldev_num;
+@@ -1101,11 +1101,11 @@ static ssize_t rebuild_show(struct device *dev,
+ 		return -EIO;
+ 	}
+ 	if (ldev_info->rbld_active) {
+-		return snprintf(buf, 32, "rebuilding block %zu of %zu\n",
++		return snprintf(buf, 64, "rebuilding block %zu of %zu\n",
+ 				(size_t)ldev_info->rbld_lba,
+ 				(size_t)ldev_info->cfg_devsize);
+ 	} else
+-		return snprintf(buf, 32, "not rebuilding\n");
++		return snprintf(buf, 64, "not rebuilding\n");
+ }
+ 
+ static ssize_t rebuild_store(struct device *dev,
+@@ -1194,7 +1194,7 @@ static ssize_t consistency_check_show(struct device *dev,
+ 	unsigned char status;
+ 
+ 	if (sdev->channel < cs->ctlr_info->physchan_present)
+-		return snprintf(buf, 32, "physical device - not checking\n");
++		return snprintf(buf, 64, "physical device - not checking\n");
+ 
+ 	ldev_info = sdev->hostdata;
+ 	if (!ldev_info)
+@@ -1202,11 +1202,11 @@ static ssize_t consistency_check_show(struct device *dev,
+ 	ldev_num = ldev_info->ldev_num;
+ 	status = myrs_get_ldev_info(cs, ldev_num, ldev_info);
+ 	if (ldev_info->cc_active)
+-		return snprintf(buf, 32, "checking block %zu of %zu\n",
++		return snprintf(buf, 64, "checking block %zu of %zu\n",
+ 				(size_t)ldev_info->cc_lba,
+ 				(size_t)ldev_info->cfg_devsize);
+ 	else
+-		return snprintf(buf, 32, "not checking\n");
++		return snprintf(buf, 64, "not checking\n");
+ }
+ 
+ static ssize_t consistency_check_store(struct device *dev,
 -- 
 2.43.0
 
