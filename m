@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB246BB29;
-	Thu, 11 Apr 2024 10:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A99E6BB29;
+	Thu, 11 Apr 2024 10:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832351; cv=none; b=sIXYMBhiQLL++zgXg50nAd8wRfODSYOcP4x72YUsaZlstVEjdUQXwdLhItQvzfSciHSZ6aeRD0srleBaECK2lC/cIlgHEFxAkFLlC9jshDvkSD5Hi7NJmMMv6QU9iUmZL/bzYmp/z6Id8ewqzUUBDm71qWFhyeYW8itAJlxm0X4=
+	t=1712832354; cv=none; b=KkmFyKnvUDzG74NpyeE8nl+6bWlZd2rMjt1XdPqbfiUpcXTzXwsg4Ps9fm8i+GwQ4jSC6rEaLg3J1CKsogyC+ae8RjYedZ9qxC7VpzJSa7EgVbCTb6P6xqcmy3sTQCUY0wZTYDkvsdvyeq81R58JTUFDIJmc3CC5J+Z4l3oSBFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832351; c=relaxed/simple;
-	bh=Yu1ztJM02la0Qizd7ojqUjHcxH/gytiIGjYRYHtGB5I=;
+	s=arc-20240116; t=1712832354; c=relaxed/simple;
+	bh=bpcAABT1rSwOi31/Cg9GA8brHPSTlEfQ3b9Z9lVq7yo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ct9bQx5vJPwPTMsQd8+bL+98pUMe5HD7FHofABpHd6mb03pHCQ/obrKGg0wEZbZrtdsdeK2hvTlHsAavCyN2X+U3tqPy4HDInojnLgJytm52pJtLtnaij8BEU55WNH1z6bH4w85ukVC9UBew2mACgUTVIZYMOcowovx5KztZ/9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPf1Ina/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oL7k9B+vOzrcxjhBGdCB5VIGcwWvAftMLaAbrB4EGdrdOLrAS1bU13Xv4SHMj0SomrZGACnz2tFGqveCe4IYiV3K+tkgA7rFABVzlvyJWBAGb549VcDwXmcJtV5mYS4VR5UZk3NuFx7TMXs3A/083ngXokRVZ22LuNWHQUobc5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STgs9O0I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPf1Ina/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67FFC433C7;
-	Thu, 11 Apr 2024 10:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STgs9O0I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45AFC433F1;
+	Thu, 11 Apr 2024 10:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832351;
-	bh=Yu1ztJM02la0Qizd7ojqUjHcxH/gytiIGjYRYHtGB5I=;
+	s=korg; t=1712832354;
+	bh=bpcAABT1rSwOi31/Cg9GA8brHPSTlEfQ3b9Z9lVq7yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VPf1Ina/Q6sqTCve4aszxI1cZxH9XX+UB8jSHQGIELl20tXXqsAdvYky4oiUmwiuG
-	 ToN031IUcIjLKvEFRFm8EUWcVFnTo0X36qIEtAFRCU5EGgTIVTIJwqysC/dfEHinPJ
-	 ENzl2VOoV1uhJvvEJY30Ou0AfvY7YvMAOZjodTow=
+	b=STgs9O0IO1BgBNPLqT9pSDB5dLX9pk1JjPja2PNG96DyyqGrdNYcq0GqpCL+Y/Asy
+	 QiNalOFWx1mz1C80VmLI3RwrCSS/TJk6KqEq2wd06u4+Jyz5Xmtpq2ecZtTQneOW60
+	 X0f0hsU93VV2eqTW76XCU26tFITwJalCIbI4MoGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Ariel Elior <aelior@marvell.com>,
-	Sudarsana Kalluru <skalluru@marvell.com>,
-	Manish Chopra <manishc@marvell.com>,
-	Kees Cook <keescook@chromium.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 02/83] bnx2x: Fix firmware version string character counts
-Date: Thu, 11 Apr 2024 11:56:34 +0200
-Message-ID: <20240411095412.749158232@linuxfoundation.org>
+Subject: [PATCH 6.1 20/83] wifi: ath11k: decrease MHI channel buffer length to 8KB
+Date: Thu, 11 Apr 2024 11:56:52 +0200
+Message-ID: <20240411095413.287609193@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -55,135 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 5642c82b9463c3263c086efb002516244bd4c668 ]
+[ Upstream commit 1cca1bddf9ef080503c15378cecf4877f7510015 ]
 
-A potential string truncation was reported in bnx2x_fill_fw_str(),
-when a long bp->fw_ver and a long phy_fw_ver might coexist, but seems
-unlikely with real-world hardware.
+Currently buf_len field of ath11k_mhi_config_qca6390 is assigned
+with 0, making MHI use a default size, 64KB, to allocate channel
+buffers. This is likely to fail in some scenarios where system
+memory is highly fragmented and memory compaction or reclaim is
+not allowed.
 
-Use scnprintf() to indicate the intent that truncations are tolerated.
+There is a fail report which is caused by it:
+kworker/u32:45: page allocation failure: order:4, mode:0x40c00(GFP_NOIO|__GFP_COMP), nodemask=(null),cpuset=/,mems_allowed=0
+CPU: 0 PID: 19318 Comm: kworker/u32:45 Not tainted 6.8.0-rc3-1.gae4495f-default #1 openSUSE Tumbleweed (unreleased) 493b6d5b382c603654d7a81fc3c144d59a1dfceb
+Workqueue: events_unbound async_run_entry_fn
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x47/0x60
+ warn_alloc+0x13a/0x1b0
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __alloc_pages_direct_compact+0xab/0x210
+ __alloc_pages_slowpath.constprop.0+0xd3e/0xda0
+ __alloc_pages+0x32d/0x350
+ ? mhi_prepare_channel+0x127/0x2d0 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
+ __kmalloc_large_node+0x72/0x110
+ __kmalloc+0x37c/0x480
+ ? mhi_map_single_no_bb+0x77/0xf0 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
+ ? mhi_prepare_channel+0x127/0x2d0 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
+ mhi_prepare_channel+0x127/0x2d0 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
+ __mhi_prepare_for_transfer+0x44/0x80 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
+ ? __pfx_____mhi_prepare_for_transfer+0x10/0x10 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
+ device_for_each_child+0x5c/0xa0
+ ? __pfx_pci_pm_resume+0x10/0x10
+ ath11k_core_resume+0x65/0x100 [ath11k a5094e22d7223135c40d93c8f5321cf09fd85e4e]
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ath11k_pci_pm_resume+0x32/0x60 [ath11k_pci 830b7bfc3ea80ebef32e563cafe2cb55e9cc73ec]
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ dpm_run_callback+0x8c/0x1e0
+ device_resume+0x104/0x340
+ ? __pfx_dpm_watchdog_handler+0x10/0x10
+ async_resume+0x1d/0x30
+ async_run_entry_fn+0x32/0x120
+ process_one_work+0x168/0x330
+ worker_thread+0x2f5/0x410
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0xe8/0x120
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x34/0x50
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1b/0x30
+ </TASK>
 
-While reading this code, I found a collection of various buffer size
-counting issues. None looked like they might lead to a buffer overflow
-with current code (the small buffers are 20 bytes and might only ever
-consume 10 bytes twice with a trailing %NUL). However, early truncation
-(due to a %NUL in the middle of the string) might be happening under
-likely rare conditions. Regardless fix the formatters and related
-functions:
+Actually those buffers are used only by QMI target -> host communication.
+And for WCN6855 and QCA6390, the largest packet size for that is less
+than 6KB. So change buf_len field to 8KB, which results in order 1
+allocation if page size is 4KB. In this way, we can at least save some
+memory, and as well as decrease the possibility of allocation failure
+in those scenarios.
 
-- Switch from a separate strscpy() to just adding an additional "%s" to
-  the format string that immediately follows it in bnx2x_fill_fw_str().
-- Use sizeof() universally instead of using unbound defines.
-- Fix bnx2x_7101_format_ver() and bnx2x_null_format_ver() to report the
-  number of characters written, not including the trailing %NUL (as
-  already done with the other firmware formatting functions).
-- Require space for at least 1 byte in bnx2x_get_ext_phy_fw_version()
-  for the trailing %NUL.
-- Correct the needed buffer size in bnx2x_3_seq_format_ver().
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202401260858.jZN6vD1k-lkp@intel.com/
-Cc: Ariel Elior <aelior@marvell.com>
-Cc: Sudarsana Kalluru <skalluru@marvell.com>
-Cc: Manish Chopra <manishc@marvell.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20240126041044.work.220-kees@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Vlastimil Babka <vbabka@suse.cz>
+Closes: https://lore.kernel.org/ath11k/96481a45-3547-4d23-ad34-3a8f1d90c1cd@suse.cz/
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240223053111.29170-1-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c    |  9 +++++----
- .../net/ethernet/broadcom/bnx2x/bnx2x_ethtool.c    |  2 +-
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_link.c   | 14 +++++++-------
- 3 files changed, 13 insertions(+), 12 deletions(-)
+ drivers/net/wireless/ath/ath11k/mhi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-index 4950fde82d175..b04c5b51eb598 100644
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-@@ -147,10 +147,11 @@ void bnx2x_fill_fw_str(struct bnx2x *bp, char *buf, size_t buf_len)
- 
- 		phy_fw_ver[0] = '\0';
- 		bnx2x_get_ext_phy_fw_version(&bp->link_params,
--					     phy_fw_ver, PHY_FW_VER_LEN);
--		strscpy(buf, bp->fw_ver, buf_len);
--		snprintf(buf + strlen(bp->fw_ver), 32 - strlen(bp->fw_ver),
--			 "bc %d.%d.%d%s%s",
-+					     phy_fw_ver, sizeof(phy_fw_ver));
-+		/* This may become truncated. */
-+		scnprintf(buf, buf_len,
-+			 "%sbc %d.%d.%d%s%s",
-+			 bp->fw_ver,
- 			 (bp->common.bc_ver & 0xff0000) >> 16,
- 			 (bp->common.bc_ver & 0xff00) >> 8,
- 			 (bp->common.bc_ver & 0xff),
-diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_ethtool.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_ethtool.c
-index bda3ccc28eca6..f920976c36f0c 100644
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_ethtool.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_ethtool.c
-@@ -1132,7 +1132,7 @@ static void bnx2x_get_drvinfo(struct net_device *dev,
- 	}
- 
- 	memset(version, 0, sizeof(version));
--	bnx2x_fill_fw_str(bp, version, ETHTOOL_FWVERS_LEN);
-+	bnx2x_fill_fw_str(bp, version, sizeof(version));
- 	strlcat(info->fw_version, version, sizeof(info->fw_version));
- 
- 	strscpy(info->bus_info, pci_name(bp->pdev), sizeof(info->bus_info));
-diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_link.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_link.c
-index 02808513ffe45..ea310057fe3af 100644
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_link.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_link.c
-@@ -6163,8 +6163,8 @@ static void bnx2x_link_int_ack(struct link_params *params,
- 
- static int bnx2x_null_format_ver(u32 spirom_ver, u8 *str, u16 *len)
- {
--	str[0] = '\0';
--	(*len)--;
-+	if (*len)
-+		str[0] = '\0';
- 	return 0;
- }
- 
-@@ -6173,7 +6173,7 @@ static int bnx2x_format_ver(u32 num, u8 *str, u16 *len)
- 	u16 ret;
- 
- 	if (*len < 10) {
--		/* Need more than 10chars for this format */
-+		/* Need more than 10 chars for this format */
- 		bnx2x_null_format_ver(num, str, len);
- 		return -EINVAL;
- 	}
-@@ -6188,8 +6188,8 @@ static int bnx2x_3_seq_format_ver(u32 num, u8 *str, u16 *len)
- {
- 	u16 ret;
- 
--	if (*len < 10) {
--		/* Need more than 10chars for this format */
-+	if (*len < 9) {
-+		/* Need more than 9 chars for this format */
- 		bnx2x_null_format_ver(num, str, len);
- 		return -EINVAL;
- 	}
-@@ -6208,7 +6208,7 @@ int bnx2x_get_ext_phy_fw_version(struct link_params *params, u8 *version,
- 	int status = 0;
- 	u8 *ver_p = version;
- 	u16 remain_len = len;
--	if (version == NULL || params == NULL)
-+	if (version == NULL || params == NULL || len == 0)
- 		return -EINVAL;
- 	bp = params->bp;
- 
-@@ -11546,7 +11546,7 @@ static int bnx2x_7101_format_ver(u32 spirom_ver, u8 *str, u16 *len)
- 	str[2] = (spirom_ver & 0xFF0000) >> 16;
- 	str[3] = (spirom_ver & 0xFF000000) >> 24;
- 	str[4] = '\0';
--	*len -= 5;
-+	*len -= 4;
- 	return 0;
- }
- 
+diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
+index a62ee05c54097..4bea36cc71085 100644
+--- a/drivers/net/wireless/ath/ath11k/mhi.c
++++ b/drivers/net/wireless/ath/ath11k/mhi.c
+@@ -105,7 +105,7 @@ static struct mhi_controller_config ath11k_mhi_config_qca6390 = {
+ 	.max_channels = 128,
+ 	.timeout_ms = 2000,
+ 	.use_bounce_buf = false,
+-	.buf_len = 0,
++	.buf_len = 8192,
+ 	.num_channels = ARRAY_SIZE(ath11k_mhi_channels_qca6390),
+ 	.ch_cfg = ath11k_mhi_channels_qca6390,
+ 	.num_events = ARRAY_SIZE(ath11k_mhi_events_qca6390),
 -- 
 2.43.0
 
