@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69609143C76;
-	Thu, 11 Apr 2024 10:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5AE145B13;
+	Thu, 11 Apr 2024 10:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831272; cv=none; b=MYqZ5tcQUDT9lC6nb4q+OmEL9p8sJuwQMqreJHqIuKi77felKyqlIYSZV3jarSmOi4VAouzWkiWxsM4OA4PRw48cfSHCgGiCHSe0RKp72f+5cjmOxFtHoh+E/U76ogku48OKrK6YFymXMLb8qCOZypfrigjvi1vdne95pqU/J3Q=
+	t=1712831275; cv=none; b=iZrLw9QR3v/xFQerld9RP1h2th0joiI07974XfASbX/x5TJWPmI3CHgRn12ZPlMljK13GVCPDqK2wKGoIZ2Y3YzONBuNdewS4yp1gofP6TTQBob+7vbdnazstfsQQZfAqhlcXuUFIsi5FK2Jqx4ngxhEr78TkVLxSchkyGcArsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831272; c=relaxed/simple;
-	bh=u+t8wXSDs8BKQBYCa7zODCcXWh48gn1C6WoY41YRSIM=;
+	s=arc-20240116; t=1712831275; c=relaxed/simple;
+	bh=mLzgJ/hSiBeLvycz507W4oJMqI8te5leEhYvIbDFZ9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W/Hns3AOeBz3yeAiCDBA6zAg5zmpOTBon0cednz1i/qB72SZbHzwBy/Tv7gOYLYwwvF2KF+8c2CDlqk6LO5SUCyJ6dJHmbs+U1J2seZA/F7+lKS3hzoaOUjAL9n+moqZ+73Z3reI09kiqj8aRufXM9qB4iz7T6+sE5sD+jdPa3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHP6RXUl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ghcRTshdo8xULpHpvPUF/iuqLHFm28JLRkYyR7iLBwzuRyQLACSz+XYo2r84bG2VqemokFzCFp8f4pCqAYKtQ07cfNOy4aWl6IgemmMfprFVlhnxwR11SEQw5wue/+/yWiQxb6LtfIIvEWHNoxOJHn6wdfYM5K2rcUiQakJiQoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYWp7yUE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHP6RXUl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F4EC433C7;
-	Thu, 11 Apr 2024 10:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYWp7yUE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C6AC433C7;
+	Thu, 11 Apr 2024 10:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831272;
-	bh=u+t8wXSDs8BKQBYCa7zODCcXWh48gn1C6WoY41YRSIM=;
+	s=korg; t=1712831275;
+	bh=mLzgJ/hSiBeLvycz507W4oJMqI8te5leEhYvIbDFZ9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GHP6RXUl8cUYHDB217iF8b2SjNGPgCEWLPWo1qfaQrqQ1N8MQP6Dyb8ocX/3qfcm9
-	 bfBk/JgimghuN+kgb9d0ykf2wkJdTkkdeN5MJCXESHIgmlOkzz4/sP7DKqlMyO9rYs
-	 FxvRGzPR+QSIHrqN4/1Ng7RsL/J1rbONs9VMmbjc=
+	b=CYWp7yUElTecAgM6wh1RfsU7eVk1UsP4erTH9V5lTPSa6YfQazJTHnxMHB+WYRIbr
+	 i+MbOnZLcm2ZSAPQOXIb/jX6x2niFVegyd0KOKosgfGhTzZ8vddu6WooB9C0mlWhwe
+	 w0fp1x97YVLLy7xCO+HezCSkrsxw+6k+ohBj2Xhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 027/114] wifi: mt76: mt7996: add locking for accessing mapped registers
-Date: Thu, 11 Apr 2024 11:55:54 +0200
-Message-ID: <20240411095417.689539196@linuxfoundation.org>
+Subject: [PATCH 6.6 028/114] ACPI: x86: Move acpi_quirk_skip_serdev_enumeration() out of CONFIG_X86_ANDROID_TABLETS
+Date: Thu, 11 Apr 2024 11:55:55 +0200
+Message-ID: <20240411095417.719713595@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095416.853744210@linuxfoundation.org>
 References: <20240411095416.853744210@linuxfoundation.org>
@@ -51,167 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shayne Chen <shayne.chen@mediatek.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 3687854d3e7e7fd760d939dd9e5a3520d5ab60fe ]
+[ Upstream commit 7c86e17455de1a442ec906d3449148b5e9a218a4 ]
 
-A race condition was observed when accessing mapped registers, so add
-locking to protect against concurrent access.
+Some recent(ish) Dell AIO devices have a backlight controller board
+connected to an UART.
 
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+This UART has a DELL0501 HID with CID set to PNP0501 so that the UART is
+still handled by 8250_pnp.c. Unfortunately there is no separate ACPI device
+with an UartSerialBusV2() resource to model the backlight-controller.
+
+The next patch in this series will use acpi_quirk_skip_serdev_enumeration()
+to still create a serdev for this for a backlight driver to bind to
+instead of creating a /dev/ttyS0.
+
+This new acpi_quirk_skip_serdev_enumeration() use is not limited to Android
+X86 tablets, so move it out of the ifdef CONFIG_X86_ANDROID_TABLETS block.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7996/mmio.c  | 64 ++++++++++++-------
- .../wireless/mediatek/mt76/mt7996/mt7996.h    |  3 +-
- 2 files changed, 43 insertions(+), 24 deletions(-)
+ drivers/acpi/x86/utils.c | 18 ++++++++++++++----
+ include/acpi/acpi_bus.h  | 14 +++++++-------
+ 2 files changed, 21 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-index 3a591a7b47ae6..e75becadc2e54 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-@@ -82,7 +82,6 @@ static u32 mt7996_reg_map_l1(struct mt7996_dev *dev, u32 addr)
- 	u32 offset = FIELD_GET(MT_HIF_REMAP_L1_OFFSET, addr);
- 	u32 base = FIELD_GET(MT_HIF_REMAP_L1_BASE, addr);
- 
--	dev->reg_l1_backup = dev->bus_ops->rr(&dev->mt76, MT_HIF_REMAP_L1);
- 	dev->bus_ops->rmw(&dev->mt76, MT_HIF_REMAP_L1,
- 			  MT_HIF_REMAP_L1_MASK,
- 			  FIELD_PREP(MT_HIF_REMAP_L1_MASK, base));
-@@ -97,7 +96,6 @@ static u32 mt7996_reg_map_l2(struct mt7996_dev *dev, u32 addr)
- 	u32 offset = FIELD_GET(MT_HIF_REMAP_L2_OFFSET, addr);
- 	u32 base = FIELD_GET(MT_HIF_REMAP_L2_BASE, addr);
- 
--	dev->reg_l2_backup = dev->bus_ops->rr(&dev->mt76, MT_HIF_REMAP_L2);
- 	dev->bus_ops->rmw(&dev->mt76, MT_HIF_REMAP_L2,
- 			  MT_HIF_REMAP_L2_MASK,
- 			  FIELD_PREP(MT_HIF_REMAP_L2_MASK, base));
-@@ -107,26 +105,10 @@ static u32 mt7996_reg_map_l2(struct mt7996_dev *dev, u32 addr)
- 	return MT_HIF_REMAP_BASE_L2 + offset;
+diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
+index 63d834dd38112..c708524576df4 100644
+--- a/drivers/acpi/x86/utils.c
++++ b/drivers/acpi/x86/utils.c
+@@ -429,7 +429,7 @@ bool acpi_quirk_skip_i2c_client_enumeration(struct acpi_device *adev)
  }
+ EXPORT_SYMBOL_GPL(acpi_quirk_skip_i2c_client_enumeration);
  
--static void mt7996_reg_remap_restore(struct mt7996_dev *dev)
--{
--	/* remap to ori status */
--	if (unlikely(dev->reg_l1_backup)) {
--		dev->bus_ops->wr(&dev->mt76, MT_HIF_REMAP_L1, dev->reg_l1_backup);
--		dev->reg_l1_backup = 0;
--	}
--
--	if (dev->reg_l2_backup) {
--		dev->bus_ops->wr(&dev->mt76, MT_HIF_REMAP_L2, dev->reg_l2_backup);
--		dev->reg_l2_backup = 0;
--	}
--}
--
- static u32 __mt7996_reg_addr(struct mt7996_dev *dev, u32 addr)
+-int acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *skip)
++static int acpi_dmi_skip_serdev_enumeration(struct device *controller_parent, bool *skip)
  {
- 	int i;
+ 	struct acpi_device *adev = ACPI_COMPANION(controller_parent);
+ 	const struct dmi_system_id *dmi_id;
+@@ -437,8 +437,6 @@ int acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *s
+ 	u64 uid;
+ 	int ret;
  
--	mt7996_reg_remap_restore(dev);
+-	*skip = false;
 -
- 	if (addr < 0x100000)
- 		return addr;
+ 	ret = acpi_dev_uid_to_integer(adev, &uid);
+ 	if (ret)
+ 		return 0;
+@@ -464,7 +462,6 @@ int acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *s
  
-@@ -143,6 +125,11 @@ static u32 __mt7996_reg_addr(struct mt7996_dev *dev, u32 addr)
- 		return dev->reg.map[i].mapped + ofs;
- 	}
+ 	return 0;
+ }
+-EXPORT_SYMBOL_GPL(acpi_quirk_skip_serdev_enumeration);
  
+ bool acpi_quirk_skip_gpio_event_handlers(void)
+ {
+@@ -479,8 +476,21 @@ bool acpi_quirk_skip_gpio_event_handlers(void)
+ 	return (quirks & ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS);
+ }
+ EXPORT_SYMBOL_GPL(acpi_quirk_skip_gpio_event_handlers);
++#else
++static int acpi_dmi_skip_serdev_enumeration(struct device *controller_parent, bool *skip)
++{
 +	return 0;
 +}
-+
-+static u32 __mt7996_reg_remap_addr(struct mt7996_dev *dev, u32 addr)
+ #endif
+ 
++int acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *skip)
 +{
- 	if ((addr >= MT_INFRA_BASE && addr < MT_WFSYS0_PHY_START) ||
- 	    (addr >= MT_WFSYS0_PHY_START && addr < MT_WFSYS1_PHY_START) ||
- 	    (addr >= MT_WFSYS1_PHY_START && addr <= MT_WFSYS1_PHY_END))
-@@ -167,28 +154,60 @@ void mt7996_memcpy_fromio(struct mt7996_dev *dev, void *buf, u32 offset,
++	*skip = false;
++
++	return acpi_dmi_skip_serdev_enumeration(controller_parent, skip);
++}
++EXPORT_SYMBOL_GPL(acpi_quirk_skip_serdev_enumeration);
++
+ /* Lists of PMIC ACPI HIDs with an (often better) native charger driver */
+ static const struct {
+ 	const char *hid;
+diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
+index 0b7eab0ef7d7f..d9c20ae23b632 100644
+--- a/include/acpi/acpi_bus.h
++++ b/include/acpi/acpi_bus.h
+@@ -652,6 +652,7 @@ bool acpi_device_override_status(struct acpi_device *adev, unsigned long long *s
+ bool acpi_quirk_skip_acpi_ac_and_battery(void);
+ int acpi_install_cmos_rtc_space_handler(acpi_handle handle);
+ void acpi_remove_cmos_rtc_space_handler(acpi_handle handle);
++int acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *skip);
+ #else
+ static inline bool acpi_device_override_status(struct acpi_device *adev,
+ 					       unsigned long long *status)
+@@ -669,23 +670,22 @@ static inline int acpi_install_cmos_rtc_space_handler(acpi_handle handle)
+ static inline void acpi_remove_cmos_rtc_space_handler(acpi_handle handle)
  {
- 	u32 addr = __mt7996_reg_addr(dev, offset);
- 
--	memcpy_fromio(buf, dev->mt76.mmio.regs + addr, len);
-+	if (addr) {
-+		memcpy_fromio(buf, dev->mt76.mmio.regs + addr, len);
-+		return;
-+	}
-+
-+	spin_lock_bh(&dev->reg_lock);
-+	memcpy_fromio(buf, dev->mt76.mmio.regs +
-+			   __mt7996_reg_remap_addr(dev, offset), len);
-+	spin_unlock_bh(&dev->reg_lock);
  }
++static inline int
++acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *skip)
++{
++	*skip = false;
++	return 0;
++}
+ #endif
  
- static u32 mt7996_rr(struct mt76_dev *mdev, u32 offset)
+ #if IS_ENABLED(CONFIG_X86_ANDROID_TABLETS)
+ bool acpi_quirk_skip_i2c_client_enumeration(struct acpi_device *adev);
+-int acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *skip);
+ bool acpi_quirk_skip_gpio_event_handlers(void);
+ #else
+ static inline bool acpi_quirk_skip_i2c_client_enumeration(struct acpi_device *adev)
  {
- 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
-+	u32 addr = __mt7996_reg_addr(dev, offset), val;
-+
-+	if (addr)
-+		return dev->bus_ops->rr(mdev, addr);
- 
--	return dev->bus_ops->rr(mdev, __mt7996_reg_addr(dev, offset));
-+	spin_lock_bh(&dev->reg_lock);
-+	val = dev->bus_ops->rr(mdev, __mt7996_reg_remap_addr(dev, offset));
-+	spin_unlock_bh(&dev->reg_lock);
-+
-+	return val;
+ 	return false;
  }
- 
- static void mt7996_wr(struct mt76_dev *mdev, u32 offset, u32 val)
+-static inline int
+-acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *skip)
+-{
+-	*skip = false;
+-	return 0;
+-}
+ static inline bool acpi_quirk_skip_gpio_event_handlers(void)
  {
- 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
-+	u32 addr = __mt7996_reg_addr(dev, offset);
- 
--	dev->bus_ops->wr(mdev, __mt7996_reg_addr(dev, offset), val);
-+	if (addr) {
-+		dev->bus_ops->wr(mdev, addr, val);
-+		return;
-+	}
-+
-+	spin_lock_bh(&dev->reg_lock);
-+	dev->bus_ops->wr(mdev, __mt7996_reg_remap_addr(dev, offset), val);
-+	spin_unlock_bh(&dev->reg_lock);
- }
- 
- static u32 mt7996_rmw(struct mt76_dev *mdev, u32 offset, u32 mask, u32 val)
- {
- 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
-+	u32 addr = __mt7996_reg_addr(dev, offset);
-+
-+	if (addr)
-+		return dev->bus_ops->rmw(mdev, addr, mask, val);
-+
-+	spin_lock_bh(&dev->reg_lock);
-+	val = dev->bus_ops->rmw(mdev, __mt7996_reg_remap_addr(dev, offset), mask, val);
-+	spin_unlock_bh(&dev->reg_lock);
- 
--	return dev->bus_ops->rmw(mdev, __mt7996_reg_addr(dev, offset), mask, val);
-+	return val;
- }
- 
- static int mt7996_mmio_init(struct mt76_dev *mdev,
-@@ -200,6 +219,7 @@ static int mt7996_mmio_init(struct mt76_dev *mdev,
- 
- 	dev = container_of(mdev, struct mt7996_dev, mt76);
- 	mt76_mmio_init(&dev->mt76, mem_base);
-+	spin_lock_init(&dev->reg_lock);
- 
- 	switch (device_id) {
- 	case 0x7990:
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-index d5ef4137290db..25bb365612314 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-@@ -242,8 +242,7 @@ struct mt7996_dev {
- 		u8 n_agrt;
- 	} twt;
- 
--	u32 reg_l1_backup;
--	u32 reg_l2_backup;
-+	spinlock_t reg_lock;
- 
- 	u8 wtbl_size_group;
- };
+ 	return false;
 -- 
 2.43.0
 
