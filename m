@@ -1,45 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABF6140E3D;
-	Thu, 11 Apr 2024 10:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E24C140E3D;
+	Thu, 11 Apr 2024 10:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830874; cv=none; b=Dw9F9OH1gB938KWu82h0S8SX0YqEuSnimUNQBUDHZhfgrSGBXpobPjura4b20gYCSAgk/ncXfFSKTv6SmZCAG7La6fj7As4Y0/SaMmvOKDULBPHqXp3BMYvP2KLviZfA7lbUbHOKqPOVgk1nFCppNAJ7U/4DG2W6JzjHRgan4kM=
+	t=1712830877; cv=none; b=nNnt19FgvlQOu+0y/o9HlHSlwRpT+0ZrIkAqqqaJJN3ykNnjW06LPZS85kF3Es9UfM38lsHvOk/Ps6HQLwEgEbb0pIrhW3Q8iwS6kHSbDwpFcZ9ZNeJsyeBA4PdOsRg3egckXJCG89haipnAKu3QPlQaXefN1H6tIkpVCpHFud0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830874; c=relaxed/simple;
-	bh=XzJvm1c2iH71JcF9+eF0poiZA75m5n9/JlUxxM96GeY=;
+	s=arc-20240116; t=1712830877; c=relaxed/simple;
+	bh=RRIF9ON4VAozpUzZbFO7hQvBkUotVc4sutGuArRX27w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JqwRzpJiVACdz5f2yHcwc4L5NSbXxTuCcaGbLf3AA06gAVSxhkqn9JrDN9vrP8WVmC3f+YZh82FcUZDgIA+RzMfw15SC5Ac30s7K0SbJQ8Lz05khKFx2ck7SIToLcFQfXqAg6QwBJngiu5y8GvlsaMWVUezAQyLhXwR++0zDyN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JhgEfsmD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BWN8qzgsGrsU4U4x6Ry5HReufEodO7cVFYz7kt5xHKUOGgdOvsD2oAmfr6fajawCJ5i9i7YLAsWi8WTtjggMt8TgkMV11mD3M5CBq96gyL/C+IGmR3embwS0McS9uUGHJpCRom1nzmhxtA2Z2V2qnMpIDBZHLcWRlOoPQx2I5s4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJM4LKz9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JhgEfsmD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD2FC433A6;
-	Thu, 11 Apr 2024 10:21:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJM4LKz9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D14FC433C7;
+	Thu, 11 Apr 2024 10:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830874;
-	bh=XzJvm1c2iH71JcF9+eF0poiZA75m5n9/JlUxxM96GeY=;
+	s=korg; t=1712830877;
+	bh=RRIF9ON4VAozpUzZbFO7hQvBkUotVc4sutGuArRX27w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JhgEfsmDecrwpkjR1AbYCOcmgcYT+7te3h+dvWqwgfLFYJh8xkaxQdqsgJ7VrW4ng
-	 pMBmptOUK6I+9R5Kuh8HHf1Llg0Eg/aFLnECGrZ9s8FN6BjEDkyWPYEKKZNNPqzV53
-	 rB8h+n1J62cfvLT0uqGDy5z8zwZCdHHPmGW+yzQo=
+	b=wJM4LKz9JFHoRHePwMLm3nWMIKLrxxBJgDPTM+8HuMi0vNmJ23u91nMKiLx2Sxx+t
+	 JyhOnIX9oCz1t/odh1RtCg9Itq0BjrVdRLPXw98xHRdJ7vsoZGB+TvSLoRuQQDJ0a4
+	 DFUYDadJQG1pqeMW+1UYIcLSHHs1MHl8/tVxvtzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Sven van Ashbrook <svenva@chromium.org>,
-	Karthikeyan Ramasubramanian <kramasub@chromium.org>,
-	Brian Geffon <bgeffon@google.com>,
-	Curtis Malainey <cujomalainey@chromium.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Michal Hocko <mhocko@kernel.org>,
-	Takashi Iwai <tiwai@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 145/215] mm, vmscan: prevent infinite loop for costly GFP_NOIO | __GFP_RETRY_MAYFAIL allocations
-Date: Thu, 11 Apr 2024 11:55:54 +0200
-Message-ID: <20240411095429.248344185@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.4 146/215] netfilter: nf_tables: flush pending destroy work before exit_net release
+Date: Thu, 11 Apr 2024 11:55:55 +0200
+Message-ID: <20240411095429.277537072@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -58,188 +49,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlastimil Babka <vbabka@suse.cz>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 803de9000f334b771afacb6ff3e78622916668b0 upstream.
+commit 24cea9677025e0de419989ecb692acd4bb34cac2 upstream.
 
-Sven reports an infinite loop in __alloc_pages_slowpath() for costly order
-__GFP_RETRY_MAYFAIL allocations that are also GFP_NOIO.  Such combination
-can happen in a suspend/resume context where a GFP_KERNEL allocation can
-have __GFP_IO masked out via gfp_allowed_mask.
+Similar to 2c9f0293280e ("netfilter: nf_tables: flush pending destroy
+work before netlink notifier") to address a race between exit_net and
+the destroy workqueue.
 
-Quoting Sven:
+The trace below shows an element to be released via destroy workqueue
+while exit_net path (triggered via module removal) has already released
+the set that is used in such transaction.
 
-1. try to do a "costly" allocation (order > PAGE_ALLOC_COSTLY_ORDER)
-   with __GFP_RETRY_MAYFAIL set.
+[ 1360.547789] BUG: KASAN: slab-use-after-free in nf_tables_trans_destroy_work+0x3f5/0x590 [nf_tables]
+[ 1360.547861] Read of size 8 at addr ffff888140500cc0 by task kworker/4:1/152465
+[ 1360.547870] CPU: 4 PID: 152465 Comm: kworker/4:1 Not tainted 6.8.0+ #359
+[ 1360.547882] Workqueue: events nf_tables_trans_destroy_work [nf_tables]
+[ 1360.547984] Call Trace:
+[ 1360.547991]  <TASK>
+[ 1360.547998]  dump_stack_lvl+0x53/0x70
+[ 1360.548014]  print_report+0xc4/0x610
+[ 1360.548026]  ? __virt_addr_valid+0xba/0x160
+[ 1360.548040]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+[ 1360.548054]  ? nf_tables_trans_destroy_work+0x3f5/0x590 [nf_tables]
+[ 1360.548176]  kasan_report+0xae/0xe0
+[ 1360.548189]  ? nf_tables_trans_destroy_work+0x3f5/0x590 [nf_tables]
+[ 1360.548312]  nf_tables_trans_destroy_work+0x3f5/0x590 [nf_tables]
+[ 1360.548447]  ? __pfx_nf_tables_trans_destroy_work+0x10/0x10 [nf_tables]
+[ 1360.548577]  ? _raw_spin_unlock_irq+0x18/0x30
+[ 1360.548591]  process_one_work+0x2f1/0x670
+[ 1360.548610]  worker_thread+0x4d3/0x760
+[ 1360.548627]  ? __pfx_worker_thread+0x10/0x10
+[ 1360.548640]  kthread+0x16b/0x1b0
+[ 1360.548653]  ? __pfx_kthread+0x10/0x10
+[ 1360.548665]  ret_from_fork+0x2f/0x50
+[ 1360.548679]  ? __pfx_kthread+0x10/0x10
+[ 1360.548690]  ret_from_fork_asm+0x1a/0x30
+[ 1360.548707]  </TASK>
 
-2. page alloc's __alloc_pages_slowpath tries to get a page from the
-   freelist. This fails because there is nothing free of that costly
-   order.
+[ 1360.548719] Allocated by task 192061:
+[ 1360.548726]  kasan_save_stack+0x20/0x40
+[ 1360.548739]  kasan_save_track+0x14/0x30
+[ 1360.548750]  __kasan_kmalloc+0x8f/0xa0
+[ 1360.548760]  __kmalloc_node+0x1f1/0x450
+[ 1360.548771]  nf_tables_newset+0x10c7/0x1b50 [nf_tables]
+[ 1360.548883]  nfnetlink_rcv_batch+0xbc4/0xdc0 [nfnetlink]
+[ 1360.548909]  nfnetlink_rcv+0x1a8/0x1e0 [nfnetlink]
+[ 1360.548927]  netlink_unicast+0x367/0x4f0
+[ 1360.548935]  netlink_sendmsg+0x34b/0x610
+[ 1360.548944]  ____sys_sendmsg+0x4d4/0x510
+[ 1360.548953]  ___sys_sendmsg+0xc9/0x120
+[ 1360.548961]  __sys_sendmsg+0xbe/0x140
+[ 1360.548971]  do_syscall_64+0x55/0x120
+[ 1360.548982]  entry_SYSCALL_64_after_hwframe+0x55/0x5d
 
-3. page alloc tries to reclaim by calling __alloc_pages_direct_reclaim,
-   which bails out because a zone is ready to be compacted; it pretends
-   to have made a single page of progress.
+[ 1360.548994] Freed by task 192222:
+[ 1360.548999]  kasan_save_stack+0x20/0x40
+[ 1360.549009]  kasan_save_track+0x14/0x30
+[ 1360.549019]  kasan_save_free_info+0x3b/0x60
+[ 1360.549028]  poison_slab_object+0x100/0x180
+[ 1360.549036]  __kasan_slab_free+0x14/0x30
+[ 1360.549042]  kfree+0xb6/0x260
+[ 1360.549049]  __nft_release_table+0x473/0x6a0 [nf_tables]
+[ 1360.549131]  nf_tables_exit_net+0x170/0x240 [nf_tables]
+[ 1360.549221]  ops_exit_list+0x50/0xa0
+[ 1360.549229]  free_exit_list+0x101/0x140
+[ 1360.549236]  unregister_pernet_operations+0x107/0x160
+[ 1360.549245]  unregister_pernet_subsys+0x1c/0x30
+[ 1360.549254]  nf_tables_module_exit+0x43/0x80 [nf_tables]
+[ 1360.549345]  __do_sys_delete_module+0x253/0x370
+[ 1360.549352]  do_syscall_64+0x55/0x120
+[ 1360.549360]  entry_SYSCALL_64_after_hwframe+0x55/0x5d
 
-4. page alloc tries to compact, but this always bails out early because
-   __GFP_IO is not set (it's not passed by the snd allocator, and even
-   if it were, we are suspending so the __GFP_IO flag would be cleared
-   anyway).
+(gdb) list *__nft_release_table+0x473
+0x1e033 is in __nft_release_table (net/netfilter/nf_tables_api.c:11354).
+11349           list_for_each_entry_safe(flowtable, nf, &table->flowtables, list) {
+11350                   list_del(&flowtable->list);
+11351                   nft_use_dec(&table->use);
+11352                   nf_tables_flowtable_destroy(flowtable);
+11353           }
+11354           list_for_each_entry_safe(set, ns, &table->sets, list) {
+11355                   list_del(&set->list);
+11356                   nft_use_dec(&table->use);
+11357                   if (set->flags & (NFT_SET_MAP | NFT_SET_OBJECT))
+11358                           nft_map_deactivate(&ctx, set);
+(gdb)
 
-5. page alloc believes reclaim progress was made (because of the
-   pretense in item 3) and so it checks whether it should retry
-   compaction. The compaction retry logic thinks it should try again,
-   because:
-    a) reclaim is needed because of the early bail-out in item 4
-    b) a zonelist is suitable for compaction
+[ 1360.549372] Last potentially related work creation:
+[ 1360.549376]  kasan_save_stack+0x20/0x40
+[ 1360.549384]  __kasan_record_aux_stack+0x9b/0xb0
+[ 1360.549392]  __queue_work+0x3fb/0x780
+[ 1360.549399]  queue_work_on+0x4f/0x60
+[ 1360.549407]  nft_rhash_remove+0x33b/0x340 [nf_tables]
+[ 1360.549516]  nf_tables_commit+0x1c6a/0x2620 [nf_tables]
+[ 1360.549625]  nfnetlink_rcv_batch+0x728/0xdc0 [nfnetlink]
+[ 1360.549647]  nfnetlink_rcv+0x1a8/0x1e0 [nfnetlink]
+[ 1360.549671]  netlink_unicast+0x367/0x4f0
+[ 1360.549680]  netlink_sendmsg+0x34b/0x610
+[ 1360.549690]  ____sys_sendmsg+0x4d4/0x510
+[ 1360.549697]  ___sys_sendmsg+0xc9/0x120
+[ 1360.549706]  __sys_sendmsg+0xbe/0x140
+[ 1360.549715]  do_syscall_64+0x55/0x120
+[ 1360.549725]  entry_SYSCALL_64_after_hwframe+0x55/0x5d
 
-6. goto 2. indefinite stall.
-
-(end quote)
-
-The immediate root cause is confusing the COMPACT_SKIPPED returned from
-__alloc_pages_direct_compact() (step 4) due to lack of __GFP_IO to be
-indicating a lack of order-0 pages, and in step 5 evaluating that in
-should_compact_retry() as a reason to retry, before incrementing and
-limiting the number of retries.  There are however other places that
-wrongly assume that compaction can happen while we lack __GFP_IO.
-
-To fix this, introduce gfp_compaction_allowed() to abstract the __GFP_IO
-evaluation and switch the open-coded test in try_to_compact_pages() to use
-it.
-
-Also use the new helper in:
-- compaction_ready(), which will make reclaim not bail out in step 3, so
-  there's at least one attempt to actually reclaim, even if chances are
-  small for a costly order
-- in_reclaim_compaction() which will make should_continue_reclaim()
-  return false and we don't over-reclaim unnecessarily
-- in __alloc_pages_slowpath() to set a local variable can_compact,
-  which is then used to avoid retrying reclaim/compaction for costly
-  allocations (step 5) if we can't compact and also to skip the early
-  compaction attempt that we do in some cases
-
-Link: https://lkml.kernel.org/r/20240221114357.13655-2-vbabka@suse.cz
-Fixes: 3250845d0526 ("Revert "mm, oom: prevent premature OOM killer invocation for high order request"")
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Reported-by: Sven van Ashbrook <svenva@chromium.org>
-Closes: https://lore.kernel.org/all/CAG-rBihs_xMKb3wrMO1%2B-%2Bp4fowP9oy1pa_OTkfxBzPUVOZF%2Bg@mail.gmail.com/
-Tested-by: Karthikeyan Ramasubramanian <kramasub@chromium.org>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Curtis Malainey <cujomalainey@chromium.org>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Fixes: 0935d5588400 ("netfilter: nf_tables: asynchronous release")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/gfp.h |    9 +++++++++
- mm/compaction.c     |    7 +------
- mm/page_alloc.c     |   10 ++++++----
- mm/vmscan.c         |    5 ++++-
- 4 files changed, 20 insertions(+), 11 deletions(-)
+ net/netfilter/nf_tables_api.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/linux/gfp.h
-+++ b/include/linux/gfp.h
-@@ -608,6 +608,15 @@ static inline bool pm_suspended_storage(
- }
- #endif /* CONFIG_PM_SLEEP */
- 
-+/*
-+ * Check if the gfp flags allow compaction - GFP_NOIO is a really
-+ * tricky context because the migration might require IO.
-+ */
-+static inline bool gfp_compaction_allowed(gfp_t gfp_mask)
-+{
-+	return IS_ENABLED(CONFIG_COMPACTION) && (gfp_mask & __GFP_IO);
-+}
-+
- #ifdef CONFIG_CONTIG_ALLOC
- /* The below functions must be run on a range from a single zone. */
- extern int alloc_contig_range(unsigned long start, unsigned long end,
---- a/mm/compaction.c
-+++ b/mm/compaction.c
-@@ -2343,16 +2343,11 @@ enum compact_result try_to_compact_pages
- 		unsigned int alloc_flags, const struct alloc_context *ac,
- 		enum compact_priority prio, struct page **capture)
- {
--	int may_perform_io = gfp_mask & __GFP_IO;
- 	struct zoneref *z;
- 	struct zone *zone;
- 	enum compact_result rc = COMPACT_SKIPPED;
- 
--	/*
--	 * Check if the GFP flags allow compaction - GFP_NOIO is really
--	 * tricky context because the migration might require IO
--	 */
--	if (!may_perform_io)
-+	if (!gfp_compaction_allowed(gfp_mask))
- 		return COMPACT_SKIPPED;
- 
- 	trace_mm_compaction_try_to_compact_pages(order, gfp_mask, prio);
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4445,6 +4445,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, u
- 						struct alloc_context *ac)
- {
- 	bool can_direct_reclaim = gfp_mask & __GFP_DIRECT_RECLAIM;
-+	bool can_compact = gfp_compaction_allowed(gfp_mask);
- 	const bool costly_order = order > PAGE_ALLOC_COSTLY_ORDER;
- 	struct page *page = NULL;
- 	unsigned int alloc_flags;
-@@ -4510,7 +4511,7 @@ restart:
- 	 * Don't try this for allocations that are allowed to ignore
- 	 * watermarks, as the ALLOC_NO_WATERMARKS attempt didn't yet happen.
- 	 */
--	if (can_direct_reclaim &&
-+	if (can_direct_reclaim && can_compact &&
- 			(costly_order ||
- 			   (order > 0 && ac->migratetype != MIGRATE_MOVABLE))
- 			&& !gfp_pfmemalloc_allowed(gfp_mask)) {
-@@ -4621,9 +4622,10 @@ retry:
- 
- 	/*
- 	 * Do not retry costly high order allocations unless they are
--	 * __GFP_RETRY_MAYFAIL
-+	 * __GFP_RETRY_MAYFAIL and we can compact
- 	 */
--	if (costly_order && !(gfp_mask & __GFP_RETRY_MAYFAIL))
-+	if (costly_order && (!can_compact ||
-+			     !(gfp_mask & __GFP_RETRY_MAYFAIL)))
- 		goto nopage;
- 
- 	if (should_reclaim_retry(gfp_mask, order, ac, alloc_flags,
-@@ -4636,7 +4638,7 @@ retry:
- 	 * implementation of the compaction depends on the sufficient amount
- 	 * of free memory (see __compaction_suitable)
- 	 */
--	if (did_some_progress > 0 &&
-+	if (did_some_progress > 0 && can_compact &&
- 			should_compact_retry(ac, order, alloc_flags,
- 				compact_result, &compact_priority,
- 				&compaction_retries))
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -2691,7 +2691,7 @@ static void shrink_node_memcg(struct pgl
- /* Use reclaim/compaction for costly allocs or under memory pressure */
- static bool in_reclaim_compaction(struct scan_control *sc)
- {
--	if (IS_ENABLED(CONFIG_COMPACTION) && sc->order &&
-+	if (gfp_compaction_allowed(sc->gfp_mask) && sc->order &&
- 			(sc->order > PAGE_ALLOC_COSTLY_ORDER ||
- 			 sc->priority < DEF_PRIORITY - 2))
- 		return true;
-@@ -2940,6 +2940,9 @@ static inline bool compaction_ready(stru
- 	unsigned long watermark;
- 	enum compact_result suitable;
- 
-+	if (!gfp_compaction_allowed(sc->gfp_mask))
-+		return false;
-+
- 	suitable = compaction_suitable(zone, sc->order, 0, sc->reclaim_idx);
- 	if (suitable == COMPACT_SUCCESS)
- 		/* Allocation should succeed already. Don't reclaim. */
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -8476,6 +8476,7 @@ static void __exit nf_tables_module_exit
+ 	unregister_netdevice_notifier(&nf_tables_flowtable_notifier);
+ 	nft_chain_filter_fini();
+ 	nft_chain_route_fini();
++	nf_tables_trans_destroy_flush_work();
+ 	unregister_pernet_subsys(&nf_tables_net_ops);
+ 	cancel_work_sync(&trans_gc_work);
+ 	cancel_work_sync(&trans_destroy_work);
 
 
