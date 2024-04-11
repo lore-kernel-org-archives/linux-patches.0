@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF5B13DDDD;
-	Thu, 11 Apr 2024 09:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DC513DDDD;
+	Thu, 11 Apr 2024 09:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829511; cv=none; b=In0juru71AdUgjdZhKLcPEW2GqEUfoUuNbl/Z2d6YFgPrDCqtheU4aS9Sd1pMhoA5TWmT5VJcr0D9OIqLqbnmBYpcyEWpbahZ8IfbNjh9qcxrvCRGjKgeHX0MYxMzB6ajDrLMZ+IpTE0Q3N9UwK78bCFDpZLFJZaOcENYCgX8Xs=
+	t=1712829513; cv=none; b=piCITP1tZwABQT0bPLcQVnPzyl6Et2kYBE37QVXHmmZYpsASy80kYQYKlFA1VPhP8OWyIuga0a18pfzFBG3jbvpCZvRUbkY1Gc5hExogfAedAkG8HUm563f7fDmMeYmXI4D/g30nDYuUkDqJkYFT2z5hflk+BWJY4L+fkI6I420=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829511; c=relaxed/simple;
-	bh=tSM6KvUdogG9SEdJA3o3LWBs4JkWb3q2Fhtw1eRxRIA=;
+	s=arc-20240116; t=1712829513; c=relaxed/simple;
+	bh=n8GFU4UKgVOTqct6aZt/EuiDIaxlW/Ddi4EhZRiYTSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BICDhnfdRUxR04S4sgd9M2QTri5wp8NWTAPYTCT6P6VkmijmJeDjc7MRIe7HJ8DS88DNMDiuNKyDuxpiyMKnBJxThYyaDG2QJzTiDXWb7pUxcyTxTJytwUtoBc0xXzl9TFZP5htpGygJd+54KYDVF4+DhJivq86AH7QpFXxxfBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CRDi7JQW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DJjdhkrweOe5lr1xA8myDMkKML1M8GXi1cGhVuNnZ/cFP4pq9He5YKutrrPl+LjK6snhM/B8ctJXAorx0BgHkEj8rSuNbYInTc5G/u09gDYRUFiZc6QnqiYUHnjQ57fcfqansw19lcBUMBlBVBecoCcsgN9egoot1vFeAGOq65A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTL5En/e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRDi7JQW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350D2C433F1;
-	Thu, 11 Apr 2024 09:58:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTL5En/e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10DBBC433C7;
+	Thu, 11 Apr 2024 09:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829510;
-	bh=tSM6KvUdogG9SEdJA3o3LWBs4JkWb3q2Fhtw1eRxRIA=;
+	s=korg; t=1712829513;
+	bh=n8GFU4UKgVOTqct6aZt/EuiDIaxlW/Ddi4EhZRiYTSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CRDi7JQWYzxuGrN4obfX5AzdEIhBObrwWC0uvLMQ8XeNG9H252nl5h8W9340Mk/pp
-	 1qsQ+m9wQSi0cBtXwfGB+HN3dpX0QdpLw1T5mQSSQ39hOfSa+mcPfUqCngr5R4IuTj
-	 05B0j78WeH0GQXwXgogQgOOlFGSCnS29/wO9ujRc=
+	b=bTL5En/e4iAUUyz7+HKR6yTp/1O2GiigfWmTNzhAr8QuffBmu1SKaVO4bOxCJ2GwV
+	 ajHIQyMGUdLrmpqkfYxR7hz6toymX4S1lEg6O8fgnWom0IMrf8I+alwk1ri0lUGel1
+	 MLwctRyPug+z94d7W+Qd5Ay9Fud4h+WxHwX9Q9h8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Lubomir Rintel <lkundrak@v3.sk>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 012/175] smack: Handle SMACK64TRANSMUTE in smack_inode_setsecurity()
-Date: Thu, 11 Apr 2024 11:53:55 +0200
-Message-ID: <20240411095419.913953001@linuxfoundation.org>
+Subject: [PATCH 4.19 013/175] ARM: dts: mmp2-brownstone: Dont redeclare phandle references
+Date: Thu, 11 Apr 2024 11:53:56 +0200
+Message-ID: <20240411095419.944257508@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -51,42 +51,369 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Lubomir Rintel <lkundrak@v3.sk>
 
-[ Upstream commit ac02f007d64eb2769d0bde742aac4d7a5fc6e8a5 ]
+[ Upstream commit 5a56cf3e8738f5d31d8c024d0c62a4c2bfe76fb2 ]
 
-If the SMACK64TRANSMUTE xattr is provided, and the inode is a directory,
-update the in-memory inode flags by setting SMK_INODE_TRANSMUTE.
+Extend the nodes by their phandle references instead of recreating the
+tree and declaring references of the same names.
 
-Cc: stable@vger.kernel.org
-Fixes: 5c6d1125f8db ("Smack: Transmute labels on specified directories") # v2.6.38.x
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20200320174107.29406-5-lkundrak@v3.sk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 831e0cd4f9ee ("arm: dts: marvell: Fix maxium->maxim typo in brownstone dts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack_lsm.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm/boot/dts/mmp2-brownstone.dts | 332 +++++++++++++-------------
+ 1 file changed, 165 insertions(+), 167 deletions(-)
 
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index 2f2dc49f53dff..d9bff4ba7f2e8 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -2802,6 +2802,15 @@ static int smack_inode_setsecurity(struct inode *inode, const char *name,
- 	if (value == NULL || size > SMK_LONGLABEL || size == 0)
- 		return -EINVAL;
+diff --git a/arch/arm/boot/dts/mmp2-brownstone.dts b/arch/arm/boot/dts/mmp2-brownstone.dts
+index 350208c5e1ed2..0fdcc2edcf4b6 100644
+--- a/arch/arm/boot/dts/mmp2-brownstone.dts
++++ b/arch/arm/boot/dts/mmp2-brownstone.dts
+@@ -21,176 +21,174 @@ chosen {
+ 	memory {
+ 		reg = <0x00000000 0x08000000>;
+ 	};
++};
++
++&uart3 {
++	status = "okay";
++};
  
-+	if (strcmp(name, XATTR_SMACK_TRANSMUTE) == 0) {
-+		if (!S_ISDIR(inode->i_mode) || size != TRANS_TRUE_SIZE ||
-+		    strncmp(value, TRANS_TRUE, TRANS_TRUE_SIZE) != 0)
-+			return -EINVAL;
+-	soc {
+-		apb@d4000000 {
+-			uart3: uart@d4018000 {
+-				status = "okay";
+-			};
+-			twsi1: i2c@d4011000 {
+-				status = "okay";
+-				pmic: max8925@3c {
+-					compatible = "maxium,max8925";
+-					reg = <0x3c>;
+-					interrupts = <1>;
+-					interrupt-parent = <&intcmux4>;
+-					interrupt-controller;
+-					#interrupt-cells = <1>;
+-					maxim,tsc-irq = <0>;
++&twsi1 {
++	status = "okay";
++	pmic: max8925@3c {
++		compatible = "maxium,max8925";
++		reg = <0x3c>;
++		interrupts = <1>;
++		interrupt-parent = <&intcmux4>;
++		interrupt-controller;
++		#interrupt-cells = <1>;
++		maxim,tsc-irq = <0>;
+ 
+-					regulators {
+-						SDV1 {
+-							regulator-min-microvolt = <637500>;
+-							regulator-max-microvolt = <1425000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						SDV2 {
+-							regulator-min-microvolt = <650000>;
+-							regulator-max-microvolt = <2225000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						SDV3 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO1 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO2 {
+-							regulator-min-microvolt = <650000>;
+-							regulator-max-microvolt = <2250000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO3 {
+-							regulator-min-microvolt = <650000>;
+-							regulator-max-microvolt = <2250000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO4 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO5 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO6 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO7 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO8 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO9 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO10 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-						};
+-						LDO11 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO12 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO13 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO14 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO15 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO16 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO17 {
+-							regulator-min-microvolt = <650000>;
+-							regulator-max-microvolt = <2250000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO18 {
+-							regulator-min-microvolt = <650000>;
+-							regulator-max-microvolt = <2250000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO19 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-						LDO20 {
+-							regulator-min-microvolt = <750000>;
+-							regulator-max-microvolt = <3900000>;
+-							regulator-boot-on;
+-							regulator-always-on;
+-						};
+-					};
+-					backlight {
+-						maxim,max8925-dual-string = <0>;
+-					};
+-					charger {
+-						batt-detect = <0>;
+-						topoff-threshold = <1>;
+-						fast-charge = <7>;
+-						no-temp-support = <0>;
+-						no-insert-detect = <0>;
+-					};
+-				};
+-			};
+-			rtc: rtc@d4010000 {
+-				status = "okay";
++		regulators {
++			SDV1 {
++				regulator-min-microvolt = <637500>;
++				regulator-max-microvolt = <1425000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			SDV2 {
++				regulator-min-microvolt = <650000>;
++				regulator-max-microvolt = <2225000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			SDV3 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO1 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO2 {
++				regulator-min-microvolt = <650000>;
++				regulator-max-microvolt = <2250000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO3 {
++				regulator-min-microvolt = <650000>;
++				regulator-max-microvolt = <2250000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO4 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO5 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO6 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO7 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO8 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO9 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO10 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
+ 			};
++			LDO11 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO12 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO13 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO14 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO15 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO16 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO17 {
++				regulator-min-microvolt = <650000>;
++				regulator-max-microvolt = <2250000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO18 {
++				regulator-min-microvolt = <650000>;
++				regulator-max-microvolt = <2250000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO19 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++			LDO20 {
++				regulator-min-microvolt = <750000>;
++				regulator-max-microvolt = <3900000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++		};
++		backlight {
++			maxim,max8925-dual-string = <0>;
++		};
++		charger {
++			batt-detect = <0>;
++			topoff-threshold = <1>;
++			fast-charge = <7>;
++			no-temp-support = <0>;
++			no-insert-detect = <0>;
+ 		};
+ 	};
+ };
 +
-+		nsp->smk_flags |= SMK_INODE_TRANSMUTE;
-+		return 0;
-+	}
-+
- 	skp = smk_import_entry(value, size);
- 	if (IS_ERR(skp))
- 		return PTR_ERR(skp);
++&rtc {
++	status = "okay";
++};
 -- 
 2.43.0
 
