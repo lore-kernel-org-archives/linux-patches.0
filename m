@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFD9146A93;
-	Thu, 11 Apr 2024 10:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B57146A93;
+	Thu, 11 Apr 2024 10:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831158; cv=none; b=b5yjEuONfupzrNQXZyJvBAIktUnxFsq8vIA7oVv6CLLi25fCFiR21r3SI4T+YKOIKWFpd2MdmgKChIXgSaOyw9qqrEOuzkgRa7CelzIwPbEGd16bDMu3e1SoKoBJErf/uvsxsY/0o647rZ7WCgT9NjMZUQ2bYXHoc02z10EmB+4=
+	t=1712831160; cv=none; b=EAJHYv4q2QO1A9pk/inzppag83Aj8Duvd17BaJqWFkN/p85MUYQPZdrr7wIxRXBeIXglKYLoGJfSzjamxB+dW/OPZo1ULBFFGHFeLW2lNod4ga90lZUkXnI5u4KJamYZ/iEu1aHxXJwCjMFHZ+Rnn1shLqsEjEAMZfZ6bhvy8uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831158; c=relaxed/simple;
-	bh=Nls6AZZNBT8X5PKwk4JHJsKIq6eObduPLYA0rK8mm3g=;
+	s=arc-20240116; t=1712831160; c=relaxed/simple;
+	bh=1NQ+TOsVeCxL5fuJdY9r68iMSAuwLrl4ErnaHr840Po=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K3kgyKDc29TkeYyY0mxxmz3YRKxY8lFlKRDWBBY2KM0qPMxQMp7L0jRmIA5zV2GMkCeqvsLmhjCiT0t0Rfq5wgFu8sg9qcgu1TOlJ+8VxbBEJXgOG4vq2eVaUA74SsCtYf3KuoMK1qdLV32XWoA/8dYT9cPilRrTf+XckTzr7Ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdE/7dbG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z/A3YtiC2c6zCBPIGULlh7Nuf5tP82yfqgkfDcbZbAa7KRbhy/+nnnDiwFMX0vsjVvkw8Yfyt6DI+otwfZKhXkJTKFoIno+BbeBCgG6GebjDNq+/H/w+Whe59Q6OwEnB5qy1O1O2R/v5zgB6YLiu9kIZmY7poTpb7B9VxT0quqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqQs+f/+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdE/7dbG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E66EC43390;
-	Thu, 11 Apr 2024 10:25:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqQs+f/+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A488C433F1;
+	Thu, 11 Apr 2024 10:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831157;
-	bh=Nls6AZZNBT8X5PKwk4JHJsKIq6eObduPLYA0rK8mm3g=;
+	s=korg; t=1712831160;
+	bh=1NQ+TOsVeCxL5fuJdY9r68iMSAuwLrl4ErnaHr840Po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KdE/7dbGSpSftdfbw3B5YTXePCBQREMT3EmgzMLtJdLz1U3ibiB+9QLVUkdFM78Zp
-	 gMMktZlDYqy3plDEUmiRQTv3gW+FiGy0StZfwLgB75dIGPqOkFfV3JEYkNK/3V4JaO
-	 KFbamyNTGUSJ4bOJqm1a6Y/21qYw4MtAs+YZrC9Q=
+	b=qqQs+f/+cJB1YyQ1sc1rh9a6Qool2+4lg5OnPeGCkJjXNiSrjYhygagHVfz8ZkkwP
+	 qfwa3TL5eGMiYmNRKGqX74Y5Dt/+GoCcf3EKNDNavGygyzysFCITDLOFNsaqw8Zg52
+	 FNMGSyPM6BGM0QCzSX1BHIBKxnL3pHKAjOLkyBqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Jacky Bai <ping.bai@nxp.com>,
-	Sandor Yu <Sandor.yu@nxp.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/114] pmdomain: imx8mp-blk-ctrl: imx8mp_blk: Add fdcc clock to hdmimix domain
-Date: Thu, 11 Apr 2024 11:55:47 +0200
-Message-ID: <20240411095417.478703138@linuxfoundation.org>
+Subject: [PATCH 6.6 029/114] pstore/zone: Add a null pointer check to the psz_kmsg_read
+Date: Thu, 11 Apr 2024 11:55:56 +0200
+Message-ID: <20240411095417.749095260@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095416.853744210@linuxfoundation.org>
 References: <20240411095416.853744210@linuxfoundation.org>
@@ -53,66 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit 697624ee8ad557ab5417f985d2c804241a7ad30d ]
+[ Upstream commit 98bc7e26e14fbb26a6abf97603d59532475e97f8 ]
 
-According to i.MX8MP RM and HDMI ADD, the fdcc clock is part of
-hdmi rx verification IP that should not enable for HDMI TX.
-But actually if the clock is disabled before HDMI/LCDIF probe,
-LCDIF will not get pixel clock from HDMI PHY and print the error
-logs:
+kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure. Ensure the allocation was successful
+by checking the pointer validity.
 
-[CRTC:39:crtc-2] vblank wait timed out
-WARNING: CPU: 2 PID: 9 at drivers/gpu/drm/drm_atomic_helper.c:1634 drm_atomic_helper_wait_for_vblanks.part.0+0x23c/0x260
-
-Add fdcc clock to LCDIF and HDMI TX power domains to fix the issue.
-
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Jacky Bai <ping.bai@nxp.com>
-Signed-off-by: Sandor Yu <Sandor.yu@nxp.com>
-Link: https://lore.kernel.org/r/20240203165307.7806-5-aford173@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Link: https://lore.kernel.org/r/20240118100206.213928-1-chentao@kylinos.cn
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pmdomain/imx/imx8mp-blk-ctrl.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/pstore/zone.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pmdomain/imx/imx8mp-blk-ctrl.c b/drivers/pmdomain/imx/imx8mp-blk-ctrl.c
-index c6ac32c1a8c17..31693add7d633 100644
---- a/drivers/pmdomain/imx/imx8mp-blk-ctrl.c
-+++ b/drivers/pmdomain/imx/imx8mp-blk-ctrl.c
-@@ -55,7 +55,7 @@ struct imx8mp_blk_ctrl_domain_data {
- 	const char *gpc_name;
- };
- 
--#define DOMAIN_MAX_CLKS 2
-+#define DOMAIN_MAX_CLKS 3
- #define DOMAIN_MAX_PATHS 3
- 
- struct imx8mp_blk_ctrl_domain {
-@@ -457,8 +457,8 @@ static const struct imx8mp_blk_ctrl_domain_data imx8mp_hdmi_domain_data[] = {
- 	},
- 	[IMX8MP_HDMIBLK_PD_LCDIF] = {
- 		.name = "hdmiblk-lcdif",
--		.clk_names = (const char *[]){ "axi", "apb" },
--		.num_clks = 2,
-+		.clk_names = (const char *[]){ "axi", "apb", "fdcc" },
-+		.num_clks = 3,
- 		.gpc_name = "lcdif",
- 		.path_names = (const char *[]){"lcdif-hdmi"},
- 		.num_paths = 1,
-@@ -483,8 +483,8 @@ static const struct imx8mp_blk_ctrl_domain_data imx8mp_hdmi_domain_data[] = {
- 	},
- 	[IMX8MP_HDMIBLK_PD_HDMI_TX] = {
- 		.name = "hdmiblk-hdmi-tx",
--		.clk_names = (const char *[]){ "apb", "ref_266m" },
--		.num_clks = 2,
-+		.clk_names = (const char *[]){ "apb", "ref_266m", "fdcc" },
-+		.num_clks = 3,
- 		.gpc_name = "hdmi-tx",
- 	},
- 	[IMX8MP_HDMIBLK_PD_HDMI_TX_PHY] = {
+diff --git a/fs/pstore/zone.c b/fs/pstore/zone.c
+index 2770746bb7aa1..abca117725c81 100644
+--- a/fs/pstore/zone.c
++++ b/fs/pstore/zone.c
+@@ -973,6 +973,8 @@ static ssize_t psz_kmsg_read(struct pstore_zone *zone,
+ 		char *buf = kasprintf(GFP_KERNEL, "%s: Total %d times\n",
+ 				      kmsg_dump_reason_str(record->reason),
+ 				      record->count);
++		if (!buf)
++			return -ENOMEM;
+ 		hlen = strlen(buf);
+ 		record->buf = krealloc(buf, hlen + size, GFP_KERNEL);
+ 		if (!record->buf) {
 -- 
 2.43.0
 
