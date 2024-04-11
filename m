@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEFA1465A5;
-	Thu, 11 Apr 2024 10:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C8914600A;
+	Thu, 11 Apr 2024 10:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830701; cv=none; b=GlEtEKWqQHkvdSedNn6A/GGhgMYHK3PM9xTB+CdW4kiX9XDSxJCAHCkhdu4FLAk1d+vArQNhKkZq7XoeTzCzpNH5vicuSWgYrmdBUC1Ht7953SzlB1B8vvpHqL0LAG3hFZCpY8u5zhnWvctIFNT3gl/+CH8124L+2JzsH7gDCSg=
+	t=1712830704; cv=none; b=jTWFjxUhq5IdcbdhVpTgoaaEwhVX68i513/oBOcCuZ8CTfWo3Gv0F5LEqiypXrLOxmLZTsRyv2Jizm03ogRji6ZmlyFsFvqvnOYAP29Uo3E71n3DKoUKSKMFWcKOZj/idS3pnf+PX73L5iICgPjJRjqFDvgg5TgbkAHqTqPNc4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830701; c=relaxed/simple;
-	bh=yWF7K26YXu9kxGVaPc4aomgSr52+tLO1UlfZXGshNC0=;
+	s=arc-20240116; t=1712830704; c=relaxed/simple;
+	bh=p1A78RP+hfrpaMcF8pKqjzFoEhynTJztsw+dVVg3fUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pwIqvnzE+7UM2Gvxvsw3kQzyJgRTUA1KMKthcvCzx+6iC+nWjxRg77wNmbRWZJO3FpgNTDfjPm88TuF8hAQaokK2JQmZ7vhE+bTzFm8m5t2aBjFNFwUsvDMC7iGJqYd+PO8ch8sXVb/utDFgrn1VSGUUWxFH962P5EPfdZ13yow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wo3MxGLB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sSjOjL0fNJASzJ1P3UuBcnJ6FBVNtgFraMz77xND2EPeV9O/NZ+Vsst/igOR5/guTY34P9DORupJUONWMeB+Hi1iUpCk2jKgH24QBUHeFp//vOain3AYS9x4KDC54nqf/+9SB/QMK8R4a7EobbLfDVnG2efLaRFcAoUsIzn6ZN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rxjlMhC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wo3MxGLB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F15C433F1;
-	Thu, 11 Apr 2024 10:18:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rxjlMhC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66318C43394;
+	Thu, 11 Apr 2024 10:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830700;
-	bh=yWF7K26YXu9kxGVaPc4aomgSr52+tLO1UlfZXGshNC0=;
+	s=korg; t=1712830703;
+	bh=p1A78RP+hfrpaMcF8pKqjzFoEhynTJztsw+dVVg3fUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wo3MxGLBSbGZpj0icS117tSK8vUyhYZApLio/8/QZ+cuBp7wZarM5G/276CzUhNxu
-	 lTRje6nLKNv+QuruCdzAzI55OOgWANKcA+wi++CC9lX4t8XuUDIz2sbbeB8DU0rBai
-	 yRF20w0o5miDix2tOAB0pIQnYeD149OAH+7Om284=
+	b=1rxjlMhCJ8w/fQGB3aisYBDNDeRlbgmDNy80Pu+A31vSSArpX++w7G7ctV4j1ymml
+	 e3cv4VC+dsy/StwKIkd/Qxjw2HT/tW0I92HueY9NzPyWJbpOkU21Nxtnt8HlQmrZU4
+	 CvJXqhFYGZDJAomlwIBSv5EuKFP6/+AFm56h6g0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.4 088/215] usb: port: Dont try to peer unused USB ports based on location
-Date: Thu, 11 Apr 2024 11:54:57 +0200
-Message-ID: <20240411095427.549402181@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Sherry Sun <sherry.sun@nxp.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Subject: [PATCH 5.4 089/215] tty: serial: fsl_lpuart: avoid idle preamble pending if CTS is enabled
+Date: Thu, 11 Apr 2024 11:54:58 +0200
+Message-ID: <20240411095427.579489581@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -44,65 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-commit 69c63350e573367f9c8594162288cffa8a26d0d1 upstream.
+commit 74cb7e0355fae9641f825afa389d3fba3b617714 upstream.
 
-Unused USB ports may have bogus location data in ACPI PLD tables.
-This causes port peering failures as these unused USB2 and USB3 ports
-location may match.
+If the remote uart device is not connected or not enabled after booting
+up, the CTS line is high by default. At this time, if we enable the flow
+control when opening the device(for example, using “stty -F /dev/ttyLP4
+crtscts” command), there will be a pending idle preamble(first writing 0
+and then writing 1 to UARTCTRL_TE will queue an idle preamble) that
+cannot be sent out, resulting in the uart port fail to close(waiting for
+TX empty), so the user space stty will have to wait for a long time or
+forever.
 
-Due to these failures the driver prints a
-"usb: port power management may be unreliable" warning, and
-unnecessarily blocks port power off during runtime suspend.
+This is an LPUART IP bug(idle preamble has higher priority than CTS),
+here add a workaround patch to enable TX CTS after enabling UARTCTRL_TE,
+so that the idle preamble does not get stuck due to CTS is deasserted.
 
-This was debugged on a couple DELL systems where the unused ports
-all returned zeroes in their location data.
-Similar bugreports exist for other systems.
-
-Don't try to peer or match ports that have connect type set to
-USB_PORT_NOT_USED.
-
-Fixes: 3bfd659baec8 ("usb: find internal hub tier mismatch via acpi")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218465
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218486
-Tested-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Link: https://lore.kernel.org/linux-usb/5406d361-f5b7-4309-b0e6-8c94408f7d75@molgen.mpg.de
-Cc: stable@vger.kernel.org # v3.16+
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218490
-Link: https://lore.kernel.org/r/20240222233343.71856-1-mathias.nyman@linux.intel.com
+Fixes: 380c966c093e ("tty: serial: fsl_lpuart: add 32-bit register interface support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://lore.kernel.org/r/20240305015706.1050769-1-sherry.sun@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/port.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/tty/serial/fsl_lpuart.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/port.c
-+++ b/drivers/usb/core/port.c
-@@ -450,7 +450,7 @@ static int match_location(struct usb_dev
- 	struct usb_hub *peer_hub = usb_hub_to_struct_hub(peer_hdev);
- 	struct usb_device *hdev = to_usb_device(port_dev->dev.parent->parent);
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -2025,9 +2025,12 @@ lpuart32_set_termios(struct uart_port *p
+ 		       UARTCTRL);
  
--	if (!peer_hub)
-+	if (!peer_hub || port_dev->connect_type == USB_PORT_NOT_USED)
- 		return 0;
+ 	lpuart32_serial_setbrg(sport, baud);
+-	lpuart32_write(&sport->port, modem, UARTMODIR);
+-	lpuart32_write(&sport->port, ctrl, UARTCTRL);
++	/* disable CTS before enabling UARTCTRL_TE to avoid pending idle preamble */
++	lpuart32_write(&sport->port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
+ 	/* restore control register */
++	lpuart32_write(&sport->port, ctrl, UARTCTRL);
++	/* re-enable the CTS if needed */
++	lpuart32_write(&sport->port, modem, UARTMODIR);
  
- 	hcd = bus_to_hcd(hdev->bus);
-@@ -461,7 +461,8 @@ static int match_location(struct usb_dev
- 
- 	for (port1 = 1; port1 <= peer_hdev->maxchild; port1++) {
- 		peer = peer_hub->ports[port1 - 1];
--		if (peer && peer->location == port_dev->location) {
-+		if (peer && peer->connect_type != USB_PORT_NOT_USED &&
-+		    peer->location == port_dev->location) {
- 			link_peers_report(port_dev, peer);
- 			return 1; /* done */
- 		}
+ 	if (old && sport->lpuart_dma_rx_use) {
+ 		if (!lpuart_start_rx_dma(sport))
 
 
