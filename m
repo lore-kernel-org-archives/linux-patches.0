@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC4B1448EF;
-	Thu, 11 Apr 2024 10:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30701448EF;
+	Thu, 11 Apr 2024 10:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830351; cv=none; b=OLSK6WQJTFuTCfoAE63ls9NAwz/pVKYG03L4QO0N2/21K5tfAqGpg9cwT7f0KxIfnUoZzKQKDJRDth1y3Qm7FyWHrwwQT02eNZuEjXRcL8+yxCPl7dIYO8LmNRpb1F9N6EX/uPuKBoKTh/mCRPugRBGiaZCmgAN2X1HA57miqzU=
+	t=1712830354; cv=none; b=GpNUNkdXEPsMrwaaFuKxoytizzm7hymyttzdDIWcTbV586ljh0OizU00AAijOFk9LV6XeY+NWBKZc5SfGkzJC4HE4FL7rzPK7wMhVvJYNa8RFxDH4f19h3+BqSRAB1Yu2CLFX2eAoq1ZdRn+htnhqfUtEY8RJrZT4CDKriTAeBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830351; c=relaxed/simple;
-	bh=6ikfXHeXH9UZyFFRr5yGkTXSUlEt8Hqz7y+2A63tcbo=;
+	s=arc-20240116; t=1712830354; c=relaxed/simple;
+	bh=lGvQwM7zmU5mZTtNvnsEpV9RivuLlE3Zx/IGcWD5Toc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JbObmVVnlzzaDkZzkzbvTSALVHn/vel9ZsRwV7WHOP/1dln1b9MENR5vVZcpv1YCguGqxxvL+DuQs0yQAe/GRHxiM4YORXw4welX1Rvz7hTd6+KkXuJX1TnaBTAkFrIYnLkwlJ6wEkjgrO67i9pFfDO32UBgkqahwKzRKbia44k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNFY3/mC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=us/k31DXvQco+z5V2FGyPW8FggouNdwouauysSqX0eh4QG1zxZlp5SPRllc64pFaC03PpBeKKToRUn0n1spt5SbuY9ChqufnREiZUazLJW0ZJ1f4QU+jlPwAe8nm9pBa789/SPMx4j0ZWruL6J6NSoPehIfhQ4JpiTKFV7R+7mU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnsE6vWN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNFY3/mC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F137C433C7;
-	Thu, 11 Apr 2024 10:12:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnsE6vWN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFC4C433F1;
+	Thu, 11 Apr 2024 10:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830351;
-	bh=6ikfXHeXH9UZyFFRr5yGkTXSUlEt8Hqz7y+2A63tcbo=;
+	s=korg; t=1712830354;
+	bh=lGvQwM7zmU5mZTtNvnsEpV9RivuLlE3Zx/IGcWD5Toc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QNFY3/mC2GsNaicJpt48QmFe0no+zZCkRkN9mNTuM5XSJcPjap5qQaKvnlkEep2r4
-	 3WaHsNuwFhHnU3XoTri2/LKwb+h84gxvF1y0cR1XY3srnXuDggoVUZwcHhBCB4Qkfn
-	 T4rPBT+RTGsz8+wBneP0mMdXo+Cx0kF7QEnVXoig=
+	b=nnsE6vWN8DYJuXdC5v78HxCgGogxXi2uDFbRrHtvkfpKn/Nm1zT0zDTVWIJ5Sm1JL
+	 2VkBqG0AGChluHbj4cPVSHnd18W6fokwRYyQcp9wFRPsQ93HQMrtkzJ3EHWlieAtFU
+	 BuNS8d4hirUimYs7hJy2CzLgJLuUEgvO19Llb5NM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 118/143] usb: typec: tcpci: add generic tcpci fallback compatible
-Date: Thu, 11 Apr 2024 11:56:26 +0200
-Message-ID: <20240411095424.458820320@linuxfoundation.org>
+Subject: [PATCH 6.8 119/143] usb: sl811-hcd: only defined function checkdone if QUIRK2 is defined
+Date: Thu, 11 Apr 2024 11:56:27 +0200
+Message-ID: <20240411095424.488893010@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -51,34 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Felsch <m.felsch@pengutronix.de>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 8774ea7a553e2aec323170d49365b59af0a2b7e0 ]
+[ Upstream commit 12f371e2b6cb4b79c788f1f073992e115f4ca918 ]
 
-The driver already support the tcpci binding for the i2c_device_id so
-add the support for the of_device_id too.
+Function checkdone is only required if QUIRK2 is defined, so add
+appropriate #if / #endif around the function.
 
-Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240222210903.208901-3-m.felsch@pengutronix.de
+Cleans up clang scan build warning:
+drivers/usb/host/sl811-hcd.c:588:18: warning: unused function
+'checkdone' [-Wunused-function]
+
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Link: https://lore.kernel.org/r/20240307111351.1982382-1-colin.i.king@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpci.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/host/sl811-hcd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/usb/typec/tcpm/tcpci.c b/drivers/usb/typec/tcpm/tcpci.c
-index 0ee3e6e29bb17..7118551827f6a 100644
---- a/drivers/usb/typec/tcpm/tcpci.c
-+++ b/drivers/usb/typec/tcpm/tcpci.c
-@@ -889,6 +889,7 @@ MODULE_DEVICE_TABLE(i2c, tcpci_id);
- #ifdef CONFIG_OF
- static const struct of_device_id tcpci_of_match[] = {
- 	{ .compatible = "nxp,ptn5110", },
-+	{ .compatible = "tcpci", },
- 	{},
- };
- MODULE_DEVICE_TABLE(of, tcpci_of_match);
+diff --git a/drivers/usb/host/sl811-hcd.c b/drivers/usb/host/sl811-hcd.c
+index 0956495bba575..2b871540bb500 100644
+--- a/drivers/usb/host/sl811-hcd.c
++++ b/drivers/usb/host/sl811-hcd.c
+@@ -585,6 +585,7 @@ done(struct sl811 *sl811, struct sl811h_ep *ep, u8 bank)
+ 		finish_request(sl811, ep, urb, urbstat);
+ }
+ 
++#ifdef QUIRK2
+ static inline u8 checkdone(struct sl811 *sl811)
+ {
+ 	u8	ctl;
+@@ -616,6 +617,7 @@ static inline u8 checkdone(struct sl811 *sl811)
+ #endif
+ 	return irqstat;
+ }
++#endif
+ 
+ static irqreturn_t sl811h_irq(struct usb_hcd *hcd)
+ {
 -- 
 2.43.0
 
