@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FF714600A;
-	Thu, 11 Apr 2024 10:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03624145353;
+	Thu, 11 Apr 2024 10:17:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830623; cv=none; b=S5HXkLrfPEcIfzbH0pZ5b1wyPRnkl6XnnIla4zFxhPNkLX3DdPmRBb+mymN58h590DG5+Be2z+/Wj53V1LM0udoh4PwbMeKV4NGpTGkIVx7UbmbHrHvn72z14evAiwYqnEaeJehuBSZhwUXkAJUZR3FSTlxVLSg271enMSLNWDc=
+	t=1712830626; cv=none; b=d10oIYJW9VA0miIztk6msXhwdMy5jBzzBJiOBv3JikchuRDt49tHbqFe3oSHgwvXdfH5WK9vD40OMV+8njwo5m6pyK0IKJsxNdNsYuWBWgzRq8Th6A/xpUgCBcq9BiIJnXRC9zXi5nHhbT6cJJro8UGph/bUhexDrRt+LOZBXjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830623; c=relaxed/simple;
-	bh=RkI1E93rfNlkUeKabSaxu7kB4nFejk0W+XpvMRrwD2s=;
+	s=arc-20240116; t=1712830626; c=relaxed/simple;
+	bh=k9iHOEQdkzf84JtRoFdudHlaY5LSlOZL0DY0dM6i9iM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dsD6xPCwSwzlqqJR83X3MR6owVQiI6cqd5qdk1WJ9sTR/vLu1AiIckrQ4FMwgR5PlwjdQFlC7BSDBdLwhEi6RkGFMgTe+RoWXSmxeArgjBa3H2fhP2oCpbm5vegtAFsJWNYUQntQh9FSibMxmd+sNzUsk5sq1dXZXJ6ll7R1xB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLq2KUfp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=htsjeRSJrJoOslBCC72jC9LqIHD8nCIO7xrnh93wNWHtslKJ32eW+zTAMZfUj8qI6HKhsP3omkiMDCvy7VNNBYnoP808eiKQUrV3TDkjLQaNcAshG/36BBrPuE0vsKA0Lm1iT7OQgn/L4AvPKgfwxB9N7djvwm8no4ktRHOGEtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0R5DfNNE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLq2KUfp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880F4C433F1;
-	Thu, 11 Apr 2024 10:17:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0R5DfNNE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A987C433C7;
+	Thu, 11 Apr 2024 10:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830622;
-	bh=RkI1E93rfNlkUeKabSaxu7kB4nFejk0W+XpvMRrwD2s=;
+	s=korg; t=1712830625;
+	bh=k9iHOEQdkzf84JtRoFdudHlaY5LSlOZL0DY0dM6i9iM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xLq2KUfpjgDARdhkRjgNTxHgZ9QjYMGrR2iAPk9lqufzHL8x4BNybsiGqDTpOlcUL
-	 A7RAZLBOAa8ddVpJWiJFWZNGDNosXvih93AiDgDU4iiQ4nZ6hUx4diapUx6YaY8Geg
-	 az8J4vjZdL34EQSI56tYvJsX9L8NfJewwi+ya448=
+	b=0R5DfNNEgXC2hqkwpJGGV8NcNU8upfE84MhwEsxkTkt0LELD1mybuSdo+RUC0DNfs
+	 3XQGG+bS0m2KR9rFDdqWNFTrrHiLY4mRIqRKKU1F5V/u5W9rZg9X09D2UL6keRF4+U
+	 PJcclAHmpOzPzy/tvkTN7XocauB2caRClupErla0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Auger <eric.auger@redhat.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 061/215] vfio/platform: Disable virqfds on cleanup
-Date: Thu, 11 Apr 2024 11:54:30 +0200
-Message-ID: <20240411095426.731003953@linuxfoundation.org>
+Subject: [PATCH 5.4 026/215] ubi: correct the calculation of fastmap size
+Date: Thu, 11 Apr 2024 11:53:55 +0200
+Message-ID: <20240411095425.669623210@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -52,42 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Williamson <alex.williamson@redhat.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit fcdc0d3d40bc26c105acf8467f7d9018970944ae ]
+[ Upstream commit 7f174ae4f39e8475adcc09d26c5a43394689ad6c ]
 
-irqfds for mask and unmask that are not specifically disabled by the
-user are leaked.  Remove any irqfds during cleanup
+Now that the calculation of fastmap size in ubi_calc_fm_size() is
+incorrect since it miss each user volume's ubi_fm_eba structure and the
+Internal UBI volume info. Let's correct the calculation.
 
-Cc: Eric Auger <eric.auger@redhat.com>
-Cc:  <stable@vger.kernel.org>
-Fixes: a7fa7c77cf15 ("vfio/platform: implement IRQ masking/unmasking via an eventfd")
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Link: https://lore.kernel.org/r/20240308230557.805580-6-alex.williamson@redhat.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/platform/vfio_platform_irq.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/mtd/ubi/fastmap.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/vfio/platform/vfio_platform_irq.c b/drivers/vfio/platform/vfio_platform_irq.c
-index c5b09ec0a3c98..f2893f2fcaabd 100644
---- a/drivers/vfio/platform/vfio_platform_irq.c
-+++ b/drivers/vfio/platform/vfio_platform_irq.c
-@@ -321,8 +321,11 @@ void vfio_platform_irq_cleanup(struct vfio_platform_device *vdev)
- {
- 	int i;
+diff --git a/drivers/mtd/ubi/fastmap.c b/drivers/mtd/ubi/fastmap.c
+index 6e95c4b1473e6..8081fc760d34f 100644
+--- a/drivers/mtd/ubi/fastmap.c
++++ b/drivers/mtd/ubi/fastmap.c
+@@ -86,9 +86,10 @@ size_t ubi_calc_fm_size(struct ubi_device *ubi)
+ 		sizeof(struct ubi_fm_scan_pool) +
+ 		sizeof(struct ubi_fm_scan_pool) +
+ 		(ubi->peb_count * sizeof(struct ubi_fm_ec)) +
+-		(sizeof(struct ubi_fm_eba) +
+-		(ubi->peb_count * sizeof(__be32))) +
+-		sizeof(struct ubi_fm_volhdr) * UBI_MAX_VOLUMES;
++		((sizeof(struct ubi_fm_eba) +
++		  sizeof(struct ubi_fm_volhdr)) *
++		 (UBI_MAX_VOLUMES + UBI_INT_VOL_COUNT)) +
++		(ubi->peb_count * sizeof(__be32));
+ 	return roundup(size, ubi->leb_size);
+ }
  
--	for (i = 0; i < vdev->num_irqs; i++)
-+	for (i = 0; i < vdev->num_irqs; i++) {
-+		vfio_virqfd_disable(&vdev->irqs[i].mask);
-+		vfio_virqfd_disable(&vdev->irqs[i].unmask);
- 		vfio_set_trigger(vdev, i, -1, NULL);
-+	}
- 
- 	vdev->num_irqs = 0;
- 	kfree(vdev->irqs);
 -- 
 2.43.0
 
