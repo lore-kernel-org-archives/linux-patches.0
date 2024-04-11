@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA761448EF;
-	Thu, 11 Apr 2024 10:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C60F1448EF;
+	Thu, 11 Apr 2024 10:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829628; cv=none; b=f5XFeENa/BJrzU4wRl/bZ59q86Gs7nvl76OUQxgFHoEB+06+bF9Hyi6fhfk4uMV7QMJoFiHExBu4WrChLx9cZlDPzfBmymwgOflCVFSzIr8wqABdyFJAU5KiGGzYwz8uAtc+KhrlnPTtGPiCbiQRwjAxuH/ivqtWQ6/obxbU/ek=
+	t=1712829631; cv=none; b=pTSsZ0LL698AoUjJ2UJ4ARGXNEdXYUB8DRbiyxptSGnnef3zB4V4XvtPzRJxa6q7JZYPZXK8DgvqzCNBaib1m+qqKofH3hiq9qYLXr9naKGK2obh3eCZSbBjs1fczAaMb3M42orftcLO+HO1BsVrIq25cNpV91lqcfzM+JY3h+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829628; c=relaxed/simple;
-	bh=0wvt95ZKmLqg5yLw9U5lCl87GJMieU/GSUurwNEg0XQ=;
+	s=arc-20240116; t=1712829631; c=relaxed/simple;
+	bh=ZPvhV4kyoJGDTb032j8gRr4CkdhqSSax5GZDFuxl9wI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rHIbZHip2tVp6Os8nUp5MPSXK8lANtA+ENJA01eX9O1L1jDYMgkmVYJR7pxgyGV4CPlB06KM0Qqw9ngnDESvsxph6e4q3XsPvzjA7+vERYL9OO2AKhOgTC2hFYxChI5MhQzr9Zt7jcO8UJm3qTMWTkEQCd8ISxhuajGMPLnUuNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N47t8XYR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hqhxB/KcvWpJOPVSeZVMVeBx3Pbm38qE3tRI18hhREhZtkuJOxZCUAtK3wirEuyoB8cdTxm6sA7sz3opBPCP1B/c+K4BpYgoy5wXdvCaNXJ79dLfwU8p86gg6AOLJuO3hnaK9ZzId+F5y/tFzxmkLaeRg364BBwOqFL70t6ovVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnfmPHY6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N47t8XYR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A77FC433C7;
-	Thu, 11 Apr 2024 10:00:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnfmPHY6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CB9C433C7;
+	Thu, 11 Apr 2024 10:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829628;
-	bh=0wvt95ZKmLqg5yLw9U5lCl87GJMieU/GSUurwNEg0XQ=;
+	s=korg; t=1712829631;
+	bh=ZPvhV4kyoJGDTb032j8gRr4CkdhqSSax5GZDFuxl9wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N47t8XYRJJBoRdDD1XkwLeYBc2vODZzMsFgDW4ZW025HbcexsCsG9gSuiJOpnUUK/
-	 6qyp8kTjPlWZaMfKrbaaZDczFvTlXStpE6xDTF6y2kvtlqVdpSfGpzyHjRKUttMfPf
-	 l2Jpcwu6yRbgChEYytPQV6a15WALzf9M2uiTxrhk=
+	b=GnfmPHY6dJ0HDH0FW4+Zwyu9o2rkgMfH0raxkfjm9XLaJUjqgdsYAMVFYC7YQ18JZ
+	 FG5xxHLVdnKvC/L7w2AlMd1OjVoRHquDsFWsP56suKjgZ/2CiPl8ckFHgKGkm5z+Ub
+	 skAZeCbMg2iuTnroZeTwBoJPSLbzImVljv9pf//g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Eric Auger <eric.auger@redhat.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 052/175] kbuild: Move -Wenum-{compare-conditional,enum-conversion} into W=1
-Date: Thu, 11 Apr 2024 11:54:35 +0200
-Message-ID: <20240411095421.134563921@linuxfoundation.org>
+Subject: [PATCH 4.19 053/175] vfio/platform: Disable virqfds on cleanup
+Date: Thu, 11 Apr 2024 11:54:36 +0200
+Message-ID: <20240411095421.163980295@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -53,69 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Alex Williamson <alex.williamson@redhat.com>
 
-[ Upstream commit 75b5ab134bb5f657ef7979a59106dce0657e8d87 ]
+[ Upstream commit fcdc0d3d40bc26c105acf8467f7d9018970944ae ]
 
-Clang enables -Wenum-enum-conversion and -Wenum-compare-conditional
-under -Wenum-conversion. A recent change in Clang strengthened these
-warnings and they appear frequently in common builds, primarily due to
-several instances in common headers but there are quite a few drivers
-that have individual instances as well.
+irqfds for mask and unmask that are not specifically disabled by the
+user are leaked.  Remove any irqfds during cleanup
 
-  include/linux/vmstat.h:508:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
-    508 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
-        |                            ~~~~~~~~~~~~~~~~~~~~~ ^
-    509 |                            item];
-        |                            ~~~~
-
-  drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c:955:24: warning: conditional expression between different enumeration types ('enum iwl_mac_beacon_flags' and 'enum iwl_mac_beacon_flags_v1') [-Wenum-compare-conditional]
-    955 |                 flags |= is_new_rate ? IWL_MAC_BEACON_CCK
-        |                                      ^ ~~~~~~~~~~~~~~~~~~
-    956 |                           : IWL_MAC_BEACON_CCK_V1;
-        |                             ~~~~~~~~~~~~~~~~~~~~~
-  drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c:1120:21: warning: conditional expression between different enumeration types ('enum iwl_mac_beacon_flags' and 'enum iwl_mac_beacon_flags_v1') [-Wenum-compare-conditional]
-   1120 |                                                0) > 10 ?
-        |                                                        ^
-   1121 |                         IWL_MAC_BEACON_FILS :
-        |                         ~~~~~~~~~~~~~~~~~~~
-   1122 |                         IWL_MAC_BEACON_FILS_V1;
-        |                         ~~~~~~~~~~~~~~~~~~~~~~
-
-Doing arithmetic between or returning two different types of enums could
-be a bug, so each of the instance of the warning needs to be evaluated.
-Unfortunately, as mentioned above, there are many instances of this
-warning in many different configurations, which can break the build when
-CONFIG_WERROR is enabled.
-
-To avoid introducing new instances of the warnings while cleaning up the
-disruption for the majority of users, disable these warnings for the
-default build while leaving them on for W=1 builds.
-
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2002
-Link: https://github.com/llvm/llvm-project/commit/8c2ae42b3e1c6aa7c18f873edcebff7c0b45a37e
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Eric Auger <eric.auger@redhat.com>
+Cc:  <stable@vger.kernel.org>
+Fixes: a7fa7c77cf15 ("vfio/platform: implement IRQ masking/unmasking via an eventfd")
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Link: https://lore.kernel.org/r/20240308230557.805580-6-alex.williamson@redhat.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.extrawarn | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/vfio/platform/vfio_platform_irq.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
-index e15cd63428ba7..c2e41daf373f8 100644
---- a/scripts/Makefile.extrawarn
-+++ b/scripts/Makefile.extrawarn
-@@ -75,5 +75,7 @@ KBUILD_CFLAGS += $(call cc-disable-warning, uninitialized)
- KBUILD_CFLAGS += $(call cc-disable-warning, pointer-to-enum-cast)
- KBUILD_CFLAGS += $(call cc-disable-warning, unaligned-access)
- KBUILD_CFLAGS += $(call cc-disable-warning, cast-function-type-strict)
-+KBUILD_CFLAGS += -Wno-enum-compare-conditional
-+KBUILD_CFLAGS += -Wno-enum-enum-conversion
- endif
- endif
+diff --git a/drivers/vfio/platform/vfio_platform_irq.c b/drivers/vfio/platform/vfio_platform_irq.c
+index 46d4750f43a8d..c53a9b4438733 100644
+--- a/drivers/vfio/platform/vfio_platform_irq.c
++++ b/drivers/vfio/platform/vfio_platform_irq.c
+@@ -329,8 +329,11 @@ void vfio_platform_irq_cleanup(struct vfio_platform_device *vdev)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < vdev->num_irqs; i++)
++	for (i = 0; i < vdev->num_irqs; i++) {
++		vfio_virqfd_disable(&vdev->irqs[i].mask);
++		vfio_virqfd_disable(&vdev->irqs[i].unmask);
+ 		vfio_set_trigger(vdev, i, -1, NULL);
++	}
+ 
+ 	vdev->num_irqs = 0;
+ 	kfree(vdev->irqs);
 -- 
 2.43.0
 
