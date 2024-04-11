@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A27140366;
-	Thu, 11 Apr 2024 10:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA8B145B0E;
+	Thu, 11 Apr 2024 10:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830715; cv=none; b=j6OrL/OOo9RK/uOIJw3ftpcFfbFf8wRWtl4zSuhsrSgRPfIJaJhb1WXKbxyt31rkpMOpoLfyQKnFiyUW3jUJL9l4AOLLmTU+8MlKeqF9LM1oiTtjRv9vQBhxt0cUnVi6SQlkmygEkbjHvjMluW/NbPoK13/kdSfzCV0ez+Oo9rs=
+	t=1712830719; cv=none; b=BTvtUjGAQElOpiwle5HFrXt2Z8DNcHZAwodWW36HCiQhWDiZecZNpvwAbOMrmdGDyR3MvR3/WNd4b52O25/HZcAWUS05DcezsXiGSzGtR55rkudWc/ek8h5Lkyx8By7Ucoh6p44r+Nm1kw1x2ZNdSis+2mb49C2uJMxu93t/8Qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830715; c=relaxed/simple;
-	bh=tqpNguA73gpptXMCQPikUAAS3/DMyWpGW/WrbTdnleY=;
+	s=arc-20240116; t=1712830719; c=relaxed/simple;
+	bh=16xKpX3Wkk+z2TX9wUCjbyzkJxs8l9hXi/o9vA/9n2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FtKCScQNwJEG/j5FesuuvK7yXT6T13kywi1gw9AOqXmO/AiXXVSoCibZMDIfohJ1RPjHbMIJT9pl4haJXscDo/LJqNl5i2Ni54QW9wn4WEkxqqkZtWjDnIkPty2D+py54TcqlOEp4tr21U5Wn1MGVRtILUJebmPcQtUyv5kgoRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLSKk7up; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AZRumou5vNVU9az8vja/5RJ9y8Yk9lBC/MF4t+kYOXM6I2YeMlV4kNQkmGDB+XAQZ71JSAVLCubNc1X3gZToKz3jkRErdnpfl+4ixZRnj7CfQU8lJiZDOBqVVETBccTNPFBUTEVH313ZMhTRS/km5LNC95yuvwVsLe6uRmQN2H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYzwdn0N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLSKk7up"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4B6C433F1;
-	Thu, 11 Apr 2024 10:18:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYzwdn0N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359A0C433F1;
+	Thu, 11 Apr 2024 10:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830715;
-	bh=tqpNguA73gpptXMCQPikUAAS3/DMyWpGW/WrbTdnleY=;
+	s=korg; t=1712830718;
+	bh=16xKpX3Wkk+z2TX9wUCjbyzkJxs8l9hXi/o9vA/9n2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BLSKk7up3W/4Cu2+8rYLZED6nngvTL5Xxpxs6k+dwUUUByFP6pY4rvc8zaIeQdjXd
-	 APhjovlZBxnHF+lSAwbancjssyeatazhJyXfsdfJGMCcT/B/e80e60O0yvy9Yh5tRc
-	 r2qdG3TPTxLNY5S1AQEYpviZC2893dIX50N3Jwio=
+	b=hYzwdn0N2XrvDO6uHetZlWClD1U3YsulHtsJNApqYgYa6RAyTsGuWr7rnLAOEH672
+	 qs0hhFI+EJyrMpA7m2VVlQjuR3Y2GAj6isBL8Bg8wu08oelmX5Xjxf+GwOmSwHAmmL
+	 Pk0obHDWGFMEmrYKhdwgbxMV7vfAVLDmy7Ncvq28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Chartre <alexandre.chartre@oracle.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Miroslav Benes <mbenes@suse.cz>,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
-	Rui Qi <qirui.001@bytedance.com>
-Subject: [PATCH 5.4 093/215] objtool: Add support for intra-function calls
-Date: Thu, 11 Apr 2024 11:55:02 +0200
-Message-ID: <20240411095427.696786483@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Steffen Trumtrar <s.trumtrar@pengutronix.de>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Camelia Groza <camelia.groza@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 067/215] soc: fsl: qbman: Use raw spinlock for cgr_lock
+Date: Thu, 11 Apr 2024 11:54:36 +0200
+Message-ID: <20240411095426.913356990@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -53,175 +54,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Chartre <alexandre.chartre@oracle.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-commit 8aa8eb2a8f5b3305a95f39957dd2b715fa668e21 upstream.
+[ Upstream commit fbec4e7fed89b579f2483041fabf9650fb0dd6bc ]
 
-Change objtool to support intra-function calls. On x86, an intra-function
-call is represented in objtool as a push onto the stack (of the return
-address), and a jump to the destination address. That way the stack
-information is correctly updated and the call flow is still accurate.
+smp_call_function always runs its callback in hard IRQ context, even on
+PREEMPT_RT, where spinlocks can sleep. So we need to use a raw spinlock
+for cgr_lock to ensure we aren't waiting on a sleeping task.
 
-Signed-off-by: Alexandre Chartre <alexandre.chartre@oracle.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Miroslav Benes <mbenes@suse.cz>
-Acked-by: Josh Poimboeuf <jpoimboe@redhat.com>
-Link: https://lkml.kernel.org/r/20200414103618.12657-4-alexandre.chartre@oracle.com
-Signed-off-by: Rui Qi <qirui.001@bytedance.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Although this bug has existed for a while, it was not apparent until
+commit ef2a8d5478b9 ("net: dpaa: Adjust queue depth on rate change")
+which invokes smp_call_function_single via qman_update_cgr_safe every
+time a link goes up or down.
+
+Fixes: 96f413f47677 ("soc/fsl/qbman: fix issue in qman_delete_cgr_safe()")
+CC: stable@vger.kernel.org
+Reported-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Closes: https://lore.kernel.org/all/20230323153935.nofnjucqjqnz34ej@skbuf/
+Reported-by: Steffen Trumtrar <s.trumtrar@pengutronix.de>
+Closes: https://lore.kernel.org/linux-arm-kernel/87wmsyvclu.fsf@pengutronix.de/
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Camelia Groza <camelia.groza@nxp.com>
+Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/frame.h                            |   11 ++++
- tools/objtool/Documentation/stack-validation.txt |    8 ++
- tools/objtool/arch/x86/decode.c                  |    6 ++
- tools/objtool/check.c                            |   62 +++++++++++++++++++++--
- 4 files changed, 83 insertions(+), 4 deletions(-)
+ drivers/soc/fsl/qbman/qman.c | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
---- a/include/linux/frame.h
-+++ b/include/linux/frame.h
-@@ -15,9 +15,20 @@
- 	static void __used __section(.discard.func_stack_frame_non_standard) \
- 		*__func_stack_frame_non_standard_##func = func
+diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
+index 52327f0dab986..5144b8c66ac46 100644
+--- a/drivers/soc/fsl/qbman/qman.c
++++ b/drivers/soc/fsl/qbman/qman.c
+@@ -996,7 +996,7 @@ struct qman_portal {
+ 	/* linked-list of CSCN handlers. */
+ 	struct list_head cgr_cbs;
+ 	/* list lock */
+-	spinlock_t cgr_lock;
++	raw_spinlock_t cgr_lock;
+ 	struct work_struct congestion_work;
+ 	struct work_struct mr_work;
+ 	char irqname[MAX_IRQNAME];
+@@ -1286,7 +1286,7 @@ static int qman_create_portal(struct qman_portal *portal,
+ 		/* if the given mask is NULL, assume all CGRs can be seen */
+ 		qman_cgrs_fill(&portal->cgrs[0]);
+ 	INIT_LIST_HEAD(&portal->cgr_cbs);
+-	spin_lock_init(&portal->cgr_lock);
++	raw_spin_lock_init(&portal->cgr_lock);
+ 	INIT_WORK(&portal->congestion_work, qm_congestion_task);
+ 	INIT_WORK(&portal->mr_work, qm_mr_process_task);
+ 	portal->bits = 0;
+@@ -1461,11 +1461,14 @@ static void qm_congestion_task(struct work_struct *work)
+ 	union qm_mc_result *mcr;
+ 	struct qman_cgr *cgr;
  
-+/*
-+ * This macro indicates that the following intra-function call is valid.
-+ * Any non-annotated intra-function call will cause objtool to issue a warning.
-+ */
-+#define ANNOTATE_INTRA_FUNCTION_CALL				\
-+	999:							\
-+	.pushsection .discard.intra_function_calls;		\
-+	.long 999b;						\
-+	.popsection;
-+
- #else /* !CONFIG_STACK_VALIDATION */
- 
- #define STACK_FRAME_NON_STANDARD(func)
-+#define ANNOTATE_INTRA_FUNCTION_CALL
- 
- #endif /* CONFIG_STACK_VALIDATION */
- 
---- a/tools/objtool/Documentation/stack-validation.txt
-+++ b/tools/objtool/Documentation/stack-validation.txt
-@@ -290,6 +290,14 @@ they mean, and suggestions for how to fi
-       https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70646
- 
- 
-+11. file.o: warning: unannotated intra-function call
-+
-+   This warning means that a direct call is done to a destination which
-+   is not at the beginning of a function. If this is a legit call, you
-+   can remove this warning by putting the ANNOTATE_INTRA_FUNCTION_CALL
-+   directive right before the call.
-+
-+
- If the error doesn't seem to make sense, it could be a bug in objtool.
- Feel free to ask the objtool maintainer for help.
- 
---- a/tools/objtool/arch/x86/decode.c
-+++ b/tools/objtool/arch/x86/decode.c
-@@ -437,6 +437,12 @@ int arch_decode_instruction(struct elf *
- 
- 	case 0xe8:
- 		*type = INSN_CALL;
-+		/*
-+		 * For the impact on the stack, a CALL behaves like
-+		 * a PUSH of an immediate value (the return address).
-+		 */
-+			op->src.type = OP_SRC_CONST;
-+			op->dest.type = OP_DEST_PUSH;
- 		break;
- 
- 	case 0xfc:
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -645,6 +645,7 @@ static int add_jump_destinations(struct
- 	return 0;
+-	spin_lock_irq(&p->cgr_lock);
++	/*
++	 * FIXME: QM_MCR_TIMEOUT is 10ms, which is too long for a raw spinlock!
++	 */
++	raw_spin_lock_irq(&p->cgr_lock);
+ 	qm_mc_start(&p->p);
+ 	qm_mc_commit(&p->p, QM_MCC_VERB_QUERYCONGESTION);
+ 	if (!qm_mc_result_timeout(&p->p, &mcr)) {
+-		spin_unlock_irq(&p->cgr_lock);
++		raw_spin_unlock_irq(&p->cgr_lock);
+ 		dev_crit(p->config->dev, "QUERYCONGESTION timeout\n");
+ 		qman_p_irqsource_add(p, QM_PIRQ_CSCI);
+ 		return;
+@@ -1481,7 +1484,7 @@ static void qm_congestion_task(struct work_struct *work)
+ 	list_for_each_entry(cgr, &p->cgr_cbs, node)
+ 		if (cgr->cb && qman_cgrs_get(&c, cgr->cgrid))
+ 			cgr->cb(p, cgr, qman_cgrs_get(&rr, cgr->cgrid));
+-	spin_unlock_irq(&p->cgr_lock);
++	raw_spin_unlock_irq(&p->cgr_lock);
+ 	qman_p_irqsource_add(p, QM_PIRQ_CSCI);
  }
  
-+
- /*
-  * Find the destination instructions for all calls.
-  */
-@@ -666,10 +667,7 @@ static int add_call_destinations(struct
- 								dest_off);
+@@ -2438,7 +2441,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
+ 	preempt_enable();
  
- 			if (!insn->call_dest && !insn->ignore) {
--				WARN_FUNC("unsupported intra-function call",
--					  insn->sec, insn->offset);
--				if (retpoline)
--					WARN("If this is a retpoline, please patch it in with alternatives and annotate it with ANNOTATE_NOSPEC_ALTERNATIVE.");
-+				WARN_FUNC("unannotated intra-function call", insn->sec, insn->offset);
- 				return -1;
- 			}
+ 	cgr->chan = p->config->channel;
+-	spin_lock_irq(&p->cgr_lock);
++	raw_spin_lock_irq(&p->cgr_lock);
  
-@@ -1291,6 +1289,58 @@ static int read_retpoline_hints(struct o
- 	return 0;
+ 	if (opts) {
+ 		struct qm_mcc_initcgr local_opts = *opts;
+@@ -2475,7 +2478,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
+ 	    qman_cgrs_get(&p->cgrs[1], cgr->cgrid))
+ 		cgr->cb(p, cgr, 1);
+ out:
+-	spin_unlock_irq(&p->cgr_lock);
++	raw_spin_unlock_irq(&p->cgr_lock);
+ 	put_affine_portal();
+ 	return ret;
  }
+@@ -2510,7 +2513,7 @@ int qman_delete_cgr(struct qman_cgr *cgr)
+ 		return -EINVAL;
  
-+
-+static int read_intra_function_calls(struct objtool_file *file)
-+{
-+	struct instruction *insn;
-+	struct section *sec;
-+	struct rela *rela;
-+
-+	sec = find_section_by_name(file->elf, ".rela.discard.intra_function_calls");
-+	if (!sec)
-+		return 0;
-+
-+	list_for_each_entry(rela, &sec->rela_list, list) {
-+		unsigned long dest_off;
-+
-+		if (rela->sym->type != STT_SECTION) {
-+			WARN("unexpected relocation symbol type in %s",
-+			     sec->name);
-+			return -1;
-+		}
-+
-+		insn = find_insn(file, rela->sym->sec, rela->addend);
-+		if (!insn) {
-+			WARN("bad .discard.intra_function_call entry");
-+			return -1;
-+		}
-+
-+		if (insn->type != INSN_CALL) {
-+			WARN_FUNC("intra_function_call not a direct call",
-+				  insn->sec, insn->offset);
-+			return -1;
-+		}
-+
-+		/*
-+		 * Treat intra-function CALLs as JMPs, but with a stack_op.
-+		 * See add_call_destinations(), which strips stack_ops from
-+		 * normal CALLs.
-+		 */
-+		insn->type = INSN_JUMP_UNCONDITIONAL;
-+
-+		dest_off = insn->offset + insn->len + insn->immediate;
-+		insn->jump_dest = find_insn(file, insn->sec, dest_off);
-+		if (!insn->jump_dest) {
-+			WARN_FUNC("can't find call dest at %s+0x%lx",
-+				  insn->sec, insn->offset,
-+				  insn->sec->name, dest_off);
-+			return -1;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static void mark_rodata(struct objtool_file *file)
- {
- 	struct section *sec;
-@@ -1346,6 +1396,10 @@ static int decode_sections(struct objtoo
- 	if (ret)
- 		return ret;
+ 	memset(&local_opts, 0, sizeof(struct qm_mcc_initcgr));
+-	spin_lock_irqsave(&p->cgr_lock, irqflags);
++	raw_spin_lock_irqsave(&p->cgr_lock, irqflags);
+ 	list_del(&cgr->node);
+ 	/*
+ 	 * If there are no other CGR objects for this CGRID in the list,
+@@ -2535,7 +2538,7 @@ int qman_delete_cgr(struct qman_cgr *cgr)
+ 		/* add back to the list */
+ 		list_add(&cgr->node, &p->cgr_cbs);
+ release_lock:
+-	spin_unlock_irqrestore(&p->cgr_lock, irqflags);
++	raw_spin_unlock_irqrestore(&p->cgr_lock, irqflags);
+ 	put_affine_portal();
+ 	return ret;
+ }
+@@ -2575,9 +2578,9 @@ static int qman_update_cgr(struct qman_cgr *cgr, struct qm_mcc_initcgr *opts)
+ 	if (!p)
+ 		return -EINVAL;
  
-+	ret = read_intra_function_calls(file);
-+	if (ret)
-+		return ret;
-+
- 	ret = add_call_destinations(file);
- 	if (ret)
- 		return ret;
+-	spin_lock_irqsave(&p->cgr_lock, irqflags);
++	raw_spin_lock_irqsave(&p->cgr_lock, irqflags);
+ 	ret = qm_modify_cgr(cgr, 0, opts);
+-	spin_unlock_irqrestore(&p->cgr_lock, irqflags);
++	raw_spin_unlock_irqrestore(&p->cgr_lock, irqflags);
+ 	put_affine_portal();
+ 	return ret;
+ }
+-- 
+2.43.0
+
 
 
