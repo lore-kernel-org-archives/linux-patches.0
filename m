@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175421474CA;
-	Thu, 11 Apr 2024 10:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE461474CA;
+	Thu, 11 Apr 2024 10:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831765; cv=none; b=dWg2S6X06le8AZWd/3+O92pBshQPgpBR1UZI1oHr3w7Q/9u6U4lhwmjKacohY25sBiUgMWUUSWRDvVzxGSsob3EXe2WbWB0dJqWb7mrS7WRbuw8QV++n1Y03WC5US417IA9bkzeCvvX8n2ykgbgwghTZJi34V+kHHLLKMVgjcbM=
+	t=1712831768; cv=none; b=eKMXaBiySmTaY65ZqfYEnSmA/gtR6cPEX+Oc9d+KN2vTwB77r2in7HshUfwlgCPQDfKCtKGZ+WOfaGP9VmMvjbioBymF6RJgcE/Wh/czTl4u3orA8j21ICO1Ri6Cwuzzz0dl+5Y4h0d9BSPmsreM0VOyvbMMGcRRt0bUWHquT8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831765; c=relaxed/simple;
-	bh=HtEFblNrTDDNVXAFYDQQX8Gh9dWI8vHg9k8+MBmYC4w=;
+	s=arc-20240116; t=1712831768; c=relaxed/simple;
+	bh=KZPf1wKXeiKemhenhPmub5r4HAau8r8SOSrZzhMxWl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KSVFbHC7ckEnmqW8Jw8kcJi1bcgA36AMSoxWq1ZbVePTErLdxs+CqQD2XjoUDXbhc+2EL35+IDGnE3nus27sQozvRXhPfAYgfHH0Vk/dqDdqmvCkKw0/5/RvSQJwtRNt0avgLKijysvcS0QtgRVLqxWYqj6jWYhYOGadRcJq5Yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbDuCbA1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DrkbJvH3FcR5wU5TURCCwKU8AQ+jscOXV4QPmRT8AdNdqemt75JDUgOvGRy1A/fuGOmTRF3wK23slUfMM7IwJBC4K3GJpJke5+O0CIe9yw7oWegReWxTXkVtowZVgSyywM9XxUcLV+Uuh0S/Uvt8nWYsabQh5BkILQ6V43i+pos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAL2wSVe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbDuCbA1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9D6C433F1;
-	Thu, 11 Apr 2024 10:36:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAL2wSVe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D45C433F1;
+	Thu, 11 Apr 2024 10:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831765;
-	bh=HtEFblNrTDDNVXAFYDQQX8Gh9dWI8vHg9k8+MBmYC4w=;
+	s=korg; t=1712831767;
+	bh=KZPf1wKXeiKemhenhPmub5r4HAau8r8SOSrZzhMxWl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qbDuCbA1ZIuLdCQZYVp8/NnOddGZyKTg+ryuFmDQR05zucfYHwWwBKdwOEFLYHvSv
-	 vHI4Y9s7jVPQqU5ShWd/dbkyjtHSHqYwrPE5W3DGibyccdSA36vxZDYnl2LwPOqKE1
-	 4UHiwbUwHQuFobbeXKl/IdooQ/YByFlf0RICL3/c=
+	b=zAL2wSVesJzQeDbImNKvcHUqSqzeWb57H0aQEHzmkExsn5PDkmH4Ccg3G0VX2nB9n
+	 Vhx8qfE/FMz+2Okrxc9+AOKzlZ08WRNy3FWYk3FOANkSuPzPvOsbSED5aRmYQ3QueZ
+	 wt6Bxk9+21BSNQQuPcHrui2AaqOK4v20dmZl75iM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingi Cho <mgcho.minic@gmail.com>,
+	lonial con <kongln9170@gmail.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.10 119/294] netfilter: nf_tables: mark set as dead when unbinding anonymous set with timeout
-Date: Thu, 11 Apr 2024 11:54:42 +0200
-Message-ID: <20240411095439.250166967@linuxfoundation.org>
+Subject: [PATCH 5.10 120/294] netfilter: nf_tables: disallow anonymous set with timeout flag
+Date: Thu, 11 Apr 2024 11:54:43 +0200
+Message-ID: <20240411095439.278694178@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -52,43 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 552705a3650bbf46a22b1adedc1b04181490fc36 upstream.
+commit 16603605b667b70da974bea8216c93e7db043bf1 upstream.
 
-While the rhashtable set gc runs asynchronously, a race allows it to
-collect elements from anonymous sets with timeouts while it is being
-released from the commit path.
-
-Mingi Cho originally reported this issue in a different path in 6.1.x
-with a pipapo set with low timeouts which is not possible upstream since
-7395dfacfff6 ("netfilter: nf_tables: use timestamp to check for set
-element timeout").
-
-Fix this by setting on the dead flag for anonymous sets to skip async gc
-in this case.
-
-According to 08e4c8c5919f ("netfilter: nf_tables: mark newset as dead on
-transaction abort"), Florian plans to accelerate abort path by releasing
-objects via workqueue, therefore, this sets on the dead flag for abort
-path too.
+Anonymous sets are never used with timeout from userspace, reject this.
+Exception to this rule is NFT_SET_EVAL to ensure legacy meters still work.
 
 Cc: stable@vger.kernel.org
-Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
-Reported-by: Mingi Cho <mgcho.minic@gmail.com>
+Fixes: 761da2935d6e ("netfilter: nf_tables: add set timeout API support")
+Reported-by: lonial con <kongln9170@gmail.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nf_tables_api.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -4754,6 +4754,7 @@ static void nf_tables_unbind_set(const s
+@@ -4410,6 +4410,9 @@ static int nf_tables_newset(struct net *
+ 		if ((flags & (NFT_SET_EVAL | NFT_SET_OBJECT)) ==
+ 			     (NFT_SET_EVAL | NFT_SET_OBJECT))
+ 			return -EOPNOTSUPP;
++		if ((flags & (NFT_SET_ANONYMOUS | NFT_SET_TIMEOUT | NFT_SET_EVAL)) ==
++			     (NFT_SET_ANONYMOUS | NFT_SET_TIMEOUT))
++			return -EOPNOTSUPP;
+ 	}
  
- 	if (list_empty(&set->bindings) && nft_set_is_anonymous(set)) {
- 		list_del_rcu(&set->list);
-+		set->dead = 1;
- 		if (event)
- 			nf_tables_set_notify(ctx, set, NFT_MSG_DELSET,
- 					     GFP_KERNEL);
+ 	dtype = 0;
 
 
