@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0306A145B07;
-	Thu, 11 Apr 2024 10:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5721142624;
+	Thu, 11 Apr 2024 10:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830205; cv=none; b=Co+0X7nNycwQzZ+bjXj1MCT2ZY7Zp5d31Trk7sr8B7LLGX0BIonUKNbI2oUCEhFzUAB8M+uV2PoDU/kXQJ7lxquDgBMzJpIRR1/0mJ0mbzR4fvLRA4rUquv6YFsNITm7RYG4boOUtdG2rb4MPzhcrZOHBReTwRZtfCGBfMnx1Y0=
+	t=1712830208; cv=none; b=fOOyj3ZDIPqdNCWKwfudtkuP9xy6Cxbssf7it1uVw9UdK8sHDh7Ar5d2ea6agz6efURyCLWZ+3J6L/uGhEpIMLX7JXCCbV+fu/KfBZfU9/BTJH5yRm34nGO5bExj2tICEXNrP9wRcQX501lO2zWiDfbVo+AFUC4M8WR+MPbGGog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830205; c=relaxed/simple;
-	bh=fDv47FkCYUnjH1Wa8jgj9qbc8CdehNNsQoLojAxD5BA=;
+	s=arc-20240116; t=1712830208; c=relaxed/simple;
+	bh=rNBjbtF/U7CqTyJLJcB1ScDBLv3NcSsmbiwqTgOnaWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NChf5DyNovS2+uS8FKcHjxr/kpGHa228rsuWhbSu7tP6yQ4ZB2BZpZRlIawmPXUuyJ91y6Cs8DOGYzRckZ/6/XzknpA0fN9ApeALaotblztS6HdJu/DkNZnsrBlN3qKtdSp+kCCA0XBAlLNvjO1MhP8fQmPaXgNwhL5sXb2Bk4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HgYO4GbS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SBjpu/ayXxlCp8lilKxmMxpChXxwvXq7ZKDkQqCPcKNpkg88aFqM7X3gFsJP5MNXiauoP3CqFcR3MhBRzUzCH0Wtan5NuLEUMw0Gn16hfWtPGYJXilsFENUTZq7CqQBZyCiQj7PFtL7tjiD5v4cCwXXHzbl4s2b+zZFWX+NPMzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXEo1aBR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HgYO4GbS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C898C433F1;
-	Thu, 11 Apr 2024 10:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXEo1aBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C356C433C7;
+	Thu, 11 Apr 2024 10:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830204;
-	bh=fDv47FkCYUnjH1Wa8jgj9qbc8CdehNNsQoLojAxD5BA=;
+	s=korg; t=1712830207;
+	bh=rNBjbtF/U7CqTyJLJcB1ScDBLv3NcSsmbiwqTgOnaWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HgYO4GbSZvaPDQ6w66fdFBo4h+H7TsOWSGDfGemVtDR0iPHihGAtRsYdkGDWKS8ZY
-	 Iq9Y5gGZ0UZYwqRkxUTfLzQWpS3Q90J8aA2hv0HKrCiEagnbCba/zVrd0yJQdUuZyT
-	 F60xnVdta0OQqthjgPgL+9EVBYYWa4YACiAB6pkM=
+	b=GXEo1aBR0KfG/9mBexbvc8rCNTctOVrs3l4oX+1Cvvixlay9TuoNuC3077k84PRvP
+	 6O4BaLXySJfO4UFrMp70+Fglp6wuduXCXkDUCDE4pkZqWXoatin6t0Y0a1fEBRzuim
+	 ujktUbiqgD9fe4AWdB2xfCGGdtQF0gZ0ijeWisLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Brent Lu <brent.lu@intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 071/143] ASoC: Intel: sof_rt5682: dmi quirk cleanup for mtl boards
-Date: Thu, 11 Apr 2024 11:55:39 +0200
-Message-ID: <20240411095423.052027638@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+830d9e3fa61968246abd@syzkaller.appspotmail.com
+Subject: [PATCH 6.8 054/143] Bluetooth: btintel: Fix null ptr deref in btintel_read_version
+Date: Thu, 11 Apr 2024 11:55:22 +0200
+Message-ID: <20240411095422.542945911@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -53,74 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brent Lu <brent.lu@intel.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 7a2a8730d51f95b263a1e8b888598dc6395220dc ]
+[ Upstream commit b79e040910101b020931ba0c9a6b77e81ab7f645 ]
 
-Some dmi quirks are duplicated since codec and amplifier type are
-removed from board quirk. Remove redundant quirks.
+If hci_cmd_sync_complete() is triggered and skb is NULL, then
+hdev->req_skb is NULL, which will cause this issue.
 
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Signed-off-by: Brent Lu <brent.lu@intel.com>
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20240208165545.93811-7-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-and-tested-by: syzbot+830d9e3fa61968246abd@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_rt5682.c | 40 -----------------------------
- 1 file changed, 40 deletions(-)
+ drivers/bluetooth/btintel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/boards/sof_rt5682.c b/sound/soc/intel/boards/sof_rt5682.c
-index cd50f26d1edbe..02705034e5713 100644
---- a/sound/soc/intel/boards/sof_rt5682.c
-+++ b/sound/soc/intel/boards/sof_rt5682.c
-@@ -154,46 +154,6 @@ static const struct dmi_system_id sof_rt5682_quirk_table[] = {
- 					SOF_RT5682_SSP_AMP(2) |
- 					SOF_RT5682_NUM_HDMIDEV(4)),
- 	},
--	{
--		.callback = sof_rt5682_quirk_cb,
--		.matches = {
--			DMI_MATCH(DMI_PRODUCT_FAMILY, "Google_Rex"),
--			DMI_MATCH(DMI_OEM_STRING, "AUDIO-MAX98360_ALC5682I_I2S"),
--		},
--		.driver_data = (void *)(SOF_RT5682_MCLK_EN |
--					SOF_RT5682_SSP_CODEC(2) |
--					SOF_RT5682_SSP_AMP(0) |
--					SOF_RT5682_NUM_HDMIDEV(3) |
--					SOF_BT_OFFLOAD_SSP(1) |
--					SOF_SSP_BT_OFFLOAD_PRESENT
--					),
--	},
--	{
--		.callback = sof_rt5682_quirk_cb,
--		.matches = {
--			DMI_MATCH(DMI_PRODUCT_FAMILY, "Google_Rex"),
--			DMI_MATCH(DMI_OEM_STRING, "AUDIO-MAX98360_ALC5682I_DISCRETE_I2S_BT"),
--		},
--		.driver_data = (void *)(SOF_RT5682_MCLK_EN |
--					SOF_RT5682_SSP_CODEC(2) |
--					SOF_RT5682_SSP_AMP(0) |
--					SOF_RT5682_NUM_HDMIDEV(3) |
--					SOF_BT_OFFLOAD_SSP(1) |
--					SOF_SSP_BT_OFFLOAD_PRESENT
--					),
--	},
--	{
--		.callback = sof_rt5682_quirk_cb,
--		.matches = {
--			DMI_MATCH(DMI_PRODUCT_FAMILY, "Google_Rex"),
--			DMI_MATCH(DMI_OEM_STRING, "AUDIO-ALC1019_ALC5682I_I2S"),
--		},
--		.driver_data = (void *)(SOF_RT5682_MCLK_EN |
--					SOF_RT5682_SSP_CODEC(2) |
--					SOF_RT5682_SSP_AMP(0) |
--					SOF_RT5682_NUM_HDMIDEV(3)
--					),
--	},
- 	{
- 		.callback = sof_rt5682_quirk_cb,
- 		.matches = {
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index cdc5c08824a0a..e5b043d962073 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -435,7 +435,7 @@ int btintel_read_version(struct hci_dev *hdev, struct intel_version *ver)
+ 	struct sk_buff *skb;
+ 
+ 	skb = __hci_cmd_sync(hdev, 0xfc05, 0, NULL, HCI_CMD_TIMEOUT);
+-	if (IS_ERR(skb)) {
++	if (IS_ERR_OR_NULL(skb)) {
+ 		bt_dev_err(hdev, "Reading Intel version information failed (%ld)",
+ 			   PTR_ERR(skb));
+ 		return PTR_ERR(skb);
 -- 
 2.43.0
 
