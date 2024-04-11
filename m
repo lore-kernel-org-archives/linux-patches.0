@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F52F140366;
-	Thu, 11 Apr 2024 10:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538C61474B0;
+	Thu, 11 Apr 2024 10:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831677; cv=none; b=G+wJRVq2fQQxYvcqwRgSH0BKXOlBTnt49E56nc/SoTN+SmPMoeS30rT36GnChXTn+CRHeBbXCU2yezyFsrw1LtrDG5CQTj3qlXjrGu4nZHT4WhKIfAlu07eGA9HslYfAgdOCU1fhehh6Li+WyGtSDA8Ja0wRgUP7bAN8f4b5bFc=
+	t=1712831680; cv=none; b=K6z+iyDbJtT7SNLxcXTl1RkxJ8IxldM7OokOfYnLMXbdaFyHwhAfpO1t5ft9t3vmgV+yGU0hwOE881VMX98FdkTNNAyKdjIE6fyZYGA4UO8pIczgmpKzwQN8KdDFkBLauJcl8GmGuLgQrlAHCgLL7U9d/1K5hnMgokZ6X8aFqM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831677; c=relaxed/simple;
-	bh=Qh1rtoXGGXJ4FOPBGOPW7/8WSKcPWbb7Pj2KqlSi9bE=;
+	s=arc-20240116; t=1712831680; c=relaxed/simple;
+	bh=OaSAt0mPncQPE0pngTTVCZYIqZrtcR1DfXGq8Ly5z5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cteR0mz5XIlxv/PB0dodwGiVZWggvqvUZ4ZL83onIEdWcg8WNX1ohzLdR76ucNz0amEjBhe29h6AhttsywDayvw3unEfMnuZhluoYSPUkiN5oekKjJiGIZwNiBpKrSdkPnhkIentuzdm4kKgUwg7JjxMEDEcGCWKOQpcwyRS7qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSAF4umu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e55SLW+aPngwNfrkrOysRlmj9eOapX+9fi2U/rwPqz6mcoGmsCKeHTTq2s3H+y7vZLFqKXoMFs/IjoBvjHPV9KVtiYANTjIrotNLsLm9W94Ys54lBGf7XEsxDUD73hN+ytSNjjLXDXPrCptgJdpQErgYFLY14cHoQeHIulOJsLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hCFYg77g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSAF4umu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA8AC433C7;
-	Thu, 11 Apr 2024 10:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hCFYg77g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA765C433F1;
+	Thu, 11 Apr 2024 10:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831677;
-	bh=Qh1rtoXGGXJ4FOPBGOPW7/8WSKcPWbb7Pj2KqlSi9bE=;
+	s=korg; t=1712831680;
+	bh=OaSAt0mPncQPE0pngTTVCZYIqZrtcR1DfXGq8Ly5z5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HSAF4umuEFL2pKpzTHjL7Zt3dBZ5bRbXrxljzHE6aLVhWaQg2vg5aqNZkIHJuyWmd
-	 2zWS3NiKIfHMmrcevxOj5CzpTuiQxjYjVLdyiUNJW8OBTC+5nH2p1N9o2wcSjLXJ4U
-	 /DDKQYFSbSnbi5DvTeKv1ZYeHQA9etb7OGb2j2Q8=
+	b=hCFYg77g+QtJB9V5p+LLKSCJWR4jvQk1f2HkkLvEVfQkbgCz74voWXZWPbZSY2Us8
+	 /9snLCb34w31454ltGcaUyLxNN2H15S/E4YVpZwlyK/+JADbKbHTCnJAr7H4kg/b/0
+	 2n24dxfC0q8cf8f54djKVqqbCySqS2wo+FGfI6QY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	linke li <lilinke99@qq.com>,
-	Rabin Vincent <rabin@rab.in>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Michael Walle <michael@walle.cc>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 089/294] ring-buffer: Fix resetting of shortest_full
-Date: Thu, 11 Apr 2024 11:54:12 +0200
-Message-ID: <20240411095438.361815895@linuxfoundation.org>
+Subject: [PATCH 5.10 063/294] PCI: Work around Intel I210 ROM BAR overlap defect
+Date: Thu, 11 Apr 2024 11:53:46 +0200
+Message-ID: <20240411095437.588151353@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -57,115 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit 68282dd930ea38b068ce2c109d12405f40df3f93 ]
+[ Upstream commit 500b55b05d0a21c4adddf4c3b29ee6f32b502046 ]
 
-The "shortest_full" variable is used to keep track of the waiter that is
-waiting for the smallest amount on the ring buffer before being woken up.
-When a tasks waits on the ring buffer, it passes in a "full" value that is
-a percentage. 0 means wake up on any data. 1-100 means wake up from 1% to
-100% full buffer.
+Per PCIe r5, sec 7.5.1.2.4, a device must not claim accesses to its
+Expansion ROM unless both the Memory Space Enable and the Expansion ROM
+Enable bit are set.  But apparently some Intel I210 NICs don't work
+correctly if the ROM BAR overlaps another BAR, even if the Expansion ROM is
+disabled.
 
-As all waiters are on the same wait queue, the wake up happens for the
-waiter with the smallest percentage.
+Michael reported that on a Kontron SMARC-sAL28 ARM64 system with U-Boot
+v2021.01-rc3, the ROM BAR overlaps BAR 3, and networking doesn't work at
+all:
 
-The problem is that the smallest_full on the cpu_buffer that stores the
-smallest amount doesn't get reset when all the waiters are woken up. It
-does get reset when the ring buffer is reset (echo > /sys/kernel/tracing/trace).
+  BAR 0: 0x40000000 (32-bit, non-prefetchable) [size=1M]
+  BAR 3: 0x40200000 (32-bit, non-prefetchable) [size=16K]
+  ROM:   0x40200000 (disabled) [size=1M]
 
-This means that tasks may be woken up more often then when they want to
-be. Instead, have the shortest_full field get reset just before waking up
-all the tasks. If the tasks wait again, they will update the shortest_full
-before sleeping.
+  NETDEV WATCHDOG: enP2p1s0 (igb): transmit queue 0 timed out
+  Hardware name: Kontron SMARC-sAL28 (Single PHY) on SMARC Eval 2.0 carrier (DT)
+  igb 0002:01:00.0 enP2p1s0: Reset adapter
 
-Also add locking around setting of shortest_full in the poll logic, and
-change "work" to "rbwork" to match the variable name for rb_irq_work
-structures that are used in other places.
+Previously, pci_std_update_resource() wrote the assigned ROM address to the
+BAR only when the ROM was enabled.  This meant that the I210 ROM BAR could
+be left with an address assigned by firmware, which might overlap with
+other BARs.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240308202431.948914369@goodmis.org
+Quirk these I210 devices so pci_std_update_resource() always writes the
+assigned address to the ROM BAR, whether or not the ROM is enabled.
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: linke li <lilinke99@qq.com>
-Cc: Rabin Vincent <rabin@rab.in>
-Fixes: 2c2b0a78b3739 ("ring-buffer: Add percentage of ring buffer full to wake up reader")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: 8145f1c35fa6 ("ring-buffer: Fix full_waiters_pending in poll")
+Link: https://lore.kernel.org/r/20211223163754.GA1267351@bhelgaas
+Link: https://lore.kernel.org/r/20201230185317.30915-1-michael@walle.cc
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=211105
+Reported-by: Michael Walle <michael@walle.cc>
+Tested-by: Michael Walle <michael@walle.cc>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Stable-dep-of: 627c6db20703 ("PCI/DPC: Quirk PIO log size for Intel Raptor Lake Root Ports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
+ drivers/pci/quirks.c    | 10 ++++++++++
+ drivers/pci/setup-res.c |  8 ++++++--
+ include/linux/pci.h     |  1 +
+ 3 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 5b665e5991bf7..5465f4c950f27 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -831,8 +831,19 @@ static void rb_wake_up_waiters(struct irq_work *work)
- 
- 	wake_up_all(&rbwork->waiters);
- 	if (rbwork->full_waiters_pending || rbwork->wakeup_full) {
-+		/* Only cpu_buffer sets the above flags */
-+		struct ring_buffer_per_cpu *cpu_buffer =
-+			container_of(rbwork, struct ring_buffer_per_cpu, irq_work);
-+
-+		/* Called from interrupt context */
-+		raw_spin_lock(&cpu_buffer->reader_lock);
- 		rbwork->wakeup_full = false;
- 		rbwork->full_waiters_pending = false;
-+
-+		/* Waking up all waiters, they will reset the shortest full */
-+		cpu_buffer->shortest_full = 0;
-+		raw_spin_unlock(&cpu_buffer->reader_lock);
-+
- 		wake_up_all(&rbwork->full_waiters);
- 	}
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 646807a443e2d..d7c4149855eb6 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -5852,3 +5852,13 @@ static void nvidia_ion_ahci_fixup(struct pci_dev *pdev)
+ 	pdev->dev_flags |= PCI_DEV_FLAGS_HAS_MSI_MASKING;
  }
-@@ -999,28 +1010,33 @@ __poll_t ring_buffer_poll_wait(struct trace_buffer *buffer, int cpu,
- 			  struct file *filp, poll_table *poll_table, int full)
- {
- 	struct ring_buffer_per_cpu *cpu_buffer;
--	struct rb_irq_work *work;
-+	struct rb_irq_work *rbwork;
- 
- 	if (cpu == RING_BUFFER_ALL_CPUS) {
--		work = &buffer->irq_work;
-+		rbwork = &buffer->irq_work;
- 		full = 0;
- 	} else {
- 		if (!cpumask_test_cpu(cpu, buffer->cpumask))
- 			return EPOLLERR;
- 
- 		cpu_buffer = buffer->buffers[cpu];
--		work = &cpu_buffer->irq_work;
-+		rbwork = &cpu_buffer->irq_work;
- 	}
- 
- 	if (full) {
--		poll_wait(filp, &work->full_waiters, poll_table);
--		work->full_waiters_pending = true;
-+		unsigned long flags;
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_NVIDIA, 0x0ab8, nvidia_ion_ahci_fixup);
 +
-+		poll_wait(filp, &rbwork->full_waiters, poll_table);
-+
-+		raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
-+		rbwork->full_waiters_pending = true;
- 		if (!cpu_buffer->shortest_full ||
- 		    cpu_buffer->shortest_full > full)
- 			cpu_buffer->shortest_full = full;
-+		raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
- 	} else {
--		poll_wait(filp, &work->waiters, poll_table);
--		work->waiters_pending = true;
-+		poll_wait(filp, &rbwork->waiters, poll_table);
-+		rbwork->waiters_pending = true;
- 	}
++static void rom_bar_overlap_defect(struct pci_dev *dev)
++{
++	pci_info(dev, "working around ROM BAR overlap defect\n");
++	dev->rom_bar_overlap = 1;
++}
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1533, rom_bar_overlap_defect);
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1536, rom_bar_overlap_defect);
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1537, rom_bar_overlap_defect);
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1538, rom_bar_overlap_defect);
+diff --git a/drivers/pci/setup-res.c b/drivers/pci/setup-res.c
+index 875d50c16f19d..b492e67c3d871 100644
+--- a/drivers/pci/setup-res.c
++++ b/drivers/pci/setup-res.c
+@@ -75,12 +75,16 @@ static void pci_std_update_resource(struct pci_dev *dev, int resno)
+ 		 * as zero when disabled, so don't update ROM BARs unless
+ 		 * they're enabled.  See
+ 		 * https://lore.kernel.org/r/43147B3D.1030309@vc.cvut.cz/
++		 * But we must update ROM BAR for buggy devices where even a
++		 * disabled ROM can conflict with other BARs.
+ 		 */
+-		if (!(res->flags & IORESOURCE_ROM_ENABLE))
++		if (!(res->flags & IORESOURCE_ROM_ENABLE) &&
++		    !dev->rom_bar_overlap)
+ 			return;
  
- 	/*
+ 		reg = dev->rom_base_reg;
+-		new |= PCI_ROM_ADDRESS_ENABLE;
++		if (res->flags & IORESOURCE_ROM_ENABLE)
++			new |= PCI_ROM_ADDRESS_ENABLE;
+ 	} else
+ 		return;
+ 
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 75f29838d25cf..5b24a6fbfa0be 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -454,6 +454,7 @@ struct pci_dev {
+ 	unsigned int	link_active_reporting:1;/* Device capable of reporting link active */
+ 	unsigned int	no_vf_scan:1;		/* Don't scan for VFs after IOV enablement */
+ 	unsigned int	no_command_memory:1;	/* No PCI_COMMAND_MEMORY */
++	unsigned int	rom_bar_overlap:1;	/* ROM BAR disable broken */
+ 	pci_dev_flags_t dev_flags;
+ 	atomic_t	enable_cnt;	/* pci_enable_device has been called */
+ 
 -- 
 2.43.0
 
