@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E342EAE5;
-	Thu, 11 Apr 2024 10:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5826D1474AB;
+	Thu, 11 Apr 2024 10:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832136; cv=none; b=WfFtgqOB6OSfpp3+HmuJNCp/o0nJwKHDz0W1owJ8j9zVMnSroLRYaJhwwoy/PZU8iah8FMY8W6kT22CLQj8HJDhFhlmMl3X/tcKx3nE0WMKJ/RGXUCq7mgWz3JYtt0xkL8ElwvjBkVHC48F2XXq6C8Qm9utRpePUmzh+C6A/dsk=
+	t=1712832139; cv=none; b=sprVRvDVjArtwv5wkX+BQSynSmmjEL6i36qY7DWMxxTZRLXYSk8gs4+9ank8tMAv/PW+DaCE5EePKFWMDBZG63TAp2TSEHWIOs98c7q56SuofJKD2MQqozCy76nBNE7Odo/hnIFRVpJuQYf297NFziWN8mpHIPBCYFZLAGQ9M4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832136; c=relaxed/simple;
-	bh=9YI7ZPpSleJ7mzgUZejWQFQKx8m4T2JXF9664DbuLoU=;
+	s=arc-20240116; t=1712832139; c=relaxed/simple;
+	bh=J7q3Zxr9ADRzFiZ77twDCX8xurDOdHWWd5mDvmmIK10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJ7SHRiBQaJyBnmRzJmkJ1o8muLZrhIQLc2iSL9/r2PijOeG1KcXVGLvMUTId6RjqWoVFDzuB4qHw+DlmUvBJ12+kcbuanIAtINFhc3MTkDM49RZGeC/gtNcPdE6biGjCcfZQPIHzNdRZ5beneOIfV/j0eqZIxo2uw45Pge9WRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mAqglkjF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=B1rANMlvdgCeUxzteX3H+gJHwM9KbxDiXlzQCLPB/rYNNaZyBtEEdYTDe/I+eK6okM2Io/Q711T6/HfAstHsiILLIyEX2N6jj/fTyIkLuurXf1EIkyAfGhhLOtWj20+CQJwCDc/lb0fxN5+BrAs0JdRIN7UMtlQ493Y/rQldzCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TE6hgD01; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAqglkjF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB876C433C7;
-	Thu, 11 Apr 2024 10:42:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TE6hgD01"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A80C433C7;
+	Thu, 11 Apr 2024 10:42:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832136;
-	bh=9YI7ZPpSleJ7mzgUZejWQFQKx8m4T2JXF9664DbuLoU=;
+	s=korg; t=1712832139;
+	bh=J7q3Zxr9ADRzFiZ77twDCX8xurDOdHWWd5mDvmmIK10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mAqglkjFyXw3JClwgedb2ZX3+aCzTcDnA898NnFhmSbDjWStOjfNFaGbrl7TywEDc
-	 4Wj+6HMsf5qDyb+NzXhNpJMujuk6K/zQREW4XGVR0vI4h7zdHx4j9q7byuvqmJ+4M+
-	 /NlsIHpfr1OTtSx4Dm52MhwKaqSpwv1Mz5W6Ag9I=
+	b=TE6hgD01L7WkKX61aYh+iel/kulLp6x6u6nbLxAiUFnMTU1nVFAKPG1Vl2AT2FL4K
+	 QQ/6aHLNu41FrpTBe/4qRUp41N55bw7bFc/plEwVOPmBQt9R65mk7tX/kVdOyJDNFO
+	 bwdOS3m9W4dzcxSVstvdSH+K6yTxymX2kdXSB9wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
-	Daniel Sneddon <daniel.sneddon@linux.intel.com>
-Subject: [PATCH 5.10 242/294] objtool: Add asm version of STACK_FRAME_NON_STANDARD
-Date: Thu, 11 Apr 2024 11:56:45 +0200
-Message-ID: <20240411095442.858518783@linuxfoundation.org>
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 243/294] wifi: ath9k: fix LNA selection in ath_ant_try_scan()
+Date: Thu, 11 Apr 2024 11:56:46 +0200
+Message-ID: <20240411095442.887348301@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -44,77 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@redhat.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-commit 081df94301e317e84c3413686043987da2c3e39d upstream.
+[ Upstream commit d6b27eb997ef9a2aa51633b3111bc4a04748e6d3 ]
 
-To be used for adding asm functions to the ignore list.  The "aw" is
-needed to help the ELF section metadata match GCC-created sections.
-Otherwise the linker creates duplicate sections instead of combining
-them.
+In 'ath_ant_try_scan()', (most likely) the 2nd LNA's signal
+strength should be used in comparison against RSSI when
+selecting first LNA as the main one. Compile tested only.
 
-Signed-off-by: Josh Poimboeuf <jpoimboe@redhat.com>
-Link: https://lore.kernel.org/r/8faa476f9a5ac89af27944ec184c89f95f3c6c49.1611263462.git.jpoimboe@redhat.com
-Signed-off-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20231211172502.25202-1-dmantipov@yandex.ru
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/objtool.h       |    8 ++++++++
- tools/include/linux/objtool.h |    8 ++++++++
- 2 files changed, 16 insertions(+)
+ drivers/net/wireless/ath/ath9k/antenna.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/objtool.h
-+++ b/include/linux/objtool.h
-@@ -141,6 +141,12 @@ struct unwind_hint {
- 	.popsection
- .endm
- 
-+.macro STACK_FRAME_NON_STANDARD func:req
-+	.pushsection .discard.func_stack_frame_non_standard, "aw"
-+		.long \func - .
-+	.popsection
-+.endm
-+
- #endif /* __ASSEMBLY__ */
- 
- #else /* !CONFIG_STACK_VALIDATION */
-@@ -158,6 +164,8 @@ struct unwind_hint {
- .endm
- .macro ANNOTATE_NOENDBR
- .endm
-+.macro STACK_FRAME_NON_STANDARD func:req
-+.endm
- #endif
- 
- #endif /* CONFIG_STACK_VALIDATION */
---- a/tools/include/linux/objtool.h
-+++ b/tools/include/linux/objtool.h
-@@ -141,6 +141,12 @@ struct unwind_hint {
- 	.popsection
- .endm
- 
-+.macro STACK_FRAME_NON_STANDARD func:req
-+	.pushsection .discard.func_stack_frame_non_standard, "aw"
-+		.long \func - .
-+	.popsection
-+.endm
-+
- #endif /* __ASSEMBLY__ */
- 
- #else /* !CONFIG_STACK_VALIDATION */
-@@ -158,6 +164,8 @@ struct unwind_hint {
- .endm
- .macro ANNOTATE_NOENDBR
- .endm
-+.macro STACK_FRAME_NON_STANDARD func:req
-+.endm
- #endif
- 
- #endif /* CONFIG_STACK_VALIDATION */
+diff --git a/drivers/net/wireless/ath/ath9k/antenna.c b/drivers/net/wireless/ath/ath9k/antenna.c
+index 988222cea9dfe..acc84e6711b0e 100644
+--- a/drivers/net/wireless/ath/ath9k/antenna.c
++++ b/drivers/net/wireless/ath/ath9k/antenna.c
+@@ -643,7 +643,7 @@ static void ath_ant_try_scan(struct ath_ant_comb *antcomb,
+ 				conf->main_lna_conf = ATH_ANT_DIV_COMB_LNA1;
+ 				conf->alt_lna_conf = ATH_ANT_DIV_COMB_LNA1_PLUS_LNA2;
+ 			} else if (antcomb->rssi_sub >
+-				   antcomb->rssi_lna1) {
++				   antcomb->rssi_lna2) {
+ 				/* set to A-B */
+ 				conf->main_lna_conf = ATH_ANT_DIV_COMB_LNA1;
+ 				conf->alt_lna_conf = ATH_ANT_DIV_COMB_LNA1_MINUS_LNA2;
+-- 
+2.43.0
+
 
 
