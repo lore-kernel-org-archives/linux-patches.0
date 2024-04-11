@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57556BB29;
-	Thu, 11 Apr 2024 10:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0DB6BB29;
+	Thu, 11 Apr 2024 10:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832212; cv=none; b=NlI8NGk/x8ZbGC4sNb/IR8evVA06iTXmjBV8viT16xqXFgBtcXrCf/l6RbfVCVtOQy9zHWq0IpYH1wxxknVnE+pzgMak63lgc06zcbhwYftloZ79Lr3GN92C42APXITPX01fo3NDpVTtFZm40FeOONS+RNkFmUiKuOfRjDKzU4Q=
+	t=1712832215; cv=none; b=jY8Hn43kWgoHMvBFuqJdcLSZ2929ff047cuDaWUwLd0OEbV2tU4doA4H76jAASMOl0WWzqYplW/VhqMOWOlJRiwggI8v9eiaV5RI8EBDu6SCUpuANdVgLUybngXxQKW2iWSq6D2fnZc5b2xUyvZ3a6CqpLAAl7ta96kScYBO6sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832212; c=relaxed/simple;
-	bh=wT7ecDMSLLcdI91XgzVo/SUa2zPUwqDg/DZ1Ft0x61M=;
+	s=arc-20240116; t=1712832215; c=relaxed/simple;
+	bh=LoA4Z59znQ5Qt4hcUTqWqNsFrzlY4BqODf7Pu2AwDwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMDYPzyWM97X1aVd20gsPQ6/Wp6Ku87aDxvJy+bHzG8nlzpqaOebpZYQja/9kC9MmcjezwFVsf3tXwPRlBwgjTwZc+jath5RW4uvRnX30vkz7tLiQdMHHosDb2SOBVoOvwPFYnpbq/ytv3BzCv6KHAlJlMIzR90ZeYD4q2XmeM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftVIaip0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K5PNCuFtgMc1ZDHRZ8VVlWmNCOmNPswFtxyqG006Xuf3K2CKd64kRvwgxrg50cR4ta8ekSx1hu/Tz0C0/MTr/WgvMUV14xRcYpXQPA54H1PRmCfflaT7444Ce/IzdpChBuWfldx5QVI9gbYrsu5qyLz6HhDzrN+wg3iXlDGTr/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ly6cjQ18; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftVIaip0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6042DC433C7;
-	Thu, 11 Apr 2024 10:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ly6cjQ18"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F75C433F1;
+	Thu, 11 Apr 2024 10:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832212;
-	bh=wT7ecDMSLLcdI91XgzVo/SUa2zPUwqDg/DZ1Ft0x61M=;
+	s=korg; t=1712832215;
+	bh=LoA4Z59znQ5Qt4hcUTqWqNsFrzlY4BqODf7Pu2AwDwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ftVIaip07AI8ekUHLWAic2i47BM9c1va1KVSYcM1PbPXlTylHrYumvodv6rchbKvE
-	 1fSaI9h5ii88s3mSRIfdLUJTVptDw7jGDA32GVoUEF63JDJrtDT9kozSR2+kHwciuS
-	 8wusw9Pz6kEkrRXUbBrfDpKOoTvPAL2XsjRmYkXc=
+	b=ly6cjQ18EHZ5K7coutV1h0AI6JZk6t/LqR2TUQDnP030jHtE/JhKJEXjMBXNeib7n
+	 70GtHqKZccAg6m8A0I0jd0IZc/9BPK+9VHzH+3Y8dVVlpXTU+tZqYW+SkPfNXiJsbC
+	 ua1htiT+5g+NWT5kDkuEFpVtxVixqDe4ZFSxv97w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Aric Cyr <aric.cyr@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 230/294] scsi: mylex: Fix sysfs buffer lengths
-Date: Thu, 11 Apr 2024 11:56:33 +0200
-Message-ID: <20240411095442.509006742@linuxfoundation.org>
+Subject: [PATCH 5.10 266/294] drm/amd/display: Fix nanosec stat overflow
+Date: Thu, 11 Apr 2024 11:57:09 +0200
+Message-ID: <20240411095443.562888849@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -52,187 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Aric Cyr <aric.cyr@amd.com>
 
-[ Upstream commit 1197c5b2099f716b3de327437fb50900a0b936c9 ]
+[ Upstream commit 14d68acfd04b39f34eea7bea65dda652e6db5bf6 ]
 
-The myrb and myrs drivers use an odd way of implementing their sysfs files,
-calling snprintf() with a fixed length of 32 bytes to print into a page
-sized buffer. One of the strings is actually longer than 32 bytes, which
-clang can warn about:
+[Why]
+Nanosec stats can overflow on long running systems potentially causing
+statistic logging issues.
 
-drivers/scsi/myrb.c:1906:10: error: 'snprintf' will always be truncated; specified size is 32, but format string expands to at least 34 [-Werror,-Wformat-truncation]
-drivers/scsi/myrs.c:1089:10: error: 'snprintf' will always be truncated; specified size is 32, but format string expands to at least 34 [-Werror,-Wformat-truncation]
+[How]
+Use 64bit types for nanosec stats to ensure no overflow.
 
-These could all be plain sprintf() without a length as the buffer is always
-long enough. On the other hand, sysfs files should not be overly long
-either, so just double the length to make sure the longest strings don't
-get truncated here.
-
-Fixes: 77266186397c ("scsi: myrs: Add Mylex RAID controller (SCSI interface)")
-Fixes: 081ff398c56c ("scsi: myrb: Add Mylex RAID controller (block interface)")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20240326223825.4084412-8-arnd@kernel.org
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Aric Cyr <aric.cyr@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/myrb.c | 20 ++++++++++----------
- drivers/scsi/myrs.c | 24 ++++++++++++------------
- 2 files changed, 22 insertions(+), 22 deletions(-)
+ drivers/gpu/drm/amd/display/modules/inc/mod_stats.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/myrb.c b/drivers/scsi/myrb.c
-index ad17c2beaacad..d4c3f00faf1ba 100644
---- a/drivers/scsi/myrb.c
-+++ b/drivers/scsi/myrb.c
-@@ -1803,9 +1803,9 @@ static ssize_t raid_state_show(struct device *dev,
+diff --git a/drivers/gpu/drm/amd/display/modules/inc/mod_stats.h b/drivers/gpu/drm/amd/display/modules/inc/mod_stats.h
+index 4220fd8fdd60c..54cd86060f4d6 100644
+--- a/drivers/gpu/drm/amd/display/modules/inc/mod_stats.h
++++ b/drivers/gpu/drm/amd/display/modules/inc/mod_stats.h
+@@ -57,10 +57,10 @@ void mod_stats_update_event(struct mod_stats *mod_stats,
+ 		unsigned int length);
  
- 		name = myrb_devstate_name(ldev_info->state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       ldev_info->state);
- 	} else {
- 		struct myrb_pdev_state *pdev_info = sdev->hostdata;
-@@ -1824,9 +1824,9 @@ static ssize_t raid_state_show(struct device *dev,
- 		else
- 			name = myrb_devstate_name(pdev_info->state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       pdev_info->state);
- 	}
- 	return ret;
-@@ -1914,11 +1914,11 @@ static ssize_t raid_level_show(struct device *dev,
+ void mod_stats_update_flip(struct mod_stats *mod_stats,
+-		unsigned long timestamp_in_ns);
++		unsigned long long timestamp_in_ns);
  
- 		name = myrb_raidlevel_name(ldev_info->raid_level);
- 		if (!name)
--			return snprintf(buf, 32, "Invalid (%02X)\n",
-+			return snprintf(buf, 64, "Invalid (%02X)\n",
- 					ldev_info->state);
--		return snprintf(buf, 32, "%s\n", name);
-+		return snprintf(buf, 64, "%s\n", name);
- 	}
--	return snprintf(buf, 32, "Physical Drive\n");
-+	return snprintf(buf, 64, "Physical Drive\n");
- }
- static DEVICE_ATTR_RO(raid_level);
+ void mod_stats_update_vupdate(struct mod_stats *mod_stats,
+-		unsigned long timestamp_in_ns);
++		unsigned long long timestamp_in_ns);
  
-@@ -1931,15 +1931,15 @@ static ssize_t rebuild_show(struct device *dev,
- 	unsigned char status;
- 
- 	if (sdev->channel < myrb_logical_channel(sdev->host))
--		return snprintf(buf, 32, "physical device - not rebuilding\n");
-+		return snprintf(buf, 64, "physical device - not rebuilding\n");
- 
- 	status = myrb_get_rbld_progress(cb, &rbld_buf);
- 
- 	if (rbld_buf.ldev_num != sdev->id ||
- 	    status != MYRB_STATUS_SUCCESS)
--		return snprintf(buf, 32, "not rebuilding\n");
-+		return snprintf(buf, 64, "not rebuilding\n");
- 
--	return snprintf(buf, 32, "rebuilding block %u of %u\n",
-+	return snprintf(buf, 64, "rebuilding block %u of %u\n",
- 			rbld_buf.ldev_size - rbld_buf.blocks_left,
- 			rbld_buf.ldev_size);
- }
-diff --git a/drivers/scsi/myrs.c b/drivers/scsi/myrs.c
-index e6a6678967e52..857a73e856a14 100644
---- a/drivers/scsi/myrs.c
-+++ b/drivers/scsi/myrs.c
-@@ -950,9 +950,9 @@ static ssize_t raid_state_show(struct device *dev,
- 
- 		name = myrs_devstate_name(ldev_info->dev_state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       ldev_info->dev_state);
- 	} else {
- 		struct myrs_pdev_info *pdev_info;
-@@ -961,9 +961,9 @@ static ssize_t raid_state_show(struct device *dev,
- 		pdev_info = sdev->hostdata;
- 		name = myrs_devstate_name(pdev_info->dev_state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       pdev_info->dev_state);
- 	}
- 	return ret;
-@@ -1069,13 +1069,13 @@ static ssize_t raid_level_show(struct device *dev,
- 		ldev_info = sdev->hostdata;
- 		name = myrs_raid_level_name(ldev_info->raid_level);
- 		if (!name)
--			return snprintf(buf, 32, "Invalid (%02X)\n",
-+			return snprintf(buf, 64, "Invalid (%02X)\n",
- 					ldev_info->dev_state);
- 
- 	} else
- 		name = myrs_raid_level_name(MYRS_RAID_PHYSICAL);
- 
--	return snprintf(buf, 32, "%s\n", name);
-+	return snprintf(buf, 64, "%s\n", name);
- }
- static DEVICE_ATTR_RO(raid_level);
- 
-@@ -1089,7 +1089,7 @@ static ssize_t rebuild_show(struct device *dev,
- 	unsigned char status;
- 
- 	if (sdev->channel < cs->ctlr_info->physchan_present)
--		return snprintf(buf, 32, "physical device - not rebuilding\n");
-+		return snprintf(buf, 64, "physical device - not rebuilding\n");
- 
- 	ldev_info = sdev->hostdata;
- 	ldev_num = ldev_info->ldev_num;
-@@ -1101,11 +1101,11 @@ static ssize_t rebuild_show(struct device *dev,
- 		return -EIO;
- 	}
- 	if (ldev_info->rbld_active) {
--		return snprintf(buf, 32, "rebuilding block %zu of %zu\n",
-+		return snprintf(buf, 64, "rebuilding block %zu of %zu\n",
- 				(size_t)ldev_info->rbld_lba,
- 				(size_t)ldev_info->cfg_devsize);
- 	} else
--		return snprintf(buf, 32, "not rebuilding\n");
-+		return snprintf(buf, 64, "not rebuilding\n");
- }
- 
- static ssize_t rebuild_store(struct device *dev,
-@@ -1194,7 +1194,7 @@ static ssize_t consistency_check_show(struct device *dev,
- 	unsigned char status;
- 
- 	if (sdev->channel < cs->ctlr_info->physchan_present)
--		return snprintf(buf, 32, "physical device - not checking\n");
-+		return snprintf(buf, 64, "physical device - not checking\n");
- 
- 	ldev_info = sdev->hostdata;
- 	if (!ldev_info)
-@@ -1202,11 +1202,11 @@ static ssize_t consistency_check_show(struct device *dev,
- 	ldev_num = ldev_info->ldev_num;
- 	status = myrs_get_ldev_info(cs, ldev_num, ldev_info);
- 	if (ldev_info->cc_active)
--		return snprintf(buf, 32, "checking block %zu of %zu\n",
-+		return snprintf(buf, 64, "checking block %zu of %zu\n",
- 				(size_t)ldev_info->cc_lba,
- 				(size_t)ldev_info->cfg_devsize);
- 	else
--		return snprintf(buf, 32, "not checking\n");
-+		return snprintf(buf, 64, "not checking\n");
- }
- 
- static ssize_t consistency_check_store(struct device *dev,
+ void mod_stats_update_freesync(struct mod_stats *mod_stats,
+ 		unsigned int v_total_min,
 -- 
 2.43.0
 
