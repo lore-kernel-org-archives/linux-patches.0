@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5182EAE5;
-	Thu, 11 Apr 2024 10:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385A62EAE5;
+	Thu, 11 Apr 2024 10:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829658; cv=none; b=Kg9T6x0t84rty49bCmhDSEUB9QRG7WZlL/waQp2iVF7o3ph0y5//TnS0rSapI0MDOQvu1gA0VIDCTkJsVGDPnzyEsAy77S60ekJP1FHAgzAKWguVUKyNuWqJQfVux4KOth+Zzb7tg09jJGNo883AGavhStidX6eyheE42YjuJ3Y=
+	t=1712829661; cv=none; b=bYc+JV0yyubPxGa36KXugIl7udOcMTCBNKGIp9aRK50rfv1wI/sf5J1HRA6EYwl8XftiaAIeq4/AfOGaJ2yQLELutc9zEyMYs+yUjfAvslp3Wid1rLH8fclPOghD9zmRCdUlP/oH+5H+XoZGBqNXV8eFHCs7gTX5cKyyAeEhKZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829658; c=relaxed/simple;
-	bh=SLiohcervRLDneKut0KfdMDc+0rEcJDOFGfLHBzwhTY=;
+	s=arc-20240116; t=1712829661; c=relaxed/simple;
+	bh=Y1UjfouNKSjpl+eU3HV6uYryuJ7yOpHX9PvZN1I9xSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fNbLP9Kx/Ug0yFvQmhXNJIQBkQAtaWCFAwPDYb+LI86FHCT9u60qNL+nw90Yj4WEDEgrPq9dTdz4+bcqX+0dAzYjLKr4V701BXBRsfvSmDVh5SDKKvG5FqtlLmPM5oY2aIw88y8cOKDV1U+nSEUun/qk7MCFkPSNYRmjjV+aCPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtHn7XyE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=klKN4eYeemfRqOuIdmzl8kMjTSZXeDBeeARDlpyg+1fzG3i2d7F/milVCBtGeh4i+kYMFXq5oZBqvp/mrvUXvmvDk8LaWUNAwP+UHhMP5T88K8li/L9kaZHIHR40sZ0zr8agnb42xZWwpKyVsdLs3anB9IlSh5QtU/AQLYgJoUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLccYwcY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtHn7XyE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7753C433F1;
-	Thu, 11 Apr 2024 10:00:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLccYwcY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75C3C433C7;
+	Thu, 11 Apr 2024 10:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829658;
-	bh=SLiohcervRLDneKut0KfdMDc+0rEcJDOFGfLHBzwhTY=;
+	s=korg; t=1712829661;
+	bh=Y1UjfouNKSjpl+eU3HV6uYryuJ7yOpHX9PvZN1I9xSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qtHn7XyE0DWPwzs4nXiUzeqBnIF2r3wbEqdvBZhz2twp8zkCWXyzq7fBAljjQnNky
-	 ScFLxo6qFzRT5d5d5oUfb5HrLUJMkVTfCveG/A85K3AH6yG6e1V17RwIWRgdenEymE
-	 2OQICVvgBqrwbdh93NTNmPMwTk2d7EfeVdT5lWV4=
+	b=yLccYwcY6FpBuLHQwLsT0pY3JNrD62ImSgzpcbV2l0UR1Tyoj/yuwPMrZguzJFpAS
+	 CvHz8oMsKG8+5PW+BJNlBd+Nm2aDiTuBuc/+6H4SNW30UViSc9o8BU7dUD/34Z5/i8
+	 ygia4d0v7ZuFE6cC8W/QpoTTr9h/PbOlK0q8pTXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Qiang Zhang <qiang4.zhang@intel.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 061/175] drm/vc4: hdmi: do not return negative values from .get_modes()
-Date: Thu, 11 Apr 2024 11:54:44 +0200
-Message-ID: <20240411095421.402610830@linuxfoundation.org>
+Subject: [PATCH 4.19 062/175] memtest: use {READ,WRITE}_ONCE in memory scanning
+Date: Thu, 11 Apr 2024 11:54:45 +0200
+Message-ID: <20240411095421.432750450@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,37 +55,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Qiang Zhang <qiang4.zhang@intel.com>
 
-[ Upstream commit abf493988e380f25242c1023275c68bd3579c9ce ]
+[ Upstream commit 82634d7e24271698e50a3ec811e5f50de790a65f ]
 
-The .get_modes() hooks aren't supposed to return negative error
-codes. Return 0 for no modes, whatever the reason.
+memtest failed to find bad memory when compiled with clang.  So use
+{WRITE,READ}_ONCE to access memory to avoid compiler over optimization.
 
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: stable@vger.kernel.org
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/dcda6d4003e2c6192987916b35c7304732800e08.1709913674.git.jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://lkml.kernel.org/r/20240312080422.691222-1-qiang4.zhang@intel.com
+Signed-off-by: Qiang Zhang <qiang4.zhang@intel.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hdmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/memtest.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index 1161662664577..013dfc63c824e 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -276,7 +276,7 @@ static int vc4_hdmi_connector_get_modes(struct drm_connector *connector)
- 	edid = drm_get_edid(connector, vc4->hdmi->ddc);
- 	cec_s_phys_addr_from_edid(vc4->hdmi->cec_adap, edid);
- 	if (!edid)
--		return -ENODEV;
-+		return 0;
+diff --git a/mm/memtest.c b/mm/memtest.c
+index f53ace709ccd8..d407373f225b4 100644
+--- a/mm/memtest.c
++++ b/mm/memtest.c
+@@ -46,10 +46,10 @@ static void __init memtest(u64 pattern, phys_addr_t start_phys, phys_addr_t size
+ 	last_bad = 0;
  
- 	vc4_encoder->hdmi_monitor = drm_detect_hdmi_monitor(edid);
+ 	for (p = start; p < end; p++)
+-		*p = pattern;
++		WRITE_ONCE(*p, pattern);
  
+ 	for (p = start; p < end; p++, start_phys_aligned += incr) {
+-		if (*p == pattern)
++		if (READ_ONCE(*p) == pattern)
+ 			continue;
+ 		if (start_phys_aligned == last_bad + incr) {
+ 			last_bad += incr;
 -- 
 2.43.0
 
