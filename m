@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C941A13FD94;
-	Thu, 11 Apr 2024 10:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7626013FD94;
+	Thu, 11 Apr 2024 10:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831187; cv=none; b=IufbinhK8G7k7PVUGKNmuX8VHzrL0dCPfScDKZ6yEc3mcKRt3MSwuMBlrQxNebMudunkB2INk+kOKZgusKQVGbqt8trH1t12S1qkFgYZo7fM8W3PTtNi5EXW+UlKBBHcwkDwl/1NYQBVT0DCGTOSgjAcOJbG5w/aRH4bGG9eAFs=
+	t=1712831190; cv=none; b=KKSYjwz8ajnc0vnXFHdZ5r5nz5Z1G7r/ZoeD/2a95BfA3G8ORTrcmBQBgOO1NLoB6ZNLRUOqvQATijsXzQJ/ama5aqF9cE2Y92YhxzVNNMW7I2MedEqUU4rHb8ciyZpaiYk+KR6TeexeAAR0GXO3Zl05RIgWOUMK/L9wDFEvbbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831187; c=relaxed/simple;
-	bh=/L0dVy2/VGSLG68m6j7T+Bw2mLeaN+VgVmMS8FlL+qM=;
+	s=arc-20240116; t=1712831190; c=relaxed/simple;
+	bh=dc7Ii/NEqsqNS8O3DMcEw34zeALAg2bumrEjymaIm04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pWtaRi4APYnLyvqexW/p7zywwyNuNEp21Q8uHQ4EIeVJ9044rg+NB4HVvuvRfS4t8BsQbjmYI2ncY8/DQP8T+SzP4PMKEFlcvtC04dPtOaQpI013aVaw8LVF5KSCYwelMAcx5DSNF03MXP7B8zmNL0loafTlgNDP9k9JD1ekAe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTB5swJa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VEw4eXsrJM/YazeI9mlpo66YKIdT1K2WY31se9yRGphYhDcOClp5fHH4ON67lfErN9UFNYLpJOGiiWn2a/uPXYIGrL8FoRkmoOFl77uVGeZMtnaKPn1mK4UYiKcwiHC/Eb1yeHth/KA5N6JFAHmnw4pLJplwm9UAuNRMMpjo2Cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTpa7FT0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTB5swJa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05185C433F1;
-	Thu, 11 Apr 2024 10:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTpa7FT0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECDBC433F1;
+	Thu, 11 Apr 2024 10:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831187;
-	bh=/L0dVy2/VGSLG68m6j7T+Bw2mLeaN+VgVmMS8FlL+qM=;
+	s=korg; t=1712831190;
+	bh=dc7Ii/NEqsqNS8O3DMcEw34zeALAg2bumrEjymaIm04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yTB5swJaZ0YspunKwE0pjoshG8r6U/9vk7z7f3I8sT3NiNCQ7gIavE8oMBWfbIsJt
-	 xBgROA2FiZQTUxjxRFOXhEOoaDXSk26yO/PzQl9cV63YCSqlAxXTgct45ZKptSxYUb
-	 sCS47YkWBY/3ELSbYXcvvQUwlxl25Pv3WP9WPqIg=
+	b=LTpa7FT0rsm8UYmbT+Sc04IdzzOdibYLuNkNURp1mzB+Vu3mKmTvgK5bqnpKPFR1P
+	 ps5aqdFgKV4noF2hWwJfz+GPOTsp04fsqew7Alc6O/QEKb0r9MZEM9wUZxYCoPlksz
+	 JdKiKLlt/vIUE6DOOVdUuKJ6+gdA5UjEP52Dz9FA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/114] btrfs: handle chunk tree lookup error in btrfs_relocate_sys_chunks()
-Date: Thu, 11 Apr 2024 11:56:05 +0200
-Message-ID: <20240411095418.031907626@linuxfoundation.org>
+Subject: [PATCH 6.6 021/114] ionic: set adminq irq affinity
+Date: Thu, 11 Apr 2024 11:55:48 +0200
+Message-ID: <20240411095417.508920247@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095416.853744210@linuxfoundation.org>
 References: <20240411095416.853744210@linuxfoundation.org>
@@ -52,54 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 7411055db5ce64f836aaffd422396af0075fdc99 ]
+[ Upstream commit c699f35d658f3c21b69ed24e64b2ea26381e941d ]
 
-The unhandled case in btrfs_relocate_sys_chunks() loop is a corruption,
-as it could be caused only by two impossible conditions:
+We claim to have the AdminQ on our irq0 and thus cpu id 0,
+but we need to be sure we set the affinity hint to try to
+keep it there.
 
-- at first the search key is set up to look for a chunk tree item, with
-  offset -1, this is an inexact search and the key->offset will contain
-  the correct offset upon a successful search, a valid chunk tree item
-  cannot have an offset -1
-
-- after first successful search, the found_key corresponds to a chunk
-  item, the offset is decremented by 1 before the next loop, it's
-  impossible to find a chunk item there due to alignment and size
-  constraints
-
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 36adbb3d096a9..453d037987fb3 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -3352,7 +3352,17 @@ static int btrfs_relocate_sys_chunks(struct btrfs_fs_info *fs_info)
- 			mutex_unlock(&fs_info->reclaim_bgs_lock);
- 			goto error;
- 		}
--		BUG_ON(ret == 0); /* Corruption */
-+		if (ret == 0) {
-+			/*
-+			 * On the first search we would find chunk tree with
-+			 * offset -1, which is not possible. On subsequent
-+			 * loops this would find an existing item on an invalid
-+			 * offset (one less than the previous one, wrong
-+			 * alignment and size).
-+			 */
-+			ret = -EUCLEAN;
-+			goto error;
-+		}
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+index adb0f9b01bb1e..4f05cddc65cb4 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+@@ -3468,9 +3468,12 @@ static int ionic_lif_adminq_init(struct ionic_lif *lif)
  
- 		ret = btrfs_previous_item(chunk_root, path, key.objectid,
- 					  key.type);
+ 	napi_enable(&qcq->napi);
+ 
+-	if (qcq->flags & IONIC_QCQ_F_INTR)
++	if (qcq->flags & IONIC_QCQ_F_INTR) {
++		irq_set_affinity_hint(qcq->intr.vector,
++				      &qcq->intr.affinity_mask);
+ 		ionic_intr_mask(idev->intr_ctrl, qcq->intr.index,
+ 				IONIC_INTR_MASK_CLEAR);
++	}
+ 
+ 	qcq->flags |= IONIC_QCQ_F_INITED;
+ 
 -- 
 2.43.0
 
