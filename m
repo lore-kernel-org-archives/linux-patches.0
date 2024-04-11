@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C8A147C7E;
-	Thu, 11 Apr 2024 10:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205E71474CF;
+	Thu, 11 Apr 2024 10:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831483; cv=none; b=NnuhsP7YoCsnsb9ArQZTdTBqq0sV0jeovVZZ4uc/reaOlEmmFlaVOSWyfeujwx8xvmCY3CS512sZFChR+yH/MK4Mt2+E7/G4O+is5Wzk+8brQ0zRydMg9akJ5u/BNXXfk1X+hj+/sj2yNGhpgMnvH6fnRvp4gXYEEzcgXU4XuXY=
+	t=1712831486; cv=none; b=ZACbIBak/n9GyBLmsHVoGvXA/p7V3uGdQ+dhNAa+wADvP/YFX8D6Y8ENmxAOfbCxa53Yy+PRLursFWLhEIznN++/3qg/pERk9A4wCgKpqBt4r2j97XgU/E6E8UlD2WuDrODxg1oIqKTmocjzn6N3+SLLVRzeeER1MSzneSprz08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831483; c=relaxed/simple;
-	bh=WTMRbtje6f2gSETP4j55+hCk36EzdjWZ/+VaBDXglAI=;
+	s=arc-20240116; t=1712831486; c=relaxed/simple;
+	bh=RdIF4nHouyLOKQA2ucreemTGRrrb1T+FjfDV5xhHCZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDbXcLukEhK0VJIwBs80UKYybOxGf0cUrAGu6AYnUteYSQVRof/sMzFfsMBBV9F3BVQi34G3x3dp8DsgetXSmnOxsSQcDdopx0K26U7xDK/Fs13bln6mE9ojT35YbIJG7et0upSOwOvsJBfmNRpfiBh9Pmy4AUItC8M4guIdiHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAjtK6b7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mc92XbrtjopcnY7fNlKOa7yil0Z5MUExznFaR4BCHHsSijL+QVsrIiy9DkLeBvwq5eR7UJH/bU70As8aahpTavvrJz0Gg2dGUWwDzxV16fMnId1qZ0HhhKkcOZnNYnfmn8opIW4SDY1LWkGz8uaKAyHyba57wQLALT4uAgLRXC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lS1RdoBG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAjtK6b7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB25C433F1;
-	Thu, 11 Apr 2024 10:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lS1RdoBG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C6EC433F1;
+	Thu, 11 Apr 2024 10:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831483;
-	bh=WTMRbtje6f2gSETP4j55+hCk36EzdjWZ/+VaBDXglAI=;
+	s=korg; t=1712831486;
+	bh=RdIF4nHouyLOKQA2ucreemTGRrrb1T+FjfDV5xhHCZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZAjtK6b7IGcIGW7SCnj09NQNl4OSRG27cRDZuxWoV9X84P8pEdDOI193YYMyfu/eK
-	 qPMBOBS05BVjsTe6h17surxxdNZ0uLZzEwNZIHpd3z5ZyEsITvnxKCaIQFUVVjtugo
-	 2wdK/91bmk1cbr3yrBKdCTKA44vAn84kNxtwGwGI=
+	b=lS1RdoBGmfB0L7VHt+Y5H4RJWDBrHodccBySWUTDmrU8PBE58lEDcsKxzVNIoG7fz
+	 /XRzyuRP7lWm1BP2xiQUkfil0RNmlGfCUI6DEGKVxUDIJq59jogsvNpHOS1YipNBbq
+	 4/HFlz5qA9ANNDKW5V1q8C93Zp7VxCqMDhGqU6Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Hidenori Kobayashi <hidenorik@chromium.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Amit Pundir <amit.pundir@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 008/294] media: staging: ipu3-imgu: Set fields before media_entity_pads_init()
-Date: Thu, 11 Apr 2024 11:52:51 +0200
-Message-ID: <20240411095435.888602891@linuxfoundation.org>
+Subject: [PATCH 5.10 009/294] clk: qcom: gcc-sdm845: Add soft dependency on rpmhpd
+Date: Thu, 11 Apr 2024 11:52:52 +0200
+Message-ID: <20240411095435.918738961@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -53,79 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hidenori Kobayashi <hidenorik@chromium.org>
+From: Amit Pundir <amit.pundir@linaro.org>
 
-[ Upstream commit 87318b7092670d4086bfec115a0280a60c51c2dd ]
+[ Upstream commit 1d9054e3a4fd36e2949e616f7360bdb81bcc1921 ]
 
-The imgu driver fails to probe with the following message because it
-does not set the pad's flags before calling media_entity_pads_init().
+With the addition of RPMh power domain to the GCC node in
+device tree, we noticed a significant delay in getting the
+UFS driver probed on AOSP which futher led to mount failures
+because Android do not support rootwait. So adding a soft
+dependency on RPMh power domain which informs modprobe to
+load rpmhpd module before gcc-sdm845.
 
-[   14.596315] ipu3-imgu 0000:00:05.0: failed initialize subdev media entity (-22)
-[   14.596322] ipu3-imgu 0000:00:05.0: failed to register subdev0 ret (-22)
-[   14.596327] ipu3-imgu 0000:00:05.0: failed to register pipes (-22)
-[   14.596331] ipu3-imgu 0000:00:05.0: failed to create V4L2 devices (-22)
-
-Fix the initialization order so that the driver probe succeeds. The ops
-initialization is also moved together for readability.
-
-Fixes: a0ca1627b450 ("media: staging/intel-ipu3: Add v4l2 driver based on media framework")
-Cc: <stable@vger.kernel.org> # 6.7
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Hidenori Kobayashi <hidenorik@chromium.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc: stable@vger.kernel.org # v5.4+
+Fixes: 4b6ea15c0a11 ("arm64: dts: qcom: sdm845: Add missing RPMh power domain to GCC")
+Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240123062814.2555649-1-amit.pundir@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/ipu3/ipu3-v4l2.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/clk/qcom/gcc-sdm845.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/staging/media/ipu3/ipu3-v4l2.c b/drivers/staging/media/ipu3/ipu3-v4l2.c
-index 103f84466f6fc..371117b511e21 100644
---- a/drivers/staging/media/ipu3/ipu3-v4l2.c
-+++ b/drivers/staging/media/ipu3/ipu3-v4l2.c
-@@ -1063,6 +1063,11 @@ static int imgu_v4l2_subdev_register(struct imgu_device *imgu,
- 	struct imgu_media_pipe *imgu_pipe = &imgu->imgu_pipe[pipe];
- 
- 	/* Initialize subdev media entity */
-+	imgu_sd->subdev.entity.ops = &imgu_media_ops;
-+	for (i = 0; i < IMGU_NODE_NUM; i++) {
-+		imgu_sd->subdev_pads[i].flags = imgu_pipe->nodes[i].output ?
-+			MEDIA_PAD_FL_SINK : MEDIA_PAD_FL_SOURCE;
-+	}
- 	r = media_entity_pads_init(&imgu_sd->subdev.entity, IMGU_NODE_NUM,
- 				   imgu_sd->subdev_pads);
- 	if (r) {
-@@ -1070,11 +1075,6 @@ static int imgu_v4l2_subdev_register(struct imgu_device *imgu,
- 			"failed initialize subdev media entity (%d)\n", r);
- 		return r;
- 	}
--	imgu_sd->subdev.entity.ops = &imgu_media_ops;
--	for (i = 0; i < IMGU_NODE_NUM; i++) {
--		imgu_sd->subdev_pads[i].flags = imgu_pipe->nodes[i].output ?
--			MEDIA_PAD_FL_SINK : MEDIA_PAD_FL_SOURCE;
--	}
- 
- 	/* Initialize subdev */
- 	v4l2_subdev_init(&imgu_sd->subdev, &imgu_subdev_ops);
-@@ -1169,15 +1169,15 @@ static int imgu_v4l2_node_setup(struct imgu_device *imgu, unsigned int pipe,
- 	}
- 
- 	/* Initialize media entities */
-+	node->vdev_pad.flags = node->output ?
-+		MEDIA_PAD_FL_SOURCE : MEDIA_PAD_FL_SINK;
-+	vdev->entity.ops = NULL;
- 	r = media_entity_pads_init(&vdev->entity, 1, &node->vdev_pad);
- 	if (r) {
- 		dev_err(dev, "failed initialize media entity (%d)\n", r);
- 		mutex_destroy(&node->lock);
- 		return r;
- 	}
--	node->vdev_pad.flags = node->output ?
--		MEDIA_PAD_FL_SOURCE : MEDIA_PAD_FL_SINK;
--	vdev->entity.ops = NULL;
- 
- 	/* Initialize vbq */
- 	vbq->type = node->vdev_fmt.type;
+diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
+index 90f7febaf5288..a6b07aa8eb650 100644
+--- a/drivers/clk/qcom/gcc-sdm845.c
++++ b/drivers/clk/qcom/gcc-sdm845.c
+@@ -3646,3 +3646,4 @@ module_exit(gcc_sdm845_exit);
+ MODULE_DESCRIPTION("QTI GCC SDM845 Driver");
+ MODULE_LICENSE("GPL v2");
+ MODULE_ALIAS("platform:gcc-sdm845");
++MODULE_SOFTDEP("pre: rpmhpd");
 -- 
 2.43.0
 
