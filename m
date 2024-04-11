@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B2D145B0A;
-	Thu, 11 Apr 2024 10:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEEF145B04;
+	Thu, 11 Apr 2024 10:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829797; cv=none; b=sNHSQCblmyKmuaiVK0ZK9Vty6NpPx5NlwKt4vcHxXbWukcsrqWpr2mBLaYOoiuwPjMSvz9QzkB3X7q2fh+MaNvSAvtyIThIUfWKSb7a4Z30Cs49pN4cxfdfbFSltTaAiwemBvUIXVUUQN0KEh2hlpIpdRHZmHnJzVSVth1uIqtw=
+	t=1712829800; cv=none; b=ue7sRG6RtD1HqojXr1oT8DGIMKT7tE5eTOnsBz919EOWWQW4Qh8gBjXN4ikukdDjhvGLIqZ7XoeNXkwFfm+z5k7pe/ID3bHdUKLWsbcqnSwyJuPNVQfGO5C0pjhK6wb5GF2ON7jiRV21dXW+WrhsUZoXOPh8y3DJY83C2FmcZ0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829797; c=relaxed/simple;
-	bh=Omkx93eAL2gchqZp2lifispFJNMbNeE0AlSsNEzXO+o=;
+	s=arc-20240116; t=1712829800; c=relaxed/simple;
+	bh=Rn+/NoXTvu1E/IItL4NfDu0kNmrhckjzCALVZZ2f7wA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=idD3mo2W1NTVZHbIEgZ3HNMZC5l/pUZAjIeTtttNdj8q2nzjB7/v79stu8oKmcMnMSIRKjf1W0O14+aYPGMdO4M5SnhpKYd2l7Ugiv8jftVXnotPqdZNqAZHZW0KlLXNALa1/EtcuiBHhZU/fWPztH9Q3Ds96o0Vrh93G4Q4HL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ML+Cfh9p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iUvPBk0z2l+zzswGluEBSeSymBYCwbEge2YiuFV6qnuEgN4F0EwnFpoKLkt16gYR7XLypC5ErINhD57y/RP7kw/TkhX6fw6eUQdhcar26psx3lHJRhknBYFlvuHdQi7raa7EahkvEycrZMMfYOVgnrbKp/nb1m/7Ywem2tb0Hrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phBAVM/8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ML+Cfh9p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11CDC43399;
-	Thu, 11 Apr 2024 10:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phBAVM/8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9D7C433F1;
+	Thu, 11 Apr 2024 10:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829797;
-	bh=Omkx93eAL2gchqZp2lifispFJNMbNeE0AlSsNEzXO+o=;
+	s=korg; t=1712829800;
+	bh=Rn+/NoXTvu1E/IItL4NfDu0kNmrhckjzCALVZZ2f7wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ML+Cfh9pjMvGZb3WB0MRiZGhbVwWFJX9Jpif6VEMi/erqv7Ym6ghGg6Jz8USSCEnS
-	 h509Yael+U/IqE3eH5HBpNfAYRMCEYvL6/ZlY3/2M/mIxUDJ5veLgNRXRkn6xkSHk/
-	 QJ9nADj1UbRRBM1Oj4ADzY691/pQ/XbE3MHMjmgk=
+	b=phBAVM/8RWWdiGkaD0mQth+gc7y2gWd+3iCtq2FAYgaNhrESj5LrwEKA9t6F1dZn+
+	 ZuIwR5WWTz56oSa6SEsZA6ysqhkPuyWTXie5m6rA4XdZHb88AkJjkM6XRI7tcftNHs
+	 HQB8cawNlWgjW+XxaYVvQwqWBWAfQUDzbTocNTRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+aa7c2385d46c5eba0b89@syzkaller.appspotmail.com,
-	syzbot+abea4558531bae1ba9fe@syzkaller.appspotmail.com,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: [PATCH 4.19 108/175] timers: Move clearing of base::timer_running under base:: Lock
-Date: Thu, 11 Apr 2024 11:55:31 +0200
-Message-ID: <20240411095422.819180143@linuxfoundation.org>
+	ranygh@riseup.net,
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 4.19 082/175] wifi: mac80211: check/clear fast rx for non-4addr sta VLAN changes
+Date: Thu, 11 Apr 2024 11:55:05 +0200
+Message-ID: <20240411095422.031663010@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,84 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit bb7262b295472eb6858b5c49893954794027cd84 upstream.
+commit 4f2bdb3c5e3189297e156b3ff84b140423d64685 upstream.
 
-syzbot reported KCSAN data races vs. timer_base::timer_running being set to
-NULL without holding base::lock in expire_timers().
+When moving a station out of a VLAN and deleting the VLAN afterwards, the
+fast_rx entry still holds a pointer to the VLAN's netdev, which can cause
+use-after-free bugs. Fix this by immediately calling ieee80211_check_fast_rx
+after the VLAN change.
 
-This looks innocent and most reads are clearly not problematic, but
-Frederic identified an issue which is:
-
- int data = 0;
-
- void timer_func(struct timer_list *t)
- {
-    data = 1;
- }
-
- CPU 0                                            CPU 1
- ------------------------------                   --------------------------
- base = lock_timer_base(timer, &flags);           raw_spin_unlock(&base->lock);
- if (base->running_timer != timer)                call_timer_fn(timer, fn, baseclk);
-   ret = detach_if_pending(timer, base, true);    base->running_timer = NULL;
- raw_spin_unlock_irqrestore(&base->lock, flags);  raw_spin_lock(&base->lock);
-
- x = data;
-
-If the timer has previously executed on CPU 1 and then CPU 0 can observe
-base->running_timer == NULL and returns, assuming the timer has completed,
-but it's not guaranteed on all architectures. The comment for
-del_timer_sync() makes that guarantee. Moving the assignment under
-base->lock prevents this.
-
-For non-RT kernel it's performance wise completely irrelevant whether the
-store happens before or after taking the lock. For an RT kernel moving the
-store under the lock requires an extra unlock/lock pair in the case that
-there is a waiter for the timer, but that's not the end of the world.
-
-Reported-by: syzbot+aa7c2385d46c5eba0b89@syzkaller.appspotmail.com
-Reported-by: syzbot+abea4558531bae1ba9fe@syzkaller.appspotmail.com
-Fixes: 030dcdd197d7 ("timers: Prepare support for PREEMPT_RT")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/87lfea7gw8.fsf@nanos.tec.linutronix.de
 Cc: stable@vger.kernel.org
+Reported-by: ranygh@riseup.net
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://msgid.link/20240316074336.40442-1-nbd@nbd.name
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/timer.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/mac80211/cfg.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/kernel/time/timer.c
-+++ b/kernel/time/timer.c
-@@ -1304,8 +1304,10 @@ static inline void timer_base_unlock_exp
- static void timer_sync_wait_running(struct timer_base *base)
- {
- 	if (atomic_read(&base->timer_waiters)) {
-+		raw_spin_unlock_irq(&base->lock);
- 		spin_unlock(&base->expiry_lock);
- 		spin_lock(&base->expiry_lock);
-+		raw_spin_lock_irq(&base->lock);
- 	}
- }
- 
-@@ -1490,14 +1492,14 @@ static void expire_timers(struct timer_b
- 		if (timer->flags & TIMER_IRQSAFE) {
- 			raw_spin_unlock(&base->lock);
- 			call_timer_fn(timer, fn, baseclk);
--			base->running_timer = NULL;
- 			raw_spin_lock(&base->lock);
-+			base->running_timer = NULL;
- 		} else {
- 			raw_spin_unlock_irq(&base->lock);
- 			call_timer_fn(timer, fn, baseclk);
-+			raw_spin_lock_irq(&base->lock);
- 			base->running_timer = NULL;
- 			timer_sync_wait_running(base);
--			raw_spin_lock_irq(&base->lock);
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1548,15 +1548,14 @@ static int ieee80211_change_station(stru
  		}
- 	}
- }
+ 
+ 		if (sta->sdata->vif.type == NL80211_IFTYPE_AP_VLAN &&
+-		    sta->sdata->u.vlan.sta) {
+-			ieee80211_clear_fast_rx(sta);
++		    sta->sdata->u.vlan.sta)
+ 			RCU_INIT_POINTER(sta->sdata->u.vlan.sta, NULL);
+-		}
+ 
+ 		if (test_sta_flag(sta, WLAN_STA_AUTHORIZED))
+ 			ieee80211_vif_dec_num_mcast(sta->sdata);
+ 
+ 		sta->sdata = vlansdata;
++		ieee80211_check_fast_rx(sta);
+ 		ieee80211_check_fast_xmit(sta);
+ 
+ 		if (test_sta_flag(sta, WLAN_STA_AUTHORIZED)) {
 
 
