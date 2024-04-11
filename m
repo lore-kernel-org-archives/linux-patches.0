@@ -1,121 +1,82 @@
-Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA231863C;
-	Thu, 11 Apr 2024 20:24:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269AF18635;
+	Thu, 11 Apr 2024 20:36:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712867082; cv=none; b=rc0kJ859xxxXRo1lLhDStI4xjQLlDU/tVgXqiGLQpvgtu1E+4YyFQ+TM57Wfehx/92lN12cnzxbQQQDFFcNP+dTloOfMxk9V32HR6xaTB8+K5HPPINnghquv9e1Yzcrimy5zpyakckU0NYf8XskrdzLoksGOrTv9GvSWglhv5iA=
+	t=1712867821; cv=none; b=B04Gti6go0G76GRrgIK4BR1mrAfnhSer2YTyr1HiN8G67wm+IScMEquYKUUL9HH1scky/avgJbgGMzhTYKCS87oVRDms/p/4mG0bB9T09r0c0rG5XctKOHupQePSlTBXstNV9u4M6FYBz2xsuD6MLuZUY9hmKC+bJ8wZvqnMbZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712867082; c=relaxed/simple;
-	bh=N+rD5QfdxBQ/+DoxhEwOJBWLJNrXs7YfVLacUCjziJg=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=S3A1pSeL/36ics9eRZnDVugJblEQ1+rRC4FmFm5hLdOIPEXaF/zl17teoX6DVHFKDWB9T2K9Weg3nnCZyIfNTdtvUQsktQZ9wFVXd4rDUenCT7Jq+Wr8mqcfQpXmyF5H080R/afi3HKJxE6XDcahtlTlRKxHoLFvk+y1eN/b6ZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=cPj9/fmJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qHqB2bof; arc=none smtp.client-ip=64.147.123.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	s=arc-20240116; t=1712867821; c=relaxed/simple;
+	bh=dmMdDLN3YgL1qMEqV22WwccWKGPvTDnUyQtKaq9KA84=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ho0rW9wGaEDJeN7Ok1W45pYLDs8SAD2WQnwz/n3/VcYGdtUZqVQaCReLd0jhj/akxMSSTb9wgswcvkPHjpBo4UwpSZ0+tS2pnuMHlhh4kt8qKSrJ4hRaJSoCKmMjxf/VzgPyLY4B0Ul9e0TXCEdcvWdDy/ghP8bA+EaNtDXqIeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=mp6BwimZ; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="cPj9/fmJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qHqB2bof"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 51A3618000F3;
-	Thu, 11 Apr 2024 16:24:37 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
-  by compute5.internal (MEProxy); Thu, 11 Apr 2024 16:24:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1712867076; x=1712953476; bh=ZXeIVotYWY
-	tiu1d2XO6gj9pTb41qrbKlByzdKKRm9q0=; b=cPj9/fmJ5ICh3OIX4HYXzZjM6n
-	cLQiW4Cz21H6OpfvtrZuajQKQhfVwrCtAKvhmNhLttcnVk+BNacSSrhvH2eoA4Jb
-	YA7ADp36lgYsoe8ZlE1IwK65U2ovNeC+NM3RZqmzX5KbJbVv+MbvmIJISIrncxpA
-	nP9LvVPza1DgjGMq5ufcQ5/epM3fh7JhGOooRe7YM/58PKTmJJHY8uIttlD7XHpF
-	n8L+VnT+Za2CYcrcZpmhXdqxVfqrRqJ9mffsEWZPmV7i7LTS2hhnaf7nEEz/gbGS
-	q2Z3cYd+YHriIMSPqNPm1krDVAqXXcfEs/RyTbq4YjbxVBfsZc7KhldP9Ozw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1712867076; x=1712953476; bh=ZXeIVotYWYtiu1d2XO6gj9pTb41q
-	rbKlByzdKKRm9q0=; b=qHqB2bofPTTin25e4aiJKGl5dqQAnld3Fg7cvAp/9+KS
-	ELfm4Jw1r+Jl+HFzb4gt0Wlc7p/jT2L7gzrhBYxITEFZs7upd0f5708VfsrfRgz4
-	X3aeO6DqbAQIwROGE2QSuJBfXkqFUhhN5Ltrn//VyJ2i/TPTltK4kw+grYkliWzg
-	78RmddP4ArbDecPpHgQ3dV1tOmnRqZKsTIX3dDCtkmoGxm0Rr9Uw6WLScZyF4nc4
-	kkuKC0gFQxbps7hOK4OpwiZGBFV9aPgl0ZALkLZrFjuOO9i4mA/YsIAMvL2u80mq
-	QrecgtpIZgCiMY0ZWunP7c9wWs5BflbhcVM7acshZA==
-X-ME-Sender: <xms:BEcYZpAZwpPAmBxOlYDASCzFc-JYQXMnIOxfElOpC1NGI-C06qCjlQ>
-    <xme:BEcYZnheUgW-Q35kxjTjNuqIJPO-Jm724Zb9c9BAyFKDmDa2MHbTElW_ezoNNv_nG
-    l_UNZdtj9ZsB8oyJx0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehkedgudehtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdet
-    rhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrg
-    htthgvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedt
-    keetffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    grrhhnugesrghrnhgusgdruggv
-X-ME-Proxy: <xmx:BEcYZklh8mIT3WyAnL0CXsulvEanTdkreoWtmohNPyKbX67YUgk6vA>
-    <xmx:BEcYZjxuyibftC51S33hv9nL8jnnYrwxGqBL77KuCKZf_31PYxnkzg>
-    <xmx:BEcYZuSbzkYjtBSFYH50QqT-S_HXRIap8ighca1--qWVlOtrBca6xw>
-    <xmx:BEcYZmbUHbWP6gDWtrjpzxKF3oMnIrQ0BFKDzvFz1UOvZ4XgXiPy0w>
-    <xmx:BEcYZhYAjiqvMqacjd-jdPFz3yG5e4uH3_E8k3rwP_Z4ENK4taN6e-b7>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 0D8BAB6008F; Thu, 11 Apr 2024 16:24:35 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-379-gabd37849b7-fm-20240408.001-gabd37849
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="mp6BwimZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1712867792; x=1713472592; i=rwarsow@gmx.de;
+	bh=dmMdDLN3YgL1qMEqV22WwccWKGPvTDnUyQtKaq9KA84=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=mp6BwimZqRGf6PmrHL+K1TTIDteZ4vNehMgc2V6VnegPlyQc7WOClZazn1lJ6YOI
+	 RGxgI/7ksEdmhylbs4WVdy0AlQsZuJkt30eZO2wwUTsDLZDh/9W+hPpGrxS5/BucH
+	 uziqi75xXfEYVJo8tgYM/kJW5DWK/q4Ejmx205CHOhY/4Xv/eQBpqx9WZWLI+JXXw
+	 8Dt87rRZKv+mciES3rFuxsW00c7WKYdY5/tS3mcy1/t9pgByBfUBmh2o+P1p1CGiC
+	 w8MyZf8eQ2VvUzMqkLmEVZQzdEGyzTm8mOvSn6tfC67+3yzxoWVcx31Akmff1G/mI
+	 N5OBYZYinJG9nazLUA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.100.20] ([46.142.32.118]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MgesG-1sOrjI1YXU-00h4IL; Thu, 11
+ Apr 2024 22:36:32 +0200
+Message-ID: <0cd9f4dc-3d11-4415-a818-f86f3cc90be1@gmx.de>
+Date: Thu, 11 Apr 2024 22:36:30 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-Id: <d499b754-4b0a-4cde-9ca8-cfe0fc9bf2c9@app.fastmail.com>
-In-Reply-To: <1-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
-References: <1-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
-Date: Thu, 11 Apr 2024 22:24:15 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Jason Gunthorpe" <jgg@nvidia.com>,
- "Alexander Gordeev" <agordeev@linux.ibm.com>,
- "Andrew Morton" <akpm@linux-foundation.org>,
- "Christian Borntraeger" <borntraeger@linux.ibm.com>,
- "Borislav Petkov" <bp@alien8.de>,
- "Dave Hansen" <dave.hansen@linux.intel.com>,
- "David S . Miller" <davem@davemloft.net>,
- "Eric Dumazet" <edumazet@google.com>,
- "Gerald Schaefer" <gerald.schaefer@linux.ibm.com>,
- "Vasily Gorbik" <gor@linux.ibm.com>,
- "Heiko Carstens" <hca@linux.ibm.com>, "H. Peter Anvin" <hpa@zytor.com>,
- "Justin Stitt" <justinstitt@google.com>,
- "Jakub Kicinski" <kuba@kernel.org>, "Leon Romanovsky" <leon@kernel.org>,
- linux-rdma@vger.kernel.org, linux-s390@vger.kernel.org,
- llvm@lists.linux.dev, "Ingo Molnar" <mingo@redhat.com>,
- "Bill Wendling" <morbo@google.com>,
- "Nathan Chancellor" <nathan@kernel.org>,
- "Nick Desaulniers" <ndesaulniers@google.com>,
- Netdev <netdev@vger.kernel.org>, "Paolo Abeni" <pabeni@redhat.com>,
- "Salil Mehta" <salil.mehta@huawei.com>,
- "Sven Schnelle" <svens@linux.ibm.com>,
- "Thomas Gleixner" <tglx@linutronix.de>, x86@kernel.org,
- "Yisen Zhuang" <yisen.zhuang@huawei.com>
-Cc: "Catalin Marinas" <catalin.marinas@arm.com>,
- "Leon Romanovsky" <leonro@mellanox.com>,
- Linux-Arch <linux-arch@vger.kernel.org>,
- linux-arm-kernel@lists.infradead.org, "Mark Rutland" <mark.rutland@arm.com>,
- "Michael Guralnik" <michaelgur@mellanox.com>, patches@lists.linux.dev,
- "Niklas Schnelle" <schnelle@linux.ibm.com>,
- "Jijie Shao" <shaojijie@huawei.com>, "Will Deacon" <will@kernel.org>
-Subject: Re: [PATCH v3 1/6] x86: Stop using weak symbols for __iowrite32_copy()
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.8 000/143] 6.8.6-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240411095420.903937140@linuxfoundation.org>
+From: Ronald Warsow <rwarsow@gmx.de>
+Content-Language: de-DE, en-US
+In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:W12SHJDXLS1ndPqcvEpZJieiHmxdRjGQWpVeZ06B8HJbZQVjlZj
+ JdMAdOAVT7pWp4s/NvJsQFXjRrPGf07z926lQV7pioiRsvDiOLEjkwJSQRKqk0zu2U3G9Ft
+ boEPqmWAwqYl80AkKFyrnV6s8n1vPdISR6+7PepLvoZVpoZQGkFRcccGcvvcqHqjLpvY0OR
+ TaOhA3D7tbZD1iKlzcjtg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:OSNZYD1ohGk=;0/NShLD+wGhb/OqkpvOpte4DRhS
+ nhUidjn8dt7jclpxpoRZ2aKA+eD8KsIvA2qTGknm3mjSvYPYi22gmhiinGBFwBguL7cNhGtng
+ PkW6f3h9Z336uX4l0ymVcx5oos5RU+QsOvA2Bh+Lamy8Gm0qi0y7xmUEIq1VSWVcU3EyaqwGM
+ y0CEj2faTsaO7L4dySlT5h5Minx7A7lFK1dkAe0y8+cwkAVAgo7WY+IpNcl+822JdCw6E3DZR
+ zn7IyTX88fcErfSnKbuxMh2kTBDBL1FVmrBYrmh+jNKHxB7Wl0YfMynHPjqV3uB+QbB4dpPNY
+ 27w5IMkZSfjyUNzqF58BJP5Ovs3VplEKHes1YmcNDPEccchn8AhumHi9IAiAoT4CQOKWe+4GQ
+ ttHYzoEiWK9WtBStnart4vn5v2jNgBJuUUriPg0/83cYn1QKXjj9Hdwe+RPFufjew7E7d/5HW
+ c8S8pnKDzl4eYBTudOCVZUl/Og1tLBNKkiy6FyxoravEfN0P2WcVINISrx0NWF2kLZD7n/UEG
+ v4N7YZz6/UiLSWII6QK+DljUUWoSQTNuZXK/+Ougg48crX+P4x6rIrFp+DmrMPReE2kN1HN+2
+ Ae1Rv6xXCX5UTbq7yn/P3uy46NFnGt2DSLCnksa1Wb/CBHcIeSt3Chcp80zCsww3/5MD8/S5R
+ a8eNMZxtARGqUoI11eD3WDt12710O3aomrxVK9ZmKKU+xPKuZEmVxwIPQP7OknEtoq9Yghtdn
+ WdJuzBprX243NfET0lkKZ2cdLnoFOwP54k3KKtvz0tH7/VmLSIN51d9T44wdrPQFmbaQc/3hR
+ N7tyhaxCfgJ783BZv9KAnFinyWorYML7hRkS5kx/HYfcs=
 
-On Thu, Apr 11, 2024, at 18:46, Jason Gunthorpe wrote:
->  arch/x86/include/asm/io.h    | 17 +++++++++++++++++
->  arch/x86/lib/Makefile        |  1 -
->  arch/x86/lib/iomap_copy_64.S | 15 ---------------
->  include/linux/io.h           |  5 ++++-
->  lib/iomap_copy.c             |  6 +++---
->  5 files changed, 24 insertions(+), 20 deletions(-)
->  delete mode 100644 arch/x86/lib/iomap_copy_64.S
+Hi Greg
 
-Acked-by: Arnd Bergmann <arnd@arndb.de>
+*no* regressions here on x86_64 (RKL, Intel 11th Gen. CPU)
+
+Thanks
+
+Tested-by: Ronald Warsow <rwarsow@gmx.de>
