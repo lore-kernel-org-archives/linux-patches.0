@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEF31422CE;
-	Thu, 11 Apr 2024 10:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA55813FD94;
+	Thu, 11 Apr 2024 10:27:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831261; cv=none; b=coVSq2i8aYuknh/W0vuRQs0HaQM58WYSpmjTlP+/ca4Xg09qT4nzfqcYjEv0KZwSa8555cJuQFJCu9nMAL6VflasLmCoQ17pOlvd9vGgDRduutOHV/tIn1Bp0lBTZs0tLhMKgYcnIPmDU9voTIiz+Hx7iIZCIsFXL3fl2YMn/RE=
+	t=1712831263; cv=none; b=th3W+E1AfPjmyOSNnGTIDj8CFBMrAGC5mRhEPB6ZbqdceAcHADR+RKgfOV5zXR/z7NEi5KEpJH7FQwvXhfnVd5Z4Ugskm8kPcXh1h8OWyBpUovgY7yGPb8PfLPiilu3QtuJgQ4E0ugISEduiRWoZ1dh3faj0+6HwIPabpWE504A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831261; c=relaxed/simple;
-	bh=Uc3aeYxtT+31Z42/NgF474FQUtuyHkJNnoZuiUpIGxc=;
+	s=arc-20240116; t=1712831263; c=relaxed/simple;
+	bh=HjGgif+i+euXAkV1I5zJRUFiCyZNPwwfRzWXVFw8pQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FC59UzpOPchiTcBVuFWYRqG/I0oron0jaLZhYE/tchSHjXZXl4+0wlbecFM/Rkyc7NxtzVTe1S8fFkw6Q11SsJ5L71K/T7oIFRV6s7eKN5CT3sxdAia81lePgXaGed7hS6wLWZuZl5k4F0clsZmOk6Z4+O98VU6hvebTY6EkHi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSjVIWH7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K7qsJj+8kGj7BVatRpKh/9i1iJ+iDvkl6OzQcZUOqPJZeStYf6/SB5Fr0uCi/ocaJpaI21OBrqNuDu8Gw8qw+FTrRK9qHKqM/R3c4TUImrK7yytH6kun2biiryw4BSD1+XbiHpqmNLKD1fK/x4PBahnKOvj1EjX1MZ0nPt8TvLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJ55MXMu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSjVIWH7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DAD7C433C7;
-	Thu, 11 Apr 2024 10:27:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJ55MXMu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F045C43390;
+	Thu, 11 Apr 2024 10:27:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831260;
-	bh=Uc3aeYxtT+31Z42/NgF474FQUtuyHkJNnoZuiUpIGxc=;
+	s=korg; t=1712831263;
+	bh=HjGgif+i+euXAkV1I5zJRUFiCyZNPwwfRzWXVFw8pQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RSjVIWH7dQRuOl7CsWHyfPCvNaEJ3PT+zfRjkG26sWjYTOBcFPX3pGw0mFGdEoIJq
-	 G9IOAhXpo08ZH1Ao2lJ4lEjmErF3OAYVEza0Qjlg4klCOAd1Fo7F3WOLASN9hlp5bp
-	 RRWczov6014B4pn4nRBH3oYMwY6pFXFMHR4b1H9U=
+	b=cJ55MXMuVlFnwgNzbLG2BBtNlE61mnnAtVqCwlw6KqBfGcXmxysH8GqmiAHo0gFYq
+	 nInUOBFhpmeDHi1LNMIJzo6qXgQUffTdDLCPHQG5RCHicES7dmiqer2tYQ6Ms68Zj1
+	 JqW6TPKNxJ2aV/160rhQMxehPJJ8ZKZXAH87BEK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 060/114] ALSA: firewire-lib: handle quirk to calculate payload quadlets as data block counter
-Date: Thu, 11 Apr 2024 11:56:27 +0200
-Message-ID: <20240411095418.698128846@linuxfoundation.org>
+Subject: [PATCH 6.6 024/114] wifi: brcmfmac: Add DMI nvram filename quirk for ACEPC W5 Pro
+Date: Thu, 11 Apr 2024 11:55:51 +0200
+Message-ID: <20240411095417.600062520@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095416.853744210@linuxfoundation.org>
 References: <20240411095416.853744210@linuxfoundation.org>
@@ -51,69 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 4a486439d2ca85752c46711f373b6ddc107bb35d ]
+[ Upstream commit 32167707aa5e7ae4b160c18be79d85a7b4fdfcfb ]
 
-Miglia Harmony Audio (OXFW970) has a quirk to put the number of
-accumulated quadlets in CIP payload into the dbc field of CIP header.
+The ACEPC W5 Pro HDMI stick contains quite generic names in the sys_vendor
+and product_name DMI strings, without this patch brcmfmac will try to load:
+"brcmfmac43455-sdio.$(DEFAULT_STRING)-$(DEFAULT_STRING).txt" as nvram file
+which is both too generic and messy with the $ symbols in the name.
 
-This commit handles the quirk in the packet processing layer.
+The ACEPC W5 Pro uses the same Ampak AP6255 module as the ACEPC T8
+and the nvram for the T8 is already in linux-firmware, so point the new
+DMI nvram filename quirk to the T8 nvram file.
 
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Link: https://lore.kernel.org/r/20240218074128.95210-4-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20240216213649.251718-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/firewire/amdtp-stream.c | 12 ++++++++----
- sound/firewire/amdtp-stream.h |  4 ++++
- 2 files changed, 12 insertions(+), 4 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/dmi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/sound/firewire/amdtp-stream.c b/sound/firewire/amdtp-stream.c
-index 7be17bca257f0..c9f153f85ae6b 100644
---- a/sound/firewire/amdtp-stream.c
-+++ b/sound/firewire/amdtp-stream.c
-@@ -773,10 +773,14 @@ static int check_cip_header(struct amdtp_stream *s, const __be32 *buf,
- 	} else {
- 		unsigned int dbc_interval;
- 
--		if (*data_blocks > 0 && s->ctx_data.tx.dbc_interval > 0)
--			dbc_interval = s->ctx_data.tx.dbc_interval;
--		else
--			dbc_interval = *data_blocks;
-+		if (!(s->flags & CIP_DBC_IS_PAYLOAD_QUADLETS)) {
-+			if (*data_blocks > 0 && s->ctx_data.tx.dbc_interval > 0)
-+				dbc_interval = s->ctx_data.tx.dbc_interval;
-+			else
-+				dbc_interval = *data_blocks;
-+		} else {
-+			dbc_interval = payload_length / sizeof(__be32);
-+		}
- 
- 		lost = dbc != ((*data_block_counter + dbc_interval) & 0xff);
- 	}
-diff --git a/sound/firewire/amdtp-stream.h b/sound/firewire/amdtp-stream.h
-index b7ff44751ab93..a1ed2e80f91a7 100644
---- a/sound/firewire/amdtp-stream.h
-+++ b/sound/firewire/amdtp-stream.h
-@@ -37,6 +37,9 @@
-  *	the value of current SYT_INTERVAL; e.g. initial value is not zero.
-  * @CIP_UNAWARE_SYT: For outgoing packet, the value in SYT field of CIP is 0xffff.
-  *	For incoming packet, the value in SYT field of CIP is not handled.
-+ * @CIP_DBC_IS_PAYLOAD_QUADLETS: Available for incoming packet, and only effective with
-+ *	CIP_DBC_IS_END_EVENT flag. The value of dbc field is the number of accumulated quadlets
-+ *	in CIP payload, instead of the number of accumulated data blocks.
-  */
- enum cip_flags {
- 	CIP_NONBLOCKING		= 0x00,
-@@ -51,6 +54,7 @@ enum cip_flags {
- 	CIP_NO_HEADER		= 0x100,
- 	CIP_UNALIGHED_DBC	= 0x200,
- 	CIP_UNAWARE_SYT		= 0x400,
-+	CIP_DBC_IS_PAYLOAD_QUADLETS = 0x800,
- };
- 
- /**
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/dmi.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/dmi.c
+index 86ff174936a9a..c3a602197662b 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/dmi.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/dmi.c
+@@ -82,6 +82,15 @@ static const struct dmi_system_id dmi_platform_data[] = {
+ 		},
+ 		.driver_data = (void *)&acepc_t8_data,
+ 	},
++	{
++		/* ACEPC W5 Pro Cherry Trail Z8350 HDMI stick, same wifi as the T8 */
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "T3 MRD"),
++			DMI_MATCH(DMI_CHASSIS_TYPE, "3"),
++			DMI_MATCH(DMI_BIOS_VENDOR, "American Megatrends Inc."),
++		},
++		.driver_data = (void *)&acepc_t8_data,
++	},
+ 	{
+ 		/* Chuwi Hi8 Pro with D2D3_Hi8Pro.233 BIOS */
+ 		.matches = {
 -- 
 2.43.0
 
