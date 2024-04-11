@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91FD1448EF;
-	Thu, 11 Apr 2024 10:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7477C1448EF;
+	Thu, 11 Apr 2024 10:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830275; cv=none; b=bVCdhWH+mn341EP6QHRAN3PoQs7GVTHjxrPsmUkAyYs5XKvOPbWOR+LI5VRZmScij8yaTGpodo7x8P6b30QmoELIXWU1UJ+/l0LwBQE1tFrr9+ij2WPYb2eCPsQRjH9t7Eb7vCFdF+0jhq24G6Zai/A4HoaduMBI8yfTTQCjUVk=
+	t=1712830278; cv=none; b=exWiS8g9DSiJWOm7OJadmrkwj/RlSKVzZoKRNOhaC4JN6rS6MbaoZh5fHNGmlgVnSu+wBSsYmDXkpgtSUu5t+NXpfffEfWU3pe/NoY+Qeajk1vf+RnM1cDCpoUwT/RQHy5i1hBNR6ubxfWhDyofJI6+si/mVl5ffrI9Y8eYGxOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830275; c=relaxed/simple;
-	bh=SrEPAlLiMDFhfM+aAezU1ia5Bk1V26penQ3wfWwQjlE=;
+	s=arc-20240116; t=1712830278; c=relaxed/simple;
+	bh=6JjttJne+WKq37ypqjTZk+z1kAR8fCNZpO0iGOicglk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=knDJ8zuZFZb0GAGzVK1k0OTAoDe7j/3FMIzdQS+q6IMy6PSD/3fYYn4kdtPEQ4+oZWItbhsNBau5wZVYpCVjux8XEQGFhOd4wJuZwF2313keWmw7IBuzR29heb3pU9KBIbPQjkX8f9h6NLfU748yR30TqHNp6kRAQ8pg62YmU5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSGb13gI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AYoaxsEsFF4hxjV7EjBLiwJ5/lrytAB/PcMez+HOr06YOg57G86/qZOvetdxPlf2dUNuewtHXn1MivgFlkHNOvvMupnUB5ZvFtG24EBj24raQZjZydNrU6TGacaV0sCSnDYa9rWplXzxquGajNJlmJudmKj43arAxBQ9k40jrsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SxDyCV6s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSGb13gI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D84CEC433C7;
-	Thu, 11 Apr 2024 10:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SxDyCV6s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43B3C43394;
+	Thu, 11 Apr 2024 10:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830275;
-	bh=SrEPAlLiMDFhfM+aAezU1ia5Bk1V26penQ3wfWwQjlE=;
+	s=korg; t=1712830278;
+	bh=6JjttJne+WKq37ypqjTZk+z1kAR8fCNZpO0iGOicglk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RSGb13gIa75AkOpVuIWvCKVVW5FOVnH0RP2KZFmm8YvHkpNiNWLn32xvncClqk5wH
-	 9zZ6McihTFeIRRUUEr/T3Pbah0bbtj1W4lp8XCxNIbp9wv95ttkCMHCvyoE8Li3Gd/
-	 RPt7bxjgyg0NeLtYqxVtNTC+m5F8fQxNxvzqgKQU=
+	b=SxDyCV6sx364KBeZPkIxqvp2DT07XKK7opCpEj5qN8SK5twOtBfX2x7DLTj876Eew
+	 MTUSn5nFd7+Ob7UpCFqqy+jXTo413SdicDXxUPvc0sg7W5uzQmXwauXEnguVVpJLoK
+	 ExBaxVr+O8ADpbII2ZSgEQURfnL3pJln+FQvsp1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 092/143] libperf evlist: Avoid out-of-bounds access
-Date: Thu, 11 Apr 2024 11:56:00 +0200
-Message-ID: <20240411095423.678608335@linuxfoundation.org>
+Subject: [PATCH 6.8 057/143] drm/vc4: dont check if plane->state->fb == state->fb
+Date: Thu, 11 Apr 2024 11:55:25 +0200
+Message-ID: <20240411095422.633197221@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -46,130 +45,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 1947b92464c3268381604bbe2ac977a3fd78192f ]
+[ Upstream commit 5ee0d47dcf33efd8950b347dcf4d20bab12a3fa9 ]
 
-Parallel testing appears to show a race between allocating and setting
-evsel ids. As there is a bounds check on the xyarray it yields a segv
-like:
+Currently, when using non-blocking commits, we can see the following
+kernel warning:
 
-```
-AddressSanitizer:DEADLYSIGNAL
+[  110.908514] ------------[ cut here ]------------
+[  110.908529] refcount_t: underflow; use-after-free.
+[  110.908620] WARNING: CPU: 0 PID: 1866 at lib/refcount.c:87 refcount_dec_not_one+0xb8/0xc0
+[  110.908664] Modules linked in: rfcomm snd_seq_dummy snd_hrtimer snd_seq snd_seq_device cmac algif_hash aes_arm64 aes_generic algif_skcipher af_alg bnep hid_logitech_hidpp vc4 brcmfmac hci_uart btbcm brcmutil bluetooth snd_soc_hdmi_codec cfg80211 cec drm_display_helper drm_dma_helper drm_kms_helper snd_soc_core snd_compress snd_pcm_dmaengine fb_sys_fops sysimgblt syscopyarea sysfillrect raspberrypi_hwmon ecdh_generic ecc rfkill libaes i2c_bcm2835 binfmt_misc joydev snd_bcm2835(C) bcm2835_codec(C) bcm2835_isp(C) v4l2_mem2mem videobuf2_dma_contig snd_pcm bcm2835_v4l2(C) raspberrypi_gpiomem bcm2835_mmal_vchiq(C) videobuf2_v4l2 snd_timer videobuf2_vmalloc videobuf2_memops videobuf2_common snd videodev vc_sm_cma(C) mc hid_logitech_dj uio_pdrv_genirq uio i2c_dev drm fuse dm_mod drm_panel_orientation_quirks backlight ip_tables x_tables ipv6
+[  110.909086] CPU: 0 PID: 1866 Comm: kodi.bin Tainted: G         C         6.1.66-v8+ #32
+[  110.909104] Hardware name: Raspberry Pi 3 Model B Rev 1.2 (DT)
+[  110.909114] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  110.909132] pc : refcount_dec_not_one+0xb8/0xc0
+[  110.909152] lr : refcount_dec_not_one+0xb4/0xc0
+[  110.909170] sp : ffffffc00913b9c0
+[  110.909177] x29: ffffffc00913b9c0 x28: 000000556969bbb0 x27: 000000556990df60
+[  110.909205] x26: 0000000000000002 x25: 0000000000000004 x24: ffffff8004448480
+[  110.909230] x23: ffffff800570b500 x22: ffffff802e03a7bc x21: ffffffecfca68c78
+[  110.909257] x20: ffffff8002b42000 x19: ffffff802e03a600 x18: 0000000000000000
+[  110.909283] x17: 0000000000000011 x16: ffffffffffffffff x15: 0000000000000004
+[  110.909308] x14: 0000000000000fff x13: ffffffed577e47e0 x12: 0000000000000003
+[  110.909333] x11: 0000000000000000 x10: 0000000000000027 x9 : c912d0d083728c00
+[  110.909359] x8 : c912d0d083728c00 x7 : 65646e75203a745f x6 : 746e756f63666572
+[  110.909384] x5 : ffffffed579f62ee x4 : ffffffed579eb01e x3 : 0000000000000000
+[  110.909409] x2 : 0000000000000000 x1 : ffffffc00913b750 x0 : 0000000000000001
+[  110.909434] Call trace:
+[  110.909441]  refcount_dec_not_one+0xb8/0xc0
+[  110.909461]  vc4_bo_dec_usecnt+0x4c/0x1b0 [vc4]
+[  110.909903]  vc4_cleanup_fb+0x44/0x50 [vc4]
+[  110.910315]  drm_atomic_helper_cleanup_planes+0x88/0xa4 [drm_kms_helper]
+[  110.910669]  vc4_atomic_commit_tail+0x390/0x9dc [vc4]
+[  110.911079]  commit_tail+0xb0/0x164 [drm_kms_helper]
+[  110.911397]  drm_atomic_helper_commit+0x1d0/0x1f0 [drm_kms_helper]
+[  110.911716]  drm_atomic_commit+0xb0/0xdc [drm]
+[  110.912569]  drm_mode_atomic_ioctl+0x348/0x4b8 [drm]
+[  110.913330]  drm_ioctl_kernel+0xec/0x15c [drm]
+[  110.914091]  drm_ioctl+0x24c/0x3b0 [drm]
+[  110.914850]  __arm64_sys_ioctl+0x9c/0xd4
+[  110.914873]  invoke_syscall+0x4c/0x114
+[  110.914897]  el0_svc_common+0xd0/0x118
+[  110.914917]  do_el0_svc+0x38/0xd0
+[  110.914936]  el0_svc+0x30/0x8c
+[  110.914958]  el0t_64_sync_handler+0x84/0xf0
+[  110.914979]  el0t_64_sync+0x18c/0x190
+[  110.914996] ---[ end trace 0000000000000000 ]---
 
-=================================================================
+This happens because, although `prepare_fb` and `cleanup_fb` are
+perfectly balanced, we cannot guarantee consistency in the check
+plane->state->fb == state->fb. This means that sometimes we can increase
+the refcount in `prepare_fb` and don't decrease it in `cleanup_fb`. The
+opposite can also be true.
 
-==484408==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000010
+In fact, the struct drm_plane .state shouldn't be accessed directly
+but instead, the `drm_atomic_get_new_plane_state()` helper function should
+be used. So, we could stick to this check, but using
+`drm_atomic_get_new_plane_state()`. But actually, this check is not really
+needed. We can increase and decrease the refcount symmetrically without
+problems.
 
-==484408==The signal is caused by a WRITE memory access.
+This is going to make the code more simple and consistent.
 
-==484408==Hint: address points to the zero page.
-
-    #0 0x55cef5d4eff4 in perf_evlist__id_hash tools/lib/perf/evlist.c:256
-    #1 0x55cef5d4f132 in perf_evlist__id_add tools/lib/perf/evlist.c:274
-    #2 0x55cef5d4f545 in perf_evlist__id_add_fd tools/lib/perf/evlist.c:315
-    #3 0x55cef5a1923f in store_evsel_ids util/evsel.c:3130
-    #4 0x55cef5a19400 in evsel__store_ids util/evsel.c:3147
-    #5 0x55cef5888204 in __run_perf_stat tools/perf/builtin-stat.c:832
-    #6 0x55cef5888c06 in run_perf_stat tools/perf/builtin-stat.c:960
-    #7 0x55cef58932db in cmd_stat tools/perf/builtin-stat.c:2878
-...
-```
-
-Avoid this crash by early exiting the perf_evlist__id_add_fd and
-perf_evlist__id_add is the access is out-of-bounds.
-
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Yang Jihong <yangjihong1@huawei.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20240229070757.796244-1-irogers@google.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240105175908.242000-1-mcanal@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/perf/evlist.c                  | 18 ++++++++++++------
- tools/lib/perf/include/internal/evlist.h |  4 ++--
- 2 files changed, 14 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/vc4/vc4_plane.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/tools/lib/perf/evlist.c b/tools/lib/perf/evlist.c
-index 058e3ff10f9b2..c6d67fc9e57ef 100644
---- a/tools/lib/perf/evlist.c
-+++ b/tools/lib/perf/evlist.c
-@@ -248,10 +248,10 @@ u64 perf_evlist__read_format(struct perf_evlist *evlist)
+diff --git a/drivers/gpu/drm/vc4/vc4_plane.c b/drivers/gpu/drm/vc4/vc4_plane.c
+index 00e713faecd5a..5948e34f7f813 100644
+--- a/drivers/gpu/drm/vc4/vc4_plane.c
++++ b/drivers/gpu/drm/vc4/vc4_plane.c
+@@ -1505,9 +1505,6 @@ static int vc4_prepare_fb(struct drm_plane *plane,
  
- static void perf_evlist__id_hash(struct perf_evlist *evlist,
- 				 struct perf_evsel *evsel,
--				 int cpu, int thread, u64 id)
-+				 int cpu_map_idx, int thread, u64 id)
- {
- 	int hash;
--	struct perf_sample_id *sid = SID(evsel, cpu, thread);
-+	struct perf_sample_id *sid = SID(evsel, cpu_map_idx, thread);
+ 	drm_gem_plane_helper_prepare_fb(plane, state);
  
- 	sid->id = id;
- 	sid->evsel = evsel;
-@@ -269,21 +269,27 @@ void perf_evlist__reset_id_hash(struct perf_evlist *evlist)
- 
- void perf_evlist__id_add(struct perf_evlist *evlist,
- 			 struct perf_evsel *evsel,
--			 int cpu, int thread, u64 id)
-+			 int cpu_map_idx, int thread, u64 id)
- {
--	perf_evlist__id_hash(evlist, evsel, cpu, thread, id);
-+	if (!SID(evsel, cpu_map_idx, thread))
-+		return;
-+
-+	perf_evlist__id_hash(evlist, evsel, cpu_map_idx, thread, id);
- 	evsel->id[evsel->ids++] = id;
+-	if (plane->state->fb == state->fb)
+-		return 0;
+-
+ 	return vc4_bo_inc_usecnt(bo);
  }
  
- int perf_evlist__id_add_fd(struct perf_evlist *evlist,
- 			   struct perf_evsel *evsel,
--			   int cpu, int thread, int fd)
-+			   int cpu_map_idx, int thread, int fd)
+@@ -1516,7 +1513,7 @@ static void vc4_cleanup_fb(struct drm_plane *plane,
  {
- 	u64 read_data[4] = { 0, };
- 	int id_idx = 1; /* The first entry is the counter value */
- 	u64 id;
- 	int ret;
+ 	struct vc4_bo *bo;
  
-+	if (!SID(evsel, cpu_map_idx, thread))
-+		return -1;
-+
- 	ret = ioctl(fd, PERF_EVENT_IOC_ID, &id);
- 	if (!ret)
- 		goto add;
-@@ -312,7 +318,7 @@ int perf_evlist__id_add_fd(struct perf_evlist *evlist,
- 	id = read_data[id_idx];
+-	if (plane->state->fb == state->fb || !state->fb)
++	if (!state->fb)
+ 		return;
  
- add:
--	perf_evlist__id_add(evlist, evsel, cpu, thread, id);
-+	perf_evlist__id_add(evlist, evsel, cpu_map_idx, thread, id);
- 	return 0;
- }
- 
-diff --git a/tools/lib/perf/include/internal/evlist.h b/tools/lib/perf/include/internal/evlist.h
-index d86ffe8ed483e..f43bdb9b6227c 100644
---- a/tools/lib/perf/include/internal/evlist.h
-+++ b/tools/lib/perf/include/internal/evlist.h
-@@ -126,11 +126,11 @@ u64 perf_evlist__read_format(struct perf_evlist *evlist);
- 
- void perf_evlist__id_add(struct perf_evlist *evlist,
- 			 struct perf_evsel *evsel,
--			 int cpu, int thread, u64 id);
-+			 int cpu_map_idx, int thread, u64 id);
- 
- int perf_evlist__id_add_fd(struct perf_evlist *evlist,
- 			   struct perf_evsel *evsel,
--			   int cpu, int thread, int fd);
-+			   int cpu_map_idx, int thread, int fd);
- 
- void perf_evlist__reset_id_hash(struct perf_evlist *evlist);
- 
+ 	bo = to_vc4_bo(&drm_fb_dma_get_gem_obj(state->fb, 0)->base);
 -- 
 2.43.0
 
