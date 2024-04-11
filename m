@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7F0145B26;
-	Thu, 11 Apr 2024 10:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052701474B5;
+	Thu, 11 Apr 2024 10:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832395; cv=none; b=DH94PHliXR6OUyT7hYnt3GV4V/p1wtNk88+Zyor/D1b3PiN5y+jXBA8T1mYkAcQ3EtQCTni1amoG9sjwwCT27IRnnvlCr+b9Ra4+pGK20fain6z7J2JkoSkTt2y7YT5mzc9KC23nQ3QMxB8oGNimyYbgI4S/HcqEy/oQss0BHcY=
+	t=1712832399; cv=none; b=PKJ2quoAb6fkGAhZfJOBupy58b92ztUMQPxjSTYwyg6pBCVJmR8ESgrKbN+b//wYjA2zmB9GHAMf+V7tScBBSf3NmMf4b1MPjrNn6+9dJJZ12D4Z1KHt7fo2Nl6AoO4JItdHRYhLpr0JyZCG+rdNedTEu+LvxmQdL0rcigcOUYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832395; c=relaxed/simple;
-	bh=y702myDjg084U/dJBaB4n8UxBb+5ZlwUfzzilAM+G60=;
+	s=arc-20240116; t=1712832399; c=relaxed/simple;
+	bh=Kco5JMaFjAUoRVsbHooKLRG7iyL1zEzyTf3O5I/9YO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h8tcPudkGRH7FQ0c8Le+LCiYoWeAAKTqq3k/ztS+ubWHGSlPn1CZOloPeCwZkgHWpltZCSSpyARjueQ+ur16NY+vAsjn1ij9rqFyP2pPt3Sg0ulSuz41Cm7HeS0KqttGM9EcqrPwUWwPrIBdTe1vMwp10ZY1IjA3WQdZ/nPV2OM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IB4vrqSs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nMuSM9hC1UUEGNuNiPVw8/sRE0+1rGGqvk8op6J4tn+isJo08z44RZwf0usM7bGmD9u4isFiu6sQmowf/Jmh2LfOJH0MO8JWrHLev/s9Zrl3euC7893rtjGIJKfrb4NIgxObCc4FSWHOK0AFQi9s5vWZkXjbL9F9Lg1Sw37qVCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+24cxfX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IB4vrqSs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21327C433C7;
-	Thu, 11 Apr 2024 10:46:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+24cxfX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB7CC433F1;
+	Thu, 11 Apr 2024 10:46:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832395;
-	bh=y702myDjg084U/dJBaB4n8UxBb+5ZlwUfzzilAM+G60=;
+	s=korg; t=1712832398;
+	bh=Kco5JMaFjAUoRVsbHooKLRG7iyL1zEzyTf3O5I/9YO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IB4vrqSsX3AQBpomCqzZ7wlRrQDW5ASG0DeGLjprE37wKLf5Nb8BR3kxf7zS2Tbw6
-	 z4X6esW46hG7j/ERD/SyxFgUVVro6JNZm+IJ7dnDDoz4yAuFGSXdiAn7sCnQRjpPjq
-	 XPCh5q6Z47/ju21Ai54BlDfyoLi77qumKAkkMYsM=
+	b=m+24cxfXSETt2zKSgXG3/MPAMWkLFROHp5xnbfLMzNrFpXlbSCXE2UtaClYIdwjYF
+	 qHKS7AnLKB0pLiZAk+UYowslgFqJNMx5gOLfL2Pv01Ja9n1VeXC+A6OD7vhRJTWJJA
+	 JcofR9vFlCXsPw2CjneFh+Hsgz75HATRtEVgCPKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <elfring@users.sourceforge.net>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 04/83] batman-adv: Improve exception handling in batadv_throw_uevent()
-Date: Thu, 11 Apr 2024 11:56:36 +0200
-Message-ID: <20240411095412.808884195@linuxfoundation.org>
+Subject: [PATCH 6.1 05/83] wifi: rtw89: pci: enlarge RX DMA buffer to consider size of RX descriptor
+Date: Thu, 11 Apr 2024 11:56:37 +0200
+Message-ID: <20240411095412.838345239@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -52,69 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Elfring <elfring@users.sourceforge.net>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 5593e9abf1cf2bf096366d8c7fd933bc69d561ce ]
+[ Upstream commit c108b4a50dd7650941d4f4ec5c161655a73711db ]
 
-The kfree() function was called in up to three cases by
-the batadv_throw_uevent() function during error handling
-even if the passed variable contained a null pointer.
-This issue was detected by using the Coccinelle software.
+Hardware puts RX descriptor and packet in RX DMA buffer, so it could be
+over one buffer size if packet size is 11454, and then it will be split
+into two segments. WiFi 7 chips use larger size of RX descriptor, so
+enlarge DMA buffer size according to RX descriptor to have better
+performance and simple flow.
 
-* Thus adjust jump targets.
-
-* Reorder kfree() calls at the end.
-
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-Acked-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20240121071826.10159-5-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/main.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/wireless/realtek/rtw89/pci.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/batman-adv/main.c b/net/batman-adv/main.c
-index e8a4499155667..100e43f5e85aa 100644
---- a/net/batman-adv/main.c
-+++ b/net/batman-adv/main.c
-@@ -688,29 +688,31 @@ int batadv_throw_uevent(struct batadv_priv *bat_priv, enum batadv_uev_type type,
- 				  "%s%s", BATADV_UEV_TYPE_VAR,
- 				  batadv_uev_type_str[type]);
- 	if (!uevent_env[0])
--		goto out;
-+		goto report_error;
+diff --git a/drivers/net/wireless/realtek/rtw89/pci.h b/drivers/net/wireless/realtek/rtw89/pci.h
+index 179740607778a..d982c5dc0889f 100644
+--- a/drivers/net/wireless/realtek/rtw89/pci.h
++++ b/drivers/net/wireless/realtek/rtw89/pci.h
+@@ -546,7 +546,7 @@
+ #define RTW89_PCI_TXWD_NUM_MAX		512
+ #define RTW89_PCI_TXWD_PAGE_SIZE	128
+ #define RTW89_PCI_ADDRINFO_MAX		4
+-#define RTW89_PCI_RX_BUF_SIZE		11460
++#define RTW89_PCI_RX_BUF_SIZE		(11454 + 40) /* +40 for rtw89_rxdesc_long_v2 */
  
- 	uevent_env[1] = kasprintf(GFP_ATOMIC,
- 				  "%s%s", BATADV_UEV_ACTION_VAR,
- 				  batadv_uev_action_str[action]);
- 	if (!uevent_env[1])
--		goto out;
-+		goto free_first_env;
- 
- 	/* If the event is DEL, ignore the data field */
- 	if (action != BATADV_UEV_DEL) {
- 		uevent_env[2] = kasprintf(GFP_ATOMIC,
- 					  "%s%s", BATADV_UEV_DATA_VAR, data);
- 		if (!uevent_env[2])
--			goto out;
-+			goto free_second_env;
- 	}
- 
- 	ret = kobject_uevent_env(bat_kobj, KOBJ_CHANGE, uevent_env);
--out:
--	kfree(uevent_env[0]);
--	kfree(uevent_env[1]);
- 	kfree(uevent_env[2]);
-+free_second_env:
-+	kfree(uevent_env[1]);
-+free_first_env:
-+	kfree(uevent_env[0]);
- 
- 	if (ret)
-+report_error:
- 		batadv_dbg(BATADV_DBG_BATMAN, bat_priv,
- 			   "Impossible to send uevent for (%s,%s,%s) event (err: %d)\n",
- 			   batadv_uev_type_str[type],
+ #define RTW89_PCI_POLL_BDRAM_RST_CNT	100
+ #define RTW89_PCI_MULTITAG		8
 -- 
 2.43.0
 
