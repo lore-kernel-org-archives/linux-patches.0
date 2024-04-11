@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052701474B5;
-	Thu, 11 Apr 2024 10:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB47145B28;
+	Thu, 11 Apr 2024 10:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832399; cv=none; b=PKJ2quoAb6fkGAhZfJOBupy58b92ztUMQPxjSTYwyg6pBCVJmR8ESgrKbN+b//wYjA2zmB9GHAMf+V7tScBBSf3NmMf4b1MPjrNn6+9dJJZ12D4Z1KHt7fo2Nl6AoO4JItdHRYhLpr0JyZCG+rdNedTEu+LvxmQdL0rcigcOUYM=
+	t=1712832402; cv=none; b=NeCVP6+3ZCod9ZmBCR+gk6Qnx4u/DhItl9j87AkJxMvO94wEEl0jAXrL3K9DOkV1Wbafb9B59j8cW2bJw/iZfwRW1jGXVlnCtIVq0rF3WaPwNgCcPSlL6nlOlgYVWn5UTLjUJh/RvoRESgizOJJCjVr36rqhgWY96aLzvRJCLrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832399; c=relaxed/simple;
-	bh=Kco5JMaFjAUoRVsbHooKLRG7iyL1zEzyTf3O5I/9YO8=;
+	s=arc-20240116; t=1712832402; c=relaxed/simple;
+	bh=yOSzghHqMtFBXEMpVrbS9ikajyDqtf7D3s0/94xwGS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nMuSM9hC1UUEGNuNiPVw8/sRE0+1rGGqvk8op6J4tn+isJo08z44RZwf0usM7bGmD9u4isFiu6sQmowf/Jmh2LfOJH0MO8JWrHLev/s9Zrl3euC7893rtjGIJKfrb4NIgxObCc4FSWHOK0AFQi9s5vWZkXjbL9F9Lg1Sw37qVCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+24cxfX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cyeiaEPspJhv33RS/kSIUIJg0s+5Zn0vrm+j/5U70KXdNE0qAyFmWxVHbslKryhSAjhSi43fjjypKnDe82LIofJ5lTLidFX+AMTE4kcY0epx52HVE4+nxEmlwWQqWqqwT0xYeWb+EklmwfOmenM9+jwk1WP6qtHuvXA20vng9yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljCVbE1t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+24cxfX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB7CC433F1;
-	Thu, 11 Apr 2024 10:46:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljCVbE1t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FF9C433C7;
+	Thu, 11 Apr 2024 10:46:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832398;
-	bh=Kco5JMaFjAUoRVsbHooKLRG7iyL1zEzyTf3O5I/9YO8=;
+	s=korg; t=1712832401;
+	bh=yOSzghHqMtFBXEMpVrbS9ikajyDqtf7D3s0/94xwGS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+24cxfXSETt2zKSgXG3/MPAMWkLFROHp5xnbfLMzNrFpXlbSCXE2UtaClYIdwjYF
-	 qHKS7AnLKB0pLiZAk+UYowslgFqJNMx5gOLfL2Pv01Ja9n1VeXC+A6OD7vhRJTWJJA
-	 JcofR9vFlCXsPw2CjneFh+Hsgz75HATRtEVgCPKU=
+	b=ljCVbE1t4vMMg5s5nh0aVAVSL+EMnU2N/9D8hl/JDkzUUv+bzLSK5BTyt1hueh4w6
+	 bN5IPLpL5mDneSoc1N6gMcCMhHtVP1/CpgZkEa1/PtC8xJzjUUVnTolNgCjPEUqMQx
+	 qSdy30Qie46g4UKbmj4EFhjogoHAkXBARNyofAMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Kees Cook <keescook@chromium.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 05/83] wifi: rtw89: pci: enlarge RX DMA buffer to consider size of RX descriptor
-Date: Thu, 11 Apr 2024 11:56:37 +0200
-Message-ID: <20240411095412.838345239@linuxfoundation.org>
+Subject: [PATCH 6.1 06/83] VMCI: Fix memcpy() run-time warning in dg_dispatch_as_host()
+Date: Thu, 11 Apr 2024 11:56:38 +0200
+Message-ID: <20240411095412.867873554@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -51,37 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit c108b4a50dd7650941d4f4ec5c161655a73711db ]
+[ Upstream commit 19b070fefd0d024af3daa7329cbc0d00de5302ec ]
 
-Hardware puts RX descriptor and packet in RX DMA buffer, so it could be
-over one buffer size if packet size is 11454, and then it will be split
-into two segments. WiFi 7 chips use larger size of RX descriptor, so
-enlarge DMA buffer size according to RX descriptor to have better
-performance and simple flow.
+Syzkaller hit 'WARNING in dg_dispatch_as_host' bug.
 
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20240121071826.10159-5-pkshih@realtek.com
+memcpy: detected field-spanning write (size 56) of single field "&dg_info->msg"
+at drivers/misc/vmw_vmci/vmci_datagram.c:237 (size 24)
+
+WARNING: CPU: 0 PID: 1555 at drivers/misc/vmw_vmci/vmci_datagram.c:237
+dg_dispatch_as_host+0x88e/0xa60 drivers/misc/vmw_vmci/vmci_datagram.c:237
+
+Some code commentry, based on my understanding:
+
+544 #define VMCI_DG_SIZE(_dg) (VMCI_DG_HEADERSIZE + (size_t)(_dg)->payload_size)
+/// This is 24 + payload_size
+
+memcpy(&dg_info->msg, dg, dg_size);
+	Destination = dg_info->msg ---> this is a 24 byte
+					structure(struct vmci_datagram)
+	Source = dg --> this is a 24 byte structure (struct vmci_datagram)
+	Size = dg_size = 24 + payload_size
+
+{payload_size = 56-24 =32} -- Syzkaller managed to set payload_size to 32.
+
+ 35 struct delayed_datagram_info {
+ 36         struct datagram_entry *entry;
+ 37         struct work_struct work;
+ 38         bool in_dg_host_queue;
+ 39         /* msg and msg_payload must be together. */
+ 40         struct vmci_datagram msg;
+ 41         u8 msg_payload[];
+ 42 };
+
+So those extra bytes of payload are copied into msg_payload[], a run time
+warning is seen while fuzzing with Syzkaller.
+
+One possible way to fix the warning is to split the memcpy() into
+two parts -- one -- direct assignment of msg and second taking care of payload.
+
+Gustavo quoted:
+"Under FORTIFY_SOURCE we should not copy data across multiple members
+in a structure."
+
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Suggested-by: Vegard Nossum <vegard.nossum@oracle.com>
+Suggested-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240105164001.2129796-2-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/pci.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/vmw_vmci/vmci_datagram.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/pci.h b/drivers/net/wireless/realtek/rtw89/pci.h
-index 179740607778a..d982c5dc0889f 100644
---- a/drivers/net/wireless/realtek/rtw89/pci.h
-+++ b/drivers/net/wireless/realtek/rtw89/pci.h
-@@ -546,7 +546,7 @@
- #define RTW89_PCI_TXWD_NUM_MAX		512
- #define RTW89_PCI_TXWD_PAGE_SIZE	128
- #define RTW89_PCI_ADDRINFO_MAX		4
--#define RTW89_PCI_RX_BUF_SIZE		11460
-+#define RTW89_PCI_RX_BUF_SIZE		(11454 + 40) /* +40 for rtw89_rxdesc_long_v2 */
+diff --git a/drivers/misc/vmw_vmci/vmci_datagram.c b/drivers/misc/vmw_vmci/vmci_datagram.c
+index f50d22882476f..d1d8224c8800c 100644
+--- a/drivers/misc/vmw_vmci/vmci_datagram.c
++++ b/drivers/misc/vmw_vmci/vmci_datagram.c
+@@ -234,7 +234,8 @@ static int dg_dispatch_as_host(u32 context_id, struct vmci_datagram *dg)
  
- #define RTW89_PCI_POLL_BDRAM_RST_CNT	100
- #define RTW89_PCI_MULTITAG		8
+ 			dg_info->in_dg_host_queue = true;
+ 			dg_info->entry = dst_entry;
+-			memcpy(&dg_info->msg, dg, dg_size);
++			dg_info->msg = *dg;
++			memcpy(&dg_info->msg_payload, dg + 1, dg->payload_size);
+ 
+ 			INIT_WORK(&dg_info->work, dg_delayed_dispatch);
+ 			schedule_work(&dg_info->work);
 -- 
 2.43.0
 
