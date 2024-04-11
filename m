@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB622EAE5;
-	Thu, 11 Apr 2024 10:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277422EAE5;
+	Thu, 11 Apr 2024 10:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829673; cv=none; b=NlV7Clq0Vsuym2rWE2AR4le5G+Y5xLYAA7rdO2qkjNKkDIZU39hSkr99EK0xaS0qp6CS0FArL2+QzxMSGGjdATBU8oXobvON6fzokwaEMCuopjUcTey+nG6B9N7/CnHzwlv+Lb0P7T7VEOKvxyy6AWNA2snCB3MKkFuT0ZkwVgY=
+	t=1712829676; cv=none; b=fxx4x836YB/4C+ZrQNGnTY1XRLAHYixAdHYtztp7iLbV2INTlmyfilD4nRcp65t42YneRtG5QKobf8pcianTt0kyUKzNc9WiBG+Ib2suuJw3Jhge5u+2GyD0D80MKEWzbIrEUNngfbmlWp8K7pDK85doo8adEzU63fjnpso6rpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829673; c=relaxed/simple;
-	bh=SOkHgWFa73tdi/jq9TyhRFRdHOjMUymdAi7P6UjtY3w=;
+	s=arc-20240116; t=1712829676; c=relaxed/simple;
+	bh=9yV8KweV20qFNfXDLg8OulAdE1yn2tsbKgUYFTZ5UIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hnRMgjz4XTzHvGzu/AcVMiWCrYsIPRuAURO3Q8Tu5XjcA8ANEh1AAW94zBtqktpy+VCGDN/azCWa1e0hqJ72qJ5H9d6JgauMr1M0d08EPDNewVhnvJraU/W86LUGrsw0fLMt2xc9y2BsaB4QJNbI8FqH5CKxW8eATmb+b8gVR+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWVgMObq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=obVuqBGxjzGg9gD26aWHYZQjvP81y32PWOCH6pqh6uPGrXgAB+qRFg1/pmpghPyvNQg26ag3wLgwJbczXDBrpoBOiJ/IFcFmKg3IYSjrAqHqfBI1NxC+cVdon/0xiOnx8TTQphNnODCH3p4PJmNkzzGS1LNgMxJr4cg8/kskxPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJRcCpRG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWVgMObq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BC3C433F1;
-	Thu, 11 Apr 2024 10:01:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJRcCpRG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A49C433C7;
+	Thu, 11 Apr 2024 10:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829673;
-	bh=SOkHgWFa73tdi/jq9TyhRFRdHOjMUymdAi7P6UjtY3w=;
+	s=korg; t=1712829676;
+	bh=9yV8KweV20qFNfXDLg8OulAdE1yn2tsbKgUYFTZ5UIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zWVgMObqP8Vq4mw7IW2G727/c9BChy60j3neWdGSjVIfgmPYGMT3K34xQ7IivP78g
-	 W/Mx2/QeoqvulT3+jFARgCt9PhqKlwwA8dXSvLeKSTuqvzQ+JH9V2lCud6k8IlQ8tU
-	 9dKS4hk0XtHxqAhEiD3reprKXk4prHS1UzjpinKE=
+	b=tJRcCpRG37RTnrODjQ/If3mNL3JVJvsWVHsYAqgeJAs0H0swrOVhaKMGcYJ03xQoh
+	 XwS2qN4o3u4y88aVd19f1NwEGSDJ0a6ffdGol6HzUKedqJGhbmp/Z4M7rwHt3qiCbC
+	 AJEwXTDCgaOXjcEpI99/kh8nAfObZKasYqgTdKjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Dhruva Gole <d-gole@ti.com>,
+	Qingliang Li <qingliang.li@mediatek.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 066/175] x86/CPU/AMD: Update the Zenbleed microcode revisions
-Date: Thu, 11 Apr 2024 11:54:49 +0200
-Message-ID: <20240411095421.553029460@linuxfoundation.org>
+Subject: [PATCH 4.19 040/175] PM: sleep: wakeirq: fix wake irq warning in system suspend
+Date: Thu, 11 Apr 2024 11:54:23 +0200
+Message-ID: <20240411095420.765959094@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,42 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Qingliang Li <qingliang.li@mediatek.com>
 
-[ Upstream commit 5c84b051bd4e777cf37aaff983277e58c99618d5 ]
+[ Upstream commit e7a7681c859643f3f2476b2a28a494877fd89442 ]
 
-Update them to the correct revision numbers.
+When driver uses pm_runtime_force_suspend() as the system suspend callback
+function and registers the wake irq with reverse enable ordering, the wake
+irq will be re-enabled when entering system suspend, triggering an
+'Unbalanced enable for IRQ xxx' warning. In this scenario, the call
+sequence during system suspend is as follows:
+  suspend_devices_and_enter()
+    -> dpm_suspend_start()
+      -> dpm_run_callback()
+        -> pm_runtime_force_suspend()
+          -> dev_pm_enable_wake_irq_check()
+          -> dev_pm_enable_wake_irq_complete()
 
-Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+    -> suspend_enter()
+      -> dpm_suspend_noirq()
+        -> device_wakeup_arm_wake_irqs()
+          -> dev_pm_arm_wake_irq()
+
+To fix this issue, complete the setting of WAKE_IRQ_DEDICATED_ENABLED flag
+in dev_pm_enable_wake_irq_complete() to avoid redundant irq enablement.
+
+Fixes: 8527beb12087 ("PM: sleep: wakeirq: fix wake irq arming")
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Signed-off-by: Qingliang Li <qingliang.li@mediatek.com>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Cc: 5.16+ <stable@vger.kernel.org> # 5.16+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/amd.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/base/power/wakeirq.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
-index 5b75a4ff6802c..3f6188477e014 100644
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -988,11 +988,11 @@ static bool cpu_has_zenbleed_microcode(void)
- 	u32 good_rev = 0;
+diff --git a/drivers/base/power/wakeirq.c b/drivers/base/power/wakeirq.c
+index e7ba514999163..bc3637b45cbf7 100644
+--- a/drivers/base/power/wakeirq.c
++++ b/drivers/base/power/wakeirq.c
+@@ -376,8 +376,10 @@ void dev_pm_enable_wake_irq_complete(struct device *dev)
+ 		return;
  
- 	switch (boot_cpu_data.x86_model) {
--	case 0x30 ... 0x3f: good_rev = 0x0830107a; break;
--	case 0x60 ... 0x67: good_rev = 0x0860010b; break;
--	case 0x68 ... 0x6f: good_rev = 0x08608105; break;
--	case 0x70 ... 0x7f: good_rev = 0x08701032; break;
--	case 0xa0 ... 0xaf: good_rev = 0x08a00008; break;
-+	case 0x30 ... 0x3f: good_rev = 0x0830107b; break;
-+	case 0x60 ... 0x67: good_rev = 0x0860010c; break;
-+	case 0x68 ... 0x6f: good_rev = 0x08608107; break;
-+	case 0x70 ... 0x7f: good_rev = 0x08701033; break;
-+	case 0xa0 ... 0xaf: good_rev = 0x08a00009; break;
+ 	if (wirq->status & WAKE_IRQ_DEDICATED_MANAGED &&
+-	    wirq->status & WAKE_IRQ_DEDICATED_REVERSE)
++	    wirq->status & WAKE_IRQ_DEDICATED_REVERSE) {
+ 		enable_irq(wirq->irq);
++		wirq->status |= WAKE_IRQ_DEDICATED_ENABLED;
++	}
+ }
  
- 	default:
- 		return false;
+ /**
 -- 
 2.43.0
 
