@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFB7145FEE;
-	Thu, 11 Apr 2024 10:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DF5143C72;
+	Thu, 11 Apr 2024 10:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829611; cv=none; b=OH8dqbvjjddpXXZ3CsM/Gx7WMKmlXuZqtzYSbbP4Q9eu7fZ9L9Sm8qhqOjKD8c4F6trPeliXcboW3EeHqqLabCibYeA3RDK/kI83VXs+6ADJmcx1uQse6AJqRpphtqelmT4XDaQuyYGPKby88xPNx4g4QfhD2QFpHoOvDdWS8cU=
+	t=1712829614; cv=none; b=JHthTds2TcJTzT3zniQZmqrTMrBLIyuZZYtgEdsJhLiOLR3sPp6O8NfrNm3EWJpCvJHPgFnv/NKToOVuPOoScF1Fcknr79v1BNDR1gjuygojFWnSDd6NLpNi/z9d4vuKv6WDBNPZdbGjdyl+D9yxtuh7cdQKKqFpc4cIGKYk/XY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829611; c=relaxed/simple;
-	bh=G7FuUj2Lu5z4ownHij3AftbnZhNnR9dlW5SaUqziUdU=;
+	s=arc-20240116; t=1712829614; c=relaxed/simple;
+	bh=0YjjAcWMgqc260bYBP3kiFN7AYM5MScTdq3KU0Ufyz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W/soMiIA+CykCWZ/Tp+5mgpYqycySo5wBuC2RkPEZk/DYqACG3pVWm0NiKSreM9LzcKPYvzeG3RlUWCvJEO92Kqu4g2QKNebvgS5m0trAXo4pZqoVsyb9j9Vj7dHfiaknMTFZRUlfmpG9Jau/XR038BxNFUz1SHezHHzcT7TYK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ce3SATWj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bG7KygQulMzHfy2ncQXgvp0A47nTgtT3wsi57DOnuMHBfHnLSkA+PeShfoeq/BSvW1IgLnWV/sEbasmMAgLOJRU1V3ASb6uzCpUgxdOgm6Nlq5t5sQL7UczswPiigVxrBF44ixcDiKkgfTEsi1AiOS7rusCLH72NXBs+oywPe2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RqYhnB2h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ce3SATWj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FB2C433C7;
-	Thu, 11 Apr 2024 10:00:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqYhnB2h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F3F7C433C7;
+	Thu, 11 Apr 2024 10:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829611;
-	bh=G7FuUj2Lu5z4ownHij3AftbnZhNnR9dlW5SaUqziUdU=;
+	s=korg; t=1712829613;
+	bh=0YjjAcWMgqc260bYBP3kiFN7AYM5MScTdq3KU0Ufyz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ce3SATWjHlt79PZ+Y1gK3T1v3yKsEOFpP1o9Sb2JY0u6PZ92Vigc4FdYJzMeb4FAA
-	 iNnvMAqdfk2EFtIsq7lQUjkdzITt7h4JC4hMtuaiZaw/Vg3A5/ZrwUIYrKqh+W12Kp
-	 uOQpLpUXYeaHygwjSGMQHOLNjnZHB9VSxcKkTQH0=
+	b=RqYhnB2hgTrg6AlJV0Qwm+lBMOCquAj5Clj9qZCNVRSycB0SlfnYYyZ9sFTAY0Zym
+	 5XtOGUKYy4OQPyixvUvQbLuaF/U9d9Sz0dXPZvbi6qJfxZaLIYd+WJ3+9ItJetCbXd
+	 mKfMkAgFRZGK3pWQNkVsKCVV6qmy1C5WlApYG3j0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Aur=C3=A9lien=20Jacobs?= <aurel@gnuage.org>,
-	Johan Hovold <johan@kernel.org>,
+	Jorge Ramirez-Ortiz <jorge@foundries.io>,
+	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 038/175] USB: serial: option: add MeiG Smart SLM320 product
-Date: Thu, 11 Apr 2024 11:54:21 +0200
-Message-ID: <20240411095420.705551405@linuxfoundation.org>
+Subject: [PATCH 4.19 047/175] mmc: core: Fix switch on gp3 partition
+Date: Thu, 11 Apr 2024 11:54:30 +0200
+Message-ID: <20240411095420.983027638@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -45,87 +47,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aurélien Jacobs <aurel@gnuage.org>
+From: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
-[ Upstream commit 46809c51565b83881aede6cdf3b0d25254966a41 ]
+[ Upstream commit 4af59a8df5ea930038cd3355e822f5eedf4accc1 ]
 
-Update the USB serial option driver to support MeiG Smart SLM320.
+Commit e7794c14fd73 ("mmc: rpmb: fixes pause retune on all RPMB
+partitions.") added a mask check for 'part_type', but the mask used was
+wrong leading to the code intended for rpmb also being executed for GP3.
 
-ID 2dee:4d41 UNISOC UNISOC-8910
+On some MMCs (but not all) this would make gp3 partition inaccessible:
+armadillo:~# head -c 1 < /dev/mmcblk2gp3
+head: standard input: I/O error
+armadillo:~# dmesg -c
+[  422.976583] mmc2: running CQE recovery
+[  423.058182] mmc2: running CQE recovery
+[  423.137607] mmc2: running CQE recovery
+[  423.137802] blk_update_request: I/O error, dev mmcblk2gp3, sector 0 op 0x0:(READ) flags 0x80700 phys_seg 4 prio class 0
+[  423.237125] mmc2: running CQE recovery
+[  423.318206] mmc2: running CQE recovery
+[  423.397680] mmc2: running CQE recovery
+[  423.397837] blk_update_request: I/O error, dev mmcblk2gp3, sector 0 op 0x0:(READ) flags 0x0 phys_seg 1 prio class 0
+[  423.408287] Buffer I/O error on dev mmcblk2gp3, logical block 0, async page read
 
-T: Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 9 Spd=480 MxCh= 0
-D: Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs= 1
-P: Vendor=2dee ProdID=4d41 Rev=00.00
-S: Manufacturer=UNISOC
-S: Product=UNISOC-8910
-C: #Ifs= 8 Cfg#= 1 Atr=e0 MxPwr=400mA
-I: If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=08(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+the part_type values of interest here are defined as follow:
+main  0
+boot0 1
+boot1 2
+rpmb  3
+gp0   4
+gp1   5
+gp2   6
+gp3   7
 
-Tested successfully a PPP LTE connection using If#= 0.
-Not sure of the purpose of every other serial interfaces.
+so mask with EXT_CSD_PART_CONFIG_ACC_MASK (7) to correctly identify rpmb
 
-Signed-off-by: Aurélien Jacobs <aurel@gnuage.org>
+Fixes: e7794c14fd73 ("mmc: rpmb: fixes pause retune on all RPMB partitions.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Cc: Jorge Ramirez-Ortiz <jorge@foundries.io>
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20240306-mmc-partswitch-v1-1-bf116985d950@codewreck.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/mmc/core/block.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/serial/option.c b/drivers/usb/serial/option.c
-index 5014f45c7c6a0..7f4baceb540cd 100644
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -613,6 +613,11 @@ static void option_instat_callback(struct urb *urb);
- /* Luat Air72*U series based on UNISOC UIS8910 uses UNISOC's vendor ID */
- #define LUAT_PRODUCT_AIR720U			0x4e00
+diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
+index ef9422917e1ca..c3b329946429c 100644
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -851,10 +851,11 @@ static const struct block_device_operations mmc_bdops = {
+ static int mmc_blk_part_switch_pre(struct mmc_card *card,
+ 				   unsigned int part_type)
+ {
+-	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
++	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_MASK;
++	const unsigned int rpmb = EXT_CSD_PART_CONFIG_ACC_RPMB;
+ 	int ret = 0;
  
-+/* MeiG Smart Technology products */
-+#define MEIGSMART_VENDOR_ID			0x2dee
-+/* MeiG Smart SLM320 based on UNISOC UIS8910 */
-+#define MEIGSMART_PRODUCT_SLM320		0x4d41
-+
- /* Device flags */
+-	if ((part_type & mask) == mask) {
++	if ((part_type & mask) == rpmb) {
+ 		if (card->ext_csd.cmdq_en) {
+ 			ret = mmc_cmdq_disable(card);
+ 			if (ret)
+@@ -869,10 +870,11 @@ static int mmc_blk_part_switch_pre(struct mmc_card *card,
+ static int mmc_blk_part_switch_post(struct mmc_card *card,
+ 				    unsigned int part_type)
+ {
+-	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
++	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_MASK;
++	const unsigned int rpmb = EXT_CSD_PART_CONFIG_ACC_RPMB;
+ 	int ret = 0;
  
- /* Highest interface number which can be used with NCTRL() and RSVD() */
-@@ -2282,6 +2287,7 @@ static const struct usb_device_id option_ids[] = {
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM320, 0xff, 0, 0) },
- 	{ } /* Terminating entry */
- };
- MODULE_DEVICE_TABLE(usb, option_ids);
+-	if ((part_type & mask) == mask) {
++	if ((part_type & mask) == rpmb) {
+ 		mmc_retune_unpause(card->host);
+ 		if (card->reenable_cmdq && !card->ext_csd.cmdq_en)
+ 			ret = mmc_cmdq_enable(card);
 -- 
 2.43.0
 
