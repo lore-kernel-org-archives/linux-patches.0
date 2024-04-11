@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1A3143C72;
-	Thu, 11 Apr 2024 09:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC4313DDDD;
+	Thu, 11 Apr 2024 09:59:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829578; cv=none; b=az742IkBIi6wEKS9jGHPSV9sh2mVsX/kbeg6TgaxNFkqTt45Dv/U9yfG+Cr+uTlHztw38jx50YV9zuPUe3GtfrZ9u1NkVcn3ZR+GY71olzL8NfY4yscCfOAGZzDjzLiSC1IOj8qoNr1GlY1eL4/YkdczpN4wYqu7IiXgHs8K+yQ=
+	t=1712829581; cv=none; b=qU4N35YV2wFESQHUEslOBxbGa8jwXyRZNhKJogT+ZxrQ8LqwioJB2ss+SIPcTy54ckIRC+jygJ/rDP+lHCDJ2WUmHdORm4Yh9yAiX8kKQY4aJWIvZ4ybDl/GzWvV4V5sISpWqd5kaf5+l3f3u4eNVXnK4XIX49cYd4FO+i78PfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829578; c=relaxed/simple;
-	bh=VaveYaJ4NYeGlmB5W4ZXAP05K4b1DFcuqPme1X4DHKg=;
+	s=arc-20240116; t=1712829581; c=relaxed/simple;
+	bh=L3lqmdoF81WTYMBFBZkXyPE2EynvR3hhuXTKjiuyIKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RYj7/C+DIAICezG4tYMJL8ZVCbk+wZX4Eb0U0lOx/yaK6qLptu0CGgFqggIv+RuUnz7CyIntQvGQLe7Zc8s1QonuJQ6xKR9XzMKEHx2HJi2XmXP1L0I0H+yfdrV2OveYt/VJE8BWSHrLdAPnjhhNVsQoT5A4u6vhAyLj8FxqnB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=heIvpsXb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d3RVL9n8rhXDrGe1x9dazcROIxRXhqW7leIodbChgTQIvBGOyawzFyEIvxPjtKXUaPFvHLa64LykWUTG1DpecoAQC+No2XkEpn5Cq81eY2pPUY32AOV4Ww1vCWs0QzfJbjqhleIZHJtkhvvp7jqRGlVn+DvFGH1LlR5cLQMD+TI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgfzXg9L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="heIvpsXb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9226C433C7;
-	Thu, 11 Apr 2024 09:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgfzXg9L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B90B0C433C7;
+	Thu, 11 Apr 2024 09:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829578;
-	bh=VaveYaJ4NYeGlmB5W4ZXAP05K4b1DFcuqPme1X4DHKg=;
+	s=korg; t=1712829581;
+	bh=L3lqmdoF81WTYMBFBZkXyPE2EynvR3hhuXTKjiuyIKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=heIvpsXb97//LBbqbgTG++E7czDzj55mukCIHY2GcEo/Nc1YH7NfcpGEWdf7QEAYy
-	 WtVEJyGAUmWERpmJGbqxDQZl66OxYKH5n2TmXcwu+ngThLnv6QaM68aIoC0mrOKdsH
-	 BX/q6p9hY8huvAixnML3on20Hq/smFTzAf2cY0Z4=
+	b=OgfzXg9LXPtcTeAU3ZI8Fdio3EO9wYYvAbOxkCj6AxBxOSnd2Mi3aMV5t3Aj30NTb
+	 lEK9dyp1AAJYGAWaM6FnxTTj8eRqDSaTIC0/IZutlx43z/8GD5UAwxCjdWPvgvVwlq
+	 mxW3I9txp7IK2J/bHGkLVdXaNa6qea/mX3TS8jh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jan-Benedict Glaw <jbglaw@lug-owl.de>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 033/175] clk: qcom: mmcc-msm8974: fix terminating of frequency table arrays
-Date: Thu, 11 Apr 2024 11:54:16 +0200
-Message-ID: <20240411095420.555150255@linuxfoundation.org>
+Subject: [PATCH 4.19 034/175] powerpc/fsl: Fix mfpmr build errors with newer binutils
+Date: Thu, 11 Apr 2024 11:54:17 +0200
+Message-ID: <20240411095420.584236272@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,49 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit e2c02a85bf53ae86d79b5fccf0a75ac0b78e0c96 ]
+[ Upstream commit 5f491356b7149564ab22323ccce79c8d595bfd0c ]
 
-The frequency table arrays are supposed to be terminated with an
-empty element. Add such entry to the end of the arrays where it
-is missing in order to avoid possible out-of-bound access when
-the table is traversed by functions like qcom_find_freq() or
-qcom_find_freq_floor().
+Binutils 2.38 complains about the use of mfpmr when building
+ppc6xx_defconfig:
 
-Only compile tested.
+    CC      arch/powerpc/kernel/pmc.o
+  {standard input}: Assembler messages:
+  {standard input}:45: Error: unrecognized opcode: `mfpmr'
+  {standard input}:56: Error: unrecognized opcode: `mtpmr'
 
-Fixes: d8b212014e69 ("clk: qcom: Add support for MSM8974's multimedia clock controller (MMCC)")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+This is because by default the kernel is built with -mcpu=powerpc, and
+the mt/mfpmr instructions are not defined.
+
+It can be avoided by enabling CONFIG_E300C3_CPU, but just adding that to
+the defconfig will leave open the possibility of randconfig failures.
+
+So add machine directives around the mt/mfpmr instructions to tell
+binutils how to assemble them.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240229-freq-table-terminator-v1-7-074334f0905c@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reported-by: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240229122521.762431-3-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/mmcc-msm8974.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/include/asm/reg_fsl_emb.h | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8974.c
-index 91818516c3e0c..124d21f19e2c7 100644
---- a/drivers/clk/qcom/mmcc-msm8974.c
-+++ b/drivers/clk/qcom/mmcc-msm8974.c
-@@ -291,6 +291,7 @@ static struct freq_tbl ftbl_mmss_axi_clk[] = {
- 	F(291750000, P_MMPLL1, 4, 0, 0),
- 	F(400000000, P_MMPLL0, 2, 0, 0),
- 	F(466800000, P_MMPLL1, 2.5, 0, 0),
-+	{ }
- };
+diff --git a/arch/powerpc/include/asm/reg_fsl_emb.h b/arch/powerpc/include/asm/reg_fsl_emb.h
+index a21f529c43d96..8359c06d92d9f 100644
+--- a/arch/powerpc/include/asm/reg_fsl_emb.h
++++ b/arch/powerpc/include/asm/reg_fsl_emb.h
+@@ -12,9 +12,16 @@
+ #ifndef __ASSEMBLY__
+ /* Performance Monitor Registers */
+ #define mfpmr(rn)	({unsigned int rval; \
+-			asm volatile("mfpmr %0," __stringify(rn) \
++			asm volatile(".machine push; " \
++				     ".machine e300; " \
++				     "mfpmr %0," __stringify(rn) ";" \
++				     ".machine pop; " \
+ 				     : "=r" (rval)); rval;})
+-#define mtpmr(rn, v)	asm volatile("mtpmr " __stringify(rn) ",%0" : : "r" (v))
++#define mtpmr(rn, v)	asm volatile(".machine push; " \
++				     ".machine e300; " \
++				     "mtpmr " __stringify(rn) ",%0; " \
++				     ".machine pop; " \
++				     : : "r" (v))
+ #endif /* __ASSEMBLY__ */
  
- static struct clk_rcg2 mmss_axi_clk_src = {
-@@ -315,6 +316,7 @@ static struct freq_tbl ftbl_ocmemnoc_clk[] = {
- 	F(150000000, P_GPLL0, 4, 0, 0),
- 	F(291750000, P_MMPLL1, 4, 0, 0),
- 	F(400000000, P_MMPLL0, 2, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 ocmemnoc_clk_src = {
+ /* Freescale Book E Performance Monitor APU Registers */
 -- 
 2.43.0
 
