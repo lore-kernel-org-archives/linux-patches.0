@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DFD1F5FA;
-	Thu, 11 Apr 2024 10:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFB91F5FA;
+	Thu, 11 Apr 2024 10:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830184; cv=none; b=oCNkRji16+GZ8imep6DnLjdtvGBjQMNnufM0j0s3NFyTi7c1yyBk6Fkor1LWP3Gd8Hg+uiu0PC8oHzwSucFOu+MQxgoKzqImh/pvryemBKx7xUwnuHWguFJjdst1jbMkz0WbWZXUB7lo5o5NKJFaKhZ3iycAi124NjORvUzhN6w=
+	t=1712830187; cv=none; b=l4/RsQzc2psR6EyJxbZE34PTy+ElYT/yQ43h1P7nWQn3j8m+8eZ/04uG0d720iLXv+ODmliSKR+p9tV/OACiBtrfyMsynLzcdQKhfmnOLSw+DhKS6Hp7DJKCdNVlYv4d3zjYZlXS7rpU0iuMeayIx4loAJwVfMm4w8CnmWMHMnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830184; c=relaxed/simple;
-	bh=b4VnElRLTuk9Or90sm5QDjFPW8GyS0X8UBhdRsyKn9Y=;
+	s=arc-20240116; t=1712830187; c=relaxed/simple;
+	bh=WwyeADEeMw1Gg2vxlnGLqulJrBtuuF972j9T27kkmq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LGZAzFfL3ThoVcuf51wCchz+cewqU8G+ioXByO+pezNcJ3D43Vst08dWt+WUNZeH1O9wjXXEt6XexmN0CJtvZjK7FbGT7s4eRb0+Dl5lnA7KH0GZWNl7CNOkjUqNsleAZgwIov03yv+VGvqpXvwE37WjK3aIYxQqMPWvhfRN+n8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xadiSLCc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KxJuDVBlAoyz04BLGIjahiwm3Vq3CdKxKkZWy9hl3kqkzZjV2wMseT8gd5yQ/LYzFsoEPJCy3sg+B7s32FwhFjE0aZcfTPj0FgSiHvpEy1kw5QIC7BDKJv225fTp1IfRNDr78voShXGkCQNZoQ7NtXYeOMonvoBIAHXukl4zcSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/1yRuh0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xadiSLCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB92C433F1;
-	Thu, 11 Apr 2024 10:09:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/1yRuh0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6534C43390;
+	Thu, 11 Apr 2024 10:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830184;
-	bh=b4VnElRLTuk9Or90sm5QDjFPW8GyS0X8UBhdRsyKn9Y=;
+	s=korg; t=1712830187;
+	bh=WwyeADEeMw1Gg2vxlnGLqulJrBtuuF972j9T27kkmq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xadiSLCcM3cNaEIKhNrjhhaFVGGMxoPRuEzDHXKaPenb0hn5UIVS8ShPv1vFurNW5
-	 0+YKLmdJMprR0eNY/q9N6UtsyFEXzFT6nhBBJCprpWOU+Q5S/qQlzaijRxgW5Nyrm/
-	 AE18yiblWZCl1xJgGNEqxwHbEThbjcBGuov3MXp8=
+	b=V/1yRuh070I1JmPC73DJn2dOIfk79RAowK8Sv+PSlGGl+jnD0hLeGII0quqsf5A8O
+	 4C1j1BD+KWdW1ykjfySZFtImPtNsTKUv9pQrXmPklLuRiNiQZYpLkHuRgnNmqJGAB7
+	 8kNkmq0LnywhZwjdEL5Ev0gUkaEjLCO0QEKasxEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Chanudet <echanude@redhat.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 6.8 064/143] scsi: ufs: qcom: Avoid re-init quirk when gears match
-Date: Thu, 11 Apr 2024 11:55:32 +0200
-Message-ID: <20240411095422.842529080@linuxfoundation.org>
+	Chaitanya Dhere <chaitanya.dhere@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Sohaib Nadeem <sohaib.nadeem@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 065/143] drm/amd/display: increased min_dcfclk_mhz and min_fclk_mhz
+Date: Thu, 11 Apr 2024 11:55:33 +0200
+Message-ID: <20240411095422.873221496@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -53,54 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Chanudet <echanude@redhat.com>
+From: Sohaib Nadeem <sohaib.nadeem@amd.com>
 
-[ Upstream commit 10a39667a117daf0c1baaebcbe589715ee79178b ]
+[ Upstream commit d46fb0068c54d3dc95ae8298299c4d9edb0fb7c1 ]
 
-On sa8775p-ride, probing the HBA will go through the
-UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH path although the power info is
-the same during the second init.
+[why]
+Originally, PMFW said min FCLK is 300Mhz, but min DCFCLK can be increased
+to 400Mhz because min FCLK is now 600Mhz so FCLK >= 1.5 * DCFCLK hardware
+requirement will still be satisfied. Increasing min DCFCLK addresses
+underflow issues (underflow occurs when phantom pipe is turned on for some
+Sub-Viewport configs).
 
-The REINIT quirk only applies starting with controller v4. For these,
-ufs_qcom_get_hs_gear() reads the highest supported gear when setting the
-host_params. After the negotiation, if the host and device are on the same
-gear, it is the highest gear supported between the two. Skip REINIT to save
-some time.
+[how]
+Increasing DCFCLK by raising the min_dcfclk_mhz
 
-Signed-off-by: Eric Chanudet <echanude@redhat.com>
-Link: https://lore.kernel.org/r/20240123192854.1724905-4-echanude@redhat.com
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8775p-ride
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Chaitanya Dhere <chaitanya.dhere@amd.com>
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Sohaib Nadeem <sohaib.nadeem@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 3d43c7ac7a3f8..f532e2c004a25 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -738,8 +738,17 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
- 		 * the second init can program the optimal PHY settings. This allows one to start
- 		 * the first init with either the minimum or the maximum support gear.
- 		 */
--		if (hba->ufshcd_state == UFSHCD_STATE_RESET)
--			host->phy_gear = dev_req_params->gear_tx;
-+		if (hba->ufshcd_state == UFSHCD_STATE_RESET) {
-+			/*
-+			 * Skip REINIT if the negotiated gear matches with the
-+			 * initial phy_gear. Otherwise, update the phy_gear to
-+			 * program the optimal gear setting during REINIT.
-+			 */
-+			if (host->phy_gear == dev_req_params->gear_tx)
-+				hba->quirks &= ~UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
-+			else
-+				host->phy_gear = dev_req_params->gear_tx;
-+		}
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index a0a65e0991041..ba76dd4a2ce29 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -2760,7 +2760,7 @@ static int build_synthetic_soc_states(bool disable_dc_mode_overwrite, struct clk
+ 	struct _vcs_dpi_voltage_scaling_st entry = {0};
+ 	struct clk_limit_table_entry max_clk_data = {0};
  
- 		/* enable the device ref clock before changing to HS mode */
- 		if (!ufshcd_is_hs_mode(&hba->pwr_info) &&
+-	unsigned int min_dcfclk_mhz = 199, min_fclk_mhz = 299;
++	unsigned int min_dcfclk_mhz = 399, min_fclk_mhz = 599;
+ 
+ 	static const unsigned int num_dcfclk_stas = 5;
+ 	unsigned int dcfclk_sta_targets[DC__VOLTAGE_STATES] = {199, 615, 906, 1324, 1564};
 -- 
 2.43.0
 
