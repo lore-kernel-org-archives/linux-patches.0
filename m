@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70822146A77;
-	Thu, 11 Apr 2024 10:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56538146A64;
+	Thu, 11 Apr 2024 10:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831031; cv=none; b=ANc7g7WpLvr+SKBx6odRjXzKcrvEnhC//1tIGem5sLhWmc400XLxs5pP4O61pzanghTDu+DSAj1MA8A7gJJYynCpo69fP1Ur+d9V9gwi1k19JsyKnLF12MhYxql3V0DSaOElsJv5ggruOjfyZqsYS3L/ScuHKflpfJ0YP1muPr8=
+	t=1712831034; cv=none; b=qZZfDeEC98pAzYo4FgajkI9SvsrYLYRTTsWYCLEaRa4rfKu64FNme/baFLjuQHIOu2Xna0UOVA7jCp/CfxZbvoNhtxu8Zi6yDkZlwxtMyTT667Q2YDsEYplU/WmguMGSKci4zJvjqb7IMRySSh7YtDRAYoj2nzYV9mzkUk8fHHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831031; c=relaxed/simple;
-	bh=3/tv+lpk42s6LiBM6zoTvIgktOQ+afs3Zj+SIUbEIJk=;
+	s=arc-20240116; t=1712831034; c=relaxed/simple;
+	bh=fSAXaUo0l0NsWcJ9YSBEb0i2CUN6pYDGVqlOAS6O+T8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AKz411GMd7GR4KFmkP4kWwLZOOUVWkqNFV7M7Zz3nEJALChoTjF78Dt9hot/xjP8dMS1SGl+QdDGNL2lylQsX1Q7+R4rfU2iUWnxQy8QCjWvvxSKK89J3ZMnDg7xSqFqy8r18Kt63cfCUSSkyDk5VLg2nn9OjmZ6naKf76IlmIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+gq4Ux7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uu0NOjWxSVjYXGVGQ0zAfmkgUGCbQI01vMuq6FZ9oZa7jzAN7ogGxxDaYWbyKD/6j8Ybm6LBlPXsBgdcMDRTbUFXU1+FIej5EtaR8ts/PotzpwAfskuh+xHc+ym5ofZBq86tK1XvmCjFP/zeC3D+bci6AqmG/vZTkvxoELMgWSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rngwmlw3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+gq4Ux7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A01C43390;
-	Thu, 11 Apr 2024 10:23:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rngwmlw3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA32C433F1;
+	Thu, 11 Apr 2024 10:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831031;
-	bh=3/tv+lpk42s6LiBM6zoTvIgktOQ+afs3Zj+SIUbEIJk=;
+	s=korg; t=1712831034;
+	bh=fSAXaUo0l0NsWcJ9YSBEb0i2CUN6pYDGVqlOAS6O+T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c+gq4Ux7mvtYxUY3x4YTlneUMHH2E3Y5KpmgKC9bS1GSxO4ijgNeBJTnnPhsSUKMC
-	 dCVSBoa6JYgg1tAR6FN0lNdXRH3DNqyr2xl6YcMbL8EeZCnUXQbF/jeWzpr90tBqKc
-	 bhs1cJUZw0ES3wBvDAaQuPTOrzhMfg8EmiTdoGEY=
+	b=rngwmlw3cCz+IDK8kgM13PfUWb3fudjrf7HjotCWz3oqSR1X12enDnz2F8SUW1GwK
+	 BnywMOcPjsdgahHmRhVv3saKNrkEA/e9NgLv7kf64WAtOpuZHbWsHDNIO9zOhcUQrD
+	 YVMQFncBweDb3OkCyzBbw5Mi5kSjxhswjDHYv3jQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 201/215] netfilter: nf_tables: reject new basechain after table flag update
-Date: Thu, 11 Apr 2024 11:56:50 +0200
-Message-ID: <20240411095430.899725492@linuxfoundation.org>
+Subject: [PATCH 5.4 202/215] netfilter: nf_tables: release batch on table validation from abort path
+Date: Thu, 11 Apr 2024 11:56:51 +0200
+Message-ID: <20240411095430.929370795@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -52,60 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 994209ddf4f430946f6247616b2e33d179243769 upstream.
+commit a45e6889575c2067d3c0212b6bc1022891e65b91 upstream.
 
-When dormant flag is toggled, hooks are disabled in the commit phase by
-iterating over current chains in table (existing and new).
+Unlike early commit path stage which triggers a call to abort, an
+explicit release of the batch is required on abort, otherwise mutex is
+released and commit_list remains in place.
 
-The following configuration allows for an inconsistent state:
+Add WARN_ON_ONCE to ensure commit_list is empty from the abort path
+before releasing the mutex.
 
-  add table x
-  add chain x y { type filter hook input priority 0; }
-  add table x { flags dormant; }
-  add chain x w { type filter hook input priority 1; }
+After this patch, commit_list is always assumed to be empty before
+grabbing the mutex, therefore
 
-which triggers the following warning when trying to unregister chain w
-which is already unregistered.
+  03c1f1ef1584 ("netfilter: Cleanup nft_net->module_list from nf_tables_exit_net()")
 
-[  127.322252] WARNING: CPU: 7 PID: 1211 at net/netfilter/core.c:50                                                                     1 __nf_unregister_net_hook+0x21a/0x260
-[...]
-[  127.322519] Call Trace:
-[  127.322521]  <TASK>
-[  127.322524]  ? __warn+0x9f/0x1a0
-[  127.322531]  ? __nf_unregister_net_hook+0x21a/0x260
-[  127.322537]  ? report_bug+0x1b1/0x1e0
-[  127.322545]  ? handle_bug+0x3c/0x70
-[  127.322552]  ? exc_invalid_op+0x17/0x40
-[  127.322556]  ? asm_exc_invalid_op+0x1a/0x20
-[  127.322563]  ? kasan_save_free_info+0x3b/0x60
-[  127.322570]  ? __nf_unregister_net_hook+0x6a/0x260
-[  127.322577]  ? __nf_unregister_net_hook+0x21a/0x260
-[  127.322583]  ? __nf_unregister_net_hook+0x6a/0x260
-[  127.322590]  ? __nf_tables_unregister_hook+0x8a/0xe0 [nf_tables]
-[  127.322655]  nft_table_disable+0x75/0xf0 [nf_tables]
-[  127.322717]  nf_tables_commit+0x2571/0x2620 [nf_tables]
+only needs to release the pending modules for registration.
 
-Fixes: 179d9ba5559a ("netfilter: nf_tables: fix table flag updates")
+Cc: stable@vger.kernel.org
+Fixes: c0391b6ab810 ("netfilter: nf_tables: missing validation from the abort path")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/netfilter/nf_tables_api.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 7c98536e9eae2..f4821d64c2fd8 100644
+index f4821d64c2fd8..b719f3517caf1 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -1805,6 +1805,9 @@ static int nf_tables_addchain(struct nft_ctx *ctx, u8 family, u8 genmask,
- 		struct nft_chain_hook hook;
- 		struct nf_hook_ops *ops;
+@@ -7564,10 +7564,11 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 	struct nftables_pernet *nft_net = net_generic(net, nf_tables_net_id);
+ 	struct nft_trans *trans, *next;
+ 	struct nft_trans_elem *te;
++	int err = 0;
  
-+		if (table->flags & __NFT_TABLE_F_UPDATE)
-+			return -EINVAL;
+ 	if (action == NFNL_ABORT_VALIDATE &&
+ 	    nf_tables_validate(net) < 0)
+-		return -EAGAIN;
++		err = -EAGAIN;
+ 
+ 	list_for_each_entry_safe_reverse(trans, next, &nft_net->commit_list,
+ 					 list) {
+@@ -7700,7 +7701,7 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 	else
+ 		nf_tables_module_autoload_cleanup(net);
+ 
+-	return 0;
++	return err;
+ }
+ 
+ static int nf_tables_abort(struct net *net, struct sk_buff *skb,
+@@ -7714,6 +7715,8 @@ static int nf_tables_abort(struct net *net, struct sk_buff *skb,
+ 	ret = __nf_tables_abort(net, action);
+ 	nft_gc_seq_end(nft_net, gc_seq);
+ 
++	WARN_ON_ONCE(!list_empty(&nft_net->commit_list));
 +
- 		err = nft_chain_parse_hook(net, nla, &hook, family, true);
- 		if (err < 0)
- 			return err;
+ 	mutex_unlock(&nft_net->commit_mutex);
+ 
+ 	return ret;
+@@ -8400,8 +8403,11 @@ static void __net_exit nf_tables_exit_net(struct net *net)
+ 
+ 	gc_seq = nft_gc_seq_begin(nft_net);
+ 
+-	if (!list_empty(&nft_net->commit_list))
+-		__nf_tables_abort(net, NFNL_ABORT_NONE);
++	WARN_ON_ONCE(!list_empty(&nft_net->commit_list));
++
++	if (!list_empty(&nft_net->module_list))
++		nf_tables_module_autoload_cleanup(net);
++
+ 	__nft_release_tables(net);
+ 
+ 	nft_gc_seq_end(nft_net, gc_seq);
 -- 
 2.43.0
 
