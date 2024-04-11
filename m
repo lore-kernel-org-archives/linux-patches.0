@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339AF1442F7;
-	Thu, 11 Apr 2024 10:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C06145B07;
+	Thu, 11 Apr 2024 10:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830019; cv=none; b=KDtF2PYamnqkLiO2X87SQQTwav2XZm+JWeFA2uC8jtnG7njW60lzfTkU0u3y4MoiYav24BG3aYtsJ0Zlgf759Dwwm+L7qNDVIzRhnVqrxUhM1ftdH8eXa3sqPd1c+DIvKYjIQ0NAMLt05rrGU9DsLTHUDN0TsN8kwsWfaCkf1FU=
+	t=1712830022; cv=none; b=E2kIkoJ/9YdmgXYbRMGhFdNNcewXilSwyDc3Ukn7Fkt6VhKGRs56Uss80cV9nJCf7WOEhNVqL7DzC5LmBu5FKJkpCjOS7yX+KiKhoUee50jyNFslfrsz/UvG25aTlkfMtujOeSUU1ssgJf0yH9KX37PIHcvunESJnZ7umKgcsnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830019; c=relaxed/simple;
-	bh=IEceZIKMOKvpF47ylPfp42eyVcot8W554PgQYWZ+EwQ=;
+	s=arc-20240116; t=1712830022; c=relaxed/simple;
+	bh=tjYklrTa49j4r/CXjXRYzIJi8Zd6XKW7w4Q9GiHpDaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XbZwLWNrYYx47g+VTkXOWm6rCBkWRZEowaQqG0y+URDuzcryPadhTjoxyTtIQTa2sSYmpdK9mJME5Ws5rLMVsBWh6HcJnVU8yEK0ltSaSC555M7bViErJYbkPrlMHJnjCrOjherxOGuCMSqYCijoTwt/J2rK6gGSifN8SUTSwaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKhE6D/i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uDIcZHo8V9X2VagN2L2NgVRxVMFafWBdA2LGcuyJvitz/h1MSKOLLaikY6HA1rztoRv/lX22Ir/QFqCQvopJKcSToe3u+8FAhu0CjSD7duv9ZMu36SAIBMGdg49zUncMVjHtH3SOcxafj9Ncfg/P00ERhB2dH8KRCNeQZZrJEqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k64M3J36; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKhE6D/i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64C0C43390;
-	Thu, 11 Apr 2024 10:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k64M3J36"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D66C43390;
+	Thu, 11 Apr 2024 10:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830019;
-	bh=IEceZIKMOKvpF47ylPfp42eyVcot8W554PgQYWZ+EwQ=;
+	s=korg; t=1712830022;
+	bh=tjYklrTa49j4r/CXjXRYzIJi8Zd6XKW7w4Q9GiHpDaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AKhE6D/iiWIcBz4/EZVLsuc0baCT+uIUC7ovpBLD4I26kKGYbqk9d9jkkXs0XTJgI
-	 3BfUsScQvqSF9Y2bOB++YGDlGlE/uDCLK9/1uGu0BEbWl1qQItUAqd27yiZaru1XSw
-	 z9XG6r1Py2dQOYGGA/KbrQtPCsNoVkuIHxshbYyk=
+	b=k64M3J36cyv5YPFTzuyVbOTuKy3DJxFPCtO/Fw4VgWnAZ5tr+uV7bHcPJYHEd9EOa
+	 NOQStU94fFnNSm63eFQWUUadlZr2SqALjJ2C4L/8N/DeLMbcCMG50pKZ/eqBJWn1Fp
+	 n8EWpli48hCtgF0rYCG0RmxzzOo1NE0FnLa1xKS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gergo Koteles <soyer@irl.hu>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 161/175] Input: allocate keycode for Display refresh rate toggle
-Date: Thu, 11 Apr 2024 11:56:24 +0200
-Message-ID: <20240411095424.411417201@linuxfoundation.org>
+Subject: [PATCH 6.8 001/143] wifi: ath9k: fix LNA selection in ath_ant_try_scan()
+Date: Thu, 11 Apr 2024 11:54:29 +0200
+Message-ID: <20240411095420.950891773@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
-References: <20240411095419.532012976@linuxfoundation.org>
+In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
+References: <20240411095420.903937140@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,42 +49,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-4.19-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gergo Koteles <soyer@irl.hu>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit cfeb98b95fff25c442f78a6f616c627bc48a26b7 ]
+[ Upstream commit d6b27eb997ef9a2aa51633b3111bc4a04748e6d3 ]
 
-Newer Lenovo Yogas and Legions with 60Hz/90Hz displays send a wmi event
-when Fn + R is pressed. This is intended for use to switch between the
-two refresh rates.
+In 'ath_ant_try_scan()', (most likely) the 2nd LNA's signal
+strength should be used in comparison against RSSI when
+selecting first LNA as the main one. Compile tested only.
 
-Allocate a new KEY_REFRESH_RATE_TOGGLE keycode for it.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://lore.kernel.org/r/15a5d08c84cf4d7b820de34ebbcf8ae2502fb3ca.1710065750.git.soyer@irl.hu
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20231211172502.25202-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/input-event-codes.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ath/ath9k/antenna.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/input-event-codes.h b/include/uapi/linux/input-event-codes.h
-index 1c011379a9967..76b524895dea6 100644
---- a/include/uapi/linux/input-event-codes.h
-+++ b/include/uapi/linux/input-event-codes.h
-@@ -596,6 +596,7 @@
- 
- #define KEY_ALS_TOGGLE		0x230	/* Ambient light sensor */
- #define KEY_ROTATE_LOCK_TOGGLE	0x231	/* Display rotation lock */
-+#define KEY_REFRESH_RATE_TOGGLE	0x232	/* Display refresh rate toggle */
- 
- #define KEY_BUTTONCONFIG		0x240	/* AL Button Configuration */
- #define KEY_TASKMANAGER		0x241	/* AL Task/Project Manager */
+diff --git a/drivers/net/wireless/ath/ath9k/antenna.c b/drivers/net/wireless/ath/ath9k/antenna.c
+index 988222cea9dfe..acc84e6711b0e 100644
+--- a/drivers/net/wireless/ath/ath9k/antenna.c
++++ b/drivers/net/wireless/ath/ath9k/antenna.c
+@@ -643,7 +643,7 @@ static void ath_ant_try_scan(struct ath_ant_comb *antcomb,
+ 				conf->main_lna_conf = ATH_ANT_DIV_COMB_LNA1;
+ 				conf->alt_lna_conf = ATH_ANT_DIV_COMB_LNA1_PLUS_LNA2;
+ 			} else if (antcomb->rssi_sub >
+-				   antcomb->rssi_lna1) {
++				   antcomb->rssi_lna2) {
+ 				/* set to A-B */
+ 				conf->main_lna_conf = ATH_ANT_DIV_COMB_LNA1;
+ 				conf->alt_lna_conf = ATH_ANT_DIV_COMB_LNA1_MINUS_LNA2;
 -- 
 2.43.0
 
