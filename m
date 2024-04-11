@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F18E1474AB;
-	Thu, 11 Apr 2024 10:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FB5657D3;
+	Thu, 11 Apr 2024 10:35:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831753; cv=none; b=qkOexQVYrkMFQGsxgn6vOkBl9J5bahBqBBj/ZMj9LghtnP4TbgNGFzf23S9U77+IO3i3lsZ0Y9+kArodAFpjKMaYGYmxkRhAJzM35uLCWXVJVWBONY8YFDiGzwjQEsdP1Iu61WQ6MRep39q4U12+a3HgWphGR4QImihJCd9Oc+g=
+	t=1712831756; cv=none; b=W0fb32oFA9U14L7KwsQGkdYozFQJKzRTSHBKY/eDRhfUvWz/hrEZppMl5jGn7PMKDsEOhyxq7PLt6nlxpUX2+NGXIMbukCLPn3m2j+jdw2y7Lle6BeDJPWyz9V9NKhd7iyIehvDt7+N4kStABqODPRtldQrV4k4sV/TDm2ZiaN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831753; c=relaxed/simple;
-	bh=LEGn1uqA35ohCNL00+b9G/2efZ1tTe7sVMH46uJloOY=;
+	s=arc-20240116; t=1712831756; c=relaxed/simple;
+	bh=qCRIUKWA/2xHmtyJPxf/4vnDpu4ja6SxPsGQId1av1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SMVXLM5R0Q42N9qjlB9wSSURvr+X96IguOLbgoeFr6OlL1Z0OO4awR40U8OJvoRtpgTyxRW9PB63R0vYxVca9JVQuh9z4ymhbqRCXcJ3WF00EyJwTB3g7LtoBY+8qIg/29nri7SvNHYqDcVFxTA7wamMIEYr18ShNG+/QEJyfVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tA1SF8Ks; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MQvcn4gOIaHgJ+AJP4eCupv+y4ZpOugsvdvYVrrxIjrr77VpoYvSkP2m79EP2XKB9Nt8h4vjmz/pFHomUR9qD1CnERPRKb1lOA65d2/P34l6DWPpDQKD+dtysdH5suXb1X8CqNxShaNof7MvbJyCPlR9mvlb3mgew/vwK59gTyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=siJ3+YcT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tA1SF8Ks"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FD9C433C7;
-	Thu, 11 Apr 2024 10:35:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="siJ3+YcT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC86AC433C7;
+	Thu, 11 Apr 2024 10:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831753;
-	bh=LEGn1uqA35ohCNL00+b9G/2efZ1tTe7sVMH46uJloOY=;
+	s=korg; t=1712831756;
+	bh=qCRIUKWA/2xHmtyJPxf/4vnDpu4ja6SxPsGQId1av1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tA1SF8KsOI9/E7OWNT/rQuaVLvp5HSzDOyeeC3t+CduktimdH6Iv8MxfcnZrtD69q
-	 3bOq5IBeoqQWVv9qfFEbkpQgLeu29q9HHZG2tgZ/levdAq0ocoz6JRkgPtjHsxGJHS
-	 ZeWU7BPOM3PuMkJEG/bBnXM4RxXn07K9AOsdF8Ik=
+	b=siJ3+YcTC1its6ekaLTaktPL8/5g7alF/hxmghnSTdOmxzuLA9Lv8uSM5eDQrOaz0
+	 IyODX5VO8dMAU3JN3V8PIrDF0ZQsxzYXXyRxLzQ2bv1R59JghJvNLkRRLIVd77Q64L
+	 +E6WsEeRuDab963Z62RFrHlMkYH+9lqOYSSVO+tY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Altaparmakov <anton@tuxera.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 115/294] x86/pm: Work around false positive kmemleak report in msr_build_context()
-Date: Thu, 11 Apr 2024 11:54:38 +0200
-Message-ID: <20240411095439.130497801@linuxfoundation.org>
+	Ben Hutchings <ben@decadent.org.uk>,
+	Salvatore Bonaccorso <carnil@debian.org>
+Subject: [PATCH 5.10 116/294] scripts: kernel-doc: Fix syntax error due to undeclared args variable
+Date: Thu, 11 Apr 2024 11:54:39 +0200
+Message-ID: <20240411095439.160585532@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -53,101 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Altaparmakov <anton@tuxera.com>
+From: Salvatore Bonaccorso <carnil@debian.org>
 
-[ Upstream commit e3f269ed0accbb22aa8f25d2daffa23c3fccd407 ]
+The backport of commit 3080ea5553cc ("stddef: Introduce
+DECLARE_FLEX_ARRAY() helper") to 5.10.y (as a prerequisite of another
+fix) modified scripts/kernel-doc and introduced a syntax error:
 
-Since:
+Global symbol "$args" requires explicit package name (did you forget to declare "my $args"?) at ./scripts/kernel-doc line 1236.
+Global symbol "$args" requires explicit package name (did you forget to declare "my $args"?) at ./scripts/kernel-doc line 1236.
+Execution of ./scripts/kernel-doc aborted due to compilation errors.
 
-  7ee18d677989 ("x86/power: Make restore_processor_context() sane")
+Note: The issue could be fixed in the 5.10.y series as well by
+backporting e86bdb24375a ("scripts: kernel-doc: reduce repeated regex
+expressions into variables") but just replacing the undeclared args back
+to ([^,)]+) was the most straightforward approach. The issue is specific
+to the backport to the 5.10.y series. Thus there is as well no upstream
+commit for this change.
 
-kmemleak reports this issue:
-
-  unreferenced object 0xf68241e0 (size 32):
-    comm "swapper/0", pid 1, jiffies 4294668610 (age 68.432s)
-    hex dump (first 32 bytes):
-      00 cc cc cc 29 10 01 c0 00 00 00 00 00 00 00 00  ....)...........
-      00 42 82 f6 cc cc cc cc cc cc cc cc cc cc cc cc  .B..............
-    backtrace:
-      [<461c1d50>] __kmem_cache_alloc_node+0x106/0x260
-      [<ea65e13b>] __kmalloc+0x54/0x160
-      [<c3858cd2>] msr_build_context.constprop.0+0x35/0x100
-      [<46635aff>] pm_check_save_msr+0x63/0x80
-      [<6b6bb938>] do_one_initcall+0x41/0x1f0
-      [<3f3add60>] kernel_init_freeable+0x199/0x1e8
-      [<3b538fde>] kernel_init+0x1a/0x110
-      [<938ae2b2>] ret_from_fork+0x1c/0x28
-
-Which is a false positive.
-
-Reproducer:
-
-  - Run rsync of whole kernel tree (multiple times if needed).
-  - start a kmemleak scan
-  - Note this is just an example: a lot of our internal tests hit these.
-
-The root cause is similar to the fix in:
-
-  b0b592cf0836 x86/pm: Fix false positive kmemleak report in msr_build_context()
-
-ie. the alignment within the packed struct saved_context
-which has everything unaligned as there is only "u16 gs;" at start of
-struct where in the past there were four u16 there thus aligning
-everything afterwards.  The issue is with the fact that Kmemleak only
-searches for pointers that are aligned (see how pointers are scanned in
-kmemleak.c) so when the struct members are not aligned it doesn't see
-them.
-
-Testing:
-
-We run a lot of tests with our CI, and after applying this fix we do not
-see any kmemleak issues any more whilst without it we see hundreds of
-the above report. From a single, simple test run consisting of 416 individual test
-cases on kernel 5.10 x86 with kmemleak enabled we got 20 failures due to this,
-which is quite a lot. With this fix applied we get zero kmemleak related failures.
-
-Fixes: 7ee18d677989 ("x86/power: Make restore_processor_context() sane")
-Signed-off-by: Anton Altaparmakov <anton@tuxera.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: stable@vger.kernel.org
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20240314142656.17699-1-anton@tuxera.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 443b16ee3d9c ("stddef: Introduce DECLARE_FLEX_ARRAY() helper") # 5.10.y
+Reported-by: Ben Hutchings <ben@decadent.org.uk>
+Link: https://lore.kernel.org/regressions/ZeHKjjPGoyv_b2Tg@eldamar.lan/T/#u
+Link: https://bugs.debian.org/1064035
+Signed-off-by: Salvatore Bonaccorso <carnil@debian.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/suspend_32.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ scripts/kernel-doc |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/suspend_32.h b/arch/x86/include/asm/suspend_32.h
-index a800abb1a9925..d8416b3bf832e 100644
---- a/arch/x86/include/asm/suspend_32.h
-+++ b/arch/x86/include/asm/suspend_32.h
-@@ -12,11 +12,6 @@
+--- a/scripts/kernel-doc
++++ b/scripts/kernel-doc
+@@ -1233,7 +1233,7 @@ sub dump_struct($$) {
+ 	# replace DECLARE_KFIFO_PTR
+ 	$members =~ s/DECLARE_KFIFO_PTR\s*\(([^,)]+),\s*([^,)]+)\)/$2 \*$1/gos;
+ 	# replace DECLARE_FLEX_ARRAY
+-	$members =~ s/(?:__)?DECLARE_FLEX_ARRAY\s*\($args,\s*$args\)/$1 $2\[\]/gos;
++	$members =~ s/(?:__)?DECLARE_FLEX_ARRAY\s*\(([^,)]+),\s*([^,)]+)\)/$1 $2\[\]/gos;
+ 	my $declaration = $members;
  
- /* image of the saved processor state */
- struct saved_context {
--	/*
--	 * On x86_32, all segment registers except gs are saved at kernel
--	 * entry in pt_regs.
--	 */
--	u16 gs;
- 	unsigned long cr0, cr2, cr3, cr4;
- 	u64 misc_enable;
- 	struct saved_msrs saved_msrs;
-@@ -27,6 +22,11 @@ struct saved_context {
- 	unsigned long tr;
- 	unsigned long safety;
- 	unsigned long return_address;
-+	/*
-+	 * On x86_32, all segment registers except gs are saved at kernel
-+	 * entry in pt_regs.
-+	 */
-+	u16 gs;
- 	bool misc_enable_saved;
- } __attribute__((packed));
- 
--- 
-2.43.0
-
+ 	# Split nested struct/union elements as newer ones
 
 
