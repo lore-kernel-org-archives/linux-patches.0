@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFDB143C76;
-	Thu, 11 Apr 2024 10:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB83143C76;
+	Thu, 11 Apr 2024 10:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832107; cv=none; b=izRXI8A9Zez/VWRUr6b09vFnZfc7/baWpod13QGp++weldAFee5ioWIVZ6jsU2UAJbSTfOUZgxr/zVuxA3+/quy1mN8lB70u5/XBeRZP9ufTDJaBo3xcTah/2BGlQgZLRC0DLPVat099Jr5eZsRa22qNNFq1zkZH6jpv/JHOhLM=
+	t=1712832110; cv=none; b=WFFD/kM80TQl5pKOTAp+RTGgr2Cz7DlEW031eXrd8kcDNmMqvlmLbiL/m0S3mjV/nNzKZUYMqguJxqfxb96exVQ26YM2kH++ys3HOcPictNDaGPvaMJ/YwCBxc0MeGguClk3rkMhbjw6VH7NTDjnvlk6sMV+hGD/YZyxb3HTKtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832107; c=relaxed/simple;
-	bh=8zKjSgCA93zFxwYX7nUARuwh4IMSs1fWhCvyXDsQMTY=;
+	s=arc-20240116; t=1712832110; c=relaxed/simple;
+	bh=ROHqbR43eXWi0lrpmcHHybRzxbd+G8PnOBoH+YOKcd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OuX8vVNB0lEjgQmNuv5tVA2NWMpbO4WQPe+D5TKZIvx+gZq5cUbWJUHbVkPZ1qcR0UmGP5kpGhA7Rxbosn74Z1WtxwuJVch7iaTyZNVmL8UuwxB/isMGVTwCpMi9sjLrNfZ7IpXpJUNwPmvZ+O4A1oLfOHB0NsMjAUI5+gj5ypU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGwWuVr1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qKd+tH5TSPjnsGdRB4NjRtrQdXo+5oXr8xPfS/DOPA6lQdwYSj4fZP4rtjdUxnjPz9rKjBbER6AXpH5SM82LppMULRX3zyjTtqT+QZqpXBJPp5kh0s5BB7BEOt4D6IDc1QTvbN8i/1YLyacWuod9MTKYfbWD93QiDi454n3QG28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjh0Ig/O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGwWuVr1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A570C433F1;
-	Thu, 11 Apr 2024 10:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjh0Ig/O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 817B0C433F1;
+	Thu, 11 Apr 2024 10:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832106;
-	bh=8zKjSgCA93zFxwYX7nUARuwh4IMSs1fWhCvyXDsQMTY=;
+	s=korg; t=1712832109;
+	bh=ROHqbR43eXWi0lrpmcHHybRzxbd+G8PnOBoH+YOKcd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GGwWuVr1rMSTGSyAk+cZtnnBD48MvOgHvqcm/jlFSP5G4TzPa5rKDGKeVjywZCE5G
-	 FgY+rtB3GQwO65FJINTMgeYkmQ3xmDOBNGVlQ/OpDhVzzPQ42SoNbEaUykJhLZxLel
-	 M8ycVqMSy5lwp/AeJcMh//nbVbixGfWjDPlBs/P0=
+	b=yjh0Ig/OHhw6UiMEw/2m0ovFEzj2nE5yskKBoitFfoFXGzDpMGYHHslrwKKbdXJ3V
+	 ddxwUKmqDtLDSi1zWpiVL6Bh25+0TUajI1XQ/4xlbNN1ssBJQg8iSTgPrjsURIPwtw
+	 +VWFgWKoDURTpQzvgGkVNt33R0uN9RTQOA942w4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <2045gemini@gmail.com>,
-	Bastien Nocera <hadess@hadess.net>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 192/294] Bluetooth: Fix TOCTOU in HCI debugfs implementation
-Date: Thu, 11 Apr 2024 11:55:55 +0200
-Message-ID: <20240411095441.394776245@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Subject: [PATCH 5.10 193/294] netfilter: nf_tables: disallow timeout for anonymous sets
+Date: Thu, 11 Apr 2024 11:55:56 +0200
+Message-ID: <20240411095441.423480695@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -51,192 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bastien Nocera <hadess@hadess.net>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 7835fcfd132eb88b87e8eb901f88436f63ab60f7 upstream.
+commit e26d3009efda338f19016df4175f354a9bd0a4ab upstream.
 
-struct hci_dev members conn_info_max_age, conn_info_min_age,
-le_conn_max_interval, le_conn_min_interval, le_adv_max_interval,
-and le_adv_min_interval can be modified from the HCI core code, as well
-through debugfs.
+Never used from userspace, disallow these parameters.
 
-The debugfs implementation, that's only available to privileged users,
-will check for boundaries, making sure that the minimum value being set
-is strictly above the maximum value that already exists, and vice-versa.
-
-However, as both minimum and maximum values can be changed concurrently
-to us modifying them, we need to make sure that the value we check is
-the value we end up using.
-
-For example, with ->conn_info_max_age set to 10, conn_info_min_age_set()
-gets called from vfs handlers to set conn_info_min_age to 8.
-
-In conn_info_min_age_set(), this goes through:
-	if (val == 0 || val > hdev->conn_info_max_age)
-		return -EINVAL;
-
-Concurrently, conn_info_max_age_set() gets called to set to set the
-conn_info_max_age to 7:
-	if (val == 0 || val > hdev->conn_info_max_age)
-		return -EINVAL;
-That check will also pass because we used the old value (10) for
-conn_info_max_age.
-
-After those checks that both passed, the struct hci_dev access
-is mutex-locked, disabling concurrent access, but that does not matter
-because the invalid value checks both passed, and we'll end up with
-conn_info_min_age = 8 and conn_info_max_age = 7
-
-To fix this problem, we need to lock the structure access before so the
-check and assignment are not interrupted.
-
-This fix was originally devised by the BassCheck[1] team, and
-considered the problem to be an atomicity one. This isn't the case as
-there aren't any concerns about the variable changing while we check it,
-but rather after we check it parallel to another change.
-
-This patch fixes CVE-2024-24858 and CVE-2024-24857.
-
-[1] https://sites.google.com/view/basscheck/
-
-Co-developed-by: Gui-Dong Han <2045gemini@gmail.com>
-Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
-Link: https://lore.kernel.org/linux-bluetooth/20231222161317.6255-1-2045gemini@gmail.com/
-Link: https://nvd.nist.gov/vuln/detail/CVE-2024-24858
-Link: https://lore.kernel.org/linux-bluetooth/20231222162931.6553-1-2045gemini@gmail.com/
-Link: https://lore.kernel.org/linux-bluetooth/20231222162310.6461-1-2045gemini@gmail.com/
-Link: https://nvd.nist.gov/vuln/detail/CVE-2024-24857
-Fixes: 31ad169148df ("Bluetooth: Add conn info lifetime parameters to debugfs")
-Fixes: 729a1051da6f ("Bluetooth: Expose default LE advertising interval via debugfs")
-Fixes: 71c3b60ec6d2 ("Bluetooth: Move BR/EDR debugfs file creation into hci_debugfs.c")
-Signed-off-by: Bastien Nocera <hadess@hadess.net>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[Keerthana: code surrounding the patch is different
+because nft_set_desc is not present in v4.19-v5.10]
+Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_debugfs.c |   48 +++++++++++++++++++++++++++++---------------
- 1 file changed, 32 insertions(+), 16 deletions(-)
+ net/netfilter/nf_tables_api.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/bluetooth/hci_debugfs.c
-+++ b/net/bluetooth/hci_debugfs.c
-@@ -216,10 +216,12 @@ static int conn_info_min_age_set(void *d
- {
- 	struct hci_dev *hdev = data;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4457,6 +4457,9 @@ static int nf_tables_newset(struct net *
+ 		if (!(flags & NFT_SET_TIMEOUT))
+ 			return -EINVAL;
  
--	if (val == 0 || val > hdev->conn_info_max_age)
-+	hci_dev_lock(hdev);
-+	if (val == 0 || val > hdev->conn_info_max_age) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->conn_info_min_age = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -244,10 +246,12 @@ static int conn_info_max_age_set(void *d
- {
- 	struct hci_dev *hdev = data;
- 
--	if (val == 0 || val < hdev->conn_info_min_age)
-+	hci_dev_lock(hdev);
-+	if (val == 0 || val < hdev->conn_info_min_age) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->conn_info_max_age = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -526,10 +530,12 @@ static int sniff_min_interval_set(void *
- {
- 	struct hci_dev *hdev = data;
- 
--	if (val == 0 || val % 2 || val > hdev->sniff_max_interval)
-+	hci_dev_lock(hdev);
-+	if (val == 0 || val % 2 || val > hdev->sniff_max_interval) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->sniff_min_interval = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -554,10 +560,12 @@ static int sniff_max_interval_set(void *
- {
- 	struct hci_dev *hdev = data;
- 
--	if (val == 0 || val % 2 || val < hdev->sniff_min_interval)
-+	hci_dev_lock(hdev);
-+	if (val == 0 || val % 2 || val < hdev->sniff_min_interval) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->sniff_max_interval = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -798,10 +806,12 @@ static int conn_min_interval_set(void *d
- {
- 	struct hci_dev *hdev = data;
- 
--	if (val < 0x0006 || val > 0x0c80 || val > hdev->le_conn_max_interval)
-+	hci_dev_lock(hdev);
-+	if (val < 0x0006 || val > 0x0c80 || val > hdev->le_conn_max_interval) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->le_conn_min_interval = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -826,10 +836,12 @@ static int conn_max_interval_set(void *d
- {
- 	struct hci_dev *hdev = data;
- 
--	if (val < 0x0006 || val > 0x0c80 || val < hdev->le_conn_min_interval)
-+	hci_dev_lock(hdev);
-+	if (val < 0x0006 || val > 0x0c80 || val < hdev->le_conn_min_interval) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->le_conn_max_interval = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -938,10 +950,12 @@ static int adv_min_interval_set(void *da
- {
- 	struct hci_dev *hdev = data;
- 
--	if (val < 0x0020 || val > 0x4000 || val > hdev->le_adv_max_interval)
-+	hci_dev_lock(hdev);
-+	if (val < 0x0020 || val > 0x4000 || val > hdev->le_adv_max_interval) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->le_adv_min_interval = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -966,10 +980,12 @@ static int adv_max_interval_set(void *da
- {
- 	struct hci_dev *hdev = data;
- 
--	if (val < 0x0020 || val > 0x4000 || val < hdev->le_adv_min_interval)
-+	hci_dev_lock(hdev);
-+	if (val < 0x0020 || val > 0x4000 || val < hdev->le_adv_min_interval) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->le_adv_max_interval = val;
- 	hci_dev_unlock(hdev);
++		if (flags & NFT_SET_ANONYMOUS)
++			return -EOPNOTSUPP;
++
+ 		err = nf_msecs_to_jiffies64(nla[NFTA_SET_TIMEOUT], &timeout);
+ 		if (err)
+ 			return err;
+@@ -4465,6 +4468,10 @@ static int nf_tables_newset(struct net *
+ 	if (nla[NFTA_SET_GC_INTERVAL] != NULL) {
+ 		if (!(flags & NFT_SET_TIMEOUT))
+ 			return -EINVAL;
++
++		if (flags & NFT_SET_ANONYMOUS)
++			return -EOPNOTSUPP;
++
+ 		gc_int = ntohl(nla_get_be32(nla[NFTA_SET_GC_INTERVAL]));
+ 	}
  
 
 
