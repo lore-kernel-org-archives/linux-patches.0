@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8BE144D34;
-	Thu, 11 Apr 2024 10:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EEDD1448EF;
+	Thu, 11 Apr 2024 10:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830287; cv=none; b=aaw60pdfBZ/k4UA5FCujMAxlCeAMMSsCopRx5CCz2IuCNDleDhV7eyUurXo0RDaKVSpOqm+MZFJlWAm8uI4Q1h1cgjrWsJ718+sQUi2mO93GdZtDboi0DMqzCC7RUrSbjQuWb0CTDFfZUluEKTMffAHe3fXuw0oaenQ2eWyrFQI=
+	t=1712830290; cv=none; b=QA3WYPPNakPq7AnPvW5Qh/MvFjSbZcCN2KJeqQrCRDZFbC6zrrNqQ4J7qsFv7//c/TEumRaenXh0M/0j+uwWJLugCa5XBY/cqHaj2gJo/fAPnNj/qq/Au91DGx/pi7kkBURCjXP4l+OwiK14gCaUoBDc57kTwdD2bTdtdayiwbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830287; c=relaxed/simple;
-	bh=7YcsASw4lNY4zzy3mzHQUl4CJRalH4wlewE9DWO1qOs=;
+	s=arc-20240116; t=1712830290; c=relaxed/simple;
+	bh=G/nXTX9L8DmZSzknHOjhpcW8Rc1qfDuCKHPNl9Szyiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=os32v0/3cu58uGUwxZrtjKBwX16o0FXdUZa2L3CUUFtSnrFtxIxJmu7ZHEpUExDkT3Giv1XfZZK0zWOt4jNP1+NNAVVkEclAIAHQSE1X2vsXkXAX2mGLCxBnnn8s0sHACHig60TVjp5pOzDmVnyXdeQIVmm1//jkO8Kk82KtZ3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pORajXCb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hXiuvcXHAxuf0XQor3XE1y7qSGvlhVRFmDgy9yYP3W4DLhmCcRCEltXnZypYgBL6lYhvCQuGeT+HTuY1Eh2BPIfZHsLHaTtb+DY6GETI/6W4fYaeQ40emlCE1Kx54TjT+oNvhBzdwHhk/isot80lEUKBcGS7MjcI934jbpGQC2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDJOK9o6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pORajXCb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AA7C433C7;
-	Thu, 11 Apr 2024 10:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDJOK9o6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C641AC433C7;
+	Thu, 11 Apr 2024 10:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830287;
-	bh=7YcsASw4lNY4zzy3mzHQUl4CJRalH4wlewE9DWO1qOs=;
+	s=korg; t=1712830290;
+	bh=G/nXTX9L8DmZSzknHOjhpcW8Rc1qfDuCKHPNl9Szyiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pORajXCbNmrDU9f4ovJk1O5k6mnuuC05zXzdQTCeCq4CU1g8Q0U/1rVysa0+feqlS
-	 MmLhOZ5dGLrHAiUldACmYZFYd7vGlk0HlWPGTl21kEe1LkPa4Kwz3NKYQYC8Va/Sjm
-	 TRjGdaam0zslZZT1hjimvWJ+/OOvIEr3U4nt1PGM=
+	b=HDJOK9o6gCHTUI4ToC5zsJdU5M056Xwi/LgOlz3jUK9uaGY2kSEJyXpcDOL/MX/cx
+	 CnSnqf/9Y+SMit4g/eEI1RNRhA53M7CPzxIX0cG/fxUsCZbEs/kf6jw0lagUwCu6u+
+	 QpzZxPUKkWgPOXBjxwfRuhxq8TyMQ61Q/Bp7xTr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Samuel Dionne-Riel <samuel@dionne-riel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 060/143] Input: synaptics-rmi4 - fail probing if memory allocation for "phys" fails
-Date: Thu, 11 Apr 2024 11:55:28 +0200
-Message-ID: <20240411095422.723246812@linuxfoundation.org>
+Subject: [PATCH 6.8 061/143] drm: panel-orientation-quirks: Add quirk for GPD Win Mini
+Date: Thu, 11 Apr 2024 11:55:29 +0200
+Message-ID: <20240411095422.752415919@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -51,39 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Samuel Dionne-Riel <samuel@dionne-riel.com>
 
-[ Upstream commit bc4996184d56cfaf56d3811ac2680c8a0e2af56e ]
+[ Upstream commit 2f862fdc0fd802e728b6ca96bc78ec3f01bf161e ]
 
-While input core can work with input->phys set to NULL userspace might
-depend on it, so better fail probing if allocation fails. The system must
-be in a pretty bad shape for it to happen anyway.
+This adds a DMI orientation quirk for the GPD Win Mini panel.
 
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Link: https://lore.kernel.org/r/20240117073124.143636-1-chentao@kylinos.cn
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Samuel Dionne-Riel <samuel@dionne-riel.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231222030149.3740815-2-samuel@dionne-riel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/rmi4/rmi_driver.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/input/rmi4/rmi_driver.c b/drivers/input/rmi4/rmi_driver.c
-index 42eaebb3bf5cc..ef9ea295f9e03 100644
---- a/drivers/input/rmi4/rmi_driver.c
-+++ b/drivers/input/rmi4/rmi_driver.c
-@@ -1196,7 +1196,11 @@ static int rmi_driver_probe(struct device *dev)
- 		}
- 		rmi_driver_set_input_params(rmi_dev, data->input);
- 		data->input->phys = devm_kasprintf(dev, GFP_KERNEL,
--						"%s/input0", dev_name(dev));
-+						   "%s/input0", dev_name(dev));
-+		if (!data->input->phys) {
-+			retval = -ENOMEM;
-+			goto err;
-+		}
- 	}
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index 3d92f66e550c3..aa93129c3397e 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -117,6 +117,12 @@ static const struct drm_dmi_panel_orientation_data lcd1080x1920_leftside_up = {
+ 	.orientation = DRM_MODE_PANEL_ORIENTATION_LEFT_UP,
+ };
  
- 	retval = rmi_init_functions(data);
++static const struct drm_dmi_panel_orientation_data lcd1080x1920_rightside_up = {
++	.width = 1080,
++	.height = 1920,
++	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
++};
++
+ static const struct drm_dmi_panel_orientation_data lcd1200x1920_rightside_up = {
+ 	.width = 1200,
+ 	.height = 1920,
+@@ -279,6 +285,12 @@ static const struct dmi_system_id orientation_data[] = {
+ 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "G1618-03")
+ 		},
+ 		.driver_data = (void *)&lcd720x1280_rightside_up,
++	}, {	/* GPD Win Mini */
++		.matches = {
++		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "GPD"),
++		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "G1617-01")
++		},
++		.driver_data = (void *)&lcd1080x1920_rightside_up,
+ 	}, {	/* I.T.Works TW891 */
+ 		.matches = {
+ 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "To be filled by O.E.M."),
 -- 
 2.43.0
 
