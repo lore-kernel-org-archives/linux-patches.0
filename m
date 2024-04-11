@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BBD14A4DF;
-	Thu, 11 Apr 2024 10:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E751487EC;
+	Thu, 11 Apr 2024 10:37:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831832; cv=none; b=ibM/qzW0nH6fPldfh+GpCiQDB3QY0zJLhCZvSEHFzlCAlulJCzQyOlh4FLxc4PdKHqbIRMzvPYYl1A86WESqW+9oAm2dTaWChUGDkDMIzgB6oNyVBlFsG9xnvziHWfdlm63x50ygHV9vPV7GADEG04PZHUWc+9ePvXl3xwS9O9M=
+	t=1712831835; cv=none; b=EuLK4LcRqS0gQHDK0ViTBrKv6gvND6q+laxIHrpPBF9yyZOcdojIXfK1sPpSZvOriy8lXgO0EQG1khjHZeP0qaoeaKwzYZdvWsSvGm5l/neTuwnBZt3et07/4DVNVB/6AJI9agzQO9cMdyqCLBmUJGcHwNnpsH/SQDfGGNuQr6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831832; c=relaxed/simple;
-	bh=qk5vKb6xdFgEJAkxtt45I85/vsldIwXBsRS/h2PM+iM=;
+	s=arc-20240116; t=1712831835; c=relaxed/simple;
+	bh=6VyIgE7HbWACAIWAWQZQj53VAuWwnE+wus+UjkCCOW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a9ydIPyd7m5aP/6h/QIPlIj+r+N9R2eLQgIl5o1txMsF1+GEUdxLj8Gg7SxLFAQT8QoNG9qPTVUmQ6jO3olKNiLhNQrZmb6gdKRrADiGdvH75z+ItpvvR0BQv9BPFOFBWBZfDf9wdQGznF8RS7FrtTU60KP+GO9dE6oeRHA0sq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuF1LJRI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SQObp98iSrW9pPnwVyDh1u2oazszRVA5AKcvTGTMRgVjD1F+PyDSXaxATJPHxcbFCy0kXEEFWBAIUk9TaErArLNUlqG9M49AFSYvBARO56ekRmHUdZjATiAH9ctLklUeKceAH6W1uvvtNcFBnM+g/nA3tZDUj1lvz0hn/n2+Ypc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0JFBi55e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuF1LJRI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1A2C43390;
-	Thu, 11 Apr 2024 10:37:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0JFBi55e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197D2C433C7;
+	Thu, 11 Apr 2024 10:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831832;
-	bh=qk5vKb6xdFgEJAkxtt45I85/vsldIwXBsRS/h2PM+iM=;
+	s=korg; t=1712831835;
+	bh=6VyIgE7HbWACAIWAWQZQj53VAuWwnE+wus+UjkCCOW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JuF1LJRI9da2PWiDmi+GoB1lg/9gYQWz9TaMMgaL+4QU9JfuqOFOzyDZYUs/cEDRo
-	 ytI4yOf05n3mAx3zKdNgMcZ1Ugijz7qdUb0Scflprl0OUax5kd7ZQWAmhZrAoj2OFI
-	 q8F6bHFEX0mycuEo13JE+Kxwx67EAEiPRrc0h2rs=
+	b=0JFBi55eQGYN0FwaIm32pbupvhZP8zVeLY3MjCHZcZYnDlJUjR3dsHBQl8FVpjmTH
+	 cOazB0AGD+qusGSZPjP73dI0AmwGWvGUOMoSXBVJwCHy7e0vljK7nbyCDNmQANT1OV
+	 lekZn4aVQpmLgmhPOajwjBQD9fgEDOXChs6M+H2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@intel.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 5.10 140/294] x86/entry_64: Add VERW just before userspace transition
-Date: Thu, 11 Apr 2024 11:55:03 +0200
-Message-ID: <20240411095439.872263227@linuxfoundation.org>
+	netdev <netdev@vger.kernel.org>,
+	Yisen Zhuang <yisen.zhuang@huawei.com>,
+	Salil Mehta <salil.mehta@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Yufeng Mo <moyufeng@huawei.com>,
+	Huazhong Tan <tanhuazhong@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 105/294] net: hns3: tracing: fix hclgevf trace event strings
+Date: Thu, 11 Apr 2024 11:54:28 +0200
+Message-ID: <20240411095438.833423565@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -45,119 +54,157 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 3c7501722e6b31a6e56edd23cea5e77dbb9ffd1a upstream.
+[ Upstream commit 3f9952e8d80cca2da3b47ecd5ad9ec16cfd1a649 ]
 
-Mitigation for MDS is to use VERW instruction to clear any secrets in
-CPU Buffers. Any memory accesses after VERW execution can still remain
-in CPU buffers. It is safer to execute VERW late in return to user path
-to minimize the window in which kernel data can end up in CPU buffers.
-There are not many kernel secrets to be had after SWITCH_TO_USER_CR3.
+The __string() and __assign_str() helper macros of the TRACE_EVENT() macro
+are going through some optimizations where only the source string of
+__string() will be used and the __assign_str() source will be ignored and
+later removed.
 
-Add support for deploying VERW mitigation after user register state is
-restored. This helps minimize the chances of kernel data ending up into
-CPU buffers after executing VERW.
+To make sure that there's no issues, a new check is added between the
+__string() src argument and the __assign_str() src argument that does a
+strcmp() to make sure they are the same string.
 
-Note that the mitigation at the new location is not yet enabled.
+The hclgevf trace events have:
 
-  Corner case not handled
-  =======================
-  Interrupts returning to kernel don't clear CPUs buffers since the
-  exit-to-user path is expected to do that anyways. But, there could be
-  a case when an NMI is generated in kernel after the exit-to-user path
-  has cleared the buffers. This case is not handled and NMI returning to
-  kernel don't clear CPU buffers because:
+  __assign_str(devname, &hdev->nic.kinfo.netdev->name);
 
-  1. It is rare to get an NMI after VERW, but before returning to user.
-  2. For an unprivileged user, there is no known way to make that NMI
-     less rare or target it.
-  3. It would take a large number of these precisely-timed NMIs to mount
-     an actual attack.  There's presumably not enough bandwidth.
-  4. The NMI in question occurs after a VERW, i.e. when user state is
-     restored and most interesting data is already scrubbed. Whats left
-     is only the data that NMI touches, and that may or may not be of
-     any interest.
+Which triggers the warning:
 
-  [ pawan: resolved conflict in syscall_return_via_sysret, added
-           CLEAR_CPU_BUFFERS to USERGS_SYSRET64 ]
+hclgevf_trace.h:34:39: error: passing argument 1 of ‘strcmp’ from incompatible pointer type [-Werror=incompatible-pointer-types]
+   34 |                 __assign_str(devname, &hdev->nic.kinfo.netdev->name);
+ [..]
+arch/x86/include/asm/string_64.h:75:24: note: expected ‘const char *’ but argument is of type ‘char (*)[16]’
+   75 | int strcmp(const char *cs, const char *ct);
+      |            ~~~~~~~~~~~~^~
 
-Suggested-by: Dave Hansen <dave.hansen@intel.com>
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/all/20240213-delay-verw-v8-2-a6216d83edb7%40linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Because __assign_str() now has:
+
+	WARN_ON_ONCE(__builtin_constant_p(src) ?		\
+		     strcmp((src), __data_offsets.dst##_ptr_) :	\
+		     (src) != __data_offsets.dst##_ptr_);	\
+
+The problem is the '&' on hdev->nic.kinfo.netdev->name. That's because
+that name is:
+
+	char			name[IFNAMSIZ]
+
+Where passing an address '&' of a char array is not compatible with strcmp().
+
+The '&' is not necessary, remove it.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240313093454.3909afe7@gandalf.local.home
+
+Cc: netdev <netdev@vger.kernel.org>
+Cc: Yisen Zhuang <yisen.zhuang@huawei.com>
+Cc: Salil Mehta <salil.mehta@huawei.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Yufeng Mo <moyufeng@huawei.com>
+Cc: Huazhong Tan <tanhuazhong@huawei.com>
+Cc: stable@vger.kernel.org
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Jijie Shao <shaojijie@huawei.com>
+Fixes: d8355240cf8fb ("net: hns3: add trace event support for PF/VF mailbox")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/entry/entry_64.S        |   10 ++++++++++
- arch/x86/entry/entry_64_compat.S |    1 +
- arch/x86/include/asm/irqflags.h  |    1 +
- 3 files changed, 12 insertions(+)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_trace.h  | 8 ++++----
+ .../net/ethernet/hisilicon/hns3/hns3vf/hclgevf_trace.h    | 8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
---- a/arch/x86/entry/entry_64.S
-+++ b/arch/x86/entry/entry_64.S
-@@ -615,6 +615,7 @@ SYM_INNER_LABEL(swapgs_restore_regs_and_
- 	/* Restore RDI. */
- 	popq	%rdi
- 	SWAPGS
-+	CLEAR_CPU_BUFFERS
- 	INTERRUPT_RETURN
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_trace.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_trace.h
+index 5b0b71bd61200..e8e67321e9632 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_trace.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_trace.h
+@@ -24,7 +24,7 @@ TRACE_EVENT(hclge_pf_mbx_get,
+ 		__field(u8, code)
+ 		__field(u8, subcode)
+ 		__string(pciname, pci_name(hdev->pdev))
+-		__string(devname, &hdev->vport[0].nic.kinfo.netdev->name)
++		__string(devname, hdev->vport[0].nic.kinfo.netdev->name)
+ 		__array(u32, mbx_data, PF_GET_MBX_LEN)
+ 	),
  
+@@ -33,7 +33,7 @@ TRACE_EVENT(hclge_pf_mbx_get,
+ 		__entry->code = req->msg.code;
+ 		__entry->subcode = req->msg.subcode;
+ 		__assign_str(pciname, pci_name(hdev->pdev));
+-		__assign_str(devname, &hdev->vport[0].nic.kinfo.netdev->name);
++		__assign_str(devname, hdev->vport[0].nic.kinfo.netdev->name);
+ 		memcpy(__entry->mbx_data, req,
+ 		       sizeof(struct hclge_mbx_vf_to_pf_cmd));
+ 	),
+@@ -56,7 +56,7 @@ TRACE_EVENT(hclge_pf_mbx_send,
+ 		__field(u8, vfid)
+ 		__field(u16, code)
+ 		__string(pciname, pci_name(hdev->pdev))
+-		__string(devname, &hdev->vport[0].nic.kinfo.netdev->name)
++		__string(devname, hdev->vport[0].nic.kinfo.netdev->name)
+ 		__array(u32, mbx_data, PF_SEND_MBX_LEN)
+ 	),
  
-@@ -721,6 +722,8 @@ native_irq_return_ldt:
- 	 */
- 	popq	%rax				/* Restore user RAX */
+@@ -64,7 +64,7 @@ TRACE_EVENT(hclge_pf_mbx_send,
+ 		__entry->vfid = req->dest_vfid;
+ 		__entry->code = req->msg.code;
+ 		__assign_str(pciname, pci_name(hdev->pdev));
+-		__assign_str(devname, &hdev->vport[0].nic.kinfo.netdev->name);
++		__assign_str(devname, hdev->vport[0].nic.kinfo.netdev->name);
+ 		memcpy(__entry->mbx_data, req,
+ 		       sizeof(struct hclge_mbx_pf_to_vf_cmd));
+ 	),
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_trace.h b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_trace.h
+index e4bfb6191fef5..a208af567909f 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_trace.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_trace.h
+@@ -23,7 +23,7 @@ TRACE_EVENT(hclge_vf_mbx_get,
+ 		__field(u8, vfid)
+ 		__field(u16, code)
+ 		__string(pciname, pci_name(hdev->pdev))
+-		__string(devname, &hdev->nic.kinfo.netdev->name)
++		__string(devname, hdev->nic.kinfo.netdev->name)
+ 		__array(u32, mbx_data, VF_GET_MBX_LEN)
+ 	),
  
-+	CLEAR_CPU_BUFFERS
-+
- 	/*
- 	 * RSP now points to an ordinary IRET frame, except that the page
- 	 * is read-only and RSP[31:16] are preloaded with the userspace
-@@ -1488,6 +1491,12 @@ nmi_restore:
- 	movq	$0, 5*8(%rsp)		/* clear "NMI executing" */
+@@ -31,7 +31,7 @@ TRACE_EVENT(hclge_vf_mbx_get,
+ 		__entry->vfid = req->dest_vfid;
+ 		__entry->code = req->msg.code;
+ 		__assign_str(pciname, pci_name(hdev->pdev));
+-		__assign_str(devname, &hdev->nic.kinfo.netdev->name);
++		__assign_str(devname, hdev->nic.kinfo.netdev->name);
+ 		memcpy(__entry->mbx_data, req,
+ 		       sizeof(struct hclge_mbx_pf_to_vf_cmd));
+ 	),
+@@ -55,7 +55,7 @@ TRACE_EVENT(hclge_vf_mbx_send,
+ 		__field(u8, code)
+ 		__field(u8, subcode)
+ 		__string(pciname, pci_name(hdev->pdev))
+-		__string(devname, &hdev->nic.kinfo.netdev->name)
++		__string(devname, hdev->nic.kinfo.netdev->name)
+ 		__array(u32, mbx_data, VF_SEND_MBX_LEN)
+ 	),
  
- 	/*
-+	 * Skip CLEAR_CPU_BUFFERS here, since it only helps in rare cases like
-+	 * NMI in kernel after user state is restored. For an unprivileged user
-+	 * these conditions are hard to meet.
-+	 */
-+
-+	/*
- 	 * iretq reads the "iret" frame and exits the NMI stack in a
- 	 * single instruction.  We are returning to kernel mode, so this
- 	 * cannot result in a fault.  Similarly, we don't need to worry
-@@ -1504,6 +1513,7 @@ SYM_CODE_END(asm_exc_nmi)
- SYM_CODE_START(ignore_sysret)
- 	UNWIND_HINT_EMPTY
- 	mov	$-ENOSYS, %eax
-+	CLEAR_CPU_BUFFERS
- 	sysretl
- SYM_CODE_END(ignore_sysret)
- #endif
---- a/arch/x86/entry/entry_64_compat.S
-+++ b/arch/x86/entry/entry_64_compat.S
-@@ -319,6 +319,7 @@ sysret32_from_system_call:
- 	xorl	%r9d, %r9d
- 	xorl	%r10d, %r10d
- 	swapgs
-+	CLEAR_CPU_BUFFERS
- 	sysretl
- SYM_CODE_END(entry_SYSCALL_compat)
- 
---- a/arch/x86/include/asm/irqflags.h
-+++ b/arch/x86/include/asm/irqflags.h
-@@ -134,6 +134,7 @@ static __always_inline unsigned long arc
- #define INTERRUPT_RETURN	jmp native_iret
- #define USERGS_SYSRET64				\
- 	swapgs;					\
-+	CLEAR_CPU_BUFFERS;			\
- 	sysretq;
- #define USERGS_SYSRET32				\
- 	swapgs;					\
+@@ -64,7 +64,7 @@ TRACE_EVENT(hclge_vf_mbx_send,
+ 		__entry->code = req->msg.code;
+ 		__entry->subcode = req->msg.subcode;
+ 		__assign_str(pciname, pci_name(hdev->pdev));
+-		__assign_str(devname, &hdev->nic.kinfo.netdev->name);
++		__assign_str(devname, hdev->nic.kinfo.netdev->name);
+ 		memcpy(__entry->mbx_data, req,
+ 		       sizeof(struct hclge_mbx_vf_to_pf_cmd));
+ 	),
+-- 
+2.43.0
+
 
 
