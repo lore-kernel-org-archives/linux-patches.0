@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC2A145B04;
-	Thu, 11 Apr 2024 10:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51851145345;
+	Thu, 11 Apr 2024 10:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829823; cv=none; b=TKI3+G9WzFOylL+KeGdvOFIqKJEsv8q7ZfVcsKTItWFaMLfvT3crIt9hn3mPhL7n8WGwbcMXX9c3gP82uG+wdkFQ1YtBAkeAn5fsxnRhxYRVETLcsBY3TjXi//XXiaRywo6RQdKFcVxxp4KGHhZlbimYLmQH7cQf9sLHNiCEibo=
+	t=1712829826; cv=none; b=rodfVGHpqBpOkcd2ml/thOxkfNB7ej0IyE9Vb+m+5yMt/xqiXLjyNrQdnZnkGkGud1iRGBdoEM8ZzHOs6piI52zrrFqXpF138r1SEuy/ATEIssdhz1aO59+aFg9JS3UfVdssk/7JCQHOt4knj+ExABujDbzn+8k9bN7B9/H8Waw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829823; c=relaxed/simple;
-	bh=XCMOBc1hhruSr/n/csosEXB83eD7M1qO6i92857LblM=;
+	s=arc-20240116; t=1712829826; c=relaxed/simple;
+	bh=IqHFWGWBRWX6wIe/SpknoNen8Hwcj0/FhMXgsnkn1sY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eh+mmDhw1A30WiV6eR3iIRln1BbY8yl9ZtK+dLImp2h3WioI049SDB2l9EuV8NXo/jFWG1+L2CQULsAn0lJSoJzzJkKjxxv4ut/xSdkqBIK7sJ84kWdOFEwpOxmpP/0K+/Od38MT67EAa2oTdL2KPr4yOi5arNvo9tMQ4ohVKfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+ozhDOX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZSVhrz21oWUArPld/ZqSHoDADGqcG+3jLPNtzDGROd3TiP4oHhnFzWP1LDpY+L8I5+jjik/Dqk9lRqoErOYQLe552GQUdZVXoZqV3jF4NdjltOGoX39WLoqtLvivBZNJcpmoO1Dd3E+S/2QLxh5+oGDxt8Nc0O0VPnhgcMgmY4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvQud/N0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+ozhDOX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91A5C433C7;
-	Thu, 11 Apr 2024 10:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvQud/N0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3AD2C433F1;
+	Thu, 11 Apr 2024 10:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829823;
-	bh=XCMOBc1hhruSr/n/csosEXB83eD7M1qO6i92857LblM=;
+	s=korg; t=1712829826;
+	bh=IqHFWGWBRWX6wIe/SpknoNen8Hwcj0/FhMXgsnkn1sY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y+ozhDOXjbftKqr+pc03Rp7km0yDZmI4ZIHJxeh8xJThxEUNqJj9YjFE7JhfSsH6A
-	 Qj70tac5sX6CW9nQ+14Fw7TX8RKxZVI3/wWF9oG/eVXMbX0xbnk2rpUyny1v99lNX4
-	 v917NCchGX9soP0AwkapA5dEUGlWsnWy3JOuWViw=
+	b=LvQud/N0q+5o3+XQUm7NMEkGn6mD1MW6G5bQdgR4CaTjTKZBUy4jmEdvwLhc507/t
+	 7xY3MkM5tfgRzdK5T6U246i3/E0Ou/sPaeZ0bgOzKW1BDcsI0XYCa4Ms0pGWXdY0eL
+	 hIBTuT9oXaZ+EwWXBDTs1PlUyjl+HmfDOuBQIlXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Hui Wang <hui.wang@canonical.com>,
+	Gui-Dong Han <2045gemini@gmail.com>,
+	Bastien Nocera <hadess@hadess.net>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 4.19 116/175] Bluetooth: hci_event: set the conn encrypted before conn establishes
-Date: Thu, 11 Apr 2024 11:55:39 +0200
-Message-ID: <20240411095423.058814671@linuxfoundation.org>
+Subject: [PATCH 4.19 117/175] Bluetooth: Fix TOCTOU in HCI debugfs implementation
+Date: Thu, 11 Apr 2024 11:55:40 +0200
+Message-ID: <20240411095423.089298608@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,108 +51,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Wang <hui.wang@canonical.com>
+From: Bastien Nocera <hadess@hadess.net>
 
-commit c569242cd49287d53b73a94233db40097d838535 upstream.
+commit 7835fcfd132eb88b87e8eb901f88436f63ab60f7 upstream.
 
-We have a BT headset (Lenovo Thinkplus XT99), the pairing and
-connecting has no problem, once this headset is paired, bluez will
-remember this device and will auto re-connect it whenever the device
-is powered on. The auto re-connecting works well with Windows and
-Android, but with Linux, it always fails. Through debugging, we found
-at the rfcomm connection stage, the bluetooth stack reports
-"Connection refused - security block (0x0003)".
+struct hci_dev members conn_info_max_age, conn_info_min_age,
+le_conn_max_interval, le_conn_min_interval, le_adv_max_interval,
+and le_adv_min_interval can be modified from the HCI core code, as well
+through debugfs.
 
-For this device, the re-connecting negotiation process is different
-from other BT headsets, it sends the Link_KEY_REQUEST command before
-the CONNECT_REQUEST completes, and it doesn't send ENCRYPT_CHANGE
-command during the negotiation. When the device sends the "connect
-complete" to hci, the ev->encr_mode is 1.
+The debugfs implementation, that's only available to privileged users,
+will check for boundaries, making sure that the minimum value being set
+is strictly above the maximum value that already exists, and vice-versa.
 
-So here in the conn_complete_evt(), if ev->encr_mode is 1, link type
-is ACL and HCI_CONN_ENCRYPT is not set, we set HCI_CONN_ENCRYPT to
-this conn, and update conn->enc_key_size accordingly.
+However, as both minimum and maximum values can be changed concurrently
+to us modifying them, we need to make sure that the value we check is
+the value we end up using.
 
-After this change, this BT headset could re-connect with Linux
-successfully. This is the btmon log after applying the patch, after
-receiving the "Connect Complete" with "Encryption: Enabled", will send
-the command to read encryption key size:
-> HCI Event: Connect Request (0x04) plen 10
-        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
-        Class: 0x240404
-          Major class: Audio/Video (headset, speaker, stereo, video, vcr)
-          Minor class: Wearable Headset Device
-          Rendering (Printing, Speaker)
-          Audio (Speaker, Microphone, Headset)
-        Link type: ACL (0x01)
-...
-> HCI Event: Link Key Request (0x17) plen 6
-        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
-< HCI Command: Link Key Request Reply (0x01|0x000b) plen 22
-        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
-        Link key: ${32-hex-digits-key}
-...
-> HCI Event: Connect Complete (0x03) plen 11
-        Status: Success (0x00)
-        Handle: 256
-        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
-        Link type: ACL (0x01)
-        Encryption: Enabled (0x01)
-< HCI Command: Read Encryption Key... (0x05|0x0008) plen 2
-        Handle: 256
-< ACL Data TX: Handle 256 flags 0x00 dlen 10
-      L2CAP: Information Request (0x0a) ident 1 len 2
-        Type: Extended features supported (0x0002)
-> HCI Event: Command Complete (0x0e) plen 7
-      Read Encryption Key Size (0x05|0x0008) ncmd 1
-        Status: Success (0x00)
-        Handle: 256
-        Key size: 16
+For example, with ->conn_info_max_age set to 10, conn_info_min_age_set()
+gets called from vfs handlers to set conn_info_min_age to 8.
 
-Cc: stable@vger.kernel.org
-Link: https://github.com/bluez/bluez/issues/704
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Signed-off-by: Hui Wang <hui.wang@canonical.com>
+In conn_info_min_age_set(), this goes through:
+	if (val == 0 || val > hdev->conn_info_max_age)
+		return -EINVAL;
+
+Concurrently, conn_info_max_age_set() gets called to set to set the
+conn_info_max_age to 7:
+	if (val == 0 || val > hdev->conn_info_max_age)
+		return -EINVAL;
+That check will also pass because we used the old value (10) for
+conn_info_max_age.
+
+After those checks that both passed, the struct hci_dev access
+is mutex-locked, disabling concurrent access, but that does not matter
+because the invalid value checks both passed, and we'll end up with
+conn_info_min_age = 8 and conn_info_max_age = 7
+
+To fix this problem, we need to lock the structure access before so the
+check and assignment are not interrupted.
+
+This fix was originally devised by the BassCheck[1] team, and
+considered the problem to be an atomicity one. This isn't the case as
+there aren't any concerns about the variable changing while we check it,
+but rather after we check it parallel to another change.
+
+This patch fixes CVE-2024-24858 and CVE-2024-24857.
+
+[1] https://sites.google.com/view/basscheck/
+
+Co-developed-by: Gui-Dong Han <2045gemini@gmail.com>
+Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
+Link: https://lore.kernel.org/linux-bluetooth/20231222161317.6255-1-2045gemini@gmail.com/
+Link: https://nvd.nist.gov/vuln/detail/CVE-2024-24858
+Link: https://lore.kernel.org/linux-bluetooth/20231222162931.6553-1-2045gemini@gmail.com/
+Link: https://lore.kernel.org/linux-bluetooth/20231222162310.6461-1-2045gemini@gmail.com/
+Link: https://nvd.nist.gov/vuln/detail/CVE-2024-24857
+Fixes: 31ad169148df ("Bluetooth: Add conn info lifetime parameters to debugfs")
+Fixes: 729a1051da6f ("Bluetooth: Expose default LE advertising interval via debugfs")
+Fixes: 71c3b60ec6d2 ("Bluetooth: Move BR/EDR debugfs file creation into hci_debugfs.c")
+Signed-off-by: Bastien Nocera <hadess@hadess.net>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |   25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ net/bluetooth/hci_debugfs.c |   48 +++++++++++++++++++++++++++++---------------
+ 1 file changed, 32 insertions(+), 16 deletions(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2453,6 +2453,31 @@ static void hci_conn_complete_evt(struct
- 		if (test_bit(HCI_ENCRYPT, &hdev->flags))
- 			set_bit(HCI_CONN_ENCRYPT, &conn->flags);
+--- a/net/bluetooth/hci_debugfs.c
++++ b/net/bluetooth/hci_debugfs.c
+@@ -200,10 +200,12 @@ static int conn_info_min_age_set(void *d
+ {
+ 	struct hci_dev *hdev = data;
  
-+		/* "Link key request" completed ahead of "connect request" completes */
-+		if (ev->encr_mode == 1 && !test_bit(HCI_CONN_ENCRYPT, &conn->flags) &&
-+		    ev->link_type == ACL_LINK) {
-+			struct link_key *key;
-+			struct hci_cp_read_enc_key_size cp;
-+
-+			key = hci_find_link_key(hdev, &ev->bdaddr);
-+			if (key) {
-+				set_bit(HCI_CONN_ENCRYPT, &conn->flags);
-+
-+				if (!(hdev->commands[20] & 0x10)) {
-+					conn->enc_key_size = HCI_LINK_KEY_SIZE;
-+				} else {
-+					cp.handle = cpu_to_le16(conn->handle);
-+					if (hci_send_cmd(hdev, HCI_OP_READ_ENC_KEY_SIZE,
-+							 sizeof(cp), &cp)) {
-+						bt_dev_err(hdev, "sending read key size failed");
-+						conn->enc_key_size = HCI_LINK_KEY_SIZE;
-+					}
-+				}
-+
-+				hci_encrypt_cfm(conn, ev->status);
-+			}
-+		}
-+
- 		/* Get remote features */
- 		if (conn->type == ACL_LINK) {
- 			struct hci_cp_read_remote_features cp;
+-	if (val == 0 || val > hdev->conn_info_max_age)
++	hci_dev_lock(hdev);
++	if (val == 0 || val > hdev->conn_info_max_age) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->conn_info_min_age = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -228,10 +230,12 @@ static int conn_info_max_age_set(void *d
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val == 0 || val < hdev->conn_info_min_age)
++	hci_dev_lock(hdev);
++	if (val == 0 || val < hdev->conn_info_min_age) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->conn_info_max_age = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -479,10 +483,12 @@ static int sniff_min_interval_set(void *
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val == 0 || val % 2 || val > hdev->sniff_max_interval)
++	hci_dev_lock(hdev);
++	if (val == 0 || val % 2 || val > hdev->sniff_max_interval) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->sniff_min_interval = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -507,10 +513,12 @@ static int sniff_max_interval_set(void *
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val == 0 || val % 2 || val < hdev->sniff_min_interval)
++	hci_dev_lock(hdev);
++	if (val == 0 || val % 2 || val < hdev->sniff_min_interval) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->sniff_max_interval = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -749,10 +757,12 @@ static int conn_min_interval_set(void *d
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val < 0x0006 || val > 0x0c80 || val > hdev->le_conn_max_interval)
++	hci_dev_lock(hdev);
++	if (val < 0x0006 || val > 0x0c80 || val > hdev->le_conn_max_interval) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->le_conn_min_interval = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -777,10 +787,12 @@ static int conn_max_interval_set(void *d
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val < 0x0006 || val > 0x0c80 || val < hdev->le_conn_min_interval)
++	hci_dev_lock(hdev);
++	if (val < 0x0006 || val > 0x0c80 || val < hdev->le_conn_min_interval) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->le_conn_max_interval = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -889,10 +901,12 @@ static int adv_min_interval_set(void *da
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val < 0x0020 || val > 0x4000 || val > hdev->le_adv_max_interval)
++	hci_dev_lock(hdev);
++	if (val < 0x0020 || val > 0x4000 || val > hdev->le_adv_max_interval) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->le_adv_min_interval = val;
+ 	hci_dev_unlock(hdev);
+ 
+@@ -917,10 +931,12 @@ static int adv_max_interval_set(void *da
+ {
+ 	struct hci_dev *hdev = data;
+ 
+-	if (val < 0x0020 || val > 0x4000 || val < hdev->le_adv_min_interval)
++	hci_dev_lock(hdev);
++	if (val < 0x0020 || val > 0x4000 || val < hdev->le_adv_min_interval) {
++		hci_dev_unlock(hdev);
+ 		return -EINVAL;
++	}
+ 
+-	hci_dev_lock(hdev);
+ 	hdev->le_adv_max_interval = val;
+ 	hci_dev_unlock(hdev);
+ 
 
 
