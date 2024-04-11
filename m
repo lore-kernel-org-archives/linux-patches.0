@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC2A624;
-	Thu, 11 Apr 2024 10:46:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF572146A72;
+	Thu, 11 Apr 2024 10:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832407; cv=none; b=hpG5sQHiwInRuqTiBlHAfy09gP8p4asOwZpAlRSeCcrRv5WLUgA4Y4RKFcJxlsK8n+bWwh8k/inxoJrSU/pj/QCJPiN9fCZLhRy2+ZF7TRGPHWgHgE8Wbm0tVRbtmF9NpjpBgCAifOiXu2EVTTKPbYBgqoDOTbJR61RTtw+KnYs=
+	t=1712832410; cv=none; b=qOyJeDli91APHHjEjEtuf6ywrI6UzRkaZhNlkCSyo662qgaGloSg83aSF/RtCbSV8LQ6OQrNFdy8WFdvz1nmrAxSMKVSzt1DoswzgW36Sa0ucdg45ApkoUSOs+w1Yp/uj4EHGr2RQp8uXtO8Wts+55XU7n/c9w258LYMTslKVYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832407; c=relaxed/simple;
-	bh=6CAHplaGkG1lVaENfvyv+lPpw8mQbdaeCuAIy6mr/aY=;
+	s=arc-20240116; t=1712832410; c=relaxed/simple;
+	bh=6+yt77kns3DaSleVjgHeS2NkuE4hM2AB0qQrgvRhEGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RGXydSm+euEZWrcsEoCAbmlhiPcHgYZ0kUFOSEdNfJNbk9D+QzHRJ7cXx1w3U8N7soo5WhmmXMmf69ptlX/cqQp2ihlcFyVQeci3HQBJ9RB/zG33oDOn0JXIXENiLDwnMQqvol9Pz9RveFYei6XpWtieCgnCyadfgXZhuxKbhb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQpRKGXY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ucLlLKeEkWb2OTQ5A3ZJ6RWTurfJuQfyTTir8xguZd4o1znlw3KmkjBmglViAy6DqqkE9LmaHI8g8XPCcHdobWmLOhmTV5Hqg+BQasQcxiA+8W9I6tPxhKce/L6foAEGCuMZfv/Agnl1e9k/YVJIa8nTu9zso0YJI5z5IylP3nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8OQs71L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQpRKGXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC54C43390;
-	Thu, 11 Apr 2024 10:46:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8OQs71L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4AD0C43399;
+	Thu, 11 Apr 2024 10:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832407;
-	bh=6CAHplaGkG1lVaENfvyv+lPpw8mQbdaeCuAIy6mr/aY=;
+	s=korg; t=1712832410;
+	bh=6+yt77kns3DaSleVjgHeS2NkuE4hM2AB0qQrgvRhEGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JQpRKGXYhraN66+KaxVgbvjA8ry9RbpVCYLLXGMxtpbXrzOQu7MbIC37pDYFdf0mv
-	 CaJeLNeg5h3yM7wqZuVsVxKPAuQC6rIAgJXSzcyOqrMXA/N63QiTfspbX55NxWC4yA
-	 HMFn5v6en5cMG9Ts7ejUjBMvaSrslYeAflEHFv+A=
+	b=g8OQs71LKyd0IQfb8aJVQ0i6nHXiQbfHritOjFbXTpkiXnkAHuNhYdBbL3nmDiyMN
+	 EJ3Y0pFYP3/z073R2L8B5wwcTaX6FIdJSNwNU6AxXxPMo52SboKEbVfXyggZq0qkyD
+	 3X8PbeRsPckt9SbJBKhJE+xG1xP0T7BFdXOOGBck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>,
+	C Cheng <C.Cheng@mediatek.com>,
+	Bo Ye <bo.ye@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 08/83] panic: Flush kernel log buffer at the end
-Date: Thu, 11 Apr 2024 11:56:40 +0200
-Message-ID: <20240411095412.928088353@linuxfoundation.org>
+Subject: [PATCH 6.1 09/83] cpuidle: Avoid potential overflow in integer multiplication
+Date: Thu, 11 Apr 2024 11:56:41 +0200
+Message-ID: <20240411095412.958067244@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -51,48 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ogness <john.ogness@linutronix.de>
+From: C Cheng <C.Cheng@mediatek.com>
 
-[ Upstream commit d988d9a9b9d180bfd5c1d353b3b176cb90d6861b ]
+[ Upstream commit 88390dd788db485912ee7f9a8d3d56fc5265d52f ]
 
-If the kernel crashes in a context where printk() calls always
-defer printing (such as in NMI or inside a printk_safe section)
-then the final panic messages will be deferred to irq_work. But
-if irq_work is not available, the messages will not get printed
-unless explicitly flushed. The result is that the final
-"end Kernel panic" banner does not get printed.
+In detail:
 
-Add one final flush after the last printk() call to make sure
-the final panic messages make it out as well.
+In C language, when you perform a multiplication operation, if
+both operands are of int type, the multiplication operation is
+performed on the int type, and then the result is converted to
+the target type. This means that if the product of int type
+multiplication exceeds the range that int type can represent,
+an overflow will occur even if you store the result in a
+variable of int64_t type.
 
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20240207134103.1357162-14-john.ogness@linutronix.de
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+For a multiplication of two int values, it is better to use
+mul_u32_u32() rather than s->exit_latency_ns = s->exit_latency *
+NSEC_PER_USEC to avoid potential overflow happenning.
+
+Signed-off-by: C Cheng <C.Cheng@mediatek.com>
+Signed-off-by: Bo Ye <bo.ye@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+[ rjw: New subject ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/panic.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/cpuidle/driver.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/panic.c b/kernel/panic.c
-index 63e94f3bd8dcd..e6c2bf04a32c0 100644
---- a/kernel/panic.c
-+++ b/kernel/panic.c
-@@ -441,6 +441,14 @@ void panic(const char *fmt, ...)
+diff --git a/drivers/cpuidle/driver.c b/drivers/cpuidle/driver.c
+index f70aa17e2a8e0..c594e28adddf3 100644
+--- a/drivers/cpuidle/driver.c
++++ b/drivers/cpuidle/driver.c
+@@ -16,6 +16,7 @@
+ #include <linux/cpumask.h>
+ #include <linux/tick.h>
+ #include <linux/cpu.h>
++#include <linux/math64.h>
  
- 	/* Do not scroll important messages printed above */
- 	suppress_printk = 1;
-+
-+	/*
-+	 * The final messages may not have been printed if in a context that
-+	 * defers printing (such as NMI) and irq_work is not available.
-+	 * Explicitly flush the kernel log buffer one last time.
-+	 */
-+	console_flush_on_panic(CONSOLE_FLUSH_PENDING);
-+
- 	local_irq_enable();
- 	for (i = 0; ; i += PANIC_TIMER_STEP) {
- 		touch_softlockup_watchdog();
+ #include "cpuidle.h"
+ 
+@@ -185,7 +186,7 @@ static void __cpuidle_driver_init(struct cpuidle_driver *drv)
+ 			s->target_residency_ns = 0;
+ 
+ 		if (s->exit_latency > 0)
+-			s->exit_latency_ns = s->exit_latency * NSEC_PER_USEC;
++			s->exit_latency_ns = mul_u32_u32(s->exit_latency, NSEC_PER_USEC);
+ 		else if (s->exit_latency_ns < 0)
+ 			s->exit_latency_ns =  0;
+ 	}
 -- 
 2.43.0
 
