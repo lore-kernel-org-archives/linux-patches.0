@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 042CB1474BB;
-	Thu, 11 Apr 2024 10:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE34114B07B;
+	Thu, 11 Apr 2024 10:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831645; cv=none; b=gPesfLpPlQ78pTTZfRFbDzf3xik6bFzQPnpSf4tdwtDSkwyHMP0snU9PyHTBGlicJSMNDaM4ZhDE6QJdH/O9xcbjy6ZNNLygJ4DI79lgRPfXQptxGDWSj3a2gRs2Ch+2Ls4L0/+dS9ZHZOdVUPOUNXxvCbOMcSVGEOcx6JOcbV0=
+	t=1712831648; cv=none; b=pF3uqzxnVCQvUgcT9fh00SJyzx/AhaMD9JBMrBcoex+lSRZrG0Jic7NVfq/PKCvBtufEkAR1q1H4hAY6uXvK/DfZumRjORxt2xaqJw53C/HSvMjlJi2PODusHL0ASY8vvadpEdw4D3gw3xatg/hiv47BXHeXmBRtNkadtk4AZSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831645; c=relaxed/simple;
-	bh=ug7afK/EJEPD6vaOVi9eF9DcPst2mRv9XDrtOnQoZ0k=;
+	s=arc-20240116; t=1712831648; c=relaxed/simple;
+	bh=EdSgtFducRCtP/XivefJgSDJbIIhL2YAp+tQptYteSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ncHhFTFuZ7cKZaEa1UwzdrwJJRlHgeFQU7YfAmlmoqDq3sTnbeLuHHa/MwcgCNKCakSvnePCIa3BYznK1eY9jghwGX66/AHFyNRgPe3Y32OxQnO0NBs0IBxm4xPdULncGjqGp0ortoMYaWsqVdEWQiHq2UXmX+nv3qNPjiCjcnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGgNVSXU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ncTLx5ZAGB4Jksnt/xJfnN9oHD97tv1SuLA1TZ6YwwXxRqkhRFYOz9L1tlZkLh4iQeF7I+L17RjiSZK3cax2Wp1qDeUj4xoLWR0nW9hVXNUiUbAtB1sucKMSYa9GiGvMxlUkTyjInFydhbzHPSpmI72HXJGni0SXGvBswnV3M3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n10KiLck; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGgNVSXU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A407C433C7;
-	Thu, 11 Apr 2024 10:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n10KiLck"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64835C433C7;
+	Thu, 11 Apr 2024 10:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831644;
-	bh=ug7afK/EJEPD6vaOVi9eF9DcPst2mRv9XDrtOnQoZ0k=;
+	s=korg; t=1712831647;
+	bh=EdSgtFducRCtP/XivefJgSDJbIIhL2YAp+tQptYteSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZGgNVSXU18f7CAt5ySVv59U7piGooMSWjNGU9sNzCxl/WEvvATUTroRO2yKd66dhz
-	 TEZEha0SEZtGlxLWYo4XkFo4IgsAEOiuTvjJ0pOp+2LWe8qyCv70uHwpDJPvQyCseP
-	 ayC76V/axc25fPmDC3cPxck1SacUwZu4WUrGDv9Y=
+	b=n10KiLckndTcLBOtTl+OL218KkkfkT8UEof5/S0cdIH/3MbLpEHiQAEBFvwwY4r5W
+	 S2ZzdfyB7ldQONb81kzJtNVc795kW3nOG45IYDibqQAboapbdGpzfgekypcV1h8H7b
+	 vSPx63Z9JJJVQgsOgUU+98tsnDHZmdMbU5X9rEEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Chang <waynec@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
+	Amey Narkhede <ameynarkhede03@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Raphael Norwitz <raphael.norwitz@nutanix.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 079/294] usb: gadget: tegra-xudc: Fix USB3 PHY retrieval logic
-Date: Thu, 11 Apr 2024 11:54:02 +0200
-Message-ID: <20240411095438.065043346@linuxfoundation.org>
+Subject: [PATCH 5.10 062/294] PCI: Cache PCIe Device Capabilities register
+Date: Thu, 11 Apr 2024 11:53:45 +0200
+Message-ID: <20240411095437.559079636@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -51,110 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Chang <waynec@nvidia.com>
+From: Amey Narkhede <ameynarkhede03@gmail.com>
 
-[ Upstream commit 84fa943d93c31ee978355e6c6c69592dae3c9f59 ]
+[ Upstream commit 69139244806537f9d51364f37fe146bb2ee88a05 ]
 
-This commit resolves an issue in the tegra-xudc USB gadget driver that
-incorrectly fetched USB3 PHY instances. The problem stemmed from the
-assumption of a one-to-one correspondence between USB2 and USB3 PHY
-names and their association with physical USB ports in the device tree.
+Add a new member called devcap in struct pci_dev for caching the PCIe
+Device Capabilities register to avoid reading PCI_EXP_DEVCAP multiple
+times.
 
-Previously, the driver associated USB3 PHY names directly with the USB3
-instance number, leading to mismatches when mapping the physical USB
-ports. For instance, if using USB3-1 PHY, the driver expect the
-corresponding PHY name as 'usb3-1'. However, the physical USB ports in
-the device tree were designated as USB2-0 and USB3-0 as we only have
-one device controller, causing a misalignment.
+Refactor pcie_has_flr() to use cached device capabilities.
 
-This commit rectifies the issue by adjusting the PHY naming logic.
-Now, the driver correctly correlates the USB2 and USB3 PHY instances,
-allowing the USB2-0 and USB3-1 PHYs to form a physical USB port pair
-while accurately reflecting their configuration in the device tree by
-naming them USB2-0 and USB3-0, respectively.
-
-The change ensures that the PHY and PHY names align appropriately,
-resolving the mismatch between physical USB ports and their associated
-names in the device tree.
-
-Fixes: b4e19931c98a ("usb: gadget: tegra-xudc: Support multiple device modes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wayne Chang <waynec@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://lore.kernel.org/r/20240307030328.1487748-3-waynec@nvidia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20210817180500.1253-2-ameynarkhede03@gmail.com
+Signed-off-by: Amey Narkhede <ameynarkhede03@gmail.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Raphael Norwitz <raphael.norwitz@nutanix.com>
+Stable-dep-of: 627c6db20703 ("PCI/DPC: Quirk PIO log size for Intel Raptor Lake Root Ports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/tegra-xudc.c | 39 ++++++++++++++++++-----------
- 1 file changed, 25 insertions(+), 14 deletions(-)
+ drivers/pci/pci.c   | 6 ++----
+ drivers/pci/probe.c | 5 +++--
+ include/linux/pci.h | 1 +
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index 23e31eec442dc..9d3e36c867e83 100644
---- a/drivers/usb/gadget/udc/tegra-xudc.c
-+++ b/drivers/usb/gadget/udc/tegra-xudc.c
-@@ -3480,8 +3480,8 @@ static void tegra_xudc_device_params_init(struct tegra_xudc *xudc)
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 1f8106ec70945..d1631109b1422 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -31,6 +31,7 @@
+ #include <linux/vmalloc.h>
+ #include <asm/dma.h>
+ #include <linux/aer.h>
++#include <linux/bitfield.h>
+ #include "pci.h"
  
- static int tegra_xudc_phy_get(struct tegra_xudc *xudc)
+ DEFINE_MUTEX(pci_slot_mutex);
+@@ -4572,13 +4573,10 @@ EXPORT_SYMBOL(pci_wait_for_pending_transaction);
+  */
+ bool pcie_has_flr(struct pci_dev *dev)
  {
--	int err = 0, usb3;
--	unsigned int i;
-+	int err = 0, usb3_companion_port;
-+	unsigned int i, j;
+-	u32 cap;
+-
+ 	if (dev->dev_flags & PCI_DEV_FLAGS_NO_FLR_RESET)
+ 		return false;
  
- 	xudc->utmi_phy = devm_kcalloc(xudc->dev, xudc->soc->num_phys,
- 					   sizeof(*xudc->utmi_phy), GFP_KERNEL);
-@@ -3509,7 +3509,7 @@ static int tegra_xudc_phy_get(struct tegra_xudc *xudc)
- 		if (IS_ERR(xudc->utmi_phy[i])) {
- 			err = PTR_ERR(xudc->utmi_phy[i]);
- 			dev_err_probe(xudc->dev, err,
--				      "failed to get usb2-%d PHY\n", i);
-+				"failed to get PHY for phy-name usb2-%d\n", i);
- 			goto clean_up;
- 		} else if (xudc->utmi_phy[i]) {
- 			/* Get usb-phy, if utmi phy is available */
-@@ -3528,19 +3528,30 @@ static int tegra_xudc_phy_get(struct tegra_xudc *xudc)
- 		}
+-	pcie_capability_read_dword(dev, PCI_EXP_DEVCAP, &cap);
+-	return cap & PCI_EXP_DEVCAP_FLR;
++	return FIELD_GET(PCI_EXP_DEVCAP_FLR, dev->devcap) == 1;
+ }
+ EXPORT_SYMBOL_GPL(pcie_has_flr);
  
- 		/* Get USB3 phy */
--		usb3 = tegra_xusb_padctl_get_usb3_companion(xudc->padctl, i);
--		if (usb3 < 0)
-+		usb3_companion_port = tegra_xusb_padctl_get_usb3_companion(xudc->padctl, i);
-+		if (usb3_companion_port < 0)
- 			continue;
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index ab106d2a99479..02a75f3b59208 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -19,6 +19,7 @@
+ #include <linux/hypervisor.h>
+ #include <linux/irqdomain.h>
+ #include <linux/pm_runtime.h>
++#include <linux/bitfield.h>
+ #include "pci.h"
  
--		snprintf(phy_name, sizeof(phy_name), "usb3-%d", usb3);
--		xudc->usb3_phy[i] = devm_phy_optional_get(xudc->dev, phy_name);
--		if (IS_ERR(xudc->usb3_phy[i])) {
--			err = PTR_ERR(xudc->usb3_phy[i]);
--			dev_err_probe(xudc->dev, err,
--				      "failed to get usb3-%d PHY\n", usb3);
--			goto clean_up;
--		} else if (xudc->usb3_phy[i])
--			dev_dbg(xudc->dev, "usb3-%d PHY registered", usb3);
-+		for (j = 0; j < xudc->soc->num_phys; j++) {
-+			snprintf(phy_name, sizeof(phy_name), "usb3-%d", j);
-+			xudc->usb3_phy[i] = devm_phy_optional_get(xudc->dev, phy_name);
-+			if (IS_ERR(xudc->usb3_phy[i])) {
-+				err = PTR_ERR(xudc->usb3_phy[i]);
-+				dev_err_probe(xudc->dev, err,
-+					"failed to get PHY for phy-name usb3-%d\n", j);
-+				goto clean_up;
-+			} else if (xudc->usb3_phy[i]) {
-+				int usb2_port =
-+					tegra_xusb_padctl_get_port_number(xudc->utmi_phy[i]);
-+				int usb3_port =
-+					tegra_xusb_padctl_get_port_number(xudc->usb3_phy[i]);
-+				if (usb3_port == usb3_companion_port) {
-+					dev_dbg(xudc->dev, "USB2 port %d is paired with USB3 port %d for device mode port %d\n",
-+					 usb2_port, usb3_port, i);
-+					break;
-+				}
-+			}
-+		}
- 	}
+ #define CARDBUS_LATENCY_TIMER	176	/* secondary latency timer */
+@@ -1496,8 +1497,8 @@ void set_pcie_port_type(struct pci_dev *pdev)
+ 	pdev->pcie_cap = pos;
+ 	pci_read_config_word(pdev, pos + PCI_EXP_FLAGS, &reg16);
+ 	pdev->pcie_flags_reg = reg16;
+-	pci_read_config_word(pdev, pos + PCI_EXP_DEVCAP, &reg16);
+-	pdev->pcie_mpss = reg16 & PCI_EXP_DEVCAP_PAYLOAD;
++	pci_read_config_dword(pdev, pos + PCI_EXP_DEVCAP, &pdev->devcap);
++	pdev->pcie_mpss = FIELD_GET(PCI_EXP_DEVCAP_PAYLOAD, pdev->devcap);
  
- 	return err;
+ 	parent = pci_upstream_bridge(pdev);
+ 	if (!parent)
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 1e3df93b39ca9..75f29838d25cf 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -333,6 +333,7 @@ struct pci_dev {
+ #ifdef CONFIG_PCIEPORTBUS
+ 	struct rcec_ea	*rcec_ea;	/* RCEC cached endpoint association */
+ #endif
++	u32		devcap;		/* PCIe Device Capabilities */
+ 	u8		pcie_cap;	/* PCIe capability offset */
+ 	u8		msi_cap;	/* MSI capability offset */
+ 	u8		msix_cap;	/* MSI-X capability offset */
 -- 
 2.43.0
 
