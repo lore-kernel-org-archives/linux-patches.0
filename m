@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6932EAE5;
-	Thu, 11 Apr 2024 10:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CE02EAE5;
+	Thu, 11 Apr 2024 10:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830710; cv=none; b=DDEN+X9x9JIEFdNAUqKESB7urQi1pGe6ffHqFRNHoTLbSCJYBnuqjxJ0Gmq9AlkdPCxL+hwFqYy/+QXMu7SWNGVm3UqgXYOJlW4jB/cp/mIeZi+QKydwgqAY0blyaG7G9DsrQVv2fXG19r0m9h6+NCYd2saJTRVFdygy1OqMxzA=
+	t=1712830713; cv=none; b=Iehffn5OZ7qVBDgb8C6POr7UTokXaJGBXuLQJLCoSJmFmljQD4YL/6aGQlzaWszPoK748wfMxCz4chFLA5Ayy5zwTVqxi2dbpg4cN+P1dC2+N5bhBMSKj7+L5cvLEiakNNrdedaYSmygvvsX6ecgtM/9kCHOpJ2LXK+FF8a+rWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830710; c=relaxed/simple;
-	bh=+P4XDqBr9jCLiOK20kTI87dLT6ZTEf/Q6HmO/MHHnnE=;
+	s=arc-20240116; t=1712830713; c=relaxed/simple;
+	bh=kGq6VtZFacPF0VPunw5ye0B1ihlQOOkDJhWwwxLwa80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aFegiXP8opUXON9TSjDEUDv5L8KuWs5xpqhzujkyx9c1DxTG3flW96OZLNPfKDqXoHk1dwm3gdTCsv5oiyv+J9QuW+8QBbFwMAgq3dNBFDldArKOGqwz/pphgogiq/xbtvQQzikMxdO+mTvmmf77u+x5cnOQ8kfg+nlq7PgurTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIrWkMlY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fZsbV2YeE3x02qOTm/wNbPodGHPepIgMmdBZvw/hXMQ7Ril2zhff/GihBnJDBeI3SdMG/5RyW5Yr6fUA7F4IR1o1KbDcD9WdArO/ovy6Eu1KltnuLkXXRidVfLXcUVGpV4W4xMnwI0gLxZ1z8pav/C3MosI7AUukwxrf1EXRs2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8mE+aMS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIrWkMlY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569B7C433F1;
-	Thu, 11 Apr 2024 10:18:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8mE+aMS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 700E6C433C7;
+	Thu, 11 Apr 2024 10:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830709;
-	bh=+P4XDqBr9jCLiOK20kTI87dLT6ZTEf/Q6HmO/MHHnnE=;
+	s=korg; t=1712830712;
+	bh=kGq6VtZFacPF0VPunw5ye0B1ihlQOOkDJhWwwxLwa80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pIrWkMlYhrM9lmTEdNdThJ3EU5hqn6e2h3qnSF2cSB+3dW1kwSvmF0JjDznim1VhP
-	 iAY2VUyHEIzB7uqbCxVM8vcKsWqFGsLQnGU0wLsP4IDU4PtAQqcV2YBNHhoC2e/NJc
-	 c9WxHld4yHoSK9xGZlmaDT4lyyoITXfbPUqGZT/g=
+	b=j8mE+aMSVGPl7ASnIXXHR3Dt5o5gUGYsJOiSQ3NgNqRFk0RcfyxwovZQduGKllc4J
+	 5xrgJbyfUC0k3883YoaQ+gMgV8BDSRIakjDh8hP//btHkGDjf9YHRqU3OL/dn1d6HX
+	 AxriacbJobV21dZ86vD9GDGwAbcvirj/UwdnQIig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Benjamin LaHaise <ben@communityfibre.ca>,
-	Eric Biggers <ebiggers@google.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Avi Kivity <avi@scylladb.com>,
-	Sandeep Dhavale <dhavale@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.4 091/215] fs/aio: Check IOCB_AIO_RW before the struct aio_kiocb conversion
-Date: Thu, 11 Apr 2024 11:55:00 +0200
-Message-ID: <20240411095427.638353771@linuxfoundation.org>
+	Alexandre Chartre <alexandre.chartre@oracle.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Miroslav Benes <mbenes@suse.cz>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	Rui Qi <qirui.001@bytedance.com>
+Subject: [PATCH 5.4 092/215] objtool: is_fentry_call() crashes if call has no destination
+Date: Thu, 11 Apr 2024 11:55:01 +0200
+Message-ID: <20240411095427.667644876@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -58,63 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Alexandre Chartre <alexandre.chartre@oracle.com>
 
-commit 961ebd120565cb60cebe21cb634fbc456022db4a upstream.
+commit 87cf61fe848ca8ddf091548671e168f52e8a718e upstream.
 
-The first kiocb_set_cancel_fn() argument may point at a struct kiocb
-that is not embedded inside struct aio_kiocb. With the current code,
-depending on the compiler, the req->ki_ctx read happens either before
-the IOCB_AIO_RW test or after that test. Move the req->ki_ctx read such
-that it is guaranteed that the IOCB_AIO_RW test happens first.
+Fix is_fentry_call() so that it works if a call has no destination
+set (call_dest). This needs to be done in order to support intra-
+function calls.
 
-Reported-by: Eric Biggers <ebiggers@kernel.org>
-Cc: Benjamin LaHaise <ben@communityfibre.ca>
-Cc: Eric Biggers <ebiggers@google.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Avi Kivity <avi@scylladb.com>
-Cc: Sandeep Dhavale <dhavale@google.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: stable@vger.kernel.org
-Fixes: b820de741ae4 ("fs/aio: Restrict kiocb_set_cancel_fn() to I/O submitted via libaio")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20240304235715.3790858-1-bvanassche@acm.org
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Alexandre Chartre <alexandre.chartre@oracle.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Miroslav Benes <mbenes@suse.cz>
+Acked-by: Josh Poimboeuf <jpoimboe@redhat.com>
+Link: https://lkml.kernel.org/r/20200414103618.12657-2-alexandre.chartre@oracle.com
+Signed-off-by: Rui Qi <qirui.001@bytedance.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/aio.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tools/objtool/check.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -566,8 +566,8 @@ static int aio_setup_ring(struct kioctx
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -1367,7 +1367,7 @@ static int decode_sections(struct objtoo
  
- void kiocb_set_cancel_fn(struct kiocb *iocb, kiocb_cancel_fn *cancel)
+ static bool is_fentry_call(struct instruction *insn)
  {
--	struct aio_kiocb *req = container_of(iocb, struct aio_kiocb, rw);
--	struct kioctx *ctx = req->ki_ctx;
-+	struct aio_kiocb *req;
-+	struct kioctx *ctx;
- 	unsigned long flags;
- 
- 	/*
-@@ -577,9 +577,13 @@ void kiocb_set_cancel_fn(struct kiocb *i
- 	if (!(iocb->ki_flags & IOCB_AIO_RW))
- 		return;
- 
-+	req = container_of(iocb, struct aio_kiocb, rw);
-+
- 	if (WARN_ON_ONCE(!list_empty(&req->ki_list)))
- 		return;
- 
-+	ctx = req->ki_ctx;
-+
- 	spin_lock_irqsave(&ctx->ctx_lock, flags);
- 	list_add_tail(&req->ki_list, &ctx->active_reqs);
- 	req->ki_cancel = cancel;
+-	if (insn->type == INSN_CALL &&
++	if (insn->type == INSN_CALL && insn->call_dest &&
+ 	    insn->call_dest->type == STT_NOTYPE &&
+ 	    !strcmp(insn->call_dest->name, "__fentry__"))
+ 		return true;
 
 
