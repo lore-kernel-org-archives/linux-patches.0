@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1049513FD97;
-	Thu, 11 Apr 2024 10:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26DA14AD26;
+	Thu, 11 Apr 2024 10:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831554; cv=none; b=pSJHbya2NLhflFIgysBJpS1jz2fOWpRNjAgex9KweXDJku8YqXA8IU7+WjPNTTajEPBnS2vSu6rPIih68wf4Yr7uRU2OHTWXHv5qyEBi7UAHlHpBRojdtVLTkDYev3eI2W2fBqxV/ORsHadzKpbPrNBp65x4Owdo1tPEfLM+jVc=
+	t=1712831556; cv=none; b=d5Z1DjfhM9Sbg9gGVnpDoaD+i/tFgl94xisq/yIbpf/RGNR/8ZjMMMuyKCIoGkinN6EW6xeZCdvnWBF4OjflTDfQc0ifCIJTjrX+pfBWkL9aoaEPbiq0jB6YT6PKyTOENWbDQDAtlgdcVj6kuu7r1H+Gq0G5amsd/WhE1fjDvTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831554; c=relaxed/simple;
-	bh=8d1O/Uio/QfDDe58Oce1uNosEpKc/TTTSTxLN7ZTiYw=;
+	s=arc-20240116; t=1712831556; c=relaxed/simple;
+	bh=Oy5bL5AoBnz16iJsbJlwRm81NuEPiaGSS0kdu4ouo20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LYYCYbhVaU5e/+KyrMr1KfjkNsK4ftRDgmgcKGZ48I2gpqZrFC8NMtqJqSMC+pP8cqQX8JX/L5RW9xa5Z1yXejVq9Vouhv6u1QPHQ1IBT6961QyOZg0TULnWdkQtIoqI8aLhA8hgnC9NwRqPHM4KQHFpSMPOQfetcsqcfo7aAPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtlQh1hk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D+wvfl+/ocT4NUhDJVRpBOamNg/grFaVqLLksK3DK2vIDPzkNmjdBA0ZCO8A6LLA4XG644JuFqeJbfe4/WQ3PtjChoEgk702Y1ipdlLM5+seditcKC+TM3h1K7OwILOiJARtszwqAKZwkrJL0DSc3/WKVVkKpHHi75PAeASrHHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tABiiicI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtlQh1hk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F93DC433F1;
-	Thu, 11 Apr 2024 10:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tABiiicI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4A3C433C7;
+	Thu, 11 Apr 2024 10:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831553;
-	bh=8d1O/Uio/QfDDe58Oce1uNosEpKc/TTTSTxLN7ZTiYw=;
+	s=korg; t=1712831556;
+	bh=Oy5bL5AoBnz16iJsbJlwRm81NuEPiaGSS0kdu4ouo20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AtlQh1hkP5xzJHMGXglDL06X09ZeUy6ED9DXS4S0hrtX0txkJMMj4zk6khJcn6ncE
-	 A12FvqHDTaaNLybzLuhdSLPrXQ2O7QCsI21P7PYTJSt09hQ5QhVN/d7vEujM6l8EuF
-	 7At841gOWlvHLMl45iOF3lPnEc61vECUBzpcfo1E=
+	b=tABiiicIhmIzKu5pYfp/Re+ONm9QjNBXQbanTaB2zUECRjIh/zfNxFwXF6LCGsEro
+	 +KY8kwmX4+X9KGgVHSZU38lBOZtmmZkKcL1Bw0i/+8CGKcAPtNwILGq+1E3cy/OEJd
+	 Ucm8l2/H7NPil+U3rm5nF1Ux3WzH1+xavO9LfLmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cameron Williams <cang1@live.co.uk>,
-	Johan Hovold <johan@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Igor Zhbanov <izh1979@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	sparclinux@vger.kernel.org,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Andreas Larsson <andreas@gaisler.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 047/294] USB: serial: add device ID for VeriFone adapter
-Date: Thu, 11 Apr 2024 11:53:30 +0200
-Message-ID: <20240411095437.058703147@linuxfoundation.org>
+Subject: [PATCH 5.10 021/294] sparc64: NMI watchdog: fix return value of __setup handler
+Date: Thu, 11 Apr 2024 11:53:04 +0200
+Message-ID: <20240411095436.270792014@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -51,92 +57,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cameron Williams <cang1@live.co.uk>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit cda704809797a8a86284f9df3eef5e62ec8a3175 ]
+[ Upstream commit 3ed7c61e49d65dacb96db798c0ab6fcd55a1f20f ]
 
-Add device ID for a (probably fake) CP2102 UART device.
+__setup() handlers should return 1 to obsolete_checksetup() in
+init/main.c to indicate that the boot option has been handled.
+A return of 0 causes the boot option/value to be listed as an Unknown
+kernel parameter and added to init's (limited) argument or environment
+strings. Also, error return codes don't mean anything to
+obsolete_checksetup() -- only non-zero (usually 1) or zero.
+So return 1 from setup_nmi_watchdog().
 
-lsusb -v output:
-
-Device Descriptor:
-  bLength                18
-  bDescriptorType         1
-  bcdUSB               1.10
-  bDeviceClass            0 [unknown]
-  bDeviceSubClass         0 [unknown]
-  bDeviceProtocol         0
-  bMaxPacketSize0        64
-  idVendor           0x11ca VeriFone Inc
-  idProduct          0x0212 Verifone USB to Printer
-  bcdDevice            1.00
-  iManufacturer           1 Silicon Labs
-  iProduct                2 Verifone USB to Printer
-  iSerial                 3 0001
-  bNumConfigurations      1
-  Configuration Descriptor:
-    bLength                 9
-    bDescriptorType         2
-    wTotalLength       0x0020
-    bNumInterfaces          1
-    bConfigurationValue     1
-    iConfiguration          0
-    bmAttributes         0x80
-      (Bus Powered)
-    MaxPower              100mA
-    Interface Descriptor:
-      bLength                 9
-      bDescriptorType         4
-      bInterfaceNumber        0
-      bAlternateSetting       0
-      bNumEndpoints           2
-      bInterfaceClass       255 Vendor Specific Class
-      bInterfaceSubClass      0 [unknown]
-      bInterfaceProtocol      0
-      iInterface              2 Verifone USB to Printer
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x81  EP 1 IN
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval               0
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x01  EP 1 OUT
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval               0
-Device Status:     0x0000
-  (Bus Powered)
-
-Signed-off-by: Cameron Williams <cang1@live.co.uk>
+Fixes: e5553a6d0442 ("sparc64: Implement NMI watchdog on capable cpus.")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: Igor Zhbanov <izh1979@gmail.com>
+Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: sparclinux@vger.kernel.org
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/r/20240211052802.22612-1-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/cp210x.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/sparc/kernel/nmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/serial/cp210x.c b/drivers/usb/serial/cp210x.c
-index d161b64416a48..f4c982a323df2 100644
---- a/drivers/usb/serial/cp210x.c
-+++ b/drivers/usb/serial/cp210x.c
-@@ -181,6 +181,7 @@ static const struct usb_device_id id_table[] = {
- 	{ USB_DEVICE(0x10C4, 0xF004) }, /* Elan Digital Systems USBcount50 */
- 	{ USB_DEVICE(0x10C5, 0xEA61) }, /* Silicon Labs MobiData GPRS USB Modem */
- 	{ USB_DEVICE(0x10CE, 0xEA6A) }, /* Silicon Labs MobiData GPRS USB Modem 100EU */
-+	{ USB_DEVICE(0x11CA, 0x0212) }, /* Verifone USB to Printer (UART, CP2102) */
- 	{ USB_DEVICE(0x12B8, 0xEC60) }, /* Link G4 ECU */
- 	{ USB_DEVICE(0x12B8, 0xEC62) }, /* Link G4+ ECU */
- 	{ USB_DEVICE(0x13AD, 0x9999) }, /* Baltech card reader */
+diff --git a/arch/sparc/kernel/nmi.c b/arch/sparc/kernel/nmi.c
+index 060fff95a305c..fbf25e926f67c 100644
+--- a/arch/sparc/kernel/nmi.c
++++ b/arch/sparc/kernel/nmi.c
+@@ -274,7 +274,7 @@ static int __init setup_nmi_watchdog(char *str)
+ 	if (!strncmp(str, "panic", 5))
+ 		panic_on_timeout = 1;
+ 
+-	return 0;
++	return 1;
+ }
+ __setup("nmi_watchdog=", setup_nmi_watchdog);
+ 
 -- 
 2.43.0
 
