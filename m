@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815B81448EF;
-	Thu, 11 Apr 2024 10:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91FD1448EF;
+	Thu, 11 Apr 2024 10:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830272; cv=none; b=uz0zzOH+L5RKYDMozt33Wdf1yKXdVMbGCB4bJmcbjgT2AFi05krXeNMb8uJXAcg1XA9JwOnvtB5KF2Xb3sGrf80EONhtQHMPymaM91OBW47MzhnM6xGy3QNYgicJpaeIyhAeOG7r3bssmku80SdMCRGhSBCmTaYVtwBK5Pr3fBM=
+	t=1712830275; cv=none; b=bVCdhWH+mn341EP6QHRAN3PoQs7GVTHjxrPsmUkAyYs5XKvOPbWOR+LI5VRZmScij8yaTGpodo7x8P6b30QmoELIXWU1UJ+/l0LwBQE1tFrr9+ij2WPYb2eCPsQRjH9t7Eb7vCFdF+0jhq24G6Zai/A4HoaduMBI8yfTTQCjUVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830272; c=relaxed/simple;
-	bh=0bmVc2pA9MRlvNLbdeDYPN6axeDlNjdXMY2KEwY9/WU=;
+	s=arc-20240116; t=1712830275; c=relaxed/simple;
+	bh=SrEPAlLiMDFhfM+aAezU1ia5Bk1V26penQ3wfWwQjlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eHXGebFyf3qvURT1cqZMYtSihtWF+zIr8rUSd73nUnsBrttp3PHqTzJ9mG+/pKUL3CtmNu+ci0gOpnHra/qDKHjuIOEnG9LC1ADOnzxO5VB462qCT1fuPWhwn2SSvlShvxx82/p1HcumIoicZgrZO/jdWyb60zdM6xKJjlXWTMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5Jmnj20; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=knDJ8zuZFZb0GAGzVK1k0OTAoDe7j/3FMIzdQS+q6IMy6PSD/3fYYn4kdtPEQ4+oZWItbhsNBau5wZVYpCVjux8XEQGFhOd4wJuZwF2313keWmw7IBuzR29heb3pU9KBIbPQjkX8f9h6NLfU748yR30TqHNp6kRAQ8pg62YmU5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSGb13gI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5Jmnj20"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08FB5C433F1;
-	Thu, 11 Apr 2024 10:11:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSGb13gI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D84CEC433C7;
+	Thu, 11 Apr 2024 10:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830272;
-	bh=0bmVc2pA9MRlvNLbdeDYPN6axeDlNjdXMY2KEwY9/WU=;
+	s=korg; t=1712830275;
+	bh=SrEPAlLiMDFhfM+aAezU1ia5Bk1V26penQ3wfWwQjlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N5Jmnj206tt+fSFCHHLsYzDhSdSC+c2SHoF7yyw05HjNsWxuU/NL/rEICYn80Mbjj
-	 FgRC61bnhZgkQbnMPnck/yRQWnfq6BZrcYf5ZLcREUWogJKw5xwnn1QsM8S0PUZKdJ
-	 REKtoOcNDpLqxy+osxE1A8OsoMCVh+RtiReDxrcI=
+	b=RSGb13gIa75AkOpVuIWvCKVVW5FOVnH0RP2KZFmm8YvHkpNiNWLn32xvncClqk5wH
+	 9zZ6McihTFeIRRUUEr/T3Pbah0bbtj1W4lp8XCxNIbp9wv95ttkCMHCvyoE8Li3Gd/
+	 RPt7bxjgyg0NeLtYqxVtNTC+m5F8fQxNxvzqgKQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Peixoto <nukelet64@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 056/143] Bluetooth: Add new quirk for broken read key length on ATS2851
-Date: Thu, 11 Apr 2024 11:55:24 +0200
-Message-ID: <20240411095422.602701774@linuxfoundation.org>
+Subject: [PATCH 6.8 092/143] libperf evlist: Avoid out-of-bounds access
+Date: Thu, 11 Apr 2024 11:56:00 +0200
+Message-ID: <20240411095423.678608335@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -51,84 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Peixoto <nukelet64@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 48201a3b3f398be6a01f78a14b18bd5d31c47458 ]
+[ Upstream commit 1947b92464c3268381604bbe2ac977a3fd78192f ]
 
-The ATS2851 controller erroneously reports support for the "Read
-Encryption Key Length" HCI command. This makes it unable to connect
-to any devices, since this command is issued by the kernel during the
-connection process in response to an "Encryption Change" HCI event.
+Parallel testing appears to show a race between allocating and setting
+evsel ids. As there is a bounds check on the xyarray it yields a segv
+like:
 
-Add a new quirk (HCI_QUIRK_BROKEN_ENC_KEY_SIZE) to hint that the command
-is unsupported, preventing it from interrupting the connection process.
+```
+AddressSanitizer:DEADLYSIGNAL
 
-This is the error log from btmon before this patch:
+=================================================================
 
-> HCI Event: Encryption Change (0x08) plen 4
-        Status: Success (0x00)
-        Handle: 2048 Address: ...
-        Encryption: Enabled with E0 (0x01)
-< HCI Command: Read Encryption Key Size (0x05|0x0008) plen 2
-        Handle: 2048 Address: ...
-> HCI Event: Command Status (0x0f) plen 4
-      Read Encryption Key Size (0x05|0x0008) ncmd 1
-        Status: Unknown HCI Command (0x01)
+==484408==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000010
 
-Signed-off-by: Vinicius Peixoto <nukelet64@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+==484408==The signal is caused by a WRITE memory access.
+
+==484408==Hint: address points to the zero page.
+
+    #0 0x55cef5d4eff4 in perf_evlist__id_hash tools/lib/perf/evlist.c:256
+    #1 0x55cef5d4f132 in perf_evlist__id_add tools/lib/perf/evlist.c:274
+    #2 0x55cef5d4f545 in perf_evlist__id_add_fd tools/lib/perf/evlist.c:315
+    #3 0x55cef5a1923f in store_evsel_ids util/evsel.c:3130
+    #4 0x55cef5a19400 in evsel__store_ids util/evsel.c:3147
+    #5 0x55cef5888204 in __run_perf_stat tools/perf/builtin-stat.c:832
+    #6 0x55cef5888c06 in run_perf_stat tools/perf/builtin-stat.c:960
+    #7 0x55cef58932db in cmd_stat tools/perf/builtin-stat.c:2878
+...
+```
+
+Avoid this crash by early exiting the perf_evlist__id_add_fd and
+perf_evlist__id_add is the access is out-of-bounds.
+
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Yang Jihong <yangjihong1@huawei.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20240229070757.796244-1-irogers@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c   | 1 +
- include/net/bluetooth/hci.h | 8 ++++++++
- net/bluetooth/hci_event.c   | 3 ++-
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ tools/lib/perf/evlist.c                  | 18 ++++++++++++------
+ tools/lib/perf/include/internal/evlist.h |  4 ++--
+ 2 files changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 6cb87d47ad7d5..f684108dc2f1c 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -4483,6 +4483,7 @@ static int btusb_probe(struct usb_interface *intf,
- 		set_bit(HCI_QUIRK_BROKEN_READ_TRANSMIT_POWER, &hdev->quirks);
- 		set_bit(HCI_QUIRK_BROKEN_SET_RPA_TIMEOUT, &hdev->quirks);
- 		set_bit(HCI_QUIRK_BROKEN_EXT_SCAN, &hdev->quirks);
-+		set_bit(HCI_QUIRK_BROKEN_READ_ENC_KEY_SIZE, &hdev->quirks);
- 	}
+diff --git a/tools/lib/perf/evlist.c b/tools/lib/perf/evlist.c
+index 058e3ff10f9b2..c6d67fc9e57ef 100644
+--- a/tools/lib/perf/evlist.c
++++ b/tools/lib/perf/evlist.c
+@@ -248,10 +248,10 @@ u64 perf_evlist__read_format(struct perf_evlist *evlist)
  
- 	if (!reset)
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 03e68a8e229f5..35c5f75a3a5ee 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -339,6 +339,14 @@ enum {
- 	 * during the hdev->setup vendor callback.
- 	 */
- 	HCI_QUIRK_BROKEN_LE_CODED,
+ static void perf_evlist__id_hash(struct perf_evlist *evlist,
+ 				 struct perf_evsel *evsel,
+-				 int cpu, int thread, u64 id)
++				 int cpu_map_idx, int thread, u64 id)
+ {
+ 	int hash;
+-	struct perf_sample_id *sid = SID(evsel, cpu, thread);
++	struct perf_sample_id *sid = SID(evsel, cpu_map_idx, thread);
+ 
+ 	sid->id = id;
+ 	sid->evsel = evsel;
+@@ -269,21 +269,27 @@ void perf_evlist__reset_id_hash(struct perf_evlist *evlist)
+ 
+ void perf_evlist__id_add(struct perf_evlist *evlist,
+ 			 struct perf_evsel *evsel,
+-			 int cpu, int thread, u64 id)
++			 int cpu_map_idx, int thread, u64 id)
+ {
+-	perf_evlist__id_hash(evlist, evsel, cpu, thread, id);
++	if (!SID(evsel, cpu_map_idx, thread))
++		return;
 +
-+	/*
-+	 * When this quirk is set, the HCI_OP_READ_ENC_KEY_SIZE command is
-+	 * skipped during an HCI_EV_ENCRYPT_CHANGE event. This is required
-+	 * for Actions Semiconductor ATS2851 based controllers, which erroneously
-+	 * claim to support it.
-+	 */
-+	HCI_QUIRK_BROKEN_READ_ENC_KEY_SIZE,
- };
++	perf_evlist__id_hash(evlist, evsel, cpu_map_idx, thread, id);
+ 	evsel->id[evsel->ids++] = id;
+ }
  
- /* HCI device flags */
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 3b63513f57ba8..3992e18f0babb 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3679,7 +3679,8 @@ static void hci_encrypt_change_evt(struct hci_dev *hdev, void *data,
- 		 * controller really supports it. If it doesn't, assume
- 		 * the default size (16).
- 		 */
--		if (!(hdev->commands[20] & 0x10)) {
-+		if (!(hdev->commands[20] & 0x10) ||
-+		    test_bit(HCI_QUIRK_BROKEN_READ_ENC_KEY_SIZE, &hdev->quirks)) {
- 			conn->enc_key_size = HCI_LINK_KEY_SIZE;
- 			goto notify;
- 		}
+ int perf_evlist__id_add_fd(struct perf_evlist *evlist,
+ 			   struct perf_evsel *evsel,
+-			   int cpu, int thread, int fd)
++			   int cpu_map_idx, int thread, int fd)
+ {
+ 	u64 read_data[4] = { 0, };
+ 	int id_idx = 1; /* The first entry is the counter value */
+ 	u64 id;
+ 	int ret;
+ 
++	if (!SID(evsel, cpu_map_idx, thread))
++		return -1;
++
+ 	ret = ioctl(fd, PERF_EVENT_IOC_ID, &id);
+ 	if (!ret)
+ 		goto add;
+@@ -312,7 +318,7 @@ int perf_evlist__id_add_fd(struct perf_evlist *evlist,
+ 	id = read_data[id_idx];
+ 
+ add:
+-	perf_evlist__id_add(evlist, evsel, cpu, thread, id);
++	perf_evlist__id_add(evlist, evsel, cpu_map_idx, thread, id);
+ 	return 0;
+ }
+ 
+diff --git a/tools/lib/perf/include/internal/evlist.h b/tools/lib/perf/include/internal/evlist.h
+index d86ffe8ed483e..f43bdb9b6227c 100644
+--- a/tools/lib/perf/include/internal/evlist.h
++++ b/tools/lib/perf/include/internal/evlist.h
+@@ -126,11 +126,11 @@ u64 perf_evlist__read_format(struct perf_evlist *evlist);
+ 
+ void perf_evlist__id_add(struct perf_evlist *evlist,
+ 			 struct perf_evsel *evsel,
+-			 int cpu, int thread, u64 id);
++			 int cpu_map_idx, int thread, u64 id);
+ 
+ int perf_evlist__id_add_fd(struct perf_evlist *evlist,
+ 			   struct perf_evsel *evsel,
+-			   int cpu, int thread, int fd);
++			   int cpu_map_idx, int thread, int fd);
+ 
+ void perf_evlist__reset_id_hash(struct perf_evlist *evlist);
+ 
 -- 
 2.43.0
 
