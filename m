@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AE4140E3D;
-	Thu, 11 Apr 2024 10:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D688114601B;
+	Thu, 11 Apr 2024 10:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830748; cv=none; b=HwdlYLiAciY1abCWwQTsUw9InreQJ2PgfSMfKA4w3/bKBnlXAD08mdjyKEIq+1v0xrbHyZ1XXsTsAVw0ELLMOEqKV5h6UhZpYbZfnXTltc0FoBvx4QX9VNEfi1nfxI2vpX5JPI2spJPRTvjXYLk5xEBZVALqKhx/aeO4Of9TMvk=
+	t=1712830750; cv=none; b=S5nl0b2WXfdpoOOAnl1tcbzX2k7/smPjFBZNeZZgI0mErb01LyIgqHk9SsHYtxeE6HlFHW982A2tjA1o5I3NPPePT6h3zy0Il4vzDO7QzeMI3VFbaBLpMdA1jwTxn/oNukYFahOo+xl9k6b9aPAwooyuriW/QrY75++q4Fn4cow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830748; c=relaxed/simple;
-	bh=aCm8vlfm8Q4BfvMgszpYtKzYPeZof52XI8PMueq0wb8=;
+	s=arc-20240116; t=1712830750; c=relaxed/simple;
+	bh=KkHvbiOE/uS1JwBUKhs52Xmi0zAFvG16YRFSXcQJsrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NLvzF6Dku0DWo6S8ahMsideFSCJBpSE805bRap9Gj1TPfmsSsiz8nZJijCvAOrbwKInX4SMKqC8TrsGLfS0jqLAgtZ+iUUjBdrPgeXprxWGmTnnWaVTo4MGmU0DoNIOmyqYHgH+RPc+3pWtYnppLF7D24Xb1GuBFuthKASknQow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CqBW1V/x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ab5uyl2/LcTgnPzxj/cKpX7paG/npeHPtABwTBQwz1IZrNwRHJjTgvTkFSHd8Fv1Hsubmjsdxu1Wsaxxl9Hyt5dGravtVo3tmJdmdeI0mFB4jrzQlr4ZMotToojPSExZhi/oBXDGVx355RONWGUEjbzFq1DKxyF0CzDy34iath4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPtZxjd0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CqBW1V/x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68419C433C7;
-	Thu, 11 Apr 2024 10:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPtZxjd0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AFD3C433C7;
+	Thu, 11 Apr 2024 10:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830747;
-	bh=aCm8vlfm8Q4BfvMgszpYtKzYPeZof52XI8PMueq0wb8=;
+	s=korg; t=1712830750;
+	bh=KkHvbiOE/uS1JwBUKhs52Xmi0zAFvG16YRFSXcQJsrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CqBW1V/xH/lCGoNbSYz0NcqYhrs3NfYg8yjPvopot03WJnOsYxrzYEzTK5p07ajXe
-	 8BZflj0EzZgPz7heAprY13y5hTo72LxW/G6s7KRpsuWeDaZErHMUfT6OwLLC7i7RXm
-	 meCftIYzxjMe0Nl/IqsKmXG5oE6dyk40RyGqJKyI=
+	b=cPtZxjd05actYHmm2a0L0TMohj5bN/P6R7uqo9FwkPlV7SpQFGHJuVW+CiGsH2+zG
+	 Rb9bowUQfXD7IDVqZXKMEG9pAvH/+9hGbdOHjt3PDa2aGAvh/M3GWQ47V9gFdnIxV0
+	 mPH8+KOuyrA+zh6HAFtF/ooamaDQV3PnfKtGdOLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martijn Coenen <maco@android.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Genjian Zhang <zhanggenjian@kylinos.cn>
-Subject: [PATCH 5.4 103/215] loop: Factor out configuring loop from status
-Date: Thu, 11 Apr 2024 11:55:12 +0200
-Message-ID: <20240411095428.007599584@linuxfoundation.org>
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 068/215] s390/zcrypt: fix reference counting on zcrypt card objects
+Date: Thu, 11 Apr 2024 11:54:37 +0200
+Message-ID: <20240411095426.943343171@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -52,173 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martijn Coenen <maco@android.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit 0c3796c244598122a5d59d56f30d19390096817f ]
+[ Upstream commit 50ed48c80fecbe17218afed4f8bed005c802976c ]
 
-Factor out this code into a separate function, so it can be reused by
-other code more easily.
+Tests with hot-plugging crytpo cards on KVM guests with debug
+kernel build revealed an use after free for the load field of
+the struct zcrypt_card. The reason was an incorrect reference
+handling of the zcrypt card object which could lead to a free
+of the zcrypt card object while it was still in use.
 
-Signed-off-by: Martijn Coenen <maco@android.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is an example of the slab message:
+
+    kernel: 0x00000000885a7512-0x00000000885a7513 @offset=1298. First byte 0x68 instead of 0x6b
+    kernel: Allocated in zcrypt_card_alloc+0x36/0x70 [zcrypt] age=18046 cpu=3 pid=43
+    kernel:  kmalloc_trace+0x3f2/0x470
+    kernel:  zcrypt_card_alloc+0x36/0x70 [zcrypt]
+    kernel:  zcrypt_cex4_card_probe+0x26/0x380 [zcrypt_cex4]
+    kernel:  ap_device_probe+0x15c/0x290
+    kernel:  really_probe+0xd2/0x468
+    kernel:  driver_probe_device+0x40/0xf0
+    kernel:  __device_attach_driver+0xc0/0x140
+    kernel:  bus_for_each_drv+0x8c/0xd0
+    kernel:  __device_attach+0x114/0x198
+    kernel:  bus_probe_device+0xb4/0xc8
+    kernel:  device_add+0x4d2/0x6e0
+    kernel:  ap_scan_adapter+0x3d0/0x7c0
+    kernel:  ap_scan_bus+0x5a/0x3b0
+    kernel:  ap_scan_bus_wq_callback+0x40/0x60
+    kernel:  process_one_work+0x26e/0x620
+    kernel:  worker_thread+0x21c/0x440
+    kernel: Freed in zcrypt_card_put+0x54/0x80 [zcrypt] age=9024 cpu=3 pid=43
+    kernel:  kfree+0x37e/0x418
+    kernel:  zcrypt_card_put+0x54/0x80 [zcrypt]
+    kernel:  ap_device_remove+0x4c/0xe0
+    kernel:  device_release_driver_internal+0x1c4/0x270
+    kernel:  bus_remove_device+0x100/0x188
+    kernel:  device_del+0x164/0x3c0
+    kernel:  device_unregister+0x30/0x90
+    kernel:  ap_scan_adapter+0xc8/0x7c0
+    kernel:  ap_scan_bus+0x5a/0x3b0
+    kernel:  ap_scan_bus_wq_callback+0x40/0x60
+    kernel:  process_one_work+0x26e/0x620
+    kernel:  worker_thread+0x21c/0x440
+    kernel:  kthread+0x150/0x168
+    kernel:  __ret_from_fork+0x3c/0x58
+    kernel:  ret_from_fork+0xa/0x30
+    kernel: Slab 0x00000372022169c0 objects=20 used=18 fp=0x00000000885a7c88 flags=0x3ffff00000000a00(workingset|slab|node=0|zone=1|lastcpupid=0x1ffff)
+    kernel: Object 0x00000000885a74b8 @offset=1208 fp=0x00000000885a7c88
+    kernel: Redzone  00000000885a74b0: bb bb bb bb bb bb bb bb                          ........
+    kernel: Object   00000000885a74b8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a74c8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a74d8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a74e8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a74f8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a7508: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 68 4b 6b 6b 6b a5  kkkkkkkkkkhKkkk.
+    kernel: Redzone  00000000885a7518: bb bb bb bb bb bb bb bb                          ........
+    kernel: Padding  00000000885a756c: 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a              ZZZZZZZZZZZZ
+    kernel: CPU: 0 PID: 387 Comm: systemd-udevd Not tainted 6.8.0-HF #2
+    kernel: Hardware name: IBM 3931 A01 704 (KVM/Linux)
+    kernel: Call Trace:
+    kernel:  [<00000000ca5ab5b8>] dump_stack_lvl+0x90/0x120
+    kernel:  [<00000000c99d78bc>] check_bytes_and_report+0x114/0x140
+    kernel:  [<00000000c99d53cc>] check_object+0x334/0x3f8
+    kernel:  [<00000000c99d820c>] alloc_debug_processing+0xc4/0x1f8
+    kernel:  [<00000000c99d852e>] get_partial_node.part.0+0x1ee/0x3e0
+    kernel:  [<00000000c99d94ec>] ___slab_alloc+0xaf4/0x13c8
+    kernel:  [<00000000c99d9e38>] __slab_alloc.constprop.0+0x78/0xb8
+    kernel:  [<00000000c99dc8dc>] __kmalloc+0x434/0x590
+    kernel:  [<00000000c9b4c0ce>] ext4_htree_store_dirent+0x4e/0x1c0
+    kernel:  [<00000000c9b908a2>] htree_dirblock_to_tree+0x17a/0x3f0
+    kernel:  [<00000000c9b919dc>] ext4_htree_fill_tree+0x134/0x400
+    kernel:  [<00000000c9b4b3d0>] ext4_dx_readdir+0x160/0x2f0
+    kernel:  [<00000000c9b4bedc>] ext4_readdir+0x5f4/0x760
+    kernel:  [<00000000c9a7efc4>] iterate_dir+0xb4/0x280
+    kernel:  [<00000000c9a7f1ea>] __do_sys_getdents64+0x5a/0x120
+    kernel:  [<00000000ca5d6946>] __do_syscall+0x256/0x310
+    kernel:  [<00000000ca5eea10>] system_call+0x70/0x98
+    kernel: INFO: lockdep is turned off.
+    kernel: FIX kmalloc-96: Restoring Poison 0x00000000885a7512-0x00000000885a7513=0x6b
+    kernel: FIX kmalloc-96: Marking all objects used
+
+The fix is simple: Before use of the queue not only the queue object
+but also the card object needs to increase it's reference count
+with a call to zcrypt_card_get(). Similar after use of the queue
+not only the queue but also the card object's reference count is
+decreased with zcrypt_card_put().
+
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c |  117 +++++++++++++++++++++++++++++----------------------
- 1 file changed, 67 insertions(+), 50 deletions(-)
+ drivers/s390/crypto/zcrypt_api.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -1258,75 +1258,43 @@ static int loop_clr_fd(struct loop_devic
- 	return __loop_clr_fd(lo, false);
+diff --git a/drivers/s390/crypto/zcrypt_api.c b/drivers/s390/crypto/zcrypt_api.c
+index f376dfcd7dbeb..69c1df560e2f1 100644
+--- a/drivers/s390/crypto/zcrypt_api.c
++++ b/drivers/s390/crypto/zcrypt_api.c
+@@ -574,6 +574,7 @@ static inline struct zcrypt_queue *zcrypt_pick_queue(struct zcrypt_card *zc,
+ {
+ 	if (!zq || !try_module_get(zq->queue->ap_dev.drv->driver.owner))
+ 		return NULL;
++	zcrypt_card_get(zc);
+ 	zcrypt_queue_get(zq);
+ 	get_device(&zq->queue->ap_dev.device);
+ 	atomic_add(weight, &zc->load);
+@@ -593,6 +594,7 @@ static inline void zcrypt_drop_queue(struct zcrypt_card *zc,
+ 	atomic_sub(weight, &zq->load);
+ 	put_device(&zq->queue->ap_dev.device);
+ 	zcrypt_queue_put(zq);
++	zcrypt_card_put(zc);
+ 	module_put(mod);
  }
  
-+/**
-+ * loop_set_status_from_info - configure device from loop_info
-+ * @lo: struct loop_device to configure
-+ * @info: struct loop_info64 to configure the device with
-+ *
-+ * Configures the loop device parameters according to the passed
-+ * in loop_info64 configuration.
-+ */
- static int
--loop_set_status(struct loop_device *lo, const struct loop_info64 *info)
-+loop_set_status_from_info(struct loop_device *lo,
-+			  const struct loop_info64 *info)
- {
- 	int err;
- 	struct loop_func_table *xfer;
- 	kuid_t uid = current_uid();
--	struct block_device *bdev;
--	bool partscan = false;
--	bool size_changed = false;
- 
--	err = mutex_lock_killable(&loop_ctl_mutex);
--	if (err)
--		return err;
--	if (lo->lo_encrypt_key_size &&
--	    !uid_eq(lo->lo_key_owner, uid) &&
--	    !capable(CAP_SYS_ADMIN)) {
--		err = -EPERM;
--		goto out_unlock;
--	}
--	if (lo->lo_state != Lo_bound) {
--		err = -ENXIO;
--		goto out_unlock;
--	}
--	if ((unsigned int) info->lo_encrypt_key_size > LO_KEY_SIZE) {
--		err = -EINVAL;
--		goto out_unlock;
--	}
--
--	if (lo->lo_offset != info->lo_offset ||
--	    lo->lo_sizelimit != info->lo_sizelimit) {
--		size_changed = true;
--		sync_blockdev(lo->lo_device);
--		invalidate_bdev(lo->lo_device);
--	}
--
--	/* I/O need to be drained during transfer transition */
--	blk_mq_freeze_queue(lo->lo_queue);
--
--	if (size_changed && lo->lo_device->bd_inode->i_mapping->nrpages) {
--		/* If any pages were dirtied after invalidate_bdev(), try again */
--		err = -EAGAIN;
--		pr_warn("%s: loop%d (%s) has still dirty pages (nrpages=%lu)\n",
--			__func__, lo->lo_number, lo->lo_file_name,
--			lo->lo_device->bd_inode->i_mapping->nrpages);
--		goto out_unfreeze;
--	}
-+	if ((unsigned int) info->lo_encrypt_key_size > LO_KEY_SIZE)
-+		return -EINVAL;
- 
- 	err = loop_release_xfer(lo);
- 	if (err)
--		goto out_unfreeze;
-+		return err;
- 
- 	if (info->lo_encrypt_type) {
- 		unsigned int type = info->lo_encrypt_type;
- 
--		if (type >= MAX_LO_CRYPT) {
--			err = -EINVAL;
--			goto out_unfreeze;
--		}
-+		if (type >= MAX_LO_CRYPT)
-+			return -EINVAL;
- 		xfer = xfer_funcs[type];
--		if (xfer == NULL) {
--			err = -EINVAL;
--			goto out_unfreeze;
--		}
-+		if (xfer == NULL)
-+			return -EINVAL;
- 	} else
- 		xfer = NULL;
- 
- 	err = loop_init_xfer(lo, xfer, info);
- 	if (err)
--		goto out_unfreeze;
-+		return err;
- 
- 	lo->lo_offset = info->lo_offset;
- 	lo->lo_sizelimit = info->lo_sizelimit;
-@@ -1353,6 +1321,55 @@ loop_set_status(struct loop_device *lo,
- 		lo->lo_key_owner = uid;
- 	}
- 
-+	return 0;
-+}
-+
-+static int
-+loop_set_status(struct loop_device *lo, const struct loop_info64 *info)
-+{
-+	int err;
-+	struct block_device *bdev;
-+	kuid_t uid = current_uid();
-+	bool partscan = false;
-+	bool size_changed = false;
-+
-+	err = mutex_lock_killable(&loop_ctl_mutex);
-+	if (err)
-+		return err;
-+	if (lo->lo_encrypt_key_size &&
-+	    !uid_eq(lo->lo_key_owner, uid) &&
-+	    !capable(CAP_SYS_ADMIN)) {
-+		err = -EPERM;
-+		goto out_unlock;
-+	}
-+	if (lo->lo_state != Lo_bound) {
-+		err = -ENXIO;
-+		goto out_unlock;
-+	}
-+
-+	if (lo->lo_offset != info->lo_offset ||
-+	    lo->lo_sizelimit != info->lo_sizelimit) {
-+		size_changed = true;
-+		sync_blockdev(lo->lo_device);
-+		invalidate_bdev(lo->lo_device);
-+	}
-+
-+	/* I/O need to be drained during transfer transition */
-+	blk_mq_freeze_queue(lo->lo_queue);
-+
-+	if (size_changed && lo->lo_device->bd_inode->i_mapping->nrpages) {
-+		/* If any pages were dirtied after invalidate_bdev(), try again */
-+		err = -EAGAIN;
-+		pr_warn("%s: loop%d (%s) has still dirty pages (nrpages=%lu)\n",
-+			__func__, lo->lo_number, lo->lo_file_name,
-+			lo->lo_device->bd_inode->i_mapping->nrpages);
-+		goto out_unfreeze;
-+	}
-+
-+	err = loop_set_status_from_info(lo, info);
-+	if (err)
-+		goto out_unfreeze;
-+
- 	if (size_changed) {
- 		loff_t new_size = get_size(lo->lo_offset, lo->lo_sizelimit,
- 					   lo->lo_backing_file);
+-- 
+2.43.0
+
 
 
