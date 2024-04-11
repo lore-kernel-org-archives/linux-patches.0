@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704C22EAE5;
-	Thu, 11 Apr 2024 10:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576182EAE5;
+	Thu, 11 Apr 2024 10:52:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832729; cv=none; b=q+JC0NZ1A5puhs+hlTZNel0wZvq5D9tERVo/2zu+jLeURNzJpYyL3D0xYgfNvYOC5K3Yqn1zX70xJ/Adr516P1xs4XAdYd1nRdWWEL+bvvCINPhlbUDYSl16vcxYdkdK/z3Pm2YJGmcbMZBup+oaKz0Yf1C3Mp+NPHVnCh+IWH8=
+	t=1712832732; cv=none; b=C8CzOkqa3T6M2rgVbKQJHvlatcXw3cYtPFfpm5zyvyGp2zkaQ+ppUQVZGbaFUOr6nCbRtqh3umtcFD0b6StzGG7HB8K6yizKFV4bsF8iEvXfZJXeyyq8SxbhlZleq+9lDiYGqRKmUDJqQCyAlKpZ75SAVAvDsBVxfSDFwhjjdw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832729; c=relaxed/simple;
-	bh=B7ogOxla0UhrcmBEIFXnMPeMuaO4OTkFqP3SLZSl+X4=;
+	s=arc-20240116; t=1712832732; c=relaxed/simple;
+	bh=tFEFgNpfP2pDrh7H/Gx9a0f+3gaEhafOfGeccai/VGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b/mk2vpVXLxO3+7mGMok8qAbW9TA1mSJoRIZw3BdhKj1nEqAsbXN1uPKFOgAa2QvkdPkBGderHW4ZO7sVs12Tt/XNi5aeCCxFDajFn7kFsP54EHBVnDaR3SxgxuFAfRVBl2g4NPWjA5uLSohD9qUw5jYOJgADTxiSwxuGPMTfu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tn17eIGx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m/LXne0qwvdu20jkn0RgRgqgod+bBlWNA6ZfxicbgWFZFU7u3v7KUdhJPUmpDnf/W88j0sHEwXss3MDqWyZvPqqb4BuQDvmfy960yNKifkoumxs5zrkNOn6KIBr+ndSuwRGIV2rXOKv24jmOn7bhmSrTfJMhp4hkYHn12pKine8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aWqmv+12; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tn17eIGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA799C433C7;
-	Thu, 11 Apr 2024 10:52:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aWqmv+12"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26F1C433C7;
+	Thu, 11 Apr 2024 10:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832729;
-	bh=B7ogOxla0UhrcmBEIFXnMPeMuaO4OTkFqP3SLZSl+X4=;
+	s=korg; t=1712832732;
+	bh=tFEFgNpfP2pDrh7H/Gx9a0f+3gaEhafOfGeccai/VGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tn17eIGxljdTd54hnv1ZHklVz1NmjxmIHk8yXSp7yvdkW9UpKvGfRs++qhA/1Xv7Y
-	 P39+FPBmohJa0HRm2n8IoLakFg5gF4EpUZEHxFqzS4xy5WE3dirRvTCWJtAr2RAfTd
-	 AQUmQsccvY53HnQyEBl2BvBhMpCJa3hb2YS+M3yk=
+	b=aWqmv+12iGGwj0Tg8+BbKLMWPSat8YD66aY2d9MFPq+xngTBwEelT0KH4XjmjECMd
+	 WdSlaMHdRin/Ze/CdbrtG/iqzsF5FNg2j8Us1DJoRRLjGbtnFv7lAoWGyPKEN5IaEj
+	 WWkVGjs4riUr9DYm1UaDggcRfZpelUUmgC7rtIYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 56/57] Bluetooth: btintel: Fixe build regression
-Date: Thu, 11 Apr 2024 11:58:04 +0200
-Message-ID: <20240411095409.683518103@linuxfoundation.org>
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 5.15 57/57] VMCI: Fix possible memcpy() run-time warning in vmci_datagram_invoke_guest_handler()
+Date: Thu, 11 Apr 2024 11:58:05 +0200
+Message-ID: <20240411095409.722366642@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095407.982258070@linuxfoundation.org>
 References: <20240411095407.982258070@linuxfoundation.org>
@@ -49,39 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-commit 6e62ebfb49eb65bdcbfc5797db55e0ce7f79c3dd upstream.
+commit e606e4b71798cc1df20e987dde2468e9527bd376 upstream.
 
-This fixes the following build regression:
+The changes are similar to those given in the commit 19b070fefd0d
+("VMCI: Fix memcpy() run-time warning in dg_dispatch_as_host()").
 
-drivers-bluetooth-btintel.c-btintel_read_version()-warn:
-passing-zero-to-PTR_ERR
+Fix filling of the msg and msg_payload in dg_info struct, which prevents a
+possible "detected field-spanning write" of memcpy warning that is issued
+by the tracking mechanism __fortify_memcpy_chk.
 
-Fixes: b79e04091010 ("Bluetooth: btintel: Fix null ptr deref in btintel_read_version")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://lore.kernel.org/r/20240219105315.76955-1-kovalev@altlinux.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btintel.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/misc/vmw_vmci/vmci_datagram.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -405,13 +405,13 @@ int btintel_read_version(struct hci_dev
- 	struct sk_buff *skb;
+--- a/drivers/misc/vmw_vmci/vmci_datagram.c
++++ b/drivers/misc/vmw_vmci/vmci_datagram.c
+@@ -378,7 +378,8 @@ int vmci_datagram_invoke_guest_handler(s
  
- 	skb = __hci_cmd_sync(hdev, 0xfc05, 0, NULL, HCI_CMD_TIMEOUT);
--	if (IS_ERR_OR_NULL(skb)) {
-+	if (IS_ERR(skb)) {
- 		bt_dev_err(hdev, "Reading Intel version information failed (%ld)",
- 			   PTR_ERR(skb));
- 		return PTR_ERR(skb);
- 	}
+ 		dg_info->in_dg_host_queue = false;
+ 		dg_info->entry = dst_entry;
+-		memcpy(&dg_info->msg, dg, VMCI_DG_SIZE(dg));
++		dg_info->msg = *dg;
++		memcpy(&dg_info->msg_payload, dg + 1, dg->payload_size);
  
--	if (skb->len != sizeof(*ver)) {
-+	if (!skb || skb->len != sizeof(*ver)) {
- 		bt_dev_err(hdev, "Intel version event size mismatch");
- 		kfree_skb(skb);
- 		return -EILSEQ;
+ 		INIT_WORK(&dg_info->work, dg_delayed_dispatch);
+ 		schedule_work(&dg_info->work);
 
 
