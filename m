@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F96F13DDDD;
-	Thu, 11 Apr 2024 10:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8AA2EAE5;
+	Thu, 11 Apr 2024 10:00:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829649; cv=none; b=t03ABGHHjsVijDu5X85b8Gz7X4xp371EMxDoOJLKKuTqqa6ZdSv05evIMpOsPt4XtCjr1eZkX03QS5v8C53Wh2FWFXdAJEHecTo57QchApH9znTQ8W8OwH1MCR71Y4To/VFLH25v1sGLpADiYco8DcuIrFBF+sOCHovE38reibY=
+	t=1712829652; cv=none; b=rboqI/mvESR+mQ4stYMlQvpAToNvfXX5QQqIJtyzB4t0AHxkuLtTV3vU6agBe3Ih1MmAIwkF3eyGHaE+EJtBjBUNZdHr1/QEhIUrg52wHf1JUAC2X9Lnba0obsU1BYrpNNzaDolE+CUBsT8FKhaLoqGtiVQA4uz2f004CfKWBkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829649; c=relaxed/simple;
-	bh=ngyDJ5qs87kNyf+tTUzFcNyydTXII5mMcm6DWxfQACU=;
+	s=arc-20240116; t=1712829652; c=relaxed/simple;
+	bh=UvGcaGw3J0975VjgPE7EdMngo7vFiOSXyVSzH6MRuWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AyIMsvAsjtPsMJluxhUs3rB8bVgAocbE4yCvaA14CET/QdERWGn0K93KMwai16+bLmS23U8dgeXXI4u2Eumk+PVr/xmxcrCPQKvZvB613ybiMnK/SAyidWyDGscXIch5EOnH/CrRWmnPigBvfjEDDhcJf8w333cfmv6C/dNxCtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miny+Ey+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K6SroJDojdSOZXYxG2Ad7r0bnl0rRAAt2qs75U7voXlJMnGd5Cp6fJTHjcfQ6F6qJrk1wU5KTiW7ebNYq/0sUxp+p5PHLFzFBTAAZEC5byoMWREK9eHiLX3oqM6t4KZfn8gcMCiS7tpD8oLQEVKI3VdwLSb2LfSiW4YynU0dtNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1UQ54Fje; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miny+Ey+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB973C433F1;
-	Thu, 11 Apr 2024 10:00:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1UQ54Fje"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5713C433F1;
+	Thu, 11 Apr 2024 10:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829649;
-	bh=ngyDJ5qs87kNyf+tTUzFcNyydTXII5mMcm6DWxfQACU=;
+	s=korg; t=1712829652;
+	bh=UvGcaGw3J0975VjgPE7EdMngo7vFiOSXyVSzH6MRuWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=miny+Ey+zbSsQDV2qgwnaGwu8Wrk3gtlhsr9zHHv/dvZM47UaqcVkoCs+dSJfvJLR
-	 RxCaV79Ll/ptIF813FjrClL+nXSznOS9BMYHEwEpcswWPANmkS7OBwCx7wJRZlUziw
-	 Vp3hZmIabZUH2qYwbvXXngpk5xZgM0r2wxZXxVJM=
+	b=1UQ54FjemO3nnnp+gnnv2+9xNPUhfZseRRWIbOiiQnthnGfcq2Os6bmXIYd49i+Yk
+	 h3lP9hZCW9SZUWttYR3jZa4now+/d4yR1o+OH1nrFMMWRIcYhIsBbRX5VijJlJFsd9
+	 bF4I+l5CaE25lZB6TPG6Op0451ZAPFTbqmV1iXOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 058/175] s390/zcrypt: fix reference counting on zcrypt card objects
-Date: Thu, 11 Apr 2024 11:54:41 +0200
-Message-ID: <20240411095421.313638221@linuxfoundation.org>
+Subject: [PATCH 4.19 059/175] drm/imx: pd: Use bus format/flags provided by the bridge when available
+Date: Thu, 11 Apr 2024 11:54:42 +0200
+Message-ID: <20240411095421.343366883@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,121 +51,307 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit 50ed48c80fecbe17218afed4f8bed005c802976c ]
+[ Upstream commit fe141cedc4333e3b76307f096e02b2c1e60f65d5 ]
 
-Tests with hot-plugging crytpo cards on KVM guests with debug
-kernel build revealed an use after free for the load field of
-the struct zcrypt_card. The reason was an incorrect reference
-handling of the zcrypt card object which could lead to a free
-of the zcrypt card object while it was still in use.
+Now that bridges can expose the bus format/flags they expect, we can
+use those instead of the relying on the display_info provided by the
+connector (which is only valid if the encoder is directly connected
+to bridge element driving the panel/display).
 
-This is an example of the slab message:
+We also explicitly expose the bus formats supported by our encoder by
+filling encoder->output_bus_caps with proper info.
 
-    kernel: 0x00000000885a7512-0x00000000885a7513 @offset=1298. First byte 0x68 instead of 0x6b
-    kernel: Allocated in zcrypt_card_alloc+0x36/0x70 [zcrypt] age=18046 cpu=3 pid=43
-    kernel:  kmalloc_trace+0x3f2/0x470
-    kernel:  zcrypt_card_alloc+0x36/0x70 [zcrypt]
-    kernel:  zcrypt_cex4_card_probe+0x26/0x380 [zcrypt_cex4]
-    kernel:  ap_device_probe+0x15c/0x290
-    kernel:  really_probe+0xd2/0x468
-    kernel:  driver_probe_device+0x40/0xf0
-    kernel:  __device_attach_driver+0xc0/0x140
-    kernel:  bus_for_each_drv+0x8c/0xd0
-    kernel:  __device_attach+0x114/0x198
-    kernel:  bus_probe_device+0xb4/0xc8
-    kernel:  device_add+0x4d2/0x6e0
-    kernel:  ap_scan_adapter+0x3d0/0x7c0
-    kernel:  ap_scan_bus+0x5a/0x3b0
-    kernel:  ap_scan_bus_wq_callback+0x40/0x60
-    kernel:  process_one_work+0x26e/0x620
-    kernel:  worker_thread+0x21c/0x440
-    kernel: Freed in zcrypt_card_put+0x54/0x80 [zcrypt] age=9024 cpu=3 pid=43
-    kernel:  kfree+0x37e/0x418
-    kernel:  zcrypt_card_put+0x54/0x80 [zcrypt]
-    kernel:  ap_device_remove+0x4c/0xe0
-    kernel:  device_release_driver_internal+0x1c4/0x270
-    kernel:  bus_remove_device+0x100/0x188
-    kernel:  device_del+0x164/0x3c0
-    kernel:  device_unregister+0x30/0x90
-    kernel:  ap_scan_adapter+0xc8/0x7c0
-    kernel:  ap_scan_bus+0x5a/0x3b0
-    kernel:  ap_scan_bus_wq_callback+0x40/0x60
-    kernel:  process_one_work+0x26e/0x620
-    kernel:  worker_thread+0x21c/0x440
-    kernel:  kthread+0x150/0x168
-    kernel:  __ret_from_fork+0x3c/0x58
-    kernel:  ret_from_fork+0xa/0x30
-    kernel: Slab 0x00000372022169c0 objects=20 used=18 fp=0x00000000885a7c88 flags=0x3ffff00000000a00(workingset|slab|node=0|zone=1|lastcpupid=0x1ffff)
-    kernel: Object 0x00000000885a74b8 @offset=1208 fp=0x00000000885a7c88
-    kernel: Redzone  00000000885a74b0: bb bb bb bb bb bb bb bb                          ........
-    kernel: Object   00000000885a74b8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
-    kernel: Object   00000000885a74c8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
-    kernel: Object   00000000885a74d8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
-    kernel: Object   00000000885a74e8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
-    kernel: Object   00000000885a74f8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
-    kernel: Object   00000000885a7508: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 68 4b 6b 6b 6b a5  kkkkkkkkkkhKkkk.
-    kernel: Redzone  00000000885a7518: bb bb bb bb bb bb bb bb                          ........
-    kernel: Padding  00000000885a756c: 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a              ZZZZZZZZZZZZ
-    kernel: CPU: 0 PID: 387 Comm: systemd-udevd Not tainted 6.8.0-HF #2
-    kernel: Hardware name: IBM 3931 A01 704 (KVM/Linux)
-    kernel: Call Trace:
-    kernel:  [<00000000ca5ab5b8>] dump_stack_lvl+0x90/0x120
-    kernel:  [<00000000c99d78bc>] check_bytes_and_report+0x114/0x140
-    kernel:  [<00000000c99d53cc>] check_object+0x334/0x3f8
-    kernel:  [<00000000c99d820c>] alloc_debug_processing+0xc4/0x1f8
-    kernel:  [<00000000c99d852e>] get_partial_node.part.0+0x1ee/0x3e0
-    kernel:  [<00000000c99d94ec>] ___slab_alloc+0xaf4/0x13c8
-    kernel:  [<00000000c99d9e38>] __slab_alloc.constprop.0+0x78/0xb8
-    kernel:  [<00000000c99dc8dc>] __kmalloc+0x434/0x590
-    kernel:  [<00000000c9b4c0ce>] ext4_htree_store_dirent+0x4e/0x1c0
-    kernel:  [<00000000c9b908a2>] htree_dirblock_to_tree+0x17a/0x3f0
-    kernel:  [<00000000c9b919dc>] ext4_htree_fill_tree+0x134/0x400
-    kernel:  [<00000000c9b4b3d0>] ext4_dx_readdir+0x160/0x2f0
-    kernel:  [<00000000c9b4bedc>] ext4_readdir+0x5f4/0x760
-    kernel:  [<00000000c9a7efc4>] iterate_dir+0xb4/0x280
-    kernel:  [<00000000c9a7f1ea>] __do_sys_getdents64+0x5a/0x120
-    kernel:  [<00000000ca5d6946>] __do_syscall+0x256/0x310
-    kernel:  [<00000000ca5eea10>] system_call+0x70/0x98
-    kernel: INFO: lockdep is turned off.
-    kernel: FIX kmalloc-96: Restoring Poison 0x00000000885a7512-0x00000000885a7513=0x6b
-    kernel: FIX kmalloc-96: Marking all objects used
+v10:
+* Add changelog to the commit message
+* Use kmalloc() instead of kcalloc()
+* Add a dev_warn() when unsupported flags are requested
 
-The fix is simple: Before use of the queue not only the queue object
-but also the card object needs to increase it's reference count
-with a call to zcrypt_card_get(). Similar after use of the queue
-not only the queue but also the card object's reference count is
-decreased with zcrypt_card_put().
+v8 -> v9:
+* No changes
 
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+v7:
+* Add an imx_pd_format_supported() helper (suggested by Philipp)
+* Simplify imx_pd_bridge_atomic_get_output_bus_fmts() (suggested by Philipp)
+* Simplify imx_pd_bridge_atomic_get_input_bus_fmts()
+* Explicitly set the duplicate/destro_state() and reset() hooks
+
+v4 -> v6:
+* Patch was not part of the series
+
+v3 (all suggested by Philipp):
+* Adjust to match core changes
+* Propagate output format to input format
+* Pick a default value when output_fmt = _FIXED
+* Add missing BGR888 and GBR888 fmts to imx_pd_bus_fmts[]
+
+v2:
+* Adjust things to match the new bus-format negotiation infra
+
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20200128135514.108171-8-boris.brezillon@collabora.com
+Stable-dep-of: c2da9ada6496 ("drm/imx/ipuv3: do not return negative values from .get_modes()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/zcrypt_api.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/imx/parallel-display.c | 176 +++++++++++++++++++++----
+ 1 file changed, 151 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/s390/crypto/zcrypt_api.c b/drivers/s390/crypto/zcrypt_api.c
-index b7cb897cd83e0..3a47e622db10e 100644
---- a/drivers/s390/crypto/zcrypt_api.c
-+++ b/drivers/s390/crypto/zcrypt_api.c
-@@ -158,6 +158,7 @@ static inline struct zcrypt_queue *zcrypt_pick_queue(struct zcrypt_card *zc,
- {
- 	if (!zq || !try_module_get(zq->queue->ap_dev.drv->driver.owner))
- 		return NULL;
-+	zcrypt_card_get(zc);
- 	zcrypt_queue_get(zq);
- 	get_device(&zq->queue->ap_dev.device);
- 	atomic_add(weight, &zc->load);
-@@ -177,6 +178,7 @@ static inline void zcrypt_drop_queue(struct zcrypt_card *zc,
- 	atomic_sub(weight, &zq->load);
- 	put_device(&zq->queue->ap_dev.device);
- 	zcrypt_queue_put(zq);
-+	zcrypt_card_put(zc);
- 	module_put(mod);
+diff --git a/drivers/gpu/drm/imx/parallel-display.c b/drivers/gpu/drm/imx/parallel-display.c
+index e9dff31b377c4..a96d99cbec4d0 100644
+--- a/drivers/gpu/drm/imx/parallel-display.c
++++ b/drivers/gpu/drm/imx/parallel-display.c
+@@ -29,6 +29,7 @@
+ struct imx_parallel_display {
+ 	struct drm_connector connector;
+ 	struct drm_encoder encoder;
++	struct drm_bridge bridge;
+ 	struct device *dev;
+ 	void *edid;
+ 	int edid_len;
+@@ -36,7 +37,7 @@ struct imx_parallel_display {
+ 	u32 bus_flags;
+ 	struct drm_display_mode mode;
+ 	struct drm_panel *panel;
+-	struct drm_bridge *bridge;
++	struct drm_bridge *next_bridge;
+ };
+ 
+ static inline struct imx_parallel_display *con_to_imxpd(struct drm_connector *c)
+@@ -49,6 +50,11 @@ static inline struct imx_parallel_display *enc_to_imxpd(struct drm_encoder *e)
+ 	return container_of(e, struct imx_parallel_display, encoder);
  }
+ 
++static inline struct imx_parallel_display *bridge_to_imxpd(struct drm_bridge *b)
++{
++	return container_of(b, struct imx_parallel_display, bridge);
++}
++
+ static int imx_pd_connector_get_modes(struct drm_connector *connector)
+ {
+ 	struct imx_parallel_display *imxpd = con_to_imxpd(connector);
+@@ -99,37 +105,148 @@ static struct drm_encoder *imx_pd_connector_best_encoder(
+ 	return &imxpd->encoder;
+ }
+ 
+-static void imx_pd_encoder_enable(struct drm_encoder *encoder)
++static void imx_pd_bridge_enable(struct drm_bridge *bridge)
+ {
+-	struct imx_parallel_display *imxpd = enc_to_imxpd(encoder);
++	struct imx_parallel_display *imxpd = bridge_to_imxpd(bridge);
+ 
+ 	drm_panel_prepare(imxpd->panel);
+ 	drm_panel_enable(imxpd->panel);
+ }
+ 
+-static void imx_pd_encoder_disable(struct drm_encoder *encoder)
++static void imx_pd_bridge_disable(struct drm_bridge *bridge)
+ {
+-	struct imx_parallel_display *imxpd = enc_to_imxpd(encoder);
++	struct imx_parallel_display *imxpd = bridge_to_imxpd(bridge);
+ 
+ 	drm_panel_disable(imxpd->panel);
+ 	drm_panel_unprepare(imxpd->panel);
+ }
+ 
+-static int imx_pd_encoder_atomic_check(struct drm_encoder *encoder,
+-				       struct drm_crtc_state *crtc_state,
+-				       struct drm_connector_state *conn_state)
++static const u32 imx_pd_bus_fmts[] = {
++	MEDIA_BUS_FMT_RGB888_1X24,
++	MEDIA_BUS_FMT_BGR888_1X24,
++	MEDIA_BUS_FMT_GBR888_1X24,
++	MEDIA_BUS_FMT_RGB666_1X18,
++	MEDIA_BUS_FMT_RGB666_1X24_CPADHI,
++	MEDIA_BUS_FMT_RGB565_1X16,
++};
++
++static u32 *
++imx_pd_bridge_atomic_get_output_bus_fmts(struct drm_bridge *bridge,
++					 struct drm_bridge_state *bridge_state,
++					 struct drm_crtc_state *crtc_state,
++					 struct drm_connector_state *conn_state,
++					 unsigned int *num_output_fmts)
+ {
+-	struct imx_crtc_state *imx_crtc_state = to_imx_crtc_state(crtc_state);
+ 	struct drm_display_info *di = &conn_state->connector->display_info;
+-	struct imx_parallel_display *imxpd = enc_to_imxpd(encoder);
++	struct imx_parallel_display *imxpd = bridge_to_imxpd(bridge);
++	u32 *output_fmts;
+ 
+-	if (!imxpd->bus_format && di->num_bus_formats) {
+-		imx_crtc_state->bus_flags = di->bus_flags;
+-		imx_crtc_state->bus_format = di->bus_formats[0];
+-	} else {
+-		imx_crtc_state->bus_flags = imxpd->bus_flags;
+-		imx_crtc_state->bus_format = imxpd->bus_format;
++	if (!imxpd->bus_format && !di->num_bus_formats) {
++		*num_output_fmts = ARRAY_SIZE(imx_pd_bus_fmts);
++		return kmemdup(imx_pd_bus_fmts, sizeof(imx_pd_bus_fmts),
++			       GFP_KERNEL);
++	}
++
++	*num_output_fmts = 1;
++	output_fmts = kmalloc(sizeof(*output_fmts), GFP_KERNEL);
++	if (!output_fmts)
++		return NULL;
++
++	if (!imxpd->bus_format && di->num_bus_formats)
++		output_fmts[0] = di->bus_formats[0];
++	else
++		output_fmts[0] = imxpd->bus_format;
++
++	return output_fmts;
++}
++
++static bool imx_pd_format_supported(u32 output_fmt)
++{
++	unsigned int i;
++
++	for (i = 0; i < ARRAY_SIZE(imx_pd_bus_fmts); i++) {
++		if (imx_pd_bus_fmts[i] == output_fmt)
++			return true;
++	}
++
++	return false;
++}
++
++static u32 *
++imx_pd_bridge_atomic_get_input_bus_fmts(struct drm_bridge *bridge,
++					struct drm_bridge_state *bridge_state,
++					struct drm_crtc_state *crtc_state,
++					struct drm_connector_state *conn_state,
++					u32 output_fmt,
++					unsigned int *num_input_fmts)
++{
++	struct imx_parallel_display *imxpd = bridge_to_imxpd(bridge);
++	u32 *input_fmts;
++
++	/*
++	 * If the next bridge does not support bus format negotiation, let's
++	 * use the static bus format definition (imxpd->bus_format) if it's
++	 * specified, RGB888 when it's not.
++	 */
++	if (output_fmt == MEDIA_BUS_FMT_FIXED)
++		output_fmt = imxpd->bus_format ? : MEDIA_BUS_FMT_RGB888_1X24;
++
++	/* Now make sure the requested output format is supported. */
++	if ((imxpd->bus_format && imxpd->bus_format != output_fmt) ||
++	    !imx_pd_format_supported(output_fmt)) {
++		*num_input_fmts = 0;
++		return NULL;
++	}
++
++	*num_input_fmts = 1;
++	input_fmts = kmalloc(sizeof(*input_fmts), GFP_KERNEL);
++	if (!input_fmts)
++		return NULL;
++
++	input_fmts[0] = output_fmt;
++	return input_fmts;
++}
++
++static int imx_pd_bridge_atomic_check(struct drm_bridge *bridge,
++				      struct drm_bridge_state *bridge_state,
++				      struct drm_crtc_state *crtc_state,
++				      struct drm_connector_state *conn_state)
++{
++	struct imx_crtc_state *imx_crtc_state = to_imx_crtc_state(crtc_state);
++	struct drm_display_info *di = &conn_state->connector->display_info;
++	struct imx_parallel_display *imxpd = bridge_to_imxpd(bridge);
++	struct drm_bridge_state *next_bridge_state = NULL;
++	struct drm_bridge *next_bridge;
++	u32 bus_flags, bus_fmt;
++
++	next_bridge = drm_bridge_get_next_bridge(bridge);
++	if (next_bridge)
++		next_bridge_state = drm_atomic_get_new_bridge_state(crtc_state->state,
++								    next_bridge);
++
++	if (next_bridge_state)
++		bus_flags = next_bridge_state->input_bus_cfg.flags;
++	else if (!imxpd->bus_format && di->num_bus_formats)
++		bus_flags = di->bus_flags;
++	else
++		bus_flags = imxpd->bus_flags;
++
++	bus_fmt = bridge_state->input_bus_cfg.format;
++	if (!imx_pd_format_supported(bus_fmt))
++		return -EINVAL;
++
++	if (bus_flags &
++	    ~(DRM_BUS_FLAG_DE_LOW | DRM_BUS_FLAG_DE_HIGH |
++	      DRM_BUS_FLAG_PIXDATA_DRIVE_POSEDGE |
++	      DRM_BUS_FLAG_PIXDATA_DRIVE_NEGEDGE)) {
++		dev_warn(imxpd->dev, "invalid bus_flags (%x)\n", bus_flags);
++		return -EINVAL;
+ 	}
++
++	bridge_state->output_bus_cfg.flags = bus_flags;
++	bridge_state->input_bus_cfg.flags = bus_flags;
++	imx_crtc_state->bus_flags = bus_flags;
++	imx_crtc_state->bus_format = bridge_state->input_bus_cfg.format;
+ 	imx_crtc_state->di_hsync_pin = 2;
+ 	imx_crtc_state->di_vsync_pin = 3;
+ 
+@@ -153,10 +270,15 @@ static const struct drm_encoder_funcs imx_pd_encoder_funcs = {
+ 	.destroy = imx_drm_encoder_destroy,
+ };
+ 
+-static const struct drm_encoder_helper_funcs imx_pd_encoder_helper_funcs = {
+-	.enable = imx_pd_encoder_enable,
+-	.disable = imx_pd_encoder_disable,
+-	.atomic_check = imx_pd_encoder_atomic_check,
++static const struct drm_bridge_funcs imx_pd_bridge_funcs = {
++	.enable = imx_pd_bridge_enable,
++	.disable = imx_pd_bridge_disable,
++	.atomic_reset = drm_atomic_helper_bridge_reset,
++	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
++	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
++	.atomic_check = imx_pd_bridge_atomic_check,
++	.atomic_get_input_bus_fmts = imx_pd_bridge_atomic_get_input_bus_fmts,
++	.atomic_get_output_bus_fmts = imx_pd_bridge_atomic_get_output_bus_fmts,
+ };
+ 
+ static int imx_pd_register(struct drm_device *drm,
+@@ -176,11 +298,13 @@ static int imx_pd_register(struct drm_device *drm,
+ 	 */
+ 	imxpd->connector.dpms = DRM_MODE_DPMS_OFF;
+ 
+-	drm_encoder_helper_add(encoder, &imx_pd_encoder_helper_funcs);
+ 	drm_encoder_init(drm, encoder, &imx_pd_encoder_funcs,
+ 			 DRM_MODE_ENCODER_NONE, NULL);
+ 
+-	if (!imxpd->bridge) {
++	imxpd->bridge.funcs = &imx_pd_bridge_funcs;
++	drm_bridge_attach(encoder, &imxpd->bridge, NULL);
++
++	if (!imxpd->next_bridge) {
+ 		drm_connector_helper_add(&imxpd->connector,
+ 				&imx_pd_connector_helper_funcs);
+ 		drm_connector_init(drm, &imxpd->connector,
+@@ -191,8 +315,9 @@ static int imx_pd_register(struct drm_device *drm,
+ 	if (imxpd->panel)
+ 		drm_panel_attach(imxpd->panel, &imxpd->connector);
+ 
+-	if (imxpd->bridge) {
+-		ret = drm_bridge_attach(encoder, imxpd->bridge, NULL);
++	if (imxpd->next_bridge) {
++		ret = drm_bridge_attach(encoder, imxpd->next_bridge,
++					&imxpd->bridge);
+ 		if (ret < 0) {
+ 			dev_err(imxpd->dev, "failed to attach bridge: %d\n",
+ 				ret);
+@@ -237,7 +362,8 @@ static int imx_pd_bind(struct device *dev, struct device *master, void *data)
+ 	imxpd->bus_format = bus_format;
+ 
+ 	/* port@1 is the output port */
+-	ret = drm_of_find_panel_or_bridge(np, 1, 0, &imxpd->panel, &imxpd->bridge);
++	ret = drm_of_find_panel_or_bridge(np, 1, 0, &imxpd->panel,
++					  &imxpd->next_bridge);
+ 	if (ret && ret != -ENODEV)
+ 		return ret;
  
 -- 
 2.43.0
