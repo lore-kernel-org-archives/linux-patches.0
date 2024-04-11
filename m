@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE32C148314;
-	Thu, 11 Apr 2024 10:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD78143C76;
+	Thu, 11 Apr 2024 10:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831844; cv=none; b=qesoJ8MddBOi/5hOKgpkhbbNNgPE3htTinkvWVU4t4P0fIYLYNFbaXeU/l4Pkzf9x5DtWwy9GMBlSgOfNQTi+EhOKQ0K7XMeV4hxz0vqpsWH0Q6bygDv8sBQ444XscuBdkFZi7hKqpmXvSCUXStpFSOA2HTUi1IJT51f8fnrXQc=
+	t=1712831847; cv=none; b=TYBZkhmhWux0PSWfRcqIt+mDSnBA4mmpPHdxra78x47hftqn2vIEcyKeWVr6dEnm0U0NWgitFGMbQfoGV/EVZFoxK8yrM97e/0YvKPTj+YoxRppKGXFEj3e7ip1VcBObb0ma2mEdssxTyTUNkE1AzBDcDnCe2O+YjJ3HSD0JVRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831844; c=relaxed/simple;
-	bh=sTipYulEZm9jF2omEAPPOKZBafYR5dP5g8AcNQ5Jo1I=;
+	s=arc-20240116; t=1712831847; c=relaxed/simple;
+	bh=5PU73dAONDUPJtz80vD2WiNSB30Z67jM35R98FEvQAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AxqsVHIP/EYW7iXB2Rg9ZMkoR2Ik7evO+qx+EW8NtFva2ByMux/eH8tNtU+gC3eF+mTavaPHB6a5CikuF5IdDwSwG3uVnVlwj7WYoKoDJ2oV2P6R/VgDAqra+1gcKEYg+k6EvrP0/euqjwFjR4taMJWG3aIQcOkep75O94Tr6hM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmkeUDYy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mUWS9G/loTdo4nCX7rbSQaPKjUP38MJcyCve9TGQpCFwxAk/tNeZXQkPxMWbzNY+udOv9+avDVpVTwKJ/Ro7fweRWxaRxlYmS1TQbXnDZTE3oLbkLPsstyX0yoYF0YwZ6pU/Gz2awW3pzmhOSs0KJpywdaD968d+avnIQTeBaRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5vP8YGA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmkeUDYy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B07C433F1;
-	Thu, 11 Apr 2024 10:37:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5vP8YGA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B09C433C7;
+	Thu, 11 Apr 2024 10:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831844;
-	bh=sTipYulEZm9jF2omEAPPOKZBafYR5dP5g8AcNQ5Jo1I=;
+	s=korg; t=1712831847;
+	bh=5PU73dAONDUPJtz80vD2WiNSB30Z67jM35R98FEvQAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pmkeUDYylLbwKzGtZuUc1BxM2pkGCzn+BjsraIGIJwu21E99QJMBFHDMrkiLYKceF
-	 +Whtplb9HHtyEmkSdep3/P//+p7pDfWQfAPa5ybd8jbB7HHsRrE04tpY66HADsFeCo
-	 FTIEWiNKbpazEicuRe57EnIpcKacGWYDTymYK4Bw=
+	b=n5vP8YGAZa+eKugtnbu4Nm8JRkq1TiLCodIdUs851e+FEqXnBXhM+0aIHfOS6AcZh
+	 o5tfSP8UZgabfb+RB+HHFaBdHGHFHnwyc+AHvRKw3lUy/wi94BOnT3Sstiz8TRlCiJ
+	 181lM9KhE77nXEEal/EdK+GXRbdIwRNGQnIiAews=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Andrey Jr. Melnikov" <temnota.am@gmail.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 107/294] wireguard: netlink: access device through ctx instead of peer
-Date: Thu, 11 Apr 2024 11:54:30 +0200
-Message-ID: <20240411095438.892176925@linuxfoundation.org>
+Subject: [PATCH 5.10 108/294] ahci: asm1064: correct count of reported ports
+Date: Thu, 11 Apr 2024 11:54:31 +0200
+Message-ID: <20240411095438.921592290@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -52,42 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Andrey Jr. Melnikov <temnota.am@gmail.com>
 
-[ Upstream commit 71cbd32e3db82ea4a74e3ef9aeeaa6971969c86f ]
+[ Upstream commit 9815e39617541ef52d0dfac4be274ad378c6dc09 ]
 
-The previous commit fixed a bug that led to a NULL peer->device being
-dereferenced. It's actually easier and faster performance-wise to
-instead get the device from ctx->wg. This semantically makes more sense
-too, since ctx->wg->peer_allowedips.seq is compared with
-ctx->allowedips_seq, basing them both in ctx. This also acts as a
-defence in depth provision against freed peers.
+The ASM1064 SATA host controller always reports wrongly,
+that it has 24 ports. But in reality, it only has four ports.
 
-Cc: stable@vger.kernel.org
-Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+before:
+ahci 0000:04:00.0: SSS flag set, parallel bus scan disabled
+ahci 0000:04:00.0: AHCI 0001.0301 32 slots 24 ports 6 Gbps 0xffff0f impl SATA mode
+ahci 0000:04:00.0: flags: 64bit ncq sntf stag pm led only pio sxs deso sadm sds apst
+
+after:
+ahci 0000:04:00.0: ASM1064 has only four ports
+ahci 0000:04:00.0: forcing port_map 0xffff0f -> 0xf
+ahci 0000:04:00.0: SSS flag set, parallel bus scan disabled
+ahci 0000:04:00.0: AHCI 0001.0301 32 slots 24 ports 6 Gbps 0xf impl SATA mode
+ahci 0000:04:00.0: flags: 64bit ncq sntf stag pm led only pio sxs deso sadm sds apst
+
+Signed-off-by: "Andrey Jr. Melnikov" <temnota.am@gmail.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Stable-dep-of: 6cd8adc3e189 ("ahci: asm1064: asm1166: don't limit reported ports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireguard/netlink.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ata/ahci.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
-index 6523f9d5a1527..9dc02fa51ed09 100644
---- a/drivers/net/wireguard/netlink.c
-+++ b/drivers/net/wireguard/netlink.c
-@@ -164,8 +164,8 @@ get_peer(struct wg_peer *peer, struct sk_buff *skb, struct dump_ctx *ctx)
- 	if (!allowedips_node)
- 		goto no_allowedips;
- 	if (!ctx->allowedips_seq)
--		ctx->allowedips_seq = peer->device->peer_allowedips.seq;
--	else if (ctx->allowedips_seq != peer->device->peer_allowedips.seq)
-+		ctx->allowedips_seq = ctx->wg->peer_allowedips.seq;
-+	else if (ctx->allowedips_seq != ctx->wg->peer_allowedips.seq)
- 		goto no_allowedips;
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 6f7f8e41404dc..5df344e26c110 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -662,9 +662,17 @@ MODULE_PARM_DESC(mobile_lpm_policy, "Default LPM policy for mobile chipsets");
+ static void ahci_pci_save_initial_config(struct pci_dev *pdev,
+ 					 struct ahci_host_priv *hpriv)
+ {
+-	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA && pdev->device == 0x1166) {
+-		dev_info(&pdev->dev, "ASM1166 has only six ports\n");
+-		hpriv->saved_port_map = 0x3f;
++	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA) {
++		switch (pdev->device) {
++		case 0x1166:
++			dev_info(&pdev->dev, "ASM1166 has only six ports\n");
++			hpriv->saved_port_map = 0x3f;
++			break;
++		case 0x1064:
++			dev_info(&pdev->dev, "ASM1064 has only four ports\n");
++			hpriv->saved_port_map = 0xf;
++			break;
++		}
+ 	}
  
- 	allowedips_nest = nla_nest_start(skb, WGPEER_A_ALLOWEDIPS);
+ 	if (pdev->vendor == PCI_VENDOR_ID_JMICRON && pdev->device == 0x2361) {
 -- 
 2.43.0
 
