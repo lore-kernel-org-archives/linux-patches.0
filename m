@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1BC145B05;
-	Thu, 11 Apr 2024 10:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8D214601D;
+	Thu, 11 Apr 2024 10:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829920; cv=none; b=DZGCdE/5c7r49mxMU3LKprOHJJufa/JPZKKRlTB4UIpvZh0b+LvsGNbpmddt/zRPPzZlfWncp4OtPDAZgh4eLeJ8QE3yfaGRyaSrIFmJuaJVk41jbGnRSCDYrLxkX8PlHmNypCyPx6V4gTVIeMddBu9v8GeIDdF34akEj7i+kJI=
+	t=1712829923; cv=none; b=MlH9FA6RVsQk5JoYp/rF0VDbSPQeN0iGHLomukIVp1vdOgISQK1HokNdJfJXVdABjH8+Sf7cdE4VXOfG1DKBMNGnv2nZRVrzccxypQP6hYQlvvl1+QgJhU2JWImfidbAMN5G9bJZkjDscwv1WM7mZkPVoIh8k39ghW+Y2uJm1cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829920; c=relaxed/simple;
-	bh=FBkIXuU3KrkzKkRKPCh7uOUpS6Xsb/yijw5lWh1rEW0=;
+	s=arc-20240116; t=1712829923; c=relaxed/simple;
+	bh=c/3zxRaATM5PUzEsS17wrPtLe5uFcT/7sI5W8g/OL1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m0spd/cWY/MSH+fRcp4ixVnLWp/R0gd1PbDo9KUCHrtlh4o4lkVcPULrXZPPiksaUFO2zMlievbHSHYHDaq9O7psYwtPXgapRNSXrCDepNMnOllYnFrxXvpKKhBbJV/6wvNIazm38XBr2rRNWB8E2vgcaHQeMSeGXYOaDCas0dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxQR4djc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dxu3dtvQmtrfDABGFIO7JaUSbedutXDe9by34oI/w5/hg+PDOFfoHA9Ot6Xj+FmQfPXWwYakOPl/9GQ/AYDT/JBgh1efTiyk0ygztWyz7RuBpf4lzGasfv9xDbMJ2Myq4rSVNg4FdCK2VWX1CyCvvJ5m87cTwMuNaMS5gEPyJPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0fuq67D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxQR4djc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E23FC433C7;
-	Thu, 11 Apr 2024 10:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0fuq67D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF99C433C7;
+	Thu, 11 Apr 2024 10:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829920;
-	bh=FBkIXuU3KrkzKkRKPCh7uOUpS6Xsb/yijw5lWh1rEW0=;
+	s=korg; t=1712829923;
+	bh=c/3zxRaATM5PUzEsS17wrPtLe5uFcT/7sI5W8g/OL1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CxQR4djcvo13hrXJxOaaYLIb0P4uyY7BXQLCd6KXJHlBxMRpVABds45/1YMKe3g5U
-	 INFjS+W16JSF+mxrZq7Ri3RZqxDo1r1OesDZib3+OXu1jpM9gjTYyLDMS3VS67nf0s
-	 UtMgFgUMskFtUWLKybMuA9ivkB131HdcdUiel4fI=
+	b=Q0fuq67DoGDHC3hDRZ0zcTOybbka0Hfz9iO6PwL5AoQ4+iJphibgl4rBiBDprTEjh
+	 HLneC1pUArM/ZFAlO9jbuVYbodLA/9+Nk95DD187D/5n9N80SxfSZQQkJ0CPhAlJC8
+	 E5CRpjeMrfvXOfrmHwSck3NpB+9P5MLcmt85ppsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.19 123/175] net/sched: act_skbmod: prevent kernel-infoleak
-Date: Thu, 11 Apr 2024 11:55:46 +0200
-Message-ID: <20240411095423.269795828@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 150/175] btrfs: export: handle invalid inode or root reference in btrfs_get_parent()
+Date: Thu, 11 Apr 2024 11:56:13 +0200
+Message-ID: <20240411095424.078608554@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -51,141 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: David Sterba <dsterba@suse.com>
 
-commit d313eb8b77557a6d5855f42d2234bd592c7b50dd upstream.
+[ Upstream commit 26b66d1d366a375745755ca7365f67110bbf6bd5 ]
 
-syzbot found that tcf_skbmod_dump() was copying four bytes
-from kernel stack to user space [1].
+The get_parent handler looks up a parent of a given dentry, this can be
+either a subvolume or a directory. The search is set up with offset -1
+but it's never expected to find such item, as it would break allowed
+range of inode number or a root id. This means it's a corruption (ext4
+also returns this error code).
 
-The issue here is that 'struct tc_skbmod' has a four bytes hole.
-
-We need to clear the structure before filling fields.
-
-[1]
-BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
- BUG: KMSAN: kernel-infoleak in copy_to_user_iter lib/iov_iter.c:24 [inline]
- BUG: KMSAN: kernel-infoleak in iterate_ubuf include/linux/iov_iter.h:29 [inline]
- BUG: KMSAN: kernel-infoleak in iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
- BUG: KMSAN: kernel-infoleak in iterate_and_advance include/linux/iov_iter.h:271 [inline]
- BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x366/0x2520 lib/iov_iter.c:185
-  instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-  copy_to_user_iter lib/iov_iter.c:24 [inline]
-  iterate_ubuf include/linux/iov_iter.h:29 [inline]
-  iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
-  iterate_and_advance include/linux/iov_iter.h:271 [inline]
-  _copy_to_iter+0x366/0x2520 lib/iov_iter.c:185
-  copy_to_iter include/linux/uio.h:196 [inline]
-  simple_copy_to_iter net/core/datagram.c:532 [inline]
-  __skb_datagram_iter+0x185/0x1000 net/core/datagram.c:420
-  skb_copy_datagram_iter+0x5c/0x200 net/core/datagram.c:546
-  skb_copy_datagram_msg include/linux/skbuff.h:4050 [inline]
-  netlink_recvmsg+0x432/0x1610 net/netlink/af_netlink.c:1962
-  sock_recvmsg_nosec net/socket.c:1046 [inline]
-  sock_recvmsg+0x2c4/0x340 net/socket.c:1068
-  __sys_recvfrom+0x35a/0x5f0 net/socket.c:2242
-  __do_sys_recvfrom net/socket.c:2260 [inline]
-  __se_sys_recvfrom net/socket.c:2256 [inline]
-  __x64_sys_recvfrom+0x126/0x1d0 net/socket.c:2256
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Uninit was stored to memory at:
-  pskb_expand_head+0x30f/0x19d0 net/core/skbuff.c:2253
-  netlink_trim+0x2c2/0x330 net/netlink/af_netlink.c:1317
-  netlink_unicast+0x9f/0x1260 net/netlink/af_netlink.c:1351
-  nlmsg_unicast include/net/netlink.h:1144 [inline]
-  nlmsg_notify+0x21d/0x2f0 net/netlink/af_netlink.c:2610
-  rtnetlink_send+0x73/0x90 net/core/rtnetlink.c:741
-  rtnetlink_maybe_send include/linux/rtnetlink.h:17 [inline]
-  tcf_add_notify net/sched/act_api.c:2048 [inline]
-  tcf_action_add net/sched/act_api.c:2071 [inline]
-  tc_ctl_action+0x146e/0x19d0 net/sched/act_api.c:2119
-  rtnetlink_rcv_msg+0x1737/0x1900 net/core/rtnetlink.c:6595
-  netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2559
-  rtnetlink_rcv+0x34/0x40 net/core/rtnetlink.c:6613
-  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
-  netlink_unicast+0xf4c/0x1260 net/netlink/af_netlink.c:1361
-  netlink_sendmsg+0x10df/0x11f0 net/netlink/af_netlink.c:1905
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  ____sys_sendmsg+0x877/0xb60 net/socket.c:2584
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
-  __sys_sendmsg net/socket.c:2667 [inline]
-  __do_sys_sendmsg net/socket.c:2676 [inline]
-  __se_sys_sendmsg net/socket.c:2674 [inline]
-  __x64_sys_sendmsg+0x307/0x4a0 net/socket.c:2674
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Uninit was stored to memory at:
-  __nla_put lib/nlattr.c:1041 [inline]
-  nla_put+0x1c6/0x230 lib/nlattr.c:1099
-  tcf_skbmod_dump+0x23f/0xc20 net/sched/act_skbmod.c:256
-  tcf_action_dump_old net/sched/act_api.c:1191 [inline]
-  tcf_action_dump_1+0x85e/0x970 net/sched/act_api.c:1227
-  tcf_action_dump+0x1fd/0x460 net/sched/act_api.c:1251
-  tca_get_fill+0x519/0x7a0 net/sched/act_api.c:1628
-  tcf_add_notify_msg net/sched/act_api.c:2023 [inline]
-  tcf_add_notify net/sched/act_api.c:2042 [inline]
-  tcf_action_add net/sched/act_api.c:2071 [inline]
-  tc_ctl_action+0x1365/0x19d0 net/sched/act_api.c:2119
-  rtnetlink_rcv_msg+0x1737/0x1900 net/core/rtnetlink.c:6595
-  netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2559
-  rtnetlink_rcv+0x34/0x40 net/core/rtnetlink.c:6613
-  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
-  netlink_unicast+0xf4c/0x1260 net/netlink/af_netlink.c:1361
-  netlink_sendmsg+0x10df/0x11f0 net/netlink/af_netlink.c:1905
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  ____sys_sendmsg+0x877/0xb60 net/socket.c:2584
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
-  __sys_sendmsg net/socket.c:2667 [inline]
-  __do_sys_sendmsg net/socket.c:2676 [inline]
-  __se_sys_sendmsg net/socket.c:2674 [inline]
-  __x64_sys_sendmsg+0x307/0x4a0 net/socket.c:2674
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Local variable opt created at:
-  tcf_skbmod_dump+0x9d/0xc20 net/sched/act_skbmod.c:244
-  tcf_action_dump_old net/sched/act_api.c:1191 [inline]
-  tcf_action_dump_1+0x85e/0x970 net/sched/act_api.c:1227
-
-Bytes 188-191 of 248 are uninitialized
-Memory access of size 248 starts at ffff888117697680
-Data copied to user address 00007ffe56d855f0
-
-Fixes: 86da71b57383 ("net_sched: Introduce skbmod action")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/20240403130908.93421-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_skbmod.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/btrfs/export.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/net/sched/act_skbmod.c
-+++ b/net/sched/act_skbmod.c
-@@ -210,13 +210,13 @@ static int tcf_skbmod_dump(struct sk_buf
- 	struct tcf_skbmod *d = to_skbmod(a);
- 	unsigned char *b = skb_tail_pointer(skb);
- 	struct tcf_skbmod_params  *p;
--	struct tc_skbmod opt = {
--		.index   = d->tcf_index,
--		.refcnt  = refcount_read(&d->tcf_refcnt) - ref,
--		.bindcnt = atomic_read(&d->tcf_bindcnt) - bind,
--	};
-+	struct tc_skbmod opt;
- 	struct tcf_t t;
+diff --git a/fs/btrfs/export.c b/fs/btrfs/export.c
+index ecc33e3a3c063..01e9a5afc33bf 100644
+--- a/fs/btrfs/export.c
++++ b/fs/btrfs/export.c
+@@ -182,8 +182,15 @@ struct dentry *btrfs_get_parent(struct dentry *child)
+ 	ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
+ 	if (ret < 0)
+ 		goto fail;
++	if (ret == 0) {
++		/*
++		 * Key with offset of -1 found, there would have to exist an
++		 * inode with such number or a root with such id.
++		 */
++		ret = -EUCLEAN;
++		goto fail;
++	}
  
-+	memset(&opt, 0, sizeof(opt));
-+	opt.index   = d->tcf_index;
-+	opt.refcnt  = refcount_read(&d->tcf_refcnt) - ref,
-+	opt.bindcnt = atomic_read(&d->tcf_bindcnt) - bind;
- 	spin_lock_bh(&d->tcf_lock);
- 	opt.action = d->tcf_action;
- 	p = rcu_dereference_protected(d->skbmod_p,
+-	BUG_ON(ret == 0); /* Key with offset of -1 found */
+ 	if (path->slots[0] == 0) {
+ 		ret = -ENOENT;
+ 		goto fail;
+-- 
+2.43.0
+
 
 
