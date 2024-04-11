@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF87145350;
-	Thu, 11 Apr 2024 10:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBB7145350;
+	Thu, 11 Apr 2024 10:16:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830602; cv=none; b=WW6yNLlqVzR+JWeL6esQuakM8n4Hnqb+6M7fMpKejwkPTftNU+P7NoJ2jQFusBOrce45O3cI+fEIIwG8v4ZJ0ieKj4gYBVZQhUa47NWgKkBOE9Iz69zKcdEX91880fP3PvWPUj/vYGomBOoMr8Dp/A7h0A2g2mt+J1HUsB65jfg=
+	t=1712830605; cv=none; b=s45GELQB3HMzTHEwX6VePIks0qarmdUG5raNGywcTz6fAtxN4YLz9rhPweHrs4eZI0CAxySXJ2ieDh1X4SRCMCtguj0qIhfpr0TptrZHX2mf8i9mequQOLTpt4sWSbxvkSv/UJaTUWlnGifK/Kv+vEk1YODCpnv5hO1V9OeYOaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830602; c=relaxed/simple;
-	bh=/o5qAbWvAScIh4JRwRkMZxLUnHQ4Ken9aOYozNq44Lg=;
+	s=arc-20240116; t=1712830605; c=relaxed/simple;
+	bh=D2SLecGdFmBGJJj2o7giNfEe1U53cF2DwZQjZRKOLvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rFNdAkM6WYMOtgK6CDHxViy3l8VXiIdLRNyyW0Ews5OnRdHgM6TodB3/p36uPocTN/xwGE7WrzyE5yqInBnMYvDu9otlOjZrEAljmzgI4+10FXCVwxX24Z9y1cNzYXeRa0kKpUrT6VdMyOa8haFyK73m0nPmUqZvbHK9kxMQnuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksVvKoSp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iwTyCBGLfVx34eJed5deZFY7R23jOW6bc6gFVf//dS8MxYgX5a+SjCsnqzl9ePxVWzfL3XzTQpIFyDjevERDvegA54z0T0XEnyC4pONB8QH2x/pvyH2gM01o7zmhfy4ROwyo5ySExOmmdz6809mkvtb31pEkLhMe5RF+mAPZtDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VekfEFTe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksVvKoSp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC52C433F1;
-	Thu, 11 Apr 2024 10:16:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VekfEFTe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2AD2C433F1;
+	Thu, 11 Apr 2024 10:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830602;
-	bh=/o5qAbWvAScIh4JRwRkMZxLUnHQ4Ken9aOYozNq44Lg=;
+	s=korg; t=1712830605;
+	bh=D2SLecGdFmBGJJj2o7giNfEe1U53cF2DwZQjZRKOLvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ksVvKoSpmiOZjCM5SGHZVZktFjkSJrJqsrJs4xIwqooNP6oC5Gwvz2qxGUCV9NxP2
-	 GSYy3JS0zZ8ZHJEGic5X6Y8ByAhM9DRWdmbBaUW+bZjpgA7oiHywdZyJLhJWxJo/eI
-	 s64T/XGTd38KAW364CUdaRfS5SvNvfB5x81pz1Sg=
+	b=VekfEFTewuz1DGFv3Jcadlt9mpvWN9ClrsBpzhLl3j5FqQ/bBryt454WPAwhW5lNi
+	 Py8ocQ0XTE6yjMXtqD2TGBOo5eflORk6lBm/Td9TbAIPhWFMdzKBT4Z7nZljvXlJPb
+	 GucNrzWR4Qug7CIQRR56w/pHVb36U3h53iTEKBv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josua Mayer <josua@solid-run.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Maximilian Heyne <mheyne@amazon.de>,
+	Srivathsa Dara <srivathsa.d.dara@oracle.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 054/215] hwmon: (amc6821) add of_match table
-Date: Thu, 11 Apr 2024 11:54:23 +0200
-Message-ID: <20240411095426.518105328@linuxfoundation.org>
+Subject: [PATCH 5.4 055/215] ext4: fix corruption during on-line resize
+Date: Thu, 11 Apr 2024 11:54:24 +0200
+Message-ID: <20240411095426.547600293@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -51,54 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josua Mayer <josua@solid-run.com>
+From: Maximilian Heyne <mheyne@amazon.de>
 
-[ Upstream commit 3f003fda98a7a8d5f399057d92e6ed56b468657c ]
+[ Upstream commit a6b3bfe176e8a5b05ec4447404e412c2a3fc92cc ]
 
-Add of_match table for "ti,amc6821" compatible string.
-This fixes automatic driver loading by userspace when using device-tree,
-and if built as a module like major linux distributions do.
+We observed a corruption during on-line resize of a file system that is
+larger than 16 TiB with 4k block size. With having more then 2^32 blocks
+resize_inode is turned off by default by mke2fs. The issue can be
+reproduced on a smaller file system for convenience by explicitly
+turning off resize_inode. An on-line resize across an 8 GiB boundary (the
+size of a meta block group in this setup) then leads to a corruption:
 
-While devices probe just fine with i2c_device_id table, userspace can't
-match the "ti,amc6821" compatible string from dt with the plain
-"amc6821" device id. As a result, the kernel module can not be loaded.
+  dev=/dev/<some_dev> # should be >= 16 GiB
+  mkdir -p /corruption
+  /sbin/mke2fs -t ext4 -b 4096 -O ^resize_inode $dev $((2 * 2**21 - 2**15))
+  mount -t ext4 $dev /corruption
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Josua Mayer <josua@solid-run.com>
-Link: https://lore.kernel.org/r/20240307-amc6821-of-match-v1-1-5f40464a3110@solid-run.com
-[groeck: Cleaned up patch description]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+  dd if=/dev/zero bs=4096 of=/corruption/test count=$((2*2**21 - 4*2**15))
+  sha1sum /corruption/test
+  # 79d2658b39dcfd77274e435b0934028adafaab11  /corruption/test
+
+  /sbin/resize2fs $dev $((2*2**21))
+  # drop page cache to force reload the block from disk
+  echo 1 > /proc/sys/vm/drop_caches
+
+  sha1sum /corruption/test
+  # 3c2abc63cbf1a94c9e6977e0fbd72cd832c4d5c3  /corruption/test
+
+2^21 = 2^15*2^6 equals 8 GiB whereof 2^15 is the number of blocks per
+block group and 2^6 are the number of block groups that make a meta
+block group.
+
+The last checksum might be different depending on how the file is laid
+out across the physical blocks. The actual corruption occurs at physical
+block 63*2^15 = 2064384 which would be the location of the backup of the
+meta block group's block descriptor. During the on-line resize the file
+system will be converted to meta_bg starting at s_first_meta_bg which is
+2 in the example - meaning all block groups after 16 GiB. However, in
+ext4_flex_group_add we might add block groups that are not part of the
+first meta block group yet. In the reproducer we achieved this by
+substracting the size of a whole block group from the point where the
+meta block group would start. This must be considered when updating the
+backup block group descriptors to follow the non-meta_bg layout. The fix
+is to add a test whether the group to add is already part of the meta
+block group or not.
+
+Fixes: 01f795f9e0d67 ("ext4: add online resizing support for meta_bg and 64-bit file systems")
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
+Tested-by: Srivathsa Dara <srivathsa.d.dara@oracle.com>
+Reviewed-by: Srivathsa Dara <srivathsa.d.dara@oracle.com>
+Link: https://lore.kernel.org/r/20240215155009.94493-1-mheyne@amazon.de
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/amc6821.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/ext4/resize.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/amc6821.c b/drivers/hwmon/amc6821.c
-index 013fb056b1d02..a8e94d73eaa04 100644
---- a/drivers/hwmon/amc6821.c
-+++ b/drivers/hwmon/amc6821.c
-@@ -935,10 +935,21 @@ static const struct i2c_device_id amc6821_id[] = {
- 
- MODULE_DEVICE_TABLE(i2c, amc6821_id);
- 
-+static const struct of_device_id __maybe_unused amc6821_of_match[] = {
-+	{
-+		.compatible = "ti,amc6821",
-+		.data = (void *)amc6821,
-+	},
-+	{ }
-+};
-+
-+MODULE_DEVICE_TABLE(of, amc6821_of_match);
-+
- static struct i2c_driver amc6821_driver = {
- 	.class = I2C_CLASS_HWMON,
- 	.driver = {
- 		.name	= "amc6821",
-+		.of_match_table = of_match_ptr(amc6821_of_match),
- 	},
- 	.probe = amc6821_probe,
- 	.id_table = amc6821_id,
+diff --git a/fs/ext4/resize.c b/fs/ext4/resize.c
+index 409b4ad28e718..d4431ca0c10e3 100644
+--- a/fs/ext4/resize.c
++++ b/fs/ext4/resize.c
+@@ -1567,7 +1567,8 @@ static int ext4_flex_group_add(struct super_block *sb,
+ 		int gdb_num = group / EXT4_DESC_PER_BLOCK(sb);
+ 		int gdb_num_end = ((group + flex_gd->count - 1) /
+ 				   EXT4_DESC_PER_BLOCK(sb));
+-		int meta_bg = ext4_has_feature_meta_bg(sb);
++		int meta_bg = ext4_has_feature_meta_bg(sb) &&
++			      gdb_num >= le32_to_cpu(es->s_first_meta_bg);
+ 		sector_t padding_blocks = meta_bg ? 0 : sbi->s_sbh->b_blocknr -
+ 					 ext4_group_first_block_no(sb, 0);
+ 		sector_t old_gdb = 0;
 -- 
 2.43.0
 
