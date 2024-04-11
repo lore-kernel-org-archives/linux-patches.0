@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC76140E3D;
-	Thu, 11 Apr 2024 10:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 144C9140E3D;
+	Thu, 11 Apr 2024 10:24:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831055; cv=none; b=PrZwLn7RzjH/ySLqOmKouuoZCtNE42uhvqa8x7l4tAAEbX/T5FLgcnDrTuXguZBCWww2eEk4a62iVgrqkiIj9SIIkWdDe5HKWa5EXiQSXEkpOPv2/N8irtI0rASxFPbtjfxmRDGfux31QCsfkgoxLYBV4i5UBU9hW+GXYMRgexY=
+	t=1712831058; cv=none; b=bmkWYELtXXPUkLdOGCw8uCH2wEZ6rag3FF2bEqcua2bWFiNNwfx6uGsd36sWQcnALT38qCnkTIfAjO53vH7FNFbhOTbxkXStAcJsFO3osd9EXuWfH/IIYZoFQezKXq1pWV0vJ5ASxTPn9mi8OG6WukBpmjj2YbyOZrKHr7CS93U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831055; c=relaxed/simple;
-	bh=k2H9Zf01S4xR1BeWCnOy05Wd5bXJ06Mx1rLhdY5GN8Y=;
+	s=arc-20240116; t=1712831058; c=relaxed/simple;
+	bh=E3Gla0CmoWC2jL+u/lKqYLtNjCcnp9TSF0nSicSBzJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KyMUZDZv1ateL8JPEBVpbpr58M4Hz0piRjXLni8csro2IMhYGgXs8pGQs4cG/dwFvNomB9lcVaqsgQZvwTY5WeQsY5mGl6dmOotBprQFwDKrn26QiAiB3ix7zUT+JrQE0mVmsoeFHBKAX+s6ecz8b3LFhejqaA+ZL1PCXqER1UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEcj5rie; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NuhPFdgu4phpa6ye8vP71FRzCkk6AGol/GydOEe+x0IU53vrj84+61jNW4OZYqNWLVp8FGQK4Ap3TaUH9SNZJ6mc7dU0+KrlunLmFPOjUVoecWXvqFPb6oIzzWo0FF1hclzJdzfGv+5mLnoE181niaRjjkIMc/kASjLZHHk/YEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5aDuajP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEcj5rie"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7953DC433F1;
-	Thu, 11 Apr 2024 10:24:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5aDuajP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92023C433C7;
+	Thu, 11 Apr 2024 10:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831055;
-	bh=k2H9Zf01S4xR1BeWCnOy05Wd5bXJ06Mx1rLhdY5GN8Y=;
+	s=korg; t=1712831058;
+	bh=E3Gla0CmoWC2jL+u/lKqYLtNjCcnp9TSF0nSicSBzJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mEcj5rieJfkUTgXEKPrDOE3cVGW1cPBX+lsFiMx+4Fz8lXN7xtugnMaUp60D5jtI0
-	 uHb95k2OmnokoxNe63A97COEdLJ7dBPzPFt/5WxnbDl1ZX/m/qY5O0WQe1gP5DqTPl
-	 aMPkldzaGdxGfxfyXowY/1MWg69YIaBe4zSaO6mY=
+	b=b5aDuajPnItclMzgC4Wcx5e8xxSHddr3Dg8PLAQA/fuiJtEdC19bNCvRNd8BVvGai
+	 e1tRyKQlBLINZRiTRY4VBoPSvhEW/Hz9oZGJJOtRtH3mLcRp+Cwe/vwigDONrV6eQO
+	 OFykNoGatQW5yLLnTfLA6CJMdpA+ThJO0oMRu9WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Wupeng Ma <mawupeng1@huawei.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Andy Lutomirski <luto@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Borislav Petkov <bp@alien8.de>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 208/215] x86/mm/pat: fix VM_PAT handling in COW mappings
-Date: Thu, 11 Apr 2024 11:56:57 +0200
-Message-ID: <20240411095431.116132102@linuxfoundation.org>
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Mika Kuoppala <mika.kuoppala@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>
+Subject: [PATCH 5.4 209/215] drm/i915/gt: Reset queue_priority_hint on parking
+Date: Thu, 11 Apr 2024 11:56:58 +0200
+Message-ID: <20240411095431.146256642@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -58,239 +53,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Chris Wilson <chris@chris-wilson.co.uk>
 
-commit 04c35ab3bdae7fefbd7c7a7355f29fa03a035221 upstream.
+commit 4a3859ea5240365d21f6053ee219bb240d520895 upstream.
 
-PAT handling won't do the right thing in COW mappings: the first PTE (or,
-in fact, all PTEs) can be replaced during write faults to point at anon
-folios.  Reliably recovering the correct PFN and cachemode using
-follow_phys() from PTEs will not work in COW mappings.
+Originally, with strict in order execution, we could complete execution
+only when the queue was empty. Preempt-to-busy allows replacement of an
+active request that may complete before the preemption is processed by
+HW. If that happens, the request is retired from the queue, but the
+queue_priority_hint remains set, preventing direct submission until
+after the next CS interrupt is processed.
 
-Using follow_phys(), we might just get the address+protection of the anon
-folio (which is very wrong), or fail on swap/nonswap entries, failing
-follow_phys() and triggering a WARN_ON_ONCE() in untrack_pfn() and
-track_pfn_copy(), not properly calling free_pfn_range().
+This preempt-to-busy race can be triggered by the heartbeat, which will
+also act as the power-management barrier and upon completion allow us to
+idle the HW. We may process the completion of the heartbeat, and begin
+parking the engine before the CS event that restores the
+queue_priority_hint, causing us to fail the assertion that it is MIN.
 
-In free_pfn_range(), we either wouldn't call memtype_free() or would call
-it with the wrong range, possibly leaking memory.
-
-To fix that, let's update follow_phys() to refuse returning anon folios,
-and fallback to using the stored PFN inside vma->vm_pgoff for COW mappings
-if we run into that.
-
-We will now properly handle untrack_pfn() with COW mappings, where we
-don't need the cachemode.  We'll have to fail fork()->track_pfn_copy() if
-the first page was replaced by an anon folio, though: we'd have to store
-the cachemode in the VMA to make this work, likely growing the VMA size.
-
-For now, lets keep it simple and let track_pfn_copy() just fail in that
-case: it would have failed in the past with swap/nonswap entries already,
-and it would have done the wrong thing with anon folios.
-
-Simple reproducer to trigger the WARN_ON_ONCE() in untrack_pfn():
-
-<--- C reproducer --->
- #include <stdio.h>
- #include <sys/mman.h>
- #include <unistd.h>
- #include <liburing.h>
-
- int main(void)
- {
-         struct io_uring_params p = {};
-         int ring_fd;
-         size_t size;
-         char *map;
-
-         ring_fd = io_uring_setup(1, &p);
-         if (ring_fd < 0) {
-                 perror("io_uring_setup");
-                 return 1;
-         }
-         size = p.sq_off.array + p.sq_entries * sizeof(unsigned);
-
-         /* Map the submission queue ring MAP_PRIVATE */
-         map = mmap(0, size, PROT_READ | PROT_WRITE, MAP_PRIVATE,
-                    ring_fd, IORING_OFF_SQ_RING);
-         if (map == MAP_FAILED) {
-                 perror("mmap");
-                 return 1;
-         }
-
-         /* We have at least one page. Let's COW it. */
-         *map = 0;
-         pause();
-         return 0;
- }
-<--- C reproducer --->
-
-On a system with 16 GiB RAM and swap configured:
- # ./iouring &
- # memhog 16G
- # killall iouring
-[  301.552930] ------------[ cut here ]------------
-[  301.553285] WARNING: CPU: 7 PID: 1402 at arch/x86/mm/pat/memtype.c:1060 untrack_pfn+0xf4/0x100
-[  301.553989] Modules linked in: binfmt_misc nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib nft_reject_g
-[  301.558232] CPU: 7 PID: 1402 Comm: iouring Not tainted 6.7.5-100.fc38.x86_64 #1
-[  301.558772] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebu4
-[  301.559569] RIP: 0010:untrack_pfn+0xf4/0x100
-[  301.559893] Code: 75 c4 eb cf 48 8b 43 10 8b a8 e8 00 00 00 3b 6b 28 74 b8 48 8b 7b 30 e8 ea 1a f7 000
-[  301.561189] RSP: 0018:ffffba2c0377fab8 EFLAGS: 00010282
-[  301.561590] RAX: 00000000ffffffea RBX: ffff9208c8ce9cc0 RCX: 000000010455e047
-[  301.562105] RDX: 07fffffff0eb1e0a RSI: 0000000000000000 RDI: ffff9208c391d200
-[  301.562628] RBP: 0000000000000000 R08: ffffba2c0377fab8 R09: 0000000000000000
-[  301.563145] R10: ffff9208d2292d50 R11: 0000000000000002 R12: 00007fea890e0000
-[  301.563669] R13: 0000000000000000 R14: ffffba2c0377fc08 R15: 0000000000000000
-[  301.564186] FS:  0000000000000000(0000) GS:ffff920c2fbc0000(0000) knlGS:0000000000000000
-[  301.564773] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  301.565197] CR2: 00007fea88ee8a20 CR3: 00000001033a8000 CR4: 0000000000750ef0
-[  301.565725] PKRU: 55555554
-[  301.565944] Call Trace:
-[  301.566148]  <TASK>
-[  301.566325]  ? untrack_pfn+0xf4/0x100
-[  301.566618]  ? __warn+0x81/0x130
-[  301.566876]  ? untrack_pfn+0xf4/0x100
-[  301.567163]  ? report_bug+0x171/0x1a0
-[  301.567466]  ? handle_bug+0x3c/0x80
-[  301.567743]  ? exc_invalid_op+0x17/0x70
-[  301.568038]  ? asm_exc_invalid_op+0x1a/0x20
-[  301.568363]  ? untrack_pfn+0xf4/0x100
-[  301.568660]  ? untrack_pfn+0x65/0x100
-[  301.568947]  unmap_single_vma+0xa6/0xe0
-[  301.569247]  unmap_vmas+0xb5/0x190
-[  301.569532]  exit_mmap+0xec/0x340
-[  301.569801]  __mmput+0x3e/0x130
-[  301.570051]  do_exit+0x305/0xaf0
+<3>[  166.210729] __engine_park:283 GEM_BUG_ON(engine->sched_engine->queue_priority_hint != (-((int)(~0U >> 1)) - 1))
+<0>[  166.210781] Dumping ftrace buffer:
+<0>[  166.210795] ---------------------------------
 ...
+<0>[  167.302811] drm_fdin-1097      2..s1. 165741070us : trace_ports: 0000:00:02.0 rcs0: promote { ccid:20 1217:2 prio 0 }
+<0>[  167.302861] drm_fdin-1097      2d.s2. 165741072us : execlists_submission_tasklet: 0000:00:02.0 rcs0: preempting last=1217:2, prio=0, hint=2147483646
+<0>[  167.302928] drm_fdin-1097      2d.s2. 165741072us : __i915_request_unsubmit: 0000:00:02.0 rcs0: fence 1217:2, current 0
+<0>[  167.302992] drm_fdin-1097      2d.s2. 165741073us : __i915_request_submit: 0000:00:02.0 rcs0: fence 3:4660, current 4659
+<0>[  167.303044] drm_fdin-1097      2d.s1. 165741076us : execlists_submission_tasklet: 0000:00:02.0 rcs0: context:3 schedule-in, ccid:40
+<0>[  167.303095] drm_fdin-1097      2d.s1. 165741077us : trace_ports: 0000:00:02.0 rcs0: submit { ccid:40 3:4660* prio 2147483646 }
+<0>[  167.303159] kworker/-89       11..... 165741139us : i915_request_retire.part.0: 0000:00:02.0 rcs0: fence c90:2, current 2
+<0>[  167.303208] kworker/-89       11..... 165741148us : __intel_context_do_unpin: 0000:00:02.0 rcs0: context:c90 unpin
+<0>[  167.303272] kworker/-89       11..... 165741159us : i915_request_retire.part.0: 0000:00:02.0 rcs0: fence 1217:2, current 2
+<0>[  167.303321] kworker/-89       11..... 165741166us : __intel_context_do_unpin: 0000:00:02.0 rcs0: context:1217 unpin
+<0>[  167.303384] kworker/-89       11..... 165741170us : i915_request_retire.part.0: 0000:00:02.0 rcs0: fence 3:4660, current 4660
+<0>[  167.303434] kworker/-89       11d..1. 165741172us : __intel_context_retire: 0000:00:02.0 rcs0: context:1216 retire runtime: { total:56028ns, avg:56028ns }
+<0>[  167.303484] kworker/-89       11..... 165741198us : __engine_park: 0000:00:02.0 rcs0: parked
+<0>[  167.303534]   <idle>-0         5d.H3. 165741207us : execlists_irq_handler: 0000:00:02.0 rcs0: semaphore yield: 00000040
+<0>[  167.303583] kworker/-89       11..... 165741397us : __intel_context_retire: 0000:00:02.0 rcs0: context:1217 retire runtime: { total:325575ns, avg:0ns }
+<0>[  167.303756] kworker/-89       11..... 165741777us : __intel_context_retire: 0000:00:02.0 rcs0: context:c90 retire runtime: { total:0ns, avg:0ns }
+<0>[  167.303806] kworker/-89       11..... 165742017us : __engine_park: __engine_park:283 GEM_BUG_ON(engine->sched_engine->queue_priority_hint != (-((int)(~0U >> 1)) - 1))
+<0>[  167.303811] ---------------------------------
+<4>[  167.304722] ------------[ cut here ]------------
+<2>[  167.304725] kernel BUG at drivers/gpu/drm/i915/gt/intel_engine_pm.c:283!
+<4>[  167.304731] invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+<4>[  167.304734] CPU: 11 PID: 89 Comm: kworker/11:1 Tainted: G        W          6.8.0-rc2-CI_DRM_14193-gc655e0fd2804+ #1
+<4>[  167.304736] Hardware name: Intel Corporation Rocket Lake Client Platform/RocketLake S UDIMM 6L RVP, BIOS RKLSFWI1.R00.3173.A03.2204210138 04/21/2022
+<4>[  167.304738] Workqueue: i915-unordered retire_work_handler [i915]
+<4>[  167.304839] RIP: 0010:__engine_park+0x3fd/0x680 [i915]
+<4>[  167.304937] Code: 00 48 c7 c2 b0 e5 86 a0 48 8d 3d 00 00 00 00 e8 79 48 d4 e0 bf 01 00 00 00 e8 ef 0a d4 e0 31 f6 bf 09 00 00 00 e8 03 49 c0 e0 <0f> 0b 0f 0b be 01 00 00 00 e8 f5 61 fd ff 31 c0 e9 34 fd ff ff 48
+<4>[  167.304940] RSP: 0018:ffffc9000059fce0 EFLAGS: 00010246
+<4>[  167.304942] RAX: 0000000000000200 RBX: 0000000000000000 RCX: 0000000000000006
+<4>[  167.304944] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000009
+<4>[  167.304946] RBP: ffff8881330ca1b0 R08: 0000000000000001 R09: 0000000000000001
+<4>[  167.304947] R10: 0000000000000001 R11: 0000000000000001 R12: ffff8881330ca000
+<4>[  167.304948] R13: ffff888110f02aa0 R14: ffff88812d1d0205 R15: ffff88811277d4f0
+<4>[  167.304950] FS:  0000000000000000(0000) GS:ffff88844f780000(0000) knlGS:0000000000000000
+<4>[  167.304952] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+<4>[  167.304953] CR2: 00007fc362200c40 CR3: 000000013306e003 CR4: 0000000000770ef0
+<4>[  167.304955] PKRU: 55555554
+<4>[  167.304957] Call Trace:
+<4>[  167.304958]  <TASK>
+<4>[  167.305573]  ____intel_wakeref_put_last+0x1d/0x80 [i915]
+<4>[  167.305685]  i915_request_retire.part.0+0x34f/0x600 [i915]
+<4>[  167.305800]  retire_requests+0x51/0x80 [i915]
+<4>[  167.305892]  intel_gt_retire_requests_timeout+0x27f/0x700 [i915]
+<4>[  167.305985]  process_scheduled_works+0x2db/0x530
+<4>[  167.305990]  worker_thread+0x18c/0x350
+<4>[  167.305993]  kthread+0xfe/0x130
+<4>[  167.305997]  ret_from_fork+0x2c/0x50
+<4>[  167.306001]  ret_from_fork_asm+0x1b/0x30
+<4>[  167.306004]  </TASK>
 
-Link: https://lkml.kernel.org/r/20240403212131.929421-3-david@redhat.com
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reported-by: Wupeng Ma <mawupeng1@huawei.com>
-Closes: https://lkml.kernel.org/r/20240227122814.3781907-1-mawupeng1@huawei.com
-Fixes: b1a86e15dc03 ("x86, pat: remove the dependency on 'vm_pgoff' in track/untrack pfn vma routines")
-Fixes: 5899329b1910 ("x86: PAT: implement track/untrack of pfnmap regions for x86 - v3")
-Acked-by: Ingo Molnar <mingo@kernel.org>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: David Hildenbrand <david@redhat.com>
+It is necessary for the queue_priority_hint to be lower than the next
+request submission upon waking up, as we rely on the hint to decide when
+to kick the tasklet to submit that first request.
+
+Fixes: 22b7a426bbe1 ("drm/i915/execlists: Preempt-to-busy")
+Closes: https://gitlab.freedesktop.org/drm/intel/issues/10154
+Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Cc: Mika Kuoppala <mika.kuoppala@linux.intel.com>
+Cc: <stable@vger.kernel.org> # v5.4+
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240318135906.716055-2-janusz.krzysztofik@linux.intel.com
+(cherry picked from commit 98850e96cf811dc2d0a7d0af491caff9f5d49c1e)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/pat.c |   50 ++++++++++++++++++++++++++++++++++++--------------
- mm/memory.c       |    4 ++++
- 2 files changed, 40 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_engine_pm.c |    3 ---
+ drivers/gpu/drm/i915/gt/intel_lrc.c       |    3 +++
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/x86/mm/pat.c
-+++ b/arch/x86/mm/pat.c
-@@ -34,6 +34,7 @@
+--- a/drivers/gpu/drm/i915/gt/intel_engine_pm.c
++++ b/drivers/gpu/drm/i915/gt/intel_engine_pm.c
+@@ -145,9 +145,6 @@ static int __engine_park(struct intel_wa
+ 	intel_engine_disarm_breadcrumbs(engine);
+ 	intel_engine_pool_park(&engine->pool);
  
- #include "pat_internal.h"
- #include "mm_internal.h"
-+#include "../../mm/internal.h"	/* is_cow_mapping() */
+-	/* Must be reset upon idling, or we may miss the busy wakeup. */
+-	GEM_BUG_ON(engine->execlists.queue_priority_hint != INT_MIN);
+-
+ 	if (engine->park)
+ 		engine->park(engine);
  
- #undef pr_fmt
- #define pr_fmt(fmt) "" fmt
-@@ -955,6 +956,38 @@ static void free_pfn_range(u64 paddr, un
- 		free_memtype(paddr, paddr + size);
+--- a/drivers/gpu/drm/i915/gt/intel_lrc.c
++++ b/drivers/gpu/drm/i915/gt/intel_lrc.c
+@@ -2992,6 +2992,9 @@ static u32 *gen11_emit_fini_breadcrumb_r
+ static void execlists_park(struct intel_engine_cs *engine)
+ {
+ 	del_timer(&engine->execlists.timer);
++
++	/* Reset upon idling, or we may delay the busy wakeup. */
++	WRITE_ONCE(engine->execlists.queue_priority_hint, INT_MIN);
  }
  
-+static int get_pat_info(struct vm_area_struct *vma, resource_size_t *paddr,
-+		pgprot_t *pgprot)
-+{
-+	unsigned long prot;
-+
-+	VM_WARN_ON_ONCE(!(vma->vm_flags & VM_PAT));
-+
-+	/*
-+	 * We need the starting PFN and cachemode used for track_pfn_remap()
-+	 * that covered the whole VMA. For most mappings, we can obtain that
-+	 * information from the page tables. For COW mappings, we might now
-+	 * suddenly have anon folios mapped and follow_phys() will fail.
-+	 *
-+	 * Fallback to using vma->vm_pgoff, see remap_pfn_range_notrack(), to
-+	 * detect the PFN. If we need the cachemode as well, we're out of luck
-+	 * for now and have to fail fork().
-+	 */
-+	if (!follow_phys(vma, vma->vm_start, 0, &prot, paddr)) {
-+		if (pgprot)
-+			*pgprot = __pgprot(prot);
-+		return 0;
-+	}
-+	if (is_cow_mapping(vma->vm_flags)) {
-+		if (pgprot)
-+			return -EINVAL;
-+		*paddr = (resource_size_t)vma->vm_pgoff << PAGE_SHIFT;
-+		return 0;
-+	}
-+	WARN_ON_ONCE(1);
-+	return -EINVAL;
-+}
-+
- /*
-  * track_pfn_copy is called when vma that is covering the pfnmap gets
-  * copied through copy_page_range().
-@@ -965,20 +998,13 @@ static void free_pfn_range(u64 paddr, un
- int track_pfn_copy(struct vm_area_struct *vma)
- {
- 	resource_size_t paddr;
--	unsigned long prot;
- 	unsigned long vma_size = vma->vm_end - vma->vm_start;
- 	pgprot_t pgprot;
- 
- 	if (vma->vm_flags & VM_PAT) {
--		/*
--		 * reserve the whole chunk covered by vma. We need the
--		 * starting address and protection from pte.
--		 */
--		if (follow_phys(vma, vma->vm_start, 0, &prot, &paddr)) {
--			WARN_ON_ONCE(1);
-+		if (get_pat_info(vma, &paddr, &pgprot))
- 			return -EINVAL;
--		}
--		pgprot = __pgprot(prot);
-+		/* reserve the whole chunk covered by vma. */
- 		return reserve_pfn_range(paddr, vma_size, &pgprot, 1);
- 	}
- 
-@@ -1053,7 +1079,6 @@ void untrack_pfn(struct vm_area_struct *
- 		 unsigned long size)
- {
- 	resource_size_t paddr;
--	unsigned long prot;
- 
- 	if (vma && !(vma->vm_flags & VM_PAT))
- 		return;
-@@ -1061,11 +1086,8 @@ void untrack_pfn(struct vm_area_struct *
- 	/* free the chunk starting from pfn or the whole chunk */
- 	paddr = (resource_size_t)pfn << PAGE_SHIFT;
- 	if (!paddr && !size) {
--		if (follow_phys(vma, vma->vm_start, 0, &prot, &paddr)) {
--			WARN_ON_ONCE(1);
-+		if (get_pat_info(vma, &paddr, NULL))
- 			return;
--		}
--
- 		size = vma->vm_end - vma->vm_start;
- 	}
- 	free_pfn_range(paddr, size);
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -4428,6 +4428,10 @@ int follow_phys(struct vm_area_struct *v
- 		goto out;
- 	pte = *ptep;
- 
-+	/* Never return PFNs of anon folios in COW mappings. */
-+	if (vm_normal_page(vma, address, pte))
-+		goto unlock;
-+
- 	if ((flags & FOLL_WRITE) && !pte_write(pte))
- 		goto unlock;
- 
+ void intel_execlists_set_default_submission(struct intel_engine_cs *engine)
 
 
