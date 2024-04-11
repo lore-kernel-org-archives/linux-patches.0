@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8E3146D7E;
-	Thu, 11 Apr 2024 10:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7497179FD;
+	Thu, 11 Apr 2024 10:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831733; cv=none; b=I4sQC9reZx9UuB/9OOcwDbn1w4BqittR7g8D/NYC4c+QgDEuJtQQzsmrd2Xl3nnYgFAU9lDBBIG/OsHSFBYTrFINxv+/5saIb8RhxKRoRBwMfJOgqrtrrGFFVqXRzwxNrJ0sFEngNisDT7E5wHBVqnXH+axzuOvwW1+fJF/1GEg=
+	t=1712831738; cv=none; b=Oew01wieOekgun8zHAidI8l6RK0Ni41GYA87epV0JET3JORl89ZBWf+wd2MInzyZY/SB0mfkCSW4b25a09UT8oDHsumpLgQuE8lJ6E4hBFpjoYKB/gwguIeD3Uj4pOwa/B7hyf1WOP2RNe7g11pGWAF+qYDxorGIwG8yDiA854k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831733; c=relaxed/simple;
-	bh=juoEirCxsMSUU8kM2CfrlgKbhsKq60LgFGN10PKjqLo=;
+	s=arc-20240116; t=1712831738; c=relaxed/simple;
+	bh=8ufM0Q5t4MUB+JWeWFT0qB9R/WmxsGcXyaXzR1SMtzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rFOqTnEUAcK5S7vlpyujeSV3CPLjzUjn/B04vakSKxtN/KAgT8L1eOe4KPU1HA6t2KlZpaEhRb1u8+epak0+7Qc0tK3zBqQM9uuo/OlsoommiCgt3CTCaBAGC5S8j8SmoNsCYGotusOIctl9dEO1yu1hjNK3ldm2lQeGdaxxCiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxayID9U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NvOyEnOk0mfzB0xpyC9NrNftn/wbGMAhYe2qw7HnZg6N+HVT0TeImep7QdNTTkKlpr4ysfoAhLU4LSetVEH1DZhFNPFg41Yx8wQT0GcguTrGPJoQeas5Alf6Z+dj+agP6Q9gqhjPPr3vn2Vl9NA3ZyWFGQJ5XjrXCnIYhCrC9+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGo8RPjd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxayID9U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5343C433F1;
-	Thu, 11 Apr 2024 10:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGo8RPjd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF703C433F1;
+	Thu, 11 Apr 2024 10:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831733;
-	bh=juoEirCxsMSUU8kM2CfrlgKbhsKq60LgFGN10PKjqLo=;
+	s=korg; t=1712831738;
+	bh=8ufM0Q5t4MUB+JWeWFT0qB9R/WmxsGcXyaXzR1SMtzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FxayID9URxytpzJlDkQ04u5dfmKbvREcv6vyBFzCowqjd7wpVefFWqwcdWfnLMPTw
-	 lB1y/r6XteDF2N/uO4zai0QgFMfvLpK6zjRFo4dlYyniQkyo1VgN0QvUZ8akV31Nic
-	 mrHc+09LuOV+dt/tLVUbuN/7AgQxQ75PkZiiafx4=
+	b=AGo8RPjdjIrfOR9/jo0XnsXar/yFDpl1jlYt0I+N6+WRaHAd8++3HVNdIMvFTGKAw
+	 5EdH/5Hup6c49R6zK0d4xto6Lqwm4n/WGTn30BWPcMboX22x2eptamVTy0VonX74ix
+	 w/R+qWesItf1dDXmSvCYufqwncu5ugcUxoriGG8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Ricky Wu <ricky_wu@realtek.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 060/294] PCI/PM: Drain runtime-idle callbacks before driver removal
-Date: Thu, 11 Apr 2024 11:53:43 +0200
-Message-ID: <20240411095437.447297136@linuxfoundation.org>
+Subject: [PATCH 5.10 102/294] nilfs2: prevent kernel bug at submit_bh_wbc()
+Date: Thu, 11 Apr 2024 11:54:25 +0200
+Message-ID: <20240411095438.742965416@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -53,74 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 9d5286d4e7f68beab450deddbb6a32edd5ecf4bf ]
+[ Upstream commit 269cdf353b5bdd15f1a079671b0f889113865f20 ]
 
-A race condition between the .runtime_idle() callback and the .remove()
-callback in the rtsx_pcr PCI driver leads to a kernel crash due to an
-unhandled page fault [1].
+Fix a bug where nilfs_get_block() returns a successful status when
+searching and inserting the specified block both fail inconsistently.  If
+this inconsistent behavior is not due to a previously fixed bug, then an
+unexpected race is occurring, so return a temporary error -EAGAIN instead.
 
-The problem is that rtsx_pci_runtime_idle() is not expected to be running
-after pm_runtime_get_sync() has been called, but the latter doesn't really
-guarantee that.  It only guarantees that the suspend and resume callbacks
-will not be running when it returns.
+This prevents callers such as __block_write_begin_int() from requesting a
+read into a buffer that is not mapped, which would cause the BUG_ON check
+for the BH_Mapped flag in submit_bh_wbc() to fail.
 
-However, if a .runtime_idle() callback is already running when
-pm_runtime_get_sync() is called, the latter will notice that the runtime PM
-status of the device is RPM_ACTIVE and it will return right away without
-waiting for the former to complete.  In fact, it cannot wait for
-.runtime_idle() to complete because it may be called from that callback (it
-arguably does not make much sense to do that, but it is not strictly
-prohibited).
-
-Thus in general, whoever is providing a .runtime_idle() callback needs
-to protect it from running in parallel with whatever code runs after
-pm_runtime_get_sync().  [Note that .runtime_idle() will not start after
-pm_runtime_get_sync() has returned, but it may continue running then if it
-has started earlier.]
-
-One way to address that race condition is to call pm_runtime_barrier()
-after pm_runtime_get_sync() (not before it, because a nonzero value of the
-runtime PM usage counter is necessary to prevent runtime PM callbacks from
-being invoked) to wait for the .runtime_idle() callback to complete should
-it be running at that point.  A suitable place for doing that is in
-pci_device_remove() which calls pm_runtime_get_sync() before removing the
-driver, so it may as well call pm_runtime_barrier() subsequently, which
-will prevent the race in question from occurring, not just in the rtsx_pcr
-driver, but in any PCI drivers providing .runtime_idle() callbacks.
-
-Link: https://lore.kernel.org/lkml/20240229062201.49500-1-kai.heng.feng@canonical.com/ # [1]
-Link: https://lore.kernel.org/r/5761426.DvuYhMxLoT@kreacher
-Reported-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Ricky Wu <ricky_wu@realtek.com>
-Acked-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Link: https://lkml.kernel.org/r/20240313105827.5296-3-konishi.ryusuke@gmail.com
+Fixes: 1f5abe7e7dbc ("nilfs2: replace BUG_ON and BUG calls triggerable from ioctl")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-driver.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/nilfs2/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index dbfeb5c148755..ae675c5a47151 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -446,6 +446,13 @@ static int pci_device_remove(struct device *dev)
- 
- 	if (drv->remove) {
- 		pm_runtime_get_sync(dev);
-+		/*
-+		 * If the driver provides a .runtime_idle() callback and it has
-+		 * started to run already, it may continue to run in parallel
-+		 * with the code below, so wait until all of the runtime PM
-+		 * activity has completed.
-+		 */
-+		pm_runtime_barrier(dev);
- 		drv->remove(pci_dev);
- 		pm_runtime_put_noidle(dev);
- 	}
+diff --git a/fs/nilfs2/inode.c b/fs/nilfs2/inode.c
+index d144e08a9003a..06f4deb550c9f 100644
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -112,7 +112,7 @@ int nilfs_get_block(struct inode *inode, sector_t blkoff,
+ 					   "%s (ino=%lu): a race condition while inserting a data block at offset=%llu",
+ 					   __func__, inode->i_ino,
+ 					   (unsigned long long)blkoff);
+-				err = 0;
++				err = -EAGAIN;
+ 			}
+ 			nilfs_transaction_abort(inode->i_sb);
+ 			goto out;
 -- 
 2.43.0
 
