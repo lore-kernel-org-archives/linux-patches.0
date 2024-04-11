@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39593146586;
-	Thu, 11 Apr 2024 10:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D8D146D6D;
+	Thu, 11 Apr 2024 10:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830830; cv=none; b=srHo5Y/8w7xrpn7xIedpcOBsPNqX04SLb6lBk8V+uLay3BeGOE2O9ghcJBTmN6Y3J3kK459BirVWw/6HgvWzylTY4bPKE9sILdhksXUmm4QC3d9dI1mESu0+0hpZIrDb+1JdKpeDJswPdfI3rD7fVSnq5tz5i69qzWQ6Ki6zm9Y=
+	t=1712830833; cv=none; b=XY/IRVDn+5lx4OlgioX/p+ZF+6qfkjmUYgyqOE8SG+Ctyn+u+hSxDl/g8+8svnCGbyialIc1almTudHYQkk3olOXd22KQdJCpgI6m9Kh0lFqUtZpXP1Yw0BVP2zL0JKk68CJw8qYCjNJ3DnVmaAHGSAgTp78rMk578HmqYYr66s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830830; c=relaxed/simple;
-	bh=tjPoWvlI1Y4PHX3KhEVJSy2qaq8TA+BpIvYF8epeV24=;
+	s=arc-20240116; t=1712830833; c=relaxed/simple;
+	bh=O+ZpGbcUsL5k1tY82kQeyJ/8hDFW0mJaKbydmzB+oVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvXq1IdDj7olzGypk6UV5D1lvn3Xo+8lrcQxzNgCOsdywNzPAkvBh8+fEStjtsveR3Sxfkc08WXgVRlTRS5QyNdF9L5aA6ZVln4sTkYimam805IB4EiAr2f3tHgykF4wVtge6Iwxd/LaSx/tz0suBePRcK/f5E6G3tZhrljr6EQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6ArQAmZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LuD+t0ELDY/TO5OdeQnHCbOBlR0mskRg9PGRbwkTXqeCIJOmmqhnSsns1hzrTexifIykK/2GwBI1hwEQz/TcMAq0j8tqYfXxuUwzU73aAtmCveWxyojMlKGvB2L40pmdT05y2ssXP0qW94nSvoUNeHXoEeyH1ha1hvxjTUAqvZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aclmPF82; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6ArQAmZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E75C433F1;
-	Thu, 11 Apr 2024 10:20:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aclmPF82"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99105C43394;
+	Thu, 11 Apr 2024 10:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830830;
-	bh=tjPoWvlI1Y4PHX3KhEVJSy2qaq8TA+BpIvYF8epeV24=;
+	s=korg; t=1712830833;
+	bh=O+ZpGbcUsL5k1tY82kQeyJ/8hDFW0mJaKbydmzB+oVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p6ArQAmZwwuxXBYRid2RUrTBdR7NjgQRvNbvXPnxDHhDHywiqhNWUi5skjaP/7I9V
-	 FFJWXva04z5zOAPUOfbFw2wo4Xeo/UtsYHaX6ANfCChj8do7wqw4z5pn96t4gnj9Ms
-	 53AaIgEsorpYhVHDApSiaP9MAA8rQ7dlMvTsbsPg=
+	b=aclmPF82w4FaHPjp1sx2fthgMw4aYW66QRGHhm62NuKLktVAjy2T21WgciR1Bzr8G
+	 BSTlhjCAZ+/WPkij7ToE9jT+4+rO4hhRVzgwK6XSeiH7EdYhzmSlIguzZE18Zv0iQf
+	 I+g2FfjRTgE0/1bpbFamZP3h99OEodadvDOwpLVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 132/215] dm integrity: fix out-of-range warning
-Date: Thu, 11 Apr 2024 11:55:41 +0200
-Message-ID: <20240411095428.863718949@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 133/215] r8169: fix issue caused by buggy BIOS on certain boards with RTL8168d
+Date: Thu, 11 Apr 2024 11:55:42 +0200
+Message-ID: <20240411095428.893228603@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -53,47 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 8e91c2342351e0f5ef6c0a704384a7f6fc70c3b2 ]
+commit 5d872c9f46bd2ea3524af3c2420a364a13667135 upstream.
 
-Depending on the value of CONFIG_HZ, clang complains about a pointless
-comparison:
+On some boards with this chip version the BIOS is buggy and misses
+to reset the PHY page selector. This results in the PHY ID read
+accessing registers on a different page, returning a more or
+less random value. Fix this by resetting the page selector first.
 
-drivers/md/dm-integrity.c:4085:12: error: result of comparison of
-                        constant 42949672950 with expression of type
-                        'unsigned int' is always false
-                        [-Werror,-Wtautological-constant-out-of-range-compare]
-                        if (val >= (uint64_t)UINT_MAX * 1000 / HZ) {
-
-As the check remains useful for other configurations, shut up the
-warning by adding a second type cast to uint64_t.
-
-Fixes: 468dfca38b1a ("dm integrity: add a bitmap mode")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Mikulas Patocka <mpatocka@redhat.com>
-Reviewed-by: Justin Stitt <justinstitt@google.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f1e911d5d0df ("r8169: add basic phylib support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/64f2055e-98b8-45ec-8568-665e3d54d4e6@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
-index f3246f7407d61..4b634633b4a5e 100644
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -3755,7 +3755,7 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned argc, char **argv)
- 		} else if (sscanf(opt_string, "sectors_per_bit:%llu%c", &llval, &dummy) == 1) {
- 			log2_sectors_per_bitmap_bit = !llval ? 0 : __ilog2_u64(llval);
- 		} else if (sscanf(opt_string, "bitmap_flush_interval:%u%c", &val, &dummy) == 1) {
--			if (val >= (uint64_t)UINT_MAX * 1000 / HZ) {
-+			if ((uint64_t)val >= (uint64_t)UINT_MAX * 1000 / HZ) {
- 				r = -EINVAL;
- 				ti->error = "Invalid bitmap_flush_interval argument";
- 				goto bad;
--- 
-2.43.0
-
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -6851,6 +6851,15 @@ static int r8169_mdio_register(struct rt
+ 	struct mii_bus *new_bus;
+ 	int ret;
+ 
++	/* On some boards with this chip version the BIOS is buggy and misses
++	 * to reset the PHY page selector. This results in the PHY ID read
++	 * accessing registers on a different page, returning a more or
++	 * less random value. Fix this by resetting the page selector first.
++	 */
++	if (tp->mac_version == RTL_GIGA_MAC_VER_25 ||
++	    tp->mac_version == RTL_GIGA_MAC_VER_26)
++		r8169_mdio_write(tp, 0x1f, 0);
++
+ 	new_bus = devm_mdiobus_alloc(&pdev->dev);
+ 	if (!new_bus)
+ 		return -ENOMEM;
 
 
