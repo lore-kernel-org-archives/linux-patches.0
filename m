@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA565140E3D;
-	Thu, 11 Apr 2024 10:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC513140E3D;
+	Thu, 11 Apr 2024 10:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830783; cv=none; b=CqW9aRkvNphVJg+pVwz5xDrVJwWDeLp9hj1YI0ErOH0xfGTAfvhIsFEj8meg4ZoNDVc5rC6Fdsy6rMHgTQ4euEl8kZ4PpWgYsWuAcyyDUw8sO4aMHGxsRQ57o5xofxjr/zyGVNQFq1jj5Mcjv5Y78OjoZUEAlgkgrAKgagThwOA=
+	t=1712830785; cv=none; b=YN+UCmygrm23uKDQ+RpJ85LFwnIuDLmYTbpoIZK9wU7A6tIk2xkK4XfPc3B175LMvYDHqJ8UHyLxG8iEPOXXq3/i7Xz818oPPCJ1nJs5kLbKhlkb8GwP+WAnMZD97n2kfPV5rkYCZ63EjV0ussxl+aMCZTHiVNQYpl3nOVwwTco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830783; c=relaxed/simple;
-	bh=gJ2ENgU/Wa6j+11Ouckw7yFQhhrUzYayA3uY2u5iujs=;
+	s=arc-20240116; t=1712830785; c=relaxed/simple;
+	bh=jgEUNW34JeSFup3GgDCBbdZY8t/HClXDCwoC6fm6aMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iAzgqsqLZeWSXY3LgtmQ4AH3ho72m6mec2aw2h32m9tyqD4cUyhlR+qf18QjXSyTcWZuM+ER08Neur6jbCtrH9lDsVLKaTMbD1KPey+JpaMC5upw22Fl/d3mn+XztXKQ8eVko3TMG00tGxrXyepyuDQg1JS17DLlYAKQewr+NCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x11xSD3Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QxRNgYJsr4ADGuudK4TjVcvqRpIL0jpPk156X63W7xPfkLCpVfVQ481n1B74VDrfBZ3vG0j7WsHCw82cynarMAlBWzSW03UmGv0zfOKWxMEz4FrDDwzU+/phW/6qC+f2Ot7qwgK7/1B/E5uY0XHXNPiKPp+Q3vf4TN5KpQSmvc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16SDlDxj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x11xSD3Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F29C433F1;
-	Thu, 11 Apr 2024 10:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16SDlDxj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A62C433C7;
+	Thu, 11 Apr 2024 10:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830782;
-	bh=gJ2ENgU/Wa6j+11Ouckw7yFQhhrUzYayA3uY2u5iujs=;
+	s=korg; t=1712830785;
+	bh=jgEUNW34JeSFup3GgDCBbdZY8t/HClXDCwoC6fm6aMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x11xSD3ZsObGY5xNbn9AQ47YDRk4vEp0YfnnF9C6VOURg6ktonvxKZviGi20Sb1Rp
-	 kcR7l9+QzeLiT/NZSCq2zZ8KP/p+Peiw7akt2FPysLOA7uE+S2diRB8zJyHRNY+aki
-	 6Da8EJb6WBDB0/YXn58aozL0zrv2Zfr42gikWTfY=
+	b=16SDlDxj7MEC245DLZqfzuSC4oxEOvD4AyobeGUiz4TlP4KRnaMIEBRHcIpIkCnnZ
+	 ZhW9kopdjtPnvzJQ9Yq/5nFOYV0biB9OeHD8Ju+4xx9sf7m7m8OtH3nMIEPu/evR0E
+	 dOHe6K0yjbXGnfD4crFZvDyM2LrVN+AaGOguT74o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 5.4 117/215] usb: cdc-wdm: close race between read and workqueue
-Date: Thu, 11 Apr 2024 11:55:26 +0200
-Message-ID: <20240411095428.421465116@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH 5.4 118/215] ALSA: sh: aica: reorder cleanup operations to avoid UAF bugs
+Date: Thu, 11 Apr 2024 11:55:27 +0200
+Message-ID: <20240411095428.450334524@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -50,47 +50,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-commit 339f83612f3a569b194680768b22bf113c26a29d upstream.
+commit 051e0840ffa8ab25554d6b14b62c9ab9e4901457 upstream.
 
-wdm_read() cannot race with itself. However, in
-service_outstanding_interrupt() it can race with the
-workqueue, which can be triggered by error handling.
+The dreamcastcard->timer could schedule the spu_dma_work and the
+spu_dma_work could also arm the dreamcastcard->timer.
 
-Hence we need to make sure that the WDM_RESPONDING
-flag is not just only set but tested.
+When the snd_pcm_substream is closing, the aica_channel will be
+deallocated. But it could still be dereferenced in the worker
+thread. The reason is that del_timer() will return directly
+regardless of whether the timer handler is running or not and
+the worker could be rescheduled in the timer handler. As a result,
+the UAF bug will happen. The racy situation is shown below:
 
-Fixes: afba937e540c9 ("USB: CDC WDM driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/20240314115132.3907-1-oneukum@suse.com
+      (Thread 1)                 |      (Thread 2)
+snd_aicapcm_pcm_close()          |
+ ...                             |  run_spu_dma() //worker
+                                 |    mod_timer()
+  flush_work()                   |
+  del_timer()                    |  aica_period_elapsed() //timer
+  kfree(dreamcastcard->channel)  |    schedule_work()
+                                 |  run_spu_dma() //worker
+  ...                            |    dreamcastcard->channel-> //USE
+
+In order to mitigate this bug and other possible corner cases,
+call mod_timer() conditionally in run_spu_dma(), then implement
+PCM sync_stop op to cancel both the timer and worker. The sync_stop
+op will be called from PCM core appropriately when needed.
+
+Fixes: 198de43d758c ("[ALSA] Add ALSA support for the SEGA Dreamcast PCM device")
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Message-ID: <20240326094238.95442-1-duoming@zju.edu.cn>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-wdm.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/sh/aica.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/class/cdc-wdm.c
-+++ b/drivers/usb/class/cdc-wdm.c
-@@ -471,6 +471,7 @@ out_free_mem:
- static int service_outstanding_interrupt(struct wdm_device *desc)
- {
- 	int rv = 0;
-+	int used;
- 
- 	/* submit read urb only if the device is waiting for it */
- 	if (!desc->resp_count || !--desc->resp_count)
-@@ -485,7 +486,10 @@ static int service_outstanding_interrupt
- 		goto out;
+--- a/sound/sh/aica.c
++++ b/sound/sh/aica.c
+@@ -279,7 +279,8 @@ static void run_spu_dma(struct work_stru
+ 		dreamcastcard->clicks++;
+ 		if (unlikely(dreamcastcard->clicks >= AICA_PERIOD_NUMBER))
+ 			dreamcastcard->clicks %= AICA_PERIOD_NUMBER;
+-		mod_timer(&dreamcastcard->timer, jiffies + 1);
++		if (snd_pcm_running(dreamcastcard->substream))
++			mod_timer(&dreamcastcard->timer, jiffies + 1);
  	}
+ }
  
--	set_bit(WDM_RESPONDING, &desc->flags);
-+	used = test_and_set_bit(WDM_RESPONDING, &desc->flags);
-+	if (used)
-+		goto out;
+@@ -291,6 +292,8 @@ static void aica_period_elapsed(struct t
+ 	/*timer function - so cannot sleep */
+ 	int play_period;
+ 	struct snd_pcm_runtime *runtime;
++	if (!snd_pcm_running(substream))
++		return;
+ 	runtime = substream->runtime;
+ 	dreamcastcard = substream->pcm->private_data;
+ 	/* Have we played out an additional period? */
+@@ -351,12 +354,19 @@ static int snd_aicapcm_pcm_open(struct s
+ 	return 0;
+ }
+ 
++static int snd_aicapcm_pcm_sync_stop(struct snd_pcm_substream *substream)
++{
++	struct snd_card_aica *dreamcastcard = substream->pcm->private_data;
 +
- 	spin_unlock_irq(&desc->iuspin);
- 	rv = usb_submit_urb(desc->response, GFP_KERNEL);
- 	spin_lock_irq(&desc->iuspin);
++	del_timer_sync(&dreamcastcard->timer);
++	cancel_work_sync(&dreamcastcard->spu_dma_work);
++	return 0;
++}
++
+ static int snd_aicapcm_pcm_close(struct snd_pcm_substream
+ 				 *substream)
+ {
+ 	struct snd_card_aica *dreamcastcard = substream->pcm->private_data;
+-	flush_work(&(dreamcastcard->spu_dma_work));
+-	del_timer(&dreamcastcard->timer);
+ 	dreamcastcard->substream = NULL;
+ 	kfree(dreamcastcard->channel);
+ 	spu_disable();
+@@ -422,6 +432,7 @@ static const struct snd_pcm_ops snd_aica
+ 	.prepare = snd_aicapcm_pcm_prepare,
+ 	.trigger = snd_aicapcm_pcm_trigger,
+ 	.pointer = snd_aicapcm_pcm_pointer,
++	.sync_stop = snd_aicapcm_pcm_sync_stop,
+ };
+ 
+ /* TO DO: set up to handle more than one pcm instance */
 
 
