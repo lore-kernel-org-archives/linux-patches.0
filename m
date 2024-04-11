@@ -1,81 +1,183 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6A5D41740
-	for <patches@lists.linux.dev>; Thu, 11 Apr 2024 18:36:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685D314A9F;
+	Thu, 11 Apr 2024 18:45:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712860593; cv=none; b=YBM5R950My84aL/FJDQg61XwL2aHrNn98RUEcNyRfu/vrn/+lGFEMyo0sB13R17xiBSY2hww/H+U7PXaqR2bCzHBd+CPfz8br/pMCC6DHIpPq3Fp1A6BCdsQwbE8Dlf+5k5wprJOyPxAZV+igtJQPCXODr6m8p5R0ebrdtMDVCc=
+	t=1712861150; cv=none; b=HcyuPN3rNShttYycCZrJsdmmeYPz628JFwxGhlTYlRMQmouOpjKE5lFZOcQ+HIS195fHkxIg0KJdUrJurAMtwkebE5UQTW8+E+zxBUKXpQ7SONqtRPc8zzLiMBCvfBNRZgACSs33by7LzroRWus/2ZmbRn7lW5DO4/5toRAhljs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712860593; c=relaxed/simple;
-	bh=Ft8JfQvHCLY2ghv8Ss761BEC9TQ/5kAvBzYcfHLpbv8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NiEZbvS9aaHzdqsDhK6Ps8LBAo1W5q7wb8vYymQPKg/p9BCFWlveFWQrLl3fZReQ/M4Edyu9H+BR1v2yyMoDSSIVtygmqL5HIZpZL8yodeWLwk8MKEzL1rvy3nEKMSUUgdd51x8kC5nV7zKErrrCYVsQppp/W/PP2XA+7LZsvqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=i03MxOyH; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1712861150; c=relaxed/simple;
+	bh=3J9KwOZ8VsQ0/GJ7lg9iQ4h/nYIgnKWTHARE6B+5FCo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jSsnRCjb4+L3e46L4S2MxMZE6dxqToMbfwi2t2Fz9FFw/rrEfyB8qodnQAiadCqWeiqMf/5UxA/92CGqXGJyECfyxLqaF5SR/GGyCMGBZka4H4okkmJW+0k7SQre2cXVT0PzfdEwqTn7NtwbqqnlnKlBlyVl8UHCennTC2RbL+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p3B6pkBa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="i03MxOyH"
-Received: from [100.64.216.186] (unknown [20.29.225.195])
-	by linux.microsoft.com (Postfix) with ESMTPSA id B898E20EC303;
-	Thu, 11 Apr 2024 11:36:29 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com B898E20EC303
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1712860590;
-	bh=dN02yDdDosiWONjItu2a2iqcmYH10EILRT9j765+B5g=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=i03MxOyHvZgSveQDWlCKvQEtyl8z5xvR5xn2cIVSL2fxgn+eautwWvzvjLpycNxb+
-	 W4hHzDLGsvFBtVdKuYI0456oklEZoeTa1vYozQzZmJnEfJKLWw616OemoZqv3uMRy3
-	 Yhmgkp+2Z/8gQWPWOs5O9kD3Xzq3qlfFY2uJsA1A=
-Message-ID: <e944c094-b503-4a9a-a5d0-487c8b056e34@linux.microsoft.com>
-Date: Thu, 11 Apr 2024 11:36:28 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p3B6pkBa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0F5C072AA;
+	Thu, 11 Apr 2024 18:45:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712861150;
+	bh=3J9KwOZ8VsQ0/GJ7lg9iQ4h/nYIgnKWTHARE6B+5FCo=;
+	h=From:Date:Subject:To:Cc:From;
+	b=p3B6pkBaCq00VhNmJ52+mGzQlu8zn1zqfs+z97qHqFk0h3vwoeMThLDKndm10X8kU
+	 wMzURSiapu5/IiVqMuEaGb5RBdkp/bS1wRCfOAzmAugCs+KUaQhuN6jgEnc2Tg4YHE
+	 sV5YVGRQSNSLu3oq98xbAFLP35RVKqZ1S84mHoPcuzzuH3Yh98NhNfLKqf10DoVOb4
+	 KJQJHF+vLun7Wl1+27WUkY+PWNmCwHR9bEM5YKpSBTsIMQGpjnwVIcorqammL/1YFv
+	 sVS9BMX38YQkOrvWLvaHnH0Rzelf4BAAjA/rwxaEwTqjN6dO7xrPVTLmVIgE7AmoX3
+	 D0LQlJLz1Q2fA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 11 Apr 2024 11:45:40 -0700
+Subject: [PATCH] kselftest: Mark functions that unconditionally call exit()
+ as __noreturn
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 00/57] 5.15.155-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240411095407.982258070@linuxfoundation.org>
-Content-Language: en-CA
-From: Easwar Hariharan <eahariha@linux.microsoft.com>
-In-Reply-To: <20240411095407.982258070@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20240411-mark-kselftest-exit-funcs-noreturn-v1-1-b027c948f586@kernel.org>
+X-B4-Tracking: v=1; b=H4sIANMvGGYC/x3NQQqDQAxA0atI1gacQZjaqxQXgyZt0MaSjEUQ7
+ 96hy7f5/wQnE3K4NycYfcVl04rQNjC9sj4JZa6G2MW+60PAd7YFF6eVC3lBOqQg7zo56mZUdlM
+ Mab4xpzjklKGGPkYsx3/yGK/rB/dzO1p0AAAA
+To: tglx@linutronix.de, shuah@kernel.org
+Cc: oleg@redhat.com, anna-maria@linutronix.de, frederic@kernel.org, 
+ ndesaulniers@google.com, morbo@google.com, justinstitt@google.com, 
+ linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ John Stultz <jstultz@google.com>, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5035; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=3J9KwOZ8VsQ0/GJ7lg9iQ4h/nYIgnKWTHARE6B+5FCo=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGkS+nfLRXd8jN7zsOrXlfr8pKf94ef91P9yMPIvC+l/N
+ 7N9DUNvRykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZhIbwUjw+WSvR4MHkZbA5s4
+ xZ9Upk1Xe1uvK624+ZxSvxb/hdtahowMq3Uas7P+O012m+8sZL3p9dw3u6ec8rpt+tJJOuaC4PU
+ qJgA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 4/11/2024 2:57 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.155 release.
-> There are 57 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 13 Apr 2024 09:53:55 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.155-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+After commit 6d029c25b71f ("selftests/timers/posix_timers: Reimplement
+check_timer_distribution()"), clang warns:
 
-<snip>
+  tools/testing/selftests/timers/../kselftest.h:398:6: warning: variable 'major' is used uninitialized whenever '||' condition is true [-Wsometimes-uninitialized]
+    398 |         if (uname(&info) || sscanf(info.release, "%u.%u.", &major, &minor) != 2)
+        |             ^~~~~~~~~~~~
+  tools/testing/selftests/timers/../kselftest.h:401:9: note: uninitialized use occurs here
+    401 |         return major > min_major || (major == min_major && minor >= min_minor);
+        |                ^~~~~
+  tools/testing/selftests/timers/../kselftest.h:398:6: note: remove the '||' if its condition is always false
+    398 |         if (uname(&info) || sscanf(info.release, "%u.%u.", &major, &minor) != 2)
+        |             ^~~~~~~~~~~~~~~
+  tools/testing/selftests/timers/../kselftest.h:395:20: note: initialize the variable 'major' to silence this warning
+    395 |         unsigned int major, minor;
+        |                           ^
+        |                            = 0
 
-I wanted to repeat my request from another thread[1] here, that we revert commit 4949affd5288 
-("ACPI: CPPC: Use access_width over bit_width for system memory accesses") in 5.15.155 due to
-known problems with the patch, so it's not lost in the mail storm.
+This is a false positive because if uname() fails, ksft_exit_fail_msg()
+will be called, which unconditionally calls exit(), a noreturn function.
+However, clang does not know that ksft_exit_fail_msg() will call exit()
+at the point in the pipeline that the warning is emitted because
+inlining has not occurred, so it assumes control flow will resume
+normally after ksft_exit_fail_msg() is called.
 
-Thanks,
-Easwar
+Make it clear to clang that all of the functions that call exit()
+unconditionally in kselftest.h are noreturn transitively by marking them
+explicitly with '__attribute__((__noreturn__))', which clears up the
+warning above and any future warnings that may appear for the same
+reason.
 
-[1] https://lore.kernel.org/all/97d25ef7-dee9-4cc5-842a-273f565869b3@linux.microsoft.com/
+Fixes: 6d029c25b71f ("selftests/timers/posix_timers: Reimplement check_timer_distribution()")
+Reported-by: John Stultz <jstultz@google.com>
+Closes: https://lore.kernel.org/all/20240410232637.4135564-2-jstultz@google.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+I have based this change on timers/urgent, as the commit that introduces
+this particular warning is there and it is marked for stable, even
+though this appears to be a generic kselftest issue. I think it makes
+the most sense for this change to go via timers/urgent with Shuah's ack.
+While __noreturn with a return type other than 'void' does not make much
+sense semantically, there are many places that these functions are used
+as the return value for other functions such as main(), so I did not
+change the return type of these functions from 'int' to 'void' to
+minimize the necessary changes for a backport (it is an existing issue
+anyways).
+
+I see there is another instance of this problem that will need to be
+addressed in -next, introduced by commit f07041728422 ("selftests: add
+ksft_exit_fail_perror()").
+---
+ tools/testing/selftests/kselftest.h | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/tools/testing/selftests/kselftest.h b/tools/testing/selftests/kselftest.h
+index 973b18e156b2..0591974b57e0 100644
+--- a/tools/testing/selftests/kselftest.h
++++ b/tools/testing/selftests/kselftest.h
+@@ -80,6 +80,9 @@
+ #define KSFT_XPASS 3
+ #define KSFT_SKIP  4
+ 
++#ifndef __noreturn
++#define __noreturn       __attribute__((__noreturn__))
++#endif
+ #define __printf(a, b)   __attribute__((format(printf, a, b)))
+ 
+ /* counters */
+@@ -300,13 +303,13 @@ void ksft_test_result_code(int exit_code, const char *test_name,
+ 	va_end(args);
+ }
+ 
+-static inline int ksft_exit_pass(void)
++static inline __noreturn int ksft_exit_pass(void)
+ {
+ 	ksft_print_cnts();
+ 	exit(KSFT_PASS);
+ }
+ 
+-static inline int ksft_exit_fail(void)
++static inline __noreturn int ksft_exit_fail(void)
+ {
+ 	ksft_print_cnts();
+ 	exit(KSFT_FAIL);
+@@ -333,7 +336,7 @@ static inline int ksft_exit_fail(void)
+ 		  ksft_cnt.ksft_xfail +	\
+ 		  ksft_cnt.ksft_xskip)
+ 
+-static inline __printf(1, 2) int ksft_exit_fail_msg(const char *msg, ...)
++static inline __noreturn __printf(1, 2) int ksft_exit_fail_msg(const char *msg, ...)
+ {
+ 	int saved_errno = errno;
+ 	va_list args;
+@@ -348,19 +351,19 @@ static inline __printf(1, 2) int ksft_exit_fail_msg(const char *msg, ...)
+ 	exit(KSFT_FAIL);
+ }
+ 
+-static inline int ksft_exit_xfail(void)
++static inline __noreturn int ksft_exit_xfail(void)
+ {
+ 	ksft_print_cnts();
+ 	exit(KSFT_XFAIL);
+ }
+ 
+-static inline int ksft_exit_xpass(void)
++static inline __noreturn int ksft_exit_xpass(void)
+ {
+ 	ksft_print_cnts();
+ 	exit(KSFT_XPASS);
+ }
+ 
+-static inline __printf(1, 2) int ksft_exit_skip(const char *msg, ...)
++static inline __noreturn __printf(1, 2) int ksft_exit_skip(const char *msg, ...)
+ {
+ 	int saved_errno = errno;
+ 	va_list args;
+
+---
+base-commit: 076361362122a6d8a4c45f172ced5576b2d4a50d
+change-id: 20240411-mark-kselftest-exit-funcs-noreturn-17d8ff729a7a
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
