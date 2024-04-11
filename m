@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFEA1D558;
-	Thu, 11 Apr 2024 10:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBE7143C76;
+	Thu, 11 Apr 2024 10:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831334; cv=none; b=iZ2Su9IqobE89CELBVYzZgpcAYxCLJACWntjxjFhA+j0nIVU5uF+jhn3vacnZhbsNGJHPeuqbSQM2rM4Xrtc6zSsr0aWWMN+WlFOvKxoULbR5ahAvkPYB1QCG1yprzbjJ9DzmTlsAjrdE5g9J4/GXGhL7Eha/OsOfpwnY4NZ/Ig=
+	t=1712831337; cv=none; b=L9QEu6AGlUwMA0euTDVfk8cpJ6oXh+1PZ6BFHvHgVorZ8dPVPLXWQoD4HQ8D4QBjcNxsLBtSTKp+ZbyWA0VuJzA0/TicnVPHidpBPPOFPoSMArYxZkFBXRlS8GZkvpXFm2DsEJj3gc65qdNz0Mrnrg7u11QZBNOfrvTaGG9r00c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831334; c=relaxed/simple;
-	bh=kn9rFZ5KJn0gBKOry9pO/COI+2Poms1BmFuJ4VhGMeA=;
+	s=arc-20240116; t=1712831337; c=relaxed/simple;
+	bh=xjh5MdBJzK09Hg7mphK7iuwfn/oXGEvlshLh4YXDCkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4z2w5rkm6ylccOWdcLDRPC0LxmJdsHPiTMyImpIIHGCt8v0k6pBXkewuQzAtJnLaK/KUxPv8pjpJKstTXr/UVcRrLI22FDLFFhwl7ayovVj/zY0Ei7Rv+UuHcwVgWlt3faTpfhx7Blift0mYy9miU1g8tV4q4dhtNs09CH4XjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnmqzh/1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JinzSrjcC/agEtY4F57iR+Am0CiPof95BU1Bhh9mjzs4+z41tK/ZBw54cOyy+Npt20iQivvt0RZyKgAee4hh3yGetbCOz/LS/KKIslcpbTYt5EUEBZW4QpStYdAoxB41U1v3worlppKhBedmlRUpljM2nvhW42phhK0ZPjv80iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpcXeTK/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnmqzh/1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94AFC433F1;
-	Thu, 11 Apr 2024 10:28:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpcXeTK/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7ACC433F1;
+	Thu, 11 Apr 2024 10:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831334;
-	bh=kn9rFZ5KJn0gBKOry9pO/COI+2Poms1BmFuJ4VhGMeA=;
+	s=korg; t=1712831336;
+	bh=xjh5MdBJzK09Hg7mphK7iuwfn/oXGEvlshLh4YXDCkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bnmqzh/1b7pV8YRj4dcboUmrcodJHsrZYfLS5yf6AdIFNC2d6GkP7DwDWAPXrP4YD
-	 dIJ4ABbcFSJElH/8ZsWPPCzLKr1zGQXCjZ5518bDYaPFVOYF4rMySmGmoqVGwsUHDT
-	 x2RLU7lGq7stlQgkG3NSowCmO2xpSLv3VZfPkSeY=
+	b=rpcXeTK/69kr7SLnigbvba39P/5eTlE8shqq1MD/x6yefD/y0BhlHfEgwkMggT22F
+	 h0ebs0pZaY7QjxDkQ881/oKn9TVsnVIYasly+2eJoGD0Kl6YshWUJJ7wfOocFIZyaA
+	 ZTTOMj50yff1zGeiBPHRFBoxO7hnIiWgFgZaFbbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Carl Vanderlip <quic_carlv@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Tejun Heo <tj@kernel.org>,
+	Andrea Righi <andrea.righi@canonical.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 087/114] bus: mhi: host: Add MHI_PM_SYS_ERR_FAIL state
-Date: Thu, 11 Apr 2024 11:56:54 +0200
-Message-ID: <20240411095419.516471444@linuxfoundation.org>
+Subject: [PATCH 6.6 088/114] kernfs: RCU protect kernfs_nodes and avoid kernfs_idr_lock in kernfs_find_and_get_node_by_id()
+Date: Thu, 11 Apr 2024 11:56:55 +0200
+Message-ID: <20240411095419.547540008@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095416.853744210@linuxfoundation.org>
 References: <20240411095416.853744210@linuxfoundation.org>
@@ -52,155 +52,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit bce3f770684cc1d91ff9edab431b71ac991faf29 ]
+[ Upstream commit 4207b556e62f0a8915afc5da4c5d5ad915a253a5 ]
 
-When processing a SYSERR, if the device does not respond to the MHI_RESET
-from the host, the host will be stuck in a difficult to recover state.
-The host will remain in MHI_PM_SYS_ERR_PROCESS and not clean up the host
-channels.  Clients will not be notified of the SYSERR via the destruction
-of their channel devices, which means clients may think that the device is
-still up.  Subsequent SYSERR events such as a device fatal error will not
-be processed as the state machine cannot transition from PROCESS back to
-DETECT.  The only way to recover from this is to unload the mhi module
-(wipe the state machine state) or for the mhi controller to initiate
-SHUTDOWN.
+The BPF helper bpf_cgroup_from_id() calls kernfs_find_and_get_node_by_id()
+which acquires kernfs_idr_lock, which is an non-raw non-IRQ-safe lock. This
+can lead to deadlocks as bpf_cgroup_from_id() can be called from any BPF
+programs including e.g. the ones that attach to functions which are holding
+the scheduler rq lock.
 
-This issue was discovered by stress testing soc_reset events on AIC100
-via the sysfs node.
+Consider the following BPF program:
 
-soc_reset is processed entirely in hardware.  When the register write
-hits the endpoint hardware, it causes the soc to reset without firmware
-involvement.  In stress testing, there is a rare race where soc_reset N
-will cause the soc to reset and PBL to signal SYSERR (fatal error).  If
-soc_reset N+1 is triggered before PBL can process the MHI_RESET from the
-host, then the soc will reset again, and re-run PBL from the beginning.
-This will cause PBL to lose all state.  PBL will be waiting for the host
-to respond to the new syserr, but host will be stuck expecting the
-previous MHI_RESET to be processed.
+  SEC("fentry/__set_cpus_allowed_ptr_locked")
+  int BPF_PROG(__set_cpus_allowed_ptr_locked, struct task_struct *p,
+	       struct affinity_context *affn_ctx, struct rq *rq, struct rq_flags *rf)
+  {
+	  struct cgroup *cgrp = bpf_cgroup_from_id(p->cgroups->dfl_cgrp->kn->id);
 
-Additionally, the AMSS EE firmware (QSM) was hacked to synthetically
-reproduce the issue by simulating a FW hang after the QSM issued a
-SYSERR.  In this case, soc_reset would not recover the device.
+	  if (cgrp) {
+		  bpf_printk("%d[%s] in %s", p->pid, p->comm, cgrp->kn->name);
+		  bpf_cgroup_release(cgrp);
+	  }
+	  return 0;
+  }
 
-For this failure case, to recover the device, we need a state similar to
-PROCESS, but can transition to DETECT.  There is not a viable existing
-state to use.  POR has the needed transitions, but assumes the device is
-in a good state and could allow the host to attempt to use the device.
-Allowing PROCESS to transition to DETECT invites the possibility of
-parallel SYSERR processing which could get the host and device out of
-sync.
+__set_cpus_allowed_ptr_locked() is called with rq lock held and the above
+BPF program calls bpf_cgroup_from_id() within leading to the following
+lockdep warning:
 
-Thus, invent a new state - MHI_PM_SYS_ERR_FAIL
+  =====================================================
+  WARNING: HARDIRQ-safe -> HARDIRQ-unsafe lock order detected
+  6.7.0-rc3-work-00053-g07124366a1d7-dirty #147 Not tainted
+  -----------------------------------------------------
+  repro/1620 [HC0[0]:SC0[0]:HE0:SE1] is trying to acquire:
+  ffffffff833b3688 (kernfs_idr_lock){+.+.}-{2:2}, at: kernfs_find_and_get_node_by_id+0x1e/0x70
 
-This essentially a holding state.  It allows us to clean up the host
-elements that are based on the old state of the device (channels), but
-does not allow us to directly advance back to an operational state.  It
-does allow the detection and processing of another SYSERR which may
-recover the device, or allows the controller to do a clean shutdown.
+		and this task is already holding:
+  ffff888237ced698 (&rq->__lock){-.-.}-{2:2}, at: task_rq_lock+0x4e/0xf0
+  which would create a new lock dependency:
+   (&rq->__lock){-.-.}-{2:2} -> (kernfs_idr_lock){+.+.}-{2:2}
+  ...
+   Possible interrupt unsafe locking scenario:
 
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240112180800.536733-1-quic_jhugo@quicinc.com
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+	 CPU0                    CPU1
+	 ----                    ----
+    lock(kernfs_idr_lock);
+				 local_irq_disable();
+				 lock(&rq->__lock);
+				 lock(kernfs_idr_lock);
+    <Interrupt>
+      lock(&rq->__lock);
+
+		 *** DEADLOCK ***
+  ...
+  Call Trace:
+   dump_stack_lvl+0x55/0x70
+   dump_stack+0x10/0x20
+   __lock_acquire+0x781/0x2a40
+   lock_acquire+0xbf/0x1f0
+   _raw_spin_lock+0x2f/0x40
+   kernfs_find_and_get_node_by_id+0x1e/0x70
+   cgroup_get_from_id+0x21/0x240
+   bpf_cgroup_from_id+0xe/0x20
+   bpf_prog_98652316e9337a5a___set_cpus_allowed_ptr_locked+0x96/0x11a
+   bpf_trampoline_6442545632+0x4f/0x1000
+   __set_cpus_allowed_ptr_locked+0x5/0x5a0
+   sched_setaffinity+0x1b3/0x290
+   __x64_sys_sched_setaffinity+0x4f/0x60
+   do_syscall_64+0x40/0xe0
+   entry_SYSCALL_64_after_hwframe+0x46/0x4e
+
+Let's fix it by protecting kernfs_node and kernfs_root with RCU and making
+kernfs_find_and_get_node_by_id() acquire rcu_read_lock() instead of
+kernfs_idr_lock.
+
+This adds an rcu_head to kernfs_node making it larger by 16 bytes on 64bit.
+Combined with the preceding rearrange patch, the net increase is 8 bytes.
+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: Andrea Righi <andrea.righi@canonical.com>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20240109214828.252092-4-tj@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/host/init.c     |  1 +
- drivers/bus/mhi/host/internal.h |  9 ++++++---
- drivers/bus/mhi/host/pm.c       | 20 +++++++++++++++++---
- 3 files changed, 24 insertions(+), 6 deletions(-)
+ fs/kernfs/dir.c             | 31 ++++++++++++++++++++-----------
+ fs/kernfs/kernfs-internal.h |  2 ++
+ include/linux/kernfs.h      |  2 ++
+ 3 files changed, 24 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-index f78aefd2d7a36..cfd17c02fe20e 100644
---- a/drivers/bus/mhi/host/init.c
-+++ b/drivers/bus/mhi/host/init.c
-@@ -62,6 +62,7 @@ static const char * const mhi_pm_state_str[] = {
- 	[MHI_PM_STATE_FW_DL_ERR] = "Firmware Download Error",
- 	[MHI_PM_STATE_SYS_ERR_DETECT] = "SYS ERROR Detect",
- 	[MHI_PM_STATE_SYS_ERR_PROCESS] = "SYS ERROR Process",
-+	[MHI_PM_STATE_SYS_ERR_FAIL] = "SYS ERROR Failure",
- 	[MHI_PM_STATE_SHUTDOWN_PROCESS] = "SHUTDOWN Process",
- 	[MHI_PM_STATE_LD_ERR_FATAL_DETECT] = "Linkdown or Error Fatal Detect",
+diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
+index 62d39ecf0a466..2405aeb39b9a2 100644
+--- a/fs/kernfs/dir.c
++++ b/fs/kernfs/dir.c
+@@ -529,6 +529,20 @@ void kernfs_get(struct kernfs_node *kn)
+ }
+ EXPORT_SYMBOL_GPL(kernfs_get);
+ 
++static void kernfs_free_rcu(struct rcu_head *rcu)
++{
++	struct kernfs_node *kn = container_of(rcu, struct kernfs_node, rcu);
++
++	kfree_const(kn->name);
++
++	if (kn->iattr) {
++		simple_xattrs_free(&kn->iattr->xattrs, NULL);
++		kmem_cache_free(kernfs_iattrs_cache, kn->iattr);
++	}
++
++	kmem_cache_free(kernfs_node_cache, kn);
++}
++
+ /**
+  * kernfs_put - put a reference count on a kernfs_node
+  * @kn: the target kernfs_node
+@@ -557,16 +571,11 @@ void kernfs_put(struct kernfs_node *kn)
+ 	if (kernfs_type(kn) == KERNFS_LINK)
+ 		kernfs_put(kn->symlink.target_kn);
+ 
+-	kfree_const(kn->name);
+-
+-	if (kn->iattr) {
+-		simple_xattrs_free(&kn->iattr->xattrs, NULL);
+-		kmem_cache_free(kernfs_iattrs_cache, kn->iattr);
+-	}
+ 	spin_lock(&kernfs_idr_lock);
+ 	idr_remove(&root->ino_idr, (u32)kernfs_ino(kn));
+ 	spin_unlock(&kernfs_idr_lock);
+-	kmem_cache_free(kernfs_node_cache, kn);
++
++	call_rcu(&kn->rcu, kernfs_free_rcu);
+ 
+ 	kn = parent;
+ 	if (kn) {
+@@ -575,7 +584,7 @@ void kernfs_put(struct kernfs_node *kn)
+ 	} else {
+ 		/* just released the root kn, free @root too */
+ 		idr_destroy(&root->ino_idr);
+-		kfree(root);
++		kfree_rcu(root, rcu);
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(kernfs_put);
+@@ -715,7 +724,7 @@ struct kernfs_node *kernfs_find_and_get_node_by_id(struct kernfs_root *root,
+ 	ino_t ino = kernfs_id_ino(id);
+ 	u32 gen = kernfs_id_gen(id);
+ 
+-	spin_lock(&kernfs_idr_lock);
++	rcu_read_lock();
+ 
+ 	kn = idr_find(&root->ino_idr, (u32)ino);
+ 	if (!kn)
+@@ -739,10 +748,10 @@ struct kernfs_node *kernfs_find_and_get_node_by_id(struct kernfs_root *root,
+ 	if (unlikely(!__kernfs_active(kn) || !atomic_inc_not_zero(&kn->count)))
+ 		goto err_unlock;
+ 
+-	spin_unlock(&kernfs_idr_lock);
++	rcu_read_unlock();
+ 	return kn;
+ err_unlock:
+-	spin_unlock(&kernfs_idr_lock);
++	rcu_read_unlock();
+ 	return NULL;
+ }
+ 
+diff --git a/fs/kernfs/kernfs-internal.h b/fs/kernfs/kernfs-internal.h
+index a9b854cdfdb5f..210dac7e9ee25 100644
+--- a/fs/kernfs/kernfs-internal.h
++++ b/fs/kernfs/kernfs-internal.h
+@@ -49,6 +49,8 @@ struct kernfs_root {
+ 	struct rw_semaphore	kernfs_rwsem;
+ 	struct rw_semaphore	kernfs_iattr_rwsem;
+ 	struct rw_semaphore	kernfs_supers_rwsem;
++
++	struct rcu_head		rcu;
  };
-diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-index 2e139e76de4c0..d2858236af52b 100644
---- a/drivers/bus/mhi/host/internal.h
-+++ b/drivers/bus/mhi/host/internal.h
-@@ -88,6 +88,7 @@ enum mhi_pm_state {
- 	MHI_PM_STATE_FW_DL_ERR,
- 	MHI_PM_STATE_SYS_ERR_DETECT,
- 	MHI_PM_STATE_SYS_ERR_PROCESS,
-+	MHI_PM_STATE_SYS_ERR_FAIL,
- 	MHI_PM_STATE_SHUTDOWN_PROCESS,
- 	MHI_PM_STATE_LD_ERR_FATAL_DETECT,
- 	MHI_PM_STATE_MAX
-@@ -104,14 +105,16 @@ enum mhi_pm_state {
- #define MHI_PM_FW_DL_ERR				BIT(7)
- #define MHI_PM_SYS_ERR_DETECT				BIT(8)
- #define MHI_PM_SYS_ERR_PROCESS				BIT(9)
--#define MHI_PM_SHUTDOWN_PROCESS				BIT(10)
-+#define MHI_PM_SYS_ERR_FAIL				BIT(10)
-+#define MHI_PM_SHUTDOWN_PROCESS				BIT(11)
- /* link not accessible */
--#define MHI_PM_LD_ERR_FATAL_DETECT			BIT(11)
-+#define MHI_PM_LD_ERR_FATAL_DETECT			BIT(12)
  
- #define MHI_REG_ACCESS_VALID(pm_state)			((pm_state & (MHI_PM_POR | MHI_PM_M0 | \
- 						MHI_PM_M2 | MHI_PM_M3_ENTER | MHI_PM_M3_EXIT | \
- 						MHI_PM_SYS_ERR_DETECT | MHI_PM_SYS_ERR_PROCESS | \
--						MHI_PM_SHUTDOWN_PROCESS | MHI_PM_FW_DL_ERR)))
-+						MHI_PM_SYS_ERR_FAIL | MHI_PM_SHUTDOWN_PROCESS |  \
-+						MHI_PM_FW_DL_ERR)))
- #define MHI_PM_IN_ERROR_STATE(pm_state)			(pm_state >= MHI_PM_FW_DL_ERR)
- #define MHI_PM_IN_FATAL_STATE(pm_state)			(pm_state == MHI_PM_LD_ERR_FATAL_DETECT)
- #define MHI_DB_ACCESS_VALID(mhi_cntrl)			(mhi_cntrl->pm_state & mhi_cntrl->db_access)
-diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-index 8a4362d75fc43..27f8a40f288cf 100644
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -36,7 +36,10 @@
-  *     M0 <--> M0
-  *     M0 -> FW_DL_ERR
-  *     M0 -> M3_ENTER -> M3 -> M3_EXIT --> M0
-- * L1: SYS_ERR_DETECT -> SYS_ERR_PROCESS --> POR
-+ * L1: SYS_ERR_DETECT -> SYS_ERR_PROCESS
-+ *     SYS_ERR_PROCESS -> SYS_ERR_FAIL
-+ *     SYS_ERR_FAIL -> SYS_ERR_DETECT
-+ *     SYS_ERR_PROCESS --> POR
-  * L2: SHUTDOWN_PROCESS -> LD_ERR_FATAL_DETECT
-  *     SHUTDOWN_PROCESS -> DISABLE
-  * L3: LD_ERR_FATAL_DETECT <--> LD_ERR_FATAL_DETECT
-@@ -93,7 +96,12 @@ static const struct mhi_pm_transitions dev_state_transitions[] = {
- 	},
- 	{
- 		MHI_PM_SYS_ERR_PROCESS,
--		MHI_PM_POR | MHI_PM_SHUTDOWN_PROCESS |
-+		MHI_PM_POR | MHI_PM_SYS_ERR_FAIL | MHI_PM_SHUTDOWN_PROCESS |
-+		MHI_PM_LD_ERR_FATAL_DETECT
-+	},
-+	{
-+		MHI_PM_SYS_ERR_FAIL,
-+		MHI_PM_SYS_ERR_DETECT | MHI_PM_SHUTDOWN_PROCESS |
- 		MHI_PM_LD_ERR_FATAL_DETECT
- 	},
- 	/* L2 States */
-@@ -624,7 +632,13 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
- 					!in_reset, timeout);
- 		if (!ret || in_reset) {
- 			dev_err(dev, "Device failed to exit MHI Reset state\n");
--			goto exit_sys_error_transition;
-+			write_lock_irq(&mhi_cntrl->pm_lock);
-+			cur_state = mhi_tryset_pm_state(mhi_cntrl,
-+							MHI_PM_SYS_ERR_FAIL);
-+			write_unlock_irq(&mhi_cntrl->pm_lock);
-+			/* Shutdown may have occurred, otherwise cleanup now */
-+			if (cur_state != MHI_PM_SYS_ERR_FAIL)
-+				goto exit_sys_error_transition;
- 		}
+ /* +1 to avoid triggering overflow warning when negating it */
+diff --git a/include/linux/kernfs.h b/include/linux/kernfs.h
+index 2a36f3218b510..5a952d00ea159 100644
+--- a/include/linux/kernfs.h
++++ b/include/linux/kernfs.h
+@@ -223,6 +223,8 @@ struct kernfs_node {
+ 	unsigned short		flags;
+ 	umode_t			mode;
+ 	struct kernfs_iattrs	*iattr;
++
++	struct rcu_head		rcu;
+ };
  
- 		/*
+ /*
 -- 
 2.43.0
 
