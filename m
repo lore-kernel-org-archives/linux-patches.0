@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE28145B28;
-	Thu, 11 Apr 2024 10:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C8A147C7E;
+	Thu, 11 Apr 2024 10:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831480; cv=none; b=Ib1msQ7oAzixWWSy8l9WHGUKO2c/+2JRNRfVVBiOKzb0133eRpLzCLV2GL+r/9BLvforYZgbtESuQVSoYl7yZPj8/8/fDkJQxFBYYKFMpDBO6P+IWyjMzxSYAB9XldTGwvsED3SHiETvyIiHy2z0HrFFY3LgugtyMCrREKYV6CE=
+	t=1712831483; cv=none; b=NnuhsP7YoCsnsb9ArQZTdTBqq0sV0jeovVZZ4uc/reaOlEmmFlaVOSWyfeujwx8xvmCY3CS512sZFChR+yH/MK4Mt2+E7/G4O+is5Wzk+8brQ0zRydMg9akJ5u/BNXXfk1X+hj+/sj2yNGhpgMnvH6fnRvp4gXYEEzcgXU4XuXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831480; c=relaxed/simple;
-	bh=KeHCk1GeDaUzrAmpghrCh6Qo3MJO/zBx/zR+0V4X8Rc=;
+	s=arc-20240116; t=1712831483; c=relaxed/simple;
+	bh=WTMRbtje6f2gSETP4j55+hCk36EzdjWZ/+VaBDXglAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aN9D20cA93gPI7Kcz6XQk8EtktdmyGLq+KppJMoZsTTc3/tiAxp40aOjmB6otPOAmCaX59DCmA0fnRz9I9vPcxGbpHpyn7p6awEYDIJlv72bRN1ahSdh1a7jzBlAnf9mVtlOts7uExiREkEwlT+W3g1Jvq3PyNwiOAFhuLMFSDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1r0SeQh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QDbXcLukEhK0VJIwBs80UKYybOxGf0cUrAGu6AYnUteYSQVRof/sMzFfsMBBV9F3BVQi34G3x3dp8DsgetXSmnOxsSQcDdopx0K26U7xDK/Fs13bln6mE9ojT35YbIJG7et0upSOwOvsJBfmNRpfiBh9Pmy4AUItC8M4guIdiHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAjtK6b7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1r0SeQh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8473FC433C7;
-	Thu, 11 Apr 2024 10:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAjtK6b7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB25C433F1;
+	Thu, 11 Apr 2024 10:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831479;
-	bh=KeHCk1GeDaUzrAmpghrCh6Qo3MJO/zBx/zR+0V4X8Rc=;
+	s=korg; t=1712831483;
+	bh=WTMRbtje6f2gSETP4j55+hCk36EzdjWZ/+VaBDXglAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k1r0SeQhpYYEbgGvp0dbG2vFzpAPGQvHxPixNOio9DHgyX8yTUyW9VFGFXVmaaCTR
-	 EcvJsnpOsqyJPlMJlYPqZ/2QpFMGZmU9WeNJeXZFuacm8PV/KXG4M1uOVtdkXesVpU
-	 oGNYD/gdAu0NsEavbPtPK4b2Vrf5v4RueJVeV87E=
+	b=ZAjtK6b7IGcIGW7SCnj09NQNl4OSRG27cRDZuxWoV9X84P8pEdDOI193YYMyfu/eK
+	 qPMBOBS05BVjsTe6h17surxxdNZ0uLZzEwNZIHpd3z5ZyEsITvnxKCaIQFUVVjtugo
+	 2wdK/91bmk1cbr3yrBKdCTKA44vAn84kNxtwGwGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Hidenori Kobayashi <hidenorik@chromium.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 007/294] wifi: brcmfmac: Fix use-after-free bug in brcmf_cfg80211_detach
-Date: Thu, 11 Apr 2024 11:52:50 +0200
-Message-ID: <20240411095435.858728590@linuxfoundation.org>
+Subject: [PATCH 5.10 008/294] media: staging: ipu3-imgu: Set fields before media_entity_pads_init()
+Date: Thu, 11 Apr 2024 11:52:51 +0200
+Message-ID: <20240411095435.888602891@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -52,75 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Hidenori Kobayashi <hidenorik@chromium.org>
 
-[ Upstream commit 0f7352557a35ab7888bc7831411ec8a3cbe20d78 ]
+[ Upstream commit 87318b7092670d4086bfec115a0280a60c51c2dd ]
 
-This is the candidate patch of CVE-2023-47233 :
-https://nvd.nist.gov/vuln/detail/CVE-2023-47233
+The imgu driver fails to probe with the following message because it
+does not set the pad's flags before calling media_entity_pads_init().
 
-In brcm80211 driver,it starts with the following invoking chain
-to start init a timeout worker:
+[   14.596315] ipu3-imgu 0000:00:05.0: failed initialize subdev media entity (-22)
+[   14.596322] ipu3-imgu 0000:00:05.0: failed to register subdev0 ret (-22)
+[   14.596327] ipu3-imgu 0000:00:05.0: failed to register pipes (-22)
+[   14.596331] ipu3-imgu 0000:00:05.0: failed to create V4L2 devices (-22)
 
-->brcmf_usb_probe
-  ->brcmf_usb_probe_cb
-    ->brcmf_attach
-      ->brcmf_bus_started
-        ->brcmf_cfg80211_attach
-          ->wl_init_priv
-            ->brcmf_init_escan
-              ->INIT_WORK(&cfg->escan_timeout_work,
-		  brcmf_cfg80211_escan_timeout_worker);
+Fix the initialization order so that the driver probe succeeds. The ops
+initialization is also moved together for readability.
 
-If we disconnect the USB by hotplug, it will call
-brcmf_usb_disconnect to make cleanup. The invoking chain is :
-
-brcmf_usb_disconnect
-  ->brcmf_usb_disconnect_cb
-    ->brcmf_detach
-      ->brcmf_cfg80211_detach
-        ->kfree(cfg);
-
-While the timeout woker may still be running. This will cause
-a use-after-free bug on cfg in brcmf_cfg80211_escan_timeout_worker.
-
-Fix it by deleting the timer and canceling the worker in
-brcmf_cfg80211_detach.
-
-Fixes: e756af5b30b0 ("brcmfmac: add e-scan support.")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Cc: stable@vger.kernel.org
-[arend.vanspriel@broadcom.com: keep timer delete as is and cancel work just before free]
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20240107072504.392713-1-arend.vanspriel@broadcom.com
+Fixes: a0ca1627b450 ("media: staging/intel-ipu3: Add v4l2 driver based on media framework")
+Cc: <stable@vger.kernel.org> # 6.7
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Hidenori Kobayashi <hidenorik@chromium.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/staging/media/ipu3/ipu3-v4l2.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index baf5f0afe802e..fbb5e29530e3d 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -790,8 +790,7 @@ s32 brcmf_notify_escan_complete(struct brcmf_cfg80211_info *cfg,
- 	scan_request = cfg->scan_request;
- 	cfg->scan_request = NULL;
+diff --git a/drivers/staging/media/ipu3/ipu3-v4l2.c b/drivers/staging/media/ipu3/ipu3-v4l2.c
+index 103f84466f6fc..371117b511e21 100644
+--- a/drivers/staging/media/ipu3/ipu3-v4l2.c
++++ b/drivers/staging/media/ipu3/ipu3-v4l2.c
+@@ -1063,6 +1063,11 @@ static int imgu_v4l2_subdev_register(struct imgu_device *imgu,
+ 	struct imgu_media_pipe *imgu_pipe = &imgu->imgu_pipe[pipe];
  
--	if (timer_pending(&cfg->escan_timeout))
--		del_timer_sync(&cfg->escan_timeout);
-+	timer_delete_sync(&cfg->escan_timeout);
+ 	/* Initialize subdev media entity */
++	imgu_sd->subdev.entity.ops = &imgu_media_ops;
++	for (i = 0; i < IMGU_NODE_NUM; i++) {
++		imgu_sd->subdev_pads[i].flags = imgu_pipe->nodes[i].output ?
++			MEDIA_PAD_FL_SINK : MEDIA_PAD_FL_SOURCE;
++	}
+ 	r = media_entity_pads_init(&imgu_sd->subdev.entity, IMGU_NODE_NUM,
+ 				   imgu_sd->subdev_pads);
+ 	if (r) {
+@@ -1070,11 +1075,6 @@ static int imgu_v4l2_subdev_register(struct imgu_device *imgu,
+ 			"failed initialize subdev media entity (%d)\n", r);
+ 		return r;
+ 	}
+-	imgu_sd->subdev.entity.ops = &imgu_media_ops;
+-	for (i = 0; i < IMGU_NODE_NUM; i++) {
+-		imgu_sd->subdev_pads[i].flags = imgu_pipe->nodes[i].output ?
+-			MEDIA_PAD_FL_SINK : MEDIA_PAD_FL_SOURCE;
+-	}
  
- 	if (fw_abort) {
- 		/* Do a scan abort to stop the driver's scan engine */
-@@ -7674,6 +7673,7 @@ void brcmf_cfg80211_detach(struct brcmf_cfg80211_info *cfg)
- 	brcmf_btcoex_detach(cfg);
- 	wiphy_unregister(cfg->wiphy);
- 	wl_deinit_priv(cfg);
-+	cancel_work_sync(&cfg->escan_timeout_work);
- 	brcmf_free_wiphy(cfg->wiphy);
- 	kfree(cfg);
- }
+ 	/* Initialize subdev */
+ 	v4l2_subdev_init(&imgu_sd->subdev, &imgu_subdev_ops);
+@@ -1169,15 +1169,15 @@ static int imgu_v4l2_node_setup(struct imgu_device *imgu, unsigned int pipe,
+ 	}
+ 
+ 	/* Initialize media entities */
++	node->vdev_pad.flags = node->output ?
++		MEDIA_PAD_FL_SOURCE : MEDIA_PAD_FL_SINK;
++	vdev->entity.ops = NULL;
+ 	r = media_entity_pads_init(&vdev->entity, 1, &node->vdev_pad);
+ 	if (r) {
+ 		dev_err(dev, "failed initialize media entity (%d)\n", r);
+ 		mutex_destroy(&node->lock);
+ 		return r;
+ 	}
+-	node->vdev_pad.flags = node->output ?
+-		MEDIA_PAD_FL_SOURCE : MEDIA_PAD_FL_SINK;
+-	vdev->entity.ops = NULL;
+ 
+ 	/* Initialize vbq */
+ 	vbq->type = node->vdev_fmt.type;
 -- 
 2.43.0
 
