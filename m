@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2D0145B26;
-	Thu, 11 Apr 2024 10:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8D7145B26;
+	Thu, 11 Apr 2024 10:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831389; cv=none; b=iiJtvUwif2sGRJ25AMj4Jp68QYLB2PWZdVLVJ4aLzRY0ZhHDdAyqnkAv3+RL3BdxntiZzikPJOhiUraJAHJlhm4T/uA4WhVA+4wx73YtTwV3B9fGeIWeDsD5uAeE6z2mLYp35NlHnTYY9NtE+DAFMKEPqNftPttWhYPNR51n1co=
+	t=1712831392; cv=none; b=WMOyyZVa2ofXwfueMY7b3LZlgW1J64HKGClEI7AJLAvewgIWLgnhRLeqS1+pHNDViG1UCWT3iqpuQTXvw7uHq1F/rH25+G38zoIy+xPEJ51A8+jwyLDaH8mvvaWLHIL41J6ByOJcFLAzOBFW0k8SG6ewybGWHMPNZQg7Zfo0rDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831389; c=relaxed/simple;
-	bh=COFVKlh2racAAVz5DU3YA+41zTjaGNUNLR8drrQRxqg=;
+	s=arc-20240116; t=1712831392; c=relaxed/simple;
+	bh=7LbuEUUfH++50lNS1dsScPlp1Vq/dqg5btVYRRHIjVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwT/9ubg4ZECbwordjJBc3njwrlI1pvUZjKvjBJCC6MS/EOYky49GANB22MOg/inRJVYy+lB1q1MbTotkDWWoFOSBOWEgIW/m3uA+tmDDhmlXZIaQ4nsuVUFMHMgwwkS38y6pTYIsnzMCDRFT+CDHA2PgccdH30AZ/somBnpcEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f68mAXkM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TEI9YwOiny6qVtMRbMhQvIPjO959GUxUnQ/pSI2FRYp1WTWvmp0WtGhMErI8/mBIgxOQjDldjqu7R9T7uwuqXOFnhNVwLm+i+/dHtx2JplnFQrKVAgO7/z55jFisR7i87F3Wqv3AQ6Tgop56Ci5W/pMR+CJZPytA/POl14YptX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBh2/UvO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f68mAXkM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDE1C433F1;
-	Thu, 11 Apr 2024 10:29:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBh2/UvO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 018F5C43390;
+	Thu, 11 Apr 2024 10:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831389;
-	bh=COFVKlh2racAAVz5DU3YA+41zTjaGNUNLR8drrQRxqg=;
+	s=korg; t=1712831392;
+	bh=7LbuEUUfH++50lNS1dsScPlp1Vq/dqg5btVYRRHIjVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f68mAXkMJcyfFMnpykxVz53w8CxxmfgWCR6JDNAo0Ox4k0wW/hjcaVbErAZqyc83d
-	 WQgR+mBBOO4+RnwfE6I0so8c29+RMVPwFTAbm+QOI5CKCxaRhxHyhsq69r7trLHGN6
-	 PWsMuz3ONbijNr5oEcN2ogAxZ0fV0ANpUDUppHb8=
+	b=SBh2/UvOacIDyDfQEqt8DqiVaSbsJ4XByo8EIsCqPb8Ns78b6CzGMpl7YV8xlTfO+
+	 YduhiFvWAxqcZ/IvdikchuJmPXeOkhmKwd0cYywhOX0VC9KP0vdnA9babXvHXznsqp
+	 WvwS8dVFx62oYEcTZBtXap7RR3AI7hAk49DGo0I8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/114] HID: input: avoid polling stylus battery on Chromebook Pompom
-Date: Thu, 11 Apr 2024 11:56:34 +0200
-Message-ID: <20240411095418.907764802@linuxfoundation.org>
+Subject: [PATCH 6.6 068/114] drm/amd/amdgpu: Fix potential ioremap() memory leaks in amdgpu_device_init()
+Date: Thu, 11 Apr 2024 11:56:35 +0200
+Message-ID: <20240411095418.938714707@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095416.853744210@linuxfoundation.org>
 References: <20240411095416.853744210@linuxfoundation.org>
@@ -45,55 +46,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 9a5b1521e2d0d7ace70c6e5eed073babcec91409 ]
+[ Upstream commit eb4f139888f636614dab3bcce97ff61cefc4b3a7 ]
 
-Internal touchscreen on Trogdor Pompom (AKA Dynabook Chromebook C1)
-supports USI stylus. Unfortunately the HID descriptor for the stylus
-interface does not contain "Stylus" physical collection, which makes
-the kernel to try and pull battery information, resulting in errors.
+This ensures that the memory mapped by ioremap for adev->rmmio, is
+properly handled in amdgpu_device_init(). If the function exits early
+due to an error, the memory is unmapped. If the function completes
+successfully, the memory remains mapped.
 
-Apply HID_BATTERY_QUIRK_AVOID_QUERY to the device.
+Reported by smatch:
+drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:4337 amdgpu_device_init() warn: 'adev->rmmio' from ioremap() not released on lines: 4035,4045,4051,4058,4068,4337
 
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h   | 1 +
- drivers/hid/hid-input.c | 2 ++
- 2 files changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 72046039d1be7..0a4daff4846ff 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -427,6 +427,7 @@
- #define I2C_DEVICE_ID_HP_SPECTRE_X360_14T_EA100_V1	0x2BED
- #define I2C_DEVICE_ID_HP_SPECTRE_X360_14T_EA100_V2	0x2BEE
- #define I2C_DEVICE_ID_HP_ENVY_X360_15_EU0556NG		0x2D02
-+#define I2C_DEVICE_ID_CHROMEBOOK_TROGDOR_POMPOM	0x2F81
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 062d78818da16..347c454b41790 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -3639,8 +3639,10 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+ 	 * early on during init and before calling to RREG32.
+ 	 */
+ 	adev->reset_domain = amdgpu_reset_create_reset_domain(SINGLE_DEVICE, "amdgpu-reset-dev");
+-	if (!adev->reset_domain)
+-		return -ENOMEM;
++	if (!adev->reset_domain) {
++		r = -ENOMEM;
++		goto unmap_memory;
++	}
  
- #define USB_VENDOR_ID_ELECOM		0x056e
- #define USB_DEVICE_ID_ELECOM_BM084	0x0061
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index c8b20d44b1472..e03d300d2bac4 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -411,6 +411,8 @@ static const struct hid_device_id hid_battery_quirks[] = {
- 	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_15_EU0556NG),
- 	  HID_BATTERY_QUIRK_IGNORE },
-+	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_CHROMEBOOK_TROGDOR_POMPOM),
-+	  HID_BATTERY_QUIRK_AVOID_QUERY },
- 	{}
- };
+ 	/* detect hw virtualization here */
+ 	amdgpu_detect_virtualization(adev);
+@@ -3650,20 +3652,20 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+ 	r = amdgpu_device_get_job_timeout_settings(adev);
+ 	if (r) {
+ 		dev_err(adev->dev, "invalid lockup_timeout parameter syntax\n");
+-		return r;
++		goto unmap_memory;
+ 	}
+ 
+ 	/* early init functions */
+ 	r = amdgpu_device_ip_early_init(adev);
+ 	if (r)
+-		return r;
++		goto unmap_memory;
+ 
+ 	amdgpu_device_set_mcbp(adev);
+ 
+ 	/* Get rid of things like offb */
+ 	r = drm_aperture_remove_conflicting_pci_framebuffers(adev->pdev, &amdgpu_kms_driver);
+ 	if (r)
+-		return r;
++		goto unmap_memory;
+ 
+ 	/* Enable TMZ based on IP_VERSION */
+ 	amdgpu_gmc_tmz_set(adev);
+@@ -3673,7 +3675,7 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+ 	if (adev->gmc.xgmi.supported) {
+ 		r = adev->gfxhub.funcs->get_xgmi_info(adev);
+ 		if (r)
+-			return r;
++			goto unmap_memory;
+ 	}
+ 
+ 	/* enable PCIE atomic ops */
+@@ -3930,6 +3932,8 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+ failed:
+ 	amdgpu_vf_error_trans_all(adev);
+ 
++unmap_memory:
++	iounmap(adev->rmmio);
+ 	return r;
+ }
  
 -- 
 2.43.0
