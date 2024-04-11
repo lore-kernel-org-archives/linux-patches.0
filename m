@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B72314430D;
-	Thu, 11 Apr 2024 10:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A447614430D;
+	Thu, 11 Apr 2024 10:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829779; cv=none; b=BuB8iDOQD3N2M1h36skWd74052fxTVTUEZARxATFVcZR/O7pkBdR2EH3xmqy+6QxzefYYAYvAbYkJs8MhQ6RCyibN8H8WgYsOh+ho1G5vg/wpnMcVaFbbgP47vFOK7TzlI+I6r0RkxiHZPpFMEyLVcPQw+2EPylAxCzmoTmqlK0=
+	t=1712829782; cv=none; b=U3w97BaYiYYvK+TkUkD22xzDoKDCFaLhCXP3PLRh05eEsPauuDaDyd5+3kezTkCIyUfGGFP+NegR/XL8UteSdq6EK4UtTEp3UsY3lKaO2XcnOWpz5rc80w6Mm+e+rjhelPSemgQ7woe4+mMIYXVH7y5NP9aR1VoNDgvMpS2qmG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829779; c=relaxed/simple;
-	bh=Stb6TA6y6LKHy0EDi3ZPzVA9euzab6Ksow0uBkAtTxI=;
+	s=arc-20240116; t=1712829782; c=relaxed/simple;
+	bh=9IJ9169LR6lgTN1162Ve3cnVRW50WXsS+v0MwP0JQGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ERmji7svW5ebN1SQYWy94kO73rsWTZTBqrvqgmisoaiV3XYVXE6SuB+0nGBdjAiG+oHT9BbW7wqD+ric2+G+2h0sPu9AOHbiHQS6LscMaHmdf6uCvvZSeL4O0ygCnf7oiaYx3NS7cTnNgItfmYrWk6ZJjM+E4wcU+fz3ZM249Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHBq61gC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OGiiY2+XaRiKizTl8BYcIJF2fDAgKHIPV9Qai3UZ2CqlQ5JSS0p9aD3tU5CbD0ZzfBSjl69JC5xh6cT7gGejyPNLa68UlUvR4WtsyNHd55lGo9e5Cd/eoUbv6KV3gP+5qVyyQZdelB/EjU6bZW0+jilswQ32Ci/ZDtPQPKgK+N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMkn3rwn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHBq61gC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F48C433F1;
-	Thu, 11 Apr 2024 10:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMkn3rwn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDF4C433C7;
+	Thu, 11 Apr 2024 10:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829779;
-	bh=Stb6TA6y6LKHy0EDi3ZPzVA9euzab6Ksow0uBkAtTxI=;
+	s=korg; t=1712829782;
+	bh=9IJ9169LR6lgTN1162Ve3cnVRW50WXsS+v0MwP0JQGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PHBq61gCEfObJ6QeHTIiFNkd12ORiTYZuvJNlkTEXBIUovCPmvMlZc9NdaUKanJj5
-	 qRLRGuarcQsXXCwvlthtz7+oUy6XFrHLdt8/Ku1jb2PpE3dXqzfTT7BssQ57Lf/nXk
-	 j80A96oAfwB9aht1RcaSHgaXov7K8P3Lbp4D69ts=
+	b=qMkn3rwnWm2sGd28wvn0qatBFN7aJjCMKLuWowFcw45iDCg1dqy9+lVQcCimvmD13
+	 y8ouhSxBN8WOPQWvokeGNSzXWkaOfLootIWBQ0M/lE33jVRE2b8+DggL70NbRedNi6
+	 CexBJRoLn0EhPYdy/U0JI2m52vtoG4TvyMxPxojI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
-Subject: [PATCH 4.19 102/175] usb: dwc2: host: Fix hibernation flow
-Date: Thu, 11 Apr 2024 11:55:25 +0200
-Message-ID: <20240411095422.640896437@linuxfoundation.org>
+Subject: [PATCH 4.19 103/175] usb: dwc2: host: Fix ISOC flow in DDMA mode
+Date: Thu, 11 Apr 2024 11:55:26 +0200
+Message-ID: <20240411095422.670754019@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -51,92 +51,132 @@ Content-Transfer-Encoding: 8bit
 
 From: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
 
-commit 3c7b9856a82227db01a20171d2e24c7ce305d59b upstream.
+commit b258e42688501cadb1a6dd658d6f015df9f32d8f upstream.
 
-Added to backup/restore registers HFLBADDR, HCCHARi, HCSPLTi,
-HCTSIZi, HCDMAi and HCDMABi.
+Fixed ISOC completion flow in DDMA mode. Added isoc
+descriptor actual length value and update urb's start_frame
+value.
+Fixed initialization of ISOC DMA descriptors flow.
 
-Fixes: 58e52ff6a6c3 ("usb: dwc2: Move register save and restore functions")
-Fixes: d17ee77b3044 ("usb: dwc2: add controller hibernation support")
+Fixes: 56f5b1cff22a ("staging: Core files for the DWC2 driver")
+Fixes: 20f2eb9c4cf8 ("staging: dwc2: add microframe scheduler from downstream Pi kernel")
+Fixes: c17b337c1ea4 ("usb: dwc2: host: program descriptor for next frame")
+Fixes: dc4c76e7b22c ("staging: HCD descriptor DMA support for the DWC2 driver")
+Fixes: 762d3a1a9cd7 ("usb: dwc2: host: process all completed urbs")
 CC: stable@vger.kernel.org
 Signed-off-by: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
-Link: https://lore.kernel.org/r/c2d10ee6098b9b009a8e94191e046004747d3bdd.1708945444.git.Minas.Harutyunyan@synopsys.com
+Link: https://lore.kernel.org/r/a8b1e1711cc6cabfb45d92ede12e35445c66f06c.1708944698.git.Minas.Harutyunyan@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/core.h |   12 ++++++++++++
- drivers/usb/dwc2/hcd.c  |   18 ++++++++++++++++--
- 2 files changed, 28 insertions(+), 2 deletions(-)
+ drivers/usb/dwc2/hcd.c      |   12 ++++++++++--
+ drivers/usb/dwc2/hcd_ddma.c |   17 +++++++++++------
+ drivers/usb/dwc2/hw.h       |    2 +-
+ 3 files changed, 22 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/dwc2/core.h
-+++ b/drivers/usb/dwc2/core.h
-@@ -716,8 +716,14 @@ struct dwc2_dregs_backup {
-  * struct dwc2_hregs_backup - Holds host registers state before
-  * entering partial power down
-  * @hcfg:		Backup of HCFG register
-+ * @hflbaddr:		Backup of HFLBADDR register
-  * @haintmsk:		Backup of HAINTMSK register
-+ * @hcchar:		Backup of HCCHAR register
-+ * @hcsplt:		Backup of HCSPLT register
-  * @hcintmsk:		Backup of HCINTMSK register
-+ * @hctsiz:		Backup of HCTSIZ register
-+ * @hdma:		Backup of HCDMA register
-+ * @hcdmab:		Backup of HCDMAB register
-  * @hprt0:		Backup of HPTR0 register
-  * @hfir:		Backup of HFIR register
-  * @hptxfsiz:		Backup of HPTXFSIZ register
-@@ -725,8 +731,14 @@ struct dwc2_dregs_backup {
-  */
- struct dwc2_hregs_backup {
- 	u32 hcfg;
-+	u32 hflbaddr;
- 	u32 haintmsk;
-+	u32 hcchar[MAX_EPS_CHANNELS];
-+	u32 hcsplt[MAX_EPS_CHANNELS];
- 	u32 hcintmsk[MAX_EPS_CHANNELS];
-+	u32 hctsiz[MAX_EPS_CHANNELS];
-+	u32 hcidma[MAX_EPS_CHANNELS];
-+	u32 hcidmab[MAX_EPS_CHANNELS];
- 	u32 hprt0;
- 	u32 hfir;
- 	u32 hptxfsiz;
 --- a/drivers/usb/dwc2/hcd.c
 +++ b/drivers/usb/dwc2/hcd.c
-@@ -5480,9 +5480,16 @@ int dwc2_backup_host_registers(struct dw
- 	/* Backup Host regs */
- 	hr = &hsotg->hr_backup;
- 	hr->hcfg = dwc2_readl(hsotg, HCFG);
-+	hr->hflbaddr = dwc2_readl(hsotg, HFLBADDR);
- 	hr->haintmsk = dwc2_readl(hsotg, HAINTMSK);
--	for (i = 0; i < hsotg->params.host_channels; ++i)
-+	for (i = 0; i < hsotg->params.host_channels; ++i) {
-+		hr->hcchar[i] = dwc2_readl(hsotg, HCCHAR(i));
-+		hr->hcsplt[i] = dwc2_readl(hsotg, HCSPLT(i));
- 		hr->hcintmsk[i] = dwc2_readl(hsotg, HCINTMSK(i));
-+		hr->hctsiz[i] = dwc2_readl(hsotg, HCTSIZ(i));
-+		hr->hcidma[i] = dwc2_readl(hsotg, HCDMA(i));
-+		hr->hcidmab[i] = dwc2_readl(hsotg, HCDMAB(i));
-+	}
+@@ -2929,8 +2929,11 @@ enum dwc2_transaction_type dwc2_hcd_sele
+ 			hsotg->available_host_channels--;
+ 		}
+ 		qh = list_entry(qh_ptr, struct dwc2_qh, qh_list_entry);
+-		if (dwc2_assign_and_init_hc(hsotg, qh))
++		if (dwc2_assign_and_init_hc(hsotg, qh)) {
++			if (hsotg->params.uframe_sched)
++				hsotg->available_host_channels++;
+ 			break;
++		}
  
- 	hr->hprt0 = dwc2_read_hprt0(hsotg);
- 	hr->hfir = dwc2_readl(hsotg, HFIR);
-@@ -5516,10 +5523,17 @@ int dwc2_restore_host_registers(struct d
- 	hr->valid = false;
+ 		/*
+ 		 * Move the QH from the periodic ready schedule to the
+@@ -2963,8 +2966,11 @@ enum dwc2_transaction_type dwc2_hcd_sele
+ 			hsotg->available_host_channels--;
+ 		}
  
- 	dwc2_writel(hsotg, hr->hcfg, HCFG);
-+	dwc2_writel(hsotg, hr->hflbaddr, HFLBADDR);
- 	dwc2_writel(hsotg, hr->haintmsk, HAINTMSK);
+-		if (dwc2_assign_and_init_hc(hsotg, qh))
++		if (dwc2_assign_and_init_hc(hsotg, qh)) {
++			if (hsotg->params.uframe_sched)
++				hsotg->available_host_channels++;
+ 			break;
++		}
  
--	for (i = 0; i < hsotg->params.host_channels; ++i)
-+	for (i = 0; i < hsotg->params.host_channels; ++i) {
-+		dwc2_writel(hsotg, hr->hcchar[i], HCCHAR(i));
-+		dwc2_writel(hsotg, hr->hcsplt[i], HCSPLT(i));
- 		dwc2_writel(hsotg, hr->hcintmsk[i], HCINTMSK(i));
-+		dwc2_writel(hsotg, hr->hctsiz[i], HCTSIZ(i));
-+		dwc2_writel(hsotg, hr->hcidma[i], HCDMA(i));
-+		dwc2_writel(hsotg, hr->hcidmab[i], HCDMAB(i));
-+	}
+ 		/*
+ 		 * Move the QH from the non-periodic inactive schedule to the
+@@ -4320,6 +4326,8 @@ void dwc2_host_complete(struct dwc2_hsot
+ 			 urb->actual_length);
  
- 	dwc2_writel(hsotg, hr->hprt0, HPRT0);
- 	dwc2_writel(hsotg, hr->hfir, HFIR);
+ 	if (usb_pipetype(urb->pipe) == PIPE_ISOCHRONOUS) {
++		if (!hsotg->params.dma_desc_enable)
++			urb->start_frame = qtd->qh->start_active_frame;
+ 		urb->error_count = dwc2_hcd_urb_get_error_count(qtd->urb);
+ 		for (i = 0; i < urb->number_of_packets; ++i) {
+ 			urb->iso_frame_desc[i].actual_length =
+--- a/drivers/usb/dwc2/hcd_ddma.c
++++ b/drivers/usb/dwc2/hcd_ddma.c
+@@ -589,7 +589,7 @@ static void dwc2_init_isoc_dma_desc(stru
+ 	idx = qh->td_last;
+ 	inc = qh->host_interval;
+ 	hsotg->frame_number = dwc2_hcd_get_frame_number(hsotg);
+-	cur_idx = dwc2_frame_list_idx(hsotg->frame_number);
++	cur_idx = idx;
+ 	next_idx = dwc2_desclist_idx_inc(qh->td_last, inc, qh->dev_speed);
+ 
+ 	/*
+@@ -896,6 +896,8 @@ static int dwc2_cmpl_host_isoc_dma_desc(
+ {
+ 	struct dwc2_dma_desc *dma_desc;
+ 	struct dwc2_hcd_iso_packet_desc *frame_desc;
++	u16 frame_desc_idx;
++	struct urb *usb_urb = qtd->urb->priv;
+ 	u16 remain = 0;
+ 	int rc = 0;
+ 
+@@ -908,8 +910,11 @@ static int dwc2_cmpl_host_isoc_dma_desc(
+ 				DMA_FROM_DEVICE);
+ 
+ 	dma_desc = &qh->desc_list[idx];
++	frame_desc_idx = (idx - qtd->isoc_td_first) & (usb_urb->number_of_packets - 1);
+ 
+-	frame_desc = &qtd->urb->iso_descs[qtd->isoc_frame_index_last];
++	frame_desc = &qtd->urb->iso_descs[frame_desc_idx];
++	if (idx == qtd->isoc_td_first)
++		usb_urb->start_frame = dwc2_hcd_get_frame_number(hsotg);
+ 	dma_desc->buf = (u32)(qtd->urb->dma + frame_desc->offset);
+ 	if (chan->ep_is_in)
+ 		remain = (dma_desc->status & HOST_DMA_ISOC_NBYTES_MASK) >>
+@@ -930,7 +935,7 @@ static int dwc2_cmpl_host_isoc_dma_desc(
+ 		frame_desc->status = 0;
+ 	}
+ 
+-	if (++qtd->isoc_frame_index == qtd->urb->packet_count) {
++	if (++qtd->isoc_frame_index == usb_urb->number_of_packets) {
+ 		/*
+ 		 * urb->status is not used for isoc transfers here. The
+ 		 * individual frame_desc status are used instead.
+@@ -1035,11 +1040,11 @@ static void dwc2_complete_isoc_xfer_ddma
+ 				return;
+ 			idx = dwc2_desclist_idx_inc(idx, qh->host_interval,
+ 						    chan->speed);
+-			if (!rc)
++			if (rc == 0)
+ 				continue;
+ 
+-			if (rc == DWC2_CMPL_DONE)
+-				break;
++			if (rc == DWC2_CMPL_DONE || rc == DWC2_CMPL_STOP)
++				goto stop_scan;
+ 
+ 			/* rc == DWC2_CMPL_STOP */
+ 
+--- a/drivers/usb/dwc2/hw.h
++++ b/drivers/usb/dwc2/hw.h
+@@ -701,7 +701,7 @@
+ #define TXSTS_QTOP_TOKEN_MASK		(0x3 << 25)
+ #define TXSTS_QTOP_TOKEN_SHIFT		25
+ #define TXSTS_QTOP_TERMINATE		BIT(24)
+-#define TXSTS_QSPCAVAIL_MASK		(0xff << 16)
++#define TXSTS_QSPCAVAIL_MASK		(0x7f << 16)
+ #define TXSTS_QSPCAVAIL_SHIFT		16
+ #define TXSTS_FSPCAVAIL_MASK		(0xffff << 0)
+ #define TXSTS_FSPCAVAIL_SHIFT		0
 
 
