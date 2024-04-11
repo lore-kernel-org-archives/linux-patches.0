@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24F513F452;
-	Thu, 11 Apr 2024 10:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A1B13F452;
+	Thu, 11 Apr 2024 10:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830563; cv=none; b=Ri/N8d8n5XCv2kE2e3J/s3Ixe2tjY8Ib4fb92NmzkOKr56KToqxQspJwRIkgtHW2iI5LZvRdRBdZC1Sd0FwQcucPKGNqTYG2y4Y/YGAjREwGSLobdzPBqMiEDYgGCh1ZgXC9NfZcVF1ZcCvz3xhClANT3B8beUmHFqMK0XfAoys=
+	t=1712830566; cv=none; b=o0HbjFrS24hcG7ZB042awn6fiHDAjZEjTDrQmpU3kt0Rg5SrOeLOHj3PVx+Prbr5ITdSjDIChl/IPlAn9Nrjs00E/7bIj2tnH1IPrSiwHiR7V0J3IxLtCIoLQW/FcLfJYhgvyB+ggusro8F6eZn5jpmnjFa7mX0fXgbWsH2his8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830563; c=relaxed/simple;
-	bh=zD9vhlldqA1nCo7Ceb5Mr/ZY57Wl38P0IUgPOfJDofo=;
+	s=arc-20240116; t=1712830566; c=relaxed/simple;
+	bh=prAjMazxOCCGNj8/Fbt5jGWYpIDbbgmMvtuJHaUNQuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i2ur+Ls7DL0yD6AvVMvunDg/GXo7Cf2htTVxr3jEI8H4tU3idEjwo1aTtgqFf3elJQJrjfeYvuFtBldDYcE0q/LfASgWVwpaqQbYG1gaCUyUV7qslNjsdWW+reFZutwqFfkVJCyXsZgbwk9YZsWWVZ5tTGS2HYCnopJlqReMF3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYRZ3guK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G3w8xIATV/lF44j5/OGiT7Yu0V7/vwYeeQ4GPY0J75LtavOYpEgaerdDqbITK/vN2SzNqP+g+ACzdbMW6gC9eVG5JbXHTcvvLBLPLoGe+NPzEDbnkrT9K90d2cx+VCT13V7oiXDVEI/SM6n3e7y0L9f/D48cXjI2RHzyi5Tic7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yN8o9XJG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYRZ3guK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E306C433C7;
-	Thu, 11 Apr 2024 10:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yN8o9XJG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B59FC433C7;
+	Thu, 11 Apr 2024 10:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830563;
-	bh=zD9vhlldqA1nCo7Ceb5Mr/ZY57Wl38P0IUgPOfJDofo=;
+	s=korg; t=1712830566;
+	bh=prAjMazxOCCGNj8/Fbt5jGWYpIDbbgmMvtuJHaUNQuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mYRZ3guKvXOmQhVcZuMgPv55/DzDFbWeb8wYnwi9a+RIs8WsDtXiuTkWy6U6fNAv1
-	 bMGOemaoeHn2DPb2qulMv71FyOXZ+gdN2TuAlY1xk01pu/Iz4vVph8mjH+sT9HmIv7
-	 3J1tQ2eF+s+mXT+d5ZelF444gCSO9U8jlfl6k1AE=
+	b=yN8o9XJGqxSyipKaiZrDycdSv25cjQGHhnCsigRx8mWrAqEOjPuRY7xOQBFGqHLo2
+	 kMPk9UIU1H5T72mQOwZCa/pJtuFPS2jr5W/s88TEoUkWIznUIEVmaVbzZJOyEIFQG5
+	 olenF2oLpU2YxOqj+RG7uyF+gCDreWQZ/gdK3IDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Toru Katagiri <Toru.Katagiri@tdk.com>,
-	Johan Hovold <johan@kernel.org>,
+	Dhruva Gole <d-gole@ti.com>,
+	Qingliang Li <qingliang.li@mediatek.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 042/215] USB: serial: cp210x: add pid/vid for TDK NC0110013M and MM0110113M
-Date: Thu, 11 Apr 2024 11:54:11 +0200
-Message-ID: <20240411095426.159652220@linuxfoundation.org>
+Subject: [PATCH 5.4 043/215] PM: sleep: wakeirq: fix wake irq warning in system suspend
+Date: Thu, 11 Apr 2024 11:54:12 +0200
+Message-ID: <20240411095426.188845956@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -51,34 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Toru Katagiri <Toru.Katagiri@tdk.com>
+From: Qingliang Li <qingliang.li@mediatek.com>
 
-[ Upstream commit b1a8da9ff1395c4879b4bd41e55733d944f3d613 ]
+[ Upstream commit e7a7681c859643f3f2476b2a28a494877fd89442 ]
 
-TDK NC0110013M and MM0110113M have custom USB IDs for CP210x,
-so we need to add them to the driver.
+When driver uses pm_runtime_force_suspend() as the system suspend callback
+function and registers the wake irq with reverse enable ordering, the wake
+irq will be re-enabled when entering system suspend, triggering an
+'Unbalanced enable for IRQ xxx' warning. In this scenario, the call
+sequence during system suspend is as follows:
+  suspend_devices_and_enter()
+    -> dpm_suspend_start()
+      -> dpm_run_callback()
+        -> pm_runtime_force_suspend()
+          -> dev_pm_enable_wake_irq_check()
+          -> dev_pm_enable_wake_irq_complete()
 
-Signed-off-by: Toru Katagiri <Toru.Katagiri@tdk.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+    -> suspend_enter()
+      -> dpm_suspend_noirq()
+        -> device_wakeup_arm_wake_irqs()
+          -> dev_pm_arm_wake_irq()
+
+To fix this issue, complete the setting of WAKE_IRQ_DEDICATED_ENABLED flag
+in dev_pm_enable_wake_irq_complete() to avoid redundant irq enablement.
+
+Fixes: 8527beb12087 ("PM: sleep: wakeirq: fix wake irq arming")
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Signed-off-by: Qingliang Li <qingliang.li@mediatek.com>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Cc: 5.16+ <stable@vger.kernel.org> # 5.16+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/cp210x.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/base/power/wakeirq.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/serial/cp210x.c b/drivers/usb/serial/cp210x.c
-index 88659a75f30f9..5353fa7e59696 100644
---- a/drivers/usb/serial/cp210x.c
-+++ b/drivers/usb/serial/cp210x.c
-@@ -57,6 +57,8 @@ static const struct usb_device_id id_table[] = {
- 	{ USB_DEVICE(0x0471, 0x066A) }, /* AKTAKOM ACE-1001 cable */
- 	{ USB_DEVICE(0x0489, 0xE000) }, /* Pirelli Broadband S.p.A, DP-L10 SIP/GSM Mobile */
- 	{ USB_DEVICE(0x0489, 0xE003) }, /* Pirelli Broadband S.p.A, DP-L10 SIP/GSM Mobile */
-+	{ USB_DEVICE(0x04BF, 0x1301) }, /* TDK Corporation NC0110013M - Network Controller */
-+	{ USB_DEVICE(0x04BF, 0x1303) }, /* TDK Corporation MM0110113M - i3 Micro Module */
- 	{ USB_DEVICE(0x0745, 0x1000) }, /* CipherLab USB CCD Barcode Scanner 1000 */
- 	{ USB_DEVICE(0x0846, 0x1100) }, /* NetGear Managed Switch M4100 series, M5300 series, M7100 series */
- 	{ USB_DEVICE(0x08e6, 0x5501) }, /* Gemalto Prox-PU/CU contactless smartcard reader */
+diff --git a/drivers/base/power/wakeirq.c b/drivers/base/power/wakeirq.c
+index 46654adf00a10..20b07fa2792ba 100644
+--- a/drivers/base/power/wakeirq.c
++++ b/drivers/base/power/wakeirq.c
+@@ -365,8 +365,10 @@ void dev_pm_enable_wake_irq_complete(struct device *dev)
+ 		return;
+ 
+ 	if (wirq->status & WAKE_IRQ_DEDICATED_MANAGED &&
+-	    wirq->status & WAKE_IRQ_DEDICATED_REVERSE)
++	    wirq->status & WAKE_IRQ_DEDICATED_REVERSE) {
+ 		enable_irq(wirq->irq);
++		wirq->status |= WAKE_IRQ_DEDICATED_ENABLED;
++	}
+ }
+ 
+ /**
 -- 
 2.43.0
 
