@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBBB145FE7;
-	Thu, 11 Apr 2024 10:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A141146D51;
+	Thu, 11 Apr 2024 10:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830243; cv=none; b=GD1vyWavIHiQRT+DNEiItFPeMqnguUF45DrbB5SMhNnDNsKVnT6jTXGofmkcYU9D3EVaHEGHcBGmVactSyxtDW8dzUxHXUOcMUbwttnKYv9+8iJjrC50VtBKLoKeudLiTDEnDgrlrHiU6oOZ4BwTAR8Cq8fts+eXfct8HpXsUaA=
+	t=1712830247; cv=none; b=JyLOgwSpGu4BF8PSlpbjfv848eW25FJhcoSPAp8Jt5AU+q+GTa8Y1JnWJkMmJQEsk3jfseOT775/xzzyrS/KysQFp4KIxhqtI3ZhrD16qB6WIOEyzuXJMux0ZLS/okO8hrefAlG+v6k4jpII6PS5X0UOPwdEOPcZoyZOSr/gLRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830243; c=relaxed/simple;
-	bh=hhzokIM22OKjrGyRjg6h+/+XlUfXgNUr2AJwg8gVsfU=;
+	s=arc-20240116; t=1712830247; c=relaxed/simple;
+	bh=2RGnegmN+RCRGduqGVnkJPBJPNJDWF3O3orcRaKFNxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GGxAthC0DRtKi1duaK6JcmDhH1Y1cH9wWYI7OAnt5DdL7Pm7lag3J6qc/BomIwAAXxv34J9+Ws2BW0rkKiht4iRyekHo8RQRgfRgGdZKE51WYseZFwhTMggGxpdzojNirWLfZRuCZsPB0PpwLM+SJCbTFHS2cUboD3wAWwTZUCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InBa1XjQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=snRZhuQnICcH3tNwZ++uwohvAe9eWxqVdEEqkDJc+7hcgw7ICufG/RzUEwyGJkQfMS4Dg6MqotR8MzlF9MyL5R2A6l/SkcY3yotVs/CUk+cFjxbXAQ7CplPL+QNQQlDwKWWskFBX2+nIot6py4n8ASx/wUxI1tTkg1DmWZK2IJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bs0vx7S/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InBa1XjQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C637C433C7;
-	Thu, 11 Apr 2024 10:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bs0vx7S/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D7CC433C7;
+	Thu, 11 Apr 2024 10:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830243;
-	bh=hhzokIM22OKjrGyRjg6h+/+XlUfXgNUr2AJwg8gVsfU=;
+	s=korg; t=1712830246;
+	bh=2RGnegmN+RCRGduqGVnkJPBJPNJDWF3O3orcRaKFNxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=InBa1XjQXIqzlJ8HyQwz2yaW8Nxoom3FLTapc7rrZJjeFgZU4C/lu9YtWWD9jOYrS
-	 WMIMXdz+atwGKzgfDQpetMJ7/0UZd9/jjqLxYPXXLoHw5IQg0jUn2nJX5KFmX7+o8V
-	 0cb8X/ShC2qUJqMehSljZs0FMpUYcajMbLHIWdiU=
+	b=bs0vx7S/p+Y94XSUGWY34bJS3zw9woVQ7wPScbrpY+aWmplg8nkxhtvnvXxmEb3Df
+	 MvH7LAjiGG5KSSfjfPyZ3RgCwwg3rfeb5a5yxhMuLwLCZFNH4MecMhcHoCn6qcxAFX
+	 Rsr+d9Q2LY/r0USCiZ87XUxnm7gyAS3mstfGKgCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Aric Cyr <aric.cyr@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 082/143] ext4: forbid commit inconsistent quota data when errors=remount-ro
-Date: Thu, 11 Apr 2024 11:55:50 +0200
-Message-ID: <20240411095423.381102282@linuxfoundation.org>
+Subject: [PATCH 6.8 083/143] drm/amd/display: Fix nanosec stat overflow
+Date: Thu, 11 Apr 2024 11:55:51 +0200
+Message-ID: <20240411095423.410356337@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -52,68 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Aric Cyr <aric.cyr@amd.com>
 
-[ Upstream commit d8b945fa475f13d787df00c26a6dc45a3e2e1d1d ]
+[ Upstream commit 14d68acfd04b39f34eea7bea65dda652e6db5bf6 ]
 
-There's issue as follows When do IO fault injection test:
-Quota error (device dm-3): find_block_dqentry: Quota for id 101 referenced but not present
-Quota error (device dm-3): qtree_read_dquot: Can't read quota structure for id 101
-Quota error (device dm-3): do_check_range: Getting block 2021161007 out of range 1-186
-Quota error (device dm-3): qtree_read_dquot: Can't read quota structure for id 661
+[Why]
+Nanosec stats can overflow on long running systems potentially causing
+statistic logging issues.
 
-Now, ext4_write_dquot()/ext4_acquire_dquot()/ext4_release_dquot() may commit
-inconsistent quota data even if process failed. This may lead to filesystem
-corruption.
-To ensure filesystem consistent when errors=remount-ro there is need to call
-ext4_handle_error() to abort journal.
+[How]
+Use 64bit types for nanosec stats to ensure no overflow.
 
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240119062908.3598806-1-yebin10@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Aric Cyr <aric.cyr@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/amd/display/modules/inc/mod_stats.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 32bd83adf0bb8..4866657c6d41f 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -6864,6 +6864,10 @@ static int ext4_write_dquot(struct dquot *dquot)
- 	if (IS_ERR(handle))
- 		return PTR_ERR(handle);
- 	ret = dquot_commit(dquot);
-+	if (ret < 0)
-+		ext4_error_err(dquot->dq_sb, -ret,
-+			       "Failed to commit dquot type %d",
-+			       dquot->dq_id.type);
- 	err = ext4_journal_stop(handle);
- 	if (!ret)
- 		ret = err;
-@@ -6880,6 +6884,10 @@ static int ext4_acquire_dquot(struct dquot *dquot)
- 	if (IS_ERR(handle))
- 		return PTR_ERR(handle);
- 	ret = dquot_acquire(dquot);
-+	if (ret < 0)
-+		ext4_error_err(dquot->dq_sb, -ret,
-+			      "Failed to acquire dquot type %d",
-+			      dquot->dq_id.type);
- 	err = ext4_journal_stop(handle);
- 	if (!ret)
- 		ret = err;
-@@ -6899,6 +6907,10 @@ static int ext4_release_dquot(struct dquot *dquot)
- 		return PTR_ERR(handle);
- 	}
- 	ret = dquot_release(dquot);
-+	if (ret < 0)
-+		ext4_error_err(dquot->dq_sb, -ret,
-+			       "Failed to release dquot type %d",
-+			       dquot->dq_id.type);
- 	err = ext4_journal_stop(handle);
- 	if (!ret)
- 		ret = err;
+diff --git a/drivers/gpu/drm/amd/display/modules/inc/mod_stats.h b/drivers/gpu/drm/amd/display/modules/inc/mod_stats.h
+index 5960dd760e91c..8ce6c22e5d041 100644
+--- a/drivers/gpu/drm/amd/display/modules/inc/mod_stats.h
++++ b/drivers/gpu/drm/amd/display/modules/inc/mod_stats.h
+@@ -57,10 +57,10 @@ void mod_stats_update_event(struct mod_stats *mod_stats,
+ 		unsigned int length);
+ 
+ void mod_stats_update_flip(struct mod_stats *mod_stats,
+-		unsigned long timestamp_in_ns);
++		unsigned long long timestamp_in_ns);
+ 
+ void mod_stats_update_vupdate(struct mod_stats *mod_stats,
+-		unsigned long timestamp_in_ns);
++		unsigned long long timestamp_in_ns);
+ 
+ void mod_stats_update_freesync(struct mod_stats *mod_stats,
+ 		unsigned int v_total_min,
 -- 
 2.43.0
 
