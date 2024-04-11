@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78ED513D258;
-	Thu, 11 Apr 2024 10:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729301448F3;
+	Thu, 11 Apr 2024 10:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831785; cv=none; b=lCbiBG3WLhsQLKLRkRuh6tfSTKmGwZMIQ3R59wsySlG15dRkvT/awekL/IbsVPoGyLux0nw1vAPRPakAIvhZRV4ZiZnZRxjaXMaZxNyeaV+dU9yscNCY4TD3/CnZ8BlNdNXAfDCQQwY9mX7wlYPEqOzVpR7BBjD8k2oyABtOs1Y=
+	t=1712831788; cv=none; b=HB7cwAzAqMnLhVe7rRAQFPXUN1zrrUgZwSAWDk0xH0ZXR9+XBbdaYLiNfU7dNb5qVodpjhCxmVcuyNqT1BeJ610+G8cw4O1j1sY+7wM3eU9LZYoB4V97VIIOtCK0t1BKzqwS+52iADE1DYNq4kwWbCkSme0lQS0aQQrbz8sWWx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831785; c=relaxed/simple;
-	bh=1kKNv1OUzZNbMdhCvielnTVOC+tV0LJPrNrw6+9+/aA=;
+	s=arc-20240116; t=1712831788; c=relaxed/simple;
+	bh=EyowG7ezgTeWP0SR5eowC7DsMIia58lNimHaWtMlL6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EUUDBOI14QdbhD7LzR1y0tENKOhKQRGINkHouwC/lzMeUtrq1sO+obfZ7kRm/jujs0RZOhzVMluBSGp1ALzuEWWR23iUDYh/mspMtwfC9If8HEGXtyAmBuprV76/kz3+AnjLRXQIYE1tFRJLMel3GKb1VidVgcv6LsQvTZqh1pY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XYWTZfxg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P4JOWJkBIAR9yDW7vOExb7+oWkRm3vD1hmpCA2hPSg17x9pUnRM8DBSOXu8aiuSDyxL8t/4OGVsbaGSHQ5S6XX4T/jd7syN0E1uLUua7UpxRf9xVF+A1DIlT/fY15xiAo9ClaAkVfsiVC0KDkQXG6ZeFGIbXYgPPawZ9tDIADhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mL+SDU51; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XYWTZfxg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4233C433F1;
-	Thu, 11 Apr 2024 10:36:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mL+SDU51"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE2EC433F1;
+	Thu, 11 Apr 2024 10:36:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831785;
-	bh=1kKNv1OUzZNbMdhCvielnTVOC+tV0LJPrNrw6+9+/aA=;
+	s=korg; t=1712831788;
+	bh=EyowG7ezgTeWP0SR5eowC7DsMIia58lNimHaWtMlL6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XYWTZfxgEPYT4fhL5WFPaqtJsUs5fdywS5nexI4agpsUluJ1N3t6DCfMKZaeHVcs8
-	 nNILBFw4i7cDSCKSzrkCnHu/szB0eR21ZU7i9MUuHUbrt2sbPqO9bI5c2DKqOpM1hS
-	 LWWqurqUEDHO5t0gkPQ1Bb3vDjcVd/yqF7gI8GL0=
+	b=mL+SDU51NFtX/5odmBGlexQ49ohNdfiRud0KQAUM77mH9KhbqGYQRmqGlqV/J/kxL
+	 TznVHDK0kdWSZT4dXIbMTGHiLAf4E2jZW06oUqpP10Rhj1E+NzpNXp+ygJKtkSiZUI
+	 +/As+wqQQBes+g4I4Q5oHfEI/h95R+flj41ufqDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 125/294] ALSA: hda/realtek - Fix headset Mic no show at resume back for Lenovo ALC897 platform
-Date: Thu, 11 Apr 2024 11:54:48 +0200
-Message-ID: <20240411095439.426448767@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	PrasannaKumar Muralidharan <prasannatsmkumar@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+28748250ab47a8f04100@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 126/294] USB: usb-storage: Prevent divide-by-0 error in isd200_ata_command
+Date: Thu, 11 Apr 2024 11:54:49 +0200
+Message-ID: <20240411095439.454988148@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -50,45 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit d397b6e56151099cf3b1f7bfccb204a6a8591720 upstream.
+commit 014bcf41d946b36a8f0b8e9b5d9529efbb822f49 upstream.
 
-Headset Mic will no show at resume back.
-This patch will fix this issue.
+The isd200 sub-driver in usb-storage uses the HEADS and SECTORS values
+in the ATA ID information to calculate cylinder and head values when
+creating a CDB for READ or WRITE commands.  The calculation involves
+division and modulus operations, which will cause a crash if either of
+these values is 0.  While this never happens with a genuine device, it
+could happen with a flawed or subversive emulation, as reported by the
+syzbot fuzzer.
 
-Fixes: d7f32791a9fc ("ALSA: hda/realtek - Add headset Mic support for Lenovo ALC897 platform")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/r/4713d48a372e47f98bba0c6120fd8254@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Protect against this possibility by refusing to bind to the device if
+either the ATA_ID_HEADS or ATA_ID_SECTORS value in the device's ID
+information is 0.  This requires isd200_Initialization() to return a
+negative error code when initialization fails; currently it always
+returns 0 (even when there is an error).
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Reported-and-tested-by: syzbot+28748250ab47a8f04100@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-usb/0000000000003eb868061245ba7f@google.com/
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reviewed-by: PrasannaKumar Muralidharan <prasannatsmkumar@gmail.com>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/b1e605ea-333f-4ac0-9511-da04f411763e@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/usb/storage/isd200.c |   23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10692,8 +10692,7 @@ static void alc897_hp_automute_hook(stru
+--- a/drivers/usb/storage/isd200.c
++++ b/drivers/usb/storage/isd200.c
+@@ -1105,7 +1105,7 @@ static void isd200_dump_driveid(struct u
+ static int isd200_get_inquiry_data( struct us_data *us )
+ {
+ 	struct isd200_info *info = (struct isd200_info *)us->extra;
+-	int retStatus = ISD200_GOOD;
++	int retStatus;
+ 	u16 *id = info->id;
  
- 	snd_hda_gen_hp_automute(codec, jack);
- 	vref = spec->gen.hp_jack_present ? (PIN_HP | AC_PINCTL_VREF_100) : PIN_HP;
--	snd_hda_codec_write(codec, 0x1b, 0, AC_VERB_SET_PIN_WIDGET_CONTROL,
--			    vref);
-+	snd_hda_set_pin_ctl(codec, 0x1b, vref);
- }
+ 	usb_stor_dbg(us, "Entering isd200_get_inquiry_data\n");
+@@ -1137,6 +1137,13 @@ static int isd200_get_inquiry_data( stru
+ 				isd200_fix_driveid(id);
+ 				isd200_dump_driveid(us, id);
  
- static void alc897_fixup_lenovo_headset_mic(struct hda_codec *codec,
-@@ -10702,6 +10701,10 @@ static void alc897_fixup_lenovo_headset_
- 	struct alc_spec *spec = codec->spec;
- 	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
- 		spec->gen.hp_automute_hook = alc897_hp_automute_hook;
-+		spec->no_shutup_pins = 1;
-+	}
-+	if (action == HDA_FIXUP_ACT_PROBE) {
-+		snd_hda_set_pin_ctl_cache(codec, 0x1a, PIN_IN | AC_PINCTL_VREF_100);
++				/* Prevent division by 0 in isd200_scsi_to_ata() */
++				if (id[ATA_ID_HEADS] == 0 || id[ATA_ID_SECTORS] == 0) {
++					usb_stor_dbg(us, "   Invalid ATA Identify data\n");
++					retStatus = ISD200_ERROR;
++					goto Done;
++				}
++
+ 				memset(&info->InquiryData, 0, sizeof(info->InquiryData));
+ 
+ 				/* Standard IDE interface only supports disks */
+@@ -1202,6 +1209,7 @@ static int isd200_get_inquiry_data( stru
+ 		}
  	}
+ 
++ Done:
+ 	usb_stor_dbg(us, "Leaving isd200_get_inquiry_data %08X\n", retStatus);
+ 
+ 	return(retStatus);
+@@ -1481,22 +1489,27 @@ static int isd200_init_info(struct us_da
+ 
+ static int isd200_Initialization(struct us_data *us)
+ {
++	int rc = 0;
++
+ 	usb_stor_dbg(us, "ISD200 Initialization...\n");
+ 
+ 	/* Initialize ISD200 info struct */
+ 
+-	if (isd200_init_info(us) == ISD200_ERROR) {
++	if (isd200_init_info(us) < 0) {
+ 		usb_stor_dbg(us, "ERROR Initializing ISD200 Info struct\n");
++		rc = -ENOMEM;
+ 	} else {
+ 		/* Get device specific data */
+ 
+-		if (isd200_get_inquiry_data(us) != ISD200_GOOD)
++		if (isd200_get_inquiry_data(us) != ISD200_GOOD) {
+ 			usb_stor_dbg(us, "ISD200 Initialization Failure\n");
+-		else
++			rc = -EINVAL;
++		} else {
+ 			usb_stor_dbg(us, "ISD200 Initialization complete\n");
++		}
+ 	}
+ 
+-	return 0;
++	return rc;
  }
+ 
  
 
 
