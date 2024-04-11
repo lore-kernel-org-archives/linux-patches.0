@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAEF79FD;
-	Thu, 11 Apr 2024 10:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08FA279FD;
+	Thu, 11 Apr 2024 10:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832653; cv=none; b=G2M+fjdwVxa+N9qTfjr1Z/Z1H7UaIOaHdk8jl4JrLNj8mNDVqyp19OnfJtwxLnvyrTLYZE7JjKPwqlC1TSyjWyZ/rC5FuYX2XRkbkMAC5V3J5bW0Ok68/5hZGKXw5lEMGJVOpJDlL1X0XDgrRwdLHYBSp8eS67muDsiZBsD6KKk=
+	t=1712832656; cv=none; b=kK2zzlN82elZuEf+X7/WQi+ad8rG6gozGVsfkupmokbAVXXYwNItDPzPDBrFvFJ29gASeb2wP9UITgRmNjFE8pm0qZ6RrJ4RlisQLIKOm8OgE0hseoM8+exxCy41RLtvMxfzLcKO5pR/cG9k33GxgMiI7xprCt5nMfaSHzQG0Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832653; c=relaxed/simple;
-	bh=In0s4XY4viUPRGW7xUMEH/bU/BWmRa2S/nVjnYVdgfE=;
+	s=arc-20240116; t=1712832656; c=relaxed/simple;
+	bh=4WLhnnN7zXJnW96NHYfMXDRH0rXtlTnqy1l03eQ7mOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pv3W+3OzSRbZU1W/ZA8ZIwzAQXsOjWV9pYFffJ02gcJXUwYaUg3VC7W6fnX9hDirz3t+ymN2dU2HgP2/sCEUolYGts34wiYMdJwZCuBozgej7+BzLKu4iuijZETyjc2/8/0FALTJrOUEP5UjhorBykCKRBTb2v3mKWMNPOLt+o4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCV6YgOR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jluxnswJZS8EMk2ekQEXmQOWWqc4tKON8E/8Pii1P6OyKPfJcHEmNwk9HdhJblIrnwbvntDLkNsie/2Ndxj12YXubUGEx8R3WU4n23M4IshbVZJRPtcgSBymuV4G9VjYQNFqpS1kdk/CPP7qWV/+97Y1bJF+SVgO7lUoF02W/pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szQwIFn6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCV6YgOR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E72C433F1;
-	Thu, 11 Apr 2024 10:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szQwIFn6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E965C433C7;
+	Thu, 11 Apr 2024 10:50:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832652;
-	bh=In0s4XY4viUPRGW7xUMEH/bU/BWmRa2S/nVjnYVdgfE=;
+	s=korg; t=1712832655;
+	bh=4WLhnnN7zXJnW96NHYfMXDRH0rXtlTnqy1l03eQ7mOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WCV6YgORiWNfiGxE5FMRpRAtn1lyAY3x6lYBYamBIanCzQU7ol3okzThtk5qYBiTt
-	 ikDG83pEXjmuFgm0RMExEeE85GB1XU3IhzWstrDbTX+fkXQ6j9px40wVb1xH/Kfj+n
-	 KJUYOILg+rkJ8aZgejau8I/Fdhhb6I1ALrAJynJs=
+	b=szQwIFn6tnaitGVx51Y8WJnMGD3QkWWcZN34ba6UXLL7b+wn30OGhFfDFYMORuQzj
+	 iPD0Ze/2QfieR0xz8ESEbJHbDYnl6ttBSprpKTkaUEQyZhUP80ehbAhNukPj99myMj
+	 cW97enF5MZfZBfjQ+hJKEvEw3vjR/RuX7VEl8VnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Hawley <warthog9@eaglescrag.net>,
-	"Ricardo B. Marliere" <ricardo@marliere.net>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	linke li <lilinke99@qq.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 37/57] ktest: force $buildonly = 1 for make_warnings_file test type
-Date: Thu, 11 Apr 2024 11:57:45 +0200
-Message-ID: <20240411095409.115472858@linuxfoundation.org>
+Subject: [PATCH 5.15 38/57] ring-buffer: use READ_ONCE() to read cpu_buffer->commit_page in concurrent environment
+Date: Thu, 11 Apr 2024 11:57:46 +0200
+Message-ID: <20240411095409.144537496@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095407.982258070@linuxfoundation.org>
 References: <20240411095407.982258070@linuxfoundation.org>
@@ -52,39 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo B. Marliere <ricardo@marliere.net>
+From: linke li <lilinke99@qq.com>
 
-[ Upstream commit 07283c1873a4d0eaa0e822536881bfdaea853910 ]
+[ Upstream commit f1e30cb6369251c03f63c564006f96a54197dcc4 ]
 
-The test type "make_warnings_file" should have no mandatory configuration
-parameters other than the ones required by the "build" test type, because
-its purpose is to create a file with build warnings that may or may not be
-used by other subsequent tests. Currently, the only way to use it as a
-stand-alone test is by setting POWER_CYCLE, CONSOLE, SSH_USER,
-BUILD_TARGET, TARGET_IMAGE, REBOOT_TYPE and GRUB_MENU.
+In function ring_buffer_iter_empty(), cpu_buffer->commit_page is read
+while other threads may change it. It may cause the time_stamp that read
+in the next line come from a different page. Use READ_ONCE() to avoid
+having to reason about compiler optimizations now and in future.
 
-Link: https://lkml.kernel.org/r/20240315-ktest-v2-1-c5c20a75f6a3@marliere.net
+Link: https://lore.kernel.org/linux-trace-kernel/tencent_DFF7D3561A0686B5E8FC079150A02505180A@qq.com
 
-Cc: John Hawley <warthog9@eaglescrag.net>
-Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: linke li <lilinke99@qq.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/ktest/ktest.pl | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/ring_buffer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
-index e6c381498e632..449e45bd69665 100755
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -836,6 +836,7 @@ sub set_value {
-     if ($lvalue =~ /^(TEST|BISECT|CONFIG_BISECT)_TYPE(\[.*\])?$/ &&
- 	$prvalue !~ /^(config_|)bisect$/ &&
- 	$prvalue !~ /^build$/ &&
-+	$prvalue !~ /^make_warnings_file$/ &&
- 	$buildonly) {
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 80ec515ae81e7..c6bcb80785d8f 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -4390,7 +4390,7 @@ int ring_buffer_iter_empty(struct ring_buffer_iter *iter)
+ 	cpu_buffer = iter->cpu_buffer;
+ 	reader = cpu_buffer->reader_page;
+ 	head_page = cpu_buffer->head_page;
+-	commit_page = cpu_buffer->commit_page;
++	commit_page = READ_ONCE(cpu_buffer->commit_page);
+ 	commit_ts = commit_page->page->time_stamp;
  
- 	# Note if a test is something other than build, then we
+ 	/*
 -- 
 2.43.0
 
