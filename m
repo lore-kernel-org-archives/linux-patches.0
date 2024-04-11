@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D9F145323;
-	Thu, 11 Apr 2024 10:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230F9140E3C;
+	Thu, 11 Apr 2024 10:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832101; cv=none; b=W5Vxj+fCurweUzF+v3QzGXBRUdSzbahvG/mWRjL/mivhuI9jD7JbGLNINpswB8qlK22bBReYguPWi77hRQs+KJOXAXw1Nlgg7yxzPnsbZFlWCbhA9hwT5L7GZSdk8SRhJmJIo1X3RMUMe/A4f2p672/J3lyv4hAaKldlOaN05mY=
+	t=1712832104; cv=none; b=sM17U1TfGhu3j9YX4H3bC01kU8mIoE+OOJPduByNYy4nK9CcZmjDruwXbW3Jqrdmn+go07iKDD2zGsJSgedx1gPM7FtE+VIStqFeB1Y2vIcBW/iDQVX4mAV7biuwe864KxBYUx2CXiRUs/LtysTKlzsNufe1x2fJQKX1duR3Cd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832101; c=relaxed/simple;
-	bh=WlEAcdx4dAp6Xfnqk2dX70F0g0b4N5ykyYyKlD9kdkU=;
+	s=arc-20240116; t=1712832104; c=relaxed/simple;
+	bh=im50JodZtUZUEleW1RofrP1NYo6QHv+SBYd/zwLwvm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vds3MCQAYwMq3IRWFzI1WP34UmL7JrUkAiAmAwjusAo65zfqP+mEByJVhsH4zYosueq+WloMJzWnmGh/OesRToffiXVdIo3RTxwZuhQSsh+VFc/8ST9Sx7S3TPjG6zXkzpDZ98/MPmh1ryPVGyon5O9QNrTLlI2SHnUkMEaHuOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7qyi9y5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WdimO0/iQVx6/xuDf8nSD5b6hwbLtMnVdPGZnZxs2SQ/7GpRgWig02pWEiLQF79uQVGzivCp3Ti9XXdmp8cPACzoVYBVoszmCnVPaQ9lxaG8flXxgZiRiFXBHJsv07CApgk8mBjiCvVk2ESzZhpguoH0bY0t+oWQb217HDCs9gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDbZ6VeF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7qyi9y5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D171C433C7;
-	Thu, 11 Apr 2024 10:41:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDbZ6VeF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D819C433F1;
+	Thu, 11 Apr 2024 10:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832101;
-	bh=WlEAcdx4dAp6Xfnqk2dX70F0g0b4N5ykyYyKlD9kdkU=;
+	s=korg; t=1712832104;
+	bh=im50JodZtUZUEleW1RofrP1NYo6QHv+SBYd/zwLwvm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d7qyi9y53njQTEu0dmWLqE1ElRV18TEWaNeZisnQaIa2Cwge5pvxcPXKn0zF963J7
-	 /ynN7CsGXeo3XFXvSMRa3vCK8ejU2hAQ52EEypiHrB3mwUnut1l1iezAQbj8T7vDAQ
-	 wRcewmrpXx+EIVBqfwLHYI/dOq3mk26rtxFdOVr0=
+	b=xDbZ6VeFFiofM23xwwIMfX3kDIGC3AMd/7JisxekLzKqQjhuHCUs8psoc9jKWIlEK
+	 Xl1PY9HlAI23BbxuH165K5Y6P1NdfEikkh2d1vlJxZ9rYfqFxzfDSPH2XE4yR5gNxX
+	 DM07TaK3FX1GQielhLCTfndr4iFlXTvy04hEQNzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 5.10 190/294] x86/cpufeatures: Add new word for scattered features
-Date: Thu, 11 Apr 2024 11:55:53 +0200
-Message-ID: <20240411095441.335387559@linuxfoundation.org>
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Hui Wang <hui.wang@canonical.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.10 191/294] Bluetooth: hci_event: set the conn encrypted before conn establishes
+Date: Thu, 11 Apr 2024 11:55:54 +0200
+Message-ID: <20240411095441.364997512@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -50,80 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Hui Wang <hui.wang@canonical.com>
 
-commit 7f274e609f3d5f45c22b1dd59053f6764458b492 upstream.
+commit c569242cd49287d53b73a94233db40097d838535 upstream.
 
-Add a new word for scattered features because all free bits among the
-existing Linux-defined auxiliary flags have been exhausted.
+We have a BT headset (Lenovo Thinkplus XT99), the pairing and
+connecting has no problem, once this headset is paired, bluez will
+remember this device and will auto re-connect it whenever the device
+is powered on. The auto re-connecting works well with Windows and
+Android, but with Linux, it always fails. Through debugging, we found
+at the rfcomm connection stage, the bluetooth stack reports
+"Connection refused - security block (0x0003)".
 
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/8380d2a0da469a1f0ad75b8954a79fb689599ff6.1711091584.git.sandipan.das@amd.com
+For this device, the re-connecting negotiation process is different
+from other BT headsets, it sends the Link_KEY_REQUEST command before
+the CONNECT_REQUEST completes, and it doesn't send ENCRYPT_CHANGE
+command during the negotiation. When the device sends the "connect
+complete" to hci, the ev->encr_mode is 1.
+
+So here in the conn_complete_evt(), if ev->encr_mode is 1, link type
+is ACL and HCI_CONN_ENCRYPT is not set, we set HCI_CONN_ENCRYPT to
+this conn, and update conn->enc_key_size accordingly.
+
+After this change, this BT headset could re-connect with Linux
+successfully. This is the btmon log after applying the patch, after
+receiving the "Connect Complete" with "Encryption: Enabled", will send
+the command to read encryption key size:
+> HCI Event: Connect Request (0x04) plen 10
+        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
+        Class: 0x240404
+          Major class: Audio/Video (headset, speaker, stereo, video, vcr)
+          Minor class: Wearable Headset Device
+          Rendering (Printing, Speaker)
+          Audio (Speaker, Microphone, Headset)
+        Link type: ACL (0x01)
+...
+> HCI Event: Link Key Request (0x17) plen 6
+        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
+< HCI Command: Link Key Request Reply (0x01|0x000b) plen 22
+        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
+        Link key: ${32-hex-digits-key}
+...
+> HCI Event: Connect Complete (0x03) plen 11
+        Status: Success (0x00)
+        Handle: 256
+        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
+        Link type: ACL (0x01)
+        Encryption: Enabled (0x01)
+< HCI Command: Read Encryption Key... (0x05|0x0008) plen 2
+        Handle: 256
+< ACL Data TX: Handle 256 flags 0x00 dlen 10
+      L2CAP: Information Request (0x0a) ident 1 len 2
+        Type: Extended features supported (0x0002)
+> HCI Event: Command Complete (0x0e) plen 7
+      Read Encryption Key Size (0x05|0x0008) ncmd 1
+        Status: Success (0x00)
+        Handle: 256
+        Key size: 16
+
+Cc: stable@vger.kernel.org
+Link: https://github.com/bluez/bluez/issues/704
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpufeature.h        |    6 ++++--
- arch/x86/include/asm/cpufeatures.h       |    2 +-
- arch/x86/include/asm/disabled-features.h |    3 ++-
- arch/x86/include/asm/required-features.h |    3 ++-
- 4 files changed, 9 insertions(+), 5 deletions(-)
+ net/bluetooth/hci_event.c |   25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
---- a/arch/x86/include/asm/cpufeature.h
-+++ b/arch/x86/include/asm/cpufeature.h
-@@ -93,8 +93,9 @@ extern const char * const x86_bug_flags[
- 	   CHECK_BIT_IN_MASK_WORD(REQUIRED_MASK, 18, feature_bit) ||	\
- 	   CHECK_BIT_IN_MASK_WORD(REQUIRED_MASK, 19, feature_bit) ||	\
- 	   CHECK_BIT_IN_MASK_WORD(REQUIRED_MASK, 20, feature_bit) ||	\
-+	   CHECK_BIT_IN_MASK_WORD(REQUIRED_MASK, 21, feature_bit) ||	\
- 	   REQUIRED_MASK_CHECK					  ||	\
--	   BUILD_BUG_ON_ZERO(NCAPINTS != 21))
-+	   BUILD_BUG_ON_ZERO(NCAPINTS != 22))
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -2636,6 +2636,31 @@ static void hci_conn_complete_evt(struct
+ 		if (test_bit(HCI_ENCRYPT, &hdev->flags))
+ 			set_bit(HCI_CONN_ENCRYPT, &conn->flags);
  
- #define DISABLED_MASK_BIT_SET(feature_bit)				\
- 	 ( CHECK_BIT_IN_MASK_WORD(DISABLED_MASK,  0, feature_bit) ||	\
-@@ -118,8 +119,9 @@ extern const char * const x86_bug_flags[
- 	   CHECK_BIT_IN_MASK_WORD(DISABLED_MASK, 18, feature_bit) ||	\
- 	   CHECK_BIT_IN_MASK_WORD(DISABLED_MASK, 19, feature_bit) ||	\
- 	   CHECK_BIT_IN_MASK_WORD(DISABLED_MASK, 20, feature_bit) ||	\
-+	   CHECK_BIT_IN_MASK_WORD(DISABLED_MASK, 21, feature_bit) ||	\
- 	   DISABLED_MASK_CHECK					  ||	\
--	   BUILD_BUG_ON_ZERO(NCAPINTS != 21))
-+	   BUILD_BUG_ON_ZERO(NCAPINTS != 22))
- 
- #define cpu_has(c, bit)							\
- 	(__builtin_constant_p(bit) && REQUIRED_MASK_BIT_SET(bit) ? 1 :	\
---- a/arch/x86/include/asm/cpufeatures.h
-+++ b/arch/x86/include/asm/cpufeatures.h
-@@ -13,7 +13,7 @@
- /*
-  * Defines x86 CPU feature bits
-  */
--#define NCAPINTS			21	   /* N 32-bit words worth of info */
-+#define NCAPINTS			22	   /* N 32-bit words worth of info */
- #define NBUGINTS			2	   /* N 32-bit bug flags */
- 
- /*
---- a/arch/x86/include/asm/disabled-features.h
-+++ b/arch/x86/include/asm/disabled-features.h
-@@ -103,6 +103,7 @@
- #define DISABLED_MASK18	0
- #define DISABLED_MASK19	0
- #define DISABLED_MASK20	0
--#define DISABLED_MASK_CHECK BUILD_BUG_ON_ZERO(NCAPINTS != 21)
-+#define DISABLED_MASK21	0
-+#define DISABLED_MASK_CHECK BUILD_BUG_ON_ZERO(NCAPINTS != 22)
- 
- #endif /* _ASM_X86_DISABLED_FEATURES_H */
---- a/arch/x86/include/asm/required-features.h
-+++ b/arch/x86/include/asm/required-features.h
-@@ -103,6 +103,7 @@
- #define REQUIRED_MASK18	0
- #define REQUIRED_MASK19	0
- #define REQUIRED_MASK20	0
--#define REQUIRED_MASK_CHECK BUILD_BUG_ON_ZERO(NCAPINTS != 21)
-+#define REQUIRED_MASK21	0
-+#define REQUIRED_MASK_CHECK BUILD_BUG_ON_ZERO(NCAPINTS != 22)
- 
- #endif /* _ASM_X86_REQUIRED_FEATURES_H */
++		/* "Link key request" completed ahead of "connect request" completes */
++		if (ev->encr_mode == 1 && !test_bit(HCI_CONN_ENCRYPT, &conn->flags) &&
++		    ev->link_type == ACL_LINK) {
++			struct link_key *key;
++			struct hci_cp_read_enc_key_size cp;
++
++			key = hci_find_link_key(hdev, &ev->bdaddr);
++			if (key) {
++				set_bit(HCI_CONN_ENCRYPT, &conn->flags);
++
++				if (!(hdev->commands[20] & 0x10)) {
++					conn->enc_key_size = HCI_LINK_KEY_SIZE;
++				} else {
++					cp.handle = cpu_to_le16(conn->handle);
++					if (hci_send_cmd(hdev, HCI_OP_READ_ENC_KEY_SIZE,
++							 sizeof(cp), &cp)) {
++						bt_dev_err(hdev, "sending read key size failed");
++						conn->enc_key_size = HCI_LINK_KEY_SIZE;
++					}
++				}
++
++				hci_encrypt_cfm(conn, ev->status);
++			}
++		}
++
+ 		/* Get remote features */
+ 		if (conn->type == ACL_LINK) {
+ 			struct hci_cp_read_remote_features cp;
 
 
