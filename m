@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B6E13FD94;
-	Thu, 11 Apr 2024 10:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF8E13FD94;
+	Thu, 11 Apr 2024 10:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831137; cv=none; b=bS2N1YKSZUFsFPnoBbTvq+mhTnEDYc2V8c7CfLgmW/OpFiC+r6Y4CUqORUviXU0wz0b1k01gHlD/eAJKtcLDVzOjM/3YW5Y4Ael7MFqZOjW2YBDTgQ+C8U+P9YUr5ZdBLiQhTzBW/DS8DPJ9RVwD6f0JiLmDbYn46pgECcVzcZI=
+	t=1712831140; cv=none; b=JToNzGMPq8bs2b9+melMGWVmawn4p0nOIK2DQ7I5rcusma6x8KRDszDrns0fO/jp07zIGTs2jAKLwHDhkMfgMFr2pU9v64ipbqibLZuRAuL+koJXIuyAHMDh0K11Dg4wazFPumiNde3ThFmKvx6Dw2MxaADLTrMINnJF+gATlKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831137; c=relaxed/simple;
-	bh=UikVFuWnNDILP2s+LPIkGddoYy8fAnSBt+0uXA7N+Zc=;
+	s=arc-20240116; t=1712831140; c=relaxed/simple;
+	bh=JCw8ElE2Y3O6/CZ3MV1KBpN6H6E6D2J+rsjXBSIaS/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tQ71rcC9OkMNbf3LHfYDweusfHHDlRHbho8U/hEgpjQtMX6C2ln2xlRQrlqb66tCvHUA2HbIQyRW6EJcqQLz25qwROx//iVQYa4dB0D98dJJ/W3Dojo/jJFhKecHl4rCoCjIfaEUGFB1oVRuM+QHax93WWi8KYxbVLrjQp8BJIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwXITaXv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uiM2YnitusLZ60AjCAqj/Sj90qVI12QLDVhYcKgJvGMFTSecKeLfwHnLk/4JUKRRnr5Ax0cv9hSCaJbDeMZqR27KwrYKDFzA0a6FkfXQsIgnbkI0dqpFVeZUPJJE/A6gGzze8l+4iPg5PynIRj6xkncqGwbo+Km3kMmtsbkZVU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mx22KWzH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwXITaXv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA1EBC433C7;
-	Thu, 11 Apr 2024 10:25:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mx22KWzH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0813C433F1;
+	Thu, 11 Apr 2024 10:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831137;
-	bh=UikVFuWnNDILP2s+LPIkGddoYy8fAnSBt+0uXA7N+Zc=;
+	s=korg; t=1712831140;
+	bh=JCw8ElE2Y3O6/CZ3MV1KBpN6H6E6D2J+rsjXBSIaS/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VwXITaXvWhdL78PbwcO3ylGkSO09UMu8Dek2FZoP5p5x/5yVSlaRqu7hMULHCff02
-	 6mhnLGssA9TTbBJx3/iFmm94BqorJRBgF5TwTgbmO24vvAaQYZM1ksRaf5xpVbNbnY
-	 4X13u/ijlObjTc99Ir01K5kS+xCPcqO+avErTWcY=
+	b=Mx22KWzHDXfa+ktIT/g4BNGA46HRvXaKk452iu1frhGsogx3b9wYA1rLDsGwVabLN
+	 1orR3U1N+LnO+NzvkpmPYfznklajx76fcJWO4zfi7XIIcCD3qVC98crdM96jnCIbpD
+	 O5IbLrBt0KhV+QOvvXJ6F8NQZs2W2MThnMTrSlsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sven Eckelmann <sven@narfation.org>,
 	Simon Wunderlich <sw@simonwunderlich.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/114] batman-adv: Return directly after a failed batadv_dat_select_candidates() in batadv_dat_forward_data()
-Date: Thu, 11 Apr 2024 11:55:31 +0200
-Message-ID: <20240411095416.993175297@linuxfoundation.org>
+Subject: [PATCH 6.6 005/114] batman-adv: Improve exception handling in batadv_throw_uevent()
+Date: Thu, 11 Apr 2024 11:55:32 +0200
+Message-ID: <20240411095417.023668264@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095416.853744210@linuxfoundation.org>
 References: <20240411095416.853744210@linuxfoundation.org>
@@ -46,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -55,47 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Markus Elfring <elfring@users.sourceforge.net>
 
-[ Upstream commit ffc15626c861f811f9778914be004fcf43810a91 ]
+[ Upstream commit 5593e9abf1cf2bf096366d8c7fd933bc69d561ce ]
 
-The kfree() function was called in one case by
-the batadv_dat_forward_data() function during error handling
+The kfree() function was called in up to three cases by
+the batadv_throw_uevent() function during error handling
 even if the passed variable contained a null pointer.
 This issue was detected by using the Coccinelle software.
 
-* Thus return directly after a batadv_dat_select_candidates() call failed
-  at the beginning.
+* Thus adjust jump targets.
 
-* Delete the label “out” which became unnecessary with this refactoring.
+* Reorder kfree() calls at the end.
 
 Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
 Acked-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/distributed-arp-table.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/batman-adv/main.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/net/batman-adv/distributed-arp-table.c b/net/batman-adv/distributed-arp-table.c
-index 28a939d560906..4c7e855343245 100644
---- a/net/batman-adv/distributed-arp-table.c
-+++ b/net/batman-adv/distributed-arp-table.c
-@@ -684,7 +684,7 @@ static bool batadv_dat_forward_data(struct batadv_priv *bat_priv,
- 
- 	cand = batadv_dat_select_candidates(bat_priv, ip, vid);
- 	if (!cand)
+diff --git a/net/batman-adv/main.c b/net/batman-adv/main.c
+index e8a4499155667..100e43f5e85aa 100644
+--- a/net/batman-adv/main.c
++++ b/net/batman-adv/main.c
+@@ -688,29 +688,31 @@ int batadv_throw_uevent(struct batadv_priv *bat_priv, enum batadv_uev_type type,
+ 				  "%s%s", BATADV_UEV_TYPE_VAR,
+ 				  batadv_uev_type_str[type]);
+ 	if (!uevent_env[0])
 -		goto out;
-+		return ret;
++		goto report_error;
  
- 	batadv_dbg(BATADV_DBG_DAT, bat_priv, "DHT_SEND for %pI4\n", &ip);
+ 	uevent_env[1] = kasprintf(GFP_ATOMIC,
+ 				  "%s%s", BATADV_UEV_ACTION_VAR,
+ 				  batadv_uev_action_str[action]);
+ 	if (!uevent_env[1])
+-		goto out;
++		goto free_first_env;
  
-@@ -728,7 +728,6 @@ static bool batadv_dat_forward_data(struct batadv_priv *bat_priv,
- 		batadv_orig_node_put(cand[i].orig_node);
+ 	/* If the event is DEL, ignore the data field */
+ 	if (action != BATADV_UEV_DEL) {
+ 		uevent_env[2] = kasprintf(GFP_ATOMIC,
+ 					  "%s%s", BATADV_UEV_DATA_VAR, data);
+ 		if (!uevent_env[2])
+-			goto out;
++			goto free_second_env;
  	}
  
+ 	ret = kobject_uevent_env(bat_kobj, KOBJ_CHANGE, uevent_env);
 -out:
- 	kfree(cand);
- 	return ret;
- }
+-	kfree(uevent_env[0]);
+-	kfree(uevent_env[1]);
+ 	kfree(uevent_env[2]);
++free_second_env:
++	kfree(uevent_env[1]);
++free_first_env:
++	kfree(uevent_env[0]);
+ 
+ 	if (ret)
++report_error:
+ 		batadv_dbg(BATADV_DBG_BATMAN, bat_priv,
+ 			   "Impossible to send uevent for (%s,%s,%s) event (err: %d)\n",
+ 			   batadv_uev_type_str[type],
 -- 
 2.43.0
 
