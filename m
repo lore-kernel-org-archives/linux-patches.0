@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7F21442F7;
-	Thu, 11 Apr 2024 10:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CED31442F7;
+	Thu, 11 Apr 2024 10:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829989; cv=none; b=C+Y83HQ9B8zvKSz3KKF3uBdfJFB2YqSK1fb6OH0/Sdq4atwCrDE9Gp20VmSXysOcuuRG/rW2HRRZFuMJ1/C4V/p/olFApRJSAtywlIDo94gXc0RNrxVNYzeUoJy8mMV56jnmI1QAKsGqceKPyQAAqTvyotGYpbUnqXyg6jAqpgM=
+	t=1712829992; cv=none; b=F62cgJcCjFnOVYkBf+qDFMXXLi9D+jDhWpOZkY0y5dlZWa6yhZByEs3hG0t4aLd6M5pYGb5MB26sIRNsQyg/+JeGRbRuNRl68Dzw79g7yleTmg4b5ddS4dOygy4zWJnZif7vK1uaOsNWQ+QwfTtknU7L1SLye+qePn2frscIbMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829989; c=relaxed/simple;
-	bh=hjbhWAQxTo9BAW8FhU3HNgzRdM5Urp3LKbxW9OnAW+I=;
+	s=arc-20240116; t=1712829992; c=relaxed/simple;
+	bh=4D+UE3Qj7lU1Aj00SE9qyyEQ7dM1Aro2zxGrkiVPhFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b8fVCwRIfbs+EKmoU02Ch4YowQedzGndkCxkNiRXrEA8Dssp3kgwJFt458c71Y/pRpIb5KpG5VW7O75aGM5kxQlAScnEcRKj+kPrT1LvV38IKNvzlZZtbpN2JquO0Fj9OHzHWNNTKWgI7vvA76Ic85fmj08czMhehFIC7UWbGPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zg7zjae2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K0o5FWS/0lSy5JI3g4eeaTNNpQWssHkYlFMkwAnFbOQah//XPIrncMdSU1Odof2k9LBzm35k0RB1k3dcHgamdLKyHvD6FN2leioVw0G/VTw+BkiytY++mOY3eh2y0bwqOY/KUcumkaAIt7JapJ59HBLDsbvlaWldKdlCH569+y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n79MrkPB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zg7zjae2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFF6CC433F1;
-	Thu, 11 Apr 2024 10:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n79MrkPB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156E5C433C7;
+	Thu, 11 Apr 2024 10:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829989;
-	bh=hjbhWAQxTo9BAW8FhU3HNgzRdM5Urp3LKbxW9OnAW+I=;
+	s=korg; t=1712829992;
+	bh=4D+UE3Qj7lU1Aj00SE9qyyEQ7dM1Aro2zxGrkiVPhFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zg7zjae2j5YcbkiCVRxZvRLEiXjR6e1Nc0u6Q4IAMWRl3KqhnqDozt26FayUL5Q/C
-	 ib6oQ9Vy7OFLkM8YzKNeWnIA9e6/ONjuQKvlT66K8g+35fxK5fW/XgXvcUEnaoJ9+e
-	 Kopdk2bACjlLs6G7gLkhXCCWUpxv3jUd2gTnw2/w=
+	b=n79MrkPB6oMm6tvysmzOIjAcFQsPNoZ/JdR/yt9nBmPJl+F0Dr8/vY9ZrxEnssTe5
+	 saTMcwcGVllci7pyJ41iBnUWlK2taStheFfGVAIPdEhId/fcyi7DRLBlcJpgYZWXLp
+	 YeoKmyrMNCIE1KgIHF6y6w5LF9Hzy+X7p9K2U9LY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianlin Shi <jishi@redhat.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	William Tu <u9012063@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 4.19 174/175] ip_gre: do not report erspan version on GRE interface
-Date: Thu, 11 Apr 2024 11:56:37 +0200
-Message-ID: <20240411095424.801482739@linuxfoundation.org>
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 4.19 175/175] initramfs: fix populate_initrd_image() section mismatch
+Date: Thu, 11 Apr 2024 11:56:38 +0200
+Message-ID: <20240411095424.831633827@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,99 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
 
-commit ee496694b9eea651ae1aa4c4667d886cdf74aa3b upstream.
+commit 4ada1e810038e9dbc20e40b524e05ee1a9d31f98 upstream.
 
-Although the type I ERSPAN is based on the barebones IP + GRE
-encapsulation and no extra ERSPAN header. Report erspan version on GRE
-interface looks unreasonable. Fix this by separating the erspan and gre
-fill info.
+With gcc-4.6.3:
 
-IPv6 GRE does not have this info as IPv6 only supports erspan version
-1 and 2.
+    WARNING: vmlinux.o(.text.unlikely+0x140): Section mismatch in reference from the function populate_initrd_image() to the variable .init.ramfs.info:__initramfs_size
+    The function populate_initrd_image() references
+    the variable __init __initramfs_size.
+    This is often because populate_initrd_image lacks a __init
+    annotation or the annotation of __initramfs_size is wrong.
 
-Reported-by: Jianlin Shi <jishi@redhat.com>
-Fixes: f989d546a2d5 ("erspan: Add type I version 0 support.")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: William Tu <u9012063@gmail.com>
-Link: https://lore.kernel.org/r/20221203032858.3130339-1-liuhangbin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+    WARNING: vmlinux.o(.text.unlikely+0x14c): Section mismatch in reference from the function populate_initrd_image() to the function .init.text:unpack_to_rootfs()
+    The function populate_initrd_image() references
+    the function __init unpack_to_rootfs().
+    This is often because populate_initrd_image lacks a __init
+    annotation or the annotation of unpack_to_rootfs is wrong.
+
+    WARNING: vmlinux.o(.text.unlikely+0x198): Section mismatch in reference from the function populate_initrd_image() to the function .init.text:xwrite()
+    The function populate_initrd_image() references
+    the function __init xwrite().
+    This is often because populate_initrd_image lacks a __init
+    annotation or the annotation of xwrite is wrong.
+
+Indeed, if the compiler decides not to inline populate_initrd_image(), a
+warning is generated.
+
+Fix this by adding the missing __init annotations.
+
+Link: http://lkml.kernel.org/r/20190617074340.12779-1-geert@linux-m68k.org
+Fixes: 7c184ecd262fe64f ("initramfs: factor out a helper to populate the initrd image")
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ip_gre.c |   48 +++++++++++++++++++++++++++++-------------------
- 1 file changed, 29 insertions(+), 19 deletions(-)
+ init/initramfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -1586,24 +1586,6 @@ static int ipgre_fill_info(struct sk_buf
- 	struct ip_tunnel_parm *p = &t->parms;
- 	__be16 o_flags = p->o_flags;
+--- a/init/initramfs.c
++++ b/init/initramfs.c
+@@ -603,7 +603,7 @@ static void __init clean_rootfs(void)
+ #endif
  
--	if (t->erspan_ver <= 2) {
--		if (t->erspan_ver != 0 && !t->collect_md)
--			o_flags |= TUNNEL_KEY;
--
--		if (nla_put_u8(skb, IFLA_GRE_ERSPAN_VER, t->erspan_ver))
--			goto nla_put_failure;
--
--		if (t->erspan_ver == 1) {
--			if (nla_put_u32(skb, IFLA_GRE_ERSPAN_INDEX, t->index))
--				goto nla_put_failure;
--		} else if (t->erspan_ver == 2) {
--			if (nla_put_u8(skb, IFLA_GRE_ERSPAN_DIR, t->dir))
--				goto nla_put_failure;
--			if (nla_put_u16(skb, IFLA_GRE_ERSPAN_HWID, t->hwid))
--				goto nla_put_failure;
--		}
--	}
--
- 	if (nla_put_u32(skb, IFLA_GRE_LINK, p->link) ||
- 	    nla_put_be16(skb, IFLA_GRE_IFLAGS,
- 			 gre_tnl_flags_to_gre_flags(p->i_flags)) ||
-@@ -1644,6 +1626,34 @@ nla_put_failure:
- 	return -EMSGSIZE;
- }
- 
-+static int erspan_fill_info(struct sk_buff *skb, const struct net_device *dev)
-+{
-+	struct ip_tunnel *t = netdev_priv(dev);
-+
-+	if (t->erspan_ver <= 2) {
-+		if (t->erspan_ver != 0 && !t->collect_md)
-+			t->parms.o_flags |= TUNNEL_KEY;
-+
-+		if (nla_put_u8(skb, IFLA_GRE_ERSPAN_VER, t->erspan_ver))
-+			goto nla_put_failure;
-+
-+		if (t->erspan_ver == 1) {
-+			if (nla_put_u32(skb, IFLA_GRE_ERSPAN_INDEX, t->index))
-+				goto nla_put_failure;
-+		} else if (t->erspan_ver == 2) {
-+			if (nla_put_u8(skb, IFLA_GRE_ERSPAN_DIR, t->dir))
-+				goto nla_put_failure;
-+			if (nla_put_u16(skb, IFLA_GRE_ERSPAN_HWID, t->hwid))
-+				goto nla_put_failure;
-+		}
-+	}
-+
-+	return ipgre_fill_info(skb, dev);
-+
-+nla_put_failure:
-+	return -EMSGSIZE;
-+}
-+
- static void erspan_setup(struct net_device *dev)
+ #ifdef CONFIG_BLK_DEV_RAM
+-static void populate_initrd_image(char *err)
++static void __init populate_initrd_image(char *err)
  {
- 	struct ip_tunnel *t = netdev_priv(dev);
-@@ -1722,7 +1732,7 @@ static struct rtnl_link_ops erspan_link_
- 	.changelink	= erspan_changelink,
- 	.dellink	= ip_tunnel_dellink,
- 	.get_size	= ipgre_get_size,
--	.fill_info	= ipgre_fill_info,
-+	.fill_info	= erspan_fill_info,
- 	.get_link_net	= ip_tunnel_get_link_net,
- };
- 
+ 	ssize_t written;
+ 	struct file *file;
 
 
