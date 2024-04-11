@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726C2143C72;
-	Thu, 11 Apr 2024 10:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6107D145342;
+	Thu, 11 Apr 2024 10:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829640; cv=none; b=hBOf/1jQwcGS/pvmF9N6t7OBWFs4jC7VA/58g9uaQsXEU7swbxF3yo0x3ZPGT70qJeLI9DjAaDiX8fKtc4XQO3YYER/lqC8qncMSIR7vtBMgz8XGFq9i0Q0K8HAWUb1c5HGobSIfI9W9JY/JTtxr1BinntU5cgai81Qbo1qtCrk=
+	t=1712829643; cv=none; b=DFUDcoiJeagodmGH63TZEPM58bxTMASsylTKY5ZH9BrrRhs5aJGIgR4amBGa0z7tpBG+rzF5zpBfh6gBN++mYR0VF8Ovg4TRl2g5RsZ7bCgEkwaPmxeif9MOu5P6KnqrzJKQGdRr8dnzZ4bubI6xRl9FAStV9nrR/3QV27Ycu4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829640; c=relaxed/simple;
-	bh=aEkyDljDkWI8U8jDoMjXMeeMSbQbW3mRLqANM/A0zBM=;
+	s=arc-20240116; t=1712829643; c=relaxed/simple;
+	bh=oN2/EzY+jEM15YshG8m5bOxJHX5ToIvq5GV9VaS95ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uEzokgX5zzncW075ih4gP8zuQRu5q3pKBgFvRtUC4ukq9mMD0kg1lnu0nLDSMSPgiznpJkPOgNa1tVkeHfY5U02pMYEMAstiQ+rHU0etACcn6na3B6OKm+6yUWJi2mFLAHAwrlJgC5txd9/gnICN8TgQcSslJv1iyPbJy1c9ViY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uZVong+y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hi2t32fwTztzWl12ZwM8+n1HArgx9cvQfbw0adue72Z8CbI7fcNPNTAwjkdvlFgHDtNsZ3691FmqNj2oCUD+u7oaV18zUZQMBE+5Plwyag0QvFod7rAWJYO7+FjANFru3WBbYO3J40B9wyLVG+IhhIZSEyltfEGzYNj7tXqe6a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLnvqZV7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZVong+y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2EA2C433F1;
-	Thu, 11 Apr 2024 10:00:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLnvqZV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF97FC433C7;
+	Thu, 11 Apr 2024 10:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829640;
-	bh=aEkyDljDkWI8U8jDoMjXMeeMSbQbW3mRLqANM/A0zBM=;
+	s=korg; t=1712829643;
+	bh=oN2/EzY+jEM15YshG8m5bOxJHX5ToIvq5GV9VaS95ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uZVong+y+51r6SBDwuSpVZVIoaeTsn9OSUiffnjWYA+QLdcAkfya0aly3J9h82+sU
-	 4H4+dCQ02+rXoFVfz1Rqnq1x3rxrADLRZy2MqN6eUaFWShCP6/DNwiFCvKZ/mV0EQw
-	 tNG/pOs35ra1m3E8IQ7MTuc+X2813PWS7pxOIzfg=
+	b=LLnvqZV7gFKNeaZZrPj2uaNHo6Kcmq1YeMetjKuDFRLUHbXdj9/+pFWXUAoy8d/6P
+	 2XsVknsnWqw88lEHgNPZPvgMZLVbOhmk43vMvnJ9ej+3nNTaYEXfBNmU9sD8flwIwM
+	 lSmgJg8K2iFfmeR25sMZJ01KwQQE2OUH5n5EHNTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@seco.com>,
-	Camelia Groza <camelia.groza@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Toru Katagiri <Toru.Katagiri@tdk.com>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 056/175] soc: fsl: qbman: Add CGR update function
-Date: Thu, 11 Apr 2024 11:54:39 +0200
-Message-ID: <20240411095421.253866128@linuxfoundation.org>
+Subject: [PATCH 4.19 039/175] USB: serial: cp210x: add pid/vid for TDK NC0110013M and MM0110113M
+Date: Thu, 11 Apr 2024 11:54:22 +0200
+Message-ID: <20240411095420.735453826@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,105 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@seco.com>
+From: Toru Katagiri <Toru.Katagiri@tdk.com>
 
-[ Upstream commit 914f8b228ede709274b8c80514b352248ec9da00 ]
+[ Upstream commit b1a8da9ff1395c4879b4bd41e55733d944f3d613 ]
 
-This adds a function to update a CGR with new parameters. qman_create_cgr
-can almost be used for this (with flags=0), but it's not suitable because
-it also registers the callback function. The _safe variant was modeled off
-of qman_cgr_delete_safe. However, we handle multiple arguments and a return
-value.
+TDK NC0110013M and MM0110113M have custom USB IDs for CP210x,
+so we need to add them to the driver.
 
-Signed-off-by: Sean Anderson <sean.anderson@seco.com>
-Acked-by: Camelia Groza <camelia.groza@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: fbec4e7fed89 ("soc: fsl: qbman: Use raw spinlock for cgr_lock")
+Signed-off-by: Toru Katagiri <Toru.Katagiri@tdk.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/qbman/qman.c | 48 ++++++++++++++++++++++++++++++++++++
- include/soc/fsl/qman.h       |  9 +++++++
- 2 files changed, 57 insertions(+)
+ drivers/usb/serial/cp210x.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
-index 24ca4bedcaa6e..4d0853ead7ddf 100644
---- a/drivers/soc/fsl/qbman/qman.c
-+++ b/drivers/soc/fsl/qbman/qman.c
-@@ -2474,6 +2474,54 @@ void qman_delete_cgr_safe(struct qman_cgr *cgr)
- }
- EXPORT_SYMBOL(qman_delete_cgr_safe);
- 
-+static int qman_update_cgr(struct qman_cgr *cgr, struct qm_mcc_initcgr *opts)
-+{
-+	int ret;
-+	unsigned long irqflags;
-+	struct qman_portal *p = qman_cgr_get_affine_portal(cgr);
-+
-+	if (!p)
-+		return -EINVAL;
-+
-+	spin_lock_irqsave(&p->cgr_lock, irqflags);
-+	ret = qm_modify_cgr(cgr, 0, opts);
-+	spin_unlock_irqrestore(&p->cgr_lock, irqflags);
-+	put_affine_portal();
-+	return ret;
-+}
-+
-+struct update_cgr_params {
-+	struct qman_cgr *cgr;
-+	struct qm_mcc_initcgr *opts;
-+	int ret;
-+};
-+
-+static void qman_update_cgr_smp_call(void *p)
-+{
-+	struct update_cgr_params *params = p;
-+
-+	params->ret = qman_update_cgr(params->cgr, params->opts);
-+}
-+
-+int qman_update_cgr_safe(struct qman_cgr *cgr, struct qm_mcc_initcgr *opts)
-+{
-+	struct update_cgr_params params = {
-+		.cgr = cgr,
-+		.opts = opts,
-+	};
-+
-+	preempt_disable();
-+	if (qman_cgr_cpus[cgr->cgrid] != smp_processor_id())
-+		smp_call_function_single(qman_cgr_cpus[cgr->cgrid],
-+					 qman_update_cgr_smp_call, &params,
-+					 true);
-+	else
-+		params.ret = qman_update_cgr(cgr, opts);
-+	preempt_enable();
-+	return params.ret;
-+}
-+EXPORT_SYMBOL(qman_update_cgr_safe);
-+
- /* Cleanup FQs */
- 
- static int _qm_mr_consume_and_match_verb(struct qm_portal *p, int v)
-diff --git a/include/soc/fsl/qman.h b/include/soc/fsl/qman.h
-index 597783b8a3a07..b67f2e83bbef9 100644
---- a/include/soc/fsl/qman.h
-+++ b/include/soc/fsl/qman.h
-@@ -1159,6 +1159,15 @@ int qman_delete_cgr(struct qman_cgr *cgr);
-  */
- void qman_delete_cgr_safe(struct qman_cgr *cgr);
- 
-+/**
-+ * qman_update_cgr_safe - Modifies a congestion group object from any CPU
-+ * @cgr: the 'cgr' object to modify
-+ * @opts: state of the CGR settings
-+ *
-+ * This will select the proper CPU and modify the CGR settings.
-+ */
-+int qman_update_cgr_safe(struct qman_cgr *cgr, struct qm_mcc_initcgr *opts);
-+
- /**
-  * qman_query_cgr_congested - Queries CGR's congestion status
-  * @cgr: the 'cgr' object to query
+diff --git a/drivers/usb/serial/cp210x.c b/drivers/usb/serial/cp210x.c
+index 4bebe0f3c201a..4686cf7c6b0a6 100644
+--- a/drivers/usb/serial/cp210x.c
++++ b/drivers/usb/serial/cp210x.c
+@@ -57,6 +57,8 @@ static const struct usb_device_id id_table[] = {
+ 	{ USB_DEVICE(0x0471, 0x066A) }, /* AKTAKOM ACE-1001 cable */
+ 	{ USB_DEVICE(0x0489, 0xE000) }, /* Pirelli Broadband S.p.A, DP-L10 SIP/GSM Mobile */
+ 	{ USB_DEVICE(0x0489, 0xE003) }, /* Pirelli Broadband S.p.A, DP-L10 SIP/GSM Mobile */
++	{ USB_DEVICE(0x04BF, 0x1301) }, /* TDK Corporation NC0110013M - Network Controller */
++	{ USB_DEVICE(0x04BF, 0x1303) }, /* TDK Corporation MM0110113M - i3 Micro Module */
+ 	{ USB_DEVICE(0x0745, 0x1000) }, /* CipherLab USB CCD Barcode Scanner 1000 */
+ 	{ USB_DEVICE(0x0846, 0x1100) }, /* NetGear Managed Switch M4100 series, M5300 series, M7100 series */
+ 	{ USB_DEVICE(0x08e6, 0x5501) }, /* Gemalto Prox-PU/CU contactless smartcard reader */
 -- 
 2.43.0
 
