@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2B714D283;
-	Thu, 11 Apr 2024 10:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A72014C591;
+	Thu, 11 Apr 2024 10:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831656; cv=none; b=dwX4Z7JmCZARgi4WHHHayNtQqzbBgxpeHr9gILzQRuq18/qJ5gU309QSypSKnfJ7tedmUXqrcRlnx1/gFqwmuSUoQMgrD7I58iitVg/aAqWo4OI0/uEr02wuBDfUvDud4QTt6tjAj3sVnyS8NRewlj3SjzSgyFUzWqMoX1j79vQ=
+	t=1712831659; cv=none; b=sCNgRu+gynflcNbqeD7mb/t8BAAZNHIhvqCZ0VybHVTs+3QwAtBlY8gMKpoy6GdpitHaiIa9Vl3sTXXpccM8thSPYbHBxIUIvHDphBvcc8OX/4CdGMY65kyHfQTVkClNhH6znVZswtBe5YOrUHXWTWItFwWzP2ue/9JLoxZA9v8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831656; c=relaxed/simple;
-	bh=G9nCqj7YyswIJhM8bkunLCgIHh6aZRUgpDUbODaxuR0=;
+	s=arc-20240116; t=1712831659; c=relaxed/simple;
+	bh=LZAxHTXHbQO5PSNeHAdTwZlEqNOkNn/BZDB+xRpbgWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lSIXwDsfJ+HDGHu3lx6oZ7rGNzcqN1Y4hNIsZhoyIehUeqr24trUIVJF6E9fj/EZLWLAcjycqKfl/bpjelZ1lxBotFY/h6JKqjodAPqxF0pCv4PSHYFqxd/k3Qy4uSsv2iNPs/TR1S6b2u8tLatR4db0H6qI7DsToUsmFQl8h3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzvTIxkm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E1coMM7A/OmlmH9egHST7Bv+vCeeV1FxmtCQZ5l3CfqCETJfx9BlWXUfetNrI9j+G7UMJ2ooR8P7FvjAc/KFKpEdoW6CJ/Ct0qS0vKlDO9Ps51pThLvDcVaOT0V7+5HJtjfwuwH4rLJ9863EicxOLsQGuXq5VVpzkiL0RVNNXg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CxvZw7e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzvTIxkm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2486EC433C7;
-	Thu, 11 Apr 2024 10:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CxvZw7e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109C2C43390;
+	Thu, 11 Apr 2024 10:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831656;
-	bh=G9nCqj7YyswIJhM8bkunLCgIHh6aZRUgpDUbODaxuR0=;
+	s=korg; t=1712831659;
+	bh=LZAxHTXHbQO5PSNeHAdTwZlEqNOkNn/BZDB+xRpbgWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dzvTIxkmq+iVI9eZFj+34FeKq/wNTaL0isVY1PH3mCLEj7pTImJ6HVPlfsXZ2VFeA
-	 zQbcpGvStajtISaRuDcr9E5NFl2p/jN5umpewDplk89qhCfrRaw+wiat+T2Dq9NY6R
-	 rd5a+zC4e4ijxhCHQLkQGMZ1Yr1bAz8vWWJFSL8A=
+	b=1CxvZw7eJ4Z10m1JztUifHNFevFlzWCVOJYzE3BN915NmLZNWfmniyv1fCOplAp6T
+	 vgmG1/P5YZ0ZKFQNxNtPa1Lxi1wYMK3D4Odd3WdTz/MQ+Tj3+HsL0DFFRer7U4cVM/
+	 oDMdhu6RlJrWWRygnGDsuWCN7Kw4Rq+gDDHelv9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 082/294] PCI/AER: Block runtime suspend when handling errors
-Date: Thu, 11 Apr 2024 11:54:05 +0200
-Message-ID: <20240411095438.155511174@linuxfoundation.org>
+Subject: [PATCH 5.10 083/294] nfs: fix UAF in direct writes
+Date: Thu, 11 Apr 2024 11:54:06 +0200
+Message-ID: <20240411095438.184938749@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -53,97 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 002bf2fbc00e5c4b95fb167287e2ae7d1973281e ]
+[ Upstream commit 17f46b803d4f23c66cacce81db35fef3adb8f2af ]
 
-PM runtime can be done simultaneously with AER error handling.  Avoid that
-by using pm_runtime_get_sync() before and pm_runtime_put() after reset in
-pcie_do_recovery() for all recovering devices.
+In production we have been hitting the following warning consistently
 
-pm_runtime_get_sync() will increase dev->power.usage_count counter to
-prevent any possible future request to runtime suspend a device.  It will
-also resume a device, if it was previously in D3hot state.
+------------[ cut here ]------------
+refcount_t: underflow; use-after-free.
+WARNING: CPU: 17 PID: 1800359 at lib/refcount.c:28 refcount_warn_saturate+0x9c/0xe0
+Workqueue: nfsiod nfs_direct_write_schedule_work [nfs]
+RIP: 0010:refcount_warn_saturate+0x9c/0xe0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? __warn+0x9f/0x130
+ ? refcount_warn_saturate+0x9c/0xe0
+ ? report_bug+0xcc/0x150
+ ? handle_bug+0x3d/0x70
+ ? exc_invalid_op+0x16/0x40
+ ? asm_exc_invalid_op+0x16/0x20
+ ? refcount_warn_saturate+0x9c/0xe0
+ nfs_direct_write_schedule_work+0x237/0x250 [nfs]
+ process_one_work+0x12f/0x4a0
+ worker_thread+0x14e/0x3b0
+ ? ZSTD_getCParams_internal+0x220/0x220
+ kthread+0xdc/0x120
+ ? __btf_name_valid+0xa0/0xa0
+ ret_from_fork+0x1f/0x30
 
-I tested with igc device by doing simultaneous aer_inject and rpm
-suspend/resume via /sys/bus/pci/devices/PCI_ID/power/control and can
-reproduce:
+This is because we're completing the nfs_direct_request twice in a row.
 
-  igc 0000:02:00.0: not ready 65535ms after bus reset; giving up
-  pcieport 0000:00:1c.2: AER: Root Port link has been reset (-25)
-  pcieport 0000:00:1c.2: AER: subordinate device reset failed
-  pcieport 0000:00:1c.2: AER: device recovery failed
-  igc 0000:02:00.0: Unable to change power state from D3hot to D0, device inaccessible
+The source of this is when we have our commit requests to submit, we
+process them and send them off, and then in the completion path for the
+commit requests we have
 
-The problem disappears when this patch is applied.
+if (nfs_commit_end(cinfo.mds))
+	nfs_direct_write_complete(dreq);
 
-Link: https://lore.kernel.org/r/20240212120135.146068-1-stanislaw.gruszka@linux.intel.com
-Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Cc: <stable@vger.kernel.org>
+However since we're submitting asynchronous requests we sometimes have
+one that completes before we submit the next one, so we end up calling
+complete on the nfs_direct_request twice.
+
+The only other place we use nfs_generic_commit_list() is in
+__nfs_commit_inode, which wraps this call in a
+
+nfs_commit_begin();
+nfs_commit_end();
+
+Which is a common pattern for this style of completion handling, one
+that is also repeated in the direct code with get_dreq()/put_dreq()
+calls around where we process events as well as in the completion paths.
+
+Fix this by using the same pattern for the commit requests.
+
+Before with my 200 node rocksdb stress running this warning would pop
+every 10ish minutes.  With my patch the stress test has been running for
+several hours without popping.
+
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/err.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ fs/nfs/direct.c        | 11 +++++++++--
+ fs/nfs/write.c         |  2 +-
+ include/linux/nfs_fs.h |  1 +
+ 3 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/pcie/err.c b/drivers/pci/pcie/err.c
-index a806dfd94586c..bb4febcf45ba1 100644
---- a/drivers/pci/pcie/err.c
-+++ b/drivers/pci/pcie/err.c
-@@ -13,6 +13,7 @@
- #define dev_fmt(fmt) "AER: " fmt
+diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
+index 5d86ffa72ceab..499519f0f6ecd 100644
+--- a/fs/nfs/direct.c
++++ b/fs/nfs/direct.c
+@@ -678,10 +678,17 @@ static void nfs_direct_commit_schedule(struct nfs_direct_req *dreq)
+ 	LIST_HEAD(mds_list);
  
- #include <linux/pci.h>
-+#include <linux/pm_runtime.h>
- #include <linux/module.h>
- #include <linux/kernel.h>
- #include <linux/errno.h>
-@@ -79,6 +80,18 @@ static int report_error_detected(struct pci_dev *dev,
- 	return 0;
+ 	nfs_init_cinfo_from_dreq(&cinfo, dreq);
++	nfs_commit_begin(cinfo.mds);
+ 	nfs_scan_commit(dreq->inode, &mds_list, &cinfo);
+ 	res = nfs_generic_commit_list(dreq->inode, &mds_list, 0, &cinfo);
+-	if (res < 0) /* res == -ENOMEM */
+-		nfs_direct_write_reschedule(dreq);
++	if (res < 0) { /* res == -ENOMEM */
++		spin_lock(&dreq->lock);
++		if (dreq->flags == 0)
++			dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
++		spin_unlock(&dreq->lock);
++	}
++	if (nfs_commit_end(cinfo.mds))
++		nfs_direct_write_complete(dreq);
  }
  
-+static int pci_pm_runtime_get_sync(struct pci_dev *pdev, void *data)
-+{
-+	pm_runtime_get_sync(&pdev->dev);
-+	return 0;
-+}
-+
-+static int pci_pm_runtime_put(struct pci_dev *pdev, void *data)
-+{
-+	pm_runtime_put(&pdev->dev);
-+	return 0;
-+}
-+
- static int report_frozen_detected(struct pci_dev *dev, void *data)
+ static void nfs_direct_write_clear_reqs(struct nfs_direct_req *dreq)
+diff --git a/fs/nfs/write.c b/fs/nfs/write.c
+index d3cd099ffb6e1..4cf0606919794 100644
+--- a/fs/nfs/write.c
++++ b/fs/nfs/write.c
+@@ -1637,7 +1637,7 @@ static int wait_on_commit(struct nfs_mds_commit_info *cinfo)
+ 				       !atomic_read(&cinfo->rpcs_out));
+ }
+ 
+-static void nfs_commit_begin(struct nfs_mds_commit_info *cinfo)
++void nfs_commit_begin(struct nfs_mds_commit_info *cinfo)
  {
- 	return report_error_detected(dev, pci_channel_io_frozen, data);
-@@ -194,6 +207,8 @@ pci_ers_result_t pcie_do_recovery(struct pci_dev *dev,
- 	else
- 		bridge = pci_upstream_bridge(dev);
+ 	atomic_inc(&cinfo->rpcs_out);
+ }
+diff --git a/include/linux/nfs_fs.h b/include/linux/nfs_fs.h
+index e39342945a80b..7488864589a7a 100644
+--- a/include/linux/nfs_fs.h
++++ b/include/linux/nfs_fs.h
+@@ -553,6 +553,7 @@ extern int nfs_wb_page_cancel(struct inode *inode, struct page* page);
+ extern int  nfs_commit_inode(struct inode *, int);
+ extern struct nfs_commit_data *nfs_commitdata_alloc(void);
+ extern void nfs_commit_free(struct nfs_commit_data *data);
++void nfs_commit_begin(struct nfs_mds_commit_info *cinfo);
+ bool nfs_commit_end(struct nfs_mds_commit_info *cinfo);
  
-+	pci_walk_bridge(bridge, pci_pm_runtime_get_sync, NULL);
-+
- 	pci_dbg(bridge, "broadcast error_detected message\n");
- 	if (state == pci_channel_io_frozen) {
- 		pci_walk_bridge(bridge, report_frozen_detected, &status);
-@@ -239,10 +254,15 @@ pci_ers_result_t pcie_do_recovery(struct pci_dev *dev,
- 		pcie_clear_device_status(bridge);
- 		pci_aer_clear_nonfatal_status(bridge);
- 	}
-+
-+	pci_walk_bridge(bridge, pci_pm_runtime_put, NULL);
-+
- 	pci_info(bridge, "device recovery successful\n");
- 	return status;
- 
- failed:
-+	pci_walk_bridge(bridge, pci_pm_runtime_put, NULL);
-+
- 	pci_uevent_ers(bridge, PCI_ERS_RESULT_DISCONNECT);
- 
- 	/* TODO: Should kernel panic here? */
+ static inline int
 -- 
 2.43.0
 
