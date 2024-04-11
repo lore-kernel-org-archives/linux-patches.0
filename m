@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53CEF1474B9;
-	Thu, 11 Apr 2024 10:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FCF13C9A5;
+	Thu, 11 Apr 2024 10:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831744; cv=none; b=RiBZ9KRz++o/Vr/wUbNj/b18pQzGjgtdNHD/VvdLHH9se7t5fPmuf2kSl4yIvlTfDQ6yf/J0+zlT9vDcY21pVPfrcX1B5CSkoYHzaaa+HSN5QJ269k/D1sKIx68vevxZZobwtOytuDk8BTRKFE5EOk4Gmg0w9VreqkyVZiDynp8=
+	t=1712831747; cv=none; b=g4G290NiARMA/qtxTx0/o48sAKA/s+cs2itkWbN9QPC9C693PBEEuxfGe0peuGemcdLS66k3GQVq8aiNr+1isr5C6uvh3Up+sP01E4TlzG7SbNDSL3yqLe6HDZzbdWYQH2dJpB2/A+olg6nB3YTGut6ME6LX3/Iisq9j+cxRiYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831744; c=relaxed/simple;
-	bh=+e8XLNvELddZonv6ny2jdM0bWUiA6dIO5dswj54CizM=;
+	s=arc-20240116; t=1712831747; c=relaxed/simple;
+	bh=ZUKE7zLJ9iv3zWzyha72+drnzsuFaXujV64aR6VdBgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQYW+iIjc4EHfB1vIYwYAQbXieRF/0kPmNl5iYP1OtFJD68/CxRP1YpJcuC+7k3UivbN9XbYBwQqCgH1CrwNghsSguBj7ZXA7Hre48COOLplqHnHW/Z2erkxOrmjehlkpcq+KALpI1c3a4nRNTjpPWlnIIKaWmK4KgXPkAiDjlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJIxyJPq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g9N3/K5IsOj3SZeHdwkFQlG5tw89GRn2i5TQkEAgxFHrSCrLbjXnlFWyJfdmZIa0tu+tUJ+aGbl5jvW/yTGMREelkF5EbOggfMu2pVVNFsZnZmCt+IPWhHBRkm+8foa6z6IXy7CUpY2PfvXeWpnPz1m3MlPif3m+ONJEGYIO8YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mt4Z4Gcl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJIxyJPq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD226C433C7;
-	Thu, 11 Apr 2024 10:35:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mt4Z4Gcl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F9BC433F1;
+	Thu, 11 Apr 2024 10:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831744;
-	bh=+e8XLNvELddZonv6ny2jdM0bWUiA6dIO5dswj54CizM=;
+	s=korg; t=1712831747;
+	bh=ZUKE7zLJ9iv3zWzyha72+drnzsuFaXujV64aR6VdBgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJIxyJPqpGwHCRfG73k/ijU+28i66hDFptrG8S2VO3cbn69S85usViweXI3FDEYh1
-	 +DJmisC78HK3kR5rN3599Dnh+FdKiRylIFXpgmjjYqIgcCjtxufP5tHmH2vFlIWcyC
-	 /QaikQtFQN/OFU/PDpHq26MHUaGvXl4IRQjqbmQs=
+	b=mt4Z4Gclc3qP+G/HKhX6G/2n7y3RJEl197gLPOYoXeQwF6dyAYRUyIbOffxs+QrQV
+	 YozIRP+nloNqlb0YFPDR02GLkMbYngWyYsUL5j4Xzfopeys8Sq76UhaO9lRlwOO5uc
+	 2hlCtSj099SwJ4HjyA4aD2jwazGzSFP+ButtiBbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Pittman <jpittman@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
+	Xu Wang <vulab@iscas.ac.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 112/294] dm snapshot: fix lockup in dm_exception_table_exit
-Date: Thu, 11 Apr 2024 11:54:35 +0200
-Message-ID: <20240411095439.041700662@linuxfoundation.org>
+Subject: [PATCH 5.10 113/294] vxge: remove unnecessary cast in kfree()
+Date: Thu, 11 Apr 2024 11:54:36 +0200
+Message-ID: <20240411095439.070982337@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -52,38 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Xu Wang <vulab@iscas.ac.cn>
 
-[ Upstream commit 6e7132ed3c07bd8a6ce3db4bb307ef2852b322dc ]
+[ Upstream commit b6bf4776d9e2ed4b2552d1c252fff8de3786309a ]
 
-There was reported lockup when we exit a snapshot with many exceptions.
-Fix this by adding "cond_resched" to the loop that frees the exceptions.
+Remove unnecessary cast in the argument to kfree.
 
-Reported-by: John Pittman <jpittman@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Xu Wang <vulab@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20201023085533.4792-1-vulab@iscas.ac.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e3f269ed0acc ("x86/pm: Work around false positive kmemleak report in msr_build_context()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-snap.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/neterion/vxge/vxge-config.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-snap.c b/drivers/md/dm-snap.c
-index 41735a25d50aa..de73fe79640fd 100644
---- a/drivers/md/dm-snap.c
-+++ b/drivers/md/dm-snap.c
-@@ -685,8 +685,10 @@ static void dm_exception_table_exit(struct dm_exception_table *et,
- 	for (i = 0; i < size; i++) {
- 		slot = et->table + i;
+diff --git a/drivers/net/ethernet/neterion/vxge/vxge-config.c b/drivers/net/ethernet/neterion/vxge/vxge-config.c
+index f5d48d7c4ce28..da48dd85770c0 100644
+--- a/drivers/net/ethernet/neterion/vxge/vxge-config.c
++++ b/drivers/net/ethernet/neterion/vxge/vxge-config.c
+@@ -1121,7 +1121,7 @@ static void __vxge_hw_blockpool_destroy(struct __vxge_hw_blockpool *blockpool)
  
--		hlist_bl_for_each_entry_safe(ex, pos, n, slot, hash_list)
-+		hlist_bl_for_each_entry_safe(ex, pos, n, slot, hash_list) {
- 			kmem_cache_free(mem, ex);
-+			cond_resched();
-+		}
+ 	list_for_each_safe(p, n, &blockpool->free_entry_list) {
+ 		list_del(&((struct __vxge_hw_blockpool_entry *)p)->item);
+-		kfree((void *)p);
++		kfree(p);
  	}
  
- 	vfree(et->table);
+ 	return;
 -- 
 2.43.0
 
