@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF166BB29;
-	Thu, 11 Apr 2024 10:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2EA6BB29;
+	Thu, 11 Apr 2024 10:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832563; cv=none; b=i5nD229r7A9YIw97RRlq/7R06Klni3XjvzNSCarRX7fdZRSJm/fgDtVyxP9zzrtwkuBx02OoBJ36ORbukYsIZdSXFvwsfhrzR8AJ7wH0Wx4qWSgNpijtJOAWfSSRh8rFL+T+GPd5wARE6XBBhkR6aWVK3iVoPr5I4WAuQr6uqpE=
+	t=1712832566; cv=none; b=vCh/O4evUv3jg+l115BJzXfxdy7aF8h+VVQ9WDawjiRyaO7EuQiux2n5mnS0uKTtFbTRaKMKM5WKHGmTQNyugcieLAgKTiS051hLTS+Ii3mFfOIyt7h4P9QUQwJYuY/0CKyO7gcwwSQJsMerV7ZLO39WtHpzReq9+HAKHBbCjKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832563; c=relaxed/simple;
-	bh=Ak23/Z3uD5U5Xe+38VIea8bf1iipNBqFQTlIw6O1b3E=;
+	s=arc-20240116; t=1712832566; c=relaxed/simple;
+	bh=xmCJSSU+klBcdiA5HBLEgf1IAY3ld/N77LLOLtMyoco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dGwA0+7CTct5W9I+JZq+acVNDGmprdqQJClKomg+89kWy3keLs7iph3cYgydmzkt4vAF8aAQr479Fh6EZ+6lw9X0KVPY6glb5zysaTTd3IxvOVqZaDgd9fR5Gnc69kXYVCzO8dlczmnocXSqqzfKkVcOAehDXfQfR21K8PXp5x4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXC5B1OP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MZbt1tTNwRI3MQXb2SQGr+CLhpP6ZjyHoKKaKe6JpnB5tVxpi7gLlMzHmK6PGoPX5jF8/310uDXs8KCWBO4wsYWViyFy7fLTaXmVKPs/xbrmNRntICgZbQR3C81P55voYmCG0+NRxu/ty0wPVCGQV/fZw+ONuysNvmK2Tl9fcbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Inlkrm4M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXC5B1OP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43714C433C7;
-	Thu, 11 Apr 2024 10:49:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Inlkrm4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A4AC433C7;
+	Thu, 11 Apr 2024 10:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832563;
-	bh=Ak23/Z3uD5U5Xe+38VIea8bf1iipNBqFQTlIw6O1b3E=;
+	s=korg; t=1712832566;
+	bh=xmCJSSU+klBcdiA5HBLEgf1IAY3ld/N77LLOLtMyoco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lXC5B1OPlT1Obrr0kp+eiYtsgkjjOX2Gk79ZjT7xQGpQQSW2jo1t67m8hKxcO2nME
-	 askVCKmOBd9RFJUREV53drUdmLhAZMB63QAeWbpiV6Ezx+AVktbsAnc54M4LAGUk3e
-	 NkyAuKU8vmQOnBpbZvSQxOYZhJJnS1NjxDs4z3wg=
+	b=Inlkrm4MBa02kvQf7z4UM1rZN+hHVGNZeZsEyAgsUn+kNl/RyySVhHaENCLbIvpTY
+	 Xq7jdUqfoMloDsTm1lzLDRhMNnQhScBGkpY8T1oV4AamXvP0eo3+xsCCC+HRTCzsA/
+	 0ghLMgePrQDcJCPy/M8OxJGMQ9EjTFQ+uCTIwd5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tasos Sahanidis <tasos@tasossah.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	James Bottomley <jejb@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	John David Anglin <dave.anglin@bell.net>,
-	Cyril Brulebois <kibi@debian.org>
-Subject: [PATCH 6.1 75/83] Revert "scsi: core: Add struct for args to execution functions"
-Date: Thu, 11 Apr 2024 11:57:47 +0200
-Message-ID: <20240411095414.945859117@linuxfoundation.org>
+	Rafael Richter <rafael.richter@gin.de>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	xu.xin16@zte.com.cn,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 01/57] net: dsa: fix panic when DSA master device unbinds on shutdown
+Date: Thu, 11 Apr 2024 11:57:09 +0200
+Message-ID: <20240411095408.029941837@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
-References: <20240411095412.671665933@linuxfoundation.org>
+In-Reply-To: <20240411095407.982258070@linuxfoundation.org>
+References: <20240411095407.982258070@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,197 +50,131 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-This reverts commit cf33e6ca12d814e1be2263cb76960d0019d7fb94 which is
-commit d0949565811f0896c1c7e781ab2ad99d34273fdf upstream.
+commit ee534378f00561207656663d93907583958339ae upstream.
 
-It is known to cause problems and has asked to be dropped.
+Rafael reports that on a system with LX2160A and Marvell DSA switches,
+if a reboot occurs while the DSA master (dpaa2-eth) is up, the following
+panic can be seen:
 
-Link: https://lore.kernel.org/r/yq1frvvpymp.fsf@ca-mkp.ca.oracle.com
-Cc: Tasos Sahanidis <tasos@tasossah.com>
-Cc: Ewan D. Milne <emilne@redhat.com>
-Cc: Bart Van Assche <bvanassche@acm.org>
-Cc: Tasos Sahanidis <tasos@tasossah.com>
-Cc: Martin K. Petersen <martin.petersen@oracle.com>
-Cc: James Bottomley <jejb@linux.ibm.com>
-Cc: Sasha Levin <sashal@kernel.org>
-Reported-by: John David Anglin <dave.anglin@bell.net>
-Reported-by: Cyril Brulebois <kibi@debian.org>
+systemd-shutdown[1]: Rebooting.
+Unable to handle kernel paging request at virtual address 00a0000800000041
+[00a0000800000041] address between user and kernel address ranges
+Internal error: Oops: 96000004 [#1] PREEMPT SMP
+CPU: 6 PID: 1 Comm: systemd-shutdow Not tainted 5.16.5-00042-g8f5585009b24 #32
+pc : dsa_slave_netdevice_event+0x130/0x3e4
+lr : raw_notifier_call_chain+0x50/0x6c
+Call trace:
+ dsa_slave_netdevice_event+0x130/0x3e4
+ raw_notifier_call_chain+0x50/0x6c
+ call_netdevice_notifiers_info+0x54/0xa0
+ __dev_close_many+0x50/0x130
+ dev_close_many+0x84/0x120
+ unregister_netdevice_many+0x130/0x710
+ unregister_netdevice_queue+0x8c/0xd0
+ unregister_netdev+0x20/0x30
+ dpaa2_eth_remove+0x68/0x190
+ fsl_mc_driver_remove+0x20/0x5c
+ __device_release_driver+0x21c/0x220
+ device_release_driver_internal+0xac/0xb0
+ device_links_unbind_consumers+0xd4/0x100
+ __device_release_driver+0x94/0x220
+ device_release_driver+0x28/0x40
+ bus_remove_device+0x118/0x124
+ device_del+0x174/0x420
+ fsl_mc_device_remove+0x24/0x40
+ __fsl_mc_device_remove+0xc/0x20
+ device_for_each_child+0x58/0xa0
+ dprc_remove+0x90/0xb0
+ fsl_mc_driver_remove+0x20/0x5c
+ __device_release_driver+0x21c/0x220
+ device_release_driver+0x28/0x40
+ bus_remove_device+0x118/0x124
+ device_del+0x174/0x420
+ fsl_mc_bus_remove+0x80/0x100
+ fsl_mc_bus_shutdown+0xc/0x1c
+ platform_shutdown+0x20/0x30
+ device_shutdown+0x154/0x330
+ __do_sys_reboot+0x1cc/0x250
+ __arm64_sys_reboot+0x20/0x30
+ invoke_syscall.constprop.0+0x4c/0xe0
+ do_el0_svc+0x4c/0x150
+ el0_svc+0x24/0xb0
+ el0t_64_sync_handler+0xa8/0xb0
+ el0t_64_sync+0x178/0x17c
+
+It can be seen from the stack trace that the problem is that the
+deregistration of the master causes a dev_close(), which gets notified
+as NETDEV_GOING_DOWN to dsa_slave_netdevice_event().
+But dsa_switch_shutdown() has already run, and this has unregistered the
+DSA slave interfaces, and yet, the NETDEV_GOING_DOWN handler attempts to
+call dev_close_many() on those slave interfaces, leading to the problem.
+
+The previous attempt to avoid the NETDEV_GOING_DOWN on the master after
+dsa_switch_shutdown() was called seems improper. Unregistering the slave
+interfaces is unnecessary and unhelpful. Instead, after the slaves have
+stopped being uppers of the DSA master, we can now reset to NULL the
+master->dsa_ptr pointer, which will make DSA start ignoring all future
+notifier events on the master.
+
+Fixes: 0650bf52b31f ("net: dsa: be compatible with masters which unregister on shutdown")
+Reported-by: Rafael Richter <rafael.richter@gin.de>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: xu.xin16@zte.com.cn
+Cc: Vladimir Oltean <olteanv@gmail.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_lib.c    |   52 +++++++++++++++++++++++----------------------
- include/scsi/scsi_device.h |   51 ++++++++++++--------------------------------
- 2 files changed, 41 insertions(+), 62 deletions(-)
+ net/dsa/dsa2.c |   25 ++++++-------------------
+ 1 file changed, 6 insertions(+), 19 deletions(-)
 
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -185,37 +185,39 @@ void scsi_queue_insert(struct scsi_cmnd
- 	__scsi_queue_insert(cmd, reason, true);
- }
+--- a/net/dsa/dsa2.c
++++ b/net/dsa/dsa2.c
+@@ -1634,7 +1634,6 @@ EXPORT_SYMBOL_GPL(dsa_unregister_switch)
+ void dsa_switch_shutdown(struct dsa_switch *ds)
+ {
+ 	struct net_device *master, *slave_dev;
+-	LIST_HEAD(unregister_list);
+ 	struct dsa_port *dp;
  
+ 	mutex_lock(&dsa2_mutex);
+@@ -1655,25 +1654,13 @@ void dsa_switch_shutdown(struct dsa_swit
+ 		slave_dev = dp->slave;
+ 
+ 		netdev_upper_dev_unlink(master, slave_dev);
+-		/* Just unlinking ourselves as uppers of the master is not
+-		 * sufficient. When the master net device unregisters, that will
+-		 * also call dev_close, which we will catch as NETDEV_GOING_DOWN
+-		 * and trigger a dev_close on our own devices (dsa_slave_close).
+-		 * In turn, that will call dev_mc_unsync on the master's net
+-		 * device. If the master is also a DSA switch port, this will
+-		 * trigger dsa_slave_set_rx_mode which will call dev_mc_sync on
+-		 * its own master. Lockdep will complain about the fact that
+-		 * all cascaded masters have the same dsa_master_addr_list_lock_key,
+-		 * which it normally would not do if the cascaded masters would
+-		 * be in a proper upper/lower relationship, which we've just
+-		 * destroyed.
+-		 * To suppress the lockdep warnings, let's actually unregister
+-		 * the DSA slave interfaces too, to avoid the nonsensical
+-		 * multicast address list synchronization on shutdown.
+-		 */
+-		unregister_netdevice_queue(slave_dev, &unregister_list);
+ 	}
+-	unregister_netdevice_many(&unregister_list);
 +
- /**
-- * scsi_execute_cmd - insert request and wait for the result
-- * @sdev:	scsi_device
-+ * __scsi_execute - insert request and wait for the result
-+ * @sdev:	scsi device
-  * @cmd:	scsi command
-- * @opf:	block layer request cmd_flags
-+ * @data_direction: data direction
-  * @buffer:	data buffer
-  * @bufflen:	len of buffer
-+ * @sense:	optional sense buffer
-+ * @sshdr:	optional decoded sense header
-  * @timeout:	request timeout in HZ
-  * @retries:	number of times to retry request
-- * @args:	Optional args. See struct definition for field descriptions
-+ * @flags:	flags for ->cmd_flags
-+ * @rq_flags:	flags for ->rq_flags
-+ * @resid:	optional residual length
-  *
-  * Returns the scsi_cmnd result field if a command was executed, or a negative
-  * Linux error code if we didn't get that far.
-  */
--int scsi_execute_cmd(struct scsi_device *sdev, const unsigned char *cmd,
--		     blk_opf_t opf, void *buffer, unsigned int bufflen,
--		     int timeout, int retries,
--		     const struct scsi_exec_args *args)
-+int __scsi_execute(struct scsi_device *sdev, const unsigned char *cmd,
-+		 int data_direction, void *buffer, unsigned bufflen,
-+		 unsigned char *sense, struct scsi_sense_hdr *sshdr,
-+		 int timeout, int retries, blk_opf_t flags,
-+		 req_flags_t rq_flags, int *resid)
- {
--	static const struct scsi_exec_args default_args;
- 	struct request *req;
- 	struct scsi_cmnd *scmd;
- 	int ret;
++	/* Disconnect from further netdevice notifiers on the master,
++	 * since netdev_uses_dsa() will now return false.
++	 */
++	dsa_switch_for_each_cpu_port(dp, ds)
++		dp->master->dsa_ptr = NULL;
  
--	if (!args)
--		args = &default_args;
--	else if (WARN_ON_ONCE(args->sense &&
--			      args->sense_len != SCSI_SENSE_BUFFERSIZE))
--		return -EINVAL;
--
--	req = scsi_alloc_request(sdev->request_queue, opf, args->req_flags);
-+	req = scsi_alloc_request(sdev->request_queue,
-+			data_direction == DMA_TO_DEVICE ?
-+			REQ_OP_DRV_OUT : REQ_OP_DRV_IN,
-+			rq_flags & RQF_PM ? BLK_MQ_REQ_PM : 0);
- 	if (IS_ERR(req))
- 		return PTR_ERR(req);
- 
-@@ -230,7 +232,8 @@ int scsi_execute_cmd(struct scsi_device
- 	memcpy(scmd->cmnd, cmd, scmd->cmd_len);
- 	scmd->allowed = retries;
- 	req->timeout = timeout;
--	req->rq_flags |= RQF_QUIET;
-+	req->cmd_flags |= flags;
-+	req->rq_flags |= rq_flags | RQF_QUIET;
- 
- 	/*
- 	 * head injection *required* here otherwise quiesce won't work
-@@ -246,21 +249,20 @@ int scsi_execute_cmd(struct scsi_device
- 	if (unlikely(scmd->resid_len > 0 && scmd->resid_len <= bufflen))
- 		memset(buffer + bufflen - scmd->resid_len, 0, scmd->resid_len);
- 
--	if (args->resid)
--		*args->resid = scmd->resid_len;
--	if (args->sense)
--		memcpy(args->sense, scmd->sense_buffer, SCSI_SENSE_BUFFERSIZE);
--	if (args->sshdr)
-+	if (resid)
-+		*resid = scmd->resid_len;
-+	if (sense && scmd->sense_len)
-+		memcpy(sense, scmd->sense_buffer, SCSI_SENSE_BUFFERSIZE);
-+	if (sshdr)
- 		scsi_normalize_sense(scmd->sense_buffer, scmd->sense_len,
--				     args->sshdr);
--
-+				     sshdr);
- 	ret = scmd->result;
-  out:
- 	blk_mq_free_request(req);
- 
- 	return ret;
- }
--EXPORT_SYMBOL(scsi_execute_cmd);
-+EXPORT_SYMBOL(__scsi_execute);
- 
- /*
-  * Wake up the error handler if necessary. Avoid as follows that the error
---- a/include/scsi/scsi_device.h
-+++ b/include/scsi/scsi_device.h
-@@ -479,51 +479,28 @@ extern const char *scsi_device_state_nam
- extern int scsi_is_sdev_device(const struct device *);
- extern int scsi_is_target_device(const struct device *);
- extern void scsi_sanitize_inquiry_string(unsigned char *s, int len);
--
--/* Optional arguments to scsi_execute_cmd */
--struct scsi_exec_args {
--	unsigned char *sense;		/* sense buffer */
--	unsigned int sense_len;		/* sense buffer len */
--	struct scsi_sense_hdr *sshdr;	/* decoded sense header */
--	blk_mq_req_flags_t req_flags;	/* BLK_MQ_REQ flags */
--	int *resid;			/* residual length */
--};
--
--int scsi_execute_cmd(struct scsi_device *sdev, const unsigned char *cmd,
--		     blk_opf_t opf, void *buffer, unsigned int bufflen,
--		     int timeout, int retries,
--		     const struct scsi_exec_args *args);
--
-+extern int __scsi_execute(struct scsi_device *sdev, const unsigned char *cmd,
-+			int data_direction, void *buffer, unsigned bufflen,
-+			unsigned char *sense, struct scsi_sense_hdr *sshdr,
-+			int timeout, int retries, blk_opf_t flags,
-+			req_flags_t rq_flags, int *resid);
- /* Make sure any sense buffer is the correct size. */
--#define scsi_execute(_sdev, _cmd, _data_dir, _buffer, _bufflen, _sense,	\
--		     _sshdr, _timeout, _retries, _flags, _rq_flags,	\
--		     _resid)						\
-+#define scsi_execute(sdev, cmd, data_direction, buffer, bufflen, sense,	\
-+		     sshdr, timeout, retries, flags, rq_flags, resid)	\
- ({									\
--	scsi_execute_cmd(_sdev, _cmd, (_data_dir == DMA_TO_DEVICE ?	\
--			 REQ_OP_DRV_OUT : REQ_OP_DRV_IN) | _flags,	\
--			 _buffer, _bufflen, _timeout, _retries,	\
--			 &(struct scsi_exec_args) {			\
--				.sense = _sense,			\
--				.sshdr = _sshdr,			\
--				.req_flags = _rq_flags & RQF_PM  ?	\
--						BLK_MQ_REQ_PM : 0,	\
--				.resid = _resid,			\
--			 });						\
-+	BUILD_BUG_ON((sense) != NULL &&					\
-+		     sizeof(sense) != SCSI_SENSE_BUFFERSIZE);		\
-+	__scsi_execute(sdev, cmd, data_direction, buffer, bufflen,	\
-+		       sense, sshdr, timeout, retries, flags, rq_flags,	\
-+		       resid);						\
- })
--
- static inline int scsi_execute_req(struct scsi_device *sdev,
- 	const unsigned char *cmd, int data_direction, void *buffer,
- 	unsigned bufflen, struct scsi_sense_hdr *sshdr, int timeout,
- 	int retries, int *resid)
- {
--	return scsi_execute_cmd(sdev, cmd,
--				data_direction == DMA_TO_DEVICE ?
--				REQ_OP_DRV_OUT : REQ_OP_DRV_IN, buffer,
--				bufflen, timeout, retries,
--				&(struct scsi_exec_args) {
--					.sshdr = sshdr,
--					.resid = resid,
--				});
-+	return scsi_execute(sdev, cmd, data_direction, buffer,
-+		bufflen, NULL, sshdr, timeout, retries,  0, 0, resid);
- }
- extern void sdev_disable_disk_events(struct scsi_device *sdev);
- extern void sdev_enable_disk_events(struct scsi_device *sdev);
+ 	rtnl_unlock();
+ out:
 
 
