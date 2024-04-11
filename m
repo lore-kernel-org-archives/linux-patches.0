@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EF56BB29;
-	Thu, 11 Apr 2024 10:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F3E142624;
+	Thu, 11 Apr 2024 10:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832319; cv=none; b=HLn8jp/lc3OgV22r2HG0d5MWcRrBT4AQO37Ik0f/ipKM4ms7EGQZWtOWfVL8chWi4g/WO5Ku9KquBFVbSyoeon9icRu+fNO/fD2YIf7Kgx9Sw+4evt53pDWBRLO1qnzrMRi+j4itWCBzwjTx649/efgoZ/7x0bTx00htSHUbvaY=
+	t=1712832322; cv=none; b=ruq2o7h8Tro8KO8Q4XrbG5TdJyIDSStnfyW36EqcOS774qiGEosViZ+wiRacedymXb5pZ624y4MXoSdvH3qi/4yV3ov36cO6yvkAHA/cGZKegjplQ8NLE7W+wwk8d1tK7Ro/b/tWIe6gdUbfqR7NrrAS3qaZD53EOaBZx+lxW9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832319; c=relaxed/simple;
-	bh=es7f6j1A8BBBGs49+th/6vf+VlPDEKCjxmpxcWVpeLk=;
+	s=arc-20240116; t=1712832322; c=relaxed/simple;
+	bh=qf3UrMTxpd7ot6qJlRLwENivF4LmPxNkzuxPiombpWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qn5g3LaIo7IRvYm6X2V9jyBic443InP6ysrHHh4Q5Ydj3ujW7px+XcTFKVVMGdgap3gYOzQ2ZJIHTjBmfi7DJgy9EN/iEoFzdDhTIBCuApZPNX2qitkO4l5ufbJgQv0mNIZHOqk7B617rJAkFBp5yXtLeAdhS0l++/IVlAiNQSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A5Zx9vav; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uXh51rzeY6dRG8wMATU7QljiduQXLMWkGpc2eP0uxBSu09Wa640L722Tk0rlcDPoYZcXQPUAuVBBxXqdVsGlR7AoGbXUmd4lc5ksUMq2CdIsQq9f5SKfKGAq27DwwynepYQv60cTT1zUVRHm0a1J4XFHWF0mi7gKe7kdAjdBkaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1trUjIz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5Zx9vav"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5875EC433F1;
-	Thu, 11 Apr 2024 10:45:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1trUjIz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CD6C433F1;
+	Thu, 11 Apr 2024 10:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832318;
-	bh=es7f6j1A8BBBGs49+th/6vf+VlPDEKCjxmpxcWVpeLk=;
+	s=korg; t=1712832321;
+	bh=qf3UrMTxpd7ot6qJlRLwENivF4LmPxNkzuxPiombpWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A5Zx9vavof4aQz9DsABd3rZXMSApp2VjnXlox/lAPffcltSuYWfOBoLCgv6PNgfng
-	 XOR2AmsY2I0nWolSxxI8SVLxomtSB8HJ1RC/bZclLQxmEtCjspYaZn7kHam6tIHKW/
-	 dmcWJ6Qg85Fztds+DpB9tv32FTHRPbnHcnK3JMG0=
+	b=P1trUjIz0hUtGNS0JnHkcrSvm95jcZjwddAEpmbUiTAzbTh+QS8ueuuqEISsVtN4K
+	 jxpvGvrgNijduFCjaIoGFbY+CTQwOVfeu4r/tb8M4A7RVO+J9IS6ZtKf67cDsJapgh
+	 OESv4Q17RaGJYN7M36L7MCPk5yfb5zDlwXzua510=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Johan Jonker <jbx6244@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 01/83] wifi: ath9k: fix LNA selection in ath_ant_try_scan()
-Date: Thu, 11 Apr 2024 11:56:33 +0200
-Message-ID: <20240411095412.719514169@linuxfoundation.org>
+Subject: [PATCH 6.1 10/83] arm64: dts: rockchip: fix rk3328 hdmi ports node
+Date: Thu, 11 Apr 2024 11:56:42 +0200
+Message-ID: <20240411095412.987405749@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -46,45 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Johan Jonker <jbx6244@gmail.com>
 
-[ Upstream commit d6b27eb997ef9a2aa51633b3111bc4a04748e6d3 ]
+[ Upstream commit 1d00ba4700d1e0f88ae70d028d2e17e39078fa1c ]
 
-In 'ath_ant_try_scan()', (most likely) the 2nd LNA's signal
-strength should be used in comparison against RSSI when
-selecting first LNA as the main one. Compile tested only.
+Fix rk3328 hdmi ports node so that it matches the
+rockchip,dw-hdmi.yaml binding.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20231211172502.25202-1-dmantipov@yandex.ru
+Signed-off-by: Johan Jonker <jbx6244@gmail.com>
+Link: https://lore.kernel.org/r/e5dea3b7-bf84-4474-9530-cc2da3c41104@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/antenna.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3328.dtsi | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/antenna.c b/drivers/net/wireless/ath/ath9k/antenna.c
-index 988222cea9dfe..acc84e6711b0e 100644
---- a/drivers/net/wireless/ath/ath9k/antenna.c
-+++ b/drivers/net/wireless/ath/ath9k/antenna.c
-@@ -643,7 +643,7 @@ static void ath_ant_try_scan(struct ath_ant_comb *antcomb,
- 				conf->main_lna_conf = ATH_ANT_DIV_COMB_LNA1;
- 				conf->alt_lna_conf = ATH_ANT_DIV_COMB_LNA1_PLUS_LNA2;
- 			} else if (antcomb->rssi_sub >
--				   antcomb->rssi_lna1) {
-+				   antcomb->rssi_lna2) {
- 				/* set to A-B */
- 				conf->main_lna_conf = ATH_ANT_DIV_COMB_LNA1;
- 				conf->alt_lna_conf = ATH_ANT_DIV_COMB_LNA1_MINUS_LNA2;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+index 905a50aa5dc38..d42846efff2fe 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+@@ -741,11 +741,20 @@ hdmi: hdmi@ff3c0000 {
+ 		status = "disabled";
+ 
+ 		ports {
+-			hdmi_in: port {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			hdmi_in: port@0 {
++				reg = <0>;
++
+ 				hdmi_in_vop: endpoint {
+ 					remote-endpoint = <&vop_out_hdmi>;
+ 				};
+ 			};
++
++			hdmi_out: port@1 {
++				reg = <1>;
++			};
+ 		};
+ 	};
+ 
 -- 
 2.43.0
 
