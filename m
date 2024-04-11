@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B04146D49;
-	Thu, 11 Apr 2024 10:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7951465BE;
+	Thu, 11 Apr 2024 10:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830930; cv=none; b=kLg8Maf0HJYkq9Xn1pj+vcvm2ckPl++KOs1I5yhqzgKflh8W3UF3+oDlH63UFy+PgdwfhuCIx0yETJCm7XyxiHKKNgQwNOkyzA6hYuy+4LfE8/OxbiVM7M1Chbi9hVhx5FwpcRzwanHY1TmYTeYu1QGE+OCp6eh0FPBf6rfJSrk=
+	t=1712830933; cv=none; b=JZymIcsyevcu/3khKTfVKN7XQujDnnDHqUXn2slflsU6wbOyIZF3eFZ66gbBqnvF4zzxK0rDqhRaM5vczjv7BPaDm5vf4N6XBnp+LEgWbVJUbfgULCFd2VI7P/M1Li+8qv8neKACBRLCaUE6duivFkzXXm1SFPyzkolgz6rnIdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830930; c=relaxed/simple;
-	bh=KWjAhNwRZjVRD7g4pIfLR2SM7HvpjEm7vFr0U5ZWga0=;
+	s=arc-20240116; t=1712830933; c=relaxed/simple;
+	bh=tHLXW9C6FUwyojIx2+G1GWd9o9A3KWGiOXke9CoBQbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i4XxwDOwC47vN9O8f0zim2pXGhAVSTjnkhlb9jYPjrBOQTwaQFLVZTHGOr4z64SOBLBTgiumba3UzyYS94AMlwWMS/+0QfxWpYkkesG19aLlPy8rykogdpmeOdoi6v3Sl7viefCnf8+kQL4EZcbfa1Pyw4Mn+i3s9xO92QGAmDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dDqqz04w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n7hrZmOyrmOzzMMnaGeQTUZwE5gUVfznFuoCfxxzsBdAhs+j0yoLEqtEjV1Ip6CbeqyjV1hmWpfwFwE8SLZSNdD00C05r26uWwGhcYArp9yFgHvmvK3YQCtiWCq50d9c3yCnSM/cgKZc+rqH4DrlHUP/yYKgTLOhWRLZK/3H6xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCBK0nqi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dDqqz04w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE25DC43394;
-	Thu, 11 Apr 2024 10:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCBK0nqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0395C433F1;
+	Thu, 11 Apr 2024 10:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830930;
-	bh=KWjAhNwRZjVRD7g4pIfLR2SM7HvpjEm7vFr0U5ZWga0=;
+	s=korg; t=1712830933;
+	bh=tHLXW9C6FUwyojIx2+G1GWd9o9A3KWGiOXke9CoBQbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dDqqz04wOkPurdKuqldSVe6Xz+YmqiJkJC9yn12iCUqukDfuixG4J7YiYXr4rN3q8
-	 VksC1fbnsRvJ6u0MT5ewaU2STuYdYA4N3YtSOF8c+Yg043Yn0Spub/JlYCyPAFQRty
-	 72f1tyNWM/4Wqmi0EzdvVA3smn3vkPve2xdAmzso=
+	b=wCBK0nqiWS9m6Un7ppF+emHccfXW4N2+I1WDMPS43auYzvSYTLtYSnhuMhfSTQ7gj
+	 XddUgNUWq2pU+kVAtNcIKgtPlutlsAZhyGjvH38gidvhHyDmQiADIIcOW8E58gCGUT
+	 nxLIFbm5GvNJy705RtloXIrdqaC4TfMKZYNEZNfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 149/215] net/sched: act_skbmod: prevent kernel-infoleak
-Date: Thu, 11 Apr 2024 11:55:58 +0200
-Message-ID: <20240411095429.364663294@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Hannes Reinecke <hare@suse.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 167/215] scsi: mylex: Fix sysfs buffer lengths
+Date: Thu, 11 Apr 2024 11:56:16 +0200
+Message-ID: <20240411095429.895001223@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -51,141 +52,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit d313eb8b77557a6d5855f42d2234bd592c7b50dd upstream.
+[ Upstream commit 1197c5b2099f716b3de327437fb50900a0b936c9 ]
 
-syzbot found that tcf_skbmod_dump() was copying four bytes
-from kernel stack to user space [1].
+The myrb and myrs drivers use an odd way of implementing their sysfs files,
+calling snprintf() with a fixed length of 32 bytes to print into a page
+sized buffer. One of the strings is actually longer than 32 bytes, which
+clang can warn about:
 
-The issue here is that 'struct tc_skbmod' has a four bytes hole.
+drivers/scsi/myrb.c:1906:10: error: 'snprintf' will always be truncated; specified size is 32, but format string expands to at least 34 [-Werror,-Wformat-truncation]
+drivers/scsi/myrs.c:1089:10: error: 'snprintf' will always be truncated; specified size is 32, but format string expands to at least 34 [-Werror,-Wformat-truncation]
 
-We need to clear the structure before filling fields.
+These could all be plain sprintf() without a length as the buffer is always
+long enough. On the other hand, sysfs files should not be overly long
+either, so just double the length to make sure the longest strings don't
+get truncated here.
 
-[1]
-BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
- BUG: KMSAN: kernel-infoleak in copy_to_user_iter lib/iov_iter.c:24 [inline]
- BUG: KMSAN: kernel-infoleak in iterate_ubuf include/linux/iov_iter.h:29 [inline]
- BUG: KMSAN: kernel-infoleak in iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
- BUG: KMSAN: kernel-infoleak in iterate_and_advance include/linux/iov_iter.h:271 [inline]
- BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x366/0x2520 lib/iov_iter.c:185
-  instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-  copy_to_user_iter lib/iov_iter.c:24 [inline]
-  iterate_ubuf include/linux/iov_iter.h:29 [inline]
-  iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
-  iterate_and_advance include/linux/iov_iter.h:271 [inline]
-  _copy_to_iter+0x366/0x2520 lib/iov_iter.c:185
-  copy_to_iter include/linux/uio.h:196 [inline]
-  simple_copy_to_iter net/core/datagram.c:532 [inline]
-  __skb_datagram_iter+0x185/0x1000 net/core/datagram.c:420
-  skb_copy_datagram_iter+0x5c/0x200 net/core/datagram.c:546
-  skb_copy_datagram_msg include/linux/skbuff.h:4050 [inline]
-  netlink_recvmsg+0x432/0x1610 net/netlink/af_netlink.c:1962
-  sock_recvmsg_nosec net/socket.c:1046 [inline]
-  sock_recvmsg+0x2c4/0x340 net/socket.c:1068
-  __sys_recvfrom+0x35a/0x5f0 net/socket.c:2242
-  __do_sys_recvfrom net/socket.c:2260 [inline]
-  __se_sys_recvfrom net/socket.c:2256 [inline]
-  __x64_sys_recvfrom+0x126/0x1d0 net/socket.c:2256
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Uninit was stored to memory at:
-  pskb_expand_head+0x30f/0x19d0 net/core/skbuff.c:2253
-  netlink_trim+0x2c2/0x330 net/netlink/af_netlink.c:1317
-  netlink_unicast+0x9f/0x1260 net/netlink/af_netlink.c:1351
-  nlmsg_unicast include/net/netlink.h:1144 [inline]
-  nlmsg_notify+0x21d/0x2f0 net/netlink/af_netlink.c:2610
-  rtnetlink_send+0x73/0x90 net/core/rtnetlink.c:741
-  rtnetlink_maybe_send include/linux/rtnetlink.h:17 [inline]
-  tcf_add_notify net/sched/act_api.c:2048 [inline]
-  tcf_action_add net/sched/act_api.c:2071 [inline]
-  tc_ctl_action+0x146e/0x19d0 net/sched/act_api.c:2119
-  rtnetlink_rcv_msg+0x1737/0x1900 net/core/rtnetlink.c:6595
-  netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2559
-  rtnetlink_rcv+0x34/0x40 net/core/rtnetlink.c:6613
-  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
-  netlink_unicast+0xf4c/0x1260 net/netlink/af_netlink.c:1361
-  netlink_sendmsg+0x10df/0x11f0 net/netlink/af_netlink.c:1905
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  ____sys_sendmsg+0x877/0xb60 net/socket.c:2584
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
-  __sys_sendmsg net/socket.c:2667 [inline]
-  __do_sys_sendmsg net/socket.c:2676 [inline]
-  __se_sys_sendmsg net/socket.c:2674 [inline]
-  __x64_sys_sendmsg+0x307/0x4a0 net/socket.c:2674
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Uninit was stored to memory at:
-  __nla_put lib/nlattr.c:1041 [inline]
-  nla_put+0x1c6/0x230 lib/nlattr.c:1099
-  tcf_skbmod_dump+0x23f/0xc20 net/sched/act_skbmod.c:256
-  tcf_action_dump_old net/sched/act_api.c:1191 [inline]
-  tcf_action_dump_1+0x85e/0x970 net/sched/act_api.c:1227
-  tcf_action_dump+0x1fd/0x460 net/sched/act_api.c:1251
-  tca_get_fill+0x519/0x7a0 net/sched/act_api.c:1628
-  tcf_add_notify_msg net/sched/act_api.c:2023 [inline]
-  tcf_add_notify net/sched/act_api.c:2042 [inline]
-  tcf_action_add net/sched/act_api.c:2071 [inline]
-  tc_ctl_action+0x1365/0x19d0 net/sched/act_api.c:2119
-  rtnetlink_rcv_msg+0x1737/0x1900 net/core/rtnetlink.c:6595
-  netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2559
-  rtnetlink_rcv+0x34/0x40 net/core/rtnetlink.c:6613
-  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
-  netlink_unicast+0xf4c/0x1260 net/netlink/af_netlink.c:1361
-  netlink_sendmsg+0x10df/0x11f0 net/netlink/af_netlink.c:1905
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  ____sys_sendmsg+0x877/0xb60 net/socket.c:2584
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
-  __sys_sendmsg net/socket.c:2667 [inline]
-  __do_sys_sendmsg net/socket.c:2676 [inline]
-  __se_sys_sendmsg net/socket.c:2674 [inline]
-  __x64_sys_sendmsg+0x307/0x4a0 net/socket.c:2674
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Local variable opt created at:
-  tcf_skbmod_dump+0x9d/0xc20 net/sched/act_skbmod.c:244
-  tcf_action_dump_old net/sched/act_api.c:1191 [inline]
-  tcf_action_dump_1+0x85e/0x970 net/sched/act_api.c:1227
-
-Bytes 188-191 of 248 are uninitialized
-Memory access of size 248 starts at ffff888117697680
-Data copied to user address 00007ffe56d855f0
-
-Fixes: 86da71b57383 ("net_sched: Introduce skbmod action")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/20240403130908.93421-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 77266186397c ("scsi: myrs: Add Mylex RAID controller (SCSI interface)")
+Fixes: 081ff398c56c ("scsi: myrb: Add Mylex RAID controller (block interface)")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240326223825.4084412-8-arnd@kernel.org
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_skbmod.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/scsi/myrb.c | 20 ++++++++++----------
+ drivers/scsi/myrs.c | 24 ++++++++++++------------
+ 2 files changed, 22 insertions(+), 22 deletions(-)
 
---- a/net/sched/act_skbmod.c
-+++ b/net/sched/act_skbmod.c
-@@ -219,13 +219,13 @@ static int tcf_skbmod_dump(struct sk_buf
- 	struct tcf_skbmod *d = to_skbmod(a);
- 	unsigned char *b = skb_tail_pointer(skb);
- 	struct tcf_skbmod_params  *p;
--	struct tc_skbmod opt = {
--		.index   = d->tcf_index,
--		.refcnt  = refcount_read(&d->tcf_refcnt) - ref,
--		.bindcnt = atomic_read(&d->tcf_bindcnt) - bind,
--	};
-+	struct tc_skbmod opt;
- 	struct tcf_t t;
+diff --git a/drivers/scsi/myrb.c b/drivers/scsi/myrb.c
+index 35b32920a94a0..c7baba5748f11 100644
+--- a/drivers/scsi/myrb.c
++++ b/drivers/scsi/myrb.c
+@@ -1803,9 +1803,9 @@ static ssize_t raid_state_show(struct device *dev,
  
-+	memset(&opt, 0, sizeof(opt));
-+	opt.index   = d->tcf_index;
-+	opt.refcnt  = refcount_read(&d->tcf_refcnt) - ref,
-+	opt.bindcnt = atomic_read(&d->tcf_bindcnt) - bind;
- 	spin_lock_bh(&d->tcf_lock);
- 	opt.action = d->tcf_action;
- 	p = rcu_dereference_protected(d->skbmod_p,
+ 		name = myrb_devstate_name(ldev_info->state);
+ 		if (name)
+-			ret = snprintf(buf, 32, "%s\n", name);
++			ret = snprintf(buf, 64, "%s\n", name);
+ 		else
+-			ret = snprintf(buf, 32, "Invalid (%02X)\n",
++			ret = snprintf(buf, 64, "Invalid (%02X)\n",
+ 				       ldev_info->state);
+ 	} else {
+ 		struct myrb_pdev_state *pdev_info = sdev->hostdata;
+@@ -1824,9 +1824,9 @@ static ssize_t raid_state_show(struct device *dev,
+ 		else
+ 			name = myrb_devstate_name(pdev_info->state);
+ 		if (name)
+-			ret = snprintf(buf, 32, "%s\n", name);
++			ret = snprintf(buf, 64, "%s\n", name);
+ 		else
+-			ret = snprintf(buf, 32, "Invalid (%02X)\n",
++			ret = snprintf(buf, 64, "Invalid (%02X)\n",
+ 				       pdev_info->state);
+ 	}
+ 	return ret;
+@@ -1914,11 +1914,11 @@ static ssize_t raid_level_show(struct device *dev,
+ 
+ 		name = myrb_raidlevel_name(ldev_info->raid_level);
+ 		if (!name)
+-			return snprintf(buf, 32, "Invalid (%02X)\n",
++			return snprintf(buf, 64, "Invalid (%02X)\n",
+ 					ldev_info->state);
+-		return snprintf(buf, 32, "%s\n", name);
++		return snprintf(buf, 64, "%s\n", name);
+ 	}
+-	return snprintf(buf, 32, "Physical Drive\n");
++	return snprintf(buf, 64, "Physical Drive\n");
+ }
+ static DEVICE_ATTR_RO(raid_level);
+ 
+@@ -1931,15 +1931,15 @@ static ssize_t rebuild_show(struct device *dev,
+ 	unsigned char status;
+ 
+ 	if (sdev->channel < myrb_logical_channel(sdev->host))
+-		return snprintf(buf, 32, "physical device - not rebuilding\n");
++		return snprintf(buf, 64, "physical device - not rebuilding\n");
+ 
+ 	status = myrb_get_rbld_progress(cb, &rbld_buf);
+ 
+ 	if (rbld_buf.ldev_num != sdev->id ||
+ 	    status != MYRB_STATUS_SUCCESS)
+-		return snprintf(buf, 32, "not rebuilding\n");
++		return snprintf(buf, 64, "not rebuilding\n");
+ 
+-	return snprintf(buf, 32, "rebuilding block %u of %u\n",
++	return snprintf(buf, 64, "rebuilding block %u of %u\n",
+ 			rbld_buf.ldev_size - rbld_buf.blocks_left,
+ 			rbld_buf.ldev_size);
+ }
+diff --git a/drivers/scsi/myrs.c b/drivers/scsi/myrs.c
+index 2d3d14aa46b4b..bf0546fc555f2 100644
+--- a/drivers/scsi/myrs.c
++++ b/drivers/scsi/myrs.c
+@@ -950,9 +950,9 @@ static ssize_t raid_state_show(struct device *dev,
+ 
+ 		name = myrs_devstate_name(ldev_info->dev_state);
+ 		if (name)
+-			ret = snprintf(buf, 32, "%s\n", name);
++			ret = snprintf(buf, 64, "%s\n", name);
+ 		else
+-			ret = snprintf(buf, 32, "Invalid (%02X)\n",
++			ret = snprintf(buf, 64, "Invalid (%02X)\n",
+ 				       ldev_info->dev_state);
+ 	} else {
+ 		struct myrs_pdev_info *pdev_info;
+@@ -961,9 +961,9 @@ static ssize_t raid_state_show(struct device *dev,
+ 		pdev_info = sdev->hostdata;
+ 		name = myrs_devstate_name(pdev_info->dev_state);
+ 		if (name)
+-			ret = snprintf(buf, 32, "%s\n", name);
++			ret = snprintf(buf, 64, "%s\n", name);
+ 		else
+-			ret = snprintf(buf, 32, "Invalid (%02X)\n",
++			ret = snprintf(buf, 64, "Invalid (%02X)\n",
+ 				       pdev_info->dev_state);
+ 	}
+ 	return ret;
+@@ -1069,13 +1069,13 @@ static ssize_t raid_level_show(struct device *dev,
+ 		ldev_info = sdev->hostdata;
+ 		name = myrs_raid_level_name(ldev_info->raid_level);
+ 		if (!name)
+-			return snprintf(buf, 32, "Invalid (%02X)\n",
++			return snprintf(buf, 64, "Invalid (%02X)\n",
+ 					ldev_info->dev_state);
+ 
+ 	} else
+ 		name = myrs_raid_level_name(MYRS_RAID_PHYSICAL);
+ 
+-	return snprintf(buf, 32, "%s\n", name);
++	return snprintf(buf, 64, "%s\n", name);
+ }
+ static DEVICE_ATTR_RO(raid_level);
+ 
+@@ -1089,7 +1089,7 @@ static ssize_t rebuild_show(struct device *dev,
+ 	unsigned char status;
+ 
+ 	if (sdev->channel < cs->ctlr_info->physchan_present)
+-		return snprintf(buf, 32, "physical device - not rebuilding\n");
++		return snprintf(buf, 64, "physical device - not rebuilding\n");
+ 
+ 	ldev_info = sdev->hostdata;
+ 	ldev_num = ldev_info->ldev_num;
+@@ -1101,11 +1101,11 @@ static ssize_t rebuild_show(struct device *dev,
+ 		return -EIO;
+ 	}
+ 	if (ldev_info->rbld_active) {
+-		return snprintf(buf, 32, "rebuilding block %zu of %zu\n",
++		return snprintf(buf, 64, "rebuilding block %zu of %zu\n",
+ 				(size_t)ldev_info->rbld_lba,
+ 				(size_t)ldev_info->cfg_devsize);
+ 	} else
+-		return snprintf(buf, 32, "not rebuilding\n");
++		return snprintf(buf, 64, "not rebuilding\n");
+ }
+ 
+ static ssize_t rebuild_store(struct device *dev,
+@@ -1194,7 +1194,7 @@ static ssize_t consistency_check_show(struct device *dev,
+ 	unsigned char status;
+ 
+ 	if (sdev->channel < cs->ctlr_info->physchan_present)
+-		return snprintf(buf, 32, "physical device - not checking\n");
++		return snprintf(buf, 64, "physical device - not checking\n");
+ 
+ 	ldev_info = sdev->hostdata;
+ 	if (!ldev_info)
+@@ -1202,11 +1202,11 @@ static ssize_t consistency_check_show(struct device *dev,
+ 	ldev_num = ldev_info->ldev_num;
+ 	status = myrs_get_ldev_info(cs, ldev_num, ldev_info);
+ 	if (ldev_info->cc_active)
+-		return snprintf(buf, 32, "checking block %zu of %zu\n",
++		return snprintf(buf, 64, "checking block %zu of %zu\n",
+ 				(size_t)ldev_info->cc_lba,
+ 				(size_t)ldev_info->cfg_devsize);
+ 	else
+-		return snprintf(buf, 32, "not checking\n");
++		return snprintf(buf, 64, "not checking\n");
+ }
+ 
+ static ssize_t consistency_check_store(struct device *dev,
+-- 
+2.43.0
+
 
 
