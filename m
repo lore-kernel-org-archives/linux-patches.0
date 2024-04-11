@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DC4146A8D;
-	Thu, 11 Apr 2024 10:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C9A142624;
+	Thu, 11 Apr 2024 10:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832159; cv=none; b=Ui4gvV5NIj4PmAUF0yTcjpYa9ap5WkD3cS27xkxcAjIGeSh27B8gdKSY9XJ/phFArTvVVy+ZaKFmr60FYq511s2MjgtSr1FykUkELwbtJqO0yKdh96iW8cm1hjsbjVTRYZiyrimMqPwKzcfOb+ePn2+AwZMZwVWRXMsLXid4oeQ=
+	t=1712832163; cv=none; b=gBITu14E+L/DQfqVcS3GPRalLvkPn08MF7nr6XiESyVFbIWuQPkOJHjNUxrXmpxiENe8LIMBowLXMkxsNlkh4TsFWl6pL4GjLeiXUznx87NRZmy8ZbjLjEmwTFqPQE21BboonCRVvBmlZTKmoeEl7HmicTGI8ggkr5r0FXKDWrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832159; c=relaxed/simple;
-	bh=t3cDHtbvcG7y2EKqLGsFNDlhvM0kLU7wjXe0re57WJU=;
+	s=arc-20240116; t=1712832163; c=relaxed/simple;
+	bh=UTgfpIma/Bxd8SNRyDpP5x2WABspy2pTry2ZpNBIBcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XCAsEawKpM/ot0Uw/ddkh20eLfgUhoT5PQMOQk1Tfqv1Io8lsIEwZc8oioIc59z9wrakgCU9aJTV8UhBxAYsfAvAvRTCa24VsZi7g5aklQZ6UCVge7Cv8P97HWaeBQ0WhiRIf2FfBiV9s4GtUpOckESnxzAYU55QE7WX0Q0ihSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gtv5k0zZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JvMkgEvfZoqMWfTL+CdAku3bqKZu22h362x5304phFo5ZL+b5aR74nsLobLpXeSSBLd8+w/0agKlU78dXTsypGuionCJyjiOxWrcIDLiXnugAridMgwuLutWvlHg3wGxfU1C2FjN8Dyx2SLjmYGmuW5GjAZDsAXrgcfwKnloagU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfLdPm4L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gtv5k0zZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCFDC433C7;
-	Thu, 11 Apr 2024 10:42:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfLdPm4L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EF6C433F1;
+	Thu, 11 Apr 2024 10:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832159;
-	bh=t3cDHtbvcG7y2EKqLGsFNDlhvM0kLU7wjXe0re57WJU=;
+	s=korg; t=1712832162;
+	bh=UTgfpIma/Bxd8SNRyDpP5x2WABspy2pTry2ZpNBIBcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gtv5k0zZPBApNzi58Lh2Z0RxkXyX+2UB/E4BudVHHV5WBSox37PmMFb7kMhTeogNc
-	 bHdgXcJjjrq0YlCrn/GYQJH+KpaZN9FTrA/OQIgdwppMP4X6WDXVnYkmpOntUvS5Gw
-	 rWp8y8TFQsu11CJ5mg6NowmXcmfsjUvSYVO+TUxg=
+	b=wfLdPm4L4cN4/bfpxVM6wpXbGt8Lmc7hcAp/3F/PSDttP4VS9U1WFB0SNl4/mD1nl
+	 tyXbT7w7AzgQeidPuXtVf9gMI9xXgwcz03oaqVk8VB557zf4JZRJKHUBcYcnic2qg9
+	 ZsfrBc51rP+a0zMiI3qoqr7B+fVAAxs/cZGCnXp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Jonker <jbx6244@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 249/294] arm64: dts: rockchip: fix rk3399 hdmi ports node
-Date: Thu, 11 Apr 2024 11:56:52 +0200
-Message-ID: <20240411095443.067061328@linuxfoundation.org>
+Subject: [PATCH 5.10 250/294] ionic: set adminq irq affinity
+Date: Thu, 11 Apr 2024 11:56:53 +0200
+Message-ID: <20240411095443.095629549@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -51,62 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit f051b6ace7ffcc48d6d1017191f167c0a85799f6 ]
+[ Upstream commit c699f35d658f3c21b69ed24e64b2ea26381e941d ]
 
-Fix rk3399 hdmi ports node so that it matches the
-rockchip,dw-hdmi.yaml binding.
+We claim to have the AdminQ on our irq0 and thus cpu id 0,
+but we need to be sure we set the affinity hint to try to
+keep it there.
 
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Link: https://lore.kernel.org/r/a6ab6f75-3b80-40b1-bd30-3113e14becdd@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399.dtsi | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399.dtsi b/arch/arm64/boot/dts/rockchip/rk3399.dtsi
-index 3180f576ed02e..e2515218ff734 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399.dtsi
-@@ -1769,6 +1769,7 @@ simple-audio-card,codec {
- 	hdmi: hdmi@ff940000 {
- 		compatible = "rockchip,rk3399-dw-hdmi";
- 		reg = <0x0 0xff940000 0x0 0x20000>;
-+		reg-io-width = <4>;
- 		interrupts = <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH 0>;
- 		clocks = <&cru PCLK_HDMI_CTRL>,
- 			 <&cru SCLK_HDMI_SFR>,
-@@ -1777,13 +1778,16 @@ hdmi: hdmi@ff940000 {
- 			 <&cru PLL_VPLL>;
- 		clock-names = "iahb", "isfr", "cec", "grf", "vpll";
- 		power-domains = <&power RK3399_PD_HDCP>;
--		reg-io-width = <4>;
- 		rockchip,grf = <&grf>;
- 		#sound-dai-cells = <0>;
- 		status = "disabled";
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+index 49c28134ac2cc..a37ca4b1e5665 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+@@ -2708,9 +2708,12 @@ static int ionic_lif_adminq_init(struct ionic_lif *lif)
  
- 		ports {
--			hdmi_in: port {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			hdmi_in: port@0 {
-+				reg = <0>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
+ 	napi_enable(&qcq->napi);
  
-@@ -1796,6 +1800,10 @@ hdmi_in_vopl: endpoint@1 {
- 					remote-endpoint = <&vopl_out_hdmi>;
- 				};
- 			};
-+
-+			hdmi_out: port@1 {
-+				reg = <1>;
-+			};
- 		};
- 	};
+-	if (qcq->flags & IONIC_QCQ_F_INTR)
++	if (qcq->flags & IONIC_QCQ_F_INTR) {
++		irq_set_affinity_hint(qcq->intr.vector,
++				      &qcq->intr.affinity_mask);
+ 		ionic_intr_mask(idev->intr_ctrl, qcq->intr.index,
+ 				IONIC_INTR_MASK_CLEAR);
++	}
+ 
+ 	qcq->flags |= IONIC_QCQ_F_INITED;
  
 -- 
 2.43.0
