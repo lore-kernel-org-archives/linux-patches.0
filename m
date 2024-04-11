@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C870145B0E;
-	Thu, 11 Apr 2024 10:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89C6145B0E;
+	Thu, 11 Apr 2024 10:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830449; cv=none; b=GFYYP3wW3wONVoemX5DSiP7I2JYEsLRPG2BFQGnyX0GwD4uHtKfS6QKDiHTS8YiHKv9WfFMbE9oHJEjMC5oEdDibfWv8cFOoOKHhbOYa0TqnBM09W7hyP8mvBPSIG6Uw/lUqgS+H1RSyrH3DhmMptsF/zjiZuFejitCSDZ5bHxo=
+	t=1712830452; cv=none; b=fJS9PPD+IPiUU6QFEJTYFvsr7WBDbvP+f5vK1RImPm2QuZFpIV0eoyf8hRfuz8ptI6/rW/eI4i7GTWyI+lIZO76IQc0761sa6n8+fBjTIi6chTHBp1vcVvtjN5p149xnlch/Cav8jWhxL/ojNusgRqbRTAAr13+yKGi9hTF58S4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830449; c=relaxed/simple;
-	bh=ubdrJUNkFDSFUFFTw1mnZEvV9P1QRza1dyPgv7H/HDE=;
+	s=arc-20240116; t=1712830452; c=relaxed/simple;
+	bh=Pe3narQ63IUAgDmTxscRGyZPUAWofvw8t01yqaNi+gI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IoVOg6oUJsCCN7QsroB7GvGNYr8KsNvqYMS0ZFi46A9+mCs5gBVo0VRaf5SddWP9XIYin5snh6+4CH+vt+Z9eX2sk5kZzxdJXDb7f7lBoL8EdlZ26xuZ4q7ub76VMTeb6t6ZNWOiOJ1vPalZvE8PxMLyHebpIPa4qtW76wb6Llg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IapuUB3W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jHu+qQna4v82Narg0ooCk5DZEy81rtnRkzKyxp+Rs7yBJLm3VjvXO9cgM86GO5ubp/Ndnvnuu+KelGY8LG5n3WUKTSEKaZF+UK02+PQ3mrgS+dsLFP0kfDgEZN4fX+Cau7jqNfQg+3NiVKxyAQmeHqX8j4z3CWJVV91GXDSkd1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDelFw5F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IapuUB3W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92440C433C7;
-	Thu, 11 Apr 2024 10:14:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDelFw5F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C39DC433F1;
+	Thu, 11 Apr 2024 10:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830449;
-	bh=ubdrJUNkFDSFUFFTw1mnZEvV9P1QRza1dyPgv7H/HDE=;
+	s=korg; t=1712830451;
+	bh=Pe3narQ63IUAgDmTxscRGyZPUAWofvw8t01yqaNi+gI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IapuUB3WTobfJCI5UwpFkNgR5uNbQQ+iUAJ/+wDZgdF64DCYwdlfV8QcJDmqpBzcq
-	 nlCZZNBcPJlFayxTtoBTmLPkuxnjVIF48Fu5o+zQp/VirF0Q9ty/D2B/nAxE3z9IaW
-	 VFIvDphRrDy7J5xbVylqHImX+iEmTEfTkCtPoKr8=
+	b=qDelFw5FGvzefRR+xmpVj2K+lUC21gDWro0/Z6qpGsMhK9cTXDEMJYkvTSMf7CEmb
+	 kzWwjxxSe+J3JvOqptR99D/h6F2HFWT5Cpz94eBKpZWEW+ePmYx5FiAcSPO4Xcsir/
+	 lp345zKAqTn1obgI9JkNcwZu01TZdTcFn6xX22Yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.8 142/143] x86/vdso: Fix rethunk patching for vdso-image-x32.o too
-Date: Thu, 11 Apr 2024 11:56:50 +0200
-Message-ID: <20240411095425.172877606@linuxfoundation.org>
+	Ma Jun <Jun.Ma2@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.8 143/143] Revert "drm/amd/amdgpu: Fix potential ioremap() memory leaks in amdgpu_device_init()"
+Date: Thu, 11 Apr 2024 11:56:51 +0200
+Message-ID: <20240411095425.202113942@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -44,41 +45,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Ma Jun <Jun.Ma2@amd.com>
 
-commit 4969d75dd9077e19e175e60f3c5a6c7653252e63 upstream.
+commit 03c6284df179de3a4a6e0684764b1c71d2a405e2 upstream.
 
-In a similar fashion to
+This patch causes the following iounmap erorr and calltrace
+iounmap: bad address 00000000d0b3631f
 
-  b388e57d4628 ("x86/vdso: Fix rethunk patching for vdso-image-{32,64}.o")
+The original patch was unjustified because amdgpu_device_fini_sw() will
+always cleanup the rmmio mapping.
 
-annotate vdso-image-x32.o too for objtool so that it gets annotated
-properly and the unused return thunk warning doesn't fire.
+This reverts commit eb4f139888f636614dab3bcce97ff61cefc4b3a7.
 
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202403251454.23df6278-lkp@intel.com
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/202403251454.23df6278-lkp@intel.com
+Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/entry/vdso/Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
---- a/arch/x86/entry/vdso/Makefile
-+++ b/arch/x86/entry/vdso/Makefile
-@@ -37,6 +37,7 @@ KCSAN_SANITIZE_vma.o			:= y
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4025,10 +4025,8 @@ int amdgpu_device_init(struct amdgpu_dev
+ 	 * early on during init and before calling to RREG32.
+ 	 */
+ 	adev->reset_domain = amdgpu_reset_create_reset_domain(SINGLE_DEVICE, "amdgpu-reset-dev");
+-	if (!adev->reset_domain) {
+-		r = -ENOMEM;
+-		goto unmap_memory;
+-	}
++	if (!adev->reset_domain)
++		return -ENOMEM;
  
- OBJECT_FILES_NON_STANDARD_extable.o		:= n
- OBJECT_FILES_NON_STANDARD_vdso-image-32.o 	:= n
-+OBJECT_FILES_NON_STANDARD_vdso-image-x32.o	:= n
- OBJECT_FILES_NON_STANDARD_vdso-image-64.o 	:= n
- OBJECT_FILES_NON_STANDARD_vdso32-setup.o	:= n
- OBJECT_FILES_NON_STANDARD_vma.o			:= n
+ 	/* detect hw virtualization here */
+ 	amdgpu_detect_virtualization(adev);
+@@ -4038,20 +4036,20 @@ int amdgpu_device_init(struct amdgpu_dev
+ 	r = amdgpu_device_get_job_timeout_settings(adev);
+ 	if (r) {
+ 		dev_err(adev->dev, "invalid lockup_timeout parameter syntax\n");
+-		goto unmap_memory;
++		return r;
+ 	}
+ 
+ 	/* early init functions */
+ 	r = amdgpu_device_ip_early_init(adev);
+ 	if (r)
+-		goto unmap_memory;
++		return r;
+ 
+ 	amdgpu_device_set_mcbp(adev);
+ 
+ 	/* Get rid of things like offb */
+ 	r = drm_aperture_remove_conflicting_pci_framebuffers(adev->pdev, &amdgpu_kms_driver);
+ 	if (r)
+-		goto unmap_memory;
++		return r;
+ 
+ 	/* Enable TMZ based on IP_VERSION */
+ 	amdgpu_gmc_tmz_set(adev);
+@@ -4061,7 +4059,7 @@ int amdgpu_device_init(struct amdgpu_dev
+ 	if (adev->gmc.xgmi.supported) {
+ 		r = adev->gfxhub.funcs->get_xgmi_info(adev);
+ 		if (r)
+-			goto unmap_memory;
++			return r;
+ 	}
+ 
+ 	/* enable PCIE atomic ops */
+@@ -4330,8 +4328,6 @@ release_ras_con:
+ failed:
+ 	amdgpu_vf_error_trans_all(adev);
+ 
+-unmap_memory:
+-	iounmap(adev->rmmio);
+ 	return r;
+ }
+ 
 
 
