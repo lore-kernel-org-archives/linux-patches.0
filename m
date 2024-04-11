@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9F3142624;
-	Thu, 11 Apr 2024 10:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DC4146D7E;
+	Thu, 11 Apr 2024 10:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832044; cv=none; b=KuuKYmiPIS42SWZQJobdVCMt9L0svnLT8jAYVWoOfQxD24OYXrVN3b33LOgYeUxEhFOAIGI9SQVz5ZrlQdkdx3pskqF6oKjK0Ep5TI4XvZJT+kVZyLcpBg6lbBg8op1sXviIAzEVE5gJniQXLZ0c+Ta2VNND/sybofu0LnKEl4o=
+	t=1712832047; cv=none; b=UuT+w/K6WxddgcPSQqT3tSWovsyN+70SJR2WH6boz1cAu+WPN8Hc9OV7aF6n0GJLkY1n9Eu3DhCJom5DSsMob8wAoNg/jMN/cf+io6akgvOBxt82VAEk4DuugtCmtJvoZNBDeaKscpAL5raazERmttWSe3Ny/WmE8LkQcrlkT9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832044; c=relaxed/simple;
-	bh=gyMikT1fti46Z6RPNWEjwde5eGXqohEHe+1U7Q1OcD4=;
+	s=arc-20240116; t=1712832047; c=relaxed/simple;
+	bh=C7Sk73tK9eVD27Efq6jQI0HXqlKX03FaUNwHl7edxD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QrFlDpKy6ovNDvEUk7Avi82xlI7kHXMY/dLeoXBfGvdhiDj3LVAUzcp0WSxnu9qkLQUrS3MNl9OilD9ZalaCjPKxOh5RPGkHmLIivcqZMNrJphGg9AJbMkJxm4yGhrA/ofh5Xo08sHYh0ByAykYhTfDVINvdPQ7aU1dTPYJ+h04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2m1Q3lSV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DJpEXumIMGLXflFPgK29ADuWKlYTb/KvSM/mBa/FqwjehBhbYT3k/+P8Onb8PtuGhvRonzMA1HIx157jiHyaKYpYtD/2Y17xvjcxU7rMJrc0IXRq/OdtrGbOH7YWSoI0Tkq484cELbAGKjDPtv1zLOiv1FXofw/vwjHlmEDSmls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUm3d6SL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2m1Q3lSV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325ACC433F1;
-	Thu, 11 Apr 2024 10:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUm3d6SL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC7DC433F1;
+	Thu, 11 Apr 2024 10:40:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832044;
-	bh=gyMikT1fti46Z6RPNWEjwde5eGXqohEHe+1U7Q1OcD4=;
+	s=korg; t=1712832047;
+	bh=C7Sk73tK9eVD27Efq6jQI0HXqlKX03FaUNwHl7edxD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2m1Q3lSVvQGoFHl4k0Pd1dLnxTkvVZQyoOgqsrE0b4Tq87GNoAelLH7+1FupZZn5K
-	 dm1quwNIkzxT0X8Pdz+EAbQX1OGL4F79HqIAOPz8WllmBkJZgQ1SokHINu13PXA6Fa
-	 pVx/l21I/7PINHWdmcluba/OP/k0e/yPesJ35jb0=
+	b=BUm3d6SLn0/w0G3s7lfPy3PmajdG5qLNbFF1OPUPJyA5B4QfQ5g/tnjqrDMrf4gul
+	 dHX9T54LgG6uHejgQJakSPE4+9f9pihYbpXXWQWnWhcJtjuNxtbs/VDY9HDq95Z5y0
+	 P/kSq0mhp7W3ZCAA85DzbEs8KcgqBj6Xs275vDRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Piotr Wejman <piotrwejman90@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 212/294] net/sched: act_skbmod: prevent kernel-infoleak
-Date: Thu, 11 Apr 2024 11:56:15 +0200
-Message-ID: <20240411095441.978947900@linuxfoundation.org>
+Subject: [PATCH 5.10 213/294] net: stmmac: fix rx queue priority assignment
+Date: Thu, 11 Apr 2024 11:56:16 +0200
+Message-ID: <20240411095442.007723718@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -51,141 +50,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Piotr Wejman <piotrwejman90@gmail.com>
 
-commit d313eb8b77557a6d5855f42d2234bd592c7b50dd upstream.
+commit b3da86d432b7cd65b025a11f68613e333d2483db upstream.
 
-syzbot found that tcf_skbmod_dump() was copying four bytes
-from kernel stack to user space [1].
+The driver should ensure that same priority is not mapped to multiple
+rx queues. From DesignWare Cores Ethernet Quality-of-Service
+Databook, section 17.1.29 MAC_RxQ_Ctrl2:
+"[...]The software must ensure that the content of this field is
+mutually exclusive to the PSRQ fields for other queues, that is,
+the same priority is not mapped to multiple Rx queues[...]"
 
-The issue here is that 'struct tc_skbmod' has a four bytes hole.
+Previously rx_queue_priority() function was:
+- clearing all priorities from a queue
+- adding new priorities to that queue
+After this patch it will:
+- first assign new priorities to a queue
+- then remove those priorities from all other queues
+- keep other priorities previously assigned to that queue
 
-We need to clear the structure before filling fields.
-
-[1]
-BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
- BUG: KMSAN: kernel-infoleak in copy_to_user_iter lib/iov_iter.c:24 [inline]
- BUG: KMSAN: kernel-infoleak in iterate_ubuf include/linux/iov_iter.h:29 [inline]
- BUG: KMSAN: kernel-infoleak in iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
- BUG: KMSAN: kernel-infoleak in iterate_and_advance include/linux/iov_iter.h:271 [inline]
- BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x366/0x2520 lib/iov_iter.c:185
-  instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-  copy_to_user_iter lib/iov_iter.c:24 [inline]
-  iterate_ubuf include/linux/iov_iter.h:29 [inline]
-  iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
-  iterate_and_advance include/linux/iov_iter.h:271 [inline]
-  _copy_to_iter+0x366/0x2520 lib/iov_iter.c:185
-  copy_to_iter include/linux/uio.h:196 [inline]
-  simple_copy_to_iter net/core/datagram.c:532 [inline]
-  __skb_datagram_iter+0x185/0x1000 net/core/datagram.c:420
-  skb_copy_datagram_iter+0x5c/0x200 net/core/datagram.c:546
-  skb_copy_datagram_msg include/linux/skbuff.h:4050 [inline]
-  netlink_recvmsg+0x432/0x1610 net/netlink/af_netlink.c:1962
-  sock_recvmsg_nosec net/socket.c:1046 [inline]
-  sock_recvmsg+0x2c4/0x340 net/socket.c:1068
-  __sys_recvfrom+0x35a/0x5f0 net/socket.c:2242
-  __do_sys_recvfrom net/socket.c:2260 [inline]
-  __se_sys_recvfrom net/socket.c:2256 [inline]
-  __x64_sys_recvfrom+0x126/0x1d0 net/socket.c:2256
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Uninit was stored to memory at:
-  pskb_expand_head+0x30f/0x19d0 net/core/skbuff.c:2253
-  netlink_trim+0x2c2/0x330 net/netlink/af_netlink.c:1317
-  netlink_unicast+0x9f/0x1260 net/netlink/af_netlink.c:1351
-  nlmsg_unicast include/net/netlink.h:1144 [inline]
-  nlmsg_notify+0x21d/0x2f0 net/netlink/af_netlink.c:2610
-  rtnetlink_send+0x73/0x90 net/core/rtnetlink.c:741
-  rtnetlink_maybe_send include/linux/rtnetlink.h:17 [inline]
-  tcf_add_notify net/sched/act_api.c:2048 [inline]
-  tcf_action_add net/sched/act_api.c:2071 [inline]
-  tc_ctl_action+0x146e/0x19d0 net/sched/act_api.c:2119
-  rtnetlink_rcv_msg+0x1737/0x1900 net/core/rtnetlink.c:6595
-  netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2559
-  rtnetlink_rcv+0x34/0x40 net/core/rtnetlink.c:6613
-  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
-  netlink_unicast+0xf4c/0x1260 net/netlink/af_netlink.c:1361
-  netlink_sendmsg+0x10df/0x11f0 net/netlink/af_netlink.c:1905
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  ____sys_sendmsg+0x877/0xb60 net/socket.c:2584
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
-  __sys_sendmsg net/socket.c:2667 [inline]
-  __do_sys_sendmsg net/socket.c:2676 [inline]
-  __se_sys_sendmsg net/socket.c:2674 [inline]
-  __x64_sys_sendmsg+0x307/0x4a0 net/socket.c:2674
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Uninit was stored to memory at:
-  __nla_put lib/nlattr.c:1041 [inline]
-  nla_put+0x1c6/0x230 lib/nlattr.c:1099
-  tcf_skbmod_dump+0x23f/0xc20 net/sched/act_skbmod.c:256
-  tcf_action_dump_old net/sched/act_api.c:1191 [inline]
-  tcf_action_dump_1+0x85e/0x970 net/sched/act_api.c:1227
-  tcf_action_dump+0x1fd/0x460 net/sched/act_api.c:1251
-  tca_get_fill+0x519/0x7a0 net/sched/act_api.c:1628
-  tcf_add_notify_msg net/sched/act_api.c:2023 [inline]
-  tcf_add_notify net/sched/act_api.c:2042 [inline]
-  tcf_action_add net/sched/act_api.c:2071 [inline]
-  tc_ctl_action+0x1365/0x19d0 net/sched/act_api.c:2119
-  rtnetlink_rcv_msg+0x1737/0x1900 net/core/rtnetlink.c:6595
-  netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2559
-  rtnetlink_rcv+0x34/0x40 net/core/rtnetlink.c:6613
-  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
-  netlink_unicast+0xf4c/0x1260 net/netlink/af_netlink.c:1361
-  netlink_sendmsg+0x10df/0x11f0 net/netlink/af_netlink.c:1905
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  ____sys_sendmsg+0x877/0xb60 net/socket.c:2584
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
-  __sys_sendmsg net/socket.c:2667 [inline]
-  __do_sys_sendmsg net/socket.c:2676 [inline]
-  __se_sys_sendmsg net/socket.c:2674 [inline]
-  __x64_sys_sendmsg+0x307/0x4a0 net/socket.c:2674
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Local variable opt created at:
-  tcf_skbmod_dump+0x9d/0xc20 net/sched/act_skbmod.c:244
-  tcf_action_dump_old net/sched/act_api.c:1191 [inline]
-  tcf_action_dump_1+0x85e/0x970 net/sched/act_api.c:1227
-
-Bytes 188-191 of 248 are uninitialized
-Memory access of size 248 starts at ffff888117697680
-Data copied to user address 00007ffe56d855f0
-
-Fixes: 86da71b57383 ("net_sched: Introduce skbmod action")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/20240403130908.93421-1-edumazet@google.com
+Fixes: a8f5102af2a7 ("net: stmmac: TX and RX queue priority configuration")
+Fixes: 2142754f8b9c ("net: stmmac: Add MAC related callbacks for XGMAC2")
+Signed-off-by: Piotr Wejman <piotrwejman90@gmail.com>
+Link: https://lore.kernel.org/r/20240401192239.33942-1-piotrwejman90@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_skbmod.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c   |   40 +++++++++++++++-----
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c |   38 +++++++++++++++----
+ 2 files changed, 62 insertions(+), 16 deletions(-)
 
---- a/net/sched/act_skbmod.c
-+++ b/net/sched/act_skbmod.c
-@@ -219,13 +219,13 @@ static int tcf_skbmod_dump(struct sk_buf
- 	struct tcf_skbmod *d = to_skbmod(a);
- 	unsigned char *b = skb_tail_pointer(skb);
- 	struct tcf_skbmod_params  *p;
--	struct tc_skbmod opt = {
--		.index   = d->tcf_index,
--		.refcnt  = refcount_read(&d->tcf_refcnt) - ref,
--		.bindcnt = atomic_read(&d->tcf_bindcnt) - bind,
--	};
-+	struct tc_skbmod opt;
- 	struct tcf_t t;
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+@@ -75,19 +75,41 @@ static void dwmac4_rx_queue_priority(str
+ 				     u32 prio, u32 queue)
+ {
+ 	void __iomem *ioaddr = hw->pcsr;
+-	u32 base_register;
+-	u32 value;
++	u32 clear_mask = 0;
++	u32 ctrl2, ctrl3;
++	int i;
  
-+	memset(&opt, 0, sizeof(opt));
-+	opt.index   = d->tcf_index;
-+	opt.refcnt  = refcount_read(&d->tcf_refcnt) - ref,
-+	opt.bindcnt = atomic_read(&d->tcf_bindcnt) - bind;
- 	spin_lock_bh(&d->tcf_lock);
- 	opt.action = d->tcf_action;
- 	p = rcu_dereference_protected(d->skbmod_p,
+-	base_register = (queue < 4) ? GMAC_RXQ_CTRL2 : GMAC_RXQ_CTRL3;
+-	if (queue >= 4)
+-		queue -= 4;
++	ctrl2 = readl(ioaddr + GMAC_RXQ_CTRL2);
++	ctrl3 = readl(ioaddr + GMAC_RXQ_CTRL3);
++
++	/* The software must ensure that the same priority
++	 * is not mapped to multiple Rx queues
++	 */
++	for (i = 0; i < 4; i++)
++		clear_mask |= ((prio << GMAC_RXQCTRL_PSRQX_SHIFT(i)) &
++						GMAC_RXQCTRL_PSRQX_MASK(i));
+ 
+-	value = readl(ioaddr + base_register);
++	ctrl2 &= ~clear_mask;
++	ctrl3 &= ~clear_mask;
+ 
+-	value &= ~GMAC_RXQCTRL_PSRQX_MASK(queue);
+-	value |= (prio << GMAC_RXQCTRL_PSRQX_SHIFT(queue)) &
++	/* First assign new priorities to a queue, then
++	 * clear them from others queues
++	 */
++	if (queue < 4) {
++		ctrl2 |= (prio << GMAC_RXQCTRL_PSRQX_SHIFT(queue)) &
+ 						GMAC_RXQCTRL_PSRQX_MASK(queue);
+-	writel(value, ioaddr + base_register);
++
++		writel(ctrl2, ioaddr + GMAC_RXQ_CTRL2);
++		writel(ctrl3, ioaddr + GMAC_RXQ_CTRL3);
++	} else {
++		queue -= 4;
++
++		ctrl3 |= (prio << GMAC_RXQCTRL_PSRQX_SHIFT(queue)) &
++						GMAC_RXQCTRL_PSRQX_MASK(queue);
++
++		writel(ctrl3, ioaddr + GMAC_RXQ_CTRL3);
++		writel(ctrl2, ioaddr + GMAC_RXQ_CTRL2);
++	}
+ }
+ 
+ static void dwmac4_tx_queue_priority(struct mac_device_info *hw,
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+@@ -97,17 +97,41 @@ static void dwxgmac2_rx_queue_prio(struc
+ 				   u32 queue)
+ {
+ 	void __iomem *ioaddr = hw->pcsr;
+-	u32 value, reg;
++	u32 clear_mask = 0;
++	u32 ctrl2, ctrl3;
++	int i;
+ 
+-	reg = (queue < 4) ? XGMAC_RXQ_CTRL2 : XGMAC_RXQ_CTRL3;
+-	if (queue >= 4)
++	ctrl2 = readl(ioaddr + XGMAC_RXQ_CTRL2);
++	ctrl3 = readl(ioaddr + XGMAC_RXQ_CTRL3);
++
++	/* The software must ensure that the same priority
++	 * is not mapped to multiple Rx queues
++	 */
++	for (i = 0; i < 4; i++)
++		clear_mask |= ((prio << XGMAC_PSRQ_SHIFT(i)) &
++						XGMAC_PSRQ(i));
++
++	ctrl2 &= ~clear_mask;
++	ctrl3 &= ~clear_mask;
++
++	/* First assign new priorities to a queue, then
++	 * clear them from others queues
++	 */
++	if (queue < 4) {
++		ctrl2 |= (prio << XGMAC_PSRQ_SHIFT(queue)) &
++						XGMAC_PSRQ(queue);
++
++		writel(ctrl2, ioaddr + XGMAC_RXQ_CTRL2);
++		writel(ctrl3, ioaddr + XGMAC_RXQ_CTRL3);
++	} else {
+ 		queue -= 4;
+ 
+-	value = readl(ioaddr + reg);
+-	value &= ~XGMAC_PSRQ(queue);
+-	value |= (prio << XGMAC_PSRQ_SHIFT(queue)) & XGMAC_PSRQ(queue);
++		ctrl3 |= (prio << XGMAC_PSRQ_SHIFT(queue)) &
++						XGMAC_PSRQ(queue);
+ 
+-	writel(value, ioaddr + reg);
++		writel(ctrl3, ioaddr + XGMAC_RXQ_CTRL3);
++		writel(ctrl2, ioaddr + XGMAC_RXQ_CTRL2);
++	}
+ }
+ 
+ static void dwxgmac2_tx_queue_prio(struct mac_device_info *hw, u32 prio,
 
 
