@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0A613E897;
-	Thu, 11 Apr 2024 10:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9F4146D4E;
+	Thu, 11 Apr 2024 10:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830670; cv=none; b=Fg8glDofqLqQJlHX/3ZMf05v7OBdbZD3M6wtbdmXDXciYoyuTTdSH3fdoQD77sJn5X1g6AWLFlhkYMYvMSBlF/+ORTEpFDe49ha+XLcwYPiHQIns3jwuEQKnG0ECF0v9SUOfx+vKrEZAbpE5whZEuVAZYwE7IFP9cDi6cIolIqI=
+	t=1712830673; cv=none; b=V18ZPHcTt6D4PPGBkPb+CYC1cZfbYj1cVhhIW0fvL+EwSrGx6CQZGO/LNh4b+l3P9+SrxaiiH3Iljx2viyjvUHZsCepvsNZ+/RCP6M9tAmNRTfCghwDqZ7thCxNwSIW4ZCYcMX2UcrWLyPCWTnSeiHFfyzmQ2Hi0FT1AnPIP0b8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830670; c=relaxed/simple;
-	bh=siq0WyUGTdQ/cFE3X2hvh0y5ZY6rUnnlqBoUe3gBhMc=;
+	s=arc-20240116; t=1712830673; c=relaxed/simple;
+	bh=Jl5ctXGYKWYgctg4HhZNoHoeH76NB84I814CQ9+8RwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BNlXww4YmPVMW94/lCTfIFLMQYAeTUKEUlGT+ERne6qOisI9bWfbdCvZX1kwvXNaQrXXUb7LcbARA32B1MCvOkA/4BPFt4yhG7glvmo9WyZW3LZ5A6q1CoxCtzuBecBbBlkre0PH4hGvLPu/S1d3dMY8HPTFeQp6OfT7TEJ74T4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIIj0r8r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iEtB02ohMKX+SUaUXhTc2J6ZtjRbdrMoPqdv3PODw77tsTUDa3tzEYkBeHRBzMFxeoeqDkEaUlaO1dpBHITi5hUXKWc6kKUYy4ZdH3qrDgDzxR+r56kXLrutbZdkyYEWh/I4Wor76KXwAt6m9cYAJCzWH6A1yX3PukLrKr+weIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fWJqloR+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIIj0r8r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57864C433F1;
-	Thu, 11 Apr 2024 10:17:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fWJqloR+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A473C43390;
+	Thu, 11 Apr 2024 10:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830670;
-	bh=siq0WyUGTdQ/cFE3X2hvh0y5ZY6rUnnlqBoUe3gBhMc=;
+	s=korg; t=1712830673;
+	bh=Jl5ctXGYKWYgctg4HhZNoHoeH76NB84I814CQ9+8RwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lIIj0r8r22DGJdi1mCOhBCvvaXnE8DvGMsCP0qiepEVqzxZnGDcfLVIcIsnyNwbM/
-	 mIjmQ+O1VVyz84eZtulMCfIqPIim/EieLYCuBaKqMGhgcXGxlgfD4A3Et6WwkFgD63
-	 sJoJ0Gi3ZMrcUr2QuU2q7tyouLqmkyRpduPq8zxE=
+	b=fWJqloR+Y/mzJfT5UHtAK7jjdBr3y7QSHbi5N4JD6z4ADaRAsXelOQs6PM5CBRd2t
+	 6FhgBm7NTVRs+6h1v1AXskU7l+i6OTQX81d5WKb9KUxvpmoO56aSZKGe8YamWdrzke
+	 VgpbMbb5cCW1fzuzFwgwDhrBniWWKyHGdGD88Pg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Pittman <jpittman@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 079/215] dm snapshot: fix lockup in dm_exception_table_exit
-Date: Thu, 11 Apr 2024 11:54:48 +0200
-Message-ID: <20240411095427.283006110@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 5.4 080/215] comedi: comedi_test: Prevent timers rescheduling during deletion
+Date: Thu, 11 Apr 2024 11:54:49 +0200
+Message-ID: <20240411095427.312522934@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -52,40 +49,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 6e7132ed3c07bd8a6ce3db4bb307ef2852b322dc ]
+commit f53641a6e849034a44bf80f50245a75d7a376025 upstream.
 
-There was reported lockup when we exit a snapshot with many exceptions.
-Fix this by adding "cond_resched" to the loop that frees the exceptions.
+The comedi_test devices have a couple of timers (ai_timer and ao_timer)
+that can be started to simulate hardware interrupts.  Their expiry
+functions normally reschedule the timer.  The driver code calls either
+del_timer_sync() or del_timer() to delete the timers from the queue, but
+does not currently prevent the timers from rescheduling themselves so
+synchronized deletion may be ineffective.
 
-Reported-by: John Pittman <jpittman@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add a couple of boolean members (one for each timer: ai_timer_enable and
+ao_timer_enable) to the device private data structure to indicate
+whether the timers are allowed to reschedule themselves.  Set the member
+to true when adding the timer to the queue, and to false when deleting
+the timer from the queue in the waveform_ai_cancel() and
+waveform_ao_cancel() functions.
+
+The del_timer_sync() function is also called from the waveform_detach()
+function, but the timer enable members will already be set to false when
+that function is called, so no change is needed there.
+
+Fixes: 403fe7f34e33 ("staging: comedi: comedi_test: fix timer race conditions")
+Cc: stable@vger.kernel.org # 4.4+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20240214100747.16203-1-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-snap.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/staging/comedi/drivers/comedi_test.c |   30 +++++++++++++++++++++++----
+ 1 file changed, 26 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/dm-snap.c b/drivers/md/dm-snap.c
-index e902aae685af9..d8902d2b6aa66 100644
---- a/drivers/md/dm-snap.c
-+++ b/drivers/md/dm-snap.c
-@@ -685,8 +685,10 @@ static void dm_exception_table_exit(struct dm_exception_table *et,
- 	for (i = 0; i < size; i++) {
- 		slot = et->table + i;
+--- a/drivers/staging/comedi/drivers/comedi_test.c
++++ b/drivers/staging/comedi/drivers/comedi_test.c
+@@ -87,6 +87,8 @@ struct waveform_private {
+ 	struct comedi_device *dev;	/* parent comedi device */
+ 	u64 ao_last_scan_time;		/* time of previous AO scan in usec */
+ 	unsigned int ao_scan_period;	/* AO scan period in usec */
++	bool ai_timer_enable:1;		/* should AI timer be running? */
++	bool ao_timer_enable:1;		/* should AO timer be running? */
+ 	unsigned short ao_loopbacks[N_CHANS];
+ };
  
--		hlist_bl_for_each_entry_safe(ex, pos, n, slot, hash_list)
-+		hlist_bl_for_each_entry_safe(ex, pos, n, slot, hash_list) {
- 			kmem_cache_free(mem, ex);
-+			cond_resched();
+@@ -236,8 +238,12 @@ static void waveform_ai_timer(struct tim
+ 			time_increment = devpriv->ai_convert_time - now;
+ 		else
+ 			time_increment = 1;
+-		mod_timer(&devpriv->ai_timer,
+-			  jiffies + usecs_to_jiffies(time_increment));
++		spin_lock(&dev->spinlock);
++		if (devpriv->ai_timer_enable) {
++			mod_timer(&devpriv->ai_timer,
++				  jiffies + usecs_to_jiffies(time_increment));
 +		}
++		spin_unlock(&dev->spinlock);
  	}
  
- 	vfree(et->table);
--- 
-2.43.0
-
+ overrun:
+@@ -393,9 +399,12 @@ static int waveform_ai_cmd(struct comedi
+ 	 * Seem to need an extra jiffy here, otherwise timer expires slightly
+ 	 * early!
+ 	 */
++	spin_lock_bh(&dev->spinlock);
++	devpriv->ai_timer_enable = true;
+ 	devpriv->ai_timer.expires =
+ 		jiffies + usecs_to_jiffies(devpriv->ai_convert_period) + 1;
+ 	add_timer(&devpriv->ai_timer);
++	spin_unlock_bh(&dev->spinlock);
+ 	return 0;
+ }
+ 
+@@ -404,6 +413,9 @@ static int waveform_ai_cancel(struct com
+ {
+ 	struct waveform_private *devpriv = dev->private;
+ 
++	spin_lock_bh(&dev->spinlock);
++	devpriv->ai_timer_enable = false;
++	spin_unlock_bh(&dev->spinlock);
+ 	if (in_softirq()) {
+ 		/* Assume we were called from the timer routine itself. */
+ 		del_timer(&devpriv->ai_timer);
+@@ -495,8 +507,12 @@ static void waveform_ao_timer(struct tim
+ 		unsigned int time_inc = devpriv->ao_last_scan_time +
+ 					devpriv->ao_scan_period - now;
+ 
+-		mod_timer(&devpriv->ao_timer,
+-			  jiffies + usecs_to_jiffies(time_inc));
++		spin_lock(&dev->spinlock);
++		if (devpriv->ao_timer_enable) {
++			mod_timer(&devpriv->ao_timer,
++				  jiffies + usecs_to_jiffies(time_inc));
++		}
++		spin_unlock(&dev->spinlock);
+ 	}
+ 
+ underrun:
+@@ -517,9 +533,12 @@ static int waveform_ao_inttrig_start(str
+ 	async->inttrig = NULL;
+ 
+ 	devpriv->ao_last_scan_time = ktime_to_us(ktime_get());
++	spin_lock_bh(&dev->spinlock);
++	devpriv->ao_timer_enable = true;
+ 	devpriv->ao_timer.expires =
+ 		jiffies + usecs_to_jiffies(devpriv->ao_scan_period);
+ 	add_timer(&devpriv->ao_timer);
++	spin_unlock_bh(&dev->spinlock);
+ 
+ 	return 1;
+ }
+@@ -604,6 +623,9 @@ static int waveform_ao_cancel(struct com
+ 	struct waveform_private *devpriv = dev->private;
+ 
+ 	s->async->inttrig = NULL;
++	spin_lock_bh(&dev->spinlock);
++	devpriv->ao_timer_enable = false;
++	spin_unlock_bh(&dev->spinlock);
+ 	if (in_softirq()) {
+ 		/* Assume we were called from the timer routine itself. */
+ 		del_timer(&devpriv->ao_timer);
 
 
