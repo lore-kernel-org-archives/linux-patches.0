@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F620142624;
-	Thu, 11 Apr 2024 10:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0E56BB29;
+	Thu, 11 Apr 2024 10:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832313; cv=none; b=KfqqWXWMdc0oHLxU5jTZAu05O1pDy2I/qriXmJU09RpFEc1iU06O2dcguPs+x0KT9C1PtyX48O9lA6nQ5MhW6Mr5C+YnR0JmKZ9aALAqaJuG50CZUuX2WaB7qrsoAyEeFm9kHfVPHP5NXq7mtp8AvtLiOF0LRlTxP2n8g3cpq3c=
+	t=1712832316; cv=none; b=b/Zks1saPw7r5Oh1S4tnZtCo1OFi4ALhv5EgRV+P6yhrKggmjaOaL/crYEE+DEM1a30mxpuCsw+f/og69hr6WjFPKHHrlLGJODqQwe3axysWDS9H2q1yii1Ys0c0pOBmvExmPuok36VNEpKpfFb9mpvtaJBkoiUnJoLjUnYnLxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832313; c=relaxed/simple;
-	bh=JKrnKLgM2/8P+SDub5K/KiDaYEFSXU8BmE4Sri2hpL8=;
+	s=arc-20240116; t=1712832316; c=relaxed/simple;
+	bh=Un/aAAT59d8jlb0etISN6ALm0gP6jU3bmXmU0EU2JWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4CyTVNKe4zNXnKuUVNvQZ/imbrvmHYM4MVPJdgvbVIQLOqrMUZPxW3iB28RQhGM1UhRir1AjemPGEtes5Jfa2SKnQOzFoMGwJU4g9Mmnpa1cabZ5YUSVkvM5wuCN4n8nqzro+K36tnKdLkWRzQy2SgZxqlySQ5rpAcchcT/Jos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhT+Ns2M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G2TIHfkdezmiPqLH5zO3SyXN5m/Hrb9wlnAl7VOhSLJq1nRPA/gCKaux87lhM2N6He8OP1TDXffwnGdbdoQcwmwJ4iUDmElTrmHziNqkFs0m6lxsQeZaLt3U0XVR/1Ku8/E9BDPWNwZbYeseL2F55er1mAtYD+4MLqMWodnl/no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nt5B6mLm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhT+Ns2M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA73C433F1;
-	Thu, 11 Apr 2024 10:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nt5B6mLm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7553CC433C7;
+	Thu, 11 Apr 2024 10:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832312;
-	bh=JKrnKLgM2/8P+SDub5K/KiDaYEFSXU8BmE4Sri2hpL8=;
+	s=korg; t=1712832315;
+	bh=Un/aAAT59d8jlb0etISN6ALm0gP6jU3bmXmU0EU2JWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jhT+Ns2MHMvXXX0zNoi92cUbxLcX692At56GNrh0eMD7DkAGJLVY0gSHofoDuC643
-	 LdALf5UU63W6m8dJvmqwVUZDUxX8nWv6ewGYrjgiRHIyXR1t/ncb1Li9OmDpouD5c7
-	 YuL//rMoOi2jm9WluqhJoDNbbLbPZEIEUt1igEog=
+	b=Nt5B6mLmG5g2bg08uwrMn5RdiCLAvOjf2PBo9hcGzldI5rZ5tsAauyGJcF0RYmemc
+	 7usct/qNvAXuG7ehPgynBNsTInCHHcR1uI/r6GqIFMgHVgFttOtFRy57RzeCDCVdcN
+	 FbemtjIXZcA2Nvh3oZxL70JYsv6kJxZ2I3PubG8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petre Rodan <petre.rodan@subdimension.ro>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 276/294] tools: iio: replace seekdir() in iio_generic_buffer
-Date: Thu, 11 Apr 2024 11:57:19 +0200
-Message-ID: <20240411095443.853450033@linuxfoundation.org>
+Subject: [PATCH 5.10 267/294] SUNRPC: increase size of rpc_wait_queue.qlen from unsigned short to unsigned int
+Date: Thu, 11 Apr 2024 11:57:10 +0200
+Message-ID: <20240411095443.592248664@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -51,43 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petre Rodan <petre.rodan@subdimension.ro>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit 4e6500bfa053dc133021f9c144261b77b0ba7dc8 ]
+[ Upstream commit 2c35f43b5a4b9cdfaa6fdd946f5a212615dac8eb ]
 
-Replace seekdir() with rewinddir() in order to fix a localized glibc bug.
+When the NFS client is under extreme load the rpc_wait_queue.qlen counter
+can be overflowed. Here is an instant of the backlog queue overflow in a
+real world environment shown by drgn helper:
 
-One of the glibc patches that stable Gentoo is using causes an improper
-directory stream positioning bug on 32bit arm. That in turn ends up as a
-floating point exception in iio_generic_buffer.
+rpc_task_stats(rpc_clnt):
+-------------------------
+rpc_clnt: 0xffff92b65d2bae00
+rpc_xprt: 0xffff9275db64f000
+  Queue:  sending[64887] pending[524] backlog[30441] binding[0]
+XMIT task: 0xffff925c6b1d8e98
+     WRITE: 750654
+        __dta_call_status_580: 65463
+        __dta_call_transmit_status_579: 1
+        call_reserveresult: 685189
+        nfs_client_init_is_complete: 1
+    COMMIT: 584
+        call_reserveresult: 573
+        __dta_call_status_580: 11
+    ACCESS: 1
+        __dta_call_status_580: 1
+   GETATTR: 10
+        __dta_call_status_580: 4
+        call_reserveresult: 6
+751249 tasks for server 111.222.333.444
+Total tasks: 751249
 
-The attached patch provides a fix by using an equivalent function which
-should not cause trouble for other distros and is easier to reason about
-in general as it obviously always goes back to to the start.
+count_rpc_wait_queues(xprt):
+----------------------------
+**** rpc_xprt: 0xffff9275db64f000 num_reqs: 65511
+wait_queue: xprt_binding[0] cnt: 0
+wait_queue: xprt_binding[1] cnt: 0
+wait_queue: xprt_binding[2] cnt: 0
+wait_queue: xprt_binding[3] cnt: 0
+rpc_wait_queue[xprt_binding].qlen: 0 maxpriority: 0
+wait_queue: xprt_sending[0] cnt: 0
+wait_queue: xprt_sending[1] cnt: 64887
+wait_queue: xprt_sending[2] cnt: 0
+wait_queue: xprt_sending[3] cnt: 0
+rpc_wait_queue[xprt_sending].qlen: 64887 maxpriority: 3
+wait_queue: xprt_pending[0] cnt: 524
+wait_queue: xprt_pending[1] cnt: 0
+wait_queue: xprt_pending[2] cnt: 0
+wait_queue: xprt_pending[3] cnt: 0
+rpc_wait_queue[xprt_pending].qlen: 524 maxpriority: 0
+wait_queue: xprt_backlog[0] cnt: 0
+wait_queue: xprt_backlog[1] cnt: 685801
+wait_queue: xprt_backlog[2] cnt: 0
+wait_queue: xprt_backlog[3] cnt: 0
+rpc_wait_queue[xprt_backlog].qlen: 30441 maxpriority: 3 [task cnt mismatch]
 
-https://sourceware.org/bugzilla/show_bug.cgi?id=31212
+There is no effect on operations when this overflow occurs. However
+it causes confusion when trying to diagnose the performance problem.
 
-Signed-off-by: Petre Rodan <petre.rodan@subdimension.ro>
-Link: https://lore.kernel.org/r/20240108103224.3986-1-petre.rodan@subdimension.ro
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/iio/iio_utils.c | 2 +-
+ include/linux/sunrpc/sched.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/iio/iio_utils.c b/tools/iio/iio_utils.c
-index 48360994c2a13..b8745873928c5 100644
---- a/tools/iio/iio_utils.c
-+++ b/tools/iio/iio_utils.c
-@@ -373,7 +373,7 @@ int build_channel_array(const char *device_dir,
- 		goto error_close_dir;
- 	}
- 
--	seekdir(dp, 0);
-+	rewinddir(dp);
- 	while (ent = readdir(dp), ent) {
- 		if (strcmp(ent->d_name + strlen(ent->d_name) - strlen("_en"),
- 			   "_en") == 0) {
+diff --git a/include/linux/sunrpc/sched.h b/include/linux/sunrpc/sched.h
+index 256dff36cf720..0527a4bc9a36f 100644
+--- a/include/linux/sunrpc/sched.h
++++ b/include/linux/sunrpc/sched.h
+@@ -197,7 +197,7 @@ struct rpc_wait_queue {
+ 	unsigned char		maxpriority;		/* maximum priority (0 if queue is not a priority queue) */
+ 	unsigned char		priority;		/* current priority */
+ 	unsigned char		nr;			/* # tasks remaining for cookie */
+-	unsigned short		qlen;			/* total # tasks waiting in queue */
++	unsigned int		qlen;			/* total # tasks waiting in queue */
+ 	struct rpc_timer	timer_list;
+ #if IS_ENABLED(CONFIG_SUNRPC_DEBUG) || IS_ENABLED(CONFIG_TRACEPOINTS)
+ 	const char *		name;
 -- 
 2.43.0
 
