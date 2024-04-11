@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA742EAE5;
-	Thu, 11 Apr 2024 10:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DA31448F3;
+	Thu, 11 Apr 2024 10:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829962; cv=none; b=MlhhF9Ta1VKUIS6Yaca1CmkZJbxQ9Y9bouT2nuyeACN2iCYkPLnHrTklTr6hO9YKO+m8eVIv10zgc8npQxfS376ekMvnukkT7CX2XZoBE5Lywm76oAXpkCIgk6AO+DqGMrxz0OIDb3qVAJC8tHTxKozDZ3/9QDGK9uanYtFrEHo=
+	t=1712829965; cv=none; b=K2KHiPnIKc6canfcr+KDO0xDmdz+p0HvoThc6GgssCS690IWDO8E+wd26zAGULi1u+Y3mWSbIyoqqcOhmC9p/6rr2xSKhOcy2e1k4M45XEYwBCZb4rlXT7UohpxrlirKb1OPMIUbAZyZl5GT5gl12LmZlmrZmwcojPe9l/VcPWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829962; c=relaxed/simple;
-	bh=kKFhvrzyuZxKDJKNbB0W9W2I59yzak06BxWVhP7JPeo=;
+	s=arc-20240116; t=1712829965; c=relaxed/simple;
+	bh=Y22j1JZ7pwhr6ycuc5/m+tTvCKWievFf0c+Lx6s8RYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fl247f6r0aXcrWUecu0SU9gruWzEo0ycL6Rymb/PLKMwywUR5GDkZV9Fkkf8UU6dyDosUjJIRQ0afCOl4wL6HVFxgqdsgDtg8sXVAVrne3GQ1/qYDniEp39OGUftID0EcGVBa/FPz1XOhP7N0X9rYusPoX8ww0crUSL4IA4g5fE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIzpDvJ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jN32s4ekLZwzvXRMoWNCDIqDNuK+Y3aXVBk55eXQ6dwtEMi+SVeklNEHDDuyJNN2UklwtJgcG7JGhScqBlKSMXtTCIulZ7qZtqsnB/d2lnDOBLcnZplkFTpXcBqd3GihO/HfRK7g1f5TOS6M6g34cgUoI7aAXULnROFg5xXNTCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDWzuf5d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIzpDvJ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C576BC433F1;
-	Thu, 11 Apr 2024 10:06:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDWzuf5d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7149C43390;
+	Thu, 11 Apr 2024 10:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829962;
-	bh=kKFhvrzyuZxKDJKNbB0W9W2I59yzak06BxWVhP7JPeo=;
+	s=korg; t=1712829965;
+	bh=Y22j1JZ7pwhr6ycuc5/m+tTvCKWievFf0c+Lx6s8RYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dIzpDvJ7XKAVE+PpTpTdX4AtuEZ2GQQFOwGNAk8pLiqSGdcXE7wS6NfNn3dTvgAQb
-	 uOYWs5UE2nKGcaRX/cLFMdGCVdcvTLY6acB7hvQLT+squ/oNHZFj8QCt0Li0uHKLYI
-	 fTUOtTQqVWKnsgFFkqcVyp0TVjrF7YSpFaHXAqAU=
+	b=YDWzuf5dlNjo7L0q19yeB0cn1/UEbMPQfINwI5aisy+iWoIYFI+p1YV4F3xkxoAhq
+	 uUKsjSsIogBLVRiOF7RkW28e29fuOP4Qdjt9IweywW7tCCoin0s2Vk4qOF4NikyoX0
+	 PnoPlOxK+4D0KgLoZiyHQ6upDYfOo3kuVU/WzzSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.19 126/175] ipv6: Fix infinite recursion in fib6_dump_done().
-Date: Thu, 11 Apr 2024 11:55:49 +0200
-Message-ID: <20240411095423.358935956@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 4.19 127/175] i40e: fix vf may be used uninitialized in this function warning
+Date: Thu, 11 Apr 2024 11:55:50 +0200
+Message-ID: <20240411095423.388849428@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -53,134 +54,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-commit d21d40605bca7bd5fc23ef03d4c1ca1f48bc2cae upstream.
+commit f37c4eac99c258111d414d31b740437e1925b8e8 upstream.
 
-syzkaller reported infinite recursive calls of fib6_dump_done() during
-netlink socket destruction.  [1]
+To fix the regression introduced by commit 52424f974bc5, which causes
+servers hang in very hard to reproduce conditions with resets races.
+Using two sources for the information is the root cause.
+In this function before the fix bumping v didn't mean bumping vf
+pointer. But the code used this variables interchangeably, so stale vf
+could point to different/not intended vf.
 
->From the log, syzkaller sent an AF_UNSPEC RTM_GETROUTE message, and then
-the response was generated.  The following recvmmsg() resumed the dump
-for IPv6, but the first call of inet6_dump_fib() failed at kzalloc() due
-to the fault injection.  [0]
+Remove redundant "v" variable and iterate via single VF pointer across
+whole function instead to guarantee VF pointer validity.
 
-  12:01:34 executing program 3:
-  r0 = socket$nl_route(0x10, 0x3, 0x0)
-  sendmsg$nl_route(r0, ... snip ...)
-  recvmmsg(r0, ... snip ...) (fail_nth: 8)
-
-Here, fib6_dump_done() was set to nlk_sk(sk)->cb.done, and the next call
-of inet6_dump_fib() set it to nlk_sk(sk)->cb.args[3].  syzkaller stopped
-receiving the response halfway through, and finally netlink_sock_destruct()
-called nlk_sk(sk)->cb.done().
-
-fib6_dump_done() calls fib6_dump_end() and nlk_sk(sk)->cb.done() if it
-is still not NULL.  fib6_dump_end() rewrites nlk_sk(sk)->cb.done() by
-nlk_sk(sk)->cb.args[3], but it has the same function, not NULL, calling
-itself recursively and hitting the stack guard page.
-
-To avoid the issue, let's set the destructor after kzalloc().
-
-[0]:
-FAULT_INJECTION: forcing a failure.
-name failslab, interval 1, probability 0, space 0, times 0
-CPU: 1 PID: 432110 Comm: syz-executor.3 Not tainted 6.8.0-12821-g537c2e91d354-dirty #11
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:117)
- should_fail_ex (lib/fault-inject.c:52 lib/fault-inject.c:153)
- should_failslab (mm/slub.c:3733)
- kmalloc_trace (mm/slub.c:3748 mm/slub.c:3827 mm/slub.c:3992)
- inet6_dump_fib (./include/linux/slab.h:628 ./include/linux/slab.h:749 net/ipv6/ip6_fib.c:662)
- rtnl_dump_all (net/core/rtnetlink.c:4029)
- netlink_dump (net/netlink/af_netlink.c:2269)
- netlink_recvmsg (net/netlink/af_netlink.c:1988)
- ____sys_recvmsg (net/socket.c:1046 net/socket.c:2801)
- ___sys_recvmsg (net/socket.c:2846)
- do_recvmmsg (net/socket.c:2943)
- __x64_sys_recvmmsg (net/socket.c:3041 net/socket.c:3034 net/socket.c:3034)
-
-[1]:
-BUG: TASK stack guard page was hit at 00000000f2fa9af1 (stack is 00000000b7912430..000000009a436beb)
-stack guard page: 0000 [#1] PREEMPT SMP KASAN
-CPU: 1 PID: 223719 Comm: kworker/1:3 Not tainted 6.8.0-12821-g537c2e91d354-dirty #11
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-Workqueue: events netlink_sock_destruct_work
-RIP: 0010:fib6_dump_done (net/ipv6/ip6_fib.c:570)
-Code: 3c 24 e8 f3 e9 51 fd e9 28 fd ff ff 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 41 57 41 56 41 55 41 54 55 48 89 fd <53> 48 8d 5d 60 e8 b6 4d 07 fd 48 89 da 48 b8 00 00 00 00 00 fc ff
-RSP: 0018:ffffc9000d980000 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: ffffffff84405990 RCX: ffffffff844059d3
-RDX: ffff8881028e0000 RSI: ffffffff84405ac2 RDI: ffff88810c02f358
-RBP: ffff88810c02f358 R08: 0000000000000007 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000224 R12: 0000000000000000
-R13: ffff888007c82c78 R14: ffff888007c82c68 R15: ffff888007c82c68
-FS:  0000000000000000(0000) GS:ffff88811b100000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffc9000d97fff8 CR3: 0000000102309002 CR4: 0000000000770ef0
-PKRU: 55555554
-Call Trace:
- <#DF>
- </#DF>
- <TASK>
- fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
- fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
- ...
- fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
- fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
- netlink_sock_destruct (net/netlink/af_netlink.c:401)
- __sk_destruct (net/core/sock.c:2177 (discriminator 2))
- sk_destruct (net/core/sock.c:2224)
- __sk_free (net/core/sock.c:2235)
- sk_free (net/core/sock.c:2246)
- process_one_work (kernel/workqueue.c:3259)
- worker_thread (kernel/workqueue.c:3329 kernel/workqueue.c:3416)
- kthread (kernel/kthread.c:388)
- ret_from_fork (arch/x86/kernel/process.c:153)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:256)
-Modules linked in:
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240401211003.25274-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 52424f974bc5 ("i40e: Fix VF hang when reset is triggered on another VF")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_fib.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |   34 +++++++++------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -587,19 +587,19 @@ static int inet6_dump_fib(struct sk_buff
- 	if (!w) {
- 		/* New dump:
- 		 *
--		 * 1. hook callback destructor.
--		 */
--		cb->args[3] = (long)cb->done;
--		cb->done = fib6_dump_done;
--
--		/*
--		 * 2. allocate and initialize walker.
-+		 * 1. allocate and initialize walker.
- 		 */
- 		w = kzalloc(sizeof(*w), GFP_ATOMIC);
- 		if (!w)
- 			return -ENOMEM;
- 		w->func = fib6_dump_node;
- 		cb->args[2] = (long)w;
-+
-+		/* 2. hook callback destructor.
-+		 */
-+		cb->args[3] = (long)cb->done;
-+		cb->done = fib6_dump_done;
-+
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -1317,8 +1317,8 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ {
+ 	struct i40e_hw *hw = &pf->hw;
+ 	struct i40e_vf *vf;
+-	int i, v;
+ 	u32 reg;
++	int i;
+ 
+ 	/* If we don't have any VFs, then there is nothing to reset */
+ 	if (!pf->num_alloc_vfs)
+@@ -1329,11 +1329,10 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 		return false;
+ 
+ 	/* Begin reset on all VFs at once */
+-	for (v = 0; v < pf->num_alloc_vfs; v++) {
+-		vf = &pf->vf[v];
++	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
+ 		/* If VF is being reset no need to trigger reset again */
+ 		if (!test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
+-			i40e_trigger_vf_reset(&pf->vf[v], flr);
++			i40e_trigger_vf_reset(vf, flr);
  	}
  
- 	arg.skb = skb;
+ 	/* HW requires some time to make sure it can flush the FIFO for a VF
+@@ -1342,14 +1341,13 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 	 * the VFs using a simple iterator that increments once that VF has
+ 	 * finished resetting.
+ 	 */
+-	for (i = 0, v = 0; i < 10 && v < pf->num_alloc_vfs; i++) {
++	for (i = 0, vf = &pf->vf[0]; i < 10 && vf < &pf->vf[pf->num_alloc_vfs]; ++i) {
+ 		usleep_range(10000, 20000);
+ 
+ 		/* Check each VF in sequence, beginning with the VF to fail
+ 		 * the previous check.
+ 		 */
+-		while (v < pf->num_alloc_vfs) {
+-			vf = &pf->vf[v];
++		while (vf < &pf->vf[pf->num_alloc_vfs]) {
+ 			if (!test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states)) {
+ 				reg = rd32(hw, I40E_VPGEN_VFRSTAT(vf->vf_id));
+ 				if (!(reg & I40E_VPGEN_VFRSTAT_VFRD_MASK))
+@@ -1359,7 +1357,7 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 			/* If the current VF has finished resetting, move on
+ 			 * to the next VF in sequence.
+ 			 */
+-			v++;
++			++vf;
+ 		}
+ 	}
+ 
+@@ -1369,39 +1367,39 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 	/* Display a warning if at least one VF didn't manage to reset in
+ 	 * time, but continue on with the operation.
+ 	 */
+-	if (v < pf->num_alloc_vfs)
++	if (vf < &pf->vf[pf->num_alloc_vfs])
+ 		dev_err(&pf->pdev->dev, "VF reset check timeout on VF %d\n",
+-			pf->vf[v].vf_id);
++			vf->vf_id);
+ 	usleep_range(10000, 20000);
+ 
+ 	/* Begin disabling all the rings associated with VFs, but do not wait
+ 	 * between each VF.
+ 	 */
+-	for (v = 0; v < pf->num_alloc_vfs; v++) {
++	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
+ 		/* On initial reset, we don't have any queues to disable */
+-		if (pf->vf[v].lan_vsi_idx == 0)
++		if (vf->lan_vsi_idx == 0)
+ 			continue;
+ 
+ 		/* If VF is reset in another thread just continue */
+ 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
+ 			continue;
+ 
+-		i40e_vsi_stop_rings_no_wait(pf->vsi[pf->vf[v].lan_vsi_idx]);
++		i40e_vsi_stop_rings_no_wait(pf->vsi[vf->lan_vsi_idx]);
+ 	}
+ 
+ 	/* Now that we've notified HW to disable all of the VF rings, wait
+ 	 * until they finish.
+ 	 */
+-	for (v = 0; v < pf->num_alloc_vfs; v++) {
++	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
+ 		/* On initial reset, we don't have any queues to disable */
+-		if (pf->vf[v].lan_vsi_idx == 0)
++		if (vf->lan_vsi_idx == 0)
+ 			continue;
+ 
+ 		/* If VF is reset in another thread just continue */
+ 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
+ 			continue;
+ 
+-		i40e_vsi_wait_queues_disabled(pf->vsi[pf->vf[v].lan_vsi_idx]);
++		i40e_vsi_wait_queues_disabled(pf->vsi[vf->lan_vsi_idx]);
+ 	}
+ 
+ 	/* Hw may need up to 50ms to finish disabling the RX queues. We
+@@ -1410,12 +1408,12 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 	mdelay(50);
+ 
+ 	/* Finish the reset on each VF */
+-	for (v = 0; v < pf->num_alloc_vfs; v++) {
++	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
+ 		/* If VF is reset in another thread just continue */
+ 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
+ 			continue;
+ 
+-		i40e_cleanup_reset_vf(&pf->vf[v]);
++		i40e_cleanup_reset_vf(vf);
+ 	}
+ 
+ 	i40e_flush(hw);
 
 
