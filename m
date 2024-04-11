@@ -1,130 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C07C2EAE5;
-	Thu, 11 Apr 2024 10:52:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8A6147C7E;
+	Thu, 11 Apr 2024 11:31:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832735; cv=none; b=Z0zU1Puw9keWdXBGn70y/K3zYkU+4lKAPC0nvIXfBMvnnnZF89grvCYFqoaudg1uQOVQQo6wKaed56TVvUQ533Ngi3v1dHRRwAGcajZ3myGyAP+r7Hlq0Mx508lzeA6H5+2csw+ZoG+xAqVTQtc+VY0W6cKWMXPx5/OXv/EDv00=
+	t=1712835070; cv=none; b=i4gQ2m99oQwEjQnsVnt5SXJ1rdUPyCWCRTnPJbbqhSUAU9b0slGG3o+ONh6d8T9xqRrCqFbzFtuIGF6SpAIMLyjV+H+PGI2DRLpEGzOYwivGDd51e9ds9JVF/DQQ+eo5+DbTAPDKEm3suBK66Jxspgowj6p89/Nc8Re4LeyDVqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832735; c=relaxed/simple;
-	bh=slbFyYG5k+Qoht7d1SnzhmWz9g/r/Z87ybQS03ddI/E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G0cO4FuKLBjTC5FuoZSA+9FFfE4aXxKb4bPZje18QGxtNikEaqYhAQOXu6Nd3NI0O+oadDextEsDCiKihatpcrBNLk4HfroPBL/spev0G+pwfXLz3xPDX5KcqkpS0zS8t1fatvOlaYLnxrNGew47lNanPFkVULquevDh1gzOdw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDtJqCEa; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712835070; c=relaxed/simple;
+	bh=8bmXSD5TR7GbqIdLzPU0tqPJQzerrcPq9z5gHkP2tOs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mElXHTU9cq75+LnHcAaCzL80Ux3CRklLWlR6wYkd5RUh859uAYlADuj3L3fCNSFjhdo7CsRbbBVuI06FJ766wCjMFyiwQCLANpn3xsiW4GjNC9mZ9we+/0TsTMlWFo8xhojhqyeQzTDe88cyyGPfeboc+2ZqmHMwJZSAgBQWzp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=none smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=F8zmltR3; arc=none smtp.client-ip=82.195.75.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=debian.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDtJqCEa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C349EC433C7;
-	Thu, 11 Apr 2024 10:52:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832735;
-	bh=slbFyYG5k+Qoht7d1SnzhmWz9g/r/Z87ybQS03ddI/E=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QDtJqCEa2y1V3Vku9PScAMudjfrevczYDH5kvIT5vhYiRSYZV3xIsu5QvqEKR8+KK
-	 yep3V2wzL5FS5rEB+y+LrIuZP5V1tgXjmT+vlJ2DnvS4aePjc1iodovVUXzZAMNNxT
-	 jt8YTN9ClB3QuFpJuH8BIMaQCIiZ8MYqvEqVTUFM=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Gwendal Grignou <gwendal@chromium.org>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="F8zmltR3"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=tERq9opbCgfNNvRYcUZvTrrVQXEmLqhRg5dU9H2JR9M=; b=F8zmltR3z/q/DpRNN3XdVVS53P
+	1QwNidq7FV9L5uZRYdnrui5DxIrUXKcyjExy/TSyyomaFPpScty2eBOxAPPbtFLhRB9gYR4liU1JQ
+	vMSGRBJfzJbHnb5KBF8a7Z/UGZVs9gb8P1z409zBZFehImkHr9DEuSdhqVO9nIDlHAZwAFohWBrAG
+	EyEJiOVQKu0LXrdGhFBC76FQC61MneHgZFjYcH/rSPiEOUziSSIK+TGGKO043xOiOG/yCwuQRWZEL
+	yBBk+tc6NXHhP8fJmqqyn0z6a9O3Q5czhpU37dIkB+2FG/Gs5JdHtM7z9yMF1VLvaChfBmkjvStVi
+	2HEyM0YQ==;
+Received: from authenticated user
+	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.94.2)
+	(envelope-from <kibi@debian.org>)
+	id 1rusdx-001nuu-Ug; Thu, 11 Apr 2024 11:31:02 +0000
+Date: Thu, 11 Apr 2024 13:30:59 +0200
+From: Cyril Brulebois <kibi@debian.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Tasos Sahanidis <tasos@tasossah.com>,
+	"Ewan D. Milne" <emilne@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 55/57] platform/x86: intel-vbtn: Update tablet mode switch at end of probe
-Date: Thu, 11 Apr 2024 11:58:03 +0200
-Message-ID: <20240411095409.652329101@linuxfoundation.org>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240411095407.982258070@linuxfoundation.org>
-References: <20240411095407.982258070@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+Subject: Re: [PATCH 6.1 76/83] scsi: sd: usb_storage: uas: Access media prior
+ to querying device properties
+Message-ID: <20240411113059.w743nqi4d7hydv4z@mraw.org>
+Organization: Debian
+References: <20240411095412.671665933@linuxfoundation.org>
+ <20240411095414.976726082@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-5.15-stable review patch.  If anyone has any objections, please let me know.
-
-------------------
-
-From: Gwendal Grignou <gwendal@chromium.org>
-
-[ Upstream commit 434e5781d8cd2d0ed512d920c6cdeba4b33a2e81 ]
-
-ACER Vivobook Flip (TP401NAS) virtual intel switch is implemented as
-follow:
-
-   Device (VGBI)
-   {
-       Name (_HID, EisaId ("INT33D6") ...
-       Name (VBDS, Zero)
-       Method (_STA, 0, Serialized)  // _STA: Status ...
-       Method (VBDL, 0, Serialized)
-       {
-           PB1E |= 0x20
-           VBDS |= 0x40
-       }
-       Method (VGBS, 0, Serialized)
-       {
-           Return (VBDS) /* \_SB_.PCI0.SBRG.EC0_.VGBI.VBDS */
-       }
-       ...
-    }
-
-By default VBDS is set to 0. At boot it is set to clamshell (bit 6 set)
-only after method VBDL is executed.
-
-Since VBDL is now evaluated in the probe routine later, after the device
-is registered, the retrieved value of VBDS was still 0 ("tablet mode")
-when setting up the virtual switch.
-
-Make sure to evaluate VGBS after VBDL, to ensure the
-convertible boots in clamshell mode, the expected default.
-
-Fixes: 26173179fae1 ("platform/x86: intel-vbtn: Eval VBDL after registering our notifier")
-Signed-off-by: Gwendal Grignou <gwendal@chromium.org>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240329143206.2977734-3-gwendal@chromium.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/platform/x86/intel/vbtn.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/platform/x86/intel/vbtn.c b/drivers/platform/x86/intel/vbtn.c
-index 6fb3e597c57aa..4e9d3f25c35d0 100644
---- a/drivers/platform/x86/intel/vbtn.c
-+++ b/drivers/platform/x86/intel/vbtn.c
-@@ -136,8 +136,6 @@ static int intel_vbtn_input_setup(struct platform_device *device)
- 	priv->switches_dev->id.bustype = BUS_HOST;
- 
- 	if (priv->has_switches) {
--		detect_tablet_mode(&device->dev);
--
- 		ret = input_register_device(priv->switches_dev);
- 		if (ret)
- 			return ret;
-@@ -316,6 +314,9 @@ static int intel_vbtn_probe(struct platform_device *device)
- 		if (ACPI_FAILURE(status))
- 			dev_err(&device->dev, "Error VBDL failed with ACPI status %d\n", status);
- 	}
-+	// Check switches after buttons since VBDL may have side effects.
-+	if (has_switches)
-+		detect_tablet_mode(&device->dev);
- 
- 	device_init_wakeup(&device->dev, true);
- 	/*
--- 
-2.43.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ddytng5kuvofzsfp"
+Content-Disposition: inline
+In-Reply-To: <20240411095414.976726082@linuxfoundation.org>
+X-Debian-User: kibi
 
 
+--ddytng5kuvofzsfp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+Hi,
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org> (2024-04-11):
+> 6.1-stable review patch.  If anyone has any objections, please let me kno=
+w.
+
+Test report initially submitted to the thread where that patch
+originated from:
+  https://lore.kernel.org/linux-scsi/20240411044021.xejk54iznz3cdxem@mraw.o=
+rg/
+
+I've confirmed that applying patches 74+75+76 on top of v6.1.85 fixes
+the (partial) loss of SMART information that started with v6.1.81 (and
+cf33e6ca12d814e1be2263cb76960d0019d7fb94 precisely).
+
+That was tested in a QEMU VM with a SATA disk (that exposes only a few
+SMART attributes anyway) and also on baremetal with real disks (2 pairs
+of Seagate IronWolf): smartctl returns data again, including
+temperatures.
+
+
+Closes: https://bugs.debian.org/1068675
+Tested-by: Cyril Brulebois <kibi@debian.org>
+
+
+Thanks everyone for the swift replies and fixes.
+
+
+Cheers,
+--=20
+Cyril Brulebois (kibi@debian.org)            <https://debamax.com/>
+D-I release manager -- Release team member -- Freelance Consultant
+
+--ddytng5kuvofzsfp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEtg6/KYRFPHDXTPR4/5FK8MKzVSAFAmYXyfAACgkQ/5FK8MKz
+VSD6RA/+NtFdbFMsg45RllOQVpB/P9Q/Y0pd9OOTYhU8ZgSXCho3HrK8gQIJHX1N
+3Eleh8/WCvdW9vP7Swp6aNTsgmnTskuzIQivxoUZrR8c0prf5MnHi8IA26ijrOhr
+xXTsdy4bUJq2ul/0dmLO5JSrtled4Xv8wHvPjYQPq8AdhQaFwRyM+x7aTSOuzkJV
+aANt4j1bZyy2j+VPqMNhb49RoJ5u6gzegN587tlwV8MRJ61abKB2//MYv8FQLy4R
++4ssAYJqwhr91I1APXo4QwXg69o3PnEBYWZHZ9we/vRmLD49JXCVvghsE4v1QekR
+UoWJSxzghm+LVuYEDOqbzKnJuiOHbcFx4TB0zsmt1X9d8wCgxOAKQtRK3stjJb5/
+FkWaZ/FqSjpT+VhOKSOISUaA555OflFt00ORCyvIjjNWOWe4g7JXXzmHXXtBPSIt
+z6Co0URZTcFdk3uY93ZxdNQZkVD55X5UczuRtaMo1mn08kL1A9//oIElu6rXPM3l
+ghqFNyo2tURccRRh6RPG+b8itj88aKvxMjh/Uj5/oeR2GfT0oyRjhqpg4uGxNOWL
+YmKasCgAcCGLjkEgN8HzS31rc6XZ+sflodzb9rZcuWXpnW0DEeL5Uf1Xm3zKt2gw
+rXubtMrHzhGPSZ3jpTGP0a8tpGXoQ5jW0XMY6RpZXq5wruU8wFI=
+=eSaE
+-----END PGP SIGNATURE-----
+
+--ddytng5kuvofzsfp--
