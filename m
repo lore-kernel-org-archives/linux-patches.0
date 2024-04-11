@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E1B2EAE5;
-	Thu, 11 Apr 2024 10:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6932EAE5;
+	Thu, 11 Apr 2024 10:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830706; cv=none; b=Ncc6sKpwNQvM1labAdm/+1BRC1yAs1oMXmDmMRWSrBkpHoI/iil9pOivluTwy+1LHC8tNw9pbzGS7ddrxbfZGdKzSmDpgCeQ4kFAFhkqMlCu/aIHigPpcu6sB5BN1zhZSKfips9dDW6l4nETIl6ZGsGZEKAgRisAyodpEu7/Qbo=
+	t=1712830710; cv=none; b=DDEN+X9x9JIEFdNAUqKESB7urQi1pGe6ffHqFRNHoTLbSCJYBnuqjxJ0Gmq9AlkdPCxL+hwFqYy/+QXMu7SWNGVm3UqgXYOJlW4jB/cp/mIeZi+QKydwgqAY0blyaG7G9DsrQVv2fXG19r0m9h6+NCYd2saJTRVFdygy1OqMxzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830706; c=relaxed/simple;
-	bh=Az+xdoN7RAbH9KXSDloEMmYqakirdLnTHBUwq0dn6B4=;
+	s=arc-20240116; t=1712830710; c=relaxed/simple;
+	bh=+P4XDqBr9jCLiOK20kTI87dLT6ZTEf/Q6HmO/MHHnnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ps32wQZj76kW5/A8leYYr7uDmqbdWkAuy/1/nBvBIT627EqMpD/bKug7lL/ZR1pUgaKsqlwEnaG6oqFS1y/nn90Fwxhox575FIalmjee9hyoRJ0EQpefcS2Cterh+t9TVichxmT+F5Mib5QZU/bA0ovqAgZ7KAiwPkj2XO0osbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ya2G0yyh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aFegiXP8opUXON9TSjDEUDv5L8KuWs5xpqhzujkyx9c1DxTG3flW96OZLNPfKDqXoHk1dwm3gdTCsv5oiyv+J9QuW+8QBbFwMAgq3dNBFDldArKOGqwz/pphgogiq/xbtvQQzikMxdO+mTvmmf77u+x5cnOQ8kfg+nlq7PgurTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIrWkMlY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ya2G0yyh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561F1C433C7;
-	Thu, 11 Apr 2024 10:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIrWkMlY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569B7C433F1;
+	Thu, 11 Apr 2024 10:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830706;
-	bh=Az+xdoN7RAbH9KXSDloEMmYqakirdLnTHBUwq0dn6B4=;
+	s=korg; t=1712830709;
+	bh=+P4XDqBr9jCLiOK20kTI87dLT6ZTEf/Q6HmO/MHHnnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ya2G0yyhAHvaiFQaleNM/DLHGXCodbCPvzPMnxGnBsBUvy8baDqNWUKzrSkff1mg6
-	 dheKBYBRyhJjhoNscj4sDRLvqy4n8hiHT/mibJ1+ZFf/N0CAftiUn5yN8Sp4AhBOv2
-	 UXUGxZHODEiMs27GAAiDuriPRb+HXowOlPjjrhr8=
+	b=pIrWkMlYhrM9lmTEdNdThJ3EU5hqn6e2h3qnSF2cSB+3dW1kwSvmF0JjDznim1VhP
+	 iAY2VUyHEIzB7uqbCxVM8vcKsWqFGsLQnGU0wLsP4IDU4PtAQqcV2YBNHhoC2e/NJc
+	 c9WxHld4yHoSK9xGZlmaDT4lyyoITXfbPUqGZT/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Pitre <nico@fluxnic.net>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.4 090/215] vt: fix unicode buffer corruption when deleting characters
-Date: Thu, 11 Apr 2024 11:54:59 +0200
-Message-ID: <20240411095427.609005595@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Benjamin LaHaise <ben@communityfibre.ca>,
+	Eric Biggers <ebiggers@google.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Avi Kivity <avi@scylladb.com>,
+	Sandeep Dhavale <dhavale@google.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.4 091/215] fs/aio: Check IOCB_AIO_RW before the struct aio_kiocb conversion
+Date: Thu, 11 Apr 2024 11:55:00 +0200
+Message-ID: <20240411095427.638353771@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -50,34 +58,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Pitre <nico@fluxnic.net>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit 1581dafaf0d34bc9c428a794a22110d7046d186d upstream.
+commit 961ebd120565cb60cebe21cb634fbc456022db4a upstream.
 
-This is the same issue that was fixed for the VGA text buffer in commit
-39cdb68c64d8 ("vt: fix memory overlapping when deleting chars in the
-buffer"). The cure is also the same i.e. replace memcpy() with memmove()
-due to the overlaping buffers.
+The first kiocb_set_cancel_fn() argument may point at a struct kiocb
+that is not embedded inside struct aio_kiocb. With the current code,
+depending on the compiler, the req->ki_ctx read happens either before
+the IOCB_AIO_RW test or after that test. Move the req->ki_ctx read such
+that it is guaranteed that the IOCB_AIO_RW test happens first.
 
-Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
-Fixes: 81732c3b2fed ("tty vt: Fix line garbage in virtual console on command line edition")
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/sn184on2-3p0q-0qrq-0218-895349s4753o@syhkavp.arg
+Reported-by: Eric Biggers <ebiggers@kernel.org>
+Cc: Benjamin LaHaise <ben@communityfibre.ca>
+Cc: Eric Biggers <ebiggers@google.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Avi Kivity <avi@scylladb.com>
+Cc: Sandeep Dhavale <dhavale@google.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: stable@vger.kernel.org
+Fixes: b820de741ae4 ("fs/aio: Restrict kiocb_set_cancel_fn() to I/O submitted via libaio")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20240304235715.3790858-1-bvanassche@acm.org
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/vt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/aio.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -405,7 +405,7 @@ static void vc_uniscr_delete(struct vc_d
- 		char32_t *ln = uniscr->lines[vc->vc_y];
- 		unsigned int x = vc->vc_x, cols = vc->vc_cols;
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -566,8 +566,8 @@ static int aio_setup_ring(struct kioctx
  
--		memcpy(&ln[x], &ln[x + nr], (cols - x - nr) * sizeof(*ln));
-+		memmove(&ln[x], &ln[x + nr], (cols - x - nr) * sizeof(*ln));
- 		memset32(&ln[cols - nr], ' ', nr);
- 	}
- }
+ void kiocb_set_cancel_fn(struct kiocb *iocb, kiocb_cancel_fn *cancel)
+ {
+-	struct aio_kiocb *req = container_of(iocb, struct aio_kiocb, rw);
+-	struct kioctx *ctx = req->ki_ctx;
++	struct aio_kiocb *req;
++	struct kioctx *ctx;
+ 	unsigned long flags;
+ 
+ 	/*
+@@ -577,9 +577,13 @@ void kiocb_set_cancel_fn(struct kiocb *i
+ 	if (!(iocb->ki_flags & IOCB_AIO_RW))
+ 		return;
+ 
++	req = container_of(iocb, struct aio_kiocb, rw);
++
+ 	if (WARN_ON_ONCE(!list_empty(&req->ki_list)))
+ 		return;
+ 
++	ctx = req->ki_ctx;
++
+ 	spin_lock_irqsave(&ctx->ctx_lock, flags);
+ 	list_add_tail(&req->ki_list, &ctx->active_reqs);
+ 	req->ki_cancel = cancel;
 
 
