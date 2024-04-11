@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4D9145B08;
-	Thu, 11 Apr 2024 10:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F5B145B06;
+	Thu, 11 Apr 2024 10:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830037; cv=none; b=p3E7wG3Dn5rM03w4Dm7T9UQbmYlTu3TGR/uGE6edhSMZtD2JiOU3wmaA+JX/36aUm+8Bj6rp0o2zpYuhjPw0e8X5LlzXE2agOpHglqLyiMuA56ST8owf2ttCowNbp+Rsgvg4q38VQdQ6EIBiKA+waBLNE/qwM0IcbrpsJgYLUNo=
+	t=1712830040; cv=none; b=gE+GfCvd30UVitm7F81qsudjR4qFsjEeh/biqqtHT9Z+1H4dZ5tOF3FHKYWv7axr/Mlg98INH2VgLl+k+QUBJXE1BPeJVp2vQH4f+d/kN15Z1ikCvqRQbrPHGFR6QDwd8k80iNn4M25aXHlmLzH8ovna7q9jfxkVJHElj5sKdx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830037; c=relaxed/simple;
-	bh=Iw5R1mbIkW1YYTydc9sQ8OSbcufWC9RiQPGAFaccReQ=;
+	s=arc-20240116; t=1712830040; c=relaxed/simple;
+	bh=gGlz7krqbfAh5MEPedsHrl3c32TZ81GRJUq291awbSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvmLsvJvNbm+EkXcQwdQVJaBnE1g5buK5FBd89usA8GR7+fpLqYHtHD4ooipDDASlXGCi/CK8DKR1DoxFe+vBjRJFrY71cBx2fRYiqGNu4ZVDQhGmWwx9klryDB8WmRlUd+pSZS/unU6NKdVGUPg2c8zxyocwuj7mVCG1fKLjMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXVq/j5p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l/xdXBceKWMp5azYsw6u/nih42SfeRcYsFEMUdDpCT6PmT3FScocxP19M3QgflRcjApKOEpwhdL1Lhckpz8ma7/dbRul03471WQRq2G9Mc9g9J+jmVe3I0t64nOF+t5hwW6sZnqeueRGNfI5UhBKDjwtWkv9773JN+3vzhwdSVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oZzrsu4U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXVq/j5p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7DDC43394;
-	Thu, 11 Apr 2024 10:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZzrsu4U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CDEC43390;
+	Thu, 11 Apr 2024 10:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830036;
-	bh=Iw5R1mbIkW1YYTydc9sQ8OSbcufWC9RiQPGAFaccReQ=;
+	s=korg; t=1712830039;
+	bh=gGlz7krqbfAh5MEPedsHrl3c32TZ81GRJUq291awbSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AXVq/j5pbcL8bKudUCJLzCGRG5PF/D0sGoDRyaJX/sIYAMnmEz0ehDd2bsg0Ynrhf
-	 oYeK2zOMgdKpUJzM65lEydy30uA2h1JcjnNZPm0LKimN4kF/rdA8XRRfLX0y7PZ2Zc
-	 NaLigFIe3pf2Jahvwd+snmwCRqTAI3UuBo+VGqwI=
+	b=oZzrsu4UNeiuqbatiVo3iUT6GMQRPVuNPcr9S3M1sqU8ijQvxH/xXjiqaxGJj56JK
+	 Yk8FBNj5+7395cVVrT3zqFVBV/ZCKbJlnqOL61KhRu3Kmd1BBWkoD/Yh4tOY6+59O3
+	 Eaay/FbgF54UUmGzVZQxVaJh0QqR0hkTc6ayA2qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Renner Berthing <kernel@esmil.dk>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Andre Werner <andre.werner@systec-electronic.com>,
 	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 006/143] net: stmmac: dwmac-starfive: Add support for JH7100 SoC
-Date: Thu, 11 Apr 2024 11:54:34 +0200
-Message-ID: <20240411095421.100262500@linuxfoundation.org>
+Subject: [PATCH 6.8 007/143] net: phy: phy_device: Prevent nullptr exceptions on ISR
+Date: Thu, 11 Apr 2024 11:54:35 +0200
+Message-ID: <20240411095421.130770667@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -54,120 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Andre Werner <andre.werner@systec-electronic.com>
 
-[ Upstream commit 8d4597b871210429bda0f5c3a8816b7d9b6daf7e ]
+[ Upstream commit 61c81872815f46006982bb80460c0c80a949b35b ]
 
-Add a missing quirk to enable support for the StarFive JH7100 SoC.
+If phydev->irq is set unconditionally, check
+for valid interrupt handler or fall back to polling mode to prevent
+nullptr exceptions in interrupt service routine.
 
-Additionally, for greater flexibility in operation, allow using the
-rgmii-rxid and rgmii-txid phy modes.
-
-Co-developed-by: Emil Renner Berthing <kernel@esmil.dk>
-Signed-off-by: Emil Renner Berthing <kernel@esmil.dk>
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Andre Werner <andre.werner@systec-electronic.com>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/r/20240129135734.18975-2-andre.werner@systec-electronic.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/Kconfig   |  6 ++--
- .../ethernet/stmicro/stmmac/dwmac-starfive.c  | 32 ++++++++++++++++---
- 2 files changed, 31 insertions(+), 7 deletions(-)
+ drivers/net/phy/phy_device.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/Kconfig b/drivers/net/ethernet/stmicro/stmmac/Kconfig
-index 85dcda51df052..4ec61f1ee71a2 100644
---- a/drivers/net/ethernet/stmicro/stmmac/Kconfig
-+++ b/drivers/net/ethernet/stmicro/stmmac/Kconfig
-@@ -165,9 +165,9 @@ config DWMAC_STARFIVE
- 	help
- 	  Support for ethernet controllers on StarFive RISC-V SoCs
- 
--	  This selects the StarFive platform specific glue layer support for
--	  the stmmac device driver. This driver is used for StarFive JH7110
--	  ethernet controller.
-+	  This selects the StarFive platform specific glue layer support
-+	  for the stmmac device driver. This driver is used for the
-+	  StarFive JH7100 and JH7110 ethernet controllers.
- 
- config DWMAC_STI
- 	tristate "STi GMAC support"
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-starfive.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-starfive.c
-index 5d630affb4d15..4e1076faee0cd 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-starfive.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-starfive.c
-@@ -15,13 +15,20 @@
- 
- #include "stmmac_platform.h"
- 
--#define STARFIVE_DWMAC_PHY_INFT_RGMII	0x1
--#define STARFIVE_DWMAC_PHY_INFT_RMII	0x4
--#define STARFIVE_DWMAC_PHY_INFT_FIELD	0x7U
-+#define STARFIVE_DWMAC_PHY_INFT_RGMII		0x1
-+#define STARFIVE_DWMAC_PHY_INFT_RMII		0x4
-+#define STARFIVE_DWMAC_PHY_INFT_FIELD		0x7U
-+
-+#define JH7100_SYSMAIN_REGISTER49_DLYCHAIN	0xc8
-+
-+struct starfive_dwmac_data {
-+	unsigned int gtxclk_dlychain;
-+};
- 
- struct starfive_dwmac {
- 	struct device *dev;
- 	struct clk *clk_tx;
-+	const struct starfive_dwmac_data *data;
- };
- 
- static void starfive_dwmac_fix_mac_speed(void *priv, unsigned int speed, unsigned int mode)
-@@ -67,6 +74,8 @@ static int starfive_dwmac_set_mode(struct plat_stmmacenet_data *plat_dat)
- 
- 	case PHY_INTERFACE_MODE_RGMII:
- 	case PHY_INTERFACE_MODE_RGMII_ID:
-+	case PHY_INTERFACE_MODE_RGMII_RXID:
-+	case PHY_INTERFACE_MODE_RGMII_TXID:
- 		mode = STARFIVE_DWMAC_PHY_INFT_RGMII;
- 		break;
- 
-@@ -89,6 +98,14 @@ static int starfive_dwmac_set_mode(struct plat_stmmacenet_data *plat_dat)
- 	if (err)
- 		return dev_err_probe(dwmac->dev, err, "error setting phy mode\n");
- 
-+	if (dwmac->data) {
-+		err = regmap_write(regmap, JH7100_SYSMAIN_REGISTER49_DLYCHAIN,
-+				   dwmac->data->gtxclk_dlychain);
-+		if (err)
-+			return dev_err_probe(dwmac->dev, err,
-+					     "error selecting gtxclk delay chain\n");
-+	}
-+
- 	return 0;
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index 6125418ca93f3..8efa2a136faa9 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -1413,6 +1413,11 @@ int phy_sfp_probe(struct phy_device *phydev,
  }
+ EXPORT_SYMBOL(phy_sfp_probe);
  
-@@ -114,6 +131,8 @@ static int starfive_dwmac_probe(struct platform_device *pdev)
- 	if (!dwmac)
- 		return -ENOMEM;
- 
-+	dwmac->data = device_get_match_data(&pdev->dev);
++static bool phy_drv_supports_irq(struct phy_driver *phydrv)
++{
++	return phydrv->config_intr && phydrv->handle_interrupt;
++}
 +
- 	dwmac->clk_tx = devm_clk_get_enabled(&pdev->dev, "tx");
- 	if (IS_ERR(dwmac->clk_tx))
- 		return dev_err_probe(&pdev->dev, PTR_ERR(dwmac->clk_tx),
-@@ -144,8 +163,13 @@ static int starfive_dwmac_probe(struct platform_device *pdev)
- 	return stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
+ /**
+  * phy_attach_direct - attach a network device to a given PHY device pointer
+  * @dev: network device to attach
+@@ -1527,6 +1532,9 @@ int phy_attach_direct(struct net_device *dev, struct phy_device *phydev,
+ 	if (phydev->dev_flags & PHY_F_NO_IRQ)
+ 		phydev->irq = PHY_POLL;
+ 
++	if (!phy_drv_supports_irq(phydev->drv) && phy_interrupt_is_valid(phydev))
++		phydev->irq = PHY_POLL;
++
+ 	/* Port is set to PORT_TP by default and the actual PHY driver will set
+ 	 * it to different value depending on the PHY configuration. If we have
+ 	 * the generic PHY driver we can't figure it out, thus set the old
+@@ -2992,11 +3000,6 @@ s32 phy_get_internal_delay(struct phy_device *phydev, struct device *dev,
  }
+ EXPORT_SYMBOL(phy_get_internal_delay);
  
-+static const struct starfive_dwmac_data jh7100_data = {
-+	.gtxclk_dlychain = 4,
-+};
-+
- static const struct of_device_id starfive_dwmac_match[] = {
--	{ .compatible = "starfive,jh7110-dwmac"	},
-+	{ .compatible = "starfive,jh7100-dwmac", .data = &jh7100_data },
-+	{ .compatible = "starfive,jh7110-dwmac" },
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, starfive_dwmac_match);
+-static bool phy_drv_supports_irq(struct phy_driver *phydrv)
+-{
+-	return phydrv->config_intr && phydrv->handle_interrupt;
+-}
+-
+ static int phy_led_set_brightness(struct led_classdev *led_cdev,
+ 				  enum led_brightness value)
+ {
 -- 
 2.43.0
 
