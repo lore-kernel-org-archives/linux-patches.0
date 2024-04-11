@@ -1,38 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEEF145B04;
-	Thu, 11 Apr 2024 10:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F8114532F;
+	Thu, 11 Apr 2024 10:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829800; cv=none; b=ue7sRG6RtD1HqojXr1oT8DGIMKT7tE5eTOnsBz919EOWWQW4Qh8gBjXN4ikukdDjhvGLIqZ7XoeNXkwFfm+z5k7pe/ID3bHdUKLWsbcqnSwyJuPNVQfGO5C0pjhK6wb5GF2ON7jiRV21dXW+WrhsUZoXOPh8y3DJY83C2FmcZ0E=
+	t=1712829803; cv=none; b=u0SUF4znecJeoyvYHfNoWNltyGZuIS2JP98ndj8yyBcAgRbpQss9gBIljoC6ta0mL6kgxI0gEykUCFokDa+JSb0PBU3BAJCHK0iMqX+jrPpwO0xCxzqA5pOBlLRQhmhxfbTbmHBF6XkTQtrMt9GpStSiZr84pSzy0JtwSFVF6pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829800; c=relaxed/simple;
-	bh=Rn+/NoXTvu1E/IItL4NfDu0kNmrhckjzCALVZZ2f7wA=;
+	s=arc-20240116; t=1712829803; c=relaxed/simple;
+	bh=RfTQQXnAUYVg1yrWumFjor8u2e48qfNt1oH1zpbQo1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iUvPBk0z2l+zzswGluEBSeSymBYCwbEge2YiuFV6qnuEgN4F0EwnFpoKLkt16gYR7XLypC5ErINhD57y/RP7kw/TkhX6fw6eUQdhcar26psx3lHJRhknBYFlvuHdQi7raa7EahkvEycrZMMfYOVgnrbKp/nb1m/7Ywem2tb0Hrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phBAVM/8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iTd20UXsUgXMooDG4+xCxuPBFNwyhhJMLEykNZt45M02iPRbzIXTF1lNGnrB8eP95Z3AJk+pv+d99xhulzH1gC6yu9nVQpiVe6Y13qpqydfYTiqsZJWAJqPgqu90Twj2WUqC4P5zf4zkO5H3QhCFliMA6tfOOT24lFmk/SDcljY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BG8GuAL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phBAVM/8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9D7C433F1;
-	Thu, 11 Apr 2024 10:03:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BG8GuAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588AFC433C7;
+	Thu, 11 Apr 2024 10:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829800;
-	bh=Rn+/NoXTvu1E/IItL4NfDu0kNmrhckjzCALVZZ2f7wA=;
+	s=korg; t=1712829802;
+	bh=RfTQQXnAUYVg1yrWumFjor8u2e48qfNt1oH1zpbQo1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phBAVM/8RWWdiGkaD0mQth+gc7y2gWd+3iCtq2FAYgaNhrESj5LrwEKA9t6F1dZn+
-	 ZuIwR5WWTz56oSa6SEsZA6ysqhkPuyWTXie5m6rA4XdZHb88AkJjkM6XRI7tcftNHs
-	 HQB8cawNlWgjW+XxaYVvQwqWBWAfQUDzbTocNTRY=
+	b=2BG8GuAL0l5zVijMXRiD+FNOPW17tFLBgKj4mBUG4oXC9wwmM+LUSLqD8vxh8KyNG
+	 K4IgL/Tc0oxPdl7A6HlnhZqS79gxN58V4MrLbZ+qBsE0xvXRG0ffe0MCESaBb3uksb
+	 /N8P9picUnFnaE7YheYW9lqZlNkjMTZcwzztkRX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	dri-devel@lists.freedesktop.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ranygh@riseup.net,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 4.19 082/175] wifi: mac80211: check/clear fast rx for non-4addr sta VLAN changes
-Date: Thu, 11 Apr 2024 11:55:05 +0200
-Message-ID: <20240411095422.031663010@linuxfoundation.org>
+	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
+	Marek Vasut <marex@denx.de>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	David Airlie <airlied@linux.ie>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	linux-arm-kernel@lists.infradead.org,
+	Max Krummenacher <max.krummenacher@toradex.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Subject: [PATCH 4.19 109/175] drm/imx: parallel-display: Remove bus flags check in imx_pd_bridge_atomic_check()
+Date: Thu, 11 Apr 2024 11:55:32 +0200
+Message-ID: <20240411095422.849076905@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -51,44 +63,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Christoph Niedermaier <cniedermaier@dh-electronics.com>
 
-commit 4f2bdb3c5e3189297e156b3ff84b140423d64685 upstream.
+commit 6061806a863e8b65b109eb06a280041cc7525442 upstream.
 
-When moving a station out of a VLAN and deleting the VLAN afterwards, the
-fast_rx entry still holds a pointer to the VLAN's netdev, which can cause
-use-after-free bugs. Fix this by immediately calling ieee80211_check_fast_rx
-after the VLAN change.
+If display timings were read from the devicetree using
+of_get_display_timing() and pixelclk-active is defined
+there, the flag DISPLAY_FLAGS_SYNC_POSEDGE/NEGEDGE is
+automatically generated. Through the function
+drm_bus_flags_from_videomode() e.g. called in the
+panel-simple driver this flag got into the bus flags,
+but then in imx_pd_bridge_atomic_check() the bus flag
+check failed and will not initialize the display. The
+original commit fe141cedc433 does not explain why this
+check was introduced. So remove the bus flags check,
+because it stops the initialization of the display with
+valid bus flags.
 
-Cc: stable@vger.kernel.org
-Reported-by: ranygh@riseup.net
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://msgid.link/20240316074336.40442-1-nbd@nbd.name
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: fe141cedc433 ("drm/imx: pd: Use bus format/flags provided by the bridge when available")
+Signed-off-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+Cc: Marek Vasut <marex@denx.de>
+Cc: Boris Brezillon <boris.brezillon@collabora.com>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: David Airlie <airlied@linux.ie>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Shawn Guo <shawnguo@kernel.org>
+Cc: Sascha Hauer <s.hauer@pengutronix.de>
+Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: NXP Linux Team <linux-imx@nxp.com>
+Cc: linux-arm-kernel@lists.infradead.org
+To: dri-devel@lists.freedesktop.org
+Tested-by: Max Krummenacher <max.krummenacher@toradex.com>
+Acked-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220201113643.4638-1-cniedermaier@dh-electronics.com
+Signed-off-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/cfg.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/imx/parallel-display.c |    8 --------
+ 1 file changed, 8 deletions(-)
 
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -1548,15 +1548,14 @@ static int ieee80211_change_station(stru
- 		}
+--- a/drivers/gpu/drm/imx/parallel-display.c
++++ b/drivers/gpu/drm/imx/parallel-display.c
+@@ -235,14 +235,6 @@ static int imx_pd_bridge_atomic_check(st
+ 	if (!imx_pd_format_supported(bus_fmt))
+ 		return -EINVAL;
  
- 		if (sta->sdata->vif.type == NL80211_IFTYPE_AP_VLAN &&
--		    sta->sdata->u.vlan.sta) {
--			ieee80211_clear_fast_rx(sta);
-+		    sta->sdata->u.vlan.sta)
- 			RCU_INIT_POINTER(sta->sdata->u.vlan.sta, NULL);
--		}
- 
- 		if (test_sta_flag(sta, WLAN_STA_AUTHORIZED))
- 			ieee80211_vif_dec_num_mcast(sta->sdata);
- 
- 		sta->sdata = vlansdata;
-+		ieee80211_check_fast_rx(sta);
- 		ieee80211_check_fast_xmit(sta);
- 
- 		if (test_sta_flag(sta, WLAN_STA_AUTHORIZED)) {
+-	if (bus_flags &
+-	    ~(DRM_BUS_FLAG_DE_LOW | DRM_BUS_FLAG_DE_HIGH |
+-	      DRM_BUS_FLAG_PIXDATA_DRIVE_POSEDGE |
+-	      DRM_BUS_FLAG_PIXDATA_DRIVE_NEGEDGE)) {
+-		dev_warn(imxpd->dev, "invalid bus_flags (%x)\n", bus_flags);
+-		return -EINVAL;
+-	}
+-
+ 	bridge_state->output_bus_cfg.flags = bus_flags;
+ 	bridge_state->input_bus_cfg.flags = bus_flags;
+ 	imx_crtc_state->bus_flags = bus_flags;
 
 
