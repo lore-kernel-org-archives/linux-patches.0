@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01998140E3D;
-	Thu, 11 Apr 2024 10:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA565140E3D;
+	Thu, 11 Apr 2024 10:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830780; cv=none; b=oq/7lQ6w5JkXV0tnaW3YlISRFAeXClK+KbTzFM/oNCKYzBDuSzNaiI5tOuKK03cATUJTtBfVOONkfhxGtbjXrYCwMWyYYMbn81SQP1VNltci9/a7iUeleJdyi0fBRXS8pGM7QZJkYoXvcx0aZ05K0//v6zU/j8oHTxSE96n55dU=
+	t=1712830783; cv=none; b=CqW9aRkvNphVJg+pVwz5xDrVJwWDeLp9hj1YI0ErOH0xfGTAfvhIsFEj8meg4ZoNDVc5rC6Fdsy6rMHgTQ4euEl8kZ4PpWgYsWuAcyyDUw8sO4aMHGxsRQ57o5xofxjr/zyGVNQFq1jj5Mcjv5Y78OjoZUEAlgkgrAKgagThwOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830780; c=relaxed/simple;
-	bh=IBcSfhkTqOFLtxfH8MBVMYAB/AYVPTbEAF+XSzDXb9E=;
+	s=arc-20240116; t=1712830783; c=relaxed/simple;
+	bh=gJ2ENgU/Wa6j+11Ouckw7yFQhhrUzYayA3uY2u5iujs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nyI2HtBm7V/bhkxyhy6ugHiTUxqGZ29zbshpyoKmxhehEwQ9Tk+Sg7kQg3G4TQIWKUfkhYdbXZzMpi8SkBMhYV+ZBChRzNYVPNTeisEbkKl2MTs9cxjhuCf2oaFNmEV5Ne1T0RLmdAlU5xMlveFmHmZfdaWQ2M35uWMsnXdq5SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VJLR73Ec; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iAzgqsqLZeWSXY3LgtmQ4AH3ho72m6mec2aw2h32m9tyqD4cUyhlR+qf18QjXSyTcWZuM+ER08Neur6jbCtrH9lDsVLKaTMbD1KPey+JpaMC5upw22Fl/d3mn+XztXKQ8eVko3TMG00tGxrXyepyuDQg1JS17DLlYAKQewr+NCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x11xSD3Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VJLR73Ec"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFE8C433C7;
-	Thu, 11 Apr 2024 10:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x11xSD3Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F29C433F1;
+	Thu, 11 Apr 2024 10:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830779;
-	bh=IBcSfhkTqOFLtxfH8MBVMYAB/AYVPTbEAF+XSzDXb9E=;
+	s=korg; t=1712830782;
+	bh=gJ2ENgU/Wa6j+11Ouckw7yFQhhrUzYayA3uY2u5iujs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VJLR73EcKFAb9GB2Kk8amfMes2zufvKvTr6aON2YMKkJJ1h2hMVX987LB6Udk2jtY
-	 qFiwK7n0O6S4+d0zWbofe/5fDeXhyIr6M+OwbZHGasjFxV5tFKkVly5Pe/3nr8iXYN
-	 nKJnDTcKKDjO6yb1vSD4lnL6RjxJJc+dlkpcQ3LQ=
+	b=x11xSD3ZsObGY5xNbn9AQ47YDRk4vEp0YfnnF9C6VOURg6ktonvxKZviGi20Sb1Rp
+	 kcR7l9+QzeLiT/NZSCq2zZ8KP/p+Peiw7akt2FPysLOA7uE+S2diRB8zJyHRNY+aki
+	 6Da8EJb6WBDB0/YXn58aozL0zrv2Zfr42gikWTfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Rapeli <mikko.rapeli@linaro.org>,
-	Avri Altman <avri.altman@wdc.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 116/215] mmc: core: Avoid negative index with array access
-Date: Thu, 11 Apr 2024 11:55:25 +0200
-Message-ID: <20240411095428.391528815@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 5.4 117/215] usb: cdc-wdm: close race between read and workqueue
+Date: Thu, 11 Apr 2024 11:55:26 +0200
+Message-ID: <20240411095428.421465116@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -52,37 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Rapeli <mikko.rapeli@linaro.org>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit cf55a7acd1ed38afe43bba1c8a0935b51d1dc014 upstream.
+commit 339f83612f3a569b194680768b22bf113c26a29d upstream.
 
-Commit 4d0c8d0aef63 ("mmc: core: Use mrq.sbc in close-ended ffu") assigns
-prev_idata = idatas[i - 1], but doesn't check that the iterator i is
-greater than zero. Let's fix this by adding a check.
+wdm_read() cannot race with itself. However, in
+service_outstanding_interrupt() it can race with the
+workqueue, which can be triggered by error handling.
 
-Fixes: 4d0c8d0aef63 ("mmc: core: Use mrq.sbc in close-ended ffu")
-Link: https://lore.kernel.org/all/20231129092535.3278-1-avri.altman@wdc.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikko Rapeli <mikko.rapeli@linaro.org>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://lore.kernel.org/r/20240313133744.2405325-2-mikko.rapeli@linaro.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Hence we need to make sure that the WDM_RESPONDING
+flag is not just only set but tested.
+
+Fixes: afba937e540c9 ("USB: CDC WDM driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20240314115132.3907-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/block.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/class/cdc-wdm.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -511,7 +511,7 @@ static int __mmc_blk_ioctl_cmd(struct mm
- 	if (idata->flags & MMC_BLK_IOC_DROP)
- 		return 0;
+--- a/drivers/usb/class/cdc-wdm.c
++++ b/drivers/usb/class/cdc-wdm.c
+@@ -471,6 +471,7 @@ out_free_mem:
+ static int service_outstanding_interrupt(struct wdm_device *desc)
+ {
+ 	int rv = 0;
++	int used;
  
--	if (idata->flags & MMC_BLK_IOC_SBC)
-+	if (idata->flags & MMC_BLK_IOC_SBC && i > 0)
- 		prev_idata = idatas[i - 1];
+ 	/* submit read urb only if the device is waiting for it */
+ 	if (!desc->resp_count || !--desc->resp_count)
+@@ -485,7 +486,10 @@ static int service_outstanding_interrupt
+ 		goto out;
+ 	}
  
- 	/*
+-	set_bit(WDM_RESPONDING, &desc->flags);
++	used = test_and_set_bit(WDM_RESPONDING, &desc->flags);
++	if (used)
++		goto out;
++
+ 	spin_unlock_irq(&desc->iuspin);
+ 	rv = usb_submit_urb(desc->response, GFP_KERNEL);
+ 	spin_lock_irq(&desc->iuspin);
 
 
