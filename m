@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED77A140E3D;
-	Thu, 11 Apr 2024 10:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC42145B1A;
+	Thu, 11 Apr 2024 10:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831067; cv=none; b=gcK0/GPQ8ZAMbWf52jpp4Gt+3PowyVHugjSPVf5UijAXxQV0rk+zl6UP5679Zj7zqkMt1kxnNjtfRj06jcOLiNmTZhbFhmZvnOdsClRpj5l6kI0qkT9sbt6XH2mQe4LLeK094+jC1m8Ed8w0T0rzq7mQm9KGrvExL+ddscY6vXw=
+	t=1712831070; cv=none; b=IY2w5mnnVypRAvZvPGPa7xXq5xPErNCCHdnJJxACNIFbSyugoluq2RUk/UAhB4DO7f8co2wLK3tN2wxOJEd38kmhyrZWDUIHcserCdrh8AYdlZYXjQFWv29y3CPbybg379rSc6E1C9waXY9e0Y5CIZdVJG5OHzLnQQYZI27ZiyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831067; c=relaxed/simple;
-	bh=D0cLPRoVayMTAZwEsMcpQkU8at3UvINMQBGk47LjoLU=;
+	s=arc-20240116; t=1712831070; c=relaxed/simple;
+	bh=eb9LJ7F8gpXikqE3WMSM/7ilkRiZpwPPcw01qYi5UFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cvoNV1G+m8VGX50xjNrvbLnt3PSUcIvEc8UHfUpIacM865u0HNTlLUDP20bw6CaYJzswF+OYUTH5lHnfznDZ4G6O3QQvc5GcnYn+Rmx/R6u/XNwC+mS9VBVvkVOAwg4bFfU5/G0L9rO6LwM2eACExsirjXV6pl9HoIkBC1N1GRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+WoXi8l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uF/oafHayKd256d5M+Ad4P5njDNQZU4Qq4X7BE07pu89XbuRvvOiOfjvtptaj7/2rjitoKrXXFxwbjZ0QSd46d8rPlXTVCiimy9KVU3BNO2sa7Aatn2esQevzS0KNNb8sOMhQ7HbkV9thjWHtI9dlxTnFHVjXtIMvB4YH7L6Vr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Yb3znyh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+WoXi8l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70678C433C7;
-	Thu, 11 Apr 2024 10:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Yb3znyh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCBBC433C7;
+	Thu, 11 Apr 2024 10:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831066;
-	bh=D0cLPRoVayMTAZwEsMcpQkU8at3UvINMQBGk47LjoLU=;
+	s=korg; t=1712831069;
+	bh=eb9LJ7F8gpXikqE3WMSM/7ilkRiZpwPPcw01qYi5UFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P+WoXi8l/t2fQWm51EnIh1Kh71WnWYozPhx5xu2FSWtLEdxH6Dk1TsINNfhO/1Vvg
-	 2GTvAYraIA9x3CmSco2/vcBUQDihYN0BIjBAkQB947vG2SvxFymOFUIiasjT5fQdJY
-	 EI0w2jTLFzL97Hj3P89LUJUcp7LXoaDY2Afm8KWk=
+	b=2Yb3znyhE2cLQf5m1PuAxKOcCntxE1ukS2UK2h3mzQ4KwRrvp9Fu+5mbJ1PIEY5Nl
+	 sNK2KRht5rlsbJonwmECy/sA6EkolZAxfCZmqb32zUHwhBG7iPIeE7k60Qa2Sy5emW
+	 vsDDasOSC9K5rZ08Ml7VOzMgepMVGWMMhnobUUto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 5.4 212/215] VMCI: Fix possible memcpy() run-time warning in vmci_datagram_invoke_guest_handler()
-Date: Thu, 11 Apr 2024 11:57:01 +0200
-Message-ID: <20240411095431.235847546@linuxfoundation.org>
+	Eric Dumazet <eric.dumazet@gmail.com>,
+	William Tu <u9012063@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.4 213/215] erspan: Check IFLA_GRE_ERSPAN_VER is set.
+Date: Thu, 11 Apr 2024 11:57:02 +0200
+Message-ID: <20240411095431.265015183@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -50,36 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: William Tu <u9012063@gmail.com>
 
-commit e606e4b71798cc1df20e987dde2468e9527bd376 upstream.
+commit 51fa960d3b5163b1af22efdebcabfccc5d615ad6 upstream.
 
-The changes are similar to those given in the commit 19b070fefd0d
-("VMCI: Fix memcpy() run-time warning in dg_dispatch_as_host()").
+Add a check to make sure the IFLA_GRE_ERSPAN_VER is provided by users.
 
-Fix filling of the msg and msg_payload in dg_info struct, which prevents a
-possible "detected field-spanning write" of memcpy warning that is issued
-by the tracking mechanism __fortify_memcpy_chk.
-
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://lore.kernel.org/r/20240219105315.76955-1-kovalev@altlinux.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Fixes: f989d546a2d5 ("erspan: Add type I version 0 support.")
+Cc: Eric Dumazet <eric.dumazet@gmail.com>
+Signed-off-by: William Tu <u9012063@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/vmw_vmci/vmci_datagram.c |    3 ++-
+ net/ipv4/ip_gre.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/misc/vmw_vmci/vmci_datagram.c
-+++ b/drivers/misc/vmw_vmci/vmci_datagram.c
-@@ -378,7 +378,8 @@ int vmci_datagram_invoke_guest_handler(s
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -1106,7 +1106,8 @@ static int erspan_validate(struct nlattr
+ 	if (ret)
+ 		return ret;
  
- 		dg_info->in_dg_host_queue = false;
- 		dg_info->entry = dst_entry;
--		memcpy(&dg_info->msg, dg, VMCI_DG_SIZE(dg));
-+		dg_info->msg = *dg;
-+		memcpy(&dg_info->msg_payload, dg + 1, dg->payload_size);
+-	if (nla_get_u8(data[IFLA_GRE_ERSPAN_VER]) == 0)
++	if (data[IFLA_GRE_ERSPAN_VER] &&
++	    nla_get_u8(data[IFLA_GRE_ERSPAN_VER]) == 0)
+ 		return 0;
  
- 		INIT_WORK(&dg_info->work, dg_delayed_dispatch);
- 		schedule_work(&dg_info->work);
+ 	/* ERSPAN type II/III should only have GRE sequence and key flag */
 
 
