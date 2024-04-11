@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F79964CC0;
-	Thu, 11 Apr 2024 10:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3648764CC0;
+	Thu, 11 Apr 2024 10:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831812; cv=none; b=NkzWb72cvnWC27KoM1oDW8dj3FuiTfyuTHaGj8LFoVjLXb0YvipczhASOrbRV2HPMvXee08pZoR5gLGkq6HPPUdO6US2hv+eexJ6k4rvAo48rLybWUt6af5JqZFDL+TLEXrU1zD9g//44CP5nKHw2HJvDhXAcQv5oXk90WrbeIk=
+	t=1712831815; cv=none; b=bkPYRIjWAC3z/PngxblbGQk/UsyPgyJf4+xtmioTRZysbowT/XgmWzAedOl31tKFuuYJzq3AkNe9q8hhQIm+pgDusKizoSPyv+l46+7Cquq4tuqvW/aNUo90wJ1G7f5z5GD8GoTjvJrvhXYs7qsi6g2hxDwRu2LAyFghZlMSE3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831812; c=relaxed/simple;
-	bh=zzDII+/tO5aGe3vGJHOKfwyHJcWsb8Uk9yhp2oIol/Q=;
+	s=arc-20240116; t=1712831815; c=relaxed/simple;
+	bh=PQl48g+kN+m17vLHDhvT4JpVk+kOp1P6NCkxlMOImDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VmM0I+Fp3yJvCVNYn4Hsxx/EpnN6KLjbSwDrTUDddgNjc+DNd2sXDR0TI2QdaxgbkXo7DxDVMC+ibAnVynguY7TmF+Lg0w4LwiUqEcXYKjjUqtQyc8eu9H95ZHsKaCD2/G/PUrFy/8KZTIWGqkEvJz48+GLzyxSyGuEZZln19CM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tExhgjDY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HCqtB7pktjjD2bUtPsUoFJqP9Le4HRbFv2gHE28tYU+WaJo1i0Vw1RTYBtpoQVMGm8xfbEbGZ7RMub+RVvCxTvivTV1mlDQkRN0m1Hs6Zb+JISb+AP16eTdnGmjRRxVcvK02cvUoc1Ah13BRTfo7fgJHZq1Qsr+AceeiUYZx0TY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdzCpxMJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tExhgjDY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A51C433F1;
-	Thu, 11 Apr 2024 10:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdzCpxMJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61495C433C7;
+	Thu, 11 Apr 2024 10:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831811;
-	bh=zzDII+/tO5aGe3vGJHOKfwyHJcWsb8Uk9yhp2oIol/Q=;
+	s=korg; t=1712831814;
+	bh=PQl48g+kN+m17vLHDhvT4JpVk+kOp1P6NCkxlMOImDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tExhgjDYw7paoUQDfLcGNuvaNQzFmKgB2EgIpXx42CdlyoEx08buxbZ1iQwMnpUCc
-	 hS2fgLu4OivPRpKYoe0RB2Otp73CU5TcXP/MLCB5q4rxbIp5KHF89ynMpzKLadXlOn
-	 PF/wLPbZiqM3Lzcy9S6YAOIK6xKOuuYMNTZcrP2E=
+	b=qdzCpxMJv8PUNEa0u3CRy+VeEK5rM/3UYTeKpfqbMj3KX/eoNKPp94uw3p2JtyPDt
+	 G90HBa4C3p3d6uIxGaxe9YGq8RL7JD/5BNNhHzrO/UAKBd/BnWxbuPXSZHAxXe9+Hb
+	 yp95ehytFMBtll0qY8kqFVZfrEH30ijV/GQoKa4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Benjamin LaHaise <ben@communityfibre.ca>,
-	Eric Biggers <ebiggers@google.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Avi Kivity <avi@scylladb.com>,
-	Sandeep Dhavale <dhavale@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.10 133/294] fs/aio: Check IOCB_AIO_RW before the struct aio_kiocb conversion
-Date: Thu, 11 Apr 2024 11:54:56 +0200
-Message-ID: <20240411095439.661721555@linuxfoundation.org>
+	Mikko Rapeli <mikko.rapeli@linaro.org>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [PATCH 5.10 134/294] tee: optee: Fix kernel panic caused by incorrect error handling
+Date: Thu, 11 Apr 2024 11:54:57 +0200
+Message-ID: <20240411095439.691279649@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -58,63 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Sumit Garg <sumit.garg@linaro.org>
 
-commit 961ebd120565cb60cebe21cb634fbc456022db4a upstream.
+commit 95915ba4b987cf2b222b0f251280228a1ff977ac upstream.
 
-The first kiocb_set_cancel_fn() argument may point at a struct kiocb
-that is not embedded inside struct aio_kiocb. With the current code,
-depending on the compiler, the req->ki_ctx read happens either before
-the IOCB_AIO_RW test or after that test. Move the req->ki_ctx read such
-that it is guaranteed that the IOCB_AIO_RW test happens first.
+The error path while failing to register devices on the TEE bus has a
+bug leading to kernel panic as follows:
 
-Reported-by: Eric Biggers <ebiggers@kernel.org>
-Cc: Benjamin LaHaise <ben@communityfibre.ca>
-Cc: Eric Biggers <ebiggers@google.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Avi Kivity <avi@scylladb.com>
-Cc: Sandeep Dhavale <dhavale@google.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
+[   15.398930] Unable to handle kernel paging request at virtual address ffff07ed00626d7c
+[   15.406913] Mem abort info:
+[   15.409722]   ESR = 0x0000000096000005
+[   15.413490]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   15.418814]   SET = 0, FnV = 0
+[   15.421878]   EA = 0, S1PTW = 0
+[   15.425031]   FSC = 0x05: level 1 translation fault
+[   15.429922] Data abort info:
+[   15.432813]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
+[   15.438310]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[   15.443372]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[   15.448697] swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000d9e3e000
+[   15.455413] [ffff07ed00626d7c] pgd=1800000bffdf9003, p4d=1800000bffdf9003, pud=0000000000000000
+[   15.464146] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
+
+Commit 7269cba53d90 ("tee: optee: Fix supplicant based device enumeration")
+lead to the introduction of this bug. So fix it appropriately.
+
+Reported-by: Mikko Rapeli <mikko.rapeli@linaro.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218542
+Fixes: 7269cba53d90 ("tee: optee: Fix supplicant based device enumeration")
 Cc: stable@vger.kernel.org
-Fixes: b820de741ae4 ("fs/aio: Restrict kiocb_set_cancel_fn() to I/O submitted via libaio")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20240304235715.3790858-1-bvanassche@acm.org
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/aio.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/tee/optee/device.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -565,8 +565,8 @@ static int aio_setup_ring(struct kioctx
+--- a/drivers/tee/optee/device.c
++++ b/drivers/tee/optee/device.c
+@@ -90,13 +90,14 @@ static int optee_register_device(const u
+ 	if (rc) {
+ 		pr_err("device registration failed, err: %d\n", rc);
+ 		put_device(&optee_device->dev);
++		return rc;
+ 	}
  
- void kiocb_set_cancel_fn(struct kiocb *iocb, kiocb_cancel_fn *cancel)
- {
--	struct aio_kiocb *req = container_of(iocb, struct aio_kiocb, rw);
--	struct kioctx *ctx = req->ki_ctx;
-+	struct aio_kiocb *req;
-+	struct kioctx *ctx;
- 	unsigned long flags;
+ 	if (func == PTA_CMD_GET_DEVICES_SUPP)
+ 		device_create_file(&optee_device->dev,
+ 				   &dev_attr_need_supplicant);
  
- 	/*
-@@ -576,9 +576,13 @@ void kiocb_set_cancel_fn(struct kiocb *i
- 	if (!(iocb->ki_flags & IOCB_AIO_RW))
- 		return;
+-	return rc;
++	return 0;
+ }
  
-+	req = container_of(iocb, struct aio_kiocb, rw);
-+
- 	if (WARN_ON_ONCE(!list_empty(&req->ki_list)))
- 		return;
- 
-+	ctx = req->ki_ctx;
-+
- 	spin_lock_irqsave(&ctx->ctx_lock, flags);
- 	list_add_tail(&req->ki_list, &ctx->active_reqs);
- 	req->ki_cancel = cancel;
+ static int __optee_enumerate_devices(u32 func)
 
 
