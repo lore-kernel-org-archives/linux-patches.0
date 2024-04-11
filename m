@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56188145B28;
-	Thu, 11 Apr 2024 10:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E09145B1E;
+	Thu, 11 Apr 2024 10:13:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830413; cv=none; b=clIWPRsILmlRsupDClSaYvUVj5X6pomCNW9B5vBCDASk3hsNKqJdJQJpqBetrcMRLSH2U9Nm/WIDKVWqXChK26wdVqTHZ6LGtp6A0k5sZTKqMY1YRCh6xjWne3qiBl7ZYA+KmadaISPQazlUNtGaKx968VC4R1AP98wJSPehjfk=
+	t=1712830416; cv=none; b=KVcz2ayWwAiPZY6GyCsphpYswV31jpHXiIoNgicUj5Vl7R8KjVA5Hl6t6HyfL6BI7nqrqhLVD11kyYXmlY8ULH9IdFvjlLGaYqGYG2V6jM0VUyH8UPhj4IR93fm09UQplf2RfRscrxpHeNB/QLH/8eU7K84trPziVorRc1ex2R0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830413; c=relaxed/simple;
-	bh=jldHpzRBkYQu1Aqx8LQCxo2YvYRjdBuZw/i3ac2oa5E=;
+	s=arc-20240116; t=1712830416; c=relaxed/simple;
+	bh=SifY4LBYSMoGkXSEx+EdXH5XDw8QTg0Yrw6AkpzdaO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O271SwXBTJA/y4SRCAOGKUZOB0MomtM/QMTRcclzzhZ+VXfbWdDULtJtK01RA+aHtihD/o6rIBg+cK25NkEwmVd+HgL8VuJj6RUJhofdW0YuD6P4fTlSHx4O2Z9DNA3bkLFYC+7GN+p10P8iGhJzovXjpQKglAOzDklwCvt3Y/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JG2BmHhG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lbazRGJARKARuf2oSmlcuRSm6/eioQwkE6Oa83uqFmjXlvUkzs9lImp27uHu1rSmwDZGeLdSCmYzXDllGllBnZJmlYVb/yK3PkRQcH3USAHz703VDDR/rw3NlyAc9kgSupzudbceFL1NqwRKzn0h3VAuniiw7/DW7pQQ3yExUno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OuuLAqwF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JG2BmHhG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2D6C433F1;
-	Thu, 11 Apr 2024 10:13:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuuLAqwF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DD4C433F1;
+	Thu, 11 Apr 2024 10:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830413;
-	bh=jldHpzRBkYQu1Aqx8LQCxo2YvYRjdBuZw/i3ac2oa5E=;
+	s=korg; t=1712830416;
+	bh=SifY4LBYSMoGkXSEx+EdXH5XDw8QTg0Yrw6AkpzdaO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JG2BmHhGjgYlbneFOwRw6+5N7OyrSeV2kiQ9qewVEd1rq3S3TucHW1Qru1BWuEXNG
-	 i4XujlzgvoguuMnAN1vSQJWI1kejOZj1OO103sV3z0VnaPSeZi9Rlwu9172NlNF3ir
-	 TYaG/JiqZmE6Ub+0zpuH0+tTs/xJ0z9mFml22ssU=
+	b=OuuLAqwF4ETd5JzWsAlWZDzxeRDiMuEUr/B67jUO20sUYXRKDcoVSKpL4T7ozFsQD
+	 1GvqskU0zmG87hlgXwhmIbiRRxs+7BF36KYXsQzH0J//2PHBggNtikprVABuyQ/wrm
+	 XWiRBJRfuQbkv2DWGMo8PaCMObfCmuTp3Zb0w23o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gergo Koteles <soyer@irl.hu>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	SungHwan Jung <onenowy@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 099/143] Input: allocate keycode for Display refresh rate toggle
-Date: Thu, 11 Apr 2024 11:56:07 +0200
-Message-ID: <20240411095423.888838428@linuxfoundation.org>
+Subject: [PATCH 6.8 100/143] platform/x86: acer-wmi: Add support for Acer PH16-71
+Date: Thu, 11 Apr 2024 11:56:08 +0200
+Message-ID: <20240411095423.918501151@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -53,38 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gergo Koteles <soyer@irl.hu>
+From: SungHwan Jung <onenowy@gmail.com>
 
-[ Upstream commit cfeb98b95fff25c442f78a6f616c627bc48a26b7 ]
+[ Upstream commit 20a36ec343d4c5abc2378a45ab5e7ea1ca85020a ]
 
-Newer Lenovo Yogas and Legions with 60Hz/90Hz displays send a wmi event
-when Fn + R is pressed. This is intended for use to switch between the
-two refresh rates.
+Add Acer Predator PH16-71 to Acer_quirks with predator_v4
+to support mode button and fan speed sensor.
 
-Allocate a new KEY_REFRESH_RATE_TOGGLE keycode for it.
-
-Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://lore.kernel.org/r/15a5d08c84cf4d7b820de34ebbcf8ae2502fb3ca.1710065750.git.soyer@irl.hu
+Signed-off-by: SungHwan Jung <onenowy@gmail.com>
+Link: https://lore.kernel.org/r/20240220055231.6451-1-onenowy@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/input-event-codes.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/acer-wmi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/include/uapi/linux/input-event-codes.h b/include/uapi/linux/input-event-codes.h
-index 022a520e31fc2..03edf2ccdf6c8 100644
---- a/include/uapi/linux/input-event-codes.h
-+++ b/include/uapi/linux/input-event-codes.h
-@@ -602,6 +602,7 @@
- 
- #define KEY_ALS_TOGGLE		0x230	/* Ambient light sensor */
- #define KEY_ROTATE_LOCK_TOGGLE	0x231	/* Display rotation lock */
-+#define KEY_REFRESH_RATE_TOGGLE	0x232	/* Display refresh rate toggle */
- 
- #define KEY_BUTTONCONFIG		0x240	/* AL Button Configuration */
- #define KEY_TASKMANAGER		0x241	/* AL Task/Project Manager */
+diff --git a/drivers/platform/x86/acer-wmi.c b/drivers/platform/x86/acer-wmi.c
+index 88b826e88ebd7..771b0ce34c8f9 100644
+--- a/drivers/platform/x86/acer-wmi.c
++++ b/drivers/platform/x86/acer-wmi.c
+@@ -584,6 +584,15 @@ static const struct dmi_system_id acer_quirks[] __initconst = {
+ 		},
+ 		.driver_data = &quirk_acer_predator_v4,
+ 	},
++	{
++		.callback = dmi_matched,
++		.ident = "Acer Predator PH16-71",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Predator PH16-71"),
++		},
++		.driver_data = &quirk_acer_predator_v4,
++	},
+ 	{
+ 		.callback = set_force_caps,
+ 		.ident = "Acer Aspire Switch 10E SW3-016",
 -- 
 2.43.0
 
