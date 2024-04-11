@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159D11482F6;
-	Thu, 11 Apr 2024 10:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E9D657AE;
+	Thu, 11 Apr 2024 10:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831589; cv=none; b=mEBv6Im+POocVF42s9KkZtAC7y9YSqUHhaK6A6BqpJ3ffSHMnHjIQhK2vX2LJJ1bmktPBB6oA0QC6aB/+y2uk6U8SOyfmbP9Spj/8+yxBKCkNES6J12V64bFnznYWeDbTGk2uh0Nzj19ZFnuLCE4j2r+mTEhO0emnnOrXzxJnZ4=
+	t=1712831592; cv=none; b=kaP11fGcZTUMtOoXg9VV2HVeeWucNfX6IG7Dpoj7T8bWluCb0iDo9HFxKdEDgYN4m4xFbJZ5GcKvdRHO9HGDzaoksIcBX1afBm9D2UdIv4oHLoeh+FzJdLxVhbtdw9Ow2MyCc3JsJ0cp+FYMaGKl69WJW4RqjKyN9PnYe3zenC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831589; c=relaxed/simple;
-	bh=nO7GnvOOizWXBYembrgYzvJUMN38MxWrMv+s6m6O38M=;
+	s=arc-20240116; t=1712831592; c=relaxed/simple;
+	bh=CcUoDzSQ9p6UGeVPxZLgD/34HJ4S2Ois12oP9Z3Jj64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hefyituZGHfFgD/CSLqxhRpuEPrAN0lhY5qt6/715TpshTGBvBKEHe6W9Afgt/X8cB4psrcQWBgq7K+5VqTuOY25OZoP1sa/n8gJHqot9Rn/NO1Ghvik5B41DGkf6JQyF2CC7ArRMW8kqvAENMbC5n+liSoDEARJQJqch/o03Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkI1646h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K5FZ1BmLK0ZmRxdplk8KYno/rx7ebkhY/gsAM02TAQ5Vvcrk625JmxAqhInY/6nrVw/iAJRYZT6hPhj4oalPdLHp9W+WC6ran4RcsKpyh2YjBPVsQz99/f3vQJvd+nSIlTNN824FVAry3WN9KkMoc+vLgQ6bZP0CLf61RLRnw4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtZaB/VJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkI1646h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620A5C433F1;
-	Thu, 11 Apr 2024 10:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtZaB/VJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77BA3C433C7;
+	Thu, 11 Apr 2024 10:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831589;
-	bh=nO7GnvOOizWXBYembrgYzvJUMN38MxWrMv+s6m6O38M=;
+	s=korg; t=1712831591;
+	bh=CcUoDzSQ9p6UGeVPxZLgD/34HJ4S2Ois12oP9Z3Jj64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XkI1646hIt8G4fcyiucBqeto1Pvzgo9CfocVYC6ML+53lPD2k5KkJjmc4y7BguVTh
-	 tnohYjaghgrFfZ2KStKbWUIG+eb9oG21D4hqkU0fYDEwi09aBw1ixYUn00NWEsHLuj
-	 xNZdiqRVVeNQsISX06h7qaMQEz17TnQGdAf51Wzk=
+	b=xtZaB/VJp2wLfv8vyeU0a9WUluZBubdl0WTza5Q8kG1qRk2JmziYQWN5fopRjGauQ
+	 jOjJi96n9yK0uSb1hmNE8ADFyU9BwD0CZG0nTdL0F7U0U273LUptyTL50HzIqdQydn
+	 5eAO0vHroEodWwWgpTJwEdDq1iCZ0Lq3yLEu3HhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Igor Zhbanov <izh1979@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	sparclinux@vger.kernel.org,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Nick Alcock <nick.alcock@oracle.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Andreas Larsson <andreas@gaisler.com>,
+	Alex Lyakas <alex.lyakas@zadara.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 022/294] sparc: vDSO: fix return value of __setup handler
-Date: Thu, 11 Apr 2024 11:53:05 +0200
-Message-ID: <20240411095436.300580167@linuxfoundation.org>
+Subject: [PATCH 5.10 058/294] btrfs: fix off-by-one chunk length calculation at contains_pending_extent()
+Date: Thu, 11 Apr 2024 11:53:41 +0200
+Message-ID: <20240411095437.386361011@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -59,55 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 5378f00c935bebb846b1fdb0e79cb76c137c56b5 ]
+[ Upstream commit ae6bd7f9b46a29af52ebfac25d395757e2031d0d ]
 
-__setup() handlers should return 1 to obsolete_checksetup() in
-init/main.c to indicate that the boot option has been handled.
-A return of 0 causes the boot option/value to be listed as an Unknown
-kernel parameter and added to init's (limited) argument or environment
-strings. Also, error return codes don't mean anything to
-obsolete_checksetup() -- only non-zero (usually 1) or zero.
-So return 1 from vdso_setup().
+At contains_pending_extent() the value of the end offset of a chunk we
+found in the device's allocation state io tree is inclusive, so when
+we calculate the length we pass to the in_range() macro, we must sum
+1 to the expression "physical_end - physical_offset".
 
-Fixes: 9a08862a5d2e ("vDSO for sparc")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: Igor Zhbanov <izh1979@gmail.com>
-Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: sparclinux@vger.kernel.org
-Cc: Dan Carpenter <dan.carpenter@oracle.com>
-Cc: Nick Alcock <nick.alcock@oracle.com>
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: stable@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Andreas Larsson <andreas@gaisler.com>
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
-Link: https://lore.kernel.org/r/20240211052808.22635-1-rdunlap@infradead.org
+In practice the wrong calculation should be harmless as chunks sizes
+are never 1 byte and we should never have 1 byte ranges of unallocated
+space. Nevertheless fix the wrong calculation.
+
+Reported-by: Alex Lyakas <alex.lyakas@zadara.com>
+Link: https://lore.kernel.org/linux-btrfs/CAOcd+r30e-f4R-5x-S7sV22RJPe7+pgwherA6xqN2_qe7o4XTg@mail.gmail.com/
+Fixes: 1c11b63eff2a ("btrfs: replace pending/pinned chunks lists with io tree")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/vdso/vma.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ fs/btrfs/volumes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/sparc/vdso/vma.c b/arch/sparc/vdso/vma.c
-index cc19e09b0fa1e..b073153c711ad 100644
---- a/arch/sparc/vdso/vma.c
-+++ b/arch/sparc/vdso/vma.c
-@@ -449,9 +449,8 @@ static __init int vdso_setup(char *s)
- 	unsigned long val;
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index eaf5cd043dace..9a05313c69f33 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -1471,7 +1471,7 @@ static bool contains_pending_extent(struct btrfs_device *device, u64 *start,
  
- 	err = kstrtoul(s, 10, &val);
--	if (err)
--		return err;
--	vdso_enabled = val;
--	return 0;
-+	if (!err)
-+		vdso_enabled = val;
-+	return 1;
- }
- __setup("vdso=", vdso_setup);
+ 		if (in_range(physical_start, *start, len) ||
+ 		    in_range(*start, physical_start,
+-			     physical_end - physical_start)) {
++			     physical_end + 1 - physical_start)) {
+ 			*start = physical_end + 1;
+ 			return true;
+ 		}
 -- 
 2.43.0
 
