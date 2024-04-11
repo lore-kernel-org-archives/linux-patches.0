@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD6D140E3D;
-	Thu, 11 Apr 2024 10:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45741140E3D;
+	Thu, 11 Apr 2024 10:19:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830768; cv=none; b=aSI84DES1biOmtS7PW8DlSm2E47YHxLDyUBhqBdRZe+eqU1KL1pXDqAUtDqUVWdcfjdnUQAxyC9cqnaJj+aGN0kbyYgxtIWviQN7/UU80J5kAVnNz/D6Hi2Io5dVdn9Nn4/rZa1XsOwmXuXr4UQ/8d82E8Gz02IIYeugaK82bH4=
+	t=1712830771; cv=none; b=Pno0rjg1jQuxxXcvjIzGgXhICuKFsPCn/VxUNpEo3uR2vLOv4YhcQ3DFM6IDmSF/bQIqFGy2yg7kcJIrY/Z8z3OWBwxiQzvndlfDEA9AtyNk3uCRARAkUgHK7JPwKEQLwlz8KsRlTuA3Hlt/i7VcaPHBcEKSowvdiy2iw66ACS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830768; c=relaxed/simple;
-	bh=oWryXuoUytwqpiwJA2FamzqQTWqXTr6uNMqHCwAi9Uw=;
+	s=arc-20240116; t=1712830771; c=relaxed/simple;
+	bh=C3wjheEbUQ1IxbYSNfMELlWS7MnanZlIjdzgZUm/xMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W3Dcq4HgRYWX+llknPAKUKdeHRWqcbI09h6Nf23Tq3eOfU7woRxL+XZEhSQerD6rp1BEey/wWK3cB43hwc92iXYB2wUDaK3+Y6TNe3P6lmvZfXaG83kRDP/z7I8UuhNMmLT/m2wBgP0CR5gLre1IFQ0B97eR64rbp90E33huCpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRHYbesu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vc5Ph0/dqjLzHlN+WLRB8Jnbygou/lJ76uusv1bP6KW7vCzL11DHv/HtMxs89W7W35AIeFsklpAkOeWhr7q1nZfGppyqYsyGOgm7n+/OwWEAfpsKbreWys5UL0pzNg9Ayc6KBQ8IfEBteR/8vmrGIE5m6kjKFJnzUZwYtui8dhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyDtRri+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRHYbesu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D35C433F1;
-	Thu, 11 Apr 2024 10:19:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyDtRri+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60D4C433F1;
+	Thu, 11 Apr 2024 10:19:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830768;
-	bh=oWryXuoUytwqpiwJA2FamzqQTWqXTr6uNMqHCwAi9Uw=;
+	s=korg; t=1712830771;
+	bh=C3wjheEbUQ1IxbYSNfMELlWS7MnanZlIjdzgZUm/xMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uRHYbesuMmJtBnu96UNi8SYreIn6vPPcrqzOQyhwXBbHyaey4CNm42IJaygb27Jku
-	 8G1qj6SevUTWlTLNGUVl5vEutYI2xY891HyNcgxxHflTyWoyxCb48bgHv4g6yi/uWY
-	 ZdeH4KXDBPuHoBIKoi2Ae4I/cvcHW33acpKGP2+8=
+	b=hyDtRri+Qc4xAvsXSWpaCC4QGarGkoKy1dacdjQWh5UhqnMezQa0ZXkXXosfC52Ou
+	 DqIu2m7OwbNvgqq9IiB73FwTnHtFnICZNG4IGGvxp/DQLoqz5g7BU1G8faLCDVPSEu
+	 RuK4y9ubz5U3i6WgFziCz1i4QygKFGZcD//2D844=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+cfed5b56649bddf80d6e@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Camelia Groza <camelia.groza@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 073/215] nilfs2: fix failure to detect DAT corruption in btree and direct mappings
-Date: Thu, 11 Apr 2024 11:54:42 +0200
-Message-ID: <20240411095427.093475543@linuxfoundation.org>
+Subject: [PATCH 5.4 064/215] soc: fsl: qbman: Always disable interrupts when taking cgr_lock
+Date: Thu, 11 Apr 2024 11:54:33 +0200
+Message-ID: <20240411095426.821075674@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -52,128 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit f2f26b4a84a0ef41791bd2d70861c8eac748f4ba ]
+[ Upstream commit 584c2a9184a33a40fceee838f856de3cffa19be3 ]
 
-Patch series "nilfs2: fix kernel bug at submit_bh_wbc()".
+smp_call_function_single disables IRQs when executing the callback. To
+prevent deadlocks, we must disable IRQs when taking cgr_lock elsewhere.
+This is already done by qman_update_cgr and qman_delete_cgr; fix the
+other lockers.
 
-This resolves a kernel BUG reported by syzbot.  Since there are two
-flaws involved, I've made each one a separate patch.
-
-The first patch alone resolves the syzbot-reported bug, but I think
-both fixes should be sent to stable, so I've tagged them as such.
-
-This patch (of 2):
-
-Syzbot has reported a kernel bug in submit_bh_wbc() when writing file data
-to a nilfs2 file system whose metadata is corrupted.
-
-There are two flaws involved in this issue.
-
-The first flaw is that when nilfs_get_block() locates a data block using
-btree or direct mapping, if the disk address translation routine
-nilfs_dat_translate() fails with internal code -ENOENT due to DAT metadata
-corruption, it can be passed back to nilfs_get_block().  This causes
-nilfs_get_block() to misidentify an existing block as non-existent,
-causing both data block lookup and insertion to fail inconsistently.
-
-The second flaw is that nilfs_get_block() returns a successful status in
-this inconsistent state.  This causes the caller __block_write_begin_int()
-or others to request a read even though the buffer is not mapped,
-resulting in a BUG_ON check for the BH_Mapped flag in submit_bh_wbc()
-failing.
-
-This fixes the first issue by changing the return value to code -EINVAL
-when a conversion using DAT fails with code -ENOENT, avoiding the
-conflicting condition that leads to the kernel bug described above.  Here,
-code -EINVAL indicates that metadata corruption was detected during the
-block lookup, which will be properly handled as a file system error and
-converted to -EIO when passing through the nilfs2 bmap layer.
-
-Link: https://lkml.kernel.org/r/20240313105827.5296-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20240313105827.5296-2-konishi.ryusuke@gmail.com
-Fixes: c3a7abf06ce7 ("nilfs2: support contiguous lookup of blocks")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+cfed5b56649bddf80d6e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cfed5b56649bddf80d6e
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 96f413f47677 ("soc/fsl/qbman: fix issue in qman_delete_cgr_safe()")
+CC: stable@vger.kernel.org
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Camelia Groza <camelia.groza@nxp.com>
+Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/btree.c  | 9 +++++++--
- fs/nilfs2/direct.c | 9 +++++++--
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/soc/fsl/qbman/qman.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nilfs2/btree.c b/fs/nilfs2/btree.c
-index a0e37530dcf30..1ab5db17e8248 100644
---- a/fs/nilfs2/btree.c
-+++ b/fs/nilfs2/btree.c
-@@ -724,7 +724,7 @@ static int nilfs_btree_lookup_contig(const struct nilfs_bmap *btree,
- 		dat = nilfs_bmap_get_dat(btree);
- 		ret = nilfs_dat_translate(dat, ptr, &blocknr);
- 		if (ret < 0)
--			goto out;
-+			goto dat_error;
- 		ptr = blocknr;
- 	}
- 	cnt = 1;
-@@ -743,7 +743,7 @@ static int nilfs_btree_lookup_contig(const struct nilfs_bmap *btree,
- 			if (dat) {
- 				ret = nilfs_dat_translate(dat, ptr2, &blocknr);
- 				if (ret < 0)
--					goto out;
-+					goto dat_error;
- 				ptr2 = blocknr;
- 			}
- 			if (ptr2 != ptr + cnt || ++cnt == maxblocks)
-@@ -782,6 +782,11 @@ static int nilfs_btree_lookup_contig(const struct nilfs_bmap *btree,
-  out:
- 	nilfs_btree_free_path(path);
+diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
+index 95f9e48052452..53b4cd0fb662d 100644
+--- a/drivers/soc/fsl/qbman/qman.c
++++ b/drivers/soc/fsl/qbman/qman.c
+@@ -1461,11 +1461,11 @@ static void qm_congestion_task(struct work_struct *work)
+ 	union qm_mc_result *mcr;
+ 	struct qman_cgr *cgr;
+ 
+-	spin_lock(&p->cgr_lock);
++	spin_lock_irq(&p->cgr_lock);
+ 	qm_mc_start(&p->p);
+ 	qm_mc_commit(&p->p, QM_MCC_VERB_QUERYCONGESTION);
+ 	if (!qm_mc_result_timeout(&p->p, &mcr)) {
+-		spin_unlock(&p->cgr_lock);
++		spin_unlock_irq(&p->cgr_lock);
+ 		dev_crit(p->config->dev, "QUERYCONGESTION timeout\n");
+ 		qman_p_irqsource_add(p, QM_PIRQ_CSCI);
+ 		return;
+@@ -1481,7 +1481,7 @@ static void qm_congestion_task(struct work_struct *work)
+ 	list_for_each_entry(cgr, &p->cgr_cbs, node)
+ 		if (cgr->cb && qman_cgrs_get(&c, cgr->cgrid))
+ 			cgr->cb(p, cgr, qman_cgrs_get(&rr, cgr->cgrid));
+-	spin_unlock(&p->cgr_lock);
++	spin_unlock_irq(&p->cgr_lock);
+ 	qman_p_irqsource_add(p, QM_PIRQ_CSCI);
+ }
+ 
+@@ -2438,7 +2438,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
+ 	preempt_enable();
+ 
+ 	cgr->chan = p->config->channel;
+-	spin_lock(&p->cgr_lock);
++	spin_lock_irq(&p->cgr_lock);
+ 
+ 	if (opts) {
+ 		struct qm_mcc_initcgr local_opts = *opts;
+@@ -2475,7 +2475,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
+ 	    qman_cgrs_get(&p->cgrs[1], cgr->cgrid))
+ 		cgr->cb(p, cgr, 1);
+ out:
+-	spin_unlock(&p->cgr_lock);
++	spin_unlock_irq(&p->cgr_lock);
+ 	put_affine_portal();
  	return ret;
-+
-+ dat_error:
-+	if (ret == -ENOENT)
-+		ret = -EINVAL;  /* Notify bmap layer of metadata corruption */
-+	goto out;
  }
- 
- static void nilfs_btree_promote_key(struct nilfs_bmap *btree,
-diff --git a/fs/nilfs2/direct.c b/fs/nilfs2/direct.c
-index 533e24ea3a88d..8d769c5dd5dc6 100644
---- a/fs/nilfs2/direct.c
-+++ b/fs/nilfs2/direct.c
-@@ -66,7 +66,7 @@ static int nilfs_direct_lookup_contig(const struct nilfs_bmap *direct,
- 		dat = nilfs_bmap_get_dat(direct);
- 		ret = nilfs_dat_translate(dat, ptr, &blocknr);
- 		if (ret < 0)
--			return ret;
-+			goto dat_error;
- 		ptr = blocknr;
- 	}
- 
-@@ -79,7 +79,7 @@ static int nilfs_direct_lookup_contig(const struct nilfs_bmap *direct,
- 		if (dat) {
- 			ret = nilfs_dat_translate(dat, ptr2, &blocknr);
- 			if (ret < 0)
--				return ret;
-+				goto dat_error;
- 			ptr2 = blocknr;
- 		}
- 		if (ptr2 != ptr + cnt)
-@@ -87,6 +87,11 @@ static int nilfs_direct_lookup_contig(const struct nilfs_bmap *direct,
- 	}
- 	*ptrp = ptr;
- 	return cnt;
-+
-+ dat_error:
-+	if (ret == -ENOENT)
-+		ret = -EINVAL;  /* Notify bmap layer of metadata corruption */
-+	return ret;
- }
- 
- static __u64
 -- 
 2.43.0
 
