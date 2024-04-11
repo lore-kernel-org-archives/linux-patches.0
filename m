@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838571474B0;
-	Thu, 11 Apr 2024 10:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E342EAE5;
+	Thu, 11 Apr 2024 10:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832133; cv=none; b=pdJMj6XZ7FtZtnG5rK37J2IZANVWb10kLGUvO4PDaUIrOFW/qpJpGze0L87btX5vy0SuWz9R4bYw+FRTHIZAQHauyORqs8m/8kd+RBXjl5/ftGAgWMVbiek1ty+WFTbXQAQGqRLHKD+Tv18dtTe1zTthvLutiZGGVdBQLg2ZMFs=
+	t=1712832136; cv=none; b=WfFtgqOB6OSfpp3+HmuJNCp/o0nJwKHDz0W1owJ8j9zVMnSroLRYaJhwwoy/PZU8iah8FMY8W6kT22CLQj8HJDhFhlmMl3X/tcKx3nE0WMKJ/RGXUCq7mgWz3JYtt0xkL8ElwvjBkVHC48F2XXq6C8Qm9utRpePUmzh+C6A/dsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832133; c=relaxed/simple;
-	bh=H/DI7RwuIdJlRMftocURoonEJsHtqtxaJkocpYEzq9A=;
+	s=arc-20240116; t=1712832136; c=relaxed/simple;
+	bh=9YI7ZPpSleJ7mzgUZejWQFQKx8m4T2JXF9664DbuLoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQ/YMo1PxZTlHM94TOWsEfEt40i5diUGeED0HbwtTOsBvrKPJD4Ep1b3zJ4P4+/Sz1Lsh8yXF8nn5DQmrVPfbkHC4DNq3qTA9wES8VQOxzmQ8BtLoZ/VFEs4BdozcuMqDEkgRYrQBDK6oynXz2auI/xipRBg3uFWwCf/pydli3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJXC5SpP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WJ7SHRiBQaJyBnmRzJmkJ1o8muLZrhIQLc2iSL9/r2PijOeG1KcXVGLvMUTId6RjqWoVFDzuB4qHw+DlmUvBJ12+kcbuanIAtINFhc3MTkDM49RZGeC/gtNcPdE6biGjCcfZQPIHzNdRZ5beneOIfV/j0eqZIxo2uw45Pge9WRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mAqglkjF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJXC5SpP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D5BC433C7;
-	Thu, 11 Apr 2024 10:42:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAqglkjF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB876C433C7;
+	Thu, 11 Apr 2024 10:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832133;
-	bh=H/DI7RwuIdJlRMftocURoonEJsHtqtxaJkocpYEzq9A=;
+	s=korg; t=1712832136;
+	bh=9YI7ZPpSleJ7mzgUZejWQFQKx8m4T2JXF9664DbuLoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJXC5SpPvV3sQPTOJiQ4+ndMMItGyB7bItWl6oQlGLztxt/pwzmh0swo0n5LUaE+P
-	 HLCLrpF5EWv06mTxeQScSqtfub0GyPGY5ufLi/FLsRLN43BXGV4/BIWvE1y/kDzI1R
-	 KzVSpWTkBQGSGV1no3Li+I9i/Ft9XLcfb4KDt1IU=
+	b=mAqglkjFyXw3JClwgedb2ZX3+aCzTcDnA898NnFhmSbDjWStOjfNFaGbrl7TywEDc
+	 4Wj+6HMsf5qDyb+NzXhNpJMujuk6K/zQREW4XGVR0vI4h7zdHx4j9q7byuvqmJ+4M+
+	 /NlsIHpfr1OTtSx4Dm52MhwKaqSpwv1Mz5W6Ag9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
 	Daniel Sneddon <daniel.sneddon@linux.intel.com>
-Subject: [PATCH 5.10 241/294] x86/cpufeatures: Add CPUID_LNX_5 to track recently added Linux-defined word
-Date: Thu, 11 Apr 2024 11:56:44 +0200
-Message-ID: <20240411095442.829808083@linuxfoundation.org>
+Subject: [PATCH 5.10 242/294] objtool: Add asm version of STACK_FRAME_NON_STANDARD
+Date: Thu, 11 Apr 2024 11:56:45 +0200
+Message-ID: <20240411095442.858518783@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -53,60 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Josh Poimboeuf <jpoimboe@redhat.com>
 
-commit 8cb4a9a82b21623dbb4b3051dd30d98356cf95bc upstream.
+commit 081df94301e317e84c3413686043987da2c3e39d upstream.
 
-Add CPUID_LNX_5 to track cpufeatures' word 21, and add the appropriate
-compile-time assert in KVM to prevent direct lookups on the features in
-CPUID_LNX_5.  KVM uses X86_FEATURE_* flags to manage guest CPUID, and so
-must translate features that are scattered by Linux from the Linux-defined
-bit to the hardware-defined bit, i.e. should never try to directly access
-scattered features in guest CPUID.
+To be used for adding asm functions to the ignore list.  The "aw" is
+needed to help the ELF section metadata match GCC-created sections.
+Otherwise the linker creates duplicate sections instead of combining
+them.
 
-Opportunistically add NR_CPUID_WORDS to enum cpuid_leafs, along with a
-compile-time assert in KVM's CPUID infrastructure to ensure that future
-additions update cpuid_leafs along with NCAPINTS.
-
-No functional change intended.
-
-Fixes: 7f274e609f3d ("x86/cpufeatures: Add new word for scattered features")
-Cc: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Josh Poimboeuf <jpoimboe@redhat.com>
+Link: https://lore.kernel.org/r/8faa476f9a5ac89af27944ec184c89f95f3c6c49.1611263462.git.jpoimboe@redhat.com
 Signed-off-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpufeature.h |    2 ++
- arch/x86/kvm/cpuid.h              |    2 ++
- 2 files changed, 4 insertions(+)
+ include/linux/objtool.h       |    8 ++++++++
+ tools/include/linux/objtool.h |    8 ++++++++
+ 2 files changed, 16 insertions(+)
 
---- a/arch/x86/include/asm/cpufeature.h
-+++ b/arch/x86/include/asm/cpufeature.h
-@@ -33,6 +33,8 @@ enum cpuid_leafs
- 	CPUID_7_EDX,
- 	CPUID_8000_001F_EAX,
- 	CPUID_8000_0021_EAX,
-+	CPUID_LNX_5,
-+	NR_CPUID_WORDS,
- };
+--- a/include/linux/objtool.h
++++ b/include/linux/objtool.h
+@@ -141,6 +141,12 @@ struct unwind_hint {
+ 	.popsection
+ .endm
  
- #ifdef CONFIG_X86_FEATURE_NAMES
---- a/arch/x86/kvm/cpuid.h
-+++ b/arch/x86/kvm/cpuid.h
-@@ -76,10 +76,12 @@ static const struct cpuid_reg reverse_cp
-  */
- static __always_inline void reverse_cpuid_check(unsigned int x86_leaf)
- {
-+	BUILD_BUG_ON(NR_CPUID_WORDS != NCAPINTS);
- 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_1);
- 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_2);
- 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_3);
- 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_4);
-+	BUILD_BUG_ON(x86_leaf == CPUID_LNX_5);
- 	BUILD_BUG_ON(x86_leaf >= ARRAY_SIZE(reverse_cpuid));
- 	BUILD_BUG_ON(reverse_cpuid[x86_leaf].function == 0);
- }
++.macro STACK_FRAME_NON_STANDARD func:req
++	.pushsection .discard.func_stack_frame_non_standard, "aw"
++		.long \func - .
++	.popsection
++.endm
++
+ #endif /* __ASSEMBLY__ */
+ 
+ #else /* !CONFIG_STACK_VALIDATION */
+@@ -158,6 +164,8 @@ struct unwind_hint {
+ .endm
+ .macro ANNOTATE_NOENDBR
+ .endm
++.macro STACK_FRAME_NON_STANDARD func:req
++.endm
+ #endif
+ 
+ #endif /* CONFIG_STACK_VALIDATION */
+--- a/tools/include/linux/objtool.h
++++ b/tools/include/linux/objtool.h
+@@ -141,6 +141,12 @@ struct unwind_hint {
+ 	.popsection
+ .endm
+ 
++.macro STACK_FRAME_NON_STANDARD func:req
++	.pushsection .discard.func_stack_frame_non_standard, "aw"
++		.long \func - .
++	.popsection
++.endm
++
+ #endif /* __ASSEMBLY__ */
+ 
+ #else /* !CONFIG_STACK_VALIDATION */
+@@ -158,6 +164,8 @@ struct unwind_hint {
+ .endm
+ .macro ANNOTATE_NOENDBR
+ .endm
++.macro STACK_FRAME_NON_STANDARD func:req
++.endm
+ #endif
+ 
+ #endif /* CONFIG_STACK_VALIDATION */
 
 
