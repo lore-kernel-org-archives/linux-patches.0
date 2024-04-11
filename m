@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5259F13E897;
-	Thu, 11 Apr 2024 10:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F2F13E897;
+	Thu, 11 Apr 2024 10:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830683; cv=none; b=rpBvFEJWKi5KrIhjwAN/LA0QbTxD3PQN2sJA+pQDNfVMIGnNrGGD2QSkUcKM26lJUnkQHDt43LVEt3V2ZvYnj9C4z/h3+ply70UMEOCtnq0vov63WrYV/v3trUIGZIsV7JPEWDh7ms68qZd6HrUofx9djrZmA75d169MQIltQr0=
+	t=1712830686; cv=none; b=exNTCgFgAqUdmnCINYQH+VmWkR/XEKY6Qr4eztb2hkaVwsWpwN/axahcVeBMeAuK3g3DdW1IMswjl4P87i99aqTW19EC1T6Xy1gicPmv+qmjHDW7p7/XsBsjIk2WlE+NHQsiyML1VJ9nWSq/0XJNTR3mkLTmOKV/1d3vPaM+5Z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830683; c=relaxed/simple;
-	bh=+K0TqwW6UZ7hHFehbXi1ELh+gYjjhMdwgDYrgOlDNmk=;
+	s=arc-20240116; t=1712830686; c=relaxed/simple;
+	bh=oPDJdsW3MKIv5b4ACCp3xP5/8GVmG6Y7/i0qCvDiezY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XB0C2+0VHUDTMNopLTYLv987H0qq0x+OjuabCmBuLSPh+2LsNhTI0ZebojUw07r0Oao3HIPrcA91uRI/mClCWXsddtBAIu0njlEckbWh3b1UF7D1Y8NgJAGhrpEqqVN6szMbl/jTxxVK4p6QavQKoHGggAcAXACzbHE4bBTQ8es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpgKUt2D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OyA4X0pAkeJVShEwBuun1qmw5LWcuLJnvc4j/iS/F5U5m15Wa0bPf1AeNuwoLWghSwOzqM+OSQPybV6gWjAGWluMk6TQV5Kal87T0fDpTM9BEl8ujsY5ld9fJvbcd3t7uWBpQU47PFhQ7Lf3ChMCUy6rOXjWM4C0ihUaDQtZl20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=un9+lBzT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpgKUt2D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E17C43390;
-	Thu, 11 Apr 2024 10:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="un9+lBzT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE97C43390;
+	Thu, 11 Apr 2024 10:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830682;
-	bh=+K0TqwW6UZ7hHFehbXi1ELh+gYjjhMdwgDYrgOlDNmk=;
+	s=korg; t=1712830685;
+	bh=oPDJdsW3MKIv5b4ACCp3xP5/8GVmG6Y7/i0qCvDiezY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DpgKUt2DXDG5uwbmEQdL22gA8xFyk8Zr0xR+lfwmKG4uGnR1kOvQwqiGEk8un0d5I
-	 ms438DywqBARMnDWYgzzZMU8aiSZAXOSXmdLhKqFpBFEIttJBYEYEZmg7bSEg6h6z/
-	 6zhlYsP+GmUJ62Kz50CSzBi28snBC3v/kr9PlVDI=
+	b=un9+lBzTdf9dD6ePxNwvkgbFQWRGKpJaDsgp2clKSczyvVADpYVdU3G2pPyaOWh6V
+	 QOGlgBYsnjgWE7x4ekj/ppbIpm0qdPsMjHZ9RgzkWrL3kFzpY8+X9KXuwP0STwsgS3
+	 G3+4kM9ktYI8we1mV/wSyF4JZMC1SuZHQS3mWdgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.4 083/215] netfilter: nf_tables: reject constant set with timeout
-Date: Thu, 11 Apr 2024 11:54:52 +0200
-Message-ID: <20240411095427.403173552@linuxfoundation.org>
+	Sean Anderson <sean.anderson@seco.com>,
+	Camelia Groza <camelia.groza@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 066/215] soc: fsl: qbman: Add CGR update function
+Date: Thu, 11 Apr 2024 11:54:35 +0200
+Message-ID: <20240411095426.882339796@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -49,34 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Sean Anderson <sean.anderson@seco.com>
 
-commit 5f4fc4bd5cddb4770ab120ce44f02695c4505562 upstream.
+[ Upstream commit 914f8b228ede709274b8c80514b352248ec9da00 ]
 
-This set combination is weird: it allows for elements to be
-added/deleted, but once bound to the rule it cannot be updated anymore.
-Eventually, all elements expire, leading to an empty set which cannot
-be updated anymore. Reject this flags combination.
+This adds a function to update a CGR with new parameters. qman_create_cgr
+can almost be used for this (with flags=0), but it's not suitable because
+it also registers the callback function. The _safe variant was modeled off
+of qman_cgr_delete_safe. However, we handle multiple arguments and a return
+value.
 
-Cc: stable@vger.kernel.org
-Fixes: 761da2935d6e ("netfilter: nf_tables: add set timeout API support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sean Anderson <sean.anderson@seco.com>
+Acked-by: Camelia Groza <camelia.groza@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: fbec4e7fed89 ("soc: fsl: qbman: Use raw spinlock for cgr_lock")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/soc/fsl/qbman/qman.c | 48 ++++++++++++++++++++++++++++++++++++
+ include/soc/fsl/qman.h       |  9 +++++++
+ 2 files changed, 57 insertions(+)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3772,6 +3772,9 @@ static int nf_tables_newset(struct net *
- 		if ((flags & (NFT_SET_ANONYMOUS | NFT_SET_TIMEOUT | NFT_SET_EVAL)) ==
- 			     (NFT_SET_ANONYMOUS | NFT_SET_TIMEOUT))
- 			return -EOPNOTSUPP;
-+		if ((flags & (NFT_SET_CONSTANT | NFT_SET_TIMEOUT)) ==
-+			     (NFT_SET_CONSTANT | NFT_SET_TIMEOUT))
-+			return -EOPNOTSUPP;
- 	}
+diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
+index e31d33d000526..52327f0dab986 100644
+--- a/drivers/soc/fsl/qbman/qman.c
++++ b/drivers/soc/fsl/qbman/qman.c
+@@ -2566,6 +2566,54 @@ void qman_delete_cgr_safe(struct qman_cgr *cgr)
+ }
+ EXPORT_SYMBOL(qman_delete_cgr_safe);
  
- 	dtype = 0;
++static int qman_update_cgr(struct qman_cgr *cgr, struct qm_mcc_initcgr *opts)
++{
++	int ret;
++	unsigned long irqflags;
++	struct qman_portal *p = qman_cgr_get_affine_portal(cgr);
++
++	if (!p)
++		return -EINVAL;
++
++	spin_lock_irqsave(&p->cgr_lock, irqflags);
++	ret = qm_modify_cgr(cgr, 0, opts);
++	spin_unlock_irqrestore(&p->cgr_lock, irqflags);
++	put_affine_portal();
++	return ret;
++}
++
++struct update_cgr_params {
++	struct qman_cgr *cgr;
++	struct qm_mcc_initcgr *opts;
++	int ret;
++};
++
++static void qman_update_cgr_smp_call(void *p)
++{
++	struct update_cgr_params *params = p;
++
++	params->ret = qman_update_cgr(params->cgr, params->opts);
++}
++
++int qman_update_cgr_safe(struct qman_cgr *cgr, struct qm_mcc_initcgr *opts)
++{
++	struct update_cgr_params params = {
++		.cgr = cgr,
++		.opts = opts,
++	};
++
++	preempt_disable();
++	if (qman_cgr_cpus[cgr->cgrid] != smp_processor_id())
++		smp_call_function_single(qman_cgr_cpus[cgr->cgrid],
++					 qman_update_cgr_smp_call, &params,
++					 true);
++	else
++		params.ret = qman_update_cgr(cgr, opts);
++	preempt_enable();
++	return params.ret;
++}
++EXPORT_SYMBOL(qman_update_cgr_safe);
++
+ /* Cleanup FQs */
+ 
+ static int _qm_mr_consume_and_match_verb(struct qm_portal *p, int v)
+diff --git a/include/soc/fsl/qman.h b/include/soc/fsl/qman.h
+index aa31c05a103ad..f9c622027d852 100644
+--- a/include/soc/fsl/qman.h
++++ b/include/soc/fsl/qman.h
+@@ -1159,6 +1159,15 @@ int qman_delete_cgr(struct qman_cgr *cgr);
+  */
+ void qman_delete_cgr_safe(struct qman_cgr *cgr);
+ 
++/**
++ * qman_update_cgr_safe - Modifies a congestion group object from any CPU
++ * @cgr: the 'cgr' object to modify
++ * @opts: state of the CGR settings
++ *
++ * This will select the proper CPU and modify the CGR settings.
++ */
++int qman_update_cgr_safe(struct qman_cgr *cgr, struct qm_mcc_initcgr *opts);
++
+ /**
+  * qman_query_cgr_congested - Queries CGR's congestion status
+  * @cgr: the 'cgr' object to query
+-- 
+2.43.0
+
 
 
