@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F301145B1A;
-	Thu, 11 Apr 2024 10:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59F714600E;
+	Thu, 11 Apr 2024 10:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831076; cv=none; b=Vrm7eOdGkWPuMnbUfDzfm1LU0ZH6RAmgufblaVEvUWBkBYUyRrW9Cd6upMzZ0hCrrHZSwWh2C8ztrIaWOWCmYsjSBA0i5pkt7aBKONCPo8MmN/zhqJ52XFLHuKICz9ZQ3qup3LZ6t6RRUv9/u7qflBiruqObYTkYsyKMzxDz/nw=
+	t=1712831079; cv=none; b=XrWBD+olkZdINvk0JnfKx/mJ1eVNCGAt1MnBYKvpZ+2a8pZAqXxB3DHUPr1cU0hXFuH21S4MbXGnuh2Tdd18a82Hu8JWhEAwbI9kRBr1+l5L2cVgoW1dQPr8wd5G/NPZDhvGVTr7WWp2DMLbgmFAkwO+vzvtU/sdmQouwljJz5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831076; c=relaxed/simple;
-	bh=RA+e22XWW9HiXLzEXpECSi/XckXvBdmbwq8nS4S3p8Q=;
+	s=arc-20240116; t=1712831079; c=relaxed/simple;
+	bh=fSqc5PZHJVXCxX98xwzsi5QrLE7JoUejIAcyIyVbrrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DtXPOvk84qa1SqnnkhB8NdGlKYHyIQjG2bLhZW0D+nR4xaHfjfT/s6QaUYjeRIbW7b0aRmjjKWZ0m+3QWBI7vvoVE/zCR2aJbFW+ytqer5lIMMnpYGns42ZGjIjsHigJa5l8DFm/VeH8nTc85AB4nbvGRaJb1TJnbuDg6P0wJZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKgyZFyW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K0Le8dEQT0qZ3IGh9jQFXo8xl4Jfuq0BSB2PI+cVnM06llfHgBwcLJkFOUQjELkFbE+EvM8mxH6g74UMVjjZICg0bD/KmaWKcrm7PprzPR/BAMHstRssrukioxdCH92RTT6BO3guzc5yLHV8TaozVe5+PPKQ8FTWIQHifO1wO1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eyc3gPiZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKgyZFyW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800BEC433C7;
-	Thu, 11 Apr 2024 10:24:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eyc3gPiZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6B3C43394;
+	Thu, 11 Apr 2024 10:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831075;
-	bh=RA+e22XWW9HiXLzEXpECSi/XckXvBdmbwq8nS4S3p8Q=;
+	s=korg; t=1712831078;
+	bh=fSqc5PZHJVXCxX98xwzsi5QrLE7JoUejIAcyIyVbrrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lKgyZFyW2fvKmhTJzOyLkNnBT1XeQTypCFVoD8USLU/hUcV7vqUBAg4qyryvz5ANH
-	 Z1fgbHQ88tGGuLKQ/vFOF/AtwJdW1Rgue0IhMzhdWC7zQlBh+lNttDr+gcdbfUBhPe
-	 v7np8BI/aPkjnuyV23z5eHRIDrW0mBf0N2C2lAQY=
+	b=Eyc3gPiZ8qaOGmBEKBoIHRKShQ7fz36Cw6TK9Vb0MxVKoS1WlAE2UGBYz82E6A/Ya
+	 /gISQLIhyhwIf47WcP/hP9v4sCTGT3jZ3yy/D2NHAC9m4dLf0EG7MREyAfFpnyhqHT
+	 6xnEQ+naqx05dyAZc7Bq9fuXvFlaa+kdoY8GqDlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 5.4 215/215] firmware: meson_sm: fix to avoid potential NULL pointer dereference
-Date: Thu, 11 Apr 2024 11:57:04 +0200
-Message-ID: <20240411095431.324173590@linuxfoundation.org>
+	Dai Ngo <dai.ngo@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 191/215] SUNRPC: increase size of rpc_wait_queue.qlen from unsigned short to unsigned int
+Date: Thu, 11 Apr 2024 11:56:40 +0200
+Message-ID: <20240411095430.604371983@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -50,34 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-commit f2ed165619c16577c02b703a114a1f6b52026df4 upstream.
+[ Upstream commit 2c35f43b5a4b9cdfaa6fdd946f5a212615dac8eb ]
 
-of_match_device() may fail and returns a NULL pointer.
+When the NFS client is under extreme load the rpc_wait_queue.qlen counter
+can be overflowed. Here is an instant of the backlog queue overflow in a
+real world environment shown by drgn helper:
 
-Fix this by checking the return value of of_match_device.
+rpc_task_stats(rpc_clnt):
+-------------------------
+rpc_clnt: 0xffff92b65d2bae00
+rpc_xprt: 0xffff9275db64f000
+  Queue:  sending[64887] pending[524] backlog[30441] binding[0]
+XMIT task: 0xffff925c6b1d8e98
+     WRITE: 750654
+        __dta_call_status_580: 65463
+        __dta_call_transmit_status_579: 1
+        call_reserveresult: 685189
+        nfs_client_init_is_complete: 1
+    COMMIT: 584
+        call_reserveresult: 573
+        __dta_call_status_580: 11
+    ACCESS: 1
+        __dta_call_status_580: 1
+   GETATTR: 10
+        __dta_call_status_580: 4
+        call_reserveresult: 6
+751249 tasks for server 111.222.333.444
+Total tasks: 751249
 
-Fixes: 8cde3c2153e8 ("firmware: meson_sm: Rework driver as a proper platform driver")
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/tencent_AA08AAA6C4F34D53ADCE962E188A879B8206@qq.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+count_rpc_wait_queues(xprt):
+----------------------------
+**** rpc_xprt: 0xffff9275db64f000 num_reqs: 65511
+wait_queue: xprt_binding[0] cnt: 0
+wait_queue: xprt_binding[1] cnt: 0
+wait_queue: xprt_binding[2] cnt: 0
+wait_queue: xprt_binding[3] cnt: 0
+rpc_wait_queue[xprt_binding].qlen: 0 maxpriority: 0
+wait_queue: xprt_sending[0] cnt: 0
+wait_queue: xprt_sending[1] cnt: 64887
+wait_queue: xprt_sending[2] cnt: 0
+wait_queue: xprt_sending[3] cnt: 0
+rpc_wait_queue[xprt_sending].qlen: 64887 maxpriority: 3
+wait_queue: xprt_pending[0] cnt: 524
+wait_queue: xprt_pending[1] cnt: 0
+wait_queue: xprt_pending[2] cnt: 0
+wait_queue: xprt_pending[3] cnt: 0
+rpc_wait_queue[xprt_pending].qlen: 524 maxpriority: 0
+wait_queue: xprt_backlog[0] cnt: 0
+wait_queue: xprt_backlog[1] cnt: 685801
+wait_queue: xprt_backlog[2] cnt: 0
+wait_queue: xprt_backlog[3] cnt: 0
+rpc_wait_queue[xprt_backlog].qlen: 30441 maxpriority: 3 [task cnt mismatch]
+
+There is no effect on operations when this overflow occurs. However
+it causes confusion when trying to diagnose the performance problem.
+
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/meson/meson_sm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/sunrpc/sched.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/firmware/meson/meson_sm.c
-+++ b/drivers/firmware/meson/meson_sm.c
-@@ -302,6 +302,8 @@ static int __init meson_sm_probe(struct
- 		return -ENOMEM;
- 
- 	chip = of_match_device(meson_sm_ids, dev)->data;
-+	if (!chip)
-+		return -EINVAL;
- 
- 	if (chip->cmd_shmem_in_base) {
- 		fw->sm_shmem_in_base = meson_sm_map_shmem(chip->cmd_shmem_in_base,
+diff --git a/include/linux/sunrpc/sched.h b/include/linux/sunrpc/sched.h
+index 5c37fabdec103..61de83be9cc27 100644
+--- a/include/linux/sunrpc/sched.h
++++ b/include/linux/sunrpc/sched.h
+@@ -196,7 +196,7 @@ struct rpc_wait_queue {
+ 	unsigned char		maxpriority;		/* maximum priority (0 if queue is not a priority queue) */
+ 	unsigned char		priority;		/* current priority */
+ 	unsigned char		nr;			/* # tasks remaining for cookie */
+-	unsigned short		qlen;			/* total # tasks waiting in queue */
++	unsigned int		qlen;			/* total # tasks waiting in queue */
+ 	struct rpc_timer	timer_list;
+ #if IS_ENABLED(CONFIG_SUNRPC_DEBUG) || IS_ENABLED(CONFIG_TRACEPOINTS)
+ 	const char *		name;
+-- 
+2.43.0
+
 
 
