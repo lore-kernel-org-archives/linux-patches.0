@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363EF79FD;
-	Thu, 11 Apr 2024 10:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D83079FD;
+	Thu, 11 Apr 2024 10:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832647; cv=none; b=pkniabOKpyVfzbeXPlMjfFDZSWpMgSGfjEe7lEfWLqKOVTBPaAoZdTUHIdazZaiX+y7ZKYKSLWn2RjemsT3npNawr/n9QgJgoje/WyAO7Z9R4+6o8CQavfqeVwjlLpucgmxu2V7oIloKppvMMFUrth1WeYsUWVnNadOfnI1DC9U=
+	t=1712832650; cv=none; b=YhIw71acY0tommtFL3MKGnq00PKssmNwy0jBp0ULbUHA6x5afwojJGYRYGkCrnP9oGLI2AfrGy5tUf85wYKYBIXu221ZKhruCSg6PYJUMdQPgbgMmOXRto3IPTB90EsQRAk0X5hQZTNtdun1bWkCnaLK/Vq98VWWCZfpMB0nVe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832647; c=relaxed/simple;
-	bh=4k/po7iVgBaFOHrBwnXbImAjReD0OdaoLFMJCf0iCAw=;
+	s=arc-20240116; t=1712832650; c=relaxed/simple;
+	bh=Oavl+aukklXJUEE9tfjr1UXq38hFGyBY4LDvL9CGCAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QAeJXIDJYzP16KDbjvwCbU1nRKlY1ZXnO45kW1sz+Pai09bCf8LwjD2tVGEXpEB6jaerzd45a/Awmw7++D5xl8HyhWD+7qs2gZAPqnoc2mcs4JSbo6Q3kkARamiCPLSPCj55IPb0/BEzVgeFAQcNlClWuJyDJUu0feLav7dy5Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DbYtVA3K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UgDZNctPM8ys3whR4QMvJbUIVKQn/0Dkpz4M6eWkySsvHHJDqVAzQ7klNlkHAbwTJVdEphtUJN6yVp5Gi6QEFfWLQfnkFOn2gcFI+w68rw/aza/Qsl2AWftDsmotdCCxbjWJ8e1voMJlJBUR0y/oF14ICRlpouT6SlFqJr+/g/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hkC+4tYZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DbYtVA3K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3277C433F1;
-	Thu, 11 Apr 2024 10:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hkC+4tYZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9905EC43390;
+	Thu, 11 Apr 2024 10:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832647;
-	bh=4k/po7iVgBaFOHrBwnXbImAjReD0OdaoLFMJCf0iCAw=;
+	s=korg; t=1712832650;
+	bh=Oavl+aukklXJUEE9tfjr1UXq38hFGyBY4LDvL9CGCAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DbYtVA3KWUQrvN/6669VzZ32WVuZknhA5wiFtDXrfSKHNs6u7oqntlDc68ujDaOt5
-	 bDYx++JXOBocViJEa8GJ/RaoNRQiRZkUPiMR2RD63xBpSw8r2iyjEtXqYXV+w3Jhk/
-	 D8zIa+573gZl86udOQJDyX96b3ekw9mmWb3dDK1M=
+	b=hkC+4tYZ98+AXT3HDP26fjNgRZsbMJ/HAsg0B1hQY3tgZE77IVJPGK6X9I4CeyCS/
+	 JqgBcAgXRS79BNTVcMnFPf6M6sp5ZXq1h2jJN1vLpfV5D/wbzwumTxNAnqQCiYQkkh
+	 6vJlnQmyX/dClx0tfNIx6lC3lF0ogJSAaxZ3mfps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gergo Koteles <soyer@irl.hu>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	=?UTF-8?q?Alban=20Boy=C3=A9?= <alban.boye@protonmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 35/57] Input: allocate keycode for Display refresh rate toggle
-Date: Thu, 11 Apr 2024 11:57:43 +0200
-Message-ID: <20240411095409.056471861@linuxfoundation.org>
+Subject: [PATCH 5.15 36/57] platform/x86: touchscreen_dmi: Add an extra entry for a variant of the Chuwi Vi8 tablet
+Date: Thu, 11 Apr 2024 11:57:44 +0200
+Message-ID: <20240411095409.086043464@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095407.982258070@linuxfoundation.org>
 References: <20240411095407.982258070@linuxfoundation.org>
@@ -53,38 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gergo Koteles <soyer@irl.hu>
+From: Alban Boyé <alban.boye@protonmail.com>
 
-[ Upstream commit cfeb98b95fff25c442f78a6f616c627bc48a26b7 ]
+[ Upstream commit 1266e2efb7512dbf20eac820ca2ed34de6b1c3e7 ]
 
-Newer Lenovo Yogas and Legions with 60Hz/90Hz displays send a wmi event
-when Fn + R is pressed. This is intended for use to switch between the
-two refresh rates.
-
-Allocate a new KEY_REFRESH_RATE_TOGGLE keycode for it.
-
-Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://lore.kernel.org/r/15a5d08c84cf4d7b820de34ebbcf8ae2502fb3ca.1710065750.git.soyer@irl.hu
+Signed-off-by: Alban Boyé <alban.boye@protonmail.com>
+Link: https://lore.kernel.org/r/20240227223919.11587-1-alban.boye@protonmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/input-event-codes.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/touchscreen_dmi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/include/uapi/linux/input-event-codes.h b/include/uapi/linux/input-event-codes.h
-index 7989d9483ea75..bed20a89c14c1 100644
---- a/include/uapi/linux/input-event-codes.h
-+++ b/include/uapi/linux/input-event-codes.h
-@@ -602,6 +602,7 @@
- 
- #define KEY_ALS_TOGGLE		0x230	/* Ambient light sensor */
- #define KEY_ROTATE_LOCK_TOGGLE	0x231	/* Display rotation lock */
-+#define KEY_REFRESH_RATE_TOGGLE	0x232	/* Display refresh rate toggle */
- 
- #define KEY_BUTTONCONFIG		0x240	/* AL Button Configuration */
- #define KEY_TASKMANAGER		0x241	/* AL Task/Project Manager */
+diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
+index 08a9b802be712..161bd19441042 100644
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -1153,6 +1153,15 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
+ 			DMI_MATCH(DMI_BIOS_VERSION, "CHUWI.D86JLBNR"),
+ 		},
+ 	},
++	{
++		/* Chuwi Vi8 dual-boot (CWI506) */
++		.driver_data = (void *)&chuwi_vi8_data,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Insyde"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "i86"),
++			DMI_MATCH(DMI_BIOS_VERSION, "CHUWI2.D86JHBNR02"),
++		},
++	},
+ 	{
+ 		/* Chuwi Vi8 Plus (CWI519) */
+ 		.driver_data = (void *)&chuwi_vi8_plus_data,
 -- 
 2.43.0
 
