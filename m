@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B112EAE5;
-	Thu, 11 Apr 2024 10:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704C22EAE5;
+	Thu, 11 Apr 2024 10:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832726; cv=none; b=I+ySbXDE7pSWx5UEmVjvXv7vaf+Ym89lDIIQ3LYPfxPy1DOqWNfOjE1F2WKCcJywoczVwRbY6VgSfpnPBc7uVr2wD6zagkpq3Ot6RNve2BO4E8Q9JAmfbkG9PmbRVbh6tEbSctEOCERc/9766UWY73d//PIuRr3Gm6OEiSjC2dI=
+	t=1712832729; cv=none; b=q+JC0NZ1A5puhs+hlTZNel0wZvq5D9tERVo/2zu+jLeURNzJpYyL3D0xYgfNvYOC5K3Yqn1zX70xJ/Adr516P1xs4XAdYd1nRdWWEL+bvvCINPhlbUDYSl16vcxYdkdK/z3Pm2YJGmcbMZBup+oaKz0Yf1C3Mp+NPHVnCh+IWH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832726; c=relaxed/simple;
-	bh=uAkr0ySvkRYzKebrUmc3r6nFL0irOF6SAkYks9Y+6EM=;
+	s=arc-20240116; t=1712832729; c=relaxed/simple;
+	bh=B7ogOxla0UhrcmBEIFXnMPeMuaO4OTkFqP3SLZSl+X4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AF90XdK8lt72tIWylAwr4op2v9O/EdlSRt+XQebyPVHxiay4BES8HejQmw1y7P72wmPZ0VdVdfK4sSaTBmSJmjNpCDcOQVq7Q0XWUKHXoXUSwdPLc3VD0gTLhGjcMlda79R9diT3f3KIOnM4Hnj8y4tigFwBLHx+MucmQV/H0M4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vr8GfMXU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b/mk2vpVXLxO3+7mGMok8qAbW9TA1mSJoRIZw3BdhKj1nEqAsbXN1uPKFOgAa2QvkdPkBGderHW4ZO7sVs12Tt/XNi5aeCCxFDajFn7kFsP54EHBVnDaR3SxgxuFAfRVBl2g4NPWjA5uLSohD9qUw5jYOJgADTxiSwxuGPMTfu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tn17eIGx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vr8GfMXU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01FBEC433C7;
-	Thu, 11 Apr 2024 10:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tn17eIGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA799C433C7;
+	Thu, 11 Apr 2024 10:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832726;
-	bh=uAkr0ySvkRYzKebrUmc3r6nFL0irOF6SAkYks9Y+6EM=;
+	s=korg; t=1712832729;
+	bh=B7ogOxla0UhrcmBEIFXnMPeMuaO4OTkFqP3SLZSl+X4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vr8GfMXUXFMWhMswv7mxSBlLTE+re/2VmpaNvNTeAWCzpEWJXNPAnPyW0HWMgRXyw
-	 /2RNM+fnve9EmcuGwA8dFbtip2h1nmz+Fn32ZzEeFQ2+CD2t2KmjKI2Ab3bvD7jDHm
-	 7Kneqi3rmsjKE+Mi45mRFf+G6ysBdF7ZDQ6a5WRU=
+	b=Tn17eIGxljdTd54hnv1ZHklVz1NmjxmIHk8yXSp7yvdkW9UpKvGfRs++qhA/1Xv7Y
+	 P39+FPBmohJa0HRm2n8IoLakFg5gF4EpUZEHxFqzS4xy5WE3dirRvTCWJtAr2RAfTd
+	 AQUmQsccvY53HnQyEBl2BvBhMpCJa3hb2YS+M3yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 13/57] net: pcs: xpcs: Return EINVAL in the internal methods
-Date: Thu, 11 Apr 2024 11:57:21 +0200
-Message-ID: <20240411095408.394354303@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.15 56/57] Bluetooth: btintel: Fixe build regression
+Date: Thu, 11 Apr 2024 11:58:04 +0200
+Message-ID: <20240411095409.683518103@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095407.982258070@linuxfoundation.org>
 References: <20240411095407.982258070@linuxfoundation.org>
@@ -52,51 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serge Semin <fancer.lancer@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit f5151005d379d9ce42e327fd3b2d2aaef61cda81 ]
+commit 6e62ebfb49eb65bdcbfc5797db55e0ce7f79c3dd upstream.
 
-In particular the xpcs_soft_reset() and xpcs_do_config() functions
-currently return -1 if invalid auto-negotiation mode is specified. That
-value might be then passed to the generic kernel subsystems which require
-a standard kernel errno value. Even though the erroneous conditions are
-very specific (memory corruption or buggy driver implementation) using a
-hard-coded -1 literal doesn't seem correct anyway especially when it comes
-to passing it higher to the network subsystem or printing to the system
-log.  Convert the hard-coded error values to -EINVAL then.
+This fixes the following build regression:
 
-Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
-Tested-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+drivers-bluetooth-btintel.c-btintel_read_version()-warn:
+passing-zero-to-PTR_ERR
+
+Fixes: b79e04091010 ("Bluetooth: btintel: Fix null ptr deref in btintel_read_version")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/pcs/pcs-xpcs.c | 4 ++--
+ drivers/bluetooth/btintel.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/pcs/pcs-xpcs.c b/drivers/net/pcs/pcs-xpcs.c
-index 556ca98843565..ab382496c3a83 100644
---- a/drivers/net/pcs/pcs-xpcs.c
-+++ b/drivers/net/pcs/pcs-xpcs.c
-@@ -242,7 +242,7 @@ static int xpcs_soft_reset(struct dw_xpcs *xpcs,
- 		dev = MDIO_MMD_VEND2;
- 		break;
- 	default:
--		return -1;
-+		return -EINVAL;
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -405,13 +405,13 @@ int btintel_read_version(struct hci_dev
+ 	struct sk_buff *skb;
+ 
+ 	skb = __hci_cmd_sync(hdev, 0xfc05, 0, NULL, HCI_CMD_TIMEOUT);
+-	if (IS_ERR_OR_NULL(skb)) {
++	if (IS_ERR(skb)) {
+ 		bt_dev_err(hdev, "Reading Intel version information failed (%ld)",
+ 			   PTR_ERR(skb));
+ 		return PTR_ERR(skb);
  	}
  
- 	ret = xpcs_write(xpcs, dev, MDIO_CTRL1, MDIO_CTRL1_RESET);
-@@ -808,7 +808,7 @@ int xpcs_do_config(struct dw_xpcs *xpcs, phy_interface_t interface,
- 			return ret;
- 		break;
- 	default:
--		return -1;
-+		return -EINVAL;
- 	}
- 
- 	if (compat->pma_config) {
--- 
-2.43.0
-
+-	if (skb->len != sizeof(*ver)) {
++	if (!skb || skb->len != sizeof(*ver)) {
+ 		bt_dev_err(hdev, "Intel version event size mismatch");
+ 		kfree_skb(skb);
+ 		return -EILSEQ;
 
 
