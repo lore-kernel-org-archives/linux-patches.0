@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3BC13DDDD;
-	Thu, 11 Apr 2024 09:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DAD213DDDD;
+	Thu, 11 Apr 2024 09:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829566; cv=none; b=IXCPdOsAtB6CRy4QV1f6uRWyxULpx5YCYYJ1FYSKAGE7+QsTXFnALRHP6NSMyIPte5CVDNCfa8SeoedOnzN/xYk+Q25Itsc7hcqTpf5EZroEUVxyN14h/sbM+HPurnZ9Vx0Ky4MdDNy+nM54/qhjnsmV7zDwVnZi/GLWNeT2/Vw=
+	t=1712829569; cv=none; b=iSAjrh6INMos8Po6z0R6wHjmFjQgpHMWjIrn84bqgYiBC7iV6QLiUyKGL+8JBB4Afj6qcittGmy6Sd0nMRGZxI/f9TbRrPtR4XbpCVKqzJvmWjDXwx4LC1e/2422rWjmxpusP4XDbhYqI6REhrMZOAoMaNCwt+F41zjIh2O1XZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829566; c=relaxed/simple;
-	bh=asvnJddpC5jFrjDsV3qMgq90h2uoC/vycIiBy00QAa4=;
+	s=arc-20240116; t=1712829569; c=relaxed/simple;
+	bh=uMScbvoJ2FEVlyiEZtkL433vmrUd6cbGefwg4aeCw/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SxbE8ELeROPvlZmKWOGhza2paqj89FDEpRgd/2jkYKTb5dGnaH58lC5vWElD6VLaEm5Jfm0blxW0+qL5VlH85YgI//ixzhMcFm2zeCTHA0EYgtAUgaL2p0AOhIUdZ+n+zwpV1DYwQ3OyBf3w3tPquNYKezeDHO+31dCAKeIRDKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rre67j2D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b7oOWxp0AE86I/5c9W0LizD97kdaAahu978/uePSwcqTCqQy3JCKAXvOD0tNfBHflbHnvP4IXRm0qhQfbze3WR2mS/6y2UamhpxSzAAPAFszkqo0PFoBne5b1nOacv/F/kajcdJjrh8uK1HCk6RrhLI4rWv15rpBZWxYMKzQfTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgWx+vTo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rre67j2D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CE0C433F1;
-	Thu, 11 Apr 2024 09:59:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgWx+vTo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00ABAC43390;
+	Thu, 11 Apr 2024 09:59:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829566;
-	bh=asvnJddpC5jFrjDsV3qMgq90h2uoC/vycIiBy00QAa4=;
+	s=korg; t=1712829569;
+	bh=uMScbvoJ2FEVlyiEZtkL433vmrUd6cbGefwg4aeCw/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rre67j2D2qtLxMKi3fSG3VTzjMVvnsPSZ+emtP48qXeh2XBQgnII+ejPOTqvv2jgq
-	 +LsoUFOzUwmBqLvpn1wgobcDkEOjgmJgQWHk98jlX9UbVs8BGuhsQjBxwRofM38x3T
-	 j2t0VrTdtBEVuYjisX0u7+8ffwenNeLPFqebjGUY=
+	b=EgWx+vTopd4nMx9aNKYUR9ctCM6jZeuX5/F8ffHNrJWwMKzGrSBfOfxRZUyO749qf
+	 nIbm8/c4Ymbt3W/UhsorP8/ytHVv2vUS0eLQB1arkPTYWusQ3WSDOybYhaPBEl/GUQ
+	 1pUvoQ/5J+EicPB0KRPzXkCGU8wCmiCc4xrDtIE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@suse.de>
-Subject: [PATCH 4.19 003/175] x86/bugs: Use sysfs_emit()
-Date: Thu, 11 Apr 2024 11:53:46 +0200
-Message-ID: <20240411095419.640981625@linuxfoundation.org>
+	Maulik Shah <quic_mkshah@quicinc.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 030/175] PM: suspend: Set mem_sleep_current during kernel command line setup
+Date: Thu, 11 Apr 2024 11:54:13 +0200
+Message-ID: <20240411095420.464077841@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -49,201 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov <bp@suse.de>
+From: Maulik Shah <quic_mkshah@quicinc.com>
 
-commit 1d30800c0c0ae1d086ffad2bdf0ba4403370f132 upstream.
+[ Upstream commit 9bc4ffd32ef8943f5c5a42c9637cfd04771d021b ]
 
-Those mitigations are very talkative; use the printing helper which pays
-attention to the buffer size.
+psci_init_system_suspend() invokes suspend_set_ops() very early during
+bootup even before kernel command line for mem_sleep_default is setup.
+This leads to kernel command line mem_sleep_default=s2idle not working
+as mem_sleep_current gets changed to deep via suspend_set_ops() and never
+changes back to s2idle.
 
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Link: https://lore.kernel.org/r/20220809153419.10182-1-bp@alien8.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Set mem_sleep_current along with mem_sleep_default during kernel command
+line setup as default suspend mode.
+
+Fixes: faf7ec4a92c0 ("drivers: firmware: psci: add system suspend support")
+CC: stable@vger.kernel.org # 5.4+
+Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/bugs.c |   82 ++++++++++++++++++++++-----------------------
- 1 file changed, 41 insertions(+), 41 deletions(-)
+ kernel/power/suspend.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -2137,69 +2137,69 @@ static const char * const l1tf_vmx_state
- static ssize_t l1tf_show_state(char *buf)
- {
- 	if (l1tf_vmx_mitigation == VMENTER_L1D_FLUSH_AUTO)
--		return sprintf(buf, "%s\n", L1TF_DEFAULT_MSG);
-+		return sysfs_emit(buf, "%s\n", L1TF_DEFAULT_MSG);
+diff --git a/kernel/power/suspend.c b/kernel/power/suspend.c
+index 0bd595a0b6103..7a080015a1b3c 100644
+--- a/kernel/power/suspend.c
++++ b/kernel/power/suspend.c
+@@ -202,6 +202,7 @@ static int __init mem_sleep_default_setup(char *str)
+ 		if (mem_sleep_labels[state] &&
+ 		    !strcmp(str, mem_sleep_labels[state])) {
+ 			mem_sleep_default = state;
++			mem_sleep_current = state;
+ 			break;
+ 		}
  
- 	if (l1tf_vmx_mitigation == VMENTER_L1D_FLUSH_EPT_DISABLED ||
- 	    (l1tf_vmx_mitigation == VMENTER_L1D_FLUSH_NEVER &&
- 	     sched_smt_active())) {
--		return sprintf(buf, "%s; VMX: %s\n", L1TF_DEFAULT_MSG,
--			       l1tf_vmx_states[l1tf_vmx_mitigation]);
-+		return sysfs_emit(buf, "%s; VMX: %s\n", L1TF_DEFAULT_MSG,
-+				  l1tf_vmx_states[l1tf_vmx_mitigation]);
- 	}
- 
--	return sprintf(buf, "%s; VMX: %s, SMT %s\n", L1TF_DEFAULT_MSG,
--		       l1tf_vmx_states[l1tf_vmx_mitigation],
--		       sched_smt_active() ? "vulnerable" : "disabled");
-+	return sysfs_emit(buf, "%s; VMX: %s, SMT %s\n", L1TF_DEFAULT_MSG,
-+			  l1tf_vmx_states[l1tf_vmx_mitigation],
-+			  sched_smt_active() ? "vulnerable" : "disabled");
- }
- 
- static ssize_t itlb_multihit_show_state(char *buf)
- {
- 	if (itlb_multihit_kvm_mitigation)
--		return sprintf(buf, "KVM: Mitigation: Split huge pages\n");
-+		return sysfs_emit(buf, "KVM: Mitigation: Split huge pages\n");
- 	else
--		return sprintf(buf, "KVM: Vulnerable\n");
-+		return sysfs_emit(buf, "KVM: Vulnerable\n");
- }
- #else
- static ssize_t l1tf_show_state(char *buf)
- {
--	return sprintf(buf, "%s\n", L1TF_DEFAULT_MSG);
-+	return sysfs_emit(buf, "%s\n", L1TF_DEFAULT_MSG);
- }
- 
- static ssize_t itlb_multihit_show_state(char *buf)
- {
--	return sprintf(buf, "Processor vulnerable\n");
-+	return sysfs_emit(buf, "Processor vulnerable\n");
- }
- #endif
- 
- static ssize_t mds_show_state(char *buf)
- {
- 	if (boot_cpu_has(X86_FEATURE_HYPERVISOR)) {
--		return sprintf(buf, "%s; SMT Host state unknown\n",
--			       mds_strings[mds_mitigation]);
-+		return sysfs_emit(buf, "%s; SMT Host state unknown\n",
-+				  mds_strings[mds_mitigation]);
- 	}
- 
- 	if (boot_cpu_has(X86_BUG_MSBDS_ONLY)) {
--		return sprintf(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
--			       (mds_mitigation == MDS_MITIGATION_OFF ? "vulnerable" :
--			        sched_smt_active() ? "mitigated" : "disabled"));
-+		return sysfs_emit(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
-+				  (mds_mitigation == MDS_MITIGATION_OFF ? "vulnerable" :
-+				   sched_smt_active() ? "mitigated" : "disabled"));
- 	}
- 
--	return sprintf(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
--		       sched_smt_active() ? "vulnerable" : "disabled");
-+	return sysfs_emit(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
-+			  sched_smt_active() ? "vulnerable" : "disabled");
- }
- 
- static ssize_t tsx_async_abort_show_state(char *buf)
- {
- 	if ((taa_mitigation == TAA_MITIGATION_TSX_DISABLED) ||
- 	    (taa_mitigation == TAA_MITIGATION_OFF))
--		return sprintf(buf, "%s\n", taa_strings[taa_mitigation]);
-+		return sysfs_emit(buf, "%s\n", taa_strings[taa_mitigation]);
- 
- 	if (boot_cpu_has(X86_FEATURE_HYPERVISOR)) {
--		return sprintf(buf, "%s; SMT Host state unknown\n",
--			       taa_strings[taa_mitigation]);
-+		return sysfs_emit(buf, "%s; SMT Host state unknown\n",
-+				  taa_strings[taa_mitigation]);
- 	}
- 
--	return sprintf(buf, "%s; SMT %s\n", taa_strings[taa_mitigation],
--		       sched_smt_active() ? "vulnerable" : "disabled");
-+	return sysfs_emit(buf, "%s; SMT %s\n", taa_strings[taa_mitigation],
-+			  sched_smt_active() ? "vulnerable" : "disabled");
- }
- 
- static ssize_t mmio_stale_data_show_state(char *buf)
-@@ -2267,33 +2267,33 @@ static char *pbrsb_eibrs_state(void)
- static ssize_t spectre_v2_show_state(char *buf)
- {
- 	if (spectre_v2_enabled == SPECTRE_V2_LFENCE)
--		return sprintf(buf, "Vulnerable: LFENCE\n");
-+		return sysfs_emit(buf, "Vulnerable: LFENCE\n");
- 
- 	if (spectre_v2_enabled == SPECTRE_V2_EIBRS && unprivileged_ebpf_enabled())
--		return sprintf(buf, "Vulnerable: eIBRS with unprivileged eBPF\n");
-+		return sysfs_emit(buf, "Vulnerable: eIBRS with unprivileged eBPF\n");
- 
- 	if (sched_smt_active() && unprivileged_ebpf_enabled() &&
- 	    spectre_v2_enabled == SPECTRE_V2_EIBRS_LFENCE)
--		return sprintf(buf, "Vulnerable: eIBRS+LFENCE with unprivileged eBPF and SMT\n");
-+		return sysfs_emit(buf, "Vulnerable: eIBRS+LFENCE with unprivileged eBPF and SMT\n");
- 
--	return sprintf(buf, "%s%s%s%s%s%s%s\n",
--		       spectre_v2_strings[spectre_v2_enabled],
--		       ibpb_state(),
--		       boot_cpu_has(X86_FEATURE_USE_IBRS_FW) ? ", IBRS_FW" : "",
--		       stibp_state(),
--		       boot_cpu_has(X86_FEATURE_RSB_CTXSW) ? ", RSB filling" : "",
--		       pbrsb_eibrs_state(),
--		       spectre_v2_module_string());
-+	return sysfs_emit(buf, "%s%s%s%s%s%s%s\n",
-+			  spectre_v2_strings[spectre_v2_enabled],
-+			  ibpb_state(),
-+			  boot_cpu_has(X86_FEATURE_USE_IBRS_FW) ? ", IBRS_FW" : "",
-+			  stibp_state(),
-+			  boot_cpu_has(X86_FEATURE_RSB_CTXSW) ? ", RSB filling" : "",
-+			  pbrsb_eibrs_state(),
-+			  spectre_v2_module_string());
- }
- 
- static ssize_t srbds_show_state(char *buf)
- {
--	return sprintf(buf, "%s\n", srbds_strings[srbds_mitigation]);
-+	return sysfs_emit(buf, "%s\n", srbds_strings[srbds_mitigation]);
- }
- 
- static ssize_t retbleed_show_state(char *buf)
- {
--	return sprintf(buf, "%s\n", retbleed_strings[retbleed_mitigation]);
-+	return sysfs_emit(buf, "%s\n", retbleed_strings[retbleed_mitigation]);
- }
- 
- static ssize_t gds_show_state(char *buf)
-@@ -2305,26 +2305,26 @@ static ssize_t cpu_show_common(struct de
- 			       char *buf, unsigned int bug)
- {
- 	if (!boot_cpu_has_bug(bug))
--		return sprintf(buf, "Not affected\n");
-+		return sysfs_emit(buf, "Not affected\n");
- 
- 	switch (bug) {
- 	case X86_BUG_CPU_MELTDOWN:
- 		if (boot_cpu_has(X86_FEATURE_PTI))
--			return sprintf(buf, "Mitigation: PTI\n");
-+			return sysfs_emit(buf, "Mitigation: PTI\n");
- 
- 		if (hypervisor_is_type(X86_HYPER_XEN_PV))
--			return sprintf(buf, "Unknown (XEN PV detected, hypervisor mitigation required)\n");
-+			return sysfs_emit(buf, "Unknown (XEN PV detected, hypervisor mitigation required)\n");
- 
- 		break;
- 
- 	case X86_BUG_SPECTRE_V1:
--		return sprintf(buf, "%s\n", spectre_v1_strings[spectre_v1_mitigation]);
-+		return sysfs_emit(buf, "%s\n", spectre_v1_strings[spectre_v1_mitigation]);
- 
- 	case X86_BUG_SPECTRE_V2:
- 		return spectre_v2_show_state(buf);
- 
- 	case X86_BUG_SPEC_STORE_BYPASS:
--		return sprintf(buf, "%s\n", ssb_strings[ssb_mode]);
-+		return sysfs_emit(buf, "%s\n", ssb_strings[ssb_mode]);
- 
- 	case X86_BUG_L1TF:
- 		if (boot_cpu_has(X86_FEATURE_L1TF_PTEINV))
-@@ -2357,7 +2357,7 @@ static ssize_t cpu_show_common(struct de
- 		break;
- 	}
- 
--	return sprintf(buf, "Vulnerable\n");
-+	return sysfs_emit(buf, "Vulnerable\n");
- }
- 
- ssize_t cpu_show_meltdown(struct device *dev, struct device_attribute *attr, char *buf)
+-- 
+2.43.0
+
 
 
