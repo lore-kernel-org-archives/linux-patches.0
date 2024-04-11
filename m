@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93BC145FF0;
-	Thu, 11 Apr 2024 10:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741ED13F452;
+	Thu, 11 Apr 2024 10:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830588; cv=none; b=m+TXVGIDEpHBidhpeCe3fBOuARdoTNiQYHmE9iO1HugVA308RceLDqX2F3ozWElo/d34tE7DfB5x4P2g2kZSGvzITwnHz0pALo8JwbCthRAvCQ/xHJo3eCu3bmYlV0AvCau9MqE9UQmyrez9iyAiMnK9JOLc7tSE6wduSnX5Leo=
+	t=1712830590; cv=none; b=jz12mRq5L+TRznqiHgAJa9uf0iKwyl5Mz1o9MdoDgXo3doX/LFV9rNyaNPOMYXchMSKDXBaAj5myU7qLxvBD5uc+pBsbYSEu4UQH+IYX5rmGFkT6hQbtaylq7ck95lZE+Z01W93aFQZEVBLWkR+37jf66Mzp9qPLqymNFXpqI28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830588; c=relaxed/simple;
-	bh=9DGxGhbKQPyz7td4w36jTPkSJTrpW73HtRB3PiztoMY=;
+	s=arc-20240116; t=1712830590; c=relaxed/simple;
+	bh=NJXwEbQn6Mr3tqLU6mwMpSRTqigbd7Kfav77pSy2ax4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LetAq7AX1WPeAfCt1XYaqJdB5H5nNKOjQ5ubyc3d3HypVj4hctwIcQEejXgeEG5CHJ5TkG97IxoHwJRC6gtgX+6x6Cl9/mC7HbEeMAySTMkEttVXsKbpfMI7zpkozP/5IZb/M9fyCyIX/a3/EYatuSHCJifYb9qTsNM9EQubMw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWH6CnV7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lAmRAwqlJt0ah9q+v21T6dzszQ+kSeDIytCWqDRQp9X5Id8sgdAJ7+W1GpzE6z2AflIOsaDfYfTTzyq5o+u0TGsZYbgr8v0PmltC9iNx4LIsptbrORhJf6zyHgwutLDSCI6BmDoPFepp1kwU4IZMVTCyC0lV1t8JtuGvTmYFRYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNpHDMvK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWH6CnV7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11D8C433C7;
-	Thu, 11 Apr 2024 10:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNpHDMvK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EA6C433F1;
+	Thu, 11 Apr 2024 10:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830587;
-	bh=9DGxGhbKQPyz7td4w36jTPkSJTrpW73HtRB3PiztoMY=;
+	s=korg; t=1712830590;
+	bh=NJXwEbQn6Mr3tqLU6mwMpSRTqigbd7Kfav77pSy2ax4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NWH6CnV7PI778a+Pw6XTwYt8kFwAcFsffIHnSslHyDbMaSlfxiNmNBir6QCgmbmDk
-	 zIICKAxpGOwuVEiLS2ubi4jst5OxrIOfKAqP9IJbTojFzAMBYaucuD4ZQw3RHkIslH
-	 cbldJzlPrsINC0oo0w7+T6ARcrJPgUNwD1Mj9htA=
+	b=qNpHDMvK8Zhf8KWk5vR5tX5xjqvcp5kds7Ucq6ND1CVtkmr0gfu2p9IY+abjDLXIr
+	 oe2qwQLuJ8qEHHqxciCEtiXC3LDHNPyxmmlEBbqAfsEJlyRFTBLBq9PAHU2Ut0g2Ff
+	 bvIlpT+1UtTTH6A8XikDQeVSKqm9X+q4gF6bRBR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Ricky Wu <ricky_wu@realtek.com>,
+	Dan Moulding <dan@danm.net>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 050/215] PCI/PM: Drain runtime-idle callbacks before driver removal
-Date: Thu, 11 Apr 2024 11:54:19 +0200
-Message-ID: <20240411095426.398110216@linuxfoundation.org>
+Subject: [PATCH 5.4 051/215] Revert "Revert "md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d""
+Date: Thu, 11 Apr 2024 11:54:20 +0200
+Message-ID: <20240411095426.427145773@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -53,74 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Song Liu <song@kernel.org>
 
-[ Upstream commit 9d5286d4e7f68beab450deddbb6a32edd5ecf4bf ]
+[ Upstream commit 3445139e3a594be77eff48bc17eff67cf983daed ]
 
-A race condition between the .runtime_idle() callback and the .remove()
-callback in the rtsx_pcr PCI driver leads to a kernel crash due to an
-unhandled page fault [1].
+This reverts commit bed9e27baf52a09b7ba2a3714f1e24e17ced386d.
 
-The problem is that rtsx_pci_runtime_idle() is not expected to be running
-after pm_runtime_get_sync() has been called, but the latter doesn't really
-guarantee that.  It only guarantees that the suspend and resume callbacks
-will not be running when it returns.
+The original set [1][2] was expected to undo a suboptimal fix in [2], and
+replace it with a better fix [1]. However, as reported by Dan Moulding [2]
+causes an issue with raid5 with journal device.
 
-However, if a .runtime_idle() callback is already running when
-pm_runtime_get_sync() is called, the latter will notice that the runtime PM
-status of the device is RPM_ACTIVE and it will return right away without
-waiting for the former to complete.  In fact, it cannot wait for
-.runtime_idle() to complete because it may be called from that callback (it
-arguably does not make much sense to do that, but it is not strictly
-prohibited).
+Revert [2] for now to close the issue. We will follow up on another issue
+reported by Juxiao Bi, as [2] is expected to fix it. We believe this is a
+good trade-off, because the latter issue happens less freqently.
 
-Thus in general, whoever is providing a .runtime_idle() callback needs
-to protect it from running in parallel with whatever code runs after
-pm_runtime_get_sync().  [Note that .runtime_idle() will not start after
-pm_runtime_get_sync() has returned, but it may continue running then if it
-has started earlier.]
+In the meanwhile, we will NOT revert [1], as it contains the right logic.
 
-One way to address that race condition is to call pm_runtime_barrier()
-after pm_runtime_get_sync() (not before it, because a nonzero value of the
-runtime PM usage counter is necessary to prevent runtime PM callbacks from
-being invoked) to wait for the .runtime_idle() callback to complete should
-it be running at that point.  A suitable place for doing that is in
-pci_device_remove() which calls pm_runtime_get_sync() before removing the
-driver, so it may as well call pm_runtime_barrier() subsequently, which
-will prevent the race in question from occurring, not just in the rtsx_pcr
-driver, but in any PCI drivers providing .runtime_idle() callbacks.
+[1] commit d6e035aad6c0 ("md: bypass block throttle for superblock update")
+[2] commit bed9e27baf52 ("Revert "md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d"")
 
-Link: https://lore.kernel.org/lkml/20240229062201.49500-1-kai.heng.feng@canonical.com/ # [1]
-Link: https://lore.kernel.org/r/5761426.DvuYhMxLoT@kreacher
-Reported-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Ricky Wu <ricky_wu@realtek.com>
-Acked-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Cc: <stable@vger.kernel.org>
+Reported-by: Dan Moulding <dan@danm.net>
+Closes: https://lore.kernel.org/linux-raid/20240123005700.9302-1-dan@danm.net/
+Fixes: bed9e27baf52 ("Revert "md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d"")
+Cc: stable@vger.kernel.org # v5.19+
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20240125082131.788600-1-song@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-driver.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/md/raid5.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index 7644a282bfdb8..617b13c94b390 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -441,6 +441,13 @@ static int pci_device_remove(struct device *dev)
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 0bea103f63d55..f3d60c4b34b8c 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -36,6 +36,7 @@
+  */
  
- 	if (drv->remove) {
- 		pm_runtime_get_sync(dev);
-+		/*
-+		 * If the driver provides a .runtime_idle() callback and it has
-+		 * started to run already, it may continue to run in parallel
-+		 * with the code below, so wait until all of the runtime PM
-+		 * activity has completed.
-+		 */
-+		pm_runtime_barrier(dev);
- 		drv->remove(pci_dev);
- 		pm_runtime_put_noidle(dev);
+ #include <linux/blkdev.h>
++#include <linux/delay.h>
+ #include <linux/kthread.h>
+ #include <linux/raid/pq.h>
+ #include <linux/async_tx.h>
+@@ -6334,7 +6335,18 @@ static void raid5d(struct md_thread *thread)
+ 			spin_unlock_irq(&conf->device_lock);
+ 			md_check_recovery(mddev);
+ 			spin_lock_irq(&conf->device_lock);
++
++			/*
++			 * Waiting on MD_SB_CHANGE_PENDING below may deadlock
++			 * seeing md_check_recovery() is needed to clear
++			 * the flag when using mdmon.
++			 */
++			continue;
+ 		}
++
++		wait_event_lock_irq(mddev->sb_wait,
++			!test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags),
++			conf->device_lock);
  	}
+ 	pr_debug("%d stripes handled\n", handled);
+ 
 -- 
 2.43.0
 
