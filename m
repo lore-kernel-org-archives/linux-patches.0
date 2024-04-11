@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E894213C9A5;
-	Thu, 11 Apr 2024 10:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF67513C9A5;
+	Thu, 11 Apr 2024 10:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831972; cv=none; b=O4uCCrVatBzu2cZk/BYSqSOiblepMLecb+FmLAIL47Wnf1G9o7ieFd/tNhYGSsPO0Yiol576bnk48dcEgSdALz5yDBFJKKR8hSXlGdJYgTQYqjd1Uyvstm/9mlfALifMOVmAL3rw60HcR1JV3S1GnBpw9RgX0ke1olhdPReFUt4=
+	t=1712831974; cv=none; b=YGY2UtNdkYt//5HM+cpwVQzLqwN2GomhoALpmlSITaa8cUS9910EeWHsNVACgz3Sn354fDlRButJMEbcku91nvPMjV0xYazRBQKBknZswe0KVN13eqQ42GYtMA8wfos7Y0Tz6KxPNewn5HU5Ea+79A48FL54z5GC+MsWo4gBnto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831972; c=relaxed/simple;
-	bh=o0NBpHlgnfmwJMTBRiBQ0Y8yoHJX6qNpnOd9TgxzAHQ=;
+	s=arc-20240116; t=1712831974; c=relaxed/simple;
+	bh=5/YK2fSn/vjrrhkTcHiJ5HK8s94gUmS5zFI9um299bQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNmJn8XpnpAd2lR2THw3b32bcAcHmTbuhLI1LNrefu4n5aeapGUGlQrCWyjE7CnvxHmUYmx5plFNFmngAOF8HHGa0YXWMyom93RonJkd+YPowyoysbTPYf1FW8Vcz+1SlJy5WIx22V/eWZ4qD3XB65V7O5pKDsOJdD3h1CnGE78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K4VpRmV8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=npUZKS99Kp+heDUUeuTeVHopuFKMWPgNmXNseUeS3/pBDlYr7dK3JGy8ag1U8DCney/KA7LfkXaNB+f+KF7u84aAK5reJfsUC7yjAqwrd22b5tdY7UcHgByhNKlgQHQi4FtAq/putski5pNK4z1VhPTWOFDg3r41YyAz5rmbnYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHktkheW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4VpRmV8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5B7C433C7;
-	Thu, 11 Apr 2024 10:39:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHktkheW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563A9C433F1;
+	Thu, 11 Apr 2024 10:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831971;
-	bh=o0NBpHlgnfmwJMTBRiBQ0Y8yoHJX6qNpnOd9TgxzAHQ=;
+	s=korg; t=1712831974;
+	bh=5/YK2fSn/vjrrhkTcHiJ5HK8s94gUmS5zFI9um299bQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K4VpRmV8KFwyOx2HN3Z5N5KdB6eZAo8/jH4qqMLETWVzjA0Rra4BgOLwG7ntm28MW
-	 DH6vSbETlOTiiUMkkflAFan+NjzudeIUy/moqGujriAo/aqMSOhr8LcKlG8HrWYMMT
-	 mdLENhN4CVHtsSFs/+nsKq8N5/P5K6ktLQMP7VnQ=
+	b=tHktkheWskB7Ld8NoK7wUnHdJdFO4GEnAui6LWDrxqy2iejXCJfkO305oZKdS2T8/
+	 wzkGdDowxF+KbPaL7PIqxygixxoKs9cJIGtI1cECJFflOgq+kre6y6RLC+f/QMEnWo
+	 z5Oq6uK7Ts21073qn2FwRjyTeYT/VXlXJSt3rqWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jihong <yangjihong1@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 5.10 149/294] perf/core: Fix reentry problem in perf_output_read_group()
-Date: Thu, 11 Apr 2024 11:55:12 +0200
-Message-ID: <20240411095440.138711648@linuxfoundation.org>
+	Tim Schumacher <timschumi@gmx.de>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 5.10 150/294] efivarfs: Request at most 512 bytes for variable names
+Date: Thu, 11 Apr 2024 11:55:13 +0200
+Message-ID: <20240411095440.167967683@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -51,80 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Tim Schumacher <timschumi@gmx.de>
 
-commit 6b959ba22d34ca793ffdb15b5715457c78e38b1a upstream.
+commit f45812cc23fb74bef62d4eb8a69fe7218f4b9f2a upstream.
 
-perf_output_read_group may respond to IPI request of other cores and invoke
-__perf_install_in_context function. As a result, hwc configuration is modified.
-causing inconsistency and unexpected consequences.
+Work around a quirk in a few old (2011-ish) UEFI implementations, where
+a call to `GetNextVariableName` with a buffer size larger than 512 bytes
+will always return EFI_INVALID_PARAMETER.
 
-Interrupts are not disabled when perf_output_read_group reads PMU counter.
-In this case, IPI request may be received from other cores.
-As a result, PMU configuration is modified and an error occurs when
-reading PMU counter:
+There is some lore around EFI variable names being up to 1024 bytes in
+size, but this has no basis in the UEFI specification, and the upper
+bounds are typically platform specific, and apply to the entire variable
+(name plus payload).
 
-		     CPU0                                         CPU1
-						      __se_sys_perf_event_open
-							perf_install_in_context
-  perf_output_read_group                                  smp_call_function_single
-    for_each_sibling_event(sub, leader) {                   generic_exec_single
-      if ((sub != event) &&                                   remote_function
-	  (sub->state == PERF_EVENT_STATE_ACTIVE))                    |
-  <enter IPI handler: __perf_install_in_context>   <----RAISE IPI-----+
-  __perf_install_in_context
-    ctx_resched
-      event_sched_out
-	armpmu_del
-	  ...
-	  hwc->idx = -1; // event->hwc.idx is set to -1
-  ...
-  <exit IPI>
-	      sub->pmu->read(sub);
-		armpmu_read
-		  armv8pmu_read_counter
-		    armv8pmu_read_hw_counter
-		      int idx = event->hw.idx; // idx = -1
-		      u64 val = armv8pmu_read_evcntr(idx);
-			u32 counter = ARMV8_IDX_TO_COUNTER(idx); // invalid counter = 30
-			read_pmevcntrn(counter) // undefined instruction
+Given that Linux does not permit creating files with names longer than
+NAME_MAX (255) bytes, 512 bytes (== 256 UTF-16 characters) is a
+reasonable limit.
 
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20220902082918.179248-1-yangjihong1@huawei.com
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Cc: <stable@vger.kernel.org> # 6.1+
+Signed-off-by: Tim Schumacher <timschumi@gmx.de>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+[timschumi@gmx.de: adjusted diff for changed context and code move]
+Signed-off-by: Tim Schumacher <timschumi@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/firmware/efi/vars.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6890,9 +6890,16 @@ static void perf_output_read_group(struc
+--- a/drivers/firmware/efi/vars.c
++++ b/drivers/firmware/efi/vars.c
+@@ -415,7 +415,7 @@ int efivar_init(int (*func)(efi_char16_t
+ 		void *data, bool duplicates, struct list_head *head)
  {
- 	struct perf_event *leader = event->group_leader, *sub;
- 	u64 read_format = event->attr.read_format;
-+	unsigned long flags;
- 	u64 values[6];
- 	int n = 0;
- 
-+	/*
-+	 * Disabling interrupts avoids all counter scheduling
-+	 * (context switches, timer based rotation and IPIs).
-+	 */
-+	local_irq_save(flags);
-+
- 	values[n++] = 1 + leader->nr_siblings;
- 
- 	if (read_format & PERF_FORMAT_TOTAL_TIME_ENABLED)
-@@ -6928,6 +6935,8 @@ static void perf_output_read_group(struc
- 
- 		__output_copy(handle, values, n * sizeof(u64));
+ 	const struct efivar_operations *ops;
+-	unsigned long variable_name_size = 1024;
++	unsigned long variable_name_size = 512;
+ 	efi_char16_t *variable_name;
+ 	efi_status_t status;
+ 	efi_guid_t vendor_guid;
+@@ -438,12 +438,13 @@ int efivar_init(int (*func)(efi_char16_t
  	}
-+
-+	local_irq_restore(flags);
- }
  
- #define PERF_FORMAT_TOTAL_TIMES (PERF_FORMAT_TOTAL_TIME_ENABLED|\
+ 	/*
+-	 * Per EFI spec, the maximum storage allocated for both
+-	 * the variable name and variable data is 1024 bytes.
++	 * A small set of old UEFI implementations reject sizes
++	 * above a certain threshold, the lowest seen in the wild
++	 * is 512.
+ 	 */
+ 
+ 	do {
+-		variable_name_size = 1024;
++		variable_name_size = 512;
+ 
+ 		status = ops->get_next_variable(&variable_name_size,
+ 						variable_name,
+@@ -491,9 +492,13 @@ int efivar_init(int (*func)(efi_char16_t
+ 			break;
+ 		case EFI_NOT_FOUND:
+ 			break;
++		case EFI_BUFFER_TOO_SMALL:
++			pr_warn("efivars: Variable name size exceeds maximum (%lu > 512)\n",
++				variable_name_size);
++			status = EFI_NOT_FOUND;
++			break;
+ 		default:
+-			printk(KERN_WARNING "efivars: get_next_variable: status=%lx\n",
+-				status);
++			pr_warn("efivars: get_next_variable: status=%lx\n", status);
+ 			status = EFI_NOT_FOUND;
+ 			break;
+ 		}
 
 
