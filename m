@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C331487C1;
-	Thu, 11 Apr 2024 10:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98BB146A72;
+	Thu, 11 Apr 2024 10:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832154; cv=none; b=dZOUemKGymol7BqvJrQd74AvNiXnvJQFvaUuypJg65+fFSTME3bwomsEXqeBo5G15fMvEm4DXv7g4mP7+5vlbjY+Y7AC7xFGEZsqVQZRTadYQp5l1eXnxmm+EGnzchxN74aYt6eJaAZBUdyC9Q5mI3LoTj+xNlGRCX7Yj1C/gE8=
+	t=1712832156; cv=none; b=Wf7MLhYd1IzJ3vFIe938DAlD33rnZ+f2QMd8yizmAJWWHwM7C7dW2YPoKxP2ztG1tuAeKZADUqgFG5daEbboP/5fC6ZFfQaahYOXgjWZjq1VAiZiJnqo7MqFU8JiOIkO/YTKEDHJZ26pP5jRpSD0t6E3N1pdc4curP/pbLu0WJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832154; c=relaxed/simple;
-	bh=0SCHghE8voAfYrYlRauv/8U6pV+drh1bpy/ZNiS+H6E=;
+	s=arc-20240116; t=1712832156; c=relaxed/simple;
+	bh=tUTrQshlfNfPU/lSoVQpDyuTeUpxihIIAn6y3zuiwyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3RKMpw91hqiJv/8qHvfv0c6rpxLG+RIF4vtM9fyDR8quq1pyIRXstBoTJOOSfUMYzzVVvZ1/Bl80X/+bnSPOwIxbddPE4qNrCN+AEeb4+om0fZjGVpiChGi3ma1hw7WumFErK9g5viFW87xNZJOJbM/gPj1RIJ3N7bnODv7EF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGuW3fxg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YtzpNV2fOZwVfmn5aYBQB6+0BFDBR8UYa4jS9d0CGe+cYJ0LmPz3rVcvA3Rp++RXaNj71xTrTB7b12k7g2ZE++QJfkh1BRAR/qAQIzGGlSf540llfPxtEjrUOJAAczNYZUlmEqPcW+Pe8CkFEMY1bnRpgO2Za2wbfpWLGGrJrcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0ntJUN7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGuW3fxg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C002C433F1;
-	Thu, 11 Apr 2024 10:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0ntJUN7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509C6C433F1;
+	Thu, 11 Apr 2024 10:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832153;
-	bh=0SCHghE8voAfYrYlRauv/8U6pV+drh1bpy/ZNiS+H6E=;
+	s=korg; t=1712832156;
+	bh=tUTrQshlfNfPU/lSoVQpDyuTeUpxihIIAn6y3zuiwyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gGuW3fxg4hCsfqH4WPH/xIvmQLKoOgij1Y00qKApdgaC/YtNmQQCgJNamxb+RQpWh
-	 AcLu4Yc7coVJpiRZ8cvKiihA1906Xb28R6qTU9MVo9fMZoxoY4v26UWkaGtdcNRCG3
-	 Te9gpauyPT45V7YvZQ3TOyDXusKOt4nA9y3T5hKc=
+	b=t0ntJUN7c5NsZTeX6d2YY1KPZEp2clXbRlNP8hqdT6BlFYZPD13Y+dgeaYueeA1gt
+	 1vdQOdAoqGK2d6+1o0jGFJotxccaCC7p1iMMwYBXMF13b+lJNAbgWFNLzO/tSU2lxV
+	 fFG1dSkpqn0oQHZIk4Ad4PBQ39T+vJsbcrO3CMOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>,
+	Johan Jonker <jbx6244@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 247/294] panic: Flush kernel log buffer at the end
-Date: Thu, 11 Apr 2024 11:56:50 +0200
-Message-ID: <20240411095443.003646780@linuxfoundation.org>
+Subject: [PATCH 5.10 248/294] arm64: dts: rockchip: fix rk3328 hdmi ports node
+Date: Thu, 11 Apr 2024 11:56:51 +0200
+Message-ID: <20240411095443.032907976@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -51,48 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Johan Jonker <jbx6244@gmail.com>
 
-[ Upstream commit d988d9a9b9d180bfd5c1d353b3b176cb90d6861b ]
+[ Upstream commit 1d00ba4700d1e0f88ae70d028d2e17e39078fa1c ]
 
-If the kernel crashes in a context where printk() calls always
-defer printing (such as in NMI or inside a printk_safe section)
-then the final panic messages will be deferred to irq_work. But
-if irq_work is not available, the messages will not get printed
-unless explicitly flushed. The result is that the final
-"end Kernel panic" banner does not get printed.
+Fix rk3328 hdmi ports node so that it matches the
+rockchip,dw-hdmi.yaml binding.
 
-Add one final flush after the last printk() call to make sure
-the final panic messages make it out as well.
-
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20240207134103.1357162-14-john.ogness@linutronix.de
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Johan Jonker <jbx6244@gmail.com>
+Link: https://lore.kernel.org/r/e5dea3b7-bf84-4474-9530-cc2da3c41104@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/panic.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3328.dtsi | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/panic.c b/kernel/panic.c
-index bc39e2b27d315..30d8da0d43d8f 100644
---- a/kernel/panic.c
-+++ b/kernel/panic.c
-@@ -427,6 +427,14 @@ void panic(const char *fmt, ...)
+diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+index 72112fe05a5c4..10df6636a6b6c 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+@@ -732,11 +732,20 @@ hdmi: hdmi@ff3c0000 {
+ 		status = "disabled";
  
- 	/* Do not scroll important messages printed above */
- 	suppress_printk = 1;
+ 		ports {
+-			hdmi_in: port {
++			#address-cells = <1>;
++			#size-cells = <0>;
 +
-+	/*
-+	 * The final messages may not have been printed if in a context that
-+	 * defers printing (such as NMI) and irq_work is not available.
-+	 * Explicitly flush the kernel log buffer one last time.
-+	 */
-+	console_flush_on_panic(CONSOLE_FLUSH_PENDING);
++			hdmi_in: port@0 {
++				reg = <0>;
 +
- 	local_irq_enable();
- 	for (i = 0; ; i += PANIC_TIMER_STEP) {
- 		touch_softlockup_watchdog();
+ 				hdmi_in_vop: endpoint {
+ 					remote-endpoint = <&vop_out_hdmi>;
+ 				};
+ 			};
++
++			hdmi_out: port@1 {
++				reg = <1>;
++			};
+ 		};
+ 	};
+ 
 -- 
 2.43.0
 
