@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2DF145B13;
-	Thu, 11 Apr 2024 10:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524E2146586;
+	Thu, 11 Apr 2024 10:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829767; cv=none; b=sNoQ2cnlWM8OfBowH6EChDcDQMAAHSDdYuqdi5jV/FytVkYextwNiclI72rEwOx7bsDzIJpKty4AFk0Pcf71NqADiFbK/aWbqHzw3KyH9cwfRi/zwZX4MW6ckGOpu2x/NvfOivdrdG3gjmXfwaFWf1Xl6eleGzZYrNL1hPWJNws=
+	t=1712829770; cv=none; b=lbpfW0+a7mg2m/k5ji655v6Qcx3GomLdk5E3V7rRkf2jKGg3lSxml3S3MGEHlnSg8rcd2zzeeucgMW6YCpaI0k2LkzUm/JLf64Ds/Yu6V4l4QFjkJbtp+poBh6Y1QITp8Kr/sTzpIZ2Zb6rQvWbLye6klqX1YxZMEBcMR8zPZN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829767; c=relaxed/simple;
-	bh=TE4dgqA3ggw51zojwt6J9BuA6RUTqEPlnPfsWRrPAsQ=;
+	s=arc-20240116; t=1712829770; c=relaxed/simple;
+	bh=qSby5htH1b5p6cHfDUIYv8mCWaEmyoHDFm+a8zpdIq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CjX5nV5D1UzOtydvP17y/bnBFZ/jJyrlz/QF0+WNNfaLxZew7U3CeHftRYXv9xdDmGMxhFdaJMN0ajUFYrlVDfi80bYtIE6DSRGYuyG0ylWbwVOEETDoMg/25+tag4vBCLarT8QW2gWgZz+Lt1Y9+oNklCDDgmmTXRnx2TdSjhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoiG+7bo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cAE/iwM0oUEPVOBOZti+AxjAGfIfrZXIf2btdTb/JQ0y64nZX7/ky3JvaN14kCosklIADqItzHEPtGVVpX5SUN363PHSpU4dC1AEKDbXZqzNmk90+yCuqixrDhdPOGs/hH4Rd024wjDsWYa2S0q1OmjjRqzzU3s7JEyD7ZU9f8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GmUY8hLo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoiG+7bo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7676C43394;
-	Thu, 11 Apr 2024 10:02:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmUY8hLo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89BFC433F1;
+	Thu, 11 Apr 2024 10:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829767;
-	bh=TE4dgqA3ggw51zojwt6J9BuA6RUTqEPlnPfsWRrPAsQ=;
+	s=korg; t=1712829770;
+	bh=qSby5htH1b5p6cHfDUIYv8mCWaEmyoHDFm+a8zpdIq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QoiG+7bou4AMXfTGrmB8yskvgKeIhxHVDiykYHt3MfHm9l8JlUbMIvGCiy0WEQBeY
-	 fL2UslqT/Ttr0PAVBKUTan230C9akBlfJejeCVD1rZ7DO+/N43nzXlngRUqrhegY46
-	 HDAA3uRdC2cdu4RgJjcts9C5VjzG0tyMWsTZtqnc=
+	b=GmUY8hLo2iqDcQHB7rUhAz82XeK2aAt1LqTbvq3Gq/QTb9tUHRRiDkZbRd5n0K8MJ
+	 QVkpLWtAiyPV1osbRvIQkhV2wkl06Va+eNhi8DaxAa3xJyLGiVXub4CoTUrW+6RtvI
+	 Xv1rRQ7mZipl11M9KhGXOhRzT1BnOmTNRD+wreSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	David Hildenbrand <david@redhat.com>
-Subject: [PATCH 4.19 081/175] mm/migrate: set swap entry values of THP tail pages properly.
-Date: Thu, 11 Apr 2024 11:55:04 +0200
-Message-ID: <20240411095422.001743978@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Siddh Raman Pant <code@siddh.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
+	Genjian Zhang <zhanggenjian@kylinos.cn>,
+	syzbot+a8e049cd3abd342936b6@syzkaller.appspotmail.com
+Subject: [PATCH 4.19 099/175] loop: Check for overflow while configuring loop
+Date: Thu, 11 Apr 2024 11:55:22 +0200
+Message-ID: <20240411095422.549754053@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -50,52 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Siddh Raman Pant <code@siddh.me>
 
-The tail pages in a THP can have swap entry information stored in their
-private field. When migrating to a new page, all tail pages of the new
-page need to update ->private to avoid future data corruption.
+[ Upstream commit c490a0b5a4f36da3918181a8acdc6991d967c5f3 ]
 
-This fix is stable-only, since after commit 07e09c483cbe ("mm/huge_memory:
-work on folio->swap instead of page->private when splitting folio"),
-subpages of a swapcached THP no longer requires the maintenance.
+The userspace can configure a loop using an ioctl call, wherein
+a configuration of type loop_config is passed (see lo_ioctl()'s
+case on line 1550 of drivers/block/loop.c). This proceeds to call
+loop_configure() which in turn calls loop_set_status_from_info()
+(see line 1050 of loop.c), passing &config->info which is of type
+loop_info64*. This function then sets the appropriate values, like
+the offset.
 
-Adding THPs to the swapcache was introduced in commit
-38d8b4e6bdc87 ("mm, THP, swap: delay splitting THP during swap out"),
-where each subpage of a THP added to the swapcache had its own swapcache
-entry and required the ->private field to point to the correct swapcache
-entry. Later, when THP migration functionality was implemented in commit
-616b8371539a6 ("mm: thp: enable thp migration in generic path"),
-it initially did not handle the subpages of swapcached THPs, failing to
-update their ->private fields or replace the subpage pointers in the
-swapcache. Subsequently, commit e71769ae5260 ("mm: enable thp migration
-for shmem thp") addressed the swapcache update aspect. This patch fixes
-the update of subpage ->private fields.
+loop_device has lo_offset of type loff_t (see line 52 of loop.c),
+which is typdef-chained to long long, whereas loop_info64 has
+lo_offset of type __u64 (see line 56 of include/uapi/linux/loop.h).
 
-Closes: https://lore.kernel.org/linux-mm/1707814102-22682-1-git-send-email-quic_charante@quicinc.com/
-Fixes: 616b8371539a ("mm: thp: enable thp migration in generic path")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand <david@redhat.com>
+The function directly copies offset from info to the device as
+follows (See line 980 of loop.c):
+	lo->lo_offset = info->lo_offset;
+
+This results in an overflow, which triggers a warning in iomap_iter()
+due to a call to iomap_iter_done() which has:
+	WARN_ON_ONCE(iter->iomap.offset > iter->pos);
+
+Thus, check for negative value during loop_set_status_from_info().
+
+Bug report: https://syzkaller.appspot.com/bug?id=c620fe14aac810396d3c3edc9ad73848bf69a29e
+
+Reported-and-tested-by: syzbot+a8e049cd3abd342936b6@syzkaller.appspotmail.com
+Cc: stable@vger.kernel.org
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Siddh Raman Pant <code@siddh.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20220823160810.181275-1-code@siddh.me
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/block/loop.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -514,8 +514,12 @@ int migrate_page_move_mapping(struct add
- 	if (PageSwapBacked(page)) {
- 		__SetPageSwapBacked(newpage);
- 		if (PageSwapCache(page)) {
-+			int i;
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -1271,6 +1271,11 @@ loop_set_status_from_info(struct loop_de
+ 
+ 	lo->lo_offset = info->lo_offset;
+ 	lo->lo_sizelimit = info->lo_sizelimit;
 +
- 			SetPageSwapCache(newpage);
--			set_page_private(newpage, page_private(page));
-+			for (i = 0; i < (1 << compound_order(page)); i++)
-+				set_page_private(newpage + i,
-+						 page_private(page + i));
- 		}
- 	} else {
- 		VM_BUG_ON_PAGE(PageSwapCache(page), page);
++	/* loff_t vars have been assigned __u64 */
++	if (lo->lo_offset < 0 || lo->lo_sizelimit < 0)
++		return -EOVERFLOW;
++
+ 	memcpy(lo->lo_file_name, info->lo_file_name, LO_NAME_SIZE);
+ 	memcpy(lo->lo_crypt_name, info->lo_crypt_name, LO_NAME_SIZE);
+ 	lo->lo_file_name[LO_NAME_SIZE-1] = 0;
 
 
