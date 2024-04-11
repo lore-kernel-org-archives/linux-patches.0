@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF0213DDDD;
-	Thu, 11 Apr 2024 09:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D056313DDDD;
+	Thu, 11 Apr 2024 09:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829505; cv=none; b=QnIcyGGUZExUFzlEud5K7UJhmWlS2GJOMlkXAPkiDcUxOvpxk/J/2y7bTcQmcsa3F0TrjFTjdeU4/BaFGZG3OmRRHblSeHBFIG4rv7ULnSmOk+SwLtN1Sz/YMet9tyxWBeTWrlU+kKQikw7nCzRm1KxEM5Us/oX8GqrNIv8XLVY=
+	t=1712829507; cv=none; b=mNd0LXmC4OZaFAtLc7sNMERGF6pIMsc/ut3fQKIRO/0cyCn0Sf1W3AGlTbhwJeVvRnwVQ/o4xMdbNJfeY+pWhR1pTeCwOBG1wFpZ5n3ktShDdCH0SWqBRRiUwlredZnasiUPkiOqeiAZu43dT6Annb+oO9ZuVRoo4MUqdDwBnG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829505; c=relaxed/simple;
-	bh=cnEit3hnvk1oiKmlrEnmZ61BoNQONgEbpX3+GKGfAEM=;
+	s=arc-20240116; t=1712829507; c=relaxed/simple;
+	bh=gXOLO0KLUU3L14fDPd0lUZ9iHeCXqECMCnMCqnnNQas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BiL/Dq4LU2w2rNpYkbW6IyUR/6L6mHozGoj9A6h8ug2qXWF8Tnprz36gMxR4b3aLEYxQDmwuxsWQKR9msRpRmZ1UsNbrQR/KQTYI2/CeFLhNIDOTojNFXwlVf+qUtPMEemZX5JdfsAEQYKZn/n5qRQ1iIUTal8TkAnASbFBU2Z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cAX/h301; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rclc/TRhv4ontK+HBOHOqdepKesPGGygo7csVVQLbcdFLcJEqkthq0KDwWq+OCC/BZrFC8dcBRiYkUz3FKZYxFuGYNpBo/zgIBEA3r9z1ENju4MJAJIcxAvqQ8rwGoZvDj16U3abG71vJ1ooIvFS8Khs4r3XvvcChAiaY5MG1bY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAxhn9M9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cAX/h301"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325D5C433F1;
-	Thu, 11 Apr 2024 09:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAxhn9M9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5C7C433F1;
+	Thu, 11 Apr 2024 09:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829504;
-	bh=cnEit3hnvk1oiKmlrEnmZ61BoNQONgEbpX3+GKGfAEM=;
+	s=korg; t=1712829507;
+	bh=gXOLO0KLUU3L14fDPd0lUZ9iHeCXqECMCnMCqnnNQas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cAX/h3010gNeetmj4bFc5NtojPfqS56AzBwBnrAOxciZl0NHpqo2B2O90o5bLl+UK
-	 6LV2mWZeOyiaTweQ5AybCuNWy4UnTGFivVpnkNNNzSKwl8xF+cM7ysmiwhA5RtFdTT
-	 gMt2Z7gVQNwjzS/xONNeOTzH2AYqBRZ6QoKiwf8M=
+	b=UAxhn9M9nBLjAoMhQVggELc6sGHRQS5izBvd2uy1HOnLTg/YD9LvLtnIsR67yzUPI
+	 vpHqvpzWtZ2JpF06Num9linelTKXYfsNchoOPrEpe8NBkrVRpxVC6ctqBskzhcFhKE
+	 ZB1FxrXayc5kLhiRzmmZddZQ4fnz0krRTPxnTOA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 010/175] wifi: brcmfmac: Fix use-after-free bug in brcmf_cfg80211_detach
-Date: Thu, 11 Apr 2024 11:53:53 +0200
-Message-ID: <20240411095419.852635828@linuxfoundation.org>
+Subject: [PATCH 4.19 011/175] smack: Set SMACK64TRANSMUTE only for dirs in smack_inode_setxattr()
+Date: Thu, 11 Apr 2024 11:53:54 +0200
+Message-ID: <20240411095419.883077285@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,75 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-[ Upstream commit 0f7352557a35ab7888bc7831411ec8a3cbe20d78 ]
+[ Upstream commit 9c82169208dde516510aaba6bbd8b13976690c5d ]
 
-This is the candidate patch of CVE-2023-47233 :
-https://nvd.nist.gov/vuln/detail/CVE-2023-47233
+Since the SMACK64TRANSMUTE xattr makes sense only for directories, enforce
+this restriction in smack_inode_setxattr().
 
-In brcm80211 driver,it starts with the following invoking chain
-to start init a timeout worker:
-
-->brcmf_usb_probe
-  ->brcmf_usb_probe_cb
-    ->brcmf_attach
-      ->brcmf_bus_started
-        ->brcmf_cfg80211_attach
-          ->wl_init_priv
-            ->brcmf_init_escan
-              ->INIT_WORK(&cfg->escan_timeout_work,
-		  brcmf_cfg80211_escan_timeout_worker);
-
-If we disconnect the USB by hotplug, it will call
-brcmf_usb_disconnect to make cleanup. The invoking chain is :
-
-brcmf_usb_disconnect
-  ->brcmf_usb_disconnect_cb
-    ->brcmf_detach
-      ->brcmf_cfg80211_detach
-        ->kfree(cfg);
-
-While the timeout woker may still be running. This will cause
-a use-after-free bug on cfg in brcmf_cfg80211_escan_timeout_worker.
-
-Fix it by deleting the timer and canceling the worker in
-brcmf_cfg80211_detach.
-
-Fixes: e756af5b30b0 ("brcmfmac: add e-scan support.")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
 Cc: stable@vger.kernel.org
-[arend.vanspriel@broadcom.com: keep timer delete as is and cancel work just before free]
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20240107072504.392713-1-arend.vanspriel@broadcom.com
+Fixes: 5c6d1125f8db ("Smack: Transmute labels on specified directories") # v2.6.38.x
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ security/smack/smack_lsm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 1827be85f115f..fe8f1134a5f3e 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -690,8 +690,7 @@ s32 brcmf_notify_escan_complete(struct brcmf_cfg80211_info *cfg,
- 	scan_request = cfg->scan_request;
- 	cfg->scan_request = NULL;
- 
--	if (timer_pending(&cfg->escan_timeout))
--		del_timer_sync(&cfg->escan_timeout);
-+	timer_delete_sync(&cfg->escan_timeout);
- 
- 	if (fw_abort) {
- 		/* Do a scan abort to stop the driver's scan engine */
-@@ -7093,6 +7092,7 @@ void brcmf_cfg80211_detach(struct brcmf_cfg80211_info *cfg)
- 	wiphy_unregister(cfg->wiphy);
- 	kfree(cfg->ops);
- 	wl_deinit_priv(cfg);
-+	cancel_work_sync(&cfg->escan_timeout_work);
- 	brcmf_free_wiphy(cfg->wiphy);
- 	kfree(cfg);
- }
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index 128a5f464740e..2f2dc49f53dff 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -1341,7 +1341,8 @@ static int smack_inode_setxattr(struct dentry *dentry, const char *name,
+ 		check_star = 1;
+ 	} else if (strcmp(name, XATTR_NAME_SMACKTRANSMUTE) == 0) {
+ 		check_priv = 1;
+-		if (size != TRANS_TRUE_SIZE ||
++		if (!S_ISDIR(d_backing_inode(dentry)->i_mode) ||
++		    size != TRANS_TRUE_SIZE ||
+ 		    strncmp(value, TRANS_TRUE, TRANS_TRUE_SIZE) != 0)
+ 			rc = -EINVAL;
+ 	} else
 -- 
 2.43.0
 
