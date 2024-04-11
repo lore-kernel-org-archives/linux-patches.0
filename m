@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643FE146D47;
-	Thu, 11 Apr 2024 10:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5BB64CC0;
+	Thu, 11 Apr 2024 10:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832183; cv=none; b=KyxEX59dDqgmaAtLwMjaroIu2XFG/YXcCy1+GyQ74kuLuP4K+el/0GSTqnbHLPwcVQK7eQ0ugdeiqWEe8+YI7ZKb0e4JMKbhuDK6Af914Ox9U4FOSMgO8XEuQfhPwKUlHKHOf73K67mLyiA9r3XiVMin6ar2BAnEqgyuegcFEQk=
+	t=1712832186; cv=none; b=OIXgvRMzvMVpws0mKpo3K3nYaVdSBq0YXoRB08kHw/QxxdazOzTxiYE5Rk46XJ130LROXYp7qMM75dn0SIoecYEzDx/1iNF2UDdK3vi1aThD4WdpMU1ebhCmUS+OUIZK8nocRvOwXFZIXA22FAkWqds22XcQuZdq+MJyVNqfXGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832183; c=relaxed/simple;
-	bh=SQMWsAQ+//yrnCmmPw5aRN8SbWZvMKOAek4afqwdcSY=;
+	s=arc-20240116; t=1712832186; c=relaxed/simple;
+	bh=9lwNW/4Cc3uwJ3RGysPBbavd4GFrNEVbncNlTXJPpws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=USOwWuOvlQP/eCEzrvWdiZNk1PQ8zvZhs7nER5CO1B6t5GnPXJpf5Vz7w29DZlpbEgiLuX9d6tA0uw4e09NGLf16TBPUdrqOfgxFQXfgFlqwpTynulP+KDSlND+k+1Z8OYAw2BBzX4CbiuxwMhA337l9LYvJ4ggeiDlUQkiXURI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYnlp2nS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IE8Pol5GFjXRHpUA2DXGk8UA4YYPBvnj5/PupD0VNvkDYLMlAary8WQaQfr7ddhS4tEgMqiu5JD7ltbM4B2fh2FX9QsnrFdu6gMfVTvTufe6k6+4bHFmqD7XeFJ4qREaOfMU5wP6koKIwDk3TJZtIx/ODD/vRS2LGyetzhtp6TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MjH6Fajc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYnlp2nS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF77C433F1;
-	Thu, 11 Apr 2024 10:43:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MjH6Fajc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D04D3C433C7;
+	Thu, 11 Apr 2024 10:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832183;
-	bh=SQMWsAQ+//yrnCmmPw5aRN8SbWZvMKOAek4afqwdcSY=;
+	s=korg; t=1712832186;
+	bh=9lwNW/4Cc3uwJ3RGysPBbavd4GFrNEVbncNlTXJPpws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UYnlp2nSnPcHH5plfcUfDP+kTB55EBE7rJCr+hqiJfzuuZPMIWumgtfc9NhsjBimA
-	 U4SHKS8lG7rpnjE0oQrdV6ABYRL+pmHGvUOBumIt1J0uP3ziEomloHzjH15CipwKuH
-	 M+G77UaUbT8N2wFBxgrOP57MHgTfLL7jDOt3vhP4=
+	b=MjH6FajcUVkETsLlfNzfPcEfCiG3XywOrKoJK7IYYIbbXTAxYC3Uw4TtXquuNfu8Y
+	 YgohJUQgsTKqau628HMR/KXSDI8FcA0nJ/0ZnueS9qcw0+KRaZl0jTpR1Nc8G4JTKA
+	 sNn7IS/7Zk3uj3FM6fA4i01WRqLiaZr6FXT2EGeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	Jan Karcher <jaka@linux.ibm.com>,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	Wen Gu <guwen@linux.alibaba.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 256/294] net/smc: reduce rtnl pressure in smc_pnet_create_pnetids_list()
-Date: Thu, 11 Apr 2024 11:56:59 +0200
-Message-ID: <20240411095443.271200364@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+830d9e3fa61968246abd@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 257/294] Bluetooth: btintel: Fix null ptr deref in btintel_read_version
+Date: Thu, 11 Apr 2024 11:57:00 +0200
+Message-ID: <20240411095443.300424600@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -56,94 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 00af2aa93b76b1bade471ad0d0525d4d29ca5cc0 ]
+[ Upstream commit b79e040910101b020931ba0c9a6b77e81ab7f645 ]
 
-Many syzbot reports show extreme rtnl pressure, and many of them hint
-that smc acquires rtnl in netns creation for no good reason [1]
+If hci_cmd_sync_complete() is triggered and skb is NULL, then
+hdev->req_skb is NULL, which will cause this issue.
 
-This patch returns early from smc_pnet_net_init()
-if there is no netdevice yet.
-
-I am not even sure why smc_pnet_create_pnetids_list() even exists,
-because smc_pnet_netdev_event() is also calling
-smc_pnet_add_base_pnetid() when handling NETDEV_UP event.
-
-[1] extract of typical syzbot reports
-
-2 locks held by syz-executor.3/12252:
-  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
-2 locks held by syz-executor.4/12253:
-  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
-2 locks held by syz-executor.1/12257:
-  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
-2 locks held by syz-executor.2/12261:
-  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
-2 locks held by syz-executor.0/12265:
-  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
-2 locks held by syz-executor.3/12268:
-  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
-2 locks held by syz-executor.4/12271:
-  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
-2 locks held by syz-executor.1/12274:
-  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
-2 locks held by syz-executor.2/12280:
-  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
-  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Wenjia Zhang <wenjia@linux.ibm.com>
-Cc: Jan Karcher <jaka@linux.ibm.com>
-Cc: "D. Wythe" <alibuda@linux.alibaba.com>
-Cc: Tony Lu <tonylu@linux.alibaba.com>
-Cc: Wen Gu <guwen@linux.alibaba.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240302100744.3868021-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-and-tested-by: syzbot+830d9e3fa61968246abd@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_pnet.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/bluetooth/btintel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
-index 30bae60d626c6..ed9cfa11b589f 100644
---- a/net/smc/smc_pnet.c
-+++ b/net/smc/smc_pnet.c
-@@ -797,6 +797,16 @@ static void smc_pnet_create_pnetids_list(struct net *net)
- 	u8 ndev_pnetid[SMC_MAX_PNETID_LEN];
- 	struct net_device *dev;
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index 88ce5f0ffc4ba..e1daf6ebd3ada 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -344,7 +344,7 @@ int btintel_read_version(struct hci_dev *hdev, struct intel_version *ver)
+ 	struct sk_buff *skb;
  
-+	/* Newly created netns do not have devices.
-+	 * Do not even acquire rtnl.
-+	 */
-+	if (list_empty(&net->dev_base_head))
-+		return;
-+
-+	/* Note: This might not be needed, because smc_pnet_netdev_event()
-+	 * is also calling smc_pnet_add_base_pnetid() when handling
-+	 * NETDEV_UP event.
-+	 */
- 	rtnl_lock();
- 	for_each_netdev(net, dev)
- 		smc_pnet_add_base_pnetid(net, dev, ndev_pnetid);
+ 	skb = __hci_cmd_sync(hdev, 0xfc05, 0, NULL, HCI_CMD_TIMEOUT);
+-	if (IS_ERR(skb)) {
++	if (IS_ERR_OR_NULL(skb)) {
+ 		bt_dev_err(hdev, "Reading Intel version information failed (%ld)",
+ 			   PTR_ERR(skb));
+ 		return PTR_ERR(skb);
 -- 
 2.43.0
 
