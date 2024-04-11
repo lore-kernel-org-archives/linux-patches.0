@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E1B13FD94;
-	Thu, 11 Apr 2024 10:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2CD213FD94;
+	Thu, 11 Apr 2024 10:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831223; cv=none; b=moE43F19b+5Ijh4KtKiBfq1LEMLjUyM+56322hSZWSY9gh+hIULPnCON75Xdhe9QPew8bP3rFJTc3vC/WZTXhhDlmQmSmcto9QY9Yn2ZrureqkZJYYdA1Vqh01KkRYG1Z42gVdp0D8b0iFNdgZtuySdZZozoGobC93QXacdenGQ=
+	t=1712831225; cv=none; b=lMz+JVztdd7HodecGGIPiHP4iz+Pmh/aI01FsE1lEtDIagZAZlVeTebf5x0ts2Nu+DCO+9vHxWgs0ooQ/DfFt7HD/JzZjUblrGA68S7cIr9pypC8o88HFHMQv4JcmFQTXodSFYXUrft/RfTeVd8yRITolKPFJV+7vNmSAzSBCE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831223; c=relaxed/simple;
-	bh=ZV1lMhXCcir27OMhymeGeWJGgJawuCKJPPEqQu9XR+Y=;
+	s=arc-20240116; t=1712831225; c=relaxed/simple;
+	bh=lem2TuFQrcbn+mzTpjiAizGcuH6dcVXmKT8HGpDssbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfE9iyRgeU8weaazMWjr3pvHQc8fRw4L6Cr8na9FdolsHpqZ9umrxJ6K1Z6HR06JViVCRpd7tsPCFrhPqy+f/7T/FXqynWp10CjzYRdPg1kD7+U41bS5BjbCaJUaeelVVV1mI9lDafsGLvlHvuyss+kBlqtO78zJsdEogAQru5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXz9vblA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GSeEXbB9Fj0iRbZNgw3cKAeab7dXrDtoCp7XSkiZ4McVodwpris+xVPD55mAWs7DctgTCQrZ5+vcmiD5hpmBK5JiYY2Tkw6y4LZ9jv2+2oPGe/fsx0uBmas/wpU9z8aMj+wCv0t/P2AxadOePwp6JPeUgVa/yjze2eGSgHLbJ1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yN1lwx+e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXz9vblA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E82DC433F1;
-	Thu, 11 Apr 2024 10:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yN1lwx+e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F76C433C7;
+	Thu, 11 Apr 2024 10:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831222;
-	bh=ZV1lMhXCcir27OMhymeGeWJGgJawuCKJPPEqQu9XR+Y=;
+	s=korg; t=1712831225;
+	bh=lem2TuFQrcbn+mzTpjiAizGcuH6dcVXmKT8HGpDssbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RXz9vblAtpxCVVz8IEs2fngOAq4KFdl2DQACqmXAdPCfOTpfyMRq3s0LIJXABel4p
-	 GpUoPm6YIQ5ygyV6PHUGcnhlUO/vtmd42ucmSpxPfwRhAGcvDup3fawy/C09qsTRnQ
-	 Z6hPHu6syrA5uGFXveZCdPKgYFMjitTCDuib+ogY=
+	b=yN1lwx+eyGYsUmb2mvfrwOZm+8WSL/Z6hl0XXUg+3AQFvZKPjEKWnuH9EXr/pyDAR
+	 rkxcS42Z/3LychQ4v0aOapN2CRcKOnpeuNXz/Du0jYu4easGkkGrGOQkOkG7PAjoEz
+	 oyaUm7pHWrvgl+laH5rkkdw0WWDyXVAA9SqZD7dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Emil Velikov <emil.velikov@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/114] net: skbuff: add overflow debug check to pull/push helpers
-Date: Thu, 11 Apr 2024 11:55:49 +0200
-Message-ID: <20240411095417.539333685@linuxfoundation.org>
+Subject: [PATCH 6.6 049/114] ASoC: SOF: amd: Optimize quirk for Valve Galileo
+Date: Thu, 11 Apr 2024 11:56:16 +0200
+Message-ID: <20240411095418.365444309@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095416.853744210@linuxfoundation.org>
 References: <20240411095416.853744210@linuxfoundation.org>
@@ -52,85 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 219eee9c0d16f1b754a8b85275854ab17df0850a ]
+[ Upstream commit a13f0c3c0e8fb3e61fbfd99c6b350cf9be0c4660 ]
 
-syzbot managed to trigger following splat:
-BUG: KASAN: use-after-free in __skb_flow_dissect+0x4a3b/0x5e50
-Read of size 1 at addr ffff888208a4000e by task a.out/2313
-[..]
-  __skb_flow_dissect+0x4a3b/0x5e50
-  __skb_get_hash+0xb4/0x400
-  ip_tunnel_xmit+0x77e/0x26f0
-  ipip_tunnel_xmit+0x298/0x410
-  ..
+Valve's Steam Deck OLED is uniquely identified by vendor and product
+name (Galileo) DMI fields.
 
-Analysis shows that the skb has a valid ->head, but bogus ->data
-pointer.
+Simplify the quirk by removing the unnecessary match on product family.
 
-skb->data gets its bogus value via the neigh layer, which does:
+Additionally, fix the related comment as it points to the old product
+variant.
 
-1556    __skb_pull(skb, skb_network_offset(skb));
-
-... and the skb was already dodgy at this point:
-
-skb_network_offset(skb) returns a negative value due to an
-earlier overflow of skb->network_header (u16).  __skb_pull thus
-"adjusts" skb->data by a huge offset, pointing outside skb->head
-area.
-
-Allow debug builds to splat when we try to pull/push more than
-INT_MAX bytes.
-
-After this, the syzkaller reproducer yields a more precise splat
-before the flow dissector attempts to read off skb->data memory:
-
-WARNING: CPU: 5 PID: 2313 at include/linux/skbuff.h:2653 neigh_connected_output+0x28e/0x400
-  ip_finish_output2+0xb25/0xed0
-  iptunnel_xmit+0x4ff/0x870
-  ipgre_xmit+0x78e/0xbb0
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240216113700.23013-1-fw@strlen.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Reviewed-by: Emil Velikov <emil.velikov@collabora.com>
+Link: https://msgid.link/r/20231219030728.2431640-7-cristian.ciocaltea@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/sof/amd/acp.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 9e61f6df6bc55..aa8d6e72ad98b 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -2627,6 +2627,8 @@ static inline void skb_put_u8(struct sk_buff *skb, u8 val)
- void *skb_push(struct sk_buff *skb, unsigned int len);
- static inline void *__skb_push(struct sk_buff *skb, unsigned int len)
- {
-+	DEBUG_NET_WARN_ON_ONCE(len > INT_MAX);
-+
- 	skb->data -= len;
- 	skb->len  += len;
- 	return skb->data;
-@@ -2635,6 +2637,8 @@ static inline void *__skb_push(struct sk_buff *skb, unsigned int len)
- void *skb_pull(struct sk_buff *skb, unsigned int len);
- static inline void *__skb_pull(struct sk_buff *skb, unsigned int len)
- {
-+	DEBUG_NET_WARN_ON_ONCE(len > INT_MAX);
-+
- 	skb->len -= len;
- 	if (unlikely(skb->len < skb->data_len)) {
- #if defined(CONFIG_DEBUG_NET)
-@@ -2659,6 +2663,8 @@ void *__pskb_pull_tail(struct sk_buff *skb, int delta);
- static inline enum skb_drop_reason
- pskb_may_pull_reason(struct sk_buff *skb, unsigned int len)
- {
-+	DEBUG_NET_WARN_ON_ONCE(len > INT_MAX);
-+
- 	if (likely(len <= skb_headlen(skb)))
- 		return SKB_NOT_DROPPED_YET;
+diff --git a/sound/soc/sof/amd/acp.c b/sound/soc/sof/amd/acp.c
+index cc006d7038d97..add386f749ae9 100644
+--- a/sound/soc/sof/amd/acp.c
++++ b/sound/soc/sof/amd/acp.c
+@@ -28,11 +28,10 @@ MODULE_PARM_DESC(enable_fw_debug, "Enable Firmware debug");
  
+ const struct dmi_system_id acp_sof_quirk_table[] = {
+ 	{
+-		/* Valve Jupiter device */
++		/* Steam Deck OLED device */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Valve"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Galileo"),
+-			DMI_MATCH(DMI_PRODUCT_FAMILY, "Sephiroth"),
+ 		},
+ 		.driver_data = (void *)SECURED_FIRMWARE,
+ 	},
 -- 
 2.43.0
 
