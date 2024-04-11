@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DE5145323;
-	Thu, 11 Apr 2024 10:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2F72EAE5;
+	Thu, 11 Apr 2024 10:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829682; cv=none; b=QaQCik0+xkFO7GhS4y2Y8ELi8VbhQOw4l44k+F8gihW5qCNrlOzBJmisQ5OtUIDN5i1ThCxmVJihLxEw8CBWSCujFpxuKw412x51YKJ/K/HBel6jmev9oIuc2YIuBc2AW/m5vGFrHNkp/OTQa4HJUwInd5/3r+n1x8F5yGIHFaE=
+	t=1712829685; cv=none; b=eRqCPbzof2RK6zsHAbP1FodDX/G6JsfcLJB7/gNDTZ1jAsIgBeeH2Ny9yj3qKh87z+wZoqZTmRoOqLDAs9urmS0JNGuypRdMoMdKTIDMl9BO9aBx6GvRjaQtGI+hJ7o76PO/AWO4gGfErjAVdrl6XqQC0Te3wG8Y62qNqFGfbg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829682; c=relaxed/simple;
-	bh=uxe4VfcQShIk31+9NHCUKDjdN3MmLbALErRTpJEhK2k=;
+	s=arc-20240116; t=1712829685; c=relaxed/simple;
+	bh=lBMz7eLrA49pJ4RHNHIPck532pG+d7XImNq3wB3K55Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJGNpPyKLq8tcSv0MSPaLQUv7f532gQKNZhhA5d0O+grUMEA4fY63VKFhxnxn85zubQMtVgl44FXyhQR4F4hXMOksAZKUPfi3ET8C+1rzTpPIdXBx//rezGc8SL/MXXMuGuZbb10/Dh6jOggyx22h2wkNnm7t+o1pHuM7oiphmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOxQSJq4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z+KGy2ECQ+ORNaql9UhOk9S2StYTuUqMtM07Rlc6nPUppnivYMXvEhg9Aqgap38tpSmHoULgkNTPNyC0PMBm83rPJm2RCrwWpV0OkhbvmhlfJyxu280yG27su5WCioJFtdxOFXgJUixwkRgIv8n1JxeKkiyTI8vUtKsoOC0yWKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DYpqFLZe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOxQSJq4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91345C433F1;
-	Thu, 11 Apr 2024 10:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYpqFLZe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8492BC433F1;
+	Thu, 11 Apr 2024 10:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829682;
-	bh=uxe4VfcQShIk31+9NHCUKDjdN3MmLbALErRTpJEhK2k=;
+	s=korg; t=1712829684;
+	bh=lBMz7eLrA49pJ4RHNHIPck532pG+d7XImNq3wB3K55Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uOxQSJq4VqzAD2X4Upo+wIDdR4djSotkmxacGaCfeHrSjD4zG2p7UnIRDAJNd/mOJ
-	 9IoOxVN3iBvui1BaI4MpcuCAJ19wwCUnf5CLHTkPswVifWi71FyAQl37RvN/f4/mAq
-	 nDD6WJb5G/GJTQvlIEMrEt9Bz/LV9RyisIosBctw=
+	b=DYpqFLZepeycGswVI2KjvcL9PUHlEJDAYdfIOZ8QtmDD7GZ9P9NRfloeiPSAGCaP+
+	 f3zLAQaSPB/S8/AykgTaf2bcmXtWPSe0YjP02tIPb3D2PGVlmBQOv+pH2fUBxytbNv
+	 UGgTBFAE5tuUp33f80MCrYc7zDBwUbnxxq6q+EiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt <cryptearth@googlemail.com>,
-	Conrad Kostecki <conikost@gentoo.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 068/175] ahci: asm1064: asm1166: dont limit reported ports
-Date: Thu, 11 Apr 2024 11:54:51 +0200
-Message-ID: <20240411095421.611995549@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 4.19 069/175] comedi: comedi_test: Prevent timers rescheduling during deletion
+Date: Thu, 11 Apr 2024 11:54:52 +0200
+Message-ID: <20240411095421.641548502@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -53,89 +49,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Conrad Kostecki <conikost@gentoo.org>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 6cd8adc3e18960f6e59d797285ed34ef473cc896 ]
+commit f53641a6e849034a44bf80f50245a75d7a376025 upstream.
 
-Previously, patches have been added to limit the reported count of SATA
-ports for asm1064 and asm1166 SATA controllers, as those controllers do
-report more ports than physically having.
+The comedi_test devices have a couple of timers (ai_timer and ao_timer)
+that can be started to simulate hardware interrupts.  Their expiry
+functions normally reschedule the timer.  The driver code calls either
+del_timer_sync() or del_timer() to delete the timers from the queue, but
+does not currently prevent the timers from rescheduling themselves so
+synchronized deletion may be ineffective.
 
-While it is allowed to report more ports than physically having in CAP.NP,
-it is not allowed to report more ports than physically having in the PI
-(Ports Implemented) register, which is what these HBAs do.
-(This is a AHCI spec violation.)
+Add a couple of boolean members (one for each timer: ai_timer_enable and
+ao_timer_enable) to the device private data structure to indicate
+whether the timers are allowed to reschedule themselves.  Set the member
+to true when adding the timer to the queue, and to false when deleting
+the timer from the queue in the waveform_ai_cancel() and
+waveform_ao_cancel() functions.
 
-Unfortunately, it seems that the PMP implementation in these ASMedia HBAs
-is also violating the AHCI and SATA-IO PMP specification.
+The del_timer_sync() function is also called from the waveform_detach()
+function, but the timer enable members will already be set to false when
+that function is called, so no change is needed there.
 
-What these HBAs do is that they do not report that they support PMP
-(CAP.SPM (Supports Port Multiplier) is not set).
-
-Instead, they have decided to add extra "virtual" ports in the PI register
-that is used if a port multiplier is connected to any of the physical
-ports of the HBA.
-
-Enumerating the devices behind the PMP as specified in the AHCI and
-SATA-IO specifications, by using PMP READ and PMP WRITE commands to the
-physical ports of the HBA is not possible, you have to use the "virtual"
-ports.
-
-This is of course bad, because this gives us no way to detect the device
-and vendor ID of the PMP actually connected to the HBA, which means that
-we can not apply the proper PMP quirks for the PMP that is connected to
-the HBA.
-
-Limiting the port map will thus stop these controllers from working with
-SATA Port Multipliers.
-
-This patch reverts both patches for asm1064 and asm1166, so old behavior
-is restored and SATA PMP will work again, but it will also reintroduce the
-(minutes long) extra boot time for the ASMedia controllers that do not
-have a PMP connected (either on the PCIe card itself, or an external PMP).
-
-However, a longer boot time for some, is the lesser evil compared to some
-other users not being able to detect their drives at all.
-
-Fixes: 0077a504e1a4 ("ahci: asm1166: correct count of reported ports")
-Fixes: 9815e3961754 ("ahci: asm1064: correct count of reported ports")
-Cc: stable@vger.kernel.org
-Reported-by: Matt <cryptearth@googlemail.com>
-Signed-off-by: Conrad Kostecki <conikost@gentoo.org>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-[cassel: rewrote commit message]
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 403fe7f34e33 ("staging: comedi: comedi_test: fix timer race conditions")
+Cc: stable@vger.kernel.org # 4.4+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20240214100747.16203-1-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/ahci.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ drivers/staging/comedi/drivers/comedi_test.c |   30 +++++++++++++++++++++++----
+ 1 file changed, 26 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
-index 6b1562fed85ed..ab3ea47ecce3a 100644
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -634,19 +634,6 @@ MODULE_PARM_DESC(mobile_lpm_policy, "Default LPM policy for mobile chipsets");
- static void ahci_pci_save_initial_config(struct pci_dev *pdev,
- 					 struct ahci_host_priv *hpriv)
+--- a/drivers/staging/comedi/drivers/comedi_test.c
++++ b/drivers/staging/comedi/drivers/comedi_test.c
+@@ -87,6 +87,8 @@ struct waveform_private {
+ 	struct comedi_device *dev;	/* parent comedi device */
+ 	u64 ao_last_scan_time;		/* time of previous AO scan in usec */
+ 	unsigned int ao_scan_period;	/* AO scan period in usec */
++	bool ai_timer_enable:1;		/* should AI timer be running? */
++	bool ao_timer_enable:1;		/* should AO timer be running? */
+ 	unsigned short ao_loopbacks[N_CHANS];
+ };
+ 
+@@ -236,8 +238,12 @@ static void waveform_ai_timer(struct tim
+ 			time_increment = devpriv->ai_convert_time - now;
+ 		else
+ 			time_increment = 1;
+-		mod_timer(&devpriv->ai_timer,
+-			  jiffies + usecs_to_jiffies(time_increment));
++		spin_lock(&dev->spinlock);
++		if (devpriv->ai_timer_enable) {
++			mod_timer(&devpriv->ai_timer,
++				  jiffies + usecs_to_jiffies(time_increment));
++		}
++		spin_unlock(&dev->spinlock);
+ 	}
+ 
+ overrun:
+@@ -393,9 +399,12 @@ static int waveform_ai_cmd(struct comedi
+ 	 * Seem to need an extra jiffy here, otherwise timer expires slightly
+ 	 * early!
+ 	 */
++	spin_lock_bh(&dev->spinlock);
++	devpriv->ai_timer_enable = true;
+ 	devpriv->ai_timer.expires =
+ 		jiffies + usecs_to_jiffies(devpriv->ai_convert_period) + 1;
+ 	add_timer(&devpriv->ai_timer);
++	spin_unlock_bh(&dev->spinlock);
+ 	return 0;
+ }
+ 
+@@ -404,6 +413,9 @@ static int waveform_ai_cancel(struct com
  {
--	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA) {
--		switch (pdev->device) {
--		case 0x1166:
--			dev_info(&pdev->dev, "ASM1166 has only six ports\n");
--			hpriv->saved_port_map = 0x3f;
--			break;
--		case 0x1064:
--			dev_info(&pdev->dev, "ASM1064 has only four ports\n");
--			hpriv->saved_port_map = 0xf;
--			break;
--		}
--	}
--
- 	if (pdev->vendor == PCI_VENDOR_ID_JMICRON && pdev->device == 0x2361) {
- 		dev_info(&pdev->dev, "JMB361 has only one port\n");
- 		hpriv->force_port_map = 1;
--- 
-2.43.0
-
+ 	struct waveform_private *devpriv = dev->private;
+ 
++	spin_lock_bh(&dev->spinlock);
++	devpriv->ai_timer_enable = false;
++	spin_unlock_bh(&dev->spinlock);
+ 	if (in_softirq()) {
+ 		/* Assume we were called from the timer routine itself. */
+ 		del_timer(&devpriv->ai_timer);
+@@ -495,8 +507,12 @@ static void waveform_ao_timer(struct tim
+ 		unsigned int time_inc = devpriv->ao_last_scan_time +
+ 					devpriv->ao_scan_period - now;
+ 
+-		mod_timer(&devpriv->ao_timer,
+-			  jiffies + usecs_to_jiffies(time_inc));
++		spin_lock(&dev->spinlock);
++		if (devpriv->ao_timer_enable) {
++			mod_timer(&devpriv->ao_timer,
++				  jiffies + usecs_to_jiffies(time_inc));
++		}
++		spin_unlock(&dev->spinlock);
+ 	}
+ 
+ underrun:
+@@ -517,9 +533,12 @@ static int waveform_ao_inttrig_start(str
+ 	async->inttrig = NULL;
+ 
+ 	devpriv->ao_last_scan_time = ktime_to_us(ktime_get());
++	spin_lock_bh(&dev->spinlock);
++	devpriv->ao_timer_enable = true;
+ 	devpriv->ao_timer.expires =
+ 		jiffies + usecs_to_jiffies(devpriv->ao_scan_period);
+ 	add_timer(&devpriv->ao_timer);
++	spin_unlock_bh(&dev->spinlock);
+ 
+ 	return 1;
+ }
+@@ -604,6 +623,9 @@ static int waveform_ao_cancel(struct com
+ 	struct waveform_private *devpriv = dev->private;
+ 
+ 	s->async->inttrig = NULL;
++	spin_lock_bh(&dev->spinlock);
++	devpriv->ao_timer_enable = false;
++	spin_unlock_bh(&dev->spinlock);
+ 	if (in_softirq()) {
+ 		/* Assume we were called from the timer routine itself. */
+ 		del_timer(&devpriv->ao_timer);
 
 
