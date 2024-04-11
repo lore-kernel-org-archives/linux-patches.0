@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232D613B5B9;
-	Thu, 11 Apr 2024 10:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634A0145B13;
+	Thu, 11 Apr 2024 10:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830108; cv=none; b=Wms/mB+mLSommapho2ROZzySs0tWk8KbZ2UYfgv8qCnSo2YZyBrHTUkWXGMRr1n4/x/XZ4XFNmtMtaVwqPCphEmpVtQn6RlaYHGE4zyW+0pgHvDnTK8AMGazRW1y90g99h6gft3/IOoSoZj4fAI1ZaHq65zaLkZMrYDXQ8sHUEk=
+	t=1712830112; cv=none; b=WudyglEt81f0I3oYO3mXxh60S3i0HdvORi3ryIogif023tr/GtXoqeDlQwd2ByfRVCQJdzc72VJtqELeIbUMeZMu18TlUFv2lpl/tlIQyq4CsxGnKBVJvA7D6T2GhYnQuBHu0MIeu8OCWq3zA5RZo8kz5C6S5ZEIZwzYT60bcP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830108; c=relaxed/simple;
-	bh=7q9fZThaEXYNcB3jQUHqempUIahxqZBS0uh24bNhbu8=;
+	s=arc-20240116; t=1712830112; c=relaxed/simple;
+	bh=QDuoqgMY+wANJrUKGGjYM10UdVpXX7vcBVu0KFV9FOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDpd8XzZM/9kKus2D0CW7FJh/CI0VozXuWe1Y5vi4DsgnYB0gnpSrp4GIMn5c5bCsRubwv0P1sfNUGqf9M7/7YSLNBd9KwsiAfeEuZmXGsNtzJqxYD7LFcy6A5oO6TC4AW6VMxumPjl7zPL9z0Iis2yTDkpj9hMtBP+be2870DU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aseznwd8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pzby2kWv5fJpXTYJhX1qGS2jjP5bOlNC5pPJ3FC5UmlOiCIybypltETRZJCj0qHe2L7FOOPEGe6sdiLbB6G0X7y51/+8NxrC+zkf9kUIH8Ll2T3ksLVGJoV8MTKQh4raYVYurxwpHONrAj/sxHCbE/qFAnJvDVz3Tv67ZZzgpiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iO5Bdz0P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aseznwd8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA5BC433F1;
-	Thu, 11 Apr 2024 10:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iO5Bdz0P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83AA5C433C7;
+	Thu, 11 Apr 2024 10:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830108;
-	bh=7q9fZThaEXYNcB3jQUHqempUIahxqZBS0uh24bNhbu8=;
+	s=korg; t=1712830110;
+	bh=QDuoqgMY+wANJrUKGGjYM10UdVpXX7vcBVu0KFV9FOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aseznwd8uceiikpKQmO4lYIDwtVXFnjXU2hHtx4mxFEhMTgNoZB+4p4h2euvYD8bC
-	 AVb8vFA3eu2VdZbk6zB7/P/+9bOPtRalEmSH26XBJE89MYg1bU7EwgqfUAWt94QIn8
-	 YygEkStyan6z2E56vh0juhcNYv/5Ct8oJndxmkIA=
+	b=iO5Bdz0P3P3qRHCvMgzjj/rKenRRViy9FXSsCsHNxxEKmB0IPVVC0ZBzv22QONJDA
+	 6CraEqOGLtYsjtp4VAXOwsBIdTd1mUbLAAslkAQA13XqQAYgmb0hsABUYa+PihmZjz
+	 /1p54FejPLVuYiF2aN+33z1gKBQjiNNGwIh3dcHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 037/143] ACPI: x86: Add DELL0501 handling to acpi_quirk_skip_serdev_enumeration()
-Date: Thu, 11 Apr 2024 11:55:05 +0200
-Message-ID: <20240411095422.028801950@linuxfoundation.org>
+Subject: [PATCH 6.8 038/143] pstore/zone: Add a null pointer check to the psz_kmsg_read
+Date: Thu, 11 Apr 2024 11:55:06 +0200
+Message-ID: <20240411095422.059129278@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -51,72 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit 99b572e6136eab69a8c91d72cf8595b256e304b5 ]
+[ Upstream commit 98bc7e26e14fbb26a6abf97603d59532475e97f8 ]
 
-Some recent(ish) Dell AIO devices have a backlight controller board
-connected to an UART.
+kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure. Ensure the allocation was successful
+by checking the pointer validity.
 
-This UART has a DELL0501 HID with CID set to PNP0501 so that the UART is
-still handled by 8250_pnp.c. Unfortunately there is no separate ACPI device
-with an UartSerialBusV2() resource to model the backlight-controller.
-This causes the kernel to create a /dev/ttyS0 char-device for the UART
-instead of creating an in kernel serdev-controller + serdev-device pair
-for a kernel backlight driver.
-
-Use the existing acpi_quirk_skip_serdev_enumeration() mechanism to work
-around this by returning skip=true for tty-ctrl parents with a HID
-of DELL0501.
-
-Like other cases where the UartSerialBusV2() resource is missing or broken
-this will only create the serdev-controller device and the serdev-device
-itself will need to be instantiated by platform code.
-
-Unfortunately in this case there is no device for the platform-code
-instantiating the serdev-device to bind to. So also create
-a platform_device for this.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Link: https://lore.kernel.org/r/20240118100206.213928-1-chentao@kylinos.cn
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/x86/utils.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ fs/pstore/zone.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
-index 8829a907eee02..90c3d2eab9e99 100644
---- a/drivers/acpi/x86/utils.c
-+++ b/drivers/acpi/x86/utils.c
-@@ -484,8 +484,28 @@ static int acpi_dmi_skip_serdev_enumeration(struct device *controller_parent, bo
- 
- int acpi_quirk_skip_serdev_enumeration(struct device *controller_parent, bool *skip)
- {
-+	struct acpi_device *adev = ACPI_COMPANION(controller_parent);
-+
- 	*skip = false;
- 
-+	/*
-+	 * The DELL0501 ACPI HID represents an UART (CID is set to PNP0501) with
-+	 * a backlight-controller attached. There is no separate ACPI device with
-+	 * an UartSerialBusV2() resource to model the backlight-controller.
-+	 * Set skip to true so that the tty core creates a serdev ctrl device.
-+	 * The backlight driver will manually create the serdev client device.
-+	 */
-+	if (acpi_dev_hid_match(adev, "DELL0501")) {
-+		*skip = true;
-+		/*
-+		 * Create a platform dev for dell-uart-backlight to bind to.
-+		 * This is a static device, so no need to store the result.
-+		 */
-+		platform_device_register_simple("dell-uart-backlight", PLATFORM_DEVID_NONE,
-+						NULL, 0);
-+		return 0;
-+	}
-+
- 	return acpi_dmi_skip_serdev_enumeration(controller_parent, skip);
- }
- EXPORT_SYMBOL_GPL(acpi_quirk_skip_serdev_enumeration);
+diff --git a/fs/pstore/zone.c b/fs/pstore/zone.c
+index 2770746bb7aa1..abca117725c81 100644
+--- a/fs/pstore/zone.c
++++ b/fs/pstore/zone.c
+@@ -973,6 +973,8 @@ static ssize_t psz_kmsg_read(struct pstore_zone *zone,
+ 		char *buf = kasprintf(GFP_KERNEL, "%s: Total %d times\n",
+ 				      kmsg_dump_reason_str(record->reason),
+ 				      record->count);
++		if (!buf)
++			return -ENOMEM;
+ 		hlen = strlen(buf);
+ 		record->buf = krealloc(buf, hlen + size, GFP_KERNEL);
+ 		if (!record->buf) {
 -- 
 2.43.0
 
