@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0659213DDDD;
-	Thu, 11 Apr 2024 09:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41B113DDDD;
+	Thu, 11 Apr 2024 09:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829537; cv=none; b=mIfTVZfJIWvy1k11DKgUbtz7HB8HT7Hh5fYRD4hDN+j1RoZDDUo9BgSQJT4KV8wKGljVkJcBcG/Dm90rjCkV70N7EJksFZNzGzakmdw1L/pPtnuQhtMpDXiKppiwzZnpr4XQ2MaTS9slLeZqChzqXx6oDoKXAczQX1DdVar79WI=
+	t=1712829540; cv=none; b=PBeNMi/j5INCkQ74nJRMJsWZ8o0G6y4SFsUwuxP/ntERN9IZ2B9fxgjEkIPlNb1dGQ2nAwSYCZzVKYI7fdx+Z0fTTW/vfmhVTpDy8taaslI+rXCHz/wPTPWP8lpVL4KzYF01zMK0BL2QHW1vHHdlfe5Jbx0/8A2bi/HBG3Ix1xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829537; c=relaxed/simple;
-	bh=lIR3CI1pUYh6QVZG9tcgqrNEVvzDbh3w/2o/8LGwB/A=;
+	s=arc-20240116; t=1712829540; c=relaxed/simple;
+	bh=fJi/t9aQy3E420HOlDR2JQn+BGjT7HH26Ze62lXcD7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iVTgvT5O2DIEdx6V8FadfgXP304XTG73FvMM6kjI9p6r8SCia/ZzRxNrhMzv6LFSK4X8mbsA4kZ3JcD9lLd3BYKyl8DniVw1JNw7HZZc+lCAC1sfy8YlqrWDzE0AEYQPwgf2grhA/JPkQHWd2PNWvvMTFWuyVRXKUFbr8Nkn+rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YoKjjU6z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l+ez8dHTbIAr/Fp8rrhsOlq2fHH32hXv8LDznP+m7OPoyxBYTOyC9Pjd+u7ha8IjVijLUFOSSvkQgqCFFeg9PwC96oSdO7w9mvjrWrrjU6QidoSsJvRSvFtGdBRk8kUcLWzaj5IIFcsKE6BW5SHwYLbWYYlnz4paMg7mQanhraE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Doacit03; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YoKjjU6z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D04C433C7;
-	Thu, 11 Apr 2024 09:58:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Doacit03"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682FDC433F1;
+	Thu, 11 Apr 2024 09:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829536;
-	bh=lIR3CI1pUYh6QVZG9tcgqrNEVvzDbh3w/2o/8LGwB/A=;
+	s=korg; t=1712829539;
+	bh=fJi/t9aQy3E420HOlDR2JQn+BGjT7HH26Ze62lXcD7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YoKjjU6zXXtNhn48meQpmWB8oCUs+7xGHBP/SQOgH48kat3Scq0vzsN7BXwHb51gr
-	 5nTuMYUWZNUIp49FSUKKb30z30HiXddr2xEXeEKsrvScJfC1qCBBerSJpMnIsHeD5e
-	 Jl6xH3B/ywSdJiiie32QdkyksUhtssxvfwCSpo+c=
+	b=Doacit03JlaZyuqo5c7SWhlALadbQWKtxebOK2mYjqPB2L9MQgYrY+rAJZlXE01ZK
+	 /+yCGtdrDXs34TdgipRKzZmQXJ5vq8Xb239fzO55gvAegrN36V4aYoeIAfLgjcXeHx
+	 gsSuLbFmndvpFjFV9GHr83xY7AegfTzcawXjs3pA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damian Muszynski <damian.muszynski@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	syzbot+3ce5dea5b1539ff36769@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
+	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 020/175] crypto: qat - resolve race condition during AER recovery
-Date: Thu, 11 Apr 2024 11:54:03 +0200
-Message-ID: <20240411095420.158709092@linuxfoundation.org>
+Subject: [PATCH 4.19 021/175] fat: fix uninitialized field in nostale filehandles
+Date: Thu, 11 Apr 2024 11:54:04 +0200
+Message-ID: <20240411095420.189483577@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,90 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damian Muszynski <damian.muszynski@intel.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 7d42e097607c4d246d99225bf2b195b6167a210c ]
+[ Upstream commit fde2497d2bc3a063d8af88b258dbadc86bd7b57c ]
 
-During the PCI AER system's error recovery process, the kernel driver
-may encounter a race condition with freeing the reset_data structure's
-memory. If the device restart will take more than 10 seconds the function
-scheduling that restart will exit due to a timeout, and the reset_data
-structure will be freed. However, this data structure is used for
-completion notification after the restart is completed, which leads
-to a UAF bug.
+When fat_encode_fh_nostale() encodes file handle without a parent it
+stores only first 10 bytes of the file handle. However the length of the
+file handle must be a multiple of 4 so the file handle is actually 12
+bytes long and the last two bytes remain uninitialized. This is not
+great at we potentially leak uninitialized information with the handle
+to userspace. Properly initialize the full handle length.
 
-This results in a KFENCE bug notice.
-
-  BUG: KFENCE: use-after-free read in adf_device_reset_worker+0x38/0xa0 [intel_qat]
-  Use-after-free read at 0x00000000bc56fddf (in kfence-#142):
-  adf_device_reset_worker+0x38/0xa0 [intel_qat]
-  process_one_work+0x173/0x340
-
-To resolve this race condition, the memory associated to the container
-of the work_struct is freed on the worker if the timeout expired,
-otherwise on the function that schedules the worker.
-The timeout detection can be done by checking if the caller is
-still waiting for completion or not by using completion_done() function.
-
-Fixes: d8cba25d2c68 ("crypto: qat - Intel(R) QAT driver framework")
+Link: https://lkml.kernel.org/r/20240205122626.13701-1-jack@suse.cz
+Reported-by: syzbot+3ce5dea5b1539ff36769@syzkaller.appspotmail.com
+Fixes: ea3983ace6b7 ("fat: restructure export_operations")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+Cc: Amir Goldstein <amir73il@gmail.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Damian Muszynski <damian.muszynski@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/qat/qat_common/adf_aer.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ fs/fat/nfs.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/crypto/qat/qat_common/adf_aer.c b/drivers/crypto/qat/qat_common/adf_aer.c
-index 44b91cb73dd19..7242a1ee86de7 100644
---- a/drivers/crypto/qat/qat_common/adf_aer.c
-+++ b/drivers/crypto/qat/qat_common/adf_aer.c
-@@ -139,7 +139,8 @@ static void adf_device_reset_worker(struct work_struct *work)
- 	if (adf_dev_init(accel_dev) || adf_dev_start(accel_dev)) {
- 		/* The device hanged and we can't restart it so stop here */
- 		dev_err(&GET_DEV(accel_dev), "Restart device failed\n");
--		if (reset_data->mode == ADF_DEV_RESET_ASYNC)
-+		if (reset_data->mode == ADF_DEV_RESET_ASYNC ||
-+		    completion_done(&reset_data->compl))
- 			kfree(reset_data);
- 		WARN(1, "QAT: device restart failed. Device is unusable\n");
- 		return;
-@@ -147,11 +148,19 @@ static void adf_device_reset_worker(struct work_struct *work)
- 	adf_dev_restarted_notify(accel_dev);
- 	clear_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
- 
--	/* The dev is back alive. Notify the caller if in sync mode */
--	if (reset_data->mode == ADF_DEV_RESET_SYNC)
--		complete(&reset_data->compl);
--	else
-+	/*
-+	 * The dev is back alive. Notify the caller if in sync mode
-+	 *
-+	 * If device restart will take a more time than expected,
-+	 * the schedule_reset() function can timeout and exit. This can be
-+	 * detected by calling the completion_done() function. In this case
-+	 * the reset_data structure needs to be freed here.
-+	 */
-+	if (reset_data->mode == ADF_DEV_RESET_ASYNC ||
-+	    completion_done(&reset_data->compl))
- 		kfree(reset_data);
-+	else
-+		complete(&reset_data->compl);
- }
- 
- static int adf_dev_aer_schedule_reset(struct adf_accel_dev *accel_dev,
-@@ -184,8 +193,9 @@ static int adf_dev_aer_schedule_reset(struct adf_accel_dev *accel_dev,
- 			dev_err(&GET_DEV(accel_dev),
- 				"Reset device timeout expired\n");
- 			ret = -EFAULT;
-+		} else {
-+			kfree(reset_data);
- 		}
--		kfree(reset_data);
- 		return ret;
+diff --git a/fs/fat/nfs.c b/fs/fat/nfs.c
+index eb192656fba27..f442a8d2f114b 100644
+--- a/fs/fat/nfs.c
++++ b/fs/fat/nfs.c
+@@ -139,6 +139,12 @@ fat_encode_fh_nostale(struct inode *inode, __u32 *fh, int *lenp,
+ 		fid->parent_i_gen = parent->i_generation;
+ 		type = FILEID_FAT_WITH_PARENT;
+ 		*lenp = FAT_FID_SIZE_WITH_PARENT;
++	} else {
++		/*
++		 * We need to initialize this field because the fh is actually
++		 * 12 bytes long
++		 */
++		fid->parent_i_pos_hi = 0;
  	}
- 	return 0;
+ 
+ 	return type;
 -- 
 2.43.0
 
