@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BAD21474B0;
-	Thu, 11 Apr 2024 10:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8F71474B9;
+	Thu, 11 Apr 2024 10:34:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831686; cv=none; b=XSp5dZSOqo06s+HCEjzd4LaCl44cXjGs4ImcmpFP1eOVsepbIsXzhm92BbHPsuhM/Wx9IAXr9tCoDtifikhe1PPg0BZ03TLqGy8h4QN16qrvQrf9xweadD2e9WFAS1XZYVh/T2c0pvDvIGLZn/xz8cpGn2yAHy36WjVu5XY8Nok=
+	t=1712831689; cv=none; b=WCtBPlbmKbAy2VSuZfhtLSOFaKDCmjhgBjA4/yRSTEybG7YV5Afmch6N0PYUnLMsBpu1jTd99DVLOEyQihnoWQNOWMYtKybNLhJeY3A6XSqwCgebBcCOdjh8EWI3N2q5TZRbimyQYND6PybIQcsboCLscveeASibb/31/o5X5yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831686; c=relaxed/simple;
-	bh=ZpUbAMHtWNrk+slycAgijDk19YVum6352XbQDoo041w=;
+	s=arc-20240116; t=1712831689; c=relaxed/simple;
+	bh=NNVL0vUgAm7kYx38ojBggc9rfFRy97StTCl06k0qTKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HPap+AnZpsBy+6QP8R20JxOBHOJrMwGxgrE0S+wurgrnvmHecx6uRNPytfUecDNjyOx22j/MpGdDCfwT0Rz6YvlKaV3lU53Tj79juo+yg345Z4jUKMC9ecfFw5pPKuXqY0YmWX0d+Wd67FDGf2wnhSJqgZKEGU/+2YeB4++PJvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WosTqe+N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iR5myfwoLWnDioHisJewN7T5Y0DkEmF+hPzbvp2FL0VdpRUtwsmFtjnXzfspl3AwppdwpBaq1XhoGu893g3sy9bL/WcsEQWVh3CfpoKWBu5WOsBgIkIF8a58peNL1W1bhdq/Ll09ineZGfBljsZx9xveCz38ujRwvnF1FMJ+s2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=El4bJ3+4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WosTqe+N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA556C433C7;
-	Thu, 11 Apr 2024 10:34:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="El4bJ3+4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970B0C433C7;
+	Thu, 11 Apr 2024 10:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831686;
-	bh=ZpUbAMHtWNrk+slycAgijDk19YVum6352XbQDoo041w=;
+	s=korg; t=1712831689;
+	bh=NNVL0vUgAm7kYx38ojBggc9rfFRy97StTCl06k0qTKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WosTqe+NomEZgW0vM770hopdyoZNqPATiV9ZJp02k112fVaMpEWip0Qv1eVZyjOSm
-	 8E6dlxkJzCteUebznOdTircBSqw36aUP6sEavpUleXNBUZY5D0eGEiF51UdvxJ51kb
-	 pT/XHZU1iZ94RkscgW3yzhVkqfDs6wAQx3nwzv6Y=
+	b=El4bJ3+4DSIcxDyxWEgjZTXzkoH5pUkBUWJTtO3dTLc081pNMuibY2kjf2xsMCBkp
+	 fdfubUwal2WW6ruWCRzBc/YJlkZ3/bRAug8Hwkgi/yObMgJI5I1K8Bvn187sRrK4Sn
+	 WSkBAGBBXkGmNFT/radlzQh9DYThu0R286omOJ1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
+	Sean Anderson <sean.anderson@seco.com>,
 	Camelia Groza <camelia.groza@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 091/294] soc: fsl: qbman: Always disable interrupts when taking cgr_lock
-Date: Thu, 11 Apr 2024 11:54:14 +0200
-Message-ID: <20240411095438.419337734@linuxfoundation.org>
+Subject: [PATCH 5.10 092/294] soc: fsl: qbman: Add helper for sanity checking cgr ops
+Date: Thu, 11 Apr 2024 11:54:15 +0200
+Message-ID: <20240411095438.448745549@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -53,68 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Sean Anderson <sean.anderson@seco.com>
 
-[ Upstream commit 584c2a9184a33a40fceee838f856de3cffa19be3 ]
+[ Upstream commit d0e17a4653cebc2c8a20251c837dd1fcec5014d9 ]
 
-smp_call_function_single disables IRQs when executing the callback. To
-prevent deadlocks, we must disable IRQs when taking cgr_lock elsewhere.
-This is already done by qman_update_cgr and qman_delete_cgr; fix the
-other lockers.
+This breaks out/combines get_affine_portal and the cgr sanity check in
+preparation for the next commit. No functional change intended.
 
-Fixes: 96f413f47677 ("soc/fsl/qbman: fix issue in qman_delete_cgr_safe()")
-CC: stable@vger.kernel.org
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Camelia Groza <camelia.groza@nxp.com>
-Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Sean Anderson <sean.anderson@seco.com>
+Acked-by: Camelia Groza <camelia.groza@nxp.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: fbec4e7fed89 ("soc: fsl: qbman: Use raw spinlock for cgr_lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/qbman/qman.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/soc/fsl/qbman/qman.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
-index feb97470699d9..d8267e6c31a50 100644
+index d8267e6c31a50..d581576c9a861 100644
 --- a/drivers/soc/fsl/qbman/qman.c
 +++ b/drivers/soc/fsl/qbman/qman.c
-@@ -1456,11 +1456,11 @@ static void qm_congestion_task(struct work_struct *work)
- 	union qm_mc_result *mcr;
- 	struct qman_cgr *cgr;
- 
--	spin_lock(&p->cgr_lock);
-+	spin_lock_irq(&p->cgr_lock);
- 	qm_mc_start(&p->p);
- 	qm_mc_commit(&p->p, QM_MCC_VERB_QUERYCONGESTION);
- 	if (!qm_mc_result_timeout(&p->p, &mcr)) {
--		spin_unlock(&p->cgr_lock);
-+		spin_unlock_irq(&p->cgr_lock);
- 		dev_crit(p->config->dev, "QUERYCONGESTION timeout\n");
- 		qman_p_irqsource_add(p, QM_PIRQ_CSCI);
- 		return;
-@@ -1476,7 +1476,7 @@ static void qm_congestion_task(struct work_struct *work)
- 	list_for_each_entry(cgr, &p->cgr_cbs, node)
- 		if (cgr->cb && qman_cgrs_get(&c, cgr->cgrid))
- 			cgr->cb(p, cgr, qman_cgrs_get(&rr, cgr->cgrid));
--	spin_unlock(&p->cgr_lock);
-+	spin_unlock_irq(&p->cgr_lock);
- 	qman_p_irqsource_add(p, QM_PIRQ_CSCI);
+@@ -2483,13 +2483,8 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
  }
+ EXPORT_SYMBOL(qman_create_cgr);
  
-@@ -2440,7 +2440,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
- 	preempt_enable();
+-int qman_delete_cgr(struct qman_cgr *cgr)
++static struct qman_portal *qman_cgr_get_affine_portal(struct qman_cgr *cgr)
+ {
+-	unsigned long irqflags;
+-	struct qm_mcr_querycgr cgr_state;
+-	struct qm_mcc_initcgr local_opts;
+-	int ret = 0;
+-	struct qman_cgr *i;
+ 	struct qman_portal *p = get_affine_portal();
  
- 	cgr->chan = p->config->channel;
--	spin_lock(&p->cgr_lock);
-+	spin_lock_irq(&p->cgr_lock);
- 
- 	if (opts) {
- 		struct qm_mcc_initcgr local_opts = *opts;
-@@ -2477,7 +2477,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
- 	    qman_cgrs_get(&p->cgrs[1], cgr->cgrid))
- 		cgr->cb(p, cgr, 1);
- out:
--	spin_unlock(&p->cgr_lock);
-+	spin_unlock_irq(&p->cgr_lock);
+ 	if (cgr->chan != p->config->channel) {
+@@ -2497,10 +2492,25 @@ int qman_delete_cgr(struct qman_cgr *cgr)
+ 		dev_err(p->config->dev, "CGR not owned by current portal");
+ 		dev_dbg(p->config->dev, " create 0x%x, delete 0x%x\n",
+ 			cgr->chan, p->config->channel);
+-
+-		ret = -EINVAL;
+-		goto put_portal;
++		put_affine_portal();
++		return NULL;
+ 	}
++
++	return p;
++}
++
++int qman_delete_cgr(struct qman_cgr *cgr)
++{
++	unsigned long irqflags;
++	struct qm_mcr_querycgr cgr_state;
++	struct qm_mcc_initcgr local_opts;
++	int ret = 0;
++	struct qman_cgr *i;
++	struct qman_portal *p = qman_cgr_get_affine_portal(cgr);
++
++	if (!p)
++		return -EINVAL;
++
+ 	memset(&local_opts, 0, sizeof(struct qm_mcc_initcgr));
+ 	spin_lock_irqsave(&p->cgr_lock, irqflags);
+ 	list_del(&cgr->node);
+@@ -2528,7 +2538,6 @@ int qman_delete_cgr(struct qman_cgr *cgr)
+ 		list_add(&cgr->node, &p->cgr_cbs);
+ release_lock:
+ 	spin_unlock_irqrestore(&p->cgr_lock, irqflags);
+-put_portal:
  	put_affine_portal();
  	return ret;
  }
