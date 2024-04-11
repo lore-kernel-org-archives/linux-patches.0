@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818A61448F3;
-	Thu, 11 Apr 2024 10:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33551448F3;
+	Thu, 11 Apr 2024 10:06:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829968; cv=none; b=ndznJU7G9UeCtsY63aRVaHhhtoOhMfLzj+2jwAP3cTAgl01zU1jWJx7g2wwFoSlj75nYxLE2Zb+0Ac50GG8933me1REeBhUAtEJaPI0Hz2ecNxHPpEdL4v6f/R6S8jRwsvgReRfiPd/0AUC9K1evycJOE8rB9MfvnuBRulrydPQ=
+	t=1712829971; cv=none; b=u/uq7MkJr/kCpgyRc00LwKICugHnWH6eJPuUkrftDclT2+lRJbSY8ZnFMU551u/SLdCyp89kkUmkLyld7Mi/LmzusIXG9x5Xeo51OXUdD1Z+XQePVji+24SNQlkNHS/FULm6jiVcXsNhjSj6feD+BSnvPFETgDACtRZ/nT7W0N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829968; c=relaxed/simple;
-	bh=S33aXnIqGbNsFMOQVUVbqZfjzx7xSfl4iS262qxU1tA=;
+	s=arc-20240116; t=1712829971; c=relaxed/simple;
+	bh=Ey7Qbbr7U2j72en2S5n/9slBerJ7Zl4w5ZrM4V6G4h8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tTBxj5HqENEmd0bowD2NjVoPGMZu45iEWodw86cWUWatml0bIXLql6O8ksVyQ4F8d2TaJuvfAVuoiUKcwRXTf4RA0QPkHthIN0Hzt11EtAyVBro1msujrh2wax/SZyGROnVMNA7n4vapHvjQAWfhCbpmMF1uK/gkAHAN9o2WQDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8Yu2gX4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gvk/USjBXiqE/aisIpqKTtJdgolkPmLI/Tc7sa0WNwVjvJcZC3JAanosvk+xoqygwQE51YtQrMRVhpoFjalGdUt3Y7xAB8kUYXqLbpL9LY+IIfUVAZZ31JXEHea9t9FK/zsQg9f+xKfSv2pdNhI8w1q5YCHkcJt20LBlIHo48xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ws1tQHrs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8Yu2gX4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E8CC433C7;
-	Thu, 11 Apr 2024 10:06:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ws1tQHrs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12BABC433C7;
+	Thu, 11 Apr 2024 10:06:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829968;
-	bh=S33aXnIqGbNsFMOQVUVbqZfjzx7xSfl4iS262qxU1tA=;
+	s=korg; t=1712829971;
+	bh=Ey7Qbbr7U2j72en2S5n/9slBerJ7Zl4w5ZrM4V6G4h8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M8Yu2gX4i3n9Dkq9shDA64bsxPfzibafLC+R5Kjwgot8dXakPNvrwjZcaDxEGaYd8
-	 yNnFyJlQQ4AnQlojDtTSzMOE71n+oiIuysWwZSGhXpA3CpTZbDdqkqwRSKhDBmuvLF
-	 Es3n3XGy969vzM2RPiL/hFF9HjpipRVEaVaP5ViQ=
+	b=ws1tQHrsuGHowtj/HpZYLHtQR/L3NyiqpvQFF1L+qYSweav2pow/s+hLTFWUfQ6D0
+	 pxV4aoMplBO52w5UwFHbGuL/vQZ7iDBXRvpZNv+DaR49ADdkUKvFmPL62sGQXyz++C
+	 8oLMlxrCmvRZokbKHVUKKfxIrbkLAUEdJzMjmfzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dave Stevenson <dave.stevenson@raspberrypi.org>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+	Jacopo Mondi <jacopo@jmondi.org>,
+	Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 128/175] staging: mmal-vchiq: Avoid use of bool in structures
-Date: Thu, 11 Apr 2024 11:55:51 +0200
-Message-ID: <20240411095423.418639459@linuxfoundation.org>
+Subject: [PATCH 4.19 129/175] staging: mmal-vchiq: Allocate and free components as required
+Date: Thu, 11 Apr 2024 11:55:52 +0200
+Message-ID: <20240411095423.448851609@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -55,97 +54,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Stevenson <dave.stevenson@raspberrypi.org>
 
-[ Upstream commit 640e77466e69d9c28de227bc76881f5501f532ca ]
+[ Upstream commit 8c589e1794a31e9a381916b0280260ab601e4d6e ]
 
-Fixes up a checkpatch error "Avoid using bool structure members
-because of possible alignment issues".
+The existing code assumed that there would only ever be 4 components,
+and never freed the entries once used.
+Allow arbitrary creation and destruction of components.
 
 Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.org>
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Acked-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Acked-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
+Signed-off-by: Jacopo Mondi <jacopo@jmondi.org>
+Signed-off-by: Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
+Link: https://lore.kernel.org/r/20200623164235.29566-3-nsaenzjulienne@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: f37e76abd614 ("staging: vc04_services: fix information leak in create_component()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../vc04_services/bcm2835-camera/mmal-vchiq.c        | 12 ++++++------
- .../vc04_services/bcm2835-camera/mmal-vchiq.h        |  4 ++--
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ .../vc04_services/bcm2835-camera/mmal-vchiq.c | 29 ++++++++++++-------
+ .../vc04_services/bcm2835-camera/mmal-vchiq.h |  1 +
+ 2 files changed, 20 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.c b/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.c
-index daa2b96565529..00c943516ba38 100644
+index 00c943516ba38..4f128c75c0f6c 100644
 --- a/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.c
 +++ b/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.c
-@@ -845,9 +845,9 @@ static int port_info_get(struct vchiq_mmal_instance *instance,
- 		goto release_msg;
+@@ -31,8 +31,11 @@
+ #define USE_VCHIQ_ARM
+ #include "interface/vchi/vchi.h"
  
- 	if (rmsg->u.port_info_get_reply.port.is_enabled == 0)
--		port->enabled = false;
-+		port->enabled = 0;
- 	else
--		port->enabled = true;
-+		port->enabled = 1;
+-/* maximum number of components supported */
+-#define VCHIQ_MMAL_MAX_COMPONENTS 4
++/*
++ * maximum number of components supported.
++ * This matches the maximum permitted by default on the VPU
++ */
++#define VCHIQ_MMAL_MAX_COMPONENTS 64
  
- 	/* copy the values out of the message */
- 	port->handle = rmsg->u.port_info_get_reply.port_handle;
-@@ -1283,7 +1283,7 @@ static int port_disable(struct vchiq_mmal_instance *instance,
- 	if (!port->enabled)
- 		return 0;
+ /*#define FULL_MSG_DUMP 1*/
  
--	port->enabled = false;
-+	port->enabled = 0;
+@@ -165,8 +168,6 @@ struct vchiq_mmal_instance {
+ 	/* protect accesses to context_map */
+ 	struct mutex context_map_lock;
  
- 	ret = port_action_port(instance, port,
- 			       MMAL_MSG_PORT_ACTION_TYPE_DISABLE);
-@@ -1335,7 +1335,7 @@ static int port_enable(struct vchiq_mmal_instance *instance,
- 	if (ret)
- 		goto done;
+-	/* component to use next */
+-	int component_idx;
+ 	struct vchiq_mmal_component component[VCHIQ_MMAL_MAX_COMPONENTS];
+ };
  
--	port->enabled = true;
-+	port->enabled = 1;
+@@ -1607,18 +1608,24 @@ int vchiq_mmal_component_init(struct vchiq_mmal_instance *instance,
+ {
+ 	int ret;
+ 	int idx;		/* port index */
+-	struct vchiq_mmal_component *component;
++	struct vchiq_mmal_component *component = NULL;
  
- 	if (port->buffer_cb) {
- 		/* send buffer headers to videocore */
-@@ -1502,7 +1502,7 @@ int vchiq_mmal_port_connect_tunnel(struct vchiq_mmal_instance *instance,
- 			pr_err("failed disconnecting src port\n");
- 			goto release_unlock;
- 		}
--		src->connected->enabled = false;
-+		src->connected->enabled = 0;
- 		src->connected = NULL;
+ 	if (mutex_lock_interruptible(&instance->vchiq_mutex))
+ 		return -EINTR;
+ 
+-	if (instance->component_idx == VCHIQ_MMAL_MAX_COMPONENTS) {
++	for (idx = 0; idx < VCHIQ_MMAL_MAX_COMPONENTS; idx++) {
++		if (!instance->component[idx].in_use) {
++			component = &instance->component[idx];
++			component->in_use = 1;
++			break;
++		}
++	}
++
++	if (!component) {
+ 		ret = -EINVAL;	/* todo is this correct error? */
+ 		goto unlock;
  	}
  
-@@ -1746,7 +1746,7 @@ int vchiq_mmal_component_disable(struct vchiq_mmal_instance *instance,
+-	component = &instance->component[instance->component_idx];
+-
+ 	ret = create_component(instance, component, name);
+ 	if (ret < 0)
+ 		goto unlock;
+@@ -1666,8 +1673,6 @@ int vchiq_mmal_component_init(struct vchiq_mmal_instance *instance,
+ 			goto release_component;
+ 	}
  
- 	ret = disable_component(instance, component);
- 	if (ret == 0)
--		component->enabled = false;
-+		component->enabled = 0;
+-	instance->component_idx++;
+-
+ 	*component_out = component;
  
  	mutex_unlock(&instance->vchiq_mutex);
+@@ -1677,6 +1682,8 @@ int vchiq_mmal_component_init(struct vchiq_mmal_instance *instance,
+ release_component:
+ 	destroy_component(instance, component);
+ unlock:
++	if (component)
++		component->in_use = 0;
+ 	mutex_unlock(&instance->vchiq_mutex);
  
+ 	return ret;
+@@ -1698,6 +1705,8 @@ int vchiq_mmal_component_finalise(struct vchiq_mmal_instance *instance,
+ 
+ 	ret = destroy_component(instance, component);
+ 
++	component->in_use = 0;
++
+ 	mutex_unlock(&instance->vchiq_mutex);
+ 
+ 	return ret;
 diff --git a/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.h b/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.h
-index b0ee1716525b4..b3c231e619c90 100644
+index b3c231e619c90..ee5eb6d4d080d 100644
 --- a/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.h
 +++ b/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.h
-@@ -47,7 +47,7 @@ typedef void (*vchiq_mmal_buffer_cb)(
- 		unsigned long length, u32 mmal_flags, s64 dts, s64 pts);
- 
- struct vchiq_mmal_port {
--	bool enabled;
-+	u32 enabled:1;
- 	u32 handle;
- 	u32 type; /* port type, cached to use on port info set */
- 	u32 index; /* port index, cached to use on port info set */
-@@ -81,7 +81,7 @@ struct vchiq_mmal_port {
+@@ -81,6 +81,7 @@ struct vchiq_mmal_port {
  };
  
  struct vchiq_mmal_component {
--	bool enabled;
-+	u32 enabled:1;
++	u32 in_use:1;
+ 	u32 enabled:1;
  	u32 handle;  /* VideoCore handle for component */
  	u32 inputs;  /* Number of input ports */
- 	u32 outputs; /* Number of output ports */
 -- 
 2.43.0
 
