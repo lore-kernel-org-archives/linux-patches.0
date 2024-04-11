@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EEDD1448EF;
-	Thu, 11 Apr 2024 10:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4103A1448EF;
+	Thu, 11 Apr 2024 10:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830290; cv=none; b=QA3WYPPNakPq7AnPvW5Qh/MvFjSbZcCN2KJeqQrCRDZFbC6zrrNqQ4J7qsFv7//c/TEumRaenXh0M/0j+uwWJLugCa5XBY/cqHaj2gJo/fAPnNj/qq/Au91DGx/pi7kkBURCjXP4l+OwiK14gCaUoBDc57kTwdD2bTdtdayiwbo=
+	t=1712830293; cv=none; b=hkw9bEUgD4nmym3MRinwTZMiJwWFvT1DQQEePdiajJLHoWlzsj6qT9tNuCUjqspjhTLhVRtj22/A0PmsDuzhONiu5G1if/PEqW+USx4lQ31bqzc4S69Pmw6Z4E11/WYfnL4VjFs17n0tg4lgiwhHn2DOOo8N+JKXPKwU6cqKfwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830290; c=relaxed/simple;
-	bh=G/nXTX9L8DmZSzknHOjhpcW8Rc1qfDuCKHPNl9Szyiw=;
+	s=arc-20240116; t=1712830293; c=relaxed/simple;
+	bh=pHAZZSRzlXXzJ3d86d0J+7Ls0AZtyCm93IHUXQsKln4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hXiuvcXHAxuf0XQor3XE1y7qSGvlhVRFmDgy9yYP3W4DLhmCcRCEltXnZypYgBL6lYhvCQuGeT+HTuY1Eh2BPIfZHsLHaTtb+DY6GETI/6W4fYaeQ40emlCE1Kx54TjT+oNvhBzdwHhk/isot80lEUKBcGS7MjcI934jbpGQC2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDJOK9o6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bM0FylZun2DJ3r1pJ0BBLzuyzX9MOdE/M8ql6RS2TB/AKA4QDtPgyUZeyaxIzbvs3J1MAEMaJWDjaTsyiJ6pkxxcWe8F1kPEyASECTUmYZ7A6sW5W8LjVvXU2uHQ57YGA72KS3oMGzdy/GPcSOe366E4rQJIWcr0+Ht4TKz/c2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0PIYSd+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDJOK9o6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C641AC433C7;
-	Thu, 11 Apr 2024 10:11:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0PIYSd+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B123FC433C7;
+	Thu, 11 Apr 2024 10:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830290;
-	bh=G/nXTX9L8DmZSzknHOjhpcW8Rc1qfDuCKHPNl9Szyiw=;
+	s=korg; t=1712830293;
+	bh=pHAZZSRzlXXzJ3d86d0J+7Ls0AZtyCm93IHUXQsKln4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HDJOK9o6gCHTUI4ToC5zsJdU5M056Xwi/LgOlz3jUK9uaGY2kSEJyXpcDOL/MX/cx
-	 CnSnqf/9Y+SMit4g/eEI1RNRhA53M7CPzxIX0cG/fxUsCZbEs/kf6jw0lagUwCu6u+
-	 QpzZxPUKkWgPOXBjxwfRuhxq8TyMQ61Q/Bp7xTr4=
+	b=P0PIYSd+d12Dlu7ml/V7Yvp2zsWmnieFyzcD8jDN3suZffSuMsUWMdTgLFsS0l3/G
+	 I5cCBpGl28MOQkhSRliJA2FvNTgXCm3PKtsX79Xms8afpOXq+fr6yeK4GkxUcCeZ/d
+	 XPikx7hkSUhjpbParWU5lNs0U+y7Q3BQ3zo8pPoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Dionne-Riel <samuel@dionne-riel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Jan Karcher <jaka@linux.ibm.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Wen Gu <guwen@linux.alibaba.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 061/143] drm: panel-orientation-quirks: Add quirk for GPD Win Mini
-Date: Thu, 11 Apr 2024 11:55:29 +0200
-Message-ID: <20240411095422.752415919@linuxfoundation.org>
+Subject: [PATCH 6.8 052/143] net/smc: reduce rtnl pressure in smc_pnet_create_pnetids_list()
+Date: Thu, 11 Apr 2024 11:55:20 +0200
+Message-ID: <20240411095422.483096548@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -51,50 +56,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Dionne-Riel <samuel@dionne-riel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2f862fdc0fd802e728b6ca96bc78ec3f01bf161e ]
+[ Upstream commit 00af2aa93b76b1bade471ad0d0525d4d29ca5cc0 ]
 
-This adds a DMI orientation quirk for the GPD Win Mini panel.
+Many syzbot reports show extreme rtnl pressure, and many of them hint
+that smc acquires rtnl in netns creation for no good reason [1]
 
-Signed-off-by: Samuel Dionne-Riel <samuel@dionne-riel.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231222030149.3740815-2-samuel@dionne-riel.com
+This patch returns early from smc_pnet_net_init()
+if there is no netdevice yet.
+
+I am not even sure why smc_pnet_create_pnetids_list() even exists,
+because smc_pnet_netdev_event() is also calling
+smc_pnet_add_base_pnetid() when handling NETDEV_UP event.
+
+[1] extract of typical syzbot reports
+
+2 locks held by syz-executor.3/12252:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.4/12253:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.1/12257:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.2/12261:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.0/12265:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.3/12268:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.4/12271:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.1/12274:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.2/12280:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Wenjia Zhang <wenjia@linux.ibm.com>
+Cc: Jan Karcher <jaka@linux.ibm.com>
+Cc: "D. Wythe" <alibuda@linux.alibaba.com>
+Cc: Tony Lu <tonylu@linux.alibaba.com>
+Cc: Wen Gu <guwen@linux.alibaba.com>
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240302100744.3868021-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/smc/smc_pnet.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index 3d92f66e550c3..aa93129c3397e 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -117,6 +117,12 @@ static const struct drm_dmi_panel_orientation_data lcd1080x1920_leftside_up = {
- 	.orientation = DRM_MODE_PANEL_ORIENTATION_LEFT_UP,
- };
+diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
+index 9f2c58c5a86b7..2adb92b8c4699 100644
+--- a/net/smc/smc_pnet.c
++++ b/net/smc/smc_pnet.c
+@@ -806,6 +806,16 @@ static void smc_pnet_create_pnetids_list(struct net *net)
+ 	u8 ndev_pnetid[SMC_MAX_PNETID_LEN];
+ 	struct net_device *dev;
  
-+static const struct drm_dmi_panel_orientation_data lcd1080x1920_rightside_up = {
-+	.width = 1080,
-+	.height = 1920,
-+	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
-+};
++	/* Newly created netns do not have devices.
++	 * Do not even acquire rtnl.
++	 */
++	if (list_empty(&net->dev_base_head))
++		return;
 +
- static const struct drm_dmi_panel_orientation_data lcd1200x1920_rightside_up = {
- 	.width = 1200,
- 	.height = 1920,
-@@ -279,6 +285,12 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "G1618-03")
- 		},
- 		.driver_data = (void *)&lcd720x1280_rightside_up,
-+	}, {	/* GPD Win Mini */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "GPD"),
-+		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "G1617-01")
-+		},
-+		.driver_data = (void *)&lcd1080x1920_rightside_up,
- 	}, {	/* I.T.Works TW891 */
- 		.matches = {
- 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "To be filled by O.E.M."),
++	/* Note: This might not be needed, because smc_pnet_netdev_event()
++	 * is also calling smc_pnet_add_base_pnetid() when handling
++	 * NETDEV_UP event.
++	 */
+ 	rtnl_lock();
+ 	for_each_netdev(net, dev)
+ 		smc_pnet_add_base_pnetid(net, dev, ndev_pnetid);
 -- 
 2.43.0
 
