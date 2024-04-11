@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0226D1474B5;
-	Thu, 11 Apr 2024 10:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCE66BB29;
+	Thu, 11 Apr 2024 10:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832381; cv=none; b=aFILJ9d12sHWRSPXKvj8QE2eFyx8Dls+t8VnmJWeU2So50J7EE0s3Ly/wYWUCkhciIpv7us9Slbe+rIKgV+EECKgP0ZEXwGzw2dOcEZzhyXOz5/b1JFOrI3mMmPURE/um7c+OQXibJhHUJae1U5Q8CcDqxwAUAifWMgVS1xYHDs=
+	t=1712832384; cv=none; b=UQZa274iQUqkR1BS1QqudVThknxUT0H2Tgukscg0evt6vPx22aS498EjIsrvSji0Z8GcwuL2S9oDxCp6OrxjA/asaHARfEW55/2lsG5rpfI6ckrnhO7zh8dIvrOP9yc3T/L5oIX0m3KMurml1hbWueTwHIqQLKdEMYitZob7toM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832381; c=relaxed/simple;
-	bh=jv88MlG3GDREym2h+pBbIR0YNu1onOngrkjMEJIY+ok=;
+	s=arc-20240116; t=1712832384; c=relaxed/simple;
+	bh=iLgPLm1FcwiKZJppAmWV/rmx0FnXLILqIDXLsugToAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GchgLMjeIke+Gug/Geax81N5KMU4RwxsAtgVYp01ACfhmXLUpXXH1F2XTO1RkanJO15AtJ/+v37YJFT64jO5TpjIcQ8XtAxaixIS/g3WfxtBXATb3hdp0z2AeB346BrWft2xNOoNhFINJSYNCSqCcTpsKi9EUewfM8gNrCN4YGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zO4ELeBH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b1O8ajWFw7Vj/zfPLAW44AHfFkWTmxxUyVPI8/IO0jNxpp0ZYAliRgBWGpF//rtuSX6QDb7fC+BIDrQd8U/+HssPiwQRWLCCBRLP+sn3k0mYtonwdYdm6UxA5CK0P2yWIFtL2wNe+X/FsKGruWHkVOAZMqKENka8iY6L9AhEYnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+3P5eC2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zO4ELeBH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734F0C433C7;
-	Thu, 11 Apr 2024 10:46:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+3P5eC2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D7CC433F1;
+	Thu, 11 Apr 2024 10:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832380;
-	bh=jv88MlG3GDREym2h+pBbIR0YNu1onOngrkjMEJIY+ok=;
+	s=korg; t=1712832383;
+	bh=iLgPLm1FcwiKZJppAmWV/rmx0FnXLILqIDXLsugToAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zO4ELeBH1pLaTHo9mm7G843r/3ZawVCKlG4Z9N+j6GNiN/vog05x4e7v1CXWXw3Kd
-	 Z+oFCfM85mUnIhxjD5roCHCRy+q3gKD0NgoKtUAFymB98G6wLCu4OwhAq/tCSGAhI/
-	 h8bfjdRKwwL2XidgTidmKZLipq+VqBqnI0ZWHWFY=
+	b=T+3P5eC2q2j4azkW4JkH3MLexeEEKUTYMlXRWtsu5i3POfvahC+Ju1Y+OnLsVAMQ+
+	 QTHwxwywRPHEZMnQ8VBcM1C93daSS++OnFghi0MBjp+SSvNdUVPIyZpw/T1YJEtrEh
+	 E3RWJhcD+glCcW9J/GoW4PRuOgfmdrko3w5G9HYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	Markus Elfring <elfring@users.sourceforge.net>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 29/83] drm/vc4: dont check if plane->state->fb == state->fb
-Date: Thu, 11 Apr 2024 11:57:01 +0200
-Message-ID: <20240411095413.554170983@linuxfoundation.org>
+Subject: [PATCH 6.1 03/83] batman-adv: Return directly after a failed batadv_dat_select_candidates() in batadv_dat_forward_data()
+Date: Thu, 11 Apr 2024 11:56:35 +0200
+Message-ID: <20240411095412.778699955@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -52,100 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Markus Elfring <elfring@users.sourceforge.net>
 
-[ Upstream commit 5ee0d47dcf33efd8950b347dcf4d20bab12a3fa9 ]
+[ Upstream commit ffc15626c861f811f9778914be004fcf43810a91 ]
 
-Currently, when using non-blocking commits, we can see the following
-kernel warning:
+The kfree() function was called in one case by
+the batadv_dat_forward_data() function during error handling
+even if the passed variable contained a null pointer.
+This issue was detected by using the Coccinelle software.
 
-[  110.908514] ------------[ cut here ]------------
-[  110.908529] refcount_t: underflow; use-after-free.
-[  110.908620] WARNING: CPU: 0 PID: 1866 at lib/refcount.c:87 refcount_dec_not_one+0xb8/0xc0
-[  110.908664] Modules linked in: rfcomm snd_seq_dummy snd_hrtimer snd_seq snd_seq_device cmac algif_hash aes_arm64 aes_generic algif_skcipher af_alg bnep hid_logitech_hidpp vc4 brcmfmac hci_uart btbcm brcmutil bluetooth snd_soc_hdmi_codec cfg80211 cec drm_display_helper drm_dma_helper drm_kms_helper snd_soc_core snd_compress snd_pcm_dmaengine fb_sys_fops sysimgblt syscopyarea sysfillrect raspberrypi_hwmon ecdh_generic ecc rfkill libaes i2c_bcm2835 binfmt_misc joydev snd_bcm2835(C) bcm2835_codec(C) bcm2835_isp(C) v4l2_mem2mem videobuf2_dma_contig snd_pcm bcm2835_v4l2(C) raspberrypi_gpiomem bcm2835_mmal_vchiq(C) videobuf2_v4l2 snd_timer videobuf2_vmalloc videobuf2_memops videobuf2_common snd videodev vc_sm_cma(C) mc hid_logitech_dj uio_pdrv_genirq uio i2c_dev drm fuse dm_mod drm_panel_orientation_quirks backlight ip_tables x_tables ipv6
-[  110.909086] CPU: 0 PID: 1866 Comm: kodi.bin Tainted: G         C         6.1.66-v8+ #32
-[  110.909104] Hardware name: Raspberry Pi 3 Model B Rev 1.2 (DT)
-[  110.909114] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  110.909132] pc : refcount_dec_not_one+0xb8/0xc0
-[  110.909152] lr : refcount_dec_not_one+0xb4/0xc0
-[  110.909170] sp : ffffffc00913b9c0
-[  110.909177] x29: ffffffc00913b9c0 x28: 000000556969bbb0 x27: 000000556990df60
-[  110.909205] x26: 0000000000000002 x25: 0000000000000004 x24: ffffff8004448480
-[  110.909230] x23: ffffff800570b500 x22: ffffff802e03a7bc x21: ffffffecfca68c78
-[  110.909257] x20: ffffff8002b42000 x19: ffffff802e03a600 x18: 0000000000000000
-[  110.909283] x17: 0000000000000011 x16: ffffffffffffffff x15: 0000000000000004
-[  110.909308] x14: 0000000000000fff x13: ffffffed577e47e0 x12: 0000000000000003
-[  110.909333] x11: 0000000000000000 x10: 0000000000000027 x9 : c912d0d083728c00
-[  110.909359] x8 : c912d0d083728c00 x7 : 65646e75203a745f x6 : 746e756f63666572
-[  110.909384] x5 : ffffffed579f62ee x4 : ffffffed579eb01e x3 : 0000000000000000
-[  110.909409] x2 : 0000000000000000 x1 : ffffffc00913b750 x0 : 0000000000000001
-[  110.909434] Call trace:
-[  110.909441]  refcount_dec_not_one+0xb8/0xc0
-[  110.909461]  vc4_bo_dec_usecnt+0x4c/0x1b0 [vc4]
-[  110.909903]  vc4_cleanup_fb+0x44/0x50 [vc4]
-[  110.910315]  drm_atomic_helper_cleanup_planes+0x88/0xa4 [drm_kms_helper]
-[  110.910669]  vc4_atomic_commit_tail+0x390/0x9dc [vc4]
-[  110.911079]  commit_tail+0xb0/0x164 [drm_kms_helper]
-[  110.911397]  drm_atomic_helper_commit+0x1d0/0x1f0 [drm_kms_helper]
-[  110.911716]  drm_atomic_commit+0xb0/0xdc [drm]
-[  110.912569]  drm_mode_atomic_ioctl+0x348/0x4b8 [drm]
-[  110.913330]  drm_ioctl_kernel+0xec/0x15c [drm]
-[  110.914091]  drm_ioctl+0x24c/0x3b0 [drm]
-[  110.914850]  __arm64_sys_ioctl+0x9c/0xd4
-[  110.914873]  invoke_syscall+0x4c/0x114
-[  110.914897]  el0_svc_common+0xd0/0x118
-[  110.914917]  do_el0_svc+0x38/0xd0
-[  110.914936]  el0_svc+0x30/0x8c
-[  110.914958]  el0t_64_sync_handler+0x84/0xf0
-[  110.914979]  el0t_64_sync+0x18c/0x190
-[  110.914996] ---[ end trace 0000000000000000 ]---
+* Thus return directly after a batadv_dat_select_candidates() call failed
+  at the beginning.
 
-This happens because, although `prepare_fb` and `cleanup_fb` are
-perfectly balanced, we cannot guarantee consistency in the check
-plane->state->fb == state->fb. This means that sometimes we can increase
-the refcount in `prepare_fb` and don't decrease it in `cleanup_fb`. The
-opposite can also be true.
+* Delete the label “out” which became unnecessary with this refactoring.
 
-In fact, the struct drm_plane .state shouldn't be accessed directly
-but instead, the `drm_atomic_get_new_plane_state()` helper function should
-be used. So, we could stick to this check, but using
-`drm_atomic_get_new_plane_state()`. But actually, this check is not really
-needed. We can increase and decrease the refcount symmetrically without
-problems.
-
-This is going to make the code more simple and consistent.
-
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240105175908.242000-1-mcanal@igalia.com
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Acked-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_plane.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/batman-adv/distributed-arp-table.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_plane.c b/drivers/gpu/drm/vc4/vc4_plane.c
-index eb08020154f30..7e6648b277b25 100644
---- a/drivers/gpu/drm/vc4/vc4_plane.c
-+++ b/drivers/gpu/drm/vc4/vc4_plane.c
-@@ -1415,9 +1415,6 @@ static int vc4_prepare_fb(struct drm_plane *plane,
+diff --git a/net/batman-adv/distributed-arp-table.c b/net/batman-adv/distributed-arp-table.c
+index a0233252032dc..521d4952eb515 100644
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -684,7 +684,7 @@ static bool batadv_dat_forward_data(struct batadv_priv *bat_priv,
  
- 	drm_gem_plane_helper_prepare_fb(plane, state);
+ 	cand = batadv_dat_select_candidates(bat_priv, ip, vid);
+ 	if (!cand)
+-		goto out;
++		return ret;
  
--	if (plane->state->fb == state->fb)
--		return 0;
--
- 	return vc4_bo_inc_usecnt(bo);
+ 	batadv_dbg(BATADV_DBG_DAT, bat_priv, "DHT_SEND for %pI4\n", &ip);
+ 
+@@ -728,7 +728,6 @@ static bool batadv_dat_forward_data(struct batadv_priv *bat_priv,
+ 		batadv_orig_node_put(cand[i].orig_node);
+ 	}
+ 
+-out:
+ 	kfree(cand);
+ 	return ret;
  }
- 
-@@ -1426,7 +1423,7 @@ static void vc4_cleanup_fb(struct drm_plane *plane,
- {
- 	struct vc4_bo *bo;
- 
--	if (plane->state->fb == state->fb || !state->fb)
-+	if (!state->fb)
- 		return;
- 
- 	bo = to_vc4_bo(&drm_fb_dma_get_gem_obj(state->fb, 0)->base);
 -- 
 2.43.0
 
