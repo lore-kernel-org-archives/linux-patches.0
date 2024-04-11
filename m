@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA83146586;
-	Thu, 11 Apr 2024 10:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6846145B28;
+	Thu, 11 Apr 2024 10:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830472; cv=none; b=BjFZk5JdvcARQhawbybsZIT8kzwCAuWecVSWhNwjlWW+HHQWEdXpDDYbf8Uvnen3Kpxi552bz4gI41/+ZfDIMPZshljqemsWJQ9ONCXl7rZSVAc0Bg4xP02DLjUigOnCKoApe9265oOg/snXfFvNUeEAli/TkDb8j5hEI+9tCbg=
+	t=1712830475; cv=none; b=EvEroHkayHCN1kZlXrX1A/dTbi6/gdaSk5TMzPzfPkjj7bduxy3chwji9S4h/uIrFgbl4nnMR+NnxL0DdRgPrcnbXb6vqaPCQV8S/8PWpnyjeLulvyFP5ce+9nId3GuZTq7qPF2VwHJiSp+qDHl24DRKbtntwHwMLeXkrhV5teg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830472; c=relaxed/simple;
-	bh=TDarKECVdbG/3qUUiWn4q4/fSFrLpla96WAzvNnlyt8=;
+	s=arc-20240116; t=1712830475; c=relaxed/simple;
+	bh=aICE5zh+3PSxAysPUC+b7BsHPnG9dJCyVsr7AFKL918=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sVBD7bHm926+xqp73sDG0wFo3eyywTFg3N5bzYtLGRYIlfQ83T+qhOtEUdGFSHAl2rzzPCIWKm9FhM+lHsR6AwjNQypt7ZTejr4tmOabhitSRKEa05fDzhMglwHycNsLJcSAm4Qn1LmZ02fBmVVol38pGoQHvplOuJ1m6qNTgXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRLzmzy+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZFVt4Uz1DbLl9JBW6Fv5Oa7q7cDuLN5O1dXwiwuZ1qfHVMGk2O8nqbpJa9ZpCn434mm1RLOmnbYYSyRQoA/5srBUWZ8oxOOeBFgVUEKHLPBuEPLW2u8dMMK+ugjiSoldB9AGL0NYHiU+1o3DsrIdUD8ZpT6kwcHmIJRShPBJEpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvegpcPz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRLzmzy+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 061CDC433F1;
-	Thu, 11 Apr 2024 10:14:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvegpcPz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED42AC433C7;
+	Thu, 11 Apr 2024 10:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830472;
-	bh=TDarKECVdbG/3qUUiWn4q4/fSFrLpla96WAzvNnlyt8=;
+	s=korg; t=1712830475;
+	bh=aICE5zh+3PSxAysPUC+b7BsHPnG9dJCyVsr7AFKL918=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TRLzmzy+wqLrWVnunD2EdMPrz1sQkbFRrPCm191wsX4zBMjCgaN3Mttclj5up/qwk
-	 cah4d5ZYpbyD9TvfHw+C2BXQg3G1l6iFdiaL0Z1QK+Pi138aXZf71mXh2/baL13I5Y
-	 97+p6khDVY+laDH5bVeRo9hCvJ7BmKmApj7nREcA=
+	b=uvegpcPz/36TLEIH/f03U2ZMQyfG9GkaFF+QBIeqAglNDXAiwkhOfIktPKAVswvhB
+	 9vvk5WMIHfTSX0BPztVW5V6UgPc91KJM4YqRXZwFZcVH8ZKS0YvB82YBD4CbttlgKc
+	 QR27gh8lnRZ7JfSp5ohpTZKSyyO/LPQUJ2yb20M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	BassCheck <bass@buaa.edu.cn>,
+	Gui-Dong Han <2045gemini@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 014/215] serial: max310x: fix NULL pointer dereference in I2C instantiation
-Date: Thu, 11 Apr 2024 11:53:43 +0200
-Message-ID: <20240411095425.311309741@linuxfoundation.org>
+Subject: [PATCH 5.4 015/215] media: xc4000: Fix atomicity violation in xc4000_get_frequency
+Date: Thu, 11 Apr 2024 11:53:44 +0200
+Message-ID: <20240411095425.341337080@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -51,60 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Gui-Dong Han <2045gemini@gmail.com>
 
-[ Upstream commit 0d27056c24efd3d63a03f3edfbcfc4827086b110 ]
+[ Upstream commit 36d503ad547d1c75758a6fcdbec2806f1b6aeb41 ]
 
-When trying to instantiate a max14830 device from userspace:
+In xc4000_get_frequency():
+	*freq = priv->freq_hz + priv->freq_offset;
+The code accesses priv->freq_hz and priv->freq_offset without holding any
+lock.
 
-    echo max14830 0x60 > /sys/bus/i2c/devices/i2c-2/new_device
+In xc4000_set_params():
+	// Code that updates priv->freq_hz and priv->freq_offset
+	...
 
-we get the following error:
+xc4000_get_frequency() and xc4000_set_params() may execute concurrently,
+risking inconsistent reads of priv->freq_hz and priv->freq_offset. Since
+these related data may update during reading, it can result in incorrect
+frequency calculation, leading to atomicity violations.
 
-    Unable to handle kernel NULL pointer dereference at virtual address...
-    ...
-    Call trace:
-        max310x_i2c_probe+0x48/0x170 [max310x]
-        i2c_device_probe+0x150/0x2a0
-    ...
+This possible bug is found by an experimental static analysis tool
+developed by our team, BassCheck[1]. This tool analyzes the locking APIs
+to extract function pairs that can be concurrently executed, and then
+analyzes the instructions in the paired functions to identify possible
+concurrency bugs including data races and atomicity violations. The above
+possible bug is reported when our tool analyzes the source code of
+Linux 6.2.
 
-Add check for validity of devtype to prevent the error, and abort probe
-with a meaningful error message.
+To address this issue, it is proposed to add a mutex lock pair in
+xc4000_get_frequency() to ensure atomicity. With this patch applied, our
+tool no longer reports the possible bug, with the kernel configuration
+allyesconfig for x86_64. Due to the lack of associated hardware, we cannot
+test the patch in runtime testing, and just verify it according to the
+code logic.
 
-Fixes: 2e1f2d9a9bdb ("serial: max310x: implement I2C support")
+[1] https://sites.google.com/view/basscheck/
+
+Fixes: 4c07e32884ab ("[media] xc4000: Fix get_frequency()")
 Cc: stable@vger.kernel.org
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240118152213.2644269-2-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: BassCheck <bass@buaa.edu.cn>
+Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max310x.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/media/tuners/xc4000.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
-index 5570fd3b84e15..363b68555fe62 100644
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -1636,13 +1636,16 @@ static unsigned short max310x_i2c_slave_addr(unsigned short addr,
- 
- static int max310x_i2c_probe(struct i2c_client *client)
+diff --git a/drivers/media/tuners/xc4000.c b/drivers/media/tuners/xc4000.c
+index ef9af052007cb..849df4d1c573c 100644
+--- a/drivers/media/tuners/xc4000.c
++++ b/drivers/media/tuners/xc4000.c
+@@ -1517,10 +1517,10 @@ static int xc4000_get_frequency(struct dvb_frontend *fe, u32 *freq)
  {
--	const struct max310x_devtype *devtype =
--			device_get_match_data(&client->dev);
-+	const struct max310x_devtype *devtype;
- 	struct i2c_client *port_client;
- 	struct regmap *regmaps[4];
- 	unsigned int i;
- 	u8 port_addr;
+ 	struct xc4000_priv *priv = fe->tuner_priv;
  
-+	devtype = device_get_match_data(&client->dev);
-+	if (!devtype)
-+		return dev_err_probe(&client->dev, -ENODEV, "Failed to match device\n");
-+
- 	if (client->addr < devtype->slave_addr.min ||
- 		client->addr > devtype->slave_addr.max)
- 		return dev_err_probe(&client->dev, -EINVAL,
++	mutex_lock(&priv->lock);
+ 	*freq = priv->freq_hz + priv->freq_offset;
+ 
+ 	if (debug) {
+-		mutex_lock(&priv->lock);
+ 		if ((priv->cur_fw.type
+ 		     & (BASE | FM | DTV6 | DTV7 | DTV78 | DTV8)) == BASE) {
+ 			u16	snr = 0;
+@@ -1531,8 +1531,8 @@ static int xc4000_get_frequency(struct dvb_frontend *fe, u32 *freq)
+ 				return 0;
+ 			}
+ 		}
+-		mutex_unlock(&priv->lock);
+ 	}
++	mutex_unlock(&priv->lock);
+ 
+ 	dprintk(1, "%s()\n", __func__);
+ 
 -- 
 2.43.0
 
