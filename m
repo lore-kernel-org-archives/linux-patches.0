@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70283146A74;
-	Thu, 11 Apr 2024 10:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5BF140366;
+	Thu, 11 Apr 2024 10:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832064; cv=none; b=H8+J0ntzYmkRYRTJADVlfX8aVsonkt2asMKRVW7Ywg2Y4wD4/Br8GrkTQ4yPylWwVawVdWiSZkfy9bqXvAJHbkYgBW+IAd0+XNnxwMBgL1pmPDEE8BJ4pM2sZ1nrKhHMl6p73NPF12V490k/GZENzNNTwosvRtALtnChS+MguxQ=
+	t=1712832067; cv=none; b=fMN0QM0s+YyMIdaApOhNeQ4IFolrIdDqB1inE19KtpQUFyXy0Cb5imNM8i2xlJvFdSxB46A2AMXm4Eo2jGqG7V3iCdJ6CILHGBbTKVI4yBKioKkd5Ltaqa2e2MfWylHT/SKDeBUtOoRd6btvn9HnSa4nyCU04jU/cBHDKnUFS44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832064; c=relaxed/simple;
-	bh=rOlDSPC3xuq95K9NnR32lLT4QB2+RLGdAqnDqEgM7Hw=;
+	s=arc-20240116; t=1712832067; c=relaxed/simple;
+	bh=3Cf4YeSzIcCwQPHEt+ZNyfdWw+UK4QeJx6AsGLsFwAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lIAcFIFNe2q8DW/lHfXHLudY5NHP0ROONRYHMww8DzuHsMESbIoq+JYSVXOZcbpKwKwVfOcMONI0qCKI7m+y5jdtufo0S6g7hCfWnxLvGnJfQ325V5Dobl6ly5XCRh82qxu3uB/BdiKNW3u0r5Wlw9c/qHcCOS+RNKWToPkkQ+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mvJIk60J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ufzBdqLzdxvWV1xJSKbdjkzcxVPdjKF++lWBAl2JTe3Mqwlt29sK7uK04DO1FrHgTBCYjBJPIwqaDo9Ijfw4EA/ifWg6574dEvmRH0sIGZHxRlC72uIu2q+ixexm4Og9fFZ9GMtfQGzAk67WN4wYCj6Yu6N5t8/1jIfQPME4+qM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8ge3UPc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvJIk60J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B19C433C7;
-	Thu, 11 Apr 2024 10:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8ge3UPc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1CE4C433C7;
+	Thu, 11 Apr 2024 10:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832064;
-	bh=rOlDSPC3xuq95K9NnR32lLT4QB2+RLGdAqnDqEgM7Hw=;
+	s=korg; t=1712832067;
+	bh=3Cf4YeSzIcCwQPHEt+ZNyfdWw+UK4QeJx6AsGLsFwAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvJIk60JJ+hWQi5Zp3ISSE7humWZvGRGk30M/5hj4N3kNwwn490hv60wJfPVtaFXq
-	 DcdGKQs/bH3Um1g/EBJNdQDDfy0gXcS05u4peoe+muVVHO6q9UaRf9IWIaBp79XSKJ
-	 5pfe31eIaqwM+U4L7zljJEBeNvxROxsQQ5Va2uy4=
+	b=g8ge3UPcXcCBHo5CAnBY9GJUm/lZyXa4tHdg1MYhfsLPU9hr8BO9Xs4QYWf3N2IPZ
+	 zBnS40h22q3ZDGG8b/kNy4X7FyIPaY27n6PSrTvLfbOdtRJvIOclt61cGzL3Ou31gD
+	 ChQzIRLbxeJoF7YiSCfFYtA+0osPXQvVRA+iHxX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 216/294] ipv6: Fix infinite recursion in fib6_dump_done().
-Date: Thu, 11 Apr 2024 11:56:19 +0200
-Message-ID: <20240411095442.098074628@linuxfoundation.org>
+	Antoine Tenart <atenart@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.10 217/294] udp: do not transition UDP GRO fraglist partial checksums to unnecessary
+Date: Thu, 11 Apr 2024 11:56:20 +0200
+Message-ID: <20240411095442.128016810@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -53,134 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Antoine Tenart <atenart@kernel.org>
 
-commit d21d40605bca7bd5fc23ef03d4c1ca1f48bc2cae upstream.
+commit f0b8c30345565344df2e33a8417a27503589247d upstream.
 
-syzkaller reported infinite recursive calls of fib6_dump_done() during
-netlink socket destruction.  [1]
+UDP GRO validates checksums and in udp4/6_gro_complete fraglist packets
+are converted to CHECKSUM_UNNECESSARY to avoid later checks. However
+this is an issue for CHECKSUM_PARTIAL packets as they can be looped in
+an egress path and then their partial checksums are not fixed.
 
->From the log, syzkaller sent an AF_UNSPEC RTM_GETROUTE message, and then
-the response was generated.  The following recvmmsg() resumed the dump
-for IPv6, but the first call of inet6_dump_fib() failed at kzalloc() due
-to the fault injection.  [0]
+Different issues can be observed, from invalid checksum on packets to
+traces like:
 
-  12:01:34 executing program 3:
-  r0 = socket$nl_route(0x10, 0x3, 0x0)
-  sendmsg$nl_route(r0, ... snip ...)
-  recvmmsg(r0, ... snip ...) (fail_nth: 8)
+  gen01: hw csum failure
+  skb len=3008 headroom=160 headlen=1376 tailroom=0
+  mac=(106,14) net=(120,40) trans=160
+  shinfo(txflags=0 nr_frags=0 gso(size=0 type=0 segs=0))
+  csum(0xffff232e ip_summed=2 complete_sw=0 valid=0 level=0)
+  hash(0x77e3d716 sw=1 l4=1) proto=0x86dd pkttype=0 iif=12
+  ...
 
-Here, fib6_dump_done() was set to nlk_sk(sk)->cb.done, and the next call
-of inet6_dump_fib() set it to nlk_sk(sk)->cb.args[3].  syzkaller stopped
-receiving the response halfway through, and finally netlink_sock_destruct()
-called nlk_sk(sk)->cb.done().
+Fix this by only converting CHECKSUM_NONE packets to
+CHECKSUM_UNNECESSARY by reusing __skb_incr_checksum_unnecessary. All
+other checksum types are kept as-is, including CHECKSUM_COMPLETE as
+fraglist packets being segmented back would have their skb->csum valid.
 
-fib6_dump_done() calls fib6_dump_end() and nlk_sk(sk)->cb.done() if it
-is still not NULL.  fib6_dump_end() rewrites nlk_sk(sk)->cb.done() by
-nlk_sk(sk)->cb.args[3], but it has the same function, not NULL, calling
-itself recursively and hitting the stack guard page.
-
-To avoid the issue, let's set the destructor after kzalloc().
-
-[0]:
-FAULT_INJECTION: forcing a failure.
-name failslab, interval 1, probability 0, space 0, times 0
-CPU: 1 PID: 432110 Comm: syz-executor.3 Not tainted 6.8.0-12821-g537c2e91d354-dirty #11
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:117)
- should_fail_ex (lib/fault-inject.c:52 lib/fault-inject.c:153)
- should_failslab (mm/slub.c:3733)
- kmalloc_trace (mm/slub.c:3748 mm/slub.c:3827 mm/slub.c:3992)
- inet6_dump_fib (./include/linux/slab.h:628 ./include/linux/slab.h:749 net/ipv6/ip6_fib.c:662)
- rtnl_dump_all (net/core/rtnetlink.c:4029)
- netlink_dump (net/netlink/af_netlink.c:2269)
- netlink_recvmsg (net/netlink/af_netlink.c:1988)
- ____sys_recvmsg (net/socket.c:1046 net/socket.c:2801)
- ___sys_recvmsg (net/socket.c:2846)
- do_recvmmsg (net/socket.c:2943)
- __x64_sys_recvmmsg (net/socket.c:3041 net/socket.c:3034 net/socket.c:3034)
-
-[1]:
-BUG: TASK stack guard page was hit at 00000000f2fa9af1 (stack is 00000000b7912430..000000009a436beb)
-stack guard page: 0000 [#1] PREEMPT SMP KASAN
-CPU: 1 PID: 223719 Comm: kworker/1:3 Not tainted 6.8.0-12821-g537c2e91d354-dirty #11
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-Workqueue: events netlink_sock_destruct_work
-RIP: 0010:fib6_dump_done (net/ipv6/ip6_fib.c:570)
-Code: 3c 24 e8 f3 e9 51 fd e9 28 fd ff ff 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 41 57 41 56 41 55 41 54 55 48 89 fd <53> 48 8d 5d 60 e8 b6 4d 07 fd 48 89 da 48 b8 00 00 00 00 00 fc ff
-RSP: 0018:ffffc9000d980000 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: ffffffff84405990 RCX: ffffffff844059d3
-RDX: ffff8881028e0000 RSI: ffffffff84405ac2 RDI: ffff88810c02f358
-RBP: ffff88810c02f358 R08: 0000000000000007 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000224 R12: 0000000000000000
-R13: ffff888007c82c78 R14: ffff888007c82c68 R15: ffff888007c82c68
-FS:  0000000000000000(0000) GS:ffff88811b100000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffc9000d97fff8 CR3: 0000000102309002 CR4: 0000000000770ef0
-PKRU: 55555554
-Call Trace:
- <#DF>
- </#DF>
- <TASK>
- fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
- fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
- ...
- fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
- fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
- netlink_sock_destruct (net/netlink/af_netlink.c:401)
- __sk_destruct (net/core/sock.c:2177 (discriminator 2))
- sk_destruct (net/core/sock.c:2224)
- __sk_free (net/core/sock.c:2235)
- sk_free (net/core/sock.c:2246)
- process_one_work (kernel/workqueue.c:3259)
- worker_thread (kernel/workqueue.c:3329 kernel/workqueue.c:3416)
- kthread (kernel/kthread.c:388)
- ret_from_fork (arch/x86/kernel/process.c:153)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:256)
-Modules linked in:
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240401211003.25274-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_fib.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/ipv4/udp_offload.c |    8 +-------
+ net/ipv6/udp_offload.c |    8 +-------
+ 2 files changed, 2 insertions(+), 14 deletions(-)
 
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -643,19 +643,19 @@ static int inet6_dump_fib(struct sk_buff
- 	if (!w) {
- 		/* New dump:
- 		 *
--		 * 1. hook callback destructor.
--		 */
--		cb->args[3] = (long)cb->done;
--		cb->done = fib6_dump_done;
--
--		/*
--		 * 2. allocate and initialize walker.
-+		 * 1. allocate and initialize walker.
- 		 */
- 		w = kzalloc(sizeof(*w), GFP_ATOMIC);
- 		if (!w)
- 			return -ENOMEM;
- 		w->func = fib6_dump_node;
- 		cb->args[2] = (long)w;
-+
-+		/* 2. hook callback destructor.
-+		 */
-+		cb->args[3] = (long)cb->done;
-+		cb->done = fib6_dump_done;
-+
- 	}
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -668,13 +668,7 @@ INDIRECT_CALLABLE_SCOPE int udp4_gro_com
+ 		skb_shinfo(skb)->gso_type |= (SKB_GSO_FRAGLIST|SKB_GSO_UDP_L4);
+ 		skb_shinfo(skb)->gso_segs = NAPI_GRO_CB(skb)->count;
  
- 	arg.skb = skb;
+-		if (skb->ip_summed == CHECKSUM_UNNECESSARY) {
+-			if (skb->csum_level < SKB_MAX_CSUM_LEVEL)
+-				skb->csum_level++;
+-		} else {
+-			skb->ip_summed = CHECKSUM_UNNECESSARY;
+-			skb->csum_level = 0;
+-		}
++		__skb_incr_checksum_unnecessary(skb);
+ 
+ 		return 0;
+ 	}
+--- a/net/ipv6/udp_offload.c
++++ b/net/ipv6/udp_offload.c
+@@ -169,13 +169,7 @@ INDIRECT_CALLABLE_SCOPE int udp6_gro_com
+ 		skb_shinfo(skb)->gso_type |= (SKB_GSO_FRAGLIST|SKB_GSO_UDP_L4);
+ 		skb_shinfo(skb)->gso_segs = NAPI_GRO_CB(skb)->count;
+ 
+-		if (skb->ip_summed == CHECKSUM_UNNECESSARY) {
+-			if (skb->csum_level < SKB_MAX_CSUM_LEVEL)
+-				skb->csum_level++;
+-		} else {
+-			skb->ip_summed = CHECKSUM_UNNECESSARY;
+-			skb->csum_level = 0;
+-		}
++		__skb_incr_checksum_unnecessary(skb);
+ 
+ 		return 0;
+ 	}
 
 
