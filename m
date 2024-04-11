@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A2C13B5B9;
-	Thu, 11 Apr 2024 10:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBEB13B5B9;
+	Thu, 11 Apr 2024 10:08:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830128; cv=none; b=mAJ8GTlyJ14to6rPd0HBLi7gJ2ZvUxvhCypduhANGUq976M7hwENC59Ie7qqG2Cayg1Jfdj4Rn05eMfng2Y1paXo7m7MWiTF4QoHJp0e8ULnujN5k3GqAeJEKNJJ4Mqrb1yV2tun0OhHmUARAuV65EcMq23jFDUkzuaRqoHNj4E=
+	t=1712830131; cv=none; b=oGDoxy5Txp4jDJvdeWa0kZ8JGCru3MIWdCxzy9T31XMTlRQWAabyNyZ6YvxvMLwaOZHAXNJrF3Kin5vpGGb78pKpM+p0cKc6QrWRC0Rx6Tpx0RL5RtLj2IWS5/MiENc3BYo/QfCC2+KUu6tcEvcmzd2f9LTS6eB/64FpQ24+1iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830128; c=relaxed/simple;
-	bh=1qkPQCqF6qTf9olnwzpFl3Xa1IkH3le/kJ6AMuW5Nrs=;
+	s=arc-20240116; t=1712830131; c=relaxed/simple;
+	bh=lKOc7kRqiHsUJlHgTdUW/T11yO72tq8mod+bjmv6U3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PdMH877KkTnHGO6kDzGuNCppGDzwWuiOa7geZ7xypLDrE6OaHR+aA8eDMlXhffmhbeR4LDwlcwqWGcVygITbJP1do8RBypEkRHSdqsp0M7puBwLVMB3UaE4YsYdk7a6OeXGWlAlpkTi04u7L4pf7piCqCouviAbyYeFsdm186/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1OMknHn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L4diZ59f7xDdv3EHQfwD1z1ouYlact86IlHwUS5DrbYhYPznUYAc9bhVxTq6BKiEsPMZUBsCCI9jva1FjRaCatyCDGZuJD+GzQwMp49VJnuVotViUPvtp1XIDzUbYxem89Y/jNkkCA/WNLPVu8MwtfAyx/PNrZaZyTO2FRsqhoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSk61kA0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1OMknHn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337E4C433F1;
-	Thu, 11 Apr 2024 10:08:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSk61kA0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0C5C433F1;
+	Thu, 11 Apr 2024 10:08:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830128;
-	bh=1qkPQCqF6qTf9olnwzpFl3Xa1IkH3le/kJ6AMuW5Nrs=;
+	s=korg; t=1712830131;
+	bh=lKOc7kRqiHsUJlHgTdUW/T11yO72tq8mod+bjmv6U3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r1OMknHn2iHuxcgtvJYlBFl4qPeaSJa/5DfnDeoULln9gBimWOUV7BMR0VquDCG3C
-	 jOLTzmdkGapxXp94twG/BSOHz/KYnGTvh1fKLubSjFAMCU3b190YVP4gkJVj2vKToE
-	 CPZK5oMYu9BbdOESKiVFKP68/K2bYB0JgUWBcT+A=
+	b=jSk61kA0Wa7iSecyx1qBnCBaCMN5vHZLgkntnHmWp3nIsHRqEs6iQgMFoeCmv+RxQ
+	 WXk+1TmsEqBo9ldoThp0eDhd4rctPnFcOZBDrYVV8ndQOviaEv4LB5DRCTNMPmUppu
+	 DA1wvk+RdrLeI7+VHmzFwursde9pgdqDzzo9DCPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Moritz Fischer <moritzf@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Will Deacon <will@kernel.org>,
+	Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>,
+	Roman Stratiienko <r.stratiienko@gmail.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Dhruva Gole <d-gole@ti.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 043/143] iommu/arm-smmu-v3: Hold arm_smmu_asid_lock during all of attach_dev
-Date: Thu, 11 Apr 2024 11:55:11 +0200
-Message-ID: <20240411095422.211176366@linuxfoundation.org>
+Subject: [PATCH 6.8 044/143] cpufreq: Dont unregister cpufreq cooling on CPU hotplug
+Date: Thu, 11 Apr 2024 11:55:12 +0200
+Message-ID: <20240411095422.241157837@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -56,130 +54,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit 9f7c68911579bc15c57d227d021ccd253da2b635 ]
+[ Upstream commit c4d61a529db788d2e52654f5b02c8d1de4952c5b ]
 
-The BTM support wants to be able to change the ASID of any smmu_domain.
-When it goes to do this it holds the arm_smmu_asid_lock and iterates over
-the target domain's devices list.
+Offlining a CPU and bringing it back online is a common operation and it
+happens frequently during system suspend/resume, where the non-boot CPUs
+are hotplugged out during suspend and brought back at resume.
 
-During attach of a S1 domain we must ensure that the devices list and
-CD are in sync, otherwise we could miss CD updates or a parallel CD update
-could push an out of date CD.
+The cpufreq core already tries to make this path as fast as possible as
+the changes are only temporary in nature and full cleanup of resources
+isn't required in this case. For example the drivers can implement
+online()/offline() callbacks to avoid a lot of tear down of resources.
 
-This is pretty complicated, and almost works today because
-arm_smmu_detach_dev() removes the master from the linked list before
-working on the CD entries, preventing parallel update of the CD.
+On similar lines, there is no need to unregister the cpufreq cooling
+device during suspend / resume, but only while the policy is getting
+removed.
 
-However, it does have an issue where the CD can remain programed while the
-domain appears to be unattached. arm_smmu_share_asid() will then not clear
-any CD entriess and install its own CD entry with the same ASID
-concurrently. This creates a small race window where the IOMMU can see two
-ASIDs pointing to different translations.
+Moreover, unregistering the cpufreq cooling device is resulting in an
+unwanted outcome, where the system suspend is eventually aborted in the
+process.  Currently, during system suspend the cpufreq core unregisters
+the cooling device, which in turn removes a kobject using device_del()
+and that generates a notification to the userspace via uevent broadcast.
+This causes system suspend to abort in some setups.
 
-       CPU0                                   CPU1
-arm_smmu_attach_dev()
-   arm_smmu_detach_dev()
-     spin_lock_irqsave(&smmu_domain->devices_lock, flags);
-     list_del(&master->domain_head);
-     spin_unlock_irqrestore(&smmu_domain->devices_lock, flags);
+This was also earlier reported (indirectly) by Roman [1]. Maybe there is
+another way around to fixing that problem properly, but this change
+makes sense anyways.
 
-				      arm_smmu_mmu_notifier_get()
-				       arm_smmu_alloc_shared_cd()
-					arm_smmu_share_asid():
-                                          // Does nothing due to list_del above
-					  arm_smmu_update_ctx_desc_devices()
-					  arm_smmu_tlb_inv_asid()
-				       arm_smmu_write_ctx_desc()
-					 ** Now the ASID is in two CDs
-					    with different translation
+Move the registering and unregistering of the cooling device to policy
+creation and removal times onlyy.
 
-     arm_smmu_write_ctx_desc(master, IOMMU_NO_PASID, NULL);
-
-Solve this by wrapping most of the attach flow in the
-arm_smmu_asid_lock. This locks more than strictly needed to prepare for
-the next patch which will reorganize the order of the linked list, STE and
-CD changes.
-
-Move arm_smmu_detach_dev() till after we have initialized the domain so
-the lock can be held for less time.
-
-Reviewed-by: Michael Shavit <mshavit@google.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Mostafa Saleh <smostafa@google.com>
-Tested-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Tested-by: Moritz Fischer <moritzf@google.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/5-v6-96275f25c39d+2d4-smmuv3_newapi_p1_jgg@nvidia.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218521
+Reported-by: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
+Reported-by: Roman Stratiienko <r.stratiienko@gmail.com>
+Link: https://patchwork.kernel.org/project/linux-pm/patch/20220710164026.541466-1-r.stratiienko@gmail.com/ [1]
+Tested-by: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 22 ++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ drivers/cpufreq/cpufreq.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 0ffb1cf17e0b2..f3f2e47b6d488 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -2398,8 +2398,6 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 		return -EBUSY;
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 7d570b44777ac..3c2c955fbbbd6 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -1576,7 +1576,8 @@ static int cpufreq_online(unsigned int cpu)
+ 	if (cpufreq_driver->ready)
+ 		cpufreq_driver->ready(policy);
+ 
+-	if (cpufreq_thermal_control_enabled(cpufreq_driver))
++	/* Register cpufreq cooling only for a new policy */
++	if (new_policy && cpufreq_thermal_control_enabled(cpufreq_driver))
+ 		policy->cdev = of_cpufreq_cooling_register(policy);
+ 
+ 	pr_debug("initialization complete\n");
+@@ -1660,11 +1661,6 @@ static void __cpufreq_offline(unsigned int cpu, struct cpufreq_policy *policy)
+ 	else
+ 		policy->last_policy = policy->policy;
+ 
+-	if (cpufreq_thermal_control_enabled(cpufreq_driver)) {
+-		cpufreq_cooling_unregister(policy->cdev);
+-		policy->cdev = NULL;
+-	}
+-
+ 	if (has_target())
+ 		cpufreq_exit_governor(policy);
+ 
+@@ -1725,6 +1721,15 @@ static void cpufreq_remove_dev(struct device *dev, struct subsys_interface *sif)
+ 		return;
  	}
  
--	arm_smmu_detach_dev(master);
--
- 	mutex_lock(&smmu_domain->init_mutex);
- 
- 	if (!smmu_domain->smmu) {
-@@ -2414,6 +2412,16 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 	if (ret)
- 		return ret;
- 
 +	/*
-+	 * Prevent arm_smmu_share_asid() from trying to change the ASID
-+	 * of either the old or new domain while we are working on it.
-+	 * This allows the STE and the smmu_domain->devices list to
-+	 * be inconsistent during this routine.
++	 * Unregister cpufreq cooling once all the CPUs of the policy are
++	 * removed.
 +	 */
-+	mutex_lock(&arm_smmu_asid_lock);
++	if (cpufreq_thermal_control_enabled(cpufreq_driver)) {
++		cpufreq_cooling_unregister(policy->cdev);
++		policy->cdev = NULL;
++	}
 +
-+	arm_smmu_detach_dev(master);
-+
- 	master->domain = smmu_domain;
- 
- 	/*
-@@ -2439,13 +2447,7 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 			}
- 		}
- 
--		/*
--		 * Prevent SVA from concurrently modifying the CD or writing to
--		 * the CD entry
--		 */
--		mutex_lock(&arm_smmu_asid_lock);
- 		ret = arm_smmu_write_ctx_desc(master, IOMMU_NO_PASID, &smmu_domain->cd);
--		mutex_unlock(&arm_smmu_asid_lock);
- 		if (ret) {
- 			master->domain = NULL;
- 			goto out_list_del;
-@@ -2455,13 +2457,15 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 	arm_smmu_install_ste_for_dev(master);
- 
- 	arm_smmu_enable_ats(master);
--	return 0;
-+	goto out_unlock;
- 
- out_list_del:
- 	spin_lock_irqsave(&smmu_domain->devices_lock, flags);
- 	list_del(&master->domain_head);
- 	spin_unlock_irqrestore(&smmu_domain->devices_lock, flags);
- 
-+out_unlock:
-+	mutex_unlock(&arm_smmu_asid_lock);
- 	return ret;
- }
- 
+ 	/* We did light-weight exit earlier, do full tear down now */
+ 	if (cpufreq_driver->offline)
+ 		cpufreq_driver->exit(policy);
 -- 
 2.43.0
 
