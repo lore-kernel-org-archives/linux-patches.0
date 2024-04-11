@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF5B2EAE5;
-	Thu, 11 Apr 2024 10:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5182EAE5;
+	Thu, 11 Apr 2024 10:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829655; cv=none; b=hm66pNXRQp80InvwjeWJcjVE8gJPUsjKc08xYqfooyYkiAcV35ZzQ+ga7SDedlqfMzma+aIT9qtLtLaIIwvDOCcNija4ueBqk1BvcjFlFbNWwqmta74uX0vx+fNvv2MQjt9wHwYo5OCBi7HRyyBAipR4PmaliFcxv1Nj4cv1O2I=
+	t=1712829658; cv=none; b=Kg9T6x0t84rty49bCmhDSEUB9QRG7WZlL/waQp2iVF7o3ph0y5//TnS0rSapI0MDOQvu1gA0VIDCTkJsVGDPnzyEsAy77S60ekJP1FHAgzAKWguVUKyNuWqJQfVux4KOth+Zzb7tg09jJGNo883AGavhStidX6eyheE42YjuJ3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829655; c=relaxed/simple;
-	bh=UclLc3x3cfMooEG7uwxUoiB9DONvo5+Nmcrzcr24rlM=;
+	s=arc-20240116; t=1712829658; c=relaxed/simple;
+	bh=SLiohcervRLDneKut0KfdMDc+0rEcJDOFGfLHBzwhTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DxkRS3TGm4ljEWQCPwso7cQ+eebG8/UuP/lwdLHcIr+C8PTZ0DB9XyUdkKIxhWBMyZst/Cx2PDe/eIfxNx5QU6ewHXFu4wnGt2+2eiqu+DxvjxW90u9ZOgq6bbAr3snXwclCcWHMr2ZLbxMsZWZzLFYqwyQ9bA3RJ/KmXuQ7g5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxXtuc/M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fNbLP9Kx/Ug0yFvQmhXNJIQBkQAtaWCFAwPDYb+LI86FHCT9u60qNL+nw90Yj4WEDEgrPq9dTdz4+bcqX+0dAzYjLKr4V701BXBRsfvSmDVh5SDKKvG5FqtlLmPM5oY2aIw88y8cOKDV1U+nSEUun/qk7MCFkPSNYRmjjV+aCPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtHn7XyE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxXtuc/M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B725FC433F1;
-	Thu, 11 Apr 2024 10:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtHn7XyE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7753C433F1;
+	Thu, 11 Apr 2024 10:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829655;
-	bh=UclLc3x3cfMooEG7uwxUoiB9DONvo5+Nmcrzcr24rlM=;
+	s=korg; t=1712829658;
+	bh=SLiohcervRLDneKut0KfdMDc+0rEcJDOFGfLHBzwhTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UxXtuc/MkD+0gcvwu85tVHGgAzhs6dj2/M8UpjTlbXdQV2mM8uEiRpGRueA8qVbZd
-	 zTVvjff69i4c8uf1A24UERUkwyp2JdGVnRBnqbaOyxvBsdETzIxYs2YO5034/T+zFs
-	 L8+K1uQT2aj1wzyuAv12wOM9zRzzajpD7IzOjirg=
+	b=qtHn7XyE0DWPwzs4nXiUzeqBnIF2r3wbEqdvBZhz2twp8zkCWXyzq7fBAljjQnNky
+	 ScFLxo6qFzRT5d5d5oUfb5HrLUJMkVTfCveG/A85K3AH6yG6e1V17RwIWRgdenEymE
+	 2OQICVvgBqrwbdh93NTNmPMwTk2d7EfeVdT5lWV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Maxime Ripard <mripard@kernel.org>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 060/175] drm/imx/ipuv3: do not return negative values from .get_modes()
-Date: Thu, 11 Apr 2024 11:54:43 +0200
-Message-ID: <20240411095421.372489820@linuxfoundation.org>
+Subject: [PATCH 4.19 061/175] drm/vc4: hdmi: do not return negative values from .get_modes()
+Date: Thu, 11 Apr 2024 11:54:44 +0200
+Message-ID: <20240411095421.402610830@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -54,43 +54,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit c2da9ada64962fcd2e6395ed9987b9874ea032d3 ]
+[ Upstream commit abf493988e380f25242c1023275c68bd3579c9ce ]
 
 The .get_modes() hooks aren't supposed to return negative error
 codes. Return 0 for no modes, whatever the reason.
 
-Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Maxime Ripard <mripard@kernel.org>
 Cc: stable@vger.kernel.org
-Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
+Acked-by: Maxime Ripard <mripard@kernel.org>
 Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/311f6eec96d47949b16a670529f4d89fcd97aefa.1709913674.git.jani.nikula@intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/dcda6d4003e2c6192987916b35c7304732800e08.1709913674.git.jani.nikula@intel.com
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imx/parallel-display.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/imx/parallel-display.c b/drivers/gpu/drm/imx/parallel-display.c
-index a96d99cbec4d0..290f68b9adfea 100644
---- a/drivers/gpu/drm/imx/parallel-display.c
-+++ b/drivers/gpu/drm/imx/parallel-display.c
-@@ -78,14 +78,14 @@ static int imx_pd_connector_get_modes(struct drm_connector *connector)
- 		int ret;
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 1161662664577..013dfc63c824e 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -276,7 +276,7 @@ static int vc4_hdmi_connector_get_modes(struct drm_connector *connector)
+ 	edid = drm_get_edid(connector, vc4->hdmi->ddc);
+ 	cec_s_phys_addr_from_edid(vc4->hdmi->cec_adap, edid);
+ 	if (!edid)
+-		return -ENODEV;
++		return 0;
  
- 		if (!mode)
--			return -EINVAL;
-+			return 0;
+ 	vc4_encoder->hdmi_monitor = drm_detect_hdmi_monitor(edid);
  
- 		ret = of_get_drm_display_mode(np, &imxpd->mode,
- 					      &imxpd->bus_flags,
- 					      OF_USE_NATIVE_MODE);
- 		if (ret) {
- 			drm_mode_destroy(connector->dev, mode);
--			return ret;
-+			return 0;
- 		}
- 
- 		drm_mode_copy(mode, &imxpd->mode);
 -- 
 2.43.0
 
