@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F9F148307;
-	Thu, 11 Apr 2024 10:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5FD145B13;
+	Thu, 11 Apr 2024 10:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832079; cv=none; b=jXeBCANlAgg8guZPhuJTneeEsiBeWD7I/n/04Uvj4yPIvuRraq6/L2RMtplXHO58bSmxeuoyuckxRqCX2yWdlo3w2WKpcnmwBntf8Yh2KAmw+DyX3lXWg72HLzN1RCvJ1E34n+UvdPm1tAhN9eebfriySlG6hzIToq0CH0LFdSg=
+	t=1712832082; cv=none; b=VJ2bB9xmgAI1YYHk/dLZsMdj0V2SvfF6zwFIwm4bolFVM4QSRed0C0ydsPYAX+3PqXuBj9Uz0FnYdI9dyLA3Dkve6SjA2fLHfbPdPbKHwKH/KvFhRYMvCyJwAbPxM9okVL/ymcSdIKvicFwtfiK5FNrviOFrPNMaNx08xnUlras=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832079; c=relaxed/simple;
-	bh=dbobdOljRClbxcI+cMo9Xc4RKUgPgARpJRZnL4nM/88=;
+	s=arc-20240116; t=1712832082; c=relaxed/simple;
+	bh=sX5TBBI74zNGIZq3nkmJsPb2VdZu/8z99BnDx3PG25A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Il+psmVHJutL2JUwYQaxmcBwgDYxljxZZAyoUq+sl1r4SFCZrAal7FHbtOaG5stYIkKs3xlrnApImT2YxboHrmsZSdUMue3WAoANWc3/cyWGgFGVulUYxZrJj7y6nzlqnvNH4ILvztKPV0ynEWJMHMvpqnlmWslgQbLOH/CfWZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuKFp/gW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lusgzzb3zfuRqv6uwfqiogAOK+IFhW9P4vdMALxynIg8lUqI0No648TrkE2eKkt/jAOaED9dGm3nIb9oA98dj1/EGSeqcAvi2ryn03v/o0RVfkwYOEa3I4ApqSdsvad+hwRMjf7H77ni/zKfXc3qzpdz1H0vGMqepLVvfVGNUX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/+ycNst; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuKFp/gW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74631C43330;
-	Thu, 11 Apr 2024 10:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/+ycNst"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E92C433C7;
+	Thu, 11 Apr 2024 10:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832079;
-	bh=dbobdOljRClbxcI+cMo9Xc4RKUgPgARpJRZnL4nM/88=;
+	s=korg; t=1712832082;
+	bh=sX5TBBI74zNGIZq3nkmJsPb2VdZu/8z99BnDx3PG25A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DuKFp/gW3BvgJEHT7RvwUS7/kiyrAD3/VjYqaqzB0KKrmyAKOIBzwWS0TTVUjSE+g
-	 RqFo15d/ACnARGUWEnE2mZKpN5MxroxeVPAl44l6bWrX4WURAukxdR/3q+N7FwNuMJ
-	 zM3C+NxkcyDVBhp/uorrQ7mMXscZ0XlZ0cp5LWe4=
+	b=W/+ycNstQL/n3khct+1HeNme4iyuxKbg0/4hOQFpngmDHenHnirtd3pijXRkVnVeS
+	 V5fPMmRJkn57Nwu7F1W63+VUcmonp11OedTIBQWJpblRv87GkK1GK3mc4i9Km2wSjl
+	 Y6KxgylIfH+AENgO9Df7FMWtHajb+QB1kPznUAUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	Bikash Hazarika <bhazarika@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 221/294] scsi: qla2xxx: Update manufacturer details
-Date: Thu, 11 Apr 2024 11:56:24 +0200
-Message-ID: <20240411095442.247449076@linuxfoundation.org>
+Subject: [PATCH 5.10 222/294] scsi: qla2xxx: Update manufacturer detail
+Date: Thu, 11 Apr 2024 11:56:25 +0200
+Message-ID: <20240411095442.276344075@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -55,49 +55,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Bikash Hazarika <bhazarika@marvell.com>
 
-[ Upstream commit 1ccad27716ecad1fd58c35e579bedb81fa5e1ad5 ]
+[ Upstream commit 688fa069fda6fce24d243cddfe0c7024428acb74 ]
 
-Update manufacturer details to indicate Marvell Semiconductors.
+Update manufacturer detail from "Marvell Semiconductor, Inc." to
+"Marvell".
 
-Link: https://lore.kernel.org/r/20220713052045.10683-10-njavali@marvell.com
 Cc: stable@vger.kernel.org
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Bikash Hazarika <bhazarika@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240227164127.36465-5-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 688fa069fda6 ("scsi: qla2xxx: Update manufacturer detail")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  drivers/scsi/qla2xxx/qla_def.h | 2 +-
- drivers/scsi/qla2xxx/qla_gs.c  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/scsi/qla2xxx/qla_def.h b/drivers/scsi/qla2xxx/qla_def.h
-index 6645b69fc2a0f..7dfd93cb4674d 100644
+index 7dfd93cb4674d..b8628bceb3aeb 100644
 --- a/drivers/scsi/qla2xxx/qla_def.h
 +++ b/drivers/scsi/qla2xxx/qla_def.h
 @@ -56,7 +56,7 @@ typedef struct {
  #include "qla_nvme.h"
  #define QLA2XXX_DRIVER_NAME	"qla2xxx"
  #define QLA2XXX_APIDEV		"ql2xapidev"
--#define QLA2XXX_MANUFACTURER	"QLogic Corporation"
-+#define QLA2XXX_MANUFACTURER	"Marvell Semiconductor, Inc."
+-#define QLA2XXX_MANUFACTURER	"Marvell Semiconductor, Inc."
++#define QLA2XXX_MANUFACTURER	"Marvell"
  
  /*
   * We have MAILBOX_REGISTER_COUNT sized arrays in a few places,
-diff --git a/drivers/scsi/qla2xxx/qla_gs.c b/drivers/scsi/qla2xxx/qla_gs.c
-index 20bbd69e35e51..d9ac17dbad789 100644
---- a/drivers/scsi/qla2xxx/qla_gs.c
-+++ b/drivers/scsi/qla2xxx/qla_gs.c
-@@ -1614,7 +1614,7 @@ qla2x00_hba_attributes(scsi_qla_host_t *vha, void *entries,
- 	eiter->type = cpu_to_be16(FDMI_HBA_MANUFACTURER);
- 	alen = scnprintf(
- 		eiter->a.manufacturer, sizeof(eiter->a.manufacturer),
--		"%s", "QLogic Corporation");
-+		"%s", QLA2XXX_MANUFACTURER);
- 	alen += FDMI_ATTR_ALIGNMENT(alen);
- 	alen += FDMI_ATTR_TYPELEN(eiter);
- 	eiter->len = cpu_to_be16(alen);
 -- 
 2.43.0
 
