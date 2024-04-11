@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4719D143C76;
-	Thu, 11 Apr 2024 10:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0631422CE;
+	Thu, 11 Apr 2024 10:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831252; cv=none; b=WE4myVAo5MFAS2CAjWktmuRj88kSfh15ADSjFCzK/tkrgpilbAIo+GOZN5/V1/nsa/NQi7lNXG1qHxgBuqGVT+aHGG3LQvKkDZ+IE4plivH+4SFgGiHMK1ydHiNgXYOirqCa/0jfceOUPNC+6r0DKTpvmggGYG35NHdL/zvL7dY=
+	t=1712831255; cv=none; b=XUQaC97g/bYAOoBZ34ukUc/UYz086doFiOmcdSp8PPpBBFX8qQIBAPJxcSRurOVvnfZpkqWKx2QWedWJUbofQA1jtS/LIW9YeveieBGpFgz7bcgpl6Jzf2A7fCZNcSnHP+mY1uhb5ovyKAnC+3ipjIoUiFyZRjYwEJ524x/dz2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831252; c=relaxed/simple;
-	bh=Z0xz6fymuxSDT8JJR5DyKmhxkwTJms81aiCO1TBP3m4=;
+	s=arc-20240116; t=1712831255; c=relaxed/simple;
+	bh=VbYIJ9sU6O9KOfEOllV0DtK7Zy0zKEno5aORUeC/l/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZB3DKe98ItXLLLhAWjjObhfnNKCmicND0feU5STT01E0CYgiiEk87/049iAweIG+2yYU6+FUeR1uSd0k8gHohIItwDhJoq6pAsqjK69Jk0usDcU/Ben2U0aFDP2ZGR+vGX3PTLPlVq/LUvSBNzlK2Bky+93+vzXatL0WGRaQMpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLYo2am2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hOAWsK70gYbwKRlc+1tEyLXQQY4upe54FCYxH1IVfkXJNORzFCe7wddflArgk5RMnR/x89puFTMoZ3x5WGXLLINlI+ShFmsYsImquZxtwZa+VJwQu6d1dsrHe8pOHyC9lTMXPgJ1PjifipOD5v6D8IXWObOBhL6OuEEzBmmlzO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbtAMA/S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLYo2am2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83E67C433F1;
-	Thu, 11 Apr 2024 10:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbtAMA/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718E2C43390;
+	Thu, 11 Apr 2024 10:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831251;
-	bh=Z0xz6fymuxSDT8JJR5DyKmhxkwTJms81aiCO1TBP3m4=;
+	s=korg; t=1712831254;
+	bh=VbYIJ9sU6O9KOfEOllV0DtK7Zy0zKEno5aORUeC/l/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sLYo2am2Ogbg834cbWB7I8t30P4gQAP4dr6//77POEVbWXcXjS7tp6SkVKKKnG4PF
-	 sAmn7fVGkyIV2P2gR9CDezQR6S0lnG0k/Zlj5SgaKgUjDaAbMVQ8OtPxdOBeDP6hkb
-	 +XEX4iZr09VRmNmqGZLQ5niJqNd/1c9d0nNUbfV8=
+	b=ZbtAMA/StBk9XRUixH0DpeafBV1mQ5i8TYEKIiM0BO7C78On7+ag/ouPylhNF7M5Q
+	 cG/giohYusZ2/dxEdZ1/28P8YJ46rblHUulUZGbySzb53HyBkbDwUXT5CLJU2i/3pe
+	 1B+c51PrYokGB7ryHEn2VVbkJJ2ZfewqjXyE8GvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Marshall <hubcap@omnibond.com>,
+	Markus Elfring <elfring@users.sourceforge.net>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 058/114] Julia Lawall reported this null pointer dereference, this should fix it.
-Date: Thu, 11 Apr 2024 11:56:25 +0200
-Message-ID: <20240411095418.637442350@linuxfoundation.org>
+Subject: [PATCH 6.6 023/114] firmware: tegra: bpmp: Return directly after a failed kzalloc() in get_filename()
+Date: Thu, 11 Apr 2024 11:55:50 +0200
+Message-ID: <20240411095417.569627603@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095416.853744210@linuxfoundation.org>
 References: <20240411095416.853744210@linuxfoundation.org>
@@ -44,35 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mike Marshall <hubcap@omnibond.com>
+From: Markus Elfring <elfring@users.sourceforge.net>
 
-[ Upstream commit 9bf93dcfc453fae192fe5d7874b89699e8f800ac ]
+[ Upstream commit 1315848f1f8a0100cb6f8a7187bc320c5d98947f ]
 
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+The kfree() function was called in one case by
+the get_filename() function during error handling
+even if the passed variable contained a null pointer.
+This issue was detected by using the Coccinelle software.
+
+Thus return directly after a call of the function “kzalloc” failed
+at the beginning.
+
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/super.c | 2 +-
+ drivers/firmware/tegra/bpmp-debugfs.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/orangefs/super.c b/fs/orangefs/super.c
-index 5254256a224d7..4ca8ed410c3cf 100644
---- a/fs/orangefs/super.c
-+++ b/fs/orangefs/super.c
-@@ -527,7 +527,7 @@ struct dentry *orangefs_mount(struct file_system_type *fst,
- 	sb->s_fs_info = kzalloc(sizeof(struct orangefs_sb_info_s), GFP_KERNEL);
- 	if (!ORANGEFS_SB(sb)) {
- 		d = ERR_PTR(-ENOMEM);
--		goto free_sb_and_op;
-+		goto free_op;
- 	}
+diff --git a/drivers/firmware/tegra/bpmp-debugfs.c b/drivers/firmware/tegra/bpmp-debugfs.c
+index 6dfe3d34109ee..b20d04950d99b 100644
+--- a/drivers/firmware/tegra/bpmp-debugfs.c
++++ b/drivers/firmware/tegra/bpmp-debugfs.c
+@@ -77,7 +77,7 @@ static const char *get_filename(struct tegra_bpmp *bpmp,
  
- 	ret = orangefs_fill_sb(sb,
+ 	root_path_buf = kzalloc(root_path_buf_len, GFP_KERNEL);
+ 	if (!root_path_buf)
+-		goto out;
++		return NULL;
+ 
+ 	root_path = dentry_path(bpmp->debugfs_mirror, root_path_buf,
+ 				root_path_buf_len);
 -- 
 2.43.0
 
