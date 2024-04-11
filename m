@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2131714B067;
-	Thu, 11 Apr 2024 10:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E7714C59A;
+	Thu, 11 Apr 2024 10:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831498; cv=none; b=goi96mUJdAjxC2Ys5+p7J93OBPpbwqmhemQ0UswNpJ0Nd+DQZjyDxq+DieD/l07IBv7r8R9rrxKl42xoV/Ta/os35105y/YwVBQgGQIVu059ptepZC0sLCfSvw9gSLH3yxAdEQirOXGlNuUvzlbJv+MNw9g/z9BTPCJ1Omsgc+8=
+	t=1712831501; cv=none; b=bY/iQxHjStR5tH0t4s+Ob11SY9umBn7bxtWeJ0j0CXriQM4/YcI2p5AevtGkv0id0k+oJVyLl0oGgbGjwdQii6IV6ApCH8cFpmyTLCj6bUW02DMiNDfyUSgjLM+bl8Xoe6A5vokznvfY1u93QK1vGuAJf55vFEdAzc3LIh5/VcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831498; c=relaxed/simple;
-	bh=HK+TJQo/QdvADH3QffEQkk2mm1Pv/GMrLbPQp+PN6Vo=;
+	s=arc-20240116; t=1712831501; c=relaxed/simple;
+	bh=eBS8a42g0V8M2EvGnIPua6veL7HdU8yuoP2TqUwSBt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XuYViHU8m7/MtaWPbFoUS7dyGwL5gZWKvcAetiJM66JMhAIdfHwIwSaJhzSCgZgJ48Hi9wMDc5lL5+quy+dL5H/iT0G3fsbYDElnzwh71IVV+vms0v31RMrj9Bgi5A2v/aSek9jjriQqAs74upK312JmyCDyquPCjbI0TUxqCJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZ4c7rRl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lyOzP2lG/SvzEUnoYGwt76v90rO6aeB8SJ5AYY6kvUJxoJHJjqs4vbkJYeTLr962w1mvG8UgZ69NhjLfIdCx0rg1h+Pu4JsuNeLodENnWyYTOTBrixQUwC4XsiWhmIg+BplZDX+vC6E+fHK5Tun15ZvE3QzjtyNwvmydPPFei6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqOVQX3x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZ4c7rRl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97343C433F1;
-	Thu, 11 Apr 2024 10:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqOVQX3x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC36C433C7;
+	Thu, 11 Apr 2024 10:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831498;
-	bh=HK+TJQo/QdvADH3QffEQkk2mm1Pv/GMrLbPQp+PN6Vo=;
+	s=korg; t=1712831500;
+	bh=eBS8a42g0V8M2EvGnIPua6veL7HdU8yuoP2TqUwSBt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TZ4c7rRltIiKF0Twxz/m44RU7fYjKb8VPZybJRKIe//o4Lg+/B0pAGupYDdUywXWS
-	 Bw/khOkYJ5wL+KabX+VhvCJfe7dRwQlmJ1p3wONIdBuUj4gaWAdjX90pMVisrcU6MT
-	 oj8v/BsCW5gPQZjToWUtgEbwQF+X8jmf9ogq7jbo=
+	b=SqOVQX3xUASgXLIixU27wu4HguCxW4UtQkS3PSusM4hiTSa3aqp/ZuhT1w/+YPf9b
+	 ffQDJKVw2lAYY0JhZNvDzH+g/uyui+VXzYtNEJX4ICxnGrwHKPZi2oPdfo3UCmR9hX
+	 aYyUpn7eFEZ3MvXNPiiFuNE+AU7LX8bgiyuCenpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Rik van Riel <riel@surriel.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	syzbot+3ce5dea5b1539ff36769@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
+	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 029/294] bounds: support non-power-of-two CONFIG_NR_CPUS
-Date: Thu, 11 Apr 2024 11:53:12 +0200
-Message-ID: <20240411095436.514132197@linuxfoundation.org>
+Subject: [PATCH 5.10 030/294] fat: fix uninitialized field in nostale filehandles
+Date: Thu, 11 Apr 2024 11:53:13 +0200
+Message-ID: <20240411095436.544373936@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -55,44 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit f2d5dcb48f7ba9e3ff249d58fc1fa963d374e66a ]
+[ Upstream commit fde2497d2bc3a063d8af88b258dbadc86bd7b57c ]
 
-ilog2() rounds down, so for example when PowerPC 85xx sets CONFIG_NR_CPUS
-to 24, we will only allocate 4 bits to store the number of CPUs instead of
-5.  Use bits_per() instead, which rounds up.  Found by code inspection.
-The effect of this would probably be a misaccounting when doing NUMA
-balancing, so to a user, it would only be a performance penalty.  The
-effects may be more wide-spread; it's hard to tell.
+When fat_encode_fh_nostale() encodes file handle without a parent it
+stores only first 10 bytes of the file handle. However the length of the
+file handle must be a multiple of 4 so the file handle is actually 12
+bytes long and the last two bytes remain uninitialized. This is not
+great at we potentially leak uninitialized information with the handle
+to userspace. Properly initialize the full handle length.
 
-Link: https://lkml.kernel.org/r/20231010145549.1244748-1-willy@infradead.org
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Fixes: 90572890d202 ("mm: numa: Change page last {nid,pid} into {cpu,pid}")
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Acked-by: Mel Gorman <mgorman@techsingularity.net>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ingo Molnar <mingo@kernel.org>
+Link: https://lkml.kernel.org/r/20240205122626.13701-1-jack@suse.cz
+Reported-by: syzbot+3ce5dea5b1539ff36769@syzkaller.appspotmail.com
+Fixes: ea3983ace6b7 ("fat: restructure export_operations")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+Cc: Amir Goldstein <amir73il@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bounds.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fat/nfs.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/kernel/bounds.c b/kernel/bounds.c
-index 9795d75b09b23..a94e3769347ee 100644
---- a/kernel/bounds.c
-+++ b/kernel/bounds.c
-@@ -19,7 +19,7 @@ int main(void)
- 	DEFINE(NR_PAGEFLAGS, __NR_PAGEFLAGS);
- 	DEFINE(MAX_NR_ZONES, __MAX_NR_ZONES);
- #ifdef CONFIG_SMP
--	DEFINE(NR_CPUS_BITS, ilog2(CONFIG_NR_CPUS));
-+	DEFINE(NR_CPUS_BITS, bits_per(CONFIG_NR_CPUS));
- #endif
- 	DEFINE(SPINLOCK_SIZE, sizeof(spinlock_t));
- 	/* End of constants */
+diff --git a/fs/fat/nfs.c b/fs/fat/nfs.c
+index af191371c3529..bab63eeaf9cbc 100644
+--- a/fs/fat/nfs.c
++++ b/fs/fat/nfs.c
+@@ -130,6 +130,12 @@ fat_encode_fh_nostale(struct inode *inode, __u32 *fh, int *lenp,
+ 		fid->parent_i_gen = parent->i_generation;
+ 		type = FILEID_FAT_WITH_PARENT;
+ 		*lenp = FAT_FID_SIZE_WITH_PARENT;
++	} else {
++		/*
++		 * We need to initialize this field because the fh is actually
++		 * 12 bytes long
++		 */
++		fid->parent_i_pos_hi = 0;
+ 	}
+ 
+ 	return type;
 -- 
 2.43.0
 
