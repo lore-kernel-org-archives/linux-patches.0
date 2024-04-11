@@ -1,36 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05AAD140E3D;
-	Thu, 11 Apr 2024 10:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF6F145353;
+	Thu, 11 Apr 2024 10:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830818; cv=none; b=g6GlZn9jV0x+jT2WSM7dE3jvQ2sUWRi20wYrharCfij4I51JgdYQIZ217IjXYCZqjb/a+QxqHgJDCkeYgQuTxPaIWCoZdd73E8lv+oaiKZ9SuLu51Obw9U2s+Rj7w90hRm7Xu6a3m66DhJjVHRUeQ4Ky/LEjmrBBOQu5Y/qUQMw=
+	t=1712830821; cv=none; b=KwSczxIk4m44SYe38fgVjGFJFybKRlJLt6NAs2VdgIC48S5887pkB0MZHL9OHbs2FPHsM7omXN8o6YYV5py3GIRugXxdLeix71N5RTp3WV4+K4+3/JecbQvlSISdYzAKa8hpDpJXlfHxc742hz/KKNMATg+oHRxleY9ra4DW/x4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830818; c=relaxed/simple;
-	bh=DpZQDw3JaW94Ed0WUjMkuTsa9QhYyXxoAFAW7xBAlVw=;
+	s=arc-20240116; t=1712830821; c=relaxed/simple;
+	bh=ZTBGl2/xDGXqy/33shPqfJAw7xmIWFY6NbpdSfKYpkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m3AzVJ+66o9I1DiqgvtNLOqMtHO9d5u2tDhbdLCEBGnePhlYlznPYuQFY5KLtMTGpTLNtY1mvbdRRuMssu0KMxjf0FyFbOJf6HWLzrSkY168RyZG3eQqYFZEvp9K1W3Ibq0UDPoC7ktJSRoR9xWvrUTn8OuJYK2u4XVdudRJbSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TgBIJgVq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TCF43Tvh2730xp+y7t1H8po4iXwvc3x34c8qeRCr1z+8yD2dvUJt8UcNFuR60QBqBAA47lAk5N2SCX64HnG6sWx/4g30I+W5GfaZ7CHp+3pRyHhMzk4XOO5zAzfDanCJG6cDRxDzJMtwXjsVVkJuwWHq8NFFX4YVjEBgzDzo/YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsF3+acS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgBIJgVq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81AA4C433F1;
-	Thu, 11 Apr 2024 10:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsF3+acS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE5EC43390;
+	Thu, 11 Apr 2024 10:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830817;
-	bh=DpZQDw3JaW94Ed0WUjMkuTsa9QhYyXxoAFAW7xBAlVw=;
+	s=korg; t=1712830821;
+	bh=ZTBGl2/xDGXqy/33shPqfJAw7xmIWFY6NbpdSfKYpkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TgBIJgVqgSGWm16Jzekq7lxRtZKuUTwqw7hWi3pvzWSLfkyOs/TV8+RB+9R34YG6K
-	 AhdcpoB3JtOUbZ61+NQcg9Rf7nLMo3ojqrnTFuEFDG2WK4eKVqc0WJ3Sz0YjjQWyko
-	 KRDWPSuFBH4T1FbwGMC1E2umUjaiXeC2U2pSsvDA=
+	b=SsF3+acS/rXu0FwlFL4ETOHzJiq/LEkQmShS/wshfAuDBJ7/YKK3Z0nQ2+ZDgbu/R
+	 t4GWqiFGdCq5V+y+EW/FUCTtpdOcojIWOSMOvIZwV8SV38RdX1aDh0jtSNGeakt5OW
+	 rMbcYHveHitIV5s4NcPLxffQj5kqQOtqAtJkzKM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.4 128/215] USB: core: Fix deadlock in usb_deauthorize_interface()
-Date: Thu, 11 Apr 2024 11:55:37 +0200
-Message-ID: <20240411095428.744925858@linuxfoundation.org>
+	Ryosuke Yasuoka <ryasuoka@redhat.com>,
+	Jeremy Cline <jeremy@jcline.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+7ea9413ea6749baf5574@syzkaller.appspotmail.com,
+	syzbot+29b5ca705d2e0f4a44d2@syzkaller.appspotmail.com
+Subject: [PATCH 5.4 129/215] nfc: nci: Fix uninit-value in nci_dev_up and nci_ntf_packet
+Date: Thu, 11 Apr 2024 11:55:38 +0200
+Message-ID: <20240411095428.774042015@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -49,70 +55,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Ryosuke Yasuoka <ryasuoka@redhat.com>
 
-commit 80ba43e9f799cbdd83842fc27db667289b3150f5 upstream.
+[ Upstream commit d24b03535e5eb82e025219c2f632b485409c898f ]
 
-Among the attribute file callback routines in
-drivers/usb/core/sysfs.c, the interface_authorized_store() function is
-the only one which acquires a device lock on an ancestor device: It
-calls usb_deauthorize_interface(), which locks the interface's parent
-USB device.
+syzbot reported the following uninit-value access issue [1][2]:
 
-The will lead to deadlock if another process already owns that lock
-and tries to remove the interface, whether through a configuration
-change or because the device has been disconnected.  As part of the
-removal procedure, device_del() waits for all ongoing sysfs attribute
-callbacks to complete.  But usb_deauthorize_interface() can't complete
-until the device lock has been released, and the lock won't be
-released until the removal has finished.
+nci_rx_work() parses and processes received packet. When the payload
+length is zero, each message type handler reads uninitialized payload
+and KMSAN detects this issue. The receipt of a packet with a zero-size
+payload is considered unexpected, and therefore, such packets should be
+silently discarded.
 
-The mechanism provided by sysfs to prevent this kind of deadlock is
-to use the sysfs_break_active_protection() function, which tells sysfs
-not to wait for the attribute callback.
+This patch resolved this issue by checking payload size before calling
+each message type handler codes.
 
-Reported-and-tested by: Yue Sun <samsun1006219@gmail.com>
-Reported by: xingwei lee <xrivendell7@gmail.com>
-
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/linux-usb/CAEkJfYO6jRVC8Tfrd_R=cjO0hguhrV31fDPrLrNOOHocDkPoAA@mail.gmail.com/#r
-Fixes: 310d2b4124c0 ("usb: interface authorization: SysFS part of USB interface authorization")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/1c37eea1-9f56-4534-b9d8-b443438dc869@rowland.harvard.edu
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
+Reported-and-tested-by: syzbot+7ea9413ea6749baf5574@syzkaller.appspotmail.com
+Reported-and-tested-by: syzbot+29b5ca705d2e0f4a44d2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7ea9413ea6749baf5574 [1]
+Closes: https://syzkaller.appspot.com/bug?extid=29b5ca705d2e0f4a44d2 [2]
+Signed-off-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
+Reviewed-by: Jeremy Cline <jeremy@jcline.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/sysfs.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ net/nfc/nci/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/core/sysfs.c
-+++ b/drivers/usb/core/sysfs.c
-@@ -1190,14 +1190,24 @@ static ssize_t interface_authorized_stor
- {
- 	struct usb_interface *intf = to_usb_interface(dev);
- 	bool val;
-+	struct kernfs_node *kn;
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index cb2193dec7129..701c3752bda09 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -1499,6 +1499,11 @@ static void nci_rx_work(struct work_struct *work)
+ 		nfc_send_to_raw_sock(ndev->nfc_dev, skb,
+ 				     RAW_PAYLOAD_NCI, NFC_DIRECTION_RX);
  
- 	if (strtobool(buf, &val) != 0)
- 		return -EINVAL;
- 
--	if (val)
-+	if (val) {
- 		usb_authorize_interface(intf);
--	else
--		usb_deauthorize_interface(intf);
-+	} else {
-+		/*
-+		 * Prevent deadlock if another process is concurrently
-+		 * trying to unregister intf.
-+		 */
-+		kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
-+		if (kn) {
-+			usb_deauthorize_interface(intf);
-+			sysfs_unbreak_active_protection(kn);
++		if (!nci_plen(skb->data)) {
++			kfree_skb(skb);
++			break;
 +		}
-+	}
- 
- 	return count;
- }
++
+ 		/* Process frame */
+ 		switch (nci_mt(skb->data)) {
+ 		case NCI_MT_RSP_PKT:
+-- 
+2.43.0
+
 
 
