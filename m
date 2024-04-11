@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8CC64CC0;
-	Thu, 11 Apr 2024 10:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C98713D24D;
+	Thu, 11 Apr 2024 10:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832423; cv=none; b=WVuxozG02HoNfFqkBm3lXUTM6cmHT9TK+1TS3Et9lxKOCq6VyIaPE/Ctp9hwmVL91oyLeYSOe5uW08xHECzJEwTT8n4+I9jf+ZGbLA46JB1N7NdV0lztcwQBtnYoFqwwMfk2QoVKRlAYEfceEwtuHJYZmJVfepE9ekLMUzL+h9Q=
+	t=1712832425; cv=none; b=pqJmnNdgBHVNktn7oJcLGzegWXrEauJTvkSeYEhKCsJqk+0wAYCBfL/CIfQoYBlnpsPIlxNtlSfoeFUH7ukY7KBVCrT5jO0XuYS1USq/jhqZQavPGE2adaCN4mHGfikAXqzg/k5XXFwFHqwB3a037MdsRAkzz6g5ANNX0Lmmyyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832423; c=relaxed/simple;
-	bh=9a/QrXINF5+BNIgCdwD2Rx+61K9f//dXS6vaGg3Ynx0=;
+	s=arc-20240116; t=1712832425; c=relaxed/simple;
+	bh=QEpTGOJRAeOts1P6yJxqDcNdd65QWzNyuhMinm8JlvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lfsHvlvCGHavUpxGsjA2R4p6HiNtbpPxA8sq3WgMMmdwb5BE6CJzXwpRV7//UO/hw4a6j5idE6pwr2/NgPeiD6F0FuHMOny34i2a4hRYKCnFIar23gzgJ+0fHBDM7wgnbjiBh2yNscVVMPCVvnDurjZ9UQMYFxrchxn9s9u5ZGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTQXENaq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BjspjWGyhqpOVHOz5Pljp6Vx7XY345D60NqalKSRkz7Zn4Z8El5Etg3UrOSVsuAKBZuI3dF/Uug5kN2+1TZx2G0cUmH0+pZTcmFz08S8gX9GpAVm/gUrmyNlpg+7xhBvZw2EILBJZTsxKRAU4ZUPOViogmaTXyI9Nxy/ndJxNss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOZpjEo+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTQXENaq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C39C433C7;
-	Thu, 11 Apr 2024 10:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOZpjEo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD95AC43390;
+	Thu, 11 Apr 2024 10:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832422;
-	bh=9a/QrXINF5+BNIgCdwD2Rx+61K9f//dXS6vaGg3Ynx0=;
+	s=korg; t=1712832425;
+	bh=QEpTGOJRAeOts1P6yJxqDcNdd65QWzNyuhMinm8JlvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vTQXENaqrk6akScuoO/mqzvJ0i9hrXt1KWewY7vcgSn5OOnOHU9bh8d5GgBvZA8JC
-	 Y2JhTjlVyRjEofSRLu54aiDsu6cNkl06cB/urs9w8utgogqcf/IFtLDS6LQTUOa20w
-	 8zbpBenehYRomjqY+ycIGeJQ5c2IWrQd/A8Xd1JM=
+	b=vOZpjEo+4C8UhbdSggAYfJYBDoRrvKen9EDLF17g6rCLqleUnuo/m2mx8TnFk0XMY
+	 oV1ti82ln5FToeKFOjrCWoUapr/23beWPoXPKfz5yV3UV5nehDA3qdkV3AQLzGg99C
+	 lhD7rQYdY1Th2TBEj7vs9lBnweLUgRhekQtyY6mM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 44/83] drm/amd/amdgpu: Fix potential ioremap() memory leaks in amdgpu_device_init()
-Date: Thu, 11 Apr 2024 11:57:16 +0200
-Message-ID: <20240411095414.010786725@linuxfoundation.org>
+Subject: [PATCH 6.1 45/83] SUNRPC: increase size of rpc_wait_queue.qlen from unsigned short to unsigned int
+Date: Thu, 11 Apr 2024 11:57:17 +0200
+Message-ID: <20240411095414.040467427@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -46,92 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit eb4f139888f636614dab3bcce97ff61cefc4b3a7 ]
+[ Upstream commit 2c35f43b5a4b9cdfaa6fdd946f5a212615dac8eb ]
 
-This ensures that the memory mapped by ioremap for adev->rmmio, is
-properly handled in amdgpu_device_init(). If the function exits early
-due to an error, the memory is unmapped. If the function completes
-successfully, the memory remains mapped.
+When the NFS client is under extreme load the rpc_wait_queue.qlen counter
+can be overflowed. Here is an instant of the backlog queue overflow in a
+real world environment shown by drgn helper:
 
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:4337 amdgpu_device_init() warn: 'adev->rmmio' from ioremap() not released on lines: 4035,4045,4051,4058,4068,4337
+rpc_task_stats(rpc_clnt):
+-------------------------
+rpc_clnt: 0xffff92b65d2bae00
+rpc_xprt: 0xffff9275db64f000
+  Queue:  sending[64887] pending[524] backlog[30441] binding[0]
+XMIT task: 0xffff925c6b1d8e98
+     WRITE: 750654
+        __dta_call_status_580: 65463
+        __dta_call_transmit_status_579: 1
+        call_reserveresult: 685189
+        nfs_client_init_is_complete: 1
+    COMMIT: 584
+        call_reserveresult: 573
+        __dta_call_status_580: 11
+    ACCESS: 1
+        __dta_call_status_580: 1
+   GETATTR: 10
+        __dta_call_status_580: 4
+        call_reserveresult: 6
+751249 tasks for server 111.222.333.444
+Total tasks: 751249
 
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+count_rpc_wait_queues(xprt):
+----------------------------
+**** rpc_xprt: 0xffff9275db64f000 num_reqs: 65511
+wait_queue: xprt_binding[0] cnt: 0
+wait_queue: xprt_binding[1] cnt: 0
+wait_queue: xprt_binding[2] cnt: 0
+wait_queue: xprt_binding[3] cnt: 0
+rpc_wait_queue[xprt_binding].qlen: 0 maxpriority: 0
+wait_queue: xprt_sending[0] cnt: 0
+wait_queue: xprt_sending[1] cnt: 64887
+wait_queue: xprt_sending[2] cnt: 0
+wait_queue: xprt_sending[3] cnt: 0
+rpc_wait_queue[xprt_sending].qlen: 64887 maxpriority: 3
+wait_queue: xprt_pending[0] cnt: 524
+wait_queue: xprt_pending[1] cnt: 0
+wait_queue: xprt_pending[2] cnt: 0
+wait_queue: xprt_pending[3] cnt: 0
+rpc_wait_queue[xprt_pending].qlen: 524 maxpriority: 0
+wait_queue: xprt_backlog[0] cnt: 0
+wait_queue: xprt_backlog[1] cnt: 685801
+wait_queue: xprt_backlog[2] cnt: 0
+wait_queue: xprt_backlog[3] cnt: 0
+rpc_wait_queue[xprt_backlog].qlen: 30441 maxpriority: 3 [task cnt mismatch]
+
+There is no effect on operations when this overflow occurs. However
+it causes confusion when trying to diagnose the performance problem.
+
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ include/linux/sunrpc/sched.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index b11690a816e73..e4eb906806a51 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3713,8 +3713,10 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 	 * early on during init and before calling to RREG32.
- 	 */
- 	adev->reset_domain = amdgpu_reset_create_reset_domain(SINGLE_DEVICE, "amdgpu-reset-dev");
--	if (!adev->reset_domain)
--		return -ENOMEM;
-+	if (!adev->reset_domain) {
-+		r = -ENOMEM;
-+		goto unmap_memory;
-+	}
- 
- 	/* detect hw virtualization here */
- 	amdgpu_detect_virtualization(adev);
-@@ -3722,18 +3724,18 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 	r = amdgpu_device_get_job_timeout_settings(adev);
- 	if (r) {
- 		dev_err(adev->dev, "invalid lockup_timeout parameter syntax\n");
--		return r;
-+		goto unmap_memory;
- 	}
- 
- 	/* early init functions */
- 	r = amdgpu_device_ip_early_init(adev);
- 	if (r)
--		return r;
-+		goto unmap_memory;
- 
- 	/* Get rid of things like offb */
- 	r = drm_aperture_remove_conflicting_pci_framebuffers(adev->pdev, &amdgpu_kms_driver);
- 	if (r)
--		return r;
-+		goto unmap_memory;
- 
- 	/* Enable TMZ based on IP_VERSION */
- 	amdgpu_gmc_tmz_set(adev);
-@@ -3743,7 +3745,7 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 	if (adev->gmc.xgmi.supported) {
- 		r = adev->gfxhub.funcs->get_xgmi_info(adev);
- 		if (r)
--			return r;
-+			goto unmap_memory;
- 	}
- 
- 	/* enable PCIE atomic ops */
-@@ -3999,6 +4001,8 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- failed:
- 	amdgpu_vf_error_trans_all(adev);
- 
-+unmap_memory:
-+	iounmap(adev->rmmio);
- 	return r;
- }
- 
+diff --git a/include/linux/sunrpc/sched.h b/include/linux/sunrpc/sched.h
+index 8ada7dc802d30..8f9bee0e21c3b 100644
+--- a/include/linux/sunrpc/sched.h
++++ b/include/linux/sunrpc/sched.h
+@@ -186,7 +186,7 @@ struct rpc_wait_queue {
+ 	unsigned char		maxpriority;		/* maximum priority (0 if queue is not a priority queue) */
+ 	unsigned char		priority;		/* current priority */
+ 	unsigned char		nr;			/* # tasks remaining for cookie */
+-	unsigned short		qlen;			/* total # tasks waiting in queue */
++	unsigned int		qlen;			/* total # tasks waiting in queue */
+ 	struct rpc_timer	timer_list;
+ #if IS_ENABLED(CONFIG_SUNRPC_DEBUG) || IS_ENABLED(CONFIG_TRACEPOINTS)
+ 	const char *		name;
 -- 
 2.43.0
 
