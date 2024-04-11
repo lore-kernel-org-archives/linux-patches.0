@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FA5145B26;
-	Thu, 11 Apr 2024 10:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385F96BB29;
+	Thu, 11 Apr 2024 10:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832357; cv=none; b=FjbDroDPRwB1MAgk0HtSHLyE7GGI3Yuvpe+aNCq+U+3hVtUJKVFbcJ0NI9K1iAkAzEeR6CoM8mj4S5qmn4+Degt6fWLBrl2J4eUUXDGA2pg7mASG7eNnULQJPExHjaQRCyrrGOxD6gW1Bf/uJpa34wFapTffFH3ieVVtOz60fXc=
+	t=1712832360; cv=none; b=ZjTzwIKbEwzVe08pXyFlZ9l6WSBVZXWL4DkiDXldPTdJPwnoxq+6z0Rdj6MDbSjynUsKVMgHxY6D4BuPpwQJevKI62fTORB0Jqo2Dp07MmWIy+QS5K6iyFNsUt4ClxHBHvO7+bpX90QFgZKcnDGpCbd+l39UBtbCLYS51zQWsBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832357; c=relaxed/simple;
-	bh=CvlCilbwdSlwvtXWSPwDRBP6qyEWh6ykVFr0cQvBMoY=;
+	s=arc-20240116; t=1712832360; c=relaxed/simple;
+	bh=2s77ssU5wd4DgrLoQHok/DO45H7Ad0S4T32akfbzEdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O30OhmEdw77+ssiyB36ay/1M+Qtda4ayRTuw79fZqW2JD62MEAcFhQayLcfXYmsbjG7oe3edhnUmF6PJfjZvLvM2/4kK9vxDwF9q0mO1lcDfXFpXAofYVDcCr2Jm634Rn8JmWggAN5CZPrmzqaprFtSidUUuNDuw/TeRxakZovg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0AKjjUG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uDVm56OQgJaSWUOt0McOBaAqD2d5m2fQY6bsptL0ZQNd7uelSFi4T1fAN3n5MXsA5m/yX/8Yhb0FuSvwOqn8Xji1DjJUUsWCJocWrP9rwBRA3fteH89TiDVkk42Zpib6XVyh9irwkLAZD0tbH7HxQmNAD4QzNPaADDlR/4VtuwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRvXToFE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0AKjjUG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02E4C433C7;
-	Thu, 11 Apr 2024 10:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRvXToFE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2714C433F1;
+	Thu, 11 Apr 2024 10:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832357;
-	bh=CvlCilbwdSlwvtXWSPwDRBP6qyEWh6ykVFr0cQvBMoY=;
+	s=korg; t=1712832360;
+	bh=2s77ssU5wd4DgrLoQHok/DO45H7Ad0S4T32akfbzEdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C0AKjjUGPlhL1Mk3pKK5Uu+9zweCMZ3HYJYUqX9ZzpvnArAKZU5R5/G42Giy0nv0y
-	 0HloB0O2vQH80kEPGpy7ou860TLpLpEFM5Ba0pkHLUUQfCyLROITmOTnyKpJAYwYOg
-	 FFOUJ72cKNieHkD16Mt8NLKjIJcxWICyuhKPjvj8=
+	b=DRvXToFEND+78bt9QTs4GdRv32iLWSvEoT2cOYTv/c7JUTKO5Q9rZqmqD23WZtQ6U
+	 6jQ0X3t6UUhDt8L5UILWV4CAaYNSZRd08Zp8OrtsqIELG/ei0VrV/CEF0A2Dga2nQ9
+	 nHKB5jIBArjSTPlsGlMZ5AxwlN3NQUSbjEnhL1B0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>,
-	Roman Stratiienko <r.stratiienko@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Dhruva Gole <d-gole@ti.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 21/83] cpufreq: Dont unregister cpufreq cooling on CPU hotplug
-Date: Thu, 11 Apr 2024 11:56:53 +0200
-Message-ID: <20240411095413.317205916@linuxfoundation.org>
+Subject: [PATCH 6.1 22/83] btrfs: handle chunk tree lookup error in btrfs_relocate_sys_chunks()
+Date: Thu, 11 Apr 2024 11:56:54 +0200
+Message-ID: <20240411095413.347064668@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -54,92 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viresh Kumar <viresh.kumar@linaro.org>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit c4d61a529db788d2e52654f5b02c8d1de4952c5b ]
+[ Upstream commit 7411055db5ce64f836aaffd422396af0075fdc99 ]
 
-Offlining a CPU and bringing it back online is a common operation and it
-happens frequently during system suspend/resume, where the non-boot CPUs
-are hotplugged out during suspend and brought back at resume.
+The unhandled case in btrfs_relocate_sys_chunks() loop is a corruption,
+as it could be caused only by two impossible conditions:
 
-The cpufreq core already tries to make this path as fast as possible as
-the changes are only temporary in nature and full cleanup of resources
-isn't required in this case. For example the drivers can implement
-online()/offline() callbacks to avoid a lot of tear down of resources.
+- at first the search key is set up to look for a chunk tree item, with
+  offset -1, this is an inexact search and the key->offset will contain
+  the correct offset upon a successful search, a valid chunk tree item
+  cannot have an offset -1
 
-On similar lines, there is no need to unregister the cpufreq cooling
-device during suspend / resume, but only while the policy is getting
-removed.
+- after first successful search, the found_key corresponds to a chunk
+  item, the offset is decremented by 1 before the next loop, it's
+  impossible to find a chunk item there due to alignment and size
+  constraints
 
-Moreover, unregistering the cpufreq cooling device is resulting in an
-unwanted outcome, where the system suspend is eventually aborted in the
-process.  Currently, during system suspend the cpufreq core unregisters
-the cooling device, which in turn removes a kobject using device_del()
-and that generates a notification to the userspace via uevent broadcast.
-This causes system suspend to abort in some setups.
-
-This was also earlier reported (indirectly) by Roman [1]. Maybe there is
-another way around to fixing that problem properly, but this change
-makes sense anyways.
-
-Move the registering and unregistering of the cooling device to policy
-creation and removal times onlyy.
-
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218521
-Reported-by: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
-Reported-by: Roman Stratiienko <r.stratiienko@gmail.com>
-Link: https://patchwork.kernel.org/project/linux-pm/patch/20220710164026.541466-1-r.stratiienko@gmail.com/ [1]
-Tested-by: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Dhruva Gole <d-gole@ti.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ fs/btrfs/volumes.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index c8912756fc06d..91efa23e0e8f3 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -1525,7 +1525,8 @@ static int cpufreq_online(unsigned int cpu)
- 	if (cpufreq_driver->ready)
- 		cpufreq_driver->ready(policy);
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index 03cfb425ea4ea..ab5d410d560e7 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -3381,7 +3381,17 @@ static int btrfs_relocate_sys_chunks(struct btrfs_fs_info *fs_info)
+ 			mutex_unlock(&fs_info->reclaim_bgs_lock);
+ 			goto error;
+ 		}
+-		BUG_ON(ret == 0); /* Corruption */
++		if (ret == 0) {
++			/*
++			 * On the first search we would find chunk tree with
++			 * offset -1, which is not possible. On subsequent
++			 * loops this would find an existing item on an invalid
++			 * offset (one less than the previous one, wrong
++			 * alignment and size).
++			 */
++			ret = -EUCLEAN;
++			goto error;
++		}
  
--	if (cpufreq_thermal_control_enabled(cpufreq_driver))
-+	/* Register cpufreq cooling only for a new policy */
-+	if (new_policy && cpufreq_thermal_control_enabled(cpufreq_driver))
- 		policy->cdev = of_cpufreq_cooling_register(policy);
- 
- 	pr_debug("initialization complete\n");
-@@ -1609,11 +1610,6 @@ static void __cpufreq_offline(unsigned int cpu, struct cpufreq_policy *policy)
- 	else
- 		policy->last_policy = policy->policy;
- 
--	if (cpufreq_thermal_control_enabled(cpufreq_driver)) {
--		cpufreq_cooling_unregister(policy->cdev);
--		policy->cdev = NULL;
--	}
--
- 	if (has_target())
- 		cpufreq_exit_governor(policy);
- 
-@@ -1674,6 +1670,15 @@ static void cpufreq_remove_dev(struct device *dev, struct subsys_interface *sif)
- 		return;
- 	}
- 
-+	/*
-+	 * Unregister cpufreq cooling once all the CPUs of the policy are
-+	 * removed.
-+	 */
-+	if (cpufreq_thermal_control_enabled(cpufreq_driver)) {
-+		cpufreq_cooling_unregister(policy->cdev);
-+		policy->cdev = NULL;
-+	}
-+
- 	/* We did light-weight exit earlier, do full tear down now */
- 	if (cpufreq_driver->offline)
- 		cpufreq_driver->exit(policy);
+ 		ret = btrfs_previous_item(chunk_root, path, key.objectid,
+ 					  key.type);
 -- 
 2.43.0
 
