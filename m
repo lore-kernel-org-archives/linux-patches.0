@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36511448F3;
-	Thu, 11 Apr 2024 10:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEE31F5FA;
+	Thu, 11 Apr 2024 10:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830114; cv=none; b=iySJjqt+hEajqqQ3Pp+22vnRsbEeBKzAvwj0sqQCdovHjSC0iDsq55yqWcXJIwrkPSLyhlhlCvK3GC8cjE+rneNhaD6JgoUEx39KyvSriHaOBVUE8XuV5bdqB7Zkg+/dmaKapcpUzFAEtdXxiISJjSEe7b8hW5+xkaD2D+uvM2k=
+	t=1712830116; cv=none; b=IEM9UvNUM5KNcVi9qjtj/Jh9lLMMFyK2QqaxSLnUc6L3IaNdK2YxNNqyRIfPoV1EfRUhIevGMOGubWBa5Cgndz1OD7zSOYhM3SIKzB6MRTx2MHDLzjkeLyPEQgkQS29YEMs3SF9XjDQcAQGl+U+Bd6IXPu9TCnjVJXUKagfot1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830114; c=relaxed/simple;
-	bh=8Y8GccT8hOJWsmtNw+63yLrv/iGvJBHNbLJBZsmHuvo=;
+	s=arc-20240116; t=1712830116; c=relaxed/simple;
+	bh=zZeZv1WYJ4TaFALGKvaCqwOeAcX5KSyaT7JX9XTX3lo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EMRa+QfT/yqfwKOxi7Q1EjzChGrvg6MgjuZekuNWVStFy0rzq9R1/3yAEnmYSIDpn5Tscxobl+50MC9mznEnAwGShveZzDfBoY+8YFT6TZ96QAmXFFGWpd3B/wWVOlFw90oOVBWuxGuFEA8A5ardLGcQfJHa3WEAOQrAFIFaUBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V140hATQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s+A93YwH9rwtyLQkBygbKSEIE+9yfZ6noVGB0JGWr7DVfCig/Cc8ENIW3fKt/RWcIbQ3BHriI2ErDZGmvqMnJJ1CVt6HAzixFUABQ6+AWoEUGfiP54w3hxzx25Xf8NS015ZVHIz7dJAPYufo6jIkiDl3SHUwliprDUFRrUnAVhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcDJbH8p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V140hATQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C42C433C7;
-	Thu, 11 Apr 2024 10:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcDJbH8p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 625BEC433F1;
+	Thu, 11 Apr 2024 10:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830113;
-	bh=8Y8GccT8hOJWsmtNw+63yLrv/iGvJBHNbLJBZsmHuvo=;
+	s=korg; t=1712830116;
+	bh=zZeZv1WYJ4TaFALGKvaCqwOeAcX5KSyaT7JX9XTX3lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V140hATQg1KsQMn4Zde2Ynu8Kp2Ka5lHuXx3b9l2vBy36iP5BSgcl7BoEimdcXlov
-	 /0As1B1nRUGRB8LenT7fMaqT/LrlxxQ6rXA3hBA4poXWPWxMVD/Y+QgOexDwYG5TOJ
-	 mxupp2ltT+wmSAYb2ioZkp1s8RuME3hPfNVPZBYo=
+	b=hcDJbH8pH8wYabNKS9nraYk3Nk36kuPdNwlgxC2GcyMtU/7BRd8XqWGgkW+Oy/2Gd
+	 IiLzW5q18fZV301pXv6/ba0WNrWUQdxAVIBMMx1+V2X4ETYJb3FDlt8MzqdJbbD+ne
+	 rZmkiK15uaSxi7R2C6eHw0ipGMIohZbaIQiVW4kQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 039/143] tools/power x86_energy_perf_policy: Fix file leak in get_pkg_num()
-Date: Thu, 11 Apr 2024 11:55:07 +0200
-Message-ID: <20240411095422.090079422@linuxfoundation.org>
+Subject: [PATCH 6.8 013/143] net: dsa: qca8k: put MDIO controller OF node if unavailable
+Date: Thu, 11 Apr 2024 11:54:41 +0200
+Message-ID: <20240411095421.309930677@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -51,31 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit f85450f134f0b4ca7e042dc3dc89155656a2299d ]
+[ Upstream commit 08932323ccf7f8c4c85db9cb12a791ed81264f66 ]
 
-In function get_pkg_num() if fopen_or_die() succeeds it returns a file
-pointer to be used. But fclose() is never called before returning from
-the function.
+It was pointed out during the review [1] of commit e66bf63a7f67 ("net:
+dsa: qca8k: skip MDIO bus creation if its OF node has status =
+"disabled"") that we now leak a reference to the "mdio" OF node if it is
+disabled.
 
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This is only a concern when using dynamic OF as far as I can tell (like
+probing on an overlay), since OF nodes are never freed in the regular
+case. Additionally, I'm unaware of any actual device trees (in
+production or elsewhere) which have status = "disabled" for the MDIO OF
+node. So handling this as a simple enhancement.
+
+[1] https://lore.kernel.org/netdev/CAJq09z4--Ug+3FAmp=EimQ8HTQYOWOuVon-PUMGB5a1N=RPv4g@mail.gmail.com/
+
+Suggested-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/dsa/qca/qca8k-8xxx.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-index 5fd9e594079cf..ebda9c366b2ba 100644
---- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-+++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-@@ -1241,6 +1241,7 @@ unsigned int get_pkg_num(int cpu)
- 	retval = fscanf(fp, "%d\n", &pkg);
- 	if (retval != 1)
- 		errx(1, "%s: failed to parse", pathname);
-+	fclose(fp);
- 	return pkg;
+diff --git a/drivers/net/dsa/qca/qca8k-8xxx.c b/drivers/net/dsa/qca/qca8k-8xxx.c
+index 7a864329cb726..95d78b3181d1c 100644
+--- a/drivers/net/dsa/qca/qca8k-8xxx.c
++++ b/drivers/net/dsa/qca/qca8k-8xxx.c
+@@ -954,7 +954,7 @@ qca8k_mdio_register(struct qca8k_priv *priv)
+ 
+ 	mdio = of_get_child_by_name(dev->of_node, "mdio");
+ 	if (mdio && !of_device_is_available(mdio))
+-		goto out;
++		goto out_put_node;
+ 
+ 	bus = devm_mdiobus_alloc(dev);
+ 	if (!bus) {
+@@ -988,7 +988,6 @@ qca8k_mdio_register(struct qca8k_priv *priv)
+ 
+ out_put_node:
+ 	of_node_put(mdio);
+-out:
+ 	return err;
  }
  
 -- 
