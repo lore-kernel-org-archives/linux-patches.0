@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EDC1442F7;
-	Thu, 11 Apr 2024 10:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4D9145B08;
+	Thu, 11 Apr 2024 10:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830034; cv=none; b=fRZe+J4W8kXgJM4uUH4h99Xzzs+rt5jY+plmiAvxRteps1j2nAd94v8D7UF+Qnddi/c76xAfHmOZmB8gfGycgGIVoIw1OmxWoAAdHF/Svc+L++rHNEFEACt3MRNDFegUysaRhTtpYOn0EfD3QT40LzOD4TJuAB+pxdpnGdI9zR0=
+	t=1712830037; cv=none; b=p3E7wG3Dn5rM03w4Dm7T9UQbmYlTu3TGR/uGE6edhSMZtD2JiOU3wmaA+JX/36aUm+8Bj6rp0o2zpYuhjPw0e8X5LlzXE2agOpHglqLyiMuA56ST8owf2ttCowNbp+Rsgvg4q38VQdQ6EIBiKA+waBLNE/qwM0IcbrpsJgYLUNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830034; c=relaxed/simple;
-	bh=PD1r+kb8IPEWJ4Qg4v7w42xBc936JPbkqJ1AGx5FOcg=;
+	s=arc-20240116; t=1712830037; c=relaxed/simple;
+	bh=Iw5R1mbIkW1YYTydc9sQ8OSbcufWC9RiQPGAFaccReQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HooMCoYEOEotl+KiEWW2BfO4ySvbEilGgirCmqdEqrlIQf9cN1dmMiplmKp8I/w16yMOb3fWJzxeJ7cWoYybUFLYCcnVzPjsIsGxtOvn4krBCwyo6/S1jdkw+V6cCTWoiQCk+EdanYkjk63vBfJ785LRbLCiyJbwfIuF/htCwUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=em4jCl6z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jvmLsvJvNbm+EkXcQwdQVJaBnE1g5buK5FBd89usA8GR7+fpLqYHtHD4ooipDDASlXGCi/CK8DKR1DoxFe+vBjRJFrY71cBx2fRYiqGNu4ZVDQhGmWwx9klryDB8WmRlUd+pSZS/unU6NKdVGUPg2c8zxyocwuj7mVCG1fKLjMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXVq/j5p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="em4jCl6z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CCEBC43390;
-	Thu, 11 Apr 2024 10:07:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXVq/j5p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7DDC43394;
+	Thu, 11 Apr 2024 10:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830033;
-	bh=PD1r+kb8IPEWJ4Qg4v7w42xBc936JPbkqJ1AGx5FOcg=;
+	s=korg; t=1712830036;
+	bh=Iw5R1mbIkW1YYTydc9sQ8OSbcufWC9RiQPGAFaccReQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=em4jCl6zVoKNJt2fHo5dBZaendGwl9wsgnaK+szPSSKndmh1IzdYgOrcvHbPKBViK
-	 uW3gbFojmxJsl3GUwKFLuFqIkai9y2LeBfKZlNJa5QMYEEzTuzaHhRuqiGuuf1GW0Y
-	 K3gk7TRMsmJRMXKZItoG+Mz7pm/4dYqCe6thBVnI=
+	b=AXVq/j5pbcL8bKudUCJLzCGRG5PF/D0sGoDRyaJX/sIYAMnmEz0ehDd2bsg0Ynrhf
+	 oYeK2zOMgdKpUJzM65lEydy30uA2h1JcjnNZPm0LKimN4kF/rdA8XRRfLX0y7PZ2Zc
+	 NaLigFIe3pf2Jahvwd+snmwCRqTAI3UuBo+VGqwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <elfring@users.sourceforge.net>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>,
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 005/143] batman-adv: Improve exception handling in batadv_throw_uevent()
-Date: Thu, 11 Apr 2024 11:54:33 +0200
-Message-ID: <20240411095421.070551748@linuxfoundation.org>
+Subject: [PATCH 6.8 006/143] net: stmmac: dwmac-starfive: Add support for JH7100 SoC
+Date: Thu, 11 Apr 2024 11:54:34 +0200
+Message-ID: <20240411095421.100262500@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -52,69 +54,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Elfring <elfring@users.sourceforge.net>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 5593e9abf1cf2bf096366d8c7fd933bc69d561ce ]
+[ Upstream commit 8d4597b871210429bda0f5c3a8816b7d9b6daf7e ]
 
-The kfree() function was called in up to three cases by
-the batadv_throw_uevent() function during error handling
-even if the passed variable contained a null pointer.
-This issue was detected by using the Coccinelle software.
+Add a missing quirk to enable support for the StarFive JH7100 SoC.
 
-* Thus adjust jump targets.
+Additionally, for greater flexibility in operation, allow using the
+rgmii-rxid and rgmii-txid phy modes.
 
-* Reorder kfree() calls at the end.
-
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-Acked-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Co-developed-by: Emil Renner Berthing <kernel@esmil.dk>
+Signed-off-by: Emil Renner Berthing <kernel@esmil.dk>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/main.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/Kconfig   |  6 ++--
+ .../ethernet/stmicro/stmmac/dwmac-starfive.c  | 32 ++++++++++++++++---
+ 2 files changed, 31 insertions(+), 7 deletions(-)
 
-diff --git a/net/batman-adv/main.c b/net/batman-adv/main.c
-index 5fc754b0b3f7f..75119f1ffcccf 100644
---- a/net/batman-adv/main.c
-+++ b/net/batman-adv/main.c
-@@ -691,29 +691,31 @@ int batadv_throw_uevent(struct batadv_priv *bat_priv, enum batadv_uev_type type,
- 				  "%s%s", BATADV_UEV_TYPE_VAR,
- 				  batadv_uev_type_str[type]);
- 	if (!uevent_env[0])
--		goto out;
-+		goto report_error;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/Kconfig b/drivers/net/ethernet/stmicro/stmmac/Kconfig
+index 85dcda51df052..4ec61f1ee71a2 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/Kconfig
++++ b/drivers/net/ethernet/stmicro/stmmac/Kconfig
+@@ -165,9 +165,9 @@ config DWMAC_STARFIVE
+ 	help
+ 	  Support for ethernet controllers on StarFive RISC-V SoCs
  
- 	uevent_env[1] = kasprintf(GFP_ATOMIC,
- 				  "%s%s", BATADV_UEV_ACTION_VAR,
- 				  batadv_uev_action_str[action]);
- 	if (!uevent_env[1])
--		goto out;
-+		goto free_first_env;
+-	  This selects the StarFive platform specific glue layer support for
+-	  the stmmac device driver. This driver is used for StarFive JH7110
+-	  ethernet controller.
++	  This selects the StarFive platform specific glue layer support
++	  for the stmmac device driver. This driver is used for the
++	  StarFive JH7100 and JH7110 ethernet controllers.
  
- 	/* If the event is DEL, ignore the data field */
- 	if (action != BATADV_UEV_DEL) {
- 		uevent_env[2] = kasprintf(GFP_ATOMIC,
- 					  "%s%s", BATADV_UEV_DATA_VAR, data);
- 		if (!uevent_env[2])
--			goto out;
-+			goto free_second_env;
- 	}
+ config DWMAC_STI
+ 	tristate "STi GMAC support"
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-starfive.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-starfive.c
+index 5d630affb4d15..4e1076faee0cd 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-starfive.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-starfive.c
+@@ -15,13 +15,20 @@
  
- 	ret = kobject_uevent_env(bat_kobj, KOBJ_CHANGE, uevent_env);
--out:
--	kfree(uevent_env[0]);
--	kfree(uevent_env[1]);
- 	kfree(uevent_env[2]);
-+free_second_env:
-+	kfree(uevent_env[1]);
-+free_first_env:
-+	kfree(uevent_env[0]);
+ #include "stmmac_platform.h"
  
- 	if (ret)
-+report_error:
- 		batadv_dbg(BATADV_DBG_BATMAN, bat_priv,
- 			   "Impossible to send uevent for (%s,%s,%s) event (err: %d)\n",
- 			   batadv_uev_type_str[type],
+-#define STARFIVE_DWMAC_PHY_INFT_RGMII	0x1
+-#define STARFIVE_DWMAC_PHY_INFT_RMII	0x4
+-#define STARFIVE_DWMAC_PHY_INFT_FIELD	0x7U
++#define STARFIVE_DWMAC_PHY_INFT_RGMII		0x1
++#define STARFIVE_DWMAC_PHY_INFT_RMII		0x4
++#define STARFIVE_DWMAC_PHY_INFT_FIELD		0x7U
++
++#define JH7100_SYSMAIN_REGISTER49_DLYCHAIN	0xc8
++
++struct starfive_dwmac_data {
++	unsigned int gtxclk_dlychain;
++};
+ 
+ struct starfive_dwmac {
+ 	struct device *dev;
+ 	struct clk *clk_tx;
++	const struct starfive_dwmac_data *data;
+ };
+ 
+ static void starfive_dwmac_fix_mac_speed(void *priv, unsigned int speed, unsigned int mode)
+@@ -67,6 +74,8 @@ static int starfive_dwmac_set_mode(struct plat_stmmacenet_data *plat_dat)
+ 
+ 	case PHY_INTERFACE_MODE_RGMII:
+ 	case PHY_INTERFACE_MODE_RGMII_ID:
++	case PHY_INTERFACE_MODE_RGMII_RXID:
++	case PHY_INTERFACE_MODE_RGMII_TXID:
+ 		mode = STARFIVE_DWMAC_PHY_INFT_RGMII;
+ 		break;
+ 
+@@ -89,6 +98,14 @@ static int starfive_dwmac_set_mode(struct plat_stmmacenet_data *plat_dat)
+ 	if (err)
+ 		return dev_err_probe(dwmac->dev, err, "error setting phy mode\n");
+ 
++	if (dwmac->data) {
++		err = regmap_write(regmap, JH7100_SYSMAIN_REGISTER49_DLYCHAIN,
++				   dwmac->data->gtxclk_dlychain);
++		if (err)
++			return dev_err_probe(dwmac->dev, err,
++					     "error selecting gtxclk delay chain\n");
++	}
++
+ 	return 0;
+ }
+ 
+@@ -114,6 +131,8 @@ static int starfive_dwmac_probe(struct platform_device *pdev)
+ 	if (!dwmac)
+ 		return -ENOMEM;
+ 
++	dwmac->data = device_get_match_data(&pdev->dev);
++
+ 	dwmac->clk_tx = devm_clk_get_enabled(&pdev->dev, "tx");
+ 	if (IS_ERR(dwmac->clk_tx))
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(dwmac->clk_tx),
+@@ -144,8 +163,13 @@ static int starfive_dwmac_probe(struct platform_device *pdev)
+ 	return stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
+ }
+ 
++static const struct starfive_dwmac_data jh7100_data = {
++	.gtxclk_dlychain = 4,
++};
++
+ static const struct of_device_id starfive_dwmac_match[] = {
+-	{ .compatible = "starfive,jh7110-dwmac"	},
++	{ .compatible = "starfive,jh7100-dwmac", .data = &jh7100_data },
++	{ .compatible = "starfive,jh7110-dwmac" },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, starfive_dwmac_match);
 -- 
 2.43.0
 
