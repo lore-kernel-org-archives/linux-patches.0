@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F89145B3E;
-	Thu, 11 Apr 2024 10:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F38145B28;
+	Thu, 11 Apr 2024 10:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830431; cv=none; b=Xw9jeqe+KpUiMbaJOTEu9MsG8NxtNuv/JLFoIpX4npptFBM19wtPb1t8ocu3X2QdQZQPbsHzdynCfo2tF9TQvjUMX8K7QbJVgk5eQxwI7yXfxFdIz12CZhIQcXb04nOPEw93YD14vTGy/iq7N70WfnjxiUIf7WnqR6N8aYimacc=
+	t=1712830434; cv=none; b=CIv+ET7kuPxgGxHB2uisNy2/9Dd03X9vw/dFDFqAdF636FJ9CohKMMMBrJvpICQ9WLmL1SlTbroiynRb0JJmxVAITuJWUvowcaeq44r2FceCPnlrooCi/snsJkEQb/o0wOZeXMLwLPGtI3AGPzYvQSAlTrbZpArOD7GdkrVh7rA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830431; c=relaxed/simple;
-	bh=YWX2S+HjNFw83l2qMWmYvU7adSh2VxY4GL45toYwhLg=;
+	s=arc-20240116; t=1712830434; c=relaxed/simple;
+	bh=b92U43FgTkSh1oOsSeVTO9cHGklap4qI9dU2V2ouXqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E7x8cD/RmE/ze0CTjER2N9kNDk5SVyW3fxQnHZLadogtqoA19weENKDG2qTQyQhaEQbTdEjYOp1CSygB0FzgTpja1JjNzj1tFbPMUWLYuIWXxsUlFyBtni3pa8CddFKKFSR+gZd1yoW9bLf5kbjVQhOLA51hmWOMXA1+fYFhxw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKKRXvOk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PQN+ATsFVwRm1cpTCRlEdslqVKB26fFux4wVEWEiz/cm4UIYsL7Pk0Tzk3XCbffKjLREh3E6aZlnRBGXyV+e/M7B/VV9V+QQx8d3dQfQ3MONeA5KumjYcLgakJ/rXlH5MYdO99/bS37/jNe/AA7JKEOEtnUxe7ONQNSCRFzEf8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEk8YmBD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKKRXvOk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A139FC433F1;
-	Thu, 11 Apr 2024 10:13:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEk8YmBD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9701AC433F1;
+	Thu, 11 Apr 2024 10:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830431;
-	bh=YWX2S+HjNFw83l2qMWmYvU7adSh2VxY4GL45toYwhLg=;
+	s=korg; t=1712830434;
+	bh=b92U43FgTkSh1oOsSeVTO9cHGklap4qI9dU2V2ouXqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DKKRXvOktIjPNSAnwq8FUD3ipXlDDrDZt8SDMMXVNBALYuppuokqJkHHs4dDJYwYV
-	 wDoe0b8Zc1WMRnnUkyjHYgdnuv8lVPM831maeregy+FPzVcVwn+ss3x9gGZhnHNXT7
-	 CLBEIr7FajeWA5OuJhmXHoF/9nu1BeR5f82O1s7I=
+	b=OEk8YmBD5DYFYfUwQhaFHfyVuxC4h1m8MsaAhRrfLP+iq8V+hCUjkEuRRVdAh9eSF
+	 oP9Jp8sDkvqIXOYlwxpl7rKuIkYwCWhnqNSNO8I4DYV5acQHcDqOHsLc1jeJYg0b1t
+	 Srn/zrm6hqzhWfTadW9kHBjHTUUPBM/zMDZ7KrLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David McFarland <corngood@gmail.com>,
-	Enrik Berkhan <Enrik.Berkhan@inka.de>,
+	Gwendal Grignou <gwendal@chromium.org>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 136/143] platform/x86/intel/hid: Dont wake on 5-button releases
-Date: Thu, 11 Apr 2024 11:56:44 +0200
-Message-ID: <20240411095424.995498714@linuxfoundation.org>
+Subject: [PATCH 6.8 137/143] platform/x86: intel-vbtn: Update tablet mode switch at end of probe
+Date: Thu, 11 Apr 2024 11:56:45 +0200
+Message-ID: <20240411095425.024920739@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -54,58 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David McFarland <corngood@gmail.com>
+From: Gwendal Grignou <gwendal@chromium.org>
 
-[ Upstream commit 5864e479ca4344f3a5df8074524da24c960f440b ]
+[ Upstream commit 434e5781d8cd2d0ed512d920c6cdeba4b33a2e81 ]
 
-If, for example, the power button is configured to suspend, holding it
-and releasing it after the machine has suspended, will wake the machine.
+ACER Vivobook Flip (TP401NAS) virtual intel switch is implemented as
+follow:
 
-Also on some machines, power button release events are sent during
-hibernation, even if the button wasn't used to hibernate the machine.
-This causes hibernation to be aborted.
+   Device (VGBI)
+   {
+       Name (_HID, EisaId ("INT33D6") ...
+       Name (VBDS, Zero)
+       Method (_STA, 0, Serialized)  // _STA: Status ...
+       Method (VBDL, 0, Serialized)
+       {
+           PB1E |= 0x20
+           VBDS |= 0x40
+       }
+       Method (VGBS, 0, Serialized)
+       {
+           Return (VBDS) /* \_SB_.PCI0.SBRG.EC0_.VGBI.VBDS */
+       }
+       ...
+    }
 
-Fixes: 0c4cae1bc00d ("PM: hibernate: Avoid missing wakeup events during hibernation")
-Signed-off-by: David McFarland <corngood@gmail.com>
-Tested-by: Enrik Berkhan <Enrik.Berkhan@inka.de>
+By default VBDS is set to 0. At boot it is set to clamshell (bit 6 set)
+only after method VBDL is executed.
+
+Since VBDL is now evaluated in the probe routine later, after the device
+is registered, the retrieved value of VBDS was still 0 ("tablet mode")
+when setting up the virtual switch.
+
+Make sure to evaluate VGBS after VBDL, to ensure the
+convertible boots in clamshell mode, the expected default.
+
+Fixes: 26173179fae1 ("platform/x86: intel-vbtn: Eval VBDL after registering our notifier")
+Signed-off-by: Gwendal Grignou <gwendal@chromium.org>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/878r1tpd6u.fsf_-_@gmail.com
+Link: https://lore.kernel.org/r/20240329143206.2977734-3-gwendal@chromium.org
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/hid.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/platform/x86/intel/vbtn.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
-index 7457ca2b27a60..9ffbdc988fe50 100644
---- a/drivers/platform/x86/intel/hid.c
-+++ b/drivers/platform/x86/intel/hid.c
-@@ -504,6 +504,7 @@ static void notify_handler(acpi_handle handle, u32 event, void *context)
- 	struct platform_device *device = context;
- 	struct intel_hid_priv *priv = dev_get_drvdata(&device->dev);
- 	unsigned long long ev_index;
-+	struct key_entry *ke;
- 	int err;
+diff --git a/drivers/platform/x86/intel/vbtn.c b/drivers/platform/x86/intel/vbtn.c
+index 084c355c86f5f..5d13452bb947a 100644
+--- a/drivers/platform/x86/intel/vbtn.c
++++ b/drivers/platform/x86/intel/vbtn.c
+@@ -136,8 +136,6 @@ static int intel_vbtn_input_setup(struct platform_device *device)
+ 	priv->switches_dev->id.bustype = BUS_HOST;
  
+ 	if (priv->has_switches) {
+-		detect_tablet_mode(&device->dev);
+-
+ 		ret = input_register_device(priv->switches_dev);
+ 		if (ret)
+ 			return ret;
+@@ -316,6 +314,9 @@ static int intel_vbtn_probe(struct platform_device *device)
+ 		if (ACPI_FAILURE(status))
+ 			dev_err(&device->dev, "Error VBDL failed with ACPI status %d\n", status);
+ 	}
++	// Check switches after buttons since VBDL may have side effects.
++	if (has_switches)
++		detect_tablet_mode(&device->dev);
+ 
+ 	device_init_wakeup(&device->dev, true);
  	/*
-@@ -545,11 +546,15 @@ static void notify_handler(acpi_handle handle, u32 event, void *context)
- 		if (event == 0xc0 || !priv->array)
- 			return;
- 
--		if (!sparse_keymap_entry_from_scancode(priv->array, event)) {
-+		ke = sparse_keymap_entry_from_scancode(priv->array, event);
-+		if (!ke) {
- 			dev_info(&device->dev, "unknown event 0x%x\n", event);
- 			return;
- 		}
- 
-+		if (ke->type == KE_IGNORE)
-+			return;
-+
- wakeup:
- 		pm_wakeup_hard_event(&device->dev);
- 
 -- 
 2.43.0
 
