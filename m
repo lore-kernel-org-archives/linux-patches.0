@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC24140366;
-	Thu, 11 Apr 2024 10:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85D32EAE5;
+	Thu, 11 Apr 2024 10:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832115; cv=none; b=I+qKujOaNIlQfQpXEQyT3cZMR3lTxemRteprFcrLGuQzBwITByXXGsC3BDP00ostWBkE0+Mhlg3d7YxsNM2RsSUelXqG1lPvqNY0jmETdTVarDoCuTfU3VJaLVsm5pY5dhtXCRNPgUjse5J9z80sBlCNel57dgbIQsjw+W4pF60=
+	t=1712832118; cv=none; b=Ktemdu/Gwgh5Kn8mBm6bqGT5Iq6DdmE6ZPsB8MiYXAq+Nd/oL5QOkMVdurC5UE1KEviaHqp0eadMbJH1iLZYxFdaNAkejdA8HqnQHQT8fBSTim+QMGBC/DeonQ3Zxmy+npGER8c8pAfsiYphV3vhHmoIEzcitzaFqcfIBCqpIik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832115; c=relaxed/simple;
-	bh=bhSMqcHLpn8mg01zn0c9ocJ8XFxgggCm6tVT2UVYLM4=;
+	s=arc-20240116; t=1712832118; c=relaxed/simple;
+	bh=vdhQePiDnXUdfrdU8pv1bc3McTnNwhsf36bP6JEyyq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XyO+Ceaa86Kh10VdAVpY6MfVs6S/zNdYJaGZ6AqFxvypuujvaSH96k5LdRbdHdnnAHdF6I+Dgx79a143zNJ40/aBQrw9oBolOUfYu3ejRA03R+QzzZBkidND4Uhou+nmdpxvmAhEovi+05ZjVV6HafHKInPCBvvdK3vDTf4GCps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9WEQgjW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GtHVTF9DZHG7mTgbdegKJIoQWdDZN1KShvYdQOaN1Sd4bxEPp9Zg79lCiV110qt8U3TPONQQKkgA9UwvjGqyUw+4YcT6WnZarAvQahXH6OLErJsFX2/QytpzRPTsQtKnzBi6yJuxwzOXY9vB9d10HRF0/0FNSab20g8ySnBqctI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvUNKQ2U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9WEQgjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5105FC433F1;
-	Thu, 11 Apr 2024 10:41:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvUNKQ2U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3046BC433C7;
+	Thu, 11 Apr 2024 10:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832115;
-	bh=bhSMqcHLpn8mg01zn0c9ocJ8XFxgggCm6tVT2UVYLM4=;
+	s=korg; t=1712832118;
+	bh=vdhQePiDnXUdfrdU8pv1bc3McTnNwhsf36bP6JEyyq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o9WEQgjWOqYHQm6XIwg61r9Tp3hn4YIoSho89fp4617rG65aA+eFiAsrRY0/o61YI
-	 3vQ7hnWvWcaTmNsKVkOswd6FBd8fl2GhzPJRxCTDy27q6qe3V2ZABVeK87FvjzJr0M
-	 Ia57fBmSEU/vI0ZOpx3YuK3WGzTMnVIgnTfev2N8=
+	b=QvUNKQ2Ux7HPlGK678ixDRpzQsxvnLjzMlJqTHK29ePQVlmbZ3v9KaMvKq73TWnaQ
+	 MD7kt5SDKOza+iCrXx1cSesXTCwFC2G2rCQ2Fb/qfxpb/lMByahesAbpu7rCl+QG3i
+	 LnT8e3CUcUqy/9Cjn4b939lUfFoPssyBwHqoN9Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 227/294] arm64: dts: qcom: sc7180-trogdor: mark bluetooth address as broken
-Date: Thu, 11 Apr 2024 11:56:30 +0200
-Message-ID: <20240411095442.421381653@linuxfoundation.org>
+	stable@kernel.org,
+	Ulrich Weigand <ulrich.weigand@de.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 5.10 236/294] s390/entry: align system call table on 8 bytes
+Date: Thu, 11 Apr 2024 11:56:39 +0200
+Message-ID: <20240411095442.683561724@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -54,55 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-[ Upstream commit e12e28009e584c8f8363439f6a928ec86278a106 ]
+commit 378ca2d2ad410a1cd5690d06b46c5e2297f4c8c0 upstream.
 
-Several Qualcomm Bluetooth controllers lack persistent storage for the
-device address and instead one can be provided by the boot firmware
-using the 'local-bd-address' devicetree property.
+Align system call table on 8 bytes. With sys_call_table entry size
+of 8 bytes that eliminates the possibility of a system call pointer
+crossing cache line boundary.
 
-The Bluetooth bindings clearly states that the address should be
-specified in little-endian order, but due to a long-standing bug in the
-Qualcomm driver which reversed the address some boot firmware has been
-providing the address in big-endian order instead.
-
-The boot firmware in SC7180 Trogdor Chromebooks is known to be affected
-so mark the 'local-bd-address' property as broken to maintain backwards
-compatibility with older firmware when fixing the underlying driver bug.
-
-Note that ChromeOS always updates the kernel and devicetree in lockstep
-so that there is no need to handle backwards compatibility with older
-devicetrees.
-
-Fixes: 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial trogdor and lazor dt")
-Cc: stable@vger.kernel.org      # 5.10
-Cc: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Acked-by: Bjorn Andersson <andersson@kernel.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Suggested-by: Ulrich Weigand <ulrich.weigand@de.ibm.com>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/s390/kernel/entry.S |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 3f5883e8bf319..9ce8bfbf7ea21 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -810,6 +810,8 @@ ap_spi_fp: &spi10 {
- 		vddrf-supply = <&pp1300_l2c>;
- 		vddch0-supply = <&pp3300_l10c>;
- 		max-speed = <3200000>;
-+
-+		qcom,local-bd-address-broken;
- 	};
- };
+--- a/arch/s390/kernel/entry.S
++++ b/arch/s390/kernel/entry.S
+@@ -1298,6 +1298,7 @@ ENDPROC(stack_overflow)
  
--- 
-2.43.0
-
+ #endif
+ 	.section .rodata, "a"
++	.balign	8
+ #define SYSCALL(esame,emu)	.quad __s390x_ ## esame
+ 	.globl	sys_call_table
+ sys_call_table:
 
 
