@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A032EAE5;
-	Thu, 11 Apr 2024 10:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28B12EAE5;
+	Thu, 11 Apr 2024 10:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829693; cv=none; b=JQo/TkQYwifRmFmOk7268A/im2oGOrnrCG0LpRmkywSRzGMX5n+kiqjpjJNJb98Sn0FZG8QtTBYyPS6huYMbAMuhcPoUYT35L6q8pkbjNKdMKzw0pS+b1w2GgS46wK67YlOAsxwC61+NZsBOPKVoAUnaWCi8ZOgPvOUgDzLXkJA=
+	t=1712829696; cv=none; b=syQwGRKivFMYa1TH3+qY3e6nLbjT8Kd1gMMr5dGxCgi1/ZfLu6i+2x3iZwavmH5uyqt8AviNG79Vjfi07+CmLnsTo6Amj0o6XDYrk1o2mbStywu4G1RWAFQs01eA8LLnWQFSLgc2zzXeV2Mc9fAfjZ/Bc2Sdwtr/639UBuZ3UrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829693; c=relaxed/simple;
-	bh=jzCzuzIGzKnFvxvFZb7+W5cQ/7l22rZsjDaFMp6Y7Ys=;
+	s=arc-20240116; t=1712829696; c=relaxed/simple;
+	bh=mFHUZZRyC4k72y3cls+vCB4+QAvzn/gS0azCZP1sm9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fjVWrQjP6lEOFFkGT1CUKK68YPPweiFkOPu86avUy+i0SKsk1yRAaLJbH5T6UYs9guGUcgOmJoQBNt1KKUSdFI1ZapoSKnCm95ZbXpww+Ghu+Be4eUlM64tmCYCrZHxn6zaJv/N3LGwxkGIMxDHKntDq/7wEPJYVs9EQ0MEhYvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLiAimO9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RdOtj8DR4dNgOFwuTJuAaL1lSc+qV8PRsExhUbDk1F2TQTxY15P81VWVqN8+8B9RMAxsrdfAFHhMjzpZNiVC+Hh8XrnuVSrb/ooDZU+OTrupxAOBLnosulxLjw0SvnghvVfftr1ZJATbKLrZTYyMqaX1npi5EFfRc3EXzlbCTwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xWY/VwwL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLiAimO9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60816C433F1;
-	Thu, 11 Apr 2024 10:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xWY/VwwL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A16C433C7;
+	Thu, 11 Apr 2024 10:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829693;
-	bh=jzCzuzIGzKnFvxvFZb7+W5cQ/7l22rZsjDaFMp6Y7Ys=;
+	s=korg; t=1712829696;
+	bh=mFHUZZRyC4k72y3cls+vCB4+QAvzn/gS0azCZP1sm9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NLiAimO9Mc+FwO0wu0qTqjtpRYY+M7eKW9bLWKVN3ceDGdOM0lOIrPtw4UT4P4epg
-	 Qc+WYd4nYvLFKBuRRleAjEICzmpHdS5Y3n0QijFwGdR3mKywjAC8sc4k96dM9WYNA+
-	 P/5giNpwLHpKhf5Wg+KaV5mREtxY5IVaWLmB9aec=
+	b=xWY/VwwLuXHXnDVOdzHLUPd67B7xc/gqyqhlD14hk7ff1La2TcvOabvJ2YeEKk1kB
+	 HBTVoY+FISzeH7FkPTj5lLIcKEpZLNjVzsZIqg7k6ykwutoR0bhtkJlU910Ig6j6Vn
+	 sDFeq5oHGPsoLCbyju2C+3ROeRJv+ilxB11FxJ2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 4.19 072/175] xfrm: Avoid clang fortify warning in copy_to_user_tmpl()
-Date: Thu, 11 Apr 2024 11:54:55 +0200
-Message-ID: <20240411095421.731325666@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.19 073/175] ALSA: hda/realtek - Fix headset Mic no show at resume back for Lenovo ALC897 platform
+Date: Thu, 11 Apr 2024 11:54:56 +0200
+Message-ID: <20240411095421.760982129@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -51,56 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Kailang Yang <kailang@realtek.com>
 
-commit 1a807e46aa93ebad1dfbed4f82dc3bf779423a6e upstream.
+commit d397b6e56151099cf3b1f7bfccb204a6a8591720 upstream.
 
-After a couple recent changes in LLVM, there is a warning (or error with
-CONFIG_WERROR=y or W=e) from the compile time fortify source routines,
-specifically the memset() in copy_to_user_tmpl().
+Headset Mic will no show at resume back.
+This patch will fix this issue.
 
-  In file included from net/xfrm/xfrm_user.c:14:
-  ...
-  include/linux/fortify-string.h:438:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
-    438 |                         __write_overflow_field(p_size_field, size);
-        |                         ^
-  1 error generated.
-
-While ->xfrm_nr has been validated against XFRM_MAX_DEPTH when its value
-is first assigned in copy_templates() by calling validate_tmpl() first
-(so there should not be any issue in practice), LLVM/clang cannot really
-deduce that across the boundaries of these functions. Without that
-knowledge, it cannot assume that the loop stops before i is greater than
-XFRM_MAX_DEPTH, which would indeed result a stack buffer overflow in the
-memset().
-
-To make the bounds of ->xfrm_nr clear to the compiler and add additional
-defense in case copy_to_user_tmpl() is ever used in a path where
-->xfrm_nr has not been properly validated against XFRM_MAX_DEPTH first,
-add an explicit bound check and early return, which clears up the
-warning.
-
-Cc: stable@vger.kernel.org
-Link: https://github.com/ClangBuiltLinux/linux/issues/1985
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: d7f32791a9fc ("ALSA: hda/realtek - Add headset Mic support for Lenovo ALC897 platform")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/r/4713d48a372e47f98bba0c6120fd8254@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_user.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/hda/patch_realtek.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -1703,6 +1703,9 @@ static int copy_to_user_tmpl(struct xfrm
- 	if (xp->xfrm_nr == 0)
- 		return 0;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -8593,8 +8593,7 @@ static void alc897_hp_automute_hook(stru
  
-+	if (xp->xfrm_nr > XFRM_MAX_DEPTH)
-+		return -ENOBUFS;
-+
- 	for (i = 0; i < xp->xfrm_nr; i++) {
- 		struct xfrm_user_tmpl *up = &vec[i];
- 		struct xfrm_tmpl *kp = &xp->xfrm_vec[i];
+ 	snd_hda_gen_hp_automute(codec, jack);
+ 	vref = spec->gen.hp_jack_present ? (PIN_HP | AC_PINCTL_VREF_100) : PIN_HP;
+-	snd_hda_codec_write(codec, 0x1b, 0, AC_VERB_SET_PIN_WIDGET_CONTROL,
+-			    vref);
++	snd_hda_set_pin_ctl(codec, 0x1b, vref);
+ }
+ 
+ static void alc897_fixup_lenovo_headset_mic(struct hda_codec *codec,
+@@ -8603,6 +8602,10 @@ static void alc897_fixup_lenovo_headset_
+ 	struct alc_spec *spec = codec->spec;
+ 	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
+ 		spec->gen.hp_automute_hook = alc897_hp_automute_hook;
++		spec->no_shutup_pins = 1;
++	}
++	if (action == HDA_FIXUP_ACT_PROBE) {
++		snd_hda_set_pin_ctl_cache(codec, 0x1a, PIN_IN | AC_PINCTL_VREF_100);
+ 	}
+ }
+ 
 
 
