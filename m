@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54B963A2;
-	Thu, 11 Apr 2024 10:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3DA14600E;
+	Thu, 11 Apr 2024 10:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832439; cv=none; b=t0g6OXQTJSGSanqRcWqbADXy14mkvP+01BytPqQ1Y+OxO5XhVUKFp9uSgXsHYBQUJLUtjpYbxcKhgEDMFYtXaRFI/1YWc7KIZ+Hmu0J6XYETH8gd4sSaWhrQ4VDVGXHeu9ON3BtszqVG1c83pNK7cPAgZzDY+l1BmvcbteqmV9k=
+	t=1712832442; cv=none; b=BKVGcnpDrls58ZMJBOTYotADFv5drUAqZXD9F9pWJZhAMCP+naEmDtWFNUr/AO2hBNI2aLm2eNFllkUzLVtqemKTkXBHvXZa4mZuUMvFp0iK+nUgy/OsW8/f3szkyDAnJe0mbWI5llH6yeaIs6nRo7Hd6LLYHcN5Dl/zQikQTjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832439; c=relaxed/simple;
-	bh=Ilpfb+FZOulLTqeDSVyMFULk66/7Z13byu8GQBjN9dk=;
+	s=arc-20240116; t=1712832442; c=relaxed/simple;
+	bh=l9KZbiRRhulvlJhTg/YbSR38kK4xFqDVYboyOjoQlA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N76chJSXGcPMr+7aX3WXh5k5h+AsWTC8O07tpk/sz33E0n+K/l9G5XrlTH5efG3peuz0t8FBeOCpVcG1fgIqn0cAYaXZoLhR4g3k/1wUWou9k/n0hxkyihzBIgsZ6q3pYePhK/d24gAKLtWJIgIpIzS/zvGAfO4yAbX3KZiliO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuxCGLLK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Yzhqx0WRRwOubrjbhZHwSbQnBk1B3m/+CMy37NYQ2ItA24UVAq7+Ltoz7Bd8R32rk5ZDAdPnonmz1mMdjCbr5rkGzlakvtonqKemS6KV/Mydpmz7/yb+8ZuZfxqDQv1vmHUrdm3pTNNMxeJiHWR/Af1gkJ1WFFzk34zody2we0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rk0uVjht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuxCGLLK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4DAC433F1;
-	Thu, 11 Apr 2024 10:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rk0uVjht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46844C43390;
+	Thu, 11 Apr 2024 10:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832439;
-	bh=Ilpfb+FZOulLTqeDSVyMFULk66/7Z13byu8GQBjN9dk=;
+	s=korg; t=1712832442;
+	bh=l9KZbiRRhulvlJhTg/YbSR38kK4xFqDVYboyOjoQlA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yuxCGLLKL96OeQ8sULMsyy7SDv8xVa3pmexLPA/CPELtwJyZxU7SeIxPaKwMyPeYG
-	 zp3dKMlJIpOWDGeQsewLX+G2l+W0CYBkVa0gUOyn9rJaqWVZbo6HKEVlJjh3FokIga
-	 7YrRwIn34P5ImNlgOIisiWZR4xBl7CfM2Fo2gqyY=
+	b=Rk0uVjht1Gh1JPJoT2tzjwC/GFSNYqim1cAhNsw24tdVHBERaCKoBcpoByqus9yyE
+	 z426oWwhRItIjHSUhgPT6PS5WmgJQln0V/sO3WhuGip6JdMGPohHe2g1Zn3JWi3j0z
+	 F57m2s4G5v9QTIKNYIUEgPh0dHf8F2ly6hFWS/8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manjunath Patil <manjunath.b.patil@oracle.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	=?UTF-8?q?Duje=20Mihanovi=C4=87?= <duje.mihanovic@skole.hr>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 50/83] RDMA/cm: add timeout to cm_destroy_id wait
-Date: Thu, 11 Apr 2024 11:57:22 +0200
-Message-ID: <20240411095414.190585160@linuxfoundation.org>
+Subject: [PATCH 6.1 51/83] Input: imagis - use FIELD_GET where applicable
+Date: Thu, 11 Apr 2024 11:57:23 +0200
+Message-ID: <20240411095414.220318172@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -45,106 +45,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manjunath Patil <manjunath.b.patil@oracle.com>
+From: Duje Mihanović <duje.mihanovic@skole.hr>
 
-[ Upstream commit 96d9cbe2f2ff7abde021bac75eafaceabe9a51fa ]
+[ Upstream commit c0ca3dbd03d66c6b9e044f48720e6ab5cef37ae5 ]
 
-Add timeout to cm_destroy_id, so that userspace can trigger any data
-collection that would help in analyzing the cause of delay in destroying
-the cm_id.
+Instead of manually extracting certain bits from registers with binary
+ANDs and shifts, the FIELD_GET macro can be used. With this in mind, the
+*_SHIFT macros can be dropped.
 
-New noinline function helps dtrace/ebpf programs to hook on to it.
-Existing functionality isn't changed except triggering a probe-able new
-function at every timeout interval.
-
-We have seen cases where CM messages stuck with MAD layer (either due to
-software bug or faulty HCA), leading to cm_id getting stuck in the
-following call stack. This patch helps in resolving such issues faster.
-
-kernel: ... INFO: task XXXX:56778 blocked for more than 120 seconds.
-...
-	Call Trace:
-	__schedule+0x2bc/0x895
-	schedule+0x36/0x7c
-	schedule_timeout+0x1f6/0x31f
- 	? __slab_free+0x19c/0x2ba
-	wait_for_completion+0x12b/0x18a
-	? wake_up_q+0x80/0x73
-	cm_destroy_id+0x345/0x610 [ib_cm]
-	ib_destroy_cm_id+0x10/0x20 [ib_cm]
-	rdma_destroy_id+0xa8/0x300 [rdma_cm]
-	ucma_destroy_id+0x13e/0x190 [rdma_ucm]
-	ucma_write+0xe0/0x160 [rdma_ucm]
-	__vfs_write+0x3a/0x16d
-	vfs_write+0xb2/0x1a1
-	? syscall_trace_enter+0x1ce/0x2b8
-	SyS_write+0x5c/0xd3
-	do_syscall_64+0x79/0x1b9
-	entry_SYSCALL_64_after_hwframe+0x16d/0x0
-
-Signed-off-by: Manjunath Patil <manjunath.b.patil@oracle.com>
-Link: https://lore.kernel.org/r/20240309063323.458102-1-manjunath.b.patil@oracle.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Duje Mihanović <duje.mihanovic@skole.hr>
+Link: https://lore.kernel.org/r/20240306-b4-imagis-keys-v3-1-2c429afa8420@skole.hr
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cm.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ drivers/input/touchscreen/imagis.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
-index b7f9023442890..462a10d6a5762 100644
---- a/drivers/infiniband/core/cm.c
-+++ b/drivers/infiniband/core/cm.c
-@@ -34,6 +34,7 @@ MODULE_AUTHOR("Sean Hefty");
- MODULE_DESCRIPTION("InfiniBand CM");
- MODULE_LICENSE("Dual BSD/GPL");
+diff --git a/drivers/input/touchscreen/imagis.c b/drivers/input/touchscreen/imagis.c
+index b667914a44f1d..2636e1c9435d8 100644
+--- a/drivers/input/touchscreen/imagis.c
++++ b/drivers/input/touchscreen/imagis.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
  
-+#define CM_DESTROY_ID_WAIT_TIMEOUT 10000 /* msecs */
- static const char * const ibcm_rej_reason_strs[] = {
- 	[IB_CM_REJ_NO_QP]			= "no QP",
- 	[IB_CM_REJ_NO_EEC]			= "no EEC",
-@@ -1025,10 +1026,20 @@ static void cm_reset_to_idle(struct cm_id_private *cm_id_priv)
++#include <linux/bitfield.h>
+ #include <linux/bits.h>
+ #include <linux/delay.h>
+ #include <linux/i2c.h>
+@@ -23,12 +24,9 @@
+ #define IST3038C_I2C_RETRY_COUNT	3
+ #define IST3038C_MAX_FINGER_NUM		10
+ #define IST3038C_X_MASK			GENMASK(23, 12)
+-#define IST3038C_X_SHIFT		12
+ #define IST3038C_Y_MASK			GENMASK(11, 0)
+ #define IST3038C_AREA_MASK		GENMASK(27, 24)
+-#define IST3038C_AREA_SHIFT		24
+ #define IST3038C_FINGER_COUNT_MASK	GENMASK(15, 12)
+-#define IST3038C_FINGER_COUNT_SHIFT	12
+ #define IST3038C_FINGER_STATUS_MASK	GENMASK(9, 0)
+ 
+ struct imagis_ts {
+@@ -92,8 +90,7 @@ static irqreturn_t imagis_interrupt(int irq, void *dev_id)
+ 		goto out;
  	}
- }
  
-+static noinline void cm_destroy_id_wait_timeout(struct ib_cm_id *cm_id)
-+{
-+	struct cm_id_private *cm_id_priv;
-+
-+	cm_id_priv = container_of(cm_id, struct cm_id_private, id);
-+	pr_err("%s: cm_id=%p timed out. state=%d refcnt=%d\n", __func__,
-+	       cm_id, cm_id->state, refcount_read(&cm_id_priv->refcount));
-+}
-+
- static void cm_destroy_id(struct ib_cm_id *cm_id, int err)
- {
- 	struct cm_id_private *cm_id_priv;
- 	struct cm_work *work;
-+	int ret;
+-	finger_count = (intr_message & IST3038C_FINGER_COUNT_MASK) >>
+-				IST3038C_FINGER_COUNT_SHIFT;
++	finger_count = FIELD_GET(IST3038C_FINGER_COUNT_MASK, intr_message);
+ 	if (finger_count > IST3038C_MAX_FINGER_NUM) {
+ 		dev_err(&ts->client->dev,
+ 			"finger count %d is more than maximum supported\n",
+@@ -101,7 +98,7 @@ static irqreturn_t imagis_interrupt(int irq, void *dev_id)
+ 		goto out;
+ 	}
  
- 	cm_id_priv = container_of(cm_id, struct cm_id_private, id);
- 	spin_lock_irq(&cm_id_priv->lock);
-@@ -1135,7 +1146,14 @@ static void cm_destroy_id(struct ib_cm_id *cm_id, int err)
+-	finger_pressed = intr_message & IST3038C_FINGER_STATUS_MASK;
++	finger_pressed = FIELD_GET(IST3038C_FINGER_STATUS_MASK, intr_message);
  
- 	xa_erase(&cm.local_id_table, cm_local_id(cm_id->local_id));
- 	cm_deref_id(cm_id_priv);
--	wait_for_completion(&cm_id_priv->comp);
-+	do {
-+		ret = wait_for_completion_timeout(&cm_id_priv->comp,
-+						  msecs_to_jiffies(
-+						  CM_DESTROY_ID_WAIT_TIMEOUT));
-+		if (!ret) /* timeout happened */
-+			cm_destroy_id_wait_timeout(cm_id);
-+	} while (!ret);
-+
- 	while ((work = cm_dequeue_work(cm_id_priv)) != NULL)
- 		cm_free_work(work);
+ 	for (i = 0; i < finger_count; i++) {
+ 		error = imagis_i2c_read_reg(ts,
+@@ -118,12 +115,11 @@ static irqreturn_t imagis_interrupt(int irq, void *dev_id)
+ 		input_mt_report_slot_state(ts->input_dev, MT_TOOL_FINGER,
+ 					   finger_pressed & BIT(i));
+ 		touchscreen_report_pos(ts->input_dev, &ts->prop,
+-				       (finger_status & IST3038C_X_MASK) >>
+-						IST3038C_X_SHIFT,
+-				       finger_status & IST3038C_Y_MASK, 1);
++				       FIELD_GET(IST3038C_X_MASK, finger_status),
++				       FIELD_GET(IST3038C_Y_MASK, finger_status),
++				       true);
+ 		input_report_abs(ts->input_dev, ABS_MT_TOUCH_MAJOR,
+-				 (finger_status & IST3038C_AREA_MASK) >>
+-					IST3038C_AREA_SHIFT);
++				 FIELD_GET(IST3038C_AREA_MASK, finger_status));
+ 	}
  
+ 	input_mt_sync_frame(ts->input_dev);
 -- 
 2.43.0
 
