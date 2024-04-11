@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1DE31465BF;
-	Thu, 11 Apr 2024 10:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6261146A70;
+	Thu, 11 Apr 2024 10:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831017; cv=none; b=A5YXjx8U2IMIRfvt2c2YCXDSEi2LlIcFThWLhQtl1Rwy78LS65jQrMGkuRubzASrXx1D7c8qha3X8llDQzLiNzhEMcglIE1rZZUCdveOynOrb+6AyQEA5u+HHEoh4ODoyCdKkUf7DMeSekQSsM1+Le3UXs39xKW7GHUWdFb5fMA=
+	t=1712831019; cv=none; b=kHscbGVYOTrhVPNUxW7q6wwnMlqSVyFlGppT+7LhnD/NfoM1wSkek8lsgucsBuP/kve7tR2XSJnlNwxL3qChlIxLz1+CdVQwaJF14alz3GPqyGYtoNEHHPKY5HfH9QaXZUyCpWpfYt4d/cfExOgTdLZawaptv2cz4MajgiXh9PY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831017; c=relaxed/simple;
-	bh=0UexDH6L7kNaeV20GrV04CgxJANkyG1t1QfwPOXPf4c=;
+	s=arc-20240116; t=1712831019; c=relaxed/simple;
+	bh=NL/r75MlsalO4CqSSZ1+PTDCDy6X568eOH6hjeOUut4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mFJxg3gT69G9g8b3M4p0sg2aAhJXspG+k6h1Rf4eWJFasyH1bRm/UjMk32Lhx/H5iP3IDYcYf7XO/kBkiCUAr5u1i1svliNI6iZWx0XizSxdKllsW1VdEqA+7Sa/EDYqqrpYjY3xIz2YYJLuYkpZeM4zyTHn2qMhsm/vpYtn4Hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7L34Tn4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mY5l3FBoesWOd052blIyO6+sXAkNRBdrpHPE2H1H8HfLnyk5H7x3BX47FLQI7PmduB73mVJZCdcwFCpCyNTM8vRII4lEnBiRICjJ65gM6jIIbk5z6oRErHXnrO/2PV5rCWVLYCHi9IfcLg3yPhwlZDqzOUHN7zNj2pmjF+a9YQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqA2By8t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7L34Tn4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EEBFC433F1;
-	Thu, 11 Apr 2024 10:23:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqA2By8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA57C433C7;
+	Thu, 11 Apr 2024 10:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831016;
-	bh=0UexDH6L7kNaeV20GrV04CgxJANkyG1t1QfwPOXPf4c=;
+	s=korg; t=1712831019;
+	bh=NL/r75MlsalO4CqSSZ1+PTDCDy6X568eOH6hjeOUut4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v7L34Tn43XFL0UPFqW2Fwbab4C3mCBfIOfbEs2yXZSeYI9HtwV4skgw7JqgX0aObG
-	 HJYXRxPcni5Pl1mZCUnyWultZEhN494OjBNZr9gLULKFACLOxzD5VLt2AI28K8GwU7
-	 hpgzLaLLeP0LLADh0ktZweWEgSsia7h8tKYDSiBw=
+	b=gqA2By8thWArWeT9KQVoatj8W0QtJCTEZuGkZ7DIcDcM6UspGZ9x3A0zYPY8hVrIp
+	 AGJAg1pv9yW2bJwwLhUqRj94jgQv9kTIgBHBwo24SHH8fd3s3zfbnsn+mtjReLcjOv
+	 M0jUID5g2MwtW1WOrvx4xJpcW2x0lIxnfkI++xvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.4 147/215] netfilter: nf_tables: Fix potential data-race in __nft_flowtable_type_get()
-Date: Thu, 11 Apr 2024 11:55:56 +0200
-Message-ID: <20240411095429.306811298@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 189/215] media: sta2x11: fix irq handler cast
+Date: Thu, 11 Apr 2024 11:56:38 +0200
+Message-ID: <20240411095430.545389975@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -50,58 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 24225011d81b471acc0e1e315b7d9905459a6304 upstream.
+[ Upstream commit 3de49ae81c3a0f83a554ecbce4c08e019f30168e ]
 
-nft_unregister_flowtable_type() within nf_flow_inet_module_exit() can
-concurrent with __nft_flowtable_type_get() within nf_tables_newflowtable().
-And thhere is not any protection when iterate over nf_tables_flowtables
-list in __nft_flowtable_type_get(). Therefore, there is pertential
-data-race of nf_tables_flowtables list entry.
+clang-16 warns about casting incompatible function pointers:
 
-Use list_for_each_entry_rcu() to iterate over nf_tables_flowtables list
-in __nft_flowtable_type_get(), and use rcu_read_lock() in the caller
-nft_flowtable_type_get() to protect the entire type query process.
+drivers/media/pci/sta2x11/sta2x11_vip.c:1057:6: error: cast from 'irqreturn_t (*)(int, struct sta2x11_vip *)' (aka 'enum irqreturn (*)(int, struct sta2x11_vip *)') to 'irq_handler_t' (aka 'enum irqreturn (*)(int, void *)') converts to incompatible function type [-Werror,-Wcast-function-type-strict]
 
-Fixes: 3b49e2e94e6e ("netfilter: nf_tables: add flow table netlink frontend")
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Change the prototype of the irq handler to the regular version with a
+local variable to adjust the argument type.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+[hverkuil: update argument documentation]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/media/pci/sta2x11/sta2x11_vip.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6041,11 +6041,12 @@ static int nf_tables_flowtable_parse_hoo
- 	return err;
- }
- 
-+/* call under rcu_read_lock */
- static const struct nf_flowtable_type *__nft_flowtable_type_get(u8 family)
+diff --git a/drivers/media/pci/sta2x11/sta2x11_vip.c b/drivers/media/pci/sta2x11/sta2x11_vip.c
+index 798574cfad35e..5a77f8ba3a187 100644
+--- a/drivers/media/pci/sta2x11/sta2x11_vip.c
++++ b/drivers/media/pci/sta2x11/sta2x11_vip.c
+@@ -760,7 +760,7 @@ static const struct video_device video_dev_template = {
+ /**
+  * vip_irq - interrupt routine
+  * @irq: Number of interrupt ( not used, correct number is assumed )
+- * @vip: local data structure containing all information
++ * @data: local data structure containing all information
+  *
+  * check for both frame interrupts set ( top and bottom ).
+  * check FIFO overflow, but limit number of log messages after open.
+@@ -770,8 +770,9 @@ static const struct video_device video_dev_template = {
+  *
+  * IRQ_HANDLED, interrupt done.
+  */
+-static irqreturn_t vip_irq(int irq, struct sta2x11_vip *vip)
++static irqreturn_t vip_irq(int irq, void *data)
  {
- 	const struct nf_flowtable_type *type;
++	struct sta2x11_vip *vip = data;
+ 	unsigned int status;
  
--	list_for_each_entry(type, &nf_tables_flowtables, list) {
-+	list_for_each_entry_rcu(type, &nf_tables_flowtables, list) {
- 		if (family == type->family)
- 			return type;
- 	}
-@@ -6057,9 +6058,13 @@ nft_flowtable_type_get(struct net *net,
- {
- 	const struct nf_flowtable_type *type;
+ 	status = reg_read(vip, DVP_ITS);
+@@ -1053,9 +1054,7 @@ static int sta2x11_vip_init_one(struct pci_dev *pdev,
  
-+	rcu_read_lock();
- 	type = __nft_flowtable_type_get(family);
--	if (type != NULL && try_module_get(type->owner))
-+	if (type != NULL && try_module_get(type->owner)) {
-+		rcu_read_unlock();
- 		return type;
-+	}
-+	rcu_read_unlock();
+ 	spin_lock_init(&vip->slock);
  
- 	lockdep_nfnl_nft_mutex_not_held();
- #ifdef CONFIG_MODULES
+-	ret = request_irq(pdev->irq,
+-			  (irq_handler_t) vip_irq,
+-			  IRQF_SHARED, KBUILD_MODNAME, vip);
++	ret = request_irq(pdev->irq, vip_irq, IRQF_SHARED, KBUILD_MODNAME, vip);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "request_irq failed\n");
+ 		ret = -ENODEV;
+-- 
+2.43.0
+
 
 
