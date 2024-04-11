@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263E113DDDD;
-	Thu, 11 Apr 2024 09:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A45813DDDD;
+	Thu, 11 Apr 2024 09:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829587; cv=none; b=m2W3RKRFqpXDo0V8RNpzBVQOADd0TGPw/ynULTH4UjLMxc6wleYAXcnHNe677HhjHrzetlmrrOlGZgDORFvoj2NbU/+LbQmZXFo22JH5zUKPZc/cXj46zF6RiUCo+UKu33Rba8fAxq8nFnT6cV9u6GRksogwya+alTysgxnPz2I=
+	t=1712829590; cv=none; b=Htw4GLTX4e66vqS3aMQ2q/trmLnlCBrZ2Dy4SbfftNQVduS1eHRgv+SOCuBk7pLbEISy50DTg2sde6AEhzRlgCwKVmgCtefpCy184P7KMCXnj/B8yBEZ+8CFXcJFpqTHttY82NpD3admKGL3IXgms5tkkHLEMhYdBlRseomBQFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829587; c=relaxed/simple;
-	bh=Y/10cUnVgY6J/8XO2BgxyMSl+ZVP/UW4+IjcjlwFowk=;
+	s=arc-20240116; t=1712829590; c=relaxed/simple;
+	bh=q9AFkWerm7xBHNsF+z6Ls9OQ46zn1ud7k8pvXnpV0A4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KMOWbR6BDlc5513YwjboflakPAH8Di3Usi1kSx64Hunu9/OgB7IIFzaRUu65gZTKw1V10wWLC8tqA6uw/Ty/Cb1vXjRIX/xJDQL16+Kx2QjXfdvQQoYrL/rCr6QiQYQQ+szlrMN3IjLIFwBpkKtrEgnbBiPgJsT65oL5P/n0XRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phSJPnQb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cZ0LpV05wX2smG+hOQazGHGtSeIuVo6uKApggrKQM+xrKp3v37/kYCld0OlxFnAzGsmVs3/Mgm4UXuXwznoi6FbRc/1XemWlpLwROa99CM+5xPDqe0ElkrtwUweBea64DigdmYIpLuSR4GVFOg2/jM10IsEcbQ5/YKZIOR1yAlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oytjELrs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phSJPnQb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B8FC433F1;
-	Thu, 11 Apr 2024 09:59:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oytjELrs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931CDC433C7;
+	Thu, 11 Apr 2024 09:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829587;
-	bh=Y/10cUnVgY6J/8XO2BgxyMSl+ZVP/UW4+IjcjlwFowk=;
+	s=korg; t=1712829590;
+	bh=q9AFkWerm7xBHNsF+z6Ls9OQ46zn1ud7k8pvXnpV0A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phSJPnQbMlzq4N3p6z4bat6h17zkG88zxLm7yiUCQjh0X1RUU/SMy5IcqWXOB0tKz
-	 7Vzu+lqXR6pt/bAQBjitZr5UTkXmWTAbOjtBp0jKY7ZkrvwagvAFpoeg1VIzWWoTXx
-	 BJo1XHzUN98E4/s3C1XeN0IjI6ZMYN19pmDivHug=
+	b=oytjELrsZ71rnFg5vPD8d4LO+1BpYHYYOhhXIptVd+4iN0/zGlMDIJEEJLJdR6yhy
+	 E87vuxScZ3Z1eAoSoDkHX71UYEP9c/S35h2XASCiqldRsppwNmA9Hn3AGz75PyYNiw
+	 ExnULstHVyc/4zKmzBt80AjNbJTU0iZGdwWqTuxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cameron Williams <cang1@live.co.uk>,
-	Johan Hovold <johan@kernel.org>,
+	Anna-Maria Gleixner <anna-maria@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	fweisbec@gmail.com,
+	peterz@infradead.org,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 036/175] USB: serial: add device ID for VeriFone adapter
-Date: Thu, 11 Apr 2024 11:54:19 +0200
-Message-ID: <20240411095420.645697223@linuxfoundation.org>
+Subject: [PATCH 4.19 004/175] timer/trace: Replace deprecated vsprintf pointer extension %pf by %ps
+Date: Thu, 11 Apr 2024 11:53:47 +0200
+Message-ID: <20240411095419.671078435@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -51,92 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cameron Williams <cang1@live.co.uk>
+From: Anna-Maria Gleixner <anna-maria@linutronix.de>
 
-[ Upstream commit cda704809797a8a86284f9df3eef5e62ec8a3175 ]
+[ Upstream commit 6849cbb0f9a8dbc1ba56e9abc6955613103e01e3 ]
 
-Add device ID for a (probably fake) CP2102 UART device.
+Since commit 04b8eb7a4ccd ("symbol lookup: introduce
+dereference_symbol_descriptor()") %pf is deprecated, because %ps is smart
+enough to handle function pointer dereference on platforms where such a
+dereference is required.
 
-lsusb -v output:
+While at it add proper line breaks to stay in the 80 character limit.
 
-Device Descriptor:
-  bLength                18
-  bDescriptorType         1
-  bcdUSB               1.10
-  bDeviceClass            0 [unknown]
-  bDeviceSubClass         0 [unknown]
-  bDeviceProtocol         0
-  bMaxPacketSize0        64
-  idVendor           0x11ca VeriFone Inc
-  idProduct          0x0212 Verifone USB to Printer
-  bcdDevice            1.00
-  iManufacturer           1 Silicon Labs
-  iProduct                2 Verifone USB to Printer
-  iSerial                 3 0001
-  bNumConfigurations      1
-  Configuration Descriptor:
-    bLength                 9
-    bDescriptorType         2
-    wTotalLength       0x0020
-    bNumInterfaces          1
-    bConfigurationValue     1
-    iConfiguration          0
-    bmAttributes         0x80
-      (Bus Powered)
-    MaxPower              100mA
-    Interface Descriptor:
-      bLength                 9
-      bDescriptorType         4
-      bInterfaceNumber        0
-      bAlternateSetting       0
-      bNumEndpoints           2
-      bInterfaceClass       255 Vendor Specific Class
-      bInterfaceSubClass      0 [unknown]
-      bInterfaceProtocol      0
-      iInterface              2 Verifone USB to Printer
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x81  EP 1 IN
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval               0
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x01  EP 1 OUT
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval               0
-Device Status:     0x0000
-  (Bus Powered)
-
-Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Anna-Maria Gleixner <anna-maria@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: fweisbec@gmail.com
+Cc: peterz@infradead.org
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Link: https://lkml.kernel.org/r/20190321120921.16463-4-anna-maria@linutronix.de
+Stable-dep-of: 0f7352557a35 ("wifi: brcmfmac: Fix use-after-free bug in brcmf_cfg80211_detach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/cp210x.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/trace/events/timer.h | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/serial/cp210x.c b/drivers/usb/serial/cp210x.c
-index b58ca66dc3aed..9901fd79b8a21 100644
---- a/drivers/usb/serial/cp210x.c
-+++ b/drivers/usb/serial/cp210x.c
-@@ -178,6 +178,7 @@ static const struct usb_device_id id_table[] = {
- 	{ USB_DEVICE(0x10C4, 0xF004) }, /* Elan Digital Systems USBcount50 */
- 	{ USB_DEVICE(0x10C5, 0xEA61) }, /* Silicon Labs MobiData GPRS USB Modem */
- 	{ USB_DEVICE(0x10CE, 0xEA6A) }, /* Silicon Labs MobiData GPRS USB Modem 100EU */
-+	{ USB_DEVICE(0x11CA, 0x0212) }, /* Verifone USB to Printer (UART, CP2102) */
- 	{ USB_DEVICE(0x12B8, 0xEC60) }, /* Link G4 ECU */
- 	{ USB_DEVICE(0x12B8, 0xEC62) }, /* Link G4+ ECU */
- 	{ USB_DEVICE(0x13AD, 0x9999) }, /* Baltech card reader */
+diff --git a/include/trace/events/timer.h b/include/trace/events/timer.h
+index 350b046e7576c..8f6240854e28f 100644
+--- a/include/trace/events/timer.h
++++ b/include/trace/events/timer.h
+@@ -73,7 +73,7 @@ TRACE_EVENT(timer_start,
+ 		__entry->flags		= flags;
+ 	),
+ 
+-	TP_printk("timer=%p function=%pf expires=%lu [timeout=%ld] cpu=%u idx=%u flags=%s",
++	TP_printk("timer=%p function=%ps expires=%lu [timeout=%ld] cpu=%u idx=%u flags=%s",
+ 		  __entry->timer, __entry->function, __entry->expires,
+ 		  (long)__entry->expires - __entry->now,
+ 		  __entry->flags & TIMER_CPUMASK,
+@@ -105,7 +105,8 @@ TRACE_EVENT(timer_expire_entry,
+ 		__entry->function	= timer->function;
+ 	),
+ 
+-	TP_printk("timer=%p function=%pf now=%lu", __entry->timer, __entry->function,__entry->now)
++	TP_printk("timer=%p function=%ps now=%lu",
++		  __entry->timer, __entry->function, __entry->now)
+ );
+ 
+ /**
+@@ -210,7 +211,7 @@ TRACE_EVENT(hrtimer_start,
+ 		__entry->mode		= mode;
+ 	),
+ 
+-	TP_printk("hrtimer=%p function=%pf expires=%llu softexpires=%llu "
++	TP_printk("hrtimer=%p function=%ps expires=%llu softexpires=%llu "
+ 		  "mode=%s", __entry->hrtimer, __entry->function,
+ 		  (unsigned long long) __entry->expires,
+ 		  (unsigned long long) __entry->softexpires,
+@@ -243,7 +244,8 @@ TRACE_EVENT(hrtimer_expire_entry,
+ 		__entry->function	= hrtimer->function;
+ 	),
+ 
+-	TP_printk("hrtimer=%p function=%pf now=%llu", __entry->hrtimer, __entry->function,
++	TP_printk("hrtimer=%p function=%ps now=%llu",
++		  __entry->hrtimer, __entry->function,
+ 		  (unsigned long long) __entry->now)
+ );
+ 
 -- 
 2.43.0
 
