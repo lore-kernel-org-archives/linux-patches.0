@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC10E1482FD;
-	Thu, 11 Apr 2024 10:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C331487C1;
+	Thu, 11 Apr 2024 10:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832151; cv=none; b=KwnS7Cv5rzG15STr1VahC1nQkyYgdNfSa2ZgLQOpYbLsbqe+lUjlPt4lwUR7oUyVuwusrRlIwaxdQBgJfbs7NJzHgM82hCe//GnI6n46UVPQE7y16bBT5qn2IxiJfmZRXF8wKwcQT5H2xD7518Wg1C/JGdCpkUWWWbitgKsdHwM=
+	t=1712832154; cv=none; b=dZOUemKGymol7BqvJrQd74AvNiXnvJQFvaUuypJg65+fFSTME3bwomsEXqeBo5G15fMvEm4DXv7g4mP7+5vlbjY+Y7AC7xFGEZsqVQZRTadYQp5l1eXnxmm+EGnzchxN74aYt6eJaAZBUdyC9Q5mI3LoTj+xNlGRCX7Yj1C/gE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832151; c=relaxed/simple;
-	bh=9nxVVNiMBx/i58oQqedPku2bQTEhZVk1MhnTz/eEWjk=;
+	s=arc-20240116; t=1712832154; c=relaxed/simple;
+	bh=0SCHghE8voAfYrYlRauv/8U6pV+drh1bpy/ZNiS+H6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qWQfVdfXQWARR3dZa41t9nIWvItt60iUu9TYm/332oJKSEt+eKtVxkkb/7ZI6L1uIf0gg7jsdB6iDvIIGYY2ejX1jLxPjTNej5HWK3LGk+VsNpyzfuPjdQ7rB998It22Y+Vf1osSAZWo73HwIFNL5o4OgWkCM2v2x289DewC8cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPOFqmur; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i3RKMpw91hqiJv/8qHvfv0c6rpxLG+RIF4vtM9fyDR8quq1pyIRXstBoTJOOSfUMYzzVVvZ1/Bl80X/+bnSPOwIxbddPE4qNrCN+AEeb4+om0fZjGVpiChGi3ma1hw7WumFErK9g5viFW87xNZJOJbM/gPj1RIJ3N7bnODv7EF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGuW3fxg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPOFqmur"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 748AFC433C7;
-	Thu, 11 Apr 2024 10:42:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGuW3fxg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C002C433F1;
+	Thu, 11 Apr 2024 10:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832150;
-	bh=9nxVVNiMBx/i58oQqedPku2bQTEhZVk1MhnTz/eEWjk=;
+	s=korg; t=1712832153;
+	bh=0SCHghE8voAfYrYlRauv/8U6pV+drh1bpy/ZNiS+H6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xPOFqmur1zq4WR8qUJYtEWx7szVD93V73s743UJYevUEsnE4Zd2ml97GL1BHWcZrd
-	 4c+4AGrO03JZrfC3TNJ18tq48Kgr+CKUH8mPvbjIZOzX+cxMG7QIv7Ywg/wWQ+gvMh
-	 Kp8d4xk6iANCkqXg0vhaLTgoiQjwtdUxPE5Ch10w=
+	b=gGuW3fxg4hCsfqH4WPH/xIvmQLKoOgij1Y00qKApdgaC/YtNmQQCgJNamxb+RQpWh
+	 AcLu4Yc7coVJpiRZ8cvKiihA1906Xb28R6qTU9MVo9fMZoxoY4v26UWkaGtdcNRCG3
+	 Te9gpauyPT45V7YvZQ3TOyDXusKOt4nA9y3T5hKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Kees Cook <keescook@chromium.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	John Ogness <john.ogness@linutronix.de>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 246/294] VMCI: Fix memcpy() run-time warning in dg_dispatch_as_host()
-Date: Thu, 11 Apr 2024 11:56:49 +0200
-Message-ID: <20240411095442.974673302@linuxfoundation.org>
+Subject: [PATCH 5.10 247/294] panic: Flush kernel log buffer at the end
+Date: Thu, 11 Apr 2024 11:56:50 +0200
+Message-ID: <20240411095443.003646780@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -55,78 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: John Ogness <john.ogness@linutronix.de>
 
-[ Upstream commit 19b070fefd0d024af3daa7329cbc0d00de5302ec ]
+[ Upstream commit d988d9a9b9d180bfd5c1d353b3b176cb90d6861b ]
 
-Syzkaller hit 'WARNING in dg_dispatch_as_host' bug.
+If the kernel crashes in a context where printk() calls always
+defer printing (such as in NMI or inside a printk_safe section)
+then the final panic messages will be deferred to irq_work. But
+if irq_work is not available, the messages will not get printed
+unless explicitly flushed. The result is that the final
+"end Kernel panic" banner does not get printed.
 
-memcpy: detected field-spanning write (size 56) of single field "&dg_info->msg"
-at drivers/misc/vmw_vmci/vmci_datagram.c:237 (size 24)
+Add one final flush after the last printk() call to make sure
+the final panic messages make it out as well.
 
-WARNING: CPU: 0 PID: 1555 at drivers/misc/vmw_vmci/vmci_datagram.c:237
-dg_dispatch_as_host+0x88e/0xa60 drivers/misc/vmw_vmci/vmci_datagram.c:237
-
-Some code commentry, based on my understanding:
-
-544 #define VMCI_DG_SIZE(_dg) (VMCI_DG_HEADERSIZE + (size_t)(_dg)->payload_size)
-/// This is 24 + payload_size
-
-memcpy(&dg_info->msg, dg, dg_size);
-	Destination = dg_info->msg ---> this is a 24 byte
-					structure(struct vmci_datagram)
-	Source = dg --> this is a 24 byte structure (struct vmci_datagram)
-	Size = dg_size = 24 + payload_size
-
-{payload_size = 56-24 =32} -- Syzkaller managed to set payload_size to 32.
-
- 35 struct delayed_datagram_info {
- 36         struct datagram_entry *entry;
- 37         struct work_struct work;
- 38         bool in_dg_host_queue;
- 39         /* msg and msg_payload must be together. */
- 40         struct vmci_datagram msg;
- 41         u8 msg_payload[];
- 42 };
-
-So those extra bytes of payload are copied into msg_payload[], a run time
-warning is seen while fuzzing with Syzkaller.
-
-One possible way to fix the warning is to split the memcpy() into
-two parts -- one -- direct assignment of msg and second taking care of payload.
-
-Gustavo quoted:
-"Under FORTIFY_SOURCE we should not copy data across multiple members
-in a structure."
-
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Suggested-by: Vegard Nossum <vegard.nossum@oracle.com>
-Suggested-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20240105164001.2129796-2-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20240207134103.1357162-14-john.ogness@linutronix.de
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/vmw_vmci/vmci_datagram.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/panic.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/misc/vmw_vmci/vmci_datagram.c b/drivers/misc/vmw_vmci/vmci_datagram.c
-index f50d22882476f..d1d8224c8800c 100644
---- a/drivers/misc/vmw_vmci/vmci_datagram.c
-+++ b/drivers/misc/vmw_vmci/vmci_datagram.c
-@@ -234,7 +234,8 @@ static int dg_dispatch_as_host(u32 context_id, struct vmci_datagram *dg)
+diff --git a/kernel/panic.c b/kernel/panic.c
+index bc39e2b27d315..30d8da0d43d8f 100644
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -427,6 +427,14 @@ void panic(const char *fmt, ...)
  
- 			dg_info->in_dg_host_queue = true;
- 			dg_info->entry = dst_entry;
--			memcpy(&dg_info->msg, dg, dg_size);
-+			dg_info->msg = *dg;
-+			memcpy(&dg_info->msg_payload, dg + 1, dg->payload_size);
- 
- 			INIT_WORK(&dg_info->work, dg_delayed_dispatch);
- 			schedule_work(&dg_info->work);
+ 	/* Do not scroll important messages printed above */
+ 	suppress_printk = 1;
++
++	/*
++	 * The final messages may not have been printed if in a context that
++	 * defers printing (such as NMI) and irq_work is not available.
++	 * Explicitly flush the kernel log buffer one last time.
++	 */
++	console_flush_on_panic(CONSOLE_FLUSH_PENDING);
++
+ 	local_irq_enable();
+ 	for (i = 0; ; i += PANIC_TIMER_STEP) {
+ 		touch_softlockup_watchdog();
 -- 
 2.43.0
 
