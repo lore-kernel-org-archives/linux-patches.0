@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C60F1448EF;
-	Thu, 11 Apr 2024 10:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E553143C72;
+	Thu, 11 Apr 2024 10:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829631; cv=none; b=pTSsZ0LL698AoUjJ2UJ4ARGXNEdXYUB8DRbiyxptSGnnef3zB4V4XvtPzRJxa6q7JZYPZXK8DgvqzCNBaib1m+qqKofH3hiq9qYLXr9naKGK2obh3eCZSbBjs1fczAaMb3M42orftcLO+HO1BsVrIq25cNpV91lqcfzM+JY3h+I=
+	t=1712829634; cv=none; b=RxMppz4Sna8oKD7aNesxmxLpZMy+UOqce6uPNdOQdceNBnU25fQOeIHhYuxHnADbHbiPH6hd1gi9u4KgoPpIRGG/4aeiMXIapPUo9b74QWmrBd+bmHKuUJk1gw7UOXEcyxpD+YnubXp2xTGP8rStWAY4WeoidliUShEwq631RNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829631; c=relaxed/simple;
-	bh=ZPvhV4kyoJGDTb032j8gRr4CkdhqSSax5GZDFuxl9wI=;
+	s=arc-20240116; t=1712829634; c=relaxed/simple;
+	bh=CYOYXO+zfNpkvJzdXNnqKyaG2nGc4P3wInfcBbAqZYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hqhxB/KcvWpJOPVSeZVMVeBx3Pbm38qE3tRI18hhREhZtkuJOxZCUAtK3wirEuyoB8cdTxm6sA7sz3opBPCP1B/c+K4BpYgoy5wXdvCaNXJ79dLfwU8p86gg6AOLJuO3hnaK9ZzId+F5y/tFzxmkLaeRg364BBwOqFL70t6ovVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnfmPHY6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qki2BX67NJuqwWkmyZ+U9Siyqe4np9bJPCrWxNne97fLPbnMeuXIpAJtSDr7811OzlZsSEd8cku3vE1aDSACK6PNqSah82epFvPJcBmBjfL4yWRbl1zbYq8z+Mk1NJPunX86dG933fwn1wzhduobTlZg/esCu9xRt62GTB6EwnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXhkp5pQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnfmPHY6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CB9C433C7;
-	Thu, 11 Apr 2024 10:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXhkp5pQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05205C433C7;
+	Thu, 11 Apr 2024 10:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829631;
-	bh=ZPvhV4kyoJGDTb032j8gRr4CkdhqSSax5GZDFuxl9wI=;
+	s=korg; t=1712829634;
+	bh=CYOYXO+zfNpkvJzdXNnqKyaG2nGc4P3wInfcBbAqZYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GnfmPHY6dJ0HDH0FW4+Zwyu9o2rkgMfH0raxkfjm9XLaJUjqgdsYAMVFYC7YQ18JZ
-	 FG5xxHLVdnKvC/L7w2AlMd1OjVoRHquDsFWsP56suKjgZ/2CiPl8ckFHgKGkm5z+Ub
-	 skAZeCbMg2iuTnroZeTwBoJPSLbzImVljv9pf//g=
+	b=pXhkp5pQLbODCBNK6aeGxLid6+UChLrYmPoikLvtHlt+UxO7CyVu8NoZhklInmis4
+	 Ew54dsvkAxNvN+yyKM1c62+7LVtXaNm2fY8E9R6WwH7M4tq9qFw8g0xePBnJ5sSHKe
+	 6yvNs+9riuZ76Fwnq87LS4JwJbAYwG2iYcUN5K3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Auger <eric.auger@redhat.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Camelia Groza <camelia.groza@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 053/175] vfio/platform: Disable virqfds on cleanup
-Date: Thu, 11 Apr 2024 11:54:36 +0200
-Message-ID: <20240411095421.163980295@linuxfoundation.org>
+Subject: [PATCH 4.19 054/175] soc: fsl: qbman: Always disable interrupts when taking cgr_lock
+Date: Thu, 11 Apr 2024 11:54:37 +0200
+Message-ID: <20240411095421.193903246@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,42 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Williamson <alex.williamson@redhat.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit fcdc0d3d40bc26c105acf8467f7d9018970944ae ]
+[ Upstream commit 584c2a9184a33a40fceee838f856de3cffa19be3 ]
 
-irqfds for mask and unmask that are not specifically disabled by the
-user are leaked.  Remove any irqfds during cleanup
+smp_call_function_single disables IRQs when executing the callback. To
+prevent deadlocks, we must disable IRQs when taking cgr_lock elsewhere.
+This is already done by qman_update_cgr and qman_delete_cgr; fix the
+other lockers.
 
-Cc: Eric Auger <eric.auger@redhat.com>
-Cc:  <stable@vger.kernel.org>
-Fixes: a7fa7c77cf15 ("vfio/platform: implement IRQ masking/unmasking via an eventfd")
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Link: https://lore.kernel.org/r/20240308230557.805580-6-alex.williamson@redhat.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Fixes: 96f413f47677 ("soc/fsl/qbman: fix issue in qman_delete_cgr_safe()")
+CC: stable@vger.kernel.org
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Camelia Groza <camelia.groza@nxp.com>
+Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/platform/vfio_platform_irq.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/soc/fsl/qbman/qman.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/vfio/platform/vfio_platform_irq.c b/drivers/vfio/platform/vfio_platform_irq.c
-index 46d4750f43a8d..c53a9b4438733 100644
---- a/drivers/vfio/platform/vfio_platform_irq.c
-+++ b/drivers/vfio/platform/vfio_platform_irq.c
-@@ -329,8 +329,11 @@ void vfio_platform_irq_cleanup(struct vfio_platform_device *vdev)
- {
- 	int i;
+diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
+index d7bf456fd10e4..17f72d7ed3103 100644
+--- a/drivers/soc/fsl/qbman/qman.c
++++ b/drivers/soc/fsl/qbman/qman.c
+@@ -1369,11 +1369,11 @@ static void qm_congestion_task(struct work_struct *work)
+ 	union qm_mc_result *mcr;
+ 	struct qman_cgr *cgr;
  
--	for (i = 0; i < vdev->num_irqs; i++)
-+	for (i = 0; i < vdev->num_irqs; i++) {
-+		vfio_virqfd_disable(&vdev->irqs[i].mask);
-+		vfio_virqfd_disable(&vdev->irqs[i].unmask);
- 		vfio_set_trigger(vdev, i, -1, NULL);
-+	}
+-	spin_lock(&p->cgr_lock);
++	spin_lock_irq(&p->cgr_lock);
+ 	qm_mc_start(&p->p);
+ 	qm_mc_commit(&p->p, QM_MCC_VERB_QUERYCONGESTION);
+ 	if (!qm_mc_result_timeout(&p->p, &mcr)) {
+-		spin_unlock(&p->cgr_lock);
++		spin_unlock_irq(&p->cgr_lock);
+ 		dev_crit(p->config->dev, "QUERYCONGESTION timeout\n");
+ 		qman_p_irqsource_add(p, QM_PIRQ_CSCI);
+ 		return;
+@@ -1389,7 +1389,7 @@ static void qm_congestion_task(struct work_struct *work)
+ 	list_for_each_entry(cgr, &p->cgr_cbs, node)
+ 		if (cgr->cb && qman_cgrs_get(&c, cgr->cgrid))
+ 			cgr->cb(p, cgr, qman_cgrs_get(&rr, cgr->cgrid));
+-	spin_unlock(&p->cgr_lock);
++	spin_unlock_irq(&p->cgr_lock);
+ 	qman_p_irqsource_add(p, QM_PIRQ_CSCI);
+ }
  
- 	vdev->num_irqs = 0;
- 	kfree(vdev->irqs);
+@@ -2346,7 +2346,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
+ 	preempt_enable();
+ 
+ 	cgr->chan = p->config->channel;
+-	spin_lock(&p->cgr_lock);
++	spin_lock_irq(&p->cgr_lock);
+ 
+ 	if (opts) {
+ 		struct qm_mcc_initcgr local_opts = *opts;
+@@ -2383,7 +2383,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
+ 	    qman_cgrs_get(&p->cgrs[1], cgr->cgrid))
+ 		cgr->cb(p, cgr, 1);
+ out:
+-	spin_unlock(&p->cgr_lock);
++	spin_unlock_irq(&p->cgr_lock);
+ 	put_affine_portal();
+ 	return ret;
+ }
 -- 
 2.43.0
 
