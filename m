@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761D66BB29;
-	Thu, 11 Apr 2024 10:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758A514600E;
+	Thu, 11 Apr 2024 10:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832534; cv=none; b=GYvJN6ykgzO6a9I1oM1LsUQTOLIYxwtQo2fvDPySYEA3qRanoIqFCaw971qRDNh3Y+uFABcXLby3YObatAJ68ok3qj4sz2FVnUJtI/qBXe2YCV5g/3OcofJXPCsKKc0AUF3F1E4FwzePKKoCWIgeSIxDetUtPL44Ke9KNQ3O+QQ=
+	t=1712832537; cv=none; b=tMNd/PeE9OVCcVt4TzMN+Nn9xRfcOYEttt1wziJM7DjerTfOEfhnYDZYP32gv88sKEzwncOT9yCQNusPlISL0ohHGLXoekGwyF04+9jossYZ52vdHUJjvfSStklafL3GwvyQebEHGqE8Bq+i/Jnx6SU2tvpdiUUUzWE2phsGtw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832534; c=relaxed/simple;
-	bh=5rh9+ZTI6aoaBdTBt8I724lwV/DkZ1ei6ImH+rSNDJ8=;
+	s=arc-20240116; t=1712832537; c=relaxed/simple;
+	bh=Hy0FzQKRLBUs6eEV+XbyVISPmyOYMwb05rQzQkOvgmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dbWGv6NHEwK+5bE07QEU7WhzjX7Sf+XEEJ+OwIMVegOk3kknGu/TXNozGJZpUcGkfBH4OOHDI7JeSdQDp3Vn4qVwDrIMoc7SyJM0hCSPUuBaS/q/KY899158AdP/3EyaH4PpHLOBzl4+5b9MwNHs0Au0iSuvafbX/aG++lNa1is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+LptlsV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A0emc8VLut7/msImjSKnc9c/eum+mn+BGlGVbZsFlPLvw3SKiGm+KmM1Bex8XDcZ+/3U6ix8s63PQxa8lJmux0kXKR2DgAWs+Zfp5N4MLYJXF+u+vculZqzgxvQc/jMPSwPsi7Q2gIjei636880q4tEadA89wvMGIyqWc++GXgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MV79Ov+p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+LptlsV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE60C433C7;
-	Thu, 11 Apr 2024 10:48:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MV79Ov+p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4208C433C7;
+	Thu, 11 Apr 2024 10:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832534;
-	bh=5rh9+ZTI6aoaBdTBt8I724lwV/DkZ1ei6ImH+rSNDJ8=;
+	s=korg; t=1712832537;
+	bh=Hy0FzQKRLBUs6eEV+XbyVISPmyOYMwb05rQzQkOvgmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+LptlsVb0bK59wQlnEvsjlEcJmH08FENWJdbpu30dzh3FigUtY5W2llvN8MKq/nl
-	 mOn8KoSJzHVnq0LmAHZr6tA9VSi/ktDUfEzxeKPur9Ljw6LMpeRkh+gofBvqsptesx
-	 rG+hKSEKpB4nehLssin1FBgsIpnS8iNIVvIUtJLM=
+	b=MV79Ov+pVmRHgCC7l6tfrPePp3rZW68MO/1pVjZnQHSFwgRECaclMncvhq456PG3j
+	 cv6VEudoISEuuOkGXeKd797N3Uwc++Q2E99W1Pf4+KNpwCOzil2/NzHyh8sJo+guZR
+	 65UCjs3xkxu0D4MG7USkHEuYsG9UKNk937b2G88A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	syzbot <syzbot+69b40dc5fd40f32c199f@syzkaller.appspotmail.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 42/83] ext4: forbid commit inconsistent quota data when errors=remount-ro
-Date: Thu, 11 Apr 2024 11:57:14 +0200
-Message-ID: <20240411095413.949328194@linuxfoundation.org>
+Subject: [PATCH 6.1 33/83] sysv: dont call sb_bread() with pointers_lock held
+Date: Thu, 11 Apr 2024 11:57:05 +0200
+Message-ID: <20240411095413.676110001@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -52,68 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit d8b945fa475f13d787df00c26a6dc45a3e2e1d1d ]
+[ Upstream commit f123dc86388cb669c3d6322702dc441abc35c31e ]
 
-There's issue as follows When do IO fault injection test:
-Quota error (device dm-3): find_block_dqentry: Quota for id 101 referenced but not present
-Quota error (device dm-3): qtree_read_dquot: Can't read quota structure for id 101
-Quota error (device dm-3): do_check_range: Getting block 2021161007 out of range 1-186
-Quota error (device dm-3): qtree_read_dquot: Can't read quota structure for id 661
+syzbot is reporting sleep in atomic context in SysV filesystem [1], for
+sb_bread() is called with rw_spinlock held.
 
-Now, ext4_write_dquot()/ext4_acquire_dquot()/ext4_release_dquot() may commit
-inconsistent quota data even if process failed. This may lead to filesystem
-corruption.
-To ensure filesystem consistent when errors=remount-ro there is need to call
-ext4_handle_error() to abort journal.
+A "write_lock(&pointers_lock) => read_lock(&pointers_lock) deadlock" bug
+and a "sb_bread() with write_lock(&pointers_lock)" bug were introduced by
+"Replace BKL for chain locking with sysvfs-private rwlock" in Linux 2.5.12.
 
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240119062908.3598806-1-yebin10@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Then, "[PATCH] err1-40: sysvfs locking fix" in Linux 2.6.8 fixed the
+former bug by moving pointers_lock lock to the callers, but instead
+introduced a "sb_bread() with read_lock(&pointers_lock)" bug (which made
+this problem easier to hit).
+
+Al Viro suggested that why not to do like get_branch()/get_block()/
+find_shared() in Minix filesystem does. And doing like that is almost a
+revert of "[PATCH] err1-40: sysvfs locking fix" except that get_branch()
+ from with find_shared() is called without write_lock(&pointers_lock).
+
+Reported-by: syzbot <syzbot+69b40dc5fd40f32c199f@syzkaller.appspotmail.com>
+Link: https://syzkaller.appspot.com/bug?extid=69b40dc5fd40f32c199f
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://lore.kernel.org/r/0d195f93-a22a-49a2-0020-103534d6f7f6@I-love.SAKURA.ne.jp
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/sysv/itree.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 601e097e17207..274542d869d0c 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -6751,6 +6751,10 @@ static int ext4_write_dquot(struct dquot *dquot)
- 	if (IS_ERR(handle))
- 		return PTR_ERR(handle);
- 	ret = dquot_commit(dquot);
-+	if (ret < 0)
-+		ext4_error_err(dquot->dq_sb, -ret,
-+			       "Failed to commit dquot type %d",
-+			       dquot->dq_id.type);
- 	err = ext4_journal_stop(handle);
- 	if (!ret)
- 		ret = err;
-@@ -6767,6 +6771,10 @@ static int ext4_acquire_dquot(struct dquot *dquot)
- 	if (IS_ERR(handle))
- 		return PTR_ERR(handle);
- 	ret = dquot_acquire(dquot);
-+	if (ret < 0)
-+		ext4_error_err(dquot->dq_sb, -ret,
-+			      "Failed to acquire dquot type %d",
-+			      dquot->dq_id.type);
- 	err = ext4_journal_stop(handle);
- 	if (!ret)
- 		ret = err;
-@@ -6786,6 +6794,10 @@ static int ext4_release_dquot(struct dquot *dquot)
- 		return PTR_ERR(handle);
+diff --git a/fs/sysv/itree.c b/fs/sysv/itree.c
+index 9925cfe571595..17c7d76770a0a 100644
+--- a/fs/sysv/itree.c
++++ b/fs/sysv/itree.c
+@@ -82,9 +82,6 @@ static inline sysv_zone_t *block_end(struct buffer_head *bh)
+ 	return (sysv_zone_t*)((char*)bh->b_data + bh->b_size);
+ }
+ 
+-/*
+- * Requires read_lock(&pointers_lock) or write_lock(&pointers_lock)
+- */
+ static Indirect *get_branch(struct inode *inode,
+ 			    int depth,
+ 			    int offsets[],
+@@ -104,15 +101,18 @@ static Indirect *get_branch(struct inode *inode,
+ 		bh = sb_bread(sb, block);
+ 		if (!bh)
+ 			goto failure;
++		read_lock(&pointers_lock);
+ 		if (!verify_chain(chain, p))
+ 			goto changed;
+ 		add_chain(++p, bh, (sysv_zone_t*)bh->b_data + *++offsets);
++		read_unlock(&pointers_lock);
+ 		if (!p->key)
+ 			goto no_block;
  	}
- 	ret = dquot_release(dquot);
-+	if (ret < 0)
-+		ext4_error_err(dquot->dq_sb, -ret,
-+			       "Failed to release dquot type %d",
-+			       dquot->dq_id.type);
- 	err = ext4_journal_stop(handle);
- 	if (!ret)
- 		ret = err;
+ 	return NULL;
+ 
+ changed:
++	read_unlock(&pointers_lock);
+ 	brelse(bh);
+ 	*err = -EAGAIN;
+ 	goto no_block;
+@@ -218,9 +218,7 @@ static int get_block(struct inode *inode, sector_t iblock, struct buffer_head *b
+ 		goto out;
+ 
+ reread:
+-	read_lock(&pointers_lock);
+ 	partial = get_branch(inode, depth, offsets, chain, &err);
+-	read_unlock(&pointers_lock);
+ 
+ 	/* Simplest case - block found, no allocation needed */
+ 	if (!partial) {
+@@ -290,9 +288,9 @@ static Indirect *find_shared(struct inode *inode,
+ 	*top = 0;
+ 	for (k = depth; k > 1 && !offsets[k-1]; k--)
+ 		;
++	partial = get_branch(inode, k, offsets, chain, &err);
+ 
+ 	write_lock(&pointers_lock);
+-	partial = get_branch(inode, k, offsets, chain, &err);
+ 	if (!partial)
+ 		partial = chain + k-1;
+ 	/*
 -- 
 2.43.0
 
