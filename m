@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741BE140E3D;
-	Thu, 11 Apr 2024 10:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B347513F452;
+	Thu, 11 Apr 2024 10:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830754; cv=none; b=tTv3/E+F6j4eRCIC6kC8k3DofXdnoaz4FwR15zxxCOelvTACcAWYTjlT01SZsDw2LEI6uxzGS5zFFlF9Ayk3YnwEDq4s8k8Nu9Ib17gzsBwWcNC+Aj9emPkA105awCq456jFIx4C2NRON6Wmen7RGnGnUJVMVdNqP27HUQkX8ac=
+	t=1712830756; cv=none; b=SuT8QGgslzmbO9pgnfV/7hvHeT1Hlc0BBtCeppGQQh1TABeSsFxvr10doPQr8SepKzXnNlqbNViA+gsquUs4T7ZzL7DuSniRAa2aINuMn/31u9190uODaLQDKKw2UAPZAhgqdZMDBA4y5sbDkK1sZg+tpw2Wyo1Lv9DrJej5Rn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830754; c=relaxed/simple;
-	bh=yFsM3djUTWz6F+nrIcFu/ksQwLW9XlBzxaWkNXmeDkw=;
+	s=arc-20240116; t=1712830756; c=relaxed/simple;
+	bh=GB+Y9Jhydztnu51Xyr7FXrJX15I4963HMyISMpLb498=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n947jJXbXs2etzZL68ButDse6IuuKGIAs7ftthItLKOjP0vv7Wvp3FvWEdGlAGFOp9t56YR4emENu7jNPuozxKnnocCiroJiAi01KlUhlSrADxj1Tkp7P+XfQwbEX8QEQdi+JT5Az/1ed9MysEHhvpndz+fB2OwzjB4ATOHlAsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ArRTakGh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ko7GBNUap7MRRoV2fsJz1gaBsQ0qDr+9UrnzVc2g95mypWAQn/8H5MZJteR68+aCnq1950ibmLBEBnUtsmePUStZozDHaHC2YgiCEl/QNLSJpqvleXaiLPN5TsZi3IsV+3h7geZZ9gDqD3ak4h5PNjl4ltWQ5VJpH0pSp59l3xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wNUe4AY/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ArRTakGh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA40C433C7;
-	Thu, 11 Apr 2024 10:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wNUe4AY/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B93C433F1;
+	Thu, 11 Apr 2024 10:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830753;
-	bh=yFsM3djUTWz6F+nrIcFu/ksQwLW9XlBzxaWkNXmeDkw=;
+	s=korg; t=1712830756;
+	bh=GB+Y9Jhydztnu51Xyr7FXrJX15I4963HMyISMpLb498=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ArRTakGhu4il9fygFBBQUMRaoxhYGTG5UfZ3yJ4ifPGLEVZZvOc+9olRub+dJLYhe
-	 78n4CfjN64KNR5sFdcsv9BinMW3SqQhiLS/fFUZ1QXoNw6pD2Pd4MgE6s6c6+AJXKW
-	 klpQOTENpzPcU+xysPVZn9svpL6+Swa6YFC5I+bc=
+	b=wNUe4AY/hRUAMFa5sXAk7y4F+zMirBQ+v9OvUFj8t7P9uuuH1588gCf2u3oAzJNYf
+	 8z+MIb91QlR4TWeYVAntm1OtRl11oMJ6S5wVpcVphdh7AYpxnc429DMiPZL9Hb1O3M
+	 ElpF58+4/NQg/wzrkX4z8rtSGPD5wrMBZFpsggkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Siddh Raman Pant <code@siddh.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Genjian Zhang <zhanggenjian@kylinos.cn>,
-	syzbot+a8e049cd3abd342936b6@syzkaller.appspotmail.com
-Subject: [PATCH 5.4 104/215] loop: Check for overflow while configuring loop
-Date: Thu, 11 Apr 2024 11:55:13 +0200
-Message-ID: <20240411095428.037325067@linuxfoundation.org>
+	Inki Dae <inki.dae@samsung.com>,
+	Seung-Woo Kim <sw0312.kim@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 069/215] drm/exynos: do not return negative values from .get_modes()
+Date: Thu, 11 Apr 2024 11:54:38 +0200
+Message-ID: <20240411095426.973963547@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -54,60 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddh Raman Pant <code@siddh.me>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit c490a0b5a4f36da3918181a8acdc6991d967c5f3 ]
+[ Upstream commit 13d5b040363c7ec0ac29c2de9cf661a24a8aa531 ]
 
-The userspace can configure a loop using an ioctl call, wherein
-a configuration of type loop_config is passed (see lo_ioctl()'s
-case on line 1550 of drivers/block/loop.c). This proceeds to call
-loop_configure() which in turn calls loop_set_status_from_info()
-(see line 1050 of loop.c), passing &config->info which is of type
-loop_info64*. This function then sets the appropriate values, like
-the offset.
+The .get_modes() hooks aren't supposed to return negative error
+codes. Return 0 for no modes, whatever the reason.
 
-loop_device has lo_offset of type loff_t (see line 52 of loop.c),
-which is typdef-chained to long long, whereas loop_info64 has
-lo_offset of type __u64 (see line 56 of include/uapi/linux/loop.h).
-
-The function directly copies offset from info to the device as
-follows (See line 980 of loop.c):
-	lo->lo_offset = info->lo_offset;
-
-This results in an overflow, which triggers a warning in iomap_iter()
-due to a call to iomap_iter_done() which has:
-	WARN_ON_ONCE(iter->iomap.offset > iter->pos);
-
-Thus, check for negative value during loop_set_status_from_info().
-
-Bug report: https://syzkaller.appspot.com/bug?id=c620fe14aac810396d3c3edc9ad73848bf69a29e
-
-Reported-and-tested-by: syzbot+a8e049cd3abd342936b6@syzkaller.appspotmail.com
+Cc: Inki Dae <inki.dae@samsung.com>
+Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Siddh Raman Pant <code@siddh.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20220823160810.181275-1-code@siddh.me
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/d8665f620d9c252aa7d5a4811ff6b16e773903a2.1709913674.git.jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c | 4 ++--
+ drivers/gpu/drm/exynos/exynos_hdmi.c     | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -1298,6 +1298,11 @@ loop_set_status_from_info(struct loop_de
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+index d882a22dfd6e6..46fc472be3068 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+@@ -308,14 +308,14 @@ static int vidi_get_modes(struct drm_connector *connector)
+ 	 */
+ 	if (!ctx->raw_edid) {
+ 		DRM_DEV_DEBUG_KMS(ctx->dev, "raw_edid is null.\n");
+-		return -EFAULT;
++		return 0;
+ 	}
  
- 	lo->lo_offset = info->lo_offset;
- 	lo->lo_sizelimit = info->lo_sizelimit;
-+
-+	/* loff_t vars have been assigned __u64 */
-+	if (lo->lo_offset < 0 || lo->lo_sizelimit < 0)
-+		return -EOVERFLOW;
-+
- 	memcpy(lo->lo_file_name, info->lo_file_name, LO_NAME_SIZE);
- 	memcpy(lo->lo_crypt_name, info->lo_crypt_name, LO_NAME_SIZE);
- 	lo->lo_file_name[LO_NAME_SIZE-1] = 0;
+ 	edid_len = (1 + ctx->raw_edid->extensions) * EDID_LENGTH;
+ 	edid = kmemdup(ctx->raw_edid, edid_len, GFP_KERNEL);
+ 	if (!edid) {
+ 		DRM_DEV_DEBUG_KMS(ctx->dev, "failed to allocate edid\n");
+-		return -ENOMEM;
++		return 0;
+ 	}
+ 
+ 	drm_connector_update_edid_property(connector, edid);
+diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
+index 93b2af4936d0e..0e2e1dfcd9ce5 100644
+--- a/drivers/gpu/drm/exynos/exynos_hdmi.c
++++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
+@@ -876,11 +876,11 @@ static int hdmi_get_modes(struct drm_connector *connector)
+ 	int ret;
+ 
+ 	if (!hdata->ddc_adpt)
+-		return -ENODEV;
++		return 0;
+ 
+ 	edid = drm_get_edid(connector, hdata->ddc_adpt);
+ 	if (!edid)
+-		return -ENODEV;
++		return 0;
+ 
+ 	hdata->dvi_mode = !drm_detect_hdmi_monitor(edid);
+ 	DRM_DEV_DEBUG_KMS(hdata->dev, "%s : width[%d] x height[%d]\n",
+-- 
+2.43.0
+
 
 
