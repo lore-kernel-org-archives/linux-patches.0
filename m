@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56166BB29;
-	Thu, 11 Apr 2024 10:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17FC6BB29;
+	Thu, 11 Apr 2024 10:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832339; cv=none; b=uxquhXkUZ57PRunXM0uZF3zT4Z9tRT4+b4JZdkL4dUj59H9w5MqckqHOT8NhYQ2BlzoTQan5VS3BMW/nhDj8oLnIdprYW2JNv06TZ+zff2kqeudyUb1Fd6RwuwKrWBzu/atI7qlKg+CSoBTXlF95WLJboCZRBjFDC8xSd10OwPU=
+	t=1712832342; cv=none; b=r3B6rBWmp4alWzETGWINjGpv+AqEwM7fXt8AuAGj8jXswAFMXpUgo7H8jPxB4LPIw+gDy9iE0yg3epjJjuSqiI/fOl+CAAQTr1o0boonWefmKaFpLwcOciQLuaV2BPF3l+HT+31Ar7l/jaVwuSmsmso/66AZg7WYgtsuu9vAMTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832339; c=relaxed/simple;
-	bh=B4GCfwbRznOKw4jbFK8H3zAHY6H/40s9bItlZRt1364=;
+	s=arc-20240116; t=1712832342; c=relaxed/simple;
+	bh=zgr+sGQpD4vQs9Lqt3wFQfl7qlumGyGjAA2KC70zhjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qgn/MYyb31dEXc41/gYvTwkR1U+UyLH3LhNG+cd1gXbLIL84Mr/RRtsEaJRMcdGlc1KyZNe9AVmi0LrWpIDmwNCIIJ7R1Llg3KgnyKuoiTJpZmbTSrR0PJyjihGHn8EemT2gHFD0FV3Ld5DPb2dTsuou8P7OZmR1wBonpbGC/fU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGB+GSVU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o79Vh9qttdjLjTQHPlC88FllsJAaCkDK0pC/DuKkwRXphj1GA1ufJuf2wbq7FV1X1tDYEjDHcNpULkFdOK18v12Y6OvK9OzKRVPfvUz8Qf/5d9ZgLFHmp12jGC7T1QHsiLkkAcSwpEzUDeCKiY7ywLrd8TiycbZee4qBy5SCd9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GOKyYr6a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGB+GSVU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356ABC433F1;
-	Thu, 11 Apr 2024 10:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GOKyYr6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EF1C433F1;
+	Thu, 11 Apr 2024 10:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832339;
-	bh=B4GCfwbRznOKw4jbFK8H3zAHY6H/40s9bItlZRt1364=;
+	s=korg; t=1712832342;
+	bh=zgr+sGQpD4vQs9Lqt3wFQfl7qlumGyGjAA2KC70zhjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JGB+GSVURxCUOLEcO0as2Q6YkWXyMg8o7lha8P/BQwoR8WVoO9ZGs1r5oFfdzFNjN
-	 mR9K5Al91THH20FYACtk8lN2zxc6ggEJxZSfyGGMphea89MSWS2Xi9QR0nJ+MIvSVG
-	 hvyLbvvzDpLGO5EwO1Pbis3wQBLxuv/xIKpjDOFs=
+	b=GOKyYr6aekiC/gh8Nocf5x0MyTKDReNEn6jRRry0q/f/4VtWMxj1/5eIfG5umkqge
+	 BtuwusadnlfcLpG0sjHTpt9cxJkLT+5bw5ggQNfN+BZs1SBpz301dcSwcENDxgb2Ih
+	 ptawHkIEku9UbgxQK1c185Kp5oSp6vJX3R12XcyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Kees Cook <keescook@chromium.org>,
+	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 16/83] pstore/zone: Add a null pointer check to the psz_kmsg_read
-Date: Thu, 11 Apr 2024 11:56:48 +0200
-Message-ID: <20240411095413.165854473@linuxfoundation.org>
+Subject: [PATCH 6.1 17/83] tools/power x86_energy_perf_policy: Fix file leak in get_pkg_num()
+Date: Thu, 11 Apr 2024 11:56:49 +0200
+Message-ID: <20240411095413.196865927@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -51,35 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
 
-[ Upstream commit 98bc7e26e14fbb26a6abf97603d59532475e97f8 ]
+[ Upstream commit f85450f134f0b4ca7e042dc3dc89155656a2299d ]
 
-kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure. Ensure the allocation was successful
-by checking the pointer validity.
+In function get_pkg_num() if fopen_or_die() succeeds it returns a file
+pointer to be used. But fclose() is never called before returning from
+the function.
 
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Link: https://lore.kernel.org/r/20240118100206.213928-1-chentao@kylinos.cn
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/zone.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/pstore/zone.c b/fs/pstore/zone.c
-index 2770746bb7aa1..abca117725c81 100644
---- a/fs/pstore/zone.c
-+++ b/fs/pstore/zone.c
-@@ -973,6 +973,8 @@ static ssize_t psz_kmsg_read(struct pstore_zone *zone,
- 		char *buf = kasprintf(GFP_KERNEL, "%s: Total %d times\n",
- 				      kmsg_dump_reason_str(record->reason),
- 				      record->count);
-+		if (!buf)
-+			return -ENOMEM;
- 		hlen = strlen(buf);
- 		record->buf = krealloc(buf, hlen + size, GFP_KERNEL);
- 		if (!record->buf) {
+diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+index 5fd9e594079cf..ebda9c366b2ba 100644
+--- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
++++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+@@ -1241,6 +1241,7 @@ unsigned int get_pkg_num(int cpu)
+ 	retval = fscanf(fp, "%d\n", &pkg);
+ 	if (retval != 1)
+ 		errx(1, "%s: failed to parse", pathname);
++	fclose(fp);
+ 	return pkg;
+ }
+ 
 -- 
 2.43.0
 
