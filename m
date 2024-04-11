@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7829F64CC0;
-	Thu, 11 Apr 2024 10:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643FE146D47;
+	Thu, 11 Apr 2024 10:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832180; cv=none; b=mNKyeoYhCFfJ/b/oJZi4/VV33F34ADjKkijXQ+7+YPCorXEw72EABdZ7rNmsBam1VKPCB69ChputGtvUqT26faORihUtwiO6o7oQ6GGtyAebFyj+LT5p1VbqtDWjithMgaG7JVvTE44KeI2crUUEzxNjJORbgH3Wri0P+7NTmRA=
+	t=1712832183; cv=none; b=KyxEX59dDqgmaAtLwMjaroIu2XFG/YXcCy1+GyQ74kuLuP4K+el/0GSTqnbHLPwcVQK7eQ0ugdeiqWEe8+YI7ZKb0e4JMKbhuDK6Af914Ox9U4FOSMgO8XEuQfhPwKUlHKHOf73K67mLyiA9r3XiVMin6ar2BAnEqgyuegcFEQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832180; c=relaxed/simple;
-	bh=y0NaD81Ao5zWOHLEotQ/Ce2Ruhes/QddpD+EbttzVho=;
+	s=arc-20240116; t=1712832183; c=relaxed/simple;
+	bh=SQMWsAQ+//yrnCmmPw5aRN8SbWZvMKOAek4afqwdcSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IR8oHqKH8+3Yazog1PKg0331PHG7c3n793RKp4JXmEZS/NeJ+WPylCG6Ac4Am/bWNwo3PWRsYINLkCULgRMRsjmsQ99ypGpbXFrT0nHphAKwVVpYH4jxVK/F96ZYVCv6+T/yoQl7wnMDi5r6LrLAhH2oGp74M757L0zWYN8tEIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXKrZ8ki; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=USOwWuOvlQP/eCEzrvWdiZNk1PQ8zvZhs7nER5CO1B6t5GnPXJpf5Vz7w29DZlpbEgiLuX9d6tA0uw4e09NGLf16TBPUdrqOfgxFQXfgFlqwpTynulP+KDSlND+k+1Z8OYAw2BBzX4CbiuxwMhA337l9LYvJ4ggeiDlUQkiXURI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYnlp2nS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXKrZ8ki"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00FB1C433F1;
-	Thu, 11 Apr 2024 10:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYnlp2nS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF77C433F1;
+	Thu, 11 Apr 2024 10:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832180;
-	bh=y0NaD81Ao5zWOHLEotQ/Ce2Ruhes/QddpD+EbttzVho=;
+	s=korg; t=1712832183;
+	bh=SQMWsAQ+//yrnCmmPw5aRN8SbWZvMKOAek4afqwdcSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RXKrZ8kiC4C9GOrJUW3khX57F9ws7FFcvoVoXFpqtFJKTnMGgNFm21qn6rOZgCzo+
-	 5V6tipJ0Il2szHQ013yJgPevyIM0gMnqAui1rwBgj4AD+eA5H4p3xRMkORb/hfrXKy
-	 AmszrE95+yilmqyqX8zGcPpmL4dnYIWIuRgHiVuo=
+	b=UYnlp2nSnPcHH5plfcUfDP+kTB55EBE7rJCr+hqiJfzuuZPMIWumgtfc9NhsjBimA
+	 U4SHKS8lG7rpnjE0oQrdV6ABYRL+pmHGvUOBumIt1J0uP3ziEomloHzjH15CipwKuH
+	 M+G77UaUbT8N2wFBxgrOP57MHgTfLL7jDOt3vhP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Jan Karcher <jaka@linux.ibm.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Wen Gu <guwen@linux.alibaba.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 229/294] ata: sata_sx4: fix pdc20621_get_from_dimm() on 64-bit
-Date: Thu, 11 Apr 2024 11:56:32 +0200
-Message-ID: <20240411095442.479887484@linuxfoundation.org>
+Subject: [PATCH 5.10 256/294] net/smc: reduce rtnl pressure in smc_pnet_create_pnetids_list()
+Date: Thu, 11 Apr 2024 11:56:59 +0200
+Message-ID: <20240411095443.271200364@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -51,69 +56,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 52f80bb181a9a1530ade30bc18991900bbb9697f ]
+[ Upstream commit 00af2aa93b76b1bade471ad0d0525d4d29ca5cc0 ]
 
-gcc warns about a memcpy() with overlapping pointers because of an
-incorrect size calculation:
+Many syzbot reports show extreme rtnl pressure, and many of them hint
+that smc acquires rtnl in netns creation for no good reason [1]
 
-In file included from include/linux/string.h:369,
-                 from drivers/ata/sata_sx4.c:66:
-In function 'memcpy_fromio',
-    inlined from 'pdc20621_get_from_dimm.constprop' at drivers/ata/sata_sx4.c:962:2:
-include/linux/fortify-string.h:97:33: error: '__builtin_memcpy' accessing 4294934464 bytes at offsets 0 and [16, 16400] overlaps 6442385281 bytes at offset -2147450817 [-Werror=restrict]
-   97 | #define __underlying_memcpy     __builtin_memcpy
-      |                                 ^
-include/linux/fortify-string.h:620:9: note: in expansion of macro '__underlying_memcpy'
-  620 |         __underlying_##op(p, q, __fortify_size);                        \
-      |         ^~~~~~~~~~~~~
-include/linux/fortify-string.h:665:26: note: in expansion of macro '__fortify_memcpy_chk'
-  665 | #define memcpy(p, q, s)  __fortify_memcpy_chk(p, q, s,                  \
-      |                          ^~~~~~~~~~~~~~~~~~~~
-include/asm-generic/io.h:1184:9: note: in expansion of macro 'memcpy'
- 1184 |         memcpy(buffer, __io_virt(addr), size);
-      |         ^~~~~~
+This patch returns early from smc_pnet_net_init()
+if there is no netdevice yet.
 
-The problem here is the overflow of an unsigned 32-bit number to a
-negative that gets converted into a signed 'long', keeping a large
-positive number.
+I am not even sure why smc_pnet_create_pnetids_list() even exists,
+because smc_pnet_netdev_event() is also calling
+smc_pnet_add_base_pnetid() when handling NETDEV_UP event.
 
-Replace the complex calculation with a more readable min() variant
-that avoids the warning.
+[1] extract of typical syzbot reports
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+2 locks held by syz-executor.3/12252:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.4/12253:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.1/12257:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.2/12261:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.0/12265:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.3/12268:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.4/12271:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.1/12274:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+2 locks held by syz-executor.2/12280:
+  #0: ffffffff8f369610 (pernet_ops_rwsem){++++}-{3:3}, at: copy_net_ns+0x4c7/0x7b0 net/core/net_namespace.c:491
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_create_pnetids_list net/smc/smc_pnet.c:809 [inline]
+  #1: ffffffff8f375b88 (rtnl_mutex){+.+.}-{3:3}, at: smc_pnet_net_init+0x10a/0x1e0 net/smc/smc_pnet.c:878
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Wenjia Zhang <wenjia@linux.ibm.com>
+Cc: Jan Karcher <jaka@linux.ibm.com>
+Cc: "D. Wythe" <alibuda@linux.alibaba.com>
+Cc: Tony Lu <tonylu@linux.alibaba.com>
+Cc: Wen Gu <guwen@linux.alibaba.com>
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240302100744.3868021-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_sx4.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/smc/smc_pnet.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/ata/sata_sx4.c b/drivers/ata/sata_sx4.c
-index 4c01190a5e370..c95685f693a68 100644
---- a/drivers/ata/sata_sx4.c
-+++ b/drivers/ata/sata_sx4.c
-@@ -1004,8 +1004,7 @@ static void pdc20621_get_from_dimm(struct ata_host *host, void *psource,
+diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
+index 30bae60d626c6..ed9cfa11b589f 100644
+--- a/net/smc/smc_pnet.c
++++ b/net/smc/smc_pnet.c
+@@ -797,6 +797,16 @@ static void smc_pnet_create_pnetids_list(struct net *net)
+ 	u8 ndev_pnetid[SMC_MAX_PNETID_LEN];
+ 	struct net_device *dev;
  
- 	offset -= (idx * window_size);
- 	idx++;
--	dist = ((long) (window_size - (offset + size))) >= 0 ? size :
--		(long) (window_size - offset);
-+	dist = min(size, window_size - offset);
- 	memcpy_fromio(psource, dimm_mmio + offset / 4, dist);
- 
- 	psource += dist;
-@@ -1053,8 +1052,7 @@ static void pdc20621_put_to_dimm(struct ata_host *host, void *psource,
- 	readl(mmio + PDC_DIMM_WINDOW_CTLR);
- 	offset -= (idx * window_size);
- 	idx++;
--	dist = ((long)(s32)(window_size - (offset + size))) >= 0 ? size :
--		(long) (window_size - offset);
-+	dist = min(size, window_size - offset);
- 	memcpy_toio(dimm_mmio + offset / 4, psource, dist);
- 	writel(0x01, mmio + PDC_GENERAL_CTLR);
- 	readl(mmio + PDC_GENERAL_CTLR);
++	/* Newly created netns do not have devices.
++	 * Do not even acquire rtnl.
++	 */
++	if (list_empty(&net->dev_base_head))
++		return;
++
++	/* Note: This might not be needed, because smc_pnet_netdev_event()
++	 * is also calling smc_pnet_add_base_pnetid() when handling
++	 * NETDEV_UP event.
++	 */
+ 	rtnl_lock();
+ 	for_each_netdev(net, dev)
+ 		smc_pnet_add_base_pnetid(net, dev, ndev_pnetid);
 -- 
 2.43.0
 
