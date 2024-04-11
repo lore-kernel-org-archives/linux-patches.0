@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C1E6BB29;
-	Thu, 11 Apr 2024 10:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6819D143C76;
+	Thu, 11 Apr 2024 10:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832269; cv=none; b=Xzv7zg8nuVHWXkjd8l4Xm+HAqu+RMA8+ijzfVXPhHDdrVhXPxbt3uv/nOnAzTfNj14pqF2zbTsKa8Sbey3aeBTQWJHPqUj9OPn5g5dtNhReW4iiRPIRiTMpww0h+YoUAurdyykmhaHBJW2Xz++6p7amPr5kz3N3OI20FgpEIFsw=
+	t=1712832272; cv=none; b=kP1Q+9vjy5AwMIj6mUAhwutXDdltiSJ+OtkQ+/0Wy5rOO/577/WcTf6FvkKO652gkSC929da4dToiPXrmahTndUDlaA+1PWyh7eh5GXuE+XLlpKU2xwqsRJeX+ZUJmMedsEZBP4eIL9sBYj4RxrWfTbLUwj3k/eBFHR/i6z/nVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832269; c=relaxed/simple;
-	bh=abNHeGH4hIn8pkBoQY3VLqPq+lIrtapJ01R7HAau/Fc=;
+	s=arc-20240116; t=1712832272; c=relaxed/simple;
+	bh=6JV4BDofroR62G5/jC2pL430IfnnNFi44iDgy8qBCuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mismsagszXBmK0vFXaAgKO+fx23RDfV6u6Rskpbra1wrIea1P5Z6vUX/gwUT/N094IWKh2vWx8X2noAJzbshJIATllKiGE3OnapnXX6lc7F6Yy82t00cyRdJoXQ3xnbEbFHDtwmUaew6YyUQxPtmja1g1GxgwiFmBHdDNeqrmEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpA8o5Yq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MEKDl4aO0UonkZyh+69zA9ISn/4JqGa3Fx6IDialOQZNVsnUnci69CWjrhPIUKynRYftj7JfoDbaW5aTohwZUHqDuBLrulwIhm0Pz+zJBai2hEQXmRBPHlbCo0I4F5o75J6bChvUOalhW9Xu9Tp1n7g2O1o4MvpbvXmelJo7VDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrtX0Z5g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpA8o5Yq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D2CC433F1;
-	Thu, 11 Apr 2024 10:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrtX0Z5g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9427BC433C7;
+	Thu, 11 Apr 2024 10:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832269;
-	bh=abNHeGH4hIn8pkBoQY3VLqPq+lIrtapJ01R7HAau/Fc=;
+	s=korg; t=1712832272;
+	bh=6JV4BDofroR62G5/jC2pL430IfnnNFi44iDgy8qBCuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GpA8o5Yqo2bg6/dyoLke8wcJxZzE/xxy4j3AlSUrV9+3K/VDU1ld+PjddoKwrLGOT
-	 3ZxQjP2JIqymnlOnQoZPF5s+06R4Ipspgj19w0zhhSy9guBogxhTv8iwL6ia+nXG0q
-	 mvo/v5BnnkfLdGS4HGoGMNeUUTVQyxVgXE2QvMyI=
+	b=HrtX0Z5gpskIIL5NnPf8IhKiuqFH76va0yVjTzbjWIRlMjxYwn20ePi3MFryJtom1
+	 PpGv/NJ0UTxmhHBMaR90VydQwNcjxiqH4YMeFT3l+Ibr1RFFIx7U5vIkIlhg3dIxjW
+	 mlQBnN3jnXUWSGqJ8HlOOFidhe4pgMR/aAqijpGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 269/294] libperf evlist: Avoid out-of-bounds access
-Date: Thu, 11 Apr 2024 11:57:12 +0200
-Message-ID: <20240411095443.650201310@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Wupeng Ma <mawupeng1@huawei.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Borislav Petkov <bp@alien8.de>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 287/294] x86/mm/pat: fix VM_PAT handling in COW mappings
+Date: Thu, 11 Apr 2024 11:57:30 +0200
+Message-ID: <20240411095444.173801977@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -52,125 +58,239 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit 1947b92464c3268381604bbe2ac977a3fd78192f ]
+commit 04c35ab3bdae7fefbd7c7a7355f29fa03a035221 upstream.
 
-Parallel testing appears to show a race between allocating and setting
-evsel ids. As there is a bounds check on the xyarray it yields a segv
-like:
+PAT handling won't do the right thing in COW mappings: the first PTE (or,
+in fact, all PTEs) can be replaced during write faults to point at anon
+folios.  Reliably recovering the correct PFN and cachemode using
+follow_phys() from PTEs will not work in COW mappings.
 
-```
-AddressSanitizer:DEADLYSIGNAL
+Using follow_phys(), we might just get the address+protection of the anon
+folio (which is very wrong), or fail on swap/nonswap entries, failing
+follow_phys() and triggering a WARN_ON_ONCE() in untrack_pfn() and
+track_pfn_copy(), not properly calling free_pfn_range().
 
-=================================================================
+In free_pfn_range(), we either wouldn't call memtype_free() or would call
+it with the wrong range, possibly leaking memory.
 
-==484408==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000010
+To fix that, let's update follow_phys() to refuse returning anon folios,
+and fallback to using the stored PFN inside vma->vm_pgoff for COW mappings
+if we run into that.
 
-==484408==The signal is caused by a WRITE memory access.
+We will now properly handle untrack_pfn() with COW mappings, where we
+don't need the cachemode.  We'll have to fail fork()->track_pfn_copy() if
+the first page was replaced by an anon folio, though: we'd have to store
+the cachemode in the VMA to make this work, likely growing the VMA size.
 
-==484408==Hint: address points to the zero page.
+For now, lets keep it simple and let track_pfn_copy() just fail in that
+case: it would have failed in the past with swap/nonswap entries already,
+and it would have done the wrong thing with anon folios.
 
-    #0 0x55cef5d4eff4 in perf_evlist__id_hash tools/lib/perf/evlist.c:256
-    #1 0x55cef5d4f132 in perf_evlist__id_add tools/lib/perf/evlist.c:274
-    #2 0x55cef5d4f545 in perf_evlist__id_add_fd tools/lib/perf/evlist.c:315
-    #3 0x55cef5a1923f in store_evsel_ids util/evsel.c:3130
-    #4 0x55cef5a19400 in evsel__store_ids util/evsel.c:3147
-    #5 0x55cef5888204 in __run_perf_stat tools/perf/builtin-stat.c:832
-    #6 0x55cef5888c06 in run_perf_stat tools/perf/builtin-stat.c:960
-    #7 0x55cef58932db in cmd_stat tools/perf/builtin-stat.c:2878
+Simple reproducer to trigger the WARN_ON_ONCE() in untrack_pfn():
+
+<--- C reproducer --->
+ #include <stdio.h>
+ #include <sys/mman.h>
+ #include <unistd.h>
+ #include <liburing.h>
+
+ int main(void)
+ {
+         struct io_uring_params p = {};
+         int ring_fd;
+         size_t size;
+         char *map;
+
+         ring_fd = io_uring_setup(1, &p);
+         if (ring_fd < 0) {
+                 perror("io_uring_setup");
+                 return 1;
+         }
+         size = p.sq_off.array + p.sq_entries * sizeof(unsigned);
+
+         /* Map the submission queue ring MAP_PRIVATE */
+         map = mmap(0, size, PROT_READ | PROT_WRITE, MAP_PRIVATE,
+                    ring_fd, IORING_OFF_SQ_RING);
+         if (map == MAP_FAILED) {
+                 perror("mmap");
+                 return 1;
+         }
+
+         /* We have at least one page. Let's COW it. */
+         *map = 0;
+         pause();
+         return 0;
+ }
+<--- C reproducer --->
+
+On a system with 16 GiB RAM and swap configured:
+ # ./iouring &
+ # memhog 16G
+ # killall iouring
+[  301.552930] ------------[ cut here ]------------
+[  301.553285] WARNING: CPU: 7 PID: 1402 at arch/x86/mm/pat/memtype.c:1060 untrack_pfn+0xf4/0x100
+[  301.553989] Modules linked in: binfmt_misc nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib nft_reject_g
+[  301.558232] CPU: 7 PID: 1402 Comm: iouring Not tainted 6.7.5-100.fc38.x86_64 #1
+[  301.558772] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebu4
+[  301.559569] RIP: 0010:untrack_pfn+0xf4/0x100
+[  301.559893] Code: 75 c4 eb cf 48 8b 43 10 8b a8 e8 00 00 00 3b 6b 28 74 b8 48 8b 7b 30 e8 ea 1a f7 000
+[  301.561189] RSP: 0018:ffffba2c0377fab8 EFLAGS: 00010282
+[  301.561590] RAX: 00000000ffffffea RBX: ffff9208c8ce9cc0 RCX: 000000010455e047
+[  301.562105] RDX: 07fffffff0eb1e0a RSI: 0000000000000000 RDI: ffff9208c391d200
+[  301.562628] RBP: 0000000000000000 R08: ffffba2c0377fab8 R09: 0000000000000000
+[  301.563145] R10: ffff9208d2292d50 R11: 0000000000000002 R12: 00007fea890e0000
+[  301.563669] R13: 0000000000000000 R14: ffffba2c0377fc08 R15: 0000000000000000
+[  301.564186] FS:  0000000000000000(0000) GS:ffff920c2fbc0000(0000) knlGS:0000000000000000
+[  301.564773] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  301.565197] CR2: 00007fea88ee8a20 CR3: 00000001033a8000 CR4: 0000000000750ef0
+[  301.565725] PKRU: 55555554
+[  301.565944] Call Trace:
+[  301.566148]  <TASK>
+[  301.566325]  ? untrack_pfn+0xf4/0x100
+[  301.566618]  ? __warn+0x81/0x130
+[  301.566876]  ? untrack_pfn+0xf4/0x100
+[  301.567163]  ? report_bug+0x171/0x1a0
+[  301.567466]  ? handle_bug+0x3c/0x80
+[  301.567743]  ? exc_invalid_op+0x17/0x70
+[  301.568038]  ? asm_exc_invalid_op+0x1a/0x20
+[  301.568363]  ? untrack_pfn+0xf4/0x100
+[  301.568660]  ? untrack_pfn+0x65/0x100
+[  301.568947]  unmap_single_vma+0xa6/0xe0
+[  301.569247]  unmap_vmas+0xb5/0x190
+[  301.569532]  exit_mmap+0xec/0x340
+[  301.569801]  __mmput+0x3e/0x130
+[  301.570051]  do_exit+0x305/0xaf0
 ...
-```
 
-Avoid this crash by early exiting the perf_evlist__id_add_fd and
-perf_evlist__id_add is the access is out-of-bounds.
-
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Yang Jihong <yangjihong1@huawei.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20240229070757.796244-1-irogers@google.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20240403212131.929421-3-david@redhat.com
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reported-by: Wupeng Ma <mawupeng1@huawei.com>
+Closes: https://lkml.kernel.org/r/20240227122814.3781907-1-mawupeng1@huawei.com
+Fixes: b1a86e15dc03 ("x86, pat: remove the dependency on 'vm_pgoff' in track/untrack pfn vma routines")
+Fixes: 5899329b1910 ("x86: PAT: implement track/untrack of pfnmap regions for x86 - v3")
+Acked-by: Ingo Molnar <mingo@kernel.org>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/perf/evlist.c                  | 18 ++++++++++++------
- tools/lib/perf/include/internal/evlist.h |  4 ++--
- 2 files changed, 14 insertions(+), 8 deletions(-)
+ arch/x86/mm/pat/memtype.c |   50 +++++++++++++++++++++++++++++++++-------------
+ mm/memory.c               |    4 +++
+ 2 files changed, 40 insertions(+), 14 deletions(-)
 
-diff --git a/tools/lib/perf/evlist.c b/tools/lib/perf/evlist.c
-index f76b1a9d5a6e1..53cff32b2cb80 100644
---- a/tools/lib/perf/evlist.c
-+++ b/tools/lib/perf/evlist.c
-@@ -226,10 +226,10 @@ u64 perf_evlist__read_format(struct perf_evlist *evlist)
+--- a/arch/x86/mm/pat/memtype.c
++++ b/arch/x86/mm/pat/memtype.c
+@@ -56,6 +56,7 @@
  
- static void perf_evlist__id_hash(struct perf_evlist *evlist,
- 				 struct perf_evsel *evsel,
--				 int cpu, int thread, u64 id)
-+				 int cpu_map_idx, int thread, u64 id)
- {
- 	int hash;
--	struct perf_sample_id *sid = SID(evsel, cpu, thread);
-+	struct perf_sample_id *sid = SID(evsel, cpu_map_idx, thread);
+ #include "memtype.h"
+ #include "../mm_internal.h"
++#include "../../../mm/internal.h"	/* is_cow_mapping() */
  
- 	sid->id = id;
- 	sid->evsel = evsel;
-@@ -239,21 +239,27 @@ static void perf_evlist__id_hash(struct perf_evlist *evlist,
- 
- void perf_evlist__id_add(struct perf_evlist *evlist,
- 			 struct perf_evsel *evsel,
--			 int cpu, int thread, u64 id)
-+			 int cpu_map_idx, int thread, u64 id)
- {
--	perf_evlist__id_hash(evlist, evsel, cpu, thread, id);
-+	if (!SID(evsel, cpu_map_idx, thread))
-+		return;
-+
-+	perf_evlist__id_hash(evlist, evsel, cpu_map_idx, thread, id);
- 	evsel->id[evsel->ids++] = id;
+ #undef pr_fmt
+ #define pr_fmt(fmt) "" fmt
+@@ -987,6 +988,38 @@ static void free_pfn_range(u64 paddr, un
+ 		memtype_free(paddr, paddr + size);
  }
  
- int perf_evlist__id_add_fd(struct perf_evlist *evlist,
- 			   struct perf_evsel *evsel,
--			   int cpu, int thread, int fd)
-+			   int cpu_map_idx, int thread, int fd)
- {
- 	u64 read_data[4] = { 0, };
- 	int id_idx = 1; /* The first entry is the counter value */
- 	u64 id;
- 	int ret;
- 
-+	if (!SID(evsel, cpu_map_idx, thread))
-+		return -1;
++static int get_pat_info(struct vm_area_struct *vma, resource_size_t *paddr,
++		pgprot_t *pgprot)
++{
++	unsigned long prot;
 +
- 	ret = ioctl(fd, PERF_EVENT_IOC_ID, &id);
- 	if (!ret)
- 		goto add;
-@@ -282,7 +288,7 @@ int perf_evlist__id_add_fd(struct perf_evlist *evlist,
- 	id = read_data[id_idx];
++	VM_WARN_ON_ONCE(!(vma->vm_flags & VM_PAT));
++
++	/*
++	 * We need the starting PFN and cachemode used for track_pfn_remap()
++	 * that covered the whole VMA. For most mappings, we can obtain that
++	 * information from the page tables. For COW mappings, we might now
++	 * suddenly have anon folios mapped and follow_phys() will fail.
++	 *
++	 * Fallback to using vma->vm_pgoff, see remap_pfn_range_notrack(), to
++	 * detect the PFN. If we need the cachemode as well, we're out of luck
++	 * for now and have to fail fork().
++	 */
++	if (!follow_phys(vma, vma->vm_start, 0, &prot, paddr)) {
++		if (pgprot)
++			*pgprot = __pgprot(prot);
++		return 0;
++	}
++	if (is_cow_mapping(vma->vm_flags)) {
++		if (pgprot)
++			return -EINVAL;
++		*paddr = (resource_size_t)vma->vm_pgoff << PAGE_SHIFT;
++		return 0;
++	}
++	WARN_ON_ONCE(1);
++	return -EINVAL;
++}
++
+ /*
+  * track_pfn_copy is called when vma that is covering the pfnmap gets
+  * copied through copy_page_range().
+@@ -997,20 +1030,13 @@ static void free_pfn_range(u64 paddr, un
+ int track_pfn_copy(struct vm_area_struct *vma)
+ {
+ 	resource_size_t paddr;
+-	unsigned long prot;
+ 	unsigned long vma_size = vma->vm_end - vma->vm_start;
+ 	pgprot_t pgprot;
  
- add:
--	perf_evlist__id_add(evlist, evsel, cpu, thread, id);
-+	perf_evlist__id_add(evlist, evsel, cpu_map_idx, thread, id);
- 	return 0;
- }
+ 	if (vma->vm_flags & VM_PAT) {
+-		/*
+-		 * reserve the whole chunk covered by vma. We need the
+-		 * starting address and protection from pte.
+-		 */
+-		if (follow_phys(vma, vma->vm_start, 0, &prot, &paddr)) {
+-			WARN_ON_ONCE(1);
++		if (get_pat_info(vma, &paddr, &pgprot))
+ 			return -EINVAL;
+-		}
+-		pgprot = __pgprot(prot);
++		/* reserve the whole chunk covered by vma. */
+ 		return reserve_pfn_range(paddr, vma_size, &pgprot, 1);
+ 	}
  
-diff --git a/tools/lib/perf/include/internal/evlist.h b/tools/lib/perf/include/internal/evlist.h
-index 2d0fa02b036f6..8999f2cc8ee44 100644
---- a/tools/lib/perf/include/internal/evlist.h
-+++ b/tools/lib/perf/include/internal/evlist.h
-@@ -118,10 +118,10 @@ u64 perf_evlist__read_format(struct perf_evlist *evlist);
+@@ -1085,7 +1111,6 @@ void untrack_pfn(struct vm_area_struct *
+ 		 unsigned long size)
+ {
+ 	resource_size_t paddr;
+-	unsigned long prot;
  
- void perf_evlist__id_add(struct perf_evlist *evlist,
- 			 struct perf_evsel *evsel,
--			 int cpu, int thread, u64 id);
-+			 int cpu_map_idx, int thread, u64 id);
+ 	if (vma && !(vma->vm_flags & VM_PAT))
+ 		return;
+@@ -1093,11 +1118,8 @@ void untrack_pfn(struct vm_area_struct *
+ 	/* free the chunk starting from pfn or the whole chunk */
+ 	paddr = (resource_size_t)pfn << PAGE_SHIFT;
+ 	if (!paddr && !size) {
+-		if (follow_phys(vma, vma->vm_start, 0, &prot, &paddr)) {
+-			WARN_ON_ONCE(1);
++		if (get_pat_info(vma, &paddr, NULL))
+ 			return;
+-		}
+-
+ 		size = vma->vm_end - vma->vm_start;
+ 	}
+ 	free_pfn_range(paddr, size);
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -4934,6 +4934,10 @@ int follow_phys(struct vm_area_struct *v
+ 		goto out;
+ 	pte = *ptep;
  
- int perf_evlist__id_add_fd(struct perf_evlist *evlist,
- 			   struct perf_evsel *evsel,
--			   int cpu, int thread, int fd);
-+			   int cpu_map_idx, int thread, int fd);
++	/* Never return PFNs of anon folios in COW mappings. */
++	if (vm_normal_page(vma, address, pte))
++		goto unlock;
++
+ 	if ((flags & FOLL_WRITE) && !pte_write(pte))
+ 		goto unlock;
  
- #endif /* __LIBPERF_INTERNAL_EVLIST_H */
--- 
-2.43.0
-
 
 
