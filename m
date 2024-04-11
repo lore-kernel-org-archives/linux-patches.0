@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C9A142624;
-	Thu, 11 Apr 2024 10:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F7B134CC2;
+	Thu, 11 Apr 2024 10:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832163; cv=none; b=gBITu14E+L/DQfqVcS3GPRalLvkPn08MF7nr6XiESyVFbIWuQPkOJHjNUxrXmpxiENe8LIMBowLXMkxsNlkh4TsFWl6pL4GjLeiXUznx87NRZmy8ZbjLjEmwTFqPQE21BboonCRVvBmlZTKmoeEl7HmicTGI8ggkr5r0FXKDWrs=
+	t=1712832165; cv=none; b=T4iIMYyqEHHxArkF/5Q3x3ycoHu6QxzPLX11ll0wnBtFhEAvNTS/7wKEkFT7KTvnKeuDrBWAulkAitn2Z4sdP/nYQhxGK4bAA2ooSzr70Z7bNsWHXDR0BreSiCHvOvUySUSv7H0yPedMdSbZ8C7U0EhrpKE8GprL+uqxQPglR/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832163; c=relaxed/simple;
-	bh=UTgfpIma/Bxd8SNRyDpP5x2WABspy2pTry2ZpNBIBcQ=;
+	s=arc-20240116; t=1712832165; c=relaxed/simple;
+	bh=Qoo6vFnBIsoGSnUdd8Z6tVpIk6/xym3E80mdj3wBkzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JvMkgEvfZoqMWfTL+CdAku3bqKZu22h362x5304phFo5ZL+b5aR74nsLobLpXeSSBLd8+w/0agKlU78dXTsypGuionCJyjiOxWrcIDLiXnugAridMgwuLutWvlHg3wGxfU1C2FjN8Dyx2SLjmYGmuW5GjAZDsAXrgcfwKnloagU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfLdPm4L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FGWZDalTc+bk4fxljMkz6wdpHAqapQpnlc0VVRnf34bAx8yzKWvteFU7gakWoSu23ZEPSfNNjT65x2oYWg0WBOoGaRY7CeiT1UamgU05goXeqBL7B5ZpqPABlT35umfny8bYXkUd+Izo06VC+oCdL4MHjOFZv08T2nNU1tPefpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3/vEelz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfLdPm4L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EF6C433F1;
-	Thu, 11 Apr 2024 10:42:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3/vEelz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D753C433F1;
+	Thu, 11 Apr 2024 10:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832162;
-	bh=UTgfpIma/Bxd8SNRyDpP5x2WABspy2pTry2ZpNBIBcQ=;
+	s=korg; t=1712832165;
+	bh=Qoo6vFnBIsoGSnUdd8Z6tVpIk6/xym3E80mdj3wBkzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfLdPm4L4cN4/bfpxVM6wpXbGt8Lmc7hcAp/3F/PSDttP4VS9U1WFB0SNl4/mD1nl
-	 tyXbT7w7AzgQeidPuXtVf9gMI9xXgwcz03oaqVk8VB557zf4JZRJKHUBcYcnic2qg9
-	 ZsfrBc51rP+a0zMiI3qoqr7B+fVAAxs/cZGCnXp0=
+	b=E3/vEelznsBHLrMfjpVS/3H6S2Y2bh7Eq6plBCEsgVeI3jZKCwwvaFp34N/NNXiCN
+	 NpBM7q+N9dBrzDqTjG45ddLS3N3xKDbiH/SEWsaJR1/IDGCKcqktgHsTu1SejnSICf
+	 HOThRQ9N4suQZ261hjtR/h9yCQsT9fmrBbc6OBm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 250/294] ionic: set adminq irq affinity
-Date: Thu, 11 Apr 2024 11:56:53 +0200
-Message-ID: <20240411095443.095629549@linuxfoundation.org>
+Subject: [PATCH 5.10 251/294] pstore/zone: Add a null pointer check to the psz_kmsg_read
+Date: Thu, 11 Apr 2024 11:56:54 +0200
+Message-ID: <20240411095443.125390361@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -53,41 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit c699f35d658f3c21b69ed24e64b2ea26381e941d ]
+[ Upstream commit 98bc7e26e14fbb26a6abf97603d59532475e97f8 ]
 
-We claim to have the AdminQ on our irq0 and thus cpu id 0,
-but we need to be sure we set the affinity hint to try to
-keep it there.
+kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure. Ensure the allocation was successful
+by checking the pointer validity.
 
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Link: https://lore.kernel.org/r/20240118100206.213928-1-chentao@kylinos.cn
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_lif.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/pstore/zone.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-index 49c28134ac2cc..a37ca4b1e5665 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-@@ -2708,9 +2708,12 @@ static int ionic_lif_adminq_init(struct ionic_lif *lif)
- 
- 	napi_enable(&qcq->napi);
- 
--	if (qcq->flags & IONIC_QCQ_F_INTR)
-+	if (qcq->flags & IONIC_QCQ_F_INTR) {
-+		irq_set_affinity_hint(qcq->intr.vector,
-+				      &qcq->intr.affinity_mask);
- 		ionic_intr_mask(idev->intr_ctrl, qcq->intr.index,
- 				IONIC_INTR_MASK_CLEAR);
-+	}
- 
- 	qcq->flags |= IONIC_QCQ_F_INITED;
- 
+diff --git a/fs/pstore/zone.c b/fs/pstore/zone.c
+index b50fc33f2ab29..2426fb6794fd3 100644
+--- a/fs/pstore/zone.c
++++ b/fs/pstore/zone.c
+@@ -973,6 +973,8 @@ static ssize_t psz_kmsg_read(struct pstore_zone *zone,
+ 		char *buf = kasprintf(GFP_KERNEL, "%s: Total %d times\n",
+ 				      kmsg_dump_reason_str(record->reason),
+ 				      record->count);
++		if (!buf)
++			return -ENOMEM;
+ 		hlen = strlen(buf);
+ 		record->buf = krealloc(buf, hlen + size, GFP_KERNEL);
+ 		if (!record->buf) {
 -- 
 2.43.0
 
