@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E7714C59A;
-	Thu, 11 Apr 2024 10:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0BD14D28E;
+	Thu, 11 Apr 2024 10:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831501; cv=none; b=bY/iQxHjStR5tH0t4s+Ob11SY9umBn7bxtWeJ0j0CXriQM4/YcI2p5AevtGkv0id0k+oJVyLl0oGgbGjwdQii6IV6ApCH8cFpmyTLCj6bUW02DMiNDfyUSgjLM+bl8Xoe6A5vokznvfY1u93QK1vGuAJf55vFEdAzc3LIh5/VcA=
+	t=1712831504; cv=none; b=HgsjUDynKd3gW28IyCDUZkFIO7A1bZB6TqDSlHifD4o05wyvrjm57rEWhX1kpjiQQaEyzO1uyB8LhMyLl/l8OMkSdqW2B33taYmubevR5Jet0RCkeF+iGYIJIHD6Ek8aKK61VdPCqTmsvpBoIYvR+9mt1hp3vygAThk7s5e4nAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831501; c=relaxed/simple;
-	bh=eBS8a42g0V8M2EvGnIPua6veL7HdU8yuoP2TqUwSBt8=;
+	s=arc-20240116; t=1712831504; c=relaxed/simple;
+	bh=DhwAFheMtmgDfERwsk5kZgr/Eaf6dI6w5jiOpCT/K98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lyOzP2lG/SvzEUnoYGwt76v90rO6aeB8SJ5AYY6kvUJxoJHJjqs4vbkJYeTLr962w1mvG8UgZ69NhjLfIdCx0rg1h+Pu4JsuNeLodENnWyYTOTBrixQUwC4XsiWhmIg+BplZDX+vC6E+fHK5Tun15ZvE3QzjtyNwvmydPPFei6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqOVQX3x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KUGaJeMXTZs/3B5fS93qS+83cAe/Z3sQYAmjXs5BKgDRabbmI9mJrIw0CAa7PtVW6pha/1lAFo1z1FM5AJiUUjphxgrXKn1lRt2GQh0HeA3fNDU9RcDHRcMaEY5IjZ2UYDiZbiICV9oza7JnSAXQUNR4E94CM0fR1A3A8FJI6gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=llT4y0CA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqOVQX3x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC36C433C7;
-	Thu, 11 Apr 2024 10:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="llT4y0CA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63994C43390;
+	Thu, 11 Apr 2024 10:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831500;
-	bh=eBS8a42g0V8M2EvGnIPua6veL7HdU8yuoP2TqUwSBt8=;
+	s=korg; t=1712831503;
+	bh=DhwAFheMtmgDfERwsk5kZgr/Eaf6dI6w5jiOpCT/K98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SqOVQX3xUASgXLIixU27wu4HguCxW4UtQkS3PSusM4hiTSa3aqp/ZuhT1w/+YPf9b
-	 ffQDJKVw2lAYY0JhZNvDzH+g/uyui+VXzYtNEJX4ICxnGrwHKPZi2oPdfo3UCmR9hX
-	 aYyUpn7eFEZ3MvXNPiiFuNE+AU7LX8bgiyuCenpI=
+	b=llT4y0CApxu2VvzlJAoVlT9AIPsM/X2Y8j8LEmq2hgmy/wJ+NQmyna8E51xCg3Ang
+	 i7iFXgu/rVrWRKgcfsbW7/6SsMztskSr8NlVSdMPts9mSXcFLv25dmoPCJ78Z/AqzQ
+	 w+80IyH6p6s2GutVktP88Gd7Vp8oOvcy3QSSTGOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3ce5dea5b1539ff36769@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/294] fat: fix uninitialized field in nostale filehandles
-Date: Thu, 11 Apr 2024 11:53:13 +0200
-Message-ID: <20240411095436.544373936@linuxfoundation.org>
+Subject: [PATCH 5.10 031/294] ubifs: Set page uptodate in the correct place
+Date: Thu, 11 Apr 2024 11:53:14 +0200
+Message-ID: <20240411095436.574497296@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -54,47 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit fde2497d2bc3a063d8af88b258dbadc86bd7b57c ]
+[ Upstream commit 723012cab779eee8228376754e22c6594229bf8f ]
 
-When fat_encode_fh_nostale() encodes file handle without a parent it
-stores only first 10 bytes of the file handle. However the length of the
-file handle must be a multiple of 4 so the file handle is actually 12
-bytes long and the last two bytes remain uninitialized. This is not
-great at we potentially leak uninitialized information with the handle
-to userspace. Properly initialize the full handle length.
+Page cache reads are lockless, so setting the freshly allocated page
+uptodate before we've overwritten it with the data it's supposed to have
+in it will allow a simultaneous reader to see old data.  Move the call
+to SetPageUptodate into ubifs_write_end(), which is after we copied the
+new data into the page.
 
-Link: https://lkml.kernel.org/r/20240205122626.13701-1-jack@suse.cz
-Reported-by: syzbot+3ce5dea5b1539ff36769@syzkaller.appspotmail.com
-Fixes: ea3983ace6b7 ("fat: restructure export_operations")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Cc: Amir Goldstein <amir73il@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1e51764a3c2a ("UBIFS: add new flash file system")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fat/nfs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ubifs/file.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/fs/fat/nfs.c b/fs/fat/nfs.c
-index af191371c3529..bab63eeaf9cbc 100644
---- a/fs/fat/nfs.c
-+++ b/fs/fat/nfs.c
-@@ -130,6 +130,12 @@ fat_encode_fh_nostale(struct inode *inode, __u32 *fh, int *lenp,
- 		fid->parent_i_gen = parent->i_generation;
- 		type = FILEID_FAT_WITH_PARENT;
- 		*lenp = FAT_FID_SIZE_WITH_PARENT;
-+	} else {
-+		/*
-+		 * We need to initialize this field because the fh is actually
-+		 * 12 bytes long
-+		 */
-+		fid->parent_i_pos_hi = 0;
+diff --git a/fs/ubifs/file.c b/fs/ubifs/file.c
+index 19fdcda045890..18df7a82517fa 100644
+--- a/fs/ubifs/file.c
++++ b/fs/ubifs/file.c
+@@ -262,9 +262,6 @@ static int write_begin_slow(struct address_space *mapping,
+ 				return err;
+ 			}
+ 		}
+-
+-		SetPageUptodate(page);
+-		ClearPageError(page);
  	}
  
- 	return type;
+ 	if (PagePrivate(page))
+@@ -463,9 +460,6 @@ static int ubifs_write_begin(struct file *file, struct address_space *mapping,
+ 				return err;
+ 			}
+ 		}
+-
+-		SetPageUptodate(page);
+-		ClearPageError(page);
+ 	}
+ 
+ 	err = allocate_budget(c, page, ui, appending);
+@@ -475,10 +469,8 @@ static int ubifs_write_begin(struct file *file, struct address_space *mapping,
+ 		 * If we skipped reading the page because we were going to
+ 		 * write all of it, then it is not up to date.
+ 		 */
+-		if (skipped_read) {
++		if (skipped_read)
+ 			ClearPageChecked(page);
+-			ClearPageUptodate(page);
+-		}
+ 		/*
+ 		 * Budgeting failed which means it would have to force
+ 		 * write-back but didn't, because we set the @fast flag in the
+@@ -569,6 +561,9 @@ static int ubifs_write_end(struct file *file, struct address_space *mapping,
+ 		goto out;
+ 	}
+ 
++	if (len == PAGE_SIZE)
++		SetPageUptodate(page);
++
+ 	if (!PagePrivate(page)) {
+ 		attach_page_private(page, (void *)1);
+ 		atomic_long_inc(&c->dirty_pg_cnt);
 -- 
 2.43.0
 
