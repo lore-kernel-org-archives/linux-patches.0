@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A72014C591;
-	Thu, 11 Apr 2024 10:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D393114A08D;
+	Thu, 11 Apr 2024 10:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831659; cv=none; b=sCNgRu+gynflcNbqeD7mb/t8BAAZNHIhvqCZ0VybHVTs+3QwAtBlY8gMKpoy6GdpitHaiIa9Vl3sTXXpccM8thSPYbHBxIUIvHDphBvcc8OX/4CdGMY65kyHfQTVkClNhH6znVZswtBe5YOrUHXWTWItFwWzP2ue/9JLoxZA9v8=
+	t=1712831662; cv=none; b=Tm2WGErWLyDNg4UOsXUskADtT+7lyLp18Pl6tHn2GIuMQWD4WB/6MhX9ptb62pfiFOJjZgXkOOI+Tpfgxr1a9PTgmxch7vib4DeSnGT0P8DC3RP1SndxrR6MYE3M0W7YMERaxIt3IwahPq1uhSM6Iz0Wcx4pAmvSQ9W7fIVjsJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831659; c=relaxed/simple;
-	bh=LZAxHTXHbQO5PSNeHAdTwZlEqNOkNn/BZDB+xRpbgWE=;
+	s=arc-20240116; t=1712831662; c=relaxed/simple;
+	bh=YPcf2vH1IiajHkuu4Q7ykY9NESgiEYrKWHxX2n/v3tM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E1coMM7A/OmlmH9egHST7Bv+vCeeV1FxmtCQZ5l3CfqCETJfx9BlWXUfetNrI9j+G7UMJ2ooR8P7FvjAc/KFKpEdoW6CJ/Ct0qS0vKlDO9Ps51pThLvDcVaOT0V7+5HJtjfwuwH4rLJ9863EicxOLsQGuXq5VVpzkiL0RVNNXg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CxvZw7e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A283FJKZ8djob11dUZwVwGWe06Wb2ZmG2gWCiw76sT7Q7mFTzWa1jy5hnXMl+bln5iWmR26PXTBOJB/sUJlkFOlsmFbySIKLQP0MYOKLhOAt1KNA3Z9ejvtuWUJjKP1b97u/gWGyo/x+qt2hMldJ/CQ4drdQN915uZOCXux/2Fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKiQ8ANU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CxvZw7e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109C2C43390;
-	Thu, 11 Apr 2024 10:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKiQ8ANU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05624C433F1;
+	Thu, 11 Apr 2024 10:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831659;
-	bh=LZAxHTXHbQO5PSNeHAdTwZlEqNOkNn/BZDB+xRpbgWE=;
+	s=korg; t=1712831662;
+	bh=YPcf2vH1IiajHkuu4Q7ykY9NESgiEYrKWHxX2n/v3tM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1CxvZw7eJ4Z10m1JztUifHNFevFlzWCVOJYzE3BN915NmLZNWfmniyv1fCOplAp6T
-	 vgmG1/P5YZ0ZKFQNxNtPa1Lxi1wYMK3D4Odd3WdTz/MQ+Tj3+HsL0DFFRer7U4cVM/
-	 oDMdhu6RlJrWWRygnGDsuWCN7Kw4Rq+gDDHelv9k=
+	b=fKiQ8ANUxoQt53zWjlICo+x0vhmbAU8/EA0n0rR9enb+JWG966W+wp+Wp21gNJLYd
+	 1Ys8e2BokEvw8HtK1P3I9TFLsw0b1rHoGHue0j5aU7veE0CcYvKu/0rWimNr9DBimQ
+	 Lk/rPwhyktBe2zpdA3ec/Mouc8IJKOYRuav+KXVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 083/294] nfs: fix UAF in direct writes
-Date: Thu, 11 Apr 2024 11:54:06 +0200
-Message-ID: <20240411095438.184938749@linuxfoundation.org>
+Subject: [PATCH 5.10 084/294] kbuild: Move -Wenum-{compare-conditional,enum-conversion} into W=1
+Date: Thu, 11 Apr 2024 11:54:07 +0200
+Message-ID: <20240411095438.214346564@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -51,123 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 17f46b803d4f23c66cacce81db35fef3adb8f2af ]
+[ Upstream commit 75b5ab134bb5f657ef7979a59106dce0657e8d87 ]
 
-In production we have been hitting the following warning consistently
+Clang enables -Wenum-enum-conversion and -Wenum-compare-conditional
+under -Wenum-conversion. A recent change in Clang strengthened these
+warnings and they appear frequently in common builds, primarily due to
+several instances in common headers but there are quite a few drivers
+that have individual instances as well.
 
-------------[ cut here ]------------
-refcount_t: underflow; use-after-free.
-WARNING: CPU: 17 PID: 1800359 at lib/refcount.c:28 refcount_warn_saturate+0x9c/0xe0
-Workqueue: nfsiod nfs_direct_write_schedule_work [nfs]
-RIP: 0010:refcount_warn_saturate+0x9c/0xe0
-PKRU: 55555554
-Call Trace:
- <TASK>
- ? __warn+0x9f/0x130
- ? refcount_warn_saturate+0x9c/0xe0
- ? report_bug+0xcc/0x150
- ? handle_bug+0x3d/0x70
- ? exc_invalid_op+0x16/0x40
- ? asm_exc_invalid_op+0x16/0x20
- ? refcount_warn_saturate+0x9c/0xe0
- nfs_direct_write_schedule_work+0x237/0x250 [nfs]
- process_one_work+0x12f/0x4a0
- worker_thread+0x14e/0x3b0
- ? ZSTD_getCParams_internal+0x220/0x220
- kthread+0xdc/0x120
- ? __btf_name_valid+0xa0/0xa0
- ret_from_fork+0x1f/0x30
+  include/linux/vmstat.h:508:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+    508 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+        |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+    509 |                            item];
+        |                            ~~~~
 
-This is because we're completing the nfs_direct_request twice in a row.
+  drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c:955:24: warning: conditional expression between different enumeration types ('enum iwl_mac_beacon_flags' and 'enum iwl_mac_beacon_flags_v1') [-Wenum-compare-conditional]
+    955 |                 flags |= is_new_rate ? IWL_MAC_BEACON_CCK
+        |                                      ^ ~~~~~~~~~~~~~~~~~~
+    956 |                           : IWL_MAC_BEACON_CCK_V1;
+        |                             ~~~~~~~~~~~~~~~~~~~~~
+  drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c:1120:21: warning: conditional expression between different enumeration types ('enum iwl_mac_beacon_flags' and 'enum iwl_mac_beacon_flags_v1') [-Wenum-compare-conditional]
+   1120 |                                                0) > 10 ?
+        |                                                        ^
+   1121 |                         IWL_MAC_BEACON_FILS :
+        |                         ~~~~~~~~~~~~~~~~~~~
+   1122 |                         IWL_MAC_BEACON_FILS_V1;
+        |                         ~~~~~~~~~~~~~~~~~~~~~~
 
-The source of this is when we have our commit requests to submit, we
-process them and send them off, and then in the completion path for the
-commit requests we have
+Doing arithmetic between or returning two different types of enums could
+be a bug, so each of the instance of the warning needs to be evaluated.
+Unfortunately, as mentioned above, there are many instances of this
+warning in many different configurations, which can break the build when
+CONFIG_WERROR is enabled.
 
-if (nfs_commit_end(cinfo.mds))
-	nfs_direct_write_complete(dreq);
+To avoid introducing new instances of the warnings while cleaning up the
+disruption for the majority of users, disable these warnings for the
+default build while leaving them on for W=1 builds.
 
-However since we're submitting asynchronous requests we sometimes have
-one that completes before we submit the next one, so we end up calling
-complete on the nfs_direct_request twice.
-
-The only other place we use nfs_generic_commit_list() is in
-__nfs_commit_inode, which wraps this call in a
-
-nfs_commit_begin();
-nfs_commit_end();
-
-Which is a common pattern for this style of completion handling, one
-that is also repeated in the direct code with get_dreq()/put_dreq()
-calls around where we process events as well as in the completion paths.
-
-Fix this by using the same pattern for the commit requests.
-
-Before with my 200 node rocksdb stress running this warning would pop
-every 10ish minutes.  With my patch the stress test has been running for
-several hours without popping.
-
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2002
+Link: https://github.com/llvm/llvm-project/commit/8c2ae42b3e1c6aa7c18f873edcebff7c0b45a37e
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/direct.c        | 11 +++++++++--
- fs/nfs/write.c         |  2 +-
- include/linux/nfs_fs.h |  1 +
- 3 files changed, 11 insertions(+), 3 deletions(-)
+ scripts/Makefile.extrawarn | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
-index 5d86ffa72ceab..499519f0f6ecd 100644
---- a/fs/nfs/direct.c
-+++ b/fs/nfs/direct.c
-@@ -678,10 +678,17 @@ static void nfs_direct_commit_schedule(struct nfs_direct_req *dreq)
- 	LIST_HEAD(mds_list);
+diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
+index fe327a4532ddb..eb01e8d07e280 100644
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -53,6 +53,8 @@ KBUILD_CFLAGS += $(call cc-disable-warning, pointer-to-enum-cast)
+ KBUILD_CFLAGS += -Wno-tautological-constant-out-of-range-compare
+ KBUILD_CFLAGS += $(call cc-disable-warning, unaligned-access)
+ KBUILD_CFLAGS += $(call cc-disable-warning, cast-function-type-strict)
++KBUILD_CFLAGS += -Wno-enum-compare-conditional
++KBUILD_CFLAGS += -Wno-enum-enum-conversion
+ endif
  
- 	nfs_init_cinfo_from_dreq(&cinfo, dreq);
-+	nfs_commit_begin(cinfo.mds);
- 	nfs_scan_commit(dreq->inode, &mds_list, &cinfo);
- 	res = nfs_generic_commit_list(dreq->inode, &mds_list, 0, &cinfo);
--	if (res < 0) /* res == -ENOMEM */
--		nfs_direct_write_reschedule(dreq);
-+	if (res < 0) { /* res == -ENOMEM */
-+		spin_lock(&dreq->lock);
-+		if (dreq->flags == 0)
-+			dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
-+		spin_unlock(&dreq->lock);
-+	}
-+	if (nfs_commit_end(cinfo.mds))
-+		nfs_direct_write_complete(dreq);
- }
- 
- static void nfs_direct_write_clear_reqs(struct nfs_direct_req *dreq)
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index d3cd099ffb6e1..4cf0606919794 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -1637,7 +1637,7 @@ static int wait_on_commit(struct nfs_mds_commit_info *cinfo)
- 				       !atomic_read(&cinfo->rpcs_out));
- }
- 
--static void nfs_commit_begin(struct nfs_mds_commit_info *cinfo)
-+void nfs_commit_begin(struct nfs_mds_commit_info *cinfo)
- {
- 	atomic_inc(&cinfo->rpcs_out);
- }
-diff --git a/include/linux/nfs_fs.h b/include/linux/nfs_fs.h
-index e39342945a80b..7488864589a7a 100644
---- a/include/linux/nfs_fs.h
-+++ b/include/linux/nfs_fs.h
-@@ -553,6 +553,7 @@ extern int nfs_wb_page_cancel(struct inode *inode, struct page* page);
- extern int  nfs_commit_inode(struct inode *, int);
- extern struct nfs_commit_data *nfs_commitdata_alloc(void);
- extern void nfs_commit_free(struct nfs_commit_data *data);
-+void nfs_commit_begin(struct nfs_mds_commit_info *cinfo);
- bool nfs_commit_end(struct nfs_mds_commit_info *cinfo);
- 
- static inline int
+ endif
 -- 
 2.43.0
 
