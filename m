@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D9C1422CE;
-	Thu, 11 Apr 2024 10:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEF31422CE;
+	Thu, 11 Apr 2024 10:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831257; cv=none; b=jrAcfWpJjTRYF2NsniHVSCefPjD542jcw3w+cSa4LgFAqEy45P2PMB6HeXbEGX3sZc32hXnQJNQTtTvZj9oGrwVOY5uAkZMPum/bmWF8anRTfrjHT0xPMWCaiVM07XPJSJSLMW8Izb49+ulOPmME5uR0fdGIPruAGxpg6uUkCUs=
+	t=1712831261; cv=none; b=coVSq2i8aYuknh/W0vuRQs0HaQM58WYSpmjTlP+/ca4Xg09qT4nzfqcYjEv0KZwSa8555cJuQFJCu9nMAL6VflasLmCoQ17pOlvd9vGgDRduutOHV/tIn1Bp0lBTZs0tLhMKgYcnIPmDU9voTIiz+Hx7iIZCIsFXL3fl2YMn/RE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831257; c=relaxed/simple;
-	bh=eOQo724hrFAFke6LNAYD9DVnbH25+KOS4O4s6MVu8b8=;
+	s=arc-20240116; t=1712831261; c=relaxed/simple;
+	bh=Uc3aeYxtT+31Z42/NgF474FQUtuyHkJNnoZuiUpIGxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PccxTvoKHLUphZDFSd+t7nVZy9cqyJsHwxDQj1u2bsdgaPIfy2cpqKS1LqcP8mJkvbaPlZJKjOC7YCj3AyazEUGMEVjkxqJr+eOgBafH4vbbOF7hXwJtzsF38HtDdTzirhwaqMVr8IaDcesTCBHMEuN7zkU8lQgxepp43VHqD/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SnKb9pA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FC59UzpOPchiTcBVuFWYRqG/I0oron0jaLZhYE/tchSHjXZXl4+0wlbecFM/Rkyc7NxtzVTe1S8fFkw6Q11SsJ5L71K/T7oIFRV6s7eKN5CT3sxdAia81lePgXaGed7hS6wLWZuZl5k4F0clsZmOk6Z4+O98VU6hvebTY6EkHi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSjVIWH7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SnKb9pA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56846C433C7;
-	Thu, 11 Apr 2024 10:27:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSjVIWH7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DAD7C433C7;
+	Thu, 11 Apr 2024 10:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831257;
-	bh=eOQo724hrFAFke6LNAYD9DVnbH25+KOS4O4s6MVu8b8=;
+	s=korg; t=1712831260;
+	bh=Uc3aeYxtT+31Z42/NgF474FQUtuyHkJNnoZuiUpIGxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2SnKb9pAbnTKOn6Ck0GdPujt5N1pp7w+gh1pn+sSpDL0++BqXp7qHDUyXKNnyh0X2
-	 4gJdS8EVdwgGjk1wFsky7G1ujJFwUXBAfx9kaSlPemm2NPObcW4zCf3p5fyNyW2Due
-	 T/gkWzXoPZfFBUL068lm77BCN3ZQd9Uy92p/AMwM=
+	b=RSjVIWH7dQRuOl7CsWHyfPCvNaEJ3PT+zfRjkG26sWjYTOBcFPX3pGw0mFGdEoIJq
+	 G9IOAhXpo08ZH1Ao2lJ4lEjmErF3OAYVEza0Qjlg4klCOAd1Fo7F3WOLASN9hlp5bp
+	 RRWczov6014B4pn4nRBH3oYMwY6pFXFMHR4b1H9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 059/114] media: sta2x11: fix irq handler cast
-Date: Thu, 11 Apr 2024 11:56:26 +0200
-Message-ID: <20240411095418.667602730@linuxfoundation.org>
+Subject: [PATCH 6.6 060/114] ALSA: firewire-lib: handle quirk to calculate payload quadlets as data block counter
+Date: Thu, 11 Apr 2024 11:56:27 +0200
+Message-ID: <20240411095418.698128846@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095416.853744210@linuxfoundation.org>
 References: <20240411095416.853744210@linuxfoundation.org>
@@ -51,60 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit 3de49ae81c3a0f83a554ecbce4c08e019f30168e ]
+[ Upstream commit 4a486439d2ca85752c46711f373b6ddc107bb35d ]
 
-clang-16 warns about casting incompatible function pointers:
+Miglia Harmony Audio (OXFW970) has a quirk to put the number of
+accumulated quadlets in CIP payload into the dbc field of CIP header.
 
-drivers/media/pci/sta2x11/sta2x11_vip.c:1057:6: error: cast from 'irqreturn_t (*)(int, struct sta2x11_vip *)' (aka 'enum irqreturn (*)(int, struct sta2x11_vip *)') to 'irq_handler_t' (aka 'enum irqreturn (*)(int, void *)') converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+This commit handles the quirk in the packet processing layer.
 
-Change the prototype of the irq handler to the regular version with a
-local variable to adjust the argument type.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-[hverkuil: update argument documentation]
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Link: https://lore.kernel.org/r/20240218074128.95210-4-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/sta2x11/sta2x11_vip.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ sound/firewire/amdtp-stream.c | 12 ++++++++----
+ sound/firewire/amdtp-stream.h |  4 ++++
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/pci/sta2x11/sta2x11_vip.c b/drivers/media/pci/sta2x11/sta2x11_vip.c
-index e4cf9d63e926d..364ce9e570182 100644
---- a/drivers/media/pci/sta2x11/sta2x11_vip.c
-+++ b/drivers/media/pci/sta2x11/sta2x11_vip.c
-@@ -757,7 +757,7 @@ static const struct video_device video_dev_template = {
- /**
-  * vip_irq - interrupt routine
-  * @irq: Number of interrupt ( not used, correct number is assumed )
-- * @vip: local data structure containing all information
-+ * @data: local data structure containing all information
-  *
-  * check for both frame interrupts set ( top and bottom ).
-  * check FIFO overflow, but limit number of log messages after open.
-@@ -767,8 +767,9 @@ static const struct video_device video_dev_template = {
-  *
-  * IRQ_HANDLED, interrupt done.
+diff --git a/sound/firewire/amdtp-stream.c b/sound/firewire/amdtp-stream.c
+index 7be17bca257f0..c9f153f85ae6b 100644
+--- a/sound/firewire/amdtp-stream.c
++++ b/sound/firewire/amdtp-stream.c
+@@ -773,10 +773,14 @@ static int check_cip_header(struct amdtp_stream *s, const __be32 *buf,
+ 	} else {
+ 		unsigned int dbc_interval;
+ 
+-		if (*data_blocks > 0 && s->ctx_data.tx.dbc_interval > 0)
+-			dbc_interval = s->ctx_data.tx.dbc_interval;
+-		else
+-			dbc_interval = *data_blocks;
++		if (!(s->flags & CIP_DBC_IS_PAYLOAD_QUADLETS)) {
++			if (*data_blocks > 0 && s->ctx_data.tx.dbc_interval > 0)
++				dbc_interval = s->ctx_data.tx.dbc_interval;
++			else
++				dbc_interval = *data_blocks;
++		} else {
++			dbc_interval = payload_length / sizeof(__be32);
++		}
+ 
+ 		lost = dbc != ((*data_block_counter + dbc_interval) & 0xff);
+ 	}
+diff --git a/sound/firewire/amdtp-stream.h b/sound/firewire/amdtp-stream.h
+index b7ff44751ab93..a1ed2e80f91a7 100644
+--- a/sound/firewire/amdtp-stream.h
++++ b/sound/firewire/amdtp-stream.h
+@@ -37,6 +37,9 @@
+  *	the value of current SYT_INTERVAL; e.g. initial value is not zero.
+  * @CIP_UNAWARE_SYT: For outgoing packet, the value in SYT field of CIP is 0xffff.
+  *	For incoming packet, the value in SYT field of CIP is not handled.
++ * @CIP_DBC_IS_PAYLOAD_QUADLETS: Available for incoming packet, and only effective with
++ *	CIP_DBC_IS_END_EVENT flag. The value of dbc field is the number of accumulated quadlets
++ *	in CIP payload, instead of the number of accumulated data blocks.
   */
--static irqreturn_t vip_irq(int irq, struct sta2x11_vip *vip)
-+static irqreturn_t vip_irq(int irq, void *data)
- {
-+	struct sta2x11_vip *vip = data;
- 	unsigned int status;
+ enum cip_flags {
+ 	CIP_NONBLOCKING		= 0x00,
+@@ -51,6 +54,7 @@ enum cip_flags {
+ 	CIP_NO_HEADER		= 0x100,
+ 	CIP_UNALIGHED_DBC	= 0x200,
+ 	CIP_UNAWARE_SYT		= 0x400,
++	CIP_DBC_IS_PAYLOAD_QUADLETS = 0x800,
+ };
  
- 	status = reg_read(vip, DVP_ITS);
-@@ -1053,9 +1054,7 @@ static int sta2x11_vip_init_one(struct pci_dev *pdev,
- 
- 	spin_lock_init(&vip->slock);
- 
--	ret = request_irq(pdev->irq,
--			  (irq_handler_t) vip_irq,
--			  IRQF_SHARED, KBUILD_MODNAME, vip);
-+	ret = request_irq(pdev->irq, vip_irq, IRQF_SHARED, KBUILD_MODNAME, vip);
- 	if (ret) {
- 		dev_err(&pdev->dev, "request_irq failed\n");
- 		ret = -ENODEV;
+ /**
 -- 
 2.43.0
 
