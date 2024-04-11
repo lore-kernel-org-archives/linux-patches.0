@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A95C146010;
-	Thu, 11 Apr 2024 10:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD811145B13;
+	Thu, 11 Apr 2024 10:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829894; cv=none; b=ng2/GnjCCM9nw5PNIjyJU8DFp06KMvWPTZ/gwm/L4B7XWYtY0zFNp8SSudJG5dubUN5fq+LJfJqJeta42jw18gArXGCkbG30CbFxpl7xJY3MLdzf2+PV6mcngrevjEvskQHZYL/gNbdl76UrdICV8gd9MDBHnMKFJNX/D3oalL8=
+	t=1712829897; cv=none; b=LeVDPxDnlq4nYxuzS5pMxfFfzPICN2bpbmKS/muM0A0BgUQ9Fy38pHf/J+f+ID+NNcFMSzJguGNxfUBTbz8C1gBX3AJoe2ZfkE/HfprlzlyCfPBjMQXqObDHycq8gy8qqOqCT7s31EXBF/GNhk01ndOIvs48TMURTVDlX4Hvpeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829894; c=relaxed/simple;
-	bh=QZCYQLdkDpsmmUS06EKe9Mw7sNRi6GxqTQ+Iq9HV3Z4=;
+	s=arc-20240116; t=1712829897; c=relaxed/simple;
+	bh=FiO5yeMABczJ3oaN9YVC7LFMdqRfUVcyeMBz4ti/070=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WtZUD3l3TvH9YcIFSvbhdlzqOqDKimju6P5YUuHYI2lAQm2PlXqWOw57EPateg+erk6xfzE8Ur33KFQHUqxeEXYaBpPrb7xNgnqI4QCLM3h/Z7iAmxx+VLn+OK37MSGhJEkmQnO5vkzHNHChOxOh3pwxBBv/j8mnUzTW1kU3ybQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qThrIlcJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h+LOWIOJvEinAeXWtPX+TQM6BUyH1EUw49XBYBMwYLfKqCtb3qMeafLSJqSwaDrD72RKdQH6svNsCHFrO+kDma7rU9E5VJYLiGlXCfJBlxdYOSXJXXyqtM4PuMvsJ2sawMMvLtv6Av07E1aMKRSak98FNM6Nj0nNlQKgonnDvQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sn7Ue50P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qThrIlcJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F253C433C7;
-	Thu, 11 Apr 2024 10:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sn7Ue50P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6114AC433C7;
+	Thu, 11 Apr 2024 10:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829893;
-	bh=QZCYQLdkDpsmmUS06EKe9Mw7sNRi6GxqTQ+Iq9HV3Z4=;
+	s=korg; t=1712829896;
+	bh=FiO5yeMABczJ3oaN9YVC7LFMdqRfUVcyeMBz4ti/070=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qThrIlcJXwDtNLSlOZ+Wky6xNRejjZL+wXroro/loK19Br8Rs2orN8Fm6VeuDFxXN
-	 7jdKs4GDa1e1pKApv4YLXmpaC5+ilj3byacAFO9DOirVbAxNtVrAzlROnN69EH5o7w
-	 Ymr/QSmmHqWCTmaqKyZPqeglEqevEih/KYvlQCKo=
+	b=sn7Ue50P/ssL4eHWRxnU8z3a/2/gAHrj4pOLu+EpS3SYsOJFDvsG7RLEKhk5sU83+
+	 5raYXRkbLIND1sxgZjOwRZz4/ayuZM8zi4Jndp+ixGaxm6D2TkTdDOGp0cZPXUVq9x
+	 P6YGtrIVTcfLOA233iKcFb338L8fcZgFgTLkdQKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Arnd Bergmann <arnd@arndb.de>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 141/175] ata: sata_sx4: fix pdc20621_get_from_dimm() on 64-bit
-Date: Thu, 11 Apr 2024 11:56:04 +0200
-Message-ID: <20240411095423.809851979@linuxfoundation.org>
+Subject: [PATCH 4.19 142/175] ata: sata_mv: Fix PCI device ID table declaration compilation warning
+Date: Thu, 11 Apr 2024 11:56:05 +0200
+Message-ID: <20240411095423.839634361@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -53,67 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 52f80bb181a9a1530ade30bc18991900bbb9697f ]
+[ Upstream commit 3137b83a90646917c90951d66489db466b4ae106 ]
 
-gcc warns about a memcpy() with overlapping pointers because of an
-incorrect size calculation:
+Building with W=1 shows a warning for an unused variable when CONFIG_PCI
+is diabled:
 
-In file included from include/linux/string.h:369,
-                 from drivers/ata/sata_sx4.c:66:
-In function 'memcpy_fromio',
-    inlined from 'pdc20621_get_from_dimm.constprop' at drivers/ata/sata_sx4.c:962:2:
-include/linux/fortify-string.h:97:33: error: '__builtin_memcpy' accessing 4294934464 bytes at offsets 0 and [16, 16400] overlaps 6442385281 bytes at offset -2147450817 [-Werror=restrict]
-   97 | #define __underlying_memcpy     __builtin_memcpy
-      |                                 ^
-include/linux/fortify-string.h:620:9: note: in expansion of macro '__underlying_memcpy'
-  620 |         __underlying_##op(p, q, __fortify_size);                        \
-      |         ^~~~~~~~~~~~~
-include/linux/fortify-string.h:665:26: note: in expansion of macro '__fortify_memcpy_chk'
-  665 | #define memcpy(p, q, s)  __fortify_memcpy_chk(p, q, s,                  \
-      |                          ^~~~~~~~~~~~~~~~~~~~
-include/asm-generic/io.h:1184:9: note: in expansion of macro 'memcpy'
- 1184 |         memcpy(buffer, __io_virt(addr), size);
-      |         ^~~~~~
+drivers/ata/sata_mv.c:790:35: error: unused variable 'mv_pci_tbl' [-Werror,-Wunused-const-variable]
+static const struct pci_device_id mv_pci_tbl[] = {
 
-The problem here is the overflow of an unsigned 32-bit number to a
-negative that gets converted into a signed 'long', keeping a large
-positive number.
+Move the table into the same block that containsn the pci_driver
+definition.
 
-Replace the complex calculation with a more readable min() variant
-that avoids the warning.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 7bb3c5290ca0 ("sata_mv: Remove PCI dependency")
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_sx4.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/ata/sata_mv.c | 63 +++++++++++++++++++++----------------------
+ 1 file changed, 31 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/ata/sata_sx4.c b/drivers/ata/sata_sx4.c
-index 0d742457925ec..f217ac8e17b15 100644
---- a/drivers/ata/sata_sx4.c
-+++ b/drivers/ata/sata_sx4.c
-@@ -1020,8 +1020,7 @@ static void pdc20621_get_from_dimm(struct ata_host *host, void *psource,
+diff --git a/drivers/ata/sata_mv.c b/drivers/ata/sata_mv.c
+index 84ea284502d53..001656642fffa 100644
+--- a/drivers/ata/sata_mv.c
++++ b/drivers/ata/sata_mv.c
+@@ -796,37 +796,6 @@ static const struct ata_port_info mv_port_info[] = {
+ 	},
+ };
  
- 	offset -= (idx * window_size);
- 	idx++;
--	dist = ((long) (window_size - (offset + size))) >= 0 ? size :
--		(long) (window_size - offset);
-+	dist = min(size, window_size - offset);
- 	memcpy_fromio(psource, dimm_mmio + offset / 4, dist);
+-static const struct pci_device_id mv_pci_tbl[] = {
+-	{ PCI_VDEVICE(MARVELL, 0x5040), chip_504x },
+-	{ PCI_VDEVICE(MARVELL, 0x5041), chip_504x },
+-	{ PCI_VDEVICE(MARVELL, 0x5080), chip_5080 },
+-	{ PCI_VDEVICE(MARVELL, 0x5081), chip_508x },
+-	/* RocketRAID 1720/174x have different identifiers */
+-	{ PCI_VDEVICE(TTI, 0x1720), chip_6042 },
+-	{ PCI_VDEVICE(TTI, 0x1740), chip_6042 },
+-	{ PCI_VDEVICE(TTI, 0x1742), chip_6042 },
+-
+-	{ PCI_VDEVICE(MARVELL, 0x6040), chip_604x },
+-	{ PCI_VDEVICE(MARVELL, 0x6041), chip_604x },
+-	{ PCI_VDEVICE(MARVELL, 0x6042), chip_6042 },
+-	{ PCI_VDEVICE(MARVELL, 0x6080), chip_608x },
+-	{ PCI_VDEVICE(MARVELL, 0x6081), chip_608x },
+-
+-	{ PCI_VDEVICE(ADAPTEC2, 0x0241), chip_604x },
+-
+-	/* Adaptec 1430SA */
+-	{ PCI_VDEVICE(ADAPTEC2, 0x0243), chip_7042 },
+-
+-	/* Marvell 7042 support */
+-	{ PCI_VDEVICE(MARVELL, 0x7042), chip_7042 },
+-
+-	/* Highpoint RocketRAID PCIe series */
+-	{ PCI_VDEVICE(TTI, 0x2300), chip_7042 },
+-	{ PCI_VDEVICE(TTI, 0x2310), chip_7042 },
+-
+-	{ }			/* terminate list */
+-};
+-
+ static const struct mv_hw_ops mv5xxx_ops = {
+ 	.phy_errata		= mv5_phy_errata,
+ 	.enable_leds		= mv5_enable_leds,
+@@ -4320,6 +4289,36 @@ static int mv_pci_init_one(struct pci_dev *pdev,
+ static int mv_pci_device_resume(struct pci_dev *pdev);
+ #endif
  
- 	psource += dist;
-@@ -1069,8 +1068,7 @@ static void pdc20621_put_to_dimm(struct ata_host *host, void *psource,
- 	readl(mmio + PDC_DIMM_WINDOW_CTLR);
- 	offset -= (idx * window_size);
- 	idx++;
--	dist = ((long)(s32)(window_size - (offset + size))) >= 0 ? size :
--		(long) (window_size - offset);
-+	dist = min(size, window_size - offset);
- 	memcpy_toio(dimm_mmio + offset / 4, psource, dist);
- 	writel(0x01, mmio + PDC_GENERAL_CTLR);
- 	readl(mmio + PDC_GENERAL_CTLR);
++static const struct pci_device_id mv_pci_tbl[] = {
++	{ PCI_VDEVICE(MARVELL, 0x5040), chip_504x },
++	{ PCI_VDEVICE(MARVELL, 0x5041), chip_504x },
++	{ PCI_VDEVICE(MARVELL, 0x5080), chip_5080 },
++	{ PCI_VDEVICE(MARVELL, 0x5081), chip_508x },
++	/* RocketRAID 1720/174x have different identifiers */
++	{ PCI_VDEVICE(TTI, 0x1720), chip_6042 },
++	{ PCI_VDEVICE(TTI, 0x1740), chip_6042 },
++	{ PCI_VDEVICE(TTI, 0x1742), chip_6042 },
++
++	{ PCI_VDEVICE(MARVELL, 0x6040), chip_604x },
++	{ PCI_VDEVICE(MARVELL, 0x6041), chip_604x },
++	{ PCI_VDEVICE(MARVELL, 0x6042), chip_6042 },
++	{ PCI_VDEVICE(MARVELL, 0x6080), chip_608x },
++	{ PCI_VDEVICE(MARVELL, 0x6081), chip_608x },
++
++	{ PCI_VDEVICE(ADAPTEC2, 0x0241), chip_604x },
++
++	/* Adaptec 1430SA */
++	{ PCI_VDEVICE(ADAPTEC2, 0x0243), chip_7042 },
++
++	/* Marvell 7042 support */
++	{ PCI_VDEVICE(MARVELL, 0x7042), chip_7042 },
++
++	/* Highpoint RocketRAID PCIe series */
++	{ PCI_VDEVICE(TTI, 0x2300), chip_7042 },
++	{ PCI_VDEVICE(TTI, 0x2310), chip_7042 },
++
++	{ }			/* terminate list */
++};
+ 
+ static struct pci_driver mv_pci_driver = {
+ 	.name			= DRV_NAME,
+@@ -4332,6 +4331,7 @@ static struct pci_driver mv_pci_driver = {
+ #endif
+ 
+ };
++MODULE_DEVICE_TABLE(pci, mv_pci_tbl);
+ 
+ /* move to PCI layer or libata core? */
+ static int pci_go_64(struct pci_dev *pdev)
+@@ -4534,7 +4534,6 @@ static void __exit mv_exit(void)
+ MODULE_AUTHOR("Brett Russ");
+ MODULE_DESCRIPTION("SCSI low-level driver for Marvell SATA controllers");
+ MODULE_LICENSE("GPL v2");
+-MODULE_DEVICE_TABLE(pci, mv_pci_tbl);
+ MODULE_VERSION(DRV_VERSION);
+ MODULE_ALIAS("platform:" DRV_NAME);
+ 
 -- 
 2.43.0
 
