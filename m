@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B6C145B06;
-	Thu, 11 Apr 2024 10:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E3613B5B9;
+	Thu, 11 Apr 2024 10:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830122; cv=none; b=LIWf1audFLhJ1YeyO1odeG+S/0jjmQoXp0hc8DKT8GhQ3LHD6DGp0gt13KOtsNJ7KpIeypZwLo3FP3t+LRIiNGf7xMeZVB2Q1VqD62kpoPpZ4LTt24yIT521J+dz3F8h4WmxHBtx0w0Uy5pOtwBju7Q1tFZnhajU2jeMbpGYvrg=
+	t=1712830125; cv=none; b=ZcnuSyrHwCX/R7NY0wtlpDxayPltQW2djOzdb0qwJr8T+LwFmmRXoPxbESlrRfJDvHwLWCgvwj08LyzX/5+KE/Qt0RSsYmcdOEJvmVSIRLGoxxnp86vb4e+AfDo63EO93NohfBWIcgchRkw25ILbKY2jWg4QzN02YbyE54RUKWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830122; c=relaxed/simple;
-	bh=T/shWO9rjbUcN0o1wN16Gqc9tHFt84JMp7D0VZDnyp8=;
+	s=arc-20240116; t=1712830125; c=relaxed/simple;
+	bh=IAZY5JYSQ8V55kBOIGAFMyRM+8IoCBOt9rcqdY0KVQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YJSoeqsCm2YIyjnDM32762DzkrWhiZQX6GWmKeO+wJ0uT6W3yaxb/Jj8zLgfgHDmD42YqSI25OfEv4qVKtN0k7gROLaXYEnetJnLhB82LqQ2PQhgGOAZvjbEYxJlS1YBDMlimOWoDk8IdtV1aP27IpahZfiJvrnYNpBl9KRbgL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KCc3p2Ey; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lxVveCmmUZf96uK+zyxrRA+C6EnLDAK7aAGo+3t/IcBomR9jkLG+WvIy0QrR8J/ocwcZPk1kfl35iHk9zulkLD3vRCE6ihZEN789yG2DLLidp7erDEumNvgQctPPdx8oddPEjkYK2NHFE7vSfeGYkgabF/lcxp8MjTVSsc0PW1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkFkghpG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCc3p2Ey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45650C433F1;
-	Thu, 11 Apr 2024 10:08:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkFkghpG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43784C433F1;
+	Thu, 11 Apr 2024 10:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830122;
-	bh=T/shWO9rjbUcN0o1wN16Gqc9tHFt84JMp7D0VZDnyp8=;
+	s=korg; t=1712830125;
+	bh=IAZY5JYSQ8V55kBOIGAFMyRM+8IoCBOt9rcqdY0KVQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KCc3p2Ey7GwR7jiGIYvXVke3Lx5zBJGzm0hw10t9c+6nbGInIl/veza/U1tXmbl+7
-	 by7j9c/8Ox7tOdVnDVCTLXNIxghtwH56N4Ozhk8rRbKXXbiyCCX8pHDU+GEGdORBzb
-	 hfC4in37LK+XCTpmMfsQEwjPVc+Nprg3DLUe6gWE=
+	b=EkFkghpGGHITGrNXYirrjq+FqEs58w40k7hPo/ZzW0F0REwgn8ULDyT4FgeiPb1wB
+	 WcPZlyuGjhG+L7OPzfNgH++T6z365XvChBganjaQ3+e3MECIYTF78XnbJ3eaLBRlXu
+	 ylm4z8HGKPN5wMUs8oNi6aQizLCcU0tbW0EVZJNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 041/143] dma-direct: Leak pages on dma_set_decrypted() failure
-Date: Thu, 11 Apr 2024 11:55:09 +0200
-Message-ID: <20240411095422.150774099@linuxfoundation.org>
+Subject: [PATCH 6.8 042/143] wifi: ath11k: decrease MHI channel buffer length to 8KB
+Date: Thu, 11 Apr 2024 11:55:10 +0200
+Message-ID: <20240411095422.180785648@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -51,65 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rick Edgecombe <rick.p.edgecombe@intel.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit b9fa16949d18e06bdf728a560f5c8af56d2bdcaf ]
+[ Upstream commit 1cca1bddf9ef080503c15378cecf4877f7510015 ]
 
-On TDX it is possible for the untrusted host to cause
-set_memory_encrypted() or set_memory_decrypted() to fail such that an
-error is returned and the resulting memory is shared. Callers need to
-take care to handle these errors to avoid returning decrypted (shared)
-memory to the page allocator, which could lead to functional or security
-issues.
+Currently buf_len field of ath11k_mhi_config_qca6390 is assigned
+with 0, making MHI use a default size, 64KB, to allocate channel
+buffers. This is likely to fail in some scenarios where system
+memory is highly fragmented and memory compaction or reclaim is
+not allowed.
 
-DMA could free decrypted/shared pages if dma_set_decrypted() fails. This
-should be a rare case. Just leak the pages in this case instead of
-freeing them.
+There is a fail report which is caused by it:
+kworker/u32:45: page allocation failure: order:4, mode:0x40c00(GFP_NOIO|__GFP_COMP), nodemask=(null),cpuset=/,mems_allowed=0
+CPU: 0 PID: 19318 Comm: kworker/u32:45 Not tainted 6.8.0-rc3-1.gae4495f-default #1 openSUSE Tumbleweed (unreleased) 493b6d5b382c603654d7a81fc3c144d59a1dfceb
+Workqueue: events_unbound async_run_entry_fn
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x47/0x60
+ warn_alloc+0x13a/0x1b0
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __alloc_pages_direct_compact+0xab/0x210
+ __alloc_pages_slowpath.constprop.0+0xd3e/0xda0
+ __alloc_pages+0x32d/0x350
+ ? mhi_prepare_channel+0x127/0x2d0 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
+ __kmalloc_large_node+0x72/0x110
+ __kmalloc+0x37c/0x480
+ ? mhi_map_single_no_bb+0x77/0xf0 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
+ ? mhi_prepare_channel+0x127/0x2d0 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
+ mhi_prepare_channel+0x127/0x2d0 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
+ __mhi_prepare_for_transfer+0x44/0x80 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
+ ? __pfx_____mhi_prepare_for_transfer+0x10/0x10 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
+ device_for_each_child+0x5c/0xa0
+ ? __pfx_pci_pm_resume+0x10/0x10
+ ath11k_core_resume+0x65/0x100 [ath11k a5094e22d7223135c40d93c8f5321cf09fd85e4e]
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ath11k_pci_pm_resume+0x32/0x60 [ath11k_pci 830b7bfc3ea80ebef32e563cafe2cb55e9cc73ec]
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ dpm_run_callback+0x8c/0x1e0
+ device_resume+0x104/0x340
+ ? __pfx_dpm_watchdog_handler+0x10/0x10
+ async_resume+0x1d/0x30
+ async_run_entry_fn+0x32/0x120
+ process_one_work+0x168/0x330
+ worker_thread+0x2f5/0x410
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0xe8/0x120
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x34/0x50
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1b/0x30
+ </TASK>
 
-Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Actually those buffers are used only by QMI target -> host communication.
+And for WCN6855 and QCA6390, the largest packet size for that is less
+than 6KB. So change buf_len field to 8KB, which results in order 1
+allocation if page size is 4KB. In this way, we can at least save some
+memory, and as well as decrease the possibility of allocation failure
+in those scenarios.
+
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+
+Reported-by: Vlastimil Babka <vbabka@suse.cz>
+Closes: https://lore.kernel.org/ath11k/96481a45-3547-4d23-ad34-3a8f1d90c1cd@suse.cz/
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240223053111.29170-1-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/direct.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath11k/mhi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
-index 98b2e192fd696..4d543b1e9d577 100644
---- a/kernel/dma/direct.c
-+++ b/kernel/dma/direct.c
-@@ -286,7 +286,7 @@ void *dma_direct_alloc(struct device *dev, size_t size,
- 	} else {
- 		ret = page_address(page);
- 		if (dma_set_decrypted(dev, ret, size))
--			goto out_free_pages;
-+			goto out_leak_pages;
- 	}
- 
- 	memset(ret, 0, size);
-@@ -307,6 +307,8 @@ void *dma_direct_alloc(struct device *dev, size_t size,
- out_free_pages:
- 	__dma_direct_free_pages(dev, page, size);
- 	return NULL;
-+out_leak_pages:
-+	return NULL;
- }
- 
- void dma_direct_free(struct device *dev, size_t size,
-@@ -367,12 +369,11 @@ struct page *dma_direct_alloc_pages(struct device *dev, size_t size,
- 
- 	ret = page_address(page);
- 	if (dma_set_decrypted(dev, ret, size))
--		goto out_free_pages;
-+		goto out_leak_pages;
- 	memset(ret, 0, size);
- 	*dma_handle = phys_to_dma_direct(dev, page_to_phys(page));
- 	return page;
--out_free_pages:
--	__dma_direct_free_pages(dev, page, size);
-+out_leak_pages:
- 	return NULL;
- }
- 
+diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
+index 6835c14b82cc9..337590236485f 100644
+--- a/drivers/net/wireless/ath/ath11k/mhi.c
++++ b/drivers/net/wireless/ath/ath11k/mhi.c
+@@ -106,7 +106,7 @@ static struct mhi_controller_config ath11k_mhi_config_qca6390 = {
+ 	.max_channels = 128,
+ 	.timeout_ms = 2000,
+ 	.use_bounce_buf = false,
+-	.buf_len = 0,
++	.buf_len = 8192,
+ 	.num_channels = ARRAY_SIZE(ath11k_mhi_channels_qca6390),
+ 	.ch_cfg = ath11k_mhi_channels_qca6390,
+ 	.num_events = ARRAY_SIZE(ath11k_mhi_events_qca6390),
 -- 
 2.43.0
 
