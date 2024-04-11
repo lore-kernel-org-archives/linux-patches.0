@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741ED13F452;
-	Thu, 11 Apr 2024 10:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8F513F452;
+	Thu, 11 Apr 2024 10:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830590; cv=none; b=jz12mRq5L+TRznqiHgAJa9uf0iKwyl5Mz1o9MdoDgXo3doX/LFV9rNyaNPOMYXchMSKDXBaAj5myU7qLxvBD5uc+pBsbYSEu4UQH+IYX5rmGFkT6hQbtaylq7ck95lZE+Z01W93aFQZEVBLWkR+37jf66Mzp9qPLqymNFXpqI28=
+	t=1712830593; cv=none; b=ObloczCcIjTf6ub73icgjdLf1OlmmxPGzLa33vL2APmdljj/pcR3hACusRuzDIRizpxZHvwrfegbsbEpGsayV0x3D9EW8pAAJcwVftuq13FlXCyou9kAi8lE6rvdHiyLiQ8wJM25H4PLDcpkjhyIw2O5XxxhVXSzr/2RL3+pLHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830590; c=relaxed/simple;
-	bh=NJXwEbQn6Mr3tqLU6mwMpSRTqigbd7Kfav77pSy2ax4=;
+	s=arc-20240116; t=1712830593; c=relaxed/simple;
+	bh=LtPRdiAP0XeyG5h7ekv3XeaJKmHDv2IuPNRu9nHIahI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lAmRAwqlJt0ah9q+v21T6dzszQ+kSeDIytCWqDRQp9X5Id8sgdAJ7+W1GpzE6z2AflIOsaDfYfTTzyq5o+u0TGsZYbgr8v0PmltC9iNx4LIsptbrORhJf6zyHgwutLDSCI6BmDoPFepp1kwU4IZMVTCyC0lV1t8JtuGvTmYFRYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNpHDMvK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pyN2SezAsh2v87bGXzq4mPzZ9KIMLfG9whLkVr3fL+/N2ZFAsmXxLc6yPhCpZbZMvZMP3dqUPAZW1+nE+cyZ7pRWz/sXx8khhuaGRLliL4dC79LtQNqV1pwtDWdk91tR3qanFY9ZbybhQveboYuqDFk/CxeUaMN8IlmQzy+BXlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqbD0E5L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNpHDMvK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EA6C433F1;
-	Thu, 11 Apr 2024 10:16:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqbD0E5L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8053C433F1;
+	Thu, 11 Apr 2024 10:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830590;
-	bh=NJXwEbQn6Mr3tqLU6mwMpSRTqigbd7Kfav77pSy2ax4=;
+	s=korg; t=1712830593;
+	bh=LtPRdiAP0XeyG5h7ekv3XeaJKmHDv2IuPNRu9nHIahI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qNpHDMvK8Zhf8KWk5vR5tX5xjqvcp5kds7Ucq6ND1CVtkmr0gfu2p9IY+abjDLXIr
-	 oe2qwQLuJ8qEHHqxciCEtiXC3LDHNPyxmmlEBbqAfsEJlyRFTBLBq9PAHU2Ut0g2Ff
-	 bvIlpT+1UtTTH6A8XikDQeVSKqm9X+q4gF6bRBR4=
+	b=ZqbD0E5LbYXCVAJzuxWlPcB3eL8onOQcMd3BnJTjwxkKnBfoHoRUMrI5Uf641x6ez
+	 Wb13LK+vabL/nJJVpPm+vBPc2vKXfwL05qdBZ+ST/vaS1iATezisPles2ZK59qGX5f
+	 m35+i009rQ2D4/efvPMY/I7aN1+xJABBocmwu5uA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Moulding <dan@danm.net>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Chenyuan Yang <cy54@illinois.edu>,
+	Richard Weinberger <richard@nod.at>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 051/215] Revert "Revert "md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d""
-Date: Thu, 11 Apr 2024 11:54:20 +0200
-Message-ID: <20240411095426.427145773@linuxfoundation.org>
+Subject: [PATCH 5.4 025/215] ubi: Check for too small LEB size in VTBL code
+Date: Thu, 11 Apr 2024 11:53:54 +0200
+Message-ID: <20240411095425.639213522@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -53,70 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Song Liu <song@kernel.org>
+From: Richard Weinberger <richard@nod.at>
 
-[ Upstream commit 3445139e3a594be77eff48bc17eff67cf983daed ]
+[ Upstream commit 68a24aba7c593eafa8fd00f2f76407b9b32b47a9 ]
 
-This reverts commit bed9e27baf52a09b7ba2a3714f1e24e17ced386d.
+If the LEB size is smaller than a volume table record we cannot
+have volumes.
+In this case abort attaching.
 
-The original set [1][2] was expected to undo a suboptimal fix in [2], and
-replace it with a better fix [1]. However, as reported by Dan Moulding [2]
-causes an issue with raid5 with journal device.
-
-Revert [2] for now to close the issue. We will follow up on another issue
-reported by Juxiao Bi, as [2] is expected to fix it. We believe this is a
-good trade-off, because the latter issue happens less freqently.
-
-In the meanwhile, we will NOT revert [1], as it contains the right logic.
-
-[1] commit d6e035aad6c0 ("md: bypass block throttle for superblock update")
-[2] commit bed9e27baf52 ("Revert "md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d"")
-
-Reported-by: Dan Moulding <dan@danm.net>
-Closes: https://lore.kernel.org/linux-raid/20240123005700.9302-1-dan@danm.net/
-Fixes: bed9e27baf52 ("Revert "md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d"")
-Cc: stable@vger.kernel.org # v5.19+
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240125082131.788600-1-song@kernel.org
+Cc: Chenyuan Yang <cy54@illinois.edu>
+Cc: stable@vger.kernel.org
+Fixes: 801c135ce73d ("UBI: Unsorted Block Images")
+Reported-by: Chenyuan Yang <cy54@illinois.edu>
+Closes: https://lore.kernel.org/linux-mtd/1433EB7A-FC89-47D6-8F47-23BE41B263B3@illinois.edu/
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/mtd/ubi/vtbl.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 0bea103f63d55..f3d60c4b34b8c 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -36,6 +36,7 @@
-  */
- 
- #include <linux/blkdev.h>
-+#include <linux/delay.h>
- #include <linux/kthread.h>
- #include <linux/raid/pq.h>
- #include <linux/async_tx.h>
-@@ -6334,7 +6335,18 @@ static void raid5d(struct md_thread *thread)
- 			spin_unlock_irq(&conf->device_lock);
- 			md_check_recovery(mddev);
- 			spin_lock_irq(&conf->device_lock);
+diff --git a/drivers/mtd/ubi/vtbl.c b/drivers/mtd/ubi/vtbl.c
+index 53d8ab54e1811..c891ee100dec4 100644
+--- a/drivers/mtd/ubi/vtbl.c
++++ b/drivers/mtd/ubi/vtbl.c
+@@ -791,6 +791,12 @@ int ubi_read_volume_table(struct ubi_device *ubi, struct ubi_attach_info *ai)
+ 	 * The number of supported volumes is limited by the eraseblock size
+ 	 * and by the UBI_MAX_VOLUMES constant.
+ 	 */
 +
-+			/*
-+			 * Waiting on MD_SB_CHANGE_PENDING below may deadlock
-+			 * seeing md_check_recovery() is needed to clear
-+			 * the flag when using mdmon.
-+			 */
-+			continue;
- 		}
++	if (ubi->leb_size < UBI_VTBL_RECORD_SIZE) {
++		ubi_err(ubi, "LEB size too small for a volume record");
++		return -EINVAL;
++	}
 +
-+		wait_event_lock_irq(mddev->sb_wait,
-+			!test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags),
-+			conf->device_lock);
- 	}
- 	pr_debug("%d stripes handled\n", handled);
- 
+ 	ubi->vtbl_slots = ubi->leb_size / UBI_VTBL_RECORD_SIZE;
+ 	if (ubi->vtbl_slots > UBI_MAX_VOLUMES)
+ 		ubi->vtbl_slots = UBI_MAX_VOLUMES;
 -- 
 2.43.0
 
