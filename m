@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7736214600E;
-	Thu, 11 Apr 2024 10:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF87145350;
+	Thu, 11 Apr 2024 10:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830599; cv=none; b=oLGlM0tz1VfpbSvhtZCGjqF4N+XO38WZvM7vbQW6A8ExCv8dijMX7pifJDfqB/WjNObnf/zhlD7+J/EpWdjTmjvyemAI2qDpTo9PS/b4q5gVy/7H4pVcGR0NJFn0XXRGHXzwB8AkmvvsGpObmCa5v3SSgrjwarlqg8VBa+DUHfE=
+	t=1712830602; cv=none; b=WW6yNLlqVzR+JWeL6esQuakM8n4Hnqb+6M7fMpKejwkPTftNU+P7NoJ2jQFusBOrce45O3cI+fEIIwG8v4ZJ0ieKj4gYBVZQhUa47NWgKkBOE9Iz69zKcdEX91880fP3PvWPUj/vYGomBOoMr8Dp/A7h0A2g2mt+J1HUsB65jfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830599; c=relaxed/simple;
-	bh=BAr9N7OrTe503OcrdM0vB7zkMxqQQDfAvC4h7GZYO2M=;
+	s=arc-20240116; t=1712830602; c=relaxed/simple;
+	bh=/o5qAbWvAScIh4JRwRkMZxLUnHQ4Ken9aOYozNq44Lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FgHs8GgJq/i7yJQvKNPDHJyymRnjPCWiPIR2IZG+dvuCE5hWUStiAwewwnInCiVEzuG8W8zWpz6WBCMO2SuGwuBW7CmcWTUjNBQhNDOvENSY/8RgGA6KImUPD9+BBxj8sADaaijNl+G4zY1mFGAZ1pFWr8g2dcxB/Y6/R8cZiMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JFe5FV2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rFNdAkM6WYMOtgK6CDHxViy3l8VXiIdLRNyyW0Ews5OnRdHgM6TodB3/p36uPocTN/xwGE7WrzyE5yqInBnMYvDu9otlOjZrEAljmzgI4+10FXCVwxX24Z9y1cNzYXeRa0kKpUrT6VdMyOa8haFyK73m0nPmUqZvbHK9kxMQnuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksVvKoSp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JFe5FV2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D6CC433F1;
-	Thu, 11 Apr 2024 10:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksVvKoSp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC52C433F1;
+	Thu, 11 Apr 2024 10:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830599;
-	bh=BAr9N7OrTe503OcrdM0vB7zkMxqQQDfAvC4h7GZYO2M=;
+	s=korg; t=1712830602;
+	bh=/o5qAbWvAScIh4JRwRkMZxLUnHQ4Ken9aOYozNq44Lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2JFe5FV2AIhDu22aeXf6gW81Qu2tPNjmfHiwSyahb53tLqGr/KhXjeIfbhmm5M+qg
-	 mO8RG1M3CDfeAA++sbmAyFvA2DrZO3UFfXbc3ZGkOEc+4nEAJp1qTpksyQcnAFjfwD
-	 Xmyxt9DKRQIaJ+uvTXEbCDOzP2vkE+T6j6BcCtHI=
+	b=ksVvKoSpmiOZjCM5SGHZVZktFjkSJrJqsrJs4xIwqooNP6oC5Gwvz2qxGUCV9NxP2
+	 GSYy3JS0zZ8ZHJEGic5X6Y8ByAhM9DRWdmbBaUW+bZjpgA7oiHywdZyJLhJWxJo/eI
+	 s64T/XGTd38KAW364CUdaRfS5SvNvfB5x81pz1Sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Ramirez-Ortiz <jorge@foundries.io>,
-	Dominique Martinet <dominique.martinet@atmark-techno.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Josua Mayer <josua@solid-run.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 053/215] mmc: core: Fix switch on gp3 partition
-Date: Thu, 11 Apr 2024 11:54:22 +0200
-Message-ID: <20240411095426.487861039@linuxfoundation.org>
+Subject: [PATCH 5.4 054/215] hwmon: (amc6821) add of_match table
+Date: Thu, 11 Apr 2024 11:54:23 +0200
+Message-ID: <20240411095426.518105328@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -53,84 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <dominique.martinet@atmark-techno.com>
+From: Josua Mayer <josua@solid-run.com>
 
-[ Upstream commit 4af59a8df5ea930038cd3355e822f5eedf4accc1 ]
+[ Upstream commit 3f003fda98a7a8d5f399057d92e6ed56b468657c ]
 
-Commit e7794c14fd73 ("mmc: rpmb: fixes pause retune on all RPMB
-partitions.") added a mask check for 'part_type', but the mask used was
-wrong leading to the code intended for rpmb also being executed for GP3.
+Add of_match table for "ti,amc6821" compatible string.
+This fixes automatic driver loading by userspace when using device-tree,
+and if built as a module like major linux distributions do.
 
-On some MMCs (but not all) this would make gp3 partition inaccessible:
-armadillo:~# head -c 1 < /dev/mmcblk2gp3
-head: standard input: I/O error
-armadillo:~# dmesg -c
-[  422.976583] mmc2: running CQE recovery
-[  423.058182] mmc2: running CQE recovery
-[  423.137607] mmc2: running CQE recovery
-[  423.137802] blk_update_request: I/O error, dev mmcblk2gp3, sector 0 op 0x0:(READ) flags 0x80700 phys_seg 4 prio class 0
-[  423.237125] mmc2: running CQE recovery
-[  423.318206] mmc2: running CQE recovery
-[  423.397680] mmc2: running CQE recovery
-[  423.397837] blk_update_request: I/O error, dev mmcblk2gp3, sector 0 op 0x0:(READ) flags 0x0 phys_seg 1 prio class 0
-[  423.408287] Buffer I/O error on dev mmcblk2gp3, logical block 0, async page read
+While devices probe just fine with i2c_device_id table, userspace can't
+match the "ti,amc6821" compatible string from dt with the plain
+"amc6821" device id. As a result, the kernel module can not be loaded.
 
-the part_type values of interest here are defined as follow:
-main  0
-boot0 1
-boot1 2
-rpmb  3
-gp0   4
-gp1   5
-gp2   6
-gp3   7
-
-so mask with EXT_CSD_PART_CONFIG_ACC_MASK (7) to correctly identify rpmb
-
-Fixes: e7794c14fd73 ("mmc: rpmb: fixes pause retune on all RPMB partitions.")
 Cc: stable@vger.kernel.org
-Cc: Jorge Ramirez-Ortiz <jorge@foundries.io>
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20240306-mmc-partswitch-v1-1-bf116985d950@codewreck.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+Link: https://lore.kernel.org/r/20240307-amc6821-of-match-v1-1-5f40464a3110@solid-run.com
+[groeck: Cleaned up patch description]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/block.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/hwmon/amc6821.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
-index 554dba0a06f5b..32369b120f02c 100644
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -873,10 +873,11 @@ static const struct block_device_operations mmc_bdops = {
- static int mmc_blk_part_switch_pre(struct mmc_card *card,
- 				   unsigned int part_type)
- {
--	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
-+	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_MASK;
-+	const unsigned int rpmb = EXT_CSD_PART_CONFIG_ACC_RPMB;
- 	int ret = 0;
+diff --git a/drivers/hwmon/amc6821.c b/drivers/hwmon/amc6821.c
+index 013fb056b1d02..a8e94d73eaa04 100644
+--- a/drivers/hwmon/amc6821.c
++++ b/drivers/hwmon/amc6821.c
+@@ -935,10 +935,21 @@ static const struct i2c_device_id amc6821_id[] = {
  
--	if ((part_type & mask) == mask) {
-+	if ((part_type & mask) == rpmb) {
- 		if (card->ext_csd.cmdq_en) {
- 			ret = mmc_cmdq_disable(card);
- 			if (ret)
-@@ -891,10 +892,11 @@ static int mmc_blk_part_switch_pre(struct mmc_card *card,
- static int mmc_blk_part_switch_post(struct mmc_card *card,
- 				    unsigned int part_type)
- {
--	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
-+	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_MASK;
-+	const unsigned int rpmb = EXT_CSD_PART_CONFIG_ACC_RPMB;
- 	int ret = 0;
+ MODULE_DEVICE_TABLE(i2c, amc6821_id);
  
--	if ((part_type & mask) == mask) {
-+	if ((part_type & mask) == rpmb) {
- 		mmc_retune_unpause(card->host);
- 		if (card->reenable_cmdq && !card->ext_csd.cmdq_en)
- 			ret = mmc_cmdq_enable(card);
++static const struct of_device_id __maybe_unused amc6821_of_match[] = {
++	{
++		.compatible = "ti,amc6821",
++		.data = (void *)amc6821,
++	},
++	{ }
++};
++
++MODULE_DEVICE_TABLE(of, amc6821_of_match);
++
+ static struct i2c_driver amc6821_driver = {
+ 	.class = I2C_CLASS_HWMON,
+ 	.driver = {
+ 		.name	= "amc6821",
++		.of_match_table = of_match_ptr(amc6821_of_match),
+ 	},
+ 	.probe = amc6821_probe,
+ 	.id_table = amc6821_id,
 -- 
 2.43.0
 
