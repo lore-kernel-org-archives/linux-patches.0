@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485056BB29;
-	Thu, 11 Apr 2024 10:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504D2142624;
+	Thu, 11 Apr 2024 10:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832328; cv=none; b=FuwV2VShnQdM/f2M4MqTEPWjH3N5Q9cfR5e2mRI8+5xq1a27Eixt0Ecb0GkNQUzxGGdCR2U6MgaoCPP+HCpVUZsNzoDQRzQIQxVsYqbiHqcOvp8nLk77qO8JD7ZlXK19yt1KJyGjW3taxccP5hPXkRG6ZK+eVFvBdxeXNR+B/Pw=
+	t=1712832332; cv=none; b=WcD/9Z6Jo0VB1eyj5Q1e6a0Ju2T+UGfHk5FMADcDnd1cKgEWAl06KdO56OExBLbDH3ojt5inNvbjB4m/rUfQmCJm8vP6mVRPsq7Waya0u9Q3py2VSWR/HMvG7eRJ8MIphzwylBbfF0MhvcVwXioRwB5VzhXKM4WpmOl3gcTkriI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832328; c=relaxed/simple;
-	bh=W+JT74PLmwCkOXX545XBT2/AFroeXO0MCwlgZiifpPU=;
+	s=arc-20240116; t=1712832332; c=relaxed/simple;
+	bh=6AihscBw4GqcCHjOjPan08Yo3ARh0m8WkIhToA7r2Vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hcjzuxuCEfBneuzSnCCH97H4uEXT5eZnjEfy4GbJcMFOHKiQXGK9Sb4bcYltI1M8WovCG1U/vwfOXpcu1ZhUT28onT0Hk5+csExCBJgHkCCE67oRgi+n8pSZa83I8tyUIwdKGZsDBEg5kpPZllloZeBz0lo45r7KtEoKEySP8/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcEoXMzY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iaxne0OJpxvSPCoTvRCy9uFBw+EdZzq40zOVBqUyBV2JF8i8T/LWyhpChV6KjB1i1qoUVzMRLaV1pHgpHVK7sRIbJt5pm7+sW8SkOqjc446v+/WwNjfxP9ERLETBQOvAoL1YtHn3JSj8WE0kb3DRwfRlb6jqJINEiQYiZGEOLxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ec8HcvZ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcEoXMzY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596D9C433F1;
-	Thu, 11 Apr 2024 10:45:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ec8HcvZ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE1DC433F1;
+	Thu, 11 Apr 2024 10:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832327;
-	bh=W+JT74PLmwCkOXX545XBT2/AFroeXO0MCwlgZiifpPU=;
+	s=korg; t=1712832330;
+	bh=6AihscBw4GqcCHjOjPan08Yo3ARh0m8WkIhToA7r2Vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kcEoXMzYWiKU5GJyrfFadTc3CEYhEiX2RpDNWLan4puq/ANL9igg84gmrw8LyZQSk
-	 U5fu2pOfu2U20gdcCQmdbF+6HGoD15jPMBQNZM4Y/mV+2/h5kR3wyVMHxa+yNW6k9P
-	 cZWbavvQIBbEifcaTm1+FfKDoPa1yfVFnGk48XfA=
+	b=Ec8HcvZ3aO8xaM0xO0XnFvwejqPjQsTvlQPLpa0QvWETblDXJvER5hhtq8tL4PTQn
+	 ju4X5469RVip0rhWR9wUK9oCHcC/fw+Eq3QOWd6WN5qU3RZDNYNPGw5FFpW3sAQSrQ
+	 ie06tcVIWCN5swvSU3kVYdgl9SqaHqoCc09tGJJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Florian Westphal <fw@strlen.de>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 12/83] ionic: set adminq irq affinity
-Date: Thu, 11 Apr 2024 11:56:44 +0200
-Message-ID: <20240411095413.047495959@linuxfoundation.org>
+Subject: [PATCH 6.1 13/83] net: skbuff: add overflow debug check to pull/push helpers
+Date: Thu, 11 Apr 2024 11:56:45 +0200
+Message-ID: <20240411095413.077192502@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -53,41 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit c699f35d658f3c21b69ed24e64b2ea26381e941d ]
+[ Upstream commit 219eee9c0d16f1b754a8b85275854ab17df0850a ]
 
-We claim to have the AdminQ on our irq0 and thus cpu id 0,
-but we need to be sure we set the affinity hint to try to
-keep it there.
+syzbot managed to trigger following splat:
+BUG: KASAN: use-after-free in __skb_flow_dissect+0x4a3b/0x5e50
+Read of size 1 at addr ffff888208a4000e by task a.out/2313
+[..]
+  __skb_flow_dissect+0x4a3b/0x5e50
+  __skb_get_hash+0xb4/0x400
+  ip_tunnel_xmit+0x77e/0x26f0
+  ipip_tunnel_xmit+0x298/0x410
+  ..
 
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Analysis shows that the skb has a valid ->head, but bogus ->data
+pointer.
+
+skb->data gets its bogus value via the neigh layer, which does:
+
+1556    __skb_pull(skb, skb_network_offset(skb));
+
+... and the skb was already dodgy at this point:
+
+skb_network_offset(skb) returns a negative value due to an
+earlier overflow of skb->network_header (u16).  __skb_pull thus
+"adjusts" skb->data by a huge offset, pointing outside skb->head
+area.
+
+Allow debug builds to splat when we try to pull/push more than
+INT_MAX bytes.
+
+After this, the syzkaller reproducer yields a more precise splat
+before the flow dissector attempts to read off skb->data memory:
+
+WARNING: CPU: 5 PID: 2313 at include/linux/skbuff.h:2653 neigh_connected_output+0x28e/0x400
+  ip_finish_output2+0xb25/0xed0
+  iptunnel_xmit+0x4ff/0x870
+  ipgre_xmit+0x78e/0xbb0
+
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240216113700.23013-1-fw@strlen.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_lif.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/skbuff.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-index fcc3faecb0600..d33cf8ee7c336 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-@@ -3216,9 +3216,12 @@ static int ionic_lif_adminq_init(struct ionic_lif *lif)
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index c4a8520dc748f..1326a935b6fad 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -2603,6 +2603,8 @@ static inline void skb_put_u8(struct sk_buff *skb, u8 val)
+ void *skb_push(struct sk_buff *skb, unsigned int len);
+ static inline void *__skb_push(struct sk_buff *skb, unsigned int len)
+ {
++	DEBUG_NET_WARN_ON_ONCE(len > INT_MAX);
++
+ 	skb->data -= len;
+ 	skb->len  += len;
+ 	return skb->data;
+@@ -2611,6 +2613,8 @@ static inline void *__skb_push(struct sk_buff *skb, unsigned int len)
+ void *skb_pull(struct sk_buff *skb, unsigned int len);
+ static inline void *__skb_pull(struct sk_buff *skb, unsigned int len)
+ {
++	DEBUG_NET_WARN_ON_ONCE(len > INT_MAX);
++
+ 	skb->len -= len;
+ 	if (unlikely(skb->len < skb->data_len)) {
+ #if defined(CONFIG_DEBUG_NET)
+@@ -2634,6 +2638,8 @@ void *__pskb_pull_tail(struct sk_buff *skb, int delta);
  
- 	napi_enable(&qcq->napi);
- 
--	if (qcq->flags & IONIC_QCQ_F_INTR)
-+	if (qcq->flags & IONIC_QCQ_F_INTR) {
-+		irq_set_affinity_hint(qcq->intr.vector,
-+				      &qcq->intr.affinity_mask);
- 		ionic_intr_mask(idev->intr_ctrl, qcq->intr.index,
- 				IONIC_INTR_MASK_CLEAR);
-+	}
- 
- 	qcq->flags |= IONIC_QCQ_F_INITED;
- 
+ static inline bool pskb_may_pull(struct sk_buff *skb, unsigned int len)
+ {
++	DEBUG_NET_WARN_ON_ONCE(len > INT_MAX);
++
+ 	if (likely(len <= skb_headlen(skb)))
+ 		return true;
+ 	if (unlikely(len > skb->len))
 -- 
 2.43.0
 
