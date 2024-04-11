@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CE02EAE5;
-	Thu, 11 Apr 2024 10:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A27140366;
+	Thu, 11 Apr 2024 10:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830713; cv=none; b=Iehffn5OZ7qVBDgb8C6POr7UTokXaJGBXuLQJLCoSJmFmljQD4YL/6aGQlzaWszPoK748wfMxCz4chFLA5Ayy5zwTVqxi2dbpg4cN+P1dC2+N5bhBMSKj7+L5cvLEiakNNrdedaYSmygvvsX6ecgtM/9kCHOpJ2LXK+FF8a+rWA=
+	t=1712830715; cv=none; b=j6OrL/OOo9RK/uOIJw3ftpcFfbFf8wRWtl4zSuhsrSgRPfIJaJhb1WXKbxyt31rkpMOpoLfyQKnFiyUW3jUJL9l4AOLLmTU+8MlKeqF9LM1oiTtjRv9vQBhxt0cUnVi6SQlkmygEkbjHvjMluW/NbPoK13/kdSfzCV0ez+Oo9rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830713; c=relaxed/simple;
-	bh=kGq6VtZFacPF0VPunw5ye0B1ihlQOOkDJhWwwxLwa80=;
+	s=arc-20240116; t=1712830715; c=relaxed/simple;
+	bh=tqpNguA73gpptXMCQPikUAAS3/DMyWpGW/WrbTdnleY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fZsbV2YeE3x02qOTm/wNbPodGHPepIgMmdBZvw/hXMQ7Ril2zhff/GihBnJDBeI3SdMG/5RyW5Yr6fUA7F4IR1o1KbDcD9WdArO/ovy6Eu1KltnuLkXXRidVfLXcUVGpV4W4xMnwI0gLxZ1z8pav/C3MosI7AUukwxrf1EXRs2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8mE+aMS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FtKCScQNwJEG/j5FesuuvK7yXT6T13kywi1gw9AOqXmO/AiXXVSoCibZMDIfohJ1RPjHbMIJT9pl4haJXscDo/LJqNl5i2Ni54QW9wn4WEkxqqkZtWjDnIkPty2D+py54TcqlOEp4tr21U5Wn1MGVRtILUJebmPcQtUyv5kgoRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLSKk7up; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8mE+aMS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 700E6C433C7;
-	Thu, 11 Apr 2024 10:18:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLSKk7up"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4B6C433F1;
+	Thu, 11 Apr 2024 10:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830712;
-	bh=kGq6VtZFacPF0VPunw5ye0B1ihlQOOkDJhWwwxLwa80=;
+	s=korg; t=1712830715;
+	bh=tqpNguA73gpptXMCQPikUAAS3/DMyWpGW/WrbTdnleY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j8mE+aMSVGPl7ASnIXXHR3Dt5o5gUGYsJOiSQ3NgNqRFk0RcfyxwovZQduGKllc4J
-	 5xrgJbyfUC0k3883YoaQ+gMgV8BDSRIakjDh8hP//btHkGDjf9YHRqU3OL/dn1d6HX
-	 AxriacbJobV21dZ86vD9GDGwAbcvirj/UwdnQIig=
+	b=BLSKk7up3W/4Cu2+8rYLZED6nngvTL5Xxpxs6k+dwUUUByFP6pY4rvc8zaIeQdjXd
+	 APhjovlZBxnHF+lSAwbancjssyeatazhJyXfsdfJGMCcT/B/e80e60O0yvy9Yh5tRc
+	 r2qdG3TPTxLNY5S1AQEYpviZC2893dIX50N3Jwio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Miroslav Benes <mbenes@suse.cz>,
 	Josh Poimboeuf <jpoimboe@redhat.com>,
 	Rui Qi <qirui.001@bytedance.com>
-Subject: [PATCH 5.4 092/215] objtool: is_fentry_call() crashes if call has no destination
-Date: Thu, 11 Apr 2024 11:55:01 +0200
-Message-ID: <20240411095427.667644876@linuxfoundation.org>
+Subject: [PATCH 5.4 093/215] objtool: Add support for intra-function calls
+Date: Thu, 11 Apr 2024 11:55:02 +0200
+Message-ID: <20240411095427.696786483@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -55,33 +55,173 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexandre Chartre <alexandre.chartre@oracle.com>
 
-commit 87cf61fe848ca8ddf091548671e168f52e8a718e upstream.
+commit 8aa8eb2a8f5b3305a95f39957dd2b715fa668e21 upstream.
 
-Fix is_fentry_call() so that it works if a call has no destination
-set (call_dest). This needs to be done in order to support intra-
-function calls.
+Change objtool to support intra-function calls. On x86, an intra-function
+call is represented in objtool as a push onto the stack (of the return
+address), and a jump to the destination address. That way the stack
+information is correctly updated and the call flow is still accurate.
 
 Signed-off-by: Alexandre Chartre <alexandre.chartre@oracle.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Reviewed-by: Miroslav Benes <mbenes@suse.cz>
 Acked-by: Josh Poimboeuf <jpoimboe@redhat.com>
-Link: https://lkml.kernel.org/r/20200414103618.12657-2-alexandre.chartre@oracle.com
+Link: https://lkml.kernel.org/r/20200414103618.12657-4-alexandre.chartre@oracle.com
 Signed-off-by: Rui Qi <qirui.001@bytedance.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/objtool/check.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/frame.h                            |   11 ++++
+ tools/objtool/Documentation/stack-validation.txt |    8 ++
+ tools/objtool/arch/x86/decode.c                  |    6 ++
+ tools/objtool/check.c                            |   62 +++++++++++++++++++++--
+ 4 files changed, 83 insertions(+), 4 deletions(-)
 
+--- a/include/linux/frame.h
++++ b/include/linux/frame.h
+@@ -15,9 +15,20 @@
+ 	static void __used __section(.discard.func_stack_frame_non_standard) \
+ 		*__func_stack_frame_non_standard_##func = func
+ 
++/*
++ * This macro indicates that the following intra-function call is valid.
++ * Any non-annotated intra-function call will cause objtool to issue a warning.
++ */
++#define ANNOTATE_INTRA_FUNCTION_CALL				\
++	999:							\
++	.pushsection .discard.intra_function_calls;		\
++	.long 999b;						\
++	.popsection;
++
+ #else /* !CONFIG_STACK_VALIDATION */
+ 
+ #define STACK_FRAME_NON_STANDARD(func)
++#define ANNOTATE_INTRA_FUNCTION_CALL
+ 
+ #endif /* CONFIG_STACK_VALIDATION */
+ 
+--- a/tools/objtool/Documentation/stack-validation.txt
++++ b/tools/objtool/Documentation/stack-validation.txt
+@@ -290,6 +290,14 @@ they mean, and suggestions for how to fi
+       https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70646
+ 
+ 
++11. file.o: warning: unannotated intra-function call
++
++   This warning means that a direct call is done to a destination which
++   is not at the beginning of a function. If this is a legit call, you
++   can remove this warning by putting the ANNOTATE_INTRA_FUNCTION_CALL
++   directive right before the call.
++
++
+ If the error doesn't seem to make sense, it could be a bug in objtool.
+ Feel free to ask the objtool maintainer for help.
+ 
+--- a/tools/objtool/arch/x86/decode.c
++++ b/tools/objtool/arch/x86/decode.c
+@@ -437,6 +437,12 @@ int arch_decode_instruction(struct elf *
+ 
+ 	case 0xe8:
+ 		*type = INSN_CALL;
++		/*
++		 * For the impact on the stack, a CALL behaves like
++		 * a PUSH of an immediate value (the return address).
++		 */
++			op->src.type = OP_SRC_CONST;
++			op->dest.type = OP_DEST_PUSH;
+ 		break;
+ 
+ 	case 0xfc:
 --- a/tools/objtool/check.c
 +++ b/tools/objtool/check.c
-@@ -1367,7 +1367,7 @@ static int decode_sections(struct objtoo
+@@ -645,6 +645,7 @@ static int add_jump_destinations(struct
+ 	return 0;
+ }
  
- static bool is_fentry_call(struct instruction *insn)
++
+ /*
+  * Find the destination instructions for all calls.
+  */
+@@ -666,10 +667,7 @@ static int add_call_destinations(struct
+ 								dest_off);
+ 
+ 			if (!insn->call_dest && !insn->ignore) {
+-				WARN_FUNC("unsupported intra-function call",
+-					  insn->sec, insn->offset);
+-				if (retpoline)
+-					WARN("If this is a retpoline, please patch it in with alternatives and annotate it with ANNOTATE_NOSPEC_ALTERNATIVE.");
++				WARN_FUNC("unannotated intra-function call", insn->sec, insn->offset);
+ 				return -1;
+ 			}
+ 
+@@ -1291,6 +1289,58 @@ static int read_retpoline_hints(struct o
+ 	return 0;
+ }
+ 
++
++static int read_intra_function_calls(struct objtool_file *file)
++{
++	struct instruction *insn;
++	struct section *sec;
++	struct rela *rela;
++
++	sec = find_section_by_name(file->elf, ".rela.discard.intra_function_calls");
++	if (!sec)
++		return 0;
++
++	list_for_each_entry(rela, &sec->rela_list, list) {
++		unsigned long dest_off;
++
++		if (rela->sym->type != STT_SECTION) {
++			WARN("unexpected relocation symbol type in %s",
++			     sec->name);
++			return -1;
++		}
++
++		insn = find_insn(file, rela->sym->sec, rela->addend);
++		if (!insn) {
++			WARN("bad .discard.intra_function_call entry");
++			return -1;
++		}
++
++		if (insn->type != INSN_CALL) {
++			WARN_FUNC("intra_function_call not a direct call",
++				  insn->sec, insn->offset);
++			return -1;
++		}
++
++		/*
++		 * Treat intra-function CALLs as JMPs, but with a stack_op.
++		 * See add_call_destinations(), which strips stack_ops from
++		 * normal CALLs.
++		 */
++		insn->type = INSN_JUMP_UNCONDITIONAL;
++
++		dest_off = insn->offset + insn->len + insn->immediate;
++		insn->jump_dest = find_insn(file, insn->sec, dest_off);
++		if (!insn->jump_dest) {
++			WARN_FUNC("can't find call dest at %s+0x%lx",
++				  insn->sec, insn->offset,
++				  insn->sec->name, dest_off);
++			return -1;
++		}
++	}
++
++	return 0;
++}
++
+ static void mark_rodata(struct objtool_file *file)
  {
--	if (insn->type == INSN_CALL &&
-+	if (insn->type == INSN_CALL && insn->call_dest &&
- 	    insn->call_dest->type == STT_NOTYPE &&
- 	    !strcmp(insn->call_dest->name, "__fentry__"))
- 		return true;
+ 	struct section *sec;
+@@ -1346,6 +1396,10 @@ static int decode_sections(struct objtoo
+ 	if (ret)
+ 		return ret;
+ 
++	ret = read_intra_function_calls(file);
++	if (ret)
++		return ret;
++
+ 	ret = add_call_destinations(file);
+ 	if (ret)
+ 		return ret;
 
 
