@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A84145B2C;
-	Thu, 11 Apr 2024 10:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A56B144D34;
+	Thu, 11 Apr 2024 10:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830225; cv=none; b=A4oakbtz2iOQUOZv5u6ItWfUWSXmkgp4+zgyNpf7cr9ZWzDeK7XXvJKFaSWvs/gICQTD388BQ3N3a4g7Zc3QzBw4O9/QObwzE8yge29ab12/Et6fa0CmygaLaFlfpj83+R8oDp6HQEqNjFGz0nK4nlCHQX5nKEvU2uGgEuDznXM=
+	t=1712830228; cv=none; b=GhyHHIanYSls6cu9GvloMtMRdQvVPsktexGdaTBxejdeJIl+Hqw0BlIFXd3HqzwbUrCSGJMDKGFBg53RwA0EscVAzeS/Q7XbeD8NuPK95RzR75CnUU5DGaXpCd6f/3H9VZm2p7E94z4SE1ppKScGx6lOXZFVx9j741p76y6AcP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830225; c=relaxed/simple;
-	bh=klxNM6uofrwW5s41f1MuqmItfePNQRQcjQx9gU5vmgo=;
+	s=arc-20240116; t=1712830228; c=relaxed/simple;
+	bh=K/FPAT8IM8xiFafTdSQ5Jk6EWK4G2oHWTVG8w3XjPSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IJl396+iew2Mw8j0r5rtXbnLj0HdRHUm7sdrU08G9D1vvS/5W8+Iduqa5M7SOK5tVAzIPGizjJMSdRlQy5Cy9HYKRotJqQXiKrBbZxmM59HGvvyunZbdSZVyW0SXSn6fc6Ui1ihRcRI2NehXPQEIkKngavwhUvjRxBSQW5yKJDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OPi5PSyv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BlYic3EBiYPsvfGYFqLHSom3enM4kLoKZcx/zmX3NimuHIWTyrCVy1gXZqk4BDxQfQzLSqeVCbMTvu7z9lX8xOrgskbxKJOV0SUAz1cx2fKIYlNt9P6xQvTA93fsdbRr8WeDbPjHkZFYV+oMLhjx10Ec2Taa1yI1Y4aCT/IMVoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kS1qAKTa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OPi5PSyv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B70C433C7;
-	Thu, 11 Apr 2024 10:10:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kS1qAKTa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F2CC433C7;
+	Thu, 11 Apr 2024 10:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830225;
-	bh=klxNM6uofrwW5s41f1MuqmItfePNQRQcjQx9gU5vmgo=;
+	s=korg; t=1712830228;
+	bh=K/FPAT8IM8xiFafTdSQ5Jk6EWK4G2oHWTVG8w3XjPSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OPi5PSyvLQAfSZ3hNLasV2zU/HTz/tSj9y3KJWMOK9tK7c+Ejl5b8NvdPWT8p1V6T
-	 yserA9055JpDLZp0l8GZ0YqJCjCq1mjbkJfaLd71beDv3v2POt/wb3LvARzZ/Xx/kW
-	 5IMVV267d9cvIPf7WljJ6nhQy2O9T4HzJflGKAXk=
+	b=kS1qAKTaNbtXaBkWrvYuNiMxzqQxhy1SYk4ZbnBIz+5Rq3SoLm9G3/TEiDN1qmiah
+	 NiwkcVX2lhMFQsJmuTzJKF+F8ormacm0cDA0tBcGoYVemveknG778nbmBgx763owcI
+	 zAOCjskdcRx+1qXxvm+u8GUjCS6i/372vHI3Ywoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Tony Lindgren <tony@atomide.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 077/143] ALSA: firewire-lib: handle quirk to calculate payload quadlets as data block counter
-Date: Thu, 11 Apr 2024 11:55:45 +0200
-Message-ID: <20240411095423.231942162@linuxfoundation.org>
+Subject: [PATCH 6.8 078/143] drm/panel: simple: Add BOE BP082WX1-100 8.2" panel
+Date: Thu, 11 Apr 2024 11:55:46 +0200
+Message-ID: <20240411095423.261678185@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -51,69 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 4a486439d2ca85752c46711f373b6ddc107bb35d ]
+[ Upstream commit dc90214ff58be575fdceb549f901506cdef5d093 ]
 
-Miglia Harmony Audio (OXFW970) has a quirk to put the number of
-accumulated quadlets in CIP payload into the dbc field of CIP header.
+The BOE BP082WX1-100 is a 8.2" panel similar to the 10.1" panel
+BP101WX1-100. Both panels use the same timings.
 
-This commit handles the quirk in the packet processing layer.
-
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Link: https://lore.kernel.org/r/20240218074128.95210-4-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20240211111703.7567-2-tony@atomide.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240211111703.7567-2-tony@atomide.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/firewire/amdtp-stream.c | 12 ++++++++----
- sound/firewire/amdtp-stream.h |  4 ++++
- 2 files changed, 12 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/sound/firewire/amdtp-stream.c b/sound/firewire/amdtp-stream.c
-index 7be17bca257f0..c9f153f85ae6b 100644
---- a/sound/firewire/amdtp-stream.c
-+++ b/sound/firewire/amdtp-stream.c
-@@ -773,10 +773,14 @@ static int check_cip_header(struct amdtp_stream *s, const __be32 *buf,
- 	} else {
- 		unsigned int dbc_interval;
- 
--		if (*data_blocks > 0 && s->ctx_data.tx.dbc_interval > 0)
--			dbc_interval = s->ctx_data.tx.dbc_interval;
--		else
--			dbc_interval = *data_blocks;
-+		if (!(s->flags & CIP_DBC_IS_PAYLOAD_QUADLETS)) {
-+			if (*data_blocks > 0 && s->ctx_data.tx.dbc_interval > 0)
-+				dbc_interval = s->ctx_data.tx.dbc_interval;
-+			else
-+				dbc_interval = *data_blocks;
-+		} else {
-+			dbc_interval = payload_length / sizeof(__be32);
-+		}
- 
- 		lost = dbc != ((*data_block_counter + dbc_interval) & 0xff);
- 	}
-diff --git a/sound/firewire/amdtp-stream.h b/sound/firewire/amdtp-stream.h
-index b7ff44751ab93..a1ed2e80f91a7 100644
---- a/sound/firewire/amdtp-stream.h
-+++ b/sound/firewire/amdtp-stream.h
-@@ -37,6 +37,9 @@
-  *	the value of current SYT_INTERVAL; e.g. initial value is not zero.
-  * @CIP_UNAWARE_SYT: For outgoing packet, the value in SYT field of CIP is 0xffff.
-  *	For incoming packet, the value in SYT field of CIP is not handled.
-+ * @CIP_DBC_IS_PAYLOAD_QUADLETS: Available for incoming packet, and only effective with
-+ *	CIP_DBC_IS_END_EVENT flag. The value of dbc field is the number of accumulated quadlets
-+ *	in CIP payload, instead of the number of accumulated data blocks.
-  */
- enum cip_flags {
- 	CIP_NONBLOCKING		= 0x00,
-@@ -51,6 +54,7 @@ enum cip_flags {
- 	CIP_NO_HEADER		= 0x100,
- 	CIP_UNALIGHED_DBC	= 0x200,
- 	CIP_UNAWARE_SYT		= 0x400,
-+	CIP_DBC_IS_PAYLOAD_QUADLETS = 0x800,
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index d493ee735c734..72fdab8adb088 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -1367,6 +1367,23 @@ static const struct drm_display_mode boe_bp101wx1_100_mode = {
+ 	.vtotal = 800 + 6 + 8 + 2,
  };
  
- /**
++static const struct panel_desc boe_bp082wx1_100 = {
++	.modes = &boe_bp101wx1_100_mode,
++	.num_modes = 1,
++	.bpc = 8,
++	.size = {
++		.width = 177,
++		.height = 110,
++	},
++	.delay = {
++		.enable = 50,
++		.disable = 50,
++	},
++	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_JEIDA,
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
++	.connector_type = DRM_MODE_CONNECTOR_LVDS,
++};
++
+ static const struct panel_desc boe_bp101wx1_100 = {
+ 	.modes = &boe_bp101wx1_100_mode,
+ 	.num_modes = 1,
+@@ -4345,6 +4362,9 @@ static const struct of_device_id platform_of_match[] = {
+ 	}, {
+ 		.compatible = "bananapi,s070wv20-ct16",
+ 		.data = &bananapi_s070wv20_ct16,
++	}, {
++		.compatible = "boe,bp082wx1-100",
++		.data = &boe_bp082wx1_100,
+ 	}, {
+ 		.compatible = "boe,bp101wx1-100",
+ 		.data = &boe_bp101wx1_100,
 -- 
 2.43.0
 
