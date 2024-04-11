@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21193146D51;
-	Thu, 11 Apr 2024 10:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBD179FD;
+	Thu, 11 Apr 2024 10:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832605; cv=none; b=fmoRAxm/s7gXIkqVb/EjDHkXmpHUpNYV8Sd2DiIA6/Dvq7juAE8XFRCpVN3B2WY0tqORHcP8mFPdopaijNbMoSs1wCjOrCOcQz/D0l/ohx+s/+JQVNqxDPsPK1pzeEzlwlHtIsKkadwmm1bDuP4VRuUF0nAozW/CyvlwF0fiyW0=
+	t=1712832608; cv=none; b=Z5Fejjhcn1191uYfvWG7CywcuMPaRoPE/8s5vD/D27m+a/XwG55oC5PcLXwpZyLlEtlOeEkAwIDB7Bt17Yx97qRTtYv1DkMK/lNbqZBUC2xArzJPDzBVe8FHk92sBc1Ltz6yISlQVcA0D4c7JP5zmOeb5jCA3MVPyl9fVLHn3ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832605; c=relaxed/simple;
-	bh=p4rcmXqYw1nfT6ugqVlxZA4D0YYH1c7gmcj8lGIUcHU=;
+	s=arc-20240116; t=1712832608; c=relaxed/simple;
+	bh=Bg+MovjjRqJ3tab3tyXMg7QHEC69MdV74NNNKQuCVuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TX5UV3Qw5i5/5vc7OMPCihz+msF4oBNMictVIhIIZp8zsGwjoV4IVKZSG7jbiupXv5asBiDyt0TXBYx2tig7UIFGfXuwc7CoYBtwu8hWCiQ4BMcmQUdEaD6wxkWMk24nFNHjJM48ATq2r05Xc+q+sbpClMkDjbeT2PO3UaB5Czg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04KJK9Lg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jvHLKlc46q6S1rrNNOLlbQYv9qN6GZtAQQMqQUDThZ2E1ACV0ee2xc7B+Eg877z4/6pA/CVQc5cRZxEJYvZV7K25KTfi6eusTNbO1z9hgY+riy082cH/YXZ2InkSe11a7dLQ9HISlvzde4gnsUsW8CCugFuAIOy7dLH9ej5Bk0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFyZ5xPq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04KJK9Lg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92DF0C433F1;
-	Thu, 11 Apr 2024 10:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFyZ5xPq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F57C433F1;
+	Thu, 11 Apr 2024 10:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832605;
-	bh=p4rcmXqYw1nfT6ugqVlxZA4D0YYH1c7gmcj8lGIUcHU=;
+	s=korg; t=1712832607;
+	bh=Bg+MovjjRqJ3tab3tyXMg7QHEC69MdV74NNNKQuCVuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=04KJK9LgPdQkO3+wbJvH0Xjy995jhBzIPmduzQkULunsvh0geKw4yL+T1vD6ezoUH
-	 enYZh9a2W2D+hmKPjvSRq5L7tzacAloryafF7tkRZzDThHPwPnBaa4eNUMGIaInNkM
-	 DvkCXNey5KIRounIjb4Ap1EEzt5S2eEw8gRIfjSI=
+	b=gFyZ5xPqhNRbDD+Gn0Fk66bbUf8ftema7UmW4xLX7QcMzVW0df7TL7oSpfdoEhfPz
+	 v6jNyBNeh/V8H9CJgQtyeIKYMmWu4lAtgFfYmWtYN3RxU+f2giA3SCS8Hgw9Yrz0o4
+	 pnAlNXTRytufnEJt6zheXAlW04BgZ/J64mvBWZFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 14/57] wifi: ath11k: decrease MHI channel buffer length to 8KB
-Date: Thu, 11 Apr 2024 11:57:22 +0200
-Message-ID: <20240411095408.425269877@linuxfoundation.org>
+Subject: [PATCH 5.15 23/57] scsi: lpfc: Fix possible memory leak in lpfc_rcv_padisc()
+Date: Thu, 11 Apr 2024 11:57:31 +0200
+Message-ID: <20240411095408.697378358@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095407.982258070@linuxfoundation.org>
 References: <20240411095407.982258070@linuxfoundation.org>
@@ -53,90 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 1cca1bddf9ef080503c15378cecf4877f7510015 ]
+[ Upstream commit 2ae917d4bcab80ab304b774d492e2fcd6c52c06b ]
 
-Currently buf_len field of ath11k_mhi_config_qca6390 is assigned
-with 0, making MHI use a default size, 64KB, to allocate channel
-buffers. This is likely to fail in some scenarios where system
-memory is highly fragmented and memory compaction or reclaim is
-not allowed.
+The call to lpfc_sli4_resume_rpi() in lpfc_rcv_padisc() may return an
+unsuccessful status.  In such cases, the elsiocb is not issued, the
+completion is not called, and thus the elsiocb resource is leaked.
 
-There is a fail report which is caused by it:
-kworker/u32:45: page allocation failure: order:4, mode:0x40c00(GFP_NOIO|__GFP_COMP), nodemask=(null),cpuset=/,mems_allowed=0
-CPU: 0 PID: 19318 Comm: kworker/u32:45 Not tainted 6.8.0-rc3-1.gae4495f-default #1 openSUSE Tumbleweed (unreleased) 493b6d5b382c603654d7a81fc3c144d59a1dfceb
-Workqueue: events_unbound async_run_entry_fn
-Call Trace:
- <TASK>
- dump_stack_lvl+0x47/0x60
- warn_alloc+0x13a/0x1b0
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? __alloc_pages_direct_compact+0xab/0x210
- __alloc_pages_slowpath.constprop.0+0xd3e/0xda0
- __alloc_pages+0x32d/0x350
- ? mhi_prepare_channel+0x127/0x2d0 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
- __kmalloc_large_node+0x72/0x110
- __kmalloc+0x37c/0x480
- ? mhi_map_single_no_bb+0x77/0xf0 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
- ? mhi_prepare_channel+0x127/0x2d0 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
- mhi_prepare_channel+0x127/0x2d0 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
- __mhi_prepare_for_transfer+0x44/0x80 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
- ? __pfx_____mhi_prepare_for_transfer+0x10/0x10 [mhi 40df44e07c05479f7a6e7b90fba9f0e0031a7814]
- device_for_each_child+0x5c/0xa0
- ? __pfx_pci_pm_resume+0x10/0x10
- ath11k_core_resume+0x65/0x100 [ath11k a5094e22d7223135c40d93c8f5321cf09fd85e4e]
- ? srso_alias_return_thunk+0x5/0xfbef5
- ath11k_pci_pm_resume+0x32/0x60 [ath11k_pci 830b7bfc3ea80ebef32e563cafe2cb55e9cc73ec]
- ? srso_alias_return_thunk+0x5/0xfbef5
- dpm_run_callback+0x8c/0x1e0
- device_resume+0x104/0x340
- ? __pfx_dpm_watchdog_handler+0x10/0x10
- async_resume+0x1d/0x30
- async_run_entry_fn+0x32/0x120
- process_one_work+0x168/0x330
- worker_thread+0x2f5/0x410
- ? __pfx_worker_thread+0x10/0x10
- kthread+0xe8/0x120
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x34/0x50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1b/0x30
- </TASK>
+Check return value after calling lpfc_sli4_resume_rpi() and conditionally
+release the elsiocb resource.
 
-Actually those buffers are used only by QMI target -> host communication.
-And for WCN6855 and QCA6390, the largest packet size for that is less
-than 6KB. So change buf_len field to 8KB, which results in order 1
-allocation if page size is 4KB. In this way, we can at least save some
-memory, and as well as decrease the possibility of allocation failure
-in those scenarios.
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-
-Reported-by: Vlastimil Babka <vbabka@suse.cz>
-Closes: https://lore.kernel.org/ath11k/96481a45-3547-4d23-ad34-3a8f1d90c1cd@suse.cz/
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240223053111.29170-1-quic_bqiang@quicinc.com
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20240131185112.149731-3-justintee8345@gmail.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mhi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_nportdisc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
-index f2149241fb131..265b85c40a4ad 100644
---- a/drivers/net/wireless/ath/ath11k/mhi.c
-+++ b/drivers/net/wireless/ath/ath11k/mhi.c
-@@ -97,7 +97,7 @@ static struct mhi_controller_config ath11k_mhi_config_qca6390 = {
- 	.max_channels = 128,
- 	.timeout_ms = 2000,
- 	.use_bounce_buf = false,
--	.buf_len = 0,
-+	.buf_len = 8192,
- 	.num_channels = ARRAY_SIZE(ath11k_mhi_channels_qca6390),
- 	.ch_cfg = ath11k_mhi_channels_qca6390,
- 	.num_events = ARRAY_SIZE(ath11k_mhi_events_qca6390),
+diff --git a/drivers/scsi/lpfc/lpfc_nportdisc.c b/drivers/scsi/lpfc/lpfc_nportdisc.c
+index 2bd35a7424c25..9b862f1254a42 100644
+--- a/drivers/scsi/lpfc/lpfc_nportdisc.c
++++ b/drivers/scsi/lpfc/lpfc_nportdisc.c
+@@ -724,8 +724,10 @@ lpfc_rcv_padisc(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
+ 				/* Save the ELS cmd */
+ 				elsiocb->drvrTimeout = cmd;
+ 
+-				lpfc_sli4_resume_rpi(ndlp,
+-					lpfc_mbx_cmpl_resume_rpi, elsiocb);
++				if (lpfc_sli4_resume_rpi(ndlp,
++						lpfc_mbx_cmpl_resume_rpi,
++						elsiocb))
++					kfree(elsiocb);
+ 				goto out;
+ 			}
+ 		}
 -- 
 2.43.0
 
