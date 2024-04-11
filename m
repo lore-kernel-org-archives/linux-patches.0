@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7652B13F452;
-	Thu, 11 Apr 2024 10:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7736214600E;
+	Thu, 11 Apr 2024 10:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830596; cv=none; b=X4wu4sNgVb/d5vlGpIuPK0Ymp+733u3OJfpmbEVS2liyeapbqk013B+vvanrAmhUfuw2AMybZ8TXXJHak7JpqeP3mgD6fshWvJykz5YFNIXuvUYEcUAYJ3t5zVK1kQstgR890zXgQcCnRPL4Rz8kZ8cUHy4m8L1GsanxOl1w7jY=
+	t=1712830599; cv=none; b=oLGlM0tz1VfpbSvhtZCGjqF4N+XO38WZvM7vbQW6A8ExCv8dijMX7pifJDfqB/WjNObnf/zhlD7+J/EpWdjTmjvyemAI2qDpTo9PS/b4q5gVy/7H4pVcGR0NJFn0XXRGHXzwB8AkmvvsGpObmCa5v3SSgrjwarlqg8VBa+DUHfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830596; c=relaxed/simple;
-	bh=EJIaHjk/CM7T8nyw7ZHWFu/5w1KQQSoPs0EC5CdiKjQ=;
+	s=arc-20240116; t=1712830599; c=relaxed/simple;
+	bh=BAr9N7OrTe503OcrdM0vB7zkMxqQQDfAvC4h7GZYO2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e2nUmQnm2+GM7oVM7EXsntE/yFyOf7saeV//Srx4hlEN38sPBY4jOQQlkt84+0GgpLIuU3DYVACWaHoVJX/kX44XB2uTF1OlYcWV4m+qA+7UF8g2G8gZhwqRwPGRGDalpp0klMwWrvIcEgL+CuKcL0eskL0ROdbSYfScMDxdxIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jNpBAwt6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FgHs8GgJq/i7yJQvKNPDHJyymRnjPCWiPIR2IZG+dvuCE5hWUStiAwewwnInCiVEzuG8W8zWpz6WBCMO2SuGwuBW7CmcWTUjNBQhNDOvENSY/8RgGA6KImUPD9+BBxj8sADaaijNl+G4zY1mFGAZ1pFWr8g2dcxB/Y6/R8cZiMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JFe5FV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jNpBAwt6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43BAC433C7;
-	Thu, 11 Apr 2024 10:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JFe5FV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D6CC433F1;
+	Thu, 11 Apr 2024 10:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830596;
-	bh=EJIaHjk/CM7T8nyw7ZHWFu/5w1KQQSoPs0EC5CdiKjQ=;
+	s=korg; t=1712830599;
+	bh=BAr9N7OrTe503OcrdM0vB7zkMxqQQDfAvC4h7GZYO2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jNpBAwt6shOOLwb1EAVK44ICoiAsr2i1Y2o6qVwnJVVTx5yCec3eVxrZyC+rBUrCm
-	 zccyLJKuEjbhiOY66JBak9VPprYCIuynW259W62RIogeBWLmL73bOZncok5vSSTFIt
-	 MvHkdk+k8wmOMwYWS118/Hgk8a+wRlSP6co8m5Lk=
+	b=2JFe5FV2AIhDu22aeXf6gW81Qu2tPNjmfHiwSyahb53tLqGr/KhXjeIfbhmm5M+qg
+	 mO8RG1M3CDfeAA++sbmAyFvA2DrZO3UFfXbc3ZGkOEc+4nEAJp1qTpksyQcnAFjfwD
+	 Xmyxt9DKRQIaJ+uvTXEbCDOzP2vkE+T6j6BcCtHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Xiao Ni <xni@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Song Liu <song@kernel.org>,
+	Jorge Ramirez-Ortiz <jorge@foundries.io>,
+	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 052/215] dm-raid: fix lockdep waring in "pers->hot_add_disk"
-Date: Thu, 11 Apr 2024 11:54:21 +0200
-Message-ID: <20240411095426.457638161@linuxfoundation.org>
+Subject: [PATCH 5.4 053/215] mmc: core: Fix switch on gp3 partition
+Date: Thu, 11 Apr 2024 11:54:22 +0200
+Message-ID: <20240411095426.487861039@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -53,47 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
-[ Upstream commit 95009ae904b1e9dca8db6f649f2d7c18a6e42c75 ]
+[ Upstream commit 4af59a8df5ea930038cd3355e822f5eedf4accc1 ]
 
-The lockdep assert is added by commit a448af25becf ("md/raid10: remove
-rcu protection to access rdev from conf") in print_conf(). And I didn't
-notice that dm-raid is calling "pers->hot_add_disk" without holding
-'reconfig_mutex'.
+Commit e7794c14fd73 ("mmc: rpmb: fixes pause retune on all RPMB
+partitions.") added a mask check for 'part_type', but the mask used was
+wrong leading to the code intended for rpmb also being executed for GP3.
 
-"pers->hot_add_disk" read and write many fields that is protected by
-'reconfig_mutex', and raid_resume() already grab the lock in other
-contex. Hence fix this problem by protecting "pers->host_add_disk"
-with the lock.
+On some MMCs (but not all) this would make gp3 partition inaccessible:
+armadillo:~# head -c 1 < /dev/mmcblk2gp3
+head: standard input: I/O error
+armadillo:~# dmesg -c
+[  422.976583] mmc2: running CQE recovery
+[  423.058182] mmc2: running CQE recovery
+[  423.137607] mmc2: running CQE recovery
+[  423.137802] blk_update_request: I/O error, dev mmcblk2gp3, sector 0 op 0x0:(READ) flags 0x80700 phys_seg 4 prio class 0
+[  423.237125] mmc2: running CQE recovery
+[  423.318206] mmc2: running CQE recovery
+[  423.397680] mmc2: running CQE recovery
+[  423.397837] blk_update_request: I/O error, dev mmcblk2gp3, sector 0 op 0x0:(READ) flags 0x0 phys_seg 1 prio class 0
+[  423.408287] Buffer I/O error on dev mmcblk2gp3, logical block 0, async page read
 
-Fixes: 9092c02d9435 ("DM RAID: Add ability to restore transiently failed devices on resume")
-Fixes: a448af25becf ("md/raid10: remove rcu protection to access rdev from conf")
-Cc: stable@vger.kernel.org # v6.7+
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Xiao Ni <xni@redhat.com>
-Acked-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240305072306.2562024-10-yukuai1@huaweicloud.com
+the part_type values of interest here are defined as follow:
+main  0
+boot0 1
+boot1 2
+rpmb  3
+gp0   4
+gp1   5
+gp2   6
+gp3   7
+
+so mask with EXT_CSD_PART_CONFIG_ACC_MASK (7) to correctly identify rpmb
+
+Fixes: e7794c14fd73 ("mmc: rpmb: fixes pause retune on all RPMB partitions.")
+Cc: stable@vger.kernel.org
+Cc: Jorge Ramirez-Ortiz <jorge@foundries.io>
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20240306-mmc-partswitch-v1-1-bf116985d950@codewreck.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-raid.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/core/block.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/dm-raid.c b/drivers/md/dm-raid.c
-index 1ccd765fad938..25eecb92f5f38 100644
---- a/drivers/md/dm-raid.c
-+++ b/drivers/md/dm-raid.c
-@@ -4027,7 +4027,9 @@ static void raid_resume(struct dm_target *ti)
- 		 * Take this opportunity to check whether any failed
- 		 * devices are reachable again.
- 		 */
-+		mddev_lock_nointr(mddev);
- 		attempt_restore_of_faulty_devices(rs);
-+		mddev_unlock(mddev);
- 	}
+diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
+index 554dba0a06f5b..32369b120f02c 100644
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -873,10 +873,11 @@ static const struct block_device_operations mmc_bdops = {
+ static int mmc_blk_part_switch_pre(struct mmc_card *card,
+ 				   unsigned int part_type)
+ {
+-	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
++	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_MASK;
++	const unsigned int rpmb = EXT_CSD_PART_CONFIG_ACC_RPMB;
+ 	int ret = 0;
  
- 	if (test_and_clear_bit(RT_FLAG_RS_SUSPENDED, &rs->runtime_flags)) {
+-	if ((part_type & mask) == mask) {
++	if ((part_type & mask) == rpmb) {
+ 		if (card->ext_csd.cmdq_en) {
+ 			ret = mmc_cmdq_disable(card);
+ 			if (ret)
+@@ -891,10 +892,11 @@ static int mmc_blk_part_switch_pre(struct mmc_card *card,
+ static int mmc_blk_part_switch_post(struct mmc_card *card,
+ 				    unsigned int part_type)
+ {
+-	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
++	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_MASK;
++	const unsigned int rpmb = EXT_CSD_PART_CONFIG_ACC_RPMB;
+ 	int ret = 0;
+ 
+-	if ((part_type & mask) == mask) {
++	if ((part_type & mask) == rpmb) {
+ 		mmc_retune_unpause(card->host);
+ 		if (card->reenable_cmdq && !card->ext_csd.cmdq_en)
+ 			ret = mmc_cmdq_enable(card);
 -- 
 2.43.0
 
