@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260FF14600E;
-	Thu, 11 Apr 2024 10:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E80146582;
+	Thu, 11 Apr 2024 10:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830528; cv=none; b=RymjtGEXO2pVxGEY/zvliVv8jgtjnWFKF9Tlzx0wDKoedAIyxt9NYZhfK+Jzyg5/3DMO7OKzWX6OqC2gkudQmxF+pabhz5vGPWS7RXA9QVI5cAY+pzhG2a/6Lll92Mr7doQ8J995SR8vCAilyb7BkES5ZRKmebYV7hVShWuE42A=
+	t=1712830531; cv=none; b=f7G2X/emxFH/QQC2VxDkesSSD4PNL1LmQspY3lrCjYrscv8sRrK0a0tGOabI6N3sbJySvaHt1Am2uAEK/9/5/V0ChThJpiciCVwVyKC7RRb3KAI0u3vnxfrxHNDXyiVNyk1ZMKjqWf/kZ3BmxdxQaZS3EeffF1Wmuw+1y0lBgKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830528; c=relaxed/simple;
-	bh=MNHt9bC8Sm/Qqsb7gVRvqAH9e2M0QIPuwvTvEE1Y4OY=;
+	s=arc-20240116; t=1712830531; c=relaxed/simple;
+	bh=QzTEHxZEqs3b/8hSe+9io+Nw7OFGnsXZeVGTstXa3Oo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpD8zM1Pa6EgVMYFBLzrqDu32KH5ETjTaJc5XOpuL9cZx3eKti3e24Mynd7DofdqMh4QECQcAksW3NNFL6SY0xD6FELK8oNJ4H6bA7p/dMHUyUUb2pyprK4JchQW3C4eCy0l6t/t6WomU76hsWFO55D+U4tTVP66QcFxTnxlqOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7k/9T7T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oPB8BXE52OPLppn8oOCUqcT4kaCcv4nNj3GKKq/c2TqWqO5HPtEng6yQXsp8rMd9uoNC4QB4KplUuwSMRjadKyPiEasZpZu6KHW3+cTOooqJV6mSBr5tFBvF34b9Aa4HKjw7i2M1XX8faT9yKYn6EMw88UQpwIX32tSPlL2U2yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SPSOHxUn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7k/9T7T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98260C433F1;
-	Thu, 11 Apr 2024 10:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SPSOHxUn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81687C43399;
+	Thu, 11 Apr 2024 10:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830528;
-	bh=MNHt9bC8Sm/Qqsb7gVRvqAH9e2M0QIPuwvTvEE1Y4OY=;
+	s=korg; t=1712830530;
+	bh=QzTEHxZEqs3b/8hSe+9io+Nw7OFGnsXZeVGTstXa3Oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b7k/9T7TMyHxrZvPI2VDady1nsVGnW2R97sXY1CkRPG7T9l/h1Oqy2ErXGmPYK01D
-	 O2X0ixaRGr96Kb4CR5zOxuyzB7c16YNBZwB1TTW6pIgzHSzRLKT63ZCZ9uSqcmLHaA
-	 WUlKjKISO/gEZumy4VT455Pthea/bQaAyDI+wSrk=
+	b=SPSOHxUneipe6c3GKuyrfx31VS/D7xOIzOTKC16BDr9FAwjUQ1tI/K2aCdopKSN53
+	 ryj4qUCR+DPQHaalepHOm/8Mn8Um+obnISENl5W4jql6CuE/q1NQOalqMMn/k7Pjgm
+	 XzASLXR3QoYgaNrInYRdQBgNL+QryW7UYGN5jXes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3ce5dea5b1539ff36769@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Helge Deller <deller@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 023/215] fat: fix uninitialized field in nostale filehandles
-Date: Thu, 11 Apr 2024 11:53:52 +0200
-Message-ID: <20240411095425.580772789@linuxfoundation.org>
+Subject: [PATCH 5.4 032/215] parisc: Strip upper 32 bit of sum in csum_ipv6_magic for 64-bit builds
+Date: Thu, 11 Apr 2024 11:54:01 +0200
+Message-ID: <20240411095425.864524369@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -54,47 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit fde2497d2bc3a063d8af88b258dbadc86bd7b57c ]
+[ Upstream commit 0568b6f0d863643db2edcc7be31165740c89fa82 ]
 
-When fat_encode_fh_nostale() encodes file handle without a parent it
-stores only first 10 bytes of the file handle. However the length of the
-file handle must be a multiple of 4 so the file handle is actually 12
-bytes long and the last two bytes remain uninitialized. This is not
-great at we potentially leak uninitialized information with the handle
-to userspace. Properly initialize the full handle length.
+IPv6 checksum tests with unaligned addresses on 64-bit builds result
+in unexpected failures.
 
-Link: https://lkml.kernel.org/r/20240205122626.13701-1-jack@suse.cz
-Reported-by: syzbot+3ce5dea5b1539ff36769@syzkaller.appspotmail.com
-Fixes: ea3983ace6b7 ("fat: restructure export_operations")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Cc: Amir Goldstein <amir73il@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Expected expected == csum_result, but
+    expected == 46591 (0xb5ff)
+    csum_result == 46381 (0xb52d)
+with alignment offset 1
+
+Oddly enough, the problem disappeared after adding test code into
+the beginning of csum_ipv6_magic().
+
+As it turns out, the 'sum' parameter of csum_ipv6_magic() is declared as
+__wsum, which is a 32-bit variable. However, it is treated as 64-bit
+variable in the 64-bit assembler code. Tests showed that the upper 32 bit
+of the register used to pass the variable are _not_ cleared when entering
+the function. This can result in checksum calculation errors.
+
+Clearing the upper 32 bit of 'sum' as first operation in the assembler
+code fixes the problem.
+
+Acked-by: Helge Deller <deller@gmx.de>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fat/nfs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/parisc/include/asm/checksum.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/fat/nfs.c b/fs/fat/nfs.c
-index af191371c3529..bab63eeaf9cbc 100644
---- a/fs/fat/nfs.c
-+++ b/fs/fat/nfs.c
-@@ -130,6 +130,12 @@ fat_encode_fh_nostale(struct inode *inode, __u32 *fh, int *lenp,
- 		fid->parent_i_gen = parent->i_generation;
- 		type = FILEID_FAT_WITH_PARENT;
- 		*lenp = FAT_FID_SIZE_WITH_PARENT;
-+	} else {
-+		/*
-+		 * We need to initialize this field because the fh is actually
-+		 * 12 bytes long
-+		 */
-+		fid->parent_i_pos_hi = 0;
- 	}
+diff --git a/arch/parisc/include/asm/checksum.h b/arch/parisc/include/asm/checksum.h
+index 7861d365ba1e2..ef34e8f839d55 100644
+--- a/arch/parisc/include/asm/checksum.h
++++ b/arch/parisc/include/asm/checksum.h
+@@ -141,6 +141,7 @@ static __inline__ __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
+ 	** Try to keep 4 registers with "live" values ahead of the ALU.
+ 	*/
  
- 	return type;
++"	depdi		0, 31, 32, %0\n"/* clear upper half of incoming checksum */
+ "	ldd,ma		8(%1), %4\n"	/* get 1st saddr word */
+ "	ldd,ma		8(%2), %5\n"	/* get 1st daddr word */
+ "	add		%4, %0, %0\n"
 -- 
 2.43.0
 
