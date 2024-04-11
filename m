@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 977D71DDE9;
-	Thu, 11 Apr 2024 10:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A981DDE9;
+	Thu, 11 Apr 2024 10:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830386; cv=none; b=IT9r8R9l0zdWGLCArclT1CCygDaXhWhI0iCUOq0pu1iqSP+tWqB7K2qUBM00BP9agYtWGCb3ufJs4ngFynW3fv4o0NqyxlrbRBB4mQVhh9U4kP2+2aiStgLfLJPHXbGgGt7tkuv4EYdYhm89kxd5IAb5EiZTbtjIfvCNUhiZbho=
+	t=1712830389; cv=none; b=jWeZDe9to+BUadFApmdaDUJDVViVgYOmBy+b/s/gpDam8LWRs0QG/Ugfj/kaU91fTacbpDkcFvO+FxfGMB3b/frO6cozQWY4xqLmBO4QuEPeUMfQoi+27ka2W90bxBNmbwpLs1KfnIY+6qc609Wz5SRg+69CKOeK0pmzIYUUIag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830386; c=relaxed/simple;
-	bh=ebnzQKkZkRyZMIjZoiNq7M1UcUz1ei4pIBUk7lZqNr4=;
+	s=arc-20240116; t=1712830389; c=relaxed/simple;
+	bh=z2SWin28xMM/FDuPfH14MGEKWMjXMIZshAGNRXX9WIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A+dGeXkF/45tqILX4IX4INgk0J8O/LKa/Yw2VWXGrbWJS8XkFXQ689ZuYq+LzL70ge1Uh2q12/eQ0iw7uihmaWEZMiaLlynYEQ2e32//aEkEzDt7e/6xlSA/9kp2+/pwLmAcZ4p6+xAU9f3uPEoF6Y66ND7G4+6TBAqLMruYq98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mowMZfX6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CTancD7iuEBvTlMgEFFej7xFoQiaaQQR1rB7LFm7te3oGOo26s1NwbpUJozkLu0xeg+kroDNhk1Lq6Lw9TgfQy3wAahqk3DlS6/J9BDhokRIn6Lgz30jKFrmrdrx8vDklAur+V70X8oRRPeMAm9rYxpIKECN8nhkJC1b0RuDosQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoOcXaWk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mowMZfX6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5B2C433C7;
-	Thu, 11 Apr 2024 10:13:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoOcXaWk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ACB5C433C7;
+	Thu, 11 Apr 2024 10:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830386;
-	bh=ebnzQKkZkRyZMIjZoiNq7M1UcUz1ei4pIBUk7lZqNr4=;
+	s=korg; t=1712830389;
+	bh=z2SWin28xMM/FDuPfH14MGEKWMjXMIZshAGNRXX9WIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mowMZfX6WXRqU5XnOsY2kxSs3aqKj48wHE1NdSj2nqwhyIuAW3kDUCU+IpFqzy7pC
-	 O0X75I77zv4C+8ImlpkSNw2ET/E4+CC5bZ43Wyxt9vTVaBNjVa0wg9XZWfByTq1SfG
-	 54XcsUNwKV1FAA9OBZFZdJ/cSB9Qdr2dQyswtZcY=
+	b=xoOcXaWkCby+zsyttqpl61ZT4wCOiyaFDlx2SYz/A/x2jywGEjzKbdksMggRwMyfj
+	 GkNYMIyZgu35keWTVLc0IJq4dPyotSzCd460Vg2rlTRsNmAbcGfLrTgZTfGqFV4J5p
+	 pcRFiovr4puRf/dPIIHws7L+lF2vvcRqhrB2ADGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawei Fu <i@ibugone.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Roman Smirnov <r.smirnov@omp.ru>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 127/143] drivers/nvme: Add quirks for device 126f:2262
-Date: Thu, 11 Apr 2024 11:56:35 +0200
-Message-ID: <20240411095424.727934392@linuxfoundation.org>
+Subject: [PATCH 6.8 128/143] fbmon: prevent division by zero in fb_videomode_from_videomode()
+Date: Thu, 11 Apr 2024 11:56:36 +0200
+Message-ID: <20240411095424.757698314@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -53,50 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawei Fu (iBug) <i@ibugone.com>
+From: Roman Smirnov <r.smirnov@omp.ru>
 
-[ Upstream commit e89086c43f0500bc7c4ce225495b73b8ce234c1f ]
+[ Upstream commit c2d953276b8b27459baed1277a4fdd5dd9bd4126 ]
 
-This commit adds NVME_QUIRK_NO_DEEPEST_PS and NVME_QUIRK_BOGUS_NID for
-device [126f:2262], which appears to be a generic VID:PID pair used for
-many SSDs based on the Silicon Motion SM2262/SM2262EN controller.
+The expression htotal * vtotal can have a zero value on
+overflow. It is necessary to prevent division by zero like in
+fb_var_to_videomode().
 
-Two of my SSDs with this VID:PID pair exhibit the same behavior:
+Found by Linux Verification Center (linuxtesting.org) with Svace.
 
-  * They frequently have trouble exiting the deepest power state (5),
-    resulting in the entire disk unresponsive.
-    Verified by setting nvme_core.default_ps_max_latency_us=10000 and
-    observing them behaving normally.
-  * They produce all-zero nguid and eui64 with `nvme id-ns` command.
-
-The offending products are:
-
-  * HP SSD EX950 1TB
-  * HIKVISION C2000Pro 2TB
-
-Signed-off-by: Jiawei Fu <i@ibugone.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Roman Smirnov <r.smirnov@omp.ru>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/video/fbdev/core/fbmon.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index e6267a6aa3801..8e0bb9692685d 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3363,6 +3363,9 @@ static const struct pci_device_id nvme_id_table[] = {
- 				NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_VDEVICE(REDHAT, 0x0010),	/* Qemu emulated controller */
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
-+	{ PCI_DEVICE(0x126f, 0x2262),	/* Silicon Motion generic */
-+		.driver_data = NVME_QUIRK_NO_DEEPEST_PS |
-+				NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_DEVICE(0x126f, 0x2263),	/* Silicon Motion unidentified */
- 		.driver_data = NVME_QUIRK_NO_NS_DESC_LIST |
- 				NVME_QUIRK_BOGUS_NID, },
+diff --git a/drivers/video/fbdev/core/fbmon.c b/drivers/video/fbdev/core/fbmon.c
+index 79e5bfbdd34c2..0a26399dbc899 100644
+--- a/drivers/video/fbdev/core/fbmon.c
++++ b/drivers/video/fbdev/core/fbmon.c
+@@ -1311,7 +1311,7 @@ int fb_get_mode(int flags, u32 val, struct fb_var_screeninfo *var, struct fb_inf
+ int fb_videomode_from_videomode(const struct videomode *vm,
+ 				struct fb_videomode *fbmode)
+ {
+-	unsigned int htotal, vtotal;
++	unsigned int htotal, vtotal, total;
+ 
+ 	fbmode->xres = vm->hactive;
+ 	fbmode->left_margin = vm->hback_porch;
+@@ -1344,8 +1344,9 @@ int fb_videomode_from_videomode(const struct videomode *vm,
+ 	vtotal = vm->vactive + vm->vfront_porch + vm->vback_porch +
+ 		 vm->vsync_len;
+ 	/* prevent division by zero */
+-	if (htotal && vtotal) {
+-		fbmode->refresh = vm->pixelclock / (htotal * vtotal);
++	total = htotal * vtotal;
++	if (total) {
++		fbmode->refresh = vm->pixelclock / total;
+ 	/* a mode must have htotal and vtotal != 0 or it is invalid */
+ 	} else {
+ 		fbmode->refresh = 0;
 -- 
 2.43.0
 
