@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7270F79FD;
-	Thu, 11 Apr 2024 10:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D84579FD;
+	Thu, 11 Apr 2024 10:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832584; cv=none; b=tT/zTfonpsu2GYXWF7tP9HwhWKrhKBho1nLLdNGfnpQMaT31lKUUkUCE28lbzNXMgWqKcBVUM+jye6L8MYQnJQzdrPY0usCTSR1oEB60svbfYQEV2kPqDvyWloAQdEWwFonP6hmM4XxsTh0gW+NSTp/hvjZm0htwhcAqjFNdndM=
+	t=1712832587; cv=none; b=WN9eTeyzwKUxalReHnEzBD3G2n/+mQ9TFzPczDOH2L/Ds0xEXcKVJJmbOKiTo3CvIdIc2qXj58Vj4INamraUJ6IokM25v9U5BiFRPw2e3+gI8iUMtJtIVOJ0uT78yt7JWg4H4ir5OLDLy/8UTD9uwbagdh6aCPdwJUCYqGCKsG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832584; c=relaxed/simple;
-	bh=DXsN0k/36I52V4j9bo21EsMSuKZ8uTj2dkDEK1yLu1g=;
+	s=arc-20240116; t=1712832587; c=relaxed/simple;
+	bh=O2fdcscBA3c3capcWmCUI/IV9rmygdNl/DlLmB7PQ/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NtlXTow7l+HuZz83Bdla9gg8lDCQDU6L/JYar507uBtdsQf39M047mlLkdDMwIiJ8QPuqKWvPz179lmsVHPzhRZbY8FyTBfYpAPQiDa4TEkm9kWsyPq2OXSSaw/iLMQElbDNV8rggwY99TSiNNszDar08Ul9O4dseGIsbv1v7tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0M+8M14q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jya9WKMudrwsJmeDviovYNO3EPQ9HkreDoQVQ2qXVZE3DG06kZeB5EKnj2nJo5ZrIoF4CCt634hKeXb9IjQwiu1B/VAxGlFEXy88BZXeY55br/XxBTh05Lts648CRpyibeHUXfzSKm4derAkRt30Sqtdsx6Mqlham8i+y65Sk0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y22ktpiU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0M+8M14q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC6CC433C7;
-	Thu, 11 Apr 2024 10:49:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y22ktpiU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E4BC433F1;
+	Thu, 11 Apr 2024 10:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832584;
-	bh=DXsN0k/36I52V4j9bo21EsMSuKZ8uTj2dkDEK1yLu1g=;
+	s=korg; t=1712832587;
+	bh=O2fdcscBA3c3capcWmCUI/IV9rmygdNl/DlLmB7PQ/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0M+8M14qj0SuzNamxrpP6wPnATfSdVNdqCa6IwLas75ZtDUu9xn4P31X1dY7JmOc6
-	 CTHPCdrSH4zTvjhWBqzI442sNsLYWNl9txV2+yS1Sq6E6GIiSk0Yf/Y9TDNNiuOEG6
-	 dimc5hDrwlvANIvYJb/00kPtgxgaEwR5LCEo7MN0=
+	b=Y22ktpiUbgn9oHqD3q/DF+ZrHWuVvV9MJrwiVQosuNvn6ojNb/xwExq1wCdDUFRKp
+	 hzT3w1q8gAqees8QDTuq+eGP++zfh2kY9Vxxzhkux1OF4Qy+Lw695Or3WEGGe2OeyW
+	 ksVpkR1Uvlan2rrdOANR9TJfLbIcxXLYYUYm8BwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <elfring@users.sourceforge.net>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Kees Cook <keescook@chromium.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 04/57] batman-adv: Improve exception handling in batadv_throw_uevent()
-Date: Thu, 11 Apr 2024 11:57:12 +0200
-Message-ID: <20240411095408.119522661@linuxfoundation.org>
+Subject: [PATCH 5.15 05/57] VMCI: Fix memcpy() run-time warning in dg_dispatch_as_host()
+Date: Thu, 11 Apr 2024 11:57:13 +0200
+Message-ID: <20240411095408.151230810@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095407.982258070@linuxfoundation.org>
 References: <20240411095407.982258070@linuxfoundation.org>
@@ -52,69 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Elfring <elfring@users.sourceforge.net>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit 5593e9abf1cf2bf096366d8c7fd933bc69d561ce ]
+[ Upstream commit 19b070fefd0d024af3daa7329cbc0d00de5302ec ]
 
-The kfree() function was called in up to three cases by
-the batadv_throw_uevent() function during error handling
-even if the passed variable contained a null pointer.
-This issue was detected by using the Coccinelle software.
+Syzkaller hit 'WARNING in dg_dispatch_as_host' bug.
 
-* Thus adjust jump targets.
+memcpy: detected field-spanning write (size 56) of single field "&dg_info->msg"
+at drivers/misc/vmw_vmci/vmci_datagram.c:237 (size 24)
 
-* Reorder kfree() calls at the end.
+WARNING: CPU: 0 PID: 1555 at drivers/misc/vmw_vmci/vmci_datagram.c:237
+dg_dispatch_as_host+0x88e/0xa60 drivers/misc/vmw_vmci/vmci_datagram.c:237
 
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-Acked-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Some code commentry, based on my understanding:
+
+544 #define VMCI_DG_SIZE(_dg) (VMCI_DG_HEADERSIZE + (size_t)(_dg)->payload_size)
+/// This is 24 + payload_size
+
+memcpy(&dg_info->msg, dg, dg_size);
+	Destination = dg_info->msg ---> this is a 24 byte
+					structure(struct vmci_datagram)
+	Source = dg --> this is a 24 byte structure (struct vmci_datagram)
+	Size = dg_size = 24 + payload_size
+
+{payload_size = 56-24 =32} -- Syzkaller managed to set payload_size to 32.
+
+ 35 struct delayed_datagram_info {
+ 36         struct datagram_entry *entry;
+ 37         struct work_struct work;
+ 38         bool in_dg_host_queue;
+ 39         /* msg and msg_payload must be together. */
+ 40         struct vmci_datagram msg;
+ 41         u8 msg_payload[];
+ 42 };
+
+So those extra bytes of payload are copied into msg_payload[], a run time
+warning is seen while fuzzing with Syzkaller.
+
+One possible way to fix the warning is to split the memcpy() into
+two parts -- one -- direct assignment of msg and second taking care of payload.
+
+Gustavo quoted:
+"Under FORTIFY_SOURCE we should not copy data across multiple members
+in a structure."
+
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Suggested-by: Vegard Nossum <vegard.nossum@oracle.com>
+Suggested-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240105164001.2129796-2-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/main.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/misc/vmw_vmci/vmci_datagram.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/batman-adv/main.c b/net/batman-adv/main.c
-index 5207cd8d6ad83..fba65c5c90bb9 100644
---- a/net/batman-adv/main.c
-+++ b/net/batman-adv/main.c
-@@ -688,29 +688,31 @@ int batadv_throw_uevent(struct batadv_priv *bat_priv, enum batadv_uev_type type,
- 				  "%s%s", BATADV_UEV_TYPE_VAR,
- 				  batadv_uev_type_str[type]);
- 	if (!uevent_env[0])
--		goto out;
-+		goto report_error;
+diff --git a/drivers/misc/vmw_vmci/vmci_datagram.c b/drivers/misc/vmw_vmci/vmci_datagram.c
+index f50d22882476f..d1d8224c8800c 100644
+--- a/drivers/misc/vmw_vmci/vmci_datagram.c
++++ b/drivers/misc/vmw_vmci/vmci_datagram.c
+@@ -234,7 +234,8 @@ static int dg_dispatch_as_host(u32 context_id, struct vmci_datagram *dg)
  
- 	uevent_env[1] = kasprintf(GFP_ATOMIC,
- 				  "%s%s", BATADV_UEV_ACTION_VAR,
- 				  batadv_uev_action_str[action]);
- 	if (!uevent_env[1])
--		goto out;
-+		goto free_first_env;
+ 			dg_info->in_dg_host_queue = true;
+ 			dg_info->entry = dst_entry;
+-			memcpy(&dg_info->msg, dg, dg_size);
++			dg_info->msg = *dg;
++			memcpy(&dg_info->msg_payload, dg + 1, dg->payload_size);
  
- 	/* If the event is DEL, ignore the data field */
- 	if (action != BATADV_UEV_DEL) {
- 		uevent_env[2] = kasprintf(GFP_ATOMIC,
- 					  "%s%s", BATADV_UEV_DATA_VAR, data);
- 		if (!uevent_env[2])
--			goto out;
-+			goto free_second_env;
- 	}
- 
- 	ret = kobject_uevent_env(bat_kobj, KOBJ_CHANGE, uevent_env);
--out:
--	kfree(uevent_env[0]);
--	kfree(uevent_env[1]);
- 	kfree(uevent_env[2]);
-+free_second_env:
-+	kfree(uevent_env[1]);
-+free_first_env:
-+	kfree(uevent_env[0]);
- 
- 	if (ret)
-+report_error:
- 		batadv_dbg(BATADV_DBG_BATMAN, bat_priv,
- 			   "Impossible to send uevent for (%s,%s,%s) event (err: %d)\n",
- 			   batadv_uev_type_str[type],
+ 			INIT_WORK(&dg_info->work, dg_delayed_dispatch);
+ 			schedule_work(&dg_info->work);
 -- 
 2.43.0
 
