@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17FC6BB29;
-	Thu, 11 Apr 2024 10:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCFA6BB29;
+	Thu, 11 Apr 2024 10:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832342; cv=none; b=r3B6rBWmp4alWzETGWINjGpv+AqEwM7fXt8AuAGj8jXswAFMXpUgo7H8jPxB4LPIw+gDy9iE0yg3epjJjuSqiI/fOl+CAAQTr1o0boonWefmKaFpLwcOciQLuaV2BPF3l+HT+31Ar7l/jaVwuSmsmso/66AZg7WYgtsuu9vAMTg=
+	t=1712832345; cv=none; b=qv5pUzI5Mz/1mrnn7ofima4CxprFhTL3sNDvmDSWjBt8WTHKqGxvJB+49kuVfghfBHQhO69jodQZ+R9ap0Go8GnlGwGIcFCjlZqFCNmb5sosgNQLuY7AxNUeNvAEcrUhyeEzvWS96/NFh0qldof5VenpoRQavWiiqK3Mcq7YOtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832342; c=relaxed/simple;
-	bh=zgr+sGQpD4vQs9Lqt3wFQfl7qlumGyGjAA2KC70zhjY=;
+	s=arc-20240116; t=1712832345; c=relaxed/simple;
+	bh=3WNVBvW1TOneoNHKr++5vI5AUPLjuKjBQTbzShp1oU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o79Vh9qttdjLjTQHPlC88FllsJAaCkDK0pC/DuKkwRXphj1GA1ufJuf2wbq7FV1X1tDYEjDHcNpULkFdOK18v12Y6OvK9OzKRVPfvUz8Qf/5d9ZgLFHmp12jGC7T1QHsiLkkAcSwpEzUDeCKiY7ywLrd8TiycbZee4qBy5SCd9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GOKyYr6a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XhQ/UDUgZa/I5+DOhkuQOI9xy0Sg2H7AVkEzTE+wwLDCIm0SxZpU8jRidT21raUTaXt/pumz9zp7fG3aRmiDjv5qhd04vFoMzJHzHDIYrG44zUgmZ4gwJSEQ6zxW4nyn8Dog2PhEfxWzpgyhWJvAgJWcVdOk1ww5gmYXFKIftRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/yPjaAo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GOKyYr6a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EF1C433F1;
-	Thu, 11 Apr 2024 10:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/yPjaAo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE75C433F1;
+	Thu, 11 Apr 2024 10:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832342;
-	bh=zgr+sGQpD4vQs9Lqt3wFQfl7qlumGyGjAA2KC70zhjY=;
+	s=korg; t=1712832345;
+	bh=3WNVBvW1TOneoNHKr++5vI5AUPLjuKjBQTbzShp1oU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GOKyYr6aekiC/gh8Nocf5x0MyTKDReNEn6jRRry0q/f/4VtWMxj1/5eIfG5umkqge
-	 BtuwusadnlfcLpG0sjHTpt9cxJkLT+5bw5ggQNfN+BZs1SBpz301dcSwcENDxgb2Ih
-	 ptawHkIEku9UbgxQK1c185Kp5oSp6vJX3R12XcyM=
+	b=C/yPjaAoheKxdc+vDdtST4UeVw66ygywmQzCWTbBEiQn+n6vwIC3n9Ux+fl7zMwQz
+	 pFHIXd1/onYCg1pNMnO8Anx6JnV6J+kpe3DQyB9K12hMQwS76TE1YwIfcHlwAhut3e
+	 zJcVDYXIPPIU0kgCuLBfL13C7L3EqfodpqQbdR60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 17/83] tools/power x86_energy_perf_policy: Fix file leak in get_pkg_num()
-Date: Thu, 11 Apr 2024 11:56:49 +0200
-Message-ID: <20240411095413.196865927@linuxfoundation.org>
+Subject: [PATCH 6.1 18/83] net: pcs: xpcs: Return EINVAL in the internal methods
+Date: Thu, 11 Apr 2024 11:56:50 +0200
+Message-ID: <20240411095413.226623709@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
 References: <20240411095412.671665933@linuxfoundation.org>
@@ -51,33 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Serge Semin <fancer.lancer@gmail.com>
 
-[ Upstream commit f85450f134f0b4ca7e042dc3dc89155656a2299d ]
+[ Upstream commit f5151005d379d9ce42e327fd3b2d2aaef61cda81 ]
 
-In function get_pkg_num() if fopen_or_die() succeeds it returns a file
-pointer to be used. But fclose() is never called before returning from
-the function.
+In particular the xpcs_soft_reset() and xpcs_do_config() functions
+currently return -1 if invalid auto-negotiation mode is specified. That
+value might be then passed to the generic kernel subsystems which require
+a standard kernel errno value. Even though the erroneous conditions are
+very specific (memory corruption or buggy driver implementation) using a
+hard-coded -1 literal doesn't seem correct anyway especially when it comes
+to passing it higher to the network subsystem or printing to the system
+log.  Convert the hard-coded error values to -EINVAL then.
 
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
+Tested-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/pcs/pcs-xpcs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-index 5fd9e594079cf..ebda9c366b2ba 100644
---- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-+++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-@@ -1241,6 +1241,7 @@ unsigned int get_pkg_num(int cpu)
- 	retval = fscanf(fp, "%d\n", &pkg);
- 	if (retval != 1)
- 		errx(1, "%s: failed to parse", pathname);
-+	fclose(fp);
- 	return pkg;
- }
+diff --git a/drivers/net/pcs/pcs-xpcs.c b/drivers/net/pcs/pcs-xpcs.c
+index 3f882bce37f42..d126273daab4f 100644
+--- a/drivers/net/pcs/pcs-xpcs.c
++++ b/drivers/net/pcs/pcs-xpcs.c
+@@ -262,7 +262,7 @@ static int xpcs_soft_reset(struct dw_xpcs *xpcs,
+ 		dev = MDIO_MMD_VEND2;
+ 		break;
+ 	default:
+-		return -1;
++		return -EINVAL;
+ 	}
  
+ 	ret = xpcs_write(xpcs, dev, MDIO_CTRL1, MDIO_CTRL1_RESET);
+@@ -904,7 +904,7 @@ int xpcs_do_config(struct dw_xpcs *xpcs, phy_interface_t interface,
+ 			return ret;
+ 		break;
+ 	default:
+-		return -1;
++		return -EINVAL;
+ 	}
+ 
+ 	if (compat->pma_config) {
 -- 
 2.43.0
 
