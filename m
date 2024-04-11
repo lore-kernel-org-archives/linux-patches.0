@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26DA14AD26;
-	Thu, 11 Apr 2024 10:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902C7146D4F;
+	Thu, 11 Apr 2024 10:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831556; cv=none; b=d5Z1DjfhM9Sbg9gGVnpDoaD+i/tFgl94xisq/yIbpf/RGNR/8ZjMMMuyKCIoGkinN6EW6xeZCdvnWBF4OjflTDfQc0ifCIJTjrX+pfBWkL9aoaEPbiq0jB6YT6PKyTOENWbDQDAtlgdcVj6kuu7r1H+Gq0G5amsd/WhE1fjDvTo=
+	t=1712831559; cv=none; b=K/8X+jVvuXp6N/fSB2W/fnH1VOP0TcHvGvO5Z+psXGyNLRXRlFUf7HHaKw+O8YMUcucsSDsMVeTs1epIpbfndN5yzwllIpM7rGFNiTDgldZT4ZshJsOg4hHIljC99HMYd9rsb1gXuMS0e2Cze1z3gghokzJ9mPBmLFuv0zwQ7JY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831556; c=relaxed/simple;
-	bh=Oy5bL5AoBnz16iJsbJlwRm81NuEPiaGSS0kdu4ouo20=;
+	s=arc-20240116; t=1712831559; c=relaxed/simple;
+	bh=cq/CH0pLmLgaQsPqCtblYdNC0xRDTHN3O1Pyx8SlJyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D+wvfl+/ocT4NUhDJVRpBOamNg/grFaVqLLksK3DK2vIDPzkNmjdBA0ZCO8A6LLA4XG644JuFqeJbfe4/WQ3PtjChoEgk702Y1ipdlLM5+seditcKC+TM3h1K7OwILOiJARtszwqAKZwkrJL0DSc3/WKVVkKpHHi75PAeASrHHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tABiiicI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Sd+6aRlju8kkeUNtKB09uoTFUR+yIW986IXeVGdlrA9z9s5UteviEKF6m62OCaNry3lylWPgSF/nDZxvld2ukaqhyCFQIwhA/w7bLO/HkbuZ9EaVauMR0CAgUMYTFN6eU1ldTuYzo06AVR+7XD5i7WOVQHD/SPX3ioVeueFQ2WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yeo0cBbi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tABiiicI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4A3C433C7;
-	Thu, 11 Apr 2024 10:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yeo0cBbi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167F1C433F1;
+	Thu, 11 Apr 2024 10:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831556;
-	bh=Oy5bL5AoBnz16iJsbJlwRm81NuEPiaGSS0kdu4ouo20=;
+	s=korg; t=1712831559;
+	bh=cq/CH0pLmLgaQsPqCtblYdNC0xRDTHN3O1Pyx8SlJyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tABiiicIhmIzKu5pYfp/Re+ONm9QjNBXQbanTaB2zUECRjIh/zfNxFwXF6LCGsEro
-	 +KY8kwmX4+X9KGgVHSZU38lBOZtmmZkKcL1Bw0i/+8CGKcAPtNwILGq+1E3cy/OEJd
-	 Ucm8l2/H7NPil+U3rm5nF1Ux3WzH1+xavO9LfLmY=
+	b=yeo0cBbihx7usyxYJyzXh6dgAi0fOJTs6O/1JnT3jAdueYGKPPazIIs2Oi9KGQ8WB
+	 MHhALsLXXbYvpu5r0tj4qqqKkz52SdDuxCA3K9EJKCkFM5ZnkeMan678zwChVsb7B1
+	 sHBIvpB7s79mYwolV7zJOO93c+si7kdNlxxn0QJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Igor Zhbanov <izh1979@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	sparclinux@vger.kernel.org,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Andreas Larsson <andreas@gaisler.com>,
+	=?UTF-8?q?Christian=20H=C3=A4ggstr=C3=B6m?= <christian.haggstrom@orexplore.com>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/294] sparc64: NMI watchdog: fix return value of __setup handler
-Date: Thu, 11 Apr 2024 11:53:04 +0200
-Message-ID: <20240411095436.270792014@linuxfoundation.org>
+Subject: [PATCH 5.10 048/294] USB: serial: cp210x: add ID for MGP Instruments PDS100
+Date: Thu, 11 Apr 2024 11:53:31 +0200
+Message-ID: <20240411095437.088397490@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -51,55 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Christian Häggström <christian.haggstrom@orexplore.com>
 
-[ Upstream commit 3ed7c61e49d65dacb96db798c0ab6fcd55a1f20f ]
+[ Upstream commit a0d9d868491a362d421521499d98308c8e3a0398 ]
 
-__setup() handlers should return 1 to obsolete_checksetup() in
-init/main.c to indicate that the boot option has been handled.
-A return of 0 causes the boot option/value to be listed as an Unknown
-kernel parameter and added to init's (limited) argument or environment
-strings. Also, error return codes don't mean anything to
-obsolete_checksetup() -- only non-zero (usually 1) or zero.
-So return 1 from setup_nmi_watchdog().
+The radiation meter has the text MGP Instruments PDS-100G or PDS-100GN
+produced by Mirion Technologies. Tested by forcing the driver
+association with
 
-Fixes: e5553a6d0442 ("sparc64: Implement NMI watchdog on capable cpus.")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: Igor Zhbanov <izh1979@gmail.com>
-Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: sparclinux@vger.kernel.org
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
+  echo 10c4 863c > /sys/bus/usb-serial/drivers/cp210x/new_id
+
+and then setting the serial port in 115200 8N1 mode. The device
+announces ID_USB_VENDOR_ENC=Silicon\x20Labs and ID_USB_MODEL_ENC=PDS100
+
+Signed-off-by: Christian Häggström <christian.haggstrom@orexplore.com>
 Cc: stable@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Andreas Larsson <andreas@gaisler.com>
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
-Link: https://lore.kernel.org/r/20240211052802.22612-1-rdunlap@infradead.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/kernel/nmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/cp210x.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/sparc/kernel/nmi.c b/arch/sparc/kernel/nmi.c
-index 060fff95a305c..fbf25e926f67c 100644
---- a/arch/sparc/kernel/nmi.c
-+++ b/arch/sparc/kernel/nmi.c
-@@ -274,7 +274,7 @@ static int __init setup_nmi_watchdog(char *str)
- 	if (!strncmp(str, "panic", 5))
- 		panic_on_timeout = 1;
- 
--	return 0;
-+	return 1;
- }
- __setup("nmi_watchdog=", setup_nmi_watchdog);
- 
+diff --git a/drivers/usb/serial/cp210x.c b/drivers/usb/serial/cp210x.c
+index f4c982a323df2..12d0be4d15101 100644
+--- a/drivers/usb/serial/cp210x.c
++++ b/drivers/usb/serial/cp210x.c
+@@ -148,6 +148,7 @@ static const struct usb_device_id id_table[] = {
+ 	{ USB_DEVICE(0x10C4, 0x85EA) }, /* AC-Services IBUS-IF */
+ 	{ USB_DEVICE(0x10C4, 0x85EB) }, /* AC-Services CIS-IBUS */
+ 	{ USB_DEVICE(0x10C4, 0x85F8) }, /* Virtenio Preon32 */
++	{ USB_DEVICE(0x10C4, 0x863C) }, /* MGP Instruments PDS100 */
+ 	{ USB_DEVICE(0x10C4, 0x8664) }, /* AC-Services CAN-IF */
+ 	{ USB_DEVICE(0x10C4, 0x8665) }, /* AC-Services OBD-IF */
+ 	{ USB_DEVICE(0x10C4, 0x87ED) }, /* IMST USB-Stick for Smart Meter */
 -- 
 2.43.0
 
