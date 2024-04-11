@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C9014600A;
-	Thu, 11 Apr 2024 10:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1BC145B05;
+	Thu, 11 Apr 2024 10:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829918; cv=none; b=WcIakStyT6dlTtaKbwQKBUX1BB6yEZnaT6ye3nRMSnBd9N0YV4Sm80atd1W9xx1pY9IJ79ydqQ+/9s4EhJcWxWzwytc7PsiiDBe7MBBDIkoDFonY+TQoj5vNVw+Lx43t97yx8acjXCCJxmCmY52jL9tj/qrbSstjSTARgqmTTq4=
+	t=1712829920; cv=none; b=DZGCdE/5c7r49mxMU3LKprOHJJufa/JPZKKRlTB4UIpvZh0b+LvsGNbpmddt/zRPPzZlfWncp4OtPDAZgh4eLeJ8QE3yfaGRyaSrIFmJuaJVk41jbGnRSCDYrLxkX8PlHmNypCyPx6V4gTVIeMddBu9v8GeIDdF34akEj7i+kJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829918; c=relaxed/simple;
-	bh=w24IojX4/Q/DJ/EQR880p51X+eH7bv7IROuRn+sWal4=;
+	s=arc-20240116; t=1712829920; c=relaxed/simple;
+	bh=FBkIXuU3KrkzKkRKPCh7uOUpS6Xsb/yijw5lWh1rEW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mKMhT3/lOKaHDVeronFAxHUpa8vg9V5gOTlYmF8+STqBLgwjSTpMS2lDSZQZvTjfwZvp+BmpKKL0q0W/xrA6NtqggYUnUeff5lNme2J0nLa3knfSiS7ByC9kVmfhe5KedRgtxQmn/zygbGbX5RWBQimjb1Islnqvxx30Jni6OZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvLL51bs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m0spd/cWY/MSH+fRcp4ixVnLWp/R0gd1PbDo9KUCHrtlh4o4lkVcPULrXZPPiksaUFO2zMlievbHSHYHDaq9O7psYwtPXgapRNSXrCDepNMnOllYnFrxXvpKKhBbJV/6wvNIazm38XBr2rRNWB8E2vgcaHQeMSeGXYOaDCas0dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxQR4djc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvLL51bs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30170C433F1;
-	Thu, 11 Apr 2024 10:05:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxQR4djc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E23FC433C7;
+	Thu, 11 Apr 2024 10:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829917;
-	bh=w24IojX4/Q/DJ/EQR880p51X+eH7bv7IROuRn+sWal4=;
+	s=korg; t=1712829920;
+	bh=FBkIXuU3KrkzKkRKPCh7uOUpS6Xsb/yijw5lWh1rEW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lvLL51bstx+JKK7qBU6WbefhdEc17XchJ71iYi+DHkZtQNPjgKRCQCxstOgaSCCTy
-	 nd652MW6+5yn72k5XMOPuHfgzVnFRNw0NeFw4R8LTVDV7BxCja0P13QQ+VXcCw3DVP
-	 uuNpdg0napLUme6LwMZZV0HCUgJOgy6r9jegd+SQ=
+	b=CxQR4djcvo13hrXJxOaaYLIb0P4uyY7BXQLCd6KXJHlBxMRpVABds45/1YMKe3g5U
+	 INFjS+W16JSF+mxrZq7Ri3RZqxDo1r1OesDZib3+OXu1jpM9gjTYyLDMS3VS67nf0s
+	 UtMgFgUMskFtUWLKybMuA9ivkB131HdcdUiel4fI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 149/175] btrfs: handle chunk tree lookup error in btrfs_relocate_sys_chunks()
-Date: Thu, 11 Apr 2024 11:56:12 +0200
-Message-ID: <20240411095424.048475234@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 123/175] net/sched: act_skbmod: prevent kernel-infoleak
+Date: Thu, 11 Apr 2024 11:55:46 +0200
+Message-ID: <20240411095423.269795828@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,56 +51,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 7411055db5ce64f836aaffd422396af0075fdc99 ]
+commit d313eb8b77557a6d5855f42d2234bd592c7b50dd upstream.
 
-The unhandled case in btrfs_relocate_sys_chunks() loop is a corruption,
-as it could be caused only by two impossible conditions:
+syzbot found that tcf_skbmod_dump() was copying four bytes
+from kernel stack to user space [1].
 
-- at first the search key is set up to look for a chunk tree item, with
-  offset -1, this is an inexact search and the key->offset will contain
-  the correct offset upon a successful search, a valid chunk tree item
-  cannot have an offset -1
+The issue here is that 'struct tc_skbmod' has a four bytes hole.
 
-- after first successful search, the found_key corresponds to a chunk
-  item, the offset is decremented by 1 before the next loop, it's
-  impossible to find a chunk item there due to alignment and size
-  constraints
+We need to clear the structure before filling fields.
 
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[1]
+BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+ BUG: KMSAN: kernel-infoleak in copy_to_user_iter lib/iov_iter.c:24 [inline]
+ BUG: KMSAN: kernel-infoleak in iterate_ubuf include/linux/iov_iter.h:29 [inline]
+ BUG: KMSAN: kernel-infoleak in iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
+ BUG: KMSAN: kernel-infoleak in iterate_and_advance include/linux/iov_iter.h:271 [inline]
+ BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x366/0x2520 lib/iov_iter.c:185
+  instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+  copy_to_user_iter lib/iov_iter.c:24 [inline]
+  iterate_ubuf include/linux/iov_iter.h:29 [inline]
+  iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
+  iterate_and_advance include/linux/iov_iter.h:271 [inline]
+  _copy_to_iter+0x366/0x2520 lib/iov_iter.c:185
+  copy_to_iter include/linux/uio.h:196 [inline]
+  simple_copy_to_iter net/core/datagram.c:532 [inline]
+  __skb_datagram_iter+0x185/0x1000 net/core/datagram.c:420
+  skb_copy_datagram_iter+0x5c/0x200 net/core/datagram.c:546
+  skb_copy_datagram_msg include/linux/skbuff.h:4050 [inline]
+  netlink_recvmsg+0x432/0x1610 net/netlink/af_netlink.c:1962
+  sock_recvmsg_nosec net/socket.c:1046 [inline]
+  sock_recvmsg+0x2c4/0x340 net/socket.c:1068
+  __sys_recvfrom+0x35a/0x5f0 net/socket.c:2242
+  __do_sys_recvfrom net/socket.c:2260 [inline]
+  __se_sys_recvfrom net/socket.c:2256 [inline]
+  __x64_sys_recvfrom+0x126/0x1d0 net/socket.c:2256
+ do_syscall_64+0xd5/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+
+Uninit was stored to memory at:
+  pskb_expand_head+0x30f/0x19d0 net/core/skbuff.c:2253
+  netlink_trim+0x2c2/0x330 net/netlink/af_netlink.c:1317
+  netlink_unicast+0x9f/0x1260 net/netlink/af_netlink.c:1351
+  nlmsg_unicast include/net/netlink.h:1144 [inline]
+  nlmsg_notify+0x21d/0x2f0 net/netlink/af_netlink.c:2610
+  rtnetlink_send+0x73/0x90 net/core/rtnetlink.c:741
+  rtnetlink_maybe_send include/linux/rtnetlink.h:17 [inline]
+  tcf_add_notify net/sched/act_api.c:2048 [inline]
+  tcf_action_add net/sched/act_api.c:2071 [inline]
+  tc_ctl_action+0x146e/0x19d0 net/sched/act_api.c:2119
+  rtnetlink_rcv_msg+0x1737/0x1900 net/core/rtnetlink.c:6595
+  netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2559
+  rtnetlink_rcv+0x34/0x40 net/core/rtnetlink.c:6613
+  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
+  netlink_unicast+0xf4c/0x1260 net/netlink/af_netlink.c:1361
+  netlink_sendmsg+0x10df/0x11f0 net/netlink/af_netlink.c:1905
+  sock_sendmsg_nosec net/socket.c:730 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:745
+  ____sys_sendmsg+0x877/0xb60 net/socket.c:2584
+  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
+  __sys_sendmsg net/socket.c:2667 [inline]
+  __do_sys_sendmsg net/socket.c:2676 [inline]
+  __se_sys_sendmsg net/socket.c:2674 [inline]
+  __x64_sys_sendmsg+0x307/0x4a0 net/socket.c:2674
+ do_syscall_64+0xd5/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+
+Uninit was stored to memory at:
+  __nla_put lib/nlattr.c:1041 [inline]
+  nla_put+0x1c6/0x230 lib/nlattr.c:1099
+  tcf_skbmod_dump+0x23f/0xc20 net/sched/act_skbmod.c:256
+  tcf_action_dump_old net/sched/act_api.c:1191 [inline]
+  tcf_action_dump_1+0x85e/0x970 net/sched/act_api.c:1227
+  tcf_action_dump+0x1fd/0x460 net/sched/act_api.c:1251
+  tca_get_fill+0x519/0x7a0 net/sched/act_api.c:1628
+  tcf_add_notify_msg net/sched/act_api.c:2023 [inline]
+  tcf_add_notify net/sched/act_api.c:2042 [inline]
+  tcf_action_add net/sched/act_api.c:2071 [inline]
+  tc_ctl_action+0x1365/0x19d0 net/sched/act_api.c:2119
+  rtnetlink_rcv_msg+0x1737/0x1900 net/core/rtnetlink.c:6595
+  netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2559
+  rtnetlink_rcv+0x34/0x40 net/core/rtnetlink.c:6613
+  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
+  netlink_unicast+0xf4c/0x1260 net/netlink/af_netlink.c:1361
+  netlink_sendmsg+0x10df/0x11f0 net/netlink/af_netlink.c:1905
+  sock_sendmsg_nosec net/socket.c:730 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:745
+  ____sys_sendmsg+0x877/0xb60 net/socket.c:2584
+  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
+  __sys_sendmsg net/socket.c:2667 [inline]
+  __do_sys_sendmsg net/socket.c:2676 [inline]
+  __se_sys_sendmsg net/socket.c:2674 [inline]
+  __x64_sys_sendmsg+0x307/0x4a0 net/socket.c:2674
+ do_syscall_64+0xd5/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+
+Local variable opt created at:
+  tcf_skbmod_dump+0x9d/0xc20 net/sched/act_skbmod.c:244
+  tcf_action_dump_old net/sched/act_api.c:1191 [inline]
+  tcf_action_dump_1+0x85e/0x970 net/sched/act_api.c:1227
+
+Bytes 188-191 of 248 are uninitialized
+Memory access of size 248 starts at ffff888117697680
+Data copied to user address 00007ffe56d855f0
+
+Fixes: 86da71b57383 ("net_sched: Introduce skbmod action")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/r/20240403130908.93421-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ net/sched/act_skbmod.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index ceced5e56c5a9..30b5646b2c0de 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -2948,7 +2948,17 @@ static int btrfs_relocate_sys_chunks(struct btrfs_fs_info *fs_info)
- 			mutex_unlock(&fs_info->delete_unused_bgs_mutex);
- 			goto error;
- 		}
--		BUG_ON(ret == 0); /* Corruption */
-+		if (ret == 0) {
-+			/*
-+			 * On the first search we would find chunk tree with
-+			 * offset -1, which is not possible. On subsequent
-+			 * loops this would find an existing item on an invalid
-+			 * offset (one less than the previous one, wrong
-+			 * alignment and size).
-+			 */
-+			ret = -EUCLEAN;
-+			goto error;
-+		}
+--- a/net/sched/act_skbmod.c
++++ b/net/sched/act_skbmod.c
+@@ -210,13 +210,13 @@ static int tcf_skbmod_dump(struct sk_buf
+ 	struct tcf_skbmod *d = to_skbmod(a);
+ 	unsigned char *b = skb_tail_pointer(skb);
+ 	struct tcf_skbmod_params  *p;
+-	struct tc_skbmod opt = {
+-		.index   = d->tcf_index,
+-		.refcnt  = refcount_read(&d->tcf_refcnt) - ref,
+-		.bindcnt = atomic_read(&d->tcf_bindcnt) - bind,
+-	};
++	struct tc_skbmod opt;
+ 	struct tcf_t t;
  
- 		ret = btrfs_previous_item(chunk_root, path, key.objectid,
- 					  key.type);
--- 
-2.43.0
-
++	memset(&opt, 0, sizeof(opt));
++	opt.index   = d->tcf_index;
++	opt.refcnt  = refcount_read(&d->tcf_refcnt) - ref,
++	opt.bindcnt = atomic_read(&d->tcf_bindcnt) - bind;
+ 	spin_lock_bh(&d->tcf_lock);
+ 	opt.action = d->tcf_action;
+ 	p = rcu_dereference_protected(d->skbmod_p,
 
 
