@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04E6149C73;
-	Thu, 11 Apr 2024 10:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88B31474CA;
+	Thu, 11 Apr 2024 10:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832013; cv=none; b=H9wwHyMUg6gpNfwbCn8QdEcq4pdi3nwf0hbm7kHFXFBbLH64cxhINQYdmobNsHONE4P0SOYNRr/4EtUubvYt0S39udPziKF3pSQZf4HI+6keKiM66mlSIX0gBav5/pV3ILrK0DgKggxRYuEO1bBGA8aXN8q6UjE1kVltCPaed5g=
+	t=1712832016; cv=none; b=uD6rpCTWEHOGt1FxpAEWCNoxL3t+j24CLYTQsUJqHMqQMSD71qGxG3uSNXp2nxEkCPaiYC9kTsG6YOo4l8LrV6gSvMOLy3S7pklifFf9DZEp+7PppCWWoG8yN8xuXJEXMYaq+X3a47F6wqlnvkkq18wBCU7V8WAI1Dl7fDoujRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832013; c=relaxed/simple;
-	bh=4mtrmC276LbjlinWuqxnSAun59vQhhoTDNz+W274Bhs=;
+	s=arc-20240116; t=1712832016; c=relaxed/simple;
+	bh=DqpuVBneWiXOkbrp4LVcnvfV4YzxF4UdLZs9aRNwA/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jrTdyt6OQg/DCeubCHQI/njyMMMV7e8s3YaR44zBGU4MwKey7DeGJLC/xLJeHW36TwLmu7eedGwCF8sMtuYeURCq5m9KYMdH03tlKs2ubP/8F3AInHjrRL94re4HmHOv7hs3OB/BO92WtwpkvV1xLMYR2BBUSloxPvUmCKXSiSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZRpfyX4I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vd8GP0yPtybL25nyxFbnpAI1Xvii4GmuCgsPgPMNV2FQAlJc2N7iFtgq1oqbTLomdWvzl0xaYoAL4eVuvjAzEE5NrmAYXjXx401T7QlAKq/iRQcSBhQdeTbgmmqvScsZH95dyR9glrut5R6e2rlqIlDzBdvUoA272k8CKSZgyn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTT4piVN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRpfyX4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07655C433C7;
-	Thu, 11 Apr 2024 10:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTT4piVN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30521C433C7;
+	Thu, 11 Apr 2024 10:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832013;
-	bh=4mtrmC276LbjlinWuqxnSAun59vQhhoTDNz+W274Bhs=;
+	s=korg; t=1712832016;
+	bh=DqpuVBneWiXOkbrp4LVcnvfV4YzxF4UdLZs9aRNwA/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZRpfyX4IVIzmPx6hV6dy4cwT7HAcnV/dooUTrQT4PkvnheW1PkU9uQz1WmBqkmq47
-	 9Si8QWjn56LY0BDRrXp8DTfunBdAmZBYpcLVwwVMHTyYL/I7iNAUG5oYLyw1zPVwFS
-	 X+RQpjk4cdh8shfRs/+aAjxfjctEOzhIlIcpkWaw=
+	b=bTT4piVNntGFVSNtSdJaszN8Ol18xFoGfDEmRr2B3mCaV0Up5p2ErtGVkrfQa/ACw
+	 gFdxdRyUypAlrqwa67ACjEvCN87TC7ANB8onNRU33baOJj74Ssi80UBe+LSe8r/SAz
+	 XQjCFOnPByRuXD648vm9eHEo9O3Ib3iNIi2YVUU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Sven van Ashbrook <svenva@chromium.org>,
-	Karthikeyan Ramasubramanian <kramasub@chromium.org>,
-	Brian Geffon <bgeffon@google.com>,
-	Curtis Malainey <cujomalainey@chromium.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Michal Hocko <mhocko@kernel.org>,
-	Takashi Iwai <tiwai@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 203/294] mm, vmscan: prevent infinite loop for costly GFP_NOIO | __GFP_RETRY_MAYFAIL allocations
-Date: Thu, 11 Apr 2024 11:56:06 +0200
-Message-ID: <20240411095441.715444677@linuxfoundation.org>
+	syzbot+33f4297b5f927648741a@syzkaller.appspotmail.com,
+	syzbot+aafd0513053a1cbf52ef@syzkaller.appspotmail.com,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Andrei Matei <andreimatei1@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 186/294] bpf: Protect against int overflow for stack access size
+Date: Thu, 11 Apr 2024 11:55:49 +0200
+Message-ID: <20240411095441.219333709@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -58,188 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlastimil Babka <vbabka@suse.cz>
+From: Andrei Matei <andreimatei1@gmail.com>
 
-commit 803de9000f334b771afacb6ff3e78622916668b0 upstream.
+[ Upstream commit ecc6a2101840177e57c925c102d2d29f260d37c8 ]
 
-Sven reports an infinite loop in __alloc_pages_slowpath() for costly order
-__GFP_RETRY_MAYFAIL allocations that are also GFP_NOIO.  Such combination
-can happen in a suspend/resume context where a GFP_KERNEL allocation can
-have __GFP_IO masked out via gfp_allowed_mask.
+This patch re-introduces protection against the size of access to stack
+memory being negative; the access size can appear negative as a result
+of overflowing its signed int representation. This should not actually
+happen, as there are other protections along the way, but we should
+protect against it anyway. One code path was missing such protections
+(fixed in the previous patch in the series), causing out-of-bounds array
+accesses in check_stack_range_initialized(). This patch causes the
+verification of a program with such a non-sensical access size to fail.
 
-Quoting Sven:
+This check used to exist in a more indirect way, but was inadvertendly
+removed in a833a17aeac7.
 
-1. try to do a "costly" allocation (order > PAGE_ALLOC_COSTLY_ORDER)
-   with __GFP_RETRY_MAYFAIL set.
-
-2. page alloc's __alloc_pages_slowpath tries to get a page from the
-   freelist. This fails because there is nothing free of that costly
-   order.
-
-3. page alloc tries to reclaim by calling __alloc_pages_direct_reclaim,
-   which bails out because a zone is ready to be compacted; it pretends
-   to have made a single page of progress.
-
-4. page alloc tries to compact, but this always bails out early because
-   __GFP_IO is not set (it's not passed by the snd allocator, and even
-   if it were, we are suspending so the __GFP_IO flag would be cleared
-   anyway).
-
-5. page alloc believes reclaim progress was made (because of the
-   pretense in item 3) and so it checks whether it should retry
-   compaction. The compaction retry logic thinks it should try again,
-   because:
-    a) reclaim is needed because of the early bail-out in item 4
-    b) a zonelist is suitable for compaction
-
-6. goto 2. indefinite stall.
-
-(end quote)
-
-The immediate root cause is confusing the COMPACT_SKIPPED returned from
-__alloc_pages_direct_compact() (step 4) due to lack of __GFP_IO to be
-indicating a lack of order-0 pages, and in step 5 evaluating that in
-should_compact_retry() as a reason to retry, before incrementing and
-limiting the number of retries.  There are however other places that
-wrongly assume that compaction can happen while we lack __GFP_IO.
-
-To fix this, introduce gfp_compaction_allowed() to abstract the __GFP_IO
-evaluation and switch the open-coded test in try_to_compact_pages() to use
-it.
-
-Also use the new helper in:
-- compaction_ready(), which will make reclaim not bail out in step 3, so
-  there's at least one attempt to actually reclaim, even if chances are
-  small for a costly order
-- in_reclaim_compaction() which will make should_continue_reclaim()
-  return false and we don't over-reclaim unnecessarily
-- in __alloc_pages_slowpath() to set a local variable can_compact,
-  which is then used to avoid retrying reclaim/compaction for costly
-  allocations (step 5) if we can't compact and also to skip the early
-  compaction attempt that we do in some cases
-
-Link: https://lkml.kernel.org/r/20240221114357.13655-2-vbabka@suse.cz
-Fixes: 3250845d0526 ("Revert "mm, oom: prevent premature OOM killer invocation for high order request"")
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Reported-by: Sven van Ashbrook <svenva@chromium.org>
-Closes: https://lore.kernel.org/all/CAG-rBihs_xMKb3wrMO1%2B-%2Bp4fowP9oy1pa_OTkfxBzPUVOZF%2Bg@mail.gmail.com/
-Tested-by: Karthikeyan Ramasubramanian <kramasub@chromium.org>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Curtis Malainey <cujomalainey@chromium.org>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a833a17aeac7 ("bpf: Fix verification of indirect var-off stack access")
+Reported-by: syzbot+33f4297b5f927648741a@syzkaller.appspotmail.com
+Reported-by: syzbot+aafd0513053a1cbf52ef@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/bpf/CAADnVQLORV5PT0iTAhRER+iLBTkByCYNBYyvBSgjN1T31K+gOw@mail.gmail.com/
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Andrei Matei <andreimatei1@gmail.com>
+Link: https://lore.kernel.org/r/20240327024245.318299-3-andreimatei1@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/gfp.h |    9 +++++++++
- mm/compaction.c     |    7 +------
- mm/page_alloc.c     |   10 ++++++----
- mm/vmscan.c         |    5 ++++-
- 4 files changed, 20 insertions(+), 11 deletions(-)
+ kernel/bpf/verifier.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/include/linux/gfp.h
-+++ b/include/linux/gfp.h
-@@ -623,6 +623,15 @@ static inline bool pm_suspended_storage(
- }
- #endif /* CONFIG_PM_SLEEP */
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index fce2345f600f2..25f8a8716e88d 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -3941,6 +3941,11 @@ static int check_stack_access_within_bounds(
+ 	err = check_stack_slot_within_bounds(min_off, state, type);
+ 	if (!err && max_off > 0)
+ 		err = -EINVAL; /* out of stack access into non-negative offsets */
++	if (!err && access_size < 0)
++		/* access_size should not be negative (or overflow an int); others checks
++		 * along the way should have prevented such an access.
++		 */
++		err = -EFAULT; /* invalid negative access size; integer overflow? */
  
-+/*
-+ * Check if the gfp flags allow compaction - GFP_NOIO is a really
-+ * tricky context because the migration might require IO.
-+ */
-+static inline bool gfp_compaction_allowed(gfp_t gfp_mask)
-+{
-+	return IS_ENABLED(CONFIG_COMPACTION) && (gfp_mask & __GFP_IO);
-+}
-+
- #ifdef CONFIG_CONTIG_ALLOC
- /* The below functions must be run on a range from a single zone. */
- extern int alloc_contig_range(unsigned long start, unsigned long end,
---- a/mm/compaction.c
-+++ b/mm/compaction.c
-@@ -2466,16 +2466,11 @@ enum compact_result try_to_compact_pages
- 		unsigned int alloc_flags, const struct alloc_context *ac,
- 		enum compact_priority prio, struct page **capture)
- {
--	int may_perform_io = gfp_mask & __GFP_IO;
- 	struct zoneref *z;
- 	struct zone *zone;
- 	enum compact_result rc = COMPACT_SKIPPED;
- 
--	/*
--	 * Check if the GFP flags allow compaction - GFP_NOIO is really
--	 * tricky context because the migration might require IO
--	 */
--	if (!may_perform_io)
-+	if (!gfp_compaction_allowed(gfp_mask))
- 		return COMPACT_SKIPPED;
- 
- 	trace_mm_compaction_try_to_compact_pages(order, gfp_mask, prio);
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4644,6 +4644,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, u
- 						struct alloc_context *ac)
- {
- 	bool can_direct_reclaim = gfp_mask & __GFP_DIRECT_RECLAIM;
-+	bool can_compact = gfp_compaction_allowed(gfp_mask);
- 	const bool costly_order = order > PAGE_ALLOC_COSTLY_ORDER;
- 	struct page *page = NULL;
- 	unsigned int alloc_flags;
-@@ -4709,7 +4710,7 @@ restart:
- 	 * Don't try this for allocations that are allowed to ignore
- 	 * watermarks, as the ALLOC_NO_WATERMARKS attempt didn't yet happen.
- 	 */
--	if (can_direct_reclaim &&
-+	if (can_direct_reclaim && can_compact &&
- 			(costly_order ||
- 			   (order > 0 && ac->migratetype != MIGRATE_MOVABLE))
- 			&& !gfp_pfmemalloc_allowed(gfp_mask)) {
-@@ -4806,9 +4807,10 @@ retry:
- 
- 	/*
- 	 * Do not retry costly high order allocations unless they are
--	 * __GFP_RETRY_MAYFAIL
-+	 * __GFP_RETRY_MAYFAIL and we can compact
- 	 */
--	if (costly_order && !(gfp_mask & __GFP_RETRY_MAYFAIL))
-+	if (costly_order && (!can_compact ||
-+			     !(gfp_mask & __GFP_RETRY_MAYFAIL)))
- 		goto nopage;
- 
- 	if (should_reclaim_retry(gfp_mask, order, ac, alloc_flags,
-@@ -4821,7 +4823,7 @@ retry:
- 	 * implementation of the compaction depends on the sufficient amount
- 	 * of free memory (see __compaction_suitable)
- 	 */
--	if (did_some_progress > 0 &&
-+	if (did_some_progress > 0 && can_compact &&
- 			should_compact_retry(ac, order, alloc_flags,
- 				compact_result, &compact_priority,
- 				&compaction_retries))
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -2546,7 +2546,7 @@ static void shrink_lruvec(struct lruvec
- /* Use reclaim/compaction for costly allocs or under memory pressure */
- static bool in_reclaim_compaction(struct scan_control *sc)
- {
--	if (IS_ENABLED(CONFIG_COMPACTION) && sc->order &&
-+	if (gfp_compaction_allowed(sc->gfp_mask) && sc->order &&
- 			(sc->order > PAGE_ALLOC_COSTLY_ORDER ||
- 			 sc->priority < DEF_PRIORITY - 2))
- 		return true;
-@@ -2873,6 +2873,9 @@ static inline bool compaction_ready(stru
- 	unsigned long watermark;
- 	enum compact_result suitable;
- 
-+	if (!gfp_compaction_allowed(sc->gfp_mask))
-+		return false;
-+
- 	suitable = compaction_suitable(zone, sc->order, 0, sc->reclaim_idx);
- 	if (suitable == COMPACT_SUCCESS)
- 		/* Allocation should succeed already. Don't reclaim. */
+ 	if (err) {
+ 		if (tnum_is_const(reg->var_off)) {
+-- 
+2.43.0
+
 
 
