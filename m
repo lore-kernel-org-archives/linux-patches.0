@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A571422C4;
-	Thu, 11 Apr 2024 10:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4BF1422C4;
+	Thu, 11 Apr 2024 10:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829741; cv=none; b=FKYFvHGORiL3/b+D0bsfCwviOfF9D68z1A28SORaWuCS55J+rb0VZ+8G4o3GblHxVylJjT+J1Z0Oecnp2gOMJ013bOIZ9+pCFdm/VkC29EwYjewsP45I6MYR0sZRrlzvpPDk8GKTp0J8DH3NzhqN7dFVihMN3mWK7JCM+JMLSHo=
+	t=1712829743; cv=none; b=oacDthu9/1NSlGhKHNlaOqQ8LxRTR2Pne6nZNrt9miifqiudSRfdTxGASmAjQswDFe4AFjE4vQB6woGfyIvLhMHmdfkkBk28pfOIV9lBwah1+qMnv8X5JCk/vblWWTG6pnnEKZZZyVnVDQTYDKS2BReJOjCVYAM1dzmrS+nadmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829741; c=relaxed/simple;
-	bh=Nbby2tkEPOTksKROBjablKFTjpzLLZB4wkn6y8SVwCo=;
+	s=arc-20240116; t=1712829743; c=relaxed/simple;
+	bh=ygSlADDSXDLsSuaBpbH+D+JKInx1ZZrg4qQcgqAjpg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CkMEupwLid9dcEnLus2G7UAEpQxbulEXgl7Z5zmOS98XC5fvR8zT651C1rmP4Un38xaLt2Qi4YG4c+O4izjOkz4zA/FEmbtvSiQAf/CrfFvno6MhtSD8eo92gQZV7U3bB/v9Q/2FERWje+MachZEnylqcLtnQJyuWSD7156yiuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3EY84fb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=idAuPC+UJPwzlp8FzJcVBwSgKuEsoQqDobiIhHbIit9gs0DZH+jj7bynT395if54FLGKt3Gr+lq2WmoHf3hh6XvCgBHkgve++r+2nDwGLnFqle8tdB96Nm7DpsDgFw4hfk/n9BiKM9xcrl1KRkkEsgTs/L0tkmaSD/hnv5ugqD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4SHaXGO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3EY84fb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690C7C433C7;
-	Thu, 11 Apr 2024 10:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4SHaXGO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5557CC433C7;
+	Thu, 11 Apr 2024 10:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829740;
-	bh=Nbby2tkEPOTksKROBjablKFTjpzLLZB4wkn6y8SVwCo=;
+	s=korg; t=1712829743;
+	bh=ygSlADDSXDLsSuaBpbH+D+JKInx1ZZrg4qQcgqAjpg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3EY84fb+kil2HKqHDss8qu8ibpKchF2LRpxTQnXcYmqOEg/DyxUuINRM5Bxhx81h
-	 pl0WuWUMzHb4QxQ2Z7djwGtFzJnLEs8I5EuvH5ayXQQDUVc0ulFRf//bEkY9VjqWEf
-	 xmgIOyxQw3BS9eVrCe4RgldDUm6fAoO1llJK8IRU=
+	b=m4SHaXGOC/ORbf64Etl9FAzPbYfKRown+D9B4zKwgpzPAKmkXLE2titnsenIFAP3J
+	 wUGpv80ImsR2zlj8/XfPsPU5Mc6L0JjbVsbj9wdInSo5UIL/4cWhS4J/Qokkr1y3Pp
+	 kciW8uSroZOuZ8Gf8xKLlqAnOEjDHb9KHsXjfuRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Martijn Coenen <maco@android.com>,
 	Christoph Hellwig <hch@lst.de>,
-	Bob Liu <bob.liu@oracle.com>,
-	Bart Van Assche <bvanassche@acm.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Genjian Zhang <zhanggenjian@kylinos.cn>
-Subject: [PATCH 4.19 090/175] loop: Call loop_config_discard() only after new config is applied
-Date: Thu, 11 Apr 2024 11:55:13 +0200
-Message-ID: <20240411095422.273162804@linuxfoundation.org>
+Subject: [PATCH 4.19 091/175] loop: Remove sector_t truncation checks
+Date: Thu, 11 Apr 2024 11:55:14 +0200
+Message-ID: <20240411095422.304818113@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -56,44 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Martijn Coenen <maco@android.com>
 
-[ Upstream commit 7c5014b0987a30e4989c90633c198aced454c0ec ]
+[ Upstream commit 083a6a50783ef54256eec3499e6575237e0e3d53 ]
 
-loop_set_status() calls loop_config_discard() to configure discard for
-the loop device; however, the discard configuration depends on whether
-the loop device uses encryption, and when we call it the encryption
-configuration has not been updated yet. Move the call down so we apply
-the correct discard configuration based on the new configuration.
+sector_t is now always u64, so we don't need to check for truncation.
 
 Signed-off-by: Martijn Coenen <maco@android.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Bob Liu <bob.liu@oracle.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/loop.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/block/loop.c |   21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
 --- a/drivers/block/loop.c
 +++ b/drivers/block/loop.c
-@@ -1286,8 +1286,6 @@ loop_set_status(struct loop_device *lo,
- 		}
- 	}
+@@ -225,24 +225,20 @@ static void __loop_update_dio(struct loo
+ 	blk_mq_unfreeze_queue(lo->lo_queue);
+ }
  
--	loop_config_discard(lo);
--
- 	memcpy(lo->lo_file_name, info->lo_file_name, LO_NAME_SIZE);
- 	memcpy(lo->lo_crypt_name, info->lo_crypt_name, LO_NAME_SIZE);
- 	lo->lo_file_name[LO_NAME_SIZE-1] = 0;
-@@ -1311,6 +1309,8 @@ loop_set_status(struct loop_device *lo,
- 		lo->lo_key_owner = uid;
- 	}
+-static int
++static void
+ figure_loop_size(struct loop_device *lo, loff_t offset, loff_t sizelimit)
+ {
+ 	loff_t size = get_size(offset, sizelimit, lo->lo_backing_file);
+-	sector_t x = (sector_t)size;
+ 	struct block_device *bdev = lo->lo_device;
  
-+	loop_config_discard(lo);
+-	if (unlikely((loff_t)x != size))
+-		return -EFBIG;
+ 	if (lo->lo_offset != offset)
+ 		lo->lo_offset = offset;
+ 	if (lo->lo_sizelimit != sizelimit)
+ 		lo->lo_sizelimit = sizelimit;
+-	set_capacity(lo->lo_disk, x);
++	set_capacity(lo->lo_disk, size);
+ 	bd_set_size(bdev, (loff_t)get_capacity(bdev->bd_disk) << 9);
+ 	/* let user-space know about the new size */
+ 	kobject_uevent(&disk_to_dev(bdev->bd_disk)->kobj, KOBJ_CHANGE);
+-	return 0;
+ }
+ 
+ static inline int
+@@ -972,10 +968,8 @@ static int loop_set_fd(struct loop_devic
+ 	    !file->f_op->write_iter)
+ 		lo_flags |= LO_FLAGS_READ_ONLY;
+ 
+-	error = -EFBIG;
+ 	size = get_loop_size(lo, file);
+-	if ((loff_t)(sector_t)size != size)
+-		goto out_unlock;
 +
- 	/* update dio if lo_offset or transfer is changed */
- 	__loop_update_dio(lo, lo->use_dio);
+ 	error = loop_prepare_queue(lo);
+ 	if (error)
+ 		goto out_unlock;
+@@ -1280,10 +1274,7 @@ loop_set_status(struct loop_device *lo,
+ 				lo->lo_device->bd_inode->i_mapping->nrpages);
+ 			goto out_unfreeze;
+ 		}
+-		if (figure_loop_size(lo, info->lo_offset, info->lo_sizelimit)) {
+-			err = -EFBIG;
+-			goto out_unfreeze;
+-		}
++		figure_loop_size(lo, info->lo_offset, info->lo_sizelimit);
+ 	}
  
+ 	memcpy(lo->lo_file_name, info->lo_file_name, LO_NAME_SIZE);
+@@ -1486,7 +1477,9 @@ static int loop_set_capacity(struct loop
+ 	if (unlikely(lo->lo_state != Lo_bound))
+ 		return -ENXIO;
+ 
+-	return figure_loop_size(lo, lo->lo_offset, lo->lo_sizelimit);
++	figure_loop_size(lo, lo->lo_offset, lo->lo_sizelimit);
++
++	return 0;
+ }
+ 
+ static int loop_set_dio(struct loop_device *lo, unsigned long arg)
 
 
