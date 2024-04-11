@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DA31448F3;
-	Thu, 11 Apr 2024 10:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818A61448F3;
+	Thu, 11 Apr 2024 10:06:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829965; cv=none; b=K2KHiPnIKc6canfcr+KDO0xDmdz+p0HvoThc6GgssCS690IWDO8E+wd26zAGULi1u+Y3mWSbIyoqqcOhmC9p/6rr2xSKhOcy2e1k4M45XEYwBCZb4rlXT7UohpxrlirKb1OPMIUbAZyZl5GT5gl12LmZlmrZmwcojPe9l/VcPWY=
+	t=1712829968; cv=none; b=ndznJU7G9UeCtsY63aRVaHhhtoOhMfLzj+2jwAP3cTAgl01zU1jWJx7g2wwFoSlj75nYxLE2Zb+0Ac50GG8933me1REeBhUAtEJaPI0Hz2ecNxHPpEdL4v6f/R6S8jRwsvgReRfiPd/0AUC9K1evycJOE8rB9MfvnuBRulrydPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829965; c=relaxed/simple;
-	bh=Y22j1JZ7pwhr6ycuc5/m+tTvCKWievFf0c+Lx6s8RYI=;
+	s=arc-20240116; t=1712829968; c=relaxed/simple;
+	bh=S33aXnIqGbNsFMOQVUVbqZfjzx7xSfl4iS262qxU1tA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jN32s4ekLZwzvXRMoWNCDIqDNuK+Y3aXVBk55eXQ6dwtEMi+SVeklNEHDDuyJNN2UklwtJgcG7JGhScqBlKSMXtTCIulZ7qZtqsnB/d2lnDOBLcnZplkFTpXcBqd3GihO/HfRK7g1f5TOS6M6g34cgUoI7aAXULnROFg5xXNTCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDWzuf5d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tTBxj5HqENEmd0bowD2NjVoPGMZu45iEWodw86cWUWatml0bIXLql6O8ksVyQ4F8d2TaJuvfAVuoiUKcwRXTf4RA0QPkHthIN0Hzt11EtAyVBro1msujrh2wax/SZyGROnVMNA7n4vapHvjQAWfhCbpmMF1uK/gkAHAN9o2WQDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8Yu2gX4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDWzuf5d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7149C43390;
-	Thu, 11 Apr 2024 10:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8Yu2gX4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E8CC433C7;
+	Thu, 11 Apr 2024 10:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829965;
-	bh=Y22j1JZ7pwhr6ycuc5/m+tTvCKWievFf0c+Lx6s8RYI=;
+	s=korg; t=1712829968;
+	bh=S33aXnIqGbNsFMOQVUVbqZfjzx7xSfl4iS262qxU1tA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YDWzuf5dlNjo7L0q19yeB0cn1/UEbMPQfINwI5aisy+iWoIYFI+p1YV4F3xkxoAhq
-	 uUKsjSsIogBLVRiOF7RkW28e29fuOP4Qdjt9IweywW7tCCoin0s2Vk4qOF4NikyoX0
-	 PnoPlOxK+4D0KgLoZiyHQ6upDYfOo3kuVU/WzzSo=
+	b=M8Yu2gX4i3n9Dkq9shDA64bsxPfzibafLC+R5Kjwgot8dXakPNvrwjZcaDxEGaYd8
+	 yNnFyJlQQ4AnQlojDtTSzMOE71n+oiIuysWwZSGhXpA3CpTZbDdqkqwRSKhDBmuvLF
+	 Es3n3XGy969vzM2RPiL/hFF9HjpipRVEaVaP5ViQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 4.19 127/175] i40e: fix vf may be used uninitialized in this function warning
-Date: Thu, 11 Apr 2024 11:55:50 +0200
-Message-ID: <20240411095423.388849428@linuxfoundation.org>
+	Dave Stevenson <dave.stevenson@raspberrypi.org>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 128/175] staging: mmal-vchiq: Avoid use of bool in structures
+Date: Thu, 11 Apr 2024 11:55:51 +0200
+Message-ID: <20240411095423.418639459@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -54,146 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+From: Dave Stevenson <dave.stevenson@raspberrypi.org>
 
-commit f37c4eac99c258111d414d31b740437e1925b8e8 upstream.
+[ Upstream commit 640e77466e69d9c28de227bc76881f5501f532ca ]
 
-To fix the regression introduced by commit 52424f974bc5, which causes
-servers hang in very hard to reproduce conditions with resets races.
-Using two sources for the information is the root cause.
-In this function before the fix bumping v didn't mean bumping vf
-pointer. But the code used this variables interchangeably, so stale vf
-could point to different/not intended vf.
+Fixes up a checkpatch error "Avoid using bool structure members
+because of possible alignment issues".
 
-Remove redundant "v" variable and iterate via single VF pointer across
-whole function instead to guarantee VF pointer validity.
-
-Fixes: 52424f974bc5 ("i40e: Fix VF hang when reset is triggered on another VF")
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.org>
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Acked-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Acked-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: f37e76abd614 ("staging: vc04_services: fix information leak in create_component()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |   34 +++++++++------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
+ .../vc04_services/bcm2835-camera/mmal-vchiq.c        | 12 ++++++------
+ .../vc04_services/bcm2835-camera/mmal-vchiq.h        |  4 ++--
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -1317,8 +1317,8 @@ bool i40e_reset_all_vfs(struct i40e_pf *
- {
- 	struct i40e_hw *hw = &pf->hw;
- 	struct i40e_vf *vf;
--	int i, v;
- 	u32 reg;
-+	int i;
+diff --git a/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.c b/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.c
+index daa2b96565529..00c943516ba38 100644
+--- a/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.c
++++ b/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.c
+@@ -845,9 +845,9 @@ static int port_info_get(struct vchiq_mmal_instance *instance,
+ 		goto release_msg;
  
- 	/* If we don't have any VFs, then there is nothing to reset */
- 	if (!pf->num_alloc_vfs)
-@@ -1329,11 +1329,10 @@ bool i40e_reset_all_vfs(struct i40e_pf *
- 		return false;
+ 	if (rmsg->u.port_info_get_reply.port.is_enabled == 0)
+-		port->enabled = false;
++		port->enabled = 0;
+ 	else
+-		port->enabled = true;
++		port->enabled = 1;
  
- 	/* Begin reset on all VFs at once */
--	for (v = 0; v < pf->num_alloc_vfs; v++) {
--		vf = &pf->vf[v];
-+	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
- 		/* If VF is being reset no need to trigger reset again */
- 		if (!test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
--			i40e_trigger_vf_reset(&pf->vf[v], flr);
-+			i40e_trigger_vf_reset(vf, flr);
- 	}
+ 	/* copy the values out of the message */
+ 	port->handle = rmsg->u.port_info_get_reply.port_handle;
+@@ -1283,7 +1283,7 @@ static int port_disable(struct vchiq_mmal_instance *instance,
+ 	if (!port->enabled)
+ 		return 0;
  
- 	/* HW requires some time to make sure it can flush the FIFO for a VF
-@@ -1342,14 +1341,13 @@ bool i40e_reset_all_vfs(struct i40e_pf *
- 	 * the VFs using a simple iterator that increments once that VF has
- 	 * finished resetting.
- 	 */
--	for (i = 0, v = 0; i < 10 && v < pf->num_alloc_vfs; i++) {
-+	for (i = 0, vf = &pf->vf[0]; i < 10 && vf < &pf->vf[pf->num_alloc_vfs]; ++i) {
- 		usleep_range(10000, 20000);
+-	port->enabled = false;
++	port->enabled = 0;
  
- 		/* Check each VF in sequence, beginning with the VF to fail
- 		 * the previous check.
- 		 */
--		while (v < pf->num_alloc_vfs) {
--			vf = &pf->vf[v];
-+		while (vf < &pf->vf[pf->num_alloc_vfs]) {
- 			if (!test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states)) {
- 				reg = rd32(hw, I40E_VPGEN_VFRSTAT(vf->vf_id));
- 				if (!(reg & I40E_VPGEN_VFRSTAT_VFRD_MASK))
-@@ -1359,7 +1357,7 @@ bool i40e_reset_all_vfs(struct i40e_pf *
- 			/* If the current VF has finished resetting, move on
- 			 * to the next VF in sequence.
- 			 */
--			v++;
-+			++vf;
+ 	ret = port_action_port(instance, port,
+ 			       MMAL_MSG_PORT_ACTION_TYPE_DISABLE);
+@@ -1335,7 +1335,7 @@ static int port_enable(struct vchiq_mmal_instance *instance,
+ 	if (ret)
+ 		goto done;
+ 
+-	port->enabled = true;
++	port->enabled = 1;
+ 
+ 	if (port->buffer_cb) {
+ 		/* send buffer headers to videocore */
+@@ -1502,7 +1502,7 @@ int vchiq_mmal_port_connect_tunnel(struct vchiq_mmal_instance *instance,
+ 			pr_err("failed disconnecting src port\n");
+ 			goto release_unlock;
  		}
+-		src->connected->enabled = false;
++		src->connected->enabled = 0;
+ 		src->connected = NULL;
  	}
  
-@@ -1369,39 +1367,39 @@ bool i40e_reset_all_vfs(struct i40e_pf *
- 	/* Display a warning if at least one VF didn't manage to reset in
- 	 * time, but continue on with the operation.
- 	 */
--	if (v < pf->num_alloc_vfs)
-+	if (vf < &pf->vf[pf->num_alloc_vfs])
- 		dev_err(&pf->pdev->dev, "VF reset check timeout on VF %d\n",
--			pf->vf[v].vf_id);
-+			vf->vf_id);
- 	usleep_range(10000, 20000);
+@@ -1746,7 +1746,7 @@ int vchiq_mmal_component_disable(struct vchiq_mmal_instance *instance,
  
- 	/* Begin disabling all the rings associated with VFs, but do not wait
- 	 * between each VF.
- 	 */
--	for (v = 0; v < pf->num_alloc_vfs; v++) {
-+	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
- 		/* On initial reset, we don't have any queues to disable */
--		if (pf->vf[v].lan_vsi_idx == 0)
-+		if (vf->lan_vsi_idx == 0)
- 			continue;
+ 	ret = disable_component(instance, component);
+ 	if (ret == 0)
+-		component->enabled = false;
++		component->enabled = 0;
  
- 		/* If VF is reset in another thread just continue */
- 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
- 			continue;
+ 	mutex_unlock(&instance->vchiq_mutex);
  
--		i40e_vsi_stop_rings_no_wait(pf->vsi[pf->vf[v].lan_vsi_idx]);
-+		i40e_vsi_stop_rings_no_wait(pf->vsi[vf->lan_vsi_idx]);
- 	}
+diff --git a/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.h b/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.h
+index b0ee1716525b4..b3c231e619c90 100644
+--- a/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.h
++++ b/drivers/staging/vc04_services/bcm2835-camera/mmal-vchiq.h
+@@ -47,7 +47,7 @@ typedef void (*vchiq_mmal_buffer_cb)(
+ 		unsigned long length, u32 mmal_flags, s64 dts, s64 pts);
  
- 	/* Now that we've notified HW to disable all of the VF rings, wait
- 	 * until they finish.
- 	 */
--	for (v = 0; v < pf->num_alloc_vfs; v++) {
-+	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
- 		/* On initial reset, we don't have any queues to disable */
--		if (pf->vf[v].lan_vsi_idx == 0)
-+		if (vf->lan_vsi_idx == 0)
- 			continue;
+ struct vchiq_mmal_port {
+-	bool enabled;
++	u32 enabled:1;
+ 	u32 handle;
+ 	u32 type; /* port type, cached to use on port info set */
+ 	u32 index; /* port index, cached to use on port info set */
+@@ -81,7 +81,7 @@ struct vchiq_mmal_port {
+ };
  
- 		/* If VF is reset in another thread just continue */
- 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
- 			continue;
- 
--		i40e_vsi_wait_queues_disabled(pf->vsi[pf->vf[v].lan_vsi_idx]);
-+		i40e_vsi_wait_queues_disabled(pf->vsi[vf->lan_vsi_idx]);
- 	}
- 
- 	/* Hw may need up to 50ms to finish disabling the RX queues. We
-@@ -1410,12 +1408,12 @@ bool i40e_reset_all_vfs(struct i40e_pf *
- 	mdelay(50);
- 
- 	/* Finish the reset on each VF */
--	for (v = 0; v < pf->num_alloc_vfs; v++) {
-+	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
- 		/* If VF is reset in another thread just continue */
- 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
- 			continue;
- 
--		i40e_cleanup_reset_vf(&pf->vf[v]);
-+		i40e_cleanup_reset_vf(vf);
- 	}
- 
- 	i40e_flush(hw);
+ struct vchiq_mmal_component {
+-	bool enabled;
++	u32 enabled:1;
+ 	u32 handle;  /* VideoCore handle for component */
+ 	u32 inputs;  /* Number of input ports */
+ 	u32 outputs; /* Number of output ports */
+-- 
+2.43.0
+
 
 
