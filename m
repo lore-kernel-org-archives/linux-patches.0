@@ -1,103 +1,133 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EEB5025A
-	for <patches@lists.linux.dev>; Thu, 11 Apr 2024 18:09:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DCE14F200;
+	Thu, 11 Apr 2024 18:11:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712858948; cv=none; b=ckkEi6RCt3uBssOm1bBgxzrJ57KHbjXfcOo0eeyvRdNGqFNfxGiMpn15ohI9Cfoz7jKo7HHAifBctOnRLSU9TB/m2w7LXxDxdQgm7f9EUp9e3CjYUY8qsuMPeldSwUvAyBnT0thK3nA5mkjoOPR0mFxXmiq6rdLeDSPh30l3yFw=
+	t=1712859075; cv=none; b=mpLOG/rT5hAzkcxfH45IyDGKG/kOJ19cUBrfn6rCkVutERHvQ8cdkxslCq3X3ux5rqFOHMa2vjyLyxBLyLUnGOKrMft5NreHsmLVU7Ke0Rdq/qj7XUJcAmbWAf+maFz0QxRJny/DTPi/8lpC8IZuGQSxzbCwUSHsD0yYXTzR2Eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712858948; c=relaxed/simple;
-	bh=ONRK5DPl6tc4wVC9RxuPEeSXQSFGntQviOc1GgrtZyM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hC05nxp+orm6RKH+umyNeKk23tmiPbYZOlD5rOYmDMtzYVCXmZ7VIWJ69jzZYzNmlpc0u20Tr0k1DkMJkF2biexkR09+K6FVgl/tK3Vlz/DIsn4ZvRDwcKbZd1pAJ0ilIPecdTsRjKOyMR2dRqpfFRdYIcqWfvv6FMG9AX8KFMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RQJfh+io; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1712859075; c=relaxed/simple;
+	bh=9NzfINZ1S8aXBjc5RBSY7BqV3Hq/eKdHBSjs+CeXu+k=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=tiRG1wn2uXILHjE1gLS0Tu9aKmtsYfWqfFMopmDZxIQpvN3D9IeAD3JfukjCWDsEXVl0rw4bWQwwBADDsitTGFV6eDdhdlnfOELHqiLDxxsOr40McgP930b37xSLIn93NyfXSt8OCqiX3gutv9DdgOd/lqtZqDdN7FAD398EGK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rRb5sizW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RQJfh+io"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1e2c725e234so8777695ad.1
-        for <patches@lists.linux.dev>; Thu, 11 Apr 2024 11:09:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712858946; x=1713463746; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aW1fSwpFf3nS8PmtpMueULfzNf99ExNq3LAfBfqw9a4=;
-        b=RQJfh+iorYMV1bWEtb4Kzt2KPfTYBk3YsqRH/7nNuF7TWi0paBcV+PBVhqf+X6jl/n
-         35uh0kAUc70CQMOBJUHE1OUalnv2vrRdD2VHy6dl+MnUx7FIOEP2bHaTbV49Kcn+Sm7X
-         BNfN01EREWk04K3A+lot5fu3uUrqv1QORKjyzO4bZHOPrVkcAFa1goLnE/ca9ZNUKDYA
-         mus/Imy9VhRshlGljqLK6h2Qg9+bU2rjB931s/stBNmH9FOCy1ljl3qJ8aYkvJHfBge7
-         Z0Iw++AmXtlwhknwEP70YsGb/ayEQYKreqhLMCAG+1Sf8WhS1FemZaE4Dm+5bjGe0SQd
-         1PtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712858946; x=1713463746;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aW1fSwpFf3nS8PmtpMueULfzNf99ExNq3LAfBfqw9a4=;
-        b=kBGik9IAWHJLUGzd1WEKMzslxFPfewNj+QaWlOvL4j37oMGshrwWocO37LgaPyRsNz
-         GAKjl9EXWX08IbDbW+4z0daNnSLiDJnY+1cLzcBL8lLJw4Zk3QHTwy24RIVlfPzHzO5v
-         IcHHsFQR0HzGEGSwYCUzXyQwicOxJnaEf1/2qHGNIAUpTMJ4X1Vz0OVMhGgYCmvhlAcJ
-         vXKCaCj6EbkyIqXNNeKpvmY+3mLCVHMjetmvFshFH0bOSwt6sMYSRIzATUPEuuEdKPa+
-         9lLiS+jLSVZAg8GJA6XhD5Kx+TVMn6JUE+Dxg37DtVo2fVydUQW/EeTaz4Gj429ac02E
-         EWlw==
-X-Gm-Message-State: AOJu0YxSM6ts+h16LcmSieKYkVkJMIMPNHM6podCey3EbS/hjzdzOH6l
-	Q7l/gr0suVRyF/OnSeL28zZgKSehV6rBhdwn66JLzP39PJ8Wncf2
-X-Google-Smtp-Source: AGHT+IHVoasH+42WFyT1KotUPe1aBvKRDCaQsY6emb8nFvCsJqJnMKmtJEB0WBmRNP/p7KeZzK5nEg==
-X-Received: by 2002:a17:902:f651:b0:1e2:a61e:47fa with SMTP id m17-20020a170902f65100b001e2a61e47famr738899plg.15.1712858946386;
-        Thu, 11 Apr 2024 11:09:06 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id k3-20020a170902c40300b001e0afbaf49asm1451945plk.278.2024.04.11.11.09.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Apr 2024 11:09:04 -0700 (PDT)
-Message-ID: <2265b42a-d2f6-46a8-924d-262abb53e3f7@gmail.com>
-Date: Thu, 11 Apr 2024 11:09:00 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rRb5sizW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B402C072AA;
+	Thu, 11 Apr 2024 18:11:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712859074;
+	bh=9NzfINZ1S8aXBjc5RBSY7BqV3Hq/eKdHBSjs+CeXu+k=;
+	h=From:Subject:Date:To:Cc:From;
+	b=rRb5sizWWZWRdP5hpnqtCNKyfLib/BUEznR2WT48dYnijLPrNQjPWTRsK/TRqbE9E
+	 Zz2SpFxVMMxo+i2mu3NV8Rg1ejSgVbYNr2Nsfcp0vXEjsEHh5pr8KK2mxpZR9HZgfP
+	 T6Kdvrkm4tgoFaox2EW5m0cxFDFKoOgS/BgiqdSODmZN8l6VtQR3CyrdP8xZ3oNV69
+	 YtFQ6UUPI9VsCezaHZ8xVl6/nhlePJhZMdN/WIeKdB8CSvNPgVsBkbZsE3p1Hfeyip
+	 ksHim2RBtpSMrrtIV5xOOCC+r+rhN7JHPInMqeE5AZ7gBil3S5ZxBq6KdKv3rfsDik
+	 U95vZeE98kM9w==
+From: Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 0/2] configs/hardening: Some fixes for UBSAN
+Date: Thu, 11 Apr 2024 11:11:05 -0700
+Message-Id: <20240411-fix-ubsan-in-hardening-config-v1-0-e0177c80ffaa@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.4 000/215] 5.4.274-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240411095424.875421572@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALknGGYC/x3MQQqAIBBA0avErBtQEaGuEi1MR5vNGEoRRHdPW
+ r7F/w80qkwN5uGBShc3LtKhxwHC7iUTcuwGo4xVVitMfOO5NS/IgruvkYQlYyiSOONkknMxKRc
+ sQX8clXrw/5f1fT9KVK9cbwAAAA==
+To: keescook@chromium.org
+Cc: gustavoars@kernel.org, justinstitt@google.com, 
+ linux-hardening@vger.kernel.org, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4231; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=9NzfINZ1S8aXBjc5RBSY7BqV3Hq/eKdHBSjs+CeXu+k=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGkS6oc8NKrOPjQ58TXqSfs/7rRlJ0WSJoXuLb2i8VFVP
+ 0Em9s60jlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRl+oM/yvUGIwjrJdYrD9q
+ u/tfSr/0exORcwxap3PVK/bdFVlb9Ybhr1TS25tcobUPo/uz6suWs853nOq7xiCt/sgLEfPHDDn
+ 8bAA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 4/11/24 02:53, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.274 release.
-> There are 215 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 13 Apr 2024 09:53:55 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.274-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Hi all,
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+This series was spurred by a couple of recent UBSAN reports in our
+continuous integration that appear to be related to
+CONFIG_UBSAN_SIGNED_WRAP (which gets enabled with hardening.config due
+to 'default UBSAN'), as they only appear with clang-19 and newer:
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+  https://github.com/ClangBuiltLinux/continuous-integration2/actions/runs/8646488985/job/23709324479#step:6:500
+  https://github.com/ClangBuiltLinux/continuous-integration2/actions/runs/8646488985/job/23709330815#step:6:651
+
+I'll include the information that I have gathered so far on these
+specific instances below but I think that it is debatable whether
+CONFIG_UBSAN_SIGNED_WRAP should be enabled by hardening.config at this
+point in time, as it does not seem "production ready" to me, given that
+there has not been many resources towards getting the majority of
+instances cleaned up yet from what I can tell. This is particularly
+problematic since hardening.config enables CONFIG_UBSAN_TRAP, so all
+instances of this problem will break the kernel at runtime, which does
+not seem great to me, hence patch 2. Patch 1 seems rather
+uncontroversial to me :)
+
+As for the actual crash itself, which seems like it should still be
+addressed, I landed on commit 1211f3b21c2a ("workqueue: Preserve OFFQ
+bits in cancel[_sync] paths") in -next for both crashes. Not immediately
+obvious to me what it is complaining about though.
+
+  [    0.000000] Linux version 6.9.0-rc1-00001-g1211f3b21c2a (nathan@dev-arch.thelio-3990X) (ClangBuiltLinux clang version 19.0.0git (https://github.com/llvm/llvm-project be10070f91b86a6f126d2451852242bfcb2cd366), ClangBuiltLinux LLD 19.0.0) #1 SMP PREEMPT Thu Apr 11 11:02:26 MST 2024
+  ...
+  [    0.189542] Internal error: UBSAN: unrecognized failure code: 00000000f2005515 [#1] PREEMPT SMP
+  [    0.193125] Modules linked in:
+  [    0.193865] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.9.0-rc1-00001-g1211f3b21c2a #1
+  [    0.194185] Hardware name: linux,dummy-virt (DT)
+  [    0.194464] pstate: 010000c9 (nzcv daIF -PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+  [    0.194778] pc : cancel_delayed_work+0x54/0x94
+  [    0.195742] lr : cancel_delayed_work+0x40/0x94
+  [    0.195877] sp : ffff80008000ba30
+  [    0.195990] x29: ffff80008000ba40 x28: 0000000000000000 x27: 0000000000000000
+  [    0.196315] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
+  [    0.196528] x23: ffff9ce4d84ac000 x22: 0000000000000000 x21: fff000000294b480
+  [    0.196746] x20: ffff9ce4d8c5e000 x19: ffff9ce4d8b28c30 x18: ffff80008000d058
+  [    0.196955] x17: 0000000000000000 x16: 0000000000000000 x15: dead000000000100
+  [    0.197173] x14: 0000000000000001 x13: 0000000000000075 x12: 00000a0000000000
+  [    0.197383] x11: fff0000002b10018 x10: 0008b1020000f0ff x9 : 7058149bb97ccd00
+  [    0.197619] x8 : 00000000000000e1 x7 : 3d4d455453595342 x6 : 000000004e514553
+  [    0.197828] x5 : fff0000002b1026b x4 : fff000001fbdaef0 x3 : 0000000000003400
+  [    0.198038] x2 : ffff80008000ba30 x1 : 0000000000000000 x0 : 0000000000000000
+  [    0.198326] Call trace:
+  [    0.198544]  cancel_delayed_work+0x54/0x94
+  [    0.198810]  deferred_probe_extend_timeout+0x20/0x6c
+  [    0.198988]  driver_register+0xa8/0x10c
+  [    0.199122]  __platform_driver_register+0x28/0x38
+  [    0.199258]  tegra194_cbb_init+0x24/0x34
+  [    0.199393]  do_one_initcall+0xec/0x2d0
+  [    0.199543]  do_initcall_level+0xa4/0xd0
+  [    0.199663]  do_initcalls+0x78/0xcc
+  [    0.199770]  do_basic_setup+0x24/0x34
+  [    0.199880]  kernel_init_freeable+0x110/0x180
+  [    0.200014]  kernel_init+0x28/0x1b8
+  [    0.200123]  ret_from_fork+0x10/0x20
+  [    0.200547] Code: 54ffff60 37f80080 39400268 371001c8 (d42aa2a0) 
+  [    0.200996] ---[ end trace 0000000000000000 ]---
+
+---
+Nathan Chancellor (2):
+      configs/hardening: Fix disabling UBSAN configurations
+      configs/hardening: Disable CONFIG_UBSAN_SIGNED_WRAP
+
+ kernel/configs/hardening.config | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+---
+base-commit: fec50db7033ea478773b159e0e2efb135270e3b7
+change-id: 20240410-fix-ubsan-in-hardening-config-92f66df06c4e
+
+Best regards,
 -- 
-Florian
+Nathan Chancellor <nathan@kernel.org>
 
