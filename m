@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A5813FD94;
-	Thu, 11 Apr 2024 10:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E1B13FD94;
+	Thu, 11 Apr 2024 10:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831220; cv=none; b=dL0GBsTxYv7gL1ou+Zpu7Jt9DmhaOcdCWmv8MPtf1gKNxo/3u0UhqalCIHOl3IYZzI0j3gP995rIpemz1trktuunpBYeu1ymplzJrFCDZzXS/hKYKHj7q8A+Zm8/gifctUPdaQfg1Hus1WBBKwtJK/EoGFACMzNJS2H2cUBg6Yc=
+	t=1712831223; cv=none; b=moE43F19b+5Ijh4KtKiBfq1LEMLjUyM+56322hSZWSY9gh+hIULPnCON75Xdhe9QPew8bP3rFJTc3vC/WZTXhhDlmQmSmcto9QY9Yn2ZrureqkZJYYdA1Vqh01KkRYG1Z42gVdp0D8b0iFNdgZtuySdZZozoGobC93QXacdenGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831220; c=relaxed/simple;
-	bh=IYyTwvr+p5ZJQMUHfOdfmJAplLOqyE7QIkdom9BX1V8=;
+	s=arc-20240116; t=1712831223; c=relaxed/simple;
+	bh=ZV1lMhXCcir27OMhymeGeWJGgJawuCKJPPEqQu9XR+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pz3v98uNlad3LPcCigPTTTSfhdYqI2APOsaL88l9qFPVqqRxVN0qFwg6gNzZIRoocEXLjqo4iFtBL8+xoREwzdhDP5kwxmSASVI1hc5c8yVoNYUlsg2gY4Gd9AdNtQOEvV0f1sMo8wwsXv0CK8EoeKa6rWUVSFdazDUwlvu2Z7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9Xx5AKE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VfE9iyRgeU8weaazMWjr3pvHQc8fRw4L6Cr8na9FdolsHpqZ9umrxJ6K1Z6HR06JViVCRpd7tsPCFrhPqy+f/7T/FXqynWp10CjzYRdPg1kD7+U41bS5BjbCaJUaeelVVV1mI9lDafsGLvlHvuyss+kBlqtO78zJsdEogAQru5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXz9vblA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9Xx5AKE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A651C43390;
-	Thu, 11 Apr 2024 10:26:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXz9vblA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E82DC433F1;
+	Thu, 11 Apr 2024 10:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831219;
-	bh=IYyTwvr+p5ZJQMUHfOdfmJAplLOqyE7QIkdom9BX1V8=;
+	s=korg; t=1712831222;
+	bh=ZV1lMhXCcir27OMhymeGeWJGgJawuCKJPPEqQu9XR+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y9Xx5AKEHYat9tQv6k+cu06sgOiOVHUWcbJfsEeGhVsbdZ+t05YjREZlLD6nrFaSw
-	 cga2TMMiFYU9EeOvQG2qGG0Zhnq/8zEiebmg+iBQF46f+qE+2nIgy708OluA4gg/ZL
-	 Ss4VHg7ozj1i91pF7VWkKsbEwEkNuNF6LAPjDUhc=
+	b=RXz9vblAtpxCVVz8IEs2fngOAq4KFdl2DQACqmXAdPCfOTpfyMRq3s0LIJXABel4p
+	 GpUoPm6YIQ5ygyV6PHUGcnhlUO/vtmd42ucmSpxPfwRhAGcvDup3fawy/C09qsTRnQ
+	 Z6hPHu6syrA5uGFXveZCdPKgYFMjitTCDuib+ogY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Dionne-Riel <samuel@dionne-riel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Florian Westphal <fw@strlen.de>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/114] drm: panel-orientation-quirks: Add quirk for GPD Win Mini
-Date: Thu, 11 Apr 2024 11:56:15 +0200
-Message-ID: <20240411095418.333279263@linuxfoundation.org>
+Subject: [PATCH 6.6 022/114] net: skbuff: add overflow debug check to pull/push helpers
+Date: Thu, 11 Apr 2024 11:55:49 +0200
+Message-ID: <20240411095417.539333685@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095416.853744210@linuxfoundation.org>
 References: <20240411095416.853744210@linuxfoundation.org>
@@ -51,50 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Dionne-Riel <samuel@dionne-riel.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 2f862fdc0fd802e728b6ca96bc78ec3f01bf161e ]
+[ Upstream commit 219eee9c0d16f1b754a8b85275854ab17df0850a ]
 
-This adds a DMI orientation quirk for the GPD Win Mini panel.
+syzbot managed to trigger following splat:
+BUG: KASAN: use-after-free in __skb_flow_dissect+0x4a3b/0x5e50
+Read of size 1 at addr ffff888208a4000e by task a.out/2313
+[..]
+  __skb_flow_dissect+0x4a3b/0x5e50
+  __skb_get_hash+0xb4/0x400
+  ip_tunnel_xmit+0x77e/0x26f0
+  ipip_tunnel_xmit+0x298/0x410
+  ..
 
-Signed-off-by: Samuel Dionne-Riel <samuel@dionne-riel.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231222030149.3740815-2-samuel@dionne-riel.com
+Analysis shows that the skb has a valid ->head, but bogus ->data
+pointer.
+
+skb->data gets its bogus value via the neigh layer, which does:
+
+1556    __skb_pull(skb, skb_network_offset(skb));
+
+... and the skb was already dodgy at this point:
+
+skb_network_offset(skb) returns a negative value due to an
+earlier overflow of skb->network_header (u16).  __skb_pull thus
+"adjusts" skb->data by a huge offset, pointing outside skb->head
+area.
+
+Allow debug builds to splat when we try to pull/push more than
+INT_MAX bytes.
+
+After this, the syzkaller reproducer yields a more precise splat
+before the flow dissector attempts to read off skb->data memory:
+
+WARNING: CPU: 5 PID: 2313 at include/linux/skbuff.h:2653 neigh_connected_output+0x28e/0x400
+  ip_finish_output2+0xb25/0xed0
+  iptunnel_xmit+0x4ff/0x870
+  ipgre_xmit+0x78e/0xbb0
+
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240216113700.23013-1-fw@strlen.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ include/linux/skbuff.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index d5c15292ae937..3fe5e6439c401 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -117,6 +117,12 @@ static const struct drm_dmi_panel_orientation_data lcd1080x1920_leftside_up = {
- 	.orientation = DRM_MODE_PANEL_ORIENTATION_LEFT_UP,
- };
- 
-+static const struct drm_dmi_panel_orientation_data lcd1080x1920_rightside_up = {
-+	.width = 1080,
-+	.height = 1920,
-+	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
-+};
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 9e61f6df6bc55..aa8d6e72ad98b 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -2627,6 +2627,8 @@ static inline void skb_put_u8(struct sk_buff *skb, u8 val)
+ void *skb_push(struct sk_buff *skb, unsigned int len);
+ static inline void *__skb_push(struct sk_buff *skb, unsigned int len)
+ {
++	DEBUG_NET_WARN_ON_ONCE(len > INT_MAX);
 +
- static const struct drm_dmi_panel_orientation_data lcd1200x1920_rightside_up = {
- 	.width = 1200,
- 	.height = 1920,
-@@ -279,6 +285,12 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "G1618-03")
- 		},
- 		.driver_data = (void *)&lcd720x1280_rightside_up,
-+	}, {	/* GPD Win Mini */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "GPD"),
-+		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "G1617-01")
-+		},
-+		.driver_data = (void *)&lcd1080x1920_rightside_up,
- 	}, {	/* I.T.Works TW891 */
- 		.matches = {
- 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "To be filled by O.E.M."),
+ 	skb->data -= len;
+ 	skb->len  += len;
+ 	return skb->data;
+@@ -2635,6 +2637,8 @@ static inline void *__skb_push(struct sk_buff *skb, unsigned int len)
+ void *skb_pull(struct sk_buff *skb, unsigned int len);
+ static inline void *__skb_pull(struct sk_buff *skb, unsigned int len)
+ {
++	DEBUG_NET_WARN_ON_ONCE(len > INT_MAX);
++
+ 	skb->len -= len;
+ 	if (unlikely(skb->len < skb->data_len)) {
+ #if defined(CONFIG_DEBUG_NET)
+@@ -2659,6 +2663,8 @@ void *__pskb_pull_tail(struct sk_buff *skb, int delta);
+ static inline enum skb_drop_reason
+ pskb_may_pull_reason(struct sk_buff *skb, unsigned int len)
+ {
++	DEBUG_NET_WARN_ON_ONCE(len > INT_MAX);
++
+ 	if (likely(len <= skb_headlen(skb)))
+ 		return SKB_NOT_DROPPED_YET;
+ 
 -- 
 2.43.0
 
