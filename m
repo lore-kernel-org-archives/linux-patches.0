@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9107A14600E;
-	Thu, 11 Apr 2024 10:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8204B146D79;
+	Thu, 11 Apr 2024 10:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831924; cv=none; b=PKhkzq/R8XaByl11jgpFFfH029+wKBH/bQebD/Cm+tsk1Xu+0r31VR2cJsS+sCpE4mpW2QMh4X3LrDRNvcXLSfKTyFyR7gm1hkA5SrPft6RzJalYpleg9YVhgEpifDYDAkwTPrBfaexbWXP0Em/ZU4azLSC58Qp1IpYuAyWFqek=
+	t=1712831927; cv=none; b=qe5MRcoNQqUlYEKaSCQq8SO5GWppxXLBl2AayI9XQQMVaqrY8vvlLkV0gcrwlzSYNGEAQuvwZYBBtqTxC1AAYxgCnBDzoRdKWRag5Y1EKB5xpJFubFEzAmYCgonKHxsnq/elpHcHfAG5JPqV/5eTTSCaKc+PPt5RcOYQeUF3yjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831924; c=relaxed/simple;
-	bh=zBRd/BH4VcFknQ3OomHU1llbz7OJH24X+6QCHiHAgf0=;
+	s=arc-20240116; t=1712831927; c=relaxed/simple;
+	bh=Veum3n/AR0Pd/k1GZzxTybdNESjBmz7GWcQY6pLFfZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y0KaE6ZuqXyGyyfSFiBjZ61XHMf/H8XNoFFd8daQsIfOhcp6GR6xiEU4L1R0RChRojq1NAgksT7mhaJj8cbkdRGADNqwLhauDN0PvGuqRa6V660na/SxdyWSIzSv1x5trV0GdpRNreKAGkwyHdUfq7tsIsPnvlkG2yxPmLaZ6B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDGkkeiJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rULCvAUwr0pa9nbfZ3GaPIMWuryXRe2qUqxpifL8S9HdUUHIeY5VtKK0h0dKjwVMz7HXhu6FbUgEXnm8vVaH/YG/LRKxlKzihEwWQYakwDpIrTuvspcHQK+sh87iEcMT1Zs6Uw9lfoCdj7duL2Jj0W9MAH4OfbOt2DpojIIDHMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGtHfXej; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDGkkeiJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17EA3C433F1;
-	Thu, 11 Apr 2024 10:38:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGtHfXej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019B6C433F1;
+	Thu, 11 Apr 2024 10:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831924;
-	bh=zBRd/BH4VcFknQ3OomHU1llbz7OJH24X+6QCHiHAgf0=;
+	s=korg; t=1712831927;
+	bh=Veum3n/AR0Pd/k1GZzxTybdNESjBmz7GWcQY6pLFfZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lDGkkeiJtJU6QOWq1KKM3NzyBpN60c9hGfXRyLb4ukn9xLjpUQqczl/DHZZxhuDLw
-	 EoAY4rexnAFpdYb5TxRYCxMIcEwE3+MmNLvPEhUT7sLwjeDvL6qqx+yzEA3IbwIBqk
-	 Kriqo0DQ59Nd23qynEARjiTec1t0YvdrbO+qY4Gc=
+	b=PGtHfXejeUihDb45fkNsYCS9wbOoWKPqRLK0kVB8Oql3prOT/rJSwZJGtOGSZuEjK
+	 SoFkIWUS/ODdWmJ51civylKZHwuPkN8UkUvvDRjPkhXESCxq1Pt2RVJBcxUweiYqQX
+	 g1Kv1xtsAhh0NU7T48+mlg8sHIq0zGSaxtEFOUsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Subject: [PATCH 5.10 145/294] x86/mmio: Disable KVM mitigation when X86_FEATURE_CLEAR_CPU_BUF is set
-Date: Thu, 11 Apr 2024 11:55:08 +0200
-Message-ID: <20240411095440.019256621@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	yuan linyu <yuanlinyu@hihonor.com>
+Subject: [PATCH 5.10 172/294] usb: udc: remove warning when queue disabled ep
+Date: Thu, 11 Apr 2024 11:55:35 +0200
+Message-ID: <20240411095440.810896569@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -50,57 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: yuan linyu <yuanlinyu@hihonor.com>
 
-commit e95df4ec0c0c9791941f112db699fae794b9862a upstream.
+commit 2a587a035214fa1b5ef598aea0b81848c5b72e5e upstream.
 
-Currently MMIO Stale Data mitigation for CPUs not affected by MDS/TAA is
-to only deploy VERW at VMentry by enabling mmio_stale_data_clear static
-branch. No mitigation is needed for kernel->user transitions. If such
-CPUs are also affected by RFDS, its mitigation may set
-X86_FEATURE_CLEAR_CPU_BUF to deploy VERW at kernel->user and VMentry.
-This could result in duplicate VERW at VMentry.
+It is possible trigger below warning message from mass storage function,
 
-Fix this by disabling mmio_stale_data_clear static branch when
-X86_FEATURE_CLEAR_CPU_BUF is enabled.
+WARNING: CPU: 6 PID: 3839 at drivers/usb/gadget/udc/core.c:294 usb_ep_queue+0x7c/0x104
+pc : usb_ep_queue+0x7c/0x104
+lr : fsg_main_thread+0x494/0x1b3c
 
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
+Root cause is mass storage function try to queue request from main thread,
+but other thread may already disable ep when function disable.
+
+As there is no function failure in the driver, in order to avoid effort
+to fix warning, change WARN_ON_ONCE() in usb_ep_queue() to pr_debug().
+
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Cc: stable@vger.kernel.org
+Signed-off-by: yuan linyu <yuanlinyu@hihonor.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20240315020144.2715575-1-yuanlinyu@hihonor.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/bugs.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/udc/core.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -419,6 +419,13 @@ static void __init mmio_select_mitigatio
- 	if (boot_cpu_has_bug(X86_BUG_MDS) || (boot_cpu_has_bug(X86_BUG_TAA) &&
- 					      boot_cpu_has(X86_FEATURE_RTM)))
- 		setup_force_cpu_cap(X86_FEATURE_CLEAR_CPU_BUF);
-+
-+	/*
-+	 * X86_FEATURE_CLEAR_CPU_BUF could be enabled by other VERW based
-+	 * mitigations, disable KVM-only mitigation in that case.
-+	 */
-+	if (boot_cpu_has(X86_FEATURE_CLEAR_CPU_BUF))
-+		static_branch_disable(&mmio_stale_data_clear);
- 	else
- 		static_branch_enable(&mmio_stale_data_clear);
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -273,7 +273,9 @@ int usb_ep_queue(struct usb_ep *ep,
+ {
+ 	int ret = 0;
  
-@@ -495,8 +502,11 @@ static void __init md_clear_update_mitig
- 		taa_mitigation = TAA_MITIGATION_VERW;
- 		taa_select_mitigation();
- 	}
--	if (mmio_mitigation == MMIO_MITIGATION_OFF &&
--	    boot_cpu_has_bug(X86_BUG_MMIO_STALE_DATA)) {
-+	/*
-+	 * MMIO_MITIGATION_OFF is not checked here so that mmio_stale_data_clear
-+	 * gets updated correctly as per X86_FEATURE_CLEAR_CPU_BUF state.
-+	 */
-+	if (boot_cpu_has_bug(X86_BUG_MMIO_STALE_DATA)) {
- 		mmio_mitigation = MMIO_MITIGATION_VERW;
- 		mmio_select_mitigation();
+-	if (WARN_ON_ONCE(!ep->enabled && ep->address)) {
++	if (!ep->enabled && ep->address) {
++		pr_debug("USB gadget: queue request to disabled ep 0x%x (%s)\n",
++				 ep->address, ep->name);
+ 		ret = -ESHUTDOWN;
+ 		goto out;
  	}
 
 
