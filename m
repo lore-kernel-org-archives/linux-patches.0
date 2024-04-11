@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7955F140366;
-	Thu, 11 Apr 2024 10:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076A8140366;
+	Thu, 11 Apr 2024 10:40:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712832050; cv=none; b=OnovWxY6qP3Q/keZ7+/XtyOpuQzDQ+r5qCAU1H2PnCZoXkvThj5VGhZv6V4VbTRHErRrW/xhfQAYiVJN+5gWkc+0NiyXrlHQhj0FOuiUCaF5R4Hs3HY3/hpVSTAPXEbuVkqYZsmKXZgB5rKeY3fib84ly0Y1rgSB9CYx4jHYyOk=
+	t=1712832059; cv=none; b=Nz2LfVDhymU7rMWiY/LZRQ/XMDeC9M7HJFQrwiacqvg1AgqnZn5W0IA49ZaJO7DN8jk1dJLgsTjX9inG8DOZPFV8OxOWovV+B+QjcbaTZGHoLycCKJ2SosLgOO9FBvCXkrDnDGMlzJYD+kETbNHsiSEQeU15ZkBboNqnZW/pIH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712832050; c=relaxed/simple;
-	bh=PMz/YMsfnHaB5uvA8HVd7aDFDDawaou6gfa08Q0whYc=;
+	s=arc-20240116; t=1712832059; c=relaxed/simple;
+	bh=m9eCv2bAz9Fzo33CT5On0Sab3Ib9IxSUdfqY8OQSU7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iSEaUEMDMnr17TM3b8Jkyd+dicKU/nd9iAYKrzyxxbbS+7mSmMqvwppL5jET34R4DYdhuWenRNskRU/DhcJ53moxX9dLL78VMxYPaFMTkA7YbV40H4Se9U48dsylP3mU6oHuaMmW9nDS8kSguScnmwFkYSMDrd4qGrDwWfyuSJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VX0bf/7O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mEH2XLm1ElVBDraKfQ2CFTwOL0YedDWHK0FDq5DeeVSfBvNyJvnLKkTuvzooBZGVskuVnBBmSZ0UlqOlK3jvMDlmSnNjjSPOnm7+qrUAjtGADrWspTJFWJ/6rEfN/HjDnmFU2W2QZguPjQJfooKy6YvhXuDzQ7fSO9mqmTGtkT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkHnNyKy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VX0bf/7O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01252C433C7;
-	Thu, 11 Apr 2024 10:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkHnNyKy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E243BC433C7;
+	Thu, 11 Apr 2024 10:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712832050;
-	bh=PMz/YMsfnHaB5uvA8HVd7aDFDDawaou6gfa08Q0whYc=;
+	s=korg; t=1712832058;
+	bh=m9eCv2bAz9Fzo33CT5On0Sab3Ib9IxSUdfqY8OQSU7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VX0bf/7OJ/2pUaCRUy125hxHdoh8fvhwoI1aFcitpL9TR55T9Egu8TrkKnVH+L/UL
-	 Y1Y60TEM3tJ0XjVLk3DN4PcrF5zg3K7q3bNbJGcXJ8lg3laSN/BGBxXBzmPdovGJdV
-	 UPFVFO5snPXvF/Ts2Ri18W6yUXdVw8wHXtlvrmAI=
+	b=HkHnNyKyApUQjb86vrrdht4BLT0bGhiBFPL7gHQZrOlhU2QnPaa+FkqPj8BOaP6lk
+	 C+Vt42zqA19rjOTxCTZFJf5a4nEM1trsKuahuGB3JGuUYnqTSIwZx9Z1MOjwvKJtnb
+	 29tlR9KTuNEEpcJiZJEpQSy/SsDc3nBzG9JAYkG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 187/294] Octeontx2-af: fix pause frame configuration in GMP mode
-Date: Thu, 11 Apr 2024 11:55:50 +0200
-Message-ID: <20240411095441.247698130@linuxfoundation.org>
+	syzbot+1c1cf138518bf0c53d68@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 214/294] erspan: make sure erspan_base_hdr is present in skb->head
+Date: Thu, 11 Apr 2024 11:56:17 +0200
+Message-ID: <20240411095442.037230983@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -52,46 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 40d4b4807cadd83fb3f46cc8cd67a945b5b25461 ]
+commit 17af420545a750f763025149fa7b833a4fc8b8f0 upstream.
 
-The Octeontx2 MAC block (CGX) has separate data paths (SMU and GMP) for
-different speeds, allowing for efficient data transfer.
+syzbot reported a problem in ip6erspan_rcv() [1]
 
-The previous patch which added pause frame configuration has a bug due
-to which pause frame feature is not working in GMP mode.
+Issue is that ip6erspan_rcv() (and erspan_rcv()) no longer make
+sure erspan_base_hdr is present in skb linear part (skb->head)
+before getting @ver field from it.
 
-This patch fixes the issue by configurating appropriate registers.
+Add the missing pskb_may_pull() calls.
 
-Fixes: f7e086e754fe ("octeontx2-af: Pause frame configuration at cgx")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240326052720.4441-1-hkelam@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+v2: Reload iph pointer in erspan_rcv() after pskb_may_pull()
+    because skb->head might have changed.
+
+[1]
+
+ BUG: KMSAN: uninit-value in pskb_may_pull_reason include/linux/skbuff.h:2742 [inline]
+ BUG: KMSAN: uninit-value in pskb_may_pull include/linux/skbuff.h:2756 [inline]
+ BUG: KMSAN: uninit-value in ip6erspan_rcv net/ipv6/ip6_gre.c:541 [inline]
+ BUG: KMSAN: uninit-value in gre_rcv+0x11f8/0x1930 net/ipv6/ip6_gre.c:610
+  pskb_may_pull_reason include/linux/skbuff.h:2742 [inline]
+  pskb_may_pull include/linux/skbuff.h:2756 [inline]
+  ip6erspan_rcv net/ipv6/ip6_gre.c:541 [inline]
+  gre_rcv+0x11f8/0x1930 net/ipv6/ip6_gre.c:610
+  ip6_protocol_deliver_rcu+0x1d4c/0x2ca0 net/ipv6/ip6_input.c:438
+  ip6_input_finish net/ipv6/ip6_input.c:483 [inline]
+  NF_HOOK include/linux/netfilter.h:314 [inline]
+  ip6_input+0x15d/0x430 net/ipv6/ip6_input.c:492
+  ip6_mc_input+0xa7e/0xc80 net/ipv6/ip6_input.c:586
+  dst_input include/net/dst.h:460 [inline]
+  ip6_rcv_finish+0x955/0x970 net/ipv6/ip6_input.c:79
+  NF_HOOK include/linux/netfilter.h:314 [inline]
+  ipv6_rcv+0xde/0x390 net/ipv6/ip6_input.c:310
+  __netif_receive_skb_one_core net/core/dev.c:5538 [inline]
+  __netif_receive_skb+0x1da/0xa00 net/core/dev.c:5652
+  netif_receive_skb_internal net/core/dev.c:5738 [inline]
+  netif_receive_skb+0x58/0x660 net/core/dev.c:5798
+  tun_rx_batched+0x3ee/0x980 drivers/net/tun.c:1549
+  tun_get_user+0x5566/0x69e0 drivers/net/tun.c:2002
+  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
+  call_write_iter include/linux/fs.h:2108 [inline]
+  new_sync_write fs/read_write.c:497 [inline]
+  vfs_write+0xb63/0x1520 fs/read_write.c:590
+  ksys_write+0x20f/0x4c0 fs/read_write.c:643
+  __do_sys_write fs/read_write.c:655 [inline]
+  __se_sys_write fs/read_write.c:652 [inline]
+  __x64_sys_write+0x93/0xe0 fs/read_write.c:652
+ do_syscall_64+0xd5/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+
+Uninit was created at:
+  slab_post_alloc_hook mm/slub.c:3804 [inline]
+  slab_alloc_node mm/slub.c:3845 [inline]
+  kmem_cache_alloc_node+0x613/0xc50 mm/slub.c:3888
+  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:577
+  __alloc_skb+0x35b/0x7a0 net/core/skbuff.c:668
+  alloc_skb include/linux/skbuff.h:1318 [inline]
+  alloc_skb_with_frags+0xc8/0xbf0 net/core/skbuff.c:6504
+  sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2795
+  tun_alloc_skb drivers/net/tun.c:1525 [inline]
+  tun_get_user+0x209a/0x69e0 drivers/net/tun.c:1846
+  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
+  call_write_iter include/linux/fs.h:2108 [inline]
+  new_sync_write fs/read_write.c:497 [inline]
+  vfs_write+0xb63/0x1520 fs/read_write.c:590
+  ksys_write+0x20f/0x4c0 fs/read_write.c:643
+  __do_sys_write fs/read_write.c:655 [inline]
+  __se_sys_write fs/read_write.c:652 [inline]
+  __x64_sys_write+0x93/0xe0 fs/read_write.c:652
+ do_syscall_64+0xd5/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+
+CPU: 1 PID: 5045 Comm: syz-executor114 Not tainted 6.9.0-rc1-syzkaller-00021-g962490525cff #0
+
+Fixes: cb73ee40b1b3 ("net: ip_gre: use erspan key field for tunnel lookup")
+Reported-by: syzbot+1c1cf138518bf0c53d68@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/000000000000772f2c0614b66ef7@google.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://lore.kernel.org/r/20240328112248.1101491-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/cgx.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/ipv4/ip_gre.c  |    5 +++++
+ net/ipv6/ip6_gre.c |    3 +++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-index 55dfe1a20bc99..7f82baf8e7403 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -403,6 +403,11 @@ int cgx_lmac_set_pause_frm(void *cgxd, int lmac_id,
- 	if (!cgx || lmac_id >= cgx->lmac_count)
- 		return -ENODEV;
- 
-+	cfg = cgx_read(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL);
-+	cfg &= ~CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK;
-+	cfg |= rx_pause ? CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK : 0x0;
-+	cgx_write(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL, cfg);
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -278,8 +278,13 @@ static int erspan_rcv(struct sk_buff *sk
+ 					  tpi->flags | TUNNEL_NO_KEY,
+ 					  iph->saddr, iph->daddr, 0);
+ 	} else {
++		if (unlikely(!pskb_may_pull(skb,
++					    gre_hdr_len + sizeof(*ershdr))))
++			return PACKET_REJECT;
 +
- 	cfg = cgx_read(cgx, lmac_id, CGXX_SMUX_RX_FRM_CTL);
- 	cfg &= ~CGX_SMUX_RX_FRM_CTL_CTL_BCK;
- 	cfg |= rx_pause ? CGX_SMUX_RX_FRM_CTL_CTL_BCK : 0x0;
--- 
-2.43.0
-
+ 		ershdr = (struct erspan_base_hdr *)(skb->data + gre_hdr_len);
+ 		ver = ershdr->ver;
++		iph = ip_hdr(skb);
+ 		tunnel = ip_tunnel_lookup(itn, skb->dev->ifindex,
+ 					  tpi->flags | TUNNEL_KEY,
+ 					  iph->saddr, iph->daddr, tpi->key);
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -533,6 +533,9 @@ static int ip6erspan_rcv(struct sk_buff
+ 	struct ip6_tnl *tunnel;
+ 	u8 ver;
+ 
++	if (unlikely(!pskb_may_pull(skb, sizeof(*ershdr))))
++		return PACKET_REJECT;
++
+ 	ipv6h = ipv6_hdr(skb);
+ 	ershdr = (struct erspan_base_hdr *)skb->data;
+ 	ver = ershdr->ver;
 
 
