@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7AD14600A;
-	Thu, 11 Apr 2024 10:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B38145B28;
+	Thu, 11 Apr 2024 10:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830401; cv=none; b=oCD5/5eKGKiVduWLn/UxuKcEoHJ6Va8E3XhrFbbhUPl5yL99TMOD/o+iGgWvi1gUsqYzbWR8ADH9qG5Yc8SHz5t4ObGdw2yX5Pub0Dro0SdGnvMN8g0FPTxky0ZVNooe7gQ4lOm0k40gaTHoDoyJpAqSqZWzM1q5bbZrOqcUO2Y=
+	t=1712830405; cv=none; b=DnLWzKAwe7kNNXaVBWBT1agV/8S28fEMHnHECv/NvnoEAWjHquqEerIVfietcaI2F7ggwiK5Cd1fCMtgi+jqGv+OapzpgOGh7nlnmwmEfNeaouwseJxNbaz3nJ3LDN4qZuDbUuwpGHb86aOECeUGqY+nuJ7fR+9O37jTprPQSKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830401; c=relaxed/simple;
-	bh=T1QbLgV34B2+REhVeVlDZM5hVVVa0DNa32qiGKJ23C4=;
+	s=arc-20240116; t=1712830405; c=relaxed/simple;
+	bh=7772yVhehGVAoMxO6XiKngiC9hADRJMTxEcn6ywEg+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ogMy6tbxlqXiUst15fc5VZZv0v2JECKVoTvSTO35a68F/FcuDVLnAvwK2BYJYPFv/Oxsli5AFHni/zab/kCXqd0JypH80uqjiWOezs0kDF+aII/FHnKlET6DyXEZenZ+lvuzV5iTo3K+uA+T310UTmlwJZb0gLvgww2DhmWCT7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HggVMTLi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YMa5pwkheKyMmJnABRbDDN3ruRqKjLmTl+fsa+U0Urzk1nacRrkKyx3lNQP6DYqU56Nrp0+ZJVLRRSIShiP4Iacdrspl69yzJ+DkVJlq86bltSuds4MSbyqTFfVxqSPuHI1HgctKF/WcTTQDN1QNu8JEYDAB9QXByUoW1GZqwuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duKL7qDR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HggVMTLi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCDFC43390;
-	Thu, 11 Apr 2024 10:13:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duKL7qDR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF6EFC433F1;
+	Thu, 11 Apr 2024 10:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830401;
-	bh=T1QbLgV34B2+REhVeVlDZM5hVVVa0DNa32qiGKJ23C4=;
+	s=korg; t=1712830404;
+	bh=7772yVhehGVAoMxO6XiKngiC9hADRJMTxEcn6ywEg+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HggVMTLibT1MdFCHnYjiOq3ryFtr5+iGfqDZex4oWvSn75GL/IK5VONyKaQiwFPQm
-	 DiHBP4Re3Pk1pchy1Ulh/P20SJEaS06nIMnYsbLou9N09XCJNSpEVz17YaPGQyLNxm
-	 m///rLxTtxeaZ2tFqOtKKgSU2aHNMYnJPO3P7CJk=
+	b=duKL7qDRoKV58EOMeXBYU5uX0wIOl70CV00GG/jSsdDBKtmvfWQCBcxCvwU6cP+Rh
+	 uSVbFnK6UzRNjxLAXQiapXoELXer+PLlkQLRQxrCE5aEztbGH6cbkKWgPeEuCyCk20
+	 dnjf1Cv4MR5T0Hw2S3CRWzEJa2eXwfErjq4ez3t0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Manjunath Patil <manjunath.b.patil@oracle.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 132/143] media: mediatek: vcodec: Fix oops when HEVC init fails
-Date: Thu, 11 Apr 2024 11:56:40 +0200
-Message-ID: <20240411095424.877215700@linuxfoundation.org>
+Subject: [PATCH 6.8 097/143] RDMA/cm: add timeout to cm_destroy_id wait
+Date: Thu, 11 Apr 2024 11:56:05 +0200
+Message-ID: <20240411095423.828437029@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -53,82 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+From: Manjunath Patil <manjunath.b.patil@oracle.com>
 
-[ Upstream commit 97c75ee5de060d271d80109b0c47cb6008439e5b ]
+[ Upstream commit 96d9cbe2f2ff7abde021bac75eafaceabe9a51fa ]
 
-The stateless HEVC decoder saves the instance pointer in the context
-regardless if the initialization worked or not. This caused a use after
-free, when the pointer is freed in case of a failure in the deinit
-function.
-Only store the instance pointer when the initialization was successful,
-to solve this issue.
+Add timeout to cm_destroy_id, so that userspace can trigger any data
+collection that would help in analyzing the cause of delay in destroying
+the cm_id.
 
- Hardware name: Acer Tomato (rev3 - 4) board (DT)
- pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : vcodec_vpu_send_msg+0x4c/0x190 [mtk_vcodec_dec]
- lr : vcodec_send_ap_ipi+0x78/0x170 [mtk_vcodec_dec]
- sp : ffff80008750bc20
- x29: ffff80008750bc20 x28: ffff1299f6d70000 x27: 0000000000000000
- x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
- x23: ffff80008750bc98 x22: 000000000000a003 x21: ffffd45c4cfae000
- x20: 0000000000000010 x19: ffff1299fd668310 x18: 000000000000001a
- x17: 000000040044ffff x16: ffffd45cb15dc648 x15: 0000000000000000
- x14: ffff1299c08da1c0 x13: ffffd45cb1f87a10 x12: ffffd45cb2f5fe80
- x11: 0000000000000001 x10: 0000000000001b30 x9 : ffffd45c4d12b488
- x8 : 1fffe25339380d81 x7 : 0000000000000001 x6 : ffff1299c9c06c00
- x5 : 0000000000000132 x4 : 0000000000000000 x3 : 0000000000000000
- x2 : 0000000000000010 x1 : ffff80008750bc98 x0 : 0000000000000000
- Call trace:
-  vcodec_vpu_send_msg+0x4c/0x190 [mtk_vcodec_dec]
-  vcodec_send_ap_ipi+0x78/0x170 [mtk_vcodec_dec]
-  vpu_dec_deinit+0x1c/0x30 [mtk_vcodec_dec]
-  vdec_hevc_slice_deinit+0x30/0x98 [mtk_vcodec_dec]
-  vdec_if_deinit+0x38/0x68 [mtk_vcodec_dec]
-  mtk_vcodec_dec_release+0x20/0x40 [mtk_vcodec_dec]
-  fops_vcodec_release+0x64/0x118 [mtk_vcodec_dec]
-  v4l2_release+0x7c/0x100
-  __fput+0x80/0x2d8
-  __fput_sync+0x58/0x70
-  __arm64_sys_close+0x40/0x90
-  invoke_syscall+0x50/0x128
-  el0_svc_common.constprop.0+0x48/0xf0
-  do_el0_svc+0x24/0x38
-  el0_svc+0x38/0xd8
-  el0t_64_sync_handler+0xc0/0xc8
-  el0t_64_sync+0x1a8/0x1b0
- Code: d503201f f9401660 b900127f b900227f (f9400400)
+New noinline function helps dtrace/ebpf programs to hook on to it.
+Existing functionality isn't changed except triggering a probe-able new
+function at every timeout interval.
 
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Fixes: 2674486aac7d ("media: mediatek: vcodec: support stateless hevc decoder")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+We have seen cases where CM messages stuck with MAD layer (either due to
+software bug or faulty HCA), leading to cm_id getting stuck in the
+following call stack. This patch helps in resolving such issues faster.
+
+kernel: ... INFO: task XXXX:56778 blocked for more than 120 seconds.
+...
+	Call Trace:
+	__schedule+0x2bc/0x895
+	schedule+0x36/0x7c
+	schedule_timeout+0x1f6/0x31f
+ 	? __slab_free+0x19c/0x2ba
+	wait_for_completion+0x12b/0x18a
+	? wake_up_q+0x80/0x73
+	cm_destroy_id+0x345/0x610 [ib_cm]
+	ib_destroy_cm_id+0x10/0x20 [ib_cm]
+	rdma_destroy_id+0xa8/0x300 [rdma_cm]
+	ucma_destroy_id+0x13e/0x190 [rdma_ucm]
+	ucma_write+0xe0/0x160 [rdma_ucm]
+	__vfs_write+0x3a/0x16d
+	vfs_write+0xb2/0x1a1
+	? syscall_trace_enter+0x1ce/0x2b8
+	SyS_write+0x5c/0xd3
+	do_syscall_64+0x79/0x1b9
+	entry_SYSCALL_64_after_hwframe+0x16d/0x0
+
+Signed-off-by: Manjunath Patil <manjunath.b.patil@oracle.com>
+Link: https://lore.kernel.org/r/20240309063323.458102-1-manjunath.b.patil@oracle.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mediatek/vcodec/decoder/vdec/vdec_hevc_req_multi_if.c       | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/core/cm.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_hevc_req_multi_if.c b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_hevc_req_multi_if.c
-index 06ed47df693bf..21836dd6ef85a 100644
---- a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_hevc_req_multi_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_hevc_req_multi_if.c
-@@ -869,7 +869,6 @@ static int vdec_hevc_slice_init(struct mtk_vcodec_dec_ctx *ctx)
- 	inst->vpu.codec_type = ctx->current_codec;
- 	inst->vpu.capture_type = ctx->capture_fourcc;
+diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
+index ff58058aeadca..bf0df6ee4f785 100644
+--- a/drivers/infiniband/core/cm.c
++++ b/drivers/infiniband/core/cm.c
+@@ -34,6 +34,7 @@ MODULE_AUTHOR("Sean Hefty");
+ MODULE_DESCRIPTION("InfiniBand CM");
+ MODULE_LICENSE("Dual BSD/GPL");
  
--	ctx->drv_handle = inst;
- 	err = vpu_dec_init(&inst->vpu);
- 	if (err) {
- 		mtk_vdec_err(ctx, "vdec_hevc init err=%d", err);
-@@ -898,6 +897,7 @@ static int vdec_hevc_slice_init(struct mtk_vcodec_dec_ctx *ctx)
- 	mtk_vdec_debug(ctx, "lat hevc instance >> %p, codec_type = 0x%x",
- 		       inst, inst->vpu.codec_type);
++#define CM_DESTROY_ID_WAIT_TIMEOUT 10000 /* msecs */
+ static const char * const ibcm_rej_reason_strs[] = {
+ 	[IB_CM_REJ_NO_QP]			= "no QP",
+ 	[IB_CM_REJ_NO_EEC]			= "no EEC",
+@@ -1025,10 +1026,20 @@ static void cm_reset_to_idle(struct cm_id_private *cm_id_priv)
+ 	}
+ }
  
-+	ctx->drv_handle = inst;
- 	return 0;
- error_free_inst:
- 	kfree(inst);
++static noinline void cm_destroy_id_wait_timeout(struct ib_cm_id *cm_id)
++{
++	struct cm_id_private *cm_id_priv;
++
++	cm_id_priv = container_of(cm_id, struct cm_id_private, id);
++	pr_err("%s: cm_id=%p timed out. state=%d refcnt=%d\n", __func__,
++	       cm_id, cm_id->state, refcount_read(&cm_id_priv->refcount));
++}
++
+ static void cm_destroy_id(struct ib_cm_id *cm_id, int err)
+ {
+ 	struct cm_id_private *cm_id_priv;
+ 	struct cm_work *work;
++	int ret;
+ 
+ 	cm_id_priv = container_of(cm_id, struct cm_id_private, id);
+ 	spin_lock_irq(&cm_id_priv->lock);
+@@ -1135,7 +1146,14 @@ static void cm_destroy_id(struct ib_cm_id *cm_id, int err)
+ 
+ 	xa_erase(&cm.local_id_table, cm_local_id(cm_id->local_id));
+ 	cm_deref_id(cm_id_priv);
+-	wait_for_completion(&cm_id_priv->comp);
++	do {
++		ret = wait_for_completion_timeout(&cm_id_priv->comp,
++						  msecs_to_jiffies(
++						  CM_DESTROY_ID_WAIT_TIMEOUT));
++		if (!ret) /* timeout happened */
++			cm_destroy_id_wait_timeout(cm_id);
++	} while (!ret);
++
+ 	while ((work = cm_dequeue_work(cm_id_priv)) != NULL)
+ 		cm_free_work(work);
+ 
 -- 
 2.43.0
 
