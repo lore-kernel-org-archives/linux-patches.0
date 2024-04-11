@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353A91448EF;
-	Thu, 11 Apr 2024 10:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D3A1448EF;
+	Thu, 11 Apr 2024 10:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830328; cv=none; b=fT225lZ/3eJoFaxV816oF4vQOyyghev8/Yz6gAFZV0M98JB7bjiLu2JSM/6xcK3auw1OlawCg/a2xippFMlIFzbybjZn15UGexL2uO25QOLIgfbBTFMiq82Ma04ZWGrDfnbL7wYAl7InNDDFjfzdROYlL8QpDifJtk01/4Q7M3I=
+	t=1712830331; cv=none; b=cmP2FBSMnazW7PMoT65O+hWUsQeUucfUJg5vV1ap3+8KN+B07TWesQQmnACY84IMJ3aVrDH6FTKLO5Y4tyq/fOXwakIB41lmKwqurhbgBEMP+JeTIpUbHJwUT7RsGl7pOnF87NmXH4DXmNtEpUzpFmVQnBLcfG6qiBTGCvw6g+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830328; c=relaxed/simple;
-	bh=QtR5o5UosXfgjfYWbTftgUOkPpDJN6xYrOcJv45Sf7M=;
+	s=arc-20240116; t=1712830331; c=relaxed/simple;
+	bh=FzjpLgJVeT3I3PuMr7TVFCW9vBbGrUyKwj7KKZ+jcLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rS1gZOSr51lPeOtFd+THiT+SztHP1ONbtQ7F+39vcCfaejq2ENW6yna9/+AWRHCm4crujmWMPS4tYUQ7pniSRlys6DEaNabF02MnrZgyJDSxEz4SgzFvvPIckqXdiYB3KeBCuGenNnuRbyUESbSlqAxyL58ztr/1RPw8AZscCWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bpi9tbjP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EDrWfDpQTDnxXy/A8ajYt9pjQZ6ql5avv+HizR/ExBP5LVCtErh7xYbS0GqCzGkcfHv1FVn5xSGbaiKnX8Q/OMHbGJz0Pev3rujXAlr9BUxtwmUh9UUHeom535A2LlW5i+Z3h6TD7yzMm1HVBus/AViFCHkvK7bM14bq3FQEtTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0UzP34o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bpi9tbjP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2C5C433F1;
-	Thu, 11 Apr 2024 10:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0UzP34o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB263C433C7;
+	Thu, 11 Apr 2024 10:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830328;
-	bh=QtR5o5UosXfgjfYWbTftgUOkPpDJN6xYrOcJv45Sf7M=;
+	s=korg; t=1712830331;
+	bh=FzjpLgJVeT3I3PuMr7TVFCW9vBbGrUyKwj7KKZ+jcLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bpi9tbjPwQP6IEWA0/QovtjFLVMU9TRJg2Aw1lQ1QRgG1/qQwrAKY6i4+QaOIBe44
-	 skB0XMvWJxVH1OVuA18yv1XuKEqYguMVyJi/GiX4J5s3L8ewV6egAQRneIulG3wQa0
-	 dXegN1j/UxXbrcEevZzMvvhu6/9vAZTBS5fmT43I=
+	b=W0UzP34oQkpPRAvCUohU0Sp3tDxinnvslgVfmUi0N14CPC7YwajDgfomtRhdXyrHz
+	 57WAmNRLBDEqVqPev1TLscy/F4YoQBOqcrJpj8cgHia5lM1UnSgCp8EarjlvnJHpRV
+	 lFFYXJnMUsPrniO3BQfiGpfvGnyEFePek2Lqqzvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Luca Weiss <luca.weiss@fairphone.com>,
+	Gil Fine <gil.fine@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 111/143] usb: typec: ucsi: Add qcm6490-pmic-glink as needing PDOS quirk
-Date: Thu, 11 Apr 2024 11:56:19 +0200
-Message-ID: <20240411095424.248796785@linuxfoundation.org>
+Subject: [PATCH 6.8 112/143] thunderbolt: Calculate DisplayPort tunnel bandwidth after DPRX capabilities read
+Date: Thu, 11 Apr 2024 11:56:20 +0200
+Message-ID: <20240411095424.279259043@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -52,35 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Gil Fine <gil.fine@linux.intel.com>
 
-[ Upstream commit 88bae831f3810e02c9c951233c7ee662aa13dc2c ]
+[ Upstream commit ccd845021147dc8257a05ed8f5a7f9c61a9101e3 ]
 
-The QCM6490 Linux Android firmware needs this workaround as well. Add it
-to the list.
+According to USB4 Connection Manager guide, after DisplayPort tunnel was
+setup, the DPRX capabilities read is performed by the DPTX. According to
+VESA spec, this shall be completed within 5 seconds after the DisplayPort
+tunnel was setup. Hence, if the bit: DPRX Capabilities Read Done, was
+not set to '1' by this time, we timeout and fail calculating DisplayPort
+tunnel consumed bandwidth.
 
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Link: https://lore.kernel.org/r/20240208-fp5-pmic-glink-v2-2-4837d4abd5a4@fairphone.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_glink.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/thunderbolt/tunnel.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-index 5d098e71f1bb7..ce08eb33e5bec 100644
---- a/drivers/usb/typec/ucsi/ucsi_glink.c
-+++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-@@ -312,6 +312,7 @@ static void pmic_glink_ucsi_destroy(void *data)
- }
- 
- static const struct of_device_id pmic_glink_ucsi_of_quirks[] = {
-+	{ .compatible = "qcom,qcm6490-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
- 	{ .compatible = "qcom,sc8180x-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
- 	{ .compatible = "qcom,sc8280xp-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
- 	{ .compatible = "qcom,sm8350-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
+diff --git a/drivers/thunderbolt/tunnel.c b/drivers/thunderbolt/tunnel.c
+index 6fffb2c82d3d1..4f09216b70f90 100644
+--- a/drivers/thunderbolt/tunnel.c
++++ b/drivers/thunderbolt/tunnel.c
+@@ -1196,17 +1196,13 @@ static int tb_dp_consumed_bandwidth(struct tb_tunnel *tunnel, int *consumed_up,
+ 		/*
+ 		 * Then see if the DPRX negotiation is ready and if yes
+ 		 * return that bandwidth (it may be smaller than the
+-		 * reduced one). Otherwise return the remote (possibly
+-		 * reduced) caps.
++		 * reduced one). According to VESA spec, the DPRX
++		 * negotiation shall compete in 5 seconds after tunnel
++		 * established. We give it 100ms extra just in case.
+ 		 */
+-		ret = tb_dp_wait_dprx(tunnel, 150);
+-		if (ret) {
+-			if (ret == -ETIMEDOUT)
+-				ret = tb_dp_read_cap(tunnel, DP_REMOTE_CAP,
+-						     &rate, &lanes);
+-			if (ret)
+-				return ret;
+-		}
++		ret = tb_dp_wait_dprx(tunnel, 5100);
++		if (ret)
++			return ret;
+ 		ret = tb_dp_read_cap(tunnel, DP_COMMON_CAP, &rate, &lanes);
+ 		if (ret)
+ 			return ret;
 -- 
 2.43.0
 
