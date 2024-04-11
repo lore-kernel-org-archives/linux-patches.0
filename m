@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C23B146D51;
-	Thu, 11 Apr 2024 10:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A891465BE;
+	Thu, 11 Apr 2024 10:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831022; cv=none; b=bvHKMiu7OHms55o15k8jXQn2ubSIwzxDlhelP8blrWI1s2VoDa9X5dFAa15C/dQNt0r366vqd1XYMFlR+C/jEZtn6UhL5naMgx0i6jKw5zXb+tczfBWPtmAr1QZjXFo2gqhjjxctXoK8bMIYibPfTkTt8cyrvCv2JieeAMQL9cc=
+	t=1712831025; cv=none; b=MEl+nTHix3cL9pl2PSFoR9RaLnWnhoRX3OGgS+JLwgt9mxICwpFpWeTV/HDGOpif0FjJbOffW23vtpaG8m0cfZsV4Vix3oudWzVNZChu5GGbrMl5hnRHF5shqtbw5gj5OYVfieyLgqbS22bJj6LHTf59BeZsr2geqiHhmwYvZHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831022; c=relaxed/simple;
-	bh=+Q+fg8vXq2XpyQJwNR9uGrcbdz3/OrNhkxXI80xufK0=;
+	s=arc-20240116; t=1712831025; c=relaxed/simple;
+	bh=HY3cxfi5qaAw1qB3JDSsDbF+hdXB7lU5cKLEaQjyc8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hv3Z8Mjn/2iQLtV/HWAUvHISQ8UbCF1WcKvytDwL8X233WULkN2KDKweN669vxwavqAvFN1xE8ow5PkOe5ug2blADubNXsXCguynp4ijn/XNU150HH4iXHkO6ZwZfUComVpw1w7EdcFKVWp5NDmaR0CdGwDDCz2ifMCRdYmnyPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kRXzuvRr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FGi9QbEgT48IY/7GeZglAuU1/3/aMgo0f6WHiJeR/+cXKF7vVlWFr7CzmROnCdxr45fLj7Qf0VMqh8CE8iWp4Dc4SxqksjVVrTR3xz97BBZrda5KF5GVAX94MXJh/TvD1Fw353X8STCr7zm75X852Wvg01UuLudUYvicdga1an4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sbeDDuye; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kRXzuvRr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147B1C433C7;
-	Thu, 11 Apr 2024 10:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbeDDuye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE54EC43390;
+	Thu, 11 Apr 2024 10:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831022;
-	bh=+Q+fg8vXq2XpyQJwNR9uGrcbdz3/OrNhkxXI80xufK0=;
+	s=korg; t=1712831025;
+	bh=HY3cxfi5qaAw1qB3JDSsDbF+hdXB7lU5cKLEaQjyc8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kRXzuvRrs6PaMBdmWv7TqXxgXCo6Mdi5/g1QYm6vFMFJEUB1zz00wdSr98lJUttN7
-	 qR4HK0p34qq5eKK8jbCh4wSU8dUvLhHt0ZT5sN8t2H9xfEl0mPiRQUys63bkvBZTlL
-	 5hw1GQG0khdP2TGjulihItT4lJXzkpnDPw6xreC4=
+	b=sbeDDuye0lmtyj14ZAu+B7+g/H0kbp5XV5yvsxRjb5/WV1UIdxV8ocsOgUabJWqMv
+	 v0GxsGjBwWzAsiy7s44F/sfGag2jilpTafDvrqmcf23Yu0v6GsLQoQMdq/d04djRcd
+	 2jbciWSFob0GHNCNCJ1txMNoJGJgUJpvh48g2wDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
+	Aleksandr Burakov <a.burakov@rosalinux.ru>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 198/215] usb: sl811-hcd: only defined function checkdone if QUIRK2 is defined
-Date: Thu, 11 Apr 2024 11:56:47 +0200
-Message-ID: <20240411095430.811063581@linuxfoundation.org>
+Subject: [PATCH 5.4 199/215] fbdev: viafb: fix typo in hw_bitblt_1 and hw_bitblt_2
+Date: Thu, 11 Apr 2024 11:56:48 +0200
+Message-ID: <20240411095430.840167098@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -50,45 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Aleksandr Burakov <a.burakov@rosalinux.ru>
 
-[ Upstream commit 12f371e2b6cb4b79c788f1f073992e115f4ca918 ]
+[ Upstream commit bc87bb342f106a0402186bcb588fcbe945dced4b ]
 
-Function checkdone is only required if QUIRK2 is defined, so add
-appropriate #if / #endif around the function.
+There are some actions with value 'tmp' but 'dst_addr' is checked instead.
+It is obvious that a copy-paste error was made here and the value
+of variable 'tmp' should be checked here.
 
-Cleans up clang scan build warning:
-drivers/usb/host/sl811-hcd.c:588:18: warning: unused function
-'checkdone' [-Wunused-function]
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Link: https://lore.kernel.org/r/20240307111351.1982382-1-colin.i.king@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Aleksandr Burakov <a.burakov@rosalinux.ru>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/sl811-hcd.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/video/fbdev/via/accel.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/host/sl811-hcd.c b/drivers/usb/host/sl811-hcd.c
-index 936fddc6d8207..3cf8fce40c9dc 100644
---- a/drivers/usb/host/sl811-hcd.c
-+++ b/drivers/usb/host/sl811-hcd.c
-@@ -585,6 +585,7 @@ done(struct sl811 *sl811, struct sl811h_ep *ep, u8 bank)
- 		finish_request(sl811, ep, urb, urbstat);
- }
+diff --git a/drivers/video/fbdev/via/accel.c b/drivers/video/fbdev/via/accel.c
+index 0a1bc7a4d7853..1e04026f08091 100644
+--- a/drivers/video/fbdev/via/accel.c
++++ b/drivers/video/fbdev/via/accel.c
+@@ -115,7 +115,7 @@ static int hw_bitblt_1(void __iomem *engine, u8 op, u32 width, u32 height,
  
-+#ifdef QUIRK2
- static inline u8 checkdone(struct sl811 *sl811)
- {
- 	u8	ctl;
-@@ -616,6 +617,7 @@ static inline u8 checkdone(struct sl811 *sl811)
- #endif
- 	return irqstat;
- }
-+#endif
+ 	if (op != VIA_BITBLT_FILL) {
+ 		tmp = src_mem ? 0 : src_addr;
+-		if (dst_addr & 0xE0000007) {
++		if (tmp & 0xE0000007) {
+ 			printk(KERN_WARNING "hw_bitblt_1: Unsupported source "
+ 				"address %X\n", tmp);
+ 			return -EINVAL;
+@@ -260,7 +260,7 @@ static int hw_bitblt_2(void __iomem *engine, u8 op, u32 width, u32 height,
+ 		writel(tmp, engine + 0x18);
  
- static irqreturn_t sl811h_irq(struct usb_hcd *hcd)
- {
+ 		tmp = src_mem ? 0 : src_addr;
+-		if (dst_addr & 0xE0000007) {
++		if (tmp & 0xE0000007) {
+ 			printk(KERN_WARNING "hw_bitblt_2: Unsupported source "
+ 				"address %X\n", tmp);
+ 			return -EINVAL;
 -- 
 2.43.0
 
