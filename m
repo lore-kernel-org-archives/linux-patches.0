@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB17F142624;
-	Thu, 11 Apr 2024 10:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B870C142624;
+	Thu, 11 Apr 2024 10:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830216; cv=none; b=SBKffoOMQOxz6SCQ5w2IRfyOP0OjtNFQDvYZRpXN2S34XOX3Z1irT0o78pXE3pdbwddSzUaxh7Hw7WupOVXeynl1v9sqTnV3HzQy3Ef6GrnFZY0iapZo89dsUeAlUGCPxqPmg1dq0zy2ncHRImlZTP2HmC1tin/p8WE3npciJ5k=
+	t=1712830219; cv=none; b=sWLPbKYGfDqBFnXsqeKZtwGBM57fFJB1lUtHg4oZtKXh2z5iNNY60Us85mwYB29kY/X0P8kxQcX3ujOswiApgJ/bC/OnFuFJxPq1aCZa3qcEqrf9ZgclETTdbLjI0aZGV6rtfn+HnDxmS8ZpfUnOgtt759TXW1zU9jrpo/KapVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830216; c=relaxed/simple;
-	bh=P4pW3c4tcs2N0o46r1Wrz+GR9fk/4/LuUkkcdiJKEGI=;
+	s=arc-20240116; t=1712830219; c=relaxed/simple;
+	bh=CinONC1eDjdb6R7fgi0qGJyGYBqBZPqfRCV6CROOJOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HwdSGALj5A2vHVgbXCFOKd3HUVCCRLq1HhXeNpNP3/6DtNCkZwZTKiU0qKMNieGegNUACIg79ppbfKscx0FaboitfXTThXv5jFRStszuQ5PAT/U2HfsryspYuS9FgdQS0Nw8v6s01cHPnPJ7bQiD+ZYZ56y2nvTecCrbFgqBYac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6QXgVT5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q3QDnYPJosOiBJRP2cg9IplwiKtgNFZKud7JKVRxmkRT8nOUMkpIQ2aMHMqMuu7AlU08DR1FIJVMucygRLlObcOqwYdaN2BZgcYqRXmX36ghmQrQM5fSa93SGy0IsBWkXtPiA12u5K15hVyuIVT8xoVMvROsbpq3Gb2WLE3nlTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gKM4+29+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6QXgVT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5153AC433F1;
-	Thu, 11 Apr 2024 10:10:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gKM4+29+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4117EC433C7;
+	Thu, 11 Apr 2024 10:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830216;
-	bh=P4pW3c4tcs2N0o46r1Wrz+GR9fk/4/LuUkkcdiJKEGI=;
+	s=korg; t=1712830219;
+	bh=CinONC1eDjdb6R7fgi0qGJyGYBqBZPqfRCV6CROOJOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F6QXgVT5Vwbd7NZMKZFv4dIB58qg8It4UHmEbFk1jrSJ7QFOGNCdwR6Zw9j1vfbuH
-	 565RVfJXfz56St19w2eeQTXRIw6kC6fZVgaaWD/JnMsbK9+zs+TwkCWLlf1cupjWPQ
-	 GkokHfNm/apXETsw9szB59VXMBpkH81WCARrh6t4=
+	b=gKM4+29+f/yPbTljSviAKImItlSBrsrF8rM8XwazjhHuxPVuX32RxmFyoSH3XjR/p
+	 9uXUi0FrZs/xuuKC+2BhtnOAd6avQ1fwxZz4DB88CZvHy7WQa3YLU1Ct3o41HT+krk
+	 u7LDs8fspNfy6cp8Dh3/oaERFGyjmJ5PXIRG8LSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
+	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 074/143] rcu-tasks: Repair RCU Tasks Trace quiescence check
-Date: Thu, 11 Apr 2024 11:55:42 +0200
-Message-ID: <20240411095423.142105239@linuxfoundation.org>
+Subject: [PATCH 6.8 075/143] Julia Lawall reported this null pointer dereference, this should fix it.
+Date: Thu, 11 Apr 2024 11:55:43 +0200
+Message-ID: <20240411095423.171513114@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
 References: <20240411095420.903937140@linuxfoundation.org>
@@ -52,44 +50,29 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Mike Marshall <hubcap@omnibond.com>
 
-[ Upstream commit 2eb52fa8900e642b3b5054c4bf9776089d2a935f ]
+[ Upstream commit 9bf93dcfc453fae192fe5d7874b89699e8f800ac ]
 
-The context-switch-time check for RCU Tasks Trace quiescence expects
-current->trc_reader_special.b.need_qs to be zero, and if so, updates
-it to TRC_NEED_QS_CHECKED.  This is backwards, because if this value
-is zero, there is no RCU Tasks Trace grace period in flight, an thus
-no need for a quiescent state.  Instead, when a grace period starts,
-this field is set to TRC_NEED_QS.
-
-This commit therefore changes the check from zero to TRC_NEED_QS.
-
-Reported-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Tested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rcupdate.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/orangefs/super.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
-index 9d69e4bd6f0a8..17d7ed5f3ae6e 100644
---- a/include/linux/rcupdate.h
-+++ b/include/linux/rcupdate.h
-@@ -184,9 +184,9 @@ void rcu_tasks_trace_qs_blkd(struct task_struct *t);
- 	do {									\
- 		int ___rttq_nesting = READ_ONCE((t)->trc_reader_nesting);	\
- 										\
--		if (likely(!READ_ONCE((t)->trc_reader_special.b.need_qs)) &&	\
-+		if (unlikely(READ_ONCE((t)->trc_reader_special.b.need_qs) == TRC_NEED_QS) &&	\
- 		    likely(!___rttq_nesting)) {					\
--			rcu_trc_cmpxchg_need_qs((t), 0,	TRC_NEED_QS_CHECKED);	\
-+			rcu_trc_cmpxchg_need_qs((t), TRC_NEED_QS, TRC_NEED_QS_CHECKED);	\
- 		} else if (___rttq_nesting && ___rttq_nesting != INT_MIN &&	\
- 			   !READ_ONCE((t)->trc_reader_special.b.blocked)) {	\
- 			rcu_tasks_trace_qs_blkd(t);				\
+diff --git a/fs/orangefs/super.c b/fs/orangefs/super.c
+index 5254256a224d7..4ca8ed410c3cf 100644
+--- a/fs/orangefs/super.c
++++ b/fs/orangefs/super.c
+@@ -527,7 +527,7 @@ struct dentry *orangefs_mount(struct file_system_type *fst,
+ 	sb->s_fs_info = kzalloc(sizeof(struct orangefs_sb_info_s), GFP_KERNEL);
+ 	if (!ORANGEFS_SB(sb)) {
+ 		d = ERR_PTR(-ENOMEM);
+-		goto free_sb_and_op;
++		goto free_op;
+ 	}
+ 
+ 	ret = orangefs_fill_sb(sb,
 -- 
 2.43.0
 
