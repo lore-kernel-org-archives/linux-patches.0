@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8723513FD94;
-	Thu, 11 Apr 2024 10:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D9613FD94;
+	Thu, 11 Apr 2024 10:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830983; cv=none; b=keDhtc2a56oxq8T480IweOAokgzRS/MhbILCrnrcjN/ysIiAq5LkToM23k1Ys/yPEMoIM21nw9JUvvJoh2CV36Jy6OIrOaczLpEHh448lKEqJ2y1+iII+0I5gxYAxDgpIf1SccZNds+IMWMbhbKkNZVmSe3TAnGwnvqU0zfIs3M=
+	t=1712830987; cv=none; b=TEFWshT3uf944tgcyvjDfAxbYXT1g675iyc4t8ZFHuX4iXOYYsU8VDXzWsjqvZfMXgDmGlVBMjA5Y0sk1CYqV4tiHSC53WR0i1rw9tr/2Ma+ZYKPvTvgv8UyI/aaUTftmqnq9ViuoSRL6ONjE+TuxdsMRXy18F7ucdE95vm10Qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830983; c=relaxed/simple;
-	bh=4B/w1SNOFkGkjELrct9wWDpnAjbx3R74KwqQOYh+Os0=;
+	s=arc-20240116; t=1712830987; c=relaxed/simple;
+	bh=JK405gihm7p0n9xO+1w8bc7peaZ2u847bd+kH7Y/zuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmMbtLgGva2EFm0tUoPjUFN9VQOT2ic/YM4JopeOQ1E/M9v6YKEWVKCjUORNZ9ieR3MJ9pAS76NW5fYpoRxCTl2X6bWVDzncv3wnUc9oMriDCBiUJr4o2aahRJjXJreNKLH7zdP7cuZQwQi1QVZJuKTwSOXWVkcqm1+t9H50VVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLqYwcEj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rQl5B2tZxXPBI251vCeZkJh1Ga2ihDmeFzFoDwRtE+Lii89ednGmtO9nnOXthPLMoAM1PBomhHJCpbpKTUeZVtDCdU0iv0ipyqBu4dBeA3mlELayph76tp2chAPv6+5DTI4FRpUAOz327ax8aazKweJXAIX6twQRvnjXteyenhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rg3RJyJ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLqYwcEj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5507C433C7;
-	Thu, 11 Apr 2024 10:23:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rg3RJyJ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09CB3C433C7;
+	Thu, 11 Apr 2024 10:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830983;
-	bh=4B/w1SNOFkGkjELrct9wWDpnAjbx3R74KwqQOYh+Os0=;
+	s=korg; t=1712830987;
+	bh=JK405gihm7p0n9xO+1w8bc7peaZ2u847bd+kH7Y/zuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oLqYwcEjnqK8l/YqrB8yXZa98FeLHEMRU/lyDpepbIEeGPkCWPiB3qVQ/y/9v70AY
-	 dund1VX8scfFDViBe04n3BTE596+bbHBarF2sqUfiHtieDQBV0HlBnDMfv8h2Mn94M
-	 V3VWXKsq2cXezy928zUTdEkhity5xTJYR82W4ab0=
+	b=Rg3RJyJ0EE7secmkV7pixUSYDkXlE0QktMKtGCd2z20CxXXX8TndglNLNfRG3Mjzo
+	 1MfWbpG9LpFoVnu5tMOO5rIk1/pzLqB6u2VaAegXB3/iPtV8Rcjj1VJcgMx1Won993
+	 T1QVfV4IvfQHlbBnPZGax7dk98cLDSGGgFnhWYuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 183/215] btrfs: send: handle path ref underflow in header iterate_inode_ref()
-Date: Thu, 11 Apr 2024 11:56:32 +0200
-Message-ID: <20240411095430.368345239@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+830d9e3fa61968246abd@syzkaller.appspotmail.com
+Subject: [PATCH 5.4 184/215] Bluetooth: btintel: Fix null ptr deref in btintel_read_version
+Date: Thu, 11 Apr 2024 11:56:33 +0200
+Message-ID: <20240411095430.398125112@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -50,41 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 3c6ee34c6f9cd12802326da26631232a61743501 ]
+[ Upstream commit b79e040910101b020931ba0c9a6b77e81ab7f645 ]
 
-Change BUG_ON to proper error handling if building the path buffer
-fails. The pointers are not printed so we don't accidentally leak kernel
-addresses.
+If hci_cmd_sync_complete() is triggered and skb is NULL, then
+hdev->req_skb is NULL, which will cause this issue.
 
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-and-tested-by: syzbot+830d9e3fa61968246abd@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/send.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btintel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
-index 0dfa88ac01393..576c027909f8a 100644
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -973,7 +973,15 @@ static int iterate_inode_ref(struct btrfs_root *root, struct btrfs_path *path,
- 					ret = PTR_ERR(start);
- 					goto out;
- 				}
--				BUG_ON(start < p->buf);
-+				if (unlikely(start < p->buf)) {
-+					btrfs_err(root->fs_info,
-+			"send: path ref buffer underflow for key (%llu %u %llu)",
-+						  found_key->objectid,
-+						  found_key->type,
-+						  found_key->offset);
-+					ret = -EINVAL;
-+					goto out;
-+				}
- 			}
- 			p->start = start;
- 		} else {
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index bb99c8653aabf..5694dd63c1459 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -340,7 +340,7 @@ int btintel_read_version(struct hci_dev *hdev, struct intel_version *ver)
+ 	struct sk_buff *skb;
+ 
+ 	skb = __hci_cmd_sync(hdev, 0xfc05, 0, NULL, HCI_CMD_TIMEOUT);
+-	if (IS_ERR(skb)) {
++	if (IS_ERR_OR_NULL(skb)) {
+ 		bt_dev_err(hdev, "Reading Intel version information failed (%ld)",
+ 			   PTR_ERR(skb));
+ 		return PTR_ERR(skb);
 -- 
 2.43.0
 
