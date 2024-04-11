@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182C464CC0;
-	Thu, 11 Apr 2024 10:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA5064CC0;
+	Thu, 11 Apr 2024 10:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831577; cv=none; b=pDlXdKw+SuKinEKonWkwkAudmiMm/KcKGbAMbnpTPT9+0phc485DJnQvyUnJ6g2PcNf8fLjV59QDyr5Z/AbMywa51pj5olz1tAPJbl/DR/dD1Gw8ba+CJnBsKn6WBSrNZsGV5iSje8WbKl3qkcyonNSh9b+focJho9ngX6eIBDM=
+	t=1712831580; cv=none; b=scx42e898VNguIIc8FEvsTf06UnpZiekgFjYynQLzN8k4ldfPo45cyeHOopmo4CwwHzjA+KUGZxElIPM9DvA+WgKR650cf+8dSRstDGyCqa539A8YaHXO/osWQg3/QXKS9/q76NMJjn6XbbN5wqVTmhW6NJ/mDEdyflC9smhqCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831577; c=relaxed/simple;
-	bh=FsPtQw5PWUvTiXfiaqWwk8k+pd46SAX0jW2HnzHtXCc=;
+	s=arc-20240116; t=1712831580; c=relaxed/simple;
+	bh=rHbf2LDWYzuwLkS0WI7Vww50HFLAKTNrW9V2Mdgrskw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dwnFbpcdzdPC1Js97QbBz7r6qxFn7TMmoJQobmSVhn4MGKylHSE9HCE3609a5nNwx/RRok42K1wIF6TLMIvlp3lG50YSwWt3pK18n6JWOZLo3N1Iin9ns+FrLeqvv3uuClvrNdd8Ds2b2utnjhMcCj9cHeq5JvpiGHrgtNwaY20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VP9jiEog; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=knJFwKzzbpgsTwNL46Zwtkj9F4i6ewwpLwawJFIhlNyjLLATqcu5sqjAnpI5+0mtafZKZnsitXUSPjcdy7zlOjw+8M9pH/RxXerVGOGD24Yc8/rlx7dIS3CO9FXys/sYxn/RYImp/AzDAbeZnVLkv5qkRe7NPwhYstVSRGmeSNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=is5+BQiU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VP9jiEog"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9106FC433C7;
-	Thu, 11 Apr 2024 10:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="is5+BQiU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CAF4C433C7;
+	Thu, 11 Apr 2024 10:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831577;
-	bh=FsPtQw5PWUvTiXfiaqWwk8k+pd46SAX0jW2HnzHtXCc=;
+	s=korg; t=1712831579;
+	bh=rHbf2LDWYzuwLkS0WI7Vww50HFLAKTNrW9V2Mdgrskw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VP9jiEogXz39joqjbUU3MxNFftrcRa5w0tOCAlrveEk7NbuHU7kFOwH/HP9U0N7yX
-	 KTRnPvcpGyyiTvLmzt9OMZhbxTqKZnaDYrQJLIt4Ab2sftFCaRxW21QnpyhPcRKzql
-	 A4bY+pKkdAH/DxzC/+eLG/14gofMVSVMhNElZVyQ=
+	b=is5+BQiUCAOs2HaxnggXFkrfI9ckd1yO6uhqaj1hLP18R58brxjTh1ZlEeoiTYZD4
+	 A50Sn3Hcv+5TRcIpjabF6S/54oPacycsAII0WUZafvi2zXCxP/97gpu8NPFDO31foA
+	 pyohCJ9tmqR0Nqg6VPbJ2iuCRZMUrC7bCAINzbio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Benson Leung <bleung@chromium.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jameson Thies <jthies@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 054/294] fuse: dont unhash root
-Date: Thu, 11 Apr 2024 11:53:37 +0200
-Message-ID: <20240411095437.268156905@linuxfoundation.org>
+Subject: [PATCH 5.10 055/294] usb: typec: ucsi: Clean up UCSI_CABLE_PROP macros
+Date: Thu, 11 Apr 2024 11:53:38 +0200
+Message-ID: <20240411095437.298330745@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -50,52 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Jameson Thies <jthies@google.com>
 
-[ Upstream commit b1fe686a765e6c0d71811d825b5a1585a202b777 ]
+[ Upstream commit 4d0a5a9915793377c0fe1a8d78de6bcd92cea963 ]
 
-The root inode is assumed to be always hashed.  Do not unhash the root
-inode even if it is marked BAD.
+Clean up UCSI_CABLE_PROP macros by fixing a bitmask shifting error for
+plug type and updating the modal support macro for consistent naming.
 
-Fixes: 5d069dbe8aaf ("fuse: fix bad inode")
-Cc: <stable@vger.kernel.org> # v5.11
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Fixes: 3cf657f07918 ("usb: typec: ucsi: Remove all bit-fields")
+Cc: stable@vger.kernel.org
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Reviewed-by: Prashant Malani <pmalani@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Jameson Thies <jthies@google.com>
+Link: https://lore.kernel.org/r/20240305025804.1290919-2-jthies@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/fuse_i.h | 1 -
- fs/fuse/inode.c  | 7 +++++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/fuse/fuse_i.h b/fs/fuse/fuse_i.h
-index ceaa6868386e6..33eb5fefc06b4 100644
---- a/fs/fuse/fuse_i.h
-+++ b/fs/fuse/fuse_i.h
-@@ -873,7 +873,6 @@ static inline bool fuse_stale_inode(const struct inode *inode, int generation,
+diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
+index fce23ad16c6d0..41e1a64da82e8 100644
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -219,12 +219,12 @@ struct ucsi_cable_property {
+ #define UCSI_CABLE_PROP_FLAG_VBUS_IN_CABLE	BIT(0)
+ #define UCSI_CABLE_PROP_FLAG_ACTIVE_CABLE	BIT(1)
+ #define UCSI_CABLE_PROP_FLAG_DIRECTIONALITY	BIT(2)
+-#define UCSI_CABLE_PROP_FLAG_PLUG_TYPE(_f_)	((_f_) & GENMASK(3, 0))
++#define UCSI_CABLE_PROP_FLAG_PLUG_TYPE(_f_)	(((_f_) & GENMASK(4, 3)) >> 3)
+ #define   UCSI_CABLE_PROPERTY_PLUG_TYPE_A	0
+ #define   UCSI_CABLE_PROPERTY_PLUG_TYPE_B	1
+ #define   UCSI_CABLE_PROPERTY_PLUG_TYPE_C	2
+ #define   UCSI_CABLE_PROPERTY_PLUG_OTHER	3
+-#define UCSI_CABLE_PROP_MODE_SUPPORT		BIT(5)
++#define UCSI_CABLE_PROP_FLAG_MODE_SUPPORT	BIT(5)
+ 	u8 latency;
+ } __packed;
  
- static inline void fuse_make_bad(struct inode *inode)
- {
--	remove_inode_hash(inode);
- 	set_bit(FUSE_I_BAD, &get_fuse_inode(inode)->state);
- }
- 
-diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
-index 9ea175ff9c8e6..4a7ebccd359ee 100644
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -352,8 +352,11 @@ struct inode *fuse_iget(struct super_block *sb, u64 nodeid,
- 	} else if (fuse_stale_inode(inode, generation, attr)) {
- 		/* nodeid was reused, any I/O on the old inode should fail */
- 		fuse_make_bad(inode);
--		iput(inode);
--		goto retry;
-+		if (inode != d_inode(sb->s_root)) {
-+			remove_inode_hash(inode);
-+			iput(inode);
-+			goto retry;
-+		}
- 	}
- done:
- 	fi = get_fuse_inode(inode);
 -- 
 2.43.0
 
