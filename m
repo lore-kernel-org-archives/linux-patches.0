@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA37D13FD9F;
-	Thu, 11 Apr 2024 10:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43CB63A2;
+	Thu, 11 Apr 2024 10:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831450; cv=none; b=JH4fYmQVWeG8YjbvF1UNrYrFPEOy69lGEr2AuEJzkY26rRpr0IEhicD+YyJf3JmSPSX7MyZLASrW5z8gxlKr/ASd1EuD0uWORF1qm8yCsfVqowAqW1ifJ5+3maqLEvn+ubr3jruYNmtYUo0G55WhtS05wYMVG24Dl4fAnzdftj4=
+	t=1712831453; cv=none; b=X6j7jKTieUzQ/dC2tgzrA6udil0cHClgBgS/kEffREiiO2cHDrfW3vpotctzsh2AGsFiQLvmTJwfjLJbRpc80R5wLKXEhCNTewE9lcP3yKMLX/pnYd9yRlMUE680tIY1tMZ4MC4jDvZeIYuBgLgwioG/raX3OTVLiFjhc9b5VgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831450; c=relaxed/simple;
-	bh=vvagAIgqYxshGgVQFz23oENnCkc4hXEZrbiQQloHn2Q=;
+	s=arc-20240116; t=1712831453; c=relaxed/simple;
+	bh=onNlRYN7vaeKrpZO8PL+jqzXrVxd7pzKZFecbWhTmsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=szUnl6p4v0Yi6bxjjwjn0SyX/Gx/pIjhFCckQaqpa0XrRZsNUVUjEdW5550aqlck2BLf2+z/wtPeDc+MCZHMg9+Sgx/K1SZjio05Tn0JwTSgrWZ9PYcBpaBreihsh+O0lb+1fKFvyQQQH0tfYSTeKo6Tt5EuC2GW2QXAh65lwxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+CuWCem; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iAde4DoWlM0gOvls1GQu53D0cpV3tUaIDs9AqEfO7c0OMljoPm5jFdpj0MCuVf908yKvKRDXEX/BFAmGrG63Crp5Bo9tyZjMxe6OAlzeKWX6oH0kzF3d1p9JJVKNpkJFtulH2+C+11R3OFJnDLbRz3SV6u0PSMfM10DznKkSUSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlgGb0n7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+CuWCem"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F20FC433F1;
-	Thu, 11 Apr 2024 10:30:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlgGb0n7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2711BC433C7;
+	Thu, 11 Apr 2024 10:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831450;
-	bh=vvagAIgqYxshGgVQFz23oENnCkc4hXEZrbiQQloHn2Q=;
+	s=korg; t=1712831453;
+	bh=onNlRYN7vaeKrpZO8PL+jqzXrVxd7pzKZFecbWhTmsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+CuWCemDTPJIJRSL+HZELhTYo/3Nx9hYklNYsGedrYdDg27gW/Ttv3T1GxVQJDmD
-	 Dw7K7UMHxqhTbjyh61RkQ87RNPBLdByAlJKtJUReHyP6mw+eSj19NJHSzISBEFmnTv
-	 1lFa/W9qamqHiILoHDXx2hOQu2d2rH4J+9SyG3ds=
+	b=FlgGb0n7Ufq+1+4RGuac1IjPb61Ld66y2uIImnyhMnizJlwg5lv6rHHIQJow/PfLC
+	 UvXVwNADjddtO1A3mLY9JgXfsUey/BTL2CydyDDRxTkbtBtfUkCfO8t6EJFTQV9HLh
+	 8LEOggmAPl2lZmzBAZdHPfOoTOOIngcI8tO9aDLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dave Airlie <airlied@redhat.com>,
 	Huang Rui <ray.huang@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 013/294] drm/vmwgfx: stop using ttm_bo_create v2
-Date: Thu, 11 Apr 2024 11:52:56 +0200
-Message-ID: <20240411095436.035513656@linuxfoundation.org>
+Subject: [PATCH 5.10 014/294] drm/vmwgfx: switch over to the new pin interface v2
+Date: Thu, 11 Apr 2024 11:52:57 +0200
+Message-ID: <20240411095436.064964561@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
 References: <20240411095435.633465671@linuxfoundation.org>
@@ -55,130 +55,416 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit b254557cb244e2c18e59ee1cc2293128c52d2473 ]
+[ Upstream commit fbe86ca567919b22bbba1220ce55020b1868879f ]
 
-Implement in the driver instead since it is the only user of that function.
+Stop using TTM_PL_FLAG_NO_EVICT.
 
-v2: fix usage of ttm_bo_init_reserved
+v2: fix unconditional pinning
 
 Signed-off-by: Christian König <christian.koenig@amd.com>
 Reviewed-by: Dave Airlie <airlied@redhat.com>
 Reviewed-by: Huang Rui <ray.huang@amd.com>
-Link: https://patchwork.freedesktop.org/patch/391614/?series=81973&rev=1
+Link: https://patchwork.freedesktop.org/patch/391601/?series=81973&rev=1
 Stable-dep-of: 517621b70600 ("drm/vmwgfx: Fix possible null pointer derefence with invalid contexts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_bo.c         | 43 ++++++++++++++++++++++
- drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf.c     |  6 +--
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.h        |  4 ++
- drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c |  8 ++--
- 4 files changed, 53 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_blit.c       |  4 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_bo.c         | 49 +++++++++++-----------
+ drivers/gpu/drm/vmwgfx/vmwgfx_cotable.c    |  4 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_drv.c        |  2 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_drv.h        |  7 +---
+ drivers/gpu/drm/vmwgfx/vmwgfx_fb.c         |  2 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_resource.c   |  4 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c       |  4 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_shader.c     |  4 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c | 42 -------------------
+ drivers/gpu/drm/vmwgfx/vmwgfx_validation.c |  2 +-
+ 11 files changed, 39 insertions(+), 85 deletions(-)
 
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_blit.c b/drivers/gpu/drm/vmwgfx/vmwgfx_blit.c
+index e8d66182cd7b5..ea2f2f937eb30 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_blit.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_blit.c
+@@ -459,9 +459,9 @@ int vmw_bo_cpu_blit(struct ttm_buffer_object *dst,
+ 	int ret = 0;
+ 
+ 	/* Buffer objects need to be either pinned or reserved: */
+-	if (!(dst->mem.placement & TTM_PL_FLAG_NO_EVICT))
++	if (!(dst->pin_count))
+ 		dma_resv_assert_held(dst->base.resv);
+-	if (!(src->mem.placement & TTM_PL_FLAG_NO_EVICT))
++	if (!(src->pin_count))
+ 		dma_resv_assert_held(src->base.resv);
+ 
+ 	if (!ttm_tt_is_populated(dst->ttm)) {
 diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
-index 813f1b1480941..c8ca09f0e6274 100644
+index c8ca09f0e6274..9a66ba2543263 100644
 --- a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
 +++ b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
-@@ -487,6 +487,49 @@ static void vmw_user_bo_destroy(struct ttm_buffer_object *bo)
- 	ttm_prime_object_kfree(vmw_user_bo, prime);
- }
+@@ -106,7 +106,7 @@ int vmw_bo_pin_in_placement(struct vmw_private *dev_priv,
+ 	if (unlikely(ret != 0))
+ 		goto err;
  
-+/**
-+ * vmw_bo_create_kernel - Create a pinned BO for internal kernel use.
-+ *
-+ * @dev_priv: Pointer to the device private struct
-+ * @size: size of the BO we need
-+ * @placement: where to put it
-+ * @p_bo: resulting BO
-+ *
-+ * Creates and pin a simple BO for in kernel use.
-+ */
-+int vmw_bo_create_kernel(struct vmw_private *dev_priv, unsigned long size,
-+			 struct ttm_placement *placement,
-+			 struct ttm_buffer_object **p_bo)
-+{
-+	unsigned npages = PAGE_ALIGN(size) >> PAGE_SHIFT;
-+	struct ttm_operation_ctx ctx = { false, false };
-+	struct ttm_buffer_object *bo;
-+	size_t acc_size;
-+	int ret;
-+
-+	bo = kzalloc(sizeof(*bo), GFP_KERNEL);
-+	if (unlikely(!bo))
-+		return -ENOMEM;
-+
-+	acc_size = ttm_round_pot(sizeof(*bo));
-+	acc_size += ttm_round_pot(npages * sizeof(void *));
-+	acc_size += ttm_round_pot(sizeof(struct ttm_tt));
-+	ret = ttm_bo_init_reserved(&dev_priv->bdev, bo, size,
-+				   ttm_bo_type_device, placement, 0,
-+				   &ctx, acc_size, NULL, NULL, NULL);
-+	if (unlikely(ret))
-+		goto error_free;
-+
-+	ttm_bo_pin(bo);
-+	ttm_bo_unreserve(bo);
-+	*p_bo = bo;
-+
-+	return 0;
-+
-+error_free:
-+	kfree(bo);
-+	return ret;
+-	if (buf->pin_count > 0)
++	if (buf->base.pin_count > 0)
+ 		ret = ttm_bo_mem_compat(placement, &bo->mem,
+ 					&new_flags) == true ? 0 : -EINVAL;
+ 	else
+@@ -155,7 +155,7 @@ int vmw_bo_pin_in_vram_or_gmr(struct vmw_private *dev_priv,
+ 	if (unlikely(ret != 0))
+ 		goto err;
+ 
+-	if (buf->pin_count > 0) {
++	if (buf->base.pin_count > 0) {
+ 		ret = ttm_bo_mem_compat(&vmw_vram_gmr_placement, &bo->mem,
+ 					&new_flags) == true ? 0 : -EINVAL;
+ 		goto out_unreserve;
+@@ -246,12 +246,12 @@ int vmw_bo_pin_in_start_of_vram(struct vmw_private *dev_priv,
+ 	if (bo->mem.mem_type == TTM_PL_VRAM &&
+ 	    bo->mem.start < bo->num_pages &&
+ 	    bo->mem.start > 0 &&
+-	    buf->pin_count == 0) {
++	    buf->base.pin_count == 0) {
+ 		ctx.interruptible = false;
+ 		(void) ttm_bo_validate(bo, &vmw_sys_placement, &ctx);
+ 	}
+ 
+-	if (buf->pin_count > 0)
++	if (buf->base.pin_count > 0)
+ 		ret = ttm_bo_mem_compat(&placement, &bo->mem,
+ 					&new_flags) == true ? 0 : -EINVAL;
+ 	else
+@@ -343,23 +343,13 @@ void vmw_bo_pin_reserved(struct vmw_buffer_object *vbo, bool pin)
+ 
+ 	dma_resv_assert_held(bo->base.resv);
+ 
+-	if (pin) {
+-		if (vbo->pin_count++ > 0)
+-			return;
+-	} else {
+-		WARN_ON(vbo->pin_count <= 0);
+-		if (--vbo->pin_count > 0)
+-			return;
+-	}
++	if (pin == !!bo->pin_count)
++		return;
+ 
+ 	pl.fpfn = 0;
+ 	pl.lpfn = 0;
+ 	pl.mem_type = bo->mem.mem_type;
+ 	pl.flags = bo->mem.placement;
+-	if (pin)
+-		pl.flags |= TTM_PL_FLAG_NO_EVICT;
+-	else
+-		pl.flags &= ~TTM_PL_FLAG_NO_EVICT;
+ 
+ 	memset(&placement, 0, sizeof(placement));
+ 	placement.num_placement = 1;
+@@ -368,8 +358,12 @@ void vmw_bo_pin_reserved(struct vmw_buffer_object *vbo, bool pin)
+ 	ret = ttm_bo_validate(bo, &placement, &ctx);
+ 
+ 	BUG_ON(ret != 0 || bo->mem.mem_type != old_mem_type);
+-}
+ 
++	if (pin)
++		ttm_bo_pin(bo);
++	else
++		ttm_bo_unpin(bo);
 +}
  
  /**
-  * vmw_bo_init - Initialize a vmw buffer object
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf.c
-index 3b41cf63110ad..9a9fe10d829b8 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf.c
-@@ -1245,9 +1245,9 @@ int vmw_cmdbuf_set_pool_size(struct vmw_cmdbuf_man *man,
- 		    !dev_priv->has_mob)
- 			return -ENOMEM;
+  * vmw_bo_map_and_cache - Map a buffer object and cache the map
+@@ -539,6 +533,7 @@ int vmw_bo_create_kernel(struct vmw_private *dev_priv, unsigned long size,
+  * @size: Buffer object size in bytes.
+  * @placement: Initial placement.
+  * @interruptible: Whether waits should be performed interruptible.
++ * @pin: If the BO should be created pinned at a fixed location.
+  * @bo_free: The buffer object destructor.
+  * Returns: Zero on success, negative error code on error.
+  *
+@@ -547,9 +542,10 @@ int vmw_bo_create_kernel(struct vmw_private *dev_priv, unsigned long size,
+ int vmw_bo_init(struct vmw_private *dev_priv,
+ 		struct vmw_buffer_object *vmw_bo,
+ 		size_t size, struct ttm_placement *placement,
+-		bool interruptible,
++		bool interruptible, bool pin,
+ 		void (*bo_free)(struct ttm_buffer_object *bo))
+ {
++	struct ttm_operation_ctx ctx = { interruptible, false };
+ 	struct ttm_bo_device *bdev = &dev_priv->bdev;
+ 	size_t acc_size;
+ 	int ret;
+@@ -563,11 +559,16 @@ int vmw_bo_init(struct vmw_private *dev_priv,
+ 	vmw_bo->base.priority = 3;
+ 	vmw_bo->res_tree = RB_ROOT;
  
--		ret = ttm_bo_create(&dev_priv->bdev, size, ttm_bo_type_device,
--				    &vmw_mob_ne_placement, 0, false,
--				    &man->cmd_space);
-+		ret = vmw_bo_create_kernel(dev_priv, size,
-+					   &vmw_mob_placement,
-+					   &man->cmd_space);
- 		if (ret)
- 			return ret;
+-	ret = ttm_bo_init(bdev, &vmw_bo->base, size,
+-			  ttm_bo_type_device, placement,
+-			  0, interruptible, acc_size,
+-			  NULL, NULL, bo_free);
+-	return ret;
++	ret = ttm_bo_init_reserved(bdev, &vmw_bo->base, size,
++				   ttm_bo_type_device, placement,
++				   0, &ctx, acc_size, NULL, NULL, bo_free);
++	if (unlikely(ret))
++		return ret;
++
++	if (pin)
++		ttm_bo_pin(&vmw_bo->base);
++	ttm_bo_unreserve(&vmw_bo->base);
++	return 0;
+ }
  
+ 
+@@ -656,7 +657,7 @@ int vmw_user_bo_alloc(struct vmw_private *dev_priv,
+ 	ret = vmw_bo_init(dev_priv, &user_bo->vbo, size,
+ 			  (dev_priv->has_mob) ?
+ 			  &vmw_sys_placement :
+-			  &vmw_vram_sys_placement, true,
++			  &vmw_vram_sys_placement, true, false,
+ 			  &vmw_user_bo_destroy);
+ 	if (unlikely(ret != 0))
+ 		return ret;
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_cotable.c b/drivers/gpu/drm/vmwgfx/vmwgfx_cotable.c
+index 65e8e7a977246..984d8884357d9 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_cotable.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_cotable.c
+@@ -410,8 +410,8 @@ static int vmw_cotable_resize(struct vmw_resource *res, size_t new_size)
+ 	if (!buf)
+ 		return -ENOMEM;
+ 
+-	ret = vmw_bo_init(dev_priv, buf, new_size, &vmw_mob_ne_placement,
+-			  true, vmw_bo_bo_free);
++	ret = vmw_bo_init(dev_priv, buf, new_size, &vmw_mob_placement,
++			  true, true, vmw_bo_bo_free);
+ 	if (ret) {
+ 		DRM_ERROR("Failed initializing new cotable MOB.\n");
+ 		return ret;
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
+index 31e3e5c9f3622..bdb7a5e965601 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
+@@ -372,7 +372,7 @@ static int vmw_dummy_query_bo_create(struct vmw_private *dev_priv)
+ 		return -ENOMEM;
+ 
+ 	ret = vmw_bo_init(dev_priv, vbo, PAGE_SIZE,
+-			  &vmw_sys_ne_placement, false,
++			  &vmw_sys_placement, false, true,
+ 			  &vmw_bo_bo_free);
+ 	if (unlikely(ret != 0))
+ 		return ret;
 diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-index 0a79c57c7db64..e6af950c40370 100644
+index e6af950c40370..fa285c20d6dac 100644
 --- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
 +++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-@@ -845,6 +845,10 @@ extern void vmw_bo_get_guest_ptr(const struct ttm_buffer_object *buf,
- 				 SVGAGuestPtr *ptr);
- extern void vmw_bo_pin_reserved(struct vmw_buffer_object *bo, bool pin);
- extern void vmw_bo_bo_free(struct ttm_buffer_object *bo);
-+extern int vmw_bo_create_kernel(struct vmw_private *dev_priv,
-+				unsigned long size,
-+				struct ttm_placement *placement,
-+				struct ttm_buffer_object **p_bo);
+@@ -99,7 +99,6 @@ struct vmw_fpriv {
+  * struct vmw_buffer_object - TTM buffer object with vmwgfx additions
+  * @base: The TTM buffer object
+  * @res_tree: RB tree of resources using this buffer object as a backing MOB
+- * @pin_count: pin depth
+  * @cpu_writers: Number of synccpu write grabs. Protected by reservation when
+  * increased. May be decreased without reservation.
+  * @dx_query_ctx: DX context if this buffer object is used as a DX query MOB
+@@ -110,7 +109,6 @@ struct vmw_fpriv {
+ struct vmw_buffer_object {
+ 	struct ttm_buffer_object base;
+ 	struct rb_root res_tree;
+-	s32 pin_count;
+ 	atomic_t cpu_writers;
+ 	/* Not ref-counted.  Protected by binding_mutex */
+ 	struct vmw_resource *dx_query_ctx;
+@@ -852,7 +850,7 @@ extern int vmw_bo_create_kernel(struct vmw_private *dev_priv,
  extern int vmw_bo_init(struct vmw_private *dev_priv,
  		       struct vmw_buffer_object *vmw_bo,
  		       size_t size, struct ttm_placement *placement,
+-		       bool interruptible,
++		       bool interruptible, bool pin,
+ 		       void (*bo_free)(struct ttm_buffer_object *bo));
+ extern int vmw_user_bo_verify_access(struct ttm_buffer_object *bo,
+ 				     struct ttm_object_file *tfile);
+@@ -1009,16 +1007,13 @@ extern void vmw_validation_mem_init_ttm(struct vmw_private *dev_priv,
+ 
+ extern const size_t vmw_tt_size;
+ extern struct ttm_placement vmw_vram_placement;
+-extern struct ttm_placement vmw_vram_ne_placement;
+ extern struct ttm_placement vmw_vram_sys_placement;
+ extern struct ttm_placement vmw_vram_gmr_placement;
+ extern struct ttm_placement vmw_vram_gmr_ne_placement;
+ extern struct ttm_placement vmw_sys_placement;
+-extern struct ttm_placement vmw_sys_ne_placement;
+ extern struct ttm_placement vmw_evictable_placement;
+ extern struct ttm_placement vmw_srf_placement;
+ extern struct ttm_placement vmw_mob_placement;
+-extern struct ttm_placement vmw_mob_ne_placement;
+ extern struct ttm_placement vmw_nonfixed_placement;
+ extern struct ttm_bo_driver vmw_bo_driver;
+ extern const struct vmw_sg_table *
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_fb.c b/drivers/gpu/drm/vmwgfx/vmwgfx_fb.c
+index 97d9d2557447b..3923acc3ab1e5 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_fb.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fb.c
+@@ -406,7 +406,7 @@ static int vmw_fb_create_bo(struct vmw_private *vmw_priv,
+ 
+ 	ret = vmw_bo_init(vmw_priv, vmw_bo, size,
+ 			      &vmw_sys_placement,
+-			      false,
++			      false, false,
+ 			      &vmw_bo_bo_free);
+ 	if (unlikely(ret != 0))
+ 		goto err_unlock; /* init frees the buffer on failure */
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_resource.c b/drivers/gpu/drm/vmwgfx/vmwgfx_resource.c
+index c0f156078ddae..5e922d9d5f2cc 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_resource.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_resource.c
+@@ -370,7 +370,7 @@ static int vmw_resource_buf_alloc(struct vmw_resource *res,
+ 
+ 	ret = vmw_bo_init(res->dev_priv, backup, res->backup_size,
+ 			      res->func->backup_placement,
+-			      interruptible,
++			      interruptible, false,
+ 			      &vmw_bo_bo_free);
+ 	if (unlikely(ret != 0))
+ 		goto out_no_bo;
+@@ -1002,7 +1002,7 @@ int vmw_resource_pin(struct vmw_resource *res, bool interruptible)
+ 			vbo = res->backup;
+ 
+ 			ttm_bo_reserve(&vbo->base, interruptible, false, NULL);
+-			if (!vbo->pin_count) {
++			if (!vbo->base.pin_count) {
+ 				ret = ttm_bo_validate
+ 					(&vbo->base,
+ 					 res->func->backup_placement,
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c b/drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c
+index 2b6590344468d..9c8109efefbd6 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c
+@@ -451,8 +451,8 @@ vmw_sou_primary_plane_prepare_fb(struct drm_plane *plane,
+ 	 */
+ 	vmw_overlay_pause_all(dev_priv);
+ 	ret = vmw_bo_init(dev_priv, vps->bo, size,
+-			      &vmw_vram_ne_placement,
+-			      false, &vmw_bo_bo_free);
++			      &vmw_vram_placement,
++			      false, true, &vmw_bo_bo_free);
+ 	vmw_overlay_resume_all(dev_priv);
+ 	if (ret) {
+ 		vps->bo = NULL; /* vmw_bo_init frees on error */
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c b/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
+index e139fdfd16356..f328aa5839a22 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
+@@ -978,8 +978,8 @@ int vmw_compat_shader_add(struct vmw_private *dev_priv,
+ 	if (unlikely(!buf))
+ 		return -ENOMEM;
+ 
+-	ret = vmw_bo_init(dev_priv, buf, size, &vmw_sys_ne_placement,
+-			      true, vmw_bo_bo_free);
++	ret = vmw_bo_init(dev_priv, buf, size, &vmw_sys_placement,
++			      true, true, vmw_bo_bo_free);
+ 	if (unlikely(ret != 0))
+ 		goto out;
+ 
 diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c b/drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c
-index 73116ec70ba59..8abeef691ad29 100644
+index 8abeef691ad29..89b3356ec27f0 100644
 --- a/drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c
 +++ b/drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c
-@@ -817,11 +817,9 @@ int vmw_bo_create_and_populate(struct vmw_private *dev_priv,
- 	struct ttm_buffer_object *bo;
- 	int ret;
+@@ -37,13 +37,6 @@ static const struct ttm_place vram_placement_flags = {
+ 	.flags = TTM_PL_FLAG_CACHED
+ };
  
--	ret = ttm_bo_create(&dev_priv->bdev, bo_size,
--			    ttm_bo_type_device,
--			    &vmw_sys_ne_placement,
--			    0, false, &bo);
+-static const struct ttm_place vram_ne_placement_flags = {
+-	.fpfn = 0,
+-	.lpfn = 0,
+-	.mem_type = TTM_PL_VRAM,
+-	.flags = TTM_PL_FLAG_CACHED | TTM_PL_FLAG_NO_EVICT
+-};
 -
-+	ret = vmw_bo_create_kernel(dev_priv, bo_size,
-+				   &vmw_sys_placement,
-+				   &bo);
- 	if (unlikely(ret != 0))
- 		return ret;
+ static const struct ttm_place sys_placement_flags = {
+ 	.fpfn = 0,
+ 	.lpfn = 0,
+@@ -51,13 +44,6 @@ static const struct ttm_place sys_placement_flags = {
+ 	.flags = TTM_PL_FLAG_CACHED
+ };
  
+-static const struct ttm_place sys_ne_placement_flags = {
+-	.fpfn = 0,
+-	.lpfn = 0,
+-	.mem_type = TTM_PL_SYSTEM,
+-	.flags = TTM_PL_FLAG_CACHED | TTM_PL_FLAG_NO_EVICT
+-};
+-
+ static const struct ttm_place gmr_placement_flags = {
+ 	.fpfn = 0,
+ 	.lpfn = 0,
+@@ -79,13 +65,6 @@ static const struct ttm_place mob_placement_flags = {
+ 	.flags = TTM_PL_FLAG_CACHED
+ };
+ 
+-static const struct ttm_place mob_ne_placement_flags = {
+-	.fpfn = 0,
+-	.lpfn = 0,
+-	.mem_type = VMW_PL_MOB,
+-	.flags = TTM_PL_FLAG_CACHED | TTM_PL_FLAG_NO_EVICT
+-};
+-
+ struct ttm_placement vmw_vram_placement = {
+ 	.num_placement = 1,
+ 	.placement = &vram_placement_flags,
+@@ -158,13 +137,6 @@ struct ttm_placement vmw_vram_sys_placement = {
+ 	.busy_placement = &sys_placement_flags
+ };
+ 
+-struct ttm_placement vmw_vram_ne_placement = {
+-	.num_placement = 1,
+-	.placement = &vram_ne_placement_flags,
+-	.num_busy_placement = 1,
+-	.busy_placement = &vram_ne_placement_flags
+-};
+-
+ struct ttm_placement vmw_sys_placement = {
+ 	.num_placement = 1,
+ 	.placement = &sys_placement_flags,
+@@ -172,13 +144,6 @@ struct ttm_placement vmw_sys_placement = {
+ 	.busy_placement = &sys_placement_flags
+ };
+ 
+-struct ttm_placement vmw_sys_ne_placement = {
+-	.num_placement = 1,
+-	.placement = &sys_ne_placement_flags,
+-	.num_busy_placement = 1,
+-	.busy_placement = &sys_ne_placement_flags
+-};
+-
+ static const struct ttm_place evictable_placement_flags[] = {
+ 	{
+ 		.fpfn = 0,
+@@ -243,13 +208,6 @@ struct ttm_placement vmw_mob_placement = {
+ 	.busy_placement = &mob_placement_flags
+ };
+ 
+-struct ttm_placement vmw_mob_ne_placement = {
+-	.num_placement = 1,
+-	.num_busy_placement = 1,
+-	.placement = &mob_ne_placement_flags,
+-	.busy_placement = &mob_ne_placement_flags
+-};
+-
+ struct ttm_placement vmw_nonfixed_placement = {
+ 	.num_placement = 3,
+ 	.placement = nonfixed_placement_flags,
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c b/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
+index e69bc373ae2e5..f2e2bf6d1421f 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
+@@ -540,7 +540,7 @@ int vmw_validation_bo_validate_single(struct ttm_buffer_object *bo,
+ 	if (atomic_read(&vbo->cpu_writers))
+ 		return -EBUSY;
+ 
+-	if (vbo->pin_count > 0)
++	if (vbo->base.pin_count > 0)
+ 		return 0;
+ 
+ 	if (validate_as_mob)
 -- 
 2.43.0
 
