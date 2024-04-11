@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323361465A2;
-	Thu, 11 Apr 2024 10:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E6F145353;
+	Thu, 11 Apr 2024 10:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712830617; cv=none; b=M5Z5gnYBj0ilcLmPOPQHkZz1PJh/JVMCxkjmfDuMKcn+c+UjhyoOlZp70QbJOVL84nUhMBxcEH1XejSKegrNmrOpzDPS5XhJx57QNx7/Fk5w3yZF9XQtqsDa/kzK06do3bthIaOkKOgQnRigSJDIli04f52q7q9roy4k9AKdeSY=
+	t=1712830620; cv=none; b=Tkwy+0wTElHsqZs2AFbSfIx6P5j9zAaHayp13kuLUoY7z19VTAQgiCdBIOeRp1AcVlBurIqm4seEjjHtibPxjmGWfm2zNb8e4DQvYDkX2NJZzx5jnXRE/DsOeNhmbkPB7yGv/NBrLJ8b2VxEFFGUCHsn60EZU7+Ms3LvYoSE8uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712830617; c=relaxed/simple;
-	bh=8sCP1b8Y3TB6pZ0dKmFjSsDhlBwu1yDUqwW32p5IVKk=;
+	s=arc-20240116; t=1712830620; c=relaxed/simple;
+	bh=o78f7YRO4Qj19Xpah9nxaUompouEIWGQhTH4xhgeI7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GLQeBdp+DJSWt25T9cGo63mzcUmBFLmBH0VRiAMyrW1Ch/foNV/iWZpkQNlrWtqSTGHGNcziUPKPCTx8aE3e3vfVMIea1he/xknozIdo+5iphlNVSwG8c0KKJpxpC3fKlqKKGAUKNvBPFcpTGYKrrQFthMqk10i5+L1taMTFpWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3opTaWW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MCQLpDnz15ihygsH5IzK9yMFUuUi7h0Iw32Ui5Zd1TArGpPgAXADIOfgwQQKIIkEYvs2qnTU9hSySIML+9LNmmENtzaq0O4JWpWKfGXTdaY1h0g9FzzyVOTv+X0qpfFq89sN8TfTzuGmbETf+zQFFYowNUu5/loUM+VwL9Nu2uI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDNBgFf5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3opTaWW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6EAC433C7;
-	Thu, 11 Apr 2024 10:16:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDNBgFf5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97661C433C7;
+	Thu, 11 Apr 2024 10:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712830617;
-	bh=8sCP1b8Y3TB6pZ0dKmFjSsDhlBwu1yDUqwW32p5IVKk=;
+	s=korg; t=1712830620;
+	bh=o78f7YRO4Qj19Xpah9nxaUompouEIWGQhTH4xhgeI7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l3opTaWWwU4GdSFgm8RWngff+RS98GwkSWwwkA9YhYzRwJiooEsA6qupxDzxYvncx
-	 Ae3TiQMJmOEFr8dNFVBN+S/Ri6jwx2knHAYPJFxZi5hqLALZWYB3RYT5SmTCWW1zpA
-	 qgKH4dsqR2qiH9poOaxkXjiHn7uf1UMPGU3IDAZ8=
+	b=YDNBgFf5Vu/b6KPnWe/M0nIqdLp6KtzsRQ9f8ggBO7Ix9JAeIGUu0sJB0leSPmo5y
+	 5XdwV8NBwaH8y9AJ4kwfNcQrKveeDBlGQsVRWS8f94bdzkSpEWxXN1a6dtoJhn0T5A
+	 pFdbItCG/oEXe+S3LSP0Ev1OF/g6pTU03oiC/ANQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Thibault <samuel.thibault@ens-lyon.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 059/215] speakup: Fix 8bit characters from direct synth
-Date: Thu, 11 Apr 2024 11:54:28 +0200
-Message-ID: <20240411095426.669999039@linuxfoundation.org>
+Subject: [PATCH 5.4 060/215] kbuild: Move -Wenum-{compare-conditional,enum-conversion} into W=1
+Date: Thu, 11 Apr 2024 11:54:29 +0200
+Message-ID: <20240411095426.701000032@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095424.875421572@linuxfoundation.org>
 References: <20240411095424.875421572@linuxfoundation.org>
@@ -50,47 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Thibault <samuel.thibault@ens-lyon.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit b6c8dafc9d86eb77e502bb018ec4105e8d2fbf78 ]
+[ Upstream commit 75b5ab134bb5f657ef7979a59106dce0657e8d87 ]
 
-When userland echoes 8bit characters to /dev/synth with e.g.
+Clang enables -Wenum-enum-conversion and -Wenum-compare-conditional
+under -Wenum-conversion. A recent change in Clang strengthened these
+warnings and they appear frequently in common builds, primarily due to
+several instances in common headers but there are quite a few drivers
+that have individual instances as well.
 
-echo -e '\xe9' > /dev/synth
+  include/linux/vmstat.h:508:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+    508 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+        |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+    509 |                            item];
+        |                            ~~~~
 
-synth_write would get characters beyond 0x7f, and thus negative when
-char is signed.  When given to synth_buffer_add which takes a u16, this
-would sign-extend and produce a U+ffxy character rather than U+xy.
-Users thus get garbled text instead of accents in their output.
+  drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c:955:24: warning: conditional expression between different enumeration types ('enum iwl_mac_beacon_flags' and 'enum iwl_mac_beacon_flags_v1') [-Wenum-compare-conditional]
+    955 |                 flags |= is_new_rate ? IWL_MAC_BEACON_CCK
+        |                                      ^ ~~~~~~~~~~~~~~~~~~
+    956 |                           : IWL_MAC_BEACON_CCK_V1;
+        |                             ~~~~~~~~~~~~~~~~~~~~~
+  drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c:1120:21: warning: conditional expression between different enumeration types ('enum iwl_mac_beacon_flags' and 'enum iwl_mac_beacon_flags_v1') [-Wenum-compare-conditional]
+   1120 |                                                0) > 10 ?
+        |                                                        ^
+   1121 |                         IWL_MAC_BEACON_FILS :
+        |                         ~~~~~~~~~~~~~~~~~~~
+   1122 |                         IWL_MAC_BEACON_FILS_V1;
+        |                         ~~~~~~~~~~~~~~~~~~~~~~
 
-Let's fix this by making sure that we read unsigned characters.
+Doing arithmetic between or returning two different types of enums could
+be a bug, so each of the instance of the warning needs to be evaluated.
+Unfortunately, as mentioned above, there are many instances of this
+warning in many different configurations, which can break the build when
+CONFIG_WERROR is enabled.
 
-Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Fixes: 89fc2ae80bb1 ("speakup: extend synth buffer to 16bit unicode characters")
+To avoid introducing new instances of the warnings while cleaning up the
+disruption for the majority of users, disable these warnings for the
+default build while leaving them on for W=1 builds.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240204155736.2oh4ot7tiaa2wpbh@begin
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2002
+Link: https://github.com/llvm/llvm-project/commit/8c2ae42b3e1c6aa7c18f873edcebff7c0b45a37e
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/speakup/synth.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ scripts/Makefile.extrawarn | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/staging/speakup/synth.c b/drivers/staging/speakup/synth.c
-index 3568bfb89912c..b5944e7bdbf67 100644
---- a/drivers/staging/speakup/synth.c
-+++ b/drivers/staging/speakup/synth.c
-@@ -208,8 +208,10 @@ void spk_do_flush(void)
- 	wake_up_process(speakup_task);
- }
+diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
+index 6a78afc6f13b4..a51193485c50f 100644
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -51,6 +51,8 @@ KBUILD_CFLAGS += -Wno-format-zero-length
+ KBUILD_CFLAGS += $(call cc-disable-warning, pointer-to-enum-cast)
+ KBUILD_CFLAGS += $(call cc-disable-warning, unaligned-access)
+ KBUILD_CFLAGS += $(call cc-disable-warning, cast-function-type-strict)
++KBUILD_CFLAGS += -Wno-enum-compare-conditional
++KBUILD_CFLAGS += -Wno-enum-enum-conversion
+ endif
  
--void synth_write(const char *buf, size_t count)
-+void synth_write(const char *_buf, size_t count)
- {
-+	const unsigned char *buf = (const unsigned char *) _buf;
-+
- 	while (count--)
- 		synth_buffer_add(*buf++);
- 	synth_start();
+ endif
 -- 
 2.43.0
 
