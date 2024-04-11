@@ -1,73 +1,57 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35291205E04;
-	Thu, 11 Apr 2024 18:17:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6A5D41740
+	for <patches@lists.linux.dev>; Thu, 11 Apr 2024 18:36:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712859476; cv=none; b=WazWpMUel+b1dpisjHzoLKa/kqitq6CR+B71S+MER/zlOLxCiZKklsZzsKV5qXzlVtNln5URz/3TLyb1UHbpi2ChtHe5P8YXm2U8TR+QRXxpqWwwMSZJdSae49wlGOFYl6HN31BYZXESIAM2EL9QY/8tiOMaiODC84OpkYPBeDY=
+	t=1712860593; cv=none; b=YBM5R950My84aL/FJDQg61XwL2aHrNn98RUEcNyRfu/vrn/+lGFEMyo0sB13R17xiBSY2hww/H+U7PXaqR2bCzHBd+CPfz8br/pMCC6DHIpPq3Fp1A6BCdsQwbE8Dlf+5k5wprJOyPxAZV+igtJQPCXODr6m8p5R0ebrdtMDVCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712859476; c=relaxed/simple;
-	bh=A+pJ1luEAcYgs14sF6QlPY8p0w7CGPTnOOI0gKFXsBI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=r/sjcEXmAu23Ai9+ZQsA7uFtUdJeOkwSjre137B8LRvHa8cosbsO+eO8rKUFPT0QA64MFrElscA4+rY/udg70Vz16CIu7mFzB+lPHwlruMfmpTnsjZcGpz9a4mG3T5rsC2NtWeg1pPCcdDay6QiB+X+XgoJ5CZlHWbbkR5qucpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DRFedOO0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712860593; c=relaxed/simple;
+	bh=Ft8JfQvHCLY2ghv8Ss761BEC9TQ/5kAvBzYcfHLpbv8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NiEZbvS9aaHzdqsDhK6Ps8LBAo1W5q7wb8vYymQPKg/p9BCFWlveFWQrLl3fZReQ/M4Edyu9H+BR1v2yyMoDSSIVtygmqL5HIZpZL8yodeWLwk8MKEzL1rvy3nEKMSUUgdd51x8kC5nV7zKErrrCYVsQppp/W/PP2XA+7LZsvqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=i03MxOyH; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DRFedOO0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87433C072AA;
-	Thu, 11 Apr 2024 18:17:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712859476;
-	bh=A+pJ1luEAcYgs14sF6QlPY8p0w7CGPTnOOI0gKFXsBI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DRFedOO0PKfcNsu5EC2d6n4K/lIHqQLW6BkoskVVwS1fr6G8i7BU/Jt9+7VeYSiyc
-	 AuYJZZPw844PBGvygaQrTJstAwWMdnyWVXseaOfAFyoYZfzyQaYFFgGbKTi3Y2pKxO
-	 Zv26h+Am8cbHKXZl/vwFoM/d7ly/Fe07EaWo/lmDGxUxJxN5rU4/ATkfyNrmZZbitm
-	 JRax3fAJM/vUb1adY/Kf3BF3OmFfOFMGuhJgSJx5SvFFICAAn0b4zr0XURVMfyl8Yk
-	 0lE5szbC991rNSgH8K6ZkwBNMAYYorPG893qcPdaGMOKO8h7dm8aBHhtlmAn+6gUoW
-	 oDJyM2ymBuqNQ==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.8 000/143] 6.8.6-rc1 review
-Date: Thu, 11 Apr 2024 11:17:52 -0700
-Message-Id: <20240411181752.91571-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240411095420.903937140@linuxfoundation.org>
-References: 
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="i03MxOyH"
+Received: from [100.64.216.186] (unknown [20.29.225.195])
+	by linux.microsoft.com (Postfix) with ESMTPSA id B898E20EC303;
+	Thu, 11 Apr 2024 11:36:29 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com B898E20EC303
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1712860590;
+	bh=dN02yDdDosiWONjItu2a2iqcmYH10EILRT9j765+B5g=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=i03MxOyHvZgSveQDWlCKvQEtyl8z5xvR5xn2cIVSL2fxgn+eautwWvzvjLpycNxb+
+	 W4hHzDLGsvFBtVdKuYI0456oklEZoeTa1vYozQzZmJnEfJKLWw616OemoZqv3uMRy3
+	 Yhmgkp+2Z/8gQWPWOs5O9kD3Xzq3qlfFY2uJsA1A=
+Message-ID: <e944c094-b503-4a9a-a5d0-487c8b056e34@linux.microsoft.com>
+Date: Thu, 11 Apr 2024 11:36:28 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.15 00/57] 5.15.155-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240411095407.982258070@linuxfoundation.org>
+Content-Language: en-CA
+From: Easwar Hariharan <eahariha@linux.microsoft.com>
+In-Reply-To: <20240411095407.982258070@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hello,
-
-On Thu, 11 Apr 2024 11:54:28 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 6.8.6 release.
-> There are 143 patches in this series, all will be posted as a response
+On 4/11/2024 2:57 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.155 release.
+> There are 57 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -75,54 +59,23 @@ On Thu, 11 Apr 2024 11:54:28 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.or
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.6-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.155-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
 > and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+<snip>
 
-Tested-by: SeongJae Park <sj@kernel.org>
-
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 1e41d76814ed ("Linux 6.8.6-rc1")
+I wanted to repeat my request from another thread[1] here, that we revert commit 4949affd5288 
+("ACPI: CPPC: Use access_width over bit_width for system memory accesses") in 5.15.155 due to
+known problems with the patch, so it's not lost in the mail storm.
 
 Thanks,
-SJ
+Easwar
 
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
-ok 11 selftests: damon: sysfs_update_schemes_tried_regions_wss_estimation.py
-ok 12 selftests: damon: reclaim.sh
-ok 13 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_m68k.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
-
-PASS
+[1] https://lore.kernel.org/all/97d25ef7-dee9-4cc5-842a-273f565869b3@linux.microsoft.com/
