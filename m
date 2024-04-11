@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595F214535A;
-	Thu, 11 Apr 2024 10:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F1014600E;
+	Thu, 11 Apr 2024 10:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829876; cv=none; b=FIzfY9oUkldePFsIqHnExW/qP893wBjXzJArOtU1atP7CxpgYAkjlAJ+bNDeHJEXBQBBRC7WAEAcrDzhZy0XRkF3xm4FFaM5PBNK4P5MaJj+pPLNr5cC3NVRpuUsvkymd7q/1qn6DQLnuZugOosgNFneqBpg7Y0zXhq6Ib42s2Q=
+	t=1712829879; cv=none; b=EsNiHOoYQQjSWQh+Fxxto6CfHps9eT5qYTY9YwbWnr3aRkJKfblJQRLLpL2ms09NFanlHxQoyJr7R8QCUVG9yzvcEalZBN4vh5mAeyyVFz3NXWz+6O0MpT/GFZSAt3zfIC5j99NSeM91h8tbUsZhq4SaDvfwqRPMUgB0iE4/0s0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829876; c=relaxed/simple;
-	bh=gVVtfFTkA9elJkUD5++T+i/A/mShFpZegP0EdbeqxIU=;
+	s=arc-20240116; t=1712829879; c=relaxed/simple;
+	bh=RBbiqdYb7a0KhzeAPgemP3xn3G0LT4MlFR3jHbaxSuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tybxu6ige4iX9J2/YPWTA7cYJsMq5fEcODqDehidJA8Ih0QljmEPhhLVkAIZY8LFm20BuJ47S7q8+HabiY4P84pAsQQBUXQMQaykIvItrmK6OiPc5vr1UidKS+49W+dqeG5GB38PX/YbsZ8CsVr8HN1OmaTvPNmA82AS3DL5ji0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLdJE4vS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T9ZoVBbGYvAsku62JEfmuMv4z9id7iYudPVbpbyCENBOrEm/Jd+deFvGjTyiVby7PvLTGoJXN46C0EI2e3FdYXmx6BOsrIYCoHX4fCS1iCJLufWDUVqZnoE1zTB2qhZdouTiMJhHwYu5W+u80EFDjI0hwAKlrtnPYIG6AMTCv04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtIKfdr8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLdJE4vS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59CCC433F1;
-	Thu, 11 Apr 2024 10:04:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtIKfdr8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24E7C433F1;
+	Thu, 11 Apr 2024 10:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829876;
-	bh=gVVtfFTkA9elJkUD5++T+i/A/mShFpZegP0EdbeqxIU=;
+	s=korg; t=1712829879;
+	bh=RBbiqdYb7a0KhzeAPgemP3xn3G0LT4MlFR3jHbaxSuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kLdJE4vS/tWxIr2777tM5FbjYFIMCTjeGXDNPvSxMxzP312YtML1jcVpF0Jy0hGko
-	 Ra+yF5bqLK6ym+yt6cmJSNXAU7NoD312uijMRKi3j+ApJFpGhQsuuKd0uWXvWpuLQE
-	 gxuLW/QTLQ0BVb7qn4dwa4QKlEbpUt+MvjWwu4ZY=
+	b=qtIKfdr8S7aKIqUuZu0MQsW9Vy13tXEymr4Sze0+cJnWEiCLXwePMzrsQfEidyHBV
+	 pq9YLMNDKV5mGHDkOhkro2Xr6HUyHabLq0DG14LY97QgAxxdpPdICrnZiWE9FgMq95
+	 JlQ17VTrt4k+Uaz/dX0IeUyZd/59q+5v+IrxmY6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	John Sperbeck <jsperbeck@google.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 136/175] initramfs: switch initramfs unpacking to struct file based APIs
-Date: Thu, 11 Apr 2024 11:55:59 +0200
-Message-ID: <20240411095423.659342089@linuxfoundation.org>
+Subject: [PATCH 4.19 137/175] init: open /initrd.image with O_LARGEFILE
+Date: Thu, 11 Apr 2024 11:56:00 +0200
+Message-ID: <20240411095423.689248851@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -51,129 +55,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: John Sperbeck <jsperbeck@google.com>
 
-[ Upstream commit bf6419e4d5440c6d414a320506c5488857a5b001 ]
+[ Upstream commit 4624b346cf67400ef46a31771011fb798dd2f999 ]
 
-There is no good reason to mess with file descriptors from in-kernel
-code, switch the initramfs unpacking to struct file based write
-instead.
+If initrd data is larger than 2Gb, we'll eventually fail to write to the
+/initrd.image file when we hit that limit, unless O_LARGEFILE is set.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
-Stable-dep-of: 4624b346cf67 ("init: open /initrd.image with O_LARGEFILE")
+Link: https://lkml.kernel.org/r/20240317221522.896040-1-jsperbeck@google.com
+Signed-off-by: John Sperbeck <jsperbeck@google.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/initramfs.c | 47 ++++++++++++++++++++++++++---------------------
- 1 file changed, 26 insertions(+), 21 deletions(-)
+ init/initramfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/init/initramfs.c b/init/initramfs.c
-index 7103edf44436c..e378d15a949e0 100644
+index e378d15a949e0..6b49c5ae78c7a 100644
 --- a/init/initramfs.c
 +++ b/init/initramfs.c
-@@ -11,13 +11,14 @@
- #include <linux/utime.h>
- #include <linux/file.h>
- 
--static ssize_t __init xwrite(int fd, const char *p, size_t count)
-+static ssize_t __init xwrite(struct file *file, const char *p, size_t count,
-+		loff_t *pos)
- {
- 	ssize_t out = 0;
- 
- 	/* sys_write only can write MAX_RW_COUNT aka 2G-4K bytes at most */
- 	while (count) {
--		ssize_t rv = ksys_write(fd, p, count);
-+		ssize_t rv = kernel_write(file, p, count, pos);
- 
- 		if (rv < 0) {
- 			if (rv == -EINTR || rv == -EAGAIN)
-@@ -315,7 +316,8 @@ static int __init maybe_link(void)
- 	return 0;
- }
- 
--static __initdata int wfd;
-+static __initdata struct file *wfile;
-+static __initdata loff_t wfile_pos;
- 
- static int __init do_name(void)
- {
-@@ -332,16 +334,17 @@ static int __init do_name(void)
- 			int openflags = O_WRONLY|O_CREAT;
- 			if (ml != 1)
- 				openflags |= O_TRUNC;
--			wfd = ksys_open(collected, openflags, mode);
--
--			if (wfd >= 0) {
--				ksys_fchown(wfd, uid, gid);
--				ksys_fchmod(wfd, mode);
--				if (body_len)
--					ksys_ftruncate(wfd, body_len);
--				vcollected = kstrdup(collected, GFP_KERNEL);
--				state = CopyFile;
--			}
-+			wfile = filp_open(collected, openflags, mode);
-+			if (IS_ERR(wfile))
-+				return 0;
-+			wfile_pos = 0;
-+
-+			vfs_fchown(wfile, uid, gid);
-+			vfs_fchmod(wfile, mode);
-+			if (body_len)
-+				vfs_truncate(&wfile->f_path, body_len);
-+			vcollected = kstrdup(collected, GFP_KERNEL);
-+			state = CopyFile;
- 		}
- 	} else if (S_ISDIR(mode)) {
- 		ksys_mkdir(collected, mode);
-@@ -363,16 +366,16 @@ static int __init do_name(void)
- static int __init do_copy(void)
- {
- 	if (byte_count >= body_len) {
--		if (xwrite(wfd, victim, body_len) != body_len)
-+		if (xwrite(wfile, victim, body_len, &wfile_pos) != body_len)
- 			error("write error");
--		ksys_close(wfd);
-+		fput(wfile);
- 		do_utime(vcollected, mtime);
- 		kfree(vcollected);
- 		eat(body_len);
- 		state = SkipIt;
- 		return 0;
- 	} else {
--		if (xwrite(wfd, victim, byte_count) != byte_count)
-+		if (xwrite(wfile, victim, byte_count, &wfile_pos) != byte_count)
- 			error("write error");
- 		body_len -= byte_count;
- 		eat(byte_count);
-@@ -603,21 +606,23 @@ static void __init clean_rootfs(void)
- static void populate_initrd_image(char *err)
- {
- 	ssize_t written;
--	int fd;
-+	struct file *file;
-+	loff_t pos = 0;
- 
- 	unpack_to_rootfs(__initramfs_start, __initramfs_size);
+@@ -613,7 +613,7 @@ static void populate_initrd_image(char *err)
  
  	printk(KERN_INFO "rootfs image is not initramfs (%s); looks like an initrd\n",
  			err);
--	fd = ksys_open("/initrd.image", O_WRONLY | O_CREAT, 0700);
--	if (fd < 0)
-+	file = filp_open("/initrd.image", O_WRONLY | O_CREAT, 0700);
-+	if (IS_ERR(file))
+-	file = filp_open("/initrd.image", O_WRONLY | O_CREAT, 0700);
++	file = filp_open("/initrd.image", O_WRONLY|O_CREAT|O_LARGEFILE, 0700);
+ 	if (IS_ERR(file))
  		return;
- 
--	written = xwrite(fd, (char *)initrd_start, initrd_end - initrd_start);
-+	written = xwrite(file, (char *)initrd_start, initrd_end - initrd_start,
-+			&pos);
- 	if (written != initrd_end - initrd_start)
- 		pr_err("/initrd.image: incomplete write (%zd != %ld)\n",
- 		       written, initrd_end - initrd_start);
--	ksys_close(fd);
-+	fput(file);
- }
- #endif /* CONFIG_BLK_DEV_RAM */
  
 -- 
 2.43.0
