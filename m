@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2C213FD7F;
-	Thu, 11 Apr 2024 10:30:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C9A1474B0;
+	Thu, 11 Apr 2024 10:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712831424; cv=none; b=d9GjOncon8a8Ng4BJQEOaDO3ePH9Z1FzhMBkvyKUnWQH7RIml+VbLt1z++ls9dbVmU1FK3b+wiWWMcentqrBDF/JZpeceaZP6lu7DWhly1mM63T0Ecrb8jxGSZO2+Ul0oRN2Ic5hb0ZQYTR22xdleWzTpTOsICuhBeWEctLvCuw=
+	t=1712831427; cv=none; b=DaRszD75We24Ci41GSgMrDF6K9I26h/JwHTvdGdRsUlXlE+6B8Z1wRQRrbkLrHLhfDFzb/+94Xeclx1bMYbfPU2rjmGtEvs3PYlv8CQ+OXGPhpJkednCXBDmHNpb/x/FRV976gBzSMGX5RKF/1L8LzdFDj0xCs16fm/JHpv7BAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712831424; c=relaxed/simple;
-	bh=nG6Gy1Vg+MuVt4oWp7gpB+/hrBGNBPY/TdnqBmaHpbs=;
+	s=arc-20240116; t=1712831427; c=relaxed/simple;
+	bh=ZSUQ1wGYlZdfUKt5EvJsJuXIWaU3zkuKbxop/03HZbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oi4ah9N8+1USiW0U5IiXyUN0PhiS1PfwvAcZTKp7lrVdj9Zp5CxEwT6coJ8q2GNgDDneZH0+/cwfFeK/plvt8Mk/ogPQim2YebQHAYX4BSHyddA9doYhny7HZ+MNKdRYEqwdrzpP2Medv2cfDf6O2Yyfu5mTh+FqgDJImbjh7c0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JsgHGDUV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CgQCDGndXuc12gNGutWqfv0i/LV+HrMKTwTehVO2VRJGNSdFTFs3UBmuKJSKkG6GsAY6XdT+yhotMAzCqy2j1zMQbS0GQhTZyFIp766VzwVdCE8twE40yoW4FImBgUZCNhGRPXVW6bfwroaa/QALoxHmifK5cWZf74gp/peckoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ea3D2Mfx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JsgHGDUV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D67C43390;
-	Thu, 11 Apr 2024 10:30:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ea3D2Mfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088ACC43390;
+	Thu, 11 Apr 2024 10:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712831424;
-	bh=nG6Gy1Vg+MuVt4oWp7gpB+/hrBGNBPY/TdnqBmaHpbs=;
+	s=korg; t=1712831427;
+	bh=ZSUQ1wGYlZdfUKt5EvJsJuXIWaU3zkuKbxop/03HZbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JsgHGDUVlzB1o0nI0HEdRmxnJmxxaPzocbdPC3Hg/buGSGAHUmmtXpaO4sf0O+jxP
-	 6ePyG8avccy95px31loyKnrbUNFzQn5+bbyueh06xhbwFwO2mUfaKdVEddRczPgHsO
-	 TtCfLf6hT3rJCcefYkgcmiQFI56B+3IdncCuDWfQ=
+	b=ea3D2MfxpcMFW2lX69O6EGaLLdi0ACMsLX557PwP9hPu4oZS5geHye7chii5rxGs0
+	 Yh3m9pIroUFHCIRW5HQbp4T0E8+03SFhJCjh8IsOlH64t5QWW2fzazt+2fFE0Fd1KP
+	 rPp5t1LTaBaJLrnK8vPnl9C2g2LMtniIrFtjKTPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <keescook@chromium.org>,
+	Gwendal Grignou <gwendal@chromium.org>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 109/114] randomize_kstack: Improve entropy diffusion
-Date: Thu, 11 Apr 2024 11:57:16 +0200
-Message-ID: <20240411095420.183089021@linuxfoundation.org>
+Subject: [PATCH 6.6 110/114] platform/x86: intel-vbtn: Update tablet mode switch at end of probe
+Date: Thu, 11 Apr 2024 11:57:17 +0200
+Message-ID: <20240411095420.212908734@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095416.853744210@linuxfoundation.org>
 References: <20240411095416.853744210@linuxfoundation.org>
@@ -45,41 +47,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Gwendal Grignou <gwendal@chromium.org>
 
-[ Upstream commit 9c573cd313433f6c1f7236fe64b9b743500c1628 ]
+[ Upstream commit 434e5781d8cd2d0ed512d920c6cdeba4b33a2e81 ]
 
-The kstack_offset variable was really only ever using the low bits for
-kernel stack offset entropy. Add a ror32() to increase bit diffusion.
+ACER Vivobook Flip (TP401NAS) virtual intel switch is implemented as
+follow:
 
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Fixes: 39218ff4c625 ("stack: Optionally randomize kernel stack offset each syscall")
-Link: https://lore.kernel.org/r/20240309202445.work.165-kees@kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
+   Device (VGBI)
+   {
+       Name (_HID, EisaId ("INT33D6") ...
+       Name (VBDS, Zero)
+       Method (_STA, 0, Serialized)  // _STA: Status ...
+       Method (VBDL, 0, Serialized)
+       {
+           PB1E |= 0x20
+           VBDS |= 0x40
+       }
+       Method (VGBS, 0, Serialized)
+       {
+           Return (VBDS) /* \_SB_.PCI0.SBRG.EC0_.VGBI.VBDS */
+       }
+       ...
+    }
+
+By default VBDS is set to 0. At boot it is set to clamshell (bit 6 set)
+only after method VBDL is executed.
+
+Since VBDL is now evaluated in the probe routine later, after the device
+is registered, the retrieved value of VBDS was still 0 ("tablet mode")
+when setting up the virtual switch.
+
+Make sure to evaluate VGBS after VBDL, to ensure the
+convertible boots in clamshell mode, the expected default.
+
+Fixes: 26173179fae1 ("platform/x86: intel-vbtn: Eval VBDL after registering our notifier")
+Signed-off-by: Gwendal Grignou <gwendal@chromium.org>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240329143206.2977734-3-gwendal@chromium.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/randomize_kstack.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/intel/vbtn.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/randomize_kstack.h b/include/linux/randomize_kstack.h
-index 5d868505a94e4..6d92b68efbf6c 100644
---- a/include/linux/randomize_kstack.h
-+++ b/include/linux/randomize_kstack.h
-@@ -80,7 +80,7 @@ DECLARE_PER_CPU(u32, kstack_offset);
- 	if (static_branch_maybe(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,	\
- 				&randomize_kstack_offset)) {		\
- 		u32 offset = raw_cpu_read(kstack_offset);		\
--		offset ^= (rand);					\
-+		offset = ror32(offset, 5) ^ (rand);			\
- 		raw_cpu_write(kstack_offset, offset);			\
- 	}								\
- } while (0)
+diff --git a/drivers/platform/x86/intel/vbtn.c b/drivers/platform/x86/intel/vbtn.c
+index 084c355c86f5f..5d13452bb947a 100644
+--- a/drivers/platform/x86/intel/vbtn.c
++++ b/drivers/platform/x86/intel/vbtn.c
+@@ -136,8 +136,6 @@ static int intel_vbtn_input_setup(struct platform_device *device)
+ 	priv->switches_dev->id.bustype = BUS_HOST;
+ 
+ 	if (priv->has_switches) {
+-		detect_tablet_mode(&device->dev);
+-
+ 		ret = input_register_device(priv->switches_dev);
+ 		if (ret)
+ 			return ret;
+@@ -316,6 +314,9 @@ static int intel_vbtn_probe(struct platform_device *device)
+ 		if (ACPI_FAILURE(status))
+ 			dev_err(&device->dev, "Error VBDL failed with ACPI status %d\n", status);
+ 	}
++	// Check switches after buttons since VBDL may have side effects.
++	if (has_switches)
++		detect_tablet_mode(&device->dev);
+ 
+ 	device_init_wakeup(&device->dev, true);
+ 	/*
 -- 
 2.43.0
 
