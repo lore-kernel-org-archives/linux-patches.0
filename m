@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC332EAE5;
-	Thu, 11 Apr 2024 10:05:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CA82EAE5;
+	Thu, 11 Apr 2024 10:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829938; cv=none; b=d0utLn6Z/aoAjWXQIVnFutf0P6pGNlExrsY9UZe6ITmwh83ChG9mFS8u3q5PYRLbHcrI/95bfFf7FEaiQoexLKk0LDZmz1GIT/Uga/DdnmlDw1DADpWkmcxJR0mvYejh37dXhqvX110y03DUHJEXfN9xyYO4tX+HaercsNo9Gh0=
+	t=1712829941; cv=none; b=PgwFLIZKFbEx8b2DVbr0sfg451vag7cSt5+z8I/lI4GFbRbrH2ABNWrDB0BLDW5n7ACFZdELW785DiyzMVgS2qZD56ADTF06EYcE0vvTi6z7OEzcRPE10PKKoWP8IIvcYg8iI5p6Zyl8P3sV5SZlcahtZjDVEW0dnGx7MvDSTS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829938; c=relaxed/simple;
-	bh=b1RcDeVVB/q7Fmp2livCobzMKbQSm3bcIhNQu4IgSDo=;
+	s=arc-20240116; t=1712829941; c=relaxed/simple;
+	bh=5k5WGojMyqqDgmgtUBBp08rL8LW8KjTuP6RXGoiX2No=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XdjpsPDqpkyP7LV9ovHMk5yNvN9rSA/N9XQp85nY4rwPBi2vSpS/Q8IcZSqUmOg0iLs7P/A93ectYiD33zM/yRzcSVhWXJPzOVGu7vl/ES9UPE5/8YA7qG2KDuvGAt0uY01Y95EsNEEzDZZZDoL85EZpBWP66SHT6OHiVUk0O/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVZdiJNR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jrrPy3wRKQVWRoXo98/4SO7SzBjboD5VydEYvHDvNqKjiRq305EmLB3No8LavOVQFCUEUuVdaphuq5/4n/TELuPDOBBr7xKCzSAlOLzwTQ1WxjQs0FdGn4XuwLMNBPdF1l14+zRGvxoWm4OfftWw2ghFZmELuX1MFMwCeqKA2J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LdVyuhSr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVZdiJNR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24528C433F1;
-	Thu, 11 Apr 2024 10:05:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LdVyuhSr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172A7C433C7;
+	Thu, 11 Apr 2024 10:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829938;
-	bh=b1RcDeVVB/q7Fmp2livCobzMKbQSm3bcIhNQu4IgSDo=;
+	s=korg; t=1712829941;
+	bh=5k5WGojMyqqDgmgtUBBp08rL8LW8KjTuP6RXGoiX2No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AVZdiJNR6XPfwO0giqZj0pH+pD3WVkzOFRbj2OO0YTpgymSWC8D/B+JQdidilG3JM
-	 kpjnuykOcg6M7IJYTS/mrpv1zRpcDbzbAqWK2cF5EaU9BqAOQydcpxKfDyFGABBbFY
-	 bcZgXUOZVWV7XnGxJ21Z9UzxpVrLODdO4ocXy0/w=
+	b=LdVyuhSryhGeOloZY8Np0p2+DdMosH018EjgB7Z9+80egJY7vULwJXFxNqOM6YfLo
+	 4SaStaCv7Hp1CccJN2Ql/xwBKXkjJH1sThPetp6MUAaoGabl5OsaY5QFH9bigtz9zf
+	 QNTjf2dMFhUX70s8sQM/hYfPhrfHRcZRzGUHHLGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 155/175] scsi: lpfc: Fix possible memory leak in lpfc_rcv_padisc()
-Date: Thu, 11 Apr 2024 11:56:18 +0200
-Message-ID: <20240411095424.232760137@linuxfoundation.org>
+Subject: [PATCH 4.19 156/175] isofs: handle CDs with bad root inode but good Joliet root directory
+Date: Thu, 11 Apr 2024 11:56:19 +0200
+Message-ID: <20240411095424.261842595@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -52,43 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Alex Henrie <alexhenrie24@gmail.com>
 
-[ Upstream commit 2ae917d4bcab80ab304b774d492e2fcd6c52c06b ]
+[ Upstream commit 4243bf80c79211a8ca2795401add9c4a3b1d37ca ]
 
-The call to lpfc_sli4_resume_rpi() in lpfc_rcv_padisc() may return an
-unsuccessful status.  In such cases, the elsiocb is not issued, the
-completion is not called, and thus the elsiocb resource is leaked.
+I have a CD copy of the original Tom Clancy's Ghost Recon game from
+2001. The disc mounts without error on Windows, but on Linux mounting
+fails with the message "isofs_fill_super: get root inode failed". The
+error originates in isofs_read_inode, which returns -EIO because de_len
+is 0. The superblock on this disc appears to be intentionally corrupt as
+a form of copy protection.
 
-Check return value after calling lpfc_sli4_resume_rpi() and conditionally
-release the elsiocb resource.
+When the root inode is unusable, instead of giving up immediately, try
+to continue with the Joliet file table. This fixes the Ghost Recon CD
+and probably other copy-protected CDs too.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20240131185112.149731-3-justintee8345@gmail.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20240208022134.451490-1-alexhenrie24@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_nportdisc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/isofs/inode.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_nportdisc.c b/drivers/scsi/lpfc/lpfc_nportdisc.c
-index f666518d84b0a..0890c2e38eeca 100644
---- a/drivers/scsi/lpfc/lpfc_nportdisc.c
-+++ b/drivers/scsi/lpfc/lpfc_nportdisc.c
-@@ -601,8 +601,10 @@ lpfc_rcv_padisc(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
- 				/* Save the ELS cmd */
- 				elsiocb->drvrTimeout = cmd;
+diff --git a/fs/isofs/inode.c b/fs/isofs/inode.c
+index 6e4e2cfd40b9e..aec11a7676c9e 100644
+--- a/fs/isofs/inode.c
++++ b/fs/isofs/inode.c
+@@ -910,8 +910,22 @@ static int isofs_fill_super(struct super_block *s, void *data, int silent)
+ 	 * we then decide whether to use the Joliet descriptor.
+ 	 */
+ 	inode = isofs_iget(s, sbi->s_firstdatazone, 0);
+-	if (IS_ERR(inode))
+-		goto out_no_root;
++
++	/*
++	 * Fix for broken CDs with a corrupt root inode but a correct Joliet
++	 * root directory.
++	 */
++	if (IS_ERR(inode)) {
++		if (joliet_level && sbi->s_firstdatazone != first_data_zone) {
++			printk(KERN_NOTICE
++			       "ISOFS: root inode is unusable. "
++			       "Disabling Rock Ridge and switching to Joliet.");
++			sbi->s_rock = 0;
++			inode = NULL;
++		} else {
++			goto out_no_root;
++		}
++	}
  
--				lpfc_sli4_resume_rpi(ndlp,
--					lpfc_mbx_cmpl_resume_rpi, elsiocb);
-+				if (lpfc_sli4_resume_rpi(ndlp,
-+						lpfc_mbx_cmpl_resume_rpi,
-+						elsiocb))
-+					kfree(elsiocb);
- 				goto out;
- 			}
- 		}
+ 	/*
+ 	 * Fix for broken CDs with Rock Ridge and empty ISO root directory but
 -- 
 2.43.0
 
