@@ -1,83 +1,68 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A09145FEE
-	for <patches@lists.linux.dev>; Thu, 11 Apr 2024 12:04:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011E814F9F2;
+	Thu, 11 Apr 2024 14:15:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712837055; cv=none; b=im18Q5Yxul722TJsAW4zOHaUuAm7H8X3LlzXBIgLXEgLwr23jbZN96zOpVyY9PlLx9vzQLymi8+xNHepKbJ8aZNQNRrst1hhLjhni/gTgJkNb7D8hJXoL65v+4RxspctlXpGYcfFDAkM2VnXg/cSakWCjrH1y0MYWBAN8QcRbk4=
+	t=1712844949; cv=none; b=T/KKaJl9TbMLPU+ErmFxIGqJuIYC02/H8QqOQ2fTgvKmy34zW0pxEJuh93y8qgatblejwyrCFSuItLvLydfKvzur/ywrhPpMGp7KsveMsPQkEFNaZqi239W9a0ShTJhPMMRaKItyRgt3pYWPerSBfWzC1V67w9aq49dErC6m/Ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712837055; c=relaxed/simple;
-	bh=OTidSHC1PvaX9rw5g3FP+ojl1bFtEeGrm/h0RE5tgUU=;
+	s=arc-20240116; t=1712844949; c=relaxed/simple;
+	bh=f3WgQJepv3I935Ux7AoYeAMSMCATyrlhQv6obAngiD4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KfW71uXg3X4pJi3U5OvpDeM4EnoLiq+LsvbN+wsuT3FcKDFX7JgW8c1NMmjG1tgdChZswin+rVBnM2tlSvQ5bJ+w5+0zB1rb9AREVX07X3vxnUWmc3IRQ8oiBR/qfkZUWx+11anMtLcwARbKtXgoYFXgYxOmJf+vUChESjt+/1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 990A91C0083; Thu, 11 Apr 2024 14:04:12 +0200 (CEST)
-Date: Thu, 11 Apr 2024 14:04:12 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=G7RILUnDRSQqLAkf5B4EPXAzE27CQXV6+7jFLtRfMzIHBy2Srp7UpaQg2cF03bDcpX4pOwBKTbjWgc+Y9xUrSfV80rp199HhkSEUe9mztZqR3EmBchQHBS3XEkxKkIxa1IRZAdep58bEMmr1kdDGI9yePEs4kRielkKalIyRxUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z3MFGY6E; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3MFGY6E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E421AC113CE;
+	Thu, 11 Apr 2024 14:15:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1712844948;
+	bh=f3WgQJepv3I935Ux7AoYeAMSMCATyrlhQv6obAngiD4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Z3MFGY6E+LA/q+FY4yR6DIj3BbXWlUkNJxoiDLE5cmzOjMHbOHOqCMhD2ho8gG0XR
+	 A2sBNmNjaY1t9FhE7E6oJKDYcX/wvL7AOVOV2acVU0XteJsICmQquYEgPDTGgpsmXS
+	 3la3jKLhTTCbywbgj4Vh5Cr8vn5Jybcp3nZUrt2Y=
+Date: Thu, 11 Apr 2024 16:15:45 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Pavel Machek <pavel@denx.de>
+Cc: elfring@users.sourceforge.net, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, broonie@kernel.org
 Subject: Re: [PATCH 6.1 00/83] 6.1.86-rc1 review
-Message-ID: <ZhfRvBksJitvLbgB@duo.ucw.cz>
+Message-ID: <2024041136-demystify-destitute-cfd5@gregkh>
 References: <20240411095412.671665933@linuxfoundation.org>
+ <ZhfQjMUvOI1QXtDN@duo.ucw.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="PcOhETxjHIz/2XeB"
-Content-Disposition: inline
-In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
-
-
---PcOhETxjHIz/2XeB
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <ZhfQjMUvOI1QXtDN@duo.ucw.cz>
 
-Hi!
+On Thu, Apr 11, 2024 at 01:59:08PM +0200, Pavel Machek wrote:
+> Hi!
+> 
+> > This is the start of the stable review cycle for the 6.1.86 release.
+> > There are 83 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> 
+> > Markus Elfring <elfring@users.sourceforge.net>
+> >     batman-adv: Improve exception handling in batadv_throw_uevent()
+> > 
+> > Markus Elfring <elfring@users.sourceforge.net>
+> >     batman-adv: Return directly after a failed batadv_dat_select_candidates() in batadv_dat_forward_data()
+> >
+> 
+> Questionable cleanups, untested, do not fix any bug, please drop.
 
-> This is the start of the stable review cycle for the 6.1.86 release.
-> There are 83 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-CIP testing did not find any problems here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.1.y
-
-Linux 5.15.155-rc1 (857e7024b96f), 5.4.274-rc1 (82d3ef764065),
-6.6.27-rc1 (3126167a036c) and 6.8.6-rc1 (1e41d76814ed) tests are
-passing, too.
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---PcOhETxjHIz/2XeB
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZhfRvAAKCRAw5/Bqldv6
-8sTtAJsEAqtKL3c4g0FdC9d5GrnXojhVkwCeMttpkuxFXpevvtWEtyxdCo8QH4g=
-=i0eI
------END PGP SIGNATURE-----
-
---PcOhETxjHIz/2XeB--
+good point, now dropped.
