@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34DD2EAE5;
-	Thu, 11 Apr 2024 10:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C9014600A;
+	Thu, 11 Apr 2024 10:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712829914; cv=none; b=XO+wRQRmWebbQOkTRpjwrhA6kV5F1n5+llRIGec+NMYiorz8nZlVT3H4SHcR0byrm/RJSWNvLUrcao+4TD0hlvuzR7u7ufu6lE8bNcWBHcBDwIUg0bX4KtIRNCPAeT+lLqQXXVJgQntFpyI4R9o6m5yxuYY2ajDgydBkYXl+99A=
+	t=1712829918; cv=none; b=WcIakStyT6dlTtaKbwQKBUX1BB6yEZnaT6ye3nRMSnBd9N0YV4Sm80atd1W9xx1pY9IJ79ydqQ+/9s4EhJcWxWzwytc7PsiiDBe7MBBDIkoDFonY+TQoj5vNVw+Lx43t97yx8acjXCCJxmCmY52jL9tj/qrbSstjSTARgqmTTq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712829914; c=relaxed/simple;
-	bh=Gg9PHJ+fWFWQilwsnPo5ZntFewBAVjOyUAZQOabBPGs=;
+	s=arc-20240116; t=1712829918; c=relaxed/simple;
+	bh=w24IojX4/Q/DJ/EQR880p51X+eH7bv7IROuRn+sWal4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cd9au1dLbbgVaVmwYJi60m1HGwn7SFX52IRWvqvebgP4fS/5LyAoHEiCNjrK3vns9aK7BBYK+/wUxwFuSGtic81oqv9uwwmUlXlEMW8+iThFEhT9DjIKrdtyQVcZaYhQvcxZvNDQ4m6mXoHH91eNImUhHnJVO1GdUFseWSLnnvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5rvHgjE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mKMhT3/lOKaHDVeronFAxHUpa8vg9V5gOTlYmF8+STqBLgwjSTpMS2lDSZQZvTjfwZvp+BmpKKL0q0W/xrA6NtqggYUnUeff5lNme2J0nLa3knfSiS7ByC9kVmfhe5KedRgtxQmn/zygbGbX5RWBQimjb1Islnqvxx30Jni6OZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvLL51bs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5rvHgjE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F74C433C7;
-	Thu, 11 Apr 2024 10:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvLL51bs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30170C433F1;
+	Thu, 11 Apr 2024 10:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712829914;
-	bh=Gg9PHJ+fWFWQilwsnPo5ZntFewBAVjOyUAZQOabBPGs=;
+	s=korg; t=1712829917;
+	bh=w24IojX4/Q/DJ/EQR880p51X+eH7bv7IROuRn+sWal4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e5rvHgjEJCFTwS9T9xHQb8sCXZo/T8pgiAPryUOaBd7JMBcPeMeiCa9CgZpv/jm5Q
-	 TolaZpT7Oxh0cmCswBSB708lC8eU7ZKlr5pqWqegzTzGNsRTbO3Jfc81oGfEu4o+tC
-	 pVSPjxSFAmhT5NPz4+zd42rNrzM7RdLtHRknz8os=
+	b=lvLL51bstx+JKK7qBU6WbefhdEc17XchJ71iYi+DHkZtQNPjgKRCQCxstOgaSCCTy
+	 nd652MW6+5yn72k5XMOPuHfgzVnFRNw0NeFw4R8LTVDV7BxCja0P13QQ+VXcCw3DVP
+	 uuNpdg0napLUme6LwMZZV0HCUgJOgy6r9jegd+SQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 148/175] tools/power x86_energy_perf_policy: Fix file leak in get_pkg_num()
-Date: Thu, 11 Apr 2024 11:56:11 +0200
-Message-ID: <20240411095424.018194284@linuxfoundation.org>
+Subject: [PATCH 4.19 149/175] btrfs: handle chunk tree lookup error in btrfs_relocate_sys_chunks()
+Date: Thu, 11 Apr 2024 11:56:12 +0200
+Message-ID: <20240411095424.048475234@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
 References: <20240411095419.532012976@linuxfoundation.org>
@@ -51,33 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit f85450f134f0b4ca7e042dc3dc89155656a2299d ]
+[ Upstream commit 7411055db5ce64f836aaffd422396af0075fdc99 ]
 
-In function get_pkg_num() if fopen_or_die() succeeds it returns a file
-pointer to be used. But fclose() is never called before returning from
-the function.
+The unhandled case in btrfs_relocate_sys_chunks() loop is a corruption,
+as it could be caused only by two impossible conditions:
 
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+- at first the search key is set up to look for a chunk tree item, with
+  offset -1, this is an inexact search and the key->offset will contain
+  the correct offset upon a successful search, a valid chunk tree item
+  cannot have an offset -1
+
+- after first successful search, the found_key corresponds to a chunk
+  item, the offset is decremented by 1 before the next loop, it's
+  impossible to find a chunk item there due to alignment and size
+  constraints
+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/volumes.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-index 2aba622d1c5aa..470d03e143422 100644
---- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-+++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-@@ -1112,6 +1112,7 @@ unsigned int get_pkg_num(int cpu)
- 	retval = fscanf(fp, "%d\n", &pkg);
- 	if (retval != 1)
- 		errx(1, "%s: failed to parse", pathname);
-+	fclose(fp);
- 	return pkg;
- }
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index ceced5e56c5a9..30b5646b2c0de 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -2948,7 +2948,17 @@ static int btrfs_relocate_sys_chunks(struct btrfs_fs_info *fs_info)
+ 			mutex_unlock(&fs_info->delete_unused_bgs_mutex);
+ 			goto error;
+ 		}
+-		BUG_ON(ret == 0); /* Corruption */
++		if (ret == 0) {
++			/*
++			 * On the first search we would find chunk tree with
++			 * offset -1, which is not possible. On subsequent
++			 * loops this would find an existing item on an invalid
++			 * offset (one less than the previous one, wrong
++			 * alignment and size).
++			 */
++			ret = -EUCLEAN;
++			goto error;
++		}
  
+ 		ret = btrfs_previous_item(chunk_root, path, key.objectid,
+ 					  key.type);
 -- 
 2.43.0
 
