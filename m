@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B1914D6FB
-	for <patches@lists.linux.dev>; Fri, 12 Apr 2024 17:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7B514EC72
+	for <patches@lists.linux.dev>; Fri, 12 Apr 2024 17:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712943048; cv=none; b=qKLTqos/IjuFta1ReVWZRYG08kHyOX5QaNuzcs1BnnoP71bhTyL+Dc3w8Q7Zozki1E5zi7qDKK6rOrm/IRMMuLVwXvi8zAOO9xZzlnDMjSaxHGUTxIkcoIm/QsFk0y3zOHRac8UPcIrvm6U+DIGR9pp3h71QP7nv5i07102SVjM=
+	t=1712943049; cv=none; b=lnitdOMjCzxDhHXGbb1PkzBrArs1NImCMita5meTlN76iGmaCPs+xVoXaAHd+uYJl05nH6aSPIpC4MHquC7jebfgy6JQFtpROVDrPCEE6Yjv6gHrGGj7EAAM6PnFDza2LflbuG7ZZ0Czr/WdZIqleIeMzGrAKxgKyRqJpzgtOeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712943048; c=relaxed/simple;
-	bh=j6VXfKkHgF7ZyzHZ2Ll+dz8fG0uzNqJxRFoI19lkgis=;
+	s=arc-20240116; t=1712943049; c=relaxed/simple;
+	bh=53VPmLYStvI4gEILOZdjzTXxl1Rvmbkp0Ro+tl8CTdM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=IxKBsguUzHT9LEHFwRn3Ye/Ji1zOLJ/8rIipDGHSLZXsCY3Z3daW1V8wIH25lJ+SBsMR1PvXYnl9fSKjUeDpdURg6yI/fgXJVU0OTaHMFnE+5EPNe/vYmbsr/s+hxXZc+KgLXm23zncPHPH1KgzC2iYa0HyXgU+DhXC4w5+fKlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=aJ0ILenp; arc=none smtp.client-ip=192.198.163.13
+	 MIME-Version; b=DE50RVn2h7kxaSqnOa8sbZojnwlxV2mpCizrWDrmvAUrjCkJY3WvY8qTTLRV3G+4UlIaXMQoUqxL8TtSlJivC018FXoyBy+h24wzacKPcLvxqazh4A7e0kNBzmciXPgzLkEtuVypUSoQYmeYZ37Z/eBAVWnVz8SSnjLrvbxJM7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=H1NG5SPd; arc=none smtp.client-ip=192.198.163.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aJ0ILenp"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="H1NG5SPd"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1712943047; x=1744479047;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=j6VXfKkHgF7ZyzHZ2Ll+dz8fG0uzNqJxRFoI19lkgis=;
-  b=aJ0ILenpXflygYPATNyjwNaZxCUNGcyqEEA6CAWFDNEehFEHsfQLug/E
-   csrakJAwY9cHAUeP3/CXa/B1KIcmYFDEwUhnWBQwEKFXFCHm6dhYy6NK1
-   tCCxU5IHRdb3y5nT2t3JzGQsDEAGe091KtMDgBifqYFUypHlzIArdkEt6
-   XcQWaLcCxR6qaWq6VDGXnFGI9+1ZBkJ6cM3Qe5zQleu8eqcxCyuSggfCk
-   K6kO8FQ/FdjaxmaCV50AWoxzzfAqZuT3mon7YDqRLcIBrnaFWYIXFQRrU
-   fCgbllg41MIMolrSnienAAn1+1ITbG6nT80BzLPdRDZhS+IjQmSqh8hzQ
-   A==;
-X-CSE-ConnectionGUID: 5NsmGd37TNqWL2AaJB3w/Q==
-X-CSE-MsgGUID: 8ouNk4SfRaGXOLOXuqVAqg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11042"; a="11365684"
+  bh=53VPmLYStvI4gEILOZdjzTXxl1Rvmbkp0Ro+tl8CTdM=;
+  b=H1NG5SPdvGw5OikyOl6Xtz1MZSbFhCDlr1GNbcK33CRiDApgEvKdO7bb
+   aQwmRH0dnG3zcA+rtX8sw7qBymKkLYI1pio9O7/BLWtRHpfrCkeC0vdhI
+   wCNALystGcV/L3gAfwyhd0SLGdwGAVH2nnCL5C6gZHT2O1w8rwWsNuCvE
+   DJVM4h9sOTe8DmmTETvyoFLC/F1CKqvv8AiFT2eSi6RPvIBU3FrhrRy8P
+   iScRj7Gt+KYW8IsWAS5kmXdZhIUrn9B8dO5ExAW5/xnfLxwcoDbhBPFjf
+   tipQFNBmsOzY7U2TUNcKBeIP1Yz7gp6w/D9HLqtYuNm2kHbZDAEBBiVTy
+   w==;
+X-CSE-ConnectionGUID: zDKxtvenRZWaq/uH0HF8Vg==
+X-CSE-MsgGUID: SMrRTpSBQoGyzHMnLnhcdg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11042"; a="11365690"
 X-IronPort-AV: E=Sophos;i="6.07,196,1708416000"; 
-   d="scan'208";a="11365684"
+   d="scan'208";a="11365690"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Apr 2024 10:30:42 -0700
-X-CSE-ConnectionGUID: UuBykGrERsmnkS9tg+FQhA==
-X-CSE-MsgGUID: 03gP47ICSL2Vn6ax703TzA==
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Apr 2024 10:30:43 -0700
+X-CSE-ConnectionGUID: BId4IbBrRS2kytb9eccrjQ==
+X-CSE-MsgGUID: movp/L6LQHq5WdRBvF4hNA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.07,196,1708416000"; 
-   d="scan'208";a="21780772"
+   d="scan'208";a="21780775"
 Received: from jithujos.sc.intel.com ([172.25.103.66])
   by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Apr 2024 10:30:42 -0700
 From: Jithu Joseph <jithu.joseph@intel.com>
@@ -56,9 +56,9 @@ Cc: linux-kernel@vger.kernel.org,
 	sathyanarayanan.kuppuswamy@intel.com,
 	ravi.v.shankar@intel.com,
 	patches@lists.linux.dev
-Subject: [PATCH 1/3] platform/x86/intel/ifs: Classify error scenarios correctly
-Date: Fri, 12 Apr 2024 10:23:47 -0700
-Message-Id: <20240412172349.544064-2-jithu.joseph@intel.com>
+Subject: [PATCH 2/3] platform/x86/intel/ifs: trace: display batch num in hex
+Date: Fri, 12 Apr 2024 10:23:48 -0700
+Message-Id: <20240412172349.544064-3-jithu.joseph@intel.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240412172349.544064-1-jithu.joseph@intel.com>
 References: <20240412172349.544064-1-jithu.joseph@intel.com>
@@ -70,74 +70,34 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Based on inputs from hardware architects, only "scan signature failures"
-should be treated as actual hardware/cpu failure.
+In Field Scan test image files are named in ff-mm-ss-<batch02x>.scan
+format. Current trace output, prints the batch number in decimal format.
 
-Current driver, in addition, classifies "scan controller error" scenario
-too as a hardware/cpu failure. Modify the driver to classify this situation
-with a more appropriate "untested" status instead of "fail" status.
+Make it easier to correlate the trace line to a test image file by
+showing the batch number also in hex format.
+
+Add 0x prefix to all fields in the trace line to make the type explicit.
 
 Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 Reviewed-by: Tony Luck <tony.luck@intel.com>
 Reviewed-by: Ashok Raj <ashok.raj@intel.com>
 ---
- drivers/platform/x86/intel/ifs/runtest.c | 27 +++++++++++++-----------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ include/trace/events/intel_ifs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
-index 95b4b71fab53..282e4bfe30da 100644
---- a/drivers/platform/x86/intel/ifs/runtest.c
-+++ b/drivers/platform/x86/intel/ifs/runtest.c
-@@ -69,6 +69,19 @@ static const char * const scan_test_status[] = {
+diff --git a/include/trace/events/intel_ifs.h b/include/trace/events/intel_ifs.h
+index 8ce2de120f2d..0d88ebf2c980 100644
+--- a/include/trace/events/intel_ifs.h
++++ b/include/trace/events/intel_ifs.h
+@@ -28,7 +28,7 @@ TRACE_EVENT(ifs_status,
+ 		__entry->status	= status;
+ 	),
  
- static void message_not_tested(struct device *dev, int cpu, union ifs_status status)
- {
-+	struct ifs_data *ifsd = ifs_get_data(dev);
-+
-+	/*
-+	 * control_error is set when the microcode runs into a problem
-+	 * loading the image from the reserved BIOS memory, or it has
-+	 * been corrupted. Reloading the image may fix this issue.
-+	 */
-+	if (status.control_error) {
-+		dev_warn(dev, "CPU(s) %*pbl: Scan controller error. Batch: %02x version: 0x%x\n",
-+			 cpumask_pr_args(cpu_smt_mask(cpu)), ifsd->cur_batch, ifsd->loaded_version);
-+		return;
-+	}
-+
- 	if (status.error_code < ARRAY_SIZE(scan_test_status)) {
- 		dev_info(dev, "CPU(s) %*pbl: SCAN operation did not start. %s\n",
- 			 cpumask_pr_args(cpu_smt_mask(cpu)),
-@@ -90,16 +103,6 @@ static void message_fail(struct device *dev, int cpu, union ifs_status status)
- {
- 	struct ifs_data *ifsd = ifs_get_data(dev);
- 
--	/*
--	 * control_error is set when the microcode runs into a problem
--	 * loading the image from the reserved BIOS memory, or it has
--	 * been corrupted. Reloading the image may fix this issue.
--	 */
--	if (status.control_error) {
--		dev_err(dev, "CPU(s) %*pbl: could not execute from loaded scan image. Batch: %02x version: 0x%x\n",
--			cpumask_pr_args(cpu_smt_mask(cpu)), ifsd->cur_batch, ifsd->loaded_version);
--	}
--
- 	/*
- 	 * signature_error is set when the output from the scan chains does not
- 	 * match the expected signature. This might be a transient problem (e.g.
-@@ -285,10 +288,10 @@ static void ifs_test_core(int cpu, struct device *dev)
- 	/* Update status for this core */
- 	ifsd->scan_details = status.data;
- 
--	if (status.control_error || status.signature_error) {
-+	if (status.signature_error) {
- 		ifsd->status = SCAN_TEST_FAIL;
- 		message_fail(dev, cpu, status);
--	} else if (status.error_code) {
-+	} else if (status.control_error || status.error_code) {
- 		ifsd->status = SCAN_NOT_TESTED;
- 		message_not_tested(dev, cpu, status);
- 	} else {
+-	TP_printk("batch: %.2d, start: %.4x, stop: %.4x, status: %.16llx",
++	TP_printk("batch: 0x%.2x, start: 0x%.4x, stop: 0x%.4x, status: 0x%.16llx",
+ 		__entry->batch,
+ 		__entry->start,
+ 		__entry->stop,
 -- 
 2.25.1
 
