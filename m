@@ -1,310 +1,113 @@
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C6A3D548
-	for <patches@lists.linux.dev>; Fri, 12 Apr 2024 20:23:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712953441; cv=fail; b=Gf0ltjYynF73II9WcerNeS/gXzMMqQYSiwsp1O6eccj6zYw+CoWNmgJBvZMAM+pEHdDil644gexejaWQasWGTNoyQLOuNQ5t+7xOYeEHfcOYBqr7pIu7Wb1cwQYHaG+6lu25Hd/BOU0sQtGSr7qr4GGcs9VTHrxJ8ZOtQttcvnM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712953441; c=relaxed/simple;
-	bh=HlBj0rUUu/GXvA9DO+IFLPRjDcwUpmnj/eOMTu6l2cU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=rNzeaDxdVIM0e5Zq4eF4JZxdz4dcHpsNFrkfGEUXkfzDSqFWvIFdkVa8xBClDcYw0ZnUHPyT9Z3ux1LyUGEc5ZnGEqq1Ac0+BCBeUeDo7+mLf3KnAFaKUpJbXZ4pUZvjcQIpaFLzFOEhJPgXsSwL2iNGwmaf0BSJYeiPh92VdNk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=d99S2hYe; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=0FUNs5BZ; arc=fail smtp.client-ip=205.220.165.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA513AC16
+	for <patches@lists.linux.dev>; Fri, 12 Apr 2024 20:46:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712954810; cv=none; b=bjGb9vSdDMDXUY/7DZdGFGduFE9/OCB8T2PqFYjmght6jzS6a7gP0d4v/r1prtLE8qfhbFmzcrvJDYX/3dXYufOlrOnBZ5mz2WiaQmQjQ2ub35gR9Vr+5HWxF33L10F/xyOOoCi9Qk5zUut2GqxROym9RQUJpxFGIf+lk+1pi+c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712954810; c=relaxed/simple;
+	bh=NaJW1CpbCmMiu1vp/LaOL7R6yRq69skyK1KPbmyNeKc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VPyR9Kq53dJR9agYyEveR35iFj5sYYZBKYU1jktIlkW0ZenV4xDDDjrB6b+zQPiDe01TB1XttjCWlB0LMCg9kLQF9wS/rIbjsVbv0f1zusauf+Fjr+X1CrKmFodnuXZNNICL1INDVc/AYpoVEKXyeYgFpTNy/qU+azOuuELKfv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lXeDWohx; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="d99S2hYe";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="0FUNs5BZ"
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 43CI9hv5027017;
-	Fri, 12 Apr 2024 20:23:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : content-type : in-reply-to :
- mime-version; s=corp-2023-11-20;
- bh=pmvskkbhU0nFZEFJpMUK7Ce2auDMDFG2zfPYEeVgvQc=;
- b=d99S2hYeOYq0VeE/MWVMV9pqDTuCch5SOd3/X5u+tkkEVmJk0URLotY81ytp3eLfmFZy
- fA2t3NXQBkPoMVSyzaX2oWd9azD3pe42Tjg+tGFbpRdx9/7aAFm71Eo+PbFB8tNTptsC
- CXjdp6dZawo7Eb8Nzf8weOm80LpQsBm+wnXGWaQrLIVYx0c0kVBKZ+W8LpwME+D9719K
- DUhOvHE5Izzwg4KYVeWeZBv3MZy5ePc8+dL+4FQUQyJWlBS0wdieqZfZ9gpiYnIWaBbF
- gmppzBzdJPXEQxhixtcvH61gZ7j4m0uGjQFcmpLafHLMlXsZD+78keGrPVkClX8AfVJY zQ== 
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xaw02ct7r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 12 Apr 2024 20:23:47 +0000
-Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 43CJ5KcT002879;
-	Fri, 12 Apr 2024 20:23:46 GMT
-Received: from nam12-bn8-obe.outbound.protection.outlook.com (mail-bn8nam12lp2168.outbound.protection.outlook.com [104.47.55.168])
-	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3xavuhrh7y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 12 Apr 2024 20:23:46 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BI3jEznFHEHiMmW4AhCxli0pam/9kckrVYb11C+OjjcnrR0GXygRsSy9yNgaMlU5aqy59NyXxc/7trwB5itljkZmpsam+7SyPBHlulvdTGELHK/ULN7qC9wbfobCl2jocXdnSBTIt1q0NIAIAPpuPV5PyOsD73zyAFP+zvRXpWc9zUEMx/AALR5gwOgUy+E0PQnaoFqZhGMMdW/BgnNcst1WIQO/cZbK/IsYIuybj2a+FfLaOvv6b8FapDfU+fGhyOgw6+w+NwcMHyDvw14tF8uz5FdbpLz/21KBw4YLC7YPFTF13s6XeBUGcMtTbLCJdiR6HZyHvcrb0csT5br7zg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pmvskkbhU0nFZEFJpMUK7Ce2auDMDFG2zfPYEeVgvQc=;
- b=XomWFx1PaDf+w8irGRlDMk7Lt2QY6jqW5KT3gxAh25wGixig5Es8m+OkL2PMt/j0FQyyBi2q0D7MhhLhdPXRZvYROs18zS4iSbu9MWb8IIqGnDqpz52An6+7wxL+0xG0K6d/z1LXGBc24MCqvRdVp8j2lEWwzxStidBoqN9HjVo1aVBUQNBlCIFoxXk/WwhHEM2DCBvaTgx7MsggMvLC34Zk4kddd5OPSCHqVF4UbVR2Io3YXz3H/dE+P1jj6tT326mRNnid7aAltbZ8qGG1Nz5oep17mSLHgNRZVS8eWbmVDhij4+1o7tSeqG3jPKyI6bJyfthuDnjS5/IfFMOEow==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pmvskkbhU0nFZEFJpMUK7Ce2auDMDFG2zfPYEeVgvQc=;
- b=0FUNs5BZfAoTYIa40Eo0Mf/1lP2QT+22hm0uC/3r1NGTJ9c6JjUz3w1/5kHgdDPrcCwQFZZ59XpB7CF4HGmaYu6GSa8H6KCZ0kb78qR2Z/25SxQQrx+WaZmzTwBMLyx8Q2WU6ZH2z/X9O08PTxkJKjAWmASaG+vS5n9XMHpsgeQ=
-Received: from BN0PR10MB5128.namprd10.prod.outlook.com (2603:10b6:408:117::24)
- by MW6PR10MB7687.namprd10.prod.outlook.com (2603:10b6:303:244::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.53; Fri, 12 Apr
- 2024 20:23:44 +0000
-Received: from BN0PR10MB5128.namprd10.prod.outlook.com
- ([fe80::743a:3154:40da:cf90]) by BN0PR10MB5128.namprd10.prod.outlook.com
- ([fe80::743a:3154:40da:cf90%4]) with mapi id 15.20.7409.055; Fri, 12 Apr 2024
- 20:23:43 +0000
-Date: Fri, 12 Apr 2024 16:23:39 -0400
-From: Chuck Lever <chuck.lever@oracle.com>
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-stable <stable@vger.kernel.org>,
-        "patches@lists.linux.dev" <patches@lists.linux.dev>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        "shuah@kernel.org" <shuah@kernel.org>,
-        "patches@kernelci.org" <patches@kernelci.org>,
-        "lkft-triage@lists.linaro.org" <lkft-triage@lists.linaro.org>,
-        "pavel@denx.de" <pavel@denx.de>,
-        "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
-        "f.fainelli@gmail.com" <f.fainelli@gmail.com>,
-        "sudipm.mukherjee@gmail.com" <sudipm.mukherjee@gmail.com>,
-        "srw@sladewatkins.net" <srw@sladewatkins.net>,
-        "rwarsow@gmx.de" <rwarsow@gmx.de>,
-        "conor@kernel.org" <conor@kernel.org>,
-        "allen.lkml@gmail.com" <allen.lkml@gmail.com>,
-        "broonie@kernel.org" <broonie@kernel.org>,
-        Calum Mackay <calum.mackay@oracle.com>,
-        Vegard Nossum <vegard.nossum@oracle.com>,
-        Darren Kenny <darren.kenny@oracle.com>,
-        Ramanan Govindarajan <ramanan.govindarajan@oracle.com>,
-        Linux NFS Mailing List <linux-nfs@vger.kernel.org>
-Subject: Re: [PATCH 5.15 00/57] 5.15.155-rc1 review
-Message-ID: <ZhmYS9ntNbDZvkKE@tissot.1015granger.net>
-References: <20240411095407.982258070@linuxfoundation.org>
- <2c2362c7-ace7-4a79-861e-fa435e46ac85@oracle.com>
- <27E1E4C4-86C3-4D78-AF85-50C1612675E0@oracle.com>
- <21c9bcf9-2d44-4ab2-b05c-a1712ac1a434@oracle.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <21c9bcf9-2d44-4ab2-b05c-a1712ac1a434@oracle.com>
-X-ClientProxiedBy: CH2PR07CA0066.namprd07.prod.outlook.com
- (2603:10b6:610:5b::40) To BN0PR10MB5128.namprd10.prod.outlook.com
- (2603:10b6:408:117::24)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lXeDWohx"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1712954810; x=1744490810;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=NaJW1CpbCmMiu1vp/LaOL7R6yRq69skyK1KPbmyNeKc=;
+  b=lXeDWohx382qblvyj4kOiN+PWa60YVla0aovhf8gTqA5U1RI0fpM6Tmh
+   y0EkOeVW2PBNwWykbMLtJBOn3WJungCleotUcFa1qGFjSvet2IhwpXsLq
+   F7vLiixm+tBpOIOzMA2Eve38UqAPCB9M/VRk+jwqczs4zRAs9mneg+lAC
+   Y0jWqZExIa14qv+A/Qp09cfG+40Nsfc8fYCMrle4kFq5uZB2NMvMfTFE4
+   +/8NWQAtUUY1+8wjST9yAObfiTL/3GAP2FuJXajxbGd0npdw+65X3fjif
+   033Nt+ii6pZbFdLFbHqFoT4THedCrguEDcczFLgnLlPSCTTsQD2tnxBTx
+   w==;
+X-CSE-ConnectionGUID: qzrYzKbDSxuNF8GbhHkjqQ==
+X-CSE-MsgGUID: 9zAV4p+4Rvewp+rBwkyaCQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11042"; a="19573912"
+X-IronPort-AV: E=Sophos;i="6.07,197,1708416000"; 
+   d="scan'208";a="19573912"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Apr 2024 13:46:50 -0700
+X-CSE-ConnectionGUID: 1iPPyoFhTQe/FM5dMMTWNA==
+X-CSE-MsgGUID: Du7LdhHjQwqOJ/+EwN/dog==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,197,1708416000"; 
+   d="scan'208";a="21834145"
+Received: from zchen24-mobl1.amr.corp.intel.com (HELO [10.209.67.36]) ([10.209.67.36])
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Apr 2024 13:46:49 -0700
+Message-ID: <e640e6eb-be63-4749-ba04-eb1835527800@linux.intel.com>
+Date: Fri, 12 Apr 2024 13:46:48 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN0PR10MB5128:EE_|MW6PR10MB7687:EE_
-X-MS-Office365-Filtering-Correlation-Id: 67e16453-3ec7-4667-8899-08dc5b2e7318
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 
-	S+TwmccRZM/qw4RtIIUcmcNm6/pbHGo0mtV3fNzlP2O8QlQ2Bs4bJZGY8ZKKk3th0+/1CSYUfvIZkPaw0nQPlfrUK3rKaWS96+EDHUlceFuJqaLdWL3yIqxtybh6nxYAZ77pvedcshdjX+b0AG/LIXCa3ad9+EKJi4EeSjAEDNqabDvd7zAZ5/E3lzD/wp1Dp9ZgXEYxU4QmgY+xuejynnzVzYheAQu8f2EGTYEeLdwubENOMY/OBUxLDZ+Jnh+1zP4sCCQVYDMqu8TQ5/+EGIQdgnoJ2b/ERwVg5wy1cXuVNaotMQ7ipQfkcHIGM1r0k5l6I0hh9yDDU6ua+ETw5fMhFh46bFdK0ZyOxi9FiOzt7SYi76DTbtBnJ0tdX728+RNJHEJu2Pu5s0t0BAmsvxf8VX8xz7zmeh9FkpsSBn82uay/WISXdjFiTGIgoCo7gdGQfdd/4wEy4uUsnGSCVUocOt7Y2Bi2W5At58Eeh3Rxgh7b/w+KILa5Y8S3T73kQAoHlfYwtWSNsGIdf8bVy0tdztX+K7IjkZVORa98sG+MpW0BUIHwrzzZePJDhpFp9WHV2SINzLGmUKNKp5fMZi0FTK8DfXJUWpNZMf2Jy7aaq7IMlWJUKH2t4LGwmHPKHlEG94YIeNkHKfRezVIQbIt6+WEcQbsx3NYsFM0d4G8=
-X-Forefront-Antispam-Report: 
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN0PR10MB5128.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(376005)(366007)(7416005);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 
-	=?us-ascii?Q?mM77e4n3UjYB3NrzfZWOiGx188K1rbnRhFnmFRAylF1eUHCpGmLQHGujRxbA?=
- =?us-ascii?Q?n+uuqd0Zy9KjM9/3aPl749HYZIbYEwXpD+hs1Q19cYNHj9xIOb5012xkgJjb?=
- =?us-ascii?Q?utYLdj0d1ABKQkiUe/Oq1I0rhunJ8wG+SwsrJLumjpI5c75XsR8yDAM6BUaZ?=
- =?us-ascii?Q?YPlTAsepFmLzUSAbgwgEXmnCGJj6GIdbQQy2+PjHXbsJW2dVMRQgdL04z6Ry?=
- =?us-ascii?Q?HiM4d8oIoKiw5dXWxh7cD+4G2z2M6dVeyZfhYsBnyYxyvrAjpmzAN5zaKJQH?=
- =?us-ascii?Q?1lC8gJ7VhuDaEbRMDqkh3JTG2gmH/CECOuG/9Ds8iIuSPXLO+/lq0Sr6O+/i?=
- =?us-ascii?Q?hwBmiScz9JWaL61wOeWPdPfzhzfFSaYaTKLpR3lWC37rorWTPykKtZm6IHAR?=
- =?us-ascii?Q?MGdhqDpl1Ae5FOvYg8ts3h4nTgtRaBA9iyp7pqm9YJCYdfl/zKbDx5XxRPou?=
- =?us-ascii?Q?z1SRmmD6M2hpUMbFqwtlqpdy2OwEm0E83mwqaPRsRf6iRUejAfTX/lMrNy6J?=
- =?us-ascii?Q?fw3T2/eKAh/RdB31kQwTaLr7ORtJo2HxiJflg+GxadaBNJWbXJe4vpQ/njkZ?=
- =?us-ascii?Q?ETbHCwuE55cl/A+iEp2/gzOkLLB7EX433iiKlyzE+pA/bOEbZKU1RcEh1NxD?=
- =?us-ascii?Q?GANek/IFO7vCc8BP5ekSaNDUJKMqfynxRn3V5YYNE9DEOKqgOAPlM9M7v/q3?=
- =?us-ascii?Q?m6MWBMB7qRMr9SMv7+XvCKmdO84KsE48Qnd1DKcAKvIVU38fgSrthJZ8+93z?=
- =?us-ascii?Q?B70dT3gJiUHFus3D3bawzSWY3/+oOHFGiyOD5uiF3//zsew4LC9tTtQiM9Is?=
- =?us-ascii?Q?SAI4nXKsqMhq1P1AP3BidZeIuwbJu15SjaPfakPfmbxikGXsg8wxyw7LEiHE?=
- =?us-ascii?Q?8cHuud8HjueefT2AfoJ75lL/W77Tzvos+q2M+97mIi+pUdR7bKM1JM1GxNUO?=
- =?us-ascii?Q?IVoD5pWaHX4vhEcn/syVEDif16Z+3iuQPyozLYF9nLDbWpQxLcMIAj9TFwgD?=
- =?us-ascii?Q?0lchqIU9agu0AP5mp2FdC0SBBELUshigv7nf2jY4Z9paPDp+NlLCsEDOuLTW?=
- =?us-ascii?Q?er7b/eBqBNaq8jmAk6AKj00MjZTeBOWv55YgM8EywiPLw2PCV3Z6+UQDnT9o?=
- =?us-ascii?Q?o171qsPoP+mBMl3xWRsi3EVuJN/NGBTiojKGd7PrIaJWi0LdViZsKk3gx0kK?=
- =?us-ascii?Q?lHG3eD1eKK7l6lqE8Mcn/vyGwrKf981MaXAFMePgUFyZXEZFYQZptQD7aeL5?=
- =?us-ascii?Q?9UaZzG7Gfos7jyhcWBPUMTo1omKgQm+Cx6zF/JzLJHDYMMlL4qLMTkDTEW8f?=
- =?us-ascii?Q?RX9mSa1+EE0+i0yLbAUAqHCqddEr+26enKyrBXPYVs6mkaZiF0mXGpHe19R8?=
- =?us-ascii?Q?soFbvBcvS639EanEI4PqWK7jzp13gmQLzRI9RIVsfwV8exG+CrWSOS0Dbnmv?=
- =?us-ascii?Q?9fhTsSWQz6zEQxgEhoLtcJ8cghUd/1zB0ms8qk/Tj3teT2myn/dVXpMpKM7v?=
- =?us-ascii?Q?iUfNCJCu9xwTnoLPmRWpvb9hktLD3jiHPmTDHzsMoca3aCIS3KBA5pHMSs79?=
- =?us-ascii?Q?pAXo6mt9QOlvzbM/BguBg1dNrs4zbV4Fm3NyZvTz3///kySkIgJgMK+C4Qve?=
- =?us-ascii?Q?tA=3D=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
-	fQeqnZKIakxmmuXKNw4vVDxIMFtK7UtO/tbDPj1Pq5rvXfkaTPedUdGjwEjlgr6fM9MWCpjhcqFW6OtRw+6Xp/vfGFd03ynWRPyomhwtkm/MO5TkkmZDZnqFOLD90yrMIZwCn7lNoiYOzwE90m5CHJhRY2RLfTnXzEDam4AaistH8tk+V1RD3xgORME+bz83ugGEL/DL+tTSX6izU4FbImdQmrTLvSUtBp9e2ZK59aZLPfIMu8Uo4ylQZ4uAQmmUNRWgA6doEmc2bY1L+rpXs75wDs+b96g+vEqgBKhFhpb3yi2aGI6TQJoskGuLyUJHgngoLVF8+gYUQYKD/CrUW8agtRQjq61nBGd3Ysbdy37jTTlTpoRlK6Hv2ERO+96Gecf5lbMuylugKkTIqgHRYvVi3NUqZ/avfAcdi00tKup3CBwbkIPpGA9q5LRZDQPm6J6Bm93GGcr+t4QtnditMlndfXTCKmyzdE5D5+3hiXK3xj1iR8uFzCdhUOV3vZvuccdwNm0u8JsnJMK1idCiYZ8qAUA3HE/lzt/g5Zo4YU+faiyBYWWi2PiD4MPNVowqnAHCiWjnl7emFt6jJCxYC3bMs5ELbIfh5RTAFTJNdN0=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 67e16453-3ec7-4667-8899-08dc5b2e7318
-X-MS-Exchange-CrossTenant-AuthSource: BN0PR10MB5128.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Apr 2024 20:23:43.8804
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QF6W9tgGZNFXruyn5LhWeDVzUA93xPrTiI2uciFR5fPSwW8QulVVf66B94Ck6xOLV8rRm8LrqdthujnwKz/Zqw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR10MB7687
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-12_16,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 phishscore=0
- adultscore=0 malwarescore=0 bulkscore=0 suspectscore=0 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2404120148
-X-Proofpoint-ORIG-GUID: ibq-hUkF_2ZN5r_Ry9JJaqojSb6O6WO2
-X-Proofpoint-GUID: ibq-hUkF_2ZN5r_Ry9JJaqojSb6O6WO2
-
-On Sat, Apr 13, 2024 at 01:41:52AM +0530, Harshit Mogalapalli wrote:
-> Hi Greg, Chuck,
-> 
-> On 12/04/24 21:27, Chuck Lever III wrote:
-> > 
-> > 
-> > > I have noticed a regression in lts test case with nfsv4 and this was overlooked in the previous cycle(5.15.154). So the regression is from 153-->154 update. And I think that is due to nfs backports we had in 5.15.154.
-> > > 
-> > > # ./runltp -d /tmpdir -s fcntl17
-> > > 
-> > > <<<test_start>>>
-> > > tag=fcntl17 stime=1712915065
-> ...
-> > > fcntl17     1  TFAIL  :  fcntl17.c:429: Alarm expired, deadlock not detected
-> > > fcntl17     0  TWARN  :  fcntl17.c:430: You may need to kill child processes by hand
-> > > fcntl17     2  TPASS  :  Block 1 PASSED
-> > > fcntl17     0  TINFO  :  Exit block 1
-> > > fcntl17     0  TWARN  :  tst_tmpdir.c:342: tst_rmdir: rmobj(/tmpdir/ltp-jRFBtBQhhx/LTP_fcn9Xy4hM) failed: unlink(/tmpdir/ltp-jRFBtBQhhx/LTP_fcn9Xy4hM) failed; errno=2: ENOENT
-> > > 
-> > > 
-> > > Steps used after installing latest ltp:
-> > > 
-> > > $ mkdir /tmpdir
-> > > $ yum install nfs-utils  -y
-> > > $ echo "/media *(rw,no_root_squash,sync)" >/etc/exports
-> > > $ systemctl start nfs-server.service
-> > > $ mount -o rw,nfsvers=3 127.0.0.1:/media /tmpdir
-> > > $ cd /opt/ltp
-> > > $ ./runltp -d /tmpdir -s fcntl17
-> > > 
-> > > 
-> > > 
-> > > This does not happen in 5.15.153 tag.
-> > > 
-> > > Adding nfs people to the CC list
-> > 
-> > The reproducer uses NFSv3, but the bug report says NFSv4
-> > at the top.
-> > 
-> > I was able to reproduce this on my nfsd-5.15.y branch
-> > with NFSv3.
-> > 
-> > A bisect would be most helpful.
-> > 
-> 
-> I was able to bisect: here are the results:
-> 
-> 
-> 
-> 2267b2e84593bd3d61a1188e68fba06307fa9dab is the first bad commit
-> commit 2267b2e84593bd3d61a1188e68fba06307fa9dab
-> Author: Alexander Aring <aahringo@redhat.com>
-> Date:   Tue Sep 12 17:53:18 2023 -0400
-> 
->     lockd: introduce safe async lock op
-> 
->     [ Upstream commit 2dd10de8e6bcbacf85ad758b904543c294820c63 ]
-> 
->     This patch reverts mostly commit 40595cdc93ed ("nfs: block notification
->     on fs with its own ->lock") and introduces an EXPORT_OP_ASYNC_LOCK
->     export flag to signal that the "own ->lock" implementation supports
->     async lock requests. The only main user is DLM that is used by GFS2 and
->     OCFS2 filesystem. Those implement their own lock() implementation and
->     return FILE_LOCK_DEFERRED as return value. Since commit 40595cdc93ed
->     ("nfs: block notification on fs with its own ->lock") the DLM
->     implementation were never updated. This patch should prepare for DLM
->     to set the EXPORT_OP_ASYNC_LOCK export flag and update the DLM
->     plock implementation regarding to it.
-> 
->     Acked-by: Jeff Layton <jlayton@kernel.org>
->     Signed-off-by: Alexander Aring <aahringo@redhat.com>
->     Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-> 
->  Documentation/filesystems/nfs/exporting.rst |  7 +++++++
->  fs/lockd/svclock.c                          |  4 +---
->  fs/nfsd/nfs4state.c                         | 10 +++++++---
->  include/linux/exportfs.h                    | 14 ++++++++++++++
->  4 files changed, 29 insertions(+), 6 deletions(-)
-> 
-> Bisect log:
-> ==========
-> 
-> git bisect start
-> # status: waiting for both good and bad commits
-> # bad: [cdfd0a7f01396303e9d4fb3513a1127636f12e5e] Linux 5.15.154
-> git bisect bad cdfd0a7f01396303e9d4fb3513a1127636f12e5e
-> # status: waiting for good commit(s), bad commit known
-> # good: [9465fef4ae351749f7068da8c78af4ca27e61928] Linux 5.15.153
-> git bisect good 9465fef4ae351749f7068da8c78af4ca27e61928
-> # good: [4420d19ed4e4fe2adc9bed8a49bf195db1137458] NFSD: Report average age
-> of filecache items
-> git bisect good 4420d19ed4e4fe2adc9bed8a49bf195db1137458
-> # good: [94e412c945e64579798204aee7bc669d0acfaf79] nfsd: fix courtesy client
-> with deny mode handling in nfs4_upgrade_open
-> git bisect good 94e412c945e64579798204aee7bc669d0acfaf79
-> # bad: [254f1c2521716cafc63530750ce313059f5d5979] iwlwifi: mvm: rfi: use
-> kmemdup() to replace kzalloc + memcpy
-> git bisect bad 254f1c2521716cafc63530750ce313059f5d5979
-> # bad: [e635f652696ef6f1230621cfd89c350cb5ec6169] serial: sc16is7xx: convert
-> from _raw_ to _noinc_ regmap functions for FIFO
-> git bisect bad e635f652696ef6f1230621cfd89c350cb5ec6169
-> # good: [05b452e8748bcf92c00725691437e16d46af7c28] nfsd: Fix creation time
-> serialization order
-> git bisect good 05b452e8748bcf92c00725691437e16d46af7c28
-> # bad: [ccd9fe71b9ee46ebcecec8aec5c4f1e1ddd35dfd] nfsd: Fix a regression in
-> nfsd_setattr()
-> git bisect bad ccd9fe71b9ee46ebcecec8aec5c4f1e1ddd35dfd
-> # bad: [2267b2e84593bd3d61a1188e68fba06307fa9dab] lockd: introduce safe
-> async lock op
-> git bisect bad 2267b2e84593bd3d61a1188e68fba06307fa9dab
-> # good: [56e5eeff6cfa4bd6ffa2b2ae5b8bfc1c28044faf] nfsd: separate
-> nfsd_last_thread() from nfsd_put()
-> git bisect good 56e5eeff6cfa4bd6ffa2b2ae5b8bfc1c28044faf
-> # good: [6e5fed48d8b7b25f8517a1292b62a3a86a5aec91] NFSD: fix possible oops
-> when nfsd/pool_stats is closed.
-> git bisect good 6e5fed48d8b7b25f8517a1292b62a3a86a5aec91
-> # first bad commit: [2267b2e84593bd3d61a1188e68fba06307fa9dab] lockd:
-> introduce safe async lock op
-> 
-> 
-> Hope the above might help.
-
-Nice work. Thanks!
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] platform/x86/intel/ifs: Classify error scenarios
+ correctly
+To: "Joseph, Jithu" <jithu.joseph@intel.com>, ilpo.jarvinen@linux.intel.com,
+ hdegoede@redhat.com, markgross@kernel.org
+Cc: linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ ashok.raj@intel.com, tony.luck@intel.com, rostedt@goodmis.org,
+ ravi.v.shankar@intel.com, patches@lists.linux.dev
+References: <20240412172349.544064-1-jithu.joseph@intel.com>
+ <20240412172349.544064-2-jithu.joseph@intel.com>
+ <69d360fc-85e4-4a6d-8f08-9f90dd7ec583@linux.intel.com>
+ <57c32cfd-136d-4c72-9f4d-12599b508fb8@intel.com>
+Content-Language: en-US
+From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+In-Reply-To: <57c32cfd-136d-4c72-9f4d-12599b508fb8@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
 
-> I didnot test the revert of culprit commit on top of 5.15.154 yet.
+On 4/12/24 12:31 PM, Joseph, Jithu wrote:
+> Sathya,
+>
+> Thanks for reviewing this
+>
+> On 4/12/2024 11:32 AM, Kuppuswamy Sathyanarayanan wrote:
+>> On 4/12/24 10:23 AM, Jithu Joseph wrote:
+>>> Based on inputs from hardware architects, only "scan signature failures"
+>>> should be treated as actual hardware/cpu failure.
+>> Instead of just saying input from hardware architects, it would be better
+>> if you mention the rationale behind it.
+> I can reword the first para as below:
+>
+> "Scan controller error" means that scan hardware encountered an error
+> prior to doing an actual test on the target CPU. It does not mean that
+> there is an actual cpu/core failure. "scan signature failure" indicates
+> that the test result on the target core did not match the expected value
+> and should be treated as a cpu failure.
+>
+> Current driver classifies both these scenarios as failures. Modify ...
 
-Please try reverting that one -- it's very close to the top so one
-or two others might need to be pulled off as well.
+Looks good to me.
 
-I expect this is due to a missing pre-requisite commit.
-
+>>> Current driver, in addition, classifies "scan controller error" scenario
+>>> too as a hardware/cpu failure. Modify the driver to classify this situation
+>>> with a more appropriate "untested" status instead of "fail" status.
+>>>
+>>> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+>>> Reviewed-by: Tony Luck <tony.luck@intel.com>
+>>> Reviewe
+>> Code wise it looks good to me.
+>>
+>> Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+>>
+>
+> Jithu
 
 -- 
-Chuck Lever
+Sathyanarayanan Kuppuswamy
+Linux Kernel Developer
+
