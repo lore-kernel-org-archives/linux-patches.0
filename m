@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7621D4F207;
-	Fri, 12 Apr 2024 08:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31F24F1F5;
+	Fri, 12 Apr 2024 08:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712910471; cv=none; b=Q34CaPT2H/HxiVgfYAagSPgl2syMsc7qTPkbbr/QDbL659PdInEIAVppYuqQAHxXbU/DCk+dMUzwkLn+IJjIMHI+KbSKukATA8uOKalZoXUAY3oLZ65PCaMbWL3R8msx88ywqGgp5WrDFhANon1sCyj9JYUlQXVCXqkTXpVNPto=
+	t=1712910590; cv=none; b=qi66jv9YCo6U1ik1cKKBs+QpDEOvQvjk8s4pJsGU3iwXANpXPu7kfJ4igDFqT5QelP9D6tYG2LjcCY1xhkf7dhSDr+Yw962lP82hqfmTkVn/pJcmk6qaR7pbHcrZ23rf7jr6BFCzr1yRBTfzEDAe6R3WSG9gAW/W0btC/Q1+wgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712910471; c=relaxed/simple;
-	bh=SI50fOegoy4JwcolEOsaawKppGsiXM/kU7sAEoFaA7o=;
+	s=arc-20240116; t=1712910590; c=relaxed/simple;
+	bh=yNUCTY3R96uKh6sdpi2i9suu0OKXHjTflNqHMb3g/Zw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QHZ9Zmz8Yd9amr54+VF7IMvLAOP68nc30N98iaeuI8/JzD7Dxzbggs+/73AXHO5F+QXtcBzI9GTEmdzWMYHoaZSWcc5YlsnRy/bvv8dTNGKPD3cQr2ileL73wnv9f751FwBgD1e5URdC4DvwYMK220s2r80DMghckMw9XaRmaHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMzlvF2D; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=cO6iHRC574XY3vCjmHFRqTHxwk3S4sfKkTHUFJCJB45vQcOB9dTaEBW9yVYdhS3hFJZJWlzS7rmtYCP06ueRIyHxnx2QzuZe+DsHFDQTY85H0xHhitrHjnD6Y91KLXbq94FCt/ZfVqhW/iyOzJGXLh3vw4cK7LAIKeu85kZcRnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJZU03Kh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMzlvF2D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7B8C113CC;
-	Fri, 12 Apr 2024 08:27:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJZU03Kh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1EA3C113CC;
+	Fri, 12 Apr 2024 08:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712910471;
-	bh=SI50fOegoy4JwcolEOsaawKppGsiXM/kU7sAEoFaA7o=;
+	s=korg; t=1712910590;
+	bh=yNUCTY3R96uKh6sdpi2i9suu0OKXHjTflNqHMb3g/Zw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=wMzlvF2DMQNYWf39zEMXhp3luphHuwnEg3TdJnhAmaRy+pR5bNQ2IwWf8UnPAyh2B
-	 RHjDNxiByP+62YOlcwsycjzv6ANVm+yB84tS8XWIsz1neRe21wofBZKs9yjRqsMlGB
-	 GkijpeSJ5loAVxzSlL3S6fMcYPVBBOIxkWolYV7A=
-Date: Fri, 12 Apr 2024 10:27:48 +0200
+	b=ZJZU03Khdu2WdxWk9+7wNcvmgMETU1OMUS2cQ7EKe2zNGS1IZnCskHzuBG7e2Zowj
+	 1fTxSOA9v625MMNkgcQxWLNFl5t6/QWyjTEe0q7btzvTJ7V5orC7we2UYWN2T38Yd5
+	 Kabaa965su4ebVWb03h4WHpzo48YTdmWFA5LUPUg=
+Date: Fri, 12 Apr 2024 10:29:47 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Easwar Hariharan <eahariha@linux.microsoft.com>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 5.15 00/57] 5.15.155-rc1 review
-Message-ID: <2024041243-finishing-jump-c142@gregkh>
-References: <20240411095407.982258070@linuxfoundation.org>
- <e944c094-b503-4a9a-a5d0-487c8b056e34@linux.microsoft.com>
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	imx@lists.linux.dev, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 4.19 000/175] 4.19.312-rc1 review
+Message-ID: <2024041240-drastic-crayon-e9d6@gregkh>
+References: <20240411095419.532012976@linuxfoundation.org>
+ <CA+G9fYuwCn0D6jzrn0dBKsa+X0zUBUMiuRqcYvc-qkKToXK5dA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,40 +46,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e944c094-b503-4a9a-a5d0-487c8b056e34@linux.microsoft.com>
+In-Reply-To: <CA+G9fYuwCn0D6jzrn0dBKsa+X0zUBUMiuRqcYvc-qkKToXK5dA@mail.gmail.com>
 
-On Thu, Apr 11, 2024 at 11:36:28AM -0700, Easwar Hariharan wrote:
-> On 4/11/2024 2:57 AM, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.15.155 release.
-> > There are 57 patches in this series, all will be posted as a response
+On Thu, Apr 11, 2024 at 07:50:57PM +0530, Naresh Kamboju wrote:
+> On Thu, 11 Apr 2024 at 15:30, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 4.19.312 release.
+> > There are 175 patches in this series, all will be posted as a response
 > > to this one.  If anyone has any issues with these being applied, please
 > > let me know.
-> > 
+> >
 > > Responses should be made by Sat, 13 Apr 2024 09:53:55 +0000.
 > > Anything received after that time might be too late.
-> > 
+> >
 > > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.155-rc1.gz
+> >         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.312-rc1.gz
 > > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
 > > and the diffstat can be found below.
-> > 
+> >
 > > thanks,
-> > 
+> >
 > > greg k-h
-> > 
 > 
-> <snip>
 > 
-> I wanted to repeat my request from another thread[1] here, that we revert commit 4949affd5288 
-> ("ACPI: CPPC: Use access_width over bit_width for system memory accesses") in 5.15.155 due to
-> known problems with the patch, so it's not lost in the mail storm.
+> The arm imx_v6_v7_defconfig build failed with gcc-12 and clang on Linux
+> stable-rc linux-4.19.y.
 > 
-> Thanks,
-> Easwar
+> Regressions:
+>  - arm
+>     * gcc-12-imx_v6_v7_defconfig - failed
 > 
-> [1] https://lore.kernel.org/all/97d25ef7-dee9-4cc5-842a-273f565869b3@linux.microsoft.com/
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> Build log:
+> ----
+> drivers/gpu/drm/imx/parallel-display.c: In function
+> 'imx_pd_bridge_atomic_check':
+> drivers/gpu/drm/imx/parallel-display.c:222:23: error: implicit
+> declaration of function 'drm_bridge_get_next_bridge'
+> [-Werror=implicit-function-declaration]
+>   222 |         next_bridge = drm_bridge_get_next_bridge(bridge);
+>       |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~
+> 
+> 
+> Links:
+>  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19.311-176-gf0cf5f6110a7/testrun/23411280/suite/build/test/gcc-12-imx_v6_v7_defconfig/details/
+>  - https://storage.tuxsuite.com/public/linaro/lkft/builds/2ex1v6eevudbi33g4ozA7hJ4fvs/
 
-Now handled, thanks.
+Offending commit now dropped, thanks!
 
 greg k-h
