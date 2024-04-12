@@ -1,100 +1,83 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199C414A099
-	for <patches@lists.linux.dev>; Fri, 12 Apr 2024 19:46:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A8E14F9D6
+	for <patches@lists.linux.dev>; Fri, 12 Apr 2024 20:02:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712951210; cv=none; b=Ua8+UgbNnzIO23C0SbIeTN2jPUdkp3NPkFEbccleGOMJqbS06HWy13h1aKTBr1dw4kTWk5IGEzyUUTkutf3MN9JKhpf52qCQ+XfG17aAZQGAb7HdpbhpzwFNdO8mN2MP4r5lsptjKCzQR6erO0g/nD8wP7Zk0DqnLWv4Msw7eDA=
+	t=1712952170; cv=none; b=gVDEauOoCOcPaRioQZeYfqHxK407r46jEr0KuwIWTxgkwxnNEf458oXrPPEuV+1eSjf2lWZYbZQ+qtspkuF3QfVXCPKuWwzVPMQLAGnXBsBktzKZkOuXAtkqvO/pM7aD0+YpEt1BWqMcZyEI8wH/s5k7OcvBAm/C6no0T1pYpik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712951210; c=relaxed/simple;
-	bh=XnUrEkoHFPhR4diIWtplmjQl0KVV2B+fVMTBj+eA3Mw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TS1nlcJRMifforFzuRlxzHqv2xOWaMgriYW4aOwAwJ1FjxPHpgLPP+qevVcrNGlBsdEbQt3EIbyQ8GmIX2yuWpZcZ5onz4eYMx+9HSr+UFGN3lD3J3qSJhGrSSIpls7ykYyRNTlSaf4lTlJ4g6NFKr8rLqhps2vVNpESwDApofw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 172A01C007B; Fri, 12 Apr 2024 21:46:47 +0200 (CEST)
-Date: Fri, 12 Apr 2024 21:46:46 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	s=arc-20240116; t=1712952170; c=relaxed/simple;
+	bh=op41Sqyr8uRfLj1kuBiDgqpP5F12Vli+Jni7UAzFnxA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ha8S7N8/zNu2BuEaKTuikHZcxdDKs66I2OU5X8gHTF7AFqZbo6IOc2dqgAqRMW/PBdrf+sxvW8UgLf1sQP1zLQauSaI4nTsWtBcMPhNtvHTxqPr2qcU/q+GFIOZDg65gPyXqk8g74iI003Fce8pwuail5Kkm6kkIQ23WO50Fgcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=qSSqkuGp; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=J+6c3ifU; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="qSSqkuGp";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="J+6c3ifU"
+From: Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1712952168;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fW4TbgGzIIRwzH2FntIEg5O7YLhVW+FYjD5M9RQsevE=;
+	b=qSSqkuGpvy4oJWtuxviFmMf9uBQ/v5PZ6bY5p2IrCythD0yQYK3q1Sn+TSs+odu5E/W2us
+	bD9kXSlaP+3DVtTOG3FSjQgNDEn14D6bLLmzkaJIUOQvw0SzLi0t/HIyB29FmwQAwkczvI
+	c+vvoSz9sftPgkNTTqFWO7d8lo9y0fX0I/ypPJeBm7sVGxFf8Yimpp3upp4cDbvSc+4g6T
+	Gjk5zANXyg1YZaJL+GAumuZgDErPh1E1qOvwcksmKgrA3yguvt0POmRfKGQ/7Bz0B1ONUz
+	nhPLENsBzVPRzAOWWwHFQs3Eln0Ybt/+pmrWtEDL9V/xgpnvBEezNR5CoTdX+A==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1712952168;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fW4TbgGzIIRwzH2FntIEg5O7YLhVW+FYjD5M9RQsevE=;
+	b=J+6c3ifUSjkLEaL9IfdBMfoARZZPCAjA+WXQtpVQsGMsAMO8UildIYSdAjxI7dAceD/H1Z
+	tj2oTBkv2gu7vbDA==
+To: Pavel Machek <pavel@denx.de>, Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
-	maco@android.com, tglx@linutronix.de, christophe.jaillet@wanadoo.fr,
-	sean.anderson@linux.dev
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ allen.lkml@gmail.com, broonie@kernel.org, maco@android.com,
+ christophe.jaillet@wanadoo.fr, sean.anderson@linux.dev
 Subject: Re: [PATCH 4.19 000/175] 4.19.312-rc1 review
-Message-ID: <ZhmPpo+EI9Ce3bI1@duo.ucw.cz>
+In-Reply-To: <ZhmPpo+EI9Ce3bI1@duo.ucw.cz>
 References: <20240411095419.532012976@linuxfoundation.org>
+ <ZhmPpo+EI9Ce3bI1@duo.ucw.cz>
+Date: Fri, 12 Apr 2024 22:02:47 +0200
+Message-ID: <87edbaz6vs.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="IWHESQAOlY1kgx+/"
-Content-Disposition: inline
-In-Reply-To: <20240411095419.532012976@linuxfoundation.org>
+Content-Type: text/plain
 
+On Fri, Apr 12 2024 at 21:46, Pavel Machek wrote:
+>> Thomas Gleixner <tglx@linutronix.de>
+>>     timers: Move clearing of base::timer_running under base:: Lock
+>
+> AFAICT, we don't have those NULL assignments in expire_timers in
+> 4.19. Can someone doublecheck this? We also don't support PREEMPT_RT
+> there.
 
---IWHESQAOlY1kgx+/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This has nothing to do with RT.
 
-Hi!
+But yes, 4.19 has the original bass::running_timer clearing which
+happens at the end of handling all expired timer callbacks and that
+actually happens with base->lock held.
 
-> This is the start of the stable review cycle for the 4.19.312 release.
-> There are 175 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+So right, 4.19 is not affected by this.
 
-> Martijn Coenen <maco@android.com>
->     loop: Remove sector_t truncation checks
+Thanks,
 
-AFAICT, in 4.19, sector_t is not guaranteed to be u64, see
-include/linux/types.h. So we can't take this.
+        tglx
 
-> Thomas Gleixner <tglx@linutronix.de>
->     timers: Move clearing of base::timer_running under base:: Lock
-
-AFAICT, we don't have those NULL assignments in expire_timers in
-4.19. Can someone doublecheck this? We also don't support PREEMPT_RT
-there.
-
-> Christophe JAILLET <christophe.jaillet@wanadoo.fr>
->     slimbus: core: Remove usage of the deprecated ida_simple_xx() API
-
-AFAICT this is just a cleanup. We should not need this.
-
-> Sean Anderson <sean.anderson@linux.dev>
->     soc: fsl: qbman: Use raw spinlock for cgr_lock
-
-As we don't have commit ef2a8d5478b9 ("net: dpaa: Adjust queue depth
-on rate change") in 4.19, we should not really need this. Plus, 10msec
-under raw spinlock is quite evil, such kernel is not realtime any
-more. We should not be doing that.
-
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---IWHESQAOlY1kgx+/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZhmPpgAKCRAw5/Bqldv6
-8p7jAKC1wg9cT7GCMWzsEHEwhuwzFSfYkwCfdjnujTG6NWr2akCF44/qcO/dweI=
-=pWcx
------END PGP SIGNATURE-----
-
---IWHESQAOlY1kgx+/--
