@@ -1,85 +1,79 @@
-Received: from nautica.notk.org (nautica.notk.org [91.121.71.147])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC5A8F6D
-	for <patches@lists.linux.dev>; Fri, 12 Apr 2024 04:50:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.121.71.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E28A46426
+	for <patches@lists.linux.dev>; Fri, 12 Apr 2024 06:38:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712897419; cv=none; b=nTJmTFtAxsCmOspEIw7/X6uIdrOJ9+KGOBGxEcgSAaXaf9P1CbscYKjowuaC1vrdp5R4DaiK87JGs8Utaf2WImON+WxkfxOXYjK0ex0PBnxUM/6YRisM/PZ5bfl60Atge+pl8bQBvKegXigw8cp+usKhk0ErFDqZA0CBZeEcspM=
+	t=1712903902; cv=none; b=UNOoj/ILYrszemB+iL4zto+Z7UzpaEMgsEZuAjiIdIvtWdWaA2f4wwOql+k0Rl8PskUUsynT1VrkyqGs4rDfFONSUYfQZ61eRmvBjtuobvTAeVXnpZGMKtBvo09ABrqMPorjtRqvS9mVfN2JsjtFUX6NDAs9qHv2FXsVjwy2ND4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712897419; c=relaxed/simple;
-	bh=4+42ynGEyHlCRHCEji9sviaHUyVVm5QGhCORJy3G0Ig=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MA87u0DcLmHRRhi6aTr4i96zPEdxkOqw/DUiv9xdxtJJpLlyM3KxfT2pev5UYSXVAMKF6a6A++R+M6lWm8zWjDh8F8wiOqg+ja4M/svxFDefX+D7eMIm9JBmfShtnB/Cps7n7QmfZPr/P007u3PT+B4ohMtqmCVeFhWBQS6wRZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=NzINVwSi; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=eWOJzqDe; arc=none smtp.client-ip=91.121.71.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="NzINVwSi";
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="eWOJzqDe"
-Received: by nautica.notk.org (Postfix, from userid 108)
-	id 565E7C01F; Fri, 12 Apr 2024 06:50:08 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
-	t=1712897408; bh=7WSthEQYlk7/SIGKZLPpcaTfbc1Ib5Ox8uDcREcjIvE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NzINVwSiTpry9k+ceLei9+eUtRNrT6PxYBoRJKbGv8sADltvPBzDQ1Crw/ljWwsgC
-	 defCI62/tYCd6rkhC4WVRdFB+Xm/xuGjkp6wasfVB9bss1QeOGASJe5+VVEadmvnMK
-	 nO0ZaQPodfUtsO3ZmtkMBeFyPG9mNPaRWT4pdLO8icpTS4agzAMLYaPaf4vaM2RqSU
-	 bScm6LPdtegvqetIPtxcOT481OaKp1FCIX1v7q+r0sqMJTuZh4Gd+lbxM5Heg5gap1
-	 4UBnSCDvp4jhkYUEJpHuwe7uy74j2vqdhxrjzH9QkW4VBzY+DlWaO8Mlni5QDTe3Io
-	 /MN888BsLgBXA==
-X-Spam-Level: 
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by nautica.notk.org (Postfix) with ESMTPS id 14E9FC009;
-	Fri, 12 Apr 2024 06:50:01 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
-	t=1712897407; bh=7WSthEQYlk7/SIGKZLPpcaTfbc1Ib5Ox8uDcREcjIvE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eWOJzqDexXHU4aJRlEzo734+unPKXb6PTP+216dp7SsTk8xyUCMECwIq+ePjvdK5I
-	 88KvyI7j2yxXmuoOxZLT4ozTnU5ewPQ4JsBggf/Sv5hBVdb1J6NdqEzCz4qGYBXnTK
-	 53gDcthgv/liMeSNc7Hb99Sqe+stv63ZmJHvxHGjT1934gU5Eho0gOUtw9P35AfEe5
-	 5gJmQIEWb+4WrOWDttq2Qt/+ux4qsB1Z6cOjOQ7qOVOL+mik23UVg0Xm/uhz2lZI3H
-	 BVtRLvTe+q+D7xNoTIJNwiN0NWCrf6QZK3ysYuRAKPMh/BakccpOOOlkdVKCKi3NxD
-	 BrDSOez73hK0w==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id f355fdc5;
-	Fri, 12 Apr 2024 04:49:57 +0000 (UTC)
-Date: Fri, 12 Apr 2024 13:49:42 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 5.10 000/294] 5.10.215-rc1 review
-Message-ID: <Zhi9Zs8oWVfNckdJ@codewreck.org>
-References: <20240411095435.633465671@linuxfoundation.org>
+	s=arc-20240116; t=1712903902; c=relaxed/simple;
+	bh=THaiSgx9X2E07f+oUE4UWK6fy9jxhKoJJ9tdTAl+xBs=;
+	h=From:In-Reply-To:Content-Type:References:Date:Cc:To:MIME-Version:
+	 Message-ID:Subject; b=XE3YxWY/kUreJnRWOn0ZM2MV0bQFLeHX1318TJR9A7LQUMgjD/iipIhDtSWTHFAd7BoB5LwDmwvdeSwYEweJmtfN+m0NirMwr/3NyufYmOWfUEz40vwMOJb21Jq9OmaDNzAxUZ8pdRotIOk+RfTyH1wChHOfxjfxxGXA8m42FKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+Received: from harlem.collaboradmins.com (harlem.collaboradmins.com [IPv6:2a01:4f8:1c0c:5936::1])
+	by madrid.collaboradmins.com (Postfix) with ESMTP id 1C6F93780C22;
+	Fri, 12 Apr 2024 06:38:17 +0000 (UTC)
+From: "Shreeya Patel" <shreeya.patel@collabora.com>
+In-Reply-To: <20240411095412.671665933@linuxfoundation.org>
+Content-Type: text/plain; charset="utf-8"
+X-Forward: 127.0.0.1
+References: <20240411095412.671665933@linuxfoundation.org>
+Date: Fri, 12 Apr 2024 07:38:16 +0100
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org, "Gustavo Padovan" <gustavo.padovan@collabora.com>, "kernelci-regressions mailing list" <kernelci-regressions@lists.collabora.co.uk>
+To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
+Message-ID: <3c0c9c-6618d700-5c7-194ac52@77440332>
+Subject: =?utf-8?q?Re=3A?= [PATCH =?utf-8?q?6=2E1?= 00/83] 
+ =?utf-8?q?6=2E1=2E86-rc1?= review
+User-Agent: SOGoMail 5.10.0
+Content-Transfer-Encoding: quoted-printable
 
-Greg Kroah-Hartman wrote on Thu, Apr 11, 2024 at 11:52:43AM +0200:
+On Thursday, April 11, 2024 15:26 IST, Greg Kroah-Hartman <gregkh@linux=
+foundation.org> wrote:
+
+> This is the start of the stable review cycle for the 6.1.86 release.
+> There are 83 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, plea=
+se
+> let me know.
+>=20
+> Responses should be made by Sat, 13 Apr 2024 09:53:55 +0000.
+> Anything received after that time might be too late.
+>=20
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.215-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1=
+.86-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc=
+.git linux-6.1.y
 > and the diffstat can be found below.
+>=20
 
-Tested 244ca117cb3c ("Linux 5.10.215-rc1") on:
-- arm i.MX6ULL (Armadillo 640)
-- arm64 i.MX8MP (Armadillo G4)
+KernelCI report for stable-rc/linux-6.1.y for this week :-
 
-No obvious regression in dmesg or basic tests:
-Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+## stable-rc HEAD for linux-6.1.y:
+Date: 2024-04-10
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.=
+git/log/?h=3Dbf1e3b1cb1e002ed1590c91f1a24433b59322368
 
--- 
-Dominique Martinet | Asmadeus
+## Build failures:
+No build failures seen for the stable-rc/linux-6.1.y commit head \o/
+
+## Boot failures:
+No **new** boot failures seen for the stable-rc/linux-6.1.y commit head=
+ \o/
+
+Tested-by: kernelci.org bot <bot@kernelci.org>
+
+Thanks,
+Shreeya Patel
+
