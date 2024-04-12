@@ -1,29 +1,29 @@
 Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D158C1C6B6
-	for <patches@lists.linux.dev>; Fri, 12 Apr 2024 06:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41186335D3
+	for <patches@lists.linux.dev>; Fri, 12 Apr 2024 06:48:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712904394; cv=none; b=nEpiUMrEd+RBK5k2dNePrVpwQYIiIgaDeHuCL8A1kN98PlHlqLIQg/h+X01vKPHbKk6FNwlwehvkSI/mibhaf6hBY0T4RzY5UJKpUz5HDJJ/ne5sRprz5w4if7zJ2EYaQVWZPRiphy4DrAURih72zFoL1yPWc+9QdX9rkKoX/xQ=
+	t=1712904519; cv=none; b=DxUjkw1wLiMBeIbWnLGapbEUaSZ7s9cNjFLnVP+khZIdeAskhRVVhgHVxqjGlrL2gUOEG7NBTc0nOpz1CegtfXIjgag5q+VGSFPQkrURQESpaAbaPIK9t765z9EEWYwjVGXzUcab9e3ybwQA5wuJ43XSFc6ErU1/p6JUPCl/e6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712904394; c=relaxed/simple;
-	bh=Oy+Hel7q1Y3lqePMTMMYyggkM6XZ16QFNOxSp8Nh4PI=;
+	s=arc-20240116; t=1712904519; c=relaxed/simple;
+	bh=bzvDIuXREV5VP1shXA/d62yknJH6KTAW+aIlCo3J0cw=;
 	h=From:In-Reply-To:Content-Type:References:Date:Cc:To:MIME-Version:
-	 Message-ID:Subject; b=MHGhET9DI6vJAH5qeMowKrtT3WF6WPbkmkYxa/sl/jyZaq8cn5akOZZX0yWn9G9JZ8+rvmh4cfK5zRxCfYlO4Y0lNtIIt/e7vApfDTsulYS/5aadFh04X6ilnU8PWpEzwZxadp7HcKD16Rb6zyxQ4IAX/kUORgF4mJfNf0cOpmg=
+	 Message-ID:Subject; b=JZiVxuEAG2AmJdhPjnz7+6PMK0zYBDPu4R6hZA/jsiBwWQ5O12M3OncxaLa3gHIKpgchM51aktvHisigu8Gpn4l663xVsef3N0fzd8AgLQG/526WbRYSiiv5n7Zys7WVGGoYk2V8pDVNcRYTyUaNrs7oWnx3Um4Hy/oycLvIwxE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; arc=none smtp.client-ip=46.235.227.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Received: from harlem.collaboradmins.com (harlem.collaboradmins.com [IPv6:2a01:4f8:1c0c:5936::1])
-	by madrid.collaboradmins.com (Postfix) with ESMTP id 9EDC53780C22;
-	Fri, 12 Apr 2024 06:46:29 +0000 (UTC)
+	by madrid.collaboradmins.com (Postfix) with ESMTP id F3E943780C22;
+	Fri, 12 Apr 2024 06:48:33 +0000 (UTC)
 From: "Shreeya Patel" <shreeya.patel@collabora.com>
 In-Reply-To: <20240411095416.853744210@linuxfoundation.org>
 Content-Type: text/plain; charset="utf-8"
 X-Forward: 127.0.0.1
 References: <20240411095416.853744210@linuxfoundation.org>
-Date: Fri, 12 Apr 2024 07:46:29 +0100
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+Date: Fri, 12 Apr 2024 07:48:33 +0100
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org, "Gustavo Padovan" <gustavo.padovan@collabora.com>, "kernelci-regressions mailing list" <kernelci-regressions@lists.collabora.co.uk>
 To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -31,7 +31,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <3c0c9c-6618d900-5d3-194ac52@77440530>
+Message-ID: <3c0c9c-6618d980-5d7-194ac52@77441883>
 Subject: =?utf-8?q?Re=3A?= [PATCH =?utf-8?q?6=2E6?= 000/114] 
  =?utf-8?q?6=2E6=2E27-rc1?= review
 User-Agent: SOGoMail 5.10.0
@@ -62,6 +62,7 @@ se
 KernelCI report for stable-rc/linux-6.6.y for this week :-
 
 ## stable-rc HEAD for linux-6.6.y:
+
 Date: 2024-04-11
 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.=
 git/log/?h=3D3126167a036c76b2c9a53d19f7387cdcaf2ffd19
