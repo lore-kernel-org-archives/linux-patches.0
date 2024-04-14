@@ -1,43 +1,64 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E847C1CFBD;
-	Sun, 14 Apr 2024 06:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B9B1799D;
+	Sun, 14 Apr 2024 06:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713074989; cv=none; b=XCp7WgG6HYjBjSQ25vvBhe6PbYI9mm8UORC1ajSr8lpNOLmrg7MS4y1ujtLv4lKOLDVSnYuGZu8H7gDIFVaaRVt3EfqkQrlXEajjEA1SoGaGIgU+j7TS8SxedvWfVnqxahIn3cPZ97z/OgVNhS3LI+WFsN0M1uechPbOw7pZArY=
+	t=1713075221; cv=none; b=m9Rh/cwOh4Dg+LRMDPf92tknExMww6RMu12gsU31dHeo2wBgGjC6PDXiGV1bwmoza3NlPCaAk/9BsUJv7ycMMHHs9NwQ+zZq96FRnCk7EQFC8arlir7R8qCGcyUoasFDFKHK283gsoN7LCqC0++CfFeRU8ClmERwuo7UXza/9KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713074989; c=relaxed/simple;
-	bh=9v+DDn2iRs6/wDy9tYErOIrVROmK2B00lt9ReBYY7sA=;
+	s=arc-20240116; t=1713075221; c=relaxed/simple;
+	bh=a/UKSDLT2RB4LLEbvIebaNm82geJbaWNHm2MRarQ+Cg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kocWrVO4PEN7B09q5cvZ+6xn4yDJed0hGbqVR7KSfaGeyEGsBCCCA34u1rVrptNCZ/zKQ8j6QUfS53Tvs1a+Ln/WWnNfGwoUPH6vlekdN5N0I4yuwf2wwc6Jy7UaIURfbAz6lkbDLxruxDIfQPIA5WFgSDVD01X4LsQ2g/BZZT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTpt42aa; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=IDIJ9nlK3dH0N1VuQPYbWA/nqWXvNLDq/0SK2K3+p4ucMk1scgrO06Y8Fhq2ztjFP0uHRVsximpcw8sH24lU9tTPpEGm9bu0SFxl4e8SaN/7W/RQyl/blzMVFvDPEOQjMxXqx9sCBSI1ZLpgVD8w9xjf82NL6P50DDZSwich2SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCsIvchc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTpt42aa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4EACC072AA;
-	Sun, 14 Apr 2024 06:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCsIvchc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366CCC072AA;
+	Sun, 14 Apr 2024 06:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713074988;
-	bh=9v+DDn2iRs6/wDy9tYErOIrVROmK2B00lt9ReBYY7sA=;
+	s=korg; t=1713075220;
+	bh=a/UKSDLT2RB4LLEbvIebaNm82geJbaWNHm2MRarQ+Cg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HTpt42aaB/isRKM7YijErp1luP3chWgVTtTwVanm6Fx0Tss4POjBzrnjnxx1ILnUb
-	 NnY6/6qeug7qTxoMGX7ZylsG0sPotBQp4lfuNweHnlr3HJA9t1ErKWUp2aDByxH7G2
-	 NOf0rA7W2lNVnNBax4VRKLbnD9pE4w49Vl+gG48c=
-Date: Sun, 14 Apr 2024 08:09:39 +0200
+	b=CCsIvchccziDtRuYg+jt7ur0f12+B8TRORh546ABw8naHDV7Wj2hT4e0/w29T+WO+
+	 GYYOM0WN6jfCNES09XbvxtFum081za5gfLFVphj4pEJ7dN3JHcX5A5md4L/YunAMZ0
+	 GB+w39gjhTPRliv+ZNC1RoggBAt4m5tx7WQV0fCU=
+Date: Sun, 14 Apr 2024 08:13:32 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, broonie@kernel.org, aleksandermj@google.com,
-	ejcaruso@google.com, oneukum@suse.com
-Subject: Re: [PATCH 5.10 000/294] 5.10.215-rc1 review
-Message-ID: <2024041411-stencil-unscathed-bc65@gregkh>
-References: <20240411095435.633465671@linuxfoundation.org>
- <9ac4f94c-414e-4c12-bfe0-36aff3e318bc@roeck-us.net>
+To: Chuck Lever <chuck.lever@oracle.com>
+Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	linux-stable <stable@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	"shuah@kernel.org" <shuah@kernel.org>,
+	"patches@kernelci.org" <patches@kernelci.org>,
+	"lkft-triage@lists.linaro.org" <lkft-triage@lists.linaro.org>,
+	"pavel@denx.de" <pavel@denx.de>,
+	"jonathanh@nvidia.com" <jonathanh@nvidia.com>,
+	"f.fainelli@gmail.com" <f.fainelli@gmail.com>,
+	"sudipm.mukherjee@gmail.com" <sudipm.mukherjee@gmail.com>,
+	"srw@sladewatkins.net" <srw@sladewatkins.net>,
+	"rwarsow@gmx.de" <rwarsow@gmx.de>,
+	"conor@kernel.org" <conor@kernel.org>,
+	"allen.lkml@gmail.com" <allen.lkml@gmail.com>,
+	"broonie@kernel.org" <broonie@kernel.org>,
+	Calum Mackay <calum.mackay@oracle.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Darren Kenny <darren.kenny@oracle.com>,
+	Ramanan Govindarajan <ramanan.govindarajan@oracle.com>,
+	Linux NFS Mailing List <linux-nfs@vger.kernel.org>
+Subject: Re: [PATCH 5.15 00/57] 5.15.155-rc1 review
+Message-ID: <2024041402-impeach-charting-60f5@gregkh>
+References: <20240411095407.982258070@linuxfoundation.org>
+ <2c2362c7-ace7-4a79-861e-fa435e46ac85@oracle.com>
+ <27E1E4C4-86C3-4D78-AF85-50C1612675E0@oracle.com>
+ <21c9bcf9-2d44-4ab2-b05c-a1712ac1a434@oracle.com>
+ <ZhmYS9ntNbDZvkKE@tissot.1015granger.net>
+ <11019956-95c4-4c35-b690-b8515b439eb2@oracle.com>
+ <ZhqrH0II0ZJj0dzW@tissot.1015granger.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,50 +67,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9ac4f94c-414e-4c12-bfe0-36aff3e318bc@roeck-us.net>
+In-Reply-To: <ZhqrH0II0ZJj0dzW@tissot.1015granger.net>
 
-On Sat, Apr 13, 2024 at 07:11:57AM -0700, Guenter Roeck wrote:
-> Hi,
+On Sat, Apr 13, 2024 at 11:56:15AM -0400, Chuck Lever wrote:
+> On Sat, Apr 13, 2024 at 03:04:19AM +0530, Harshit Mogalapalli wrote:
+> > Hi Chuck and Greg,
+> > 
+> > On 13/04/24 01:53, Chuck Lever wrote:
+> > > On Sat, Apr 13, 2024 at 01:41:52AM +0530, Harshit Mogalapalli wrote:
+> > > > # first bad commit: [2267b2e84593bd3d61a1188e68fba06307fa9dab] lockd:
+> > > > introduce safe async lock op
+> > > > 
+> > > > 
+> > > > Hope the above might help.
+> > > 
+> > > Nice work. Thanks!
+> > > 
+> > > 
+> > > > I didnot test the revert of culprit commit on top of 5.15.154 yet.
+> > > 
+> > > Please try reverting that one -- it's very close to the top so one
+> > > or two others might need to be pulled off as well.
+> > > 
+> > 
+> > I have reverted the bad commit: 2267b2e84593 ("lockd: introduce safe async
+> > lock op") and the test passes.
+> > 
+> > Note: Its reverts cleanly on 5.15.154
 > 
-> On Thu, Apr 11, 2024 at 11:52:43AM +0200, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.10.215 release.
-> > There are 294 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Sat, 13 Apr 2024 09:53:55 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.215-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> > 
-> > -------------
-> [ ... ]
-> > 
-> > Oliver Neukum <oneukum@suse.com>
-> >     usb: cdc-wdm: close race between read and workqueue
-> > 
-> 
-> Just in case it has not been reported yet:
-> 
-> This patch is causing connection failures (timeouts) on all
-> Chromebooks using the cdc-wdm driver for cellular modems, with
-> all kernel branches where this patch has been applied.
-> Reverting it fixes the problem.
-> 
-> I am copying some of the Google employees involved in identifying
-> the regression in case additional feedback is needed.
+> Harshit also informs me that "lockd: introduce safe async lock op"
+> is not applied to v6.1, so it's not likely necessary to include here
+> and can be safely reverted from v5.15.y.
 
-Can you all respond to Oliver on the linux-usb list where this was
-originally submitted to work it out?  This commit has been in the tree
-for almost a month now with no reported problems that I can see.
+Chuck, can you send a series of reverts for what needs to be done here
+as these were your original backports?
 
 thanks,
 
