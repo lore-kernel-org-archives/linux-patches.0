@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAEB7C090;
-	Mon, 15 Apr 2024 14:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BF576F17;
+	Mon, 15 Apr 2024 14:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191395; cv=none; b=Izq+U2Y+YaSaSCLvW68mV9j8kFkz12pTcFR/j7fPwG2Deov8qEOqWlk4Y4RWiWRSHOHnFlMOpjbAFtIWCMaDS/b39tTFPDc4e5cHauVQFGdi1m0LaiBZ5o4qqnqLEXXQjW1UFjOwqpLpx3FizDP2HY0S4atqtMC5cOfoYPnkRQ0=
+	t=1713191398; cv=none; b=tUOPx57CGUjBzB6RDC0b9+xM+6Ez0GC3PBKcHRecd+szD05ZwsKCANKp6Rni1MLPcsee9ypGxbRkVLztL+HP1zDOLL0HeLwqDVwb3w2me5zsBsWktGexd/+G26Iw6f5PmZ3tcZUWMZOTrTf74vmTCcOE7qNEjOFD2UtgmT7n7wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191395; c=relaxed/simple;
-	bh=wd12WuFFLglZ3Kks3sqbtvu16UtgWk+VzHKRKKEGUeE=;
+	s=arc-20240116; t=1713191398; c=relaxed/simple;
+	bh=1clrBa0pM35up35uO1AL3aYpjXMK8AL8DABVP87BoEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=orhV96utDOp2Q0Msg50bAwVmuPvL6irz/uGmWWo/3Eug6BI8PHXODZOX7deWou7uC39AzeqB34zdK/RDDoQOecCklb3f3z5OLxWyYSbRu5DhvbyQw0Y/n3vz4eRvA5wposfgYTouItJUgf6WrBswqYz3xZN/hxN6WxBnSrLykdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iYm99qB0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mBjrQGCq3/5rl3Jq6nZaVpYA3TxDsxIzVECwcUZSHQ6UBl2vV4nEWQDoo/lhE0dHiZcUeUd6u6PhEopHFryWNEoSlXueLhut6Ac0QcKz5kjMAsWKBOSN/h4yqTY7b1/bQ0gyBVebFnIj+A7PrM7Zjc9380Ns++Tfvwqp0/u/qoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ivtzzWDp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iYm99qB0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4270EC2BD10;
-	Mon, 15 Apr 2024 14:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ivtzzWDp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1E9C113CC;
+	Mon, 15 Apr 2024 14:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191395;
-	bh=wd12WuFFLglZ3Kks3sqbtvu16UtgWk+VzHKRKKEGUeE=;
+	s=korg; t=1713191398;
+	bh=1clrBa0pM35up35uO1AL3aYpjXMK8AL8DABVP87BoEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iYm99qB0dtFUS+MJEUSqfs//NgtMby5qXkNSwGxeurWtI91Jf8HxuXQGN76gbHCiA
-	 cJoHaSF8yRrZp1kn+XrvTMm4kNCPaJATcIR4kserpetl/5oYpES7tJL2Q1RrCbwwzO
-	 4IgiZHUvXMFJXDpn0VAFTcusHiZ0E9+8MF/JT8lg=
+	b=ivtzzWDptJv1q9CUI7w6v7MzBcFEFxeF0K63QLmkoldkXg2HxJ2cgpWx7ITDHnKvL
+	 ++2nhn9PVA8Wg6LfUGR4dJe/iyebC/xMVpojF1x4WOYDH9DfFq2MJVSQ6fRvtbLjdB
+	 XOj2CzhpNMy15l5Y9/Hzz1Uyp/OUSRk7HTaMVzLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Price <steven.price@arm.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH 6.8 127/172] drm/panfrost: Fix the error path in panfrost_mmu_map_fault_addr()
-Date: Mon, 15 Apr 2024 16:20:26 +0200
-Message-ID: <20240415142004.243244225@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 6.8 128/172] drm/client: Fully protect modes[] with dev->mode_config.mutex
+Date: Mon, 15 Apr 2024 16:20:27 +0200
+Message-ID: <20240415142004.272102048@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -46,76 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 1fc9af813b25e146d3607669247d0f970f5a87c3 upstream.
+commit 3eadd887dbac1df8f25f701e5d404d1b90fd0fea upstream.
 
-Subject: [PATCH 6.8 127/172] drm/panfrost: Fix the error path in panfrost_mmu_map_fault_addr()
+The modes[] array contains pointers to modes on the connectors'
+mode lists, which are protected by dev->mode_config.mutex.
+Thus we need to extend modes[] the same protection or by the
+time we use it the elements may already be pointing to
+freed/reused memory.
 
-If some the pages or sgt allocation failed, we shouldn't release the
-pages ref we got earlier, otherwise we will end up with unbalanced
-get/put_pages() calls. We should instead leave everything in place
-and let the BO release function deal with extra cleanup when the object
-is destroyed, or let the fault handler try again next time it's called.
-
-Fixes: 187d2929206e ("drm/panfrost: Add support for GPU heap allocations")
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Co-developed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240105184624.508603-18-dmitry.osipenko@collabora.com
+Cc: stable@vger.kernel.org
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10583
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240404203336.10454-2-ville.syrjala@linux.intel.com
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_mmu.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/drm_client_modeset.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-@@ -502,11 +502,18 @@ static int panfrost_mmu_map_fault_addr(s
- 	mapping_set_unevictable(mapping);
+--- a/drivers/gpu/drm/drm_client_modeset.c
++++ b/drivers/gpu/drm/drm_client_modeset.c
+@@ -777,6 +777,7 @@ int drm_client_modeset_probe(struct drm_
+ 	unsigned int total_modes_count = 0;
+ 	struct drm_client_offset *offsets;
+ 	unsigned int connector_count = 0;
++	/* points to modes protected by mode_config.mutex */
+ 	struct drm_display_mode **modes;
+ 	struct drm_crtc **crtcs;
+ 	int i, ret = 0;
+@@ -845,7 +846,6 @@ int drm_client_modeset_probe(struct drm_
+ 		drm_client_pick_crtcs(client, connectors, connector_count,
+ 				      crtcs, modes, 0, width, height);
+ 	}
+-	mutex_unlock(&dev->mode_config.mutex);
  
- 	for (i = page_offset; i < page_offset + NUM_FAULT_PAGES; i++) {
-+		/* Can happen if the last fault only partially filled this
-+		 * section of the pages array before failing. In that case
-+		 * we skip already filled pages.
-+		 */
-+		if (pages[i])
-+			continue;
-+
- 		pages[i] = shmem_read_mapping_page(mapping, i);
- 		if (IS_ERR(pages[i])) {
- 			ret = PTR_ERR(pages[i]);
- 			pages[i] = NULL;
--			goto err_pages;
-+			goto err_unlock;
+ 	drm_client_modeset_release(client);
+ 
+@@ -875,6 +875,7 @@ int drm_client_modeset_probe(struct drm_
+ 			modeset->y = offset->y;
  		}
  	}
++	mutex_unlock(&dev->mode_config.mutex);
  
-@@ -514,7 +521,7 @@ static int panfrost_mmu_map_fault_addr(s
- 	ret = sg_alloc_table_from_pages(sgt, pages + page_offset,
- 					NUM_FAULT_PAGES, 0, SZ_2M, GFP_KERNEL);
- 	if (ret)
--		goto err_pages;
-+		goto err_unlock;
- 
- 	ret = dma_map_sgtable(pfdev->dev, sgt, DMA_BIDIRECTIONAL, 0);
- 	if (ret)
-@@ -537,8 +544,6 @@ out:
- 
- err_map:
- 	sg_free_table(sgt);
--err_pages:
--	drm_gem_shmem_put_pages(&bo->base);
- err_unlock:
- 	dma_resv_unlock(obj->resv);
- err_bo:
+ 	mutex_unlock(&client->modeset_mutex);
+ out:
 
 
