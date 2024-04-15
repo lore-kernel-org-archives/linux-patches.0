@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288751E501;
-	Mon, 15 Apr 2024 14:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C13B1D52B;
+	Mon, 15 Apr 2024 14:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192269; cv=none; b=atT4Bd5kqYC4ndjhB4PGwxzptGaOxi8feXOad2yyLRnzAo6nCSCMtU+vUkTzePuxNOKR2AsJ4fjtEP4zIqLP4SyIdjZhief8B6EJ6cFfGTPipEkamPQbQGNrjbRRVtHFHJZeMHSHXTtGAVwZK3KKyoCSSmotW1zfW/BSRCOoWOY=
+	t=1713192272; cv=none; b=QFwSHYHw/cbiQexVAJkoMWQKJ5DE6dkZ+NRajwdIDPPQotVGuCxUEwEfQdt3NPZZiR45StxmnuTGbYTd+wFLpmaEKS0g3SYvnRxMXUtkdNsGY22GUjCd14jgsVKCD087aGLgvGZDKL5Za+FZGjK1WFo0t3AfOvtAVeeAq2mRT+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192269; c=relaxed/simple;
-	bh=cMb9DXhV50etmzlVCUmijpJ+PHhEocX40ixTfp+0gG0=;
+	s=arc-20240116; t=1713192272; c=relaxed/simple;
+	bh=CNbuw7OT1TH2i21cq6nPeoGx6i5lbK6dY5v+cgRdZNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I/D9iL1pJ1iSMGb5TtEb/dsycvsE64ojOnwhN9WJfSO2k2qM+4ckDjyUhzwHcHCdhZZ6d14BZL4885WVDH7h0Kzv3EgRXDqrblsW25EzYKLw8I3p84UOlVcbzwE0xYodk3IL1H6FQF8ialSFAm8My0C52XpaEaQcuHanza2IdMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtFwXKKt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kBgdiFY0hepBB2Dt3J1DL2EzDzKdcPePrE44fJAq9FQY09L+rc86HCQYUsee8XDF9qhEAJKnlXC6RpL3Pxu+LkqNsAK0Fm5pAwvV7Secdc8kXFeCrXvIOQIGagvXLeleYsNeGOUzI4+xs44goD1EODKa1DFZexrsawo1LZoyZbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FAiYB9tK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtFwXKKt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7864DC113CC;
-	Mon, 15 Apr 2024 14:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAiYB9tK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A67FC2BD10;
+	Mon, 15 Apr 2024 14:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192269;
-	bh=cMb9DXhV50etmzlVCUmijpJ+PHhEocX40ixTfp+0gG0=;
+	s=korg; t=1713192272;
+	bh=CNbuw7OT1TH2i21cq6nPeoGx6i5lbK6dY5v+cgRdZNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UtFwXKKtIoT5B3bgD8JjiFZxXMlXR9hr9ECGSlAmMtPEA67NROVNn9BArull8mj3D
-	 GioQVurLsQhbjrc1GLpWYCgqCro/BDtbKEQXFYSTXg0d63jBJ6WlafojHWGFMEGNYj
-	 Mm9j4g8LoR61I7vK3X/PPEOTc8+SW7ROUAZlc7wA=
+	b=FAiYB9tKjQj4lKHzZDI0eqDEZST/adXSRz8hf0Qn2iFAc0Ds0Z6BNVQIOpxM6TGAu
+	 QzBD1xoJ8p3WpBw76AbNV8ELAV7vh2sMZ5pycJnw3zdk5N6KONHBzsvwi5NeO5nZ4T
+	 qhKBWBc8Hq4HLYOe/o3DzrdTUOaKCTU6u1ZjIr2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Timo Lindfors <timo.lindfors@iki.fi>,
+	Alex Constantino <dreaming.about.electric.sheep@gmail.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 15/45] ipv6: fib: hide unused pn variable
-Date: Mon, 15 Apr 2024 16:21:22 +0200
-Message-ID: <20240415141942.699346833@linuxfoundation.org>
+Subject: [PATCH 5.15 06/45] Revert "drm/qxl: simplify qxl_fence_wait"
+Date: Mon, 15 Apr 2024 16:21:13 +0200
+Message-ID: <20240415141942.432718374@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141942.235939111@linuxfoundation.org>
 References: <20240415141942.235939111@linuxfoundation.org>
@@ -53,58 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Alex Constantino <dreaming.about.electric.sheep@gmail.com>
 
-[ Upstream commit 74043489fcb5e5ca4074133582b5b8011b67f9e7 ]
+[ Upstream commit 07ed11afb68d94eadd4ffc082b97c2331307c5ea ]
 
-When CONFIG_IPV6_SUBTREES is disabled, the only user is hidden, causing
-a 'make W=1' warning:
+This reverts commit 5a838e5d5825c85556011478abde708251cc0776.
 
-net/ipv6/ip6_fib.c: In function 'fib6_add':
-net/ipv6/ip6_fib.c:1388:32: error: variable 'pn' set but not used [-Werror=unused-but-set-variable]
+Changes from commit 5a838e5d5825 ("drm/qxl: simplify qxl_fence_wait") would
+result in a '[TTM] Buffer eviction failed' exception whenever it reached a
+timeout.
+Due to a dependency to DMA_FENCE_WARN this also restores some code deleted
+by commit d72277b6c37d ("dma-buf: nuke DMA_FENCE_TRACE macros v2").
 
-Add another #ifdef around the variable declaration, matching the other
-uses in this file.
-
-Fixes: 66729e18df08 ("[IPV6] ROUTE: Make sure we have fn->leaf when adding a node on subtree.")
-Link: https://lore.kernel.org/netdev/20240322131746.904943-1-arnd@kernel.org/
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240408074219.3030256-1-arnd@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 5a838e5d5825 ("drm/qxl: simplify qxl_fence_wait")
+Link: https://lore.kernel.org/regressions/ZTgydqRlK6WX_b29@eldamar.lan/
+Reported-by: Timo Lindfors <timo.lindfors@iki.fi>
+Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1054514
+Signed-off-by: Alex Constantino <dreaming.about.electric.sheep@gmail.com>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240404181448.1643-2-dreaming.about.electric.sheep@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_fib.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/qxl/qxl_release.c | 50 +++++++++++++++++++++++++++----
+ include/linux/dma-fence.h         |  7 +++++
+ 2 files changed, 52 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index bbb9ed6d1ae6f..c0ff5ee490e7b 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -1375,7 +1375,10 @@ int fib6_add(struct fib6_node *root, struct fib6_info *rt,
- 	     struct nl_info *info, struct netlink_ext_ack *extack)
+diff --git a/drivers/gpu/drm/qxl/qxl_release.c b/drivers/gpu/drm/qxl/qxl_release.c
+index b19f2f00b2158..d4f26075383da 100644
+--- a/drivers/gpu/drm/qxl/qxl_release.c
++++ b/drivers/gpu/drm/qxl/qxl_release.c
+@@ -58,16 +58,56 @@ static long qxl_fence_wait(struct dma_fence *fence, bool intr,
+ 			   signed long timeout)
  {
- 	struct fib6_table *table = rt->fib6_table;
--	struct fib6_node *fn, *pn = NULL;
-+	struct fib6_node *fn;
-+#ifdef CONFIG_IPV6_SUBTREES
-+	struct fib6_node *pn = NULL;
-+#endif
- 	int err = -ENOMEM;
- 	int allow_create = 1;
- 	int replace_required = 0;
-@@ -1399,9 +1402,9 @@ int fib6_add(struct fib6_node *root, struct fib6_info *rt,
- 		goto out;
- 	}
+ 	struct qxl_device *qdev;
++	struct qxl_release *release;
++	int count = 0, sc = 0;
++	bool have_drawable_releases;
+ 	unsigned long cur, end = jiffies + timeout;
  
-+#ifdef CONFIG_IPV6_SUBTREES
- 	pn = fn;
+ 	qdev = container_of(fence->lock, struct qxl_device, release_lock);
++	release = container_of(fence, struct qxl_release, base);
++	have_drawable_releases = release->type == QXL_RELEASE_DRAWABLE;
  
--#ifdef CONFIG_IPV6_SUBTREES
- 	if (rt->fib6_src.plen) {
- 		struct fib6_node *sn;
+-	if (!wait_event_timeout(qdev->release_event,
+-				(dma_fence_is_signaled(fence) ||
+-				 (qxl_io_notify_oom(qdev), 0)),
+-				timeout))
+-		return 0;
++retry:
++	sc++;
++
++	if (dma_fence_is_signaled(fence))
++		goto signaled;
++
++	qxl_io_notify_oom(qdev);
++
++	for (count = 0; count < 11; count++) {
++		if (!qxl_queue_garbage_collect(qdev, true))
++			break;
++
++		if (dma_fence_is_signaled(fence))
++			goto signaled;
++	}
++
++	if (dma_fence_is_signaled(fence))
++		goto signaled;
++
++	if (have_drawable_releases || sc < 4) {
++		if (sc > 2)
++			/* back off */
++			usleep_range(500, 1000);
++
++		if (time_after(jiffies, end))
++			return 0;
++
++		if (have_drawable_releases && sc > 300) {
++			DMA_FENCE_WARN(fence,
++				       "failed to wait on release %llu after spincount %d\n",
++				       fence->context & ~0xf0000000, sc);
++			goto signaled;
++		}
++		goto retry;
++	}
++	/*
++	 * yeah, original sync_obj_wait gave up after 3 spins when
++	 * have_drawable_releases is not set.
++	 */
  
++signaled:
+ 	cur = jiffies;
+ 	if (time_after(cur, end))
+ 		return 0;
+diff --git a/include/linux/dma-fence.h b/include/linux/dma-fence.h
+index 9d276655cc25a..6659d0369ec5c 100644
+--- a/include/linux/dma-fence.h
++++ b/include/linux/dma-fence.h
+@@ -631,4 +631,11 @@ u64 dma_fence_context_alloc(unsigned num);
+ 			##args);					\
+ 	} while (0)
+ 
++#define DMA_FENCE_WARN(f, fmt, args...) \
++	do {								\
++		struct dma_fence *__ff = (f);				\
++		pr_warn("f %llu#%llu: " fmt, __ff->context, __ff->seqno,\
++			 ##args);					\
++	} while (0)
++
+ #endif /* __LINUX_DMA_FENCE_H */
 -- 
 2.43.0
 
