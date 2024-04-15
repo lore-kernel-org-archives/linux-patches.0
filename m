@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C633274C0C;
-	Mon, 15 Apr 2024 14:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0532875810;
+	Mon, 15 Apr 2024 14:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191175; cv=none; b=iWZ7QsRoViHRhgSxIUWRGW4g71Us/43KEWHlixhT/2Hi9ejEEZc6Tw3Ce/XjzFeJOxuj7oz3pIovabB8F8kD2LmCAEWCRkbRs9UtMEDUB34ixLBdgUYyyB7/M9pNqe/p/sdkVHWeL3ZBOVifptfw+IEM5s8u/E5Bo1nPFMRLlyQ=
+	t=1713191179; cv=none; b=hYkpbRePFI3RA1kuDsiW7UcXxP0OzQ38JUPog0W5T5TAofhfwidhUPZ1mdVawMv53xL//mu469qXxlgKBr1x3jYuAUS65EJ1dN4BOAMv0KCFny2Cr7GiOYb/yB7K6ZfzGgVJerYTGZ/xoRe07a1YmlmjocsXIroMfvStkUojTec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191175; c=relaxed/simple;
-	bh=H6aSlvtS5ZQiQbs+G+mQQUWnJwUjmHKIHjMX6f3zpLE=;
+	s=arc-20240116; t=1713191179; c=relaxed/simple;
+	bh=K8nwCyi3iYp8B8FyKlGh8c2lEHMqwje8d/XYxwpT/80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cbbPHuqc7kKU6XDX2eER2McndTw0smGuch2zQRipUblhqUy7eZMRlTbyj0kvxzOc2oJ5wuVhvxvNr4w5PDH+/alfeG9Uj3jPni08C/I1lJ6+RMDd0BD71KwbI3YbSr95sVjgGrWmjmZr9fcY9QExRRko8u1m+dXrJgDbo7hteOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icEuq5r7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uD27mRcBoxQI8tIt0H0QE7K+WLe0s2r0Pi6d/9ZxBZXMLmvVXw2qWP8vapsrhfNUY0UYQoWVmzFYKoRizTmZylHrZgaB3+zNqr4/uBOeTQdqYvMdgAFR0yHxwr33uI+MnbxTOKkjlN9XK5Oy6TVqlwbJ7/8UJ3krj1OOfYrT2Ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZoB+j3W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icEuq5r7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A98FC113CC;
-	Mon, 15 Apr 2024 14:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZoB+j3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB93C2BD10;
+	Mon, 15 Apr 2024 14:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191175;
-	bh=H6aSlvtS5ZQiQbs+G+mQQUWnJwUjmHKIHjMX6f3zpLE=;
+	s=korg; t=1713191178;
+	bh=K8nwCyi3iYp8B8FyKlGh8c2lEHMqwje8d/XYxwpT/80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=icEuq5r7kyc30Dz7iWDHPQaCEWkah6qxpikXK8bk6Ws+fAi61rum7edeUUUq0SxDX
-	 Box8zFPzHnMx2O+lQZujcuFJkMHTZTJuI6mDEFUwiF3TsTXGnrMqOY7nUGT5ZRK8d5
-	 OqBQac1PesjecRG/EOdOnegiCqpYn5rRRbZgo3CI=
+	b=RZoB+j3WE2FPnQFWraXq6FucL+p7S0xJPx8lbwjB7stfWgLDCuFn4bgakRRQNCDWF
+	 oD8Ihi6IkoimUcwqPuTMPoCE6hd1fwOvdS/dILl5LzkR5QgSFw6cSJl1fhtZT6/v8a
+	 0EbWmvZWRYdxW1/n8F45gusjy+smatI7Wk3o2WVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 050/172] s390/ism: fix receive message buffer allocation
-Date: Mon, 15 Apr 2024 16:19:09 +0200
-Message-ID: <20240415142001.936717153@linuxfoundation.org>
+Subject: [PATCH 6.8 059/172] cxl: Split out host bridge access coordinates
+Date: Mon, 15 Apr 2024 16:19:18 +0200
+Message-ID: <20240415142002.213143197@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -51,108 +52,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerd Bayer <gbayer@linux.ibm.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 58effa3476536215530c9ec4910ffc981613b413 ]
+[ Upstream commit 863027d40993f13155451bd898bfe4c4e9b7002f ]
 
-Since [1], dma_alloc_coherent() does not accept requests for GFP_COMP
-anymore, even on archs that may be able to fulfill this. Functionality that
-relied on the receive buffer being a compound page broke at that point:
-The SMC-D protocol, that utilizes the ism device driver, passes receive
-buffers to the splice processor in a struct splice_pipe_desc with a
-single entry list of struct pages. As the buffer is no longer a compound
-page, the splice processor now rejects requests to handle more than a
-page worth of data.
+The difference between access class 0 and access class 1 for 'struct
+access_coordinate', if any, is that class 0 is for the distance from
+the target to the closest initiator and that class 1 is for the distance
+from the target to the closest CPU. For CXL memory, the nearest initiator
+may not necessarily be a CPU node. The performance path from the CXL
+endpoint to the host bridge should remain the same. However, the numbers
+extracted and stored from HMAT is the difference for the two access
+classes. Split out the performance numbers for the host bridge (generic
+target) from the calculation of the entire path in order to allow
+calculation of both access classes for a CXL region.
 
-Replace dma_alloc_coherent() and allocate a buffer with folio_alloc and
-create a DMA map for it with dma_map_page(). Since only receive buffers
-on ISM devices use DMA, qualify the mapping as FROM_DEVICE.
-Since ISM devices are available on arch s390, only and on that arch all
-DMA is coherent, there is no need to introduce and export some kind of
-dma_sync_to_cpu() method to be called by the SMC-D protocol layer.
-
-Analogously, replace dma_free_coherent by a two step dma_unmap_page,
-then folio_put to free the receive buffer.
-
-[1] https://lore.kernel.org/all/20221113163535.884299-1-hch@lst.de/
-
-Fixes: c08004eede4b ("s390/ism: don't pass bogus GFP_ flags to dma_alloc_coherent")
-Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Tested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20240308220055.2172956-7-dave.jiang@intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Stable-dep-of: 592780b8391f ("cxl: Fix retrieving of access_coordinates in PCIe path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/ism_drv.c | 38 +++++++++++++++++++++++++++++---------
- 1 file changed, 29 insertions(+), 9 deletions(-)
+ drivers/cxl/core/cdat.c | 28 ++++++++++++++++++++++------
+ drivers/cxl/core/port.c | 35 ++++++++++++++++++++++++++++++++---
+ drivers/cxl/cxl.h       |  2 ++
+ 3 files changed, 56 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
-index 2c8e964425dc3..affb05521e146 100644
---- a/drivers/s390/net/ism_drv.c
-+++ b/drivers/s390/net/ism_drv.c
-@@ -14,6 +14,8 @@
- #include <linux/err.h>
- #include <linux/ctype.h>
- #include <linux/processor.h>
-+#include <linux/dma-mapping.h>
-+#include <linux/mm.h>
- 
- #include "ism.h"
- 
-@@ -292,13 +294,15 @@ static int ism_read_local_gid(struct ism_dev *ism)
- static void ism_free_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
+diff --git a/drivers/cxl/core/cdat.c b/drivers/cxl/core/cdat.c
+index 4739a9d776a65..fbf167f9d59d4 100644
+--- a/drivers/cxl/core/cdat.c
++++ b/drivers/cxl/core/cdat.c
+@@ -162,15 +162,22 @@ static int cxl_cdat_endpoint_process(struct cxl_port *port,
+ static int cxl_port_perf_data_calculate(struct cxl_port *port,
+ 					struct xarray *dsmas_xa)
  {
- 	clear_bit(dmb->sba_idx, ism->sba_bitmap);
--	dma_free_coherent(&ism->pdev->dev, dmb->dmb_len,
--			  dmb->cpu_addr, dmb->dma_addr);
-+	dma_unmap_page(&ism->pdev->dev, dmb->dma_addr, dmb->dmb_len,
-+		       DMA_FROM_DEVICE);
-+	folio_put(virt_to_folio(dmb->cpu_addr));
+-	struct access_coordinate c;
++	struct access_coordinate ep_c;
++	struct access_coordinate coord[ACCESS_COORDINATE_MAX];
+ 	struct dsmas_entry *dent;
+ 	int valid_entries = 0;
+ 	unsigned long index;
+ 	int rc;
+ 
+-	rc = cxl_endpoint_get_perf_coordinates(port, &c);
++	rc = cxl_endpoint_get_perf_coordinates(port, &ep_c);
+ 	if (rc) {
+-		dev_dbg(&port->dev, "Failed to retrieve perf coordinates.\n");
++		dev_dbg(&port->dev, "Failed to retrieve ep perf coordinates.\n");
++		return rc;
++	}
++
++	rc = cxl_hb_get_perf_coordinates(port, coord);
++	if (rc)  {
++		dev_dbg(&port->dev, "Failed to retrieve hb perf coordinates.\n");
+ 		return rc;
+ 	}
+ 
+@@ -185,10 +192,19 @@ static int cxl_port_perf_data_calculate(struct cxl_port *port,
+ 	xa_for_each(dsmas_xa, index, dent) {
+ 		int qos_class;
+ 
+-		cxl_coordinates_combine(&dent->coord, &dent->coord, &c);
++		cxl_coordinates_combine(&dent->coord, &dent->coord, &ep_c);
++		/*
++		 * Keeping the host bridge coordinates separate from the dsmas
++		 * coordinates in order to allow calculation of access class
++		 * 0 and 1 for region later.
++		 */
++		cxl_coordinates_combine(&coord[ACCESS_COORDINATE_LOCAL],
++					&coord[ACCESS_COORDINATE_LOCAL],
++					&dent->coord);
+ 		dent->entries = 1;
+-		rc = cxl_root->ops->qos_class(cxl_root, &dent->coord, 1,
+-					      &qos_class);
++		rc = cxl_root->ops->qos_class(cxl_root,
++					      &coord[ACCESS_COORDINATE_LOCAL],
++					      1, &qos_class);
+ 		if (rc != 1)
+ 			continue;
+ 
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index af9458b2678cf..b2a2f6c34886d 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -2096,6 +2096,38 @@ bool schedule_cxl_memdev_detach(struct cxl_memdev *cxlmd)
  }
+ EXPORT_SYMBOL_NS_GPL(schedule_cxl_memdev_detach, CXL);
  
- static int ism_alloc_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
- {
- 	unsigned long bit;
-+	int rc;
- 
- 	if (PAGE_ALIGN(dmb->dmb_len) > dma_get_max_seg_size(&ism->pdev->dev))
- 		return -EINVAL;
-@@ -315,14 +319,30 @@ static int ism_alloc_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
- 	    test_and_set_bit(dmb->sba_idx, ism->sba_bitmap))
- 		return -EINVAL;
- 
--	dmb->cpu_addr = dma_alloc_coherent(&ism->pdev->dev, dmb->dmb_len,
--					   &dmb->dma_addr,
--					   GFP_KERNEL | __GFP_NOWARN |
--					   __GFP_NOMEMALLOC | __GFP_NORETRY);
--	if (!dmb->cpu_addr)
--		clear_bit(dmb->sba_idx, ism->sba_bitmap);
-+	dmb->cpu_addr =
-+		folio_address(folio_alloc(GFP_KERNEL | __GFP_NOWARN |
-+					  __GFP_NOMEMALLOC | __GFP_NORETRY,
-+					  get_order(dmb->dmb_len)));
- 
--	return dmb->cpu_addr ? 0 : -ENOMEM;
-+	if (!dmb->cpu_addr) {
-+		rc = -ENOMEM;
-+		goto out_bit;
++/**
++ * cxl_hb_get_perf_coordinates - Retrieve performance numbers between initiator
++ *				 and host bridge
++ *
++ * @port: endpoint cxl_port
++ * @coord: output access coordinates
++ *
++ * Return: errno on failure, 0 on success.
++ */
++int cxl_hb_get_perf_coordinates(struct cxl_port *port,
++				struct access_coordinate *coord)
++{
++	struct cxl_port *iter = port;
++	struct cxl_dport *dport;
++
++	if (!is_cxl_endpoint(port))
++		return -EINVAL;
++
++	dport = iter->parent_dport;
++	while (iter && !is_cxl_root(to_cxl_port(iter->dev.parent))) {
++		iter = to_cxl_port(iter->dev.parent);
++		dport = iter->parent_dport;
 +	}
-+	dmb->dma_addr = dma_map_page(&ism->pdev->dev,
-+				     virt_to_page(dmb->cpu_addr), 0,
-+				     dmb->dmb_len, DMA_FROM_DEVICE);
-+	if (dma_mapping_error(&ism->pdev->dev, dmb->dma_addr)) {
-+		rc = -ENOMEM;
-+		goto out_free;
-+	}
++
++	coord[ACCESS_COORDINATE_LOCAL] =
++		dport->hb_coord[ACCESS_COORDINATE_LOCAL];
++	coord[ACCESS_COORDINATE_CPU] =
++		dport->hb_coord[ACCESS_COORDINATE_CPU];
 +
 +	return 0;
++}
 +
-+out_free:
-+	kfree(dmb->cpu_addr);
-+out_bit:
-+	clear_bit(dmb->sba_idx, ism->sba_bitmap);
-+	return rc;
- }
+ /**
+  * cxl_endpoint_get_perf_coordinates - Retrieve performance numbers stored in dports
+  *				   of CXL path
+@@ -2137,9 +2169,6 @@ int cxl_endpoint_get_perf_coordinates(struct cxl_port *port,
+ 		dport = iter->parent_dport;
+ 	}
  
- int ism_register_dmb(struct ism_dev *ism, struct ism_dmb *dmb,
+-	/* Augment with the generic port (host bridge) perf data */
+-	cxl_coordinates_combine(&c, &c, &dport->hb_coord[ACCESS_COORDINATE_LOCAL]);
+-
+ 	/* Get the calculated PCI paths bandwidth */
+ 	pdev = to_pci_dev(port->uport_dev->parent);
+ 	bw = pcie_bandwidth_available(pdev, NULL, NULL, NULL);
+diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+index fab2da4b1f04e..de477eb7f5d54 100644
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -879,6 +879,8 @@ void cxl_switch_parse_cdat(struct cxl_port *port);
+ 
+ int cxl_endpoint_get_perf_coordinates(struct cxl_port *port,
+ 				      struct access_coordinate *coord);
++int cxl_hb_get_perf_coordinates(struct cxl_port *port,
++				struct access_coordinate *coord);
+ 
+ void cxl_memdev_update_perf(struct cxl_memdev *cxlmd);
+ 
 -- 
 2.43.0
 
