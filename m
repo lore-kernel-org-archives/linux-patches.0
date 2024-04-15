@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9A374C0C;
-	Mon, 15 Apr 2024 14:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D70B762FF;
+	Mon, 15 Apr 2024 14:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191148; cv=none; b=TlYa5QuGEjlsj5Ea5oZLhzmckunIIkTbdCLOS/+kTmXhDqedSC88R7aPyQDWtStikQ/H5ism25qQQ8Igvp9mWVfgVv8tchlrKZWZK/OKVCHaweWZK2lrVSchpzLGkW18kXxjETltPVosSmTfecWkINRemVdXftdS5atTk51nFD8=
+	t=1713191151; cv=none; b=OvoYRVdvxYeqAH8rrQqQf6A4dw3qC3GwKUeHA+Go/0m/xLmO4/FWOQI3sUlRIWOrlVbKNL2yzPgi8QoDxSSgOfx8vcolM5TYK3qJVfB0uU6PQic/bOodba3W2AiIj7vcpsx6I0RRIZq4KjXLlpZiqdRVkG1mA1DmQ41Ui3hm5UE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191148; c=relaxed/simple;
-	bh=qropjtm1ZEGxoMkWPLsK/KhzNVpJlzfeY8fMMnV+zjY=;
+	s=arc-20240116; t=1713191151; c=relaxed/simple;
+	bh=Oml7gJrANrzCixQ1VKOyNsBj3D9/lLmKcL2mU93p79M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UkxOCP5m8wqUsuXoUHJD22gNwjk25WZCkuJqLh+HYoJI/QfHcEsDKD3xNbMAEoIdCrYsL9ASOxycHvuBGqvJmf8zi2+pmD5zrV7k0aX0yUCEA6eGhBolCQgvDaTxFXEXgQomhaAaOmwxlNOzlpX4ZYtIm9Bsen4npY8mYMqa8Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1RK5l2P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XwavJh9DhZijyARJv7K1BbBEQU/QAlYnwDFW6vgSTP7wwQwyr0dPU1A2nUv+vIWDKa1YBMi4spK1o0E3Plma7vV/eKo1cRW5Yohzc/J5wtEudRwp1EbPje3eDICThmbywpbsd2wNHIyDcDqPffZJXCG1dlLMFbdjxcqMujddWxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtrvrHdn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1RK5l2P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24ABDC2BD10;
-	Mon, 15 Apr 2024 14:25:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtrvrHdn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05EA3C113CC;
+	Mon, 15 Apr 2024 14:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191148;
-	bh=qropjtm1ZEGxoMkWPLsK/KhzNVpJlzfeY8fMMnV+zjY=;
+	s=korg; t=1713191151;
+	bh=Oml7gJrANrzCixQ1VKOyNsBj3D9/lLmKcL2mU93p79M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D1RK5l2PMnvPNirsdjlVGWSNSCAC2HdQL3wphzZ+POnsfxvXRNYkhVsivy8t7RtSe
-	 lGBzHmH1uRkhyobpt5awHePmhNpCNSreazj0r+vh7dJpQLqEJrKnDMkxyiHn7Sj/oH
-	 YGqDN1+SuCDaiaeaCsDm7cK0QxvbV+E7bsfni2Vc=
+	b=QtrvrHdnPxWa7/s3N7V5ZR9WkQ6iqjs4sqWcyiTcyWw0rOoXG8kTp3+3MNTpdIpNl
+	 0gQFa797NYWj511XdZU09+fS2pLPmQFG/6Jw2gGuKCdDLiUjmtnW2zqUxHxvYUsRu5
+	 GACbWSFKS6S67e0Yl7gEZbyYs3UNusl3iTuEkXRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 047/172] block: fix q->blkg_list corruption during disk rebind
-Date: Mon, 15 Apr 2024 16:19:06 +0200
-Message-ID: <20240415142001.847109919@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.8 012/172] ring-buffer: Only update pages_touched when a new page is touched
+Date: Mon, 15 Apr 2024 16:18:31 +0200
+Message-ID: <20240415142000.355876236@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -53,100 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 8b8ace080319a866f5dfe9da8e665ae51d971c54 ]
+commit ffe3986fece696cf65e0ef99e74c75f848be8e30 upstream.
 
-Multiple gendisk instances can allocated/added for single request queue
-in case of disk rebind. blkg may still stay in q->blkg_list when calling
-blkcg_init_disk() for rebind, then q->blkg_list becomes corrupted.
+The "buffer_percent" logic that is used by the ring buffer splice code to
+only wake up the tasks when there's no data after the buffer is filled to
+the percentage of the "buffer_percent" file is dependent on three
+variables that determine the amount of data that is in the ring buffer:
 
-Fix the list corruption issue by:
+ 1) pages_read - incremented whenever a new sub-buffer is consumed
+ 2) pages_lost - incremented every time a writer overwrites a sub-buffer
+ 3) pages_touched - incremented when a write goes to a new sub-buffer
 
-- add blkg_init_queue() to initialize q->blkg_list & q->blkcg_mutex only
-- move calling blkg_init_queue() into blk_alloc_queue()
+The percentage is the calculation of:
 
-The list corruption should be started since commit f1c006f1c685 ("blk-cgroup:
-synchronize pd_free_fn() from blkg_free_workfn() and blkcg_deactivate_policy()")
-which delays removing blkg from q->blkg_list into blkg_free_workfn().
+  (pages_touched - (pages_lost + pages_read)) / nr_pages
 
-Fixes: f1c006f1c685 ("blk-cgroup: synchronize pd_free_fn() from blkg_free_workfn() and blkcg_deactivate_policy()")
-Fixes: 1059699f87eb ("block: move blkcg initialization/destroy into disk allocation/release handler")
-Cc: Yu Kuai <yukuai3@huawei.com>
-Cc: Tejun Heo <tj@kernel.org>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240407125910.4053377-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Basically, the amount of data is the total number of sub-bufs that have been
+touched, minus the number of sub-bufs lost and sub-bufs consumed. This is
+divided by the total count to give the buffer percentage. When the
+percentage is greater than the value in the "buffer_percent" file, it
+wakes up splice readers waiting for that amount.
+
+It was observed that over time, the amount read from the splice was
+constantly decreasing the longer the trace was running. That is, if one
+asked for 60%, it would read over 60% when it first starts tracing, but
+then it would be woken up at under 60% and would slowly decrease the
+amount of data read after being woken up, where the amount becomes much
+less than the buffer percent.
+
+This was due to an accounting of the pages_touched incrementation. This
+value is incremented whenever a writer transfers to a new sub-buffer. But
+the place where it was incremented was incorrect. If a writer overflowed
+the current sub-buffer it would go to the next one. If it gets preempted
+by an interrupt at that time, and the interrupt performs a trace, it too
+will end up going to the next sub-buffer. But only one should increment
+the counter. Unfortunately, that was not the case.
+
+Change the cmpxchg() that does the real switch of the tail-page into a
+try_cmpxchg(), and on success, perform the increment of pages_touched. This
+will only increment the counter once for when the writer moves to a new
+sub-buffer, and not when there's a race and is incremented for when a
+writer and its preempting writer both move to the same new sub-buffer.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240409151309.0d0e5056@gandalf.local.home
+
+Cc: stable@vger.kernel.org
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: 2c2b0a78b3739 ("ring-buffer: Add percentage of ring buffer full to wake up reader")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-cgroup.c | 9 ++++++---
- block/blk-cgroup.h | 2 ++
- block/blk-core.c   | 2 ++
- 3 files changed, 10 insertions(+), 3 deletions(-)
+ kernel/trace/ring_buffer.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index ff93c385ba5af..4529122e0cbdb 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -1409,6 +1409,12 @@ static int blkcg_css_online(struct cgroup_subsys_state *css)
- 	return 0;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1400,7 +1400,6 @@ static void rb_tail_page_update(struct r
+ 	old_write = local_add_return(RB_WRITE_INTCNT, &next_page->write);
+ 	old_entries = local_add_return(RB_WRITE_INTCNT, &next_page->entries);
+ 
+-	local_inc(&cpu_buffer->pages_touched);
+ 	/*
+ 	 * Just make sure we have seen our old_write and synchronize
+ 	 * with any interrupts that come in.
+@@ -1437,8 +1436,9 @@ static void rb_tail_page_update(struct r
+ 		 */
+ 		local_set(&next_page->page->commit, 0);
+ 
+-		/* Again, either we update tail_page or an interrupt does */
+-		(void)cmpxchg(&cpu_buffer->tail_page, tail_page, next_page);
++		/* Either we update tail_page or an interrupt does */
++		if (try_cmpxchg(&cpu_buffer->tail_page, &tail_page, next_page))
++			local_inc(&cpu_buffer->pages_touched);
+ 	}
  }
  
-+void blkg_init_queue(struct request_queue *q)
-+{
-+	INIT_LIST_HEAD(&q->blkg_list);
-+	mutex_init(&q->blkcg_mutex);
-+}
-+
- int blkcg_init_disk(struct gendisk *disk)
- {
- 	struct request_queue *q = disk->queue;
-@@ -1416,9 +1422,6 @@ int blkcg_init_disk(struct gendisk *disk)
- 	bool preloaded;
- 	int ret;
- 
--	INIT_LIST_HEAD(&q->blkg_list);
--	mutex_init(&q->blkcg_mutex);
--
- 	new_blkg = blkg_alloc(&blkcg_root, disk, GFP_KERNEL);
- 	if (!new_blkg)
- 		return -ENOMEM;
-diff --git a/block/blk-cgroup.h b/block/blk-cgroup.h
-index b927a4a0ad030..5b0bdc268ade9 100644
---- a/block/blk-cgroup.h
-+++ b/block/blk-cgroup.h
-@@ -188,6 +188,7 @@ struct blkcg_policy {
- extern struct blkcg blkcg_root;
- extern bool blkcg_debug_stats;
- 
-+void blkg_init_queue(struct request_queue *q);
- int blkcg_init_disk(struct gendisk *disk);
- void blkcg_exit_disk(struct gendisk *disk);
- 
-@@ -481,6 +482,7 @@ struct blkcg {
- };
- 
- static inline struct blkcg_gq *blkg_lookup(struct blkcg *blkcg, void *key) { return NULL; }
-+static inline void blkg_init_queue(struct request_queue *q) { }
- static inline int blkcg_init_disk(struct gendisk *disk) { return 0; }
- static inline void blkcg_exit_disk(struct gendisk *disk) { }
- static inline int blkcg_policy_register(struct blkcg_policy *pol) { return 0; }
-diff --git a/block/blk-core.c b/block/blk-core.c
-index de771093b5268..99d684085719d 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -431,6 +431,8 @@ struct request_queue *blk_alloc_queue(int node_id)
- 	init_waitqueue_head(&q->mq_freeze_wq);
- 	mutex_init(&q->mq_freeze_lock);
- 
-+	blkg_init_queue(q);
-+
- 	/*
- 	 * Init percpu_ref in atomic mode so that it's faster to shutdown.
- 	 * See blk_register_queue() for details.
--- 
-2.43.0
-
 
 
