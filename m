@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE428249A;
-	Mon, 15 Apr 2024 14:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8722119;
+	Mon, 15 Apr 2024 14:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191833; cv=none; b=ro9XM2gCH9hh8yUisjUZJWeZkP/UDy/a9HwXma13MHjvXN93Il6fIYvXlRHcQ6tRNj87C0BaHfWxE7uYfDSxdrgwD4VCyC0B6ohCZKRak/q/mD1R9mIz4CLzhNSf11bPC3d4ExnIkyhocH9sS88lw5vPk9PIlJLFm0AC8+Wv05Q=
+	t=1713191836; cv=none; b=YT5EsNWfC/bige8p8O848TqxvnEHI0XZhZkaXgEw4hUMpA+yGuD9nz6+K9D+C8SsHTqLgFIQx6shPxQSWgFTYViY6Ot/HuJTxq8VtI3OiNblxgSOlAXgWGjjVlDWc651WDI7YlbOAX9HmHFTNTusMTtJMuezAjsSfdjTXFaSDh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191833; c=relaxed/simple;
-	bh=YzUGefSEAIbCD9n0VS/Ib7SaG7bi4L86xmU2DL8M5Xk=;
+	s=arc-20240116; t=1713191836; c=relaxed/simple;
+	bh=Sod/+TmoCvGok3nwSYxxrJ2duYj3BhJamXfJU8OmIJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SePhsY+9+i/K5aqskVhdeLeO5C5rFx8OY7TVuYL72C35fKgP5yv9YX2b0dAKoTm5fWhJulGy4G1SS9cPpti72ettzCN/VoRnX5KUP1ZcGV36kfu8dsgmc65mEk8djK0UPNB5U+POFYfrcGVREfxkDOqpAQ0k4CUKL6QwG0RCCN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdGygxin; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gs8l4D0FTX/36W/+hQt6ElreXxCQ7dBNGfmZm3fUOUSSH6etfm2H9MzxjQLih2pFcBJTrJ/98/wYM+8O6/epI0oHKn5STkBEclJaONhYhoNC6z3+gx7DW6goa1wyixwS0K5bUIIF8RSxab5LBK8dfIHjbyyHgwMhEM9hBJzk5o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtXItRx/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdGygxin"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCA7C113CC;
-	Mon, 15 Apr 2024 14:37:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtXItRx/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D03C113CC;
+	Mon, 15 Apr 2024 14:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191833;
-	bh=YzUGefSEAIbCD9n0VS/Ib7SaG7bi4L86xmU2DL8M5Xk=;
+	s=korg; t=1713191836;
+	bh=Sod/+TmoCvGok3nwSYxxrJ2duYj3BhJamXfJU8OmIJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZdGygxinZl3gw7vGk61leLuAwDeYrwRS71Hr4pMXsS+v4A+w66FKv9SJk58/hSlC5
-	 e43K3U1hfRjxYek0l9cuziBknRDH4Fd5xjyAlWtfKNKCl2vF/qtWbg01NHqDyDETJe
-	 beLszqIbJ6tcuXbMfN5YPM2jkkUpCINdnsWS9dM0=
+	b=mtXItRx/RMF1jiliRvPVVAILqt/yR6wVgDqZoyeIxEN5/sY1PuV47tTq7K5xb1Jei
+	 FRhZ+P6L5qnGTlW+gSggQHBXk3zeobA8heRe5zJHIRI7+yK7hlDwBB9/0E/D9QgUif
+	 bFYkkbhP09cuBEef7A2Ul0UbFWt+wFeNpeS2b3+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>
-Subject: [PATCH 6.6 102/122] perf/x86: Fix out of range data
-Date: Mon, 15 Apr 2024 16:21:07 +0200
-Message-ID: <20240415141956.436432261@linuxfoundation.org>
+	Alexander Wetzel <Alexander@wetzel-home.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 085/122] scsi: sg: Avoid sg device teardown race
+Date: Mon, 15 Apr 2024 16:20:50 +0200
+Message-ID: <20240415141955.927421106@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -51,109 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Alexander Wetzel <Alexander@wetzel-home.de>
 
-commit dec8ced871e17eea46f097542dd074d022be4bd1 upstream.
+commit 27f58c04a8f438078583041468ec60597841284d upstream.
 
-On x86 each struct cpu_hw_events maintains a table for counter assignment but
-it missed to update one for the deleted event in x86_pmu_del().  This
-can make perf_clear_dirty_counters() reset used counter if it's called
-before event scheduling or enabling.  Then it would return out of range
-data which doesn't make sense.
+sg_remove_sfp_usercontext() must not use sg_device_destroy() after calling
+scsi_device_put().
 
-The following code can reproduce the problem.
+sg_device_destroy() is accessing the parent scsi_device request_queue which
+will already be set to NULL when the preceding call to scsi_device_put()
+removed the last reference to the parent scsi_device.
 
-  $ cat repro.c
-  #include <pthread.h>
-  #include <stdio.h>
-  #include <stdlib.h>
-  #include <unistd.h>
-  #include <linux/perf_event.h>
-  #include <sys/ioctl.h>
-  #include <sys/mman.h>
-  #include <sys/syscall.h>
+The resulting NULL pointer exception will then crash the kernel.
 
-  struct perf_event_attr attr = {
-  	.type = PERF_TYPE_HARDWARE,
-  	.config = PERF_COUNT_HW_CPU_CYCLES,
-  	.disabled = 1,
-  };
-
-  void *worker(void *arg)
-  {
-  	int cpu = (long)arg;
-  	int fd1 = syscall(SYS_perf_event_open, &attr, -1, cpu, -1, 0);
-  	int fd2 = syscall(SYS_perf_event_open, &attr, -1, cpu, -1, 0);
-  	void *p;
-
-  	do {
-  		ioctl(fd1, PERF_EVENT_IOC_ENABLE, 0);
-  		p = mmap(NULL, 4096, PROT_READ, MAP_SHARED, fd1, 0);
-  		ioctl(fd2, PERF_EVENT_IOC_ENABLE, 0);
-
-  		ioctl(fd2, PERF_EVENT_IOC_DISABLE, 0);
-  		munmap(p, 4096);
-  		ioctl(fd1, PERF_EVENT_IOC_DISABLE, 0);
-  	} while (1);
-
-  	return NULL;
-  }
-
-  int main(void)
-  {
-  	int i;
-  	int n = sysconf(_SC_NPROCESSORS_ONLN);
-  	pthread_t *th = calloc(n, sizeof(*th));
-
-  	for (i = 0; i < n; i++)
-  		pthread_create(&th[i], NULL, worker, (void *)(long)i);
-  	for (i = 0; i < n; i++)
-  		pthread_join(th[i], NULL);
-
-  	free(th);
-  	return 0;
-  }
-
-And you can see the out of range data using perf stat like this.
-Probably it'd be easier to see on a large machine.
-
-  $ gcc -o repro repro.c -pthread
-  $ ./repro &
-  $ sudo perf stat -A -I 1000 2>&1 | awk '{ if (length($3) > 15) print }'
-       1.001028462 CPU6   196,719,295,683,763      cycles                           # 194290.996 GHz                       (71.54%)
-       1.001028462 CPU3   396,077,485,787,730      branch-misses                    # 15804359784.80% of all branches      (71.07%)
-       1.001028462 CPU17  197,608,350,727,877      branch-misses                    # 14594186554.56% of all branches      (71.22%)
-       2.020064073 CPU4   198,372,472,612,140      cycles                           # 194681.113 GHz                       (70.95%)
-       2.020064073 CPU6   199,419,277,896,696      cycles                           # 195720.007 GHz                       (70.57%)
-       2.020064073 CPU20  198,147,174,025,639      cycles                           # 194474.654 GHz                       (71.03%)
-       2.020064073 CPU20  198,421,240,580,145      stalled-cycles-frontend          #  100.14% frontend cycles idle        (70.93%)
-       3.037443155 CPU4   197,382,689,923,416      cycles                           # 194043.065 GHz                       (71.30%)
-       3.037443155 CPU20  196,324,797,879,414      cycles                           # 193003.773 GHz                       (71.69%)
-       3.037443155 CPU5   197,679,956,608,205      stalled-cycles-backend           # 1315606428.66% backend cycles idle   (71.19%)
-       3.037443155 CPU5   198,571,860,474,851      instructions                     # 13215422.58  insn per cycle
-
-It should move the contents in the cpuc->assign as well.
-
-Fixes: 5471eea5d3bf ("perf/x86: Reset the dirty counter to prevent the leak for an RDPMC task")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/r/20240305150509.23896-1-Alexander@wetzel-home.de
+Fixes: db59133e9279 ("scsi: sg: fix blktrace debugfs entries leakage")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240306061003.1894224-1-namhyung@kernel.org
+Signed-off-by: Alexander Wetzel <Alexander@wetzel-home.de>
+Link: https://lore.kernel.org/r/20240320213032.18221-1-Alexander@wetzel-home.de
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/sg.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -1644,6 +1644,7 @@ static void x86_pmu_del(struct perf_even
- 	while (++i < cpuc->n_events) {
- 		cpuc->event_list[i-1] = cpuc->event_list[i];
- 		cpuc->event_constraint[i-1] = cpuc->event_constraint[i];
-+		cpuc->assign[i-1] = cpuc->assign[i];
- 	}
- 	cpuc->event_constraint[i-1] = NULL;
- 	--cpuc->n_events;
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -2208,6 +2208,7 @@ sg_remove_sfp_usercontext(struct work_st
+ {
+ 	struct sg_fd *sfp = container_of(work, struct sg_fd, ew.work);
+ 	struct sg_device *sdp = sfp->parentdp;
++	struct scsi_device *device = sdp->device;
+ 	Sg_request *srp;
+ 	unsigned long iflags;
+ 
+@@ -2233,8 +2234,9 @@ sg_remove_sfp_usercontext(struct work_st
+ 			"sg_remove_sfp: sfp=0x%p\n", sfp));
+ 	kfree(sfp);
+ 
+-	scsi_device_put(sdp->device);
++	WARN_ON_ONCE(kref_read(&sdp->d_ref) != 1);
+ 	kref_put(&sdp->d_ref, sg_device_destroy);
++	scsi_device_put(device);
+ 	module_put(THIS_MODULE);
+ }
+ 
 
 
