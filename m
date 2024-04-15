@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC27B7A702;
-	Mon, 15 Apr 2024 14:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E188174F;
+	Mon, 15 Apr 2024 14:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191894; cv=none; b=p1L/BQLfNyWTJD9eqOIIllLl/8OMUH3D1zRkiVXMx8nyPsgIe3rlLedCZj7UuAJe+6byhnIdKwBFXUps+g8vBGLpr/o1dnQ1GxSaDiU5vQiEMjD7PpZ52n75b7H2aVKMWarV7vw1HSAD8H+ZlWH7h3KfiRpi7uE6jzIUPHcT22k=
+	t=1713191897; cv=none; b=E8jGa0VhCcQevbwTlIBbG9fCqApSB6dSq/v3qVilT7gWedDGaC0ikQb5fp3H2fw839vV9C8PtTzu7YFHtmeBwkWLYGDMZ16OqcnUMor2elwby8g/mui9t2pVTCUXmqJWLpBmMdfKDcm5/GWfmlJkPPuKLcxwZFyEyc/L5kGZ4Vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191894; c=relaxed/simple;
-	bh=9Ufen1hkqM33oP6seiMqCVW6WKIp6snVb7/DKS8cJHo=;
+	s=arc-20240116; t=1713191897; c=relaxed/simple;
+	bh=hbYQfDp9P6hJw3Sad6q0sXHSHKLin2fG52nZZC8XPSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WaKpIMnlZZy9ZvDjBXCUjglsHFz8+bA4tw1Ej35lpXVbrbLmxb2bn2TmSGz+673m8NtxnZXOctQMDxgyfO35ahO1zGbR95WffyGR4DJXvga8rehx73oKIfWftu5lr0L1sH0jkEAswFwRvNbOjI8cTiPRZpEDNIVHyGT4mC9DjCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbJG6+dx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jKL3wqLqFCX6wWayD3kq9msh2GNqJAqqRvh23jzuEEd9UpblrhR4u//ehsYUAmPxIa4bsSredZrztYakNqXw07AlZnPuO3tNhRAGom1hydABFnAJdb+BR8VLEXvuONbwq4H4ZbcMbfwBzWp+Yqyayx+UjUhdFuKZMhNN2rTkqM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6H12YUU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbJG6+dx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F17C113CC;
-	Mon, 15 Apr 2024 14:38:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6H12YUU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE6DC113CC;
+	Mon, 15 Apr 2024 14:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191893;
-	bh=9Ufen1hkqM33oP6seiMqCVW6WKIp6snVb7/DKS8cJHo=;
+	s=korg; t=1713191896;
+	bh=hbYQfDp9P6hJw3Sad6q0sXHSHKLin2fG52nZZC8XPSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UbJG6+dx+UzGgYwELs20pLV4SZiAnJaehrXVRveM81jYKfp5xPut7MFLm5NszmbD6
-	 bFlIYXGVyxXHLF4z3eJQAyyVKG2pucNh95w8GHZT2jSa/R4mW9FuiTRscoIFA6Em5D
-	 2GiG+IckYSLasCOAN2pD03HIyYLYnONkKDbGjE7o=
+	b=b6H12YUUbABDZaUmTRg+UB9WEWLBTaW052EZLw41mrsSn4nQFIo0bexnURR7JAiSM
+	 d2mc3K3sZZmk2ZFNRdlsgiEG70pHSfxLhbHtj8EmbUazA9/XEnkd5u2M/6zLyfLneu
+	 9XDq0NXNJ296iFwfaKj3Zgpzh4uE7cpWedF1gpms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Ashton <joshua@froggi.es>,
-	Xaver Hugl <xaver.hugl@gmail.com>,
-	Melissa Wen <mwen@igalia.com>,
-	Agustin Gutierrez <Agustin.Gutierrez@amd.com>,
 	Agustin Gutierrez <agustin.gutierrez@amd.com>,
 	Hamza Mahfooz <hamza.mahfooz@amd.com>,
 	Harry Wentland <harry.wentland@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 120/122] drm/amd/display: Program VSC SDP colorimetry for all DP sinks >= 1.4
-Date: Mon, 15 Apr 2024 16:21:25 +0200
-Message-ID: <20240415141956.969716616@linuxfoundation.org>
+Subject: [PATCH 6.6 121/122] drm/amd/display: Set VSC SDP Colorimetry same way for MST and SST
+Date: Mon, 15 Apr 2024 16:21:26 +0200
+Message-ID: <20240415141956.999203893@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -58,49 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Harry Wentland <harry.wentland@amd.com>
 
-commit 9e61ef8d219877202d4ee51d0d2ad9072c99a262 upstream.
+commit c3e2a5f2da904a18661335e8be2b961738574998 upstream.
 
-In order for display colorimetry to work correctly on DP displays
-we need to send the VSC SDP packet. We should only do so for
-panels with DPCD revision greater or equal to 1.4 as older
-receivers might have problems with it.
+The previous check for the is_vsc_sdp_colorimetry_supported flag
+for MST sink signals did nothing. Simplify the code and use the
+same check for MST and SST.
 
 Cc: stable@vger.kernel.org
-Cc: Joshua Ashton <joshua@froggi.es>
-Cc: Xaver Hugl <xaver.hugl@gmail.com>
-Cc: Melissa Wen <mwen@igalia.com>
-Cc: Agustin Gutierrez <Agustin.Gutierrez@amd.com>
 Reviewed-by: Agustin Gutierrez <agustin.gutierrez@amd.com>
 Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
 Signed-off-by: Harry Wentland <harry.wentland@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -6122,7 +6122,9 @@ create_stream_for_sink(struct amdgpu_dm_
- 	if (stream->signal == SIGNAL_TYPE_HDMI_TYPE_A)
- 		mod_build_hf_vsif_infopacket(stream, &stream->vsp_infopacket);
- 
--	if (stream->link->psr_settings.psr_feature_enabled || stream->link->replay_settings.replay_feature_enabled) {
-+	if (stream->signal == SIGNAL_TYPE_DISPLAY_PORT ||
-+	    stream->signal == SIGNAL_TYPE_DISPLAY_PORT_MST ||
-+	    stream->signal == SIGNAL_TYPE_EDP) {
- 		//
+@@ -6129,15 +6129,9 @@ create_stream_for_sink(struct amdgpu_dm_
  		// should decide stream support vsc sdp colorimetry capability
  		// before building vsc info packet
-@@ -6132,7 +6134,8 @@ create_stream_for_sink(struct amdgpu_dm_
- 			stream->use_vsc_sdp_for_colorimetry =
- 				aconnector->dc_sink->is_vsc_sdp_colorimetry_supported;
- 		} else {
--			if (stream->link->dpcd_caps.dprx_feature.bits.VSC_SDP_COLORIMETRY_SUPPORTED)
-+			if (stream->link->dpcd_caps.dpcd_rev.raw >= 0x14 &&
-+			    stream->link->dpcd_caps.dprx_feature.bits.VSC_SDP_COLORIMETRY_SUPPORTED)
- 				stream->use_vsc_sdp_for_colorimetry = true;
- 		}
+ 		//
+-		stream->use_vsc_sdp_for_colorimetry = false;
+-		if (aconnector->dc_sink->sink_signal == SIGNAL_TYPE_DISPLAY_PORT_MST) {
+-			stream->use_vsc_sdp_for_colorimetry =
+-				aconnector->dc_sink->is_vsc_sdp_colorimetry_supported;
+-		} else {
+-			if (stream->link->dpcd_caps.dpcd_rev.raw >= 0x14 &&
+-			    stream->link->dpcd_caps.dprx_feature.bits.VSC_SDP_COLORIMETRY_SUPPORTED)
+-				stream->use_vsc_sdp_for_colorimetry = true;
+-		}
++		stream->use_vsc_sdp_for_colorimetry = stream->link->dpcd_caps.dpcd_rev.raw >= 0x14 &&
++						      stream->link->dpcd_caps.dprx_feature.bits.VSC_SDP_COLORIMETRY_SUPPORTED;
++
  		if (stream->out_transfer_func->tf == TRANSFER_FUNCTION_GAMMA22)
+ 			tf = TRANSFER_FUNC_GAMMA_22;
+ 		mod_build_vsc_infopacket(stream, &stream->vsc_infopacket, stream->output_color_space, tf);
 
 
