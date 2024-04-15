@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A837F47B;
-	Mon, 15 Apr 2024 14:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8A6824BB;
+	Mon, 15 Apr 2024 14:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191389; cv=none; b=t8Ft7FnQYp6D6VL4PfrjJa5u/zJ+L4LnwLy9O/Qj3euqAq0g1RvmDHzxQWNE6WoHJjjvCg4vF7S2HXUIc9YKy2eKGrXdiBMPM510vxl86fZKzJ3ZVy0bkPygh2HL4iaMqpGtUX7/r4JVLJLymYH/pei/XvEYJkJMRawECx0Cguk=
+	t=1713191392; cv=none; b=lfJsBHSKoTbc9tNbzfOvyXIsKgYL6cS3NXh1h4rJKqcSx4pRlyghAVGIyukQ62OBNkQskumfzFBZGLPNZmLTeRBlaV3CDMwY63AjwtQnH9+UXmfWp0hfjdAyKXx9wlyG0zzeroXmLVKKnK5LeL6VY9LUan7PrPM8URLrG454O7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191389; c=relaxed/simple;
-	bh=CqclnSIylVtN7eH2/1sSJeo2y/fcI9aeuawohaL4BSM=;
+	s=arc-20240116; t=1713191392; c=relaxed/simple;
+	bh=2y57751c4o3ZPEuM3UTKDpX3if7IvhZqT6qdXJaUh9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W1VEJKWzIZd59JqDnQO78k/Ka9jbjXUpvVcGB4Hn61HV5pJqNHr8/ToJTrlIbEdB6Kyit22rMCKLwyl26E/bnY4sExBuqViiZj3tlZ0mrtCi05hnwuDZjEoC+dE69rngLy+7UODfg5C+hKK6ckKXwSt9SRvKBRUGlylkzIlWEsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxpYRVzn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VqOJhYOv5kYi156kReCaGT0RSbdcy+kaiPwHkcyy2l8VCs4wRXq1w9YdryRj0WxRGzTGU5HoPCYkZipSPT5J4C6PD+27eGfQjAQiWbKVGt8Gshhp2fUHGZhWxxDftTCGXoVKu2q59pjt/gnN1ZPRSM7EYQeqZrV+WQgjfxm9MWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mi56qNye; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxpYRVzn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 406BBC113CC;
-	Mon, 15 Apr 2024 14:29:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mi56qNye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41DC5C113CC;
+	Mon, 15 Apr 2024 14:29:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191389;
-	bh=CqclnSIylVtN7eH2/1sSJeo2y/fcI9aeuawohaL4BSM=;
+	s=korg; t=1713191392;
+	bh=2y57751c4o3ZPEuM3UTKDpX3if7IvhZqT6qdXJaUh9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KxpYRVznaOnCJAo1lIbZ8JdISkMipHYgZfwO8ECr4GQgF7OP+ZMvA0TTGS+Nao1Ue
-	 I5qBzZpQcpFKacme+Qy2YRhSXGIv/Wr1NJINt3gQRxfqsSGaRgKr2KArUrm9cCEzP6
-	 JXBDczSBJbZQZ67VDEY1LAb2Kc/qKYYYrCHDuMCk=
+	b=mi56qNyeaS5XIVE5UoVGbVwo9aCnxO6LIxgd0sOuHo7K3L8ePof9QZMdn8QPtReGg
+	 dO/4D1dXY8wohWzcTqTjfkvXZdM18m28Ft5QYahM8YlWpfruFpFhfuZsbh0gMagkST
+	 7MxNs+wMgwuwvpVFyG9IC6otfi1zl7TGo2gp1EtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Mukul Joshi <mukul.joshi@amd.com>
-Subject: [PATCH 6.8 125/172] drm/amdkfd: Reset GPU on queue preemption failure
-Date: Mon, 15 Apr 2024 16:20:24 +0200
-Message-ID: <20240415142004.184854854@linuxfoundation.org>
+	Jammy Huang <jammy_huang@aspeedtech.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	KuoHsiang Chou <kuohsiang_chou@aspeedtech.com>,
+	Dave Airlie <airlied@redhat.com>,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH 6.8 126/172] drm/ast: Fix soft lockup
+Date: Mon, 15 Apr 2024 16:20:25 +0200
+Message-ID: <20240415142004.213204201@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -51,35 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+From: Jammy Huang <jammy_huang@aspeedtech.com>
 
-commit 8bdfb4ea95ca738d33ef71376c21eba20130f2eb upstream.
+commit bc004f5038220b1891ef4107134ccae44be55109 upstream.
 
-Currently, with F32 HWS GPU reset is only when unmap queue fails.
+There is a while-loop in ast_dp_set_on_off() that could lead to
+infinite-loop. This is because the register, VGACRI-Dx, checked in
+this API is a scratch register actually controlled by a MCU, named
+DPMCU, in BMC.
 
-However, if compute queue doesn't repond to preemption request in time
-unmap will return without any error. In this case, only preemption error
-is logged and Reset is not triggered. Call GPU reset in this case also.
+These scratch registers are protected by scu-lock. If suc-lock is not
+off, DPMCU can not update these registers and then host will have soft
+lockup due to never updated status.
 
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Reviewed-by: Mukul Joshi <mukul.joshi@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+DPMCU is used to control DP and relative registers to handshake with
+host's VGA driver. Even the most time-consuming task, DP's link
+training, is less than 100ms. 200ms should be enough.
+
+Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+Fixes: 594e9c04b586 ("drm/ast: Create the driver for ASPEED proprietory Display-Port")
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: KuoHsiang Chou <kuohsiang_chou@aspeedtech.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.19+
+Link: https://patchwork.freedesktop.org/patch/msgid/20240403090246.1495487-1-jammy_huang@aspeedtech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/ast/ast_dp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-@@ -1997,6 +1997,7 @@ static int unmap_queues_cpsch(struct dev
- 		dev_err(dev, "HIQ MQD's queue_doorbell_id0 is not 0, Queue preemption time out\n");
- 		while (halt_if_hws_hang)
- 			schedule();
-+		kfd_hws_hang(dqm);
- 		return -ETIME;
- 	}
+--- a/drivers/gpu/drm/ast/ast_dp.c
++++ b/drivers/gpu/drm/ast/ast_dp.c
+@@ -180,6 +180,7 @@ void ast_dp_set_on_off(struct drm_device
+ {
+ 	struct ast_device *ast = to_ast_device(dev);
+ 	u8 video_on_off = on;
++	u32 i = 0;
  
+ 	// Video On/Off
+ 	ast_set_index_reg_mask(ast, AST_IO_VGACRI, 0xE3, (u8) ~AST_DP_VIDEO_ENABLE, on);
+@@ -192,6 +193,8 @@ void ast_dp_set_on_off(struct drm_device
+ 						ASTDP_MIRROR_VIDEO_ENABLE) != video_on_off) {
+ 			// wait 1 ms
+ 			mdelay(1);
++			if (++i > 200)
++				break;
+ 		}
+ 	}
+ }
 
 
