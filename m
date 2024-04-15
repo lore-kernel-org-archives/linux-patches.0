@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B79874C0C;
-	Mon, 15 Apr 2024 14:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A02F3BBE1;
+	Mon, 15 Apr 2024 14:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191109; cv=none; b=ZDPA/oycEbQuC0J6MAANj/1picm65v1ixqBSgXLDA2uQjo6c/Hnbu9GA8V+Je7AsVxHmsf92VJxT9nDBcmqiNJL9aZ/37bjpmrvxFF/GN6Cse7zSBY34gNAfl2kZuADjFzVY69dfr6P2RqHiDAIgJzvJQrz2cxHgVuDCitLnlqk=
+	t=1713191112; cv=none; b=PaJh3gb2J+9rqRT/Hw8MqRb9yhlokDARtC7XNWngNB6f7DIvfzmwSVI5C6PyVKrzyA8s+YtT8INTTX36ixUcO0N/hWs5k9kG7+kOZGz2Bc1AV1t84KWiXAZ3nxbIVN1RmTafCHfunwSgnyVi9jTC0vMPPJ6D9uVTL2IFWLHgqNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191109; c=relaxed/simple;
-	bh=uvbPiPWuxJZPNDMSJkQuu0aJ4gJLz+Mz31e8XyTZvPo=;
+	s=arc-20240116; t=1713191112; c=relaxed/simple;
+	bh=PRfhbTx4hCcumV9yY7fYqq7VcGv21VG/iNA9y2RnPIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1G3jiGZCo4t132jPyRBMdtcDXR5yZvCJFufRiZQMTIR/P/QLGV83cQbJkgvR6nhvA6ts0TegEseafPd2gjXe84Xgm54SOY4yjx5iaulDNMZH9PuP6G6NCz/xQ7Vc6vVe9agDr85TK8knQFZjt3rN2AYHwMpXWKCPtQ3nsA/Fb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETBT6WxT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UbCUMkbwUqJBzav4BayRD7y/MMHGj8hEj2T0OSwwUYgmn/U47lT3mFWNTndldqan49immvfsDE1PgFJFUuqbVCoy0IALjNUkkqQmvwY0oa0hZBUCOQb039pW0O6Iqx2U08APwOAY4BUdn6oX55jwXGrCcGlT7NK1WNMfa+K4lz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YARmk7Fh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETBT6WxT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1468AC113CC;
-	Mon, 15 Apr 2024 14:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YARmk7Fh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E7EEC113CC;
+	Mon, 15 Apr 2024 14:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191109;
-	bh=uvbPiPWuxJZPNDMSJkQuu0aJ4gJLz+Mz31e8XyTZvPo=;
+	s=korg; t=1713191112;
+	bh=PRfhbTx4hCcumV9yY7fYqq7VcGv21VG/iNA9y2RnPIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ETBT6WxTBPAjJyJEvbOnO08XlSnLqFWcavQD9KNOv2l/r7qwLusGICk2H1bxHg51C
-	 j4/nSy38je+WS68CeDMFFJAvLsjJVptGbP8amGYekwbEIz2LgqVWBx22tin3942jcA
-	 mdH2x5j9toRsISE2dD+erh/IfH+zqcfzVNUOFMUI=
+	b=YARmk7FhDlMQS1Z+25ACSwrgsazqgHz1ijqCSnIkPYqY5Fr5K49EakQhba/RKbqL8
+	 N8I/E5FMba+vuCDwSYoiMcQHXHYxZnUrGJpfWCM8DieymHySfMaYBNDGLX6aJ8arIQ
+	 EABpa8s1QggRYJFBdLmryWR575M77tQjirzBviUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 035/172] dt-bindings: display/msm: sm8150-mdss: add DP node
-Date: Mon, 15 Apr 2024 16:18:54 +0200
-Message-ID: <20240415142001.495977235@linuxfoundation.org>
+Subject: [PATCH 6.8 036/172] arm64: dts: imx8-ss-conn: fix usdhc wrong lpcg clock order
+Date: Mon, 15 Apr 2024 16:18:55 +0200
+Message-ID: <20240415142001.525788320@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -52,44 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit be1b7acb929137e3943fe380671242beb485190c ]
+[ Upstream commit c6ddd6e7b166532a0816825442ff60f70aed9647 ]
 
-As Qualcomm SM8150 got support for the DisplayPort, add displayport@
-node as a valid child to the MDSS node.
+The actual clock show wrong frequency:
 
-Fixes: 88806318e2c2 ("dt-bindings: display: msm: dp: declare compatible string for sm8150")
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/586156/
-Link: https://lore.kernel.org/r/20240402-fd-fix-schema-v3-1-817ea6ddf775@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+   echo on >/sys/devices/platform/bus\@5b000000/5b010000.mmc/power/control
+   cat /sys/kernel/debug/mmc0/ios
+
+   clock:          200000000 Hz
+   actual clock:   166000000 Hz
+                   ^^^^^^^^^
+   .....
+
+According to
+
+sdhc0_lpcg: clock-controller@5b200000 {
+                compatible = "fsl,imx8qxp-lpcg";
+                reg = <0x5b200000 0x10000>;
+                #clock-cells = <1>;
+                clocks = <&clk IMX_SC_R_SDHC_0 IMX_SC_PM_CLK_PER>,
+                         <&conn_ipg_clk>, <&conn_axi_clk>;
+                clock-indices = <IMX_LPCG_CLK_0>, <IMX_LPCG_CLK_4>,
+                                <IMX_LPCG_CLK_5>;
+                clock-output-names = "sdhc0_lpcg_per_clk",
+                                     "sdhc0_lpcg_ipg_clk",
+                                     "sdhc0_lpcg_ahb_clk";
+                power-domains = <&pd IMX_SC_R_SDHC_0>;
+        }
+
+"per_clk" should be IMX_LPCG_CLK_0 instead of IMX_LPCG_CLK_5.
+
+After correct clocks order:
+
+   echo on >/sys/devices/platform/bus\@5b000000/5b010000.mmc/power/control
+   cat /sys/kernel/debug/mmc0/ios
+
+   clock:          200000000 Hz
+   actual clock:   198000000 Hz
+                   ^^^^^^^^
+   ...
+
+Fixes: 16c4ea7501b1 ("arm64: dts: imx8: switch to new lpcg clock binding")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/display/msm/qcom,sm8150-mdss.yaml           | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8150-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8150-mdss.yaml
-index c0d6a4fdff97e..e6dc5494baee2 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sm8150-mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8150-mdss.yaml
-@@ -53,6 +53,15 @@ patternProperties:
-       compatible:
-         const: qcom,sm8150-dpu
- 
-+  "^displayport-controller@[0-9a-f]+$":
-+    type: object
-+    additionalProperties: true
-+
-+    properties:
-+      compatible:
-+        contains:
-+          const: qcom,sm8150-dp
-+
-   "^dsi@[0-9a-f]+$":
-     type: object
-     additionalProperties: true
+diff --git a/arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi b/arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi
+index 3c42240e78e24..af2259e997967 100644
+--- a/arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi
+@@ -67,8 +67,8 @@ usdhc1: mmc@5b010000 {
+ 		interrupts = <GIC_SPI 232 IRQ_TYPE_LEVEL_HIGH>;
+ 		reg = <0x5b010000 0x10000>;
+ 		clocks = <&sdhc0_lpcg IMX_LPCG_CLK_4>,
+-			 <&sdhc0_lpcg IMX_LPCG_CLK_0>,
+-			 <&sdhc0_lpcg IMX_LPCG_CLK_5>;
++			 <&sdhc0_lpcg IMX_LPCG_CLK_5>,
++			 <&sdhc0_lpcg IMX_LPCG_CLK_0>;
+ 		clock-names = "ipg", "ahb", "per";
+ 		power-domains = <&pd IMX_SC_R_SDHC_0>;
+ 		status = "disabled";
+@@ -78,8 +78,8 @@ usdhc2: mmc@5b020000 {
+ 		interrupts = <GIC_SPI 233 IRQ_TYPE_LEVEL_HIGH>;
+ 		reg = <0x5b020000 0x10000>;
+ 		clocks = <&sdhc1_lpcg IMX_LPCG_CLK_4>,
+-			 <&sdhc1_lpcg IMX_LPCG_CLK_0>,
+-			 <&sdhc1_lpcg IMX_LPCG_CLK_5>;
++			 <&sdhc1_lpcg IMX_LPCG_CLK_5>,
++			 <&sdhc1_lpcg IMX_LPCG_CLK_0>;
+ 		clock-names = "ipg", "ahb", "per";
+ 		power-domains = <&pd IMX_SC_R_SDHC_1>;
+ 		fsl,tuning-start-tap = <20>;
+@@ -91,8 +91,8 @@ usdhc3: mmc@5b030000 {
+ 		interrupts = <GIC_SPI 234 IRQ_TYPE_LEVEL_HIGH>;
+ 		reg = <0x5b030000 0x10000>;
+ 		clocks = <&sdhc2_lpcg IMX_LPCG_CLK_4>,
+-			 <&sdhc2_lpcg IMX_LPCG_CLK_0>,
+-			 <&sdhc2_lpcg IMX_LPCG_CLK_5>;
++			 <&sdhc2_lpcg IMX_LPCG_CLK_5>,
++			 <&sdhc2_lpcg IMX_LPCG_CLK_0>;
+ 		clock-names = "ipg", "ahb", "per";
+ 		power-domains = <&pd IMX_SC_R_SDHC_2>;
+ 		status = "disabled";
 -- 
 2.43.0
 
