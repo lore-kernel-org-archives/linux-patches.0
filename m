@@ -1,40 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BE778B49;
-	Mon, 15 Apr 2024 14:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218BB7FBBE;
+	Mon, 15 Apr 2024 14:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191307; cv=none; b=CpR/trMPKAT8xxD4ADoRfmVZ1sZjqIxMQIAFEiX6/rVzbILjFdDqpYS9TlybGYzETANeKrK/BRwarwRdY36EtBFk2RQ6eTTynOAm2pYwN8ncwrE4mEh5ijY1FJ6h+8P2C2De1DbAdY+8GXyqtPioDrJf/g/Yg+lhCThz4h1p8D4=
+	t=1713191310; cv=none; b=QBYvPZPUtoDvzoqyW+NmM/5lenBKVvPEhbzn8b1C0rhLnnnr/aBK4vgHLMPwa6uTKtTVPlp+UBCz1LtdAurW3QoQv6sUyUd9hE/F7s4Ii//4b+wC1fQgPYld5fbry7HIMyMHFBWfoIl/KvpLwvG2ihPYGnYs7WCN+HrG4DnO3nQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191307; c=relaxed/simple;
-	bh=PMvhYYt3sjLDVf8dGm2FkF9/tkQxOx3w8lJ0QE/Kv+k=;
+	s=arc-20240116; t=1713191310; c=relaxed/simple;
+	bh=zt8KqiFeNGkHq0/SSiM8phbujEgveeF94hV+lzKrV3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QnUJBuwajKyNa+iYxlbBtt14LqjvUn+rbOy1ow3uqFxCQphDau7uVyxhigLwFS8K5EVwAMaCl1r3FuQq0NWzv7xUM27N1MKbCj8j39eAIgmCNWMO00VmqazQCzMjVG03yK2OgAkLVgyBcttx7Z3SMjxs+Bgk1eDVFH896t5NNvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3hQQGzC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I81sUaQDlsDt+00gOCJzIYY5uf6USiZaD/yOSB2hK/vmaLRc/PQzqsfjnxrcTeNodBRDaYNsgBrNesAEnVdpFfz9zfY+827GQck4p9Nf0dlaYkWKR+cy5Q5QJQOaha2hgKQwhh2vYHrJ3Ux8mc/impjEQJW3tgVRr+aOch5dxhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOy5VteQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3hQQGzC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FACDC2BD10;
-	Mon, 15 Apr 2024 14:28:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOy5VteQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67EFBC32783;
+	Mon, 15 Apr 2024 14:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191307;
-	bh=PMvhYYt3sjLDVf8dGm2FkF9/tkQxOx3w8lJ0QE/Kv+k=;
+	s=korg; t=1713191310;
+	bh=zt8KqiFeNGkHq0/SSiM8phbujEgveeF94hV+lzKrV3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r3hQQGzCyWuX2DzSVdELsrRC79pak+GURExhuDpB2N4Rqk5HUqd+I0aKEydSGGk9c
-	 WI1/U8ibXfM7W8YuRMEt/lYXSTdzBRLPQnXBqRNQhXDLJMOwX5+5hVFDmvo9J9vfjz
-	 G9EKqdR61H88JT+9lmO2Uy9eF0pbt6GievvJHU7c=
+	b=kOy5VteQ5mib0+LkN4b2pcNgiHW0l8iD09Rz+l4hs77cSFHwNyLhzgVHrv7VGvKxa
+	 ChgfEXO1X5SmTKv4Tb+sxl2AWSM5WFZ6ZA2ncdcFfSrhSILcwWCsCSNqh9/qiZxLk2
+	 acDKJ8wcM/LQPVj+j50c+6nRAmXHAr3Pot5Qqrpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthik Poosa <karthik.poosa@intel.com>,
-	Anshuman Gupta <anshuman.gupta@intel.com>,
-	Badal Nilawar <badal.nilawar@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Kees Cook <keescook@chromium.org>,
+	Ajay Kaher <akaher@vmware.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Tzvetomir Stoyanov (VMware)" <tz.stoyanov@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 101/172] drm/xe/hwmon: Cast result to output precision on left shift of operand
-Date: Mon, 15 Apr 2024 16:20:00 +0200
-Message-ID: <20240415142003.464933951@linuxfoundation.org>
+Subject: [PATCH 6.8 102/172] tracing: hide unused ftrace_event_id_fops
+Date: Mon, 15 Apr 2024 16:20:01 +0200
+Message-ID: <20240415142003.494518428@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -47,58 +55,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karthik Poosa <karthik.poosa@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit a8ad8715472bb8f6a2ea8b4072a28151eb9f4f24 ]
+[ Upstream commit 5281ec83454d70d98b71f1836fb16512566c01cd ]
 
-Address potential overflow in result of left shift of a
-lower precision (u32) operand before assignment to higher
-precision (u64) variable.
+When CONFIG_PERF_EVENTS, a 'make W=1' build produces a warning about the
+unused ftrace_event_id_fops variable:
 
-v2:
- - Update commit message. (Himal)
+kernel/trace/trace_events.c:2155:37: error: 'ftrace_event_id_fops' defined but not used [-Werror=unused-const-variable=]
+ 2155 | static const struct file_operations ftrace_event_id_fops = {
 
-Fixes: 4446fcf220ce ("drm/xe/hwmon: Expose power1_max_interval")
-Signed-off-by: Karthik Poosa <karthik.poosa@intel.com>
-Reviewed-by: Anshuman Gupta <anshuman.gupta@intel.com>
-Cc: Badal Nilawar <badal.nilawar@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240405130127.1392426-5-karthik.poosa@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit 883232b47b81108b0252197c747f396ecd51455a)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Hide this in the same #ifdef as the reference to it.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240403080702.3509288-7-arnd@kernel.org
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Zheng Yejian <zhengyejian1@huawei.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Ajay Kaher <akaher@vmware.com>
+Cc: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: Clément Léger <cleger@rivosinc.com>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: "Tzvetomir Stoyanov (VMware)" <tz.stoyanov@gmail.com>
+Fixes: 620a30e97feb ("tracing: Don't pass file_operations array to event_create_dir()")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_hwmon.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
-index 174ed2185481e..a6f43446c779a 100644
---- a/drivers/gpu/drm/xe/xe_hwmon.c
-+++ b/drivers/gpu/drm/xe/xe_hwmon.c
-@@ -288,7 +288,7 @@ xe_hwmon_power1_max_interval_show(struct device *dev, struct device_attribute *a
- 	 * As y can be < 2, we compute tau4 = (4 | x) << y
- 	 * and then add 2 when doing the final right shift to account for units
- 	 */
--	tau4 = ((1 << x_w) | x) << y;
-+	tau4 = (u64)((1 << x_w) | x) << y;
+diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
+index 7c364b87352ee..52f75c36bbca4 100644
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -1670,6 +1670,7 @@ static int trace_format_open(struct inode *inode, struct file *file)
+ 	return 0;
+ }
  
- 	/* val in hwmon interface units (millisec) */
- 	out = mul_u64_u32_shr(tau4, SF_TIME, hwmon->scl_shift_time + x_w);
-@@ -328,7 +328,7 @@ xe_hwmon_power1_max_interval_store(struct device *dev, struct device_attribute *
- 	r = FIELD_PREP(PKG_MAX_WIN, PKG_MAX_WIN_DEFAULT);
- 	x = REG_FIELD_GET(PKG_MAX_WIN_X, r);
- 	y = REG_FIELD_GET(PKG_MAX_WIN_Y, r);
--	tau4 = ((1 << x_w) | x) << y;
-+	tau4 = (u64)((1 << x_w) | x) << y;
- 	max_win = mul_u64_u32_shr(tau4, SF_TIME, hwmon->scl_shift_time + x_w);
++#ifdef CONFIG_PERF_EVENTS
+ static ssize_t
+ event_id_read(struct file *filp, char __user *ubuf, size_t cnt, loff_t *ppos)
+ {
+@@ -1684,6 +1685,7 @@ event_id_read(struct file *filp, char __user *ubuf, size_t cnt, loff_t *ppos)
  
- 	if (val > max_win)
+ 	return simple_read_from_buffer(ubuf, cnt, ppos, buf, len);
+ }
++#endif
+ 
+ static ssize_t
+ event_filter_read(struct file *filp, char __user *ubuf, size_t cnt,
+@@ -2152,10 +2154,12 @@ static const struct file_operations ftrace_event_format_fops = {
+ 	.release = seq_release,
+ };
+ 
++#ifdef CONFIG_PERF_EVENTS
+ static const struct file_operations ftrace_event_id_fops = {
+ 	.read = event_id_read,
+ 	.llseek = default_llseek,
+ };
++#endif
+ 
+ static const struct file_operations ftrace_event_filter_fops = {
+ 	.open = tracing_open_file_tr,
 -- 
 2.43.0
 
