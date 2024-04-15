@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C19182D86;
-	Mon, 15 Apr 2024 14:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670AA757EA;
+	Mon, 15 Apr 2024 14:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191682; cv=none; b=csJFYYlwy1Z7dSJHJi4texoYt25UbCkplomv081GeJxmet9V9o8wTT7IFanihzsdh562goKs7e7vlxyNnqYR/4k9Ve6I2lpg8TCfoQu9v45Epgg1a7hutsejLoGohhAMNx54BB8VzSHdL9J/kfFcnuXnUgrJCEL2kfxJ567L3Wg=
+	t=1713191686; cv=none; b=KUMI8A2NLsSJ5ptqxm7X0t6FODhXzVehVe9DGIO2wYnILU1paHx54zh+UFnfetwOIDeUpqmunwrzLLao21vQ6Z90n8vp4iu+YO+mSkleMUUa7kiK7sLM97V3pAmA6hLueyEDxOk9Ye6UoTvPiidwr4y4Gvl5lYnbwZ+A1661rhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191682; c=relaxed/simple;
-	bh=UBgVwf1eJSbrPykllpN2W4Rp7OEpgdNqxI3WQ2QWz/s=;
+	s=arc-20240116; t=1713191686; c=relaxed/simple;
+	bh=hIlBBi7ISlHCajDmnyDSm/w1OZOnXva6NRMZoFF6/a8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r1kgcZ0sLBz6xDOTV2PlEKaYib82LQIJD8470Db18hr9JdF5cziznO8x1GJnmK89+Z2LNPaPVIv2UR4oTYlp4FVeiQgzXTl299GACQxA6ZbbpW0rMGMJQwUUV7MKVjlSnwKuiF1IaDHk5zFyYRzncLqB0+IDKt4IDp0PRJMR3qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PewHqzYC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tpXS80Hn4JdJ6g3ECGzhs8wi9ee+DTdQV2/gDx+L5nyi2R39w97aH0P3S8wh1Hj+hGml7CfKAzDLwYZvTKUYZ2yk1JHxAi0G170c4eIQtKJ8ivJ3WKYprJYEhVznicEbvVCf7kDbklmUaP0EkN49jReRzFnpb6kpGSfiobMWj9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlVC25Uz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PewHqzYC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87599C113CC;
-	Mon, 15 Apr 2024 14:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlVC25Uz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFF6C113CC;
+	Mon, 15 Apr 2024 14:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191681;
-	bh=UBgVwf1eJSbrPykllpN2W4Rp7OEpgdNqxI3WQ2QWz/s=;
+	s=korg; t=1713191686;
+	bh=hIlBBi7ISlHCajDmnyDSm/w1OZOnXva6NRMZoFF6/a8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PewHqzYCphpA0QVDk9v8DdtgIIuMTq/mE3oxMx0pX5OVGXDiTdvjjNQR4wgmEtvhl
-	 acNz9gfa6DmzFhputKBCK4s7Y/xqK+w762VJHHGeGmBXbTLE4OPeCcAzb6xUIqM1jY
-	 nOWIEvPKlLScR0OmGCua4knvuik86w8qeug4BBaQ=
+	b=rlVC25UzQ7PoNfkT6y5fmtilofg1Tv05KStxWJbc969gFbz3X/c+fomIxQCbYyPEe
+	 wSaYEuxZaP7Y7mM6isebC6AaBRlA+l0k0kzGMUXxAKAleT5V17LJB6b/Rk4fawbz6N
+	 tvvkJh1L/pjMDDKI6X8f9OIvgpTtNG+H2NWJPUjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Archie Pusaka <apusaka@chromium.org>,
+	Manish Mandlik <mmandlik@chromium.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/122] Bluetooth: SCO: Fix not validating setsockopt user input
-Date: Mon, 15 Apr 2024 16:20:17 +0200
-Message-ID: <20240415141954.931900709@linuxfoundation.org>
+Subject: [PATCH 6.6 053/122] Bluetooth: l2cap: Dont double set the HCI_CONN_MGMT_CONNECTED bit
+Date: Mon, 15 Apr 2024 16:20:18 +0200
+Message-ID: <20240415141954.960741572@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -52,119 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Archie Pusaka <apusaka@chromium.org>
 
-[ Upstream commit 51eda36d33e43201e7a4fd35232e069b2c850b01 ]
+[ Upstream commit 600b0bbe73d3a9a264694da0e4c2c0800309141e ]
 
-syzbot reported sco_sock_setsockopt() is copying data without
-checking user input length.
+The bit is set and tested inside mgmt_device_connected(), therefore we
+must not set it just outside the function.
 
-BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset
-include/linux/sockptr.h:49 [inline]
-BUG: KASAN: slab-out-of-bounds in copy_from_sockptr
-include/linux/sockptr.h:55 [inline]
-BUG: KASAN: slab-out-of-bounds in sco_sock_setsockopt+0xc0b/0xf90
-net/bluetooth/sco.c:893
-Read of size 4 at addr ffff88805f7b15a3 by task syz-executor.5/12578
-
-Fixes: ad10b1a48754 ("Bluetooth: Add Bluetooth socket voice option")
-Fixes: b96e9c671b05 ("Bluetooth: Add BT_DEFER_SETUP option to sco socket")
-Fixes: 00398e1d5183 ("Bluetooth: Add support for BT_PKT_STATUS CMSG data for SCO connections")
-Fixes: f6873401a608 ("Bluetooth: Allow setting of codec for HFP offload use case")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Fixes: eeda1bf97bb5 ("Bluetooth: hci_event: Fix not indicating new connection for BIG Sync")
+Signed-off-by: Archie Pusaka <apusaka@chromium.org>
+Reviewed-by: Manish Mandlik <mmandlik@chromium.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/bluetooth.h |  9 +++++++++
- net/bluetooth/sco.c               | 23 ++++++++++-------------
- 2 files changed, 19 insertions(+), 13 deletions(-)
+ net/bluetooth/l2cap_core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
-index 28e32c9a6cc99..e4a6831133f81 100644
---- a/include/net/bluetooth/bluetooth.h
-+++ b/include/net/bluetooth/bluetooth.h
-@@ -585,6 +585,15 @@ static inline struct sk_buff *bt_skb_sendmmsg(struct sock *sk,
- 	return skb;
- }
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index ab5a9d42fae71..706d2478ddb33 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4054,8 +4054,7 @@ static int l2cap_connect_req(struct l2cap_conn *conn,
+ 		return -EPROTO;
  
-+static inline int bt_copy_from_sockptr(void *dst, size_t dst_size,
-+				       sockptr_t src, size_t src_size)
-+{
-+	if (dst_size > src_size)
-+		return -EINVAL;
-+
-+	return copy_from_sockptr(dst, src, dst_size);
-+}
-+
- int bt_to_errno(u16 code);
- __u8 bt_status(int err);
- 
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index c736186aba26b..8e4f39b8601cb 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -823,7 +823,7 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
- 			       sockptr_t optval, unsigned int optlen)
- {
- 	struct sock *sk = sock->sk;
--	int len, err = 0;
-+	int err = 0;
- 	struct bt_voice voice;
- 	u32 opt;
- 	struct bt_codecs *codecs;
-@@ -842,10 +842,9 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
- 			break;
- 		}
- 
--		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
-+		if (err)
- 			break;
--		}
- 
- 		if (opt)
- 			set_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags);
-@@ -862,11 +861,10 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
- 
- 		voice.setting = sco_pi(sk)->setting;
- 
--		len = min_t(unsigned int, sizeof(voice), optlen);
--		if (copy_from_sockptr(&voice, optval, len)) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&voice, sizeof(voice), optval,
-+					   optlen);
-+		if (err)
- 			break;
--		}
- 
- 		/* Explicitly check for these values */
- 		if (voice.setting != BT_VOICE_TRANSPARENT &&
-@@ -889,10 +887,9 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
- 		break;
- 
- 	case BT_PKT_STATUS:
--		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
-+		if (err)
- 			break;
--		}
- 
- 		if (opt)
- 			set_bit(BT_SK_PKT_STATUS, &bt_sk(sk)->flags);
-@@ -933,9 +930,9 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
- 			break;
- 		}
- 
--		if (copy_from_sockptr(buffer, optval, optlen)) {
-+		err = bt_copy_from_sockptr(buffer, optlen, optval, optlen);
-+		if (err) {
- 			hci_dev_put(hdev);
--			err = -EFAULT;
- 			break;
- 		}
+ 	hci_dev_lock(hdev);
+-	if (hci_dev_test_flag(hdev, HCI_MGMT) &&
+-	    !test_and_set_bit(HCI_CONN_MGMT_CONNECTED, &hcon->flags))
++	if (hci_dev_test_flag(hdev, HCI_MGMT))
+ 		mgmt_device_connected(hdev, hcon, NULL, 0);
+ 	hci_dev_unlock(hdev);
  
 -- 
 2.43.0
