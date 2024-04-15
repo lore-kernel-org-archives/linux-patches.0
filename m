@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6B58288A;
-	Mon, 15 Apr 2024 14:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DDC1D524;
+	Mon, 15 Apr 2024 14:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191638; cv=none; b=FlayMIMlegsayTi9076zFcEUk6SlJUIlQj717fhSSmiRXOyDT5iRdTHWK8MQvxY/V3K2MQAnwEZgiCjobbXARkc44Hmu14N185bpBjR5Mk/nUeJ3BQvMPajM88/6PVgF64ZUO8LrQM1jG9S+mjEi1KobljZwG0p5k3k+XVZT1es=
+	t=1713191641; cv=none; b=EwRjr2ORsuqZ1SGHUtNgJMRryfiEQpoV4WZk+bk69eGlUFH/glrpKZPxATNs/eXcrTKRFc3THAaA2xOlA/Znr22oKZB+XBFR3fFqYLnMvKpatiF1SMCJy2B219GFGIpVdj6HemYVkLO2II/fQx7Kg3WaFZjQYMd7XNicz+lZ2hU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191638; c=relaxed/simple;
-	bh=k9iy7C5rwkGZwebdwbriKmNVui/T4tT1RhQyRujn1as=;
+	s=arc-20240116; t=1713191641; c=relaxed/simple;
+	bh=d/dMx5G0lXiLdkU5dsRtz78hYKCpjN2uCqUQKH0/o/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9lJsT2QmutpjTrLKq5CyBy21nKwbmcV+YsSyPRNYO92qO3PnBypg5zCXFvje+Ldzt9NqpCa1xe6VNrYpp69f8HBiGHCdT4bEoRwAsssJjbuc8+EWeETvIgMftSNLvjIX/QO60HqTNnOMszCC2wKWTxUovPdgEh8ov8xJaQ3hrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btmjkP9D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mC/aPAOl+NPcP6bXgx0fyzeDvjKzaeQm+XAY9N2sjr3tkkXe0fHVUTabIrq7zVXIxNkKH/AUUranursuTKX53DONfRZNKJ4xQLpwdI2t2Bp/Xq5BsrLm5eOnedSlgRLM7c8CKkfn3GTX71AAV4IgUfyL2sicIdz3B/kkg2W+AkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3EGBIR7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btmjkP9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1FDC113CC;
-	Mon, 15 Apr 2024 14:33:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3EGBIR7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327A0C113CC;
+	Mon, 15 Apr 2024 14:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191637;
-	bh=k9iy7C5rwkGZwebdwbriKmNVui/T4tT1RhQyRujn1as=;
+	s=korg; t=1713191640;
+	bh=d/dMx5G0lXiLdkU5dsRtz78hYKCpjN2uCqUQKH0/o/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=btmjkP9Dpt5l0NVky+F9IG7RHcROQ+CAfD3LeeA+qLhtNm1QowJn4A9i0W1Qwatc4
-	 /9Sf2Ss+W83JmATfenDqx3WqOxr4cesHMZ2eKIPrUfpa8V2WOzNzxKynXBbV7wh1TO
-	 Qjk6DQA0M163DoaVjUevbyT+vXzSOUnXXEZqHmZQ=
+	b=z3EGBIR7pL9wPod1zVqoTEO5lSWaxSWqmR1YSxc4beSJ/tMqgEPKHYYhY39RN7R4H
+	 YwRFg2326Re108n3azwKnks1nv+l9AmYBcnWqv+cwNPUSp3MZ9+C0prL71pcKbUWMo
+	 FiuByM83TgfFeLWYCUe9ucvIZrv1/9q4WsqTNIec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+9ee20ec1de7b3168db09@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Phillip Potter <phil@philpotter.co.uk>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/122] block: fix q->blkg_list corruption during disk rebind
-Date: Mon, 15 Apr 2024 16:20:00 +0200
-Message-ID: <20240415141954.423563141@linuxfoundation.org>
+Subject: [PATCH 6.6 036/122] geneve: fix header validation in geneve[6]_xmit_skb
+Date: Mon, 15 Apr 2024 16:20:01 +0200
+Message-ID: <20240415141954.453254636@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -53,98 +54,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8b8ace080319a866f5dfe9da8e665ae51d971c54 ]
+[ Upstream commit d8a6213d70accb403b82924a1c229e733433a5ef ]
 
-Multiple gendisk instances can allocated/added for single request queue
-in case of disk rebind. blkg may still stay in q->blkg_list when calling
-blkcg_init_disk() for rebind, then q->blkg_list becomes corrupted.
+syzbot is able to trigger an uninit-value in geneve_xmit() [1]
 
-Fix the list corruption issue by:
+Problem : While most ip tunnel helpers (like ip_tunnel_get_dsfield())
+uses skb_protocol(skb, true), pskb_inet_may_pull() is only using
+skb->protocol.
 
-- add blkg_init_queue() to initialize q->blkg_list & q->blkcg_mutex only
-- move calling blkg_init_queue() into blk_alloc_queue()
+If anything else than ETH_P_IPV6 or ETH_P_IP is found in skb->protocol,
+pskb_inet_may_pull() does nothing at all.
 
-The list corruption should be started since commit f1c006f1c685 ("blk-cgroup:
-synchronize pd_free_fn() from blkg_free_workfn() and blkcg_deactivate_policy()")
-which delays removing blkg from q->blkg_list into blkg_free_workfn().
+If a vlan tag was provided by the caller (af_packet in the syzbot case),
+the network header might not point to the correct location, and skb
+linear part could be smaller than expected.
 
-Fixes: f1c006f1c685 ("blk-cgroup: synchronize pd_free_fn() from blkg_free_workfn() and blkcg_deactivate_policy()")
-Fixes: 1059699f87eb ("block: move blkcg initialization/destroy into disk allocation/release handler")
-Cc: Yu Kuai <yukuai3@huawei.com>
-Cc: Tejun Heo <tj@kernel.org>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240407125910.4053377-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Add skb_vlan_inet_prepare() to perform a complete mac validation.
+
+Use this in geneve for the moment, I suspect we need to adopt this
+more broadly.
+
+v4 - Jakub reported v3 broke l2_tos_ttl_inherit.sh selftest
+   - Only call __vlan_get_protocol() for vlan types.
+Link: https://lore.kernel.org/netdev/20240404100035.3270a7d5@kernel.org/
+
+v2,v3 - Addressed Sabrina comments on v1 and v2
+Link: https://lore.kernel.org/netdev/Zg1l9L2BNoZWZDZG@hog/
+
+[1]
+
+BUG: KMSAN: uninit-value in geneve_xmit_skb drivers/net/geneve.c:910 [inline]
+ BUG: KMSAN: uninit-value in geneve_xmit+0x302d/0x5420 drivers/net/geneve.c:1030
+  geneve_xmit_skb drivers/net/geneve.c:910 [inline]
+  geneve_xmit+0x302d/0x5420 drivers/net/geneve.c:1030
+  __netdev_start_xmit include/linux/netdevice.h:4903 [inline]
+  netdev_start_xmit include/linux/netdevice.h:4917 [inline]
+  xmit_one net/core/dev.c:3531 [inline]
+  dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3547
+  __dev_queue_xmit+0x348d/0x52c0 net/core/dev.c:4335
+  dev_queue_xmit include/linux/netdevice.h:3091 [inline]
+  packet_xmit+0x9c/0x6c0 net/packet/af_packet.c:276
+  packet_snd net/packet/af_packet.c:3081 [inline]
+  packet_sendmsg+0x8bb0/0x9ef0 net/packet/af_packet.c:3113
+  sock_sendmsg_nosec net/socket.c:730 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:745
+  __sys_sendto+0x685/0x830 net/socket.c:2191
+  __do_sys_sendto net/socket.c:2203 [inline]
+  __se_sys_sendto net/socket.c:2199 [inline]
+  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2199
+ do_syscall_64+0xd5/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+
+Uninit was created at:
+  slab_post_alloc_hook mm/slub.c:3804 [inline]
+  slab_alloc_node mm/slub.c:3845 [inline]
+  kmem_cache_alloc_node+0x613/0xc50 mm/slub.c:3888
+  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:577
+  __alloc_skb+0x35b/0x7a0 net/core/skbuff.c:668
+  alloc_skb include/linux/skbuff.h:1318 [inline]
+  alloc_skb_with_frags+0xc8/0xbf0 net/core/skbuff.c:6504
+  sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2795
+  packet_alloc_skb net/packet/af_packet.c:2930 [inline]
+  packet_snd net/packet/af_packet.c:3024 [inline]
+  packet_sendmsg+0x722d/0x9ef0 net/packet/af_packet.c:3113
+  sock_sendmsg_nosec net/socket.c:730 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:745
+  __sys_sendto+0x685/0x830 net/socket.c:2191
+  __do_sys_sendto net/socket.c:2203 [inline]
+  __se_sys_sendto net/socket.c:2199 [inline]
+  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2199
+ do_syscall_64+0xd5/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+
+CPU: 0 PID: 5033 Comm: syz-executor346 Not tainted 6.9.0-rc1-syzkaller-00005-g928a87efa423 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/29/2024
+
+Fixes: d13f048dd40e ("net: geneve: modify IP header check in geneve6_xmit_skb and geneve_xmit_skb")
+Reported-by: syzbot+9ee20ec1de7b3168db09@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/000000000000d19c3a06152f9ee4@google.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Phillip Potter <phil@philpotter.co.uk>
+Cc: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Phillip Potter <phil@philpotter.co.uk>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 9 ++++++---
- block/blk-cgroup.h | 2 ++
- block/blk-core.c   | 2 ++
- 3 files changed, 10 insertions(+), 3 deletions(-)
+ drivers/net/geneve.c     |  4 ++--
+ include/net/ip_tunnels.h | 33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 4b48c2c440981..4c49a70b46bd1 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -1409,6 +1409,12 @@ static int blkcg_css_online(struct cgroup_subsys_state *css)
- 	return 0;
+diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
+index 0204ac92b05ab..0a18b67d0d669 100644
+--- a/drivers/net/geneve.c
++++ b/drivers/net/geneve.c
+@@ -926,7 +926,7 @@ static int geneve_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 	__be16 sport;
+ 	int err;
+ 
+-	if (!pskb_inet_may_pull(skb))
++	if (!skb_vlan_inet_prepare(skb))
+ 		return -EINVAL;
+ 
+ 	sport = udp_flow_src_port(geneve->net, skb, 1, USHRT_MAX, true);
+@@ -1024,7 +1024,7 @@ static int geneve6_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 	__be16 sport;
+ 	int err;
+ 
+-	if (!pskb_inet_may_pull(skb))
++	if (!skb_vlan_inet_prepare(skb))
+ 		return -EINVAL;
+ 
+ 	sport = udp_flow_src_port(geneve->net, skb, 1, USHRT_MAX, true);
+diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
+index f346b4efbc307..822f0fad39623 100644
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -360,6 +360,39 @@ static inline bool pskb_inet_may_pull(struct sk_buff *skb)
+ 	return pskb_network_may_pull(skb, nhlen);
  }
  
-+void blkg_init_queue(struct request_queue *q)
++/* Variant of pskb_inet_may_pull().
++ */
++static inline bool skb_vlan_inet_prepare(struct sk_buff *skb)
 +{
-+	INIT_LIST_HEAD(&q->blkg_list);
-+	mutex_init(&q->blkcg_mutex);
++	int nhlen = 0, maclen = ETH_HLEN;
++	__be16 type = skb->protocol;
++
++	/* Essentially this is skb_protocol(skb, true)
++	 * And we get MAC len.
++	 */
++	if (eth_type_vlan(type))
++		type = __vlan_get_protocol(skb, type, &maclen);
++
++	switch (type) {
++#if IS_ENABLED(CONFIG_IPV6)
++	case htons(ETH_P_IPV6):
++		nhlen = sizeof(struct ipv6hdr);
++		break;
++#endif
++	case htons(ETH_P_IP):
++		nhlen = sizeof(struct iphdr);
++		break;
++	}
++	/* For ETH_P_IPV6/ETH_P_IP we make sure to pull
++	 * a base network header in skb->head.
++	 */
++	if (!pskb_may_pull(skb, maclen + nhlen))
++		return false;
++
++	skb_set_network_header(skb, maclen);
++	return true;
 +}
 +
- int blkcg_init_disk(struct gendisk *disk)
+ static inline int ip_encap_hlen(struct ip_tunnel_encap *e)
  {
- 	struct request_queue *q = disk->queue;
-@@ -1416,9 +1422,6 @@ int blkcg_init_disk(struct gendisk *disk)
- 	bool preloaded;
- 	int ret;
- 
--	INIT_LIST_HEAD(&q->blkg_list);
--	mutex_init(&q->blkcg_mutex);
--
- 	new_blkg = blkg_alloc(&blkcg_root, disk, GFP_KERNEL);
- 	if (!new_blkg)
- 		return -ENOMEM;
-diff --git a/block/blk-cgroup.h b/block/blk-cgroup.h
-index b927a4a0ad030..5b0bdc268ade9 100644
---- a/block/blk-cgroup.h
-+++ b/block/blk-cgroup.h
-@@ -188,6 +188,7 @@ struct blkcg_policy {
- extern struct blkcg blkcg_root;
- extern bool blkcg_debug_stats;
- 
-+void blkg_init_queue(struct request_queue *q);
- int blkcg_init_disk(struct gendisk *disk);
- void blkcg_exit_disk(struct gendisk *disk);
- 
-@@ -481,6 +482,7 @@ struct blkcg {
- };
- 
- static inline struct blkcg_gq *blkg_lookup(struct blkcg *blkcg, void *key) { return NULL; }
-+static inline void blkg_init_queue(struct request_queue *q) { }
- static inline int blkcg_init_disk(struct gendisk *disk) { return 0; }
- static inline void blkcg_exit_disk(struct gendisk *disk) { }
- static inline int blkcg_policy_register(struct blkcg_policy *pol) { return 0; }
-diff --git a/block/blk-core.c b/block/blk-core.c
-index 2eca76ccf4ee0..a3726d8cf8738 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -430,6 +430,8 @@ struct request_queue *blk_alloc_queue(int node_id)
- 	init_waitqueue_head(&q->mq_freeze_wq);
- 	mutex_init(&q->mq_freeze_lock);
- 
-+	blkg_init_queue(q);
-+
- 	/*
- 	 * Init percpu_ref in atomic mode so that it's faster to shutdown.
- 	 * See blk_register_queue() for details.
+ 	const struct ip_tunnel_encap_ops *ops;
 -- 
 2.43.0
 
