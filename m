@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679DC7602A;
-	Mon, 15 Apr 2024 14:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F44E71B32;
+	Mon, 15 Apr 2024 14:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191157; cv=none; b=jQ1pU16XmKXx0ETKqG97xhS/Nc+tN7O5tXXyRuBFytQvZf70a+LrCDcYqz2krXss8OsWijLnhJ0ZRyPyJKZdgZ3KYAosA1ywsAs+GPtyPf7vPZ3uxYH795tQArsgCZOFC8x+rrAS78mKcqnDFZoBSmGbt3j60s8AuCTmH2nCqtM=
+	t=1713191160; cv=none; b=QZ+VR9bmGCuGRUW3wPzKR/tWnKKjNCGIrjeT8nNEVKdZJvIBTHyYUYqYgVKdjKbidVEWoUTa18CStUsOcQS8wxUCVB5xeeNW9K8Qx5AMay2iwX7yZnPHqAZ4ZRhNDG2StQC/kqAl6swI5S/zA4TXxVncVmRC9Pb/Q7gatp0FQi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191157; c=relaxed/simple;
-	bh=X3/U8WnYVT/W/Aaf3BuQAxV4T/TGfJyxoYeSCVeFivc=;
+	s=arc-20240116; t=1713191160; c=relaxed/simple;
+	bh=pJBo+NftW1P4ZmXLMRHvoHQhglxYyr0NndghdAfUNV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IobsfgEA0/5Zo5WgPp/DA7ieTwxeJYcWwtVvYeT6UUohQpMXlwJ3ixeItqNLGBEG3f2CorbWcq5UrP+39fPLLuGKPBoe72JmOpUz10jgkvcQlw8l/uWbhxpfKLSCGGVEpeQaaxMD+hZdk8Az+rgndE5xCLlEm6m4+vcimkWiKi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nkhAvgpx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TVegyFFS5fKSzvy6tNN7uvKDLfFYYv4AIgtByq6ZPEQ2VpxP8r8qHYzXaef05uU8kcb3oHRL0b7oZ8SpBWonfnb/TDd3dU5jnK9ng9jQgObmKmy2sF8KqWi17HHFyebduCiQhrZWwtcJXpjA63/scQ12tCKkAFK8ACMd9TnjroE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLj/pQki; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkhAvgpx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5684C2BD10;
-	Mon, 15 Apr 2024 14:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLj/pQki"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4E3C113CC;
+	Mon, 15 Apr 2024 14:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191157;
-	bh=X3/U8WnYVT/W/Aaf3BuQAxV4T/TGfJyxoYeSCVeFivc=;
+	s=korg; t=1713191160;
+	bh=pJBo+NftW1P4ZmXLMRHvoHQhglxYyr0NndghdAfUNV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nkhAvgpx1Eq7r6oeLSuXOEHgRNEWPWUSBIEKaNxmwJDkNk+NM9pMVgzzgjcZilQIm
-	 I7QwH1lkw2h8/oJ+v6wxFnor8UerFV9fhegdMycEcaM6xG8Nk7txZJNAeVAAQcIjtx
-	 AJBQrAZ5rMcnoJAfv6W/2IKjXTild7amNsKAiVNo=
+	b=XLj/pQkiRX3Yvqj4kG/N2r4u/yYW2xnUrsqnxFnbia4/rQ43nh3Pl2iA+vbYKpfP1
+	 GnwaAbz9OZ7d/2pLdo4gb25VkFK30+hXk0y5tYOXTKVkh2YyJUfYADUsFZBiq5bmoq
+	 XVqxAG4QUHH5LLi3xT4EdXU+GEFHV8EwpBrlTO5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+39ec16ff6cc18b1d066d@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.8 013/172] Bluetooth: Fix memory leak in hci_req_sync_complete()
-Date: Mon, 15 Apr 2024 16:18:32 +0200
-Message-ID: <20240415142000.386307276@linuxfoundation.org>
+	Tim Huang <Tim.Huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <superm1@gmail.com>
+Subject: [PATCH 6.8 014/172] drm/amd/pm: fixes a random hang in S4 for SMU v13.0.4/11
+Date: Mon, 15 Apr 2024 16:18:33 +0200
+Message-ID: <20240415142000.415254778@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -51,37 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Tim Huang <Tim.Huang@amd.com>
 
-commit 45d355a926ab40f3ae7bc0b0a00cb0e3e8a5a810 upstream.
+commit 31729e8c21ecfd671458e02b6511eb68c2225113 upstream.
 
-In 'hci_req_sync_complete()', always free the previous sync
-request state before assigning reference to a new one.
+While doing multiple S4 stress tests, GC/RLC/PMFW get into
+an invalid state resulting into hard hangs.
 
-Reported-by: syzbot+39ec16ff6cc18b1d066d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=39ec16ff6cc18b1d066d
-Cc: stable@vger.kernel.org
-Fixes: f60cb30579d3 ("Bluetooth: Convert hci_req_sync family of function to new request API")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Adding a GFX reset as workaround just before sending the
+MP1_UNLOAD message avoids this failure.
+
+Signed-off-by: Tim Huang <Tim.Huang@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Mario Limonciello <superm1@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_request.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_request.c
-+++ b/net/bluetooth/hci_request.c
-@@ -105,8 +105,10 @@ void hci_req_sync_complete(struct hci_de
- 	if (hdev->req_status == HCI_REQ_PEND) {
- 		hdev->req_result = result;
- 		hdev->req_status = HCI_REQ_DONE;
--		if (skb)
-+		if (skb) {
-+			kfree_skb(hdev->req_skb);
- 			hdev->req_skb = skb_get(skb);
-+		}
- 		wake_up_interruptible(&hdev->req_wait_q);
- 	}
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
+@@ -226,8 +226,18 @@ static int smu_v13_0_4_system_features_c
+ 	struct amdgpu_device *adev = smu->adev;
+ 	int ret = 0;
+ 
+-	if (!en && !adev->in_s0ix)
++	if (!en && !adev->in_s0ix) {
++		/* Adds a GFX reset as workaround just before sending the
++		 * MP1_UNLOAD message to prevent GC/RLC/PMFW from entering
++		 * an invalid state.
++		 */
++		ret = smu_cmn_send_smc_msg_with_param(smu, SMU_MSG_GfxDeviceDriverReset,
++						      SMU_RESET_MODE_2, NULL);
++		if (ret)
++			return ret;
++
+ 		ret = smu_cmn_send_smc_msg(smu, SMU_MSG_PrepareMp1ForUnload, NULL);
++	}
+ 
+ 	return ret;
  }
 
 
