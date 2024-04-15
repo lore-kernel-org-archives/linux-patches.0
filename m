@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4423478C66;
-	Mon, 15 Apr 2024 14:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389EB811EB;
+	Mon, 15 Apr 2024 14:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191489; cv=none; b=LsVzgdfa2D+BU7lRElIDtJ01Po1tJ0jTzZYb9kNWsxrOdrHSn4RQADcFQuHT8Cyer3D0Jb314JT21zp9W4w5v5LRfQxICy2k7hKqaWeYylReK17Aebsryho800+8EVSilTK13+j6o8vqphsXQC1AXaoRN7qqFgrzOs47p4XCDkw=
+	t=1713191492; cv=none; b=iy1z5daONaGr1qApxy/KvTIcb7BacMYf5RMQTFaFIDIOaihGLBjJXCeIjYbq55TjhXnI7wvdGZITzgSSKXcLuLcgyh/D5NSt3QZ5c5Vr6YsvDA25izQPfuNslhImukCcUvEuTAk8h9Zbn1i71kR87euWpMl0MAFqRK+743twIAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191489; c=relaxed/simple;
-	bh=NlM5fJIyjJcwPD1IzSG1q6SWBRFCYnKo+x+QAFcho2Q=;
+	s=arc-20240116; t=1713191492; c=relaxed/simple;
+	bh=uoSLwY9RvpbUdbw6bY2bZX4zLHVWCmLE3ZzYYQ3Jx6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uSgFwQLTMdSauN5Rm9trOfby3vNKtRUPAM8R/BXdujdcZBmmnulC35lAljmeMeh9rnKX8c1FNmrhWGeDkRqM2MvK9YtML+P3nzTsTk6db5CaaqYyn+iKEJdGF0hL9++PNK2fTczCdPR2qmgYLuLsvSh0u+CzwbBm8qOBYvuZWyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bh0GZfsc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YhcE1baNsbnJJR9PY7MstaTKGSrdKp1N9RQ+3tC+l51etw3rY1dIXBuopnKHmvZH4kDPff9eOAeKQJdiW15s8/OL2M/f/qvt4xnoRGqj9H2r+++5+RQQbWbW9POtSWpPnZmuZCZoCcGaaufTdz0STbqtgvOpM5S1ZYpzU7t4x/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YyzR4u6p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bh0GZfsc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1119C113CC;
-	Mon, 15 Apr 2024 14:31:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YyzR4u6p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F65C113CC;
+	Mon, 15 Apr 2024 14:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191489;
-	bh=NlM5fJIyjJcwPD1IzSG1q6SWBRFCYnKo+x+QAFcho2Q=;
+	s=korg; t=1713191492;
+	bh=uoSLwY9RvpbUdbw6bY2bZX4zLHVWCmLE3ZzYYQ3Jx6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bh0GZfscI26H17mqPLzIVrWWlcnDECug7V4djXIgXFHPo+QGBI8TixBRl+n07Ygsn
-	 jRVI2KRC2OksV/M2r9iTzHeBFmS3PlSGENUdVuyj64F57lR1C4sfN+Di4ERRzxEIlC
-	 E5q6/KbrDMpYvZO8USmYmX/IiFd8J4wupYGa8oX4=
+	b=YyzR4u6pqPTleJAkzjCduV5D69QYU+apIuiMDsPGS62/x8gYY05KEAduIeO3Qw1MD
+	 mOpxMqewlTCAvncmp9iAFgw/XMt7P/lxowXA6/eA0l5huJ/FmKoTavSd5J/AZ+V3x2
+	 dl3lfzUJ3cNlmVQvNHziILlvVIkVs7QanjN80jHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uma Shankar <uma.shankar@intel.com>,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Arun R Murthy <arun.r.mruthy@intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
 	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.8 159/172] drm/i915/cdclk: Fix CDCLK programming order when pipes are active
-Date: Mon, 15 Apr 2024 16:20:58 +0200
-Message-ID: <20240415142005.186844209@linuxfoundation.org>
+Subject: [PATCH 6.8 160/172] drm/i915/psr: Disable PSR when bigjoiner is used
+Date: Mon, 15 Apr 2024 16:20:59 +0200
+Message-ID: <20240415142005.217364899@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -55,101 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 7b1f6b5aaec0f849e19c3e99d4eea75876853cdd upstream.
+commit e3d4ead4d48c05355bd3b99c8162428f68c3c1a5 upstream.
 
-Currently we always reprogram CDCLK from the
-intel_set_cdclk_pre_plane_update() when using squash/crawl.
-The code only works correctly for the cd2x update or full
-modeset cases, and it was simply never updated to deal with
-squash/crawl.
-
-If the CDCLK frequency is increasing we must reprogram it
-before we do anything else that might depend on the new
-higher frequency, and conversely we must not decrease
-the frequency until everything that might still depend
-on the old higher frequency has been dealt with.
-
-Since cdclk_state->pipe is only relevant when doing a cd2x
-update we can't use it to determine the correct sequence
-during squash/crawl. To that end introduce cdclk_state->disable_pipes
-which simply indicates that we must perform the update
-while the pipes are disable (ie. during
-intel_set_cdclk_pre_plane_update()). Otherwise we use the
-same old vs. new CDCLK frequency comparsiong as for cd2x
-updates.
-
-The only remaining problem case is when the voltage_level
-needs to increase due to a DDI port, but the CDCLK frequency
-is decreasing (and not all pipes are being disabled). The
-current approach will not bump the voltage level up until
-after the port has already been enabled, which is too late.
-But we'll take care of that case separately.
-
-v2: Don't break the "must disable pipes case"
-v3: Keep the on stack 'pipe' for future use
+Bigjoiner seem to be causing all kinds of grief to the PSR
+code currently. I don't believe there is any hardware issue
+but the code simply not handling this correctly. For now
+just disable PSR when bigjoiner is needed.
 
 Cc: stable@vger.kernel.org
-Fixes: d62686ba3b54 ("drm/i915/adl_p: CDCLK crawl support for ADL")
-Reviewed-by: Uma Shankar <uma.shankar@intel.com>
-Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240404213441.17637-3-ville.syrjala@linux.intel.com
+Reviewed-by: Arun R Murthy <arun.r.mruthy@intel.com>
+Acked-by: Jouni Högander <jouni.hogander@intel.com>
 Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240402155016.13733-2-ville.syrjala@linux.intel.com
-(cherry picked from commit 3aecee90ac12a351905f12dda7643d5b0676d6ca)
+(cherry picked from commit 372fa0c79d3f289f813d8001e0a8a96d1011826c)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_cdclk.c |    7 +++++--
- drivers/gpu/drm/i915/display/intel_cdclk.h |    3 +++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/gpu/drm/i915/display/intel_cdclk.c
-+++ b/drivers/gpu/drm/i915/display/intel_cdclk.c
-@@ -2521,7 +2521,7 @@ intel_set_cdclk_pre_plane_update(struct
- 	if (IS_DG2(i915))
- 		intel_cdclk_pcode_pre_notify(state);
- 
--	if (pipe == INVALID_PIPE ||
-+	if (new_cdclk_state->disable_pipes ||
- 	    old_cdclk_state->actual.cdclk <= new_cdclk_state->actual.cdclk) {
- 		drm_WARN_ON(&i915->drm, !new_cdclk_state->base.changed);
- 
-@@ -2553,7 +2553,7 @@ intel_set_cdclk_post_plane_update(struct
- 	if (IS_DG2(i915))
- 		intel_cdclk_pcode_post_notify(state);
- 
--	if (pipe != INVALID_PIPE &&
-+	if (!new_cdclk_state->disable_pipes &&
- 	    old_cdclk_state->actual.cdclk > new_cdclk_state->actual.cdclk) {
- 		drm_WARN_ON(&i915->drm, !new_cdclk_state->base.changed);
- 
-@@ -3036,6 +3036,7 @@ static struct intel_global_state *intel_
- 		return NULL;
- 
- 	cdclk_state->pipe = INVALID_PIPE;
-+	cdclk_state->disable_pipes = false;
- 
- 	return &cdclk_state->base;
- }
-@@ -3214,6 +3215,8 @@ int intel_modeset_calc_cdclk(struct inte
- 		if (ret)
- 			return ret;
- 
-+		new_cdclk_state->disable_pipes = true;
-+
- 		drm_dbg_kms(&dev_priv->drm,
- 			    "Modeset required for cdclk change\n");
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -1368,6 +1368,17 @@ void intel_psr_compute_config(struct int
+ 		return;
  	}
---- a/drivers/gpu/drm/i915/display/intel_cdclk.h
-+++ b/drivers/gpu/drm/i915/display/intel_cdclk.h
-@@ -51,6 +51,9 @@ struct intel_cdclk_state {
  
- 	/* bitmask of active pipes */
- 	u8 active_pipes;
++	/*
++	 * FIXME figure out what is wrong with PSR+bigjoiner and
++	 * fix it. Presumably something related to the fact that
++	 * PSR is a transcoder level feature.
++	 */
++	if (crtc_state->bigjoiner_pipes) {
++		drm_dbg_kms(&dev_priv->drm,
++			    "PSR disabled due to bigjoiner\n");
++		return;
++	}
 +
-+	/* update cdclk with pipes disabled */
-+	bool disable_pipes;
- };
- 
- int intel_crtc_compute_min_cdclk(const struct intel_crtc_state *crtc_state);
+ 	if (CAN_PANEL_REPLAY(intel_dp))
+ 		crtc_state->has_panel_replay = true;
+ 	else
 
 
