@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7290641C75;
-	Mon, 15 Apr 2024 14:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3F27581B;
+	Mon, 15 Apr 2024 14:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191548; cv=none; b=OD6lcYty7yz3eY+t4kFPi9biaBFFGqWHIGGCQTQ3uSr/H+E1PgRsBx3nHumfkAnsa8h1znGLRst2UO6Ur3Wsy0MTCATMKQ/HNpBNf6bv4B6v4hUJpnbwL9UY6HGruk1EG+cX+muw1MgE5dTAMY3J6NNAbwMqDGPCtygz8OBKQEA=
+	t=1713191551; cv=none; b=mti6izSYfEzVSVhYnOpNF6b4xjLFOZtgQYz33L2iDaQEyMVqO0eIhfwdt1Sl5J+lVeUBJcLn7uul438CmNZpVUYkog7NOHk/sfo4nkl6bo0HcTdNhhmDhX35iz6D8YkQa0yQ60+TZesLSIIrsLPfXL6pNS0sBkpOpUrwYxZ9c1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191548; c=relaxed/simple;
-	bh=0t6dwT6l7d3WCElEwmubtdz5wEUxP1A4SzT8xsJm4mg=;
+	s=arc-20240116; t=1713191551; c=relaxed/simple;
+	bh=BDLmlm8U65qv59bADBTj+upCTyn43H/elJcug7mIx0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plZPHhvRZqD//y8bI+Y88e1ZzxH+OKCtaBRNNHMudqwNWTXO+dAuKAcxCepolvaFJrhW49DXwo2+GhaymWfuo9zFHB5O+adC5ng/CsiW7pojfl5daferl99eOU6j66gCA73ifQ6JcK5/b7CjbkRgqq8pPTlhnuiPgOJsBJS7kxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1tNPyTK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Io6rrEa1HXJgxliq8S0MjLKEZjUpuMkOMPzCwPuCDlinscp9rfmjDzmEu05QhL8EK49xunrnkK+Oi3BbfUAOLK2hfN3rXUfuTCoPHATCQaV2+3CdXhLnqgGWvdaJOKdCRvZznj8Aw/1CTJHC0K4rw/c10COw0Zmw8vHPdPippWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAMV+8q4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1tNPyTK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC52C113CC;
-	Mon, 15 Apr 2024 14:32:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAMV+8q4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8670C113CC;
+	Mon, 15 Apr 2024 14:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191548;
-	bh=0t6dwT6l7d3WCElEwmubtdz5wEUxP1A4SzT8xsJm4mg=;
+	s=korg; t=1713191551;
+	bh=BDLmlm8U65qv59bADBTj+upCTyn43H/elJcug7mIx0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L1tNPyTK0cQ8yLyWPMMVVT3MiI+Fgb6Xt8gyB81+Bepk1ZaLHhkMBUKt9LJcYsHGR
-	 PtYvZkYP/4DciwQ9RV+oQKOrFxt3i1NtRbFq3G7B+ASeuDaEo00d3yfHjYDcx5DVyc
-	 JVg9PcCQKnxwMGkBYLBX+2i669tCVe9avjihCLww=
+	b=hAMV+8q4FTJAga5VAj2/g54c8gerjIK2pPsTdvK3QQgB/3NKjfOuKpwICnPiTvRRw
+	 KjPMwdPsWcQVIBNyKQzgQ7QmDnCVTxQdn3V37B7xnEhPS4JmbBMHrjSZYJVXE38vNE
+	 NG3JxRH5U9Plf2ucBA+Wjd6gJJfSRm2Kf9XonMsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>
-Subject: [PATCH 6.8 141/172] perf/x86: Fix out of range data
-Date: Mon, 15 Apr 2024 16:20:40 +0200
-Message-ID: <20240415142004.655887847@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.8 132/172] arm64: dts: imx8qm-ss-dma: fix can lpcg indices
+Date: Mon, 15 Apr 2024 16:20:31 +0200
+Message-ID: <20240415142004.390017429@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -51,109 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit dec8ced871e17eea46f097542dd074d022be4bd1 upstream.
+commit 00b436182138310bb8d362b912b12a9df8f72ca3 upstream.
 
-On x86 each struct cpu_hw_events maintains a table for counter assignment but
-it missed to update one for the deleted event in x86_pmu_del().  This
-can make perf_clear_dirty_counters() reset used counter if it's called
-before event scheduling or enabling.  Then it would return out of range
-data which doesn't make sense.
+can1_lpcg: clock-controller@5ace0000 {
+	...						    Col1   Col2
+	clocks = <&clk IMX_SC_R_CAN_1 IMX_SC_PM_CLK_PER>,//  0       0
+		 <&dma_ipg_clk>,			 //  1       4
+		 <&dma_ipg_clk>;			 //  2       5
+	clock-indices = <IMX_LPCG_CLK_0>,
+			<IMX_LPCG_CLK_4>,
+			<IMX_LPCG_CLK_5>;
+};
 
-The following code can reproduce the problem.
+Col1: index, which existing dts try to get.
+Col2: actual index in lpcg driver
 
-  $ cat repro.c
-  #include <pthread.h>
-  #include <stdio.h>
-  #include <stdlib.h>
-  #include <unistd.h>
-  #include <linux/perf_event.h>
-  #include <sys/ioctl.h>
-  #include <sys/mman.h>
-  #include <sys/syscall.h>
+&flexcan2 {
+	clocks = <&can1_lpcg 1>, <&can1_lpcg 0>;
+			     ^^		     ^^
+Should be:
+	clocks = <&can1_lpcg IMX_LPCG_CLK_4>, <&can1_lpcg IMX_LPCG_CLK_0>;
+};
 
-  struct perf_event_attr attr = {
-  	.type = PERF_TYPE_HARDWARE,
-  	.config = PERF_COUNT_HW_CPU_CYCLES,
-  	.disabled = 1,
-  };
+Arg0 is divided by 4 in lpcg driver. So flexcan get IMX_SC_PM_CLK_PER by
+<&can1_lpcg 1> and <&can1_lpcg 0>. Although function work, code logic is
+wrong. Fix it by using correct clock indices.
 
-  void *worker(void *arg)
-  {
-  	int cpu = (long)arg;
-  	int fd1 = syscall(SYS_perf_event_open, &attr, -1, cpu, -1, 0);
-  	int fd2 = syscall(SYS_perf_event_open, &attr, -1, cpu, -1, 0);
-  	void *p;
-
-  	do {
-  		ioctl(fd1, PERF_EVENT_IOC_ENABLE, 0);
-  		p = mmap(NULL, 4096, PROT_READ, MAP_SHARED, fd1, 0);
-  		ioctl(fd2, PERF_EVENT_IOC_ENABLE, 0);
-
-  		ioctl(fd2, PERF_EVENT_IOC_DISABLE, 0);
-  		munmap(p, 4096);
-  		ioctl(fd1, PERF_EVENT_IOC_DISABLE, 0);
-  	} while (1);
-
-  	return NULL;
-  }
-
-  int main(void)
-  {
-  	int i;
-  	int n = sysconf(_SC_NPROCESSORS_ONLN);
-  	pthread_t *th = calloc(n, sizeof(*th));
-
-  	for (i = 0; i < n; i++)
-  		pthread_create(&th[i], NULL, worker, (void *)(long)i);
-  	for (i = 0; i < n; i++)
-  		pthread_join(th[i], NULL);
-
-  	free(th);
-  	return 0;
-  }
-
-And you can see the out of range data using perf stat like this.
-Probably it'd be easier to see on a large machine.
-
-  $ gcc -o repro repro.c -pthread
-  $ ./repro &
-  $ sudo perf stat -A -I 1000 2>&1 | awk '{ if (length($3) > 15) print }'
-       1.001028462 CPU6   196,719,295,683,763      cycles                           # 194290.996 GHz                       (71.54%)
-       1.001028462 CPU3   396,077,485,787,730      branch-misses                    # 15804359784.80% of all branches      (71.07%)
-       1.001028462 CPU17  197,608,350,727,877      branch-misses                    # 14594186554.56% of all branches      (71.22%)
-       2.020064073 CPU4   198,372,472,612,140      cycles                           # 194681.113 GHz                       (70.95%)
-       2.020064073 CPU6   199,419,277,896,696      cycles                           # 195720.007 GHz                       (70.57%)
-       2.020064073 CPU20  198,147,174,025,639      cycles                           # 194474.654 GHz                       (71.03%)
-       2.020064073 CPU20  198,421,240,580,145      stalled-cycles-frontend          #  100.14% frontend cycles idle        (70.93%)
-       3.037443155 CPU4   197,382,689,923,416      cycles                           # 194043.065 GHz                       (71.30%)
-       3.037443155 CPU20  196,324,797,879,414      cycles                           # 193003.773 GHz                       (71.69%)
-       3.037443155 CPU5   197,679,956,608,205      stalled-cycles-backend           # 1315606428.66% backend cycles idle   (71.19%)
-       3.037443155 CPU5   198,571,860,474,851      instructions                     # 13215422.58  insn per cycle
-
-It should move the contents in the cpuc->assign as well.
-
-Fixes: 5471eea5d3bf ("perf/x86: Reset the dirty counter to prevent the leak for an RDPMC task")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240306061003.1894224-1-namhyung@kernel.org
+Fixes: be85831de020 ("arm64: dts: imx8qm: add can node in devicetree")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/freescale/imx8qm-ss-dma.dtsi |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -1644,6 +1644,7 @@ static void x86_pmu_del(struct perf_even
- 	while (++i < cpuc->n_events) {
- 		cpuc->event_list[i-1] = cpuc->event_list[i];
- 		cpuc->event_constraint[i-1] = cpuc->event_constraint[i];
-+		cpuc->assign[i-1] = cpuc->assign[i];
- 	}
- 	cpuc->event_constraint[i-1] = NULL;
- 	--cpuc->n_events;
+--- a/arch/arm64/boot/dts/freescale/imx8qm-ss-dma.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8qm-ss-dma.dtsi
+@@ -127,15 +127,15 @@
+ };
+ 
+ &flexcan2 {
+-	clocks = <&can1_lpcg 1>,
+-		 <&can1_lpcg 0>;
++	clocks = <&can1_lpcg IMX_LPCG_CLK_4>,
++		 <&can1_lpcg IMX_LPCG_CLK_0>;
+ 	assigned-clocks = <&clk IMX_SC_R_CAN_1 IMX_SC_PM_CLK_PER>;
+ 	fsl,clk-source = /bits/ 8 <1>;
+ };
+ 
+ &flexcan3 {
+-	clocks = <&can2_lpcg 1>,
+-		 <&can2_lpcg 0>;
++	clocks = <&can2_lpcg IMX_LPCG_CLK_4>,
++		 <&can2_lpcg IMX_LPCG_CLK_0>;
+ 	assigned-clocks = <&clk IMX_SC_R_CAN_2 IMX_SC_PM_CLK_PER>;
+ 	fsl,clk-source = /bits/ 8 <1>;
+ };
 
 
