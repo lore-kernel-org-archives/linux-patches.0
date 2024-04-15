@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FFA77F15;
-	Mon, 15 Apr 2024 14:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4F577658;
+	Mon, 15 Apr 2024 14:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191086; cv=none; b=ipDGNA932+liZb84BVN699AfuSn7543pOk5l91AgxrRAab5z0XPBlFZ3gw0xMrHoujLm92rnrg0dPlgchPpw5JyvwYAj6YhL3pXUsLkU75SvMbrJnlvAlujGrNcwQ23lF0W8Y7p5a4SSDryyiN5A7UuPteE9OA3tuSkmZ/HpCTQ=
+	t=1713191089; cv=none; b=WVLsMMuYjtJoX0r5Xueb+UgY8iymkOqLxme8+Pz5Ql4B+h3oyD3D4rw9eSfLcNwGrbBDcda/zjTMVarY9G8zBSzTrmeeUOfb5XcwCu9mq14wSL1gIS1TnNJJU5qmFP4gu31SgbxTL2FKxuxRitySl+hprZwTjNed/lqbpByDgbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191086; c=relaxed/simple;
-	bh=CQtwwECl0ReMXs2kpiaO00vA7etkPT7nxvImrwZSSk4=;
+	s=arc-20240116; t=1713191089; c=relaxed/simple;
+	bh=c+/xEKMENRKbEFDOiVze9Wmt3fI/D3M8d8h3Nbd5Gl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AKuhhUSOmwsDPF+hWa7pRxgSIyChQ7Ghuau+iXoKlcIOLxJ5LiLpXZl2jZe2foEriDd7mF5jGRwc7Y56NgD8svc77Fgu0DVmsAxdtlTOs3waHarXHpz2bCEaRq8y40VUVIuRnm9igxuMpEOAEphn0rTEmE7ceK7hNe19WTZMnEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=apciiIec; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AeF5tSdTZyXXufPup5aZ6yaXxrFrqw5HZsmKKfTzV2FGy6knWsO94hSPTrQu2yZHRoFESow1vmO/N6oafda0LpAwqsf8OUMUGKqpvVwF3Kd8mQ9+n922GE5BIlvZFuPp8JMc0iOM+FAg67A2MEIfUgSTs6vDWO1DW+dgRkslb54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=me/KKj/7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="apciiIec"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD40C113CC;
-	Mon, 15 Apr 2024 14:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="me/KKj/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2B8C113CC;
+	Mon, 15 Apr 2024 14:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191085;
-	bh=CQtwwECl0ReMXs2kpiaO00vA7etkPT7nxvImrwZSSk4=;
+	s=korg; t=1713191088;
+	bh=c+/xEKMENRKbEFDOiVze9Wmt3fI/D3M8d8h3Nbd5Gl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=apciiIecUSlxwsTKiW8UaXbnS6o6EEkO70AYU+ZX70cdpsM+2XCtEDuHs9pTP7Wzf
-	 7aUdmr95t5mM6QOlm4GSpR5PHqLpr3C9OepTdAkOaRATTdtw31l2ErB1c7xwj9S96o
-	 lV817JpK7wy1idKrdRbuqJdsysiQ3xIA6l7PvzWA=
+	b=me/KKj/7hfUFAeMvgW6uWaKyOnp+jYH9330VYTINabyONNl8Te2vBKBR+x879ogVj
+	 Y7dDnT9C2TrXZPZ12Hz7+GS2ZTV0mOrDP9F9pUn7pyk3CNtmNEtoasxVQe8S4OFLDZ
+	 DDSuLpTKEWC6GoB8zPFakRZ+3xOuvQ+rZPkKsgQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.8 010/172] ARM: dts: imx7s-warp: Pass OV2680 link-frequencies
-Date: Mon, 15 Apr 2024 16:18:29 +0200
-Message-ID: <20240415142000.295901798@linuxfoundation.org>
+	Yuquan Wang <wangyuquan1236@phytium.com.cn>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Fan Ni <fan.ni@samsung.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 028/172] cxl/mem: Fix for the index of Clear Event Record Handle
+Date: Mon, 15 Apr 2024 16:18:47 +0200
+Message-ID: <20240415142001.201790112@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -50,39 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
 
-commit 135f218255b28c5bbf71e9e32a49e5c734cabbe5 upstream.
+[ Upstream commit b7c59b038c656214f56432867056997c2e0fc268 ]
 
-Since commit 63b0cd30b78e ("media: ov2680: Add bus-cfg / endpoint
-property verification") the ov2680 no longer probes on a imx7s-warp7:
+The dev_dbg info for Clear Event Records mailbox command would report
+the handle of the next record to clear not the current one.
 
-ov2680 1-0036: error -EINVAL: supported link freq 330000000 not found
-ov2680 1-0036: probe with driver ov2680 failed with error -22
+This was because the index 'i' had incremented before printing the
+current handle value.
 
-Fix it by passing the required 'link-frequencies' property as
-recommended by:
-
-https://www.kernel.org/doc/html/v6.9-rc1/driver-api/media/camera-sensor.html#handling-clocks
-
-Cc: stable@vger.kernel.org
-Fixes: 63b0cd30b78e ("media: ov2680: Add bus-cfg / endpoint property verification")
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6ebe28f9ec72 ("cxl/mem: Read, trace, and clear events on driver load")
+Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Fan Ni <fan.ni@samsung.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx7s-warp.dts |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/cxl/core/mbox.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm/boot/dts/nxp/imx/imx7s-warp.dts
-+++ b/arch/arm/boot/dts/nxp/imx/imx7s-warp.dts
-@@ -210,6 +210,7 @@
- 				remote-endpoint = <&mipi_from_sensor>;
- 				clock-lanes = <0>;
- 				data-lanes = <1>;
-+				link-frequencies = /bits/ 64 <330000000>;
- 			};
- 		};
- 	};
+diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+index 9adda4795eb78..50146161887d5 100644
+--- a/drivers/cxl/core/mbox.c
++++ b/drivers/cxl/core/mbox.c
+@@ -915,7 +915,7 @@ static int cxl_clear_event_record(struct cxl_memdev_state *mds,
+ 
+ 		payload->handles[i++] = gen->hdr.handle;
+ 		dev_dbg(mds->cxlds.dev, "Event log '%d': Clearing %u\n", log,
+-			le16_to_cpu(payload->handles[i]));
++			le16_to_cpu(payload->handles[i - 1]));
+ 
+ 		if (i == max_handles) {
+ 			payload->nr_recs = i;
+-- 
+2.43.0
+
 
 
