@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF097580D;
-	Mon, 15 Apr 2024 14:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676CA76033;
+	Mon, 15 Apr 2024 14:35:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191749; cv=none; b=mnzRgrfFii/TgsTj3BwsFyOuBfUENHlRGFhNudmPyM17enWcRcPwN/3g6qYc632uoZz/r1lpcHd+4q6DpYIAjw5v6yBJXY18TyLWazhEZUDMFnVyJ7f00MiFDOOvSq5tSGVf3gjq/bMxgecljD1P5IpgiwICIKjBW6yBsIhwOP0=
+	t=1713191752; cv=none; b=c9OjlwUnjaiQi7oLvZp288XPLMoGQZ6pYt9uWPEdvpNcBxWa20KrwceOutbEAakM9PsBopb980tYEYe/SyZMZE4bRaYAuR2GXUhOO7x+Q61QOk6tP9hXyXY2H/qACH0x/pFK4AHw8sBaTqb2O621QUr4KtnfISziPQBX0CZht2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191749; c=relaxed/simple;
-	bh=dXj/h+IxvrAB0MayVw/YAFD4d/f/o68hQz4bH2ROPs4=;
+	s=arc-20240116; t=1713191752; c=relaxed/simple;
+	bh=+tg5kjZmTl7NxSvFK24M1wfRTBSioc7h/gkotVS/eo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RNGImhdqrT6kNPHKl1b8Xl43GuzFFEdBPtQYOJiFqlGxj2to+0qsFPntLGQi3cICcgB0CqY4KdcHMIQjwfOOZgkDIJTEKb7LQRIn39AojbaZ0T/RFsqkro2jxBb3oqX1tmsQ7UnyqdDivBGPdpiclyVJlId1lUDGr7uBKJIL/vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1dcO+PU3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sn9Bj8uycSDrDhU1kwj7Ti1rqqPKdYZuhyYNHg+4/tvvF7v2sdFMnA7n96ju5oN4IZFRFvSBzMIsfhvwKn+4Fj4QKi363Al7Ar0Bwo3dgQGEkiw3TVSPUbcGgPW/iRHm9E9Tsuu3xmvVWWDK28rvVy9pX7cY+y93jfz3Gzq0kf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T26u6NT6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dcO+PU3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C60AC113CC;
-	Mon, 15 Apr 2024 14:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T26u6NT6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A33C113CC;
+	Mon, 15 Apr 2024 14:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191748;
-	bh=dXj/h+IxvrAB0MayVw/YAFD4d/f/o68hQz4bH2ROPs4=;
+	s=korg; t=1713191751;
+	bh=+tg5kjZmTl7NxSvFK24M1wfRTBSioc7h/gkotVS/eo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1dcO+PU3tFhTbGVjCj7MqfYch9+AtuHezTIJcy4bgcAPIWhowdjUfKCJ1L9fnWD8b
-	 PjRGD7h14Oj3+aZGYdTa6s1pzOv6XYNMY1s7zWGlOZLtaEUrTKMN49GJqVUsXT0ZbE
-	 6r7ilnMJ/5bJ3KVc+iqmhHAjTaIw7CfyZoCcWGvw=
+	b=T26u6NT6e58ny69o3FywYfkxmQdGHSdCN4KXND832FJK9/ATAux8aN73NsxsPJ9y4
+	 /SDqCiYvwDU8UqcXP5Ua2BNLT89Sf2pKG907AoMGadTLzHwyIR9ZmX69aIndyUQN9D
+	 RbgnMcFO4kHSTQABphbKXZdlTBZGZDTwF2Xo0aIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Arinzon <darinzon@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/122] net: ena: Pass ena_adapter instead of net_device to ena_xmit_common()
-Date: Mon, 15 Apr 2024 16:20:37 +0200
-Message-ID: <20240415141955.539236688@linuxfoundation.org>
+Subject: [PATCH 6.6 073/122] net: ena: Use tx_ring instead of xdp_ring for XDP channel TX
+Date: Mon, 15 Apr 2024 16:20:38 +0200
+Message-ID: <20240415141955.568542397@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -54,138 +54,387 @@ Content-Transfer-Encoding: 8bit
 
 From: David Arinzon <darinzon@amazon.com>
 
-[ Upstream commit 39a044f4dcfee1c776603a6589b6fb98a9e222f2 ]
+[ Upstream commit 911a8c960110b03ed519ce43ea6c9990a0ee0ceb ]
 
-This change will enable the ability to use ena_xmit_common()
-in functions that don't have a net_device pointer.
-While it can be retrieved by dereferencing
-ena_adapter (adapter->netdev), there's no reason to do it in
-fast path code where this pointer is only needed for
-debug prints.
+When an XDP program is loaded the existing channels in the driver split
+into two halves:
+- The first half of the channels contain RX and TX rings, these queues
+  are used for receiving traffic and sending packets originating from
+  kernel.
+- The second half of the channels contain only a TX ring. These queues
+  are used for sending packets that were redirected using XDP_TX
+  or XDP_REDIRECT.
+
+Referring to the queues in the second half of the channels as "xdp_ring"
+can be confusing and may give the impression that ENA has the capability
+to generate an additional special queue.
+
+This patch ensures that the xdp_ring field is exclusively used to
+describe the XDP TX queue that a specific RX queue needs to utilize when
+forwarding packets with XDP TX and XDP REDIRECT, preserving the
+integrity of the xdp_ring field in ena_ring.
 
 Signed-off-by: Shay Agroskin <shayagr@amazon.com>
 Signed-off-by: David Arinzon <darinzon@amazon.com>
-Link: https://lore.kernel.org/r/20240101190855.18739-3-darinzon@amazon.com
+Link: https://lore.kernel.org/r/20240101190855.18739-6-darinzon@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 36a1ca01f045 ("net: ena: Set tx_info->xdpf value to NULL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_netdev.c | 9 ++++-----
- drivers/net/ethernet/amazon/ena/ena_netdev.h | 2 +-
- drivers/net/ethernet/amazon/ena/ena_xdp.c    | 6 +++---
- drivers/net/ethernet/amazon/ena/ena_xdp.h    | 4 ++--
- 4 files changed, 10 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c |  12 +-
+ drivers/net/ethernet/amazon/ena/ena_netdev.h |   1 -
+ drivers/net/ethernet/amazon/ena/ena_xdp.c    | 111 +++++++++----------
+ drivers/net/ethernet/amazon/ena/ena_xdp.h    |   2 +-
+ 4 files changed, 61 insertions(+), 65 deletions(-)
 
 diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index 1e74386829c42..8868494929c78 100644
+index 8868494929c78..b239e473d59fa 100644
 --- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
 +++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -88,19 +88,18 @@ static int ena_change_mtu(struct net_device *dev, int new_mtu)
- 	return ret;
+@@ -1753,8 +1753,8 @@ static void ena_del_napi_in_range(struct ena_adapter *adapter,
+ 	for (i = first_index; i < first_index + count; i++) {
+ 		netif_napi_del(&adapter->ena_napi[i].napi);
+ 
+-		WARN_ON(!ENA_IS_XDP_INDEX(adapter, i) &&
+-			adapter->ena_napi[i].xdp_ring);
++		WARN_ON(ENA_IS_XDP_INDEX(adapter, i) &&
++			adapter->ena_napi[i].rx_ring);
+ 	}
  }
  
--int ena_xmit_common(struct net_device *dev,
-+int ena_xmit_common(struct ena_adapter *adapter,
- 		    struct ena_ring *ring,
- 		    struct ena_tx_buffer *tx_info,
- 		    struct ena_com_tx_ctx *ena_tx_ctx,
- 		    u16 next_to_use,
- 		    u32 bytes)
- {
--	struct ena_adapter *adapter = netdev_priv(dev);
- 	int rc, nb_hw_desc;
+@@ -1769,12 +1769,10 @@ static void ena_init_napi_in_range(struct ena_adapter *adapter,
+ 		netif_napi_add(adapter->netdev, &napi->napi,
+ 			       ENA_IS_XDP_INDEX(adapter, i) ? ena_xdp_io_poll : ena_io_poll);
  
- 	if (unlikely(ena_com_is_doorbell_needed(ring->ena_com_io_sq,
- 						ena_tx_ctx))) {
--		netif_dbg(adapter, tx_queued, dev,
-+		netif_dbg(adapter, tx_queued, adapter->netdev,
- 			  "llq tx max burst size of queue %d achieved, writing doorbell to send burst\n",
- 			  ring->qid);
- 		ena_ring_tx_doorbell(ring);
-@@ -115,7 +114,7 @@ int ena_xmit_common(struct net_device *dev,
- 	 * ena_com_prepare_tx() are fatal and therefore require a device reset.
- 	 */
- 	if (unlikely(rc)) {
--		netif_err(adapter, tx_queued, dev,
-+		netif_err(adapter, tx_queued, adapter->netdev,
- 			  "Failed to prepare tx bufs\n");
- 		ena_increase_stat(&ring->tx_stats.prepare_ctx_err, 1,
- 				  &ring->syncp);
-@@ -2607,7 +2606,7 @@ static netdev_tx_t ena_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	/* set flags and meta data */
- 	ena_tx_csum(&ena_tx_ctx, skb, tx_ring->disable_meta_caching);
- 
--	rc = ena_xmit_common(dev,
-+	rc = ena_xmit_common(adapter,
- 			     tx_ring,
- 			     tx_info,
- 			     &ena_tx_ctx,
+-		if (!ENA_IS_XDP_INDEX(adapter, i)) {
++		if (!ENA_IS_XDP_INDEX(adapter, i))
+ 			napi->rx_ring = &adapter->rx_ring[i];
+-			napi->tx_ring = &adapter->tx_ring[i];
+-		} else {
+-			napi->xdp_ring = &adapter->tx_ring[i];
+-		}
++
++		napi->tx_ring = &adapter->tx_ring[i];
+ 		napi->qid = i;
+ 	}
+ }
 diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.h b/drivers/net/ethernet/amazon/ena/ena_netdev.h
-index 041f08d20b450..236d1f859a783 100644
+index 236d1f859a783..b364febab011e 100644
 --- a/drivers/net/ethernet/amazon/ena/ena_netdev.h
 +++ b/drivers/net/ethernet/amazon/ena/ena_netdev.h
-@@ -426,7 +426,7 @@ static inline void ena_ring_tx_doorbell(struct ena_ring *tx_ring)
- 	ena_increase_stat(&tx_ring->tx_stats.doorbells, 1, &tx_ring->syncp);
- }
- 
--int ena_xmit_common(struct net_device *dev,
-+int ena_xmit_common(struct ena_adapter *adapter,
- 		    struct ena_ring *ring,
- 		    struct ena_tx_buffer *tx_info,
- 		    struct ena_com_tx_ctx *ena_tx_ctx,
+@@ -125,7 +125,6 @@ struct ena_napi {
+ 	struct napi_struct napi;
+ 	struct ena_ring *tx_ring;
+ 	struct ena_ring *rx_ring;
+-	struct ena_ring *xdp_ring;
+ 	u32 qid;
+ 	struct dim dim;
+ };
 diff --git a/drivers/net/ethernet/amazon/ena/ena_xdp.c b/drivers/net/ethernet/amazon/ena/ena_xdp.c
-index d0c8a2dc9a676..42370fa027733 100644
+index 42370fa027733..363e361cc5aa8 100644
 --- a/drivers/net/ethernet/amazon/ena/ena_xdp.c
 +++ b/drivers/net/ethernet/amazon/ena/ena_xdp.c
-@@ -73,7 +73,7 @@ static int ena_xdp_tx_map_frame(struct ena_ring *xdp_ring,
+@@ -5,23 +5,23 @@
+ 
+ #include "ena_xdp.h"
+ 
+-static int validate_xdp_req_id(struct ena_ring *xdp_ring, u16 req_id)
++static int validate_xdp_req_id(struct ena_ring *tx_ring, u16 req_id)
+ {
+ 	struct ena_tx_buffer *tx_info;
+ 
+-	tx_info = &xdp_ring->tx_buffer_info[req_id];
++	tx_info = &tx_ring->tx_buffer_info[req_id];
+ 	if (likely(tx_info->xdpf))
+ 		return 0;
+ 
+-	return handle_invalid_req_id(xdp_ring, req_id, tx_info, true);
++	return handle_invalid_req_id(tx_ring, req_id, tx_info, true);
  }
  
- int ena_xdp_xmit_frame(struct ena_ring *xdp_ring,
--		       struct net_device *dev,
-+		       struct ena_adapter *adapter,
+-static int ena_xdp_tx_map_frame(struct ena_ring *xdp_ring,
++static int ena_xdp_tx_map_frame(struct ena_ring *tx_ring,
+ 				struct ena_tx_buffer *tx_info,
+ 				struct xdp_frame *xdpf,
+ 				struct ena_com_tx_ctx *ena_tx_ctx)
+ {
+-	struct ena_adapter *adapter = xdp_ring->adapter;
++	struct ena_adapter *adapter = tx_ring->adapter;
+ 	struct ena_com_buf *ena_buf;
+ 	int push_len = 0;
+ 	dma_addr_t dma;
+@@ -32,9 +32,9 @@ static int ena_xdp_tx_map_frame(struct ena_ring *xdp_ring,
+ 	data = tx_info->xdpf->data;
+ 	size = tx_info->xdpf->len;
+ 
+-	if (xdp_ring->tx_mem_queue_type == ENA_ADMIN_PLACEMENT_POLICY_DEV) {
++	if (tx_ring->tx_mem_queue_type == ENA_ADMIN_PLACEMENT_POLICY_DEV) {
+ 		/* Designate part of the packet for LLQ */
+-		push_len = min_t(u32, size, xdp_ring->tx_max_header_size);
++		push_len = min_t(u32, size, tx_ring->tx_max_header_size);
+ 
+ 		ena_tx_ctx->push_header = data;
+ 
+@@ -45,11 +45,11 @@ static int ena_xdp_tx_map_frame(struct ena_ring *xdp_ring,
+ 	ena_tx_ctx->header_len = push_len;
+ 
+ 	if (size > 0) {
+-		dma = dma_map_single(xdp_ring->dev,
++		dma = dma_map_single(tx_ring->dev,
+ 				     data,
+ 				     size,
+ 				     DMA_TO_DEVICE);
+-		if (unlikely(dma_mapping_error(xdp_ring->dev, dma)))
++		if (unlikely(dma_mapping_error(tx_ring->dev, dma)))
+ 			goto error_report_dma_error;
+ 
+ 		tx_info->map_linear_data = 0;
+@@ -65,14 +65,14 @@ static int ena_xdp_tx_map_frame(struct ena_ring *xdp_ring,
+ 	return 0;
+ 
+ error_report_dma_error:
+-	ena_increase_stat(&xdp_ring->tx_stats.dma_mapping_err, 1,
+-			  &xdp_ring->syncp);
++	ena_increase_stat(&tx_ring->tx_stats.dma_mapping_err, 1,
++			  &tx_ring->syncp);
+ 	netif_warn(adapter, tx_queued, adapter->netdev, "Failed to map xdp buff\n");
+ 
+ 	return -EINVAL;
+ }
+ 
+-int ena_xdp_xmit_frame(struct ena_ring *xdp_ring,
++int ena_xdp_xmit_frame(struct ena_ring *tx_ring,
+ 		       struct ena_adapter *adapter,
  		       struct xdp_frame *xdpf,
  		       int flags)
- {
-@@ -93,7 +93,7 @@ int ena_xdp_xmit_frame(struct ena_ring *xdp_ring,
+@@ -82,19 +82,19 @@ int ena_xdp_xmit_frame(struct ena_ring *xdp_ring,
+ 	u16 next_to_use, req_id;
+ 	int rc;
+ 
+-	next_to_use = xdp_ring->next_to_use;
+-	req_id = xdp_ring->free_ids[next_to_use];
+-	tx_info = &xdp_ring->tx_buffer_info[req_id];
++	next_to_use = tx_ring->next_to_use;
++	req_id = tx_ring->free_ids[next_to_use];
++	tx_info = &tx_ring->tx_buffer_info[req_id];
+ 	tx_info->num_of_bufs = 0;
+ 
+-	rc = ena_xdp_tx_map_frame(xdp_ring, tx_info, xdpf, &ena_tx_ctx);
++	rc = ena_xdp_tx_map_frame(tx_ring, tx_info, xdpf, &ena_tx_ctx);
+ 	if (unlikely(rc))
+ 		return rc;
  
  	ena_tx_ctx.req_id = req_id;
  
--	rc = ena_xmit_common(dev,
-+	rc = ena_xmit_common(adapter,
- 			     xdp_ring,
+ 	rc = ena_xmit_common(adapter,
+-			     xdp_ring,
++			     tx_ring,
  			     tx_info,
  			     &ena_tx_ctx,
-@@ -141,7 +141,7 @@ int ena_xdp_xmit(struct net_device *dev, int n,
- 	spin_lock(&xdp_ring->xdp_tx_lock);
+ 			     next_to_use,
+@@ -106,12 +106,12 @@ int ena_xdp_xmit_frame(struct ena_ring *xdp_ring,
+ 	 * calls a memory barrier inside it.
+ 	 */
+ 	if (flags & XDP_XMIT_FLUSH)
+-		ena_ring_tx_doorbell(xdp_ring);
++		ena_ring_tx_doorbell(tx_ring);
+ 
+ 	return rc;
+ 
+ error_unmap_dma:
+-	ena_unmap_tx_buff(xdp_ring, tx_info);
++	ena_unmap_tx_buff(tx_ring, tx_info);
+ 	tx_info->xdpf = NULL;
+ 	return rc;
+ }
+@@ -120,7 +120,7 @@ int ena_xdp_xmit(struct net_device *dev, int n,
+ 		 struct xdp_frame **frames, u32 flags)
+ {
+ 	struct ena_adapter *adapter = netdev_priv(dev);
+-	struct ena_ring *xdp_ring;
++	struct ena_ring *tx_ring;
+ 	int qid, i, nxmit = 0;
+ 
+ 	if (unlikely(flags & ~XDP_XMIT_FLAGS_MASK))
+@@ -135,22 +135,22 @@ int ena_xdp_xmit(struct net_device *dev, int n,
+ 
+ 	qid = smp_processor_id() % adapter->xdp_num_queues;
+ 	qid += adapter->xdp_first_ring;
+-	xdp_ring = &adapter->tx_ring[qid];
++	tx_ring = &adapter->tx_ring[qid];
+ 
+ 	/* Other CPU ids might try to send thorugh this queue */
+-	spin_lock(&xdp_ring->xdp_tx_lock);
++	spin_lock(&tx_ring->xdp_tx_lock);
  
  	for (i = 0; i < n; i++) {
--		if (ena_xdp_xmit_frame(xdp_ring, dev, frames[i], 0))
-+		if (ena_xdp_xmit_frame(xdp_ring, adapter, frames[i], 0))
+-		if (ena_xdp_xmit_frame(xdp_ring, adapter, frames[i], 0))
++		if (ena_xdp_xmit_frame(tx_ring, adapter, frames[i], 0))
  			break;
  		nxmit++;
  	}
+ 
+ 	/* Ring doorbell to make device aware of the packets */
+ 	if (flags & XDP_XMIT_FLUSH)
+-		ena_ring_tx_doorbell(xdp_ring);
++		ena_ring_tx_doorbell(tx_ring);
+ 
+-	spin_unlock(&xdp_ring->xdp_tx_lock);
++	spin_unlock(&tx_ring->xdp_tx_lock);
+ 
+ 	/* Return number of packets sent */
+ 	return nxmit;
+@@ -355,7 +355,7 @@ int ena_xdp(struct net_device *netdev, struct netdev_bpf *bpf)
+ 	return 0;
+ }
+ 
+-static int ena_clean_xdp_irq(struct ena_ring *xdp_ring, u32 budget)
++static int ena_clean_xdp_irq(struct ena_ring *tx_ring, u32 budget)
+ {
+ 	u32 total_done = 0;
+ 	u16 next_to_clean;
+@@ -363,55 +363,54 @@ static int ena_clean_xdp_irq(struct ena_ring *xdp_ring, u32 budget)
+ 	u16 req_id;
+ 	int rc;
+ 
+-	if (unlikely(!xdp_ring))
++	if (unlikely(!tx_ring))
+ 		return 0;
+-	next_to_clean = xdp_ring->next_to_clean;
++	next_to_clean = tx_ring->next_to_clean;
+ 
+ 	while (tx_pkts < budget) {
+ 		struct ena_tx_buffer *tx_info;
+ 		struct xdp_frame *xdpf;
+ 
+-		rc = ena_com_tx_comp_req_id_get(xdp_ring->ena_com_io_cq,
++		rc = ena_com_tx_comp_req_id_get(tx_ring->ena_com_io_cq,
+ 						&req_id);
+ 		if (rc) {
+ 			if (unlikely(rc == -EINVAL))
+-				handle_invalid_req_id(xdp_ring, req_id, NULL,
+-						      true);
++				handle_invalid_req_id(tx_ring, req_id, NULL, true);
+ 			break;
+ 		}
+ 
+ 		/* validate that the request id points to a valid xdp_frame */
+-		rc = validate_xdp_req_id(xdp_ring, req_id);
++		rc = validate_xdp_req_id(tx_ring, req_id);
+ 		if (rc)
+ 			break;
+ 
+-		tx_info = &xdp_ring->tx_buffer_info[req_id];
++		tx_info = &tx_ring->tx_buffer_info[req_id];
+ 		xdpf = tx_info->xdpf;
+ 
+ 		tx_info->xdpf = NULL;
+ 		tx_info->last_jiffies = 0;
+-		ena_unmap_tx_buff(xdp_ring, tx_info);
++		ena_unmap_tx_buff(tx_ring, tx_info);
+ 
+-		netif_dbg(xdp_ring->adapter, tx_done, xdp_ring->netdev,
+-			  "tx_poll: q %d skb %p completed\n", xdp_ring->qid,
++		netif_dbg(tx_ring->adapter, tx_done, tx_ring->netdev,
++			  "tx_poll: q %d skb %p completed\n", tx_ring->qid,
+ 			  xdpf);
+ 
+ 		tx_pkts++;
+ 		total_done += tx_info->tx_descs;
+ 
+ 		xdp_return_frame(xdpf);
+-		xdp_ring->free_ids[next_to_clean] = req_id;
++		tx_ring->free_ids[next_to_clean] = req_id;
+ 		next_to_clean = ENA_TX_RING_IDX_NEXT(next_to_clean,
+-						     xdp_ring->ring_size);
++						     tx_ring->ring_size);
+ 	}
+ 
+-	xdp_ring->next_to_clean = next_to_clean;
+-	ena_com_comp_ack(xdp_ring->ena_com_io_sq, total_done);
+-	ena_com_update_dev_comp_head(xdp_ring->ena_com_io_cq);
++	tx_ring->next_to_clean = next_to_clean;
++	ena_com_comp_ack(tx_ring->ena_com_io_sq, total_done);
++	ena_com_update_dev_comp_head(tx_ring->ena_com_io_cq);
+ 
+-	netif_dbg(xdp_ring->adapter, tx_done, xdp_ring->netdev,
++	netif_dbg(tx_ring->adapter, tx_done, tx_ring->netdev,
+ 		  "tx_poll: q %d done. total pkts: %d\n",
+-		  xdp_ring->qid, tx_pkts);
++		  tx_ring->qid, tx_pkts);
+ 
+ 	return tx_pkts;
+ }
+@@ -423,43 +422,43 @@ int ena_xdp_io_poll(struct napi_struct *napi, int budget)
+ {
+ 	struct ena_napi *ena_napi = container_of(napi, struct ena_napi, napi);
+ 	u32 xdp_work_done, xdp_budget;
+-	struct ena_ring *xdp_ring;
++	struct ena_ring *tx_ring;
+ 	int napi_comp_call = 0;
+ 	int ret;
+ 
+-	xdp_ring = ena_napi->xdp_ring;
++	tx_ring = ena_napi->tx_ring;
+ 
+ 	xdp_budget = budget;
+ 
+-	if (!test_bit(ENA_FLAG_DEV_UP, &xdp_ring->adapter->flags) ||
+-	    test_bit(ENA_FLAG_TRIGGER_RESET, &xdp_ring->adapter->flags)) {
++	if (!test_bit(ENA_FLAG_DEV_UP, &tx_ring->adapter->flags) ||
++	    test_bit(ENA_FLAG_TRIGGER_RESET, &tx_ring->adapter->flags)) {
+ 		napi_complete_done(napi, 0);
+ 		return 0;
+ 	}
+ 
+-	xdp_work_done = ena_clean_xdp_irq(xdp_ring, xdp_budget);
++	xdp_work_done = ena_clean_xdp_irq(tx_ring, xdp_budget);
+ 
+ 	/* If the device is about to reset or down, avoid unmask
+ 	 * the interrupt and return 0 so NAPI won't reschedule
+ 	 */
+-	if (unlikely(!test_bit(ENA_FLAG_DEV_UP, &xdp_ring->adapter->flags))) {
++	if (unlikely(!test_bit(ENA_FLAG_DEV_UP, &tx_ring->adapter->flags))) {
+ 		napi_complete_done(napi, 0);
+ 		ret = 0;
+ 	} else if (xdp_budget > xdp_work_done) {
+ 		napi_comp_call = 1;
+ 		if (napi_complete_done(napi, xdp_work_done))
+-			ena_unmask_interrupt(xdp_ring, NULL);
+-		ena_update_ring_numa_node(xdp_ring, NULL);
++			ena_unmask_interrupt(tx_ring, NULL);
++		ena_update_ring_numa_node(tx_ring, NULL);
+ 		ret = xdp_work_done;
+ 	} else {
+ 		ret = xdp_budget;
+ 	}
+ 
+-	u64_stats_update_begin(&xdp_ring->syncp);
+-	xdp_ring->tx_stats.napi_comp += napi_comp_call;
+-	xdp_ring->tx_stats.tx_poll++;
+-	u64_stats_update_end(&xdp_ring->syncp);
+-	xdp_ring->tx_stats.last_napi_jiffies = jiffies;
++	u64_stats_update_begin(&tx_ring->syncp);
++	tx_ring->tx_stats.napi_comp += napi_comp_call;
++	tx_ring->tx_stats.tx_poll++;
++	u64_stats_update_end(&tx_ring->syncp);
++	tx_ring->tx_stats.last_napi_jiffies = jiffies;
+ 
+ 	return ret;
+ }
 diff --git a/drivers/net/ethernet/amazon/ena/ena_xdp.h b/drivers/net/ethernet/amazon/ena/ena_xdp.h
-index 80c7496081088..6e472ba6ce1ba 100644
+index 6e472ba6ce1ba..3fa8e80b18a9e 100644
 --- a/drivers/net/ethernet/amazon/ena/ena_xdp.h
 +++ b/drivers/net/ethernet/amazon/ena/ena_xdp.h
-@@ -36,7 +36,7 @@ void ena_xdp_exchange_program_rx_in_range(struct ena_adapter *adapter,
+@@ -35,7 +35,7 @@ void ena_xdp_exchange_program_rx_in_range(struct ena_adapter *adapter,
+ 					  struct bpf_prog *prog,
  					  int first, int count);
  int ena_xdp_io_poll(struct napi_struct *napi, int budget);
- int ena_xdp_xmit_frame(struct ena_ring *xdp_ring,
--		       struct net_device *dev,
-+		       struct ena_adapter *adapter,
+-int ena_xdp_xmit_frame(struct ena_ring *xdp_ring,
++int ena_xdp_xmit_frame(struct ena_ring *tx_ring,
+ 		       struct ena_adapter *adapter,
  		       struct xdp_frame *xdpf,
  		       int flags);
- int ena_xdp_xmit(struct net_device *dev, int n,
-@@ -108,7 +108,7 @@ static inline int ena_xdp_execute(struct ena_ring *rx_ring, struct xdp_buff *xdp
- 		/* The XDP queues are shared between XDP_TX and XDP_REDIRECT */
- 		spin_lock(&xdp_ring->xdp_tx_lock);
- 
--		if (ena_xdp_xmit_frame(xdp_ring, rx_ring->netdev, xdpf,
-+		if (ena_xdp_xmit_frame(xdp_ring, rx_ring->adapter, xdpf,
- 				       XDP_XMIT_FLUSH))
- 			xdp_return_frame(xdpf);
- 
 -- 
 2.43.0
 
