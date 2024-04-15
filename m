@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7691F8565A;
-	Mon, 15 Apr 2024 14:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636FA762D2;
+	Mon, 15 Apr 2024 14:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191716; cv=none; b=E/RG+fDfsQLt0hnCLI+gwSY11WeZ/m4GYFgsHSQcP+pZx4qmKLvzsVrNyY9zWaxSGRGKXsslQtW9ciyBjIkric9PALWfJfuqm1Gx27IGefgavlBDpkewQVx429po6TeJXQ0e9I0aBQCXv76a4OPYYw5iCABeigyQDjugELZ/qsQ=
+	t=1713191719; cv=none; b=YxckqO51pmrsk61zkJkoVTno6VYZJdJ9/5zVi9INqwTrQnSr9ne9G2oc8a0q1Tc3TfMqYeeilTdJD9jZz5NPqXQIPnoh926amEVSX3ZQ33WbtdJBOagKKe/f2CfkwdemF95XfGBVQV80eP0ge45G1c49XSQALY8lMqVG054hx5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191716; c=relaxed/simple;
-	bh=MwJUl3Y3co6t2uLqX9HxlM6VlEXpy5uyuNnM++Ikt0w=;
+	s=arc-20240116; t=1713191719; c=relaxed/simple;
+	bh=+mJZ+WoQYKpKZkGfG+KLpKTWeKzIyORh03LIjD9UN78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GxOf+tBeq8c6nEQc0q+V6z6EkbShMM5rlcoHk0pTo95wJGmqVy0q8pKRZx2sFoTnCaOgRk9hJhMNVbhXZB+4v2v4chFfWVSKHWK8Yx8U6pJSfC+fuN/+q0oQF8thz3BvCrmJ+2fdP6gNjrTeA4y4NsqIgQwRPss/UxAEqHsMi/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgV0T7fI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nphg/Flm21rWPnOQIAOvzTi3qfAxSyka9nJ0bd6x3K8D3FjH4C5ZNHI8pXqdBskZWL3K9TAevytBNRI+vmaXEeLsY/EwLDFVQg9nIgXlxDQ8ZDTOqZkQkjh7UU09eJumZyClBWb92APoXmXsTmTtIde91dw/2Heo3gVRzwPenRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVeed/zH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgV0T7fI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5276C2BD10;
-	Mon, 15 Apr 2024 14:35:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVeed/zH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB7D4C2BD11;
+	Mon, 15 Apr 2024 14:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191716;
-	bh=MwJUl3Y3co6t2uLqX9HxlM6VlEXpy5uyuNnM++Ikt0w=;
+	s=korg; t=1713191719;
+	bh=+mJZ+WoQYKpKZkGfG+KLpKTWeKzIyORh03LIjD9UN78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xgV0T7fICGx4+evOQlfWxLFPeV5/q6w1oH15jzO/DlmkkfrANKkrNdX8382SnidFG
-	 Gs0mO/SE+YA71yAZUV7dqQhoRBut4BbyMhn5IKjyx7BFjWZd+68h8Gs3N+cdzR236o
-	 bmRzTyVuKyrp9QrU72QK/yOFix/dkskniyfI1xQY=
+	b=dVeed/zHyccXfIUZ0oMzNT+UlyvuxMnul2jtb9+c6kTMHqWTERCL7HOvIaMDLXt75
+	 +EgCe0UnfnHvFzZOh9rVXyDytENUaoZznb2Q29UHArT1MG2wLkbJMVQm3z4gwwP3II
+	 aHpQ2MZegAyojIaxTYHzGwh3fv2iCX3v/+hGfhdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/122] net/mlx5e: Do not produce metadata freelist entries in Tx port ts WQE xmit
-Date: Mon, 15 Apr 2024 16:20:27 +0200
-Message-ID: <20240415141955.237092642@linuxfoundation.org>
+Subject: [PATCH 6.6 063/122] net: sparx5: fix wrong config being used when reconfiguring PCS
+Date: Mon, 15 Apr 2024 16:20:28 +0200
+Message-ID: <20240415141955.266426010@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -53,81 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit 86b0ca5b118d3a0bae5e5645a13e66f8a4f6c525 ]
+[ Upstream commit 33623113a48ea906f1955cbf71094f6aa4462e8f ]
 
-Free Tx port timestamping metadata entries in the NAPI poll context and
-consume metadata enties in the WQE xmit path. Do not free a Tx port
-timestamping metadata entry in the WQE xmit path even in the error path to
-avoid a race between two metadata entry producers.
+The wrong port config is being used if the PCS is reconfigured. Fix this
+by correctly using the new config instead of the old one.
 
-Fixes: 3178308ad4ca ("net/mlx5e: Make tx_port_ts logic resilient to out-of-order CQEs")
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20240409190820.227554-10-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 946e7fd5053a ("net: sparx5: add port module support")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20240409-link-mode-reconfiguration-fix-v2-1-db6a507f3627@microchip.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/ptp.h | 8 +++++++-
- drivers/net/ethernet/mellanox/mlx5/core/en_tx.c  | 7 +++----
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_port.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.h b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.h
-index 7b700d0f956a8..b171cd8f11e04 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.h
-@@ -95,9 +95,15 @@ static inline void mlx5e_ptp_metadata_fifo_push(struct mlx5e_ptp_metadata_fifo *
- }
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_port.c b/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
+index 3a1b1a1f5a195..60dd2fd603a85 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
+@@ -731,7 +731,7 @@ static int sparx5_port_pcs_low_set(struct sparx5 *sparx5,
+ 	bool sgmii = false, inband_aneg = false;
+ 	int err;
  
- static inline u8
-+mlx5e_ptp_metadata_fifo_peek(struct mlx5e_ptp_metadata_fifo *fifo)
-+{
-+	return fifo->data[fifo->mask & fifo->cc];
-+}
-+
-+static inline void
- mlx5e_ptp_metadata_fifo_pop(struct mlx5e_ptp_metadata_fifo *fifo)
- {
--	return fifo->data[fifo->mask & fifo->cc++];
-+	fifo->cc++;
- }
+-	if (port->conf.inband) {
++	if (conf->inband) {
+ 		if (conf->portmode == PHY_INTERFACE_MODE_SGMII ||
+ 		    conf->portmode == PHY_INTERFACE_MODE_QSGMII)
+ 			inband_aneg = true; /* Cisco-SGMII in-band-aneg */
+@@ -948,7 +948,7 @@ int sparx5_port_pcs_set(struct sparx5 *sparx5,
+ 	if (err)
+ 		return -EINVAL;
  
- static inline void
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
-index 1ead69c5f5fa3..24cbd44dae93c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
-@@ -398,6 +398,8 @@ mlx5e_txwqe_complete(struct mlx5e_txqsq *sq, struct sk_buff *skb,
- 		     (skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP))) {
- 		u8 metadata_index = be32_to_cpu(eseg->flow_table_metadata);
- 
-+		mlx5e_ptp_metadata_fifo_pop(&sq->ptpsq->metadata_freelist);
-+
- 		mlx5e_skb_cb_hwtstamp_init(skb);
- 		mlx5e_ptp_metadata_map_put(&sq->ptpsq->metadata_map, skb,
- 					   metadata_index);
-@@ -496,9 +498,6 @@ mlx5e_sq_xmit_wqe(struct mlx5e_txqsq *sq, struct sk_buff *skb,
- 
- err_drop:
- 	stats->dropped++;
--	if (unlikely(sq->ptpsq && (skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP)))
--		mlx5e_ptp_metadata_fifo_push(&sq->ptpsq->metadata_freelist,
--					     be32_to_cpu(eseg->flow_table_metadata));
- 	dev_kfree_skb_any(skb);
- 	mlx5e_tx_flush(sq);
- }
-@@ -657,7 +656,7 @@ static void mlx5e_cqe_ts_id_eseg(struct mlx5e_ptpsq *ptpsq, struct sk_buff *skb,
- {
- 	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP))
- 		eseg->flow_table_metadata =
--			cpu_to_be32(mlx5e_ptp_metadata_fifo_pop(&ptpsq->metadata_freelist));
-+			cpu_to_be32(mlx5e_ptp_metadata_fifo_peek(&ptpsq->metadata_freelist));
- }
- 
- static void mlx5e_txwqe_build_eseg(struct mlx5e_priv *priv, struct mlx5e_txqsq *sq,
+-	if (port->conf.inband) {
++	if (conf->inband) {
+ 		/* Enable/disable 1G counters in ASM */
+ 		spx5_rmw(ASM_PORT_CFG_CSC_STAT_DIS_SET(high_speed_dev),
+ 			 ASM_PORT_CFG_CSC_STAT_DIS,
 -- 
 2.43.0
 
