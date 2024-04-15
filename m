@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5031A762C9;
-	Mon, 15 Apr 2024 14:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071C27C090;
+	Mon, 15 Apr 2024 14:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191982; cv=none; b=rSLS1RdYpDu80BExz9t2ZnDuP4lHOH4iHEXh9BYKVRFjtgCHKn8vvdpIeKQu6Jjv73cWpCUnFUOrZviRDomA/NVr4V80YIU3UqdR9uuXstDDVQYWmQd9M7V6aYf9xcmOC6mRP0+hpEnVzbOhAAjhrGOLonj9IMbPEnmNT0u7nFI=
+	t=1713191984; cv=none; b=oytG2cWeCXn8koZe4Bo4wfOBnobPHezyZNZc0UQUo3/L/uAJglIXq4FU5e7OK+IZsSW/sdHZwbNDr/XVz4KGXettvSlhyGcayn1ThQgw9E78zmnNzw97h2Cw/RSVwyeuzHpiZCSIskQZ+YcecS04CRw1/VvhUDlP2tUzZ+Tou8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191982; c=relaxed/simple;
-	bh=5qIbok063h/yC7qm0MDjdnaQl8w6/ab1DtI4h8Ctp3s=;
+	s=arc-20240116; t=1713191984; c=relaxed/simple;
+	bh=YWpBBDRT+nFAn1w06uc2R6Ks/Vo3m1qLoG+x1RWlMLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G0JZ28zoTGs/pHA7NFiYKHv/vVbQp2vanwUQB/07nckiSxRog6hysNTfMcDg4S7wO5LBIrGlhRcI+Yqtk7ggr6Uz2syJ01Xp+8VjkvlP8LM0zbBFnr8+r107981BHoljWJAP97EwWrrHvuwHJTUWAh/i/HP6gOd2UmnBXKZhimw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqbssgJ0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eeow9TbilyjAZ/0Op02ZpR2iHicpqhiF5/u1JKnuUovMVfBgdloYb2gN5zJiVNg2vEMfUtCbD23QtVWnssuWVRDh5M9n5nnDnSXjxdlD3MbjGucf+lXrfpto57I+uuS+ptPMX26FlQBmtiwWZjrkIZMvbCr3PVRMqN64FwwUtKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ixygggXO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqbssgJ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BB8C113CC;
-	Mon, 15 Apr 2024 14:39:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ixygggXO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F71AC113CC;
+	Mon, 15 Apr 2024 14:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191980;
-	bh=5qIbok063h/yC7qm0MDjdnaQl8w6/ab1DtI4h8Ctp3s=;
+	s=korg; t=1713191983;
+	bh=YWpBBDRT+nFAn1w06uc2R6Ks/Vo3m1qLoG+x1RWlMLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xqbssgJ0ojfgMdRkFXcEMfweEQQJtbaBBXsO3FtE53s0Tbat/rqytqJKKaMqnrobU
-	 sAiA6fMQTDWEYFMuG0WOFu4izw3pHKRISPF/I4UesIaf9RoHAjIuVy1ePQIfXWpjU1
-	 bjjIHVDiWu01FWnlwmEt0NTZ63RYZDlCWVzJ/Eoo=
+	b=ixygggXOosKe6RswNAya2VN6FgqBe1XQzhLxM0PzdW6gMFNVTst7dnUhOQtuQAfSh
+	 CG0jA+ZV7BD5FFEs5D7GvcxN+ZBVjPEFuHSJ0Y0WUzuuDvaRjlLXWyDlyyeKANjkLw
+	 934vN0E38w3Z5wmcZVGAKquvMKTT287cN1mP0k0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 27/69] Bluetooth: L2CAP: Fix not validating setsockopt user input
-Date: Mon, 15 Apr 2024 16:20:58 +0200
-Message-ID: <20240415141946.985183405@linuxfoundation.org>
+Subject: [PATCH 6.1 28/69] netfilter: complete validation of user input
+Date: Mon, 15 Apr 2024 16:20:59 +0200
+Message-ID: <20240415141947.014693952@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141946.165870434@linuxfoundation.org>
 References: <20240415141946.165870434@linuxfoundation.org>
@@ -51,162 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4f3951242ace5efc7131932e2e01e6ac6baed846 ]
+[ Upstream commit 65acf6e0501ac8880a4f73980d01b5d27648b956 ]
 
-Check user input length before copying data.
+In my recent commit, I missed that do_replace() handlers
+use copy_from_sockptr() (which I fixed), followed
+by unsafe copy_from_sockptr_offset() calls.
 
-Fixes: 33575df7be67 ("Bluetooth: move l2cap_sock_setsockopt() to l2cap_sock.c")
-Fixes: 3ee7b7cd8390 ("Bluetooth: Add BT_MODE socket option")
+In all functions, we can perform the @optlen validation
+before even calling xt_alloc_table_info() with the following
+check:
+
+if ((u64)optlen < (u64)tmp.size + sizeof(tmp))
+        return -EINVAL;
+
+Fixes: 0c83842df40f ("netfilter: validate user input for expected length")
+Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lore.kernel.org/r/20240409120741.3538135-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_sock.c | 52 +++++++++++++++-----------------------
- 1 file changed, 20 insertions(+), 32 deletions(-)
+ net/ipv4/netfilter/arp_tables.c | 4 ++++
+ net/ipv4/netfilter/ip_tables.c  | 4 ++++
+ net/ipv6/netfilter/ip6_tables.c | 4 ++++
+ 3 files changed, 12 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 947ca580bb9a2..4198ca66fbe10 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -745,7 +745,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
- 	struct sock *sk = sock->sk;
- 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
- 	struct l2cap_options opts;
--	int len, err = 0;
-+	int err = 0;
- 	u32 opt;
+diff --git a/net/ipv4/netfilter/arp_tables.c b/net/ipv4/netfilter/arp_tables.c
+index b150c9929b12e..14365b20f1c5c 100644
+--- a/net/ipv4/netfilter/arp_tables.c
++++ b/net/ipv4/netfilter/arp_tables.c
+@@ -966,6 +966,8 @@ static int do_replace(struct net *net, sockptr_t arg, unsigned int len)
+ 		return -ENOMEM;
+ 	if (tmp.num_counters == 0)
+ 		return -EINVAL;
++	if ((u64)len < (u64)tmp.size + sizeof(tmp))
++		return -EINVAL;
  
- 	BT_DBG("sk %p", sk);
-@@ -772,11 +772,9 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
- 		opts.max_tx   = chan->max_tx;
- 		opts.txwin_size = chan->tx_win;
+ 	tmp.name[sizeof(tmp.name)-1] = 0;
  
--		len = min_t(unsigned int, sizeof(opts), optlen);
--		if (copy_from_sockptr(&opts, optval, len)) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&opts, sizeof(opts), optval, optlen);
-+		if (err)
- 			break;
--		}
+@@ -1266,6 +1268,8 @@ static int compat_do_replace(struct net *net, sockptr_t arg, unsigned int len)
+ 		return -ENOMEM;
+ 	if (tmp.num_counters == 0)
+ 		return -EINVAL;
++	if ((u64)len < (u64)tmp.size + sizeof(tmp))
++		return -EINVAL;
  
- 		if (opts.txwin_size > L2CAP_DEFAULT_EXT_WINDOW) {
- 			err = -EINVAL;
-@@ -819,10 +817,9 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
- 		break;
+ 	tmp.name[sizeof(tmp.name)-1] = 0;
  
- 	case L2CAP_LM:
--		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
-+		if (err)
- 			break;
--		}
+diff --git a/net/ipv4/netfilter/ip_tables.c b/net/ipv4/netfilter/ip_tables.c
+index 1f365e28e316c..a6208efcfccfc 100644
+--- a/net/ipv4/netfilter/ip_tables.c
++++ b/net/ipv4/netfilter/ip_tables.c
+@@ -1120,6 +1120,8 @@ do_replace(struct net *net, sockptr_t arg, unsigned int len)
+ 		return -ENOMEM;
+ 	if (tmp.num_counters == 0)
+ 		return -EINVAL;
++	if ((u64)len < (u64)tmp.size + sizeof(tmp))
++		return -EINVAL;
  
- 		if (opt & L2CAP_LM_FIPS) {
- 			err = -EINVAL;
-@@ -903,7 +900,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 	struct bt_security sec;
- 	struct bt_power pwr;
- 	struct l2cap_conn *conn;
--	int len, err = 0;
-+	int err = 0;
- 	u32 opt;
- 	u16 mtu;
- 	u8 mode;
-@@ -929,11 +926,9 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 	tmp.name[sizeof(tmp.name)-1] = 0;
  
- 		sec.level = BT_SECURITY_LOW;
+@@ -1506,6 +1508,8 @@ compat_do_replace(struct net *net, sockptr_t arg, unsigned int len)
+ 		return -ENOMEM;
+ 	if (tmp.num_counters == 0)
+ 		return -EINVAL;
++	if ((u64)len < (u64)tmp.size + sizeof(tmp))
++		return -EINVAL;
  
--		len = min_t(unsigned int, sizeof(sec), optlen);
--		if (copy_from_sockptr(&sec, optval, len)) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&sec, sizeof(sec), optval, optlen);
-+		if (err)
- 			break;
--		}
+ 	tmp.name[sizeof(tmp.name)-1] = 0;
  
- 		if (sec.level < BT_SECURITY_LOW ||
- 		    sec.level > BT_SECURITY_FIPS) {
-@@ -978,10 +973,9 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 			break;
- 		}
+diff --git a/net/ipv6/netfilter/ip6_tables.c b/net/ipv6/netfilter/ip6_tables.c
+index 37a2b3301e423..b844e519da1b4 100644
+--- a/net/ipv6/netfilter/ip6_tables.c
++++ b/net/ipv6/netfilter/ip6_tables.c
+@@ -1137,6 +1137,8 @@ do_replace(struct net *net, sockptr_t arg, unsigned int len)
+ 		return -ENOMEM;
+ 	if (tmp.num_counters == 0)
+ 		return -EINVAL;
++	if ((u64)len < (u64)tmp.size + sizeof(tmp))
++		return -EINVAL;
  
--		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
-+		if (err)
- 			break;
--		}
+ 	tmp.name[sizeof(tmp.name)-1] = 0;
  
- 		if (opt) {
- 			set_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags);
-@@ -993,10 +987,9 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 		break;
+@@ -1515,6 +1517,8 @@ compat_do_replace(struct net *net, sockptr_t arg, unsigned int len)
+ 		return -ENOMEM;
+ 	if (tmp.num_counters == 0)
+ 		return -EINVAL;
++	if ((u64)len < (u64)tmp.size + sizeof(tmp))
++		return -EINVAL;
  
- 	case BT_FLUSHABLE:
--		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
-+		if (err)
- 			break;
--		}
- 
- 		if (opt > BT_FLUSHABLE_ON) {
- 			err = -EINVAL;
-@@ -1028,11 +1021,9 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 
- 		pwr.force_active = BT_POWER_FORCE_ACTIVE_ON;
- 
--		len = min_t(unsigned int, sizeof(pwr), optlen);
--		if (copy_from_sockptr(&pwr, optval, len)) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&pwr, sizeof(pwr), optval, optlen);
-+		if (err)
- 			break;
--		}
- 
- 		if (pwr.force_active)
- 			set_bit(FLAG_FORCE_ACTIVE, &chan->flags);
-@@ -1041,10 +1032,9 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 		break;
- 
- 	case BT_CHANNEL_POLICY:
--		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
-+		if (err)
- 			break;
--		}
- 
- 		if (opt > BT_CHANNEL_POLICY_AMP_PREFERRED) {
- 			err = -EINVAL;
-@@ -1089,10 +1079,9 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 			break;
- 		}
- 
--		if (copy_from_sockptr(&mtu, optval, sizeof(u16))) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&mtu, sizeof(mtu), optval, optlen);
-+		if (err)
- 			break;
--		}
- 
- 		if (chan->mode == L2CAP_MODE_EXT_FLOWCTL &&
- 		    sk->sk_state == BT_CONNECTED)
-@@ -1120,10 +1109,9 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 			break;
- 		}
- 
--		if (copy_from_sockptr(&mode, optval, sizeof(u8))) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&mode, sizeof(mode), optval, optlen);
-+		if (err)
- 			break;
--		}
- 
- 		BT_DBG("mode %u", mode);
+ 	tmp.name[sizeof(tmp.name)-1] = 0;
  
 -- 
 2.43.0
