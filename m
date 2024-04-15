@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCCE69D0A;
-	Mon, 15 Apr 2024 14:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2C071B51;
+	Mon, 15 Apr 2024 14:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191091; cv=none; b=lcVqHjNWjtUI5lxmlTXx9M8h4NPHfQH8wucskCqd6MxO/rFDlrbuIhF5LO7pLc5rbKIhHDCenptPLVyAPgbswD2zsBK9xPhaPpAsFCKTPOqyZbQ4YQiwHOnJd7u8x+0UshzBUHFF/SnMoKhY5RU11/9pMcKwUlIl1q0eLwUA2Jg=
+	t=1713191094; cv=none; b=YnHJjlmhPh2NluXgxHZlkvdtx3XP3a2WHu+O/zQB0SpBSZo56m/WumP+Mqf+JEd58MAaxCOP+WU0R76oi6lRnQBKyaPIgeIkdPXG5azMXTZ6L284FjL9jxbiaUUpgXX4Q3D0xBvgNbcpA0AwERovyEKI6AX5ISwGcbSAKQ+vf2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191091; c=relaxed/simple;
-	bh=3CqgNF32sfgwYXgEd1iOqdLAw0YFvvOFsCBjCV7he5s=;
+	s=arc-20240116; t=1713191094; c=relaxed/simple;
+	bh=0KqwtW5uwALZpbD+du0iphmThktQOOTSyokD+d1cbaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=keC9yo8DVuzvYoVAm9rQ6xvJAUkngEAJx094caLbS8SyehLg4nVPzta6/C8/mKsoJttW4sNqcymVf13+l4NFUe9qq2DpzTJQaYap0MU0aHeYcx8vHqOTIGLU/eyB+adx/f1XPU0Gz0pv5iZClAdzf0vw58PxYFtNGf/sybuzNPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pET67DxQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LHBRtqKFKpTg7sv0txWblJhjNTJ5cl0NGT6MlqNwAMBJ8g0abhgN9j8WuaBKwznhlf/OF8SwHvnFmN3I4AnhVmsRn4LJgC29VsMcIZDucs/IQ/3j3NGM8JVUS3t7IhbZt7MVF3fTd/j/ZpWLq0s0xWgUe9CeS906op15DjnZabw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O4OD2Ls6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pET67DxQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DF2C113CC;
-	Mon, 15 Apr 2024 14:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O4OD2Ls6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D36C113CC;
+	Mon, 15 Apr 2024 14:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191091;
-	bh=3CqgNF32sfgwYXgEd1iOqdLAw0YFvvOFsCBjCV7he5s=;
+	s=korg; t=1713191094;
+	bh=0KqwtW5uwALZpbD+du0iphmThktQOOTSyokD+d1cbaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pET67DxQUvi2zZtQvi12DM0me2rKVAdS9wUIzmpELo6QTRQBzxhBcyiyPYbKuidYL
-	 w0zHgIrxlka2VwOVvvhT8j56730XR3Q1P36OY2p1EiIRx6d97oDhbXCop+5MABuKMo
-	 Xd2EzDCLqNAgskebk0BWflvrxiGZ6u78VI8UGISE=
+	b=O4OD2Ls6sqindfiifOXQZ6ZFGpA2BenlfP/UNiuLwJthZCfjvmbjWP8XJXXmyfCqp
+	 p5evCQWQW+hokb+lvupkErrviyv4xjCbDLiHmwPg6gQutddjqWIfAefA9PXNGYENW2
+	 MmHoUOrLXNkVhqHLg5S0C/qWZrPrpAbqldoTsHFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Williams <dan.j.williams@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Tim Harvey <tharvey@gateworks.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 029/172] cxl/core/regs: Fix usage of map->reg_type in cxl_decode_regblock() before assigned
-Date: Mon, 15 Apr 2024 16:18:48 +0200
-Message-ID: <20240415142001.308240324@linuxfoundation.org>
+Subject: [PATCH 6.8 030/172] arm64: dts: freescale: imx8mp-venice-gw72xx-2x: fix USB vbus regulator
+Date: Mon, 15 Apr 2024 16:18:49 +0200
+Message-ID: <20240415142001.351452703@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -52,50 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Tim Harvey <tharvey@gateworks.com>
 
-[ Upstream commit 5c88a9ccd4c431d58b532e4158b6999a8350062c ]
+[ Upstream commit 8cb10cba124c4798b6cb333245ecdc8dde78aeae ]
 
-In the error path, map->reg_type is being used for kernel warning
-before its value is setup. Found by code inspection. Exposure to
-user is wrong reg_type being emitted via kernel log. Use a local
-var for reg_type and retrieve value for usage.
+When using usb-conn-gpio to control USB role and VBUS, the vbus-supply
+property must be present in the usb-conn-gpio node. Additionally it
+should not be present in the phy node as that isn't what controls vbus
+and will upset the use count.
 
-Fixes: 6c7f4f1e51c2 ("cxl/core/regs: Make cxl_map_{component, device}_regs() device generic")
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+This resolves an issue where VBUS is enabled with OTG in peripheral
+mode.
+
+Fixes: ad9a12f7a522 ("arm64: dts: imx8mp-venice: Fix USB connector description")
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/regs.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mp-venice-gw72xx.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cxl/core/regs.c b/drivers/cxl/core/regs.c
-index 372786f809555..3c42f984eeafa 100644
---- a/drivers/cxl/core/regs.c
-+++ b/drivers/cxl/core/regs.c
-@@ -271,6 +271,7 @@ EXPORT_SYMBOL_NS_GPL(cxl_map_device_regs, CXL);
- static bool cxl_decode_regblock(struct pci_dev *pdev, u32 reg_lo, u32 reg_hi,
- 				struct cxl_register_map *map)
- {
-+	u8 reg_type = FIELD_GET(CXL_DVSEC_REG_LOCATOR_BLOCK_ID_MASK, reg_lo);
- 	int bar = FIELD_GET(CXL_DVSEC_REG_LOCATOR_BIR_MASK, reg_lo);
- 	u64 offset = ((u64)reg_hi << 32) |
- 		     (reg_lo & CXL_DVSEC_REG_LOCATOR_BLOCK_OFF_LOW_MASK);
-@@ -278,11 +279,11 @@ static bool cxl_decode_regblock(struct pci_dev *pdev, u32 reg_lo, u32 reg_hi,
- 	if (offset > pci_resource_len(pdev, bar)) {
- 		dev_warn(&pdev->dev,
- 			 "BAR%d: %pr: too small (offset: %pa, type: %d)\n", bar,
--			 &pdev->resource[bar], &offset, map->reg_type);
-+			 &pdev->resource[bar], &offset, reg_type);
- 		return false;
- 	}
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw72xx.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw72xx.dtsi
+index 41c79d2ebdd62..f24b14744799e 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw72xx.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw72xx.dtsi
+@@ -14,6 +14,7 @@ connector {
+ 		pinctrl-0 = <&pinctrl_usbcon1>;
+ 		type = "micro";
+ 		label = "otg";
++		vbus-supply = <&reg_usb1_vbus>;
+ 		id-gpios = <&gpio3 21 GPIO_ACTIVE_HIGH>;
  
--	map->reg_type = FIELD_GET(CXL_DVSEC_REG_LOCATOR_BLOCK_ID_MASK, reg_lo);
-+	map->reg_type = reg_type;
- 	map->resource = pci_resource_start(pdev, bar) + offset;
- 	map->max_size = pci_resource_len(pdev, bar) - offset;
- 	return true;
+ 		port {
+@@ -183,7 +184,6 @@ &usb3_0 {
+ };
+ 
+ &usb3_phy0 {
+-	vbus-supply = <&reg_usb1_vbus>;
+ 	status = "okay";
+ };
+ 
 -- 
 2.43.0
 
