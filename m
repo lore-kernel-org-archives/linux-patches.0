@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638877580D;
-	Mon, 15 Apr 2024 14:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA217581B;
+	Mon, 15 Apr 2024 14:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191731; cv=none; b=B24T8/smGB3bw+ENUvky8tWyPDwlrDwy1yUxMAFENWnzHB77W5gE+uPQER+vm+pRAZ5E7aTpcUfueqapKoDRLtgeEyTNz1Bil7SlzMMZ/okcaBM8PolfOJZr51tcUR86Ue2HrGCWrv48Byy78+1dJ4vj+LeCc+rzZ+UE+C9EkGI=
+	t=1713191734; cv=none; b=areNmYHgyYkzkU+pE9wkvMEEG222OHrEM/MbGwve5fHrVsn/O783cXKhGpkeMhpw3FKw2R9JqYc56JnuMvOvMCuaJK56d4yzAHvyawIuyuJTzffVQueRfDBMEBs3e0SXB1Up/6ScyG83tX06qYraySlc3JQFwd0L354IaKXN8qY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191731; c=relaxed/simple;
-	bh=4bb1UGjBlD1Mqk1JNGW1yMrvAd1qDMkYjZr2NpzOjic=;
+	s=arc-20240116; t=1713191734; c=relaxed/simple;
+	bh=SPK31REBAgv5VJGfMsruwgbTQ3egwx+J08SobjRaY0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qG6H5s3a+uieMP8jt+EygzKy5ZOp3rHPDmU2WKiyt5MGkk++J9ulsTrGXqLzeAgGX38Wr1lX+QVdqWU99dqxXTYYBFJGTZ178pDX0DAT4NgSzSTS9hFeBYbH/28LFrxDnDcV2S6NhlTXXp4yJiokovTpbieTaxSmBPvfE6FYQLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZor+rBw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QNk0sAdJOh8/imZkib7de6/CBFziTwHfriPziEoRcKaI1Qgcob70foZVFlcd8OPs8pGjDC3yxAgNdAfOFDNFnBJafRAcXpUJzIxTzz2fk3xkslkz/im8/PrFUyW9zoNzejbgBY15IgoxExo1gAiVprTIt7HbncyoVe8TS57+TE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4FlCZah; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZor+rBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A431C113CC;
-	Mon, 15 Apr 2024 14:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4FlCZah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898E3C113CC;
+	Mon, 15 Apr 2024 14:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191731;
-	bh=4bb1UGjBlD1Mqk1JNGW1yMrvAd1qDMkYjZr2NpzOjic=;
+	s=korg; t=1713191733;
+	bh=SPK31REBAgv5VJGfMsruwgbTQ3egwx+J08SobjRaY0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KZor+rBwLLzB/5yldO0gqq9lHs/OT+aLWocab8Rbh4Nek9lGzgYLC2cMiQv/WZqjr
-	 AXUjSUXG+RyiQD/jicpKU1edIrDbVFQiwR+rpUsUZ3IWPBEYRaspzzq4Zfa+xrZv9t
-	 tJyxo+/q49rrEEj8okIAyNdxg8PFBMHdJxguC7bw=
+	b=V4FlCZah4c+b7ubhMvdVS2MfP0UCOQQCea1owlgsozDTcqO0VMgEXmjF/3SQVuOxQ
+	 1wy3soRBEd+K7ysmzRvk/wt89QrA8ejhmeIxJQjy8M4B1SuPiVcJZy1aWDf1/pERN1
+	 5dPV2b01SKqKYOYsQObWBg4NQCLt37UXfHauOzAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Arthur Kiyanovski <akiyano@amazon.com>,
+	David Arinzon <darinzon@amazon.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/122] af_unix: Fix garbage collector racing against connect()
-Date: Mon, 15 Apr 2024 16:20:32 +0200
-Message-ID: <20240415141955.390888218@linuxfoundation.org>
+Subject: [PATCH 6.6 068/122] net: ena: Fix potential sign extension issue
+Date: Mon, 15 Apr 2024 16:20:33 +0200
+Message-ID: <20240415141955.420177717@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -52,120 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: David Arinzon <darinzon@amazon.com>
 
-[ Upstream commit 47d8ac011fe1c9251070e1bd64cb10b48193ec51 ]
+[ Upstream commit 713a85195aad25d8a26786a37b674e3e5ec09e3c ]
 
-Garbage collector does not take into account the risk of embryo getting
-enqueued during the garbage collection. If such embryo has a peer that
-carries SCM_RIGHTS, two consecutive passes of scan_children() may see a
-different set of children. Leading to an incorrectly elevated inflight
-count, and then a dangling pointer within the gc_inflight_list.
+Small unsigned types are promoted to larger signed types in
+the case of multiplication, the result of which may overflow.
+In case the result of such a multiplication has its MSB
+turned on, it will be sign extended with '1's.
+This changes the multiplication result.
 
-sockets are AF_UNIX/SOCK_STREAM
-S is an unconnected socket
-L is a listening in-flight socket bound to addr, not in fdtable
-V's fd will be passed via sendmsg(), gets inflight count bumped
+Code example of the phenomenon:
+-------------------------------
+u16 x, y;
+size_t z1, z2;
 
-connect(S, addr)	sendmsg(S, [V]); close(V)	__unix_gc()
-----------------	-------------------------	-----------
+x = y = 0xffff;
+printk("x=%x y=%x\n",x,y);
 
-NS = unix_create1()
-skb1 = sock_wmalloc(NS)
-L = unix_find_other(addr)
-unix_state_lock(L)
-unix_peer(S) = NS
-			// V count=1 inflight=0
+z1 = x*y;
+z2 = (size_t)x*y;
 
- 			NS = unix_peer(S)
- 			skb2 = sock_alloc()
-			skb_queue_tail(NS, skb2[V])
+printk("z1=%lx z2=%lx\n", z1, z2);
 
-			// V became in-flight
-			// V count=2 inflight=1
+Output:
+-------
+x=ffff y=ffff
+z1=fffffffffffe0001 z2=fffe0001
 
-			close(V)
+The expected result of ffff*ffff is fffe0001, and without the
+explicit casting to avoid the unwanted sign extension we got
+fffffffffffe0001.
 
-			// V count=1 inflight=1
-			// GC candidate condition met
+This commit adds an explicit casting to avoid the sign extension
+issue.
 
-						for u in gc_inflight_list:
-						  if (total_refs == inflight_refs)
-						    add u to gc_candidates
-
-						// gc_candidates={L, V}
-
-						for u in gc_candidates:
-						  scan_children(u, dec_inflight)
-
-						// embryo (skb1) was not
-						// reachable from L yet, so V's
-						// inflight remains unchanged
-__skb_queue_tail(L, skb1)
-unix_state_unlock(L)
-						for u in gc_candidates:
-						  if (u.inflight)
-						    scan_children(u, inc_inflight_move_tail)
-
-						// V count=1 inflight=2 (!)
-
-If there is a GC-candidate listening socket, lock/unlock its state. This
-makes GC wait until the end of any ongoing connect() to that socket. After
-flipping the lock, a possibly SCM-laden embryo is already enqueued. And if
-there is another embryo coming, it can not possibly carry SCM_RIGHTS. At
-this point, unix_inflight() can not happen because unix_gc_lock is already
-taken. Inflight graph remains unaffected.
-
-Fixes: 1fd05ba5a2f2 ("[AF_UNIX]: Rewrite garbage collector, fixes race.")
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240409201047.1032217-1-mhal@rbox.co
+Fixes: 689b2bdaaa14 ("net: ena: add functions for handling Low Latency Queues in ena_com")
+Signed-off-by: Arthur Kiyanovski <akiyano@amazon.com>
+Signed-off-by: David Arinzon <darinzon@amazon.com>
+Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/garbage.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/amazon/ena/ena_com.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/unix/garbage.c b/net/unix/garbage.c
-index aea222796dfdc..8734c0c1fc197 100644
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -235,11 +235,22 @@ void unix_gc(void)
- 	 * receive queues.  Other, non candidate sockets _can_ be
- 	 * added to queue, so we must make sure only to touch
- 	 * candidates.
-+	 *
-+	 * Embryos, though never candidates themselves, affect which
-+	 * candidates are reachable by the garbage collector.  Before
-+	 * being added to a listener's queue, an embryo may already
-+	 * receive data carrying SCM_RIGHTS, potentially making the
-+	 * passed socket a candidate that is not yet reachable by the
-+	 * collector.  It becomes reachable once the embryo is
-+	 * enqueued.  Therefore, we must ensure that no SCM-laden
-+	 * embryo appears in a (candidate) listener's queue between
-+	 * consecutive scan_children() calls.
- 	 */
- 	list_for_each_entry_safe(u, next, &gc_inflight_list, link) {
-+		struct sock *sk = &u->sk;
- 		long total_refs;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_com.c b/drivers/net/ethernet/amazon/ena/ena_com.c
+index 633b321d7fdd9..4db689372980e 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_com.c
++++ b/drivers/net/ethernet/amazon/ena/ena_com.c
+@@ -362,7 +362,7 @@ static int ena_com_init_io_sq(struct ena_com_dev *ena_dev,
+ 			ENA_COM_BOUNCE_BUFFER_CNTRL_CNT;
+ 		io_sq->bounce_buf_ctrl.next_to_use = 0;
  
--		total_refs = file_count(u->sk.sk_socket->file);
-+		total_refs = file_count(sk->sk_socket->file);
+-		size = io_sq->bounce_buf_ctrl.buffer_size *
++		size = (size_t)io_sq->bounce_buf_ctrl.buffer_size *
+ 			io_sq->bounce_buf_ctrl.buffers_num;
  
- 		BUG_ON(!u->inflight);
- 		BUG_ON(total_refs < u->inflight);
-@@ -247,6 +258,11 @@ void unix_gc(void)
- 			list_move_tail(&u->link, &gc_candidates);
- 			__set_bit(UNIX_GC_CANDIDATE, &u->gc_flags);
- 			__set_bit(UNIX_GC_MAYBE_CYCLE, &u->gc_flags);
-+
-+			if (sk->sk_state == TCP_LISTEN) {
-+				unix_state_lock(sk);
-+				unix_state_unlock(sk);
-+			}
- 		}
- 	}
- 
+ 		dev_node = dev_to_node(ena_dev->dmadev);
 -- 
 2.43.0
 
