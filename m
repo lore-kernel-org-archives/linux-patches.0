@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743C71E4B1;
-	Mon, 15 Apr 2024 14:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6827A1E4B1;
+	Mon, 15 Apr 2024 14:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191610; cv=none; b=TFofEHT9bczC2dfgrzM5sDnWvN+qh15OjKFkLAyOul+nGfq09zw0WOx2xBLAR1+RjMqymXz4zdJ7M122/13yK+70/Fv/NEsTMymECZnJPfACk8Gp1bs9Wf1KOQV2wd0Wm1aiQpt30UtSlsm2ckZYE66301RVPkjoeND0XE2T2kY=
+	t=1713191613; cv=none; b=fcfRlX7k8RryuwzGmVi18T2ShWYSE/NACKDrf1gXsfcWexV5uOIM6mJqQmuxy1atgetGlIQkWOd59oYLeB/DyUPnjRl7bqjHZAychL5DtO9jSOO8oey4eYYBzB6tWF2rGcIUeuBZmj3fFZihp7oMfRviVsLHmorY/TEkvoXhJnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191610; c=relaxed/simple;
-	bh=HyJWV/t4PWni2qmBUQw7InKm+zABGxpkwdYE0zqq/Tg=;
+	s=arc-20240116; t=1713191613; c=relaxed/simple;
+	bh=qlQL3wp/RHj+x0YN/63soH8fnY7EShzzXDuVSFUpvDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zl5PwRiiMPn3qGH6gbmSdedW3RPCD4gRkHhgpLy36jKy8O6LzQoEZeC2kKt1H0Xs7rdiuvnVsJI/9FjOkbrpGnE9V9WSsEedL0J0tKPWp6kcFKZq2OSfdsqRd/inqbriwhu77Yvj1xy8na7XZ8JxDAhclPlnbl9q2Zww+v4/j3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vyrB9qSl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LHCefrm2TtOgfOgb/uArk720iIDE1zpiuHnEZV+Zj3zZyVmyYVsF1TYhZnR6u8bVEIMXOuadOM8c7xIui0mqKkkRZn8TvBbFopUvwMM9YLGF2kr9YD9pyXtbDz8d19kQnMwZk6nagCuI2kPWESLixs+qFbsitAJ0Ddpqyg99bp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1iXUMKXy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyrB9qSl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA1CEC113CC;
-	Mon, 15 Apr 2024 14:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1iXUMKXy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A90C2BD10;
+	Mon, 15 Apr 2024 14:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191610;
-	bh=HyJWV/t4PWni2qmBUQw7InKm+zABGxpkwdYE0zqq/Tg=;
+	s=korg; t=1713191613;
+	bh=qlQL3wp/RHj+x0YN/63soH8fnY7EShzzXDuVSFUpvDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vyrB9qSlQqjhUCIeE8gekPkK79vkVKcJod9NlFHzl0kss00eQxZ0IiP1PKqU8p/wu
-	 djzTXVZKMJdhtjz+lHJUmqIWxsKDFH0lWyn0DfQNAN3j2hTAU3fdxSiF8qIis1nT2b
-	 Wr9ZjbtH4jyw2yh+nbfrpZxQh6wci9Ov48Lv77hI=
+	b=1iXUMKXy2U88I11oB6IKtSvgq4fPyZiI0yVBUk/ccuRfaaj9B4hESAvWhg90cntZB
+	 XYmMjwdnXzGLXHRx3PsqQZ8DXCdkjHUdeiHm7o1Y4Y7buYBSkconVFQOLyNiEdrrDB
+	 JawWYkZTYG7PxN3UmlT/GrvMKbTFTryfEuUVxP9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timo Lindfors <timo.lindfors@iki.fi>,
-	Alex Constantino <dreaming.about.electric.sheep@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Danilo Krummrich <dakr@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 027/122] Revert "drm/qxl: simplify qxl_fence_wait"
-Date: Mon, 15 Apr 2024 16:19:52 +0200
-Message-ID: <20240415141954.187201496@linuxfoundation.org>
+Subject: [PATCH 6.6 028/122] nouveau: fix function cast warning
+Date: Mon, 15 Apr 2024 16:19:53 +0200
+Message-ID: <20240415141954.216203747@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -52,113 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Constantino <dreaming.about.electric.sheep@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 07ed11afb68d94eadd4ffc082b97c2331307c5ea ]
+[ Upstream commit 185fdb4697cc9684a02f2fab0530ecdd0c2f15d4 ]
 
-This reverts commit 5a838e5d5825c85556011478abde708251cc0776.
+Calling a function through an incompatible pointer type causes breaks
+kcfi, so clang warns about the assignment:
 
-Changes from commit 5a838e5d5825 ("drm/qxl: simplify qxl_fence_wait") would
-result in a '[TTM] Buffer eviction failed' exception whenever it reached a
-timeout.
-Due to a dependency to DMA_FENCE_WARN this also restores some code deleted
-by commit d72277b6c37d ("dma-buf: nuke DMA_FENCE_TRACE macros v2").
+drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c:73:10: error: cast from 'void (*)(const void *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+   73 |         .fini = (void(*)(void *))kfree,
 
-Fixes: 5a838e5d5825 ("drm/qxl: simplify qxl_fence_wait")
-Link: https://lore.kernel.org/regressions/ZTgydqRlK6WX_b29@eldamar.lan/
-Reported-by: Timo Lindfors <timo.lindfors@iki.fi>
-Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1054514
-Signed-off-by: Alex Constantino <dreaming.about.electric.sheep@gmail.com>
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240404181448.1643-2-dreaming.about.electric.sheep@gmail.com
+Avoid this with a trivial wrapper.
+
+Fixes: c39f472e9f14 ("drm/nouveau: remove symlinks, move core/ to nvkm/ (no code changes)")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240404160234.2923554-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/qxl/qxl_release.c | 50 +++++++++++++++++++++++++++----
- include/linux/dma-fence.h         |  7 +++++
- 2 files changed, 52 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/qxl/qxl_release.c b/drivers/gpu/drm/qxl/qxl_release.c
-index 368d26da0d6a2..9febc8b73f09e 100644
---- a/drivers/gpu/drm/qxl/qxl_release.c
-+++ b/drivers/gpu/drm/qxl/qxl_release.c
-@@ -58,16 +58,56 @@ static long qxl_fence_wait(struct dma_fence *fence, bool intr,
- 			   signed long timeout)
- {
- 	struct qxl_device *qdev;
-+	struct qxl_release *release;
-+	int count = 0, sc = 0;
-+	bool have_drawable_releases;
- 	unsigned long cur, end = jiffies + timeout;
- 
- 	qdev = container_of(fence->lock, struct qxl_device, release_lock);
-+	release = container_of(fence, struct qxl_release, base);
-+	have_drawable_releases = release->type == QXL_RELEASE_DRAWABLE;
- 
--	if (!wait_event_timeout(qdev->release_event,
--				(dma_fence_is_signaled(fence) ||
--				 (qxl_io_notify_oom(qdev), 0)),
--				timeout))
--		return 0;
-+retry:
-+	sc++;
-+
-+	if (dma_fence_is_signaled(fence))
-+		goto signaled;
-+
-+	qxl_io_notify_oom(qdev);
-+
-+	for (count = 0; count < 11; count++) {
-+		if (!qxl_queue_garbage_collect(qdev, true))
-+			break;
-+
-+		if (dma_fence_is_signaled(fence))
-+			goto signaled;
-+	}
-+
-+	if (dma_fence_is_signaled(fence))
-+		goto signaled;
-+
-+	if (have_drawable_releases || sc < 4) {
-+		if (sc > 2)
-+			/* back off */
-+			usleep_range(500, 1000);
-+
-+		if (time_after(jiffies, end))
-+			return 0;
-+
-+		if (have_drawable_releases && sc > 300) {
-+			DMA_FENCE_WARN(fence,
-+				       "failed to wait on release %llu after spincount %d\n",
-+				       fence->context & ~0xf0000000, sc);
-+			goto signaled;
-+		}
-+		goto retry;
-+	}
-+	/*
-+	 * yeah, original sync_obj_wait gave up after 3 spins when
-+	 * have_drawable_releases is not set.
-+	 */
- 
-+signaled:
- 	cur = jiffies;
- 	if (time_after(cur, end))
- 		return 0;
-diff --git a/include/linux/dma-fence.h b/include/linux/dma-fence.h
-index b3772edca2e6e..fd4a823ce3cdb 100644
---- a/include/linux/dma-fence.h
-+++ b/include/linux/dma-fence.h
-@@ -681,4 +681,11 @@ static inline bool dma_fence_is_container(struct dma_fence *fence)
- 	return dma_fence_is_array(fence) || dma_fence_is_chain(fence);
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c
+index 4bf486b571013..cb05f7f48a98b 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c
+@@ -66,11 +66,16 @@ of_init(struct nvkm_bios *bios, const char *name)
+ 	return ERR_PTR(-EINVAL);
  }
  
-+#define DMA_FENCE_WARN(f, fmt, args...) \
-+	do {								\
-+		struct dma_fence *__ff = (f);				\
-+		pr_warn("f %llu#%llu: " fmt, __ff->context, __ff->seqno,\
-+			 ##args);					\
-+	} while (0)
++static void of_fini(void *p)
++{
++	kfree(p);
++}
 +
- #endif /* __LINUX_DMA_FENCE_H */
+ const struct nvbios_source
+ nvbios_of = {
+ 	.name = "OpenFirmware",
+ 	.init = of_init,
+-	.fini = (void(*)(void *))kfree,
++	.fini = of_fini,
+ 	.read = of_read,
+ 	.size = of_size,
+ 	.rw = false,
 -- 
 2.43.0
 
