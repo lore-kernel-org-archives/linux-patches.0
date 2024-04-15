@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF1483A10;
-	Mon, 15 Apr 2024 14:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C0D8063C;
+	Mon, 15 Apr 2024 14:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191478; cv=none; b=Lp9A+vufQwa/Jm0Ik00FfhaoBHgaAq+8v6FkaCJtHENeLdO9rKJ4NpT3deUPE0kXPZC8faWdoRv4izsV8Qvi4JMljeKJ4VHzAXUSyEQEIqqvlac8SM8you4431Qok5MAPiCcU7jNdOEmb9Eqa0Rp9/h7azz0JBAS/VoVV2c64Hg=
+	t=1713191480; cv=none; b=HsZTZogGiG1/YuMrbHN/43y+Abf+LgqNWymWxGxLmvyL5ERXyMyFY917vuyclEc/ZzDZrHZ7sXz9T3fTh+q8glRA4V/xKdxh5OJ9NUgIQ5kSvUL1go3UNwxUjCzb2Mh0So5aNTC+kshOmmobkEXQrsGkshkNaeF7CIE5rI3Vvdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191478; c=relaxed/simple;
-	bh=KOMQ4WQ7UflswVSYQCOzT6pn6ft4jpuCgrt4+5QLrBM=;
+	s=arc-20240116; t=1713191480; c=relaxed/simple;
+	bh=fK4RCBwzo6KveOmXXBgAsT49r7X52YEFv2DevTXTjG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gO3+i0KXRr+J2drssvPEBfy/xW+D5Lhs7XOHJeD3By+e9A0HgR5x5BIuKuJr7Pww+/lxRlmQ7eMIMeqJdBSrcHa4oQbiiAzow5wBxTdW0duX92EYfFoFbwztyZffuiQJqME8SGzbJGAMZ+gSsqQQEVc7ejycPCOWeHWBoRvPE1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QxVozywM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EM5qhfynEd0BbVhcTFQP0j1WTkxIn1T95xdFQjoLDKlf4iY7zPi43e7aCpbdLmr0NmfLvpYqer/Rc34bfUFd78xYjraVkL9s81qbciYAf50Pv1z0LvGZpL8AWMAogs4QjyOWRZTjcaTCgZ83+RU3UK6hpbXE202sQkWZXyJ3SXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BqmMVfiP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxVozywM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A9EC2BD10;
-	Mon, 15 Apr 2024 14:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BqmMVfiP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DECC113CC;
+	Mon, 15 Apr 2024 14:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191477;
-	bh=KOMQ4WQ7UflswVSYQCOzT6pn6ft4jpuCgrt4+5QLrBM=;
+	s=korg; t=1713191480;
+	bh=fK4RCBwzo6KveOmXXBgAsT49r7X52YEFv2DevTXTjG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QxVozywMeA0LzQlW6JR4dNZosEjjNLYsSZYhI1YQzPiKYZj/PnDDzhmBDZbWneR9L
-	 IA5PFYlxfPKhwrB1qM6xUXsbnrXHdS84QKelTsZ+BjG+UqPeFRnvgMekDK/5ysr/dg
-	 Ou6W6rzWvmA/eCdUl+6+OsprdWpH9th1JAMhBf4s=
+	b=BqmMVfiPEVnT9tfWDci05sKyppEgbHMKOkoVudyabzhXkSY6GDR5NI+sNqNy352yL
+	 jFVvfNIV+XuDxuW+fIS9rMQJ23X7UXfEV6ePNbs4fV2CBy8i45CLle1aTK4BJcmDZl
+	 E5751kqMAKXS0TtrJrSydaR1ruAYXQJY1NIfBFOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ingo Molnar <mingo@kernel.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.8 155/172] x86/bugs: Fix BHI handling of RRSBA
-Date: Mon, 15 Apr 2024 16:20:54 +0200
-Message-ID: <20240415142005.069653811@linuxfoundation.org>
+Subject: [PATCH 6.8 156/172] x86/bugs: Clarify that syscall hardening isnt a BHI mitigation
+Date: Mon, 15 Apr 2024 16:20:55 +0200
+Message-ID: <20240415142005.098954900@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -54,82 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit 1cea8a280dfd1016148a3820676f2f03e3f5b898 upstream.
+commit 5f882f3b0a8bf0788d5a0ee44b1191de5319bb8a upstream.
 
-The ARCH_CAP_RRSBA check isn't correct: RRSBA may have already been
-disabled by the Spectre v2 mitigation (or can otherwise be disabled by
-the BHI mitigation itself if needed).  In that case retpolines are fine.
+While syscall hardening helps prevent some BHI attacks, there's still
+other low-hanging fruit remaining.  Don't classify it as a mitigation
+and make it clear that the system may still be vulnerable if it doesn't
+have a HW or SW mitigation enabled.
 
 Fixes: ec9404e40e8f ("x86/bhi: Add BHI mitigation knob")
 Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/r/6f56f13da34a0834b69163467449be7f58f253dc.1712813475.git.jpoimboe@kernel.org
+Link: https://lore.kernel.org/r/b5951dae3fdee7f1520d5136a27be3bdfe95f88b.1712813475.git.jpoimboe@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/bugs.c |   30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ Documentation/admin-guide/hw-vuln/spectre.rst   |   11 +++++------
+ Documentation/admin-guide/kernel-parameters.txt |    3 +--
+ arch/x86/kernel/cpu/bugs.c                      |    6 +++---
+ 3 files changed, 9 insertions(+), 11 deletions(-)
 
+--- a/Documentation/admin-guide/hw-vuln/spectre.rst
++++ b/Documentation/admin-guide/hw-vuln/spectre.rst
+@@ -441,10 +441,10 @@ The possible values in this file are:
+    - System is protected by BHI_DIS_S
+  * - BHI: SW loop, KVM SW loop
+    - System is protected by software clearing sequence
+- * - BHI: Syscall hardening
+-   - Syscalls are hardened against BHI
+- * - BHI: Syscall hardening, KVM: SW loop
+-   - System is protected from userspace attacks by syscall hardening; KVM is protected by software clearing sequence
++ * - BHI: Vulnerable
++   - System is vulnerable to BHI
++ * - BHI: Vulnerable, KVM: SW loop
++   - System is vulnerable; KVM is protected by software clearing sequence
+ 
+ Full mitigation might require a microcode update from the CPU
+ vendor. When the necessary microcode is not available, the kernel will
+@@ -661,8 +661,7 @@ kernel command line.
+ 	spectre_bhi=
+ 
+ 		[X86] Control mitigation of Branch History Injection
+-		(BHI) vulnerability. Syscalls are hardened against BHI
+-		regardless of this setting. This setting affects the deployment
++		(BHI) vulnerability.  This setting affects the deployment
+ 		of the HW BHI control and the SW BHB clearing sequence.
+ 
+ 		on
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -6033,8 +6033,7 @@
+ 			See Documentation/admin-guide/laptops/sonypi.rst
+ 
+ 	spectre_bhi=	[X86] Control mitigation of Branch History Injection
+-			(BHI) vulnerability. Syscalls are hardened against BHI
+-			reglardless of this setting. This setting affects the
++			(BHI) vulnerability.  This setting affects the
+ 			deployment of the HW BHI control and the SW BHB
+ 			clearing sequence.
+ 
 --- a/arch/x86/kernel/cpu/bugs.c
 +++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1537,20 +1537,25 @@ static enum spectre_v2_mitigation __init
- 	return SPECTRE_V2_RETPOLINE;
- }
- 
-+static bool __ro_after_init rrsba_disabled;
-+
- /* Disable in-kernel use of non-RSB RET predictors */
- static void __init spec_ctrl_disable_kernel_rrsba(void)
- {
--	u64 x86_arch_cap_msr;
-+	if (rrsba_disabled)
-+		return;
- 
--	if (!boot_cpu_has(X86_FEATURE_RRSBA_CTRL))
-+	if (!(x86_arch_cap_msr & ARCH_CAP_RRSBA)) {
-+		rrsba_disabled = true;
- 		return;
-+	}
- 
--	x86_arch_cap_msr = x86_read_arch_cap_msr();
-+	if (!boot_cpu_has(X86_FEATURE_RRSBA_CTRL))
-+		return;
- 
--	if (x86_arch_cap_msr & ARCH_CAP_RRSBA) {
--		x86_spec_ctrl_base |= SPEC_CTRL_RRSBA_DIS_S;
--		update_spec_ctrl(x86_spec_ctrl_base);
--	}
-+	x86_spec_ctrl_base |= SPEC_CTRL_RRSBA_DIS_S;
-+	update_spec_ctrl(x86_spec_ctrl_base);
-+	rrsba_disabled = true;
- }
- 
- static void __init spectre_v2_determine_rsb_fill_type_at_vmexit(enum spectre_v2_mitigation mode)
-@@ -1651,9 +1656,11 @@ static void __init bhi_select_mitigation
- 		return;
- 
- 	/* Retpoline mitigates against BHI unless the CPU has RRSBA behavior */
--	if (cpu_feature_enabled(X86_FEATURE_RETPOLINE) &&
--	    !(x86_read_arch_cap_msr() & ARCH_CAP_RRSBA))
--		return;
-+	if (cpu_feature_enabled(X86_FEATURE_RETPOLINE)) {
-+		spec_ctrl_disable_kernel_rrsba();
-+		if (rrsba_disabled)
-+			return;
-+	}
- 
- 	if (spec_ctrl_bhi_dis())
- 		return;
-@@ -2808,8 +2815,7 @@ static const char *spectre_bhi_state(voi
- 		return "; BHI: BHI_DIS_S";
- 	else if  (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP))
+@@ -2817,10 +2817,10 @@ static const char *spectre_bhi_state(voi
  		return "; BHI: SW loop, KVM: SW loop";
--	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) &&
--		 !(x86_arch_cap_msr & ARCH_CAP_RRSBA))
-+	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) && rrsba_disabled)
+ 	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) && rrsba_disabled)
  		return "; BHI: Retpoline";
- 	else if  (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT))
- 		return "; BHI: Syscall hardening, KVM: SW loop";
+-	else if  (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT))
+-		return "; BHI: Syscall hardening, KVM: SW loop";
++	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT))
++		return "; BHI: Vulnerable, KVM: SW loop";
+ 
+-	return "; BHI: Vulnerable (Syscall hardening enabled)";
++	return "; BHI: Vulnerable";
+ }
+ 
+ static ssize_t spectre_v2_show_state(char *buf)
 
 
