@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B65782486;
-	Mon, 15 Apr 2024 14:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550F280049;
+	Mon, 15 Apr 2024 14:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191800; cv=none; b=enJvc5kv3yKpI/hn6PuAc6djjuT3psnUZqfgKDzxLE+lroS0C/9qcjAEWBu+lLRqJYLuxRISBYi64xclJHd5z6u7DURVibm5T4phBYJj7ZdT2Ttny4Rym81wFnl+E6J5M9OewE68UYbZLJSTV23IxitCA4NfAqz3ki0SyRoyVRc=
+	t=1713191803; cv=none; b=qtH4d5NhYoY5yWsqmkyDV4Za3E/oW4KeG1jK/KQYvedMeMXq28sH3CNPXTXrGmFYQ2UXZ3HV4ymmq5yJKX3+xfCCUhv7KLlz+CbcN18xZOfQs0CEvCEuVAUVpyExAc6VdJ68hsqOIGPBLeUdQ0jfghdMpXcF5EOq/wcMeD+0a9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191800; c=relaxed/simple;
-	bh=jpyLELkIGDBD6zEoW2ddiuz8KtVK9mG5FACzjkjD5bI=;
+	s=arc-20240116; t=1713191803; c=relaxed/simple;
+	bh=51LfCQq6MQFoTopwWRpgrVlBAq89i3ugg3e1b31Effk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qj6mHcdxwR7P42CETP6FPeftXUbvoOxtd9AR01kiDNtL+YU2c9WB6qTvS44dKz83hZp7b2DK6fauZHFEhJB/Io3j12csbB8WQqsYNkSTCfjXugCVgOQr1BrpM8vewlQA7Qs/45gEgKjS4QS342CFEfxVVwqVWsnCMJv0VQw/Vv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oEoQOf3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aJrNGNA3GLsStT4X5UTj0NTqNJihSeU4WKzMTNVQwhahepDfd2zV7muPdj2hD5icdWrcCLBU7uRPnvjuHz9clUw6jhMJlCb62B6mFg38Xj15l0agAJz0zoPHSjdMNnbkj7FYXtdEL3e7x5ktcwCJ4QPrsfFRh/NNg+3mPV0P6kQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/IlgENr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oEoQOf3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5866C113CC;
-	Mon, 15 Apr 2024 14:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/IlgENr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEEA6C113CC;
+	Mon, 15 Apr 2024 14:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191800;
-	bh=jpyLELkIGDBD6zEoW2ddiuz8KtVK9mG5FACzjkjD5bI=;
+	s=korg; t=1713191803;
+	bh=51LfCQq6MQFoTopwWRpgrVlBAq89i3ugg3e1b31Effk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1oEoQOf3GyrtcG8eqJUjq/klmLS2Gnswy/cyA08M3/lFkNesYc6YSSKsHlyQrIfLE
-	 G0sXP8SfeDZn//7ePBsw01ZToDDHCXDzArlPBBMzugGNqlG1qICl5uafQG/XPQK1Al
-	 Yo62HCYc3DpmaqbVJntis8kdVJstQa+unT8p1mtY=
+	b=o/IlgENrGAxulRBI+6MYebXrlqSdN1BOGJSv3IfQmGS6FoJ8qMC34Dr1a6a8gu7ac
+	 gV/GL1Tu227TIbc2Jr7NZkYPspQZkZFuKAoVOOXokWzcuY6Y9mDK0NDZDmKReirLfR
+	 PkgEtuJgIPaec+OSSXn5qGFIHOLaSTejM2OV0CY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/122] net: ks8851: Handle softirqs at the end of IRQ thread to fix hang
-Date: Mon, 15 Apr 2024 16:20:07 +0200
-Message-ID: <20240415141954.629177358@linuxfoundation.org>
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.6 084/122] kprobes: Fix possible use-after-free issue on kprobe registration
+Date: Mon, 15 Apr 2024 16:20:49 +0200
+Message-ID: <20240415141955.897520572@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -51,101 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit be0384bf599cf1eb8d337517feeb732d71f75a6f ]
+commit 325f3fb551f8cd672dbbfc4cf58b14f9ee3fc9e8 upstream.
 
-The ks8851_irq() thread may call ks8851_rx_pkts() in case there are
-any packets in the MAC FIFO, which calls netif_rx(). This netif_rx()
-implementation is guarded by local_bh_disable() and local_bh_enable().
-The local_bh_enable() may call do_softirq() to run softirqs in case
-any are pending. One of the softirqs is net_rx_action, which ultimately
-reaches the driver .start_xmit callback. If that happens, the system
-hangs. The entire call chain is below:
+When unloading a module, its state is changing MODULE_STATE_LIVE ->
+ MODULE_STATE_GOING -> MODULE_STATE_UNFORMED. Each change will take
+a time. `is_module_text_address()` and `__module_text_address()`
+works with MODULE_STATE_LIVE and MODULE_STATE_GOING.
+If we use `is_module_text_address()` and `__module_text_address()`
+separately, there is a chance that the first one is succeeded but the
+next one is failed because module->state becomes MODULE_STATE_UNFORMED
+between those operations.
 
-ks8851_start_xmit_par from netdev_start_xmit
-netdev_start_xmit from dev_hard_start_xmit
-dev_hard_start_xmit from sch_direct_xmit
-sch_direct_xmit from __dev_queue_xmit
-__dev_queue_xmit from __neigh_update
-__neigh_update from neigh_update
-neigh_update from arp_process.constprop.0
-arp_process.constprop.0 from __netif_receive_skb_one_core
-__netif_receive_skb_one_core from process_backlog
-process_backlog from __napi_poll.constprop.0
-__napi_poll.constprop.0 from net_rx_action
-net_rx_action from __do_softirq
-__do_softirq from call_with_stack
-call_with_stack from do_softirq
-do_softirq from __local_bh_enable_ip
-__local_bh_enable_ip from netif_rx
-netif_rx from ks8851_irq
-ks8851_irq from irq_thread_fn
-irq_thread_fn from irq_thread
-irq_thread from kthread
-kthread from ret_from_fork
+In `check_kprobe_address_safe()`, if the second `__module_text_address()`
+is failed, that is ignored because it expected a kernel_text address.
+But it may have failed simply because module->state has been changed
+to MODULE_STATE_UNFORMED. In this case, arm_kprobe() will try to modify
+non-exist module text address (use-after-free).
 
-The hang happens because ks8851_irq() first locks a spinlock in
-ks8851_par.c ks8851_lock_par() spin_lock_irqsave(&ksp->lock, ...)
-and with that spinlock locked, calls netif_rx(). Once the execution
-reaches ks8851_start_xmit_par(), it calls ks8851_lock_par() again
-which attempts to claim the already locked spinlock again, and the
-hang happens.
+To fix this problem, we should not use separated `is_module_text_address()`
+and `__module_text_address()`, but use only `__module_text_address()`
+once and do `try_module_get(module)` which is only available with
+MODULE_STATE_LIVE.
 
-Move the do_softirq() call outside of the spinlock protected section
-of ks8851_irq() by disabling BHs around the entire spinlock protected
-section of ks8851_irq() handler. Place local_bh_enable() outside of
-the spinlock protected section, so that it can trigger do_softirq()
-without the ks8851_par.c ks8851_lock_par() spinlock being held, and
-safely call ks8851_start_xmit_par() without attempting to lock the
-already locked spinlock.
+Link: https://lore.kernel.org/all/20240410015802.265220-1-zhengyejian1@huawei.com/
 
-Since ks8851_irq() is protected by local_bh_disable()/local_bh_enable()
-now, replace netif_rx() with __netif_rx() which is not duplicating the
-local_bh_disable()/local_bh_enable() calls.
-
-Fixes: 797047f875b5 ("net: ks8851: Implement Parallel bus operations")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Link: https://lore.kernel.org/r/20240405203204.82062-2-marex@denx.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 28f6c37a2910 ("kprobes: Forbid probing on trampoline and BPF code areas")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/micrel/ks8851_common.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/kprobes.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/micrel/ks8851_common.c b/drivers/net/ethernet/micrel/ks8851_common.c
-index 896d43bb8883d..d4cdf3d4f5525 100644
---- a/drivers/net/ethernet/micrel/ks8851_common.c
-+++ b/drivers/net/ethernet/micrel/ks8851_common.c
-@@ -299,7 +299,7 @@ static void ks8851_rx_pkts(struct ks8851_net *ks)
- 					ks8851_dbg_dumpkkt(ks, rxpkt);
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -1567,10 +1567,17 @@ static int check_kprobe_address_safe(str
+ 	jump_label_lock();
+ 	preempt_disable();
  
- 				skb->protocol = eth_type_trans(skb, ks->netdev);
--				netif_rx(skb);
-+				__netif_rx(skb);
+-	/* Ensure it is not in reserved area nor out of text */
+-	if (!(core_kernel_text((unsigned long) p->addr) ||
+-	    is_module_text_address((unsigned long) p->addr)) ||
+-	    in_gate_area_no_mm((unsigned long) p->addr) ||
++	/* Ensure the address is in a text area, and find a module if exists. */
++	*probed_mod = NULL;
++	if (!core_kernel_text((unsigned long) p->addr)) {
++		*probed_mod = __module_text_address((unsigned long) p->addr);
++		if (!(*probed_mod)) {
++			ret = -EINVAL;
++			goto out;
++		}
++	}
++	/* Ensure it is not in reserved area. */
++	if (in_gate_area_no_mm((unsigned long) p->addr) ||
+ 	    within_kprobe_blacklist((unsigned long) p->addr) ||
+ 	    jump_label_text_reserved(p->addr, p->addr) ||
+ 	    static_call_text_reserved(p->addr, p->addr) ||
+@@ -1580,8 +1587,7 @@ static int check_kprobe_address_safe(str
+ 		goto out;
+ 	}
  
- 				ks->netdev->stats.rx_packets++;
- 				ks->netdev->stats.rx_bytes += rxlen;
-@@ -330,6 +330,8 @@ static irqreturn_t ks8851_irq(int irq, void *_ks)
- 	unsigned long flags;
- 	unsigned int status;
- 
-+	local_bh_disable();
-+
- 	ks8851_lock(ks, &flags);
- 
- 	status = ks8851_rdreg16(ks, KS_ISR);
-@@ -406,6 +408,8 @@ static irqreturn_t ks8851_irq(int irq, void *_ks)
- 	if (status & IRQ_LCI)
- 		mii_check_link(&ks->mii);
- 
-+	local_bh_enable();
-+
- 	return IRQ_HANDLED;
- }
- 
--- 
-2.43.0
-
+-	/* Check if 'p' is probing a module. */
+-	*probed_mod = __module_text_address((unsigned long) p->addr);
++	/* Get module refcount and reject __init functions for loaded modules. */
+ 	if (*probed_mod) {
+ 		/*
+ 		 * We must hold a refcount of the probed module while updating
 
 
