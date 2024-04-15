@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A287F7EF;
-	Mon, 15 Apr 2024 14:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9427B7602A;
+	Mon, 15 Apr 2024 14:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191215; cv=none; b=K/kafKyMOgpPfU5/twL0yWm8mBtaU6BcpbW9GPVGpJYJgI84VfJmU8vZhx1Lg3lddYIHm13oQvagJuqKPq8/Szv4h79Qez8xuzE46T60zscaaWtiVf0Prqfg+imEDSYWxHcatvXUsOPc358OXx7pKJ9o46fhbCjDAFkepvTk4QE=
+	t=1713191218; cv=none; b=jjJdpfXmgOLaeIuF5L0ogPR9cqd8yJ439JjiWOgvLexUA+XOO46Wk8Zr3RwDkhHUh80xvc17Bp3K3GfcRIoVRnn7DjxDQuM6ltSuyKF3izB8O7QUdPc9kCoHiR5Qyy18DHq1re9lHP4x3lpjzc4SUXKJkA2irGKCLpc2nGO/XYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191215; c=relaxed/simple;
-	bh=g//tdNvOBVsv6iHkNxWofXTX5dXDuOYvWYM387YWgZY=;
+	s=arc-20240116; t=1713191218; c=relaxed/simple;
+	bh=dcP/buCKKPsOz+jzh2/aM9/5bysm1epOjnNi14E5or0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rM4wU/dGLcFqJlvmpUUhwEpdLtgK13aa4Z4/HMd5zlC4KiDjVnvNwB8wM7K0Ihmk0OPrAMvQ5FTH4Qy8G5CRav0rlVjzI+k83p3ePRZa823jpSATnNVguhxVUCJN/ZBcD4R0JtUfpuoXKk3+Rnyhoy1mcYFEcOE9IZ09ZgFVrnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mL9qH/28; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lHEi93W/N3E/1ozwVVeMH2WZi8zCDjFEqscBh7Bu/GB7NOPn6C+B0ei6t7B/Lh0gXT5MWOqWnP9pXVW7sIcr32UdmSuAjIRr6nnM4863qkUvm3GeWJr4LurcY7vDtvDGO1yZJMYBe7AU9xJ/dJZCbOgrxpvJOGoe397RkvnFGAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyPeehht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mL9qH/28"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E14C4AF07;
-	Mon, 15 Apr 2024 14:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyPeehht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4890C113CC;
+	Mon, 15 Apr 2024 14:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191215;
-	bh=g//tdNvOBVsv6iHkNxWofXTX5dXDuOYvWYM387YWgZY=;
+	s=korg; t=1713191218;
+	bh=dcP/buCKKPsOz+jzh2/aM9/5bysm1epOjnNi14E5or0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mL9qH/28uMPPL+9JwePAefG/pfS6YjkAb4y4ovKBp+23trqJ3GIkC7t4LttemBsVS
-	 E/xAchYSqvjVOsXt9pbshh+UCPWoGK3ZOih2QTJsEaYME1gCXUth00vm0V/hKtMPhr
-	 FKE4bNKvpPiZLAbPvfMIs0w9II75QxlgkEECDclA=
+	b=ZyPeehhtO3My6g+OlkyWgRxbLAdF++dWUEky84jG6V8TJMaEesGVTHZ4j21PXHRUv
+	 1sYJrXRfyyONyRgOPfZheUWkQgeDPS7UxhEPziA2uNjvqJ+vNNB26y4s7RtBOj/LNx
+	 +hkQ45nXV2Lx7y63Hrhlskfls1rmHoBRW7WJzT8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 070/172] pds_core: Fix pdsc_check_pci_health function to use work thread
-Date: Mon, 15 Apr 2024 16:19:29 +0200
-Message-ID: <20240415142002.535640928@linuxfoundation.org>
+Subject: [PATCH 6.8 071/172] Bluetooth: ISO: Align broadcast sync_timeout with connection timeout
+Date: Mon, 15 Apr 2024 16:19:30 +0200
+Message-ID: <20240415142002.564244492@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -53,144 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brett Creeley <brett.creeley@amd.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 81665adf25d28a00a986533f1d3a5df76b79cad9 ]
+[ Upstream commit 42ed95de82c01184a88945d3ca274be6a7ea607d ]
 
-When the driver notices fw_status == 0xff it tries to perform a PCI
-reset on itself via pci_reset_function() in the context of the driver's
-health thread. However, pdsc_reset_prepare calls
-pdsc_stop_health_thread(), which attempts to stop/flush the health
-thread. This results in a deadlock because the stop/flush will never
-complete since the driver called pci_reset_function() from the health
-thread context. Fix by changing the pdsc_check_pci_health_function()
-to queue a newly introduced pdsc_pci_reset_thread() on the pdsc's
-work queue.
+This aligns broadcast sync_timeout with existing connection timeouts
+which are 20 seconds long.
 
-Unloading the driver in the fw_down/dead state uncovered another issue,
-which can be seen in the following trace:
-
-WARNING: CPU: 51 PID: 6914 at kernel/workqueue.c:1450 __queue_work+0x358/0x440
-[...]
-RIP: 0010:__queue_work+0x358/0x440
-[...]
-Call Trace:
- <TASK>
- ? __warn+0x85/0x140
- ? __queue_work+0x358/0x440
- ? report_bug+0xfc/0x1e0
- ? handle_bug+0x3f/0x70
- ? exc_invalid_op+0x17/0x70
- ? asm_exc_invalid_op+0x1a/0x20
- ? __queue_work+0x358/0x440
- queue_work_on+0x28/0x30
- pdsc_devcmd_locked+0x96/0xe0 [pds_core]
- pdsc_devcmd_reset+0x71/0xb0 [pds_core]
- pdsc_teardown+0x51/0xe0 [pds_core]
- pdsc_remove+0x106/0x200 [pds_core]
- pci_device_remove+0x37/0xc0
- device_release_driver_internal+0xae/0x140
- driver_detach+0x48/0x90
- bus_remove_driver+0x6d/0xf0
- pci_unregister_driver+0x2e/0xa0
- pdsc_cleanup_module+0x10/0x780 [pds_core]
- __x64_sys_delete_module+0x142/0x2b0
- ? syscall_trace_enter.isra.18+0x126/0x1a0
- do_syscall_64+0x3b/0x90
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-RIP: 0033:0x7fbd9d03a14b
-[...]
-
-Fix this by preventing the devcmd reset if the FW is not running.
-
-Fixes: d9407ff11809 ("pds_core: Prevent health thread from running during reset/remove")
-Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
-Signed-off-by: Brett Creeley <brett.creeley@amd.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: b37cab587aa3 ("Bluetooth: ISO: Don't reject BT_ISO_QOS if parameters are unset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/core.c | 13 ++++++++++++-
- drivers/net/ethernet/amd/pds_core/core.h |  2 ++
- drivers/net/ethernet/amd/pds_core/dev.c  |  3 +++
- drivers/net/ethernet/amd/pds_core/main.c |  1 +
- 4 files changed, 18 insertions(+), 1 deletion(-)
+ include/net/bluetooth/bluetooth.h | 2 ++
+ net/bluetooth/iso.c               | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/core.c b/drivers/net/ethernet/amd/pds_core/core.c
-index 0d148795a8d09..dd4f0965bbe64 100644
---- a/drivers/net/ethernet/amd/pds_core/core.c
-+++ b/drivers/net/ethernet/amd/pds_core/core.c
-@@ -595,6 +595,16 @@ void pdsc_fw_up(struct pdsc *pdsc)
- 	pdsc_teardown(pdsc, PDSC_TEARDOWN_RECOVERY);
- }
+diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
+index 7ffa8c192c3f2..9fe95a22abeb7 100644
+--- a/include/net/bluetooth/bluetooth.h
++++ b/include/net/bluetooth/bluetooth.h
+@@ -164,6 +164,8 @@ struct bt_voice {
+ #define BT_ISO_QOS_BIG_UNSET	0xff
+ #define BT_ISO_QOS_BIS_UNSET	0xff
  
-+void pdsc_pci_reset_thread(struct work_struct *work)
-+{
-+	struct pdsc *pdsc = container_of(work, struct pdsc, pci_reset_work);
-+	struct pci_dev *pdev = pdsc->pdev;
++#define BT_ISO_SYNC_TIMEOUT	0x07d0 /* 20 secs */
 +
-+	pci_dev_get(pdev);
-+	pci_reset_function(pdev);
-+	pci_dev_put(pdev);
-+}
-+
- static void pdsc_check_pci_health(struct pdsc *pdsc)
- {
- 	u8 fw_status;
-@@ -609,7 +619,8 @@ static void pdsc_check_pci_health(struct pdsc *pdsc)
- 	if (fw_status != PDS_RC_BAD_PCI)
- 		return;
- 
--	pci_reset_function(pdsc->pdev);
-+	/* prevent deadlock between pdsc_reset_prepare and pdsc_health_thread */
-+	queue_work(pdsc->wq, &pdsc->pci_reset_work);
- }
- 
- void pdsc_health_thread(struct work_struct *work)
-diff --git a/drivers/net/ethernet/amd/pds_core/core.h b/drivers/net/ethernet/amd/pds_core/core.h
-index f410f7d132056..401ff56eba0dc 100644
---- a/drivers/net/ethernet/amd/pds_core/core.h
-+++ b/drivers/net/ethernet/amd/pds_core/core.h
-@@ -197,6 +197,7 @@ struct pdsc {
- 	struct pdsc_qcq notifyqcq;
- 	u64 last_eid;
- 	struct pdsc_viftype *viftype_status;
-+	struct work_struct pci_reset_work;
+ struct bt_iso_io_qos {
+ 	__u32 interval;
+ 	__u16 latency;
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 04f6572d35f17..4fa1f3b779a71 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -837,10 +837,10 @@ static struct bt_iso_qos default_qos = {
+ 		.bcode			= {0x00},
+ 		.options		= 0x00,
+ 		.skip			= 0x0000,
+-		.sync_timeout		= 0x4000,
++		.sync_timeout		= BT_ISO_SYNC_TIMEOUT,
+ 		.sync_cte_type		= 0x00,
+ 		.mse			= 0x00,
+-		.timeout		= 0x4000,
++		.timeout		= BT_ISO_SYNC_TIMEOUT,
+ 	},
  };
- 
- /** enum pds_core_dbell_bits - bitwise composition of dbell values.
-@@ -312,5 +313,6 @@ int pdsc_firmware_update(struct pdsc *pdsc, const struct firmware *fw,
- 
- void pdsc_fw_down(struct pdsc *pdsc);
- void pdsc_fw_up(struct pdsc *pdsc);
-+void pdsc_pci_reset_thread(struct work_struct *work);
- 
- #endif /* _PDSC_H_ */
-diff --git a/drivers/net/ethernet/amd/pds_core/dev.c b/drivers/net/ethernet/amd/pds_core/dev.c
-index e65a1632df505..bfb79c5aac391 100644
---- a/drivers/net/ethernet/amd/pds_core/dev.c
-+++ b/drivers/net/ethernet/amd/pds_core/dev.c
-@@ -229,6 +229,9 @@ int pdsc_devcmd_reset(struct pdsc *pdsc)
- 		.reset.opcode = PDS_CORE_CMD_RESET,
- 	};
- 
-+	if (!pdsc_is_fw_running(pdsc))
-+		return 0;
-+
- 	return pdsc_devcmd(pdsc, &cmd, &comp, pdsc->devcmd_timeout);
- }
- 
-diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
-index 345b16127fe8b..a375d612d2875 100644
---- a/drivers/net/ethernet/amd/pds_core/main.c
-+++ b/drivers/net/ethernet/amd/pds_core/main.c
-@@ -238,6 +238,7 @@ static int pdsc_init_pf(struct pdsc *pdsc)
- 	snprintf(wq_name, sizeof(wq_name), "%s.%d", PDS_CORE_DRV_NAME, pdsc->uid);
- 	pdsc->wq = create_singlethread_workqueue(wq_name);
- 	INIT_WORK(&pdsc->health_work, pdsc_health_thread);
-+	INIT_WORK(&pdsc->pci_reset_work, pdsc_pci_reset_thread);
- 	timer_setup(&pdsc->wdtimer, pdsc_wdtimer_cb, 0);
- 	pdsc->wdtimer_period = PDSC_WATCHDOG_SECS * HZ;
  
 -- 
 2.43.0
