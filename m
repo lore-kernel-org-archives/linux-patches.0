@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D40A78C74;
-	Mon, 15 Apr 2024 14:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B772119;
+	Mon, 15 Apr 2024 14:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192134; cv=none; b=N/e1wcrWcCeWMDw1h3szCgd1olRl4MBwTJnIc1148y7u7hyld5SeWDXsy+eNLFNCDazhUeN8khud1ez3k3u9aKQIEUw5R4ZkV/k6SMyPW0j+hC0vJWkYDTUKFjIn4gzUHspGOyROWkpVjWz4eLmdUgCEupSY473Y4BzNxHSdZhs=
+	t=1713192137; cv=none; b=TMYTcTd33hpy+GZUucZH5luRDYXUY48LSYLg7WjL9pvRXAuVJUfThMd3OGuDnCAkVO2tYbP0Ur9CFHNKc2nCrTH2RQWHq5QBxCh93CQhiwiCj33bCY4BLeyjWH4iS2MUuTV603n6KDdWenbFR+jlmkgof+Fm+x7VA4yfF1nU/Qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192134; c=relaxed/simple;
-	bh=wqlMZfTwF0e1+/s+EKYgq1CyqhcpOOX1tUWFdpBtfj8=;
+	s=arc-20240116; t=1713192137; c=relaxed/simple;
+	bh=D7QYrbwdogRU4RtyibQeGVlD6nxzROFUyTnuImN9PSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cl30nMPxSolwQGmWvhG7egzUER1xCKZl8h//+MJ9bnyATbp6Nfwdz+5fIhCFAAyK/fFAIa9DvpxIfCMBMqUAZloILUUjClavfWtJLUn9cEsVsfcoMLOZyEI16Yeu6pwZcPxIhyLDVSfKPGi4UkZ2ElccPDdvhT1xumFoDvy+ZAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYH1LVdW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ck66790WVN6Wb+SLav6nfP9PIZ/NedYlXM+7NMMkku9+sIZw8ZUaP4KA6r6OugFs9pQ7i4GF25+owr2HaWcFDvsaIU6s/iBL0Nr6EpUXl+rxmHOID9reMv1gK7WAOZO814gZrZDFVnbYttZdMS35RCSF9d5osa6uQ85XuldkKqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cC96im8O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYH1LVdW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9B6C4AF11;
-	Mon, 15 Apr 2024 14:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cC96im8O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929ABC4AF07;
+	Mon, 15 Apr 2024 14:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192134;
-	bh=wqlMZfTwF0e1+/s+EKYgq1CyqhcpOOX1tUWFdpBtfj8=;
+	s=korg; t=1713192137;
+	bh=D7QYrbwdogRU4RtyibQeGVlD6nxzROFUyTnuImN9PSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mYH1LVdW/z0N0+QGnhkAV40d6avAO5jizA4EaxjqCKXK9owB1PZj99xKRV78e0bmU
-	 +MufCmvM5vgpaCo9WoNER2Jf+m05mHr9jcVD8r55Jem1YgjXKB7d9r6TVQbqyuMtFB
-	 hMArFyW8IkorwbilkzQAoDp2GMtvo3FcxuBebOMM=
+	b=cC96im8O7GWogdUBZBcub1qgp/qe6Z5Snx/6KJfzxPE2J73a6gGGbou22pGEdNbSe
+	 eg2jySVAmHrbHpw/soOryI9JmyEFFUpOl3XZ4fbwigh1OKbXzDd9QE5fauNjC+xrHy
+	 PmDvn/I/BdFiH4rd2a/vOmLbfH3S0I916KkjGS+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jammy Huang <jammy_huang@aspeedtech.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	KuoHsiang Chou <kuohsiang_chou@aspeedtech.com>,
-	Dave Airlie <airlied@redhat.com>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.1 48/69] drm/ast: Fix soft lockup
-Date: Mon, 15 Apr 2024 16:21:19 +0200
-Message-ID: <20240415141947.614367351@linuxfoundation.org>
+	syzbot+a6a4b5bb3da165594cff@syzkaller.appspotmail.com,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 5.15 01/45] batman-adv: Avoid infinite loop trying to resize local TT
+Date: Mon, 15 Apr 2024 16:21:08 +0200
+Message-ID: <20240415141942.282701211@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240415141946.165870434@linuxfoundation.org>
-References: <20240415141946.165870434@linuxfoundation.org>
+In-Reply-To: <20240415141942.235939111@linuxfoundation.org>
+References: <20240415141942.235939111@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,62 +47,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jammy Huang <jammy_huang@aspeedtech.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit bc004f5038220b1891ef4107134ccae44be55109 upstream.
+commit b1f532a3b1e6d2e5559c7ace49322922637a28aa upstream.
 
-There is a while-loop in ast_dp_set_on_off() that could lead to
-infinite-loop. This is because the register, VGACRI-Dx, checked in
-this API is a scratch register actually controlled by a MCU, named
-DPMCU, in BMC.
+If the MTU of one of an attached interface becomes too small to transmit
+the local translation table then it must be resized to fit inside all
+fragments (when enabled) or a single packet.
 
-These scratch registers are protected by scu-lock. If suc-lock is not
-off, DPMCU can not update these registers and then host will have soft
-lockup due to never updated status.
+But if the MTU becomes too low to transmit even the header + the VLAN
+specific part then the resizing of the local TT will never succeed. This
+can for example happen when the usable space is 110 bytes and 11 VLANs are
+on top of batman-adv. In this case, at least 116 byte would be needed.
+There will just be an endless spam of
 
-DPMCU is used to control DP and relative registers to handshake with
-host's VGA driver. Even the most time-consuming task, DP's link
-training, is less than 100ms. 200ms should be enough.
+   batman_adv: batadv0: Forced to purge local tt entries to fit new maximum fragment MTU (110)
 
-Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
-Fixes: 594e9c04b586 ("drm/ast: Create the driver for ASPEED proprietory Display-Port")
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: KuoHsiang Chou <kuohsiang_chou@aspeedtech.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: Jocelyn Falempe <jfalempe@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.19+
-Link: https://patchwork.freedesktop.org/patch/msgid/20240403090246.1495487-1-jammy_huang@aspeedtech.com
+in the log but the function will never finish. Problem here is that the
+timeout will be halved all the time and will then stagnate at 0 and
+therefore never be able to reduce the table even more.
+
+There are other scenarios possible with a similar result. The number of
+BATADV_TT_CLIENT_NOPURGE entries in the local TT can for example be too
+high to fit inside a packet. Such a scenario can therefore happen also with
+only a single VLAN + 7 non-purgable addresses - requiring at least 120
+bytes.
+
+While this should be handled proactively when:
+
+* interface with too low MTU is added
+* VLAN is added
+* non-purgeable local mac is added
+* MTU of an attached interface is reduced
+* fragmentation setting gets disabled (which most likely requires dropping
+  attached interfaces)
+
+not all of these scenarios can be prevented because batman-adv is only
+consuming events without the the possibility to prevent these actions
+(non-purgable MAC address added, MTU of an attached interface is reduced).
+It is therefore necessary to also make sure that the code is able to handle
+also the situations when there were already incompatible system
+configuration are present.
+
+Cc: stable@vger.kernel.org
+Fixes: a19d3d85e1b8 ("batman-adv: limit local translation table max size")
+Reported-by: syzbot+a6a4b5bb3da165594cff@syzkaller.appspotmail.com
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ast/ast_dp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/batman-adv/translation-table.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/ast/ast_dp.c
-+++ b/drivers/gpu/drm/ast/ast_dp.c
-@@ -190,6 +190,7 @@ void ast_dp_set_on_off(struct drm_device
- {
- 	struct ast_private *ast = to_ast_private(dev);
- 	u8 video_on_off = on;
-+	u32 i = 0;
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -3948,7 +3948,7 @@ void batadv_tt_local_resize_to_mtu(struc
  
- 	// Video On/Off
- 	ast_set_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xE3, (u8) ~AST_DP_VIDEO_ENABLE, on);
-@@ -202,6 +203,8 @@ void ast_dp_set_on_off(struct drm_device
- 						ASTDP_MIRROR_VIDEO_ENABLE) != video_on_off) {
- 			// wait 1 ms
- 			mdelay(1);
-+			if (++i > 200)
-+				break;
- 		}
- 	}
- }
+ 	spin_lock_bh(&bat_priv->tt.commit_lock);
+ 
+-	while (true) {
++	while (timeout) {
+ 		table_size = batadv_tt_local_table_transmit_size(bat_priv);
+ 		if (packet_size_max >= table_size)
+ 			break;
 
 
