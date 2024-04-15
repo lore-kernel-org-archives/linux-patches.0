@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309F71D524;
-	Mon, 15 Apr 2024 14:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C827376E7;
+	Mon, 15 Apr 2024 14:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192241; cv=none; b=YfbGTHu0HbmMiQvf1mcAG5MgW/sg9bsIHM7sntmGExpluZU08aFqgYyEqQG/YAu5y3TKjMI9cMQq7mQnccKkjQE7tDo+Moau617MLiPOL5wBER4883EefLWWNXtfXLJ8Vz8fBMA2mlBy9uNUXS/xOE6UqSgwYG4hbPXYfYOthsc=
+	t=1713192244; cv=none; b=CAOEgPJVGsinxYeJfANQQyM3o0ORKtw+HIcVrMFQrnImxPiAKT9B7c56HEhn/IusesEsbicBnQdM6kGrzMX5gEDVM2Sf/E0WtNCor0N9dIU+a4Pxus5VVJpOB4ZTpheqv75J1PWlEdFFRUDGO0pT2f92A7MpyGJZHp+X+M+Y5+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192241; c=relaxed/simple;
-	bh=UBJyjVsmOpP9zeC1SAunK88smfZT2ZXVYoEvQuy5xG8=;
+	s=arc-20240116; t=1713192244; c=relaxed/simple;
+	bh=VbpcEoNRw3d5gH2dMmgwVgb5AmU3Qs5h14m+0XSLE8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H8tSoG+dVmEK0Vgyg9Fnia4h8vBFBAiQYLKJKoNS7nUCPx1XsJ+SImDGLxCnJcURhMm/7hiJDzcdlz0Kw2mJXKNnh8heOVqC3U035CUstVPTprI/Q2dTbZJA0np5n3PSDgZ5FXEefsnkl0rhzUt7nGMoaW4zsA1Ctn/BS1w9WJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AlJDtcHa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aezZe5Dq9IH6iU4h1c+l8QYT8hkRrPMhGM804KEcGqFTop+Q/JDaZZ+Z6qkU5P52fmZE+a5ZOevhhr6gG4PlsvBA17KmgA7ahz3SsbY1pUJRuModuK2NRfpw2pkeR+/o+YQj+M/3KJMfkZICoOUAGfdUmP/uJ03s2VndnI2TdB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYZSEMQA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlJDtcHa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9AA1C113CC;
-	Mon, 15 Apr 2024 14:44:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYZSEMQA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96174C2BD10;
+	Mon, 15 Apr 2024 14:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192241;
-	bh=UBJyjVsmOpP9zeC1SAunK88smfZT2ZXVYoEvQuy5xG8=;
+	s=korg; t=1713192244;
+	bh=VbpcEoNRw3d5gH2dMmgwVgb5AmU3Qs5h14m+0XSLE8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AlJDtcHaiLYS47PkWzwtHVDasJNk2cxqiH/xQLOqKW6/0R0fQ/d2ODDrorfBnopWh
-	 iP9YMiURtkWrJC3jQHw1niOPjubqEO3r1W6mO99PHkeDLERVI9R4o+EhSxbLXABpL4
-	 8qRrOigq+aecMG1+YqXfbKClIIwvio4/GBksdKFA=
+	b=aYZSEMQAfp9AMZuaNgo2DGAnGK27SjIB/tKFqgKjm+b7Ih6ujnVbMxhDfsoxgbHgz
+	 GO+UZY4zHTqX5yWIFzXrotZHz3Ap4kt8cievHgTpJtfVgNZzhHIuaz0PO5rGopRGGc
+	 nXz7B4gUfsTAfy41IhrVciK8W1Mem9QjrLzhqdUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.15 42/45] x86/bugs: Clarify that syscall hardening isnt a BHI mitigation
-Date: Mon, 15 Apr 2024 16:21:49 +0200
-Message-ID: <20240415141943.505229084@linuxfoundation.org>
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.15 43/45] x86/bugs: Remove CONFIG_BHI_MITIGATION_AUTO and spectre_bhi=auto
+Date: Mon, 15 Apr 2024 16:21:50 +0200
+Message-ID: <20240415141943.534147635@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141942.235939111@linuxfoundation.org>
 References: <20240415141942.235939111@linuxfoundation.org>
@@ -54,80 +55,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit 5f882f3b0a8bf0788d5a0ee44b1191de5319bb8a upstream.
+commit 36d4fe147c870f6d3f6602befd7ef44393a1c87a upstream.
 
-While syscall hardening helps prevent some BHI attacks, there's still
-other low-hanging fruit remaining.  Don't classify it as a mitigation
-and make it clear that the system may still be vulnerable if it doesn't
-have a HW or SW mitigation enabled.
+Unlike most other mitigations' "auto" options, spectre_bhi=auto only
+mitigates newer systems, which is confusing and not particularly useful.
 
-Fixes: ec9404e40e8f ("x86/bhi: Add BHI mitigation knob")
+Remove it.
+
 Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
 Cc: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/r/b5951dae3fdee7f1520d5136a27be3bdfe95f88b.1712813475.git.jpoimboe@kernel.org
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/412e9dc87971b622bbbaf64740ebc1f140bff343.1712813475.git.jpoimboe@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/hw-vuln/spectre.rst   |   11 +++++------
- Documentation/admin-guide/kernel-parameters.txt |    3 +--
- arch/x86/kernel/cpu/bugs.c                      |    6 +++---
- 3 files changed, 9 insertions(+), 11 deletions(-)
+ Documentation/admin-guide/hw-vuln/spectre.rst   |    4 ----
+ Documentation/admin-guide/kernel-parameters.txt |    3 ---
+ arch/x86/Kconfig                                |    4 ----
+ arch/x86/kernel/cpu/bugs.c                      |   10 +---------
+ 4 files changed, 1 insertion(+), 20 deletions(-)
 
 --- a/Documentation/admin-guide/hw-vuln/spectre.rst
 +++ b/Documentation/admin-guide/hw-vuln/spectre.rst
-@@ -441,10 +441,10 @@ The possible values in this file are:
-    - System is protected by BHI_DIS_S
-  * - BHI: SW loop, KVM SW loop
-    - System is protected by software clearing sequence
-- * - BHI: Syscall hardening
--   - Syscalls are hardened against BHI
-- * - BHI: Syscall hardening, KVM: SW loop
--   - System is protected from userspace attacks by syscall hardening; KVM is protected by software clearing sequence
-+ * - BHI: Vulnerable
-+   - System is vulnerable to BHI
-+ * - BHI: Vulnerable, KVM: SW loop
-+   - System is vulnerable; KVM is protected by software clearing sequence
+@@ -719,10 +719,6 @@ For user space mitigation:
+ 			needed.
+ 		off
+ 			Disable the mitigation.
+-		auto
+-			Enable the HW mitigation if needed, but
+-			*don't* enable the SW mitigation except for KVM.
+-			The system may be vulnerable.
  
- Full mitigation might require a microcode update from the CPU
- vendor. When the necessary microcode is not available, the kernel will
-@@ -711,8 +711,7 @@ For user space mitigation:
- 	spectre_bhi=
+ For spectre_v2_user see Documentation/admin-guide/kernel-parameters.txt
  
- 		[X86] Control mitigation of Branch History Injection
--		(BHI) vulnerability. Syscalls are hardened against BHI
--		regardless of this setting. This setting affects the deployment
-+		(BHI) vulnerability.  This setting affects the deployment
- 		of the HW BHI control and the SW BHB clearing sequence.
- 
- 		on
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -5406,8 +5406,7 @@
- 			See Documentation/admin-guide/laptops/sonypi.rst
+@@ -5413,9 +5413,6 @@
+ 			on   - (default) Enable the HW or SW mitigation
+ 			       as needed.
+ 			off  - Disable the mitigation.
+-			auto - Enable the HW mitigation if needed, but
+-			       *don't* enable the SW mitigation except
+-			       for KVM.  The system may be vulnerable.
  
- 	spectre_bhi=	[X86] Control mitigation of Branch History Injection
--			(BHI) vulnerability. Syscalls are hardened against BHI
--			reglardless of this setting. This setting affects the
-+			(BHI) vulnerability.  This setting affects the
- 			deployment of the HW BHI control and the SW BHB
- 			clearing sequence.
+ 	spectre_v2=	[X86] Control mitigation of Spectre variant 2
+ 			(indirect branch speculation) vulnerability.
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -2523,10 +2523,6 @@ config SPECTRE_BHI_OFF
+ 	bool "off"
+ 	help
+ 	  Equivalent to setting spectre_bhi=off command line parameter.
+-config SPECTRE_BHI_AUTO
+-	bool "auto"
+-	help
+-	  Equivalent to setting spectre_bhi=auto command line parameter.
+ 
+ endchoice
  
 --- a/arch/x86/kernel/cpu/bugs.c
 +++ b/arch/x86/kernel/cpu/bugs.c
-@@ -2797,10 +2797,10 @@ static const char *spectre_bhi_state(voi
- 		return "; BHI: SW loop, KVM: SW loop";
- 	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) && rrsba_disabled)
- 		return "; BHI: Retpoline";
--	else if  (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT))
--		return "; BHI: Syscall hardening, KVM: SW loop";
-+	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT))
-+		return "; BHI: Vulnerable, KVM: SW loop";
+@@ -1602,13 +1602,10 @@ static bool __init spec_ctrl_bhi_dis(voi
+ enum bhi_mitigations {
+ 	BHI_MITIGATION_OFF,
+ 	BHI_MITIGATION_ON,
+-	BHI_MITIGATION_AUTO,
+ };
  
--	return "; BHI: Vulnerable (Syscall hardening enabled)";
-+	return "; BHI: Vulnerable";
- }
+ static enum bhi_mitigations bhi_mitigation __ro_after_init =
+-	IS_ENABLED(CONFIG_SPECTRE_BHI_ON)  ? BHI_MITIGATION_ON  :
+-	IS_ENABLED(CONFIG_SPECTRE_BHI_OFF) ? BHI_MITIGATION_OFF :
+-					     BHI_MITIGATION_AUTO;
++	IS_ENABLED(CONFIG_SPECTRE_BHI_ON) ? BHI_MITIGATION_ON : BHI_MITIGATION_OFF;
  
- static ssize_t spectre_v2_show_state(char *buf)
+ static int __init spectre_bhi_parse_cmdline(char *str)
+ {
+@@ -1619,8 +1616,6 @@ static int __init spectre_bhi_parse_cmdl
+ 		bhi_mitigation = BHI_MITIGATION_OFF;
+ 	else if (!strcmp(str, "on"))
+ 		bhi_mitigation = BHI_MITIGATION_ON;
+-	else if (!strcmp(str, "auto"))
+-		bhi_mitigation = BHI_MITIGATION_AUTO;
+ 	else
+ 		pr_err("Ignoring unknown spectre_bhi option (%s)", str);
+ 
+@@ -1650,9 +1645,6 @@ static void __init bhi_select_mitigation
+ 	setup_force_cpu_cap(X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT);
+ 	pr_info("Spectre BHI mitigation: SW BHB clearing on vm exit\n");
+ 
+-	if (bhi_mitigation == BHI_MITIGATION_AUTO)
+-		return;
+-
+ 	/* Mitigate syscalls when the mitigation is forced =on */
+ 	setup_force_cpu_cap(X86_FEATURE_CLEAR_BHB_LOOP);
+ 	pr_info("Spectre BHI mitigation: SW BHB clearing on syscall\n");
 
 
