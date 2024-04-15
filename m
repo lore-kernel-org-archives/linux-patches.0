@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844C374BEB;
-	Mon, 15 Apr 2024 14:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB43374C4;
+	Mon, 15 Apr 2024 14:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192217; cv=none; b=BlsYlr7P7dOsVXuwRjo0y70Mvix85ShuLFhJeWqQPyiGcTYu6URF4S4apW56qeGbTy8NMgsuC92u3fLSOM7Fpjn8XY3EfAL71ryOJHrkdgkrVrWQYEwnXIo07mphSf4DhqKXKUISwraHRmMzoU08cKDlh1whEE5sNR77MxNUfAw=
+	t=1713192220; cv=none; b=fygoICmnCVtN1UwsKB9NW8EnU2TCR+vP4Pxi3aWSwvGYt420IXW5M6z7tje7kaFWUYfKvjbAyghqOrBUKKGBfg4I1gHWL2btPEu0D0Ksy4POLGW0j5xDiLqO99fsleQr4iQyxD7QkW2h3uSM/dFwplaA76W5HlGZiY4g7qIpcK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192217; c=relaxed/simple;
-	bh=LvzKo+1OSELww9LakWbtnUHWwtNGNjpM16htveN977s=;
+	s=arc-20240116; t=1713192220; c=relaxed/simple;
+	bh=YsZG3eqERYf9xIi6wLGYU59LbPRzCq/EpAsvhPx+eJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z9/2KV8XA+hpBKc/kFF/MGMZfvuwbmvLmhq0hQZZuwDjhDJqAV3xh+aKORkzx1dIw3J9jAfJfqtYTuxuXelT3l5tkdg7AAZ5K2UODFgjLpe2b1u4avqrJ71o6DCb/HdwGGLkLAljcRwnq778IlLPjmICDDcV8IFud+2+/xwNIes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5oDphmz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=irWn3/J122IaQXj9Teq1Puv7Mpje9BUQ3REINyjBdDk7DVl+fX7WW53qgfcJ08OzIaPoJvIKCKd3y6Hp0QXW57bvMMCvXPp27POc4TfuZQiqwdz7oEm4R7tOtYyxV1iZMdWD/QX0tHdsmK2qRCUNcfMUyQlTqjioZCIAxM2URLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZmx54Ur; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5oDphmz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F737C113CC;
-	Mon, 15 Apr 2024 14:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZmx54Ur"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FB6C113CC;
+	Mon, 15 Apr 2024 14:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192217;
-	bh=LvzKo+1OSELww9LakWbtnUHWwtNGNjpM16htveN977s=;
+	s=korg; t=1713192220;
+	bh=YsZG3eqERYf9xIi6wLGYU59LbPRzCq/EpAsvhPx+eJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u5oDphmzdWyqqEDZ8wPzLcCcrwTmcOmlKx022bjDoRC2KK/Zt8gTfhvohsXRGqxsH
-	 ptnoRXxxkBWoDvVrs3H1tW98dfwZ33/w7BdWYz0XCkXPaJC2NtFXyN1nol+bXjti+1
-	 ico31AsamLviECHTU9r+XpLsAtJW72Y3wS5JCvp0=
+	b=WZmx54UrztoCGz1irBAL/zdSEWQn5wkJmtfnSa34nwnEQmUTtAy8/cxIEkD9a0mMm
+	 gL9S9D8Dnpm6oFPbG+qzgDGmOkiXaU8Bjxm8KSswujVVe2734AYlXQtdtvYnx0IKJo
+	 lNTQevAuZiCIj6WIyzrgNQtr7IkFl5H2UKiAAHMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Dunlap <acdunlap@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Kevin Loughlin <kevinloughlin@google.com>
-Subject: [PATCH 5.15 35/45] x86/apic: Force native_apic_mem_read() to use the MOV instruction
-Date: Mon, 15 Apr 2024 16:21:42 +0200
-Message-ID: <20240415141943.298769478@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 09/45] net: openvswitch: fix unwanted error log on timeout policy probing
+Date: Mon, 15 Apr 2024 16:21:16 +0200
+Message-ID: <20240415141942.521769639@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141942.235939111@linuxfoundation.org>
 References: <20240415141942.235939111@linuxfoundation.org>
@@ -53,70 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Dunlap <acdunlap@google.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit 5ce344beaca688f4cdea07045e0b8f03dc537e74 upstream.
+[ Upstream commit 4539f91f2a801c0c028c252bffae56030cfb2cae ]
 
-When done from a virtual machine, instructions that touch APIC memory
-must be emulated. By convention, MMIO accesses are typically performed
-via io.h helpers such as readl() or writeq() to simplify instruction
-emulation/decoding (ex: in KVM hosts and SEV guests) [0].
+On startup, ovs-vswitchd probes different datapath features including
+support for timeout policies.  While probing, it tries to execute
+certain operations with OVS_PACKET_ATTR_PROBE or OVS_FLOW_ATTR_PROBE
+attributes set.  These attributes tell the openvswitch module to not
+log any errors when they occur as it is expected that some of the
+probes will fail.
 
-Currently, native_apic_mem_read() does not follow this convention,
-allowing the compiler to emit instructions other than the MOV
-instruction generated by readl(). In particular, when the kernel is
-compiled with clang and run as a SEV-ES or SEV-SNP guest, the compiler
-would emit a TESTL instruction which is not supported by the SEV-ES
-emulator, causing a boot failure in that environment. It is likely the
-same problem would happen in a TDX guest as that uses the same
-instruction emulator as SEV-ES.
+For some reason, setting the timeout policy ignores the PROBE attribute
+and logs a failure anyway.  This is causing the following kernel log
+on each re-start of ovs-vswitchd:
 
-To make sure all emulators can emulate APIC memory reads via MOV, use
-the readl() function in native_apic_mem_read(). It is expected that any
-emulator would support MOV in any addressing mode as it is the most
-generic and is what is usually emitted currently.
+  kernel: Failed to associated timeout policy `ovs_test_tp'
 
-The TESTL instruction is emitted when native_apic_mem_read() is inlined
-into apic_mem_wait_icr_idle(). The emulator comes from
-insn_decode_mmio() in arch/x86/lib/insn-eval.c. It's not worth it to
-extend insn_decode_mmio() to support more instructions since, in theory,
-the compiler could choose to output nearly any instruction for such
-reads which would bloat the emulator beyond reason.
+Fix that by using the same logging macro that all other messages are
+using.  The message will still be printed at info level when needed
+and will be rate limited, but with a net rate limiter instead of
+generic printk one.
 
-  [0] https://lore.kernel.org/all/20220405232939.73860-12-kirill.shutemov@linux.intel.com/
+The nf_ct_set_timeout() itself will still print some info messages,
+but at least this change makes logging in openvswitch module more
+consistent.
 
-  [ bp: Massage commit message, fix typos. ]
-
-Signed-off-by: Adam Dunlap <acdunlap@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Tested-by: Kevin Loughlin <kevinloughlin@google.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240318230927.2191933-1-acdunlap@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 06bd2bdf19d2 ("openvswitch: Add timeout support to ct action")
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Eelco Chaudron <echaudro@redhat.com>
+Link: https://lore.kernel.org/r/20240403203803.2137962-1-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/apic.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/openvswitch/conntrack.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/x86/include/asm/apic.h
-+++ b/arch/x86/include/asm/apic.h
-@@ -12,6 +12,7 @@
- #include <asm/mpspec.h>
- #include <asm/msr.h>
- #include <asm/hardirq.h>
-+#include <asm/io.h>
- 
- #define ARCH_APICTIMER_STOPS_ON_C3	1
- 
-@@ -111,7 +112,7 @@ static inline void native_apic_mem_write
- 
- static inline u32 native_apic_mem_read(u32 reg)
- {
--	return *((volatile u32 *)(APIC_BASE + reg));
-+	return readl((void __iomem *)(APIC_BASE + reg));
- }
- 
- extern void native_apic_wait_icr_idle(void);
+diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
+index 7106ce231a2dd..60dd6f32d520e 100644
+--- a/net/openvswitch/conntrack.c
++++ b/net/openvswitch/conntrack.c
+@@ -1704,8 +1704,9 @@ int ovs_ct_copy_action(struct net *net, const struct nlattr *attr,
+ 	if (ct_info.timeout[0]) {
+ 		if (nf_ct_set_timeout(net, ct_info.ct, family, key->ip.proto,
+ 				      ct_info.timeout))
+-			pr_info_ratelimited("Failed to associated timeout "
+-					    "policy `%s'\n", ct_info.timeout);
++			OVS_NLERR(log,
++				  "Failed to associated timeout policy '%s'",
++				  ct_info.timeout);
+ 		else
+ 			ct_info.nf_ct_timeout = rcu_dereference(
+ 				nf_ct_timeout_find(ct_info.ct)->timeout);
+-- 
+2.43.0
+
 
 
