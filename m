@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9031E501;
-	Mon, 15 Apr 2024 14:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F371E501;
+	Mon, 15 Apr 2024 14:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192199; cv=none; b=TM6VVTpPOUEL5l8C6Ll2niV1BxV96P8FnOndg4ady3+zm4tpkpwaF0wqcEXIpxyLxG48YLv7shWq38OLuUarS9XJ6DvXTIJEEWOZfHfyXdQW+ud4cAqTLQb0DKim/SN1gEGk++LAdqgE6vgoZ14g1Ys5GBxjov/QdJkKkP3UJNA=
+	t=1713192202; cv=none; b=g9TDk11dtsh80LA4RApaT5lpz7wLkR/iAmG/cYlPQLGA/X3R8op5yurgJTFXgbxl4nODM0mYm6wfCIiVMe+feiYoe4eDvT6Z84tCsXML5Vq2wY6/6vU5v2e3d+89x3KBMMjKMo2RPiaW8nsXeX4mzH5cgqTs6qjVyUe7YRkbB1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192199; c=relaxed/simple;
-	bh=lCnP0HPxKOXGRjMcNaJcIiu5ecS9uP/RJpXMSOtC7OM=;
+	s=arc-20240116; t=1713192202; c=relaxed/simple;
+	bh=6cS9xaLap0THNn+I6r41lyfxsl5v1ExZqXceRROdclc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fiieF/lhNvq7frEmo9JuWI900k5Ff6btBaqIccLIh2FUM7iKPuUOB3Y67OeiB5ydrSFFwy9Ef/rAK2HXavmT3jKEOnore7SEybebFfIQE+2oPgLPk3RrSpOjkHtA3sBCdwHb1lGPkadqHWB7DSRVQMMdgj7Hd/GBND3O8H9oAQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZy85h8o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=D93RxBaUieCEBNjCAiu3FDl0v1RAIY7hknXUniqCBPgcLvnMcv6UM2cNtXvPxNGdT8nySwNFpx/M3xqa2jVFUSxOervNw3q62lw1w4umrBYgrvfchP88+X0CnbkcYwYAQiH1GxDOQ1oOGS3carGnVxsTuRKXPtR+3YHgJXAK9ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inO63tX9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZy85h8o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AAAC113CC;
-	Mon, 15 Apr 2024 14:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inO63tX9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3056BC113CC;
+	Mon, 15 Apr 2024 14:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192199;
-	bh=lCnP0HPxKOXGRjMcNaJcIiu5ecS9uP/RJpXMSOtC7OM=;
+	s=korg; t=1713192202;
+	bh=6cS9xaLap0THNn+I6r41lyfxsl5v1ExZqXceRROdclc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZy85h8oweN546HdfOteIV9c1S2GL6XwhHllXiPA/8QdxY3TytO47YSz8oJaQkO7u
-	 6DejYTv4+z6xOTYhW+CoBaUjOXXELA7Wp8I2eQqsSgSoMq4wDyL5sbC1Dbdh3Pw3tK
-	 sn5ZvQ8WkrfRClgsP/zGiGxA5WZiJ5VWpj71wjsk=
+	b=inO63tX9TMmJNjLBgxYHRcWU7UB8Bh/vEP3j8lNBLAf4lK6U8Bjun5Vcv/EQiwDNs
+	 JfkMsUFnteRUZ+neAdmgacmD5FIsevE6XlsIVituoCkriYV+XbOf8KC48iKFYHrBL8
+	 szaLdFWE/ePWJkaAn+kkmyj9FHDzHATw/LVrqpCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 29/45] btrfs: qgroup: correctly model root qgroup rsv in convert
-Date: Mon, 15 Apr 2024 16:21:36 +0200
-Message-ID: <20240415141943.118206027@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 5.15 30/45] drm/client: Fully protect modes[] with dev->mode_config.mutex
+Date: Mon, 15 Apr 2024 16:21:37 +0200
+Message-ID: <20240415141943.148333129@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141942.235939111@linuxfoundation.org>
 References: <20240415141942.235939111@linuxfoundation.org>
@@ -45,44 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 141fb8cd206ace23c02cd2791c6da52c1d77d42a upstream.
+commit 3eadd887dbac1df8f25f701e5d404d1b90fd0fea upstream.
 
-We use add_root_meta_rsv and sub_root_meta_rsv to track prealloc and
-pertrans reservations for subvolumes when quotas are enabled. The
-convert function does not properly increment pertrans after decrementing
-prealloc, so the count is not accurate.
+The modes[] array contains pointers to modes on the connectors'
+mode lists, which are protected by dev->mode_config.mutex.
+Thus we need to extend modes[] the same protection or by the
+time we use it the elements may already be pointing to
+freed/reused memory.
 
-Note: we check that the fs is not read-only to mirror the logic in
-qgroup_convert_meta, which checks that before adding to the pertrans rsv.
-
-Fixes: 8287475a2055 ("btrfs: qgroup: Use root::qgroup_meta_rsv_* to record qgroup meta reserved space")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10583
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240404203336.10454-2-ville.syrjala@linux.intel.com
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/qgroup.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/drm_client_modeset.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -4080,6 +4080,8 @@ void btrfs_qgroup_convert_reserved_meta(
- 				      BTRFS_QGROUP_RSV_META_PREALLOC);
- 	trace_qgroup_meta_convert(root, num_bytes);
- 	qgroup_convert_meta(fs_info, root->root_key.objectid, num_bytes);
-+	if (!sb_rdonly(fs_info->sb))
-+		add_root_meta_rsv(root, num_bytes, BTRFS_QGROUP_RSV_META_PERTRANS);
- }
+--- a/drivers/gpu/drm/drm_client_modeset.c
++++ b/drivers/gpu/drm/drm_client_modeset.c
+@@ -775,6 +775,7 @@ int drm_client_modeset_probe(struct drm_
+ 	unsigned int total_modes_count = 0;
+ 	struct drm_client_offset *offsets;
+ 	unsigned int connector_count = 0;
++	/* points to modes protected by mode_config.mutex */
+ 	struct drm_display_mode **modes;
+ 	struct drm_crtc **crtcs;
+ 	int i, ret = 0;
+@@ -843,7 +844,6 @@ int drm_client_modeset_probe(struct drm_
+ 		drm_client_pick_crtcs(client, connectors, connector_count,
+ 				      crtcs, modes, 0, width, height);
+ 	}
+-	mutex_unlock(&dev->mode_config.mutex);
  
- /*
+ 	drm_client_modeset_release(client);
+ 
+@@ -873,6 +873,7 @@ int drm_client_modeset_probe(struct drm_
+ 			modeset->y = offset->y;
+ 		}
+ 	}
++	mutex_unlock(&dev->mode_config.mutex);
+ 
+ 	mutex_unlock(&client->modeset_mutex);
+ out:
 
 
