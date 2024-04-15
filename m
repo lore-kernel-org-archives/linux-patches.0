@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF8E78C76;
-	Mon, 15 Apr 2024 14:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3349757E1;
+	Mon, 15 Apr 2024 14:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191465; cv=none; b=C98IC+2AAbCxu/DTna7ssUu9WtkY12M1riHXkl5weSs/Rd6y+1RdQXuMRMGq6dZxpwcImh3kI8Hu4M5X5ILDJ0XNB6ugyhCovgCchvZUnWcUdbre5rXbiXCsRiPd+nulmiXNSiC/nbK/K+BgOFPpk5dCAzF/CwgkHh1LTUcIlOs=
+	t=1713191468; cv=none; b=FaD8lQr/HxAuqfYAO1sI1cIm1kY2Wjvq/4UHQklmwX5R0bhZ35pw29dXPbfd8giw49/4RtpGlo79i1j5bQxiGP81q87rBug+WUpydPSfmI/imwBYkNUE4HYRc597IIk+72YC72LUpsGzg5TZZg3oGYlZluTF3G9Bwv5V3DavX7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191465; c=relaxed/simple;
-	bh=h+vGp156q2RtwoputzFVL7FRuGWWZY3HQs1FEkZgB0c=;
+	s=arc-20240116; t=1713191468; c=relaxed/simple;
+	bh=LrzwHHbyuWkZSJ55XYfNUcQaY/VONo6v1O+NplGW4xQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cBsDusfznwZZpACEbPMLmJF7XmQH/MRDKNjjNILnC/WhpDVrcJiTrP8Pj3x8nk6l6Wg9eYLfqoef1RoMDwmPF0KOnClwl4/nJjl+YZrZHq8K+HVYF+xRJ10iP15A3pSJcrcRew+kMyY2nZE2m+d8jy6BE8iJbHdmXumT82guoIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvEuvVGA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cG3UaI3ynW2q7e4Fn5C8vagIsAy57114bRBE4j3k6dILlxov7hDe4H1YsQRomKhCHbFPXkwCNJsjgL4zvr0SABaaAR80eKWwuq1HlHucGO8DeGPoz4sKORT1BRtYyIxfT635sDpYDMHQCRW2d4fiOFfgVVvKkCDisNSDdE6MSic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XeS27Apy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvEuvVGA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5C5C113CC;
-	Mon, 15 Apr 2024 14:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XeS27Apy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAED7C113CC;
+	Mon, 15 Apr 2024 14:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191465;
-	bh=h+vGp156q2RtwoputzFVL7FRuGWWZY3HQs1FEkZgB0c=;
+	s=korg; t=1713191468;
+	bh=LrzwHHbyuWkZSJ55XYfNUcQaY/VONo6v1O+NplGW4xQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uvEuvVGA/Uhb/u8ayApM4WA5RFpKzgMU4aryJBFN1rXgdWt2H75T2tG+LPNMm2XPZ
-	 +pP9Gth430SKaQ8qVCn5E9Xk1kVIceZRoIz7EDqCxHqNnsTxLhvPjGASPB4Jm3hR3k
-	 rXyzMLXcgXMh/TeTGlENRLkCmY6kOW6Dgf3tk1Tw=
+	b=XeS27ApyGOVCIMkGsC+tPGxxemJqrOM0rajL4L4hzV7D50dtrDc1oToNzn6zGBNm/
+	 Ix0fRCii6QKDqbey5G4s1UX6yhuAy2joYymc3Kaq9g2BmPQ+t53pkPztQzx9K283y1
+	 wI31tn6Bitjc0pdpq+fQ5PgbWu+IbhUS/6/myrs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.8 134/172] arm64: dts: imx8-ss-dma: fix adc lpcg indices
-Date: Mon, 15 Apr 2024 16:20:33 +0200
-Message-ID: <20240415142004.447964613@linuxfoundation.org>
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.8 152/172] x86/bugs: Fix BHI documentation
+Date: Mon, 15 Apr 2024 16:20:51 +0200
+Message-ID: <20240415142004.982053061@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -50,61 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit 81975080f14167610976e968e8016e92d836266f upstream.
+commit dfe648903f42296866d79f10d03f8c85c9dfba30 upstream.
 
-adc0_lpcg: clock-controller@5ac80000 {
-	...						    Col1   Col2
-	clocks = <&clk IMX_SC_R_ADC_0 IMX_SC_PM_CLK_PER>, // 0      0
-		 <&dma_ipg_clk>;			  // 1      4
-	clock-indices = <IMX_LPCG_CLK_0>, <IMX_LPCG_CLK_4>;
-};
+Fix up some inaccuracies in the BHI documentation.
 
-Col1: index, which existing dts try to get.
-Col2: actual index in lpcg driver.
-
-adc0: adc@5a880000 {
-	clocks = <&adc0_lpcg 0>, <&adc0_lpcg 1>;
-			     ^^              ^^
-	clocks = <&adc0_lpcg IMX_LPCG_CLK_0>, <&adc0_lpcg IMX_LPCG_CLK_4>;
-
-Arg0 is divided by 4 in lpcg driver. So adc get IMX_SC_PM_CLK_PER by
-<&adc0_lpcg 0>, <&adc0_lpcg 1>. Although function can work, code logic is
-wrong. Fix it by using correct indices.
-
-Cc: stable@vger.kernel.org
-Fixes: 1db044b25d2e ("arm64: dts: imx8dxl: add adc0 support")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: ec9404e40e8f ("x86/bhi: Add BHI mitigation knob")
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/8c84f7451bfe0dd08543c6082a383f390d4aa7e2.1712813475.git.jpoimboe@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8-ss-dma.dtsi |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/admin-guide/hw-vuln/spectre.rst   |   15 ++++++++-------
+ Documentation/admin-guide/kernel-parameters.txt |   12 +++++++-----
+ 2 files changed, 15 insertions(+), 12 deletions(-)
 
---- a/arch/arm64/boot/dts/freescale/imx8-ss-dma.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8-ss-dma.dtsi
-@@ -377,8 +377,8 @@ dma_subsys: bus@5a000000 {
- 		reg = <0x5a880000 0x10000>;
- 		interrupts = <GIC_SPI 240 IRQ_TYPE_LEVEL_HIGH>;
- 		interrupt-parent = <&gic>;
--		clocks = <&adc0_lpcg 0>,
--			 <&adc0_lpcg 1>;
-+		clocks = <&adc0_lpcg IMX_LPCG_CLK_0>,
-+			 <&adc0_lpcg IMX_LPCG_CLK_4>;
- 		clock-names = "per", "ipg";
- 		assigned-clocks = <&clk IMX_SC_R_ADC_0 IMX_SC_PM_CLK_PER>;
- 		assigned-clock-rates = <24000000>;
-@@ -392,8 +392,8 @@ dma_subsys: bus@5a000000 {
- 		reg = <0x5a890000 0x10000>;
- 		interrupts = <GIC_SPI 241 IRQ_TYPE_LEVEL_HIGH>;
- 		interrupt-parent = <&gic>;
--		clocks = <&adc1_lpcg 0>,
--			 <&adc1_lpcg 1>;
-+		clocks = <&adc1_lpcg IMX_LPCG_CLK_0>,
-+			 <&adc1_lpcg IMX_LPCG_CLK_4>;
- 		clock-names = "per", "ipg";
- 		assigned-clocks = <&clk IMX_SC_R_ADC_1 IMX_SC_PM_CLK_PER>;
- 		assigned-clock-rates = <24000000>;
+--- a/Documentation/admin-guide/hw-vuln/spectre.rst
++++ b/Documentation/admin-guide/hw-vuln/spectre.rst
+@@ -439,11 +439,11 @@ The possible values in this file are:
+    - System is protected by retpoline
+  * - BHI: BHI_DIS_S
+    - System is protected by BHI_DIS_S
+- * - BHI: SW loop; KVM SW loop
++ * - BHI: SW loop, KVM SW loop
+    - System is protected by software clearing sequence
+  * - BHI: Syscall hardening
+    - Syscalls are hardened against BHI
+- * - BHI: Syscall hardening; KVM: SW loop
++ * - BHI: Syscall hardening, KVM: SW loop
+    - System is protected from userspace attacks by syscall hardening; KVM is protected by software clearing sequence
+ 
+ Full mitigation might require a microcode update from the CPU
+@@ -666,13 +666,14 @@ kernel command line.
+ 		of the HW BHI control and the SW BHB clearing sequence.
+ 
+ 		on
+-			unconditionally enable.
++			(default) Enable the HW or SW mitigation as
++			needed.
+ 		off
+-			unconditionally disable.
++			Disable the mitigation.
+ 		auto
+-			enable if hardware mitigation
+-			control(BHI_DIS_S) is available, otherwise
+-			enable alternate mitigation in KVM.
++			Enable the HW mitigation if needed, but
++			*don't* enable the SW mitigation except for KVM.
++			The system may be vulnerable.
+ 
+ For spectre_v2_user see Documentation/admin-guide/kernel-parameters.txt
+ 
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -3419,6 +3419,7 @@
+ 					       reg_file_data_sampling=off [X86]
+ 					       retbleed=off [X86]
+ 					       spec_store_bypass_disable=off [X86,PPC]
++					       spectre_bhi=off [X86]
+ 					       spectre_v2_user=off [X86]
+ 					       srbds=off [X86,INTEL]
+ 					       ssbd=force-off [ARM64]
+@@ -6037,11 +6038,12 @@
+ 			deployment of the HW BHI control and the SW BHB
+ 			clearing sequence.
+ 
+-			on   - unconditionally enable.
+-			off  - unconditionally disable.
+-			auto - (default) enable hardware mitigation
+-			       (BHI_DIS_S) if available, otherwise enable
+-			       alternate mitigation in KVM.
++			on   - (default) Enable the HW or SW mitigation
++			       as needed.
++			off  - Disable the mitigation.
++			auto - Enable the HW mitigation if needed, but
++			       *don't* enable the SW mitigation except
++			       for KVM.  The system may be vulnerable.
+ 
+ 	spectre_v2=	[X86] Control mitigation of Spectre variant 2
+ 			(indirect branch speculation) vulnerability.
 
 
