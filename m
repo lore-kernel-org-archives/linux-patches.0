@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1FC76025;
-	Mon, 15 Apr 2024 14:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E1E71B32;
+	Mon, 15 Apr 2024 14:24:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191037; cv=none; b=Ni/sGCYRQmB0K/9x6af9uek6Obqkp2LJrzLkB/FoPlAI+iAQADYR0VFYpht+xwGeM5xOiru0VDFEW7PvjtSy/7ccEk440DiUwWRVI+XlIqFkXBazRBiyG403K1W2lZTpnOViTLMRROqjXKQD68oMrfJj8ETrWcO03EUbVGeW4MI=
+	t=1713191040; cv=none; b=hJZF01r9eJ0yiMP3rH29qsCfyEAjyfKB/Qyw/Ubqm5tiPhDMWIiZcH4PK/uI3FacuH7pilVYX/r2XRBdwtsbZMbo+GcybyXisGv+Sd/ktwlvDiQeU6ltv5mzKVV4BzVwEo4zPfY1iDFw5KJvsbi2wsVRuUnKfB+0KVakztT07Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191037; c=relaxed/simple;
-	bh=E8hqykKvOejQiwkp8fIbGFLCn+jrcfRHIrAzVFLTrnA=;
+	s=arc-20240116; t=1713191040; c=relaxed/simple;
+	bh=lmq2Syi2xs2GE7tN3cIBwg+Du/nyml6SoYWbQQkbNqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPwKIg/nUyWBTNOI7/wPdhvbB1NawDZx0SGOlnusYJMzjJaGBA4YXhYOIxov+ksc3VtZLmJcc7QJLgkdY48TWyxbY2blUjJASTNpTTjHORGK5j7VkeMz4w1Q8l6iX880+zjEGNKPO8S5exTqLqzUap6xdDrLmXOivPCkPX3s61g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kf+uIoMD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c6jd1aIMSVJbPm8nvWydKsuJf9mcSxjiy7XbH4YPEQlwMJJHhn1cRpjCydWdmSQyL9vPwg6cvOZ6AkoaNhk5gV17QvbxKEjCPwCMfhIw08Sh/Lqbk8LnY3biz6hguVWPXOVQuhR9KVurnJ6w6SAK/dsRDT6HqyMH9mRslOtDSb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srZQVcbg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kf+uIoMD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F31C113CC;
-	Mon, 15 Apr 2024 14:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srZQVcbg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5E7C2BD11;
+	Mon, 15 Apr 2024 14:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191037;
-	bh=E8hqykKvOejQiwkp8fIbGFLCn+jrcfRHIrAzVFLTrnA=;
+	s=korg; t=1713191040;
+	bh=lmq2Syi2xs2GE7tN3cIBwg+Du/nyml6SoYWbQQkbNqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kf+uIoMDZKUU574lgKp0qo/xKiu4P8CPN2ekQx86s2XGRFLaQk0SW66tWYARtVJrU
-	 WdYkB9SruiDwQugxiZO8C5ZWgeijpCtYFYEoGNAbVLtjQ+ABL+wmkhdP75wS1Dyi93
-	 35vp8247IA3cI4XTwlWU+aBO+7IkMzLE/rhSQAHE=
+	b=srZQVcbgffX47NmtK4gnTgNGav0MOcvamXlLO5WAcYITEpKVcgRc1UJk/+yvtwDB2
+	 CIe8zgZWII/u16euBAUTG90FLQ4nA2S6HsecDetMiW7xBQ47Nkmqhk60LCTJxR5rNQ
+	 aIdr2lqLFc5Bcj8KaafHF2KrUwEBWmmNIZvSJyf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peyton Lee <peytolee@amd.com>,
-	Lang Yu <lang.yu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	"Gong, Richard" <richard.gong@amd.com>
-Subject: [PATCH 6.8 004/172] drm/amdgpu/vpe: power on vpe when hw_init
-Date: Mon, 15 Apr 2024 16:18:23 +0200
-Message-ID: <20240415142000.108719013@linuxfoundation.org>
+	syzbot+a6a4b5bb3da165594cff@syzkaller.appspotmail.com,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 6.8 005/172] batman-adv: Avoid infinite loop trying to resize local TT
+Date: Mon, 15 Apr 2024 16:18:24 +0200
+Message-ID: <20240415142000.138361839@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -52,36 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peyton Lee <peytolee@amd.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit eed14eb48ee176fe0144c6a999d00c855d0b199b upstream.
+commit b1f532a3b1e6d2e5559c7ace49322922637a28aa upstream.
 
-To fix mode2 reset failure.
-Should power on VPE when hw_init.
+If the MTU of one of an attached interface becomes too small to transmit
+the local translation table then it must be resized to fit inside all
+fragments (when enabled) or a single packet.
 
-Signed-off-by: Peyton Lee <peytolee@amd.com>
-Reviewed-by: Lang Yu <lang.yu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Gong, Richard" <richard.gong@amd.com>
+But if the MTU becomes too low to transmit even the header + the VLAN
+specific part then the resizing of the local TT will never succeed. This
+can for example happen when the usable space is 110 bytes and 11 VLANs are
+on top of batman-adv. In this case, at least 116 byte would be needed.
+There will just be an endless spam of
+
+   batman_adv: batadv0: Forced to purge local tt entries to fit new maximum fragment MTU (110)
+
+in the log but the function will never finish. Problem here is that the
+timeout will be halved all the time and will then stagnate at 0 and
+therefore never be able to reduce the table even more.
+
+There are other scenarios possible with a similar result. The number of
+BATADV_TT_CLIENT_NOPURGE entries in the local TT can for example be too
+high to fit inside a packet. Such a scenario can therefore happen also with
+only a single VLAN + 7 non-purgable addresses - requiring at least 120
+bytes.
+
+While this should be handled proactively when:
+
+* interface with too low MTU is added
+* VLAN is added
+* non-purgeable local mac is added
+* MTU of an attached interface is reduced
+* fragmentation setting gets disabled (which most likely requires dropping
+  attached interfaces)
+
+not all of these scenarios can be prevented because batman-adv is only
+consuming events without the the possibility to prevent these actions
+(non-purgable MAC address added, MTU of an attached interface is reduced).
+It is therefore necessary to also make sure that the code is able to handle
+also the situations when there were already incompatible system
+configuration are present.
+
+Cc: stable@vger.kernel.org
+Fixes: a19d3d85e1b8 ("batman-adv: limit local translation table max size")
+Reported-by: syzbot+a6a4b5bb3da165594cff@syzkaller.appspotmail.com
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/batman-adv/translation-table.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c
-@@ -390,6 +390,12 @@ static int vpe_hw_init(void *handle)
- 	struct amdgpu_vpe *vpe = &adev->vpe;
- 	int ret;
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -3948,7 +3948,7 @@ void batadv_tt_local_resize_to_mtu(struc
  
-+	/* Power on VPE */
-+	ret = amdgpu_device_ip_set_powergating_state(adev, AMD_IP_BLOCK_TYPE_VPE,
-+						     AMD_PG_STATE_UNGATE);
-+	if (ret)
-+		return ret;
-+
- 	ret = vpe_load_microcode(vpe);
- 	if (ret)
- 		return ret;
+ 	spin_lock_bh(&bat_priv->tt.commit_lock);
+ 
+-	while (true) {
++	while (timeout) {
+ 		table_size = batadv_tt_local_table_transmit_size(bat_priv);
+ 		if (packet_size_max >= table_size)
+ 			break;
 
 
