@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004F88004D;
-	Mon, 15 Apr 2024 14:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755567F7DD;
+	Mon, 15 Apr 2024 14:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192043; cv=none; b=mNVRAcjP9CkMZJTnIu4i00gA3UsmGqXKyVGuUVQjRbDUjS0Ss7WbY3Da5UHMTMT7g9gHHNYiEdyKXUTyxOOv4bkynh1zNvN9PpL0wsqkJe2zZhXERTtZe/LMigDc0Kh5pUuXCmAlVHtZMXxXxtg6yicj7cQLI7f9EyOGDUnhQUU=
+	t=1713192046; cv=none; b=WXglANxCXHrRiKZFV1wigJLygtPa7PgRR91jMsaI0RIpe8VEZhkd1h70nxVIBiNb2A5jRzq+UtE83Yy9Angzusf6gXRCbrQkE3qW2UpMS9hxwKWMd0uX1Qj0YLVhV4AHE1tdWpyNSB37Wbsj0ei8RNuH/LqqpDiu5SSaCEHKwRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192043; c=relaxed/simple;
-	bh=mdO3yihjxKbGhmF/J5kcIU76JrvujoGBzJqRX8M5ick=;
+	s=arc-20240116; t=1713192046; c=relaxed/simple;
+	bh=olTbRMbD15xK9ylq7pmz58SeWAMchAWJXa8plSiPEH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GpbVpkIAaImBsypiQN5or2h3Jm34q+CAs0rJfotqN80bvVA48BVezdcUAwIYKhGEB6umTFYrUCcJe+GJ8QYZ+nUbAkncqjWahsI/ElQJlwigThCdRq39c9aliLgLP7thRcbYDBppKsM/effm7WjzciftUkFRFxD2MpsAH3gnRSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWNTWizp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IUh7MvLt0Nhlu5AOJT4UaKB9cJHeAQSCk0yPEnINT8J9H8giolcLCYqwESWrHJoRXXliYfeL455oAJFO3Fot3B3M+o8gIo4j1JcR50gy718C/xOk+2ddfJjM4Fb19wPdb59oAsFi9zesQn5ytKcHLvnaSumCuQYI3J6sAwJvIqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6lP9gBn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWNTWizp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C4CC113CC;
-	Mon, 15 Apr 2024 14:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6lP9gBn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE339C113CC;
+	Mon, 15 Apr 2024 14:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192042;
-	bh=mdO3yihjxKbGhmF/J5kcIU76JrvujoGBzJqRX8M5ick=;
+	s=korg; t=1713192046;
+	bh=olTbRMbD15xK9ylq7pmz58SeWAMchAWJXa8plSiPEH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QWNTWizpdncCl1nvgTuXxM/D3LdAf6Kq80AvTlSbkmwL7spsXQ0f5RgZIDolVIM9B
-	 i6DoTnAM70+UPgpP/ryHbiIlfwVcc2eeGEXAAQEszwS36AOf/rA4k9nS3Jc+74kUSN
-	 /1+86N0Rz9uEIb4MkvFMvVNIWcWS1bGF5W6FZQlA=
+	b=r6lP9gBnm1yMYAQgyjJuRlZs82BpAKANuTRtYSHsnnM77hJHskQmkMmEJ0CzVn/I8
+	 yVAZyiDi7kHUtj6FJI+XUD/zqUcAjJOcxu3P5w3G2XL53aAsHPN2Ic1uNMqDKaH2f8
+	 X5e3qr7fiyaAPEeDIab0F0a1yCm5AMloLAaYaaO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidya Srinivas <vidya.srinivas@intel.com>,
-	Vandita Kulkarni <vandita.kulkarni@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.1 46/69] drm/i915/vrr: Disable VRR when using bigjoiner
-Date: Mon, 15 Apr 2024 16:21:17 +0200
-Message-ID: <20240415141947.555054601@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Danilo Krummrich <dakr@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 11/69] nouveau: fix function cast warning
+Date: Mon, 15 Apr 2024 16:20:42 +0200
+Message-ID: <20240415141946.511811318@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141946.165870434@linuxfoundation.org>
 References: <20240415141946.165870434@linuxfoundation.org>
@@ -46,50 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit dcd8992e47f13afb5c11a61e8d9c141c35e23751 upstream.
+[ Upstream commit 185fdb4697cc9684a02f2fab0530ecdd0c2f15d4 ]
 
-All joined pipes share the same transcoder/timing generator.
-Currently we just do the commits per-pipe, which doesn't really
-work if we need to change switch between non-VRR and VRR timings
-generators on the fly, or even when sending the push to the
-transcoder. For now just disable VRR when bigjoiner is needed.
+Calling a function through an incompatible pointer type causes breaks
+kcfi, so clang warns about the assignment:
 
-Cc: stable@vger.kernel.org
-Tested-by: Vidya Srinivas <vidya.srinivas@intel.com>
-Reviewed-by: Vandita Kulkarni <vandita.kulkarni@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240404213441.17637-6-ville.syrjala@linux.intel.com
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-(cherry picked from commit f9d5e51db65652dbd8a2102fd7619440e3599fd2)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c:73:10: error: cast from 'void (*)(const void *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+   73 |         .fini = (void(*)(void *))kfree,
+
+Avoid this with a trivial wrapper.
+
+Fixes: c39f472e9f14 ("drm/nouveau: remove symlinks, move core/ to nvkm/ (no code changes)")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240404160234.2923554-1-arnd@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_vrr.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_vrr.c
-+++ b/drivers/gpu/drm/i915/display/intel_vrr.c
-@@ -110,6 +110,13 @@ intel_vrr_compute_config(struct intel_cr
- 	if (!intel_vrr_is_capable(connector))
- 		return;
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c
+index 4bf486b571013..cb05f7f48a98b 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c
+@@ -66,11 +66,16 @@ of_init(struct nvkm_bios *bios, const char *name)
+ 	return ERR_PTR(-EINVAL);
+ }
  
-+	/*
-+	 * FIXME all joined pipes share the same transcoder.
-+	 * Need to account for that during VRR toggle/push/etc.
-+	 */
-+	if (crtc_state->bigjoiner_pipes)
-+		return;
++static void of_fini(void *p)
++{
++	kfree(p);
++}
 +
- 	if (adjusted_mode->flags & DRM_MODE_FLAG_INTERLACE)
- 		return;
- 
+ const struct nvbios_source
+ nvbios_of = {
+ 	.name = "OpenFirmware",
+ 	.init = of_init,
+-	.fini = (void(*)(void *))kfree,
++	.fini = of_fini,
+ 	.read = of_read,
+ 	.size = of_size,
+ 	.rw = false,
+-- 
+2.43.0
+
 
 
