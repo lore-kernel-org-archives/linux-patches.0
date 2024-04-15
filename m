@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94963757EB;
-	Mon, 15 Apr 2024 14:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0DB174C0C;
+	Mon, 15 Apr 2024 14:26:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191169; cv=none; b=Vb34Fyr88bh5hddXgW+ZknEbK8KUf1gmZMeyzeNqkdU/6g3nlxTr9vFZRtsh0ojUX3OHZrm8LQ/yajiEyICcoxSsf9AI7/GNZx6YP28caiglrMlAl2zdz45t2cXd9shkfpx781ncjfqdkd2NpSRYq2M5XH+7DMCcObJpbKZcOFs=
+	t=1713191172; cv=none; b=nAfuUxyMwwOzP5Nyxlj1+lF1z+O6d1sCvNWqkXEMCaXAGk2SWDWOrehoeuYidKD1cK9Ss7nZZaVh9NyLIPVmuJxhihLdKrepLpXtCu3H0VIIlRafWoEf7aBC0w3m4BhcNWUmBnJyNMpWdVWFiX6dhVNsWrN1kIrHi4uvq2LYHjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191169; c=relaxed/simple;
-	bh=OA0ginYu+FXmGA7iabCdGLMntfHNio8NP4tByc7VuQY=;
+	s=arc-20240116; t=1713191172; c=relaxed/simple;
+	bh=ljaw1E3qFIqt2x4A+U9bPaVD6pkQHPufn25O4pnueYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WWs3QSa60mu0H1GMmL9/fvmvJCIJBIqGTiQanyeQsI0CNpUVTxU/a5+reIgaXqdyfqNpmS2IT0fXuzojpOMsQ07N3MbT4sEuO0Qx3pX53W4BzzYXIRNvcfiKK2D5MunSfUWZt305W3yvS0Ta4/2ZtpclZpNZ8xDihxk6ItBXZec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMvvA59D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ksw2CXYwxLm0W+7p7M0jyI1X+oCw2uVFmMx48DXctWV/504UH70AgFt1HrcI7TW0XWDbfOWFc/lJhJKwCNtf2/9FmuNL152s000RGDCY5PEZSnHn1ZQnUXWB1SNsKPEGw1BUn7+RIFYXdYDX1lLajimSQDuV32DlfEkR8OVQ6S8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nU9Zczi7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMvvA59D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F31C113CC;
-	Mon, 15 Apr 2024 14:26:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nU9Zczi7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8EBC113CC;
+	Mon, 15 Apr 2024 14:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191169;
-	bh=OA0ginYu+FXmGA7iabCdGLMntfHNio8NP4tByc7VuQY=;
+	s=korg; t=1713191172;
+	bh=ljaw1E3qFIqt2x4A+U9bPaVD6pkQHPufn25O4pnueYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hMvvA59Dm9Pwkhc3iBh9cwECH6FAmBDFpBJuxOR2WUr61KSvQCPaQxYd5mtfku3GX
-	 lnLOluowU0ZBdXxycoZ6unFYaFHaKZUSS3QOi/WDTfnWTMfUpEYxpGoy6c8D+g/dGQ
-	 S24cvPdQbOa5iMjE7VWCRtVrEiPDs0m6cn5IDYRM=
+	b=nU9Zczi7FTOEfjZlClZUiYn0FcpoGgKphKbYwoIAQv8iYgpJJ/aX9MLQ0gqnWjgbZ
+	 WMoP0rvFRZHHVwmmLWvXfRuw8gU808XaXuD8MeQJEABoYXxUibHXLJRhRfixZ5m86g
+	 KL4r7zIbshUq24B9mjzSxOwkoBz3yYA6ILGMYKpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anna-Maria Behnsen <anna-maria@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	"5 . 16+" <stable@kernel.org>
-Subject: [PATCH 6.8 017/172] PM: s2idle: Make sure CPUs will wakeup directly on resume
-Date: Mon, 15 Apr 2024 16:18:36 +0200
-Message-ID: <20240415142000.876719822@linuxfoundation.org>
+	qemu-devel@nongnu.org,
+	Breno Leitao <leitao@debian.org>,
+	Heng Qi <hengqi@linux.alibaba.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.8 008/172] virtio_net: Do not send RSS key if it is not supported
+Date: Mon, 15 Apr 2024 16:18:27 +0200
+Message-ID: <20240415142000.227047251@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -55,83 +53,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anna-Maria Behnsen <anna-maria@linutronix.de>
+From: Breno Leitao <leitao@debian.org>
 
-commit 3c89a068bfd0698a5478f4cf39493595ef757d5e upstream.
+commit 059a49aa2e25c58f90b50151f109dd3c4cdb3a47 upstream.
 
-s2idle works like a regular suspend with freezing processes and freezing
-devices. All CPUs except the control CPU go into idle. Once this is
-completed the control CPU kicks all other CPUs out of idle, so that they
-reenter the idle loop and then enter s2idle state. The control CPU then
-issues an swait() on the suspend state and therefore enters the idle loop
-as well.
+There is a bug when setting the RSS options in virtio_net that can break
+the whole machine, getting the kernel into an infinite loop.
 
-Due to being kicked out of idle, the other CPUs leave their NOHZ states,
-which means the tick is active and the corresponding hrtimer is programmed
-to the next jiffie.
+Running the following command in any QEMU virtual machine with virtionet
+will reproduce this problem:
 
-On entering s2idle the CPUs shut down their local clockevent device to
-prevent wakeups. The last CPU which enters s2idle shuts down its local
-clockevent and freezes timekeeping.
+    # ethtool -X eth0  hfunc toeplitz
 
-On resume, one of the CPUs receives the wakeup interrupt, unfreezes
-timekeeping and its local clockevent and starts the resume process. At that
-point all other CPUs are still in s2idle with their clockevents switched
-off. They only resume when they are kicked by another CPU or after resuming
-devices and then receiving a device interrupt.
+This is how the problem happens:
 
-That means there is no guarantee that all CPUs will wakeup directly on
-resume. As a consequence there is no guarantee that timers which are queued
-on those CPUs and should expire directly after resume, are handled. Also
-timer list timers which are remotely queued to one of those CPUs after
-resume will not result in a reprogramming IPI as the tick is
-active. Queueing a hrtimer will also not result in a reprogramming IPI
-because the first hrtimer event is already in the past.
+1) ethtool_set_rxfh() calls virtnet_set_rxfh()
 
-The recent introduction of the timer pull model (7ee988770326 ("timers:
-Implement the hierarchical pull model")) amplifies this problem, if the
-current migrator is one of the non woken up CPUs. When a non pinned timer
-list timer is queued and the queuing CPU goes idle, it relies on the still
-suspended migrator CPU to expire the timer which will happen by chance.
+2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
 
-The problem exists since commit 8d89835b0467 ("PM: suspend: Do not pause
-cpuidle in the suspend-to-idle path"). There the cpuidle_pause() call which
-in turn invoked a wakeup for all idle CPUs was moved to a later point in
-the resume process. This might not be reached or reached very late because
-it waits on a timer of a still suspended CPU.
+3) virtnet_commit_rss_command() populates 4 entries for the rss
+scatter-gather
 
-Address this by kicking all CPUs out of idle after the control CPU returns
-from swait() so that they resume their timers and restore consistent system
-state.
+4) Since the command above does not have a key, then the last
+scatter-gatter entry will be zeroed, since rss_key_size == 0.
+sg_buf_size = vi->rss_key_size;
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218641
-Fixes: 8d89835b0467 ("PM: suspend: Do not pause cpuidle in the suspend-to-idle path")
-Signed-off-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Mario Limonciello <mario.limonciello@amd.com>
-Cc: 5.16+ <stable@kernel.org> # 5.16+
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+5) This buffer is passed to qemu, but qemu is not happy with a buffer
+with zero length, and do the following in virtqueue_map_desc() (QEMU
+function):
+
+  if (!sz) {
+      virtio_error(vdev, "virtio: zero sized buffers are not allowed");
+
+6) virtio_error() (also QEMU function) set the device as broken
+
+    vdev->broken = true;
+
+7) Qemu bails out, and do not repond this crazy kernel.
+
+8) The kernel is waiting for the response to come back (function
+virtnet_send_command())
+
+9) The kernel is waiting doing the following :
+
+      while (!virtqueue_get_buf(vi->cvq, &tmp) &&
+	     !virtqueue_is_broken(vi->cvq))
+	      cpu_relax();
+
+10) None of the following functions above is true, thus, the kernel
+loops here forever. Keeping in mind that virtqueue_is_broken() does
+not look at the qemu `vdev->broken`, so, it never realizes that the
+vitio is broken at QEMU side.
+
+Fix it by not sending RSS commands if the feature is not available in
+the device.
+
+Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
+Cc: stable@vger.kernel.org
+Cc: qemu-devel@nongnu.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/power/suspend.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/virtio_net.c |   26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
---- a/kernel/power/suspend.c
-+++ b/kernel/power/suspend.c
-@@ -106,6 +106,12 @@ static void s2idle_enter(void)
- 	swait_event_exclusive(s2idle_wait_head,
- 		    s2idle_state == S2IDLE_STATE_WAKE);
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3768,6 +3768,7 @@ static int virtnet_set_rxfh(struct net_d
+ 			    struct netlink_ext_ack *extack)
+ {
+ 	struct virtnet_info *vi = netdev_priv(dev);
++	bool update = false;
+ 	int i;
  
-+	/*
-+	 * Kick all CPUs to ensure that they resume their timers and restore
-+	 * consistent system state.
-+	 */
-+	wake_up_all_idle_cpus();
+ 	if (rxfh->hfunc != ETH_RSS_HASH_NO_CHANGE &&
+@@ -3775,13 +3776,28 @@ static int virtnet_set_rxfh(struct net_d
+ 		return -EOPNOTSUPP;
+ 
+ 	if (rxfh->indir) {
++		if (!vi->has_rss)
++			return -EOPNOTSUPP;
 +
- 	cpus_read_unlock();
+ 		for (i = 0; i < vi->rss_indir_table_size; ++i)
+ 			vi->ctrl->rss.indirection_table[i] = rxfh->indir[i];
++		update = true;
+ 	}
+-	if (rxfh->key)
++
++	if (rxfh->key) {
++		/* If either _F_HASH_REPORT or _F_RSS are negotiated, the
++		 * device provides hash calculation capabilities, that is,
++		 * hash_key is configured.
++		 */
++		if (!vi->has_rss && !vi->has_rss_hash_report)
++			return -EOPNOTSUPP;
++
+ 		memcpy(vi->ctrl->rss.key, rxfh->key, vi->rss_key_size);
++		update = true;
++	}
  
- 	raw_spin_lock_irq(&s2idle_lock);
+-	virtnet_commit_rss_command(vi);
++	if (update)
++		virtnet_commit_rss_command(vi);
+ 
+ 	return 0;
+ }
+@@ -4686,13 +4702,15 @@ static int virtnet_probe(struct virtio_d
+ 	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
+ 		vi->has_rss_hash_report = true;
+ 
+-	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
++	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
+ 		vi->has_rss = true;
+ 
+-	if (vi->has_rss || vi->has_rss_hash_report) {
+ 		vi->rss_indir_table_size =
+ 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
+ 				rss_max_indirection_table_length));
++	}
++
++	if (vi->has_rss || vi->has_rss_hash_report) {
+ 		vi->rss_key_size =
+ 			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
+ 
 
 
