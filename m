@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C90F1E4B1;
-	Mon, 15 Apr 2024 14:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F4D74E25;
+	Mon, 15 Apr 2024 14:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191619; cv=none; b=EL2SCCFDuMFUsWShPxOru/ciB0KYB7ogj+l4h55Ff63YaNB6xm1RiIrFyZoVEQqPXcMz2Jo+v7UWtbUl6tC1R23h9hoyIEgG8EeUnQQomO9mEWjZHif/tUv3Ux+9PqRC2/JEFlNe77osRzSXKBOLhf2AaMIBC3k8/qX4t0AAnDM=
+	t=1713191622; cv=none; b=gGHGsB6CXJoFAu4dXNxk9It3Q+7kizm+Ij944hDcVcdq5lT2fWU5WbY6ugcC1Xfs/TGzC6Y5ZEm9eYMXcKPDVGS4hFj8u3eKm5nGOUC/z3/codYB5AvUBEQ8x0YspbPYPNxFFJvVSc5ypSi2dBj8ESFNk8RaTajCgnuhpoq2eV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191619; c=relaxed/simple;
-	bh=wnnavf1Dh4LIRKurvG5rdC/3gRZN/3vKT1SHeogszO8=;
+	s=arc-20240116; t=1713191622; c=relaxed/simple;
+	bh=9l1M6leeRvZU3GmmMZ8JOY9pSJuXMZnreK0mzq/tEEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=av4doBvKdJyHcTS+7OxcCuo11P2jK1YVeyl+wpP8M4NlG1efd9rFtO0j8qK678up0yg39SRW3xX1iRcBtnv5x3z+qdTtqNVDk/dHDEtlKQKyAOdDkiBrw18AqsWZrsESQDqJ/a0EWasf3FI59NEI/mWXBxsaHx7YV34afPd1Dno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trrFDeXg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LC5TgWY+IqJSskLN374/m7MSHLPqhkW9kUAFgoEa0jm1afUne0GDol4Z7lRxeJ2Un/NiXwOUYfsYizFBfmtHAcSV82dM2Sf88xIBFboEQ+dxs9DofaB0EcYHZMErUpL6B7lK9Ex9MFbceHDKgnLOg0ZBGp2E+HT1ieTm9rIHhVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFOG3SE9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trrFDeXg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8394C113CC;
-	Mon, 15 Apr 2024 14:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFOG3SE9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E686C113CC;
+	Mon, 15 Apr 2024 14:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191619;
-	bh=wnnavf1Dh4LIRKurvG5rdC/3gRZN/3vKT1SHeogszO8=;
+	s=korg; t=1713191622;
+	bh=9l1M6leeRvZU3GmmMZ8JOY9pSJuXMZnreK0mzq/tEEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=trrFDeXgHrF64BJDdULFrsm5bAl5HNM1RYVwIhvLPhAA15BBN1AU1jTkh0Pu+3wad
-	 HDfuFyo+2MZM4WSAZ7YXZq4jt8NU9mYfMRIpamWVTlqJihzP3uNMRFJpbpCZDLvELJ
-	 d0Iya2kMeDqXuxSefQdadXr337wuO3Mt5ecqYq9k=
+	b=WFOG3SE937GkYhjj0yoqW11jrjOPVu52B9er4GmtoWd7EmlCmISUJvvTf6lddu993
+	 UxWIg1uho3gAWSa50UKb70oOeZg9MEfr3d7jvrOpqzMRV4Te+e8M58PT2eFzAOqb3Z
+	 N7/bZfRze6DtZZVR3Q85DuATDYZ2TRNuZXOThXzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/122] scsi: qla2xxx: Fix off by one in qla_edif_app_getstats()
-Date: Mon, 15 Apr 2024 16:19:55 +0200
-Message-ID: <20240415141954.275241941@linuxfoundation.org>
+	syzbot+a6a4b5bb3da165594cff@syzkaller.appspotmail.com,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 6.6 004/122] batman-adv: Avoid infinite loop trying to resize local TT
+Date: Mon, 15 Apr 2024 16:19:29 +0200
+Message-ID: <20240415141953.501311659@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -52,39 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 4406e4176f47177f5e51b4cc7e6a7a2ff3dbfbbd ]
+commit b1f532a3b1e6d2e5559c7ace49322922637a28aa upstream.
 
-The app_reply->elem[] array is allocated earlier in this function and it
-has app_req.num_ports elements.  Thus this > comparison needs to be >= to
-prevent memory corruption.
+If the MTU of one of an attached interface becomes too small to transmit
+the local translation table then it must be resized to fit inside all
+fragments (when enabled) or a single packet.
 
-Fixes: 7878f22a2e03 ("scsi: qla2xxx: edif: Add getfcinfo and statistic bsgs")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/5c125b2f-92dd-412b-9b6f-fc3a3207bd60@moroto.mountain
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+But if the MTU becomes too low to transmit even the header + the VLAN
+specific part then the resizing of the local TT will never succeed. This
+can for example happen when the usable space is 110 bytes and 11 VLANs are
+on top of batman-adv. In this case, at least 116 byte would be needed.
+There will just be an endless spam of
+
+   batman_adv: batadv0: Forced to purge local tt entries to fit new maximum fragment MTU (110)
+
+in the log but the function will never finish. Problem here is that the
+timeout will be halved all the time and will then stagnate at 0 and
+therefore never be able to reduce the table even more.
+
+There are other scenarios possible with a similar result. The number of
+BATADV_TT_CLIENT_NOPURGE entries in the local TT can for example be too
+high to fit inside a packet. Such a scenario can therefore happen also with
+only a single VLAN + 7 non-purgable addresses - requiring at least 120
+bytes.
+
+While this should be handled proactively when:
+
+* interface with too low MTU is added
+* VLAN is added
+* non-purgeable local mac is added
+* MTU of an attached interface is reduced
+* fragmentation setting gets disabled (which most likely requires dropping
+  attached interfaces)
+
+not all of these scenarios can be prevented because batman-adv is only
+consuming events without the the possibility to prevent these actions
+(non-purgable MAC address added, MTU of an attached interface is reduced).
+It is therefore necessary to also make sure that the code is able to handle
+also the situations when there were already incompatible system
+configuration are present.
+
+Cc: stable@vger.kernel.org
+Fixes: a19d3d85e1b8 ("batman-adv: limit local translation table max size")
+Reported-by: syzbot+a6a4b5bb3da165594cff@syzkaller.appspotmail.com
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_edif.c | 2 +-
+ net/batman-adv/translation-table.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_edif.c b/drivers/scsi/qla2xxx/qla_edif.c
-index 26e6b3e3af431..dcde55c8ee5de 100644
---- a/drivers/scsi/qla2xxx/qla_edif.c
-+++ b/drivers/scsi/qla2xxx/qla_edif.c
-@@ -1100,7 +1100,7 @@ qla_edif_app_getstats(scsi_qla_host_t *vha, struct bsg_job *bsg_job)
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -3948,7 +3948,7 @@ void batadv_tt_local_resize_to_mtu(struc
  
- 		list_for_each_entry_safe(fcport, tf, &vha->vp_fcports, list) {
- 			if (fcport->edif.enable) {
--				if (pcnt > app_req.num_ports)
-+				if (pcnt >= app_req.num_ports)
- 					break;
+ 	spin_lock_bh(&bat_priv->tt.commit_lock);
  
- 				app_reply->elem[pcnt].rekey_count =
--- 
-2.43.0
-
+-	while (true) {
++	while (timeout) {
+ 		table_size = batadv_tt_local_table_transmit_size(bat_priv);
+ 		if (packet_size_max >= table_size)
+ 			break;
 
 
