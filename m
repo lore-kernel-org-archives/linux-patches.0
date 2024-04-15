@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29EC1D52B;
-	Mon, 15 Apr 2024 14:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9BB2A8D3;
+	Mon, 15 Apr 2024 14:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191962; cv=none; b=pyIbou9luRncy8KcTjGL3xrdi3jbTSAHlpYInLLP80RG622oaTHL4WmIbbRmaBhVzKQx+bxcIa/QciCcmhSBV30omM/ZA64F3LO0tXSOnkRmQMX6/hb3He5tWslMw4t7pjOLZpTV5YXS0+F7liKtKcamTyp/QfMhy8O5IxdnN0s=
+	t=1713191965; cv=none; b=scYHifhODkk3Qbmf2Y6wVazxrfNJeWUtS66JmtWv/359GXY2Duq1IVAnZExPTzThtltD4jTW/LbDOCd8j2Nd8XdGMyvNr3d9+7mMB3xLyS78zliWgxC3+g4n5ZrIkldyHPD2C2rc/z7p9OFm3fc8n/uwgH2DyGGk3fS/sQ7Tmdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191962; c=relaxed/simple;
-	bh=IiDLFYkc37TqiDjn/g2MhCoF86NH/juOWfxEish5gjs=;
+	s=arc-20240116; t=1713191965; c=relaxed/simple;
+	bh=43LERzgou9E8W1xTJxzTDOkTBTJ58G1d2OtLTxOzJC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APaTuWneEY3nO5YD3t2Khx4n5cOuQWpJ4HrdKGBKlZBNc3CijnI7Njviw6FsjpRB1PvadibFUFWqnI+iBSQ3mKCZWGHFTaGSsy56xIHA5RuQ+iRX9UK4elY/9SwQVU6CTJa32uPPn4EUJZbUtIbxRGPKCFzr4MzTH58a2WQkf2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FifMP93; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u77vjqmTk+4G+ItxN9bDiGNttZEveo1LD3PpfR71T9N4Vy4qPp78p3RvLvfRXepmqcrS8aFEY59/T0ILJV5IuIkr+csngzYgod42WU9ea2h4TXvxwMYROYagaE2GPemcCsl2ZlIbHzxrLJO1NJYm6hrw2nbMn1FRk/bAERDQsiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w+I3ZBhA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FifMP93"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39FEFC113CC;
-	Mon, 15 Apr 2024 14:39:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+I3ZBhA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2715CC113CC;
+	Mon, 15 Apr 2024 14:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191962;
-	bh=IiDLFYkc37TqiDjn/g2MhCoF86NH/juOWfxEish5gjs=;
+	s=korg; t=1713191965;
+	bh=43LERzgou9E8W1xTJxzTDOkTBTJ58G1d2OtLTxOzJC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1FifMP93seReHaEvuodoad+hXJZO+4Hp7Ef8AO8RuUZlYFzKi00FkdpfgXX7CIysM
-	 ucJJLLlLdutl6qmxQKJTo7IHmi8gOcXvd/8YzQIlAzwQdRWMBZXYOWH4bbW42XBUry
-	 BE6WG/em6yi2CWDOriF7YCNE1P4rPv3jTXbavGWM=
+	b=w+I3ZBhAM1E8IpKAQdp0CI3acnl6xbmHyzXWCfx6wxU48DTtMhVDII82TF83nmsNs
+	 gA42u0uEn1jpFDRKGbZhL2UIjsnNmoFX5A9Ig3vH0CBYVQkyWVa9NGVy4tVEtwpIsy
+	 PjJzBsvl1N3jRqgiKpKs98heB9ctD++BFlDnjIFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geetha sowjanya <gakula@marvell.com>,
+	David Ahern <dsahern@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Eric Dumazet <edumazet@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 22/69] octeontx2-af: Fix NIX SQ mode and BP config
-Date: Mon, 15 Apr 2024 16:20:53 +0200
-Message-ID: <20240415141946.837187166@linuxfoundation.org>
+Subject: [PATCH 6.1 23/69] ipv6: fib: hide unused pn variable
+Date: Mon, 15 Apr 2024 16:20:54 +0200
+Message-ID: <20240415141946.867174699@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141946.165870434@linuxfoundation.org>
 References: <20240415141946.165870434@linuxfoundation.org>
@@ -51,57 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geetha sowjanya <gakula@marvell.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit faf23006185e777db18912685922c5ddb2df383f ]
+[ Upstream commit 74043489fcb5e5ca4074133582b5b8011b67f9e7 ]
 
-NIX SQ mode and link backpressure configuration is required for
-all platforms. But in current driver this code is wrongly placed
-under specific platform check. This patch fixes the issue by
-moving the code out of platform check.
+When CONFIG_IPV6_SUBTREES is disabled, the only user is hidden, causing
+a 'make W=1' warning:
 
-Fixes: 5d9b976d4480 ("octeontx2-af: Support fixed transmit scheduler topology")
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Link: https://lore.kernel.org/r/20240408063643.26288-1-gakula@marvell.com
+net/ipv6/ip6_fib.c: In function 'fib6_add':
+net/ipv6/ip6_fib.c:1388:32: error: variable 'pn' set but not used [-Werror=unused-but-set-variable]
+
+Add another #ifdef around the variable declaration, matching the other
+uses in this file.
+
+Fixes: 66729e18df08 ("[IPV6] ROUTE: Make sure we have fn->leaf when adding a node on subtree.")
+Link: https://lore.kernel.org/netdev/20240322131746.904943-1-arnd@kernel.org/
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240408074219.3030256-1-arnd@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/af/rvu_nix.c   | 20 +++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ net/ipv6/ip6_fib.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index bb99302eab67a..67080d5053e07 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -4237,18 +4237,18 @@ static int rvu_nix_block_init(struct rvu *rvu, struct nix_hw *nix_hw)
- 		 */
- 		rvu_write64(rvu, blkaddr, NIX_AF_CFG,
- 			    rvu_read64(rvu, blkaddr, NIX_AF_CFG) | 0x40ULL);
-+	}
+diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
+index e606374854ce5..8213626434b91 100644
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -1376,7 +1376,10 @@ int fib6_add(struct fib6_node *root, struct fib6_info *rt,
+ 	     struct nl_info *info, struct netlink_ext_ack *extack)
+ {
+ 	struct fib6_table *table = rt->fib6_table;
+-	struct fib6_node *fn, *pn = NULL;
++	struct fib6_node *fn;
++#ifdef CONFIG_IPV6_SUBTREES
++	struct fib6_node *pn = NULL;
++#endif
+ 	int err = -ENOMEM;
+ 	int allow_create = 1;
+ 	int replace_required = 0;
+@@ -1400,9 +1403,9 @@ int fib6_add(struct fib6_node *root, struct fib6_info *rt,
+ 		goto out;
+ 	}
  
--		/* Set chan/link to backpressure TL3 instead of TL2 */
--		rvu_write64(rvu, blkaddr, NIX_AF_PSE_CHANNEL_LEVEL, 0x01);
-+	/* Set chan/link to backpressure TL3 instead of TL2 */
-+	rvu_write64(rvu, blkaddr, NIX_AF_PSE_CHANNEL_LEVEL, 0x01);
++#ifdef CONFIG_IPV6_SUBTREES
+ 	pn = fn;
  
--		/* Disable SQ manager's sticky mode operation (set TM6 = 0)
--		 * This sticky mode is known to cause SQ stalls when multiple
--		 * SQs are mapped to same SMQ and transmitting pkts at a time.
--		 */
--		cfg = rvu_read64(rvu, blkaddr, NIX_AF_SQM_DBG_CTL_STATUS);
--		cfg &= ~BIT_ULL(15);
--		rvu_write64(rvu, blkaddr, NIX_AF_SQM_DBG_CTL_STATUS, cfg);
--	}
-+	/* Disable SQ manager's sticky mode operation (set TM6 = 0)
-+	 * This sticky mode is known to cause SQ stalls when multiple
-+	 * SQs are mapped to same SMQ and transmitting pkts at a time.
-+	 */
-+	cfg = rvu_read64(rvu, blkaddr, NIX_AF_SQM_DBG_CTL_STATUS);
-+	cfg &= ~BIT_ULL(15);
-+	rvu_write64(rvu, blkaddr, NIX_AF_SQM_DBG_CTL_STATUS, cfg);
+-#ifdef CONFIG_IPV6_SUBTREES
+ 	if (rt->fib6_src.plen) {
+ 		struct fib6_node *sn;
  
- 	ltdefs = rvu->kpu.lt_def;
- 	/* Calibrate X2P bus to check if CGX/LBK links are fine */
 -- 
 2.43.0
 
