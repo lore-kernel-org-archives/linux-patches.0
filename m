@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB4D433AD;
-	Mon, 15 Apr 2024 14:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5387F7FA;
+	Mon, 15 Apr 2024 14:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192037; cv=none; b=JBjmRpgp6ujMdDdK+J+raS30cLgZu2+qXt5GBAUgx5pibuT5bnZ8J60QNHhCfYP04PiILMuAbh3s6Y06GcumrQVZ+hTczRh9RTwF+5aJKaZiHsiAAx3JmtVoG0iQwm3iCmzfgs4YjJz+g280CJ4qBEVCnnGhHf+Az7SxICJTPVQ=
+	t=1713192040; cv=none; b=jmgyPkayhjyL1yWYjyA/7XZxD80erDnCuUlGJljVnxOLjMfJIeFPSa3FcNxUruvtpWx15KiDU2tmc0XH7zGL9nkpp2hDrSwfdnA1gzai3BPWLBwOIA0qgPCjK12G6XfVTYcP34XBwiR2XsYoIRPuIDZr/e8bOTtSMTOH2uVPLMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192037; c=relaxed/simple;
-	bh=iWUnAjcBqN6ThexP9dmBCiCFqrtkU14aAPZ8Fxh0a40=;
+	s=arc-20240116; t=1713192040; c=relaxed/simple;
+	bh=ZVqycs2bEoa7717KPIuTRc6oaAyQ/fEsav2eFV09r8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3cb914Lr+dUxD4QBp/ELttSO6Pgu7owYCk6nwQFgB0pngK+wsXvpDB2x6O1wKZW+dUh8RC7uYEfsdL2xNfTfG4l0t/puAuDy1BpPYPqFe7AQw04HH6WGCJ53EPBLc5WmAq4DPMUL7bLjiCyMONA2oJ8Aq3U/NwyuIXlgXAih5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLcRtar2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AOqoHh2IshlenrdVnWOgoFnK73S+ZBC2UjkiNtZ+CEiRAcjahD262+fPKC4KO//E71393PZ2RadAdX29GsmG7O8Pyn7dKyhcGRJKutEezPCufaaVOy9KdDBdshM29M8fpaqLLDBNjBdz6iGKtjmDoxJ9iePPHmbzFFCMjBom1GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQBvNDLb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLcRtar2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99767C113CC;
-	Mon, 15 Apr 2024 14:40:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQBvNDLb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AA4C113CC;
+	Mon, 15 Apr 2024 14:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192037;
-	bh=iWUnAjcBqN6ThexP9dmBCiCFqrtkU14aAPZ8Fxh0a40=;
+	s=korg; t=1713192039;
+	bh=ZVqycs2bEoa7717KPIuTRc6oaAyQ/fEsav2eFV09r8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DLcRtar2oFklQjpl9Ykaq9gP/qS/NRDmMj3MS1kJ+3hx7iPDiYnEP5xBJ3y+0xtXz
-	 V5ZDNJgtEBD/ThxY7oTsOumMY006o1zfnBgWL2Z3V74kZtxYXUsVa33GxI+Q0Jrllp
-	 wxWGFDnN+G27Uc98yRC4blbNgDldjkjp1xU5W3uw=
+	b=WQBvNDLbV6jDTE7/TxXR8sWdBUfA/d3FRr00WIadB2GUcm3uHLZ4UqjXQy521r2zL
+	 cnB3tMA9KolUYpAMUv4PLBq3dj2N/vF9QP6i8n241DvXcuRt5BUWCcOfdux9JJJsWE
+	 zIfZDrjyVVdzVUJfMjuj0urFLv81lTCs5GvVrCFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 44/69] io_uring/net: restore msg_control on sendzc retry
-Date: Mon, 15 Apr 2024 16:21:15 +0200
-Message-ID: <20240415141947.494048772@linuxfoundation.org>
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.1 45/69] kprobes: Fix possible use-after-free issue on kprobe registration
+Date: Mon, 15 Apr 2024 16:21:16 +0200
+Message-ID: <20240415141947.525188106@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141946.165870434@linuxfoundation.org>
 References: <20240415141946.165870434@linuxfoundation.org>
@@ -50,35 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit 4fe82aedeb8a8cb09bfa60f55ab57b5c10a74ac4 upstream.
+commit 325f3fb551f8cd672dbbfc4cf58b14f9ee3fc9e8 upstream.
 
-cac9e4418f4cb ("io_uring/net: save msghdr->msg_control for retries")
-reinstatiates msg_control before every __sys_sendmsg_sock(), since the
-function can overwrite the value in msghdr. We need to do same for
-zerocopy sendmsg.
+When unloading a module, its state is changing MODULE_STATE_LIVE ->
+ MODULE_STATE_GOING -> MODULE_STATE_UNFORMED. Each change will take
+a time. `is_module_text_address()` and `__module_text_address()`
+works with MODULE_STATE_LIVE and MODULE_STATE_GOING.
+If we use `is_module_text_address()` and `__module_text_address()`
+separately, there is a chance that the first one is succeeded but the
+next one is failed because module->state becomes MODULE_STATE_UNFORMED
+between those operations.
 
+In `check_kprobe_address_safe()`, if the second `__module_text_address()`
+is failed, that is ignored because it expected a kernel_text address.
+But it may have failed simply because module->state has been changed
+to MODULE_STATE_UNFORMED. In this case, arm_kprobe() will try to modify
+non-exist module text address (use-after-free).
+
+To fix this problem, we should not use separated `is_module_text_address()`
+and `__module_text_address()`, but use only `__module_text_address()`
+once and do `try_module_get(module)` which is only available with
+MODULE_STATE_LIVE.
+
+Link: https://lore.kernel.org/all/20240410015802.265220-1-zhengyejian1@huawei.com/
+
+Fixes: 28f6c37a2910 ("kprobes: Forbid probing on trampoline and BPF code areas")
 Cc: stable@vger.kernel.org
-Fixes: 493108d95f146 ("io_uring/net: zerocopy sendmsg")
-Link: https://github.com/axboe/liburing/issues/1067
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/cc1d5d9df0576fa66ddad4420d240a98a020b267.1712596179.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/kprobes.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -1229,6 +1229,7 @@ int io_sendmsg_zc(struct io_kiocb *req,
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -1567,10 +1567,17 @@ static int check_kprobe_address_safe(str
+ 	jump_label_lock();
+ 	preempt_disable();
  
- 	if (req_has_async_data(req)) {
- 		kmsg = req->async_data;
-+		kmsg->msg.msg_control_user = sr->msg_control;
- 	} else {
- 		ret = io_sendmsg_copy_hdr(req, &iomsg);
- 		if (ret)
+-	/* Ensure it is not in reserved area nor out of text */
+-	if (!(core_kernel_text((unsigned long) p->addr) ||
+-	    is_module_text_address((unsigned long) p->addr)) ||
+-	    in_gate_area_no_mm((unsigned long) p->addr) ||
++	/* Ensure the address is in a text area, and find a module if exists. */
++	*probed_mod = NULL;
++	if (!core_kernel_text((unsigned long) p->addr)) {
++		*probed_mod = __module_text_address((unsigned long) p->addr);
++		if (!(*probed_mod)) {
++			ret = -EINVAL;
++			goto out;
++		}
++	}
++	/* Ensure it is not in reserved area. */
++	if (in_gate_area_no_mm((unsigned long) p->addr) ||
+ 	    within_kprobe_blacklist((unsigned long) p->addr) ||
+ 	    jump_label_text_reserved(p->addr, p->addr) ||
+ 	    static_call_text_reserved(p->addr, p->addr) ||
+@@ -1580,8 +1587,7 @@ static int check_kprobe_address_safe(str
+ 		goto out;
+ 	}
+ 
+-	/* Check if 'p' is probing a module. */
+-	*probed_mod = __module_text_address((unsigned long) p->addr);
++	/* Get module refcount and reject __init functions for loaded modules. */
+ 	if (*probed_mod) {
+ 		/*
+ 		 * We must hold a refcount of the probed module while updating
 
 
