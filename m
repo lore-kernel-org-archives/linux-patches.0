@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307FF8120A;
-	Mon, 15 Apr 2024 14:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3928D7A705;
+	Mon, 15 Apr 2024 14:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191495; cv=none; b=IgUQlzu8f0bJ3RrPk0daM+UMdziLnCaDB4t6fxL6/ohjEOT8l8qY46nF0m6bdayPQjJJPOVSflwDHEwEfvDvpPmwzMjWXks04VqRP0Zb9NXF/zMjyd4cz/QjC26whgCbha0L5xoXYvYJWHLfXDwMoXw3Y0NftBlnubcIQnlDPls=
+	t=1713191498; cv=none; b=GfaRWwT+/v0vn+ie/ELk7loXStEjpXglRvCN0/l5F2naa/ADQLk0azAfETpP9znxMGsU0mn6dRK796IsnozmKh4SAOUPxXFvqOIMMBcs4UjnCuaKBOjWNe1ZM9/CBDwJT1yB5GQnmNYPxkZEf/kdUp+mkrHyoKb7S8KvNR+zebg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191495; c=relaxed/simple;
-	bh=4QEfsxyfxiiC0q4eEZUDi2BJsQW7UcznjM9Z4FEPmNw=;
+	s=arc-20240116; t=1713191498; c=relaxed/simple;
+	bh=GiBz9udlZwzlGHCuOQsO+L3740Na3E2X3SF2079tCBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZRvlsvM4OzihM1BLLYBLwBdoYaqp3vqchDWj1p0TFBbFBKEpluXriWKlhX9uoFAKT26tHn71MRCei6HQhfN+o0AyKGVY+sqiZZeSip+HSmJ9QGn5fgnpxWFayEVZhOBSJJ3Lp/7e7CnOCrmu8cIKCJKNSgi+4zfg0xy6XqCg3+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFbwEqHj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FgZyzDlcpi6qbvK9PKXoTJcat5P98e5cWInzPQYIFZ7UchvUlGK07lDF5q9BwvrKwBxvcjBmm0Am+IYP7lqfU1gVW9qpFe1ib6QhStFCE3UlNZZqWHZvpmYaYA6Rbs4lMORZmf50Nf+hOkZs029EvTm5DBivxkJXCuqGjDhbZlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2cpAkd5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFbwEqHj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF1FC113CC;
-	Mon, 15 Apr 2024 14:31:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2cpAkd5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC83FC113CC;
+	Mon, 15 Apr 2024 14:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191495;
-	bh=4QEfsxyfxiiC0q4eEZUDi2BJsQW7UcznjM9Z4FEPmNw=;
+	s=korg; t=1713191498;
+	bh=GiBz9udlZwzlGHCuOQsO+L3740Na3E2X3SF2079tCBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HFbwEqHj+Ss6bA1FHxfvbCoxvjTcYxpwQPIIjI8EmK2RPpLikebAjEjc6yn2rzGCd
-	 zHgTP9SejnM9ptAjeJVifCFon0UU2MOvsCrbsBV793FA+k0+gzV2TnkfNV3cJKhFYO
-	 OckpfSiM4g8MtW8eMlNI9iRL1I6JAxMZ1KD5b8Aw=
+	b=Q2cpAkd5DmqzHOPsxZrPhIuQOHRSkxSspGSuug0TjDZ5fxQkn+WGggPg+S0XTF8LC
+	 qQe1PSVoUQXZDFJqEbKTBQzGUZPqHjI6XRZCx3+/wybVa1SrsosbOA+1gCxrHToog3
+	 cdWtRnb1X7ZVJDDk8eWaJQW1A++Zt/RcOskrFCNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidya Srinivas <vidya.srinivas@intel.com>,
-	Vandita Kulkarni <vandita.kulkarni@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.8 161/172] drm/i915: Disable port sync when bigjoiner is used
-Date: Mon, 15 Apr 2024 16:21:00 +0200
-Message-ID: <20240415142005.246334691@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.8 135/172] arm64: dts: imx8-ss-conn: fix usb lpcg indices
+Date: Mon, 15 Apr 2024 16:20:34 +0200
+Message-ID: <20240415142004.477732740@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -46,49 +44,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 0653d501409eeb9f1deb7e4c12e4d0d2c9f1cba1 upstream.
+commit 808e7716edcdb39d3498b9f567ef6017858b49aa upstream.
 
-The current modeset sequence can't handle port sync and bigjoiner
-at the same time. Refuse port sync when bigjoiner is needed,
-at least until we fix the modeset sequence.
+usb2_lpcg: clock-controller@5b270000 {
+	...                                                    Col1  Col2
+	clocks = <&conn_ahb_clk>, <&conn_ipg_clk>;           // 0     6
+	clock-indices = <IMX_LPCG_CLK_6>, <IMX_LPCG_CLK_7>;  // 0     7
+        ...
+};
 
-v2: Add a FIXME (Vandite)
+Col1: index, which existing dts try to get.
+Col2: actual index in lpcg driver.
+
+usbotg1: usb@5b0d0000 {
+	...
+	clocks = <&usb2_lpcg 0>;
+			     ^^
+Should be:
+	clocks = <&usb2_lpcg IMX_LPCG_CLK_6>;
+};
+
+usbphy1: usbphy@5b100000 {
+	clocks = <&usb2_lpcg 1>;
+			     ^^
+SHould be:
+	clocks = <&usb2_lpcg IMX_LPCG_CLK_7>;
+};
+
+Arg0 is divided by 4 in lpcg driver. So lpcg will do dummy enable. Fix it
+by use correct clock indices.
 
 Cc: stable@vger.kernel.org
-Tested-by: Vidya Srinivas <vidya.srinivas@intel.com>
-Reviewed-by: Vandita Kulkarni <vandita.kulkarni@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240404213441.17637-4-ville.syrjala@linux.intel.com
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-(cherry picked from commit b37e1347b991459c38c56ec2476087854a4f720b)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 8065fc937f0f ("arm64: dts: imx8dxl: add usb1 and usb2 support")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_ddi.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_ddi.c
-+++ b/drivers/gpu/drm/i915/display/intel_ddi.c
-@@ -4229,7 +4229,12 @@ static bool m_n_equal(const struct intel
- static bool crtcs_port_sync_compatible(const struct intel_crtc_state *crtc_state1,
- 				       const struct intel_crtc_state *crtc_state2)
- {
-+	/*
-+	 * FIXME the modeset sequence is currently wrong and
-+	 * can't deal with bigjoiner + port sync at the same time.
-+	 */
- 	return crtc_state1->hw.active && crtc_state2->hw.active &&
-+		!crtc_state1->bigjoiner_pipes && !crtc_state2->bigjoiner_pipes &&
- 		crtc_state1->output_types == crtc_state2->output_types &&
- 		crtc_state1->output_format == crtc_state2->output_format &&
- 		crtc_state1->lane_count == crtc_state2->lane_count &&
+--- a/arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi
+@@ -41,7 +41,7 @@ conn_subsys: bus@5b000000 {
+ 		interrupts = <GIC_SPI 267 IRQ_TYPE_LEVEL_HIGH>;
+ 		fsl,usbphy = <&usbphy1>;
+ 		fsl,usbmisc = <&usbmisc1 0>;
+-		clocks = <&usb2_lpcg 0>;
++		clocks = <&usb2_lpcg IMX_LPCG_CLK_6>;
+ 		ahb-burst-config = <0x0>;
+ 		tx-burst-size-dword = <0x10>;
+ 		rx-burst-size-dword = <0x10>;
+@@ -58,7 +58,7 @@ conn_subsys: bus@5b000000 {
+ 	usbphy1: usbphy@5b100000 {
+ 		compatible = "fsl,imx7ulp-usbphy";
+ 		reg = <0x5b100000 0x1000>;
+-		clocks = <&usb2_lpcg 1>;
++		clocks = <&usb2_lpcg IMX_LPCG_CLK_7>;
+ 		power-domains = <&pd IMX_SC_R_USB_0_PHY>;
+ 		status = "disabled";
+ 	};
 
 
