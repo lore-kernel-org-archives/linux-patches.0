@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C4776044;
-	Mon, 15 Apr 2024 14:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D90762D2;
+	Mon, 15 Apr 2024 14:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191527; cv=none; b=UY+HYc6+iGvTycgHz1MrO6HH18QFUB8zFSLkc/gIwJXYmvGbiKHHWWquZk7Mh3GzO1WXZMXZRugtI8MckySG64qjDb1rHkPen8eEIq/BnvDEeTSNwebCaUElknNCw8dkcUHoMJXrhWcB7INagMaIJjTJsGba1dChU4b4mj6CwbA=
+	t=1713191531; cv=none; b=uhn0LZi8YFypNDJOhhWVpdOxHugPjTAeRAUD7CCZzJdf6+43niBCLM2Z40h/ZanA72JtHLmbJIwYw1FRYFWfwjw8JjVP5NQePIUKUPnJ2B+xrVTBMSn85ARsTWLbs7c2HETlfErVy9n7SzXEOVXEPRUKu4M67270Jvfw31rpxzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191527; c=relaxed/simple;
-	bh=hqriBvCNqPFtaQu3djPavsPyXafvaq4giZKBVZ/cL5I=;
+	s=arc-20240116; t=1713191531; c=relaxed/simple;
+	bh=4yZe8dlVhPdPzip/k/+q1PWHwpFHgK3noJ22XqsSXQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nS0hHhRdt8ir08qoEYaZlOUO5/OPNByOtGXnkG4lSc+DAuQOhObsMnnN6oK9avYg+6kE+fuYONhxjRPozYtKhTLFxyow4r13edp3yhC4ng7ZEIsf0cr6wmPj9bJRdOXXRZvCbHBe3CGzhlb+AyeT8HNkjZVN+filvTH/c/qHfBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpjaJTj1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y23tusnpnW3oTkxYdQ5gQ3s9LfWAlcWcv8xYbzZshrE96eDsB6nnfJJ2cV/ecyaQUNruCeEFLtWMU2h3efWogHQm6W0mLCcAf4gKH4DzEe9l0CGienYer9msRLWiaTI/EEr0jrJhW3w+W9QynfsfVEAf847oG+RQgBLYZsPDYBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Brv+F3eV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpjaJTj1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43514C113CC;
-	Mon, 15 Apr 2024 14:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Brv+F3eV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D46CC113CC;
+	Mon, 15 Apr 2024 14:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191527;
-	bh=hqriBvCNqPFtaQu3djPavsPyXafvaq4giZKBVZ/cL5I=;
+	s=korg; t=1713191530;
+	bh=4yZe8dlVhPdPzip/k/+q1PWHwpFHgK3noJ22XqsSXQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FpjaJTj1crhSMP1+tkvlXSlusk/ihf1hIfXR4arWX1TnvKdJ9EdjR16y8GAKCcdI/
-	 9nQq2WNvqNIwOSmtP2ngUkzVqDIn0KzNbZHUgyp4WO+Gnyep9/nk/ADVbD8rjlNFGa
-	 tufqMSvorvNBLGCM1XdW3gTIyR1FCJFcw0fLYlhk=
+	b=Brv+F3eVGt5S9pGw4PMIqZsdeDUx3CjjF7q9/EtP0M+O/WpfaWK81l0yu1N+dFNzF
+	 3Kf4NchnLVyqgdJmJxaL3m79s188fStt/DvzLVo1VZAomq8xL3eLIw6LLYRhf5uhiC
+	 G9FI9OohRTlrn+AQQUG5c5EYA70+4jiKe+W/Rgdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.8 171/172] drm/amd/display: always reset ODM mode in context when adding first plane
-Date: Mon, 15 Apr 2024 16:21:10 +0200
-Message-ID: <20240415142005.538891219@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.8 136/172] arm64: dts: imx8-ss-dma: fix pwm lpcg indices
+Date: Mon, 15 Apr 2024 16:20:35 +0200
+Message-ID: <20240415142004.507145908@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -52,46 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjing Liu <wenjing.liu@amd.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 81901d8d0472e9a19d294ae1dea76b950548195d upstream.
+commit 9055d87bce7276234173fa90e9702af31b3f5353 upstream.
 
-[why]
-In current implemenation ODM mode is only reset when the last plane is
-removed from dc state. For any dc validate we will always remove all
-current planes and add new planes. However when switching from no planes
-to 1 plane, ODM mode is not reset because no planes get removed. This
-has caused an issue where we kept ODM combine when it should have been
-remove when a plane is added. The change is to reset ODM mode when
-adding the first plane.
+adma_pwm_lpcg: clock-controller@5a590000 {
+	...							 col1 col2
+	clocks = <&clk IMX_SC_R_LCD_0_PWM_0 IMX_SC_PM_CLK_PER>,// 0   0
+		 <&dma_ipg_clk>;                               // 1   4
+	clock-indices = <IMX_LPCG_CLK_0>, <IMX_LPCG_CLK_4>;
+        ...
+};
+
+Col1: index, which existing dts try to get.
+Col2: actual index in lpcg driver.
+
+adma_pwm: pwm@5a190000 {
+	...
+	clocks = <&adma_pwm_lpcg 1>, <&adma_pwm_lpcg 0>;
+				 ^^		     ^^
+Should be
+	clocks = <&adma_pwm_lpcg IMX_LPCG_CLK_4>,
+		 <&adma_pwm_lpcg IMX_LPCG_CLK_0>;
+};
+
+Arg0 will be divided by 4 in lcpg driver, so pwm will get IMX_SC_PM_CLK_PER
+by <&adma_pwm_lpcg 1>, <&adma_pwm_lpcg 0>. Although function can work, code
+logic is wrong. Fix it by use correct indices.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: f1d6a6b991ef ("arm64: dts: imx8qxp: add adma_pwm in adma")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_state.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/boot/dts/freescale/imx8-ss-dma.dtsi |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc_state.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_state.c
-@@ -436,6 +436,15 @@ bool dc_state_add_plane(
- 		goto out;
- 	}
- 
-+	if (stream_status->plane_count == 0 && dc->config.enable_windowed_mpo_odm)
-+		/* ODM combine could prevent us from supporting more planes
-+		 * we will reset ODM slice count back to 1 when all planes have
-+		 * been removed to maximize the amount of planes supported when
-+		 * new planes are added.
-+		 */
-+		resource_update_pipes_for_stream_with_slice_count(
-+				state, dc->current_state, dc->res_pool, stream, 1);
-+
- 	otg_master_pipe = resource_get_otg_master_for_stream(
- 			&state->res_ctx, stream);
- 	if (otg_master_pipe)
+--- a/arch/arm64/boot/dts/freescale/imx8-ss-dma.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8-ss-dma.dtsi
+@@ -144,8 +144,8 @@ dma_subsys: bus@5a000000 {
+ 		compatible = "fsl,imx8qxp-pwm", "fsl,imx27-pwm";
+ 		reg = <0x5a190000 0x1000>;
+ 		interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_HIGH>;
+-		clocks = <&adma_pwm_lpcg 1>,
+-			 <&adma_pwm_lpcg 0>;
++		clocks = <&adma_pwm_lpcg IMX_LPCG_CLK_4>,
++			 <&adma_pwm_lpcg IMX_LPCG_CLK_0>;
+ 		clock-names = "ipg", "per";
+ 		assigned-clocks = <&clk IMX_SC_R_LCD_0_PWM_0 IMX_SC_PM_CLK_PER>;
+ 		assigned-clock-rates = <24000000>;
 
 
