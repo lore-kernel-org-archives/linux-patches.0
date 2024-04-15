@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57659445;
-	Mon, 15 Apr 2024 14:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9031E501;
+	Mon, 15 Apr 2024 14:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192196; cv=none; b=TN1jgfmKbNF6sfGcrzm3cKfEi4Q1oQ+iaoXkpLSJMre0AsiurRaJPNHWKYJHhga5PVNK0wP7DKZgKdf/JHyjhQtHlUXB/ginpatJqWDscv42wQP3LCMKuH2WL7y8FJ/ujktOdHOINxZOM9pcXWTkbCAcPpzjckWtkGugVDGXcr8=
+	t=1713192199; cv=none; b=TM6VVTpPOUEL5l8C6Ll2niV1BxV96P8FnOndg4ady3+zm4tpkpwaF0wqcEXIpxyLxG48YLv7shWq38OLuUarS9XJ6DvXTIJEEWOZfHfyXdQW+ud4cAqTLQb0DKim/SN1gEGk++LAdqgE6vgoZ14g1Ys5GBxjov/QdJkKkP3UJNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192196; c=relaxed/simple;
-	bh=oZy1HnfVyjQRn+gbm19hcU3KbJmAd2pmqBnXFrvCmUU=;
+	s=arc-20240116; t=1713192199; c=relaxed/simple;
+	bh=lCnP0HPxKOXGRjMcNaJcIiu5ecS9uP/RJpXMSOtC7OM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KAdZixT236zNOVUqiRMiocTZTMMwG9caE5a2W/X0x0Wob5xtj9YZEqMDKSjX46lIaaZPX9SgHXt3sJoiYvzMmdu+DZObMBwTCU9ws65wUXeTnhFgpR1lWVazDmWPc+bWD0zajy64lWsUNafgPina7r3N7fhzpDMtb+jlAksQE4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPByCCbI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fiieF/lhNvq7frEmo9JuWI900k5Ff6btBaqIccLIh2FUM7iKPuUOB3Y67OeiB5ydrSFFwy9Ef/rAK2HXavmT3jKEOnore7SEybebFfIQE+2oPgLPk3RrSpOjkHtA3sBCdwHb1lGPkadqHWB7DSRVQMMdgj7Hd/GBND3O8H9oAQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZy85h8o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPByCCbI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A0ACC113CC;
-	Mon, 15 Apr 2024 14:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZy85h8o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AAAC113CC;
+	Mon, 15 Apr 2024 14:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192196;
-	bh=oZy1HnfVyjQRn+gbm19hcU3KbJmAd2pmqBnXFrvCmUU=;
+	s=korg; t=1713192199;
+	bh=lCnP0HPxKOXGRjMcNaJcIiu5ecS9uP/RJpXMSOtC7OM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rPByCCbIp6INR41jEB0Hhl6WHdc3bYzvaptT2EnIWz1wALLIBkOcA1/Sxiw0aEorC
-	 Ky9asHscc9BA0rIGP6DZcz5A1PpCYMRIdRrjhAN5MI4Ae89DSBBfeSkVkzVbuDTNhV
-	 2aGIe8yyREP72W4cT605RG9YSnQci5TAjRAus0n0=
+	b=MZy85h8oweN546HdfOteIV9c1S2GL6XwhHllXiPA/8QdxY3TytO47YSz8oJaQkO7u
+	 6DejYTv4+z6xOTYhW+CoBaUjOXXELA7Wp8I2eQqsSgSoMq4wDyL5sbC1Dbdh3Pw3tK
+	 sn5ZvQ8WkrfRClgsP/zGiGxA5WZiJ5VWpj71wjsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Pan <jacob.jun.pan@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 28/45] iommu/vt-d: Allocate local memory for page request queue
-Date: Mon, 15 Apr 2024 16:21:35 +0200
-Message-ID: <20240415141943.087418061@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 29/45] btrfs: qgroup: correctly model root qgroup rsv in convert
+Date: Mon, 15 Apr 2024 16:21:36 +0200
+Message-ID: <20240415141943.118206027@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141942.235939111@linuxfoundation.org>
 References: <20240415141942.235939111@linuxfoundation.org>
@@ -53,39 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Pan <jacob.jun.pan@linux.intel.com>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit a34f3e20ddff02c4f12df2c0635367394e64c63d ]
+commit 141fb8cd206ace23c02cd2791c6da52c1d77d42a upstream.
 
-The page request queue is per IOMMU, its allocation should be made
-NUMA-aware for performance reasons.
+We use add_root_meta_rsv and sub_root_meta_rsv to track prealloc and
+pertrans reservations for subvolumes when quotas are enabled. The
+convert function does not properly increment pertrans after decrementing
+prealloc, so the count is not accurate.
 
-Fixes: a222a7f0bb6c ("iommu/vt-d: Implement page request handling")
-Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20240403214007.985600-1-jacob.jun.pan@linux.intel.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Note: we check that the fs is not read-only to mirror the logic in
+qgroup_convert_meta, which checks that before adding to the pertrans rsv.
+
+Fixes: 8287475a2055 ("btrfs: qgroup: Use root::qgroup_meta_rsv_* to record qgroup meta reserved space")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/svm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/qgroup.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iommu/intel/svm.c b/drivers/iommu/intel/svm.c
-index 3a9468b1d2c3c..a96c9a15c9fee 100644
---- a/drivers/iommu/intel/svm.c
-+++ b/drivers/iommu/intel/svm.c
-@@ -88,7 +88,7 @@ int intel_svm_enable_prq(struct intel_iommu *iommu)
- 	struct page *pages;
- 	int irq, ret;
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -4080,6 +4080,8 @@ void btrfs_qgroup_convert_reserved_meta(
+ 				      BTRFS_QGROUP_RSV_META_PREALLOC);
+ 	trace_qgroup_meta_convert(root, num_bytes);
+ 	qgroup_convert_meta(fs_info, root->root_key.objectid, num_bytes);
++	if (!sb_rdonly(fs_info->sb))
++		add_root_meta_rsv(root, num_bytes, BTRFS_QGROUP_RSV_META_PERTRANS);
+ }
  
--	pages = alloc_pages(GFP_KERNEL | __GFP_ZERO, PRQ_ORDER);
-+	pages = alloc_pages_node(iommu->node, GFP_KERNEL | __GFP_ZERO, PRQ_ORDER);
- 	if (!pages) {
- 		pr_warn("IOMMU: %s: Failed to allocate page request queue\n",
- 			iommu->name);
--- 
-2.43.0
-
+ /*
 
 
