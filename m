@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3F080BF0;
-	Mon, 15 Apr 2024 14:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C19182D86;
+	Mon, 15 Apr 2024 14:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191679; cv=none; b=lU1ZcygLkKQuQgzYrTVgruMuhg3M4D4HU/rGWcIlKjE+x0o24lWmk600WlSphseJHZuF41pB8vU4bP0leZBGNmGkqetH0culAQb7sKlQHv1n2x1hnI1KWz2HvBJ+cur5EtiHS55mbmDwuL6IQlhE1JWfD+ULDNRd6C6gXgP4sh8=
+	t=1713191682; cv=none; b=csJFYYlwy1Z7dSJHJi4texoYt25UbCkplomv081GeJxmet9V9o8wTT7IFanihzsdh562goKs7e7vlxyNnqYR/4k9Ve6I2lpg8TCfoQu9v45Epgg1a7hutsejLoGohhAMNx54BB8VzSHdL9J/kfFcnuXnUgrJCEL2kfxJ567L3Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191679; c=relaxed/simple;
-	bh=8+qWHD1af2MUK8hq0PiHbQtOnwSTjJSNCPrlTW+K+SU=;
+	s=arc-20240116; t=1713191682; c=relaxed/simple;
+	bh=UBgVwf1eJSbrPykllpN2W4Rp7OEpgdNqxI3WQ2QWz/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A09crvoK9KgT8alN2JygmqklHQu1pCYSWknD+WTE2IITf1L019k7YlHiwVddlLcQuZ2o9D4Dk+8IXqWigqUVNRgsfoySkUpD9cpBMp3StciK8MhtHtanDrfSXmQJS6glP7tMH4S1bocGPEt5IhfH7uTX8yQbMRLzL0Na7g29rXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIfA/3L7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r1kgcZ0sLBz6xDOTV2PlEKaYib82LQIJD8470Db18hr9JdF5cziznO8x1GJnmK89+Z2LNPaPVIv2UR4oTYlp4FVeiQgzXTl299GACQxA6ZbbpW0rMGMJQwUUV7MKVjlSnwKuiF1IaDHk5zFyYRzncLqB0+IDKt4IDp0PRJMR3qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PewHqzYC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIfA/3L7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948B9C113CC;
-	Mon, 15 Apr 2024 14:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PewHqzYC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87599C113CC;
+	Mon, 15 Apr 2024 14:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191679;
-	bh=8+qWHD1af2MUK8hq0PiHbQtOnwSTjJSNCPrlTW+K+SU=;
+	s=korg; t=1713191681;
+	bh=UBgVwf1eJSbrPykllpN2W4Rp7OEpgdNqxI3WQ2QWz/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MIfA/3L7i1s49ph1o8VEGXyNIOyiRfnIW3H9LUnqxxbPWRq68nLxwE5SJpFKMiqyj
-	 NDKABbDqbPkJwfBoJ1AiLvKtGs8KhBS79D6fcvZ3qdFloxyqR6u1OIvZu++aiZkCLq
-	 8Qh6dX6Oy6WfFhsXFFo38oIyy1C9OupCzSoDOj9E=
+	b=PewHqzYCphpA0QVDk9v8DdtgIIuMTq/mE3oxMx0pX5OVGXDiTdvjjNQR4wgmEtvhl
+	 acNz9gfa6DmzFhputKBCK4s7Y/xqK+w762VJHHGeGmBXbTLE4OPeCcAzb6xUIqM1jY
+	 nOWIEvPKlLScR0OmGCua4knvuik86w8qeug4BBaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7f7f201cc2668a8fd169@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 043/122] af_unix: Clear stale u->oob_skb.
-Date: Mon, 15 Apr 2024 16:20:08 +0200
-Message-ID: <20240415141954.659206081@linuxfoundation.org>
+Subject: [PATCH 6.6 052/122] Bluetooth: SCO: Fix not validating setsockopt user input
+Date: Mon, 15 Apr 2024 16:20:17 +0200
+Message-ID: <20240415141954.931900709@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -53,102 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit b46f4eaa4f0ec38909fb0072eea3aeddb32f954e ]
+[ Upstream commit 51eda36d33e43201e7a4fd35232e069b2c850b01 ]
 
-syzkaller started to report deadlock of unix_gc_lock after commit
-4090fa373f0e ("af_unix: Replace garbage collection algorithm."), but
-it just uncovers the bug that has been there since commit 314001f0bf92
-("af_unix: Add OOB support").
+syzbot reported sco_sock_setsockopt() is copying data without
+checking user input length.
 
-The repro basically does the following.
+BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset
+include/linux/sockptr.h:49 [inline]
+BUG: KASAN: slab-out-of-bounds in copy_from_sockptr
+include/linux/sockptr.h:55 [inline]
+BUG: KASAN: slab-out-of-bounds in sco_sock_setsockopt+0xc0b/0xf90
+net/bluetooth/sco.c:893
+Read of size 4 at addr ffff88805f7b15a3 by task syz-executor.5/12578
 
-  from socket import *
-  from array import array
-
-  c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
-  c1.sendmsg([b'a'], [(SOL_SOCKET, SCM_RIGHTS, array("i", [c2.fileno()]))], MSG_OOB)
-  c2.recv(1)  # blocked as no normal data in recv queue
-
-  c2.close()  # done async and unblock recv()
-  c1.close()  # done async and trigger GC
-
-A socket sends its file descriptor to itself as OOB data and tries to
-receive normal data, but finally recv() fails due to async close().
-
-The problem here is wrong handling of OOB skb in manage_oob().  When
-recvmsg() is called without MSG_OOB, manage_oob() is called to check
-if the peeked skb is OOB skb.  In such a case, manage_oob() pops it
-out of the receive queue but does not clear unix_sock(sk)->oob_skb.
-This is wrong in terms of uAPI.
-
-Let's say we send "hello" with MSG_OOB, and "world" without MSG_OOB.
-The 'o' is handled as OOB data.  When recv() is called twice without
-MSG_OOB, the OOB data should be lost.
-
-  >>> from socket import *
-  >>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM, 0)
-  >>> c1.send(b'hello', MSG_OOB)  # 'o' is OOB data
-  5
-  >>> c1.send(b'world')
-  5
-  >>> c2.recv(5)  # OOB data is not received
-  b'hell'
-  >>> c2.recv(5)  # OOB date is skipped
-  b'world'
-  >>> c2.recv(5, MSG_OOB)  # This should return an error
-  b'o'
-
-In the same situation, TCP actually returns -EINVAL for the last
-recv().
-
-Also, if we do not clear unix_sk(sk)->oob_skb, unix_poll() always set
-EPOLLPRI even though the data has passed through by previous recv().
-
-To avoid these issues, we must clear unix_sk(sk)->oob_skb when dequeuing
-it from recv queue.
-
-The reason why the old GC did not trigger the deadlock is because the
-old GC relied on the receive queue to detect the loop.
-
-When it is triggered, the socket with OOB data is marked as GC candidate
-because file refcount == inflight count (1).  However, after traversing
-all inflight sockets, the socket still has a positive inflight count (1),
-thus the socket is excluded from candidates.  Then, the old GC lose the
-chance to garbage-collect the socket.
-
-With the old GC, the repro continues to create true garbage that will
-never be freed nor detected by kmemleak as it's linked to the global
-inflight list.  That's why we couldn't even notice the issue.
-
-Fixes: 314001f0bf92 ("af_unix: Add OOB support")
-Reported-by: syzbot+7f7f201cc2668a8fd169@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7f7f201cc2668a8fd169
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240405221057.2406-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ad10b1a48754 ("Bluetooth: Add Bluetooth socket voice option")
+Fixes: b96e9c671b05 ("Bluetooth: Add BT_DEFER_SETUP option to sco socket")
+Fixes: 00398e1d5183 ("Bluetooth: Add support for BT_PKT_STATUS CMSG data for SCO connections")
+Fixes: f6873401a608 ("Bluetooth: Allow setting of codec for HFP offload use case")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/net/bluetooth/bluetooth.h |  9 +++++++++
+ net/bluetooth/sco.c               | 23 ++++++++++-------------
+ 2 files changed, 19 insertions(+), 13 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 510b1d6758db7..ac3d4b540c100 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2589,7 +2589,9 @@ static struct sk_buff *manage_oob(struct sk_buff *skb, struct sock *sk,
- 				}
- 			} else if (!(flags & MSG_PEEK)) {
- 				skb_unlink(skb, &sk->sk_receive_queue);
--				consume_skb(skb);
-+				WRITE_ONCE(u->oob_skb, NULL);
-+				if (!WARN_ON_ONCE(skb_unref(skb)))
-+					kfree_skb(skb);
- 				skb = skb_peek(&sk->sk_receive_queue);
- 			}
+diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
+index 28e32c9a6cc99..e4a6831133f81 100644
+--- a/include/net/bluetooth/bluetooth.h
++++ b/include/net/bluetooth/bluetooth.h
+@@ -585,6 +585,15 @@ static inline struct sk_buff *bt_skb_sendmmsg(struct sock *sk,
+ 	return skb;
+ }
+ 
++static inline int bt_copy_from_sockptr(void *dst, size_t dst_size,
++				       sockptr_t src, size_t src_size)
++{
++	if (dst_size > src_size)
++		return -EINVAL;
++
++	return copy_from_sockptr(dst, src, dst_size);
++}
++
+ int bt_to_errno(u16 code);
+ __u8 bt_status(int err);
+ 
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index c736186aba26b..8e4f39b8601cb 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -823,7 +823,7 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			       sockptr_t optval, unsigned int optlen)
+ {
+ 	struct sock *sk = sock->sk;
+-	int len, err = 0;
++	int err = 0;
+ 	struct bt_voice voice;
+ 	u32 opt;
+ 	struct bt_codecs *codecs;
+@@ -842,10 +842,9 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
  		}
+ 
+-		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (opt)
+ 			set_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags);
+@@ -862,11 +861,10 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 
+ 		voice.setting = sco_pi(sk)->setting;
+ 
+-		len = min_t(unsigned int, sizeof(voice), optlen);
+-		if (copy_from_sockptr(&voice, optval, len)) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&voice, sizeof(voice), optval,
++					   optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		/* Explicitly check for these values */
+ 		if (voice.setting != BT_VOICE_TRANSPARENT &&
+@@ -889,10 +887,9 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		break;
+ 
+ 	case BT_PKT_STATUS:
+-		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (opt)
+ 			set_bit(BT_SK_PKT_STATUS, &bt_sk(sk)->flags);
+@@ -933,9 +930,9 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
+-		if (copy_from_sockptr(buffer, optval, optlen)) {
++		err = bt_copy_from_sockptr(buffer, optlen, optval, optlen);
++		if (err) {
+ 			hci_dev_put(hdev);
+-			err = -EFAULT;
+ 			break;
+ 		}
+ 
 -- 
 2.43.0
 
