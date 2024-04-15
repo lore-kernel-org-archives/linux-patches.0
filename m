@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B309445;
-	Mon, 15 Apr 2024 14:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA767602A;
+	Mon, 15 Apr 2024 14:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192092; cv=none; b=pXTTcrCKAdat+hJRu0JFnQBTeIw9CXr4qZBn6R5P0mlR/ZgvBQT+hhdGvhSCLKr9Bs6azGwST5JZXQhQGKVjijfXu/TywkXjJsn6NcZULK+rns4gNII3gKS2TXvK4ayx9vBNh+BDX9PXCDg7xruOjsOo4T8I8l4O6OIYzl0AVQw=
+	t=1713192095; cv=none; b=HJaGFfj1tZxUEtopiKFVFqnwJCaAHKUstIB5nO3M8SKxBAwhW5QTpT9SZK2R/iiSyWEu7VsiO+QOJZW4Mo7cvfHlpH5kivtcgZbQeqdp0hmF3ZdUhTprOnFyFYo6prM3Tk0FIpOgRsKAH1KpNblt+TA22nxtl3daofDgnc1TavI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192092; c=relaxed/simple;
-	bh=3xEyy4uTl+wBQg6N0I4zrHD0+TL4I/+RcY/fKKOpAw8=;
+	s=arc-20240116; t=1713192095; c=relaxed/simple;
+	bh=Z7gmBT6XI4gSUpeVDj5c9idbV2GoNQp6a557ToM9gZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ehne3F9LPlT0k5p8oijsttUtE10LnVNJT/Hc7g5SUY8fIq20YFLa2MiIkpnpbAP/EKdCO9/2XRdWWRTJTGDS2emEXGLMKLbF7d9INpi/aBrQe4LViuKe/h0xfSnUjSyRmHdSzrNbiH76JUTwu64CTVk/7MCV3ZU42TICIuKjbXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJCz1+L7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cGMmSj+XrUHZ9eIc7SiC+WgFKhIBtg7Fw07Hckn6D/NQvB67RPGJQz7oiRRKXw+/sd71JYYR7l7khjKu5jpDHgmQVStU3nc78hWgNLD9dh64Wcuk8mWJMVHXfEq6p6l9VHT7bf0cC5k+8o4wIz01ItjJvczSl8p7lDbD5RcPVIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jABNCqAn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJCz1+L7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46AFC2BD11;
-	Mon, 15 Apr 2024 14:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jABNCqAn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B9DC113CC;
+	Mon, 15 Apr 2024 14:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192092;
-	bh=3xEyy4uTl+wBQg6N0I4zrHD0+TL4I/+RcY/fKKOpAw8=;
+	s=korg; t=1713192095;
+	bh=Z7gmBT6XI4gSUpeVDj5c9idbV2GoNQp6a557ToM9gZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vJCz1+L7WoBc4MO1QGoz54rX9th4LqSGqrWnfc/QrDadtUzTfHoIN4qLB5L5t2RWt
-	 FuFxUidGxJrvSrk6KyqXvK38FviZzr5qqf1sKmMMhOu9nkSrZVqReK9OLKIm1kaSkk
-	 UxzcvrIWJUE/iI2f5ef77o7pOLqJ531CtXfIL1jg=
+	b=jABNCqAnIa/2pcO0RNwnJGkqlyNtZKwckPxx521mFCcMPYJ51PuS3RRFeeQMcQtt6
+	 txMdv+WXzmx8yeXaKPBo5TQC/+Zm6Ab5d7b9Nw+hK9w6vb5YRJnSqLjNcYnJk/SPIB
+	 hZFisM83GZfTCvCtNImnNkQwkh76k079Di75XP28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Nikolay Borisov <nik.borisov@suse.com>
-Subject: [PATCH 6.1 64/69] x86/bugs: Replace CONFIG_SPECTRE_BHI_{ON,OFF} with CONFIG_MITIGATION_SPECTRE_BHI
-Date: Mon, 15 Apr 2024 16:21:35 +0200
-Message-ID: <20240415141948.096683138@linuxfoundation.org>
+	Uma Shankar <uma.shankar@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.1 65/69] drm/i915/cdclk: Fix CDCLK programming order when pipes are active
+Date: Mon, 15 Apr 2024 16:21:36 +0200
+Message-ID: <20240415141948.127938011@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141946.165870434@linuxfoundation.org>
 References: <20240415141946.165870434@linuxfoundation.org>
@@ -47,77 +46,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 4f511739c54b549061993b53fc0380f48dfca23b upstream.
+commit 7b1f6b5aaec0f849e19c3e99d4eea75876853cdd upstream.
 
-For consistency with the other CONFIG_MITIGATION_* options, replace the
-CONFIG_SPECTRE_BHI_{ON,OFF} options with a single
-CONFIG_MITIGATION_SPECTRE_BHI option.
+Currently we always reprogram CDCLK from the
+intel_set_cdclk_pre_plane_update() when using squash/crawl.
+The code only works correctly for the cd2x update or full
+modeset cases, and it was simply never updated to deal with
+squash/crawl.
 
-[ mingo: Fix ]
+If the CDCLK frequency is increasing we must reprogram it
+before we do anything else that might depend on the new
+higher frequency, and conversely we must not decrease
+the frequency until everything that might still depend
+on the old higher frequency has been dealt with.
 
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Nikolay Borisov <nik.borisov@suse.com>
-Link: https://lore.kernel.org/r/3833812ea63e7fdbe36bf8b932e63f70d18e2a2a.1712813475.git.jpoimboe@kernel.org
+Since cdclk_state->pipe is only relevant when doing a cd2x
+update we can't use it to determine the correct sequence
+during squash/crawl. To that end introduce cdclk_state->disable_pipes
+which simply indicates that we must perform the update
+while the pipes are disable (ie. during
+intel_set_cdclk_pre_plane_update()). Otherwise we use the
+same old vs. new CDCLK frequency comparsiong as for cd2x
+updates.
+
+The only remaining problem case is when the voltage_level
+needs to increase due to a DDI port, but the CDCLK frequency
+is decreasing (and not all pipes are being disabled). The
+current approach will not bump the voltage level up until
+after the port has already been enabled, which is too late.
+But we'll take care of that case separately.
+
+v2: Don't break the "must disable pipes case"
+v3: Keep the on stack 'pipe' for future use
+
+Cc: stable@vger.kernel.org
+Fixes: d62686ba3b54 ("drm/i915/adl_p: CDCLK crawl support for ADL")
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240402155016.13733-2-ville.syrjala@linux.intel.com
+(cherry picked from commit 3aecee90ac12a351905f12dda7643d5b0676d6ca)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/Kconfig           |   17 +++--------------
- arch/x86/kernel/cpu/bugs.c |    2 +-
- 2 files changed, 4 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/i915/display/intel_cdclk.c |    7 +++++--
+ drivers/gpu/drm/i915/display/intel_cdclk.h |    3 +++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -2563,27 +2563,16 @@ config MITIGATION_RFDS
- 	  stored in floating point, vector and integer registers.
- 	  See also <file:Documentation/admin-guide/hw-vuln/reg-file-data-sampling.rst>
+--- a/drivers/gpu/drm/i915/display/intel_cdclk.c
++++ b/drivers/gpu/drm/i915/display/intel_cdclk.c
+@@ -2152,7 +2152,7 @@ intel_set_cdclk_pre_plane_update(struct
+ 				 &new_cdclk_state->actual))
+ 		return;
  
--choice
--	prompt "Clear branch history"
-+config MITIGATION_SPECTRE_BHI
-+	bool "Mitigate Spectre-BHB (Branch History Injection)"
- 	depends on CPU_SUP_INTEL
--	default SPECTRE_BHI_ON
-+	default y
- 	help
- 	  Enable BHI mitigations. BHI attacks are a form of Spectre V2 attacks
- 	  where the branch history buffer is poisoned to speculatively steer
- 	  indirect branches.
- 	  See <file:Documentation/admin-guide/hw-vuln/spectre.rst>
+-	if (pipe == INVALID_PIPE ||
++	if (new_cdclk_state->disable_pipes ||
+ 	    old_cdclk_state->actual.cdclk <= new_cdclk_state->actual.cdclk) {
+ 		drm_WARN_ON(&dev_priv->drm, !new_cdclk_state->base.changed);
  
--config SPECTRE_BHI_ON
--	bool "on"
--	help
--	  Equivalent to setting spectre_bhi=on command line parameter.
--config SPECTRE_BHI_OFF
--	bool "off"
--	help
--	  Equivalent to setting spectre_bhi=off command line parameter.
--
--endchoice
--
- endif
+@@ -2181,7 +2181,7 @@ intel_set_cdclk_post_plane_update(struct
+ 				 &new_cdclk_state->actual))
+ 		return;
  
- config ARCH_HAS_ADD_PAGES
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1605,7 +1605,7 @@ enum bhi_mitigations {
+-	if (pipe != INVALID_PIPE &&
++	if (!new_cdclk_state->disable_pipes &&
+ 	    old_cdclk_state->actual.cdclk > new_cdclk_state->actual.cdclk) {
+ 		drm_WARN_ON(&dev_priv->drm, !new_cdclk_state->base.changed);
+ 
+@@ -2634,6 +2634,7 @@ static struct intel_global_state *intel_
+ 		return NULL;
+ 
+ 	cdclk_state->pipe = INVALID_PIPE;
++	cdclk_state->disable_pipes = false;
+ 
+ 	return &cdclk_state->base;
+ }
+@@ -2793,6 +2794,8 @@ int intel_modeset_calc_cdclk(struct inte
+ 		if (ret)
+ 			return ret;
+ 
++		new_cdclk_state->disable_pipes = true;
++
+ 		drm_dbg_kms(&dev_priv->drm,
+ 			    "Modeset required for cdclk change\n");
+ 	}
+--- a/drivers/gpu/drm/i915/display/intel_cdclk.h
++++ b/drivers/gpu/drm/i915/display/intel_cdclk.h
+@@ -51,6 +51,9 @@ struct intel_cdclk_state {
+ 
+ 	/* bitmask of active pipes */
+ 	u8 active_pipes;
++
++	/* update cdclk with pipes disabled */
++	bool disable_pipes;
  };
  
- static enum bhi_mitigations bhi_mitigation __ro_after_init =
--	IS_ENABLED(CONFIG_SPECTRE_BHI_ON) ? BHI_MITIGATION_ON : BHI_MITIGATION_OFF;
-+	IS_ENABLED(CONFIG_MITIGATION_SPECTRE_BHI) ? BHI_MITIGATION_ON : BHI_MITIGATION_OFF;
- 
- static int __init spectre_bhi_parse_cmdline(char *str)
- {
+ int intel_crtc_compute_min_cdclk(const struct intel_crtc_state *crtc_state);
 
 
