@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19CE78C66;
-	Mon, 15 Apr 2024 14:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2342182877;
+	Mon, 15 Apr 2024 14:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191313; cv=none; b=OGZxo9L+Tx3NVmAoVcWFKxPSj4JdCUuscy4AaJqvsYFC3LrJCYj4MMrZC6RxYQRkGQTZUP1lsGepgXxxk9yWLoVQgiLCr02Ntsf5PGnamak0iUYv5851kcV148qexwX8hR+JyIHfodkYGTEHG+7yoZdn5FdqzRt7prfY+cNQ5/k=
+	t=1713191316; cv=none; b=Exuqul24BiPP5LKnJbuefcdyB+WD6JyqHfZQu1fIBu4PATsx74x3/uJHqrQKbu1zTvdbMWDxLnshbs+MHfNwsm3sb3H9sGvGl/y9MQkydAb/cOlC9xhe9ih+z/psyUeAa3CE/hzl8gnLIWYtSh+2DUczitaK0qBCBdVjYHRgALI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191313; c=relaxed/simple;
-	bh=XbUZkZ0E8H6DTxG/NhaNUWhuXjmms/KMW5ShQjPzp3Y=;
+	s=arc-20240116; t=1713191316; c=relaxed/simple;
+	bh=CTe2lPgO3PkHs4ZGkiNRzuTRUwT+ocjUFPD8VmfC0MQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hdc094SeXobb9Fv4+8PWovk4paBNTvFe8whiqU/Q0+a4PQLKfW3E0a77T2R3sEiv8HeMEQcirraibv2izeeINnb4jCY3xzC8uPWloM6mYm38bqRrJ6qWaYl3LXvCjE6ho846Tqupej4/wFeCm/bUh2C6GN3+7Q48XQsCBMv/ibc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLYVELkA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NciwZcfKSVU1b32/OSevhe0mr8xNztqFUNFdHSN6nvUbe1LFtci4f88dg3eCHrdC3N/8CHhXLMb+x1DddSz1XpFDfEECo5gBAE0OcTpBkgeomMKTBN1dNoSRZ9aZORopMG5+UoCxMkb66L96tKyIRJy35+1qMPruRPwnjVANnQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TipV9D3a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLYVELkA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7D2C113CC;
-	Mon, 15 Apr 2024 14:28:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TipV9D3a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D5AFC113CC;
+	Mon, 15 Apr 2024 14:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191312;
-	bh=XbUZkZ0E8H6DTxG/NhaNUWhuXjmms/KMW5ShQjPzp3Y=;
+	s=korg; t=1713191316;
+	bh=CTe2lPgO3PkHs4ZGkiNRzuTRUwT+ocjUFPD8VmfC0MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WLYVELkAIeGVf6Yw4pizQeyTnh8/6USRb5YdmnYAbxyuQNFF2YLcqh+omfbmNKn4z
-	 6A12MNWAH9NjupaUCfM06DPav9qH1bf/4noahAvWaJoyhEWfgP0AkX10jBVCPlS4MZ
-	 f8g75TzvJJ+E5L6h6Wl998jDz3tce4DECHqLMhSQ=
+	b=TipV9D3ajAfyXpmu3+jwwzQYlfxo+9pasDECBrzrSsPDGdkrMhayn5zjjGUYu/50U
+	 YWmIAPo7aPcphZa7gdZTD4dTxqZbl1qPYmMT0d1L2JZ8YcWvSl0puIU+SvdNIBFdZh
+	 Xe8eL2aHevEAeFp1WkuR6fgfySLQFCRQTNWtRiVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuchun Shang <xuchun.shang@linux.alibaba.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Jacob Pan <jacob.jun.pan@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
 	Lu Baolu <baolu.lu@linux.intel.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 103/172] iommu/vt-d: Fix wrong use of pasid config
-Date: Mon, 15 Apr 2024 16:20:02 +0200
-Message-ID: <20240415142003.524032086@linuxfoundation.org>
+Subject: [PATCH 6.8 104/172] iommu/vt-d: Allocate local memory for page request queue
+Date: Mon, 15 Apr 2024 16:20:03 +0200
+Message-ID: <20240415142003.553143076@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -53,37 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuchun Shang <xuchun.shang@linux.alibaba.com>
+From: Jacob Pan <jacob.jun.pan@linux.intel.com>
 
-[ Upstream commit 5b3625a4f6422e8982f90f0c11b5546149c962b8 ]
+[ Upstream commit a34f3e20ddff02c4f12df2c0635367394e64c63d ]
 
-The commit "iommu/vt-d: Add IOMMU perfmon support" introduce IOMMU
-PMU feature, but use the wrong config when set pasid filter.
+The page request queue is per IOMMU, its allocation should be made
+NUMA-aware for performance reasons.
 
-Fixes: 7232ab8b89e9 ("iommu/vt-d: Add IOMMU perfmon support")
-Signed-off-by: Xuchun Shang <xuchun.shang@linux.alibaba.com>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20240401060753.3321318-1-xuchun.shang@linux.alibaba.com
+Fixes: a222a7f0bb6c ("iommu/vt-d: Implement page request handling")
+Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20240403214007.985600-1-jacob.jun.pan@linux.intel.com
 Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/perfmon.c | 2 +-
+ drivers/iommu/intel/svm.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/intel/perfmon.c b/drivers/iommu/intel/perfmon.c
-index cf43e798eca49..44083d01852db 100644
---- a/drivers/iommu/intel/perfmon.c
-+++ b/drivers/iommu/intel/perfmon.c
-@@ -438,7 +438,7 @@ static int iommu_pmu_assign_event(struct iommu_pmu *iommu_pmu,
- 	iommu_pmu_set_filter(domain, event->attr.config1,
- 			     IOMMU_PMU_FILTER_DOMAIN, idx,
- 			     event->attr.config1);
--	iommu_pmu_set_filter(pasid, event->attr.config1,
-+	iommu_pmu_set_filter(pasid, event->attr.config2,
- 			     IOMMU_PMU_FILTER_PASID, idx,
- 			     event->attr.config1);
- 	iommu_pmu_set_filter(ats, event->attr.config2,
+diff --git a/drivers/iommu/intel/svm.c b/drivers/iommu/intel/svm.c
+index ec47ec81f0ecd..4d269df0082fb 100644
+--- a/drivers/iommu/intel/svm.c
++++ b/drivers/iommu/intel/svm.c
+@@ -67,7 +67,7 @@ int intel_svm_enable_prq(struct intel_iommu *iommu)
+ 	struct page *pages;
+ 	int irq, ret;
+ 
+-	pages = alloc_pages(GFP_KERNEL | __GFP_ZERO, PRQ_ORDER);
++	pages = alloc_pages_node(iommu->node, GFP_KERNEL | __GFP_ZERO, PRQ_ORDER);
+ 	if (!pages) {
+ 		pr_warn("IOMMU: %s: Failed to allocate page request queue\n",
+ 			iommu->name);
 -- 
 2.43.0
 
