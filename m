@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F011E4B1;
-	Mon, 15 Apr 2024 14:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD3B2119;
+	Mon, 15 Apr 2024 14:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192119; cv=none; b=oeAqaORbGGKxhhqBZmTc/uBP4cAc/IvloxP1Bo7AlaUNmUvyxBI9UbWe3ekb7Xw9/b2kSJ+Him6Ql4Qz0LN94gAoS1MEDF/I6Y+DzCqDn6qdafXWCWO9rY7VClkXiDMP3xsdDGh3qK0U1DtURvRrZjD54pipnbk7DoynHN7/kkY=
+	t=1713192122; cv=none; b=N0Z0nbcc0u7evv/Al9DUWi9qGt0WOtbRhMGZKnpD+ggokndg+jW0R03K2eklFgAntggqHwrI/VytfCsliCxVgb+++38+YEK8ZAxT7/4JelUuFDrG26gXxEtaJWHV61EiO7I+A3IeRD0tPUD+Qrxwu9bcloXRw2vWEKtNoXTczX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192119; c=relaxed/simple;
-	bh=6iucqrJJL0scwhY8+4RE2uRj/g2IyXEB4O4bWyTB9I8=;
+	s=arc-20240116; t=1713192122; c=relaxed/simple;
+	bh=josSVi1K8kY3IUDVUrBu2ANnj1lrr72nAFvGgX/r5eI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EGA7UEiAThK85r5E9we0kGz3h1syHIpa6z0Dv3A6Uz5aIYOR+tLUlm6GXZ3kdOB0xUS41M+cXrx1M27ooybw6pXchoGK3q8Do51FsM24JC0Crt4s83xSGN6Yx6wayVlvuz0fsTMOId+uq5/G+8WZfngLOKBI/u1xWA6sN83dCtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYJJuR7p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tPipk6rxe7u30qABI/Z7OJ0oHUUCburQZ5Dmxsz+KA0FdQLaNTl46fxXlxQli+K1QRkkOs8nieqR14UyhhqSv7xQHL00kIhTy/ygBmC4GW8sObuMBOx31SIK+Qe2gcpdWh8lfakVXJ/0THRgaeQ+E65fM54d90CqCzVS98bzDXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbmZT2ek; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYJJuR7p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3719C113CC;
-	Mon, 15 Apr 2024 14:41:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbmZT2ek"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95577C113CC;
+	Mon, 15 Apr 2024 14:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192119;
-	bh=6iucqrJJL0scwhY8+4RE2uRj/g2IyXEB4O4bWyTB9I8=;
+	s=korg; t=1713192122;
+	bh=josSVi1K8kY3IUDVUrBu2ANnj1lrr72nAFvGgX/r5eI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KYJJuR7pJrsfXGFvW/9zPJdSN3EG8RmpnE8kJ+MqrQl75cKMgwl2R7N4mT8oya6F5
-	 ZLuvRtuDEdqfZsCW24Bm4hxuFRgV2+9Prgl+iTE9xYyZuKonGiheIv5Nz5k5AI2NFu
-	 rrjA7ll6jmIRfQ/A3HgPO3PPGw845ighOYaTG06I=
+	b=wbmZT2ekLLn3dEX+TLeq1noRxErhZFzbfmLHXsRejV1qQr1N7tps+7fWmC+6iQcNG
+	 6OBzGs28G6S0SjZ9ZvVD2JTjsCzkiPxP2/IqxzII9tiD5bTNlapXyQaAzW4dWCB2gw
+	 EzuSG/rrEXfjkqpzdRzORf43wQsChLQo09kQAzv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 53/69] x86/cpu: Actually turn off mitigations by default for SPECULATION_MITIGATIONS=n
-Date: Mon, 15 Apr 2024 16:21:24 +0200
-Message-ID: <20240415141947.766678667@linuxfoundation.org>
+	John Stultz <jstultz@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 54/69] selftests: timers: Fix abs() warning in posix_timers test
+Date: Mon, 15 Apr 2024 16:21:25 +0200
+Message-ID: <20240415141947.796631590@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141946.165870434@linuxfoundation.org>
 References: <20240415141946.165870434@linuxfoundation.org>
@@ -46,51 +44,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: John Stultz <jstultz@google.com>
 
-commit f337a6a21e2fd67eadea471e93d05dd37baaa9be upstream.
+commit ed366de8ec89d4f960d66c85fc37d9de22f7bf6d upstream.
 
-Initialize cpu_mitigations to CPU_MITIGATIONS_OFF if the kernel is built
-with CONFIG_SPECULATION_MITIGATIONS=n, as the help text quite clearly
-states that disabling SPECULATION_MITIGATIONS is supposed to turn off all
-mitigations by default.
+Building with clang results in the following warning:
 
-  │ If you say N, all mitigations will be disabled. You really
-  │ should know what you are doing to say so.
+  posix_timers.c:69:6: warning: absolute value function 'abs' given an
+      argument of type 'long long' but has parameter of type 'int' which may
+      cause truncation of value [-Wabsolute-value]
+        if (abs(diff - DELAY * USECS_PER_SEC) > USECS_PER_SEC / 2) {
+            ^
+So switch to using llabs() instead.
 
-As is, the kernel still defaults to CPU_MITIGATIONS_AUTO, which results in
-some mitigations being enabled in spite of SPECULATION_MITIGATIONS=n.
-
-Fixes: f43b9876e857 ("x86/retbleed: Add fine grained Kconfig knobs")
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+Fixes: 0bc4b0cf1570 ("selftests: add basic posix timers selftests")
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20240409175108.1512861-2-seanjc@google.com
+Link: https://lore.kernel.org/r/20240410232637.4135564-3-jstultz@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cpu.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/timers/posix_timers.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -2788,7 +2788,8 @@ enum cpu_mitigations {
- };
+--- a/tools/testing/selftests/timers/posix_timers.c
++++ b/tools/testing/selftests/timers/posix_timers.c
+@@ -66,7 +66,7 @@ static int check_diff(struct timeval sta
+ 	diff = end.tv_usec - start.tv_usec;
+ 	diff += (end.tv_sec - start.tv_sec) * USECS_PER_SEC;
  
- static enum cpu_mitigations cpu_mitigations __ro_after_init =
--	CPU_MITIGATIONS_AUTO;
-+	IS_ENABLED(CONFIG_SPECULATION_MITIGATIONS) ? CPU_MITIGATIONS_AUTO :
-+						     CPU_MITIGATIONS_OFF;
- 
- static int __init mitigations_parse_cmdline(char *arg)
- {
+-	if (abs(diff - DELAY * USECS_PER_SEC) > USECS_PER_SEC / 2) {
++	if (llabs(diff - DELAY * USECS_PER_SEC) > USECS_PER_SEC / 2) {
+ 		printf("Diff too high: %lld..", diff);
+ 		return -1;
+ 	}
 
 
