@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581B678297;
-	Mon, 15 Apr 2024 14:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B512A8D3;
+	Mon, 15 Apr 2024 14:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191776; cv=none; b=GqyBRHww76wf/8Ewwb+JydJv1DSd9DiIoaCM/1z+ugeFafxXqbA+W79Aydqzfh6u7JKuPMeLLcgWYBZZJDaRPxcsL6cBVfeBJw09wduNiNOCDO3vsS3hi2Rq9Qr28vgVz36rX3rt2pWs9LJ2EC1h2u0H43L97uB7mWU86+gvR3s=
+	t=1713191779; cv=none; b=bG/q/nJzwo1Xg/xKZmNx4+SiTMSa81OFyjEbAW1r6KnaO+zwb7NNIJLe8hB3cWIUQBHyp4ZOLwIZgLn2qFaEtMFcRZoeAAsqbCmiIEFFDSd31SV0byuVcJv3yj7zbCTZ6KJRvYGnWf/silnQIPF9W0XHZO6Bo5ZSH2ObKThRzbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191776; c=relaxed/simple;
-	bh=fC+BQyhJwX6NPfeIhGCjrKDZLhjwDFWlEGBKKv2B49s=;
+	s=arc-20240116; t=1713191779; c=relaxed/simple;
+	bh=QHUVOjXnxH1IoczCq5jyOvc6npmKxNQ+yhvzQ9njmlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJjPryHI2exOROwe/wDo9YrT92XZGawC04+uiHTTDnU4OPBPqqD8iw3iZ4IUsAL3Ko8YpzjyffVYXlJBp8+Kc89VXhUBTV3kA5sgdmlYhhRoV1ZjBO3xQW9ie8+gl37lO/6Q9043hyx9Sr2EysB6b5chuAA7W/PG5tE2th5MWxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oaLYiSkJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DQat0zEfIT3cydKUbPZhtxhuMFyiLayvgX9am6VYBOcoh48zgA+I4c5DL7hyfM8cPkhhWN557sLemz5VjVyl3cpRf0zIcbnsrowKtmAtVYWuhdOxH+rVxSAD1hpK6i6VdbRlObLjYG7uOJ97w9Y7lOyXIiRjT5NjyReAJWj/+t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CiUT++fO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oaLYiSkJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59D5C113CC;
-	Mon, 15 Apr 2024 14:36:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CiUT++fO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C314AC113CC;
+	Mon, 15 Apr 2024 14:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191776;
-	bh=fC+BQyhJwX6NPfeIhGCjrKDZLhjwDFWlEGBKKv2B49s=;
+	s=korg; t=1713191779;
+	bh=QHUVOjXnxH1IoczCq5jyOvc6npmKxNQ+yhvzQ9njmlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oaLYiSkJ38fDjuv/YkVkTNEvxsh/0m9+6pu5M711A9ORvSWOFOwNvXFhIHdXf54WB
-	 BEtFEmNz0GWzF9rxCJ2UOPsjkrTfMj1AkwswW3Kd2PIRe5Jrib0exbzGdfRiuIXUD4
-	 Bcj6j5fjbs1XPxZmAdtBc6/KWOLlU84bz5KWLpTg=
+	b=CiUT++fOR1YaV4Nz174An4bQ+mBgZMTumUNmjr/KljPc/DqxLR/RgLZSknUpTiyov
+	 fAzS6MujAPloV6oNpFiR9UoPbrU9QbYkG318GqFKnXFbor6FYlKAkUR4tOEmieZleY
+	 HOEcBZLvEDHA00eeheZmDzkEtR/cQ/6/q77p1Iwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 081/122] btrfs: record delayed inode root in transaction
-Date: Mon, 15 Apr 2024 16:20:46 +0200
-Message-ID: <20240415141955.806443060@linuxfoundation.org>
+	David Ahern <dsahern@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 046/122] ipv4/route: avoid unused-but-set-variable warning
+Date: Mon, 15 Apr 2024 16:20:11 +0200
+Message-ID: <20240415141954.747195786@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -51,36 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 71537e35c324ea6fbd68377a4f26bb93a831ae35 upstream.
+[ Upstream commit cf1b7201df59fb936f40f4a807433fe3f2ce310a ]
 
-When running delayed inode updates, we do not record the inode's root in
-the transaction, but we do allocate PREALLOC and thus converted PERTRANS
-space for it. To be sure we free that PERTRANS meta rsv, we must ensure
-that we record the root in the transaction.
+The log_martians variable is only used in an #ifdef, causing a 'make W=1'
+warning with gcc:
 
-Fixes: 4f5427ccce5d ("btrfs: delayed-inode: Use new qgroup meta rsv for delayed inode and item")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+net/ipv4/route.c: In function 'ip_rt_send_redirect':
+net/ipv4/route.c:880:13: error: variable 'log_martians' set but not used [-Werror=unused-but-set-variable]
+
+Change the #ifdef to an equivalent IS_ENABLED() to let the compiler
+see where the variable is used.
+
+Fixes: 30038fc61adf ("net: ip_rt_send_redirect() optimization")
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240408074219.3030256-2-arnd@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/delayed-inode.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/route.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/fs/btrfs/delayed-inode.c
-+++ b/fs/btrfs/delayed-inode.c
-@@ -1120,6 +1120,9 @@ __btrfs_commit_inode_delayed_items(struc
- 	if (ret)
- 		return ret;
- 
-+	ret = btrfs_record_root_in_trans(trans, node->root);
-+	if (ret)
-+		return ret;
- 	ret = btrfs_update_delayed_inode(trans, node->root, path, node);
- 	return ret;
- }
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 3bad9aa066db3..e1e30c09a1753 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -926,13 +926,11 @@ void ip_rt_send_redirect(struct sk_buff *skb)
+ 		icmp_send(skb, ICMP_REDIRECT, ICMP_REDIR_HOST, gw);
+ 		peer->rate_last = jiffies;
+ 		++peer->n_redirects;
+-#ifdef CONFIG_IP_ROUTE_VERBOSE
+-		if (log_martians &&
++		if (IS_ENABLED(CONFIG_IP_ROUTE_VERBOSE) && log_martians &&
+ 		    peer->n_redirects == ip_rt_redirect_number)
+ 			net_warn_ratelimited("host %pI4/if%d ignores redirects for %pI4 to %pI4\n",
+ 					     &ip_hdr(skb)->saddr, inet_iif(skb),
+ 					     &ip_hdr(skb)->daddr, &gw);
+-#endif
+ 	}
+ out_put_peer:
+ 	inet_putpeer(peer);
+-- 
+2.43.0
+
 
 
