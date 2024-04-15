@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B512A8D3;
-	Mon, 15 Apr 2024 14:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B211E4B1;
+	Mon, 15 Apr 2024 14:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191779; cv=none; b=bG/q/nJzwo1Xg/xKZmNx4+SiTMSa81OFyjEbAW1r6KnaO+zwb7NNIJLe8hB3cWIUQBHyp4ZOLwIZgLn2qFaEtMFcRZoeAAsqbCmiIEFFDSd31SV0byuVcJv3yj7zbCTZ6KJRvYGnWf/silnQIPF9W0XHZO6Bo5ZSH2ObKThRzbs=
+	t=1713191782; cv=none; b=Hm8FZsu95tzQ797RT7IsxmzpGkf4NfhpEsxHBQnyCMoXEcThgGEX0mWwjmZVkNI8O3UlUJ4+zTI+wRJWPizcb1RJy+cDNqH+98n3EE6aRfPBoOhigHpOxgMyTbr6IJLywI98Vw0dtH1SEslPxP+qlOcL9pec0Qtytqz1Latni+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191779; c=relaxed/simple;
-	bh=QHUVOjXnxH1IoczCq5jyOvc6npmKxNQ+yhvzQ9njmlY=;
+	s=arc-20240116; t=1713191782; c=relaxed/simple;
+	bh=BoYu5BjcFDcfL7vBOMA5m2pBCi61aJ6d19XQaKljkhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DQat0zEfIT3cydKUbPZhtxhuMFyiLayvgX9am6VYBOcoh48zgA+I4c5DL7hyfM8cPkhhWN557sLemz5VjVyl3cpRf0zIcbnsrowKtmAtVYWuhdOxH+rVxSAD1hpK6i6VdbRlObLjYG7uOJ97w9Y7lOyXIiRjT5NjyReAJWj/+t4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CiUT++fO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U0sJixURpqOGUR41WZtaiVxvl8pYfvEx5epKEx2yg3GF5mvQ80wrtE2sJEjYh2F98jM/A5BnP1keLuBQbYpzOgSjpNUddgNluEr14Ex1YHYpe/OUJp3PYKaMhEqQ0/JvJhRo/Gdc9HLUw/EQf8sf8hoy7JOSMg+05Ytyx3doNBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wutytgjK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CiUT++fO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C314AC113CC;
-	Mon, 15 Apr 2024 14:36:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wutytgjK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3714C113CC;
+	Mon, 15 Apr 2024 14:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191779;
-	bh=QHUVOjXnxH1IoczCq5jyOvc6npmKxNQ+yhvzQ9njmlY=;
+	s=korg; t=1713191782;
+	bh=BoYu5BjcFDcfL7vBOMA5m2pBCi61aJ6d19XQaKljkhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CiUT++fOR1YaV4Nz174An4bQ+mBgZMTumUNmjr/KljPc/DqxLR/RgLZSknUpTiyov
-	 fAzS6MujAPloV6oNpFiR9UoPbrU9QbYkG318GqFKnXFbor6FYlKAkUR4tOEmieZleY
-	 HOEcBZLvEDHA00eeheZmDzkEtR/cQ/6/q77p1Iwk=
+	b=wutytgjKEs/nKhBv9duQiA9kRzkyUA8gLUb9Ze1Afz2XedRLQTs22Ty9eiP0w1nlU
+	 nCo6MClZXPG+7+1Na1xEHVoeQ/U+AORd1FyXXNCZRlRPMgbWP0n0ivtA/hWsmT/Ggc
+	 VFuqNAx+LW2OKsIYKWKFOzVpArqmJkG5grIF0wBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 046/122] ipv4/route: avoid unused-but-set-variable warning
-Date: Mon, 15 Apr 2024 16:20:11 +0200
-Message-ID: <20240415141954.747195786@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 082/122] btrfs: qgroup: convert PREALLOC to PERTRANS after record_root_in_trans
+Date: Mon, 15 Apr 2024 16:20:47 +0200
+Message-ID: <20240415141955.836560883@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -53,51 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit cf1b7201df59fb936f40f4a807433fe3f2ce310a ]
+commit 211de93367304ab395357f8cb12568a4d1e20701 upstream.
 
-The log_martians variable is only used in an #ifdef, causing a 'make W=1'
-warning with gcc:
+The transaction is only able to free PERTRANS reservations for a root
+once that root has been recorded with the TRANS tag on the roots radix
+tree. Therefore, until we are sure that this root will get tagged, it
+isn't safe to convert. Generally, this is not an issue as *some*
+transaction will likely tag the root before long and this reservation
+will get freed in that transaction, but technically it could stick
+around until unmount and result in a warning about leaked metadata
+reservation space.
 
-net/ipv4/route.c: In function 'ip_rt_send_redirect':
-net/ipv4/route.c:880:13: error: variable 'log_martians' set but not used [-Werror=unused-but-set-variable]
+This path is most exercised by running the generic/269 fstest with
+CONFIG_BTRFS_DEBUG.
 
-Change the #ifdef to an equivalent IS_ENABLED() to let the compiler
-see where the variable is used.
-
-Fixes: 30038fc61adf ("net: ip_rt_send_redirect() optimization")
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240408074219.3030256-2-arnd@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a6496849671a ("btrfs: fix start transaction qgroup rsv double free")
+CC: stable@vger.kernel.org # 6.6+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/route.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/btrfs/transaction.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 3bad9aa066db3..e1e30c09a1753 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -926,13 +926,11 @@ void ip_rt_send_redirect(struct sk_buff *skb)
- 		icmp_send(skb, ICMP_REDIRECT, ICMP_REDIR_HOST, gw);
- 		peer->rate_last = jiffies;
- 		++peer->n_redirects;
--#ifdef CONFIG_IP_ROUTE_VERBOSE
--		if (log_martians &&
-+		if (IS_ENABLED(CONFIG_IP_ROUTE_VERBOSE) && log_martians &&
- 		    peer->n_redirects == ip_rt_redirect_number)
- 			net_warn_ratelimited("host %pI4/if%d ignores redirects for %pI4 to %pI4\n",
- 					     &ip_hdr(skb)->saddr, inet_iif(skb),
- 					     &ip_hdr(skb)->daddr, &gw);
--#endif
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -715,14 +715,6 @@ again:
+ 		h->reloc_reserved = reloc_reserved;
  	}
- out_put_peer:
- 	inet_putpeer(peer);
--- 
-2.43.0
-
+ 
+-	/*
+-	 * Now that we have found a transaction to be a part of, convert the
+-	 * qgroup reservation from prealloc to pertrans. A different transaction
+-	 * can't race in and free our pertrans out from under us.
+-	 */
+-	if (qgroup_reserved)
+-		btrfs_qgroup_convert_reserved_meta(root, qgroup_reserved);
+-
+ got_it:
+ 	if (!current->journal_info)
+ 		current->journal_info = h;
+@@ -756,8 +748,15 @@ got_it:
+ 		 * not just freed.
+ 		 */
+ 		btrfs_end_transaction(h);
+-		return ERR_PTR(ret);
++		goto reserve_fail;
+ 	}
++	/*
++	 * Now that we have found a transaction to be a part of, convert the
++	 * qgroup reservation from prealloc to pertrans. A different transaction
++	 * can't race in and free our pertrans out from under us.
++	 */
++	if (qgroup_reserved)
++		btrfs_qgroup_convert_reserved_meta(root, qgroup_reserved);
+ 
+ 	return h;
+ 
 
 
