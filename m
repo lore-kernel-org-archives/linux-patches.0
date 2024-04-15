@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AEF74BE1;
-	Mon, 15 Apr 2024 14:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23D714265;
+	Mon, 15 Apr 2024 14:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191993; cv=none; b=rTV/4JyPjXiqEHvME/7GCeq/P87yBpegL+04yXVO12+o5iShijkFLxmzle79VfeIbcAHD5pmOHooXl7/TUO558dPlmdpD4b9ZnAN61jV3q/8bEcSfyEg/byymPwCow0ZyrPVxExOxAK/G/6y+echGtDzpv2u5OlZv+AfDUHFK8k=
+	t=1713191996; cv=none; b=tJSc/gYrD/UfbPhzqnyGV5udq9TI10J7bfzLtY2+eo3uVWFzk9vygJ9YwbICIXeaQnzr1vaX+GPC9r4Dej9h6sr6e0blGObx/97KVkZVWvpurCHfPvxXvsioMMEaNj9WQP7L0qtL/rHhIyys4IDRrTX9fzwdwh9/P8/O7bNZt2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191993; c=relaxed/simple;
-	bh=D5JdW7jG3SrPq3epWQ0WEJUyxliGPauVA6IoUIjN5WM=;
+	s=arc-20240116; t=1713191996; c=relaxed/simple;
+	bh=dx5mgI0Mx0lFtf2/Z45Tv8XxjeTSEOF7ByBrpoI1DwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5QtjY7x4SMfkFAMdFi4d11NECnJyBr2TvDTwDp/1xDNiMGAQV2cOh0XdTdLiI+TCNCC1eHn76fNsdtpUo9R1YvtDj7E6ape1WwS7YSeM//hlopb8ilK1T9vmXrG5EnJJvPnkXRtmLzuwY6hZGb5FWXbWmJGZerohMysVVER/ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPmejLBQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UUkOe/LTlmoVRjWzTUlYCopyjd2eyYHmHkXraCowSM88Aaa73wkwQiOX3pCRzc1TEtg6RXMIPuepgLrrUJcSfleRcZncg7i+wxwrID1DKI46BtivCYtXEGeqxqZ/UVRbgu0rk26FvryxeizWcs2Z11NrLODlKwv/sDoR2Zjepn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/a4o8+v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPmejLBQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B90AC113CC;
-	Mon, 15 Apr 2024 14:39:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/a4o8+v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A2CC113CC;
+	Mon, 15 Apr 2024 14:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191992;
-	bh=D5JdW7jG3SrPq3epWQ0WEJUyxliGPauVA6IoUIjN5WM=;
+	s=korg; t=1713191995;
+	bh=dx5mgI0Mx0lFtf2/Z45Tv8XxjeTSEOF7ByBrpoI1DwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pPmejLBQWouFCGxyTMGRLNxFofBo8vgQZv03YSKZGyVMfU6UL4x8ceP0Kyd/AJrHb
-	 2jY+T6ncZ2HiM/zzBNT1YIRNuC9K7s+svkQ7x0k9Bv7m1/ILXfX1nBrAQr2iZaIFFJ
-	 EVvxOAIJWzcfMflPzeAjQzfQhTdTxD/h5uAilXAU=
+	b=1/a4o8+v1jI2ttE/uFA9feTZkBhncRgycKHZFn8iOeHy1S+xtcW9LKRBTJdlKbRuQ
+	 JtKEuBtID3IOrPOf/RnQ2jon2kJHB1pRadTHr6tpYmjx5rH7VaJCKi7WurJ9H8HAj9
+	 5p64yH8PoVUR070k8n4n8RJNACMLKdQBjcEt9uHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 31/69] net/mlx5e: HTB, Fix inconsistencies with QoS SQs number
-Date: Mon, 15 Apr 2024 16:21:02 +0200
-Message-ID: <20240415141947.102662666@linuxfoundation.org>
+Subject: [PATCH 6.1 32/69] net: sparx5: fix wrong config being used when reconfiguring PCS
+Date: Mon, 15 Apr 2024 16:21:03 +0200
+Message-ID: <20240415141947.132001894@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141946.165870434@linuxfoundation.org>
 References: <20240415141946.165870434@linuxfoundation.org>
@@ -54,81 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit 2f436f1869771d46e1a9f85738d5a1a7c5653a4e ]
+[ Upstream commit 33623113a48ea906f1955cbf71094f6aa4462e8f ]
 
-When creating a new HTB class while the interface is down,
-the variable that follows the number of QoS SQs (htb_max_qos_sqs)
-may not be consistent with the number of HTB classes.
+The wrong port config is being used if the PCS is reconfigured. Fix this
+by correctly using the new config instead of the old one.
 
-Previously, we compared these two values to ensure that
-the node_qid is lower than the number of QoS SQs, and we
-allocated stats for that SQ when they are equal.
-
-Change the check to compare the node_qid with the current
-number of leaf nodes and fix the checking conditions to
-ensure allocation of stats_list and stats for each node.
-
-Fixes: 214baf22870c ("net/mlx5e: Support HTB offload")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20240409190820.227554-9-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 946e7fd5053a ("net: sparx5: add port module support")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20240409-link-mode-reconfiguration-fix-v2-1-db6a507f3627@microchip.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en/qos.c  | 33 ++++++++++---------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_port.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c b/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c
-index 2842195ee548a..1e887d640cffc 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c
-@@ -82,24 +82,25 @@ int mlx5e_open_qos_sq(struct mlx5e_priv *priv, struct mlx5e_channels *chs,
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_port.c b/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
+index 32709d21ab2f9..212bf6f4ed72d 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
+@@ -730,7 +730,7 @@ static int sparx5_port_pcs_low_set(struct sparx5 *sparx5,
+ 	bool sgmii = false, inband_aneg = false;
+ 	int err;
  
- 	txq_ix = mlx5e_qid_from_qos(chs, node_qid);
+-	if (port->conf.inband) {
++	if (conf->inband) {
+ 		if (conf->portmode == PHY_INTERFACE_MODE_SGMII ||
+ 		    conf->portmode == PHY_INTERFACE_MODE_QSGMII)
+ 			inband_aneg = true; /* Cisco-SGMII in-band-aneg */
+@@ -947,7 +947,7 @@ int sparx5_port_pcs_set(struct sparx5 *sparx5,
+ 	if (err)
+ 		return -EINVAL;
  
--	WARN_ON(node_qid > priv->htb_max_qos_sqs);
--	if (node_qid == priv->htb_max_qos_sqs) {
--		struct mlx5e_sq_stats *stats, **stats_list = NULL;
--
--		if (priv->htb_max_qos_sqs == 0) {
--			stats_list = kvcalloc(mlx5e_qos_max_leaf_nodes(priv->mdev),
--					      sizeof(*stats_list),
--					      GFP_KERNEL);
--			if (!stats_list)
--				return -ENOMEM;
--		}
-+	WARN_ON(node_qid >= mlx5e_htb_cur_leaf_nodes(priv->htb));
-+	if (!priv->htb_qos_sq_stats) {
-+		struct mlx5e_sq_stats **stats_list;
-+
-+		stats_list = kvcalloc(mlx5e_qos_max_leaf_nodes(priv->mdev),
-+				      sizeof(*stats_list), GFP_KERNEL);
-+		if (!stats_list)
-+			return -ENOMEM;
-+
-+		WRITE_ONCE(priv->htb_qos_sq_stats, stats_list);
-+	}
-+
-+	if (!priv->htb_qos_sq_stats[node_qid]) {
-+		struct mlx5e_sq_stats *stats;
-+
- 		stats = kzalloc(sizeof(*stats), GFP_KERNEL);
--		if (!stats) {
--			kvfree(stats_list);
-+		if (!stats)
- 			return -ENOMEM;
--		}
--		if (stats_list)
--			WRITE_ONCE(priv->htb_qos_sq_stats, stats_list);
-+
- 		WRITE_ONCE(priv->htb_qos_sq_stats[node_qid], stats);
- 		/* Order htb_max_qos_sqs increment after writing the array pointer.
- 		 * Pairs with smp_load_acquire in en_stats.c.
+-	if (port->conf.inband) {
++	if (conf->inband) {
+ 		/* Enable/disable 1G counters in ASM */
+ 		spx5_rmw(ASM_PORT_CFG_CSC_STAT_DIS_SET(high_speed_dev),
+ 			 ASM_PORT_CFG_CSC_STAT_DIS,
 -- 
 2.43.0
 
