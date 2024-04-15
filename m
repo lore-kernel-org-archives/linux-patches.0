@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D386278685;
-	Mon, 15 Apr 2024 14:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C7E81ABF;
+	Mon, 15 Apr 2024 14:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191899; cv=none; b=PEpSuSY/WCisV8RvTTCIV3efLjo9k0RrHD5x/aTNpSuvvo8ad33vApNq6lW0aKnJfQxM7xudfzblViFpm9xm4GyqaHBK6Dv11U9XqZkWtyCvBZ2i4OFeVhItKyq0wwijdiyzyzpLUirRA40RKqPrX6iuHXvbHtCy7MmKAsMZGtI=
+	t=1713191902; cv=none; b=G9mMh+6FyRyPIDIo5NfZBJHkK2rgBqCvCQT3YbJWdQBd6mJDw5Z5TIDzmfbj353VyC2ObJq9aMeSESC7CN+CT1yU3ueqVlMLQhJuO6frtaVIqIdblT+EQM61CL9olI5LdA/2EZn5G7lvgOgGpsq7MR1Jd4VrH9qV230RqqGTnDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191899; c=relaxed/simple;
-	bh=QFzD9EftAAVficFMv+b3k7Z5qYGYOXuTbwJ9//ppx+I=;
+	s=arc-20240116; t=1713191902; c=relaxed/simple;
+	bh=dHE5tQOJqqL+geyvbVN4ffA6yx6Pg8KEg/9YwchZxNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iw+IabRMOQjsHD206T5tFWcHgVeCHVGLufWhuHUDdVxUDlozYUZfybPTfZF2v6BeltuCtw0FC2CX1aMMBKAXeRYwgVssh2R/JtT+oxga3nmaC13BLJKOOMTjBjF5rh1eGSSaGMRqe+74mWCBoOwrXxXeqrW92TrhzgEClNsVeMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4kwZi2X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gs+LfmXWxw7xjarcKSdffXUO1Pt4vBIXNp/6Cn4LMehu5UjHS7mIWYLolpWXowlbTY8KteXnsNXTuy4xXK3+LEcWajpREdceSPfaVNDm4Gr2AktoXdZiuFO2WVZzgx5d8hn6qTD1dju5QSo9Y66Kr4zcr8IVc6iQXIz0UXNYhH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJaPmknc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4kwZi2X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2DFC113CC;
-	Mon, 15 Apr 2024 14:38:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJaPmknc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49FC0C113CC;
+	Mon, 15 Apr 2024 14:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191899;
-	bh=QFzD9EftAAVficFMv+b3k7Z5qYGYOXuTbwJ9//ppx+I=;
+	s=korg; t=1713191902;
+	bh=dHE5tQOJqqL+geyvbVN4ffA6yx6Pg8KEg/9YwchZxNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V4kwZi2X8ooKaWrDDQuzJur2sMT5ueFYonRAo5wt+E9kfKrTh6Z0YvuPzMX4oy4G/
-	 4xaTC+tBayx3MeiUGiZeqQrFlZOW+agoOXbkAvBqR4aVe7WTNNSj3GmvXhyLLcq3Wg
-	 6NAXHbrxG3mxRSeZQRu5sa3AixnFf/K60QB8jUrM=
+	b=sJaPmknc01vroUXE29HZdN90IOQ8aILc83eduop+Xzyb27SykGY3/bmRbON2munUS
+	 tYDa5MHOTmVhCSTT2pATs3ByCwQPsY4Bzfz9mr+JIfPtNG6eHQg4+KxQtOxBdyZia7
+	 WvefWggtCQiJ1FS12RCeNemo963wkTQH2eGwKess=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Fudongwang <fudong.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 122/122] drm/amd/display: fix disable otg wa logic in DCN316
-Date: Mon, 15 Apr 2024 16:21:27 +0200
-Message-ID: <20240415141957.029397225@linuxfoundation.org>
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH 6.6 087/122] accel/ivpu: Fix deadlock in context_xa
+Date: Mon, 15 Apr 2024 16:20:52 +0200
+Message-ID: <20240415141955.986106993@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -52,72 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fudongwang <fudong.wang@amd.com>
+From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 
-commit cf79814cb0bf5749b9f0db53ca231aa540c02768 upstream.
+commit fd7726e75968b27fe98534ccbf47ccd6fef686f3 upstream.
 
-[Why]
-Wrong logic cause screen corruption.
+ivpu_device->context_xa is locked both in kernel thread and IRQ context.
+It requires XA_FLAGS_LOCK_IRQ flag to be passed during initialization
+otherwise the lock could be acquired from a thread and interrupted by
+an IRQ that locks it for the second time causing the deadlock.
 
-[How]
-Port logic from DCN35/314.
+This deadlock was reported by lockdep and observed in internal tests.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Fudongwang <fudong.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 35b137630f08 ("accel/ivpu: Introduce a new DRM driver for Intel VPU")
+Cc: <stable@vger.kernel.org> # v6.3+
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240402104929.941186-9-jacek.lawrynowicz@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c |   19 ++++++----
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/accel/ivpu/ivpu_drv.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c
-@@ -99,20 +99,25 @@ static int dcn316_get_active_display_cnt
- 	return display_count;
- }
+--- a/drivers/accel/ivpu/ivpu_drv.c
++++ b/drivers/accel/ivpu/ivpu_drv.c
+@@ -517,7 +517,7 @@ static int ivpu_dev_init(struct ivpu_dev
+ 	vdev->context_xa_limit.min = IVPU_USER_CONTEXT_MIN_SSID;
+ 	vdev->context_xa_limit.max = IVPU_USER_CONTEXT_MAX_SSID;
+ 	atomic64_set(&vdev->unique_id_counter, 0);
+-	xa_init_flags(&vdev->context_xa, XA_FLAGS_ALLOC);
++	xa_init_flags(&vdev->context_xa, XA_FLAGS_ALLOC | XA_FLAGS_LOCK_IRQ);
+ 	xa_init_flags(&vdev->submitted_jobs_xa, XA_FLAGS_ALLOC1);
+ 	lockdep_set_class(&vdev->submitted_jobs_xa.xa_lock, &submitted_jobs_xa_lock_class_key);
  
--static void dcn316_disable_otg_wa(struct clk_mgr *clk_mgr_base, struct dc_state *context, bool disable)
-+static void dcn316_disable_otg_wa(struct clk_mgr *clk_mgr_base, struct dc_state *context,
-+		bool safe_to_lower, bool disable)
- {
- 	struct dc *dc = clk_mgr_base->ctx->dc;
- 	int i;
- 
- 	for (i = 0; i < dc->res_pool->pipe_count; ++i) {
--		struct pipe_ctx *pipe = &dc->current_state->res_ctx.pipe_ctx[i];
-+		struct pipe_ctx *pipe = safe_to_lower
-+			? &context->res_ctx.pipe_ctx[i]
-+			: &dc->current_state->res_ctx.pipe_ctx[i];
- 
- 		if (pipe->top_pipe || pipe->prev_odm_pipe)
- 			continue;
--		if (pipe->stream && (pipe->stream->dpms_off || pipe->plane_state == NULL ||
--				     dc_is_virtual_signal(pipe->stream->signal))) {
-+		if (pipe->stream && (pipe->stream->dpms_off || dc_is_virtual_signal(pipe->stream->signal) ||
-+				     !pipe->stream->link_enc)) {
- 			if (disable) {
--				pipe->stream_res.tg->funcs->immediate_disable_crtc(pipe->stream_res.tg);
-+				if (pipe->stream_res.tg && pipe->stream_res.tg->funcs->immediate_disable_crtc)
-+					pipe->stream_res.tg->funcs->immediate_disable_crtc(pipe->stream_res.tg);
-+
- 				reset_sync_context_for_pipe(dc, context, i);
- 			} else
- 				pipe->stream_res.tg->funcs->enable_crtc(pipe->stream_res.tg);
-@@ -207,11 +212,11 @@ static void dcn316_update_clocks(struct
- 	}
- 
- 	if (should_set_clock(safe_to_lower, new_clocks->dispclk_khz, clk_mgr_base->clks.dispclk_khz)) {
--		dcn316_disable_otg_wa(clk_mgr_base, context, true);
-+		dcn316_disable_otg_wa(clk_mgr_base, context, safe_to_lower, true);
- 
- 		clk_mgr_base->clks.dispclk_khz = new_clocks->dispclk_khz;
- 		dcn316_smu_set_dispclk(clk_mgr, clk_mgr_base->clks.dispclk_khz);
--		dcn316_disable_otg_wa(clk_mgr_base, context, false);
-+		dcn316_disable_otg_wa(clk_mgr_base, context, safe_to_lower, false);
- 
- 		update_dispclk = true;
- 	}
 
 
