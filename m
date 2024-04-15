@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D18978281;
-	Mon, 15 Apr 2024 14:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5043A78281;
+	Mon, 15 Apr 2024 14:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191297; cv=none; b=W0v3S4xQAgE4MFNpIeU9tEByX8bk0VmVxEGIwKCfpyDbF9o0aNuUe/wwxGWZEp6kdx9mtrZGP6ubwXj6FG4sqzEx6LnyT9m0w2/LmQ55oVf2h8V/88FbtZgmpQmMqzMg0CcVUdoSVE0MPhOCTohLe2XK3Zt9dwIq8m48cjuTadA=
+	t=1713191300; cv=none; b=VXWyP+3NdG9uX4YNh+1ve9CBM0VKIC46rDMi5ebxIY/rhnASiZ7uEy7T2L+5oBzJGhIAQPH5PX3bx+BsVP3voZnDTok8bKOuR79zxdD9RSD9lrAzqElAlUMLRnANszYyMwApBlkRLae7qTxpMAEglHkL/PHqnGM6SNVoNrRlryQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191297; c=relaxed/simple;
-	bh=sy9GA8yPfFy1NEfjxYvjfz4QAUOZ0INmbUWuGG5Apiw=;
+	s=arc-20240116; t=1713191300; c=relaxed/simple;
+	bh=U+T+sWtXVsb5St6FP4wMnjJ5KD+FrS2jadcBbTvzQq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iQEshAOEo+LnXbWNDTxHuqS0CGfJVLJYdZdldpDFmE5J+FeWX8pKJGfK7HWdGOcKTG5STke1bPOUpcXzE1V9mN3O+i+Wjm0oO/XT69Ba+klG0euuHdJBz8xya4lPf+3DjUk85SBXC49ZhnnK9c6ly7LimJVlBObGyzX+Z3hD1mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdBWZfmV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=brRuRcUMaQaC2oDtmHOAKh70gCY6S8jO3b0x0RaODVTOBmi66aWyt64bZrVZHW5aAtNmDHkqLZyWMk5Tnr/7P2kQG7ldPXCrIpD1jR5w0FfC6ywN3sZ1bhPUC8b012BWnaCDfyDpd7qLff1Le2xEKyF+ZgKHpAB/Rou3xaq5pCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKhestEB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdBWZfmV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D5FC113CC;
-	Mon, 15 Apr 2024 14:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKhestEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D8DC113CC;
+	Mon, 15 Apr 2024 14:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191297;
-	bh=sy9GA8yPfFy1NEfjxYvjfz4QAUOZ0INmbUWuGG5Apiw=;
+	s=korg; t=1713191300;
+	bh=U+T+sWtXVsb5St6FP4wMnjJ5KD+FrS2jadcBbTvzQq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MdBWZfmVajyTJbLkkfSfUKS53cbcJoD0fBFPhBd/N9XTfoJwLNNblqvJeKvPVW0Yr
-	 euXDjV5SwHj500Z58hsQ4db5vNpoH7WImlJlx3/qJN3NaCuft+R7MfdQXXnXTbucBs
-	 eU2s1Rqg2Jm/YXdidFv1qweJzymBVH8aPkXj5I88=
+	b=jKhestEBVtOYOpP/MXWfpDXzNLm7fsH1sKgmLPv2FSaosEhXkoEOB5iv02sENiE8W
+	 yva824Rk3dUGamRL1D6QL9Ftywk9Uc8HyLf1Z+0pVE0nVa4ejTGEy0pug6ZFt5qDqk
+	 RnMN0UY18ij3/wLJMQuyYxZu7EvDM6pYbRyBNWUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9ee20ec1de7b3168db09@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Phillip Potter <phil@philpotter.co.uk>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	"David S. Miller" <davem@davemloft.net>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 049/172] geneve: fix header validation in geneve[6]_xmit_skb
-Date: Mon, 15 Apr 2024 16:19:08 +0200
-Message-ID: <20240415142001.906746949@linuxfoundation.org>
+Subject: [PATCH 6.8 091/172] net: sparx5: fix wrong config being used when reconfiguring PCS
+Date: Mon, 15 Apr 2024 16:19:50 +0200
+Message-ID: <20240415142003.159350716@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -54,164 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit d8a6213d70accb403b82924a1c229e733433a5ef ]
+[ Upstream commit 33623113a48ea906f1955cbf71094f6aa4462e8f ]
 
-syzbot is able to trigger an uninit-value in geneve_xmit() [1]
+The wrong port config is being used if the PCS is reconfigured. Fix this
+by correctly using the new config instead of the old one.
 
-Problem : While most ip tunnel helpers (like ip_tunnel_get_dsfield())
-uses skb_protocol(skb, true), pskb_inet_may_pull() is only using
-skb->protocol.
-
-If anything else than ETH_P_IPV6 or ETH_P_IP is found in skb->protocol,
-pskb_inet_may_pull() does nothing at all.
-
-If a vlan tag was provided by the caller (af_packet in the syzbot case),
-the network header might not point to the correct location, and skb
-linear part could be smaller than expected.
-
-Add skb_vlan_inet_prepare() to perform a complete mac validation.
-
-Use this in geneve for the moment, I suspect we need to adopt this
-more broadly.
-
-v4 - Jakub reported v3 broke l2_tos_ttl_inherit.sh selftest
-   - Only call __vlan_get_protocol() for vlan types.
-Link: https://lore.kernel.org/netdev/20240404100035.3270a7d5@kernel.org/
-
-v2,v3 - Addressed Sabrina comments on v1 and v2
-Link: https://lore.kernel.org/netdev/Zg1l9L2BNoZWZDZG@hog/
-
-[1]
-
-BUG: KMSAN: uninit-value in geneve_xmit_skb drivers/net/geneve.c:910 [inline]
- BUG: KMSAN: uninit-value in geneve_xmit+0x302d/0x5420 drivers/net/geneve.c:1030
-  geneve_xmit_skb drivers/net/geneve.c:910 [inline]
-  geneve_xmit+0x302d/0x5420 drivers/net/geneve.c:1030
-  __netdev_start_xmit include/linux/netdevice.h:4903 [inline]
-  netdev_start_xmit include/linux/netdevice.h:4917 [inline]
-  xmit_one net/core/dev.c:3531 [inline]
-  dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3547
-  __dev_queue_xmit+0x348d/0x52c0 net/core/dev.c:4335
-  dev_queue_xmit include/linux/netdevice.h:3091 [inline]
-  packet_xmit+0x9c/0x6c0 net/packet/af_packet.c:276
-  packet_snd net/packet/af_packet.c:3081 [inline]
-  packet_sendmsg+0x8bb0/0x9ef0 net/packet/af_packet.c:3113
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  __sys_sendto+0x685/0x830 net/socket.c:2191
-  __do_sys_sendto net/socket.c:2203 [inline]
-  __se_sys_sendto net/socket.c:2199 [inline]
-  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2199
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:3804 [inline]
-  slab_alloc_node mm/slub.c:3845 [inline]
-  kmem_cache_alloc_node+0x613/0xc50 mm/slub.c:3888
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:577
-  __alloc_skb+0x35b/0x7a0 net/core/skbuff.c:668
-  alloc_skb include/linux/skbuff.h:1318 [inline]
-  alloc_skb_with_frags+0xc8/0xbf0 net/core/skbuff.c:6504
-  sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2795
-  packet_alloc_skb net/packet/af_packet.c:2930 [inline]
-  packet_snd net/packet/af_packet.c:3024 [inline]
-  packet_sendmsg+0x722d/0x9ef0 net/packet/af_packet.c:3113
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  __sys_sendto+0x685/0x830 net/socket.c:2191
-  __do_sys_sendto net/socket.c:2203 [inline]
-  __se_sys_sendto net/socket.c:2199 [inline]
-  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2199
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-CPU: 0 PID: 5033 Comm: syz-executor346 Not tainted 6.9.0-rc1-syzkaller-00005-g928a87efa423 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/29/2024
-
-Fixes: d13f048dd40e ("net: geneve: modify IP header check in geneve6_xmit_skb and geneve_xmit_skb")
-Reported-by: syzbot+9ee20ec1de7b3168db09@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/000000000000d19c3a06152f9ee4@google.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Phillip Potter <phil@philpotter.co.uk>
-Cc: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Phillip Potter <phil@philpotter.co.uk>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 946e7fd5053a ("net: sparx5: add port module support")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20240409-link-mode-reconfiguration-fix-v2-1-db6a507f3627@microchip.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/geneve.c     |  4 ++--
- include/net/ip_tunnels.h | 33 +++++++++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_port.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
-index 097a8db0d1d99..7f00fca0c538c 100644
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -830,7 +830,7 @@ static int geneve_xmit_skb(struct sk_buff *skb, struct net_device *dev,
- 	__be16 sport;
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_port.c b/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
+index 3a1b1a1f5a195..60dd2fd603a85 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
+@@ -731,7 +731,7 @@ static int sparx5_port_pcs_low_set(struct sparx5 *sparx5,
+ 	bool sgmii = false, inband_aneg = false;
  	int err;
  
--	if (!pskb_inet_may_pull(skb))
-+	if (!skb_vlan_inet_prepare(skb))
+-	if (port->conf.inband) {
++	if (conf->inband) {
+ 		if (conf->portmode == PHY_INTERFACE_MODE_SGMII ||
+ 		    conf->portmode == PHY_INTERFACE_MODE_QSGMII)
+ 			inband_aneg = true; /* Cisco-SGMII in-band-aneg */
+@@ -948,7 +948,7 @@ int sparx5_port_pcs_set(struct sparx5 *sparx5,
+ 	if (err)
  		return -EINVAL;
  
- 	if (!gs4)
-@@ -937,7 +937,7 @@ static int geneve6_xmit_skb(struct sk_buff *skb, struct net_device *dev,
- 	__be16 sport;
- 	int err;
- 
--	if (!pskb_inet_may_pull(skb))
-+	if (!skb_vlan_inet_prepare(skb))
- 		return -EINVAL;
- 
- 	if (!gs6)
-diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
-index 2d746f4c9a0a4..6690939f241a4 100644
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -360,6 +360,39 @@ static inline bool pskb_inet_may_pull(struct sk_buff *skb)
- 	return pskb_network_may_pull(skb, nhlen);
- }
- 
-+/* Variant of pskb_inet_may_pull().
-+ */
-+static inline bool skb_vlan_inet_prepare(struct sk_buff *skb)
-+{
-+	int nhlen = 0, maclen = ETH_HLEN;
-+	__be16 type = skb->protocol;
-+
-+	/* Essentially this is skb_protocol(skb, true)
-+	 * And we get MAC len.
-+	 */
-+	if (eth_type_vlan(type))
-+		type = __vlan_get_protocol(skb, type, &maclen);
-+
-+	switch (type) {
-+#if IS_ENABLED(CONFIG_IPV6)
-+	case htons(ETH_P_IPV6):
-+		nhlen = sizeof(struct ipv6hdr);
-+		break;
-+#endif
-+	case htons(ETH_P_IP):
-+		nhlen = sizeof(struct iphdr);
-+		break;
-+	}
-+	/* For ETH_P_IPV6/ETH_P_IP we make sure to pull
-+	 * a base network header in skb->head.
-+	 */
-+	if (!pskb_may_pull(skb, maclen + nhlen))
-+		return false;
-+
-+	skb_set_network_header(skb, maclen);
-+	return true;
-+}
-+
- static inline int ip_encap_hlen(struct ip_tunnel_encap *e)
- {
- 	const struct ip_tunnel_encap_ops *ops;
+-	if (port->conf.inband) {
++	if (conf->inband) {
+ 		/* Enable/disable 1G counters in ASM */
+ 		spx5_rmw(ASM_PORT_CFG_CSC_STAT_DIS_SET(high_speed_dev),
+ 			 ASM_PORT_CFG_CSC_STAT_DIS,
 -- 
 2.43.0
 
