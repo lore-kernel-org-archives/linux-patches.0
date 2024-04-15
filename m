@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3DD757E1;
-	Mon, 15 Apr 2024 14:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8C374E3A;
+	Mon, 15 Apr 2024 14:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191065; cv=none; b=RaAJ3D0QF0BaNRBiD56U5HXFW+zYdpZVpfEXXuAJWVaRSvfl08v7CSP5i4Oy4Joh61zbL9WpcBje7Q7PbOdNumoRFgCXNXRhC8ofruOlLwW08feqzqCPre99EnJ8OuqK3GeGcpx0Qb11cGkbnbeTAfwAHzqdjDaYs3XaXCDbHpk=
+	t=1713191067; cv=none; b=Cb9o8tvXLUIdq7rZYnn2nuv5brx9Odbth8d3ezSYJ8Hm2JNZZacHWZ9lR5FqExrB1bxPj3KoPrwF7jg82wntjXeViM7GwssFzJHSTMeZ/5ipNsTl+KyNMnyIT4jSLko8MV1Yls9fPHf5Coa9qSU1Cj4li/ZWMkmP6ff+96kZspg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191065; c=relaxed/simple;
-	bh=o+q1LSw2TfF35riHvyXgx9hsmlk1RN2n2ItZKDQw6LY=;
+	s=arc-20240116; t=1713191067; c=relaxed/simple;
+	bh=P+vxjZz0E2y3ba0Is6Rr2vFW/Qjqi+snGnDoo3jJHzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kl0x3nO8GHkfx8EHEMMyIraas1aB/D94AxRsjSEwmRG/J1dov+Do53miQyKUGXfO7b02dX53kqjuM8gVF5zUZqYdgUjrYc4b9xmkizFgmd30I5KP7mn8kXSz+e2uKKk/D1/QEjBIY1LSF1fLkZcf/5q7cfASFxv+ifosmwYYW5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mem9FBL3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aaZOGxzbPTmgjwIWJnhP9ryoNumWjxgZTtt4zTAkTDipZUXa3EPA5fNP8C5adqgQfatvyZZERLEBcyreROGP+4V6DtoTFMnaiI68uuVKLQMGHQP9yzsKeLiL7GGMo8h/KehiUoFJTHP6Kyo+UWqMKXlZKsnRq/gGSyUfhoEZdZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lizyR52Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mem9FBL3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0824C113CC;
-	Mon, 15 Apr 2024 14:24:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lizyR52Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B81C113CC;
+	Mon, 15 Apr 2024 14:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191064;
-	bh=o+q1LSw2TfF35riHvyXgx9hsmlk1RN2n2ItZKDQw6LY=;
+	s=korg; t=1713191067;
+	bh=P+vxjZz0E2y3ba0Is6Rr2vFW/Qjqi+snGnDoo3jJHzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mem9FBL36KkYIOT5kayPzqpGpOw+2rI5GlxI18gzS0QH+r9LSRv/OMyQdMo3YXI73
-	 FuOTfj+OZh2CaZEi418JGuL1+FDwn1zn/OJ8vzCV5uf3L/56D1ACdsFY7+JlGDYNTm
-	 0TFb3ERxMx5J+7apjJbICy2TXEZ01yIAnNSCaLI8=
+	b=lizyR52QkqPT1czdfE5kNqhDwEaCZ3O1zpAuXxkyw7SMRNUO5xYQBkZiYF+iamP2m
+	 WiMsrsHsxJR3yHNVMkWELCDqkLw2AHoeugizkQhJ/GO5H6cIcGjBdeaGJMIMZ1HFw1
+	 olacWdI99H89a+f3c7NtFGJBmilJt9KYrQ/JEO7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 021/172] ARM: OMAP2+: fix N810 MMC gpiod table
-Date: Mon, 15 Apr 2024 16:18:40 +0200
-Message-ID: <20240415142000.996307500@linuxfoundation.org>
+Subject: [PATCH 6.8 022/172] mmc: omap: fix broken slot switch lookup
+Date: Mon, 15 Apr 2024 16:18:41 +0200
+Message-ID: <20240415142001.026280344@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -55,65 +55,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Aaro Koskinen <aaro.koskinen@iki.fi>
 
-[ Upstream commit 480d44d0820dd5ae043dc97c0b46dabbe53cb1cf ]
+[ Upstream commit d4debbcbffa45c3de5df0040af2eea74a9e794a3 ]
 
-Trying to append a second table for the same dev_id doesn't seem to work.
-The second table is just silently ignored. As a result eMMC GPIOs are not
-present.
-
-Fix by using separate tables for N800 and N810.
+The lookup is done before host->dev is initialized. It will always just
+fail silently, and the MMC behaviour is totally unpredictable as the switch
+is left in an undefined state. Fix that.
 
 Fixes: e519f0bb64ef ("ARM/mmc: Convert old mmci-omap to GPIO descriptors")
 Signed-off-by: Aaro Koskinen <aaro.koskinen@iki.fi>
-Message-ID: <20240223181439.1099750-3-aaro.koskinen@iki.fi>
+Message-ID: <20240223181439.1099750-4-aaro.koskinen@iki.fi>
 Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/board-n8x0.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/mmc/host/omap.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm/mach-omap2/board-n8x0.c b/arch/arm/mach-omap2/board-n8x0.c
-index 3e48f34016c19..c933a91751e4f 100644
---- a/arch/arm/mach-omap2/board-n8x0.c
-+++ b/arch/arm/mach-omap2/board-n8x0.c
-@@ -140,7 +140,7 @@ static int slot1_cover_open;
- static int slot2_cover_open;
- static struct device *mmc_device;
+diff --git a/drivers/mmc/host/omap.c b/drivers/mmc/host/omap.c
+index 9fb8995b43a1c..aa40e1a9dc29e 100644
+--- a/drivers/mmc/host/omap.c
++++ b/drivers/mmc/host/omap.c
+@@ -1384,13 +1384,6 @@ static int mmc_omap_probe(struct platform_device *pdev)
+ 	if (IS_ERR(host->virt_base))
+ 		return PTR_ERR(host->virt_base);
  
--static struct gpiod_lookup_table nokia8xx_mmc_gpio_table = {
-+static struct gpiod_lookup_table nokia800_mmc_gpio_table = {
- 	.dev_id = "mmci-omap.0",
- 	.table = {
- 		/* Slot switch, GPIO 96 */
-@@ -152,6 +152,8 @@ static struct gpiod_lookup_table nokia8xx_mmc_gpio_table = {
- static struct gpiod_lookup_table nokia810_mmc_gpio_table = {
- 	.dev_id = "mmci-omap.0",
- 	.table = {
-+		/* Slot switch, GPIO 96 */
-+		GPIO_LOOKUP("gpio-96-127", 0, "switch", GPIO_ACTIVE_HIGH),
- 		/* Slot index 1, VSD power, GPIO 23 */
- 		GPIO_LOOKUP_IDX("gpio-0-31", 23, "vsd", 1, GPIO_ACTIVE_HIGH),
- 		/* Slot index 1, VIO power, GPIO 9 */
-@@ -412,8 +414,6 @@ static struct omap_mmc_platform_data *mmc_data[OMAP24XX_NR_MMC];
- 
- static void __init n8x0_mmc_init(void)
- {
--	gpiod_add_lookup_table(&nokia8xx_mmc_gpio_table);
+-	host->slot_switch = gpiod_get_optional(host->dev, "switch",
+-					       GPIOD_OUT_LOW);
+-	if (IS_ERR(host->slot_switch))
+-		return dev_err_probe(host->dev, PTR_ERR(host->slot_switch),
+-				     "error looking up slot switch GPIO\n");
 -
- 	if (board_is_n810()) {
- 		mmc1_data.slots[0].name = "external";
+-
+ 	INIT_WORK(&host->slot_release_work, mmc_omap_slot_release_work);
+ 	INIT_WORK(&host->send_stop_work, mmc_omap_send_stop_work);
  
-@@ -426,6 +426,8 @@ static void __init n8x0_mmc_init(void)
- 		mmc1_data.slots[1].name = "internal";
- 		mmc1_data.slots[1].ban_openended = 1;
- 		gpiod_add_lookup_table(&nokia810_mmc_gpio_table);
-+	} else {
-+		gpiod_add_lookup_table(&nokia800_mmc_gpio_table);
- 	}
+@@ -1409,6 +1402,12 @@ static int mmc_omap_probe(struct platform_device *pdev)
+ 	host->dev = &pdev->dev;
+ 	platform_set_drvdata(pdev, host);
  
- 	mmc1_data.nr_slots = 2;
++	host->slot_switch = gpiod_get_optional(host->dev, "switch",
++					       GPIOD_OUT_LOW);
++	if (IS_ERR(host->slot_switch))
++		return dev_err_probe(host->dev, PTR_ERR(host->slot_switch),
++				     "error looking up slot switch GPIO\n");
++
+ 	host->id = pdev->id;
+ 	host->irq = irq;
+ 	host->phys_base = res->start;
 -- 
 2.43.0
 
