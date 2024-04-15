@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E6B1E4B1;
-	Mon, 15 Apr 2024 14:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8921E52A;
+	Mon, 15 Apr 2024 14:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192128; cv=none; b=uuEvQGvJ9BfvQZo8y4CZxhaAUqKlx/jA5dcltIXBdrHxcTdiNH+ndqyMH592mAFzixsg9abGQZFltMqh6sCQ/8FEX1bmK1EpcqL62381n+3w2ZpmJWsXetrCsW1ofX0S3Ia8M3U/StYLtY8pb4+z9tSBKNI5hZpE7UzZLBILfXM=
+	t=1713192130; cv=none; b=iVwCdM1G4/z3qxzetPJMImwQx0DsDPCNbaWKZ2dSg77yxOzBQQnSOv9lm4JzShmcof24UJFZARD690R24ohXbNal3VL63+4i/sPw8JGLMQONCuEjh37W7IsiZSTFZcWvGe3PPRB3kSil/j6+GMhT6SuoRWngrqqTUuXqwqqgH18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192128; c=relaxed/simple;
-	bh=VvGlRyWUYjUyH1MhARQ4QU1d8NCqBinMpq8lByMO/0Y=;
+	s=arc-20240116; t=1713192130; c=relaxed/simple;
+	bh=fR6dtQUMSIaroyy1OOFxhknNXLCYjtRAaKvbTRvUaFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j3kdtxu5O1GXMx0Ni7zZ8rvF8/7c05AURKAvzKtDTz8XWfILgAIUx+2IgZYvymL/vqcmnvlc7QQdJz67OoSSru1/llWqU+l+TTqU93mSPiZyqOfDGlMijC+nJuED8AiN7BEn9yDcDGUNHPLgwKEBsDBJ/dAC0vINSsGqqcbHcRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0XiWjvi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gkbFAebzF8OyHyswxtt6ts8qMeIQ8BCalH6zUj7R0F5YvM8l6e6Y5ZW+CjF0qWFwO3vvQRvveemw2EzNTpchfrD0w/O3FMzKazjtyYD6CKCp/DwJwLWaXVfkEC1j46AbqWRWAhkXa4tLLteUyxiItTKlKZJkpzj1up96rro6LU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMJABVGH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0XiWjvi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA47C113CC;
-	Mon, 15 Apr 2024 14:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMJABVGH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58AD7C113CC;
+	Mon, 15 Apr 2024 14:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192127;
-	bh=VvGlRyWUYjUyH1MhARQ4QU1d8NCqBinMpq8lByMO/0Y=;
+	s=korg; t=1713192130;
+	bh=fR6dtQUMSIaroyy1OOFxhknNXLCYjtRAaKvbTRvUaFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K0XiWjviVOF2wFRqh+4+yDknrpucY/61xtv9zuDs2y7YXhsnsZYWM3KolRxw/Ifa6
-	 VWY8dBdxNgHBMoTDu5LFzeLSvDUsJJe/ZoUzHUMs/pt1LqlQ2y+m833H0yHodfJYNM
-	 gsLg/hgmGwIBqGGixBywloNl7se8r3U50dHZkBP8=
+	b=XMJABVGH0qavfTbt9WniFjlaly1B64QaNqkjWdH3UHau+gfeWc7/DIfcnQHoT92fu
+	 3QlxlnEGslSoDB50HaLdNTrm6WRLEvcN4sdm+86bF9WUJ4CC8L46AOXiX5w3Q2o50m
+	 2JzRJmTY9ut7UH58nRi7x8TY+6naFzD90Ro/4HyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: [PATCH 6.1 56/69] irqflags: Explicitly ignore lockdep_hrtimer_exit() argument
-Date: Mon, 15 Apr 2024 16:21:27 +0200
-Message-ID: <20240415141947.856384537@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 57/69] x86/bugs: Fix return type of spectre_bhi_state()
+Date: Mon, 15 Apr 2024 16:21:28 +0200
+Message-ID: <20240415141947.886658118@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141946.165870434@linuxfoundation.org>
 References: <20240415141946.165870434@linuxfoundation.org>
@@ -52,40 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Daniel Sneddon <daniel.sneddon@linux.intel.com>
 
-commit c1d11fc2c8320871b40730991071dd0a0b405bc8 upstream.
+commit 04f4230e2f86a4e961ea5466eda3db8c1762004d upstream.
 
-When building with 'make W=1' but CONFIG_TRACE_IRQFLAGS=n, the
-unused argument to lockdep_hrtimer_exit() causes a warning:
+The definition of spectre_bhi_state() incorrectly returns a const char
+* const. This causes the a compiler warning when building with W=1:
 
-kernel/time/hrtimer.c:1655:14: error: variable 'expires_in_hardirq' set but not used [-Werror=unused-but-set-variable]
+ warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+ 2812 | static const char * const spectre_bhi_state(void)
 
-This is intentional behavior, so add a cast to void to shut up the warning.
+Remove the const qualifier from the pointer.
 
-Fixes: 73d20564e0dc ("hrtimer: Don't dereference the hrtimer pointer after the callback")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240408074609.3170807-1-arnd@kernel.org
-Closes: https://lore.kernel.org/oe-kbuild-all/202311191229.55QXHVc6-lkp@intel.com/
+Fixes: ec9404e40e8f ("x86/bhi: Add BHI mitigation knob")
+Reported-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20240409230806.1545822-1-daniel.sneddon@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/irqflags.h |    2 +-
+ arch/x86/kernel/cpu/bugs.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/irqflags.h
-+++ b/include/linux/irqflags.h
-@@ -126,7 +126,7 @@ do {						\
- # define lockdep_softirq_enter()		do { } while (0)
- # define lockdep_softirq_exit()			do { } while (0)
- # define lockdep_hrtimer_enter(__hrtimer)	false
--# define lockdep_hrtimer_exit(__context)	do { } while (0)
-+# define lockdep_hrtimer_exit(__context)	do { (void)(__context); } while (0)
- # define lockdep_posixtimer_enter()		do { } while (0)
- # define lockdep_posixtimer_exit()		do { } while (0)
- # define lockdep_irq_work_enter(__work)		do { } while (0)
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -2788,7 +2788,7 @@ static char *pbrsb_eibrs_state(void)
+ 	}
+ }
+ 
+-static const char * const spectre_bhi_state(void)
++static const char *spectre_bhi_state(void)
+ {
+ 	if (!boot_cpu_has_bug(X86_BUG_BHI))
+ 		return "; BHI: Not affected";
 
 
