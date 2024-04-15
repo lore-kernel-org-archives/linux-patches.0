@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74727757EA;
-	Mon, 15 Apr 2024 14:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFBB7FBB2;
+	Mon, 15 Apr 2024 14:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191221; cv=none; b=p3E528hcN5/LAXe9yZljGE9t4jpWim1yEEFTJtARUjyQeJmuYHicMA8k13F2D7ECD+zOssMIk51PaLdutx8bhgoR+EmA+VglbSBAOwKfyH2CZoFiEUALRB/qDPbb4Bb1rA7E75shcNQkFgDV7j3+kS4zUhfxE9krYfWNklBxwGs=
+	t=1713191224; cv=none; b=vAjaU7n8d3owBnADZimg2tWiLCCDZoVdtimpzygU0fj11VCNagsOlYPYJxaaT7O9BOs2BtwYM0ieGhzhcfa+jMW4VJ9Re/vg6awxChhj9UuYBN1720uUOnWhWndlAHHAlut6xGubX3U32++MhlTwH0PTXwxviGZj6qEkn8mH+vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191221; c=relaxed/simple;
-	bh=QxwEuKhBx45N+1bJd0T53yhn2/ways45Klv0kBdy9V8=;
+	s=arc-20240116; t=1713191224; c=relaxed/simple;
+	bh=l6ub+yZ8ukEHARdDLa7qhaLZLdmfsR6W00sPecuDHfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o0XtqU+g8pFwMj6FVmhaKeikVdKxsrZ4fQt+EP2CwyRY1d1Fen3My3rQT9IIdeUAjpqSE/PrxSz/7Mk9jn3lx9oDAwHbrBbjPDK1e0o6+ETd3MH3NEkhNmluaf9nM/R9RJXdXUXz68073WEInQG7kMfqDYFyC+RGzCcUzdncPfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdDvRcj4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V8ZmTASn87wbVfru+fH05c7kzDhJst3uVtlufYq75f8Op4NoNO5/f+uPtB4XEnmzVwS5Mo+LgKaWG1h+5eg7kixd2lN5RnJA+XDqYpsgEkRnUy9W5eA4mXO5ATn06HK18adpBeIs1qRgmZo7SE+usC9SlW1iLaPHS+0F9Ux4vm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulZOs6l/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdDvRcj4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02E6C113CC;
-	Mon, 15 Apr 2024 14:27:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulZOs6l/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FBFC113CC;
+	Mon, 15 Apr 2024 14:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191221;
-	bh=QxwEuKhBx45N+1bJd0T53yhn2/ways45Klv0kBdy9V8=;
+	s=korg; t=1713191224;
+	bh=l6ub+yZ8ukEHARdDLa7qhaLZLdmfsR6W00sPecuDHfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FdDvRcj4qoAyYCLVlTx7Z8v5GVBl/Y+nM/iIgPupyISZRB/vEkDIfL82yGnZ+Yo+s
-	 69CpvYJTKwlBWJyh9JDhp8YdsJomr1EG5Tq+52ZKo83qGWwLzODaTVG0HeHg4F2cl+
-	 mQkjZnCah62JiyM2wVIbRnVsxZdb82yUVVFOvsRM=
+	b=ulZOs6l/NJK61al8HocjIZm/bVJIt7UQ9mIRNyo5C0MG5xZy/uyHofYk2f/r18NbE
+	 zydFh1zfIs/XgEs7GR5cih/ak2svsIC618/pbK6k+v4mXG7Q+hJfGF7s7vhwBAtzLK
+	 3iiFjSNIIsQ5q+2TkhIXQlRXuF4NwtiwtGMkGzXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 072/172] Bluetooth: ISO: Dont reject BT_ISO_QOS if parameters are unset
-Date: Mon, 15 Apr 2024 16:19:31 +0200
-Message-ID: <20240415142002.593399773@linuxfoundation.org>
+Subject: [PATCH 6.8 073/172] Bluetooth: hci_sync: Use QoS to determine which PHY to scan
+Date: Mon, 15 Apr 2024 16:19:32 +0200
+Message-ID: <20240415142002.622421284@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -52,53 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit b37cab587aa3c9ab29c6b10aa55627dad713011f ]
+[ Upstream commit 22cbf4f84c00da64196eb15034feee868e63eef0 ]
 
-Consider certain values (0x00) as unset and load proper default if
-an application has not set them properly.
+This used the hci_conn QoS to determine which PHY to scan when creating
+a PA Sync.
 
-Fixes: 0fe8c8d07134 ("Bluetooth: Split bt_iso_qos into dedicated structures")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 53cb4197e63a ("Bluetooth: hci_sync: Fix using the same interval and window for Coded PHY")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_sync.c | 66 +++++++++++++++++++++++++++++++++-------
+ 1 file changed, 55 insertions(+), 11 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 4fa1f3b779a71..3681e3673654a 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1430,8 +1430,8 @@ static bool check_ucast_qos(struct bt_iso_qos *qos)
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 824ce03bb361b..89bd1c1a3e0e8 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -2611,6 +2611,14 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
+ 	return filter_policy;
+ }
  
- static bool check_bcast_qos(struct bt_iso_qos *qos)
- {
--	if (qos->bcast.sync_factor == 0x00)
--		return false;
-+	if (!qos->bcast.sync_factor)
-+		qos->bcast.sync_factor = 0x01;
- 
- 	if (qos->bcast.packing > 0x01)
- 		return false;
-@@ -1454,6 +1454,9 @@ static bool check_bcast_qos(struct bt_iso_qos *qos)
- 	if (qos->bcast.skip > 0x01f3)
- 		return false;
- 
-+	if (!qos->bcast.sync_timeout)
-+		qos->bcast.sync_timeout = BT_ISO_SYNC_TIMEOUT;
++static void hci_le_scan_phy_params(struct hci_cp_le_scan_phy_params *cp,
++				   u8 type, u16 interval, u16 window)
++{
++	cp->type = type;
++	cp->interval = cpu_to_le16(interval);
++	cp->window = cpu_to_le16(window);
++}
 +
- 	if (qos->bcast.sync_timeout < 0x000a || qos->bcast.sync_timeout > 0x4000)
- 		return false;
+ static int hci_le_set_ext_scan_param_sync(struct hci_dev *hdev, u8 type,
+ 					  u16 interval, u16 window,
+ 					  u8 own_addr_type, u8 filter_policy)
+@@ -2618,7 +2626,7 @@ static int hci_le_set_ext_scan_param_sync(struct hci_dev *hdev, u8 type,
+ 	struct hci_cp_le_set_ext_scan_params *cp;
+ 	struct hci_cp_le_scan_phy_params *phy;
+ 	u8 data[sizeof(*cp) + sizeof(*phy) * 2];
+-	u8 num_phy = 0;
++	u8 num_phy = 0x00;
  
-@@ -1463,6 +1466,9 @@ static bool check_bcast_qos(struct bt_iso_qos *qos)
- 	if (qos->bcast.mse > 0x1f)
- 		return false;
+ 	cp = (void *)data;
+ 	phy = (void *)cp->data;
+@@ -2628,28 +2636,64 @@ static int hci_le_set_ext_scan_param_sync(struct hci_dev *hdev, u8 type,
+ 	cp->own_addr_type = own_addr_type;
+ 	cp->filter_policy = filter_policy;
  
-+	if (!qos->bcast.timeout)
-+		qos->bcast.sync_timeout = BT_ISO_SYNC_TIMEOUT;
++	/* Check if PA Sync is in progress then select the PHY based on the
++	 * hci_conn.iso_qos.
++	 */
++	if (hci_dev_test_flag(hdev, HCI_PA_SYNC)) {
++		struct hci_cp_le_add_to_accept_list *sent;
 +
- 	if (qos->bcast.timeout < 0x000a || qos->bcast.timeout > 0x4000)
- 		return false;
++		sent = hci_sent_cmd_data(hdev, HCI_OP_LE_ADD_TO_ACCEPT_LIST);
++		if (sent) {
++			struct hci_conn *conn;
++
++			conn = hci_conn_hash_lookup_ba(hdev, ISO_LINK,
++						       &sent->bdaddr);
++			if (conn) {
++				struct bt_iso_qos *qos = &conn->iso_qos;
++
++				if (qos->bcast.in.phy & BT_ISO_PHY_1M ||
++				    qos->bcast.in.phy & BT_ISO_PHY_2M) {
++					cp->scanning_phys |= LE_SCAN_PHY_1M;
++					hci_le_scan_phy_params(phy, type,
++							       interval,
++							       window);
++					num_phy++;
++					phy++;
++				}
++
++				if (qos->bcast.in.phy & BT_ISO_PHY_CODED) {
++					cp->scanning_phys |= LE_SCAN_PHY_CODED;
++					hci_le_scan_phy_params(phy, type,
++							       interval,
++							       window);
++					num_phy++;
++					phy++;
++				}
++
++				if (num_phy)
++					goto done;
++			}
++		}
++	}
++
+ 	if (scan_1m(hdev) || scan_2m(hdev)) {
+ 		cp->scanning_phys |= LE_SCAN_PHY_1M;
+-
+-		phy->type = type;
+-		phy->interval = cpu_to_le16(interval);
+-		phy->window = cpu_to_le16(window);
+-
++		hci_le_scan_phy_params(phy, type, interval, window);
+ 		num_phy++;
+ 		phy++;
+ 	}
  
+ 	if (scan_coded(hdev)) {
+ 		cp->scanning_phys |= LE_SCAN_PHY_CODED;
+-
+-		phy->type = type;
+-		phy->interval = cpu_to_le16(interval);
+-		phy->window = cpu_to_le16(window);
+-
++		hci_le_scan_phy_params(phy, type, interval, window);
+ 		num_phy++;
+ 		phy++;
+ 	}
+ 
++done:
++	if (!num_phy)
++		return -EINVAL;
++
+ 	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_SCAN_PARAMS,
+ 				     sizeof(*cp) + sizeof(*phy) * num_phy,
+ 				     data, HCI_CMD_TIMEOUT);
 -- 
 2.43.0
 
