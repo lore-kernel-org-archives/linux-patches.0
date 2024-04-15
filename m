@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E93757FB;
-	Mon, 15 Apr 2024 14:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BC87A705;
+	Mon, 15 Apr 2024 14:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191507; cv=none; b=NNm2UHibiCHCo3QWr0f4xUNZMF/i6PdltiUWQa82dLJlMqX0NjAW7rvsRxuGmQ+pvjHXkv43QKA6xhz3DWds7N4zbKXV9eSrZgRyrY9hEnr0wpRxxzCwLICBoamnmqg5t196nx96i6SL9JraGammYReMTS1WYpTkVYq7exfclGQ=
+	t=1713191510; cv=none; b=qm01bUKWe6I0Jsuss8eA3ZI0DWPpOZ3X3MP5IlZHm01bfryqXElsd29dWPw44ki4cLwkj98O5Zu/tQH9Q+yahDIhukAuSRgFP8zjirY2LjNWjNW5tOTiwXuxSQJ7kAJiZHyO2roVAcyLWyMsuNxXmitt+btgrbV7j1ST7R8dooA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191507; c=relaxed/simple;
-	bh=usJLt4axeKYWFqxayiRD1gpqamN9+qxx4tJOe34R9vU=;
+	s=arc-20240116; t=1713191510; c=relaxed/simple;
+	bh=dtzMa4MJs11/6RH6lheuBCFJVkV7AZ26EyyvvVrtuiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gIdIY6EydwWRP1tyK7FZIYb4rtPPGm9m8a3tAgI/GdN0RFMe7IjROCnq/vyLTxDDOlzrOlVHtV/hgd0wMkjbe4cLPfadaP81YUZKrVQmTIMeR7YZB547R6BFJijJ0nkGqVxx1J/bGzPSnNOciTjnWOEdczAYDQyOkhNW/2LksoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yx/uWeoZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lfaMeykVRf53XToHnGHR5QfZyLFPB4jPVFLXQ6OHEHUNScVgdniRpzKJV0tREcXNMHfuIa4v6XPmSKS7XR9EwB2f4izYoKu8O6LEw3NQrdZyWJFrfXMTk+5gjTQn6RKzU0xsru0nJLlPnTGi4PifC7YFnQZjC67NSQfrPmvHSDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EySTYizE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yx/uWeoZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947F1C113CC;
-	Mon, 15 Apr 2024 14:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EySTYizE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9206DC113CC;
+	Mon, 15 Apr 2024 14:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191507;
-	bh=usJLt4axeKYWFqxayiRD1gpqamN9+qxx4tJOe34R9vU=;
+	s=korg; t=1713191510;
+	bh=dtzMa4MJs11/6RH6lheuBCFJVkV7AZ26EyyvvVrtuiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yx/uWeoZCwwpS2bpGKmDpO++cPZOqEmH6c6uqZj3We7Xb27E1kFWRSJWTanjSvH2c
-	 iyZb7e1Q1+nnFqjIMp+n1WNO4yA0s1w3toc9J0EvmuNN9i/UzppGsNE4X/foeIg5N5
-	 9KCmsoZIQuwvU5QkXosVvwml1d1KLqz0vPpqsVfs=
+	b=EySTYizE+m6655hOqNHT0Wz6glxMNiHFoxI9cSUoGWsazbW8kI1BLK3RQ60FxDmbN
+	 JhYlmvnNFIm0NK3zzYaIA21dRygSLIZwaZntpy7krtJH8mjj8NEqE2z0TGjTaw7rAW
+	 gI32kb4NMs2C5Y/JkzmFupS6MUuAdnv8PnBkLb0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Tim Huang <Tim.Huang@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.8 164/172] drm/amdgpu: always force full reset for SOC21
-Date: Mon, 15 Apr 2024 16:21:03 +0200
-Message-ID: <20240415142005.333138988@linuxfoundation.org>
+Subject: [PATCH 6.8 165/172] drm/amdgpu: fix incorrect number of active RBs for gfx11
+Date: Mon, 15 Apr 2024 16:21:04 +0200
+Message-ID: <20240415142005.362031511@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -50,33 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Tim Huang <Tim.Huang@amd.com>
 
-commit 65ff8092e4802f96d87d3d7cde146961f5228265 upstream.
+commit bbca7f414ae9a12ea231cdbafd79c607e3337ea8 upstream.
 
-There are cases where soft reset seems to succeed, but
-does not, so always use mode1/2 for now.
+The RB bitmap should be global active RB bitmap &
+active RB bitmap based on active SA.
 
-Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Tim Huang <Tim.Huang@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/soc21.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/soc21.c
-+++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
-@@ -450,10 +450,8 @@ static bool soc21_need_full_reset(struct
- {
- 	switch (amdgpu_ip_version(adev, GC_HWIP, 0)) {
- 	case IP_VERSION(11, 0, 0):
--		return amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__UMC);
- 	case IP_VERSION(11, 0, 2):
- 	case IP_VERSION(11, 0, 3):
--		return false;
- 	default:
- 		return true;
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -1630,7 +1630,7 @@ static void gfx_v11_0_setup_rb(struct am
+ 			active_rb_bitmap |= (0x3 << (i * rb_bitmap_width_per_sa));
  	}
+ 
+-	active_rb_bitmap |= global_active_rb_bitmap;
++	active_rb_bitmap &= global_active_rb_bitmap;
+ 	adev->gfx.config.backend_enable_mask = active_rb_bitmap;
+ 	adev->gfx.config.num_rbs = hweight32(active_rb_bitmap);
+ }
 
 
