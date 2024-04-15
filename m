@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E9479DDB;
-	Mon, 15 Apr 2024 14:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98FE36AE0;
+	Mon, 15 Apr 2024 14:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191664; cv=none; b=nlj5ZcUqD0r3PXXhRzOOKFicqhc/6oZayTQAAa3r9fBLfP+QHAH6ZEp9Ied+kN9xFIuODbyO55124j/TW8zCPXt3FDWA+JGdBN60lJiAdDQU+rfeqOuzvkMfDgVkzVIqISKRR375OeNijZtzjJ6BpcuytJ0ZDiLvwJS1AN+0grY=
+	t=1713191667; cv=none; b=CUqF8HUJynpFW+3RZA84tyEV23HdtSp5e3fLb0pp0wUtBRlfi2q1Xp89EFXrCbeG0N5ukz2Bq90JSKEKc7a3fVeBV5j9dsA0dNHAKR/HVKDfZ8TLVV4s+04dNk671+d2vzABBmJ3GVoq2h+fs5W0wtdBBMiPXaKQHrjkdsNF3Us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191664; c=relaxed/simple;
-	bh=7eJDZDXFVzVyq2gPO3cGBdkm0B+9nwelg6LUaDNRYck=;
+	s=arc-20240116; t=1713191667; c=relaxed/simple;
+	bh=ola6rwMPm3y8qLlDmhCNtT1nyjw4B0aP+hCuJYsZJSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=REA4aousmEgKIoC9dgudL92+e8fMi58J2Jbct8o9JmpUfI2wltJkKqZm/xUly2Q5H28czei6O6vYlKxstYcCxa5FL5tGZmyY4ZFjg4ACtCdl5nuZVkQoW478i8034cWp3pSHN2yjSHmn/chVTiGZrZkEjtpq0wOCLFNXj9sulDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PdXCa8DY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UYFh3dbtzuRrqWfkUr8rRtnz+8ao8cvKvnWXbZjID6uejU1pdT6cCeDAUq128nQzhOoxT2cPef0yD3MZOrNAfnc0gaELmEZIcN4xB6iYmxe5K+8wumbSmMsY77vnV3FG4Qo/9eW7CBscM7HYKX6Bs9M1ok2LGcCnWMzSn8EHqV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwBfcqTV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PdXCa8DY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35A3C113CC;
-	Mon, 15 Apr 2024 14:34:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwBfcqTV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C1EC2BD10;
+	Mon, 15 Apr 2024 14:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191664;
-	bh=7eJDZDXFVzVyq2gPO3cGBdkm0B+9nwelg6LUaDNRYck=;
+	s=korg; t=1713191667;
+	bh=ola6rwMPm3y8qLlDmhCNtT1nyjw4B0aP+hCuJYsZJSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PdXCa8DYEmdnnQlLh3WtSZ2TLRbBJl2gidt62S9sS4aidgxeH0ithZPX69Sbws3KP
-	 3ooy/N5FD6Cwci2Quxsr0SLOJqQvpuLJosRbbYIoLrJd4bLQ7X1FMb5Ep7Wh5pKx6m
-	 Zq5f0w3yH/QdwZeQlWSdoAw9a7xY1h3acPUigs4g=
+	b=KwBfcqTVQ4SbIjf1l5LmOGOzOaLNw9HD/BEPy7w+bSKeXdyVUgYoj6VjJPRvrjlmv
+	 4msGxafozN9j8E4LliRtzHXt6khEbnVddS5dEHlgngI5eryBnrhuZV9tCAqb5QnZU6
+	 EtUeF3nxMrb2aOUneK7kRFaVGClWOJLTGt4W4GhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Coly Li <colyli@suse.de>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.6 007/122] raid1: fix use-after-free for original bio in raid1_write_request()
-Date: Mon, 15 Apr 2024 16:19:32 +0200
-Message-ID: <20240415141953.596019201@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.6 008/122] ring-buffer: Only update pages_touched when a new page is touched
+Date: Mon, 15 Apr 2024 16:19:33 +0200
+Message-ID: <20240415141953.626926938@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -51,98 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit fcf3f7e2fc8a53a6140beee46ec782a4c88e4744 upstream.
+commit ffe3986fece696cf65e0ef99e74c75f848be8e30 upstream.
 
-r1_bio->bios[] is used to record new bios that will be issued to
-underlying disks, however, in raid1_write_request(), r1_bio->bios[]
-will set to the original bio temporarily. Meanwhile, if blocked rdev
-is set, free_r1bio() will be called causing that all r1_bio->bios[]
-to be freed:
+The "buffer_percent" logic that is used by the ring buffer splice code to
+only wake up the tasks when there's no data after the buffer is filled to
+the percentage of the "buffer_percent" file is dependent on three
+variables that determine the amount of data that is in the ring buffer:
 
-raid1_write_request()
- r1_bio = alloc_r1bio(mddev, bio); -> r1_bio->bios[] is NULL
- for (i = 0;  i < disks; i++) -> for each rdev in conf
-  // first rdev is normal
-  r1_bio->bios[0] = bio; -> set to original bio
-  // second rdev is blocked
-  if (test_bit(Blocked, &rdev->flags))
-   break
+ 1) pages_read - incremented whenever a new sub-buffer is consumed
+ 2) pages_lost - incremented every time a writer overwrites a sub-buffer
+ 3) pages_touched - incremented when a write goes to a new sub-buffer
 
- if (blocked_rdev)
-  free_r1bio()
-   put_all_bios()
-    bio_put(r1_bio->bios[0]) -> original bio is freed
+The percentage is the calculation of:
 
-Test scripts:
+  (pages_touched - (pages_lost + pages_read)) / nr_pages
 
-mdadm -CR /dev/md0 -l1 -n4 /dev/sd[abcd] --assume-clean
-fio -filename=/dev/md0 -ioengine=libaio -rw=write -bs=4k -numjobs=1 \
-    -iodepth=128 -name=test -direct=1
-echo blocked > /sys/block/md0/md/rd2/state
+Basically, the amount of data is the total number of sub-bufs that have been
+touched, minus the number of sub-bufs lost and sub-bufs consumed. This is
+divided by the total count to give the buffer percentage. When the
+percentage is greater than the value in the "buffer_percent" file, it
+wakes up splice readers waiting for that amount.
 
-Test result:
+It was observed that over time, the amount read from the splice was
+constantly decreasing the longer the trace was running. That is, if one
+asked for 60%, it would read over 60% when it first starts tracing, but
+then it would be woken up at under 60% and would slowly decrease the
+amount of data read after being woken up, where the amount becomes much
+less than the buffer percent.
 
-BUG bio-264 (Not tainted): Object already free
------------------------------------------------------------------------------
+This was due to an accounting of the pages_touched incrementation. This
+value is incremented whenever a writer transfers to a new sub-buffer. But
+the place where it was incremented was incorrect. If a writer overflowed
+the current sub-buffer it would go to the next one. If it gets preempted
+by an interrupt at that time, and the interrupt performs a trace, it too
+will end up going to the next sub-buffer. But only one should increment
+the counter. Unfortunately, that was not the case.
 
-Allocated in mempool_alloc_slab+0x24/0x50 age=1 cpu=1 pid=869
- kmem_cache_alloc+0x324/0x480
- mempool_alloc_slab+0x24/0x50
- mempool_alloc+0x6e/0x220
- bio_alloc_bioset+0x1af/0x4d0
- blkdev_direct_IO+0x164/0x8a0
- blkdev_write_iter+0x309/0x440
- aio_write+0x139/0x2f0
- io_submit_one+0x5ca/0xb70
- __do_sys_io_submit+0x86/0x270
- __x64_sys_io_submit+0x22/0x30
- do_syscall_64+0xb1/0x210
- entry_SYSCALL_64_after_hwframe+0x6c/0x74
-Freed in mempool_free_slab+0x1f/0x30 age=1 cpu=1 pid=869
- kmem_cache_free+0x28c/0x550
- mempool_free_slab+0x1f/0x30
- mempool_free+0x40/0x100
- bio_free+0x59/0x80
- bio_put+0xf0/0x220
- free_r1bio+0x74/0xb0
- raid1_make_request+0xadf/0x1150
- md_handle_request+0xc7/0x3b0
- md_submit_bio+0x76/0x130
- __submit_bio+0xd8/0x1d0
- submit_bio_noacct_nocheck+0x1eb/0x5c0
- submit_bio_noacct+0x169/0xd40
- submit_bio+0xee/0x1d0
- blkdev_direct_IO+0x322/0x8a0
- blkdev_write_iter+0x309/0x440
- aio_write+0x139/0x2f0
+Change the cmpxchg() that does the real switch of the tail-page into a
+try_cmpxchg(), and on success, perform the increment of pages_touched. This
+will only increment the counter once for when the writer moves to a new
+sub-buffer, and not when there's a race and is incremented for when a
+writer and its preempting writer both move to the same new sub-buffer.
 
-Since that bios for underlying disks are not allocated yet, fix this
-problem by using mempool_free() directly to free the r1_bio.
+Link: https://lore.kernel.org/linux-trace-kernel/20240409151309.0d0e5056@gandalf.local.home
 
-Fixes: 992db13a4aee ("md/raid1: free the r1bio before waiting for blocked rdev")
-Cc: stable@vger.kernel.org # v6.6+
-Reported-by: Coly Li <colyli@suse.de>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Tested-by: Coly Li <colyli@suse.de>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240308093726.1047420-1-yukuai1@huaweicloud.com
+Cc: stable@vger.kernel.org
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: 2c2b0a78b3739 ("ring-buffer: Add percentage of ring buffer full to wake up reader")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid1.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1473,7 +1473,7 @@ static void raid1_write_request(struct m
- 		for (j = 0; j < i; j++)
- 			if (r1_bio->bios[j])
- 				rdev_dec_pending(conf->mirrors[j].rdev, mddev);
--		free_r1bio(r1_bio);
-+		mempool_free(r1_bio, &conf->r1bio_pool);
- 		allow_barrier(conf, bio->bi_iter.bi_sector);
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1536,7 +1536,6 @@ static void rb_tail_page_update(struct r
+ 	old_write = local_add_return(RB_WRITE_INTCNT, &next_page->write);
+ 	old_entries = local_add_return(RB_WRITE_INTCNT, &next_page->entries);
  
- 		if (bio->bi_opf & REQ_NOWAIT) {
+-	local_inc(&cpu_buffer->pages_touched);
+ 	/*
+ 	 * Just make sure we have seen our old_write and synchronize
+ 	 * with any interrupts that come in.
+@@ -1573,8 +1572,9 @@ static void rb_tail_page_update(struct r
+ 		 */
+ 		local_set(&next_page->page->commit, 0);
+ 
+-		/* Again, either we update tail_page or an interrupt does */
+-		(void)cmpxchg(&cpu_buffer->tail_page, tail_page, next_page);
++		/* Either we update tail_page or an interrupt does */
++		if (try_cmpxchg(&cpu_buffer->tail_page, &tail_page, next_page))
++			local_inc(&cpu_buffer->pages_touched);
+ 	}
+ }
+ 
 
 
