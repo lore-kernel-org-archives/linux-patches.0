@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69108BF8;
-	Mon, 15 Apr 2024 14:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFB41EEE3;
+	Mon, 15 Apr 2024 14:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191589; cv=none; b=OlSKX0Ns9ED84/g+rwJZlcTFCRc+3WhYPdczj57Z//AFA4FD/dEsMQOOjgpLc4+tOj/33YpB6KeJpZViU/bhiUf3xs0J8eNb/RhNN7cD2cDiu4gH6vVHhv9/3Xj/SkUnJnx8U98rSGrJA9mVmrf5+PRRdzoaMcDZsYBhjunhyCQ=
+	t=1713191592; cv=none; b=ezBgTC4PgvzB/xZv4cQz1gPU96lF5l59r8YsfOhT4S1e4xV4Am+5Wr+sk0a68WZ2J6LpohiFaI6G9TDP26jS3TgPlzH7laYlQ7QTIQYg4V73NaecFhwobKchVRsyFUjdsRHah7TNcpViH8y9h7DAGGZlkiOoYXELVpnAn99N4gY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191589; c=relaxed/simple;
-	bh=UjYAjyeRXtXqZKCFkPE+QWVCyE8hcPvw3L/ecbzWKps=;
+	s=arc-20240116; t=1713191592; c=relaxed/simple;
+	bh=Xh87xGGtUpW5AofdfKZB7SOmQ8aEaiJ02Vwm+RK8jMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bYGW7uJ8BOHCrcgV8N8tcTQxdqHtVZBKYCd++lC48bJftCJlcRSbsRW4HKdOVgn82+BH/fzXRxALOZtuvIOHPEnkeaUOE5Y6nwaQpCNxbqEmvktXy4yeMduDIuST+oBY+R4t98YTkD/N4qUzqTQfCxVF99w4Cd+GDgypjuIeqIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUyCMKXR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kqlx83j0ByxoqpqmEEhQYRxb0fQ0Oorj28Ibf6UujW2Npwb0nq9v7howRXyj9JGPqd1IA67CKV9E3uqPuaZ0e9UEjiXMkwD0H07PUKFlXAQqETgZm13vw/m9itXCUqypenRorQK5X7bzt/rYJ8nkek38u4r7BQuw3PQ4E2LvFJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epUnGrB1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUyCMKXR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DD0C113CC;
-	Mon, 15 Apr 2024 14:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epUnGrB1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A45BC113CC;
+	Mon, 15 Apr 2024 14:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191589;
-	bh=UjYAjyeRXtXqZKCFkPE+QWVCyE8hcPvw3L/ecbzWKps=;
+	s=korg; t=1713191592;
+	bh=Xh87xGGtUpW5AofdfKZB7SOmQ8aEaiJ02Vwm+RK8jMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VUyCMKXRR15z9CJibXa4mfHEqp7arjSIjq+JDhL4CGwfzp3zjqHxxHIn1PMNaUPpa
-	 fENrl+Uu8rRLDpZwYkiQKS9i1obpJPJeebKWXYZPEzdIPqqtBBQZg838CSUiSja+Pp
-	 QBe5Pn3BEIfHO3kz9938h5vcNz5pvlVhq0cOJcak=
+	b=epUnGrB1xxJQYhXxVP8D1inj7s5zGJ5mF4aYkeQHZ5GLD9BEubAG1uO0x9r4y7wkE
+	 MQBWCl0I9afYBu2M2Q79V9x5Mg84jBQ3HEzhqgMMV8uZvbaymLqJ1Y59/qV0ugIt2U
+	 tjcNulSXSNOAMQlLtAJRK3B1G6kGsshcL2bfi69U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.6 003/122] ata: libata-scsi: Fix ata_scsi_dev_rescan() error path
-Date: Mon, 15 Apr 2024 16:19:28 +0200
-Message-ID: <20240415141953.471519955@linuxfoundation.org>
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 021/122] firmware: arm_scmi: Make raw debugfs entries non-seekable
+Date: Mon, 15 Apr 2024 16:19:46 +0200
+Message-ID: <20240415141954.012099858@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -51,67 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-commit 79336504781e7fee5ddaf046dcc186c8dfdf60b1 upstream.
+[ Upstream commit b70c7996d4ffb2e02895132e8a79a37cee66504f ]
 
-Commit 0c76106cb975 ("scsi: sd: Fix TCG OPAL unlock on system resume")
-incorrectly handles failures of scsi_resume_device() in
-ata_scsi_dev_rescan(), leading to a double call to
-spin_unlock_irqrestore() to unlock a device port. Fix this by redefining
-the goto labels used in case of errors and only unlock the port
-scsi_scan_mutex when scsi_resume_device() fails.
+SCMI raw debugfs entries are used to inject and snoop messages out of the
+SCMI core and, as such, the underlying virtual files have no reason to
+support seeking.
 
-Bug found with the Smatch static checker warning:
+Modify the related file_operations descriptors to be non-seekable.
 
-	drivers/ata/libata-scsi.c:4774 ata_scsi_dev_rescan()
-	error: double unlocked 'ap->lock' (orig line 4757)
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: 0c76106cb975 ("scsi: sd: Fix TCG OPAL unlock on system resume")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3c3d818a9317 ("firmware: arm_scmi: Add core raw transmission support")
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20240315140324.231830-1-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/firmware/arm_scmi/raw_mode.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -4780,7 +4780,7 @@ void ata_scsi_dev_rescan(struct work_str
- 			 * bail out.
- 			 */
- 			if (ap->pflags & ATA_PFLAG_SUSPENDED)
--				goto unlock;
-+				goto unlock_ap;
+diff --git a/drivers/firmware/arm_scmi/raw_mode.c b/drivers/firmware/arm_scmi/raw_mode.c
+index 3505735185033..130d13e9cd6be 100644
+--- a/drivers/firmware/arm_scmi/raw_mode.c
++++ b/drivers/firmware/arm_scmi/raw_mode.c
+@@ -921,7 +921,7 @@ static int scmi_dbg_raw_mode_open(struct inode *inode, struct file *filp)
+ 	rd->raw = raw;
+ 	filp->private_data = rd;
  
- 			if (!sdev)
- 				continue;
-@@ -4793,7 +4793,7 @@ void ata_scsi_dev_rescan(struct work_str
- 			if (do_resume) {
- 				ret = scsi_resume_device(sdev);
- 				if (ret == -EWOULDBLOCK)
--					goto unlock;
-+					goto unlock_scan;
- 				dev->flags &= ~ATA_DFLAG_RESUMING;
- 			}
- 			ret = scsi_rescan_device(sdev);
-@@ -4801,12 +4801,13 @@ void ata_scsi_dev_rescan(struct work_str
- 			spin_lock_irqsave(ap->lock, flags);
+-	return 0;
++	return nonseekable_open(inode, filp);
+ }
  
- 			if (ret)
--				goto unlock;
-+				goto unlock_ap;
- 		}
- 	}
+ static int scmi_dbg_raw_mode_release(struct inode *inode, struct file *filp)
+@@ -950,6 +950,7 @@ static const struct file_operations scmi_dbg_raw_mode_reset_fops = {
+ 	.open = scmi_dbg_raw_mode_open,
+ 	.release = scmi_dbg_raw_mode_release,
+ 	.write = scmi_dbg_raw_mode_reset_write,
++	.llseek = no_llseek,
+ 	.owner = THIS_MODULE,
+ };
  
--unlock:
-+unlock_ap:
- 	spin_unlock_irqrestore(ap->lock, flags);
-+unlock_scan:
- 	mutex_unlock(&ap->scsi_scan_mutex);
+@@ -959,6 +960,7 @@ static const struct file_operations scmi_dbg_raw_mode_message_fops = {
+ 	.read = scmi_dbg_raw_mode_message_read,
+ 	.write = scmi_dbg_raw_mode_message_write,
+ 	.poll = scmi_dbg_raw_mode_message_poll,
++	.llseek = no_llseek,
+ 	.owner = THIS_MODULE,
+ };
  
- 	/* Reschedule with a delay if scsi_rescan_device() returned an error */
+@@ -975,6 +977,7 @@ static const struct file_operations scmi_dbg_raw_mode_message_async_fops = {
+ 	.read = scmi_dbg_raw_mode_message_read,
+ 	.write = scmi_dbg_raw_mode_message_async_write,
+ 	.poll = scmi_dbg_raw_mode_message_poll,
++	.llseek = no_llseek,
+ 	.owner = THIS_MODULE,
+ };
+ 
+@@ -998,6 +1001,7 @@ static const struct file_operations scmi_dbg_raw_mode_notification_fops = {
+ 	.release = scmi_dbg_raw_mode_release,
+ 	.read = scmi_test_dbg_raw_mode_notif_read,
+ 	.poll = scmi_test_dbg_raw_mode_notif_poll,
++	.llseek = no_llseek,
+ 	.owner = THIS_MODULE,
+ };
+ 
+@@ -1021,6 +1025,7 @@ static const struct file_operations scmi_dbg_raw_mode_errors_fops = {
+ 	.release = scmi_dbg_raw_mode_release,
+ 	.read = scmi_test_dbg_raw_mode_errors_read,
+ 	.poll = scmi_test_dbg_raw_mode_errors_poll,
++	.llseek = no_llseek,
+ 	.owner = THIS_MODULE,
+ };
+ 
+-- 
+2.43.0
+
 
 
