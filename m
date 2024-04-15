@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7857BAF9;
-	Mon, 15 Apr 2024 14:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D7B80C1D;
+	Mon, 15 Apr 2024 14:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191356; cv=none; b=dtBhgTVpK31vsrHKv1FQ+U+KORjjG4Wa19q6duUeSXPDvdy271MRXpawLXzqRSI2thUp+olpZ518nyJzl2r8LeP3VlYRlJnGFsN9nkoGQRR9il63Yk2za3TRluF/rwA8/NQYwu9KggQkA0QTV70+vhdxY5zXWiV54V3Ykwli+lU=
+	t=1713191359; cv=none; b=lJNM4kI6/uAxhTRx0IUlQE97I9Ep8YHIBdhZc0WUXmNmotNZm+EHGJHOkS4InI/88X3Z/dla60wnwxry0lDmNQEV9MUPHqkfwatHZco5lQ7JbfaaaGRUO/3pLiMbNgFEED68ePDL1lc1uWBYw33kPJF+WwdwYDaaaTB0q38xj/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191356; c=relaxed/simple;
-	bh=EckqB4RaE3Huc5/l3CV/lxsyi1i58RIdhjQEW9sx8JU=;
+	s=arc-20240116; t=1713191359; c=relaxed/simple;
+	bh=R5kZ3J2h2q5M9lqUHJGgWWJAbOAMABD4kbCbpfOiwEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KldRScB+trjk32HMiRqzFPr3UZV2H1rKz8z5jUbjHi318DB1Y855EAa3MNr/u9LnMWvRRSv5/MgE4TyvvsTroM4ZlwKz2XjZFO4/f+wk+3mLVtaayXaMCe2doCtSqxtN8qu9AxeDfZ8LjNs5Qsi67hXpa02Bg3eZztpq8LeEpw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TK1W4YEd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a7K6QSWR/gG323CDz5jkiBNeeFAoLYqK9YIt1qZBDid2EmKucbJot5s8lNzU7dNv7bdX9bbVVlCERATryxkNjvvdRD3VJy6tZsj8aygCmW6Q26o1D9nLdBPLx4LdBvaAzZPbvkfwpBRVm4cR8I1B4zkBDXt2S8NJElVJ+KbmBxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I33KvoXN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TK1W4YEd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40016C113CC;
-	Mon, 15 Apr 2024 14:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I33KvoXN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C73C113CC;
+	Mon, 15 Apr 2024 14:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191356;
-	bh=EckqB4RaE3Huc5/l3CV/lxsyi1i58RIdhjQEW9sx8JU=;
+	s=korg; t=1713191359;
+	bh=R5kZ3J2h2q5M9lqUHJGgWWJAbOAMABD4kbCbpfOiwEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TK1W4YEdBdjG/jV+NbROSOf1ZTTQQTV2g4I6STqa47qhy1/QuLh/wXxqkww3iQZPr
-	 /IxJw6IKbRiN9jvb+vla98TUvJ8D6RCFFo7s8SSpoYU2Vv6HEKAJquG96sPpEK2nty
-	 r8QdK5LeCF7lecJFvr2+Bmfe6MZuIOJcMCVlGjuY=
+	b=I33KvoXN00h6SzfOVaF1mXDE7ru1ymzgAy7cd/QuzmjTrGDJz5uTcqEXLtm6e/4T9
+	 Wn0IInZ9cyuuWQAmiLbYrKQgtPzLmjJBm1VePq4oB3Y8uNcdVboft2hI87d7A3yLfg
+	 DN3A/Mo0Poa6z158PDoZ4+dJaNQsQpSgo+0Ipgkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>
-Subject: [PATCH 6.8 115/172] fs/proc: Skip bootloader comment if no embedded kernel parameters
-Date: Mon, 15 Apr 2024 16:20:14 +0200
-Message-ID: <20240415142003.885448821@linuxfoundation.org>
+	Alexander Wetzel <Alexander@wetzel-home.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.8 116/172] scsi: sg: Avoid sg device teardown race
+Date: Mon, 15 Apr 2024 16:20:15 +0200
+Message-ID: <20240415142003.914821460@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -50,66 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu <mhiramat@kernel.org>
+From: Alexander Wetzel <Alexander@wetzel-home.de>
 
-commit c722cea208789d9e2660992bcd05fb9fac3adb56 upstream.
+commit 27f58c04a8f438078583041468ec60597841284d upstream.
 
-If the "bootconfig" kernel command-line argument was specified or if
-the kernel was built with CONFIG_BOOT_CONFIG_FORCE, but if there are
-no embedded kernel parameter, omit the "# Parameters from bootloader:"
-comment from the /proc/bootconfig file.  This will cause automation
-to fall back to the /proc/cmdline file, which will be identical to the
-comment in this no-embedded-kernel-parameters case.
+sg_remove_sfp_usercontext() must not use sg_device_destroy() after calling
+scsi_device_put().
 
-Link: https://lore.kernel.org/all/20240409044358.1156477-2-paulmck@kernel.org/
+sg_device_destroy() is accessing the parent scsi_device request_queue which
+will already be set to NULL when the preceding call to scsi_device_put()
+removed the last reference to the parent scsi_device.
 
-Fixes: 8b8ce6c75430 ("fs/proc: remove redundant comments from /proc/bootconfig")
-Signed-off-by: Masami Hiramatsu <mhiramat@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+The resulting NULL pointer exception will then crash the kernel.
+
+Link: https://lore.kernel.org/r/20240305150509.23896-1-Alexander@wetzel-home.de
+Fixes: db59133e9279 ("scsi: sg: fix blktrace debugfs entries leakage")
 Cc: stable@vger.kernel.org
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Alexander Wetzel <Alexander@wetzel-home.de>
+Link: https://lore.kernel.org/r/20240320213032.18221-1-Alexander@wetzel-home.de
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/bootconfig.c       |    2 +-
- include/linux/bootconfig.h |    1 +
- init/main.c                |    5 +++++
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/scsi/sg.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/proc/bootconfig.c
-+++ b/fs/proc/bootconfig.c
-@@ -63,7 +63,7 @@ static int __init copy_xbc_key_value_lis
- 			dst += ret;
- 		}
- 	}
--	if (ret >= 0 && boot_command_line[0]) {
-+	if (cmdline_has_extra_options() && ret >= 0 && boot_command_line[0]) {
- 		ret = snprintf(dst, rest(dst, end), "# Parameters from bootloader:\n# %s\n",
- 			       boot_command_line);
- 		if (ret > 0)
---- a/include/linux/bootconfig.h
-+++ b/include/linux/bootconfig.h
-@@ -10,6 +10,7 @@
- #ifdef __KERNEL__
- #include <linux/kernel.h>
- #include <linux/types.h>
-+bool __init cmdline_has_extra_options(void);
- #else /* !__KERNEL__ */
- /*
-  * NOTE: This is only for tools/bootconfig, because tools/bootconfig will
---- a/init/main.c
-+++ b/init/main.c
-@@ -485,6 +485,11 @@ static int __init warn_bootconfig(char *
- 
- early_param("bootconfig", warn_bootconfig);
- 
-+bool __init cmdline_has_extra_options(void)
-+{
-+	return extra_command_line || extra_init_args;
-+}
-+
- /* Change NUL term back to "=", to make "param" the whole string. */
- static void __init repair_env_string(char *param, char *val)
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -2207,6 +2207,7 @@ sg_remove_sfp_usercontext(struct work_st
  {
+ 	struct sg_fd *sfp = container_of(work, struct sg_fd, ew.work);
+ 	struct sg_device *sdp = sfp->parentdp;
++	struct scsi_device *device = sdp->device;
+ 	Sg_request *srp;
+ 	unsigned long iflags;
+ 
+@@ -2232,8 +2233,9 @@ sg_remove_sfp_usercontext(struct work_st
+ 			"sg_remove_sfp: sfp=0x%p\n", sfp));
+ 	kfree(sfp);
+ 
+-	scsi_device_put(sdp->device);
++	WARN_ON_ONCE(kref_read(&sdp->d_ref) != 1);
+ 	kref_put(&sdp->d_ref, sg_device_destroy);
++	scsi_device_put(device);
+ 	module_put(THIS_MODULE);
+ }
+ 
 
 
