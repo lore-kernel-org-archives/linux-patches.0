@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCF07A705;
-	Mon, 15 Apr 2024 14:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC27B7A702;
+	Mon, 15 Apr 2024 14:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191891; cv=none; b=HNQ7mlyZtCuuN8Y1iAX1l3BfpXQ2RrQV7Ep6kCsY0Z/DX+yTTijm2SMRxlQ0XJSBG1TYyj88G8juagDkm3nY0zQbbQQ2PgG+Bx+8H/r+LIIjxUmX2bISghPnmEgUtCO37q7M6tceL9a8qYyC1FDH9S30D3RBLTG0IvoaZWv/YqM=
+	t=1713191894; cv=none; b=p1L/BQLfNyWTJD9eqOIIllLl/8OMUH3D1zRkiVXMx8nyPsgIe3rlLedCZj7UuAJe+6byhnIdKwBFXUps+g8vBGLpr/o1dnQ1GxSaDiU5vQiEMjD7PpZ52n75b7H2aVKMWarV7vw1HSAD8H+ZlWH7h3KfiRpi7uE6jzIUPHcT22k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191891; c=relaxed/simple;
-	bh=1eiGAwvXGsEe8YL/J1mL4TQEiq+/lGC5aDGJxdpVPwI=;
+	s=arc-20240116; t=1713191894; c=relaxed/simple;
+	bh=9Ufen1hkqM33oP6seiMqCVW6WKIp6snVb7/DKS8cJHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=falE+5NMX4qyvDJielxw3qA655GThAvuKT9ZMpJuyN1e6PGzK5VUX4d2t7jWipuF3O2R5l7pDeujKcA+yTOe27BsnPqrkpCKD2ZHojOzZXK7axLyW2ygB2QAQ81w0HMmsYsIpdDvetU/GOsz0nYMYUZfzcHm6ZQk+jyVIoWaNsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R54L6jIx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WaKpIMnlZZy9ZvDjBXCUjglsHFz8+bA4tw1Ej35lpXVbrbLmxb2bn2TmSGz+673m8NtxnZXOctQMDxgyfO35ahO1zGbR95WffyGR4DJXvga8rehx73oKIfWftu5lr0L1sH0jkEAswFwRvNbOjI8cTiPRZpEDNIVHyGT4mC9DjCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbJG6+dx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R54L6jIx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870A7C113CC;
-	Mon, 15 Apr 2024 14:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbJG6+dx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F17C113CC;
+	Mon, 15 Apr 2024 14:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191890;
-	bh=1eiGAwvXGsEe8YL/J1mL4TQEiq+/lGC5aDGJxdpVPwI=;
+	s=korg; t=1713191893;
+	bh=9Ufen1hkqM33oP6seiMqCVW6WKIp6snVb7/DKS8cJHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R54L6jIx99tOk4Yha0samr7T/TU0wH2p5u2icVmlFgO32uk9+VYUEXsTryYqm/i8+
-	 MMFgughyPacBfzhLBfsRR35MTJq7JgE1qYwHMUpbOF8ejHBF4TcZZPzR9pILbnCGG9
-	 kcSIlVKIbD7jYPW4JkwmPOisp/5bbD0bW13rJSRo=
+	b=UbJG6+dx+UzGgYwELs20pLV4SZiAnJaehrXVRveM81jYKfp5xPut7MFLm5NszmbD6
+	 bFlIYXGVyxXHLF4z3eJQAyyVKG2pucNh95w8GHZT2jSa/R4mW9FuiTRscoIFA6Em5D
+	 2GiG+IckYSLasCOAN2pD03HIyYLYnONkKDbGjE7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <Tim.Huang@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>,
+	Joshua Ashton <joshua@froggi.es>,
+	Xaver Hugl <xaver.hugl@gmail.com>,
+	Melissa Wen <mwen@igalia.com>,
+	Agustin Gutierrez <Agustin.Gutierrez@amd.com>,
+	Agustin Gutierrez <agustin.gutierrez@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 119/122] drm/amdgpu: fix incorrect number of active RBs for gfx11
-Date: Mon, 15 Apr 2024 16:21:24 +0200
-Message-ID: <20240415141956.940231208@linuxfoundation.org>
+Subject: [PATCH 6.6 120/122] drm/amd/display: Program VSC SDP colorimetry for all DP sinks >= 1.4
+Date: Mon, 15 Apr 2024 16:21:25 +0200
+Message-ID: <20240415141956.969716616@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -51,32 +56,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Huang <Tim.Huang@amd.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit bbca7f414ae9a12ea231cdbafd79c607e3337ea8 upstream.
+commit 9e61ef8d219877202d4ee51d0d2ad9072c99a262 upstream.
 
-The RB bitmap should be global active RB bitmap &
-active RB bitmap based on active SA.
+In order for display colorimetry to work correctly on DP displays
+we need to send the VSC SDP packet. We should only do so for
+panels with DPCD revision greater or equal to 1.4 as older
+receivers might have problems with it.
 
-Signed-off-by: Tim Huang <Tim.Huang@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
+Cc: Joshua Ashton <joshua@froggi.es>
+Cc: Xaver Hugl <xaver.hugl@gmail.com>
+Cc: Melissa Wen <mwen@igalia.com>
+Cc: Agustin Gutierrez <Agustin.Gutierrez@amd.com>
+Reviewed-by: Agustin Gutierrez <agustin.gutierrez@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -1616,7 +1616,7 @@ static void gfx_v11_0_setup_rb(struct am
- 			active_rb_bitmap |= (0x3 << (i * rb_bitmap_width_per_sa));
- 	}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -6122,7 +6122,9 @@ create_stream_for_sink(struct amdgpu_dm_
+ 	if (stream->signal == SIGNAL_TYPE_HDMI_TYPE_A)
+ 		mod_build_hf_vsif_infopacket(stream, &stream->vsp_infopacket);
  
--	active_rb_bitmap |= global_active_rb_bitmap;
-+	active_rb_bitmap &= global_active_rb_bitmap;
- 	adev->gfx.config.backend_enable_mask = active_rb_bitmap;
- 	adev->gfx.config.num_rbs = hweight32(active_rb_bitmap);
- }
+-	if (stream->link->psr_settings.psr_feature_enabled || stream->link->replay_settings.replay_feature_enabled) {
++	if (stream->signal == SIGNAL_TYPE_DISPLAY_PORT ||
++	    stream->signal == SIGNAL_TYPE_DISPLAY_PORT_MST ||
++	    stream->signal == SIGNAL_TYPE_EDP) {
+ 		//
+ 		// should decide stream support vsc sdp colorimetry capability
+ 		// before building vsc info packet
+@@ -6132,7 +6134,8 @@ create_stream_for_sink(struct amdgpu_dm_
+ 			stream->use_vsc_sdp_for_colorimetry =
+ 				aconnector->dc_sink->is_vsc_sdp_colorimetry_supported;
+ 		} else {
+-			if (stream->link->dpcd_caps.dprx_feature.bits.VSC_SDP_COLORIMETRY_SUPPORTED)
++			if (stream->link->dpcd_caps.dpcd_rev.raw >= 0x14 &&
++			    stream->link->dpcd_caps.dprx_feature.bits.VSC_SDP_COLORIMETRY_SUPPORTED)
+ 				stream->use_vsc_sdp_for_colorimetry = true;
+ 		}
+ 		if (stream->out_transfer_func->tf == TRANSFER_FUNCTION_GAMMA22)
 
 
