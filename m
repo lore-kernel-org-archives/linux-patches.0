@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760111EEE3;
-	Mon, 15 Apr 2024 14:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCF4745C9;
+	Mon, 15 Apr 2024 14:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192080; cv=none; b=N/Mtkv7cveLeNmTqSVRtdlc8rme3stslQOnYJGNal+PovD8vwOObBdODSBV+EhN5R2CLvJuTs49WDFwUflw54iktysXwR81JJWPE8I+tLS0Cwf7SsC3A9mA4sk9kr8QQCUGwoHbstahURiZOUTK5R7T8WDn2gP5QH15Wb/DxCoM=
+	t=1713192083; cv=none; b=HyB/o4r4bKbCbsRJEwDqe3TvUdwFly+0PlLhpjAKccQ/opGfkpsvrmjAfsboKMo89E3umRoC6dpIv03rCq3o51jGOjqmb+Jq49S6/eDjN/wFKTKl23ocF4KR0WECNYtD4yQnUtnsSJ9MwO9/jQ7yNuAilaA7bD1wszjRC4RjACU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192080; c=relaxed/simple;
-	bh=MjRBhtDfCpsIds7ero3p2mxf9hHhO425hKvyF3qib+I=;
+	s=arc-20240116; t=1713192083; c=relaxed/simple;
+	bh=MOJlWPOwv/KYBYMwAc7DyQYP7g6YKwzWZTN6y0Aw69I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dYMiXy1JAKqfF7S8rDJzMf8dG7JZ/TNtgwQ6zLP/yAlQqRo1VJ5pkeUbdMXwp0bjeKf9SeVYzSHuodrh+MuNF4SH0aQVtwTxW2jUn8npXSPxggU1y3koDQerngMBcZXZwtSVh/udtETE1344tU8cu5EH3AinIOFdwQ8/nfgoIK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBVb/cvZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T21j1CR6QTsQALQh0Z9daFfd2/kGykT5oLQoQ8W+y2ZYqzoZO4RpmA8oCKyHsMcP4Pq919+l7KfsL7JmKchPSYF9l+/aQbiXfcve4kbrhKpOVXJ0XBBwijSESxWI4iylsfl0hpyHT597ioC3hFpq6pxZRn9KDeHv2BfutUoSh0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFdRQXXG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBVb/cvZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1840C113CC;
-	Mon, 15 Apr 2024 14:41:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFdRQXXG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CDFC113CC;
+	Mon, 15 Apr 2024 14:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192080;
-	bh=MjRBhtDfCpsIds7ero3p2mxf9hHhO425hKvyF3qib+I=;
+	s=korg; t=1713192083;
+	bh=MOJlWPOwv/KYBYMwAc7DyQYP7g6YKwzWZTN6y0Aw69I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IBVb/cvZZY1B2wOYBaAC4clGqUWctVzgUS/RluD7OIpkEUOQ9+CFrzK6ziuGlcHJe
-	 fY6Q/1a0akpFs5eMFpMXRwrTH7D5BsODFH+L0Kc9P7dwp50iM50GgCopk8vaOLbIrL
-	 492VMUKUvqrp0OtDtpgameeLcYi+lQidi7zClmSE=
+	b=EFdRQXXGmbCdMpsv9akS0wAEOiP68k5+7bkW2VsCFsbIqgA0g5ElDIRV8WxWYmp7c
+	 IHDHWm4VUEMlAA5W2zabK6P1sIM767D4dMzkt2tYHmqG4VXALF+42arrkcE13H0frl
+	 apePJxb/1V+GDlqesHU4PDc7raIQXe1voxfjdTck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Ingo Molnar <mingo@kernel.org>,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
-	Nikolay Borisov <nik.borisov@suse.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 60/69] x86/bugs: Rename various ia32_cap variables to x86_arch_cap_msr
-Date: Mon, 15 Apr 2024 16:21:31 +0200
-Message-ID: <20240415141947.976465908@linuxfoundation.org>
+Subject: [PATCH 6.1 61/69] x86/bugs: Fix BHI handling of RRSBA
+Date: Mon, 15 Apr 2024 16:21:32 +0200
+Message-ID: <20240415141948.006061684@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141946.165870434@linuxfoundation.org>
 References: <20240415141946.165870434@linuxfoundation.org>
@@ -53,318 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ingo Molnar <mingo@kernel.org>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit d0485730d2189ffe5d986d4e9e191f1e4d5ffd24 upstream.
+commit 1cea8a280dfd1016148a3820676f2f03e3f5b898 upstream.
 
-So we are using the 'ia32_cap' value in a number of places,
-which got its name from MSR_IA32_ARCH_CAPABILITIES MSR register.
+The ARCH_CAP_RRSBA check isn't correct: RRSBA may have already been
+disabled by the Spectre v2 mitigation (or can otherwise be disabled by
+the BHI mitigation itself if needed).  In that case retpolines are fine.
 
-But there's very little 'IA32' about it - this isn't 32-bit only
-code, nor does it originate from there, it's just a historic
-quirk that many Intel MSR names are prefixed with IA32_.
-
-This is already clear from the helper method around the MSR:
-x86_read_arch_cap_msr(), which doesn't have the IA32 prefix.
-
-So rename 'ia32_cap' to 'x86_arch_cap_msr' to be consistent with
-its role and with the naming of the helper function.
-
+Fixes: ec9404e40e8f ("x86/bhi: Add BHI mitigation knob")
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Cc: Nikolay Borisov <nik.borisov@suse.com>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/r/9592a18a814368e75f8f4b9d74d3883aa4fd1eaf.1712813475.git.jpoimboe@kernel.org
+Link: https://lore.kernel.org/r/6f56f13da34a0834b69163467449be7f58f253dc.1712813475.git.jpoimboe@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/apic/apic.c  |    6 ++---
- arch/x86/kernel/cpu/bugs.c   |   30 +++++++++++++-------------
- arch/x86/kernel/cpu/common.c |   48 +++++++++++++++++++++----------------------
- 3 files changed, 42 insertions(+), 42 deletions(-)
+ arch/x86/kernel/cpu/bugs.c |   30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
---- a/arch/x86/kernel/apic/apic.c
-+++ b/arch/x86/kernel/apic/apic.c
-@@ -1760,11 +1760,11 @@ static int x2apic_state;
- 
- static bool x2apic_hw_locked(void)
- {
--	u64 ia32_cap;
-+	u64 x86_arch_cap_msr;
- 	u64 msr;
- 
--	ia32_cap = x86_read_arch_cap_msr();
--	if (ia32_cap & ARCH_CAP_XAPIC_DISABLE) {
-+	x86_arch_cap_msr = x86_read_arch_cap_msr();
-+	if (x86_arch_cap_msr & ARCH_CAP_XAPIC_DISABLE) {
- 		rdmsrl(MSR_IA32_XAPIC_DISABLE_STATUS, msr);
- 		return (msr & LEGACY_XAPIC_DISABLED);
- 	}
 --- a/arch/x86/kernel/cpu/bugs.c
 +++ b/arch/x86/kernel/cpu/bugs.c
-@@ -60,7 +60,7 @@ EXPORT_SYMBOL_GPL(x86_spec_ctrl_current)
- u64 x86_pred_cmd __ro_after_init = PRED_CMD_IBPB;
- EXPORT_SYMBOL_GPL(x86_pred_cmd);
+@@ -1515,20 +1515,25 @@ static enum spectre_v2_mitigation __init
+ 	return SPECTRE_V2_RETPOLINE;
+ }
  
--static u64 __ro_after_init ia32_cap;
-+static u64 __ro_after_init x86_arch_cap_msr;
- 
- static DEFINE_MUTEX(spec_ctrl_mutex);
- 
-@@ -145,7 +145,7 @@ void __init cpu_select_mitigations(void)
- 		x86_spec_ctrl_base &= ~SPEC_CTRL_MITIGATIONS_MASK;
- 	}
- 
--	ia32_cap = x86_read_arch_cap_msr();
-+	x86_arch_cap_msr = x86_read_arch_cap_msr();
- 
- 	/* Select the proper CPU mitigations before patching alternatives: */
- 	spectre_v1_select_mitigation();
-@@ -342,8 +342,8 @@ static void __init taa_select_mitigation
- 	 * On MDS_NO=1 CPUs if ARCH_CAP_TSX_CTRL_MSR is not set, microcode
- 	 * update is required.
- 	 */
--	if ( (ia32_cap & ARCH_CAP_MDS_NO) &&
--	    !(ia32_cap & ARCH_CAP_TSX_CTRL_MSR))
-+	if ( (x86_arch_cap_msr & ARCH_CAP_MDS_NO) &&
-+	    !(x86_arch_cap_msr & ARCH_CAP_TSX_CTRL_MSR))
- 		taa_mitigation = TAA_MITIGATION_UCODE_NEEDED;
- 
- 	/*
-@@ -433,7 +433,7 @@ static void __init mmio_select_mitigatio
- 	 * be propagated to uncore buffers, clearing the Fill buffers on idle
- 	 * is required irrespective of SMT state.
- 	 */
--	if (!(ia32_cap & ARCH_CAP_FBSDP_NO))
-+	if (!(x86_arch_cap_msr & ARCH_CAP_FBSDP_NO))
- 		static_branch_enable(&mds_idle_clear);
- 
- 	/*
-@@ -443,10 +443,10 @@ static void __init mmio_select_mitigatio
- 	 * FB_CLEAR or by the presence of both MD_CLEAR and L1D_FLUSH on MDS
- 	 * affected systems.
- 	 */
--	if ((ia32_cap & ARCH_CAP_FB_CLEAR) ||
-+	if ((x86_arch_cap_msr & ARCH_CAP_FB_CLEAR) ||
- 	    (boot_cpu_has(X86_FEATURE_MD_CLEAR) &&
- 	     boot_cpu_has(X86_FEATURE_FLUSH_L1D) &&
--	     !(ia32_cap & ARCH_CAP_MDS_NO)))
-+	     !(x86_arch_cap_msr & ARCH_CAP_MDS_NO)))
- 		mmio_mitigation = MMIO_MITIGATION_VERW;
- 	else
- 		mmio_mitigation = MMIO_MITIGATION_UCODE_NEEDED;
-@@ -504,7 +504,7 @@ static void __init rfds_select_mitigatio
- 	if (rfds_mitigation == RFDS_MITIGATION_OFF)
- 		return;
- 
--	if (ia32_cap & ARCH_CAP_RFDS_CLEAR)
-+	if (x86_arch_cap_msr & ARCH_CAP_RFDS_CLEAR)
- 		setup_force_cpu_cap(X86_FEATURE_CLEAR_CPU_BUF);
- 	else
- 		rfds_mitigation = RFDS_MITIGATION_UCODE_NEEDED;
-@@ -663,7 +663,7 @@ static void __init srbds_select_mitigati
- 	 * are only exposed to SRBDS when TSX is enabled or when CPU is affected
- 	 * by Processor MMIO Stale Data vulnerability.
- 	 */
--	if ((ia32_cap & ARCH_CAP_MDS_NO) && !boot_cpu_has(X86_FEATURE_RTM) &&
-+	if ((x86_arch_cap_msr & ARCH_CAP_MDS_NO) && !boot_cpu_has(X86_FEATURE_RTM) &&
- 	    !boot_cpu_has_bug(X86_BUG_MMIO_STALE_DATA))
- 		srbds_mitigation = SRBDS_MITIGATION_TSX_OFF;
- 	else if (boot_cpu_has(X86_FEATURE_HYPERVISOR))
-@@ -806,7 +806,7 @@ static void __init gds_select_mitigation
- 	/* Will verify below that mitigation _can_ be disabled */
- 
- 	/* No microcode */
--	if (!(ia32_cap & ARCH_CAP_GDS_CTRL)) {
-+	if (!(x86_arch_cap_msr & ARCH_CAP_GDS_CTRL)) {
- 		if (gds_mitigation == GDS_MITIGATION_FORCE) {
- 			/*
- 			 * This only needs to be done on the boot CPU so do it
-@@ -1518,14 +1518,14 @@ static enum spectre_v2_mitigation __init
++static bool __ro_after_init rrsba_disabled;
++
  /* Disable in-kernel use of non-RSB RET predictors */
  static void __init spec_ctrl_disable_kernel_rrsba(void)
  {
--	u64 ia32_cap;
-+	u64 x86_arch_cap_msr;
+-	u64 x86_arch_cap_msr;
++	if (rrsba_disabled)
++		return;
  
- 	if (!boot_cpu_has(X86_FEATURE_RRSBA_CTRL))
+-	if (!boot_cpu_has(X86_FEATURE_RRSBA_CTRL))
++	if (!(x86_arch_cap_msr & ARCH_CAP_RRSBA)) {
++		rrsba_disabled = true;
+ 		return;
++	}
+ 
+-	x86_arch_cap_msr = x86_read_arch_cap_msr();
++	if (!boot_cpu_has(X86_FEATURE_RRSBA_CTRL))
++		return;
+ 
+-	if (x86_arch_cap_msr & ARCH_CAP_RRSBA) {
+-		x86_spec_ctrl_base |= SPEC_CTRL_RRSBA_DIS_S;
+-		update_spec_ctrl(x86_spec_ctrl_base);
+-	}
++	x86_spec_ctrl_base |= SPEC_CTRL_RRSBA_DIS_S;
++	update_spec_ctrl(x86_spec_ctrl_base);
++	rrsba_disabled = true;
+ }
+ 
+ static void __init spectre_v2_determine_rsb_fill_type_at_vmexit(enum spectre_v2_mitigation mode)
+@@ -1629,9 +1634,11 @@ static void __init bhi_select_mitigation
  		return;
  
--	ia32_cap = x86_read_arch_cap_msr();
-+	x86_arch_cap_msr = x86_read_arch_cap_msr();
+ 	/* Retpoline mitigates against BHI unless the CPU has RRSBA behavior */
+-	if (cpu_feature_enabled(X86_FEATURE_RETPOLINE) &&
+-	    !(x86_read_arch_cap_msr() & ARCH_CAP_RRSBA))
+-		return;
++	if (cpu_feature_enabled(X86_FEATURE_RETPOLINE)) {
++		spec_ctrl_disable_kernel_rrsba();
++		if (rrsba_disabled)
++			return;
++	}
  
--	if (ia32_cap & ARCH_CAP_RRSBA) {
-+	if (x86_arch_cap_msr & ARCH_CAP_RRSBA) {
- 		x86_spec_ctrl_base |= SPEC_CTRL_RRSBA_DIS_S;
- 		update_spec_ctrl(x86_spec_ctrl_base);
- 	}
-@@ -1892,7 +1892,7 @@ static void update_mds_branch_idle(void)
- 	if (sched_smt_active()) {
- 		static_branch_enable(&mds_idle_clear);
- 	} else if (mmio_mitigation == MMIO_MITIGATION_OFF ||
--		   (ia32_cap & ARCH_CAP_FBSDP_NO)) {
-+		   (x86_arch_cap_msr & ARCH_CAP_FBSDP_NO)) {
- 		static_branch_disable(&mds_idle_clear);
- 	}
- }
-@@ -2789,7 +2789,7 @@ static const char *spectre_bhi_state(voi
+ 	if (spec_ctrl_bhi_dis())
+ 		return;
+@@ -2788,8 +2795,7 @@ static const char *spectre_bhi_state(voi
+ 		return "; BHI: BHI_DIS_S";
  	else if  (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP))
  		return "; BHI: SW loop, KVM: SW loop";
- 	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) &&
--		 !(ia32_cap & ARCH_CAP_RRSBA))
-+		 !(x86_arch_cap_msr & ARCH_CAP_RRSBA))
+-	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) &&
+-		 !(x86_arch_cap_msr & ARCH_CAP_RRSBA))
++	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) && rrsba_disabled)
  		return "; BHI: Retpoline";
  	else if  (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT))
  		return "; BHI: Syscall hardening, KVM: SW loop";
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1308,25 +1308,25 @@ static bool __init cpu_matches(const str
- 
- u64 x86_read_arch_cap_msr(void)
- {
--	u64 ia32_cap = 0;
-+	u64 x86_arch_cap_msr = 0;
- 
- 	if (boot_cpu_has(X86_FEATURE_ARCH_CAPABILITIES))
--		rdmsrl(MSR_IA32_ARCH_CAPABILITIES, ia32_cap);
-+		rdmsrl(MSR_IA32_ARCH_CAPABILITIES, x86_arch_cap_msr);
- 
--	return ia32_cap;
-+	return x86_arch_cap_msr;
- }
- 
--static bool arch_cap_mmio_immune(u64 ia32_cap)
-+static bool arch_cap_mmio_immune(u64 x86_arch_cap_msr)
- {
--	return (ia32_cap & ARCH_CAP_FBSDP_NO &&
--		ia32_cap & ARCH_CAP_PSDP_NO &&
--		ia32_cap & ARCH_CAP_SBDR_SSDP_NO);
-+	return (x86_arch_cap_msr & ARCH_CAP_FBSDP_NO &&
-+		x86_arch_cap_msr & ARCH_CAP_PSDP_NO &&
-+		x86_arch_cap_msr & ARCH_CAP_SBDR_SSDP_NO);
- }
- 
--static bool __init vulnerable_to_rfds(u64 ia32_cap)
-+static bool __init vulnerable_to_rfds(u64 x86_arch_cap_msr)
- {
- 	/* The "immunity" bit trumps everything else: */
--	if (ia32_cap & ARCH_CAP_RFDS_NO)
-+	if (x86_arch_cap_msr & ARCH_CAP_RFDS_NO)
- 		return false;
- 
- 	/*
-@@ -1334,7 +1334,7 @@ static bool __init vulnerable_to_rfds(u6
- 	 * indicate that mitigation is needed because guest is running on a
- 	 * vulnerable hardware or may migrate to such hardware:
- 	 */
--	if (ia32_cap & ARCH_CAP_RFDS_CLEAR)
-+	if (x86_arch_cap_msr & ARCH_CAP_RFDS_CLEAR)
- 		return true;
- 
- 	/* Only consult the blacklist when there is no enumeration: */
-@@ -1343,11 +1343,11 @@ static bool __init vulnerable_to_rfds(u6
- 
- static void __init cpu_set_bug_bits(struct cpuinfo_x86 *c)
- {
--	u64 ia32_cap = x86_read_arch_cap_msr();
-+	u64 x86_arch_cap_msr = x86_read_arch_cap_msr();
- 
- 	/* Set ITLB_MULTIHIT bug if cpu is not in the whitelist and not mitigated */
- 	if (!cpu_matches(cpu_vuln_whitelist, NO_ITLB_MULTIHIT) &&
--	    !(ia32_cap & ARCH_CAP_PSCHANGE_MC_NO))
-+	    !(x86_arch_cap_msr & ARCH_CAP_PSCHANGE_MC_NO))
- 		setup_force_cpu_bug(X86_BUG_ITLB_MULTIHIT);
- 
- 	if (cpu_matches(cpu_vuln_whitelist, NO_SPECULATION))
-@@ -1359,7 +1359,7 @@ static void __init cpu_set_bug_bits(stru
- 		setup_force_cpu_bug(X86_BUG_SPECTRE_V2);
- 
- 	if (!cpu_matches(cpu_vuln_whitelist, NO_SSB) &&
--	    !(ia32_cap & ARCH_CAP_SSB_NO) &&
-+	    !(x86_arch_cap_msr & ARCH_CAP_SSB_NO) &&
- 	   !cpu_has(c, X86_FEATURE_AMD_SSB_NO))
- 		setup_force_cpu_bug(X86_BUG_SPEC_STORE_BYPASS);
- 
-@@ -1367,15 +1367,15 @@ static void __init cpu_set_bug_bits(stru
- 	 * AMD's AutoIBRS is equivalent to Intel's eIBRS - use the Intel feature
- 	 * flag and protect from vendor-specific bugs via the whitelist.
- 	 */
--	if ((ia32_cap & ARCH_CAP_IBRS_ALL) || cpu_has(c, X86_FEATURE_AUTOIBRS)) {
-+	if ((x86_arch_cap_msr & ARCH_CAP_IBRS_ALL) || cpu_has(c, X86_FEATURE_AUTOIBRS)) {
- 		setup_force_cpu_cap(X86_FEATURE_IBRS_ENHANCED);
- 		if (!cpu_matches(cpu_vuln_whitelist, NO_EIBRS_PBRSB) &&
--		    !(ia32_cap & ARCH_CAP_PBRSB_NO))
-+		    !(x86_arch_cap_msr & ARCH_CAP_PBRSB_NO))
- 			setup_force_cpu_bug(X86_BUG_EIBRS_PBRSB);
- 	}
- 
- 	if (!cpu_matches(cpu_vuln_whitelist, NO_MDS) &&
--	    !(ia32_cap & ARCH_CAP_MDS_NO)) {
-+	    !(x86_arch_cap_msr & ARCH_CAP_MDS_NO)) {
- 		setup_force_cpu_bug(X86_BUG_MDS);
- 		if (cpu_matches(cpu_vuln_whitelist, MSBDS_ONLY))
- 			setup_force_cpu_bug(X86_BUG_MSBDS_ONLY);
-@@ -1394,9 +1394,9 @@ static void __init cpu_set_bug_bits(stru
- 	 * TSX_CTRL check alone is not sufficient for cases when the microcode
- 	 * update is not present or running as guest that don't get TSX_CTRL.
- 	 */
--	if (!(ia32_cap & ARCH_CAP_TAA_NO) &&
-+	if (!(x86_arch_cap_msr & ARCH_CAP_TAA_NO) &&
- 	    (cpu_has(c, X86_FEATURE_RTM) ||
--	     (ia32_cap & ARCH_CAP_TSX_CTRL_MSR)))
-+	     (x86_arch_cap_msr & ARCH_CAP_TSX_CTRL_MSR)))
- 		setup_force_cpu_bug(X86_BUG_TAA);
- 
- 	/*
-@@ -1422,7 +1422,7 @@ static void __init cpu_set_bug_bits(stru
- 	 * Set X86_BUG_MMIO_UNKNOWN for CPUs that are neither in the blacklist,
- 	 * nor in the whitelist and also don't enumerate MSR ARCH_CAP MMIO bits.
- 	 */
--	if (!arch_cap_mmio_immune(ia32_cap)) {
-+	if (!arch_cap_mmio_immune(x86_arch_cap_msr)) {
- 		if (cpu_matches(cpu_vuln_blacklist, MMIO))
- 			setup_force_cpu_bug(X86_BUG_MMIO_STALE_DATA);
- 		else if (!cpu_matches(cpu_vuln_whitelist, NO_MMIO))
-@@ -1430,7 +1430,7 @@ static void __init cpu_set_bug_bits(stru
- 	}
- 
- 	if (!cpu_has(c, X86_FEATURE_BTC_NO)) {
--		if (cpu_matches(cpu_vuln_blacklist, RETBLEED) || (ia32_cap & ARCH_CAP_RSBA))
-+		if (cpu_matches(cpu_vuln_blacklist, RETBLEED) || (x86_arch_cap_msr & ARCH_CAP_RSBA))
- 			setup_force_cpu_bug(X86_BUG_RETBLEED);
- 	}
- 
-@@ -1443,7 +1443,7 @@ static void __init cpu_set_bug_bits(stru
- 	 * disabling AVX2. The only way to do this in HW is to clear XCR0[2],
- 	 * which means that AVX will be disabled.
- 	 */
--	if (cpu_matches(cpu_vuln_blacklist, GDS) && !(ia32_cap & ARCH_CAP_GDS_NO) &&
-+	if (cpu_matches(cpu_vuln_blacklist, GDS) && !(x86_arch_cap_msr & ARCH_CAP_GDS_NO) &&
- 	    boot_cpu_has(X86_FEATURE_AVX))
- 		setup_force_cpu_bug(X86_BUG_GDS);
- 
-@@ -1452,11 +1452,11 @@ static void __init cpu_set_bug_bits(stru
- 			setup_force_cpu_bug(X86_BUG_SRSO);
- 	}
- 
--	if (vulnerable_to_rfds(ia32_cap))
-+	if (vulnerable_to_rfds(x86_arch_cap_msr))
- 		setup_force_cpu_bug(X86_BUG_RFDS);
- 
- 	/* When virtualized, eIBRS could be hidden, assume vulnerable */
--	if (!(ia32_cap & ARCH_CAP_BHI_NO) &&
-+	if (!(x86_arch_cap_msr & ARCH_CAP_BHI_NO) &&
- 	    !cpu_matches(cpu_vuln_whitelist, NO_BHI) &&
- 	    (boot_cpu_has(X86_FEATURE_IBRS_ENHANCED) ||
- 	     boot_cpu_has(X86_FEATURE_HYPERVISOR)))
-@@ -1466,7 +1466,7 @@ static void __init cpu_set_bug_bits(stru
- 		return;
- 
- 	/* Rogue Data Cache Load? No! */
--	if (ia32_cap & ARCH_CAP_RDCL_NO)
-+	if (x86_arch_cap_msr & ARCH_CAP_RDCL_NO)
- 		return;
- 
- 	setup_force_cpu_bug(X86_BUG_CPU_MELTDOWN);
 
 
