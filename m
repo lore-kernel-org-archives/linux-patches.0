@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EBF71B32;
-	Mon, 15 Apr 2024 14:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872C480BFE;
+	Mon, 15 Apr 2024 14:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191533; cv=none; b=sgvSqpQrHtngdAVlRKxfQyIOomI+9S76gOLg50l3XssPHAgiVtR4efSL5up40Rm2qeARec12M4EeHy8XLVb4k94jZIaJqNxS8g8pS9aqjC/eefw4hgzeudSM4I/U/On7XYpii280iUF4UOVj0iuz2ucFu/pOZ27odHFSIERvHfs=
+	t=1713191536; cv=none; b=Lx5GuI2htN30DOH4p3UhYmAd0KyNfnx5IxugX6zCBg5ZQYdhpt4c9CVZXPj7CRn6umsS0ywOzkcgCvuPd477XQjYPaJj71yW66DqpU8z+cOrZZ10baTMhohOsdOrCMmQjmjt1VWsHv42eQgVPWHK72JXSe5Qom7xl8+vKmgm3xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191533; c=relaxed/simple;
-	bh=npMT8cxn1EMAoxqbQVVCK7OrKHPTcD0xwiIJKUmNueU=;
+	s=arc-20240116; t=1713191536; c=relaxed/simple;
+	bh=LUd5/0+JreaGis0BdfeTlIBmlF/qQ7sIWgR67JwdrU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KOkZhMeorjZv4XojDwjMm9dCAGOFqYFjzKVFdMhy3X7yut4j4shMGewD8bFuzDecB9Y5rLr48WVyZoQb1khFpjadYEe42WCcPt3M9CN75eGwUEf+vN3M32n2cIVhxIEDTtvR7/oDRo2nQ+F0XtKuyx8hmT5z4Q0mCHpVAvFN6tI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNcAQ7fP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cKJjwd8OuS/9NJmg19I3/Wy6FLx1Conf201CsloTlZeNsZiAP/+kSztuVksgDkIKreWfqgLlaox+3VkQdI+UI8WL0HygvAy3miCAEjaVKq+cKbzA/v+qN0LPsqFiJUygU/DjtQbeMMP34JuKb49pUYwmr06N0bqGF7frWKwm7iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kiILADv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNcAQ7fP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166FFC113CC;
-	Mon, 15 Apr 2024 14:32:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kiILADv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7BEC113CC;
+	Mon, 15 Apr 2024 14:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191533;
-	bh=npMT8cxn1EMAoxqbQVVCK7OrKHPTcD0xwiIJKUmNueU=;
+	s=korg; t=1713191536;
+	bh=LUd5/0+JreaGis0BdfeTlIBmlF/qQ7sIWgR67JwdrU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HNcAQ7fPxKDRafTf/4XBvvLsKID5DLzI0JfSmiiAgKq2+Am3Z+Jvx9Q80N0CLPK1D
-	 pv653vET643bUoo2OvuPYxOt9deUXVP3SeHjVe+VQy03E8yyChlXvyvQO5JdFDPopc
-	 a9RIrujLxxJUtejUzj9W1KCAwz6bALlZQJ9MfE0w=
+	b=0kiILADv+wqTvPcXLk+0zsA9skndwHy9bPz5NxhOgvg5jnr7Ie5Jtcp1eD60UAAle
+	 G+EsQ3bcpDo0Uzkm/S7SykpyO1Dd9Blkod4JOv9vSPgYODZOcKj3D3F6HBbEJN1c7E
+	 x7OsGekcLTLfWVdlNlVdKe/WnZj1wkkCnOFguiY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Fudongwang <fudong.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.8 172/172] drm/amd/display: fix disable otg wa logic in DCN316
-Date: Mon, 15 Apr 2024 16:21:11 +0200
-Message-ID: <20240415142005.569001212@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.8 137/172] arm64: dts: imx8-ss-lsio: fix pwm lpcg indices
+Date: Mon, 15 Apr 2024 16:20:36 +0200
+Message-ID: <20240415142004.536555376@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -52,72 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fudongwang <fudong.wang@amd.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit cf79814cb0bf5749b9f0db53ca231aa540c02768 upstream.
+commit 1d86c2b3946e69d6b0b93568d312aae6247847c0 upstream.
 
-[Why]
-Wrong logic cause screen corruption.
+lpcg's arg0 should use clock indices instead of index.
 
-[How]
-Port logic from DCN35/314.
+pwm0_lpcg: clock-controller@5d400000 {
+	...                                                // Col1  Col2
+	clocks = <&clk IMX_SC_R_PWM_0 IMX_SC_PM_CLK_PER>,  // 0     0
+		 <&clk IMX_SC_R_PWM_0 IMX_SC_PM_CLK_PER>,  // 1     1
+		 <&clk IMX_SC_R_PWM_0 IMX_SC_PM_CLK_PER>,  // 2     4
+		 <&lsio_bus_clk>,                          // 3     5
+		 <&clk IMX_SC_R_PWM_0 IMX_SC_PM_CLK_PER>;  // 4     6
+	clock-indices = <IMX_LPCG_CLK_0>, <IMX_LPCG_CLK_1>,
+			<IMX_LPCG_CLK_4>, <IMX_LPCG_CLK_5>,
+			<IMX_LPCG_CLK_6>;
+};
+
+Col1: index, which existing dts try to get.
+Col2: actual index in lpcg driver.
+
+pwm1 {
+	....
+	clocks = <&pwm1_lpcg 4>, <&pwm1_lpcg 1>;
+                             ^^              ^^
+should be:
+
+	clocks = <&pwm1_lpcg IMX_LPCG_CLK_6>, <&pwm1_lpcg IMX_LPCG_CLK_1>;
+};
+
+Arg0 is divided by 4 in lpcg driver, so index 0 and 1 will be get by pwm
+driver, which are same as IMX_LPCG_CLK_6 and IMX_LPCG_CLK_1. Even it can
+work, but code logic is wrong. Fixed it by use correct indices.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Fudongwang <fudong.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 23fa99b205ea ("arm64: dts: freescale: imx8-ss-lsio: add support for lsio_pwm0-3")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c |   19 ++++++----
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8-ss-lsio.dtsi |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c
-@@ -99,20 +99,25 @@ static int dcn316_get_active_display_cnt
- 	return display_count;
- }
- 
--static void dcn316_disable_otg_wa(struct clk_mgr *clk_mgr_base, struct dc_state *context, bool disable)
-+static void dcn316_disable_otg_wa(struct clk_mgr *clk_mgr_base, struct dc_state *context,
-+		bool safe_to_lower, bool disable)
- {
- 	struct dc *dc = clk_mgr_base->ctx->dc;
- 	int i;
- 
- 	for (i = 0; i < dc->res_pool->pipe_count; ++i) {
--		struct pipe_ctx *pipe = &dc->current_state->res_ctx.pipe_ctx[i];
-+		struct pipe_ctx *pipe = safe_to_lower
-+			? &context->res_ctx.pipe_ctx[i]
-+			: &dc->current_state->res_ctx.pipe_ctx[i];
- 
- 		if (pipe->top_pipe || pipe->prev_odm_pipe)
- 			continue;
--		if (pipe->stream && (pipe->stream->dpms_off || pipe->plane_state == NULL ||
--				     dc_is_virtual_signal(pipe->stream->signal))) {
-+		if (pipe->stream && (pipe->stream->dpms_off || dc_is_virtual_signal(pipe->stream->signal) ||
-+				     !pipe->stream->link_enc)) {
- 			if (disable) {
--				pipe->stream_res.tg->funcs->immediate_disable_crtc(pipe->stream_res.tg);
-+				if (pipe->stream_res.tg && pipe->stream_res.tg->funcs->immediate_disable_crtc)
-+					pipe->stream_res.tg->funcs->immediate_disable_crtc(pipe->stream_res.tg);
-+
- 				reset_sync_context_for_pipe(dc, context, i);
- 			} else
- 				pipe->stream_res.tg->funcs->enable_crtc(pipe->stream_res.tg);
-@@ -207,11 +212,11 @@ static void dcn316_update_clocks(struct
- 	}
- 
- 	if (should_set_clock(safe_to_lower, new_clocks->dispclk_khz, clk_mgr_base->clks.dispclk_khz)) {
--		dcn316_disable_otg_wa(clk_mgr_base, context, true);
-+		dcn316_disable_otg_wa(clk_mgr_base, context, safe_to_lower, true);
- 
- 		clk_mgr_base->clks.dispclk_khz = new_clocks->dispclk_khz;
- 		dcn316_smu_set_dispclk(clk_mgr, clk_mgr_base->clks.dispclk_khz);
--		dcn316_disable_otg_wa(clk_mgr_base, context, false);
-+		dcn316_disable_otg_wa(clk_mgr_base, context, safe_to_lower, false);
- 
- 		update_dispclk = true;
- 	}
+--- a/arch/arm64/boot/dts/freescale/imx8-ss-lsio.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8-ss-lsio.dtsi
+@@ -25,8 +25,8 @@ lsio_subsys: bus@5d000000 {
+ 		compatible = "fsl,imx27-pwm";
+ 		reg = <0x5d000000 0x10000>;
+ 		clock-names = "ipg", "per";
+-		clocks = <&pwm0_lpcg 4>,
+-			 <&pwm0_lpcg 1>;
++		clocks = <&pwm0_lpcg IMX_LPCG_CLK_6>,
++			 <&pwm0_lpcg IMX_LPCG_CLK_1>;
+ 		assigned-clocks = <&clk IMX_SC_R_PWM_0 IMX_SC_PM_CLK_PER>;
+ 		assigned-clock-rates = <24000000>;
+ 		#pwm-cells = <3>;
+@@ -38,8 +38,8 @@ lsio_subsys: bus@5d000000 {
+ 		compatible = "fsl,imx27-pwm";
+ 		reg = <0x5d010000 0x10000>;
+ 		clock-names = "ipg", "per";
+-		clocks = <&pwm1_lpcg 4>,
+-			 <&pwm1_lpcg 1>;
++		clocks = <&pwm1_lpcg IMX_LPCG_CLK_6>,
++			 <&pwm1_lpcg IMX_LPCG_CLK_1>;
+ 		assigned-clocks = <&clk IMX_SC_R_PWM_1 IMX_SC_PM_CLK_PER>;
+ 		assigned-clock-rates = <24000000>;
+ 		#pwm-cells = <3>;
+@@ -51,8 +51,8 @@ lsio_subsys: bus@5d000000 {
+ 		compatible = "fsl,imx27-pwm";
+ 		reg = <0x5d020000 0x10000>;
+ 		clock-names = "ipg", "per";
+-		clocks = <&pwm2_lpcg 4>,
+-			 <&pwm2_lpcg 1>;
++		clocks = <&pwm2_lpcg IMX_LPCG_CLK_6>,
++			 <&pwm2_lpcg IMX_LPCG_CLK_1>;
+ 		assigned-clocks = <&clk IMX_SC_R_PWM_2 IMX_SC_PM_CLK_PER>;
+ 		assigned-clock-rates = <24000000>;
+ 		#pwm-cells = <3>;
+@@ -64,8 +64,8 @@ lsio_subsys: bus@5d000000 {
+ 		compatible = "fsl,imx27-pwm";
+ 		reg = <0x5d030000 0x10000>;
+ 		clock-names = "ipg", "per";
+-		clocks = <&pwm3_lpcg 4>,
+-			 <&pwm3_lpcg 1>;
++		clocks = <&pwm3_lpcg IMX_LPCG_CLK_6>,
++			 <&pwm3_lpcg IMX_LPCG_CLK_1>;
+ 		assigned-clocks = <&clk IMX_SC_R_PWM_3 IMX_SC_PM_CLK_PER>;
+ 		assigned-clock-rates = <24000000>;
+ 		#pwm-cells = <3>;
 
 
