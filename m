@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B779757FB;
-	Mon, 15 Apr 2024 14:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E93757FB;
+	Mon, 15 Apr 2024 14:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191504; cv=none; b=OylW2u6oqmDM5tefj37BvNNLaponIhTjT28lM89T1OLgdLkQ6HHDxWBEFvDZ4L0bk5hpIIPoEAnJS8C45RtP4mVAG2YG1ciqcllHYrhuPVDpkzoQlLYlVXUeKFGv2TKUOCnEqxA7J3PWQUrpywEl80tSNVKrWJISqdgy7eHeWis=
+	t=1713191507; cv=none; b=NNm2UHibiCHCo3QWr0f4xUNZMF/i6PdltiUWQa82dLJlMqX0NjAW7rvsRxuGmQ+pvjHXkv43QKA6xhz3DWds7N4zbKXV9eSrZgRyrY9hEnr0wpRxxzCwLICBoamnmqg5t196nx96i6SL9JraGammYReMTS1WYpTkVYq7exfclGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191504; c=relaxed/simple;
-	bh=7fl9qsbCDgyU55H96DJ4tAIRgSLCH8GC7iQP6wLhBE4=;
+	s=arc-20240116; t=1713191507; c=relaxed/simple;
+	bh=usJLt4axeKYWFqxayiRD1gpqamN9+qxx4tJOe34R9vU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LBpWYNi8l2nQKd9p9SLlq05YOuQTS73QC/iA5Dzf4jr8sucwYpHRCt8jrAzu9I9yPqn7SLokyyQLu6SoKRJPaC601OR7px1CQHe/hv7hSeFE/jhhmhrIHd8mRUw36+sEi3rMQQ7L6fvlcsMv9cWHuBKfPKdI5xymQPgCa8aT9YQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NXDr3e7a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gIdIY6EydwWRP1tyK7FZIYb4rtPPGm9m8a3tAgI/GdN0RFMe7IjROCnq/vyLTxDDOlzrOlVHtV/hgd0wMkjbe4cLPfadaP81YUZKrVQmTIMeR7YZB547R6BFJijJ0nkGqVxx1J/bGzPSnNOciTjnWOEdczAYDQyOkhNW/2LksoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yx/uWeoZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NXDr3e7a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8291C113CC;
-	Mon, 15 Apr 2024 14:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yx/uWeoZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947F1C113CC;
+	Mon, 15 Apr 2024 14:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191504;
-	bh=7fl9qsbCDgyU55H96DJ4tAIRgSLCH8GC7iQP6wLhBE4=;
+	s=korg; t=1713191507;
+	bh=usJLt4axeKYWFqxayiRD1gpqamN9+qxx4tJOe34R9vU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NXDr3e7aAPhThROfowIa1d80dRxHhPt5pdWCtedD8KisPSScSXyEt6nHr+WycwD2o
-	 Lbb9A+jemEekG8tbhbsJiuG2699Q+c1bqV+efTAjE9rHKD6Ke05HXCAV8Fm3/60xay
-	 UQGyPIVSZkAvb3udtMQhTLZ1KIBbrMycTwiPaWF0=
+	b=yx/uWeoZCwwpS2bpGKmDpO++cPZOqEmH6c6uqZj3We7Xb27E1kFWRSJWTanjSvH2c
+	 iyZb7e1Q1+nnFqjIMp+n1WNO4yA0s1w3toc9J0EvmuNN9i/UzppGsNE4X/foeIg5N5
+	 9KCmsoZIQuwvU5QkXosVvwml1d1KLqz0vPpqsVfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>
-Subject: [PATCH 6.8 163/172] drm/amdgpu: Reset dGPU if suspend got aborted
-Date: Mon, 15 Apr 2024 16:21:02 +0200
-Message-ID: <20240415142005.304398474@linuxfoundation.org>
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.8 164/172] drm/amdgpu: always force full reset for SOC21
+Date: Mon, 15 Apr 2024 16:21:03 +0200
+Message-ID: <20240415142005.333138988@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -52,62 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 8b2be55f4d6c1099d7f629b0ed7535a5be788c83 upstream.
+commit 65ff8092e4802f96d87d3d7cde146961f5228265 upstream.
 
-For SOC21 ASICs, there is an issue in re-enabling PM features if a
-suspend got aborted. In such cases, reset the device during resume
-phase. This is a workaround till a proper solution is finalized.
+There are cases where soft reset seems to succeed, but
+does not, so always use mode1/2 for now.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/soc21.c |   25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/soc21.c |    2 --
+ 1 file changed, 2 deletions(-)
 
 --- a/drivers/gpu/drm/amd/amdgpu/soc21.c
 +++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
-@@ -832,10 +832,35 @@ static int soc21_common_suspend(void *ha
- 	return soc21_common_hw_fini(adev);
- }
- 
-+static bool soc21_need_reset_on_resume(struct amdgpu_device *adev)
-+{
-+	u32 sol_reg1, sol_reg2;
-+
-+	/* Will reset for the following suspend abort cases.
-+	 * 1) Only reset dGPU side.
-+	 * 2) S3 suspend got aborted and TOS is active.
-+	 */
-+	if (!(adev->flags & AMD_IS_APU) && adev->in_s3 &&
-+	    !adev->suspend_complete) {
-+		sol_reg1 = RREG32_SOC15(MP0, 0, regMP0_SMN_C2PMSG_81);
-+		msleep(100);
-+		sol_reg2 = RREG32_SOC15(MP0, 0, regMP0_SMN_C2PMSG_81);
-+
-+		return (sol_reg1 != sol_reg2);
-+	}
-+
-+	return false;
-+}
-+
- static int soc21_common_resume(void *handle)
+@@ -450,10 +450,8 @@ static bool soc21_need_full_reset(struct
  {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
- 
-+	if (soc21_need_reset_on_resume(adev)) {
-+		dev_info(adev->dev, "S3 suspend aborted, resetting...");
-+		soc21_asic_reset(adev);
-+	}
-+
- 	return soc21_common_hw_init(adev);
- }
- 
+ 	switch (amdgpu_ip_version(adev, GC_HWIP, 0)) {
+ 	case IP_VERSION(11, 0, 0):
+-		return amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__UMC);
+ 	case IP_VERSION(11, 0, 2):
+ 	case IP_VERSION(11, 0, 3):
+-		return false;
+ 	default:
+ 		return true;
+ 	}
 
 
