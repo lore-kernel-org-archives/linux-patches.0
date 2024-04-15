@@ -1,170 +1,138 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0591553A2;
-	Mon, 15 Apr 2024 18:32:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B212B84D24
+	for <patches@lists.linux.dev>; Mon, 15 Apr 2024 18:41:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713205953; cv=none; b=CrNsQVLM5if+VEy35yfmydXdWauQD2G8s7MVeHhMkNysz3W+l9USV9dOf9mHsB6S6SgqBAQD/ws6u3rVUzPzT4VnmRyEaRI9n7wpH189iB8CDj3nHRcB8Dq/kvG9wRgbdoc8WIZnJuAnjmcTXSo6A2ajhDPKAtUNbglo4Iy26VE=
+	t=1713206480; cv=none; b=ZWiYaIjsCLUvLOIe21uDIQNQY/6SeymhN3xFMF6cQTx68FpKFOixRzJmadPB13X9+qrU0wQ5VVXtuJbNfzqmSgXQbpmMiVzbR0VrPWu5QAEmX9UtEkdh1HJxBXl/rcFh3lwCY5GeG3DzRSoMxh4nSVuBNJT86SFZJoc1lPx17Kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713205953; c=relaxed/simple;
-	bh=CG7UrxiclCzOT3p6JpR2Gw4yfNeQuA+CZtiI3k6cX/I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GQ978oRxpaaL76xGCB8ZGf52YGZH/WrM7Fgn0KRZ7ZfRVw/BtCVZ6i+MnNDsMhLTZitkE8yfnobeun2GoguGWTK770PNdnUe7Q7m4jskIthZGk0FMt7iCZSUXKgrsWGuAOmmL32iJaY+AflJgM4TyUP3+B6kTn3gaF4gHJjcpA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kweOLtnr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713206480; c=relaxed/simple;
+	bh=2ruptX+/9hWKb3oStP8xOxWrDxeGthrFWC5sxQMpkuE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ceAcaZpvg3j5S93TronR5pSyscmH8E9XV9ICwwDJyZG1x+AOW0gp3lewPxnDoQS7bMtOcxeQSZqr7qwzVSxjZ6o4kfTXGY68nJoonJAYJGyd5uFh6kQtcI/7H0Bc8V6aUJwmIocjlEnlhJ0WFDJtBjsOoMpGD/4U5xOPpCNIzGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=irCgedzc; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kweOLtnr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BEAAC113CC;
-	Mon, 15 Apr 2024 18:32:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713205952;
-	bh=CG7UrxiclCzOT3p6JpR2Gw4yfNeQuA+CZtiI3k6cX/I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kweOLtnrZS6ULiNjjAANs5MyE9uTN5M0jQptaSd//PDOWqmlDXJnXgNx4MO+zwuD9
-	 XC+cIi8gqj17tpAuiHjiPQF3TLM74nHgWY4Tgm8IusYk1801wQc3M0kA3Z8/m6nSkm
-	 UuXob0JKWkylhbqgeE9qgODJOXkLStCfPDEz6ihHyhHBen/EA+qtpDxOeF2+yzWNn9
-	 DyLjNSNa1VRC+oOXhPM4hSf4vhoqU/jwAZkmMCutnkdPt4xE9H8C+RN7TPrBOw9GO2
-	 elpLxDWmER/GtUYjmuqFX0vX2H8TcXUd6s4uKScsfbv6XMljTVbwjYVplj9NiHzWp+
-	 bbq03jdmkqMMw==
-Date: Mon, 15 Apr 2024 11:32:30 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Kees Cook <keescook@chromium.org>
-Cc: gustavoars@kernel.org, justinstitt@google.com,
-	linux-hardening@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 0/2] configs/hardening: Some fixes for UBSAN
-Message-ID: <20240415183230.GA1011455@dev-arch.thelio-3990X>
-References: <20240411-fix-ubsan-in-hardening-config-v1-0-e0177c80ffaa@kernel.org>
- <202404151110.8D4AD8E@keescook>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="irCgedzc"
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-dcbcea9c261so3530964276.3
+        for <patches@lists.linux.dev>; Mon, 15 Apr 2024 11:41:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713206477; x=1713811277; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ly6P13yPcMqifhtf+m3GgrmwXTdYjr1GqnuIG3EWkcI=;
+        b=irCgedzcB5frULAdAqcKKZRYad4D4ZVa4ShV2rqxipsLfxiEHRMtSvNY7uju1QxjM/
+         DqtKjGVCkYcIrOuZd/3bhbzSx1zWTttMLdjmj4NcHvmNOzAkpEecVRHs65f6fhOOpLI/
+         pAXHpVpKW8rTY2MMzwCkA7HjxovOZjnhWVcX4wGXnQoJO4Oe7CR30q2BczFFibVt0YHg
+         3a2/0+dLFpm7+8oc9HmW9blTZgr5R1moBRFa7s4awuegm8V2ajlPKJb+anKXDDpixUAR
+         gS7muI4Gy3WCh9i7m/S2bFc4mkTS/+vre+cXDFoXMMzqYROPj3aCDXv+YFIjFuuDWOr1
+         j6Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713206478; x=1713811278;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ly6P13yPcMqifhtf+m3GgrmwXTdYjr1GqnuIG3EWkcI=;
+        b=uPWacvqDEf4Oz/cK7NFtZSBQf3A64l+IW35yUbBJFi5Xocaf7R6Zoqx9uGSxWifF5M
+         2o44WoPPj3X7OpwnMoRbcEs51rBqIjGZiMZsg+imvojV614brB+TlM+XQCoQymLftM7b
+         cj6kA+MRcQZv1F2DupPqYuDBWjysdh87XZ9UvA0PuC1/CTjQwBXQrrjT4y9ljT+U93+f
+         r9FfEVLjm6Qd6Eatqy09KqqXvrpZDGJ0ttGbXWBIAgj5idQpAF5qNCfcj4V8l+CEQyoP
+         BIgmlCKTuWFvbi/DBAkI/+VbcE4O6rl5HszYlcs4cb5W4UsSSTmUbLM0kMwifEKXW/ty
+         JTjA==
+X-Gm-Message-State: AOJu0YxTKl1wHbjffN7jXjVW7VvswMJpA90cc9hEjeHGuo5mKUpzI0Bc
+	okwIhN28O15g1TVsxkO4D4wVYRWsFDAUZkCEyywYSgBmmg2aD4pI
+X-Google-Smtp-Source: AGHT+IGP/uVgNEMB9YuK+XS3yWg0wA62IO4XRQxZjXZw4SOvexnDeJM5wnrRkLQHw7XO6StDLRwgRg==
+X-Received: by 2002:a25:b7ca:0:b0:dc2:421e:c943 with SMTP id u10-20020a25b7ca000000b00dc2421ec943mr8964930ybj.42.1713206477525;
+        Mon, 15 Apr 2024 11:41:17 -0700 (PDT)
+Received: from [192.168.1.3] (ip68-4-215-93.oc.oc.cox.net. [68.4.215.93])
+        by smtp.gmail.com with ESMTPSA id l18-20020ad44532000000b0069cc3a02eebsm104859qvu.4.2024.04.15.11.41.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Apr 2024 11:41:16 -0700 (PDT)
+Message-ID: <1ba6c65e-5de7-4b42-85e6-979c8845abc4@gmail.com>
+Date: Mon, 15 Apr 2024 11:41:11 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <202404151110.8D4AD8E@keescook>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.8 000/172] 6.8.7-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240415141959.976094777@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ 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
+ HGuUuzv+GKZ6nsysJw==
+In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Apr 15, 2024 at 11:15:05AM -0700, Kees Cook wrote:
-> On Thu, Apr 11, 2024 at 11:11:05AM -0700, Nathan Chancellor wrote:
-> >   [    0.189542] Internal error: UBSAN: unrecognized failure code: 00000000f2005515 [#1] PREEMPT SMP
+
+
+On 4/15/2024 7:18 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.8.7 release.
+> There are 172 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Oops! Yes, I didn't update the (arm64) trap handler to notice integer
-> overflows. I think I need something like:
+> Responses should be made by Wed, 17 Apr 2024 14:19:30 +0000.
+> Anything received after that time might be too late.
 > 
-> diff --git a/lib/ubsan.c b/lib/ubsan.c
-> index 5fc107f61934..a2fb19f75825 100644
-> --- a/lib/ubsan.c
-> +++ b/lib/ubsan.c
-> @@ -77,6 +77,14 @@ const char *report_ubsan_failure(struct pt_regs *regs, u32 check_type)
->  		return "UBSAN: alignment assumption";
->  	case ubsan_type_mismatch:
->  		return "UBSAN: type mismatch";
-> +#endif
-> +#ifdef CONFIG_UBSAN_SIGNED_INTEGER_WRAP
-
-This should be CONFIG_UBSAN_SIGNED_WRAP
-
-> +	case ubsan_add_overflow:
-> +		return "UBSAN: integer addition overflow";
-> +	case ubsan_sub_overflow:
-> +		return "UBSAN: integer subtraction overflow";
-> +	case ubsan_mul_overflow:
-> +		return "UBSAN: integer multiplication overflow";
->  #endif
->  	default:
->  		return "UBSAN: unrecognized failure code";
-
-but with that fixed, it becomes
-
-  [    0.208004] Internal error: UBSAN: integer subtraction overflow: 00000000f2005515 [#1] PREEMPT SMP
-
-so LGTM.
-
-> >   [    0.198326] Call trace:
-> >   [    0.198544]  cancel_delayed_work+0x54/0x94
-> >   [    0.198810]  deferred_probe_extend_timeout+0x20/0x6c
-> >   [    0.198988]  driver_register+0xa8/0x10c
-> >   [    0.199122]  __platform_driver_register+0x28/0x38
-> >   [    0.199258]  tegra194_cbb_init+0x24/0x34
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.7-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
+> and the diffstat can be found below.
 > 
-> Justin, does this trace match anything you found running syzkaller
-> against SIO? (I assume not -- this seems to be a tegra code path...)
+> thanks,
+> 
+> greg k-h
 
-FWIW, it is also visible with x86_64 in some other driver, so it is
-likely not a driver specific issue (at least not to one driver).
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-[    0.219560] Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-[    0.220441] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.9.0-rc4-next-20240415-dirty #1
-[    0.220441] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-[    0.220441] RIP: 0010:cancel_delayed_work+0x23/0x40
-[    0.220441] Code: 90 90 90 90 90 90 90 f3 0f 1e fa 53 50 48 89 fb 48 c7 04 24 00 00 00 00 48 89 e2 be 01 00 00 00 e8 02 eb ff ff f6 03 04 75 05 <67> 0f b9 40 15 90 0f 0b 90 67 0f b9 40 15 66 66 66 66 66 66 2e 0f
-[    0.220441] RSP: 0018:ffffa51600017b30 EFLAGS: 00010046
-[    0.220441] RAX: 0000000000000000 RBX: ffffffff997db830 RCX: 6da351d27a629a00
-[    0.220441] RDX: ffffa51600017b01 RSI: 0000000000000000 RDI: ffffffff997db850
-[    0.220441] RBP: ffffa51600017ea8 R08: 0000000000000001 R09: 000000000000000a
-[    0.220441] R10: 0000410110000001 R11: 0000000000000000 R12: 0000000000000000
-[    0.220441] R13: 0000000000000000 R14: ffffffff99f2e474 R15: 0000000000000000
-[    0.220441] FS:  0000000000000000(0000) GS:ffff8c485d200000(0000) knlGS:0000000000000000
-[    0.220441] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    0.220441] CR2: ffff8c4854401000 CR3: 000000001382a000 CR4: 0000000000350ef0
-[    0.220441] Call Trace:
-[    0.220441]  <TASK>
-[    0.220441]  ? __die_body+0x65/0xb0
-[    0.220441]  ? die+0xa5/0xd0
-[    0.220441]  ? do_trap+0xa1/0x170
-[    0.220441]  ? cancel_delayed_work+0x23/0x40
-[    0.220441]  ? cancel_delayed_work+0x23/0x40
-[    0.220441]  ? handle_invalid_op+0x65/0x80
-[    0.220441]  ? cancel_delayed_work+0x23/0x40
-[    0.220441]  ? exc_invalid_op+0x39/0x50
-[    0.220441]  ? asm_exc_invalid_op+0x1a/0x20
-[    0.220441]  ? cancel_delayed_work+0x23/0x40
-[    0.220441]  deferred_probe_extend_timeout+0x10/0x50
-[    0.220441]  driver_register+0xa9/0x110
-[    0.220441]  i2c_register_driver+0x40/0xa0
-[    0.220441]  i2c_init+0x8b/0xe0
-[    0.220441]  ? __pfx_i2c_init+0x10/0x10
-[    0.220441]  do_one_initcall+0x110/0x350
-[    0.220441]  ? kernfs_xattr_get+0x34/0x70
-[    0.220441]  ? srso_return_thunk+0x5/0x5f
-[    0.220441]  ? __alloc_pages_noprof+0x186/0x320
-[    0.220441]  ? srso_return_thunk+0x5/0x5f
-[    0.220441]  ? __get_random_u32_below+0xe/0x60
-[    0.220441]  ? srso_return_thunk+0x5/0x5f
-[    0.220441]  ? new_slab+0x1d6/0x710
-[    0.220441]  ? new_slab+0x1d6/0x710
-[    0.220441]  ? srso_return_thunk+0x5/0x5f
-[    0.220441]  ? number+0x166/0x530
-[    0.220441]  ? srso_return_thunk+0x5/0x5f
-[    0.220441]  ? ida_alloc_range+0x459/0x4a0
-[    0.220441]  ? srso_return_thunk+0x5/0x5f
-[    0.220441]  ? parameq+0x12/0x90
-[    0.220441]  ? srso_return_thunk+0x5/0x5f
-[    0.220441]  ? srso_return_thunk+0x5/0x5f
-[    0.220441]  ? parse_args+0x137/0x340
-[    0.220441]  do_initcall_level+0x85/0x100
-[    0.220441]  do_initcalls+0x54/0x90
-[    0.220441]  kernel_init_freeable+0xf2/0x160
-[    0.220441]  ? __pfx_kernel_init+0x10/0x10
-[    0.220441]  kernel_init+0x15/0x1b0
-[    0.220441]  ret_from_fork+0x35/0x40
-[    0.220441]  ? __pfx_kernel_init+0x10/0x10
-[    0.220441]  ret_from_fork_asm+0x1a/0x30
-[    0.220441]  </TASK>
-[    0.220441] Modules linked in:
-[    0.220441] ---[ end trace 0000000000000000 ]---
-[    0.220441] RIP: 0010:cancel_delayed_work+0x23/0x40
-[    0.220441] Code: 90 90 90 90 90 90 90 f3 0f 1e fa 53 50 48 89 fb 48 c7 04 24 00 00 00 00 48 89 e2 be 01 00 00 00 e8 02 eb ff ff f6 03 04 75 05 <67> 0f b9 40 15 90 0f 0b 90 67 0f b9 40 15 66 66 66 66 66 66 2e 0f
-[    0.220441] RSP: 0018:ffffa51600017b30 EFLAGS: 00010046
-[    0.220441] RAX: 0000000000000000 RBX: ffffffff997db830 RCX: 6da351d27a629a00
-[    0.220441] RDX: ffffa51600017b01 RSI: 0000000000000000 RDI: ffffffff997db850
-[    0.220441] RBP: ffffa51600017ea8 R08: 0000000000000001 R09: 000000000000000a
-[    0.220441] R10: 0000410110000001 R11: 0000000000000000 R12: 0000000000000000
-[    0.220441] R13: 0000000000000000 R14: ffffffff99f2e474 R15: 0000000000000000
-[    0.220441] FS:  0000000000000000(0000) GS:ffff8c485d200000(0000) knlGS:0000000000000000
-[    0.220441] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    0.220441] CR2: ffff8c4854401000 CR3: 000000001382a000 CR4: 0000000000350ef0
-
-Cheers,
-Nathan
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
