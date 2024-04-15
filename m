@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBE27F7F2;
-	Mon, 15 Apr 2024 14:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E565C78C78;
+	Mon, 15 Apr 2024 14:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191432; cv=none; b=SpuYqygf4KISCMYMLuAA0TGndM4JkOrTG2sGA/fNAOalH5nZRobFFiJaYf04V7rZIbiNkpn/RlmuWsIqUNSaF/jSOAl2CMroOUWOlpvRQCQPxy+JI4UR9/+5IJZR7UAcWGOs24xUiZjymqd5CpcAgSafknjYRz+N+Gc0BHpi0Rg=
+	t=1713191436; cv=none; b=LvDurrjWLMPOFyILlacI+Q6MyBwcNqhMDI8mij7pcsPZTkFsR3h4gUX+wWTSo7tI/qw5GbC1BppS/atsUkVCtLsuQ3YEFivNxTK2D43P/vIYzPGGEhB4NyewKWGXAJ7gLmTz8wARNmUmWYMWNEZjiNnknsUNv7q+Q0SjReFhgUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191432; c=relaxed/simple;
-	bh=YkCc4IKa9RoLxQdiGwfcLagOxOa5ybHo9lHalGbhNKA=;
+	s=arc-20240116; t=1713191436; c=relaxed/simple;
+	bh=pQA5TYDnhmdh+/uulFnCfP9NcD7PxpYH00MqJpwFSYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qNPPAVumeRQCJD9XUh1yABoiwuYX9Irl7lm7YuptquRXnLDhtK5QcFsrf7ERLp2AWsnX9cH8RG7DxYeU5PG2v3QHzjBMc82CrTYpbjWG/FOBwo/TISYVwR+TeZHaLwxMFjW9yOowbaOEG29ew7N1duA7p9WHds4eL26TXaoSy4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kr0Zpqf+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sPDcnMTfwc1jY7f2xxBk0wnZhu52gK/KoyGHxgC1ceW/5gNCI8nfRRgBNEIPSz5548rDE01m/obc7XOxxc0VwkgaDIgeLFBQMPi9sPcVEKrW8thlgFBEMOpeCAAqEPFaJF4BRQ4I7qNlnnXVGJwSr2E3MhFOatw4YfhmpPCQPzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNaBbOho; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kr0Zpqf+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD23C113CC;
-	Mon, 15 Apr 2024 14:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNaBbOho"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4BAC2BD11;
+	Mon, 15 Apr 2024 14:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191432;
-	bh=YkCc4IKa9RoLxQdiGwfcLagOxOa5ybHo9lHalGbhNKA=;
+	s=korg; t=1713191435;
+	bh=pQA5TYDnhmdh+/uulFnCfP9NcD7PxpYH00MqJpwFSYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kr0Zpqf+vuXTcyQBs1Y7SubmxJPMdoG0BR3GRj7nq3KJc8lPjdH5ITW9hQO2ySYOs
-	 /pjsTBKOp36+CwOB/zN+eeFs7Ds6PQm/8UvVXbf2XrI2QgfYKSL154udEVzeMFq50e
-	 gn+/UWZypvpzFE2uRrlavFWO9XO2vHhq7FTC+5Bk=
+	b=aNaBbOhoycwG67GgjY0G05TPsouNxFZDe0XM+Dt4n8wotmsAc8dJUtCsalNy/Dot4
+	 MnlNelLd2K9XFsjn1Rs6+/ST0EtJR4z7iX9nEROXt2CCMb+8/Sq0yPmDwAECaZ7gIs
+	 OFe/aLRieEJoxiBW2gbw2Lxq0+aGfqi2lXxabicA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.8 133/172] arm64: dts: imx8-ss-dma: fix can lpcg indices
-Date: Mon, 15 Apr 2024 16:20:32 +0200
-Message-ID: <20240415142004.419154491@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.8 142/172] x86/cpu: Actually turn off mitigations by default for SPECULATION_MITIGATIONS=n
+Date: Mon, 15 Apr 2024 16:20:41 +0200
+Message-ID: <20240415142004.684949568@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -44,83 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 0893392334b5dffdf616a53679c6a2942c46391b upstream.
+commit f337a6a21e2fd67eadea471e93d05dd37baaa9be upstream.
 
-can0_lpcg: clock-controller@5acd0000 {
-	...						   Col1  Col2
-	clocks = <&clk IMX_SC_R_CAN_0 IMX_SC_PM_CLK_PER>, // 0    0
-		 <&dma_ipg_clk>,			  // 1    4
-		 <&dma_ipg_clk>;			  // 2    5
-        clock-indices = <IMX_LPCG_CLK_0>,
-			<IMX_LPCG_CLK_4>,
-			<IMX_LPCG_CLK_5>;
-}
+Initialize cpu_mitigations to CPU_MITIGATIONS_OFF if the kernel is built
+with CONFIG_SPECULATION_MITIGATIONS=n, as the help text quite clearly
+states that disabling SPECULATION_MITIGATIONS is supposed to turn off all
+mitigations by default.
 
-Col1: index, which existing dts try to get.
-Col2: actual index in lpcg driver.
+  │ If you say N, all mitigations will be disabled. You really
+  │ should know what you are doing to say so.
 
-flexcan1: can@5a8d0000 {
-	clocks = <&can0_lpcg 1>, <&can0_lpcg 0>;
-			     ^^		     ^^
-Should be:
-	clocks = <&can0_lpcg IMX_LPCG_CLK_4>, <&can0_lpcg IMX_LPCG_CLK_0>;
-};
+As is, the kernel still defaults to CPU_MITIGATIONS_AUTO, which results in
+some mitigations being enabled in spite of SPECULATION_MITIGATIONS=n.
 
-Arg0 is divided by 4 in lpcg driver. flexcan driver get IMX_SC_PM_CLK_PER
-by <&can0_lpcg 1> and <&can0_lpcg 0>. Although function can work, code
-logic is wrong. Fix it by using correct clock indices.
-
+Fixes: f43b9876e857 ("x86/retbleed: Add fine grained Kconfig knobs")
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
 Cc: stable@vger.kernel.org
-Fixes: 5e7d5b023e03 ("arm64: dts: imx8qxp: add flexcan in adma")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20240409175108.1512861-2-seanjc@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8-ss-dma.dtsi |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/cpu.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/freescale/imx8-ss-dma.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8-ss-dma.dtsi
-@@ -406,8 +406,8 @@ dma_subsys: bus@5a000000 {
- 		reg = <0x5a8d0000 0x10000>;
- 		interrupts = <GIC_SPI 235 IRQ_TYPE_LEVEL_HIGH>;
- 		interrupt-parent = <&gic>;
--		clocks = <&can0_lpcg 1>,
--			 <&can0_lpcg 0>;
-+		clocks = <&can0_lpcg IMX_LPCG_CLK_4>,
-+			 <&can0_lpcg IMX_LPCG_CLK_0>;
- 		clock-names = "ipg", "per";
- 		assigned-clocks = <&clk IMX_SC_R_CAN_0 IMX_SC_PM_CLK_PER>;
- 		assigned-clock-rates = <40000000>;
-@@ -427,8 +427,8 @@ dma_subsys: bus@5a000000 {
- 		 * CAN1 shares CAN0's clock and to enable CAN0's clock it
- 		 * has to be powered on.
- 		 */
--		clocks = <&can0_lpcg 1>,
--			 <&can0_lpcg 0>;
-+		clocks = <&can0_lpcg IMX_LPCG_CLK_4>,
-+			 <&can0_lpcg IMX_LPCG_CLK_0>;
- 		clock-names = "ipg", "per";
- 		assigned-clocks = <&clk IMX_SC_R_CAN_0 IMX_SC_PM_CLK_PER>;
- 		assigned-clock-rates = <40000000>;
-@@ -448,8 +448,8 @@ dma_subsys: bus@5a000000 {
- 		 * CAN2 shares CAN0's clock and to enable CAN0's clock it
- 		 * has to be powered on.
- 		 */
--		clocks = <&can0_lpcg 1>,
--			 <&can0_lpcg 0>;
-+		clocks = <&can0_lpcg IMX_LPCG_CLK_4>,
-+			 <&can0_lpcg IMX_LPCG_CLK_0>;
- 		clock-names = "ipg", "per";
- 		assigned-clocks = <&clk IMX_SC_R_CAN_0 IMX_SC_PM_CLK_PER>;
- 		assigned-clock-rates = <40000000>;
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -3207,7 +3207,8 @@ enum cpu_mitigations {
+ };
+ 
+ static enum cpu_mitigations cpu_mitigations __ro_after_init =
+-	CPU_MITIGATIONS_AUTO;
++	IS_ENABLED(CONFIG_SPECULATION_MITIGATIONS) ? CPU_MITIGATIONS_AUTO :
++						     CPU_MITIGATIONS_OFF;
+ 
+ static int __init mitigations_parse_cmdline(char *arg)
+ {
 
 
