@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8921E52A;
-	Mon, 15 Apr 2024 14:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D40A78C74;
+	Mon, 15 Apr 2024 14:42:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192130; cv=none; b=iVwCdM1G4/z3qxzetPJMImwQx0DsDPCNbaWKZ2dSg77yxOzBQQnSOv9lm4JzShmcof24UJFZARD690R24ohXbNal3VL63+4i/sPw8JGLMQONCuEjh37W7IsiZSTFZcWvGe3PPRB3kSil/j6+GMhT6SuoRWngrqqTUuXqwqqgH18=
+	t=1713192134; cv=none; b=N/e1wcrWcCeWMDw1h3szCgd1olRl4MBwTJnIc1148y7u7hyld5SeWDXsy+eNLFNCDazhUeN8khud1ez3k3u9aKQIEUw5R4ZkV/k6SMyPW0j+hC0vJWkYDTUKFjIn4gzUHspGOyROWkpVjWz4eLmdUgCEupSY473Y4BzNxHSdZhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192130; c=relaxed/simple;
-	bh=fR6dtQUMSIaroyy1OOFxhknNXLCYjtRAaKvbTRvUaFg=;
+	s=arc-20240116; t=1713192134; c=relaxed/simple;
+	bh=wqlMZfTwF0e1+/s+EKYgq1CyqhcpOOX1tUWFdpBtfj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gkbFAebzF8OyHyswxtt6ts8qMeIQ8BCalH6zUj7R0F5YvM8l6e6Y5ZW+CjF0qWFwO3vvQRvveemw2EzNTpchfrD0w/O3FMzKazjtyYD6CKCp/DwJwLWaXVfkEC1j46AbqWRWAhkXa4tLLteUyxiItTKlKZJkpzj1up96rro6LU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMJABVGH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cl30nMPxSolwQGmWvhG7egzUER1xCKZl8h//+MJ9bnyATbp6Nfwdz+5fIhCFAAyK/fFAIa9DvpxIfCMBMqUAZloILUUjClavfWtJLUn9cEsVsfcoMLOZyEI16Yeu6pwZcPxIhyLDVSfKPGi4UkZ2ElccPDdvhT1xumFoDvy+ZAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYH1LVdW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMJABVGH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58AD7C113CC;
-	Mon, 15 Apr 2024 14:42:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYH1LVdW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9B6C4AF11;
+	Mon, 15 Apr 2024 14:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192130;
-	bh=fR6dtQUMSIaroyy1OOFxhknNXLCYjtRAaKvbTRvUaFg=;
+	s=korg; t=1713192134;
+	bh=wqlMZfTwF0e1+/s+EKYgq1CyqhcpOOX1tUWFdpBtfj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XMJABVGH0qavfTbt9WniFjlaly1B64QaNqkjWdH3UHau+gfeWc7/DIfcnQHoT92fu
-	 3QlxlnEGslSoDB50HaLdNTrm6WRLEvcN4sdm+86bF9WUJ4CC8L46AOXiX5w3Q2o50m
-	 2JzRJmTY9ut7UH58nRi7x8TY+6naFzD90Ro/4HyA=
+	b=mYH1LVdW/z0N0+QGnhkAV40d6avAO5jizA4EaxjqCKXK9owB1PZj99xKRV78e0bmU
+	 +MufCmvM5vgpaCo9WoNER2Jf+m05mHr9jcVD8r55Jem1YgjXKB7d9r6TVQbqyuMtFB
+	 hMArFyW8IkorwbilkzQAoDp2GMtvo3FcxuBebOMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 57/69] x86/bugs: Fix return type of spectre_bhi_state()
-Date: Mon, 15 Apr 2024 16:21:28 +0200
-Message-ID: <20240415141947.886658118@linuxfoundation.org>
+	Jammy Huang <jammy_huang@aspeedtech.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	KuoHsiang Chou <kuohsiang_chou@aspeedtech.com>,
+	Dave Airlie <airlied@redhat.com>,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH 6.1 48/69] drm/ast: Fix soft lockup
+Date: Mon, 15 Apr 2024 16:21:19 +0200
+Message-ID: <20240415141947.614367351@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141946.165870434@linuxfoundation.org>
 References: <20240415141946.165870434@linuxfoundation.org>
@@ -52,39 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+From: Jammy Huang <jammy_huang@aspeedtech.com>
 
-commit 04f4230e2f86a4e961ea5466eda3db8c1762004d upstream.
+commit bc004f5038220b1891ef4107134ccae44be55109 upstream.
 
-The definition of spectre_bhi_state() incorrectly returns a const char
-* const. This causes the a compiler warning when building with W=1:
+There is a while-loop in ast_dp_set_on_off() that could lead to
+infinite-loop. This is because the register, VGACRI-Dx, checked in
+this API is a scratch register actually controlled by a MCU, named
+DPMCU, in BMC.
 
- warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
- 2812 | static const char * const spectre_bhi_state(void)
+These scratch registers are protected by scu-lock. If suc-lock is not
+off, DPMCU can not update these registers and then host will have soft
+lockup due to never updated status.
 
-Remove the const qualifier from the pointer.
+DPMCU is used to control DP and relative registers to handshake with
+host's VGA driver. Even the most time-consuming task, DP's link
+training, is less than 100ms. 200ms should be enough.
 
-Fixes: ec9404e40e8f ("x86/bhi: Add BHI mitigation knob")
-Reported-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20240409230806.1545822-1-daniel.sneddon@linux.intel.com
+Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+Fixes: 594e9c04b586 ("drm/ast: Create the driver for ASPEED proprietory Display-Port")
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: KuoHsiang Chou <kuohsiang_chou@aspeedtech.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.19+
+Link: https://patchwork.freedesktop.org/patch/msgid/20240403090246.1495487-1-jammy_huang@aspeedtech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/bugs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/ast/ast_dp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -2788,7 +2788,7 @@ static char *pbrsb_eibrs_state(void)
+--- a/drivers/gpu/drm/ast/ast_dp.c
++++ b/drivers/gpu/drm/ast/ast_dp.c
+@@ -190,6 +190,7 @@ void ast_dp_set_on_off(struct drm_device
+ {
+ 	struct ast_private *ast = to_ast_private(dev);
+ 	u8 video_on_off = on;
++	u32 i = 0;
+ 
+ 	// Video On/Off
+ 	ast_set_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xE3, (u8) ~AST_DP_VIDEO_ENABLE, on);
+@@ -202,6 +203,8 @@ void ast_dp_set_on_off(struct drm_device
+ 						ASTDP_MIRROR_VIDEO_ENABLE) != video_on_off) {
+ 			// wait 1 ms
+ 			mdelay(1);
++			if (++i > 200)
++				break;
+ 		}
  	}
  }
- 
--static const char * const spectre_bhi_state(void)
-+static const char *spectre_bhi_state(void)
- {
- 	if (!boot_cpu_has_bug(X86_BUG_BHI))
- 		return "; BHI: Not affected";
 
 
