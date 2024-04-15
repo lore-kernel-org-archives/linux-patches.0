@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD837F465;
-	Mon, 15 Apr 2024 14:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5031A762C9;
+	Mon, 15 Apr 2024 14:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191978; cv=none; b=Usv9gk+0M5/IC8Gqj4XneDdUFP5ZIrtp2E/Sslme/TKN2OKHRDk5V0zyJFKnFGLLesXs4LnNWUKxgdrDNhy6/SVWqsWW+yG0hH0BfLJNPMdTSb03iBiqSQwU46duqfXGezsgGibl18zmf29JPoxXoV3wLR71f1XLB0LGW7bwhDE=
+	t=1713191982; cv=none; b=rSLS1RdYpDu80BExz9t2ZnDuP4lHOH4iHEXh9BYKVRFjtgCHKn8vvdpIeKQu6Jjv73cWpCUnFUOrZviRDomA/NVr4V80YIU3UqdR9uuXstDDVQYWmQd9M7V6aYf9xcmOC6mRP0+hpEnVzbOhAAjhrGOLonj9IMbPEnmNT0u7nFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191978; c=relaxed/simple;
-	bh=RM3D/FgMSL1W4YYSaICA0GbIvd7SQPSBaXTZ83Ey++Q=;
+	s=arc-20240116; t=1713191982; c=relaxed/simple;
+	bh=5qIbok063h/yC7qm0MDjdnaQl8w6/ab1DtI4h8Ctp3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PMi8O2doJYabeB80yIDwodKa46IPuq6glMVUWuN01jvYFyesr3x3lu7m7IFHmBGyie9oYIKqJMR2l9aupJpeRhnHevXicwg1RQWG9GsjxQXQ1TKu/IhWhwlwI3F/7yZV/Mw99A25Pp/ddC2rJsSYst95Gt7z1oSHA9IUkungqEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alXZBDOS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G0JZ28zoTGs/pHA7NFiYKHv/vVbQp2vanwUQB/07nckiSxRog6hysNTfMcDg4S7wO5LBIrGlhRcI+Yqtk7ggr6Uz2syJ01Xp+8VjkvlP8LM0zbBFnr8+r107981BHoljWJAP97EwWrrHvuwHJTUWAh/i/HP6gOd2UmnBXKZhimw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqbssgJ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alXZBDOS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C0CC113CC;
-	Mon, 15 Apr 2024 14:39:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqbssgJ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BB8C113CC;
+	Mon, 15 Apr 2024 14:39:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191978;
-	bh=RM3D/FgMSL1W4YYSaICA0GbIvd7SQPSBaXTZ83Ey++Q=;
+	s=korg; t=1713191980;
+	bh=5qIbok063h/yC7qm0MDjdnaQl8w6/ab1DtI4h8Ctp3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=alXZBDOSjJxUPD3um8DDd1kTCp7lBqeYxOcKxANO/0/NS8YBgoxzxibwf8dQwaxdA
-	 4r7wUjYQ+Dxc3RGwSBEJw4KPh67RTR2k9YzbcEdbGaJyVnaHNiL3oW6ynZDvGwi/g8
-	 rNOOwr/TN+r1ZJDlBhEwMpp6vDzcxhoB2ppUsZD8=
+	b=xqbssgJ0ojfgMdRkFXcEMfweEQQJtbaBBXsO3FtE53s0Tbat/rqytqJKKaMqnrobU
+	 sAiA6fMQTDWEYFMuG0WOFu4izw3pHKRISPF/I4UesIaf9RoHAjIuVy1ePQIfXWpjU1
+	 bjjIHVDiWu01FWnlwmEt0NTZ63RYZDlCWVzJ/Eoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 09/69] arm64: dts: imx8-ss-conn: fix usdhc wrong lpcg clock order
-Date: Mon, 15 Apr 2024 16:20:40 +0200
-Message-ID: <20240415141946.451519586@linuxfoundation.org>
+Subject: [PATCH 6.1 27/69] Bluetooth: L2CAP: Fix not validating setsockopt user input
+Date: Mon, 15 Apr 2024 16:20:58 +0200
+Message-ID: <20240415141946.985183405@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141946.165870434@linuxfoundation.org>
 References: <20240415141946.165870434@linuxfoundation.org>
@@ -51,93 +51,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit c6ddd6e7b166532a0816825442ff60f70aed9647 ]
+[ Upstream commit 4f3951242ace5efc7131932e2e01e6ac6baed846 ]
 
-The actual clock show wrong frequency:
+Check user input length before copying data.
 
-   echo on >/sys/devices/platform/bus\@5b000000/5b010000.mmc/power/control
-   cat /sys/kernel/debug/mmc0/ios
-
-   clock:          200000000 Hz
-   actual clock:   166000000 Hz
-                   ^^^^^^^^^
-   .....
-
-According to
-
-sdhc0_lpcg: clock-controller@5b200000 {
-                compatible = "fsl,imx8qxp-lpcg";
-                reg = <0x5b200000 0x10000>;
-                #clock-cells = <1>;
-                clocks = <&clk IMX_SC_R_SDHC_0 IMX_SC_PM_CLK_PER>,
-                         <&conn_ipg_clk>, <&conn_axi_clk>;
-                clock-indices = <IMX_LPCG_CLK_0>, <IMX_LPCG_CLK_4>,
-                                <IMX_LPCG_CLK_5>;
-                clock-output-names = "sdhc0_lpcg_per_clk",
-                                     "sdhc0_lpcg_ipg_clk",
-                                     "sdhc0_lpcg_ahb_clk";
-                power-domains = <&pd IMX_SC_R_SDHC_0>;
-        }
-
-"per_clk" should be IMX_LPCG_CLK_0 instead of IMX_LPCG_CLK_5.
-
-After correct clocks order:
-
-   echo on >/sys/devices/platform/bus\@5b000000/5b010000.mmc/power/control
-   cat /sys/kernel/debug/mmc0/ios
-
-   clock:          200000000 Hz
-   actual clock:   198000000 Hz
-                   ^^^^^^^^
-   ...
-
-Fixes: 16c4ea7501b1 ("arm64: dts: imx8: switch to new lpcg clock binding")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 33575df7be67 ("Bluetooth: move l2cap_sock_setsockopt() to l2cap_sock.c")
+Fixes: 3ee7b7cd8390 ("Bluetooth: Add BT_MODE socket option")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/bluetooth/l2cap_sock.c | 52 +++++++++++++++-----------------------
+ 1 file changed, 20 insertions(+), 32 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi b/arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi
-index 10370d1a6c6de..dbb298b907c1c 100644
---- a/arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi
-@@ -38,8 +38,8 @@ usdhc1: mmc@5b010000 {
- 		interrupts = <GIC_SPI 232 IRQ_TYPE_LEVEL_HIGH>;
- 		reg = <0x5b010000 0x10000>;
- 		clocks = <&sdhc0_lpcg IMX_LPCG_CLK_4>,
--			 <&sdhc0_lpcg IMX_LPCG_CLK_0>,
--			 <&sdhc0_lpcg IMX_LPCG_CLK_5>;
-+			 <&sdhc0_lpcg IMX_LPCG_CLK_5>,
-+			 <&sdhc0_lpcg IMX_LPCG_CLK_0>;
- 		clock-names = "ipg", "ahb", "per";
- 		power-domains = <&pd IMX_SC_R_SDHC_0>;
- 		status = "disabled";
-@@ -49,8 +49,8 @@ usdhc2: mmc@5b020000 {
- 		interrupts = <GIC_SPI 233 IRQ_TYPE_LEVEL_HIGH>;
- 		reg = <0x5b020000 0x10000>;
- 		clocks = <&sdhc1_lpcg IMX_LPCG_CLK_4>,
--			 <&sdhc1_lpcg IMX_LPCG_CLK_0>,
--			 <&sdhc1_lpcg IMX_LPCG_CLK_5>;
-+			 <&sdhc1_lpcg IMX_LPCG_CLK_5>,
-+			 <&sdhc1_lpcg IMX_LPCG_CLK_0>;
- 		clock-names = "ipg", "ahb", "per";
- 		power-domains = <&pd IMX_SC_R_SDHC_1>;
- 		fsl,tuning-start-tap = <20>;
-@@ -62,8 +62,8 @@ usdhc3: mmc@5b030000 {
- 		interrupts = <GIC_SPI 234 IRQ_TYPE_LEVEL_HIGH>;
- 		reg = <0x5b030000 0x10000>;
- 		clocks = <&sdhc2_lpcg IMX_LPCG_CLK_4>,
--			 <&sdhc2_lpcg IMX_LPCG_CLK_0>,
--			 <&sdhc2_lpcg IMX_LPCG_CLK_5>;
-+			 <&sdhc2_lpcg IMX_LPCG_CLK_5>,
-+			 <&sdhc2_lpcg IMX_LPCG_CLK_0>;
- 		clock-names = "ipg", "ahb", "per";
- 		power-domains = <&pd IMX_SC_R_SDHC_2>;
- 		status = "disabled";
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 947ca580bb9a2..4198ca66fbe10 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -745,7 +745,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
+ 	struct sock *sk = sock->sk;
+ 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
+ 	struct l2cap_options opts;
+-	int len, err = 0;
++	int err = 0;
+ 	u32 opt;
+ 
+ 	BT_DBG("sk %p", sk);
+@@ -772,11 +772,9 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
+ 		opts.max_tx   = chan->max_tx;
+ 		opts.txwin_size = chan->tx_win;
+ 
+-		len = min_t(unsigned int, sizeof(opts), optlen);
+-		if (copy_from_sockptr(&opts, optval, len)) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&opts, sizeof(opts), optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (opts.txwin_size > L2CAP_DEFAULT_EXT_WINDOW) {
+ 			err = -EINVAL;
+@@ -819,10 +817,9 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
+ 		break;
+ 
+ 	case L2CAP_LM:
+-		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (opt & L2CAP_LM_FIPS) {
+ 			err = -EINVAL;
+@@ -903,7 +900,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 	struct bt_security sec;
+ 	struct bt_power pwr;
+ 	struct l2cap_conn *conn;
+-	int len, err = 0;
++	int err = 0;
+ 	u32 opt;
+ 	u16 mtu;
+ 	u8 mode;
+@@ -929,11 +926,9 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 
+ 		sec.level = BT_SECURITY_LOW;
+ 
+-		len = min_t(unsigned int, sizeof(sec), optlen);
+-		if (copy_from_sockptr(&sec, optval, len)) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&sec, sizeof(sec), optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (sec.level < BT_SECURITY_LOW ||
+ 		    sec.level > BT_SECURITY_FIPS) {
+@@ -978,10 +973,9 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
+-		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (opt) {
+ 			set_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags);
+@@ -993,10 +987,9 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		break;
+ 
+ 	case BT_FLUSHABLE:
+-		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (opt > BT_FLUSHABLE_ON) {
+ 			err = -EINVAL;
+@@ -1028,11 +1021,9 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 
+ 		pwr.force_active = BT_POWER_FORCE_ACTIVE_ON;
+ 
+-		len = min_t(unsigned int, sizeof(pwr), optlen);
+-		if (copy_from_sockptr(&pwr, optval, len)) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&pwr, sizeof(pwr), optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (pwr.force_active)
+ 			set_bit(FLAG_FORCE_ACTIVE, &chan->flags);
+@@ -1041,10 +1032,9 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		break;
+ 
+ 	case BT_CHANNEL_POLICY:
+-		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (opt > BT_CHANNEL_POLICY_AMP_PREFERRED) {
+ 			err = -EINVAL;
+@@ -1089,10 +1079,9 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
+-		if (copy_from_sockptr(&mtu, optval, sizeof(u16))) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&mtu, sizeof(mtu), optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (chan->mode == L2CAP_MODE_EXT_FLOWCTL &&
+ 		    sk->sk_state == BT_CONNECTED)
+@@ -1120,10 +1109,9 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
+-		if (copy_from_sockptr(&mode, optval, sizeof(u8))) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&mode, sizeof(mode), optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		BT_DBG("mode %u", mode);
+ 
 -- 
 2.43.0
 
