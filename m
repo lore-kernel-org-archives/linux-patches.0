@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0D974E11;
-	Mon, 15 Apr 2024 14:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12DB74E11;
+	Mon, 15 Apr 2024 14:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191136; cv=none; b=E6MsOOmKGCS0N3UybtjiSpeiF+KLnn4sPYtKSYDfnuXgoLbCzR4lmvVTA665bUK0JonjKkZUtvOWge/LwyIsSpfHExFYq2abIw1BDoRfcm17Xeb5Ea6jdn/k2T4SD5tCYIGJ4Qxznr99DKRXRnHHk0+eTgXO03vxPpEbDOByEzc=
+	t=1713191139; cv=none; b=tvesMYmFG7sWpQkrPsh0OJTo3PlHEhvx/n6i2pA5Gk9md4uAowufEEiFnNWhixmtcdNzSf3gPcK68i9vYXet39EWKT2G9hJmi8+OnYyFDKUr3ul12HrBeJWf/tcgNhrUyfVq5GA8cuMSCh+zqN4I49mKBV2YB2uwDBdebwgesVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191136; c=relaxed/simple;
-	bh=jSJaN06LqITi125kWY5KRpAzLo46lIx2Ldcsgz2hkes=;
+	s=arc-20240116; t=1713191139; c=relaxed/simple;
+	bh=woOZ8xvjJ9fLG3YVRtH+JvtNLQIrHyWDdDGwH35alUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L1FobXDouJwvrB/YxN3Ty83v+SH/pJ/jW+Z9zTOCQ4xdLj++iK8jsAtSHUD24dThbqnq18fzkKOZQFkZsnBPRa/DDL7jdBMtfeJG8UIvd5xf3cgVaLtDJOvird9I6XlWYOETsynVkTRUvGyonDQfWsDJWjVMjHj59cjgqlqll+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nq97GEII; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b2lo+/Se5RJ4J992xO5ADPuOagotbH1/d8pNfnWJgtqDaJUE5su4BuCX9zyjrwqiv9dKmGgF+eAZNMH5q4FUgGkZE1Y/CLIfye2qH5BMfgeegJwiRegEpGsWd1rCObpp31eFnL4FDF4F4O0YKO/Gd2slYuPzgHX9nEe7Xva/v6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vzrq20Hu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nq97GEII"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA18C113CC;
-	Mon, 15 Apr 2024 14:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vzrq20Hu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF29C113CC;
+	Mon, 15 Apr 2024 14:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191136;
-	bh=jSJaN06LqITi125kWY5KRpAzLo46lIx2Ldcsgz2hkes=;
+	s=korg; t=1713191139;
+	bh=woOZ8xvjJ9fLG3YVRtH+JvtNLQIrHyWDdDGwH35alUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nq97GEII+r7egcAqzc56JO2rgYB52woPZbk6gyOY83zSTIbGpA3y3MSFUbg4hPW3a
-	 aXqU2n6HBuKr+uIE881eVWTTi6jghtLJFnEDbY79EyTaRb1aH0yOo4AM0is765Qi3M
-	 evmhcWpgc8ufPQcy1AOyUea/T5Zaru3KZzDnKtw0=
+	b=Vzrq20HuQlKdd0V/6zKNOeZmvQEosK/lyN/Gej9edIsu7rxgXQ0YQspgF9pdwp8lx
+	 WqhjAMmf3iiUIdXbUWOKG4st1hg4BFWBEWXyGFzIrpMZ30/IUa9zC9Z+e3OlHuRmki
+	 t2h27oKe20MGtlefJlxv+M2k3fPLCp2v7pPPUkTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
+	Petr Tesarik <petr@tesarici.cz>,
+	Simon Horman <horms@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 043/172] net: openvswitch: fix unwanted error log on timeout policy probing
-Date: Mon, 15 Apr 2024 16:19:02 +0200
-Message-ID: <20240415142001.730808865@linuxfoundation.org>
+Subject: [PATCH 6.8 044/172] u64_stats: fix u64_stats_init() for lockdep when used repeatedly in one file
+Date: Mon, 15 Apr 2024 16:19:03 +0200
+Message-ID: <20240415142001.759400640@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -52,58 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Petr Tesarik <petr@tesarici.cz>
 
-[ Upstream commit 4539f91f2a801c0c028c252bffae56030cfb2cae ]
+[ Upstream commit 38a15d0a50e0a43778561a5861403851f0b0194c ]
 
-On startup, ovs-vswitchd probes different datapath features including
-support for timeout policies.  While probing, it tries to execute
-certain operations with OVS_PACKET_ATTR_PROBE or OVS_FLOW_ATTR_PROBE
-attributes set.  These attributes tell the openvswitch module to not
-log any errors when they occur as it is expected that some of the
-probes will fail.
+Fix bogus lockdep warnings if multiple u64_stats_sync variables are
+initialized in the same file.
 
-For some reason, setting the timeout policy ignores the PROBE attribute
-and logs a failure anyway.  This is causing the following kernel log
-on each re-start of ovs-vswitchd:
+With CONFIG_LOCKDEP, seqcount_init() is a macro which declares:
 
-  kernel: Failed to associated timeout policy `ovs_test_tp'
+	static struct lock_class_key __key;
 
-Fix that by using the same logging macro that all other messages are
-using.  The message will still be printed at info level when needed
-and will be rate limited, but with a net rate limiter instead of
-generic printk one.
+Since u64_stats_init() is a function (albeit an inline one), all calls
+within the same file end up using the same instance, effectively treating
+them all as a single lock-class.
 
-The nf_ct_set_timeout() itself will still print some info messages,
-but at least this change makes logging in openvswitch module more
-consistent.
-
-Fixes: 06bd2bdf19d2 ("openvswitch: Add timeout support to ct action")
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Link: https://lore.kernel.org/r/20240403203803.2137962-1-i.maximets@ovn.org
+Fixes: 9464ca650008 ("net: make u64_stats_init() a function")
+Closes: https://lore.kernel.org/netdev/ea1567d9-ce66-45e6-8168-ac40a47d1821@roeck-us.net/
+Signed-off-by: Petr Tesarik <petr@tesarici.cz>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240404075740.30682-1-petr@tesarici.cz
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/conntrack.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/linux/u64_stats_sync.h | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
-index 3019a4406ca4f..74b63cdb59923 100644
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -1380,8 +1380,9 @@ int ovs_ct_copy_action(struct net *net, const struct nlattr *attr,
- 	if (ct_info.timeout[0]) {
- 		if (nf_ct_set_timeout(net, ct_info.ct, family, key->ip.proto,
- 				      ct_info.timeout))
--			pr_info_ratelimited("Failed to associated timeout "
--					    "policy `%s'\n", ct_info.timeout);
-+			OVS_NLERR(log,
-+				  "Failed to associated timeout policy '%s'",
-+				  ct_info.timeout);
- 		else
- 			ct_info.nf_ct_timeout = rcu_dereference(
- 				nf_ct_timeout_find(ct_info.ct)->timeout);
+diff --git a/include/linux/u64_stats_sync.h b/include/linux/u64_stats_sync.h
+index ffe48e69b3f3a..457879938fc19 100644
+--- a/include/linux/u64_stats_sync.h
++++ b/include/linux/u64_stats_sync.h
+@@ -135,10 +135,11 @@ static inline void u64_stats_inc(u64_stats_t *p)
+ 	p->v++;
+ }
+ 
+-static inline void u64_stats_init(struct u64_stats_sync *syncp)
+-{
+-	seqcount_init(&syncp->seq);
+-}
++#define u64_stats_init(syncp)				\
++	do {						\
++		struct u64_stats_sync *__s = (syncp);	\
++		seqcount_init(&__s->seq);		\
++	} while (0)
+ 
+ static inline void __u64_stats_update_begin(struct u64_stats_sync *syncp)
+ {
 -- 
 2.43.0
 
