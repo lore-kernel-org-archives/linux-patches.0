@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79ACF1E52A;
-	Mon, 15 Apr 2024 14:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755011E4B1;
+	Mon, 15 Apr 2024 14:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192181; cv=none; b=ExCdDLGnYTs8+mPMFlST5V2P7dwjwjTdlFvQVOMCfG3Svt8sT8hRG9sZj9+fdklkY+j5HhhbIoa6/CFYym0QvHzuIXlO7h9E2I/8Nj3MKP/9RpHAcDwKlDSGoXhurdd06BzV+8mSx122HSBgWL+NDS63eO7Og28Hnt+tZYWvb1M=
+	t=1713192184; cv=none; b=loxyUtxRpCgp72fyrjdfKGLJGpv3fSTkwnJ8sBwyCBUUJRJsUnGE3ONYmJBFzvTHNWYwXS+SEAQKm0KgsJXxl3/dG/6ICuWFmX7KlNfgT0wrKTrIIAxz96goaHgm8sts1PJ3w/baaf9mI0UxzuN5ZSYvoH9ECdZIxmIjs7x6iHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192181; c=relaxed/simple;
-	bh=dOgAaK/YDzIHAXgaSLp43tzq0PV+ZsLCyS+VtRY+FDY=;
+	s=arc-20240116; t=1713192184; c=relaxed/simple;
+	bh=mI5KkaRNHOTpSacZsYTZDeWzhXQo9tGbLG1N68+C4M4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+t5TRTDDpybUb1O/hASnbA2vrxO1E+TDs/Jd+o4UZUsXZKKpEuk0DdUnGpFtRqbC0IQRcSXP2dTVCYLuoGDAH89qI/XJjPI1tMhx6s8jbgKbrcIEF4/h/3VMkWAfWMvGgPsOorwSc12r3lPuG2dLpqnoMcFbGsJrZHsvmPWYqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkXPN1MN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MCpT5PtZNckYQ9nGC5lFKFDMmIp4v4MkYj5ybSAmQwNDTl65EpCp+xsqmJRUx1Zu/MdNsl56bTta0bTmk1LGxoyQS+7aZkP8Eeg0pWWZeHhqXPbhk8JexFn4RuwB/U07EaDN6thFElNgtwAHXFwwLBsyKVFI32vUDgdzqur0oLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xsTH+8ou; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkXPN1MN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01512C113CC;
-	Mon, 15 Apr 2024 14:43:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsTH+8ou"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0017C113CC;
+	Mon, 15 Apr 2024 14:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192181;
-	bh=dOgAaK/YDzIHAXgaSLp43tzq0PV+ZsLCyS+VtRY+FDY=;
+	s=korg; t=1713192184;
+	bh=mI5KkaRNHOTpSacZsYTZDeWzhXQo9tGbLG1N68+C4M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QkXPN1MNslpYToE5zdSctpo5H838exiMABf91OduUGqXnSRRSVCk3zuks84xsRgWu
-	 LGyTtceQaZcbxZuMaUkDy6Q5t2Gnc48gpI5+eG1inR0pyCJ783ApE+EJ8of7fLekKn
-	 zDxvagsE1f1DseYAZE7G/8OnGgleiPunIXX1l4Fk=
+	b=xsTH+8ouswm7FqzjYXdcqMM47e4c7wxALCWViIXds0mtLeB2eHQHZsD8qkq4xb7K0
+	 og4TKJCwoPK3/BlXwKXt9K/jA2dMg0N+htbRCBTd2DtXyLplQaHDrGXK4tym3pZHPT
+	 MsNjfRRUo7iJ+4VQSfCgurZlRxON4dTAJw7vzlNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arthur Kiyanovski <akiyano@amazon.com>,
+	Amit Bernstein <amitbern@amazon.com>,
 	David Arinzon <darinzon@amazon.com>,
 	Shannon Nelson <shannon.nelson@amd.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 24/45] net: ena: Fix potential sign extension issue
-Date: Mon, 15 Apr 2024 16:21:31 +0200
-Message-ID: <20240415141942.968747130@linuxfoundation.org>
+Subject: [PATCH 5.15 25/45] net: ena: Wrong missing IO completions check order
+Date: Mon, 15 Apr 2024 16:21:32 +0200
+Message-ID: <20240415141942.998237267@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141942.235939111@linuxfoundation.org>
 References: <20240415141942.235939111@linuxfoundation.org>
@@ -55,62 +55,104 @@ Content-Transfer-Encoding: 8bit
 
 From: David Arinzon <darinzon@amazon.com>
 
-[ Upstream commit 713a85195aad25d8a26786a37b674e3e5ec09e3c ]
+[ Upstream commit f7e417180665234fdb7af2ebe33d89aaa434d16f ]
 
-Small unsigned types are promoted to larger signed types in
-the case of multiplication, the result of which may overflow.
-In case the result of such a multiplication has its MSB
-turned on, it will be sign extended with '1's.
-This changes the multiplication result.
+Missing IO completions check is called every second (HZ jiffies).
+This commit fixes several issues with this check:
 
-Code example of the phenomenon:
--------------------------------
-u16 x, y;
-size_t z1, z2;
+1. Duplicate queues check:
+   Max of 4 queues are scanned on each check due to monitor budget.
+   Once reaching the budget, this check exits under the assumption that
+   the next check will continue to scan the remainder of the queues,
+   but in practice, next check will first scan the last already scanned
+   queue which is not necessary and may cause the full queue scan to
+   last a couple of seconds longer.
+   The fix is to start every check with the next queue to scan.
+   For example, on 8 IO queues:
+   Bug: [0,1,2,3], [3,4,5,6], [6,7]
+   Fix: [0,1,2,3], [4,5,6,7]
 
-x = y = 0xffff;
-printk("x=%x y=%x\n",x,y);
+2. Unbalanced queues check:
+   In case the number of active IO queues is not a multiple of budget,
+   there will be checks which don't utilize the full budget
+   because the full scan exits when reaching the last queue id.
+   The fix is to run every TX completion check with exact queue budget
+   regardless of the queue id.
+   For example, on 7 IO queues:
+   Bug: [0,1,2,3], [4,5,6], [0,1,2,3]
+   Fix: [0,1,2,3], [4,5,6,0], [1,2,3,4]
+   The budget may be lowered in case the number of IO queues is less
+   than the budget (4) to make sure there are no duplicate queues on
+   the same check.
+   For example, on 3 IO queues:
+   Bug: [0,1,2,0], [1,2,0,1]
+   Fix: [0,1,2], [0,1,2]
 
-z1 = x*y;
-z2 = (size_t)x*y;
-
-printk("z1=%lx z2=%lx\n", z1, z2);
-
-Output:
--------
-x=ffff y=ffff
-z1=fffffffffffe0001 z2=fffe0001
-
-The expected result of ffff*ffff is fffe0001, and without the
-explicit casting to avoid the unwanted sign extension we got
-fffffffffffe0001.
-
-This commit adds an explicit casting to avoid the sign extension
-issue.
-
-Fixes: 689b2bdaaa14 ("net: ena: add functions for handling Low Latency Queues in ena_com")
-Signed-off-by: Arthur Kiyanovski <akiyano@amazon.com>
+Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
+Signed-off-by: Amit Bernstein <amitbern@amazon.com>
 Signed-off-by: David Arinzon <darinzon@amazon.com>
 Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_com.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c | 21 +++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_com.c b/drivers/net/ethernet/amazon/ena/ena_com.c
-index 7979b10192425..e37c82eb62326 100644
---- a/drivers/net/ethernet/amazon/ena/ena_com.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_com.c
-@@ -362,7 +362,7 @@ static int ena_com_init_io_sq(struct ena_com_dev *ena_dev,
- 			ENA_COM_BOUNCE_BUFFER_CNTRL_CNT;
- 		io_sq->bounce_buf_ctrl.next_to_use = 0;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+index 43c099141e211..44b8df731c889 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -3815,10 +3815,11 @@ static void check_for_missing_completions(struct ena_adapter *adapter)
+ {
+ 	struct ena_ring *tx_ring;
+ 	struct ena_ring *rx_ring;
+-	int i, budget, rc;
++	int qid, budget, rc;
+ 	int io_queue_count;
  
--		size = io_sq->bounce_buf_ctrl.buffer_size *
-+		size = (size_t)io_sq->bounce_buf_ctrl.buffer_size *
- 			io_sq->bounce_buf_ctrl.buffers_num;
+ 	io_queue_count = adapter->xdp_num_queues + adapter->num_io_queues;
++
+ 	/* Make sure the driver doesn't turn the device in other process */
+ 	smp_rmb();
  
- 		dev_node = dev_to_node(ena_dev->dmadev);
+@@ -3831,27 +3832,29 @@ static void check_for_missing_completions(struct ena_adapter *adapter)
+ 	if (adapter->missing_tx_completion_to == ENA_HW_HINTS_NO_TIMEOUT)
+ 		return;
+ 
+-	budget = ENA_MONITORED_TX_QUEUES;
++	budget = min_t(u32, io_queue_count, ENA_MONITORED_TX_QUEUES);
+ 
+-	for (i = adapter->last_monitored_tx_qid; i < io_queue_count; i++) {
+-		tx_ring = &adapter->tx_ring[i];
+-		rx_ring = &adapter->rx_ring[i];
++	qid = adapter->last_monitored_tx_qid;
++
++	while (budget) {
++		qid = (qid + 1) % io_queue_count;
++
++		tx_ring = &adapter->tx_ring[qid];
++		rx_ring = &adapter->rx_ring[qid];
+ 
+ 		rc = check_missing_comp_in_tx_queue(adapter, tx_ring);
+ 		if (unlikely(rc))
+ 			return;
+ 
+-		rc =  !ENA_IS_XDP_INDEX(adapter, i) ?
++		rc =  !ENA_IS_XDP_INDEX(adapter, qid) ?
+ 			check_for_rx_interrupt_queue(adapter, rx_ring) : 0;
+ 		if (unlikely(rc))
+ 			return;
+ 
+ 		budget--;
+-		if (!budget)
+-			break;
+ 	}
+ 
+-	adapter->last_monitored_tx_qid = i % io_queue_count;
++	adapter->last_monitored_tx_qid = qid;
+ }
+ 
+ /* trigger napi schedule after 2 consecutive detections */
 -- 
 2.43.0
 
