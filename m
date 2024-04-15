@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6BC76919;
-	Mon, 15 Apr 2024 14:42:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C8C77A03;
+	Mon, 15 Apr 2024 14:42:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192154; cv=none; b=u+NO96OmvEeX+fdWZLiavAQPbL89Mf11GwHIWLM+xlTiKPLJdysoLbiGKojU8/eQaDx2T1UuKT2uqiCjytAgd/1DADljU+Km33Xs8koxMfObEXuJGETySiZ3QkEAWSthXDRZGiOzxyZmRVqEQnHIIZceHj+xVXjZ1oIehJkNAcs=
+	t=1713192157; cv=none; b=uo4clCw/4u54NxIBew/3nKMyj6rOc9eUoNIOZgheqgtKR3bg0G2/88j1YooW22OeCAak9KJUTTkfGDMGFegur/6rYsXqajr0auCr+BmWVlbomQlgM4CzmGGc6jo5lYIrpTbQSrlrYFrF6sUgZguPiVcJP3vAlLqqhDF1mS8pYm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192154; c=relaxed/simple;
-	bh=pZlL/VEdyiu8iMnyaFeUf54zgHI4FM6OI9AQW1aYQWI=;
+	s=arc-20240116; t=1713192157; c=relaxed/simple;
+	bh=dd72bjEidwRl1v8pVSCAmF7ajdh4aQuUA9mmRW4bRYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L4XlUVl4BlhxHjc7Rw+Ex+l1hURE0/Bh6ICypoO+fgHk4BC/WUxIfMX0W4FN80JOIL/9Kn7C+KvFqDVuJ/L0cCBrKGJQUduvkH2em7/zsk6ZBbhpGuDmmXGLTRJnI3YS9o2o/MV4sPoNJsty8IidItPWAf0+pQq9DAmtCJFTfHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tum+rVIo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S8ryARkCHu6qpm+99EZgJGWr9jz4wZh13MO06i9v2PqwaNuKtF2wzBK06DcJV3k2mGQ/Ty6q/srUjiJzuaGPey3E9YBbegX2Jb+6FgVhwWtQdgnq501jdB4uq1rx1gSLfNCB5fx+6Si7cWGxN+hBUyIYPHpFlFD9QuaZ1fhepbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DAPJBnJn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tum+rVIo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E25C3277B;
-	Mon, 15 Apr 2024 14:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAPJBnJn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8B6C32783;
+	Mon, 15 Apr 2024 14:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192154;
-	bh=pZlL/VEdyiu8iMnyaFeUf54zgHI4FM6OI9AQW1aYQWI=;
+	s=korg; t=1713192157;
+	bh=dd72bjEidwRl1v8pVSCAmF7ajdh4aQuUA9mmRW4bRYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tum+rVIowuGDUP8NIhYb6Njqa+IIw225r0H0EEi3tMfJR2AUU4VvXWT2I0XEU863r
-	 PN8pNeEI/PvYHUWi1hD/EkzZGu0WpokfTyCVH9cWGf5nXEU/f9zXmE2E2vDFycCQog
-	 lKgquXMUMQELgoY30V4iBn5o6kzZkIcb9a1EA5eM=
+	b=DAPJBnJn5K1S+9y8zrJvfLFOqzGwA6j0m5rcvBcj8YppeAMu5w9n3mDa4pxA8LMYn
+	 cDRIoa3Y9Os3Bvs3PzJjoVzdrR3OUqrEoTxq+iWbK7qmNbM8kIFF41TgC4DHIonkNP
+	 diJDZlaro2M5ZYqgSaF9qwCq8Lq9YZOaPtN/8HD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	David Ahern <dsahern@kernel.org>,
 	Arnd Bergmann <arnd@arndb.de>,
-	Danilo Krummrich <dakr@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 07/45] nouveau: fix function cast warning
-Date: Mon, 15 Apr 2024 16:21:14 +0200
-Message-ID: <20240415141942.462885455@linuxfoundation.org>
+Subject: [PATCH 5.15 16/45] ipv4/route: avoid unused-but-set-variable warning
+Date: Mon, 15 Apr 2024 16:21:23 +0200
+Message-ID: <20240415141942.732655519@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141942.235939111@linuxfoundation.org>
 References: <20240415141942.235939111@linuxfoundation.org>
@@ -53,47 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 185fdb4697cc9684a02f2fab0530ecdd0c2f15d4 ]
+[ Upstream commit cf1b7201df59fb936f40f4a807433fe3f2ce310a ]
 
-Calling a function through an incompatible pointer type causes breaks
-kcfi, so clang warns about the assignment:
+The log_martians variable is only used in an #ifdef, causing a 'make W=1'
+warning with gcc:
 
-drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c:73:10: error: cast from 'void (*)(const void *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
-   73 |         .fini = (void(*)(void *))kfree,
+net/ipv4/route.c: In function 'ip_rt_send_redirect':
+net/ipv4/route.c:880:13: error: variable 'log_martians' set but not used [-Werror=unused-but-set-variable]
 
-Avoid this with a trivial wrapper.
+Change the #ifdef to an equivalent IS_ENABLED() to let the compiler
+see where the variable is used.
 
-Fixes: c39f472e9f14 ("drm/nouveau: remove symlinks, move core/ to nvkm/ (no code changes)")
+Fixes: 30038fc61adf ("net: ip_rt_send_redirect() optimization")
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240404160234.2923554-1-arnd@kernel.org
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240408074219.3030256-2-arnd@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/ipv4/route.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c
-index 4bf486b571013..cb05f7f48a98b 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c
-@@ -66,11 +66,16 @@ of_init(struct nvkm_bios *bios, const char *name)
- 	return ERR_PTR(-EINVAL);
- }
- 
-+static void of_fini(void *p)
-+{
-+	kfree(p);
-+}
-+
- const struct nvbios_source
- nvbios_of = {
- 	.name = "OpenFirmware",
- 	.init = of_init,
--	.fini = (void(*)(void *))kfree,
-+	.fini = of_fini,
- 	.read = of_read,
- 	.size = of_size,
- 	.rw = false,
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 12c59d700942f..4ff94596f8cd5 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -933,13 +933,11 @@ void ip_rt_send_redirect(struct sk_buff *skb)
+ 		icmp_send(skb, ICMP_REDIRECT, ICMP_REDIR_HOST, gw);
+ 		peer->rate_last = jiffies;
+ 		++peer->n_redirects;
+-#ifdef CONFIG_IP_ROUTE_VERBOSE
+-		if (log_martians &&
++		if (IS_ENABLED(CONFIG_IP_ROUTE_VERBOSE) && log_martians &&
+ 		    peer->n_redirects == ip_rt_redirect_number)
+ 			net_warn_ratelimited("host %pI4/if%d ignores redirects for %pI4 to %pI4\n",
+ 					     &ip_hdr(skb)->saddr, inet_iif(skb),
+ 					     &ip_hdr(skb)->daddr, &gw);
+-#endif
+ 	}
+ out_put_peer:
+ 	inet_putpeer(peer);
 -- 
 2.43.0
 
