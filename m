@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DDC1D524;
-	Mon, 15 Apr 2024 14:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD87763F8;
+	Mon, 15 Apr 2024 14:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191641; cv=none; b=EwRjr2ORsuqZ1SGHUtNgJMRryfiEQpoV4WZk+bk69eGlUFH/glrpKZPxATNs/eXcrTKRFc3THAaA2xOlA/Znr22oKZB+XBFR3fFqYLnMvKpatiF1SMCJy2B219GFGIpVdj6HemYVkLO2II/fQx7Kg3WaFZjQYMd7XNicz+lZ2hU=
+	t=1713191643; cv=none; b=iF7DU78hsUroInCFXByq7ichrzMvx/4PPzf0VEo5DavnAcWQJ8t8O6SV4htwZHSG1u9MJDoaMs/vdURSR8NJAoqJgP3bd71xMXFe3s1lj6pqgs1gEFFzy0GtCxncNCuE1JrqH8BwimUCIkq/AN1Jwg0H7uy4E5/iUDmjNwCYRyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191641; c=relaxed/simple;
-	bh=d/dMx5G0lXiLdkU5dsRtz78hYKCpjN2uCqUQKH0/o/M=;
+	s=arc-20240116; t=1713191643; c=relaxed/simple;
+	bh=cN2R+AHlr8fOdHVdhsrYqVUQaz+aTldXulCCTg4Aw+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mC/aPAOl+NPcP6bXgx0fyzeDvjKzaeQm+XAY9N2sjr3tkkXe0fHVUTabIrq7zVXIxNkKH/AUUranursuTKX53DONfRZNKJ4xQLpwdI2t2Bp/Xq5BsrLm5eOnedSlgRLM7c8CKkfn3GTX71AAV4IgUfyL2sicIdz3B/kkg2W+AkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3EGBIR7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iepNAJbarmG2FZjuywDIvJpHBPQeRNXnPB6JXuXoxYC7mqeF5XLETXBx/qsHPYuVPve98kzMTT3Gl2ArrUlvWLUSlPKhvNxJuL9nWXuoYzFpXuQNvlGeRFcVtRmHndxkuv566OcIflUvrZLmAnrSCvkN+uMTEx4Lb6kKVODOK5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taUA/Y82; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3EGBIR7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327A0C113CC;
-	Mon, 15 Apr 2024 14:34:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taUA/Y82"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BEBC3277B;
+	Mon, 15 Apr 2024 14:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191640;
-	bh=d/dMx5G0lXiLdkU5dsRtz78hYKCpjN2uCqUQKH0/o/M=;
+	s=korg; t=1713191643;
+	bh=cN2R+AHlr8fOdHVdhsrYqVUQaz+aTldXulCCTg4Aw+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z3EGBIR7pL9wPod1zVqoTEO5lSWaxSWqmR1YSxc4beSJ/tMqgEPKHYYhY39RN7R4H
-	 YwRFg2326Re108n3azwKnks1nv+l9AmYBcnWqv+cwNPUSp3MZ9+C0prL71pcKbUWMo
-	 FiuByM83TgfFeLWYCUe9ucvIZrv1/9q4WsqTNIec=
+	b=taUA/Y82G5WfNQNuHGpdTTArvgMhEJ95FHpcO8bAMENw91e+Mc5JH5+oRWaWfBWg9
+	 Gc4z540qiyYwHj0oW+eemp9bnwrT5LGTo405t7I95E6w/iMsmcuZZhxIthCV/KRzKj
+	 pD1TicfVcbWgT4V3Mq4b6GdV10blPjalKxfSWF3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9ee20ec1de7b3168db09@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Phillip Potter <phil@philpotter.co.uk>,
-	Sabrina Dubroca <sd@queasysnail.net>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/122] geneve: fix header validation in geneve[6]_xmit_skb
-Date: Mon, 15 Apr 2024 16:20:01 +0200
-Message-ID: <20240415141954.453254636@linuxfoundation.org>
+Subject: [PATCH 6.6 037/122] s390/ism: fix receive message buffer allocation
+Date: Mon, 15 Apr 2024 16:20:02 +0200
+Message-ID: <20240415141954.482575015@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -54,164 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gerd Bayer <gbayer@linux.ibm.com>
 
-[ Upstream commit d8a6213d70accb403b82924a1c229e733433a5ef ]
+[ Upstream commit 58effa3476536215530c9ec4910ffc981613b413 ]
 
-syzbot is able to trigger an uninit-value in geneve_xmit() [1]
+Since [1], dma_alloc_coherent() does not accept requests for GFP_COMP
+anymore, even on archs that may be able to fulfill this. Functionality that
+relied on the receive buffer being a compound page broke at that point:
+The SMC-D protocol, that utilizes the ism device driver, passes receive
+buffers to the splice processor in a struct splice_pipe_desc with a
+single entry list of struct pages. As the buffer is no longer a compound
+page, the splice processor now rejects requests to handle more than a
+page worth of data.
 
-Problem : While most ip tunnel helpers (like ip_tunnel_get_dsfield())
-uses skb_protocol(skb, true), pskb_inet_may_pull() is only using
-skb->protocol.
+Replace dma_alloc_coherent() and allocate a buffer with folio_alloc and
+create a DMA map for it with dma_map_page(). Since only receive buffers
+on ISM devices use DMA, qualify the mapping as FROM_DEVICE.
+Since ISM devices are available on arch s390, only and on that arch all
+DMA is coherent, there is no need to introduce and export some kind of
+dma_sync_to_cpu() method to be called by the SMC-D protocol layer.
 
-If anything else than ETH_P_IPV6 or ETH_P_IP is found in skb->protocol,
-pskb_inet_may_pull() does nothing at all.
+Analogously, replace dma_free_coherent by a two step dma_unmap_page,
+then folio_put to free the receive buffer.
 
-If a vlan tag was provided by the caller (af_packet in the syzbot case),
-the network header might not point to the correct location, and skb
-linear part could be smaller than expected.
+[1] https://lore.kernel.org/all/20221113163535.884299-1-hch@lst.de/
 
-Add skb_vlan_inet_prepare() to perform a complete mac validation.
-
-Use this in geneve for the moment, I suspect we need to adopt this
-more broadly.
-
-v4 - Jakub reported v3 broke l2_tos_ttl_inherit.sh selftest
-   - Only call __vlan_get_protocol() for vlan types.
-Link: https://lore.kernel.org/netdev/20240404100035.3270a7d5@kernel.org/
-
-v2,v3 - Addressed Sabrina comments on v1 and v2
-Link: https://lore.kernel.org/netdev/Zg1l9L2BNoZWZDZG@hog/
-
-[1]
-
-BUG: KMSAN: uninit-value in geneve_xmit_skb drivers/net/geneve.c:910 [inline]
- BUG: KMSAN: uninit-value in geneve_xmit+0x302d/0x5420 drivers/net/geneve.c:1030
-  geneve_xmit_skb drivers/net/geneve.c:910 [inline]
-  geneve_xmit+0x302d/0x5420 drivers/net/geneve.c:1030
-  __netdev_start_xmit include/linux/netdevice.h:4903 [inline]
-  netdev_start_xmit include/linux/netdevice.h:4917 [inline]
-  xmit_one net/core/dev.c:3531 [inline]
-  dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3547
-  __dev_queue_xmit+0x348d/0x52c0 net/core/dev.c:4335
-  dev_queue_xmit include/linux/netdevice.h:3091 [inline]
-  packet_xmit+0x9c/0x6c0 net/packet/af_packet.c:276
-  packet_snd net/packet/af_packet.c:3081 [inline]
-  packet_sendmsg+0x8bb0/0x9ef0 net/packet/af_packet.c:3113
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  __sys_sendto+0x685/0x830 net/socket.c:2191
-  __do_sys_sendto net/socket.c:2203 [inline]
-  __se_sys_sendto net/socket.c:2199 [inline]
-  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2199
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:3804 [inline]
-  slab_alloc_node mm/slub.c:3845 [inline]
-  kmem_cache_alloc_node+0x613/0xc50 mm/slub.c:3888
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:577
-  __alloc_skb+0x35b/0x7a0 net/core/skbuff.c:668
-  alloc_skb include/linux/skbuff.h:1318 [inline]
-  alloc_skb_with_frags+0xc8/0xbf0 net/core/skbuff.c:6504
-  sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2795
-  packet_alloc_skb net/packet/af_packet.c:2930 [inline]
-  packet_snd net/packet/af_packet.c:3024 [inline]
-  packet_sendmsg+0x722d/0x9ef0 net/packet/af_packet.c:3113
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  __sys_sendto+0x685/0x830 net/socket.c:2191
-  __do_sys_sendto net/socket.c:2203 [inline]
-  __se_sys_sendto net/socket.c:2199 [inline]
-  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2199
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-CPU: 0 PID: 5033 Comm: syz-executor346 Not tainted 6.9.0-rc1-syzkaller-00005-g928a87efa423 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/29/2024
-
-Fixes: d13f048dd40e ("net: geneve: modify IP header check in geneve6_xmit_skb and geneve_xmit_skb")
-Reported-by: syzbot+9ee20ec1de7b3168db09@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/000000000000d19c3a06152f9ee4@google.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Phillip Potter <phil@philpotter.co.uk>
-Cc: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Phillip Potter <phil@philpotter.co.uk>
+Fixes: c08004eede4b ("s390/ism: don't pass bogus GFP_ flags to dma_alloc_coherent")
+Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/geneve.c     |  4 ++--
- include/net/ip_tunnels.h | 33 +++++++++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+), 2 deletions(-)
+ drivers/s390/net/ism_drv.c | 38 +++++++++++++++++++++++++++++---------
+ 1 file changed, 29 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
-index 0204ac92b05ab..0a18b67d0d669 100644
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -926,7 +926,7 @@ static int geneve_xmit_skb(struct sk_buff *skb, struct net_device *dev,
- 	__be16 sport;
- 	int err;
+diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
+index 81aabbfbbe2ca..477d7b003c3f0 100644
+--- a/drivers/s390/net/ism_drv.c
++++ b/drivers/s390/net/ism_drv.c
+@@ -14,6 +14,8 @@
+ #include <linux/err.h>
+ #include <linux/ctype.h>
+ #include <linux/processor.h>
++#include <linux/dma-mapping.h>
++#include <linux/mm.h>
  
--	if (!pskb_inet_may_pull(skb))
-+	if (!skb_vlan_inet_prepare(skb))
- 		return -EINVAL;
+ #include "ism.h"
  
- 	sport = udp_flow_src_port(geneve->net, skb, 1, USHRT_MAX, true);
-@@ -1024,7 +1024,7 @@ static int geneve6_xmit_skb(struct sk_buff *skb, struct net_device *dev,
- 	__be16 sport;
- 	int err;
- 
--	if (!pskb_inet_may_pull(skb))
-+	if (!skb_vlan_inet_prepare(skb))
- 		return -EINVAL;
- 
- 	sport = udp_flow_src_port(geneve->net, skb, 1, USHRT_MAX, true);
-diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
-index f346b4efbc307..822f0fad39623 100644
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -360,6 +360,39 @@ static inline bool pskb_inet_may_pull(struct sk_buff *skb)
- 	return pskb_network_may_pull(skb, nhlen);
+@@ -291,13 +293,15 @@ static int ism_read_local_gid(struct ism_dev *ism)
+ static void ism_free_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
+ {
+ 	clear_bit(dmb->sba_idx, ism->sba_bitmap);
+-	dma_free_coherent(&ism->pdev->dev, dmb->dmb_len,
+-			  dmb->cpu_addr, dmb->dma_addr);
++	dma_unmap_page(&ism->pdev->dev, dmb->dma_addr, dmb->dmb_len,
++		       DMA_FROM_DEVICE);
++	folio_put(virt_to_folio(dmb->cpu_addr));
  }
  
-+/* Variant of pskb_inet_may_pull().
-+ */
-+static inline bool skb_vlan_inet_prepare(struct sk_buff *skb)
-+{
-+	int nhlen = 0, maclen = ETH_HLEN;
-+	__be16 type = skb->protocol;
-+
-+	/* Essentially this is skb_protocol(skb, true)
-+	 * And we get MAC len.
-+	 */
-+	if (eth_type_vlan(type))
-+		type = __vlan_get_protocol(skb, type, &maclen);
-+
-+	switch (type) {
-+#if IS_ENABLED(CONFIG_IPV6)
-+	case htons(ETH_P_IPV6):
-+		nhlen = sizeof(struct ipv6hdr);
-+		break;
-+#endif
-+	case htons(ETH_P_IP):
-+		nhlen = sizeof(struct iphdr);
-+		break;
-+	}
-+	/* For ETH_P_IPV6/ETH_P_IP we make sure to pull
-+	 * a base network header in skb->head.
-+	 */
-+	if (!pskb_may_pull(skb, maclen + nhlen))
-+		return false;
-+
-+	skb_set_network_header(skb, maclen);
-+	return true;
-+}
-+
- static inline int ip_encap_hlen(struct ip_tunnel_encap *e)
+ static int ism_alloc_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
  {
- 	const struct ip_tunnel_encap_ops *ops;
+ 	unsigned long bit;
++	int rc;
+ 
+ 	if (PAGE_ALIGN(dmb->dmb_len) > dma_get_max_seg_size(&ism->pdev->dev))
+ 		return -EINVAL;
+@@ -314,14 +318,30 @@ static int ism_alloc_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
+ 	    test_and_set_bit(dmb->sba_idx, ism->sba_bitmap))
+ 		return -EINVAL;
+ 
+-	dmb->cpu_addr = dma_alloc_coherent(&ism->pdev->dev, dmb->dmb_len,
+-					   &dmb->dma_addr,
+-					   GFP_KERNEL | __GFP_NOWARN |
+-					   __GFP_NOMEMALLOC | __GFP_NORETRY);
+-	if (!dmb->cpu_addr)
+-		clear_bit(dmb->sba_idx, ism->sba_bitmap);
++	dmb->cpu_addr =
++		folio_address(folio_alloc(GFP_KERNEL | __GFP_NOWARN |
++					  __GFP_NOMEMALLOC | __GFP_NORETRY,
++					  get_order(dmb->dmb_len)));
+ 
+-	return dmb->cpu_addr ? 0 : -ENOMEM;
++	if (!dmb->cpu_addr) {
++		rc = -ENOMEM;
++		goto out_bit;
++	}
++	dmb->dma_addr = dma_map_page(&ism->pdev->dev,
++				     virt_to_page(dmb->cpu_addr), 0,
++				     dmb->dmb_len, DMA_FROM_DEVICE);
++	if (dma_mapping_error(&ism->pdev->dev, dmb->dma_addr)) {
++		rc = -ENOMEM;
++		goto out_free;
++	}
++
++	return 0;
++
++out_free:
++	kfree(dmb->cpu_addr);
++out_bit:
++	clear_bit(dmb->sba_idx, ism->sba_bitmap);
++	return rc;
+ }
+ 
+ int ism_register_dmb(struct ism_dev *ism, struct ism_dmb *dmb,
 -- 
 2.43.0
 
