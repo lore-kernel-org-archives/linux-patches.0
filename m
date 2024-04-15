@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F371E501;
-	Mon, 15 Apr 2024 14:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1CE1D52B;
+	Mon, 15 Apr 2024 14:43:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192202; cv=none; b=g9TDk11dtsh80LA4RApaT5lpz7wLkR/iAmG/cYlPQLGA/X3R8op5yurgJTFXgbxl4nODM0mYm6wfCIiVMe+feiYoe4eDvT6Z84tCsXML5Vq2wY6/6vU5v2e3d+89x3KBMMjKMo2RPiaW8nsXeX4mzH5cgqTs6qjVyUe7YRkbB1o=
+	t=1713192205; cv=none; b=GvYihT/WZLNAq8jtbrK8R2UpcSfTkhg7ncuNYDSTLBtjgeaE3xJEBdLtzPNQe2ZsqbMRJNm0T+IbXcWVIrkZ9DOi7XaNSgfO8JoEozyvgLA9eaZT+Dp3FET/nSRzybd8VLdrHy6hTIOkX7PrxoBMJ3Bkal+pHSKQyTz7iXam+o4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192202; c=relaxed/simple;
-	bh=6cS9xaLap0THNn+I6r41lyfxsl5v1ExZqXceRROdclc=;
+	s=arc-20240116; t=1713192205; c=relaxed/simple;
+	bh=Fe4XKxoh9qyScYKV4+gFtL1VhbB6sNSTeT1QTsLTawY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D93RxBaUieCEBNjCAiu3FDl0v1RAIY7hknXUniqCBPgcLvnMcv6UM2cNtXvPxNGdT8nySwNFpx/M3xqa2jVFUSxOervNw3q62lw1w4umrBYgrvfchP88+X0CnbkcYwYAQiH1GxDOQ1oOGS3carGnVxsTuRKXPtR+3YHgJXAK9ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inO63tX9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QE31TbVgRGb1MWBbTtYc4yVWUinAzmmA0vSA9M2UlIxfk0WOoNzNhhFdtrch6W6PhtKLVrl9geY0+cR+mpG7e6VsfzmxXz6hfI/I1CoVjz7U1HiE4st7bY38hblZmzi7C/0SX3fM8QzLwdg6WBfxv8WKyXe/0eJ4dXGnxTpES0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqTElxeI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inO63tX9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3056BC113CC;
-	Mon, 15 Apr 2024 14:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqTElxeI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2730FC113CC;
+	Mon, 15 Apr 2024 14:43:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192202;
-	bh=6cS9xaLap0THNn+I6r41lyfxsl5v1ExZqXceRROdclc=;
+	s=korg; t=1713192205;
+	bh=Fe4XKxoh9qyScYKV4+gFtL1VhbB6sNSTeT1QTsLTawY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=inO63tX9TMmJNjLBgxYHRcWU7UB8Bh/vEP3j8lNBLAf4lK6U8Bjun5Vcv/EQiwDNs
-	 JfkMsUFnteRUZ+neAdmgacmD5FIsevE6XlsIVituoCkriYV+XbOf8KC48iKFYHrBL8
-	 szaLdFWE/ePWJkaAn+kkmyj9FHDzHATw/LVrqpCI=
+	b=XqTElxeIUoiRTxrD209zlYcPPImxlxmOjsD6b8zrB1RZeSa2YnFM6voF0nQ6yZKs6
+	 WgivLX7VmRvpdRAHeB5U+rJuOBxel8XKwir+p+sbuIJov4BKbefShiAP4s+0BXd+AZ
+	 n0Fb+WooWYMDoKz9e367I4sKVCG8NLFZxd067ls0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 5.15 30/45] drm/client: Fully protect modes[] with dev->mode_config.mutex
-Date: Mon, 15 Apr 2024 16:21:37 +0200
-Message-ID: <20240415141943.148333129@linuxfoundation.org>
+	Yihuang Yu <yihyu@redhat.com>,
+	Will Deacon <will@kernel.org>,
+	Gavin Shan <gshan@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	stable@kernel.org
+Subject: [PATCH 5.15 31/45] vhost: Add smp_rmb() in vhost_vq_avail_empty()
+Date: Mon, 15 Apr 2024 16:21:38 +0200
+Message-ID: <20240415141943.177849756@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141942.235939111@linuxfoundation.org>
 References: <20240415141942.235939111@linuxfoundation.org>
@@ -46,60 +49,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Gavin Shan <gshan@redhat.com>
 
-commit 3eadd887dbac1df8f25f701e5d404d1b90fd0fea upstream.
+commit 22e1992cf7b034db5325660e98c41ca5afa5f519 upstream.
 
-The modes[] array contains pointers to modes on the connectors'
-mode lists, which are protected by dev->mode_config.mutex.
-Thus we need to extend modes[] the same protection or by the
-time we use it the elements may already be pointing to
-freed/reused memory.
+A smp_rmb() has been missed in vhost_vq_avail_empty(), spotted by
+Will. Otherwise, it's not ensured the available ring entries pushed
+by guest can be observed by vhost in time, leading to stale available
+ring entries fetched by vhost in vhost_get_vq_desc(), as reported by
+Yihuang Yu on NVidia's grace-hopper (ARM64) platform.
 
-Cc: stable@vger.kernel.org
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10583
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240404203336.10454-2-ville.syrjala@linux.intel.com
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+  /home/gavin/sandbox/qemu.main/build/qemu-system-aarch64      \
+  -accel kvm -machine virt,gic-version=host -cpu host          \
+  -smp maxcpus=1,cpus=1,sockets=1,clusters=1,cores=1,threads=1 \
+  -m 4096M,slots=16,maxmem=64G                                 \
+  -object memory-backend-ram,id=mem0,size=4096M                \
+   :                                                           \
+  -netdev tap,id=vnet0,vhost=true                              \
+  -device virtio-net-pci,bus=pcie.8,netdev=vnet0,mac=52:54:00:f1:26:b0
+   :
+  guest# netperf -H 10.26.1.81 -l 60 -C -c -t UDP_STREAM
+  virtio_net virtio0: output.0:id 100 is not a head!
+
+Add the missed smp_rmb() in vhost_vq_avail_empty(). When tx_can_batch()
+returns true, it means there's still pending tx buffers. Since it might
+read indices, so it still can bypass the smp_rmb() in vhost_get_vq_desc().
+Note that it should be safe until vq->avail_idx is changed by commit
+275bf960ac697 ("vhost: better detection of available buffers").
+
+Fixes: 275bf960ac69 ("vhost: better detection of available buffers")
+Cc: <stable@kernel.org> # v4.11+
+Reported-by: Yihuang Yu <yihyu@redhat.com>
+Suggested-by: Will Deacon <will@kernel.org>
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Message-Id: <20240328002149.1141302-2-gshan@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_client_modeset.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/vhost/vhost.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_client_modeset.c
-+++ b/drivers/gpu/drm/drm_client_modeset.c
-@@ -775,6 +775,7 @@ int drm_client_modeset_probe(struct drm_
- 	unsigned int total_modes_count = 0;
- 	struct drm_client_offset *offsets;
- 	unsigned int connector_count = 0;
-+	/* points to modes protected by mode_config.mutex */
- 	struct drm_display_mode **modes;
- 	struct drm_crtc **crtcs;
- 	int i, ret = 0;
-@@ -843,7 +844,6 @@ int drm_client_modeset_probe(struct drm_
- 		drm_client_pick_crtcs(client, connectors, connector_count,
- 				      crtcs, modes, 0, width, height);
- 	}
--	mutex_unlock(&dev->mode_config.mutex);
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -2518,9 +2518,19 @@ bool vhost_vq_avail_empty(struct vhost_d
+ 	r = vhost_get_avail_idx(vq, &avail_idx);
+ 	if (unlikely(r))
+ 		return false;
++
+ 	vq->avail_idx = vhost16_to_cpu(vq, avail_idx);
++	if (vq->avail_idx != vq->last_avail_idx) {
++		/* Since we have updated avail_idx, the following
++		 * call to vhost_get_vq_desc() will read available
++		 * ring entries. Make sure that read happens after
++		 * the avail_idx read.
++		 */
++		smp_rmb();
++		return false;
++	}
  
- 	drm_client_modeset_release(client);
+-	return vq->avail_idx == vq->last_avail_idx;
++	return true;
+ }
+ EXPORT_SYMBOL_GPL(vhost_vq_avail_empty);
  
-@@ -873,6 +873,7 @@ int drm_client_modeset_probe(struct drm_
- 			modeset->y = offset->y;
- 		}
- 	}
-+	mutex_unlock(&dev->mode_config.mutex);
- 
- 	mutex_unlock(&client->modeset_mutex);
- out:
 
 
