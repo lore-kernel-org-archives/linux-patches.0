@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E88A78676;
-	Mon, 15 Apr 2024 14:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5801274439;
+	Mon, 15 Apr 2024 14:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191812; cv=none; b=CWxhuSI9r5d3cE/CQ1e1chW4FxArZ1DKbgSxjEgsMmI9swUGSz3iPQ+d/BMp7KBGz0YiEzsiRjzGeNGJlx3OvTmR9sEfoGxBh4RZk0sLHZXZIQxOdgaQMmt4DJjhRaSYMNUv6bjcI3B4t6xMSi5ipIMzOyow60fuQc7JFJreCJ8=
+	t=1713191815; cv=none; b=pSG2GYmbpq2QptV+sr+Ryiuw8zxf15cR+0i+UH6tiI/82/w7dHika63cYa8PEF/6YBgpeU3w80NNPW7g90Vl6h2e7yPKc/28qMZPSPMa1PJo7O1NO3Yy+WnmKZPEPDS8bSqKKrMHFuS6wbKZ3Hs7NJuevG0Yz1aoT5RhL1F6ZVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191812; c=relaxed/simple;
-	bh=u+vkjYjAudQ7w4GfP6pfIhbkmBlj9dQdqaDOK2KxMS0=;
+	s=arc-20240116; t=1713191815; c=relaxed/simple;
+	bh=lt3TGb4S32lq0i/98tJzlbW5cKhLJQRJ6FDMap3Kp/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fl9I/vSuuLHFgpMCpeN85AcGeWD1cGRVMcCTp/a1FFHnXdoskAy9UfE1Uqf2OSB/Kn2v4ev7cg/Yb5qoPzhxLKgIG8up5QFxxThWlT87JmzuRCemAgAscuJLP2RTFskv4Htem9koBP3b3NHoIyLzIzpz4+mDxrITqhleq9pRRD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgrNGQr5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b5FcF0IgwpA/kbAd2hqyNa6dtbpcpy7ykH8WmypJa3W0I7X0JzGS1li5tr8M/7lK4D9jnP5qWX1fXVZwSK/L85xUeArdpE9b40A+TxXzIZvdnvnFEZ3xFVZay53OESUBAswXBhVgnJHbS00WeGeVHcPthLOUoarWbBar4mDGPCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0XVFIawT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgrNGQr5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACCD5C113CC;
-	Mon, 15 Apr 2024 14:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0XVFIawT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDECC113CC;
+	Mon, 15 Apr 2024 14:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191812;
-	bh=u+vkjYjAudQ7w4GfP6pfIhbkmBlj9dQdqaDOK2KxMS0=;
+	s=korg; t=1713191815;
+	bh=lt3TGb4S32lq0i/98tJzlbW5cKhLJQRJ6FDMap3Kp/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RgrNGQr5CAIENNkJuymuUE4SSgiF7kMScUq+a4Jrthtk2RnK/j/hwAclNuIwwtues
-	 1JGZZX7XE/2bwVEEmZeyA3h+RnU0WmHnDcdTjw/V8I0kt3mg8CY8qkl/Iwg9/k7EHX
-	 WYl8mr8h0qNkXoB7PZo1TaV+G2mz1fahoxK/5KVA=
+	b=0XVFIawT3sOPzsM+fZPxgOr03rxARuedEs5ck1nJR3i1qKnaxZfk1XE1YE+1pKqi6
+	 XXa5FzkyZYrBSlfqM6ictccPjb737gTpPcrEuQfmhxuA22LGOgIzj/NrjDZ894Dfvz
+	 /mXWO9WvQt8IW2xmR2KzmwbYlyaDttDlnE1SeVhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Frank Li <Frank.Li@nxp.com>,
 	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.6 095/122] arm64: dts: imx8-ss-dma: fix can lpcg indices
-Date: Mon, 15 Apr 2024 16:21:00 +0200
-Message-ID: <20240415141956.224250345@linuxfoundation.org>
+Subject: [PATCH 6.6 096/122] arm64: dts: imx8-ss-dma: fix adc lpcg indices
+Date: Mon, 15 Apr 2024 16:21:01 +0200
+Message-ID: <20240415141956.253949420@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -52,75 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Li <Frank.Li@nxp.com>
 
-commit 0893392334b5dffdf616a53679c6a2942c46391b upstream.
+commit 81975080f14167610976e968e8016e92d836266f upstream.
 
-can0_lpcg: clock-controller@5acd0000 {
-	...						   Col1  Col2
-	clocks = <&clk IMX_SC_R_CAN_0 IMX_SC_PM_CLK_PER>, // 0    0
-		 <&dma_ipg_clk>,			  // 1    4
-		 <&dma_ipg_clk>;			  // 2    5
-        clock-indices = <IMX_LPCG_CLK_0>,
-			<IMX_LPCG_CLK_4>,
-			<IMX_LPCG_CLK_5>;
-}
+adc0_lpcg: clock-controller@5ac80000 {
+	...						    Col1   Col2
+	clocks = <&clk IMX_SC_R_ADC_0 IMX_SC_PM_CLK_PER>, // 0      0
+		 <&dma_ipg_clk>;			  // 1      4
+	clock-indices = <IMX_LPCG_CLK_0>, <IMX_LPCG_CLK_4>;
+};
 
 Col1: index, which existing dts try to get.
 Col2: actual index in lpcg driver.
 
-flexcan1: can@5a8d0000 {
-	clocks = <&can0_lpcg 1>, <&can0_lpcg 0>;
-			     ^^		     ^^
-Should be:
-	clocks = <&can0_lpcg IMX_LPCG_CLK_4>, <&can0_lpcg IMX_LPCG_CLK_0>;
-};
+adc0: adc@5a880000 {
+	clocks = <&adc0_lpcg 0>, <&adc0_lpcg 1>;
+			     ^^              ^^
+	clocks = <&adc0_lpcg IMX_LPCG_CLK_0>, <&adc0_lpcg IMX_LPCG_CLK_4>;
 
-Arg0 is divided by 4 in lpcg driver. flexcan driver get IMX_SC_PM_CLK_PER
-by <&can0_lpcg 1> and <&can0_lpcg 0>. Although function can work, code
-logic is wrong. Fix it by using correct clock indices.
+Arg0 is divided by 4 in lpcg driver. So adc get IMX_SC_PM_CLK_PER by
+<&adc0_lpcg 0>, <&adc0_lpcg 1>. Although function can work, code logic is
+wrong. Fix it by using correct indices.
 
 Cc: stable@vger.kernel.org
-Fixes: 5e7d5b023e03 ("arm64: dts: imx8qxp: add flexcan in adma")
+Fixes: 1db044b25d2e ("arm64: dts: imx8dxl: add adc0 support")
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8-ss-dma.dtsi |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8-ss-dma.dtsi |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 --- a/arch/arm64/boot/dts/freescale/imx8-ss-dma.dtsi
 +++ b/arch/arm64/boot/dts/freescale/imx8-ss-dma.dtsi
-@@ -311,8 +311,8 @@ dma_subsys: bus@5a000000 {
- 		reg = <0x5a8d0000 0x10000>;
- 		interrupts = <GIC_SPI 235 IRQ_TYPE_LEVEL_HIGH>;
+@@ -282,8 +282,8 @@ dma_subsys: bus@5a000000 {
+ 		reg = <0x5a880000 0x10000>;
+ 		interrupts = <GIC_SPI 240 IRQ_TYPE_LEVEL_HIGH>;
  		interrupt-parent = <&gic>;
--		clocks = <&can0_lpcg 1>,
--			 <&can0_lpcg 0>;
-+		clocks = <&can0_lpcg IMX_LPCG_CLK_4>,
-+			 <&can0_lpcg IMX_LPCG_CLK_0>;
- 		clock-names = "ipg", "per";
- 		assigned-clocks = <&clk IMX_SC_R_CAN_0 IMX_SC_PM_CLK_PER>;
- 		assigned-clock-rates = <40000000>;
-@@ -332,8 +332,8 @@ dma_subsys: bus@5a000000 {
- 		 * CAN1 shares CAN0's clock and to enable CAN0's clock it
- 		 * has to be powered on.
- 		 */
--		clocks = <&can0_lpcg 1>,
--			 <&can0_lpcg 0>;
-+		clocks = <&can0_lpcg IMX_LPCG_CLK_4>,
-+			 <&can0_lpcg IMX_LPCG_CLK_0>;
- 		clock-names = "ipg", "per";
- 		assigned-clocks = <&clk IMX_SC_R_CAN_0 IMX_SC_PM_CLK_PER>;
- 		assigned-clock-rates = <40000000>;
-@@ -353,8 +353,8 @@ dma_subsys: bus@5a000000 {
- 		 * CAN2 shares CAN0's clock and to enable CAN0's clock it
- 		 * has to be powered on.
- 		 */
--		clocks = <&can0_lpcg 1>,
--			 <&can0_lpcg 0>;
-+		clocks = <&can0_lpcg IMX_LPCG_CLK_4>,
-+			 <&can0_lpcg IMX_LPCG_CLK_0>;
- 		clock-names = "ipg", "per";
- 		assigned-clocks = <&clk IMX_SC_R_CAN_0 IMX_SC_PM_CLK_PER>;
- 		assigned-clock-rates = <40000000>;
+-		clocks = <&adc0_lpcg 0>,
+-			 <&adc0_lpcg 1>;
++		clocks = <&adc0_lpcg IMX_LPCG_CLK_0>,
++			 <&adc0_lpcg IMX_LPCG_CLK_4>;
+ 		clock-names = "per", "ipg";
+ 		assigned-clocks = <&clk IMX_SC_R_ADC_0 IMX_SC_PM_CLK_PER>;
+ 		assigned-clock-rates = <24000000>;
+@@ -297,8 +297,8 @@ dma_subsys: bus@5a000000 {
+ 		reg = <0x5a890000 0x10000>;
+ 		interrupts = <GIC_SPI 241 IRQ_TYPE_LEVEL_HIGH>;
+ 		interrupt-parent = <&gic>;
+-		clocks = <&adc1_lpcg 0>,
+-			 <&adc1_lpcg 1>;
++		clocks = <&adc1_lpcg IMX_LPCG_CLK_0>,
++			 <&adc1_lpcg IMX_LPCG_CLK_4>;
+ 		clock-names = "per", "ipg";
+ 		assigned-clocks = <&clk IMX_SC_R_ADC_1 IMX_SC_PM_CLK_PER>;
+ 		assigned-clock-rates = <24000000>;
 
 
