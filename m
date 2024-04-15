@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99AB763EC;
-	Mon, 15 Apr 2024 14:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930A0762FF;
+	Mon, 15 Apr 2024 14:27:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191270; cv=none; b=jRTTEHwEG7HbTc97mgHFc18SzCp/fcPC/qU5XM3vZG0waGfCagEAEzO70YHiR4AAmzXQodg7Kq3pSuS/60QegrMqpeHCyNyfpHFdAaYJiHMpZ3vkBPds6kOWZo6HIEvnyh2auG+0bN0KGVgy7awPy/Fk0Lg13hpaguXKxI6HTew=
+	t=1713191273; cv=none; b=O9P1FYO+PfE6HLTV3lEdx2YgcVueinpa6+/Jgla1jJf0KZJ1z2CFx8YsLp3MPBvLqjSK0vkhCe90euV17Ak5In1P2gLiIBgwlwAM2AcppAwfJAG1PNXKpxG0MQ1nYmJ3EnKfHEpbAMstNrSDn5LjSrYhfZD3TI12EmtTJMx6N9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191270; c=relaxed/simple;
-	bh=jcNuu2K9KiiXkXUhlrDtDJnkmREDnICQ6c98W/TezWQ=;
+	s=arc-20240116; t=1713191273; c=relaxed/simple;
+	bh=BKl2ZEOlGxl7nwTSB9ithrM/jJXdbm3DgjIbjtLrwsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tpeaPeGWQ20iWPYVqzyO9mw1ni47ksyEKCBTKihGrfCgtcVJ8MoOSxVKV4s6y4O1pWS4YykNMFV6rjNdDGBKyj0ugo2QAp3KbVVGP84NgT1SvkDq3HKjGeLuBUBKZTm1DZEw2xtJ4fqNlaMI+7/gLheVjLDr9WVNj4XAQlD/ywk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+lsgbs6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s0dzt4vNx4I9eSNC7iwWPlFI9E/Q2DGS0XHF4cADa4+/IJTUy+zETr/VaQaKmwYdcPSwDQCYoaYNOYd2Yr/azpRM9EFp93+olpWThWKLySj1X05GqO2TIjFvX0atoEP008Rnxc1FZkLYz4/yWrNRzjXcdq1Zoj1j4EbACvplajU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04XLSCoU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+lsgbs6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23895C113CC;
-	Mon, 15 Apr 2024 14:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04XLSCoU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5ACC113CC;
+	Mon, 15 Apr 2024 14:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191270;
-	bh=jcNuu2K9KiiXkXUhlrDtDJnkmREDnICQ6c98W/TezWQ=;
+	s=korg; t=1713191273;
+	bh=BKl2ZEOlGxl7nwTSB9ithrM/jJXdbm3DgjIbjtLrwsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i+lsgbs6dlROWyQKgU1s+SEmX6xzX0CZSh+bp17SWDsi5MM8ELy8wGP2Jw1NLjAHY
-	 TAGbEnRv+DxIp7ifD0Wbg9EF5x5lIcwyrMoywZcE9AacOs/wdlgQKdlLIo+4UHQbpp
-	 oWXz4QdXkjLz8z90q2iwPzqKjs65LhGbASKdsLec=
+	b=04XLSCoUf55Z1X/JOXoBCmi30RXlJbgNCLWKZjrM+Y8zWosGKNzuBk38isPsMRyba
+	 enQNTo13qANYO7D1BMKRGj5Rwnx2ijddkzWgBBhukVjaBRqayK70TJhL1aPZP4/49x
+	 +tjiPblswczw+RVtzS8syRMmXFusUfGWcKWzdpd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Carolina Jubran <cjubran@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 087/172] net/mlx5e: RSS, Block changing channels number when RXFH is configured
-Date: Mon, 15 Apr 2024 16:19:46 +0200
-Message-ID: <20240415142003.043761606@linuxfoundation.org>
+Subject: [PATCH 6.8 088/172] net/mlx5e: Fix mlx5e_priv_init() cleanup flow
+Date: Mon, 15 Apr 2024 16:19:47 +0200
+Message-ID: <20240415142003.073296444@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -55,56 +56,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit ee3572409f74a838154af74ce1e56e62c17786a8 ]
+[ Upstream commit ecb829459a841198e142f72fadab56424ae96519 ]
 
-Changing the channels number after configuring the receive flow hash
-indirection table may affect the RSS table size. The previous
-configuration may no longer be compatible with the new receive flow
-hash indirection table.
+When mlx5e_priv_init() fails, the cleanup flow calls mlx5e_selq_cleanup which
+calls mlx5e_selq_apply() that assures that the `priv->state_lock` is held using
+lockdep_is_held().
 
-Block changing the channels number when RXFH is configured and changing
-the channels number requires resizing the RSS table size.
+Acquire the state_lock in mlx5e_selq_cleanup().
 
-Fixes: 74a8dadac17e ("net/mlx5e: Preparations for supporting larger number of channels")
+Kernel log:
+=============================
+WARNING: suspicious RCU usage
+6.8.0-rc3_net_next_841a9b5 #1 Not tainted
+-----------------------------
+drivers/net/ethernet/mellanox/mlx5/core/en/selq.c:124 suspicious rcu_dereference_protected() usage!
+
+other info that might help us debug this:
+
+rcu_scheduler_active = 2, debug_locks = 1
+2 locks held by systemd-modules/293:
+ #0: ffffffffa05067b0 (devices_rwsem){++++}-{3:3}, at: ib_register_client+0x109/0x1b0 [ib_core]
+ #1: ffff8881096c65c0 (&device->client_data_rwsem){++++}-{3:3}, at: add_client_context+0x104/0x1c0 [ib_core]
+
+stack backtrace:
+CPU: 4 PID: 293 Comm: systemd-modules Not tainted 6.8.0-rc3_net_next_841a9b5 #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x8a/0xa0
+ lockdep_rcu_suspicious+0x154/0x1a0
+ mlx5e_selq_apply+0x94/0xa0 [mlx5_core]
+ mlx5e_selq_cleanup+0x3a/0x60 [mlx5_core]
+ mlx5e_priv_init+0x2be/0x2f0 [mlx5_core]
+ mlx5_rdma_setup_rn+0x7c/0x1a0 [mlx5_core]
+ rdma_init_netdev+0x4e/0x80 [ib_core]
+ ? mlx5_rdma_netdev_free+0x70/0x70 [mlx5_core]
+ ipoib_intf_init+0x64/0x550 [ib_ipoib]
+ ipoib_intf_alloc+0x4e/0xc0 [ib_ipoib]
+ ipoib_add_one+0xb0/0x360 [ib_ipoib]
+ add_client_context+0x112/0x1c0 [ib_core]
+ ib_register_client+0x166/0x1b0 [ib_core]
+ ? 0xffffffffa0573000
+ ipoib_init_module+0xeb/0x1a0 [ib_ipoib]
+ do_one_initcall+0x61/0x250
+ do_init_module+0x8a/0x270
+ init_module_from_file+0x8b/0xd0
+ idempotent_init_module+0x17d/0x230
+ __x64_sys_finit_module+0x61/0xb0
+ do_syscall_64+0x71/0x140
+ entry_SYSCALL_64_after_hwframe+0x46/0x4e
+ </TASK>
+
+Fixes: 8bf30be75069 ("net/mlx5e: Introduce select queue parameters")
 Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
 Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20240409190820.227554-7-tariqt@nvidia.com
+Link: https://lore.kernel.org/r/20240409190820.227554-8-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/en_ethtool.c    | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en/selq.c | 2 ++
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 2 --
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-index cc51ce16df14a..93461b0c5703b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-@@ -451,6 +451,23 @@ int mlx5e_ethtool_set_channels(struct mlx5e_priv *priv,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/selq.c b/drivers/net/ethernet/mellanox/mlx5/core/en/selq.c
+index f675b1926340f..f66bbc8464645 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/selq.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/selq.c
+@@ -57,6 +57,7 @@ int mlx5e_selq_init(struct mlx5e_selq *selq, struct mutex *state_lock)
  
- 	mutex_lock(&priv->state_lock);
+ void mlx5e_selq_cleanup(struct mlx5e_selq *selq)
+ {
++	mutex_lock(selq->state_lock);
+ 	WARN_ON_ONCE(selq->is_prepared);
  
-+	/* If RXFH is configured, changing the channels number is allowed only if
-+	 * it does not require resizing the RSS table. This is because the previous
-+	 * configuration may no longer be compatible with the new RSS table.
-+	 */
-+	if (netif_is_rxfh_configured(priv->netdev)) {
-+		int cur_rqt_size = mlx5e_rqt_size(priv->mdev, cur_params->num_channels);
-+		int new_rqt_size = mlx5e_rqt_size(priv->mdev, count);
-+
-+		if (new_rqt_size != cur_rqt_size) {
-+			err = -EINVAL;
-+			netdev_err(priv->netdev,
-+				   "%s: RXFH is configured, block changing channels number that affects RSS table size (new: %d, current: %d)\n",
-+				   __func__, new_rqt_size, cur_rqt_size);
-+			goto out;
-+		}
-+	}
-+
- 	/* Don't allow changing the number of channels if HTB offload is active,
- 	 * because the numeration of the QoS SQs will change, while per-queue
- 	 * qdiscs are attached.
+ 	kvfree(selq->standby);
+@@ -67,6 +68,7 @@ void mlx5e_selq_cleanup(struct mlx5e_selq *selq)
+ 
+ 	kvfree(selq->standby);
+ 	selq->standby = NULL;
++	mutex_unlock(selq->state_lock);
+ }
+ 
+ void mlx5e_selq_prepare_params(struct mlx5e_selq *selq, struct mlx5e_params *params)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index c8e8f512803ef..952f1f98138cc 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -5695,9 +5695,7 @@ void mlx5e_priv_cleanup(struct mlx5e_priv *priv)
+ 	kfree(priv->tx_rates);
+ 	kfree(priv->txq2sq);
+ 	destroy_workqueue(priv->wq);
+-	mutex_lock(&priv->state_lock);
+ 	mlx5e_selq_cleanup(&priv->selq);
+-	mutex_unlock(&priv->state_lock);
+ 	free_cpumask_var(priv->scratchpad.cpumask);
+ 
+ 	for (i = 0; i < priv->htb_max_qos_sqs; i++)
 -- 
 2.43.0
 
