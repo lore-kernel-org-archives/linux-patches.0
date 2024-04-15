@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB43374C4;
-	Mon, 15 Apr 2024 14:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D722A8D3;
+	Mon, 15 Apr 2024 14:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192220; cv=none; b=fygoICmnCVtN1UwsKB9NW8EnU2TCR+vP4Pxi3aWSwvGYt420IXW5M6z7tje7kaFWUYfKvjbAyghqOrBUKKGBfg4I1gHWL2btPEu0D0Ksy4POLGW0j5xDiLqO99fsleQr4iQyxD7QkW2h3uSM/dFwplaA76W5HlGZiY4g7qIpcK0=
+	t=1713192223; cv=none; b=GojMXfn1G3nNAb4QzIxYfcJzc/lj2oKHQopj6s85dTwTI/LqWMqk5ssbvC509fFsXKTLsazTKnIPcbSSG9DlDmKcNgDjIs8/X0Mb3X4B3ty1wNqh3X7ovTFz4JRyTztUsknmE9OZ5/scRT/rf4GjYR+MJIkXM53RSZbOJYYp/so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192220; c=relaxed/simple;
-	bh=YsZG3eqERYf9xIi6wLGYU59LbPRzCq/EpAsvhPx+eJA=;
+	s=arc-20240116; t=1713192223; c=relaxed/simple;
+	bh=QplOc3QWQBTGvzSdsrnvXrb0ni6aSic21Br/25WrTmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=irWn3/J122IaQXj9Teq1Puv7Mpje9BUQ3REINyjBdDk7DVl+fX7WW53qgfcJ08OzIaPoJvIKCKd3y6Hp0QXW57bvMMCvXPp27POc4TfuZQiqwdz7oEm4R7tOtYyxV1iZMdWD/QX0tHdsmK2qRCUNcfMUyQlTqjioZCIAxM2URLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZmx54Ur; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q9YjKgRz4vADV0j063u3QbO36O3EZ381D8eQH1nZUMHBRKuP/GVxStQLluGK/864Lc50rMJXjSRcYQ7BQOSsVZUN3pDS7MN9tVutfZNE2OS31uDxk0/1i0pGy+8Ii6VmV8OrXS3k4fWiRQFV55tyAF8rQBMUaeK0iwVT8BUtBqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJzPQBga; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZmx54Ur"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FB6C113CC;
-	Mon, 15 Apr 2024 14:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJzPQBga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE54C113CC;
+	Mon, 15 Apr 2024 14:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192220;
-	bh=YsZG3eqERYf9xIi6wLGYU59LbPRzCq/EpAsvhPx+eJA=;
+	s=korg; t=1713192223;
+	bh=QplOc3QWQBTGvzSdsrnvXrb0ni6aSic21Br/25WrTmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WZmx54UrztoCGz1irBAL/zdSEWQn5wkJmtfnSa34nwnEQmUTtAy8/cxIEkD9a0mMm
-	 gL9S9D8Dnpm6oFPbG+qzgDGmOkiXaU8Bjxm8KSswujVVe2734AYlXQtdtvYnx0IKJo
-	 lNTQevAuZiCIj6WIyzrgNQtr7IkFl5H2UKiAAHMQ=
+	b=qJzPQBgaW1gyYYmIb0jwdBb7Sl2aPcgYoUU/Kzwh/brA0t5NKYn8hSm5xcQZuwkYJ
+	 VSmScTo8S83ygkNy7BTdzLPJjxMoqx5qQTQHq0nvhjKUYm7DNFbHFloFAszCJgbO2w
+	 ghOxBT9Qkc/Ld/aogj/7GUPcet8n9zWJ50CUeQSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 09/45] net: openvswitch: fix unwanted error log on timeout policy probing
-Date: Mon, 15 Apr 2024 16:21:16 +0200
-Message-ID: <20240415141942.521769639@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Subject: [PATCH 5.15 36/45] irqflags: Explicitly ignore lockdep_hrtimer_exit() argument
+Date: Mon, 15 Apr 2024 16:21:43 +0200
+Message-ID: <20240415141943.328407143@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141942.235939111@linuxfoundation.org>
 References: <20240415141942.235939111@linuxfoundation.org>
@@ -52,60 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 4539f91f2a801c0c028c252bffae56030cfb2cae ]
+commit c1d11fc2c8320871b40730991071dd0a0b405bc8 upstream.
 
-On startup, ovs-vswitchd probes different datapath features including
-support for timeout policies.  While probing, it tries to execute
-certain operations with OVS_PACKET_ATTR_PROBE or OVS_FLOW_ATTR_PROBE
-attributes set.  These attributes tell the openvswitch module to not
-log any errors when they occur as it is expected that some of the
-probes will fail.
+When building with 'make W=1' but CONFIG_TRACE_IRQFLAGS=n, the
+unused argument to lockdep_hrtimer_exit() causes a warning:
 
-For some reason, setting the timeout policy ignores the PROBE attribute
-and logs a failure anyway.  This is causing the following kernel log
-on each re-start of ovs-vswitchd:
+kernel/time/hrtimer.c:1655:14: error: variable 'expires_in_hardirq' set but not used [-Werror=unused-but-set-variable]
 
-  kernel: Failed to associated timeout policy `ovs_test_tp'
+This is intentional behavior, so add a cast to void to shut up the warning.
 
-Fix that by using the same logging macro that all other messages are
-using.  The message will still be printed at info level when needed
-and will be rate limited, but with a net rate limiter instead of
-generic printk one.
-
-The nf_ct_set_timeout() itself will still print some info messages,
-but at least this change makes logging in openvswitch module more
-consistent.
-
-Fixes: 06bd2bdf19d2 ("openvswitch: Add timeout support to ct action")
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Link: https://lore.kernel.org/r/20240403203803.2137962-1-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 73d20564e0dc ("hrtimer: Don't dereference the hrtimer pointer after the callback")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240408074609.3170807-1-arnd@kernel.org
+Closes: https://lore.kernel.org/oe-kbuild-all/202311191229.55QXHVc6-lkp@intel.com/
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/conntrack.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/linux/irqflags.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
-index 7106ce231a2dd..60dd6f32d520e 100644
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -1704,8 +1704,9 @@ int ovs_ct_copy_action(struct net *net, const struct nlattr *attr,
- 	if (ct_info.timeout[0]) {
- 		if (nf_ct_set_timeout(net, ct_info.ct, family, key->ip.proto,
- 				      ct_info.timeout))
--			pr_info_ratelimited("Failed to associated timeout "
--					    "policy `%s'\n", ct_info.timeout);
-+			OVS_NLERR(log,
-+				  "Failed to associated timeout policy '%s'",
-+				  ct_info.timeout);
- 		else
- 			ct_info.nf_ct_timeout = rcu_dereference(
- 				nf_ct_timeout_find(ct_info.ct)->timeout);
--- 
-2.43.0
-
+--- a/include/linux/irqflags.h
++++ b/include/linux/irqflags.h
+@@ -133,7 +133,7 @@ do {						\
+ # define lockdep_softirq_enter()		do { } while (0)
+ # define lockdep_softirq_exit()			do { } while (0)
+ # define lockdep_hrtimer_enter(__hrtimer)	false
+-# define lockdep_hrtimer_exit(__context)	do { } while (0)
++# define lockdep_hrtimer_exit(__context)	do { (void)(__context); } while (0)
+ # define lockdep_posixtimer_enter()		do { } while (0)
+ # define lockdep_posixtimer_exit()		do { } while (0)
+ # define lockdep_irq_work_enter(__work)		do { } while (0)
 
 
