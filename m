@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947A63BBE1;
-	Mon, 15 Apr 2024 14:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8926974C02;
+	Mon, 15 Apr 2024 14:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713192056; cv=none; b=Pb1jwBSnUPJBr30NS/BmGM87xNo3ewz+LMc8oPKNF3rs5UkmzDPJk3tX8UmdVyLGLYqKd1oFcRuG2vFUdOJRJxKe8SNdBWluG+GB0cKtxkcfbMgT3mh9JCiknV5zOY1PANMVZzn5+bgyzllOXV6he0VGckeYt4qPhtIQo1WkmZU=
+	t=1713192059; cv=none; b=Rz1xdREHu+Db3DQG6YKJQsyS9MBP3xFh9h3neUPAfyA+4nH/yKDjm12kNfgJtQkD8w+aEvt0/vCtQueEZUlKj0+SheDT43+JAAeCSElKadBGHIKYTEjBx13FkewiV/21bBHm+8KYfXspnGIQbb7NrXdRg3UaYpFa4ajkhR/DeVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713192056; c=relaxed/simple;
-	bh=+9IqYnNH+gOpMZECLRIZkXsZ7/FCaDKeADGJIoGrITQ=;
+	s=arc-20240116; t=1713192059; c=relaxed/simple;
+	bh=RA2kS7ynZBlfZgu/7EMbaHrDGwkwK4M47KjZtDQnCOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZIxFFXMx/4otIojRCEUNDKQRwjrGW5bSD0angd9zYol0lDK847K27YFuH0ewXAskSOSZ1qG9wRzZ4Vve2QO2aDdtHn/m8YSffHsRAGUFrJoFjD/56+YTpvcNWDD4AHgIR6T+QnLM94uvalGtM/VQ+N7PEypc9kmx52+rAY/lbvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qViqT3yQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dfez49Im5At+dsYApmwJ/eEqQlthMjjLMIpt1Wdr12l5lJFhyg0e4jT/4ismoJi9Pjwa431owIQAXUyoq/FepU2haGsd4lfFEA3/pU5IfQRjGRByrpUSXaFXZ0imxoEFQjp0RlNDPYdFuan7vrCZWmXdNDJxBdMWxzb7NmDdqSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOP0NeMt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qViqT3yQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 182C0C113CC;
-	Mon, 15 Apr 2024 14:40:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOP0NeMt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9D1C113CC;
+	Mon, 15 Apr 2024 14:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713192056;
-	bh=+9IqYnNH+gOpMZECLRIZkXsZ7/FCaDKeADGJIoGrITQ=;
+	s=korg; t=1713192059;
+	bh=RA2kS7ynZBlfZgu/7EMbaHrDGwkwK4M47KjZtDQnCOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qViqT3yQ5IvTCk5EsVz9aCEFuhCuPCtOHRGOtkHN9XRx9O7jqvGZNXvGos4F42blT
-	 vfuOfVJtg4dhOVativ4U3eXakxdkr9xokIcHzRTMYw8RmP/3SXUv68R6ENpu1flc1k
-	 AUIgYqGrNkRtkuuyvZQZ1mcYL0bsV5Lf318dT66w=
+	b=iOP0NeMtkMcJe3jLVZMC1nyn2ncvRM/4Q6WxHoPEzcbqYdWXD2Tqib3vrm93biiMc
+	 WvuckiUVX+5sGSwlwdGzS1m53TBXW3Awj38iqauC8e79M89qTuXNwhz/jMzujmEiWR
+	 cEtWENZdcp2f8kUINFcv+6+f83xDxvOD7NXv3FJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 13/69] scsi: qla2xxx: Fix off by one in qla_edif_app_getstats()
-Date: Mon, 15 Apr 2024 16:20:44 +0200
-Message-ID: <20240415141946.571190629@linuxfoundation.org>
+Subject: [PATCH 6.1 14/69] net: openvswitch: fix unwanted error log on timeout policy probing
+Date: Mon, 15 Apr 2024 16:20:45 +0200
+Message-ID: <20240415141946.600795105@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141946.165870434@linuxfoundation.org>
 References: <20240415141946.165870434@linuxfoundation.org>
@@ -52,37 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit 4406e4176f47177f5e51b4cc7e6a7a2ff3dbfbbd ]
+[ Upstream commit 4539f91f2a801c0c028c252bffae56030cfb2cae ]
 
-The app_reply->elem[] array is allocated earlier in this function and it
-has app_req.num_ports elements.  Thus this > comparison needs to be >= to
-prevent memory corruption.
+On startup, ovs-vswitchd probes different datapath features including
+support for timeout policies.  While probing, it tries to execute
+certain operations with OVS_PACKET_ATTR_PROBE or OVS_FLOW_ATTR_PROBE
+attributes set.  These attributes tell the openvswitch module to not
+log any errors when they occur as it is expected that some of the
+probes will fail.
 
-Fixes: 7878f22a2e03 ("scsi: qla2xxx: edif: Add getfcinfo and statistic bsgs")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/5c125b2f-92dd-412b-9b6f-fc3a3207bd60@moroto.mountain
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+For some reason, setting the timeout policy ignores the PROBE attribute
+and logs a failure anyway.  This is causing the following kernel log
+on each re-start of ovs-vswitchd:
+
+  kernel: Failed to associated timeout policy `ovs_test_tp'
+
+Fix that by using the same logging macro that all other messages are
+using.  The message will still be printed at info level when needed
+and will be rate limited, but with a net rate limiter instead of
+generic printk one.
+
+The nf_ct_set_timeout() itself will still print some info messages,
+but at least this change makes logging in openvswitch module more
+consistent.
+
+Fixes: 06bd2bdf19d2 ("openvswitch: Add timeout support to ct action")
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Eelco Chaudron <echaudro@redhat.com>
+Link: https://lore.kernel.org/r/20240403203803.2137962-1-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_edif.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/openvswitch/conntrack.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_edif.c b/drivers/scsi/qla2xxx/qla_edif.c
-index 7aee4d093969a..969008071decd 100644
---- a/drivers/scsi/qla2xxx/qla_edif.c
-+++ b/drivers/scsi/qla2xxx/qla_edif.c
-@@ -1058,7 +1058,7 @@ qla_edif_app_getstats(scsi_qla_host_t *vha, struct bsg_job *bsg_job)
- 
- 		list_for_each_entry_safe(fcport, tf, &vha->vp_fcports, list) {
- 			if (fcport->edif.enable) {
--				if (pcnt > app_req.num_ports)
-+				if (pcnt >= app_req.num_ports)
- 					break;
- 
- 				app_reply->elem[pcnt].rekey_count =
+diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
+index 0591cfb289d50..e4ba86b84b9b1 100644
+--- a/net/openvswitch/conntrack.c
++++ b/net/openvswitch/conntrack.c
+@@ -1711,8 +1711,9 @@ int ovs_ct_copy_action(struct net *net, const struct nlattr *attr,
+ 	if (ct_info.timeout[0]) {
+ 		if (nf_ct_set_timeout(net, ct_info.ct, family, key->ip.proto,
+ 				      ct_info.timeout))
+-			pr_info_ratelimited("Failed to associated timeout "
+-					    "policy `%s'\n", ct_info.timeout);
++			OVS_NLERR(log,
++				  "Failed to associated timeout policy '%s'",
++				  ct_info.timeout);
+ 		else
+ 			ct_info.nf_ct_timeout = rcu_dereference(
+ 				nf_ct_timeout_find(ct_info.ct)->timeout);
 -- 
 2.43.0
 
