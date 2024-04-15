@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3577764E;
-	Mon, 15 Apr 2024 14:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FFA77F15;
+	Mon, 15 Apr 2024 14:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191083; cv=none; b=K4u+IMJafFj0ieA5URObTEdMkILFdno9fHtZj86Vq49d9e39j4Gnm5HdJ3tp+xKb6R6oufReVcgz58z6/xGB5cW6ug5xTtrORDo0YGSiayEZp628jTTcCK82haGyFQoICRcUwQ0coPRl8JQEJgFaXqFT4c0lFjFySutmyLqId3U=
+	t=1713191086; cv=none; b=ipDGNA932+liZb84BVN699AfuSn7543pOk5l91AgxrRAab5z0XPBlFZ3gw0xMrHoujLm92rnrg0dPlgchPpw5JyvwYAj6YhL3pXUsLkU75SvMbrJnlvAlujGrNcwQ23lF0W8Y7p5a4SSDryyiN5A7UuPteE9OA3tuSkmZ/HpCTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191083; c=relaxed/simple;
-	bh=31OkMvRHlzM2LaLACPPOggOD+x8RC/10o+jlKyCq64w=;
+	s=arc-20240116; t=1713191086; c=relaxed/simple;
+	bh=CQtwwECl0ReMXs2kpiaO00vA7etkPT7nxvImrwZSSk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F3RTYA+w0vo/17xtmmPfGvNnuDqbBhGOOEsNfxQj1YiwUWSXgZC19ItJLBSSVbGgLD6v5LdbtkHRs7bNATaa/Bd47RzacPB+xg6FqXkxsitIc3eSF2qNXPW5XFiv4G9u1Q+uqv0V1DCV+0LSSjtJslxE4DCzkE0dWK/lSXI+GbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rq9eKAn2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AKuhhUSOmwsDPF+hWa7pRxgSIyChQ7Ghuau+iXoKlcIOLxJ5LiLpXZl2jZe2foEriDd7mF5jGRwc7Y56NgD8svc77Fgu0DVmsAxdtlTOs3waHarXHpz2bCEaRq8y40VUVIuRnm9igxuMpEOAEphn0rTEmE7ceK7hNe19WTZMnEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=apciiIec; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rq9eKAn2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB8DC113CC;
-	Mon, 15 Apr 2024 14:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="apciiIec"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD40C113CC;
+	Mon, 15 Apr 2024 14:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191082;
-	bh=31OkMvRHlzM2LaLACPPOggOD+x8RC/10o+jlKyCq64w=;
+	s=korg; t=1713191085;
+	bh=CQtwwECl0ReMXs2kpiaO00vA7etkPT7nxvImrwZSSk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rq9eKAn2T5JNacapt7po4NPQGIwZxEw1/mZ7fXA0z1h78IZOAI7COhsjYG9XmfT/d
-	 OV9LqaOOHXHhSMB8CgVFdgyP+81aeHud/evLN1MsHPuzA9xEEtmx9so8KIsyu6zw6a
-	 NqKm+/gGy+dpn8E93SNmrAk4F5R6gqUcDnQbx6rw=
+	b=apciiIecUSlxwsTKiW8UaXbnS6o6EEkO70AYU+ZX70cdpsM+2XCtEDuHs9pTP7Wzf
+	 7aUdmr95t5mM6QOlm4GSpR5PHqLpr3C9OepTdAkOaRATTdtw31l2ErB1c7xwj9S96o
+	 lV817JpK7wy1idKrdRbuqJdsysiQ3xIA6l7PvzWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 027/172] firmware: arm_scmi: Make raw debugfs entries non-seekable
-Date: Mon, 15 Apr 2024 16:18:46 +0200
-Message-ID: <20240415142001.172900890@linuxfoundation.org>
+	Fabio Estevam <festevam@denx.de>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.8 010/172] ARM: dts: imx7s-warp: Pass OV2680 link-frequencies
+Date: Mon, 15 Apr 2024 16:18:29 +0200
+Message-ID: <20240415142000.295901798@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -51,80 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit b70c7996d4ffb2e02895132e8a79a37cee66504f ]
+commit 135f218255b28c5bbf71e9e32a49e5c734cabbe5 upstream.
 
-SCMI raw debugfs entries are used to inject and snoop messages out of the
-SCMI core and, as such, the underlying virtual files have no reason to
-support seeking.
+Since commit 63b0cd30b78e ("media: ov2680: Add bus-cfg / endpoint
+property verification") the ov2680 no longer probes on a imx7s-warp7:
 
-Modify the related file_operations descriptors to be non-seekable.
+ov2680 1-0036: error -EINVAL: supported link freq 330000000 not found
+ov2680 1-0036: probe with driver ov2680 failed with error -22
 
-Fixes: 3c3d818a9317 ("firmware: arm_scmi: Add core raw transmission support")
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20240315140324.231830-1-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix it by passing the required 'link-frequencies' property as
+recommended by:
+
+https://www.kernel.org/doc/html/v6.9-rc1/driver-api/media/camera-sensor.html#handling-clocks
+
+Cc: stable@vger.kernel.org
+Fixes: 63b0cd30b78e ("media: ov2680: Add bus-cfg / endpoint property verification")
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_scmi/raw_mode.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/nxp/imx/imx7s-warp.dts |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/firmware/arm_scmi/raw_mode.c b/drivers/firmware/arm_scmi/raw_mode.c
-index 3505735185033..130d13e9cd6be 100644
---- a/drivers/firmware/arm_scmi/raw_mode.c
-+++ b/drivers/firmware/arm_scmi/raw_mode.c
-@@ -921,7 +921,7 @@ static int scmi_dbg_raw_mode_open(struct inode *inode, struct file *filp)
- 	rd->raw = raw;
- 	filp->private_data = rd;
- 
--	return 0;
-+	return nonseekable_open(inode, filp);
- }
- 
- static int scmi_dbg_raw_mode_release(struct inode *inode, struct file *filp)
-@@ -950,6 +950,7 @@ static const struct file_operations scmi_dbg_raw_mode_reset_fops = {
- 	.open = scmi_dbg_raw_mode_open,
- 	.release = scmi_dbg_raw_mode_release,
- 	.write = scmi_dbg_raw_mode_reset_write,
-+	.llseek = no_llseek,
- 	.owner = THIS_MODULE,
- };
- 
-@@ -959,6 +960,7 @@ static const struct file_operations scmi_dbg_raw_mode_message_fops = {
- 	.read = scmi_dbg_raw_mode_message_read,
- 	.write = scmi_dbg_raw_mode_message_write,
- 	.poll = scmi_dbg_raw_mode_message_poll,
-+	.llseek = no_llseek,
- 	.owner = THIS_MODULE,
- };
- 
-@@ -975,6 +977,7 @@ static const struct file_operations scmi_dbg_raw_mode_message_async_fops = {
- 	.read = scmi_dbg_raw_mode_message_read,
- 	.write = scmi_dbg_raw_mode_message_async_write,
- 	.poll = scmi_dbg_raw_mode_message_poll,
-+	.llseek = no_llseek,
- 	.owner = THIS_MODULE,
- };
- 
-@@ -998,6 +1001,7 @@ static const struct file_operations scmi_dbg_raw_mode_notification_fops = {
- 	.release = scmi_dbg_raw_mode_release,
- 	.read = scmi_test_dbg_raw_mode_notif_read,
- 	.poll = scmi_test_dbg_raw_mode_notif_poll,
-+	.llseek = no_llseek,
- 	.owner = THIS_MODULE,
- };
- 
-@@ -1021,6 +1025,7 @@ static const struct file_operations scmi_dbg_raw_mode_errors_fops = {
- 	.release = scmi_dbg_raw_mode_release,
- 	.read = scmi_test_dbg_raw_mode_errors_read,
- 	.poll = scmi_test_dbg_raw_mode_errors_poll,
-+	.llseek = no_llseek,
- 	.owner = THIS_MODULE,
- };
- 
--- 
-2.43.0
-
+--- a/arch/arm/boot/dts/nxp/imx/imx7s-warp.dts
++++ b/arch/arm/boot/dts/nxp/imx/imx7s-warp.dts
+@@ -210,6 +210,7 @@
+ 				remote-endpoint = <&mipi_from_sensor>;
+ 				clock-lanes = <0>;
+ 				data-lanes = <1>;
++				link-frequencies = /bits/ 64 <330000000>;
+ 			};
+ 		};
+ 	};
 
 
