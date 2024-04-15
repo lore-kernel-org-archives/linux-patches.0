@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8413976023;
-	Mon, 15 Apr 2024 14:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679DC7602A;
+	Mon, 15 Apr 2024 14:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191154; cv=none; b=iwhTAlsrM82jyfx/CsaCiD4h3nRajppTQb2xzN21ppqeF4iFYD2CEyNtPJKQXg5RrEgDiAb+vJDyylvMtUgtSkyYQq4yOMxgq4OBUFi024V4YoX3jlbqX8H+6mO8Rp+84rY1awA4AIgIsxzfD1f5NPIH0jHRUPLoK2xnjAd6QOI=
+	t=1713191157; cv=none; b=jQ1pU16XmKXx0ETKqG97xhS/Nc+tN7O5tXXyRuBFytQvZf70a+LrCDcYqz2krXss8OsWijLnhJ0ZRyPyJKZdgZ3KYAosA1ywsAs+GPtyPf7vPZ3uxYH795tQArsgCZOFC8x+rrAS78mKcqnDFZoBSmGbt3j60s8AuCTmH2nCqtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191154; c=relaxed/simple;
-	bh=Vy+t/Q7YGB+UuQOGBIH+Pdioc4BAVhiBJmiURe4fsCc=;
+	s=arc-20240116; t=1713191157; c=relaxed/simple;
+	bh=X3/U8WnYVT/W/Aaf3BuQAxV4T/TGfJyxoYeSCVeFivc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZWvgC9DlKYXSXfS+amMnROvG3cxhrchYa4hh9SCuAceQCTiGSLEPDYrpKz2kCaQJPppvqb8lkN7lh6otgzSLUywyRXZagzmxj18s2u/CWe4eIerBW7zESHO4faJ9uOuEIMeH4qPONObC+RCHKkWVwV0fjSej1wu/8FyXBiAwow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1uAwyQFa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IobsfgEA0/5Zo5WgPp/DA7ieTwxeJYcWwtVvYeT6UUohQpMXlwJ3ixeItqNLGBEG3f2CorbWcq5UrP+39fPLLuGKPBoe72JmOpUz10jgkvcQlw8l/uWbhxpfKLSCGGVEpeQaaxMD+hZdk8Az+rgndE5xCLlEm6m4+vcimkWiKi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nkhAvgpx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1uAwyQFa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41F3C2BD10;
-	Mon, 15 Apr 2024 14:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkhAvgpx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5684C2BD10;
+	Mon, 15 Apr 2024 14:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191154;
-	bh=Vy+t/Q7YGB+UuQOGBIH+Pdioc4BAVhiBJmiURe4fsCc=;
+	s=korg; t=1713191157;
+	bh=X3/U8WnYVT/W/Aaf3BuQAxV4T/TGfJyxoYeSCVeFivc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1uAwyQFaQxNZsfe7jsAb0XBI0375v7a5uKA2IX10Vjasym0/8Ci4/6AsYLfq45Get
-	 j7uPYkLI9Q3DVkcxsRahjhnDHQZLoq/1OYcHSSLShJ+LbquPWS4DJRz5nb5zxNwpTT
-	 dtksCqM/yB5Sk/uBuhlgzTeB7RBa37TJJmC2H/gk=
+	b=nkhAvgpx1Eq7r6oeLSuXOEHgRNEWPWUSBIEKaNxmwJDkNk+NM9pMVgzzgjcZilQIm
+	 I7QwH1lkw2h8/oJ+v6wxFnor8UerFV9fhegdMycEcaM6xG8Nk7txZJNAeVAAQcIjtx
+	 AJBQrAZ5rMcnoJAfv6W/2IKjXTild7amNsKAiVNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 048/172] lib: checksum: hide unused expected_csum_ipv6_magic[]
-Date: Mon, 15 Apr 2024 16:19:07 +0200
-Message-ID: <20240415142001.876740925@linuxfoundation.org>
+	syzbot+39ec16ff6cc18b1d066d@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.8 013/172] Bluetooth: Fix memory leak in hci_req_sync_complete()
+Date: Mon, 15 Apr 2024 16:18:32 +0200
+Message-ID: <20240415142000.386307276@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -55,62 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit e9d47b7b31563a6524b9f64ea70ed0289cc4d9c4 ]
+commit 45d355a926ab40f3ae7bc0b0a00cb0e3e8a5a810 upstream.
 
-When CONFIG_NET is disabled, an extra warning shows up for this
-unused variable:
+In 'hci_req_sync_complete()', always free the previous sync
+request state before assigning reference to a new one.
 
-lib/checksum_kunit.c:218:18: error: 'expected_csum_ipv6_magic' defined but not used [-Werror=unused-const-variable=]
-
-Replace the #ifdef with an IS_ENABLED() check that makes the compiler's
-dead-code-elimination take care of the link failure.
-
-Fixes: f24a70106dc1 ("lib: checksum: Fix build with CONFIG_NET=n")
-Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Simon Horman <horms@kernel.org> # build-tested
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+39ec16ff6cc18b1d066d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=39ec16ff6cc18b1d066d
+Cc: stable@vger.kernel.org
+Fixes: f60cb30579d3 ("Bluetooth: Convert hci_req_sync family of function to new request API")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/checksum_kunit.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_request.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/lib/checksum_kunit.c b/lib/checksum_kunit.c
-index bf70850035c76..404dba36bae38 100644
---- a/lib/checksum_kunit.c
-+++ b/lib/checksum_kunit.c
-@@ -594,13 +594,15 @@ static void test_ip_fast_csum(struct kunit *test)
- 
- static void test_csum_ipv6_magic(struct kunit *test)
- {
--#if defined(CONFIG_NET)
- 	const struct in6_addr *saddr;
- 	const struct in6_addr *daddr;
- 	unsigned int len;
- 	unsigned char proto;
- 	__wsum csum;
- 
-+	if (!IS_ENABLED(CONFIG_NET))
-+		return;
-+
- 	const int daddr_offset = sizeof(struct in6_addr);
- 	const int len_offset = sizeof(struct in6_addr) + sizeof(struct in6_addr);
- 	const int proto_offset = sizeof(struct in6_addr) + sizeof(struct in6_addr) +
-@@ -618,7 +620,6 @@ static void test_csum_ipv6_magic(struct kunit *test)
- 		CHECK_EQ(to_sum16(expected_csum_ipv6_magic[i]),
- 			 csum_ipv6_magic(saddr, daddr, len, proto, csum));
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -105,8 +105,10 @@ void hci_req_sync_complete(struct hci_de
+ 	if (hdev->req_status == HCI_REQ_PEND) {
+ 		hdev->req_result = result;
+ 		hdev->req_status = HCI_REQ_DONE;
+-		if (skb)
++		if (skb) {
++			kfree_skb(hdev->req_skb);
+ 			hdev->req_skb = skb_get(skb);
++		}
+ 		wake_up_interruptible(&hdev->req_wait_q);
  	}
--#endif /* !CONFIG_NET */
  }
- 
- static struct kunit_case __refdata checksum_test_cases[] = {
--- 
-2.43.0
-
 
 
