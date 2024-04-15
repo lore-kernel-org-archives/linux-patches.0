@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D9D7F476;
-	Mon, 15 Apr 2024 14:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F1E745C9;
+	Mon, 15 Apr 2024 14:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191279; cv=none; b=X+YZDKhGE4JeM5GiPnb38fvuIKuGGxL41+sWZZ8Jn6lbHv6phFdfZAq6xzZonb7sY8MejZYH/kblhepmt0c0NR4aK9JqU35VliBXBbkFr8bSJe/CWbe+sQosIskrZFkcZcF5Yaxdj4Spd8LbBRCXPhkAu03ks3pzJMp2E9zNEqY=
+	t=1713191282; cv=none; b=F0EwKkVCWcq80d6q1tiNzB4ImfMMGr/QOsjMP/psSA5lk/Nr3PAGkU6XCsrsTSIF7GWVNSJt6p5Vf2Lw9ehB4tHzxxfZ3wAS65nM1sL29l0O0L9aVHvA0aihB3ZsaIuewX6IgnccvD3YSrWWCEPcUnoX5GP1IDpj1ns8sVF3Ze4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191279; c=relaxed/simple;
-	bh=L4RbYFj2bMTsHPA+msIYx88UQYGBNc/1PqP1EmFi2Ec=;
+	s=arc-20240116; t=1713191282; c=relaxed/simple;
+	bh=IW6gzuO5YI5bs8mY2RDDGNKTKeJAR5iu9IPpEmHNE8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nSoFmI/d+LlA9E84xQQHxzAAti6BqpxMo0a6JE8ie0XWd6HWS1S/adBLpxxN1dq87NOUp47vrwuEgCSbjYyPeWPtNTA9SWm5pguVYDorbs5zKdHIqWvgtempLvgnHPngWvMUWvM7OIHPerWe8MhfvrUEaJAMaGibB1D42yxvto4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ra/kn6rS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BXJRFImc0u8h6ws9TJgJmiifi8526Pe+uoV7vNMZTY4KyPaZ7yaq55T8jCwrAxd1hnpXKDIMok+CWI922QWl+8rBwPUyY3TIrpUqFDhGeOpIKJS3bow5I2sTU8dyt/buA3CmdQ7W/P3xRZdfTrHq0VuhVgI64Q2DqSSTXk3coIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlbEyPh7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ra/kn6rS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F27E8C113CC;
-	Mon, 15 Apr 2024 14:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlbEyPh7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE549C113CC;
+	Mon, 15 Apr 2024 14:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191279;
-	bh=L4RbYFj2bMTsHPA+msIYx88UQYGBNc/1PqP1EmFi2Ec=;
+	s=korg; t=1713191282;
+	bh=IW6gzuO5YI5bs8mY2RDDGNKTKeJAR5iu9IPpEmHNE8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ra/kn6rSw+rM5jM7IEr+JMTPldRaHLRKCvUnBPmaJ0WpPfmFGlgJVRx/dtDpT+BDT
-	 unFAUnnIShHUbXLWX7b0mu73BzItGzDK6hAecLErY0xbfVImSrzUA/QV9Sx9yI537r
-	 JPXNMZGGeU3+VEIvW4FYTflJIpq1tWWQlasLxhqs=
+	b=NlbEyPh7DhobjnPeu/jHJSjnVthiwtLo0myGTqWDlgiyprfBBVA3s/7xYJC5DXQ6E
+	 DWIO5jD72hLw0yGRHMkwrYQYWD271jMrSl+WdV8F075o3pFj8pyBn+oScgTnN2a8PK
+	 pdBNxK2aV10sJ3DyG5Yldnc0+PF8SsZ4Tl+TItm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Raag Jadav <raag.jadav@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 089/172] net/mlx5e: HTB, Fix inconsistencies with QoS SQs number
-Date: Mon, 15 Apr 2024 16:19:48 +0200
-Message-ID: <20240415142003.101638721@linuxfoundation.org>
+Subject: [PATCH 6.8 054/172] ACPI: bus: allow _UID matching for integer zero
+Date: Mon, 15 Apr 2024 16:19:13 +0200
+Message-ID: <20240415142002.068165159@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
 References: <20240415141959.976094777@linuxfoundation.org>
@@ -54,81 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Raag Jadav <raag.jadav@intel.com>
 
-[ Upstream commit 2f436f1869771d46e1a9f85738d5a1a7c5653a4e ]
+[ Upstream commit aca1a5287ea328fd1f7e2bfa6806646486d86a70 ]
 
-When creating a new HTB class while the interface is down,
-the variable that follows the number of QoS SQs (htb_max_qos_sqs)
-may not be consistent with the number of HTB classes.
+Commit b2b32a173881 ("ACPI: bus: update acpi_dev_hid_uid_match() to
+support multiple types") added _UID matching support for both integer
+and string types, which satisfies NULL @uid2 argument for string types
+using inversion, but this logic prevents _UID comparision in case the
+argument is integer 0, which may result in false positives.
 
-Previously, we compared these two values to ensure that
-the node_qid is lower than the number of QoS SQs, and we
-allocated stats for that SQ when they are equal.
+Fix this using _Generic(), which will allow NULL @uid2 argument for
+string types as well as _UID matching for all possible integer values.
 
-Change the check to compare the node_qid with the current
-number of leaf nodes and fix the checking conditions to
-ensure allocation of stats_list and stats for each node.
-
-Fixes: 214baf22870c ("net/mlx5e: Support HTB offload")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20240409190820.227554-9-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b2b32a173881 ("ACPI: bus: update acpi_dev_hid_uid_match() to support multiple types")
+Signed-off-by: Raag Jadav <raag.jadav@intel.com>
+[ rjw: Comment adjustment ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en/qos.c  | 33 ++++++++++---------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ include/acpi/acpi_bus.h | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c b/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c
-index 34adf8c3f81a0..922bc5b7c10e3 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/qos.c
-@@ -83,24 +83,25 @@ int mlx5e_open_qos_sq(struct mlx5e_priv *priv, struct mlx5e_channels *chs,
+diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
+index 446225aada50d..8b45b82cd5edc 100644
+--- a/include/acpi/acpi_bus.h
++++ b/include/acpi/acpi_bus.h
+@@ -911,17 +911,19 @@ static inline bool acpi_int_uid_match(struct acpi_device *adev, u64 uid2)
+  * acpi_dev_hid_uid_match - Match device by supplied HID and UID
+  * @adev: ACPI device to match.
+  * @hid2: Hardware ID of the device.
+- * @uid2: Unique ID of the device, pass 0 or NULL to not check _UID.
++ * @uid2: Unique ID of the device, pass NULL to not check _UID.
+  *
+  * Matches HID and UID in @adev with given @hid2 and @uid2. Absence of @uid2
+  * will be treated as a match. If user wants to validate @uid2, it should be
+  * done before calling this function.
+  *
+- * Returns: %true if matches or @uid2 is 0 or NULL, %false otherwise.
++ * Returns: %true if matches or @uid2 is NULL, %false otherwise.
+  */
+ #define acpi_dev_hid_uid_match(adev, hid2, uid2)			\
+ 	(acpi_dev_hid_match(adev, hid2) &&				\
+-		(!(uid2) || acpi_dev_uid_match(adev, uid2)))
++		/* Distinguish integer 0 from NULL @uid2 */		\
++		(_Generic(uid2,	ACPI_STR_TYPES(!(uid2)), default: 0) ||	\
++		acpi_dev_uid_match(adev, uid2)))
  
- 	txq_ix = mlx5e_qid_from_qos(chs, node_qid);
- 
--	WARN_ON(node_qid > priv->htb_max_qos_sqs);
--	if (node_qid == priv->htb_max_qos_sqs) {
--		struct mlx5e_sq_stats *stats, **stats_list = NULL;
--
--		if (priv->htb_max_qos_sqs == 0) {
--			stats_list = kvcalloc(mlx5e_qos_max_leaf_nodes(priv->mdev),
--					      sizeof(*stats_list),
--					      GFP_KERNEL);
--			if (!stats_list)
--				return -ENOMEM;
--		}
-+	WARN_ON(node_qid >= mlx5e_htb_cur_leaf_nodes(priv->htb));
-+	if (!priv->htb_qos_sq_stats) {
-+		struct mlx5e_sq_stats **stats_list;
-+
-+		stats_list = kvcalloc(mlx5e_qos_max_leaf_nodes(priv->mdev),
-+				      sizeof(*stats_list), GFP_KERNEL);
-+		if (!stats_list)
-+			return -ENOMEM;
-+
-+		WRITE_ONCE(priv->htb_qos_sq_stats, stats_list);
-+	}
-+
-+	if (!priv->htb_qos_sq_stats[node_qid]) {
-+		struct mlx5e_sq_stats *stats;
-+
- 		stats = kzalloc(sizeof(*stats), GFP_KERNEL);
--		if (!stats) {
--			kvfree(stats_list);
-+		if (!stats)
- 			return -ENOMEM;
--		}
--		if (stats_list)
--			WRITE_ONCE(priv->htb_qos_sq_stats, stats_list);
-+
- 		WRITE_ONCE(priv->htb_qos_sq_stats[node_qid], stats);
- 		/* Order htb_max_qos_sqs increment after writing the array pointer.
- 		 * Pairs with smp_load_acquire in en_stats.c.
+ void acpi_dev_clear_dependencies(struct acpi_device *supplier);
+ bool acpi_dev_ready_for_enumeration(const struct acpi_device *device);
 -- 
 2.43.0
 
