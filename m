@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B153378685;
-	Mon, 15 Apr 2024 14:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD36B762E0;
+	Mon, 15 Apr 2024 14:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713191917; cv=none; b=mWLDoYYWOdsfw3/2POziFjhorg9w/Rbp5+ITPSZqhALIDqxd3Vg391GRq83bQqZNAyBiWHx6a5XcOds7CibGHiC8K8CUHTyg5O2+v6ztKfkVia17j9D2NABQZctW15HR6Qv0L8sUUpyqw186Ojmdc5pqJGU6pyKSAogMYnkMBXg=
+	t=1713191920; cv=none; b=saFGGWI5gx2CohuVzDexKBPlP71ne+EDW3s+g++qS3xmT69HoK5JfUGrAua6QoAD9mHHX1pzW/xLq6ABsg7tPegVzbyDYqZsaaYZ/MuDi+8b5WrvsZzJehyO+VOTMGO07psV4elq2ADyKZ2QtL8R2rQpyUsMs9UGl0J27/1aPXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713191917; c=relaxed/simple;
-	bh=KstyiJDBRMBByego7vhIAwHySaxRsMbSx4MW0V2HwWY=;
+	s=arc-20240116; t=1713191920; c=relaxed/simple;
+	bh=SJ0soXVBbIEDkcqkG6R7aD6Z3f4wgkFvJte7YnVIzVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fu4BQLvmpdR1p8TB6W2aZCOQIKHajC8XzkB8mHMEFQVeulJE7BWdGdpIs9CK7P8aXnooIDcOyrKjyGHAusXrQPK4BA8hbEe8TCRrhDrsMDzz8EU78dKLDqNcNtC34ckKUnjCvlQf32eBDVCZUwrZrApaIrn1uCa0Lf9MD3lFg0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/9Frdg8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dSv3jPPN0+0QHoUFxyGIk7c7vlyFWcBDZLdScdclOTbx/4kNA+rf7qXXuZ97E+AU647al8Tk8e8O0gSXoYmd44VBmW2OAP/N4WCQIuIV1wyqjkqVBYJdTmcK5+99PhzEORu8zvA+qyQrAox3pI8/G6KSk82vOUF3xGM2oHmI50E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDGX65jw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/9Frdg8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A80CC113CC;
-	Mon, 15 Apr 2024 14:38:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDGX65jw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F02C2BD10;
+	Mon, 15 Apr 2024 14:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713191917;
-	bh=KstyiJDBRMBByego7vhIAwHySaxRsMbSx4MW0V2HwWY=;
+	s=korg; t=1713191920;
+	bh=SJ0soXVBbIEDkcqkG6R7aD6Z3f4wgkFvJte7YnVIzVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/9Frdg8GcwlTHHJeaV+26cGjuH5PdpjGH9lVfNUG+xwJ5pdCvznBWxsC5Xt1vC7r
-	 xgSyzwjEiy4vBCREMKoioICGX415hFjbyWQZSSfgB1rsjCYWGuhHXGhznZtdcENZUI
-	 VoVi3FdjsAUaTYUbCpMJpvgM3W32kPALrA86Lcec=
+	b=oDGX65jwWu5TJ0P+7GxZoNVtrKbmLmGl5U+htTR/cIBRve+kIMfFceISOeyxD1W3B
+	 waPc25Y9Zq/beUaug6GzsU6nhZwVJNm8Lgr6lJStaVm49x1Cyx8oPDPZ5fmasNDljS
+	 dN5uDR3dLcfz73vdX9eNyVXCKYjh6MT4hJFIoujY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Price <steven.price@arm.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH 6.6 092/122] drm/panfrost: Fix the error path in panfrost_mmu_map_fault_addr()
-Date: Mon, 15 Apr 2024 16:20:57 +0200
-Message-ID: <20240415141956.135930511@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 083/122] io_uring/net: restore msg_control on sendzc retry
+Date: Mon, 15 Apr 2024 16:20:48 +0200
+Message-ID: <20240415141955.867719147@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
 References: <20240415141953.365222063@linuxfoundation.org>
@@ -52,70 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 1fc9af813b25e146d3607669247d0f970f5a87c3 upstream.
+commit 4fe82aedeb8a8cb09bfa60f55ab57b5c10a74ac4 upstream.
 
-Subject: [PATCH 6.6 092/122] drm/panfrost: Fix the error path in panfrost_mmu_map_fault_addr()
+cac9e4418f4cb ("io_uring/net: save msghdr->msg_control for retries")
+reinstatiates msg_control before every __sys_sendmsg_sock(), since the
+function can overwrite the value in msghdr. We need to do same for
+zerocopy sendmsg.
 
-If some the pages or sgt allocation failed, we shouldn't release the
-pages ref we got earlier, otherwise we will end up with unbalanced
-get/put_pages() calls. We should instead leave everything in place
-and let the BO release function deal with extra cleanup when the object
-is destroyed, or let the fault handler try again next time it's called.
-
-Fixes: 187d2929206e ("drm/panfrost: Add support for GPU heap allocations")
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Co-developed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240105184624.508603-18-dmitry.osipenko@collabora.com
+Cc: stable@vger.kernel.org
+Fixes: 493108d95f146 ("io_uring/net: zerocopy sendmsg")
+Link: https://github.com/axboe/liburing/issues/1067
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/cc1d5d9df0576fa66ddad4420d240a98a020b267.1712596179.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_mmu.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ io_uring/net.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-@@ -500,11 +500,18 @@ static int panfrost_mmu_map_fault_addr(s
- 	mapping_set_unevictable(mapping);
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1274,6 +1274,7 @@ int io_sendmsg_zc(struct io_kiocb *req,
  
- 	for (i = page_offset; i < page_offset + NUM_FAULT_PAGES; i++) {
-+		/* Can happen if the last fault only partially filled this
-+		 * section of the pages array before failing. In that case
-+		 * we skip already filled pages.
-+		 */
-+		if (pages[i])
-+			continue;
-+
- 		pages[i] = shmem_read_mapping_page(mapping, i);
- 		if (IS_ERR(pages[i])) {
- 			ret = PTR_ERR(pages[i]);
- 			pages[i] = NULL;
--			goto err_pages;
-+			goto err_unlock;
- 		}
- 	}
- 
-@@ -512,7 +519,7 @@ static int panfrost_mmu_map_fault_addr(s
- 	ret = sg_alloc_table_from_pages(sgt, pages + page_offset,
- 					NUM_FAULT_PAGES, 0, SZ_2M, GFP_KERNEL);
- 	if (ret)
--		goto err_pages;
-+		goto err_unlock;
- 
- 	ret = dma_map_sgtable(pfdev->dev, sgt, DMA_BIDIRECTIONAL, 0);
- 	if (ret)
-@@ -534,8 +541,6 @@ out:
- 
- err_map:
- 	sg_free_table(sgt);
--err_pages:
--	drm_gem_shmem_put_pages(&bo->base);
- err_unlock:
- 	dma_resv_unlock(obj->resv);
- err_bo:
+ 	if (req_has_async_data(req)) {
+ 		kmsg = req->async_data;
++		kmsg->msg.msg_control_user = sr->msg_control;
+ 	} else {
+ 		ret = io_sendmsg_copy_hdr(req, &iomsg);
+ 		if (ret)
 
 
