@@ -1,114 +1,119 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE2985959;
-	Tue, 16 Apr 2024 08:30:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C9B8529D
+	for <patches@lists.linux.dev>; Tue, 16 Apr 2024 09:16:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713256203; cv=none; b=W+SXq8KM17NfxZqf61n/tUo9fwAai5VwhGx+sK6vcjYb3X1oeaAZRK+2Zpj8VHOxghWRl+cJYat+Uf0d3GRL0ndbuEd9noHuEHcRjOseGxcngjUsvOSATWfK+ZFbio5iOat0HTz0xsEowElko8dROj5cPI3+XWm5WFkB0o/Lcpk=
+	t=1713259021; cv=none; b=dYrougH5mrClGqaIlh1qdLSWz//pkdPGje8o1OuTG/DTKWhejrVNBBTrIObGMOb59nVWRsgV1kXd2V4hcOe8B2jxZImH0a1TsgLQYvMtcPIdE/J6kmJTHV79znaBzUE53egxnY7CcKUk6/OJ3Z03jlY6dqt0VMd1aPB8CdOEyXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713256203; c=relaxed/simple;
-	bh=lJrj9v6ekM+Ddi5L9uY9dMcBsBq+d7SARM1jH6N4GQQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gST/C1vOqA1EmWlrS9NrQhVdPkaV6TrAcfTSGDr/mgR262tD0XWwJtFxWy/aUxo59T30bsOXjCs7UN8/Qx+O7pRXNcA7hkPrNPXgsWXPxVQIgqMrHoGqz89UhdLOfnUtzF0dPatyFEQ3b3wg4rxCU8rgYlNn92+nlvFbJY0on1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p61+UYgY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713259021; c=relaxed/simple;
+	bh=8jgLAUJob4komqyCXQnIuIoKS9Y6WNsjEipKGCag8BI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=e4uR8NEgws3nn2UMU5rzmNRB6RmfUTo4WY2s1yNxCyKpI68POYJH4UCG6X7q4+lTjXY3VdPmKbRBNNpwJghjTprOlxSFmqgJa3dJ0f81n3xNnK0OVSUitsh5Zrl2latu+svNIquS8wxfGjmpgJbfYgI5rCtb4dVHbyB+fvHAOMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wwa2vprk; arc=none smtp.client-ip=209.85.222.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p61+UYgY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B131DC113CE;
-	Tue, 16 Apr 2024 08:30:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713256202;
-	bh=lJrj9v6ekM+Ddi5L9uY9dMcBsBq+d7SARM1jH6N4GQQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=p61+UYgYo11o8wr+9Y1NTCQKaUdil+iO3y09VvB2XgUFcg+G0hFo9nVW748ZyFVyS
-	 jbsf9lWI/fFLW2RS99UV30A3yiEWvznNPQ8QGOUpP08u3lFxS3v2xFdx4iUVfPLLvQ
-	 kUTrfHBa2we/FaHPNnxCp/OEulJA6LTIK+TyCuJUppYn2sc73MSIfB37zKPHIXDyXM
-	 vJfCDtHbQXfm1eYIVsUEcNy+DkO2Ld937JnJ/MOVna6c+oUdYFKaKxzWRGG033qwRR
-	 LtIIu1HqZaC3Ig8eBWSR97uPo608TMUmpzBoHQXGVFzkEUxfvYwv7vLMjz8gm6l87/
-	 XztQv707Kx+FQ==
-Date: Tue, 16 Apr 2024 11:29:57 +0300
-From: Leon Romanovsky <leon@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, linux-rdma@vger.kernel.org,
-	linux-s390@vger.kernel.org, llvm@lists.linux.dev,
-	Ingo Molnar <mingo@redhat.com>, Bill Wendling <morbo@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>, netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>,
-	Salil Mehta <salil.mehta@huawei.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Thomas Gleixner <tglx@linutronix.de>, x86@kernel.org,
-	Yisen Zhuang <yisen.zhuang@huawei.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	linux-arch@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	Mark Rutland <mark.rutland@arm.com>,
-	Michael Guralnik <michaelgur@mellanox.com>, patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Jijie Shao <shaojijie@huawei.com>, Will Deacon <will@kernel.org>
-Subject: Re: [PATCH v3 6/6] IB/mlx5: Use __iowrite64_copy() for write
- combining stores
-Message-ID: <20240416082957.GC6832@unreal>
-References: <0-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
- <6-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wwa2vprk"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-7e73cd45b8bso2080775241.0
+        for <patches@lists.linux.dev>; Tue, 16 Apr 2024 02:16:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1713259018; x=1713863818; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=vVWn70QrmoA1ffZj2betPxocp2G4USrXC3Hf1knCx68=;
+        b=wwa2vprkgKS8p2ujIxbJRChOdYx+CHgaCOx3VvdAdbzpjO0O3s2zidjU3IuxXdgfAy
+         t9o6Cvdti5V7WRfmUnQxkljLM4k3tXK3z9cnPiv9ie2Gj09+hB0Q+rjtbw/Z7HvXnPAm
+         WmNanLHZMnPNGHAHok/k+5TQjeTdbtaC4qVRzlvOBDNpbujAWroSTVEcaJBT2XOqKscq
+         4JaZRhU3I2dr22PmsjiUXjiNGJEAyKmy8+qBlOHiFuzjn9ceVSeCl8aUCPAxZndQZC8g
+         9e/ORChscQ6KW3u8J15OGhpUSXm3ElRYWmGZyHFD3rMiAQ0mKwUlT20eo4ZNJOtJju13
+         kVTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713259018; x=1713863818;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vVWn70QrmoA1ffZj2betPxocp2G4USrXC3Hf1knCx68=;
+        b=H/T0hAkXZCYAOCB9pTFKsJtox9VO2awa8d8pmr2j49VgWzU4y6aPecsI6iHpGwd9bZ
+         XPlI+GWIO3u09Fl19Tj3sXEFHtELKXSJj+tI/qdi8sSkxJ+1kGOgo5BnlQr6cNmU6mcP
+         Cmsf9Za6tSBRYQTFGcFZTwmG2J6JqI1g/e5/b+pwWSM5WOmEWWBYZyTZIgz9deWqF70E
+         LrCDRQb8gsuN6tFZW01EpAa6uBu2kpPTpkC9PCE4b20IFBnpqFx+cxP9n0qdcHL+laUK
+         4OcFlDqKIGY6M06DCMJ/djrIMgrYma5ETWgMW44IQbukr1vKyaqnXNOC5BzfPBpxBxaL
+         4dMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV/JBMPwZuCN4Cc9XIWkhWKLv0upOsDnWVzh6SwcLkwh+qiZzGOyzHETCWe8l53KnAF8vNR06pgx0nQxz+X3gvf+y5NUGI/NA==
+X-Gm-Message-State: AOJu0YwQk9HF5XFPjQ30XjNfT5JxYnyUUjg4KMzDjkIpR4ErZp7OhMXt
+	bOU1fhOtvblnAHP7FdwVfqipy7qqMG7jVRsSsylNWmtQ0c8r4p+xi7mgF0nmJc5lVCnu+WAhS4J
+	hB9ZUo3neRDErQSQAIMR7wNOEvMAyzZSYOT0ANQ==
+X-Google-Smtp-Source: AGHT+IGdpoYmKI9SqOv3iUlv9BkJT85Yzy6MJYOaIEGPqruTKs/l0Rq7SnWeRhl+jvwoE4tXiBJFHrIO7sIJV7KYpIc=
+X-Received: by 2002:a05:6102:b0e:b0:47b:9d4e:e0c with SMTP id
+ b14-20020a0561020b0e00b0047b9d4e0e0cmr154923vst.12.1713259018530; Tue, 16 Apr
+ 2024 02:16:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
+References: <20240415141953.365222063@linuxfoundation.org> <Zh3AywUqfBB5wQgp@finisterre.sirena.org.uk>
+In-Reply-To: <Zh3AywUqfBB5wQgp@finisterre.sirena.org.uk>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 16 Apr 2024 14:46:47 +0530
+Message-ID: <CA+G9fYuxQemNR=6ypi681qMqg+szi+ZZL_Xdhz0Wg1BO0-7bjA@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/122] 6.6.28-rc1 review
+To: Mark Brown <broonie@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Apr 11, 2024 at 01:46:19PM -0300, Jason Gunthorpe wrote:
-> mlx5 has a built in self-test at driver startup to evaluate if the
-> platform supports write combining to generate a 64 byte PCIe TLP or
-> not. This has proven necessary because a lot of common scenarios end up
-> with broken write combining (especially inside virtual machines) and there
-> is other way to learn this information.
-> 
-> This self test has been consistently failing on new ARM64 CPU
-> designs (specifically with NVIDIA Grace's implementation of Neoverse
-> V2). The C loop around writeq() generates some pretty terrible ARM64
-> assembly, but historically this has worked on a lot of existing ARM64 CPUs
-> till now.
-> 
-> We see it succeed about 1 time in 10,000 on the worst effected
-> systems. The CPU architects speculate that the load instructions
-> interspersed with the stores makes the WC buffers statistically flush too
-> often and thus the generation of large TLPs becomes infrequent. This makes
-> the boot up test unreliable in that it indicates no write-combining,
-> however userspace would be fine since it uses a ST4 instruction.
-> 
-> Further, S390 has similar issues where only the special zpci_memcpy_toio()
-> will actually generate large TLPs, and the open coded loop does not
-> trigger it at all.
-> 
-> Fix both ARM64 and S390 by switching to __iowrite64_copy() which now
-> provides architecture specific variants that have a high change of
-> generating a large TLP with write combining. x86 continues to use a
-> similar writeq loop in the generate __iowrite64_copy().
-> 
-> Fixes: 11f552e21755 ("IB/mlx5: Test write combining support")
-> Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/infiniband/hw/mlx5/mem.c | 8 +++-----
->  1 file changed, 3 insertions(+), 5 deletions(-)
-> 
+On Tue, 16 Apr 2024 at 05:35, Mark Brown <broonie@kernel.org> wrote:
+>
+> On Mon, Apr 15, 2024 at 04:19:25PM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.6.28 release.
+> > There are 122 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+>
+> I'm seeing boot breakage with this one on the Arm fast models, a bisect
+> is running now, for slow values of run but should be done by the time I
+> get back tonight.  It only seems to be affecting 6.6, the boot grinds to
+> a halt shortly after getting to userspace apparently with some
+> PCI/virtio issues:
 
-Thanks,
-Acked-by: Leon Romanovsky <leonro@nvidia.com>
+LKFT also noticed the problem that Mark Brown reported.
+
+>
+> [    1.606075] VFS: Mounted root (ext4 filesystem) on device 254:1.
+> [    1.608751] devtmpfs: mounted
+> [    1.627412] Freeing unused kernel memory: 9152K
+> [    1.627894] Run /sbin/init as init process
+> [    1.627957]   with arguments:
+> [    1.628009]     /sbin/init
+> [    1.628064]     Image
+> [    1.628117]   with environment:
+> [    1.628169]     HOME=/
+> [    1.628222]     TERM=linux
+> [    1.628275]     user_debug=31
+> [   11.764055] pci 0000:00:01.0: deferred probe pending
+> [   11.764141] pci 0000:00:02.0: deferred probe pending
+> [   11.764227] pci 0000:00:03.0: deferred probe pending
+> [   11.764313] pci 0000:00:04.0: deferred probe pending
+> [   11.764399] pci 0000:03:00.0: deferred probe pending
+> [   11.764485] pci 0000:04:00.0: deferred probe pending
+> [   11.764571] pci 0000:04:01.0: deferred probe pending
+> [   11.764657] pci 0000:04:02.0: deferred probe pending
+> [   11.764743] pci 0000:00:1f.0: deferred probe pending
+> [   11.764829] pci 0000:01:00.0: deferred probe pending
+> [   11.764915] pci 0000:05:00.0: deferred probe pending
+>
+> (no probe deferral happens for working boots.)
+
+
+--
+Linaro LKFT
+https://lkft.linaro.org
