@@ -1,75 +1,80 @@
-Received: from 0.smtp.remotehost.it (0.smtp.remotehost.it [213.190.28.75])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CB812F373
-	for <patches@lists.linux.dev>; Tue, 16 Apr 2024 14:30:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.190.28.75
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D238612E1D3;
+	Tue, 16 Apr 2024 14:46:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713277819; cv=none; b=aPUHvBf6ltL57cBrfEcW+HhcrTB8vEukgBfN5BlkoEuxJBEly9pxL07lunoXUa3rbkKpaa++VXRUzdIhfQhdvog5Adwnr1+GkTqkmzTdKUME8K9Gvq7sQsxuFo/Uij85UO55KUd+wMqFla5Oz8CIM1DSckyauK9luYhmBawBxJQ=
+	t=1713278808; cv=none; b=iQSoCiOPzOYoEXfYOx+hSKIKUfhEnq/aM7LA5frwnVE3t3JIVnQpa+vfM3vy+dfJHpiO0yElDJLmKDF4kXoDCssTmbryuiued7OmMLTHwqiPM9dzD9HBANrWDODSeh2ej00qKlzOmfiQlbfNQaXkGHZuYf0svgPli1edRNpoYho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713277819; c=relaxed/simple;
-	bh=ZkxV8cJONvEC4oqWmroqUXltG2+/7sknHrLgfWj8pXo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UO8OVSpJYROxUBo333YjiIGpTFO9fu1EXFzPGkCmgE6NluYBE4uA5FzsHtthZGVBmTTLFIAWYaknh9bgsrLvWtJ+9ISNGpzwdg5XWUvavjyC0WXXvj6sl3gdSK5pFDRdhH00qCCCWVtQCA2lLDcy7ORnvi1Bnsbby3e1BOtVrJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net; spf=pass smtp.mailfrom=hardfalcon.net; dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b=15x0cU/3; arc=none smtp.client-ip=213.190.28.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hardfalcon.net
+	s=arc-20240116; t=1713278808; c=relaxed/simple;
+	bh=s1wsWduYDqv05kVoGZ8o/W0Re4M928FY9n0RIrMDsAI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jku8Z6x73bEsdcyKTZpEQvZm/86CacPg9qQVPK7ArQAlovh0vGALzEKbbAbGJ2wfPVHh9uk8mT+wg6AKFxVJrjRC86QoTvwp25TEYm8no111vNLF9/mgTM+wDOzc6nFWAJ6A7i0tmx/GjoYcJX2IUs0IDuCJDzeQU4cMgL8y7Dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U14TzebB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b="15x0cU/3"
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=hardfalcon.net;
-	s=dkim_2024-02-03; t=1713277815;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=xo6ffTmH4y0k7CSDPOwZQiagenGRC1zqiV3Mx5nwHWs=;
-	b=15x0cU/3Uh61s/TINOQar2aF93sM8A8kJLF4mIrDtw9eG3KrzmwGpc4SQDOulvC12aSCOm
-	2+L4QRKBmRoQj4CQ==
-Message-ID: <f4a899db-1d5e-49bb-a92a-737ada549f9b@hardfalcon.net>
-Date: Tue, 16 Apr 2024 16:30:14 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U14TzebB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5BFC2BD10;
+	Tue, 16 Apr 2024 14:46:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1713278808;
+	bh=s1wsWduYDqv05kVoGZ8o/W0Re4M928FY9n0RIrMDsAI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=U14TzebBmfTne1ehQMVP9Z2dPS78m0HGTEfCP612tqdwG34VJwDu0hnYhoUEepEgI
+	 go5xbgywViqnoLfg24/azsnOAstHnSMo494YJTFMuUt4GAn77jFz4kWCa9hut3PT6A
+	 fyVSqc3cWRpDFqUE7yGyCioMGRImgI6+IF+Ya6ek=
+Date: Tue, 16 Apr 2024 16:46:45 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Pascal Ernster <git@hardfalcon.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 5.15 00/45] 5.15.156-rc1 review
+Message-ID: <2024041612-bacterium-scratch-22ea@gregkh>
+References: <20240415141942.235939111@linuxfoundation.org>
+ <f4a899db-1d5e-49bb-a92a-737ada549f9b@hardfalcon.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 5.15 00/45] 5.15.156-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240415141942.235939111@linuxfoundation.org>
-Content-Language: en-US
-From: Pascal Ernster <git@hardfalcon.net>
-In-Reply-To: <20240415141942.235939111@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f4a899db-1d5e-49bb-a92a-737ada549f9b@hardfalcon.net>
 
-[2024-04-15 16:21] Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 5.15.156 release.
-> There are 45 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Apr 16, 2024 at 04:30:14PM +0200, Pascal Ernster wrote:
+> [2024-04-15 16:21] Greg Kroah-Hartman:
+> > This is the start of the stable review cycle for the 5.15.156 release.
+> > There are 45 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Wed, 17 Apr 2024 14:19:30 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.156-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > and the diffstat can be found below.
+> > 
+> > thanks,
+> > 
+> > greg k-h
 > 
-> Responses should be made by Wed, 17 Apr 2024 14:19:30 +0000.
-> Anything received after that time might be too late.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.156-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> Hi, 5.15.156-rc1 is running fine on a Netgear GS108T v3 (the SoC is a
+> Realtek RTL8380M, which has a MIPS 4KEc core).
 
+Note, if you respond with a "Tested-by:" type line, my tools will pick
+it up and add it to the final version commit in the tree when it is
+made, if you want.
 
-Hi, 5.15.156-rc1 is running fine on a Netgear GS108T v3 (the SoC is a 
-Realtek RTL8380M, which has a MIPS 4KEc core).
+thanks,
 
-Regards
-Pascal
+greg k-h
