@@ -1,195 +1,114 @@
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F80A7FBC6
-	for <patches@lists.linux.dev>; Tue, 16 Apr 2024 07:45:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713253543; cv=fail; b=rVm8nJuevq/qyMxln3dQu670H+6/w+A7/ZczqiINk7B5OcjE9S9PQ0svBxOiX7btNlTGH66J9CqLkSB4HEBrmRpr9iP2KSl/DUoUqed72iQdZ2V5ZTmT4zr9d7OPUperiH6UhnnQnm9XUQDN/Y2WT8r+Qg5EgsBSJw6gCoMCl9c=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713253543; c=relaxed/simple;
-	bh=pWV9fUsV3FyjEg9hq5O5QnjWA6kUlDjY6PBNI/BbA8Y=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=RW1BiTcSBlty2FwgihFaBcJQwEvVXZ7bNv++SjEBGkegYD3oxvuBY9+MZq/mhwSem+Zqy+fVUxNOGJFCN1+kIuLTN0De4Akj5Afyl7ZL4pB7Lm2Ehpsm4rkEIUggo0MWI6X0BvsN0RTOuto/Ywdc58T5JtTq46eAForWe4eOC6c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=P/xlKw9t; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=WhJNQH4X; arc=fail smtp.client-ip=205.220.165.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE2985959;
+	Tue, 16 Apr 2024 08:30:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1713256203; cv=none; b=W+SXq8KM17NfxZqf61n/tUo9fwAai5VwhGx+sK6vcjYb3X1oeaAZRK+2Zpj8VHOxghWRl+cJYat+Uf0d3GRL0ndbuEd9noHuEHcRjOseGxcngjUsvOSATWfK+ZFbio5iOat0HTz0xsEowElko8dROj5cPI3+XWm5WFkB0o/Lcpk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1713256203; c=relaxed/simple;
+	bh=lJrj9v6ekM+Ddi5L9uY9dMcBsBq+d7SARM1jH6N4GQQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gST/C1vOqA1EmWlrS9NrQhVdPkaV6TrAcfTSGDr/mgR262tD0XWwJtFxWy/aUxo59T30bsOXjCs7UN8/Qx+O7pRXNcA7hkPrNPXgsWXPxVQIgqMrHoGqz89UhdLOfnUtzF0dPatyFEQ3b3wg4rxCU8rgYlNn92+nlvFbJY0on1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p61+UYgY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="P/xlKw9t";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="WhJNQH4X"
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 43G5FGqG027756;
-	Tue, 16 Apr 2024 07:45:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2023-11-20;
- bh=qqOdr0Ab1ZxIG/cvvALFsfpdIf/pvw2o2ZaZ9+NwGMo=;
- b=P/xlKw9ty54cAhiDiPEof/m9ANki3DlaTFZFnEBFAgfB2gcLLmphxKZItNg0kawMsnCt
- 5/bcH1W0nYUM4SnFolwABUjHylZOVv9PB1FLVsJbC2ZI77Y1c5dih4JW1J5pZPfV056g
- yJFI4h+W8CjJATZoMRpk65wM0cz3rJK0Iglmq5B6gAXum7OXj6jtvshgZIrQ4dANDuUm
- NySbjgPsD+rqiB9osHjzawmxmkyv0WOTsxonANHw4aC0xWLLOGKOwqwwiIMqCRVG5fdd
- hwWifUKMXddo8VrzxbwE8WS/5TaASxNAn/+qyfyG5cfZL8X7P/56cDuEPtOF6DC9pxbE NQ== 
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xfgycmkm8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 16 Apr 2024 07:45:30 +0000
-Received: from pps.filterd (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 43G7RaG0014297;
-	Tue, 16 Apr 2024 07:45:28 GMT
-Received: from nam10-dm6-obe.outbound.protection.outlook.com (mail-dm6nam10lp2101.outbound.protection.outlook.com [104.47.58.101])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3xfggd46u2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 16 Apr 2024 07:45:28 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ls8JjC89eqEfJA4u1VKr+Ehpy9l12uBb9xa2ULTdSgbZJRMoG9IFMRdxhlliHWhlv/iDLm/xOCYm4edKwNZf7GPJeTOJExleiNSMqLtC844yqKt4zv2DBTABe3NdFlwp4gmJJT5LFt7A0BFRC3o2TTc9RpC49CNfb/JmNEtrDEwXT95ssLsrBrvqHiolxOXM5WtgFNd//fU+iiGnM9+RvQSBycs1sdtgQKXqb03weOU6Ef2QwsIoNyh5n13lvOlfxbsWQwgRrzqdM8oPw9fU+G/fIHdN6a2tRBDF42KGjOsTQsje6/i848ii94VmeaZxfVjIBpGEwBPm++7NUA/LwA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qqOdr0Ab1ZxIG/cvvALFsfpdIf/pvw2o2ZaZ9+NwGMo=;
- b=dCsPfbwXm/I2HeYFQGmjnmkxhJWaNaW+/kz27whDXC305fbLNY5NskA1Xe37HWKx7sPJgPFmGTN4u/J0vGbBxovwCOmnuUtyxM41pPBIPwuciOajKfUXdZnIkQU+9uFkVAPAtjOBAPX5V+L6VkkxnqA5p9tf0IlWIbQ8UJKcL5rioHoqM89hg8h52XVtKR4LpsUYctGGUmZNzMJ4AcayZNiMPVIEYBHHlYX7T1G3htP9+fYSM1y2qViQceB+rEUKGU413r4dIeGbgk8hSnOoYZypTVRN9Bb/71PlcjowE0BmnQzo5WW94T/ihouKQq31KDLChKB+1Wh7yyaVofnh0Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qqOdr0Ab1ZxIG/cvvALFsfpdIf/pvw2o2ZaZ9+NwGMo=;
- b=WhJNQH4XXl6uPsaTnKDJFMdbbMnd62E54cN5nVmbrh/JZV4tquu4bv2Yh4+c2OGG3Qr/7AIlRCJuf+6UaaB5mTdToMD6g6K5mCbs/SjbsQgJpWU4SBrKqWpOhgOrqmNlcXQHB0NjPuONYcbL9zfsNZPQJYRkmKXfZF987MNlI64=
-Received: from PH8PR10MB6290.namprd10.prod.outlook.com (2603:10b6:510:1c1::7)
- by DS0PR10MB6974.namprd10.prod.outlook.com (2603:10b6:8:148::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.50; Tue, 16 Apr
- 2024 07:45:26 +0000
-Received: from PH8PR10MB6290.namprd10.prod.outlook.com
- ([fe80::309b:26bb:11d5:cc76]) by PH8PR10MB6290.namprd10.prod.outlook.com
- ([fe80::309b:26bb:11d5:cc76%6]) with mapi id 15.20.7452.049; Tue, 16 Apr 2024
- 07:45:26 +0000
-Message-ID: <189c8903-4976-466d-9be5-249d3cd5e399@oracle.com>
-Date: Tue, 16 Apr 2024 13:15:15 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 00/45] 5.15.156-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-        torvalds@linux-foundation.org, akpm@linux-foundation.org,
-        linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-        lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-        f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
-        rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com,
-        broonie@kernel.org, Vegard Nossum <vegard.nossum@oracle.com>,
-        Darren Kenny <darren.kenny@oracle.com>
-References: <20240415141942.235939111@linuxfoundation.org>
-Content-Language: en-US
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-In-Reply-To: <20240415141942.235939111@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TYCP286CA0128.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:2b6::18) To PH8PR10MB6290.namprd10.prod.outlook.com
- (2603:10b6:510:1c1::7)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p61+UYgY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B131DC113CE;
+	Tue, 16 Apr 2024 08:30:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713256202;
+	bh=lJrj9v6ekM+Ddi5L9uY9dMcBsBq+d7SARM1jH6N4GQQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=p61+UYgYo11o8wr+9Y1NTCQKaUdil+iO3y09VvB2XgUFcg+G0hFo9nVW748ZyFVyS
+	 jbsf9lWI/fFLW2RS99UV30A3yiEWvznNPQ8QGOUpP08u3lFxS3v2xFdx4iUVfPLLvQ
+	 kUTrfHBa2we/FaHPNnxCp/OEulJA6LTIK+TyCuJUppYn2sc73MSIfB37zKPHIXDyXM
+	 vJfCDtHbQXfm1eYIVsUEcNy+DkO2Ld937JnJ/MOVna6c+oUdYFKaKxzWRGG033qwRR
+	 LtIIu1HqZaC3Ig8eBWSR97uPo608TMUmpzBoHQXGVFzkEUxfvYwv7vLMjz8gm6l87/
+	 XztQv707Kx+FQ==
+Date: Tue, 16 Apr 2024 11:29:57 +0300
+From: Leon Romanovsky <leon@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, linux-rdma@vger.kernel.org,
+	linux-s390@vger.kernel.org, llvm@lists.linux.dev,
+	Ingo Molnar <mingo@redhat.com>, Bill Wendling <morbo@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>,
+	Salil Mehta <salil.mehta@huawei.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Thomas Gleixner <tglx@linutronix.de>, x86@kernel.org,
+	Yisen Zhuang <yisen.zhuang@huawei.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	linux-arch@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Michael Guralnik <michaelgur@mellanox.com>, patches@lists.linux.dev,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Jijie Shao <shaojijie@huawei.com>, Will Deacon <will@kernel.org>
+Subject: Re: [PATCH v3 6/6] IB/mlx5: Use __iowrite64_copy() for write
+ combining stores
+Message-ID: <20240416082957.GC6832@unreal>
+References: <0-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
+ <6-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH8PR10MB6290:EE_|DS0PR10MB6974:EE_
-X-MS-Office365-Filtering-Correlation-Id: ec6b703b-571d-4aca-f335-08dc5de92e34
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 
-	GAbEr7uu6+ET9/+B2Dm5w8Uq+hVDt6nVIFia6xKObtc2qp/dQINPcZeb69qjDcRWPUn49j94jsiADdKnKKQ+4DHtXU5IuiATQrjQCIl7nUF0kV1GcPod3FOOlQztXjIogeHjuOLhauomfr3YScsn6EO1V7RoBDnMbbcpQgeBeMg8GVUUMlyCtueskH0sC+BgenI6Zbgd/g20duzPBslsH7NMEO6qQ5popLS9F3H1rdP1EcWWojD1gRdI+g9Kh4ncQPLYXAb8d/M+3YkVHJ2w7fMNxJK6Y+FK8WNQt5PlvF2RlLfKmsWo/o0wMMm3Ls+CepwA4LfULHm+2RdPwVto+O7miYvW71dzt+VU/lF8MBtcq9JbM+2uwi65Oz9Vdq86RcvuJ10LzNY9p0aelTAiHklNOpYxRZWgWn0Bofd0TsAF3+ncYJ71xeTdjt/nA3rkokeGiMaibCrePzE1XzajGaRNsXe23XSqqiAdfc1tDLLIaKJiCcGLv/0DTPKsZzPIOK7LIXfRPHU1OYkpSNahUGY1Lbb7hqz4rmy1iUHIFSnNtFjBeRjbqyQkaHh9R41Dyh+RA34JGUrJOR095mXejsy8Se3uU0lexaWXYf5AXJwmDAVD1QbMOedDeAVwsnfmzL55VJBVOXYIOvVYn4lGMbVb75E7kTtoOIWJ+zo2Mww=
-X-Forefront-Antispam-Report: 
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR10MB6290.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(7416005)(1800799015)(376005)(366007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 
-	=?utf-8?B?MXJaWkcxZWZSMlI0MDZ0dlJtcWlxOFVMck43a09ZZmVKbDZFWVRxMXpXcXNU?=
- =?utf-8?B?eEFOSWFZTHNxZ3FGVVpvclBSM29OUG1mSXRYN2c0eFRUcSt2VU9zRXNtbXRO?=
- =?utf-8?B?cWJmY1VnWGlSWDdkcjlzaVBnN1hVNS9qTkJWbEgzTGsyNnlUbThRTlVHak1L?=
- =?utf-8?B?Wk5oZ2NibUVlaWtqRXB3V3Z4ZjlVWU5DNGVaMkZUR3FFeUJZMEJwUUFxVWNB?=
- =?utf-8?B?T3c5b051cThtR2FnbjM1RjNFYlZVMWVIN3BnNEdudFZCSkYzS2hSeVdpYlBE?=
- =?utf-8?B?UWh3MmRrVUZwZTE4dGFkOEpXUWpOSGk5d1NkNmNDenhoUGNYeCsxREFlRUlY?=
- =?utf-8?B?ZEdqZ3BGZFJadW44cURsK1d4TVBYZ1dlcEZjRFNCMDNwUno2SU1hSWRBNStQ?=
- =?utf-8?B?QTdrbkYxU2JuQ25TRUtQUndZZ2ZXNk9LMEJMLzVjOHNHdXc3bDZjSExBekFD?=
- =?utf-8?B?ZDEvSnpCUXIwaVQyMG84U1YzTmtJWWYrV2NVMWlNWGhkVGdvalowR21QUW1i?=
- =?utf-8?B?Y2JydWh6SW1qM0pHQXBlNU83Z2d0bWRsb1Rxb21rNnRTa2srWkNFek83clEv?=
- =?utf-8?B?Sk8yY1dPL2EyYVg1bGhVVEl3WUxsNU5MdWdYWWpHakNwb2t1UzNaVzhMNDBp?=
- =?utf-8?B?cnJVRkNzTU1xUklDbmcyZHl2SjR5WFNEc25SU05HVnA3N2xxYTdOL3RZdzBL?=
- =?utf-8?B?dzhZa3VlMit5TmZLeGYwL3lNKzBKRE5ENElJRUtsSjRtc3BKTXhSc05Lckpr?=
- =?utf-8?B?Q0JmOFVHV0duWDg1SXFYWnBjUk1RS3NZN0NDamsrOG14RnpQWW00b1hUdjBU?=
- =?utf-8?B?Tk1kc09seGVHTW11TFRsc2poYkxGNzVqcGNPSDIrUnJiMmJVS2VLcTBiSW5P?=
- =?utf-8?B?NVoxWmI2M2cwMkcyZ0pFaGtPRXBiT003Sk5JTm14RjBhNFVOc3J6MU16QWt3?=
- =?utf-8?B?QWlEZDJSVUtVNTJEcFZpZnFvSldDcVNaZGNrekxFc3JrQ3VteUdVN09KU0Fa?=
- =?utf-8?B?QzV5YzVnQzVqamdSMmZmamdDSmY0TWtFZXRkNHlCTWNGUU1ndUFJM1ZSVGQ2?=
- =?utf-8?B?dHdxbnJNMHFuMEVKck41NzRWdzVmSjI3R1VzYTdxRFJuNVZuSW1zdkxxYnlt?=
- =?utf-8?B?NUdNZTBnTGh5ZHRpWXRMSzZsaGhoeHkzN3ZPeHBudi93YldiOWlSbkxxQWpw?=
- =?utf-8?B?SWl6a25KcGkxTGJXY1NZRlZDUVdwSXV1SVN3ZHlTUjJOUXFkUjJzdWxrUEs0?=
- =?utf-8?B?VkRUWVhHUnRIS0Zla09zUXJsUVNUcGxIQXNvU1JKN3lYRVI2cTZDNGFXQlF6?=
- =?utf-8?B?d3hKU3ZuM0hGZENENWpnMjNlUzlPRjlMbEtabG5ZemtxK3NiUnMrZFdML2Ir?=
- =?utf-8?B?ZmhwZlFKeTU3TmFIZ04zcGUrakZiZzczdU1YbDN6cVpvWTRqcXVoa25JeHpC?=
- =?utf-8?B?aHZJcVMwV3RiZHQyTWhPbVdmckJHM3oycFFBbG5qWnM4bXplMW13V01wV0k3?=
- =?utf-8?B?dFZwb1VQcHo4elR0dk80MmhMMmEybThLUkNoQ0dEZnZrRFpKNEREYXhUNFRB?=
- =?utf-8?B?WUY1aENnQVZSRGpZVUpPcjJ4bXYzeVROdmxoNEp5VWY2VFpVQzFBSG5DNUEx?=
- =?utf-8?B?ci9vVkkxVjlrenhyTGZQTTlya1FraHZRK1ExakFIQTd2T1lBRXY2V096WHFF?=
- =?utf-8?B?bklma0FGM1M5ZTl5SmNYNkRZbVJqK1BkYkxZeGM3L0RCbE5wai9zcXk2Z2VL?=
- =?utf-8?B?MnEzSHZPR2lWdmNVV2ZjQVg2R3hrb0NUaGNSRjh5dkl3RzI2RVFEZiszT2lH?=
- =?utf-8?B?QXRwekVjc3RMS2h3MlYxQVFuVElJUDcwQng1QUdoK2hYd1ovbndtaDVDSll6?=
- =?utf-8?B?NmhxQW9kMWc3elo4ZnpQcXg4QnFqODZGQTkzRjAxRXAxYytId0ZYYkMxeVFD?=
- =?utf-8?B?VzFXMGwxV0xXcXkrbmZUT0dtbGkzd0ttNTZFL2JMNEo1ZEtGbVpRVm5Od2Z5?=
- =?utf-8?B?KysvbVV2MlVUNjJCbmJGdXJ3UGRWcE9YcUFyaC9HSkhPQzZQOHMzSnI4WXpT?=
- =?utf-8?B?Nm94WVNtQm1nMDhjUlBkN21DQUZBaHFsMlBoUFRIZG56SFVhTC9vcDU5RE12?=
- =?utf-8?B?TlRXTHBhMTVSMk9uWDlZeUpqQk5icWdJUWljbC9OV2EyM1hybitHZWE3SkJY?=
- =?utf-8?Q?PXqv+TpovzoATiToglD5Ah8=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
-	wf80Wk/7jIQ9pIH3e8NRLQKiz2LDhnDeDe0fv7CsO0frpcUwLiHlO82/Z+b/l+RoNDGitfyjeXuiIN4LuqxxHyHtpkQ8rydDnca8Wu77yHozyekEe3DPNAzvFd8KbauV8hv9h8nFvbgm7PfXhuxNKOZEYkZ5rkbg26b/bgpibu164xQaLMYNBcILe78XHXTsJb/m+1iJ96ZoF6xI+Y8zrH650evQNmv+R7rR7NKU7BIja32kBzCXy/W3odDJyBezhUB+AyVItU8rg43eQcTxXybcqjoWxglh8qLgav5UCYyfnROzFGdtS572JMvR15jUCylwQPHB0Cz/r/+VQKA4L6e9iVAAqLHnaAOlamZTojRLOO1QHix8cmWdsdD3oReEd9DZqLi6YuNYddyvEoYUK/xzW9eH9qUODXkuKiGrSQWXiGnvLsLyhrEpBEBgeXYhvOJC+8LeAz3ObTqaaXiqUEgT12o0RCf6b3xzEyqwmrKxqsIHyW8nvGnAjYSnFVJGZzIpVbz/3/43AaWkTPtCvFPCVbShcERC9ULgpgcX5BWa1Lt23TJEM/AHaK2BckrY51Y8MzSWlS9Oa3KNHsrk8ZRNcmlH7u9uKc1LwO4VGE8=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ec6b703b-571d-4aca-f335-08dc5de92e34
-X-MS-Exchange-CrossTenant-AuthSource: PH8PR10MB6290.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Apr 2024 07:45:26.4665
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TiNHs0b0Kh7fuFLrp/lPmKehzVDgmYHtMAC3Pph7F4oaxwOZB+VQe8Z6GG9GbrLhctGHjSYx04N/xa/kgatPpvUTrP2VXqJSCKhTiMkOqilwuXEygAyd/PmZBCzTc0aM
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB6974
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-16_04,2024-04-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 adultscore=0
- phishscore=0 bulkscore=0 spamscore=0 malwarescore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2404160046
-X-Proofpoint-ORIG-GUID: ls8D-x3QmKcRuxaXcTJD_Cgb_9-bXOYM
-X-Proofpoint-GUID: ls8D-x3QmKcRuxaXcTJD_Cgb_9-bXOYM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
 
-Hi Greg,
-
-On 15/04/24 19:51, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.156 release.
-> There are 45 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Thu, Apr 11, 2024 at 01:46:19PM -0300, Jason Gunthorpe wrote:
+> mlx5 has a built in self-test at driver startup to evaluate if the
+> platform supports write combining to generate a 64 byte PCIe TLP or
+> not. This has proven necessary because a lot of common scenarios end up
+> with broken write combining (especially inside virtual machines) and there
+> is other way to learn this information.
 > 
-> Responses should be made by Wed, 17 Apr 2024 14:19:30 +0000.
-> Anything received after that time might be too late.
+> This self test has been consistently failing on new ARM64 CPU
+> designs (specifically with NVIDIA Grace's implementation of Neoverse
+> V2). The C loop around writeq() generates some pretty terrible ARM64
+> assembly, but historically this has worked on a lot of existing ARM64 CPUs
+> till now.
 > 
-
-No problems seen on x86_64 and aarch64 with our testing.
-
-Tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+> We see it succeed about 1 time in 10,000 on the worst effected
+> systems. The CPU architects speculate that the load instructions
+> interspersed with the stores makes the WC buffers statistically flush too
+> often and thus the generation of large TLPs becomes infrequent. This makes
+> the boot up test unreliable in that it indicates no write-combining,
+> however userspace would be fine since it uses a ST4 instruction.
+> 
+> Further, S390 has similar issues where only the special zpci_memcpy_toio()
+> will actually generate large TLPs, and the open coded loop does not
+> trigger it at all.
+> 
+> Fix both ARM64 and S390 by switching to __iowrite64_copy() which now
+> provides architecture specific variants that have a high change of
+> generating a large TLP with write combining. x86 continues to use a
+> similar writeq loop in the generate __iowrite64_copy().
+> 
+> Fixes: 11f552e21755 ("IB/mlx5: Test write combining support")
+> Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/infiniband/hw/mlx5/mem.c | 8 +++-----
+>  1 file changed, 3 insertions(+), 5 deletions(-)
+> 
 
 Thanks,
-Harshit
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.156-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+Acked-by: Leon Romanovsky <leonro@nvidia.com>
