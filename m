@@ -1,105 +1,102 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAEE12838A;
-	Tue, 16 Apr 2024 11:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948921272DF;
+	Tue, 16 Apr 2024 11:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713265474; cv=none; b=d7K0ikE4mcfunI/9E8i9PlQzcQugcw0LzIDsYNl2DQtOP2Lvx26Hpqs4uKdC/AzxDywDlNy3gqtigL6QIJlNdqe0A/xpel2KsT4tzIJ35jhEXIHKLv6y0jegpGKQs+ouoAzo0v/J4910LHg6c5bKuxXwvFdxXgbxhdS2Fzvszn8=
+	t=1713266045; cv=none; b=Qf/fjOXlvuRZg1p8Im8qr7ij3cfYzE+8q9cBWhlex4G3/LSFONOEIQTV4eribbYXvzYF1KBJUQBBZkhrHKWJoax5qDgRXTO5O2NPZfZD8Xc/TwhhiWFXq4jDZmh+nodVd8nfTzwGxLUtIu00CWOaM1TvD9DfYaZL/16ejN46kZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713265474; c=relaxed/simple;
-	bh=KcfsyDFtDwm+76QLCm2uHrf37SSxIwm1ldEOf6zXOHU=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D8vlnghzEz5R9meoWIJcMCPnG/03a2Et6uhxqu/vwQLYORPSfPrcWvqBnkDulc+H3mKKtPyZKCLgwGhz8T7whFjhfp4cNnTPs37iiO/CrDi3w8ZCNWWOIyuKb+M3JqpNZADd4ahUTSp/XmQ4DLHYJD9oSDReX5WiVahVzgHppdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TwHQpbmm; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713266045; c=relaxed/simple;
+	bh=S3Kfiv9DS0nLvicmsmZgYbCioARiZ+nfWbbfcdaTN34=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=niE0LIXSyuVAI75lWH5B8gOJgz4g7Y67J1nh3bWOFm2vbkVncZ47eHT39bjjXeNTTOAY2QcpOyOblWLS87CB51EPw1t3wk6LDibCjIa8Gq1OFidxBCN+G6EaA5Od0gejD76NjjQqrMlJBh1lwaDeF+AH6TuRTOUdyFNmQisDgso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TYmwpLN3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TwHQpbmm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310ECC113CE;
-	Tue, 16 Apr 2024 11:04:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TYmwpLN3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD286C113CE;
+	Tue, 16 Apr 2024 11:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713265474;
-	bh=KcfsyDFtDwm+76QLCm2uHrf37SSxIwm1ldEOf6zXOHU=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=TwHQpbmmRNXOXD52PKCYvuEI4g00n8M2qsSgUuLt+wyQuy+3mg12vdzpd3ed3VMs8
-	 Yy2A/G1DP2pntFvBFyZWbAfURgQZ2GnN0jcV0K9f7XXn5DEJyVrBvfFk3nRbm9Slu9
-	 jxD2zRqpHe2wRcGzQlwiBogAGbRYqi5aFaVd/cQiixKCgZYYJarY5NQZxSMNNhqipI
-	 Ra1ZigmTMIHWmiEVIlDFmzQyA91TM2P3aZBfAFcMTtbrR/EmT4QysCwlobKIy6KzmR
-	 v3SARv1j4CLY/18tP4JFtkmAvlGy1yTNkB7BDHH42j0na6JrUeR82R1KSEfHdiMp8Z
-	 0S/T5bJaXAdtA==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <maz@kernel.org>)
-	id 1rwgc3-004zM6-8H;
-	Tue, 16 Apr 2024 12:04:31 +0100
-Date: Tue, 16 Apr 2024 12:04:29 +0100
-Message-ID: <8634rlsh4y.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	Yihuang Yu <yihyu@redhat.com>,
+	s=k20201202; t=1713266045;
+	bh=S3Kfiv9DS0nLvicmsmZgYbCioARiZ+nfWbbfcdaTN34=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TYmwpLN3qnViraldNuGwwyKyp1jObk6vzfuCJtjgoYsWflfsFmr4kRVj8dLqr46do
+	 3LCVHLHCKVFXHeiC1ejEnCe3v93cWWDxXL9uwQyKaWDHbZY4LBque3o/8ouqh7Iuq7
+	 FEPDZa3tznq8tzsVEww8VqLmf3PXkX0edas+ouE6qERbwhbWl7CYT4Z9aACEeemF8u
+	 EOniw1nybhHe3bk2uY9jMQXDiWudd+5dzLGGVn+ShOs7bz9YdB+2ezBOwDxPGT5djB
+	 Ssghr+RpU9W7HQPJBXrttyQvZMlXpLVFZ/flgO7W9EC3YDsSCipuSCKLwciVNTzg/x
+	 CUjyl7QP7BhUw==
+Date: Tue, 16 Apr 2024 20:14:02 +0900
+From: Mark Brown <broonie@kernel.org>
+To: Marc Zyngier <maz@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, Yihuang Yu <yihyu@redhat.com>,
 	Gavin Shan <gshan@redhat.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Ryan Roberts <ryan.roberts@arm.com>,
 	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Shaoqin Huang <shahuang@redhat.com>,
-	Will Deacon <will@kernel.org>,
+	Shaoqin Huang <shahuang@redhat.com>, Will Deacon <will@kernel.org>,
 	linux-arm-kernel@lists.infradead.org
 Subject: Re: [PATCH 6.6 000/122] 6.6.28-rc1 review
-In-Reply-To: <Zh5UJh31PlBkpZWd@finisterre.sirena.org.uk>
+Message-ID: <Zh5det1wn9wscUFn@finisterre.sirena.org.uk>
 References: <20240415141953.365222063@linuxfoundation.org>
-	<Zh5UJh31PlBkpZWd@finisterre.sirena.org.uk>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.2
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+ <Zh5UJh31PlBkpZWd@finisterre.sirena.org.uk>
+ <8634rlsh4y.wl-maz@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: broonie@kernel.org, gregkh@linuxfoundation.org, stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, yihyu@redhat.com, gshan@redhat.com, catalin.marinas@arm.com, ryan.roberts@arm.com, anshuman.khandual@arm.com, shahuang@redhat.com, will@kernel.org, linux-arm-kernel@lists.infradead.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="amu2Tn57XLjbtMUG"
+Content-Disposition: inline
+In-Reply-To: <8634rlsh4y.wl-maz@kernel.org>
+X-Cookie: TANSTAAFL
 
-On Tue, 16 Apr 2024 11:34:14 +0100,
-Mark Brown <broonie@kernel.org> wrote:
-> 
-> On Mon, Apr 15, 2024 at 04:19:25PM +0200, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.6.28 release.
-> > There are 122 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> 
-> The bisect of the boot issue that's affecting the FVP in v6.6 (only)
-> landed on c9ad150ed8dd988 (arm64: tlb: Fix TLBI RANGE operand),
-> e3ba51ab24fdd in mainline, as being the first bad commit - it's also in
-> the -rc for v6.8 but that seems fine.  I've done no investigation beyond
-> the bisect and looking at the commit log to pull out people to CC and
-> note that the fix was explicitly targeted at v6.6.
 
-What are the configurations of the kernel and the FVP?
+--amu2Tn57XLjbtMUG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-	M.
+On Tue, Apr 16, 2024 at 12:04:29PM +0100, Marc Zyngier wrote:
+> Mark Brown <broonie@kernel.org> wrote:
 
--- 
-Without deviation from the norm, progress is not possible.
+> > The bisect of the boot issue that's affecting the FVP in v6.6 (only)
+> > landed on c9ad150ed8dd988 (arm64: tlb: Fix TLBI RANGE operand),
+> > e3ba51ab24fdd in mainline, as being the first bad commit - it's also in
+> > the -rc for v6.8 but that seems fine.  I've done no investigation beyond
+> > the bisect and looking at the commit log to pull out people to CC and
+> > note that the fix was explicitly targeted at v6.6.
+
+> What are the configurations of the kernel and the FVP?
+
+The kernel is a defconfig, the FVP arguments can be seen in the log from
+the job here:
+
+   https://lava.sirena.org.uk/scheduler/job/148281#L233
+
+(sorry, should've included that in the earlier mail.)
+
+--amu2Tn57XLjbtMUG
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmYeXXkACgkQJNaLcl1U
+h9BhIQf/coOwRlOX6HOXGuvITmLKiqVnDtDUp/Gd1OiCAK8fdomYe8k2SN+PJTFR
+fgpclHNZgGt8HAm6HgwxC6iyoQ3f9QAh58SZ2jsDGpmFUKXW944/JkCG0tmU3hu+
+5CF4+TgCM3qsmZ75ikqxwoEJ9+GsF7H2SVTDojqbTQVE2jdEd7GpWBTHldfy8MT4
+w/7vmS5YTyhYqkQbF5yAVFdUgNu041g4kCavu/UGuBT8UjnWe4ZUZa1TY6m0Gk2X
+v1PtOCXxYM4csW4UeEpM9351EhhHoOsP6hB0RTQ7cIyML8vtZrxBZC6kxGBBF1Vc
+rksG3SfgvAEW9vosKZlhR18o+2b8lA==
+=33ax
+-----END PGP SIGNATURE-----
+
+--amu2Tn57XLjbtMUG--
