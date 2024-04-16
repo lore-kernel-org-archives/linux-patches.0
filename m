@@ -1,102 +1,148 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpout42.security-mail.net (mxout.security-mail.net [85.31.212.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948921272DF;
-	Tue, 16 Apr 2024 11:14:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713266045; cv=none; b=Qf/fjOXlvuRZg1p8Im8qr7ij3cfYzE+8q9cBWhlex4G3/LSFONOEIQTV4eribbYXvzYF1KBJUQBBZkhrHKWJoax5qDgRXTO5O2NPZfZD8Xc/TwhhiWFXq4jDZmh+nodVd8nfTzwGxLUtIu00CWOaM1TvD9DfYaZL/16ejN46kZk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713266045; c=relaxed/simple;
-	bh=S3Kfiv9DS0nLvicmsmZgYbCioARiZ+nfWbbfcdaTN34=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=niE0LIXSyuVAI75lWH5B8gOJgz4g7Y67J1nh3bWOFm2vbkVncZ47eHT39bjjXeNTTOAY2QcpOyOblWLS87CB51EPw1t3wk6LDibCjIa8Gq1OFidxBCN+G6EaA5Od0gejD76NjjQqrMlJBh1lwaDeF+AH6TuRTOUdyFNmQisDgso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TYmwpLN3; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92731129A93
+	for <patches@lists.linux.dev>; Tue, 16 Apr 2024 12:00:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=85.31.212.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1713268805; cv=fail; b=S0ovm341lOb1ulAaMjTFUrupIZbc08gkyNpuP5Zz+Qrbe/ONIz+3J+ChUEystYjW+hwn/KO5QuLQsIbbXGe6aM406AtkajqzSlZK/pLCSUCnMgaLD8HEDLky57jfVm9ZJH70gr2QpX9XvfDrH5e6UxB+VSgQ63sGQYdte9u53E4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1713268805; c=relaxed/simple;
+	bh=StrGid2dBfOixfPa9P2MRP26amZHDOUthHHCkeBF848=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=LLPpUcH5HIEFocOzRS5WQQncRbeIK856RW60ii0GrhSGWY86/NHAzpncfkDLdgadshwhGqoBaov9ED8ckgbE/+Iz6Cr58CVJ2rEMjIQnnX7OuBajJqMLXecrfHt78Vz3UJ0RtbQIieKtSJMm9aICRxyS25IYoj4pbQlXcEDILJE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kalrayinc.com; spf=pass smtp.mailfrom=kalrayinc.com; dkim=pass (1024-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b=dDBlCKxT; dkim=fail (2048-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b=QZzg9Wyn reason="signature verification failed"; arc=fail smtp.client-ip=85.31.212.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kalrayinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kalrayinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TYmwpLN3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD286C113CE;
-	Tue, 16 Apr 2024 11:14:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713266045;
-	bh=S3Kfiv9DS0nLvicmsmZgYbCioARiZ+nfWbbfcdaTN34=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TYmwpLN3qnViraldNuGwwyKyp1jObk6vzfuCJtjgoYsWflfsFmr4kRVj8dLqr46do
-	 3LCVHLHCKVFXHeiC1ejEnCe3v93cWWDxXL9uwQyKaWDHbZY4LBque3o/8ouqh7Iuq7
-	 FEPDZa3tznq8tzsVEww8VqLmf3PXkX0edas+ouE6qERbwhbWl7CYT4Z9aACEeemF8u
-	 EOniw1nybhHe3bk2uY9jMQXDiWudd+5dzLGGVn+ShOs7bz9YdB+2ezBOwDxPGT5djB
-	 Ssghr+RpU9W7HQPJBXrttyQvZMlXpLVFZ/flgO7W9EC3YDsSCipuSCKLwciVNTzg/x
-	 CUjyl7QP7BhUw==
-Date: Tue, 16 Apr 2024 20:14:02 +0900
-From: Mark Brown <broonie@kernel.org>
-To: Marc Zyngier <maz@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, Yihuang Yu <yihyu@redhat.com>,
-	Gavin Shan <gshan@redhat.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Shaoqin Huang <shahuang@redhat.com>, Will Deacon <will@kernel.org>,
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 6.6 000/122] 6.6.28-rc1 review
-Message-ID: <Zh5det1wn9wscUFn@finisterre.sirena.org.uk>
-References: <20240415141953.365222063@linuxfoundation.org>
- <Zh5UJh31PlBkpZWd@finisterre.sirena.org.uk>
- <8634rlsh4y.wl-maz@kernel.org>
+	dkim=pass (1024-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b="dDBlCKxT";
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b="QZzg9Wyn"
+Received: from localhost (localhost [127.0.0.1])
+	by fx302.security-mail.net (Postfix) with ESMTP id 19F247C4A44
+	for <patches@lists.linux.dev>; Tue, 16 Apr 2024 13:55:55 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kalrayinc.com;
+	s=sec-sig-email; t=1713268555;
+	bh=StrGid2dBfOixfPa9P2MRP26amZHDOUthHHCkeBF848=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=dDBlCKxTdgPbKXREfaRG1d4FpITreAUPx7IfJPozghsnSU7r9dn7PPzJLjVFJko0k
+	 uUBq4FYr4aUAFwzNRCJxH7eXDpHWvJuqaGoWJyneD84hT+r6xP+cXImjtSA1pq4tZL
+	 IKp6Hvck1GKuwuRqzAaLMxnqzmlHYbFU/q+ampKk=
+Received: from fx302 (localhost [127.0.0.1]) by fx302.security-mail.net
+ (Postfix) with ESMTP id E67997C43EA; Tue, 16 Apr 2024 13:55:54 +0200 (CEST)
+Received: from MRZP264CU002.outbound.protection.outlook.com
+ (mail-francesouthazlp17010000.outbound.protection.outlook.com [40.93.69.0])
+ by fx302.security-mail.net (Postfix) with ESMTPS id 65D427C4375; Tue, 16 Apr
+ 2024 13:55:54 +0200 (CEST)
+Received: from PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:14b::6)
+ by PAZP264MB3245.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:1f6::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.50; Tue, 16 Apr
+ 2024 11:55:51 +0000
+Received: from PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
+ ([fe80::d918:21af:904a:ce0a]) by PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
+ ([fe80::d918:21af:904a:ce0a%4]) with mapi id 15.20.7452.049; Tue, 16 Apr
+ 2024 11:55:51 +0000
+X-Virus-Scanned: E-securemail
+Secumail-id: <eb52.661e674a.6493b.0>
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=HW+bApLiskXP6XHLC5sRiTz85l+y9pxDh2ohMAYDEBvbBINIYY434o3tnOb7Wdl45iDDOe6x2WZLU5i+i6zyK+qeOw13ch46OAjqfaCNAbgPKeyoN3cRTZ37whh9QWmv4pW6eX9aD9tQi09+HgxZdN7tV2bDOOnBGpwQOHYq4uI4HU3sXBH/y6lTgtU9RGHcryk9PXs1BJ2TjWhFtnE0NceUtqVO5mDewtSGk/3bYu1l6prq3tj8w5J0PmezIxjOBqVN2gJIZS/qOoZWuIeu+8+EYXS/2Gb0OO1qL21/N5FuwZmI5iWJ7DE4k/F6/zfht8ehlueEQW5LCr0B+LgiBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=microsoft.com; s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2j35nNn33eL4zpEznZM9BCAUc3eIC8SYVU6BFRGeIAU=;
+ b=LmPBR1bGWjoajgHgrjE6ShK7vNEqinVhtPNxJTS3Aii2tfo3mHOATB5Yh2IK+Y9/GeRtZRSfJTxlQ6hh7Y11v5ogBJZpE9eylZzkHl0IkX48HMezS18v+gc/S0vXLmVKRnS2yo/h6hrW4PNLNARh675QNvix5Nl8kpDPbnRiTpd9gWsT2EjNP453BaO0WjJxqB9Zx77EONSX3jU0prI14pqx6lJatkDMt+7kuJrt0O4f6KiEGNWqU81YNHtRLmWkSYp7Jt34dY6CAw+FjyZksSAL/5RFF+9BLgwqFFVjtFvz37h4Q3An6Bl+vdzAJCfVF2fdKcTpUuOCvmLvjeDupQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=kalrayinc.com; dmarc=pass action=none
+ header.from=kalrayinc.com; dkim=pass header.d=kalrayinc.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kalrayinc.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2j35nNn33eL4zpEznZM9BCAUc3eIC8SYVU6BFRGeIAU=;
+ b=QZzg9WynEndJ8umZr6iWOvTrNp17XQ7q3i8Of5t1pBKVQJippXIvHFXFtjKbdszjAwaRYLElzBl8yr7I4zcHW0p1TRBnnSH+BXI9bubbRCmWY5kdPMUz7/ZjGhNDgCdpgOABSFC1HDcLMjj8x3BLP2rWYUN6k5ptDB/k7IevTLQAxTf/0i7rES5bB7XKgKZ5INOvWwV9TfvCAMijEVYISvjmzv6RFS2iqUf97XmzavaQ8dt+DGWgh54oTDrVNUe9ToU+r7eLtS12M+wldIYPOulrXGpVYkFpPfPu5d9hQnEWYDvXa3lEdKg86HRdFF2mC23X8MjXhveuurkLlu95vg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=kalrayinc.com;
+Message-ID: <7ebb18ec-a7ac-4145-ab21-1d6d7f77234e@kalrayinc.com>
+Date: Tue, 16 Apr 2024 13:55:48 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 6.1 00/69] 6.1.87-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240415141946.165870434@linuxfoundation.org>
+Content-Language: en-us
+From: Yann Sionneau <ysionneau@kalrayinc.com>
+In-Reply-To: <20240415141946.165870434@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: AM4PR0302CA0012.eurprd03.prod.outlook.com
+ (2603:10a6:205:2::25) To PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:102:14b::6)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="amu2Tn57XLjbtMUG"
-Content-Disposition: inline
-In-Reply-To: <8634rlsh4y.wl-maz@kernel.org>
-X-Cookie: TANSTAAFL
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PR0P264MB3481:EE_|PAZP264MB3245:EE_
+X-MS-Office365-Filtering-Correlation-Id: faf4bdc8-fd2e-4b5e-b459-08dc5e0c2979
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: APa/BdBdGDGJpK+y0nytTD65YtqAkd0gS1xbdXP1N4KoRi1LTYP9RKc5HllRjxce/wn4ZT1xnJ2mD1fah5EE+cLH3cN5ldNOBOP3DAWkUNZ7HJrfW0+rBx4eTb9EoQYUOE/lGlcroG/br8uYMM16AoG+Z4SH99CYLHNaRi5acUjBFofjzL/pCHfkN5jUsdhmYSC3A4Z4gbMI+berS9s53qA8JRR0lQb9TsacU4OVbbLRbi0STsB4kkkViaWPKoUtWMR1UuLewJAlTLj2IkK+E/vHKsPmYBq3h+bqsr8SiDwlGOXD3rnh4aK7FTsiBlGMAHnzPlQVROH+kghO2Z8+B66E2ia9qfaBE+F5HXhdQ8BEiQuAEjYfINe0aGGW/HNgT+1gEl2YnfjUM90cVIC+RrjO9bAa1HvbrQ9jhCY59QTxzufGC3qZbLUg9Mq+P1sfG2VFaTImIaB00ge8HRHfvbzSovTYDYq0hZ2ZN9fs+AaRrw4uqEhwaWiFM3TvqM/36N6YleWJG41y3L7bk2f1fUtFZBr1RWfw30Ank3Ru+D7Vy3YKMZd6dMf+KxNh0a/HEP9UA3b6DWtzFlrl/PQuBTozdLMCWwWHyTdRLJ305iNsLuKOOqKiXqLG/oQOIVpxOZmaoX/yBYNff5ul10CknlcBjgPkVtUZpENxduCH4S4=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(376005)(7416005)(1800799015)(366007);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: E1THdzdxoKb/U9uGh+6DBLrnx1x8dDiBsSnprSGROhkGWwBqQA67pY56fTdSxFuS/kp0UcfWfBNs+WdjmZ21rh8WwMJvNGGKIEtwkpFK8o6WK9mUI1HLsVf8vctgSQe+W7CMCSGjsvn1dEWGYUi0VdGQmoo1jtbzNFBNA1yiI/rtrbFfxrL5zMTpMUnqESh5PjJZThWgZ/KMd3ugD0GTcPxw6tRltJMR3OD5RLLYY0n//mY5PaTWonIM71lEwYW/667fK9swnv38WDjCLEV4wHx9BZ/rz2pmu7o2RGI+Jx01sBEHJ3d8IpiLWjP5+QJfkqtQDvWPraG4soQVl8zhG3D3oIlZW3exRaRWkk1eYQ/csMXuoF8nQTafHH+ehpQ/CdPS9EjQpZJFzzCi92qNnYzsfSAGaWadq3fMaesB4aEil8M52X5rm51Ps9PyRKB2smQaw+Oskdq8nHhqNw6Y6GKMvjYpaWBJYPn6UdEOUKQPEHMDsD4HzZkKDt9pPgClhfdobeVrxafA1W/Gw6VHtHrI1H6Gt37Z6DfMxDkDGmvR4l3Z9rCmpoS9LZLOeCQwQxc4kD3I+pbxlRpFvMXjHQqxaEAPz7bptOQNDD40bs8YnJuQSmEgV9jA+pCH7qZWxbEtUV9gZZwXEpKd0sXoa13dejSIh+8z9Vc8DX3XWVKuQ5de5/k2BYz1lc/u6r55vIZwI73/yViWH14z2zJVYZTf/MvLv3YaLz1DZQRNBHVnqp09uFRy0OfLO1NteIIr5ycVUuKamuk1w3ygMgOJzFmkCr+1liIYi+v/1zyqk2aYn2tS5AerUHQEFm2Udt4ln6W9C9IKw9n3nn9beH5zqCmDNipqjBWt+MeawWADBAy35eMWYf2GOW8NvJ8+0nERs+yGG5cUnKjYm1h3fXi7G1YYAUSpDf4xVgZ/RR4hJHutdN2s1+/06TK+jMpuyPUf
+ fPSRuj8gEV5qo71wWL84mEVwlyYRLFUOs3/nHrK26pYt+ihvwr5YMJXDSI3szBMGIxEUJ4lEoiJ3//eXy5RVEWINgBU7zG260f2og+U+vUf4uCEoVa52LJqxzWthGVnZ979MwiwjovvKGR1KZJhbXnF5rZRO/Zajqf64HseNVkN9t3mrTpwd/wkzBEW1tjKhAWeMUIWIOrByHCbndoevB4E9PLbzzD1h9hxhry92h2dVJHmznEJSzvermRxIxV3oRJi0VXxtx0YpWJCrS20wDvlrGh74mjZrbf3jtsd3C57Rclgje70GURENXWWlc3Xp35Geg03ojcU5aiUHJoQoMjN8DHcghF8A926pzXtz0x8UvI8rYYP28Iw9dWOXpuMSzwlSrFB7ufS6AZoqg80zBFndv9li/GNrkiEe2WNgFZarsSOznb+/Fj3NvxilYrcCml6KiPNLHD+lHXMRNIX7m4BpLnvRq3rPxrqiTRQf0g3AZ341u7k/l2oY2mQ/Pv30X50ERkGnhA2ikrcYdg9gAOJ4g1e9FEEA9jaJcNiF385PZo2N1UDO6XNWRmi22ilPugkUKiL/vBuZvaIMGgWQo/QtIRanZOLP7AcSZQZMsTU47cn58Bvw/BzYdubj+4Io/uGLaj4H8wo5BSDpQAJPfA==
+X-OriginatorOrg: kalrayinc.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: faf4bdc8-fd2e-4b5e-b459-08dc5e0c2979
+X-MS-Exchange-CrossTenant-AuthSource: PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Apr 2024 11:55:51.2331
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 8931925d-7620-4a64-b7fe-20afd86363d3
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: K25ckVWwF9hNMBKZNkTcXSgEWx9ZqVAxa7asHu6/4BUJ3OXDbAqXwBDJg3iABvJpDG+n5G8SG+KLxHze+Z9pfA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAZP264MB3245
+X-ALTERMIMEV2_out: done
+
+Hi Greg,
+
+On 4/15/24 16:20, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.87 release.
+> There are 69 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 17 Apr 2024 14:19:30 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.87-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+
+I tested 6.1.87-rc1 (6745a5f2c806) on Kalray kvx arch (not upstream yet) and everything looks good!
+
+It ran on real hw (k200, k200lp and k300 boards), on qemu as well as on our internal instruction set simulator (ISS).
+
+Tests were run on several interfaces/drivers (usb, qsfp ethernet, eMMC, PCIe endpoint+RC, SPI, remoteproc, uart, iommu). LTP and uClibc-ng testsuites are also run without any regression.
+
+Everything looks fine to us.
+
+Tested-by: Yann Sionneau<ysionneau@kalrayinc.com>
+
+-- 
+Yann
 
 
---amu2Tn57XLjbtMUG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Tue, Apr 16, 2024 at 12:04:29PM +0100, Marc Zyngier wrote:
-> Mark Brown <broonie@kernel.org> wrote:
 
-> > The bisect of the boot issue that's affecting the FVP in v6.6 (only)
-> > landed on c9ad150ed8dd988 (arm64: tlb: Fix TLBI RANGE operand),
-> > e3ba51ab24fdd in mainline, as being the first bad commit - it's also in
-> > the -rc for v6.8 but that seems fine.  I've done no investigation beyond
-> > the bisect and looking at the commit log to pull out people to CC and
-> > note that the fix was explicitly targeted at v6.6.
 
-> What are the configurations of the kernel and the FVP?
-
-The kernel is a defconfig, the FVP arguments can be seen in the log from
-the job here:
-
-   https://lava.sirena.org.uk/scheduler/job/148281#L233
-
-(sorry, should've included that in the earlier mail.)
-
---amu2Tn57XLjbtMUG
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmYeXXkACgkQJNaLcl1U
-h9BhIQf/coOwRlOX6HOXGuvITmLKiqVnDtDUp/Gd1OiCAK8fdomYe8k2SN+PJTFR
-fgpclHNZgGt8HAm6HgwxC6iyoQ3f9QAh58SZ2jsDGpmFUKXW944/JkCG0tmU3hu+
-5CF4+TgCM3qsmZ75ikqxwoEJ9+GsF7H2SVTDojqbTQVE2jdEd7GpWBTHldfy8MT4
-w/7vmS5YTyhYqkQbF5yAVFdUgNu041g4kCavu/UGuBT8UjnWe4ZUZa1TY6m0Gk2X
-v1PtOCXxYM4csW4UeEpM9351EhhHoOsP6hB0RTQ7cIyML8vtZrxBZC6kxGBBF1Vc
-rksG3SfgvAEW9vosKZlhR18o+2b8lA==
-=33ax
------END PGP SIGNATURE-----
-
---amu2Tn57XLjbtMUG--
