@@ -1,115 +1,75 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from 0.smtp.remotehost.it (0.smtp.remotehost.it [213.190.28.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95E112C46F;
-	Tue, 16 Apr 2024 13:22:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36B212F362
+	for <patches@lists.linux.dev>; Tue, 16 Apr 2024 13:58:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.190.28.75
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713273732; cv=none; b=MACaickG5J54CddLfFOEN7UTyq+dYtNsV3fZwh2Y800ghG5bZYii8QQYMuga2tNwGxVAevFak5LvsFFr/d0K4m03A/9LyjjDMVvf+VtUHC0A0XQ4K9V/kTCMU41o3c3cZpawaVq7gXyuUl2UGaQx+xA6cx4+wpbw+8snQO8UXNA=
+	t=1713275906; cv=none; b=PCzxPOt3+eeQt9hNr/JyQ9frPG7ysE+cXuoT5dnLQrmb8m3JfjI1HYSzyKqUEevkJHsvbu9v68uqlwLHHDpwfh07ZpwEfIVbUSgCx5gS9C8uX2BMnfssAFdK12ChiR4n/fwdPorTIr2JWTrHvAvBVdDgfA5vFxoEa5TTAva8pZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713273732; c=relaxed/simple;
-	bh=BFQljuMVTClNVjDMuw/IrsqPjuJUXCtl5zc7GQU7tpc=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YQq7ANhppeWgpvF2/WAbcAQeNe7u2NKSyNjDHjemrs1B/YaPA8cTPJy0+C+ilZmCYg8SYiSVCsZolvnO6rWbNphFHXSNQo/59bg8VbEuOiS9nY9rFWDC6GcGN40m8ZIK+/RF1wpnOvAULikLBDin4QhXcZFi53eK4cx4EeHF70M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oauJhRl1; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713275906; c=relaxed/simple;
+	bh=wMeoMRPj8QzxVMrvPzuWIu3U/9xD6X5SS7/EJ+X2d/A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CG9QEmFM3UaXSYBp+D9dfecXS6hpsVPyqS4ar1D+S/7rVgdDsAU/7cs/cFrSn6ov2j0FHyV55Lohear1a5r4hMUwalrxrkOKcLciWJlspgAp2gVk1T1XQIKdVXZTwtHoBkViWQM0bN36eErS47xQ4XTrcbmxgSFQj3sIuEmzpWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net; spf=pass smtp.mailfrom=hardfalcon.net; dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b=P/BEOeX+; arc=none smtp.client-ip=213.190.28.75
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hardfalcon.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oauJhRl1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71870C113CE;
-	Tue, 16 Apr 2024 13:22:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713273731;
-	bh=BFQljuMVTClNVjDMuw/IrsqPjuJUXCtl5zc7GQU7tpc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=oauJhRl1Ng77wYskusi1RAwDUu9MXz1hjLryHTHiIjNl+n07VIKjCIKuf5Rln5CyE
-	 2gA4nJVd0uzIKIzITAsuRNX6paoUyGBTKJaDjh6G8WokgClf66H6t0Fr7L9Fa7/pio
-	 /unsiVNAqhRLIH6Av0WwQ5DFAjaH/a6qJlNCpjVbepAdLHj2MoLEaCqPlgtLvj9kys
-	 BX33QuZ9EE61exWHDkJSmNN3FM8066NUaRkWbqi+WHAXDI4+xEfI2B0q8kPEc2DBAQ
-	 IVh4+44AzezZ4+AufuewqjR2IY48LH7b0S0TZieuvLhjtA947mb52eL5YFdfkmDlL3
-	 vRYdts8WbjeHg==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <maz@kernel.org>)
-	id 1rwilF-0051lu-82;
-	Tue, 16 Apr 2024 14:22:09 +0100
-Date: Tue, 16 Apr 2024 14:22:07 +0100
-Message-ID: <86y19dqw74.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Mark Brown <broonie@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	Yihuang Yu <yihyu@redhat.com>,
-	Gavin Shan <gshan@redhat.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Shaoqin Huang <shahuang@redhat.com>,
-	Will Deacon <will@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Anders Roxell <anders.roxell@linaro.org>
-Subject: Re: [PATCH 6.6 000/122] 6.6.28-rc1 review
-In-Reply-To: <CA+G9fYu-AjRm-BBA=8fWS8oCbBJ5W443JHPh3uddD7ea7MY-YA@mail.gmail.com>
-References: <20240415141953.365222063@linuxfoundation.org>
-	<Zh5UJh31PlBkpZWd@finisterre.sirena.org.uk>
-	<CA+G9fYu-AjRm-BBA=8fWS8oCbBJ5W443JHPh3uddD7ea7MY-YA@mail.gmail.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.2
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b="P/BEOeX+"
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=hardfalcon.net;
+	s=dkim_2024-02-03; t=1713275895;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=pdIiHK1ZlBh7Ekhy8QQcOVSWRAuRXuGcvF4f/tlXFtM=;
+	b=P/BEOeX+3LO9FRldT3d5oKl7aj+iZQc3SOs2v6Ja4gqOr1Zy0QXbC23z6B5Ggg0l9KP4bm
+	gSgeyxeM81SZqvDg==
+Message-ID: <a07045d9-ec06-4a9c-b6e6-b3232325201e@hardfalcon.net>
+Date: Tue, 16 Apr 2024 15:58:13 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: naresh.kamboju@linaro.org, gregkh@linuxfoundation.org, broonie@kernel.org, stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, yihyu@redhat.com, gshan@redhat.com, catalin.marinas@arm.com, ryan.roberts@arm.com, anshuman.khandual@arm.com, shahuang@redhat.com, will@kernel.org, linux-arm-kernel@lists.infradead.org, anders.roxell@linaro.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Subject: Re: [PATCH 6.8 000/172] 6.8.7-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240415141959.976094777@linuxfoundation.org>
+Content-Language: en-US
+From: Pascal Ernster <git@hardfalcon.net>
+In-Reply-To: <20240415141959.976094777@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, 16 Apr 2024 14:07:30 +0100,
-Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+[2024-04-15 16:18] Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.8.7 release.
+> There are 172 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> On Tue, 16 Apr 2024 at 16:04, Mark Brown <broonie@kernel.org> wrote:
-> >
-> > On Mon, Apr 15, 2024 at 04:19:25PM +0200, Greg Kroah-Hartman wrote:
-> > > This is the start of the stable review cycle for the 6.6.28 release.
-> > > There are 122 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> >
-> > The bisect of the boot issue that's affecting the FVP in v6.6 (only)
-> > landed on c9ad150ed8dd988 (arm64: tlb: Fix TLBI RANGE operand),
-> > e3ba51ab24fdd in mainline, as being the first bad commit - it's also in
-> > the -rc for v6.8 but that seems fine.  I've done no investigation beyond
-> > the bisect and looking at the commit log to pull out people to CC and
-> > note that the fix was explicitly targeted at v6.6.
+> Responses should be made by Wed, 17 Apr 2024 14:19:30 +0000.
+> Anything received after that time might be too late.
 > 
-> Anders investigated this reported issues and bisected and also found
-> the missing commit for stable-rc 6.6 is
-> e2768b798a19 ("arm64/mm: Modify range-based tlbi to decrement scale")
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.7-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Which is definitely *not* stable candidate. We need to understand why
-the invalidation goes south when the scale go up instead of down.
 
-	M.
+Hi, 6.8.7-rc1 is running fine on various x86_64 bare metal and virtual 
+machines of mine (Haswell, Kaby Lake, Coffee Lake).
 
--- 
-Without deviation from the norm, progress is not possible.
+Regards
+Pascal
