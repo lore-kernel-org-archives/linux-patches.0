@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D238612E1D3;
-	Tue, 16 Apr 2024 14:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0738F10A22;
+	Tue, 16 Apr 2024 17:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713278808; cv=none; b=iQSoCiOPzOYoEXfYOx+hSKIKUfhEnq/aM7LA5frwnVE3t3JIVnQpa+vfM3vy+dfJHpiO0yElDJLmKDF4kXoDCssTmbryuiued7OmMLTHwqiPM9dzD9HBANrWDODSeh2ej00qKlzOmfiQlbfNQaXkGHZuYf0svgPli1edRNpoYho=
+	t=1713288499; cv=none; b=iUuEnuxCBGF1ZZJye/kujOMjzs4jLYxorePrSmPs3dGK93Xel+BK0H0C3c77zFTXYPzmf3YNXldVIq05lnNoa5RKq1XSZSN6IkOOOhd/+rbIE1YSTq7Ty5A4WduBF2xj+HOJuGmQDOhREbYcnCuB8ifUrb1nF0Qdk4K47DB5Neg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713278808; c=relaxed/simple;
-	bh=s1wsWduYDqv05kVoGZ8o/W0Re4M928FY9n0RIrMDsAI=;
+	s=arc-20240116; t=1713288499; c=relaxed/simple;
+	bh=fzIQWinEL64tdKbuV71MRaTNL67LcKX8BvwcAqWO8DA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jku8Z6x73bEsdcyKTZpEQvZm/86CacPg9qQVPK7ArQAlovh0vGALzEKbbAbGJ2wfPVHh9uk8mT+wg6AKFxVJrjRC86QoTvwp25TEYm8no111vNLF9/mgTM+wDOzc6nFWAJ6A7i0tmx/GjoYcJX2IUs0IDuCJDzeQU4cMgL8y7Dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U14TzebB; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U14TzebB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5BFC2BD10;
-	Tue, 16 Apr 2024 14:46:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713278808;
-	bh=s1wsWduYDqv05kVoGZ8o/W0Re4M928FY9n0RIrMDsAI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=U14TzebBmfTne1ehQMVP9Z2dPS78m0HGTEfCP612tqdwG34VJwDu0hnYhoUEepEgI
-	 go5xbgywViqnoLfg24/azsnOAstHnSMo494YJTFMuUt4GAn77jFz4kWCa9hut3PT6A
-	 fyVSqc3cWRpDFqUE7yGyCioMGRImgI6+IF+Ya6ek=
-Date: Tue, 16 Apr 2024 16:46:45 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Pascal Ernster <git@hardfalcon.net>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 5.15 00/45] 5.15.156-rc1 review
-Message-ID: <2024041612-bacterium-scratch-22ea@gregkh>
-References: <20240415141942.235939111@linuxfoundation.org>
- <f4a899db-1d5e-49bb-a92a-737ada549f9b@hardfalcon.net>
+	 Content-Type:Content-Disposition:In-Reply-To; b=PztHaNVNL3lnP8oWdrLxK2Td98SEWtPYCEyrTUUM6tbq7cL4wHvrWxr2DAk29C9p/SuFfFQi6I8IOkX5Sx+uY5m3Go/dROjxOOP5f/zRcshBMivArsEQAh3AIUE9wNc96tHuWEgfbSpwxuQ5+Z327kuXtgOXKg2pE6MJ+SVSWPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EABFC113CE;
+	Tue, 16 Apr 2024 17:28:13 +0000 (UTC)
+Date: Tue, 16 Apr 2024 18:28:10 +0100
+From: Catalin Marinas <catalin.marinas@arm.com>
+To: Marc Zyngier <maz@kernel.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Mark Brown <broonie@kernel.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, Yihuang Yu <yihyu@redhat.com>,
+	Gavin Shan <gshan@redhat.com>, Ryan Roberts <ryan.roberts@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Shaoqin Huang <shahuang@redhat.com>, Will Deacon <will@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: Re: [PATCH 6.6 000/122] 6.6.28-rc1 review
+Message-ID: <Zh61KobDt_y1O46-@arm.com>
+References: <20240415141953.365222063@linuxfoundation.org>
+ <Zh5UJh31PlBkpZWd@finisterre.sirena.org.uk>
+ <CA+G9fYu-AjRm-BBA=8fWS8oCbBJ5W443JHPh3uddD7ea7MY-YA@mail.gmail.com>
+ <86y19dqw74.wl-maz@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,36 +46,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f4a899db-1d5e-49bb-a92a-737ada549f9b@hardfalcon.net>
+In-Reply-To: <86y19dqw74.wl-maz@kernel.org>
 
-On Tue, Apr 16, 2024 at 04:30:14PM +0200, Pascal Ernster wrote:
-> [2024-04-15 16:21] Greg Kroah-Hartman:
-> > This is the start of the stable review cycle for the 5.15.156 release.
-> > There are 45 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
+On Tue, Apr 16, 2024 at 02:22:07PM +0100, Marc Zyngier wrote:
+> On Tue, 16 Apr 2024 14:07:30 +0100,
+> Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> > On Tue, 16 Apr 2024 at 16:04, Mark Brown <broonie@kernel.org> wrote:
+> > > On Mon, Apr 15, 2024 at 04:19:25PM +0200, Greg Kroah-Hartman wrote:
+> > > > This is the start of the stable review cycle for the 6.6.28 release.
+> > > > There are 122 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > >
+> > > The bisect of the boot issue that's affecting the FVP in v6.6 (only)
+> > > landed on c9ad150ed8dd988 (arm64: tlb: Fix TLBI RANGE operand),
+> > > e3ba51ab24fdd in mainline, as being the first bad commit - it's also in
+> > > the -rc for v6.8 but that seems fine.  I've done no investigation beyond
+> > > the bisect and looking at the commit log to pull out people to CC and
+> > > note that the fix was explicitly targeted at v6.6.
 > > 
-> > Responses should be made by Wed, 17 Apr 2024 14:19:30 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.156-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
+> > Anders investigated this reported issues and bisected and also found
+> > the missing commit for stable-rc 6.6 is
+> > e2768b798a19 ("arm64/mm: Modify range-based tlbi to decrement scale")
 > 
-> 
-> Hi, 5.15.156-rc1 is running fine on a Netgear GS108T v3 (the SoC is a
-> Realtek RTL8380M, which has a MIPS 4KEc core).
+> Which is definitely *not* stable candidate. We need to understand why
+> the invalidation goes south when the scale go up instead of down.
 
-Note, if you respond with a "Tested-by:" type line, my tools will pick
-it up and add it to the final version commit in the tree when it is
-made, if you want.
+If you backport e3ba51ab24fd ("arm64: tlb: Fix TLBI RANGE operand")
+which fixes 117940aa6e5f ("KVM: arm64: Define
+kvm_tlb_flush_vmid_range()") but without the newer e2768b798a19
+("arm64/mm: Modify range-based tlbi to decrement scale"), it looks like
+"scale" in __flush_tlb_range_op() goes out of range to 4. Tested on my
+CBMC model, not on the actual kernel. It may be worth adding some
+WARN_ONs in __flush_tlb_range_op() if scale is outside the 0..3 range or
+num greater than 31.
 
-thanks,
+I haven't investigated properly (and I'm off tomorrow, back on Thu) but
+it's likely the original code was not very friendly to the maximum
+range, never tested. Anyway, if one figures out why it goes out of
+range, I think the solution is to also backport e2768b798a19 to stable.
 
-greg k-h
+-- 
+Catalin
