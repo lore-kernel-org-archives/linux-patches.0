@@ -1,45 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1B958203
-	for <patches@lists.linux.dev>; Tue, 16 Apr 2024 21:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089965FDA5
+	for <patches@lists.linux.dev>; Tue, 16 Apr 2024 21:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713302400; cv=none; b=DefllYLc+ge73KOxBCHk+SjgxwP0x/HP7RorlpXQSTSmHg99LO6E2KCCba2mS4DsFCpoNrP4CtgmRANnoIBRIKX5321vUL4jIBwH4t4hhAi2t29s2fUa3b63wS0wW7psC76+ikgjWn8xPplUjvrXSSX4BG7GGCbyh1DrVPo2lG8=
+	t=1713302400; cv=none; b=nXrA8aMIBmmByGTe8n+sR1u3/0/X2ATDaaxju5etujTE3b5GQloEgz8dtbCRc95nAd2/TSF6gNL96fyA4mlxfeDlqHZ9Re7FzSp3uxY1PMinRH5M9KIaeNXZNO20WZ7M//ZSw5yDdWDCwlgXy2oGaRQ9EQaxf2d+BQEzZCXFVEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713302400; c=relaxed/simple;
-	bh=/gG1Ud4Jh4yyM43jcukle0sEq0SFa7ETYPrFB0mf/2E=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KpaWtK9ObOCDYqPOmgLZQz80J5DS7HQNYsycvM4JClcv2rjMb6qkB9Crd9xzESeqIujdfBl31ORI87QcxLQiMarXz30gX6Qa3edRCRYnIXj3/wnQB0E0ugvAfF27gzvQ11MTBJO+gxNlPRyH9tK9C0RlyuIcGmj7CXRu5UmseHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=n9udOsL4; arc=none smtp.client-ip=198.175.65.13
+	bh=1xysypfQVziDzwWG3upBUJnEDoAX0Eg1A0VmJS43ebA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dVlwcZqgRrHWS9frtnfEAuiEEq9Td2u9ZNf6+eDd10AK8VNtFghbMFgpcfJLYQ7egDQOtXrGjpXM71OCI0/vFGCb+IY8/fYstJ/hUzX8KOEAsDV8Uvi2PRzf7OvNflUc5gVxBv5E64e8hXk1t+La1vs8R0ltaN4kNKCrPFxjc/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hr4C8rHZ; arc=none smtp.client-ip=198.175.65.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="n9udOsL4"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hr4C8rHZ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713302397; x=1744838397;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=/gG1Ud4Jh4yyM43jcukle0sEq0SFa7ETYPrFB0mf/2E=;
-  b=n9udOsL41BmkuCibE9h4CID+dU8dSimR7nmEbbSmCoK98/ufCzyNEaeg
-   EF+xkIC9HEIV6F2G9z+/SBcNGA2ifmuK5AXdjM+gWfI753Bu3hnPkn9RB
-   CTk1VrjLRCNrGi9dQ+xNySXDPuISbvPU5IRyjnWp+jK4WcAKdCCTQMhXa
-   sx1uKJhaAbDbLDd/O2wU2Yea1EGjzzz/pRD12VuBkWrA5oZUHiFMsTog4
-   J9omMeFSD+yIxpxc98Mg8jqQkICYZDBS6K1wRjLPNq89dllfkPB7SteDb
-   xU4RFiCBVhBo9nEIGYxTKsjl3R8+XUr5yq6vdPSfNsHEOxGqxZ9XE9skQ
-   Q==;
-X-CSE-ConnectionGUID: fSTIwgIpS3KeRkDsIkLDQA==
-X-CSE-MsgGUID: bXkiVc4YThul8M/9JowS2g==
-X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="19914662"
+  t=1713302399; x=1744838399;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=1xysypfQVziDzwWG3upBUJnEDoAX0Eg1A0VmJS43ebA=;
+  b=hr4C8rHZiIrzk8Y8MTcO6hHMcWKKQvpmK4sZFqfc4xhl9nH7iFGovpfl
+   CJ1g3fsPtaXdj3pqWNOOFIuVxLoIG+L14PJLiFeZpWctocSj/k2iJYcfX
+   OReDzEaoPiK4G9msujo06oPFwn5Pxc9qyDm7BQmfXWHZVOFItq7tH/Fj2
+   hzA7aOhKk9XcrbYjsRnXeioRv3767NBq/PHPkYZMLLi1IHbQgBnYYUU+V
+   Z7s/NOb1kr2t5PFn8M/2Uwrrz583nP9n0EbZD4cklDmntkGHpClF3hSZW
+   JPHLBYYIMecLQGUp4w61/YZKc6NeHgyjIqezhRPC7ppnyfTSRKmoN2UHR
+   A==;
+X-CSE-ConnectionGUID: J9xlqa4DSz6PBgVspIih6A==
+X-CSE-MsgGUID: 7ftTpIEYSYGYVsyn5c6CpQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="19914675"
 X-IronPort-AV: E=Sophos;i="6.07,207,1708416000"; 
-   d="scan'208";a="19914662"
+   d="scan'208";a="19914675"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Apr 2024 14:19:56 -0700
-X-CSE-ConnectionGUID: vxTvYbj+TKutBoMOCnu21w==
-X-CSE-MsgGUID: 7FXH+FLdS+inHxaKAAafsw==
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Apr 2024 14:19:57 -0700
+X-CSE-ConnectionGUID: wSsBaYMLQG2/b6yyT80pnQ==
+X-CSE-MsgGUID: LqPXntYjQ3Gy8rzYUPG/kA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.07,207,1708416000"; 
-   d="scan'208";a="22871863"
+   d="scan'208";a="22871875"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
   by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Apr 2024 14:19:56 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -47,11 +48,14 @@ To: Borislav Petkov <bp@alien8.de>
 Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v3 00/74] New Intel CPUID families
-Date: Tue, 16 Apr 2024 14:19:02 -0700
-Message-ID: <20240416211941.9369-1-tony.luck@intel.com>
+	Tony Luck <tony.luck@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH v3 02/74] x86/cpu/vfm: Add new macros to work with (vendor/family/model) values
+Date: Tue, 16 Apr 2024 14:19:04 -0700
+Message-ID: <20240416211941.9369-3-tony.luck@intel.com>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240416211941.9369-1-tony.luck@intel.com>
+References: <20240416211941.9369-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -60,264 +64,134 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Patches on tip/master as of April 16th. See base-commit at end of
-this message for exact commit ID.
-
-Intel has been using family 6 almost exclusively for many
-years. As a result, Linux has built up infrastructure like
-X86_MATCH_INTEL_FAM6_MODEL() to make it easy for model specific code to
-use the #defines for each Intel CPU model.
-
-But the reign of family 6 is about to end. Intel will begin using non-zero
-values for the extended family field in CPUID(1).EAX. The minimal patch
-size approach to handle these would be to clone the FAM6 macros. But
-that will get messy as these prolifrate. This approach does not have an
-elegant solution if a switch() statement needs to choose between CPUs
-from different families.
-
-Dave Hansen suggested that a more general cleanup that provides
-CPU #defines that encode all of <vendor, family, model> would make
-existing code better, and provide infrastructure that makes it trivial
-to incorporate new families.
-
-Big picture view is that code like this:
-
-  if (c->x86_vendor == X86_VENDOR_INTEL && c->x86 == 6 && c->x86_model == INTEL_FAM6_ICELAKE_X)
-
-can become:
-
-  if (c->x86_vfm == INTEL_ICELAKE_X)
-
-which is:
-a)	Simpler
-b)	Faster
-c)	More resilient (can't forget to check vendor & family along with model)
-d)	Code style doesn't change for every new family.
-
-Note that "struct cpuinfo_x86" gains a new xf6_vfm field and the ICELAKE
-#define loses the "FAM6_" substring and will be initialized with a macro
-that does the bit shuffling to fit X86_VENDOR_INTEL and a family and
-model into a "u32":
-
-#define INTEL_ICELAKE_X                 IFM(6, 0x6A) /* Sunny Cove */
-
-New CPUs in other families might look like:
-
-#define INTEL_DOUGLASCOVE		IFM(42, 0x01) /* Adams Lake */
-#define INTEL_SHELDONMONT		IFM(73, 0x01) /* Cooper Forest */
-
-[Some folks missed the jokes embedded in these EXAMPLE names/numbers.
-For cultural references read/listen/watch "The Hitchhikers Guide to the
-Galaxy" by Douglas Adams and "The Big Bang Theory" TV show created by
-Chuck Lorre and Bill Prady].
-
-Model specific "if" statements then follow the same pattern
-regardless of family:
-
-  if (c->x86_vfm == INTEL_DOUGLASCOVE || c->x86_vfm == INTEL_SHELDONMONT) {
-  }
-
-If needed these could even appear in the same switch statement:
-
-	switch (c->x86_vfm) {
-	case INTEL_ICELAKE_X:
-		...
-	case INTEL_DOUGLASCOVE:
-		...
-	case INTEL_SHELDONMONT:
-		...
-	}
-
-The existing X86_MATCH_INTEL_FAM6_MODEL() can be replaced with a new
-X86_MATCH_VFM() macro.
-
-Update can happen in phases:
-
-1) Add infrastructure macros, new "x86_vfm" field, new CPU #defines
-   Patches 0001 .. 0003
-
-2) arch/x86 update from old to new
-   Patches 0004 .. 0039
-
-3) Other treewide updates from old to new
-   Patches 0040 .. 0072
-
-4) Delete the old INTEL_FAM6 and X86_MATCH_INTEL_FAM6 macros (when
-   all of 0001 .. 0072 have been applied)
-   Patches 0073 .. 0074
+To avoid adding a slew of new macros for each new Intel CPU family
+switch over from providing CPU model number #defines to a new
+scheme that encodes vendor, family, and model in a single number.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
 ---
-Link: v1: https://lore.kernel.org/all/20240328163746.243023-1-tony.luck@intel.com/
+ arch/x86/include/asm/cpu_device_id.h | 93 ++++++++++++++++++++++++++++
+ 1 file changed, 93 insertions(+)
 
-v2: Just changed parts 1 & 2 to rearrange the vendor, family, model
-fields in x86_vfm so that model is in the least significant bits with
-family and vendor each in more significant bits so that ranges of models
-could be used in "if" and "switch" statements.
-
-v3: Added Thomas Gleixner's reviewed-by to parts 1-3. Shuffled parts
-4-72 so that arch/x86 files appear before other changes scattered around
-the source tree.
-
-Tony Luck (74):
-  x86/cpu/vfm: Add/initialize x86_vfm field to struct cpuinfo_x86
-  x86/cpu/vfm: Add new macros to work with (vendor/family/model) values
-  x86/cpu/vfm: Update arch/x86/include/asm/intel-family.h
-  x86/cpu/vfm: Update arch/x86/crypto/poly1305_glue.c
-  x86/cpu/vfm: Update arch/x86/crypto/twofish_glue_3way.c
-  x86/cpu/vfm: Update arch/x86/events/intel/cstate.c
-  x86/cpu/vfm: Update arch/x86/events/intel/lbr.c
-  x86/cpu/vfm: Update arch/x86/events/intel/pt.c
-  x86/cpu/vfm: Update arch/x86/events/intel/uncore.c
-  x86/cpu/vfm: Update arch/x86/events/intel/uncore_nhmex.c
-  x86/cpu/vfm: Update arch/x86/events/intel/uncore_snbep.c
-  x86/cpu/vfm: Update arch/x86/events/msr.c
-  x86/cpu/vfm: Update arch/x86/events/rapl.c
-  x86/cpu/vfm: Update arch/x86/kernel/apic/apic.c
-  x86/cpu/vfm: Update arch/x86/kernel/cpu/aperfmperf.c
-  x86/cpu/vfm: Update arch/x86/kernel/cpu/bugs.c
-  x86/cpu/vfm: Update arch/x86/kernel/cpu/common.c
-  x86/cpu/vfm: Update arch/x86/kernel/cpu/intel.c
-  x86/cpu/vfm: Update arch/x86/kernel/cpu/intel_epb.c
-  x86/cpu/vfm: Update arch/x86/kernel/cpu/match.c
-  x86/cpu/vfm: Update arch/x86/kernel/cpu/mce/core.c
-  x86/cpu/vfm: Update arch/x86/kernel/cpu/mce/intel.c
-  x86/cpu/vfm: Update arch/x86/kernel/cpu/mce/severity.c
-  x86/cpu/vfm: Update arch/x86/kernel/cpu/microcode/intel.c
-  x86/cpu/vfm: Update arch/x86/kernel/cpu/resctrl/core.c
-  x86/cpu/vfm: Update arch/x86/kernel/cpu/resctrl/pseudo_lock.c
-  x86/cpu/vfm: Update arch/x86/kernel/smpboot.c
-  x86/cpu/vfm: Update arch/x86/kernel/tsc.c
-  x86/cpu/vfm: Update arch/x86/kernel/tsc_msr.c
-  x86/cpu/vfm: Update arch/x86/kvm/pmu.c
-  x86/cpu/vfm: Update arch/x86/kvm/vmx/vmx.c
-  x86/cpu/vfm: Update arch/x86/mm/init.c
-  x86/cpu/vfm: Update arch/x86/pci/intel_mid_pci.c
-  x86/cpu/vfm: Update arch/x86/virt/vmx/tdx/tdx.c
-  x86/cpu/vfm: Update arch/x86/events/intel/core.c
-  x86/cpu/vfm: Update arch/x86/platform/intel-mid/intel-mid.c
-  x86/cpu/vfm: Update arch/x86/platform/atom/punit_atom_debug.c
-  x86/cpu/vfm: Update arch/x86/events/intel/core.c
-  x86/cpu/vfm: Update arch/x86/boot/cpucheck.c
-  x86/cpu/vfm: Update drivers/acpi/acpi_lpss.c
-  x86/cpu/vfm: Update drivers/acpi/x86/utils.c
-  x86/cpu/vfm: Update tpm files
-  x86/cpu/vfm: Update drivers/cpufreq/intel_pstate.c
-  x86/cpu/vfm: Update drivers/cpufreq/speedstep-centrino.c
-  x86/cpu/vfm: Update drivers/edac/i10nm_base.c
-  x86/cpu/vfm: Update drivers/edac/pnd2_edac.c
-  x86/cpu/vfm: Update drivers/edac/sb_edac.c
-  x86/cpu/vfm: Update drivers/edac/skx_base.c
-  x86/cpu/vfm: Update drivers/extcon/extcon-axp288.c
-  x86/cpu/vfm: Update drivers/hwmon/peci/cputemp.c
-  x86/cpu/vfm: Update drivers/idle/intel_idle.c
-  x86/cpu/vfm: Update drivers/pci/pci-mid.c
-  x86/cpu/vfm: Update drivers/peci/cpu.c
-  x86/cpu/vfm: Update drivers/platform/x86/intel/ifs/core.c
-  x86/cpu/vfm: Update drivers/platform/x86/intel_ips.c
-  x86/cpu/vfm: Update drivers/platform/x86/intel/pmc/core.c
-  x86/cpu/vfm: Update drivers/platform/x86/intel/pmc/pltdrv.c
-  x86/cpu/vfm: Update drivers/platform/x86/intel_scu_wdt.c
-  x86/cpu/vfm: Update
-    drivers/platform/x86/intel/speed_select_if/isst_if_common.c
-  x86/cpu/vfm: Update
-    drivers/platform/x86/intel/speed_select_if/isst_if_mbox_msr.c
-  x86/cpu/vfm: Update drivers/platform/x86/intel/telemetry/debugfs.c
-  x86/cpu/vfm: Update drivers/platform/x86/intel/telemetry/pltdrv.c
-  x86/cpu/vfm: Update drivers/platform/x86/intel/turbo_max_3.c
-  x86/cpu/vfm: Update
-    drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
-  x86/cpu/vfm: Update drivers/platform/x86/p2sb.c
-  x86/cpu/vfm: Update drivers/powercap/intel_rapl_common.c
-  x86/cpu/vfm: Update drivers/powercap/intel_rapl_msr.c
-  x86/cpu/vfm: Update
-    drivers/staging/media/atomisp/include/linux/atomisp_platform.h
-  x86/cpu/vfm: Update intel_soc_dts_thermal.c
-  x86/cpu/vfm: Update drivers/thermal/intel/intel_tcc_cooling.c
-  x86/cpu/vfm: Update sound/soc/intel/avs/boards/es8336.c
-  x86/cpu/vfm: Update tools/power/x86/turbostat/turbostat.c
-  x86/cpu/vfm: Delete X86_MATCH_INTEL_FAM6_MODEL[_STEPPING]() macros
-  x86/cpu/vfm: Delete all the *_FAM6_ CPU #defines
-
- .../atomisp/include/linux/atomisp_platform.h  |  26 +--
- include/linux/peci-cpu.h                      |   1 +
- include/linux/platform_data/x86/soc.h         |  12 +-
- arch/x86/include/asm/cpu_device_id.h          | 103 +++++++--
- arch/x86/include/asm/intel-family.h           | 167 +++++++-------
- arch/x86/include/asm/processor.h              |  12 +-
- drivers/char/tpm/tpm.h                        |   1 +
- drivers/char/tpm/tpm_tis_core.h               |   2 +-
- arch/x86/boot/cpucheck.c                      |   2 +-
- arch/x86/crypto/poly1305_glue.c               |   3 +-
- arch/x86/crypto/twofish_glue_3way.c           |  10 +-
- arch/x86/events/intel/core.c                  | 212 +++++++++---------
- arch/x86/events/intel/cstate.c                | 144 ++++++------
- arch/x86/events/intel/lbr.c                   |   3 +-
- arch/x86/events/intel/pt.c                    |  11 +-
- arch/x86/events/intel/uncore.c                | 100 ++++-----
- arch/x86/events/intel/uncore_nhmex.c          |   3 +-
- arch/x86/events/intel/uncore_snbep.c          |   5 +-
- arch/x86/events/msr.c                         | 131 +++++------
- arch/x86/events/rapl.c                        |  90 ++++----
- arch/x86/kernel/apic/apic.c                   |  38 ++--
- arch/x86/kernel/cpu/aperfmperf.c              |  17 +-
- arch/x86/kernel/cpu/bugs.c                    |  29 +--
- arch/x86/kernel/cpu/common.c                  | 154 +++++++------
- arch/x86/kernel/cpu/intel.c                   | 115 +++++-----
- arch/x86/kernel/cpu/intel_epb.c               |  12 +-
- arch/x86/kernel/cpu/match.c                   |   5 +-
- arch/x86/kernel/cpu/mce/core.c                |   5 +-
- arch/x86/kernel/cpu/mce/intel.c               |  20 +-
- arch/x86/kernel/cpu/mce/severity.c            |   9 +-
- arch/x86/kernel/cpu/microcode/intel.c         |   4 +-
- arch/x86/kernel/cpu/resctrl/core.c            |   9 +-
- arch/x86/kernel/cpu/resctrl/pseudo_lock.c     |  21 +-
- arch/x86/kernel/smpboot.c                     |   6 +-
- arch/x86/kernel/tsc.c                         |   5 +-
- arch/x86/kernel/tsc_msr.c                     |  14 +-
- arch/x86/kvm/pmu.c                            |   8 +-
- arch/x86/kvm/vmx/vmx.c                        |  20 +-
- arch/x86/mm/init.c                            |  16 +-
- arch/x86/pci/intel_mid_pci.c                  |   4 +-
- arch/x86/platform/atom/punit_atom_debug.c     |  11 +-
- arch/x86/platform/intel-mid/intel-mid.c       |   7 +-
- arch/x86/virt/vmx/tdx/tdx.c                   |   7 +-
- drivers/acpi/acpi_lpss.c                      |   4 +-
- drivers/acpi/x86/utils.c                      |  42 ++--
- drivers/cpufreq/intel_pstate.c                |  90 ++++----
- drivers/cpufreq/speedstep-centrino.c          |   8 +-
- drivers/edac/i10nm_base.c                     |  20 +-
- drivers/edac/pnd2_edac.c                      |   4 +-
- drivers/edac/sb_edac.c                        |  14 +-
- drivers/edac/skx_base.c                       |   2 +-
- drivers/extcon/extcon-axp288.c                |   2 +-
- drivers/hwmon/peci/cputemp.c                  |   7 +-
- drivers/idle/intel_idle.c                     | 116 +++++-----
- drivers/pci/pci-mid.c                         |   4 +-
- drivers/peci/cpu.c                            |  28 +--
- drivers/platform/x86/intel/ifs/core.c         |  15 +-
- drivers/platform/x86/intel/pmc/core.c         |  46 ++--
- drivers/platform/x86/intel/pmc/pltdrv.c       |  16 +-
- .../intel/speed_select_if/isst_if_common.c    |   4 +-
- .../intel/speed_select_if/isst_if_mbox_msr.c  |   2 +-
- .../platform/x86/intel/telemetry/debugfs.c    |   4 +-
- drivers/platform/x86/intel/telemetry/pltdrv.c |   4 +-
- drivers/platform/x86/intel/turbo_max_3.c      |   4 +-
- .../intel/uncore-frequency/uncore-frequency.c |  56 ++---
- drivers/platform/x86/intel_ips.c              |   3 +-
- drivers/platform/x86/intel_scu_wdt.c          |   2 +-
- drivers/platform/x86/p2sb.c                   |   2 +-
- drivers/powercap/intel_rapl_common.c          | 118 +++++-----
- drivers/powercap/intel_rapl_msr.c             |  16 +-
- drivers/thermal/intel/intel_soc_dts_thermal.c |   2 +-
- drivers/thermal/intel/intel_tcc_cooling.c     |  30 +--
- sound/soc/intel/avs/boards/es8336.c           |   7 +-
- tools/power/x86/turbostat/turbostat.c         | 161 +++++++------
- 74 files changed, 1261 insertions(+), 1146 deletions(-)
-
-
-base-commit: 367dc2b68007e8ca00a0d8dc9afb69bff5451ae7
+diff --git a/arch/x86/include/asm/cpu_device_id.h b/arch/x86/include/asm/cpu_device_id.h
+index bf4e065cf1e2..833f230aeafc 100644
+--- a/arch/x86/include/asm/cpu_device_id.h
++++ b/arch/x86/include/asm/cpu_device_id.h
+@@ -2,6 +2,39 @@
+ #ifndef _ASM_X86_CPU_DEVICE_ID
+ #define _ASM_X86_CPU_DEVICE_ID
+ 
++/*
++ * Can't use <linux/bitfield.h> because it generates expressions that
++ * cannot be used in structure initializers. Bitfield construction
++ * here must match the union in struct cpuinfo_86:
++ *	union {
++ *		struct {
++ *			__u8	x86_model;
++ *			__u8	x86;
++ *			__u8	x86_vendor;
++ *			__u8	x86_reserved;
++ *		};
++ *		__u32		x86_vfm;
++ *	};
++ */
++#define VFM_MODEL_BIT	0
++#define VFM_FAMILY_BIT	8
++#define VFM_VENDOR_BIT	16
++#define VFM_RSVD_BIT	24
++
++#define	VFM_MODEL_MASK	GENMASK(VFM_FAMILY_BIT - 1, VFM_MODEL_BIT)
++#define	VFM_FAMILY_MASK	GENMASK(VFM_VENDOR_BIT - 1, VFM_FAMILY_BIT)
++#define	VFM_VENDOR_MASK	GENMASK(VFM_RSVD_BIT - 1, VFM_VENDOR_BIT)
++
++#define VFM_MODEL(vfm)	(((vfm) & VFM_MODEL_MASK) >> VFM_MODEL_BIT)
++#define VFM_FAMILY(vfm)	(((vfm) & VFM_FAMILY_MASK) >> VFM_FAMILY_BIT)
++#define VFM_VENDOR(vfm)	(((vfm) & VFM_VENDOR_MASK) >> VFM_VENDOR_BIT)
++
++#define	VFM_MAKE(_vendor, _family, _model) (	\
++	((_model) << VFM_MODEL_BIT) |		\
++	((_family) << VFM_FAMILY_BIT) |		\
++	((_vendor) << VFM_VENDOR_BIT)		\
++)
++
+ /*
+  * Declare drivers belonging to specific x86 CPUs
+  * Similar in spirit to pci_device_id and related PCI functions
+@@ -49,6 +82,16 @@
+ 	.driver_data	= (unsigned long) _data				\
+ }
+ 
++#define X86_MATCH_VENDORID_FAM_MODEL_STEPPINGS_FEATURE(_vendor, _family, _model, \
++						    _steppings, _feature, _data) { \
++	.vendor		= _vendor,					\
++	.family		= _family,					\
++	.model		= _model,					\
++	.steppings	= _steppings,					\
++	.feature	= _feature,					\
++	.driver_data	= (unsigned long) _data				\
++}
++
+ /**
+  * X86_MATCH_VENDOR_FAM_MODEL_FEATURE - Macro for CPU matching
+  * @_vendor:	The vendor name, e.g. INTEL, AMD, HYGON, ..., ANY
+@@ -164,6 +207,56 @@
+ 	X86_MATCH_VENDOR_FAM_MODEL_STEPPINGS_FEATURE(INTEL, 6, INTEL_FAM6_##model, \
+ 						     steppings, X86_FEATURE_ANY, data)
+ 
++/**
++ * X86_MATCH_VFM - Match encoded vendor/family/model
++ * @vfm:	Encoded 8-bits each for vendor, family, model
++ * @data:	Driver specific data or NULL. The internal storage
++ *		format is unsigned long. The supplied value, pointer
++ *		etc. is casted to unsigned long internally.
++ *
++ * Stepping and feature are set to wildcards
++ */
++#define X86_MATCH_VFM(vfm, data)			\
++	X86_MATCH_VENDORID_FAM_MODEL_STEPPINGS_FEATURE(	\
++		VFM_VENDOR(vfm),			\
++		VFM_FAMILY(vfm),			\
++		VFM_MODEL(vfm),				\
++		X86_STEPPING_ANY, X86_FEATURE_ANY, data)
++
++/**
++ * X86_MATCH_VFM_STEPPINGS - Match encoded vendor/family/model/stepping
++ * @vfm:	Encoded 8-bits each for vendor, family, model
++ * @steppings:	Bitmask of steppings to match
++ * @data:	Driver specific data or NULL. The internal storage
++ *		format is unsigned long. The supplied value, pointer
++ *		etc. is casted to unsigned long internally.
++ *
++ * feature is set to wildcard
++ */
++#define X86_MATCH_VFM_STEPPINGS(vfm, steppings, data)	\
++	X86_MATCH_VENDORID_FAM_MODEL_STEPPINGS_FEATURE(	\
++		VFM_VENDOR(vfm),			\
++		VFM_FAMILY(vfm),			\
++		VFM_MODEL(vfm),				\
++		steppings, X86_FEATURE_ANY, data)
++
++/**
++ * X86_MATCH_VFM_FEATURE - Match encoded vendor/family/model/feature
++ * @vfm:	Encoded 8-bits each for vendor, family, model
++ * @feature:	A X86_FEATURE bit
++ * @data:	Driver specific data or NULL. The internal storage
++ *		format is unsigned long. The supplied value, pointer
++ *		etc. is casted to unsigned long internally.
++ *
++ * Steppings is set to wildcard
++ */
++#define X86_MATCH_VFM_FEATURE(vfm, feature, data)	\
++	X86_MATCH_VENDORID_FAM_MODEL_STEPPINGS_FEATURE(	\
++		VFM_VENDOR(vfm),			\
++		VFM_FAMILY(vfm),			\
++		VFM_MODEL(vfm),				\
++		X86_STEPPING_ANY, feature, data)
++
+ /*
+  * Match specific microcode revisions.
+  *
 -- 
 2.44.0
 
