@@ -1,119 +1,117 @@
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C9B8529D
-	for <patches@lists.linux.dev>; Tue, 16 Apr 2024 09:16:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43C586AC9
+	for <patches@lists.linux.dev>; Tue, 16 Apr 2024 10:13:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713259021; cv=none; b=dYrougH5mrClGqaIlh1qdLSWz//pkdPGje8o1OuTG/DTKWhejrVNBBTrIObGMOb59nVWRsgV1kXd2V4hcOe8B2jxZImH0a1TsgLQYvMtcPIdE/J6kmJTHV79znaBzUE53egxnY7CcKUk6/OJ3Z03jlY6dqt0VMd1aPB8CdOEyXg=
+	t=1713262423; cv=none; b=I6KKXA8uLzUiDcH26zHlRxuOszOHP4W/AWWBpl+ETIYq0PYlKZ6vRE6ruT+o4qPpL2wN7vEE3IpRYYL5/rSdaR58M2j6/YE9WDZRdJgTu/OON08iA8Em7xDFFe/R83d7q2GyphCyHGNdT4nRnjXaH1G6VCwyJxQzSmpJFYv+clM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713259021; c=relaxed/simple;
-	bh=8jgLAUJob4komqyCXQnIuIoKS9Y6WNsjEipKGCag8BI=;
+	s=arc-20240116; t=1713262423; c=relaxed/simple;
+	bh=PLfHS/pr861fPjFBeMBoEopPIt381ou0qj9dA0o7sxM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=e4uR8NEgws3nn2UMU5rzmNRB6RmfUTo4WY2s1yNxCyKpI68POYJH4UCG6X7q4+lTjXY3VdPmKbRBNNpwJghjTprOlxSFmqgJa3dJ0f81n3xNnK0OVSUitsh5Zrl2latu+svNIquS8wxfGjmpgJbfYgI5rCtb4dVHbyB+fvHAOMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wwa2vprk; arc=none smtp.client-ip=209.85.222.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	 To:Cc:Content-Type; b=TknyXeoZMBSeerhY0U9EyUlsLd0SMs0HYpSYd9tlHwr1JSgAv36itw13w5Rb1ePXCwpIHo2nXSfhzW6/0dpcXNJ/LJVeF0ankJMNwFmVmqAsBzupe5xGE+p7Gqkrawk3BUCAL4WEZ9WbNeFzCgHBgCM9Sj4X0m1DulBGTDXpZUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=ScNb0YjH; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wwa2vprk"
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-7e73cd45b8bso2080775241.0
-        for <patches@lists.linux.dev>; Tue, 16 Apr 2024 02:16:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="ScNb0YjH"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-5dcc4076c13so2782460a12.0
+        for <patches@lists.linux.dev>; Tue, 16 Apr 2024 03:13:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713259018; x=1713863818; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=vVWn70QrmoA1ffZj2betPxocp2G4USrXC3Hf1knCx68=;
-        b=wwa2vprkgKS8p2ujIxbJRChOdYx+CHgaCOx3VvdAdbzpjO0O3s2zidjU3IuxXdgfAy
-         t9o6Cvdti5V7WRfmUnQxkljLM4k3tXK3z9cnPiv9ie2Gj09+hB0Q+rjtbw/Z7HvXnPAm
-         WmNanLHZMnPNGHAHok/k+5TQjeTdbtaC4qVRzlvOBDNpbujAWroSTVEcaJBT2XOqKscq
-         4JaZRhU3I2dr22PmsjiUXjiNGJEAyKmy8+qBlOHiFuzjn9ceVSeCl8aUCPAxZndQZC8g
-         9e/ORChscQ6KW3u8J15OGhpUSXm3ElRYWmGZyHFD3rMiAQ0mKwUlT20eo4ZNJOtJju13
-         kVTw==
+        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1713262422; x=1713867222; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YZfb01z1cElSdFgczCPztvVWoygfwcGgF7HnVAPTuEs=;
+        b=ScNb0YjH0uz49vtv6WVyuE6jKviP0K+KssowfMaKy6zhxuISHHR8aPfNl8G+ndn9H6
+         hzPRLU2/IgjSxur3yPEKT8ZjZsjbZLhizoo4Y4t116qBiy7ruuuJmv8LOG2Nm/2jxU5s
+         uhJwON9XZYbjUYi5xwIKUsLmKHGTlZTHfXG6BXOusT1Mk4vgpJpsyi3quP7sSKCpal8E
+         WcJbZzU7JVl5alrddmqtzxLr5rpf7doL966wd74aeIIHbw1k2jHLdpF293+EyGLazpsh
+         tA41sORaYWOSK/NX5DMDREHmOxNc9ZuUvXfrmGKiTZAOOsru1v9XB+nFgDq59+X/A6q3
+         ZRQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713259018; x=1713863818;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vVWn70QrmoA1ffZj2betPxocp2G4USrXC3Hf1knCx68=;
-        b=H/T0hAkXZCYAOCB9pTFKsJtox9VO2awa8d8pmr2j49VgWzU4y6aPecsI6iHpGwd9bZ
-         XPlI+GWIO3u09Fl19Tj3sXEFHtELKXSJj+tI/qdi8sSkxJ+1kGOgo5BnlQr6cNmU6mcP
-         Cmsf9Za6tSBRYQTFGcFZTwmG2J6JqI1g/e5/b+pwWSM5WOmEWWBYZyTZIgz9deWqF70E
-         LrCDRQb8gsuN6tFZW01EpAa6uBu2kpPTpkC9PCE4b20IFBnpqFx+cxP9n0qdcHL+laUK
-         4OcFlDqKIGY6M06DCMJ/djrIMgrYma5ETWgMW44IQbukr1vKyaqnXNOC5BzfPBpxBxaL
-         4dMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV/JBMPwZuCN4Cc9XIWkhWKLv0upOsDnWVzh6SwcLkwh+qiZzGOyzHETCWe8l53KnAF8vNR06pgx0nQxz+X3gvf+y5NUGI/NA==
-X-Gm-Message-State: AOJu0YwQk9HF5XFPjQ30XjNfT5JxYnyUUjg4KMzDjkIpR4ErZp7OhMXt
-	bOU1fhOtvblnAHP7FdwVfqipy7qqMG7jVRsSsylNWmtQ0c8r4p+xi7mgF0nmJc5lVCnu+WAhS4J
-	hB9ZUo3neRDErQSQAIMR7wNOEvMAyzZSYOT0ANQ==
-X-Google-Smtp-Source: AGHT+IGdpoYmKI9SqOv3iUlv9BkJT85Yzy6MJYOaIEGPqruTKs/l0Rq7SnWeRhl+jvwoE4tXiBJFHrIO7sIJV7KYpIc=
-X-Received: by 2002:a05:6102:b0e:b0:47b:9d4e:e0c with SMTP id
- b14-20020a0561020b0e00b0047b9d4e0e0cmr154923vst.12.1713259018530; Tue, 16 Apr
- 2024 02:16:58 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1713262422; x=1713867222;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YZfb01z1cElSdFgczCPztvVWoygfwcGgF7HnVAPTuEs=;
+        b=ff6XFHGjwqS7iNgaNa6SEi6qbRbEhz9S9l7aBFXn5xNXSMeW+2jAQ/MzNW2YGHtaz0
+         KCfjxYSG4azXO7fQCqVvijL9pqAis8xWxK839Wv2yA7EyMJlb2SuLdFvbM3o0sGRy1ZH
+         N0PQ92Le8iS+13CdkaSoqrloZhfwdAIjsdEFdrNlQ2Gia0mziPbmt0rAldfDVw2ujB8U
+         rD6iraQQwfwE3bFCItUzSF9CeX902+6n6VEL+HIsBIkci7vGBE54ic0jRlTLawkksVzT
+         2zreQciS9YDwLq0nUx0L71dMRkiitOJ/r6PsJf1tz2zTa2NP6mF0dKjGdUyXRe9qcpHl
+         vD5A==
+X-Forwarded-Encrypted: i=1; AJvYcCXkK+vuFA+rfkWQGFq90Z3fzdNs3ph1JSkWmgs9GANtkTuDr54gHTRfV/B7PHqQoh1XazY5clO04ft6S1TrXi2NHX+zKwK9zw==
+X-Gm-Message-State: AOJu0YzV0NJmi/YKlrSuj60ZnCA0zIN1DkyRkALAGMNtRAtpuJnX5u8E
+	+6QEvyQS/+rHOt+7ktBWJ1pTpU8cT9QHHyC69jvk+vLe6MF8Ix3mo5d5JSBjkEwFtLl5CZFFT3t
+	gEdwT9nRcZhU+vAoPuh+yXkZEtp6ZiwOczMIDgg==
+X-Google-Smtp-Source: AGHT+IEAmCX3pj6Nd8BE8HVb4J6COM8iyob7Dnrh8XVaPFzBOespQeJDXW+F7FT5eUBAa5B9DPn9VuXJil6nMAitpYE=
+X-Received: by 2002:a17:90a:f105:b0:2a7:8674:a0c8 with SMTP id
+ cc5-20020a17090af10500b002a78674a0c8mr2945956pjb.1.1713262421827; Tue, 16 Apr
+ 2024 03:13:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240415141953.365222063@linuxfoundation.org> <Zh3AywUqfBB5wQgp@finisterre.sirena.org.uk>
-In-Reply-To: <Zh3AywUqfBB5wQgp@finisterre.sirena.org.uk>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 16 Apr 2024 14:46:47 +0530
-Message-ID: <CA+G9fYuxQemNR=6ypi681qMqg+szi+ZZL_Xdhz0Wg1BO0-7bjA@mail.gmail.com>
+References: <20240415141953.365222063@linuxfoundation.org>
+In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Tue, 16 Apr 2024 19:13:30 +0900
+Message-ID: <CAKL4bV6gTOUt=LomZjGceMm6SjqWeOXXeTE8EQ7H-ovQvnfzZA@mail.gmail.com>
 Subject: Re: [PATCH 6.6 000/122] 6.6.28-rc1 review
-To: Mark Brown <broonie@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
-	conor@kernel.org, allen.lkml@gmail.com
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 16 Apr 2024 at 05:35, Mark Brown <broonie@kernel.org> wrote:
+Hi Greg
+
+On Mon, Apr 15, 2024 at 11:35=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> On Mon, Apr 15, 2024 at 04:19:25PM +0200, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.6.28 release.
-> > There are 122 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
+> This is the start of the stable review cycle for the 6.6.28 release.
+> There are 122 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> I'm seeing boot breakage with this one on the Arm fast models, a bisect
-> is running now, for slow values of run but should be done by the time I
-> get back tonight.  It only seems to be affecting 6.6, the boot grinds to
-> a halt shortly after getting to userspace apparently with some
-> PCI/virtio issues:
-
-LKFT also noticed the problem that Mark Brown reported.
-
+> Responses should be made by Wed, 17 Apr 2024 14:19:30 +0000.
+> Anything received after that time might be too late.
 >
-> [    1.606075] VFS: Mounted root (ext4 filesystem) on device 254:1.
-> [    1.608751] devtmpfs: mounted
-> [    1.627412] Freeing unused kernel memory: 9152K
-> [    1.627894] Run /sbin/init as init process
-> [    1.627957]   with arguments:
-> [    1.628009]     /sbin/init
-> [    1.628064]     Image
-> [    1.628117]   with environment:
-> [    1.628169]     HOME=/
-> [    1.628222]     TERM=linux
-> [    1.628275]     user_debug=31
-> [   11.764055] pci 0000:00:01.0: deferred probe pending
-> [   11.764141] pci 0000:00:02.0: deferred probe pending
-> [   11.764227] pci 0000:00:03.0: deferred probe pending
-> [   11.764313] pci 0000:00:04.0: deferred probe pending
-> [   11.764399] pci 0000:03:00.0: deferred probe pending
-> [   11.764485] pci 0000:04:00.0: deferred probe pending
-> [   11.764571] pci 0000:04:01.0: deferred probe pending
-> [   11.764657] pci 0000:04:02.0: deferred probe pending
-> [   11.764743] pci 0000:00:1f.0: deferred probe pending
-> [   11.764829] pci 0000:01:00.0: deferred probe pending
-> [   11.764915] pci 0000:05:00.0: deferred probe pending
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.28-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
+> and the diffstat can be found below.
 >
-> (no probe deferral happens for working boots.)
+> thanks,
+>
+> greg k-h
 
+6.6.28-rc1 tested.
 
---
-Linaro LKFT
-https://lkft.linaro.org
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
+
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+
+[    0.000000] Linux version 6.6.28-rc1rv
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 13.2.1 20230801, GNU ld (GNU
+Binutils) 2.42.0) #1 SMP PREEMPT_DYNAMIC Tue Apr 16 18:32:52 JST 2024
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
