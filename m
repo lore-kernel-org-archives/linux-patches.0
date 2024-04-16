@@ -1,117 +1,149 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2047.outbound.protection.outlook.com [40.107.243.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB863D38E;
-	Tue, 16 Apr 2024 10:34:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713263657; cv=none; b=Q6HZafYb7R+0tA21Wtsi1avzcWp/Q3uHxl9BXRApmgMeBKQLTymK2KzW1reHKxviq44dEk4Pq1myGd1Eik1h0dC4LthQPEQm4C+jdojjBULJiIQyyOwBLsQGdg9F9HGhEE7OvrEng4Tisq8BGd6RJIdsd4bJriWiLnmxjRSWz74=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713263657; c=relaxed/simple;
-	bh=lb2mredCM4AdUxSTAm5hobl6mxpttwOgXqc2M0SZvQw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ur8Ci8G3Pc9oez1KO7t6tesMHli2XZGZVeKfrCydrlqhBSkc8KVaCSzqgNDBZNmDgLkl1VpIwqm78hWO6Sup/3ZQ1CB2Y6ohATLlbTVi0/UhFmxlQBS8rOSlGxRBChXhEu6Ur/GNHpAbWk5wmQr9znXMVupgy+zK6QVveZ3ORL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OE05n9Rz; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6ED127B7A
+	for <patches@lists.linux.dev>; Tue, 16 Apr 2024 10:37:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1713263845; cv=fail; b=jrIlPTCq/5ZhTd4U4RX7pOnzEJEgiIAN9nJTn+KJhFH0dAa80nEHNL/U3M7fbgIyfWa9DMn6wTfKYb8zv306mrBgeMHdYbD66MAZwYlWcYG5hEvKtmCpebe6MsU+GpCpulb2KI/DSiodNCxAT1kLL4OCya8Hq/OEPDlbOtdFyzA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1713263845; c=relaxed/simple;
+	bh=Af75r0BCQ02k5wirmQMlr4dq/lyHaiyE1xc1mBSeTQw=;
+	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID:Date; b=J+NJHz2STFtRV13lbG5uh6VuolDRfuJjSknqQGFekSFkZaS8J9+0trZlvsZY+gzAbGkJwtF6fDzADY7x3JFaydHgUVGx0jBThYIauJZXEnPkEasCLafjw9l7lwIZ46IJAT+p6aeByPrTaZN4vuPRTAZz7f5ji2s+OZgjTbnrKgU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=W/jddl5I; arc=fail smtp.client-ip=40.107.243.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OE05n9Rz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20B6C113CE;
-	Tue, 16 Apr 2024 10:34:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713263657;
-	bh=lb2mredCM4AdUxSTAm5hobl6mxpttwOgXqc2M0SZvQw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OE05n9RzorSVMMaYacpW4ss6P2cEo2BLuzw+a9ueig0urmRe8GXg4xn+Sftf6sDBd
-	 kIzRbGtnJ54cvhld4CiCX/4aPIuthVj436tK0fBoPUQ3E4RRmveFzLVb9E4bkU1cTk
-	 9YtukZTQLfLD8TSlOEyz7KJAm/0M4E+0oM89IUQVGVctfDhMqvK4abCVKyuLrpCWLK
-	 Mo6P4xzVmrP87Xksv0+j/p93AzEMFZZV3lPS1hANoMSGDxm8fMnqzuzIjbx8KkMK43
-	 HNs63Dro4P+I/AVTYQdwNwSKnDpzBJoPz4wF9kAOXkHGywCvPYTUoZKKExE/ItgalP
-	 emi6vffqK0GGA==
-Date: Tue, 16 Apr 2024 19:34:14 +0900
-From: Mark Brown <broonie@kernel.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="W/jddl5I"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=n9kCRbX+vuMeWM4/vncVsiYoRXQMShOoCUBrdXLuDQgein+u3gu0/tjson0wvgLqvTIu6uu43MBNbzYxbcyXUSp9h6ujpG6fhYm4m+jRy9gxqqKDaMSre+kG1bJbOaG22CasfwC5PnGHfSLxEMqKazycWlSoHnE4G8OlX4AFpWHlUQ3mLivWWDyaukzeeiwm1ErNuJGD+5jraiIi8rAO2RJFkJ3duOWw9OTdePzm60FceUCATdvIf6SIEG+kD5+vf8wiFbOip/PtUbYjJtp/xd/8rf2so51o8EPO8y3bmmztlF3h81TRGzP658/YaZNt4ju9djW7wXh+E/3gwu/ZNA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=W8sE8HP20xEQ7yjlTOK0IGPnLQKE5C9y6MnOyECmAIE=;
+ b=h06Ez2HhBeyNSbXXcWEAHHw6HENO8wCa+fTISEjf302sWz8e8V/HXHaYwkZpjIglhF34UmcYkZtF/xfcw9TCAJ2Pw1+FlEhgH140X6FOHBtdNLgMQuGUcD9sJmmm1h6Pc049vtFa+dP646MXmA8SPCbWSElDHo+10by/P3Btba6yVGRt4jm3DbN5F0/C0OAT6P0qoOTvWzk2kvmRsccjQac3Mxj7eFGnf7VP65bC0vYlNnggZmctC/KYTTwmuvDLEW/KeWyA1AcHTT3ONk1vC1ARzDII/2i0JWRV4hfIEwHY42PjtB0hZvvoXPzjRxK1DSNKxqWhMTUh4F/mUMauCg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=W8sE8HP20xEQ7yjlTOK0IGPnLQKE5C9y6MnOyECmAIE=;
+ b=W/jddl5IlefzLVGowltMA/DlXceui/qlw/eJUTkNG6lf2xomyszQoTpj8Uh2mR2ybT+JGcwRLQjm3snWYpmNlh+A1qyLzFpXO+PxdvcEMWPujdkv7aKZiOa72WVSBFYL1QTqZJkInNckNusyOtco1ZFKwg6be9rUXSUdlNtDH3Qskiu532o3yHI5YSFIfAv8aQbmkhLJ8LDSZJoIGj3vhWGPzA2NuQTZPh1Crdbx9PeBkckeBQi06nCgDle04LvMXuvmmN0i0/XwrOYLXLz3SxONWaRYr+ITWo/B4ob3+pslTBhoUkiQthX3hj1KlqrvhLne2OQDMsF8NC0ewmBdrQ==
+Received: from PH2PEPF00003848.namprd17.prod.outlook.com (2603:10b6:518:1::65)
+ by PH7PR12MB7844.namprd12.prod.outlook.com (2603:10b6:510:27b::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.50; Tue, 16 Apr
+ 2024 10:37:18 +0000
+Received: from CY4PEPF0000E9D4.namprd03.prod.outlook.com
+ (2a01:111:f403:c802::) by PH2PEPF00003848.outlook.office365.com
+ (2603:1036:903:48::3) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.33 via Frontend
+ Transport; Tue, 16 Apr 2024 10:37:18 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CY4PEPF0000E9D4.mail.protection.outlook.com (10.167.241.139) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7452.22 via Frontend Transport; Tue, 16 Apr 2024 10:37:18 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 16 Apr
+ 2024 03:37:05 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 16 Apr
+ 2024 03:37:04 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12 via Frontend
+ Transport; Tue, 16 Apr 2024 03:37:04 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com,
-	Yihuang Yu <yihyu@redhat.com>, Marc Zyngier <maz@kernel.org>,
-	Gavin Shan <gshan@redhat.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Shaoqin Huang <shahuang@redhat.com>, Will Deacon <will@kernel.org>,
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 6.6 000/122] 6.6.28-rc1 review
-Message-ID: <Zh5UJh31PlBkpZWd@finisterre.sirena.org.uk>
-References: <20240415141953.365222063@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <allen.lkml@gmail.com>,
+	<broonie@kernel.org>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 5.15 00/45] 5.15.156-rc1 review
+In-Reply-To: <20240415141942.235939111@linuxfoundation.org>
+References: <20240415141942.235939111@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="zvbK2jxsbCApSYIv"
-Content-Disposition: inline
-In-Reply-To: <20240415141953.365222063@linuxfoundation.org>
-X-Cookie: You might have mail.
+Message-ID: <5057351b-f282-4c0a-afc8-0030158c1ec2@rnnvmail205.nvidia.com>
+Date: Tue, 16 Apr 2024 03:37:04 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000E9D4:EE_|PH7PR12MB7844:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7d8fc91e-1d5e-4bc3-52cd-08dc5e0130b5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	6HrJRGasSvCuxGQ8dZN7FmhUJ/6wE61x0rN0/cb8pZfx7SKLJKXiQwm6GXM/wmL6sG+Nn/txlSDxBmNqq/G38Lo3Of6NTnQ/KKhsTOAVmJ8Ma5dS60PEJIgdjMbEuIbFtCHwI8kaM2Z3BIRoZcxkPHFV/76dXCGgr4nTaXIBW18LadIS/jXvZpL5DhwTHvKCh1YPbrMHZ2Mijc+scHxz3D/waPeIcZ47bWuieQTqeXldEmpjJvrnx73ewWpVWRKdSjelxDVNsob4H4c+pkiZnLbwTTc9kewgUvI4EHSLCEPXH+BLSp8jA4FU1nRP1QzRvUVvQRuaYrVJNwB8rrJHVRu+rujrbs5Nw6qLdWL5UxjojcnMzIi5ROAuylIOo8cpslqVT1iyKu6YrSFgp4R3v+QLzvi8lqojkTL76e2X8wAQ3ywMSWX2V86H1yVO8hC0U6Sv62j///9nfUctLJYaNqTBAK5Ns3S87PtGRA7jGvqq62fMF+XMId7xXDs0Anygd7GsndpidjDK1c5qrnqlOGKLPWp06+NmkxgsZX3NqkIEgTbRgR1EAejn5vMaFCujphdk/O1FACkswJHKaauRnx4O2cokE1ZiBU61m6irlIVG2A4p54WSpawnkrBBJ/CSb8zPguO2ZZVQaXbWRjlnof5pWDacxCkCYxSc4ufn8aDL3ZfJ7Oln0arvOJvizfA3SxNUqvwa4uXEBJcDWb+9j5P1lvLm91TSFl0/Dx1MnlyVsZdau78AZ6FO3E5EnMyw
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230031)(7416005)(1800799015)(376005)(82310400014)(36860700004);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Apr 2024 10:37:18.3685
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7d8fc91e-1d5e-4bc3-52cd-08dc5e0130b5
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CY4PEPF0000E9D4.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7844
 
-
---zvbK2jxsbCApSYIv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Mon, Apr 15, 2024 at 04:19:25PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.28 release.
-> There are 122 patches in this series, all will be posted as a response
+On Mon, 15 Apr 2024 16:21:07 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.156 release.
+> There are 45 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+> 
+> Responses should be made by Wed, 17 Apr 2024 14:19:30 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.156-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-The bisect of the boot issue that's affecting the FVP in v6.6 (only)
-landed on c9ad150ed8dd988 (arm64: tlb: Fix TLBI RANGE operand),
-e3ba51ab24fdd in mainline, as being the first bad commit - it's also in
-the -rc for v6.8 but that seems fine.  I've done no investigation beyond
-the bisect and looking at the commit log to pull out people to CC and
-note that the fix was explicitly targeted at v6.6.
+All tests passing for Tegra ...
 
-Bisect log:
+Test results for stable-v5.15:
+    10 builds:	10 pass, 0 fail
+    26 boots:	26 pass, 0 fail
+    102 tests:	102 pass, 0 fail
 
-# bad: [a4e5ff3532873150dc32d20f5c214ec59f98bcd2] Linux 6.6.28-rc1
-# good: [5e828009c8b380739e13da92be847f10461c38b1] Linux 6.6.27
-git bisect start 'a4e5ff3532873150dc32d20f5c214ec59f98bcd2' '5e828009c8b380739e13da92be847f10461c38b1'
-# bad: [a4e5ff3532873150dc32d20f5c214ec59f98bcd2] Linux 6.6.28-rc1
-git bisect bad a4e5ff3532873150dc32d20f5c214ec59f98bcd2
-# bad: [f95afc8867d1f2e18e0c6abd16ca76c99a2839be] net/mlx5e: HTB, Fix inconsistencies with QoS SQs number
-git bisect bad f95afc8867d1f2e18e0c6abd16ca76c99a2839be
-# bad: [06e82fe83cc671df58a956cd0cf8ba64c15a6d0d] scsi: qla2xxx: Fix off by one in qla_edif_app_getstats()
-git bisect bad 06e82fe83cc671df58a956cd0cf8ba64c15a6d0d
-# bad: [d2b5692676e7a204487546699cd5511baad5e9b6] ARM: OMAP2+: fix bogus MMC GPIO labels on Nokia N8x0
-git bisect bad d2b5692676e7a204487546699cd5511baad5e9b6
-# bad: [a438d050bf7ba5e3462dd61d90897569e7892c80] raid1: fix use-after-free for original bio in raid1_write_request()
-git bisect bad a438d050bf7ba5e3462dd61d90897569e7892c80
-# good: [6e869ee886dead911b2411c7cba816be52dffb19] ata: libata-scsi: Fix ata_scsi_dev_rescan() error path
-git bisect good 6e869ee886dead911b2411c7cba816be52dffb19
-# bad: [c9ad150ed8dd988d1cefc1a8e19df53d46990e76] arm64: tlb: Fix TLBI RANGE operand
-git bisect bad c9ad150ed8dd988d1cefc1a8e19df53d46990e76
-# good: [56a6896c1f107d519c0045dd6575648745bcba21] batman-adv: Avoid infinite loop trying to resize local TT
-git bisect good 56a6896c1f107d519c0045dd6575648745bcba21
-# first bad commit: [c9ad150ed8dd988d1cefc1a8e19df53d46990e76] arm64: tlb: Fix TLBI RANGE operand
+Linux version:	5.15.156-rc1-g8d83652ef6bf
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
 
---zvbK2jxsbCApSYIv
-Content-Type: application/pgp-signature; name="signature.asc"
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmYeVCUACgkQJNaLcl1U
-h9CJoQf/aLbhmUPsMaw34Z5cJTRhddU/q+mZXHLarxGpVF+A+aZ3O/+DITRTAcUy
-AdMokVsUuN/YCaqzuG72h7Mkz7jDckgqzcjgDVbqVvFSo5Kxl7OBKnfEw8U3emR9
-7uCac8TNu2TMjrqfxJQeSLWO1nX+YHvetyucLDdxVp8nG233ayTEaYpa+iFU7T1Z
-xBWPgUckoLt5I7aissYoDglN8aCctetYVTMSgDZ7O0eQanyEn/HY1fOTcISmULIG
-ztTwQ5G7iJMaKbI6Ktd4LjjwhVl3/8RCemPTzdcoEEwUUBqUdpBS3sLiab6Fz/r4
-yY0Ci/q9mbsbe2MkySmAU5qSPHNFwg==
-=t9tj
------END PGP SIGNATURE-----
-
---zvbK2jxsbCApSYIv--
+Jon
