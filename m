@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15ED712F398;
-	Wed, 17 Apr 2024 18:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A8D17334F;
+	Wed, 17 Apr 2024 18:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713378284; cv=none; b=I8zUbNxIxVrQC0XC+QwsHXl79ksQdPfrU6QclIo321DdvHYDqBDv/q8hEPfMrOM3KiAMmESaKOCpcmf9e2LIzjr3SZALSo74McCKcJYyKO4h0fO+WOPCd3zNznCb2GbO4D1R/veqew3sr+sD3gJKzPai/ZoVlwthOOTB/1P0URE=
+	t=1713378285; cv=none; b=RrPuqDQHJYOhsFTKoONf3KKlpdtOHMp/KAgvudCvhPKcbWPxZJsCHbHVPxT9lCiXEMigYpxW5PRHz1HDsAI5t9i1x7iO99ERv7qHbPMgCZKbf/+TKH/tkNtEWbnS8g3u3Fy1aK2cOdF6Y6RpwUd5o8KsJYWdgdKvRPzLCJ7Hbyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713378284; c=relaxed/simple;
-	bh=rC6fYZoAlfEmkU++TOsOASncl2m62lXgQpEKvON5jQM=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=EJjEuva9lvsgslbb+xm5QbWD+XhgIbvq1mH+lFfc2umzYmSWQ2mpqtjjSHljqvt1WSfp44n629COX2fj2+svdfceYnpl0sXkXYdTPFPX4UcssQ8D/16eY7Fb0iYEXXx2B5/ARHkc6rN1jhvGYnj91gMe4AIGt/ii2ssBdBEafI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dvsX6Ohj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713378285; c=relaxed/simple;
+	bh=fYkwEx2Fnvr2iiX6XX+36THAG6KdQSDvo+yNuCVygkk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Spk1NC6nlblnxlkA9zB/WLllgYCNALYsb7nZ/cWnF59t3/+V46plVVNkUusHh+frpODnLSRJqqE9a3PASQ0TBrPnRN09kZQ5F8TRRYpNyIJAteUFPUvfE7GobK95zMbN+wctOSKF6PYnSvkFxy4f8kCbFcXfIAGYAESYCJ8Iotc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CMR2uWEg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dvsX6Ohj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D174BC072AA;
-	Wed, 17 Apr 2024 18:24:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CMR2uWEg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DAAC2BD11;
+	Wed, 17 Apr 2024 18:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713378283;
-	bh=rC6fYZoAlfEmkU++TOsOASncl2m62lXgQpEKvON5jQM=;
-	h=From:Subject:Date:To:Cc:From;
-	b=dvsX6Ohj3xfUy735gR3FR3M4TbYT0bVSmJiiMsHfhY4ZSd3tBBM0R/tRFHFZOuES2
-	 /IvS1Vu3IIbRgIGIUscggpLo/r68ShYgJ5+tBk0h7DKdJ7cneTgBejpDWkVOxP+TM5
-	 8sQJHDNTz6xJqJGk5xgmd1NE9Oz5PNAV2+X9A2pKWzi8/rUvU1HKEw0H5e2lOOPuTQ
-	 Ry4Vikjucfp7RpbUd+/zQsmcWStlspOTwN0fbJwsDP9p7gRzSjWSSjyLs5IOO2oQo9
-	 52Ucr6JzaFicZMSrEyhUic0yj/Yjs1EfG0S+ua9Bez83N7xld1scwwxiS5GXwRo71c
-	 qGzC0ikgw/P3Q==
+	s=k20201202; t=1713378284;
+	bh=fYkwEx2Fnvr2iiX6XX+36THAG6KdQSDvo+yNuCVygkk=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=CMR2uWEgo4NDGIc9UsEPhCV7R4WDsr9DvuuPtbA0z7wvDzU/KlkmyqpsboU7ric6+
+	 s1Kx+jcSnJTMHFfq59lrxBr+cQ5A7rd+/jm5+n2Mx2PCjQSUx3VF+8KYkS6x8JUS3N
+	 jVVPIY0Htl3bUtErCaaawyQs62ovh3qr+zIsg8niLj3h9JpI87AnzH4Im/TLgG5Yk/
+	 kx1eQjU+d6+SF8JwMQ/Z7TpU1OETfRH1RMIhV99/NoVIcQUqDS85WMHMPdJYx1YrqW
+	 gNK4N75VBn5b/ZUs85Dp/JIaB7l/zuZpj51bbZrc6qQ7T0Utk3jsKZFDPc0JcrhbkV
+	 D0t3WEoSuwLKA==
 From: Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 0/3] drivers/s390: Fix instances of
- -Wcast-function-type-strict
-Date: Wed, 17 Apr 2024 11:24:34 -0700
-Message-Id: <20240417-s390-drivers-fix-cast-function-type-v1-0-fd048c9903b0@kernel.org>
+Date: Wed, 17 Apr 2024 11:24:35 -0700
+Subject: [PATCH 1/3] s390/vmlogrdr: Remove function pointer cast
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,9 +37,9 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAOITIGYC/x2NQQ7CMAwEv1L5jKWkVBT4CuIQ0g34Eio7rUBV/
- 47FcaSdnY0MKjC6dhspVjF5V4d46Ci/Un2CZXKmPvRDGOLIdrwEnlRWqHGRD+dkjctSc3OV23c
- Gn2LCOaYCjA/yp1nhy3/ldt/3HxjTem11AAAA
+Message-Id: <20240417-s390-drivers-fix-cast-function-type-v1-1-fd048c9903b0@kernel.org>
+References: <20240417-s390-drivers-fix-cast-function-type-v1-0-fd048c9903b0@kernel.org>
+In-Reply-To: <20240417-s390-drivers-fix-cast-function-type-v1-0-fd048c9903b0@kernel.org>
 To: akpm@linux-foundation.org, arnd@arndb.de, hca@linux.ibm.com, 
  gor@linux.ibm.com, agordeev@linux.ibm.com
 Cc: borntraeger@linux.ibm.com, svens@linux.ibm.com, wintera@linux.ibm.com, 
@@ -48,45 +47,64 @@ Cc: borntraeger@linux.ibm.com, svens@linux.ibm.com, wintera@linux.ibm.com,
  llvm@lists.linux.dev, patches@lists.linux.dev, 
  Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1218; i=nathan@kernel.org;
- h=from:subject:message-id; bh=rC6fYZoAlfEmkU++TOsOASncl2m62lXgQpEKvON5jQM=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGkKwq/m2uh8Z775dJLJvzvLlqvPEDv2+PXyWq1dZ73fe
- jtl+4Re6yhlYRDjYpAVU2Spfqx63NBwzlnGG6cmwcxhZQIZwsDFKQAT2bae4X96/t/bIcxdXZcU
- uKZ3a2/2CVr1UuH7WpY1M3jKH3jebhdn+KdUeUr9q+btYhsNWfEza4sZmfbZP/8TseOL8LoPSou
- sS9kA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1919; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=fYkwEx2Fnvr2iiX6XX+36THAG6KdQSDvo+yNuCVygkk=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGkKwq98EljjvxjHLVYW3JenwOTf4epu8GfnbptM6bOcL
+ 4qnnZ3WUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACayeRkjw9fVWwKVvrn0Hqzq
+ VopYl23/5Fr/YaHbvh8+O3lEGU99vIXhf/njrz8q/u8NVDGS2Mx6a7t34ys2R63SO7NKzrXMYni
+ 0iBUA
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hi all,
+Clang warns (or errors with CONFIG_WERROR) after enabling
+-Wcast-function-type-strict by default:
 
-This series resolves the instances of -Wcast-function-type-strict that
-show up in my s390 builds on -next, which has this warning enabled by
-default.
+  drivers/s390/char/vmlogrdr.c:746:18: error: cast from 'void (*)(const void *)' to 'void (*)(struct device *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+    746 |                 dev->release = (void (*)(struct device *))kfree;
+        |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-The patches should be fairly uncontroversial, as this is the direction
-that the kernel as a whole has been taking to resolve these warnings.
-They are based on Andrew's mm-nonmm-unstable branch [1], as that has the
-patch that enables -Wcast-function-type-strict. There should be no
-conflicts if the s390 folks want to take the series but it may make more
-sense for Andrew to take them with s390 acks.
+Add a standalone function to fix the warning properly, which addresses
+the root of the warning that these casts are not safe for kCFI. The
+comment is not really relevant after this change, so remove it.
 
-[1]: https://git.kernel.org/akpm/mm/l/mm-nonmm-unstable
-
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
-Nathan Chancellor (3):
-      s390/vmlogrdr: Remove function pointer cast
-      s390/smsgiucv_app: Remove function pointer cast
-      s390/netiucv: Remove function pointer cast
+ drivers/s390/char/vmlogrdr.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
- drivers/s390/char/vmlogrdr.c    | 13 +++++--------
- drivers/s390/net/netiucv.c      | 14 ++++++--------
- drivers/s390/net/smsgiucv_app.c |  7 ++++++-
- 3 files changed, 17 insertions(+), 17 deletions(-)
----
-base-commit: 75c44169c080221080be73998466d2e9c130caa7
-change-id: 20240417-s390-drivers-fix-cast-function-type-61ae81afee7b
+diff --git a/drivers/s390/char/vmlogrdr.c b/drivers/s390/char/vmlogrdr.c
+index d7e408c8d0b8..8f90f58b680a 100644
+--- a/drivers/s390/char/vmlogrdr.c
++++ b/drivers/s390/char/vmlogrdr.c
+@@ -722,6 +722,10 @@ static void vmlogrdr_unregister_driver(void)
+ 	iucv_unregister(&vmlogrdr_iucv_handler, 1);
+ }
+ 
++static void vmlogrdr_free_dev(struct device *dev)
++{
++	kfree(dev);
++}
+ 
+ static int vmlogrdr_register_device(struct vmlogrdr_priv_t *priv)
+ {
+@@ -736,14 +740,7 @@ static int vmlogrdr_register_device(struct vmlogrdr_priv_t *priv)
+ 		dev->driver = &vmlogrdr_driver;
+ 		dev->groups = vmlogrdr_attr_groups;
+ 		dev_set_drvdata(dev, priv);
+-		/*
+-		 * The release function could be called after the
+-		 * module has been unloaded. It's _only_ task is to
+-		 * free the struct. Therefore, we specify kfree()
+-		 * directly here. (Probably a little bit obfuscating
+-		 * but legitime ...).
+-		 */
+-		dev->release = (void (*)(struct device *))kfree;
++		dev->release = vmlogrdr_free_dev;
+ 	} else
+ 		return -ENOMEM;
+ 	ret = device_register(dev);
 
-Best regards,
 -- 
-Nathan Chancellor <nathan@kernel.org>
+2.44.0
 
