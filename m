@@ -1,205 +1,92 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5EB7E799
-	for <patches@lists.linux.dev>; Wed, 17 Apr 2024 08:26:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91662744B
+	for <patches@lists.linux.dev>; Wed, 17 Apr 2024 08:47:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713342379; cv=none; b=b9OkV2jMohO3G6ecg6kLZcCIDfd8cWzwkbj19H6HIQ2hFjm0sua08uG4ZYi/4wgjMGUxpZr2Z0oPIHQVLFq+AnqTvv4B4KiLbqUX9dfnfIOli+JbZdXm87ujve1vK8p+dHv0NbLYeBJyogiRnpGu3DMfRShsVJ/j7BIq+pItD2g=
+	t=1713343641; cv=none; b=lCa2bPg97ePSksnKr7K4EJLTiAbe2Qrr8gcTv+kOisu4L0lh7B4/CcFOhydDl4JovWUJX7NxFrqxU0Au/DtvsrZsqlszQpajaEhrmEyPjEWsAv+VB4nSGlfp+AohSLfOCTRy+9Q7pU3prLrsh1PNjDJ0hWcN7bajLTOzT6vTc+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713342379; c=relaxed/simple;
-	bh=F+55rTidfxMpJlnh4dRbVr8SWqmLzp+FoCh+4rte+4E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=J5poyGc5xmeqccQKnylYw2hzHkKeUMMdCBdjV2mgmdn9jZ08cQxLkEiyy0b2akgp1pN2tVo0iqYPLEO2NKBWXoOHEDd1RiEoc4MJHfXCwq4VGRPLuYeBa12xs/kf9HnpfOqxAHHe8SSBt38hUnwLe4aN86cEeDZGGbpguN60WOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pZxOw0F9; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713343641; c=relaxed/simple;
+	bh=A5ttHuzOe/HMJsBE4szfcXeW6bosf6khB8tSfgYBqUc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cCrjCR1rI3bPsZwAZuiZWIzgVaGDfYzt817bJS8TIy0Ki2+7RmqpWkfPbzFh2yKB3Wo3evkdNXyC+9+9Av1Xrhsz1lATFc9PxKTB7be/F5yEDo+yDdozC+k+FEUXNZERX2kWHm1XpioaBk+AylMkQEuG8RyNzxS2tlxRyNxX0NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XtnHhhYt; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pZxOw0F9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DB5C2BD10
-	for <patches@lists.linux.dev>; Wed, 17 Apr 2024 08:26:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713342379;
-	bh=F+55rTidfxMpJlnh4dRbVr8SWqmLzp+FoCh+4rte+4E=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=pZxOw0F9Z/UFOywwzsgCv2AEQiz/JG9YLjRQmhM2alTpRc3YXd7ftLKfI7OHuT6gZ
-	 EHPnxk9IGbWgikeweSDid3WByETfTE2YPSXybLIKNml1cyS7VA3qcVXDJgja3faRwb
-	 ghLTgL5BmnXgVRXv2WRCrAzwYNg63GQCDj9sssTlruLT9vhpdrIPntL2VEQydZkBWC
-	 joycDJMpKhpPzOQFR8R/3YDXJCIa8yi3NmhFbX++mMGDuyvVgLDoULQoBzI4/31tyg
-	 5ksOOZt2EtrcGAKAsK0wyLNm6Curx6E2rjMSJz8A4eTa1rW45GfWArgx/T2CQkpwK1
-	 rrq0RLUIu7o7A==
-Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-5acdbfa7a46so157513eaf.3
-        for <patches@lists.linux.dev>; Wed, 17 Apr 2024 01:26:19 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVore1cM5pPh6iFV6CPkpcENGtK4pVKRn/MUVeKZFXUuSQ+A92eHqL5vdkqi61y92P0FWrXw06yIGRef4COK5CKx061JxDCLw==
-X-Gm-Message-State: AOJu0YxJW8HXEX/D0yw+4a3kBX4Il/RlYJ3EcVKkP2E5r183kzZSlP3O
-	/2vE3+IY4R6RJT9tIp0aPmw5czXPYabVdTTf2IyagmFovKeQhn0WrRnljg0JXMYCrOIu64NUgEM
-	s3M6SfOWQiq9r5laXJYIHSi/8jAI=
-X-Google-Smtp-Source: AGHT+IGEahwDm1uzbNdSdWAFcMKikrGld/DOz6HotTHQBOOVZweQDP0Y8baQQ5DQVQ5kuPPheaN7cdrl3zv+9GA4odM=
-X-Received: by 2002:a05:6820:4008:b0:5aa:6b2e:36f0 with SMTP id
- fh8-20020a056820400800b005aa6b2e36f0mr18086148oob.0.1713342378562; Wed, 17
- Apr 2024 01:26:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XtnHhhYt"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1713343640; x=1744879640;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=A5ttHuzOe/HMJsBE4szfcXeW6bosf6khB8tSfgYBqUc=;
+  b=XtnHhhYtYNbnP7TDIdHKTkZdYpuXA2B0tErxWuqfF6ZViWO7zx1WWEDS
+   qHJ/Q+m2MIvGl/6WPgLn6J5wY/eikuzIf+UjNwvHbAe1EYY1tZ9lS3C6m
+   TtaU65wpTUw3yb8lDjzqcDsH8y/lI2gfnDBD9oMGEa1QHX5A4M0PRBbOo
+   fvzQroLFpklxsWoKBJOwVEJJUkjp82DXhduLCr11hcRsizOf24ppfF8dl
+   45m5+HSJmNiwgRY0owlibrp5MJnd/mcVqlpEReEdl76jWPosECzIG3AKL
+   pXhrZbp2f3ZXDe4C/O3gxC1MP9ceEun/DNmdKHwf6FT9JWwKPNC0hczWi
+   g==;
+X-CSE-ConnectionGUID: VlcPtdcWSuGJ0UEAKQztFg==
+X-CSE-MsgGUID: i72hlvGIQdiFh6YNuvBtow==
+X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="11766170"
+X-IronPort-AV: E=Sophos;i="6.07,208,1708416000"; 
+   d="scan'208";a="11766170"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2024 01:47:19 -0700
+X-CSE-ConnectionGUID: 1linExoaQLywdjNzzQ9S8g==
+X-CSE-MsgGUID: NQUFbEeBTP+ECIGwdkj68Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,208,1708416000"; 
+   d="scan'208";a="22627863"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2024 01:47:17 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.97)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1rx0wl-00000004y2U-0XuF;
+	Wed, 17 Apr 2024 11:47:15 +0300
+Date: Wed, 17 Apr 2024 11:47:14 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: "Luck, Tony" <tony.luck@intel.com>
+Cc: Bjorn Helgaas <helgaas@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH v3 52/74] x86/cpu/vfm: Update drivers/pci/pci-mid.c
+Message-ID: <Zh-Mks49D2az47xT@smile.fi.intel.com>
+References: <20240416212219.9643-1-tony.luck@intel.com>
+ <20240416213813.GA171111@bhelgaas>
+ <SJ1PR11MB608361540C2BE3D9A68FB7C2FC082@SJ1PR11MB6083.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240416211941.9369-1-tony.luck@intel.com> <20240416212201.9433-1-tony.luck@intel.com>
-In-Reply-To: <20240416212201.9433-1-tony.luck@intel.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Wed, 17 Apr 2024 10:26:06 +0200
-X-Gmail-Original-Message-ID: <CAJZ5v0givBRP9Dj0pEJpB==TpeCyq_pE__2Jt3YvWUbcvWWweA@mail.gmail.com>
-Message-ID: <CAJZ5v0givBRP9Dj0pEJpB==TpeCyq_pE__2Jt3YvWUbcvWWweA@mail.gmail.com>
-Subject: Re: [PATCH v3 41/74] x86/cpu/vfm: Update drivers/acpi/x86/utils.c
-To: Tony Luck <tony.luck@intel.com>
-Cc: linux-kernel@vger.kernel.org, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Len Brown <lenb@kernel.org>, Hans de Goede <hdegoede@redhat.com>, Raag Jadav <raag.jadav@intel.com>, 
-	Mika Westerberg <mika.westerberg@linux.intel.com>, Marius Hoch <mail@mariushoch.de>, 
-	Michal Wilczynski <michal.wilczynski@intel.com>, linux-acpi@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <SJ1PR11MB608361540C2BE3D9A68FB7C2FC082@SJ1PR11MB6083.namprd11.prod.outlook.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Tue, Apr 16, 2024 at 11:22=E2=80=AFPM Tony Luck <tony.luck@intel.com> wr=
-ote:
->
-> New CPU #defines encode vendor and family as well as model.
->
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
+On Tue, Apr 16, 2024 at 09:51:43PM +0000, Luck, Tony wrote:
 
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+...
 
-> ---
->  drivers/acpi/x86/utils.c | 42 ++++++++++++++++++++--------------------
->  1 file changed, 21 insertions(+), 21 deletions(-)
->
-> diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
-> index 90c3d2eab9e9..2d8203f7bd98 100644
-> --- a/drivers/acpi/x86/utils.c
-> +++ b/drivers/acpi/x86/utils.c
-> @@ -45,37 +45,37 @@ struct override_status_id {
->         unsigned long long status;
->  };
->
-> -#define ENTRY(status, hid, uid, path, cpu_model, dmi...) {             \
-> +#define ENTRY(status, hid, uid, path, cpu_vfm, dmi...) {               \
->         { { hid, }, {} },                                               \
-> -       { X86_MATCH_INTEL_FAM6_MODEL(cpu_model, NULL), {} },            \
-> +       { X86_MATCH_VFM(cpu_vfm, NULL), {} },                           \
->         { { .matches =3D dmi }, {} },                                    =
- \
->         uid,                                                            \
->         path,                                                           \
->         status,                                                         \
->  }
->
-> -#define PRESENT_ENTRY_HID(hid, uid, cpu_model, dmi...) \
-> -       ENTRY(ACPI_STA_DEFAULT, hid, uid, NULL, cpu_model, dmi)
-> +#define PRESENT_ENTRY_HID(hid, uid, cpu_vfm, dmi...) \
-> +       ENTRY(ACPI_STA_DEFAULT, hid, uid, NULL, cpu_vfm, dmi)
->
-> -#define NOT_PRESENT_ENTRY_HID(hid, uid, cpu_model, dmi...) \
-> -       ENTRY(0, hid, uid, NULL, cpu_model, dmi)
-> +#define NOT_PRESENT_ENTRY_HID(hid, uid, cpu_vfm, dmi...) \
-> +       ENTRY(0, hid, uid, NULL, cpu_vfm, dmi)
->
-> -#define PRESENT_ENTRY_PATH(path, cpu_model, dmi...) \
-> -       ENTRY(ACPI_STA_DEFAULT, "", NULL, path, cpu_model, dmi)
-> +#define PRESENT_ENTRY_PATH(path, cpu_vfm, dmi...) \
-> +       ENTRY(ACPI_STA_DEFAULT, "", NULL, path, cpu_vfm, dmi)
->
-> -#define NOT_PRESENT_ENTRY_PATH(path, cpu_model, dmi...) \
-> -       ENTRY(0, "", NULL, path, cpu_model, dmi)
-> +#define NOT_PRESENT_ENTRY_PATH(path, cpu_vfm, dmi...) \
-> +       ENTRY(0, "", NULL, path, cpu_vfm, dmi)
->
->  static const struct override_status_id override_status_ids[] =3D {
->         /*
->          * Bay / Cherry Trail PWM directly poked by GPU driver in win10,
->          * but Linux uses a separate PWM driver, harmless if not used.
->          */
-> -       PRESENT_ENTRY_HID("80860F09", "1", ATOM_SILVERMONT, {}),
-> -       PRESENT_ENTRY_HID("80862288", "1", ATOM_AIRMONT, {}),
-> +       PRESENT_ENTRY_HID("80860F09", "1", INTEL_ATOM_SILVERMONT, {}),
-> +       PRESENT_ENTRY_HID("80862288", "1", INTEL_ATOM_AIRMONT, {}),
->
->         /* The Xiaomi Mi Pad 2 uses PWM2 for touchkeys backlight control =
-*/
-> -       PRESENT_ENTRY_HID("80862289", "2", ATOM_AIRMONT, {
-> +       PRESENT_ENTRY_HID("80862289", "2", INTEL_ATOM_AIRMONT, {
->                 DMI_MATCH(DMI_SYS_VENDOR, "Xiaomi Inc"),
->                 DMI_MATCH(DMI_PRODUCT_NAME, "Mipad2"),
->               }),
-> @@ -84,18 +84,18 @@ static const struct override_status_id override_statu=
-s_ids[] =3D {
->          * The INT0002 device is necessary to clear wakeup interrupt sour=
-ces
->          * on Cherry Trail devices, without it we get nobody cared IRQ ms=
-gs.
->          */
-> -       PRESENT_ENTRY_HID("INT0002", "1", ATOM_AIRMONT, {}),
-> +       PRESENT_ENTRY_HID("INT0002", "1", INTEL_ATOM_AIRMONT, {}),
->         /*
->          * On the Dell Venue 11 Pro 7130 and 7139, the DSDT hides
->          * the touchscreen ACPI device until a certain time
->          * after _SB.PCI0.GFX0.LCD.LCD1._ON gets called has passed
->          * *and* _STA has been called at least 3 times since.
->          */
-> -       PRESENT_ENTRY_HID("SYNA7500", "1", HASWELL_L, {
-> +       PRESENT_ENTRY_HID("SYNA7500", "1", INTEL_HASWELL_L, {
->                 DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
->                 DMI_MATCH(DMI_PRODUCT_NAME, "Venue 11 Pro 7130"),
->               }),
-> -       PRESENT_ENTRY_HID("SYNA7500", "1", HASWELL_L, {
-> +       PRESENT_ENTRY_HID("SYNA7500", "1", INTEL_HASWELL_L, {
->                 DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
->                 DMI_MATCH(DMI_PRODUCT_NAME, "Venue 11 Pro 7139"),
->               }),
-> @@ -112,19 +112,19 @@ static const struct override_status_id override_sta=
-tus_ids[] =3D {
->          * was copy-pasted from the GPD win, so it has a disabled KIOX000=
-A
->          * node which we should not enable, thus we also check the BIOS d=
-ate.
->          */
-> -       PRESENT_ENTRY_HID("KIOX000A", "1", ATOM_AIRMONT, {
-> +       PRESENT_ENTRY_HID("KIOX000A", "1", INTEL_ATOM_AIRMONT, {
->                 DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
->                 DMI_MATCH(DMI_BOARD_NAME, "Default string"),
->                 DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
->                 DMI_MATCH(DMI_BIOS_DATE, "02/21/2017")
->               }),
-> -       PRESENT_ENTRY_HID("KIOX000A", "1", ATOM_AIRMONT, {
-> +       PRESENT_ENTRY_HID("KIOX000A", "1", INTEL_ATOM_AIRMONT, {
->                 DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
->                 DMI_MATCH(DMI_BOARD_NAME, "Default string"),
->                 DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
->                 DMI_MATCH(DMI_BIOS_DATE, "03/20/2017")
->               }),
-> -       PRESENT_ENTRY_HID("KIOX000A", "1", ATOM_AIRMONT, {
-> +       PRESENT_ENTRY_HID("KIOX000A", "1", INTEL_ATOM_AIRMONT, {
->                 DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
->                 DMI_MATCH(DMI_BOARD_NAME, "Default string"),
->                 DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
-> @@ -137,7 +137,7 @@ static const struct override_status_id override_statu=
-s_ids[] =3D {
->          * method sets a GPIO causing the PCI wifi card to turn off.
->          * See above remark about uniqueness of the DMI match.
->          */
-> -       NOT_PRESENT_ENTRY_PATH("\\_SB_.PCI0.SDHB.BRC1", ATOM_AIRMONT, {
-> +       NOT_PRESENT_ENTRY_PATH("\\_SB_.PCI0.SDHB.BRC1", INTEL_ATOM_AIRMON=
-T, {
->                 DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
->                 DMI_EXACT_MATCH(DMI_BOARD_NAME, "Default string"),
->                 DMI_EXACT_MATCH(DMI_BOARD_SERIAL, "Default string"),
-> @@ -149,7 +149,7 @@ static const struct override_status_id override_statu=
-s_ids[] =3D {
->          * as both ACCL0001 and MAGN0001. As we can only ever register an
->          * i2c client for one of them, ignore MAGN0001.
->          */
-> -       NOT_PRESENT_ENTRY_HID("MAGN0001", "1", ATOM_SILVERMONT, {
-> +       NOT_PRESENT_ENTRY_HID("MAGN0001", "1", INTEL_ATOM_SILVERMONT, {
->                 DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
->                 DMI_MATCH(DMI_PRODUCT_FAMILY, "YOGATablet2"),
->               }),
-> --
-> 2.44.0
->
+> > I guess "vfm" is
+> > some kind of a hint, but I don't know what it means.  I suppose it is
+> > for "vendor, family, model".
+> 
+> Yes. vfm is indeed vendor-family-model.  Agreed the commit comment
+> is lacking details without the context of the cover letter and the other
+> patches in this series.
+
+You see, TLAs are cryptic, that's why I internally proposed different naming.
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
