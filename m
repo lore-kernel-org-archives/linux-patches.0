@@ -1,189 +1,225 @@
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2046.outbound.protection.outlook.com [40.107.96.46])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBCB6A037;
-	Wed, 17 Apr 2024 08:09:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.96.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713341404; cv=fail; b=loLnYa5CLQjzEuZDjZWshdczpMImXyxeVid3SP3ep+yluHGXnuQaVB6oNgl8olwZbqpYOPYk23je0+EHHpM26XEl8Vpf8XoEYG/veeGbltiMigoM5c7Haxg5WAT11MNOqbw3xQgbRONCQrd+BnohTuiBqju1w4WA7LC6zibEcu4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713341404; c=relaxed/simple;
-	bh=cGYlcLu8N+FgrVP1RQ4s1Wg9kxcD3ZGYPD4ye0RuSIc=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CFLLUIfJp5ExbRkcSf6y5YpEnxSpKDOBbaB7gygruo6fWCFUIahvP96KB506GNxwDr5sEdGFXUqh+7uRNdMXCGxRPovNwXsWO8bev/wwk9y269sjreikZ3KkOPzsydD35kZ5dnmg4BjGmzj3eRIdADUQiDSCbDFzAi9fXq8CLWA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=cEuXjWm5; arc=fail smtp.client-ip=40.107.96.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B627D3E4
+	for <patches@lists.linux.dev>; Wed, 17 Apr 2024 08:21:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1713342069; cv=none; b=gXPmn32Mh2WH7hhl/JHAChiE3s0ZgAd83FMIN57wOOLCkBUFxZhdeSspB8P/DYJBGPIwBjPQm0d9i5zsyHvzUEcJdzcQLg+yak/xws05iQsFhhSN4UnDP16OE3Dn6ymcNe4/HGFJCYQ5EOcz4DnnzeEMWsXQhfNsW7rNxfG7tf8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1713342069; c=relaxed/simple;
+	bh=n75R7c/Oh7vGZ60kh161ESLlcInlrQbqdPcmJ9fFJVA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NKI7cRXAmYBsszIxW73cvt5jQBZF6fe4EoTyxeH4pwWuy0A/q/jjRXrflBMSdGKsC/Y95t44Y0t1MC3dyxTRbjK6kGxtHVHaLuh08wU9cHNXl3T0d0E3hgfKWyrd9wR276sRqUXAHABtBG7VEydYrMSQb6fq6bROksskomx1+YU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a4K0+uR/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="cEuXjWm5"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Yt3F0CY83IplAZI1iNxmw5bRSl1/VnVY5tqHtq3vOAn4IbxMMt7Gi6qpB4ytfE2mflzpEtc5QttzgpzAaX+GEGOzuNKn1KhhVHuROUGTlzNuSJclgAG26gS4TjzOgxHc/02gSLdCMDJdxnoF6HxhrLYRhlPenq8f7PUxSeyDWhg0nvL5zSn6znwIQXbR4BcoB613WSFr2NRaBHoNcN8xQ1v3R0cRjm6pSXMyD7nUkl+cHmlgEIccQDPY0jDRu9QGbxFDlGMSqdc+JfAo8zbNQrRhnSyzSdfldgq7jnl+D9gijI7qe8/gOAokWjE02pWeYkdzNoFB5ratOcjUakRJ1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Me38kvEDYmOXEfesgOSyaiIpG0CWRtXj83wIFwXJ2tw=;
- b=VBBso2y0avjHd428do03qIFbzhTL8BHMRpia29fz3BIuFBcsL/uD83mGAODTJlAORSuIG0sHStE1XheHex5vOcvPpTWmZJ8uA5f/82NWEVVY15T5sEGSil66q5i/z4JGYvv5RhPmMYz+yu4GtHcnIr0seG6Vn6K7h/Qpbg0x+SGnJMNQACgxN1Tdfw1I3oKdHyX6N0BjncCxFvEvrjbJoRdZgn/RFfP4ob5uVcOVqY+MFHeO+o4wajh8sSeN3K5kICa4TEOFpVS3eXwDr6WL2sho0T3vysvarsJWyiskkZVDFzPGnG/8eIZQ+gLr9LyVgeJBGMciM6n9gO1Rj5wnmg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Me38kvEDYmOXEfesgOSyaiIpG0CWRtXj83wIFwXJ2tw=;
- b=cEuXjWm50xU+8/dPuVp58S4u2TseWm2FsMbjV6ldirQ6/VxMScip9cVGvRMnFYKA6XW03m8Js9vC76A7t5Bi1LDsDmlcM4qkQ1sF27ESy3LiGBwqn2MVSFbCRI1OMDH7van0qO0QxKrFW6Qyzu0AcalgomDBhz5YhtF3tSODu5iQxuFGinruepPLEjEZnC0pUZVYmFnDt0qESfMCF6cP2nW1k/GJ7WHSP+Wm4IiTEOqKHgTih5/ROD5GHUvtcrJwpDhhWLfNsaMitXllp/cpEbmW3cWaaaujAPdYudRmgGha0QV5XdNscS9hlcfD/C6exi9wIXGMmQEgJEVcIIRp9g==
-Received: from MN2PR01CA0060.prod.exchangelabs.com (2603:10b6:208:23f::29) by
- CH3PR12MB8581.namprd12.prod.outlook.com (2603:10b6:610:15d::9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7452.50; Wed, 17 Apr 2024 08:09:55 +0000
-Received: from MN1PEPF0000F0DF.namprd04.prod.outlook.com
- (2603:10b6:208:23f:cafe::5c) by MN2PR01CA0060.outlook.office365.com
- (2603:10b6:208:23f::29) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7495.23 via Frontend
- Transport; Wed, 17 Apr 2024 08:09:55 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- MN1PEPF0000F0DF.mail.protection.outlook.com (10.167.242.37) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7452.22 via Frontend Transport; Wed, 17 Apr 2024 08:09:55 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 17 Apr
- 2024 01:09:42 -0700
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 17 Apr
- 2024 01:09:42 -0700
-Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com (10.129.68.7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Wed, 17 Apr 2024 01:09:41 -0700
-Date: Wed, 17 Apr 2024 01:09:40 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: <iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>,
-	<linux-arm-kernel@lists.infradead.org>, Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>, Eric Auger <eric.auger@redhat.com>, "Moritz
- Fischer" <mdf@kernel.org>, Moritz Fischer <moritzf@google.com>, Michael
- Shavit <mshavit@google.com>, <patches@lists.linux.dev>, Shameerali Kolothum
- Thodi <shameerali.kolothum.thodi@huawei.com>, Mostafa Saleh
-	<smostafa@google.com>
-Subject: Re: [PATCH v7 9/9] iommu/arm-smmu-v3: Add unit tests for
- arm_smmu_write_entry
-Message-ID: <Zh+DxJoAMIXy9O/R@Asurada-Nvidia>
-References: <0-v7-cb149db3a320+3b5-smmuv3_newapi_p2_jgg@nvidia.com>
- <9-v7-cb149db3a320+3b5-smmuv3_newapi_p2_jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a4K0+uR/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53383C32786
+	for <patches@lists.linux.dev>; Wed, 17 Apr 2024 08:21:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713342069;
+	bh=n75R7c/Oh7vGZ60kh161ESLlcInlrQbqdPcmJ9fFJVA=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=a4K0+uR/k2z17A2pywiLxoy0vZO9lFEVelB4VBEjpEyYmS5TT4Z953zhvoWf7I6MK
+	 DIWO9lEYOnLkg+Hg0iqpKbxx5B/ZkdsLidlKZYQeMC7QSsWBEAbUIHcvLcxHakdhg1
+	 tzY7o2Iav71HHrqOs9aIhkb1dS1w1F9cUnE+jmRNdAa2hkwjTqJ2s4Adko/bTeYLjF
+	 6YNWsSu0H+2lhob3h6s2T8WqkXDs9vqv/1fbhknSI+IrXuRPcPYDcJl82+agzYzC6q
+	 wE3+hWsG6cxNCSV16gc0b33SRmILYlROlXFoRa3BqywZuaVZ9SvqCWBtralvh+aZdX
+	 PgB+CT2Cqs4lw==
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-5acdbfa6e94so218855eaf.2
+        for <patches@lists.linux.dev>; Wed, 17 Apr 2024 01:21:09 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCV2b4JVLUrBlvIazyTHWs64kMqzeR7a2ljzAxz1IHMaMcbNHRj4/4Cy8pF5xTsGcUe5KjAl7Bdto27X/gwFPwO13t1iaVpRaA==
+X-Gm-Message-State: AOJu0YwLGFqSIVnEQiAripHNm1mI/1U56E/e3Au0wpMGxfiIW7ogKIjO
+	z5DubLI8CG3X45zgvhPAiLey4IC9nt4c1zaEhZU/i+Lr48I5vW/kIgEmjKEzux8lg88mgEGNbKR
+	ENvotRtZFw1wjnZFocRLgwNthb50=
+X-Google-Smtp-Source: AGHT+IF1HUDQADytF/vNEBQ2UKS59DYMbC6OocjMGqOLuGMZH0OZPRVlzAAbkHRUU1qzVJJiRvJRK+r7AgZPRefv4/U=
+X-Received: by 2002:a05:6820:4187:b0:5ac:6fc1:c2cb with SMTP id
+ fk7-20020a056820418700b005ac6fc1c2cbmr15321134oob.0.1713342068650; Wed, 17
+ Apr 2024 01:21:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <9-v7-cb149db3a320+3b5-smmuv3_newapi_p2_jgg@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN1PEPF0000F0DF:EE_|CH3PR12MB8581:EE_
-X-MS-Office365-Filtering-Correlation-Id: b295993a-5bff-41c6-fb79-08dc5eb5c469
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	m6wQoAxeOcXWb4kUUwZfxvWlfnCPvRmS10kDvcpq0hDuLQ7DCnMd4p42w/CQrgTZ9I5rJmWzwZg55oeTsbiHA/vbhewfoIrWcsNUxGiXADwyKrRBHyZuwWV40+klPYu152WNXxv3+5YW5niO663E0NajCh0V1bGTmEJSWmciGpXQoKeQ6DnMxUeuyRnZToLVSyPqyXknql8Bd2baiGGjKREqDB+GN2EhTe/aLm8Jxz7zCLX42iFoL3374HoySHeyFQ80BrTjnwkxoDyNfLRUsJ49HqwuKbWcZQNQ9i8cDTx01In68O6EUslC9NkcSsVN3Jk4Xc3LEv7GG9wJB4YLo5Wr+dRjbnsTEyipDZJNbfjhLc/ZOMEiJNKV81oMheOUVOS+hW5hdejWCDhq2O6w7m85RpFZdV6O2Mtgy7FHPinhX13xoyHB2SdAXdoAe0ym3Xe0oW6J7bx4//Wdk50wUHOa09Ma7i/dsnXJqhHYbpazw+ZEykfegQhaEVjOIEbVi8BRcPZgIetnQNNH9+n048KHeysm7akOZN7T4ZnyS1xVZLKPi8VDm+rSEEVtv12B720J0BJvCGsCmdX1F3tS3yeTrMtH/muzqmqyBQlioQdkK6EflNedYTDZO6H23xV9Cts3CC4luIsZmXmger0a7JM9gjSff4kDXbJ19/7xy00u874d5CgdlFakg44WAjCQtkcsLvcmgRBMhY6Z7NuROL1h0pa4i84aHqdqVFjVvdPmOMqm1PUM563ect34vss+
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230031)(376005)(82310400014)(7416005)(1800799015)(36860700004);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Apr 2024 08:09:55.4951
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b295993a-5bff-41c6-fb79-08dc5eb5c469
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	MN1PEPF0000F0DF.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8581
+References: <20240416211941.9369-1-tony.luck@intel.com> <20240416212204.9471-1-tony.luck@intel.com>
+In-Reply-To: <20240416212204.9471-1-tony.luck@intel.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Wed, 17 Apr 2024 10:20:56 +0200
+X-Gmail-Original-Message-ID: <CAJZ5v0iGL8kk_0ym5-mvodZbkfhPtkJbjytEMjPmBN2G1vt=5A@mail.gmail.com>
+Message-ID: <CAJZ5v0iGL8kk_0ym5-mvodZbkfhPtkJbjytEMjPmBN2G1vt=5A@mail.gmail.com>
+Subject: Re: [PATCH v3 43/74] x86/cpu/vfm: Update drivers/cpufreq/intel_pstate.c
+To: Tony Luck <tony.luck@intel.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>, 
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>, Len Brown <lenb@kernel.org>, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 16, 2024 at 04:28:20PM -0300, Jason Gunthorpe wrote:
-> Add tests for some of the more common STE update operations that we expect
-> to see, as well as some artificial STE updates to test the edges of
-> arm_smmu_write_entry. These also serve as a record of which common
-> operation is expected to be hitless, and how many syncs they require.
-> 
-> arm_smmu_write_entry implements a generic algorithm that updates an STE/CD
-> to any other abritrary STE/CD configuration. The update requires a
-> sequence of write+sync operations with some invariants that must be held
-> true after each sync. arm_smmu_write_entry lends itself well to
-> unit-testing since the function's interaction with the STE/CD is already
-> abstracted by input callbacks that we can hook to introspect into the
-> sequence of operations. We can use these hooks to guarantee that
-> invariants are held throughout the entire update operation.
-> 
-> Link: https://lore.kernel.org/r/20240106083617.1173871-3-mshavit@google.com
-> Signed-off-by: Michael Shavit <mshavit@google.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+On Tue, Apr 16, 2024 at 11:22=E2=80=AFPM Tony Luck <tony.luck@intel.com> wr=
+ote:
+>
+> New CPU #defines encode vendor and family as well as model.
+>
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+
 > ---
->  drivers/iommu/Kconfig                         |  12 +-
->  drivers/iommu/arm/arm-smmu-v3/Makefile        |   2 +
->  .../iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c   |   6 +-
->  .../iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c  | 467 ++++++++++++++++++
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   |  36 +-
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  30 ++
- 
-> +config ARM_SMMU_V3_KUNIT_TEST
-> +	tristate "KUnit tests for arm-smmu-v3 driver"  if !KUNIT_ALL_TESTS
-> +	depends on KUNIT
-> +	default KUNIT_ALL_TESTS
-> +	help
-> +	  Enable this option to unit-test arm-smmu-v3 driver functions.
-> +
-> +	  If unsure, say N.
-
-Forgot that my SVA sanity doesn't cover this patch. And it looks
-like some problems here when building it with "=m":
-
-ERROR: modpost: missing MODULE_LICENSE() in drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.o
-ERROR: modpost: "arm_smmu_make_cdtable_ste" [drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.ko] undefined!
-ERROR: modpost: "arm_smmu_make_bypass_ste" [drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.ko] undefined!
-ERROR: modpost: "arm_smmu_make_abort_ste" [drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.ko] undefined!
-ERROR: modpost: "arm_smmu_make_s2_domain_ste" [drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.ko] undefined!
-ERROR: modpost: "arm_smmu_get_ste_used" [drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.ko] undefined!
-ERROR: modpost: "arm_smmu_write_entry" [drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.ko] undefined!
-
-Likely needs MODULE_LICENSE and some EXPORT_SYMBOLs.
-
-With built-in '=y' and a MODULE_LICENSE, tests passed:
-[   13.244780] KTAP version 1
-[   13.247542] 1..1
-[   13.249421]     KTAP version 1
-[   13.252538]     # Subtest: arm-smmu-v3-kunit-test
-[   13.257344]     1..16
-[   13.259727]     ok 1 arm_smmu_v3_write_ste_test_bypass_to_abort
-[   13.259789]     ok 2 arm_smmu_v3_write_ste_test_abort_to_bypass
-[   13.265895]     ok 3 arm_smmu_v3_write_ste_test_cdtable_to_abort
-[   13.271988]     ok 4 arm_smmu_v3_write_ste_test_abort_to_cdtable
-[   13.278172]     ok 5 arm_smmu_v3_write_ste_test_cdtable_to_bypass
-[   13.284353]     ok 6 arm_smmu_v3_write_ste_test_bypass_to_cdtable
-[   13.290636]     ok 7 arm_smmu_v3_write_ste_test_cdtable_s1dss_change
-[   13.296917]     ok 8 arm_smmu_v3_write_ste_test_s1dssbypass_to_stebypass
-[   13.303464]     ok 9 arm_smmu_v3_write_ste_test_stebypass_to_s1dssbypass
-[   13.310357]     ok 10 arm_smmu_v3_write_ste_test_s2_to_abort
-[   13.317265]     ok 11 arm_smmu_v3_write_ste_test_abort_to_s2
-[   13.323104]     ok 12 arm_smmu_v3_write_ste_test_s2_to_bypass
-[   13.328937]     ok 13 arm_smmu_v3_write_ste_test_bypass_to_s2
-[   13.334861]     ok 14 arm_smmu_v3_write_ste_test_s1_to_s2
-[   13.340787]     ok 15 arm_smmu_v3_write_ste_test_s2_to_s1
-[   13.346364]     ok 16 arm_smmu_v3_write_ste_test_non_hitless
-[   13.351883] # arm-smmu-v3-kunit-test: pass:16 fail:0 skip:0 total:16
-[   13.357667] # Totals: pass:16 fail:0 skip:0 total:16
-[   13.364163] ok 1 arm-smmu-v3-kunit-test
-
-Once those are fixed,
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+>  drivers/cpufreq/intel_pstate.c | 90 +++++++++++++++++-----------------
+>  1 file changed, 44 insertions(+), 46 deletions(-)
+>
+> diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstat=
+e.c
+> index dbbf299f4219..685ec80e0af5 100644
+> --- a/drivers/cpufreq/intel_pstate.c
+> +++ b/drivers/cpufreq/intel_pstate.c
+> @@ -2402,52 +2402,51 @@ static const struct pstate_funcs knl_funcs =3D {
+>         .get_val =3D core_get_val,
+>  };
+>
+> -#define X86_MATCH(model, policy)                                        =
+\
+> -       X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6, INTEL_FAM6_##model, =
+\
+> -                                          X86_FEATURE_APERFMPERF, &polic=
+y)
+> +#define X86_MATCH(vfm, policy)                                  \
+> +       X86_MATCH_VFM_FEATURE(vfm, X86_FEATURE_APERFMPERF, &policy)
+>
+>  static const struct x86_cpu_id intel_pstate_cpu_ids[] =3D {
+> -       X86_MATCH(SANDYBRIDGE,          core_funcs),
+> -       X86_MATCH(SANDYBRIDGE_X,        core_funcs),
+> -       X86_MATCH(ATOM_SILVERMONT,      silvermont_funcs),
+> -       X86_MATCH(IVYBRIDGE,            core_funcs),
+> -       X86_MATCH(HASWELL,              core_funcs),
+> -       X86_MATCH(BROADWELL,            core_funcs),
+> -       X86_MATCH(IVYBRIDGE_X,          core_funcs),
+> -       X86_MATCH(HASWELL_X,            core_funcs),
+> -       X86_MATCH(HASWELL_L,            core_funcs),
+> -       X86_MATCH(HASWELL_G,            core_funcs),
+> -       X86_MATCH(BROADWELL_G,          core_funcs),
+> -       X86_MATCH(ATOM_AIRMONT,         airmont_funcs),
+> -       X86_MATCH(SKYLAKE_L,            core_funcs),
+> -       X86_MATCH(BROADWELL_X,          core_funcs),
+> -       X86_MATCH(SKYLAKE,              core_funcs),
+> -       X86_MATCH(BROADWELL_D,          core_funcs),
+> -       X86_MATCH(XEON_PHI_KNL,         knl_funcs),
+> -       X86_MATCH(XEON_PHI_KNM,         knl_funcs),
+> -       X86_MATCH(ATOM_GOLDMONT,        core_funcs),
+> -       X86_MATCH(ATOM_GOLDMONT_PLUS,   core_funcs),
+> -       X86_MATCH(SKYLAKE_X,            core_funcs),
+> -       X86_MATCH(COMETLAKE,            core_funcs),
+> -       X86_MATCH(ICELAKE_X,            core_funcs),
+> -       X86_MATCH(TIGERLAKE,            core_funcs),
+> -       X86_MATCH(SAPPHIRERAPIDS_X,     core_funcs),
+> -       X86_MATCH(EMERALDRAPIDS_X,      core_funcs),
+> +       X86_MATCH(INTEL_SANDYBRIDGE,            core_funcs),
+> +       X86_MATCH(INTEL_SANDYBRIDGE_X,          core_funcs),
+> +       X86_MATCH(INTEL_ATOM_SILVERMONT,        silvermont_funcs),
+> +       X86_MATCH(INTEL_IVYBRIDGE,              core_funcs),
+> +       X86_MATCH(INTEL_HASWELL,                core_funcs),
+> +       X86_MATCH(INTEL_BROADWELL,              core_funcs),
+> +       X86_MATCH(INTEL_IVYBRIDGE_X,            core_funcs),
+> +       X86_MATCH(INTEL_HASWELL_X,              core_funcs),
+> +       X86_MATCH(INTEL_HASWELL_L,              core_funcs),
+> +       X86_MATCH(INTEL_HASWELL_G,              core_funcs),
+> +       X86_MATCH(INTEL_BROADWELL_G,            core_funcs),
+> +       X86_MATCH(INTEL_ATOM_AIRMONT,           airmont_funcs),
+> +       X86_MATCH(INTEL_SKYLAKE_L,              core_funcs),
+> +       X86_MATCH(INTEL_BROADWELL_X,            core_funcs),
+> +       X86_MATCH(INTEL_SKYLAKE,                core_funcs),
+> +       X86_MATCH(INTEL_BROADWELL_D,            core_funcs),
+> +       X86_MATCH(INTEL_XEON_PHI_KNL,           knl_funcs),
+> +       X86_MATCH(INTEL_XEON_PHI_KNM,           knl_funcs),
+> +       X86_MATCH(INTEL_ATOM_GOLDMONT,          core_funcs),
+> +       X86_MATCH(INTEL_ATOM_GOLDMONT_PLUS,     core_funcs),
+> +       X86_MATCH(INTEL_SKYLAKE_X,              core_funcs),
+> +       X86_MATCH(INTEL_COMETLAKE,              core_funcs),
+> +       X86_MATCH(INTEL_ICELAKE_X,              core_funcs),
+> +       X86_MATCH(INTEL_TIGERLAKE,              core_funcs),
+> +       X86_MATCH(INTEL_SAPPHIRERAPIDS_X,       core_funcs),
+> +       X86_MATCH(INTEL_EMERALDRAPIDS_X,        core_funcs),
+>         {}
+>  };
+>  MODULE_DEVICE_TABLE(x86cpu, intel_pstate_cpu_ids);
+>
+>  static const struct x86_cpu_id intel_pstate_cpu_oob_ids[] __initconst =
+=3D {
+> -       X86_MATCH(BROADWELL_D,          core_funcs),
+> -       X86_MATCH(BROADWELL_X,          core_funcs),
+> -       X86_MATCH(SKYLAKE_X,            core_funcs),
+> -       X86_MATCH(ICELAKE_X,            core_funcs),
+> -       X86_MATCH(SAPPHIRERAPIDS_X,     core_funcs),
+> +       X86_MATCH(INTEL_BROADWELL_D,            core_funcs),
+> +       X86_MATCH(INTEL_BROADWELL_X,            core_funcs),
+> +       X86_MATCH(INTEL_SKYLAKE_X,              core_funcs),
+> +       X86_MATCH(INTEL_ICELAKE_X,              core_funcs),
+> +       X86_MATCH(INTEL_SAPPHIRERAPIDS_X,       core_funcs),
+>         {}
+>  };
+>
+>  static const struct x86_cpu_id intel_pstate_cpu_ee_disable_ids[] =3D {
+> -       X86_MATCH(KABYLAKE,             core_funcs),
+> +       X86_MATCH(INTEL_KABYLAKE,               core_funcs),
+>         {}
+>  };
+>
+> @@ -3386,14 +3385,13 @@ static inline void intel_pstate_request_control_f=
+rom_smm(void) {}
+>
+>  #define INTEL_PSTATE_HWP_BROADWELL     0x01
+>
+> -#define X86_MATCH_HWP(model, hwp_mode)                                 \
+> -       X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6, INTEL_FAM6_##model, =
+\
+> -                                          X86_FEATURE_HWP, hwp_mode)
+> +#define X86_MATCH_HWP(vfm, hwp_mode)                           \
+> +       X86_MATCH_VFM_FEATURE(vfm, X86_FEATURE_HWP, hwp_mode)
+>
+>  static const struct x86_cpu_id hwp_support_ids[] __initconst =3D {
+> -       X86_MATCH_HWP(BROADWELL_X,      INTEL_PSTATE_HWP_BROADWELL),
+> -       X86_MATCH_HWP(BROADWELL_D,      INTEL_PSTATE_HWP_BROADWELL),
+> -       X86_MATCH_HWP(ANY,              0),
+> +       X86_MATCH_HWP(INTEL_BROADWELL_X,        INTEL_PSTATE_HWP_BROADWEL=
+L),
+> +       X86_MATCH_HWP(INTEL_BROADWELL_D,        INTEL_PSTATE_HWP_BROADWEL=
+L),
+> +       X86_MATCH_HWP(INTEL_ANY,                0),
+>         {}
+>  };
+>
+> @@ -3426,15 +3424,15 @@ static const struct x86_cpu_id intel_epp_default[=
+] =3D {
+>          * which can result in one core turbo frequency for
+>          * AlderLake Mobile CPUs.
+>          */
+> -       X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L, HWP_SET_DEF_BALANCE_PERF_=
+EPP(102)),
+> -       X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X, HWP_SET_DEF_BALANCE_=
+PERF_EPP(32)),
+> -       X86_MATCH_INTEL_FAM6_MODEL(METEORLAKE_L, HWP_SET_EPP_VALUES(HWP_E=
+PP_POWERSAVE,
+> -                                                       HWP_EPP_BALANCE_P=
+OWERSAVE, 115, 16)),
+> +       X86_MATCH_VFM(INTEL_ALDERLAKE_L, HWP_SET_DEF_BALANCE_PERF_EPP(102=
+)),
+> +       X86_MATCH_VFM(INTEL_SAPPHIRERAPIDS_X, HWP_SET_DEF_BALANCE_PERF_EP=
+P(32)),
+> +       X86_MATCH_VFM(INTEL_METEORLAKE_L, HWP_SET_EPP_VALUES(HWP_EPP_POWE=
+RSAVE,
+> +                     HWP_EPP_BALANCE_POWERSAVE, 115, 16)),
+>         {}
+>  };
+>
+>  static const struct x86_cpu_id intel_hybrid_scaling_factor[] =3D {
+> -       X86_MATCH_INTEL_FAM6_MODEL(METEORLAKE_L, HYBRID_SCALING_FACTOR_MT=
+L),
+> +       X86_MATCH_VFM(INTEL_METEORLAKE_L, HYBRID_SCALING_FACTOR_MTL),
+>         {}
+>  };
+>
+> --
+> 2.44.0
+>
