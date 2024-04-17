@@ -1,113 +1,79 @@
-Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D857925619;
-	Wed, 17 Apr 2024 18:57:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4A6FBF3
+	for <patches@lists.linux.dev>; Wed, 17 Apr 2024 18:59:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713380264; cv=none; b=AXNwEZYwSJOh+UdAvRlJWUwJUX6DAsnnpK/zC2dQtNw8AzMwD0LPrbxlEL6d6Mucwd3YevfnbjWipi3E6g/BaMbIUY3jHAXXdYoP+OlADBaW2fY2sfxMUSosqb5IOKdQXqTZ7ZYPKl5LmxfbcmdI6+e+c/XDnClK7z2ap4XnUDA=
+	t=1713380396; cv=none; b=uBw3Z6x5np/NrLCuW3cq66TDGISnhpVGtgeIMu5tzbxaVzlkN6tR2PlJGc+vYpzru4np70xkJMg5N826ex+LPY4ZdCLrn4T2toz3lxoQzfrNWf9u+ESuhm47hDUKHZXTFK1tLooqwa9jc983BBM2H3SmVCaLjNr6vuiNhf8wH54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713380264; c=relaxed/simple;
-	bh=mukMXfRaH5+NMZIb5Xef9x+qYy3bjdENrO6zRsPJYd8=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=Taz5V8UMrbOtO0Jy4YOmA7wKtm3Pd4De5v6Q4+XhUbVFL2GKg9gmwzAbAES8/rjXGjdbDwtW4ybbg5REVgkiOX0Yjfsm+U4ZyMtqdC/zsl2ciW+joyKXdfZSW8iR7iBaaGwy1sptIZedwFzWAYjvp+J2uQdEqCzxpdzJjW9Ollk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=rOw5ijSY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SS6ODAj0; arc=none smtp.client-ip=64.147.123.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	s=arc-20240116; t=1713380396; c=relaxed/simple;
+	bh=BA12yhIn/tlwN3KcWEpZllfM7GcJgrUEZA6BLeoXfDc=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=fdb6jQcOxaTROEMgeO7MUDjn6KMGONZNwBDZr2BO/sGv0uWclA7ZIE0unnIoM/1jAXvGL27JqUYvkVdidthLFDxG7qM9zoruN3UpxUgD0BRorIfznzsGToZFk1OYqAWqjRyMa8WRgrLMf71tfAUhNmtunmSXmFjHCW7DaSsPfMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WSbUMM9k; arc=none smtp.client-ip=209.85.219.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="rOw5ijSY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SS6ODAj0"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 391E818000E1;
-	Wed, 17 Apr 2024 14:57:41 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
-  by compute5.internal (MEProxy); Wed, 17 Apr 2024 14:57:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1713380260; x=1713466660; bh=OxvFic6ocJ
-	NdAQ1CbbZKQNKjRdfB7w7LA61IzvHtWvY=; b=rOw5ijSYBZv1I1XhE3WvVyJHq6
-	X0lgHu9QGkRqpdOQufnm1KZl7XXp5zwDrzcQVV6RWg2hvTqQHKuWRVLOff3H8RlX
-	BU4QBHhPtVV17o3v4kV7HcvoiNG4WMl+ERnyS12aK4Pzv+YU5xCsgoPZTNFftQNE
-	SNXPElt/3CV5ggr3m2yO368rpPKMiIVecDvxfZKFtm4/s/nw9eutA+xIXir3mIGs
-	2w8XWxmxsyyKKkKv/1Yxc4CdpnhyuKl32GsP1q/DvK3DMc2vozS9bhRKR4IYHQO4
-	CkBVg1XxyQANUWil5N2AqRg3C8/IP1bomUg//U6v6GQZkDFQDH72O9ipB3Zg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1713380260; x=1713466660; bh=OxvFic6ocJNdAQ1CbbZKQNKjRdfB
-	7w7LA61IzvHtWvY=; b=SS6ODAj0UBa+zx3QqFbG/EHR30M0oqWRwWJGiNsN/m0V
-	EyUOTD48mHRW+TpTHsr+eMaDeNgLEcuRqwIkMW/UcGd/DapLZCKGihRx6H+gge2P
-	rB5/qOuuy2IAqgzrx3wzzVpP9bWEqmTJymAGYEtPg1uL2xKhaOkOrHDKtag0FCqZ
-	3X4fPXqQQ6G+JBB53oeFfSYgYntdcUrJsEglGyoLzDXCTGPLbzAB92J5pQp4wi7N
-	kRq55E8eKZxDWvRqlaiVwP7Wcm1hOqk4TG2q1x2XlD1mtaegYeQcg6hJL8XpeFRE
-	+XyM6vTX+rly007dnPuJ3MU9Xc3suhxd8V17xvnT0g==
-X-ME-Sender: <xms:pBsgZrDh-2pb37X5fawSDSV5ZBxjvnIAyt3BYosHh_UeBb__kiUbrQ>
-    <xme:pBsgZhhUOdB_jMqVHjtNE8waKOGL7IsepZDTS1DsTtFj9NNJX0YlSoxoctW0aufTU
-    o-F5mLXfDHfI20u-qI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudejkedgudefudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdet
-    rhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrg
-    htthgvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedt
-    keetffenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    grrhhnugesrghrnhgusgdruggv
-X-ME-Proxy: <xmx:pBsgZmm2dnejA125rIL6MlKgbatUPlX0L7kZGN_TUiCtCXnTrgi4Uw>
-    <xmx:pBsgZtxsHQHOaqqN4hcb-R5oHpz1LJHxxGY-MFRZ7aWM_UbqBEwqDA>
-    <xmx:pBsgZgTGaEhfdqxWh3Hmco2HaBJ7joP5PpU299mR6t3008CbL3gnFQ>
-    <xmx:pBsgZgaEGnvgx1bo_wz4bjzo3fqxN-dYSPXHtXO4-5_G1SeqgEOuLQ>
-    <xmx:pBsgZnJZbBb1Bju-n99SXpn0PZeOH6pJEHZa7U8I3M9xNZcrv1q4eZG5>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 467B6B6008D; Wed, 17 Apr 2024 14:57:40 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-379-gabd37849b7-fm-20240408.001-gabd37849
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WSbUMM9k"
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dcc0bcf9256so117548276.3
+        for <patches@lists.linux.dev>; Wed, 17 Apr 2024 11:59:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1713380394; x=1713985194; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xQae4cfX4NaL9u9eCz9LjDnsnMH5rontKvZj0HGESGE=;
+        b=WSbUMM9kFJ7ySqMsToLLPZCz7vWC5QqKJMMj3evGV34/FH4GjOTZ05ds7NBmvWGJmY
+         75PKuWCC5WKtVrIlz1Rc52giCZS9qlHGCVAtt74eNI690BhOQsf2VArHjE4nnJp2+UVo
+         /1dlPMH8/G3NE0CD/ArHwrXZlBtr0z1Rcy2cbeY5/8Jas+fxGMmGabP6gbQv4eOprXIU
+         Wc3Bh2Gsfkk1859hujwnv0Kb8RdFVLY11UMluBH4pTWt+0Ogso+Jlcg8xyAdA9qiQt6a
+         PS3t4Dj+AdznMcP3uDBLQCb+5vQe4VUsLtPBS0zaTKhRobhcAgCnHwsrtL9E8uogJ9Qz
+         HYxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713380394; x=1713985194;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xQae4cfX4NaL9u9eCz9LjDnsnMH5rontKvZj0HGESGE=;
+        b=lXxZXrnxNgucqTLb11z4WNzfaKnbmKmdzS0IrhtvAVNKLcnw8LEJ2c0B6S0aQwwBac
+         IKIuy6Mnif9al01QdbCp2Qvn+rZdpGgp0qfOg3kjkxBEgePfuTLudscF+B+Afivipehl
+         WfR4Z8hPgYfjlIFt3xPBOYqSVvx52UQxHsPlhpbDujRjTCU2rtMG7DAhxKPOu09oWa8y
+         q726QSj1D0wPRATxi8nNlVKG8DOQqZl+0GldzRq/jexlbzpoxSAD+QuUgOxUgn6a2gHs
+         OUHgeFwu1RmCX6sHmW85XT0jj8/Wj9QMCGsjLjNhYmFbuFLTd1boRsugfeE6vCN+wK9l
+         ptyg==
+X-Forwarded-Encrypted: i=1; AJvYcCVeQfX2N4SY/2tGot7puFhAUP9fdsayeaUOaa4qrrgp6YXckXPAlpTIp1yeBbTn0IR9ygDbSAK4YYz9QC2MrHIg90Yz9jA+YQ==
+X-Gm-Message-State: AOJu0Yzcy23Pa53DVVyanNEahKedMcQ9Y+L+B6fOy2t/n//fSj1zjIad
+	Av4oxxVkz7ac/YPMFIjm3TZMQbVcVnsrV8lcLpVBM7TCR1vOMRvSTad0jdI5xMlUzfJdkM4Gnvy
+	6Rg==
+X-Google-Smtp-Source: AGHT+IGLW2W1pTs3wPgozteR9glPETjOgHDdfcxzf86ViF2A3bPyNslXaVI1lvNh87ZSztdrKiw/9LObPqo=
+X-Received: from zagreus.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
+ (user=seanjc job=sendgmr) by 2002:a25:c711:0:b0:dda:d7cf:5c2c with SMTP id
+ w17-20020a25c711000000b00ddad7cf5c2cmr22957ybe.13.1713380394327; Wed, 17 Apr
+ 2024 11:59:54 -0700 (PDT)
+Date: Wed, 17 Apr 2024 11:59:52 -0700
+In-Reply-To: <20240416211941.9369-31-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Message-Id: <46329c2f-dc04-4533-a958-bfe6b9a1fa0e@app.fastmail.com>
-In-Reply-To: 
- <20240417-s390-drivers-fix-cast-function-type-v1-3-fd048c9903b0@kernel.org>
-References: 
- <20240417-s390-drivers-fix-cast-function-type-v1-0-fd048c9903b0@kernel.org>
- <20240417-s390-drivers-fix-cast-function-type-v1-3-fd048c9903b0@kernel.org>
-Date: Wed, 17 Apr 2024 20:57:19 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Nathan Chancellor" <nathan@kernel.org>,
- "Andrew Morton" <akpm@linux-foundation.org>,
- "Heiko Carstens" <hca@linux.ibm.com>, gor@linux.ibm.com,
- "Alexander Gordeev" <agordeev@linux.ibm.com>
-Cc: "Christian Borntraeger" <borntraeger@linux.ibm.com>,
- "Sven Schnelle" <svens@linux.ibm.com>, wintera@linux.ibm.com,
- twinkler@linux.ibm.com, linux-s390@vger.kernel.org,
- Netdev <netdev@vger.kernel.org>, llvm@lists.linux.dev,
- patches@lists.linux.dev
-Subject: Re: [PATCH 3/3] s390/netiucv: Remove function pointer cast
-Content-Type: text/plain
+Mime-Version: 1.0
+References: <20240416211941.9369-1-tony.luck@intel.com> <20240416211941.9369-31-tony.luck@intel.com>
+Message-ID: <ZiAcKKX_L2MNOF_n@google.com>
+Subject: Re: [PATCH v3 30/74] x86/cpu/vfm: Update arch/x86/kvm/pmu.c
+From: Sean Christopherson <seanjc@google.com>
+To: Tony Luck <tony.luck@intel.com>
+Cc: Borislav Petkov <bp@alien8.de>, x86@kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="us-ascii"
 
-On Wed, Apr 17, 2024, at 20:24, Nathan Chancellor wrote:
-> Clang warns (or errors with CONFIG_WERROR) after enabling
-> -Wcast-function-type-strict by default:
->
->   drivers/s390/net/netiucv.c:1716:18: error: cast from 'void (*)(const 
-> void *)' to 'void (*)(struct device *)' converts to incompatible 
-> function type [-Werror,-Wcast-function-type-strict]
->    1716 |                 dev->release = (void (*)(struct device 
-> *))kfree;
->         |                                
-> ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->   1 error generated.
->
-> Add a standalone function to fix the warning properly, which addresses
-> the root of the warning that these casts are not safe for kCFI. The
-> comment is not really relevant after this change, so remove it.
->
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+For the scope, please use:
 
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+   KVM: x86/pmu:
+
+On Tue, Apr 16, 2024, Tony Luck wrote:
+> New CPU #defines encode vendor and family as well as model.
+> 
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ---
+
+Acked-by: Sean Christopherson <seanjc@google.com>
