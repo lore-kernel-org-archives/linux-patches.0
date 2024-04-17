@@ -1,79 +1,99 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D377E208D6
-	for <patches@lists.linux.dev>; Wed, 17 Apr 2024 19:00:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616E1208D6;
+	Wed, 17 Apr 2024 20:06:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713380449; cv=none; b=oLk3CqobTaL7bYPfohnEcY3NpG22TnDeI7/+C/j+Uj19V1ksRzLCMJXrPclIVweIRW8iDgKJlrtyReH8QDx868DiHGMLu9mN/SrOorQhtrUysjmEMnoJZ8EX9ZzoIZ14QbAibou5RU+pJeSARgIRBhcXFt4wn5BbFtKZLW8OGoY=
+	t=1713384408; cv=none; b=iNUl8/mIk9eDeVWalEBZBdqXBQf6nXVxoCYsVQil0Ns/3RuN2N4Iy+veWBWEv9BepY3sE0V/eoTVrsf5Iv6vk3jUj+3f/+2Q9914X7WP9AsRSHBTh4EO64RcVOQs3GvS/Aexf6PjoAJWnNsGdPfiulGDuQGGfuZb4+HaMS3Z5ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713380449; c=relaxed/simple;
-	bh=01o4dHuglQVsTu+PcICGhK6gJNVEOr86+0KoEPkkiwE=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Z43JZ2tsKl+3Ow5ba6O2suzMyTEEMXC/L0qeMuhG7eEIpTHjVRIGimWjY2urEUuKhinvxlH5ZnZnXgiH+3LTaG4v9ZQzHfRgWs04XqS6uI2DOOsy9FRDRGRYeUvYWWjSeJKUPN7svJqlFEER3l9IV6YquMeCnygclOQ6O6ABvUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CHifo0e2; arc=none smtp.client-ip=209.85.128.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CHifo0e2"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-610b96c8ca2so96724947b3.2
-        for <patches@lists.linux.dev>; Wed, 17 Apr 2024 12:00:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1713380446; x=1713985246; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vfxuAXuPWvmyvdr5+9PlGKbmbBIGocadn3UYl5buNro=;
-        b=CHifo0e2jaNuCsh+d6TbEVnnkMRbJeRbacxjSg+nkXMtRW+wgJWOha4PuTnAdFJ2hE
-         eqYf2D7O6YUHC8yjQ7q5E3fYO8Gs8EZRNirnh8rzKvQLs/0XHbhSABpR7nrlOEdngMRV
-         3egwYadPFbfy4PJG8On+21ck323labSdL+cJjQh9MA9IsZvhK11BU1Wigl8NoBQrJKOU
-         YMK237zNKdUBmWCZ5b2iZ4TT+SSTWalpcJXGOsTIcD+fHTRBtDBxSmB751Pkgh2PL1Rj
-         oB4n7KY+Ytt0JA2ukByFoJfMar0hXL6XLl5Lfx9SD5xeRSXEHmYxpDdQ09JxX8qn9NDh
-         T6Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713380446; x=1713985246;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vfxuAXuPWvmyvdr5+9PlGKbmbBIGocadn3UYl5buNro=;
-        b=WLwaZRlCKb8RVdZiLLCNoC/OVblW+Rtg2n9ENrGj4R55dLfHCgPRoRQ3I+dtdNZSQW
-         IjE1mp5vPFiVezettpfb2vGk3aJ1h/iKCEQWNULQaSTvrERhcxg3bRWq3FhzeEiWTPJW
-         yf9maJ3GaVrVoNPhr+0YVd2ZR93mwIAWSraNMCzjdvawKFr4F5+2ce26DUWweVwwdISi
-         UDCsqn8l2DC9aiIXD1L8yCa8WOMoed1zJTeaJt4UfJR/fhiaZAUyoK7uPEBIovtCMvjF
-         +52SOf35E6sCZZ7oJH43ftJSpsmA6vtW/x6SSx40gEgee+KyoaA+6u5136m7Q9p4pnEk
-         5sSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWpPiDug7b7U9Hdz7yV468Q//E6Zu0i9Ems5Uqd3VrOFkIs+/bgS5sefaPb2jMxfd3f1l6qHD81OTZOYzgJmwlOVBzpoCPVEA==
-X-Gm-Message-State: AOJu0YxkYh2THqmEU8r5woX6UbyRUPXPnAkGmIy/ebq/zk0SyV760d9S
-	0es7PzpGQfVIspkGtkE579xUuzXUuixArVm8l/nK+pJEAxX58f7SZtjft3QZpLwbOKSEEs7Ttjw
-	cag==
-X-Google-Smtp-Source: AGHT+IF1El6IZGCeA7PMlSPFtdTtFo9BlftsZ/Xw0iunvnYRq58iSoQFWMf5DXWl+OqcrZTERay510JNjxo=
-X-Received: from zagreus.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a0d:ccc7:0:b0:618:859e:3f01 with SMTP id
- o190-20020a0dccc7000000b00618859e3f01mr21635ywd.6.1713380445908; Wed, 17 Apr
- 2024 12:00:45 -0700 (PDT)
-Date: Wed, 17 Apr 2024 12:00:44 -0700
-In-Reply-To: <20240416211941.9369-32-tony.luck@intel.com>
+	s=arc-20240116; t=1713384408; c=relaxed/simple;
+	bh=nv1mChUkPCiO/HWkxgelFfD99Z4nAlmsWNhrqLyMFWM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qPiJU3oaO4J0WPpFXI4Vk1ccG8fTn0FHum1rNHQpd9HwuypkaS0x1oBVj6EQePbCU+ESrgWNeg1NGbOwpEqbBMZUZeY7ACXvcjarTvdh+iZtm20YAsCW6q40thP5DBMiB0zVZkXkrQRtaOv9k2UNwoL6G37uLgCJpF/Ni0207gI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85CCC072AA;
+	Wed, 17 Apr 2024 20:06:42 +0000 (UTC)
+Date: Wed, 17 Apr 2024 21:06:40 +0100
+From: Catalin Marinas <catalin.marinas@arm.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Marc Zyngier <maz@kernel.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Mark Brown <broonie@kernel.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, Yihuang Yu <yihyu@redhat.com>,
+	Gavin Shan <gshan@redhat.com>, Ryan Roberts <ryan.roberts@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Shaoqin Huang <shahuang@redhat.com>, Will Deacon <will@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: Re: [PATCH 6.6 000/122] 6.6.28-rc1 review
+Message-ID: <ZiAr0OeeaCeKMY1I@arm.com>
+References: <20240415141953.365222063@linuxfoundation.org>
+ <Zh5UJh31PlBkpZWd@finisterre.sirena.org.uk>
+ <CA+G9fYu-AjRm-BBA=8fWS8oCbBJ5W443JHPh3uddD7ea7MY-YA@mail.gmail.com>
+ <86y19dqw74.wl-maz@kernel.org>
+ <Zh61KobDt_y1O46-@arm.com>
+ <2024041744-pretender-clutter-7d4d@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20240416211941.9369-1-tony.luck@intel.com> <20240416211941.9369-32-tony.luck@intel.com>
-Message-ID: <ZiAcXCQBy3rBFKOF@google.com>
-Subject: Re: [PATCH v3 31/74] x86/cpu/vfm: Update arch/x86/kvm/vmx/vmx.c
-From: Sean Christopherson <seanjc@google.com>
-To: Tony Luck <tony.luck@intel.com>
-Cc: Borislav Petkov <bp@alien8.de>, x86@kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2024041744-pretender-clutter-7d4d@gregkh>
 
-For the scope:
-
-  KVM: VMX:
-
-On Tue, Apr 16, 2024, Tony Luck wrote:
-> New CPU #defines encode vendor and family as well as model.
+On Wed, Apr 17, 2024 at 09:05:12AM +0200, Greg Kroah-Hartman wrote:
+> On Tue, Apr 16, 2024 at 06:28:10PM +0100, Catalin Marinas wrote:
+> > On Tue, Apr 16, 2024 at 02:22:07PM +0100, Marc Zyngier wrote:
+> > > On Tue, 16 Apr 2024 14:07:30 +0100,
+> > > Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> > > > On Tue, 16 Apr 2024 at 16:04, Mark Brown <broonie@kernel.org> wrote:
+> > > > > On Mon, Apr 15, 2024 at 04:19:25PM +0200, Greg Kroah-Hartman wrote:
+> > > > > > This is the start of the stable review cycle for the 6.6.28 release.
+> > > > > > There are 122 patches in this series, all will be posted as a response
+> > > > > > to this one.  If anyone has any issues with these being applied, please
+> > > > > > let me know.
+> > > > >
+> > > > > The bisect of the boot issue that's affecting the FVP in v6.6 (only)
+> > > > > landed on c9ad150ed8dd988 (arm64: tlb: Fix TLBI RANGE operand),
+> > > > > e3ba51ab24fdd in mainline, as being the first bad commit - it's also in
+> > > > > the -rc for v6.8 but that seems fine.  I've done no investigation beyond
+> > > > > the bisect and looking at the commit log to pull out people to CC and
+> > > > > note that the fix was explicitly targeted at v6.6.
+> > > > 
+> > > > Anders investigated this reported issues and bisected and also found
+> > > > the missing commit for stable-rc 6.6 is
+> > > > e2768b798a19 ("arm64/mm: Modify range-based tlbi to decrement scale")
+> > > 
+> > > Which is definitely *not* stable candidate. We need to understand why
+> > > the invalidation goes south when the scale go up instead of down.
+> > 
+> > If you backport e3ba51ab24fd ("arm64: tlb: Fix TLBI RANGE operand")
+> > which fixes 117940aa6e5f ("KVM: arm64: Define
+> > kvm_tlb_flush_vmid_range()") but without the newer e2768b798a19
+> > ("arm64/mm: Modify range-based tlbi to decrement scale"), it looks like
+> > "scale" in __flush_tlb_range_op() goes out of range to 4. Tested on my
+> > CBMC model, not on the actual kernel. It may be worth adding some
+> > WARN_ONs in __flush_tlb_range_op() if scale is outside the 0..3 range or
+> > num greater than 31.
+> > 
+> > I haven't investigated properly (and I'm off tomorrow, back on Thu) but
+> > it's likely the original code was not very friendly to the maximum
+> > range, never tested. Anyway, if one figures out why it goes out of
+> > range, I think the solution is to also backport e2768b798a19 to stable.
 > 
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> ---
+> How about I drop the offending commit from stable and let you all figure
+> out what needs to be added before applying anything else :)
 
-Acked-by: Sean Christopherson <seanjc@google.com>
+It makes sense ;). We'll send them to stable once sorted.
+
+-- 
+Catalin
