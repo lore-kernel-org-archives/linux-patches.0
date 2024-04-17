@@ -1,57 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B087F7F3
-	for <patches@lists.linux.dev>; Wed, 17 Apr 2024 08:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD428200D2
+	for <patches@lists.linux.dev>; Wed, 17 Apr 2024 08:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713342096; cv=none; b=IDBKbpMtwCxAZ6iPhJE/xIKZf4ENXhbAQeOb/EfVtcEupogyHjDngbLTgtm/M3og/dDiqTr4LaB7X3MlFdu42DInz30WTypIZ/618V7RvsY1vEflXTMVzih2aSyOwMA93/TIsPbgnya8/9An3j6wQAvb8D4TJlwn2UjAYN+YxHk=
+	t=1713342125; cv=none; b=J60+eL7exOwV2wGuCAACBFMqG5/qT5e3/UdL7T2CYVidBp1oSr/uuTX3KdkZKTdTud4lJZ8kk1XeFrxXauk4Vv3Zq6sNYqa2uYCSAl3j5adofBROu8bngyeCiuTEWyuoAK0urmWfR6wSKFwLAnA2V5gFDcFBU4pb9zWlsUG1m8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713342096; c=relaxed/simple;
-	bh=eu2GOPzGwad/3/lfGEROqvHCUBUr+7CG1NuOmCQ8RQg=;
+	s=arc-20240116; t=1713342125; c=relaxed/simple;
+	bh=fJVFKAtjU8PYRAWhhJNVZZwZkfGyLUmuVCnAzGjz4j4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VRz+ekYlWicMcaDqVX1Dx8rFBC5gftiyml2BphnVFt+2CpDvcLjPQ4IxmrvX7v1R7zK69TsjJUG9ImVLAxAeJm/N0FrzVe8tFJwE3stFTXhLDFAfrqWuI8mz4jKMUJcsR9El/cIFn2k7KTh7hKDPGUlYzuMz2AYHCfhks51hXgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GQ/TrdyD; arc=none smtp.client-ip=10.30.226.201
+	 To:Cc:Content-Type; b=II3GngGWtIo5mB4npL6STWs9j7DRC8JcoSMuot3y2vf1iabnqYJ4UdwjxpWNU8SnFLaOEnIiOM2Yc6zq5kfDN5dGsSnEjt3j/ZjAWh6nfz+lswCQwlIWzJEzJpL2XHjg2X6m7Wsm7XUfkffS/NfAvTYOMZ8ZA6lAJzWFI/2waWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SAGmkfnp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GQ/TrdyD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577DDC4AF0F
-	for <patches@lists.linux.dev>; Wed, 17 Apr 2024 08:21:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SAGmkfnp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50487C32781
+	for <patches@lists.linux.dev>; Wed, 17 Apr 2024 08:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713342096;
-	bh=eu2GOPzGwad/3/lfGEROqvHCUBUr+7CG1NuOmCQ8RQg=;
+	s=k20201202; t=1713342125;
+	bh=fJVFKAtjU8PYRAWhhJNVZZwZkfGyLUmuVCnAzGjz4j4=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=GQ/TrdyD5qrydYrHbdpQYxJTDm7X+MozQyvwUMs04QORnA1KMTPovvdD1RyitGiCS
-	 L7s+LQ2BQt2v8D/dquUkozkh/dd+ogq5S27r+6V3sUOBMhGBLLj/VOUArhJ++yei0P
-	 M+Py3QISDfx1ZCQD745SZHoo2+KLPk0gIYjPO4OPTeGGaZsbHaxbVPs4JM2mXYwS5B
-	 OH/rANfiWCC3oKR/6IyDtaK0ea4/OMpOgPCMuZUMx+yPvoC8OWYg/IDBA0CYedakZS
-	 /lMfBhftFgkRpRMyduEKWgp8GPtCzAQ6+8iH+pzxDQd0koBjIin+M3HXgkUQfkrhhn
-	 YP7sNHkcHVisg==
-Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-5ac4470de3bso1305856eaf.0
-        for <patches@lists.linux.dev>; Wed, 17 Apr 2024 01:21:36 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXsUab7FDKgmFM9fQYAn21ptZ2T6OqV1jxhgWzeLiDLTM73JbVwVeIb1dLdiba6dEAmaiqknbT97sVkG0kosyOU4E5yctaulQ==
-X-Gm-Message-State: AOJu0YyT7j00zbPuKtZun48FHjEzjfjKR8SjnVv+NoltcDmPlEM11lk/
-	fCg3AY+c91XKAUPFQT2RnunkjAUehMWV7kwjy/RQW1sFTtoQ1AbNFr5X/w9yULwtIHDAiR4MHCC
-	tPyO+emBVU3iNnsYOfQouXGFUHXQ=
-X-Google-Smtp-Source: AGHT+IGoRTQ/V437LwNCrGiF0jtVKX86Oy53+gMmVH8pyrBe4lpDVCLLmCiyHNQiGlmHI2OMp4NTfOU9rqXtWum1qkw=
-X-Received: by 2002:a05:6820:f44:b0:5aa:241a:7f4b with SMTP id
- ep4-20020a0568200f4400b005aa241a7f4bmr14975713oob.1.1713342095681; Wed, 17
- Apr 2024 01:21:35 -0700 (PDT)
+	b=SAGmkfnpE4X+tV9vTqzVGLoVe+966WhszV5WKsHiAPm9y7v7FBoZ9TIMrKb7AZ5ZV
+	 5RMRU750/I1sNwrl1ebuSDezJFv92tID203AUvyq1yhELtM7ag0jx/ohSKzPH18bqW
+	 eny4EyHnOqgHzFau4qN05PWedaKvf9T4D/ZPnk5r1TYJAq/jVVZOcjDgS5lEZgVSLX
+	 9D3TmwdOlh5IHOJkT5spO1NVWFkBps95qDc0JmLnJ7WXm4YQdsiTpTOYe3llLLYLxP
+	 3uqZAqr4OCry9JPXMmjB9mJ+TeI7Pq+Syd4uLXTZyNyuM/g5org0ZndbQE5WZgy0i0
+	 Ir/IwIuYCZPZg==
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-6eba841d83bso82580a34.3
+        for <patches@lists.linux.dev>; Wed, 17 Apr 2024 01:22:05 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWYowcRKOzrqyWDNapdfW2Yh70TJtnZ3rnk8va4kfjyyGgzGA92q4z5E01/ZojYJ7c8hlsZ058xxYXo0alKIVkK4WoRzMRtog==
+X-Gm-Message-State: AOJu0Yx+gcXLLNTXGX6MXjMi81YpUlw4PDz6MW5fPoY9rzekXTMVnidf
+	DMNNlEFpRLCv5GoSmgSpCj29Zi5O4LSrYsepvBwBwI6CvwK/RPzZuj8k7W97k6WdY9aiJMycohN
+	0s6lik2ru8bQ+a0PSmq3Dl/jU2/M=
+X-Google-Smtp-Source: AGHT+IGOxdBQGozU3hYW410deWZT982OPluZf8gphKnDc/jI4f4/4FO3e+MUIIEUFwb/5B1vFl+v0fy1UzyxDGXysDY=
+X-Received: by 2002:a4a:e9f0:0:b0:5aa:6a31:4f53 with SMTP id
+ w16-20020a4ae9f0000000b005aa6a314f53mr13550136ooc.0.1713342124603; Wed, 17
+ Apr 2024 01:22:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240416211941.9369-1-tony.luck@intel.com> <20240416212206.9490-1-tony.luck@intel.com>
-In-Reply-To: <20240416212206.9490-1-tony.luck@intel.com>
+References: <20240416211941.9369-1-tony.luck@intel.com> <20240416212243.9910-1-tony.luck@intel.com>
+In-Reply-To: <20240416212243.9910-1-tony.luck@intel.com>
 From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Wed, 17 Apr 2024 10:21:23 +0200
-X-Gmail-Original-Message-ID: <CAJZ5v0gsU1suTkk1P16QiKqg-dj4Wna1r7h1L816BXQHVbZ7tg@mail.gmail.com>
-Message-ID: <CAJZ5v0gsU1suTkk1P16QiKqg-dj4Wna1r7h1L816BXQHVbZ7tg@mail.gmail.com>
-Subject: Re: [PATCH v3 44/74] x86/cpu/vfm: Update drivers/cpufreq/speedstep-centrino.c
+Date: Wed, 17 Apr 2024 10:21:52 +0200
+X-Gmail-Original-Message-ID: <CAJZ5v0hgyKxxA-fVjn_1NsSmm7yTOY1HPdpxTk3NL=sFpvWCOQ@mail.gmail.com>
+Message-ID: <CAJZ5v0hgyKxxA-fVjn_1NsSmm7yTOY1HPdpxTk3NL=sFpvWCOQ@mail.gmail.com>
+Subject: Re: [PATCH v3 66/74] x86/cpu/vfm: Update drivers/powercap/intel_rapl_common.c
 To: Tony Luck <tony.luck@intel.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>, linux-pm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	linux-pm@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -65,33 +65,202 @@ ote:
 Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
 > ---
->  drivers/cpufreq/speedstep-centrino.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  drivers/powercap/intel_rapl_common.c | 118 +++++++++++++--------------
+>  1 file changed, 59 insertions(+), 59 deletions(-)
 >
-> diff --git a/drivers/cpufreq/speedstep-centrino.c b/drivers/cpufreq/speed=
-step-centrino.c
-> index 75b10ecdb60f..ddd6f53bfd2a 100644
-> --- a/drivers/cpufreq/speedstep-centrino.c
-> +++ b/drivers/cpufreq/speedstep-centrino.c
-> @@ -520,10 +520,10 @@ static struct cpufreq_driver centrino_driver =3D {
->   * or ASCII model IDs.
->   */
->  static const struct x86_cpu_id centrino_ids[] =3D {
-> -       X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL,  6,  9, X86_FEATURE_EST=
-, NULL),
-> -       X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL,  6, 13, X86_FEATURE_EST=
-, NULL),
-> -       X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 15,  3, X86_FEATURE_EST=
-, NULL),
-> -       X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 15,  4, X86_FEATURE_EST=
-, NULL),
-> +       X86_MATCH_VFM_FEATURE(IFM( 6,  9), X86_FEATURE_EST, NULL),
-> +       X86_MATCH_VFM_FEATURE(IFM( 6, 13), X86_FEATURE_EST, NULL),
-> +       X86_MATCH_VFM_FEATURE(IFM(15,  3), X86_FEATURE_EST, NULL),
-> +       X86_MATCH_VFM_FEATURE(IFM(15,  4), X86_FEATURE_EST, NULL),
->         {}
+> diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/inte=
+l_rapl_common.c
+> index a28d54fd5222..59c36ea55712 100644
+> --- a/drivers/powercap/intel_rapl_common.c
+> +++ b/drivers/powercap/intel_rapl_common.c
+> @@ -1220,65 +1220,65 @@ static const struct rapl_defaults rapl_defaults_a=
+md =3D {
 >  };
 >
+>  static const struct x86_cpu_id rapl_ids[] __initconst =3D {
+> -       X86_MATCH_INTEL_FAM6_MODEL(SANDYBRIDGE,         &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(SANDYBRIDGE_X,       &rapl_defaults_co=
+re),
+> -
+> -       X86_MATCH_INTEL_FAM6_MODEL(IVYBRIDGE,           &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(IVYBRIDGE_X,         &rapl_defaults_co=
+re),
+> -
+> -       X86_MATCH_INTEL_FAM6_MODEL(HASWELL,             &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(HASWELL_L,           &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(HASWELL_G,           &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(HASWELL_X,           &rapl_defaults_hs=
+w_server),
+> -
+> -       X86_MATCH_INTEL_FAM6_MODEL(BROADWELL,           &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(BROADWELL_G,         &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(BROADWELL_D,         &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(BROADWELL_X,         &rapl_defaults_hs=
+w_server),
+> -
+> -       X86_MATCH_INTEL_FAM6_MODEL(SKYLAKE,             &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(SKYLAKE_L,           &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(SKYLAKE_X,           &rapl_defaults_hs=
+w_server),
+> -       X86_MATCH_INTEL_FAM6_MODEL(KABYLAKE_L,          &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(KABYLAKE,            &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(CANNONLAKE_L,        &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_L,           &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ICELAKE,             &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_NNPI,        &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_X,           &rapl_defaults_hs=
+w_server),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_D,           &rapl_defaults_hs=
+w_server),
+> -       X86_MATCH_INTEL_FAM6_MODEL(COMETLAKE_L,         &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(COMETLAKE,           &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(TIGERLAKE_L,         &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(TIGERLAKE,           &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ROCKETLAKE,          &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE,           &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L,         &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ATOM_GRACEMONT,      &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE,          &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_P,        &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_S,        &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(METEORLAKE,          &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(METEORLAKE_L,        &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X,    &rapl_defaults_sp=
+r_server),
+> -       X86_MATCH_INTEL_FAM6_MODEL(EMERALDRAPIDS_X,     &rapl_defaults_sp=
+r_server),
+> -       X86_MATCH_INTEL_FAM6_MODEL(LUNARLAKE_M,         &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ARROWLAKE,           &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(LAKEFIELD,           &rapl_defaults_co=
+re),
+> -
+> -       X86_MATCH_INTEL_FAM6_MODEL(ATOM_SILVERMONT,     &rapl_defaults_by=
+t),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ATOM_AIRMONT,        &rapl_defaults_ch=
+t),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ATOM_SILVERMONT_MID, &rapl_defaults_tn=
+g),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ATOM_AIRMONT_MID,    &rapl_defaults_an=
+n),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ATOM_GOLDMONT,       &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ATOM_GOLDMONT_PLUS,  &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ATOM_GOLDMONT_D,     &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ATOM_TREMONT,        &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ATOM_TREMONT_D,      &rapl_defaults_co=
+re),
+> -       X86_MATCH_INTEL_FAM6_MODEL(ATOM_TREMONT_L,      &rapl_defaults_co=
+re),
+> -
+> -       X86_MATCH_INTEL_FAM6_MODEL(XEON_PHI_KNL,        &rapl_defaults_hs=
+w_server),
+> -       X86_MATCH_INTEL_FAM6_MODEL(XEON_PHI_KNM,        &rapl_defaults_hs=
+w_server),
+> +       X86_MATCH_VFM(INTEL_SANDYBRIDGE,        &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_SANDYBRIDGE_X,      &rapl_defaults_core),
+> +
+> +       X86_MATCH_VFM(INTEL_IVYBRIDGE,          &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_IVYBRIDGE_X,        &rapl_defaults_core),
+> +
+> +       X86_MATCH_VFM(INTEL_HASWELL,            &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_HASWELL_L,          &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_HASWELL_G,          &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_HASWELL_X,          &rapl_defaults_hsw_server=
+),
+> +
+> +       X86_MATCH_VFM(INTEL_BROADWELL,          &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_BROADWELL_G,        &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_BROADWELL_D,        &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_BROADWELL_X,        &rapl_defaults_hsw_server=
+),
+> +
+> +       X86_MATCH_VFM(INTEL_SKYLAKE,            &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_SKYLAKE_L,          &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_SKYLAKE_X,          &rapl_defaults_hsw_server=
+),
+> +       X86_MATCH_VFM(INTEL_KABYLAKE_L,         &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_KABYLAKE,           &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_CANNONLAKE_L,       &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_ICELAKE_L,          &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_ICELAKE,            &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_ICELAKE_NNPI,       &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_ICELAKE_X,          &rapl_defaults_hsw_server=
+),
+> +       X86_MATCH_VFM(INTEL_ICELAKE_D,          &rapl_defaults_hsw_server=
+),
+> +       X86_MATCH_VFM(INTEL_COMETLAKE_L,        &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_COMETLAKE,          &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_TIGERLAKE_L,        &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_TIGERLAKE,          &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_ROCKETLAKE,         &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_ALDERLAKE,          &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_ALDERLAKE_L,        &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_ATOM_GRACEMONT,     &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_RAPTORLAKE,         &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_RAPTORLAKE_P,        &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_RAPTORLAKE_S,       &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_METEORLAKE,         &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_METEORLAKE_L,       &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_SAPPHIRERAPIDS_X,   &rapl_defaults_spr_server=
+),
+> +       X86_MATCH_VFM(INTEL_EMERALDRAPIDS_X,    &rapl_defaults_spr_server=
+),
+> +       X86_MATCH_VFM(INTEL_LUNARLAKE_M,        &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_ARROWLAKE,          &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_LAKEFIELD,          &rapl_defaults_core),
+> +
+> +       X86_MATCH_VFM(INTEL_ATOM_SILVERMONT,    &rapl_defaults_byt),
+> +       X86_MATCH_VFM(INTEL_ATOM_AIRMONT,       &rapl_defaults_cht),
+> +       X86_MATCH_VFM(INTEL_ATOM_SILVERMONT_MID, &rapl_defaults_tng),
+> +       X86_MATCH_VFM(INTEL_ATOM_AIRMONT_MID,   &rapl_defaults_ann),
+> +       X86_MATCH_VFM(INTEL_ATOM_GOLDMONT,      &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_ATOM_GOLDMONT_PLUS, &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_ATOM_GOLDMONT_D,    &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_ATOM_TREMONT,       &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_ATOM_TREMONT_D,     &rapl_defaults_core),
+> +       X86_MATCH_VFM(INTEL_ATOM_TREMONT_L,     &rapl_defaults_core),
+> +
+> +       X86_MATCH_VFM(INTEL_XEON_PHI_KNL,       &rapl_defaults_hsw_server=
+),
+> +       X86_MATCH_VFM(INTEL_XEON_PHI_KNM,       &rapl_defaults_hsw_server=
+),
+>
+>         X86_MATCH_VENDOR_FAM(AMD, 0x17, &rapl_defaults_amd),
+>         X86_MATCH_VENDOR_FAM(AMD, 0x19, &rapl_defaults_amd),
 > --
 > 2.44.0
 >
