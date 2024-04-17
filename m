@@ -1,84 +1,84 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B099A13C3F9;
-	Wed, 17 Apr 2024 21:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBC622338;
+	Wed, 17 Apr 2024 22:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713390842; cv=none; b=PsmZCtv5iOONTEZcInN1q0GOUQ2BgrqwOlma/6yqFqFbRwoAxtB9FflBrkabaSQAnfrbhyrBlkqltaQPG/RB/0/K32JuBWg7MlcwLH4kXkDZBXBRNZ8jSQ2InamlmeV6ol0VIq2QaxfHavA6mVcxxHXC47LFGUr4KD3iLQCmSxE=
+	t=1713391821; cv=none; b=qXCtQL4QtD8WuxJajQEujTh4orEiD8msvKEZaCo6pW16WESZGh1rr+iDrw2wzuIphyKVEY+FUV4YPMNIVrKGdVZVqf/SJbApPb9hwIoro5SCB/7MNcdFLoowbriMrj12mXzUtOZZ2uTRQlGMnIRXvjCSVyW/nQa1coFzkJeLV0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713390842; c=relaxed/simple;
-	bh=y/oIuT0t5fQdzfr7m5A1SD/C2aOn4sapsexfuFNbY9A=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qDd66lJiwvBbs2qyQ2tBfXSPP+/fNddUzT+WrmDbKU1W6FsGHIxzt7pG7ym30e7lHddF6j307jfZOFTkTT0vkY2TnNFvhKiNwmTebh4ztNbywNaQkB6UDIn6Lh8NLjlr5uroilQtMDDBKJcjA6ZqJ2Cyi/rNybZJIIcbri/+rgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Uma00F9J; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713391821; c=relaxed/simple;
+	bh=7Z20tbLxC5O4ltU3plGgmWQIn5Hvd3ptzRJFvtnJm7A=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=WRRDSTizg1VmrrAur746RJSEDkOXc7y+4RGxd5HcxfegBlAdfDomWEA9ct2VkrGMUrZT7p8SQcWWsFY0/Qtcf58F7Gd0K9KxXOVqJHSfEzwp2PjEplsnoqtCPYHTrlzXhEIA2SA1tZ9bWap/vgxu37pVd0SCGeV0okiPYkrkjh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZWHKkFQP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Uma00F9J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5350C4AF08;
-	Wed, 17 Apr 2024 21:54:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZWHKkFQP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9EFC072AA;
+	Wed, 17 Apr 2024 22:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713390842;
-	bh=y/oIuT0t5fQdzfr7m5A1SD/C2aOn4sapsexfuFNbY9A=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=Uma00F9JLR/MDDk8Ai4ss95HRMdT+/3/4abNgJvFKaR+uQOI07KPlMMMwnPDJHtrL
-	 twPGdo+SrIY+zn0ogxQob6IJxEQp6VUHInw+8Nj93souXMgPXJWyR5zrkQIFYOPFlc
-	 o9Xq5uHoy3u7EBoLly1bWdX6+gdOs5orvNsgW6lFyc/MX7nMOgZuLKzZ4G2YBHqdCn
-	 Ilxj2xiUfPiP03tLDXUHCc76yM4x9nzQWM96/mznvTUcMtPAV3Ww7JqIsF6hZKFnXL
-	 8cKlRqwuuf6u6wRZaaJIrh6vlr5kNW/Iu7j9i0Y40IWw6bWFsYRTL7hprddMUFgaB/
-	 HtzgAjksBrGSA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 17 Apr 2024 14:53:46 -0700
-Subject: [PATCH 2/2] x86/purgatory: Enable orphan section warnings
+	s=k20201202; t=1713391821;
+	bh=7Z20tbLxC5O4ltU3plGgmWQIn5Hvd3ptzRJFvtnJm7A=;
+	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
+	b=ZWHKkFQPTmNqpUCBVBhdAyFSvX4ytbFsy9UsBDAt+xa5qq6GTH9KATPc1tezaCVMQ
+	 e98oLS8rOZ3L6CPNPHib8za3LukWgNmTDlAv60TTVMx/uQFklhXmij440/UP98+kxQ
+	 0ikGQH1LtCAKhRZqHnqprF2R9KzLNxoTU+lcMXIwaqfS8kpTO44n3qAHVrd1dMe8Ep
+	 GpBcE16GeN7mdtLy3TXA03pM2/SKKKGdIAlQjckfJi4jPYhiK97KEtC3ruum1l5Eh1
+	 YuLafqMistqPiKwIXYSVz383Cp80DZRdM+9GMcj/YBNchHcGRvIPtPvbGjF0GQa1P8
+	 ZNyw21arSuw5Q==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240417-x86-fix-kexec-with-llvm-18-v1-2-5383121e8fb7@kernel.org>
-References: <20240417-x86-fix-kexec-with-llvm-18-v1-0-5383121e8fb7@kernel.org>
-In-Reply-To: <20240417-x86-fix-kexec-with-llvm-18-v1-0-5383121e8fb7@kernel.org>
-To: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
- dave.hansen@linux.intel.com
-Cc: x86@kernel.org, hpa@zytor.com, ndesaulniers@google.com, 
- morbo@google.com, justinstitt@google.com, song@kernel.org, 
- ribalda@chromium.org, linux-kernel@vger.kernel.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1061; i=nathan@kernel.org;
- h=from:subject:message-id; bh=y/oIuT0t5fQdzfr7m5A1SD/C2aOn4sapsexfuFNbY9A=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGkKLt8PhWsHZx2oyzv68Upp7qGDh1ebxX3UNlt6Ss81t
- fKyWh93RykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZgIpxPDP7vJTiUzA7wNrmd/
- cGS8+5dXT+uqyd9JTzwfT9//UJmB+z8jw1mOjeoPI0Mr/CfITf4gf5en9bnT2/hr/FFWV97LuRW
- o8QEA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 18 Apr 2024 01:10:17 +0300
+Message-Id: <D0MQPITI39QG.6OBIUUUL3AQA@kernel.org>
+Cc: "Jason Gunthorpe" <jgg@ziepe.ca>, "linux-integrity@vger.kernel.org"
+ <linux-integrity@vger.kernel.org>, "linux-kernel@vger.kernel.org"
+ <linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
+ <patches@lists.linux.dev>
+Subject: Re: [PATCH v3 42/74] x86/cpu/vfm: Update tpm files
+From: "Jarkko Sakkinen" <jarkko@kernel.org>
+To: "Luck, Tony" <tony.luck@intel.com>, "Peter Huewe" <peterhuewe@gmx.de>
+X-Mailer: aerc 0.17.0
+References: <20240416211941.9369-1-tony.luck@intel.com>
+ <20240416212202.9452-1-tony.luck@intel.com>
+ <D0MIG62V6JNV.3OZB5M1T63T7@kernel.org>
+ <SJ1PR11MB6083CC350A16FED86B109C81FC0F2@SJ1PR11MB6083.namprd11.prod.outlook.com>
+In-Reply-To: <SJ1PR11MB6083CC350A16FED86B109C81FC0F2@SJ1PR11MB6083.namprd11.prod.outlook.com>
 
-Now that the purgatory has a linker script that explicitly describes all
-of its sections, turn on orphan section warnings for it so that new
-sections do not appear without notice.
+On Wed Apr 17, 2024 at 7:38 PM EEST, Luck, Tony wrote:
+> > >  #ifdef CONFIG_X86
+> > > -   return ((boot_cpu_data.x86_model =3D=3D INTEL_FAM6_ATOM_AIRMONT) =
+? 1 : 0);
+> > > +   return ((boot_cpu_data.x86_vfm =3D=3D INTEL_ATOM_AIRMONT) ? 1 : 0=
+);
+> > >  #else
+> > >     return false;
+> > >  #endif
+> >
+> > Thanks!
+> >
+> > Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+> >
+> > You want me to pick this?
+>
+> This depends on patches 1,2,3 in this series. Boris may be applying those=
+ to TIP soon.
+>
+> Are you Ok with this patch also going into the TIP tree to keep all the p=
+arts in sync?
+>
+> Otherwise it can wait until this moves from TIP to Linus. I'm not in a gr=
+eat rush.
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/x86/purgatory/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I don't mind Boris applying this. It is very unlikely to cause any
+possible merge issues with other patches.
 
-diff --git a/arch/x86/purgatory/Makefile b/arch/x86/purgatory/Makefile
-index dfc030a4cca9..a6c8239abcba 100644
---- a/arch/x86/purgatory/Makefile
-+++ b/arch/x86/purgatory/Makefile
-@@ -17,7 +17,7 @@ CFLAGS_sha256.o := -D__DISABLE_EXPORTS -D__NO_FORTIFY
- # When linking purgatory.ro with -r unresolved symbols are not checked,
- # also link a purgatory.chk binary without -r to check for unresolved symbols.
- PURGATORY_LDFLAGS := -z nodefaultlib
--LDFLAGS_purgatory.ro := -r $(PURGATORY_LDFLAGS) -T
-+LDFLAGS_purgatory.ro := --orphan-handling=$(CONFIG_LD_ORPHAN_WARN_LEVEL) -r $(PURGATORY_LDFLAGS) -T
- LDFLAGS_purgatory.chk := -e purgatory_start $(PURGATORY_LDFLAGS)
- targets += purgatory.ro purgatory.chk
- 
+>
+> -Tony
 
--- 
-2.44.0
-
+BR, Jarkko
