@@ -1,115 +1,86 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B704365BA8
-	for <patches@lists.linux.dev>; Wed, 17 Apr 2024 08:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBB56BFA9;
+	Wed, 17 Apr 2024 08:08:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713340892; cv=none; b=ucQ3hA6kGQ3IHPIPm43fBJs9mwIprL4Za/nEMokaK2Ny+bJZffN2WIiNexRbdIvh5LAkg3/0NMaRyLi2L0QKAz5SFoqrnvpKxh+nHaMVznLCymImKYJ6nGMDfM0Re5eFuQNBPJbBncD3w2Srs32D1tYhMG6cH5Qgzilm0eOGasc=
+	t=1713341283; cv=none; b=iwXxsmS9t62FbluUUfmccRWjpcplCwJtJpIRTy70oF280ncMX3Zf3L5hwxqheNgJ0jvjPd8dIBFgV94mQWAYxGsvYOsW8FMzYBg5TFGkzjreIBBJ6LfOWRGQ8dq3vfiZevehOZKStWYCSnleEzNwzAeYS72M0xOkh/3wMbWMUsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713340892; c=relaxed/simple;
-	bh=+AHxkBxgK0JVVQSGYJS1zewwUaQq0VBfzWVYWCsdqJ0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AFgeov30MJeS0b4qNI5UjKDLkKogW2E9bQ0y8LWTndIJ83eXXi83cU31JlCS5kjE47HutZC6eiSLHYsSyx9x6fHrna/Rs0Jvs90uNiLhEODdBLlWR5fl2cjVkn5rQE1WLfMn7alvvyyhVSjB5AFBxxP02jo53q/6Nrl2DQapXiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mzMNYHiF; arc=none smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1713341283; c=relaxed/simple;
+	bh=DHm8Ps55G9Fj9QrWrNjR73du8vQp5pj8qoxp4e93/lA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IInerFekIqBJNUnysbHwV739Bb5YgcrNHEtolPOwAYdaoWW76YpcRiB4jDuqYg5+IEjhAgYGBhzc0YV+OdpLQ6F2j2OYVGu+ggat/ZI8aWzVh33dyJFfzDpZfjS+uaJct4jmouOtv0ew2UVl1UY7Tr2N3cL323kuQrWhJYQ85Vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MfHfTqRE; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mzMNYHiF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713340889; x=1744876889;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=+AHxkBxgK0JVVQSGYJS1zewwUaQq0VBfzWVYWCsdqJ0=;
-  b=mzMNYHiFIB3UQWJPN3grGTiBRUcZaBshJGEpUNghduJHcpM79o2+8HrO
-   W1Kp8Dw6K756ATSyTEsqweliioO5z8imzs0ZbBu7XPuYwBzHKBkK3M4rQ
-   C70tZXZCSTSQRzi/6r/Z+GCpXxVmJzT/Bf75bQxTv42ZIqKCbVe/CYeJW
-   OJTUfvHkKBWfIxZLLEPt8Oe+ex6/hYkA++t+xFh225+fISJxFJmcOUSEX
-   CDCVvPZOxbjJlOxM3Etyfz8laiNKNZGMttu4hB6HUKR2jOrR7K33X4Mec
-   slsgiQEKZsPA0tVw0IcGbpOGRxFCV5SfyeNXQqwksUTKFeBJN3XEItKf2
-   g==;
-X-CSE-ConnectionGUID: /DcMKm4ITkCF1jr4vMhuxA==
-X-CSE-MsgGUID: lIgFifLqTn6e9zC6MKdmHQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="8645468"
-X-IronPort-AV: E=Sophos;i="6.07,208,1708416000"; 
-   d="scan'208";a="8645468"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2024 01:01:29 -0700
-X-CSE-ConnectionGUID: B+QfucwGScGx7lVtv3A5OA==
-X-CSE-MsgGUID: Fe65QYkKT6Cu91ekTALwTQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,208,1708416000"; 
-   d="scan'208";a="22619310"
-Received: from aslawinx-mobl.ger.corp.intel.com (HELO [10.94.0.53]) ([10.94.0.53])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2024 01:01:23 -0700
-Message-ID: <f75809bb-1594-4bcd-9362-5aee8df04375@linux.intel.com>
-Date: Wed, 17 Apr 2024 10:01:21 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MfHfTqRE"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a555faf94fcso24085866b.0;
+        Wed, 17 Apr 2024 01:08:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713341279; x=1713946079; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DHm8Ps55G9Fj9QrWrNjR73du8vQp5pj8qoxp4e93/lA=;
+        b=MfHfTqREzMANo5HVD3f7aY9qcD6bCC/ZGFGhfOJAhtYUAIJ1zMeX2DUCR6LPMTuVwi
+         F34HDdaZkbof8a1CZEl4WtpFg80/yAIYXL6IdzRiYBjxLqK51g8YxFDKSjcW29wROr6z
+         RphEb6RinakUGYSpUFDHCc3nnRbkuF30wyzhNe7zC6KM+WKHqxrFw5/WbF4exeOQFGLu
+         sLVl0EAPcLwRBzJsbVy3AwqX9XhH3S3fX7m6p3XNHYmDHdvHhWVLmsHFLFvDGV10rac3
+         Omn25cfe78lQyJ1KPvWeu92KdGozKz6Bzt9f1U+/pb4Qt0QWwk+gyrj/NV4a0WVDxcag
+         M5xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713341279; x=1713946079;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DHm8Ps55G9Fj9QrWrNjR73du8vQp5pj8qoxp4e93/lA=;
+        b=Nsx96wBwcvF8fErTfxuW52BAYqF2TbMIGFdAWyubUmEcWDHGpWpzmff4txVYEu+dbN
+         S7kD2PXSrsd77f+zm4KpQ+59rB6xwzVOqG0HcVOx5yfnfIPozD1z+nuYhsTtTGkySt16
+         gl+3JQUzh2CZnt8AU6QgNr/7UA/9kpY3dqYjnMAmMRwNEwxxTFhRvT3VD3V6ZgMqoyyc
+         lGM818IKesEwYSt30spk1NPYJpCNU3/XLmm7cLgzsp57P6Dp5tYxwKMnJ4K9Fhgtej3m
+         hjnDxt4Al4OwhGA2WQ0d9n8zWilR5xS4E/INX7xHtVYW/9rgfEXcsHXN4WfYbyYveL64
+         idLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUt6yfPAA1hfYcuz7mYylqs6fgv2wmC7FfpGh7mgQRFkCw1xR7Vk9UZNpGrT+ffttrcPlpiufq/EuhBMWRqs8ZJ4kX+mNDPsFeKRXD4Tbmx5CAXFZJwe+ls5kRnpR6LrZeQdylVFu0=
+X-Gm-Message-State: AOJu0YyY2EEKXisjDN8O4cSdlztO5qiu0sS/2cmmOnenJRKwrxtgeode
+	6dtbnqXVTy5InWQcQjU9zkGV7g+qjDCUPOOiteGzfjEXez3cF2FSEpmTVGYaptmEnjYQfhyhSZK
+	F5bPu1WWZNqOtUw+4Pm8vz1opyYU=
+X-Google-Smtp-Source: AGHT+IEynMUl5J9HloIF7Lmmtb9Np+ui5Xjtf47XvRiYkRJSWfelm64saMncMNCznjQRG+iBvCfWr77dG8JoXMd7AzU=
+X-Received: by 2002:a17:906:b358:b0:a53:4cae:e40 with SMTP id
+ cd24-20020a170906b35800b00a534cae0e40mr4590024ejb.25.1713341279014; Wed, 17
+ Apr 2024 01:07:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 71/74] x86/cpu/vfm: Update
- sound/soc/intel/avs/boards/es8336.c
-Content-Language: en-US
-To: Tony Luck <tony.luck@intel.com>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>
-Cc: Cezary Rojewski <cezary.rojewski@intel.com>,
- Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
- Liam Girdwood <liam.r.girdwood@linux.intel.com>,
- Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
- Bard Liao <yung-chuan.liao@linux.intel.com>,
- Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
- Kai Vehmanen <kai.vehmanen@linux.intel.com>, Mark Brown
- <broonie@kernel.org>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
- alsa-devel@alsa-project.org, linux-sound@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <20240416211941.9369-1-tony.luck@intel.com>
- <20240416212257.10009-1-tony.luck@intel.com>
-From: =?UTF-8?Q?Amadeusz_S=C5=82awi=C5=84ski?=
- <amadeuszx.slawinski@linux.intel.com>
-In-Reply-To: <20240416212257.10009-1-tony.luck@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20240416211941.9369-1-tony.luck@intel.com> <20240416212247.9949-1-tony.luck@intel.com>
+In-Reply-To: <20240416212247.9949-1-tony.luck@intel.com>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Wed, 17 Apr 2024 11:07:23 +0300
+Message-ID: <CAHp75VcQvNqaTj6GTNmhoMbTj-qbn=WX7OSuRwiPaFO5pzPd9g@mail.gmail.com>
+Subject: Re: [PATCH v3 68/74] x86/cpu/vfm: Update drivers/staging/media/atomisp/include/linux/atomisp_platform.h
+To: Tony Luck <tony.luck@intel.com>
+Cc: Hans de Goede <hdegoede@redhat.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Sakari Ailus <sakari.ailus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-media@vger.kernel.org, 
+	linux-staging@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 4/16/2024 11:22 PM, Tony Luck wrote:
+On Wed, Apr 17, 2024 at 12:22=E2=80=AFAM Tony Luck <tony.luck@intel.com> wr=
+ote:
+>
 > New CPU #defines encode vendor and family as well as model.
-> 
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> ---
->   sound/soc/intel/avs/boards/es8336.c | 7 ++++---
->   1 file changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git a/sound/soc/intel/avs/boards/es8336.c b/sound/soc/intel/avs/boards/es8336.c
-> index 5c90a6007577..6c86c581877e 100644
-> --- a/sound/soc/intel/avs/boards/es8336.c
-> +++ b/sound/soc/intel/avs/boards/es8336.c
-> @@ -18,6 +18,7 @@
->   #include <sound/pcm_params.h>
->   #include <sound/soc.h>
->   #include <sound/soc-acpi.h>
-> +#include <asm/cpu_device_id.h>
->   #include <asm/intel-family.h>
->   #include "../utils.h"
->   
-> @@ -153,9 +154,9 @@ static int avs_es8336_hw_params(struct snd_pcm_substream *substream,
->   	int clk_freq;
->   	int ret;
->   
-> -	switch (boot_cpu_data.x86_model) {
-> -	case INTEL_FAM6_KABYLAKE_L:
-> -	case INTEL_FAM6_KABYLAKE:
-> +	switch (boot_cpu_data.x86_vfm) {
-> +	case INTEL_KABYLAKE_L:
-> +	case INTEL_KABYLAKE:
->   		clk_freq = 24000000;
->   		break;
->   	default:
 
-Any chance we could adjust topic to follow subsystem rules?
-Something like:
-ASoC: Intel: avs: boards: Update defines used in es8336
-or something like that?
+Thanks, but I would rather see this using the following
+https://elixir.bootlin.com/linux/v6.9-rc4/source/include/linux/platform_dat=
+a/x86/soc.h
+
+
+--=20
+With Best Regards,
+Andy Shevchenko
