@@ -1,92 +1,107 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91662744B
-	for <patches@lists.linux.dev>; Wed, 17 Apr 2024 08:47:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98BAF132803
+	for <patches@lists.linux.dev>; Wed, 17 Apr 2024 12:59:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713343641; cv=none; b=lCa2bPg97ePSksnKr7K4EJLTiAbe2Qrr8gcTv+kOisu4L0lh7B4/CcFOhydDl4JovWUJX7NxFrqxU0Au/DtvsrZsqlszQpajaEhrmEyPjEWsAv+VB4nSGlfp+AohSLfOCTRy+9Q7pU3prLrsh1PNjDJ0hWcN7bajLTOzT6vTc+0=
+	t=1713358767; cv=none; b=m0417BN+GwcZbxNDjmzVk0VRev4fu6//gxY5Kmnn/83qwanBkb4kY0qu8Cku/nVfGIeDsuoW6U7IOia+r55iBuO5wVzLhZAon7dnLG+mqlvQ/nkPhsJI3Xot6fRKgoE7AXw3HxUpctrToR/1X9p5gl1cHwUxnv1X0GG7y1ak/0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713343641; c=relaxed/simple;
-	bh=A5ttHuzOe/HMJsBE4szfcXeW6bosf6khB8tSfgYBqUc=;
+	s=arc-20240116; t=1713358767; c=relaxed/simple;
+	bh=HFvWvay/5DDWO9T/F/109Vc0YMZS09zONeLb7BQUvMU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cCrjCR1rI3bPsZwAZuiZWIzgVaGDfYzt817bJS8TIy0Ki2+7RmqpWkfPbzFh2yKB3Wo3evkdNXyC+9+9Av1Xrhsz1lATFc9PxKTB7be/F5yEDo+yDdozC+k+FEUXNZERX2kWHm1XpioaBk+AylMkQEuG8RyNzxS2tlxRyNxX0NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XtnHhhYt; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XtnHhhYt"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713343640; x=1744879640;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=A5ttHuzOe/HMJsBE4szfcXeW6bosf6khB8tSfgYBqUc=;
-  b=XtnHhhYtYNbnP7TDIdHKTkZdYpuXA2B0tErxWuqfF6ZViWO7zx1WWEDS
-   qHJ/Q+m2MIvGl/6WPgLn6J5wY/eikuzIf+UjNwvHbAe1EYY1tZ9lS3C6m
-   TtaU65wpTUw3yb8lDjzqcDsH8y/lI2gfnDBD9oMGEa1QHX5A4M0PRBbOo
-   fvzQroLFpklxsWoKBJOwVEJJUkjp82DXhduLCr11hcRsizOf24ppfF8dl
-   45m5+HSJmNiwgRY0owlibrp5MJnd/mcVqlpEReEdl76jWPosECzIG3AKL
-   pXhrZbp2f3ZXDe4C/O3gxC1MP9ceEun/DNmdKHwf6FT9JWwKPNC0hczWi
-   g==;
-X-CSE-ConnectionGUID: VlcPtdcWSuGJ0UEAKQztFg==
-X-CSE-MsgGUID: i72hlvGIQdiFh6YNuvBtow==
-X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="11766170"
-X-IronPort-AV: E=Sophos;i="6.07,208,1708416000"; 
-   d="scan'208";a="11766170"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2024 01:47:19 -0700
-X-CSE-ConnectionGUID: 1linExoaQLywdjNzzQ9S8g==
-X-CSE-MsgGUID: NQUFbEeBTP+ECIGwdkj68Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,208,1708416000"; 
-   d="scan'208";a="22627863"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2024 01:47:17 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1rx0wl-00000004y2U-0XuF;
-	Wed, 17 Apr 2024 11:47:15 +0300
-Date: Wed, 17 Apr 2024 11:47:14 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: Bjorn Helgaas <helgaas@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v3 52/74] x86/cpu/vfm: Update drivers/pci/pci-mid.c
-Message-ID: <Zh-Mks49D2az47xT@smile.fi.intel.com>
-References: <20240416212219.9643-1-tony.luck@intel.com>
- <20240416213813.GA171111@bhelgaas>
- <SJ1PR11MB608361540C2BE3D9A68FB7C2FC082@SJ1PR11MB6083.namprd11.prod.outlook.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=WFF9C4b35655I7HjP5++VTf0TT6GTCYlY/nbbvfSY4hf9m5pKoGueMMj8nm4P/bRs5PGgj2Y8WddQG5Ng/2AINItIqcElAIoSZyRoQwy/T4QkfIRt4XCUehUb78l7fsBKnOxz1PTYDq+fxEBbiY9zZeVvzlvbQr53RWmnBG7T70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 4EE061C0080; Wed, 17 Apr 2024 14:59:17 +0200 (CEST)
+Date: Wed, 17 Apr 2024 14:59:16 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	alex.williamson@redhat.com, seanjc@google.com, jpoimboe@redhat.com,
+	michael.roth@amd.com, dsterba@suse.com, aric.cyr@amd.com
+Subject: Re: [PATCH 5.10 000/294] 5.10.215-rc1 review
+Message-ID: <Zh/HpAGFqa7YAFuM@duo.ucw.cz>
+References: <20240411095435.633465671@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="WebcVGuD/i7sDG85"
+Content-Disposition: inline
+In-Reply-To: <20240411095435.633465671@linuxfoundation.org>
+
+
+--WebcVGuD/i7sDG85
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <SJ1PR11MB608361540C2BE3D9A68FB7C2FC082@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 16, 2024 at 09:51:43PM +0000, Luck, Tony wrote:
+Hi!
 
-...
+> This is the start of the stable review cycle for the 5.10.215 release.
+> There are 294 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-> > I guess "vfm" is
-> > some kind of a hint, but I don't know what it means.  I suppose it is
-> > for "vendor, family, model".
-> 
-> Yes. vfm is indeed vendor-family-model.  Agreed the commit comment
-> is lacking details without the context of the cover letter and the other
-> patches in this series.
+> Alex Williamson <alex.williamson@redhat.com>
+>     vfio/pci: Create persistent INTx handler
 
-You see, TLAs are cryptic, that's why I internally proposed different naming.
+This introduces memory leak in vfio_intx_enable() -- name is not freed
+in case vdev->ctx =3D kzalloc() fails, for example.
 
--- 
-With Best Regards,
-Andy Shevchenko
+> Sean Christopherson <seanjc@google.com>
+>     x86/cpufeatures: Add CPUID_LNX_5 to track recently added Linux-define=
+d word
 
+AFAICT this is not needed in 5.10.
 
+> Josh Poimboeuf <jpoimboe@redhat.com>
+>     objtool: Add asm version of STACK_FRAME_NON_STANDARD
+
+Asm version of this macro is not used in 5.10.
+
+> Michael Roth <michael.roth@amd.com>
+>     x86/head/64: Re-enable stack protection
+
+This is preparation for preparation for SEV-SNP CPUID patches, I don't
+believe we plan that for 6.1.
+
+> David Sterba <dsterba@suse.com>
+>     btrfs: handle chunk tree lookup error in btrfs_relocate_sys_chunks()
+
+(This applies to 4.19, too). mutex_unlock() is needed before "goto
+error" here.
+
+> Aric Cyr <aric.cyr@amd.com>
+>     drm/amd/display: Fix nanosec stat overflow
+
+(This applies to 4.19, too). This is wrong. It updates prototypes but
+not actual functions.
+
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--WebcVGuD/i7sDG85
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZh/HpAAKCRAw5/Bqldv6
+8jQNAKCgA7GiY1skcB6NPefx12bHsL8tcgCePTp6JbCq8u+7xNLXCnN/mluCLio=
+=GdgS
+-----END PGP SIGNATURE-----
+
+--WebcVGuD/i7sDG85--
