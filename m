@@ -1,113 +1,201 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2052.outbound.protection.outlook.com [40.107.96.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9467F1635C7
-	for <patches@lists.linux.dev>; Thu, 18 Apr 2024 13:52:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713448378; cv=none; b=UsucGsiZkFPBLoE8a+xLWX4flqiJ9iVtnr1A2MAg+ODKftWAW2td5AC4R61U2VNqzDegUIshOjMFVPP2h+NpwMpghp/+m/eWHTLydqc8dmBXC8ImRRuOll2RMNrCLAyqJcOSieVJJiMhalJu97e3AQEQQrnBMXa7IwXxZqQz48o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713448378; c=relaxed/simple;
-	bh=OOfclcgBJP4rjtOQmlOeafKYzgvn9V5QPUbGwmpD9H0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HKFC7pO0qrUH4TVvRcQBVwm/Ej9FU/DWTpbX173XTEgXM/2NyKCopnMsRkHy1wEdKSh/PosFnGVwrZ7SV+U3CBKzIZqovFr5CoNX6BBijrFOu27Hg4aca6vzBgE3q1qwPLFzgy2Kgom9xS9MzpHWI6LZJKLAxs4lq/ZkjUsr0Oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R2gUycX8; arc=none smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42501165FA9;
+	Thu, 18 Apr 2024 14:28:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.96.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1713450514; cv=fail; b=fhdDZH8+yDtkVbNWLEDJbsz9/rG4gn91fUshAerTeJgw/dfMhMddHfrWubwPWi1IixfgX7Z4D+yHWofOrpHYdPegkIA9tAfrTpx7N+0Mij3YurcgGdMZSiPBnlaf4Q1YB6P47QmAK07UoH9SEdJWYpDYoX3TUS6abHM/1zZRM7E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1713450514; c=relaxed/simple;
+	bh=QDmhH+oSyDvTGTJCQRWfDJWqFK1iBFw7Gmz2TaKKLbo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=XKFygq6huIQ4X4CiXpRyowMgKcpR6uFIFZYOq5oylUGoVQ5GvSRK2q8bZCIrEARBaSFQxfMV2mRzraEn+yrSFuQn6oY6UXlvLkoOQ0Zn2ADIRpb3MKc/Mu0i41kBQ2l2354pyeAno4YMRkrLRQ9GWZj6vTgBx9TJz5YcxLQ4xf0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ahTEtrC8; arc=fail smtp.client-ip=40.107.96.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R2gUycX8"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-6ecf406551aso795698b3a.2
-        for <patches@lists.linux.dev>; Thu, 18 Apr 2024 06:52:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713448376; x=1714053176; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QyA3fzOku9oWwA8R0hs2Mphvf99QfjgFFiLxSpYNLQc=;
-        b=R2gUycX8Mi75YPHmYxB5bA9z4A6REeljLVxCw95jWIISqGrbk9qvsgVAmMPOXht9Zz
-         M5V7L/KL/OteP+Ff7oEGUrCH+RcsKuaMCeZ4YoMrk6uXYO9ovtoN0tPPP2oCfS3VsUgR
-         n05il/0C71fidDjyWFyvRMcOFWhFJ2+hYipVvkhk4CU4Y/FntSudT2/Ev6/p7RcBx8Qq
-         u5G5WBdBMIyqt4REf9uatrMMiPjH9DEzSz2UIUaum/sRmq82XloaY9Q4bRCx1A3R24YB
-         ijTpin0xtHe3HBdpMRP1kmnbxVoI5tquVrP/kJGYwiW8FtD+CSqiMT7xotuKCEDpmkH4
-         sTZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713448376; x=1714053176;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QyA3fzOku9oWwA8R0hs2Mphvf99QfjgFFiLxSpYNLQc=;
-        b=idseIffuGhqPIsNY1nQKNAPmwNK9C5dIp/1Xvi7JawzeltyDOKl9RGbMm3R1sBMBTw
-         ZlMa7T1psPUHxwJUsw5kZUyGo4Ok22G/edsn74opkliWg6u5qY2HZ4yA4JV9uOuPb8Hz
-         vJtPfkuDIMi3kH1uLStcnyTMyKx9AeeZvOMwd3ChkWGQylOccHHVAYgmUfdiMq3yIV43
-         GSrFZvmjbgqptF9baC0CRTQvWwFTJRHe8BhOabyPwYLcJ35VJoO8RdkR17mzIPQIgQMy
-         LL6V6lI5xDqCQzQ5RZbSrgG+cELXeRwtgeYn5lnRRNYG4DF+9OkO9HWtLhzUE0KnK4ar
-         4a7Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUn3bdY3LgZg+NMRdBJY6UYk8bGo3GWdpGPfEaOHyYcD2ecE60w24Oz53GNE8e0fVKgZbkzp+WcE1aVZt3XhakdkALDv5av6Q==
-X-Gm-Message-State: AOJu0YwiGVDLclmf9vZ04nMe97S36FProuqTMXnOgb4NFz3iAhZsBptP
-	hpXScX83dWs5bbD4sOCXtYaj+y9u3lelrLxR+EVYBR68L3DTnFCsrv9q1w==
-X-Google-Smtp-Source: AGHT+IFKjXEU0yszXeRAs3pRq6UlLYqDpFbI6NzJmKcNmljEtyYAhAhxpmnGaPhWktOFaXkyMjn/2w==
-X-Received: by 2002:a05:6a20:841b:b0:1a9:ccf8:6ea5 with SMTP id c27-20020a056a20841b00b001a9ccf86ea5mr3873023pzd.8.1713448375740;
-        Thu, 18 Apr 2024 06:52:55 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id kg15-20020a170903060f00b001e28d7329e6sm1530208plb.91.2024.04.18.06.52.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Apr 2024 06:52:55 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Thu, 18 Apr 2024 06:52:53 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: "Winiarska, Iwona" <iwona.winiarska@intel.com>
-Cc: "Luck, Tony" <tony.luck@intel.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"jdelvare@suse.com" <jdelvare@suse.com>
-Subject: Re: [PATCH v3 50/74] x86/cpu/vfm: Update drivers/hwmon/peci/cputemp.c
-Message-ID: <f1d02e4f-a947-4af1-a7c0-9f7c12c57b3e@roeck-us.net>
-References: <20240416211941.9369-1-tony.luck@intel.com>
- <20240416212216.9605-1-tony.luck@intel.com>
- <5869d164-25c4-42e5-bf87-c4aeeac57388@roeck-us.net>
- <SJ1PR11MB6083D0DFBC7DE286F986A453FC082@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <8690bcea-3ff4-49f1-a671-16583b8d241e@roeck-us.net>
- <SJ1PR11MB6083C8D12885057BF3A0A6AAFC082@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <7cb09d67409c94284928243d8ffb1f8a3128d849.camel@intel.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ahTEtrC8"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=D40KSNC+ZZqRsZIpX+vd+x0z/gveKMXmGKCa7EK4D3Je0vYSbbzTKuGp08aK9CQWtOQPXydzO/I/ZPKJDhDS7gF98tmzbwMSG3fGZ4vspvIIffzqJFpNLIaAjHMZo/FsyAIx1KAxTinKJ9hV4aKT7Q4mTLvwpEueAxz4+gUaWYVIC/ptYxkJ/tx6g5TehlZ3LdXftpuYlUtTKVag3M7HTdsY9tIaghXyBs64tE+0x0g2ecaatV/5mEfeNrnuhvYDplEYTYtCXwLxwQOjTmx4g3gQauLSppgQbtBIqgc50YNTtC/1x50aR6WuB6tclrTg7JJ3+dm2kkzAddtVsE+1DA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OTOesFcMPCp+Yt803ABSueWVCCc/mk1duZ4b3bvYSiQ=;
+ b=E0D4YOtKBZ6RmabV2B20PuyMu/FSYUyy2LFeNRfFyXbjJlQgV3JtAzHWkaKVtoyv7nDw13BvJTkcZrLH6Q2jXvvJSk1shRNI8pF+bKln+X/res4pdlvvVcY6jhqimpoBD/rCiP2IuDgQmHh/5mSCSHELZcsWsGrPBJeyozuIiXe7WtDQkKDr3n0jY+xrM8ZFkHTfk7SJWESS3tzKWMu5wvUdLDNJxgw76tyx1PKzFtTmPkgj/hR7URiD9vqAT3r+Dyib+4tpluv5uBykQbKHVZ5dM9OtP4e8Is3a2BowW7SNwOBZ4qE+h2V36ja0iWwPRxzpFKmrcI8DRLlnSFnd8w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OTOesFcMPCp+Yt803ABSueWVCCc/mk1duZ4b3bvYSiQ=;
+ b=ahTEtrC8af/FMWZ3Z+IFDc/nygw+PLlQiXJ//RMKcwaFqpxGMbGnGOYYQNVDP01frci7EAN5/iYshJ75D0Nfq/t7VPE5k1EOYOTzLpSgGKk0ym9IXU9Zfz68uOGfTlPqmSOP19Id7i9inwEYqMMSg6fjAfhtulig+V6+dapTXwgVKxC2Aw5oip7QfxegcAHhXfpelcJp61h6t9sgFkiaTEYqJR92jtAk7pqrpSVY0T8MF3Kv2IjyN0roTpAHy7j4dP/HkQ8k8dkK+X9huaxA8ooLX6NvQnVfczJ7FgMh3HVsEQKQzyG4FMJBKk2SdBXhT2fDisa1gU6fXhMbLIexBg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
+ by CY8PR12MB8242.namprd12.prod.outlook.com (2603:10b6:930:77::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.37; Thu, 18 Apr
+ 2024 14:28:28 +0000
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::6aec:dbca:a593:a222]) by DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::6aec:dbca:a593:a222%5]) with mapi id 15.20.7472.037; Thu, 18 Apr 2024
+ 14:28:28 +0000
+Date: Thu, 18 Apr 2024 11:28:27 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Michael Shavit <mshavit@google.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	Eric Auger <eric.auger@redhat.com>, Moritz Fischer <mdf@kernel.org>,
+	Moritz Fischer <moritzf@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+	Mostafa Saleh <smostafa@google.com>
+Subject: Re: [PATCH v7 7/9] iommu/arm-smmu-v3: Move the CD generation for SVA
+ into a function
+Message-ID: <20240418142827.GB3050601@nvidia.com>
+References: <0-v7-cb149db3a320+3b5-smmuv3_newapi_p2_jgg@nvidia.com>
+ <7-v7-cb149db3a320+3b5-smmuv3_newapi_p2_jgg@nvidia.com>
+ <CAKHBV24s1j_AeAEHxYnGdMAERs21Z7iBMwG=ihaZmgNKsrA4SQ@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKHBV24s1j_AeAEHxYnGdMAERs21Z7iBMwG=ihaZmgNKsrA4SQ@mail.gmail.com>
+X-ClientProxiedBy: SA1PR05CA0001.namprd05.prod.outlook.com
+ (2603:10b6:806:2d2::6) To DM6PR12MB3849.namprd12.prod.outlook.com
+ (2603:10b6:5:1c7::26)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7cb09d67409c94284928243d8ffb1f8a3128d849.camel@intel.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|CY8PR12MB8242:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3147d3d1-63f2-49a5-332c-08dc5fb3d08f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	lxiiHd2A4opopSqXdi0d1cOikZBRDqPrRtdLOJNzIbsZSm4WBxVl4FVhmw/TiiYEZK5I0CX5N1yD1TLVdW8GoORUwl3D/fjLVL7EPXXmn0yOFFgZ2TbQc2nnXw1GsG7AWzJxZ8ftThs/W4/9agg1+dlXtkz34qdsKWebxTCLolVwTtP3pvCWpLI92+9nA+8nEjdg3nbluheh+au20OpDkMdoM0NP++oxoAWfeL9G494dQW2g4kqPn1RnMuyWGnn7b7xReFH2S7Yl7gnuMoav1xlEr/8WhANrCUSdEF2AWPWx0nZAgxogYoHyGa9QzoeKivm6Jzn7pAFJBOHg63iFxABrVCRIBbSAhRwn8y10wpPoknRuSVRJLPUfJIkmBFcuTL+URnExrdXte9VZ8YNCfEFhPGFKA8G5mdUs5Pc40+rixj+MkHmVotDra8K6c1b/v4u9IwaA6cnfbgEDa9aOTupUmyjUe4AJ/eUkj/vrPcSDx9mFD57vpbVODZyqzo4FMPFFupVSZHEiGhIsZONlZbbnuqG/ggi6tKLzBqXV8WlF2eirfZKgZuWdJmGB/Bbul8BKYFvjvViAwPgCBZjrggLAmme44act3pvtdFRJ9e9esCPSYhSEE3WZrFL3FV/r9ouzsT2EEgcKRk5CEybquyvojzm2mx5AOmZkXmQHt/4=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(7416005)(1800799015)(366007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?nFXYuAX2YYULN9aXp40ssBPOC/bo6F9fouS/j0hQC5edtBJmZP//N5LPs5jV?=
+ =?us-ascii?Q?gsDsDOvSOI2wyLStz1JoxK81VU8hOTRbgVB5GHhqOIBmbF1VPU4AcTy04S1i?=
+ =?us-ascii?Q?GsxKrN50U6G/9PnVzKTP/Bm3o0dp7UzQ7DCbPwv8sjgCQW2g7sH6YEfqrCGE?=
+ =?us-ascii?Q?KYlMuDtd+6FxYIDtjHV9yaxs4CeiQxlEgHzvpY+FIN/RxIdQhETg/PTXwLUQ?=
+ =?us-ascii?Q?bFTVZS3T8JiYQNrBZQ+1YMnqaElUbzBWGk+xY4dKmfUTJkzdDbQuY6McTvty?=
+ =?us-ascii?Q?IpeYKPJuYlHeCPhslJK3H2+3vGpLxGu8wNojUyL9JSOke0OcUSo2GvPIlLkc?=
+ =?us-ascii?Q?RunnobhpzOXfM+yU+v3t5ecS59CiIMBC/DY0gzIjluWVy/QWwi+FdFa5Owqo?=
+ =?us-ascii?Q?Cg7+3LwC1+quqZkat+NiGLbdF9z9by12AMp4jy0XRNPiW3iNGHFHa8FKWC+I?=
+ =?us-ascii?Q?1nK1ahVT2actIvY5vqAIofc5jk36Y44ErNP/kYVMvE2iZ8U53L6KjKEGPlio?=
+ =?us-ascii?Q?VYjobyDgB3I9JsJ3rQNiNsAgiBrFTsFRwTKYzJWOvFmDcKAbdi+/nuTCwh3g?=
+ =?us-ascii?Q?xdqaRc8Vfsody//OfJyu4hQ2PLK/e+63FdeFCmMT8gfOtFqmGLZQfATTMpYa?=
+ =?us-ascii?Q?B2LAD6EaIcXSozaTqKIk0IZlT3SiCr9UBxmbaQKH9lN0V4z0aDeZLAzio9V6?=
+ =?us-ascii?Q?ZpkVd3nNlAj0zK7sWFVXrTmWV+Y6Zo/TZmVUJEXWSOv9ADR8YTkWPlrg09ig?=
+ =?us-ascii?Q?j2B8WYhxnrjtN/Zxjnmnw0euPhLY8qnaOy7A6PpqvcsuYC80UxOZT35qFoWc?=
+ =?us-ascii?Q?rCkjEv64+vvgUuIPaM6+ZKNbeq0HTSyS+HprZa0N2pDcPLumu3HGhOtx0Tvy?=
+ =?us-ascii?Q?xJcoSKj8raq51qQkY4OmjgyaGMtDiCs21l4Apdoa9TkEUT3eP76CMfMIAMdu?=
+ =?us-ascii?Q?UN7UGnYFXWy1LWf8S75XspBpjbe8fuQt8UvcG8Oo5SX+MsVs0XH/EbQPxsS9?=
+ =?us-ascii?Q?yn08eSDHjpHiSKirJv7keJDSturheSmjT9ccMzmIYr08Ebkgfdj6DRj1eTca?=
+ =?us-ascii?Q?N7j42FLl6sQLevroFRLWcQY9TtFMxWEvFVd+2VIHSGMe8OzMd9/j8SQVljJ1?=
+ =?us-ascii?Q?VicaBQPngLyVi7+WiaUEhSpIh+hKFrs3UYUZ1xtNAdYgcK31WkNxncmxjN9M?=
+ =?us-ascii?Q?F6kjsaRZGYlvh8/6gsvL4SUtO8WQUEdrhJQpwv50gX+pQfbZPkLufqsV1NJR?=
+ =?us-ascii?Q?TRdm1g45SXaRZ1NjzjOmYLlvRr6IONZU8LsQoDM4GjY7uYDzWcjYPBCpBHqg?=
+ =?us-ascii?Q?IeQhxPzwV7WMLcERmeQmeGVOd7oIKSHpAZVUs9JDqwEckR88eMofeJS8W889?=
+ =?us-ascii?Q?NvAJURwkIQHKS2Wx2ZoEo0p9XnXnXTZhOLnjVumaf3CJ7WPS43F6aE988Zby?=
+ =?us-ascii?Q?3YhC9KPl9YcLs1M6IGTA8xHk6Gpai/fPKHF6zXghvWV4L/ckxTCPu41ru+9C?=
+ =?us-ascii?Q?PNt2knggviJfWXSHkQVTxLZNM2fUshMEddpEFj5dJQkU9yG8U1Iw6n+GM1rD?=
+ =?us-ascii?Q?LQvR88Belnq3rlD26UY=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3147d3d1-63f2-49a5-332c-08dc5fb3d08f
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Apr 2024 14:28:28.4305
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: NnxRFtVoWaHA4YyXqugP3B7OYnw6zejkDtHcaxXCI8PBnmgE3deCfSyFmpWIMOD3
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB8242
 
-On Thu, Apr 18, 2024 at 01:32:15PM +0000, Winiarska, Iwona wrote:
-> On Tue, 2024-04-16 at 23:57 +0000, Luck, Tony wrote:
-> > > If the CPU defines and the new macro are to be kept in architecture code,
-> > > maybe include arch/x86/include/asm/cpu_device_id.h from linux/peci.cpu.h.
-> > > That would not be worse than today's include of intel-family.h.
-> > 
-> > Guenter,
-> > 
-> > Looks like I did that to resolve one of the other peci problems. Because I
-> > already have:
-> > 
-> > #include "../../arch/x86/include/asm/cpu_device_id.h"
-> > #include "../../arch/x86/include/asm/intel-family.h"
-> > 
-> > in <linux/peci_cpu.h>
-> > 
-> > Simply deleting the include from cputemp.c builds OK in the
-> > context of all the other changes in my patch series.
-> 
-> Hi Tony,
-> 
-> It won't build on non-x86, as cpu_device_id.h includes <asm/intel-family.h>.
-> I think the simplest way to solve the issue is to provide a copy of VFM_* macros
-> and X86_VENDOR_INTEL in include/linux/peci-cpu.h.
-> 
+On Thu, Apr 18, 2024 at 12:40:03PM +0800, Michael Shavit wrote:
 
-I think the proper fix would really be to move the include files to a
-generic directory, such as include/linux/x86/ or include/linux/cpu/x86/.
-After all, they _are_ now needed in non-Intel code.
+> > +static void arm_smmu_make_sva_cd(struct arm_smmu_cd *target,
+> > +                                struct arm_smmu_master *master,
+> > +                                struct mm_struct *mm, u16 asid)
+> > +{
+> > +       u64 par;
+> > +
+> > +       memset(target, 0, sizeof(*target));
+> > +
+> > +       par = cpuid_feature_extract_unsigned_field(
+> > +               read_sanitised_ftr_reg(SYS_ID_AA64MMFR0_EL1),
+> > +               ID_AA64MMFR0_EL1_PARANGE_SHIFT);
+> > +
+> > +       target->data[0] = cpu_to_le64(
+> > +               CTXDESC_CD_0_TCR_EPD1 |
+> > +#ifdef __BIG_ENDIAN
+> > +               CTXDESC_CD_0_ENDI |
+> > +#endif
+> > +               CTXDESC_CD_0_V |
+> > +               FIELD_PREP(CTXDESC_CD_0_TCR_IPS, par) |
+> > +               CTXDESC_CD_0_AA64 |
+> > +               (master->stall_enabled ? CTXDESC_CD_0_S : 0) |
+> > +               CTXDESC_CD_0_R |
+> > +               CTXDESC_CD_0_A |
+> > +               CTXDESC_CD_0_ASET |
+> > +               FIELD_PREP(CTXDESC_CD_0_ASID, asid));
+> > +
+> > +       /*
+> > +        * If no MM is passed then this creates a SVA entry that faults
+> > +        * everything. arm_smmu_write_cd_entry() can hitlessly go between these
+> > +        * two entries types since TTB0 is ignored by HW when EPD0 is set.
+> > +        */
+> > +       if (mm) {
+> > +               target->data[0] |= cpu_to_le64(
+> > +                       FIELD_PREP(CTXDESC_CD_0_TCR_T0SZ,
+> > +                                  64ULL - vabits_actual) |
+> > +                       FIELD_PREP(CTXDESC_CD_0_TCR_TG0, page_size_to_cd()) |
+> > +                       FIELD_PREP(CTXDESC_CD_0_TCR_IRGN0,
+> > +                                  ARM_LPAE_TCR_RGN_WBWA) |
+> > +                       FIELD_PREP(CTXDESC_CD_0_TCR_ORGN0,
+> > +                                  ARM_LPAE_TCR_RGN_WBWA) |
+> > +                       FIELD_PREP(CTXDESC_CD_0_TCR_SH0, ARM_LPAE_TCR_SH_IS));
+> > +
+> > +               target->data[1] = cpu_to_le64(virt_to_phys(mm->pgd) &
+> > +                                             CTXDESC_CD_1_TTB0_MASK);
+> > +       } else {
+> > +               target->data[0] |= cpu_to_le64(CTXDESC_CD_0_TCR_EPD0);
+> > +
+> > +               /*
+> > +                * Disable stall and immediately generate an abort if stall
+> > +                * disable is permitted. This speeds up cleanup for an unclean
+> > +                * exit if the device is still doing a lot of DMA.
+> > +                */
+> > +               if (master->stall_enabled &&
+> > +                   !(master->smmu->features & ARM_SMMU_FEAT_STALL_FORCE))
+> > +                       target->data[0] &=
+> > +                               cpu_to_le64(~(CTXDESC_CD_0_S | CTXDESC_CD_0_R));
+> 
+> 
+> This condition looks slightly different from the original one. Does
+> this imply a change in behaviour that should be noted in the commit
+> message?
 
-Guenter
+You mean because stall_enable is checked? This means the R bit will
+not be cleared for non-stalling devices.
+
+Yeah, that probably shouldn't be changed in this patch, I'll adjust it.
+
+But I think the original commit is slightly off as the PCI modes
+shouldn't be changing behavior. Issuing a non-translated MemRd/Wr to
+non-present IOVA should always abort and always log an event
+regardless of what state the mm is in. Devices need to ensure that
+their HW only issues ATS for SVA PASIDs.
+
+Thanks,
+Jason
