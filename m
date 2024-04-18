@@ -1,133 +1,160 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B8015AD88;
-	Thu, 18 Apr 2024 10:27:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23C215E5C6;
+	Thu, 18 Apr 2024 11:07:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713436059; cv=none; b=Nnfvl8J0Opb7rV7Obead2k479ryqxBl8scjOFBrmQ47dE/HkqN/md3F0ugLJ4ZL8fyPLz9dQ7tE7JkAKveKBvypozCYwDfRJSfnZwBcKhnjMnBPqZA+6Jx3cpfrKK4en2EbOXc3wk+05tQ0WzQm62AvD5ngV7M+EITs/RVDEhn0=
+	t=1713438459; cv=none; b=muRpHdHgn2kwDM6rqMJihiUHwDHvUX3rJsId/y6CAryoacJMcD+b/3lOq9gz0yuxb5qF4Az0URjOfLAQAT21Vmtv48nobWpHADJWDc1kOu2XNlApPPxPFisOJYSOkANq10a9WTGTaQ1l6yjsHWXapvrjT8KR0WMiG/79rUDdmVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713436059; c=relaxed/simple;
-	bh=l0PktlGfNBkP770IX+SQswEFDu9IgkacUZXUZrm+544=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=gr4xHWI53f4D3fBnZsoEt33jHFdthW7b/xtIgkP2Ikib/BIVK2S7OPaHJsMb68i5EVJ8p6mWioTiJIndzqr0LcjX/bFzz1oVdEj8nqK/3mTADpe+dHugXQs9zNNgKXgXzIpfDr2IGGoCzjthBJ7Y4MACO7Pi2w1bYJlpNObpvXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=QaEsYsP7; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1713438459; c=relaxed/simple;
+	bh=zwXcSp+gS+V/zeI7KiXiX9qGQJloCCeFDJ8XC9FCmp8=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=FBy7D7P6s7lsXhV5axLLI+EFfY7xYy3CGGIfdwc0nBTQDPKomoxDrwQPzdB65NDQHLwODOqnP2t3+pul/K0y0t2K99rqbjanVnRbMMYVryGjOj7X909KC0j52op3+5ia2f/60TDZvvR7HU/r0XkWiEMyPd6Nk/3LQ87dBfhQDM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WtBUCCud; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="QaEsYsP7"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 43I9qnTB021464;
-	Thu, 18 Apr 2024 10:27:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
- subject : message-id : references : content-type : in-reply-to :
- mime-version; s=pp1; bh=VFEM4yX673OCnQWsK1sjaApOyag8baUFgsw0s/TifqA=;
- b=QaEsYsP7kkhj5ssPZYiAWl2NRwFNMs9grtRaJPs1QkEghQ6ZwrqNhj/nUAYF5jIo6jsk
- xq5ES36M03mW9/+nwB7jOQ7vKAbKbZi37cuVL6eYwXnOgIW9Zlc+/t6L6goQZZVgU60n
- eTVIfGN2REXmIHNZz6OlnKYZ0fZem1F+J1QHFo1SU63f8WE48lPFFLfCWH+ZfvYdDWk4
- 9f5c70dfuZMN7xUSdLoN9Q1pLVMu2oAxISdxbb/hNcgNNAfGer2J1ZBbRcFfyA99n/t2
- fbpNGhKX+1XwcCVfBu8NPU/zgK9P9CWXrXSiQiZkrHtzz05zsD7Sm/KRnYsNWdWnr33x KQ== 
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xk18ug2af-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Apr 2024 10:27:29 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 43I8M5MQ023555;
-	Thu, 18 Apr 2024 10:25:57 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xg5cpa29x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Apr 2024 10:25:57 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
-	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 43IAPp9k52429122
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 18 Apr 2024 10:25:53 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 9CC5620040;
-	Thu, 18 Apr 2024 10:25:51 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 538EC20043;
-	Thu, 18 Apr 2024 10:25:51 +0000 (GMT)
-Received: from osiris (unknown [9.152.212.60])
-	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Thu, 18 Apr 2024 10:25:51 +0000 (GMT)
-Date: Thu, 18 Apr 2024 12:25:49 +0200
-From: Heiko Carstens <hca@linux.ibm.com>
-To: Heiko Carstens <hca@linux.ibm.com>
-Cc: Nathan Chancellor <nathan@kernel.org>, akpm@linux-foundation.org,
-        arnd@arndb.de, gor@linux.ibm.com, agordeev@linux.ibm.com,
-        borntraeger@linux.ibm.com, svens@linux.ibm.com, wintera@linux.ibm.com,
-        twinkler@linux.ibm.com, linux-s390@vger.kernel.org,
-        netdev@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH 1/3] s390/vmlogrdr: Remove function pointer cast
-Message-ID: <20240418102549.6056-B-hca@linux.ibm.com>
-References: <20240417-s390-drivers-fix-cast-function-type-v1-0-fd048c9903b0@kernel.org>
- <20240417-s390-drivers-fix-cast-function-type-v1-1-fd048c9903b0@kernel.org>
- <20240418095438.6056-A-hca@linux.ibm.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240418095438.6056-A-hca@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: wCs8fo8EhTRhucgf_a-lZhHdO296ll8B
-X-Proofpoint-ORIG-GUID: wCs8fo8EhTRhucgf_a-lZhHdO296ll8B
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WtBUCCud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340B6C4AF08;
+	Thu, 18 Apr 2024 11:07:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713438459;
+	bh=zwXcSp+gS+V/zeI7KiXiX9qGQJloCCeFDJ8XC9FCmp8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=WtBUCCudLJbry0qzPtwylXf2XGuGsS9YFZZbVBKyb4nwXE9SbJPICMdSz17v5pxpQ
+	 zHMRtYfZqNy8jVXfppLtkwfowLAiAnDXlQFRDsgFJThXqFJO5h3zoSsvYjRlEMLzAx
+	 9LXQ6/oTWKWqsKJRc3vDNEzH4kYvhm8PMnO/2O86+TtjGbI0mDRKn1qKcM1i53BaD7
+	 cxUXY2nD7xItggFx0zxzRcrcPku0l6YxKUng3U7W95PmU5T9CGOmmgyciRByFeKSMS
+	 0HWc5L4ytm1JZ0cJPT3mJopkclbM0rRRltrI9Q7mBDJWZkjWVJ7tY+CxB9RRvdEunj
+	 PByS17Na8RLYg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1rxPc8-005iIG-CB;
+	Thu, 18 Apr 2024 12:07:36 +0100
+Date: Thu, 18 Apr 2024 12:07:35 +0100
+Message-ID: <86sezjq688.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Mark Brown <broonie@kernel.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	Yihuang Yu <yihyu@redhat.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Shaoqin Huang <shahuang@redhat.com>,
+	Will Deacon <will@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: Re: [PATCH 6.6 000/122] 6.6.28-rc1 review
+In-Reply-To: <Zh61KobDt_y1O46-@arm.com>
+References: <20240415141953.365222063@linuxfoundation.org>
+	<Zh5UJh31PlBkpZWd@finisterre.sirena.org.uk>
+	<CA+G9fYu-AjRm-BBA=8fWS8oCbBJ5W443JHPh3uddD7ea7MY-YA@mail.gmail.com>
+	<86y19dqw74.wl-maz@kernel.org>
+	<Zh61KobDt_y1O46-@arm.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.2
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-18_08,2024-04-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
- adultscore=0 lowpriorityscore=0 priorityscore=1501 mlxlogscore=999
- phishscore=0 spamscore=0 mlxscore=0 impostorscore=0 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2404180074
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: catalin.marinas@arm.com, naresh.kamboju@linaro.org, gregkh@linuxfoundation.org, broonie@kernel.org, stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, yihyu@redhat.com, gshan@redhat.com, ryan.roberts@arm.com, anshuman.khandual@arm.com, shahuang@redhat.com, will@kernel.org, linux-arm-kernel@lists.infradead.org, anders.roxell@linaro.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Thu, Apr 18, 2024 at 11:54:38AM +0200, Heiko Carstens wrote:
-> On Wed, Apr 17, 2024 at 11:24:35AM -0700, Nathan Chancellor wrote:
-> > Clang warns (or errors with CONFIG_WERROR) after enabling
-> > -Wcast-function-type-strict by default:
-> > 
-> >   drivers/s390/char/vmlogrdr.c:746:18: error: cast from 'void (*)(const void *)' to 'void (*)(struct device *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
-> >     746 |                 dev->release = (void (*)(struct device *))kfree;
-> >         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> >   1 error generated.
-> > 
-> > Add a standalone function to fix the warning properly, which addresses
-> > the root of the warning that these casts are not safe for kCFI. The
-> > comment is not really relevant after this change, so remove it.
-> > 
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > ---
-> >  drivers/s390/char/vmlogrdr.c | 13 +++++--------
-> >  1 file changed, 5 insertions(+), 8 deletions(-)
+On Tue, 16 Apr 2024 18:28:10 +0100,
+Catalin Marinas <catalin.marinas@arm.com> wrote:
 > 
-> > @@ -736,14 +740,7 @@ static int vmlogrdr_register_device(struct vmlogrdr_priv_t *priv)
-> >  		dev->driver = &vmlogrdr_driver;
-> >  		dev->groups = vmlogrdr_attr_groups;
-> >  		dev_set_drvdata(dev, priv);
-> > -		/*
-> > -		 * The release function could be called after the
-> > -		 * module has been unloaded. It's _only_ task is to
-> > -		 * free the struct. Therefore, we specify kfree()
-> > -		 * directly here. (Probably a little bit obfuscating
-> > -		 * but legitime ...).
-> > -		 */
+> On Tue, Apr 16, 2024 at 02:22:07PM +0100, Marc Zyngier wrote:
+> > On Tue, 16 Apr 2024 14:07:30 +0100,
+> > Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> > > On Tue, 16 Apr 2024 at 16:04, Mark Brown <broonie@kernel.org> wrote:
+> > > > On Mon, Apr 15, 2024 at 04:19:25PM +0200, Greg Kroah-Hartman wrote:
+> > > > > This is the start of the stable review cycle for the 6.6.28 release.
+> > > > > There are 122 patches in this series, all will be posted as a response
+> > > > > to this one.  If anyone has any issues with these being applied, please
+> > > > > let me know.
+> > > >
+> > > > The bisect of the boot issue that's affecting the FVP in v6.6 (only)
+> > > > landed on c9ad150ed8dd988 (arm64: tlb: Fix TLBI RANGE operand),
+> > > > e3ba51ab24fdd in mainline, as being the first bad commit - it's also in
+> > > > the -rc for v6.8 but that seems fine.  I've done no investigation beyond
+> > > > the bisect and looking at the commit log to pull out people to CC and
+> > > > note that the fix was explicitly targeted at v6.6.
+> > > 
+> > > Anders investigated this reported issues and bisected and also found
+> > > the missing commit for stable-rc 6.6 is
+> > > e2768b798a19 ("arm64/mm: Modify range-based tlbi to decrement scale")
+> > 
+> > Which is definitely *not* stable candidate. We need to understand why
+> > the invalidation goes south when the scale go up instead of down.
 > 
-> Why is the comment not relevant after this change? Or better: why is it not
-> valid before this change, which is why the code was introduced a very long
-> time ago? Any reference?
+> If you backport e3ba51ab24fd ("arm64: tlb: Fix TLBI RANGE operand")
+> which fixes 117940aa6e5f ("KVM: arm64: Define
+> kvm_tlb_flush_vmid_range()") but without the newer e2768b798a19
+> ("arm64/mm: Modify range-based tlbi to decrement scale"), it looks like
+> "scale" in __flush_tlb_range_op() goes out of range to 4. Tested on my
+> CBMC model, not on the actual kernel. It may be worth adding some
+> WARN_ONs in __flush_tlb_range_op() if scale is outside the 0..3 range or
+> num greater than 31.
 > 
-> I've seen the warning since quite some time, but didn't change the code
-> before sure that this doesn't introduce the bug described in the comment.
+> I haven't investigated properly (and I'm off tomorrow, back on Thu) but
+> it's likely the original code was not very friendly to the maximum
+> range, never tested. Anyway, if one figures out why it goes out of
+> range, I think the solution is to also backport e2768b798a19 to stable.
 
-From only 20 years ago:
+I looked into this, and I came to the conclusion that this patch is
+pretty much incompatible with the increasing scale (even if you cap
+num to 30).
 
-https://lore.kernel.org/all/20040316170812.GA14971@kroah.com/
+The number of pages to invalidate is a 20 bit quantity, a 5 bit slice
+per scale. With the 6.6 approach (limit of num=30 and increasing
+scale), we invalidate each 5 bit slice independently. After each
+scale round, the corresponding slice is guaranteed to be 0.
 
-The particular code (zfcp) was changed, so it doesn't have this code
-(or never did?)  anymore, but for the rest this may or may not still
-be valid.
+With the 6.9 method, we invalidate the maximum possible for a given
+scale. With a decreasing scale, we converge towards 0 or 1 on each
+round.  With an increasing scale, this breaks spectacularly, because
+the strong guarantee that the remaining page count is "aligned" to
+2^(5*scale+1) is not valid anymore (the low bits may not be 0).
+
+As a result, we don't converge because we never consider these low
+bits anymore, the page count doesn't decrease, scale goes past 3, and
+everything catches fire.
+
+So despite my earlier comment, it looks like picking e2768b798a19 is
+the right thing to do *if* we're taking e3ba51ab24fd into 6.6-stable.
+
+Otherwise, we need a separate fix, which Ryan initially advocating for
+initially.
+
+Thanks,
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
