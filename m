@@ -1,66 +1,66 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABE154BCC
-	for <patches@lists.linux.dev>; Thu, 18 Apr 2024 05:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF3338DDB
+	for <patches@lists.linux.dev>; Thu, 18 Apr 2024 05:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713419820; cv=none; b=jLzir28mszQKV14xKUwAn2GTCZ6tefB5n51bN1zeVI8aitFmmtbE+KRL9rxW2T5V1BC5lBSXeY2zrlZ+BAA2mO0EpAedF5OlwWscQXaundT48yaRlpr50oaIP/fzSw1/hSqHxt7CGkYu2DnzxZC5DCQqVM6Y8FT89FGfGq3M1UU=
+	t=1713419869; cv=none; b=AsUPY9ZJJ6I2bZzsXUET+Ox54OVOneOlXGnG+w2iLVC7xRkYQivvzH9bcKP+30e+cCJztoklP9DD6ppFdLPQSYFujcMxsMdGfZ4HBXQmDayXHyHum3czyUhMfskvGsMQ12BEAmbiU9a45jgcj2si33AzqwlRO0e/MuW9HpPXx+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713419820; c=relaxed/simple;
-	bh=RLDSVm8K87CdU8QKvkxypvN6+yIETdNq4qZlkYhiles=;
+	s=arc-20240116; t=1713419869; c=relaxed/simple;
+	bh=FSWfeJRVhpivjhcZOKtr/RECIGZFZ6Lvd8suprQ2zlc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=U5ujB9DMCG5ITs+Pcv7D5ecfP+cEj0KneZZkubGMkUxmgJrITnJtk34+qHp/HLzzb8P2g8wsDCtjVExOTNVBqO9Wn6E7E57vdecHVXSxcTugNakMW/ESsHjOerRSrDnDDRW+2jZe2o7bBR5sxcpQGRMb7DGlJJBM5wM0TQoE5cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=H0rW4sPo; arc=none smtp.client-ip=170.10.133.124
+	 In-Reply-To:Content-Type; b=mpn40EQUr9GUSQ54BWW9kQPV2Zy1B2AZuS7j3yBDuNt5nCQuycm3TAbxR1H6iJuzDCakBufnqGjxDEtlP5HT52gHUdxSRFnOi3QD+WV3vSgewQGJ+1dcGAF7z/VEvicz1SWj1TlfGplvS0mVZfjY9P+Plp9n7u0CkXMtXz7R1NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=PIb/x+yi; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="H0rW4sPo"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="PIb/x+yi"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1713419817;
+	s=mimecast20190719; t=1713419866;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=8g2uuNxxiwYQyQPoW1yOkVCXoXx7/GQBe/aHyhjlL3E=;
-	b=H0rW4sPo1x8tI74VFW6EskIwCuzEcBO6kI/C9DD0bdbpAezs2gsriWpN1BxBqkOCYkQBry
-	E9i+ooP7IJzNwAYV/cCW8w6rBn6BfVceI1X5Regv4Z7Xxsp76ID857iqbdngmDt65SYJDy
-	Yn7rf6O0SXDRW7W6f0BOMVYoyuYjMh8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=WnN76fVoeHJRKOHHPsuZPbIKbYuzDGfrYAq34ct/Ccs=;
+	b=PIb/x+yisoY2Up2KefHLTe8qQtOw0rshL65+xSCD4lrgWwD9qAg36FazNx6sSwmjKppYVe
+	mtvImtOMmIWma7S4e7lwLB8Mzg0xs19HEJaQ2QaeQk7NxotxP3WwULMxnhjiRdyIvGe0m4
+	gas8tibb3L7I5ZnbEkHmSNEATvaVTKo=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-3yApdBf8Mj6I4je7ZIsKgg-1; Thu, 18 Apr 2024 01:56:54 -0400
-X-MC-Unique: 3yApdBf8Mj6I4je7ZIsKgg-1
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-347f92ab882so311207f8f.0
-        for <patches@lists.linux.dev>; Wed, 17 Apr 2024 22:56:54 -0700 (PDT)
+ us-mta-60-DTcWEj5HPW23xpk2_2ejAA-1; Thu, 18 Apr 2024 01:57:45 -0400
+X-MC-Unique: DTcWEj5HPW23xpk2_2ejAA-1
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-4189d4aee2cso2940825e9.0
+        for <patches@lists.linux.dev>; Wed, 17 Apr 2024 22:57:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713419813; x=1714024613;
+        d=1e100.net; s=20230601; t=1713419864; x=1714024664;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8g2uuNxxiwYQyQPoW1yOkVCXoXx7/GQBe/aHyhjlL3E=;
-        b=BmKtZftPs+CmINL+gUuEP+/GT3zA579x7MYSJgOVYInIjN7Hyw/f6v+2DqN89N0iDx
-         7q6zO9TEEKy5y7UyNOsRwIl2iFA1Yrsri/HAoOcfmAKR+UnkxEreBw8NlmYhvufOcnVI
-         YCrOEaFqMHp7pW4RbvLzJv99D/xG3qIHQkskQCz7P8cjy7w2mcfc0ED0QKENGTEKVZqP
-         TPzeeKpKW8OM1+ypAtd5JwKyMnxNhKJTeLjcM/ghuEv3RbdydrLJ/bkpnf9tKSrkKxXD
-         4PrwR+OvE/Ii74YxRGPHzZoC7ygNXBRbJ9ERr5Ld+1qnBoldJW39uPDKxd7ExnRqsj+I
-         pfMw==
-X-Forwarded-Encrypted: i=1; AJvYcCVazmTkYCxe1JMAsSqbEfsYj6vdVfvla1WQvsSxX6WGwn4KpM6/QSvfTjKyUEYO+m6+mKpGRc8Psda/o0hsTaW22vndCEENBw==
-X-Gm-Message-State: AOJu0YyzbF0ooRA3zYeoyxILGtKPJhJw/tvkjr92gDXsY/4ed5zD0oUq
-	DgVyLG1zHs8yw0oOVatXQrEPxTiZyBiBFdiCHwQTzLbzMRH47qtBBuZw7sOnjRMUA0AYbSslaon
-	0JmpR3LzGfdUfZqf9bJayxd2mmsh8Xjt+GwE3xBfi1v42xSKbjhNyI7M=
-X-Received: by 2002:adf:f352:0:b0:33e:78ca:e039 with SMTP id e18-20020adff352000000b0033e78cae039mr974827wrp.59.1713419813386;
-        Wed, 17 Apr 2024 22:56:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHq6gP4Yb3ppbn7gdUi3KkDfZ8Xpf5YR62TOPtanGXmO5tiuo00HgVFIKwjTNDhOMe5uMNFxQ==
-X-Received: by 2002:adf:f352:0:b0:33e:78ca:e039 with SMTP id e18-20020adff352000000b0033e78cae039mr974814wrp.59.1713419813022;
-        Wed, 17 Apr 2024 22:56:53 -0700 (PDT)
+        bh=WnN76fVoeHJRKOHHPsuZPbIKbYuzDGfrYAq34ct/Ccs=;
+        b=ROGxw5/c+3rxgude3OJ5yiRfmUNpNxgdUpfP9TVjvqvbOckByfVUJH6p4u1me/NbB+
+         wJQFnBYw8sznyrHOQQjbSWDpHRBps16IiFrLJJgFSjShNDBab5rVaAnyHiqk6ZJzDnkS
+         eiUhYwFkxWvvOuOT9QUYXJDF8o+JtVgcBiFDx7H1uupepUjCyIxeBkG7qTcYg5TqOCpa
+         2K/50raErA6gj0e44VHfG/K5YTy90ZaoY0ln01qQkF0Y9zbe4JAl/RglUB8105bYT8ox
+         KhsK61VY/8t3R7UfQAYk94F27L99/+pBzGGfJOoxDzVOjGrYs44WHcC128ROJnhhajw6
+         YoJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW/uJzC5euyC4FEqAb41yeJBHJgot6P8AEU93TkKE3GWng8ELTckBfdvLRXbb0jhPM22SV1GCW0KZkTpPAIkUziwmvDfVRndw==
+X-Gm-Message-State: AOJu0Yw018LG5neVkldjLDaQyLv/GqD3xsJKMpZv9Ih/PebOsfCu858C
+	C/n/YNOjhoyOlfk++0xahhIOBhsnrTdEeMvHfbKhr63DEpTCiyCbDqOhLQTM7Z1fUm+tY5Mpdyi
+	xRpHsThksw1ZexzFh4irhEf1r6mTf/aV+vwfKOoj9UqrgWd8vuJ+UwcA=
+X-Received: by 2002:a05:600c:198f:b0:416:3f85:d49 with SMTP id t15-20020a05600c198f00b004163f850d49mr1207760wmq.18.1713419864128;
+        Wed, 17 Apr 2024 22:57:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEivO//bEq/fkCuEybbkIrJpkIdU2CyNNJe3O+FwYgdnqOOzAsnV3tmnt1D2t9sOwRhRe4I5g==
+X-Received: by 2002:a05:600c:198f:b0:416:3f85:d49 with SMTP id t15-20020a05600c198f00b004163f850d49mr1207738wmq.18.1713419863732;
+        Wed, 17 Apr 2024 22:57:43 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-177-117.web.vodafone.de. [109.43.177.117])
-        by smtp.gmail.com with ESMTPSA id d9-20020a056000114900b003469e7f5c52sm898525wrx.80.2024.04.17.22.56.51
+        by smtp.gmail.com with ESMTPSA id g18-20020adfa492000000b0033e9d9f891csm909663wrb.58.2024.04.17.22.57.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Apr 2024 22:56:52 -0700 (PDT)
-Message-ID: <3c7b0835-3e4e-4c86-ae71-288aea437ed0@redhat.com>
-Date: Thu, 18 Apr 2024 07:56:51 +0200
+        Wed, 17 Apr 2024 22:57:43 -0700 (PDT)
+Message-ID: <00054ec1-66c2-46e3-917f-cd5a43ffe4cd@redhat.com>
+Date: Thu, 18 Apr 2024 07:57:42 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -68,14 +68,14 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] s390/smsgiucv_app: Remove function pointer cast
+Subject: Re: [PATCH 3/3] s390/netiucv: Remove function pointer cast
 To: Nathan Chancellor <nathan@kernel.org>, akpm@linux-foundation.org,
  arnd@arndb.de, hca@linux.ibm.com, gor@linux.ibm.com, agordeev@linux.ibm.com
 Cc: borntraeger@linux.ibm.com, svens@linux.ibm.com, wintera@linux.ibm.com,
  twinkler@linux.ibm.com, linux-s390@vger.kernel.org, netdev@vger.kernel.org,
  llvm@lists.linux.dev, patches@lists.linux.dev
 References: <20240417-s390-drivers-fix-cast-function-type-v1-0-fd048c9903b0@kernel.org>
- <20240417-s390-drivers-fix-cast-function-type-v1-2-fd048c9903b0@kernel.org>
+ <20240417-s390-drivers-fix-cast-function-type-v1-3-fd048c9903b0@kernel.org>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -119,7 +119,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240417-s390-drivers-fix-cast-function-type-v1-2-fd048c9903b0@kernel.org>
+In-Reply-To: <20240417-s390-drivers-fix-cast-function-type-v1-3-fd048c9903b0@kernel.org>
 X-Mimecast-Spam-Score: 0
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
@@ -130,18 +130,19 @@ On 17/04/2024 20.24, Nathan Chancellor wrote:
 > Clang warns (or errors with CONFIG_WERROR) after enabling
 > -Wcast-function-type-strict by default:
 > 
->    drivers/s390/net/smsgiucv_app.c:176:26: error: cast from 'void (*)(const void *)' to 'void (*)(struct device *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
->      176 |         smsg_app_dev->release = (void (*)(struct device *)) kfree;
->          |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>    drivers/s390/net/netiucv.c:1716:18: error: cast from 'void (*)(const void *)' to 'void (*)(struct device *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+>     1716 |                 dev->release = (void (*)(struct device *))kfree;
+>          |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 >    1 error generated.
 > 
 > Add a standalone function to fix the warning properly, which addresses
-> the root of the warning that these casts are not safe for kCFI.
+> the root of the warning that these casts are not safe for kCFI. The
+> comment is not really relevant after this change, so remove it.
 > 
 > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 > ---
->   drivers/s390/net/smsgiucv_app.c | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
+>   drivers/s390/net/netiucv.c | 14 ++++++--------
+>   1 file changed, 6 insertions(+), 8 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
