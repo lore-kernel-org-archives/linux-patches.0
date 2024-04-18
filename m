@@ -1,202 +1,218 @@
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2071.outbound.protection.outlook.com [40.107.237.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3736C15CD46;
-	Thu, 18 Apr 2024 12:48:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.71
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713444539; cv=fail; b=lhBbk4/yFpGIey0CKy6CRJ5HwwXTO3P/WoY5u5S9vC9AUei2uqe9lIzblob5ZsvkiEdSdcouWsJ3PqmxJFj4uTZ30b9SoPP1ujR+UGJ8RggX8jJLycEB2roFuFPML/h603Gxz11u63YzelxvA4y5t7HezN7ChULiIJbFbmMdr20=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713444539; c=relaxed/simple;
-	bh=h/6trcMtAOyoczbQhGkowQWYMuPQkqTblyZBWTkA+TU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=QSr6T8YTQ2aouG0rMVeDWSP1BujiR+37zh+RKdPhjIu7lz/DLhTnVqmw+iUIUQC1pJnJaRGopM8kxXLe/F0aAvDgpceqmciT+MqEC3+nZZZzmtrUYefolNMmbQpynL07W6E/3WNTZ7bkcJ9CsNqoO4SDXTrGC4O9yQKn9c/hvmk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=R2nHEGBY; arc=fail smtp.client-ip=40.107.237.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="R2nHEGBY"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=lGFPMbypkRO69TgBzRtwHKQlnUGnfgmdfYYCxbdMahYHbThxDE6lAQ5ejFwYFmYRAQqB6JhbXrifwTI1u9RmJuDxp2xcCeCiASaFT8MGKs/NVu4WDQtCKttEBFI7B0sYlkIIYFRlB4TTDvppVvTh1UfWkapBReea31ZOcNX4KK9lImwtfK7bT9PJLzpoIeBTBq/r4uLOWwFTZ7ad55Q6n0pl8c4NtqSUDZvogUKmeKTpGVpzPgn+2QtnMScntkQimRNQuQrP0h2Oo5NSpGcwWIlQyO08JC9f5yILbUHXmlbkx0As0+DREXwI44+aHydJ+yS5bwKr8nF/J8n3jHVd/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wxSH6QMaLiv6eHEGvMqsH1VQjC/AgjE3HRlc97SHr7I=;
- b=gBFaqwpXlBtMKUY9v3DVclszkJRWm+KSTf+1OjBK1KP5S2p/FxCfmXmvfRKosCD0ixyQ5lmBrgVKLVAYpETGPz8nrH3egPAgGxXw8XL5HN2HP8dlNpnIWtSqhlqINLm5oWdvgscUvN54MZP2xKiff2dVYnaXgUmkOZF4ELKpygH00BEo/wzZOllcfmL8wkkLbdEYDoU9M/DBTtMYcaIIOfYTkC6A+kqT2/9pgnjeyGU7H1FHeUuCPO2SlHKSHOFupuFAHPxirXkA6hL7kRSmr6+G/KzBoFvfytmPPlgLNr0afBYHuLlm9YdAg/9VyS9N5dUfTGJewves/i3StgU3AQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wxSH6QMaLiv6eHEGvMqsH1VQjC/AgjE3HRlc97SHr7I=;
- b=R2nHEGBYb2GTeijy8YxII2GFIMWXyp7G0b23O3IaFMHO1AhFBX1nWNokSkUjD+v5raLa44Nw68DSA5ZwMQEF9xMgBCGxa4UJ+aHAbhbU1rFNjPYTt9ofcndDHIUc45gv7bK91mjxkLaxKzYuvQKkYWJb4kDsmyH871I3KXFn/VG6c7DuBOw+yqnzCCXeUI7XQ31dQ2HNHVtX0CnndtYV6StsNz2NJKHLZxwzlcN6SB0mF668A0Niarhuwd+IWmKkRYMUFwXa7RBbq6TjTffebg/ocLUKjI5YDk+G7xF07JaioFfWBorzO82AL+zsbiwDGtLV1h80mL6wcrievf0xuA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
- by CH3PR12MB7620.namprd12.prod.outlook.com (2603:10b6:610:150::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.50; Thu, 18 Apr
- 2024 12:48:54 +0000
-Received: from DM6PR12MB3849.namprd12.prod.outlook.com
- ([fe80::6aec:dbca:a593:a222]) by DM6PR12MB3849.namprd12.prod.outlook.com
- ([fe80::6aec:dbca:a593:a222%5]) with mapi id 15.20.7472.037; Thu, 18 Apr 2024
- 12:48:54 +0000
-Date: Thu, 18 Apr 2024 09:48:52 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Michael Shavit <mshavit@google.com>
-Cc: Nicolin Chen <nicolinc@nvidia.com>, iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-	Eric Auger <eric.auger@redhat.com>, Moritz Fischer <mdf@kernel.org>,
-	Moritz Fischer <moritzf@google.com>, patches@lists.linux.dev,
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
-	Mostafa Saleh <smostafa@google.com>
-Subject: Re: [PATCH v7 9/9] iommu/arm-smmu-v3: Add unit tests for
- arm_smmu_write_entry
-Message-ID: <20240418124852.GA3050601@nvidia.com>
-References: <0-v7-cb149db3a320+3b5-smmuv3_newapi_p2_jgg@nvidia.com>
- <9-v7-cb149db3a320+3b5-smmuv3_newapi_p2_jgg@nvidia.com>
- <Zh+DxJoAMIXy9O/R@Asurada-Nvidia>
- <20240417141618.GS3637727@nvidia.com>
- <CAKHBV275bzhRK6oSvDrH7h780qde53z_x8TLVtV3sHACL3gMHA@mail.gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAKHBV275bzhRK6oSvDrH7h780qde53z_x8TLVtV3sHACL3gMHA@mail.gmail.com>
-X-ClientProxiedBy: SA9P223CA0021.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:806:26::26) To DM6PR12MB3849.namprd12.prod.outlook.com
- (2603:10b6:5:1c7::26)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0A9F1487F0;
+	Thu, 18 Apr 2024 13:01:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1713445299; cv=none; b=F1bQrFDuZIJLqt0VLC68gDGs+bBdESheQ95fU+hcORocbH+wFEkWdFgmc1rBeJa5c8Kmidph1QrVSagBAwO4k4GxfZnZF/MFq+eHes2BIsSaBzdCQn+bvjTydya5oz5n9XS3O+E/AkbGOrwcByfeXfej9/7RLmrOjP3+IVcn/xY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1713445299; c=relaxed/simple;
+	bh=amamIpgtgRewNwPqvv/Utr33VuZsP/x2at/1g3R/vV8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TIyRsFJlnjfMlOrprfAsFfCAL/udkKngN0p2sfRikXXqyUHdMy1FxTyhXzZaJ7/OkuA/NMKzxLlFchBBZUrJe+ddEAqQLaMH/xtaXYb+ZlOTmoTiRP2/LfX2lOezHhFseZrbQ1OdQgvjI+flLni+tz3F76QixGlvRAeDrg5LHu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D2D00339;
+	Thu, 18 Apr 2024 06:02:02 -0700 (PDT)
+Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5022D3F738;
+	Thu, 18 Apr 2024 06:01:33 -0700 (PDT)
+Message-ID: <15db91d8-be78-4aae-8715-3a992df062af@arm.com>
+Date: Thu, 18 Apr 2024 14:01:31 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|CH3PR12MB7620:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9d5cbe53-c736-4488-f2c7-08dc5fa5e78f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?L6KTYmSXww0i99n47KEIFGuqV+T3E/3ylc01441pIeiWCZ7WZyfM7YChWc45?=
- =?us-ascii?Q?qIHgEfnpMi9+rBJEokjICkaOrVgIQBF0C93ZkRFNCMhVo1hq2+9vDUE1eL4g?=
- =?us-ascii?Q?fMfd/FkQG6kJrPFoEuxcjk6h4L21eendbIiyS3Nia7hQajRejg9pp8u8JDsK?=
- =?us-ascii?Q?s7qSNseX4pB6r5YYC8FAIMaSwRLR59CyQCxyGsXwVdvHYmfon2UM+yfpRc1y?=
- =?us-ascii?Q?ft4V4CYoSRPwjKjBDx4VHMx50BUYyFXZ9Dwo/gCiSc71hegNYif+arQXpias?=
- =?us-ascii?Q?oJg6dINhebtEozlMSJrom0PxVr1N5Xca11QrXS8TAjHwB5m3qwY0xQJ09f87?=
- =?us-ascii?Q?oFgKyWmWuJgLZuV7zpCK29zSjJMWFJ5fneaeeODGxLZpfuOONLuF+pTqtl4A?=
- =?us-ascii?Q?qpdnxqj17lDKkDJoAnwjXRcSXRjoCFY22XfvYB0ZI+uEsVAOO+fZGnSbGWcA?=
- =?us-ascii?Q?tgzsz104mvr1+RSFUVDsg0sabJb613TEK71ekze8WhAo6RaVHKDcafBkaEzs?=
- =?us-ascii?Q?TwHOe0o7cX304ojk37/7zFIuQACOrNCzSis1E3V+jM46bumegsts5KG4LyPM?=
- =?us-ascii?Q?/4siaA475FPA2HLyMSqBe7K9hW0ggZ+44wNDM5eefy5VZyDayjai1d+6OtvE?=
- =?us-ascii?Q?lJ/4n3dYtv4OmhJN/kNzlidaqiCflLLZOPkLDWnqbbza+0IYV5DQsCoyshuK?=
- =?us-ascii?Q?PTbD/HZRATff7faIYx7Fl0J56y5U9QkhMR3tc5kh+lH6efqYWK6HrCwDCLsF?=
- =?us-ascii?Q?SQwz9zsndZnC+p/WvFTKPYuzSFVEibnKoSBM8MX818dHs3UV7foV18lgXT2s?=
- =?us-ascii?Q?wbCob8aY3AIlaZr44CFNDoOC1HLGfpUBDbcP8rLCXrPMmFNQrBKsWClkg6Yp?=
- =?us-ascii?Q?nn7rUcrvOunYc2dbw6tYmdjkEVIuRDyX6zQv66b9j342heDL2U9a7VrbYK2s?=
- =?us-ascii?Q?5V2kKkK+qTdjT0G9Ba3d8sBR2p0c2M0F80k0r58pH8ozHiOgcF1NxNmAcYGx?=
- =?us-ascii?Q?kOxFZHXqgMDZ7Tsg9zGFVPhbvTkaZr1Adp5/vLn7OsuwX3EvntsWJ4HCzb17?=
- =?us-ascii?Q?gTHklEUzGba2WVf/NWG5O48EM2uhmIyz84q3z0KaLK1tA1JypPbUXQnLxHsV?=
- =?us-ascii?Q?mB991OVtFCfuO2jkH2U/TuEE4KsEVzf8k2UMRRzApRGyE/HAh+S6m9EpjXRC?=
- =?us-ascii?Q?kiA/fDcZMhUB68xOqPgDCZmFLDeN2XO5fYsBjswoTa1XOkVzADlCe+f9lXde?=
- =?us-ascii?Q?YQ+f5dks3BY7mcbxmagyqoO7+JU75qk1T391Q064pQ=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(366007)(1800799015)(7416005);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?cn9aUlGuq8UseTJChwGQ3qw104ZyRhORMYIygvNiAyR36ELLROCU7pO1rV5c?=
- =?us-ascii?Q?gcsJBTBK61mtP7tprO8yOgHTzKCDjPlQW8mQ9fxfKz8HlfaiGOXnYjLR3YDk?=
- =?us-ascii?Q?Ozp9p9BGE0PigqIg/MFgLvEMyZIZdz+m0fWKgNNqyMuF3iB5oWKPImbF75GZ?=
- =?us-ascii?Q?AsEMjQwgf09RCBTDGR5qgHi8y52fMSz4H5rBucHzG1fZEEj+r6GtgRFwCCvd?=
- =?us-ascii?Q?fc8+O88UOjVI6WnD+PLxjMST7XuHI0Nom4fv3pUNKRT+Lgr61WoqWoeKCXCJ?=
- =?us-ascii?Q?RbwgmmDeN+2sy/6ALqPymWfF7IAK/lJw3a6doAGxP6JGUrsgS68UV2Gn2OK+?=
- =?us-ascii?Q?xE8YhIDNxm48fwJysG11/Cxsx0NUR2ICDNN7du38ywxNQ8GqdP/YjA4/qKkl?=
- =?us-ascii?Q?4osAc7Z8tikAizEEgW0glAaaErd0RneTqgsszvxQJ8l3RwLBK4JYsYgRQ9O+?=
- =?us-ascii?Q?4JZwNwj4ET8S8ypc7ZLJeym/McESmncJ2udHzX2wkdnCvtWumEpm43m7SfPo?=
- =?us-ascii?Q?mTRwoB/Ew+ENtE6zzTBOD+A2bB2ZXinUZs76rs/ys6x4PeQVl2er21J2UaJ5?=
- =?us-ascii?Q?mLlu4NQE1FN90hhIbc+p+9p52krOkCagT8mxPo6MAxB7b/rstUUyqTMpIfeX?=
- =?us-ascii?Q?68Hm1AKxRmC811AqDOUqtxX35e5qujdv6NRvfWYobEiAASmPJNFBmDWydAAC?=
- =?us-ascii?Q?1UBnUxbd5exC0vYqoBegUft+bIwqpB2a0oSL69xoQ5/yBDhjFfVKaiHXAi4P?=
- =?us-ascii?Q?HG+qHcgVdPuzZPTGak96yp0LwbnYGLouHlu3i1X1bOtSim8LtMo+v+TVRdmT?=
- =?us-ascii?Q?MyT0Y/GuwHJ2z4lOqAFHjnP1Rby7iuQh2GxpW/d58FSvn0m6o5ixNAJ/wM37?=
- =?us-ascii?Q?W3XSo+nKxHk0Rga6jguPnwPw8CMwXJ6yWb1FqH7Cqw509wYNpWMETw6QNequ?=
- =?us-ascii?Q?qxoig2BJkwMa/8ASxI4tzIaN6astSH9SxcNy9jvCv+0eoXBJHsuXTpFjpRuS?=
- =?us-ascii?Q?s61xcEOHKH3lcLmeJglvaji/r21AR5FOvgbNPXBa0JGq3gebA/02k17W2pph?=
- =?us-ascii?Q?4csvcaiSjIuaLoY7XCi6Wjk64CyB55YtxFmrdGq7U/CtdKNq8Ohwd68PBV6x?=
- =?us-ascii?Q?HyymK9v/3IRPjY0S7G9kBdK+bYrOzMqP56p19qZgEI98/NEYuVB5nIGABFPv?=
- =?us-ascii?Q?nIyDRt9E5Bz2PKRIc7ZhrZ8cQFpryeb8zTwbjX1AvHYFnrZxi9ZYz6wXnTy1?=
- =?us-ascii?Q?piMZGxkUVESG8318Yj1HuU0IV67X8KtShsBz7iSLq7RIIbVZows5rn7YQfKY?=
- =?us-ascii?Q?nSFOXEpXAYdfG5wBHd+bTlcoMwOmMunRVxB7a7uLzguU3CkARMFU3tbO5324?=
- =?us-ascii?Q?dM/11T2JwCpW4mtPSsa+H0rcSuIFkd5ArahZ/6VaxBnTLkI5zB8Yp1DznLW8?=
- =?us-ascii?Q?36nx+sw8uJVhbkfy+VBGC9QOzBdqtPp5rFT2TTwYuYZwiRkDlanUK9MkwOV+?=
- =?us-ascii?Q?2zv1BewxWe3v3NtwETuKc4nDQiyRH2apVOA/UHcipO1iNh3POCQiH83/Zx8P?=
- =?us-ascii?Q?IIAQuoX2+ZAhY0HkmXc=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9d5cbe53-c736-4488-f2c7-08dc5fa5e78f
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Apr 2024 12:48:54.0127
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eA/6zZEHj1SG9aaO63/LUQ2wmayJLtkxHsjY5rzhq6J0+y7QI1ZTSXBWFDJzX2wW
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7620
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 2/9] iommu/arm-smmu-v3: Make CD programming use
+ arm_smmu_write_entry()
+To: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>, linux-arm-kernel@lists.infradead.org,
+ Will Deacon <will@kernel.org>
+Cc: Eric Auger <eric.auger@redhat.com>, Moritz Fischer <mdf@kernel.org>,
+ Moritz Fischer <moritzf@google.com>, Michael Shavit <mshavit@google.com>,
+ Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Mostafa Saleh <smostafa@google.com>
+References: <2-v7-cb149db3a320+3b5-smmuv3_newapi_p2_jgg@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <2-v7-cb149db3a320+3b5-smmuv3_newapi_p2_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Apr 18, 2024 at 12:39:29PM +0800, Michael Shavit wrote:
-> > > Forgot that my SVA sanity doesn't cover this patch. And it looks
-> > > like some problems here when building it with "=m":
-> > >
-> > > ERROR: modpost: missing MODULE_LICENSE() in drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.o
-> > > ERROR: modpost: "arm_smmu_make_cdtable_ste" [drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.ko] undefined!
-> > > ERROR: modpost: "arm_smmu_make_bypass_ste" [drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.ko] undefined!
-> > > ERROR: modpost: "arm_smmu_make_abort_ste" [drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.ko] undefined!
-> > > ERROR: modpost: "arm_smmu_make_s2_domain_ste" [drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.ko] undefined!
-> > > ERROR: modpost: "arm_smmu_get_ste_used" [drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.ko] undefined!
-> > > ERROR: modpost: "arm_smmu_write_entry" [drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.ko] undefined!
-> > >
-> > > Likely needs MODULE_LICENSE and some EXPORT_SYMBOLs.
-> >
-> > Oh! The kbuild never tested this kconfig combination...
-> >
-> > I think just this? Michael?
+On 16/04/2024 8:28 pm, Jason Gunthorpe wrote:
+> CD table entries and STE's have the same essential programming sequence,
+> just with different types.
 > 
-> Urhh I'm not sure... Should this also depend on ARM_SMMU_V3? 
+> Have arm_smmu_write_ctx_desc() generate a target CD and call
+> arm_smmu_write_entry() to do the programming. Due to the way the target CD
+> is generated by modifying the existing CD this alone is not enough for the
+> CD callers to be freed of the ordering requirements.
+> 
+> The following patches will make the rest of the CD flow mirror the STE
+> flow with precise CD contents generated in all cases.
+> 
+> Signed-off-by: Michael Shavit <mshavit@google.com>
+> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+> Tested-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> Reviewed-by: Moritz Fischer <moritzf@google.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 94 ++++++++++++++++-----
+>   1 file changed, 74 insertions(+), 20 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> index bf105e914d38b1..3983de90c2fa01 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> @@ -56,6 +56,7 @@ struct arm_smmu_entry_writer_ops {
+>   
+>   #define NUM_ENTRY_QWORDS 8
+>   static_assert(sizeof(struct arm_smmu_ste) == NUM_ENTRY_QWORDS * sizeof(u64));
+> +static_assert(sizeof(struct arm_smmu_cd) == NUM_ENTRY_QWORDS * sizeof(u64));
+>   
+>   static phys_addr_t arm_smmu_msi_cfg[ARM_SMMU_MAX_MSIS][3] = {
+>   	[EVTQ_MSI_INDEX] = {
+> @@ -1231,6 +1232,67 @@ static struct arm_smmu_cd *arm_smmu_get_cd_ptr(struct arm_smmu_master *master,
+>   	return &l1_desc->l2ptr[idx];
+>   }
+>   
+> +struct arm_smmu_cd_writer {
+> +	struct arm_smmu_entry_writer writer;
+> +	unsigned int ssid;
+> +};
+> +
+> +static void arm_smmu_get_cd_used(const __le64 *ent, __le64 *used_bits)
+> +{
+> +	used_bits[0] = cpu_to_le64(CTXDESC_CD_0_V);
+> +	if (!(ent[0] & cpu_to_le64(CTXDESC_CD_0_V)))
+> +		return;
+> +	memset(used_bits, 0xFF, sizeof(struct arm_smmu_cd));
+> +
+> +	/* EPD0 means T0SZ/TG0/IR0/OR0/SH0/TTB0 are IGNORED */
 
-It does:
+They're ignored if the *effective value* of EPD0 is 1, which means you 
+also need to account for when EPD0 itself is ignored, or all this 
+complication is essentially meaningless.
 
-if ARM_SMMU_V3
-config ARM_SMMU_V3_SVA
-        bool "Shared Virtual Addressing support for the ARM SMMUv3"
-        select IOMMU_SVA
-        select IOMMU_IOPF
-        select MMU_NOTIFIER
-        help
-          Support for sharing process address spaces with devices using the
-          SMMUv3.
+Thanks,
+Robin.
 
-          Say Y here if your system supports SVA extensions such as PCIe PASID
-          and PRI.
-
-config ARM_SMMU_V3_KUNIT_TEST
-        bool "KUnit tests for arm-smmu-v3 driver"  if !KUNIT_ALL_TESTS
-        depends on KUNIT
-        default KUNIT_ALL_TESTS
-        help
-          Enable this option to unit-test arm-smmu-v3 driver functions.
-
-          If unsure, say N.
-endif
-
-The 'if' creates an automatic dependency and groups things into a
-kconfig menu
-
-> Also what
-> happens if ARM_SMMU_V3=m and ARM_SMMU_V3_KUNIT_TEST=y ?
-
-Works fine, the kunit symbols are exported and we still build one
-module for smmu so we don't need to have internal cross-module stuff
-
-Jason
+> +	if (ent[0] & cpu_to_le64(CTXDESC_CD_0_TCR_EPD0)) {
+> +		used_bits[0] &= ~cpu_to_le64(
+> +			CTXDESC_CD_0_TCR_T0SZ | CTXDESC_CD_0_TCR_TG0 |
+> +			CTXDESC_CD_0_TCR_IRGN0 | CTXDESC_CD_0_TCR_ORGN0 |
+> +			CTXDESC_CD_0_TCR_SH0);
+> +		used_bits[1] &= ~cpu_to_le64(CTXDESC_CD_1_TTB0_MASK);
+> +	}
+> +}
+> +
+> +static void arm_smmu_cd_writer_sync_entry(struct arm_smmu_entry_writer *writer)
+> +{
+> +	struct arm_smmu_cd_writer *cd_writer =
+> +		container_of(writer, struct arm_smmu_cd_writer, writer);
+> +
+> +	arm_smmu_sync_cd(writer->master, cd_writer->ssid, true);
+> +}
+> +
+> +static const struct arm_smmu_entry_writer_ops arm_smmu_cd_writer_ops = {
+> +	.sync = arm_smmu_cd_writer_sync_entry,
+> +	.get_used = arm_smmu_get_cd_used,
+> +	.v_bit = cpu_to_le64(CTXDESC_CD_0_V),
+> +};
+> +
+> +static void arm_smmu_write_cd_entry(struct arm_smmu_master *master, int ssid,
+> +				    struct arm_smmu_cd *cdptr,
+> +				    const struct arm_smmu_cd *target)
+> +{
+> +	struct arm_smmu_cd_writer cd_writer = {
+> +		.writer = {
+> +			.ops = &arm_smmu_cd_writer_ops,
+> +			.master = master,
+> +		},
+> +		.ssid = ssid,
+> +	};
+> +
+> +	arm_smmu_write_entry(&cd_writer.writer, cdptr->data, target->data);
+> +}
+> +
+> +static void arm_smmu_clean_cd_entry(struct arm_smmu_cd *target)
+> +{
+> +	struct arm_smmu_cd used = {};
+> +	int i;
+> +
+> +	arm_smmu_get_cd_used(target->data, used.data);
+> +	for (i = 0; i != ARRAY_SIZE(target->data); i++)
+> +		target->data[i] &= used.data[i];
+> +}
+> +
+>   int arm_smmu_write_ctx_desc(struct arm_smmu_master *master, int ssid,
+>   			    struct arm_smmu_ctx_desc *cd)
+>   {
+> @@ -1247,17 +1309,20 @@ int arm_smmu_write_ctx_desc(struct arm_smmu_master *master, int ssid,
+>   	 */
+>   	u64 val;
+>   	bool cd_live;
+> -	struct arm_smmu_cd *cdptr;
+> +	struct arm_smmu_cd target;
+> +	struct arm_smmu_cd *cdptr = &target;
+> +	struct arm_smmu_cd *cd_table_entry;
+>   	struct arm_smmu_ctx_desc_cfg *cd_table = &master->cd_table;
+>   	struct arm_smmu_device *smmu = master->smmu;
+>   
+>   	if (WARN_ON(ssid >= (1 << cd_table->s1cdmax)))
+>   		return -E2BIG;
+>   
+> -	cdptr = arm_smmu_get_cd_ptr(master, ssid);
+> -	if (!cdptr)
+> +	cd_table_entry = arm_smmu_get_cd_ptr(master, ssid);
+> +	if (!cd_table_entry)
+>   		return -ENOMEM;
+>   
+> +	target = *cd_table_entry;
+>   	val = le64_to_cpu(cdptr->data[0]);
+>   	cd_live = !!(val & CTXDESC_CD_0_V);
+>   
+> @@ -1279,13 +1344,6 @@ int arm_smmu_write_ctx_desc(struct arm_smmu_master *master, int ssid,
+>   		cdptr->data[2] = 0;
+>   		cdptr->data[3] = cpu_to_le64(cd->mair);
+>   
+> -		/*
+> -		 * STE may be live, and the SMMU might read dwords of this CD in any
+> -		 * order. Ensure that it observes valid values before reading
+> -		 * V=1.
+> -		 */
+> -		arm_smmu_sync_cd(master, ssid, true);
+> -
+>   		val = cd->tcr |
+>   #ifdef __BIG_ENDIAN
+>   			CTXDESC_CD_0_ENDI |
+> @@ -1299,18 +1357,14 @@ int arm_smmu_write_ctx_desc(struct arm_smmu_master *master, int ssid,
+>   		if (cd_table->stall_enabled)
+>   			val |= CTXDESC_CD_0_S;
+>   	}
+> -
+> +	cdptr->data[0] = cpu_to_le64(val);
+>   	/*
+> -	 * The SMMU accesses 64-bit values atomically. See IHI0070Ca 3.21.3
+> -	 * "Configuration structures and configuration invalidation completion"
+> -	 *
+> -	 *   The size of single-copy atomic reads made by the SMMU is
+> -	 *   IMPLEMENTATION DEFINED but must be at least 64 bits. Any single
+> -	 *   field within an aligned 64-bit span of a structure can be altered
+> -	 *   without first making the structure invalid.
+> +	 * Since the above is updating the CD entry based on the current value
+> +	 * without zeroing unused bits it needs fixing before being passed to
+> +	 * the programming logic.
+>   	 */
+> -	WRITE_ONCE(cdptr->data[0], cpu_to_le64(val));
+> -	arm_smmu_sync_cd(master, ssid, true);
+> +	arm_smmu_clean_cd_entry(&target);
+> +	arm_smmu_write_cd_entry(master, ssid, cd_table_entry, &target);
+>   	return 0;
+>   }
+>   
