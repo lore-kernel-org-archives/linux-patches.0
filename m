@@ -1,103 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from nautica.notk.org (nautica.notk.org [91.121.71.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C57C17A938;
-	Thu, 18 Apr 2024 20:32:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D13E15CB
+	for <patches@lists.linux.dev>; Fri, 19 Apr 2024 02:06:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.121.71.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713472355; cv=none; b=A3YdQxntT3vvqWk+9Ggc5phAAq82HQLbJGzP9FcJ820yo2/NSD0blPHm7z2G9i06QeZDwf9xu7COYJaz+UT2zKL/1dMxSWlzhxuwMUEs0qzjdtGyyQvEVh81/Wd4Fg29EeefgxYvTSVskQMcjjvvV4GmtC4xZ949r7CvPWWXDLw=
+	t=1713492398; cv=none; b=nIcj3YI2Ty3xCU9lZh4VgJI/fZ8HbhXqDdWvyNKHd/1LAiG5BVVjapnOxns0V4fG/kpHCk9QvnTaAkdSytxhSsp7ZrhNRI/yhJWCvNvdMZ3ZqDp/vH7SVvGBClfwXulnT9ndUriCzuLgekRReTBhueWi+HS3X+NlM/B7b2OHfpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713472355; c=relaxed/simple;
-	bh=i6IHCK7Y8d6u6GANr3/DxbBo5khouz5aFu33Kjmu+/Q=;
+	s=arc-20240116; t=1713492398; c=relaxed/simple;
+	bh=Y2/s4WAiydW6QBiopUoU1XVzzehaD4MVwOtscaPf80c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MZ5/9c7kQTwWOqf9dpzy/H1o+fvf+YBCO7G/Lo2MkjG0RlXLE8z/grJ/XRPnhtjVKkN5nc8n8/VtMdrGmwmVIp1BsdM6lAGpGnDBFXKc5/CtnBEkH14qa1b6QfNyDUZWpbQH7sEER+koCp1KfqShLuQtDdjKWhAr520BzLSoB/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jcu3C3rj; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Up9AeGyj9fPKjPIUUAyF7gWZ0UV2RSJ9ZgHZ3SXEvTvQZi9jbO6J+ACyYsy7UwitvY6Mswo+uZNzsn3me0/DDSJHhZTp61K6ukmhtxdr/hMwIr3kEFMwUCAwZM/X0CWpwjT85fnDh5/Zng0vyzpSyibUlFVCIzWqlYgODpvkjIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=ITMi5GGU; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=KnhBJAbi; arc=none smtp.client-ip=91.121.71.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jcu3C3rj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D53C113CC;
-	Thu, 18 Apr 2024 20:32:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713472355;
-	bh=i6IHCK7Y8d6u6GANr3/DxbBo5khouz5aFu33Kjmu+/Q=;
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="ITMi5GGU";
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="KnhBJAbi"
+Received: by nautica.notk.org (Postfix, from userid 108)
+	id 3F4A7C023; Fri, 19 Apr 2024 04:06:27 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1713492387; bh=KpqMVThaIWBdhLUdSPYvCvTYHHBX94PAOEp7ltD0JSA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jcu3C3rjY9LFfERyGgNHl8DlmNsLigxeBPR9EZpb9xk970H77vQLgB69t0/BpqWeW
-	 O8cIt8I3CwT7N0zZ8v//yXlpOtDc7pI4kFWxtimZVY+hBtkkaV/mPqvInZS/GQyLpY
-	 8BSs2MPPEGvuzChKpNQVGsEpBKw05tUtfFi0VhbMe/0uoXozbOdkbglsUyfpPEr0pR
-	 WWFqBL6qdz+9nG9KqWYvOFmISQyxIeoykVDYmFH0yEpGR2QaL8LuHv2w6FNo/D9xvD
-	 5rsiWROIzH9e00wSyBeEJDbeh8cpfcykJCZF0jiOTLz8poQXEhSEqdD65wwys1HuV7
-	 YHBKGkG+P5USw==
-Date: Thu, 18 Apr 2024 13:32:32 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Heiko Carstens <hca@linux.ibm.com>
-Cc: akpm@linux-foundation.org, arnd@arndb.de, gor@linux.ibm.com,
-	agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
-	svens@linux.ibm.com, wintera@linux.ibm.com, twinkler@linux.ibm.com,
-	linux-s390@vger.kernel.org, netdev@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH 1/3] s390/vmlogrdr: Remove function pointer cast
-Message-ID: <20240418203232.GA2962980@dev-arch.thelio-3990X>
-References: <20240417-s390-drivers-fix-cast-function-type-v1-0-fd048c9903b0@kernel.org>
- <20240417-s390-drivers-fix-cast-function-type-v1-1-fd048c9903b0@kernel.org>
- <20240418095438.6056-A-hca@linux.ibm.com>
- <20240418102549.6056-B-hca@linux.ibm.com>
- <20240418145121.GA1435416@dev-arch.thelio-3990X>
- <20240418151501.6056-C-hca@linux.ibm.com>
- <20240418153406.GC1435416@dev-arch.thelio-3990X>
- <20240418192100.6741-A-hca@linux.ibm.com>
+	b=ITMi5GGUb/dh+Iglk8Ly2f1C3k+o4Xh/qD46xpCYek/d139l9hWoLaEzWRQDDUAid
+	 zeRuiV9ijlV/UMt980z66XnA5W1khjwa+GCH7gsUvf9M8JLojlfjlpuzXcdeGrhaoE
+	 ySYU85zXy9y5+VMVFtV5xnSHiMWT4OTMc4TQr2h7dm1VrzXiKcQoD4dxQsvSoFN06r
+	 gAUoYKWNRYDhc2F6WH800QP4cNSTVUILss9q3sacWzr+Hfk5OzrX1QryiXPmP+QT79
+	 jKCDiUWCZ231/DyRnZVUiooGyInMStGbvydBTwXENARZs4fQaFhUCX/TeB4vOKZ+BI
+	 s8XzSZjmpOQHQ==
+X-Spam-Level: 
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by nautica.notk.org (Postfix) with ESMTPS id 419BAC009;
+	Fri, 19 Apr 2024 04:06:18 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1713492386; bh=KpqMVThaIWBdhLUdSPYvCvTYHHBX94PAOEp7ltD0JSA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KnhBJAbijWsbehQ0m5ys2wsqXkVqpojDVgvUZcq3/8bfQ6GYhUYiGbeKBpTS5VMwk
+	 XdWOJskfq/XzJMdTDDnttyj8D0HwLdz9bGPVK66VK+sOUIKyAv9OpoNRi1cDYpQ2N0
+	 plWQ5+4Au9d16bLOLiJjuBxe17CAzGLmKap0Q2n314dj5qCeQD4gGDt7gxGmbGp1MU
+	 lsVk6HKNqQuwnr6qfJ0/Pga7o4lQenBBDGILz0XLsqWzqSsXFyEqYFSd1b5b4xoVED
+	 O9wZkDTSBfVdH4oiyJdE7+nO40hE+V6XfAU/Z/G2UVzKebVoRrjmbrPcyoogIdbCAJ
+	 WxicTz2Faln9A==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 86916471;
+	Fri, 19 Apr 2024 02:06:13 +0000 (UTC)
+Date: Fri, 19 Apr 2024 11:05:58 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Pavel Machek <pavel@denx.de>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, broonie@kernel.org,
+	alex.williamson@redhat.com, seanjc@google.com, jpoimboe@redhat.com,
+	michael.roth@amd.com, dsterba@suse.com, aric.cyr@amd.com
+Subject: Re: [PATCH 5.10 000/294] 5.10.215-rc1 review
+Message-ID: <ZiHRhg0TOvh0cUn3@codewreck.org>
+References: <20240411095435.633465671@linuxfoundation.org>
+ <Zh/HpAGFqa7YAFuM@duo.ucw.cz>
+ <2024041739-faceted-sandpit-0818@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240418192100.6741-A-hca@linux.ibm.com>
+In-Reply-To: <2024041739-faceted-sandpit-0818@gregkh>
 
-On Thu, Apr 18, 2024 at 09:21:00PM +0200, Heiko Carstens wrote:
-> Hi Nathan,
-> 
-> > > > > > > -		/*
-> > > > > > > -		 * The release function could be called after the
-> > > > > > > -		 * module has been unloaded. It's _only_ task is to
-> > > > > > > -		 * free the struct. Therefore, we specify kfree()
-> > > > > > > -		 * directly here. (Probably a little bit obfuscating
-> > > > > > > -		 * but legitime ...).
-> > > > > > > -		 */
-> > > 
-> > > That doesn't answer my question what prevents the release function
-> > > from being called after the module has been unloaded.
-> > > 
-> > > At least back then when the code was added it was a real bug.
+Greg Kroah-Hartman wrote on Wed, Apr 17, 2024 at 03:28:04PM +0200:
+> > > David Sterba <dsterba@suse.com>
+> > >     btrfs: handle chunk tree lookup error in btrfs_relocate_sys_chunks()
 > > 
-> > I do not know the answer to that question (and I suspect there is
-> > nothing preventing ->release() from being called after module unload),
-> > so I'll just bring back the comment (although I'll need to adjust it
-> > since kfree() is not being used there directly anymore). Andrew, would
-> > you prefer a diff from what's in -mm or a v2?
-> 
-> I guess there is some confusion here :) My request was not to keep the
+> > (This applies to 4.19, too). mutex_unlock() is needed before "goto
+> > error" here.
 
-Heh, yes, my apologies for being rather dense, I was not interpreting
-the comment or the thread you linked properly... :(
+ugh, I need to look more at the context when reviewing these, btrfs is
+part of what I'm more or less looking at when updating...
 
-> comment. I'm much rather afraid that the comment is still valid; and if
-> that is the case then your patch series adds three bugs, exactly what is
-> described in the comment.
-> 
-> Right now the release function is kfree which is always within the kernel
-> image, and therefore always a valid branch target. If however the code is
-> changed to what you propose, then the release function would be inside of
-> the module, which potentially does not exist anymore when the release
-> function is called, since the module was unloaded.
-> So the branch target would be invalid.
+> So can you provide that fix please?
 
-That is super subtle :/ I can understand what the comment is warning
-about with that extra context. I see Arnd's suggestion which may fix
-this problem and get rid of the warning but if there are other ideas, I
-am all ears. I guess we could just disable -Wcast-function-type-strict
-for this code since s390 does not support kCFI right now but since it
-could, it seems better to resolve it properly.
+This bug affects upstream as well and I don't see any upstream fix for
+it yet on linux-btrfs@vger, I'll send a patch with Pavel's reported at.
 
-Thanks a lot for the quick review and catching my mistake, cheers!
-Nathan
+-- 
+Dominique Martinet
