@@ -1,138 +1,157 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29537BAE5;
-	Fri, 19 Apr 2024 11:05:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A313B52F71;
+	Fri, 19 Apr 2024 12:15:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713524717; cv=none; b=k/oF9Nk+Tn/bqJxNQe+WZ/Baf7vfFbIDxQf2uEMbp4ejpKkwHxplatoAQMTK0H05eMpB3AzP3M0wZjscnO3rNOGrQVH3s4pbn10wlnZpIFyxAu/xOllYAnU3NhWLSYQBGH7P8R9vQNDGng47DJZ45mUVxf7+xo8TI17jmjV9i08=
+	t=1713528924; cv=none; b=nrcdSwFYDDG1S7G5BFKbXJMJRMeLylk+ey2xpVtqrbs/a70BFq9DqhSt0kS3Eo+BtGRcWP06/AqzlZ5ntxgePb99CvpXfh0/wvEw9zUrolYG9XWNuiyuaTtvEV32j9UzddCFvH6AC6/pxrYUho0b2A3gOcIdjjk2ZHCo7UfAfiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713524717; c=relaxed/simple;
-	bh=wOUo2++bYvOhHtA/1yKJ+lIawhgs+4qJQ+CoecAxzKI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iWFaukRC+ZBRG7w8t2FUff+6vbkwG7rh1pg05gzJrM06JNXWFTOwpQrKejAI+bOL9XVuHVVqbc7bf+Gb9UgnTu0pp9FvlcIAqDBNJuXfxtegveJ+toIyS6vOajCB6WVptlLpYbMneILatOUzuSspzHT0CWua49VgIRn+ZROBQBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDY7u55w; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713528924; c=relaxed/simple;
+	bh=uJctjiwok9OAxi8V9EB9j1/O1K4QOMr78QQhPuVBSY8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=otbwIC/+nP5ElPX7JYLa8SO9q2Uy7NjwmhqxuetHsIS+XBvIlqHdnbMtUy4bsh/J0hvTuLIC04s/oAQAA8HQUtlftemW3HMSFUXdNZdewF8IvlctDQObFLpbF3j/6p2G64hw9GtwIOM0iRILJ3ANPHZcCHo0rNINQ0xcFdApV+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=qtuopD0Y; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDY7u55w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E2AC072AA;
-	Fri, 19 Apr 2024 11:05:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713524716;
-	bh=wOUo2++bYvOhHtA/1yKJ+lIawhgs+4qJQ+CoecAxzKI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tDY7u55wKa7tKq9U/6vZr38Np7ow1VOp99BWoLgocxm2uWiDfyEh9Dsk8vZXHzZkz
-	 Q0m24GX9jFlUdmh4oONI+68B20HmzlRA4Xsc0BlhOJxU1cjIRqXTin+etPgdMXKDMv
-	 K3GPdXbZApY6JvwNKf9mLSDW2aplgZgxJr5447fo=
-Date: Fri, 19 Apr 2024 13:05:03 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Marc Zyngier <maz@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Mark Brown <broonie@kernel.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, Yihuang Yu <yihyu@redhat.com>,
-	Gavin Shan <gshan@redhat.com>, Ryan Roberts <ryan.roberts@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Shaoqin Huang <shahuang@redhat.com>, Will Deacon <will@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Anders Roxell <anders.roxell@linaro.org>
-Subject: Re: [PATCH 6.6 000/122] 6.6.28-rc1 review
-Message-ID: <2024041954-replica-deflation-73b5@gregkh>
-References: <20240415141953.365222063@linuxfoundation.org>
- <Zh5UJh31PlBkpZWd@finisterre.sirena.org.uk>
- <CA+G9fYu-AjRm-BBA=8fWS8oCbBJ5W443JHPh3uddD7ea7MY-YA@mail.gmail.com>
- <86y19dqw74.wl-maz@kernel.org>
- <Zh61KobDt_y1O46-@arm.com>
- <86sezjq688.wl-maz@kernel.org>
- <ZiECLaXHce05DSM6@arm.com>
- <2024041921-drown-dizzy-7481@gregkh>
- <86r0f1r5i1.wl-maz@kernel.org>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="qtuopD0Y"
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 43JBZCLo020693;
+	Fri, 19 Apr 2024 12:15:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
+ subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=pp1; bh=XSwAKK1U4BbAzR0wUXsJ0kRA3eWzLRtYrhex8CN/Lbc=;
+ b=qtuopD0YV+mtz024ohiwb+aYk2zP3zUUQi0G0yInoKE8MSAx7C49k9uoz3XNAwRtcGhf
+ G/ldqQH8YbKAxEKC6YjCQQGpWp4seHs7ZBCep7ejPPMuNO5RzxSsLA7hc8P4Z5Ixznfv
+ Y9+3hMZD9z4saXHOBY1P3XZmJBdSnDe3Bu4OmNvlirVgSE9zknHcYbL6oBYaXQc4MLoj
+ 5ALKpnbqByWi+JSGlZNN287NM3w9deg+OyRYcooo9r959f2RuI5tTIQ+GtK8SQJZLiWg
+ dbavR7PBhaVhYZ9DfoNhSdIiU8DKsSL89wRV6vbX3P+VxxBF7p9ZqKmgmBOsOfh7YMSO Gw== 
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xkqu2837b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 19 Apr 2024 12:15:15 +0000
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 43J8uA1Z027929;
+	Fri, 19 Apr 2024 12:15:14 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xkbmpbfgp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 19 Apr 2024 12:15:14 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 43JCF8Qg52429204
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 19 Apr 2024 12:15:11 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id DF4682004D;
+	Fri, 19 Apr 2024 12:15:08 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 13BC620040;
+	Fri, 19 Apr 2024 12:15:08 +0000 (GMT)
+Received: from osiris (unknown [9.171.8.18])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Fri, 19 Apr 2024 12:15:07 +0000 (GMT)
+Date: Fri, 19 Apr 2024 14:15:06 +0200
+From: Heiko Carstens <hca@linux.ibm.com>
+To: Arnd Bergmann <arnd@arndb.de>, Alexandra Winter <wintera@linux.ibm.com>,
+        Thorsten Winkler <twinkler@linux.ibm.com>
+Cc: Nathan Chancellor <nathan@kernel.org>,
+        Andrew Morton <akpm@linux-foundation.org>, gor@linux.ibm.com,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>, wintera@linux.ibm.com,
+        twinkler@linux.ibm.com, linux-s390@vger.kernel.org,
+        Netdev <netdev@vger.kernel.org>, llvm@lists.linux.dev,
+        patches@lists.linux.dev
+Subject: Re: [PATCH 1/3] s390/vmlogrdr: Remove function pointer cast
+Message-ID: <20240419121506.23824-A-hca@linux.ibm.com>
+References: <20240417-s390-drivers-fix-cast-function-type-v1-0-fd048c9903b0@kernel.org>
+ <20240417-s390-drivers-fix-cast-function-type-v1-1-fd048c9903b0@kernel.org>
+ <20240418095438.6056-A-hca@linux.ibm.com>
+ <20240418102549.6056-B-hca@linux.ibm.com>
+ <20240418145121.GA1435416@dev-arch.thelio-3990X>
+ <20240418151501.6056-C-hca@linux.ibm.com>
+ <798df2d7-b13f-482a-8d4a-106c6492af01@app.fastmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <798df2d7-b13f-482a-8d4a-106c6492af01@app.fastmail.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: jtCq1dlQ4O8G1fc-sPJaSGTvo2WX1l6d
+X-Proofpoint-ORIG-GUID: jtCq1dlQ4O8G1fc-sPJaSGTvo2WX1l6d
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <86r0f1r5i1.wl-maz@kernel.org>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-19_08,2024-04-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ clxscore=1015 lowpriorityscore=0 mlxlogscore=877 impostorscore=0
+ malwarescore=0 spamscore=0 bulkscore=0 suspectscore=0 adultscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2404190092
 
-On Fri, Apr 19, 2024 at 11:50:14AM +0100, Marc Zyngier wrote:
-> On Fri, 19 Apr 2024 11:40:33 +0100,
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> > 
-> > On Thu, Apr 18, 2024 at 12:21:17PM +0100, Catalin Marinas wrote:
-> > > On Thu, Apr 18, 2024 at 12:07:35PM +0100, Marc Zyngier wrote:
-> > > > On Tue, 16 Apr 2024 18:28:10 +0100,
-> > > > Catalin Marinas <catalin.marinas@arm.com> wrote:
-> > > > > On Tue, Apr 16, 2024 at 02:22:07PM +0100, Marc Zyngier wrote:
-> > > > > > On Tue, 16 Apr 2024 14:07:30 +0100,
-> > > > > > Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> > > > > > > On Tue, 16 Apr 2024 at 16:04, Mark Brown <broonie@kernel.org> wrote:
-> > > > > > > > On Mon, Apr 15, 2024 at 04:19:25PM +0200, Greg Kroah-Hartman wrote:
-> > > > > > > > > This is the start of the stable review cycle for the 6.6.28 release.
-> > > > > > > > > There are 122 patches in this series, all will be posted as a response
-> > > > > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > > > > let me know.
-> > > > > > > >
-> > > > > > > > The bisect of the boot issue that's affecting the FVP in v6.6 (only)
-> > > > > > > > landed on c9ad150ed8dd988 (arm64: tlb: Fix TLBI RANGE operand),
-> > > > > > > > e3ba51ab24fdd in mainline, as being the first bad commit - it's also in
-> > > > > > > > the -rc for v6.8 but that seems fine.  I've done no investigation beyond
-> > > > > > > > the bisect and looking at the commit log to pull out people to CC and
-> > > > > > > > note that the fix was explicitly targeted at v6.6.
-> > > > > > > 
-> > > > > > > Anders investigated this reported issues and bisected and also found
-> > > > > > > the missing commit for stable-rc 6.6 is
-> > > > > > > e2768b798a19 ("arm64/mm: Modify range-based tlbi to decrement scale")
-> > > > > > 
-> > > > > > Which is definitely *not* stable candidate. We need to understand why
-> > > > > > the invalidation goes south when the scale go up instead of down.
-> > > > > 
-> > > > > If you backport e3ba51ab24fd ("arm64: tlb: Fix TLBI RANGE operand")
-> > > > > which fixes 117940aa6e5f ("KVM: arm64: Define
-> > > > > kvm_tlb_flush_vmid_range()") but without the newer e2768b798a19
-> > > > > ("arm64/mm: Modify range-based tlbi to decrement scale"), it looks like
-> > > > > "scale" in __flush_tlb_range_op() goes out of range to 4. Tested on my
-> > > > > CBMC model, not on the actual kernel. It may be worth adding some
-> > > > > WARN_ONs in __flush_tlb_range_op() if scale is outside the 0..3 range or
-> > > > > num greater than 31.
-> > > > > 
-> > > > > I haven't investigated properly (and I'm off tomorrow, back on Thu) but
-> > > > > it's likely the original code was not very friendly to the maximum
-> > > > > range, never tested. Anyway, if one figures out why it goes out of
-> > > > > range, I think the solution is to also backport e2768b798a19 to stable.
-> > > > 
-> > > > I looked into this, and I came to the conclusion that this patch is
-> > > > pretty much incompatible with the increasing scale (even if you cap
-> > > > num to 30).
-> > > 
-> > > Thanks Marc for digging into this.
-> > > 
-> > > > So despite my earlier comment, it looks like picking e2768b798a19 is
-> > > > the right thing to do *if* we're taking e3ba51ab24fd into 6.6-stable.
-> > > > 
-> > > > Otherwise, we need a separate fix, which Ryan initially advocating for
-> > > > initially.
-> > > 
-> > > My preference would be to cherry-pick the two upstream commits than
-> > > coming up with an alternative fix for 6.6.
-> > 
-> > To be specific, which 2 commits, and what order?
+On Thu, Apr 18, 2024 at 09:46:18PM +0200, Arnd Bergmann wrote:
+> On Thu, Apr 18, 2024, at 17:15, Heiko Carstens wrote:
+> >> > > > -		/*
+> >> > > > -		 * The release function could be called after the
+> >> > > > -		 * module has been unloaded. It's _only_ task is to
+> >> > > > -		 * free the struct. Therefore, we specify kfree()
+> >> > > > -		 * directly here. (Probably a little bit obfuscating
+> >> > > > -		 * but legitime ...).
+> >> > > > -		 */
 > 
-> That'd be:
+> I think the way this should work is to have the allocation and
+> the release function in the iucv bus driver, with a function
+> roughly like
 > 
-> e2768b798a19 ("arm64/mm: Modify range-based tlbi to decrement scale")
+> struct device *iucv_alloc_device(char *name,
+>                const struct attribute_group *attrs,
+>                void *priv)
+> {
+>       dev = kzalloc(sizeof(struct device), GFP_KERNEL);
+>       if (!dev)
+>            return NULL;
 > 
-> followed by:
+>       dev_set_name(dev, "%s", name);
+>       dev->bus = &iucv_bus;
+>       dev->parent = iucv_root;
+>       dev->groups = attrs;
+>       dev_set_drvdata(dev, priv);
+>       dev->release = iucv_free_dev;
+>   
+>       return dev;
+> }
 > 
-> e3ba51ab24fd ("arm64: tlb: Fix TLBI RANGE operand")
+> Now the release function cannot go away as long as any module
+> is loaded that links against it, and those modules cannot
+> go away as long as the devices are in use.
+> 
+> I don't remember how iucv works, but if there is a way to
+> detect which system services exist, then the actual device
+> creation should also be separate from the driver using those
+> services, with another driver responsible for enumerating
+> the existing services and creating those devices.
 
-Thanks, now queued up.
+I have the impression we have the same discussion like it happened 20
+years ago:
+https://lore.kernel.org/all/OF876C2271.59086B92-ONC1256E5A.00409933-C1256E5A.00427853@de.ibm.com/
 
-greg k-h
+Adding extra module dependencies won't help, since it just moves the
+potential races. However what could easily solve this problem is to
+make CONFIG_IUCV a boolean config option instead of tristate. If it
+would be compiled in, the release function cannot go away.
+
+We have already "def_tristate y if S390" for IUCV, so it looks like
+this wouldn't change anything in real life. In addition with something
+like your proposed change, we should be fine.
+
+Plus we need to fix the potential bug you introduced with commit
+42af6bcbc351 ("tty: hvc-iucv: fix function pointer casts"). But at
+least this is also iucv_bus related.
+
+Alexandra, Thorsten, any objections if CONFIG_IUCV would be changed so
+it can only be compiled in or out, but not as a module anymore?
