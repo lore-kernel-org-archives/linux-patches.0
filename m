@@ -1,47 +1,33 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA65550A65;
-	Sun, 21 Apr 2024 22:29:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2750502BD;
+	Mon, 22 Apr 2024 08:18:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=150.107.74.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713738586; cv=none; b=CsZ6hQkS0SH83ScU+a4a8CpZJUTbk+Y+9k8fMNk1QWAuHlHF9Mr+JQ5092QCSm7yUTIM6hl5M0zhtExFKDc3AMj7bN16LoxQ1eskXDoVR6636xefde3PeQ4+M9tftJ/kA64KXT/Ma0t9SqheSNzC6b/mguhTSD3qmPgOuXV7AVM=
+	t=1713773931; cv=none; b=NuJM9J05bKB5B5Zgp8Wom7nWErGrOjaKD64iMq1ROOcewpko5w2h0PRzx9YQOmbFaCLi5TN9oRdFIAYRygoommG4iKBfMTWG4XFluIeHoT1prMO+Q+KE2jtun7HOKeWF/dhATNVEZhgBBBAFBpjvZBEY4XhEdMVd8Vv8vdJ43xI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713738586; c=relaxed/simple;
-	bh=w/xWsMj6GMAy+FKXfCKW1NhgakVrHhumWn47xc68dIM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Osgv/vrquXbJGZMfrIa0Dt6Tm3VDW98kVJSleKyUUUwPNXZQjO5fwW1/3seY3LLYBYp3QyKuGiudXZyFd+yuvbI5RaJc6sFh2HJX9fUykdHvrn4FVvf3ttT4Jq1OUpCkMfn2q9O7J5jbIBuxWBOrqX5z/g8X6LwuuGVXoBNX+MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JyJDrPu/; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JyJDrPu/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBBCC32783;
-	Sun, 21 Apr 2024 22:29:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713738586;
-	bh=w/xWsMj6GMAy+FKXfCKW1NhgakVrHhumWn47xc68dIM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JyJDrPu/pADswzE8YtcbuOocNYOqRxJk6uKRyhDu06RKUZvns0b45tXnpUZAV0hi4
-	 OCa67HN1PZWc7kA9X9yWA134cn9MYUxknFYzO1xtCNXh5D3rKDzzjTp4Nlvl2nWdox
-	 TZOYUY9EWK7X/68/K4LpJuCerzv2f1cF22zFmVoHvSLcSmH8RcihoGvbd0mhsGreGo
-	 GfX3QiSHLW2E73zH3xjgWPMnlXYv0cHGipBKHTJaupg5yvcnwGN+tKB/qptdp89JRB
-	 KEeNUGge6GmvV6PUghPVtKvjxvUxsdrUBStHkYUTxNKW1OMklbvbSCBA1X845QZrEr
-	 OrmivM16PqVOg==
-From: Bjorn Andersson <andersson@kernel.org>
-To: sboyd@kernel.org,
-	Nathan Chancellor <nathan@kernel.org>
-Cc: konrad.dybcio@linaro.org,
-	mturquette@baylibre.com,
-	bryan.odonoghue@linaro.org,
-	neil.armstrong@linaro.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 0/2] clk: qcom: Fix two driver Kconfig dependencies
-Date: Sun, 21 Apr 2024 17:29:20 -0500
-Message-ID: <171373856767.1196479.14241619358074535915.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240318-fix-some-qcom-kconfig-deps-v1-0-ea0773e3df5a@kernel.org>
-References: <20240318-fix-some-qcom-kconfig-deps-v1-0-ea0773e3df5a@kernel.org>
+	s=arc-20240116; t=1713773931; c=relaxed/simple;
+	bh=sSY3u+8ZHO4gD1DSn/pzbn7w0OPgLJUBZ8cqjGbolh8=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=qpnheTGiu4QfBqeNVbivY4Hzk2pQc3jzUhEzA30Y7hqRIjiarI0Btk1i6wiXFcQ6uVdgaLsxJwP9KVL0mHg4GuRFoOutMj6g6FmSN0EgPvM3m7nfHO9fNJqKmWbVgnwR0Et+6QJ0zbOskpHO+MkEEbvssCLTe6r+11mvbSsiZQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ellerman.id.au; spf=pass smtp.mailfrom=ellerman.id.au; arc=none smtp.client-ip=150.107.74.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ellerman.id.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ellerman.id.au
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.ozlabs.org (Postfix) with ESMTPSA id 4VNJ6w2xtQz4x23;
+	Mon, 22 Apr 2024 18:18:48 +1000 (AEST)
+From: Michael Ellerman <patch-notifications@ellerman.id.au>
+To: mpe@ellerman.id.au, Nathan Chancellor <nathan@kernel.org>
+Cc: morbo@google.com, justinstitt@google.com, ajd@linux.ibm.com, bgray@linux.ibm.com, linuxppc-dev@lists.ozlabs.org, llvm@lists.linux.dev, patches@lists.linux.dev
+In-Reply-To: <20240405-ppc-fix-wa-fatal-warnings-clang-v1-1-bdcd969f2ef0@kernel.org>
+References: <20240405-ppc-fix-wa-fatal-warnings-clang-v1-1-bdcd969f2ef0@kernel.org>
+Subject: Re: [PATCH] powerpc: Fix fatal warnings flag for LLVM's integrated assembler
+Message-Id: <171377378380.1025456.16747240278509808133.b4-ty@ellerman.id.au>
+Date: Mon, 22 Apr 2024 18:16:23 +1000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,27 +35,22 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-
-On Mon, 18 Mar 2024 08:18:09 -0700, Nathan Chancellor wrote:
-> This series fixes two Kconfig warnings that I recently saw crop up in my
-> build tests because the dependencies for newly added drivers in 6.8 are
-> not correct.
+On Fri, 05 Apr 2024 12:31:22 -0700, Nathan Chancellor wrote:
+> When building with LLVM_IAS=1, there is an error because
+> '-fatal-warnings' is not recognized as a valid flag:
 > 
-> This is now the fourth set of changes to avoid warnings of this nature
-> for the exact same reason... is there anything that can be done to
-> ensure this does not continue to happen? See
+>   clang: error: unsupported argument '-fatal-warnings' to option '-Wa,'
+> 
+> Use the double hyphen version of the flag, '--fatal-warnings', which
+> works with both the GNU assembler and LLVM's integrated assembler.
 > 
 > [...]
 
-Applied, thanks!
+Applied to powerpc/next.
 
-[1/2] clk: qcom: Fix SC_CAMCC_8280XP dependencies
-      commit: 0e79d702bf7fac2e63fc32a1b4ff307d71db692f
-[2/2] clk: qcom: Fix SM_GPUCC_8650 dependencies
-      commit: 551eb5194bf328652decc5531edd9c65a5d2a17c
+[1/1] powerpc: Fix fatal warnings flag for LLVM's integrated assembler
+      https://git.kernel.org/powerpc/c/8884fc918f6aee220f9b41806974508bd0213aca
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+cheers
