@@ -1,212 +1,168 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702861CD37
-	for <patches@lists.linux.dev>; Mon, 22 Apr 2024 22:19:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.11
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713824398; cv=fail; b=IypUFGcRYbtsz544YVrAg3mJQErThXCrA885ZKgZaiXdfdNJ4G7qsMg7MKs6Pzj89UI39T5EfDzWSnJw2Q59mBl5qyzDbMJqQgYHa/HDQUgAyrkdyDGbwn034DxUY1e2pCeWWMfcfS3/X2Vr2wu/CmDqWauBlXNcyuRYmFfu7is=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713824398; c=relaxed/simple;
-	bh=A8sonWcetWjaaoJPj7ngBYiUgM1SwFZT/nmVhvI2V4E=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=EOntWW1GiGzb9tcyarTdGu6hVri2Lk4e9AroihhulXaihIfUu5QVNWKrrVr/FTfPMY3RW4FGDHmUgRyjGfL6z+2l6fBg+xXaVhPQWpQlL/9cMLBFTng3o/kHdVXiFDtQcs495bfvOg3Wl+spys6xLycGu5MaKAcE6/GvFfbPLA0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nitZdQai; arc=fail smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E6E2942F;
+	Mon, 22 Apr 2024 23:24:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1713828247; cv=none; b=NMHf8CJfgTCfa/UuC5GieYg4u5uR5wVfiPLjYOMCkST/xy/FhdQiRawTgzdSMn3M22A7r/zW/naYx9Etzm9OuaetkMy4ZzItJA/nVu2sbpyC+zoPU/qT/f07ZX3is3H+V5oFgTvP8qQVWGkxqiMDNiI+WVqbqUglM9h4fXPwxzU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1713828247; c=relaxed/simple;
+	bh=v3XW2cYQ79gqDMbF1UVESANI0NiQDi505TJ8KLujo5k=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mulC7ptUOK1PmkPxdYk00nUKMamoFbWqdYfOUsu1UNATzmsZyYqVtN4n0BYY/rh4nSU31E4oSxq5Shzg9MyDXP3fvhRslmJ7rtQcbc1oCpZwUSBcYTzJaco7Z/9tZ7Vr93PEBu0zRtpT8RpvRvPZLY1jVsQtd3TzTtbek9282w8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s8yAgiDA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nitZdQai"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713824398; x=1745360398;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=A8sonWcetWjaaoJPj7ngBYiUgM1SwFZT/nmVhvI2V4E=;
-  b=nitZdQaivDbl0xRisLElKY7E9UkmS969LOGZ2M5NeEcK4RodyHAlW5LF
-   4VxRzMu5Aw5pGB0oCBFFGe9HgxZihsblvqCnlGTXRJhtY/WwKAfm3V/U1
-   10SFnDUEPU40xwODj97gmmjcuWi8sAuHyUdw7B6RYEY60Dy9FvI0jFkED
-   /NkyqUf14JTJqY7jozhXbpuLavtCF4TrcIXzCGw8WCz0nUxDyPeylpoQ1
-   6F72vM2zRn+jDFv3v1ayufp/WHgjxJZqXIaSfQHhErThosaGxLkfYin1/
-   5AtoSdfg67xa9KAVeudhs/vBblhzZRRmFlPOLr0bC0KMkKLF4HKbB/Ypz
-   w==;
-X-CSE-ConnectionGUID: dx8wcKosSP2imcCbym8ACw==
-X-CSE-MsgGUID: 26NqMJQDQjORqgZyfO74TQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11052"; a="19997011"
-X-IronPort-AV: E=Sophos;i="6.07,221,1708416000"; 
-   d="scan'208";a="19997011"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Apr 2024 15:19:56 -0700
-X-CSE-ConnectionGUID: i4ObMmCtSKyM5kAe7Y5yPw==
-X-CSE-MsgGUID: b7YNCOG0TBaNJq12e0+BDw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,221,1708416000"; 
-   d="scan'208";a="55093512"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
-  by orviesa002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 22 Apr 2024 15:19:55 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 22 Apr 2024 15:19:55 -0700
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Mon, 22 Apr 2024 15:19:55 -0700
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.170)
- by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Mon, 22 Apr 2024 15:19:55 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=n8aDE85QuRhpsqTtC8iH8Y2lsf3kUnodsxD21Vlf6iatJJveUjW9BUOz44DpnspLc4W5b65U9HY2e0DQ2fUHSahJbdKD/ewu+XsPceJApZLTx0u8A4cbxfGDYuftelmjBAB2n5OPtnp45FIj4eKMXBbGT+yhfkoaSVR4a/CiLyfddGxbGJA9QrJw47dUg8HwkyhN+MOL0VRMs/lMXSybN7yt652g4EZUnQhb2XlIapkz7MfGFPDnQhjy6rtSknPs2bJwQZgNTrUStknl3GJeTdD5z/U1fBsZBsgQ1v3yL0EE5kN3TGTT2o978hTFG3aFXN0IexPYgjQsno6tFgnwZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=A8sonWcetWjaaoJPj7ngBYiUgM1SwFZT/nmVhvI2V4E=;
- b=W4RYapSQqQzPYu0WeCP4vBNewL97GkI1Lf0kfAlgMvrYMR5IGFAcAO09uKVD96GK91NAhu+xRvoC3Sk/e+xRAJbHwjfmRIha7nxqHHOwwZkdsBYdrs7KF8Y3D/Kw3bX1JVB4KA6v5IEEOghEZobCHVCFbJJ+m5sKRtCoTWtBNwPYzPE8CPfItTZMBPdPQhYo4uXfN158UscnzVGLjl2oS1URrhF3Ht5BG8T3VS5lU2iRFKcG4nQum7Rc+iuhUEfP3lW9Ypa1Qh4dXi4XwdEHIFzpzTpLoiw38qrWjJ3TB7PIP/p688xidkaaqtZfLOg6bm9dN1I0Xac/w5fEoeyaRg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by IA1PR11MB7197.namprd11.prod.outlook.com (2603:10b6:208:41a::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7519.19; Mon, 22 Apr
- 2024 22:19:52 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::fca9:7c00:b6d0:1d62]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::fca9:7c00:b6d0:1d62%5]) with mapi id 15.20.7519.015; Mon, 22 Apr 2024
- 22:19:52 +0000
-From: "Luck, Tony" <tony.luck@intel.com>
-To: "Winiarska, Iwona" <iwona.winiarska@intel.com>, "linux@roeck-us.net"
-	<linux@roeck-us.net>
-CC: "patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"jdelvare@suse.com" <jdelvare@suse.com>
-Subject: RE: [PATCH v3 50/74] x86/cpu/vfm: Update drivers/hwmon/peci/cputemp.c
-Thread-Topic: [PATCH v3 50/74] x86/cpu/vfm: Update
- drivers/hwmon/peci/cputemp.c
-Thread-Index: AQHakEQwBnh1fvUg7kmXRylMjbAVKLFrfA0AgAABsLCAAA+0gIAAAzKggAJ4e4CAAAXEgIAAEDgAgAZleUCAAGCP0A==
-Date: Mon, 22 Apr 2024 22:19:52 +0000
-Message-ID: <SJ1PR11MB60832358E2E243784A57DDFDFC122@SJ1PR11MB6083.namprd11.prod.outlook.com>
-References: <20240416211941.9369-1-tony.luck@intel.com>
-	 <20240416212216.9605-1-tony.luck@intel.com>
-	 <5869d164-25c4-42e5-bf87-c4aeeac57388@roeck-us.net>
-	 <SJ1PR11MB6083D0DFBC7DE286F986A453FC082@SJ1PR11MB6083.namprd11.prod.outlook.com>
-	 <8690bcea-3ff4-49f1-a671-16583b8d241e@roeck-us.net>
-	 <SJ1PR11MB6083C8D12885057BF3A0A6AAFC082@SJ1PR11MB6083.namprd11.prod.outlook.com>
-	 <7cb09d67409c94284928243d8ffb1f8a3128d849.camel@intel.com>
-	 <f1d02e4f-a947-4af1-a7c0-9f7c12c57b3e@roeck-us.net>
- <f0b67e10b79e7e57846f792a0671434ce20c878a.camel@intel.com>
- <SJ1PR11MB60834BB7EF162E36DE58D29BFC122@SJ1PR11MB6083.namprd11.prod.outlook.com>
-In-Reply-To: <SJ1PR11MB60834BB7EF162E36DE58D29BFC122@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|IA1PR11MB7197:EE_
-x-ms-office365-filtering-correlation-id: d8591465-abe5-4201-1aa5-08dc631a54bc
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230031|1800799015|376005|366007|38070700009;
-x-microsoft-antispam-message-info: =?utf-8?B?N2hxcDJkYnZwYllLa3lzTW90RDh5MkhROUdCOU44ZXdqQmVKa1ZuSnVKcHZn?=
- =?utf-8?B?TFNlOHhjclNRQzUrckw2MkhhQ01zbG5XdGFlbUUwTy9qSWhBd2drdVJvVEdM?=
- =?utf-8?B?d1lTaUl4eVNwVktHNEc5V1lES29RMVVJV2QzU3VSNi8zckhTcnFvaGEzNjAv?=
- =?utf-8?B?bzY5NEVpUzhXZmljTWNtL3h1VXY2dlc0N1FmQlIrWWtySmFEUWdUYWZhaEx1?=
- =?utf-8?B?SlJaZGt1Z0M1b09tV0ltYmFwVndxSnNaWTZhWVh6dGhmdlVEcDB4amZnWk5F?=
- =?utf-8?B?UnE2bGVubUphcHVVbmRrRU5zRXVkMWw4S1haR1QyVWZ6eHlFYm9XVkZycXNx?=
- =?utf-8?B?SEdwdHk0eEkxYXR6RVU1UGFPd1I4WHBzYmt5MUM2UDZjcENwVzdVbzBML2M4?=
- =?utf-8?B?RTBaSjBkQkd6NkpOajM4V0JqOXBuUktOYlFLQW52OFRqV3d2bUlYWE9kMWQ0?=
- =?utf-8?B?bWZiTWRzRzV6VmZCK2Q4MUJRdUxiYWgwb1hDUzFrb3JYcFNvVjQxQTMwWHBO?=
- =?utf-8?B?VytKTm9leGlWdm1UODhHa09pSjM4UDVBZVRvcUhCbGR5L3pOeFBRejdPQ2FV?=
- =?utf-8?B?MFgrMTA3bEhGWkNwSWF5aUdEK3VTVE5seCs1NGZ0NlRhWlI4QlRpMWVNZGRD?=
- =?utf-8?B?NzNyTlNlMVBhMGZmT2pFYy83QUVqTUVMOVRRdG50bmRROHZVelFFM0lIVDJV?=
- =?utf-8?B?VCtiMFZMODVIRVBpaW9oV3FibXB0NUsvb2VBdXB2UlJqMzllakNTNzlQTGFh?=
- =?utf-8?B?RGc2YkJqYkYrSUxiWlpNUm9rc1NtMVg0VmJEOU0xcGxSdU9HWnFNaGtmZUJh?=
- =?utf-8?B?TWNXdWd2a2hRbjlrRHV6SnN6UW90UFViOGY3Wmd4d1BoM3MzOTZsaENaaWgy?=
- =?utf-8?B?bTR6S01aRlpBY0kyRlUzd3IvcTBRcTIyN1NDZEJ6eGZqMWR6ajdKbFYwUWt6?=
- =?utf-8?B?MS9IVEJMTTgva2FBZ25pVmN5d1ZKYnB3M2VPeEM0VlhCb0sxQnY3ajl4MkdS?=
- =?utf-8?B?VGVCNk9lalpmRW8yZnBKN0c3QlVRWGhQOGVRQUE5YlBwZVFsckc0TzJBb2Q2?=
- =?utf-8?B?UTZ1ZHJERTh3UHo4bHJBemYvd242OEFNUmhGVENQcE92SFRBKzFEY3dHVk1K?=
- =?utf-8?B?ZEVveVJtN0JpTjRTN3RQQmJyT2lvU0VuVWNXQ2M5V0ExK1RwSHN6SFVUMkhJ?=
- =?utf-8?B?VllzNWRITENCZERHRzBzQ3JuZ3l6U2NhODlDYVdSWU9tOGZLVGhqSWM2NDdV?=
- =?utf-8?B?eGtCK041RlVJSm8vdkVvVUszS2t4a2lkRjEzNzJmbmgzUkdqRGtqbGxBdHNY?=
- =?utf-8?B?TlFJL2pqam53WGsvTy9IdHZxYTVCK2xXaFJDQzNUa21uL3VMay9rY3ArNjNE?=
- =?utf-8?B?RHRXWHNMNXIvNUZPSDRpdUl6SVJYeEFRZVA1YmhtQmxJRUtvK1NvaU9kN2s0?=
- =?utf-8?B?UWgwUTdyb0d3YXo3SGJwb0VnVTNCQVBaZS9KaXFub0ltdXJocDUxdmJaUG1V?=
- =?utf-8?B?YzFQODEvcndKcmhURGo5a3V3N1BUR1dacTNYQXpCc0JXN1NUcWNzbDl2RmJo?=
- =?utf-8?B?dHF4TkVCYXBUU09WSXp4R3VVdFA4YzVPMjl1R2lZcXlnd1ZKSmh6WGxlYm5D?=
- =?utf-8?B?Q3IyY0hPVk0zaGFlWHgzYWtwRzBld09iQTk2RG5DYVpqcE9Fd0t0Njhka25l?=
- =?utf-8?B?OE9zeHJmbE1HYmZWNXlEdXd3VWVJOE9EOXk3RzM5WnpKWHcvZTdWem9jK05l?=
- =?utf-8?B?eU13S0pwNUM3cDVtODN1TVZFb2FTSlRpVkh1TFNwaU9qQVVGaGJGbEVnaWo1?=
- =?utf-8?B?d1NyUUtXY3pLRzZqQXJ1QT09?=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(376005)(366007)(38070700009);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?K1VpQTlXbGRMbTd2eExCNXZSSElZTmxPQkNCdDIxVExPKzQ3ODk1bUdkQkl1?=
- =?utf-8?B?MWlaTUNRVUVQc1doV2pqU2s4RTBoN05sQ3owNTdsVWFvSy9POE90ajRIKzg0?=
- =?utf-8?B?dzNMR05vVXkvcCtYMGdOWUNWNmsxU0c3a1NRYnlpVEc3WDVnZ05SeEVmQndG?=
- =?utf-8?B?WXVqczZpR2ErYmx6K2JqSzJHSm94b2hsbFZxekJTRkt6V1BGTlMyMUk2MkF2?=
- =?utf-8?B?RWxHd1NrN1p6Ni9CN0Y1aTZLSURHVG85L2szZk4zck5YVndNbzV3Vkl2MFRt?=
- =?utf-8?B?aUFwTU5RT3JTNG5Wamd6eFBacHNKc2xEbUFBd2Q4djFvN1U1Qk5HeWFhZzUw?=
- =?utf-8?B?SEdpYlo1T0taTnZQdmdmWk42MDdYZm1wazdUM05BL0QxamhwdnZoTDlUa0FJ?=
- =?utf-8?B?aWp3R3FmTjdWTS9sOVRvTkhJS1BNakVCcGNiTGFtd1ZLTTNhYjlhcytoK3JV?=
- =?utf-8?B?a1JsOWcrQWtFVUpMQUYwanc4VGtNelA1K1JadVJKMFVqUHlOazBIYkZEQjNU?=
- =?utf-8?B?R3dIYnEwUHhZM1lib2puQjVCOHgzcXJjcXA4bUtVbWxjMkUvWEo0YkNxdlJo?=
- =?utf-8?B?ZEVnTlJuczExWFYyNEpWOG1kTHlWYTd3VGVxNXZPTC9jUXV3Uy9vOWlETlhU?=
- =?utf-8?B?ZXhWeGtLeTdudVFxYks4QTIxYkVZNTR5bEduQ3IyY3h0Q0FSTWhTNjVPN1ph?=
- =?utf-8?B?OFdSY1V1b20yOGdZM1J4N3FYZUdUVmlqZUZ4RTlwN0VWOGdlMThRbnFoM1Fl?=
- =?utf-8?B?NCtFbGNPM0U5WlRURi9ZQmJka3kwRWE1QzdjYUZhV3NVell5K3RtelRXN2p1?=
- =?utf-8?B?UFh4RkovRlZaOHpsQjNMYTR5YWpKcUNqQ21aOHhleU9JVU9tY0xXaGpWbmgx?=
- =?utf-8?B?Z2d4N3VjQkJnQ2FHTjZuQUliUDh2a3Z6UTJNaStIVHkrRzV3cGFnNDBZeHdi?=
- =?utf-8?B?NnczL2NuM1VTVlc4Wnhnayt1UUJjSXZEWjA4S3VRVkRsL2hVNktHVnp2ZC9u?=
- =?utf-8?B?U1RrUHpWTnloTUhmcVZ5dldpR0JZWFRBQTVyYlo0MjBqSXloVW1MazFUUGI0?=
- =?utf-8?B?bmJ6UlRZQ3RYVUd4L3IzZlJTNVgvUFZpSHViMHVIVG5SREhLQ0s5bFhQTG9q?=
- =?utf-8?B?aDNFTWN3eXlNcG1BMCs1b3YwYjJ4L01NY01WVklzeDRybFVhT3lPdGlsSFll?=
- =?utf-8?B?eXFOL3BuR0hva043NExySjFQcnZwWjRHckJFQVZMakV0cXlCYkF2TytwZzFi?=
- =?utf-8?B?WitnM2ZncDJHaThkUlFyODc1cllaZFhJZ01kVkhlM0o1ZUF5TG1INmNEN1NC?=
- =?utf-8?B?cVY4WTlLekZGWXk5M1NLaDlHSW8wbHpiZHpvVHhBdldhL2tyYTNEQzVLQlcr?=
- =?utf-8?B?OUQ1VkppYjUxVXNDT1VPQlZwS2ErR3cwcFl3UXlsUEgzbUg4WFEzRGR4dmFw?=
- =?utf-8?B?TWM3K1pYWDZ2L2o4d3A0L01vSngycTVpQTA3M0lrR2JURHFDeDdnNUcyYWN5?=
- =?utf-8?B?Sk1yMm9TdE56U2F1RlFnOVYzNVlDdUsvODhkMzQyMUxPMFRXSHVwV0dlL0hz?=
- =?utf-8?B?VTNVYTY5ZURmcVhEMnhEcytsdXZXM1RtNkYrcC83dVgvTGJuVk1uU2tDOUQr?=
- =?utf-8?B?clMwUjFzTTUvS3NFMklyNXR5YmIvbzh4bCtpQTF3OEdBN0ZPTVh1K2U2SXdP?=
- =?utf-8?B?eGplMG9oWWgwZTcvNllMMmt3Y0lENWJIWUcrc3lxOHczdFRIS1dETTM5ZVdF?=
- =?utf-8?B?ei9MeHc1ZFBMa05icE4wTVBnVllkSUd5Zzhzcnk0NWJzMkxQUUJaUnJxOGRV?=
- =?utf-8?B?TjcvUk1HdEN0bWtkS3dEU0ZDTTFsM2lnWXRUNERLanB2VWE5eXAvWTdwaWZT?=
- =?utf-8?B?QVpDVEhwVTVUdkswa3ErWDhFalBTd0R1Vmw5dzEyREIwSlNwV2hNSElqRy9I?=
- =?utf-8?B?T0xBWWhVWjhrU0g3WHV0N2prL05odnF3RzBFVDBKcDdiZkpMaGw4UkpSMkVi?=
- =?utf-8?B?K3g5dHRxb3hJZW5nVm5zcHQ3NnZuSEFDUGZQU0pBMnF2VExMZkt5enRRNGZH?=
- =?utf-8?B?VHAxWjVwWm4vK0FINHEvdmZlRFcveWpYWTkwU2hzS01sTkZzdWVEdEl4MDBS?=
- =?utf-8?Q?gmactN1W6xz8e92pKbR6l2vib?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s8yAgiDA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B6DC113CC;
+	Mon, 22 Apr 2024 23:24:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713828246;
+	bh=v3XW2cYQ79gqDMbF1UVESANI0NiQDi505TJ8KLujo5k=;
+	h=From:To:Cc:Subject:Date:From;
+	b=s8yAgiDABYJJ5Q6dUW0bQqyeiS8he+8GKi6+qSH2CUjwIshTMK2Pmweg6oyFqcvce
+	 fVdaffWRShYGJ8PlgFk6UIM0a/ie3FY+avPhCyXknhkizTBzYmS5oRAhifjXIU9Bj+
+	 3yXDzzPDC6LWdVFOYJZu0hFT3i++tZF7ZxJxtV5FUSOUPdgWpTFmtU/Tqol6EZF+K2
+	 ZtqURe1IlXFEDkPbwts/B7hBcH09GXRFg3IDbs4sG+Rjns3fMnvf0BUERcRsl4FcCv
+	 /FxhJEqvCwwDxYbI3yzO2R7Ln2N9AlRiVGL5xMah5oMP2YeUmzixTqQjeLRTfZy1nT
+	 X6Kgf1sBnttMA==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-kselftest@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Rae Moar <rmoar@google.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
+	Daniel Latypov <dlatypov@google.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Maxime Ripard <maxime@cerno.tech>
+Subject: [PATCH v4 00/10] clk: Add kunit tests for fixed rate and parent data
+Date: Mon, 22 Apr 2024 16:23:53 -0700
+Message-ID: <20240422232404.213174-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.44.0.769.g3c40516874-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d8591465-abe5-4201-1aa5-08dc631a54bc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Apr 2024 22:19:52.1353
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: +jhSvpSSlAuA7HjipfadVDZv7g5KbXVFGqMhjWciawYZAxqnQPBu5KOAUsQIVucYxN/KVoEbkqVH3Utg8hVOlw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB7197
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 8bit
 
-Pj4gVW5mb3J0dW5hdGVseSwgaXQgZW5kZWQgdXAgYmVpbmcgc2ltcGxpZmllZCB0byBqdXN0IGlu
-Y2x1ZGUgYXJjaC94ODYgZGlyZWN0bHkuDQo+DQo+IFJlYWRpbmcgdGhyb3VnaCB0aGF0IG90aGVy
-IHRocmVhZCAoSXdvbmE6IHRoYW5rcyBmb3IgdGhlIGxpbmspIGl0IHNlZW1zIHRoYXQgbW92aW5n
-DQo+IHRoZSB4ODYgaW5jbHVkZSBmaWxlcyBvdXQgb2YgYXJjaC94ODYvaW5jbHVkZS9hc20gaGFz
-IGJlZW4gc291bmRseSByZWplY3RlZC4NCj4NCj4gSSdtIGdvaW5nIHRvIHRha2UgSXdvbmEncyBh
-ZHZpY2UgYWJvdmUgYW5kIGNvcHkgdGhlIFZGTV8qIG1hY3Jvcy4NCg0KSXdvbmEsDQoNCkkganVz
-dCBwdXNoZWQgd2hhdCBtaWdodCBiZWNvbWUgdjQgb2YgdGhpcyBzZXJpZXMgdG86DQoNCglnaXQ6
-Ly9naXQua2VybmVsLm9yZy9wdWIvc2NtL2xpbnV4L2tlcm5lbC9naXQvYWVnbC9saW51eC5naXQg
-bmV3X2ZhbWlsaWVzX3Y0DQoNCklmIHlvdSBoYXZlIGEgbW9tZW50LCBjb3VsZCB5b3UgcGxlYXNl
-IGNoZWNrIHdoZXRoZXIgdGhlIHBlY2kgYml0cyBidWlsZCBvbg0KYSBub24teDg2IHN5c3RlbS4N
-Cg0KVGhhbmtzDQoNCi1Ub255DQo=
+This patch series adds unit tests for the clk fixed rate basic type and
+the clk registration functions that use struct clk_parent_data. To get
+there, we add support for loading device tree overlays onto the live DTB
+along with probing platform drivers to bind to device nodes in the
+overlays. With this series, we're able to exercise some of the code in
+the common clk framework that uses devicetree lookups to find parents
+and the fixed rate clk code that scans device tree directly and creates
+clks. Please review.
+
+I Cced everyone to all the patches so they get the full context. I'm
+hoping I can take the whole pile through the clk tree as they all build
+upon each other. Or the DT part can be merged through the DT tree to
+reduce the dependencies.
+
+Changes from v3 (https://lore.kernel.org/r/20230327222159.3509818-1-sboyd@kernel.org):
+ * No longer depend on Frank's series[1] because it was merged upstream[2]
+ * Use kunit_add_action_or_reset() to shorten code
+ * Skip tests properly when CONFIG_OF_OVERLAY isn't set
+
+Changes from v2 (https://lore.kernel.org/r/20230315183729.2376178-1-sboyd@kernel.org):
+ * Overlays don't depend on __symbols__ node
+ * Depend on Frank's always create root node if CONFIG_OF series[1]
+ * Added kernel-doc to KUnit API doc
+ * Fixed some kernel-doc on functions
+ * More test cases for fixed rate clk
+
+Changes from v1 (https://lore.kernel.org/r/20230302013822.1808711-1-sboyd@kernel.org):
+ * Don't depend on UML, use unittest data approach to attach nodes
+ * Introduce overlay loading API for KUnit
+ * Move platform_device KUnit code to drivers/base/test
+ * Use #define macros for constants shared between unit tests and
+   overlays
+ * Settle on "test" as a vendor prefix
+ * Make KUnit wrappers have "_kunit" postfix
+
+[1] https://lore.kernel.org/r/20230317053415.2254616-1-frowand.list@gmail.com
+[2] https://lore.kernel.org/r/20240308195737.GA1174908-robh@kernel.org
+
+Stephen Boyd (10):
+  of: Add test managed wrappers for of_overlay_apply()/of_node_put()
+  dt-bindings: vendor-prefixes: Add "test" vendor for KUnit and friends
+  dt-bindings: test: Add KUnit empty node binding
+  of: Add a KUnit test for overlays and test managed APIs
+  platform: Add test managed platform_device/driver APIs
+  dt-bindings: kunit: Add fixed rate clk consumer test
+  clk: Add test managed clk provider/consumer APIs
+  clk: Add KUnit tests for clk fixed rate basic type
+  dt-bindings: clk: Add KUnit clk_parent_data test
+  clk: Add KUnit tests for clks registered with struct clk_parent_data
+
+ Documentation/dev-tools/kunit/api/clk.rst     |  10 +
+ Documentation/dev-tools/kunit/api/index.rst   |  21 +
+ Documentation/dev-tools/kunit/api/of.rst      |  13 +
+ .../dev-tools/kunit/api/platformdevice.rst    |  10 +
+ .../bindings/clock/test,clk-parent-data.yaml  |  47 ++
+ .../bindings/test/test,clk-fixed-rate.yaml    |  35 ++
+ .../devicetree/bindings/test/test,empty.yaml  |  30 ++
+ .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+ drivers/base/test/Makefile                    |   3 +
+ drivers/base/test/platform_kunit-test.c       | 140 ++++++
+ drivers/base/test/platform_kunit.c            | 174 +++++++
+ drivers/clk/.kunitconfig                      |   2 +
+ drivers/clk/Kconfig                           |   9 +
+ drivers/clk/Makefile                          |   9 +-
+ drivers/clk/clk-fixed-rate_test.c             | 377 +++++++++++++++
+ drivers/clk/clk-fixed-rate_test.h             |   8 +
+ drivers/clk/clk_kunit.c                       | 198 ++++++++
+ drivers/clk/clk_parent_data_test.h            |  10 +
+ drivers/clk/clk_test.c                        | 451 +++++++++++++++++-
+ drivers/clk/kunit_clk_fixed_rate_test.dtso    |  19 +
+ drivers/clk/kunit_clk_parent_data_test.dtso   |  28 ++
+ drivers/of/.kunitconfig                       |   1 +
+ drivers/of/Kconfig                            |  10 +
+ drivers/of/Makefile                           |   2 +
+ drivers/of/kunit_overlay_test.dtso            |   9 +
+ drivers/of/of_kunit.c                         |  99 ++++
+ drivers/of/overlay_test.c                     | 115 +++++
+ include/kunit/clk.h                           |  28 ++
+ include/kunit/of.h                            |  94 ++++
+ include/kunit/platform_device.h               |  15 +
+ 30 files changed, 1967 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/dev-tools/kunit/api/clk.rst
+ create mode 100644 Documentation/dev-tools/kunit/api/of.rst
+ create mode 100644 Documentation/dev-tools/kunit/api/platformdevice.rst
+ create mode 100644 Documentation/devicetree/bindings/clock/test,clk-parent-data.yaml
+ create mode 100644 Documentation/devicetree/bindings/test/test,clk-fixed-rate.yaml
+ create mode 100644 Documentation/devicetree/bindings/test/test,empty.yaml
+ create mode 100644 drivers/base/test/platform_kunit-test.c
+ create mode 100644 drivers/base/test/platform_kunit.c
+ create mode 100644 drivers/clk/clk-fixed-rate_test.c
+ create mode 100644 drivers/clk/clk-fixed-rate_test.h
+ create mode 100644 drivers/clk/clk_kunit.c
+ create mode 100644 drivers/clk/clk_parent_data_test.h
+ create mode 100644 drivers/clk/kunit_clk_fixed_rate_test.dtso
+ create mode 100644 drivers/clk/kunit_clk_parent_data_test.dtso
+ create mode 100644 drivers/of/kunit_overlay_test.dtso
+ create mode 100644 drivers/of/of_kunit.c
+ create mode 100644 drivers/of/overlay_test.c
+ create mode 100644 include/kunit/clk.h
+ create mode 100644 include/kunit/of.h
+ create mode 100644 include/kunit/platform_device.h
+
+
+base-commit: 4cece764965020c22cff7665b18a012006359095
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+
