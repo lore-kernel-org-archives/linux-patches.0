@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F3F146A64;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4875143C46;
 	Tue, 23 Apr 2024 21:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908680; cv=none; b=met4KTzW1gL+IQYjEoczd1b/CcL8Y4eQcCmup6kqrux7ZZzsuUojMatZfCdFUkwAmU+kNRdOtcSO238x10q/7rmgv/F/FAfBFo0G3trfbdhX/2cDCTlokC6sJsa0wGLDtOiSnpJW9bH5mSlKWR0UF44nBTiF4J5hdBZ7/OmcY/U=
+	t=1713908681; cv=none; b=hh/zH16DEpt4i3oaUolbanbm6UrsWOzRiBYzHOlLOb3u9Q1a+kSGqNCxJIOCLDJKVQDz/48KB4IlUrF/AP4UfLPEXi9kUTzMxT1M83cLjTd4NEpKqN7Ehj/omAR2mZntY6QzQQRg/AVULPh60TfIkCzVQFS7ZveE7IW0gT0g/jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908680; c=relaxed/simple;
-	bh=qpsG0jYWAbQ57gJcrWWJlvPm3RFmZLNDDficITYSF8w=;
+	s=arc-20240116; t=1713908681; c=relaxed/simple;
+	bh=iTfIx4KeeRUszMS3oIObfvNQi39Kg/E2FrL8fOSP/Lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eyenh0ffI0BPjzZZVrN/UUKAP1cHep6EwJqeay3Hl1tgkLOeqCiXRaxLoKQlUvqwTaKMK3l6Mly4YZYVjQWRgTeHWuke5c99w7R6g0E4HjtgizLE28nCOoJH+e2Qnn9rK1OT5GEsMLCX5fTeMjxVIuHVN2FVm4brf6sVh9ULliE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdbvPuL3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lcnUeXuvx3BkH0tkapADUlyasTy7S8ltTTumXZCJrMUPCI2yChpP+Fj0YxwllmYofaJ5cF1Q5jeN54tQRRJjrx4oU+IB5D86VZNk+nivJWK8BIu1OWvtSeK2Xd0tvMMaC/0a48ewIQkS8CaibhHEOlKoETy8LX4qBvhbwQIwnDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E9dPv1d4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdbvPuL3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B5AC32783;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E9dPv1d4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAAB5C116B1;
 	Tue, 23 Apr 2024 21:44:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908680;
-	bh=qpsG0jYWAbQ57gJcrWWJlvPm3RFmZLNDDficITYSF8w=;
+	bh=iTfIx4KeeRUszMS3oIObfvNQi39Kg/E2FrL8fOSP/Lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sdbvPuL33EPofnVVyvrFsRLG/O2UyTwefkXXX3cK1GMyad1Xizytvybm/E4YIWrAY
-	 yyLzsE0mJA5F595Fx4KWPHtAUB9ezSw02PoT42F6SF3MnRm6g0cO7aRWh5/CxplAEQ
-	 t1UHw2SWeOHWBtu+55oim7CasJtBmNCaWCgMR5KQ=
+	b=E9dPv1d4SW6kduplRDbuWcU89JGG49yI1viGbMT5IDDC0yBEJjjLiVIWHl+/CyenL
+	 dTevMjtjNd2FfS8MhPhKRvdliCGOeoZZuC7+misEadq2aO3C/CeEakXB1V8VDlb08h
+	 uzMhXU4BBCgeeYtYqRuBKPAa3b3BREurY0d09Hq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Izbyshev <izbyshev@ispras.ru>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 005/141] io_uring: Fix io_cqring_wait() not restoring sigmask on get_timespec64() failure
-Date: Tue, 23 Apr 2024 14:37:53 -0700
-Message-ID: <20240423213853.532291890@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 006/141] SUNRPC: Fix rpcgss_context trace event acceptor field
+Date: Tue, 23 Apr 2024 14:37:54 -0700
+Message-ID: <20240423213853.566444432@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -50,57 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Izbyshev <izbyshev@ispras.ru>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-Commit 978e5c19dfefc271e5550efba92fcef0d3f62864 upstream.
+commit a4833e3abae132d613ce7da0e0c9a9465d1681fa upstream.
 
-This bug was introduced in commit 950e79dd7313 ("io_uring: minor
-io_cqring_wait() optimization"), which was made in preparation for
-adc8682ec690 ("io_uring: Add support for napi_busy_poll"). The latter
-got reverted in cb3182167325 ("Revert "io_uring: Add support for
-napi_busy_poll""), so simply undo the former as well.
+The rpcgss_context trace event acceptor field is a dynamically sized
+string that records the "data" parameter. But this parameter is also
+dependent on the "len" field to determine the size of the data.
+
+It needs to use __string_len() helper macro where the length can be passed
+in. It also incorrectly uses strncpy() to save it instead of
+__assign_str(). As these macros can change, it is not wise to open code
+them in trace events.
+
+As of commit c759e609030c ("tracing: Remove __assign_str_len()"),
+__assign_str() can be used for both __string() and __string_len() fields.
+Before that commit, __assign_str_len() is required to be used. This needs
+to be noted for backporting. (In actuality, commit c1fa617caeb0 ("tracing:
+Rework __assign_str() and __string() to not duplicate getting the string")
+is the commit that makes __string_str_len() obsolete).
 
 Cc: stable@vger.kernel.org
-Fixes: 950e79dd7313 ("io_uring: minor io_cqring_wait() optimization")
-Signed-off-by: Alexey Izbyshev <izbyshev@ispras.ru>
-Link: https://lore.kernel.org/r/20240405125551.237142-1-izbyshev@ispras.ru
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 0c77668ddb4e ("SUNRPC: Introduce trace points in rpc_auth_gss.ko")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ include/trace/events/rpcgss.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2426,6 +2426,14 @@ static int io_cqring_wait(struct io_ring
- 			return 0;
- 	} while (ret > 0);
+--- a/include/trace/events/rpcgss.h
++++ b/include/trace/events/rpcgss.h
+@@ -587,7 +587,7 @@ TRACE_EVENT(rpcgss_context,
+ 		__field(unsigned int, timeout)
+ 		__field(u32, window_size)
+ 		__field(int, len)
+-		__string(acceptor, data)
++		__string_len(acceptor, data, len)
+ 	),
  
-+	if (uts) {
-+		struct timespec64 ts;
-+
-+		if (get_timespec64(&ts, uts))
-+			return -EFAULT;
-+		timeout = ktime_add_ns(timespec64_to_ktime(ts), ktime_get_ns());
-+	}
-+
- 	if (sig) {
- #ifdef CONFIG_COMPAT
- 		if (in_compat_syscall())
-@@ -2439,14 +2447,6 @@ static int io_cqring_wait(struct io_ring
- 			return ret;
- 	}
+ 	TP_fast_assign(
+@@ -596,7 +596,7 @@ TRACE_EVENT(rpcgss_context,
+ 		__entry->timeout = timeout;
+ 		__entry->window_size = window_size;
+ 		__entry->len = len;
+-		strncpy(__get_str(acceptor), data, len);
++		__assign_str(acceptor, data);
+ 	),
  
--	if (uts) {
--		struct timespec64 ts;
--
--		if (get_timespec64(&ts, uts))
--			return -EFAULT;
--		timeout = ktime_add_ns(timespec64_to_ktime(ts), ktime_get_ns());
--	}
--
- 	init_waitqueue_func_entry(&iowq.wq, io_wake_function);
- 	iowq.wq.private = current;
- 	INIT_LIST_HEAD(&iowq.wq.entry);
+ 	TP_printk("win_size=%u expiry=%lu now=%lu timeout=%u acceptor=%.*s",
 
 
