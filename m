@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C423A143C47;
-	Tue, 23 Apr 2024 21:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78301144D0D;
+	Tue, 23 Apr 2024 21:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908495; cv=none; b=V8g1X9Grvq7Xckt3TQvqZ2sg/41rrsxCz9CdpZ8MVA67bXOPvvGt15W3gcM2XzeNO02roJIf5nQonXOkgokYz8xNpKrGqFFqAuUzdBKzOkYGhYU39BF0G7LCjuqxF7YLuUgYNzPVN7UEfb9RioKqH5dJHw8Q7OdDkP5nqqZJKeM=
+	t=1713908496; cv=none; b=r12AeryHmwHQELLfyrxZ9OBrNkkKb03/PHjw06zBky9ref4Ud64ShblL906bk/EfQ79u44P8iu1uff7eN05XUfJEKJJfI2isbJ/xOqn0YVQDqF+bE+FofjHqeunh6POKPdLty+pqCwf/uyO+Im1P9QePlIiX0dHiU01TeAP44N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908495; c=relaxed/simple;
-	bh=FtHRsMj1aq9t2UnmQjpXI6cOYBlBcyVfbkLgB6B8ojU=;
+	s=arc-20240116; t=1713908496; c=relaxed/simple;
+	bh=2Qv738hF7mYg/PS+doPkQwHk0h7Vpwg0dj1T/AgBeO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VoqIA8Ip3BhgiI/Wb9KGoDv5HOWZ4HXwNBAXmiNoTZ8ASci7K5mmE4sd1Wk7EAWlG8tV/k0mpL3lWY5un2+2fC4jno653KZvk1S7WcSRno3KuO0HkzRtPPyPslRq2VP7kyfWwxFwqVbw5gmkmlQ5i8/prZkJhTE2IPeF04vh6ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LyalK1AR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OVvOoCDe3PFRxVOFQr2QwkCPWM+2ku+kLUQgwNLjN2IC7hfoc1W66ajPqaJmz4ZnVH+bUIdh0LMxrSimK064+Ms9Nu8gJ9SeXzhXiESOzj04FvDgWQpkTXF8OPNaIM9YuSoGQThuYVY8ZyQSB4GIz9aDedTs6e2XkiqrOgO3Nbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZeDo4PWS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LyalK1AR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B696C32783;
-	Tue, 23 Apr 2024 21:41:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZeDo4PWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E531C4AF0B;
+	Tue, 23 Apr 2024 21:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908495;
-	bh=FtHRsMj1aq9t2UnmQjpXI6cOYBlBcyVfbkLgB6B8ojU=;
+	s=korg; t=1713908496;
+	bh=2Qv738hF7mYg/PS+doPkQwHk0h7Vpwg0dj1T/AgBeO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LyalK1ARX/RqqZgKCBHS8jQ4QxNrq8bXgfCCCheWvAO+GB1uze5IxIw/sm1lYIudt
-	 jD3UiN2GpJAINEpPtBwFv2coRZRnj5977s5Bx6dQpab8RNoLB17+65tZ73T/Xt1Ber
-	 UYwP1TORShUUdx2gVVRDR5yAnENVHHfQvjOcazBw=
+	b=ZeDo4PWSO50+/loMxG8cbGaZ9kWsmbyLHYTh4NwqHL5q98yD1tf1FxRGDA3Z4Vs5w
+	 rhvhisTm7zeq+4GQYvs6bwSywtc9XpjJH6/f9u8u+nUp+HRnEaOhYQpa3kNvEcPv6+
+	 bATlNyKjiMy0WHss0d6BYyVwba4oyvxc6vaK97F0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Kees Cook <keescook@chromium.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Huayu Zhang <zhanghuayu1233@qq.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 072/158] drm/radeon: make -fstrict-flex-arrays=3 happy
-Date: Tue, 23 Apr 2024 14:38:14 -0700
-Message-ID: <20240423213858.298407374@linuxfoundation.org>
+Subject: [PATCH 6.8 073/158] ALSA: hda/realtek: Fix volumn control of ThinkBook 16P Gen4
+Date: Tue, 23 Apr 2024 14:38:15 -0700
+Message-ID: <20240423213858.333205328@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -46,52 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Huayu Zhang <zhanghuayu1233@qq.com>
 
-[ Upstream commit 0ba753bc7e79e49556e81b0d09b2de1aa558553b ]
+[ Upstream commit dca5f4dfa925b51becee65031869e917e6229620 ]
 
-The driver parses a union where the layout up through the first
-array is the same, however, the array has different sizes
-depending on the elements in the union.  Be explicit to
-fix the UBSAN checker.
+change HDA & AMP configuration from ALC287_FIXUP_CS35L41_I2C_2 to
+ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD for ThinkBook 16P Gen4
+models to fix volumn control issue (cannot fully mute).
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3323
-Fixes: df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3")
-Acked-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: Kees Cook <keescook@chromium.org>
+Signed-off-by: Huayu Zhang <zhanghuayu1233@qq.com>
+Fixes: 6214e24cae9b ("ALSA: hda/realtek: Add quirks for Lenovo Thinkbook 16P laptops")
+Message-ID: <tencent_37EB880C5E5BD99D21C16B288115C4545F06@qq.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_atombios.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_atombios.c b/drivers/gpu/drm/radeon/radeon_atombios.c
-index 3596ea4a8b60f..fc7b0e8f1ca15 100644
---- a/drivers/gpu/drm/radeon/radeon_atombios.c
-+++ b/drivers/gpu/drm/radeon/radeon_atombios.c
-@@ -923,8 +923,12 @@ bool radeon_get_atom_connector_info_from_supported_devices_table(struct
- 		max_device = ATOM_MAX_SUPPORTED_DEVICE_INFO;
- 
- 	for (i = 0; i < max_device; i++) {
--		ATOM_CONNECTOR_INFO_I2C ci =
--		    supported_devices->info.asConnInfo[i];
-+		ATOM_CONNECTOR_INFO_I2C ci;
-+
-+		if (frev > 1)
-+			ci = supported_devices->info_2d1.asConnInfo[i];
-+		else
-+			ci = supported_devices->info.asConnInfo[i];
- 
- 		bios_connectors[i].valid = false;
- 
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 8c2467ed127ee..a57f5a02b498d 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10381,8 +10381,8 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3886, "Y780 VECO DUAL", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38a7, "Y780P AMD YG dual", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38a8, "Y780P AMD VECO dual", ALC287_FIXUP_TAS2781_I2C),
+-	SND_PCI_QUIRK(0x17aa, 0x38a9, "Thinkbook 16P", ALC287_FIXUP_CS35L41_I2C_2),
+-	SND_PCI_QUIRK(0x17aa, 0x38ab, "Thinkbook 16P", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x17aa, 0x38a9, "Thinkbook 16P", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
++	SND_PCI_QUIRK(0x17aa, 0x38ab, "Thinkbook 16P", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
+ 	SND_PCI_QUIRK(0x17aa, 0x38b4, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38b5, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38b6, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
 -- 
 2.43.0
 
