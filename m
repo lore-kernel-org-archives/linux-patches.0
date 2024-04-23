@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FE014388A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD75914388A;
 	Tue, 23 Apr 2024 21:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908788; cv=none; b=UDtISlDnNh1Yb9Zi0q+JfNvi5WApmVPGhN5paM45KK0mMOe4hz8Ta58IYddRqupA2ZxDVDBU+KIeIzfOXwb92/pDp6BaKRFtCUHkLa9bmmc9xQKS+H01DgxPEqYWV0mg/M2rm8sOOoczvo6AtvlzOP6gxnJc1G3N4RIGjmECgYk=
+	t=1713908788; cv=none; b=QK9eyhcFHaijMyCy+jP6WCb9wfDZZKxfRJMx4MYQdLd+GSVNd1+2kM1SIE1Pu+c8Vdo1e75kC0sWZxw/BwZfXot5AmGUU0xjUhpFXZ8GRXSJCtFwG/ZngoBomjI4FoS7pg2xW6eCYh0zL590BMV1X1A29k5HFC59waMCCzRzO4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908788; c=relaxed/simple;
-	bh=FJzmO0TzlplGa0KI5M5YdICC5ksuXU7m7AjKECchsdA=;
+	bh=QcpykKv65UZNvNh9GtOfD5KXh778OanwUIjUIaiUD9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=useNZwwSSFdpGIoUvdZxns4AXIUSdAJEoDyb0ZET3zx4CAFGk+F+7UKVDZbnCM5CyUKcfTJzzJc/VEj0F1R2Ekb9UNupPKOirey1QGW+4LAZWFhvASh764JMK16J4zPbiBbZUL5XELqv+xZ0K+WP8n55JI4KjwNsl7Jxq9R2ZHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqpg1C11; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D+zwC5J3KBO6vfnaYphiEY897VQr5ybmqoeV5o7A1NtuVfW/HaomxnBpz7CPZAWvj1ldAREj+J3/u8LWMYAvPZQhYOuYBnCRErfvJJX+WhzKVEkO9FpHZ6fDnLNbYVysnR1IlWTK7g7iPRjKYn/1lU4ihuIc+aR22qcJscljBwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Su/Qvf17; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqpg1C11"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65C6C32781;
-	Tue, 23 Apr 2024 21:46:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Su/Qvf17"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B327C4AF08;
+	Tue, 23 Apr 2024 21:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908788;
-	bh=FJzmO0TzlplGa0KI5M5YdICC5ksuXU7m7AjKECchsdA=;
+	bh=QcpykKv65UZNvNh9GtOfD5KXh778OanwUIjUIaiUD9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aqpg1C111fTw3FIXMxgC5Zs43O2vpS7f4lh7rs0nwG4m1fQEHz6jOzS2Qw5KSvfcq
-	 yf9XwT6PMxrygjFMNOZSdVaGyDOk/vxu4hbVPfPei/Pjln8b1ImFjNhIJO8wmQtWn5
-	 8MQSOXTlsKcjd+2KvItjLZl5ZOlsl7ZMGTUVWDcI=
+	b=Su/Qvf17D+7uhoM5WBX+UEJcPkZNUU8aYQeYsDH1LQ8FVCTtuuBl0wVkoAuVNhWFC
+	 56eu/KhDyGciw0ExK/AtB5GZVkLdz1v86FcpfilyHpVHj2dxLBBkcpa7Yep6Kv/bZ8
+	 /H3d5lrGv7ftlDsfcXNoDGJLb0ZBVvbQ92FdVNNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 39/71] clk: Get runtime PM before walking tree during disable_unused
-Date: Tue, 23 Apr 2024 14:39:52 -0700
-Message-ID: <20240423213845.488256119@linuxfoundation.org>
+Subject: [PATCH 5.15 40/71] x86/bugs: Fix BHI retpoline check
+Date: Tue, 23 Apr 2024 14:39:53 -0700
+Message-ID: <20240423213845.522545382@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
 References: <20240423213844.122920086@linuxfoundation.org>
@@ -54,342 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Boyd <sboyd@kernel.org>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit e581cf5d216289ef292d1a4036d53ce90e122469 ]
+[ Upstream commit 69129794d94c544810e68b2b4eaa7e44063f9bf2 ]
 
-Doug reported [1] the following hung task:
+Confusingly, X86_FEATURE_RETPOLINE doesn't mean retpolines are enabled,
+as it also includes the original "AMD retpoline" which isn't a retpoline
+at all.
 
- INFO: task swapper/0:1 blocked for more than 122 seconds.
-       Not tainted 5.15.149-21875-gf795ebc40eb8 #1
- "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
- task:swapper/0       state:D stack:    0 pid:    1 ppid:     0 flags:0x00000008
- Call trace:
-  __switch_to+0xf4/0x1f4
-  __schedule+0x418/0xb80
-  schedule+0x5c/0x10c
-  rpm_resume+0xe0/0x52c
-  rpm_resume+0x178/0x52c
-  __pm_runtime_resume+0x58/0x98
-  clk_pm_runtime_get+0x30/0xb0
-  clk_disable_unused_subtree+0x58/0x208
-  clk_disable_unused_subtree+0x38/0x208
-  clk_disable_unused_subtree+0x38/0x208
-  clk_disable_unused_subtree+0x38/0x208
-  clk_disable_unused_subtree+0x38/0x208
-  clk_disable_unused+0x4c/0xe4
-  do_one_initcall+0xcc/0x2d8
-  do_initcall_level+0xa4/0x148
-  do_initcalls+0x5c/0x9c
-  do_basic_setup+0x24/0x30
-  kernel_init_freeable+0xec/0x164
-  kernel_init+0x28/0x120
-  ret_from_fork+0x10/0x20
- INFO: task kworker/u16:0:9 blocked for more than 122 seconds.
-       Not tainted 5.15.149-21875-gf795ebc40eb8 #1
- "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
- task:kworker/u16:0   state:D stack:    0 pid:    9 ppid:     2 flags:0x00000008
- Workqueue: events_unbound deferred_probe_work_func
- Call trace:
-  __switch_to+0xf4/0x1f4
-  __schedule+0x418/0xb80
-  schedule+0x5c/0x10c
-  schedule_preempt_disabled+0x2c/0x48
-  __mutex_lock+0x238/0x488
-  __mutex_lock_slowpath+0x1c/0x28
-  mutex_lock+0x50/0x74
-  clk_prepare_lock+0x7c/0x9c
-  clk_core_prepare_lock+0x20/0x44
-  clk_prepare+0x24/0x30
-  clk_bulk_prepare+0x40/0xb0
-  mdss_runtime_resume+0x54/0x1c8
-  pm_generic_runtime_resume+0x30/0x44
-  __genpd_runtime_resume+0x68/0x7c
-  genpd_runtime_resume+0x108/0x1f4
-  __rpm_callback+0x84/0x144
-  rpm_callback+0x30/0x88
-  rpm_resume+0x1f4/0x52c
-  rpm_resume+0x178/0x52c
-  __pm_runtime_resume+0x58/0x98
-  __device_attach+0xe0/0x170
-  device_initial_probe+0x1c/0x28
-  bus_probe_device+0x3c/0x9c
-  device_add+0x644/0x814
-  mipi_dsi_device_register_full+0xe4/0x170
-  devm_mipi_dsi_device_register_full+0x28/0x70
-  ti_sn_bridge_probe+0x1dc/0x2c0
-  auxiliary_bus_probe+0x4c/0x94
-  really_probe+0xcc/0x2c8
-  __driver_probe_device+0xa8/0x130
-  driver_probe_device+0x48/0x110
-  __device_attach_driver+0xa4/0xcc
-  bus_for_each_drv+0x8c/0xd8
-  __device_attach+0xf8/0x170
-  device_initial_probe+0x1c/0x28
-  bus_probe_device+0x3c/0x9c
-  deferred_probe_work_func+0x9c/0xd8
-  process_one_work+0x148/0x518
-  worker_thread+0x138/0x350
-  kthread+0x138/0x1e0
-  ret_from_fork+0x10/0x20
+Also replace cpu_feature_enabled() with boot_cpu_has() because this is
+before alternatives are patched and cpu_feature_enabled()'s fallback
+path is slower than plain old boot_cpu_has().
 
-The first thread is walking the clk tree and calling
-clk_pm_runtime_get() to power on devices required to read the clk
-hardware via struct clk_ops::is_enabled(). This thread holds the clk
-prepare_lock, and is trying to runtime PM resume a device, when it finds
-that the device is in the process of resuming so the thread schedule()s
-away waiting for the device to finish resuming before continuing. The
-second thread is runtime PM resuming the same device, but the runtime
-resume callback is calling clk_prepare(), trying to grab the
-prepare_lock waiting on the first thread.
-
-This is a classic ABBA deadlock. To properly fix the deadlock, we must
-never runtime PM resume or suspend a device with the clk prepare_lock
-held. Actually doing that is near impossible today because the global
-prepare_lock would have to be dropped in the middle of the tree, the
-device runtime PM resumed/suspended, and then the prepare_lock grabbed
-again to ensure consistency of the clk tree topology. If anything
-changes with the clk tree in the meantime, we've lost and will need to
-start the operation all over again.
-
-Luckily, most of the time we're simply incrementing or decrementing the
-runtime PM count on an active device, so we don't have the chance to
-schedule away with the prepare_lock held. Let's fix this immediate
-problem that can be triggered more easily by simply booting on Qualcomm
-sc7180.
-
-Introduce a list of clk_core structures that have been registered, or
-are in the process of being registered, that require runtime PM to
-operate. Iterate this list and call clk_pm_runtime_get() on each of them
-without holding the prepare_lock during clk_disable_unused(). This way
-we can be certain that the runtime PM state of the devices will be
-active and resumed so we can't schedule away while walking the clk tree
-with the prepare_lock held. Similarly, call clk_pm_runtime_put() without
-the prepare_lock held to properly drop the runtime PM reference. We
-remove the calls to clk_pm_runtime_{get,put}() in this path because
-they're superfluous now that we know the devices are runtime resumed.
-
-Reported-by: Douglas Anderson <dianders@chromium.org>
-Closes: https://lore.kernel.org/all/20220922084322.RFC.2.I375b6b9e0a0a5348962f004beb3dafee6a12dfbb@changeid/ [1]
-Closes: https://issuetracker.google.com/328070191
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Fixes: 9a34b45397e5 ("clk: Add support for runtime PM")
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20240325184204.745706-5-sboyd@kernel.org
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Fixes: ec9404e40e8f ("x86/bhi: Add BHI mitigation knob")
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/ad3807424a3953f0323c011a643405619f2a4927.1712944776.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 117 +++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 105 insertions(+), 12 deletions(-)
+ arch/x86/kernel/cpu/bugs.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index 5cbc42882dce4..a05b5bca64250 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -37,6 +37,10 @@ static HLIST_HEAD(clk_root_list);
- static HLIST_HEAD(clk_orphan_list);
- static LIST_HEAD(clk_notifier_list);
- 
-+/* List of registered clks that use runtime PM */
-+static HLIST_HEAD(clk_rpm_list);
-+static DEFINE_MUTEX(clk_rpm_list_lock);
-+
- static const struct hlist_head *all_lists[] = {
- 	&clk_root_list,
- 	&clk_orphan_list,
-@@ -59,6 +63,7 @@ struct clk_core {
- 	struct clk_hw		*hw;
- 	struct module		*owner;
- 	struct device		*dev;
-+	struct hlist_node	rpm_node;
- 	struct device_node	*of_node;
- 	struct clk_core		*parent;
- 	struct clk_parent_map	*parents;
-@@ -129,6 +134,89 @@ static void clk_pm_runtime_put(struct clk_core *core)
- 	pm_runtime_put_sync(core->dev);
- }
- 
-+/**
-+ * clk_pm_runtime_get_all() - Runtime "get" all clk provider devices
-+ *
-+ * Call clk_pm_runtime_get() on all runtime PM enabled clks in the clk tree so
-+ * that disabling unused clks avoids a deadlock where a device is runtime PM
-+ * resuming/suspending and the runtime PM callback is trying to grab the
-+ * prepare_lock for something like clk_prepare_enable() while
-+ * clk_disable_unused_subtree() holds the prepare_lock and is trying to runtime
-+ * PM resume/suspend the device as well.
-+ *
-+ * Context: Acquires the 'clk_rpm_list_lock' and returns with the lock held on
-+ * success. Otherwise the lock is released on failure.
-+ *
-+ * Return: 0 on success, negative errno otherwise.
-+ */
-+static int clk_pm_runtime_get_all(void)
-+{
-+	int ret;
-+	struct clk_core *core, *failed;
-+
-+	/*
-+	 * Grab the list lock to prevent any new clks from being registered
-+	 * or unregistered until clk_pm_runtime_put_all().
-+	 */
-+	mutex_lock(&clk_rpm_list_lock);
-+
-+	/*
-+	 * Runtime PM "get" all the devices that are needed for the clks
-+	 * currently registered. Do this without holding the prepare_lock, to
-+	 * avoid the deadlock.
-+	 */
-+	hlist_for_each_entry(core, &clk_rpm_list, rpm_node) {
-+		ret = clk_pm_runtime_get(core);
-+		if (ret) {
-+			failed = core;
-+			pr_err("clk: Failed to runtime PM get '%s' for clk '%s'\n",
-+			       dev_name(failed->dev), failed->name);
-+			goto err;
-+		}
-+	}
-+
-+	return 0;
-+
-+err:
-+	hlist_for_each_entry(core, &clk_rpm_list, rpm_node) {
-+		if (core == failed)
-+			break;
-+
-+		clk_pm_runtime_put(core);
-+	}
-+	mutex_unlock(&clk_rpm_list_lock);
-+
-+	return ret;
-+}
-+
-+/**
-+ * clk_pm_runtime_put_all() - Runtime "put" all clk provider devices
-+ *
-+ * Put the runtime PM references taken in clk_pm_runtime_get_all() and release
-+ * the 'clk_rpm_list_lock'.
-+ */
-+static void clk_pm_runtime_put_all(void)
-+{
-+	struct clk_core *core;
-+
-+	hlist_for_each_entry(core, &clk_rpm_list, rpm_node)
-+		clk_pm_runtime_put(core);
-+	mutex_unlock(&clk_rpm_list_lock);
-+}
-+
-+static void clk_pm_runtime_init(struct clk_core *core)
-+{
-+	struct device *dev = core->dev;
-+
-+	if (dev && pm_runtime_enabled(dev)) {
-+		core->rpm_enabled = true;
-+
-+		mutex_lock(&clk_rpm_list_lock);
-+		hlist_add_head(&core->rpm_node, &clk_rpm_list);
-+		mutex_unlock(&clk_rpm_list_lock);
-+	}
-+}
-+
- /***           locking             ***/
- static void clk_prepare_lock(void)
- {
-@@ -1252,9 +1340,6 @@ static void __init clk_unprepare_unused_subtree(struct clk_core *core)
- 	if (core->flags & CLK_IGNORE_UNUSED)
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index b30b32b288dd4..247545b57dff6 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1629,7 +1629,8 @@ static void __init bhi_select_mitigation(void)
  		return;
  
--	if (clk_pm_runtime_get(core))
--		return;
--
- 	if (clk_core_is_prepared(core)) {
- 		trace_clk_unprepare(core);
- 		if (core->ops->unprepare_unused)
-@@ -1263,8 +1348,6 @@ static void __init clk_unprepare_unused_subtree(struct clk_core *core)
- 			core->ops->unprepare(core->hw);
- 		trace_clk_unprepare_complete(core);
- 	}
--
--	clk_pm_runtime_put(core);
- }
- 
- static void __init clk_disable_unused_subtree(struct clk_core *core)
-@@ -1280,9 +1363,6 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
- 	if (core->flags & CLK_OPS_PARENT_ENABLE)
- 		clk_core_prepare_enable(core->parent);
- 
--	if (clk_pm_runtime_get(core))
--		goto unprepare_out;
--
- 	flags = clk_enable_lock();
- 
- 	if (core->enable_count)
-@@ -1307,8 +1387,6 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
- 
- unlock_out:
- 	clk_enable_unlock(flags);
--	clk_pm_runtime_put(core);
--unprepare_out:
- 	if (core->flags & CLK_OPS_PARENT_ENABLE)
- 		clk_core_disable_unprepare(core->parent);
- }
-@@ -1324,6 +1402,7 @@ __setup("clk_ignore_unused", clk_ignore_unused_setup);
- static int __init clk_disable_unused(void)
+ 	/* Retpoline mitigates against BHI unless the CPU has RRSBA behavior */
+-	if (cpu_feature_enabled(X86_FEATURE_RETPOLINE)) {
++	if (boot_cpu_has(X86_FEATURE_RETPOLINE) &&
++	    !boot_cpu_has(X86_FEATURE_RETPOLINE_LFENCE)) {
+ 		spec_ctrl_disable_kernel_rrsba();
+ 		if (rrsba_disabled)
+ 			return;
+@@ -2783,11 +2784,13 @@ static const char *spectre_bhi_state(void)
  {
- 	struct clk_core *core;
-+	int ret;
- 
- 	if (clk_ignore_unused) {
- 		pr_warn("clk: Not disabling unused clocks\n");
-@@ -1332,6 +1411,13 @@ static int __init clk_disable_unused(void)
- 
- 	pr_info("clk: Disabling unused clocks\n");
- 
-+	ret = clk_pm_runtime_get_all();
-+	if (ret)
-+		return ret;
-+	/*
-+	 * Grab the prepare lock to keep the clk topology stable while iterating
-+	 * over clks.
-+	 */
- 	clk_prepare_lock();
- 
- 	hlist_for_each_entry(core, &clk_root_list, child_node)
-@@ -1348,6 +1434,8 @@ static int __init clk_disable_unused(void)
- 
- 	clk_prepare_unlock();
- 
-+	clk_pm_runtime_put_all();
-+
- 	return 0;
- }
- late_initcall_sync(clk_disable_unused);
-@@ -3887,6 +3975,12 @@ static void __clk_release(struct kref *ref)
- {
- 	struct clk_core *core = container_of(ref, struct clk_core, ref);
- 
-+	if (core->rpm_enabled) {
-+		mutex_lock(&clk_rpm_list_lock);
-+		hlist_del(&core->rpm_node);
-+		mutex_unlock(&clk_rpm_list_lock);
-+	}
-+
- 	clk_core_free_parent_map(core);
- 	kfree_const(core->name);
- 	kfree(core);
-@@ -3926,9 +4020,8 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
- 	}
- 	core->ops = init->ops;
- 
--	if (dev && pm_runtime_enabled(dev))
--		core->rpm_enabled = true;
- 	core->dev = dev;
-+	clk_pm_runtime_init(core);
- 	core->of_node = np;
- 	if (dev && dev->driver)
- 		core->owner = dev->driver->owner;
+ 	if (!boot_cpu_has_bug(X86_BUG_BHI))
+ 		return "; BHI: Not affected";
+-	else if  (boot_cpu_has(X86_FEATURE_CLEAR_BHB_HW))
++	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_HW))
+ 		return "; BHI: BHI_DIS_S";
+-	else if  (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP))
++	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP))
+ 		return "; BHI: SW loop, KVM: SW loop";
+-	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) && rrsba_disabled)
++	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) &&
++		 !boot_cpu_has(X86_FEATURE_RETPOLINE_LFENCE) &&
++		 rrsba_disabled)
+ 		return "; BHI: Retpoline";
+ 	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT))
+ 		return "; BHI: Vulnerable, KVM: SW loop";
 -- 
 2.43.0
 
