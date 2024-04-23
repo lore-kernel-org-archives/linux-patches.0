@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13040143C49;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D1F143C49;
 	Tue, 23 Apr 2024 21:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908728; cv=none; b=pUPvWspbCBIhaQDyuFrmxnwRt1AiUYhR6CtykJu1Z2guAsHsN7B/xPzCMVXLgtErQWNnbznBcpiD3UthiSvzczj2e5XxLplRjD0IrCYWmm+aXmkS4omIh1iU48vnf+27mqnhyn07OPQAVkDxYMDAy2Fx7b1fzf6twyAevCHvN9I=
+	t=1713908728; cv=none; b=QA99/ua4GH211XnqA4yyc2xMMq3Fzbw0q0IJrC60D6YdkFieNbPZuqh+Vl+CCXTZLChcXQ4cLrb3JZkJinBwPDUJ4Il8dGjudesKVeiAuQJRbZKiI2upTPiUYfZw456qWQtjpPwF0iVzkLWH3LsqzKVB6JLUfg+O7ijIwHX1IJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908728; c=relaxed/simple;
-	bh=kavt5TSsOY+5RvKOP7OiA1S6sTBhazn1Uoibc23/TY8=;
+	bh=nNUK7Qn+21C9dLg4ztCCUuk6WKuOQQssg0g1pwyL4xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pol3+dBzJ9DvU0nVl0lcpe4OA+qN9uiCtIw5Mq3jyBEPrZR8F/vngTnE8kjpaEbMb9+fRRzT5hIxhpxqT+aLCK0muElpWPm27YdyLzcru7/hv/Y6NogupMPIo8FIUOoPX8g7VzqfJ4LbdkksX2iY0asMQJDUWtycp6K1hEF7Ptw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9WZFPlp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lIcC/jUGA0C4/crhatvvUHmk++cjhubS7hWuju410YXYSwEYNsJfhGTK2Nw5S7egORafUYeD9twZT28RUl5ptoXg6VcvnIZU0P4UTaJkPoEK1ZQK9XcmZSYj51oeWfHTbrd2Lpv9twTRf4UTM+5XiqShkDd31qC0wvQc0DH1GaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vCp3lWn4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9WZFPlp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4619C3277B;
-	Tue, 23 Apr 2024 21:45:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vCp3lWn4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D89C116B1;
+	Tue, 23 Apr 2024 21:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908727;
-	bh=kavt5TSsOY+5RvKOP7OiA1S6sTBhazn1Uoibc23/TY8=;
+	s=korg; t=1713908728;
+	bh=nNUK7Qn+21C9dLg4ztCCUuk6WKuOQQssg0g1pwyL4xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C9WZFPlpaBcTuljOak0o7vjE85UNCmbh1Axa8mJjhYzAQKOuGZUvidmhw4Um+1Rsv
-	 nUdrArALrT5KCpGZrIvypEjdlkAQQROQTc0zhugp4Zuk/Fy0vZJ6mKh0H2zZWkgXv8
-	 a9AzldVPkk52thVSl6W4wBFmm7SsL+0yudS/gaKA=
+	b=vCp3lWn4cM6DE7bw1EWLE5T3L0b4jkG8Q5W0Q2YM+7Ql3hsffJF3l3WfbxeSe2Gah
+	 OZ3beIRDE1sYptr+gO/ar76MdJrRHtFWXuyFlui4gIvMXK//OjA38LHKzEcgrahdMr
+	 lrlbUTpUFNxitzjNbahYnBQMaNA5KsGXwK734kM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mingming Su <mingming.su@mediatek.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/141] clk: mediatek: clk-mtk: Propagate struct device for composites
-Date: Tue, 23 Apr 2024 14:39:21 -0700
-Message-ID: <20240423213856.197780239@linuxfoundation.org>
+Subject: [PATCH 6.1 094/141] clk: mediatek: clk-mux: Propagate struct device for mtk-mux
+Date: Tue, 23 Apr 2024 14:39:22 -0700
+Message-ID: <20240423213856.231830620@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -55,514 +55,237 @@ Content-Transfer-Encoding: 8bit
 
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 01a6c1ab57c3a474c8d23c7d82c3fcce85f62612 ]
+[ Upstream commit d3d6bd5e25cdc460df33ae1db4f051c4bdd3aa60 ]
 
-Like done for cpumux clocks, propagate struct device for composite
-clocks registered through clk-mtk helpers to be able to get runtime
-pm support for MTK clocks.
+Like done for other clocks, propagate struct device for mtk mux clocks
+registered through clk-mux helpers to enable runtime pm support.
 
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Tested-by: Miles Chen <miles.chen@mediatek.com>
-Link: https://lore.kernel.org/r/20230120092053.182923-6-angelogioacchino.delregno@collabora.com
+Link: https://lore.kernel.org/r/20230120092053.182923-7-angelogioacchino.delregno@collabora.com
 Tested-by: Mingming Su <mingming.su@mediatek.com>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Stable-dep-of: 2f7b1d8b5505 ("clk: mediatek: Do a runtime PM get on controllers during probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt2701.c          | 10 ++++++----
- drivers/clk/mediatek/clk-mt2712.c          | 12 ++++++++----
- drivers/clk/mediatek/clk-mt6779.c          | 10 ++++++----
- drivers/clk/mediatek/clk-mt6795-pericfg.c  |  3 ++-
+ drivers/clk/mediatek/clk-mt6765.c          |  3 ++-
+ drivers/clk/mediatek/clk-mt6779.c          |  5 +++--
  drivers/clk/mediatek/clk-mt6795-topckgen.c |  3 ++-
- drivers/clk/mediatek/clk-mt6797.c          |  3 ++-
- drivers/clk/mediatek/clk-mt7622.c          |  8 +++++---
- drivers/clk/mediatek/clk-mt7629.c          |  8 +++++---
- drivers/clk/mediatek/clk-mt8135.c          | 10 ++++++----
- drivers/clk/mediatek/clk-mt8167.c          | 10 ++++++----
- drivers/clk/mediatek/clk-mt8173.c          | 10 ++++++----
- drivers/clk/mediatek/clk-mt8183.c          | 15 +++++++++------
- drivers/clk/mediatek/clk-mt8186-mcu.c      |  3 ++-
- drivers/clk/mediatek/clk-mt8186-topckgen.c |  6 ++++--
- drivers/clk/mediatek/clk-mt8192.c          |  6 ++++--
+ drivers/clk/mediatek/clk-mt7986-infracfg.c |  3 ++-
+ drivers/clk/mediatek/clk-mt7986-topckgen.c |  3 ++-
+ drivers/clk/mediatek/clk-mt8183.c          |  5 +++--
+ drivers/clk/mediatek/clk-mt8186-topckgen.c |  3 ++-
+ drivers/clk/mediatek/clk-mt8192.c          |  3 ++-
  drivers/clk/mediatek/clk-mt8195-topckgen.c |  3 ++-
- drivers/clk/mediatek/clk-mt8365.c          |  7 ++++---
- drivers/clk/mediatek/clk-mt8516.c          | 10 ++++++----
- drivers/clk/mediatek/clk-mtk.c             | 11 ++++++-----
- drivers/clk/mediatek/clk-mtk.h             |  3 ++-
- 20 files changed, 93 insertions(+), 58 deletions(-)
+ drivers/clk/mediatek/clk-mt8365.c          |  3 ++-
+ drivers/clk/mediatek/clk-mux.c             | 14 ++++++++------
+ drivers/clk/mediatek/clk-mux.h             |  3 ++-
+ 12 files changed, 32 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mt2701.c b/drivers/clk/mediatek/clk-mt2701.c
-index c7510f7ba4cc9..e80fe9c942eeb 100644
---- a/drivers/clk/mediatek/clk-mt2701.c
-+++ b/drivers/clk/mediatek/clk-mt2701.c
-@@ -679,8 +679,9 @@ static int mtk_topckgen_init(struct platform_device *pdev)
- 	mtk_clk_register_factors(top_fixed_divs, ARRAY_SIZE(top_fixed_divs),
- 								clk_data);
- 
--	mtk_clk_register_composites(top_muxes, ARRAY_SIZE(top_muxes),
--				base, &mt2701_clk_lock, clk_data);
-+	mtk_clk_register_composites(&pdev->dev, top_muxes,
-+				    ARRAY_SIZE(top_muxes), base,
-+				    &mt2701_clk_lock, clk_data);
- 
- 	mtk_clk_register_dividers(top_adj_divs, ARRAY_SIZE(top_adj_divs),
- 				base, &mt2701_clk_lock, clk_data);
-@@ -905,8 +906,9 @@ static int mtk_pericfg_init(struct platform_device *pdev)
- 	mtk_clk_register_gates(&pdev->dev, node, peri_clks,
- 			       ARRAY_SIZE(peri_clks), clk_data);
- 
--	mtk_clk_register_composites(peri_muxs, ARRAY_SIZE(peri_muxs), base,
--			&mt2701_clk_lock, clk_data);
-+	mtk_clk_register_composites(&pdev->dev, peri_muxs,
-+				    ARRAY_SIZE(peri_muxs), base,
-+				    &mt2701_clk_lock, clk_data);
- 
- 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- 	if (r)
-diff --git a/drivers/clk/mediatek/clk-mt2712.c b/drivers/clk/mediatek/clk-mt2712.c
-index 78ebb4f2335c1..a0f0c9ed48d10 100644
---- a/drivers/clk/mediatek/clk-mt2712.c
-+++ b/drivers/clk/mediatek/clk-mt2712.c
-@@ -1320,8 +1320,9 @@ static int clk_mt2712_top_probe(struct platform_device *pdev)
- 	mtk_clk_register_factors(top_early_divs, ARRAY_SIZE(top_early_divs),
- 			top_clk_data);
- 	mtk_clk_register_factors(top_divs, ARRAY_SIZE(top_divs), top_clk_data);
--	mtk_clk_register_composites(top_muxes, ARRAY_SIZE(top_muxes), base,
--			&mt2712_clk_lock, top_clk_data);
-+	mtk_clk_register_composites(&pdev->dev, top_muxes,
-+				    ARRAY_SIZE(top_muxes), base,
-+				    &mt2712_clk_lock, top_clk_data);
- 	mtk_clk_register_dividers(top_adj_divs, ARRAY_SIZE(top_adj_divs), base,
- 			&mt2712_clk_lock, top_clk_data);
+diff --git a/drivers/clk/mediatek/clk-mt6765.c b/drivers/clk/mediatek/clk-mt6765.c
+index 4a7bc6e04580d..c4941523f5520 100644
+--- a/drivers/clk/mediatek/clk-mt6765.c
++++ b/drivers/clk/mediatek/clk-mt6765.c
+@@ -782,7 +782,8 @@ static int clk_mt6765_top_probe(struct platform_device *pdev)
+ 				    clk_data);
+ 	mtk_clk_register_factors(top_divs, ARRAY_SIZE(top_divs),
+ 				 clk_data);
+-	mtk_clk_register_muxes(top_muxes, ARRAY_SIZE(top_muxes), node,
++	mtk_clk_register_muxes(&pdev->dev, top_muxes,
++			       ARRAY_SIZE(top_muxes), node,
+ 			       &mt6765_clk_lock, clk_data);
  	mtk_clk_register_gates(&pdev->dev, node, top_clks,
-@@ -1395,8 +1396,11 @@ static int clk_mt2712_mcu_probe(struct platform_device *pdev)
- 
- 	clk_data = mtk_alloc_clk_data(CLK_MCU_NR_CLK);
- 
--	mtk_clk_register_composites(mcu_muxes, ARRAY_SIZE(mcu_muxes), base,
--			&mt2712_clk_lock, clk_data);
-+	r = mtk_clk_register_composites(&pdev->dev, mcu_muxes,
-+					ARRAY_SIZE(mcu_muxes), base,
-+					&mt2712_clk_lock, clk_data);
-+	if (r)
-+		dev_err(&pdev->dev, "Could not register composites: %d\n", r);
- 
- 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- 
+ 			       ARRAY_SIZE(top_clks), clk_data);
 diff --git a/drivers/clk/mediatek/clk-mt6779.c b/drivers/clk/mediatek/clk-mt6779.c
-index 5a396d2464ce5..2c20e40d7c809 100644
+index 2c20e40d7c809..7fe9d12b2dfdd 100644
 --- a/drivers/clk/mediatek/clk-mt6779.c
 +++ b/drivers/clk/mediatek/clk-mt6779.c
-@@ -1251,11 +1251,13 @@ static int clk_mt6779_top_probe(struct platform_device *pdev)
- 	mtk_clk_register_muxes(top_muxes, ARRAY_SIZE(top_muxes),
- 			       node, &mt6779_clk_lock, clk_data);
+@@ -1248,8 +1248,9 @@ static int clk_mt6779_top_probe(struct platform_device *pdev)
  
--	mtk_clk_register_composites(top_aud_muxes, ARRAY_SIZE(top_aud_muxes),
--				    base, &mt6779_clk_lock, clk_data);
-+	mtk_clk_register_composites(&pdev->dev, top_aud_muxes,
-+				    ARRAY_SIZE(top_aud_muxes), base,
-+				    &mt6779_clk_lock, clk_data);
+ 	mtk_clk_register_factors(top_divs, ARRAY_SIZE(top_divs), clk_data);
  
--	mtk_clk_register_composites(top_aud_divs, ARRAY_SIZE(top_aud_divs),
--				    base, &mt6779_clk_lock, clk_data);
-+	mtk_clk_register_composites(&pdev->dev, top_aud_divs,
-+				    ARRAY_SIZE(top_aud_divs), base,
-+				    &mt6779_clk_lock, clk_data);
+-	mtk_clk_register_muxes(top_muxes, ARRAY_SIZE(top_muxes),
+-			       node, &mt6779_clk_lock, clk_data);
++	mtk_clk_register_muxes(&pdev->dev, top_muxes,
++			       ARRAY_SIZE(top_muxes), node,
++			       &mt6779_clk_lock, clk_data);
  
- 	return of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- }
-diff --git a/drivers/clk/mediatek/clk-mt6795-pericfg.c b/drivers/clk/mediatek/clk-mt6795-pericfg.c
-index f69e715e0c1f3..08aaa9b09c363 100644
---- a/drivers/clk/mediatek/clk-mt6795-pericfg.c
-+++ b/drivers/clk/mediatek/clk-mt6795-pericfg.c
-@@ -114,7 +114,8 @@ static int clk_mt6795_pericfg_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto free_clk_data;
- 
--	ret = mtk_clk_register_composites(peri_clks, ARRAY_SIZE(peri_clks), base,
-+	ret = mtk_clk_register_composites(&pdev->dev, peri_clks,
-+					  ARRAY_SIZE(peri_clks), base,
- 					  &mt6795_peri_clk_lock, clk_data);
- 	if (ret)
- 		goto unregister_gates;
+ 	mtk_clk_register_composites(&pdev->dev, top_aud_muxes,
+ 				    ARRAY_SIZE(top_aud_muxes), base,
 diff --git a/drivers/clk/mediatek/clk-mt6795-topckgen.c b/drivers/clk/mediatek/clk-mt6795-topckgen.c
-index 2948dd1aee8fa..845cc87049303 100644
+index 845cc87049303..2ab8bf5d6d6d9 100644
 --- a/drivers/clk/mediatek/clk-mt6795-topckgen.c
 +++ b/drivers/clk/mediatek/clk-mt6795-topckgen.c
-@@ -557,7 +557,8 @@ static int clk_mt6795_topckgen_probe(struct platform_device *pdev)
+@@ -552,7 +552,8 @@ static int clk_mt6795_topckgen_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto unregister_fixed_clks;
+ 
+-	ret = mtk_clk_register_muxes(top_muxes, ARRAY_SIZE(top_muxes), node,
++	ret = mtk_clk_register_muxes(&pdev->dev, top_muxes,
++				     ARRAY_SIZE(top_muxes), node,
+ 				     &mt6795_top_clk_lock, clk_data);
  	if (ret)
  		goto unregister_factors;
- 
--	ret = mtk_clk_register_composites(top_aud_divs, ARRAY_SIZE(top_aud_divs), base,
-+	ret = mtk_clk_register_composites(&pdev->dev, top_aud_divs,
-+					  ARRAY_SIZE(top_aud_divs), base,
- 					  &mt6795_top_clk_lock, clk_data);
- 	if (ret)
- 		goto unregister_muxes;
-diff --git a/drivers/clk/mediatek/clk-mt6797.c b/drivers/clk/mediatek/clk-mt6797.c
-index 29211744b1736..0429a80f3cad7 100644
---- a/drivers/clk/mediatek/clk-mt6797.c
-+++ b/drivers/clk/mediatek/clk-mt6797.c
-@@ -398,7 +398,8 @@ static int mtk_topckgen_init(struct platform_device *pdev)
- 	mtk_clk_register_factors(top_fixed_divs, ARRAY_SIZE(top_fixed_divs),
- 				 clk_data);
- 
--	mtk_clk_register_composites(top_muxes, ARRAY_SIZE(top_muxes), base,
-+	mtk_clk_register_composites(&pdev->dev, top_muxes,
-+				    ARRAY_SIZE(top_muxes), base,
- 				    &mt6797_clk_lock, clk_data);
- 
- 	return of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
-diff --git a/drivers/clk/mediatek/clk-mt7622.c b/drivers/clk/mediatek/clk-mt7622.c
-index bba88018f056a..67a296646722f 100644
---- a/drivers/clk/mediatek/clk-mt7622.c
-+++ b/drivers/clk/mediatek/clk-mt7622.c
-@@ -615,8 +615,9 @@ static int mtk_topckgen_init(struct platform_device *pdev)
- 	mtk_clk_register_factors(top_divs, ARRAY_SIZE(top_divs),
- 				 clk_data);
- 
--	mtk_clk_register_composites(top_muxes, ARRAY_SIZE(top_muxes),
--				    base, &mt7622_clk_lock, clk_data);
-+	mtk_clk_register_composites(&pdev->dev, top_muxes,
-+				    ARRAY_SIZE(top_muxes), base,
-+				    &mt7622_clk_lock, clk_data);
- 
- 	mtk_clk_register_dividers(top_adj_divs, ARRAY_SIZE(top_adj_divs),
- 				  base, &mt7622_clk_lock, clk_data);
-@@ -685,7 +686,8 @@ static int mtk_pericfg_init(struct platform_device *pdev)
- 	mtk_clk_register_gates(&pdev->dev, node, peri_clks,
- 			       ARRAY_SIZE(peri_clks), clk_data);
- 
--	mtk_clk_register_composites(peri_muxes, ARRAY_SIZE(peri_muxes), base,
-+	mtk_clk_register_composites(&pdev->dev, peri_muxes,
-+				    ARRAY_SIZE(peri_muxes), base,
- 				    &mt7622_clk_lock, clk_data);
- 
- 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
-diff --git a/drivers/clk/mediatek/clk-mt7629.c b/drivers/clk/mediatek/clk-mt7629.c
-index c0cdaf0242961..2019e272d1cd7 100644
---- a/drivers/clk/mediatek/clk-mt7629.c
-+++ b/drivers/clk/mediatek/clk-mt7629.c
-@@ -566,8 +566,9 @@ static int mtk_topckgen_init(struct platform_device *pdev)
- 	mtk_clk_register_factors(top_divs, ARRAY_SIZE(top_divs),
- 				 clk_data);
- 
--	mtk_clk_register_composites(top_muxes, ARRAY_SIZE(top_muxes),
--				    base, &mt7629_clk_lock, clk_data);
-+	mtk_clk_register_composites(&pdev->dev, top_muxes,
-+				    ARRAY_SIZE(top_muxes), base,
-+				    &mt7629_clk_lock, clk_data);
- 
- 	clk_prepare_enable(clk_data->hws[CLK_TOP_AXI_SEL]->clk);
- 	clk_prepare_enable(clk_data->hws[CLK_TOP_MEM_SEL]->clk);
-@@ -613,7 +614,8 @@ static int mtk_pericfg_init(struct platform_device *pdev)
- 	mtk_clk_register_gates(&pdev->dev, node, peri_clks,
- 			       ARRAY_SIZE(peri_clks), clk_data);
- 
--	mtk_clk_register_composites(peri_muxes, ARRAY_SIZE(peri_muxes), base,
-+	mtk_clk_register_composites(&pdev->dev, peri_muxes,
-+				    ARRAY_SIZE(peri_muxes), base,
- 				    &mt7629_clk_lock, clk_data);
- 
- 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
-diff --git a/drivers/clk/mediatek/clk-mt8135.c b/drivers/clk/mediatek/clk-mt8135.c
-index 8137cf2252724..a39ad58e27418 100644
---- a/drivers/clk/mediatek/clk-mt8135.c
-+++ b/drivers/clk/mediatek/clk-mt8135.c
-@@ -536,8 +536,9 @@ static void __init mtk_topckgen_init(struct device_node *node)
- 
- 	mtk_clk_register_factors(root_clk_alias, ARRAY_SIZE(root_clk_alias), clk_data);
- 	mtk_clk_register_factors(top_divs, ARRAY_SIZE(top_divs), clk_data);
--	mtk_clk_register_composites(top_muxes, ARRAY_SIZE(top_muxes), base,
--			&mt8135_clk_lock, clk_data);
-+	mtk_clk_register_composites(NULL, top_muxes,
-+				    ARRAY_SIZE(top_muxes), base,
-+				    &mt8135_clk_lock, clk_data);
- 
- 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- 	if (r)
-@@ -581,8 +582,9 @@ static void __init mtk_pericfg_init(struct device_node *node)
- 
- 	mtk_clk_register_gates(NULL, node, peri_gates,
- 			       ARRAY_SIZE(peri_gates), clk_data);
--	mtk_clk_register_composites(peri_clks, ARRAY_SIZE(peri_clks), base,
--			&mt8135_clk_lock, clk_data);
-+	mtk_clk_register_composites(NULL, peri_clks,
-+				    ARRAY_SIZE(peri_clks), base,
-+				    &mt8135_clk_lock, clk_data);
- 
- 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- 	if (r)
-diff --git a/drivers/clk/mediatek/clk-mt8167.c b/drivers/clk/mediatek/clk-mt8167.c
-index 59fe82ba5c7a1..91669ebafaf9b 100644
---- a/drivers/clk/mediatek/clk-mt8167.c
-+++ b/drivers/clk/mediatek/clk-mt8167.c
-@@ -940,8 +940,9 @@ static void __init mtk_topckgen_init(struct device_node *node)
- 	mtk_clk_register_gates(NULL, node, top_clks, ARRAY_SIZE(top_clks), clk_data);
- 
- 	mtk_clk_register_factors(top_divs, ARRAY_SIZE(top_divs), clk_data);
--	mtk_clk_register_composites(top_muxes, ARRAY_SIZE(top_muxes), base,
--		&mt8167_clk_lock, clk_data);
-+	mtk_clk_register_composites(NULL, top_muxes,
-+				    ARRAY_SIZE(top_muxes), base,
-+				    &mt8167_clk_lock, clk_data);
- 	mtk_clk_register_dividers(top_adj_divs, ARRAY_SIZE(top_adj_divs),
- 				base, &mt8167_clk_lock, clk_data);
- 
-@@ -966,8 +967,9 @@ static void __init mtk_infracfg_init(struct device_node *node)
- 
- 	clk_data = mtk_alloc_clk_data(CLK_IFR_NR_CLK);
- 
--	mtk_clk_register_composites(ifr_muxes, ARRAY_SIZE(ifr_muxes), base,
--		&mt8167_clk_lock, clk_data);
-+	mtk_clk_register_composites(NULL, ifr_muxes,
-+				    ARRAY_SIZE(ifr_muxes), base,
-+				    &mt8167_clk_lock, clk_data);
- 
- 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- 	if (r)
-diff --git a/drivers/clk/mediatek/clk-mt8173.c b/drivers/clk/mediatek/clk-mt8173.c
-index 74ed7dd129f47..d05c1109b4f87 100644
---- a/drivers/clk/mediatek/clk-mt8173.c
-+++ b/drivers/clk/mediatek/clk-mt8173.c
-@@ -869,8 +869,9 @@ static void __init mtk_topckgen_init(struct device_node *node)
- 
- 	mtk_clk_register_fixed_clks(fixed_clks, ARRAY_SIZE(fixed_clks), clk_data);
- 	mtk_clk_register_factors(top_divs, ARRAY_SIZE(top_divs), clk_data);
--	mtk_clk_register_composites(top_muxes, ARRAY_SIZE(top_muxes), base,
--			&mt8173_clk_lock, clk_data);
-+	mtk_clk_register_composites(NULL, top_muxes,
-+				    ARRAY_SIZE(top_muxes), base,
-+				    &mt8173_clk_lock, clk_data);
- 
- 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- 	if (r)
-@@ -920,8 +921,9 @@ static void __init mtk_pericfg_init(struct device_node *node)
- 
- 	mtk_clk_register_gates(NULL, node, peri_gates,
- 			       ARRAY_SIZE(peri_gates), clk_data);
--	mtk_clk_register_composites(peri_clks, ARRAY_SIZE(peri_clks), base,
--			&mt8173_clk_lock, clk_data);
-+	mtk_clk_register_composites(NULL, peri_clks,
-+				    ARRAY_SIZE(peri_clks), base,
-+				    &mt8173_clk_lock, clk_data);
- 
- 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- 	if (r)
-diff --git a/drivers/clk/mediatek/clk-mt8183.c b/drivers/clk/mediatek/clk-mt8183.c
-index ba0d6ba10b359..bf7b342332536 100644
---- a/drivers/clk/mediatek/clk-mt8183.c
-+++ b/drivers/clk/mediatek/clk-mt8183.c
-@@ -1241,11 +1241,13 @@ static int clk_mt8183_top_probe(struct platform_device *pdev)
- 	mtk_clk_register_muxes(top_muxes, ARRAY_SIZE(top_muxes),
- 		node, &mt8183_clk_lock, top_clk_data);
- 
--	mtk_clk_register_composites(top_aud_muxes, ARRAY_SIZE(top_aud_muxes),
--		base, &mt8183_clk_lock, top_clk_data);
-+	mtk_clk_register_composites(&pdev->dev, top_aud_muxes,
-+				    ARRAY_SIZE(top_aud_muxes), base,
-+				    &mt8183_clk_lock, top_clk_data);
- 
--	mtk_clk_register_composites(top_aud_divs, ARRAY_SIZE(top_aud_divs),
--		base, &mt8183_clk_lock, top_clk_data);
-+	mtk_clk_register_composites(&pdev->dev, top_aud_divs,
-+				    ARRAY_SIZE(top_aud_divs), base,
-+				    &mt8183_clk_lock, top_clk_data);
- 
- 	mtk_clk_register_gates(&pdev->dev, node, top_clks,
- 			       ARRAY_SIZE(top_clks), top_clk_data);
-@@ -1308,8 +1310,9 @@ static int clk_mt8183_mcu_probe(struct platform_device *pdev)
- 
- 	clk_data = mtk_alloc_clk_data(CLK_MCU_NR_CLK);
- 
--	mtk_clk_register_composites(mcu_muxes, ARRAY_SIZE(mcu_muxes), base,
--			&mt8183_clk_lock, clk_data);
-+	mtk_clk_register_composites(&pdev->dev, mcu_muxes,
-+				    ARRAY_SIZE(mcu_muxes), base,
-+				    &mt8183_clk_lock, clk_data);
- 
- 	return of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- }
-diff --git a/drivers/clk/mediatek/clk-mt8186-mcu.c b/drivers/clk/mediatek/clk-mt8186-mcu.c
-index dfc305c1fc5d8..e52a2d986c99c 100644
---- a/drivers/clk/mediatek/clk-mt8186-mcu.c
-+++ b/drivers/clk/mediatek/clk-mt8186-mcu.c
-@@ -65,7 +65,8 @@ static int clk_mt8186_mcu_probe(struct platform_device *pdev)
- 		goto free_mcu_data;
- 	}
- 
--	r = mtk_clk_register_composites(mcu_muxes, ARRAY_SIZE(mcu_muxes), base,
-+	r = mtk_clk_register_composites(&pdev->dev, mcu_muxes,
-+					ARRAY_SIZE(mcu_muxes), base,
- 					NULL, clk_data);
- 	if (r)
- 		goto free_mcu_data;
-diff --git a/drivers/clk/mediatek/clk-mt8186-topckgen.c b/drivers/clk/mediatek/clk-mt8186-topckgen.c
-index d7f2c4663c853..4ac157320a6b9 100644
---- a/drivers/clk/mediatek/clk-mt8186-topckgen.c
-+++ b/drivers/clk/mediatek/clk-mt8186-topckgen.c
-@@ -720,12 +720,14 @@ static int clk_mt8186_topck_probe(struct platform_device *pdev)
- 	if (r)
- 		goto unregister_factors;
- 
--	r = mtk_clk_register_composites(top_muxes, ARRAY_SIZE(top_muxes), base,
-+	r = mtk_clk_register_composites(&pdev->dev, top_muxes,
-+					ARRAY_SIZE(top_muxes), base,
- 					&mt8186_clk_lock, clk_data);
- 	if (r)
- 		goto unregister_muxes;
- 
--	r = mtk_clk_register_composites(top_adj_divs, ARRAY_SIZE(top_adj_divs), base,
-+	r = mtk_clk_register_composites(&pdev->dev, top_adj_divs,
-+					ARRAY_SIZE(top_adj_divs), base,
- 					&mt8186_clk_lock, clk_data);
- 	if (r)
- 		goto unregister_composite_muxes;
-diff --git a/drivers/clk/mediatek/clk-mt8192.c b/drivers/clk/mediatek/clk-mt8192.c
-index ac1eee513649b..ab856d0276184 100644
---- a/drivers/clk/mediatek/clk-mt8192.c
-+++ b/drivers/clk/mediatek/clk-mt8192.c
-@@ -1117,12 +1117,14 @@ static int clk_mt8192_top_probe(struct platform_device *pdev)
- 	if (r)
- 		goto unregister_factors;
- 
--	r = mtk_clk_register_composites(top_muxes, ARRAY_SIZE(top_muxes), base,
-+	r = mtk_clk_register_composites(&pdev->dev, top_muxes,
-+					ARRAY_SIZE(top_muxes), base,
- 					&mt8192_clk_lock, top_clk_data);
- 	if (r)
- 		goto unregister_muxes;
- 
--	r = mtk_clk_register_composites(top_adj_divs, ARRAY_SIZE(top_adj_divs), base,
-+	r = mtk_clk_register_composites(&pdev->dev, top_adj_divs,
-+					ARRAY_SIZE(top_adj_divs), base,
- 					&mt8192_clk_lock, top_clk_data);
- 	if (r)
- 		goto unregister_top_composites;
-diff --git a/drivers/clk/mediatek/clk-mt8195-topckgen.c b/drivers/clk/mediatek/clk-mt8195-topckgen.c
-index e6e0298d64494..aae31ef3903de 100644
---- a/drivers/clk/mediatek/clk-mt8195-topckgen.c
-+++ b/drivers/clk/mediatek/clk-mt8195-topckgen.c
-@@ -1281,7 +1281,8 @@ static int clk_mt8195_topck_probe(struct platform_device *pdev)
- 	if (r)
- 		goto unregister_muxes;
- 
--	r = mtk_clk_register_composites(top_adj_divs, ARRAY_SIZE(top_adj_divs), base,
-+	r = mtk_clk_register_composites(&pdev->dev, top_adj_divs,
-+					ARRAY_SIZE(top_adj_divs), base,
- 					&mt8195_clk_lock, top_clk_data);
- 	if (r)
- 		goto unregister_muxes;
-diff --git a/drivers/clk/mediatek/clk-mt8365.c b/drivers/clk/mediatek/clk-mt8365.c
-index b30cbeae1c3d3..0482a8aa43cc9 100644
---- a/drivers/clk/mediatek/clk-mt8365.c
-+++ b/drivers/clk/mediatek/clk-mt8365.c
-@@ -952,7 +952,7 @@ static int clk_mt8365_top_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto unregister_factors;
- 
--	ret = mtk_clk_register_composites(top_misc_mux_gates,
-+	ret = mtk_clk_register_composites(&pdev->dev, top_misc_mux_gates,
- 					  ARRAY_SIZE(top_misc_mux_gates), base,
- 					  &mt8365_clk_lock, clk_data);
- 	if (ret)
-@@ -1080,8 +1080,9 @@ static int clk_mt8365_mcu_probe(struct platform_device *pdev)
- 	if (!clk_data)
+diff --git a/drivers/clk/mediatek/clk-mt7986-infracfg.c b/drivers/clk/mediatek/clk-mt7986-infracfg.c
+index 578f150e0ee52..0a4bf87ee1607 100644
+--- a/drivers/clk/mediatek/clk-mt7986-infracfg.c
++++ b/drivers/clk/mediatek/clk-mt7986-infracfg.c
+@@ -178,7 +178,8 @@ static int clk_mt7986_infracfg_probe(struct platform_device *pdev)
  		return -ENOMEM;
  
--	ret = mtk_clk_register_composites(mcu_muxes, ARRAY_SIZE(mcu_muxes),
--					  base, &mt8365_clk_lock, clk_data);
-+	ret = mtk_clk_register_composites(&pdev->dev, mcu_muxes,
-+					  ARRAY_SIZE(mcu_muxes), base,
-+					  &mt8365_clk_lock, clk_data);
- 	if (ret)
- 		goto free_clk_data;
- 
-diff --git a/drivers/clk/mediatek/clk-mt8516.c b/drivers/clk/mediatek/clk-mt8516.c
-index bde0b8c761d47..6983d3a48dc9a 100644
---- a/drivers/clk/mediatek/clk-mt8516.c
-+++ b/drivers/clk/mediatek/clk-mt8516.c
-@@ -658,8 +658,9 @@ static void __init mtk_topckgen_init(struct device_node *node)
- 	mtk_clk_register_gates(NULL, node, top_clks, ARRAY_SIZE(top_clks), clk_data);
- 
+ 	mtk_clk_register_factors(infra_divs, ARRAY_SIZE(infra_divs), clk_data);
+-	mtk_clk_register_muxes(infra_muxes, ARRAY_SIZE(infra_muxes), node,
++	mtk_clk_register_muxes(&pdev->dev, infra_muxes,
++			       ARRAY_SIZE(infra_muxes), node,
+ 			       &mt7986_clk_lock, clk_data);
+ 	mtk_clk_register_gates(&pdev->dev, node, infra_clks,
+ 			       ARRAY_SIZE(infra_clks), clk_data);
+diff --git a/drivers/clk/mediatek/clk-mt7986-topckgen.c b/drivers/clk/mediatek/clk-mt7986-topckgen.c
+index de5121cf28774..c9bf47e6098fd 100644
+--- a/drivers/clk/mediatek/clk-mt7986-topckgen.c
++++ b/drivers/clk/mediatek/clk-mt7986-topckgen.c
+@@ -303,7 +303,8 @@ static int clk_mt7986_topckgen_probe(struct platform_device *pdev)
+ 	mtk_clk_register_fixed_clks(top_fixed_clks, ARRAY_SIZE(top_fixed_clks),
+ 				    clk_data);
  	mtk_clk_register_factors(top_divs, ARRAY_SIZE(top_divs), clk_data);
--	mtk_clk_register_composites(top_muxes, ARRAY_SIZE(top_muxes), base,
--		&mt8516_clk_lock, clk_data);
-+	mtk_clk_register_composites(NULL, top_muxes,
-+				    ARRAY_SIZE(top_muxes), base,
-+				    &mt8516_clk_lock, clk_data);
- 	mtk_clk_register_dividers(top_adj_divs, ARRAY_SIZE(top_adj_divs),
- 				base, &mt8516_clk_lock, clk_data);
+-	mtk_clk_register_muxes(top_muxes, ARRAY_SIZE(top_muxes), node,
++	mtk_clk_register_muxes(&pdev->dev, top_muxes,
++			       ARRAY_SIZE(top_muxes), node,
+ 			       &mt7986_clk_lock, clk_data);
  
-@@ -684,8 +685,9 @@ static void __init mtk_infracfg_init(struct device_node *node)
+ 	clk_prepare_enable(clk_data->hws[CLK_TOP_SYSAXI_SEL]->clk);
+diff --git a/drivers/clk/mediatek/clk-mt8183.c b/drivers/clk/mediatek/clk-mt8183.c
+index bf7b342332536..78620244144e8 100644
+--- a/drivers/clk/mediatek/clk-mt8183.c
++++ b/drivers/clk/mediatek/clk-mt8183.c
+@@ -1238,8 +1238,9 @@ static int clk_mt8183_top_probe(struct platform_device *pdev)
  
- 	clk_data = mtk_alloc_clk_data(CLK_IFR_NR_CLK);
+ 	mtk_clk_register_factors(top_divs, ARRAY_SIZE(top_divs), top_clk_data);
  
--	mtk_clk_register_composites(ifr_muxes, ARRAY_SIZE(ifr_muxes), base,
--		&mt8516_clk_lock, clk_data);
-+	mtk_clk_register_composites(NULL, ifr_muxes,
-+				    ARRAY_SIZE(ifr_muxes), base,
-+				    &mt8516_clk_lock, clk_data);
+-	mtk_clk_register_muxes(top_muxes, ARRAY_SIZE(top_muxes),
+-		node, &mt8183_clk_lock, top_clk_data);
++	mtk_clk_register_muxes(&pdev->dev, top_muxes,
++			       ARRAY_SIZE(top_muxes), node,
++			       &mt8183_clk_lock, top_clk_data);
  
- 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
+ 	mtk_clk_register_composites(&pdev->dev, top_aud_muxes,
+ 				    ARRAY_SIZE(top_aud_muxes), base,
+diff --git a/drivers/clk/mediatek/clk-mt8186-topckgen.c b/drivers/clk/mediatek/clk-mt8186-topckgen.c
+index 4ac157320a6b9..70b6e008a188b 100644
+--- a/drivers/clk/mediatek/clk-mt8186-topckgen.c
++++ b/drivers/clk/mediatek/clk-mt8186-topckgen.c
+@@ -715,7 +715,8 @@ static int clk_mt8186_topck_probe(struct platform_device *pdev)
  	if (r)
-diff --git a/drivers/clk/mediatek/clk-mtk.c b/drivers/clk/mediatek/clk-mtk.c
-index 6123b234d3c3b..152f3d906ef8a 100644
---- a/drivers/clk/mediatek/clk-mtk.c
-+++ b/drivers/clk/mediatek/clk-mtk.c
-@@ -197,8 +197,8 @@ void mtk_clk_unregister_factors(const struct mtk_fixed_factor *clks, int num,
- }
- EXPORT_SYMBOL_GPL(mtk_clk_unregister_factors);
+ 		goto unregister_fixed_clks;
  
--static struct clk_hw *mtk_clk_register_composite(const struct mtk_composite *mc,
--		void __iomem *base, spinlock_t *lock)
-+static struct clk_hw *mtk_clk_register_composite(struct device *dev,
-+		const struct mtk_composite *mc, void __iomem *base, spinlock_t *lock)
+-	r = mtk_clk_register_muxes(top_mtk_muxes, ARRAY_SIZE(top_mtk_muxes), node,
++	r = mtk_clk_register_muxes(&pdev->dev, top_mtk_muxes,
++				   ARRAY_SIZE(top_mtk_muxes), node,
+ 				   &mt8186_clk_lock, clk_data);
+ 	if (r)
+ 		goto unregister_factors;
+diff --git a/drivers/clk/mediatek/clk-mt8192.c b/drivers/clk/mediatek/clk-mt8192.c
+index ab856d0276184..16feb86dcb1b8 100644
+--- a/drivers/clk/mediatek/clk-mt8192.c
++++ b/drivers/clk/mediatek/clk-mt8192.c
+@@ -1112,7 +1112,8 @@ static int clk_mt8192_top_probe(struct platform_device *pdev)
+ 	if (r)
+ 		goto unregister_early_factors;
+ 
+-	r = mtk_clk_register_muxes(top_mtk_muxes, ARRAY_SIZE(top_mtk_muxes), node,
++	r = mtk_clk_register_muxes(&pdev->dev, top_mtk_muxes,
++				   ARRAY_SIZE(top_mtk_muxes), node,
+ 				   &mt8192_clk_lock, top_clk_data);
+ 	if (r)
+ 		goto unregister_factors;
+diff --git a/drivers/clk/mediatek/clk-mt8195-topckgen.c b/drivers/clk/mediatek/clk-mt8195-topckgen.c
+index aae31ef3903de..3485ebb17ab83 100644
+--- a/drivers/clk/mediatek/clk-mt8195-topckgen.c
++++ b/drivers/clk/mediatek/clk-mt8195-topckgen.c
+@@ -1262,7 +1262,8 @@ static int clk_mt8195_topck_probe(struct platform_device *pdev)
+ 	if (r)
+ 		goto unregister_fixed_clks;
+ 
+-	r = mtk_clk_register_muxes(top_mtk_muxes, ARRAY_SIZE(top_mtk_muxes), node,
++	r = mtk_clk_register_muxes(&pdev->dev, top_mtk_muxes,
++				   ARRAY_SIZE(top_mtk_muxes), node,
+ 				   &mt8195_clk_lock, top_clk_data);
+ 	if (r)
+ 		goto unregister_factors;
+diff --git a/drivers/clk/mediatek/clk-mt8365.c b/drivers/clk/mediatek/clk-mt8365.c
+index 0482a8aa43cc9..c9faa07ec0a64 100644
+--- a/drivers/clk/mediatek/clk-mt8365.c
++++ b/drivers/clk/mediatek/clk-mt8365.c
+@@ -947,7 +947,8 @@ static int clk_mt8365_top_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto unregister_fixed_clks;
+ 
+-	ret = mtk_clk_register_muxes(top_muxes, ARRAY_SIZE(top_muxes), node,
++	ret = mtk_clk_register_muxes(&pdev->dev, top_muxes,
++				     ARRAY_SIZE(top_muxes), node,
+ 				     &mt8365_clk_lock, clk_data);
+ 	if (ret)
+ 		goto unregister_factors;
+diff --git a/drivers/clk/mediatek/clk-mux.c b/drivers/clk/mediatek/clk-mux.c
+index ba1720b9e2310..c8593554239d6 100644
+--- a/drivers/clk/mediatek/clk-mux.c
++++ b/drivers/clk/mediatek/clk-mux.c
+@@ -154,9 +154,10 @@ const struct clk_ops mtk_mux_gate_clr_set_upd_ops  = {
+ };
+ EXPORT_SYMBOL_GPL(mtk_mux_gate_clr_set_upd_ops);
+ 
+-static struct clk_hw *mtk_clk_register_mux(const struct mtk_mux *mux,
+-				 struct regmap *regmap,
+-				 spinlock_t *lock)
++static struct clk_hw *mtk_clk_register_mux(struct device *dev,
++					   const struct mtk_mux *mux,
++					   struct regmap *regmap,
++					   spinlock_t *lock)
  {
- 	struct clk_hw *hw;
- 	struct clk_mux *mux = NULL;
-@@ -264,7 +264,7 @@ static struct clk_hw *mtk_clk_register_composite(const struct mtk_composite *mc,
- 		div_ops = &clk_divider_ops;
- 	}
+ 	struct mtk_clk_mux *clk_mux;
+ 	struct clk_init_data init = {};
+@@ -177,7 +178,7 @@ static struct clk_hw *mtk_clk_register_mux(const struct mtk_mux *mux,
+ 	clk_mux->lock = lock;
+ 	clk_mux->hw.init = &init;
  
--	hw = clk_hw_register_composite(NULL, mc->name, parent_names, num_parents,
-+	hw = clk_hw_register_composite(dev, mc->name, parent_names, num_parents,
- 		mux_hw, mux_ops,
- 		div_hw, div_ops,
- 		gate_hw, gate_ops,
-@@ -308,7 +308,8 @@ static void mtk_clk_unregister_composite(struct clk_hw *hw)
+-	ret = clk_hw_register(NULL, &clk_mux->hw);
++	ret = clk_hw_register(dev, &clk_mux->hw);
+ 	if (ret) {
+ 		kfree(clk_mux);
+ 		return ERR_PTR(ret);
+@@ -198,7 +199,8 @@ static void mtk_clk_unregister_mux(struct clk_hw *hw)
  	kfree(mux);
  }
  
--int mtk_clk_register_composites(const struct mtk_composite *mcs, int num,
-+int mtk_clk_register_composites(struct device *dev,
-+				const struct mtk_composite *mcs, int num,
- 				void __iomem *base, spinlock_t *lock,
- 				struct clk_hw_onecell_data *clk_data)
- {
-@@ -327,7 +328,7 @@ int mtk_clk_register_composites(const struct mtk_composite *mcs, int num,
+-int mtk_clk_register_muxes(const struct mtk_mux *muxes,
++int mtk_clk_register_muxes(struct device *dev,
++			   const struct mtk_mux *muxes,
+ 			   int num, struct device_node *node,
+ 			   spinlock_t *lock,
+ 			   struct clk_hw_onecell_data *clk_data)
+@@ -222,7 +224,7 @@ int mtk_clk_register_muxes(const struct mtk_mux *muxes,
  			continue;
  		}
  
--		hw = mtk_clk_register_composite(mc, base, lock);
-+		hw = mtk_clk_register_composite(dev, mc, base, lock);
+-		hw = mtk_clk_register_mux(mux, regmap, lock);
++		hw = mtk_clk_register_mux(dev, mux, regmap, lock);
  
  		if (IS_ERR(hw)) {
- 			pr_err("Failed to register clk %s: %pe\n", mc->name,
-diff --git a/drivers/clk/mediatek/clk-mtk.h b/drivers/clk/mediatek/clk-mtk.h
-index 63ae7941aa92f..3993a60738c77 100644
---- a/drivers/clk/mediatek/clk-mtk.h
-+++ b/drivers/clk/mediatek/clk-mtk.h
-@@ -149,7 +149,8 @@ struct mtk_composite {
- 		.flags = 0,						\
- 	}
+ 			pr_err("Failed to register clk %s: %pe\n", mux->name,
+diff --git a/drivers/clk/mediatek/clk-mux.h b/drivers/clk/mediatek/clk-mux.h
+index 83ff420f4ebe6..7ecb963b0ec68 100644
+--- a/drivers/clk/mediatek/clk-mux.h
++++ b/drivers/clk/mediatek/clk-mux.h
+@@ -83,7 +83,8 @@ extern const struct clk_ops mtk_mux_gate_clr_set_upd_ops;
+ 			0, _upd_ofs, _upd, CLK_SET_RATE_PARENT,		\
+ 			mtk_mux_clr_set_upd_ops)
  
--int mtk_clk_register_composites(const struct mtk_composite *mcs, int num,
-+int mtk_clk_register_composites(struct device *dev,
-+				const struct mtk_composite *mcs, int num,
- 				void __iomem *base, spinlock_t *lock,
- 				struct clk_hw_onecell_data *clk_data);
- void mtk_clk_unregister_composites(const struct mtk_composite *mcs, int num,
+-int mtk_clk_register_muxes(const struct mtk_mux *muxes,
++int mtk_clk_register_muxes(struct device *dev,
++			   const struct mtk_mux *muxes,
+ 			   int num, struct device_node *node,
+ 			   spinlock_t *lock,
+ 			   struct clk_hw_onecell_data *clk_data);
 -- 
 2.43.0
 
