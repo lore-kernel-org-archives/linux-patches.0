@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC3D14388F;
-	Tue, 23 Apr 2024 21:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4077514388F;
+	Tue, 23 Apr 2024 21:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908513; cv=none; b=uRVSII5uXpRbSS5noTHnB/tZamIYXqpM5PYk6jHsfUz3yFZ6nD6bE+iwOBZDi8UW2kP1P63crkMZMWsnUtOA5/V7/FuQkZeGnbXyqFnH6/eilHubTe1uX0YzcrZtEDHscMKXrY5QPzWhjy2T2bTwI4V2yKWdcUnBa+DItvdP6PY=
+	t=1713908514; cv=none; b=J+8ROwBACiexK1EjsLp1evcs6rA/2c23EB15KfahQ51YxNJhUnEhJPGIgBgido7Q/qqIu7qRHUpF3yFpUyIjz3Zg9TCaOZ4ITsZatzOI5xDf/fDJDIPJyPIam4kvl7RXmUeuE8mef4KTuHycjNU9bYO261VBui08WvNORaLoZjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908513; c=relaxed/simple;
-	bh=7nC1IWxTKT+pq4h51pai/fTYeSPPlWjh9gjjr4co4Lo=;
+	s=arc-20240116; t=1713908514; c=relaxed/simple;
+	bh=77HKJMJGH9zQ4nJ/eU+H/j2EysdNuqB/kDkWtqUDVas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D9pUX1bR83krUoBesqHffutvZDbCFqXeO4HeIFX0s8ssbzbkrG+pAs/xiyeUHup/zFbctt84pBeaIHk0aUj4ikCI3VtSICSvhlpAZb4Qutwd6sqUYmOy8NdV3vBlJ/IxmPzp1Qco6/npHlosgQA5TAultturJZpDZFLaqS/OPWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mj5EMbP8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qmc2jRYUfKjJYtEPovPp92rq2xY/rWxAsTRYHPSStccj9MN7E1Ha85QqTu0R0APoKl0NOuTERWrePhxt9HRilByjTnq9j52fIk1JZi3FDc1yAQKFQsRfrFyQimuhefrL0818v3DVOy/F2++reMt2IQF9SSFHcLR5hEARiF4Wmk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVwvGxVr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mj5EMbP8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6394CC116B1;
-	Tue, 23 Apr 2024 21:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVwvGxVr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15779C3277B;
+	Tue, 23 Apr 2024 21:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908513;
-	bh=7nC1IWxTKT+pq4h51pai/fTYeSPPlWjh9gjjr4co4Lo=;
+	s=korg; t=1713908514;
+	bh=77HKJMJGH9zQ4nJ/eU+H/j2EysdNuqB/kDkWtqUDVas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mj5EMbP85LFEqED7QwYnxmRoiNkn+b3cdPopgGkoLCLePyzqb5IKwOz2WuyQSy10G
-	 Fbz2FueEzJNVytNFyJ96zosg+kONqEoNMVETE6ucQD6IwNJ5ijvLFB8bFnvnNajgwk
-	 iV9Z0pR8DwVckn0N1a1NL8pKl1KTO/cOsBAcSmsg=
+	b=JVwvGxVrJC6Z2A6fMuF3brsHNz9+i1USyCy5Fzp7c0a8zNmjMP7XVhbQAkhAKfQcU
+	 N4jq+1jy9TMr6YQMarNlR2M0/9RKgIvYChPwOStf616IGsgK0q9xPjbNkWhtpV7JDR
+	 HZYfmYKkHmThy3WdpvYQa6zi8/vNjp+3a0OJz3wA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Fine <gil.fine@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.8 099/158] thunderbolt: Do not create DisplayPort tunnels on adapters of the same router
-Date: Tue, 23 Apr 2024 14:38:41 -0700
-Message-ID: <20240423213859.167911640@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	syzbot+5f29dc6a889fc42bd896@syzkaller.appspotmail.com
+Subject: [PATCH 6.8 100/158] comedi: vmk80xx: fix incomplete endpoint checking
+Date: Tue, 23 Apr 2024 14:38:42 -0700
+Message-ID: <20240423213859.196489693@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -50,45 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit c032cdd48b29549e8283c2fea99e7d91ddefebf7 upstream.
+commit d1718530e3f640b7d5f0050e725216eab57a85d8 upstream.
 
-Probably due to a firmware bug Dell TB16 dock announces that one of its
-DisplayPort adapters is actually DP IN. Now this is possible and used
-with some external GPUs but not likely in this case as we are dealing
-with a dock. Anyways the problem is that the driver tries to create a
-DisplayPort tunnel between adapters of the same router which then shows
-to user that there is no picture on the display (because there are no
-available DP OUT adapters on the dock anymore).
+While vmk80xx does have endpoint checking implemented, some things
+can fall through the cracks. Depending on the hardware model,
+URBs can have either bulk or interrupt type, and current version
+of vmk80xx_find_usb_endpoints() function does not take that fully
+into account. While this warning does not seem to be too harmful,
+at the very least it will crash systems with 'panic_on_warn' set on
+them.
 
-Fix this by not creating DisplayPort tunnels between adapters that are
-on the same router.
+Fix the issue found by Syzkaller [1] by somewhat simplifying the
+endpoint checking process with usb_find_common_endpoints() and
+ensuring that only expected endpoint types are present.
 
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10265
-Fixes: 274baf695b08 ("thunderbolt: Add DP IN added last in the head of the list of DP resources")
-Cc: Gil Fine <gil.fine@linux.intel.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+This patch has not been tested on real hardware.
+
+[1] Syzkaller report:
+usb 1-1: BOGUS urb xfer, pipe 1 != type 3
+WARNING: CPU: 0 PID: 781 at drivers/usb/core/urb.c:504 usb_submit_urb+0xc4e/0x18c0 drivers/usb/core/urb.c:503
+...
+Call Trace:
+ <TASK>
+ usb_start_wait_urb+0x113/0x520 drivers/usb/core/message.c:59
+ vmk80xx_reset_device drivers/comedi/drivers/vmk80xx.c:227 [inline]
+ vmk80xx_auto_attach+0xa1c/0x1a40 drivers/comedi/drivers/vmk80xx.c:818
+ comedi_auto_config+0x238/0x380 drivers/comedi/drivers.c:1067
+ usb_probe_interface+0x5cd/0xb00 drivers/usb/core/driver.c:399
+...
+
+Similar issue also found by Syzkaller:
+Link: https://syzkaller.appspot.com/bug?extid=5205eb2f17de3e01946e
+
+Reported-and-tested-by: syzbot+5f29dc6a889fc42bd896@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Fixes: 49253d542cc0 ("staging: comedi: vmk80xx: factor out usb endpoint detection")
+Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://lore.kernel.org/r/20240408171633.31649-1-n.zhandarovich@fintech.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tb.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/comedi/drivers/vmk80xx.c |   35 ++++++++++++-----------------------
+ 1 file changed, 12 insertions(+), 23 deletions(-)
 
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -1717,6 +1717,12 @@ static struct tb_port *tb_find_dp_out(st
- 			continue;
- 		}
+--- a/drivers/comedi/drivers/vmk80xx.c
++++ b/drivers/comedi/drivers/vmk80xx.c
+@@ -641,33 +641,22 @@ static int vmk80xx_find_usb_endpoints(st
+ 	struct vmk80xx_private *devpriv = dev->private;
+ 	struct usb_interface *intf = comedi_to_usb_interface(dev);
+ 	struct usb_host_interface *iface_desc = intf->cur_altsetting;
+-	struct usb_endpoint_descriptor *ep_desc;
+-	int i;
++	struct usb_endpoint_descriptor *ep_rx_desc, *ep_tx_desc;
++	int ret;
  
-+		/* Needs to be on different routers */
-+		if (in->sw == port->sw) {
-+			tb_port_dbg(port, "skipping DP OUT on same router\n");
-+			continue;
-+		}
+-	if (iface_desc->desc.bNumEndpoints != 2)
+-		return -ENODEV;
+-
+-	for (i = 0; i < iface_desc->desc.bNumEndpoints; i++) {
+-		ep_desc = &iface_desc->endpoint[i].desc;
+-
+-		if (usb_endpoint_is_int_in(ep_desc) ||
+-		    usb_endpoint_is_bulk_in(ep_desc)) {
+-			if (!devpriv->ep_rx)
+-				devpriv->ep_rx = ep_desc;
+-			continue;
+-		}
++	if (devpriv->model == VMK8061_MODEL)
++		ret = usb_find_common_endpoints(iface_desc, &ep_rx_desc,
++						&ep_tx_desc, NULL, NULL);
++	else
++		ret = usb_find_common_endpoints(iface_desc, NULL, NULL,
++						&ep_rx_desc, &ep_tx_desc);
+ 
+-		if (usb_endpoint_is_int_out(ep_desc) ||
+-		    usb_endpoint_is_bulk_out(ep_desc)) {
+-			if (!devpriv->ep_tx)
+-				devpriv->ep_tx = ep_desc;
+-			continue;
+-		}
+-	}
+-
+-	if (!devpriv->ep_rx || !devpriv->ep_tx)
++	if (ret)
+ 		return -ENODEV;
+ 
++	devpriv->ep_rx = ep_rx_desc;
++	devpriv->ep_tx = ep_tx_desc;
 +
- 		tb_port_dbg(port, "DP OUT available\n");
+ 	if (!usb_endpoint_maxp(devpriv->ep_rx) || !usb_endpoint_maxp(devpriv->ep_tx))
+ 		return -EINVAL;
  
- 		/*
 
 
