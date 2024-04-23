@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA83143C47;
-	Tue, 23 Apr 2024 21:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77287143C47;
+	Tue, 23 Apr 2024 21:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908472; cv=none; b=D4Bso8zwuiVFcbNZCGVeeB9TGDzS6uxvvVrJ70Q3WLC7WY2zSv9fm1J8/z5q9cs0JFvTVYOPJ0JFxuNxZmNn7lUummPeIXSZQUZDGNGBk+NOutX9gZ3/lOdUhUTCm9snhoLRMv61MmUyypRIB7TUvpAUEoMwWr2Blw06LjEuGOo=
+	t=1713908473; cv=none; b=Vu5xAaf7de3nQac/I3N+b4zDdAgZn1PVjgMcpVq5bsSrJpyCM9Mg4uZvizvESEfJJbgXFh7cr3d2p0pkoNbXI3yQ2HCnvkGR0PzlIDk77bGrSn5cjQ8buFR/fnsC+05gMiFm6nFQ6/VKAIGJwBaf7uD9PXBnzD7pje6oRuGdxQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908472; c=relaxed/simple;
-	bh=u3XzlOJpkHPy0QSjNfl3ac2uPANi0KxVNaaT7jmzb5k=;
+	s=arc-20240116; t=1713908473; c=relaxed/simple;
+	bh=rrn0EynlITCI61fgoy+rqfYIITsKr4Tfj6zcyo1Jtyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oxIkzA4U10Oh8k/WMfdxAhxuTfpF1W0bUH+Eaa3V5/zTixi0q7mdxzAmN/1QA4+JCvpoZrIKjcg0+xhdJhJ/zRsLWyfUM/tVTsAJ1BbNWfFsZUkm4Cksb+5mOabl5wu2SIbQHeQetlTmNmLGI96dDFPpqe+Ow6lnpEM4tgjEmFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1kjnIIrg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AerN4kDZW1KmkXpAPbGurstFx0OeMzJ/4RadaE0RYIItobFS2qgeczgNvwxmjTnygn36Uz0//kLtmeoZ1Nm+BUOqAtWE4T6fP0NUduS8Kgs0tMWQKgVhIivHqSucyRpWD7e0HknxHLG2jOofPajcTkl7WeWLc5gwuCwTsbIsSPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccc29tpv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1kjnIIrg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9AEC32783;
-	Tue, 23 Apr 2024 21:41:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccc29tpv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44536C32786;
+	Tue, 23 Apr 2024 21:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908472;
-	bh=u3XzlOJpkHPy0QSjNfl3ac2uPANi0KxVNaaT7jmzb5k=;
+	s=korg; t=1713908473;
+	bh=rrn0EynlITCI61fgoy+rqfYIITsKr4Tfj6zcyo1Jtyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1kjnIIrgmNJQjt2RtqBIL625mEwpXlNXnAOSG2HP9/rptK7WHN30HF7IUkbjfZcOl
-	 1n8Q9BxCzc0FplwoYVo4CltBwW4q1DeGcRr8kY0HBVKFjyWVM9V2GzFV1P3J61qr0k
-	 pssKyFS0wfB1s+OFpOnu0DwJ9glRoBt4LoLDZt7M=
+	b=ccc29tpvVfVKzucPBkFuQJU7DZGq5SqbuUhL57htvOn8XoE5AqSGh7eknXS7Pl6gK
+	 DNuRqbN2von+ohQaVTgRaXwPf9bbblVzag4wIi4lBjuvORAfK91FES9j+tkGfAc9TJ
+	 5DVj6w0NquJSdr3Bb26WY4qWSio+ulXLW7DCUG20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Marcin Szycik <marcin.szycik@linux.intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Lei Chen <lei.chen@smartx.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 039/158] ice: Fix checking for unsupported keys on non-tunnel device
-Date: Tue, 23 Apr 2024 14:37:41 -0700
-Message-ID: <20240423213857.176123107@linuxfoundation.org>
+Subject: [PATCH 6.8 040/158] tun: limit printing rate when illegal packet received by tun dev
+Date: Tue, 23 Apr 2024 14:37:42 -0700
+Message-ID: <20240423213857.213850685@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -54,49 +55,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcin Szycik <marcin.szycik@linux.intel.com>
+From: Lei Chen <lei.chen@smartx.com>
 
-[ Upstream commit 2cca35f5dd78b9f8297c879c5db5ab137c5d86c3 ]
+[ Upstream commit f8bbc07ac535593139c875ffa19af924b1084540 ]
 
-Add missing FLOW_DISSECTOR_KEY_ENC_* checks to TC flower filter parsing.
-Without these checks, it would be possible to add filters with tunnel
-options on non-tunnel devices. enc_* options are only valid for tunnel
-devices.
+vhost_worker will call tun call backs to receive packets. If too many
+illegal packets arrives, tun_do_read will keep dumping packet contents.
+When console is enabled, it will costs much more cpu time to dump
+packet and soft lockup will be detected.
 
-Example:
-  devlink dev eswitch set $PF1_PCI mode switchdev
-  echo 1 > /sys/class/net/$PF1/device/sriov_numvfs
-  tc qdisc add dev $VF1_PR ingress
-  ethtool -K $PF1 hw-tc-offload on
-  tc filter add dev $VF1_PR ingress flower enc_ttl 12 skip_sw action drop
+net_ratelimit mechanism can be used to limit the dumping rate.
 
-Fixes: 9e300987d4a8 ("ice: VXLAN and Geneve TC support")
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+PID: 33036    TASK: ffff949da6f20000  CPU: 23   COMMAND: "vhost-32980"
+ #0 [fffffe00003fce50] crash_nmi_callback at ffffffff89249253
+ #1 [fffffe00003fce58] nmi_handle at ffffffff89225fa3
+ #2 [fffffe00003fceb0] default_do_nmi at ffffffff8922642e
+ #3 [fffffe00003fced0] do_nmi at ffffffff8922660d
+ #4 [fffffe00003fcef0] end_repeat_nmi at ffffffff89c01663
+    [exception RIP: io_serial_in+20]
+    RIP: ffffffff89792594  RSP: ffffa655314979e8  RFLAGS: 00000002
+    RAX: ffffffff89792500  RBX: ffffffff8af428a0  RCX: 0000000000000000
+    RDX: 00000000000003fd  RSI: 0000000000000005  RDI: ffffffff8af428a0
+    RBP: 0000000000002710   R8: 0000000000000004   R9: 000000000000000f
+    R10: 0000000000000000  R11: ffffffff8acbf64f  R12: 0000000000000020
+    R13: ffffffff8acbf698  R14: 0000000000000058  R15: 0000000000000000
+    ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
+ #5 [ffffa655314979e8] io_serial_in at ffffffff89792594
+ #6 [ffffa655314979e8] wait_for_xmitr at ffffffff89793470
+ #7 [ffffa65531497a08] serial8250_console_putchar at ffffffff897934f6
+ #8 [ffffa65531497a20] uart_console_write at ffffffff8978b605
+ #9 [ffffa65531497a48] serial8250_console_write at ffffffff89796558
+ #10 [ffffa65531497ac8] console_unlock at ffffffff89316124
+ #11 [ffffa65531497b10] vprintk_emit at ffffffff89317c07
+ #12 [ffffa65531497b68] printk at ffffffff89318306
+ #13 [ffffa65531497bc8] print_hex_dump at ffffffff89650765
+ #14 [ffffa65531497ca8] tun_do_read at ffffffffc0b06c27 [tun]
+ #15 [ffffa65531497d38] tun_recvmsg at ffffffffc0b06e34 [tun]
+ #16 [ffffa65531497d68] handle_rx at ffffffffc0c5d682 [vhost_net]
+ #17 [ffffa65531497ed0] vhost_worker at ffffffffc0c644dc [vhost]
+ #18 [ffffa65531497f10] kthread at ffffffff892d2e72
+ #19 [ffffa65531497f50] ret_from_fork at ffffffff89c0022f
+
+Fixes: ef3db4a59542 ("tun: avoid BUG, dump packet on GSO errors")
+Signed-off-by: Lei Chen <lei.chen@smartx.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://lore.kernel.org/r/20240415020247.2207781-1-lei.chen@smartx.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_tc_lib.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/tun.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_tc_lib.c b/drivers/net/ethernet/intel/ice/ice_tc_lib.c
-index bcbcfc67e5606..688ccb0615ab9 100644
---- a/drivers/net/ethernet/intel/ice/ice_tc_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_tc_lib.c
-@@ -1489,7 +1489,10 @@ ice_parse_cls_flower(struct net_device *filter_dev, struct ice_vsi *vsi,
- 		  (BIT_ULL(FLOW_DISSECTOR_KEY_ENC_IPV4_ADDRS) |
- 		   BIT_ULL(FLOW_DISSECTOR_KEY_ENC_IPV6_ADDRS) |
- 		   BIT_ULL(FLOW_DISSECTOR_KEY_ENC_KEYID) |
--		   BIT_ULL(FLOW_DISSECTOR_KEY_ENC_PORTS))) {
-+		   BIT_ULL(FLOW_DISSECTOR_KEY_ENC_PORTS) |
-+		   BIT_ULL(FLOW_DISSECTOR_KEY_ENC_IP) |
-+		   BIT_ULL(FLOW_DISSECTOR_KEY_ENC_OPTS) |
-+		   BIT_ULL(FLOW_DISSECTOR_KEY_ENC_CONTROL))) {
- 		NL_SET_ERR_MSG_MOD(fltr->extack, "Tunnel key used, but device isn't a tunnel");
- 		return -EOPNOTSUPP;
- 	} else {
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index 8f95a562b8d0c..86515f0c2b6c1 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -2132,14 +2132,16 @@ static ssize_t tun_put_user(struct tun_struct *tun,
+ 					    tun_is_little_endian(tun), true,
+ 					    vlan_hlen)) {
+ 			struct skb_shared_info *sinfo = skb_shinfo(skb);
+-			pr_err("unexpected GSO type: "
+-			       "0x%x, gso_size %d, hdr_len %d\n",
+-			       sinfo->gso_type, tun16_to_cpu(tun, gso.gso_size),
+-			       tun16_to_cpu(tun, gso.hdr_len));
+-			print_hex_dump(KERN_ERR, "tun: ",
+-				       DUMP_PREFIX_NONE,
+-				       16, 1, skb->head,
+-				       min((int)tun16_to_cpu(tun, gso.hdr_len), 64), true);
++
++			if (net_ratelimit()) {
++				netdev_err(tun->dev, "unexpected GSO type: 0x%x, gso_size %d, hdr_len %d\n",
++					   sinfo->gso_type, tun16_to_cpu(tun, gso.gso_size),
++					   tun16_to_cpu(tun, gso.hdr_len));
++				print_hex_dump(KERN_ERR, "tun: ",
++					       DUMP_PREFIX_NONE,
++					       16, 1, skb->head,
++					       min((int)tun16_to_cpu(tun, gso.hdr_len), 64), true);
++			}
+ 			WARN_ON_ONCE(1);
+ 			return -EINVAL;
+ 		}
 -- 
 2.43.0
 
