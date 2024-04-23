@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535F720B3E;
-	Tue, 23 Apr 2024 21:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1149C20B3E;
+	Tue, 23 Apr 2024 21:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908482; cv=none; b=LYR6k9xvyvirJLXAkXcle16SdcZ864vNR3our/0BUWNMP3XFw03lqhsmZX9JXRSFV9r7pl1z5nF6uYX87Cbhps32MPcIWFsBIeQzbOlmtGeRRr785Mg9AqDIyrqAUApxLBq3s1AhzdrngI1Tk+DYyMmT/1VzkOjZe6VuQnvmT94=
+	t=1713908483; cv=none; b=oNkk/dusbEy7kXLMsGbs1hwX9O+AVsRvfTi1/PlfCTlNAc3gS1VLa4B7h11geSujarG/FTvDXggr/iQ09okkHA75QjvQKWFAVg8fc0n5PgNhIK4IT6N1xU7Vwa0JD4uSY8bQUwF8lsBVcDnWie8I5+dUB2M/AS8WVPrXo3M4ERo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908482; c=relaxed/simple;
-	bh=z5CwRZU23E3V5UhGjAuNJrMffkE1T7f8c5CQuI49/TI=;
+	s=arc-20240116; t=1713908483; c=relaxed/simple;
+	bh=qfkyt+jrNfmNMRqsq80ZTMzPgdI+g/XL395Wrx8sB/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Hncjap9NM/r6YfL8gnhjlYj4OUZJ1LLmO7dR9vVeZ5VvFLSdKEcn2tc1azoAQ6ayqcDtsV0iYV3PwJHsxBDdXTbjme9H+s9M+4KfXmXRFFGbrN8n2QB6/3uLbsppXbSwAiJecuJu5bJPJZOMOQTSJwmYrgg/mDm5JIpxXhKALXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLYJnbxJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ILF91OkRJghpxoOUGrW3xWEOQSw2xhvfybUbY70GCB0AFcOzs2ruvJRYYPrTyCtNGinp40snjfCvJNXueajprXflT0fDZjcI/XdzEUBPoyxFf4qdydrICXcWPJu+YShz2VAIEkk09HoAt7n7HH8VywcEZ58wWVksEzP6FZtqlM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SGUCkBLz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLYJnbxJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28142C116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SGUCkBLz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AD5C32786;
 	Tue, 23 Apr 2024 21:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908482;
-	bh=z5CwRZU23E3V5UhGjAuNJrMffkE1T7f8c5CQuI49/TI=;
+	bh=qfkyt+jrNfmNMRqsq80ZTMzPgdI+g/XL395Wrx8sB/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LLYJnbxJbiFmDHf2efClvIvmLuUKDdJO6YZ8DmeMlE7FRWZG+KmTrQ4Onlctm6iXq
-	 Qu8pKonkfRUZAARJRFoq0QIZNb8KwrrEWaS0YVahSEhtV/aOjb6lf+5ZGkTaq0eCvu
-	 RyFwqnnAsxoycnyU/l/DemEdUo+sjNXGa3Tlgf1I=
+	b=SGUCkBLzWWCZNwxNuxgfvXoK8hZMhpGVEMMB8aM2YByEtGHeqw8RobhyQ64TSe8Rn
+	 zbKtNcQW5PQmm/LM1Z47o3FiWYkEf6k/cv6V7Z677U44uvmi6haZ9+UoW5jPkFOcyQ
+	 Ui5GrWTwbEPljq3nkgkdDbrcX1cEkgSMRiA1Zcjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 029/158] octeontx2-pf: fix FLOW_DIS_IS_FRAGMENT implementation
-Date: Tue, 23 Apr 2024 14:37:31 -0700
-Message-ID: <20240423213856.818713473@linuxfoundation.org>
+Subject: [PATCH 6.8 030/158] selftests/tcp_ao: Make RST tests less flaky
+Date: Tue, 23 Apr 2024 14:37:32 -0700
+Message-ID: <20240423213856.857617275@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -46,64 +46,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+From: Dmitry Safonov <0x7f454c46@gmail.com>
 
-[ Upstream commit 75ce9506ee3dc66648a7d74ab3b0acfa364d6d43 ]
+[ Upstream commit 4225dfa4535f219b03ae14147d9c6e7e82ec8df4 ]
 
-Upon reviewing the flower control flags handling in
-this driver, I notice that the key wasn't being used,
-only the mask.
+Currently, "active reset" cases are flaky, because select() is called
+for 3 sockets, while only 2 are expected to receive RST.
+The idea of the third socket was to get into request_sock_queue,
+but the test mistakenly attempted to connect() after the listener
+socket was shut down.
 
-Ie. `tc flower ... ip_flags nofrag` was hardware
-offloaded as `... ip_flags frag`.
+Repair this test, it's important to check the different kernel
+code-paths for signing RST TCP-AO segments.
 
-Only compile tested, no access to HW.
-
-Fixes: c672e3727989 ("octeontx2-pf: Add support to filter packet based on IP fragment")
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c6df7b2361d7 ("selftests/net: Add TCP-AO RST test")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dmitry Safonov <0x7f454c46@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/tcp_ao/rst.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-index 4fd44b6eecea6..60ee7ae2c4097 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-@@ -688,6 +688,7 @@ static int otx2_tc_prepare_flow(struct otx2_nic *nic, struct otx2_tc_flow *node,
+diff --git a/tools/testing/selftests/net/tcp_ao/rst.c b/tools/testing/selftests/net/tcp_ao/rst.c
+index 7df8b8700e39e..a2fe88d35ac06 100644
+--- a/tools/testing/selftests/net/tcp_ao/rst.c
++++ b/tools/testing/selftests/net/tcp_ao/rst.c
+@@ -256,8 +256,6 @@ static int test_wait_fds(int sk[], size_t nr, bool is_writable[],
  
- 	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_CONTROL)) {
- 		struct flow_match_control match;
-+		u32 val;
+ static void test_client_active_rst(unsigned int port)
+ {
+-	/* one in queue, another accept()ed */
+-	unsigned int wait_for = backlog + 2;
+ 	int i, sk[3], err;
+ 	bool is_writable[ARRAY_SIZE(sk)] = {false};
+ 	unsigned int last = ARRAY_SIZE(sk) - 1;
+@@ -275,16 +273,20 @@ static void test_client_active_rst(unsigned int port)
+ 	for (i = 0; i < last; i++) {
+ 		err = _test_connect_socket(sk[i], this_ip_dest, port,
+ 					       (i == 0) ? TEST_TIMEOUT_SEC : -1);
+-
+ 		if (err < 0)
+ 			test_error("failed to connect()");
+ 	}
  
- 		flow_rule_match_control(rule, &match);
- 		if (match.mask->flags & FLOW_DIS_FIRST_FRAG) {
-@@ -696,12 +697,14 @@ static int otx2_tc_prepare_flow(struct otx2_nic *nic, struct otx2_tc_flow *node,
- 		}
+-	synchronize_threads(); /* 2: connection accept()ed, another queued */
+-	err = test_wait_fds(sk, last, is_writable, wait_for, TEST_TIMEOUT_SEC);
++	synchronize_threads(); /* 2: two connections: one accept()ed, another queued */
++	err = test_wait_fds(sk, last, is_writable, last, TEST_TIMEOUT_SEC);
+ 	if (err < 0)
+ 		test_error("test_wait_fds(): %d", err);
  
- 		if (match.mask->flags & FLOW_DIS_IS_FRAGMENT) {
-+			val = match.key->flags & FLOW_DIS_IS_FRAGMENT;
- 			if (ntohs(flow_spec->etype) == ETH_P_IP) {
--				flow_spec->ip_flag = IPV4_FLAG_MORE;
-+				flow_spec->ip_flag = val ? IPV4_FLAG_MORE : 0;
- 				flow_mask->ip_flag = IPV4_FLAG_MORE;
- 				req->features |= BIT_ULL(NPC_IPFRAG_IPV4);
- 			} else if (ntohs(flow_spec->etype) == ETH_P_IPV6) {
--				flow_spec->next_header = IPPROTO_FRAGMENT;
-+				flow_spec->next_header = val ?
-+							 IPPROTO_FRAGMENT : 0;
- 				flow_mask->next_header = 0xff;
- 				req->features |= BIT_ULL(NPC_IPFRAG_IPV6);
- 			} else {
++	/* async connect() with third sk to get into request_sock_queue */
++	err = _test_connect_socket(sk[last], this_ip_dest, port, -1);
++	if (err < 0)
++		test_error("failed to connect()");
++
+ 	synchronize_threads(); /* 3: close listen socket */
+ 	if (test_client_verify(sk[0], packet_sz, quota / packet_sz, TEST_TIMEOUT_SEC))
+ 		test_fail("Failed to send data on connected socket");
+@@ -292,13 +294,14 @@ static void test_client_active_rst(unsigned int port)
+ 		test_ok("Verified established tcp connection");
+ 
+ 	synchronize_threads(); /* 4: finishing up */
+-	err = _test_connect_socket(sk[last], this_ip_dest, port, -1);
+-	if (err < 0)
+-		test_error("failed to connect()");
+ 
+ 	synchronize_threads(); /* 5: closed active sk */
+-	err = test_wait_fds(sk, ARRAY_SIZE(sk), NULL,
+-			    wait_for, TEST_TIMEOUT_SEC);
++	/*
++	 * Wait for 2 connections: one accepted, another in the accept queue,
++	 * the one in request_sock_queue won't get fully established, so
++	 * doesn't receive an active RST, see inet_csk_listen_stop().
++	 */
++	err = test_wait_fds(sk, last, NULL, last, TEST_TIMEOUT_SEC);
+ 	if (err < 0)
+ 		test_error("select(): %d", err);
+ 
 -- 
 2.43.0
 
