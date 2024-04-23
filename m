@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9489F1420BE;
-	Tue, 23 Apr 2024 21:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF621420BE;
+	Tue, 23 Apr 2024 21:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908696; cv=none; b=ILryCsM92JE070bmkPHE11TI0a0pgwGD/FCKPHO32Y/lHXBW44Pr/lPWpB33r1rGfWozjbuglfUF5+4sPHA0XmQ4EHYnIb6qmd/fHoNIbsj3b+1DxzeF5Gky6HThfvsKU7S2r9EMooQXpdFR0t0+6JJWJaiqV674wg6dB1Glpek=
+	t=1713908697; cv=none; b=l0hNf0AulEM7JVmrXr14kpHKoewpnxNbN9edcy5VIFl90FQM3j0mosDaHA2OSaMchAZOfHlNwRVaJ3SQ5w6j1j+HrKSPM7Nh4WVurPcRXNuO6IezveKBQ20noH3IIy1N4F7Xzcj/yZlbDlKBZMsHPtKocSuFvsK2xjkswHAZSZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908696; c=relaxed/simple;
-	bh=I9Svx+8p/Ks6+/TfsePBYYzO5rnX0N5cHAgJCeHvyPM=;
+	s=arc-20240116; t=1713908697; c=relaxed/simple;
+	bh=RFf1ZnnsANlf+ITGLZrd7AUnXmyFQw3AizD+mqzCAzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BZttGLAbMHq+g6vdXyGwVRl0+i4AFjRJGciIkw+z0hZCjUYOA4R5aVmN/yaDcPv7izbQpOjxyz/hbbhXOn6mM8svxmcHqMLY7xqgbPCRyqCRZ008+5W0gxxAUTuH0io7kFTOc7FpXKo8tUh0YnF9DLD40LxUi/txOeJfKoL4IYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvWGootP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ptPrcGXsSzVICx3dEO8e3p3u6/CJWN8JrPNYRdqXPAxQ3a+weTnfXieyPB7xrqH5e8W2LQvftepDJaGPvjYcobV0k0H2Z58ukPZCTM/8kjl4S+hMm1c8+TFF2EBOpmCXy/Ij9A2eqlW8kWiFgzZAVzI0LKQN/rNVqKPgNtzl04A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yU1tJA8L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvWGootP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6962DC3277B;
-	Tue, 23 Apr 2024 21:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yU1tJA8L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127BCC116B1;
+	Tue, 23 Apr 2024 21:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908696;
-	bh=I9Svx+8p/Ks6+/TfsePBYYzO5rnX0N5cHAgJCeHvyPM=;
+	s=korg; t=1713908697;
+	bh=RFf1ZnnsANlf+ITGLZrd7AUnXmyFQw3AizD+mqzCAzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xvWGootPzf+pRzSRFk5FRZp+SSu9VYmOdMZbLhTKtXX3ZJEC/sslD0pxxBGbRZEQr
-	 ombhQFwJ4N5IVITPCsZBI4pkEOnteMqob+cof79qSDA1NIcisNADrcaLE/5oIHTC0v
-	 L9M/3qmGM7Do7H2Mq0EL5r867PBZKUtMLOH1+h3U=
+	b=yU1tJA8LUyy7HvZc0h58sTCwrZgaDsG3iq0D5XN8VPd/HIV/zaNk6ZlhF2NAsMXAt
+	 0TjRPcFXY/umIIwLYknKR8P8Asx+K0PsvoteaB2DrpPUZ8ZPKdTMT/ehd6IDxdTC29
+	 F2PmyB08SNDg9h4GdD2RDd2M2ERITz/BWLsKvIIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/141] net: dsa: mt7530: fix mirroring frames received on local port
-Date: Tue, 23 Apr 2024 14:38:34 -0700
-Message-ID: <20240423213854.752710228@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 6.1 023/141] x86/boot: Construct PE/COFF .text section from assembler
+Date: Tue, 23 Apr 2024 14:38:11 -0700
+Message-ID: <20240423213854.078917417@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -45,85 +44,185 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit d59cf049c8378677053703e724808836f180888e ]
+[ Commit efa089e63b56bdc5eca754b995cb039dd7a5457e upstream ]
 
-This switch intellectual property provides a bit on the ARL global control
-register which controls allowing mirroring frames which are received on the
-local port (monitor port). This bit is unset after reset.
+Now that the size of the setup block is visible to the assembler, it is
+possible to populate the PE/COFF header fields from the asm code
+directly, instead of poking the values into the binary using the build
+tool. This will make it easier to reorganize the section layout without
+having to tweak the build tool in lockstep.
 
-This ability must be enabled to fully support the port mirroring feature on
-this switch intellectual property.
+This change has no impact on the resulting bzImage binary.
 
-Therefore, this patch fixes the traffic not being reflected on a port,
-which would be configured like below:
-
-  tc qdisc add dev swp0 clsact
-
-  tc filter add dev swp0 ingress matchall skip_sw \
-  action mirred egress mirror dev swp0
-
-As a side note, this configuration provides the hairpinning feature for a
-single port.
-
-Fixes: 37feab6076aa ("net: dsa: mt7530: add support for port mirroring")
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20230915171623.655440-15-ardb@google.com
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mt7530.c | 6 ++++++
- drivers/net/dsa/mt7530.h | 4 ++++
- 2 files changed, 10 insertions(+)
+ arch/x86/boot/header.S      |   22 ++++++--------------
+ arch/x86/boot/tools/build.c |   47 --------------------------------------------
+ 2 files changed, 7 insertions(+), 62 deletions(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index d4515c19a5f34..b5f61a9a378eb 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -2461,6 +2461,9 @@ mt7530_setup(struct dsa_switch *ds)
- 			   PVC_EG_TAG(MT7530_VLAN_EG_CONSISTENT));
- 	}
+--- a/arch/x86/boot/header.S
++++ b/arch/x86/boot/header.S
+@@ -74,14 +74,12 @@ optional_header:
+ 	.byte	0x02				# MajorLinkerVersion
+ 	.byte	0x14				# MinorLinkerVersion
  
-+	/* Allow mirroring frames received on the local port (monitor port). */
-+	mt7530_set(priv, MT753X_AGC, LOCAL_EN);
-+
- 	/* Setup VLAN ID 0 for VLAN-unaware bridges */
- 	ret = mt7530_setup_vlan0(priv);
- 	if (ret)
-@@ -2577,6 +2580,9 @@ mt7531_setup_common(struct dsa_switch *ds)
- 			   PVC_EG_TAG(MT7530_VLAN_EG_CONSISTENT));
- 	}
+-	# Filled in by build.c
+-	.long	0				# SizeOfCode
++	.long	setup_size + ZO__end - 0x200	# SizeOfCode
  
-+	/* Allow mirroring frames received on the local port (monitor port). */
-+	mt7530_set(priv, MT753X_AGC, LOCAL_EN);
-+
- 	/* Flush the FDB table */
- 	ret = mt7530_fdb_cmd(priv, MT7530_FDB_FLUSH, NULL);
- 	if (ret < 0)
-diff --git a/drivers/net/dsa/mt7530.h b/drivers/net/dsa/mt7530.h
-index 2d1ea390f05ab..af18f47f22141 100644
---- a/drivers/net/dsa/mt7530.h
-+++ b/drivers/net/dsa/mt7530.h
-@@ -31,6 +31,10 @@ enum mt753x_id {
- #define SYSC_REG_RSTCTRL		0x34
- #define  RESET_MCM			BIT(2)
+ 	.long	0				# SizeOfInitializedData
+ 	.long	0				# SizeOfUninitializedData
  
-+/* Register for ARL global control */
-+#define MT753X_AGC			0xc
-+#define  LOCAL_EN			BIT(7)
-+
- /* Registers to mac forward control for unknown frames */
- #define MT7530_MFC			0x10
- #define  BC_FFP(x)			(((x) & 0xff) << 24)
--- 
-2.43.0
-
+-	# Filled in by build.c
+-	.long	0x0000				# AddressOfEntryPoint
++	.long	setup_size + ZO_efi_pe_entry	# AddressOfEntryPoint
+ 
+ 	.long	0x0200				# BaseOfCode
+ #ifdef CONFIG_X86_32
+@@ -104,10 +102,7 @@ extra_header_fields:
+ 	.word	0				# MinorSubsystemVersion
+ 	.long	0				# Win32VersionValue
+ 
+-	#
+-	# The size of the bzImage is written in tools/build.c
+-	#
+-	.long	0				# SizeOfImage
++	.long	setup_size + ZO__end 		# SizeOfImage
+ 
+ 	.long	0x200				# SizeOfHeaders
+ 	.long	0				# CheckSum
+@@ -198,18 +193,15 @@ section_table:
+ 		IMAGE_SCN_MEM_DISCARDABLE	# Characteristics
+ #endif
+ 
+-	#
+-	# The offset & size fields are filled in by build.c.
+-	#
+ 	.ascii	".text"
+ 	.byte	0
+ 	.byte	0
+ 	.byte	0
+-	.long	0
+-	.long	0x0				# startup_{32,64}
+-	.long	0				# Size of initialized data
++	.long	ZO__end
++	.long	setup_size
++	.long	ZO__edata			# Size of initialized data
+ 						# on disk
+-	.long	0x0				# startup_{32,64}
++	.long	setup_size
+ 	.long	0				# PointerToRelocations
+ 	.long	0				# PointerToLineNumbers
+ 	.word	0				# NumberOfRelocations
+--- a/arch/x86/boot/tools/build.c
++++ b/arch/x86/boot/tools/build.c
+@@ -50,10 +50,8 @@ u8 buf[SETUP_SECT_MAX*512];
+ #define PECOFF_RELOC_RESERVE 0x20
+ #define PECOFF_COMPAT_RESERVE 0x20
+ 
+-static unsigned long efi_pe_entry;
+ static unsigned long efi32_pe_entry;
+ static unsigned long _edata;
+-static unsigned long _end;
+ 
+ /*----------------------------------------------------------------------*/
+ 
+@@ -216,32 +214,6 @@ static void update_pecoff_setup_and_relo
+ #endif
+ }
+ 
+-static void update_pecoff_text(unsigned int text_start, unsigned int file_sz)
+-{
+-	unsigned int pe_header;
+-	unsigned int text_sz = file_sz - text_start;
+-	unsigned int bss_sz = _end - text_sz;
+-
+-	pe_header = get_unaligned_le32(&buf[0x3c]);
+-
+-	/*
+-	 * Size of code: Subtract the size of the first sector (512 bytes)
+-	 * which includes the header.
+-	 */
+-	put_unaligned_le32(file_sz - 512 + bss_sz, &buf[pe_header + 0x1c]);
+-
+-	/* Size of image */
+-	put_unaligned_le32(file_sz + bss_sz, &buf[pe_header + 0x50]);
+-
+-	/*
+-	 * Address of entry point for PE/COFF executable
+-	 */
+-	put_unaligned_le32(text_start + efi_pe_entry, &buf[pe_header + 0x28]);
+-
+-	update_pecoff_section_header_fields(".text", text_start, text_sz + bss_sz,
+-					    text_sz, text_start);
+-}
+-
+ static int reserve_pecoff_reloc_section(int c)
+ {
+ 	/* Reserve 0x20 bytes for .reloc section */
+@@ -249,22 +221,9 @@ static int reserve_pecoff_reloc_section(
+ 	return PECOFF_RELOC_RESERVE;
+ }
+ 
+-static void efi_stub_defaults(void)
+-{
+-	/* Defaults for old kernel */
+-#ifdef CONFIG_X86_32
+-	efi_pe_entry = 0x10;
+-#else
+-	efi_pe_entry = 0x210;
+-#endif
+-}
+-
+ #else
+ 
+ static inline void update_pecoff_setup_and_reloc(unsigned int size) {}
+-static inline void update_pecoff_text(unsigned int text_start,
+-				      unsigned int file_sz) {}
+-static inline void efi_stub_defaults(void) {}
+ 
+ static inline int reserve_pecoff_reloc_section(int c)
+ {
+@@ -307,10 +266,8 @@ static void parse_zoffset(char *fname)
+ 	p = (char *)buf;
+ 
+ 	while (p && *p) {
+-		PARSE_ZOFS(p, efi_pe_entry);
+ 		PARSE_ZOFS(p, efi32_pe_entry);
+ 		PARSE_ZOFS(p, _edata);
+-		PARSE_ZOFS(p, _end);
+ 
+ 		p = strchr(p, '\n');
+ 		while (p && (*p == '\r' || *p == '\n'))
+@@ -328,8 +285,6 @@ int main(int argc, char ** argv)
+ 	void *kernel;
+ 	u32 crc = 0xffffffffUL;
+ 
+-	efi_stub_defaults();
+-
+ 	if (argc != 5)
+ 		usage();
+ 	parse_zoffset(argv[3]);
+@@ -376,8 +331,6 @@ int main(int argc, char ** argv)
+ 	kernel = mmap(NULL, sz, PROT_READ, MAP_SHARED, fd, 0);
+ 	if (kernel == MAP_FAILED)
+ 		die("Unable to mmap '%s': %m", argv[2]);
+-	update_pecoff_text(setup_sectors * 512, i + _edata);
+-
+ 
+ 	crc = partial_crc32(buf, i, crc);
+ 	if (fwrite(buf, 1, i, dest) != i)
 
 
