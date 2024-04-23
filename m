@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FAC814885A;
-	Tue, 23 Apr 2024 21:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F53C14885A;
+	Tue, 23 Apr 2024 21:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908808; cv=none; b=hH3FKUH/xAHfU8qCnNY2XFkbofm04lMmHs1lydObSW9gOU0yI7T42DIBo4QF4xWVhACVJ5AX2RU88uh9xHzfBbvFmvCYicwtGXmt98LCGAnMCf3Iqm6L+6rmiU8sRm7qzI2KfUuGZvUcgToHwrHrvl5PYCm/tZqwPj5O/22UAro=
+	t=1713908809; cv=none; b=AR+Z34FjPyDSlJNw8DUvjTrnoZIZ+vJCHuZ2qoUG2HHuaTiLaDlpmtaxMOB5YTyAZ9809DE1UEETgWSHd02DDjr50uOGSXv22+i79ao6H9wxJebw/50KKK9ShTg12BQTD5Bbwv6t0FKkNkK0haiGT38jSYipAzn6DT6SiA4RUvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908808; c=relaxed/simple;
-	bh=em4JYEX47QXpqcQVyASC1nlckuGZFaEK1CKlkrnW5Ew=;
+	s=arc-20240116; t=1713908809; c=relaxed/simple;
+	bh=4ZO1grQSgP8s/M27aR04lEJdweNjCOcFbiNgXCjcJcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fOSCEcmXm1+MalifU4pENxu9i2GkKPmByOKAEQQFCD2i46iz8sg9vMhcQPycMMUv14L+RqmB+oKUGB+d0df/gSynNQ+MLQitI/td+VjN3bSv/kkrTlO1/dXAKeQnvCjMKow5ip6/Wthei7joFcvoU5afnPY7RhFPQYOu5DE4Mp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUGR8Inw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FYH7IMOtxSqHknduCY7rr1FVHKbgtXXFxg4OgwrzBd+DLq+C1+klVWyoIiop9oIlaufYlO5hp7UubNo7QKRmpE5SsvQbxzYnCox+tTzptbMy2zyqtIVw/9HHn3jHTIRF7aLeSgC5pNOFWrjDwT93Bcm4SP5xsqX7NVJSk4dGloA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcUP6Mt7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUGR8Inw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E4CC3277B;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcUP6Mt7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1404C116B1;
 	Tue, 23 Apr 2024 21:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908808;
-	bh=em4JYEX47QXpqcQVyASC1nlckuGZFaEK1CKlkrnW5Ew=;
+	s=korg; t=1713908809;
+	bh=4ZO1grQSgP8s/M27aR04lEJdweNjCOcFbiNgXCjcJcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FUGR8InweQ9kmYK/FHZcOjbAOQIidMsm1Uj15iRA+7e+j80HIAD8HbVNWmF44T4ql
-	 sPhTTr+LZM40EnjcwNId3hk835i2EVvAG33t1eY3uToni7PaSix1jivFcb+ofHg+J8
-	 ayChBnXfZSVE+MrdcUTbvMUIW3i/XEJ5X8gdqc58=
+	b=PcUP6Mt7ivJPROGq3TihXGjsphDWZHFYtr7UIKqdLFJ+raoC80riwIurwmEcYhi0v
+	 abWridiGWitb7o6Mf4dodXzWwe+UnV8U2fmcI4hqbRmJCWnY9ssL5bqntzmalk/soc
+	 TYBVkJ6LQpmkE0GCDYxzX1ChmqEsxTe77ySBMN58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <olteanv@gmail.com>,
 	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 69/71] net: dsa: introduce preferred_default_local_cpu_port and use on MT7530
-Date: Tue, 23 Apr 2024 14:40:22 -0700
-Message-ID: <20240423213846.598175005@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 70/71] net: dsa: mt7530: fix improper frames on all 25MHz and 40MHz XTAL MT7530
+Date: Tue, 23 Apr 2024 14:40:23 -0700
+Message-ID: <20240423213846.634482990@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
 References: <20240423213844.122920086@linuxfoundation.org>
@@ -54,168 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <olteanv@gmail.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-commit b79d7c14f48083abb3fb061370c0c64a569edf4c upstream.
+commit 5f563c31ff0c40ce395d0bae7daa94c7950dac97 upstream.
 
-Since the introduction of the OF bindings, DSA has always had a policy that
-in case multiple CPU ports are present in the device tree, the numerically
-smallest one is always chosen.
+The MT7530 switch after reset initialises with a core clock frequency that
+works with a 25MHz XTAL connected to it. For 40MHz XTAL, the core clock
+frequency must be set to 500MHz.
 
-The MT7530 switch family, except the switch on the MT7988 SoC, has 2 CPU
-ports, 5 and 6, where port 6 is preferable on the MT7531BE switch because
-it has higher bandwidth.
+The mt7530_pll_setup() function is responsible of setting the core clock
+frequency. Currently, it runs on MT7530 with 25MHz and 40MHz XTAL. This
+causes MT7530 switch with 25MHz XTAL to egress and ingress frames
+improperly.
 
-The MT7530 driver developers had 3 options:
-- to modify DSA when the MT7531 switch support was introduced, such as to
-  prefer the better port
-- to declare both CPU ports in device trees as CPU ports, and live with the
-  sub-optimal performance resulting from not preferring the better port
-- to declare just port 6 in the device tree as a CPU port
+Introduce a check to run it only on MT7530 with 40MHz XTAL.
 
-Of course they chose the path of least resistance (3rd option), kicking the
-can down the road. The hardware description in the device tree is supposed
-to be stable - developers are not supposed to adopt the strategy of
-piecemeal hardware description, where the device tree is updated in
-lockstep with the features that the kernel currently supports.
+The core clock frequency is set by writing to a switch PHY's register.
+Access to the PHY's register is done via the MDIO bus the switch is also
+on. Therefore, it works only when the switch makes switch PHYs listen on
+the MDIO bus the switch is on. This is controlled either by the state of
+the ESW_P1_LED_1 pin after reset deassertion or modifying bit 5 of the
+modifiable trap register.
 
-Now, as a result of the fact that they did that, any attempts to modify the
-device tree and describe both CPU ports as CPU ports would make DSA change
-its default selection from port 6 to 5, effectively resulting in a
-performance degradation visible to users with the MT7531BE switch as can be
-seen below.
+When ESW_P1_LED_1 is pulled high, PHY indirect access is used. That means
+accessing PHY registers via the PHY indirect access control register of the
+switch.
 
-Without preferring port 6:
+When ESW_P1_LED_1 is pulled low, PHY direct access is used. That means
+accessing PHY registers via the MDIO bus the switch is on.
 
-[ ID][Role] Interval           Transfer     Bitrate         Retr
-[  5][TX-C]   0.00-20.00  sec   374 MBytes   157 Mbits/sec  734    sender
-[  5][TX-C]   0.00-20.00  sec   373 MBytes   156 Mbits/sec    receiver
-[  7][RX-C]   0.00-20.00  sec  1.81 GBytes   778 Mbits/sec    0    sender
-[  7][RX-C]   0.00-20.00  sec  1.81 GBytes   777 Mbits/sec    receiver
+For MT7530 switch with 40MHz XTAL on a board with ESW_P1_LED_1 pulled high,
+the core clock frequency won't be set to 500MHz, causing the switch to
+egress and ingress frames improperly.
 
-With preferring port 6:
+Run mt7530_pll_setup() after PHY direct access is set on the modifiable
+trap register.
 
-[ ID][Role] Interval           Transfer     Bitrate         Retr
-[  5][TX-C]   0.00-20.00  sec  1.99 GBytes   856 Mbits/sec  273    sender
-[  5][TX-C]   0.00-20.00  sec  1.99 GBytes   855 Mbits/sec    receiver
-[  7][RX-C]   0.00-20.00  sec  1.72 GBytes   737 Mbits/sec   15    sender
-[  7][RX-C]   0.00-20.00  sec  1.71 GBytes   736 Mbits/sec    receiver
+With these two changes, all MT7530 switches with 25MHz and 40MHz, and
+P1_LED_1 pulled high or low, will egress and ingress frames properly.
 
-Using one port for WAN and the other ports for LAN is a very popular use
-case which is what this test emulates.
-
-As such, this change proposes that we retroactively modify stable kernels
-(which don't support the modification of the CPU port assignments, so as to
-let user space fix the problem and restore the throughput) to keep the
-mt7530 driver preferring port 6 even with device trees where the hardware
-is more fully described.
-
-Fixes: c288575f7810 ("net: dsa: mt7530: Add the support of MT7531 switch")
-Signed-off-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://github.com/BPI-SINOVOIP/BPI-R2-bsp/blob/4a5dd143f2172ec97a2872fa29c7c4cd520f45b5/linux-mt/drivers/net/ethernet/mediatek/gsw_mt7623.c#L1039
+Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
 Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Link: https://lore.kernel.org/r/20240320-for-net-mt7530-fix-25mhz-xtal-with-direct-phy-access-v1-1-d92f605f1160@arinc9.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mt7530.c |   15 +++++++++++++++
- include/net/dsa.h        |    8 ++++++++
- net/dsa/dsa2.c           |   24 +++++++++++++++++++++++-
- 3 files changed, 46 insertions(+), 1 deletion(-)
+ drivers/net/dsa/mt7530.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 --- a/drivers/net/dsa/mt7530.c
 +++ b/drivers/net/dsa/mt7530.c
-@@ -415,6 +415,20 @@ static void mt7530_pll_setup(struct mt75
- 	core_set(priv, CORE_TRGMII_GSW_CLK_CG, REG_GSWCK_EN);
- }
+@@ -2410,8 +2410,6 @@ mt7530_setup(struct dsa_switch *ds)
+ 		     SYS_CTRL_PHY_RST | SYS_CTRL_SW_RST |
+ 		     SYS_CTRL_REG_RST);
  
-+/* If port 6 is available as a CPU port, always prefer that as the default,
-+ * otherwise don't care.
-+ */
-+static struct dsa_port *
-+mt753x_preferred_default_local_cpu_port(struct dsa_switch *ds)
-+{
-+	struct dsa_port *cpu_dp = dsa_to_port(ds, 6);
-+
-+	if (dsa_port_is_cpu(cpu_dp))
-+		return cpu_dp;
-+
-+	return NULL;
-+}
-+
- /* Setup port 6 interface mode and TRGMII TX circuit */
- static int
- mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
-@@ -3381,6 +3395,7 @@ static int mt753x_set_mac_eee(struct dsa
- static const struct dsa_switch_ops mt7530_switch_ops = {
- 	.get_tag_protocol	= mtk_get_tag_protocol,
- 	.setup			= mt753x_setup,
-+	.preferred_default_local_cpu_port = mt753x_preferred_default_local_cpu_port,
- 	.get_strings		= mt7530_get_strings,
- 	.get_ethtool_stats	= mt7530_get_ethtool_stats,
- 	.get_sset_count		= mt7530_get_sset_count,
---- a/include/net/dsa.h
-+++ b/include/net/dsa.h
-@@ -706,6 +706,14 @@ struct dsa_switch_ops {
- 	void	(*port_disable)(struct dsa_switch *ds, int port);
+-	mt7530_pll_setup(priv);
+-
+ 	/* Lower Tx driving for TRGMII path */
+ 	for (i = 0; i < NUM_TRGMII_CTRL; i++)
+ 		mt7530_write(priv, MT7530_TRGMII_TD_ODT(i),
+@@ -2429,6 +2427,9 @@ mt7530_setup(struct dsa_switch *ds)
  
- 	/*
-+	 * Compatibility between device trees defining multiple CPU ports and
-+	 * drivers which are not OK to use by default the numerically smallest
-+	 * CPU port of a switch for its local ports. This can return NULL,
-+	 * meaning "don't know/don't care".
-+	 */
-+	struct dsa_port *(*preferred_default_local_cpu_port)(struct dsa_switch *ds);
-+
-+	/*
- 	 * Port's MAC EEE settings
- 	 */
- 	int	(*set_mac_eee)(struct dsa_switch *ds, int port,
---- a/net/dsa/dsa2.c
-+++ b/net/dsa/dsa2.c
-@@ -386,6 +386,24 @@ static int dsa_tree_setup_default_cpu(st
- 	return 0;
- }
+ 	priv->p6_interface = PHY_INTERFACE_MODE_NA;
  
-+static struct dsa_port *
-+dsa_switch_preferred_default_local_cpu_port(struct dsa_switch *ds)
-+{
-+	struct dsa_port *cpu_dp;
++	if ((val & HWTRAP_XTAL_MASK) == HWTRAP_XTAL_40MHZ)
++		mt7530_pll_setup(priv);
 +
-+	if (!ds->ops->preferred_default_local_cpu_port)
-+		return NULL;
-+
-+	cpu_dp = ds->ops->preferred_default_local_cpu_port(ds);
-+	if (!cpu_dp)
-+		return NULL;
-+
-+	if (WARN_ON(!dsa_port_is_cpu(cpu_dp) || cpu_dp->ds != ds))
-+		return NULL;
-+
-+	return cpu_dp;
-+}
-+
- /* Perform initial assignment of CPU ports to user ports and DSA links in the
-  * fabric, giving preference to CPU ports local to each switch. Default to
-  * using the first CPU port in the switch tree if the port does not have a CPU
-@@ -393,12 +411,16 @@ static int dsa_tree_setup_default_cpu(st
-  */
- static int dsa_tree_setup_cpu_ports(struct dsa_switch_tree *dst)
- {
--	struct dsa_port *cpu_dp, *dp;
-+	struct dsa_port *preferred_cpu_dp, *cpu_dp, *dp;
+ 	mt753x_trap_frames(priv);
  
- 	list_for_each_entry(cpu_dp, &dst->ports, list) {
- 		if (!dsa_port_is_cpu(cpu_dp))
- 			continue;
- 
-+		preferred_cpu_dp = dsa_switch_preferred_default_local_cpu_port(cpu_dp->ds);
-+		if (preferred_cpu_dp && preferred_cpu_dp != cpu_dp)
-+			continue;
-+
- 		list_for_each_entry(dp, &dst->ports, list) {
- 			/* Prefer a local CPU port */
- 			if (dp->ds != cpu_dp->ds)
+ 	/* Enable and reset MIB counters */
 
 
