@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D2F143895;
-	Tue, 23 Apr 2024 21:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022C4143895;
+	Tue, 23 Apr 2024 21:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908626; cv=none; b=BAFSOIjgtWzM3UhgN11tLwVesUVdnpe5Mw99n7Jz+5DeGKFuyZZi2jt7gOQmKeBd+J3z+CheMZS5Y4TAKgLidjg9r9D+HvP1PRe9P2gXXQ9i5dgcB6JPyHd5NKNQ1p0Eb5CUGlZifQYJlAJrM8T/H9z7/Mp1nFDcSwBaDfE3JB0=
+	t=1713908627; cv=none; b=g1U/Bmsjgcgf4GthNvnv0tYj+uuNNFD0ExIojaSdu6yzaHlK/BD4UFpL5/vJFu8JGcOtA4Oc0gFFuy2/DwmtDUYoaj5Qxj3j3/N1O6eNa9IQFZR14LdqtiSWjHdHbhbjDvSvHEnrpjmvrpq72ebaLykOAeB1oqFivLMXbJLO88g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908626; c=relaxed/simple;
-	bh=DHZ6taESmviAUZ3bPhMfWxneDSdFZcpHPfz5Hgge6/0=;
+	s=arc-20240116; t=1713908627; c=relaxed/simple;
+	bh=fXppmqJD2nM/nT+MrwGcMo1slrukO3wA6eU+ieTm7Ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=juep2MhTDn2rP4nNhSiTcc1iXE2SW5LKtBmanQAFoy9cKoQHPXiwct3deHHu7HgQoYAeAcN3iOHEzghf4cuVjvLB8uuO+R/LGh51/1ff1bkstvLF15WLnWw4ML5H2Xq/j/cVjha1eqyNqa6p0OLrdwbWmiE9GhXNEphLaoaQONY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tu1Y2nD0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HKsixWBc47lr250+uekmtVW5EYu7cZVsMCyUmvFYTTPcVCrs7bZ8RmGma6qsv+hr4O3pNekBjcsg1JHajU4W58sVbUerbRXTOMeponGKi7MgA79ypww0Wx2MI67ztzoRVd21Z/Oo3lXPmD4kWvVG09K+0tGKeiY3V0UTzR1y69I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6yKIuEm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tu1Y2nD0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BCD1C32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6yKIuEm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC665C116B1;
 	Tue, 23 Apr 2024 21:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908626;
-	bh=DHZ6taESmviAUZ3bPhMfWxneDSdFZcpHPfz5Hgge6/0=;
+	bh=fXppmqJD2nM/nT+MrwGcMo1slrukO3wA6eU+ieTm7Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tu1Y2nD0rFLLOz6NtnQFY6Q5LIT9ml3MgtVkG27N0aQzX1OUzybU/YFJCfk6MW3ZH
-	 OJtDNyKuhvUU0D6ixe6tycM3OnY6Q+Kti+J8Se892+Az18MyHnXG5p3TDuVeO8xTt+
-	 4sqzcP4cl89SnQB+Ls/wg5SpOwIJQ6+j3tsJYgHA=
+	b=J6yKIuEmrH3kQonh235JoEzJASPqZz0HE4F5glD94AB8N23d04Je4d6VEL9tgvNIK
+	 H6iFH6v+2S01W6MFWsQjW7o/69KXbHKMoAt1/KTQix1ZndIGdnZhECoGxtxPD0Aq5P
+	 xpwSlfigWfkwGVX2F2qsvduX6pReFXqQJUyyq8R0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Sanath S <Sanath.S@amd.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.6 078/158] thunderbolt: Reset topology created by the boot firmware
-Date: Tue, 23 Apr 2024 14:38:35 -0700
-Message-ID: <20240423213858.303029885@linuxfoundation.org>
+	"Geoffrey D. Bennett" <g@b4.vu>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 079/158] ALSA: scarlett2: Default mixer driver to enabled
+Date: Tue, 23 Apr 2024 14:38:36 -0700
+Message-ID: <20240423213858.337307060@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -51,207 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanath S <Sanath.S@amd.com>
+From: Geoffrey D. Bennett <g@b4.vu>
 
-commit 59a54c5f3dbde00b8ad30aef27fe35b1fe07bf5c upstream.
+[ Upstream commit bc83058f598757a908b30f8f536338cb1478ab5b ]
 
-Boot firmware (typically BIOS) might have created tunnels of its own.
-The tunnel configuration that it does might be sub-optimal. For instance
-it may only support HBR2 monitors so the DisplayPort tunnels it created
-may limit Linux graphics drivers. In addition there is an issue on some
-AMD based systems where the BIOS does not allocate enough PCIe resources
-for future topology extension. By resetting the USB4 topology the PCIe
-links will be reset as well allowing Linux to re-allocate.
+Early versions of this mixer driver did not work on all hardware, so
+out of caution the driver was disabled by default and had to be
+explicitly enabled with device_setup=1.
 
-This aligns the behavior with Windows Connection Manager.
+Since commit 764fa6e686e0 ("ALSA: usb-audio: scarlett2: Fix device
+hang with ehci-pci") no more problems of this nature have been
+reported. Therefore, enable the driver by default but provide a new
+device_setup option to disable the driver in case that is needed.
 
-We already issued host router reset for USB4 v2 routers, now extend it
-to USB4 v1 routers as well. For pre-USB4 (that's Apple systems) we leave
-it as is and continue to discover the existing tunnels.
+- device_setup value of 0 now means "enable" rather than "disable".
+- device_setup value of 1 is now ignored.
+- device_setup value of 4 now means "disable".
 
-Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Sanath S <Sanath.S@amd.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Link: https://lore.kernel.org/r/89600a35b40307f2766578ad1ca2f21801286b58.1694705811.git.g@b4.vu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: b61a3acada00 ("ALSA: scarlett2: Add Focusrite Clarett+ 2Pre and 4Pre support")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/domain.c |    5 +++--
- drivers/thunderbolt/icm.c    |    2 +-
- drivers/thunderbolt/nhi.c    |   19 +++++++++++++------
- drivers/thunderbolt/tb.c     |   26 +++++++++++++++++++-------
- drivers/thunderbolt/tb.h     |    4 ++--
- 5 files changed, 38 insertions(+), 18 deletions(-)
+ sound/usb/mixer_scarlett_gen2.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/drivers/thunderbolt/domain.c
-+++ b/drivers/thunderbolt/domain.c
-@@ -423,6 +423,7 @@ err_free:
- /**
-  * tb_domain_add() - Add domain to the system
-  * @tb: Domain to add
-+ * @reset: Issue reset to the host router
-  *
-  * Starts the domain and adds it to the system. Hotplugging devices will
-  * work after this has been returned successfully. In order to remove
-@@ -431,7 +432,7 @@ err_free:
-  *
-  * Return: %0 in case of success and negative errno in case of error
-  */
--int tb_domain_add(struct tb *tb)
-+int tb_domain_add(struct tb *tb, bool reset)
- {
- 	int ret;
+diff --git a/sound/usb/mixer_scarlett_gen2.c b/sound/usb/mixer_scarlett_gen2.c
+index bf3d916d5a13c..c53ce9b81a7bb 100644
+--- a/sound/usb/mixer_scarlett_gen2.c
++++ b/sound/usb/mixer_scarlett_gen2.c
+@@ -145,12 +145,12 @@
  
-@@ -460,7 +461,7 @@ int tb_domain_add(struct tb *tb)
+ #include "mixer_scarlett_gen2.h"
  
- 	/* Start the domain */
- 	if (tb->cm_ops->start) {
--		ret = tb->cm_ops->start(tb);
-+		ret = tb->cm_ops->start(tb, reset);
- 		if (ret)
- 			goto err_domain_del;
- 	}
---- a/drivers/thunderbolt/icm.c
-+++ b/drivers/thunderbolt/icm.c
-@@ -2144,7 +2144,7 @@ static int icm_runtime_resume(struct tb
- 	return 0;
- }
+-/* device_setup value to enable */
+-#define SCARLETT2_ENABLE 0x01
+-
+ /* device_setup value to allow turning MSD mode back on */
+ #define SCARLETT2_MSD_ENABLE 0x02
  
--static int icm_start(struct tb *tb)
-+static int icm_start(struct tb *tb, bool not_used)
- {
- 	struct icm *icm = tb_priv(tb);
- 	int ret;
---- a/drivers/thunderbolt/nhi.c
-+++ b/drivers/thunderbolt/nhi.c
-@@ -1221,7 +1221,7 @@ static void nhi_check_iommu(struct tb_nh
- 		str_enabled_disabled(port_ok));
- }
++/* device_setup value to disable this mixer driver */
++#define SCARLETT2_DISABLE 0x04
++
+ /* some gui mixers can't handle negative ctl values */
+ #define SCARLETT2_VOLUME_BIAS 127
  
--static void nhi_reset(struct tb_nhi *nhi)
-+static bool nhi_reset(struct tb_nhi *nhi)
- {
- 	ktime_t timeout;
- 	u32 val;
-@@ -1229,11 +1229,11 @@ static void nhi_reset(struct tb_nhi *nhi
- 	val = ioread32(nhi->iobase + REG_CAPS);
- 	/* Reset only v2 and later routers */
- 	if (FIELD_GET(REG_CAPS_VERSION_MASK, val) < REG_CAPS_VERSION_2)
--		return;
-+		return false;
+@@ -4237,19 +4237,20 @@ int snd_scarlett_gen2_init(struct usb_mixer_interface *mixer)
+ 	if (!mixer->protocol)
+ 		return 0;
  
- 	if (!host_reset) {
- 		dev_dbg(&nhi->pdev->dev, "skipping host router reset\n");
--		return;
-+		return false;
+-	if (!(chip->setup & SCARLETT2_ENABLE)) {
++	if (chip->setup & SCARLETT2_DISABLE) {
+ 		usb_audio_info(chip,
+-			"Focusrite Scarlett Gen 2/3 Mixer Driver disabled; "
+-			"use options snd_usb_audio vid=0x%04x pid=0x%04x "
+-			"device_setup=1 to enable and report any issues "
+-			"to g@b4.vu",
++			"Focusrite Scarlett Gen 2/3 Mixer Driver disabled "
++			"by modprobe options (snd_usb_audio "
++			"vid=0x%04x pid=0x%04x device_setup=%d)\n",
+ 			USB_ID_VENDOR(chip->usb_id),
+-			USB_ID_PRODUCT(chip->usb_id));
++			USB_ID_PRODUCT(chip->usb_id),
++			SCARLETT2_DISABLE);
+ 		return 0;
  	}
  
- 	iowrite32(REG_RESET_HRR, nhi->iobase + REG_RESET);
-@@ -1244,12 +1244,14 @@ static void nhi_reset(struct tb_nhi *nhi
- 		val = ioread32(nhi->iobase + REG_RESET);
- 		if (!(val & REG_RESET_HRR)) {
- 			dev_warn(&nhi->pdev->dev, "host router reset successful\n");
--			return;
-+			return true;
- 		}
- 		usleep_range(10, 20);
- 	} while (ktime_before(ktime_get(), timeout));
+ 	usb_audio_info(chip,
+-		"Focusrite Scarlett Gen 2/3 Mixer Driver enabled pid=0x%04x",
++		"Focusrite Scarlett Gen 2/3 Mixer Driver enabled (pid=0x%04x); "
++		"report any issues to g@b4.vu",
+ 		USB_ID_PRODUCT(chip->usb_id));
  
- 	dev_warn(&nhi->pdev->dev, "timeout resetting host router\n");
-+
-+	return false;
- }
- 
- static int nhi_init_msi(struct tb_nhi *nhi)
-@@ -1331,6 +1333,7 @@ static int nhi_probe(struct pci_dev *pde
- 	struct device *dev = &pdev->dev;
- 	struct tb_nhi *nhi;
- 	struct tb *tb;
-+	bool reset;
- 	int res;
- 
- 	if (!nhi_imr_valid(pdev))
-@@ -1365,7 +1368,11 @@ static int nhi_probe(struct pci_dev *pde
- 	nhi_check_quirks(nhi);
- 	nhi_check_iommu(nhi);
- 
--	nhi_reset(nhi);
-+	/*
-+	 * Only USB4 v2 hosts support host reset so if we already did
-+	 * that then don't do it again when the domain is initialized.
-+	 */
-+	reset = nhi_reset(nhi) ? false : host_reset;
- 
- 	res = nhi_init_msi(nhi);
- 	if (res)
-@@ -1392,7 +1399,7 @@ static int nhi_probe(struct pci_dev *pde
- 
- 	dev_dbg(dev, "NHI initialized, starting thunderbolt\n");
- 
--	res = tb_domain_add(tb);
-+	res = tb_domain_add(tb, reset);
- 	if (res) {
- 		/*
- 		 * At this point the RX/TX rings might already have been
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -2131,7 +2131,7 @@ static int tb_scan_finalize_switch(struc
- 	return 0;
- }
- 
--static int tb_start(struct tb *tb)
-+static int tb_start(struct tb *tb, bool reset)
- {
- 	struct tb_cm *tcm = tb_priv(tb);
- 	int ret;
-@@ -2172,12 +2172,24 @@ static int tb_start(struct tb *tb)
- 	tb_switch_tmu_configure(tb->root_switch, TB_SWITCH_TMU_MODE_LOWRES);
- 	/* Enable TMU if it is off */
- 	tb_switch_tmu_enable(tb->root_switch);
--	/* Full scan to discover devices added before the driver was loaded. */
--	tb_scan_switch(tb->root_switch);
--	/* Find out tunnels created by the boot firmware */
--	tb_discover_tunnels(tb);
--	/* Add DP resources from the DP tunnels created by the boot firmware */
--	tb_discover_dp_resources(tb);
-+
-+	/*
-+	 * Boot firmware might have created tunnels of its own. Since we
-+	 * cannot be sure they are usable for us, tear them down and
-+	 * reset the ports to handle it as new hotplug for USB4 v1
-+	 * routers (for USB4 v2 and beyond we already do host reset).
-+	 */
-+	if (reset && usb4_switch_version(tb->root_switch) == 1) {
-+		tb_switch_reset(tb->root_switch);
-+	} else {
-+		/* Full scan to discover devices added before the driver was loaded. */
-+		tb_scan_switch(tb->root_switch);
-+		/* Find out tunnels created by the boot firmware */
-+		tb_discover_tunnels(tb);
-+		/* Add DP resources from the DP tunnels created by the boot firmware */
-+		tb_discover_dp_resources(tb);
-+	}
-+
- 	/*
- 	 * If the boot firmware did not create USB 3.x tunnels create them
- 	 * now for the whole topology.
---- a/drivers/thunderbolt/tb.h
-+++ b/drivers/thunderbolt/tb.h
-@@ -488,7 +488,7 @@ struct tb_path {
-  */
- struct tb_cm_ops {
- 	int (*driver_ready)(struct tb *tb);
--	int (*start)(struct tb *tb);
-+	int (*start)(struct tb *tb, bool reset);
- 	void (*stop)(struct tb *tb);
- 	int (*suspend_noirq)(struct tb *tb);
- 	int (*resume_noirq)(struct tb *tb);
-@@ -735,7 +735,7 @@ int tb_xdomain_init(void);
- void tb_xdomain_exit(void);
- 
- struct tb *tb_domain_alloc(struct tb_nhi *nhi, int timeout_msec, size_t privsize);
--int tb_domain_add(struct tb *tb);
-+int tb_domain_add(struct tb *tb, bool reset);
- void tb_domain_remove(struct tb *tb);
- int tb_domain_suspend_noirq(struct tb *tb);
- int tb_domain_resume_noirq(struct tb *tb);
+ 	err = snd_scarlett_gen2_controls_create(mixer);
+-- 
+2.43.0
+
 
 
