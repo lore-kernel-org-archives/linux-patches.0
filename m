@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D5C1420BE;
-	Tue, 23 Apr 2024 21:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5979A1420BE;
+	Tue, 23 Apr 2024 21:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908702; cv=none; b=IUKhkhgMKShzvjlNaQ3QjalBrteBiosh72m5DA4zvejSAgLAz+G2kV4Urd7XXLpacfgQI5llxn01Ev+exH49kg7PT6kTxvpFWfdXBxKx4ucFkVwWRnqaT4HrtVA6hrQxlTE/SI29gsAFcfZERM83sZU0YoLV48LQMHie0jPEixw=
+	t=1713908703; cv=none; b=R3DXZuVWbHRt079T99e3BGgJZPD/PgU5y1jVAp0Gu5tgnUWezY9vnobdRLzwoc4fGnJHEldGJv9zZvWRlsz4Typ1pZWGewSoC5dLEwyuPMNAOJ9qHWvzHit301V5DKTdKamLot48/NCp/QoRY6pScG7iJByIXh19felrv0VdFXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908702; c=relaxed/simple;
-	bh=dgAHx0Gs9baK7jfjqPk/LuJpoV3ETOGFsZpHBTZzcKI=;
+	s=arc-20240116; t=1713908703; c=relaxed/simple;
+	bh=j4ltxH9hS632REIZ9fYID9Y7WCaurUzOErmE5aolq10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DGuMvU1DsobmUHROW5AMfQIvgKhNjEughuhTkQNf5ojrB00oHgpV/l7bcju3gl+BdALqF0k4G/Jv0lpf4BAwXe+RsYJbIykYmA22hDAxvm9NDXRVt/fMzzbBeRu8py3EHR0mF9ouI5t3+d6zbuY8dQWCG+otILt7g+Z1f4AVet4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLmvlqcA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oOwzAWmjxwu19BPrCONVE+hnxj7AF0u8LGCIFa1aNmDKOTFNAIBelhghzoNUzvu3hVv7C6qCH4AG5npsacnd849UQFo1lyGs9+2G2+l2wvS70YR1QL/DNlVLT/8P1+FkDnhg9yjQhxF2t1PcrwIBa4k6gIZF35EntJpOCOpGuwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3YBLKIa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLmvlqcA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A69AC116B1;
-	Tue, 23 Apr 2024 21:45:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3YBLKIa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25209C116B1;
+	Tue, 23 Apr 2024 21:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908702;
-	bh=dgAHx0Gs9baK7jfjqPk/LuJpoV3ETOGFsZpHBTZzcKI=;
+	s=korg; t=1713908703;
+	bh=j4ltxH9hS632REIZ9fYID9Y7WCaurUzOErmE5aolq10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wLmvlqcAj4QdJ/XzKQzNgVocemmwuCO3sW9IvdHIPA69mHn4zDmmkAQbDsjfUW/EY
-	 qChS98aoc5mXxhn5z835zy3Eg0YXibc8p3N+SorfXijOMCFvfnyO0RzMUCM/pIXcVS
-	 lSUdKH4DmcfmIsgWOuTJVg2i0Y6C/cJHamVchaEk=
+	b=r3YBLKIatghesDtMXPVvd2OswD1XNv4b3kYv4nVebiIkFZdrxOFFtHXxtRZ6JOefv
+	 8Qjjgvlps8ikra9+hNaCUNtmuiPHJ7p7GfoS2L2KY0gVtFIImjTxDoNKYS0VArCViq
+	 XdwFQfxOOmHpmz8Njs/dh961FE1FyMeKMRET0XPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Yanjun.Zhu" <yanjun.zhu@linux.dev>,
-	Daisuke Matsuda <matsuda-daisuke@fujitsu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Alvaro Karsz <alvaro.karsz@solid-run.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 048/141] RDMA/rxe: Fix the problem "mutex_destroy missing"
-Date: Tue, 23 Apr 2024 14:38:36 -0700
-Message-ID: <20240423213854.821043654@linuxfoundation.org>
+Subject: [PATCH 6.1 057/141] PCI: Avoid FLR for SolidRun SNET DPU rev 1
+Date: Tue, 23 Apr 2024 14:38:45 -0700
+Message-ID: <20240423213855.100233583@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -52,36 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yanjun.Zhu <yanjun.zhu@linux.dev>
+From: Alvaro Karsz <alvaro.karsz@solid-run.com>
 
-[ Upstream commit 481047d7e8391d3842ae59025806531cdad710d9 ]
+[ Upstream commit d089d69cc1f824936eeaa4fa172f8fa1a0949eaa ]
 
-When a mutex lock is not used any more, the function mutex_destroy
-should be called to mark the mutex lock uninitialized.
+This patch fixes a FLR bug on the SNET DPU rev 1 by setting the
+PCI_DEV_FLAGS_NO_FLR_RESET flag.
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Yanjun.Zhu <yanjun.zhu@linux.dev>
-Link: https://lore.kernel.org/r/20240314065140.27468-1-yanjun.zhu@linux.dev
-Reviewed-by: Daisuke Matsuda <matsuda-daisuke@fujitsu.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+As there is a quirk to avoid FLR (quirk_no_flr), I added a new quirk
+to check the rev ID before calling to quirk_no_flr.
+
+Without this patch, a SNET DPU rev 1 may hang when FLR is applied.
+
+Signed-off-by: Alvaro Karsz <alvaro.karsz@solid-run.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Message-Id: <20230110165638.123745-3-alvaro.karsz@solid-run.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/quirks.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe.c b/drivers/infiniband/sw/rxe/rxe.c
-index 51daac5c4feb7..be3ddfbf3cae3 100644
---- a/drivers/infiniband/sw/rxe/rxe.c
-+++ b/drivers/infiniband/sw/rxe/rxe.c
-@@ -33,6 +33,8 @@ void rxe_dealloc(struct ib_device *ib_dev)
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 289ba6902e41b..d8d3f817e95cb 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -5403,6 +5403,14 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x7901, quirk_no_flr);
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1502, quirk_no_flr);
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1503, quirk_no_flr);
  
- 	if (rxe->tfm)
- 		crypto_free_shash(rxe->tfm);
++/* FLR may cause the SolidRun SNET DPU (rev 0x1) to hang */
++static void quirk_no_flr_snet(struct pci_dev *dev)
++{
++	if (dev->revision == 0x1)
++		quirk_no_flr(dev);
++}
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SOLIDRUN, 0x1000, quirk_no_flr_snet);
 +
-+	mutex_destroy(&rxe->usdev_lock);
- }
- 
- /* initialize rxe device parameters */
+ static void quirk_no_ext_tags(struct pci_dev *pdev)
+ {
+ 	struct pci_host_bridge *bridge = pci_find_host_bridge(pdev->bus);
 -- 
 2.43.0
 
