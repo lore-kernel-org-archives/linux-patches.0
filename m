@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BEAA143882;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB3B143882;
 	Tue, 23 Apr 2024 21:45:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908738; cv=none; b=nZLRIxoG1hD/3tA05h3tdzd4a9IUB7PhH+1sQW/3JnknZsZ2GDQuO8bipYKsdUUfOU/5aMdJW2dRnRYEZf89uShwQc3I8xltD2ddiMMU/oRg1kslMUFCc1UcRblcCg6x4QQX9UlWfmQ6mrhamjuvKSo2KlxDjO76k3s/855kIk4=
+	t=1713908739; cv=none; b=n8inIexemavhm0FdQ8tfmqzc+L8lpcgyJQ6d5x1QU0DWFD/7AIPX7oD/pMYx6fMr7FJx2uClYFmJOO9QH+9KxsDu0Jqy9clM/xljLP9CxSdsIDtulku0WU7jw4c5gaqpWOLht6tWcdbO/Hv70BtAdyJSbnMEqWODSH1hG1vAKTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908738; c=relaxed/simple;
-	bh=Jd3Zg8FsQlVWHidA6i+Z4Ax1rvZUZAadq4tRIGE127k=;
+	s=arc-20240116; t=1713908739; c=relaxed/simple;
+	bh=3e9QiZSM87HXoskk9malujogzkzAXnUnpvy//f2tXF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VNihtAraO+u5Sn/8m89+ApfE4kg96RtRVOefkKOybgXLJA0g6SWxZIbuSv92wTMc2DX9SaJoGgPWcNAprWVppMBzu7VsgYpPdL19VB0a5JdvuKVCbUvzl91b29v1Q0f3FagH0EyhTNRrgUtxCCHmbnagfF6c+OVrYhSBbPzvx38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTKQmPrJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aAnUaTxrH52C7kS6WDJuOySJ7sUatOQiIt0ffDLoIejmyAymZpVNEToCBySLPXlJPLPoV8C7FTp7xE+JSSEErmCLEphWprPkvltYTPVH+ZWX3nWuy9BR9/Sz9JS0abonemtHAUmSPRQulVDUaML4gf1Be7gxVEwqO+CNWqbJWpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlQ2RaQh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTKQmPrJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A30C116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlQ2RaQh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1DB1C3277B;
 	Tue, 23 Apr 2024 21:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908738;
-	bh=Jd3Zg8FsQlVWHidA6i+Z4Ax1rvZUZAadq4tRIGE127k=;
+	bh=3e9QiZSM87HXoskk9malujogzkzAXnUnpvy//f2tXF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTKQmPrJa+azZ1cwAN+xAbTtKBhcWoiu/ArE+Bx6NW/48yhZhGd18twMz2tsJkEZ+
-	 R4DSDxhB671tBztOa9NEJ5WmyChyHlVYewGFguUONu3soWCIIr4t6BsoNm5eta2A8P
-	 mztkjEqRUQt2+/DprrE895WqNAc3/cGNpy5qYJrg=
+	b=LlQ2RaQhVAtct+SyPjHHJCQ3YX9yzP7OGWErDZrmlrj5rJFDF7ua2+WbU5+HEeMJo
+	 a4HhaYbR9BPr4JkIgElng7tuJI4wDMJnZwRmLELoezj9FJjQCyZT8l4t0mDX/Q2TxW
+	 A7nAJAbQvn+aUpd91aEdNuAIfr2jcmWlHRpqf4Js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Douglas Anderson <dianders@chromium.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 083/141] clk: Remove prepare_lock hold assertion in __clk_release()
-Date: Tue, 23 Apr 2024 14:39:11 -0700
-Message-ID: <20240423213855.864887822@linuxfoundation.org>
+Subject: [PATCH 6.1 084/141] clk: Print an info line before disabling unused clocks
+Date: Tue, 23 Apr 2024 14:39:12 -0700
+Message-ID: <20240423213855.909687218@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -52,42 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Boyd <sboyd@kernel.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 8358a76cfb47c9a5af627a0c4e7168aa14fa25f6 ]
+[ Upstream commit 12ca59b91d04df32e41be5a52f0cabba912c11de ]
 
-Removing this assertion lets us move the kref_put() call outside the
-prepare_lock section. We don't need to hold the prepare_lock here to
-free memory and destroy the clk_core structure. We've already unlinked
-the clk from the clk tree and by the time the release function runs
-nothing holds a reference to the clk_core anymore so anything with the
-pointer can't access the memory that's being freed anyway. Way back in
-commit 496eadf821c2 ("clk: Use lockdep asserts to find missing hold of
-prepare_lock") we didn't need to have this assertion either.
+Currently, the regulator framework informs us before calling into
+their unused cleanup paths, which eases at least some debugging. The
+same could be beneficial for clocks, so that random shutdowns shortly
+after most initcalls are done can be less of a guess.
 
-Fixes: 496eadf821c2 ("clk: Use lockdep asserts to find missing hold of prepare_lock")
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Add a pr_info before disabling unused clocks to do so.
+
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230307132928.3887737-1-konrad.dybcio@linaro.org
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20240325184204.745706-2-sboyd@kernel.org
+Stable-dep-of: e581cf5d2162 ("clk: Get runtime PM before walking tree during disable_unused")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/clk/clk.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index 9004e07182259..ad40913d80a8b 100644
+index ad40913d80a8b..d841a9d7281c6 100644
 --- a/drivers/clk/clk.c
 +++ b/drivers/clk/clk.c
-@@ -4230,8 +4230,6 @@ static void __clk_release(struct kref *ref)
- {
- 	struct clk_core *core = container_of(ref, struct clk_core, ref);
+@@ -1388,6 +1388,8 @@ static int __init clk_disable_unused(void)
+ 		return 0;
+ 	}
  
--	lockdep_assert_held(&prepare_lock);
--
- 	clk_core_free_parent_map(core);
- 	kfree_const(core->name);
- 	kfree(core);
++	pr_info("clk: Disabling unused clocks\n");
++
+ 	clk_prepare_lock();
+ 
+ 	hlist_for_each_entry(core, &clk_root_list, child_node)
 -- 
 2.43.0
 
