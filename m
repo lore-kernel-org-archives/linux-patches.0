@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B3114885A;
-	Tue, 23 Apr 2024 21:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD1714885A;
+	Tue, 23 Apr 2024 21:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908809; cv=none; b=d05aWiPgKiui8TsCt/4mKl6WVbXtnu+oqNfxYgu+FyGWXjpqHHQFiXKJRarR9YC5Rf3AFy0NVZwn2QdRaKf7nXBcrQ78cUzLfrdr5ld9NF+NgFLg+oIw6Cae0LmkSVppgNEyP2vUuXafNC2Oho534MPEG3TIUNT2l+v7rwv8ajQ=
+	t=1713908810; cv=none; b=XG3cir5yHARxmkX1Xf5C0LOTf77MKoggGzRFw8+1oD/1yYgBtO+pYE4H1LCHnoQbVe2CUxR7WjVLDvD+bwIP8HrzaYdS/kc7PDyOlk8LXtHARjbCNUeuHvUPoZSaWl4ovrbErf2OFreqP5/XJoobEGuYTnMiyydm5/0Bbqwrj10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908809; c=relaxed/simple;
-	bh=T0/TYXYMKKzBnXk7/5zikX0Am71pvV7G9F9Ip5Bft1s=;
+	s=arc-20240116; t=1713908810; c=relaxed/simple;
+	bh=vq7fsIfQNn4x9er7yC4C7YRA7Jbzbm+wiDl7ME2JlKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QBiPZXrggk3lLc4+xzzJPftkP5GNG9JuM2Y/LNoYaY9wiyHPc0F4vRtk5b4iaXLjPwSzKRbGIT3ZG+xROJvfnGNkPSgWwNkUSE+Oo2MumxvSenW2MhCQF+hGN/vdC6Qn11Sx8uMwmNhbX1OxZ8Pyf9gSFC7SwLb2UvZuZ+p09NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NekY3Fiy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IRRKtio86zEdGdU+uh/ejzGvh6y0TSGJBlKTCi+Z0z/Uhn8QFI8Iyf8pKO36p8GfjiAbBC9WMw+XPVLGpjM24s6Oq8wim8jD1hKW4JwX07ssDMGZ7FHRx+N7+if48JEiBn0AQ/j2nTT6B5cNUVvITdemCu7X30WTyLwBYZNyFlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xh/kn9A1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NekY3Fiy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C15C3277B;
-	Tue, 23 Apr 2024 21:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xh/kn9A1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFA8C32783;
+	Tue, 23 Apr 2024 21:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908809;
-	bh=T0/TYXYMKKzBnXk7/5zikX0Am71pvV7G9F9Ip5Bft1s=;
+	s=korg; t=1713908810;
+	bh=vq7fsIfQNn4x9er7yC4C7YRA7Jbzbm+wiDl7ME2JlKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NekY3FiyZ6Hdu02bNrZM6ORgnQS0I/fEdAuCFv45dBwa8mXxZ11JHwLL28K5cqANH
-	 lvxnxFCaK6GNt9FYVg9zULhKaxMLf++62yDEVVkRoZbNkSNpdJky6u8sXMCZqtRm9Q
-	 ozOBwhXPjDZ3NM1BTlXfkRWbW8kfsYSeqjrOf6tg=
+	b=Xh/kn9A1j3J5b9UehqlqK0L7lVVFdh9xGv52Tam79q/RiL7FLitg/rcX5ma1bKlnr
+	 eGcF33eFPyQ0nnCUN68+gG49O7WjJCmTeCldLDau1X0T2/lFFreuOUZt0P/qVG9Qrs
+	 J/naAi4M0stvNRS5XXrYaM1rhQQfiBB8YR8SGd/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 71/71] net: dsa: mt7530: fix enabling EEE on MT7531 switch on all boards
-Date: Tue, 23 Apr 2024 14:40:24 -0700
-Message-ID: <20240423213846.667651340@linuxfoundation.org>
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 54/71] usb: Disable USB3 LPM at shutdown
+Date: Tue, 23 Apr 2024 14:40:07 -0700
+Message-ID: <20240423213846.044156444@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
 References: <20240423213844.122920086@linuxfoundation.org>
@@ -46,114 +44,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: Kai-Heng Feng <kai.heng.feng@canonical.com>
 
-commit 06dfcd4098cfdc4d4577d94793a4f9125386da8b upstream.
+commit d920a2ed8620be04a3301e1a9c2b7cc1de65f19d upstream.
 
-The commit 40b5d2f15c09 ("net: dsa: mt7530: Add support for EEE features")
-brought EEE support but did not enable EEE on MT7531 switch MACs. EEE is
-enabled on MT7531 switch MACs by pulling the LAN2LED0 pin low on the board
-(bootstrapping), unsetting the EEE_DIS bit on the trap register, or setting
-the internal EEE switch bit on the CORE_PLL_GROUP4 register. Thanks to
-SkyLake Huang (黃啟澤) from MediaTek for providing information on the
-internal EEE switch bit.
+SanDisks USB3 storage may disapper after system reboot:
 
-There are existing boards that were not designed to pull the pin low.
-Because of that, the EEE status currently depends on the board design.
+usb usb2-port3: link state change
+xhci_hcd 0000:00:14.0: clear port3 link state change, portsc: 0x2c0
+usb usb2-port3: do warm reset, port only
+xhci_hcd 0000:00:14.0: xhci_hub_status_data: stopping usb2 port polling
+xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x2b0, return 0x2b0
+usb usb2-port3: not warm reset yet, waiting 50ms
+xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x2f0, return 0x2f0
+usb usb2-port3: not warm reset yet, waiting 200ms
+...
+xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x6802c0, return 0x7002c0
+usb usb2-port3: not warm reset yet, waiting 200ms
+xhci_hcd 0000:00:14.0: clear port3 reset change, portsc: 0x4802c0
+xhci_hcd 0000:00:14.0: clear port3 warm(BH) reset change, portsc: 0x4002c0
+xhci_hcd 0000:00:14.0: clear port3 link state change, portsc: 0x2c0
+xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x2c0, return 0x2c0
+usb usb2-port3: not enabled, trying warm reset again...
 
-The EEE_DIS bit on the trap pertains to the LAN2LED0 pin which is usually
-used to control an LED. Once the bit is unset, the pin will be low. That
-will make the active low LED turn on. The pin is controlled by the switch
-PHY. It seems that the PHY controls the pin in the way that it inverts the
-pin state. That means depending on the wiring of the LED connected to
-LAN2LED0 on the board, the LED may be on without an active link.
+This is due to the USB device still cause port change event after xHCI is
+shuted down:
 
-To not cause this unwanted behaviour whilst enabling EEE on all boards, set
-the internal EEE switch bit on the CORE_PLL_GROUP4 register.
+xhci_hcd 0000:38:00.0: // Setting command ring address to 0xffffe001
+xhci_hcd 0000:38:00.0: xhci_resume: starting usb3 port polling.
+xhci_hcd 0000:38:00.0: xhci_hub_status_data: stopping usb4 port polling
+xhci_hcd 0000:38:00.0: xhci_hub_status_data: stopping usb3 port polling
+xhci_hcd 0000:38:00.0: hcd_pci_runtime_resume: 0
+xhci_hcd 0000:38:00.0: xhci_shutdown: stopping usb3 port polling.
+xhci_hcd 0000:38:00.0: // Halt the HC
+xhci_hcd 0000:38:00.0: xhci_shutdown completed - status = 1
+xhci_hcd 0000:00:14.0: xhci_shutdown: stopping usb1 port polling.
+xhci_hcd 0000:00:14.0: // Halt the HC
+xhci_hcd 0000:00:14.0: xhci_shutdown completed - status = 1
+xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x1203, return 0x203
+xhci_hcd 0000:00:14.0: set port reset, actual port 2-3 status  = 0x1311
+xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x201203, return 0x100203
+xhci_hcd 0000:00:14.0: clear port3 reset change, portsc: 0x1203
+xhci_hcd 0000:00:14.0: clear port3 warm(BH) reset change, portsc: 0x1203
+xhci_hcd 0000:00:14.0: clear port3 link state change, portsc: 0x1203
+xhci_hcd 0000:00:14.0: clear port3 connect change, portsc: 0x1203
+xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x1203, return 0x203
+usb 2-3: device not accepting address 2, error -108
+xhci_hcd 0000:00:14.0: xHCI dying or halted, can't queue_command
+xhci_hcd 0000:00:14.0: Set port 2-3 link state, portsc: 0x1203, write 0x11261
+xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x1263, return 0x263
+xhci_hcd 0000:00:14.0: set port reset, actual port 2-3 status  = 0x1271
+xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x12b1, return 0x2b1
+usb usb2-port3: not reset yet, waiting 60ms
+ACPI: PM: Preparing to enter system sleep state S5
+xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x12f1, return 0x2f1
+usb usb2-port3: not reset yet, waiting 200ms
+reboot: Restarting system
 
-My testing on MT7531 shows a certain amount of traffic loss when EEE is
-enabled. That said, I haven't come across a board that enables EEE. So
-enable EEE on the switch MACs but disable EEE advertisement on the switch
-PHYs. This way, we don't change the behaviour of the majority of the boards
-that have this switch. The mediatek-ge PHY driver already disables EEE
-advertisement on the switch PHYs but my testing shows that it is somehow
-enabled afterwards. Disabling EEE advertisement before the PHY driver
-initialises keeps it off.
+The port change event is caused by LPM transition, so disabling LPM at shutdown
+to make sure the device is in U0 for warmboot.
 
-With this change, EEE can now be enabled using ethtool.
-
-Fixes: 40b5d2f15c09 ("net: dsa: mt7530: Add support for EEE features")
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Tested-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://lore.kernel.org/r/20240408-for-net-mt7530-fix-eee-for-mt7531-mt7988-v3-1-84fdef1f008b@arinc9.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20240305065140.66801-1-kai.heng.feng@canonical.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mt7530.c |   19 +++++++++++++------
- drivers/net/dsa/mt7530.h |    1 +
- 2 files changed, 14 insertions(+), 6 deletions(-)
+ drivers/usb/core/port.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -2587,7 +2587,7 @@ mt7531_setup(struct dsa_switch *ds)
- 	struct mt7530_priv *priv = ds->priv;
- 	struct mt7530_dummy_poll p;
- 	u32 val, id;
--	int ret;
-+	int ret, i;
+--- a/drivers/usb/core/port.c
++++ b/drivers/usb/core/port.c
+@@ -295,8 +295,10 @@ static void usb_port_shutdown(struct dev
+ {
+ 	struct usb_port *port_dev = to_usb_port(dev);
  
- 	/* Reset whole chip through gpio pin or memory-mapped registers for
- 	 * different type of hardware
-@@ -2647,18 +2647,25 @@ mt7531_setup(struct dsa_switch *ds)
- 	priv->p5_interface = PHY_INTERFACE_MODE_NA;
- 	priv->p6_interface = PHY_INTERFACE_MODE_NA;
- 
--	/* Enable PHY core PLL, since phy_device has not yet been created
--	 * provided for phy_[read,write]_mmd_indirect is called, we provide
--	 * our own mt7531_ind_mmd_phy_[read,write] to complete this
--	 * function.
-+	/* Enable Energy-Efficient Ethernet (EEE) and PHY core PLL, since
-+	 * phy_device has not yet been created provided for
-+	 * phy_[read,write]_mmd_indirect is called, we provide our own
-+	 * mt7531_ind_mmd_phy_[read,write] to complete this function.
- 	 */
- 	val = mt7531_ind_c45_phy_read(priv, MT753X_CTRL_PHY_ADDR,
- 				      MDIO_MMD_VEND2, CORE_PLL_GROUP4);
--	val |= MT7531_PHY_PLL_BYPASS_MODE;
-+	val |= MT7531_RG_SYSPLL_DMY2 | MT7531_PHY_PLL_BYPASS_MODE;
- 	val &= ~MT7531_PHY_PLL_OFF;
- 	mt7531_ind_c45_phy_write(priv, MT753X_CTRL_PHY_ADDR, MDIO_MMD_VEND2,
- 				 CORE_PLL_GROUP4, val);
- 
-+	/* Disable EEE advertisement on the switch PHYs. */
-+	for (i = MT753X_CTRL_PHY_ADDR;
-+	     i < MT753X_CTRL_PHY_ADDR + MT7530_NUM_PHYS; i++) {
-+		mt7531_ind_c45_phy_write(priv, i, MDIO_MMD_AN, MDIO_AN_EEE_ADV,
-+					 0);
+-	if (port_dev->child)
++	if (port_dev->child) {
+ 		usb_disable_usb2_hardware_lpm(port_dev->child);
++		usb_unlocked_disable_lpm(port_dev->child);
 +	}
-+
- 	mt7531_setup_common(ds);
+ }
  
- 	/* Setup VLAN ID 0 for VLAN-unaware bridges */
---- a/drivers/net/dsa/mt7530.h
-+++ b/drivers/net/dsa/mt7530.h
-@@ -673,6 +673,7 @@ enum mt7531_clk_skew {
- #define  RG_SYSPLL_DDSFBK_EN		BIT(12)
- #define  RG_SYSPLL_BIAS_EN		BIT(11)
- #define  RG_SYSPLL_BIAS_LPF_EN		BIT(10)
-+#define  MT7531_RG_SYSPLL_DMY2		BIT(6)
- #define  MT7531_PHY_PLL_OFF		BIT(5)
- #define  MT7531_PHY_PLL_BYPASS_MODE	BIT(4)
- 
+ static const struct dev_pm_ops usb_port_pm_ops = {
 
 
