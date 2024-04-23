@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6BB14AD0D;
-	Tue, 23 Apr 2024 21:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF48B20B3E;
+	Tue, 23 Apr 2024 21:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908761; cv=none; b=NhjeN5KS22/nW44Fg3fWp8nnWUj81f0vilhUqYD+Yh8ag7e22Wip/zIG9t6GrRilFoJx9wyw+9k5z2i8eLXX+t0PiZtd3mAk0fhipJypwtL1UK0ExW34GCEsis2SQpN2ukgJe0hfiV3lSfPsacP6NnbIE5uaYtJWyFixBcCXMDA=
+	t=1713908762; cv=none; b=PKwug/fEkTt/uiZ9JfR6eALEg82wMA0M1C7XwrpAfKHcGO9ECJHzuikNvH5wMJY7HwzJ2RW4u3Mqib9QMVq7DDjT+hK6UiyjTajSukIceCaW7eaaaQKcaWZmA9Opooj+oytYBlyOGGYs6kH2iB78wtUkOoD/yubnzuMgcTuLsDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908761; c=relaxed/simple;
-	bh=sO+Hp9fycmwRSfVFT5mbGO54McnHacQH3dD83KhQmdc=;
+	s=arc-20240116; t=1713908762; c=relaxed/simple;
+	bh=LSYM7nRDsC6OBT73WIn4AWDRdZy1+F5hugbqOa82oQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNaGMadDHVOWgfAdBlvAq+Zxjk/xFd99oc8sE9FRhJ66CjSISvpmJNALDikH4+keJ9O+LQieNJdmHPp5AMnowBmtJ3J4KfjPwZl4V8Vl36Vq+ZAy+HkH7mubBuIK/CzUiN2sctYvm4eRn6oIPDnr7cQ5yBLu9zWzawiBqkbXV4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuaSP3GH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UJIIcJplJptXmUWXNx8cdX52M3XDAzIkFXYwxvRUPbDRnUFVt5fkrVG4b46Jwpnnmoe3x9cBQKldgcVzZ+dunCMpqXTER0L0ga0Fp1D26TSTGge/LvjqxWyfPiDt7xvVmqGHbhk6FwQag+SczzrQgDOp/n4TeseimbuKmFhxpAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyCkxUIP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuaSP3GH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D09C32782;
-	Tue, 23 Apr 2024 21:46:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyCkxUIP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C65CC116B1;
+	Tue, 23 Apr 2024 21:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908760;
-	bh=sO+Hp9fycmwRSfVFT5mbGO54McnHacQH3dD83KhQmdc=;
+	s=korg; t=1713908761;
+	bh=LSYM7nRDsC6OBT73WIn4AWDRdZy1+F5hugbqOa82oQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zuaSP3GH4hyRyMOsLzJcYueOrZP+j0Ll/CMaDNAVKjiPXHP4ow35DuzIEc+XiiTBo
-	 5tONYNlxdWVmlL6cssnhAyP4c2LYg0gLbPOoIpgXBqFuMvBxL5eeBPVoDDO74xhOh6
-	 focafeH79wsjLXPfmNTTdea+8vsVDMLSXJTro0Vg=
+	b=XyCkxUIP42Yxglx0sKW2w+97YkyAlhE+6Usv+UwpnjZLy8Gfy2nMFOXwNnTJ+BeS6
+	 p/eI5yeVSeuXad0F1V1LhuaRk27ufTBtRGJD1eEpA4qr8CQAQH8twU6daQB+bY6zFE
+	 4hqEwXapgwOmYk6cNI7k8Nj46/07UvQDdGAprl9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Palmas <dnlplm@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 113/141] USB: serial: option: add Telit FN920C04 rmnet compositions
-Date: Tue, 23 Apr 2024 14:39:41 -0700
-Message-ID: <20240423213856.868984264@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Emil Kronborg <emil.kronborg@protonmail.com>
+Subject: [PATCH 6.1 104/141] serial: mxs-auart: add spinlock around changing cts state
+Date: Tue, 23 Apr 2024 14:39:32 -0700
+Message-ID: <20240423213856.554899978@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -50,107 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Palmas <dnlplm@gmail.com>
+From: Emil Kronborg <emil.kronborg@protonmail.com>
 
-commit 582ee2f9d268d302595db3e36b985e5cbb93284d upstream.
+commit 54c4ec5f8c471b7c1137a1f769648549c423c026 upstream.
 
-Add the following Telit FN920C04 compositions:
+The uart_handle_cts_change() function in serial_core expects the caller
+to hold uport->lock. For example, I have seen the below kernel splat,
+when the Bluetooth driver is loaded on an i.MX28 board.
 
-0x10a0: rmnet + tty (AT/NMEA) + tty (AT) + tty (diag)
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#=  5 Spd=480  MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10a0 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+    [   85.119255] ------------[ cut here ]------------
+    [   85.124413] WARNING: CPU: 0 PID: 27 at /drivers/tty/serial/serial_core.c:3453 uart_handle_cts_change+0xb4/0xec
+    [   85.134694] Modules linked in: hci_uart bluetooth ecdh_generic ecc wlcore_sdio configfs
+    [   85.143314] CPU: 0 PID: 27 Comm: kworker/u3:0 Not tainted 6.6.3-00021-gd62a2f068f92 #1
+    [   85.151396] Hardware name: Freescale MXS (Device Tree)
+    [   85.156679] Workqueue: hci0 hci_power_on [bluetooth]
+    (...)
+    [   85.191765]  uart_handle_cts_change from mxs_auart_irq_handle+0x380/0x3f4
+    [   85.198787]  mxs_auart_irq_handle from __handle_irq_event_percpu+0x88/0x210
+    (...)
 
-0x10a4: rmnet + tty (AT) + tty (AT) + tty (diag)
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#=  8 Spd=480  MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10a4 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-0x10a9: rmnet + tty (AT) + tty (diag) + DPL (data packet logging) + adb
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#=  9 Spd=480  MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10a9 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 4d90bb147ef6 ("serial: core: Document and assert lock requirements for irq helpers")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Emil Kronborg <emil.kronborg@protonmail.com>
+Link: https://lore.kernel.org/r/20240320121530.11348-1-emil.kronborg@protonmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/tty/serial/mxs-auart.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1376,6 +1376,12 @@ static const struct usb_device_id option
- 	  .driver_info = NCTRL(2) | RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1083, 0xff),	/* Telit FE990 (ECM) */
- 	  .driver_info = NCTRL(0) | RSVD(1) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a0, 0xff),	/* Telit FN20C04 (rmnet) */
-+	  .driver_info = RSVD(0) | NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a4, 0xff),	/* Telit FN20C04 (rmnet) */
-+	  .driver_info = RSVD(0) | NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a9, 0xff),	/* Telit FN20C04 (rmnet) */
-+	  .driver_info = RSVD(0) | NCTRL(2) | RSVD(3) | RSVD(4) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910),
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(3) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910_DUAL_MODEM),
+--- a/drivers/tty/serial/mxs-auart.c
++++ b/drivers/tty/serial/mxs-auart.c
+@@ -1094,11 +1094,13 @@ static void mxs_auart_set_ldisc(struct u
+ 
+ static irqreturn_t mxs_auart_irq_handle(int irq, void *context)
+ {
+-	u32 istat;
++	u32 istat, stat;
+ 	struct mxs_auart_port *s = context;
+ 	u32 mctrl_temp = s->mctrl_prev;
+-	u32 stat = mxs_read(s, REG_STAT);
+ 
++	uart_port_lock(&s->port);
++
++	stat = mxs_read(s, REG_STAT);
+ 	istat = mxs_read(s, REG_INTR);
+ 
+ 	/* ack irq */
+@@ -1134,6 +1136,8 @@ static irqreturn_t mxs_auart_irq_handle(
+ 		istat &= ~AUART_INTR_TXIS;
+ 	}
+ 
++	uart_port_unlock(&s->port);
++
+ 	return IRQ_HANDLED;
+ }
+ 
 
 
