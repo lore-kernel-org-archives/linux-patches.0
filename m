@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC67143895;
-	Tue, 23 Apr 2024 21:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1B6143895;
+	Tue, 23 Apr 2024 21:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908627; cv=none; b=H4qIKPVVyuRzntZGUcPPxYCLb79zXd8JlL3ubysy7GPRu9qA97KMdgtop+YyreQghb0rCIW16cL0kuAqXsbQSf6MnqVPUQPGMa19y0htZK9f2VQfwrCiA/a9jF8hRE9t7hsHzIm5bsDAEL8d6s0xQoRK7hUZCW/0yx6hVEP2lLk=
+	t=1713908628; cv=none; b=qlb3LZEuLpxz+IaviE9Sg3s0ew895tvgV16hBMNRFtlOkKqtAgAvuaPIq8V5hynnmTpoZ5laDOgDfvquKNkBgjDVKtFIrD4BVOIva8DrF+Koz3FaLgMlt7bst862exLJDhXH7Dvmfl4oYHwwXluI5fu2+bZfa9bWysPSK34uebk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908627; c=relaxed/simple;
-	bh=EsKYU6f9N5aXFfdSUDMXcdS//w8A/ktuj8M6TGQrRvw=;
+	s=arc-20240116; t=1713908628; c=relaxed/simple;
+	bh=buGKg5zfgxyMAF610jGNHThKyaXYkhv2/4tccCGmMGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=urEVJkf9Ajba2nkMuEFKo5s4hlNUqQ7y5DcWGxMta5m2jE/JJ1h0p1+XEjmupoPZdaeEm1Nl/fbtCc+ZVLU1KtLR2FeaHkgDlkkOnTjktvQT6kKjIj5y99JSxVTp831C3CsUZxT4lc/JwNdCEIbcEvEw1qOswkBUWS00xLnLONQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVUUhPXV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EOz4sImkQwLi9G8lh3sn2V66HbOUieehw2ZiOPKnM31CFG1Ifh4IzAqlPOsb066VG+aSi1R4E/CcZsaD6kUR6R45CJ3IYjjnTwUUhwdBlvbyHQpr+74R3FGJLJLChk57kF9T8FG378j/d3CqNJ740AGJsDy8dGNGacJM6t9OtTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVcxbhsH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVUUhPXV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C7BC32782;
-	Tue, 23 Apr 2024 21:43:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVcxbhsH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF33C32781;
+	Tue, 23 Apr 2024 21:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908627;
-	bh=EsKYU6f9N5aXFfdSUDMXcdS//w8A/ktuj8M6TGQrRvw=;
+	s=korg; t=1713908628;
+	bh=buGKg5zfgxyMAF610jGNHThKyaXYkhv2/4tccCGmMGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JVUUhPXVgquYAC+GryKMH7se9X/IuCItkIxRPn3hGBvIiRZtrcPmorNOSaQiD1zLb
-	 PK8DjUS3Z7oo0rZ4mjUjx0LRM4bdPFJ/kcxyfw9pMAOKzPFKQu/Yb5/8hXSLBiebcu
-	 /12Y8W6pi0WS1xcm43mD+CGQKsu/vOUW763BV/k0=
+	b=fVcxbhsHMIJO7Le2HPAypz9F/2Vc/bRk/5Brcjk1iVJ+zXWiRt8iQQWvpFCM3Jjof
+	 uvtCOXo5mFhADqxz2rQ3Cq9/MH86SAITtdIRUAjAtI+Qs17oZrYzaLsfwnMPo9A1Jn
+	 nyAHFutyQWSg15apH8ErrmyKRslWRMLZ75d5CWho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Geoffrey D. Bennett" <g@b4.vu>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/158] ALSA: scarlett2: Add correct product series name to messages
-Date: Tue, 23 Apr 2024 14:38:37 -0700
-Message-ID: <20240423213858.363435818@linuxfoundation.org>
+Subject: [PATCH 6.6 081/158] ALSA: scarlett2: Add Focusrite Clarett+ 2Pre and 4Pre support
+Date: Tue, 23 Apr 2024 14:38:38 -0700
+Message-ID: <20240423213858.395388676@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -53,216 +53,167 @@ Content-Transfer-Encoding: 8bit
 
 From: Geoffrey D. Bennett <g@b4.vu>
 
-[ Upstream commit 6e743781d62e28f5fa095e5f31f878819622c143 ]
+[ Upstream commit b61a3acada0031e7a4922d1340b4296ab95c260b ]
 
-This driver was originally developed for the Focusrite Scarlett Gen 2
-series, but now also supports the Scarlett Gen 3 series, the
-Clarett 8Pre USB, and the Clarett+ 8Pre. The messages output by the
-driver on initialisation and error include the identifying text
-"Scarlett Gen 2/3", but this is no longer accurate, and writing
-"Scarlett Gen 2/3/Clarett USB/Clarett+" would be unwieldy.
+The Focusrite Clarett+ series uses the same protocol as the Scarlett
+Gen 2 and Gen 3 series. This patch adds support for the Clarett+ 2Pre
+and Clarett+ 4Pre similarly to the existing 8Pre support by adding
+appropriate entries to the scarlett2 driver.
 
-Add series_name field to the scarlett2_device_entry struct so that
-concise and accurate messages can be output.
+The Clarett 2Pre USB and 4Pre USB presumably use the same protocol as
+well, so support for them can easily be added if someone can test.
 
 Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Link: https://lore.kernel.org/r/3774b9d35bf1fbdd6fdad9f3f4f97e9b82ac76bf.1694705811.git.g@b4.vu
+Link: https://lore.kernel.org/r/ZRL7qjC3tYQllT3H@m.b4.vu
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: b61a3acada00 ("ALSA: scarlett2: Add Focusrite Clarett+ 2Pre and 4Pre support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_scarlett_gen2.c | 81 ++++++++++++++++++++++-----------
- 1 file changed, 54 insertions(+), 27 deletions(-)
+ sound/usb/mixer_quirks.c        |  2 +
+ sound/usb/mixer_scarlett_gen2.c | 97 ++++++++++++++++++++++++++++++++-
+ 2 files changed, 98 insertions(+), 1 deletion(-)
 
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index b122d7aedb443..3721d59a56809 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -3448,6 +3448,8 @@ int snd_usb_mixer_apply_create_quirk(struct usb_mixer_interface *mixer)
+ 	case USB_ID(0x1235, 0x8214): /* Focusrite Scarlett 18i8 3rd Gen */
+ 	case USB_ID(0x1235, 0x8215): /* Focusrite Scarlett 18i20 3rd Gen */
+ 	case USB_ID(0x1235, 0x8208): /* Focusrite Clarett 8Pre USB */
++	case USB_ID(0x1235, 0x820a): /* Focusrite Clarett+ 2Pre */
++	case USB_ID(0x1235, 0x820b): /* Focusrite Clarett+ 4Pre */
+ 	case USB_ID(0x1235, 0x820c): /* Focusrite Clarett+ 8Pre */
+ 		err = snd_scarlett_gen2_init(mixer);
+ 		break;
 diff --git a/sound/usb/mixer_scarlett_gen2.c b/sound/usb/mixer_scarlett_gen2.c
-index c53ce9b81a7bb..83df5621c98f5 100644
+index 83df5621c98f5..653dc7d8fb47c 100644
 --- a/sound/usb/mixer_scarlett_gen2.c
 +++ b/sound/usb/mixer_scarlett_gen2.c
-@@ -391,6 +391,7 @@ struct scarlett2_data {
- 	struct mutex data_mutex; /* lock access to this data */
- 	struct delayed_work work;
- 	const struct scarlett2_device_info *info;
-+	const char *series_name;
- 	__u8 bInterfaceNumber;
- 	__u8 bEndpointAddress;
- 	__u16 wMaxPacketSize;
-@@ -887,25 +888,26 @@ static const struct scarlett2_device_info clarett_8pre_info = {
- struct scarlett2_device_entry {
- 	const u32 usb_id; /* USB device identifier */
- 	const struct scarlett2_device_info *info;
-+	const char *series_name;
+@@ -6,7 +6,7 @@
+  *   - 6i6/18i8/18i20 Gen 2
+  *   - Solo/2i2/4i4/8i6/18i8/18i20 Gen 3
+  *   - Clarett 8Pre USB
+- *   - Clarett+ 8Pre
++ *   - Clarett+ 2Pre/4Pre/8Pre
+  *
+  *   Copyright (c) 2018-2023 by Geoffrey D. Bennett <g at b4.vu>
+  *   Copyright (c) 2020-2021 by Vladimir Sadovnikov <sadko4u@gmail.com>
+@@ -60,6 +60,10 @@
+  * Support for Clarett 8Pre USB added in Sep 2023 (thanks to Philippe
+  * Perrot for confirmation).
+  *
++ * Support for Clarett+ 4Pre and 2Pre added in Sep 2023 (thanks to
++ * Gregory Rozzo for donating a 4Pre, and David Sherwood and Patrice
++ * Peterson for usbmon output).
++ *
+  * This ALSA mixer gives access to (model-dependent):
+  *  - input, output, mixer-matrix muxes
+  *  - mixer-matrix gain stages
+@@ -832,6 +836,95 @@ static const struct scarlett2_device_info s18i20_gen3_info = {
+ 	} },
  };
  
- static const struct scarlett2_device_entry scarlett2_devices[] = {
- 	/* Supported Gen 2 devices */
--	{ USB_ID(0x1235, 0x8203), &s6i6_gen2_info },
--	{ USB_ID(0x1235, 0x8204), &s18i8_gen2_info },
--	{ USB_ID(0x1235, 0x8201), &s18i20_gen2_info },
-+	{ USB_ID(0x1235, 0x8203), &s6i6_gen2_info, "Scarlett Gen 2" },
-+	{ USB_ID(0x1235, 0x8204), &s18i8_gen2_info, "Scarlett Gen 2" },
-+	{ USB_ID(0x1235, 0x8201), &s18i20_gen2_info, "Scarlett Gen 2" },
- 
- 	/* Supported Gen 3 devices */
--	{ USB_ID(0x1235, 0x8211), &solo_gen3_info },
--	{ USB_ID(0x1235, 0x8210), &s2i2_gen3_info },
--	{ USB_ID(0x1235, 0x8212), &s4i4_gen3_info },
--	{ USB_ID(0x1235, 0x8213), &s8i6_gen3_info },
--	{ USB_ID(0x1235, 0x8214), &s18i8_gen3_info },
--	{ USB_ID(0x1235, 0x8215), &s18i20_gen3_info },
-+	{ USB_ID(0x1235, 0x8211), &solo_gen3_info, "Scarlett Gen 3" },
-+	{ USB_ID(0x1235, 0x8210), &s2i2_gen3_info, "Scarlett Gen 3" },
-+	{ USB_ID(0x1235, 0x8212), &s4i4_gen3_info, "Scarlett Gen 3" },
-+	{ USB_ID(0x1235, 0x8213), &s8i6_gen3_info, "Scarlett Gen 3" },
-+	{ USB_ID(0x1235, 0x8214), &s18i8_gen3_info, "Scarlett Gen 3" },
-+	{ USB_ID(0x1235, 0x8215), &s18i20_gen3_info, "Scarlett Gen 3" },
++static const struct scarlett2_device_info clarett_2pre_info = {
++	.config_set = SCARLETT2_CONFIG_SET_CLARETT,
++	.line_out_hw_vol = 1,
++	.level_input_count = 2,
++	.air_input_count = 2,
++
++	.line_out_descrs = {
++		"Monitor L",
++		"Monitor R",
++		"Headphones L",
++		"Headphones R",
++	},
++
++	.port_count = {
++		[SCARLETT2_PORT_TYPE_NONE]     = {  1,  0 },
++		[SCARLETT2_PORT_TYPE_ANALOGUE] = {  2,  4 },
++		[SCARLETT2_PORT_TYPE_SPDIF]    = {  2,  0 },
++		[SCARLETT2_PORT_TYPE_ADAT]     = {  8,  0 },
++		[SCARLETT2_PORT_TYPE_MIX]      = { 10, 18 },
++		[SCARLETT2_PORT_TYPE_PCM]      = {  4, 12 },
++	},
++
++	.mux_assignment = { {
++		{ SCARLETT2_PORT_TYPE_PCM,      0, 12 },
++		{ SCARLETT2_PORT_TYPE_ANALOGUE, 0,  4 },
++		{ SCARLETT2_PORT_TYPE_MIX,      0, 18 },
++		{ SCARLETT2_PORT_TYPE_NONE,     0,  8 },
++		{ 0,                            0,  0 },
++	}, {
++		{ SCARLETT2_PORT_TYPE_PCM,      0,  8 },
++		{ SCARLETT2_PORT_TYPE_ANALOGUE, 0,  4 },
++		{ SCARLETT2_PORT_TYPE_MIX,      0, 18 },
++		{ SCARLETT2_PORT_TYPE_NONE,     0,  8 },
++		{ 0,                            0,  0 },
++	}, {
++		{ SCARLETT2_PORT_TYPE_PCM,      0,  2 },
++		{ SCARLETT2_PORT_TYPE_ANALOGUE, 0,  4 },
++		{ SCARLETT2_PORT_TYPE_NONE,     0, 26 },
++		{ 0,                            0,  0 },
++	} },
++};
++
++static const struct scarlett2_device_info clarett_4pre_info = {
++	.config_set = SCARLETT2_CONFIG_SET_CLARETT,
++	.line_out_hw_vol = 1,
++	.level_input_count = 2,
++	.air_input_count = 4,
++
++	.line_out_descrs = {
++		"Monitor L",
++		"Monitor R",
++		"Headphones 1 L",
++		"Headphones 1 R",
++		"Headphones 2 L",
++		"Headphones 2 R",
++	},
++
++	.port_count = {
++		[SCARLETT2_PORT_TYPE_NONE]     = {  1,  0 },
++		[SCARLETT2_PORT_TYPE_ANALOGUE] = {  8,  6 },
++		[SCARLETT2_PORT_TYPE_SPDIF]    = {  2,  2 },
++		[SCARLETT2_PORT_TYPE_ADAT]     = {  8,  0 },
++		[SCARLETT2_PORT_TYPE_MIX]      = { 10, 18 },
++		[SCARLETT2_PORT_TYPE_PCM]      = {  8, 18 },
++	},
++
++	.mux_assignment = { {
++		{ SCARLETT2_PORT_TYPE_PCM,      0, 18 },
++		{ SCARLETT2_PORT_TYPE_ANALOGUE, 0,  6 },
++		{ SCARLETT2_PORT_TYPE_SPDIF,    0,  2 },
++		{ SCARLETT2_PORT_TYPE_MIX,      0, 18 },
++		{ SCARLETT2_PORT_TYPE_NONE,     0,  8 },
++		{ 0,                            0,  0 },
++	}, {
++		{ SCARLETT2_PORT_TYPE_PCM,      0, 14 },
++		{ SCARLETT2_PORT_TYPE_ANALOGUE, 0,  6 },
++		{ SCARLETT2_PORT_TYPE_SPDIF,    0,  2 },
++		{ SCARLETT2_PORT_TYPE_MIX,      0, 18 },
++		{ SCARLETT2_PORT_TYPE_NONE,     0,  8 },
++		{ 0,                            0,  0 },
++	}, {
++		{ SCARLETT2_PORT_TYPE_PCM,      0, 12 },
++		{ SCARLETT2_PORT_TYPE_ANALOGUE, 0,  6 },
++		{ SCARLETT2_PORT_TYPE_SPDIF,    0,  2 },
++		{ SCARLETT2_PORT_TYPE_NONE,     0, 24 },
++		{ 0,                            0,  0 },
++	} },
++};
++
+ static const struct scarlett2_device_info clarett_8pre_info = {
+ 	.config_set = SCARLETT2_CONFIG_SET_CLARETT,
+ 	.line_out_hw_vol = 1,
+@@ -907,6 +1000,8 @@ static const struct scarlett2_device_entry scarlett2_devices[] = {
  
  	/* Supported Clarett USB/Clarett+ devices */
--	{ USB_ID(0x1235, 0x8208), &clarett_8pre_info },
--	{ USB_ID(0x1235, 0x820c), &clarett_8pre_info },
-+	{ USB_ID(0x1235, 0x8208), &clarett_8pre_info, "Clarett USB" },
-+	{ USB_ID(0x1235, 0x820c), &clarett_8pre_info, "Clarett+" },
+ 	{ USB_ID(0x1235, 0x8208), &clarett_8pre_info, "Clarett USB" },
++	{ USB_ID(0x1235, 0x820a), &clarett_2pre_info, "Clarett+" },
++	{ USB_ID(0x1235, 0x820b), &clarett_4pre_info, "Clarett+" },
+ 	{ USB_ID(0x1235, 0x820c), &clarett_8pre_info, "Clarett+" },
  
  	/* End of list */
- 	{ 0, NULL },
-@@ -1205,8 +1207,8 @@ static int scarlett2_usb(
- 	if (err != req_buf_size) {
- 		usb_audio_err(
- 			mixer->chip,
--			"Scarlett Gen 2/3 USB request result cmd %x was %d\n",
--			cmd, err);
-+			"%s USB request result cmd %x was %d\n",
-+			private->series_name, cmd, err);
- 		err = -EINVAL;
- 		goto unlock;
- 	}
-@@ -1222,9 +1224,8 @@ static int scarlett2_usb(
- 	if (err != resp_buf_size) {
- 		usb_audio_err(
- 			mixer->chip,
--			"Scarlett Gen 2/3 USB response result cmd %x was %d "
--			"expected %zu\n",
--			cmd, err, resp_buf_size);
-+			"%s USB response result cmd %x was %d expected %zu\n",
-+			private->series_name, cmd, err, resp_buf_size);
- 		err = -EINVAL;
- 		goto unlock;
- 	}
-@@ -1240,9 +1241,10 @@ static int scarlett2_usb(
- 	    resp->pad) {
- 		usb_audio_err(
- 			mixer->chip,
--			"Scarlett Gen 2/3 USB invalid response; "
-+			"%s USB invalid response; "
- 			   "cmd tx/rx %d/%d seq %d/%d size %d/%d "
- 			   "error %d pad %d\n",
-+			private->series_name,
- 			le32_to_cpu(req->cmd), le32_to_cpu(resp->cmd),
- 			le16_to_cpu(req->seq), le16_to_cpu(resp->seq),
- 			resp_size, le16_to_cpu(resp->size),
-@@ -3798,7 +3800,7 @@ static int scarlett2_find_fc_interface(struct usb_device *dev,
- 
- /* Initialise private data */
- static int scarlett2_init_private(struct usb_mixer_interface *mixer,
--				  const struct scarlett2_device_info *info)
-+				  const struct scarlett2_device_entry *entry)
- {
- 	struct scarlett2_data *private =
- 		kzalloc(sizeof(struct scarlett2_data), GFP_KERNEL);
-@@ -3814,7 +3816,8 @@ static int scarlett2_init_private(struct usb_mixer_interface *mixer,
- 	mixer->private_free = scarlett2_private_free;
- 	mixer->private_suspend = scarlett2_private_suspend;
- 
--	private->info = info;
-+	private->info = entry->info;
-+	private->series_name = entry->series_name;
- 	scarlett2_count_mux_io(private);
- 	private->scarlett2_seq = 0;
- 	private->mixer = mixer;
-@@ -4135,19 +4138,28 @@ static int scarlett2_init_notify(struct usb_mixer_interface *mixer)
- 	return usb_submit_urb(mixer->urb, GFP_KERNEL);
- }
- 
--static int snd_scarlett_gen2_controls_create(struct usb_mixer_interface *mixer)
-+static const struct scarlett2_device_entry *get_scarlett2_device_entry(
-+	struct usb_mixer_interface *mixer)
- {
- 	const struct scarlett2_device_entry *entry = scarlett2_devices;
--	int err;
- 
- 	/* Find entry in scarlett2_devices */
- 	while (entry->usb_id && entry->usb_id != mixer->chip->usb_id)
- 		entry++;
- 	if (!entry->usb_id)
--		return -EINVAL;
-+		return NULL;
-+
-+	return entry;
-+}
-+
-+static int snd_scarlett_gen2_controls_create(
-+	struct usb_mixer_interface *mixer,
-+	const struct scarlett2_device_entry *entry)
-+{
-+	int err;
- 
- 	/* Initialise private data */
--	err = scarlett2_init_private(mixer, entry->info);
-+	err = scarlett2_init_private(mixer, entry);
- 	if (err < 0)
- 		return err;
- 
-@@ -4231,17 +4243,30 @@ static int snd_scarlett_gen2_controls_create(struct usb_mixer_interface *mixer)
- int snd_scarlett_gen2_init(struct usb_mixer_interface *mixer)
- {
- 	struct snd_usb_audio *chip = mixer->chip;
-+	const struct scarlett2_device_entry *entry;
- 	int err;
- 
- 	/* only use UAC_VERSION_2 */
- 	if (!mixer->protocol)
- 		return 0;
- 
-+	/* find entry in scarlett2_devices */
-+	entry = get_scarlett2_device_entry(mixer);
-+	if (!entry) {
-+		usb_audio_err(mixer->chip,
-+			      "%s: missing device entry for %04x:%04x\n",
-+			      __func__,
-+			      USB_ID_VENDOR(chip->usb_id),
-+			      USB_ID_PRODUCT(chip->usb_id));
-+		return 0;
-+	}
-+
- 	if (chip->setup & SCARLETT2_DISABLE) {
- 		usb_audio_info(chip,
--			"Focusrite Scarlett Gen 2/3 Mixer Driver disabled "
-+			"Focusrite %s Mixer Driver disabled "
- 			"by modprobe options (snd_usb_audio "
- 			"vid=0x%04x pid=0x%04x device_setup=%d)\n",
-+			entry->series_name,
- 			USB_ID_VENDOR(chip->usb_id),
- 			USB_ID_PRODUCT(chip->usb_id),
- 			SCARLETT2_DISABLE);
-@@ -4249,14 +4274,16 @@ int snd_scarlett_gen2_init(struct usb_mixer_interface *mixer)
- 	}
- 
- 	usb_audio_info(chip,
--		"Focusrite Scarlett Gen 2/3 Mixer Driver enabled (pid=0x%04x); "
-+		"Focusrite %s Mixer Driver enabled (pid=0x%04x); "
- 		"report any issues to g@b4.vu",
-+		entry->series_name,
- 		USB_ID_PRODUCT(chip->usb_id));
- 
--	err = snd_scarlett_gen2_controls_create(mixer);
-+	err = snd_scarlett_gen2_controls_create(mixer, entry);
- 	if (err < 0)
- 		usb_audio_err(mixer->chip,
--			      "Error initialising Scarlett Mixer Driver: %d",
-+			      "Error initialising %s Mixer Driver: %d",
-+			      entry->series_name,
- 			      err);
- 
- 	return err;
 -- 
 2.43.0
 
