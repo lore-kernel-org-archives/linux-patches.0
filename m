@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8FF4143889;
-	Tue, 23 Apr 2024 21:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE93B143889;
+	Tue, 23 Apr 2024 21:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908591; cv=none; b=Hr3kJu/A1fm0tHAnX61Wo9gWEW/eDWXl12b+i6W9Su1HSPrVHao0IE64bolRrlBqqsy3dK8x63IHZQVLD1gZ9XWSZl9Yb7m4wlqwEjdv+FJOAj6IBcSbv4XtiY/7vw2WhJTWMgrZFsWTw/i1j3vztRQqatR4WMKGjjC2apgj6qM=
+	t=1713908592; cv=none; b=OoZitjoRfSxZMgIu/vfbxS2IXOJUnr+T00bly0zeaoE3lS8u5X5P8sDXPNNP5j0WS7akji0VrmaO0OgUCxFdWAPaopTP+U3lLqdQkdJeEPjSAFNFBy22aUXxp3NVPtoSp7DgTZOhMYkZoF7VSscnWhqyLyIa78FzQ8A8BMP0rNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908591; c=relaxed/simple;
-	bh=yKA9sGgw9uM3qal9s57f3o5GglN8vRr+MehprDlCesw=;
+	s=arc-20240116; t=1713908592; c=relaxed/simple;
+	bh=S+dOXAYRduH64dD8hFlL8+1G4avCBSR8K+e1hKX1z4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHle1h7EVmewb8afhUwIgUR7vHH+v10676maq9R+R/R5wirx6Oy46FT9HdPCw71MKy8KRqWe9lFIqrKWUMLG3w09mzOGp0iAnlm6gwg8N5a4cyI33UgwN5HKyKGjG+0g9ME3q4bNl7otCVoyiyk4M1o33zQLxIp4510L3uuGzus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJU1BGvZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=A4s5+C8lt1wZGRsf1/Ryef2fPWa2etTlj3Iv49xW4HgCYXxRr45t/h+Serxpup/jhX8dTOjLe2WDfuC7XU4dJbcZkpShvtXrRlSu/jCsQzCAvZINU21UHkqtHVzsGOTnRo6Ej7LO88/rhcxtx7fPXsVYBXdgefg/iQtN03CePkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hS/xA8R4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJU1BGvZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9ACC4AF08;
-	Tue, 23 Apr 2024 21:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hS/xA8R4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF10C3277B;
+	Tue, 23 Apr 2024 21:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908591;
-	bh=yKA9sGgw9uM3qal9s57f3o5GglN8vRr+MehprDlCesw=;
+	s=korg; t=1713908592;
+	bh=S+dOXAYRduH64dD8hFlL8+1G4avCBSR8K+e1hKX1z4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJU1BGvZ9VsCZL+0nmPLaVTd54Sgd7ZnQbR+gSg98NQhQ4htKAjgGVNpETDq8MNft
-	 BH3oCBOW11mHjw5Xt9Pl1S6j1OkbFMG/D8AL64oWVg+xY1Up6y3yzwUEOxlpR/oMwu
-	 TwTV1ZMLuKQM+zl3d4ROv/M/QDdkMZGpwINS8PwQ=
+	b=hS/xA8R4DuTtUqqwUc75RLVhWWM06KXORwJEHVqLlBQ2B9iYAlG25NhBU1YgfOBze
+	 xl8kLqfDlR8TA7dWdm1pBobNg+zNpJKXkndP0VyuijXye7DJP6H9kyZMDjL9MHApfx
+	 V2prNg7BWkWHuBGsHPGI48l6rWWmFEAxSJ4se4G8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuri Benditovich <yuri.benditovich@daynix.com>,
-	Willem de Bruijn <willemb@google.com>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 044/158] net: change maximum number of UDP segments to 128
-Date: Tue, 23 Apr 2024 14:38:01 -0700
-Message-ID: <20240423213857.204028752@linuxfoundation.org>
+Subject: [PATCH 6.6 053/158] net: dsa: mt7530: fix mirroring frames received on local port
+Date: Tue, 23 Apr 2024 14:38:10 -0700
+Message-ID: <20240423213857.498754317@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -46,75 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuri Benditovich <yuri.benditovich@daynix.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit 1382e3b6a3500c245e5278c66d210c02926f804f ]
+[ Upstream commit d59cf049c8378677053703e724808836f180888e ]
 
-The commit fc8b2a619469
-("net: more strict VIRTIO_NET_HDR_GSO_UDP_L4 validation")
-adds check of potential number of UDP segments vs
-UDP_MAX_SEGMENTS in linux/virtio_net.h.
-After this change certification test of USO guest-to-guest
-transmit on Windows driver for virtio-net device fails,
-for example with packet size of ~64K and mss of 536 bytes.
-In general the USO should not be more restrictive than TSO.
-Indeed, in case of unreasonably small mss a lot of segments
-can cause queue overflow and packet loss on the destination.
-Limit of 128 segments is good for any practical purpose,
-with minimal meaningful mss of 536 the maximal UDP packet will
-be divided to ~120 segments.
-The number of segments for UDP packets is validated vs
-UDP_MAX_SEGMENTS also in udp.c (v4,v6), this does not affect
-quest-to-guest path but does affect packets sent to host, for
-example.
-It is important to mention that UDP_MAX_SEGMENTS is kernel-only
-define and not available to user mode socket applications.
-In order to request MSS smaller than MTU the applications
-just uses setsockopt with SOL_UDP and UDP_SEGMENT and there is
-no limitations on socket API level.
+This switch intellectual property provides a bit on the ARL global control
+register which controls allowing mirroring frames which are received on the
+local port (monitor port). This bit is unset after reset.
 
-Fixes: fc8b2a619469 ("net: more strict VIRTIO_NET_HDR_GSO_UDP_L4 validation")
-Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
+This ability must be enabled to fully support the port mirroring feature on
+this switch intellectual property.
+
+Therefore, this patch fixes the traffic not being reflected on a port,
+which would be configured like below:
+
+  tc qdisc add dev swp0 clsact
+
+  tc filter add dev swp0 ingress matchall skip_sw \
+  action mirred egress mirror dev swp0
+
+As a side note, this configuration provides the hairpinning feature for a
+single port.
+
+Fixes: 37feab6076aa ("net: dsa: mt7530: add support for port mirroring")
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/udp.h                  | 2 +-
- tools/testing/selftests/net/udpgso.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/dsa/mt7530.c | 6 ++++++
+ drivers/net/dsa/mt7530.h | 4 ++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/include/linux/udp.h b/include/linux/udp.h
-index 94e63b2695406..00790bb5cbde6 100644
---- a/include/linux/udp.h
-+++ b/include/linux/udp.h
-@@ -105,7 +105,7 @@ struct udp_sock {
- #define udp_assign_bit(nr, sk, val)		\
- 	assign_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags, val)
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 88f081672f6fb..a123bb832db91 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -2518,6 +2518,9 @@ mt7530_setup(struct dsa_switch *ds)
+ 			   PVC_EG_TAG(MT7530_VLAN_EG_CONSISTENT));
+ 	}
  
--#define UDP_MAX_SEGMENTS	(1 << 6UL)
-+#define UDP_MAX_SEGMENTS	(1 << 7UL)
++	/* Allow mirroring frames received on the local port (monitor port). */
++	mt7530_set(priv, MT753X_AGC, LOCAL_EN);
++
+ 	/* Setup VLAN ID 0 for VLAN-unaware bridges */
+ 	ret = mt7530_setup_vlan0(priv);
+ 	if (ret)
+@@ -2626,6 +2629,9 @@ mt7531_setup_common(struct dsa_switch *ds)
+ 			   PVC_EG_TAG(MT7530_VLAN_EG_CONSISTENT));
+ 	}
  
- #define udp_sk(ptr) container_of_const(ptr, struct udp_sock, inet.sk)
++	/* Allow mirroring frames received on the local port (monitor port). */
++	mt7530_set(priv, MT753X_AGC, LOCAL_EN);
++
+ 	/* Flush the FDB table */
+ 	ret = mt7530_fdb_cmd(priv, MT7530_FDB_FLUSH, NULL);
+ 	if (ret < 0)
+diff --git a/drivers/net/dsa/mt7530.h b/drivers/net/dsa/mt7530.h
+index ddefeb69afda1..9388c1205bea2 100644
+--- a/drivers/net/dsa/mt7530.h
++++ b/drivers/net/dsa/mt7530.h
+@@ -32,6 +32,10 @@ enum mt753x_id {
+ #define SYSC_REG_RSTCTRL		0x34
+ #define  RESET_MCM			BIT(2)
  
-diff --git a/tools/testing/selftests/net/udpgso.c b/tools/testing/selftests/net/udpgso.c
-index 7badaf215de28..b02080d09fbc0 100644
---- a/tools/testing/selftests/net/udpgso.c
-+++ b/tools/testing/selftests/net/udpgso.c
-@@ -34,7 +34,7 @@
- #endif
- 
- #ifndef UDP_MAX_SEGMENTS
--#define UDP_MAX_SEGMENTS	(1 << 6UL)
-+#define UDP_MAX_SEGMENTS	(1 << 7UL)
- #endif
- 
- #define CONST_MTU_TEST	1500
++/* Register for ARL global control */
++#define MT753X_AGC			0xc
++#define  LOCAL_EN			BIT(7)
++
+ /* Registers to mac forward control for unknown frames */
+ #define MT7530_MFC			0x10
+ #define  BC_FFP(x)			(((x) & 0xff) << 24)
 -- 
 2.43.0
 
