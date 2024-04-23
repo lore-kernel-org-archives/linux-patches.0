@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595FD146A64;
-	Tue, 23 Apr 2024 21:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078EA143C46;
+	Tue, 23 Apr 2024 21:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908684; cv=none; b=Dskp7pY5hZePNN16UciBuyJrfxMBjTuN8/qiQf4NlqhohlyffgofcLYVBSpyMnHXQu7gc8XUz96BNzqZpfgE8497JxByw8aceOtYL6WdC2ssYxb4g9kJNW9TGN8ZRaPzgtv4JGlXaqgSYEpvaNBba2VQV9V7xdrERfshFqpXHQc=
+	t=1713908685; cv=none; b=Hs0YuHflLdHjh7J8XUY8AbwJp8FVS5F+oupGEquf4PjfaE3FUR+5l3iT3JdFHLzpCdK/xCjmoXBSnC8wsU4UTbMntqCVI+f9qUXqBUnfrlIpXbUsvx3H971XfwACVsc6lhJgQ0h+UV4uUk5fh4sNCo+OCpjagXSHoeuDUo0IANo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908684; c=relaxed/simple;
-	bh=HW3wc9c8453iBhyhmiyD72v5GVsdLPzgbLEA5Xs1n14=;
+	s=arc-20240116; t=1713908685; c=relaxed/simple;
+	bh=+0FM8r+mU43uVx8HJ2q85y74PhRyMOIpHF+VcOyXdAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h484vs1V1BMA3SXZUrtLP1TJP7t5RO5HhkE23zz+hN1sEHGowOcEJC43Fx1UFsk9Fzf4s40Kq1IhmvoTaMiFKsbBzG/d3HrsmonWr+boKcfUSLtfwYXcITXT8Z0/sfM2z4HuAiBgtnENB3yEinFAtFBavWXthf1AXnzMgmbz7JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGaMYxCg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V0DKdaWdZ2YrKuag1IyI3fXG6OHezkyOnb2SaTS1hMEVry+Xnh19/B4RgYlQwRODqQjzPkrZd38b0Dn+5xHxoB+c7fU6qsNlnDqWSZGV7slLbz+1QV45d/WE9unvVo2pB5tp9TH3nUEjmsLRwMA91U7hTNeWIL9i3scpY93MX2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyPWaLCm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGaMYxCg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C838C116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyPWaLCm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E19C116B1;
 	Tue, 23 Apr 2024 21:44:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908684;
-	bh=HW3wc9c8453iBhyhmiyD72v5GVsdLPzgbLEA5Xs1n14=;
+	bh=+0FM8r+mU43uVx8HJ2q85y74PhRyMOIpHF+VcOyXdAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YGaMYxCghLxL8l8yW2cPHT5ZppC06OzQc8b94Gn4asWiynhAEjAT3oz3NWQ5NUTdR
-	 NqFs4lOY5SH96onpVjUbGS9q5C1Tqd3p3u9kgOV+jp/2pnICrziN+6w6lnZK0pertL
-	 RSU4+0/LAVJwdo6hLarFzDGT2270NJknIQWBrggI=
+	b=DyPWaLCmMXFIHygMO95FlSrOFUJMMMnGen2YKRen/o4YFi/uB+WCfqsTeQeAnv4JC
+	 odHgTSZ82cHb7jtXtmk39VZKl0juo1lciydMp8X9+rSPE20/5Z6V6QVqb7bxmDBbx6
+	 GkYG1V0a53U2gQIKAJwJubA0m0xhxyga1PoC55Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.1 021/141] x86/boot: Define setup size in linker script
-Date: Tue, 23 Apr 2024 14:38:09 -0700
-Message-ID: <20240423213854.009698290@linuxfoundation.org>
+	Hou Wenlong <houwenlong.hwl@antgroup.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.1 030/141] x86/head/64: Move the __head definition to <asm/init.h>
+Date: Tue, 23 Apr 2024 14:38:18 -0700
+Message-ID: <20240423213854.289965914@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -50,90 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Hou Wenlong <houwenlong.hwl@antgroup.com>
 
-[ Commit 093ab258e3fb1d1d3afdfd4a69403d44ce90e360 upstream ]
+[ Commit d2a285d65bfde3218fd0c3b88794d0135ced680b upstream ]
 
-The setup block contains the real mode startup code that is used when
-booting from a legacy BIOS, along with the boot_params/setup_data that
-is used by legacy x86 bootloaders to pass the command line and initial
-ramdisk parameters, among other things.
+Move the __head section definition to a header to widen its use.
 
-The setup block also contains the PE/COFF header of the entire combined
-image, which includes the compressed kernel image, the decompressor and
-the EFI stub.
+An upcoming patch will mark the code as __head in mem_encrypt_identity.c too.
 
-This PE header describes the layout of the executable image in memory,
-and currently, the fact that the setup block precedes it makes it rather
-fiddly to get the right values into the right place in the final image.
-
-Let's make things a bit easier by defining the setup_size in the linker
-script so it can be referenced from the asm code directly, rather than
-having to rely on the build tool to calculate it. For the time being,
-add 64 bytes of fixed padding for the .reloc and .compat sections - this
-will be removed in a subsequent patch after the PE/COFF header has been
-reorganized.
-
-This change has no impact on the resulting bzImage binary when
-configured with CONFIG_EFI_MIXED=y.
-
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Hou Wenlong <houwenlong.hwl@antgroup.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230915171623.655440-13-ardb@google.com
+Link: https://lore.kernel.org/r/0583f57977be184689c373fe540cbd7d85ca2047.1697525407.git.houwenlong.hwl@antgroup.com
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/header.S      |    2 +-
- arch/x86/boot/setup.ld      |    4 ++++
- arch/x86/boot/tools/build.c |    6 ------
- 3 files changed, 5 insertions(+), 7 deletions(-)
+ arch/x86/include/asm/init.h |    2 ++
+ arch/x86/kernel/head64.c    |    3 +--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/x86/boot/header.S
-+++ b/arch/x86/boot/header.S
-@@ -230,7 +230,7 @@ sentinel:	.byte 0xff, 0xff        /* Use
+--- a/arch/x86/include/asm/init.h
++++ b/arch/x86/include/asm/init.h
+@@ -2,6 +2,8 @@
+ #ifndef _ASM_X86_INIT_H
+ #define _ASM_X86_INIT_H
  
- 	.globl	hdr
- hdr:
--setup_sects:	.byte 0			/* Filled in by build.c */
-+		.byte setup_sects - 1
- root_flags:	.word ROOT_RDONLY
- syssize:	.long 0			/* Filled in by build.c */
- ram_size:	.word 0			/* Obsolete */
---- a/arch/x86/boot/setup.ld
-+++ b/arch/x86/boot/setup.ld
-@@ -39,6 +39,10 @@ SECTIONS
- 	.signature	: {
- 		setup_sig = .;
- 		LONG(0x5a5aaa55)
++#define __head	__section(".head.text")
 +
-+		/* Reserve some extra space for the reloc and compat sections */
-+		setup_size = ALIGN(ABSOLUTE(.) + 64, 512);
-+		setup_sects = ABSOLUTE(setup_size / 512);
- 	}
+ struct x86_mapping_info {
+ 	void *(*alloc_pgt_page)(void *); /* allocate buf for page table */
+ 	void *context;			 /* context for alloc_pgt_page */
+--- a/arch/x86/kernel/head64.c
++++ b/arch/x86/kernel/head64.c
+@@ -41,6 +41,7 @@
+ #include <asm/trapnr.h>
+ #include <asm/sev.h>
+ #include <asm/tdx.h>
++#include <asm/init.h>
  
+ /*
+  * Manage page tables very early on.
+@@ -84,8 +85,6 @@ static struct desc_ptr startup_gdt_descr
+ 	.address = 0,
+ };
  
---- a/arch/x86/boot/tools/build.c
-+++ b/arch/x86/boot/tools/build.c
-@@ -48,12 +48,7 @@ typedef unsigned int   u32;
- u8 buf[SETUP_SECT_MAX*512];
- 
- #define PECOFF_RELOC_RESERVE 0x20
+-#define __head	__section(".head.text")
 -
--#ifdef CONFIG_EFI_MIXED
- #define PECOFF_COMPAT_RESERVE 0x20
--#else
--#define PECOFF_COMPAT_RESERVE 0x0
--#endif
- 
- static unsigned long efi_pe_entry;
- static unsigned long efi32_pe_entry;
-@@ -388,7 +383,6 @@ int main(int argc, char ** argv)
- #endif
- 
- 	/* Patch the setup code with the appropriate size parameters */
--	buf[0x1f1] = setup_sectors-1;
- 	put_unaligned_le32(sys_size, &buf[0x1f4]);
- 
- 	update_pecoff_text(setup_sectors * 512, i + (sys_size * 16));
+ static void __head *fixup_pointer(void *ptr, unsigned long physaddr)
+ {
+ 	return ptr - (void *)_text + (void *)physaddr;
 
 
