@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F069A143C69;
-	Tue, 23 Apr 2024 21:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F94143C4D;
+	Tue, 23 Apr 2024 21:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908470; cv=none; b=pmspQUkNn2mr3a1133a5jNc65amOKiH1MfRmpQi4VbryELH03dfI1qRsLEAmV58JKtj2RZAK4vG+pRKIbdd2SuVGoB6vzbVePTbCgYTXTwW0h+IkEbgy3IALPUZHWmF3j0+WAx4kS2udkqrf6MstkefAnsHWoypXvULdEmK8MHA=
+	t=1713908470; cv=none; b=WZW4YF514JAoGUdxqliYQ6oHF+TeAJ+/u3ox0zH0Fk67Z34OFvGRqBud9Jr/rT2XEuHVQ7m4EjPGmVqU8ttavWbnZ0h6E1wNXOMwLPhcqq4tfaFuNY7omyKpRaKgIgDYp4GmH1fPOOjHXrIkp/2ds+IsUvD2ULWdgOYMG6fyyGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908470; c=relaxed/simple;
-	bh=/crl7X5H7Uq3aVi3BYiNBBPQHzKIfuWVqU883+1/VDE=;
+	bh=eeqkELhaNhpszgfy/fjO5lrNR/buTgd4LsyGan6JZVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oSzfexHWJ/7Su981WeQGOp+BQp/fwYaAeDPmVb6DEzD6l3Bb/2sx8yE7ds+ob7MQzm8KaUq7Lh7nNn+0D0dCvHmuvi1ecT8UskF31s5xEvguiK+6xPF8cgd6ivTcZ50wg61WKUWBSQDndH7x9vSTs97b5GRO7Wiq+HwdbKoxPBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBOnTv60; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ClzNP+6FMVq1oDTjt6lSaTiiw1r/LUtWy2ShVS17xbCuSCM4fBH5uRLLSXE+3ibWiFqWEJB2z7e2iSekVmrRxL9oJzOfxRBU3qGz8a0A2sxdNw/qR8/DLpbvRxA9tw+nTkQ2wnFD6duRfbKOTcs5DQNVOioQ2nnJ1w6LY9f/Sg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hjs2ZDZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBOnTv60"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1289C116B1;
-	Tue, 23 Apr 2024 21:41:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hjs2ZDZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D513C4AF09;
+	Tue, 23 Apr 2024 21:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908469;
-	bh=/crl7X5H7Uq3aVi3BYiNBBPQHzKIfuWVqU883+1/VDE=;
+	s=korg; t=1713908470;
+	bh=eeqkELhaNhpszgfy/fjO5lrNR/buTgd4LsyGan6JZVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nBOnTv60Otw84jw03C0F46GttBfssVOKStpwuq3z2FkEtP7diKfPrKAGtVnJ1QfrX
-	 98sV55IL6Nd4i2Cq4yBguTUx3iV7QvWTdNgLMr/A/BEXOlaJWLNIsBQ95z496tzrtP
-	 Wpn/PqpJJq81S0e1a1mum5pVIxqILjDh9rC/hB4g=
+	b=0hjs2ZDZOwX473u+B0SAIZLBVJxTHxPq0YWFCutXZHaFoeZ3ShgI6HJUuqOfqab+i
+	 yl8ewMMNG+sbYiQIlnKGU8NY3Cs96RWYgkkxDbfKpkmLI2UO1jJEiGHosoSqZ0xd50
+	 kgq9ZW8AXWHgHPFAUoch7S3WKs9d7zwyum1kcV8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Russell King (Oracle)" <linux@armlinux.org.uk>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 027/158] net/mlx5e: Prevent deadlock while disabling aRFS
-Date: Tue, 23 Apr 2024 14:37:29 -0700
-Message-ID: <20240423213856.748390218@linuxfoundation.org>
+Subject: [PATCH 6.8 036/158] net: stmmac: Fix IP-cores specific MAC capabilities
+Date: Tue, 23 Apr 2024 14:37:38 -0700
+Message-ID: <20240423213857.077780044@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -52,211 +53,243 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Serge Semin <fancer.lancer@gmail.com>
 
-[ Upstream commit fef965764cf562f28afb997b626fc7c3cec99693 ]
+[ Upstream commit 9cb54af214a7cdc91577ec083e5569f2ce2c86d8 ]
 
-When disabling aRFS under the `priv->state_lock`, any scheduled
-aRFS works are canceled using the `cancel_work_sync` function,
-which waits for the work to end if it has already started.
-However, while waiting for the work handler, the handler will
-try to acquire the `state_lock` which is already acquired.
+Here is the list of the MAC capabilities specific to the particular DW MAC
+IP-cores currently supported by the driver:
 
-The worker acquires the lock to delete the rules if the state
-is down, which is not the worker's responsibility since
-disabling aRFS deletes the rules.
+DW MAC100: MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
+	   MAC_10 | MAC_100
 
-Add an aRFS state variable, which indicates whether the aRFS is
-enabled and prevent adding rules when the aRFS is disabled.
+DW GMAC:  MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
+          MAC_10 | MAC_100 | MAC_1000
 
-Kernel log:
+Allwinner sun8i MAC: MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
+                     MAC_10 | MAC_100 | MAC_1000
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.7.0-rc4_net_next_mlx5_5483eb2 #1 Tainted: G          I
-------------------------------------------------------
-ethtool/386089 is trying to acquire lock:
-ffff88810f21ce68 ((work_completion)(&rule->arfs_work)){+.+.}-{0:0}, at: __flush_work+0x74/0x4e0
+DW QoS Eth: MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
+            MAC_10 | MAC_100 | MAC_1000 | MAC_2500FD
+if there is more than 1 active Tx/Rx queues:
+	   MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
+           MAC_10FD | MAC_100FD | MAC_1000FD | MAC_2500FD
 
-but task is already holding lock:
-ffff8884a1808cc0 (&priv->state_lock){+.+.}-{3:3}, at: mlx5e_ethtool_set_channels+0x53/0x200 [mlx5_core]
+DW XGMAC: MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
+          MAC_1000FD | MAC_2500FD | MAC_5000FD | MAC_10000FD
 
-which lock already depends on the new lock.
+DW XLGMAC: MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
+          MAC_1000FD | MAC_2500FD | MAC_5000FD | MAC_10000FD |
+          MAC_25000FD | MAC_40000FD | MAC_50000FD | MAC_100000FD
 
-the existing dependency chain (in reverse order) is:
+As you can see there are only two common capabilities:
+MAC_ASYM_PAUSE | MAC_SYM_PAUSE.
+Meanwhile what is currently implemented defines 10/100/1000 link speeds
+for all IP-cores, which is definitely incorrect for DW MAC100, DW XGMAC
+and DW XLGMAC devices.
 
--> #1 (&priv->state_lock){+.+.}-{3:3}:
-       __mutex_lock+0x80/0xc90
-       arfs_handle_work+0x4b/0x3b0 [mlx5_core]
-       process_one_work+0x1dc/0x4a0
-       worker_thread+0x1bf/0x3c0
-       kthread+0xd7/0x100
-       ret_from_fork+0x2d/0x50
-       ret_from_fork_asm+0x11/0x20
+Seeing the flow-control is implemented as a callback for each MAC IP-core
+(see dwmac100_flow_ctrl(), dwmac1000_flow_ctrl(), sun8i_dwmac_flow_ctrl(),
+etc) and since the MAC-specific setup() method is supposed to be called
+for each available DW MAC-based device, the capabilities initialization
+can be freely moved to these setup() functions, thus correctly setting up
+the MAC-capabilities for each IP-core (including the Allwinner Sun8i). A
+new stmmac_link::caps field was specifically introduced for that so to
+have all link-specific info preserved in a single structure.
 
--> #0 ((work_completion)(&rule->arfs_work)){+.+.}-{0:0}:
-       __lock_acquire+0x17b4/0x2c80
-       lock_acquire+0xd0/0x2b0
-       __flush_work+0x7a/0x4e0
-       __cancel_work_timer+0x131/0x1c0
-       arfs_del_rules+0x143/0x1e0 [mlx5_core]
-       mlx5e_arfs_disable+0x1b/0x30 [mlx5_core]
-       mlx5e_ethtool_set_channels+0xcb/0x200 [mlx5_core]
-       ethnl_set_channels+0x28f/0x3b0
-       ethnl_default_set_doit+0xec/0x240
-       genl_family_rcv_msg_doit+0xd0/0x120
-       genl_rcv_msg+0x188/0x2c0
-       netlink_rcv_skb+0x54/0x100
-       genl_rcv+0x24/0x40
-       netlink_unicast+0x1a1/0x270
-       netlink_sendmsg+0x214/0x460
-       __sock_sendmsg+0x38/0x60
-       __sys_sendto+0x113/0x170
-       __x64_sys_sendto+0x20/0x30
-       do_syscall_64+0x40/0xe0
-       entry_SYSCALL_64_after_hwframe+0x46/0x4e
+Note the suggested change fixes three earlier commits at a time. The
+commit 5b0d7d7da64b ("net: stmmac: Add the missing speeds that XGMAC
+supports") permitted the 10-100 link speeds and 1G half-duplex mode for DW
+XGMAC IP-core even though it doesn't support them. The commit df7699c70c1b
+("net: stmmac: Do not cut down 1G modes") incorrectly added the MAC1000
+capability to the DW MAC100 IP-core. Similarly to the DW XGMAC the commit
+8a880936e902 ("net: stmmac: Add XLGMII support") incorrectly permitted the
+10-100 link speeds and 1G half-duplex mode for DW XLGMAC IP-core.
 
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&priv->state_lock);
-                               lock((work_completion)(&rule->arfs_work));
-                               lock(&priv->state_lock);
-  lock((work_completion)(&rule->arfs_work));
-
- *** DEADLOCK ***
-
-3 locks held by ethtool/386089:
- #0: ffffffff82ea7210 (cb_lock){++++}-{3:3}, at: genl_rcv+0x15/0x40
- #1: ffffffff82e94c88 (rtnl_mutex){+.+.}-{3:3}, at: ethnl_default_set_doit+0xd3/0x240
- #2: ffff8884a1808cc0 (&priv->state_lock){+.+.}-{3:3}, at: mlx5e_ethtool_set_channels+0x53/0x200 [mlx5_core]
-
-stack backtrace:
-CPU: 15 PID: 386089 Comm: ethtool Tainted: G          I        6.7.0-rc4_net_next_mlx5_5483eb2 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x60/0xa0
- check_noncircular+0x144/0x160
- __lock_acquire+0x17b4/0x2c80
- lock_acquire+0xd0/0x2b0
- ? __flush_work+0x74/0x4e0
- ? save_trace+0x3e/0x360
- ? __flush_work+0x74/0x4e0
- __flush_work+0x7a/0x4e0
- ? __flush_work+0x74/0x4e0
- ? __lock_acquire+0xa78/0x2c80
- ? lock_acquire+0xd0/0x2b0
- ? mark_held_locks+0x49/0x70
- __cancel_work_timer+0x131/0x1c0
- ? mark_held_locks+0x49/0x70
- arfs_del_rules+0x143/0x1e0 [mlx5_core]
- mlx5e_arfs_disable+0x1b/0x30 [mlx5_core]
- mlx5e_ethtool_set_channels+0xcb/0x200 [mlx5_core]
- ethnl_set_channels+0x28f/0x3b0
- ethnl_default_set_doit+0xec/0x240
- genl_family_rcv_msg_doit+0xd0/0x120
- genl_rcv_msg+0x188/0x2c0
- ? ethnl_ops_begin+0xb0/0xb0
- ? genl_family_rcv_msg_dumpit+0xf0/0xf0
- netlink_rcv_skb+0x54/0x100
- genl_rcv+0x24/0x40
- netlink_unicast+0x1a1/0x270
- netlink_sendmsg+0x214/0x460
- __sock_sendmsg+0x38/0x60
- __sys_sendto+0x113/0x170
- ? do_user_addr_fault+0x53f/0x8f0
- __x64_sys_sendto+0x20/0x30
- do_syscall_64+0x40/0xe0
- entry_SYSCALL_64_after_hwframe+0x46/0x4e
- </TASK>
-
-Fixes: 45bf454ae884 ("net/mlx5e: Enabling aRFS mechanism")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20240411115444.374475-7-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5b0d7d7da64b ("net: stmmac: Add the missing speeds that XGMAC supports")
+Fixes: df7699c70c1b ("net: stmmac: Do not cut down 1G modes")
+Fixes: 8a880936e902 ("net: stmmac: Add XLGMII support")
+Suggested-by: Russell King (Oracle) <linux@armlinux.org.uk>
+Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
+Reviewed-by: Romain Gantois <romain.gantois@bootlin.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_arfs.c | 27 +++++++++++--------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/common.h   |  1 +
+ .../net/ethernet/stmicro/stmmac/dwmac-sun8i.c  |  2 ++
+ .../ethernet/stmicro/stmmac/dwmac1000_core.c   |  2 ++
+ .../ethernet/stmicro/stmmac/dwmac100_core.c    |  2 ++
+ .../net/ethernet/stmicro/stmmac/dwmac4_core.c  | 10 ++++------
+ .../ethernet/stmicro/stmmac/dwxgmac2_core.c    | 18 ++++++++----------
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c  |  7 ++++---
+ 7 files changed, 23 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
-index e66f486faafe1..415fec7763bd2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
-@@ -45,6 +45,10 @@ struct arfs_table {
- 	struct hlist_head	 rules_hash[ARFS_HASH_SIZE];
- };
+diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
+index 5ba606a596e77..5a1d46dcd5de0 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/common.h
++++ b/drivers/net/ethernet/stmicro/stmmac/common.h
+@@ -550,6 +550,7 @@ extern const struct stmmac_hwtimestamp stmmac_ptp;
+ extern const struct stmmac_mode_ops dwmac4_ring_mode_ops;
  
-+enum {
-+	MLX5E_ARFS_STATE_ENABLED,
-+};
-+
- enum arfs_type {
- 	ARFS_IPV4_TCP,
- 	ARFS_IPV6_TCP,
-@@ -59,6 +63,7 @@ struct mlx5e_arfs_tables {
- 	spinlock_t                     arfs_lock;
- 	int                            last_filter_id;
- 	struct workqueue_struct        *wq;
-+	unsigned long                  state;
- };
+ struct mac_link {
++	u32 caps;
+ 	u32 speed_mask;
+ 	u32 speed10;
+ 	u32 speed100;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
+index b21d99faa2d04..e1b761dcfa1dd 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
+@@ -1096,6 +1096,8 @@ static struct mac_device_info *sun8i_dwmac_setup(void *ppriv)
  
- struct arfs_tuple {
-@@ -169,6 +174,8 @@ int mlx5e_arfs_enable(struct mlx5e_flow_steering *fs)
- 			return err;
- 		}
- 	}
-+	set_bit(MLX5E_ARFS_STATE_ENABLED, &arfs->state);
-+
- 	return 0;
+ 	priv->dev->priv_flags |= IFF_UNICAST_FLT;
+ 
++	mac->link.caps = MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
++			 MAC_10 | MAC_100 | MAC_1000;
+ 	/* The loopback bit seems to be re-set when link change
+ 	 * Simply mask it each time
+ 	 * Speed 10/100/1000 are set in BIT(2)/BIT(3)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
+index 3927609abc441..8555299443f4e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
+@@ -539,6 +539,8 @@ int dwmac1000_setup(struct stmmac_priv *priv)
+ 	if (mac->multicast_filter_bins)
+ 		mac->mcast_bits_log2 = ilog2(mac->multicast_filter_bins);
+ 
++	mac->link.caps = MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
++			 MAC_10 | MAC_100 | MAC_1000;
+ 	mac->link.duplex = GMAC_CONTROL_DM;
+ 	mac->link.speed10 = GMAC_CONTROL_PS;
+ 	mac->link.speed100 = GMAC_CONTROL_PS | GMAC_CONTROL_FES;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac100_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac100_core.c
+index a6e8d7bd95886..7667d103cd0eb 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac100_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac100_core.c
+@@ -175,6 +175,8 @@ int dwmac100_setup(struct stmmac_priv *priv)
+ 	dev_info(priv->device, "\tDWMAC100\n");
+ 
+ 	mac->pcsr = priv->ioaddr;
++	mac->link.caps = MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
++			 MAC_10 | MAC_100;
+ 	mac->link.duplex = MAC_CONTROL_F;
+ 	mac->link.speed10 = 0;
+ 	mac->link.speed100 = 0;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+index ec6a13e644b36..a38226d7cc6a9 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+@@ -70,14 +70,10 @@ static void dwmac4_core_init(struct mac_device_info *hw,
+ 
+ static void dwmac4_phylink_get_caps(struct stmmac_priv *priv)
+ {
+-	priv->phylink_config.mac_capabilities |= MAC_2500FD;
+-
+ 	if (priv->plat->tx_queues_to_use > 1)
+-		priv->phylink_config.mac_capabilities &=
+-			~(MAC_10HD | MAC_100HD | MAC_1000HD);
++		priv->hw->link.caps &= ~(MAC_10HD | MAC_100HD | MAC_1000HD);
+ 	else
+-		priv->phylink_config.mac_capabilities |=
+-			(MAC_10HD | MAC_100HD | MAC_1000HD);
++		priv->hw->link.caps |= (MAC_10HD | MAC_100HD | MAC_1000HD);
  }
  
-@@ -454,6 +461,8 @@ static void arfs_del_rules(struct mlx5e_flow_steering *fs)
- 	int i;
- 	int j;
+ static void dwmac4_rx_queue_enable(struct mac_device_info *hw,
+@@ -1385,6 +1381,8 @@ int dwmac4_setup(struct stmmac_priv *priv)
+ 	if (mac->multicast_filter_bins)
+ 		mac->mcast_bits_log2 = ilog2(mac->multicast_filter_bins);
  
-+	clear_bit(MLX5E_ARFS_STATE_ENABLED, &arfs->state);
-+
- 	spin_lock_bh(&arfs->arfs_lock);
- 	mlx5e_for_each_arfs_rule(rule, htmp, arfs->arfs_tables, i, j) {
- 		hlist_del_init(&rule->hlist);
-@@ -626,17 +635,8 @@ static void arfs_handle_work(struct work_struct *work)
- 	struct mlx5_flow_handle *rule;
++	mac->link.caps = MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
++			 MAC_10 | MAC_100 | MAC_1000 | MAC_2500FD;
+ 	mac->link.duplex = GMAC_CONFIG_DM;
+ 	mac->link.speed10 = GMAC_CONFIG_PS;
+ 	mac->link.speed100 = GMAC_CONFIG_FES | GMAC_CONFIG_PS;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+index e841e312077ef..f8e7775bb6336 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+@@ -47,14 +47,6 @@ static void dwxgmac2_core_init(struct mac_device_info *hw,
+ 	writel(XGMAC_INT_DEFAULT_EN, ioaddr + XGMAC_INT_EN);
+ }
  
- 	arfs = mlx5e_fs_get_arfs(priv->fs);
--	mutex_lock(&priv->state_lock);
--	if (!test_bit(MLX5E_STATE_OPENED, &priv->state)) {
--		spin_lock_bh(&arfs->arfs_lock);
--		hlist_del(&arfs_rule->hlist);
--		spin_unlock_bh(&arfs->arfs_lock);
+-static void xgmac_phylink_get_caps(struct stmmac_priv *priv)
+-{
+-	priv->phylink_config.mac_capabilities |= MAC_2500FD | MAC_5000FD |
+-						 MAC_10000FD | MAC_25000FD |
+-						 MAC_40000FD | MAC_50000FD |
+-						 MAC_100000FD;
+-}
 -
--		mutex_unlock(&priv->state_lock);
--		kfree(arfs_rule);
--		goto out;
--	}
--	mutex_unlock(&priv->state_lock);
-+	if (!test_bit(MLX5E_ARFS_STATE_ENABLED, &arfs->state))
-+		return;
+ static void dwxgmac2_set_mac(void __iomem *ioaddr, bool enable)
+ {
+ 	u32 tx = readl(ioaddr + XGMAC_TX_CONFIG);
+@@ -1540,7 +1532,6 @@ static void dwxgmac3_fpe_configure(void __iomem *ioaddr, struct stmmac_fpe_cfg *
  
- 	if (!arfs_rule->rule) {
- 		rule = arfs_add_rule(priv, arfs_rule);
-@@ -752,6 +752,11 @@ int mlx5e_rx_flow_steer(struct net_device *dev, const struct sk_buff *skb,
- 		return -EPROTONOSUPPORT;
+ const struct stmmac_ops dwxgmac210_ops = {
+ 	.core_init = dwxgmac2_core_init,
+-	.phylink_get_caps = xgmac_phylink_get_caps,
+ 	.set_mac = dwxgmac2_set_mac,
+ 	.rx_ipc = dwxgmac2_rx_ipc,
+ 	.rx_queue_enable = dwxgmac2_rx_queue_enable,
+@@ -1601,7 +1592,6 @@ static void dwxlgmac2_rx_queue_enable(struct mac_device_info *hw, u8 mode,
  
- 	spin_lock_bh(&arfs->arfs_lock);
-+	if (!test_bit(MLX5E_ARFS_STATE_ENABLED, &arfs->state)) {
-+		spin_unlock_bh(&arfs->arfs_lock);
-+		return -EPERM;
-+	}
+ const struct stmmac_ops dwxlgmac2_ops = {
+ 	.core_init = dwxgmac2_core_init,
+-	.phylink_get_caps = xgmac_phylink_get_caps,
+ 	.set_mac = dwxgmac2_set_mac,
+ 	.rx_ipc = dwxgmac2_rx_ipc,
+ 	.rx_queue_enable = dwxlgmac2_rx_queue_enable,
+@@ -1661,6 +1651,9 @@ int dwxgmac2_setup(struct stmmac_priv *priv)
+ 	if (mac->multicast_filter_bins)
+ 		mac->mcast_bits_log2 = ilog2(mac->multicast_filter_bins);
+ 
++	mac->link.caps = MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
++			 MAC_1000FD | MAC_2500FD | MAC_5000FD |
++			 MAC_10000FD;
+ 	mac->link.duplex = 0;
+ 	mac->link.speed10 = XGMAC_CONFIG_SS_10_MII;
+ 	mac->link.speed100 = XGMAC_CONFIG_SS_100_MII;
+@@ -1698,6 +1691,11 @@ int dwxlgmac2_setup(struct stmmac_priv *priv)
+ 	if (mac->multicast_filter_bins)
+ 		mac->mcast_bits_log2 = ilog2(mac->multicast_filter_bins);
+ 
++	mac->link.caps = MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
++			 MAC_1000FD | MAC_2500FD | MAC_5000FD |
++			 MAC_10000FD | MAC_25000FD |
++			 MAC_40000FD | MAC_50000FD |
++			 MAC_100000FD;
+ 	mac->link.duplex = 0;
+ 	mac->link.speed1000 = XLGMAC_CONFIG_SS_1000;
+ 	mac->link.speed2500 = XLGMAC_CONFIG_SS_2500;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 2a48277ed614f..83b732c30c1bb 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1225,12 +1225,11 @@ static int stmmac_phy_setup(struct stmmac_priv *priv)
+ 		xpcs_get_interfaces(priv->hw->xpcs,
+ 				    priv->phylink_config.supported_interfaces);
+ 
+-	priv->phylink_config.mac_capabilities = MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
+-						MAC_10 | MAC_100 | MAC_1000;
+-
+ 	/* Get the MAC specific capabilities */
+ 	stmmac_mac_phylink_get_caps(priv);
+ 
++	priv->phylink_config.mac_capabilities = priv->hw->link.caps;
 +
- 	arfs_rule = arfs_find_rule(arfs_t, &fk);
- 	if (arfs_rule) {
- 		if (arfs_rule->rxq == rxq_index || work_busy(&arfs_rule->arfs_work)) {
+ 	max_speed = priv->plat->max_speed;
+ 	if (max_speed)
+ 		phylink_limit_mac_speed(&priv->phylink_config, max_speed);
+@@ -7288,6 +7287,8 @@ int stmmac_reinit_queues(struct net_device *dev, u32 rx_cnt, u32 tx_cnt)
+ 
+ 	stmmac_mac_phylink_get_caps(priv);
+ 
++	priv->phylink_config.mac_capabilities = priv->hw->link.caps;
++
+ 	max_speed = priv->plat->max_speed;
+ 	if (max_speed)
+ 		phylink_limit_mac_speed(&priv->phylink_config, max_speed);
 -- 
 2.43.0
 
