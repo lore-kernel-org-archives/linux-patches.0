@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750FA143C41;
-	Tue, 23 Apr 2024 21:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E5D143C41;
+	Tue, 23 Apr 2024 21:45:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908705; cv=none; b=AHTblvNAUtU3MQMrnGsEyrzZJzXAh5CAAg9J+SlNgLAerkUwsCdOO4Oh4EgcFfis/kxe8p4wYSwNlg58VgWA10akrqnAGnPk0JR+gBTMWG/6r/QWcTKB+rbP7MMkpZb9wkceVEcMdt9UPV4+RL7ZX+q9jaJx2fiXd7PePIt9PQE=
+	t=1713908706; cv=none; b=DxJI058gxAUinzFzq+8SZwDtMxjrmTXMLw/tDXHn7pzwEQH6MVlVWozjcXyTrLbByIseJTvqMMLLPFJNj7XgZlx0dOTmQC174bmgUXyE9UoPKdsQQ5e8nKwC7SeFzKnEitKQKj8jJn4p770Zjep8r/U2uj2CxLb6RzntOsNlFco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908705; c=relaxed/simple;
-	bh=DXx3KRPXYqmWtdNU0T9BOdd2PmdlUrRIG4g5oZjxBUk=;
+	s=arc-20240116; t=1713908706; c=relaxed/simple;
+	bh=ttOxlreeqC4NVbTete9S1dmmkXekuNoW7gz4VktxoOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=klVZaacDo9Q5b5DozKuLwp9NzpRJsovRmL/aBjX374ybdzXFe4vuZb4B31VHK7BYYPBnSFMn1G7Rr1XFwRE+7PXDjPkUHcTKpa5kq2KYkU18dudfdy3rhWHDYlMHHY23o6vMjxZrCW+fW+RknVnMKz0qTPO4WKGaBa6F8TCpyKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3GO3+sb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ImPzZ2pSb9zWLK+lYmA/e6ubROidby2rZmS5T1rybqNnMNPsnUB2ngcn20/QY2HhZ0lqiIWLKQqD4a5NzTRImJGsHdwIOiHJMc/M7DpEwBxlWs0G7lknqyYdbSez8SafrPJ3iH/sUT2fEmtJFKRpSK46MfcKCYCeyeDC3TLoe+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RerSEZe9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3GO3+sb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AB9C3277B;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RerSEZe9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE33C116B1;
 	Tue, 23 Apr 2024 21:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908705;
-	bh=DXx3KRPXYqmWtdNU0T9BOdd2PmdlUrRIG4g5oZjxBUk=;
+	s=korg; t=1713908706;
+	bh=ttOxlreeqC4NVbTete9S1dmmkXekuNoW7gz4VktxoOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q3GO3+sblUS35SLTMoTazhquHkgzITJuwHQZ8FR8GuigkyuRg9+z6vQDs8cyfHn4d
-	 FDP4pNeeOetNOhIsnhx2/M/20CTw7LYLiHKJu2nr22oOLskBtY+gCJX5kUCScKgGkQ
-	 5P6xX6+iIHGO7jHVe5x7pesdOqLBuglBV/V9+OLQ=
+	b=RerSEZe9qUEF29smjOdYCABtVTvBjHKzTj+17aJeYI+x7AtSUE4yIYHMLZIiybHhA
+	 8wfLfU165jfd1nFgwoJ3g7VX/2MF/Pako1Vv/kA9OybWHaNckXUJ3xr3v3kwdWg+YC
+	 0CXMwrEMa8ML5PNhj6iX4cOFrYfpCM3+hzNC4SWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Pastore <mike@oobak.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/141] PCI: Delay after FLR of Solidigm P44 Pro NVMe
-Date: Tue, 23 Apr 2024 14:38:48 -0700
-Message-ID: <20240423213855.197611419@linuxfoundation.org>
+Subject: [PATCH 6.1 061/141] x86/quirks: Include linux/pnp.h for arch_pnpbios_disabled()
+Date: Tue, 23 Apr 2024 14:38:49 -0700
+Message-ID: <20240423213855.230977851@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -51,68 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Pastore <mike@oobak.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 0ac448e0d29d6ba978684b3fa2e3ac7294ec2475 ]
+[ Upstream commit 056b44a4d10907ec8153863b2a0564e808ef1440 ]
 
-Prevent KVM hang when a Solidgm P44 Pro NVMe is passed through to a guest
-via IOMMU and the guest is subsequently rebooted.
+arch_pnpbios_disabled() is defined in architecture code on x86, but this
+does not include the appropriate header, causing a warning:
 
-A similar issue was identified and patched by 51ba09452d11 ("PCI: Delay
-after FLR of Intel DC P3700 NVMe") and the same fix can be applied for this
-case. (Intel spun off their NAND and SSD business as Solidigm and sold it
-to SK Hynix in late 2021.)
+arch/x86/kernel/platform-quirks.c:42:13: error: no previous prototype for 'arch_pnpbios_disabled' [-Werror=missing-prototypes]
 
-Link: https://lore.kernel.org/r/20230507073519.9737-1-mike@oobak.org
-Signed-off-by: Mike Pastore <mike@oobak.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://lore.kernel.org/all/20230516193549.544673-10-arnd%40kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c    | 10 ++++++----
- include/linux/pci_ids.h |  2 ++
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ arch/x86/kernel/platform-quirks.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index d8d3f817e95cb..92169dc71468e 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -4011,10 +4011,11 @@ static int nvme_disable_and_flr(struct pci_dev *dev, bool probe)
- }
+diff --git a/arch/x86/kernel/platform-quirks.c b/arch/x86/kernel/platform-quirks.c
+index b348a672f71d5..b525fe6d66571 100644
+--- a/arch/x86/kernel/platform-quirks.c
++++ b/arch/x86/kernel/platform-quirks.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <linux/kernel.h>
+ #include <linux/init.h>
++#include <linux/pnp.h>
  
- /*
-- * Intel DC P3700 NVMe controller will timeout waiting for ready status
-- * to change after NVMe enable if the driver starts interacting with the
-- * device too soon after FLR.  A 250ms delay after FLR has heuristically
-- * proven to produce reliably working results for device assignment cases.
-+ * Some NVMe controllers such as Intel DC P3700 and Solidigm P44 Pro will
-+ * timeout waiting for ready status to change after NVMe enable if the driver
-+ * starts interacting with the device too soon after FLR.  A 250ms delay after
-+ * FLR has heuristically proven to produce reliably working results for device
-+ * assignment cases.
-  */
- static int delay_250ms_after_flr(struct pci_dev *dev, bool probe)
- {
-@@ -4101,6 +4102,7 @@ static const struct pci_dev_reset_methods pci_dev_reset_methods[] = {
- 	{ PCI_VENDOR_ID_SAMSUNG, 0xa804, nvme_disable_and_flr },
- 	{ PCI_VENDOR_ID_INTEL, 0x0953, delay_250ms_after_flr },
- 	{ PCI_VENDOR_ID_INTEL, 0x0a54, delay_250ms_after_flr },
-+	{ PCI_VENDOR_ID_SOLIDIGM, 0xf1ac, delay_250ms_after_flr },
- 	{ PCI_VENDOR_ID_CHELSIO, PCI_ANY_ID,
- 		reset_chelsio_generic_dev },
- 	{ PCI_VENDOR_ID_HUAWEI, PCI_DEVICE_ID_HINIC_VF,
-diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
-index 73cc1e7dd15ad..9e9794d03c9fc 100644
---- a/include/linux/pci_ids.h
-+++ b/include/linux/pci_ids.h
-@@ -158,6 +158,8 @@
- 
- #define PCI_VENDOR_ID_LOONGSON		0x0014
- 
-+#define PCI_VENDOR_ID_SOLIDIGM		0x025e
-+
- #define PCI_VENDOR_ID_TTTECH		0x0357
- #define PCI_DEVICE_ID_TTTECH_MC322	0x000a
- 
+ #include <asm/setup.h>
+ #include <asm/bios_ebda.h>
 -- 
 2.43.0
 
