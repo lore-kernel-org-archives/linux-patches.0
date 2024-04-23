@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CEE143C57;
-	Tue, 23 Apr 2024 21:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06085143C57;
+	Tue, 23 Apr 2024 21:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908611; cv=none; b=DRdiY/wMfRjvUQenjGMl8iI9CqDhlJxuUxyy6seAzwi3fCEmzMRmkB80sE1wM0QJBm0AL4TqOzdir+P1xfqPZdX1I5ULKn5a/HF9HOiVZCu+vI88thnuF1zMfPasfM+vD3iHmibFg2NlWtpSCZ4Pf66I05UrCQ2GXID/FdMIXfk=
+	t=1713908612; cv=none; b=DnB07XlOP4pTsjybuVquJVpkUaYhXvQaa4di0gg/8lXFYE+zYi7iLdSOKZ9msSN+lWG7dUMpkA0qe0JJLDnqzRSVp3drcx4DZRprJC+GIlnDElOMemI2V/XbxLnfPLWQTfIcNnxV4zLH2rN19uJHzZ7LOkAKiJ0dJiDTx9Qtqrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908611; c=relaxed/simple;
-	bh=R4BP9TcGmJlHI5yhQKy3oHq7SSUIpy7Jc2KxL/APk3o=;
+	s=arc-20240116; t=1713908612; c=relaxed/simple;
+	bh=Wn9C9/QHau82EtnNRtlWchOgb+BzEV75DPb5uYrxCwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X593Yen5G4KaLez5EXOGt/qQSvOIsEEJACYGAG1hkOsYz71JwJ9DzhXqNUQztQ/5lhh9UuHxZinFcVUlIbHob9V1T3TFmezUGkSnXQ8i8MDQc0YsxDaumai1sbk4n8wRho7CTnO0n8aY695VWpi/Xsvz14B7GWOkSa4QxGRsLvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CboQVGKa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=siPGB6M3jn97w+eTIYMzmxKSSLrEL+qpDGnbLn5jUEGfGA74nKp4qtcyDGZclPiZTr8M7KTDuDDEozDnw8le9G/OPGPrG1Nlgp5BB+cuau/1L4GtTHcT/RllHPPvqk26hFrbs5+kYso5SbPqmNoWSfDJyosEYUKHGJwYyBXYxz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOULTNMR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CboQVGKa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FCBCC116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOULTNMR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4F8BC4AF07;
 	Tue, 23 Apr 2024 21:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908611;
-	bh=R4BP9TcGmJlHI5yhQKy3oHq7SSUIpy7Jc2KxL/APk3o=;
+	bh=Wn9C9/QHau82EtnNRtlWchOgb+BzEV75DPb5uYrxCwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CboQVGKa3FtvzwU2GgaM+X4vw/HCmUJtr9TEWkceLWOdJbQ9Mt9vh7uVK+KqT45ul
-	 fls6Nwf9g+wL+M6IC+zSgEoQ0e2XbcfLYyACverTYrAvw8M6zND1wxjVlwfCpgYint
-	 mgiuC4fkORlzWPTEUy+76GR/SSrVMaGyu/dja0G0=
+	b=iOULTNMRui5b4Xi4lsR4jXWR+nOIRuuUz9ORGfmJ8sVZ+aL2VPTO8/D42PTEwNqju
+	 Qtl4bshF5p/l3KoSr+FNQsoBifvMR+pP/kogg2f/cmkat+Lkx3dhnGFPzykEcAwAbU
+	 JY54JMhoGQAj72LaHf8QhRSB4ujrSF0qZbWxSvBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@kernel.org>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 043/158] net/mlx5e: Prevent deadlock while disabling aRFS
-Date: Tue, 23 Apr 2024 14:38:00 -0700
-Message-ID: <20240423213857.163695326@linuxfoundation.org>
+Subject: [PATCH 6.6 074/158] usb: pci-quirks: handle HAS_IOPORT dependency for UHCI handoff
+Date: Tue, 23 Apr 2024 14:38:31 -0700
+Message-ID: <20240423213858.170080847@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -52,211 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit fef965764cf562f28afb997b626fc7c3cec99693 ]
+[ Upstream commit 358ad297e379ff548247e3e24c6619559942bfdd ]
 
-When disabling aRFS under the `priv->state_lock`, any scheduled
-aRFS works are canceled using the `cancel_work_sync` function,
-which waits for the work to end if it has already started.
-However, while waiting for the work handler, the handler will
-try to acquire the `state_lock` which is already acquired.
+In a future patch HAS_IOPORT=n will result in inb()/outb() and friends
+not being declared. With the AMD quirk handled USB PCI quirks still use
+inw() in uhci_check_and_reset_hc() and thus indirectly in
+quirk_usb_handoff_uhci(). Handle this by conditionally compiling
+uhci_check_and_reset_hc() and stubbing out quirk_usb_handoff_uhci() when
+HAS_IOPORT is not available.
 
-The worker acquires the lock to delete the rules if the state
-is down, which is not the worker's responsibility since
-disabling aRFS deletes the rules.
-
-Add an aRFS state variable, which indicates whether the aRFS is
-enabled and prevent adding rules when the aRFS is disabled.
-
-Kernel log:
-
-======================================================
-WARNING: possible circular locking dependency detected
-6.7.0-rc4_net_next_mlx5_5483eb2 #1 Tainted: G          I
-------------------------------------------------------
-ethtool/386089 is trying to acquire lock:
-ffff88810f21ce68 ((work_completion)(&rule->arfs_work)){+.+.}-{0:0}, at: __flush_work+0x74/0x4e0
-
-but task is already holding lock:
-ffff8884a1808cc0 (&priv->state_lock){+.+.}-{3:3}, at: mlx5e_ethtool_set_channels+0x53/0x200 [mlx5_core]
-
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #1 (&priv->state_lock){+.+.}-{3:3}:
-       __mutex_lock+0x80/0xc90
-       arfs_handle_work+0x4b/0x3b0 [mlx5_core]
-       process_one_work+0x1dc/0x4a0
-       worker_thread+0x1bf/0x3c0
-       kthread+0xd7/0x100
-       ret_from_fork+0x2d/0x50
-       ret_from_fork_asm+0x11/0x20
-
--> #0 ((work_completion)(&rule->arfs_work)){+.+.}-{0:0}:
-       __lock_acquire+0x17b4/0x2c80
-       lock_acquire+0xd0/0x2b0
-       __flush_work+0x7a/0x4e0
-       __cancel_work_timer+0x131/0x1c0
-       arfs_del_rules+0x143/0x1e0 [mlx5_core]
-       mlx5e_arfs_disable+0x1b/0x30 [mlx5_core]
-       mlx5e_ethtool_set_channels+0xcb/0x200 [mlx5_core]
-       ethnl_set_channels+0x28f/0x3b0
-       ethnl_default_set_doit+0xec/0x240
-       genl_family_rcv_msg_doit+0xd0/0x120
-       genl_rcv_msg+0x188/0x2c0
-       netlink_rcv_skb+0x54/0x100
-       genl_rcv+0x24/0x40
-       netlink_unicast+0x1a1/0x270
-       netlink_sendmsg+0x214/0x460
-       __sock_sendmsg+0x38/0x60
-       __sys_sendto+0x113/0x170
-       __x64_sys_sendto+0x20/0x30
-       do_syscall_64+0x40/0xe0
-       entry_SYSCALL_64_after_hwframe+0x46/0x4e
-
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&priv->state_lock);
-                               lock((work_completion)(&rule->arfs_work));
-                               lock(&priv->state_lock);
-  lock((work_completion)(&rule->arfs_work));
-
- *** DEADLOCK ***
-
-3 locks held by ethtool/386089:
- #0: ffffffff82ea7210 (cb_lock){++++}-{3:3}, at: genl_rcv+0x15/0x40
- #1: ffffffff82e94c88 (rtnl_mutex){+.+.}-{3:3}, at: ethnl_default_set_doit+0xd3/0x240
- #2: ffff8884a1808cc0 (&priv->state_lock){+.+.}-{3:3}, at: mlx5e_ethtool_set_channels+0x53/0x200 [mlx5_core]
-
-stack backtrace:
-CPU: 15 PID: 386089 Comm: ethtool Tainted: G          I        6.7.0-rc4_net_next_mlx5_5483eb2 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x60/0xa0
- check_noncircular+0x144/0x160
- __lock_acquire+0x17b4/0x2c80
- lock_acquire+0xd0/0x2b0
- ? __flush_work+0x74/0x4e0
- ? save_trace+0x3e/0x360
- ? __flush_work+0x74/0x4e0
- __flush_work+0x7a/0x4e0
- ? __flush_work+0x74/0x4e0
- ? __lock_acquire+0xa78/0x2c80
- ? lock_acquire+0xd0/0x2b0
- ? mark_held_locks+0x49/0x70
- __cancel_work_timer+0x131/0x1c0
- ? mark_held_locks+0x49/0x70
- arfs_del_rules+0x143/0x1e0 [mlx5_core]
- mlx5e_arfs_disable+0x1b/0x30 [mlx5_core]
- mlx5e_ethtool_set_channels+0xcb/0x200 [mlx5_core]
- ethnl_set_channels+0x28f/0x3b0
- ethnl_default_set_doit+0xec/0x240
- genl_family_rcv_msg_doit+0xd0/0x120
- genl_rcv_msg+0x188/0x2c0
- ? ethnl_ops_begin+0xb0/0xb0
- ? genl_family_rcv_msg_dumpit+0xf0/0xf0
- netlink_rcv_skb+0x54/0x100
- genl_rcv+0x24/0x40
- netlink_unicast+0x1a1/0x270
- netlink_sendmsg+0x214/0x460
- __sock_sendmsg+0x38/0x60
- __sys_sendto+0x113/0x170
- ? do_user_addr_fault+0x53f/0x8f0
- __x64_sys_sendto+0x20/0x30
- do_syscall_64+0x40/0xe0
- entry_SYSCALL_64_after_hwframe+0x46/0x4e
- </TASK>
-
-Fixes: 45bf454ae884 ("net/mlx5e: Enabling aRFS mechanism")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20240411115444.374475-7-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Co-developed-by: Arnd Bergmann <arnd@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@kernel.org>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230911125653.1393895-4-schnelle@linux.ibm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_arfs.c | 27 +++++++++++--------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ drivers/usb/host/pci-quirks.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
-index e66f486faafe1..415fec7763bd2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
-@@ -45,6 +45,10 @@ struct arfs_table {
- 	struct hlist_head	 rules_hash[ARFS_HASH_SIZE];
- };
+diff --git a/drivers/usb/host/pci-quirks.c b/drivers/usb/host/pci-quirks.c
+index 10813096d00c6..1f9c1b1435d86 100644
+--- a/drivers/usb/host/pci-quirks.c
++++ b/drivers/usb/host/pci-quirks.c
+@@ -634,6 +634,16 @@ void usb_asmedia_modifyflowcontrol(struct pci_dev *pdev)
+ }
+ EXPORT_SYMBOL_GPL(usb_asmedia_modifyflowcontrol);
  
-+enum {
-+	MLX5E_ARFS_STATE_ENABLED,
-+};
++static inline int io_type_enabled(struct pci_dev *pdev, unsigned int mask)
++{
++	u16 cmd;
 +
- enum arfs_type {
- 	ARFS_IPV4_TCP,
- 	ARFS_IPV6_TCP,
-@@ -59,6 +63,7 @@ struct mlx5e_arfs_tables {
- 	spinlock_t                     arfs_lock;
- 	int                            last_filter_id;
- 	struct workqueue_struct        *wq;
-+	unsigned long                  state;
- };
++	return !pci_read_config_word(pdev, PCI_COMMAND, &cmd) && (cmd & mask);
++}
++
++#define mmio_enabled(dev) io_type_enabled(dev, PCI_COMMAND_MEMORY)
++
++#if defined(CONFIG_HAS_IOPORT) && IS_ENABLED(CONFIG_USB_UHCI_HCD)
+ /*
+  * Make sure the controller is completely inactive, unable to
+  * generate interrupts or do DMA.
+@@ -715,14 +725,7 @@ int uhci_check_and_reset_hc(struct pci_dev *pdev, unsigned long base)
+ }
+ EXPORT_SYMBOL_GPL(uhci_check_and_reset_hc);
  
- struct arfs_tuple {
-@@ -169,6 +174,8 @@ int mlx5e_arfs_enable(struct mlx5e_flow_steering *fs)
- 			return err;
- 		}
- 	}
-+	set_bit(MLX5E_ARFS_STATE_ENABLED, &arfs->state);
-+
- 	return 0;
+-static inline int io_type_enabled(struct pci_dev *pdev, unsigned int mask)
+-{
+-	u16 cmd;
+-	return !pci_read_config_word(pdev, PCI_COMMAND, &cmd) && (cmd & mask);
+-}
+-
+ #define pio_enabled(dev) io_type_enabled(dev, PCI_COMMAND_IO)
+-#define mmio_enabled(dev) io_type_enabled(dev, PCI_COMMAND_MEMORY)
+ 
+ static void quirk_usb_handoff_uhci(struct pci_dev *pdev)
+ {
+@@ -742,6 +745,12 @@ static void quirk_usb_handoff_uhci(struct pci_dev *pdev)
+ 		uhci_check_and_reset_hc(pdev, base);
  }
  
-@@ -454,6 +461,8 @@ static void arfs_del_rules(struct mlx5e_flow_steering *fs)
- 	int i;
- 	int j;
- 
-+	clear_bit(MLX5E_ARFS_STATE_ENABLED, &arfs->state);
++#else /* defined(CONFIG_HAS_IOPORT && IS_ENABLED(CONFIG_USB_UHCI_HCD) */
 +
- 	spin_lock_bh(&arfs->arfs_lock);
- 	mlx5e_for_each_arfs_rule(rule, htmp, arfs->arfs_tables, i, j) {
- 		hlist_del_init(&rule->hlist);
-@@ -626,17 +635,8 @@ static void arfs_handle_work(struct work_struct *work)
- 	struct mlx5_flow_handle *rule;
- 
- 	arfs = mlx5e_fs_get_arfs(priv->fs);
--	mutex_lock(&priv->state_lock);
--	if (!test_bit(MLX5E_STATE_OPENED, &priv->state)) {
--		spin_lock_bh(&arfs->arfs_lock);
--		hlist_del(&arfs_rule->hlist);
--		spin_unlock_bh(&arfs->arfs_lock);
--
--		mutex_unlock(&priv->state_lock);
--		kfree(arfs_rule);
--		goto out;
--	}
--	mutex_unlock(&priv->state_lock);
-+	if (!test_bit(MLX5E_ARFS_STATE_ENABLED, &arfs->state))
-+		return;
- 
- 	if (!arfs_rule->rule) {
- 		rule = arfs_add_rule(priv, arfs_rule);
-@@ -752,6 +752,11 @@ int mlx5e_rx_flow_steer(struct net_device *dev, const struct sk_buff *skb,
- 		return -EPROTONOSUPPORT;
- 
- 	spin_lock_bh(&arfs->arfs_lock);
-+	if (!test_bit(MLX5E_ARFS_STATE_ENABLED, &arfs->state)) {
-+		spin_unlock_bh(&arfs->arfs_lock);
-+		return -EPERM;
-+	}
++static void quirk_usb_handoff_uhci(struct pci_dev *pdev) {}
 +
- 	arfs_rule = arfs_find_rule(arfs_t, &fk);
- 	if (arfs_rule) {
- 		if (arfs_rule->rxq == rxq_index || work_busy(&arfs_rule->arfs_work)) {
++#endif /* defined(CONFIG_HAS_IOPORT && IS_ENABLED(CONFIG_USB_UHCI_HCD) */
++
+ static int mmio_resource_enabled(struct pci_dev *pdev, int idx)
+ {
+ 	return pci_resource_start(pdev, idx) && mmio_enabled(pdev);
 -- 
 2.43.0
 
