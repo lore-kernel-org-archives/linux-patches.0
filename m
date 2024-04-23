@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4875143C46;
-	Tue, 23 Apr 2024 21:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962A5143C46;
+	Tue, 23 Apr 2024 21:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908681; cv=none; b=hh/zH16DEpt4i3oaUolbanbm6UrsWOzRiBYzHOlLOb3u9Q1a+kSGqNCxJIOCLDJKVQDz/48KB4IlUrF/AP4UfLPEXi9kUTzMxT1M83cLjTd4NEpKqN7Ehj/omAR2mZntY6QzQQRg/AVULPh60TfIkCzVQFS7ZveE7IW0gT0g/jo=
+	t=1713908681; cv=none; b=CA7HtnK0Yi7uY1cqD9iSivnndOrvvbzzReAqKC3c2PIzzSPoSZRFDKpNTQEMyLifqwFmqK4SUH7lc0/TioW6+mRpaYTxfyQzVWDyDLdmuC46os1qJBT1Onmjbh0W4Nr+4BA+mXGDY9ieYIC9d0cTUsAbCTOY5gD2w2gc2nOV0yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908681; c=relaxed/simple;
-	bh=iTfIx4KeeRUszMS3oIObfvNQi39Kg/E2FrL8fOSP/Lg=;
+	bh=/GCgFnWs3e4LZnhej04tqCkSBUoKo6lICXlY/qv4ITg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lcnUeXuvx3BkH0tkapADUlyasTy7S8ltTTumXZCJrMUPCI2yChpP+Fj0YxwllmYofaJ5cF1Q5jeN54tQRRJjrx4oU+IB5D86VZNk+nivJWK8BIu1OWvtSeK2Xd0tvMMaC/0a48ewIQkS8CaibhHEOlKoETy8LX4qBvhbwQIwnDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E9dPv1d4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rm7z2naRznJKDlBeAQn2e/8O3WzUTazaRLdZLApKhLvmc8+H4zfw9zjrZe2h/hevLZxVF+Tx4kSyqaYxod55L/SSu5d3ldTp2aQ6r3wBzuGFZBEk3xJJpb5b/NV9953O7XGv/kl7SC1XPlCkdHEOZjyUAyHEi0HSF+EPhGXS4+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8HD5JXA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E9dPv1d4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAAB5C116B1;
-	Tue, 23 Apr 2024 21:44:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8HD5JXA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A31C3277B;
+	Tue, 23 Apr 2024 21:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908680;
-	bh=iTfIx4KeeRUszMS3oIObfvNQi39Kg/E2FrL8fOSP/Lg=;
+	s=korg; t=1713908681;
+	bh=/GCgFnWs3e4LZnhej04tqCkSBUoKo6lICXlY/qv4ITg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E9dPv1d4SW6kduplRDbuWcU89JGG49yI1viGbMT5IDDC0yBEJjjLiVIWHl+/CyenL
-	 dTevMjtjNd2FfS8MhPhKRvdliCGOeoZZuC7+misEadq2aO3C/CeEakXB1V8VDlb08h
-	 uzMhXU4BBCgeeYtYqRuBKPAa3b3BREurY0d09Hq4=
+	b=W8HD5JXAbBiRV2DzbJ/rtfnf1aXG1B4aQV1hvGd45H2nZjNA+ime1i1Y+8AXS+9o2
+	 Tl3qv48/LavmQeijEov/UhDEhj9NGpI8XyBiD4vOu8sS6jAl5+u6m5MFWGYdSmJzS9
+	 QroApxRubc8kyOfyuiaYPz361/cft0vFHdwiMe0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yuanhe Shu <xiangzao@linux.alibaba.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 006/141] SUNRPC: Fix rpcgss_context trace event acceptor field
-Date: Tue, 23 Apr 2024 14:37:54 -0700
-Message-ID: <20240423213853.566444432@linuxfoundation.org>
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.1 007/141] selftests/ftrace: Limit length in subsystem-enable tests
+Date: Tue, 23 Apr 2024 14:37:55 -0700
+Message-ID: <20240423213853.592948142@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -50,54 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Yuanhe Shu <xiangzao@linux.alibaba.com>
 
-commit a4833e3abae132d613ce7da0e0c9a9465d1681fa upstream.
+commit 1a4ea83a6e67f1415a1f17c1af5e9c814c882bb5 upstream.
 
-The rpcgss_context trace event acceptor field is a dynamically sized
-string that records the "data" parameter. But this parameter is also
-dependent on the "len" field to determine the size of the data.
+While sched* events being traced and sched* events continuously happen,
+"[xx] event tracing - enable/disable with subsystem level files" would
+not stop as on some slower systems it seems to take forever.
+Select the first 100 lines of output would be enough to judge whether
+there are more than 3 types of sched events.
 
-It needs to use __string_len() helper macro where the length can be passed
-in. It also incorrectly uses strncpy() to save it instead of
-__assign_str(). As these macros can change, it is not wise to open code
-them in trace events.
-
-As of commit c759e609030c ("tracing: Remove __assign_str_len()"),
-__assign_str() can be used for both __string() and __string_len() fields.
-Before that commit, __assign_str_len() is required to be used. This needs
-to be noted for backporting. (In actuality, commit c1fa617caeb0 ("tracing:
-Rework __assign_str() and __string() to not duplicate getting the string")
-is the commit that makes __string_str_len() obsolete).
-
+Fixes: 815b18ea66d6 ("ftracetest: Add basic event tracing test cases")
 Cc: stable@vger.kernel.org
-Fixes: 0c77668ddb4e ("SUNRPC: Introduce trace points in rpc_auth_gss.ko")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Yuanhe Shu <xiangzao@linux.alibaba.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/rpcgss.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/include/trace/events/rpcgss.h
-+++ b/include/trace/events/rpcgss.h
-@@ -587,7 +587,7 @@ TRACE_EVENT(rpcgss_context,
- 		__field(unsigned int, timeout)
- 		__field(u32, window_size)
- 		__field(int, len)
--		__string(acceptor, data)
-+		__string_len(acceptor, data, len)
- 	),
+--- a/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
++++ b/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
+@@ -18,7 +18,7 @@ echo 'sched:*' > set_event
  
- 	TP_fast_assign(
-@@ -596,7 +596,7 @@ TRACE_EVENT(rpcgss_context,
- 		__entry->timeout = timeout;
- 		__entry->window_size = window_size;
- 		__entry->len = len;
--		strncpy(__get_str(acceptor), data, len);
-+		__assign_str(acceptor, data);
- 	),
+ yield
  
- 	TP_printk("win_size=%u expiry=%lu now=%lu timeout=%u acceptor=%.*s",
+-count=`cat trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
++count=`head -n 100 trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
+ if [ $count -lt 3 ]; then
+     fail "at least fork, exec and exit events should be recorded"
+ fi
+@@ -29,7 +29,7 @@ echo 1 > events/sched/enable
+ 
+ yield
+ 
+-count=`cat trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
++count=`head -n 100 trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
+ if [ $count -lt 3 ]; then
+     fail "at least fork, exec and exit events should be recorded"
+ fi
+@@ -40,7 +40,7 @@ echo 0 > events/sched/enable
+ 
+ yield
+ 
+-count=`cat trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
++count=`head -n 100 trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
+ if [ $count -ne 0 ]; then
+     fail "any of scheduler events should not be recorded"
+ fi
 
 
