@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48527143C46;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52C7145339;
 	Tue, 23 Apr 2024 21:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908682; cv=none; b=vFF85PmgumCtGnABo6FKuhHUDQi6KIoBm/5VJ0O6RX/K9n42zdjgf+Q30/w68DOna/fvuc4Hi3/gvIk21NiM+HBuSSVWbPB+b1LwCoCL0lC32QB+mIzMvWgYa+VM13oppSayt10Df99yb57vW8D+o5g4uOox17r2V5QUpXit9WU=
+	t=1713908683; cv=none; b=CGhQnUYLWl4bVF7L7FUN4n4sErrm13Cy8/ZOYDyPx6hCb5gNMxBV2sKhl+Cnqq2KmUfcrl9sHimmtCfLJqoEaLaTUsa8XQYGRSfwctPsibSemAd1Ejnc+zei8bA+mm+/gFQC+bku2WoA3IAivfhbTf61/XKr6bAWjGmGDfwBd+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908682; c=relaxed/simple;
-	bh=UVieBGmCsm0OUFy+Z8D03LYDA7X5E7u+QTMCi18x/kk=;
+	s=arc-20240116; t=1713908683; c=relaxed/simple;
+	bh=db7SfcWYqBtZOMbOl20ki6vOdhVO7oHlYxrzzp7PHFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LzOJHLW1ylutxSNnoaTl2MRpPPXaV5lzxdtgzjlbxneb9ys4aTvGhPYWnsBJHYKjdcsA0jJBQ2C8RifN+17Yxh+mZ0CY2RW22bDFi/q5QqOSz1Fn2ZiH+uDGYrXf3/OusSTrl0loBiTB5o+bYhvINvJvVm6fwUugRHHMT3u4dhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P102Yhmp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aZFTngKZjxD9SySCKOjx64OjXZt8yEEVVQn7c0ymrHtuWzouSEvYdySVXmYptM6/H7/fxsiN3pYnEQNRleeiAPGqxNKp/W701WMSzBVTXzM+wSUUbg7Vwq4zd8Zq40Sw83U0K5mYZEfI5/CBOiWAGXqAAAwIOBdodmk3nr9fv1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4Z69/8x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P102Yhmp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7CCC3277B;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4Z69/8x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9BDDC116B1;
 	Tue, 23 Apr 2024 21:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908682;
-	bh=UVieBGmCsm0OUFy+Z8D03LYDA7X5E7u+QTMCi18x/kk=;
+	bh=db7SfcWYqBtZOMbOl20ki6vOdhVO7oHlYxrzzp7PHFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P102YhmpxfEkak3c/Igf+XUrQrMaLYrf8xLwFg9yt0KFJnTMnip40Qs6YJqT7ZpZW
-	 Sxd0eTlAurbskbrB7DmtAY36VGU/nkX9ny5sdyH33oTSuB5ImouwQ14FvOu6nw0Jts
-	 qpsK1+ImgWh5AiE2y56CdA33HHjqkgnlUEsspBz8=
+	b=S4Z69/8x8vZK4zn7UEfZw7/Iya3WLqa9pkZSZapEIQjfYxbjEuEIkJfD0QIKj4xs8
+	 Dszcjr5vmNxS3FwD7LwfH4Tfbw2gANoXTWWvQOXBxFurMOA2X7mRCMz9ZvfU+HKUlY
+	 DCea4FfODT4hFA2vRdX1qMEoyv1g83K5uracs4sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoyong Wang <guoyong.wang@mediatek.com>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH 6.1 008/141] random: handle creditable entropy from atomic process context
-Date: Tue, 23 Apr 2024 14:37:56 -0700
-Message-ID: <20240423213853.624174256@linuxfoundation.org>
+	Jarkko Palviainen <jarkko.palviainen@gmail.com>,
+	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 009/141] net: usb: ax88179_178a: avoid writing the mac address before first reading
+Date: Tue, 23 Apr 2024 14:37:57 -0700
+Message-ID: <20240423213853.658196560@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -50,94 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-commit e871abcda3b67d0820b4182ebe93435624e9c6a4 upstream.
+commit 56f78615bcb1c3ba58a5d9911bad3d9185cf141b upstream.
 
-The entropy accounting changes a static key when the RNG has
-initialized, since it only ever initializes once. Static key changes,
-however, cannot be made from atomic context, so depending on where the
-last creditable entropy comes from, the static key change might need to
-be deferred to a worker.
+After the commit d2689b6a86b9 ("net: usb: ax88179_178a: avoid two
+consecutive device resets"), reset operation, in which the default mac
+address from the device is read, is not executed from bind operation and
+the random address, that is pregenerated just in case, is direclty written
+the first time in the device, so the default one from the device is not
+even read. This writing is not dangerous because is volatile and the
+default mac address is not missed.
 
-Previously the code used the execute_in_process_context() helper
-function, which accounts for whether or not the caller is
-in_interrupt(). However, that doesn't account for the case where the
-caller is actually in process context but is holding a spinlock.
+In order to avoid this and keep the simplification to have only one
+reset and reduce the delays, restore the reset from bind operation and
+remove the reset that is commanded from open operation. The behavior is
+the same but everything is ready for usbnet_probe.
 
-This turned out to be the case with input_handle_event() in
-drivers/input/input.c contributing entropy:
+Tested with ASIX AX88179 USB Gigabit Ethernet devices.
+Restore the old behavior for the rest of possible devices because I don't
+have the hardware to test.
 
-  [<ffffffd613025ba0>] die+0xa8/0x2fc
-  [<ffffffd613027428>] bug_handler+0x44/0xec
-  [<ffffffd613016964>] brk_handler+0x90/0x144
-  [<ffffffd613041e58>] do_debug_exception+0xa0/0x148
-  [<ffffffd61400c208>] el1_dbg+0x60/0x7c
-  [<ffffffd61400c000>] el1h_64_sync_handler+0x38/0x90
-  [<ffffffd613011294>] el1h_64_sync+0x64/0x6c
-  [<ffffffd613102d88>] __might_resched+0x1fc/0x2e8
-  [<ffffffd613102b54>] __might_sleep+0x44/0x7c
-  [<ffffffd6130b6eac>] cpus_read_lock+0x1c/0xec
-  [<ffffffd6132c2820>] static_key_enable+0x14/0x38
-  [<ffffffd61400ac08>] crng_set_ready+0x14/0x28
-  [<ffffffd6130df4dc>] execute_in_process_context+0xb8/0xf8
-  [<ffffffd61400ab30>] _credit_init_bits+0x118/0x1dc
-  [<ffffffd6138580c8>] add_timer_randomness+0x264/0x270
-  [<ffffffd613857e54>] add_input_randomness+0x38/0x48
-  [<ffffffd613a80f94>] input_handle_event+0x2b8/0x490
-  [<ffffffd613a81310>] input_event+0x6c/0x98
-
-According to Guoyong, it's not really possible to refactor the various
-drivers to never hold a spinlock there. And in_atomic() isn't reliable.
-
-So, rather than trying to be too fancy, just punt the change in the
-static key to a workqueue always. There's basically no drawback of doing
-this, as the code already needed to account for the static key not
-changing immediately, and given that it's just an optimization, there's
-not exactly a hurry to change the static key right away, so deferal is
-fine.
-
-Reported-by: Guoyong Wang <guoyong.wang@mediatek.com>
-Cc: stable@vger.kernel.org
-Fixes: f5bda35fba61 ("random: use static branch for crng_ready()")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+cc: stable@vger.kernel.org # 6.6+
+Fixes: d2689b6a86b9 ("net: usb: ax88179_178a: avoid two consecutive device resets")
+Reported-by: Jarkko Palviainen <jarkko.palviainen@gmail.com>
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Link: https://lore.kernel.org/r/20240417085524.219532-1-jtornosm@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/random.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/usb/ax88179_178a.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/char/random.c
-+++ b/drivers/char/random.c
-@@ -683,7 +683,7 @@ static void extract_entropy(void *buf, s
+--- a/drivers/net/usb/ax88179_178a.c
++++ b/drivers/net/usb/ax88179_178a.c
+@@ -1317,6 +1317,8 @@ static int ax88179_bind(struct usbnet *d
  
- static void __cold _credit_init_bits(size_t bits)
- {
--	static struct execute_work set_ready;
-+	static DECLARE_WORK(set_ready, crng_set_ready);
- 	unsigned int new, orig, add;
- 	unsigned long flags;
+ 	netif_set_tso_max_size(dev->net, 16384);
  
-@@ -699,8 +699,8 @@ static void __cold _credit_init_bits(siz
++	ax88179_reset(dev);
++
+ 	return 0;
+ }
  
- 	if (orig < POOL_READY_BITS && new >= POOL_READY_BITS) {
- 		crng_reseed(); /* Sets crng_init to CRNG_READY under base_crng.lock. */
--		if (static_key_initialized)
--			execute_in_process_context(crng_set_ready, &set_ready);
-+		if (static_key_initialized && system_unbound_wq)
-+			queue_work(system_unbound_wq, &set_ready);
- 		wake_up_interruptible(&crng_init_wait);
- 		kill_fasync(&fasync, SIGIO, POLL_IN);
- 		pr_notice("crng init done\n");
-@@ -870,8 +870,8 @@ void __init random_init(void)
- 
- 	/*
- 	 * If we were initialized by the cpu or bootloader before jump labels
--	 * are initialized, then we should enable the static branch here, where
--	 * it's guaranteed that jump labels have been initialized.
-+	 * or workqueues are initialized, then we should enable the static
-+	 * branch here, where it's guaranteed that these have been initialized.
- 	 */
- 	if (!static_branch_likely(&crng_is_ready) && crng_init >= CRNG_READY)
- 		crng_set_ready(NULL);
+@@ -1695,7 +1697,6 @@ static const struct driver_info ax88179_
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset = ax88179_reset,
+ 	.stop = ax88179_stop,
+ 	.flags = FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
+@@ -1708,7 +1709,6 @@ static const struct driver_info ax88178a
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset = ax88179_reset,
+ 	.stop = ax88179_stop,
+ 	.flags = FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
 
 
