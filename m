@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5FE1487EA;
-	Tue, 23 Apr 2024 21:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32432145B1E;
+	Tue, 23 Apr 2024 21:46:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908766; cv=none; b=odMivKK/8/8vo64Zk1XuAZ1vDMHy4qNp/f82OO83IHbBXysbR/+8tu8waeZChP1WSxSnAlOn8j5AJb7+qdToGlf9FxtBz8AfVta/IfKPSnIpEQ2rvtnfvRGbtbhFmsk30XyoiSmEScP0EeEmHMWyaP5ETeuEKkv9A+tKCWYwFXk=
+	t=1713908767; cv=none; b=YPmzc36Te6qtjHeEJN2H0qAMs3F7kYFzFJo8p41S7RApeeELp++d/rbv6j/tDftvfUMWUPS1h+DmcsYo76m2rPJryjqhZeAVbQs8mxqtGxJVkQe50FWfthrfg6+vhyj0vuAHzgN3frp0RuGSMCWQieYNG2fnvErqA30zxWG7BI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908766; c=relaxed/simple;
-	bh=t+5A+Kagdy46nt3BaEMkS7cJbxHbAdvOcjXN9xgmM4E=;
+	s=arc-20240116; t=1713908767; c=relaxed/simple;
+	bh=kQHw5taQJ3dI3DQzcXK173Z7bsS9N881mB1xA/ZVXbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oX+tV/d51+s0kAocLxdsYgzMB7FZ8lU/aor4bbJ92GBYgHEJy37QRodDyI0PZn/btqdlwIvUTWSpDZpZmZoE2Y2eRSs7BAPLoTQj7k400AXzSJYvnKuyv0sM1MTy2gtIGfdJOFO1FErk3yYb+crQ4/XUWLVSV/9M6Y6RejCWY9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mjuClQ93; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aGR9srixuW40ScRSF8TOx1Dj43P9ttROF9pgTWBL5aqJHRhxukDXWBzmPUdaefwX70wxYdGt2XrtAZSnleRBNI7B7bozXm2DVUpQoO54899ek9gC0gDBEpY6G9zQZpORe5x9remm8StO2wQyQGOa1wwEzggMEejAPl/tDpPYcoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L8reMRbj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjuClQ93"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E973C3277B;
-	Tue, 23 Apr 2024 21:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L8reMRbj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07625C116B1;
+	Tue, 23 Apr 2024 21:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908766;
-	bh=t+5A+Kagdy46nt3BaEMkS7cJbxHbAdvOcjXN9xgmM4E=;
+	s=korg; t=1713908767;
+	bh=kQHw5taQJ3dI3DQzcXK173Z7bsS9N881mB1xA/ZVXbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mjuClQ93x2q8Is1+LwJcYhRfyfs0zrt+ZIYRcP2mziyGYyQjJc5xzyTjtOx+j5apf
-	 eH+ModQJ0B0ToZZUQyNdSL3fdrMhXOuKNZsoM4IYSAouzbg9exttpPLXo6aJ4Bnq9+
-	 5ndBD0LOjU1zbT99E4HICEF1WZWI+Ul4mFx7MGDM=
+	b=L8reMRbjd535T7/TBT5+sSqzIBH6nVwcOm4iwnb492OmPvI2ZpiO6fpfIeRQWTtvF
+	 Wwhe5Tap/CwDpp7OZJDws7Ct6Jl9Sgm5qQWO8HVCd7obW2bnDTYt9jzfbKSwosxChr
+	 gYURsX90s8A1QIECWwkzCL8H/3WH6IBvJYUJGs94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.1 141/141] PCI/ASPM: Fix deadlock when enabling ASPM
-Date: Tue, 23 Apr 2024 14:40:09 -0700
-Message-ID: <20240423213857.798145327@linuxfoundation.org>
+	Vladimir Oltean <olteanv@gmail.com>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 134/141] net: dsa: introduce preferred_default_local_cpu_port and use on MT7530
+Date: Tue, 23 Apr 2024 14:40:02 -0700
+Message-ID: <20240423213857.569072539@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -44,394 +47,175 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Vladimir Oltean <olteanv@gmail.com>
 
-commit 1e560864159d002b453da42bd2c13a1805515a20 upstream.
+commit b79d7c14f48083abb3fb061370c0c64a569edf4c upstream.
 
-A last minute revert in 6.7-final introduced a potential deadlock when
-enabling ASPM during probe of Qualcomm PCIe controllers as reported by
-lockdep:
+Since the introduction of the OF bindings, DSA has always had a policy that
+in case multiple CPU ports are present in the device tree, the numerically
+smallest one is always chosen.
 
-  ============================================
-  WARNING: possible recursive locking detected
-  6.7.0 #40 Not tainted
-  --------------------------------------------
-  kworker/u16:5/90 is trying to acquire lock:
-  ffffacfa78ced000 (pci_bus_sem){++++}-{3:3}, at: pcie_aspm_pm_state_change+0x58/0xdc
+The MT7530 switch family, except the switch on the MT7988 SoC, has 2 CPU
+ports, 5 and 6, where port 6 is preferable on the MT7531BE switch because
+it has higher bandwidth.
 
-              but task is already holding lock:
-  ffffacfa78ced000 (pci_bus_sem){++++}-{3:3}, at: pci_walk_bus+0x34/0xbc
+The MT7530 driver developers had 3 options:
+- to modify DSA when the MT7531 switch support was introduced, such as to
+  prefer the better port
+- to declare both CPU ports in device trees as CPU ports, and live with the
+  sub-optimal performance resulting from not preferring the better port
+- to declare just port 6 in the device tree as a CPU port
 
-              other info that might help us debug this:
-   Possible unsafe locking scenario:
+Of course they chose the path of least resistance (3rd option), kicking the
+can down the road. The hardware description in the device tree is supposed
+to be stable - developers are not supposed to adopt the strategy of
+piecemeal hardware description, where the device tree is updated in
+lockstep with the features that the kernel currently supports.
 
-         CPU0
-         ----
-    lock(pci_bus_sem);
-    lock(pci_bus_sem);
+Now, as a result of the fact that they did that, any attempts to modify the
+device tree and describe both CPU ports as CPU ports would make DSA change
+its default selection from port 6 to 5, effectively resulting in a
+performance degradation visible to users with the MT7531BE switch as can be
+seen below.
 
-               *** DEADLOCK ***
+Without preferring port 6:
 
-  Call trace:
-   print_deadlock_bug+0x25c/0x348
-   __lock_acquire+0x10a4/0x2064
-   lock_acquire+0x1e8/0x318
-   down_read+0x60/0x184
-   pcie_aspm_pm_state_change+0x58/0xdc
-   pci_set_full_power_state+0xa8/0x114
-   pci_set_power_state+0xc4/0x120
-   qcom_pcie_enable_aspm+0x1c/0x3c [pcie_qcom]
-   pci_walk_bus+0x64/0xbc
-   qcom_pcie_host_post_init_2_7_0+0x28/0x34 [pcie_qcom]
+[ ID][Role] Interval           Transfer     Bitrate         Retr
+[  5][TX-C]   0.00-20.00  sec   374 MBytes   157 Mbits/sec  734    sender
+[  5][TX-C]   0.00-20.00  sec   373 MBytes   156 Mbits/sec    receiver
+[  7][RX-C]   0.00-20.00  sec  1.81 GBytes   778 Mbits/sec    0    sender
+[  7][RX-C]   0.00-20.00  sec  1.81 GBytes   777 Mbits/sec    receiver
 
-The deadlock can easily be reproduced on machines like the Lenovo ThinkPad
-X13s by adding a delay to increase the race window during asynchronous
-probe where another thread can take a write lock.
+With preferring port 6:
 
-Add a new pci_set_power_state_locked() and associated helper functions that
-can be called with the PCI bus semaphore held to avoid taking the read lock
-twice.
+[ ID][Role] Interval           Transfer     Bitrate         Retr
+[  5][TX-C]   0.00-20.00  sec  1.99 GBytes   856 Mbits/sec  273    sender
+[  5][TX-C]   0.00-20.00  sec  1.99 GBytes   855 Mbits/sec    receiver
+[  7][RX-C]   0.00-20.00  sec  1.72 GBytes   737 Mbits/sec   15    sender
+[  7][RX-C]   0.00-20.00  sec  1.71 GBytes   736 Mbits/sec    receiver
 
-Link: https://lore.kernel.org/r/ZZu0qx2cmn7IwTyQ@hovoldconsulting.com
-Link: https://lore.kernel.org/r/20240130100243.11011-1-johan+linaro@kernel.org
-Fixes: f93e71aea6c6 ("Revert "PCI/ASPM: Remove pcie_aspm_pm_state_change()"")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: <stable@vger.kernel.org>	# 6.7
-[bhelgaas: backported to v6.1.y, which contains b9c370b61d73 ("Revert
- "PCI/ASPM: Remove pcie_aspm_pm_state_change()""), a backport of
- f93e71aea6c6.  This omits the drivers/pci/controller/dwc/pcie-qcom.c hunk
- that updates qcom_pcie_enable_aspm(), which was added by 9f4f3dfad8cf
- ("PCI: qcom: Enable ASPM for platforms supporting 1.9.0 ops"), which is not
- present in v6.1.87.]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Using one port for WAN and the other ports for LAN is a very popular use
+case which is what this test emulates.
+
+As such, this change proposes that we retroactively modify stable kernels
+(which don't support the modification of the CPU port assignments, so as to
+let user space fix the problem and restore the throughput) to keep the
+mt7530 driver preferring port 6 even with device trees where the hardware
+is more fully described.
+
+Fixes: c288575f7810 ("net: dsa: mt7530: Add the support of MT7531 switch")
+Signed-off-by: Vladimir Oltean <olteanv@gmail.com>
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/bus.c       |   49 +++++++++++++++++++-----------
- drivers/pci/pci.c       |   78 ++++++++++++++++++++++++++++++++----------------
- drivers/pci/pci.h       |    4 +-
- drivers/pci/pcie/aspm.c |   13 +++++---
- include/linux/pci.h     |    5 +++
- 5 files changed, 100 insertions(+), 49 deletions(-)
+ drivers/net/dsa/mt7530.c |   15 +++++++++++++++
+ include/net/dsa.h        |    8 ++++++++
+ net/dsa/dsa2.c           |   24 +++++++++++++++++++++++-
+ 3 files changed, 46 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/bus.c
-+++ b/drivers/pci/bus.c
-@@ -379,21 +379,8 @@ void pci_bus_add_devices(const struct pc
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -419,6 +419,20 @@ static void mt7530_pll_setup(struct mt75
+ 	core_set(priv, CORE_TRGMII_GSW_CLK_CG, REG_GSWCK_EN);
  }
- EXPORT_SYMBOL(pci_bus_add_devices);
  
--/** pci_walk_bus - walk devices on/under bus, calling callback.
-- *  @top      bus whose devices should be walked
-- *  @cb       callback to be called for each device found
-- *  @userdata arbitrary pointer to be passed to callback.
-- *
-- *  Walk the given bus, including any bridged devices
-- *  on buses under this bus.  Call the provided callback
-- *  on each device found.
-- *
-- *  We check the return of @cb each time. If it returns anything
-- *  other than 0, we break out.
-- *
-- */
--void pci_walk_bus(struct pci_bus *top, int (*cb)(struct pci_dev *, void *),
--		  void *userdata)
-+static void __pci_walk_bus(struct pci_bus *top, int (*cb)(struct pci_dev *, void *),
-+			   void *userdata, bool locked)
- {
- 	struct pci_dev *dev;
- 	struct pci_bus *bus;
-@@ -401,7 +388,8 @@ void pci_walk_bus(struct pci_bus *top, i
- 	int retval;
- 
- 	bus = top;
--	down_read(&pci_bus_sem);
-+	if (!locked)
-+		down_read(&pci_bus_sem);
- 	next = top->devices.next;
- 	for (;;) {
- 		if (next == &bus->devices) {
-@@ -424,10 +412,37 @@ void pci_walk_bus(struct pci_bus *top, i
- 		if (retval)
- 			break;
- 	}
--	up_read(&pci_bus_sem);
-+	if (!locked)
-+		up_read(&pci_bus_sem);
-+}
-+
-+/**
-+ *  pci_walk_bus - walk devices on/under bus, calling callback.
-+ *  @top: bus whose devices should be walked
-+ *  @cb: callback to be called for each device found
-+ *  @userdata: arbitrary pointer to be passed to callback
-+ *
-+ *  Walk the given bus, including any bridged devices
-+ *  on buses under this bus.  Call the provided callback
-+ *  on each device found.
-+ *
-+ *  We check the return of @cb each time. If it returns anything
-+ *  other than 0, we break out.
++/* If port 6 is available as a CPU port, always prefer that as the default,
++ * otherwise don't care.
 + */
-+void pci_walk_bus(struct pci_bus *top, int (*cb)(struct pci_dev *, void *), void *userdata)
++static struct dsa_port *
++mt753x_preferred_default_local_cpu_port(struct dsa_switch *ds)
 +{
-+	__pci_walk_bus(top, cb, userdata, false);
- }
- EXPORT_SYMBOL_GPL(pci_walk_bus);
- 
-+void pci_walk_bus_locked(struct pci_bus *top, int (*cb)(struct pci_dev *, void *), void *userdata)
-+{
-+	lockdep_assert_held(&pci_bus_sem);
++	struct dsa_port *cpu_dp = dsa_to_port(ds, 6);
 +
-+	__pci_walk_bus(top, cb, userdata, true);
-+}
-+EXPORT_SYMBOL_GPL(pci_walk_bus_locked);
++	if (dsa_port_is_cpu(cpu_dp))
++		return cpu_dp;
 +
- struct pci_bus *pci_bus_get(struct pci_bus *bus)
- {
- 	if (bus)
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1258,6 +1258,7 @@ end:
- /**
-  * pci_set_full_power_state - Put a PCI device into D0 and update its state
-  * @dev: PCI device to power up
-+ * @locked: whether pci_bus_sem is held
-  *
-  * Call pci_power_up() to put @dev into D0, read from its PCI_PM_CTRL register
-  * to confirm the state change, restore its BARs if they might be lost and
-@@ -1267,7 +1268,7 @@ end:
-  * to D0, it is more efficient to use pci_power_up() directly instead of this
-  * function.
-  */
--static int pci_set_full_power_state(struct pci_dev *dev)
-+static int pci_set_full_power_state(struct pci_dev *dev, bool locked)
- {
- 	u16 pmcsr;
- 	int ret;
-@@ -1303,7 +1304,7 @@ static int pci_set_full_power_state(stru
- 	}
- 
- 	if (dev->bus->self)
--		pcie_aspm_pm_state_change(dev->bus->self);
-+		pcie_aspm_pm_state_change(dev->bus->self, locked);
- 
- 	return 0;
- }
-@@ -1332,10 +1333,22 @@ void pci_bus_set_current_state(struct pc
- 		pci_walk_bus(bus, __pci_dev_set_current_state, &state);
- }
- 
-+static void __pci_bus_set_current_state(struct pci_bus *bus, pci_power_t state, bool locked)
-+{
-+	if (!bus)
-+		return;
-+
-+	if (locked)
-+		pci_walk_bus_locked(bus, __pci_dev_set_current_state, &state);
-+	else
-+		pci_walk_bus(bus, __pci_dev_set_current_state, &state);
++	return NULL;
 +}
 +
- /**
-  * pci_set_low_power_state - Put a PCI device into a low-power state.
-  * @dev: PCI device to handle.
-  * @state: PCI power state (D1, D2, D3hot) to put the device into.
-+ * @locked: whether pci_bus_sem is held
-  *
-  * Use the device's PCI_PM_CTRL register to put it into a low-power state.
-  *
-@@ -1346,7 +1359,7 @@ void pci_bus_set_current_state(struct pc
-  * 0 if device already is in the requested state.
-  * 0 if device's power state has been successfully changed.
-  */
--static int pci_set_low_power_state(struct pci_dev *dev, pci_power_t state)
-+static int pci_set_low_power_state(struct pci_dev *dev, pci_power_t state, bool locked)
- {
- 	u16 pmcsr;
- 
-@@ -1400,29 +1413,12 @@ static int pci_set_low_power_state(struc
- 				     pci_power_name(state));
- 
- 	if (dev->bus->self)
--		pcie_aspm_pm_state_change(dev->bus->self);
-+		pcie_aspm_pm_state_change(dev->bus->self, locked);
- 
- 	return 0;
- }
- 
--/**
-- * pci_set_power_state - Set the power state of a PCI device
-- * @dev: PCI device to handle.
-- * @state: PCI power state (D0, D1, D2, D3hot) to put the device into.
-- *
-- * Transition a device to a new power state, using the platform firmware and/or
-- * the device's PCI PM registers.
-- *
-- * RETURN VALUE:
-- * -EINVAL if the requested state is invalid.
-- * -EIO if device does not support PCI PM or its PM capabilities register has a
-- * wrong version, or device doesn't support the requested state.
-- * 0 if the transition is to D1 or D2 but D1 and D2 are not supported.
-- * 0 if device already is in the requested state.
-- * 0 if the transition is to D3 but D3 is not supported.
-- * 0 if device's power state has been successfully changed.
-- */
--int pci_set_power_state(struct pci_dev *dev, pci_power_t state)
-+static int __pci_set_power_state(struct pci_dev *dev, pci_power_t state, bool locked)
- {
- 	int error;
- 
-@@ -1446,7 +1442,7 @@ int pci_set_power_state(struct pci_dev *
- 		return 0;
- 
- 	if (state == PCI_D0)
--		return pci_set_full_power_state(dev);
-+		return pci_set_full_power_state(dev, locked);
+ /* Setup port 6 interface mode and TRGMII TX circuit */
+ static int
+ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
+@@ -3405,6 +3419,7 @@ static int mt753x_set_mac_eee(struct dsa
+ static const struct dsa_switch_ops mt7530_switch_ops = {
+ 	.get_tag_protocol	= mtk_get_tag_protocol,
+ 	.setup			= mt753x_setup,
++	.preferred_default_local_cpu_port = mt753x_preferred_default_local_cpu_port,
+ 	.get_strings		= mt7530_get_strings,
+ 	.get_ethtool_stats	= mt7530_get_ethtool_stats,
+ 	.get_sset_count		= mt7530_get_sset_count,
+--- a/include/net/dsa.h
++++ b/include/net/dsa.h
+@@ -969,6 +969,14 @@ struct dsa_switch_ops {
+ 	void	(*port_disable)(struct dsa_switch *ds, int port);
  
  	/*
- 	 * This device is quirked not to be put into D3, so don't put it in
-@@ -1460,16 +1456,16 @@ int pci_set_power_state(struct pci_dev *
- 		 * To put the device in D3cold, put it into D3hot in the native
- 		 * way, then put it into D3cold using platform ops.
- 		 */
--		error = pci_set_low_power_state(dev, PCI_D3hot);
-+		error = pci_set_low_power_state(dev, PCI_D3hot, locked);
- 
- 		if (pci_platform_power_transition(dev, PCI_D3cold))
- 			return error;
- 
- 		/* Powering off a bridge may power off the whole hierarchy */
- 		if (dev->current_state == PCI_D3cold)
--			pci_bus_set_current_state(dev->subordinate, PCI_D3cold);
-+			__pci_bus_set_current_state(dev->subordinate, PCI_D3cold, locked);
- 	} else {
--		error = pci_set_low_power_state(dev, state);
-+		error = pci_set_low_power_state(dev, state, locked);
- 
- 		if (pci_platform_power_transition(dev, state))
- 			return error;
-@@ -1477,8 +1473,38 @@ int pci_set_power_state(struct pci_dev *
- 
++	 * Compatibility between device trees defining multiple CPU ports and
++	 * drivers which are not OK to use by default the numerically smallest
++	 * CPU port of a switch for its local ports. This can return NULL,
++	 * meaning "don't know/don't care".
++	 */
++	struct dsa_port *(*preferred_default_local_cpu_port)(struct dsa_switch *ds);
++
++	/*
+ 	 * Port's MAC EEE settings
+ 	 */
+ 	int	(*set_mac_eee)(struct dsa_switch *ds, int port,
+--- a/net/dsa/dsa2.c
++++ b/net/dsa/dsa2.c
+@@ -425,6 +425,24 @@ static int dsa_tree_setup_default_cpu(st
  	return 0;
  }
-+
-+/**
-+ * pci_set_power_state - Set the power state of a PCI device
-+ * @dev: PCI device to handle.
-+ * @state: PCI power state (D0, D1, D2, D3hot) to put the device into.
-+ *
-+ * Transition a device to a new power state, using the platform firmware and/or
-+ * the device's PCI PM registers.
-+ *
-+ * RETURN VALUE:
-+ * -EINVAL if the requested state is invalid.
-+ * -EIO if device does not support PCI PM or its PM capabilities register has a
-+ * wrong version, or device doesn't support the requested state.
-+ * 0 if the transition is to D1 or D2 but D1 and D2 are not supported.
-+ * 0 if device already is in the requested state.
-+ * 0 if the transition is to D3 but D3 is not supported.
-+ * 0 if device's power state has been successfully changed.
-+ */
-+int pci_set_power_state(struct pci_dev *dev, pci_power_t state)
+ 
++static struct dsa_port *
++dsa_switch_preferred_default_local_cpu_port(struct dsa_switch *ds)
 +{
-+	return __pci_set_power_state(dev, state, false);
-+}
- EXPORT_SYMBOL(pci_set_power_state);
- 
-+int pci_set_power_state_locked(struct pci_dev *dev, pci_power_t state)
-+{
-+	lockdep_assert_held(&pci_bus_sem);
++	struct dsa_port *cpu_dp;
 +
-+	return __pci_set_power_state(dev, state, true);
-+}
-+EXPORT_SYMBOL(pci_set_power_state_locked);
++	if (!ds->ops->preferred_default_local_cpu_port)
++		return NULL;
 +
- #define PCI_EXP_SAVE_REGS	7
- 
- static struct pci_cap_saved_state *_pci_find_saved_cap(struct pci_dev *pci_dev,
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -556,12 +556,12 @@ bool pcie_wait_for_link(struct pci_dev *
- #ifdef CONFIG_PCIEASPM
- void pcie_aspm_init_link_state(struct pci_dev *pdev);
- void pcie_aspm_exit_link_state(struct pci_dev *pdev);
--void pcie_aspm_pm_state_change(struct pci_dev *pdev);
-+void pcie_aspm_pm_state_change(struct pci_dev *pdev, bool locked);
- void pcie_aspm_powersave_config_link(struct pci_dev *pdev);
- #else
- static inline void pcie_aspm_init_link_state(struct pci_dev *pdev) { }
- static inline void pcie_aspm_exit_link_state(struct pci_dev *pdev) { }
--static inline void pcie_aspm_pm_state_change(struct pci_dev *pdev) { }
-+static inline void pcie_aspm_pm_state_change(struct pci_dev *pdev, bool locked) { }
- static inline void pcie_aspm_powersave_config_link(struct pci_dev *pdev) { }
- #endif
- 
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -1055,8 +1055,11 @@ void pcie_aspm_exit_link_state(struct pc
- 	up_read(&pci_bus_sem);
- }
- 
--/* @pdev: the root port or switch downstream port */
--void pcie_aspm_pm_state_change(struct pci_dev *pdev)
-+/*
-+ * @pdev: the root port or switch downstream port
-+ * @locked: whether pci_bus_sem is held
-+ */
-+void pcie_aspm_pm_state_change(struct pci_dev *pdev, bool locked)
++	cpu_dp = ds->ops->preferred_default_local_cpu_port(ds);
++	if (!cpu_dp)
++		return NULL;
++
++	if (WARN_ON(!dsa_port_is_cpu(cpu_dp) || cpu_dp->ds != ds))
++		return NULL;
++
++	return cpu_dp;
++}
++
+ /* Perform initial assignment of CPU ports to user ports and DSA links in the
+  * fabric, giving preference to CPU ports local to each switch. Default to
+  * using the first CPU port in the switch tree if the port does not have a CPU
+@@ -432,12 +450,16 @@ static int dsa_tree_setup_default_cpu(st
+  */
+ static int dsa_tree_setup_cpu_ports(struct dsa_switch_tree *dst)
  {
- 	struct pcie_link_state *link = pdev->link_state;
+-	struct dsa_port *cpu_dp, *dp;
++	struct dsa_port *preferred_cpu_dp, *cpu_dp, *dp;
  
-@@ -1066,12 +1069,14 @@ void pcie_aspm_pm_state_change(struct pc
- 	 * Devices changed PM state, we should recheck if latency
- 	 * meets all functions' requirement
- 	 */
--	down_read(&pci_bus_sem);
-+	if (!locked)
-+		down_read(&pci_bus_sem);
- 	mutex_lock(&aspm_lock);
- 	pcie_update_aspm_capable(link->root);
- 	pcie_config_aspm_path(link);
- 	mutex_unlock(&aspm_lock);
--	up_read(&pci_bus_sem);
-+	if (!locked)
-+		up_read(&pci_bus_sem);
- }
+ 	list_for_each_entry(cpu_dp, &dst->ports, list) {
+ 		if (!dsa_port_is_cpu(cpu_dp))
+ 			continue;
  
- void pcie_aspm_powersave_config_link(struct pci_dev *pdev)
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -1383,6 +1383,7 @@ int pci_load_and_free_saved_state(struct
- 				  struct pci_saved_state **state);
- int pci_platform_power_transition(struct pci_dev *dev, pci_power_t state);
- int pci_set_power_state(struct pci_dev *dev, pci_power_t state);
-+int pci_set_power_state_locked(struct pci_dev *dev, pci_power_t state);
- pci_power_t pci_choose_state(struct pci_dev *dev, pm_message_t state);
- bool pci_pme_capable(struct pci_dev *dev, pci_power_t state);
- void pci_pme_active(struct pci_dev *dev, bool enable);
-@@ -1553,6 +1554,8 @@ int pci_scan_bridge(struct pci_bus *bus,
- 
- void pci_walk_bus(struct pci_bus *top, int (*cb)(struct pci_dev *, void *),
- 		  void *userdata);
-+void pci_walk_bus_locked(struct pci_bus *top, int (*cb)(struct pci_dev *, void *),
-+			 void *userdata);
- int pci_cfg_space_size(struct pci_dev *dev);
- unsigned char pci_bus_max_busnr(struct pci_bus *bus);
- void pci_setup_bridge(struct pci_bus *bus);
-@@ -1884,6 +1887,8 @@ static inline int pci_save_state(struct
- static inline void pci_restore_state(struct pci_dev *dev) { }
- static inline int pci_set_power_state(struct pci_dev *dev, pci_power_t state)
- { return 0; }
-+static inline int pci_set_power_state_locked(struct pci_dev *dev, pci_power_t state)
-+{ return 0; }
- static inline int pci_wake_from_d3(struct pci_dev *dev, bool enable)
- { return 0; }
- static inline pci_power_t pci_choose_state(struct pci_dev *dev,
++		preferred_cpu_dp = dsa_switch_preferred_default_local_cpu_port(cpu_dp->ds);
++		if (preferred_cpu_dp && preferred_cpu_dp != cpu_dp)
++			continue;
++
+ 		/* Prefer a local CPU port */
+ 		dsa_switch_for_each_port(dp, cpu_dp->ds) {
+ 			/* Prefer the first local CPU port found */
 
 
