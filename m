@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E40B1420BE;
-	Tue, 23 Apr 2024 21:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D611420BE;
+	Tue, 23 Apr 2024 21:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908708; cv=none; b=UYd1v6GEGXlr0wGCEKCw+l+pMccVX97mlcXM0JQw5KhBfTQe8CtWJ3UZFGCWKTIohwSgVSkn0Gz6vLHnPyRzr6pn+A3ByUeD9misCL/nCfX9/JRdnWTmkqcRv+TSegUSMtoBJqKnwu/6v/Ieyt4aTXRvvm7uCvZO78e0BPU8BRY=
+	t=1713908709; cv=none; b=ExcaQEA+29nhfy/QPYBpG4tFsNnF0YqH9RnK41yggERrFljvl/zcyMLPgCldFtAo6KdnyK9VVDn3oXe83HI1pIwKJiEZvY7lvlQTSjtclVjdsRTr+Pa1qVciDm71LudYfxN5nrvbvLN7PgL0ZtMkQAK7iqPJdsDYDWsDmgUWqkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908708; c=relaxed/simple;
-	bh=H3+gqjF3dckKL5sj16WIhPU4uUoU+/KxkdfrdD6HMbw=;
+	s=arc-20240116; t=1713908709; c=relaxed/simple;
+	bh=W5R/gXNLsubgP1ofWaa2232rch0CXbxaisOYUVs7VPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZPeqXM/9iEPPFApvfkvMIopYTi5ecXdRhCDIUeW3T26kek/0Ncv0ZWjsOFKepsrgs7J13+HRhx/ivK+ScnjZNjYl4FIBc7Q4Doyn+TKojtGYG9OijzGywmgwzq+EWSwpMyUAYFecvzOfQRVe1O9+SJY2LIVGGRsGMZJvLWGXfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vwh2hJLa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mMlUIrqXZtqjT/9PNmuv24jjooJOfOliILldkLzXqa0Gczb6iaq+i4NwsI8EZLNe6ed8padMDZWpODLsz/CNw7hEoEQxnYQyzOBRW3qaCP3FWp/h37vdzWXWqEvBKv9AC6+A9sufBuwCyklSYiPIdszkYiQIR21l/cogoRof5Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=APr+NIyH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vwh2hJLa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B78EC3277B;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="APr+NIyH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2370C116B1;
 	Tue, 23 Apr 2024 21:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908708;
-	bh=H3+gqjF3dckKL5sj16WIhPU4uUoU+/KxkdfrdD6HMbw=;
+	bh=W5R/gXNLsubgP1ofWaa2232rch0CXbxaisOYUVs7VPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vwh2hJLaFLmw1evZzOFNSvAIjHxYmh1B9PrzaqbrRH/zkcqrbWxBW/v9apgGFsEsO
-	 e7OHQEmnlNkCAa4q7c/UVeMGwNL8mKoJKjq18Ek5Ua6Xp7IwULEViENkuRytE0rQXl
-	 /UpMDpCk1fa0M5nERoSqbaHihAj934QVx/Nw89uU=
+	b=APr+NIyHtmT9Fd+9lFCYn3ABB9BqseYM/rNSTox8TiBI9yT5uDdA2GhuUoDwvUaUf
+	 d2w5k8gyVQT3hSgMsFEEueV/w7L2CWhIWxIRXYaKZv+1Uw3WwcyzTTdoEBxDI73auM
+	 dSKrdLzX4nxdRWpoGxagRXnuTraQgWP5mFTEJxiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Arnd Bergmann <arnd@kernel.org>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 064/141] PCI: Execute quirk_enable_clear_retrain_link() earlier
-Date: Tue, 23 Apr 2024 14:38:52 -0700
-Message-ID: <20240423213855.324071619@linuxfoundation.org>
+Subject: [PATCH 6.1 065/141] PCI: Make quirk using inw() depend on HAS_IOPORT
+Date: Tue, 23 Apr 2024 14:38:53 -0700
+Message-ID: <20240423213855.355112439@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -51,41 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit 07a8d698de50c4740ac6f709c43e23a6da6e4dbc ]
+[ Upstream commit f768c75d61582b011962f9dcb9ff8eafb8da0383 ]
 
-Make quirk_enable_clear_retrain_link() an early quirk so that any later
-fixups can rely on dev->clear_retrain_link to have been already
-initialised.
+In the future inw() and friends will not be compiled on architectures
+without I/O port support.
 
-[bhelgaas: reorder to just before it becomes possible to call
-pcie_retrain_link() earlier]
-Link: https://lore.kernel.org/r/alpine.DEB.2.21.2305310049000.59226@angie.orcam.me.uk
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Co-developed-by: Arnd Bergmann <arnd@kernel.org>
+Link: https://lore.kernel.org/r/20230703135255.2202721-2-schnelle@linux.ibm.com
+Signed-off-by: Arnd Bergmann <arnd@kernel.org>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/pci/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 92169dc71468e..3959ea7b106b6 100644
+index 3959ea7b106b6..5aca621dd1c22 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
-@@ -2425,9 +2425,9 @@ static void quirk_enable_clear_retrain_link(struct pci_dev *dev)
- 	dev->clear_retrain_link = 1;
- 	pci_info(dev, "Enable PCIe Retrain Link quirk\n");
- }
--DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_PERICOM, 0xe110, quirk_enable_clear_retrain_link);
--DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_PERICOM, 0xe111, quirk_enable_clear_retrain_link);
--DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_PERICOM, 0xe130, quirk_enable_clear_retrain_link);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_PERICOM, 0xe110, quirk_enable_clear_retrain_link);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_PERICOM, 0xe111, quirk_enable_clear_retrain_link);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_PERICOM, 0xe130, quirk_enable_clear_retrain_link);
+@@ -268,6 +268,7 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_NEC,	PCI_DEVICE_ID_NEC_CBUS_2,	quirk_isa_d
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_NEC,	PCI_DEVICE_ID_NEC_CBUS_3,	quirk_isa_dma_hangs);
+ #endif
  
- static void fixup_rev1_53c810(struct pci_dev *dev)
- {
++#ifdef CONFIG_HAS_IOPORT
+ /*
+  * Intel NM10 "TigerPoint" LPC PM1a_STS.BM_STS must be clear
+  * for some HT machines to use C4 w/o hanging.
+@@ -287,6 +288,7 @@ static void quirk_tigerpoint_bm_sts(struct pci_dev *dev)
+ 	}
+ }
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_TGP_LPC, quirk_tigerpoint_bm_sts);
++#endif
+ 
+ /* Chipsets where PCI->PCI transfers vanish or hang */
+ static void quirk_nopcipci(struct pci_dev *dev)
 -- 
 2.43.0
 
