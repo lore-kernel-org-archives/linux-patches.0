@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0F920B3E;
-	Tue, 23 Apr 2024 21:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A39C20B3E;
+	Tue, 23 Apr 2024 21:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908548; cv=none; b=cWqzz69aVj/cDpKaegW7eNLYzbUs7WY0gAgSo7r1xvku5s9lNIfpwyg/9wGTOv4G7jxlNu8T2XZBD/mG3Gu2TVW32OFxN+9sNpaaKprN0l4tjqAG3jqGD+8Y1s58Oz9trep2hd2fUoEy3FNrMB2ZOR9otXYNdFjQJq9Og4SGeBk=
+	t=1713908549; cv=none; b=Ni6oc3wgkphQF2EAHeviRnCSmuPQMqfq7yARL6JCSPp+nu3YPE3PBM32pW9IsZHCdBtAuKVHRPfho8kHSGWA05GnFCOfgBz+h9QvhbIyiGWRDzvatao3nnwZKqT9sTYFAV23plOxXJeqUCnulRhoczOsTuxV6K0MZopyM2Kbmy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908548; c=relaxed/simple;
-	bh=dkjDUWD88QywDK7X81442WUkPZfBkWoEiTUSVFHgqKQ=;
+	s=arc-20240116; t=1713908549; c=relaxed/simple;
+	bh=/k2kTire9eVYD93V7/1OfQG1wBOrseO+Fr1pHN8RECo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dfTDFzgu4JVQaks9oiSxRwN/ixSUSQHS8N+e2vIOtu9nwam53kkTmNK84ouuPjMU2mYdJrDSj+bEgC0pMEHcdnCnj/jXywL/3FTYTjJUmqQl0BH/adayhp+lnMPmcwcz8VXlKKaxHnJ1KV6SvwjzWJ652utTmGbsgzKbFg6K2cY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SdWsWFsJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e1c5/qsbblDbsPDfSurBad+3MDvc/9ZXoRdfA8j2MhFValYUrRklns5cDrqxuVOB0HoUdWpIrquMwoaBhx4CMAluUiced2SW1aVkG941J5BvgDXnFHDaH0ry06sB+Y8rZVJHSVmFbykgZ/MUL9xJq5z7m70DNaz/OBefqZYNPgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUfRGmVI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdWsWFsJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9391DC116B1;
-	Tue, 23 Apr 2024 21:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUfRGmVI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408DFC3277B;
+	Tue, 23 Apr 2024 21:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908548;
-	bh=dkjDUWD88QywDK7X81442WUkPZfBkWoEiTUSVFHgqKQ=;
+	s=korg; t=1713908549;
+	bh=/k2kTire9eVYD93V7/1OfQG1wBOrseO+Fr1pHN8RECo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SdWsWFsJs/0XGX4p156SvYZXyLDY2fJPHFxqIHaNG+l80qSCkQvsmGY2UEHojUIL9
-	 SzHv/SmK7lBCJXkQptk5tPz24TwtDCx9mKRGleQ5eWj+yWwo1QPs4akLr0ZTiwA118
-	 hzGHadb4EetNLGPZjKDDvpC9GOJB9kviKs78nmu0=
+	b=UUfRGmVI1F4HgfXXEvAHYb9HW50J0CE9wTsMhKNudWdCDqR82BTWjCOwHyy+AL7g4
+	 bsUEBbBIzfGE6vcXUutqUO3hE4dsK9Y3At9fEumCYDPlQZBW/KV3kNOeL1KsRacqJG
+	 L7hhfKISTmiLekYTynuhBegdoSP3tQxQii+ippLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Stolyarov <hexed@google.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	xinhui pan <xinhui.pan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.8 140/158] drm/amdgpu: validate the parameters of bo mapping operations more clearly
-Date: Tue, 23 Apr 2024 14:39:22 -0700
-Message-ID: <20240423213900.418891027@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Qiang Zhang <qiang4.zhang@intel.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.8 149/158] bootconfig: use memblock_free_late to free xbc memory to buddy
+Date: Tue, 23 Apr 2024 14:39:31 -0700
+Message-ID: <20240423213900.696329715@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -46,145 +45,161 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: xinhui pan <xinhui.pan@amd.com>
+From: Qiang Zhang <qiang4.zhang@intel.com>
 
-commit 6fef2d4c00b5b8561ad68dd2b68173f5c6af1e75 upstream.
+commit 89f9a1e876b5a7ad884918c03a46831af202c8a0 upstream.
 
-Verify the parameters of
-amdgpu_vm_bo_(map/replace_map/clearing_mappings) in one common place.
+On the time to free xbc memory in xbc_exit(), memblock may has handed
+over memory to buddy allocator. So it doesn't make sense to free memory
+back to memblock. memblock_free() called by xbc_exit() even causes UAF bugs
+on architectures with CONFIG_ARCH_KEEP_MEMBLOCK disabled like x86.
+Following KASAN logs shows this case.
 
-Fixes: dc54d3d1744d ("drm/amdgpu: implement AMDGPU_VA_OP_CLEAR v2")
-Cc: stable@vger.kernel.org
-Reported-by: Vlad Stolyarov <hexed@google.com>
-Suggested-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: xinhui pan <xinhui.pan@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This patch fixes the xbc memory free problem by calling memblock_free()
+in early xbc init error rewind path and calling memblock_free_late() in
+xbc exit path to free memory to buddy allocator.
+
+[    9.410890] ==================================================================
+[    9.418962] BUG: KASAN: use-after-free in memblock_isolate_range+0x12d/0x260
+[    9.426850] Read of size 8 at addr ffff88845dd30000 by task swapper/0/1
+
+[    9.435901] CPU: 9 PID: 1 Comm: swapper/0 Tainted: G     U             6.9.0-rc3-00208-g586b5dfb51b9 #5
+[    9.446403] Hardware name: Intel Corporation RPLP LP5 (CPU:RaptorLake)/RPLP LP5 (ID:13), BIOS IRPPN02.01.01.00.00.19.015.D-00000000 Dec 28 2023
+[    9.460789] Call Trace:
+[    9.463518]  <TASK>
+[    9.465859]  dump_stack_lvl+0x53/0x70
+[    9.469949]  print_report+0xce/0x610
+[    9.473944]  ? __virt_addr_valid+0xf5/0x1b0
+[    9.478619]  ? memblock_isolate_range+0x12d/0x260
+[    9.483877]  kasan_report+0xc6/0x100
+[    9.487870]  ? memblock_isolate_range+0x12d/0x260
+[    9.493125]  memblock_isolate_range+0x12d/0x260
+[    9.498187]  memblock_phys_free+0xb4/0x160
+[    9.502762]  ? __pfx_memblock_phys_free+0x10/0x10
+[    9.508021]  ? mutex_unlock+0x7e/0xd0
+[    9.512111]  ? __pfx_mutex_unlock+0x10/0x10
+[    9.516786]  ? kernel_init_freeable+0x2d4/0x430
+[    9.521850]  ? __pfx_kernel_init+0x10/0x10
+[    9.526426]  xbc_exit+0x17/0x70
+[    9.529935]  kernel_init+0x38/0x1e0
+[    9.533829]  ? _raw_spin_unlock_irq+0xd/0x30
+[    9.538601]  ret_from_fork+0x2c/0x50
+[    9.542596]  ? __pfx_kernel_init+0x10/0x10
+[    9.547170]  ret_from_fork_asm+0x1a/0x30
+[    9.551552]  </TASK>
+
+[    9.555649] The buggy address belongs to the physical page:
+[    9.561875] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x1 pfn:0x45dd30
+[    9.570821] flags: 0x200000000000000(node=0|zone=2)
+[    9.576271] page_type: 0xffffffff()
+[    9.580167] raw: 0200000000000000 ffffea0011774c48 ffffea0012ba1848 0000000000000000
+[    9.588823] raw: 0000000000000001 0000000000000000 00000000ffffffff 0000000000000000
+[    9.597476] page dumped because: kasan: bad access detected
+
+[    9.605362] Memory state around the buggy address:
+[    9.610714]  ffff88845dd2ff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[    9.618786]  ffff88845dd2ff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[    9.626857] >ffff88845dd30000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[    9.634930]                    ^
+[    9.638534]  ffff88845dd30080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[    9.646605]  ffff88845dd30100: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[    9.654675] ==================================================================
+
+Link: https://lore.kernel.org/all/20240414114944.1012359-1-qiang4.zhang@linux.intel.com/
+
+Fixes: 40caa127f3c7 ("init: bootconfig: Remove all bootconfig data when the init memory is removed")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Qiang Zhang <qiang4.zhang@intel.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |   72 +++++++++++++++++++++------------
- 1 file changed, 46 insertions(+), 26 deletions(-)
+ include/linux/bootconfig.h |    7 ++++++-
+ lib/bootconfig.c           |   19 +++++++++++--------
+ 2 files changed, 17 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -1559,6 +1559,37 @@ static void amdgpu_vm_bo_insert_map(stru
- 	trace_amdgpu_vm_bo_map(bo_va, mapping);
+--- a/include/linux/bootconfig.h
++++ b/include/linux/bootconfig.h
+@@ -288,7 +288,12 @@ int __init xbc_init(const char *buf, siz
+ int __init xbc_get_info(int *node_size, size_t *data_size);
+ 
+ /* XBC cleanup data structures */
+-void __init xbc_exit(void);
++void __init _xbc_exit(bool early);
++
++static inline void xbc_exit(void)
++{
++	_xbc_exit(false);
++}
+ 
+ /* XBC embedded bootconfig data in kernel */
+ #ifdef CONFIG_BOOT_CONFIG_EMBED
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -61,9 +61,12 @@ static inline void * __init xbc_alloc_me
+ 	return memblock_alloc(size, SMP_CACHE_BYTES);
  }
  
-+/* Validate operation parameters to prevent potential abuse */
-+static int amdgpu_vm_verify_parameters(struct amdgpu_device *adev,
-+					  struct amdgpu_bo *bo,
-+					  uint64_t saddr,
-+					  uint64_t offset,
-+					  uint64_t size)
-+{
-+	uint64_t tmp, lpfn;
-+
-+	if (saddr & AMDGPU_GPU_PAGE_MASK
-+	    || offset & AMDGPU_GPU_PAGE_MASK
-+	    || size & AMDGPU_GPU_PAGE_MASK)
-+		return -EINVAL;
-+
-+	if (check_add_overflow(saddr, size, &tmp)
-+	    || check_add_overflow(offset, size, &tmp)
-+	    || size == 0 /* which also leads to end < begin */)
-+		return -EINVAL;
-+
-+	/* make sure object fit at this offset */
-+	if (bo && offset + size > amdgpu_bo_size(bo))
-+		return -EINVAL;
-+
-+	/* Ensure last pfn not exceed max_pfn */
-+	lpfn = (saddr + size - 1) >> AMDGPU_GPU_PAGE_SHIFT;
-+	if (lpfn >= adev->vm_manager.max_pfn)
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+
- /**
-  * amdgpu_vm_bo_map - map bo inside a vm
-  *
-@@ -1585,21 +1616,14 @@ int amdgpu_vm_bo_map(struct amdgpu_devic
- 	struct amdgpu_bo *bo = bo_va->base.bo;
- 	struct amdgpu_vm *vm = bo_va->base.vm;
- 	uint64_t eaddr;
-+	int r;
+-static inline void __init xbc_free_mem(void *addr, size_t size)
++static inline void __init xbc_free_mem(void *addr, size_t size, bool early)
+ {
+-	memblock_free(addr, size);
++	if (early)
++		memblock_free(addr, size);
++	else if (addr)
++		memblock_free_late(__pa(addr), size);
+ }
  
--	/* validate the parameters */
--	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
--		return -EINVAL;
--	if (saddr + size <= saddr || offset + size <= offset)
--		return -EINVAL;
--
--	/* make sure object fit at this offset */
--	eaddr = saddr + size - 1;
--	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
--	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
--		return -EINVAL;
-+	r = amdgpu_vm_verify_parameters(adev, bo, saddr, offset, size);
-+	if (r)
-+		return r;
+ #else /* !__KERNEL__ */
+@@ -73,7 +76,7 @@ static inline void *xbc_alloc_mem(size_t
+ 	return malloc(size);
+ }
  
- 	saddr /= AMDGPU_GPU_PAGE_SIZE;
--	eaddr /= AMDGPU_GPU_PAGE_SIZE;
-+	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
- 
- 	tmp = amdgpu_vm_it_iter_first(&vm->va, saddr, eaddr);
- 	if (tmp) {
-@@ -1652,17 +1676,9 @@ int amdgpu_vm_bo_replace_map(struct amdg
- 	uint64_t eaddr;
- 	int r;
- 
--	/* validate the parameters */
--	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
--		return -EINVAL;
--	if (saddr + size <= saddr || offset + size <= offset)
--		return -EINVAL;
--
--	/* make sure object fit at this offset */
--	eaddr = saddr + size - 1;
--	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
--	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
--		return -EINVAL;
-+	r = amdgpu_vm_verify_parameters(adev, bo, saddr, offset, size);
-+	if (r)
-+		return r;
- 
- 	/* Allocate all the needed memory */
- 	mapping = kmalloc(sizeof(*mapping), GFP_KERNEL);
-@@ -1676,7 +1692,7 @@ int amdgpu_vm_bo_replace_map(struct amdg
+-static inline void xbc_free_mem(void *addr, size_t size)
++static inline void xbc_free_mem(void *addr, size_t size, bool early)
+ {
+ 	free(addr);
+ }
+@@ -904,13 +907,13 @@ static int __init xbc_parse_tree(void)
+  * If you need to reuse xbc_init() with new boot config, you can
+  * use this.
+  */
+-void __init xbc_exit(void)
++void __init _xbc_exit(bool early)
+ {
+-	xbc_free_mem(xbc_data, xbc_data_size);
++	xbc_free_mem(xbc_data, xbc_data_size, early);
+ 	xbc_data = NULL;
+ 	xbc_data_size = 0;
+ 	xbc_node_num = 0;
+-	xbc_free_mem(xbc_nodes, sizeof(struct xbc_node) * XBC_NODE_MAX);
++	xbc_free_mem(xbc_nodes, sizeof(struct xbc_node) * XBC_NODE_MAX, early);
+ 	xbc_nodes = NULL;
+ 	brace_index = 0;
+ }
+@@ -963,7 +966,7 @@ int __init xbc_init(const char *data, si
+ 	if (!xbc_nodes) {
+ 		if (emsg)
+ 			*emsg = "Failed to allocate bootconfig nodes";
+-		xbc_exit();
++		_xbc_exit(true);
+ 		return -ENOMEM;
  	}
+ 	memset(xbc_nodes, 0, sizeof(struct xbc_node) * XBC_NODE_MAX);
+@@ -977,7 +980,7 @@ int __init xbc_init(const char *data, si
+ 			*epos = xbc_err_pos;
+ 		if (emsg)
+ 			*emsg = xbc_err_msg;
+-		xbc_exit();
++		_xbc_exit(true);
+ 	} else
+ 		ret = xbc_node_num;
  
- 	saddr /= AMDGPU_GPU_PAGE_SIZE;
--	eaddr /= AMDGPU_GPU_PAGE_SIZE;
-+	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
- 
- 	mapping->start = saddr;
- 	mapping->last = eaddr;
-@@ -1763,10 +1779,14 @@ int amdgpu_vm_bo_clear_mappings(struct a
- 	struct amdgpu_bo_va_mapping *before, *after, *tmp, *next;
- 	LIST_HEAD(removed);
- 	uint64_t eaddr;
-+	int r;
-+
-+	r = amdgpu_vm_verify_parameters(adev, NULL, saddr, 0, size);
-+	if (r)
-+		return r;
- 
--	eaddr = saddr + size - 1;
- 	saddr /= AMDGPU_GPU_PAGE_SIZE;
--	eaddr /= AMDGPU_GPU_PAGE_SIZE;
-+	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
- 
- 	/* Allocate all the needed memory */
- 	before = kzalloc(sizeof(*before), GFP_KERNEL);
 
 
