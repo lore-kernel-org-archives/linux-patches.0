@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B114143C74;
-	Tue, 23 Apr 2024 21:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6B7143C46;
+	Tue, 23 Apr 2024 21:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908522; cv=none; b=TLBfdKaFRNQfm2k0fys652uCWomNh4XoKeV1eHDS4Q3aZ35UU2pdd+TM066HTwyohnRJEo9lPPo9KAMesvYWXlGAKwzhY6FXVFOJf4uVGcNn1XBfYm74tuXc+pD/hM5KM9fpdK1Ny+2ZFwxs5suka9tLRHUGzeYHVPpSGc3ayNo=
+	t=1713908523; cv=none; b=RHeTluumrTw+klqkFF4jjlKAqpu9v1O9AjXhdaPvBkUCc61DVO326E3QJB7D5oP37yloRju7GcQfKTosDT4ZMh9HQa7UQDCa0xq8ZcLIZfZUrafNCTER8js8OtlocplYALL9byJD/0cwyKimc2KCw9VcRgf0h+TcffSCxgGfIHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908522; c=relaxed/simple;
-	bh=pYDMjtPiTnEuMhs4xwA/RoA041LOmMbgzadS/QBUFuk=;
+	s=arc-20240116; t=1713908523; c=relaxed/simple;
+	bh=20Z+/bKG1JVrhMkmylVRYoiQvip/LB9lkAgUZL4wpEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fra1M0pOV9XGhffqp3hmg4fqeJzibU4DO+ETWGVhKfkjJ4HUB+FMOYJUKBSFXk7fC6mKqjkMsv7OtvQNYCd9Vo7h8kg4DWVQ9SR3kuNK/YZWxnfWZQYnwuDy/FCloMmml0+FCme9h1gZojHKR4AymquM3S/17lJ5dOjhZ76HqlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NR5dtowu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QFwGS8ectljxCFS7jNRJO2bLdcBAkA1l6ZGJnIkwBH1oxof/jHIV9DNF8elBrwfHaMCp7MP33+zjE6SvgagpNQUW4CwRyVrvVz7c+a3oPbltPYz1UsPDu25hth4q+PAxuC/16SsTNowPhFIdgoqM8PEVddiVNFzTch/mbHUYJTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwZyVyVX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NR5dtowu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F553C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwZyVyVX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3ECDC4AF08;
 	Tue, 23 Apr 2024 21:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908522;
-	bh=pYDMjtPiTnEuMhs4xwA/RoA041LOmMbgzadS/QBUFuk=;
+	bh=20Z+/bKG1JVrhMkmylVRYoiQvip/LB9lkAgUZL4wpEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NR5dtowu7+7Z1/Civuj9y6jPlRdGPhcRDR+FYvuhURvkOeWglxwHD6D7pp/dWxqHW
-	 BCQ5Ai0YQybmpEs9V8u8k/g0L8XYCMOkWz4SFQHfOkYxmZG5n2YjvP6joSGEZCsiCP
-	 g+XgKV98T02QkIxtYB62m6WEj3duqs8e8t3HHrHY=
+	b=WwZyVyVXBqqVDM52+3Ha4CRIJV6AJ0o6ygYzsVT8tAmbv2ERCe079hvpQApsgSMM1
+	 6Q4NJhAfK4NXLETun4x4YEe53GKmcOk1XVnrrXvGaaTiXyKgqPv6XkGld3RQY3feNm
+	 m0D+P7Gzk9vtx06JP0jlbeZX8eBqgHZKU9TTe+y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saranya Muruganandam <saranyamohan@google.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Shay Drory <shayd@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 087/158] block: propagate partition scanning errors to the BLKRRPART ioctl
-Date: Tue, 23 Apr 2024 14:38:29 -0700
-Message-ID: <20240423213858.765982038@linuxfoundation.org>
+Subject: [PATCH 6.8 088/158] net/mlx5: E-switch, store eswitch pointer before registering devlink_param
+Date: Tue, 23 Apr 2024 14:38:30 -0700
+Message-ID: <20240423213858.803345927@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -54,112 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 752863bddacab6b5c5164b1df8c8b2e3a175ee28 ]
+[ Upstream commit 0553e753ea9ee724acaf6b3dfc7354702af83567 ]
 
-Commit 4601b4b130de ("block: reopen the device in blkdev_reread_part")
-lost the propagation of I/O errors from the low-level read of the
-partition table to the user space caller of the BLKRRPART.
+Next patch will move devlink register to be first. Therefore, whenever
+mlx5 will register a param, the user will be notified.
+In order to notify the user, devlink is using the get() callback of
+the param. Hence, resources that are being used by the get() callback
+must be set before the devlink param is registered.
 
-Apparently some user space relies on, so restore the propagation.  This
-isn't exactly pretty as other block device open calls explicitly do not
-are about these errors, so add a new BLK_OPEN_STRICT_SCAN to opt into
-the error propagation.
+Therefore, store eswitch pointer inside mdev before registering the
+param.
 
-Fixes: 4601b4b130de ("block: reopen the device in blkdev_reread_part")
-Reported-by: Saranya Muruganandam <saranyamohan@google.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Link: https://lore.kernel.org/r/20240417144743.2277601-1-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://lore.kernel.org/r/20240409190820.227554-2-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bdev.c           | 29 +++++++++++++++++++----------
- block/ioctl.c          |  3 ++-
- include/linux/blkdev.h |  2 ++
- 3 files changed, 23 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/eswitch.c        | 9 +++------
+ .../net/ethernet/mellanox/mlx5/core/eswitch_offloads.c   | 4 ++++
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index 678807bcd0034..2b0f97651a0a7 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -639,6 +639,14 @@ static void blkdev_flush_mapping(struct block_device *bdev)
- 	bdev_write_inode(bdev);
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+index 3047d7015c525..1789800faaeb6 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+@@ -1868,6 +1868,7 @@ int mlx5_eswitch_init(struct mlx5_core_dev *dev)
+ 	if (err)
+ 		goto abort;
  
-+static void blkdev_put_whole(struct block_device *bdev)
-+{
-+	if (atomic_dec_and_test(&bdev->bd_openers))
-+		blkdev_flush_mapping(bdev);
-+	if (bdev->bd_disk->fops->release)
-+		bdev->bd_disk->fops->release(bdev->bd_disk);
-+}
-+
- static int blkdev_get_whole(struct block_device *bdev, blk_mode_t mode)
- {
- 	struct gendisk *disk = bdev->bd_disk;
-@@ -657,20 +665,21 @@ static int blkdev_get_whole(struct block_device *bdev, blk_mode_t mode)
- 
- 	if (!atomic_read(&bdev->bd_openers))
- 		set_init_blocksize(bdev);
--	if (test_bit(GD_NEED_PART_SCAN, &disk->state))
--		bdev_disk_changed(disk, false);
- 	atomic_inc(&bdev->bd_openers);
-+	if (test_bit(GD_NEED_PART_SCAN, &disk->state)) {
-+		/*
-+		 * Only return scanning errors if we are called from contexts
-+		 * that explicitly want them, e.g. the BLKRRPART ioctl.
-+		 */
-+		ret = bdev_disk_changed(disk, false);
-+		if (ret && (mode & BLK_OPEN_STRICT_SCAN)) {
-+			blkdev_put_whole(bdev);
-+			return ret;
-+		}
-+	}
- 	return 0;
- }
- 
--static void blkdev_put_whole(struct block_device *bdev)
--{
--	if (atomic_dec_and_test(&bdev->bd_openers))
--		blkdev_flush_mapping(bdev);
--	if (bdev->bd_disk->fops->release)
--		bdev->bd_disk->fops->release(bdev->bd_disk);
--}
++	dev->priv.eswitch = esw;
+ 	err = esw_offloads_init(esw);
+ 	if (err)
+ 		goto reps_err;
+@@ -1892,11 +1893,6 @@ int mlx5_eswitch_init(struct mlx5_core_dev *dev)
+ 		esw->offloads.encap = DEVLINK_ESWITCH_ENCAP_MODE_BASIC;
+ 	else
+ 		esw->offloads.encap = DEVLINK_ESWITCH_ENCAP_MODE_NONE;
+-	if (MLX5_ESWITCH_MANAGER(dev) &&
+-	    mlx5_esw_vport_match_metadata_supported(esw))
+-		esw->flags |= MLX5_ESWITCH_VPORT_MATCH_METADATA;
 -
- static int blkdev_get_part(struct block_device *part, blk_mode_t mode)
- {
- 	struct gendisk *disk = part->bd_disk;
-diff --git a/block/ioctl.c b/block/ioctl.c
-index 438f79c564cfc..5f8c988239c68 100644
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -556,7 +556,8 @@ static int blkdev_common_ioctl(struct block_device *bdev, blk_mode_t mode,
- 			return -EACCES;
- 		if (bdev_is_partition(bdev))
- 			return -EINVAL;
--		return disk_scan_partitions(bdev->bd_disk, mode);
-+		return disk_scan_partitions(bdev->bd_disk,
-+				mode | BLK_OPEN_STRICT_SCAN);
- 	case BLKTRACESTART:
- 	case BLKTRACESTOP:
- 	case BLKTRACETEARDOWN:
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 99e4f5e722132..b43ca3b9d2a26 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -126,6 +126,8 @@ typedef unsigned int __bitwise blk_mode_t;
- #define BLK_OPEN_WRITE_IOCTL	((__force blk_mode_t)(1 << 4))
- /* open is exclusive wrt all other BLK_OPEN_WRITE opens to the device */
- #define BLK_OPEN_RESTRICT_WRITES	((__force blk_mode_t)(1 << 5))
-+/* return partition scanning errors */
-+#define BLK_OPEN_STRICT_SCAN	((__force blk_mode_t)(1 << 6))
+-	dev->priv.eswitch = esw;
+ 	BLOCKING_INIT_NOTIFIER_HEAD(&esw->n_head);
  
- struct gendisk {
- 	/*
+ 	esw_info(dev,
+@@ -1908,6 +1904,7 @@ int mlx5_eswitch_init(struct mlx5_core_dev *dev)
+ 
+ reps_err:
+ 	mlx5_esw_vports_cleanup(esw);
++	dev->priv.eswitch = NULL;
+ abort:
+ 	if (esw->work_queue)
+ 		destroy_workqueue(esw->work_queue);
+@@ -1926,7 +1923,6 @@ void mlx5_eswitch_cleanup(struct mlx5_eswitch *esw)
+ 
+ 	esw_info(esw->dev, "cleanup\n");
+ 
+-	esw->dev->priv.eswitch = NULL;
+ 	destroy_workqueue(esw->work_queue);
+ 	WARN_ON(refcount_read(&esw->qos.refcnt));
+ 	mutex_destroy(&esw->state_lock);
+@@ -1937,6 +1933,7 @@ void mlx5_eswitch_cleanup(struct mlx5_eswitch *esw)
+ 	mutex_destroy(&esw->offloads.encap_tbl_lock);
+ 	mutex_destroy(&esw->offloads.decap_tbl_lock);
+ 	esw_offloads_cleanup(esw);
++	esw->dev->priv.eswitch = NULL;
+ 	mlx5_esw_vports_cleanup(esw);
+ 	debugfs_remove_recursive(esw->debugfs_root);
+ 	devl_params_unregister(priv_to_devlink(esw->dev), mlx5_eswitch_params,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index baaae628b0a0f..e3cce110e52fd 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -2476,6 +2476,10 @@ int esw_offloads_init(struct mlx5_eswitch *esw)
+ 	if (err)
+ 		return err;
+ 
++	if (MLX5_ESWITCH_MANAGER(esw->dev) &&
++	    mlx5_esw_vport_match_metadata_supported(esw))
++		esw->flags |= MLX5_ESWITCH_VPORT_MATCH_METADATA;
++
+ 	err = devl_params_register(priv_to_devlink(esw->dev),
+ 				   esw_devlink_params,
+ 				   ARRAY_SIZE(esw_devlink_params));
 -- 
 2.43.0
 
