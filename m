@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAF120B3E;
-	Tue, 23 Apr 2024 21:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CD7143897;
+	Tue, 23 Apr 2024 21:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908553; cv=none; b=swJgA526BLKusU5D1Ez5/BEODgIwFXXZVjoCyu1z7HC7lab7C09XnQ8RkLCg8ROPY9PXcpxg5HLC5CO9MdejB0T73RBIcsssyPsCMRmA3wV//ur/KsWdiPcW0684DWrecIc6y+KswCrzGe2whbnIKByCpLbErJF0nL7LOVHfDZc=
+	t=1713908554; cv=none; b=HCobpHS/AgpHJdOUJl9FcU20ZT6tiB2bDVqgesk3k9Z9Hyan8ipMWYjnS3l6fZD5SrqlixuOqCrarCF4CiL355p6EggWDZEKonEHbAmBXRFNXmChh6fmWN1aSsNmlPKx+liFfx0Xnl7d1AaDNiHda/E4lsTGTb0kLVOzqEQ2Jp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908553; c=relaxed/simple;
-	bh=2Z2sQUj6p+fZJkaFVZEyWEZKoHqqrUM5vwJzxCneUJw=;
+	s=arc-20240116; t=1713908554; c=relaxed/simple;
+	bh=/YtTmdomJQWaL3IMJ1DvHIBPS7dd+HCSpc7F9gwNFG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DiJq1NFMWN4gbeoCK6XHLrEbHF5ruYQ/+zdcrE/kgDHugfW40OPg2dqNn0UVO1YRWFIrmzwkgjxc+2pw/+yacb+9yCyHPE3/GoxIDbtLRMIvEpcY7weHxlvfhzEs5I5fs/vPBXmupnVFU2SH6gWc6by06g3vrmNHkejvXP+8y1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwX/K47S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lr+qvbN00/yOCsLlIpLEBKKKKIa5ZHxYhbpjcWxZlEQ8R/qEHfJ1ji8h4BAf4mXgQ78FaaHaUtv2lOyk5nzSZ6EQxMmH+gXduK3o18BTCJksb32EMtTG5aOMBAwfcuFd+naGxV3Y7uMf0ckupPBMCnz9RPJxbDnZ1df/zR9ISPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhYkXST+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwX/K47S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511E8C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhYkXST+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD2DC32783;
 	Tue, 23 Apr 2024 21:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908553;
-	bh=2Z2sQUj6p+fZJkaFVZEyWEZKoHqqrUM5vwJzxCneUJw=;
+	s=korg; t=1713908554;
+	bh=/YtTmdomJQWaL3IMJ1DvHIBPS7dd+HCSpc7F9gwNFG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwX/K47SnWlAtFkxDj8624u26uwEQ9Vw+n3kgS+gzm8C8qlrb2fEQ5ZUj26opt0HE
-	 cF8WLmILGNqJBu7bD63i3+JUxAt/ET2NR+B5pMcn4tvvNRYXDFH4QNipvB9oqJqFn7
-	 XqMtcwVHZcicJV2wTdoXpUoD/yR1CM/laSOXQd5c=
+	b=fhYkXST+yZkSQec+w+ZdCLZ8JAsUAUZ4oW0lw7Cx3fABaZ161rZAnD0cB6yMXqldL
+	 fWIT/AK31+i1MNzyzqNVGB2c6j1nx9XTnyHI0YyGQaq/ZCjTXEwNeaIAGE5iwxfnEm
+	 zusIZaxhs5CFhAUuF0wj8vPonwdA+qmL+7FzjnzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.8 155/158] ksmbd: fix slab-out-of-bounds in smb2_allocate_rsp_buf
-Date: Tue, 23 Apr 2024 14:39:37 -0700
-Message-ID: <20240423213900.885703760@linuxfoundation.org>
+Subject: [PATCH 6.8 156/158] ksmbd: validate request buffer size in smb2_allocate_rsp_buf()
+Date: Tue, 23 Apr 2024 14:39:38 -0700
+Message-ID: <20240423213900.917808392@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -53,51 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit c119f4ede3fa90a9463f50831761c28f989bfb20 upstream.
+commit 17cf0c2794bdb6f39671265aa18aea5c22ee8c4a upstream.
 
-If ->ProtocolId is SMB2_TRANSFORM_PROTO_NUM, smb2 request size
-validation could be skipped. if request size is smaller than
-sizeof(struct smb2_query_info_req), slab-out-of-bounds read can happen in
-smb2_allocate_rsp_buf(). This patch allocate response buffer after
-decrypting transform request. smb3_decrypt_req() will validate transform
-request size and avoid slab-out-of-bound in smb2_allocate_rsp_buf().
+The response buffer should be allocated in smb2_allocate_rsp_buf
+before validating request. But the fields in payload as well as smb2 header
+is used in smb2_allocate_rsp_buf(). This patch add simple buffer size
+validation to avoid potencial out-of-bounds in request buffer.
 
-Reported-by: Norbert Szetei <norbert@doyensec.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/server.c |   13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ fs/smb/server/smb2pdu.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -167,20 +167,17 @@ static void __handle_ksmbd_work(struct k
- 	int rc;
- 	bool is_chained = false;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -535,6 +535,10 @@ int smb2_allocate_rsp_buf(struct ksmbd_w
+ 	if (cmd == SMB2_QUERY_INFO_HE) {
+ 		struct smb2_query_info_req *req;
  
--	if (conn->ops->allocate_rsp_buf(work))
--		return;
--
- 	if (conn->ops->is_transform_hdr &&
- 	    conn->ops->is_transform_hdr(work->request_buf)) {
- 		rc = conn->ops->decrypt_req(work);
--		if (rc < 0) {
--			conn->ops->set_rsp_status(work, STATUS_DATA_ERROR);
--			goto send;
--		}
--
-+		if (rc < 0)
-+			return;
- 		work->encrypted = true;
- 	}
- 
-+	if (conn->ops->allocate_rsp_buf(work))
-+		return;
++		if (get_rfc1002_len(work->request_buf) <
++		    offsetof(struct smb2_query_info_req, OutputBufferLength))
++			return -EINVAL;
 +
- 	rc = conn->ops->init_rsp_hdr(work);
- 	if (rc) {
- 		/* either uid or tid is not correct */
+ 		req = smb2_get_msg(work->request_buf);
+ 		if ((req->InfoType == SMB2_O_INFO_FILE &&
+ 		     (req->FileInfoClass == FILE_FULL_EA_INFORMATION ||
 
 
