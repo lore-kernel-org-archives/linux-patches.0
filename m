@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D82143C49;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB218143C49;
 	Tue, 23 Apr 2024 21:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908725; cv=none; b=NJJ3EPNzOzU6HB2jUTYsL2ljMz/GN38M2G1bH61BFMcCcGBCkOCF9N9Z3A1ctgGRZQD/LmtzTp+COxHTHJJa+VjB2vPP3HOpDfSYT1ZniBCpew+tGcWKAkd6dSvVROeGTDB9iD51a6ciTPogwWOK4uyuQG5u3yZgsfhHZCUyuwo=
+	t=1713908725; cv=none; b=u/mB3SdPKo1dpi0Kmg6dWxLv1BMXDnDoQVuHIkdnUGq4MX4Fc+trK5XZmgB0ou3mrJJjjhoZj5M0t2x1xO0fdCVxQBnQcp7H7FdYq7+YXjEXLeavXpWqs2r9QyH3b5uPj7PNU0lRceNwCQ+Fy1Ii/G28WsWk9c7bKZvQUPWAo8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908725; c=relaxed/simple;
-	bh=0dna9pcrj1OIaP1tioC4eoqJZTNXlSkxRJwxQ1Q46Ss=;
+	bh=XcT40y8Z3MZc9d1BDVniqK9Zg4eHapLP/YNB6NlIp6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KDzxwjwdjjeY4l2AAdqfIYJFwdYOWcq9ilQo6jcIMHm4cDTkAmdnDoqnI2Zf4iBK6c/1F7ph2Wd3ZJEczl6xLMdiuDio4coTsqQEm420ZAn22xdbxhpPjZoUjWrgqVI0o8vqlE/JU9X0l/xs1NxiGoqjpgiP7rQ3nLnqkLL1+Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=drOy8IPl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s+QWJ1hJrhd/+HWGeJ8bP8br9mKsOXA5oTBWjaduVTwQLU49Td2uyiMeYiaaxOtYUfuSCn53FlGQ50BPgp65bcxV8mIwHvNZAuShqsrGn2M/wE/Tz2MV5NO1TtalGkCVIxNZaZxEudntc+Vl0vNAGPe4FT9hmHpsN5m9oyGu8eE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xNZlpETT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="drOy8IPl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3AEFC3277B;
-	Tue, 23 Apr 2024 21:45:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xNZlpETT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67DBC116B1;
+	Tue, 23 Apr 2024 21:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908725;
-	bh=0dna9pcrj1OIaP1tioC4eoqJZTNXlSkxRJwxQ1Q46Ss=;
+	bh=XcT40y8Z3MZc9d1BDVniqK9Zg4eHapLP/YNB6NlIp6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=drOy8IPlF0/dfQmVuIA6SwEdB6jz6if0JnMCEUwz/STI9UWm7vB5yPFpFl9BaBSdh
-	 kxCXCD4cTCfZhe/Hcu+Q6M6PlH8Uyx6JiirYIG/iu/GvILkA7/pU5iGe8MxZeNakAy
-	 myEOx6/qYgtklmTzCh4ImK/lyAXG+zkwmpyncrbg=
+	b=xNZlpETTcm3FrY9GAvkWYG4Er7Ay9kng1HXGGs+Z+6JF0dR+fLw2JbUtr6AMZQbe2
+	 bG9jxUZAfRl+aHRK73ymoP/wfJjg4Cr0hqj5NGvGoPO7gTlaPgPrVk95M1/qAKfy3l
+	 LbS1U/LQcQqRWFemxRSKVfg/kzSRbmJzygYWLpnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Miles Chen <miles.chen@mediatek.com>,
+	Mingming Su <mingming.su@mediatek.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 089/141] clk: Get runtime PM before walking tree for clk_summary
-Date: Tue, 23 Apr 2024 14:39:17 -0700
-Message-ID: <20240423213856.074086570@linuxfoundation.org>
+Subject: [PATCH 6.1 090/141] clk: mediatek: mt8192: Correctly unregister and free clocks on failure
+Date: Tue, 23 Apr 2024 14:39:18 -0700
+Message-ID: <20240423213856.110759291@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -52,93 +55,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Boyd <sboyd@kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 9d1e795f754db1ac3344528b7af0b17b8146f321 ]
+[ Upstream commit 0cbe12694990501be92f997d987925132002dbe5 ]
 
-Similar to the previous commit, we should make sure that all devices are
-runtime resumed before printing the clk_summary through debugfs. Failure
-to do so would result in a deadlock if the thread is resuming a device
-to print clk state and that device is also runtime resuming in another
-thread, e.g the screen is turning on and the display driver is starting
-up. We remove the calls to clk_pm_runtime_{get,put}() in this path
-because they're superfluous now that we know the devices are runtime
-resumed. This also squashes a bug where the return value of
-clk_pm_runtime_get() wasn't checked, leading to an RPM count underflow
-on error paths.
+If anything fails during probe of the clock controller(s), unregister
+(and kfree!) whatever we have previously registered to leave with a
+clean state and prevent leaks.
 
-Fixes: 1bb294a7981c ("clk: Enable/Disable runtime PM for clk_summary")
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Cc: Douglas Anderson <dianders@chromium.org>
+Fixes: 710573dee31b ("clk: mediatek: Add MT8192 basic clocks support")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Tested-by: Miles Chen <miles.chen@mediatek.com>
+Link: https://lore.kernel.org/r/20230120092053.182923-2-angelogioacchino.delregno@collabora.com
+Tested-by: Mingming Su <mingming.su@mediatek.com>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20240325184204.745706-6-sboyd@kernel.org
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Stable-dep-of: 2f7b1d8b5505 ("clk: mediatek: Do a runtime PM get on controllers during probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/clk/mediatek/clk-mt8192.c | 77 ++++++++++++++++++++++++-------
+ 1 file changed, 60 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index ded4a51323d2e..fe1d45eac837c 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -3247,9 +3247,7 @@ static void clk_summary_show_subtree(struct seq_file *s, struct clk_core *c,
- {
- 	struct clk_core *child;
+diff --git a/drivers/clk/mediatek/clk-mt8192.c b/drivers/clk/mediatek/clk-mt8192.c
+index d0f2269310706..74bd8bac94a35 100644
+--- a/drivers/clk/mediatek/clk-mt8192.c
++++ b/drivers/clk/mediatek/clk-mt8192.c
+@@ -1100,27 +1100,64 @@ static int clk_mt8192_top_probe(struct platform_device *pdev)
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
  
--	clk_pm_runtime_get(c);
- 	clk_summary_show_one(s, c, level);
--	clk_pm_runtime_put(c);
+-	mtk_clk_register_fixed_clks(top_fixed_clks, ARRAY_SIZE(top_fixed_clks), top_clk_data);
+-	mtk_clk_register_factors(top_early_divs, ARRAY_SIZE(top_early_divs), top_clk_data);
+-	mtk_clk_register_factors(top_divs, ARRAY_SIZE(top_divs), top_clk_data);
+-	mtk_clk_register_muxes(top_mtk_muxes, ARRAY_SIZE(top_mtk_muxes), node, &mt8192_clk_lock,
+-			       top_clk_data);
+-	mtk_clk_register_composites(top_muxes, ARRAY_SIZE(top_muxes), base, &mt8192_clk_lock,
+-				    top_clk_data);
+-	mtk_clk_register_composites(top_adj_divs, ARRAY_SIZE(top_adj_divs), base, &mt8192_clk_lock,
+-				    top_clk_data);
+-	r = mtk_clk_register_gates(node, top_clks, ARRAY_SIZE(top_clks), top_clk_data);
++	r = mtk_clk_register_fixed_clks(top_fixed_clks, ARRAY_SIZE(top_fixed_clks), top_clk_data);
+ 	if (r)
+ 		return r;
  
- 	hlist_for_each_entry(child, &c->children, child_node)
- 		clk_summary_show_subtree(s, child, level + 1);
-@@ -3259,11 +3257,15 @@ static int clk_summary_show(struct seq_file *s, void *data)
- {
- 	struct clk_core *c;
- 	struct hlist_head **lists = s->private;
-+	int ret;
++	r = mtk_clk_register_factors(top_early_divs, ARRAY_SIZE(top_early_divs), top_clk_data);
++	if (r)
++		goto unregister_fixed_clks;
++
++	r = mtk_clk_register_factors(top_divs, ARRAY_SIZE(top_divs), top_clk_data);
++	if (r)
++		goto unregister_early_factors;
++
++	r = mtk_clk_register_muxes(top_mtk_muxes, ARRAY_SIZE(top_mtk_muxes), node,
++				   &mt8192_clk_lock, top_clk_data);
++	if (r)
++		goto unregister_factors;
++
++	r = mtk_clk_register_composites(top_muxes, ARRAY_SIZE(top_muxes), base,
++					&mt8192_clk_lock, top_clk_data);
++	if (r)
++		goto unregister_muxes;
++
++	r = mtk_clk_register_composites(top_adj_divs, ARRAY_SIZE(top_adj_divs), base,
++					&mt8192_clk_lock, top_clk_data);
++	if (r)
++		goto unregister_top_composites;
++
++	r = mtk_clk_register_gates(node, top_clks, ARRAY_SIZE(top_clks), top_clk_data);
++	if (r)
++		goto unregister_adj_divs_composites;
++
+ 	r = clk_mt8192_reg_mfg_mux_notifier(&pdev->dev,
+ 					    top_clk_data->hws[CLK_TOP_MFG_PLL_SEL]->clk);
+ 	if (r)
+-		return r;
+-
++		goto unregister_gates;
  
- 	seq_puts(s, "                                 enable  prepare  protect                                duty  hardware                            connection\n");
- 	seq_puts(s, "   clock                          count    count    count        rate   accuracy phase  cycle    enable   consumer                         id\n");
- 	seq_puts(s, "---------------------------------------------------------------------------------------------------------------------------------------------\n");
- 
-+	ret = clk_pm_runtime_get_all();
-+	if (ret)
-+		return ret;
- 
- 	clk_prepare_lock();
- 
-@@ -3272,6 +3274,7 @@ static int clk_summary_show(struct seq_file *s, void *data)
- 			clk_summary_show_subtree(s, c, 0);
- 
- 	clk_prepare_unlock();
-+	clk_pm_runtime_put_all();
- 
- 	return 0;
+-	return of_clk_add_hw_provider(node, of_clk_hw_onecell_get,
++	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, top_clk_data);
++	if (r)
++		goto unregister_gates;
++
++	return 0;
++
++unregister_gates:
++	mtk_clk_unregister_gates(top_clks, ARRAY_SIZE(top_clks), top_clk_data);
++unregister_adj_divs_composites:
++	mtk_clk_unregister_composites(top_adj_divs, ARRAY_SIZE(top_adj_divs), top_clk_data);
++unregister_top_composites:
++	mtk_clk_unregister_composites(top_muxes, ARRAY_SIZE(top_muxes), top_clk_data);
++unregister_muxes:
++	mtk_clk_unregister_muxes(top_mtk_muxes, ARRAY_SIZE(top_mtk_muxes), top_clk_data);
++unregister_factors:
++	mtk_clk_unregister_factors(top_divs, ARRAY_SIZE(top_divs), top_clk_data);
++unregister_early_factors:
++	mtk_clk_unregister_factors(top_early_divs, ARRAY_SIZE(top_early_divs), top_clk_data);
++unregister_fixed_clks:
++	mtk_clk_unregister_fixed_clks(top_fixed_clks, ARRAY_SIZE(top_fixed_clks),
+ 				      top_clk_data);
++	return r;
  }
-@@ -3319,8 +3322,14 @@ static int clk_dump_show(struct seq_file *s, void *data)
- 	struct clk_core *c;
- 	bool first_node = true;
- 	struct hlist_head **lists = s->private;
-+	int ret;
-+
-+	ret = clk_pm_runtime_get_all();
-+	if (ret)
-+		return ret;
  
- 	seq_putc(s, '{');
-+
- 	clk_prepare_lock();
+ static int clk_mt8192_infra_probe(struct platform_device *pdev)
+@@ -1139,14 +1176,16 @@ static int clk_mt8192_infra_probe(struct platform_device *pdev)
  
- 	for (; *lists; lists++) {
-@@ -3333,6 +3342,7 @@ static int clk_dump_show(struct seq_file *s, void *data)
- 	}
+ 	r = mtk_register_reset_controller_with_dev(&pdev->dev, &clk_rst_desc);
+ 	if (r)
+-		goto free_clk_data;
++		goto unregister_gates;
  
- 	clk_prepare_unlock();
-+	clk_pm_runtime_put_all();
+ 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
+ 	if (r)
+-		goto free_clk_data;
++		goto unregister_gates;
  
- 	seq_puts(s, "}\n");
- 	return 0;
+ 	return r;
+ 
++unregister_gates:
++	mtk_clk_unregister_gates(infra_clks, ARRAY_SIZE(infra_clks), clk_data);
+ free_clk_data:
+ 	mtk_free_clk_data(clk_data);
+ 	return r;
+@@ -1168,10 +1207,12 @@ static int clk_mt8192_peri_probe(struct platform_device *pdev)
+ 
+ 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
+ 	if (r)
+-		goto free_clk_data;
++		goto unregister_gates;
+ 
+ 	return r;
+ 
++unregister_gates:
++	mtk_clk_unregister_gates(peri_clks, ARRAY_SIZE(peri_clks), clk_data);
+ free_clk_data:
+ 	mtk_free_clk_data(clk_data);
+ 	return r;
+@@ -1194,10 +1235,12 @@ static int clk_mt8192_apmixed_probe(struct platform_device *pdev)
+ 
+ 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
+ 	if (r)
+-		goto free_clk_data;
++		goto unregister_gates;
+ 
+ 	return r;
+ 
++unregister_gates:
++	mtk_clk_unregister_gates(apmixed_clks, ARRAY_SIZE(apmixed_clks), clk_data);
+ free_clk_data:
+ 	mtk_free_clk_data(clk_data);
+ 	return r;
 -- 
 2.43.0
 
