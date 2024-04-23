@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA4D20B3E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C4520B3E;
 	Tue, 23 Apr 2024 21:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908546; cv=none; b=Ft4+Jdy4fmBTWJLy56GR+tzcD//amrEHyIuxeif2BOcW/Fc8Sge7YBB+pxqI2bmKGnJ7ZucEhQiftpfQq9dkuGh1qy0GIIW6OQN2IBUO5/fWRVOb5u3nIxCF555o3tHB6fvXPBCsLIHwEBXZuFBnMEDueJoXZ/FDhfmbpqwhR20=
+	t=1713908546; cv=none; b=U0VcYGTsKbiBZDqNFYmdyG2JKDYRL9HhiRg4R44FhvRWpFdasQPoTd+oG89zE0+5ZXXL0OZTDt5d3pj7iPfZvngUpOGBBrVX5Xg9paEjtIpREBFleuMxAn71Tg4PhHjI1ucZWvik4GC89R0hG6IzE/nFLhk8zpR35xfGs27hSMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908546; c=relaxed/simple;
-	bh=H+5Xx386DlhUpJgLTP5wzuoJNEfRyNk3xdC71yzMjQc=;
+	bh=dbBjf9tskrHH6eCX0WNkd7nAa1Xr3qs+b37ZHmJ2cFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SisXl//P9nWuMw8v9ScLirvVGzZU4Ef1K26TWVjuksaw6BORaQqj7QkvEsj+Bj3iUR7ZZVHxNO2XvpZS+lq4Nogbe9ZnC6YLaSCKlORdJT75tS7oeXllxTZK5S7WKI4DgLQLIf6GC6gLXvX8LHfiktlzOkQ/m0wKrX0dsVwQqJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A5LNTsVf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CNB2IkaEhqC1zOzwQlZvF/yzW6iR6c4MMVDnt6L1N5CfDP/alMjdjdRjigbuJ2xz55vJOYQktWmr5/phcNKZFLZm1m0Rt0auywJhD94atFlkagfa82K2xJWUDpV0hs3+2+qqYQ6mUGQXvUqbwDWd7SJNB8SfnOLYXrJEV2m1iGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNLBWVoy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5LNTsVf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A3FC116B1;
-	Tue, 23 Apr 2024 21:42:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNLBWVoy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0E1C3277B;
+	Tue, 23 Apr 2024 21:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908546;
-	bh=H+5Xx386DlhUpJgLTP5wzuoJNEfRyNk3xdC71yzMjQc=;
+	bh=dbBjf9tskrHH6eCX0WNkd7nAa1Xr3qs+b37ZHmJ2cFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A5LNTsVfq3ABC8f4kH8Mosq1yMw7mosmXc+qlX4QyGroXnIE1N3+2uxlvuZdIjWWC
-	 gY0U7GuAOhtJ36+v+zRz3UbjkginYmaptzj8xHciOD+pqu27ltlvFsQBxwkFQH36Ol
-	 up+QxligEvZNeQ6wjEk5KZzgppV2ZAndOw7+ldrM=
+	b=QNLBWVoy6u0+JaJI/jJqbGO3DCZG8ZewmMJ5Mnr9udP2HPW2S3qBp0TE/n5IN+vH5
+	 n8C0kyEsYpmhOzsGoZGWOymJ2z0bVHh+J+xtFKzbV1Ke0LdkvSrAKjgdK68uttQBlr
+	 iv/SPwE+NAjbyfhzHcrOs8bQd6VY8NcAD87ZDEKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Tomas Winkler <tomas.winkler@intel.com>
-Subject: [PATCH 6.8 116/158] Revert "mei: vsc: Call wake_up() in the threaded IRQ handler"
-Date: Tue, 23 Apr 2024 14:38:58 -0700
-Message-ID: <20240423213859.700888956@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Subject: [PATCH 6.8 117/158] usb: dwc2: host: Fix dereference issue in DDMA completion flow.
+Date: Tue, 23 Apr 2024 14:38:59 -0700
+Message-ID: <20240423213859.727854430@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -50,44 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
 
-commit e3dc66d998d2b0c2734db9ca1d6c94c97349529a upstream.
+commit eed04fa96c48790c1cce73c8a248e9d460b088f8 upstream.
 
-This reverts commit 058a38acba15fd8e7b262ec6e17c4204cb15f984.
+Fixed variable dereference issue in DDMA completion flow.
 
-It's not necessary to avoid a spinlock, a sleeping lock on PREEMPT_RT, in
-an interrupt handler as the interrupt handler itself would be called in a
-process context if PREEMPT_RT is enabled. So revert the patch.
-
-Cc: stable@vger.kernel.org # for 6.8
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Acked-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20240403051341.3534650-1-wentong.wu@intel.com
+Fixes: b258e4268850 ("usb: dwc2: host: Fix ISOC flow in DDMA mode")
+CC: stable@vger.kernel.org
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/linux-usb/2024040834-ethically-rumble-701f@gregkh/T/#m4c4b83bef0ebb4b67fe2e0a7d6466cbb6f416e39
+Signed-off-by: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Link: https://lore.kernel.org/r/cc826d3ef53c934d8e6d98870f17f3cdc3d2755d.1712665387.git.Minas.Harutyunyan@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/vsc-tp.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/dwc2/hcd_ddma.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/misc/mei/vsc-tp.c
-+++ b/drivers/misc/mei/vsc-tp.c
-@@ -419,6 +419,8 @@ static irqreturn_t vsc_tp_isr(int irq, v
+--- a/drivers/usb/dwc2/hcd_ddma.c
++++ b/drivers/usb/dwc2/hcd_ddma.c
+@@ -867,13 +867,15 @@ static int dwc2_cmpl_host_isoc_dma_desc(
+ 	struct dwc2_dma_desc *dma_desc;
+ 	struct dwc2_hcd_iso_packet_desc *frame_desc;
+ 	u16 frame_desc_idx;
+-	struct urb *usb_urb = qtd->urb->priv;
++	struct urb *usb_urb;
+ 	u16 remain = 0;
+ 	int rc = 0;
  
- 	atomic_inc(&tp->assert_cnt);
+ 	if (!qtd->urb)
+ 		return -EINVAL;
  
-+	wake_up(&tp->xfer_wait);
++	usb_urb = qtd->urb->priv;
 +
- 	return IRQ_WAKE_THREAD;
- }
- 
-@@ -426,8 +428,6 @@ static irqreturn_t vsc_tp_thread_isr(int
- {
- 	struct vsc_tp *tp = data;
- 
--	wake_up(&tp->xfer_wait);
--
- 	if (tp->event_notify)
- 		tp->event_notify(tp->event_notify_context);
- 
+ 	dma_sync_single_for_cpu(hsotg->dev, qh->desc_list_dma + (idx *
+ 				sizeof(struct dwc2_dma_desc)),
+ 				sizeof(struct dwc2_dma_desc),
 
 
