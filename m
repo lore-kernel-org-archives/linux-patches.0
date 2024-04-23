@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC70143895;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E829A143895;
 	Tue, 23 Apr 2024 21:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908777; cv=none; b=mTRztNbDZzUnbdAlTCbhv1pyONQXCTIXIr294GiNpb8MPvdukvCkZPjX2dZT2Saq9PO0umV4l79xE12Ptt+hsRq3fuz3pEe6sEt2LB5P8HpcF6GLT5Y8yvlR6Dyc4JZLiMMr9gGCYVY3OD4nS13Tlyz5xEZFY/eYKo8GohEQqOg=
+	t=1713908778; cv=none; b=PkV5hos5h2l5LFob7zoI7OEwGJmhYlc9Kkgr6TyNgUBdfOxDi5nFp7ggBtD5RMYEXk9jExU7nEx1dOy5j3ECCtgT4F6cquUGBkJAhS2UhxBo9/4V1qvkb4xhyPjfmB0eNzXMJoaN+2GCUSkyY8XsXX6Oi/3Zx6dQDeAtEhekDnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908777; c=relaxed/simple;
-	bh=ulxGtpUX587knkUlNBV0aCgo3xPpBmxAilS/NSdNsnY=;
+	s=arc-20240116; t=1713908778; c=relaxed/simple;
+	bh=p79EzAmFA8VT2brkKgODJotqRWiFbvthXMnVg6CdI0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVxFF3Hc0e7Cc1cf88iIWFHK5kCkKOK0I100T4rSKt+rChPBdsghabMFH1is0azo3Xal5YmqG7xjnCOP1pXD+sd9WG2rud6gjFZonC2W3NDS+qlbXbNR8LoRgXtjCYHdyc5EPwudHUBoUfXT+tEUVNYABNxIlGpcupQLPtKE/hY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNBW1pe3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lFnK9fFgdUmiR1WfaPNRGqINuwTx+aVvdSE0zfhPVj3HZznD1mLqe/kOeG+lW/lQlUrTx8ovHmQFGdg7GnVY/3TCsSZeY4q4jbZRb5P4aoxocUqs8EsL7ZudEF0/unE/XGa3YOBlCpWimIqMtttS5V0VxTRaokCRYGAvtyVC/E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzC3FU7y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNBW1pe3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C22C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzC3FU7y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36D8C116B1;
 	Tue, 23 Apr 2024 21:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908777;
-	bh=ulxGtpUX587knkUlNBV0aCgo3xPpBmxAilS/NSdNsnY=;
+	bh=p79EzAmFA8VT2brkKgODJotqRWiFbvthXMnVg6CdI0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MNBW1pe3RR/MFlj6A4ZDtaTcAbKVVWrDQyNaxvWmrkPgecQ/Wt7flHYi/QFaKyB+T
-	 5JjiRSKgJg46reKtK9RHX6zhZGJ6mkbVE9v3bYSf+4g1/0XD+GL6T7HQCzE3h8UjYu
-	 oJ1LFdPh1BeFsoVwrngxo2PJH+p5oJYVrk6sXbVQ=
+	b=qzC3FU7yDOiGQwWR1fU1eBnjS/B8zdPZGF2EIX8spPcadpT1zFsZLiuV8EieOHNwD
+	 ZaPi6Q94G1F61REqV/fY4bvbzGXiMzEWQXqEYjcAVr9h3V1dFCoWj+rvuTv7pk02IE
+	 A3HLSTAmIvaS5htdaVEuUoOtPm5yqbKxSot/8kqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Christopher Adduono <jc@adduono.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 03/71] ksmbd: do not set SMB2_GLOBAL_CAP_ENCRYPTION for SMB 3.1.1
-Date: Tue, 23 Apr 2024 14:39:16 -0700
-Message-ID: <20240423213844.242602828@linuxfoundation.org>
+Subject: [PATCH 5.15 04/71] btrfs: record delayed inode root in transaction
+Date: Tue, 23 Apr 2024 14:39:17 -0700
+Message-ID: <20240423213844.279293591@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
 References: <20240423213844.122920086@linuxfoundation.org>
@@ -52,52 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit 5ed11af19e56f0434ce0959376d136005745a936 ]
+[ Upstream commit 71537e35c324ea6fbd68377a4f26bb93a831ae35 ]
 
-SMB2_GLOBAL_CAP_ENCRYPTION flag should be used only for 3.0 and
-3.0.2 dialects. This flags set cause compatibility problems with
-other SMB clients.
+When running delayed inode updates, we do not record the inode's root in
+the transaction, but we do allocate PREALLOC and thus converted PERTRANS
+space for it. To be sure we free that PERTRANS meta rsv, we must ensure
+that we record the root in the transaction.
 
-Reported-by: James Christopher Adduono <jc@adduono.com>
-Tested-by: James Christopher Adduono <jc@adduono.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 4f5427ccce5d ("btrfs: delayed-inode: Use new qgroup meta rsv for delayed inode and item")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2ops.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/btrfs/delayed-inode.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ksmbd/smb2ops.c b/fs/ksmbd/smb2ops.c
-index c69943d96565a..d0db9f32c423d 100644
---- a/fs/ksmbd/smb2ops.c
-+++ b/fs/ksmbd/smb2ops.c
-@@ -229,6 +229,11 @@ void init_smb3_0_server(struct ksmbd_conn *conn)
- 	    conn->cli_cap & SMB2_GLOBAL_CAP_ENCRYPTION)
- 		conn->vals->capabilities |= SMB2_GLOBAL_CAP_ENCRYPTION;
+diff --git a/fs/btrfs/delayed-inode.c b/fs/btrfs/delayed-inode.c
+index 5a98c5da12250..8d8b455992362 100644
+--- a/fs/btrfs/delayed-inode.c
++++ b/fs/btrfs/delayed-inode.c
+@@ -1046,6 +1046,9 @@ __btrfs_commit_inode_delayed_items(struct btrfs_trans_handle *trans,
+ 	if (ret)
+ 		return ret;
  
-+	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION ||
-+	    (!(server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION_OFF) &&
-+	     conn->cli_cap & SMB2_GLOBAL_CAP_ENCRYPTION))
-+		conn->vals->capabilities |= SMB2_GLOBAL_CAP_ENCRYPTION;
-+
- 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL)
- 		conn->vals->capabilities |= SMB2_GLOBAL_CAP_MULTI_CHANNEL;
++	ret = btrfs_record_root_in_trans(trans, node->root);
++	if (ret)
++		return ret;
+ 	ret = btrfs_update_delayed_inode(trans, node->root, path, node);
+ 	return ret;
  }
-@@ -276,11 +281,6 @@ int init_smb3_11_server(struct ksmbd_conn *conn)
- 		conn->vals->capabilities |= SMB2_GLOBAL_CAP_LEASING |
- 			SMB2_GLOBAL_CAP_DIRECTORY_LEASING;
- 
--	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION ||
--	    (!(server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION_OFF) &&
--	     conn->cli_cap & SMB2_GLOBAL_CAP_ENCRYPTION))
--		conn->vals->capabilities |= SMB2_GLOBAL_CAP_ENCRYPTION;
--
- 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL)
- 		conn->vals->capabilities |= SMB2_GLOBAL_CAP_MULTI_CHANNEL;
- 
 -- 
 2.43.0
 
