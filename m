@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EED143882;
-	Tue, 23 Apr 2024 21:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A080143882;
+	Tue, 23 Apr 2024 21:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908732; cv=none; b=d17YgOFk9soCod/Y5O2O7dY7g9u/ERS5NAxrli4P/v0ngluj2+FzIXxdMRt9Q7H438awt9HY/DbnbzyiiOjdamO8RS+5KO6LezGRg8equexgf25z35yu43Q4rUeuL+Tn/ldeIYd2FEFSEeP4Qu2CRwlEenyd3rIX3Nqswu6XOi4=
+	t=1713908733; cv=none; b=CkLvmWUmCeY8kvorXKtvEiCmMvnRtnN96lLoMLWUWbojAXtgcDDy+lp3RrG4/CNO9bkVyQHkQl1CWelD/8QwxAXS9hneIOklyME2XPpfJPmgEx+e46XEaRgcKTP4p7aqsMCu6qdI9Hbl1ckoM7OB8oBN39ZkDiBD3pdULGRiKEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908732; c=relaxed/simple;
-	bh=xosoGJHljVVlSW63OVsn21qz2LTx47nSJU9RS34o/3I=;
+	s=arc-20240116; t=1713908733; c=relaxed/simple;
+	bh=ihSLyGQnrcOcs7Z1m6pc6g0RJJFeJj16q+ErUFDJ8Nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=duRrexqz6fpphLqlb/iPaN/85xGjcS8E2TyEJ8eP2+sS9P0mNZw6KdyXEiK2smFXM3+IP64znLMkEFwFKwuXsP3aujEUuv5VTU7Z7UMVeGBGhhFIZC+7Xvl8MZHm2iXeIHpu1l+iMHLVsmvS8FP+HLbh5gkbiQiWevXZtXJT4GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfOmUShP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gN9eNIEO1CgfL4zgpeLO6rriKVhxiLTBXL3bSMffhzuciu9x3wwIEOJzrvbUTnZbs+VfvJOGUfWTYyAHJ3IRDyhed3gvbjNF7nKkRDV55sjzll4uDqK+7PyG0kKiZ76i617J5oRvifhCa7KM8V0Cw1oUa9k+1pbDIP9c/235Y48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyenvKWW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfOmUShP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A99AC32781;
-	Tue, 23 Apr 2024 21:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyenvKWW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50602C116B1;
+	Tue, 23 Apr 2024 21:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908732;
-	bh=xosoGJHljVVlSW63OVsn21qz2LTx47nSJU9RS34o/3I=;
+	s=korg; t=1713908733;
+	bh=ihSLyGQnrcOcs7Z1m6pc6g0RJJFeJj16q+ErUFDJ8Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CfOmUShPcoWlHKQyNeTLLrYMcSqsLAq4/TwmJ8xbiZ1Jxjnj90HnrDR9Z3nhSM+Ji
-	 LHoU96CthQoUr0KmeSbcB4gdjTZgvehsNbhQcRB/9Pi9wHS04ABFPSdnwXJMCuHkAJ
-	 BMsanSsRYKq9u27L3b7RhjiEhvD1FaqP43gD8Fng=
+	b=WyenvKWWJ30kiqrcF/CKo/+HYtaph3f0MqhMopgnpS/Y0S+3DEhH0LH0stYOYwWAQ
+	 whQc9vIiktD7UM9iky9pAhHS+UKn1o7Gt0XglN2JbWW+GSjsZh4G+MmcA7VZcs4Fs3
+	 OMkFL5sGyfQYZA3FOVQVs62eR0dqbDISeNo2u0dY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ai Chao <aichao@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 099/141] ALSA: hda/realtek - Enable audio jacks of Haier Boyue G42 with ALC269VC
-Date: Tue, 23 Apr 2024 14:39:27 -0700
-Message-ID: <20240423213856.384071886@linuxfoundation.org>
+	Carlos Llamas <cmllamas@google.com>,
+	Todd Kjos <tkjos@google.com>
+Subject: [PATCH 6.1 100/141] binder: check offset alignment in binder_get_object()
+Date: Tue, 23 Apr 2024 14:39:28 -0700
+Message-ID: <20240423213856.420942169@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -50,32 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ai Chao <aichao@kylinos.cn>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit 7ee5faad0f8c3ad86c8cfc2f6aac91d2ba29790f upstream.
+commit aaef73821a3b0194a01bd23ca77774f704a04d40 upstream.
 
-The Haier Boyue G42 with ALC269VC cannot detect the MIC of headset,
-the line out and internal speaker until
-ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS quirk applied.
+Commit 6d98eb95b450 ("binder: avoid potential data leakage when copying
+txn") introduced changes to how binder objects are copied. In doing so,
+it unintentionally removed an offset alignment check done through calls
+to binder_alloc_copy_from_buffer() -> check_buffer().
 
-Signed-off-by: Ai Chao <aichao@kylinos.cn>
-Cc: <stable@vger.kernel.org>
-Message-ID: <20240419082159.476879-1-aichao@kylinos.cn>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+These calls were replaced in binder_get_object() with copy_from_user(),
+so now an explicit offset alignment check is needed here. This avoids
+later complications when unwinding the objects gets harder.
+
+It is worth noting this check existed prior to commit 7a67a39320df
+("binder: add function to copy binder object from buffer"), likely
+removed due to redundancy at the time.
+
+Fixes: 6d98eb95b450 ("binder: avoid potential data leakage when copying txn")
+Cc: stable@vger.kernel.org
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Acked-by: Todd Kjos <tkjos@google.com>
+Link: https://lore.kernel.org/r/20240330190115.1877819-1-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/android/binder.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10122,6 +10122,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1d05, 0x115c, "TongFang GMxTGxx", ALC269_FIXUP_NO_SHUTUP),
- 	SND_PCI_QUIRK(0x1d05, 0x121b, "TongFang GMxAGxx", ALC269_FIXUP_NO_SHUTUP),
- 	SND_PCI_QUIRK(0x1d05, 0x1387, "TongFang GMxIXxx", ALC2XX_FIXUP_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1d17, 0x3288, "Haier Boyue G42", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
- 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -1707,8 +1707,10 @@ static size_t binder_get_object(struct b
+ 	size_t object_size = 0;
+ 
+ 	read_size = min_t(size_t, sizeof(*object), buffer->data_size - offset);
+-	if (offset > buffer->data_size || read_size < sizeof(*hdr))
++	if (offset > buffer->data_size || read_size < sizeof(*hdr) ||
++	    !IS_ALIGNED(offset, sizeof(u32)))
+ 		return 0;
++
+ 	if (u) {
+ 		if (copy_from_user(object, u + offset, read_size))
+ 			return 0;
 
 
