@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9E9144D3A;
-	Tue, 23 Apr 2024 21:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B26085274;
+	Tue, 23 Apr 2024 21:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908507; cv=none; b=KN5X7CStim24CPn/AS6fvG29rgbupbJtSDDdoLpMS9mpMLcyJ/RTzdTNRRaBnyQCNBSd1W5nAnC/FPplxUc0fVUdmSkrbaoARvpU2fu6ArMLpJKpSiQOkg4j5haUKmKjGaX+cdBFz/2QfaypuypKcHjOf7XDGJjTAhllh7jHTf8=
+	t=1713908508; cv=none; b=YUp5UdjHuYU+BudhlW8pvR5f3wsFzpBCqv7drAun5c2dhdEdR3ZOsph7FLD4p1ZTUuKKQ6n3D1+4hGaxhfsxvVsW02ykkEDXoF72tVbYfJVrY8ycvM86pTRirtoc0fqcxQfYrqQ5z/WjRu6pIL4UOH1JrirtdETdZfZCkSK43cQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908507; c=relaxed/simple;
-	bh=qc9utWjZtW8UIMHMG8EKUV1TxzrI4vQ2FHaC+BJNZjw=;
+	s=arc-20240116; t=1713908508; c=relaxed/simple;
+	bh=bZ9PiPN5aV/VTmDPUoxPI5oG2EFbu5yglpKhO0HnYz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B153mhnaSsSFKSlR8U6kj75ZfkQeHPHyEbRWSy+2MOFUV5XS4gidxOsr2LPgsPfboYrlfqxGfNdv5m85Z1LF4pq0JAU8dwkmRNmYw0GdmS0304q47IosgklnhYucg6OeOzzoin5PP/zk41cideM1LgEyp7sNo91qC8IY7RSE+B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GY9NcvD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aNk7HayV6DzqTM/ucmOx4jofBRovBebdI3lQGT/mVkqt9iE/Xqo9jUdTnvCC3kzRuIlk2b7eFmmQ5B+8KDVCz9em3HBuoduTq7vv+Hakxl8I5kP0g/1MCQqij9dsEJjWiTpdQUvkAeSskSyaqkTzie0knz3Iqrb3yY+OLHGvt04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6+24Ll3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GY9NcvD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5858CC116B1;
-	Tue, 23 Apr 2024 21:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6+24Ll3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08230C32783;
+	Tue, 23 Apr 2024 21:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908507;
-	bh=qc9utWjZtW8UIMHMG8EKUV1TxzrI4vQ2FHaC+BJNZjw=;
+	s=korg; t=1713908508;
+	bh=bZ9PiPN5aV/VTmDPUoxPI5oG2EFbu5yglpKhO0HnYz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1GY9NcvDTIh4hAxj3LCucDQLexzwqHsGXv+f+ACUchln2/G3KCgIdFTTU+kpAmWj+
-	 9zHAK3ZpPsvzmBBVCNGaTa2gJVxU9+mGXV+h06zc5bQvuLdTsYNNkH6xM+wGx+nk2i
-	 IRPq4OE/eo7gy2BK77G5DLG0+YSChrHOj+RRYqnQ=
+	b=S6+24Ll3ukWEoxMzbS8O45AGb6ldl37YLVtTN0MLKchkkkON+Iax4CXX6VtGhNfti
+	 z5XK56rsDif6ELTYNAdSLiQ8vom3tjQ94K70HZObGRvl619S66yQwgjWKqNexxqGlx
+	 U0ZeaD73eVPICeW8s0Z4zFoimD5sFnRvd3Od0lYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Barker <paul.barker.ct@bp.renesas.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sam Shih <sam.shih@mediatek.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 052/158] net: ravb: Allow RX loop to move past DMA mapping errors
-Date: Tue, 23 Apr 2024 14:37:54 -0700
-Message-ID: <20240423213857.618693899@linuxfoundation.org>
+Subject: [PATCH 6.8 083/158] clk: mediatek: mt7988-infracfg: fix clocks for 2nd PCIe port
+Date: Tue, 23 Apr 2024 14:38:25 -0700
+Message-ID: <20240423213858.644701202@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -52,104 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Barker <paul.barker.ct@bp.renesas.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit a892493a343494bd6bab9d098593932077ff3c43 ]
+[ Upstream commit d3e8a91a848a5941e3c31ecebd6b2612b37e01a6 ]
 
-The RX loops in ravb_rx_gbeth() and ravb_rx_rcar() skip to the next loop
-iteration if a zero-length descriptor is seen (indicating a DMA mapping
-error). However, the current RX descriptor index `priv->cur_rx[q]` was
-incremented at the end of the loop and so would not be incremented when
-we skip to the next loop iteration. This would cause the loop to keep
-seeing the same zero-length descriptor instead of moving on to the next
-descriptor.
+Due to what seems to be an undocumented oddity in MediaTek's MT7988
+SoC design the CLK_INFRA_PCIE_PERI_26M_CK_P2 clock requires
+CLK_INFRA_PCIE_PERI_26M_CK_P3 to be enabled.
 
-As the loop counter `i` still increments, the loop would eventually
-terminate so there is no risk of being stuck here forever - but we
-should still fix this to avoid wasting cycles.
+This currently leads to PCIe port 2 not working in Linux.
 
-To fix this, the RX descriptor index is incremented at the top of the
-loop, in the for statement itself. The assignments of `entry` and `desc`
-are brought into the loop to avoid the need for duplication.
+Reflect the apparent relationship in the clk driver to make sure PCIe
+port 2 of the MT7988 SoC works.
 
-Fixes: d8b48911fd24 ("ravb: fix ring memory allocation")
-Signed-off-by: Paul Barker <paul.barker.ct@bp.renesas.com>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 4b4719437d85f ("clk: mediatek: add drivers for MT7988 SoC")
+Suggested-by: Sam Shih <sam.shih@mediatek.com>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://lore.kernel.org/r/1da2506a51f970706bf4ec9509dd04e0471065e5.1710367453.git.daniel@makrotopia.org
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 25 ++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ drivers/clk/mediatek/clk-mt7988-infracfg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index 60c1cfc501304..853c2a0d4e259 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -781,12 +781,15 @@ static bool ravb_rx_gbeth(struct net_device *ndev, int *quota, int q)
- 	int limit;
- 	int i;
- 
--	entry = priv->cur_rx[q] % priv->num_rx_ring[q];
- 	limit = priv->dirty_rx[q] + priv->num_rx_ring[q] - priv->cur_rx[q];
- 	stats = &priv->stats[q];
- 
--	desc = &priv->rx_ring[q].desc[entry];
--	for (i = 0; i < limit && rx_packets < *quota && desc->die_dt != DT_FEMPTY; i++) {
-+	for (i = 0; i < limit; i++, priv->cur_rx[q]++) {
-+		entry = priv->cur_rx[q] % priv->num_rx_ring[q];
-+		desc = &priv->rx_ring[q].desc[entry];
-+		if (rx_packets == *quota || desc->die_dt == DT_FEMPTY)
-+			break;
-+
- 		/* Descriptor type must be checked before all other reads */
- 		dma_rmb();
- 		desc_status = desc->msc;
-@@ -850,9 +853,6 @@ static bool ravb_rx_gbeth(struct net_device *ndev, int *quota, int q)
- 				break;
- 			}
- 		}
--
--		entry = (++priv->cur_rx[q]) % priv->num_rx_ring[q];
--		desc = &priv->rx_ring[q].desc[entry];
- 	}
- 
- 	/* Refill the RX ring buffers. */
-@@ -894,7 +894,6 @@ static bool ravb_rx_rcar(struct net_device *ndev, int *quota, int q)
- {
- 	struct ravb_private *priv = netdev_priv(ndev);
- 	const struct ravb_hw_info *info = priv->info;
--	int entry = priv->cur_rx[q] % priv->num_rx_ring[q];
- 	struct net_device_stats *stats = &priv->stats[q];
- 	struct ravb_ex_rx_desc *desc;
- 	unsigned int limit, i;
-@@ -904,10 +903,15 @@ static bool ravb_rx_rcar(struct net_device *ndev, int *quota, int q)
- 	int rx_packets = 0;
- 	u8  desc_status;
- 	u16 pkt_len;
-+	int entry;
- 
- 	limit = priv->dirty_rx[q] + priv->num_rx_ring[q] - priv->cur_rx[q];
--	desc = &priv->rx_ring[q].ex_desc[entry];
--	for (i = 0; i < limit && rx_packets < *quota && desc->die_dt != DT_FEMPTY; i++) {
-+	for (i = 0; i < limit; i++, priv->cur_rx[q]++) {
-+		entry = priv->cur_rx[q] % priv->num_rx_ring[q];
-+		desc = &priv->rx_ring[q].ex_desc[entry];
-+		if (rx_packets == *quota || desc->die_dt == DT_FEMPTY)
-+			break;
-+
- 		/* Descriptor type must be checked before all other reads */
- 		dma_rmb();
- 		desc_status = desc->msc;
-@@ -961,9 +965,6 @@ static bool ravb_rx_rcar(struct net_device *ndev, int *quota, int q)
- 			rx_packets++;
- 			stats->rx_bytes += pkt_len;
- 		}
--
--		entry = (++priv->cur_rx[q]) % priv->num_rx_ring[q];
--		desc = &priv->rx_ring[q].ex_desc[entry];
- 	}
- 
- 	/* Refill the RX ring buffers. */
+diff --git a/drivers/clk/mediatek/clk-mt7988-infracfg.c b/drivers/clk/mediatek/clk-mt7988-infracfg.c
+index 8011ef278bea3..df02997c6b7c9 100644
+--- a/drivers/clk/mediatek/clk-mt7988-infracfg.c
++++ b/drivers/clk/mediatek/clk-mt7988-infracfg.c
+@@ -152,7 +152,7 @@ static const struct mtk_gate infra_clks[] = {
+ 	GATE_INFRA0(CLK_INFRA_PCIE_PERI_26M_CK_P1, "infra_pcie_peri_ck_26m_ck_p1",
+ 		    "csw_infra_f26m_sel", 8),
+ 	GATE_INFRA0(CLK_INFRA_PCIE_PERI_26M_CK_P2, "infra_pcie_peri_ck_26m_ck_p2",
+-		    "csw_infra_f26m_sel", 9),
++		    "infra_pcie_peri_ck_26m_ck_p3", 9),
+ 	GATE_INFRA0(CLK_INFRA_PCIE_PERI_26M_CK_P3, "infra_pcie_peri_ck_26m_ck_p3",
+ 		    "csw_infra_f26m_sel", 10),
+ 	/* INFRA1 */
 -- 
 2.43.0
 
