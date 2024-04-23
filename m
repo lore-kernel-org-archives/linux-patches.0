@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADD81420BE;
-	Tue, 23 Apr 2024 21:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7A41420BE;
+	Tue, 23 Apr 2024 21:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908701; cv=none; b=qpYAQ9MyvjTMPS6kXV8MsELvz88fnHe2RqqhicAwTNDCTZR0YCfZVpoAVZs9MfXsEuq0ZUNxeKAfugE9IrJVjXSGWAM1a3il8u3WEUKSXfQn/qm1g+iFMzna/hjoJJzJAATLde+RJtqndz/uY9p6yFKCCPsEM1oKXH8qub+HpVg=
+	t=1713908702; cv=none; b=jm/Mc+oSjrtVsNpNh1nkFdhwI2C8+qUWSlWbvQrrUeNEJiApCquURPvhEktuzslxDi4gXPi0viAlUOJ3cLxM8ilM+rwl20B73GRL4TTB8qbv9HH+9fdHc1gldlby0RCVYCJnVJx9tfo6SVGPot+Pr9wdOvuL6vjO2BGmJLp8XjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908701; c=relaxed/simple;
-	bh=E/R1dS2whryx+4FPwD4MYQHUoHerC/6YcGENFwFHJrw=;
+	s=arc-20240116; t=1713908702; c=relaxed/simple;
+	bh=/6dCX7XcaNK5OeU3e97N+FmuLi43m9L8cQsXXGY+PF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0cUgvfGZM/ZwzcWhwGfI1/+xc3w0xiKXYzBo0kVcwiUKu7lhImWm4/5eVg2MGxkTVNW08BuVtbvItH4OKw89u4cI+W3/ln7cIIFuVBJuLOCPJXkbLYu3hQcuRTjK9uZMSz3WRGOh8Go4CfYO1XIzzie6AiK9eBK/LCyqeX/xSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymZ9CGqO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UCx9ApQV8LLZCiuLFDUibf6ZaQcRi/THnpNqtoie+65YTqKbfFxVy8s6ju4iDRjm8ZOLceMygFRZ4SNHOJJ2x8O4ZKuYf08wcpmimztRo49GTUVijPwWSjZJAGDAlquyjK0tTx8PoN4TT733fC3Q1JZMx5FEiZH2Jh0sjZJ16mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jM4AR2kr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymZ9CGqO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E95C116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jM4AR2kr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA630C3277B;
 	Tue, 23 Apr 2024 21:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908701;
-	bh=E/R1dS2whryx+4FPwD4MYQHUoHerC/6YcGENFwFHJrw=;
+	bh=/6dCX7XcaNK5OeU3e97N+FmuLi43m9L8cQsXXGY+PF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ymZ9CGqOHhvL6zD0iDBI2amgZD7W2+bvx9h9M5B7aA/l5J9KMs0MXltgy4sDbCmuK
-	 MEMqCceoEfrd4+VXeVUGNnlf9xlfbLyFm3XGgSesQVpqFZ2FKxahYfFAkYu9Y6rCua
-	 GtH7dVLjvnzRM3o+6klvW2Rfh8yjG7SHwuxQu3Qw=
+	b=jM4AR2kreu+n5izoc9UnVxfB4V93++zx3HJuOu/y2c1onyiiCQwdwFMcc204P7j6O
+	 dZ7kItxkTHABbkKTzEcR+wdjbRkZuXBz7G7z2dNXLPu80z+Nh7QC29BDFcsUf4C9sG
+	 yI/tWLZfWWbZj4C49zKjs0NtWESWjuT1MhdTxb74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Wenlong <houwenlong.hwl@antgroup.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.1 029/141] x86/head/64: Add missing __head annotation to startup_64_load_idt()
-Date: Tue, 23 Apr 2024 14:38:17 -0700
-Message-ID: <20240423213854.257272518@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 6.1 020/141] x86/boot: Set EFI handover offset directly in header asm
+Date: Tue, 23 Apr 2024 14:38:08 -0700
+Message-ID: <20240423213853.976656706@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -51,33 +50,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Wenlong <houwenlong.hwl@antgroup.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Commit 7f6874eddd81cb2ed784642a7a4321671e158ffe upstream ]
+[ Commit eac956345f99dda3d68f4ae6cf7b494105e54780 upstream ]
 
-This function is currently only used in the head code and is only called
-from startup_64_setup_env(). Although it would be inlined by the
-compiler, it would be better to mark it as __head too in case it doesn't.
+The offsets of the EFI handover entrypoints are available to the
+assembler when constructing the header, so there is no need to set them
+from the build tool afterwards.
 
-Signed-off-by: Hou Wenlong <houwenlong.hwl@antgroup.com>
+This change has no impact on the resulting bzImage binary.
+
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/efcc5b5e18af880e415d884e072bf651c1fa7c34.1689130310.git.houwenlong.hwl@antgroup.com
+Link: https://lore.kernel.org/r/20230915171623.655440-12-ardb@google.com
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/head64.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/boot/header.S      |   18 +++++++++++++++++-
+ arch/x86/boot/tools/build.c |   24 ------------------------
+ 2 files changed, 17 insertions(+), 25 deletions(-)
 
---- a/arch/x86/kernel/head64.c
-+++ b/arch/x86/kernel/head64.c
-@@ -588,7 +588,7 @@ static void set_bringup_idt_handler(gate
+--- a/arch/x86/boot/header.S
++++ b/arch/x86/boot/header.S
+@@ -523,8 +523,24 @@ pref_address:		.quad LOAD_PHYSICAL_ADDR
+ # define INIT_SIZE VO_INIT_SIZE
+ #endif
+ 
++	.macro		__handover_offset
++#ifndef CONFIG_EFI_HANDOVER_PROTOCOL
++	.long		0
++#elif !defined(CONFIG_X86_64)
++	.long		ZO_efi32_stub_entry
++#else
++	/* Yes, this is really how we defined it :( */
++	.long		ZO_efi64_stub_entry - 0x200
++#ifdef CONFIG_EFI_MIXED
++	.if		ZO_efi32_stub_entry != ZO_efi64_stub_entry - 0x200
++	.error		"32-bit and 64-bit EFI entry points do not match"
++	.endif
++#endif
++#endif
++	.endm
++
+ init_size:		.long INIT_SIZE		# kernel initialization size
+-handover_offset:	.long 0			# Filled in by build.c
++handover_offset:	__handover_offset
+ kernel_info_offset:	.long ZO_kernel_info
+ 
+ # End of setup header #####################################################
+--- a/arch/x86/boot/tools/build.c
++++ b/arch/x86/boot/tools/build.c
+@@ -55,8 +55,6 @@ u8 buf[SETUP_SECT_MAX*512];
+ #define PECOFF_COMPAT_RESERVE 0x0
+ #endif
+ 
+-static unsigned long efi32_stub_entry;
+-static unsigned long efi64_stub_entry;
+ static unsigned long efi_pe_entry;
+ static unsigned long efi32_pe_entry;
+ static unsigned long _end;
+@@ -265,31 +263,12 @@ static void efi_stub_defaults(void)
+ #endif
  }
  
- /* This runs while still in the direct mapping */
--static void startup_64_load_idt(unsigned long physbase)
-+static void __head startup_64_load_idt(unsigned long physbase)
+-static void efi_stub_entry_update(void)
+-{
+-	unsigned long addr = efi32_stub_entry;
+-
+-#ifdef CONFIG_EFI_HANDOVER_PROTOCOL
+-#ifdef CONFIG_X86_64
+-	/* Yes, this is really how we defined it :( */
+-	addr = efi64_stub_entry - 0x200;
+-#endif
+-
+-#ifdef CONFIG_EFI_MIXED
+-	if (efi32_stub_entry != addr)
+-		die("32-bit and 64-bit EFI entry points do not match\n");
+-#endif
+-#endif
+-	put_unaligned_le32(addr, &buf[0x264]);
+-}
+-
+ #else
+ 
+ static inline void update_pecoff_setup_and_reloc(unsigned int size) {}
+ static inline void update_pecoff_text(unsigned int text_start,
+ 				      unsigned int file_sz) {}
+ static inline void efi_stub_defaults(void) {}
+-static inline void efi_stub_entry_update(void) {}
+ 
+ static inline int reserve_pecoff_reloc_section(int c)
  {
- 	struct desc_ptr *desc = fixup_pointer(&bringup_idt_descr, physbase);
- 	gate_desc *idt = fixup_pointer(bringup_idt_table, physbase);
+@@ -332,8 +311,6 @@ static void parse_zoffset(char *fname)
+ 	p = (char *)buf;
+ 
+ 	while (p && *p) {
+-		PARSE_ZOFS(p, efi32_stub_entry);
+-		PARSE_ZOFS(p, efi64_stub_entry);
+ 		PARSE_ZOFS(p, efi_pe_entry);
+ 		PARSE_ZOFS(p, efi32_pe_entry);
+ 		PARSE_ZOFS(p, _end);
+@@ -416,7 +393,6 @@ int main(int argc, char ** argv)
+ 
+ 	update_pecoff_text(setup_sectors * 512, i + (sys_size * 16));
+ 
+-	efi_stub_entry_update();
+ 
+ 	crc = partial_crc32(buf, i, crc);
+ 	if (fwrite(buf, 1, i, dest) != i)
 
 
