@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024281494A7;
-	Tue, 23 Apr 2024 21:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6680143C69;
+	Tue, 23 Apr 2024 21:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908660; cv=none; b=nwO9PoMzkH8EmdnYLr6Ydeaey12ogwK097EQtuor1aUhvXftf0xfABHiJx486Hub36S7Crsm1dKC8I0xdt409D2eqM4Vvx/BbJPu0GOgKqqWnzG1hr/lR182ngA9ZmqQBAyCz8IXlgt9ZFrMzB1DgJ4cZJn0UfnTaf9j9HQuLbA=
+	t=1713908660; cv=none; b=nzwSggJYdE9c41x5hrfOC/lshDlTsQ64ThEym/T2ZnAdoK354k3vRejL6HHlf6EpQmFHJyGiFjcfvvLZqMbAoOmkaf+JsJ2GgSuXgSOJAdAi7xvFs2emcA2/FjgAbJO6+B0QCmimdfx7iUd8HEaQicjHoBHzpfoFvqF0YuuAUIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908660; c=relaxed/simple;
-	bh=hvzX9hllUzDnYT9UhgXa3s0+WIaqemCVVAy9ciJ3Rf0=;
+	bh=UjoA6V0036zekFPRJZHvdkpX+1cdG39k2bgLXgJFrkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=di+G/pEVjdIqj3EIBCsqg3nM0+oYtTHUVLeb6gOg4AXR9doDub6RwmFM4+14Os2L4P5fh3jpNV62AJpQ33eVMewnE6QvuoyUdLejrVXrDgTsqhdJnCDdipjIFiaOGonOkk50A36YGO+PdXQZQgwCiPCFITxPsD237DzaKJQVUzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=In+Eq0Du; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iqc+SIu3EMZ/fzTrOQJqYHHGEGVDXDDzlufHNlk97risKN4LtTADN0ewk9Tsw2gZA8RyZuudk9WOpkUidIEHtOFybv/nWIYhAmwxUBKJRFfrJS9Q46SKGDQ1yaI2V6cVmuHDyIX7jR0U4APzDbKDG39QJTZtSGXZqjMtl9/EYMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1L1CPTN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="In+Eq0Du"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1DD2C3277B;
-	Tue, 23 Apr 2024 21:44:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1L1CPTN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A239C116B1;
+	Tue, 23 Apr 2024 21:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908659;
-	bh=hvzX9hllUzDnYT9UhgXa3s0+WIaqemCVVAy9ciJ3Rf0=;
+	s=korg; t=1713908660;
+	bh=UjoA6V0036zekFPRJZHvdkpX+1cdG39k2bgLXgJFrkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=In+Eq0DuTGDc3mbSu9wOOA84N1q4ftTU7waxilgQqRrfzWVLuqnsMIfQ+VRyDb0/m
-	 GbQ8ilAjguZAR28AYaCF7Rz/VGcvAb22pc/KsA5HbsKPDrNDuLuNlE3VzPgK2Sv9y2
-	 nnFnexnnVOyJsqzsr1Uf4gPHbd8tU41EqUw+fWeY=
+	b=k1L1CPTNKSyXJ8WEyxYmUIw04+7p0v/+Bkl+Io4Fqr7y7Jg5tZ5Rh6csHyUnaQBle
+	 5YZVjgoWsGOvUhRX0/zm/d2AzKO9gAAQ8YTcOqzbvXQD1gKS9F5iBllZ/8qMup+DfE
+	 tEIdqX1xioKzGSQ3pJkQJp+EqleTkGg/pQQ8kEU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 151/158] net: dsa: mt7530: fix enabling EEE on MT7531 switch on all boards
-Date: Tue, 23 Apr 2024 14:39:48 -0700
-Message-ID: <20240423213900.571553070@linuxfoundation.org>
+	qemu-devel@nongnu.org,
+	Breno Leitao <leitao@debian.org>,
+	Heng Qi <hengqi@linux.alibaba.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Vlad Poenaru <vlad.wing@gmail.com>
+Subject: [PATCH 6.6 152/158] virtio_net: Do not send RSS key if it is not supported
+Date: Tue, 23 Apr 2024 14:39:49 -0700
+Message-ID: <20240423213900.607828253@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -46,105 +48,136 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 06dfcd4098cfdc4d4577d94793a4f9125386da8b upstream.
+commit 059a49aa2e25c58f90b50151f109dd3c4cdb3a47 upstream.
 
-The commit 40b5d2f15c09 ("net: dsa: mt7530: Add support for EEE features")
-brought EEE support but did not enable EEE on MT7531 switch MACs. EEE is
-enabled on MT7531 switch MACs by pulling the LAN2LED0 pin low on the board
-(bootstrapping), unsetting the EEE_DIS bit on the trap register, or setting
-the internal EEE switch bit on the CORE_PLL_GROUP4 register. Thanks to
-SkyLake Huang (黃啟澤) from MediaTek for providing information on the
-internal EEE switch bit.
+There is a bug when setting the RSS options in virtio_net that can break
+the whole machine, getting the kernel into an infinite loop.
 
-There are existing boards that were not designed to pull the pin low.
-Because of that, the EEE status currently depends on the board design.
+Running the following command in any QEMU virtual machine with virtionet
+will reproduce this problem:
 
-The EEE_DIS bit on the trap pertains to the LAN2LED0 pin which is usually
-used to control an LED. Once the bit is unset, the pin will be low. That
-will make the active low LED turn on. The pin is controlled by the switch
-PHY. It seems that the PHY controls the pin in the way that it inverts the
-pin state. That means depending on the wiring of the LED connected to
-LAN2LED0 on the board, the LED may be on without an active link.
+    # ethtool -X eth0  hfunc toeplitz
 
-To not cause this unwanted behaviour whilst enabling EEE on all boards, set
-the internal EEE switch bit on the CORE_PLL_GROUP4 register.
+This is how the problem happens:
 
-My testing on MT7531 shows a certain amount of traffic loss when EEE is
-enabled. That said, I haven't come across a board that enables EEE. So
-enable EEE on the switch MACs but disable EEE advertisement on the switch
-PHYs. This way, we don't change the behaviour of the majority of the boards
-that have this switch. The mediatek-ge PHY driver already disables EEE
-advertisement on the switch PHYs but my testing shows that it is somehow
-enabled afterwards. Disabling EEE advertisement before the PHY driver
-initialises keeps it off.
+1) ethtool_set_rxfh() calls virtnet_set_rxfh()
 
-With this change, EEE can now be enabled using ethtool.
+2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
 
-Fixes: 40b5d2f15c09 ("net: dsa: mt7530: Add support for EEE features")
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Tested-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://lore.kernel.org/r/20240408-for-net-mt7530-fix-eee-for-mt7531-mt7988-v3-1-84fdef1f008b@arinc9.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+3) virtnet_commit_rss_command() populates 4 entries for the rss
+scatter-gather
+
+4) Since the command above does not have a key, then the last
+scatter-gatter entry will be zeroed, since rss_key_size == 0.
+sg_buf_size = vi->rss_key_size;
+
+5) This buffer is passed to qemu, but qemu is not happy with a buffer
+with zero length, and do the following in virtqueue_map_desc() (QEMU
+function):
+
+  if (!sz) {
+      virtio_error(vdev, "virtio: zero sized buffers are not allowed");
+
+6) virtio_error() (also QEMU function) set the device as broken
+
+    vdev->broken = true;
+
+7) Qemu bails out, and do not repond this crazy kernel.
+
+8) The kernel is waiting for the response to come back (function
+virtnet_send_command())
+
+9) The kernel is waiting doing the following :
+
+      while (!virtqueue_get_buf(vi->cvq, &tmp) &&
+	     !virtqueue_is_broken(vi->cvq))
+	      cpu_relax();
+
+10) None of the following functions above is true, thus, the kernel
+loops here forever. Keeping in mind that virtqueue_is_broken() does
+not look at the qemu `vdev->broken`, so, it never realizes that the
+vitio is broken at QEMU side.
+
+Fix it by not sending RSS commands if the feature is not available in
+the device.
+
+Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
+Cc: stable@vger.kernel.org
+Cc: qemu-devel@nongnu.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Vlad Poenaru <vlad.wing@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mt7530.c |   17 ++++++++++++-----
- drivers/net/dsa/mt7530.h |    1 +
- 2 files changed, 13 insertions(+), 5 deletions(-)
+ drivers/net/virtio_net.c |   25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -2713,18 +2713,25 @@ mt7531_setup(struct dsa_switch *ds)
- 	priv->p5_interface = PHY_INTERFACE_MODE_NA;
- 	priv->p6_interface = PHY_INTERFACE_MODE_NA;
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3570,19 +3570,34 @@ static int virtnet_get_rxfh(struct net_d
+ static int virtnet_set_rxfh(struct net_device *dev, const u32 *indir, const u8 *key, const u8 hfunc)
+ {
+ 	struct virtnet_info *vi = netdev_priv(dev);
++	bool update = false;
+ 	int i;
  
--	/* Enable PHY core PLL, since phy_device has not yet been created
--	 * provided for phy_[read,write]_mmd_indirect is called, we provide
--	 * our own mt7531_ind_mmd_phy_[read,write] to complete this
--	 * function.
-+	/* Enable Energy-Efficient Ethernet (EEE) and PHY core PLL, since
-+	 * phy_device has not yet been created provided for
-+	 * phy_[read,write]_mmd_indirect is called, we provide our own
-+	 * mt7531_ind_mmd_phy_[read,write] to complete this function.
- 	 */
- 	val = mt7531_ind_c45_phy_read(priv, MT753X_CTRL_PHY_ADDR,
- 				      MDIO_MMD_VEND2, CORE_PLL_GROUP4);
--	val |= MT7531_PHY_PLL_BYPASS_MODE;
-+	val |= MT7531_RG_SYSPLL_DMY2 | MT7531_PHY_PLL_BYPASS_MODE;
- 	val &= ~MT7531_PHY_PLL_OFF;
- 	mt7531_ind_c45_phy_write(priv, MT753X_CTRL_PHY_ADDR, MDIO_MMD_VEND2,
- 				 CORE_PLL_GROUP4, val);
+ 	if (hfunc != ETH_RSS_HASH_NO_CHANGE && hfunc != ETH_RSS_HASH_TOP)
+ 		return -EOPNOTSUPP;
  
-+	/* Disable EEE advertisement on the switch PHYs. */
-+	for (i = MT753X_CTRL_PHY_ADDR;
-+	     i < MT753X_CTRL_PHY_ADDR + MT7530_NUM_PHYS; i++) {
-+		mt7531_ind_c45_phy_write(priv, i, MDIO_MMD_AN, MDIO_AN_EEE_ADV,
-+					 0);
+ 	if (indir) {
++		if (!vi->has_rss)
++			return -EOPNOTSUPP;
++
+ 		for (i = 0; i < vi->rss_indir_table_size; ++i)
+ 			vi->ctrl->rss.indirection_table[i] = indir[i];
++		update = true;
+ 	}
+-	if (key)
++	if (key) {
++		/* If either _F_HASH_REPORT or _F_RSS are negotiated, the
++		 * device provides hash calculation capabilities, that is,
++		 * hash_key is configured.
++		 */
++		if (!vi->has_rss && !vi->has_rss_hash_report)
++			return -EOPNOTSUPP;
++
+ 		memcpy(vi->ctrl->rss.key, key, vi->rss_key_size);
++		update = true;
++	}
+ 
+-	virtnet_commit_rss_command(vi);
++	if (update)
++		virtnet_commit_rss_command(vi);
+ 
+ 	return 0;
+ }
+@@ -4491,13 +4506,15 @@ static int virtnet_probe(struct virtio_d
+ 	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
+ 		vi->has_rss_hash_report = true;
+ 
+-	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
++	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
+ 		vi->has_rss = true;
+ 
+-	if (vi->has_rss || vi->has_rss_hash_report) {
+ 		vi->rss_indir_table_size =
+ 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
+ 				rss_max_indirection_table_length));
 +	}
 +
- 	mt7531_setup_common(ds);
- 
- 	/* Setup VLAN ID 0 for VLAN-unaware bridges */
---- a/drivers/net/dsa/mt7530.h
-+++ b/drivers/net/dsa/mt7530.h
-@@ -634,6 +634,7 @@ enum mt7531_clk_skew {
- #define  RG_SYSPLL_DDSFBK_EN		BIT(12)
- #define  RG_SYSPLL_BIAS_EN		BIT(11)
- #define  RG_SYSPLL_BIAS_LPF_EN		BIT(10)
-+#define  MT7531_RG_SYSPLL_DMY2		BIT(6)
- #define  MT7531_PHY_PLL_OFF		BIT(5)
- #define  MT7531_PHY_PLL_BYPASS_MODE	BIT(4)
++	if (vi->has_rss || vi->has_rss_hash_report) {
+ 		vi->rss_key_size =
+ 			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
  
 
 
