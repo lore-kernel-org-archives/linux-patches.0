@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99E120B3E;
-	Tue, 23 Apr 2024 21:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01D420B3E;
+	Tue, 23 Apr 2024 21:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908452; cv=none; b=RoRZ5Aox13Tj+8KoSopDGkLlttRaTCdXhh3Q3oqzbRZi5fMn9sj6YuauLPUmS8Jvgi/z4POk92s8v4LB4SyWTW8PiIgxJiZW0M9oxs2Hc/i0Gj5eJj8B5WUtQxptq2gQ3KmYg+jdKKByJ2nlfEzyrxANiyPgCIwJOEcZKIQylFk=
+	t=1713908452; cv=none; b=am2Fk5mSo1oi6qDr+arlHqdpDfZuH4nkVCIlMHEZV6WGMfHHJwCWfkT9dXTHnxyfFJMqpOz+hMoxo9GmbPnHyVCBrrgxzsDKjPqn2BSF2aQufMvbtdVoXVYvBBC4Ex7GKngwAXh6htIl5gAfMm0Xy24weKCjdFhjR6GTUkO2Je0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908452; c=relaxed/simple;
-	bh=O9e1rlR17TsMH/Aw0x6f4a7mRyXli8yaFew9EXbQ3Dk=;
+	bh=MZ0ZAJOeqlH8IP+aT3pxC9J+B4ljNoixJhgDtKsVjX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZ3TvyI5feJ9NrG8uxmmTQ6IXwN5xiyLrxYH+E8PcXjGehxzkZF4je0+P7PDvtyN2tE4rknpc1IsbNZncIA8TksgHUPvw+UipZxxwlChHpyOMECkhekuLZ7THMUvr1jGd1C0TlH/S0d+FKkE8X+cPgk9RbGlnzs7/8xRaZzIPT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afAbqlVd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YHP/aJWJJhkC46HIDvZ2L3wwQnAkWMbz+CPJ9N8TeC6RpExl1upPI2b6gvw32kdCsRHnRl/Hxp7kO6uyAcs/6EVkvt5PeTx+AaDtZ052mGS4RikLKvK7Gb2Tgfb00J59dKIaPa27kohlCpATJh6hVOO6qTFhZELWljro2imJAlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trZ2WjDQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afAbqlVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9668AC116B1;
-	Tue, 23 Apr 2024 21:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trZ2WjDQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59371C3277B;
+	Tue, 23 Apr 2024 21:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908451;
-	bh=O9e1rlR17TsMH/Aw0x6f4a7mRyXli8yaFew9EXbQ3Dk=;
+	s=korg; t=1713908452;
+	bh=MZ0ZAJOeqlH8IP+aT3pxC9J+B4ljNoixJhgDtKsVjX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=afAbqlVdjlMagQK2NMsnJOIk50R7gmmHlG61xcjby2/VdGkrnCXnBeAAif9piSZ78
-	 icszFAJ7lqlyITuNG1e5BmaKlsSipjKrsO/y6eqKJGtGD/UHUie1eHEllcFP0eRohb
-	 W3y+Z+OTl/8ErilspcYgSQpOIBZqv6MWVYap8QPo=
+	b=trZ2WjDQKOTcVYzuuB+QdRPzxw/UPb9C2HzF7o7ejwvrtfi6BnYmwr7fGcWST2vby
+	 AsAObDKZRvztceR9uLvK2yhkpxtiugai4Gqmlp+eaU7gyh4oRNF1al+4Jkyf6sGMZy
+	 dkUyP1Ua0q0BuWlPQTSlusu7X5ldW4vOghK8cFVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Izbyshev <izbyshev@ispras.ru>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 001/158] io_uring: Fix io_cqring_wait() not restoring sigmask on get_timespec64() failure
-Date: Tue, 23 Apr 2024 14:37:03 -0700
-Message-ID: <20240423213855.878147778@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.8 010/158] btrfs: zoned: do not flag ZEROOUT on non-dirty extent buffer
+Date: Tue, 23 Apr 2024 14:37:12 -0700
+Message-ID: <20240423213856.183046285@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -51,68 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Izbyshev <izbyshev@ispras.ru>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-Commit 978e5c19dfefc271e5550efba92fcef0d3f62864 upstream.
+commit 68879386180c0efd5a11e800b0525a01068c9457 upstream.
 
-This bug was introduced in commit 950e79dd7313 ("io_uring: minor
-io_cqring_wait() optimization"), which was made in preparation for
-adc8682ec690 ("io_uring: Add support for napi_busy_poll"). The latter
-got reverted in cb3182167325 ("Revert "io_uring: Add support for
-napi_busy_poll""), so simply undo the former as well.
+Btrfs clears the content of an extent buffer marked as
+EXTENT_BUFFER_ZONED_ZEROOUT before the bio submission. This mechanism is
+introduced to prevent a write hole of an extent buffer, which is once
+allocated, marked dirty, but turns out unnecessary and cleaned up within
+one transaction operation.
 
-Cc: stable@vger.kernel.org
-Fixes: 950e79dd7313 ("io_uring: minor io_cqring_wait() optimization")
-Signed-off-by: Alexey Izbyshev <izbyshev@ispras.ru>
-Link: https://lore.kernel.org/r/20240405125551.237142-1-izbyshev@ispras.ru
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Currently, btrfs_clear_buffer_dirty() marks the extent buffer as
+EXTENT_BUFFER_ZONED_ZEROOUT, and skips the entry function. If this call
+happens while the buffer is under IO (with the WRITEBACK flag set,
+without the DIRTY flag), we can add the ZEROOUT flag and clear the
+buffer's content just before a bio submission. As a result:
+
+1) it can lead to adding faulty delayed reference item which leads to a
+   FS corrupted (EUCLEAN) error, and
+
+2) it writes out cleared tree node on disk
+
+The former issue is previously discussed in [1]. The corruption happens
+when it runs a delayed reference update. So, on-disk data is safe.
+
+[1] https://lore.kernel.org/linux-btrfs/3f4f2a0ff1a6c818050434288925bdcf3cd719e5.1709124777.git.naohiro.aota@wdc.com/
+
+The latter one can reach on-disk data. But, as that node is already
+processed by btrfs_clear_buffer_dirty(), that will be invalidated in the
+next transaction commit anyway. So, the chance of hitting the corruption
+is relatively small.
+
+Anyway, we should skip flagging ZEROOUT on a non-DIRTY extent buffer, to
+keep the content under IO intact.
+
+Fixes: aa6313e6ff2b ("btrfs: zoned: don't clear dirty flag of extent buffer")
+CC: stable@vger.kernel.org # 6.8
+Link: https://lore.kernel.org/linux-btrfs/oadvdekkturysgfgi4qzuemd57zudeasynswurjxw3ocdfsef6@sjyufeugh63f/
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ fs/btrfs/extent_io.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2610,19 +2610,6 @@ static int io_cqring_wait(struct io_ring
- 	if (__io_cqring_events_user(ctx) >= min_events)
- 		return 0;
- 
--	if (sig) {
--#ifdef CONFIG_COMPAT
--		if (in_compat_syscall())
--			ret = set_compat_user_sigmask((const compat_sigset_t __user *)sig,
--						      sigsz);
--		else
--#endif
--			ret = set_user_sigmask(sig, sigsz);
--
--		if (ret)
--			return ret;
--	}
--
- 	init_waitqueue_func_entry(&iowq.wq, io_wake_function);
- 	iowq.wq.private = current;
- 	INIT_LIST_HEAD(&iowq.wq.entry);
-@@ -2639,6 +2626,19 @@ static int io_cqring_wait(struct io_ring
- 		iowq.timeout = ktime_add_ns(timespec64_to_ktime(ts), ktime_get_ns());
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -4130,7 +4130,7 @@ void btrfs_clear_buffer_dirty(struct btr
+ 	 * The actual zeroout of the buffer will happen later in
+ 	 * btree_csum_one_bio.
+ 	 */
+-	if (btrfs_is_zoned(fs_info)) {
++	if (btrfs_is_zoned(fs_info) && test_bit(EXTENT_BUFFER_DIRTY, &eb->bflags)) {
+ 		set_bit(EXTENT_BUFFER_ZONED_ZEROOUT, &eb->bflags);
+ 		return;
  	}
- 
-+	if (sig) {
-+#ifdef CONFIG_COMPAT
-+		if (in_compat_syscall())
-+			ret = set_compat_user_sigmask((const compat_sigset_t __user *)sig,
-+						      sigsz);
-+		else
-+#endif
-+			ret = set_user_sigmask(sig, sigsz);
-+
-+		if (ret)
-+			return ret;
-+	}
-+
- 	trace_io_uring_cqring_wait(ctx, min_events);
- 	do {
- 		int nr_wait = (int) iowq.cq_tail - READ_ONCE(ctx->rings->cq.tail);
 
 
