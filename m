@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C840B14389D;
-	Tue, 23 Apr 2024 21:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AED91487DD;
+	Tue, 23 Apr 2024 21:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908623; cv=none; b=jH+6NZud6vNMbxMeSi83LMPrUh1AkoLn2PXKDFFy4RE79ZcONt7oOSHr/JoU8XeIYLY2oWmG4tfElR4c/90V/nYIy3imTnaPICGlcGavD+gyNyAHJZ0vQjdY+KieH9vl1lIsGVGtv2Dfh7NCbEQWKUJ5A0X8hgNNfAU91g2ZtA8=
+	t=1713908624; cv=none; b=gzifcve+YL5u2cvoM/098cLOejXM/pyuB1qNv4uamx7D1e/uGj3MB/0wD5Y2nTgXQSsgbJbAlzX+cbTOhgc3C8LuXk3yzwXOXzkpOMOyZRcXxHL5+925ed9tCXf8vmg6NviBRZczSJdZIPFJRk6epnhMR7+kk22J8GfvPaVP9EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908623; c=relaxed/simple;
-	bh=PtMkC3xbRL6yHfbMo+jEwjHgsHfsm9UBD0wnRrQ8WuA=;
+	s=arc-20240116; t=1713908624; c=relaxed/simple;
+	bh=C9/wWXH+SoWWY1JwQGLYtvvf7Ze9PqstVKKwnMxD0FE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJysXajhWjCBJvqcfEnMW6hyqaC1YpbVFSyYyxbpPcmW2cF8qe8ACfn74fVHhx9TaVKOKEzZfxhzc4ez4nhIciSmn1nB5d6DLWa1e2KFR8glxuUukTQDXJ5c+fYV7xEBUYSthd/FcrV9sI/pP4wNDKoZuR0N1jymCMG+KMwzLyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2efvW9F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lm/Y8YV0rJKEtfR//U0heYBktx8UvVeWVO4LdHOxoVpPYnZYx6TQRl8LGIDY+pi4IgeFxnP26Uvcu5FUuQEh+t5B1+356NIKr5UgPsb5U9afau/WfvBQgDuKshlKvSrJlHgFY6GCvyV16I7wUaHhV825xl2ZNG9G043/3M+nQ34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2qJi7F+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2efvW9F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5358AC116B1;
-	Tue, 23 Apr 2024 21:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2qJi7F+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D009C32781;
+	Tue, 23 Apr 2024 21:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908623;
-	bh=PtMkC3xbRL6yHfbMo+jEwjHgsHfsm9UBD0wnRrQ8WuA=;
+	s=korg; t=1713908624;
+	bh=C9/wWXH+SoWWY1JwQGLYtvvf7Ze9PqstVKKwnMxD0FE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S2efvW9FiypJ6JHNbvTVwrkM0BCLGO0A1TmjnoHBMQODDdTvwbRkzKSiSyyDgsm/u
-	 Usd8eeKwzBnlKXbc2+MScuOXdau0Zce/CDKe3NhUme77jHoxOhiawrD9G9StSX4eAO
-	 YWYDLFNTPeJJ56jxg6SCfXWjbcKEq07FFho1oKwU=
+	b=L2qJi7F+wUKbv2NkaZTMZvnceMgD2chp21OYnsScVwbcYTWwUUE/m/jDd1PQUe9YJ
+	 GHjp777jeSmMkdboD+8GrEyccpjGmBd/6ELRZjJ9+ihuzZkoD/YBwnGrxvBmrVNSUH
+	 MN9eqYbwPApLgIS89VQNWw/1MZhcelC8ZbW7M3FM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 098/158] x86/cpufeatures: Fix dependencies for GFNI, VAES, and VPCLMULQDQ
-Date: Tue, 23 Apr 2024 14:38:55 -0700
-Message-ID: <20240423213858.932509387@linuxfoundation.org>
+Subject: [PATCH 6.6 099/158] net/mlx5: E-switch, store eswitch pointer before registering devlink_param
+Date: Tue, 23 Apr 2024 14:38:56 -0700
+Message-ID: <20240423213858.963300158@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -52,57 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 9543f6e26634537997b6e909c20911b7bf4876de ]
+[ Upstream commit 0553e753ea9ee724acaf6b3dfc7354702af83567 ]
 
-Fix cpuid_deps[] to list the correct dependencies for GFNI, VAES, and
-VPCLMULQDQ.  These features don't depend on AVX512, and there exist CPUs
-that support these features but not AVX512.  GFNI actually doesn't even
-depend on AVX.
+Next patch will move devlink register to be first. Therefore, whenever
+mlx5 will register a param, the user will be notified.
+In order to notify the user, devlink is using the get() callback of
+the param. Hence, resources that are being used by the get() callback
+must be set before the devlink param is registered.
 
-This prevents GFNI from being unnecessarily disabled if AVX is disabled
-to mitigate the GDS vulnerability.
+Therefore, store eswitch pointer inside mdev before registering the
+param.
 
-This also prevents all three features from being unnecessarily disabled
-if AVX512VL (or its dependency AVX512F) were to be disabled, but it
-looks like there isn't any case where this happens anyway.
-
-Fixes: c128dbfa0f87 ("x86/cpufeatures: Enable new SSE/AVX/AVX512 CPU features")
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/r/20240417060434.47101-1-ebiggers@kernel.org
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://lore.kernel.org/r/20240409190820.227554-2-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/cpuid-deps.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/eswitch.c        | 9 +++------
+ .../net/ethernet/mellanox/mlx5/core/eswitch_offloads.c   | 4 ++++
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/cpuid-deps.c b/arch/x86/kernel/cpu/cpuid-deps.c
-index e462c1d3800a6..6fb6d8a57ceca 100644
---- a/arch/x86/kernel/cpu/cpuid-deps.c
-+++ b/arch/x86/kernel/cpu/cpuid-deps.c
-@@ -44,7 +44,10 @@ static const struct cpuid_dep cpuid_deps[] = {
- 	{ X86_FEATURE_F16C,			X86_FEATURE_XMM2,     },
- 	{ X86_FEATURE_AES,			X86_FEATURE_XMM2      },
- 	{ X86_FEATURE_SHA_NI,			X86_FEATURE_XMM2      },
-+	{ X86_FEATURE_GFNI,			X86_FEATURE_XMM2      },
- 	{ X86_FEATURE_FMA,			X86_FEATURE_AVX       },
-+	{ X86_FEATURE_VAES,			X86_FEATURE_AVX       },
-+	{ X86_FEATURE_VPCLMULQDQ,		X86_FEATURE_AVX       },
- 	{ X86_FEATURE_AVX2,			X86_FEATURE_AVX,      },
- 	{ X86_FEATURE_AVX512F,			X86_FEATURE_AVX,      },
- 	{ X86_FEATURE_AVX512IFMA,		X86_FEATURE_AVX512F   },
-@@ -56,9 +59,6 @@ static const struct cpuid_dep cpuid_deps[] = {
- 	{ X86_FEATURE_AVX512VL,			X86_FEATURE_AVX512F   },
- 	{ X86_FEATURE_AVX512VBMI,		X86_FEATURE_AVX512F   },
- 	{ X86_FEATURE_AVX512_VBMI2,		X86_FEATURE_AVX512VL  },
--	{ X86_FEATURE_GFNI,			X86_FEATURE_AVX512VL  },
--	{ X86_FEATURE_VAES,			X86_FEATURE_AVX512VL  },
--	{ X86_FEATURE_VPCLMULQDQ,		X86_FEATURE_AVX512VL  },
- 	{ X86_FEATURE_AVX512_VNNI,		X86_FEATURE_AVX512VL  },
- 	{ X86_FEATURE_AVX512_BITALG,		X86_FEATURE_AVX512VL  },
- 	{ X86_FEATURE_AVX512_4VNNIW,		X86_FEATURE_AVX512F   },
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+index 3047d7015c525..1789800faaeb6 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+@@ -1868,6 +1868,7 @@ int mlx5_eswitch_init(struct mlx5_core_dev *dev)
+ 	if (err)
+ 		goto abort;
+ 
++	dev->priv.eswitch = esw;
+ 	err = esw_offloads_init(esw);
+ 	if (err)
+ 		goto reps_err;
+@@ -1892,11 +1893,6 @@ int mlx5_eswitch_init(struct mlx5_core_dev *dev)
+ 		esw->offloads.encap = DEVLINK_ESWITCH_ENCAP_MODE_BASIC;
+ 	else
+ 		esw->offloads.encap = DEVLINK_ESWITCH_ENCAP_MODE_NONE;
+-	if (MLX5_ESWITCH_MANAGER(dev) &&
+-	    mlx5_esw_vport_match_metadata_supported(esw))
+-		esw->flags |= MLX5_ESWITCH_VPORT_MATCH_METADATA;
+-
+-	dev->priv.eswitch = esw;
+ 	BLOCKING_INIT_NOTIFIER_HEAD(&esw->n_head);
+ 
+ 	esw_info(dev,
+@@ -1908,6 +1904,7 @@ int mlx5_eswitch_init(struct mlx5_core_dev *dev)
+ 
+ reps_err:
+ 	mlx5_esw_vports_cleanup(esw);
++	dev->priv.eswitch = NULL;
+ abort:
+ 	if (esw->work_queue)
+ 		destroy_workqueue(esw->work_queue);
+@@ -1926,7 +1923,6 @@ void mlx5_eswitch_cleanup(struct mlx5_eswitch *esw)
+ 
+ 	esw_info(esw->dev, "cleanup\n");
+ 
+-	esw->dev->priv.eswitch = NULL;
+ 	destroy_workqueue(esw->work_queue);
+ 	WARN_ON(refcount_read(&esw->qos.refcnt));
+ 	mutex_destroy(&esw->state_lock);
+@@ -1937,6 +1933,7 @@ void mlx5_eswitch_cleanup(struct mlx5_eswitch *esw)
+ 	mutex_destroy(&esw->offloads.encap_tbl_lock);
+ 	mutex_destroy(&esw->offloads.decap_tbl_lock);
+ 	esw_offloads_cleanup(esw);
++	esw->dev->priv.eswitch = NULL;
+ 	mlx5_esw_vports_cleanup(esw);
+ 	debugfs_remove_recursive(esw->debugfs_root);
+ 	devl_params_unregister(priv_to_devlink(esw->dev), mlx5_eswitch_params,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index baaae628b0a0f..e3cce110e52fd 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -2476,6 +2476,10 @@ int esw_offloads_init(struct mlx5_eswitch *esw)
+ 	if (err)
+ 		return err;
+ 
++	if (MLX5_ESWITCH_MANAGER(esw->dev) &&
++	    mlx5_esw_vport_match_metadata_supported(esw))
++		esw->flags |= MLX5_ESWITCH_VPORT_MATCH_METADATA;
++
+ 	err = devl_params_register(priv_to_devlink(esw->dev),
+ 				   esw_devlink_params,
+ 				   ARRAY_SIZE(esw_devlink_params));
 -- 
 2.43.0
 
