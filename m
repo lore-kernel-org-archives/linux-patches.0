@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECC81420BE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E169A1420BE;
 	Tue, 23 Apr 2024 21:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908693; cv=none; b=LOmsuOAIJx9czUAs/TFdy8lPZY9Z1CKanUWlH6FJXGpiY886HkA7ciKPSm2p9qEj+pl7ZWLCSHLTBHLp2XM2k+u3cU7jRtfxDCocrrvb/Mcptgnikttm4EH/FTOdwoBrUzZr1kBgm+UtfoCmKO57fnOwZqcPF6+ZVu34rALYs1o=
+	t=1713908694; cv=none; b=VL5r7lPT2nrxLBLKm80gCs7fYFuSKY6xiRoUwK4qq5P1T+uPv8mUfq69pPo+hyzhaA1hEZSZLCVJARBZ8ZkmntI6dLkXKHuKVltlcnJWXzWhFpuBhaoKWsdMeaJFLc+gE8yjYQn6BpFzh0GpUZFq66yNIGDbwBz89TPsNVjhYqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908693; c=relaxed/simple;
-	bh=SVuihGkICe0yqTPq6ROZuDvS4cRylPJMkjEm1iTaiDk=;
+	s=arc-20240116; t=1713908694; c=relaxed/simple;
+	bh=VFyNtQpN/nnVG3XdIZrp0bNMfQcN/qHUdyPHFTMw67g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHWsAvNIysGkvZoC93vgOSiKqAoadhdiNdgVSTzhr2LfiMQLn7XKShnoJ/RVk7glMaGBtVfLPZBjUrShkxWod71jFbMNNtFzuPua83aR8RuNYTa2xGKKeXQUgMlCZmtTKWKP3I59QBORlYbK+nVgyxFexHZCL1KqxeHV15e2+0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dR1E4tSx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ojxtH+TAKvjCM/uJugO04F/I//0GSU8sCpGBab9g27+SbN/QwHYxEN02LnxpSJ87AvU+5iCh7UF7oqnijh9U4laCHEuVm+nVhCA8/whLNtxjDqwaXQAHkzr6/L13sbo+SPNa3Gp4fhn4aqSXc2dZd7DncfzXkdNsRlSl6g8XmX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o26vMj+9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dR1E4tSx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BADFC32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o26vMj+9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DCBC116B1;
 	Tue, 23 Apr 2024 21:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908693;
-	bh=SVuihGkICe0yqTPq6ROZuDvS4cRylPJMkjEm1iTaiDk=;
+	bh=VFyNtQpN/nnVG3XdIZrp0bNMfQcN/qHUdyPHFTMw67g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dR1E4tSxgcsk1J8pHDUDhxCG3++PU1VYzm/HsHHmBhd5HEegOdulZ/iFqokyqeNyD
-	 3ZHyNuIcobonaNriEbm0yuI4T4E3lBQKQqRNcWJwbSCDNhm/dl3ei32NnMR3PR7U8L
-	 +SuRcfAyzTnwcP08c50mM+zz3faVJXlklqEaKbc0=
+	b=o26vMj+9/quXFk1o2kdlMrCuyC5wVRJ07Mks/91vV0HH0hld0bEpPDqFmaI2Nn9Je
+	 0XYi4PO30cshprVfIGlOH6oje25Z0Yzk0sxvrZ+QOKhC1pNXOGOlLefuwa9zNEBw2K
+	 lbUDMRQqVDBg2fneGpqxz/5xDXPYMIbdnP7unlQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/141] af_unix: Dont peek OOB data without MSG_OOB.
-Date: Tue, 23 Apr 2024 14:38:29 -0700
-Message-ID: <20240423213854.605817900@linuxfoundation.org>
+Subject: [PATCH 6.1 042/141] net/mlx5: Lag, restore buckets number to default after hash LAG deactivation
+Date: Tue, 23 Apr 2024 14:38:30 -0700
+Message-ID: <20240423213854.636140783@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -51,84 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 22dd70eb2c3d754862964377a75abafd3167346b ]
+[ Upstream commit 37cc10da3a50e6d0cb9808a90b7da9b4868794dd ]
 
-Currently, we can read OOB data without MSG_OOB by using MSG_PEEK
-when OOB data is sitting on the front row, which is apparently
-wrong.
+The cited patch introduces the concept of buckets in LAG in hash mode.
+However, the patch doesn't clear the number of buckets in the LAG
+deactivation. This results in using the wrong number of buckets in
+case user create a hash mode LAG and afterwards create a non-hash
+mode LAG.
 
-  >>> from socket import *
-  >>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
-  >>> c1.send(b'a', MSG_OOB)
-  1
-  >>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
-  b'a'
+Hence, restore buckets number to default after hash mode LAG
+deactivation.
 
-If manage_oob() is called when no data has been copied, we only
-check if the socket enables SO_OOBINLINE or MSG_PEEK is not used.
-Otherwise, the skb is returned as is.
-
-However, here we should return NULL if MSG_PEEK is set and no data
-has been copied.
-
-Also, in such a case, we should not jump to the redo label because
-we will be caught in the loop and hog the CPU until normal data
-comes in.
-
-Then, we need to handle skb == NULL case with the if-clause below
-the manage_oob() block.
-
-With this patch:
-
-  >>> from socket import *
-  >>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
-  >>> c1.send(b'a', MSG_OOB)
-  1
-  >>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
-  Traceback (most recent call last):
-    File "<stdin>", line 1, in <module>
-  BlockingIOError: [Errno 11] Resource temporarily unavailable
-
-Fixes: 314001f0bf92 ("af_unix: Add OOB support")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240410171016.7621-3-kuniyu@amazon.com
+Fixes: 352899f384d4 ("net/mlx5: Lag, use buckets in hash mode")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://lore.kernel.org/r/20240411115444.374475-2-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 6af6f82e89464..f28e2956fea58 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2675,7 +2675,9 @@ static struct sk_buff *manage_oob(struct sk_buff *skb, struct sock *sk,
- 					WRITE_ONCE(u->oob_skb, NULL);
- 					consume_skb(skb);
- 				}
--			} else if (!(flags & MSG_PEEK)) {
-+			} else if (flags & MSG_PEEK) {
-+				skb = NULL;
-+			} else {
- 				skb_unlink(skb, &sk->sk_receive_queue);
- 				WRITE_ONCE(u->oob_skb, NULL);
- 				if (!WARN_ON_ONCE(skb_unref(skb)))
-@@ -2757,11 +2759,9 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
- #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
- 		if (skb) {
- 			skb = manage_oob(skb, sk, flags, copied);
--			if (!skb) {
-+			if (!skb && copied) {
- 				unix_state_unlock(sk);
--				if (copied)
--					break;
--				goto redo;
-+				break;
- 			}
- 		}
- #endif
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index ad32b80e85018..01c0e1ee918d8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -679,8 +679,10 @@ static int mlx5_deactivate_lag(struct mlx5_lag *ldev)
+ 		return err;
+ 	}
+ 
+-	if (test_bit(MLX5_LAG_MODE_FLAG_HASH_BASED, &flags))
++	if (test_bit(MLX5_LAG_MODE_FLAG_HASH_BASED, &flags)) {
+ 		mlx5_lag_port_sel_destroy(ldev);
++		ldev->buckets = 1;
++	}
+ 	if (mlx5_lag_has_drop_rule(ldev))
+ 		mlx5_lag_drop_rule_cleanup(ldev);
+ 
 -- 
 2.43.0
 
