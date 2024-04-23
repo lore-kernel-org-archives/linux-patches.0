@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D4F1448EF;
-	Tue, 23 Apr 2024 21:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2D7143C52;
+	Tue, 23 Apr 2024 21:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908666; cv=none; b=Imjt7ZVyXIGMmEPkFRpLhowJkDPzmRN6iP6XKeZdu1C9HiKBDAAmkZOCZFnGHgO8LdhTuMDRpHhrp6TsMj3iHSj4q8HFAz2688RJ8LLZz/vjJ55BDxfcw/Yocc5qZS2BNLd2YCVQ6TEknMltda0ToDXQumiEZYFZUvzNe2a7TW4=
+	t=1713908667; cv=none; b=JbwGgDD9rmVBT+vanB35PW7LW05FjjzqDtIGaDl6MbUEhA9uSRABoqLMzq881MOTg2VJutFrAE81A5hNff+SLlub5wnVJwwOMgkYB/7YRp5TC+zHLGICYdaql3YVHgT4ZZwOyMMLGELPNrwHw1ESEj/Q/9Yeu3CxaQ+AJkoSnS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908666; c=relaxed/simple;
-	bh=4W6FyvICcLJ+EEZf5qHyokIo9IPdgqIKpjjnH0WEwOE=;
+	s=arc-20240116; t=1713908667; c=relaxed/simple;
+	bh=ByfPTkQcIeXfTFX8HC97A42YMKDQP+VWD1LlGE207Is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ncp+diA/GUHE4yCqTxYjZG7lZYZ7i2MgTU0ZMSF2jbjL8j/HcDe94eInjneABs9bpuOO31QLo1Sm599g7sDQLS3fyK0RC6S1gxGevK1Gywej4taLgLrKJFklb9XM4u9ydFqvzDJFlJMgAft1hKhnWKkub/quZ56zhU8C9d3xW3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nG8OXB2v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RzyEyUlGZlGo4bpik+nZOv/tZw1p8B7aO5LnKUuPn6BOiqxNsIpfu8RPX1raVQDEvKNTK3AU8VRSVKrc5SdDK1Q5GJAlbbvItgNJJyZc1zEImB/+uCyYHrAIyo4rbKTDNiNe7w9t9HtCGBtETbhn4VC1IR95gkCwjZfqs5lcOh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGwiYNUF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nG8OXB2v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75364C3277B;
-	Tue, 23 Apr 2024 21:44:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGwiYNUF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FDBC3277B;
+	Tue, 23 Apr 2024 21:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908666;
-	bh=4W6FyvICcLJ+EEZf5qHyokIo9IPdgqIKpjjnH0WEwOE=;
+	s=korg; t=1713908667;
+	bh=ByfPTkQcIeXfTFX8HC97A42YMKDQP+VWD1LlGE207Is=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nG8OXB2v2e/GunOXoZ58fQEwmvVQ6wk8bhIjZ25IMgPX2dCkquutKMhrXjRqoecWm
-	 kMsqaK1go73GJ+WpjCO/prAJ7RFWBqW3cBMqbqbK4oRNIyvrCAJrXZt5wnPtHp84d5
-	 r5nEQqmU+AMCzjb+zZG2cpSAqQT727QiAuL4TsiU=
+	b=rGwiYNUFAUPgHx+7BVLunzi5mycwP1xGSGpUrVSOXkOYph8WexBZLBiu9G/7XQtt2
+	 oS3VttcFd8qPuCrqh2oNKauFyjvwjLZcLTHVHtYNOGQ/d4XFBKVR+P6xaJ1coqjPt/
+	 Z0LWQUzNaWWvxzl6Qycghb26gw1GRWrIUr7ZrFVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oscar Salvador <osalvador@suse.de>,
-	Tony Luck <tony.luck@intel.com>,
-	Peter Xu <peterx@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
 	Miaohe Lin <linmiaohe@huawei.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Jane Chu <jane.chu@oracle.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 137/158] mm,swapops: update check in is_pfn_swap_entry for hwpoison entries
-Date: Tue, 23 Apr 2024 14:39:34 -0700
-Message-ID: <20240423213900.151202897@linuxfoundation.org>
+Subject: [PATCH 6.6 138/158] mm/memory-failure: fix deadlock when hugetlb_optimize_vmemmap is enabled
+Date: Tue, 23 Apr 2024 14:39:35 -0700
+Message-ID: <20240423213900.184963664@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -54,137 +53,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oscar Salvador <osalvador@suse.de>
+From: Miaohe Lin <linmiaohe@huawei.com>
 
-commit 07a57a338adb6ec9e766d6a6790f76527f45ceb5 upstream.
+commit 1983184c22dd84a4d95a71e5c6775c2638557dc7 upstream.
 
-Tony reported that the Machine check recovery was broken in v6.9-rc1, as
-he was hitting a VM_BUG_ON when injecting uncorrectable memory errors to
-DRAM.
+When I did hard offline test with hugetlb pages, below deadlock occurs:
 
-After some more digging and debugging on his side, he realized that this
-went back to v6.1, with the introduction of 'commit 0d206b5d2e0d
-("mm/swap: add swp_offset_pfn() to fetch PFN from swap entry")'.  That
-commit, among other things, introduced swp_offset_pfn(), replacing
-hwpoison_entry_to_pfn() in its favour.
+======================================================
+WARNING: possible circular locking dependency detected
+6.8.0-11409-gf6cef5f8c37f #1 Not tainted
+------------------------------------------------------
+bash/46904 is trying to acquire lock:
+ffffffffabe68910 (cpu_hotplug_lock){++++}-{0:0}, at: static_key_slow_dec+0x16/0x60
 
-The patch also introduced a VM_BUG_ON() check for is_pfn_swap_entry(), but
-is_pfn_swap_entry() never got updated to cover hwpoison entries, which
-means that we would hit the VM_BUG_ON whenever we would call
-swp_offset_pfn() for such entries on environments with CONFIG_DEBUG_VM
-set.  Fix this by updating the check to cover hwpoison entries as well,
-and update the comment while we are it.
+but task is already holding lock:
+ffffffffabf92ea8 (pcp_batch_high_lock){+.+.}-{3:3}, at: zone_pcp_disable+0x16/0x40
 
-Link: https://lkml.kernel.org/r/20240407130537.16977-1-osalvador@suse.de
-Fixes: 0d206b5d2e0d ("mm/swap: add swp_offset_pfn() to fetch PFN from swap entry")
-Signed-off-by: Oscar Salvador <osalvador@suse.de>
-Reported-by: Tony Luck <tony.luck@intel.com>
-Closes: https://lore.kernel.org/all/Zg8kLSl2yAlA3o5D@agluck-desk3/
-Tested-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Acked-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: <stable@vger.kernel.org>	[6.1.x]
+which lock already depends on the new lock.
+
+the existing dependency chain (in reverse order) is:
+
+-> #1 (pcp_batch_high_lock){+.+.}-{3:3}:
+       __mutex_lock+0x6c/0x770
+       page_alloc_cpu_online+0x3c/0x70
+       cpuhp_invoke_callback+0x397/0x5f0
+       __cpuhp_invoke_callback_range+0x71/0xe0
+       _cpu_up+0xeb/0x210
+       cpu_up+0x91/0xe0
+       cpuhp_bringup_mask+0x49/0xb0
+       bringup_nonboot_cpus+0xb7/0xe0
+       smp_init+0x25/0xa0
+       kernel_init_freeable+0x15f/0x3e0
+       kernel_init+0x15/0x1b0
+       ret_from_fork+0x2f/0x50
+       ret_from_fork_asm+0x1a/0x30
+
+-> #0 (cpu_hotplug_lock){++++}-{0:0}:
+       __lock_acquire+0x1298/0x1cd0
+       lock_acquire+0xc0/0x2b0
+       cpus_read_lock+0x2a/0xc0
+       static_key_slow_dec+0x16/0x60
+       __hugetlb_vmemmap_restore_folio+0x1b9/0x200
+       dissolve_free_huge_page+0x211/0x260
+       __page_handle_poison+0x45/0xc0
+       memory_failure+0x65e/0xc70
+       hard_offline_page_store+0x55/0xa0
+       kernfs_fop_write_iter+0x12c/0x1d0
+       vfs_write+0x387/0x550
+       ksys_write+0x64/0xe0
+       do_syscall_64+0xca/0x1e0
+       entry_SYSCALL_64_after_hwframe+0x6d/0x75
+
+other info that might help us debug this:
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(pcp_batch_high_lock);
+                               lock(cpu_hotplug_lock);
+                               lock(pcp_batch_high_lock);
+  rlock(cpu_hotplug_lock);
+
+ *** DEADLOCK ***
+
+5 locks held by bash/46904:
+ #0: ffff98f6c3bb23f0 (sb_writers#5){.+.+}-{0:0}, at: ksys_write+0x64/0xe0
+ #1: ffff98f6c328e488 (&of->mutex){+.+.}-{3:3}, at: kernfs_fop_write_iter+0xf8/0x1d0
+ #2: ffff98ef83b31890 (kn->active#113){.+.+}-{0:0}, at: kernfs_fop_write_iter+0x100/0x1d0
+ #3: ffffffffabf9db48 (mf_mutex){+.+.}-{3:3}, at: memory_failure+0x44/0xc70
+ #4: ffffffffabf92ea8 (pcp_batch_high_lock){+.+.}-{3:3}, at: zone_pcp_disable+0x16/0x40
+
+stack backtrace:
+CPU: 10 PID: 46904 Comm: bash Kdump: loaded Not tainted 6.8.0-11409-gf6cef5f8c37f #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x68/0xa0
+ check_noncircular+0x129/0x140
+ __lock_acquire+0x1298/0x1cd0
+ lock_acquire+0xc0/0x2b0
+ cpus_read_lock+0x2a/0xc0
+ static_key_slow_dec+0x16/0x60
+ __hugetlb_vmemmap_restore_folio+0x1b9/0x200
+ dissolve_free_huge_page+0x211/0x260
+ __page_handle_poison+0x45/0xc0
+ memory_failure+0x65e/0xc70
+ hard_offline_page_store+0x55/0xa0
+ kernfs_fop_write_iter+0x12c/0x1d0
+ vfs_write+0x387/0x550
+ ksys_write+0x64/0xe0
+ do_syscall_64+0xca/0x1e0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+RIP: 0033:0x7fc862314887
+Code: 10 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b7 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 48 89 54 24 18 48 89 74 24
+RSP: 002b:00007fff19311268 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 000000000000000c RCX: 00007fc862314887
+RDX: 000000000000000c RSI: 000056405645fe10 RDI: 0000000000000001
+RBP: 000056405645fe10 R08: 00007fc8623d1460 R09: 000000007fffffff
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000000000c
+R13: 00007fc86241b780 R14: 00007fc862417600 R15: 00007fc862416a00
+
+In short, below scene breaks the lock dependency chain:
+
+ memory_failure
+  __page_handle_poison
+   zone_pcp_disable -- lock(pcp_batch_high_lock)
+   dissolve_free_huge_page
+    __hugetlb_vmemmap_restore_folio
+     static_key_slow_dec
+      cpus_read_lock -- rlock(cpu_hotplug_lock)
+
+Fix this by calling drain_all_pages() instead.
+
+This issue won't occur until commit a6b40850c442 ("mm: hugetlb: replace
+hugetlb_free_vmemmap_enabled with a static_key").  As it introduced
+rlock(cpu_hotplug_lock) in dissolve_free_huge_page() code path while
+lock(pcp_batch_high_lock) is already in the __page_handle_poison().
+
+[linmiaohe@huawei.com: extend comment per Oscar]
+[akpm@linux-foundation.org: reflow block comment]
+Link: https://lkml.kernel.org/r/20240407085456.2798193-1-linmiaohe@huawei.com
+Fixes: a6b40850c442 ("mm: hugetlb: replace hugetlb_free_vmemmap_enabled with a static_key")
+Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Jane Chu <jane.chu@oracle.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/swapops.h |   65 ++++++++++++++++++++++++------------------------
- 1 file changed, 33 insertions(+), 32 deletions(-)
+ mm/memory-failure.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/include/linux/swapops.h
-+++ b/include/linux/swapops.h
-@@ -390,6 +390,35 @@ static inline bool is_migration_entry_di
- }
- #endif	/* CONFIG_MIGRATION */
- 
-+#ifdef CONFIG_MEMORY_FAILURE
-+
-+/*
-+ * Support for hardware poisoned pages
-+ */
-+static inline swp_entry_t make_hwpoison_entry(struct page *page)
-+{
-+	BUG_ON(!PageLocked(page));
-+	return swp_entry(SWP_HWPOISON, page_to_pfn(page));
-+}
-+
-+static inline int is_hwpoison_entry(swp_entry_t entry)
-+{
-+	return swp_type(entry) == SWP_HWPOISON;
-+}
-+
-+#else
-+
-+static inline swp_entry_t make_hwpoison_entry(struct page *page)
-+{
-+	return swp_entry(0, 0);
-+}
-+
-+static inline int is_hwpoison_entry(swp_entry_t swp)
-+{
-+	return 0;
-+}
-+#endif
-+
- typedef unsigned long pte_marker;
- 
- #define  PTE_MARKER_UFFD_WP			BIT(0)
-@@ -470,8 +499,9 @@ static inline struct page *pfn_swap_entr
- 
- /*
-  * A pfn swap entry is a special type of swap entry that always has a pfn stored
-- * in the swap offset. They are used to represent unaddressable device memory
-- * and to restrict access to a page undergoing migration.
-+ * in the swap offset. They can either be used to represent unaddressable device
-+ * memory, to restrict access to a page undergoing migration or to represent a
-+ * pfn which has been hwpoisoned and unmapped.
-  */
- static inline bool is_pfn_swap_entry(swp_entry_t entry)
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -154,11 +154,23 @@ static int __page_handle_poison(struct p
  {
-@@ -479,7 +509,7 @@ static inline bool is_pfn_swap_entry(swp
- 	BUILD_BUG_ON(SWP_TYPE_SHIFT < SWP_PFN_BITS);
+ 	int ret;
  
- 	return is_migration_entry(entry) || is_device_private_entry(entry) ||
--	       is_device_exclusive_entry(entry);
-+	       is_device_exclusive_entry(entry) || is_hwpoison_entry(entry);
+-	zone_pcp_disable(page_zone(page));
++	/*
++	 * zone_pcp_disable() can't be used here. It will
++	 * hold pcp_batch_high_lock and dissolve_free_huge_page() might hold
++	 * cpu_hotplug_lock via static_key_slow_dec() when hugetlb vmemmap
++	 * optimization is enabled. This will break current lock dependency
++	 * chain and leads to deadlock.
++	 * Disabling pcp before dissolving the page was a deterministic
++	 * approach because we made sure that those pages cannot end up in any
++	 * PCP list. Draining PCP lists expels those pages to the buddy system,
++	 * but nothing guarantees that those pages do not get back to a PCP
++	 * queue if we need to refill those.
++	 */
+ 	ret = dissolve_free_huge_page(page);
+-	if (!ret)
++	if (!ret) {
++		drain_all_pages(page_zone(page));
+ 		ret = take_page_off_buddy(page);
+-	zone_pcp_enable(page_zone(page));
++	}
+ 
+ 	return ret;
  }
- 
- struct page_vma_mapped_walk;
-@@ -548,35 +578,6 @@ static inline int is_pmd_migration_entry
- }
- #endif  /* CONFIG_ARCH_ENABLE_THP_MIGRATION */
- 
--#ifdef CONFIG_MEMORY_FAILURE
--
--/*
-- * Support for hardware poisoned pages
-- */
--static inline swp_entry_t make_hwpoison_entry(struct page *page)
--{
--	BUG_ON(!PageLocked(page));
--	return swp_entry(SWP_HWPOISON, page_to_pfn(page));
--}
--
--static inline int is_hwpoison_entry(swp_entry_t entry)
--{
--	return swp_type(entry) == SWP_HWPOISON;
--}
--
--#else
--
--static inline swp_entry_t make_hwpoison_entry(struct page *page)
--{
--	return swp_entry(0, 0);
--}
--
--static inline int is_hwpoison_entry(swp_entry_t swp)
--{
--	return 0;
--}
--#endif
--
- static inline int non_swap_entry(swp_entry_t entry)
- {
- 	return swp_type(entry) >= MAX_SWAPFILES;
 
 
