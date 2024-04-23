@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE05143888;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8F71448D4;
 	Tue, 23 Apr 2024 21:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908633; cv=none; b=MB/Xy1ZdbZl2ckUCmdNXxagaw0KK/M+V7gFBlZLbk/RkU0qlez2SLJNiAvL9bNSrBlwPFuJFaiidCs3ewkbDNibogwojSH8UfBxTcjyYvYR576+6IEAU4eu0+WOykPkxJLCvbJT88Di4sWuaLCgj4o5ObFwg1CV+c1mUxHELM8Y=
+	t=1713908633; cv=none; b=jPBQt3R3M85htaNGalm7TwM9uHAGAdzRda7eMzYo7krmwXwo4+pHlN3zYcpy3xnWgZ2P70baZFWW1a7o3EjcSFvBC6Vz1/GjcM4+KYCU0nCIcifzzWl2v11Af6U+/o+eTCz5AQ/Kj2IlzwN2YzdGAtQ2F6Om+TKsQCez1gCDxf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908633; c=relaxed/simple;
-	bh=jsaM5oU1fwbv0OwfNF8oaMkpQ1xompy4OkJDJH4Q9eQ=;
+	bh=Qow1x6YmDcIRywu2ZS8XKkwIRKWFh7LLY6NaOqz6zbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cg4qj05EcUK+EIbkdOcOVN2Oa7i07/G3PqpFjMMhtbTSQwWuBl6zrdx6Sj9X2bh3oIWl1i+XRadvalKgcq3riQSRw6iK5a4miENqYUeJcGZr0S5A8kQx1vTktKvz/kdWZ2nyFEWB2hPx1CrRbW+qgrH5pxnCXBSCeDcv0HZMHd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8wWelJT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GCIHs/X41g8igwr+k9SO/ElJxgAbxGnni8YIScH1A31B+U8e1eZYHvo7QQDaDubVMHO9opUCjX8H2Ce5GYl9pMwQb4lO4aioKNw/e4AoCOwd/VItX9ai6ARBU6gST5Hjsm1G6/Ma6rsuFoL9IQFSqvUHAfdQcOmDHSV7fY69Hc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRn+9qWh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8wWelJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86BDC32782;
-	Tue, 23 Apr 2024 21:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRn+9qWh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962F9C116B1;
+	Tue, 23 Apr 2024 21:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908633;
-	bh=jsaM5oU1fwbv0OwfNF8oaMkpQ1xompy4OkJDJH4Q9eQ=;
+	bh=Qow1x6YmDcIRywu2ZS8XKkwIRKWFh7LLY6NaOqz6zbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w8wWelJT1rt8oDvIY+oqbXRJj61M0pY2JOKI+g9u7G9kWWjTCvPF4WETZYWVIMEKS
-	 EeAs4rSdE2+jY22ydCQKUuk1e4rQBVW3GAtuXn7TM704f3yLIzSDWUidcx0yQWaR2b
-	 DU5uaThaaUPmTOtgBabFnMaahDP8+nhdS0M1lyE0=
+	b=GRn+9qWhSmhXAk3UQNEB4zUId1E6FAbSijyGPMKxFN70wBd0x2xslSY0dUUhLV15m
+	 c7nGxMAtkwlAj1OXCZobgUtLgT4Y8yRoqr73pygu0kTmTP9GufwkWqj9Y+jU43VjCK
+	 tkP26ywwtO6OXck952qofd91aWez/4Pe4kMqSrmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	kernel test robot <oliver.sang@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.6 113/158] serial: core: Clearing the circular buffer before NULLifying it
-Date: Tue, 23 Apr 2024 14:39:10 -0700
-Message-ID: <20240423213859.416573484@linuxfoundation.org>
+	Jiri Slaby <jirislaby@kernel.org>,
+	Tony Lindgren <tony@atomide.com>
+Subject: [PATCH 6.6 114/158] serial: core: Fix missing shutdown and startup for serial base port
+Date: Tue, 23 Apr 2024 14:39:11 -0700
+Message-ID: <20240423213859.446389490@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -51,55 +51,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Tony Lindgren <tony@atomide.com>
 
-commit 9cf7ea2eeb745213dc2a04103e426b960e807940 upstream.
+commit 1aa4ad4eb695bac1b0a7ba542a16d6833c9c8dd8 upstream.
 
-The circular buffer is NULLified in uart_tty_port_shutdown()
-under the spin lock. However, the PM or other timer based callbacks
-may still trigger after this event without knowning that buffer pointer
-is not valid. Since the serial code is a bit inconsistent in checking
-the buffer state (some rely on the head-tail positions, some on the
-buffer pointer), it's better to have both aligned, i.e. buffer pointer
-to be NULL and head-tail possitions to be the same, meaning it's empty.
-This will prevent asynchronous calls to dereference NULL pointer as
-reported recently in 8250 case:
+We are seeing start_tx being called after port shutdown as noted by Jiri.
+This happens because we are missing the startup and shutdown related
+functions for the serial base port.
 
-  BUG: kernel NULL pointer dereference, address: 00000cf5
-  Workqueue: pm pm_runtime_work
-  EIP: serial8250_tx_chars (drivers/tty/serial/8250/8250_port.c:1809)
-  ...
-  ? serial8250_tx_chars (drivers/tty/serial/8250/8250_port.c:1809)
-  __start_tx (drivers/tty/serial/8250/8250_port.c:1551)
-  serial8250_start_tx (drivers/tty/serial/8250/8250_port.c:1654)
-  serial_port_runtime_suspend (include/linux/serial_core.h:667 drivers/tty/serial/serial_port.c:63)
-  __rpm_callback (drivers/base/power/runtime.c:393)
-  ? serial_port_remove (drivers/tty/serial/serial_port.c:50)
-  rpm_suspend (drivers/base/power/runtime.c:447)
+Let's fix the issue by adding startup and shutdown functions for the
+serial base port to block tx flushing for the serial base port when the
+port is not in use.
 
-The proposed change will prevent ->start_tx() to be called during
-suspend on shut down port.
-
-Fixes: 43066e32227e ("serial: port: Don't suspend if the port is still busy")
+Fixes: 84a9582fd203 ("serial: core: Start managing serial controllers to enable runtime PM")
 Cc: stable <stable@kernel.org>
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202404031607.2e92eebe-lkp@intel.com
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240404150034.41648-1-andriy.shevchenko@linux.intel.com
+Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20240411055848.38190-1-tony@atomide.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/serial_base.h |    4 ++++
+ drivers/tty/serial/serial_core.c |   20 +++++++++++++++++---
+ drivers/tty/serial/serial_port.c |   34 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 55 insertions(+), 3 deletions(-)
 
+--- a/drivers/tty/serial/serial_base.h
++++ b/drivers/tty/serial/serial_base.h
+@@ -22,6 +22,7 @@ struct serial_ctrl_device {
+ struct serial_port_device {
+ 	struct device dev;
+ 	struct uart_port *port;
++	unsigned int tx_enabled:1;
+ };
+ 
+ int serial_base_ctrl_init(void);
+@@ -30,6 +31,9 @@ void serial_base_ctrl_exit(void);
+ int serial_base_port_init(void);
+ void serial_base_port_exit(void);
+ 
++void serial_base_port_startup(struct uart_port *port);
++void serial_base_port_shutdown(struct uart_port *port);
++
+ int serial_base_driver_register(struct device_driver *driver);
+ void serial_base_driver_unregister(struct device_driver *driver);
+ 
 --- a/drivers/tty/serial/serial_core.c
 +++ b/drivers/tty/serial/serial_core.c
-@@ -1782,6 +1782,7 @@ static void uart_tty_port_shutdown(struc
- 	 * Free the transmit buffer.
- 	 */
- 	spin_lock_irq(&uport->lock);
-+	uart_circ_clear(&state->xmit);
- 	buf = state->xmit.buf;
- 	state->xmit.buf = NULL;
+@@ -323,16 +323,26 @@ static int uart_startup(struct tty_struc
+ 			bool init_hw)
+ {
+ 	struct tty_port *port = &state->port;
++	struct uart_port *uport;
+ 	int retval;
+ 
+ 	if (tty_port_initialized(port))
+-		return 0;
++		goto out_base_port_startup;
+ 
+ 	retval = uart_port_startup(tty, state, init_hw);
+-	if (retval)
++	if (retval) {
+ 		set_bit(TTY_IO_ERROR, &tty->flags);
++		return retval;
++	}
+ 
+-	return retval;
++out_base_port_startup:
++	uport = uart_port_check(state);
++	if (!uport)
++		return -EIO;
++
++	serial_base_port_startup(uport);
++
++	return 0;
+ }
+ 
+ /*
+@@ -355,6 +365,9 @@ static void uart_shutdown(struct tty_str
+ 	if (tty)
+ 		set_bit(TTY_IO_ERROR, &tty->flags);
+ 
++	if (uport)
++		serial_base_port_shutdown(uport);
++
+ 	if (tty_port_initialized(port)) {
+ 		tty_port_set_initialized(port, false);
+ 
+@@ -1769,6 +1782,7 @@ static void uart_tty_port_shutdown(struc
+ 	uport->ops->stop_rx(uport);
  	spin_unlock_irq(&uport->lock);
+ 
++	serial_base_port_shutdown(uport);
+ 	uart_port_shutdown(port);
+ 
+ 	/*
+--- a/drivers/tty/serial/serial_port.c
++++ b/drivers/tty/serial/serial_port.c
+@@ -36,8 +36,12 @@ static int serial_port_runtime_resume(st
+ 
+ 	/* Flush any pending TX for the port */
+ 	spin_lock_irqsave(&port->lock, flags);
++	if (!port_dev->tx_enabled)
++		goto unlock;
+ 	if (__serial_port_busy(port))
+ 		port->ops->start_tx(port);
++
++unlock:
+ 	spin_unlock_irqrestore(&port->lock, flags);
+ 
+ out:
+@@ -57,6 +61,11 @@ static int serial_port_runtime_suspend(s
+ 		return 0;
+ 
+ 	uart_port_lock_irqsave(port, &flags);
++	if (!port_dev->tx_enabled) {
++		uart_port_unlock_irqrestore(port, flags);
++		return 0;
++	}
++
+ 	busy = __serial_port_busy(port);
+ 	if (busy)
+ 		port->ops->start_tx(port);
+@@ -68,6 +77,31 @@ static int serial_port_runtime_suspend(s
+ 	return busy ? -EBUSY : 0;
+ }
+ 
++static void serial_base_port_set_tx(struct uart_port *port,
++				    struct serial_port_device *port_dev,
++				    bool enabled)
++{
++	unsigned long flags;
++
++	uart_port_lock_irqsave(port, &flags);
++	port_dev->tx_enabled = enabled;
++	uart_port_unlock_irqrestore(port, flags);
++}
++
++void serial_base_port_startup(struct uart_port *port)
++{
++	struct serial_port_device *port_dev = port->port_dev;
++
++	serial_base_port_set_tx(port, port_dev, true);
++}
++
++void serial_base_port_shutdown(struct uart_port *port)
++{
++	struct serial_port_device *port_dev = port->port_dev;
++
++	serial_base_port_set_tx(port, port_dev, false);
++}
++
+ static DEFINE_RUNTIME_DEV_PM_OPS(serial_port_pm,
+ 				 serial_port_runtime_suspend,
+ 				 serial_port_runtime_resume, NULL);
 
 
