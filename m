@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E480114A4D9;
-	Tue, 23 Apr 2024 21:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82D314A4E0;
+	Tue, 23 Apr 2024 21:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908750; cv=none; b=Xnz+JjTKzY3iRDuQdqzIj3hCU6sTfFhJvrXssGg+PLInuCHCrUavnqIll5M3g4UsbB8mCbXTJgMNeJivx5gyuYtjtaFAgnSfpszssmn8xvykA8s/m3M0X9Y3jhzvqBFGO1nDvOYISGFTdBC3GU/3OteiyWgj+S8NMeErkd8ZYVE=
+	t=1713908751; cv=none; b=qcAc73x/rhAlURF2OFjBdtfi+6OBY+9LfK0EHnOrxby0iSeXcPjDUsqtJYc57Ir1kbT00w7XM1djJNw3CItaTbJe+HVWy82Tj2sK1OPFyRABf5gY5tsY9ZO3RouRr9GQKUCc+tauLDI2ITUXxUTo1gkXoGWNQdK35OPz8GfmuOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908750; c=relaxed/simple;
-	bh=9sZZFnvceWHdQtCmR+j/Pd3ei24YquCqV/HqaZA00jU=;
+	s=arc-20240116; t=1713908751; c=relaxed/simple;
+	bh=H6Peiw2WiHhxqz9oHdfyT6l7fpxwnyuXisW3x1HF6E0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TpGjNZUsjID6rhA98xSnoM9vsVtuuMHp34docRBrK00ec2FXM8b4ftyV0NNY6AT3L4QO1i6TdjLwdwC62FzD7TK1z0MIa7xRLJG6N5KGuZVyMVdR49SxNsO4ireeuDk0tN0kOXJDH7bB6tz4UYotJUlL2Ge0B1umVpBEf79ccro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUVUCYzh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dx/L81tsp7slMcuN4F0FhFO8IZUXvAyiF7+a814Qo2nTBLjjevUFJiRZ0/i3WqGFCZ+isoHUiG+9SZEn7uPcaFvZ08fk4liLQ8A/uiren367KWhtMutcH+uIjdAFmts5mMHc9CqZmMJioLy+IjVnyWe5JzwpJmumCO1zeaneyck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugvQ0E9s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUVUCYzh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEC9C32781;
-	Tue, 23 Apr 2024 21:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugvQ0E9s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7365FC32783;
+	Tue, 23 Apr 2024 21:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908749;
-	bh=9sZZFnvceWHdQtCmR+j/Pd3ei24YquCqV/HqaZA00jU=;
+	s=korg; t=1713908750;
+	bh=H6Peiw2WiHhxqz9oHdfyT6l7fpxwnyuXisW3x1HF6E0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HUVUCYzh9fg4DtIiy5ZMb7YAPN7JDwXSYOf4Cy+/roSPvH/oD54Y6883xQ9VjFvQ5
-	 TOl+PVzsJUesCAijSD4NLPXedpLQZow2TyxzJyBk4fbobbQpK+VLoHgbgmo8764FfZ
-	 hh8dkM+k9Gptnxf7Sjs6ZpxDg2rHdI54hXG7vmqg=
+	b=ugvQ0E9sGIEJqONtSka/1J7Ar5n+OVy4cmJH62v1UfGWlvP4V2qnzgGXOZE9xdQOs
+	 TDA4cL7Fa3iWvcByS0MUyMv0PSxKDuxr0T0B4Fd0qnC0QITy6Z4ZCjL2Z8PtiN+Yc1
+	 OOmFAZlDUw8dKxUjd44Cvh9y7fWW5hPSPsERXlRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Rapoport <rppt@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	xiongxin <xiongxin@kylinos.cn>,
-	Yaxiong Tian <tianyaxiong@kylinos.cn>
-Subject: [PATCH 6.1 124/141] arm64: hibernate: Fix level3 translation fault in swsusp_save()
-Date: Tue, 23 Apr 2024 14:39:52 -0700
-Message-ID: <20240423213857.231413962@linuxfoundation.org>
+	Yuntao Wang <ytcoode@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.1 125/141] init/main.c: Fix potential static_command_line memory overflow
+Date: Tue, 23 Apr 2024 14:39:53 -0700
+Message-ID: <20240423213857.262698649@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -52,96 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yaxiong Tian <tianyaxiong@kylinos.cn>
+From: Yuntao Wang <ytcoode@gmail.com>
 
-commit 50449ca66cc5a8cbc64749cf4b9f3d3fc5f4b457 upstream.
+commit 46dad3c1e57897ab9228332f03e1c14798d2d3b9 upstream.
 
-On arm64 machines, swsusp_save() faults if it attempts to access
-MEMBLOCK_NOMAP memory ranges. This can be reproduced in QEMU using UEFI
-when booting with rodata=off debug_pagealloc=off and CONFIG_KFENCE=n:
+We allocate memory of size 'xlen + strlen(boot_command_line) + 1' for
+static_command_line, but the strings copied into static_command_line are
+extra_command_line and command_line, rather than extra_command_line and
+boot_command_line.
 
-  Unable to handle kernel paging request at virtual address ffffff8000000000
-  Mem abort info:
-    ESR = 0x0000000096000007
-    EC = 0x25: DABT (current EL), IL = 32 bits
-    SET = 0, FnV = 0
-    EA = 0, S1PTW = 0
-    FSC = 0x07: level 3 translation fault
-  Data abort info:
-    ISV = 0, ISS = 0x00000007, ISS2 = 0x00000000
-    CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-    GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-  swapper pgtable: 4k pages, 39-bit VAs, pgdp=00000000eeb0b000
-  [ffffff8000000000] pgd=180000217fff9803, p4d=180000217fff9803, pud=180000217fff9803, pmd=180000217fff8803, pte=0000000000000000
-  Internal error: Oops: 0000000096000007 [#1] SMP
-  Internal error: Oops: 0000000096000007 [#1] SMP
-  Modules linked in: xt_multiport ipt_REJECT nf_reject_ipv4 xt_conntrack nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 libcrc32c iptable_filter bpfilter rfkill at803x snd_hda_codec_hdmi snd_hda_intel snd_intel_dspcfg dwmac_generic stmmac_platform snd_hda_codec stmmac joydev pcs_xpcs snd_hda_core phylink ppdev lp parport ramoops reed_solomon ip_tables x_tables nls_iso8859_1 vfat multipath linear amdgpu amdxcp drm_exec gpu_sched drm_buddy hid_generic usbhid hid radeon video drm_suballoc_helper drm_ttm_helper ttm i2c_algo_bit drm_display_helper cec drm_kms_helper drm
-  CPU: 0 PID: 3663 Comm: systemd-sleep Not tainted 6.6.2+ #76
-  Source Version: 4e22ed63a0a48e7a7cff9b98b7806d8d4add7dc0
-  Hardware name: Greatwall GW-XXXXXX-XXX/GW-XXXXXX-XXX, BIOS KunLun BIOS V4.0 01/19/2021
-  pstate: 600003c5 (nZCv DAIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  pc : swsusp_save+0x280/0x538
-  lr : swsusp_save+0x280/0x538
-  sp : ffffffa034a3fa40
-  x29: ffffffa034a3fa40 x28: ffffff8000001000 x27: 0000000000000000
-  x26: ffffff8001400000 x25: ffffffc08113e248 x24: 0000000000000000
-  x23: 0000000000080000 x22: ffffffc08113e280 x21: 00000000000c69f2
-  x20: ffffff8000000000 x19: ffffffc081ae2500 x18: 0000000000000000
-  x17: 6666662074736420 x16: 3030303030303030 x15: 3038666666666666
-  x14: 0000000000000b69 x13: ffffff9f89088530 x12: 00000000ffffffea
-  x11: 00000000ffff7fff x10: 00000000ffff7fff x9 : ffffffc08193f0d0
-  x8 : 00000000000bffe8 x7 : c0000000ffff7fff x6 : 0000000000000001
-  x5 : ffffffa0fff09dc8 x4 : 0000000000000000 x3 : 0000000000000027
-  x2 : 0000000000000000 x1 : 0000000000000000 x0 : 000000000000004e
-  Call trace:
-   swsusp_save+0x280/0x538
-   swsusp_arch_suspend+0x148/0x190
-   hibernation_snapshot+0x240/0x39c
-   hibernate+0xc4/0x378
-   state_store+0xf0/0x10c
-   kobj_attr_store+0x14/0x24
+When strlen(command_line) > strlen(boot_command_line), static_command_line
+will overflow.
 
-The reason is swsusp_save() -> copy_data_pages() -> page_is_saveable()
--> kernel_page_present() assuming that a page is always present when
-can_set_direct_map() is false (all of rodata_full,
-debug_pagealloc_enabled() and arm64_kfence_can_set_direct_map() false),
-irrespective of the MEMBLOCK_NOMAP ranges. Such MEMBLOCK_NOMAP regions
-should not be saved during hibernation.
+This patch just recovers strlen(command_line) which was miss-consolidated
+with strlen(boot_command_line) in the commit f5c7310ac73e ("init/main: add
+checks for the return value of memblock_alloc*()")
 
-This problem was introduced by changes to the pfn_valid() logic in
-commit a7d9f306ba70 ("arm64: drop pfn_valid_within() and simplify
-pfn_valid()").
+Link: https://lore.kernel.org/all/20240412081733.35925-2-ytcoode@gmail.com/
 
-Similar to other architectures, drop the !can_set_direct_map() check in
-kernel_page_present() so that page_is_savable() skips such pages.
-
-Fixes: a7d9f306ba70 ("arm64: drop pfn_valid_within() and simplify pfn_valid()")
-Cc: <stable@vger.kernel.org> # 5.14.x
-Suggested-by: Mike Rapoport <rppt@kernel.org>
-Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
-Co-developed-by: xiongxin <xiongxin@kylinos.cn>
-Signed-off-by: xiongxin <xiongxin@kylinos.cn>
-Signed-off-by: Yaxiong Tian <tianyaxiong@kylinos.cn>
-Acked-by: Mike Rapoport (IBM) <rppt@kernel.org>
-Link: https://lore.kernel.org/r/20240417025248.386622-1-tianyaxiong@kylinos.cn
-[catalin.marinas@arm.com: rework commit message]
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: f5c7310ac73e ("init/main: add checks for the return value of memblock_alloc*()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yuntao Wang <ytcoode@gmail.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/pageattr.c |    3 ---
- 1 file changed, 3 deletions(-)
+ init/main.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/mm/pageattr.c
-+++ b/arch/arm64/mm/pageattr.c
-@@ -220,9 +220,6 @@ bool kernel_page_present(struct page *pa
- 	pte_t *ptep;
- 	unsigned long addr = (unsigned long)page_address(page);
+--- a/init/main.c
++++ b/init/main.c
+@@ -633,6 +633,8 @@ static void __init setup_command_line(ch
+ 	if (!saved_command_line)
+ 		panic("%s: Failed to allocate %zu bytes\n", __func__, len + ilen);
  
--	if (!can_set_direct_map())
--		return true;
--
- 	pgdp = pgd_offset_k(addr);
- 	if (pgd_none(READ_ONCE(*pgdp)))
- 		return false;
++	len = xlen + strlen(command_line) + 1;
++
+ 	static_command_line = memblock_alloc(len, SMP_CACHE_BYTES);
+ 	if (!static_command_line)
+ 		panic("%s: Failed to allocate %zu bytes\n", __func__, len);
 
 
