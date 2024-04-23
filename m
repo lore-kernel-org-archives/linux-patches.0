@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5374A143882;
-	Tue, 23 Apr 2024 21:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C9F143899;
+	Tue, 23 Apr 2024 21:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908454; cv=none; b=Y18XaJ7o243HUCxl6P9uMym1QWQvU5+L3Oz8tH1hL6LoQ9vi+Sr7dLc+aReRj4eYB2R1nYaMUrLiMVFDe2rzbfRiemm/fP9hd9/pWI7fZyNcYOTKvCzaQkBBTjWbS6VJWgySj6Dwkq51Glh3ECmInDC4GnJHqfJHSSb/4rH3zf0=
+	t=1713908454; cv=none; b=iPGAG+e0pNva3YScWULd8OXUb+LfK9OCPgkc+tX69IP66qy4GWmO3yEpiKePd6lAUvd/i0qEO3X1OrF+UmVfPsSNPt6nQf9ZXaYweHHdGCl1+jdKiYHZMEpYS2XqyjEUz5hBwCCYLK7APa/LP0f9yf7AfbAlSLdYZv6ccI6bgeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908454; c=relaxed/simple;
-	bh=VWdHFBXghY2iJusz44HDATzTPy4gpWGAN5/M7VtfVac=;
+	bh=mBH98hwW/rVngNROlkEIBWoA1XRQ6dc/EkmNpZCI6w0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ADh9cpNAuQ1ELnyOkKfNv1va0Anrbar3NDgoOcauqZOZh7jRwON8XEznEk61U0Ne8J2Rlcz4AM/2RWIWeq0lEXMUsizO/NKfDz6j5uwLQpyQcNFxM5rQoY+qPRhSffsihCuGm55R8udwKbiCH66X+jIsC1Q5GRh5JNVtJPChs9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z37FnURp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ifnqllbAkN8tS49ycLirRN4yf1GdVk7nDT7N7Ih5LmREGYh5qZ+RFenQuP5uw9ZSsR9fFrU0FkZISLlXla3GGb17siF7R83o5d4rs5bU2P++5KsBWQAG1H9NIdNivNbN/1cOXqCZ9FknsmYIXj4w7FPpC+L3Gt8Vp/DlSk0idrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuFcQJND; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z37FnURp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9708C32786;
-	Tue, 23 Apr 2024 21:40:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuFcQJND"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B93C116B1;
+	Tue, 23 Apr 2024 21:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908453;
-	bh=VWdHFBXghY2iJusz44HDATzTPy4gpWGAN5/M7VtfVac=;
+	s=korg; t=1713908454;
+	bh=mBH98hwW/rVngNROlkEIBWoA1XRQ6dc/EkmNpZCI6w0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z37FnURp7J8BtYy9y1VYnPgmVfLyzJVcZMUSvgMkUuGZWwhLCh8bWZMrLya4dk3z4
-	 8QLeiHYdePr2AlEEP5FpRhbh1gplddvfzDUq7vOM1POy+Yvl2ikRR9Yp+9NT5ZiLh0
-	 G1DyPkOZVLk05GATtfw6QX1w+Kdd0tXRRKLMD/8g=
+	b=WuFcQJNDbC/YaA18E51bTRsi6mUNKhS2EkcPAt/2iudbjUYdVZVCyAZuYLN1Ke/1h
+	 8UXDWJtD+KiNxwhu+02it6JmiIbHm4EuRwX7gMcYxcOghiPIRx2Dv/LHHILdn7ODD8
+	 pBUMJG7axGTBhG2Qzj9FQ2uvw+nmRf2LiwWG/FdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkat Rao Bagalkote <venkat88@linux.vnet.ibm.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.8 012/158] r8169: add missing conditional compiling for call to r8169_remove_leds
-Date: Tue, 23 Apr 2024 14:37:14 -0700
-Message-ID: <20240423213856.243814697@linuxfoundation.org>
+	Amit Pundir <amit.pundir@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 013/158] scsi: ufs: qcom: Add missing interconnect bandwidth values for Gear 5
+Date: Tue, 23 Apr 2024 14:37:15 -0700
+Message-ID: <20240423213856.277043241@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -51,35 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit 97e176fcbbf3c0f2bd410c9b241177c051f57176 upstream.
+[ Upstream commit 8db8f6ce556af60ca9a9fd5e826d369ded70fcc7 ]
 
-Add missing dependency on CONFIG_R8169_LEDS. As-is a link error occurs
-if config option CONFIG_R8169_LEDS isn't enabled.
+These entries are necessary to scale the interconnect bandwidth while
+operating in Gear 5.
 
-Fixes: 19fa4f2a85d7 ("r8169: fix LED-related deadlock on module removal")
-Reported-by: Venkat Rao Bagalkote <venkat88@linux.vnet.ibm.com>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Tested-By: Venkat Rao Bagalkote <venkat88@linux.vnet.ibm.com>
-Link: https://lore.kernel.org/r/d080038c-eb6b-45ac-9237-b8c1cdd7870f@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Amit Pundir <amit.pundir@linaro.org>
+Fixes: 03ce80a1bb86 ("scsi: ufs: qcom: Add support for scaling interconnects")
+Tested-by: Amit Pundir <amit.pundir@linaro.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240403-ufs-icc-fix-v2-1-958412a5eb45@linaro.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ufs/host/ufs-qcom.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -4932,7 +4932,8 @@ static void rtl_remove_one(struct pci_de
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index f532e2c004a25..bcbcf758925be 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -47,7 +47,7 @@ enum {
+ 	TSTBUS_MAX,
+ };
  
- 	cancel_work_sync(&tp->wk.work);
+-#define QCOM_UFS_MAX_GEAR 4
++#define QCOM_UFS_MAX_GEAR 5
+ #define QCOM_UFS_MAX_LANE 2
  
--	r8169_remove_leds(tp->leds);
-+	if (IS_ENABLED(CONFIG_R8169_LEDS))
-+		r8169_remove_leds(tp->leds);
+ enum {
+@@ -67,26 +67,32 @@ static const struct __ufs_qcom_bw_table {
+ 	[MODE_PWM][UFS_PWM_G2][UFS_LANE_1] = { 1844,		1000 },
+ 	[MODE_PWM][UFS_PWM_G3][UFS_LANE_1] = { 3688,		1000 },
+ 	[MODE_PWM][UFS_PWM_G4][UFS_LANE_1] = { 7376,		1000 },
++	[MODE_PWM][UFS_PWM_G5][UFS_LANE_1] = { 14752,		1000 },
+ 	[MODE_PWM][UFS_PWM_G1][UFS_LANE_2] = { 1844,		1000 },
+ 	[MODE_PWM][UFS_PWM_G2][UFS_LANE_2] = { 3688,		1000 },
+ 	[MODE_PWM][UFS_PWM_G3][UFS_LANE_2] = { 7376,		1000 },
+ 	[MODE_PWM][UFS_PWM_G4][UFS_LANE_2] = { 14752,		1000 },
++	[MODE_PWM][UFS_PWM_G5][UFS_LANE_2] = { 29504,		1000 },
+ 	[MODE_HS_RA][UFS_HS_G1][UFS_LANE_1] = { 127796,		1000 },
+ 	[MODE_HS_RA][UFS_HS_G2][UFS_LANE_1] = { 255591,		1000 },
+ 	[MODE_HS_RA][UFS_HS_G3][UFS_LANE_1] = { 1492582,	102400 },
+ 	[MODE_HS_RA][UFS_HS_G4][UFS_LANE_1] = { 2915200,	204800 },
++	[MODE_HS_RA][UFS_HS_G5][UFS_LANE_1] = { 5836800,	409600 },
+ 	[MODE_HS_RA][UFS_HS_G1][UFS_LANE_2] = { 255591,		1000 },
+ 	[MODE_HS_RA][UFS_HS_G2][UFS_LANE_2] = { 511181,		1000 },
+ 	[MODE_HS_RA][UFS_HS_G3][UFS_LANE_2] = { 1492582,	204800 },
+ 	[MODE_HS_RA][UFS_HS_G4][UFS_LANE_2] = { 2915200,	409600 },
++	[MODE_HS_RA][UFS_HS_G5][UFS_LANE_2] = { 5836800,	819200 },
+ 	[MODE_HS_RB][UFS_HS_G1][UFS_LANE_1] = { 149422,		1000 },
+ 	[MODE_HS_RB][UFS_HS_G2][UFS_LANE_1] = { 298189,		1000 },
+ 	[MODE_HS_RB][UFS_HS_G3][UFS_LANE_1] = { 1492582,	102400 },
+ 	[MODE_HS_RB][UFS_HS_G4][UFS_LANE_1] = { 2915200,	204800 },
++	[MODE_HS_RB][UFS_HS_G5][UFS_LANE_1] = { 5836800,	409600 },
+ 	[MODE_HS_RB][UFS_HS_G1][UFS_LANE_2] = { 298189,		1000 },
+ 	[MODE_HS_RB][UFS_HS_G2][UFS_LANE_2] = { 596378,		1000 },
+ 	[MODE_HS_RB][UFS_HS_G3][UFS_LANE_2] = { 1492582,	204800 },
+ 	[MODE_HS_RB][UFS_HS_G4][UFS_LANE_2] = { 2915200,	409600 },
++	[MODE_HS_RB][UFS_HS_G5][UFS_LANE_2] = { 5836800,	819200 },
+ 	[MODE_MAX][0][0]		    = { 7643136,	307200 },
+ };
  
- 	unregister_netdev(tp->dev);
- 
+-- 
+2.43.0
+
 
 
