@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF5820B3E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DB920B3E;
 	Tue, 23 Apr 2024 21:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908487; cv=none; b=CKG/oFbNUe5+oLNZ6fHSuDo1toZJc4Nzc4hu4uoWlfUoxdSFxHFw3J/r3g2iPlX7rp9KCCVKjOjulZLlCwRHgrgVDQ9mrw0jEUQAL2i8qyLjY+Rf6YDl8TJiGo7qpxVuW2HI2wwv9Z/LqqUAbG783HxOe0rRwzyQMi47I8inZqc=
+	t=1713908487; cv=none; b=cNar6ArCYBjWswzyX/Q1WV5wBb079fDpdmQjeLlvUOuhOzxPnP3BlyahzoCskxqJxbUxH7lvA0qAaNXW4xFy10op7X+2TOsEi/60tewNHRh1bOljhXK+ODeU8ADa9Fn3SH85iS2/nTBmAcZKIJ9sF2oMzcIDNAUD5gUL4rZt1T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908487; c=relaxed/simple;
-	bh=i1r9BUuiZ1Vyhza9ZEPA78pYhEIlnIgTheRTq4mvbBI=;
+	bh=VYEBvN8nFOgyDJa3It+yXPpaK9SEG2+pxJjU3c/uD7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kHg3JPrjYh2e2UMyHpKgrBtSKPDTF3rLCuNMLGQpbc91K71UHt6ZkItVbXfPNIHD1LAPLf8q/Q7j01EHOVW9rxAx1VkeyIc647i58iCxj4YbF64rBnlNhdF/KSlxtMqOrxUSL27bepTbTXhrhbbUW/OQNcBEdH0UzZIMMzjjnXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w0qGiv2z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i3n4r3wFPBuj18zS+xenUw0y1dojYZatyMIbjUO5BOU8cuFPKnc0ShwD3rJY9SP4gXKUkdr1BckFCynz60JBEuBvlVKvyDTAqyw5y+1e5rxK+1JWPwFzXe19hsf5pQPy6dudNzrCeklbXB9RHNzbJ/pnoHj1j/GPHL3V2McTWxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6Wz5WBv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w0qGiv2z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D263CC3277B;
-	Tue, 23 Apr 2024 21:41:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6Wz5WBv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF68C116B1;
+	Tue, 23 Apr 2024 21:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908486;
-	bh=i1r9BUuiZ1Vyhza9ZEPA78pYhEIlnIgTheRTq4mvbBI=;
+	s=korg; t=1713908487;
+	bh=VYEBvN8nFOgyDJa3It+yXPpaK9SEG2+pxJjU3c/uD7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w0qGiv2zdMUktc2ve1Rs/0iFw4EAhHjAReRrBwdux9gysx9nPOQPftD5oCbsUlkhg
-	 wYLHOfcOs+0rosUUGJ/nNE49Em3xszFT9WKRC2+vBXFL8D5j9lWguxN//6PHJAwb9d
-	 WSqLz5GlnPEYoMID9PJEuzAI9U24DfamA0zudlOQ=
+	b=o6Wz5WBvvKmTgKDnWs8Rg0OXGka/mtKyV9gimBYu2EEDoOWYz695ezORKRYpAsKs5
+	 5lIiJg7iioOwCjtPfPRMOQOvhY6OIaiw4euOp8Udcbdfqm5+4apdPH+8m8os7roMfa
+	 XEnF1C1NX6MERmsZOD+3zg1jAXhFlNJG5d2+CKbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Schuyler Patton <spatton@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Roger Quadros <rogerq@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 026/158] net/mlx5: Restore mistakenly dropped parts in register devlink flow
-Date: Tue, 23 Apr 2024 14:37:28 -0700
-Message-ID: <20240423213856.718923812@linuxfoundation.org>
+Subject: [PATCH 6.8 053/158] net: ethernet: ti: am65-cpsw-nuss: cleanup DMA Channels before using them
+Date: Tue, 23 Apr 2024 14:37:55 -0700
+Message-ID: <20240423213857.657580029@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -52,57 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit bf729988303a27833a86acb561f42b9a3cc12728 ]
+[ Upstream commit c24cd679b075b0e953ea167b0aa2b2d59e4eba7f ]
 
-Code parts from cited commit were mistakenly dropped while rebasing
-before submission. Add them here.
+The TX and RX DMA Channels used by the driver to exchange data with CPSW
+are not guaranteed to be in a clean state during driver initialization.
+The Bootloader could have used the same DMA Channels without cleaning them
+up in the event of failure. Thus, reset and disable the DMA Channels to
+ensure that they are in a clean state before using them.
 
-Fixes: c6e77aa9dd82 ("net/mlx5: Register devlink first under devlink lock")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20240411115444.374475-4-tariqt@nvidia.com
+Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
+Reported-by: Schuyler Patton <spatton@ti.com>
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/20240417095425.2253876-1-s-vadapalli@ti.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c          | 5 ++++-
- drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c | 1 -
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 131a836c127e3..e285823bd08f0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -1699,12 +1699,15 @@ int mlx5_init_one_light(struct mlx5_core_dev *dev)
- 	err = mlx5_devlink_params_register(priv_to_devlink(dev));
- 	if (err) {
- 		mlx5_core_warn(dev, "mlx5_devlink_param_reg err = %d\n", err);
--		goto query_hca_caps_err;
-+		goto params_reg_err;
- 	}
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 2939a21ca74f3..1d00e21808c1c 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2793,6 +2793,8 @@ static void am65_cpsw_unregister_devlink(struct am65_cpsw_common *common)
  
- 	devl_unlock(devlink);
- 	return 0;
+ static int am65_cpsw_nuss_register_ndevs(struct am65_cpsw_common *common)
+ {
++	struct am65_cpsw_rx_chn *rx_chan = &common->rx_chns;
++	struct am65_cpsw_tx_chn *tx_chan = common->tx_chns;
+ 	struct device *dev = common->dev;
+ 	struct am65_cpsw_port *port;
+ 	int ret = 0, i;
+@@ -2805,6 +2807,22 @@ static int am65_cpsw_nuss_register_ndevs(struct am65_cpsw_common *common)
+ 	if (ret)
+ 		return ret;
  
-+params_reg_err:
-+	devl_unregister(devlink);
-+	devl_unlock(devlink);
- query_hca_caps_err:
- 	devl_unregister(devlink);
- 	devl_unlock(devlink);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
-index e3bf8c7e4baa6..7ebe712808275 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
-@@ -75,7 +75,6 @@ static int mlx5_sf_dev_probe(struct auxiliary_device *adev, const struct auxilia
- 		goto peer_devlink_set_err;
- 	}
- 
--	devlink_register(devlink);
- 	return 0;
- 
- peer_devlink_set_err:
++	/* The DMA Channels are not guaranteed to be in a clean state.
++	 * Reset and disable them to ensure that they are back to the
++	 * clean state and ready to be used.
++	 */
++	for (i = 0; i < common->tx_ch_num; i++) {
++		k3_udma_glue_reset_tx_chn(tx_chan[i].tx_chn, &tx_chan[i],
++					  am65_cpsw_nuss_tx_cleanup);
++		k3_udma_glue_disable_tx_chn(tx_chan[i].tx_chn);
++	}
++
++	for (i = 0; i < AM65_CPSW_MAX_RX_FLOWS; i++)
++		k3_udma_glue_reset_rx_chn(rx_chan->rx_chn, i, rx_chan,
++					  am65_cpsw_nuss_rx_cleanup, !!i);
++
++	k3_udma_glue_disable_rx_chn(rx_chan->rx_chn);
++
+ 	ret = am65_cpsw_nuss_register_devlink(common);
+ 	if (ret)
+ 		return ret;
 -- 
 2.43.0
 
