@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D39145B0F;
-	Tue, 23 Apr 2024 21:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2158E145B0F;
+	Tue, 23 Apr 2024 21:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908621; cv=none; b=gZUuSKREi3kLZo4/aRZlLFg4kxBKD6lkfZgWER0QBanCLyT39DZVQlScQVDStNxQAcyS6OVuCJIVv29D839AWnIIPknVNxe+iWL5cSzkszEMTrU3yWsdhcu86j/AtXz6ebqzMiMNMLIViDyP1aqcePgdmw+GKe8vUyb5p9QxuJg=
+	t=1713908622; cv=none; b=c5eq6YW0p7HtuANLPfBRfOIKIxDzyp18vAe6Vx3eE6y3BcpsZb9CZGBoboSOYvhMnXeFJbk+SAw1Jv1ugVCREK3l70bhGbCtwRohSpL3vp2SePHkgohx1FebO2fMjuZEop3bIMerKzWS+L9nCBahGiui3G0fvh/tpblRzFq7Eqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908621; c=relaxed/simple;
-	bh=ayyyNUCWh0jFPREanMeWwjEtpcUC0K+zMsWEnt6yBvY=;
+	s=arc-20240116; t=1713908622; c=relaxed/simple;
+	bh=QxYsMVWMynwM9XeE+ticMddsfMXnXsoh5udqcyf4uA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GY/hwpRc8E+qNiPd0+Z25SG8N5CZp4GNCiRjcW/uJr4xS2ysBGJ9OzKG+HZ+/+JdzrzWYEFaEwrihJF1Kz60o0IDZWYRu7iiFUtvrHLXTqAWl7HC8N6oj2Z6fxLmzSkHA+S1m/VM6/iQX9mQYZGAwq7r7HL1nn4PcI4Twf6853Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTRsTorH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QK4SyqBpLO8f8PdK6HRMGpxs6qKWa4R+aQ8ITHpYDlH1mTLBcKGojs0wxK6i+iDk0JOu2VOmmxVK1enMB0Bn6ak9dyhy9Y8wbIoBLAk5/MfON/SUES4hJcOvONLhRDw54MeeQUYus682Hw+yOxvVkgqhFR6AxU/r1b+74wp3yXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7DCEDGG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTRsTorH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45ED4C4AF09;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7DCEDGG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9380C3277B;
 	Tue, 23 Apr 2024 21:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908621;
-	bh=ayyyNUCWh0jFPREanMeWwjEtpcUC0K+zMsWEnt6yBvY=;
+	s=korg; t=1713908622;
+	bh=QxYsMVWMynwM9XeE+ticMddsfMXnXsoh5udqcyf4uA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vTRsTorHF78v6vlkYW08BaF2M1t5iTK8OaT84VkCQNyCP7A8bthsXsBSj+CG9bSVq
-	 I3rGO5LzT/pFxjs79fNO6VB9w2f46G3YseO0ZvP3qX+u5NtKsmCPdz62fWFVbIXW92
-	 P7p/ybkE4AdNDiQH/AgrHetdfxoL+ZJf47LrdYkg=
+	b=F7DCEDGGWLEP8UFzY3Cj8/N65X/ev4Y62rzIp5Sw0OKGOIWenW1Bg9yffcuXb3/pN
+	 HGEPO+Ko3J4Xx1mFOe5V0QjqokiWGhcgs8TN0YawO9d3MgFYmWodagUisLSNYy88h6
+	 ko2Khi1GAe3SNAqc5ykQaMf3reOBGa6Rgyi2Eik4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Pin-yen Lin <treapking@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/158] clk: Get runtime PM before walking tree for clk_summary
-Date: Tue, 23 Apr 2024 14:38:52 -0700
-Message-ID: <20240423213858.832342506@linuxfoundation.org>
+Subject: [PATCH 6.6 096/158] clk: mediatek: Do a runtime PM get on controllers during probe
+Date: Tue, 23 Apr 2024 14:38:53 -0700
+Message-ID: <20240423213858.867439612@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -52,93 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Boyd <sboyd@kernel.org>
+From: Pin-yen Lin <treapking@chromium.org>
 
-[ Upstream commit 9d1e795f754db1ac3344528b7af0b17b8146f321 ]
+[ Upstream commit 2f7b1d8b5505efb0057cd1ab85fca206063ea4c3 ]
 
-Similar to the previous commit, we should make sure that all devices are
-runtime resumed before printing the clk_summary through debugfs. Failure
-to do so would result in a deadlock if the thread is resuming a device
-to print clk state and that device is also runtime resuming in another
-thread, e.g the screen is turning on and the display driver is starting
-up. We remove the calls to clk_pm_runtime_{get,put}() in this path
-because they're superfluous now that we know the devices are runtime
-resumed. This also squashes a bug where the return value of
-clk_pm_runtime_get() wasn't checked, leading to an RPM count underflow
-on error paths.
+mt8183-mfgcfg has a mutual dependency with genpd during the probing
+stage, which leads to a deadlock in the following call stack:
 
-Fixes: 1bb294a7981c ("clk: Enable/Disable runtime PM for clk_summary")
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Cc: Douglas Anderson <dianders@chromium.org>
+CPU0:  genpd_lock --> clk_prepare_lock
+genpd_power_off_work_fn()
+ genpd_lock()
+ generic_pm_domain::power_off()
+    clk_unprepare()
+      clk_prepare_lock()
+
+CPU1: clk_prepare_lock --> genpd_lock
+clk_register()
+  __clk_core_init()
+    clk_prepare_lock()
+    clk_pm_runtime_get()
+      genpd_lock()
+
+Do a runtime PM get at the probe function to make sure clk_register()
+won't acquire the genpd lock. Instead of only modifying mt8183-mfgcfg,
+do this on all mediatek clock controller probings because we don't
+believe this would cause any regression.
+
+Verified on MT8183 and MT8192 Chromebooks.
+
+Fixes: acddfc2c261b ("clk: mediatek: Add MT8183 clock support")
+Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+
+Link: https://lore.kernel.org/r/20240312115249.3341654-1-treapking@chromium.org
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20240325184204.745706-6-sboyd@kernel.org
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/clk/mediatek/clk-mtk.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index 011e7632541fa..4a67c0d4823cf 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -3321,9 +3321,7 @@ static void clk_summary_show_subtree(struct seq_file *s, struct clk_core *c,
- {
- 	struct clk_core *child;
+diff --git a/drivers/clk/mediatek/clk-mtk.c b/drivers/clk/mediatek/clk-mtk.c
+index 2e55368dc4d82..bd37ab4d1a9bb 100644
+--- a/drivers/clk/mediatek/clk-mtk.c
++++ b/drivers/clk/mediatek/clk-mtk.c
+@@ -13,6 +13,7 @@
+ #include <linux/of.h>
+ #include <linux/of_address.h>
+ #include <linux/platform_device.h>
++#include <linux/pm_runtime.h>
+ #include <linux/slab.h>
  
--	clk_pm_runtime_get(c);
- 	clk_summary_show_one(s, c, level);
--	clk_pm_runtime_put(c);
- 
- 	hlist_for_each_entry(child, &c->children, child_node)
- 		clk_summary_show_subtree(s, child, level + 1);
-@@ -3333,11 +3331,15 @@ static int clk_summary_show(struct seq_file *s, void *data)
- {
- 	struct clk_core *c;
- 	struct hlist_head **lists = s->private;
-+	int ret;
- 
- 	seq_puts(s, "                                 enable  prepare  protect                                duty  hardware                            connection\n");
- 	seq_puts(s, "   clock                          count    count    count        rate   accuracy phase  cycle    enable   consumer                         id\n");
- 	seq_puts(s, "---------------------------------------------------------------------------------------------------------------------------------------------\n");
- 
-+	ret = clk_pm_runtime_get_all();
-+	if (ret)
-+		return ret;
- 
- 	clk_prepare_lock();
- 
-@@ -3346,6 +3348,7 @@ static int clk_summary_show(struct seq_file *s, void *data)
- 			clk_summary_show_subtree(s, c, 0);
- 
- 	clk_prepare_unlock();
-+	clk_pm_runtime_put_all();
- 
- 	return 0;
- }
-@@ -3393,8 +3396,14 @@ static int clk_dump_show(struct seq_file *s, void *data)
- 	struct clk_core *c;
- 	bool first_node = true;
- 	struct hlist_head **lists = s->private;
-+	int ret;
-+
-+	ret = clk_pm_runtime_get_all();
-+	if (ret)
-+		return ret;
- 
- 	seq_putc(s, '{');
-+
- 	clk_prepare_lock();
- 
- 	for (; *lists; lists++) {
-@@ -3407,6 +3416,7 @@ static int clk_dump_show(struct seq_file *s, void *data)
+ #include "clk-mtk.h"
+@@ -494,6 +495,16 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
+ 			return IS_ERR(base) ? PTR_ERR(base) : -ENOMEM;
  	}
  
- 	clk_prepare_unlock();
-+	clk_pm_runtime_put_all();
++
++	devm_pm_runtime_enable(&pdev->dev);
++	/*
++	 * Do a pm_runtime_resume_and_get() to workaround a possible
++	 * deadlock between clk_register() and the genpd framework.
++	 */
++	r = pm_runtime_resume_and_get(&pdev->dev);
++	if (r)
++		return r;
++
+ 	/* Calculate how many clk_hw_onecell_data entries to allocate */
+ 	num_clks = mcd->num_clks + mcd->num_composite_clks;
+ 	num_clks += mcd->num_fixed_clks + mcd->num_factor_clks;
+@@ -574,6 +585,8 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
+ 			goto unregister_clks;
+ 	}
  
- 	seq_puts(s, "}\n");
- 	return 0;
++	pm_runtime_put(&pdev->dev);
++
+ 	return r;
+ 
+ unregister_clks:
+@@ -604,6 +617,8 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
+ free_base:
+ 	if (mcd->shared_io && base)
+ 		iounmap(base);
++
++	pm_runtime_put(&pdev->dev);
+ 	return r;
+ }
+ 
 -- 
 2.43.0
 
