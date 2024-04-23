@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A84220B3E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C900920B3E;
 	Tue, 23 Apr 2024 21:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908552; cv=none; b=UJORPvo7Z8pqmohQhBDHKaW6wlID347dQReHGEkDlrkHquhoLVOfGTPyVSXC95mr0/Jz37x7Qj/fQ+G7PxlXE9IOLafOlqBAxMiQEWp0SwlLwUggsj9QIOD2f0wcVfC2wlZydC6nvMCPZQ7UJGFkgyCC7fFs1oSjNPJQm8/YFOw=
+	t=1713908552; cv=none; b=IBn/8aeSFRK+tQIjtC4iZjj4pcJSvVjCJAlDK3n5GLLq//1aSZcklRZPspHKQlF8QpEkZ6bg6Udboco5cltHaU42OIEguuqizpNqwTAYPKXEoNq0G6EvOY8bzc3/v6imNYMp3+ZvGYBG8TFi/uKbTp5+SrjlSEvA4sPXN0U11Zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908552; c=relaxed/simple;
-	bh=MHWJTUZZDr0c7bwFuKVXnzjbR5GlMBQYeKR9vKJHLJk=;
+	bh=XYsjPkjKZ0x3GBDFo+HM75RSoJDILXaFP9KFTfmc7tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mqpkpY/FZjvCNs5gUvU63ge531fD0UuKcCYLUxD0+RHdsdIecUlRXv887IuhIDOYyoQF2/dU8zPzKcohE2a/C5puorAkxJGqPTVB1WSqhBxzR85BAGhhzhm0VlwP6/JANR1T9BOnQzdZeGAeafCjbMD04Hh5BR7HDavKv3PFMRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNpuHXHl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MIEDPMiVvug/gyCOVrEs7LIQnBhMCx/q9vkueq2cz4is3EuCfxWOYn+il/AHGIYrho9w7t04fnR4L4iE2a4iH/3FMWWIkCTyVruTPFeXqGxfzKtAcOqVYpsok0zYbPT3BTlt4URhm224ovgga6sz4/bK0J3T8wLbr14qYSUPwtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SS6LgcSV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNpuHXHl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3AE3C3277B;
-	Tue, 23 Apr 2024 21:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SS6LgcSV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E123C116B1;
+	Tue, 23 Apr 2024 21:42:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908552;
-	bh=MHWJTUZZDr0c7bwFuKVXnzjbR5GlMBQYeKR9vKJHLJk=;
+	bh=XYsjPkjKZ0x3GBDFo+HM75RSoJDILXaFP9KFTfmc7tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NNpuHXHliZ+8iXs0ODVd3m9jAi+6U/DTz6Qe3vqEidLAXSLYLlDpMyKsaYE9Ig2/m
-	 MLXW5mzhYC6wXEFLC72rpmklZU7apErmcLvOZvRszm3NUUuQEqbwUz9Tm+ds04R5av
-	 GHdXC6zg/vGIp3nRoYIfVcrDv4AoMoXWFyyYjx64=
+	b=SS6LgcSVvZyAXEOkZsVDZZQbEFPgORL0w7O2Uv2c8DAZx8sapqx/59IRT+rMpJn8B
+	 y2uOPhmaWEb3tlbwYUN2Yo9Tg+tbLMhqlm1eu2IiuYzUkQRSLHmOj0eBbaRVTvqZZH
+	 sOZ24bx19w/kTIAmF6smldPl0Vk49bR5u4+KWffc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.8 153/158] net: dsa: mt7530: fix improper frames on all 25MHz and 40MHz XTAL MT7530
-Date: Tue, 23 Apr 2024 14:39:35 -0700
-Message-ID: <20240423213900.817584586@linuxfoundation.org>
+	Daniel Golle <daniel@makrotopia.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.8 154/158] net: dsa: mt7530: fix enabling EEE on MT7531 switch on all boards
+Date: Tue, 23 Apr 2024 14:39:36 -0700
+Message-ID: <20240423213900.851224145@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -53,74 +55,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-commit 5f563c31ff0c40ce395d0bae7daa94c7950dac97 upstream.
+commit 06dfcd4098cfdc4d4577d94793a4f9125386da8b upstream.
 
-The MT7530 switch after reset initialises with a core clock frequency that
-works with a 25MHz XTAL connected to it. For 40MHz XTAL, the core clock
-frequency must be set to 500MHz.
+The commit 40b5d2f15c09 ("net: dsa: mt7530: Add support for EEE features")
+brought EEE support but did not enable EEE on MT7531 switch MACs. EEE is
+enabled on MT7531 switch MACs by pulling the LAN2LED0 pin low on the board
+(bootstrapping), unsetting the EEE_DIS bit on the trap register, or setting
+the internal EEE switch bit on the CORE_PLL_GROUP4 register. Thanks to
+SkyLake Huang (黃啟澤) from MediaTek for providing information on the
+internal EEE switch bit.
 
-The mt7530_pll_setup() function is responsible of setting the core clock
-frequency. Currently, it runs on MT7530 with 25MHz and 40MHz XTAL. This
-causes MT7530 switch with 25MHz XTAL to egress and ingress frames
-improperly.
+There are existing boards that were not designed to pull the pin low.
+Because of that, the EEE status currently depends on the board design.
 
-Introduce a check to run it only on MT7530 with 40MHz XTAL.
+The EEE_DIS bit on the trap pertains to the LAN2LED0 pin which is usually
+used to control an LED. Once the bit is unset, the pin will be low. That
+will make the active low LED turn on. The pin is controlled by the switch
+PHY. It seems that the PHY controls the pin in the way that it inverts the
+pin state. That means depending on the wiring of the LED connected to
+LAN2LED0 on the board, the LED may be on without an active link.
 
-The core clock frequency is set by writing to a switch PHY's register.
-Access to the PHY's register is done via the MDIO bus the switch is also
-on. Therefore, it works only when the switch makes switch PHYs listen on
-the MDIO bus the switch is on. This is controlled either by the state of
-the ESW_P1_LED_1 pin after reset deassertion or modifying bit 5 of the
-modifiable trap register.
+To not cause this unwanted behaviour whilst enabling EEE on all boards, set
+the internal EEE switch bit on the CORE_PLL_GROUP4 register.
 
-When ESW_P1_LED_1 is pulled high, PHY indirect access is used. That means
-accessing PHY registers via the PHY indirect access control register of the
-switch.
+My testing on MT7531 shows a certain amount of traffic loss when EEE is
+enabled. That said, I haven't come across a board that enables EEE. So
+enable EEE on the switch MACs but disable EEE advertisement on the switch
+PHYs. This way, we don't change the behaviour of the majority of the boards
+that have this switch. The mediatek-ge PHY driver already disables EEE
+advertisement on the switch PHYs but my testing shows that it is somehow
+enabled afterwards. Disabling EEE advertisement before the PHY driver
+initialises keeps it off.
 
-When ESW_P1_LED_1 is pulled low, PHY direct access is used. That means
-accessing PHY registers via the MDIO bus the switch is on.
+With this change, EEE can now be enabled using ethtool.
 
-For MT7530 switch with 40MHz XTAL on a board with ESW_P1_LED_1 pulled high,
-the core clock frequency won't be set to 500MHz, causing the switch to
-egress and ingress frames improperly.
-
-Run mt7530_pll_setup() after PHY direct access is set on the modifiable
-trap register.
-
-With these two changes, all MT7530 switches with 25MHz and 40MHz, and
-P1_LED_1 pulled high or low, will egress and ingress frames properly.
-
-Link: https://github.com/BPI-SINOVOIP/BPI-R2-bsp/blob/4a5dd143f2172ec97a2872fa29c7c4cd520f45b5/linux-mt/drivers/net/ethernet/mediatek/gsw_mt7623.c#L1039
-Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
+Fixes: 40b5d2f15c09 ("net: dsa: mt7530: Add support for EEE features")
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Link: https://lore.kernel.org/r/20240320-for-net-mt7530-fix-25mhz-xtal-with-direct-phy-access-v1-1-d92f605f1160@arinc9.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://lore.kernel.org/r/20240408-for-net-mt7530-fix-eee-for-mt7531-mt7988-v3-1-84fdef1f008b@arinc9.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mt7530.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/dsa/mt7530.c |   17 ++++++++++++-----
+ drivers/net/dsa/mt7530.h |    1 +
+ 2 files changed, 13 insertions(+), 5 deletions(-)
 
 --- a/drivers/net/dsa/mt7530.c
 +++ b/drivers/net/dsa/mt7530.c
-@@ -2471,8 +2471,6 @@ mt7530_setup(struct dsa_switch *ds)
- 		     SYS_CTRL_PHY_RST | SYS_CTRL_SW_RST |
- 		     SYS_CTRL_REG_RST);
- 
--	mt7530_pll_setup(priv);
--
- 	/* Lower Tx driving for TRGMII path */
- 	for (i = 0; i < NUM_TRGMII_CTRL; i++)
- 		mt7530_write(priv, MT7530_TRGMII_TD_ODT(i),
-@@ -2490,6 +2488,9 @@ mt7530_setup(struct dsa_switch *ds)
- 
+@@ -2712,18 +2712,25 @@ mt7531_setup(struct dsa_switch *ds)
+ 	priv->p5_interface = PHY_INTERFACE_MODE_NA;
  	priv->p6_interface = PHY_INTERFACE_MODE_NA;
  
-+	if ((val & HWTRAP_XTAL_MASK) == HWTRAP_XTAL_40MHZ)
-+		mt7530_pll_setup(priv);
-+
- 	mt753x_trap_frames(priv);
+-	/* Enable PHY core PLL, since phy_device has not yet been created
+-	 * provided for phy_[read,write]_mmd_indirect is called, we provide
+-	 * our own mt7531_ind_mmd_phy_[read,write] to complete this
+-	 * function.
++	/* Enable Energy-Efficient Ethernet (EEE) and PHY core PLL, since
++	 * phy_device has not yet been created provided for
++	 * phy_[read,write]_mmd_indirect is called, we provide our own
++	 * mt7531_ind_mmd_phy_[read,write] to complete this function.
+ 	 */
+ 	val = mt7531_ind_c45_phy_read(priv, MT753X_CTRL_PHY_ADDR,
+ 				      MDIO_MMD_VEND2, CORE_PLL_GROUP4);
+-	val |= MT7531_PHY_PLL_BYPASS_MODE;
++	val |= MT7531_RG_SYSPLL_DMY2 | MT7531_PHY_PLL_BYPASS_MODE;
+ 	val &= ~MT7531_PHY_PLL_OFF;
+ 	mt7531_ind_c45_phy_write(priv, MT753X_CTRL_PHY_ADDR, MDIO_MMD_VEND2,
+ 				 CORE_PLL_GROUP4, val);
  
- 	/* Enable and reset MIB counters */
++	/* Disable EEE advertisement on the switch PHYs. */
++	for (i = MT753X_CTRL_PHY_ADDR;
++	     i < MT753X_CTRL_PHY_ADDR + MT7530_NUM_PHYS; i++) {
++		mt7531_ind_c45_phy_write(priv, i, MDIO_MMD_AN, MDIO_AN_EEE_ADV,
++					 0);
++	}
++
+ 	mt7531_setup_common(ds);
+ 
+ 	/* Setup VLAN ID 0 for VLAN-unaware bridges */
+--- a/drivers/net/dsa/mt7530.h
++++ b/drivers/net/dsa/mt7530.h
+@@ -634,6 +634,7 @@ enum mt7531_clk_skew {
+ #define  RG_SYSPLL_DDSFBK_EN		BIT(12)
+ #define  RG_SYSPLL_BIAS_EN		BIT(11)
+ #define  RG_SYSPLL_BIAS_LPF_EN		BIT(10)
++#define  MT7531_RG_SYSPLL_DMY2		BIT(6)
+ #define  MT7531_PHY_PLL_OFF		BIT(5)
+ #define  MT7531_PHY_PLL_BYPASS_MODE	BIT(4)
+ 
 
 
