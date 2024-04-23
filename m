@@ -1,49 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AB720B3E;
-	Tue, 23 Apr 2024 21:42:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A84220B3E;
+	Tue, 23 Apr 2024 21:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908551; cv=none; b=oOrx7Ru7iz9Msr8CsO0SPynb7aUVRhJWlV7/nu+LFe5osntwJDXalf9HPWqvv+0no/kcPeN8nq1aYkkfvo5JukG1AfsN1hUfN/tAYEL72F5vyoM9t95vzvIBA6Y6QYH8475mXbju4PBq6n8krotoHGHo7+Jac1HJGvXR6lX2Ji0=
+	t=1713908552; cv=none; b=UJORPvo7Z8pqmohQhBDHKaW6wlID347dQReHGEkDlrkHquhoLVOfGTPyVSXC95mr0/Jz37x7Qj/fQ+G7PxlXE9IOLafOlqBAxMiQEWp0SwlLwUggsj9QIOD2f0wcVfC2wlZydC6nvMCPZQ7UJGFkgyCC7fFs1oSjNPJQm8/YFOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908551; c=relaxed/simple;
-	bh=TxZ12yq1/puCaLG4Q/uV82F/X6dPU3Cs2whN6dKGpgk=;
+	s=arc-20240116; t=1713908552; c=relaxed/simple;
+	bh=MHWJTUZZDr0c7bwFuKVXnzjbR5GlMBQYeKR9vKJHLJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IPgtjBWAxx0FWA2Xw6g6XcRHhYAKmsB0Ut0ifWAXfI3jk4NStJPMB9nbNKC2Uq+ROiHCDrNEIiHSEblGdBo4fCzmNUnvhAlzKajTarLJiVRUFshTp2VI/JKuJ7aNwmvChdzkIBfo8uHIsypqCxUke9fLen7YK0TaMvGeZe+GnU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryMBh/gG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mqpkpY/FZjvCNs5gUvU63ge531fD0UuKcCYLUxD0+RHdsdIecUlRXv887IuhIDOYyoQF2/dU8zPzKcohE2a/C5puorAkxJGqPTVB1WSqhBxzR85BAGhhzhm0VlwP6/JANR1T9BOnQzdZeGAeafCjbMD04Hh5BR7HDavKv3PFMRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNpuHXHl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryMBh/gG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468D4C32783;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNpuHXHl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3AE3C3277B;
 	Tue, 23 Apr 2024 21:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908551;
-	bh=TxZ12yq1/puCaLG4Q/uV82F/X6dPU3Cs2whN6dKGpgk=;
+	s=korg; t=1713908552;
+	bh=MHWJTUZZDr0c7bwFuKVXnzjbR5GlMBQYeKR9vKJHLJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ryMBh/gGaMNXJwvnRPDWbLx/UBUq7/HiyS/BQgpqKDe4y9+xMIxZ6n6V66CXiTBhS
-	 y5bUFoWmVY1UYRt/ioPEIQZcGU+JdhQ3UnNZiXmQiyXbHWAaUjd3dzUnfkqv6PIPax
-	 hurep3/S//I5AunPnyajO9R89l+NFVJg5kQZ3AJ8=
+	b=NNpuHXHliZ+8iXs0ODVd3m9jAi+6U/DTz6Qe3vqEidLAXSLYLlDpMyKsaYE9Ig2/m
+	 MLXW5mzhYC6wXEFLC72rpmklZU7apErmcLvOZvRszm3NUUuQEqbwUz9Tm+ds04R5av
+	 GHdXC6zg/vGIp3nRoYIfVcrDv4AoMoXWFyyYjx64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Thorvald Natvig <thorvald@google.com>,
-	Jane Chu <jane.chu@oracle.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Peng Zhang <zhangpeng.00@bytedance.com>,
-	Tycho Andersen <tandersen@netflix.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.8 152/158] fork: defer linking file vma until vma is fully initialized
-Date: Tue, 23 Apr 2024 14:39:34 -0700
-Message-ID: <20240423213900.780826104@linuxfoundation.org>
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.8 153/158] net: dsa: mt7530: fix improper frames on all 25MHz and 40MHz XTAL MT7530
+Date: Tue, 23 Apr 2024 14:39:35 -0700
+Message-ID: <20240423213900.817584586@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -56,113 +44,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-commit 35e351780fa9d8240dd6f7e4f245f9ea37e96c19 upstream.
+commit 5f563c31ff0c40ce395d0bae7daa94c7950dac97 upstream.
 
-Thorvald reported a WARNING [1]. And the root cause is below race:
+The MT7530 switch after reset initialises with a core clock frequency that
+works with a 25MHz XTAL connected to it. For 40MHz XTAL, the core clock
+frequency must be set to 500MHz.
 
- CPU 1					CPU 2
- fork					hugetlbfs_fallocate
-  dup_mmap				 hugetlbfs_punch_hole
-   i_mmap_lock_write(mapping);
-   vma_interval_tree_insert_after -- Child vma is visible through i_mmap tree.
-   i_mmap_unlock_write(mapping);
-   hugetlb_dup_vma_private -- Clear vma_lock outside i_mmap_rwsem!
-					 i_mmap_lock_write(mapping);
-   					 hugetlb_vmdelete_list
-					  vma_interval_tree_foreach
-					   hugetlb_vma_trylock_write -- Vma_lock is cleared.
-   tmp->vm_ops->open -- Alloc new vma_lock outside i_mmap_rwsem!
-					   hugetlb_vma_unlock_write -- Vma_lock is assigned!!!
-					 i_mmap_unlock_write(mapping);
+The mt7530_pll_setup() function is responsible of setting the core clock
+frequency. Currently, it runs on MT7530 with 25MHz and 40MHz XTAL. This
+causes MT7530 switch with 25MHz XTAL to egress and ingress frames
+improperly.
 
-hugetlb_dup_vma_private() and hugetlb_vm_op_open() are called outside
-i_mmap_rwsem lock while vma lock can be used in the same time.  Fix this
-by deferring linking file vma until vma is fully initialized.  Those vmas
-should be initialized first before they can be used.
+Introduce a check to run it only on MT7530 with 40MHz XTAL.
 
-Link: https://lkml.kernel.org/r/20240410091441.3539905-1-linmiaohe@huawei.com
-Fixes: 8d9bfb260814 ("hugetlb: add vma based lock for pmd sharing")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Reported-by: Thorvald Natvig <thorvald@google.com>
-Closes: https://lore.kernel.org/linux-mm/20240129161735.6gmjsswx62o4pbja@revolver/T/ [1]
-Reviewed-by: Jane Chu <jane.chu@oracle.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Mateusz Guzik <mjguzik@gmail.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Peng Zhang <zhangpeng.00@bytedance.com>
-Cc: Tycho Andersen <tandersen@netflix.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The core clock frequency is set by writing to a switch PHY's register.
+Access to the PHY's register is done via the MDIO bus the switch is also
+on. Therefore, it works only when the switch makes switch PHYs listen on
+the MDIO bus the switch is on. This is controlled either by the state of
+the ESW_P1_LED_1 pin after reset deassertion or modifying bit 5 of the
+modifiable trap register.
+
+When ESW_P1_LED_1 is pulled high, PHY indirect access is used. That means
+accessing PHY registers via the PHY indirect access control register of the
+switch.
+
+When ESW_P1_LED_1 is pulled low, PHY direct access is used. That means
+accessing PHY registers via the MDIO bus the switch is on.
+
+For MT7530 switch with 40MHz XTAL on a board with ESW_P1_LED_1 pulled high,
+the core clock frequency won't be set to 500MHz, causing the switch to
+egress and ingress frames improperly.
+
+Run mt7530_pll_setup() after PHY direct access is set on the modifiable
+trap register.
+
+With these two changes, all MT7530 switches with 25MHz and 40MHz, and
+P1_LED_1 pulled high or low, will egress and ingress frames properly.
+
+Link: https://github.com/BPI-SINOVOIP/BPI-R2-bsp/blob/4a5dd143f2172ec97a2872fa29c7c4cd520f45b5/linux-mt/drivers/net/ethernet/mediatek/gsw_mt7623.c#L1039
+Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Link: https://lore.kernel.org/r/20240320-for-net-mt7530-fix-25mhz-xtal-with-direct-phy-access-v1-1-d92f605f1160@arinc9.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/fork.c |   33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ drivers/net/dsa/mt7530.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -712,6 +712,23 @@ static __latent_entropy int dup_mmap(str
- 		} else if (anon_vma_fork(tmp, mpnt))
- 			goto fail_nomem_anon_vma_fork;
- 		vm_flags_clear(tmp, VM_LOCKED_MASK);
-+		/*
-+		 * Copy/update hugetlb private vma information.
-+		 */
-+		if (is_vm_hugetlb_page(tmp))
-+			hugetlb_dup_vma_private(tmp);
-+
-+		/*
-+		 * Link the vma into the MT. After using __mt_dup(), memory
-+		 * allocation is not necessary here, so it cannot fail.
-+		 */
-+		vma_iter_bulk_store(&vmi, tmp);
-+
-+		mm->map_count++;
-+
-+		if (tmp->vm_ops && tmp->vm_ops->open)
-+			tmp->vm_ops->open(tmp);
-+
- 		file = tmp->vm_file;
- 		if (file) {
- 			struct address_space *mapping = file->f_mapping;
-@@ -728,25 +745,9 @@ static __latent_entropy int dup_mmap(str
- 			i_mmap_unlock_write(mapping);
- 		}
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -2471,8 +2471,6 @@ mt7530_setup(struct dsa_switch *ds)
+ 		     SYS_CTRL_PHY_RST | SYS_CTRL_SW_RST |
+ 		     SYS_CTRL_REG_RST);
  
--		/*
--		 * Copy/update hugetlb private vma information.
--		 */
--		if (is_vm_hugetlb_page(tmp))
--			hugetlb_dup_vma_private(tmp);
+-	mt7530_pll_setup(priv);
 -
--		/*
--		 * Link the vma into the MT. After using __mt_dup(), memory
--		 * allocation is not necessary here, so it cannot fail.
--		 */
--		vma_iter_bulk_store(&vmi, tmp);
--
--		mm->map_count++;
- 		if (!(tmp->vm_flags & VM_WIPEONFORK))
- 			retval = copy_page_range(tmp, mpnt);
+ 	/* Lower Tx driving for TRGMII path */
+ 	for (i = 0; i < NUM_TRGMII_CTRL; i++)
+ 		mt7530_write(priv, MT7530_TRGMII_TD_ODT(i),
+@@ -2490,6 +2488,9 @@ mt7530_setup(struct dsa_switch *ds)
  
--		if (tmp->vm_ops && tmp->vm_ops->open)
--			tmp->vm_ops->open(tmp);
--
- 		if (retval) {
- 			mpnt = vma_next(&vmi);
- 			goto loop_out;
+ 	priv->p6_interface = PHY_INTERFACE_MODE_NA;
+ 
++	if ((val & HWTRAP_XTAL_MASK) == HWTRAP_XTAL_40MHZ)
++		mt7530_pll_setup(priv);
++
+ 	mt753x_trap_frames(priv);
+ 
+ 	/* Enable and reset MIB counters */
 
 
