@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED15214388F;
-	Tue, 23 Apr 2024 21:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC3D14388F;
+	Tue, 23 Apr 2024 21:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908513; cv=none; b=lzE48oJOrk9ufWSfDQrgLdnFEZE3B15NXipY8qWKJEqgl6zpXwioBiirwCPbbRdt1ZMU7b5Zt38mbsqcsDowcmTCF1xJ2rHKDhL/2pwWOWmeilyfm2ug1shZGXUX7l1ji/HxvbA8oAese+kyT/9v3Fykoai2AilDDtlet5BAk4E=
+	t=1713908513; cv=none; b=uRVSII5uXpRbSS5noTHnB/tZamIYXqpM5PYk6jHsfUz3yFZ6nD6bE+iwOBZDi8UW2kP1P63crkMZMWsnUtOA5/V7/FuQkZeGnbXyqFnH6/eilHubTe1uX0YzcrZtEDHscMKXrY5QPzWhjy2T2bTwI4V2yKWdcUnBa+DItvdP6PY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908513; c=relaxed/simple;
-	bh=Ax5zhEh6PVBl34KIaMMrgHOLdegsdxENFIZndI/EBQ8=;
+	bh=7nC1IWxTKT+pq4h51pai/fTYeSPPlWjh9gjjr4co4Lo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H5bqG0Qphqoun9FXjapRDc761MaLa1USDuP6tYlz6lFNS8OAADWm5zBb1nLxb1gK1sff+Y0HaoiB0zJKpdfseaIbFaTl25japEBitrvRhsebKPMUdFJ52O56JDq0q6xe5FflttIq7L6sJpMl4FtBou3BWYqKJ0rvsAdRchpj26o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVOJoUOb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D9pUX1bR83krUoBesqHffutvZDbCFqXeO4HeIFX0s8ssbzbkrG+pAs/xiyeUHup/zFbctt84pBeaIHk0aUj4ikCI3VtSICSvhlpAZb4Qutwd6sqUYmOy8NdV3vBlJ/IxmPzp1Qco6/npHlosgQA5TAultturJZpDZFLaqS/OPWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mj5EMbP8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVOJoUOb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D4BC3277B;
-	Tue, 23 Apr 2024 21:41:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mj5EMbP8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6394CC116B1;
+	Tue, 23 Apr 2024 21:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908512;
-	bh=Ax5zhEh6PVBl34KIaMMrgHOLdegsdxENFIZndI/EBQ8=;
+	s=korg; t=1713908513;
+	bh=7nC1IWxTKT+pq4h51pai/fTYeSPPlWjh9gjjr4co4Lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UVOJoUObgziPIg3spXt5voEIV9y9E0ziu0ueAgvcjDmSONqtQBMbI7ozeMD0Ga4Ky
-	 dZY9LwKbp65sxlOV5NN/O5o+JTsavIHam2gAhRyLxCwzoFphI4JrI6wDbBuUgeCxO4
-	 S0M6XcVjCP4sqo3TNoKcrWorGm1X3XN671LkdwMU=
+	b=Mj5EMbP85LFEqED7QwYnxmRoiNkn+b3cdPopgGkoLCLePyzqb5IKwOz2WuyQSy10G
+	 Fbz2FueEzJNVytNFyJ96zosg+kONqEoNMVETE6ucQD6IwNJ5ijvLFB8bFnvnNajgwk
+	 iV9Z0pR8DwVckn0N1a1NL8pKl1KTO/cOsBAcSmsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gil Fine <gil.fine@linux.intel.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.8 098/158] thunderbolt: Fix wake configurations after device unplug
-Date: Tue, 23 Apr 2024 14:38:40 -0700
-Message-ID: <20240423213859.134210488@linuxfoundation.org>
+Subject: [PATCH 6.8 099/158] thunderbolt: Do not create DisplayPort tunnels on adapters of the same router
+Date: Tue, 23 Apr 2024 14:38:41 -0700
+Message-ID: <20240423213859.167911640@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -50,63 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Fine <gil.fine@linux.intel.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit c38fa07dc69f0b9e6f43ecab96dc7861a70c827c upstream.
+commit c032cdd48b29549e8283c2fea99e7d91ddefebf7 upstream.
 
-Currently we don't configure correctly the wake events after unplug of device
-router. What can happen is that the downstream ports of host router will be
-configured to wake on: USB4-wake and wake-on-disconnect, but not on
-wake-on-connect. This may cause the later plugged device not to wake the
-domain and fail in enumeration. Fix this by clearing downstream port's "USB4
-Port is Configured" bit, after unplug of a device router.
+Probably due to a firmware bug Dell TB16 dock announces that one of its
+DisplayPort adapters is actually DP IN. Now this is possible and used
+with some external GPUs but not likely in this case as we are dealing
+with a dock. Anyways the problem is that the driver tries to create a
+DisplayPort tunnel between adapters of the same router which then shows
+to user that there is no picture on the display (because there are no
+available DP OUT adapters on the dock anymore).
 
-Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
+Fix this by not creating DisplayPort tunnels between adapters that are
+on the same router.
+
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10265
+Fixes: 274baf695b08 ("thunderbolt: Add DP IN added last in the head of the list of DP resources")
+Cc: Gil Fine <gil.fine@linux.intel.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/switch.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/thunderbolt/tb.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/thunderbolt/switch.c
-+++ b/drivers/thunderbolt/switch.c
-@@ -3180,22 +3180,29 @@ void tb_switch_unconfigure_link(struct t
- {
- 	struct tb_port *up, *down;
+--- a/drivers/thunderbolt/tb.c
++++ b/drivers/thunderbolt/tb.c
+@@ -1717,6 +1717,12 @@ static struct tb_port *tb_find_dp_out(st
+ 			continue;
+ 		}
  
--	if (sw->is_unplugged)
--		return;
- 	if (!tb_route(sw) || tb_switch_is_icm(sw))
- 		return;
- 
-+	/*
-+	 * Unconfigure downstream port so that wake-on-connect can be
-+	 * configured after router unplug. No need to unconfigure upstream port
-+	 * since its router is unplugged.
-+	 */
- 	up = tb_upstream_port(sw);
--	if (tb_switch_is_usb4(up->sw))
--		usb4_port_unconfigure(up);
--	else
--		tb_lc_unconfigure_port(up);
--
- 	down = up->remote;
- 	if (tb_switch_is_usb4(down->sw))
- 		usb4_port_unconfigure(down);
- 	else
- 		tb_lc_unconfigure_port(down);
++		/* Needs to be on different routers */
++		if (in->sw == port->sw) {
++			tb_port_dbg(port, "skipping DP OUT on same router\n");
++			continue;
++		}
 +
-+	if (sw->is_unplugged)
-+		return;
-+
-+	up = tb_upstream_port(sw);
-+	if (tb_switch_is_usb4(up->sw))
-+		usb4_port_unconfigure(up);
-+	else
-+		tb_lc_unconfigure_port(up);
- }
+ 		tb_port_dbg(port, "DP OUT available\n");
  
- static void tb_switch_credits_init(struct tb_switch *sw)
+ 		/*
 
 
