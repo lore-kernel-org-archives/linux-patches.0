@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C25C145B05;
-	Tue, 23 Apr 2024 21:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28911145B05;
+	Tue, 23 Apr 2024 21:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908744; cv=none; b=CXZ6glzL03674+zPMnrEPi6sxuCFROD/I6+ZHGAMBQrpaD2QqhoDgKp+Wtft6j1DxduaT9qs84XYaAZn6FVUARXU+Mw1PlKLgsLR099wQPrQOoYp4HR04wrBpJFgxyqlEjKbqWurmMSTZ/PQWwTMTC6Q/VlSJ5cZSpJE1EHTQjM=
+	t=1713908745; cv=none; b=u1qceWuYlS1YZ0t4nCXEfSsgDC9G4RlxosUhIybQz5a3xFmdHNm9O2Inp/J+f1aZg+/1mhI/ViAeK8CUNuPLSKe9BIjRhlkdx0AIgVQpse07Fx/OFQs2oMYKapO2xplZDzVTOiMGlbusq1c07UvRvznNif5cNznglgKIFlBhBJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908744; c=relaxed/simple;
-	bh=nvQGnrcjiCbrd8jmU57apB2SEMVbIxrB8E7BWcBvWts=;
+	s=arc-20240116; t=1713908745; c=relaxed/simple;
+	bh=htpgL12qoj6GTkTEG6RBiJjGxaeOLyNY/4nPnAQ58r8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=upvvQ20GkNVPx22YiCcFDFkl37S4t5uPhiTH9gJG8bRIBOG13kyohUPF3gpQ3K2Dovp3I+ynsrpQAZ8c/mN9COvcSJUlRYnCZhVvJutAcnjoHU1h4PC7HZGSnnnKF5662K77xxtfnNSpyowNgMHLU8fVfKDyBdy4dBpjtg/jt18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1oDhY1H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hmLQtINY+RozZp51gfIz5Jq3DvI8ojy9lSrMGXxBvuAUZi9PRC6OaUiC/UUXi81fLjJKJ8qJ4CeXDA5PA4cgNhBl7ZQBdekVJpswFV02+v5Re5vvDL8W6gQskcookyXXkfT4liC0N3WPqvzCeiktSupGQj+S9plXiYI8X9FtD1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1dpkAhl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1oDhY1H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511F9C116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1dpkAhl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0ED8C3277B;
 	Tue, 23 Apr 2024 21:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908744;
-	bh=nvQGnrcjiCbrd8jmU57apB2SEMVbIxrB8E7BWcBvWts=;
+	s=korg; t=1713908745;
+	bh=htpgL12qoj6GTkTEG6RBiJjGxaeOLyNY/4nPnAQ58r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M1oDhY1H+h/zupA6S+j/MP+YPHmTW+/CjfGDelR2JEp0thipQb6nXM4N58pDhUcdz
-	 b/G3I5+iwZtvdKmwi+BSFRN1W6f3ZiHfJnG3X+1KCzUhGlowHnMhZ1/QO3hzeSIALK
-	 AK0GdxsbyVn2XKN9kJ1kVUh+SZIGwhV6jOXmNHHg=
+	b=t1dpkAhl0PsbZzqyozxwvP4y31y4ke1URm2fxeQTef3z9sw+7lwUNljV/sK+AkmR4
+	 kOTPtJw38NzdxSzqiA18i3kLoRItravg/cTT6G6YLjkkWdwC24OzYKiAiXmbQ5OEIc
+	 7I2DS7D1aJEa1E+heRYhLGLj1oaalsIibiQ1EETc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norihiko Hama <Norihiko.Hama@alpsalpine.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.1 117/141] usb: gadget: f_ncm: Fix UAF ncm object at re-bind after usb ep transport error
-Date: Tue, 23 Apr 2024 14:39:45 -0700
-Message-ID: <20240423213857.007008035@linuxfoundation.org>
+	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Tomas Winkler <tomas.winkler@intel.com>
+Subject: [PATCH 6.1 118/141] mei: me: disable RPL-S on SPS and IGN firmwares
+Date: Tue, 23 Apr 2024 14:39:46 -0700
+Message-ID: <20240423213857.037091156@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -50,77 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norihiko Hama <Norihiko.Hama@alpsalpine.com>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit 6334b8e4553cc69f51e383c9de545082213d785e upstream.
+commit 0dc04112bee6fdd6eb847ccb32214703022c0269 upstream.
 
-When ncm function is working and then stop usb0 interface for link down,
-eth_stop() is called. At this piont, accidentally if usb transport error
-should happen in usb_ep_enable(), 'in_ep' and/or 'out_ep' may not be enabled.
+Extend the quirk to disable MEI interface on Intel PCH Ignition (IGN)
+and SPS firmwares for RPL-S devices. These firmwares do not support
+the MEI protocol.
 
-After that, ncm_disable() is called to disable for ncm unbind
-but gether_disconnect() is never called since 'in_ep' is not enabled.
-
-As the result, ncm object is released in ncm unbind
-but 'dev->port_usb' associated to 'ncm->port' is not NULL.
-
-And when ncm bind again to recover netdev, ncm object is reallocated
-but usb0 interface is already associated to previous released ncm object.
-
-Therefore, once usb0 interface is up and eth_start_xmit() is called,
-released ncm object is dereferrenced and it might cause use-after-free memory.
-
-[function unlink via configfs]
-  usb0: eth_stop dev->port_usb=ffffff9b179c3200
-  --> error happens in usb_ep_enable().
-  NCM: ncm_disable: ncm=ffffff9b179c3200
-  --> no gether_disconnect() since ncm->port.in_ep->enabled is false.
-  NCM: ncm_unbind: ncm unbind ncm=ffffff9b179c3200
-  NCM: ncm_free: ncm free ncm=ffffff9b179c3200   <-- released ncm
-
-[function link via configfs]
-  NCM: ncm_alloc: ncm alloc ncm=ffffff9ac4f8a000
-  NCM: ncm_bind: ncm bind ncm=ffffff9ac4f8a000
-  NCM: ncm_set_alt: ncm=ffffff9ac4f8a000 alt=0
-  usb0: eth_open dev->port_usb=ffffff9b179c3200  <-- previous released ncm
-  usb0: eth_start dev->port_usb=ffffff9b179c3200 <--
-  eth_start_xmit()
-  --> dev->wrap()
-  Unable to handle kernel paging request at virtual address dead00000000014f
-
-This patch addresses the issue by checking if 'ncm->netdev' is not NULL at
-ncm_disable() to call gether_disconnect() to deassociate 'dev->port_usb'.
-It's more reasonable to check 'ncm->netdev' to call gether_connect/disconnect
-rather than check 'ncm->port.in_ep->enabled' since it might not be enabled
-but the gether connection might be established.
-
-Signed-off-by: Norihiko Hama <Norihiko.Hama@alpsalpine.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20240327023550.51214-1-Norihiko.Hama@alpsalpine.com
+Fixes: 3ed8c7d39cfe ("mei: me: add raptor lake point S DID")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
+Link: https://lore.kernel.org/r/20240312051958.118478-1-tomas.winkler@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/misc/mei/pci-me.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -884,7 +884,7 @@ static int ncm_set_alt(struct usb_functi
- 		if (alt > 1)
- 			goto fail;
+--- a/drivers/misc/mei/pci-me.c
++++ b/drivers/misc/mei/pci-me.c
+@@ -116,7 +116,7 @@ static const struct pci_device_id mei_me
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_ADP_P, MEI_ME_PCH15_CFG)},
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_ADP_N, MEI_ME_PCH15_CFG)},
  
--		if (ncm->port.in_ep->enabled) {
-+		if (ncm->netdev) {
- 			DBG(cdev, "reset ncm\n");
- 			ncm->netdev = NULL;
- 			gether_disconnect(&ncm->port);
-@@ -1369,7 +1369,7 @@ static void ncm_disable(struct usb_funct
+-	{MEI_PCI_DEVICE(MEI_DEV_ID_RPL_S, MEI_ME_PCH15_CFG)},
++	{MEI_PCI_DEVICE(MEI_DEV_ID_RPL_S, MEI_ME_PCH15_SPS_CFG)},
  
- 	DBG(cdev, "ncm deactivated\n");
- 
--	if (ncm->port.in_ep->enabled) {
-+	if (ncm->netdev) {
- 		ncm->netdev = NULL;
- 		gether_disconnect(&ncm->port);
- 	}
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_MTL_M, MEI_ME_PCH15_CFG)},
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_S, MEI_ME_PCH15_CFG)},
 
 
