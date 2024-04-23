@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1E020B3E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD40C20B3E;
 	Tue, 23 Apr 2024 21:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908550; cv=none; b=hFDgM4F3CT1WS1TlcG0XJSz+JVwlSriSWwoke4Sr3L51jJXF4eUK/IcJdHWuIlO2qLWnJ+568tOBF8K5zZMH17LJFrfBhG6vylHOyQD0answHWuf3QCZ970NJn/XJYFgdZPcfFGriu2nnre2BeE57MtV2O4qKFRT6oP7ct5R82E=
+	t=1713908550; cv=none; b=p8iezFv89hKBjWIn6Ew6bFuGVn+BF11SOO+hCzp3wJsXloTjwCtQb1Zd5SXDezx+bSw79xH5UEESUFD7dgAgb/B3RJZjJD35p3NGujdMVCzFJ2NvWREDDQPp2pXvqwBlS53Vq8xcaXXYuRU+yoRceIPMaJ8Jt4iUzN0omgfBeAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908550; c=relaxed/simple;
-	bh=SRU5OYpDbHY1aP2PGMiF0y7Zse+N9Smgu/kXgnocBkc=;
+	bh=0EsYeqxOXVeTuFYhsvYcZBqT33KcCLvf/1V70QX3uNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TerKeqy9d5sOh1hf3EipGUhqASpZUjDbWLtDWBM54ky/fMahui1kVS3Id36wQSdNY7H0bmDQryDfnbK2NMX+T18q+KYis9GnBFZFMx7c3S/Dz/7WgKX3pYJRKvsgigGcfik19i3jVPC188F55649m4R4xPb0BE+QWz1SIANycq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6TNK9i/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pClnSOGZsTatd4zDAj9tjb77Zn298v7pQ5Jsj9+TCRh60mlKzWB+cRMy6Ulm3fWZ59vZKpWf0v/eQO5tvTgKFMQRkypZCU3DWleI4bZTbJh/CzZUelyd3i+gKqy3+nhUMBtX/gzxh2Cj9BBt/gXI+v1lMtWXHplxyg1hgP+hLiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uy4EQ6Dw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6TNK9i/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A39C32782;
-	Tue, 23 Apr 2024 21:42:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uy4EQ6Dw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94079C32781;
+	Tue, 23 Apr 2024 21:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908550;
-	bh=SRU5OYpDbHY1aP2PGMiF0y7Zse+N9Smgu/kXgnocBkc=;
+	bh=0EsYeqxOXVeTuFYhsvYcZBqT33KcCLvf/1V70QX3uNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U6TNK9i//j0iYaqMzR7uw9pxaFDGlfq7yvbNQLl7R/KC4qsR17QuVq0t3Zxm3SDlR
-	 dyq5b/xQIjKRR/XZ2i4iuvlq4AJZrUoNUozcziGN16T5sNHH4tSbtAA6ieoUSKfycV
-	 8Srz1+EoMzCvZCFJmgehaT9iWJgXxGnctzg9pbew=
+	b=Uy4EQ6Dwi6egHeQCPhlFFxjgVxldUzuu2p+x5jOkBjBvUYLfQSujMf7XqBTt1OUbf
+	 gqQ3lTFKxTaHaCX7YtbAUybq1fymW57Vl891PhPQM8yzpwk20bi0fQQHo83JfEhtU3
+	 8epGd+VvHPj9NuZBNw4T3NSEwhMxE7LT0XRLeuSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	"Ubisectech Sirius" <bugreport@ubisectech.com>,
-	Christian Brauner <brauner@kernel.org>,
+	syzbot+2e22057de05b9f3b30d8@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.8 150/158] Squashfs: check the inode number is not the invalid value of zero
-Date: Tue, 23 Apr 2024 14:39:32 -0700
-Message-ID: <20240423213900.722105945@linuxfoundation.org>
+Subject: [PATCH 6.8 151/158] nilfs2: fix OOB in nilfs_set_de_type
+Date: Tue, 23 Apr 2024 14:39:33 -0700
+Message-ID: <20240423213900.750798855@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -52,67 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phillip Lougher <phillip@squashfs.org.uk>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 9253c54e01b6505d348afbc02abaa4d9f8a01395 upstream.
+commit c4a7dc9523b59b3e73fd522c73e95e072f876b16 upstream.
 
-Syskiller has produced an out of bounds access in fill_meta_index().
+The size of the nilfs_type_by_mode array in the fs/nilfs2/dir.c file is
+defined as "S_IFMT >> S_SHIFT", but the nilfs_set_de_type() function,
+which uses this array, specifies the index to read from the array in the
+same way as "(mode & S_IFMT) >> S_SHIFT".
 
-That out of bounds access is ultimately caused because the inode
-has an inode number with the invalid value of zero, which was not checked.
+static void nilfs_set_de_type(struct nilfs_dir_entry *de, struct inode
+ *inode)
+{
+	umode_t mode = inode->i_mode;
 
-The reason this causes the out of bounds access is due to following
-sequence of events:
+	de->file_type = nilfs_type_by_mode[(mode & S_IFMT)>>S_SHIFT]; // oob
+}
 
-1. Fill_meta_index() is called to allocate (via empty_meta_index())
-   and fill a metadata index.  It however suffers a data read error
-   and aborts, invalidating the newly returned empty metadata index.
-   It does this by setting the inode number of the index to zero,
-   which means unused (zero is not a valid inode number).
+However, when the index is determined this way, an out-of-bounds (OOB)
+error occurs by referring to an index that is 1 larger than the array size
+when the condition "mode & S_IFMT == S_IFMT" is satisfied.  Therefore, a
+patch to resize the nilfs_type_by_mode array should be applied to prevent
+OOB errors.
 
-2. When fill_meta_index() is subsequently called again on another
-   read operation, locate_meta_index() returns the previous index
-   because it matches the inode number of 0.  Because this index
-   has been returned it is expected to have been filled, and because
-   it hasn't been, an out of bounds access is performed.
-
-This patch adds a sanity check which checks that the inode number
-is not zero when the inode is created and returns -EINVAL if it is.
-
-[phillip@squashfs.org.uk: whitespace fix]
-  Link: https://lkml.kernel.org/r/20240409204723.446925-1-phillip@squashfs.org.uk
-Link: https://lkml.kernel.org/r/20240408220206.435788-1-phillip@squashfs.org.uk
-Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
-Reported-by: "Ubisectech Sirius" <bugreport@ubisectech.com>
-Closes: https://lore.kernel.org/lkml/87f5c007-b8a5-41ae-8b57-431e924c5915.bugreport@ubisectech.com/
-Cc: Christian Brauner <brauner@kernel.org>
+Link: https://lkml.kernel.org/r/20240415182048.7144-1-konishi.ryusuke@gmail.com
+Reported-by: syzbot+2e22057de05b9f3b30d8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2e22057de05b9f3b30d8
+Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/squashfs/inode.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/nilfs2/dir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/squashfs/inode.c
-+++ b/fs/squashfs/inode.c
-@@ -48,6 +48,10 @@ static int squashfs_new_inode(struct sup
- 	gid_t i_gid;
- 	int err;
+--- a/fs/nilfs2/dir.c
++++ b/fs/nilfs2/dir.c
+@@ -240,7 +240,7 @@ nilfs_filetype_table[NILFS_FT_MAX] = {
  
-+	inode->i_ino = le32_to_cpu(sqsh_ino->inode_number);
-+	if (inode->i_ino == 0)
-+		return -EINVAL;
-+
- 	err = squashfs_get_id(sb, le16_to_cpu(sqsh_ino->uid), &i_uid);
- 	if (err)
- 		return err;
-@@ -58,7 +62,6 @@ static int squashfs_new_inode(struct sup
- 
- 	i_uid_write(inode, i_uid);
- 	i_gid_write(inode, i_gid);
--	inode->i_ino = le32_to_cpu(sqsh_ino->inode_number);
- 	inode_set_mtime(inode, le32_to_cpu(sqsh_ino->mtime), 0);
- 	inode_set_atime(inode, inode_get_mtime_sec(inode), 0);
- 	inode_set_ctime(inode, inode_get_mtime_sec(inode), 0);
+ #define S_SHIFT 12
+ static unsigned char
+-nilfs_type_by_mode[S_IFMT >> S_SHIFT] = {
++nilfs_type_by_mode[(S_IFMT >> S_SHIFT) + 1] = {
+ 	[S_IFREG >> S_SHIFT]	= NILFS_FT_REG_FILE,
+ 	[S_IFDIR >> S_SHIFT]	= NILFS_FT_DIR,
+ 	[S_IFCHR >> S_SHIFT]	= NILFS_FT_CHRDEV,
 
 
