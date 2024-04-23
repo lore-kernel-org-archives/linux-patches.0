@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BDD143C57;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A502C143C57;
 	Tue, 23 Apr 2024 21:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908606; cv=none; b=iwlAx6f2uLR+XxY2G1Uw+/YMfixdvW5csSxFa3X2s3GkF8+GsggXeIdENQ6M2ho7VlSOY6I+Utk1j27Lel4ikMngAnADcVFY/MBVTBkvdrz0/NGoox+YuKlF9jtNV8N/yzCLy+/agSxWaQ8xUWUSEdfnvTbOJ4TjOSWD00EgKrU=
+	t=1713908606; cv=none; b=LoAg+eTLi0f3oaEux/lviZSpmow+mwN2g0unIBSW+qotQ0TVEDfbowyGsYTf/Peq3663EfVUsMnck/XYG7cVig96dbN8nXN6yJTwVK0YhpTYDwKpPkE/FmatiDN4ikS+LlvZv/1gJwye8Q3G+PbWzANn7D5Y1VT3tt+ULdh9Fsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908606; c=relaxed/simple;
-	bh=PSh7msqzjMZGHrLiXPMUhgp9hpyKkjUUykG/pNrM84Y=;
+	bh=RtN8jqDVelFusVvxk5vHl5Yj3x6aYhnMinjBLFhgx70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lAoUQ+XTQ3auowkxHsBzv/E6b/f8PXwtqJOmBIvF6TyZNyyBFBN6Jeiib73QXKFlmjFHbs/CAFPqfWpDofuxsgvXxEH/W8MGHz8lTR9s9iI36pp7xw61Um0qZFAlHuWTsTp2xTQmYtcoYiiRrGtS7gOfJmZWb+pkxTjLTLJxBdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFSdVRek; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uyz13jRrITUUA37qUQoGKYkpprfIxTUgU1Yo3OpWBrCo3t+UMTbPIFh1eTkYMZUmlEhBLtS3lbh6CMGy2DdV1dUjrhlh8boNLpOu1XcAZy5dIkW2De9c5vPzTig4V4byaAcKoFEcGVm74K47xrNWpGBWiUln7pIrd1b2FrAVNds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6M8dN3+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFSdVRek"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC83C32781;
-	Tue, 23 Apr 2024 21:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6M8dN3+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EB9C116B1;
+	Tue, 23 Apr 2024 21:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908605;
-	bh=PSh7msqzjMZGHrLiXPMUhgp9hpyKkjUUykG/pNrM84Y=;
+	s=korg; t=1713908606;
+	bh=RtN8jqDVelFusVvxk5vHl5Yj3x6aYhnMinjBLFhgx70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFSdVRekYY2B/sldPOH6DI8MJ1MMIMGOQhiXF93Cg/dZUpcomQ9qijxKUBQo00/7K
-	 2ocypUnhjnM2IQF69D81ciwTr3zFbdTj4I4Qy7Iwn6jkEFC+uCffMxq8ZfjLJamMp8
-	 gpId4ZxDEHl5S/O0LIJVDeAN61YX9aXHuIAZo41U=
+	b=i6M8dN3+yxpvn+sylenDamT70hKoNmwUD0e+klCckBAc0u+jXosYFvJOWv/cCiDzM
+	 GOYJ51ffJM5YTmPY1Ze9brhogUmN3kL1Y55t0Zt9d+79II62a9x8xP1hKhL/fcqKhH
+	 l6qRUwxEJogUfIVWapPqD+clKmiUWXxD3sc63TCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@kernel.org>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/158] usb: pci-quirks: group AMD specific quirk code together
-Date: Tue, 23 Apr 2024 14:38:29 -0700
-Message-ID: <20240423213858.110943229@linuxfoundation.org>
+Subject: [PATCH 6.6 046/158] net: stmmac: Apply half-duplex-less constraint for DW QoS Eth only
+Date: Tue, 23 Apr 2024 14:38:03 -0700
+Message-ID: <20240423213857.272080205@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -51,223 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Serge Semin <fancer.lancer@gmail.com>
 
-[ Upstream commit 7ca9f9ba8aa7380dee5dd8346b57bbaf198b075a ]
+[ Upstream commit 0ebd96f5da4410c0cb8fc75e44f1009530b2f90b ]
 
-A follow on patch will introduce CONFIG_USB_PCI_AMD governing the AMD
-quirk and adding its compile time dependency on HAS_IOPORT. In order to
-minimize the number of #ifdefs in C files and make that patch easier
-to read first group the code together. This is pure code movement
-no functional change is intended.
+There are three DW MAC IP-cores which can have the multiple Tx/Rx queues
+enabled:
+DW GMAC v3.7+ with AV feature,
+DW QoS Eth v4.x/v5.x,
+DW XGMAC/XLGMAC
+Based on the respective HW databooks, only the DW QoS Eth IP-core doesn't
+support the half-duplex link mode in case if more than one queues enabled:
 
-Co-developed-by: Arnd Bergmann <arnd@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@kernel.org>
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230911125653.1393895-2-schnelle@linux.ibm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+"In multiple queue/channel configurations, for half-duplex operation,
+enable only the Q0/CH0 on Tx and Rx. For single queue/channel in
+full-duplex operation, any queue/channel can be enabled."
+
+The rest of the IP-cores don't have such constraint. Thus in order to have
+the constraint applied for the DW QoS Eth MACs only, let's move the it'
+implementation to the respective MAC-capabilities getter and make sure the
+getter is called in the queues re-init procedure.
+
+Fixes: b6cfffa7ad92 ("stmmac: fix DMA channel hang in half-duplex mode")
+Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
+Reviewed-by: Romain Gantois <romain.gantois@bootlin.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/pci-quirks.c | 119 +++++++++++++++++-----------------
- drivers/usb/host/pci-quirks.h |  14 ++--
- 2 files changed, 68 insertions(+), 65 deletions(-)
+ .../net/ethernet/stmicro/stmmac/dwmac4_core.c |  7 +++++++
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 19 +++----------------
+ 2 files changed, 10 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/usb/host/pci-quirks.c b/drivers/usb/host/pci-quirks.c
-index 2665832f9addf..5e06fad82a228 100644
---- a/drivers/usb/host/pci-quirks.c
-+++ b/drivers/usb/host/pci-quirks.c
-@@ -60,6 +60,22 @@
- #define EHCI_USBLEGCTLSTS	4		/* legacy control/status */
- #define EHCI_USBLEGCTLSTS_SOOE	(1 << 13)	/* SMI on ownership change */
- 
-+/* ASMEDIA quirk use */
-+#define ASMT_DATA_WRITE0_REG	0xF8
-+#define ASMT_DATA_WRITE1_REG	0xFC
-+#define ASMT_CONTROL_REG	0xE0
-+#define ASMT_CONTROL_WRITE_BIT	0x02
-+#define ASMT_WRITEREG_CMD	0x10423
-+#define ASMT_FLOWCTL_ADDR	0xFA30
-+#define ASMT_FLOWCTL_DATA	0xBA
-+#define ASMT_PSEUDO_DATA	0
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+index 683c34e609638..434e306876b41 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+@@ -71,6 +71,13 @@ static void dwmac4_core_init(struct mac_device_info *hw,
+ static void dwmac4_phylink_get_caps(struct stmmac_priv *priv)
+ {
+ 	priv->phylink_config.mac_capabilities |= MAC_2500FD;
 +
-+/* Intel quirk use */
-+#define USB_INTEL_XUSB2PR      0xD0
-+#define USB_INTEL_USB2PRM      0xD4
-+#define USB_INTEL_USB3_PSSEN   0xD8
-+#define USB_INTEL_USB3PRM      0xDC
-+
- /* AMD quirk use */
- #define	AB_REG_BAR_LOW		0xe0
- #define	AB_REG_BAR_HIGH		0xe1
-@@ -93,21 +109,6 @@
- #define	NB_PIF0_PWRDOWN_0	0x01100012
- #define	NB_PIF0_PWRDOWN_1	0x01100013
- 
--#define USB_INTEL_XUSB2PR      0xD0
--#define USB_INTEL_USB2PRM      0xD4
--#define USB_INTEL_USB3_PSSEN   0xD8
--#define USB_INTEL_USB3PRM      0xDC
--
--/* ASMEDIA quirk use */
--#define ASMT_DATA_WRITE0_REG	0xF8
--#define ASMT_DATA_WRITE1_REG	0xFC
--#define ASMT_CONTROL_REG	0xE0
--#define ASMT_CONTROL_WRITE_BIT	0x02
--#define ASMT_WRITEREG_CMD	0x10423
--#define ASMT_FLOWCTL_ADDR	0xFA30
--#define ASMT_FLOWCTL_DATA	0xBA
--#define ASMT_PSEUDO_DATA	0
--
- /*
-  * amd_chipset_gen values represent AMD different chipset generations
-  */
-@@ -458,50 +459,6 @@ void usb_amd_quirk_pll_disable(void)
++	if (priv->plat->tx_queues_to_use > 1)
++		priv->phylink_config.mac_capabilities &=
++			~(MAC_10HD | MAC_100HD | MAC_1000HD);
++	else
++		priv->phylink_config.mac_capabilities |=
++			(MAC_10HD | MAC_100HD | MAC_1000HD);
  }
- EXPORT_SYMBOL_GPL(usb_amd_quirk_pll_disable);
  
--static int usb_asmedia_wait_write(struct pci_dev *pdev)
+ static void dwmac4_rx_queue_enable(struct mac_device_info *hw,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index d1adb102a1d49..f3dbbc900d498 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1198,17 +1198,6 @@ static int stmmac_init_phy(struct net_device *dev)
+ 	return ret;
+ }
+ 
+-static void stmmac_set_half_duplex(struct stmmac_priv *priv)
 -{
--	unsigned long retry_count;
--	unsigned char value;
--
--	for (retry_count = 1000; retry_count > 0; --retry_count) {
--
--		pci_read_config_byte(pdev, ASMT_CONTROL_REG, &value);
--
--		if (value == 0xff) {
--			dev_err(&pdev->dev, "%s: check_ready ERROR", __func__);
--			return -EIO;
--		}
--
--		if ((value & ASMT_CONTROL_WRITE_BIT) == 0)
--			return 0;
--
--		udelay(50);
--	}
--
--	dev_warn(&pdev->dev, "%s: check_write_ready timeout", __func__);
--	return -ETIMEDOUT;
+-	/* Half-Duplex can only work with single tx queue */
+-	if (priv->plat->tx_queues_to_use > 1)
+-		priv->phylink_config.mac_capabilities &=
+-			~(MAC_10HD | MAC_100HD | MAC_1000HD);
+-	else
+-		priv->phylink_config.mac_capabilities |=
+-			(MAC_10HD | MAC_100HD | MAC_1000HD);
 -}
 -
--void usb_asmedia_modifyflowcontrol(struct pci_dev *pdev)
--{
--	if (usb_asmedia_wait_write(pdev) != 0)
--		return;
--
--	/* send command and address to device */
--	pci_write_config_dword(pdev, ASMT_DATA_WRITE0_REG, ASMT_WRITEREG_CMD);
--	pci_write_config_dword(pdev, ASMT_DATA_WRITE1_REG, ASMT_FLOWCTL_ADDR);
--	pci_write_config_byte(pdev, ASMT_CONTROL_REG, ASMT_CONTROL_WRITE_BIT);
--
--	if (usb_asmedia_wait_write(pdev) != 0)
--		return;
--
--	/* send data to device */
--	pci_write_config_dword(pdev, ASMT_DATA_WRITE0_REG, ASMT_FLOWCTL_DATA);
--	pci_write_config_dword(pdev, ASMT_DATA_WRITE1_REG, ASMT_PSEUDO_DATA);
--	pci_write_config_byte(pdev, ASMT_CONTROL_REG, ASMT_CONTROL_WRITE_BIT);
--}
--EXPORT_SYMBOL_GPL(usb_asmedia_modifyflowcontrol);
--
- void usb_amd_quirk_pll_enable(void)
+ static int stmmac_phy_setup(struct stmmac_priv *priv)
  {
- 	usb_amd_quirk_pll(0);
-@@ -631,6 +588,50 @@ bool usb_amd_pt_check_port(struct device *device, int port)
- }
- EXPORT_SYMBOL_GPL(usb_amd_pt_check_port);
+ 	struct stmmac_mdio_bus_data *mdio_bus_data;
+@@ -1237,10 +1226,7 @@ static int stmmac_phy_setup(struct stmmac_priv *priv)
+ 				    priv->phylink_config.supported_interfaces);
  
-+static int usb_asmedia_wait_write(struct pci_dev *pdev)
-+{
-+	unsigned long retry_count;
-+	unsigned char value;
-+
-+	for (retry_count = 1000; retry_count > 0; --retry_count) {
-+
-+		pci_read_config_byte(pdev, ASMT_CONTROL_REG, &value);
-+
-+		if (value == 0xff) {
-+			dev_err(&pdev->dev, "%s: check_ready ERROR", __func__);
-+			return -EIO;
-+		}
-+
-+		if ((value & ASMT_CONTROL_WRITE_BIT) == 0)
-+			return 0;
-+
-+		udelay(50);
-+	}
-+
-+	dev_warn(&pdev->dev, "%s: check_write_ready timeout", __func__);
-+	return -ETIMEDOUT;
-+}
-+
-+void usb_asmedia_modifyflowcontrol(struct pci_dev *pdev)
-+{
-+	if (usb_asmedia_wait_write(pdev) != 0)
-+		return;
-+
-+	/* send command and address to device */
-+	pci_write_config_dword(pdev, ASMT_DATA_WRITE0_REG, ASMT_WRITEREG_CMD);
-+	pci_write_config_dword(pdev, ASMT_DATA_WRITE1_REG, ASMT_FLOWCTL_ADDR);
-+	pci_write_config_byte(pdev, ASMT_CONTROL_REG, ASMT_CONTROL_WRITE_BIT);
-+
-+	if (usb_asmedia_wait_write(pdev) != 0)
-+		return;
-+
-+	/* send data to device */
-+	pci_write_config_dword(pdev, ASMT_DATA_WRITE0_REG, ASMT_FLOWCTL_DATA);
-+	pci_write_config_dword(pdev, ASMT_DATA_WRITE1_REG, ASMT_PSEUDO_DATA);
-+	pci_write_config_byte(pdev, ASMT_CONTROL_REG, ASMT_CONTROL_WRITE_BIT);
-+}
-+EXPORT_SYMBOL_GPL(usb_asmedia_modifyflowcontrol);
-+
- /*
-  * Make sure the controller is completely inactive, unable to
-  * generate interrupts or do DMA.
-diff --git a/drivers/usb/host/pci-quirks.h b/drivers/usb/host/pci-quirks.h
-index e729de21fad7a..cde2263a9d2e4 100644
---- a/drivers/usb/host/pci-quirks.h
-+++ b/drivers/usb/host/pci-quirks.h
-@@ -3,8 +3,6 @@
- #define __LINUX_USB_PCI_QUIRKS_H
+ 	priv->phylink_config.mac_capabilities = MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
+-						MAC_10FD | MAC_100FD |
+-						MAC_1000FD;
+-
+-	stmmac_set_half_duplex(priv);
++						MAC_10 | MAC_100 | MAC_1000;
  
- #ifdef CONFIG_USB_PCI
--void uhci_reset_hc(struct pci_dev *pdev, unsigned long base);
--int uhci_check_and_reset_hc(struct pci_dev *pdev, unsigned long base);
- int usb_hcd_amd_remote_wakeup_quirk(struct pci_dev *pdev);
- bool usb_amd_hang_symptom_quirk(void);
- bool usb_amd_prefetch_quirk(void);
-@@ -12,23 +10,27 @@ void usb_amd_dev_put(void);
- bool usb_amd_quirk_pll_check(void);
- void usb_amd_quirk_pll_disable(void);
- void usb_amd_quirk_pll_enable(void);
-+void sb800_prefetch(struct device *dev, int on);
-+bool usb_amd_pt_check_port(struct device *device, int port);
-+
-+void uhci_reset_hc(struct pci_dev *pdev, unsigned long base);
-+int uhci_check_and_reset_hc(struct pci_dev *pdev, unsigned long base);
- void usb_asmedia_modifyflowcontrol(struct pci_dev *pdev);
- void usb_enable_intel_xhci_ports(struct pci_dev *xhci_pdev);
- void usb_disable_xhci_ports(struct pci_dev *xhci_pdev);
--void sb800_prefetch(struct device *dev, int on);
--bool usb_amd_pt_check_port(struct device *device, int port);
- #else
- struct pci_dev;
- static inline void usb_amd_quirk_pll_disable(void) {}
- static inline void usb_amd_quirk_pll_enable(void) {}
--static inline void usb_asmedia_modifyflowcontrol(struct pci_dev *pdev) {}
- static inline void usb_amd_dev_put(void) {}
--static inline void usb_disable_xhci_ports(struct pci_dev *xhci_pdev) {}
- static inline void sb800_prefetch(struct device *dev, int on) {}
- static inline bool usb_amd_pt_check_port(struct device *device, int port)
- {
- 	return false;
- }
-+
-+static inline void usb_asmedia_modifyflowcontrol(struct pci_dev *pdev) {}
-+static inline void usb_disable_xhci_ports(struct pci_dev *xhci_pdev) {}
- #endif  /* CONFIG_USB_PCI */
+ 	/* Get the MAC specific capabilities */
+ 	stmmac_mac_phylink_get_caps(priv);
+@@ -7197,7 +7183,8 @@ int stmmac_reinit_queues(struct net_device *dev, u32 rx_cnt, u32 tx_cnt)
+ 			priv->rss.table[i] = ethtool_rxfh_indir_default(i,
+ 									rx_cnt);
  
- #endif  /*  __LINUX_USB_PCI_QUIRKS_H  */
+-	stmmac_set_half_duplex(priv);
++	stmmac_mac_phylink_get_caps(priv);
++
+ 	stmmac_napi_add(dev);
+ 
+ 	if (netif_running(dev))
 -- 
 2.43.0
 
