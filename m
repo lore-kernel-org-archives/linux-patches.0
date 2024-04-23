@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CE1148843;
-	Tue, 23 Apr 2024 21:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA15148843;
+	Tue, 23 Apr 2024 21:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908784; cv=none; b=UBA0+7ynuyy/d4pEEYrRVlY00b29s1jZySJGVi4wfGSCn6mPz7NYRf7dGXsTxLlrqSM+I3TwoUDiMZTjyQYaxGG7gGHdLOb+KB+910l19JRKd8mh0U4Td64gu+Dt3A2BrgdC/be8mmjG2SSrCwDwH6Iv/GNkuv+TWjvv//7s4+c=
+	t=1713908784; cv=none; b=XayYLrlQQmMSPBlLI8nhJYsKLsY6paOJIJXx0g0SxPIHTOF/uoh9uCn7Go9P7eMPWtPyettpaNVEIZiwiyb6f33JXn2gdVjuoNCXQHVgipKogW/GHTdvwB6KHAf1VJOspiDj6TqjtmT5qHpe7Goj9whTPZuZn3tQ3h7knglM7zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908784; c=relaxed/simple;
-	bh=Ro2iV7xC4KDR1sQr2TSAHVCMiP1BmKFtG7JfHKF7v5I=;
+	bh=i2/xI4+BMSO8x6qBg8+29o+xGCBF2kK6BA1N7w6IJtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sY5GzYTomSh4sCl0WRD7Y4RH/CPgiB80QNvITyFLJTfRS7H6YqnrIctgDmbePpO6LclQQxCPrKgd25VhXw5IOu2oiLL6kG3ZSR2Pyk08eHWSDrhIXpapuG4dznQYqmDwdixDvqhnL8jaFX8iamudsEMboclm0os2ZsTg7pcmjA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gbid60Gf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KFxRvhqGXGYDU/wlTi2DPWIiDlFcgOsO2ws0jWsYf09F1vQFzyn7LITH8ooPJ5PnAZQy0wWesWAW6Dd5lAnUWuSQiVqPulCk5AYyjMXdE2CPQ7jH1WIOAv7FJ86rCD5kTBa2p5NOtaEyuNk6PfB0N6qJfEIy4Bbh+SA4iYJ4aiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVTmCmyV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gbid60Gf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC034C32783;
-	Tue, 23 Apr 2024 21:46:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVTmCmyV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702C9C32782;
+	Tue, 23 Apr 2024 21:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908783;
-	bh=Ro2iV7xC4KDR1sQr2TSAHVCMiP1BmKFtG7JfHKF7v5I=;
+	s=korg; t=1713908784;
+	bh=i2/xI4+BMSO8x6qBg8+29o+xGCBF2kK6BA1N7w6IJtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gbid60GfYsT+23LNikiw3BuwuSV2JnkYbXX7QHS0ifcg0BUjEIrZ4mLf0Ed8zNfCr
-	 CPlc6LQwF/5k46assjkezUrdnC+M16/Ie2XWUtPPoea0s2/oSRHJHjQA+cxXI4L8gH
-	 XO+wIi/wFCSKz5unsX991ePePiEIehD/J6nfv54c=
+	b=tVTmCmyVH3e3M5OR4mLdWl22hfhEBGSUCbiu0+YA3K3rG4UZTP5wUy0bcf/uODeB9
+	 kR95OqMptM4P2q+VqQqhmtSKdoEWKEDwiiLnMsHU4l8bI3BkXk+Oab3lISZ3DaDwkt
+	 0/s3eW/wwW+bvaPj6fnt77wTweV1VulkISSmGWSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 33/71] drm/panel: visionox-rm69299: dont unregister DSI device
-Date: Tue, 23 Apr 2024 14:39:46 -0700
-Message-ID: <20240423213845.291699144@linuxfoundation.org>
+Subject: [PATCH 5.15 34/71] clk: Remove prepare_lock hold assertion in __clk_release()
+Date: Tue, 23 Apr 2024 14:39:47 -0700
+Message-ID: <20240423213845.320807665@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
 References: <20240423213844.122920086@linuxfoundation.org>
@@ -51,36 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Stephen Boyd <sboyd@kernel.org>
 
-[ Upstream commit 9e4d3f4f34455abbaa9930bf6b7575a5cd081496 ]
+[ Upstream commit 8358a76cfb47c9a5af627a0c4e7168aa14fa25f6 ]
 
-The DSI device for the panel was registered by the DSI host, so it is an
-error to unregister it from the panel driver. Drop the call to
-mipi_dsi_device_unregister().
+Removing this assertion lets us move the kref_put() call outside the
+prepare_lock section. We don't need to hold the prepare_lock here to
+free memory and destroy the clk_core structure. We've already unlinked
+the clk from the clk tree and by the time the release function runs
+nothing holds a reference to the clk_core anymore so anything with the
+pointer can't access the memory that's being freed anyway. Way back in
+commit 496eadf821c2 ("clk: Use lockdep asserts to find missing hold of
+prepare_lock") we didn't need to have this assertion either.
 
-Fixes: c7f66d32dd43 ("drm/panel: add support for rm69299 visionox panel")
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240404-drop-panel-unregister-v1-1-9f56953c5fb9@linaro.org
+Fixes: 496eadf821c2 ("clk: Use lockdep asserts to find missing hold of prepare_lock")
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/20240325184204.745706-2-sboyd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-visionox-rm69299.c | 2 --
+ drivers/clk/clk.c | 2 --
  1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-visionox-rm69299.c b/drivers/gpu/drm/panel/panel-visionox-rm69299.c
-index eb43503ec97b3..6134432e4918d 100644
---- a/drivers/gpu/drm/panel/panel-visionox-rm69299.c
-+++ b/drivers/gpu/drm/panel/panel-visionox-rm69299.c
-@@ -261,8 +261,6 @@ static int visionox_rm69299_remove(struct mipi_dsi_device *dsi)
- 	struct visionox_rm69299 *ctx = mipi_dsi_get_drvdata(dsi);
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index 84397af4fb336..acbe917cbe775 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -4047,8 +4047,6 @@ static void __clk_release(struct kref *ref)
+ {
+ 	struct clk_core *core = container_of(ref, struct clk_core, ref);
  
- 	mipi_dsi_detach(ctx->dsi);
--	mipi_dsi_device_unregister(ctx->dsi);
+-	lockdep_assert_held(&prepare_lock);
 -
- 	drm_panel_remove(&ctx->panel);
- 	return 0;
- }
+ 	clk_core_free_parent_map(core);
+ 	kfree_const(core->name);
+ 	kfree(core);
 -- 
 2.43.0
 
