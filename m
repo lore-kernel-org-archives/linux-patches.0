@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AEC143882;
-	Tue, 23 Apr 2024 21:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA2C1482F9;
+	Tue, 23 Apr 2024 21:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908739; cv=none; b=Qla4RLG0o5qBZExxdVMd1tMckPOyCCW6sT7clxwd2ymfP45eqdP4Y/4CD+O62OrPCWBWMPtKRVPq+TnXwKc0KCgPB++a5x6OMgBhq8BuwftX7coOn+VtwB6leAN7JWaCUoPsbjhTr1oaXm94aJy8bJ/kdJyavXFDfMjVyXl3TPI=
+	t=1713908740; cv=none; b=WB1WvGuEWyNcS+g1MAu4S6vnc4EUl/LzYmOjy3C1Ujn6R2x/+pCCjGO0qfI0uHrJ0X0mmEtxOU6xWTMEM/l8z0utDBBpFTKra7HWKvo/T52ApVMi6BNwaJPolzgJOmQlJQALhZ1M3mh4oWyozLjpRchK0Y2seIOrD7uh620hlLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908739; c=relaxed/simple;
-	bh=2X92Uejevxo1td8OtS6QPdxhcJguC4qzCKKSCOAEAyo=;
+	s=arc-20240116; t=1713908740; c=relaxed/simple;
+	bh=zIgwo8ktL6RnpUTgVlTf279rx57SMFlTO7RG1YPunBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t9d336aclMoJHLBiPz9hCHeILSeCdZW9zr5h1K54LzhGg9X+VqWZcC5XZf142hQJ0ax1fyHemkj9UptLOI45bhQeuBAGBwy0TaGHsW3Q8Q/kREuzxjo6lyBz+f5lf+hyXKZmjxr6fmNLaVyY89bCiWXTjn3PgY9dwYQadW1MPg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3Re5Xxr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b23+n8PAnqGfvbwn4FNgE9dAA1TXMnSoQ1zqjPREhvYAVS1jlSXtmmmbPYvvlYdFfTey3ycrhLPNJb9hBiEyj2XGSVbJPb669JVm+aYLqANM7G1c13PwmmurpYPexkFjGBsD0GDM6aEfw0/D1DCTQLb0PyoL61P4LTmMfhz1ihI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=diDTco4N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3Re5Xxr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78894C116B1;
-	Tue, 23 Apr 2024 21:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="diDTco4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33051C32783;
+	Tue, 23 Apr 2024 21:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908739;
-	bh=2X92Uejevxo1td8OtS6QPdxhcJguC4qzCKKSCOAEAyo=;
+	s=korg; t=1713908740;
+	bh=zIgwo8ktL6RnpUTgVlTf279rx57SMFlTO7RG1YPunBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s3Re5Xxr4x9IocHtA4iAeJFomc4Tl55hbzWlC8fZ73lG6l+qUg40VXHIiOAn1DN2Z
-	 PP1soMHDZvoEHXCDGsr9LAdT5ZbBP1waZYHobMbgpiPfbcDrb8QiqCbbrxsVxlmGrV
-	 u8ZE0UCibv7CS0YOM3i7B5LuXQiHSONnkS3ZmR/Y=
+	b=diDTco4NjbuZY3j/VScBRvXxdNCTLMpmRKjTYx9RMTEWzNg7Oki7RFJ5579ZbYDZH
+	 Tn8R5AF7TdOwGlj6bFpLG45dnB0JKQf8DRwVw+oLhmOg+FOi6klF5Qy8F/bgwlqpEF
+	 dsR1BYW+xHzPW8KxHe965wyKLBmbQD0G4eOg6Sgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Douglas Anderson <dianders@chromium.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/141] clk: Initialize struct clk_core kref earlier
-Date: Tue, 23 Apr 2024 14:39:13 -0700
-Message-ID: <20240423213855.937872157@linuxfoundation.org>
+Subject: [PATCH 6.1 086/141] clk: Get runtime PM before walking tree during disable_unused
+Date: Tue, 23 Apr 2024 14:39:14 -0700
+Message-ID: <20240423213855.983222834@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -53,94 +56,340 @@ Content-Transfer-Encoding: 8bit
 
 From: Stephen Boyd <sboyd@kernel.org>
 
-[ Upstream commit 9d05ae531c2cff20d5d527f04e28d28e04379929 ]
+[ Upstream commit e581cf5d216289ef292d1a4036d53ce90e122469 ]
 
-Initialize this kref once we allocate memory for the struct clk_core so
-that we can reuse the release function to free any memory associated
-with the structure. This mostly consolidates code, but also clarifies
-that the kref lifetime exists once the container structure (struct
-clk_core) is allocated instead of leaving it in a half-baked state for
-most of __clk_core_init().
+Doug reported [1] the following hung task:
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+ INFO: task swapper/0:1 blocked for more than 122 seconds.
+       Not tainted 5.15.149-21875-gf795ebc40eb8 #1
+ "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+ task:swapper/0       state:D stack:    0 pid:    1 ppid:     0 flags:0x00000008
+ Call trace:
+  __switch_to+0xf4/0x1f4
+  __schedule+0x418/0xb80
+  schedule+0x5c/0x10c
+  rpm_resume+0xe0/0x52c
+  rpm_resume+0x178/0x52c
+  __pm_runtime_resume+0x58/0x98
+  clk_pm_runtime_get+0x30/0xb0
+  clk_disable_unused_subtree+0x58/0x208
+  clk_disable_unused_subtree+0x38/0x208
+  clk_disable_unused_subtree+0x38/0x208
+  clk_disable_unused_subtree+0x38/0x208
+  clk_disable_unused_subtree+0x38/0x208
+  clk_disable_unused+0x4c/0xe4
+  do_one_initcall+0xcc/0x2d8
+  do_initcall_level+0xa4/0x148
+  do_initcalls+0x5c/0x9c
+  do_basic_setup+0x24/0x30
+  kernel_init_freeable+0xec/0x164
+  kernel_init+0x28/0x120
+  ret_from_fork+0x10/0x20
+ INFO: task kworker/u16:0:9 blocked for more than 122 seconds.
+       Not tainted 5.15.149-21875-gf795ebc40eb8 #1
+ "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+ task:kworker/u16:0   state:D stack:    0 pid:    9 ppid:     2 flags:0x00000008
+ Workqueue: events_unbound deferred_probe_work_func
+ Call trace:
+  __switch_to+0xf4/0x1f4
+  __schedule+0x418/0xb80
+  schedule+0x5c/0x10c
+  schedule_preempt_disabled+0x2c/0x48
+  __mutex_lock+0x238/0x488
+  __mutex_lock_slowpath+0x1c/0x28
+  mutex_lock+0x50/0x74
+  clk_prepare_lock+0x7c/0x9c
+  clk_core_prepare_lock+0x20/0x44
+  clk_prepare+0x24/0x30
+  clk_bulk_prepare+0x40/0xb0
+  mdss_runtime_resume+0x54/0x1c8
+  pm_generic_runtime_resume+0x30/0x44
+  __genpd_runtime_resume+0x68/0x7c
+  genpd_runtime_resume+0x108/0x1f4
+  __rpm_callback+0x84/0x144
+  rpm_callback+0x30/0x88
+  rpm_resume+0x1f4/0x52c
+  rpm_resume+0x178/0x52c
+  __pm_runtime_resume+0x58/0x98
+  __device_attach+0xe0/0x170
+  device_initial_probe+0x1c/0x28
+  bus_probe_device+0x3c/0x9c
+  device_add+0x644/0x814
+  mipi_dsi_device_register_full+0xe4/0x170
+  devm_mipi_dsi_device_register_full+0x28/0x70
+  ti_sn_bridge_probe+0x1dc/0x2c0
+  auxiliary_bus_probe+0x4c/0x94
+  really_probe+0xcc/0x2c8
+  __driver_probe_device+0xa8/0x130
+  driver_probe_device+0x48/0x110
+  __device_attach_driver+0xa4/0xcc
+  bus_for_each_drv+0x8c/0xd8
+  __device_attach+0xf8/0x170
+  device_initial_probe+0x1c/0x28
+  bus_probe_device+0x3c/0x9c
+  deferred_probe_work_func+0x9c/0xd8
+  process_one_work+0x148/0x518
+  worker_thread+0x138/0x350
+  kthread+0x138/0x1e0
+  ret_from_fork+0x10/0x20
+
+The first thread is walking the clk tree and calling
+clk_pm_runtime_get() to power on devices required to read the clk
+hardware via struct clk_ops::is_enabled(). This thread holds the clk
+prepare_lock, and is trying to runtime PM resume a device, when it finds
+that the device is in the process of resuming so the thread schedule()s
+away waiting for the device to finish resuming before continuing. The
+second thread is runtime PM resuming the same device, but the runtime
+resume callback is calling clk_prepare(), trying to grab the
+prepare_lock waiting on the first thread.
+
+This is a classic ABBA deadlock. To properly fix the deadlock, we must
+never runtime PM resume or suspend a device with the clk prepare_lock
+held. Actually doing that is near impossible today because the global
+prepare_lock would have to be dropped in the middle of the tree, the
+device runtime PM resumed/suspended, and then the prepare_lock grabbed
+again to ensure consistency of the clk tree topology. If anything
+changes with the clk tree in the meantime, we've lost and will need to
+start the operation all over again.
+
+Luckily, most of the time we're simply incrementing or decrementing the
+runtime PM count on an active device, so we don't have the chance to
+schedule away with the prepare_lock held. Let's fix this immediate
+problem that can be triggered more easily by simply booting on Qualcomm
+sc7180.
+
+Introduce a list of clk_core structures that have been registered, or
+are in the process of being registered, that require runtime PM to
+operate. Iterate this list and call clk_pm_runtime_get() on each of them
+without holding the prepare_lock during clk_disable_unused(). This way
+we can be certain that the runtime PM state of the devices will be
+active and resumed so we can't schedule away while walking the clk tree
+with the prepare_lock held. Similarly, call clk_pm_runtime_put() without
+the prepare_lock held to properly drop the runtime PM reference. We
+remove the calls to clk_pm_runtime_{get,put}() in this path because
+they're superfluous now that we know the devices are runtime resumed.
+
+Reported-by: Douglas Anderson <dianders@chromium.org>
+Closes: https://lore.kernel.org/all/20220922084322.RFC.2.I375b6b9e0a0a5348962f004beb3dafee6a12dfbb@changeid/ [1]
+Closes: https://issuetracker.google.com/328070191
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: 9a34b45397e5 ("clk: Add support for runtime PM")
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20240325184204.745706-4-sboyd@kernel.org
-Stable-dep-of: e581cf5d2162 ("clk: Get runtime PM before walking tree during disable_unused")
+Link: https://lore.kernel.org/r/20240325184204.745706-5-sboyd@kernel.org
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 28 +++++++++++++---------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ drivers/clk/clk.c | 117 +++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 105 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index d841a9d7281c6..4f9f55cff9231 100644
+index 4f9f55cff9231..75d8f7f0de9ba 100644
 --- a/drivers/clk/clk.c
 +++ b/drivers/clk/clk.c
-@@ -3838,8 +3838,6 @@ static int __clk_core_init(struct clk_core *core)
- 	}
+@@ -37,6 +37,10 @@ static HLIST_HEAD(clk_root_list);
+ static HLIST_HEAD(clk_orphan_list);
+ static LIST_HEAD(clk_notifier_list);
  
- 	clk_core_reparent_orphans_nolock();
--
--	kref_init(&core->ref);
- out:
- 	clk_pm_runtime_put(core);
- unlock:
-@@ -4068,6 +4066,16 @@ static void clk_core_free_parent_map(struct clk_core *core)
- 	kfree(core->parents);
++/* List of registered clks that use runtime PM */
++static HLIST_HEAD(clk_rpm_list);
++static DEFINE_MUTEX(clk_rpm_list_lock);
++
+ static const struct hlist_head *all_lists[] = {
+ 	&clk_root_list,
+ 	&clk_orphan_list,
+@@ -59,6 +63,7 @@ struct clk_core {
+ 	struct clk_hw		*hw;
+ 	struct module		*owner;
+ 	struct device		*dev;
++	struct hlist_node	rpm_node;
+ 	struct device_node	*of_node;
+ 	struct clk_core		*parent;
+ 	struct clk_parent_map	*parents;
+@@ -122,6 +127,89 @@ static void clk_pm_runtime_put(struct clk_core *core)
+ 	pm_runtime_put_sync(core->dev);
  }
  
-+/* Free memory allocated for a struct clk_core */
-+static void __clk_release(struct kref *ref)
++/**
++ * clk_pm_runtime_get_all() - Runtime "get" all clk provider devices
++ *
++ * Call clk_pm_runtime_get() on all runtime PM enabled clks in the clk tree so
++ * that disabling unused clks avoids a deadlock where a device is runtime PM
++ * resuming/suspending and the runtime PM callback is trying to grab the
++ * prepare_lock for something like clk_prepare_enable() while
++ * clk_disable_unused_subtree() holds the prepare_lock and is trying to runtime
++ * PM resume/suspend the device as well.
++ *
++ * Context: Acquires the 'clk_rpm_list_lock' and returns with the lock held on
++ * success. Otherwise the lock is released on failure.
++ *
++ * Return: 0 on success, negative errno otherwise.
++ */
++static int clk_pm_runtime_get_all(void)
 +{
-+	struct clk_core *core = container_of(ref, struct clk_core, ref);
++	int ret;
++	struct clk_core *core, *failed;
 +
-+	clk_core_free_parent_map(core);
-+	kfree_const(core->name);
-+	kfree(core);
++	/*
++	 * Grab the list lock to prevent any new clks from being registered
++	 * or unregistered until clk_pm_runtime_put_all().
++	 */
++	mutex_lock(&clk_rpm_list_lock);
++
++	/*
++	 * Runtime PM "get" all the devices that are needed for the clks
++	 * currently registered. Do this without holding the prepare_lock, to
++	 * avoid the deadlock.
++	 */
++	hlist_for_each_entry(core, &clk_rpm_list, rpm_node) {
++		ret = clk_pm_runtime_get(core);
++		if (ret) {
++			failed = core;
++			pr_err("clk: Failed to runtime PM get '%s' for clk '%s'\n",
++			       dev_name(failed->dev), failed->name);
++			goto err;
++		}
++	}
++
++	return 0;
++
++err:
++	hlist_for_each_entry(core, &clk_rpm_list, rpm_node) {
++		if (core == failed)
++			break;
++
++		clk_pm_runtime_put(core);
++	}
++	mutex_unlock(&clk_rpm_list_lock);
++
++	return ret;
 +}
 +
- static struct clk *
- __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
- {
-@@ -4088,6 +4096,8 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
- 		goto fail_out;
- 	}
- 
-+	kref_init(&core->ref);
++/**
++ * clk_pm_runtime_put_all() - Runtime "put" all clk provider devices
++ *
++ * Put the runtime PM references taken in clk_pm_runtime_get_all() and release
++ * the 'clk_rpm_list_lock'.
++ */
++static void clk_pm_runtime_put_all(void)
++{
++	struct clk_core *core;
 +
- 	core->name = kstrdup_const(init->name, GFP_KERNEL);
- 	if (!core->name) {
- 		ret = -ENOMEM;
-@@ -4142,12 +4152,10 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
- 	hw->clk = NULL;
++	hlist_for_each_entry(core, &clk_rpm_list, rpm_node)
++		clk_pm_runtime_put(core);
++	mutex_unlock(&clk_rpm_list_lock);
++}
++
++static void clk_pm_runtime_init(struct clk_core *core)
++{
++	struct device *dev = core->dev;
++
++	if (dev && pm_runtime_enabled(dev)) {
++		core->rpm_enabled = true;
++
++		mutex_lock(&clk_rpm_list_lock);
++		hlist_add_head(&core->rpm_node, &clk_rpm_list);
++		mutex_unlock(&clk_rpm_list_lock);
++	}
++}
++
+ /***           locking             ***/
+ static void clk_prepare_lock(void)
+ {
+@@ -1310,9 +1398,6 @@ static void __init clk_unprepare_unused_subtree(struct clk_core *core)
+ 	if (core->flags & CLK_IGNORE_UNUSED)
+ 		return;
  
- fail_create_clk:
--	clk_core_free_parent_map(core);
- fail_parents:
- fail_ops:
--	kfree_const(core->name);
- fail_name:
--	kfree(core);
-+	kref_put(&core->ref, __clk_release);
- fail_out:
- 	return ERR_PTR(ret);
+-	if (clk_pm_runtime_get(core))
+-		return;
+-
+ 	if (clk_core_is_prepared(core)) {
+ 		trace_clk_unprepare(core);
+ 		if (core->ops->unprepare_unused)
+@@ -1321,8 +1406,6 @@ static void __init clk_unprepare_unused_subtree(struct clk_core *core)
+ 			core->ops->unprepare(core->hw);
+ 		trace_clk_unprepare_complete(core);
+ 	}
+-
+-	clk_pm_runtime_put(core);
  }
-@@ -4227,16 +4235,6 @@ int of_clk_hw_register(struct device_node *node, struct clk_hw *hw)
- }
- EXPORT_SYMBOL_GPL(of_clk_hw_register);
  
--/* Free memory allocated for a clock. */
--static void __clk_release(struct kref *ref)
--{
--	struct clk_core *core = container_of(ref, struct clk_core, ref);
+ static void __init clk_disable_unused_subtree(struct clk_core *core)
+@@ -1338,9 +1421,6 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
+ 	if (core->flags & CLK_OPS_PARENT_ENABLE)
+ 		clk_core_prepare_enable(core->parent);
+ 
+-	if (clk_pm_runtime_get(core))
+-		goto unprepare_out;
 -
--	clk_core_free_parent_map(core);
--	kfree_const(core->name);
--	kfree(core);
--}
--
- /*
-  * Empty clk_ops for unregistered clocks. These are used temporarily
-  * after clk_unregister() was called on a clock and until last clock
+ 	flags = clk_enable_lock();
+ 
+ 	if (core->enable_count)
+@@ -1365,8 +1445,6 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
+ 
+ unlock_out:
+ 	clk_enable_unlock(flags);
+-	clk_pm_runtime_put(core);
+-unprepare_out:
+ 	if (core->flags & CLK_OPS_PARENT_ENABLE)
+ 		clk_core_disable_unprepare(core->parent);
+ }
+@@ -1382,6 +1460,7 @@ __setup("clk_ignore_unused", clk_ignore_unused_setup);
+ static int __init clk_disable_unused(void)
+ {
+ 	struct clk_core *core;
++	int ret;
+ 
+ 	if (clk_ignore_unused) {
+ 		pr_warn("clk: Not disabling unused clocks\n");
+@@ -1390,6 +1469,13 @@ static int __init clk_disable_unused(void)
+ 
+ 	pr_info("clk: Disabling unused clocks\n");
+ 
++	ret = clk_pm_runtime_get_all();
++	if (ret)
++		return ret;
++	/*
++	 * Grab the prepare lock to keep the clk topology stable while iterating
++	 * over clks.
++	 */
+ 	clk_prepare_lock();
+ 
+ 	hlist_for_each_entry(core, &clk_root_list, child_node)
+@@ -1406,6 +1492,8 @@ static int __init clk_disable_unused(void)
+ 
+ 	clk_prepare_unlock();
+ 
++	clk_pm_runtime_put_all();
++
+ 	return 0;
+ }
+ late_initcall_sync(clk_disable_unused);
+@@ -4071,6 +4159,12 @@ static void __clk_release(struct kref *ref)
+ {
+ 	struct clk_core *core = container_of(ref, struct clk_core, ref);
+ 
++	if (core->rpm_enabled) {
++		mutex_lock(&clk_rpm_list_lock);
++		hlist_del(&core->rpm_node);
++		mutex_unlock(&clk_rpm_list_lock);
++	}
++
+ 	clk_core_free_parent_map(core);
+ 	kfree_const(core->name);
+ 	kfree(core);
+@@ -4110,9 +4204,8 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
+ 	}
+ 	core->ops = init->ops;
+ 
+-	if (dev && pm_runtime_enabled(dev))
+-		core->rpm_enabled = true;
+ 	core->dev = dev;
++	clk_pm_runtime_init(core);
+ 	core->of_node = np;
+ 	if (dev && dev->driver)
+ 		core->owner = dev->driver->owner;
 -- 
 2.43.0
 
