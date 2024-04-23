@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C50143891;
-	Tue, 23 Apr 2024 21:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3796414388A;
+	Tue, 23 Apr 2024 21:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908477; cv=none; b=iInOUmJDGaLSuD8XrjX9uHDB5ju6O4BKEeN664bYcgiAMq1VF6YQR12hr/5pekS9e1LwumwCFLBXHotsRB1fCUjYqFuPBcHKXTu1dwXcNxUz4osbdqygwdbfo2thGrNwG0cJvuG2oynkuBrKoHM8OEd3Lua8oDfK0afWTCzSipA=
+	t=1713908478; cv=none; b=K29/lklUyhHD2R/PxMLwYRkBApdPU5nTNiHJWzOegSgWrifk4s3Y98O0B029fkc8VVw7EGo+tmsKR/HoZ7XO+pvtrCNKVpSzN+y6gJIEEDhHDMMOybYZG15Jfoom70QjS3caV5EcuM2jJetSz6jau6l078tvjPzP7r606fNw3bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908477; c=relaxed/simple;
-	bh=mPJ96iend0FUbUQCG+fwbibkNZt+JFY5afHwv0JyNyI=;
+	s=arc-20240116; t=1713908478; c=relaxed/simple;
+	bh=muykViqdHxRq4mEuLU21icDJX1nhi5XMc7xGUguUvgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AlxUy7MZDrU3zMma63JOAypfN8jXc1M9pkVFuo/zdjmVc+daYo40Fg2cdLhCYJmcLqpXpTSO0GJAAJh9dglIwOO5KYGavN4BhyLJTEFdP320KUBGllUjpmYgGk8SvLLGXvTdopcq1vYASrm3gqh5wNoAJD00Nl9p8b+XFoq5CJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3qAxCIx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pkIZv9eqTQEgnSOi1tKbizPhVdIBGLKIgLHfAqIJ3T1PXueY2Fdkv66DEfScjwAC5W3XEyNbwRODb2IdlEr1eDvpP+ZMCwcD++dAW2CUiZlgBivJyIbvRgE+wZmobjpAKKy1UTJEC+fnZVffPb+GYxzo3x3FVUEn/9q+88yqA4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVZBkMct; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3qAxCIx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A35EC4AF0B;
-	Tue, 23 Apr 2024 21:41:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVZBkMct"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEFCC4AF07;
+	Tue, 23 Apr 2024 21:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908477;
-	bh=mPJ96iend0FUbUQCG+fwbibkNZt+JFY5afHwv0JyNyI=;
+	s=korg; t=1713908478;
+	bh=muykViqdHxRq4mEuLU21icDJX1nhi5XMc7xGUguUvgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3qAxCIxaEgTTam8CoZk9sDiBsegEWVrfxzGUTK1ZJalRTL5hz7Crv4NTrOZRjyY8
-	 V51sE8VW6cBa6Ys5qAaFS1gIU52r2LngR8j/wUnITrLYA1SxJzRc5aRG7yo5ZQRg9G
-	 8JJ0mKCN6jTNEn2Hk8Eailk+x5t4ZU7k0eZs2AvY=
+	b=pVZBkMctVduONLDZksyTIZPqFB3FZUqOm0DZ6iozqL/WrZxQkDqLzIsX5xOEAlrsc
+	 p2jJfrEZBYPxJXGuCxgSisW+Q8n85FCI9GW3D6p4EDXKHYtLNU/DFLIM53MIPCSmCo
+	 Glqp1fDswNs7folBoj4VLjMJC9NFYnH3/O+n+LP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuri Benditovich <yuri.benditovich@daynix.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 028/158] net: change maximum number of UDP segments to 128
-Date: Tue, 23 Apr 2024 14:37:30 -0700
-Message-ID: <20240423213856.781519707@linuxfoundation.org>
+Subject: [PATCH 6.8 046/158] gpiolib: swnode: Remove wrong header inclusion
+Date: Tue, 23 Apr 2024 14:37:48 -0700
+Message-ID: <20240423213857.407527367@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -52,69 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuri Benditovich <yuri.benditovich@daynix.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 1382e3b6a3500c245e5278c66d210c02926f804f ]
+[ Upstream commit 69ffed4b62523bbc85511f150500329d28aba356 ]
 
-The commit fc8b2a619469
-("net: more strict VIRTIO_NET_HDR_GSO_UDP_L4 validation")
-adds check of potential number of UDP segments vs
-UDP_MAX_SEGMENTS in linux/virtio_net.h.
-After this change certification test of USO guest-to-guest
-transmit on Windows driver for virtio-net device fails,
-for example with packet size of ~64K and mss of 536 bytes.
-In general the USO should not be more restrictive than TSO.
-Indeed, in case of unreasonably small mss a lot of segments
-can cause queue overflow and packet loss on the destination.
-Limit of 128 segments is good for any practical purpose,
-with minimal meaningful mss of 536 the maximal UDP packet will
-be divided to ~120 segments.
-The number of segments for UDP packets is validated vs
-UDP_MAX_SEGMENTS also in udp.c (v4,v6), this does not affect
-quest-to-guest path but does affect packets sent to host, for
-example.
-It is important to mention that UDP_MAX_SEGMENTS is kernel-only
-define and not available to user mode socket applications.
-In order to request MSS smaller than MTU the applications
-just uses setsockopt with SOL_UDP and UDP_SEGMENT and there is
-no limitations on socket API level.
+The flags in the software node properties are supposed to be
+the GPIO lookup flags, which are provided by gpio/machine.h,
+as the software nodes are the kernel internal thing and doesn't
+need to rely to any of ABIs.
 
-Fixes: fc8b2a619469 ("net: more strict VIRTIO_NET_HDR_GSO_UDP_L4 validation")
-Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e7f9ff5dc90c ("gpiolib: add support for software nodes")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/udp.h                  | 2 +-
- tools/testing/selftests/net/udpgso.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ include/linux/gpio/property.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/include/linux/udp.h b/include/linux/udp.h
-index 94e63b2695406..00790bb5cbde6 100644
---- a/include/linux/udp.h
-+++ b/include/linux/udp.h
-@@ -105,7 +105,7 @@ struct udp_sock {
- #define udp_assign_bit(nr, sk, val)		\
- 	assign_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags, val)
+diff --git a/include/linux/gpio/property.h b/include/linux/gpio/property.h
+index 6c75c8bd44a0b..1a14e239221f7 100644
+--- a/include/linux/gpio/property.h
++++ b/include/linux/gpio/property.h
+@@ -2,7 +2,6 @@
+ #ifndef __LINUX_GPIO_PROPERTY_H
+ #define __LINUX_GPIO_PROPERTY_H
  
--#define UDP_MAX_SEGMENTS	(1 << 6UL)
-+#define UDP_MAX_SEGMENTS	(1 << 7UL)
+-#include <dt-bindings/gpio/gpio.h> /* for GPIO_* flags */
+ #include <linux/property.h>
  
- #define udp_sk(ptr) container_of_const(ptr, struct udp_sock, inet.sk)
- 
-diff --git a/tools/testing/selftests/net/udpgso.c b/tools/testing/selftests/net/udpgso.c
-index 7badaf215de28..b02080d09fbc0 100644
---- a/tools/testing/selftests/net/udpgso.c
-+++ b/tools/testing/selftests/net/udpgso.c
-@@ -34,7 +34,7 @@
- #endif
- 
- #ifndef UDP_MAX_SEGMENTS
--#define UDP_MAX_SEGMENTS	(1 << 6UL)
-+#define UDP_MAX_SEGMENTS	(1 << 7UL)
- #endif
- 
- #define CONST_MTU_TEST	1500
+ #define PROPERTY_ENTRY_GPIO(_name_, _chip_node_, _idx_, _flags_) \
 -- 
 2.43.0
 
