@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D56143C46;
-	Tue, 23 Apr 2024 21:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683F4143C45;
+	Tue, 23 Apr 2024 21:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908523; cv=none; b=t9Rm073KihKVpUfxnH5TzIIb0+IS73OuK428P0jRBWZMe6MC8hgmunuYBZIVmtqJM+fk/paAno4w6D2TBs7+46fQsW9D9tHfx/OIf7tOHIRtCcues1v5DNNftq9C48OP5/tqZiw8WsCBQz8QZosQ2yIn4GuitdBBbaONMkLjQsM=
+	t=1713908524; cv=none; b=mEuUJ5ThuuAUf6eI7TA14Do3yqml3kzmGWqMAXGE0W60NypHSsRU6QiK0+Ddw62FUzI1z7BiAXuuctCaw0OehUP/hVWBnv0Ow0IajBQ0q6uri5uzd1pxIcpPxatDLCisIeAFK15UkcBzO67eisDUn8601Aw1QuxHhK84mKCg+K4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908523; c=relaxed/simple;
-	bh=amoAlcVgfnbfpFv0EL0jh799Ms1K/6U5gGIVbQeqiaI=;
+	s=arc-20240116; t=1713908524; c=relaxed/simple;
+	bh=Eql7X4AVZTS73kG6O9iSjweGdJygx9r0Qe13h1SBfyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=drY61Tj7JxEQ0+/SYKMfmf+AJsuEJvx1jkm8kGMAodYItAlqZA++hqk73fY7i/akBHY0BO/WPJjqppH9Snno67eF2mLp43uOlTrKQWBp/mvHopXQfdvLGjH4Cq5byagUGx9h/vZ9R3cZS7MuAHrmt/uC5lVC0PWvuJNHrKifa0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnKmuSKs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KbvCdR8YrBqYONyHY7XtmVuLm4yBkSiE6J6soPQfMKkC6h6tO7KixYb5uUwpuiM6P9oksC2iycJ/zJSc+NWtY7OlKIIgt9axt2oKpzydPrQJ+iMV/OTqj51YRqNIy24n7bQb39lvtnd7SWsSnjkoPOkYfVBUdltJOEF+USdZQRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qouhhAWB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnKmuSKs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8780CC32786;
-	Tue, 23 Apr 2024 21:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qouhhAWB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA48C116B1;
+	Tue, 23 Apr 2024 21:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908523;
-	bh=amoAlcVgfnbfpFv0EL0jh799Ms1K/6U5gGIVbQeqiaI=;
+	s=korg; t=1713908524;
+	bh=Eql7X4AVZTS73kG6O9iSjweGdJygx9r0Qe13h1SBfyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XnKmuSKsMd8QiOxop+9IZ910+UqDehgplmAii3O8JS+tRewFgn2MobI2o0teZtPho
-	 2zQNNk65ooYiCMB0CT3MT6XITDtsPvStCvHgN6nS3q25KBHaZdWDcP6wpYGHo5q6KU
-	 JSlkb/mQR5RyKrlolqhCPLsQA/lIBebkPmSx4q3k=
+	b=qouhhAWBlEl6vBqHRPfpawGQrYPO+NwJHXl2C+X71Dfs96XWpIAVF2byqUQG6gewW
+	 XSwSoVXapxwO+uQfzeM5eO5cXmN52kUTPDa1JU7bna3DRZkZmacpUyusdYV5XZPWH1
+	 eOKieqZ6Pe0O+Wz0q6s770TUkUPlPI5RUnPfpy5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shenghao Ding <shenghao-ding@ti.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.8 089/158] ALSA: seq: ump: Fix conversion from MIDI2 to MIDI1 UMP messages
-Date: Tue, 23 Apr 2024 14:38:31 -0700
-Message-ID: <20240423213858.843507708@linuxfoundation.org>
+Subject: [PATCH 6.8 090/158] ALSA: hda/tas2781: correct the register for pow calibrated data
+Date: Tue, 23 Apr 2024 14:38:32 -0700
+Message-ID: <20240423213858.882309895@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -49,34 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Shenghao Ding <shenghao-ding@ti.com>
 
-commit f25f17dc5c6a5e3f2014d44635f0c0db45224efe upstream.
+commit 0b6f0ff01a4a8c1b66c600263465976d57dcc1a3 upstream.
 
-The conversion from MIDI2 to MIDI1 UMP messages had a leftover
-artifact (superfluous bit shift), and this resulted in the bogus type
-check, leading to empty outputs.  Let's fix it.
+Calibrated data was written into an incorrect register, which cause
+speaker protection sometimes malfuctions
 
-Fixes: e9e02819a98a ("ALSA: seq: Automatic conversion of UMP events")
+Fixes: 5be27f1e3ec9 ("ALSA: hda/tas2781: Add tas2781 HDA driver")
+Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
 Cc: <stable@vger.kernel.org>
-Link: https://github.com/alsa-project/alsa-utils/issues/262
-Message-ID: <20240419100442.14806-1-tiwai@suse.de>
+Message-ID: <20240406132010.341-1-shenghao-ding@ti.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/seq_ump_convert.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/tas2781_hda_i2c.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/core/seq/seq_ump_convert.c
-+++ b/sound/core/seq/seq_ump_convert.c
-@@ -428,7 +428,7 @@ static int cvt_ump_midi2_to_midi1(struct
- 	midi1->note.group = midi2->note.group;
- 	midi1->note.status = midi2->note.status;
- 	midi1->note.channel = midi2->note.channel;
--	switch (midi2->note.status << 4) {
-+	switch (midi2->note.status) {
- 	case UMP_MSG_STATUS_NOTE_ON:
- 	case UMP_MSG_STATUS_NOTE_OFF:
- 		midi1->note.note = midi2->note.note;
+--- a/sound/pci/hda/tas2781_hda_i2c.c
++++ b/sound/pci/hda/tas2781_hda_i2c.c
+@@ -501,10 +501,10 @@ static int tas2563_save_calibration(stru
+ static void tas2781_apply_calib(struct tasdevice_priv *tas_priv)
+ {
+ 	static const unsigned char page_array[CALIB_MAX] = {
+-		0x17, 0x18, 0x18, 0x0d, 0x18
++		0x17, 0x18, 0x18, 0x13, 0x18,
+ 	};
+ 	static const unsigned char rgno_array[CALIB_MAX] = {
+-		0x74, 0x0c, 0x14, 0x3c, 0x7c
++		0x74, 0x0c, 0x14, 0x70, 0x7c,
+ 	};
+ 	unsigned char *data;
+ 	int i, j, rc;
 
 
