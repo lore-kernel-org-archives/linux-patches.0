@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEBA4146A94;
-	Tue, 23 Apr 2024 21:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F50146A94;
+	Tue, 23 Apr 2024 21:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908679; cv=none; b=FT25O8Nn5W39fS4CLdQxVub+1Ijzsb+ifs7XZfyIloGBEHnwbRX2VtFX6e6sJw/MpD55lzsM/bFWPflrALJHA1VFWKdEZ/kcPHFi+OwvtNcCv3HkNJzsgATQ9wD7U+Orjo7EPZEavsMegOilf+WhoNazhb09yHUncv4T3gv6W5Y=
+	t=1713908679; cv=none; b=XLRddXtQ/IO2PbwmHYhqKF4IREF5gCtcWMqCThQXbNxF9AVdpa3H3ebZ7SNEZ6M3venqUXajUiG+KZ+cNuR3GGbCqf5r4INDBE4kn05oNe0yYZx4m1AJ7O+Fkfu2Po94wYZDk8+PRr9TSF2AuX4kUajehcHvrPmDZuYRcyBqo80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908679; c=relaxed/simple;
-	bh=9AOt29k2fEqqW+JkPMGA/FxX34wANXmME0zxpr1XXxQ=;
+	bh=y9H9xjFq/7vEVrSQtqiXtFaGPltpxauAQ7n6Nqv24U0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I07cNsJpmEMkjHjEEmu9PemPoxP6if4ojWAV/SbSMstkFcPF+tpiyZ03wHta23ztgqSKjLu+/HeSemY+bItKVtEwbtNV+2UkU9aZkO2tIeGwU2cmV6rFHE4+YBDunX/WwrCi5tijLYlIxqF/sx8YksHVpgQNgfOb7A+vFlaEe/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oR0ltvu5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gSVpOPTVDn+aa28gef9wbuewylptVTQsZp8ok9GPuphw1T9hvqntJC4CUchq1zRzfoq78ZGHDdBfVPo6j23AxSTgAYz7LqKQcfUlr0KFzU1cMc9eMsQ8acbzA1dITlIYJMr5jrMB66g9yIkHcjKZleHh4eFNiLRuOMwoUR1h+H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWU1mQrv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oR0ltvu5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B78C116B1;
-	Tue, 23 Apr 2024 21:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWU1mQrv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E354C116B1;
+	Tue, 23 Apr 2024 21:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908678;
-	bh=9AOt29k2fEqqW+JkPMGA/FxX34wANXmME0zxpr1XXxQ=;
+	s=korg; t=1713908679;
+	bh=y9H9xjFq/7vEVrSQtqiXtFaGPltpxauAQ7n6Nqv24U0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oR0ltvu5man2K3CrR5GZTYFKf0A+bTnNsNoG7zGUxKQWGCUU1egdaMqzl6msybIdi
-	 aRi8lYtAbWoBof/PCi1sGjp1LBT7qtrgH4jZN05LBSdMINfC2BbVELERm1CNf2fIWh
-	 dBiif18kJQp4tHjaZY+7xVXqWJlBDWQFc+uAswpM=
+	b=CWU1mQrvdRUeyMqyVRDKAru86onkhj3EIS8sg154lx/1uTCVA3Nvi8jhsB3OgJftw
+	 nv9UWmqQaqvhN2IrRTjIUGDQwhZDeAbtWLutW9LK5C55Q07svrMNALZuLTxbV/FgJQ
+	 kUCApnYYJ6tSZo3IP+srXrLmaclVRU3lC38sGzv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <Tim.Huang@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Dillon Varone <dillon.varone@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/141] drm/amdgpu: fix incorrect number of active RBs for gfx11
-Date: Tue, 23 Apr 2024 14:37:51 -0700
-Message-ID: <20240423213853.469961946@linuxfoundation.org>
+Subject: [PATCH 6.1 004/141] drm/amd/display: Do not recursively call manual trigger programming
+Date: Tue, 23 Apr 2024 14:37:52 -0700
+Message-ID: <20240423213853.503693461@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -52,35 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Huang <Tim.Huang@amd.com>
+From: Dillon Varone <dillon.varone@amd.com>
 
-[ Upstream commit bbca7f414ae9a12ea231cdbafd79c607e3337ea8 ]
+[ Upstream commit 953927587f37b731abdeabe46ad44a3b3ec67a52 ]
 
-The RB bitmap should be global active RB bitmap &
-active RB bitmap based on active SA.
+[WHY&HOW]
+We should not be recursively calling the manual trigger programming function when
+FAMS is not in use.
 
-Signed-off-by: Tim Huang <Tim.Huang@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-index ec40f88da00c3..5a5787bfbce7f 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -1592,7 +1592,7 @@ static void gfx_v11_0_setup_rb(struct amdgpu_device *adev)
- 			active_rb_bitmap |= (0x3 << (i * rb_bitmap_width_per_sa));
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
+index a974f86e718a8..37c645a882dd8 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
+@@ -216,9 +216,6 @@ static void optc32_setup_manual_trigger(struct timing_generator *optc)
+ 				OTG_V_TOTAL_MAX_SEL, 1,
+ 				OTG_FORCE_LOCK_ON_EVENT, 0,
+ 				OTG_SET_V_TOTAL_MIN_MASK, (1 << 1)); /* TRIGA */
+-
+-		// Setup manual flow control for EOF via TRIG_A
+-		optc->funcs->setup_manual_trigger(optc);
  	}
- 
--	active_rb_bitmap |= global_active_rb_bitmap;
-+	active_rb_bitmap &= global_active_rb_bitmap;
- 	adev->gfx.config.backend_enable_mask = active_rb_bitmap;
- 	adev->gfx.config.num_rbs = hweight32(active_rb_bitmap);
  }
+ 
 -- 
 2.43.0
 
