@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E78B20B3E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC09720B3E;
 	Tue, 23 Apr 2024 21:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908542; cv=none; b=BQg4GEVi3O7vpR+lmABmcD/AEfKC4FgcLS4NjGvA16nPrFFUaiBcROVUbytHLTHYzY+jk71bfoIpXsKr3VM/RpCuLaK+LFelStsDYZw2pKjqS7cm9v4Isr8Fw3oADonhrP4dkhMPU4q8MXgquv7JLEcQrqHISBBGSCNw5dbfbz8=
+	t=1713908542; cv=none; b=itppx+QSLjoi32CgstTcvs1GlDegn4r0c3zmU7fA1nnyLqorS7lYYjB9D3eg6av2AF/v5XoagXAH+GmWwG0Bu/OBtArXyNAqkTIY2MEuXoZURTCag/fywXrQm6An9tr6ek2g3YlbPuik+1eh3H83P/lbTElociNw9pD1mxkV+SM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908542; c=relaxed/simple;
-	bh=BzMs/r7pjPZuMTk9+NnUKAuwgD2QkoUOybfhWwLSCDM=;
+	bh=BYEu/r/H0/N+1ey6NsGYvPFQE3Yh0u/Y1awCYUowuHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JV6VOWeIlVTfrVX0Dwy6kFJXWmpHksoKLRgVntkpvdv4bgcHjfqdlWRpOAMWmfkw1eJlnYKjG7M8U5O8g5LVWVAztxl9lYxAnvul4chuORX89Fqs2S+W3BogwUg2ee4Wgx59AZKek5W/VL9JOUPhbf9fC31Wj2jfisRX9SU9Ep8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izaRB0Gv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c1hYWcD2Ii0gOW6COfVTmqlWC0V6l12QCG8FaF0v6UV7MZrwBFNcrURQpJCMqJQPUvzR/+AhCgOiUZ8SEFNM4xtYHorE5iYZ+7Et+velB3vjdIumKKbtdMhgT/ahL3LGzblxZqqOlCwukSTDwh4/trHY/GhA1E3ZfQFCBAlaxkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlMYY2yA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izaRB0Gv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6462C3277B;
-	Tue, 23 Apr 2024 21:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlMYY2yA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90302C116B1;
+	Tue, 23 Apr 2024 21:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908541;
-	bh=BzMs/r7pjPZuMTk9+NnUKAuwgD2QkoUOybfhWwLSCDM=;
+	s=korg; t=1713908542;
+	bh=BYEu/r/H0/N+1ey6NsGYvPFQE3Yh0u/Y1awCYUowuHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=izaRB0GvwjJ0D7VVQDA3TGQ5KeyR4qd6sChpNFFTYUfXk1biz8CekNOW66m+kNnP0
-	 YWZAaDPkgkwVl+V0/iUceOV3QHwq88HQVrO4SQ2F9y8usHBNmne5KLuh8Gh90MQaRb
-	 rBSFccm6xnPL8vyCXuGESlRtB2IfKDswnndjuQ3g=
+	b=FlMYY2yABPfcA/kbe7bhi5TzedvbxsT0Cw5tEp2DJsjednpQyY8AJsUgQtPqG7Hm4
+	 s66qi6NKgNGsur9dCbFIUwWOcusdGOMQ3HhMrbpY0ak0MHHfesRLidryjJBY89Srzy
+	 gjJz4paeaPkecJwyj/7kZa7kdnxN30hf/P4e1cG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Jane Chu <jane.chu@oracle.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Hugh Dickins <hughd@google.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.8 137/158] mm/memory-failure: fix deadlock when hugetlb_optimize_vmemmap is enabled
-Date: Tue, 23 Apr 2024 14:39:19 -0700
-Message-ID: <20240423213900.328935835@linuxfoundation.org>
+Subject: [PATCH 6.8 138/158] mm/shmem: inline shmem_is_huge() for disabled transparent hugepages
+Date: Tue, 23 Apr 2024 14:39:20 -0700
+Message-ID: <20240423213900.355862439@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -53,167 +56,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-commit 1983184c22dd84a4d95a71e5c6775c2638557dc7 upstream.
+commit 1f737846aa3c45f07a06fa0d018b39e1afb8084a upstream.
 
-When I did hard offline test with hugetlb pages, below deadlock occurs:
+In order to  minimize code size (CONFIG_CC_OPTIMIZE_FOR_SIZE=y),
+compiler might choose to make a regular function call (out-of-line) for
+shmem_is_huge() instead of inlining it. When transparent hugepages are
+disabled (CONFIG_TRANSPARENT_HUGEPAGE=n), it can cause compilation
+error.
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.8.0-11409-gf6cef5f8c37f #1 Not tainted
-------------------------------------------------------
-bash/46904 is trying to acquire lock:
-ffffffffabe68910 (cpu_hotplug_lock){++++}-{0:0}, at: static_key_slow_dec+0x16/0x60
+mm/shmem.c: In function `shmem_getattr':
+./include/linux/huge_mm.h:383:27: note: in expansion of macro `BUILD_BUG'
+  383 | #define HPAGE_PMD_SIZE ({ BUILD_BUG(); 0; })
+      |                           ^~~~~~~~~
+mm/shmem.c:1148:33: note: in expansion of macro `HPAGE_PMD_SIZE'
+ 1148 |                 stat->blksize = HPAGE_PMD_SIZE;
 
-but task is already holding lock:
-ffffffffabf92ea8 (pcp_batch_high_lock){+.+.}-{3:3}, at: zone_pcp_disable+0x16/0x40
+To prevent the possible error, always inline shmem_is_huge() when
+transparent hugepages are disabled.
 
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #1 (pcp_batch_high_lock){+.+.}-{3:3}:
-       __mutex_lock+0x6c/0x770
-       page_alloc_cpu_online+0x3c/0x70
-       cpuhp_invoke_callback+0x397/0x5f0
-       __cpuhp_invoke_callback_range+0x71/0xe0
-       _cpu_up+0xeb/0x210
-       cpu_up+0x91/0xe0
-       cpuhp_bringup_mask+0x49/0xb0
-       bringup_nonboot_cpus+0xb7/0xe0
-       smp_init+0x25/0xa0
-       kernel_init_freeable+0x15f/0x3e0
-       kernel_init+0x15/0x1b0
-       ret_from_fork+0x2f/0x50
-       ret_from_fork_asm+0x1a/0x30
-
--> #0 (cpu_hotplug_lock){++++}-{0:0}:
-       __lock_acquire+0x1298/0x1cd0
-       lock_acquire+0xc0/0x2b0
-       cpus_read_lock+0x2a/0xc0
-       static_key_slow_dec+0x16/0x60
-       __hugetlb_vmemmap_restore_folio+0x1b9/0x200
-       dissolve_free_huge_page+0x211/0x260
-       __page_handle_poison+0x45/0xc0
-       memory_failure+0x65e/0xc70
-       hard_offline_page_store+0x55/0xa0
-       kernfs_fop_write_iter+0x12c/0x1d0
-       vfs_write+0x387/0x550
-       ksys_write+0x64/0xe0
-       do_syscall_64+0xca/0x1e0
-       entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(pcp_batch_high_lock);
-                               lock(cpu_hotplug_lock);
-                               lock(pcp_batch_high_lock);
-  rlock(cpu_hotplug_lock);
-
- *** DEADLOCK ***
-
-5 locks held by bash/46904:
- #0: ffff98f6c3bb23f0 (sb_writers#5){.+.+}-{0:0}, at: ksys_write+0x64/0xe0
- #1: ffff98f6c328e488 (&of->mutex){+.+.}-{3:3}, at: kernfs_fop_write_iter+0xf8/0x1d0
- #2: ffff98ef83b31890 (kn->active#113){.+.+}-{0:0}, at: kernfs_fop_write_iter+0x100/0x1d0
- #3: ffffffffabf9db48 (mf_mutex){+.+.}-{3:3}, at: memory_failure+0x44/0xc70
- #4: ffffffffabf92ea8 (pcp_batch_high_lock){+.+.}-{3:3}, at: zone_pcp_disable+0x16/0x40
-
-stack backtrace:
-CPU: 10 PID: 46904 Comm: bash Kdump: loaded Not tainted 6.8.0-11409-gf6cef5f8c37f #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x68/0xa0
- check_noncircular+0x129/0x140
- __lock_acquire+0x1298/0x1cd0
- lock_acquire+0xc0/0x2b0
- cpus_read_lock+0x2a/0xc0
- static_key_slow_dec+0x16/0x60
- __hugetlb_vmemmap_restore_folio+0x1b9/0x200
- dissolve_free_huge_page+0x211/0x260
- __page_handle_poison+0x45/0xc0
- memory_failure+0x65e/0xc70
- hard_offline_page_store+0x55/0xa0
- kernfs_fop_write_iter+0x12c/0x1d0
- vfs_write+0x387/0x550
- ksys_write+0x64/0xe0
- do_syscall_64+0xca/0x1e0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-RIP: 0033:0x7fc862314887
-Code: 10 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b7 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 48 89 54 24 18 48 89 74 24
-RSP: 002b:00007fff19311268 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 000000000000000c RCX: 00007fc862314887
-RDX: 000000000000000c RSI: 000056405645fe10 RDI: 0000000000000001
-RBP: 000056405645fe10 R08: 00007fc8623d1460 R09: 000000007fffffff
-R10: 0000000000000000 R11: 0000000000000246 R12: 000000000000000c
-R13: 00007fc86241b780 R14: 00007fc862417600 R15: 00007fc862416a00
-
-In short, below scene breaks the lock dependency chain:
-
- memory_failure
-  __page_handle_poison
-   zone_pcp_disable -- lock(pcp_batch_high_lock)
-   dissolve_free_huge_page
-    __hugetlb_vmemmap_restore_folio
-     static_key_slow_dec
-      cpus_read_lock -- rlock(cpu_hotplug_lock)
-
-Fix this by calling drain_all_pages() instead.
-
-This issue won't occur until commit a6b40850c442 ("mm: hugetlb: replace
-hugetlb_free_vmemmap_enabled with a static_key").  As it introduced
-rlock(cpu_hotplug_lock) in dissolve_free_huge_page() code path while
-lock(pcp_batch_high_lock) is already in the __page_handle_poison().
-
-[linmiaohe@huawei.com: extend comment per Oscar]
-[akpm@linux-foundation.org: reflow block comment]
-Link: https://lkml.kernel.org/r/20240407085456.2798193-1-linmiaohe@huawei.com
-Fixes: a6b40850c442 ("mm: hugetlb: replace hugetlb_free_vmemmap_enabled with a static_key")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Reviewed-by: Jane Chu <jane.chu@oracle.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Link: https://lkml.kernel.org/r/20240409155407.2322714-1-sumanthk@linux.ibm.com
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ include/linux/shmem_fs.h |    9 +++++++++
+ mm/shmem.c               |    6 ------
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -154,11 +154,23 @@ static int __page_handle_poison(struct p
+--- a/include/linux/shmem_fs.h
++++ b/include/linux/shmem_fs.h
+@@ -114,8 +114,17 @@ extern struct page *shmem_read_mapping_p
+ extern void shmem_truncate_range(struct inode *inode, loff_t start, loff_t end);
+ int shmem_unuse(unsigned int type);
+ 
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ extern bool shmem_is_huge(struct inode *inode, pgoff_t index, bool shmem_huge_force,
+ 			  struct mm_struct *mm, unsigned long vm_flags);
++#else
++static __always_inline bool shmem_is_huge(struct inode *inode, pgoff_t index, bool shmem_huge_force,
++					  struct mm_struct *mm, unsigned long vm_flags)
++{
++	return false;
++}
++#endif
++
+ #ifdef CONFIG_SHMEM
+ extern unsigned long shmem_swap_usage(struct vm_area_struct *vma);
+ #else
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -742,12 +742,6 @@ static long shmem_unused_huge_count(stru
+ 
+ #define shmem_huge SHMEM_HUGE_DENY
+ 
+-bool shmem_is_huge(struct inode *inode, pgoff_t index, bool shmem_huge_force,
+-		   struct mm_struct *mm, unsigned long vm_flags)
+-{
+-	return false;
+-}
+-
+ static unsigned long shmem_unused_huge_shrink(struct shmem_sb_info *sbinfo,
+ 		struct shrink_control *sc, unsigned long nr_to_split)
  {
- 	int ret;
- 
--	zone_pcp_disable(page_zone(page));
-+	/*
-+	 * zone_pcp_disable() can't be used here. It will
-+	 * hold pcp_batch_high_lock and dissolve_free_huge_page() might hold
-+	 * cpu_hotplug_lock via static_key_slow_dec() when hugetlb vmemmap
-+	 * optimization is enabled. This will break current lock dependency
-+	 * chain and leads to deadlock.
-+	 * Disabling pcp before dissolving the page was a deterministic
-+	 * approach because we made sure that those pages cannot end up in any
-+	 * PCP list. Draining PCP lists expels those pages to the buddy system,
-+	 * but nothing guarantees that those pages do not get back to a PCP
-+	 * queue if we need to refill those.
-+	 */
- 	ret = dissolve_free_huge_page(page);
--	if (!ret)
-+	if (!ret) {
-+		drain_all_pages(page_zone(page));
- 		ret = take_page_off_buddy(page);
--	zone_pcp_enable(page_zone(page));
-+	}
- 
- 	return ret;
- }
 
 
