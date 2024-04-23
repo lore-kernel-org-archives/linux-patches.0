@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847C1145330;
-	Tue, 23 Apr 2024 21:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41871145330;
+	Tue, 23 Apr 2024 21:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908656; cv=none; b=FaE83CuSzp5fgQ4Z4kp+DM1Sbytl6QBF6Prszj5c8rxGlcddO8kZwKQFqRYJcvY+tLN/JUvjjFocJTlgbNxgzUuQUAqGE0Oa6zGH/cMDSQU7Wkq+K0tE2AqO2NaybSLq5D74Suk74TnmhojP4BlJCx3QtHHG8Xv5hP3qyG5Q6AM=
+	t=1713908657; cv=none; b=mIuYc1kRgKyjrHERhkG50ToIRT37Yn4FEfMA3Pv7DlFRkk0jdpcVJYbgls7e1ls+pjvdjzP+IIWywjicwpEdGF+98oZctdB9U6mPqepdg/YF1UntRx15Kt83ya5FnlKuQvXTglHH88xX5EDW5c7xmxTFcDMB9qJCb4r78J1Zp10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908656; c=relaxed/simple;
-	bh=pOccrmkpDAUMNJ4IK5IkJ8WHnRJEkCMM/b7P1zMn/7w=;
+	s=arc-20240116; t=1713908657; c=relaxed/simple;
+	bh=jcldbYPx30GvC13aLzHhH/rPLnukppd2MSHVPDi64ic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lD7YuL55I5SEXXBHIxq853i7kjWYjaSAuc5VuJQCH8fWuAHKC/REYU7McQXBr7MS1+49ijJtiQJJH0yKYMn3TXRJLxOJmcsBmhJlts4b13UFDkf8KuBTRnT/EYGI9fV1lxFDXPyMWv0o1a12mkbcV3GJdpZQQ4qUwL+ZBHZ8cz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXDpR74J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LQobDiHioP9KxC0NfoIl/rUWRUhd28yxXce4c8Ry49vCNum+0pWHJTRFF6LsWUZ+ksTIw4TyC9IUrRUdv1RP1YxYhiykzaL4E6syNXY1rS2JSqs2QvTxwUMrIuPUJz9L5kp/wvDmeE+fzu9saGTZ4U4sMwFtoLzUQT+98iaCSYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6FpRceH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXDpR74J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D140C32781;
-	Tue, 23 Apr 2024 21:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6FpRceH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC50C116B1;
+	Tue, 23 Apr 2024 21:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908656;
-	bh=pOccrmkpDAUMNJ4IK5IkJ8WHnRJEkCMM/b7P1zMn/7w=;
+	s=korg; t=1713908657;
+	bh=jcldbYPx30GvC13aLzHhH/rPLnukppd2MSHVPDi64ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OXDpR74J4GiWZ9bfCEtYMxXSKzjZ86dVby3aVyW0pKpV1zd6wssY8dBTwG/IxZhRq
-	 zYAnRI87R3C/ECAkVNA8fVMI8KzZ91hD95a/g+a5RvniUXL5KAxDnqnBjl9a4SS1/K
-	 he3EJq/kExgYYKvot0FrvjsZvdfcUcMfIBLwmzPo=
+	b=n6FpRceHNYGPfqH9Lvxj6heaUuBiMcryoz1NpYjPS9wQX7fi3ybIIU5A0OpM7zydY
+	 tJKm8dfyBf3N29M86EBgNrGMf2zRsr9lQTwB9avOy2G3xOrfycHXkN6U+DlahAhSln
+	 WaUIs/Fv8PYZuTs8xtygFPrakiXhPrHjY6zyoo2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Danilo Krummrich <dakr@redhat.com>
-Subject: [PATCH 6.6 147/158] nouveau: fix instmem race condition around ptr stores
-Date: Tue, 23 Apr 2024 14:39:44 -0700
-Message-ID: <20240423213900.452794813@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Qiang Zhang <qiang4.zhang@intel.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.6 148/158] bootconfig: use memblock_free_late to free xbc memory to buddy
+Date: Tue, 23 Apr 2024 14:39:45 -0700
+Message-ID: <20240423213900.483701084@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -50,96 +51,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Qiang Zhang <qiang4.zhang@intel.com>
 
-commit fff1386cc889d8fb4089d285f883f8cba62d82ce upstream.
+commit 89f9a1e876b5a7ad884918c03a46831af202c8a0 upstream.
 
-Running a lot of VK CTS in parallel against nouveau, once every
-few hours you might see something like this crash.
+On the time to free xbc memory in xbc_exit(), memblock may has handed
+over memory to buddy allocator. So it doesn't make sense to free memory
+back to memblock. memblock_free() called by xbc_exit() even causes UAF bugs
+on architectures with CONFIG_ARCH_KEEP_MEMBLOCK disabled like x86.
+Following KASAN logs shows this case.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000008
-PGD 8000000114e6e067 P4D 8000000114e6e067 PUD 109046067 PMD 0
-Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 7 PID: 53891 Comm: deqp-vk Not tainted 6.8.0-rc6+ #27
-Hardware name: Gigabyte Technology Co., Ltd. Z390 I AORUS PRO WIFI/Z390 I AORUS PRO WIFI-CF, BIOS F8 11/05/2021
-RIP: 0010:gp100_vmm_pgt_mem+0xe3/0x180 [nouveau]
-Code: c7 48 01 c8 49 89 45 58 85 d2 0f 84 95 00 00 00 41 0f b7 46 12 49 8b 7e 08 89 da 42 8d 2c f8 48 8b 47 08 41 83 c7 01 48 89 ee <48> 8b 40 08 ff d0 0f 1f 00 49 8b 7e 08 48 89 d9 48 8d 75 04 48 c1
-RSP: 0000:ffffac20c5857838 EFLAGS: 00010202
-RAX: 0000000000000000 RBX: 00000000004d8001 RCX: 0000000000000001
-RDX: 00000000004d8001 RSI: 00000000000006d8 RDI: ffffa07afe332180
-RBP: 00000000000006d8 R08: ffffac20c5857ad0 R09: 0000000000ffff10
-R10: 0000000000000001 R11: ffffa07af27e2de0 R12: 000000000000001c
-R13: ffffac20c5857ad0 R14: ffffa07a96fe9040 R15: 000000000000001c
-FS:  00007fe395eed7c0(0000) GS:ffffa07e2c980000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000008 CR3: 000000011febe001 CR4: 00000000003706f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
+This patch fixes the xbc memory free problem by calling memblock_free()
+in early xbc init error rewind path and calling memblock_free_late() in
+xbc exit path to free memory to buddy allocator.
 
-...
+[    9.410890] ==================================================================
+[    9.418962] BUG: KASAN: use-after-free in memblock_isolate_range+0x12d/0x260
+[    9.426850] Read of size 8 at addr ffff88845dd30000 by task swapper/0/1
 
- ? gp100_vmm_pgt_mem+0xe3/0x180 [nouveau]
- ? gp100_vmm_pgt_mem+0x37/0x180 [nouveau]
- nvkm_vmm_iter+0x351/0xa20 [nouveau]
- ? __pfx_nvkm_vmm_ref_ptes+0x10/0x10 [nouveau]
- ? __pfx_gp100_vmm_pgt_mem+0x10/0x10 [nouveau]
- ? __pfx_gp100_vmm_pgt_mem+0x10/0x10 [nouveau]
- ? __lock_acquire+0x3ed/0x2170
- ? __pfx_gp100_vmm_pgt_mem+0x10/0x10 [nouveau]
- nvkm_vmm_ptes_get_map+0xc2/0x100 [nouveau]
- ? __pfx_nvkm_vmm_ref_ptes+0x10/0x10 [nouveau]
- ? __pfx_gp100_vmm_pgt_mem+0x10/0x10 [nouveau]
- nvkm_vmm_map_locked+0x224/0x3a0 [nouveau]
+[    9.435901] CPU: 9 PID: 1 Comm: swapper/0 Tainted: G     U             6.9.0-rc3-00208-g586b5dfb51b9 #5
+[    9.446403] Hardware name: Intel Corporation RPLP LP5 (CPU:RaptorLake)/RPLP LP5 (ID:13), BIOS IRPPN02.01.01.00.00.19.015.D-00000000 Dec 28 2023
+[    9.460789] Call Trace:
+[    9.463518]  <TASK>
+[    9.465859]  dump_stack_lvl+0x53/0x70
+[    9.469949]  print_report+0xce/0x610
+[    9.473944]  ? __virt_addr_valid+0xf5/0x1b0
+[    9.478619]  ? memblock_isolate_range+0x12d/0x260
+[    9.483877]  kasan_report+0xc6/0x100
+[    9.487870]  ? memblock_isolate_range+0x12d/0x260
+[    9.493125]  memblock_isolate_range+0x12d/0x260
+[    9.498187]  memblock_phys_free+0xb4/0x160
+[    9.502762]  ? __pfx_memblock_phys_free+0x10/0x10
+[    9.508021]  ? mutex_unlock+0x7e/0xd0
+[    9.512111]  ? __pfx_mutex_unlock+0x10/0x10
+[    9.516786]  ? kernel_init_freeable+0x2d4/0x430
+[    9.521850]  ? __pfx_kernel_init+0x10/0x10
+[    9.526426]  xbc_exit+0x17/0x70
+[    9.529935]  kernel_init+0x38/0x1e0
+[    9.533829]  ? _raw_spin_unlock_irq+0xd/0x30
+[    9.538601]  ret_from_fork+0x2c/0x50
+[    9.542596]  ? __pfx_kernel_init+0x10/0x10
+[    9.547170]  ret_from_fork_asm+0x1a/0x30
+[    9.551552]  </TASK>
 
-Adding any sort of useful debug usually makes it go away, so I hand
-wrote the function in a line, and debugged the asm.
+[    9.555649] The buggy address belongs to the physical page:
+[    9.561875] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x1 pfn:0x45dd30
+[    9.570821] flags: 0x200000000000000(node=0|zone=2)
+[    9.576271] page_type: 0xffffffff()
+[    9.580167] raw: 0200000000000000 ffffea0011774c48 ffffea0012ba1848 0000000000000000
+[    9.588823] raw: 0000000000000001 0000000000000000 00000000ffffffff 0000000000000000
+[    9.597476] page dumped because: kasan: bad access detected
 
-Every so often pt->memory->ptrs is NULL. This ptrs ptr is set in
-the nv50_instobj_acquire called from nvkm_kmap.
+[    9.605362] Memory state around the buggy address:
+[    9.610714]  ffff88845dd2ff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[    9.618786]  ffff88845dd2ff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[    9.626857] >ffff88845dd30000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[    9.634930]                    ^
+[    9.638534]  ffff88845dd30080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[    9.646605]  ffff88845dd30100: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[    9.654675] ==================================================================
 
-If Thread A and Thread B both get to nv50_instobj_acquire around
-the same time, and Thread A hits the refcount_set line, and in
-lockstep thread B succeeds at refcount_inc_not_zero, there is a
-chance the ptrs value won't have been stored since refcount_set
-is unordered. Force a memory barrier here, I picked smp_mb, since
-we want it on all CPUs and it's write followed by a read.
+Link: https://lore.kernel.org/all/20240414114944.1012359-1-qiang4.zhang@linux.intel.com/
 
-v2: use paired smp_rmb/smp_wmb.
-
-Cc: <stable@vger.kernel.org>
-Fixes: be55287aa5ba ("drm/nouveau/imem/nv50: embed nvkm_instobj directly into nv04_instobj")
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240411011510.2546857-1-airlied@gmail.com
+Fixes: 40caa127f3c7 ("init: bootconfig: Remove all bootconfig data when the init memory is removed")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Qiang Zhang <qiang4.zhang@intel.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/instmem/nv50.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/linux/bootconfig.h |    7 ++++++-
+ lib/bootconfig.c           |   19 +++++++++++--------
+ 2 files changed, 17 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/instmem/nv50.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/instmem/nv50.c
-@@ -221,8 +221,11 @@ nv50_instobj_acquire(struct nvkm_memory
- 	void __iomem *map = NULL;
+--- a/include/linux/bootconfig.h
++++ b/include/linux/bootconfig.h
+@@ -287,7 +287,12 @@ int __init xbc_init(const char *buf, siz
+ int __init xbc_get_info(int *node_size, size_t *data_size);
  
- 	/* Already mapped? */
--	if (refcount_inc_not_zero(&iobj->maps))
-+	if (refcount_inc_not_zero(&iobj->maps)) {
-+		/* read barrier match the wmb on refcount set */
-+		smp_rmb();
- 		return iobj->map;
-+	}
+ /* XBC cleanup data structures */
+-void __init xbc_exit(void);
++void __init _xbc_exit(bool early);
++
++static inline void xbc_exit(void)
++{
++	_xbc_exit(false);
++}
  
- 	/* Take the lock, and re-check that another thread hasn't
- 	 * already mapped the object in the meantime.
-@@ -249,6 +252,8 @@ nv50_instobj_acquire(struct nvkm_memory
- 			iobj->base.memory.ptrs = &nv50_instobj_fast;
- 		else
- 			iobj->base.memory.ptrs = &nv50_instobj_slow;
-+		/* barrier to ensure the ptrs are written before refcount is set */
-+		smp_wmb();
- 		refcount_set(&iobj->maps, 1);
+ /* XBC embedded bootconfig data in kernel */
+ #ifdef CONFIG_BOOT_CONFIG_EMBED
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -61,9 +61,12 @@ static inline void * __init xbc_alloc_me
+ 	return memblock_alloc(size, SMP_CACHE_BYTES);
+ }
+ 
+-static inline void __init xbc_free_mem(void *addr, size_t size)
++static inline void __init xbc_free_mem(void *addr, size_t size, bool early)
+ {
+-	memblock_free(addr, size);
++	if (early)
++		memblock_free(addr, size);
++	else if (addr)
++		memblock_free_late(__pa(addr), size);
+ }
+ 
+ #else /* !__KERNEL__ */
+@@ -73,7 +76,7 @@ static inline void *xbc_alloc_mem(size_t
+ 	return malloc(size);
+ }
+ 
+-static inline void xbc_free_mem(void *addr, size_t size)
++static inline void xbc_free_mem(void *addr, size_t size, bool early)
+ {
+ 	free(addr);
+ }
+@@ -904,13 +907,13 @@ static int __init xbc_parse_tree(void)
+  * If you need to reuse xbc_init() with new boot config, you can
+  * use this.
+  */
+-void __init xbc_exit(void)
++void __init _xbc_exit(bool early)
+ {
+-	xbc_free_mem(xbc_data, xbc_data_size);
++	xbc_free_mem(xbc_data, xbc_data_size, early);
+ 	xbc_data = NULL;
+ 	xbc_data_size = 0;
+ 	xbc_node_num = 0;
+-	xbc_free_mem(xbc_nodes, sizeof(struct xbc_node) * XBC_NODE_MAX);
++	xbc_free_mem(xbc_nodes, sizeof(struct xbc_node) * XBC_NODE_MAX, early);
+ 	xbc_nodes = NULL;
+ 	brace_index = 0;
+ }
+@@ -963,7 +966,7 @@ int __init xbc_init(const char *data, si
+ 	if (!xbc_nodes) {
+ 		if (emsg)
+ 			*emsg = "Failed to allocate bootconfig nodes";
+-		xbc_exit();
++		_xbc_exit(true);
+ 		return -ENOMEM;
  	}
+ 	memset(xbc_nodes, 0, sizeof(struct xbc_node) * XBC_NODE_MAX);
+@@ -977,7 +980,7 @@ int __init xbc_init(const char *data, si
+ 			*epos = xbc_err_pos;
+ 		if (emsg)
+ 			*emsg = xbc_err_msg;
+-		xbc_exit();
++		_xbc_exit(true);
+ 	} else
+ 		ret = xbc_node_num;
  
 
 
