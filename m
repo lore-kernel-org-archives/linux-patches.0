@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915C214388D;
-	Tue, 23 Apr 2024 21:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4897914388D;
+	Tue, 23 Apr 2024 21:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908498; cv=none; b=bwQ4EdIg1YFjfqgelFFGzQ4GDLCo7z3YE+1FuBgZSHVWYfkc+OcS+f/AdbwpQNqMGuRv0kixR5JOjRxiTzh9O6Mz4A7ggfyuFE/brGVl8tkBIiY9JxRjp/ToCYXtaaZ+dhitq81ZrgZFGPWzyKMqUk2la6HTW6V+iJi9b2LDXzs=
+	t=1713908499; cv=none; b=oXhlaeKlqjs4+Jyrwo9jWHz6i9L8rE8HffAWAcAZl+XhUKc0BqHIhulHYOZsmXbhNRKVlQPnDYRJV6zKDhunrlv+SaiqR+zLqJR11U/vLYEBnUq7Vs05wb9VJNzZUVsCGqlGR87Lld9Gu09EoiGid27PMFZ4B3r0fHxg6quzfd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908498; c=relaxed/simple;
-	bh=N3N2fMpPSEsJdVnDd4D8+XuslV0K2ed1TfFkUvfaQ0I=;
+	s=arc-20240116; t=1713908499; c=relaxed/simple;
+	bh=hB5b4LYiSf1uNXTlLFqXle/c3PqdA948485iN+FzvqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrOznVmwofm36Km17aAe5rhRFtaCdvhzT6n+0o3WEXJ2qW/5U8//OEYuqDOXM68EA/Dkb5prULH0xTa9Yxf7ou9a0oMo154kdaCXpOehjvFaYhyXTUd7ZigtVtpm3zCZHWda71dCZkf/tuKxf3SA8hzVXLVfoa86nrxEneUwiss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q56Xhicr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nk9eM0bDdRcHSlMWm8NW5PBHznfInnv3fZFzZIt08W4yYus/j4A9JlHQ8V4yoH62vmY2FLB5fUt0Uz42zkYGs/NOoD6/zn6HKDN2SW5S7aLnsb4ETtXzhChkVgEoecU2eOSUiek40ljj0NmSL3NxFXAC85hoN9HrJvVwQUcdSTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQkWrz8O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q56Xhicr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63AC3C32786;
-	Tue, 23 Apr 2024 21:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQkWrz8O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB61C32782;
+	Tue, 23 Apr 2024 21:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908498;
-	bh=N3N2fMpPSEsJdVnDd4D8+XuslV0K2ed1TfFkUvfaQ0I=;
+	s=korg; t=1713908499;
+	bh=hB5b4LYiSf1uNXTlLFqXle/c3PqdA948485iN+FzvqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q56XhicrNcB33igZ/DaSWXUXveYUM98pSju5Q08ZA8BEl6N10u0LtYOFAMMjBeMFi
-	 kVh1hCllgBNqdWNfE5Iqnf/ImDC4rn7fSQ8OsmwgCTF0mkuS/Uxh2y8ahdViBv5QWq
-	 4hoy1vLHgumVqxZlt2r4x+0pvOY06ZloQyZFAsaI=
+	b=TQkWrz8OjWo570rkCF7DKChiI6kxMDmSl8gqkKaemqp0v2Q7zPKvMPZG/6S/WBYYz
+	 UAl7mjYqZPRDKA3v8a/NywDql1VgnmPi7tHzSvhBbpQ7NFdA2zOFJbYkbV6YJJ/dWz
+	 mlxaohqsVqfXz3is5dhFs35EFXgesVM+g1PK9IT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Mike Tipton <quic_mdtipton@quicinc.com>,
+	Rob Clark <robdclark@chromium.org>,
 	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 076/158] interconnect: qcom: x1e80100: Remove inexistent ACV_PERF BCM
-Date: Tue, 23 Apr 2024 14:38:18 -0700
-Message-ID: <20240423213858.429386511@linuxfoundation.org>
+Subject: [PATCH 6.8 077/158] interconnect: Dont access req_list while its being manipulated
+Date: Tue, 23 Apr 2024 14:38:19 -0700
+Message-ID: <20240423213858.455330550@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -52,93 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Mike Tipton <quic_mdtipton@quicinc.com>
 
-[ Upstream commit 59097a2a5ecadb0f025232c665fd11c8ae1e1f58 ]
+[ Upstream commit de1bf25b6d771abdb52d43546cf57ad775fb68a1 ]
 
-Booting the kernel on X1E results in a message like:
+The icc_lock mutex was split into separate icc_lock and icc_bw_lock
+mutexes in [1] to avoid lockdep splats. However, this didn't adequately
+protect access to icc_node::req_list.
 
-[    2.561524] qnoc-x1e80100 interconnect-0: ACV_PERF could not find RPMh address
+The icc_set_bw() function will eventually iterate over req_list while
+only holding icc_bw_lock, but req_list can be modified while only
+holding icc_lock. This causes races between icc_set_bw(), of_icc_get(),
+and icc_put().
 
-And indeed, taking a look at cmd-db, no such BCM exists. Remove it.
+Example A:
 
-Fixes: 9f196772841e ("interconnect: qcom: Add X1E80100 interconnect provider driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Mike Tipton <quic_mdtipton@quicinc.com>
-Link: https://lore.kernel.org/r/20240302-topic-faux_bcm_x1e-v1-1-c40fab7c4bc5@linaro.org
+  CPU0                               CPU1
+  ----                               ----
+  icc_set_bw(path_a)
+    mutex_lock(&icc_bw_lock);
+                                     icc_put(path_b)
+                                       mutex_lock(&icc_lock);
+    aggregate_requests()
+      hlist_for_each_entry(r, ...
+                                       hlist_del(...
+        <r = invalid pointer>
+
+Example B:
+
+  CPU0                               CPU1
+  ----                               ----
+  icc_set_bw(path_a)
+    mutex_lock(&icc_bw_lock);
+                                     path_b = of_icc_get()
+                                       of_icc_get_by_index()
+                                         mutex_lock(&icc_lock);
+                                         path_find()
+                                           path_init()
+    aggregate_requests()
+      hlist_for_each_entry(r, ...
+                                             hlist_add_head(...
+        <r = invalid pointer>
+
+Fix this by ensuring icc_bw_lock is always held before manipulating
+icc_node::req_list. The additional places icc_bw_lock is held don't
+perform any memory allocations, so we should still be safe from the
+original lockdep splats that motivated the separate locks.
+
+[1] commit af42269c3523 ("interconnect: Fix locking for runpm vs reclaim")
+
+Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
+Fixes: af42269c3523 ("interconnect: Fix locking for runpm vs reclaim")
+Reviewed-by: Rob Clark <robdclark@chromium.org>
+Link: https://lore.kernel.org/r/20240305225652.22872-1-quic_mdtipton@quicinc.com
 Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/x1e80100.c | 26 --------------------------
- 1 file changed, 26 deletions(-)
+ drivers/interconnect/core.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/interconnect/qcom/x1e80100.c b/drivers/interconnect/qcom/x1e80100.c
-index cbaf4f9c41be6..06f0a6d6cbbc0 100644
---- a/drivers/interconnect/qcom/x1e80100.c
-+++ b/drivers/interconnect/qcom/x1e80100.c
-@@ -116,15 +116,6 @@ static struct qcom_icc_node xm_sdc2 = {
- 	.links = { X1E80100_SLAVE_A2NOC_SNOC },
- };
+diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+index 50bac2d79d9b5..68edb07d4443e 100644
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -176,6 +176,8 @@ static struct icc_path *path_init(struct device *dev, struct icc_node *dst,
  
--static struct qcom_icc_node ddr_perf_mode_master = {
--	.name = "ddr_perf_mode_master",
--	.id = X1E80100_MASTER_DDR_PERF_MODE,
--	.channels = 1,
--	.buswidth = 4,
--	.num_links = 1,
--	.links = { X1E80100_SLAVE_DDR_PERF_MODE },
--};
--
- static struct qcom_icc_node qup0_core_master = {
- 	.name = "qup0_core_master",
- 	.id = X1E80100_MASTER_QUP_CORE_0,
-@@ -832,14 +823,6 @@ static struct qcom_icc_node qns_a2noc_snoc = {
- 	.links = { X1E80100_MASTER_A2NOC_SNOC },
- };
+ 	path->num_nodes = num_nodes;
  
--static struct qcom_icc_node ddr_perf_mode_slave = {
--	.name = "ddr_perf_mode_slave",
--	.id = X1E80100_SLAVE_DDR_PERF_MODE,
--	.channels = 1,
--	.buswidth = 4,
--	.num_links = 0,
--};
--
- static struct qcom_icc_node qup0_core_slave = {
- 	.name = "qup0_core_slave",
- 	.id = X1E80100_SLAVE_QUP_CORE_0,
-@@ -1591,12 +1574,6 @@ static struct qcom_icc_bcm bcm_acv = {
- 	.nodes = { &ebi },
- };
++	mutex_lock(&icc_bw_lock);
++
+ 	for (i = num_nodes - 1; i >= 0; i--) {
+ 		node->provider->users++;
+ 		hlist_add_head(&path->reqs[i].req_node, &node->req_list);
+@@ -186,6 +188,8 @@ static struct icc_path *path_init(struct device *dev, struct icc_node *dst,
+ 		node = node->reverse;
+ 	}
  
--static struct qcom_icc_bcm bcm_acv_perf = {
--	.name = "ACV_PERF",
--	.num_nodes = 1,
--	.nodes = { &ddr_perf_mode_slave },
--};
--
- static struct qcom_icc_bcm bcm_ce0 = {
- 	.name = "CE0",
- 	.num_nodes = 1,
-@@ -1863,18 +1840,15 @@ static const struct qcom_icc_desc x1e80100_aggre2_noc = {
- };
++	mutex_unlock(&icc_bw_lock);
++
+ 	return path;
+ }
  
- static struct qcom_icc_bcm * const clk_virt_bcms[] = {
--	&bcm_acv_perf,
- 	&bcm_qup0,
- 	&bcm_qup1,
- 	&bcm_qup2,
- };
+@@ -792,12 +796,16 @@ void icc_put(struct icc_path *path)
+ 		pr_err("%s: error (%d)\n", __func__, ret);
  
- static struct qcom_icc_node * const clk_virt_nodes[] = {
--	[MASTER_DDR_PERF_MODE] = &ddr_perf_mode_master,
- 	[MASTER_QUP_CORE_0] = &qup0_core_master,
- 	[MASTER_QUP_CORE_1] = &qup1_core_master,
- 	[MASTER_QUP_CORE_2] = &qup2_core_master,
--	[SLAVE_DDR_PERF_MODE] = &ddr_perf_mode_slave,
- 	[SLAVE_QUP_CORE_0] = &qup0_core_slave,
- 	[SLAVE_QUP_CORE_1] = &qup1_core_slave,
- 	[SLAVE_QUP_CORE_2] = &qup2_core_slave,
+ 	mutex_lock(&icc_lock);
++	mutex_lock(&icc_bw_lock);
++
+ 	for (i = 0; i < path->num_nodes; i++) {
+ 		node = path->reqs[i].node;
+ 		hlist_del(&path->reqs[i].req_node);
+ 		if (!WARN_ON(!node->provider->users))
+ 			node->provider->users--;
+ 	}
++
++	mutex_unlock(&icc_bw_lock);
+ 	mutex_unlock(&icc_lock);
+ 
+ 	kfree_const(path->name);
 -- 
 2.43.0
 
