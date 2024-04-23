@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6623A143C49;
-	Tue, 23 Apr 2024 21:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224D7143C49;
+	Tue, 23 Apr 2024 21:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908722; cv=none; b=BAPD0+L6RIR8V9+1YOfehLy61nl5JIQHwHFEhMvCFuKuM2KalpMmbyi2zAV8G+lzk7GUlYBCWehCeBg7/Qqx4UoL3EWGheYr/0hqk9L0RqvJnqeRPg7YWUKpvEZtsiOb/AdoFtKHCBT+ZGCSBebAHV6Y1eAFM8/Rsoxt2FPJYsc=
+	t=1713908723; cv=none; b=a6sQKwMDXu55KXEffda0BLsinkosrGMcz+wR+CdqZFgvdPkB78ICiplxRoequM9qG4rKR0y969dwmPccc2ux/wiBmsrupJe6APOuIhspS0aoaT1Y/VK9fL8UQRj8o7pUAYBhnvmr3EnqkBsn4Bou765Y99ESbp5W5IbYJ74oFjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908722; c=relaxed/simple;
-	bh=q8AzzETJ75LJq/aQZNV4MF8V+jha1tQqpLqM/kmnxAE=;
+	s=arc-20240116; t=1713908723; c=relaxed/simple;
+	bh=CUpCWBkfJ0kL3HhBayatLNFps5OeA8mvuEH1O/HHN4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCZvL1xHHyxxZ8FbCkkycWZVsQtL8gOS3axQ4RAyGF697a0Nn20TU75onGAYT9WvlhG/ad218iN9k4EFrdYz7fj/iMRMbvuj15mtswZylM1/jr4ABDYXC2Z67dx1BseclkC5ktcZsR9NwRFGEjaOjqZG/JRwCOqITrAEkkcBdTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCihTU6G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=H4ArAip9AR7rS5h6M5PKtgAiRA1HxN9iF1fnAW03A7sUycVf9iHPcllRJSj7dzVa0u8Mpv+HiHguB3W0Kapt68u1i5CsnhgxNmYgZDX4Fgs860AOcuZr8/vZnFFolD6flJM//8itb1OhmF0mrCoy8aIH7zYH5KVuKNWMc7K8ouc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8pkSVgs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCihTU6G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B6B8C32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8pkSVgs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8407C3277B;
 	Tue, 23 Apr 2024 21:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908722;
-	bh=q8AzzETJ75LJq/aQZNV4MF8V+jha1tQqpLqM/kmnxAE=;
+	s=korg; t=1713908723;
+	bh=CUpCWBkfJ0kL3HhBayatLNFps5OeA8mvuEH1O/HHN4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RCihTU6GlYpcPAl3TM6dYihoa6gzq1c4vfEzolTXx+gALegwRmj2VZGrsCXgHWpgR
-	 RAxPCRPBOQJn19jnjfNirOHlkQnYhITpqHUIX59oYazxl13oGUBHZuZrGuifjzsOm3
-	 LYfAqGUkF8+oILctK4zUN24xljzkwUCRlU+HqAcA=
+	b=s8pkSVgs/dUOls2wb3uTVAMtKG0FhVvCd5ROfppuCXNrelOID2nqlhtg5V018QhbO
+	 NDSkVApz4zlAxriKVUE2oDrIk9lp8ArEepTGzNO1cAZ//syWVQ6mIiIF3nPFf//wgm
+	 kDnatBYMJEX78U5YPS9cEP7dsabE2qKY7/ItpKeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Schuyler Patton <spatton@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/141] net: ethernet: ti: am65-cpsw-nuss: cleanup DMA Channels before using them
-Date: Tue, 23 Apr 2024 14:38:35 -0700
-Message-ID: <20240423213854.785404499@linuxfoundation.org>
+Subject: [PATCH 6.1 078/141] PCI: Simplify pcie_capability_clear_and_set_word() to ..._clear_word()
+Date: Tue, 23 Apr 2024 14:39:06 -0700
+Message-ID: <20240423213855.732564009@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -47,69 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit c24cd679b075b0e953ea167b0aa2b2d59e4eba7f ]
+[ Upstream commit 0fce6e5c87faec2c8bf28d2abc8cb595f4e244b6 ]
 
-The TX and RX DMA Channels used by the driver to exchange data with CPSW
-are not guaranteed to be in a clean state during driver initialization.
-The Bootloader could have used the same DMA Channels without cleaning them
-up in the event of failure. Thus, reset and disable the DMA Channels to
-ensure that they are in a clean state before using them.
+When using pcie_capability_clear_and_set_word() but not actually *setting*
+anything, use pcie_capability_clear_word() instead.
 
-Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
-Reported-by: Schuyler Patton <spatton@ti.com>
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/20240417095425.2253876-1-s-vadapalli@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20231026121924.2164-1-ilpo.jarvinen@linux.intel.com
+Link: https://lore.kernel.org/r/20231026121924.2164-2-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+[bhelgaas: squash]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/pci/pcie/aspm.c | 8 ++++----
+ drivers/pci/quirks.c    | 6 +++---
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 76fabeae512db..33df06a2de13a 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -2549,6 +2549,8 @@ static void am65_cpsw_unregister_devlink(struct am65_cpsw_common *common)
- 
- static int am65_cpsw_nuss_register_ndevs(struct am65_cpsw_common *common)
- {
-+	struct am65_cpsw_rx_chn *rx_chan = &common->rx_chns;
-+	struct am65_cpsw_tx_chn *tx_chan = common->tx_chns;
- 	struct device *dev = common->dev;
- 	struct devlink_port *dl_port;
- 	struct am65_cpsw_port *port;
-@@ -2567,6 +2569,22 @@ static int am65_cpsw_nuss_register_ndevs(struct am65_cpsw_common *common)
- 		return ret;
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index 25736d408e88e..2a3d973658dac 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -743,10 +743,10 @@ static void pcie_config_aspm_l1ss(struct pcie_link_state *link, u32 state)
+ 	 * in pcie_config_aspm_link().
+ 	 */
+ 	if (enable_req & (ASPM_STATE_L1_1 | ASPM_STATE_L1_2)) {
+-		pcie_capability_clear_and_set_word(child, PCI_EXP_LNKCTL,
+-						   PCI_EXP_LNKCTL_ASPM_L1, 0);
+-		pcie_capability_clear_and_set_word(parent, PCI_EXP_LNKCTL,
+-						   PCI_EXP_LNKCTL_ASPM_L1, 0);
++		pcie_capability_clear_word(child, PCI_EXP_LNKCTL,
++					   PCI_EXP_LNKCTL_ASPM_L1);
++		pcie_capability_clear_word(parent, PCI_EXP_LNKCTL,
++					   PCI_EXP_LNKCTL_ASPM_L1);
  	}
  
-+	/* The DMA Channels are not guaranteed to be in a clean state.
-+	 * Reset and disable them to ensure that they are back to the
-+	 * clean state and ready to be used.
-+	 */
-+	for (i = 0; i < common->tx_ch_num; i++) {
-+		k3_udma_glue_reset_tx_chn(tx_chan[i].tx_chn, &tx_chan[i],
-+					  am65_cpsw_nuss_tx_cleanup);
-+		k3_udma_glue_disable_tx_chn(tx_chan[i].tx_chn);
-+	}
-+
-+	for (i = 0; i < AM65_CPSW_MAX_RX_FLOWS; i++)
-+		k3_udma_glue_reset_rx_chn(rx_chan->rx_chn, i, rx_chan,
-+					  am65_cpsw_nuss_rx_cleanup, !!i);
-+
-+	k3_udma_glue_disable_rx_chn(rx_chan->rx_chn);
-+
- 	ret = am65_cpsw_nuss_register_devlink(common);
- 	if (ret)
- 		return ret;
+ 	val = 0;
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index e4951b30b923b..ba353b37ba526 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -4478,9 +4478,9 @@ static void quirk_disable_root_port_attributes(struct pci_dev *pdev)
+ 
+ 	pci_info(root_port, "Disabling No Snoop/Relaxed Ordering Attributes to avoid PCIe Completion erratum in %s\n",
+ 		 dev_name(&pdev->dev));
+-	pcie_capability_clear_and_set_word(root_port, PCI_EXP_DEVCTL,
+-					   PCI_EXP_DEVCTL_RELAX_EN |
+-					   PCI_EXP_DEVCTL_NOSNOOP_EN, 0);
++	pcie_capability_clear_word(root_port, PCI_EXP_DEVCTL,
++				   PCI_EXP_DEVCTL_RELAX_EN |
++				   PCI_EXP_DEVCTL_NOSNOOP_EN);
+ }
+ 
+ /*
 -- 
 2.43.0
 
