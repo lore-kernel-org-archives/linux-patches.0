@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92B820B3E;
-	Tue, 23 Apr 2024 21:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535F720B3E;
+	Tue, 23 Apr 2024 21:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908481; cv=none; b=MNRptV4C2bLHH1i3jh1INX27cuVxfVVJnK2dsG/tRg/d6kpoY+GAhshuCZir1LQ3WA3tHx4j22A7fzxKF+2JCd0noPkdPFKFxlf07Vq2EHc7sMoVK5tNmPkyVHUI1yrJA2YPOWiBX1s2vXKCkBKurc6UvO+IcQjSeibKB7TO7Zs=
+	t=1713908482; cv=none; b=LYR6k9xvyvirJLXAkXcle16SdcZ864vNR3our/0BUWNMP3XFw03lqhsmZX9JXRSFV9r7pl1z5nF6uYX87Cbhps32MPcIWFsBIeQzbOlmtGeRRr785Mg9AqDIyrqAUApxLBq3s1AhzdrngI1Tk+DYyMmT/1VzkOjZe6VuQnvmT94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908481; c=relaxed/simple;
-	bh=rh0EPYZYL7MHCpy9Z2Z2MiqnZU5m1v4BJKtvespapMU=;
+	s=arc-20240116; t=1713908482; c=relaxed/simple;
+	bh=z5CwRZU23E3V5UhGjAuNJrMffkE1T7f8c5CQuI49/TI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WDzjeYU5g8Ct0H0iAHVUdILQpEGJRROpMAiPQeg5m6efWP6ln72DS+OyRtx1r32pVd9M2lnUy0bcR0mghPA0Toii/1qS6d8gioo4ofiUUWcAdlvl0tBdScL0nsAW5F1d5zymugXG2xkCMYYVVsMtUX9CXutPIPcbTm3P0UheHrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XlJ+guMz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Hncjap9NM/r6YfL8gnhjlYj4OUZJ1LLmO7dR9vVeZ5VvFLSdKEcn2tc1azoAQ6ayqcDtsV0iYV3PwJHsxBDdXTbjme9H+s9M+4KfXmXRFFGbrN8n2QB6/3uLbsppXbSwAiJecuJu5bJPJZOMOQTSJwmYrgg/mDm5JIpxXhKALXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLYJnbxJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlJ+guMz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F073C32781;
-	Tue, 23 Apr 2024 21:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLYJnbxJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28142C116B1;
+	Tue, 23 Apr 2024 21:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908481;
-	bh=rh0EPYZYL7MHCpy9Z2Z2MiqnZU5m1v4BJKtvespapMU=;
+	s=korg; t=1713908482;
+	bh=z5CwRZU23E3V5UhGjAuNJrMffkE1T7f8c5CQuI49/TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XlJ+guMz2PciBZzkF7XWDwqXIHt9/aOyabRNm9U1eibWpctvXiwp1fwjls/NOoYTZ
-	 SVSVYc5nDHCMhOM0w7mU3dXFx3FGv4ZTNwL1HiKQRDW+KMgdVVt3t+AH0TkzhnKyAy
-	 CseWAunZHEXZGq83kR/hycEjLzhbI0eB71EOtgSc=
+	b=LLYJnbxJbiFmDHf2efClvIvmLuUKDdJO6YZ8DmeMlE7FRWZG+KmTrQ4Onlctm6iXq
+	 Qu8pKonkfRUZAARJRFoq0QIZNb8KwrrEWaS0YVahSEhtV/aOjb6lf+5ZGkTaq0eCvu
+	 RyFwqnnAsxoycnyU/l/DemEdUo+sjNXGa3Tlgf1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Barker <paul.barker.ct@bp.renesas.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 051/158] net: ravb: Count packets instead of descriptors in R-Car RX path
-Date: Tue, 23 Apr 2024 14:37:53 -0700
-Message-ID: <20240423213857.577261381@linuxfoundation.org>
+Subject: [PATCH 6.8 029/158] octeontx2-pf: fix FLOW_DIS_IS_FRAGMENT implementation
+Date: Tue, 23 Apr 2024 14:37:31 -0700
+Message-ID: <20240423213856.818713473@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -54,89 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Barker <paul.barker.ct@bp.renesas.com>
+From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit def52db470df28d6f43cacbd21137f03b9502073 ]
+[ Upstream commit 75ce9506ee3dc66648a7d74ab3b0acfa364d6d43 ]
 
-The units of "work done" in the RX path should be packets instead of
-descriptors.
+Upon reviewing the flower control flags handling in
+this driver, I notice that the key wasn't being used,
+only the mask.
 
-Descriptors which are used by the hardware to record error conditions or
-are empty in the case of a DMA mapping error should not count towards
-our RX work budget.
+Ie. `tc flower ... ip_flags nofrag` was hardware
+offloaded as `... ip_flags frag`.
 
-Also make the limit variable unsigned as it can never be negative.
+Only compile tested, no access to HW.
 
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Signed-off-by: Paul Barker <paul.barker.ct@bp.renesas.com>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c672e3727989 ("octeontx2-pf: Add support to filter packet based on IP fragment")
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 21 ++++++++-------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index e97c98d5eb19c..60c1cfc501304 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -895,29 +895,24 @@ static bool ravb_rx_rcar(struct net_device *ndev, int *quota, int q)
- 	struct ravb_private *priv = netdev_priv(ndev);
- 	const struct ravb_hw_info *info = priv->info;
- 	int entry = priv->cur_rx[q] % priv->num_rx_ring[q];
--	int boguscnt = (priv->dirty_rx[q] + priv->num_rx_ring[q]) -
--			priv->cur_rx[q];
- 	struct net_device_stats *stats = &priv->stats[q];
- 	struct ravb_ex_rx_desc *desc;
-+	unsigned int limit, i;
- 	struct sk_buff *skb;
- 	dma_addr_t dma_addr;
- 	struct timespec64 ts;
-+	int rx_packets = 0;
- 	u8  desc_status;
- 	u16 pkt_len;
--	int limit;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
+index 4fd44b6eecea6..60ee7ae2c4097 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
+@@ -688,6 +688,7 @@ static int otx2_tc_prepare_flow(struct otx2_nic *nic, struct otx2_tc_flow *node,
  
--	boguscnt = min(boguscnt, *quota);
--	limit = boguscnt;
-+	limit = priv->dirty_rx[q] + priv->num_rx_ring[q] - priv->cur_rx[q];
- 	desc = &priv->rx_ring[q].ex_desc[entry];
--	while (desc->die_dt != DT_FEMPTY) {
-+	for (i = 0; i < limit && rx_packets < *quota && desc->die_dt != DT_FEMPTY; i++) {
- 		/* Descriptor type must be checked before all other reads */
- 		dma_rmb();
- 		desc_status = desc->msc;
- 		pkt_len = le16_to_cpu(desc->ds_cc) & RX_DS;
+ 	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_CONTROL)) {
+ 		struct flow_match_control match;
++		u32 val;
  
--		if (--boguscnt < 0)
--			break;
--
- 		/* We use 0-byte descriptors to mark the DMA mapping errors */
- 		if (!pkt_len)
- 			continue;
-@@ -963,7 +958,7 @@ static bool ravb_rx_rcar(struct net_device *ndev, int *quota, int q)
- 			if (ndev->features & NETIF_F_RXCSUM)
- 				ravb_rx_csum(skb);
- 			napi_gro_receive(&priv->napi[q], skb);
--			stats->rx_packets++;
-+			rx_packets++;
- 			stats->rx_bytes += pkt_len;
+ 		flow_rule_match_control(rule, &match);
+ 		if (match.mask->flags & FLOW_DIS_FIRST_FRAG) {
+@@ -696,12 +697,14 @@ static int otx2_tc_prepare_flow(struct otx2_nic *nic, struct otx2_tc_flow *node,
  		}
  
-@@ -999,9 +994,9 @@ static bool ravb_rx_rcar(struct net_device *ndev, int *quota, int q)
- 		desc->die_dt = DT_FEMPTY;
- 	}
- 
--	*quota -= limit - (++boguscnt);
--
--	return boguscnt <= 0;
-+	stats->rx_packets += rx_packets;
-+	*quota -= rx_packets;
-+	return *quota == 0;
- }
- 
- /* Packet receive function for Ethernet AVB */
+ 		if (match.mask->flags & FLOW_DIS_IS_FRAGMENT) {
++			val = match.key->flags & FLOW_DIS_IS_FRAGMENT;
+ 			if (ntohs(flow_spec->etype) == ETH_P_IP) {
+-				flow_spec->ip_flag = IPV4_FLAG_MORE;
++				flow_spec->ip_flag = val ? IPV4_FLAG_MORE : 0;
+ 				flow_mask->ip_flag = IPV4_FLAG_MORE;
+ 				req->features |= BIT_ULL(NPC_IPFRAG_IPV4);
+ 			} else if (ntohs(flow_spec->etype) == ETH_P_IPV6) {
+-				flow_spec->next_header = IPPROTO_FRAGMENT;
++				flow_spec->next_header = val ?
++							 IPPROTO_FRAGMENT : 0;
+ 				flow_mask->next_header = 0xff;
+ 				req->features |= BIT_ULL(NPC_IPFRAG_IPV6);
+ 			} else {
 -- 
 2.43.0
 
