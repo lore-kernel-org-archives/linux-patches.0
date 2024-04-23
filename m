@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98BC314389D;
-	Tue, 23 Apr 2024 21:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC70143895;
+	Tue, 23 Apr 2024 21:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908776; cv=none; b=IAFjlXhtRS6FYTWztxzA6QJFjW2GIzg9u4eiRj7u4IdTbVWGtm/XorYTH+RkxEnMzJGSdjf66emMusVdTl74GzKYYOiuE2mwwazgAmDWNFFT+Qm5YgTsKJQwGVr/6y5iLpnfmlIieCnkXBofHTbwam50YU8ROg7jbIDqi/Cea7E=
+	t=1713908777; cv=none; b=mTRztNbDZzUnbdAlTCbhv1pyONQXCTIXIr294GiNpb8MPvdukvCkZPjX2dZT2Saq9PO0umV4l79xE12Ptt+hsRq3fuz3pEe6sEt2LB5P8HpcF6GLT5Y8yvlR6Dyc4JZLiMMr9gGCYVY3OD4nS13Tlyz5xEZFY/eYKo8GohEQqOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908776; c=relaxed/simple;
-	bh=Vgfv3+JVBXsQhn0LFWIiOfUTpgDatVoYKdixJ2GhyLs=;
+	s=arc-20240116; t=1713908777; c=relaxed/simple;
+	bh=ulxGtpUX587knkUlNBV0aCgo3xPpBmxAilS/NSdNsnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A0CmE7UkIaYAyDCwnVcmfmMYoiPJ71eRB0jXCNwDGNQcwuW6Z0iXAynBUITYVIxhAFAac24pOkoNylyYaRs7pOQrYJY8lteGIVxb71aNZs8LFUrC90wKoJ7pGguP8rcBFPpfkcb41+iWJR+9b/egHfLQ2+bwHlsLhal2ZPZ1oME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjRonUhF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lVxFF3Hc0e7Cc1cf88iIWFHK5kCkKOK0I100T4rSKt+rChPBdsghabMFH1is0azo3Xal5YmqG7xjnCOP1pXD+sd9WG2rud6gjFZonC2W3NDS+qlbXbNR8LoRgXtjCYHdyc5EPwudHUBoUfXT+tEUVNYABNxIlGpcupQLPtKE/hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNBW1pe3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjRonUhF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC75C3277B;
-	Tue, 23 Apr 2024 21:46:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNBW1pe3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C22C32781;
+	Tue, 23 Apr 2024 21:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908776;
-	bh=Vgfv3+JVBXsQhn0LFWIiOfUTpgDatVoYKdixJ2GhyLs=;
+	s=korg; t=1713908777;
+	bh=ulxGtpUX587knkUlNBV0aCgo3xPpBmxAilS/NSdNsnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wjRonUhFGVfC348sQ6lubZ7wnIvZHhfvjpX0bIUqnvgS70/U9UxIG9kdNEBgJyJEi
-	 FQ1KglFD4x7uCc5y6LESmvWr+vCVAA/gZWJvOnfY2S45DOPI4Phm3oX3suqJ9pvheU
-	 ChJykMvuWwkxvzre4FFiZlSes+QyJSHRCS4LQFnc=
+	b=MNBW1pe3RR/MFlj6A4ZDtaTcAbKVVWrDQyNaxvWmrkPgecQ/Wt7flHYi/QFaKyB+T
+	 5JjiRSKgJg46reKtK9RHX6zhZGJ6mkbVE9v3bYSf+4g1/0XD+GL6T7HQCzE3h8UjYu
+	 oJ1LFdPh1BeFsoVwrngxo2PJH+p5oJYVrk6sXbVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	James Christopher Adduono <jc@adduono.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 21/71] netfilter: flowtable: incorrect pppoe tuple
-Date: Tue, 23 Apr 2024 14:39:34 -0700
-Message-ID: <20240423213844.860692888@linuxfoundation.org>
+Subject: [PATCH 5.15 03/71] ksmbd: do not set SMB2_GLOBAL_CAP_ENCRYPTION for SMB 3.1.1
+Date: Tue, 23 Apr 2024 14:39:16 -0700
+Message-ID: <20240423213844.242602828@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
 References: <20240423213844.122920086@linuxfoundation.org>
@@ -50,35 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 6db5dc7b351b9569940cd1cf445e237c42cd6d27 ]
+[ Upstream commit 5ed11af19e56f0434ce0959376d136005745a936 ]
 
-pppoe traffic reaching ingress path does not match the flowtable entry
-because the pppoe header is expected to be at the network header offset.
-This bug causes a mismatch in the flow table lookup, so pppoe packets
-enter the classical forwarding path.
+SMB2_GLOBAL_CAP_ENCRYPTION flag should be used only for 3.0 and
+3.0.2 dialects. This flags set cause compatibility problems with
+other SMB clients.
 
-Fixes: 72efd585f714 ("netfilter: flowtable: add pppoe support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: James Christopher Adduono <jc@adduono.com>
+Tested-by: James Christopher Adduono <jc@adduono.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_ip.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ksmbd/smb2ops.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nf_flow_table_ip.c b/net/netfilter/nf_flow_table_ip.c
-index 448956fb52f69..f3227f9316969 100644
---- a/net/netfilter/nf_flow_table_ip.c
-+++ b/net/netfilter/nf_flow_table_ip.c
-@@ -156,7 +156,7 @@ static void nf_flow_tuple_encap(struct sk_buff *skb,
- 		tuple->encap[i].proto = skb->protocol;
- 		break;
- 	case htons(ETH_P_PPP_SES):
--		phdr = (struct pppoe_hdr *)skb_mac_header(skb);
-+		phdr = (struct pppoe_hdr *)skb_network_header(skb);
- 		tuple->encap[i].id = ntohs(phdr->sid);
- 		tuple->encap[i].proto = skb->protocol;
- 		break;
+diff --git a/fs/ksmbd/smb2ops.c b/fs/ksmbd/smb2ops.c
+index c69943d96565a..d0db9f32c423d 100644
+--- a/fs/ksmbd/smb2ops.c
++++ b/fs/ksmbd/smb2ops.c
+@@ -229,6 +229,11 @@ void init_smb3_0_server(struct ksmbd_conn *conn)
+ 	    conn->cli_cap & SMB2_GLOBAL_CAP_ENCRYPTION)
+ 		conn->vals->capabilities |= SMB2_GLOBAL_CAP_ENCRYPTION;
+ 
++	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION ||
++	    (!(server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION_OFF) &&
++	     conn->cli_cap & SMB2_GLOBAL_CAP_ENCRYPTION))
++		conn->vals->capabilities |= SMB2_GLOBAL_CAP_ENCRYPTION;
++
+ 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL)
+ 		conn->vals->capabilities |= SMB2_GLOBAL_CAP_MULTI_CHANNEL;
+ }
+@@ -276,11 +281,6 @@ int init_smb3_11_server(struct ksmbd_conn *conn)
+ 		conn->vals->capabilities |= SMB2_GLOBAL_CAP_LEASING |
+ 			SMB2_GLOBAL_CAP_DIRECTORY_LEASING;
+ 
+-	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION ||
+-	    (!(server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION_OFF) &&
+-	     conn->cli_cap & SMB2_GLOBAL_CAP_ENCRYPTION))
+-		conn->vals->capabilities |= SMB2_GLOBAL_CAP_ENCRYPTION;
+-
+ 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL)
+ 		conn->vals->capabilities |= SMB2_GLOBAL_CAP_MULTI_CHANNEL;
+ 
 -- 
 2.43.0
 
