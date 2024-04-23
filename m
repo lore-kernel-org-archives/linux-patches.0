@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B205B1487C1;
-	Tue, 23 Apr 2024 21:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2122143C5F;
+	Tue, 23 Apr 2024 21:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908618; cv=none; b=sOJtB5TuXLL9K8wus3RI0bKh1u8ILjipm9Ej1AGv2dlcf/6lOoTsN4uDFGBKzrC9j7QDE3foUEs4qkxJJIA+2q6b0NtJcmp7YwI5v14/lHSuS+PXAdpiUbF/riebKv2oe7RbyNWmu+bfEzNHYV097OlVuzik6clUJwoQRDp6qwI=
+	t=1713908619; cv=none; b=T+Oe/Q3cW++vW/e51szjDVZD7DYwEJ2bvzmhHN73LcsbXB4MeLzkPhcIU43ZUhFJm0+Cqw8owldYIAdFngO0RkMhRPuHvMkBmCUilgkBYBsP6NiEVTvrdNNglfrxlYytaCHeLJYRo1sl/gWn9n3JNxU/UknQ+rSBf3TYcEZzFO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908618; c=relaxed/simple;
-	bh=E7BfcHXuDKdyT7P20zL3hqd/hmuuXLmnvO9V9a46whA=;
+	s=arc-20240116; t=1713908619; c=relaxed/simple;
+	bh=jjQ++cEJQihTa7Vg8LmW2DdsRGpGy0iwr1WwlnSoVRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jJJW6WEqGkpn3Xf7NZRBY+F87B3Bju8emB/yEzMfE+Dt6jlrP294obMWPcVnPuUAKixJM2Qa21xWtAku6+SbaGX0ReEiYaZQ1EEq6LuZRA7xrAysBafH1OSQdDwK7w0pDyIJkEcmQhbUIpE/phnTUrC/xSg07g+i5Xg02qH4Gno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xc5XntyC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RV9E6c66DjKcupEUNcwU1GKUPgC1ukSNpYl+Uwo4rbkbTjHz4fncbcv3sXMTqcinFRH+saLu5JDJexfA6w041QPKsuxBe3NhNufpCzHwtG0fyQXfnZm6E5TKoexeMAzryhuR5WYlZvOx4ghNdLTwMrUH7Ac8iI2eYORll9/dhQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FiXVRVkc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xc5XntyC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877A1C32782;
-	Tue, 23 Apr 2024 21:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FiXVRVkc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C98BC116B1;
+	Tue, 23 Apr 2024 21:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908618;
-	bh=E7BfcHXuDKdyT7P20zL3hqd/hmuuXLmnvO9V9a46whA=;
+	s=korg; t=1713908619;
+	bh=jjQ++cEJQihTa7Vg8LmW2DdsRGpGy0iwr1WwlnSoVRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xc5XntyCUWeUIF1x9ex6tO/zxQ70ts+5xvuixHEeXM3TPaA8w+d+V8LGJH+Kzed7z
-	 M3EeCHINcbddTSZmqrAvmOYmdK+e1rgXppNiitHNYHXd3r2kMZaGixXSyvs6PQ67uA
-	 hdf+S9/XXhNyIKKNEJjWJQxt/6eGfuUgNCbtD4yM=
+	b=FiXVRVkcrlpChtbpsmuirwVFub4sTDQQE7HcORQfFdEy1oXB/RfhFPHwBWrzTDwNN
+	 I+DsBP03+VVzBikWJnGO7ySyIMNC9WJ68uNMgi86K5HdvVay499wQvA5n1c9Uqblup
+	 tJe1helPS0Iahm6SGwJfG0PVDYC/523p0aOyPsH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 092/158] clk: Initialize struct clk_core kref earlier
-Date: Tue, 23 Apr 2024 14:38:49 -0700
-Message-ID: <20240423213858.731476112@linuxfoundation.org>
+	Sanath S <Sanath.S@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.6 075/158] thunderbolt: Introduce tb_port_reset()
+Date: Tue, 23 Apr 2024 14:38:32 -0700
+Message-ID: <20240423213858.198867326@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -51,98 +51,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Boyd <sboyd@kernel.org>
+From: Sanath S <Sanath.S@amd.com>
 
-[ Upstream commit 9d05ae531c2cff20d5d527f04e28d28e04379929 ]
+commit 01da6b99d49f60b1edead44e33569b1a2e9f49b7 upstream.
 
-Initialize this kref once we allocate memory for the struct clk_core so
-that we can reuse the release function to free any memory associated
-with the structure. This mostly consolidates code, but also clarifies
-that the kref lifetime exists once the container structure (struct
-clk_core) is allocated instead of leaving it in a half-baked state for
-most of __clk_core_init().
+Introduce a function that issues Downstream Port Reset to a USB4 port.
+This supports Thunderbolt 2, 3 and USB4 routers.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20240325184204.745706-4-sboyd@kernel.org
-Stable-dep-of: e581cf5d2162 ("clk: Get runtime PM before walking tree during disable_unused")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Sanath S <Sanath.S@amd.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/clk.c | 28 +++++++++++++---------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ drivers/thunderbolt/lc.c      |   45 ++++++++++++++++++++++++++++++++++++++++++
+ drivers/thunderbolt/switch.c  |    7 ++++++
+ drivers/thunderbolt/tb.h      |    2 +
+ drivers/thunderbolt/tb_regs.h |    4 +++
+ drivers/thunderbolt/usb4.c    |   39 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 97 insertions(+)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index ac5be561ccdc9..56b8f540e8abe 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -3919,8 +3919,6 @@ static int __clk_core_init(struct clk_core *core)
- 	}
+--- a/drivers/thunderbolt/lc.c
++++ b/drivers/thunderbolt/lc.c
+@@ -6,6 +6,8 @@
+  * Author: Mika Westerberg <mika.westerberg@linux.intel.com>
+  */
  
- 	clk_core_reparent_orphans_nolock();
--
--	kref_init(&core->ref);
- out:
- 	clk_pm_runtime_put(core);
- unlock:
-@@ -4149,6 +4147,16 @@ static void clk_core_free_parent_map(struct clk_core *core)
- 	kfree(core->parents);
++#include <linux/delay.h>
++
+ #include "tb.h"
+ 
+ /**
+@@ -45,6 +47,49 @@ static int find_port_lc_cap(struct tb_po
+ 	return sw->cap_lc + start + phys * size;
  }
  
-+/* Free memory allocated for a struct clk_core */
-+static void __clk_release(struct kref *ref)
++/**
++ * tb_lc_reset_port() - Trigger downstream port reset through LC
++ * @port: Port that is reset
++ *
++ * Triggers downstream port reset through link controller registers.
++ * Returns %0 in case of success negative errno otherwise. Only supports
++ * non-USB4 routers with link controller (that's Thunderbolt 2 and
++ * Thunderbolt 3).
++ */
++int tb_lc_reset_port(struct tb_port *port)
 +{
-+	struct clk_core *core = container_of(ref, struct clk_core, ref);
++	struct tb_switch *sw = port->sw;
++	int cap, ret;
++	u32 mode;
 +
-+	clk_core_free_parent_map(core);
-+	kfree_const(core->name);
-+	kfree(core);
++	if (sw->generation < 2)
++		return -EINVAL;
++
++	cap = find_port_lc_cap(port);
++	if (cap < 0)
++		return cap;
++
++	ret = tb_sw_read(sw, &mode, TB_CFG_SWITCH, cap + TB_LC_PORT_MODE, 1);
++	if (ret)
++		return ret;
++
++	mode |= TB_LC_PORT_MODE_DPR;
++
++	ret = tb_sw_write(sw, &mode, TB_CFG_SWITCH, cap + TB_LC_PORT_MODE, 1);
++	if (ret)
++		return ret;
++
++	fsleep(10000);
++
++	ret = tb_sw_read(sw, &mode, TB_CFG_SWITCH, cap + TB_LC_PORT_MODE, 1);
++	if (ret)
++		return ret;
++
++	mode &= ~TB_LC_PORT_MODE_DPR;
++
++	return tb_sw_write(sw, &mode, TB_CFG_SWITCH, cap + TB_LC_PORT_MODE, 1);
 +}
 +
- static struct clk *
- __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
+ static int tb_lc_set_port_configured(struct tb_port *port, bool configured)
  {
-@@ -4169,6 +4177,8 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
- 		goto fail_out;
- 	}
+ 	bool upstream = tb_is_upstream_port(port);
+--- a/drivers/thunderbolt/switch.c
++++ b/drivers/thunderbolt/switch.c
+@@ -675,6 +675,13 @@ int tb_port_disable(struct tb_port *port
+ 	return __tb_port_enable(port, false);
+ }
  
-+	kref_init(&core->ref);
++static int tb_port_reset(struct tb_port *port)
++{
++	if (tb_switch_is_usb4(port->sw))
++		return port->cap_usb4 ? usb4_port_reset(port) : 0;
++	return tb_lc_reset_port(port);
++}
 +
- 	core->name = kstrdup_const(init->name, GFP_KERNEL);
- 	if (!core->name) {
- 		ret = -ENOMEM;
-@@ -4223,12 +4233,10 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
- 	hw->clk = NULL;
- 
- fail_create_clk:
--	clk_core_free_parent_map(core);
- fail_parents:
- fail_ops:
--	kfree_const(core->name);
- fail_name:
--	kfree(core);
-+	kref_put(&core->ref, __clk_release);
- fail_out:
- 	return ERR_PTR(ret);
- }
-@@ -4308,16 +4316,6 @@ int of_clk_hw_register(struct device_node *node, struct clk_hw *hw)
- }
- EXPORT_SYMBOL_GPL(of_clk_hw_register);
- 
--/* Free memory allocated for a clock. */
--static void __clk_release(struct kref *ref)
--{
--	struct clk_core *core = container_of(ref, struct clk_core, ref);
--
--	clk_core_free_parent_map(core);
--	kfree_const(core->name);
--	kfree(core);
--}
--
  /*
-  * Empty clk_ops for unregistered clocks. These are used temporarily
-  * after clk_unregister() was called on a clock and until last clock
--- 
-2.43.0
-
+  * tb_init_port() - initialize a port
+  *
+--- a/drivers/thunderbolt/tb.h
++++ b/drivers/thunderbolt/tb.h
+@@ -1119,6 +1119,7 @@ int tb_drom_read(struct tb_switch *sw);
+ int tb_drom_read_uid_only(struct tb_switch *sw, u64 *uid);
+ 
+ int tb_lc_read_uuid(struct tb_switch *sw, u32 *uuid);
++int tb_lc_reset_port(struct tb_port *port);
+ int tb_lc_configure_port(struct tb_port *port);
+ void tb_lc_unconfigure_port(struct tb_port *port);
+ int tb_lc_configure_xdomain(struct tb_port *port);
+@@ -1251,6 +1252,7 @@ void usb4_switch_remove_ports(struct tb_
+ 
+ int usb4_port_unlock(struct tb_port *port);
+ int usb4_port_hotplug_enable(struct tb_port *port);
++int usb4_port_reset(struct tb_port *port);
+ int usb4_port_configure(struct tb_port *port);
+ void usb4_port_unconfigure(struct tb_port *port);
+ int usb4_port_configure_xdomain(struct tb_port *port, struct tb_xdomain *xd);
+--- a/drivers/thunderbolt/tb_regs.h
++++ b/drivers/thunderbolt/tb_regs.h
+@@ -383,6 +383,7 @@ struct tb_regs_port_header {
+ #define PORT_CS_18_WODS				BIT(17)
+ #define PORT_CS_18_WOU4S			BIT(18)
+ #define PORT_CS_19				0x13
++#define PORT_CS_19_DPR				BIT(0)
+ #define PORT_CS_19_PC				BIT(3)
+ #define PORT_CS_19_PID				BIT(4)
+ #define PORT_CS_19_WOC				BIT(16)
+@@ -579,6 +580,9 @@ struct tb_regs_hop {
+ #define TB_LC_POWER				0x740
+ 
+ /* Link controller registers */
++#define TB_LC_PORT_MODE				0x26
++#define TB_LC_PORT_MODE_DPR			BIT(0)
++
+ #define TB_LC_CS_42				0x2a
+ #define TB_LC_CS_42_USB_PLUGGED			BIT(31)
+ 
+--- a/drivers/thunderbolt/usb4.c
++++ b/drivers/thunderbolt/usb4.c
+@@ -1113,6 +1113,45 @@ int usb4_port_hotplug_enable(struct tb_p
+ 	return tb_port_write(port, &val, TB_CFG_PORT, ADP_CS_5, 1);
+ }
+ 
++/**
++ * usb4_port_reset() - Issue downstream port reset
++ * @port: USB4 port to reset
++ *
++ * Issues downstream port reset to @port.
++ */
++int usb4_port_reset(struct tb_port *port)
++{
++	int ret;
++	u32 val;
++
++	if (!port->cap_usb4)
++		return -EINVAL;
++
++	ret = tb_port_read(port, &val, TB_CFG_PORT,
++			   port->cap_usb4 + PORT_CS_19, 1);
++	if (ret)
++		return ret;
++
++	val |= PORT_CS_19_DPR;
++
++	ret = tb_port_write(port, &val, TB_CFG_PORT,
++			    port->cap_usb4 + PORT_CS_19, 1);
++	if (ret)
++		return ret;
++
++	fsleep(10000);
++
++	ret = tb_port_read(port, &val, TB_CFG_PORT,
++			   port->cap_usb4 + PORT_CS_19, 1);
++	if (ret)
++		return ret;
++
++	val &= ~PORT_CS_19_DPR;
++
++	return tb_port_write(port, &val, TB_CFG_PORT,
++			     port->cap_usb4 + PORT_CS_19, 1);
++}
++
+ static int usb4_port_set_configured(struct tb_port *port, bool configured)
+ {
+ 	int ret;
 
 
