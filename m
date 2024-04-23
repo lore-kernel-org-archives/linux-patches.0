@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6494C85274;
-	Tue, 23 Apr 2024 21:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A2085274;
+	Tue, 23 Apr 2024 21:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908567; cv=none; b=cBuIhIurxO4fdzbxHGJSWPcs/tozWA6J0EUPLbO8dlz/Yj5OERcflPOMTsrXE3Rh0oovz8JBlITx4l7TSIQo0MYF4edaLZSLAhOASugTobqriNfD93g+B4r0wC0XJMZrGiSnRjVE3SHDJyjN4cJVWTqmtKD4LUgMlhsZzQ/D+cc=
+	t=1713908568; cv=none; b=n68Y8kIoWU/fJ5y+bm1wwIJfvTE1mSRhYNP8+K1LcMxEsuSJ206KwhDWSzaKgcCZE1+W4om2iW3aOM0ywXU4PvHSW1uCMR0nxmOZdChTwqmmDIXp2hexVk3nbnfJDTHGAsNh4xEfxxn4dc8dfqqnVZhTMieYNhKJuunR6zm4qN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908567; c=relaxed/simple;
-	bh=igbRRTy7T0K4FecNtEs5ykgYDI5c7JqaU//XFl68mGE=;
+	s=arc-20240116; t=1713908568; c=relaxed/simple;
+	bh=5qfcQsJ11VJDHWcL6albcm6k/9d62aZm5FogVVVdAxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X5QDlAjZBeiIWkgRwBNsMcRrEC99fGZqS+d1waKxw8WFeShuddAdV0VM9vpcOy19DpL2Ha3imHnlm1cZx97EARUAw8MDqh7xgehbuACcNi5uy5vf2f2Kj7KUej8kX5KkMCbLqRvvlEyFeuHRbrTQpZzO0KpoyjI9lf+rWOUamu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x146WF+w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HFgqShNrFUE7srgDnIBwyTvGHRU+7XDk2WozO2SDFmttCAbKLc4ZFHl6odklhUei3zTmwAUHr81IxJNoleU8CaKKIw23yZwLmYcZRM709h4PE4KSZsdHOaNImyVP0nj/6fMXPlU+Q6oGaoRmdorCe4bnUtRb7M53VS6jIirtOew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZi797Uq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x146WF+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3275DC32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZi797Uq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE168C32782;
 	Tue, 23 Apr 2024 21:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908567;
-	bh=igbRRTy7T0K4FecNtEs5ykgYDI5c7JqaU//XFl68mGE=;
+	bh=5qfcQsJ11VJDHWcL6albcm6k/9d62aZm5FogVVVdAxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x146WF+wYPHybZizcuHGLhfvynQU4W10Aj88/KDgv5zrorT75pMLI+9qBTq0p5eOf
-	 XuctOlzvm/Fw5I3iyOMiOzmYxiKuf9pfv+M/+/ela23i5e5GN2dlSaAEFgfdgZBhUt
-	 hz7rsGOpDCaaj6QJdeLQWRibs/2e8ItMbPKoqcu4=
+	b=QZi797Uq+Q0LSf5r5BD+NhLt41lADiFPofMtXaMvVyCtAxT1QnPHMPtrp3iErElj9
+	 c6EoA7X2AnxWH0/ExIoxcsMPRiL7TD2w/zFcQ17NlfABmnqevRQD+Cb+EvcX4WRF0A
+	 JiI4N2ez13YR3GzYjZp37pubchGgO39w8JbBCsjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 002/158] smb: client: fix UAF in smb2_reconnect_server()
-Date: Tue, 23 Apr 2024 14:37:19 -0700
-Message-ID: <20240423213855.776896638@linuxfoundation.org>
+Subject: [PATCH 6.6 003/158] smb3: show beginning time for per share stats
+Date: Tue, 23 Apr 2024 14:37:20 -0700
+Message-ID: <20240423213855.802187668@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -51,214 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 24a9799aa8efecd0eb55a75e35f9d8e6400063aa ]
+[ Upstream commit d8392c203e84ec7daa2afecdb8f4db69bc32416a ]
 
-The UAF bug is due to smb2_reconnect_server() accessing a session that
-is already being teared down by another thread that is executing
-__cifs_put_smb_ses().  This can happen when (a) the client has
-connection to the server but no session or (b) another thread ends up
-setting @ses->ses_status again to something different than
-SES_EXITING.
+In analyzing problems, one missing piece of debug data is when the
+mount occurred.  A related problem is when collecting stats we don't
+know the  period of time the stats covered, ie when this set of stats
+for the tcon started to be collected.  To make debugging easier track
+the stats begin time. Set it when the mount occurred at mount time,
+and reset it to current time whenever stats are reset. For example,
 
-To fix this, we need to make sure to unconditionally set
-@ses->ses_status to SES_EXITING and prevent any other threads from
-setting a new status while we're still tearing it down.
-
-The following can be reproduced by adding some delay to right after
-the ipc is freed in __cifs_put_smb_ses() - which will give
-smb2_reconnect_server() worker a chance to run and then accessing
-@ses->ipc:
-
-kinit ...
-mount.cifs //srv/share /mnt/1 -o sec=krb5,nohandlecache,echo_interval=10
-[disconnect srv]
-ls /mnt/1 &>/dev/null
-sleep 30
-kdestroy
-[reconnect srv]
-sleep 10
-umount /mnt/1
 ...
-CIFS: VFS: Verify user has a krb5 ticket and keyutils is installed
-CIFS: VFS: \\srv Send error in SessSetup = -126
-CIFS: VFS: Verify user has a krb5 ticket and keyutils is installed
-CIFS: VFS: \\srv Send error in SessSetup = -126
-general protection fault, probably for non-canonical address
-0x6b6b6b6b6b6b6b6b: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 3 PID: 50 Comm: kworker/3:1 Not tainted 6.9.0-rc2 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-1.fc39
-04/01/2014
-Workqueue: cifsiod smb2_reconnect_server [cifs]
-RIP: 0010:__list_del_entry_valid_or_report+0x33/0xf0
-Code: 4f 08 48 85 d2 74 42 48 85 c9 74 59 48 b8 00 01 00 00 00 00 ad
-de 48 39 c2 74 61 48 b8 22 01 00 00 00 00 74 69 <48> 8b 01 48 39 f8 75
-7b 48 8b 72 08 48 39 c6 0f 85 88 00 00 00 b8
-RSP: 0018:ffffc900001bfd70 EFLAGS: 00010a83
-RAX: dead000000000122 RBX: ffff88810da53838 RCX: 6b6b6b6b6b6b6b6b
-RDX: 6b6b6b6b6b6b6b6b RSI: ffffffffc02f6878 RDI: ffff88810da53800
-RBP: ffff88810da53800 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000001 R12: ffff88810c064000
-R13: 0000000000000001 R14: ffff88810c064000 R15: ffff8881039cc000
-FS: 0000000000000000(0000) GS:ffff888157c00000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fe3728b1000 CR3: 000000010caa4000 CR4: 0000000000750ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- ? die_addr+0x36/0x90
- ? exc_general_protection+0x1c1/0x3f0
- ? asm_exc_general_protection+0x26/0x30
- ? __list_del_entry_valid_or_report+0x33/0xf0
- __cifs_put_smb_ses+0x1ae/0x500 [cifs]
- smb2_reconnect_server+0x4ed/0x710 [cifs]
- process_one_work+0x205/0x6b0
- worker_thread+0x191/0x360
- ? __pfx_worker_thread+0x10/0x10
- kthread+0xe2/0x110
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x34/0x50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+1) \\localhost\test
+SMBs: 14 since 2024-01-17 22:17:30 UTC
+Bytes read: 0  Bytes written: 0
+Open files: 0 total (local), 0 open on server
+TreeConnects: 1 total 0 failed
+TreeDisconnects: 0 total 0 failed
+...
+2) \\localhost\scratch
+SMBs: 24 since 2024-01-17 22:16:04 UTC
+Bytes read: 0  Bytes written: 0
+Open files: 0 total (local), 0 open on server
+TreeConnects: 1 total 0 failed
+TreeDisconnects: 0 total 0 failed
+...
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Note the time "since ... UTC" is now displayed in /proc/fs/cifs/Stats
+for each share that is mounted.
+
+Suggested-by: Shyam Prasad N <sprasad@microsoft.com>
+Reviewed-by: Bharath SM <bharathsm@microsoft.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 062a7f0ff46e ("smb: client: guarantee refcounted children from parent session")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c | 83 +++++++++++++++++------------------------
- 1 file changed, 34 insertions(+), 49 deletions(-)
+ fs/smb/client/cifs_debug.c | 6 ++++--
+ fs/smb/client/cifsglob.h   | 1 +
+ fs/smb/client/misc.c       | 1 +
+ 3 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index 556f3c31aedc7..ae35855966afd 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -237,7 +237,13 @@ cifs_mark_tcp_ses_conns_for_reconnect(struct TCP_Server_Info *server,
- 
- 	spin_lock(&cifs_tcp_ses_lock);
- 	list_for_each_entry_safe(ses, nses, &pserver->smb_ses_list, smb_ses_list) {
--		/* check if iface is still active */
-+		spin_lock(&ses->ses_lock);
-+		if (ses->ses_status == SES_EXITING) {
-+			spin_unlock(&ses->ses_lock);
-+			continue;
-+		}
-+		spin_unlock(&ses->ses_lock);
-+
- 		spin_lock(&ses->chan_lock);
- 		if (cifs_ses_get_chan_index(ses, server) ==
- 		    CIFS_INVAL_CHAN_INDEX) {
-@@ -1960,31 +1966,6 @@ cifs_setup_ipc(struct cifs_ses *ses, struct smb3_fs_context *ctx)
- 	return rc;
- }
- 
--/**
-- * cifs_free_ipc - helper to release the session IPC tcon
-- * @ses: smb session to unmount the IPC from
-- *
-- * Needs to be called everytime a session is destroyed.
-- *
-- * On session close, the IPC is closed and the server must release all tcons of the session.
-- * No need to send a tree disconnect here.
-- *
-- * Besides, it will make the server to not close durable and resilient files on session close, as
-- * specified in MS-SMB2 3.3.5.6 Receiving an SMB2 LOGOFF Request.
-- */
--static int
--cifs_free_ipc(struct cifs_ses *ses)
--{
--	struct cifs_tcon *tcon = ses->tcon_ipc;
--
--	if (tcon == NULL)
--		return 0;
--
--	tconInfoFree(tcon);
--	ses->tcon_ipc = NULL;
--	return 0;
--}
--
- static struct cifs_ses *
- cifs_find_smb_ses(struct TCP_Server_Info *server, struct smb3_fs_context *ctx)
- {
-@@ -2016,48 +1997,52 @@ cifs_find_smb_ses(struct TCP_Server_Info *server, struct smb3_fs_context *ctx)
- void __cifs_put_smb_ses(struct cifs_ses *ses)
- {
- 	struct TCP_Server_Info *server = ses->server;
-+	struct cifs_tcon *tcon;
- 	unsigned int xid;
- 	size_t i;
-+	bool do_logoff;
- 	int rc;
- 
-+	spin_lock(&cifs_tcp_ses_lock);
- 	spin_lock(&ses->ses_lock);
--	if (ses->ses_status == SES_EXITING) {
-+	cifs_dbg(FYI, "%s: id=0x%llx ses_count=%d ses_status=%u ipc=%s\n",
-+		 __func__, ses->Suid, ses->ses_count, ses->ses_status,
-+		 ses->tcon_ipc ? ses->tcon_ipc->tree_name : "none");
-+	if (ses->ses_status == SES_EXITING || --ses->ses_count > 0) {
- 		spin_unlock(&ses->ses_lock);
-+		spin_unlock(&cifs_tcp_ses_lock);
- 		return;
- 	}
--	spin_unlock(&ses->ses_lock);
-+	/* ses_count can never go negative */
-+	WARN_ON(ses->ses_count < 0);
- 
--	cifs_dbg(FYI, "%s: ses_count=%d\n", __func__, ses->ses_count);
--	cifs_dbg(FYI,
--		 "%s: ses ipc: %s\n", __func__, ses->tcon_ipc ? ses->tcon_ipc->tree_name : "NONE");
-+	spin_lock(&ses->chan_lock);
-+	cifs_chan_clear_need_reconnect(ses, server);
-+	spin_unlock(&ses->chan_lock);
- 
--	spin_lock(&cifs_tcp_ses_lock);
--	if (--ses->ses_count > 0) {
--		spin_unlock(&cifs_tcp_ses_lock);
--		return;
--	}
--	spin_lock(&ses->ses_lock);
--	if (ses->ses_status == SES_GOOD)
--		ses->ses_status = SES_EXITING;
-+	do_logoff = ses->ses_status == SES_GOOD && server->ops->logoff;
-+	ses->ses_status = SES_EXITING;
-+	tcon = ses->tcon_ipc;
-+	ses->tcon_ipc = NULL;
- 	spin_unlock(&ses->ses_lock);
- 	spin_unlock(&cifs_tcp_ses_lock);
- 
--	/* ses_count can never go negative */
--	WARN_ON(ses->ses_count < 0);
--
--	spin_lock(&ses->ses_lock);
--	if (ses->ses_status == SES_EXITING && server->ops->logoff) {
--		spin_unlock(&ses->ses_lock);
--		cifs_free_ipc(ses);
-+	/*
-+	 * On session close, the IPC is closed and the server must release all
-+	 * tcons of the session.  No need to send a tree disconnect here.
-+	 *
-+	 * Besides, it will make the server to not close durable and resilient
-+	 * files on session close, as specified in MS-SMB2 3.3.5.6 Receiving an
-+	 * SMB2 LOGOFF Request.
-+	 */
-+	tconInfoFree(tcon);
-+	if (do_logoff) {
- 		xid = get_xid();
- 		rc = server->ops->logoff(xid, ses);
- 		if (rc)
- 			cifs_server_dbg(VFS, "%s: Session Logoff failure rc=%d\n",
- 				__func__, rc);
- 		_free_xid(xid);
--	} else {
--		spin_unlock(&ses->ses_lock);
--		cifs_free_ipc(ses);
- 	}
- 
- 	spin_lock(&cifs_tcp_ses_lock);
+diff --git a/fs/smb/client/cifs_debug.c b/fs/smb/client/cifs_debug.c
+index 6c85edb8635d0..c53d516459fc4 100644
+--- a/fs/smb/client/cifs_debug.c
++++ b/fs/smb/client/cifs_debug.c
+@@ -663,6 +663,7 @@ static ssize_t cifs_stats_proc_write(struct file *file,
+ 					spin_lock(&tcon->stat_lock);
+ 					tcon->bytes_read = 0;
+ 					tcon->bytes_written = 0;
++					tcon->stats_from_time = ktime_get_real_seconds();
+ 					spin_unlock(&tcon->stat_lock);
+ 					if (server->ops->clear_stats)
+ 						server->ops->clear_stats(tcon);
+@@ -743,8 +744,9 @@ static int cifs_stats_proc_show(struct seq_file *m, void *v)
+ 				seq_printf(m, "\n%d) %s", i, tcon->tree_name);
+ 				if (tcon->need_reconnect)
+ 					seq_puts(m, "\tDISCONNECTED ");
+-				seq_printf(m, "\nSMBs: %d",
+-					   atomic_read(&tcon->num_smbs_sent));
++				seq_printf(m, "\nSMBs: %d since %ptTs UTC",
++					   atomic_read(&tcon->num_smbs_sent),
++					   &tcon->stats_from_time);
+ 				if (server->ops->print_stats)
+ 					server->ops->print_stats(m, tcon);
+ 			}
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index a878b1e5aa313..01d7031194671 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -1208,6 +1208,7 @@ struct cifs_tcon {
+ 	__u64    bytes_read;
+ 	__u64    bytes_written;
+ 	spinlock_t stat_lock;  /* protects the two fields above */
++	time64_t stats_from_time;
+ 	FILE_SYSTEM_DEVICE_INFO fsDevInfo;
+ 	FILE_SYSTEM_ATTRIBUTE_INFO fsAttrInfo; /* ok if fs name truncated */
+ 	FILE_SYSTEM_UNIX_INFO fsUnixInfo;
+diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
+index ef573e3f8e52a..51413cb00e199 100644
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -140,6 +140,7 @@ tcon_info_alloc(bool dir_leases_enabled)
+ 	spin_lock_init(&ret_buf->stat_lock);
+ 	atomic_set(&ret_buf->num_local_opens, 0);
+ 	atomic_set(&ret_buf->num_remote_opens, 0);
++	ret_buf->stats_from_time = ktime_get_real_seconds();
+ #ifdef CONFIG_CIFS_DFS_UPCALL
+ 	INIT_LIST_HEAD(&ret_buf->dfs_ses_list);
+ #endif
 -- 
 2.43.0
 
