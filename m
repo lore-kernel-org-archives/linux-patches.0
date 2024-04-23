@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2342A14388D;
-	Tue, 23 Apr 2024 21:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9E9144D3A;
+	Tue, 23 Apr 2024 21:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908507; cv=none; b=PuSic12XvkFn8Iy8GcEkhxbNIGmksKNizOAVaHfxAuzB31HPyaOO5Og2S0sqVQIhHs7pv4+nYxoeoUggUrVAci884dKwlJyThS4VMbciJbOVHPUOKaV4MgRgMZVhRqC1PzQqUr8enxbVnoYaBAqo8qvCNdpZcOqcojBrGlxgPlU=
+	t=1713908507; cv=none; b=KN5X7CStim24CPn/AS6fvG29rgbupbJtSDDdoLpMS9mpMLcyJ/RTzdTNRRaBnyQCNBSd1W5nAnC/FPplxUc0fVUdmSkrbaoARvpU2fu6ArMLpJKpSiQOkg4j5haUKmKjGaX+cdBFz/2QfaypuypKcHjOf7XDGJjTAhllh7jHTf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908507; c=relaxed/simple;
-	bh=b2cCcWMIVXxsIev2qylYjowVRScIDiv/6mgsw9i6HtM=;
+	bh=qc9utWjZtW8UIMHMG8EKUV1TxzrI4vQ2FHaC+BJNZjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=te9z13bmQzjAXOOX6H+dbLDinhA59DP41A2iHiHzfyo9NHuCbkGiSmQaAf5SyN9V+ez1M4NYMpFY//UH+X6gylxtuju4xYxjz+xxgY0vfWPtrdZw8RT3ZYC0wN/Go7ZgXCABuKhdOz6c5YkhNGrij2eNF0KVFnVa4XD8CLFlKns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DzfKxBX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B153mhnaSsSFKSlR8U6kj75ZfkQeHPHyEbRWSy+2MOFUV5XS4gidxOsr2LPgsPfboYrlfqxGfNdv5m85Z1LF4pq0JAU8dwkmRNmYw0GdmS0304q47IosgklnhYucg6OeOzzoin5PP/zk41cideM1LgEyp7sNo91qC8IY7RSE+B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GY9NcvD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DzfKxBX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD5CC32781;
-	Tue, 23 Apr 2024 21:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GY9NcvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5858CC116B1;
+	Tue, 23 Apr 2024 21:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908506;
-	bh=b2cCcWMIVXxsIev2qylYjowVRScIDiv/6mgsw9i6HtM=;
+	s=korg; t=1713908507;
+	bh=qc9utWjZtW8UIMHMG8EKUV1TxzrI4vQ2FHaC+BJNZjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2DzfKxBXFH6T2OWCjFZR3uFLCYThJAwhAQoKuTuc0ZdwSI2fr69G67idd6Qk5F02a
-	 qjzgPkhBCohEJFLOgzRjVbKwuDkptZb8I/oTVhOpIa8E1eNC2UYo3TrsaZWDVuH9fz
-	 Yw2O0kDo1h5kXPssG/+5FiSSfM3SqbuKQVzz06Ng=
+	b=1GY9NcvDTIh4hAxj3LCucDQLexzwqHsGXv+f+ACUchln2/G3KCgIdFTTU+kpAmWj+
+	 9zHAK3ZpPsvzmBBVCNGaTa2gJVxU9+mGXV+h06zc5bQvuLdTsYNNkH6xM+wGx+nk2i
+	 IRPq4OE/eo7gy2BK77G5DLG0+YSChrHOj+RRYqnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Paul Barker <paul.barker.ct@bp.renesas.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 061/158] s390/cio: fix race condition during online processing
-Date: Tue, 23 Apr 2024 14:38:03 -0700
-Message-ID: <20240423213857.945308670@linuxfoundation.org>
+Subject: [PATCH 6.8 052/158] net: ravb: Allow RX loop to move past DMA mapping errors
+Date: Tue, 23 Apr 2024 14:37:54 -0700
+Message-ID: <20240423213857.618693899@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -53,70 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
+From: Paul Barker <paul.barker.ct@bp.renesas.com>
 
-[ Upstream commit 2d8527f2f911fab84aec04df4788c0c23af3df48 ]
+[ Upstream commit a892493a343494bd6bab9d098593932077ff3c43 ]
 
-A race condition exists in ccw_device_set_online() that can cause the
-online process to fail, leaving the affected device in an inconsistent
-state. As a result, subsequent attempts to set that device online fail
-with return code ENODEV.
+The RX loops in ravb_rx_gbeth() and ravb_rx_rcar() skip to the next loop
+iteration if a zero-length descriptor is seen (indicating a DMA mapping
+error). However, the current RX descriptor index `priv->cur_rx[q]` was
+incremented at the end of the loop and so would not be incremented when
+we skip to the next loop iteration. This would cause the loop to keep
+seeing the same zero-length descriptor instead of moving on to the next
+descriptor.
 
-The problem occurs when a path verification request arrives after
-a wait for final device state completed, but before the result state
-is evaluated.
+As the loop counter `i` still increments, the loop would eventually
+terminate so there is no risk of being stuck here forever - but we
+should still fix this to avoid wasting cycles.
 
-Fix this by ensuring that the CCW-device lock is held between
-determining final state and checking result state.
+To fix this, the RX descriptor index is incremented at the top of the
+loop, in the for statement itself. The assignments of `entry` and `desc`
+are brought into the loop to avoid the need for duplication.
 
-Note that since:
-
-commit 2297791c92d0 ("s390/cio: dont unregister subchannel from child-drivers")
-
-path verification requests are much more likely to occur during boot,
-resulting in an increased chance of this race condition occurring.
-
-Fixes: 2297791c92d0 ("s390/cio: dont unregister subchannel from child-drivers")
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: d8b48911fd24 ("ravb: fix ring memory allocation")
+Signed-off-by: Paul Barker <paul.barker.ct@bp.renesas.com>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/device.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/renesas/ravb_main.c | 25 ++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/s390/cio/device.c b/drivers/s390/cio/device.c
-index 0cfb179e1bcb6..34b2567b8df49 100644
---- a/drivers/s390/cio/device.c
-+++ b/drivers/s390/cio/device.c
-@@ -363,10 +363,8 @@ int ccw_device_set_online(struct ccw_device *cdev)
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index 60c1cfc501304..853c2a0d4e259 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -781,12 +781,15 @@ static bool ravb_rx_gbeth(struct net_device *ndev, int *quota, int q)
+ 	int limit;
+ 	int i;
  
- 	spin_lock_irq(cdev->ccwlock);
- 	ret = ccw_device_online(cdev);
--	spin_unlock_irq(cdev->ccwlock);
--	if (ret == 0)
--		wait_event(cdev->private->wait_q, dev_fsm_final_state(cdev));
--	else {
-+	if (ret) {
-+		spin_unlock_irq(cdev->ccwlock);
- 		CIO_MSG_EVENT(0, "ccw_device_online returned %d, "
- 			      "device 0.%x.%04x\n",
- 			      ret, cdev->private->dev_id.ssid,
-@@ -375,7 +373,12 @@ int ccw_device_set_online(struct ccw_device *cdev)
- 		put_device(&cdev->dev);
- 		return ret;
+-	entry = priv->cur_rx[q] % priv->num_rx_ring[q];
+ 	limit = priv->dirty_rx[q] + priv->num_rx_ring[q] - priv->cur_rx[q];
+ 	stats = &priv->stats[q];
+ 
+-	desc = &priv->rx_ring[q].desc[entry];
+-	for (i = 0; i < limit && rx_packets < *quota && desc->die_dt != DT_FEMPTY; i++) {
++	for (i = 0; i < limit; i++, priv->cur_rx[q]++) {
++		entry = priv->cur_rx[q] % priv->num_rx_ring[q];
++		desc = &priv->rx_ring[q].desc[entry];
++		if (rx_packets == *quota || desc->die_dt == DT_FEMPTY)
++			break;
++
+ 		/* Descriptor type must be checked before all other reads */
+ 		dma_rmb();
+ 		desc_status = desc->msc;
+@@ -850,9 +853,6 @@ static bool ravb_rx_gbeth(struct net_device *ndev, int *quota, int q)
+ 				break;
+ 			}
+ 		}
+-
+-		entry = (++priv->cur_rx[q]) % priv->num_rx_ring[q];
+-		desc = &priv->rx_ring[q].desc[entry];
  	}
--	spin_lock_irq(cdev->ccwlock);
-+	/* Wait until a final state is reached */
-+	while (!dev_fsm_final_state(cdev)) {
-+		spin_unlock_irq(cdev->ccwlock);
-+		wait_event(cdev->private->wait_q, dev_fsm_final_state(cdev));
-+		spin_lock_irq(cdev->ccwlock);
-+	}
- 	/* Check if online processing was successful */
- 	if ((cdev->private->state != DEV_STATE_ONLINE) &&
- 	    (cdev->private->state != DEV_STATE_W4SENSE)) {
+ 
+ 	/* Refill the RX ring buffers. */
+@@ -894,7 +894,6 @@ static bool ravb_rx_rcar(struct net_device *ndev, int *quota, int q)
+ {
+ 	struct ravb_private *priv = netdev_priv(ndev);
+ 	const struct ravb_hw_info *info = priv->info;
+-	int entry = priv->cur_rx[q] % priv->num_rx_ring[q];
+ 	struct net_device_stats *stats = &priv->stats[q];
+ 	struct ravb_ex_rx_desc *desc;
+ 	unsigned int limit, i;
+@@ -904,10 +903,15 @@ static bool ravb_rx_rcar(struct net_device *ndev, int *quota, int q)
+ 	int rx_packets = 0;
+ 	u8  desc_status;
+ 	u16 pkt_len;
++	int entry;
+ 
+ 	limit = priv->dirty_rx[q] + priv->num_rx_ring[q] - priv->cur_rx[q];
+-	desc = &priv->rx_ring[q].ex_desc[entry];
+-	for (i = 0; i < limit && rx_packets < *quota && desc->die_dt != DT_FEMPTY; i++) {
++	for (i = 0; i < limit; i++, priv->cur_rx[q]++) {
++		entry = priv->cur_rx[q] % priv->num_rx_ring[q];
++		desc = &priv->rx_ring[q].ex_desc[entry];
++		if (rx_packets == *quota || desc->die_dt == DT_FEMPTY)
++			break;
++
+ 		/* Descriptor type must be checked before all other reads */
+ 		dma_rmb();
+ 		desc_status = desc->msc;
+@@ -961,9 +965,6 @@ static bool ravb_rx_rcar(struct net_device *ndev, int *quota, int q)
+ 			rx_packets++;
+ 			stats->rx_bytes += pkt_len;
+ 		}
+-
+-		entry = (++priv->cur_rx[q]) % priv->num_rx_ring[q];
+-		desc = &priv->rx_ring[q].ex_desc[entry];
+ 	}
+ 
+ 	/* Refill the RX ring buffers. */
 -- 
 2.43.0
 
