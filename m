@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917D9143C6B;
-	Tue, 23 Apr 2024 21:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E903143C6B;
+	Tue, 23 Apr 2024 21:44:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908649; cv=none; b=FQ4iJtArolGJm1uGho/BkZKIG5yIy7K9n1YmQBg5bjbWOwxPtFjV06ybIJhkzkMlXKgeXG83Q2WEwNexayrSOTbfvVc953DZ1A1iCgVQtrf+IwLRdXR8mXVmMK7nnoF2s/RQeZfuwpd5XfixWnyuLZYbFZFgSYXLLiUAO5a6wzE=
+	t=1713908650; cv=none; b=hG8EIS3IGJOmmBcLWAHgsflUhwxNw9HL34SWHw6puSoJ+djw4UbQmFccdcacGaEM5cK0eFiaCE/hFHJEEgigwMb8syEv69QhopNY8adDosK3BmhFxKNMEnS8OqTEnS930YAUh0/cN9uohmbmc7qv9xbr6UbmflzH2FZzwJeGELA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908649; c=relaxed/simple;
-	bh=YRxHusXoakFZBxlZH1Vc98M4cl46zjEhJFKr0ibbCfM=;
+	s=arc-20240116; t=1713908650; c=relaxed/simple;
+	bh=+58TTd6JNBaS0pJu1VzPeFSTMGRPE/PQ36iqMeSbcss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o8PxKzvMWCmBwKtrlFQAYPrlXbBSHoHkoFX46Ql8gVPD1JrBmIZZKjLM3SdvkeeWrGq4fqSXiVsE/AAbTLlPfDEtSByoT5MTLbxHQwIFnYg6CCPLQ2iIohieo9ZbOmivT7npHw4o8pZnUdv6tkjXzAya66IKQ4eLah4n93zpmkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sn3sKbxs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VP8DnC0VP/I1SEWHKS2sEJx6kO2VNIqCjFGRckKSBHkMbNCAvBKV6V78AAskp1JG+kbdNH/LSnls94xopcca+8nwHzz6zQt7QKiYttITlV6eXyWXfAfqEoH7NuPO5A7e/7KbgsDFRX4PPK3Dmrkhgeix9Z20BcKhVHEYjUceKnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFPEJUg8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sn3sKbxs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66591C3277B;
-	Tue, 23 Apr 2024 21:44:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFPEJUg8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B37C32781;
+	Tue, 23 Apr 2024 21:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908649;
-	bh=YRxHusXoakFZBxlZH1Vc98M4cl46zjEhJFKr0ibbCfM=;
+	s=korg; t=1713908650;
+	bh=+58TTd6JNBaS0pJu1VzPeFSTMGRPE/PQ36iqMeSbcss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sn3sKbxsUBaAORxxwp6ajwQNclUHHYtloUoEw8AmNu3BOy51dxNZtA/nYSxoOAeVk
-	 3GxnMPWKdioxgAMR0a0hBKRXAVHEIAmK7vMuEdodpsmnrxnLaXoMgZOYTT+OKj3PDG
-	 mttYzBqWQfv4TxKuwus2LF3WeiEx7VaEQGzYSCXo=
+	b=TFPEJUg8WPA74dpWD/zt/wHH4WQGRYGamPDXQAn5j4K2WY8C1X53la/rWrtKYqMxs
+	 WmqNUleIxVcfYPUmVtYejypBQUaOgC0O8gyFLSwqxps19Ou7PwZHMIEgrG9ijW4PHJ
+	 5IIpQieOAGdZvjuYMHv/zgRw7BsrlbE0waQRv+mE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Emil Kronborg <emil.kronborg@protonmail.com>
-Subject: [PATCH 6.6 109/158] serial: mxs-auart: add spinlock around changing cts state
-Date: Tue, 23 Apr 2024 14:39:06 -0700
-Message-ID: <20240423213859.289628970@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 100/158] ALSA: seq: ump: Fix conversion from MIDI2 to MIDI1 UMP messages
+Date: Tue, 23 Apr 2024 14:38:57 -0700
+Message-ID: <20240423213858.999513325@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -50,61 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Kronborg <emil.kronborg@protonmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 54c4ec5f8c471b7c1137a1f769648549c423c026 upstream.
+commit f25f17dc5c6a5e3f2014d44635f0c0db45224efe upstream.
 
-The uart_handle_cts_change() function in serial_core expects the caller
-to hold uport->lock. For example, I have seen the below kernel splat,
-when the Bluetooth driver is loaded on an i.MX28 board.
+The conversion from MIDI2 to MIDI1 UMP messages had a leftover
+artifact (superfluous bit shift), and this resulted in the bogus type
+check, leading to empty outputs.  Let's fix it.
 
-    [   85.119255] ------------[ cut here ]------------
-    [   85.124413] WARNING: CPU: 0 PID: 27 at /drivers/tty/serial/serial_core.c:3453 uart_handle_cts_change+0xb4/0xec
-    [   85.134694] Modules linked in: hci_uart bluetooth ecdh_generic ecc wlcore_sdio configfs
-    [   85.143314] CPU: 0 PID: 27 Comm: kworker/u3:0 Not tainted 6.6.3-00021-gd62a2f068f92 #1
-    [   85.151396] Hardware name: Freescale MXS (Device Tree)
-    [   85.156679] Workqueue: hci0 hci_power_on [bluetooth]
-    (...)
-    [   85.191765]  uart_handle_cts_change from mxs_auart_irq_handle+0x380/0x3f4
-    [   85.198787]  mxs_auart_irq_handle from __handle_irq_event_percpu+0x88/0x210
-    (...)
-
-Cc: stable@vger.kernel.org
-Fixes: 4d90bb147ef6 ("serial: core: Document and assert lock requirements for irq helpers")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Emil Kronborg <emil.kronborg@protonmail.com>
-Link: https://lore.kernel.org/r/20240320121530.11348-1-emil.kronborg@protonmail.com
+Fixes: e9e02819a98a ("ALSA: seq: Automatic conversion of UMP events")
+Cc: <stable@vger.kernel.org>
+Link: https://github.com/alsa-project/alsa-utils/issues/262
+Message-ID: <20240419100442.14806-1-tiwai@suse.de>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/mxs-auart.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/core/seq/seq_ump_convert.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/mxs-auart.c
-+++ b/drivers/tty/serial/mxs-auart.c
-@@ -1080,11 +1080,13 @@ static void mxs_auart_set_ldisc(struct u
- 
- static irqreturn_t mxs_auart_irq_handle(int irq, void *context)
- {
--	u32 istat;
-+	u32 istat, stat;
- 	struct mxs_auart_port *s = context;
- 	u32 mctrl_temp = s->mctrl_prev;
--	u32 stat = mxs_read(s, REG_STAT);
- 
-+	uart_port_lock(&s->port);
-+
-+	stat = mxs_read(s, REG_STAT);
- 	istat = mxs_read(s, REG_INTR);
- 
- 	/* ack irq */
-@@ -1120,6 +1122,8 @@ static irqreturn_t mxs_auart_irq_handle(
- 		istat &= ~AUART_INTR_TXIS;
- 	}
- 
-+	uart_port_unlock(&s->port);
-+
- 	return IRQ_HANDLED;
- }
- 
+diff --git a/sound/core/seq/seq_ump_convert.c b/sound/core/seq/seq_ump_convert.c
+index b141024830ec..ee6ac649df83 100644
+--- a/sound/core/seq/seq_ump_convert.c
++++ b/sound/core/seq/seq_ump_convert.c
+@@ -428,7 +428,7 @@ static int cvt_ump_midi2_to_midi1(struct snd_seq_client *dest,
+ 	midi1->note.group = midi2->note.group;
+ 	midi1->note.status = midi2->note.status;
+ 	midi1->note.channel = midi2->note.channel;
+-	switch (midi2->note.status << 4) {
++	switch (midi2->note.status) {
+ 	case UMP_MSG_STATUS_NOTE_ON:
+ 	case UMP_MSG_STATUS_NOTE_OFF:
+ 		midi1->note.note = midi2->note.note;
+-- 
+2.44.0
+
 
 
