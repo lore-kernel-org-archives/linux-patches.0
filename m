@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F50146A94;
-	Tue, 23 Apr 2024 21:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F3F146A64;
+	Tue, 23 Apr 2024 21:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908679; cv=none; b=XLRddXtQ/IO2PbwmHYhqKF4IREF5gCtcWMqCThQXbNxF9AVdpa3H3ebZ7SNEZ6M3venqUXajUiG+KZ+cNuR3GGbCqf5r4INDBE4kn05oNe0yYZx4m1AJ7O+Fkfu2Po94wYZDk8+PRr9TSF2AuX4kUajehcHvrPmDZuYRcyBqo80=
+	t=1713908680; cv=none; b=met4KTzW1gL+IQYjEoczd1b/CcL8Y4eQcCmup6kqrux7ZZzsuUojMatZfCdFUkwAmU+kNRdOtcSO238x10q/7rmgv/F/FAfBFo0G3trfbdhX/2cDCTlokC6sJsa0wGLDtOiSnpJW9bH5mSlKWR0UF44nBTiF4J5hdBZ7/OmcY/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908679; c=relaxed/simple;
-	bh=y9H9xjFq/7vEVrSQtqiXtFaGPltpxauAQ7n6Nqv24U0=;
+	s=arc-20240116; t=1713908680; c=relaxed/simple;
+	bh=qpsG0jYWAbQ57gJcrWWJlvPm3RFmZLNDDficITYSF8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gSVpOPTVDn+aa28gef9wbuewylptVTQsZp8ok9GPuphw1T9hvqntJC4CUchq1zRzfoq78ZGHDdBfVPo6j23AxSTgAYz7LqKQcfUlr0KFzU1cMc9eMsQ8acbzA1dITlIYJMr5jrMB66g9yIkHcjKZleHh4eFNiLRuOMwoUR1h+H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWU1mQrv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eyenh0ffI0BPjzZZVrN/UUKAP1cHep6EwJqeay3Hl1tgkLOeqCiXRaxLoKQlUvqwTaKMK3l6Mly4YZYVjQWRgTeHWuke5c99w7R6g0E4HjtgizLE28nCOoJH+e2Qnn9rK1OT5GEsMLCX5fTeMjxVIuHVN2FVm4brf6sVh9ULliE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdbvPuL3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWU1mQrv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E354C116B1;
-	Tue, 23 Apr 2024 21:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdbvPuL3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B5AC32783;
+	Tue, 23 Apr 2024 21:44:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908679;
-	bh=y9H9xjFq/7vEVrSQtqiXtFaGPltpxauAQ7n6Nqv24U0=;
+	s=korg; t=1713908680;
+	bh=qpsG0jYWAbQ57gJcrWWJlvPm3RFmZLNDDficITYSF8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CWU1mQrvdRUeyMqyVRDKAru86onkhj3EIS8sg154lx/1uTCVA3Nvi8jhsB3OgJftw
-	 nv9UWmqQaqvhN2IrRTjIUGDQwhZDeAbtWLutW9LK5C55Q07svrMNALZuLTxbV/FgJQ
-	 kUCApnYYJ6tSZo3IP+srXrLmaclVRU3lC38sGzv8=
+	b=sdbvPuL33EPofnVVyvrFsRLG/O2UyTwefkXXX3cK1GMyad1Xizytvybm/E4YIWrAY
+	 yyLzsE0mJA5F595Fx4KWPHtAUB9ezSw02PoT42F6SF3MnRm6g0cO7aRWh5/CxplAEQ
+	 t1UHw2SWeOHWBtu+55oim7CasJtBmNCaWCgMR5KQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Dillon Varone <dillon.varone@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 004/141] drm/amd/display: Do not recursively call manual trigger programming
-Date: Tue, 23 Apr 2024 14:37:52 -0700
-Message-ID: <20240423213853.503693461@linuxfoundation.org>
+	Alexey Izbyshev <izbyshev@ispras.ru>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 005/141] io_uring: Fix io_cqring_wait() not restoring sigmask on get_timespec64() failure
+Date: Tue, 23 Apr 2024 14:37:53 -0700
+Message-ID: <20240423213853.532291890@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -53,40 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dillon Varone <dillon.varone@amd.com>
+From: Alexey Izbyshev <izbyshev@ispras.ru>
 
-[ Upstream commit 953927587f37b731abdeabe46ad44a3b3ec67a52 ]
+Commit 978e5c19dfefc271e5550efba92fcef0d3f62864 upstream.
 
-[WHY&HOW]
-We should not be recursively calling the manual trigger programming function when
-FAMS is not in use.
+This bug was introduced in commit 950e79dd7313 ("io_uring: minor
+io_cqring_wait() optimization"), which was made in preparation for
+adc8682ec690 ("io_uring: Add support for napi_busy_poll"). The latter
+got reverted in cb3182167325 ("Revert "io_uring: Add support for
+napi_busy_poll""), so simply undo the former as well.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Dillon Varone <dillon.varone@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 950e79dd7313 ("io_uring: minor io_cqring_wait() optimization")
+Signed-off-by: Alexey Izbyshev <izbyshev@ispras.ru>
+Link: https://lore.kernel.org/r/20240405125551.237142-1-izbyshev@ispras.ru
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c | 3 ---
- 1 file changed, 3 deletions(-)
+ io_uring/io_uring.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
-index a974f86e718a8..37c645a882dd8 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
-@@ -216,9 +216,6 @@ static void optc32_setup_manual_trigger(struct timing_generator *optc)
- 				OTG_V_TOTAL_MAX_SEL, 1,
- 				OTG_FORCE_LOCK_ON_EVENT, 0,
- 				OTG_SET_V_TOTAL_MIN_MASK, (1 << 1)); /* TRIGA */
--
--		// Setup manual flow control for EOF via TRIG_A
--		optc->funcs->setup_manual_trigger(optc);
- 	}
- }
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2426,6 +2426,14 @@ static int io_cqring_wait(struct io_ring
+ 			return 0;
+ 	} while (ret > 0);
  
--- 
-2.43.0
-
++	if (uts) {
++		struct timespec64 ts;
++
++		if (get_timespec64(&ts, uts))
++			return -EFAULT;
++		timeout = ktime_add_ns(timespec64_to_ktime(ts), ktime_get_ns());
++	}
++
+ 	if (sig) {
+ #ifdef CONFIG_COMPAT
+ 		if (in_compat_syscall())
+@@ -2439,14 +2447,6 @@ static int io_cqring_wait(struct io_ring
+ 			return ret;
+ 	}
+ 
+-	if (uts) {
+-		struct timespec64 ts;
+-
+-		if (get_timespec64(&ts, uts))
+-			return -EFAULT;
+-		timeout = ktime_add_ns(timespec64_to_ktime(ts), ktime_get_ns());
+-	}
+-
+ 	init_waitqueue_func_entry(&iowq.wq, io_wake_function);
+ 	iowq.wq.private = current;
+ 	INIT_LIST_HEAD(&iowq.wq.entry);
 
 
