@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74626143C6C;
-	Tue, 23 Apr 2024 21:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A430143C6C;
+	Tue, 23 Apr 2024 21:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908802; cv=none; b=iz1ab4kWYa0gcVeHjTNYlzn1gTWazIq9b8JhlJ2rqdvuoKS+4K4MS5WIDvC5nsiWm5Z4CeL0Sb4btg/oteqEG1iONydGdYbT3FiMPf+MpmfkIHNTq5lX+Z3f6WGCGTQP8RJRfwF2W/re9wsx86uSh5GFQyOi4iqgpgBKUCxnLQo=
+	t=1713908803; cv=none; b=LjDbUlA/ZNkrk8U/uarsr5+IF3rO9Rr8YhN/midMgoUwsLJAuFNsa+ZgxepaTRA0ouRbhpC48s4hYjq+8q95TrTobRUUdkUfoE8SCMgSGYvEY97lJJnVxspKLJf96vzAtCqleWB0wYdnieWeukdAdD3Q15zT96DpoJ9x3C3RhyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908802; c=relaxed/simple;
-	bh=CR9aSOCH06gBunoeAcqvP5GIXNJ214oj8ZXaLssKYaw=;
+	s=arc-20240116; t=1713908803; c=relaxed/simple;
+	bh=i4M377JLWPQWNwOdhIoY2L0K21T3LbQ/hHa0idxbu7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3C73aQwMw/w3LW0Lz5Ji3KIARvXFVRzHwwgtHVfDb/O+WAuPN26hEwl3vPKgrl+Aw0l3byCxD37xxYVw4wvxopK0UJOIGFprnND0oXGVuHI7p4VCR8EtktHRFd4nW07mUkuzTGZJNPuDrBl6qrBvwlutwxxa5ToT5U3rFoPQRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQvliwgf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VqHybIwVsQsvxGI0aGTSuTULKSP0JSFmhsC8SClVpZveHRP1giLgnNK+Kkh5+2DyyVZ7ytEYJnf9Cbr3+PkBv8ZTXDKWvQxQFZ99LbbOg06AFzQXEdjRAXKkyopLJGCZfw/l2ZhWpq4JwWrDFAOo8BTo8Jyb5ThDegz8iZikcxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWHgWbmb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQvliwgf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B218C3277B;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWHgWbmb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF282C116B1;
 	Tue, 23 Apr 2024 21:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908802;
-	bh=CR9aSOCH06gBunoeAcqvP5GIXNJ214oj8ZXaLssKYaw=;
+	s=korg; t=1713908803;
+	bh=i4M377JLWPQWNwOdhIoY2L0K21T3LbQ/hHa0idxbu7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HQvliwgfNKpRD83qUfv8E9cXawynWbqDd0HhfUrmHP2AFgI+tGonSWf/w62H/qvAQ
-	 kS8OA8qlzVZG3sHv4Rx6+71DQ2loJCTUfvjA0PAaV4awrLICemuWDFdcLyCoJaJ6B/
-	 DvCFsa5a6NCn98ysxkrPTTiv1H5DjwlSBJF29NOU=
+	b=wWHgWbmbCZ2W377xbPWp3j4LBQdrZeKAtyPidBHJ4Dvhn398DTioT/IztuaGr5IY7
+	 s8MRPNWw/3xi8A7yFqyqXb2XohZD2E3Mr8egpjjdGvWtLwiz2GOV2oU0nKlFiWYPKf
+	 T/M+9OOvfLBZ/Mzjq59eUv2SAg4rdyEJSjJcMyRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 22/71] af_unix: Call manage_oob() for every skb in unix_stream_read_generic().
-Date: Tue, 23 Apr 2024 14:39:35 -0700
-Message-ID: <20240423213844.904442048@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Subject: [PATCH 5.15 53/71] usb: dwc2: host: Fix dereference issue in DDMA completion flow.
+Date: Tue, 23 Apr 2024 14:40:06 -0700
+Message-ID: <20240423213846.010098229@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
 References: <20240423213844.122920086@linuxfoundation.org>
@@ -51,72 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
 
-[ Upstream commit 283454c8a123072e5c386a5a2b5fc576aa455b6f ]
+commit eed04fa96c48790c1cce73c8a248e9d460b088f8 upstream.
 
-When we call recv() for AF_UNIX socket, we first peek one skb and
-calls manage_oob() to check if the skb is sent with MSG_OOB.
+Fixed variable dereference issue in DDMA completion flow.
 
-However, when we fetch the next (and the following) skb, manage_oob()
-is not called now, leading a wrong behaviour.
-
-Let's say a socket send()s "hello" with MSG_OOB and the peer tries
-to recv() 5 bytes with MSG_PEEK.  Here, we should get only "hell"
-without 'o', but actually not:
-
-  >>> from socket import *
-  >>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
-  >>> c1.send(b'hello', MSG_OOB)
-  5
-  >>> c2.recv(5, MSG_PEEK)
-  b'hello'
-
-The first skb fills 4 bytes, and the next skb is peeked but not
-properly checked by manage_oob().
-
-Let's move up the again label to call manage_oob() for evry skb.
-
-With this patch:
-
-  >>> from socket import *
-  >>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
-  >>> c1.send(b'hello', MSG_OOB)
-  5
-  >>> c2.recv(5, MSG_PEEK)
-  b'hell'
-
-Fixes: 314001f0bf92 ("af_unix: Add OOB support")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240410171016.7621-2-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b258e4268850 ("usb: dwc2: host: Fix ISOC flow in DDMA mode")
+CC: stable@vger.kernel.org
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/linux-usb/2024040834-ethically-rumble-701f@gregkh/T/#m4c4b83bef0ebb4b67fe2e0a7d6466cbb6f416e39
+Signed-off-by: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Link: https://lore.kernel.org/r/cc826d3ef53c934d8e6d98870f17f3cdc3d2755d.1712665387.git.Minas.Harutyunyan@synopsys.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/unix/af_unix.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc2/hcd_ddma.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 628d97c195a7e..e2a2e22d210f6 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2644,6 +2644,7 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
- 		last = skb = skb_peek(&sk->sk_receive_queue);
- 		last_len = last ? last->len : 0;
+--- a/drivers/usb/dwc2/hcd_ddma.c
++++ b/drivers/usb/dwc2/hcd_ddma.c
+@@ -897,13 +897,15 @@ static int dwc2_cmpl_host_isoc_dma_desc(
+ 	struct dwc2_dma_desc *dma_desc;
+ 	struct dwc2_hcd_iso_packet_desc *frame_desc;
+ 	u16 frame_desc_idx;
+-	struct urb *usb_urb = qtd->urb->priv;
++	struct urb *usb_urb;
+ 	u16 remain = 0;
+ 	int rc = 0;
  
-+again:
- #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
- 		if (skb) {
- 			skb = manage_oob(skb, sk, flags, copied);
-@@ -2655,7 +2656,6 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
- 			}
- 		}
- #endif
--again:
- 		if (skb == NULL) {
- 			if (copied >= target)
- 				goto unlock;
--- 
-2.43.0
-
+ 	if (!qtd->urb)
+ 		return -EINVAL;
+ 
++	usb_urb = qtd->urb->priv;
++
+ 	dma_sync_single_for_cpu(hsotg->dev, qh->desc_list_dma + (idx *
+ 				sizeof(struct dwc2_dma_desc)),
+ 				sizeof(struct dwc2_dma_desc),
 
 
