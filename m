@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7BE143C7E;
-	Tue, 23 Apr 2024 21:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2195A143C7E;
+	Tue, 23 Apr 2024 21:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908573; cv=none; b=s7dwrlGlxVJ8JkVyuSkJgGcUQTIySv2Z5+nznYqzWg59mhLKefvwDpJlkW5Wz3JOjxfJ/dxF2pVnRCzCR/wacJOhcDdXnDWUm5OLGnOP2DWIY5yDzFgPxnxPlIs9N+wqt19Xn1q5DG0RUBdtsuWHD8xe/sqDX3ZtNyISfkKhdfU=
+	t=1713908574; cv=none; b=KcKSUbMtzmJkdT6VE+AFPgL7sIbyqDmDE6akHisi1qrSVtSsqk1DrE8hUiRDeTcW9HZOCmL7HesDc+cnuW9476yKjQELL5ipFLzLHngx0YYCfKgaSCaq6yJ/i155j1KsiLxy5KLluoTXd410r+8awnr38ITNh6WrJXTfxIqeYnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908573; c=relaxed/simple;
-	bh=C+HLGqaX+1kot3vEO6vGxahICFAbhHutndMB8eKyqtM=;
+	s=arc-20240116; t=1713908574; c=relaxed/simple;
+	bh=FsMlwNEoFMxcwpt8q8Mc+QStKkZLNBdxSKyOF+4Z9ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=np/YIlZJUETzihWlHRC7JLrpoc/4DHBuwvogf5+9gFgAsbCoReogTTblMyNzzl2n2AHr1HRiCkAtVOBFmgNyyEKkHiEqRR85LCirIGTcmPBHEqHQc81CYLmJJLkkpT6tlgPVzw1WY6ZWYXm7MuaUXh+TE6YaabdYoGzB3ojCjxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3s+I26k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NWEBLFdzkZH3N1VwyPeG7ePVRIEv7fA7jy8LCFVITUkoq4SG0wlc+GYz4KAFYU7JEBHq8sMn4Qs8GZLpsxVSw5Raj4C/lG3aNb6JZ5dU92eBYahzjKGe3upIg1RnRuKXqGRgw2yLUp2K/ofIKU40E/lGQfh/vxDSP+g3/3jxpdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCtJ9xdP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3s+I26k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5363CC116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCtJ9xdP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB28BC4AF07;
 	Tue, 23 Apr 2024 21:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908573;
-	bh=C+HLGqaX+1kot3vEO6vGxahICFAbhHutndMB8eKyqtM=;
+	s=korg; t=1713908574;
+	bh=FsMlwNEoFMxcwpt8q8Mc+QStKkZLNBdxSKyOF+4Z9ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s3s+I26kqCDDF6Olx50wKY11tgxDcS/WXK6hZtpxR4cKfaojnpbLilEygi+oKQjT+
-	 TPNg7GzvSQKIWVcGHG8bObiFGgqWEjTiyqBB2NM5RPJxV3zVhv/hH0A2UoWf+fTnO1
-	 Zzb+SZ6xfBFcrJbCSrJeDZzFAs/LtftR+JIFswP0=
+	b=RCtJ9xdPKPy683pE70idxKtkPub96O7ICyH+SoSqKCmYQyt+oWM/W3FdKbiJcRK2j
+	 uYEr8QnvYR87RDandE8WpQW6vXWp8w+jvETCJ1LN44Q3e/O10vF59zwbC+VyHMkiDf
+	 9uIDtfbfO1BudRfqpPAeuulfX1vFNFxgKHYJtJxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Patrick Donnelly <pdonnell@redhat.com>,
-	Milind Changire <mchangir@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 017/158] ceph: pass the mdsc to several helpers
-Date: Tue, 23 Apr 2024 14:37:34 -0700
-Message-ID: <20240423213856.276014039@linuxfoundation.org>
+	Yuanhe Shu <xiangzao@linux.alibaba.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.6 026/158] selftests/ftrace: Limit length in subsystem-enable tests
+Date: Tue, 23 Apr 2024 14:37:43 -0700
+Message-ID: <20240423213856.595700337@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -53,425 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Yuanhe Shu <xiangzao@linux.alibaba.com>
 
-[ Upstream commit 197b7d792d6aead2e30d4b2c054ffabae2ed73dc ]
+commit 1a4ea83a6e67f1415a1f17c1af5e9c814c882bb5 upstream.
 
-We will use the 'mdsc' to get the global_id in the following commits.
+While sched* events being traced and sched* events continuously happen,
+"[xx] event tracing - enable/disable with subsystem level files" would
+not stop as on some slower systems it seems to take forever.
+Select the first 100 lines of output would be enough to judge whether
+there are more than 3 types of sched events.
 
-Link: https://tracker.ceph.com/issues/61590
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
-Reviewed-by: Milind Changire <mchangir@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Stable-dep-of: b372e96bd0a3 ("ceph: redirty page before returning AOP_WRITEPAGE_ACTIVATE")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 815b18ea66d6 ("ftracetest: Add basic event tracing test cases")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yuanhe Shu <xiangzao@linux.alibaba.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c              | 15 ++++++++------
- fs/ceph/debugfs.c           |  4 ++--
- fs/ceph/dir.c               |  2 +-
- fs/ceph/file.c              |  2 +-
- fs/ceph/mds_client.c        | 39 +++++++++++++++++++++----------------
- fs/ceph/mds_client.h        |  3 ++-
- fs/ceph/mdsmap.c            |  3 ++-
- fs/ceph/snap.c              | 16 +++++++++------
- fs/ceph/super.h             |  3 ++-
- include/linux/ceph/mdsmap.h |  5 ++++-
- 10 files changed, 55 insertions(+), 37 deletions(-)
+ tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
-index fc9f8f1a9036d..02f93437be353 100644
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -1178,7 +1178,8 @@ void __ceph_remove_cap(struct ceph_cap *cap, bool queue_release)
- 	}
- }
+--- a/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
++++ b/tools/testing/selftests/ftrace/test.d/event/subsystem-enable.tc
+@@ -18,7 +18,7 @@ echo 'sched:*' > set_event
  
--void ceph_remove_cap(struct ceph_cap *cap, bool queue_release)
-+void ceph_remove_cap(struct ceph_mds_client *mdsc, struct ceph_cap *cap,
-+		     bool queue_release)
- {
- 	struct ceph_inode_info *ci = cap->ci;
- 	struct ceph_fs_client *fsc;
-@@ -1342,6 +1343,8 @@ static void encode_cap_msg(struct ceph_msg *msg, struct cap_msg_args *arg)
-  */
- void __ceph_remove_caps(struct ceph_inode_info *ci)
- {
-+	struct inode *inode = &ci->netfs.inode;
-+	struct ceph_mds_client *mdsc = ceph_inode_to_client(inode)->mdsc;
- 	struct rb_node *p;
+ yield
  
- 	/* lock i_ceph_lock, because ceph_d_revalidate(..., LOOKUP_RCU)
-@@ -1351,7 +1354,7 @@ void __ceph_remove_caps(struct ceph_inode_info *ci)
- 	while (p) {
- 		struct ceph_cap *cap = rb_entry(p, struct ceph_cap, ci_node);
- 		p = rb_next(p);
--		ceph_remove_cap(cap, true);
-+		ceph_remove_cap(mdsc, cap, true);
- 	}
- 	spin_unlock(&ci->i_ceph_lock);
- }
-@@ -4000,7 +4003,7 @@ static void handle_cap_export(struct inode *inode, struct ceph_mds_caps *ex,
- 		goto out_unlock;
+-count=`cat trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
++count=`head -n 100 trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
+ if [ $count -lt 3 ]; then
+     fail "at least fork, exec and exit events should be recorded"
+ fi
+@@ -29,7 +29,7 @@ echo 1 > events/sched/enable
  
- 	if (target < 0) {
--		ceph_remove_cap(cap, false);
-+		ceph_remove_cap(mdsc, cap, false);
- 		goto out_unlock;
- 	}
+ yield
  
-@@ -4035,7 +4038,7 @@ static void handle_cap_export(struct inode *inode, struct ceph_mds_caps *ex,
- 				change_auth_cap_ses(ci, tcap->session);
- 			}
- 		}
--		ceph_remove_cap(cap, false);
-+		ceph_remove_cap(mdsc, cap, false);
- 		goto out_unlock;
- 	} else if (tsession) {
- 		/* add placeholder for the export tagert */
-@@ -4052,7 +4055,7 @@ static void handle_cap_export(struct inode *inode, struct ceph_mds_caps *ex,
- 			spin_unlock(&mdsc->cap_dirty_lock);
- 		}
+-count=`cat trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
++count=`head -n 100 trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
+ if [ $count -lt 3 ]; then
+     fail "at least fork, exec and exit events should be recorded"
+ fi
+@@ -40,7 +40,7 @@ echo 0 > events/sched/enable
  
--		ceph_remove_cap(cap, false);
-+		ceph_remove_cap(mdsc, cap, false);
- 		goto out_unlock;
- 	}
+ yield
  
-@@ -4165,7 +4168,7 @@ static void handle_cap_import(struct ceph_mds_client *mdsc,
- 					ocap->mseq, mds, le32_to_cpu(ph->seq),
- 					le32_to_cpu(ph->mseq));
- 		}
--		ceph_remove_cap(ocap, (ph->flags & CEPH_CAP_FLAG_RELEASE));
-+		ceph_remove_cap(mdsc, ocap, (ph->flags & CEPH_CAP_FLAG_RELEASE));
- 	}
- 
- 	*old_issued = issued;
-diff --git a/fs/ceph/debugfs.c b/fs/ceph/debugfs.c
-index 3904333fa6c38..2f1e7498cd745 100644
---- a/fs/ceph/debugfs.c
-+++ b/fs/ceph/debugfs.c
-@@ -81,7 +81,7 @@ static int mdsc_show(struct seq_file *s, void *p)
- 		if (req->r_inode) {
- 			seq_printf(s, " #%llx", ceph_ino(req->r_inode));
- 		} else if (req->r_dentry) {
--			path = ceph_mdsc_build_path(req->r_dentry, &pathlen,
-+			path = ceph_mdsc_build_path(mdsc, req->r_dentry, &pathlen,
- 						    &pathbase, 0);
- 			if (IS_ERR(path))
- 				path = NULL;
-@@ -100,7 +100,7 @@ static int mdsc_show(struct seq_file *s, void *p)
- 		}
- 
- 		if (req->r_old_dentry) {
--			path = ceph_mdsc_build_path(req->r_old_dentry, &pathlen,
-+			path = ceph_mdsc_build_path(mdsc, req->r_old_dentry, &pathlen,
- 						    &pathbase, 0);
- 			if (IS_ERR(path))
- 				path = NULL;
-diff --git a/fs/ceph/dir.c b/fs/ceph/dir.c
-index 854cbdd666619..fff5cb2df9a89 100644
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -1226,7 +1226,7 @@ static void ceph_async_unlink_cb(struct ceph_mds_client *mdsc,
- 	if (result) {
- 		int pathlen = 0;
- 		u64 base = 0;
--		char *path = ceph_mdsc_build_path(dentry, &pathlen,
-+		char *path = ceph_mdsc_build_path(mdsc, dentry, &pathlen,
- 						  &base, 0);
- 
- 		/* mark error on parent + clear complete */
-diff --git a/fs/ceph/file.c b/fs/ceph/file.c
-index bdd0a3b894b7b..472e86454488d 100644
---- a/fs/ceph/file.c
-+++ b/fs/ceph/file.c
-@@ -574,7 +574,7 @@ static void ceph_async_create_cb(struct ceph_mds_client *mdsc,
- 	if (result) {
- 		int pathlen = 0;
- 		u64 base = 0;
--		char *path = ceph_mdsc_build_path(req->r_dentry, &pathlen,
-+		char *path = ceph_mdsc_build_path(mdsc, req->r_dentry, &pathlen,
- 						  &base, 0);
- 
- 		pr_warn("async create failure path=(%llx)%s result=%d!\n",
-diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index 6d76fd0f704a6..750dfe512aca0 100644
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -2126,6 +2126,7 @@ static bool drop_negative_children(struct dentry *dentry)
-  */
- static int trim_caps_cb(struct inode *inode, int mds, void *arg)
- {
-+	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(inode->i_sb);
- 	int *remaining = arg;
- 	struct ceph_inode_info *ci = ceph_inode(inode);
- 	int used, wanted, oissued, mine;
-@@ -2173,7 +2174,7 @@ static int trim_caps_cb(struct inode *inode, int mds, void *arg)
- 
- 	if (oissued) {
- 		/* we aren't the only cap.. just remove us */
--		ceph_remove_cap(cap, true);
-+		ceph_remove_cap(mdsc, cap, true);
- 		(*remaining)--;
- 	} else {
- 		struct dentry *dentry;
-@@ -2588,6 +2589,7 @@ static u8 *get_fscrypt_altname(const struct ceph_mds_request *req, u32 *plen)
- 
- /**
-  * ceph_mdsc_build_path - build a path string to a given dentry
-+ * @mdsc: mds client
-  * @dentry: dentry to which path should be built
-  * @plen: returned length of string
-  * @pbase: returned base inode number
-@@ -2607,8 +2609,8 @@ static u8 *get_fscrypt_altname(const struct ceph_mds_request *req, u32 *plen)
-  * Encode hidden .snap dirs as a double /, i.e.
-  *   foo/.snap/bar -> foo//bar
-  */
--char *ceph_mdsc_build_path(struct dentry *dentry, int *plen, u64 *pbase,
--			   int for_wire)
-+char *ceph_mdsc_build_path(struct ceph_mds_client *mdsc, struct dentry *dentry,
-+			   int *plen, u64 *pbase, int for_wire)
- {
- 	struct dentry *cur;
- 	struct inode *inode;
-@@ -2726,9 +2728,9 @@ char *ceph_mdsc_build_path(struct dentry *dentry, int *plen, u64 *pbase,
- 	return path + pos;
- }
- 
--static int build_dentry_path(struct dentry *dentry, struct inode *dir,
--			     const char **ppath, int *ppathlen, u64 *pino,
--			     bool *pfreepath, bool parent_locked)
-+static int build_dentry_path(struct ceph_mds_client *mdsc, struct dentry *dentry,
-+			     struct inode *dir, const char **ppath, int *ppathlen,
-+			     u64 *pino, bool *pfreepath, bool parent_locked)
- {
- 	char *path;
- 
-@@ -2744,7 +2746,7 @@ static int build_dentry_path(struct dentry *dentry, struct inode *dir,
- 		return 0;
- 	}
- 	rcu_read_unlock();
--	path = ceph_mdsc_build_path(dentry, ppathlen, pino, 1);
-+	path = ceph_mdsc_build_path(mdsc, dentry, ppathlen, pino, 1);
- 	if (IS_ERR(path))
- 		return PTR_ERR(path);
- 	*ppath = path;
-@@ -2756,6 +2758,7 @@ static int build_inode_path(struct inode *inode,
- 			    const char **ppath, int *ppathlen, u64 *pino,
- 			    bool *pfreepath)
- {
-+	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(inode->i_sb);
- 	struct dentry *dentry;
- 	char *path;
- 
-@@ -2765,7 +2768,7 @@ static int build_inode_path(struct inode *inode,
- 		return 0;
- 	}
- 	dentry = d_find_alias(inode);
--	path = ceph_mdsc_build_path(dentry, ppathlen, pino, 1);
-+	path = ceph_mdsc_build_path(mdsc, dentry, ppathlen, pino, 1);
- 	dput(dentry);
- 	if (IS_ERR(path))
- 		return PTR_ERR(path);
-@@ -2778,10 +2781,11 @@ static int build_inode_path(struct inode *inode,
-  * request arguments may be specified via an inode *, a dentry *, or
-  * an explicit ino+path.
-  */
--static int set_request_path_attr(struct inode *rinode, struct dentry *rdentry,
--				  struct inode *rdiri, const char *rpath,
--				  u64 rino, const char **ppath, int *pathlen,
--				  u64 *ino, bool *freepath, bool parent_locked)
-+static int set_request_path_attr(struct ceph_mds_client *mdsc, struct inode *rinode,
-+				 struct dentry *rdentry, struct inode *rdiri,
-+				 const char *rpath, u64 rino, const char **ppath,
-+				 int *pathlen, u64 *ino, bool *freepath,
-+				 bool parent_locked)
- {
- 	int r = 0;
- 
-@@ -2790,7 +2794,7 @@ static int set_request_path_attr(struct inode *rinode, struct dentry *rdentry,
- 		dout(" inode %p %llx.%llx\n", rinode, ceph_ino(rinode),
- 		     ceph_snap(rinode));
- 	} else if (rdentry) {
--		r = build_dentry_path(rdentry, rdiri, ppath, pathlen, ino,
-+		r = build_dentry_path(mdsc, rdentry, rdiri, ppath, pathlen, ino,
- 					freepath, parent_locked);
- 		dout(" dentry %p %llx/%.*s\n", rdentry, *ino, *pathlen,
- 		     *ppath);
-@@ -2877,7 +2881,7 @@ static struct ceph_msg *create_request_message(struct ceph_mds_session *session,
- 	bool old_version = !test_bit(CEPHFS_FEATURE_32BITS_RETRY_FWD,
- 				     &session->s_features);
- 
--	ret = set_request_path_attr(req->r_inode, req->r_dentry,
-+	ret = set_request_path_attr(mdsc, req->r_inode, req->r_dentry,
- 			      req->r_parent, req->r_path1, req->r_ino1.ino,
- 			      &path1, &pathlen1, &ino1, &freepath1,
- 			      test_bit(CEPH_MDS_R_PARENT_LOCKED,
-@@ -2891,7 +2895,7 @@ static struct ceph_msg *create_request_message(struct ceph_mds_session *session,
- 	if (req->r_old_dentry &&
- 	    !(req->r_old_dentry->d_flags & DCACHE_DISCONNECTED))
- 		old_dentry = req->r_old_dentry;
--	ret = set_request_path_attr(NULL, old_dentry,
-+	ret = set_request_path_attr(mdsc, NULL, old_dentry,
- 			      req->r_old_dentry_dir,
- 			      req->r_path2, req->r_ino2.ino,
- 			      &path2, &pathlen2, &ino2, &freepath2, true);
-@@ -4290,6 +4294,7 @@ static struct dentry* d_find_primary(struct inode *inode)
-  */
- static int reconnect_caps_cb(struct inode *inode, int mds, void *arg)
- {
-+	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(inode->i_sb);
- 	union {
- 		struct ceph_mds_cap_reconnect v2;
- 		struct ceph_mds_cap_reconnect_v1 v1;
-@@ -4307,7 +4312,7 @@ static int reconnect_caps_cb(struct inode *inode, int mds, void *arg)
- 	dentry = d_find_primary(inode);
- 	if (dentry) {
- 		/* set pathbase to parent dir when msg_version >= 2 */
--		path = ceph_mdsc_build_path(dentry, &pathlen, &pathbase,
-+		path = ceph_mdsc_build_path(mdsc, dentry, &pathlen, &pathbase,
- 					    recon_state->msg_version >= 2);
- 		dput(dentry);
- 		if (IS_ERR(path)) {
-@@ -5662,7 +5667,7 @@ void ceph_mdsc_handle_mdsmap(struct ceph_mds_client *mdsc, struct ceph_msg *msg)
- 		return;
- 	}
- 
--	newmap = ceph_mdsmap_decode(&p, end, ceph_msgr2(mdsc->fsc->client));
-+	newmap = ceph_mdsmap_decode(mdsc, &p, end, ceph_msgr2(mdsc->fsc->client));
- 	if (IS_ERR(newmap)) {
- 		err = PTR_ERR(newmap);
- 		goto bad_unlock;
-diff --git a/fs/ceph/mds_client.h b/fs/ceph/mds_client.h
-index 5a3714bdd64a8..d930eb79dc380 100644
---- a/fs/ceph/mds_client.h
-+++ b/fs/ceph/mds_client.h
-@@ -581,7 +581,8 @@ static inline void ceph_mdsc_free_path(char *path, int len)
- 		__putname(path - (PATH_MAX - 1 - len));
- }
- 
--extern char *ceph_mdsc_build_path(struct dentry *dentry, int *plen, u64 *base,
-+extern char *ceph_mdsc_build_path(struct ceph_mds_client *mdsc,
-+				  struct dentry *dentry, int *plen, u64 *base,
- 				  int for_wire);
- 
- extern void __ceph_mdsc_drop_dentry_lease(struct dentry *dentry);
-diff --git a/fs/ceph/mdsmap.c b/fs/ceph/mdsmap.c
-index 3bb3b610d403e..66afb18df76b2 100644
---- a/fs/ceph/mdsmap.c
-+++ b/fs/ceph/mdsmap.c
-@@ -114,7 +114,8 @@ static int __decode_and_drop_compat_set(void **p, void* end)
-  * Ignore any fields we don't care about (there are quite a few of
-  * them).
-  */
--struct ceph_mdsmap *ceph_mdsmap_decode(void **p, void *end, bool msgr2)
-+struct ceph_mdsmap *ceph_mdsmap_decode(struct ceph_mds_client *mdsc, void **p,
-+				       void *end, bool msgr2)
- {
- 	struct ceph_mdsmap *m;
- 	const void *start = *p;
-diff --git a/fs/ceph/snap.c b/fs/ceph/snap.c
-index 813f21add992c..55090e6c99672 100644
---- a/fs/ceph/snap.c
-+++ b/fs/ceph/snap.c
-@@ -329,7 +329,8 @@ static int cmpu64_rev(const void *a, const void *b)
- /*
-  * build the snap context for a given realm.
-  */
--static int build_snap_context(struct ceph_snap_realm *realm,
-+static int build_snap_context(struct ceph_mds_client *mdsc,
-+			      struct ceph_snap_realm *realm,
- 			      struct list_head *realm_queue,
- 			      struct list_head *dirty_realms)
- {
-@@ -425,7 +426,8 @@ static int build_snap_context(struct ceph_snap_realm *realm,
- /*
-  * rebuild snap context for the given realm and all of its children.
-  */
--static void rebuild_snap_realms(struct ceph_snap_realm *realm,
-+static void rebuild_snap_realms(struct ceph_mds_client *mdsc,
-+				struct ceph_snap_realm *realm,
- 				struct list_head *dirty_realms)
- {
- 	LIST_HEAD(realm_queue);
-@@ -451,7 +453,8 @@ static void rebuild_snap_realms(struct ceph_snap_realm *realm,
- 			continue;
- 		}
- 
--		last = build_snap_context(_realm, &realm_queue, dirty_realms);
-+		last = build_snap_context(mdsc, _realm, &realm_queue,
-+					  dirty_realms);
- 		dout("%s %llx %p, %s\n", __func__, _realm->ino, _realm,
- 		     last > 0 ? "is deferred" : !last ? "succeeded" : "failed");
- 
-@@ -708,7 +711,8 @@ int __ceph_finish_cap_snap(struct ceph_inode_info *ci,
-  * Queue cap_snaps for snap writeback for this realm and its children.
-  * Called under snap_rwsem, so realm topology won't change.
-  */
--static void queue_realm_cap_snaps(struct ceph_snap_realm *realm)
-+static void queue_realm_cap_snaps(struct ceph_mds_client *mdsc,
-+				  struct ceph_snap_realm *realm)
- {
- 	struct ceph_inode_info *ci;
- 	struct inode *lastinode = NULL;
-@@ -855,7 +859,7 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
- 
- 	/* rebuild_snapcs when we reach the _end_ (root) of the trace */
- 	if (realm_to_rebuild && p >= e)
--		rebuild_snap_realms(realm_to_rebuild, &dirty_realms);
-+		rebuild_snap_realms(mdsc, realm_to_rebuild, &dirty_realms);
- 
- 	if (!first_realm)
- 		first_realm = realm;
-@@ -873,7 +877,7 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
- 		realm = list_first_entry(&dirty_realms, struct ceph_snap_realm,
- 					 dirty_item);
- 		list_del_init(&realm->dirty_item);
--		queue_realm_cap_snaps(realm);
-+		queue_realm_cap_snaps(mdsc, realm);
- 	}
- 
- 	if (realm_ret)
-diff --git a/fs/ceph/super.h b/fs/ceph/super.h
-index 51c7f2b14f6f8..09c262dd5bd36 100644
---- a/fs/ceph/super.h
-+++ b/fs/ceph/super.h
-@@ -1223,7 +1223,8 @@ extern void ceph_add_cap(struct inode *inode,
- 			 unsigned cap, unsigned seq, u64 realmino, int flags,
- 			 struct ceph_cap **new_cap);
- extern void __ceph_remove_cap(struct ceph_cap *cap, bool queue_release);
--extern void ceph_remove_cap(struct ceph_cap *cap, bool queue_release);
-+extern void ceph_remove_cap(struct ceph_mds_client *mdsc, struct ceph_cap *cap,
-+			    bool queue_release);
- extern void __ceph_remove_caps(struct ceph_inode_info *ci);
- extern void ceph_put_cap(struct ceph_mds_client *mdsc,
- 			 struct ceph_cap *cap);
-diff --git a/include/linux/ceph/mdsmap.h b/include/linux/ceph/mdsmap.h
-index fcc95bff72a57..1f2171dd01bfa 100644
---- a/include/linux/ceph/mdsmap.h
-+++ b/include/linux/ceph/mdsmap.h
-@@ -5,6 +5,8 @@
- #include <linux/bug.h>
- #include <linux/ceph/types.h>
- 
-+struct ceph_mds_client;
-+
- /*
-  * mds map - describe servers in the mds cluster.
-  *
-@@ -69,7 +71,8 @@ static inline bool ceph_mdsmap_is_laggy(struct ceph_mdsmap *m, int w)
- }
- 
- extern int ceph_mdsmap_get_random_mds(struct ceph_mdsmap *m);
--struct ceph_mdsmap *ceph_mdsmap_decode(void **p, void *end, bool msgr2);
-+struct ceph_mdsmap *ceph_mdsmap_decode(struct ceph_mds_client *mdsc, void **p,
-+				       void *end, bool msgr2);
- extern void ceph_mdsmap_destroy(struct ceph_mdsmap *m);
- extern bool ceph_mdsmap_is_cluster_available(struct ceph_mdsmap *m);
- 
--- 
-2.43.0
-
+-count=`cat trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
++count=`head -n 100 trace | grep -v ^# | awk '{ print $5 }' | sort -u | wc -l`
+ if [ $count -ne 0 ]; then
+     fail "any of scheduler events should not be recorded"
+ fi
 
 
