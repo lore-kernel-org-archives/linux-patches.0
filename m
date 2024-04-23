@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14806143895;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0772143895;
 	Tue, 23 Apr 2024 21:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908629; cv=none; b=eAkpbMbAROY8bU3K2NHhI+xPqF6s8ko/ICaEKD5ln18TxoMdKY3GWKSE0o+34jLjzb1C0w6cVvqes6Qyyj50FyGVXm7steGxQml8GOTSIO8Ccko+KIlJVajsdkv8QJupphP5ljE/v0lCVnaAdHfEqFgCBYZht9I3ob1iobABFoM=
+	t=1713908629; cv=none; b=CV8nGRsElX/yHWEr6J4+/obkSrEULjocmvdeioN2eeTWNv8vqKdos5PD/35/Ju+qAhx++ksXnhOld3BKxQr3D8i9PtB2PhqjfK+IZedwe+Armp3YVQ2g5mD0PqwAN/ydmR9aj14ShVYM9qDAqsQO0XeXMqdUARHW05oyDshv/Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908629; c=relaxed/simple;
-	bh=PAfgC6AfPCAnRHDYbLnYB1OKuxlfXb1wMAs2lH+BfuQ=;
+	bh=LF2NKiLOcfBKSrq6olUhtwOqkC83ooJl/9Cu5LeEOIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CIKztktRH2ACrKnAH1j4vBp64zYQLMI7b9HSaIXYdDjdB4skgpRWWq9d8/wSvbJMsIW4FzhEVwpbHK2kTknKt5AxukIAarsWzkogLGV6WITKSHG8qg7e2gFVbsM5An/bcHA+clSRzgT2Y19pybBlzwUHTzXuG1qB4j40RsL/0yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XYwj4T03; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RqUh/u/LQ/jym1kTo+eImBJnIIEvitq6YK3nqqHrU6exhLcpZ9KTpm48v3ZkFqfon8o4GaPPRNCnVHHVs6gBjh1a6aYsZbvSOet14ICFOcT1aMXELZuSNYAdscgy3gvTmRHxfE+b/rsKX+A4kViyFDssbH+nCxmFupjTafJdtEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YlEaXb2f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XYwj4T03"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA13C3277B;
-	Tue, 23 Apr 2024 21:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YlEaXb2f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85794C116B1;
+	Tue, 23 Apr 2024 21:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908629;
-	bh=PAfgC6AfPCAnRHDYbLnYB1OKuxlfXb1wMAs2lH+BfuQ=;
+	bh=LF2NKiLOcfBKSrq6olUhtwOqkC83ooJl/9Cu5LeEOIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XYwj4T03CNvrJ8sT2QdBHHPbh6+rHIc/fH5hXylOfja4psFyhwfsu5w/hB6Q+5srN
-	 AAHHq0QIzrBeF1oesTsLhRuHQbuSz/jQql8bVcHb+itB5juicdoh6UOsL+yKlOH9zQ
-	 TKhksiOBMfhMSaW6JCJNM2qknT11qvslVKR1witk=
+	b=YlEaXb2fJ0vP4ugusX5sMvsYAN44ygeQwSNMmczsxYQbydSg1vgR8f1xpzU+5ZW/c
+	 HBwFU6oC5R2uc89BkY4n655eUifLw2thD5CcJfqYhxgocv0/ZMyWLH6pmlFfHLDCQH
+	 4Pw4i9lpfpbWzaA7fmL8S1kE75JsrjQ0Q5yArbOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Arnd Bergmann <arnd@kernel.org>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 082/158] ALSA: scarlett2: Add Focusrite Clarett 2Pre and 4Pre USB support
-Date: Tue, 23 Apr 2024 14:38:39 -0700
-Message-ID: <20240423213858.427834431@linuxfoundation.org>
+Subject: [PATCH 6.6 073/158] usb: pci-quirks: handle HAS_IOPORT dependency for AMD quirk
+Date: Tue, 23 Apr 2024 14:38:30 -0700
+Message-ID: <20240423213858.137949890@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -51,76 +51,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit 2b17b489e47a956c8e93c8f1bcabb0343c851d90 ]
+[ Upstream commit 52e24f8c0a102ac76649c6b71224fadcc82bd5da ]
 
-It has been confirmed that all devices in the Focusrite Clarett USB
-series work the same as the devices in the Clarett+ series. Add the
-missing PIDs to enable support for the Clarett 2Pre and 4Pre USB.
+In a future patch HAS_IOPORT=n will result in inb()/outb() and friends
+not being declared. In the pci-quirks case the I/O port acceses are
+used in the quirks for several AMD south bridges, Add a config option
+for the AMD quirks to depend on HAS_IOPORT and #ifdef the quirk code.
 
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Link: https://lore.kernel.org/r/ZSFB8EVTG1PK1eq/@m.b4.vu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Co-developed-by: Arnd Bergmann <arnd@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@kernel.org>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230911125653.1393895-3-schnelle@linux.ibm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_quirks.c        | 2 ++
- sound/usb/mixer_scarlett_gen2.c | 8 ++++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/usb/Kconfig           | 10 ++++++++++
+ drivers/usb/core/hcd-pci.c    |  3 +--
+ drivers/usb/host/pci-quirks.c |  2 ++
+ drivers/usb/host/pci-quirks.h | 30 ++++++++++++++++++++++--------
+ include/linux/usb/hcd.h       | 17 +++++++++++++++++
+ 5 files changed, 52 insertions(+), 10 deletions(-)
 
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index 3721d59a56809..a331732fed890 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -3447,6 +3447,8 @@ int snd_usb_mixer_apply_create_quirk(struct usb_mixer_interface *mixer)
- 	case USB_ID(0x1235, 0x8213): /* Focusrite Scarlett 8i6 3rd Gen */
- 	case USB_ID(0x1235, 0x8214): /* Focusrite Scarlett 18i8 3rd Gen */
- 	case USB_ID(0x1235, 0x8215): /* Focusrite Scarlett 18i20 3rd Gen */
-+	case USB_ID(0x1235, 0x8206): /* Focusrite Clarett 2Pre USB */
-+	case USB_ID(0x1235, 0x8207): /* Focusrite Clarett 4Pre USB */
- 	case USB_ID(0x1235, 0x8208): /* Focusrite Clarett 8Pre USB */
- 	case USB_ID(0x1235, 0x820a): /* Focusrite Clarett+ 2Pre */
- 	case USB_ID(0x1235, 0x820b): /* Focusrite Clarett+ 4Pre */
-diff --git a/sound/usb/mixer_scarlett_gen2.c b/sound/usb/mixer_scarlett_gen2.c
-index 653dc7d8fb47c..e5e70abf5286b 100644
---- a/sound/usb/mixer_scarlett_gen2.c
-+++ b/sound/usb/mixer_scarlett_gen2.c
-@@ -5,7 +5,7 @@
-  *   Supported models:
-  *   - 6i6/18i8/18i20 Gen 2
-  *   - Solo/2i2/4i4/8i6/18i8/18i20 Gen 3
-- *   - Clarett 8Pre USB
-+ *   - Clarett 2Pre/4Pre/8Pre USB
-  *   - Clarett+ 2Pre/4Pre/8Pre
-  *
-  *   Copyright (c) 2018-2023 by Geoffrey D. Bennett <g at b4.vu>
-@@ -64,6 +64,8 @@
-  * Gregory Rozzo for donating a 4Pre, and David Sherwood and Patrice
-  * Peterson for usbmon output).
-  *
-+ * Support for Clarett 2Pre and 4Pre USB added in Oct 2023.
-+ *
-  * This ALSA mixer gives access to (model-dependent):
-  *  - input, output, mixer-matrix muxes
-  *  - mixer-matrix gain stages
-@@ -999,6 +1001,8 @@ static const struct scarlett2_device_entry scarlett2_devices[] = {
- 	{ USB_ID(0x1235, 0x8215), &s18i20_gen3_info, "Scarlett Gen 3" },
+diff --git a/drivers/usb/Kconfig b/drivers/usb/Kconfig
+index 7f33bcc315f27..abf8c6cdea9ea 100644
+--- a/drivers/usb/Kconfig
++++ b/drivers/usb/Kconfig
+@@ -91,6 +91,16 @@ config USB_PCI
+ 	  If you have such a device you may say N here and PCI related code
+ 	  will not be built in the USB driver.
  
- 	/* Supported Clarett USB/Clarett+ devices */
-+	{ USB_ID(0x1235, 0x8206), &clarett_2pre_info, "Clarett USB" },
-+	{ USB_ID(0x1235, 0x8207), &clarett_4pre_info, "Clarett USB" },
- 	{ USB_ID(0x1235, 0x8208), &clarett_8pre_info, "Clarett USB" },
- 	{ USB_ID(0x1235, 0x820a), &clarett_2pre_info, "Clarett+" },
- 	{ USB_ID(0x1235, 0x820b), &clarett_4pre_info, "Clarett+" },
-@@ -1197,7 +1201,7 @@ static const struct scarlett2_config
- 	[SCARLETT2_CONFIG_TALKBACK_MAP] = {
- 		.offset = 0xb0, .size = 16, .activate = 10 },
++config USB_PCI_AMD
++	bool "AMD PCI USB host support"
++	depends on USB_PCI && HAS_IOPORT
++	default X86 || MACH_LOONGSON64 || PPC_PASEMI
++	help
++	  Enable workarounds for USB implementation quirks in SB600/SB700/SB800
++	  and later south bridge implementations. These are common on x86 PCs
++	  with AMD CPUs but rarely used elsewhere, with the exception of a few
++	  powerpc and mips desktop machines.
++
+ if USB
  
--/* Clarett+ 8Pre */
-+/* Clarett USB and Clarett+ devices: 2Pre, 4Pre, 8Pre */
- }, {
- 	[SCARLETT2_CONFIG_DIM_MUTE] = {
- 		.offset = 0x31, .size = 8, .activate = 2 },
+ source "drivers/usb/core/Kconfig"
+diff --git a/drivers/usb/core/hcd-pci.c b/drivers/usb/core/hcd-pci.c
+index 990280688b254..ee3156f495338 100644
+--- a/drivers/usb/core/hcd-pci.c
++++ b/drivers/usb/core/hcd-pci.c
+@@ -206,8 +206,7 @@ int usb_hcd_pci_probe(struct pci_dev *dev, const struct hc_driver *driver)
+ 		goto free_irq_vectors;
+ 	}
+ 
+-	hcd->amd_resume_bug = (usb_hcd_amd_remote_wakeup_quirk(dev) &&
+-			driver->flags & (HCD_USB11 | HCD_USB3)) ? 1 : 0;
++	hcd->amd_resume_bug = usb_hcd_amd_resume_bug(dev, driver);
+ 
+ 	if (driver->flags & HCD_MEMORY) {
+ 		/* EHCI, OHCI */
+diff --git a/drivers/usb/host/pci-quirks.c b/drivers/usb/host/pci-quirks.c
+index 5e06fad82a228..10813096d00c6 100644
+--- a/drivers/usb/host/pci-quirks.c
++++ b/drivers/usb/host/pci-quirks.c
+@@ -76,6 +76,7 @@
+ #define USB_INTEL_USB3_PSSEN   0xD8
+ #define USB_INTEL_USB3PRM      0xDC
+ 
++#ifdef CONFIG_USB_PCI_AMD
+ /* AMD quirk use */
+ #define	AB_REG_BAR_LOW		0xe0
+ #define	AB_REG_BAR_HIGH		0xe1
+@@ -587,6 +588,7 @@ bool usb_amd_pt_check_port(struct device *device, int port)
+ 	return !(value & BIT(port_shift));
+ }
+ EXPORT_SYMBOL_GPL(usb_amd_pt_check_port);
++#endif /* CONFIG_USB_PCI_AMD */
+ 
+ static int usb_asmedia_wait_write(struct pci_dev *pdev)
+ {
+diff --git a/drivers/usb/host/pci-quirks.h b/drivers/usb/host/pci-quirks.h
+index cde2263a9d2e4..a5230b0b9e913 100644
+--- a/drivers/usb/host/pci-quirks.h
++++ b/drivers/usb/host/pci-quirks.h
+@@ -2,7 +2,7 @@
+ #ifndef __LINUX_USB_PCI_QUIRKS_H
+ #define __LINUX_USB_PCI_QUIRKS_H
+ 
+-#ifdef CONFIG_USB_PCI
++#ifdef CONFIG_USB_PCI_AMD
+ int usb_hcd_amd_remote_wakeup_quirk(struct pci_dev *pdev);
+ bool usb_amd_hang_symptom_quirk(void);
+ bool usb_amd_prefetch_quirk(void);
+@@ -12,23 +12,37 @@ void usb_amd_quirk_pll_disable(void);
+ void usb_amd_quirk_pll_enable(void);
+ void sb800_prefetch(struct device *dev, int on);
+ bool usb_amd_pt_check_port(struct device *device, int port);
+-
+-void uhci_reset_hc(struct pci_dev *pdev, unsigned long base);
+-int uhci_check_and_reset_hc(struct pci_dev *pdev, unsigned long base);
+-void usb_asmedia_modifyflowcontrol(struct pci_dev *pdev);
+-void usb_enable_intel_xhci_ports(struct pci_dev *xhci_pdev);
+-void usb_disable_xhci_ports(struct pci_dev *xhci_pdev);
+ #else
+-struct pci_dev;
++static inline bool usb_amd_hang_symptom_quirk(void)
++{
++	return false;
++};
++static inline bool usb_amd_prefetch_quirk(void)
++{
++	return false;
++}
+ static inline void usb_amd_quirk_pll_disable(void) {}
+ static inline void usb_amd_quirk_pll_enable(void) {}
+ static inline void usb_amd_dev_put(void) {}
++static inline bool usb_amd_quirk_pll_check(void)
++{
++	return false;
++}
+ static inline void sb800_prefetch(struct device *dev, int on) {}
+ static inline bool usb_amd_pt_check_port(struct device *device, int port)
+ {
+ 	return false;
+ }
++#endif /* CONFIG_USB_PCI_AMD */
+ 
++#ifdef CONFIG_USB_PCI
++void uhci_reset_hc(struct pci_dev *pdev, unsigned long base);
++int uhci_check_and_reset_hc(struct pci_dev *pdev, unsigned long base);
++void usb_asmedia_modifyflowcontrol(struct pci_dev *pdev);
++void usb_enable_intel_xhci_ports(struct pci_dev *xhci_pdev);
++void usb_disable_xhci_ports(struct pci_dev *xhci_pdev);
++#else
++struct pci_dev;
+ static inline void usb_asmedia_modifyflowcontrol(struct pci_dev *pdev) {}
+ static inline void usb_disable_xhci_ports(struct pci_dev *xhci_pdev) {}
+ #endif  /* CONFIG_USB_PCI */
+diff --git a/include/linux/usb/hcd.h b/include/linux/usb/hcd.h
+index 61d4f0b793dcd..00724b4f6e122 100644
+--- a/include/linux/usb/hcd.h
++++ b/include/linux/usb/hcd.h
+@@ -484,8 +484,25 @@ extern int usb_hcd_pci_probe(struct pci_dev *dev,
+ extern void usb_hcd_pci_remove(struct pci_dev *dev);
+ extern void usb_hcd_pci_shutdown(struct pci_dev *dev);
+ 
++#ifdef CONFIG_USB_PCI_AMD
+ extern int usb_hcd_amd_remote_wakeup_quirk(struct pci_dev *dev);
+ 
++static inline bool usb_hcd_amd_resume_bug(struct pci_dev *dev,
++					  const struct hc_driver *driver)
++{
++	if (!usb_hcd_amd_remote_wakeup_quirk(dev))
++		return false;
++	if (driver->flags & (HCD_USB11 | HCD_USB3))
++		return true;
++	return false;
++}
++#else /* CONFIG_USB_PCI_AMD */
++static inline bool usb_hcd_amd_resume_bug(struct pci_dev *dev,
++					  const struct hc_driver *driver)
++{
++	return false;
++}
++#endif
+ extern const struct dev_pm_ops usb_hcd_pci_pm_ops;
+ #endif /* CONFIG_USB_PCI */
+ 
 -- 
 2.43.0
 
