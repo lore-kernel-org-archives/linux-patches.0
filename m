@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579BF143C5F;
-	Tue, 23 Apr 2024 21:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05EAE143C5F;
+	Tue, 23 Apr 2024 21:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908773; cv=none; b=Oq3AKAhdyS4gxZY8aiL4/ONxgAgOgHroDRDo3CuuaK7oaf4Ue6AyVM4naKRTQKP1BuGENrIt7WHdYWgNAFtgI9kkBo0IaZn4cYC5YQ7AYsWi89CLiRdnXSswVY0oWSAQWHyBE6T4iXsw+W1bDQTKTgxn+LdHiSnkJmWpUGhmZSE=
+	t=1713908774; cv=none; b=JK8XSoe1tpQuTI60IrDmzKtyVVlbAS+hfxj6LhDbnEX19TFT+i7QDJ1ELPoCz8zueToiSOpgr5foN3zQo581GtDsbgGaidYxA8osGo1YkEROfx9eEuhQIDgkV4dXk3Csw+yTsP1Y8auAnZwdAR+s59Ad7mCQKZKTQfaJ1YiYEy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908773; c=relaxed/simple;
-	bh=iduOkZhyufHqHQ1mIAT78eeRVHkPQN0lrvQ0p/Jaf5g=;
+	s=arc-20240116; t=1713908774; c=relaxed/simple;
+	bh=9e7C15Tmm1FQvlYdKQLjjdXPhwQI8k3onDC3keqqHcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/NT6RgqYH9Qymr+fB9fOGnZIVwLf3ch1xqVD5+QB4GAjuqxtL/WMRj8XOWJg8vbRVjkSsChouAS/K0mXBvhqaQEnPRoXmKCjjOmIM8ecsTqGsw+aJZ/WojRY4Lv8m4LvyztvDvjv2VGTCMvTQqkN+63IDRU2a95eH6XpdA3g9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UIHdXstr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PsWYe1FKQ882jgAmEZaEVQdYC/QrWuJIt2Jny8DQLmZnKlanG3UvQ1gHm9y3WxyO1H/WVTGYPh3bItQAquqXg4j1kytPDt3tRD9cy6RD9GppTjBoTlCeSeCKyhXeiT+K0G6CRfEKVF8xo/mbDKbiMPAQUEFJJrPl5FfsxsJGhno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgA5wnFz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UIHdXstr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2339EC116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgA5wnFz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE09C3277B;
 	Tue, 23 Apr 2024 21:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908773;
-	bh=iduOkZhyufHqHQ1mIAT78eeRVHkPQN0lrvQ0p/Jaf5g=;
+	bh=9e7C15Tmm1FQvlYdKQLjjdXPhwQI8k3onDC3keqqHcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UIHdXstrbXloWE52jFfIVh/URp4raXk2PJ1JOdPidJ6uzRk9htJjeL+AcaJCjXdvd
-	 uYdOrYmuxM4hBJdeT5QaIA8zDtF2nuxwPSKkWXV7WdpFDtsxGCrbXNF6gGxb0i5sI2
-	 XcDVuM9d8ksQ0MzHnpimmYL9PFBt/G69z0Vru+HQ=
+	b=XgA5wnFzl4DPNCAgPxOdnffpEUP3Ti3Pl6ImC0MBIqJqVeVI6UKzIgpsR6w8sAk1s
+	 ArA3CJxI9F6+9eEMd2TztZe3/YwkbuM8En8M1xmxFN9/umS0gCF3RhNfONckiLoFPF
+	 p/oQtd6CqvU64Aw8ldZ9kt1fLuEBP3fmP7BabKRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 17/71] netfilter: br_netfilter: skip conntrack input hook for promisc packets
-Date: Tue, 23 Apr 2024 14:39:30 -0700
-Message-ID: <20240423213844.716822019@linuxfoundation.org>
+Subject: [PATCH 5.15 18/71] netfilter: nft_set_pipapo: do not free live element
+Date: Tue, 23 Apr 2024 14:39:31 -0700
+Message-ID: <20240423213844.752636865@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
 References: <20240423213844.122920086@linuxfoundation.org>
@@ -51,217 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 751de2012eafa4d46d8081056761fa0e9cc8a178 ]
+[ Upstream commit 3cfc9ec039af60dbd8965ae085b2c2ccdcfbe1cc ]
 
-For historical reasons, when bridge device is in promisc mode, packets
-that are directed to the taps follow bridge input hook path. This patch
-adds a workaround to reset conntrack for these packets.
+Pablo reports a crash with large batches of elements with a
+back-to-back add/remove pattern.  Quoting Pablo:
 
-Jianbo Liu reports warning splats in their test infrastructure where
-cloned packets reach the br_netfilter input hook to confirm the
-conntrack object.
+  add_elem("00000000") timeout 100 ms
+  ...
+  add_elem("0000000X") timeout 100 ms
+  del_elem("0000000X") <---------------- delete one that was just added
+  ...
+  add_elem("00005000") timeout 100 ms
 
-Scratch one bit from BR_INPUT_SKB_CB to annotate that this packet has
-reached the input hook because it is passed up to the bridge device to
-reach the taps.
+  1) nft_pipapo_remove() removes element 0000000X
+  Then, KASAN shows a splat.
 
-[   57.571874] WARNING: CPU: 1 PID: 0 at net/bridge/br_netfilter_hooks.c:616 br_nf_local_in+0x157/0x180 [br_netfilter]
-[   57.572749] Modules linked in: xt_MASQUERADE nf_conntrack_netlink nfnetlink iptable_nat xt_addrtype xt_conntrack nf_nat br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_registry overlay rpcrdma rdma_ucm ib_iser libiscsi scsi_transport_isc si ib_umad rdma_cm ib_ipoib iw_cm ib_cm mlx5_ib ib_uverbs ib_core mlx5ctl mlx5_core
-[   57.575158] CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.8.0+ #19
-[   57.575700] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-[   57.576662] RIP: 0010:br_nf_local_in+0x157/0x180 [br_netfilter]
-[   57.577195] Code: fe ff ff 41 bd 04 00 00 00 be 04 00 00 00 e9 4a ff ff ff be 04 00 00 00 48 89 ef e8 f3 a9 3c e1 66 83 ad b4 00 00 00 04 eb 91 <0f> 0b e9 f1 fe ff ff 0f 0b e9 df fe ff ff 48 89 df e8 b3 53 47 e1
-[   57.578722] RSP: 0018:ffff88885f845a08 EFLAGS: 00010202
-[   57.579207] RAX: 0000000000000002 RBX: ffff88812dfe8000 RCX: 0000000000000000
-[   57.579830] RDX: ffff88885f845a60 RSI: ffff8881022dc300 RDI: 0000000000000000
-[   57.580454] RBP: ffff88885f845a60 R08: 0000000000000001 R09: 0000000000000003
-[   57.581076] R10: 00000000ffff1300 R11: 0000000000000002 R12: 0000000000000000
-[   57.581695] R13: ffff8881047ffe00 R14: ffff888108dbee00 R15: ffff88814519b800
-[   57.582313] FS:  0000000000000000(0000) GS:ffff88885f840000(0000) knlGS:0000000000000000
-[   57.583040] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   57.583564] CR2: 000000c4206aa000 CR3: 0000000103847001 CR4: 0000000000370eb0
-[   57.584194] DR0: 0000000000000000 DR1: 0000000000000000 DR2:
-0000000000000000
-[   57.584820] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7:
-0000000000000400
-[   57.585440] Call Trace:
-[   57.585721]  <IRQ>
-[   57.585976]  ? __warn+0x7d/0x130
-[   57.586323]  ? br_nf_local_in+0x157/0x180 [br_netfilter]
-[   57.586811]  ? report_bug+0xf1/0x1c0
-[   57.587177]  ? handle_bug+0x3f/0x70
-[   57.587539]  ? exc_invalid_op+0x13/0x60
-[   57.587929]  ? asm_exc_invalid_op+0x16/0x20
-[   57.588336]  ? br_nf_local_in+0x157/0x180 [br_netfilter]
-[   57.588825]  nf_hook_slow+0x3d/0xd0
-[   57.589188]  ? br_handle_vlan+0x4b/0x110
-[   57.589579]  br_pass_frame_up+0xfc/0x150
-[   57.589970]  ? br_port_flags_change+0x40/0x40
-[   57.590396]  br_handle_frame_finish+0x346/0x5e0
-[   57.590837]  ? ipt_do_table+0x32e/0x430
-[   57.591221]  ? br_handle_local_finish+0x20/0x20
-[   57.591656]  br_nf_hook_thresh+0x4b/0xf0 [br_netfilter]
-[   57.592286]  ? br_handle_local_finish+0x20/0x20
-[   57.592802]  br_nf_pre_routing_finish+0x178/0x480 [br_netfilter]
-[   57.593348]  ? br_handle_local_finish+0x20/0x20
-[   57.593782]  ? nf_nat_ipv4_pre_routing+0x25/0x60 [nf_nat]
-[   57.594279]  br_nf_pre_routing+0x24c/0x550 [br_netfilter]
-[   57.594780]  ? br_nf_hook_thresh+0xf0/0xf0 [br_netfilter]
-[   57.595280]  br_handle_frame+0x1f3/0x3d0
-[   57.595676]  ? br_handle_local_finish+0x20/0x20
-[   57.596118]  ? br_handle_frame_finish+0x5e0/0x5e0
-[   57.596566]  __netif_receive_skb_core+0x25b/0xfc0
-[   57.597017]  ? __napi_build_skb+0x37/0x40
-[   57.597418]  __netif_receive_skb_list_core+0xfb/0x220
+Looking at the remove function there is a chance that we will drop a
+rule that maps to a non-deactivated element.
 
-Fixes: 62e7151ae3eb ("netfilter: bridge: confirm multicast packets before passing them up the stack")
-Reported-by: Jianbo Liu <jianbol@nvidia.com>
+Removal happens in two steps, first we do a lookup for key k and return the
+to-be-removed element and mark it as inactive in the next generation.
+Then, in a second step, the element gets removed from the set/map.
+
+The _remove function does not work correctly if we have more than one
+element that share the same key.
+
+This can happen if we insert an element into a set when the set already
+holds an element with same key, but the element mapping to the existing
+key has timed out or is not active in the next generation.
+
+In such case its possible that removal will unmap the wrong element.
+If this happens, we will leak the non-deactivated element, it becomes
+unreachable.
+
+The element that got deactivated (and will be freed later) will
+remain reachable in the set data structure, this can result in
+a crash when such an element is retrieved during lookup (stale
+pointer).
+
+Add a check that the fully matching key does in fact map to the element
+that we have marked as inactive in the deactivation step.
+If not, we need to continue searching.
+
+Add a bug/warn trap at the end of the function as well, the remove
+function must not ever be called with an invisible/unreachable/non-existent
+element.
+
+v2: avoid uneeded temporary variable (Stefano)
+
+Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
+Reported-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_input.c                      | 15 +++++++++++----
- net/bridge/br_netfilter_hooks.c            |  6 ++++++
- net/bridge/br_private.h                    |  1 +
- net/bridge/netfilter/nf_conntrack_bridge.c | 14 ++++++++++----
- 4 files changed, 28 insertions(+), 8 deletions(-)
+ net/netfilter/nft_set_pipapo.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/net/bridge/br_input.c b/net/bridge/br_input.c
-index 54bfcdf692732..f3d49343f7dbe 100644
---- a/net/bridge/br_input.c
-+++ b/net/bridge/br_input.c
-@@ -30,7 +30,7 @@ br_netif_receive_skb(struct net *net, struct sock *sk, struct sk_buff *skb)
- 	return netif_receive_skb(skb);
- }
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 58eca26162735..2299ced939c47 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1994,6 +1994,8 @@ static void nft_pipapo_remove(const struct net *net, const struct nft_set *set,
+ 		rules_fx = rules_f0;
  
--static int br_pass_frame_up(struct sk_buff *skb)
-+static int br_pass_frame_up(struct sk_buff *skb, bool promisc)
- {
- 	struct net_device *indev, *brdev = BR_INPUT_SKB_CB(skb)->brdev;
- 	struct net_bridge *br = netdev_priv(brdev);
-@@ -65,6 +65,8 @@ static int br_pass_frame_up(struct sk_buff *skb)
- 	br_multicast_count(br, NULL, skb, br_multicast_igmp_type(skb),
- 			   BR_MCAST_DIR_TX);
- 
-+	BR_INPUT_SKB_CB(skb)->promisc = promisc;
+ 		nft_pipapo_for_each_field(f, i, m) {
++			bool last = i == m->field_count - 1;
 +
- 	return NF_HOOK(NFPROTO_BRIDGE, NF_BR_LOCAL_IN,
- 		       dev_net(indev), NULL, skb, indev, NULL,
- 		       br_netif_receive_skb);
-@@ -82,6 +84,7 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
- 	struct net_bridge_mcast *brmctx;
- 	struct net_bridge_vlan *vlan;
- 	struct net_bridge *br;
-+	bool promisc;
- 	u16 vid = 0;
- 	u8 state;
+ 			if (!pipapo_match_field(f, start, rules_fx,
+ 						match_start, match_end))
+ 				break;
+@@ -2006,16 +2008,18 @@ static void nft_pipapo_remove(const struct net *net, const struct nft_set *set,
  
-@@ -102,7 +105,9 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
- 	if (p->flags & BR_LEARNING)
- 		br_fdb_update(br, p, eth_hdr(skb)->h_source, vid, 0);
+ 			match_start += NFT_PIPAPO_GROUPS_PADDED_SIZE(f);
+ 			match_end += NFT_PIPAPO_GROUPS_PADDED_SIZE(f);
+-		}
  
--	local_rcv = !!(br->dev->flags & IFF_PROMISC);
-+	promisc = !!(br->dev->flags & IFF_PROMISC);
-+	local_rcv = promisc;
-+
- 	if (is_multicast_ether_addr(eth_hdr(skb)->h_dest)) {
- 		/* by definition the broadcast is also a multicast address */
- 		if (is_broadcast_ether_addr(eth_hdr(skb)->h_dest)) {
-@@ -165,7 +170,7 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
- 		unsigned long now = jiffies;
- 
- 		if (test_bit(BR_FDB_LOCAL, &dst->flags))
--			return br_pass_frame_up(skb);
-+			return br_pass_frame_up(skb, false);
- 
- 		if (now != dst->used)
- 			dst->used = now;
-@@ -178,7 +183,7 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
- 	}
- 
- 	if (local_rcv)
--		return br_pass_frame_up(skb);
-+		return br_pass_frame_up(skb, promisc);
- 
- out:
- 	return 0;
-@@ -350,6 +355,8 @@ static rx_handler_result_t br_handle_frame(struct sk_buff **pskb)
- 				goto forward;
+-		if (i == m->field_count) {
+-			priv->dirty = true;
+-			pipapo_drop(m, rulemap);
+-			return;
++			if (last && f->mt[rulemap[i].to].e == e) {
++				priv->dirty = true;
++				pipapo_drop(m, rulemap);
++				return;
++			}
  		}
  
-+		BR_INPUT_SKB_CB(skb)->promisc = false;
+ 		first_rule += rules_f0;
+ 	}
 +
- 		/* The else clause should be hit when nf_hook():
- 		 *   - returns < 0 (drop/error)
- 		 *   - returns = 0 (stolen/nf_queue)
-diff --git a/net/bridge/br_netfilter_hooks.c b/net/bridge/br_netfilter_hooks.c
-index 8a114a5000466..9981e0dfdd4d3 100644
---- a/net/bridge/br_netfilter_hooks.c
-+++ b/net/bridge/br_netfilter_hooks.c
-@@ -584,11 +584,17 @@ static unsigned int br_nf_local_in(void *priv,
- 				   struct sk_buff *skb,
- 				   const struct nf_hook_state *state)
- {
-+	bool promisc = BR_INPUT_SKB_CB(skb)->promisc;
- 	struct nf_conntrack *nfct = skb_nfct(skb);
- 	const struct nf_ct_hook *ct_hook;
- 	struct nf_conn *ct;
- 	int ret;
++	WARN_ON_ONCE(1); /* elem_priv not found */
+ }
  
-+	if (promisc) {
-+		nf_reset_ct(skb);
-+		return NF_ACCEPT;
-+	}
-+
- 	if (!nfct || skb->pkt_type == PACKET_HOST)
- 		return NF_ACCEPT;
- 
-diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index ff10ddeeb50ff..fe61d3b8d0cc2 100644
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -547,6 +547,7 @@ struct br_input_skb_cb {
- #endif
- 	u8 proxyarp_replied:1;
- 	u8 src_port_isolated:1;
-+	u8 promisc:1;
- #ifdef CONFIG_BRIDGE_VLAN_FILTERING
- 	u8 vlan_filtered:1;
- #endif
-diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
-index 83743e95939b1..fbdb1ad448c3a 100644
---- a/net/bridge/netfilter/nf_conntrack_bridge.c
-+++ b/net/bridge/netfilter/nf_conntrack_bridge.c
-@@ -293,18 +293,24 @@ static unsigned int nf_ct_bridge_pre(void *priv, struct sk_buff *skb,
- static unsigned int nf_ct_bridge_in(void *priv, struct sk_buff *skb,
- 				    const struct nf_hook_state *state)
- {
--	enum ip_conntrack_info ctinfo;
-+	bool promisc = BR_INPUT_SKB_CB(skb)->promisc;
-+	struct nf_conntrack *nfct = skb_nfct(skb);
- 	struct nf_conn *ct;
- 
--	if (skb->pkt_type == PACKET_HOST)
-+	if (promisc) {
-+		nf_reset_ct(skb);
-+		return NF_ACCEPT;
-+	}
-+
-+	if (!nfct || skb->pkt_type == PACKET_HOST)
- 		return NF_ACCEPT;
- 
- 	/* nf_conntrack_confirm() cannot handle concurrent clones,
- 	 * this happens for broad/multicast frames with e.g. macvlan on top
- 	 * of the bridge device.
- 	 */
--	ct = nf_ct_get(skb, &ctinfo);
--	if (!ct || nf_ct_is_confirmed(ct) || nf_ct_is_template(ct))
-+	ct = container_of(nfct, struct nf_conn, ct_general);
-+	if (nf_ct_is_confirmed(ct) || nf_ct_is_template(ct))
- 		return NF_ACCEPT;
- 
- 	/* let inet prerouting call conntrack again */
+ /**
 -- 
 2.43.0
 
