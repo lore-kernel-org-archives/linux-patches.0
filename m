@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B121E146D6D;
-	Tue, 23 Apr 2024 21:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67633149C4D;
+	Tue, 23 Apr 2024 21:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908687; cv=none; b=nQ/xZFrWhuBTBNJqFZfZkGfuDGYCPCQ7ERKa8r5ebMUZBf3VEUiZaxBaqNGyWnUmrRe13waMv699Wztjrg0pRQI/I2S10Fz/25zFh0w1YFjXrO/zV9gllRj/tuh3LcK9JxezZIMP+wKzYg1eLFg1eAYMyFF2Q9vbH+IbyzmrRog=
+	t=1713908688; cv=none; b=t6vTwKisJqvVhebLGO88Wdtco6vyY95Fy1pVMUe1NGZoOOrFJiowOGMdbQh8zH3qokxwaeVRjnaQ8rVMnsFgZhMLyqo/K3+dzHcxnU35ZlROUnn5787f3+mzgqrmTR4Btjfe5eI/77xih1CLen+WnmyPoGo0sjJp+EpcQeqek3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908687; c=relaxed/simple;
-	bh=PT6TjXZ0mdOmQChCjY8Svm7sDis8OE3cPTp7k7vJK5E=;
+	s=arc-20240116; t=1713908688; c=relaxed/simple;
+	bh=GvVJjg+fREEsvivMaLt5Km6B/4u/Nbb4cJyOJjRbZZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uqg4yar3fY2ONAC6nQNFOBkHlKIBX0qY27QVS7KRiN7rP8PiabZbVJY7g4h9WDkn4lg3aLCQlgiAk8Kin+/+M6H1Tiw08104loQrXA1Sw0ivVTP/Mz2Dx2dY0yjr/2IcHeWTFbHhRSH6Mf0PItmMV6iPPjNjMQjqRW8b4QP1dLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYGclpkJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oi5VopfuqfPUHA9Kan7+k3MuHdjfdi6cqFFQ3Fj5GkzA7YForZU9Ej/dYfwk1axvPuciVCeZHVJoirGwE1NMYuB7MkyuDOyfevP5jH9gudB/rCZcUQpmOpd9t5N+83R62wIsmghhQQKSN6O/OpIxUeSECWoLuFTXjairOsB9rIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQPPIz5O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYGclpkJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82412C116B1;
-	Tue, 23 Apr 2024 21:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQPPIz5O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38DBFC3277B;
+	Tue, 23 Apr 2024 21:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908687;
-	bh=PT6TjXZ0mdOmQChCjY8Svm7sDis8OE3cPTp7k7vJK5E=;
+	s=korg; t=1713908688;
+	bh=GvVJjg+fREEsvivMaLt5Km6B/4u/Nbb4cJyOJjRbZZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MYGclpkJkIfMUuFDopbDpf2Gqjgtbp7bQoseAuflRcPke6f8Nqk+OAs9oI1mVdTXl
-	 N4F4HBt6JXeLujG7+j1MPFJNvEIspmw/69/2VtcIPscYmkFHcKyJRRsKVySkS+yqWd
-	 M5bN00gjN08FQlIfwcC9kRW8gKwXJAUVI/CVkfFM=
+	b=ZQPPIz5OWN5Lz2lVbt96TTWX6jfhHemKex7R1C5vLNzkREJc4szvyN7bmsztMtAVf
+	 CA/w+5AlCwt5ypdDkbm9p92K4sf1JX2Alvc9yMQaJbFquZsWlGKt7y7aBOX8hJKLKn
+	 rMZSMZ7BUo1sKDSx/fpttQyCnVbE5FOd2fp62Oa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ziyang Xuan <william.xuanziyang@huawei.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 034/141] netfilter: nf_tables: Fix potential data-race in __nft_expr_type_get()
-Date: Tue, 23 Apr 2024 14:38:22 -0700
-Message-ID: <20240423213854.411688737@linuxfoundation.org>
+Subject: [PATCH 6.1 035/141] netfilter: nf_tables: Fix potential data-race in __nft_obj_type_get()
+Date: Tue, 23 Apr 2024 14:38:23 -0700
+Message-ID: <20240423213854.438581428@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -53,18 +53,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit f969eb84ce482331a991079ab7a5c4dc3b7f89bf ]
+[ Upstream commit d78d867dcea69c328db30df665be5be7d0148484 ]
 
-nft_unregister_expr() can concurrent with __nft_expr_type_get(),
-and there is not any protection when iterate over nf_tables_expressions
-list in __nft_expr_type_get(). Therefore, there is potential data-race
-of nf_tables_expressions list entry.
+nft_unregister_obj() can concurrent with __nft_obj_type_get(),
+and there is not any protection when iterate over nf_tables_objects
+list in __nft_obj_type_get(). Therefore, there is potential data-race
+of nf_tables_objects list entry.
 
-Use list_for_each_entry_rcu() to iterate over nf_tables_expressions
-list in __nft_expr_type_get(), and use rcu_read_lock() in the caller
-nft_expr_type_get() to protect the entire type query process.
+Use list_for_each_entry_rcu() to iterate over nf_tables_objects
+list in __nft_obj_type_get(), and use rcu_read_lock() in the caller
+nft_obj_type_get() to protect the entire type query process.
 
-Fixes: ef1f7df9170d ("netfilter: nf_tables: expression ops overloading")
+Fixes: e50092404c1b ("netfilter: nf_tables: add stateful objects")
 Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -73,24 +73,24 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 8152a69d82681..ba63866914f18 100644
+index ba63866914f18..1c4b7a8ec2cc6 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -2891,7 +2891,7 @@ static const struct nft_expr_type *__nft_expr_type_get(u8 family,
+@@ -7175,7 +7175,7 @@ static const struct nft_object_type *__nft_obj_type_get(u32 objtype, u8 family)
  {
- 	const struct nft_expr_type *type, *candidate = NULL;
+ 	const struct nft_object_type *type;
  
--	list_for_each_entry(type, &nf_tables_expressions, list) {
-+	list_for_each_entry_rcu(type, &nf_tables_expressions, list) {
- 		if (!nla_strcmp(nla, type->name)) {
- 			if (!type->family && !candidate)
- 				candidate = type;
-@@ -2923,9 +2923,13 @@ static const struct nft_expr_type *nft_expr_type_get(struct net *net,
- 	if (nla == NULL)
- 		return ERR_PTR(-EINVAL);
+-	list_for_each_entry(type, &nf_tables_objects, list) {
++	list_for_each_entry_rcu(type, &nf_tables_objects, list) {
+ 		if (type->family != NFPROTO_UNSPEC &&
+ 		    type->family != family)
+ 			continue;
+@@ -7191,9 +7191,13 @@ nft_obj_type_get(struct net *net, u32 objtype, u8 family)
+ {
+ 	const struct nft_object_type *type;
  
 +	rcu_read_lock();
- 	type = __nft_expr_type_get(family, nla);
+ 	type = __nft_obj_type_get(objtype, family);
 -	if (type != NULL && try_module_get(type->owner))
 +	if (type != NULL && try_module_get(type->owner)) {
 +		rcu_read_unlock();
