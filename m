@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229D920B3E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC33320B3E;
 	Tue, 23 Apr 2024 21:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908533; cv=none; b=ji4bSmOgkHE+oSH3i0r9zPuy5Ix62TUIQJMhTm9r/w7m7gmjLdkIjCqpeqiU2EDQjf70lYZqGVfyGqfD364QGS5ia2z+FCdgH3NUC24QEIgvwTLDWAxuj+MDW1/Am5W0eO6eNROKczt9M33TngeU/81S0kc8xICrrwioCX4FKo4=
+	t=1713908533; cv=none; b=M0l0QkZtC1EF6Sy+m+IB27lCfsPjZAq41WQh4IiKIYPvFrYOc1RZ2g2j3YDoGaM+0J6CQrly8iefwAkaztRJGkMj/6t++0XGGQCWaCajRXPAXGMjNcpaEnUtjx//ezRn+bz6vC+x/fkRqjsU8/8SDKsUMSrD2IfMPQ03tQq3s4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908533; c=relaxed/simple;
-	bh=Ryewm76C+Tp0jXTFId8/0euSws61HTV6oKAYeNIjgFo=;
+	bh=xA15Qg5eZ86NPEgxjC/cyb17sUXI42YSkxlAhF7NPVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nl2+JxI0yik4o66ToyczI7ax3j6WBbzt0MMKxwRLLwShytt3sJXJ9qq8E7sdMzdHCSa6QF8CfPaSN1lU0EQoUSYpLQ04a01HiY6/cr7GkjEAE/h/6SjvfZ9OkpL/NW4JYT9s2K4LoJHhz/p2CkU7t1NOjqGdl3v0ZOA5B05m+Nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/uJ8LyA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nbssvjlgdj5jHo1HZDs8CmBFqx+49rfxaBdM5BAM+X9/ln4PPlEcpybHXlfBmG223h6hJWMdZ8A7j9lCduNqJcHgd0PXnb9Z1/XIeObo/tOU3Wcvq1xiGCJxSXGJjxG67TK9xsKe8sqZSakiOgkFsuqeuFNK1KUd56BFqhi5XHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w19UQFs3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/uJ8LyA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55FCC32782;
-	Tue, 23 Apr 2024 21:42:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w19UQFs3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B259FC3277B;
+	Tue, 23 Apr 2024 21:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908533;
-	bh=Ryewm76C+Tp0jXTFId8/0euSws61HTV6oKAYeNIjgFo=;
+	bh=xA15Qg5eZ86NPEgxjC/cyb17sUXI42YSkxlAhF7NPVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e/uJ8LyA4iZsaAIFEQViW5pzDaiWQTamXbDb6FZFbgOAX+VjoFH+d5tkm+8iDTQbN
-	 +09qzZe3yvGHfzQ8+XK4r54+clTCMVU6cw/jBZZ1ltvSux7GqbCFh+chFTUlTwVNb1
-	 3TOiwvVk8hECNU/svCfRW2bCF3Pho21kitFC73TQ=
+	b=w19UQFs3BW0AxHffoTX2vcenJGYlOKMPFisK7OsIzhYO0TTV5CvtDPtTUy0unEhCb
+	 uzRylDLvtdwWPaaUd+gHrGDWkzdbP+ba6+lPnY0lIaKrbIX/i0p36UFKDbiDnm9tIK
+	 GH0BLUWWPJB0MNtq8l5/eFhV47QsFqi7GZXhg/3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"levi.yun" <yeoreum.yun@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.8 125/158] sched: Add missing memory barrier in switch_mm_cid
-Date: Tue, 23 Apr 2024 14:39:07 -0700
-Message-ID: <20240423213859.966625981@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.8 126/158] KVM: x86: Snapshot if a vCPUs vendor model is AMD vs. Intel compatible
+Date: Tue, 23 Apr 2024 14:39:08 -0700
+Message-ID: <20240423213900.000274338@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -54,125 +50,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit fe90f3967bdb3e13f133e5f44025e15f943a99c5 upstream.
+commit fd706c9b1674e2858766bfbf7430534c2b26fbef upstream.
 
-Many architectures' switch_mm() (e.g. arm64) do not have an smp_mb()
-which the core scheduler code has depended upon since commit:
+Add kvm_vcpu_arch.is_amd_compatible to cache if a vCPU's vendor model is
+compatible with AMD, i.e. if the vCPU vendor is AMD or Hygon, along with
+helpers to check if a vCPU is compatible AMD vs. Intel.  To handle Intel
+vs. AMD behavior related to masking the LVTPC entry, KVM will need to
+check for vendor compatibility on every PMI injection, i.e. querying for
+AMD will soon be a moderately hot path.
 
-    commit 223baf9d17f25 ("sched: Fix performance regression introduced by mm_cid")
+Note!  This subtly (or maybe not-so-subtly) makes "Intel compatible" KVM's
+default behavior, both if userspace omits (or never sets) CPUID 0x0 and if
+userspace sets a completely unknown vendor.  One could argue that KVM
+should treat such vCPUs as not being compatible with Intel *or* AMD, but
+that would add useless complexity to KVM.
 
-If switch_mm() doesn't call smp_mb(), sched_mm_cid_remote_clear() can
-unset the actively used cid when it fails to observe active task after it
-sets lazy_put.
+KVM needs to do *something* in the face of vendor specific behavior, and
+so unless KVM conjured up a magic third option, choosing to treat unknown
+vendors as neither Intel nor AMD means that checks on AMD compatibility
+would yield Intel behavior, and checks for Intel compatibility would yield
+AMD behavior.  And that's far worse as it would effectively yield random
+behavior depending on whether KVM checked for AMD vs. Intel vs. !AMD vs.
+!Intel.  And practically speaking, all x86 CPUs follow either Intel or AMD
+architecture, i.e. "supporting" an unknown third architecture adds no
+value.
 
-There *is* a memory barrier between storing to rq->curr and _return to
-userspace_ (as required by membarrier), but the rseq mm_cid has stricter
-requirements: the barrier needs to be issued between store to rq->curr
-and switch_mm_cid(), which happens earlier than:
+Deliberately don't convert any of the existing guest_cpuid_is_intel()
+checks, as the Intel side of things is messier due to some flows explicitly
+checking for exactly vendor==Intel, versus some flows assuming anything
+that isn't "AMD compatible" gets Intel behavior.  The Intel code will be
+cleaned up in the future.
 
-  - spin_unlock(),
-  - switch_to().
-
-So it's fine when the architecture switch_mm() happens to have that
-barrier already, but less so when the architecture only provides the
-full barrier in switch_to() or spin_unlock().
-
-It is a bug in the rseq switch_mm_cid() implementation. All architectures
-that don't have memory barriers in switch_mm(), but rather have the full
-barrier either in finish_lock_switch() or switch_to() have them too late
-for the needs of switch_mm_cid().
-
-Introduce a new smp_mb__after_switch_mm(), defined as smp_mb() in the
-generic barrier.h header, and use it in switch_mm_cid() for scheduler
-transitions where switch_mm() is expected to provide a memory barrier.
-
-Architectures can override smp_mb__after_switch_mm() if their
-switch_mm() implementation provides an implicit memory barrier.
-Override it with a no-op on x86 which implicitly provide this memory
-barrier by writing to CR3.
-
-Fixes: 223baf9d17f2 ("sched: Fix performance regression introduced by mm_cid")
-Reported-by: levi.yun <yeoreum.yun@arm.com>
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com> # for arm64
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com> # for x86
-Cc: <stable@vger.kernel.org> # 6.4.x
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20240415152114.59122-2-mathieu.desnoyers@efficios.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20240405235603.1173076-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/barrier.h |    3 +++
- include/asm-generic/barrier.h  |    8 ++++++++
- kernel/sched/sched.h           |   20 ++++++++++++++------
- 3 files changed, 25 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/kvm_host.h |    1 +
+ arch/x86/kvm/cpuid.c            |    1 +
+ arch/x86/kvm/cpuid.h            |   10 ++++++++++
+ arch/x86/kvm/mmu/mmu.c          |    2 +-
+ arch/x86/kvm/x86.c              |    2 +-
+ 5 files changed, 14 insertions(+), 2 deletions(-)
 
---- a/arch/x86/include/asm/barrier.h
-+++ b/arch/x86/include/asm/barrier.h
-@@ -79,6 +79,9 @@ do {									\
- #define __smp_mb__before_atomic()	do { } while (0)
- #define __smp_mb__after_atomic()	do { } while (0)
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -854,6 +854,7 @@ struct kvm_vcpu_arch {
+ 	int cpuid_nent;
+ 	struct kvm_cpuid_entry2 *cpuid_entries;
+ 	struct kvm_hypervisor_cpuid kvm_cpuid;
++	bool is_amd_compatible;
  
-+/* Writing to CR3 provides a full memory barrier in switch_mm(). */
-+#define smp_mb__after_switch_mm()	do { } while (0)
+ 	/*
+ 	 * FIXME: Drop this macro and use KVM_NR_GOVERNED_FEATURES directly
+--- a/arch/x86/kvm/cpuid.c
++++ b/arch/x86/kvm/cpuid.c
+@@ -366,6 +366,7 @@ static void kvm_vcpu_after_set_cpuid(str
+ 
+ 	kvm_update_pv_runtime(vcpu);
+ 
++	vcpu->arch.is_amd_compatible = guest_cpuid_is_amd_or_hygon(vcpu);
+ 	vcpu->arch.maxphyaddr = cpuid_query_maxphyaddr(vcpu);
+ 	vcpu->arch.reserved_gpa_bits = kvm_vcpu_reserved_gpa_bits_raw(vcpu);
+ 
+--- a/arch/x86/kvm/cpuid.h
++++ b/arch/x86/kvm/cpuid.h
+@@ -120,6 +120,16 @@ static inline bool guest_cpuid_is_intel(
+ 	return best && is_guest_vendor_intel(best->ebx, best->ecx, best->edx);
+ }
+ 
++static inline bool guest_cpuid_is_amd_compatible(struct kvm_vcpu *vcpu)
++{
++	return vcpu->arch.is_amd_compatible;
++}
 +
- #include <asm-generic/barrier.h>
- 
- #endif /* _ASM_X86_BARRIER_H */
---- a/include/asm-generic/barrier.h
-+++ b/include/asm-generic/barrier.h
-@@ -296,5 +296,13 @@ do {									\
- #define io_stop_wc() do { } while (0)
- #endif
- 
-+/*
-+ * Architectures that guarantee an implicit smp_mb() in switch_mm()
-+ * can override smp_mb__after_switch_mm.
-+ */
-+#ifndef smp_mb__after_switch_mm
-+# define smp_mb__after_switch_mm()	smp_mb()
-+#endif
++static inline bool guest_cpuid_is_intel_compatible(struct kvm_vcpu *vcpu)
++{
++	return !guest_cpuid_is_amd_compatible(vcpu);
++}
 +
- #endif /* !__ASSEMBLY__ */
- #endif /* __ASM_GENERIC_BARRIER_H */
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -79,6 +79,8 @@
- # include <asm/paravirt_api_clock.h>
- #endif
+ static inline int guest_cpuid_family(struct kvm_vcpu *vcpu)
+ {
+ 	struct kvm_cpuid_entry2 *best;
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -4922,7 +4922,7 @@ static void reset_guest_rsvds_bits_mask(
+ 				context->cpu_role.base.level, is_efer_nx(context),
+ 				guest_can_use(vcpu, X86_FEATURE_GBPAGES),
+ 				is_cr4_pse(context),
+-				guest_cpuid_is_amd_or_hygon(vcpu));
++				guest_cpuid_is_amd_compatible(vcpu));
+ }
  
-+#include <asm/barrier.h>
-+
- #include "cpupri.h"
- #include "cpudeadline.h"
+ static void __reset_rsvds_bits_mask_ept(struct rsvd_bits_validate *rsvd_check,
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -3422,7 +3422,7 @@ static bool is_mci_status_msr(u32 msr)
+ static bool can_set_mci_status(struct kvm_vcpu *vcpu)
+ {
+ 	/* McStatusWrEn enabled? */
+-	if (guest_cpuid_is_amd_or_hygon(vcpu))
++	if (guest_cpuid_is_amd_compatible(vcpu))
+ 		return !!(vcpu->arch.msr_hwcr & BIT_ULL(18));
  
-@@ -3445,13 +3447,19 @@ static inline void switch_mm_cid(struct
- 		 * between rq->curr store and load of {prev,next}->mm->pcpu_cid[cpu].
- 		 * Provide it here.
- 		 */
--		if (!prev->mm)                          // from kernel
-+		if (!prev->mm) {                        // from kernel
- 			smp_mb();
--		/*
--		 * user -> user transition guarantees a memory barrier through
--		 * switch_mm() when current->mm changes. If current->mm is
--		 * unchanged, no barrier is needed.
--		 */
-+		} else {				// from user
-+			/*
-+			 * user->user transition relies on an implicit
-+			 * memory barrier in switch_mm() when
-+			 * current->mm changes. If the architecture
-+			 * switch_mm() does not have an implicit memory
-+			 * barrier, it is emitted here.  If current->mm
-+			 * is unchanged, no barrier is needed.
-+			 */
-+			smp_mb__after_switch_mm();
-+		}
- 	}
- 	if (prev->mm_cid_active) {
- 		mm_cid_snapshot_time(rq, prev->mm);
+ 	return false;
 
 
