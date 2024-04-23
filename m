@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC09720B3E;
-	Tue, 23 Apr 2024 21:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657FD20B3E;
+	Tue, 23 Apr 2024 21:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908542; cv=none; b=itppx+QSLjoi32CgstTcvs1GlDegn4r0c3zmU7fA1nnyLqorS7lYYjB9D3eg6av2AF/v5XoagXAH+GmWwG0Bu/OBtArXyNAqkTIY2MEuXoZURTCag/fywXrQm6An9tr6ek2g3YlbPuik+1eh3H83P/lbTElociNw9pD1mxkV+SM=
+	t=1713908543; cv=none; b=WfZMZ9t8brDQ1sj2TcCcJl09GtL2zIGsMGilsCqs9dp5Hot/rNB1vhLC534rDgxyif1AM65bWMXH61qbwwfHGBKOfBnpC/pV7sKy+gwuIcwT3FVo+Vre06PYwcN64hSUpCu5tuEbP+FHEQq3zrEU5swUI0a48fDIpu0h7f4ra7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908542; c=relaxed/simple;
-	bh=BYEu/r/H0/N+1ey6NsGYvPFQE3Yh0u/Y1awCYUowuHI=;
+	s=arc-20240116; t=1713908543; c=relaxed/simple;
+	bh=aIUGeOJMe/EOXY3H3fKGQepeN7ISJpmvJUaHzfXv8os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c1hYWcD2Ii0gOW6COfVTmqlWC0V6l12QCG8FaF0v6UV7MZrwBFNcrURQpJCMqJQPUvzR/+AhCgOiUZ8SEFNM4xtYHorE5iYZ+7Et+velB3vjdIumKKbtdMhgT/ahL3LGzblxZqqOlCwukSTDwh4/trHY/GhA1E3ZfQFCBAlaxkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlMYY2yA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OvMMd1yCVIKi9Whvx3AZ2ggppWWuHNGDPNAZtyNVgFud/kiZYj7hpDSuctPTo7ByalOdVxfkTh1WJ/ALxWUsRiKaTzlVjBIM4UF7gjBCod2TDfzpDmAJUGA7iPTTb/R1Zwtrky5DYXTFpm66r2Y34i4E25zxcCo/BKTtkpR0OHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHRTMpO7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlMYY2yA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90302C116B1;
-	Tue, 23 Apr 2024 21:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHRTMpO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD3CC3277B;
+	Tue, 23 Apr 2024 21:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908542;
-	bh=BYEu/r/H0/N+1ey6NsGYvPFQE3Yh0u/Y1awCYUowuHI=;
+	s=korg; t=1713908543;
+	bh=aIUGeOJMe/EOXY3H3fKGQepeN7ISJpmvJUaHzfXv8os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FlMYY2yABPfcA/kbe7bhi5TzedvbxsT0Cw5tEp2DJsjednpQyY8AJsUgQtPqG7Hm4
-	 s66qi6NKgNGsur9dCbFIUwWOcusdGOMQ3HhMrbpY0ak0MHHfesRLidryjJBY89Srzy
-	 gjJz4paeaPkecJwyj/7kZa7kdnxN30hf/P4e1cG8=
+	b=tHRTMpO7HbdqKlHGAucMYbAdXelWY46viDLIuAWJ/46oOL7A0LbecJH6HafwyiNQQ
+	 OigqdzPurmL5B5wVRtlVEMcQBBg4i5fvJBZeLXjFR0/kQ5w0MJx2d5yPmbNnnwTDZW
+	 DEzp8HXz82va/D7fLNaJXv6dpw+Pve/zR49a1oAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Hugh Dickins <hughd@google.com>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.8 138/158] mm/shmem: inline shmem_is_huge() for disabled transparent hugepages
-Date: Tue, 23 Apr 2024 14:39:20 -0700
-Message-ID: <20240423213900.355862439@linuxfoundation.org>
+	Jerry Meng <jerry-meng@foxmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.8 112/158] USB: serial: option: support Quectel EM060K sub-models
+Date: Tue, 23 Apr 2024 14:38:54 -0700
+Message-ID: <20240423213859.575622764@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -56,76 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumanth Korikkar <sumanthk@linux.ibm.com>
+From: Jerry Meng <jerry-meng@foxmail.com>
 
-commit 1f737846aa3c45f07a06fa0d018b39e1afb8084a upstream.
+commit c840244aba7ad2b83ed904378b36bd6aef25511c upstream.
 
-In order to  minimize code size (CONFIG_CC_OPTIMIZE_FOR_SIZE=y),
-compiler might choose to make a regular function call (out-of-line) for
-shmem_is_huge() instead of inlining it. When transparent hugepages are
-disabled (CONFIG_TRANSPARENT_HUGEPAGE=n), it can cause compilation
-error.
+EM060K_129, EM060K_12a, EM060K_12b and EM0060K_12c are EM060K's sub-models,
+having the same name "Quectel EM060K-GL" and the same interface layout.
 
-mm/shmem.c: In function `shmem_getattr':
-./include/linux/huge_mm.h:383:27: note: in expansion of macro `BUILD_BUG'
-  383 | #define HPAGE_PMD_SIZE ({ BUILD_BUG(); 0; })
-      |                           ^~~~~~~~~
-mm/shmem.c:1148:33: note: in expansion of macro `HPAGE_PMD_SIZE'
- 1148 |                 stat->blksize = HPAGE_PMD_SIZE;
+MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
 
-To prevent the possible error, always inline shmem_is_huge() when
-transparent hugepages are disabled.
+T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=02 Dev#=  8 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=0129 Rev= 5.04
+S:  Manufacturer=Quectel
+S:  Product=Quectel EM060K-GL
+S:  SerialNumber=f6fa08b6
+C:* #Ifs= 8 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8f(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Link: https://lkml.kernel.org/r/20240409155407.2322714-1-sumanthk@linux.ibm.com
-Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Jerry Meng <jerry-meng@foxmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/shmem_fs.h |    9 +++++++++
- mm/shmem.c               |    6 ------
- 2 files changed, 9 insertions(+), 6 deletions(-)
+ drivers/usb/serial/option.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/include/linux/shmem_fs.h
-+++ b/include/linux/shmem_fs.h
-@@ -114,8 +114,17 @@ extern struct page *shmem_read_mapping_p
- extern void shmem_truncate_range(struct inode *inode, loff_t start, loff_t end);
- int shmem_unuse(unsigned int type);
- 
-+#ifdef CONFIG_TRANSPARENT_HUGEPAGE
- extern bool shmem_is_huge(struct inode *inode, pgoff_t index, bool shmem_huge_force,
- 			  struct mm_struct *mm, unsigned long vm_flags);
-+#else
-+static __always_inline bool shmem_is_huge(struct inode *inode, pgoff_t index, bool shmem_huge_force,
-+					  struct mm_struct *mm, unsigned long vm_flags)
-+{
-+	return false;
-+}
-+#endif
-+
- #ifdef CONFIG_SHMEM
- extern unsigned long shmem_swap_usage(struct vm_area_struct *vma);
- #else
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -742,12 +742,6 @@ static long shmem_unused_huge_count(stru
- 
- #define shmem_huge SHMEM_HUGE_DENY
- 
--bool shmem_is_huge(struct inode *inode, pgoff_t index, bool shmem_huge_force,
--		   struct mm_struct *mm, unsigned long vm_flags)
--{
--	return false;
--}
--
- static unsigned long shmem_unused_huge_shrink(struct shmem_sb_info *sbinfo,
- 		struct shrink_control *sc, unsigned long nr_to_split)
- {
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -255,6 +255,10 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_EM061K_LMS		0x0124
+ #define QUECTEL_PRODUCT_EC25			0x0125
+ #define QUECTEL_PRODUCT_EM060K_128		0x0128
++#define QUECTEL_PRODUCT_EM060K_129		0x0129
++#define QUECTEL_PRODUCT_EM060K_12a		0x012a
++#define QUECTEL_PRODUCT_EM060K_12b		0x012b
++#define QUECTEL_PRODUCT_EM060K_12c		0x012c
+ #define QUECTEL_PRODUCT_EG91			0x0191
+ #define QUECTEL_PRODUCT_EG95			0x0195
+ #define QUECTEL_PRODUCT_BG96			0x0296
+@@ -1218,6 +1222,18 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_128, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_128, 0xff, 0x00, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_128, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_129, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_129, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_129, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_12a, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_12a, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_12a, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_12b, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_12b, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_12b, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_12c, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_12c, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_12c, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0x00, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0xff, 0x40) },
 
 
