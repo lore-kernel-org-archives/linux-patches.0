@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2878F143889;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60B5143889;
 	Tue, 23 Apr 2024 21:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908595; cv=none; b=U3EBPXLygQdV/umOZ2PaGt191rCVlOfZVxyyJVQrnBIfuOyItOZQXD/GuUnqQ6XcXFNfV6y/JQVVonooC+xRuK9BLBxmpZNehsjjmDRsoVO7lXB1N+PA0DLWQPZ2FzcRmqGE3GK7Mm/jpJCyhfVbclSwyNWlpmxuJ8sDoKbZft4=
+	t=1713908595; cv=none; b=NPVhKeyrIYXn9zyaaQQ5+q9Gd1Mt0puZsWyRDxpdnPW/I+Df5P4dt7GXXSzhlkEIB2rfRMy+M1olr+C7v8p0bviSCNsn74WU3UFajGWGPjMV46En2vFbjrLPi9cq0EsxGh0rna7VzDAAg0qZHdTuK42ypezrbzIzrJn+AgGhpxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908595; c=relaxed/simple;
-	bh=6T+iYD1PUxrhDIAYXCMFdwNBOmiHv3LrTQ0Yk+rFMoQ=;
+	bh=d/G8t6GJ5zYpeFwgZFbo1cFG4Qv31Yadbiz0IOKvh4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfACgBXcO6pOoZbWm0MuzctFRXjrt5NHh5wWDLHVT8rjRXPxlBiIvwTEXSiNPygABBdD8r4s5YmvliZ57sxUSsrTWN7VyntK5J/fr5pr8wJjiPhdRzw7p+FhSuKT5Ee+gj0t/op5kFQAvPfP0fe8YbD1vz2BU7ok8rjJqkKcAc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7MB17VR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RhQ5EM7MUEblet3TlehvTXDXkcdaTzdwjx/7vwI+FA6N/5umVlT+lfl8HipgO4ddmBv+zots8XkjbTErks+vVh5H3fXVHGkJSHrj2lSS20Y1xLKAdB8Wf3eWz0KlLAAzklvaVurg3f5QFax0BzeNdANq4fl67J5ae98tBcOddp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEbmhZt5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7MB17VR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1100C116B1;
-	Tue, 23 Apr 2024 21:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEbmhZt5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C422C116B1;
+	Tue, 23 Apr 2024 21:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908595;
-	bh=6T+iYD1PUxrhDIAYXCMFdwNBOmiHv3LrTQ0Yk+rFMoQ=;
+	bh=d/G8t6GJ5zYpeFwgZFbo1cFG4Qv31Yadbiz0IOKvh4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d7MB17VRsGiJ0Xk8lrMlLSA+pjnRGBrTKidRPIVmYwXqPROQ1J6r6aVROT2oXHCVQ
-	 yJluk/J+n9NBLggYWhyabt10wRkGqXKp4Uek23DNmXkW6t5/czmsX/l77PN9yyxbx/
-	 3CIuRnmCZaISdcj2TS2y4+wQKalVELF8mEMv9f1A=
+	b=rEbmhZt5qrpq/akM67687fk135qODU/SpjUy0qK1La+oc0xOi6Rg6SctTSTNpOowU
+	 taFxamABSNBoM63xJ0qe8Q9hw66lWdAeEncDWuPMkhhaTSuACA3n144O36xfHlgJBh
+	 ByzS3J+J49o/VLdyNDC35bCn3OmEdac4dZmsxIiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Schuyler Patton <spatton@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Roger Quadros <rogerq@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/158] net: ethernet: mtk_eth_soc: fix WED + wifi reset
-Date: Tue, 23 Apr 2024 14:38:14 -0700
-Message-ID: <20240423213857.629633467@linuxfoundation.org>
+Subject: [PATCH 6.6 058/158] net: ethernet: ti: am65-cpsw-nuss: cleanup DMA Channels before using them
+Date: Tue, 23 Apr 2024 14:38:15 -0700
+Message-ID: <20240423213857.661224106@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -51,62 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit 94667949ec3bbb2218c46ad0a0e7274c8832e494 ]
+[ Upstream commit c24cd679b075b0e953ea167b0aa2b2d59e4eba7f ]
 
-The WLAN + WED reset sequence relies on being able to receive interrupts from
-the card, in order to synchronize individual steps with the firmware.
-When WED is stopped, leave interrupts running and rely on the driver turning
-off unwanted ones.
-WED DMA also needs to be disabled before resetting.
+The TX and RX DMA Channels used by the driver to exchange data with CPSW
+are not guaranteed to be in a clean state during driver initialization.
+The Bootloader could have used the same DMA Channels without cleaning them
+up in the event of failure. Thus, reset and disable the DMA Channels to
+ensure that they are in a clean state before using them.
 
-Fixes: f78cd9c783e0 ("net: ethernet: mtk_wed: update mtk_wed_stop")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://lore.kernel.org/r/20240416082330.82564-1-nbd@nbd.name
+Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
+Reported-by: Schuyler Patton <spatton@ti.com>
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/20240417095425.2253876-1-s-vadapalli@ti.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_wed.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_wed.c b/drivers/net/ethernet/mediatek/mtk_wed.c
-index 94376aa2b34c5..c7196055c8c98 100644
---- a/drivers/net/ethernet/mediatek/mtk_wed.c
-+++ b/drivers/net/ethernet/mediatek/mtk_wed.c
-@@ -598,13 +598,13 @@ mtk_wed_dma_disable(struct mtk_wed_device *dev)
- static void
- mtk_wed_stop(struct mtk_wed_device *dev)
- {
-+	mtk_wed_dma_disable(dev);
- 	mtk_wed_set_ext_int(dev, false);
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index c62b0f99f2bc4..d556e705ec000 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2716,6 +2716,8 @@ static void am65_cpsw_unregister_devlink(struct am65_cpsw_common *common)
  
- 	wed_w32(dev, MTK_WED_WPDMA_INT_TRIGGER, 0);
- 	wed_w32(dev, MTK_WED_WDMA_INT_TRIGGER, 0);
- 	wdma_w32(dev, MTK_WDMA_INT_MASK, 0);
- 	wdma_w32(dev, MTK_WDMA_INT_GRP2, 0);
--	wed_w32(dev, MTK_WED_WPDMA_INT_MASK, 0);
- 
- 	if (dev->hw->version == 1)
- 		return;
-@@ -617,7 +617,6 @@ static void
- mtk_wed_deinit(struct mtk_wed_device *dev)
+ static int am65_cpsw_nuss_register_ndevs(struct am65_cpsw_common *common)
  {
- 	mtk_wed_stop(dev);
--	mtk_wed_dma_disable(dev);
++	struct am65_cpsw_rx_chn *rx_chan = &common->rx_chns;
++	struct am65_cpsw_tx_chn *tx_chan = common->tx_chns;
+ 	struct device *dev = common->dev;
+ 	struct am65_cpsw_port *port;
+ 	int ret = 0, i;
+@@ -2728,6 +2730,22 @@ static int am65_cpsw_nuss_register_ndevs(struct am65_cpsw_common *common)
+ 	if (ret)
+ 		return ret;
  
- 	wed_clr(dev, MTK_WED_CTRL,
- 		MTK_WED_CTRL_WDMA_INT_AGENT_EN |
-@@ -1703,9 +1702,6 @@ mtk_wed_irq_get(struct mtk_wed_device *dev, u32 mask)
- static void
- mtk_wed_irq_set_mask(struct mtk_wed_device *dev, u32 mask)
- {
--	if (!dev->running)
--		return;
--
- 	mtk_wed_set_ext_int(dev, !!mask);
- 	wed_w32(dev, MTK_WED_INT_MASK, mask);
- }
++	/* The DMA Channels are not guaranteed to be in a clean state.
++	 * Reset and disable them to ensure that they are back to the
++	 * clean state and ready to be used.
++	 */
++	for (i = 0; i < common->tx_ch_num; i++) {
++		k3_udma_glue_reset_tx_chn(tx_chan[i].tx_chn, &tx_chan[i],
++					  am65_cpsw_nuss_tx_cleanup);
++		k3_udma_glue_disable_tx_chn(tx_chan[i].tx_chn);
++	}
++
++	for (i = 0; i < AM65_CPSW_MAX_RX_FLOWS; i++)
++		k3_udma_glue_reset_rx_chn(rx_chan->rx_chn, i, rx_chan,
++					  am65_cpsw_nuss_rx_cleanup, !!i);
++
++	k3_udma_glue_disable_rx_chn(rx_chan->rx_chn);
++
+ 	ret = am65_cpsw_nuss_register_devlink(common);
+ 	if (ret)
+ 		return ret;
 -- 
 2.43.0
 
