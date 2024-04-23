@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313CA143888;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26602143888;
 	Tue, 23 Apr 2024 21:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908510; cv=none; b=lKHowp9PkpYTgXtvp09Y69EQVp9Vcp/0+Anw8fR3YEuLRXNMDbBXe7KNwsJiYnFQwtb6HmBGHK6Ui9T+atG5aa4TItWcgjHle54HzgRY1nN6KibfEKNK5K0KI9jtNVVvgItwgAKcu71KH26qgIxKvR/Gpp+/km8KYidQ+v/3+m0=
+	t=1713908511; cv=none; b=JWyWFS3uhH0vhk8KD8gcBwhQ9587EwvmifynerHTrI2MMraOQEBMTN/OXJ1fipQu1WTpAViVvIoNQrw/bktEGQ/ftZNyiRy4BNpH4jjkbyBQ7GNpRvCevZrLCFQDKmJyADO2ebitLcAPfNwGR9BMIE4GHQTAaBmirDCjzwpi5BM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908510; c=relaxed/simple;
-	bh=2d0ku5CK1I7KH+Vc781cqF7VAnrMlc04qWlcCqiGjwY=;
+	s=arc-20240116; t=1713908511; c=relaxed/simple;
+	bh=YcE8/FU0jLrIhgoVTxcH+rQbW5BuFMQG80e0NKnIKJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=abeIAD3VH/09rBsgoI9g55JIHRrhUwZz8Iwiidk70+eQwknHempn+yIfA6KKNTA9LFYocLebJ1G34qgpWG8hDG0JVCSAS2qbHxrnqPugU6QPSUZjoxdPXf1k2RbMJOqyShu5JASO/mC8zXO6YqtGIcD477zmwUJi7bUX0IbXS6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rL71Bf8l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mtDYusNW7emF1OElFcXOm3faT+CzatTpI+Lon4CZRQ7laAADzVUd0/RuLXrhwBxSlGIj+fA3d5PkJxyTXEZZpy1MOjAymL9jQnKppwF5M77PYBYeZ4ovxjZ3hAiMy3Jz/OYqISGHfbhgGbHoMZfcvctag+M/Qf4lUeI2fIZFZlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjV/e5Yy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rL71Bf8l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B56C116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjV/e5Yy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B3DC32782;
 	Tue, 23 Apr 2024 21:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908510;
-	bh=2d0ku5CK1I7KH+Vc781cqF7VAnrMlc04qWlcCqiGjwY=;
+	bh=YcE8/FU0jLrIhgoVTxcH+rQbW5BuFMQG80e0NKnIKJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rL71Bf8lG9qXiQiiX44UtdnWRQ393YBap1kQgRpW74vevuKJ7JrCA5PPiY47im88K
-	 cSZK9HDYhgRHonw2LnaF+X1gIfCzLj9KbVZxueE8Bu4+318ar6QNLaMbX2vj6zRWFp
-	 sZaVmnOi+kEXhHk3N4sSj5sYCoYqzudPkxIvGSOw=
+	b=OjV/e5YyomViYt2DNaaB3cdo+TBWCT3UMdyybcJtzeDDf+NGE8rnh/bqL9ov/5zQw
+	 N2LZQjy/AxHfbvrUZ23CWDqD8ddc7r5t2oiPmi+hYqvpo8smTp/yMkeziZiLfbTr40
+	 rLgWCP1WmnWaCjurcg0EULbxzHqHLDpNbzjTq2+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Fabio Estevam <festevam@denx.de>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH 6.8 094/158] usb: misc: onboard_usb_hub: Disable the USB hub clock on failure
-Date: Tue, 23 Apr 2024 14:38:36 -0700
-Message-ID: <20240423213859.013781802@linuxfoundation.org>
+	Ricky Wu <ricky_wu@realtek.com>
+Subject: [PATCH 6.8 095/158] misc: rtsx: Fix rts5264 driver status incorrect when card removed
+Date: Tue, 23 Apr 2024 14:38:37 -0700
+Message-ID: <20240423213859.041866863@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -52,50 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Ricky Wu <ricky_wu@realtek.com>
 
-commit 34b990e9bb54d20b9675ca9483be8668eed374d8 upstream.
+commit 26ac2df47d4c58f17210b7a59037e40f7eca693e upstream.
 
-In case regulator_bulk_enable() fails, the previously enabled USB hub
-clock should be disabled.
+rts5264 driver not clean express link error and set EXTRA_CAPS_SD_EXPRESS
+capability back when card removed
 
-Fix it accordingly.
-
-Fixes: 65e62b8a955a ("usb: misc: onboard_usb_hub: Add support for clock input")
+Fixes: 6a511c9b3a0d ("misc: rtsx: add to support new card reader rts5264")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Acked-by: Matthias Kaehlcke <mka@chromium.org>
-Link: https://lore.kernel.org/r/20240409162910.2061640-1-festevam@gmail.com
+Signed-off-by: Ricky Wu <ricky_wu@realtek.com>
+Link: https://lore.kernel.org/r/20240314065113.5962-1-ricky_wu@realtek.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/onboard_usb_hub.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/misc/cardreader/rtsx_pcr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/misc/onboard_usb_hub.c b/drivers/usb/misc/onboard_usb_hub.c
-index c6101ed2d9d4..d8049275a023 100644
---- a/drivers/usb/misc/onboard_usb_hub.c
-+++ b/drivers/usb/misc/onboard_usb_hub.c
-@@ -78,7 +78,7 @@ static int onboard_hub_power_on(struct onboard_hub *hub)
- 	err = regulator_bulk_enable(hub->pdata->num_supplies, hub->supplies);
- 	if (err) {
- 		dev_err(hub->dev, "failed to enable supplies: %pe\n", ERR_PTR(err));
--		return err;
-+		goto disable_clk;
- 	}
- 
- 	fsleep(hub->pdata->reset_us);
-@@ -87,6 +87,10 @@ static int onboard_hub_power_on(struct onboard_hub *hub)
- 	hub->is_powered_on = true;
- 
- 	return 0;
-+
-+disable_clk:
-+	clk_disable_unprepare(hub->clk);
-+	return err;
- }
- 
- static int onboard_hub_power_off(struct onboard_hub *hub)
+diff --git a/drivers/misc/cardreader/rtsx_pcr.c b/drivers/misc/cardreader/rtsx_pcr.c
+index 1a64364700eb..0ad2ff9065aa 100644
+--- a/drivers/misc/cardreader/rtsx_pcr.c
++++ b/drivers/misc/cardreader/rtsx_pcr.c
+@@ -1002,7 +1002,7 @@ static irqreturn_t rtsx_pci_isr(int irq, void *dev_id)
+ 		} else {
+ 			pcr->card_removed |= SD_EXIST;
+ 			pcr->card_inserted &= ~SD_EXIST;
+-			if (PCI_PID(pcr) == PID_5261) {
++			if ((PCI_PID(pcr) == PID_5261) || (PCI_PID(pcr) == PID_5264)) {
+ 				rtsx_pci_write_register(pcr, RTS5261_FW_STATUS,
+ 					RTS5261_EXPRESS_LINK_FAIL_MASK, 0);
+ 				pcr->extra_caps |= EXTRA_CAPS_SD_EXPRESS;
 -- 
 2.44.0
 
