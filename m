@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62861448DF;
-	Tue, 23 Apr 2024 21:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A17A143898;
+	Tue, 23 Apr 2024 21:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908517; cv=none; b=g8eoEl049Z+lUrMC9ZNhZI1wogdWfFmS2cVGbS7CTT6Tg5OhqW0FlGQrJzptlUDMj0Si2Qy6jjT4seMC8hbw5SXQXA4G1kjRbB6QEhXYxMISHxfllG+dyOSJfYnsgJDSAdLGrLE6LqLNFRYy/EFJ7Lr/JjX6lWZRBD8aLqBXOSQ=
+	t=1713908517; cv=none; b=L+haQeihc5cfHXPQqhggNCC2BmVolLEJuIIpezce5iCqBh2X8mUIK6Pa99C2aKgyEdxDwb1OXGd10c+GejIDx0VwGBvJDJLq9pMGNWwIQxo7Y3jq7cxWvst5xm1C6S+5jS4T7pAbjVJUAsZK+hczaky+cCs/9SD+TD6nMpO9OJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908517; c=relaxed/simple;
-	bh=O9wdK6njTPYm1F7aHpRWw91Nx8rRq4asvP2UZRC+ny8=;
+	bh=K2tTR2ZzIRFEFg7q4VyrbR3zD3RxT/8ijj384SmsbvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aFVQF+9zOVmmrB+scnzf13afCM7cWLPq+C7rzH406VEEEZePzW59BpbjknqOmNvum+uR0wgUu4g2KES2cCTn0PUX3/qKZmidmtb6hWXcQ3C3OZprwuyg1ScoAozUliNK4enR5n2UgCemvhy8apFiysA/fsIDvBVKt1h2UsdL6MA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzBeYOGN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=myS9/qwGJn9C1/UeKlZN/6OCcM3kuguxEKj6sl/8IIGfufp8S7nhqyP8yxWtp8hGT9fehFADwrNSgtMT6ikyhfjw9Lf88CzHoA7+du6iBp4gQD4oz/rOz4BbcuhvT1CnCaaM8cyxYfe3aIj6xPOHu45Jqt1BnuhRGTR/HFuVwws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NrA4+LB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzBeYOGN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA766C116B1;
-	Tue, 23 Apr 2024 21:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NrA4+LB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB2EC3277B;
+	Tue, 23 Apr 2024 21:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908516;
-	bh=O9wdK6njTPYm1F7aHpRWw91Nx8rRq4asvP2UZRC+ny8=;
+	s=korg; t=1713908517;
+	bh=K2tTR2ZzIRFEFg7q4VyrbR3zD3RxT/8ijj384SmsbvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzBeYOGN6maSO4/6zJOR0hbDY6vzZgYwTdAjFho8JwpaJsvd8L10mjBBk7Kfy4wz9
-	 UQGF0+moKSb/TQHmiMBVYcubBR8+0n7pUMI2GjQhCqrhWub4G6mnvWg3golneGPMAp
-	 xc2J3LTeXhvXQq0Iiiu1ZqKFrW6gS2T8TpsaNdD8=
+	b=2NrA4+LBrNeHXDk7DBtHF85ma03w52mVh4lPeqMXQ8B1DN2lnV51bTTfFHh3+ar/O
+	 SZ6zDkmTwAH/U0iCWlT2Kg8Lg9IR9W/g77c8NuACk//AbUHybexbUObTok0Xzsnsr4
+	 muxlaKeLFwwlG7kGY3GEKtW6eoR+kT4fTI5EEZpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Collingbourne <pcc@google.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.8 103/158] serial: 8250_dw: Revert: Do not reclock if already at correct rate
-Date: Tue, 23 Apr 2024 14:38:45 -0700
-Message-ID: <20240423213859.294089905@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Subject: [PATCH 6.8 104/158] serial: stm32: Return IRQ_NONE in the ISR if no handling happend
+Date: Tue, 23 Apr 2024 14:38:46 -0700
+Message-ID: <20240423213859.323299900@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -45,77 +43,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 7dfae6cbadc1ac99e38ad19fb08810b31ff167be upstream.
+commit 13c785323b36b845300b256d0e5963c3727667d7 upstream.
 
-Commit e5d6bd25f93d ("serial: 8250_dw: Do not reclock if already at
-correct rate") breaks the dw UARTs on Intel Bay Trail (BYT) and
-Cherry Trail (CHT) SoCs.
+If there is a stuck irq that the handler doesn't address, returning
+IRQ_HANDLED unconditionally makes it impossible for the irq core to
+detect the problem and disable the irq. So only return IRQ_HANDLED if
+an event was handled.
 
-Before this change the RTL8732BS Bluetooth HCI which is found
-connected over the dw UART on both BYT and CHT boards works properly:
+A stuck irq is still problematic, but with this change at least it only
+makes the UART nonfunctional instead of occupying the (usually only) CPU
+by 100% and so stall the whole machine.
 
-Bluetooth: hci0: RTL: examining hci_ver=06 hci_rev=000b lmp_ver=06 lmp_subver=8723
-Bluetooth: hci0: RTL: rom_version status=0 version=1
-Bluetooth: hci0: RTL: loading rtl_bt/rtl8723bs_fw.bin
-Bluetooth: hci0: RTL: loading rtl_bt/rtl8723bs_config-OBDA8723.bin
-Bluetooth: hci0: RTL: cfg_sz 64, total sz 24508
-Bluetooth: hci0: RTL: fw version 0x365d462e
-
-where as after this change probing it fails:
-
-Bluetooth: hci0: RTL: examining hci_ver=06 hci_rev=000b lmp_ver=06 lmp_subver=8723
-Bluetooth: hci0: RTL: rom_version status=0 version=1
-Bluetooth: hci0: RTL: loading rtl_bt/rtl8723bs_fw.bin
-Bluetooth: hci0: RTL: loading rtl_bt/rtl8723bs_config-OBDA8723.bin
-Bluetooth: hci0: RTL: cfg_sz 64, total sz 24508
-Bluetooth: hci0: command 0xfc20 tx timeout
-Bluetooth: hci0: RTL: download fw command failed (-110)
-
-Revert the changes to fix this regression.
-
-Fixes: e5d6bd25f93d ("serial: 8250_dw: Do not reclock if already at correct rate")
+Fixes: 48a6092fb41f ("serial: stm32-usart: Add STM32 USART Driver")
 Cc: stable@vger.kernel.org
-Cc: Peter Collingbourne <pcc@google.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Peter Collingbourne <pcc@google.com>
-Link: https://lore.kernel.org/r/20240317214123.34482-1-hdegoede@redhat.com
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/5f92603d0dfd8a5b8014b2b10a902d91e0bb881f.1713344161.git.u.kleine-koenig@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_dw.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/tty/serial/stm32-usart.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_dw.c
-+++ b/drivers/tty/serial/8250/8250_dw.c
-@@ -357,9 +357,9 @@ static void dw8250_set_termios(struct ua
- 	long rate;
- 	int ret;
+--- a/drivers/tty/serial/stm32-usart.c
++++ b/drivers/tty/serial/stm32-usart.c
+@@ -857,6 +857,7 @@ static irqreturn_t stm32_usart_interrupt
+ 	const struct stm32_usart_offsets *ofs = &stm32_port->info->ofs;
+ 	u32 sr;
+ 	unsigned int size;
++	irqreturn_t ret = IRQ_NONE;
  
-+	clk_disable_unprepare(d->clk);
- 	rate = clk_round_rate(d->clk, newrate);
--	if (rate > 0 && p->uartclk != rate) {
--		clk_disable_unprepare(d->clk);
-+	if (rate > 0) {
- 		/*
- 		 * Note that any clock-notifer worker will block in
- 		 * serial8250_update_uartclk() until we are done.
-@@ -367,8 +367,8 @@ static void dw8250_set_termios(struct ua
- 		ret = clk_set_rate(d->clk, newrate);
- 		if (!ret)
- 			p->uartclk = rate;
--		clk_prepare_enable(d->clk);
+ 	sr = readl_relaxed(port->membase + ofs->isr);
+ 
+@@ -865,11 +866,14 @@ static irqreturn_t stm32_usart_interrupt
+ 	    (sr & USART_SR_TC)) {
+ 		stm32_usart_tc_interrupt_disable(port);
+ 		stm32_usart_rs485_rts_disable(port);
++		ret = IRQ_HANDLED;
  	}
-+	clk_prepare_enable(d->clk);
  
- 	dw8250_do_set_termios(p, termios, old);
+-	if ((sr & USART_SR_RTOF) && ofs->icr != UNDEF_REG)
++	if ((sr & USART_SR_RTOF) && ofs->icr != UNDEF_REG) {
+ 		writel_relaxed(USART_ICR_RTOCF,
+ 			       port->membase + ofs->icr);
++		ret = IRQ_HANDLED;
++	}
+ 
+ 	if ((sr & USART_SR_WUF) && ofs->icr != UNDEF_REG) {
+ 		/* Clear wake up flag and disable wake up interrupt */
+@@ -878,6 +882,7 @@ static irqreturn_t stm32_usart_interrupt
+ 		stm32_usart_clr_bits(port, ofs->cr3, USART_CR3_WUFIE);
+ 		if (irqd_is_wakeup_set(irq_get_irq_data(port->irq)))
+ 			pm_wakeup_event(tport->tty->dev, 0);
++		ret = IRQ_HANDLED;
+ 	}
+ 
+ 	/*
+@@ -892,6 +897,7 @@ static irqreturn_t stm32_usart_interrupt
+ 			uart_unlock_and_check_sysrq(port);
+ 			if (size)
+ 				tty_flip_buffer_push(tport);
++			ret = IRQ_HANDLED;
+ 		}
+ 	}
+ 
+@@ -899,6 +905,7 @@ static irqreturn_t stm32_usart_interrupt
+ 		uart_port_lock(port);
+ 		stm32_usart_transmit_chars(port);
+ 		uart_port_unlock(port);
++		ret = IRQ_HANDLED;
+ 	}
+ 
+ 	/* Receiver timeout irq for DMA RX */
+@@ -908,9 +915,10 @@ static irqreturn_t stm32_usart_interrupt
+ 		uart_unlock_and_check_sysrq(port);
+ 		if (size)
+ 			tty_flip_buffer_push(tport);
++		ret = IRQ_HANDLED;
+ 	}
+ 
+-	return IRQ_HANDLED;
++	return ret;
  }
+ 
+ static void stm32_usart_set_mctrl(struct uart_port *port, unsigned int mctrl)
 
 
