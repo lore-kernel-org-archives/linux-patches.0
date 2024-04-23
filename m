@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249B8143882;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EED143882;
 	Tue, 23 Apr 2024 21:45:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908732; cv=none; b=O9aPDjV1T9TEcwX4TpWxKaafw6jx+395ckqlC0Dc8PfmCOjXxtkL7eB4xQI5D+npEhkIAqLnTuJcmz7lzVEbJ6lUZDYvV69HwHXk23JkEbE1nqUam/f/xq+xBocFpJ5XWg59+UxHXK1R9WirFZZLsdUVZlT3M0atc1d5TQsIb+Y=
+	t=1713908732; cv=none; b=d17YgOFk9soCod/Y5O2O7dY7g9u/ERS5NAxrli4P/v0ngluj2+FzIXxdMRt9Q7H438awt9HY/DbnbzyiiOjdamO8RS+5KO6LezGRg8equexgf25z35yu43Q4rUeuL+Tn/ldeIYd2FEFSEeP4Qu2CRwlEenyd3rIX3Nqswu6XOi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908732; c=relaxed/simple;
-	bh=OHsCj3NhMpU4FyIpGdRNMN7xa9B64mKaEYytzhJoY+4=;
+	bh=xosoGJHljVVlSW63OVsn21qz2LTx47nSJU9RS34o/3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdzraHP0hU9bWYs88y9pCKxIrr85hVj6Aw5wHrwZYe6+xW6/sRtgyVeEc7MJ7FNrGsJFYqSAExA5alhGWs+yB7eBnqaKIaxyDZNRQq6AS+OEL64JUFQ9HLJbVZeDgqlb+SiQK9sC4S/Sp5VSfRbxKqG7V64iOOKBFZElkJ3uNpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjt4Qfs7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=duRrexqz6fpphLqlb/iPaN/85xGjcS8E2TyEJ8eP2+sS9P0mNZw6KdyXEiK2smFXM3+IP64znLMkEFwFKwuXsP3aujEUuv5VTU7Z7UMVeGBGhhFIZC+7Xvl8MZHm2iXeIHpu1l+iMHLVsmvS8FP+HLbh5gkbiQiWevXZtXJT4GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfOmUShP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjt4Qfs7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6C5C116B1;
-	Tue, 23 Apr 2024 21:45:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfOmUShP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A99AC32781;
+	Tue, 23 Apr 2024 21:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908732;
-	bh=OHsCj3NhMpU4FyIpGdRNMN7xa9B64mKaEYytzhJoY+4=;
+	bh=xosoGJHljVVlSW63OVsn21qz2LTx47nSJU9RS34o/3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qjt4Qfs7yqU0weX+L6qPgxE4JQCaXnpfeLDhW0a9twD3V2nCuTRd0JT6VPKtVavgx
-	 geB8N/Zu4/rB7n5uS2y/Vd7p63WOmOmEY7IVFafOvS0K8zWLne1g4B9wypgJFjgiqa
-	 uzOAyz0+1C+UOct/m9tj/U87g45ePQTmBlZ0U+cc=
+	b=CfOmUShPcoWlHKQyNeTLLrYMcSqsLAq4/TwmJ8xbiZ1Jxjnj90HnrDR9Z3nhSM+Ji
+	 LHoU96CthQoUr0KmeSbcB4gdjTZgvehsNbhQcRB/9Pi9wHS04ABFPSdnwXJMCuHkAJ
+	 BMsanSsRYKq9u27L3b7RhjiEhvD1FaqP43gD8Fng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/141] x86/cpufeatures: Fix dependencies for GFNI, VAES, and VPCLMULQDQ
-Date: Tue, 23 Apr 2024 14:39:26 -0700
-Message-ID: <20240423213856.351747503@linuxfoundation.org>
+	Ai Chao <aichao@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 099/141] ALSA: hda/realtek - Enable audio jacks of Haier Boyue G42 with ALC269VC
+Date: Tue, 23 Apr 2024 14:39:27 -0700
+Message-ID: <20240423213856.384071886@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -52,59 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Ai Chao <aichao@kylinos.cn>
 
-[ Upstream commit 9543f6e26634537997b6e909c20911b7bf4876de ]
+commit 7ee5faad0f8c3ad86c8cfc2f6aac91d2ba29790f upstream.
 
-Fix cpuid_deps[] to list the correct dependencies for GFNI, VAES, and
-VPCLMULQDQ.  These features don't depend on AVX512, and there exist CPUs
-that support these features but not AVX512.  GFNI actually doesn't even
-depend on AVX.
+The Haier Boyue G42 with ALC269VC cannot detect the MIC of headset,
+the line out and internal speaker until
+ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS quirk applied.
 
-This prevents GFNI from being unnecessarily disabled if AVX is disabled
-to mitigate the GDS vulnerability.
-
-This also prevents all three features from being unnecessarily disabled
-if AVX512VL (or its dependency AVX512F) were to be disabled, but it
-looks like there isn't any case where this happens anyway.
-
-Fixes: c128dbfa0f87 ("x86/cpufeatures: Enable new SSE/AVX/AVX512 CPU features")
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/r/20240417060434.47101-1-ebiggers@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ai Chao <aichao@kylinos.cn>
+Cc: <stable@vger.kernel.org>
+Message-ID: <20240419082159.476879-1-aichao@kylinos.cn>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/cpuid-deps.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kernel/cpu/cpuid-deps.c b/arch/x86/kernel/cpu/cpuid-deps.c
-index c881bcafba7d7..9c19f40b1b272 100644
---- a/arch/x86/kernel/cpu/cpuid-deps.c
-+++ b/arch/x86/kernel/cpu/cpuid-deps.c
-@@ -44,7 +44,10 @@ static const struct cpuid_dep cpuid_deps[] = {
- 	{ X86_FEATURE_F16C,			X86_FEATURE_XMM2,     },
- 	{ X86_FEATURE_AES,			X86_FEATURE_XMM2      },
- 	{ X86_FEATURE_SHA_NI,			X86_FEATURE_XMM2      },
-+	{ X86_FEATURE_GFNI,			X86_FEATURE_XMM2      },
- 	{ X86_FEATURE_FMA,			X86_FEATURE_AVX       },
-+	{ X86_FEATURE_VAES,			X86_FEATURE_AVX       },
-+	{ X86_FEATURE_VPCLMULQDQ,		X86_FEATURE_AVX       },
- 	{ X86_FEATURE_AVX2,			X86_FEATURE_AVX,      },
- 	{ X86_FEATURE_AVX512F,			X86_FEATURE_AVX,      },
- 	{ X86_FEATURE_AVX512IFMA,		X86_FEATURE_AVX512F   },
-@@ -56,9 +59,6 @@ static const struct cpuid_dep cpuid_deps[] = {
- 	{ X86_FEATURE_AVX512VL,			X86_FEATURE_AVX512F   },
- 	{ X86_FEATURE_AVX512VBMI,		X86_FEATURE_AVX512F   },
- 	{ X86_FEATURE_AVX512_VBMI2,		X86_FEATURE_AVX512VL  },
--	{ X86_FEATURE_GFNI,			X86_FEATURE_AVX512VL  },
--	{ X86_FEATURE_VAES,			X86_FEATURE_AVX512VL  },
--	{ X86_FEATURE_VPCLMULQDQ,		X86_FEATURE_AVX512VL  },
- 	{ X86_FEATURE_AVX512_VNNI,		X86_FEATURE_AVX512VL  },
- 	{ X86_FEATURE_AVX512_BITALG,		X86_FEATURE_AVX512VL  },
- 	{ X86_FEATURE_AVX512_4VNNIW,		X86_FEATURE_AVX512F   },
--- 
-2.43.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10122,6 +10122,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1d05, 0x115c, "TongFang GMxTGxx", ALC269_FIXUP_NO_SHUTUP),
+ 	SND_PCI_QUIRK(0x1d05, 0x121b, "TongFang GMxAGxx", ALC269_FIXUP_NO_SHUTUP),
+ 	SND_PCI_QUIRK(0x1d05, 0x1387, "TongFang GMxIXxx", ALC2XX_FIXUP_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1d17, 0x3288, "Haier Boyue G42", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
+ 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
 
 
