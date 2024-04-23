@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35519143897;
-	Tue, 23 Apr 2024 21:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D19E85274;
+	Tue, 23 Apr 2024 21:42:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908556; cv=none; b=t/JuXifax0Lwq0iNX4Q4B8tUJExJ3dFPNIZoHc2Gkm+ZWqWY8Z0H9ZFUF5su4j+OOozWcvfn2Dqx46+Rp0cgbCOojYGBMVIm2tw1JK3XXa1LzGZSn5jfQ3DovqIduFpnI1r8EVhzoGUZ+Jt6p8DMQZzSgcWTIEgPykj472XRP0Q=
+	t=1713908557; cv=none; b=PW2RWxHdA4IQkaZqOoObKFopT25HxlOJKDwgo6NqnG63gHCnFibiyR/gt7bmmGhzhUS3TQULC5YlgyF1rbk7UXwoHMXjrDxp8ubWMGxH28sqsOlgr1xDsqPjxqyCVFU4zHBFs85pZPvfxYnfBSxW9ip2DD0HoKNMnr8J43xCEvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908556; c=relaxed/simple;
-	bh=nWAxosUidR6hAEWsRgDnwX+YzURzW+RwjaagbdfJr9k=;
+	s=arc-20240116; t=1713908557; c=relaxed/simple;
+	bh=hty4y6TT/YVcWow8+dPKzLCFZkszg2vlpQqMtf2wquE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DRHz6Cq1sSHM2ghYBFqCVOvj8E9/Tf7r4Aal+qXFNnO0+uHXZuwlTXqAUIra0U5Bd1zNKwjNSxpBIvbLCD2/dH55YmNH6Y+1rdsf/PtpJ7Siy0XSXNGBMXtuehJVY8xdNXF0j5WhLWifnH1Q++9jpozscxsJ+kNiGyUtAgkpO5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j5lq2up2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=J6cjOq0nd/G/BbwL5YpiokwiDBsn0WzYEn0kh48sasuPr6BWdY3xw5+EoWuNLV0cQPGTvDe0I64zyEWjQid+D1IbGQ8rurWzNPLI84tC4K/VhhFJkl82Ye7at69wp1WTjLRopNYHp5jH6Nj+u7k0kd664lsPve427u1c4w8xkAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJDHhuTs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j5lq2up2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083ABC32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJDHhuTs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCA2C116B1;
 	Tue, 23 Apr 2024 21:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908556;
-	bh=nWAxosUidR6hAEWsRgDnwX+YzURzW+RwjaagbdfJr9k=;
+	bh=hty4y6TT/YVcWow8+dPKzLCFZkszg2vlpQqMtf2wquE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j5lq2up2lZxNpI2o/sf5y4EGboQix6vMAK5yF4JuprgrT/8JpBHyXeNe5yayBTGJW
-	 LXgdEyR6af0jhJvJvIVAlqURJicFHjJCjGBrpc5IksK33LGXKVubMjEU7GWp+LwMnO
-	 TPGDmui1hXPmay1FHz4w8pK6JlH18tGjut/FY8ZY=
+	b=CJDHhuTsEwFayUAQFFwgTD3x76ft6r3Z+BwMWxulEPZnUlrtt/AXBCupD5j5SKJt6
+	 wV/KktmGpAQpxofWbUEcQPZtMgJ/HlbY71sR2zgsWBR9cwZRVtWMoIhcIUZbdsOvAX
+	 4y9z8dRGJr/AUCOuZ+yBSzr2nb347hn1D6gQry6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaogang Chen <xiaogang.chen@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Harish Kasiviswanthan <Harish.Kasiviswanthan@amd.com>,
-	Mukul Joshi <mukul.joshi@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.8 141/158] drm/amdkfd: Fix memory leak in create_process failure
-Date: Tue, 23 Apr 2024 14:39:23 -0700
-Message-ID: <20240423213900.447387875@linuxfoundation.org>
+Subject: [PATCH 6.8 142/158] drm/amdgpu: remove invalid resource->start check v2
+Date: Tue, 23 Apr 2024 14:39:24 -0700
+Message-ID: <20240423213900.479846593@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -47,45 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Kuehling <felix.kuehling@amd.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit 18921b205012568b45760753ad3146ddb9e2d4e2 upstream.
+commit ca7c4507ba87e9fc22e0ecfa819c3664b3e8287b upstream.
 
-Fix memory leak due to a leaked mmget reference on an error handling
-code path that is triggered when attempting to create KFD processes
-while a GPU reset is in progress.
+The majority of those where removed in the commit aed01a68047b
+("drm/amdgpu: Remove TTM resource->start visible VRAM condition v2")
 
-Fixes: 0ab2d7532b05 ("drm/amdkfd: prepare per-process debug enable and disable")
-CC: Xiaogang Chen <xiaogang.chen@amd.com>
-Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
-Tested-by: Harish Kasiviswanthan <Harish.Kasiviswanthan@amd.com>
-Reviewed-by: Mukul Joshi <mukul.joshi@amd.com>
+But this one was missed because it's working on the resource and not the
+BO. Since we also no longer use a fake start address for visible BOs
+this will now trigger invalid mapping errors.
+
+v2: also remove the unused variable
+
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: aed01a68047b ("drm/amdgpu: Remove TTM resource->start visible VRAM condition v2")
+CC: stable@vger.kernel.org
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -819,9 +819,9 @@ struct kfd_process *kfd_create_process(s
- 	mutex_lock(&kfd_processes_mutex);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -562,7 +562,6 @@ static int amdgpu_ttm_io_mem_reserve(str
+ 				     struct ttm_resource *mem)
+ {
+ 	struct amdgpu_device *adev = amdgpu_ttm_adev(bdev);
+-	size_t bus_size = (size_t)mem->size;
  
- 	if (kfd_is_locked()) {
--		mutex_unlock(&kfd_processes_mutex);
- 		pr_debug("KFD is locked! Cannot create process");
--		return ERR_PTR(-EINVAL);
-+		process = ERR_PTR(-EINVAL);
-+		goto out;
- 	}
+ 	switch (mem->mem_type) {
+ 	case TTM_PL_SYSTEM:
+@@ -573,9 +572,6 @@ static int amdgpu_ttm_io_mem_reserve(str
+ 		break;
+ 	case TTM_PL_VRAM:
+ 		mem->bus.offset = mem->start << PAGE_SHIFT;
+-		/* check if it's visible */
+-		if ((mem->bus.offset + bus_size) > adev->gmc.visible_vram_size)
+-			return -EINVAL;
  
- 	/* A prior open of /dev/kfd could have already created the process. */
+ 		if (adev->mman.aper_base_kaddr &&
+ 		    mem->placement & TTM_PL_FLAG_CONTIGUOUS)
 
 
