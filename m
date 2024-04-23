@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EEBE143C6C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2ED914C594;
 	Tue, 23 Apr 2024 21:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908807; cv=none; b=GpZs8QDCb7zdJYyYlDR/rN/asbtOMZH/T8yVYIA6Hpuj+edUJuODu2GSxxWoVKVctin7zLodVcdPih2iNtCn31GmDpEXYMTUDustIDd8TiCj5Yh+08fV9iJYnIQtiucwH/GkD0A1B3hBW3K44WuQKUPPB41kaSpaUyRCdwdXnlY=
+	t=1713908807; cv=none; b=DNmtgbRTO9bJnWNtBMB8PydVSK6J5Tco8rVjg+wBGds4JFvrOd0iB3UrZOQXZ+C8prFwsLApJ9a53GSJOsQJuExnsoyM7gxu2R93VC3RfOv94FsbsL/HZKQgvT4TEOQH4pByz/x0lgHsmfQjKj98N/bmmA3VEPRT/9YsSaKj6VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908807; c=relaxed/simple;
-	bh=BXUglFimDRfSnYJquJli0mRjDxFP8xkmz6IiVx576QQ=;
+	bh=8NIEHujQ6ix7E081pCAW2u6vw+uJqYxC8PP9UCIg/tY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=laV8zQb5/y/8U8czwCqiqQvSGPMMqT2Rdw/EU/kgQPJZNeK2z442DSnzCDcasAiGFGrieFbZQClvjEOuDbHO3LYbsTnoMRlaRfsik1i9+tC0TXTBNCCXPb/5A7iWepzthrp0oBgz9G5alxGX2JDD7FlOb7EryzZtFHbvft5Tefo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCL6SvA4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Nwbi22dnI5M2cbA55ylod5zx2BpzSJaSb01/EE8L2+OEFGNK3VlGHQs4HqKy7ABpVUBhFj2GTUWSHI+Vh94cHGt3Bk+L6XjyGpHokXEHUgkGxHTBu87FV/NFQSbQlIzqhhpQr7T64/reG8StvV+0h7J458qEpjnv/NKvb5u8zA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxFAraJF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCL6SvA4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB919C32781;
-	Tue, 23 Apr 2024 21:46:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxFAraJF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0C7C116B1;
+	Tue, 23 Apr 2024 21:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908807;
-	bh=BXUglFimDRfSnYJquJli0mRjDxFP8xkmz6IiVx576QQ=;
+	bh=8NIEHujQ6ix7E081pCAW2u6vw+uJqYxC8PP9UCIg/tY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dCL6SvA4p6+YjNbOxYJ2C/gkMysM4hhKctuIsxqucu79ZeU/04l9MlQioNIMXoXC+
-	 PMBo5rpeqXbdALjCAGD8viUWqrwVG3H4HVByqhTcevd4g2BTkWJsmiq2X8qt/s0Qt0
-	 lE/VZ7ROANJHjkcLBP3VO77LxygKF7GpX6QjPUmY=
+	b=dxFAraJFfMVad06gqOj69NMElhIfG/cvr+ZDUFe9yY+vShp8SewF/JO2RAs+sEFIm
+	 VjasR0ffXNfhYXHcBABPANHZJjS+x2kfSmGmC+CVys7IWikDAD/GXcuM1pDxFn1P4d
+	 ToK20aHg2FCTcuAHy3zCTQSGnnAEDakzz+HIarcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2e22057de05b9f3b30d8@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 67/71] nilfs2: fix OOB in nilfs_set_de_type
-Date: Tue, 23 Apr 2024 14:40:20 -0700
-Message-ID: <20240423213846.515697678@linuxfoundation.org>
+	"Russell King (Oracle)" <linux@armlinux.org.uk>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 68/71] net: dsa: mt7530: set all CPU ports in MT7531_CPU_PMAP
+Date: Tue, 23 Apr 2024 14:40:21 -0700
+Message-ID: <20240423213846.560894836@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
 References: <20240423213844.122920086@linuxfoundation.org>
@@ -46,59 +48,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-commit c4a7dc9523b59b3e73fd522c73e95e072f876b16 upstream.
+commit ff221029a51fd54cacac66e193e0c75e4de940e7 upstream.
 
-The size of the nilfs_type_by_mode array in the fs/nilfs2/dir.c file is
-defined as "S_IFMT >> S_SHIFT", but the nilfs_set_de_type() function,
-which uses this array, specifies the index to read from the array in the
-same way as "(mode & S_IFMT) >> S_SHIFT".
+MT7531_CPU_PMAP represents the destination port mask for trapped-to-CPU
+frames (further restricted by PCR_MATRIX).
 
-static void nilfs_set_de_type(struct nilfs_dir_entry *de, struct inode
- *inode)
-{
-	umode_t mode = inode->i_mode;
+Currently the driver sets the first CPU port as the single port in this bit
+mask, which works fine regardless of whether the device tree defines port
+5, 6 or 5+6 as CPU ports. This is because the logic coincides with DSA's
+logic of picking the first CPU port as the CPU port that all user ports are
+affine to, by default.
 
-	de->file_type = nilfs_type_by_mode[(mode & S_IFMT)>>S_SHIFT]; // oob
-}
+An upcoming change would like to influence DSA's selection of the default
+CPU port to no longer be the first one, and in that case, this logic needs
+adaptation.
 
-However, when the index is determined this way, an out-of-bounds (OOB)
-error occurs by referring to an index that is 1 larger than the array size
-when the condition "mode & S_IFMT == S_IFMT" is satisfied.  Therefore, a
-patch to resize the nilfs_type_by_mode array should be applied to prevent
-OOB errors.
+Since there is no observed leakage or duplication of frames if all CPU
+ports are defined in this bit mask, simply include them all.
 
-Link: https://lkml.kernel.org/r/20240415182048.7144-1-konishi.ryusuke@gmail.com
-Reported-by: syzbot+2e22057de05b9f3b30d8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2e22057de05b9f3b30d8
-Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Russell King (Oracle) <linux@armlinux.org.uk>
+Suggested-by: Vladimir Oltean <olteanv@gmail.com>
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/dir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/mt7530.c |   15 +++++++--------
+ drivers/net/dsa/mt7530.h |    1 +
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -243,7 +243,7 @@ nilfs_filetype_table[NILFS_FT_MAX] = {
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -1232,6 +1232,13 @@ mt753x_cpu_port_enable(struct dsa_switch
+ 	if (priv->id == ID_MT7530 || priv->id == ID_MT7621)
+ 		mt7530_rmw(priv, MT7530_MFC, CPU_MASK, CPU_EN | CPU_PORT(port));
  
- #define S_SHIFT 12
- static unsigned char
--nilfs_type_by_mode[S_IFMT >> S_SHIFT] = {
-+nilfs_type_by_mode[(S_IFMT >> S_SHIFT) + 1] = {
- 	[S_IFREG >> S_SHIFT]	= NILFS_FT_REG_FILE,
- 	[S_IFDIR >> S_SHIFT]	= NILFS_FT_DIR,
- 	[S_IFCHR >> S_SHIFT]	= NILFS_FT_CHRDEV,
++	/* Add the CPU port to the CPU port bitmap for MT7531. Trapped frames
++	 * will be forwarded to the CPU port that is affine to the inbound user
++	 * port.
++	 */
++	if (priv->id == ID_MT7531)
++		mt7530_set(priv, MT7531_CFC, MT7531_CPU_PMAP(BIT(port)));
++
+ 	/* CPU port gets connected to all user ports of
+ 	 * the switch.
+ 	 */
+@@ -2510,16 +2517,8 @@ static int
+ mt7531_setup_common(struct dsa_switch *ds)
+ {
+ 	struct mt7530_priv *priv = ds->priv;
+-	struct dsa_port *cpu_dp;
+ 	int ret, i;
+ 
+-	/* BPDU to CPU port */
+-	dsa_switch_for_each_cpu_port(cpu_dp, ds) {
+-		mt7530_rmw(priv, MT7531_CFC, MT7531_CPU_PMAP_MASK,
+-			   BIT(cpu_dp->index));
+-		break;
+-	}
+-
+ 	mt753x_trap_frames(priv);
+ 
+ 	/* Enable and reset MIB counters */
+--- a/drivers/net/dsa/mt7530.h
++++ b/drivers/net/dsa/mt7530.h
+@@ -58,6 +58,7 @@ enum mt753x_id {
+ #define  MT7531_MIRROR_PORT_GET(x)	(((x) >> 16) & MIRROR_MASK)
+ #define  MT7531_MIRROR_PORT_SET(x)	(((x) & MIRROR_MASK) << 16)
+ #define  MT7531_CPU_PMAP_MASK		GENMASK(7, 0)
++#define  MT7531_CPU_PMAP(x)		FIELD_PREP(MT7531_CPU_PMAP_MASK, x)
+ 
+ #define MT753X_MIRROR_REG(id)		(((id) == ID_MT7531) ? \
+ 					 MT7531_CFC : MT7530_MFC)
 
 
