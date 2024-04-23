@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0E485274;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B137685274;
 	Tue, 23 Apr 2024 21:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908566; cv=none; b=KHb0jRQJzVJ+x83f6lNyYGArAaFckt0W+Z4Soc++bLkFTBmmJOj/qzPUFstfK7rJKdIs/7B+VvMga/Qs8dsD24dS0SqoBdtgrtKBLXg8TdSg8aKbGyWSlcr+iT1z6KIM3zfloqZQ3jXGqcUzxxfUbkICQuzUp47XkFhCYzUWm+o=
+	t=1713908566; cv=none; b=KcNbLxtO3cXkolAPF4nTaOFJUGPQEufwiK25Z6lmYPM6q2+/1IC6jEMs3f0aQWsPdQjgCKFU7HDPvcQinmT+RBB3RzfKhMrZjMTGM+mUjcZ7zVgykM33mcjsPO1Urx5YY5h3ueweub9iRADB/cCSPJ9jaE8l7hL4GJWgtlIjImA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908566; c=relaxed/simple;
-	bh=/aNMV6ngNeMoHqec/50lit2FRmmxo/gAd94LglwTr8g=;
+	bh=hAeCY1TlQ9Ofj1d4WZdla3xHeVLprb5H8LZz1X3xYv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/VnAa+4bFAG/U8rEMqxHe22dubL0boUTK/Okqpxxy1fxGxLAXzgwwDmJYDDF/3hoH5aySnSuR/XQbz6Vyi+mDphpv+mEGtf+QnlNOaD1rXZ+tT8xy1307VKsxH/0fSL75L6lJY3oen5NLqGXhyOCiFKIIGSp9BddCSnHEwrh9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqCrQd1X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YKnZmhfYiPFCPdQeSPJC7LQuGim+UlL3eCMwjHG0BhHckXSmrjm1wVhcyZnK7hf39TiR9LoB4MTSaQlpdEgvNqxzOXddTvX+WEFsaQugbXWZzR3wG2FZnMQ3zmEdY734WmHrAAHqk3VFmSS/qSZw3MG+N0BCqTLqEUkNcCCllIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmwJKEMs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqCrQd1X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF177C3277B;
-	Tue, 23 Apr 2024 21:42:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmwJKEMs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE1BC32786;
+	Tue, 23 Apr 2024 21:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908565;
-	bh=/aNMV6ngNeMoHqec/50lit2FRmmxo/gAd94LglwTr8g=;
+	s=korg; t=1713908566;
+	bh=hAeCY1TlQ9Ofj1d4WZdla3xHeVLprb5H8LZz1X3xYv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yqCrQd1XHAHPvp09gYF/U0cbClSPb9ht7/0NazQJfZhk6eg0P7NBwVnBsf3pDZNUB
-	 GVI7VveSmtzwYmHXmKBGrMgohjQ3aLMRdMs/7CPy4oIt6gkjH0IFEWTOunvxy6M5ne
-	 b8z/stWJIiM+wlQZx3Z52ogc1jk3mC3quDBloCeo=
+	b=hmwJKEMsJg6vaIPw4hyA2M8YF6CN6X3jqJ81gkl+iwvmllpsQHIFL+tp93IupHsyK
+	 /LNEcbBFiDsW/Jy+UHcPmHk7iCFYWI7JDy3Du4t4bpIrWy0/ajGT07v7OE+HTdsv4k
+	 W40rrXyyS7x05oQ3Y9G60gOWNzYPdp1lQbp6ZnOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 014/158] selftests: timers: Convert posix_timers test to generate KTAP output
-Date: Tue, 23 Apr 2024 14:37:31 -0700
-Message-ID: <20240423213856.177773079@linuxfoundation.org>
+Subject: [PATCH 6.6 015/158] selftests/timers/posix_timers: Reimplement check_timer_distribution()
+Date: Tue, 23 Apr 2024 14:37:32 -0700
+Message-ID: <20240423213856.210564153@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -51,235 +51,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 071af0c9e582bc47e379e39490a2bc1adfe4ec68 ]
+[ Upstream commit 6d029c25b71f2de2838a6f093ce0fa0e69336154 ]
 
-Currently the posix_timers test does not produce KTAP output but rather a
-custom format. This means that we only get a pass/fail for the suite, not
-for each individual test that the suite does. Convert to using the standard
-kselftest output functions which result in KTAP output being generated.
+check_timer_distribution() runs ten threads in a busy loop and tries to
+test that the kernel distributes a process posix CPU timer signal to every
+thread over time.
 
-As part of this fix the printing of diagnostics in the unlikely event that
-the pthread APIs fail, these were using perror() but the API functions
-directly return an error code instead of setting errno.
+There is not guarantee that this is true even after commit bcb7ee79029d
+("posix-timers: Prefer delivery of signals to the current thread") because
+that commit only avoids waking up the sleeping process leader thread, but
+that has nothing to do with the actual signal delivery.
 
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Stable-dep-of: 6d029c25b71f ("selftests/timers/posix_timers: Reimplement check_timer_distribution()")
+As the signal is process wide the first thread which observes sigpending
+and wins the race to lock sighand will deliver the signal. Testing shows
+that this hangs on a regular base because some threads never win the race.
+
+The comment "This primarily tests that the kernel does not favour any one."
+is wrong. The kernel does favour a thread which hits the timer interrupt
+when CLOCK_PROCESS_CPUTIME_ID expires.
+
+Rewrite the test so it only checks that the group leader sleeping in join()
+never receives SIGALRM and the thread which burns CPU cycles receives all
+signals.
+
+In older kernels which do not have commit bcb7ee79029d ("posix-timers:
+Prefer delivery of signals to the current thread") the test-case fails
+immediately, the very 1st tick wakes the leader up. Otherwise it quickly
+succeeds after 100 ticks.
+
+CI testing wants to use newer selftest versions on stable kernels. In this
+case the test is guaranteed to fail.
+
+So check in the failure case whether the kernel version is less than v6.3
+and skip the test result in that case.
+
+[ tglx: Massaged change log, renamed the version check helper ]
+
+Fixes: e797203fb3ba ("selftests/timers/posix_timers: Test delivery of signals across threads")
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240409133802.GD29396@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/timers/posix_timers.c | 81 ++++++++++---------
- 1 file changed, 41 insertions(+), 40 deletions(-)
+ tools/testing/selftests/kselftest.h           |  13 +++
+ tools/testing/selftests/timers/posix_timers.c | 103 ++++++++----------
+ 2 files changed, 60 insertions(+), 56 deletions(-)
 
+diff --git a/tools/testing/selftests/kselftest.h b/tools/testing/selftests/kselftest.h
+index 529d29a359002..68d5a93dff8dc 100644
+--- a/tools/testing/selftests/kselftest.h
++++ b/tools/testing/selftests/kselftest.h
+@@ -49,6 +49,7 @@
+ #include <unistd.h>
+ #include <stdarg.h>
+ #include <stdio.h>
++#include <sys/utsname.h>
+ #endif
+ 
+ #ifndef ARRAY_SIZE
+@@ -327,4 +328,16 @@ static inline int ksft_exit_skip(const char *msg, ...)
+ 	exit(KSFT_SKIP);
+ }
+ 
++static inline int ksft_min_kernel_version(unsigned int min_major,
++					  unsigned int min_minor)
++{
++	unsigned int major, minor;
++	struct utsname info;
++
++	if (uname(&info) || sscanf(info.release, "%u.%u.", &major, &minor) != 2)
++		ksft_exit_fail_msg("Can't parse kernel version\n");
++
++	return major > min_major || (major == min_major && minor >= min_minor);
++}
++
+ #endif /* __KSELFTEST_H */
 diff --git a/tools/testing/selftests/timers/posix_timers.c b/tools/testing/selftests/timers/posix_timers.c
-index 9a42403eaff70..2669c45316b3d 100644
+index 2669c45316b3d..14355d8472110 100644
 --- a/tools/testing/selftests/timers/posix_timers.c
 +++ b/tools/testing/selftests/timers/posix_timers.c
-@@ -76,22 +76,21 @@ static int check_diff(struct timeval start, struct timeval end)
- 
- static int check_itimer(int which)
- {
-+	const char *name;
- 	int err;
- 	struct timeval start, end;
- 	struct itimerval val = {
- 		.it_value.tv_sec = DELAY,
- 	};
- 
--	printf("Check itimer ");
--
- 	if (which == ITIMER_VIRTUAL)
--		printf("virtual... ");
-+		name = "ITIMER_VIRTUAL";
- 	else if (which == ITIMER_PROF)
--		printf("prof... ");
-+		name = "ITIMER_PROF";
- 	else if (which == ITIMER_REAL)
--		printf("real... ");
--
--	fflush(stdout);
-+		name = "ITIMER_REAL";
-+	else
-+		return -1;
- 
- 	done = 0;
- 
-@@ -104,13 +103,13 @@ static int check_itimer(int which)
- 
- 	err = gettimeofday(&start, NULL);
- 	if (err < 0) {
--		perror("Can't call gettimeofday()\n");
-+		ksft_perror("Can't call gettimeofday()");
- 		return -1;
- 	}
- 
- 	err = setitimer(which, &val, NULL);
- 	if (err < 0) {
--		perror("Can't set timer\n");
-+		ksft_perror("Can't set timer");
- 		return -1;
- 	}
- 
-@@ -123,20 +122,18 @@ static int check_itimer(int which)
- 
- 	err = gettimeofday(&end, NULL);
- 	if (err < 0) {
--		perror("Can't call gettimeofday()\n");
-+		ksft_perror("Can't call gettimeofday()");
- 		return -1;
- 	}
- 
--	if (!check_diff(start, end))
--		printf("[OK]\n");
--	else
--		printf("[FAIL]\n");
-+	ksft_test_result(check_diff(start, end) == 0, "%s\n", name);
- 
+@@ -184,80 +184,71 @@ static int check_timer_create(int which)
  	return 0;
  }
  
- static int check_timer_create(int which)
+-int remain;
+-__thread int got_signal;
++static pthread_t ctd_thread;
++static volatile int ctd_count, ctd_failed;
+ 
+-static void *distribution_thread(void *arg)
++static void ctd_sighandler(int sig)
  {
-+	const char *type;
- 	int err;
- 	timer_t id;
- 	struct timeval start, end;
-@@ -144,31 +141,32 @@ static int check_timer_create(int which)
- 		.it_value.tv_sec = DELAY,
- 	};
- 
--	printf("Check timer_create() ");
- 	if (which == CLOCK_THREAD_CPUTIME_ID) {
--		printf("per thread... ");
-+		type = "thread";
- 	} else if (which == CLOCK_PROCESS_CPUTIME_ID) {
--		printf("per process... ");
-+		type = "process";
-+	} else {
-+		ksft_print_msg("Unknown timer_create() type %d\n", which);
-+		return -1;
- 	}
--	fflush(stdout);
- 
- 	done = 0;
- 	err = timer_create(which, NULL, &id);
- 	if (err < 0) {
--		perror("Can't create timer\n");
-+		ksft_perror("Can't create timer");
- 		return -1;
- 	}
- 	signal(SIGALRM, sig_handler);
- 
- 	err = gettimeofday(&start, NULL);
- 	if (err < 0) {
--		perror("Can't call gettimeofday()\n");
-+		ksft_perror("Can't call gettimeofday()");
- 		return -1;
- 	}
- 
- 	err = timer_settime(id, 0, &val, NULL);
- 	if (err < 0) {
--		perror("Can't set timer\n");
-+		ksft_perror("Can't set timer");
- 		return -1;
- 	}
- 
-@@ -176,14 +174,12 @@ static int check_timer_create(int which)
- 
- 	err = gettimeofday(&end, NULL);
- 	if (err < 0) {
--		perror("Can't call gettimeofday()\n");
-+		ksft_perror("Can't call gettimeofday()");
- 		return -1;
- 	}
- 
--	if (!check_diff(start, end))
--		printf("[OK]\n");
--	else
--		printf("[FAIL]\n");
-+	ksft_test_result(check_diff(start, end) == 0,
-+			 "timer_create() per %s\n", type);
- 
- 	return 0;
+-	while (__atomic_load_n(&remain, __ATOMIC_RELAXED));
+-	return NULL;
++	if (pthread_self() != ctd_thread)
++		ctd_failed = 1;
++	ctd_count--;
  }
-@@ -220,25 +216,25 @@ static int check_timer_distribution(void)
+ 
+-static void distribution_handler(int nr)
++static void *ctd_thread_func(void *arg)
+ {
+-	if (!__atomic_exchange_n(&got_signal, 1, __ATOMIC_RELAXED))
+-		__atomic_fetch_sub(&remain, 1, __ATOMIC_RELAXED);
+-}
+-
+-/*
+- * Test that all running threads _eventually_ receive CLOCK_PROCESS_CPUTIME_ID
+- * timer signals. This primarily tests that the kernel does not favour any one.
+- */
+-static int check_timer_distribution(void)
+-{
+-	int err, i;
+-	timer_t id;
+-	const int nthreads = 10;
+-	pthread_t threads[nthreads];
+ 	struct itimerspec val = {
+ 		.it_value.tv_sec = 0,
+ 		.it_value.tv_nsec = 1000 * 1000,
+ 		.it_interval.tv_sec = 0,
  		.it_interval.tv_nsec = 1000 * 1000,
  	};
++	timer_t id;
  
--	printf("Check timer_create() per process signal distribution... ");
--	fflush(stdout);
--
- 	remain = nthreads + 1;  /* worker threads + this thread */
- 	signal(SIGALRM, distribution_handler);
- 	err = timer_create(CLOCK_PROCESS_CPUTIME_ID, NULL, &id);
- 	if (err < 0) {
--		perror("Can't create timer\n");
-+		ksft_perror("Can't create timer");
- 		return -1;
- 	}
- 	err = timer_settime(id, 0, &val, NULL);
- 	if (err < 0) {
--		perror("Can't set timer\n");
-+		ksft_perror("Can't set timer");
- 		return -1;
- 	}
+-	remain = nthreads + 1;  /* worker threads + this thread */
+-	signal(SIGALRM, distribution_handler);
+-	err = timer_create(CLOCK_PROCESS_CPUTIME_ID, NULL, &id);
+-	if (err < 0) {
+-		ksft_perror("Can't create timer");
+-		return -1;
+-	}
+-	err = timer_settime(id, 0, &val, NULL);
+-	if (err < 0) {
+-		ksft_perror("Can't set timer");
+-		return -1;
+-	}
++	/* 1/10 seconds to ensure the leader sleeps */
++	usleep(10000);
  
- 	for (i = 0; i < nthreads; i++) {
--		if (pthread_create(&threads[i], NULL, distribution_thread, NULL)) {
--			perror("Can't create thread\n");
-+		err = pthread_create(&threads[i], NULL, distribution_thread,
-+				     NULL);
-+		if (err) {
-+			ksft_print_msg("Can't create thread: %s (%d)\n",
-+				       strerror(errno), errno);
- 			return -1;
- 		}
- 	}
-@@ -247,25 +243,30 @@ static int check_timer_distribution(void)
- 	while (__atomic_load_n(&remain, __ATOMIC_RELAXED));
+-	for (i = 0; i < nthreads; i++) {
+-		err = pthread_create(&threads[i], NULL, distribution_thread,
+-				     NULL);
+-		if (err) {
+-			ksft_print_msg("Can't create thread: %s (%d)\n",
+-				       strerror(errno), errno);
+-			return -1;
+-		}
+-	}
++	ctd_count = 100;
++	if (timer_create(CLOCK_PROCESS_CPUTIME_ID, NULL, &id))
++		return "Can't create timer\n";
++	if (timer_settime(id, 0, &val, NULL))
++		return "Can't set timer\n";
  
- 	for (i = 0; i < nthreads; i++) {
--		if (pthread_join(threads[i], NULL)) {
--			perror("Can't join thread\n");
-+		err = pthread_join(threads[i], NULL);
-+		if (err) {
-+			ksft_print_msg("Can't join thread: %s (%d)\n",
-+				       strerror(errno), errno);
- 			return -1;
- 		}
- 	}
+-	/* Wait for all threads to receive the signal. */
+-	while (__atomic_load_n(&remain, __ATOMIC_RELAXED));
++	while (ctd_count > 0 && !ctd_failed)
++		;
  
- 	if (timer_delete(id)) {
--		perror("Can't delete timer\n");
-+		ksft_perror("Can't delete timer");
- 		return -1;
- 	}
+-	for (i = 0; i < nthreads; i++) {
+-		err = pthread_join(threads[i], NULL);
+-		if (err) {
+-			ksft_print_msg("Can't join thread: %s (%d)\n",
+-				       strerror(errno), errno);
+-			return -1;
+-		}
+-	}
++	if (timer_delete(id))
++		return "Can't delete timer\n";
  
--	printf("[OK]\n");
-+	ksft_test_result_pass("check_timer_distribution\n");
+-	if (timer_delete(id)) {
+-		ksft_perror("Can't delete timer");
+-		return -1;
+-	}
++	return NULL;
++}
++
++/*
++ * Test that only the running thread receives the timer signal.
++ */
++static int check_timer_distribution(void)
++{
++	const char *errmsg;
+ 
+-	ksft_test_result_pass("check_timer_distribution\n");
++	signal(SIGALRM, ctd_sighandler);
++
++	errmsg = "Can't create thread\n";
++	if (pthread_create(&ctd_thread, NULL, ctd_thread_func, NULL))
++		goto err;
++
++	errmsg = "Can't join thread\n";
++	if (pthread_join(ctd_thread, (void **)&errmsg) || errmsg)
++		goto err;
++
++	if (!ctd_failed)
++		ksft_test_result_pass("check signal distribution\n");
++	else if (ksft_min_kernel_version(6, 3))
++		ksft_test_result_fail("check signal distribution\n");
++	else
++		ksft_test_result_skip("check signal distribution (old kernel)\n");
  	return 0;
++err:
++	ksft_print_msg(errmsg);
++	return -1;
  }
  
  int main(int argc, char **argv)
- {
--	printf("Testing posix timers. False negative may happen on CPU execution \n");
--	printf("based timers if other threads run on the CPU...\n");
-+	ksft_print_header();
-+	ksft_set_plan(6);
-+
-+	ksft_print_msg("Testing posix timers. False negative may happen on CPU execution \n");
-+	ksft_print_msg("based timers if other threads run on the CPU...\n");
- 
- 	if (check_itimer(ITIMER_VIRTUAL) < 0)
- 		return ksft_exit_fail();
-@@ -294,5 +295,5 @@ int main(int argc, char **argv)
- 	if (check_timer_distribution() < 0)
- 		return ksft_exit_fail();
- 
--	return ksft_exit_pass();
-+	ksft_finished();
- }
 -- 
 2.43.0
 
