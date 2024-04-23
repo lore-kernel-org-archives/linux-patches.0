@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EFB145B29;
-	Tue, 23 Apr 2024 21:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F97E85274;
+	Tue, 23 Apr 2024 21:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908562; cv=none; b=KUVtCJ3xlYW2HuT/8yIfSgyGj5hLUPaMSYGykk/Txch9gb7TyFiRINhPxuzEs1z03Q2BVyFDoN8en/2ngMu2GVytJ/evPU505ITJQijsHK5Ugt/MRLqVgqC/XNhuv8MuHoZZInUz7NeN/5ZnRKU2+TaaNWRg3qc3TVUBTbk635s=
+	t=1713908563; cv=none; b=AQoiOw0NeKsJlA+6CKCNRvy/eGoe79jH4nPEUuhSZdxT9YDE4FrsiNA2k4kHhRUbianQwKuOBpBXHjAK7L48G3NTZl8GILnIj/DrBjZRdWqG65AAiQghWBypNpjlLswm3q34ncSeIYrQMyESBixYSl/UcAApvlMmpArM/1//tWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908562; c=relaxed/simple;
-	bh=Q5lDrRA/9J/3UFt/A/8bVPOExtmLnKI5xy/nRNsEcPg=;
+	s=arc-20240116; t=1713908563; c=relaxed/simple;
+	bh=0ZFcTo6ehWh21FS9BJBnC5AY+kvVcRYlkQy1X7ogLh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AqFgpcPTmilpdt+BOMnNvlJNr50XuSBI6i0TOpqBjgqyFVMtLDYLZmmZN+sQHwGGllSLpzG/2gQ3yv1byfWoSywl3fxadTlUnRWQe+l2VFDu6fylP+ti54TdlcglsdK972P7Dme8eA1oqZ/MKgp5GIhjwT5BknJJ6q5BY2OJ7R0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9f42+SL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=A+A0Fr+MF9h0yVPcf7n5vizMqOBRDtBP0MPVqqGPvVEOVJZfueRrc0GrBo3AfaHYNnHXfCBqYAcFhwBQ+nazQyKof0WEVZLXswqXpaik/5rCOFfQxeKJiQWGnC4JokVZOBCAMmdHwGTxC988a74UwgFk5GGXEoMmBEmycScbBm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTmeDcev; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9f42+SL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50996C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTmeDcev"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8D5C4AF07;
 	Tue, 23 Apr 2024 21:42:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908562;
-	bh=Q5lDrRA/9J/3UFt/A/8bVPOExtmLnKI5xy/nRNsEcPg=;
+	s=korg; t=1713908563;
+	bh=0ZFcTo6ehWh21FS9BJBnC5AY+kvVcRYlkQy1X7ogLh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z9f42+SLPq50panAZLYJYBQ3GSKBLPpCoIjfK4HscvvLu6kY6Pr4wj43NLxjMRA9l
-	 JT15d3DvNKRSiIRAxKPlDADykIBAgZDaLQ82uTwiSK/sUvOVjSaaIAeviB0k0mtVkg
-	 lxa64VzQep8/gdVoiy1wvH3mV6+5xe3qEUOH2/QY=
+	b=YTmeDcevnMqPgkl20ewIZVU7XDdPWTWPAGs35N7TQywci/Le77+Jtjs4LHqKggbEV
+	 XFnpiHgAMKQc+Y4LcM5RsuEaxf9SP0HNkj2R8/mKDJsi1UVQqA1w+QWUkxzcGyIx2L
+	 mn00+gVjG//Gn5YVhPjue5XaNAfm5ZkXJOP9IkbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Manasi Navare <navaremanasi@chromium.org>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 001/158] smb: client: remove extra @chan_count check in __cifs_put_smb_ses()
-Date: Tue, 23 Apr 2024 14:37:18 -0700
-Message-ID: <20240423213855.742187126@linuxfoundation.org>
+Subject: [PATCH 6.6 010/158] drm/i915: Extract intel_crtc_vblank_evade_scanlines()
+Date: Tue, 23 Apr 2024 14:37:27 -0700
+Message-ID: <20240423213856.051408075@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -46,72 +46,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit c37ed2d7d09869f30d291b9c6cba56ea4f0b0417 ]
+[ Upstream commit f4b0cece716c95e16d973a774d5a5c5cc8cb335d ]
 
-If @ses->chan_count <= 1, then for-loop body will not be executed so
-no need to check it twice.
+Pull the vblank evasion scanline calculations into their own helper
+to declutter intel_pipe_update_start() a bit.
 
-Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 24a9799aa8ef ("smb: client: fix UAF in smb2_reconnect_server()")
+Reviewed-by: Manasi Navare <navaremanasi@chromium.org>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230901130440.2085-4-ville.syrjala@linux.intel.com
+Reviewed-by: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
+Stable-dep-of: 4a36e46df7aa ("drm/i915: Disable live M/N updates when using bigjoiner")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/i915/display/intel_crtc.c | 53 +++++++++++++----------
+ 1 file changed, 31 insertions(+), 22 deletions(-)
 
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index 97776dd12b6b8..556f3c31aedc7 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -2015,9 +2015,10 @@ cifs_find_smb_ses(struct TCP_Server_Info *server, struct smb3_fs_context *ctx)
+diff --git a/drivers/gpu/drm/i915/display/intel_crtc.c b/drivers/gpu/drm/i915/display/intel_crtc.c
+index 65d91c7ad22ff..9693747a18c66 100644
+--- a/drivers/gpu/drm/i915/display/intel_crtc.c
++++ b/drivers/gpu/drm/i915/display/intel_crtc.c
+@@ -468,6 +468,36 @@ static int intel_mode_vblank_start(const struct drm_display_mode *mode)
+ 	return vblank_start;
+ }
  
- void __cifs_put_smb_ses(struct cifs_ses *ses)
- {
--	unsigned int rc, xid;
--	unsigned int chan_count;
- 	struct TCP_Server_Info *server = ses->server;
-+	unsigned int xid;
-+	size_t i;
-+	int rc;
++static void intel_crtc_vblank_evade_scanlines(struct intel_atomic_state *state,
++					      struct intel_crtc *crtc,
++					      int *min, int *max, int *vblank_start)
++{
++	const struct intel_crtc_state *new_crtc_state =
++		intel_atomic_get_new_crtc_state(state, crtc);
++	const struct drm_display_mode *adjusted_mode = &new_crtc_state->hw.adjusted_mode;
++
++	if (new_crtc_state->vrr.enable) {
++		if (intel_vrr_is_push_sent(new_crtc_state))
++			*vblank_start = intel_vrr_vmin_vblank_start(new_crtc_state);
++		else
++			*vblank_start = intel_vrr_vmax_vblank_start(new_crtc_state);
++	} else {
++		*vblank_start = intel_mode_vblank_start(adjusted_mode);
++	}
++
++	/* FIXME needs to be calibrated sensibly */
++	*min = *vblank_start - intel_usecs_to_scanlines(adjusted_mode,
++							VBLANK_EVASION_TIME_US);
++	*max = *vblank_start - 1;
++
++	/*
++	 * M/N is double buffered on the transcoder's undelayed vblank,
++	 * so with seamless M/N we must evade both vblanks.
++	 */
++	if (new_crtc_state->seamless_m_n && intel_crtc_needs_fastset(new_crtc_state))
++		*min -= adjusted_mode->crtc_vblank_start - adjusted_mode->crtc_vdisplay;
++}
++
+ /**
+  * intel_pipe_update_start() - start update of a set of display registers
+  * @state: the atomic state
+@@ -487,7 +517,6 @@ void intel_pipe_update_start(struct intel_atomic_state *state,
+ 	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
+ 	struct intel_crtc_state *new_crtc_state =
+ 		intel_atomic_get_new_crtc_state(state, crtc);
+-	const struct drm_display_mode *adjusted_mode = &new_crtc_state->hw.adjusted_mode;
+ 	long timeout = msecs_to_jiffies_timeout(1);
+ 	int scanline, min, max, vblank_start;
+ 	wait_queue_head_t *wq = drm_crtc_vblank_waitqueue(&crtc->base);
+@@ -503,27 +532,7 @@ void intel_pipe_update_start(struct intel_atomic_state *state,
+ 	if (intel_crtc_needs_vblank_work(new_crtc_state))
+ 		intel_crtc_vblank_work_init(new_crtc_state);
  
- 	spin_lock(&ses->ses_lock);
- 	if (ses->ses_status == SES_EXITING) {
-@@ -2063,20 +2064,14 @@ void __cifs_put_smb_ses(struct cifs_ses *ses)
- 	list_del_init(&ses->smb_ses_list);
- 	spin_unlock(&cifs_tcp_ses_lock);
- 
--	chan_count = ses->chan_count;
+-	if (new_crtc_state->vrr.enable) {
+-		if (intel_vrr_is_push_sent(new_crtc_state))
+-			vblank_start = intel_vrr_vmin_vblank_start(new_crtc_state);
+-		else
+-			vblank_start = intel_vrr_vmax_vblank_start(new_crtc_state);
+-	} else {
+-		vblank_start = intel_mode_vblank_start(adjusted_mode);
+-	}
 -
- 	/* close any extra channels */
--	if (chan_count > 1) {
--		int i;
+-	/* FIXME needs to be calibrated sensibly */
+-	min = vblank_start - intel_usecs_to_scanlines(adjusted_mode,
+-						      VBLANK_EVASION_TIME_US);
+-	max = vblank_start - 1;
 -
--		for (i = 1; i < chan_count; i++) {
--			if (ses->chans[i].iface) {
--				kref_put(&ses->chans[i].iface->refcount, release_iface);
--				ses->chans[i].iface = NULL;
--			}
--			cifs_put_tcp_session(ses->chans[i].server, 0);
--			ses->chans[i].server = NULL;
-+	for (i = 1; i < ses->chan_count; i++) {
-+		if (ses->chans[i].iface) {
-+			kref_put(&ses->chans[i].iface->refcount, release_iface);
-+			ses->chans[i].iface = NULL;
- 		}
-+		cifs_put_tcp_session(ses->chans[i].server, 0);
-+		ses->chans[i].server = NULL;
- 	}
+-	/*
+-	 * M/N is double buffered on the transcoder's undelayed vblank,
+-	 * so with seamless M/N we must evade both vblanks.
+-	 */
+-	if (new_crtc_state->seamless_m_n && intel_crtc_needs_fastset(new_crtc_state))
+-		min -= adjusted_mode->crtc_vblank_start - adjusted_mode->crtc_vdisplay;
+-
++	intel_crtc_vblank_evade_scanlines(state, crtc, &min, &max, &vblank_start);
+ 	if (min <= 0 || max <= 0)
+ 		goto irq_disable;
  
- 	/* we now account for primary channel in iface->refcount */
 -- 
 2.43.0
 
