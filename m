@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CB085274;
-	Tue, 23 Apr 2024 21:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C020885274;
+	Tue, 23 Apr 2024 21:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908559; cv=none; b=e4Q4xE9kXghKBXdKYbXNqm2slJxZzIyX9exhzylbu9xde51I64FN1KuB2Cb98THrCf9Z9ZFfVQYebXQgY9nQ0QgtUDAm4e/6WtDRKU9K5BiRlLGXZlx5+QslHEPwaY8Do1WtF1FIYP4zwyHJB9wX8w2yQac9DKfviDbFTmPjciM=
+	t=1713908560; cv=none; b=AQb/OKDsHyQLbjLrK2N2a/JAgAxoNdkv4aokq7zIfHqQNCllNF0s9klTAxzd9m91juRT3j4Q9AOlJpeAcnjQxZHIYxeXjvoBwCBKS+ejsXr6ZXmPo9wCBf1+zaWr8LsgI4LNWJdv9elVfMxCLV9lfB/5q5pDoQ7uxnRErHmtcbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908559; c=relaxed/simple;
-	bh=wtIbt6hKLI9SYaTZFUwU2/J3b5auzSYLLV6jtbqPsfw=;
+	s=arc-20240116; t=1713908560; c=relaxed/simple;
+	bh=HO3LLj9BrHRilh1v5egcQVu7Tan1DJpbQAlk2INj8w0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kmSjWuNd64fanHn/Y7vPqYVAx9/msmPkus2pyW7aKPnnci8VYN4GJYjbn8cRz+Nfv/yMCA2lEpwpagUr99+/jHCzsE1QTntPdZpUQJhuoaQvTRXeJvAJa+ypS+xPBj0qEseXbxbDyOPNy/vw+gn/6NC4qgmqsQl2dzqxyfyWwzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7c3TZt0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TX0yOjDuE7+/oOXkGQT9c+CGfupMrtzIxYO8RA36DAxI8ijEuPDy/EBifYnAoxuxggP7PtmerAgfUzfONRSJ/V096FXACMb7Qg/QwEFarEK4/wScoUIM7eI45MrfmbeVgzwiBGUiytp+LAVLG9EBVoZBeI5XBkMz534MvXzsvBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QL9eAH1U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7c3TZt0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862A2C116B1;
-	Tue, 23 Apr 2024 21:42:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QL9eAH1U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4495BC4AF08;
+	Tue, 23 Apr 2024 21:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908559;
-	bh=wtIbt6hKLI9SYaTZFUwU2/J3b5auzSYLLV6jtbqPsfw=;
+	s=korg; t=1713908560;
+	bh=HO3LLj9BrHRilh1v5egcQVu7Tan1DJpbQAlk2INj8w0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o7c3TZt01Th3MyJ3C0nKnr+bcTzamLGc9nOh6FekG3Erb/2oGU/bm0Syg/PxCk/mI
-	 gvKXK3wAVy3shDKiPqPP1tjC5Xf+Cac3qsGwkRWxZPE8oXKO3sZiWgKeMx/HhKtoNP
-	 P6zx+7hrrCkx4unxw8MhP7M+7qs9kDhXJbNuVveo=
+	b=QL9eAH1UAcgqNkbkk9gIlkjrkeFkRScSs7aB8th1UWTuGFHm+M2EpvnpE6fwe/i7L
+	 b8vjUgqAujLPoaS32rkLrHE2sZadqwcBAm2fs3ancwCGRrEBtqAfVVx4zW93TlctOJ
+	 D2bg45oPA3RkfCy3R+EAOCtWEBtrUGJjx4KytwXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,10 +30,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zack Rusin <zack.rusin@broadcom.com>,
 	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
 	dri-devel@lists.freedesktop.org,
-	Pekka Paalanen <pekka.paalanen@collabora.com>
-Subject: [PATCH 6.8 146/158] drm/vmwgfx: Sort primary plane formats by order of preference
-Date: Tue, 23 Apr 2024 14:39:28 -0700
-Message-ID: <20240423213900.605907888@linuxfoundation.org>
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Martin Krastev <martin.krastev@broadcom.com>
+Subject: [PATCH 6.8 147/158] drm/vmwgfx: Fix crtcs atomic check conditional
+Date: Tue, 23 Apr 2024 14:39:29 -0700
+Message-ID: <20240423213900.633679341@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -54,46 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit d4c972bff3129a9dd4c22a3999fd8eba1a81531a upstream.
+commit a60ccade88f926e871a57176e86a34bbf0db0098 upstream.
 
-The table of primary plane formats wasn't sorted at all, leading to
-applications picking our least desirable formats by defaults.
+The conditional was supposed to prevent enabling of a crtc state
+without a set primary plane. Accidently it also prevented disabling
+crtc state with a set primary plane. Neither is correct.
 
-Sort the primary plane formats according to our order of preference.
+Fix the conditional and just driver-warn when a crtc state has been
+enabled without a primary plane which will help debug broken userspace.
 
-Nice side-effect of this change is that it makes IGT's kms_atomic
-plane-invalid-params pass because the test picks the first format
-which for vmwgfx was DRM_FORMAT_XRGB1555 and uses fb's with odd sizes
-which make Pixman, which IGT depends on assert due to the fact that our
-16bpp formats aren't 32 bit aligned like Pixman requires all formats
-to be.
+Fixes IGT's kms_atomic_interruptible and kms_atomic_transition tests.
 
 Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Fixes: 36cc79bc9077 ("drm/vmwgfx: Add universal plane support")
+Fixes: 06ec41909e31 ("drm/vmwgfx: Add and connect CRTC helper functions")
 Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
 Cc: dri-devel@lists.freedesktop.org
 Cc: <stable@vger.kernel.org> # v4.12+
-Acked-by: Pekka Paalanen <pekka.paalanen@collabora.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240412025511.78553-6-zack.rusin@broadcom.com
+Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
+Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240412025511.78553-5-zack.rusin@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.h
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.h
-@@ -243,10 +243,10 @@ struct vmw_framebuffer_bo {
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+@@ -932,6 +932,7 @@ int vmw_du_cursor_plane_atomic_check(str
+ int vmw_du_crtc_atomic_check(struct drm_crtc *crtc,
+ 			     struct drm_atomic_state *state)
+ {
++	struct vmw_private *vmw = vmw_priv(crtc->dev);
+ 	struct drm_crtc_state *new_state = drm_atomic_get_new_crtc_state(state,
+ 									 crtc);
+ 	struct vmw_display_unit *du = vmw_crtc_to_du(new_state->crtc);
+@@ -939,9 +940,13 @@ int vmw_du_crtc_atomic_check(struct drm_
+ 	bool has_primary = new_state->plane_mask &
+ 			   drm_plane_mask(crtc->primary);
+ 
+-	/* We always want to have an active plane with an active CRTC */
+-	if (has_primary != new_state->enable)
+-		return -EINVAL;
++	/*
++	 * This is fine in general, but broken userspace might expect
++	 * some actual rendering so give a clue as why it's blank.
++	 */
++	if (new_state->enable && !has_primary)
++		drm_dbg_driver(&vmw->drm,
++			       "CRTC without a primary plane will be blank.\n");
  
  
- static const uint32_t __maybe_unused vmw_primary_plane_formats[] = {
--	DRM_FORMAT_XRGB1555,
--	DRM_FORMAT_RGB565,
- 	DRM_FORMAT_XRGB8888,
- 	DRM_FORMAT_ARGB8888,
-+	DRM_FORMAT_RGB565,
-+	DRM_FORMAT_XRGB1555,
- };
- 
- static const uint32_t __maybe_unused vmw_cursor_plane_formats[] = {
+ 	if (new_state->connector_mask != connector_mask &&
 
 
