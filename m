@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522B2143C57;
-	Tue, 23 Apr 2024 21:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B75143C57;
+	Tue, 23 Apr 2024 21:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908609; cv=none; b=fgGfHrTkYbdurfSa6FgamP+hxfBnKPjjwtRa0e1/cLrPs4rv5Pr/+wA2Cb3LPt8PqrAOePv9DXFEtpA8vNe11qqIrqBnQv02jkD9r+PExUO9s4DvNPvBYMKs+tjMRuImSYjAewMQwewrMR+GtehgX6NFIqL3DjTSH+zR7aRQMMs=
+	t=1713908610; cv=none; b=q9uSlSeegMesHw8Y21LN+8Arq1jKnc01FA7mSAP2J0bSMwy0fEtn/ROlVeiqL4BvLioMJIO9ZtkTZKfvfbcVpowhDODIFyKfkWWdeYJbe1m8pOv+WjGNDEXMHlfFIPRceN9ryxr9ZUWckYoAXYBCXp44OQCVcEA7It1BRHRj79g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908609; c=relaxed/simple;
-	bh=Gz3Mi0cGY+rkE8/CNPZYbZY0P9U2hYfC9mLhtcftBS4=;
+	s=arc-20240116; t=1713908610; c=relaxed/simple;
+	bh=GeyLBrV5fuK0RptIRICI7y063hcv44xSW5YwLjWSbXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gogLU9YlRNQbDI7c50lN8qFdTvSVroVxcz7TJsM+VNv0xsofZLyn17ygJ7tCfEllTSsT94V9Ns9mI5aSaWOeHz4kqZPPeMh5aUVq4Hyal9Zju4uNrgk+CtEeC1y+GKZciyWXgz4ugaH2wXSAVcrPuzKHUCAFPsfM0a0Qclv31go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xo/sm28I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AT4P1gGYUztirvDhB1u55/g23ivrjrxCnss9RWioVLtyEYrKl4jRXCPfe0+LjO/6342h3wFJcAPFUZ6OkixwDhaHKDS/Giv2IEHjvlX5FFA/rZBwihIHe0jEnsC6qiJazdZalbdCV1Bq9L8K0neUI0z7qweDHKvlVs7NcFeg0YY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSNbFYeW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xo/sm28I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4CFC32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSNbFYeW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C645BC3277B;
 	Tue, 23 Apr 2024 21:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908609;
-	bh=Gz3Mi0cGY+rkE8/CNPZYbZY0P9U2hYfC9mLhtcftBS4=;
+	bh=GeyLBrV5fuK0RptIRICI7y063hcv44xSW5YwLjWSbXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xo/sm28I/9gqKYScMhPZt+20L0FGq0tYMg8/hUmYDASfkhPUz1IPECwriV4qZnbrS
-	 mzCXPIj8WPtihrWcb42/9I4w0eYK4DlKb10+OdOcBpBJjPqCFDvALBq4YXOXobUwdf
-	 /6Hp5bfwidGF6EEUGUiCckuJNI4/irYyq3TLtOqo=
+	b=YSNbFYeW9NZDBr6AQs8wKHcnkIs0Q9y3IcNGzBJ885Dy+5SqItj6OckUN7JnweGOD
+	 LW1CK18xnfMTd5AryWVKk5HVZXMevghu2RvxhzGofxbnIVmaiaZd1jqgeoA2MeBzDR
+	 tKcFhgd+NbEJb0uoX4D7K9WWUJbOmCmsQl9c3mGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
 	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/158] ice: tc: allow zero flags in parsing tc flower
-Date: Tue, 23 Apr 2024 14:38:07 -0700
-Message-ID: <20240423213857.400450360@linuxfoundation.org>
+Subject: [PATCH 6.6 051/158] ice: Fix checking for unsupported keys on non-tunnel device
+Date: Tue, 23 Apr 2024 14:38:08 -0700
+Message-ID: <20240423213857.429083896@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -54,47 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+From: Marcin Szycik <marcin.szycik@linux.intel.com>
 
-[ Upstream commit 73278715725a8347032acf233082ca4eb31e6a56 ]
+[ Upstream commit 2cca35f5dd78b9f8297c879c5db5ab137c5d86c3 ]
 
-The check for flags is done to not pass empty lookups to adding switch
-rule functions. Since metadata is always added to lookups there is no
-need to check against the flag.
+Add missing FLOW_DISSECTOR_KEY_ENC_* checks to TC flower filter parsing.
+Without these checks, it would be possible to add filters with tunnel
+options on non-tunnel devices. enc_* options are only valid for tunnel
+devices.
 
-It is also fixing the problem with such rule:
-$ tc filter add dev gtp_dev ingress protocol ip prio 0 flower \
-	enc_dst_port 2123 action drop
-Switch block in case of GTP can't parse the destination port, because it
-should always be set to GTP specific value. The same with ethertype. The
-result is that there is no other matching criteria than GTP tunnel. In
-this case flags is 0, rule can't be added only because of defensive
-check against flags.
+Example:
+  devlink dev eswitch set $PF1_PCI mode switchdev
+  echo 1 > /sys/class/net/$PF1/device/sriov_numvfs
+  tc qdisc add dev $VF1_PR ingress
+  ethtool -K $PF1 hw-tc-offload on
+  tc filter add dev $VF1_PR ingress flower enc_ttl 12 skip_sw action drop
 
-Fixes: 9a225f81f540 ("ice: Support GTP-U and GTP-C offload in switchdev")
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 9e300987d4a8 ("ice: VXLAN and Geneve TC support")
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_tc_lib.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_tc_lib.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_tc_lib.c b/drivers/net/ethernet/intel/ice/ice_tc_lib.c
-index f111fdd6a6ef7..9c97c99feac3d 100644
+index 9c97c99feac3d..76ad5930c0102 100644
 --- a/drivers/net/ethernet/intel/ice/ice_tc_lib.c
 +++ b/drivers/net/ethernet/intel/ice/ice_tc_lib.c
-@@ -738,7 +738,7 @@ ice_eswitch_add_tc_fltr(struct ice_vsi *vsi, struct ice_tc_flower_fltr *fltr)
- 	int ret;
- 	int i;
- 
--	if (!flags || (flags & ICE_TC_FLWR_FIELD_ENC_SRC_L4_PORT)) {
-+	if (flags & ICE_TC_FLWR_FIELD_ENC_SRC_L4_PORT) {
- 		NL_SET_ERR_MSG_MOD(fltr->extack, "Unsupported encap field(s)");
+@@ -1448,7 +1448,10 @@ ice_parse_cls_flower(struct net_device *filter_dev, struct ice_vsi *vsi,
+ 		  (BIT_ULL(FLOW_DISSECTOR_KEY_ENC_IPV4_ADDRS) |
+ 		   BIT_ULL(FLOW_DISSECTOR_KEY_ENC_IPV6_ADDRS) |
+ 		   BIT_ULL(FLOW_DISSECTOR_KEY_ENC_KEYID) |
+-		   BIT_ULL(FLOW_DISSECTOR_KEY_ENC_PORTS))) {
++		   BIT_ULL(FLOW_DISSECTOR_KEY_ENC_PORTS) |
++		   BIT_ULL(FLOW_DISSECTOR_KEY_ENC_IP) |
++		   BIT_ULL(FLOW_DISSECTOR_KEY_ENC_OPTS) |
++		   BIT_ULL(FLOW_DISSECTOR_KEY_ENC_CONTROL))) {
+ 		NL_SET_ERR_MSG_MOD(fltr->extack, "Tunnel key used, but device isn't a tunnel");
  		return -EOPNOTSUPP;
- 	}
+ 	} else {
 -- 
 2.43.0
 
