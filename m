@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAEE20B3E;
-	Tue, 23 Apr 2024 21:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E7520B3E;
+	Tue, 23 Apr 2024 21:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908527; cv=none; b=ZGOGS5K/yUBi7jbGveJlar57LO0kIKmccEWdTg8AdWgxpESDIoxmBDJg+4C7vo5Z3ug1qJT2p4+yYXXjOs59eOoy7l7qUo6SjhK2xTrGwA7Z2mMEudazFfsUW7Y6npkk9YTJEby/ONefaSiLZD8RNNeRkaIuZgreNC0En2BRBIM=
+	t=1713908528; cv=none; b=tGiUSGYKJFAleUAQLuax3/O4Xs4dsx1nrog7EpWSFvWkqVSQo7o1SpBvT0Am++hUvR6xFN37ZZFTHYkUGXxVAynobYDJDe9g/VBmtQwIEiE5lgIhOFCPLojofY9AK9oN0xYFcr+d3EwnjEtuS1WXPhUZ5twnvJPhuUixnqs/qd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908527; c=relaxed/simple;
-	bh=QZ+qqX+IJqkvqScY+qTQMSgoygtADBJRzWQHuMw++MQ=;
+	s=arc-20240116; t=1713908528; c=relaxed/simple;
+	bh=GCNOPttGHyjkNtSa4vuMW2YBAPGF/2jyBZkRJ52E57Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cpV4caDi6mCgF+Isuw89pI3d4q+ASmYx/tiJ9WtGArAbX8qquJpYNGd4ItjrTGESNVxzmdWb++n/PoNF3/sGxnrLM4y8XlTg5pZM7lm2x2k9rpTCck3uQT+oBBbFjiMdBjEiqpWdQY+OG7jRV2YLPTWqq1GSl/1TcQ/xZwPeQv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jv7uA21w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BpZr+7gmwFJvy5NAZoOj5h4cSC8ZDJsiegIRQVjVrr3QNIfN9Yb8c6LZFvwx6e6R3cerJoeTDumBNYeYl2GH7RbdXnZkuegk8goDXF184JWxvbDVRIzAhX9EbFECy+U9tvErGz1XF1JSmI6ojCcG+VTGqBgz6DZzpX9HcSB4iWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHreVTcC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jv7uA21w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9482DC116B1;
-	Tue, 23 Apr 2024 21:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHreVTcC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E0EC3277B;
+	Tue, 23 Apr 2024 21:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908527;
-	bh=QZ+qqX+IJqkvqScY+qTQMSgoygtADBJRzWQHuMw++MQ=;
+	s=korg; t=1713908528;
+	bh=GCNOPttGHyjkNtSa4vuMW2YBAPGF/2jyBZkRJ52E57Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jv7uA21wx0jNLgxogJ2N8LhNrNnW5MQRsVFXCXbKmYCFfEP4zUC4SR0q6lGz3dbTH
-	 MSgxaVNKWi4uAQdMlubhENPnfaJWp4rC/aA/HuTfryPaSJvaSxmnJJ7WFY7nTGq5v9
-	 YwZ5XzlHKtImHWrQevJpsY8OoAewQYCoaO3Xle0E=
+	b=NHreVTcCQX0pTFk7GtDsJdP7eRy5Y80p0fthz612QFQ1hNL9k2ZAIOioCHknAxuWv
+	 VE+KIixVUaIti/xMJDCNu9FYmzHbcTjBH4zz33WTnhORUPjUO0QdCgK8ghnFV1m38n
+	 yoh2jngi896w2x7PhQEQnLcxFLE7zxCCTxeDFw5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Tso <kyletso@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.8 120/158] usb: typec: tcpm: Correct the PDO counting in pd_set
-Date: Tue, 23 Apr 2024 14:39:02 -0700
-Message-ID: <20240423213859.818971117@linuxfoundation.org>
+	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Wentong Wu <wentong.wu@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Tomas Winkler <tomas.winkler@intel.com>
+Subject: [PATCH 6.8 121/158] mei: vsc: Unregister interrupt handler for system suspend
+Date: Tue, 23 Apr 2024 14:39:03 -0700
+Message-ID: <20240423213859.848874352@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -50,56 +52,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Tso <kyletso@google.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit c4128304c2169b4664ed6fb6200f228cead2ab70 upstream.
+commit f6085a96c97387154be7eaebd1a5420eb3cd55dc upstream.
 
-Off-by-one errors happen because nr_snk_pdo and nr_src_pdo are
-incorrectly added one. The index of the loop is equal to the number of
-PDOs to be updated when leaving the loop and it doesn't need to be added
-one.
+Unregister the MEI VSC interrupt handler before system suspend and
+re-register it at system resume time. This mirrors implementation of other
+MEI devices.
 
-When doing the power negotiation, TCPM relies on the "nr_snk_pdo" as
-the size of the local sink PDO array to match the Source capabilities
-of the partner port. If the off-by-one overflow occurs, a wrong RDO
-might be sent and unexpected power transfer might happen such as over
-voltage or over current (than expected).
+This patch fixes the bug that causes continuous stream of MEI VSC errors
+after system resume.
 
-"nr_src_pdo" is used to set the Rp level when the port is in Source
-role. It is also the array size of the local Source capabilities when
-filling up the buffer which will be sent as the Source PDOs (such as
-in Power Negotiation). If the off-by-one overflow occurs, a wrong Rp
-level might be set and wrong Source PDOs will be sent to the partner
-port. This could potentially cause over current or port resets.
-
-Fixes: cd099cde4ed2 ("usb: typec: tcpm: Support multiple capabilities")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Tso <kyletso@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240404133517.2707955-1-kyletso@google.com
+Fixes: 386a766c4169 ("mei: Add MEI hardware support for IVSC device")
+Cc: stable@vger.kernel.org # for 6.8
+Reported-by: Dominik Brodowski <linux@dominikbrodowski.net>
+Signed-off-by: Wentong Wu <wentong.wu@intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Acked-by: Tomas Winkler <tomas.winkler@intel.com>
+Link: https://lore.kernel.org/r/20240403051341.3534650-2-wentong.wu@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/misc/mei/platform-vsc.c |   17 +++++++-
+ drivers/misc/mei/vsc-tp.c       |   84 ++++++++++++++++++++++++++++------------
+ drivers/misc/mei/vsc-tp.h       |    3 +
+ 3 files changed, 78 insertions(+), 26 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -6111,14 +6111,14 @@ static int tcpm_pd_set(struct typec_port
- 	if (data->sink_desc.pdo[0]) {
- 		for (i = 0; i < PDO_MAX_OBJECTS && data->sink_desc.pdo[i]; i++)
- 			port->snk_pdo[i] = data->sink_desc.pdo[i];
--		port->nr_snk_pdo = i + 1;
-+		port->nr_snk_pdo = i;
- 		port->operating_snk_mw = data->operating_snk_mw;
- 	}
+--- a/drivers/misc/mei/platform-vsc.c
++++ b/drivers/misc/mei/platform-vsc.c
+@@ -402,25 +402,40 @@ static int mei_vsc_remove(struct platfor
+ static int mei_vsc_suspend(struct device *dev)
+ {
+ 	struct mei_device *mei_dev = dev_get_drvdata(dev);
++	struct mei_vsc_hw *hw = mei_dev_to_vsc_hw(mei_dev);
  
- 	if (data->source_desc.pdo[0]) {
- 		for (i = 0; i < PDO_MAX_OBJECTS && data->source_desc.pdo[i]; i++)
- 			port->src_pdo[i] = data->source_desc.pdo[i];
--		port->nr_src_pdo = i + 1;
-+		port->nr_src_pdo = i;
- 	}
+ 	mei_stop(mei_dev);
  
- 	switch (port->state) {
++	mei_disable_interrupts(mei_dev);
++
++	vsc_tp_free_irq(hw->tp);
++
+ 	return 0;
+ }
+ 
+ static int mei_vsc_resume(struct device *dev)
+ {
+ 	struct mei_device *mei_dev = dev_get_drvdata(dev);
++	struct mei_vsc_hw *hw = mei_dev_to_vsc_hw(mei_dev);
+ 	int ret;
+ 
+-	ret = mei_restart(mei_dev);
++	ret = vsc_tp_request_irq(hw->tp);
+ 	if (ret)
+ 		return ret;
+ 
++	ret = mei_restart(mei_dev);
++	if (ret)
++		goto err_free;
++
+ 	/* start timer if stopped in suspend */
+ 	schedule_delayed_work(&mei_dev->timer_work, HZ);
+ 
+ 	return 0;
++
++err_free:
++	vsc_tp_free_irq(hw->tp);
++
++	return ret;
+ }
+ 
+ static DEFINE_SIMPLE_DEV_PM_OPS(mei_vsc_pm_ops, mei_vsc_suspend, mei_vsc_resume);
+--- a/drivers/misc/mei/vsc-tp.c
++++ b/drivers/misc/mei/vsc-tp.c
+@@ -94,6 +94,27 @@ static const struct acpi_gpio_mapping vs
+ 	{}
+ };
+ 
++static irqreturn_t vsc_tp_isr(int irq, void *data)
++{
++	struct vsc_tp *tp = data;
++
++	atomic_inc(&tp->assert_cnt);
++
++	wake_up(&tp->xfer_wait);
++
++	return IRQ_WAKE_THREAD;
++}
++
++static irqreturn_t vsc_tp_thread_isr(int irq, void *data)
++{
++	struct vsc_tp *tp = data;
++
++	if (tp->event_notify)
++		tp->event_notify(tp->event_notify_context);
++
++	return IRQ_HANDLED;
++}
++
+ /* wakeup firmware and wait for response */
+ static int vsc_tp_wakeup_request(struct vsc_tp *tp)
+ {
+@@ -384,6 +405,37 @@ int vsc_tp_register_event_cb(struct vsc_
+ EXPORT_SYMBOL_NS_GPL(vsc_tp_register_event_cb, VSC_TP);
+ 
+ /**
++ * vsc_tp_request_irq - request irq for vsc_tp device
++ * @tp: vsc_tp device handle
++ */
++int vsc_tp_request_irq(struct vsc_tp *tp)
++{
++	struct spi_device *spi = tp->spi;
++	struct device *dev = &spi->dev;
++	int ret;
++
++	irq_set_status_flags(spi->irq, IRQ_DISABLE_UNLAZY);
++	ret = request_threaded_irq(spi->irq, vsc_tp_isr, vsc_tp_thread_isr,
++				   IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
++				   dev_name(dev), tp);
++	if (ret)
++		return ret;
++
++	return 0;
++}
++EXPORT_SYMBOL_NS_GPL(vsc_tp_request_irq, VSC_TP);
++
++/**
++ * vsc_tp_free_irq - free irq for vsc_tp device
++ * @tp: vsc_tp device handle
++ */
++void vsc_tp_free_irq(struct vsc_tp *tp)
++{
++	free_irq(tp->spi->irq, tp);
++}
++EXPORT_SYMBOL_NS_GPL(vsc_tp_free_irq, VSC_TP);
++
++/**
+  * vsc_tp_intr_synchronize - synchronize vsc_tp interrupt
+  * @tp: vsc_tp device handle
+  */
+@@ -413,27 +465,6 @@ void vsc_tp_intr_disable(struct vsc_tp *
+ }
+ EXPORT_SYMBOL_NS_GPL(vsc_tp_intr_disable, VSC_TP);
+ 
+-static irqreturn_t vsc_tp_isr(int irq, void *data)
+-{
+-	struct vsc_tp *tp = data;
+-
+-	atomic_inc(&tp->assert_cnt);
+-
+-	wake_up(&tp->xfer_wait);
+-
+-	return IRQ_WAKE_THREAD;
+-}
+-
+-static irqreturn_t vsc_tp_thread_isr(int irq, void *data)
+-{
+-	struct vsc_tp *tp = data;
+-
+-	if (tp->event_notify)
+-		tp->event_notify(tp->event_notify_context);
+-
+-	return IRQ_HANDLED;
+-}
+-
+ static int vsc_tp_match_any(struct acpi_device *adev, void *data)
+ {
+ 	struct acpi_device **__adev = data;
+@@ -485,10 +516,9 @@ static int vsc_tp_probe(struct spi_devic
+ 	tp->spi = spi;
+ 
+ 	irq_set_status_flags(spi->irq, IRQ_DISABLE_UNLAZY);
+-	ret = devm_request_threaded_irq(dev, spi->irq, vsc_tp_isr,
+-					vsc_tp_thread_isr,
+-					IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
+-					dev_name(dev), tp);
++	ret = request_threaded_irq(spi->irq, vsc_tp_isr, vsc_tp_thread_isr,
++				   IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
++				   dev_name(dev), tp);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -522,6 +552,8 @@ static int vsc_tp_probe(struct spi_devic
+ err_destroy_lock:
+ 	mutex_destroy(&tp->mutex);
+ 
++	free_irq(spi->irq, tp);
++
+ 	return ret;
+ }
+ 
+@@ -532,6 +564,8 @@ static void vsc_tp_remove(struct spi_dev
+ 	platform_device_unregister(tp->pdev);
+ 
+ 	mutex_destroy(&tp->mutex);
++
++	free_irq(spi->irq, tp);
+ }
+ 
+ static const struct acpi_device_id vsc_tp_acpi_ids[] = {
+--- a/drivers/misc/mei/vsc-tp.h
++++ b/drivers/misc/mei/vsc-tp.h
+@@ -37,6 +37,9 @@ int vsc_tp_xfer(struct vsc_tp *tp, u8 cm
+ int vsc_tp_register_event_cb(struct vsc_tp *tp, vsc_tp_event_cb_t event_cb,
+ 			     void *context);
+ 
++int vsc_tp_request_irq(struct vsc_tp *tp);
++void vsc_tp_free_irq(struct vsc_tp *tp);
++
+ void vsc_tp_intr_enable(struct vsc_tp *tp);
+ void vsc_tp_intr_disable(struct vsc_tp *tp);
+ void vsc_tp_intr_synchronize(struct vsc_tp *tp);
 
 
