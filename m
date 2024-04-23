@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1251420BE;
-	Tue, 23 Apr 2024 21:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253FF1420BE;
+	Tue, 23 Apr 2024 21:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908571; cv=none; b=jm6RTp+gbirYhpHZlX1fWJyFrctH9pOX+Vsyi6pKO1WgdSKqm0rOh1kcEzj6MDQ+sjwdhOtfziLoJsgKtGpICHgn/SYKA4YjtLZQUAwrflcKw+7q6ycBMWE8fhMwslONY6g5vZX6FG+wqE2etdqurgnRlL0/Z0SITm0ptfSwNvI=
+	t=1713908572; cv=none; b=UVJkpQgp0SiNcDw4ok1XBzJC9FxXyi4cd/kkkV2DpODMnKZR9h3+WzlpD9vX4JkYi/kRdMaPb7qk2ttV5EnkEpdwqc0/tguRAkWhlZ9g6bTW2XEk/MlaiZfz6FrPR4aD+U1q+cMu5JfsFx1+nrGU0xXwiAP1IJsIEJfqAvQrjmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908571; c=relaxed/simple;
-	bh=7xbKKTS3xQmpwzOOyW9+2Ua+CDOqX+kPFYvCxu5LfAg=;
+	s=arc-20240116; t=1713908572; c=relaxed/simple;
+	bh=guK5pgwlpHL4VZ/gQc/gPg3xzyhgW5KyE7mlORcqj0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F9ErD3xSqkIwAFatkx7NjEu4vjmI9zH8+R9bHT4fjxkEAQ7DlnOruxdqNF5jt3wFZ3TEyxFks28Ls49m5KYQk4FrCS9zmKIuBm9V4Mrk34CBp8FPenNczMISLbEzNHQOHtu0P1VcZbrS2tWcypDwF0T8r+3SYQpH1zSbAa+7zpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DvcNf0pz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q/THckFQ97sU790AMAOSuky8kIElf0UulZUbgA1jIiQYVxOlWeZeKHSuSbZgKJAqP3EEK/kvQd4i9+PDNmfMbATSOKkyLzfk/ds0m4Y/v2ikRY2E9EMw5tW+6apCne77T6srLlFbZHFBvCspQOjY6Ft9fzVwHmaqTYd3yKhb23c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=huQ/cdb1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DvcNf0pz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CF8C3277B;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="huQ/cdb1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0291C32781;
 	Tue, 23 Apr 2024 21:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908571;
-	bh=7xbKKTS3xQmpwzOOyW9+2Ua+CDOqX+kPFYvCxu5LfAg=;
+	s=korg; t=1713908572;
+	bh=guK5pgwlpHL4VZ/gQc/gPg3xzyhgW5KyE7mlORcqj0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DvcNf0pz10wupG4StoCS7k+aByvq5thQrvhTnvtSt+JfPIK8cytf8PSThWVX9BE18
-	 f1I93UhdOcBZbWR1thXZ7eLUgFhQPrb/PDebuzyLKXC6UUwPKLKdbloN76hOY3yOlQ
-	 QNvRJ+EV973lYu49bR4e1NCGh85d0Hixc120HspE=
+	b=huQ/cdb16QmA1JREC77kzWS/TcpUwZu8hz9u3Y4zBSwFLvx8ftxFegh9roAwfYS4o
+	 wC3GnX/E0OyiYadGBemLYr24tuNdTDgGFqohDNrr69i2BJjZik12FxES+5yvOC44GN
+	 Bhsapl3dMlaAVZVZ2zsbedCbDm8LEwIrBqaq2GHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
-	Uma Shankar <uma.shankar@intel.com>,
+	Manasi Navare <navaremanasi@chromium.org>,
 	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 008/158] drm/i915/cdclk: Fix voltage_level programming edge case
-Date: Tue, 23 Apr 2024 14:37:25 -0700
-Message-ID: <20240423213855.976722633@linuxfoundation.org>
+Subject: [PATCH 6.6 009/158] drm/i915: Change intel_pipe_update_{start,end}() calling convention
+Date: Tue, 23 Apr 2024 14:37:26 -0700
+Message-ID: <20240423213856.022555617@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -56,120 +55,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 6154cc9177ccea00c89ce0bf93352e474b819ff2 ]
+[ Upstream commit 09f390d4e2f38f8433431f4da31ca0a17a5c7853 ]
 
-Currently we only consider the relationship of the
-old and new CDCLK frequencies when determining whether
-to do the repgramming from intel_set_cdclk_pre_plane_update()
-or intel_set_cdclk_post_plane_update().
+We'll need to also look at the old crtc state in
+intel_pipe_update_start() so change the calling convention to
+just plumb in the full atomic state instead.
 
-It is technically possible to have a situation where the
-CDCLK frequency is decreasing, but the voltage_level is
-increasing due a DDI port. In this case we should bump
-the voltage level already in intel_set_cdclk_pre_plane_update()
-(so that the voltage_level will have been increased by the
-time the port gets enabled), while leaving the CDCLK frequency
-unchanged (as active planes/etc. may still depend on it).
-We can then reduce the CDCLK frequency to its final value
-from intel_set_cdclk_post_plane_update().
-
-In order to handle that correctly we shall construct a
-suitable amalgam of the old and new cdclk states in
-intel_set_cdclk_pre_plane_update().
-
-And we can simply call intel_set_cdclk() unconditionally
-in both places as it will not do anything if nothing actually
-changes vs. the current hw state.
-
-v2: Handle cdclk_state->disable_pipes
-v3: Only synchronize the cd2x update against the pipe's vblank
-    when the cdclk frequency is changing during the current
-    commit phase (Gustavo)
-
-Cc: stable@vger.kernel.org
-Cc: Gustavo Sousa <gustavo.sousa@intel.com>
-Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Cc: Manasi Navare <navaremanasi@chromium.org>
 Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240402155016.13733-3-ville.syrjala@linux.intel.com
-(cherry picked from commit 34d127e2bdef73a923aa0dcd95cbc3257ad5af52)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230901130440.2085-3-ville.syrjala@linux.intel.com
+Reviewed-by: Manasi Navare <navaremanasi@chromium.org>
+Reviewed-by: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
+Stable-dep-of: 4a36e46df7aa ("drm/i915: Disable live M/N updates when using bigjoiner")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_cdclk.c | 37 ++++++++++++++++------
- 1 file changed, 27 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/i915/display/intel_crtc.c    | 18 ++++++++++++------
+ drivers/gpu/drm/i915/display/intel_crtc.h    |  6 ++++--
+ drivers/gpu/drm/i915/display/intel_display.c |  4 ++--
+ 3 files changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_cdclk.c b/drivers/gpu/drm/i915/display/intel_cdclk.c
-index 5aa6b998a1cb1..fc3a6eb1de741 100644
---- a/drivers/gpu/drm/i915/display/intel_cdclk.c
-+++ b/drivers/gpu/drm/i915/display/intel_cdclk.c
-@@ -2453,7 +2453,8 @@ intel_set_cdclk_pre_plane_update(struct intel_atomic_state *state)
- 		intel_atomic_get_old_cdclk_state(state);
- 	const struct intel_cdclk_state *new_cdclk_state =
- 		intel_atomic_get_new_cdclk_state(state);
--	enum pipe pipe = new_cdclk_state->pipe;
-+	struct intel_cdclk_config cdclk_config;
-+	enum pipe pipe;
- 
- 	if (!intel_cdclk_changed(&old_cdclk_state->actual,
- 				 &new_cdclk_state->actual))
-@@ -2462,12 +2463,25 @@ intel_set_cdclk_pre_plane_update(struct intel_atomic_state *state)
- 	if (IS_DG2(i915))
- 		intel_cdclk_pcode_pre_notify(state);
- 
--	if (new_cdclk_state->disable_pipes ||
--	    old_cdclk_state->actual.cdclk <= new_cdclk_state->actual.cdclk) {
--		drm_WARN_ON(&i915->drm, !new_cdclk_state->base.changed);
-+	if (new_cdclk_state->disable_pipes) {
-+		cdclk_config = new_cdclk_state->actual;
-+		pipe = INVALID_PIPE;
-+	} else {
-+		if (new_cdclk_state->actual.cdclk >= old_cdclk_state->actual.cdclk) {
-+			cdclk_config = new_cdclk_state->actual;
-+			pipe = new_cdclk_state->pipe;
-+		} else {
-+			cdclk_config = old_cdclk_state->actual;
-+			pipe = INVALID_PIPE;
-+		}
- 
--		intel_set_cdclk(i915, &new_cdclk_state->actual, pipe);
-+		cdclk_config.voltage_level = max(new_cdclk_state->actual.voltage_level,
-+						 old_cdclk_state->actual.voltage_level);
- 	}
-+
-+	drm_WARN_ON(&i915->drm, !new_cdclk_state->base.changed);
-+
-+	intel_set_cdclk(i915, &cdclk_config, pipe);
- }
+diff --git a/drivers/gpu/drm/i915/display/intel_crtc.c b/drivers/gpu/drm/i915/display/intel_crtc.c
+index 182c6dd64f47c..65d91c7ad22ff 100644
+--- a/drivers/gpu/drm/i915/display/intel_crtc.c
++++ b/drivers/gpu/drm/i915/display/intel_crtc.c
+@@ -470,7 +470,8 @@ static int intel_mode_vblank_start(const struct drm_display_mode *mode)
  
  /**
-@@ -2485,7 +2499,7 @@ intel_set_cdclk_post_plane_update(struct intel_atomic_state *state)
- 		intel_atomic_get_old_cdclk_state(state);
- 	const struct intel_cdclk_state *new_cdclk_state =
- 		intel_atomic_get_new_cdclk_state(state);
--	enum pipe pipe = new_cdclk_state->pipe;
-+	enum pipe pipe;
+  * intel_pipe_update_start() - start update of a set of display registers
+- * @new_crtc_state: the new crtc state
++ * @state: the atomic state
++ * @crtc: the crtc
+  *
+  * Mark the start of an update to pipe registers that should be updated
+  * atomically regarding vblank. If the next vblank will happens within
+@@ -480,10 +481,12 @@ static int intel_mode_vblank_start(const struct drm_display_mode *mode)
+  * until a subsequent call to intel_pipe_update_end(). That is done to
+  * avoid random delays.
+  */
+-void intel_pipe_update_start(struct intel_crtc_state *new_crtc_state)
++void intel_pipe_update_start(struct intel_atomic_state *state,
++			     struct intel_crtc *crtc)
+ {
+-	struct intel_crtc *crtc = to_intel_crtc(new_crtc_state->uapi.crtc);
+ 	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
++	struct intel_crtc_state *new_crtc_state =
++		intel_atomic_get_new_crtc_state(state, crtc);
+ 	const struct drm_display_mode *adjusted_mode = &new_crtc_state->hw.adjusted_mode;
+ 	long timeout = msecs_to_jiffies_timeout(1);
+ 	int scanline, min, max, vblank_start;
+@@ -631,15 +634,18 @@ static void dbg_vblank_evade(struct intel_crtc *crtc, ktime_t end) {}
  
- 	if (!intel_cdclk_changed(&old_cdclk_state->actual,
- 				 &new_cdclk_state->actual))
-@@ -2495,11 +2509,14 @@ intel_set_cdclk_post_plane_update(struct intel_atomic_state *state)
- 		intel_cdclk_pcode_post_notify(state);
+ /**
+  * intel_pipe_update_end() - end update of a set of display registers
+- * @new_crtc_state: the new crtc state
++ * @state: the atomic state
++ * @crtc: the crtc
+  *
+  * Mark the end of an update started with intel_pipe_update_start(). This
+  * re-enables interrupts and verifies the update was actually completed
+  * before a vblank.
+  */
+-void intel_pipe_update_end(struct intel_crtc_state *new_crtc_state)
++void intel_pipe_update_end(struct intel_atomic_state *state,
++			   struct intel_crtc *crtc)
+ {
+-	struct intel_crtc *crtc = to_intel_crtc(new_crtc_state->uapi.crtc);
++	struct intel_crtc_state *new_crtc_state =
++		intel_atomic_get_new_crtc_state(state, crtc);
+ 	enum pipe pipe = crtc->pipe;
+ 	int scanline_end = intel_get_crtc_scanline(crtc);
+ 	u32 end_vbl_count = intel_crtc_get_vblank_counter(crtc);
+diff --git a/drivers/gpu/drm/i915/display/intel_crtc.h b/drivers/gpu/drm/i915/display/intel_crtc.h
+index 51a4c8df9e657..22d7993d1f0ba 100644
+--- a/drivers/gpu/drm/i915/display/intel_crtc.h
++++ b/drivers/gpu/drm/i915/display/intel_crtc.h
+@@ -36,8 +36,10 @@ void intel_crtc_state_reset(struct intel_crtc_state *crtc_state,
+ u32 intel_crtc_get_vblank_counter(struct intel_crtc *crtc);
+ void intel_crtc_vblank_on(const struct intel_crtc_state *crtc_state);
+ void intel_crtc_vblank_off(const struct intel_crtc_state *crtc_state);
+-void intel_pipe_update_start(struct intel_crtc_state *new_crtc_state);
+-void intel_pipe_update_end(struct intel_crtc_state *new_crtc_state);
++void intel_pipe_update_start(struct intel_atomic_state *state,
++			     struct intel_crtc *crtc);
++void intel_pipe_update_end(struct intel_atomic_state *state,
++			   struct intel_crtc *crtc);
+ void intel_wait_for_vblank_workers(struct intel_atomic_state *state);
+ struct intel_crtc *intel_first_crtc(struct drm_i915_private *i915);
+ struct intel_crtc *intel_crtc_for_pipe(struct drm_i915_private *i915,
+diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
+index a072fbb9872aa..af93761e82cac 100644
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -6616,7 +6616,7 @@ static void intel_update_crtc(struct intel_atomic_state *state,
+ 	intel_crtc_planes_update_noarm(state, crtc);
  
- 	if (!new_cdclk_state->disable_pipes &&
--	    old_cdclk_state->actual.cdclk > new_cdclk_state->actual.cdclk) {
--		drm_WARN_ON(&i915->drm, !new_cdclk_state->base.changed);
-+	    new_cdclk_state->actual.cdclk < old_cdclk_state->actual.cdclk)
-+		pipe = new_cdclk_state->pipe;
-+	else
-+		pipe = INVALID_PIPE;
+ 	/* Perform vblank evasion around commit operation */
+-	intel_pipe_update_start(new_crtc_state);
++	intel_pipe_update_start(state, crtc);
  
--		intel_set_cdclk(i915, &new_cdclk_state->actual, pipe);
--	}
-+	drm_WARN_ON(&i915->drm, !new_cdclk_state->base.changed);
-+
-+	intel_set_cdclk(i915, &new_cdclk_state->actual, pipe);
- }
+ 	commit_pipe_pre_planes(state, crtc);
  
- static int intel_pixel_rate_to_cdclk(const struct intel_crtc_state *crtc_state)
+@@ -6624,7 +6624,7 @@ static void intel_update_crtc(struct intel_atomic_state *state,
+ 
+ 	commit_pipe_post_planes(state, crtc);
+ 
+-	intel_pipe_update_end(new_crtc_state);
++	intel_pipe_update_end(state, crtc);
+ 
+ 	/*
+ 	 * We usually enable FIFO underrun interrupts as part of the
 -- 
 2.43.0
 
