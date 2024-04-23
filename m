@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A430143C6C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C936B143C6C;
 	Tue, 23 Apr 2024 21:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908803; cv=none; b=LjDbUlA/ZNkrk8U/uarsr5+IF3rO9Rr8YhN/midMgoUwsLJAuFNsa+ZgxepaTRA0ouRbhpC48s4hYjq+8q95TrTobRUUdkUfoE8SCMgSGYvEY97lJJnVxspKLJf96vzAtCqleWB0wYdnieWeukdAdD3Q15zT96DpoJ9x3C3RhyI=
+	t=1713908803; cv=none; b=a/I5m+CN+cd3Nyx1VyoafSuvukJP+ScxnrVPxrk1mK/69zcx1VvY2K+KX80gcYytfuAQ7GPVWLFF+V92PAkUvJdP2wVTtVa2a5qPwZTkBO4+0Q/GN040SaSDGRTIPvfwz83lhZ+CgxIZXlGsmkQYeGB3cQRAYgjPb+a+6oZRRes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908803; c=relaxed/simple;
-	bh=i4M377JLWPQWNwOdhIoY2L0K21T3LbQ/hHa0idxbu7M=;
+	bh=EL9Ewr7LiNB4bjcS4u3lQqA8RIY5JHH8issPul0zh1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqHybIwVsQsvxGI0aGTSuTULKSP0JSFmhsC8SClVpZveHRP1giLgnNK+Kkh5+2DyyVZ7ytEYJnf9Cbr3+PkBv8ZTXDKWvQxQFZ99LbbOg06AFzQXEdjRAXKkyopLJGCZfw/l2ZhWpq4JwWrDFAOo8BTo8Jyb5ThDegz8iZikcxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWHgWbmb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V/LvNtVwtHSjGIGbULC9xH429Pdz42drrJP8/ik5NTl6AqR7qiFRXHdYk1nzHmE3JoZH96zeBwl60wms1MRSSLt8vI63593Z0V724RWjW+T2Q7BD0DolKD1J/HEh3wef1kvnvi5rT5BckSOe4pgPN453YcnWZ6hq6EM35oNzcWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDDzIShP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWHgWbmb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF282C116B1;
-	Tue, 23 Apr 2024 21:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDDzIShP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E721C3277B;
+	Tue, 23 Apr 2024 21:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908803;
-	bh=i4M377JLWPQWNwOdhIoY2L0K21T3LbQ/hHa0idxbu7M=;
+	bh=EL9Ewr7LiNB4bjcS4u3lQqA8RIY5JHH8issPul0zh1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wWHgWbmbCZ2W377xbPWp3j4LBQdrZeKAtyPidBHJ4Dvhn398DTioT/IztuaGr5IY7
-	 s8MRPNWw/3xi8A7yFqyqXb2XohZD2E3Mr8egpjjdGvWtLwiz2GOV2oU0nKlFiWYPKf
-	 T/M+9OOvfLBZ/Mzjq59eUv2SAg4rdyEJSjJcMyRg=
+	b=BDDzIShPRtoXlnUhzUiwlBm3Vh9NkieH2lCOaBPVQ5u8JvS64P1ZFfFvCqVR9wxK4
+	 +bsMCFeSD1tMvKq719n7ZiS+SMU/CAfDPSm+aHJxUKWNrnVPkMzrsimnuNs/RHDSMx
+	 BN+Gfi0A6NMnad1dDWfyrASYt0fV5oLcuf1NvXqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
-Subject: [PATCH 5.15 53/71] usb: dwc2: host: Fix dereference issue in DDMA completion flow.
-Date: Tue, 23 Apr 2024 14:40:06 -0700
-Message-ID: <20240423213846.010098229@linuxfoundation.org>
+	Yuntao Wang <ytcoode@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 5.15 62/71] init/main.c: Fix potential static_command_line memory overflow
+Date: Tue, 23 Apr 2024 14:40:15 -0700
+Message-ID: <20240423213846.323672207@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
 References: <20240423213844.122920086@linuxfoundation.org>
@@ -50,41 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+From: Yuntao Wang <ytcoode@gmail.com>
 
-commit eed04fa96c48790c1cce73c8a248e9d460b088f8 upstream.
+commit 46dad3c1e57897ab9228332f03e1c14798d2d3b9 upstream.
 
-Fixed variable dereference issue in DDMA completion flow.
+We allocate memory of size 'xlen + strlen(boot_command_line) + 1' for
+static_command_line, but the strings copied into static_command_line are
+extra_command_line and command_line, rather than extra_command_line and
+boot_command_line.
 
-Fixes: b258e4268850 ("usb: dwc2: host: Fix ISOC flow in DDMA mode")
-CC: stable@vger.kernel.org
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/linux-usb/2024040834-ethically-rumble-701f@gregkh/T/#m4c4b83bef0ebb4b67fe2e0a7d6466cbb6f416e39
-Signed-off-by: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
-Link: https://lore.kernel.org/r/cc826d3ef53c934d8e6d98870f17f3cdc3d2755d.1712665387.git.Minas.Harutyunyan@synopsys.com
+When strlen(command_line) > strlen(boot_command_line), static_command_line
+will overflow.
+
+This patch just recovers strlen(command_line) which was miss-consolidated
+with strlen(boot_command_line) in the commit f5c7310ac73e ("init/main: add
+checks for the return value of memblock_alloc*()")
+
+Link: https://lore.kernel.org/all/20240412081733.35925-2-ytcoode@gmail.com/
+
+Fixes: f5c7310ac73e ("init/main: add checks for the return value of memblock_alloc*()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yuntao Wang <ytcoode@gmail.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/hcd_ddma.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ init/main.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/dwc2/hcd_ddma.c
-+++ b/drivers/usb/dwc2/hcd_ddma.c
-@@ -897,13 +897,15 @@ static int dwc2_cmpl_host_isoc_dma_desc(
- 	struct dwc2_dma_desc *dma_desc;
- 	struct dwc2_hcd_iso_packet_desc *frame_desc;
- 	u16 frame_desc_idx;
--	struct urb *usb_urb = qtd->urb->priv;
-+	struct urb *usb_urb;
- 	u16 remain = 0;
- 	int rc = 0;
+--- a/init/main.c
++++ b/init/main.c
+@@ -640,6 +640,8 @@ static void __init setup_command_line(ch
+ 	if (!saved_command_line)
+ 		panic("%s: Failed to allocate %zu bytes\n", __func__, len + ilen);
  
- 	if (!qtd->urb)
- 		return -EINVAL;
- 
-+	usb_urb = qtd->urb->priv;
++	len = xlen + strlen(command_line) + 1;
 +
- 	dma_sync_single_for_cpu(hsotg->dev, qh->desc_list_dma + (idx *
- 				sizeof(struct dwc2_dma_desc)),
- 				sizeof(struct dwc2_dma_desc),
+ 	static_command_line = memblock_alloc(len, SMP_CACHE_BYTES);
+ 	if (!static_command_line)
+ 		panic("%s: Failed to allocate %zu bytes\n", __func__, len);
 
 
