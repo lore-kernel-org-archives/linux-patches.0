@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E8214A0BE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E480114A4D9;
 	Tue, 23 Apr 2024 21:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908749; cv=none; b=qslvh41pwtqKKxGU2qs1WMSf1Nlok6+VgGxF9iPF9VN7cPznpnVutC/AIBW/r/MQNFilOnZtuh1DepwolSuZgd5hag8GUVJ4VaxYRkJeSYWfJ5aAwth78ywPDsc20CIKZ9ta+yS6LbmZzlXVTG9a9AAYH9xKmWFxcACC6Ror+FQ=
+	t=1713908750; cv=none; b=Xnz+JjTKzY3iRDuQdqzIj3hCU6sTfFhJvrXssGg+PLInuCHCrUavnqIll5M3g4UsbB8mCbXTJgMNeJivx5gyuYtjtaFAgnSfpszssmn8xvykA8s/m3M0X9Y3jhzvqBFGO1nDvOYISGFTdBC3GU/3OteiyWgj+S8NMeErkd8ZYVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908749; c=relaxed/simple;
-	bh=3IdpPLWVLNAaH1c1CJm4SASikdALaPgwsm4xIqEOntc=;
+	s=arc-20240116; t=1713908750; c=relaxed/simple;
+	bh=9sZZFnvceWHdQtCmR+j/Pd3ei24YquCqV/HqaZA00jU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I2l2OuTPCV8HlaM48Hb/fDz7M2nDUzK5z8fwLzzkKG7Pv9Q9OvaJZyNGllu7LC89x45LvHOmlFe+FfXpzjBbgX+xObQRq4L8PlYA/8TMXLVs6PoX1igPS6qCB0wcYVpXDPIdeYNLw2D9PtkkVBKNqzEiPh9f48ijc9Q3Io4VgMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QzksRIdx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TpGjNZUsjID6rhA98xSnoM9vsVtuuMHp34docRBrK00ec2FXM8b4ftyV0NNY6AT3L4QO1i6TdjLwdwC62FzD7TK1z0MIa7xRLJG6N5KGuZVyMVdR49SxNsO4ireeuDk0tN0kOXJDH7bB6tz4UYotJUlL2Ge0B1umVpBEf79ccro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUVUCYzh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QzksRIdx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BADBC116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUVUCYzh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEC9C32781;
 	Tue, 23 Apr 2024 21:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908749;
-	bh=3IdpPLWVLNAaH1c1CJm4SASikdALaPgwsm4xIqEOntc=;
+	bh=9sZZFnvceWHdQtCmR+j/Pd3ei24YquCqV/HqaZA00jU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QzksRIdxb5vrU3uDRjhKEaE4ZrXFXhraz4NX8L0YpbC7OIRNWqzkt1EAZqM1IU2oD
-	 niVGaC4hhpB+XNvou+OjUIe61UdrppbEs5i55Atd/l6PrOw/haTw/dn1zKXpwDHNNh
-	 njWdlKogmQnpKsBQbfSY0sjqHFnboTo+/1Eb75bE=
+	b=HUVUCYzh9fg4DtIiy5ZMb7YAPN7JDwXSYOf4Cy+/roSPvH/oD54Y6883xQ9VjFvQ5
+	 TOl+PVzsJUesCAijSD4NLPXedpLQZow2TyxzJyBk4fbobbQpK+VLoHgbgmo8764FfZ
+	 hh8dkM+k9Gptnxf7Sjs6ZpxDg2rHdI54hXG7vmqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Subject: [PATCH 6.1 106/141] serial: stm32: Return IRQ_NONE in the ISR if no handling happend
-Date: Tue, 23 Apr 2024 14:39:34 -0700
-Message-ID: <20240423213856.632850637@linuxfoundation.org>
+	Mike Rapoport <rppt@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	xiongxin <xiongxin@kylinos.cn>,
+	Yaxiong Tian <tianyaxiong@kylinos.cn>
+Subject: [PATCH 6.1 124/141] arm64: hibernate: Fix level3 translation fault in swsusp_save()
+Date: Tue, 23 Apr 2024 14:39:52 -0700
+Message-ID: <20240423213857.231413962@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -43,96 +46,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Yaxiong Tian <tianyaxiong@kylinos.cn>
 
-commit 13c785323b36b845300b256d0e5963c3727667d7 upstream.
+commit 50449ca66cc5a8cbc64749cf4b9f3d3fc5f4b457 upstream.
 
-If there is a stuck irq that the handler doesn't address, returning
-IRQ_HANDLED unconditionally makes it impossible for the irq core to
-detect the problem and disable the irq. So only return IRQ_HANDLED if
-an event was handled.
+On arm64 machines, swsusp_save() faults if it attempts to access
+MEMBLOCK_NOMAP memory ranges. This can be reproduced in QEMU using UEFI
+when booting with rodata=off debug_pagealloc=off and CONFIG_KFENCE=n:
 
-A stuck irq is still problematic, but with this change at least it only
-makes the UART nonfunctional instead of occupying the (usually only) CPU
-by 100% and so stall the whole machine.
+  Unable to handle kernel paging request at virtual address ffffff8000000000
+  Mem abort info:
+    ESR = 0x0000000096000007
+    EC = 0x25: DABT (current EL), IL = 32 bits
+    SET = 0, FnV = 0
+    EA = 0, S1PTW = 0
+    FSC = 0x07: level 3 translation fault
+  Data abort info:
+    ISV = 0, ISS = 0x00000007, ISS2 = 0x00000000
+    CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+    GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+  swapper pgtable: 4k pages, 39-bit VAs, pgdp=00000000eeb0b000
+  [ffffff8000000000] pgd=180000217fff9803, p4d=180000217fff9803, pud=180000217fff9803, pmd=180000217fff8803, pte=0000000000000000
+  Internal error: Oops: 0000000096000007 [#1] SMP
+  Internal error: Oops: 0000000096000007 [#1] SMP
+  Modules linked in: xt_multiport ipt_REJECT nf_reject_ipv4 xt_conntrack nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 libcrc32c iptable_filter bpfilter rfkill at803x snd_hda_codec_hdmi snd_hda_intel snd_intel_dspcfg dwmac_generic stmmac_platform snd_hda_codec stmmac joydev pcs_xpcs snd_hda_core phylink ppdev lp parport ramoops reed_solomon ip_tables x_tables nls_iso8859_1 vfat multipath linear amdgpu amdxcp drm_exec gpu_sched drm_buddy hid_generic usbhid hid radeon video drm_suballoc_helper drm_ttm_helper ttm i2c_algo_bit drm_display_helper cec drm_kms_helper drm
+  CPU: 0 PID: 3663 Comm: systemd-sleep Not tainted 6.6.2+ #76
+  Source Version: 4e22ed63a0a48e7a7cff9b98b7806d8d4add7dc0
+  Hardware name: Greatwall GW-XXXXXX-XXX/GW-XXXXXX-XXX, BIOS KunLun BIOS V4.0 01/19/2021
+  pstate: 600003c5 (nZCv DAIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  pc : swsusp_save+0x280/0x538
+  lr : swsusp_save+0x280/0x538
+  sp : ffffffa034a3fa40
+  x29: ffffffa034a3fa40 x28: ffffff8000001000 x27: 0000000000000000
+  x26: ffffff8001400000 x25: ffffffc08113e248 x24: 0000000000000000
+  x23: 0000000000080000 x22: ffffffc08113e280 x21: 00000000000c69f2
+  x20: ffffff8000000000 x19: ffffffc081ae2500 x18: 0000000000000000
+  x17: 6666662074736420 x16: 3030303030303030 x15: 3038666666666666
+  x14: 0000000000000b69 x13: ffffff9f89088530 x12: 00000000ffffffea
+  x11: 00000000ffff7fff x10: 00000000ffff7fff x9 : ffffffc08193f0d0
+  x8 : 00000000000bffe8 x7 : c0000000ffff7fff x6 : 0000000000000001
+  x5 : ffffffa0fff09dc8 x4 : 0000000000000000 x3 : 0000000000000027
+  x2 : 0000000000000000 x1 : 0000000000000000 x0 : 000000000000004e
+  Call trace:
+   swsusp_save+0x280/0x538
+   swsusp_arch_suspend+0x148/0x190
+   hibernation_snapshot+0x240/0x39c
+   hibernate+0xc4/0x378
+   state_store+0xf0/0x10c
+   kobj_attr_store+0x14/0x24
 
-Fixes: 48a6092fb41f ("serial: stm32-usart: Add STM32 USART Driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/5f92603d0dfd8a5b8014b2b10a902d91e0bb881f.1713344161.git.u.kleine-koenig@pengutronix.de
+The reason is swsusp_save() -> copy_data_pages() -> page_is_saveable()
+-> kernel_page_present() assuming that a page is always present when
+can_set_direct_map() is false (all of rodata_full,
+debug_pagealloc_enabled() and arm64_kfence_can_set_direct_map() false),
+irrespective of the MEMBLOCK_NOMAP ranges. Such MEMBLOCK_NOMAP regions
+should not be saved during hibernation.
+
+This problem was introduced by changes to the pfn_valid() logic in
+commit a7d9f306ba70 ("arm64: drop pfn_valid_within() and simplify
+pfn_valid()").
+
+Similar to other architectures, drop the !can_set_direct_map() check in
+kernel_page_present() so that page_is_savable() skips such pages.
+
+Fixes: a7d9f306ba70 ("arm64: drop pfn_valid_within() and simplify pfn_valid()")
+Cc: <stable@vger.kernel.org> # 5.14.x
+Suggested-by: Mike Rapoport <rppt@kernel.org>
+Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
+Co-developed-by: xiongxin <xiongxin@kylinos.cn>
+Signed-off-by: xiongxin <xiongxin@kylinos.cn>
+Signed-off-by: Yaxiong Tian <tianyaxiong@kylinos.cn>
+Acked-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Link: https://lore.kernel.org/r/20240417025248.386622-1-tianyaxiong@kylinos.cn
+[catalin.marinas@arm.com: rework commit message]
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/stm32-usart.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ arch/arm64/mm/pageattr.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/tty/serial/stm32-usart.c
-+++ b/drivers/tty/serial/stm32-usart.c
-@@ -755,6 +755,7 @@ static irqreturn_t stm32_usart_interrupt
- 	const struct stm32_usart_offsets *ofs = &stm32_port->info->ofs;
- 	u32 sr;
- 	unsigned int size;
-+	irqreturn_t ret = IRQ_NONE;
+--- a/arch/arm64/mm/pageattr.c
++++ b/arch/arm64/mm/pageattr.c
+@@ -220,9 +220,6 @@ bool kernel_page_present(struct page *pa
+ 	pte_t *ptep;
+ 	unsigned long addr = (unsigned long)page_address(page);
  
- 	sr = readl_relaxed(port->membase + ofs->isr);
- 
-@@ -763,11 +764,14 @@ static irqreturn_t stm32_usart_interrupt
- 	    (sr & USART_SR_TC)) {
- 		stm32_usart_tc_interrupt_disable(port);
- 		stm32_usart_rs485_rts_disable(port);
-+		ret = IRQ_HANDLED;
- 	}
- 
--	if ((sr & USART_SR_RTOF) && ofs->icr != UNDEF_REG)
-+	if ((sr & USART_SR_RTOF) && ofs->icr != UNDEF_REG) {
- 		writel_relaxed(USART_ICR_RTOCF,
- 			       port->membase + ofs->icr);
-+		ret = IRQ_HANDLED;
-+	}
- 
- 	if ((sr & USART_SR_WUF) && ofs->icr != UNDEF_REG) {
- 		/* Clear wake up flag and disable wake up interrupt */
-@@ -776,6 +780,7 @@ static irqreturn_t stm32_usart_interrupt
- 		stm32_usart_clr_bits(port, ofs->cr3, USART_CR3_WUFIE);
- 		if (irqd_is_wakeup_set(irq_get_irq_data(port->irq)))
- 			pm_wakeup_event(tport->tty->dev, 0);
-+		ret = IRQ_HANDLED;
- 	}
- 
- 	/*
-@@ -790,6 +795,7 @@ static irqreturn_t stm32_usart_interrupt
- 			uart_unlock_and_check_sysrq(port);
- 			if (size)
- 				tty_flip_buffer_push(tport);
-+			ret = IRQ_HANDLED;
- 		}
- 	}
- 
-@@ -797,6 +803,7 @@ static irqreturn_t stm32_usart_interrupt
- 		spin_lock(&port->lock);
- 		stm32_usart_transmit_chars(port);
- 		spin_unlock(&port->lock);
-+		ret = IRQ_HANDLED;
- 	}
- 
- 	/* Receiver timeout irq for DMA RX */
-@@ -806,9 +813,10 @@ static irqreturn_t stm32_usart_interrupt
- 		uart_unlock_and_check_sysrq(port);
- 		if (size)
- 			tty_flip_buffer_push(tport);
-+		ret = IRQ_HANDLED;
- 	}
- 
--	return IRQ_HANDLED;
-+	return ret;
- }
- 
- static void stm32_usart_set_mctrl(struct uart_port *port, unsigned int mctrl)
+-	if (!can_set_direct_map())
+-		return true;
+-
+ 	pgdp = pgd_offset_k(addr);
+ 	if (pgd_none(READ_ONCE(*pgdp)))
+ 		return false;
 
 
