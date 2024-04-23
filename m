@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6758C143C57;
-	Tue, 23 Apr 2024 21:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BDD143C57;
+	Tue, 23 Apr 2024 21:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908605; cv=none; b=F5rmwwbmKeVsajj5uOdSd8DaICWB1MLu3ZSrxVkRAIBdPAQqlLWYAhYQd71yhlwwFenBbCZybROVkidACWyHbWdQi+UihAHnmQ16czd5ppwAJbXjV+bVtZ0hyR5yDpp06qm7q9L2BfsVnWor5KrzAxe/m89LEtw1ppSx0P3X2iU=
+	t=1713908606; cv=none; b=iwlAx6f2uLR+XxY2G1Uw+/YMfixdvW5csSxFa3X2s3GkF8+GsggXeIdENQ6M2ho7VlSOY6I+Utk1j27Lel4ikMngAnADcVFY/MBVTBkvdrz0/NGoox+YuKlF9jtNV8N/yzCLy+/agSxWaQ8xUWUSEdfnvTbOJ4TjOSWD00EgKrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908605; c=relaxed/simple;
-	bh=xJorBsdxMlluQWgs/1/LbUrLz+a3vhivj36VjGnNWrM=;
+	s=arc-20240116; t=1713908606; c=relaxed/simple;
+	bh=PSh7msqzjMZGHrLiXPMUhgp9hpyKkjUUykG/pNrM84Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gCBQIzlMbmeaF+mfEjNBbg9uopDs1qh366HT1VGHhwMtPXmjKR1STOcdYA5tT1kjlUrDtFhr8mAaEtGXHSh3uqfWWR3iKqnQwnWFAh0D10ReCJ2rfqhhJKmn58fj/2Gj0Trm9NhHrimLov2Dn2bdTRyRdW7CgC6aofBc84NJlRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AEvUTqdk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lAoUQ+XTQ3auowkxHsBzv/E6b/f8PXwtqJOmBIvF6TyZNyyBFBN6Jeiib73QXKFlmjFHbs/CAFPqfWpDofuxsgvXxEH/W8MGHz8lTR9s9iI36pp7xw61Um0qZFAlHuWTsTp2xTQmYtcoYiiRrGtS7gOfJmZWb+pkxTjLTLJxBdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFSdVRek; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AEvUTqdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3651AC116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFSdVRek"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC83C32781;
 	Tue, 23 Apr 2024 21:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908605;
-	bh=xJorBsdxMlluQWgs/1/LbUrLz+a3vhivj36VjGnNWrM=;
+	bh=PSh7msqzjMZGHrLiXPMUhgp9hpyKkjUUykG/pNrM84Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AEvUTqdkql33GO/o51KY3l+4hjI/aC6hL1miKMgv9vk5cPDC8E4JMnev80cGdzy+R
-	 28R/ayyvkpoAJK+F5p6btZrIc4m0Mj1ryTUnn5uVYu0nnXr0l/qioutZDrfvRvkpky
-	 u/VoiUvTaokr/g3DNkUBNReZHyoXNSNJICKVd9tg=
+	b=sFSdVRekYY2B/sldPOH6DI8MJ1MMIMGOQhiXF93Cg/dZUpcomQ9qijxKUBQo00/7K
+	 2ocypUnhjnM2IQF69D81ciwTr3zFbdTj4I4Qy7Iwn6jkEFC+uCffMxq8ZfjLJamMp8
+	 gpId4ZxDEHl5S/O0LIJVDeAN61YX9aXHuIAZo41U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Jarkko Nikula <jarkko.nikula@bitmer.com>,
-	Mark Brown <broonie@kernel.org>,
+	Arnd Bergmann <arnd@kernel.org>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/158] ASoC: ti: Convert Pandora ASoC to GPIO descriptors
-Date: Tue, 23 Apr 2024 14:38:28 -0700
-Message-ID: <20240423213858.071601050@linuxfoundation.org>
+Subject: [PATCH 6.6 072/158] usb: pci-quirks: group AMD specific quirk code together
+Date: Tue, 23 Apr 2024 14:38:29 -0700
+Message-ID: <20240423213858.110943229@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -52,183 +51,223 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit 319e6ac143b9e9048e527ab9dd2aabb8fdf3d60f ]
+[ Upstream commit 7ca9f9ba8aa7380dee5dd8346b57bbaf198b075a ]
 
-The Pandora uses GPIO descriptors pretty much exclusively, but not
-for ASoC, so let's fix it. Register the pins in a descriptor table
-in the machine since the ASoC device is not using device tree.
+A follow on patch will introduce CONFIG_USB_PCI_AMD governing the AMD
+quirk and adding its compile time dependency on HAS_IOPORT. In order to
+minimize the number of #ifdefs in C files and make that patch easier
+to read first group the code together. This is pure code movement
+no functional change is intended.
 
-Use static locals for the GPIO descriptors because I'm not able
-to experient with better state storage on any real hardware. Others
-using the Pandora can come afterwards and improve this.
-
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Acked-by: Jarkko Nikula <jarkko.nikula@bitmer.com>
-Link: https://lore.kernel.org/r/20230926-descriptors-asoc-ti-v1-4-60cf4f8adbc5@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Co-developed-by: Arnd Bergmann <arnd@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@kernel.org>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230911125653.1393895-2-schnelle@linux.ibm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/pdata-quirks.c | 10 +++++
- sound/soc/ti/omap3pandora.c        | 63 +++++++++++-------------------
- 2 files changed, 33 insertions(+), 40 deletions(-)
+ drivers/usb/host/pci-quirks.c | 119 +++++++++++++++++-----------------
+ drivers/usb/host/pci-quirks.h |  14 ++--
+ 2 files changed, 68 insertions(+), 65 deletions(-)
 
-diff --git a/arch/arm/mach-omap2/pdata-quirks.c b/arch/arm/mach-omap2/pdata-quirks.c
-index c1c0121f478d6..b947bacf23a37 100644
---- a/arch/arm/mach-omap2/pdata-quirks.c
-+++ b/arch/arm/mach-omap2/pdata-quirks.c
-@@ -275,9 +275,19 @@ static struct platform_device pandora_backlight = {
- 	.id	= -1,
- };
+diff --git a/drivers/usb/host/pci-quirks.c b/drivers/usb/host/pci-quirks.c
+index 2665832f9addf..5e06fad82a228 100644
+--- a/drivers/usb/host/pci-quirks.c
++++ b/drivers/usb/host/pci-quirks.c
+@@ -60,6 +60,22 @@
+ #define EHCI_USBLEGCTLSTS	4		/* legacy control/status */
+ #define EHCI_USBLEGCTLSTS_SOOE	(1 << 13)	/* SMI on ownership change */
  
-+static struct gpiod_lookup_table pandora_soc_audio_gpios = {
-+	.dev_id = "soc-audio",
-+	.table = {
-+		GPIO_LOOKUP("gpio-112-127", 6, "dac", GPIO_ACTIVE_HIGH),
-+		GPIO_LOOKUP("gpio-0-15", 14, "amp", GPIO_ACTIVE_HIGH),
-+		{ }
-+	},
-+};
++/* ASMEDIA quirk use */
++#define ASMT_DATA_WRITE0_REG	0xF8
++#define ASMT_DATA_WRITE1_REG	0xFC
++#define ASMT_CONTROL_REG	0xE0
++#define ASMT_CONTROL_WRITE_BIT	0x02
++#define ASMT_WRITEREG_CMD	0x10423
++#define ASMT_FLOWCTL_ADDR	0xFA30
++#define ASMT_FLOWCTL_DATA	0xBA
++#define ASMT_PSEUDO_DATA	0
 +
- static void __init omap3_pandora_legacy_init(void)
- {
- 	platform_device_register(&pandora_backlight);
-+	gpiod_add_lookup_table(&pandora_soc_audio_gpios);
++/* Intel quirk use */
++#define USB_INTEL_XUSB2PR      0xD0
++#define USB_INTEL_USB2PRM      0xD4
++#define USB_INTEL_USB3_PSSEN   0xD8
++#define USB_INTEL_USB3PRM      0xDC
++
+ /* AMD quirk use */
+ #define	AB_REG_BAR_LOW		0xe0
+ #define	AB_REG_BAR_HIGH		0xe1
+@@ -93,21 +109,6 @@
+ #define	NB_PIF0_PWRDOWN_0	0x01100012
+ #define	NB_PIF0_PWRDOWN_1	0x01100013
+ 
+-#define USB_INTEL_XUSB2PR      0xD0
+-#define USB_INTEL_USB2PRM      0xD4
+-#define USB_INTEL_USB3_PSSEN   0xD8
+-#define USB_INTEL_USB3PRM      0xDC
+-
+-/* ASMEDIA quirk use */
+-#define ASMT_DATA_WRITE0_REG	0xF8
+-#define ASMT_DATA_WRITE1_REG	0xFC
+-#define ASMT_CONTROL_REG	0xE0
+-#define ASMT_CONTROL_WRITE_BIT	0x02
+-#define ASMT_WRITEREG_CMD	0x10423
+-#define ASMT_FLOWCTL_ADDR	0xFA30
+-#define ASMT_FLOWCTL_DATA	0xBA
+-#define ASMT_PSEUDO_DATA	0
+-
+ /*
+  * amd_chipset_gen values represent AMD different chipset generations
+  */
+@@ -458,50 +459,6 @@ void usb_amd_quirk_pll_disable(void)
  }
- #endif /* CONFIG_ARCH_OMAP3 */
+ EXPORT_SYMBOL_GPL(usb_amd_quirk_pll_disable);
  
-diff --git a/sound/soc/ti/omap3pandora.c b/sound/soc/ti/omap3pandora.c
-index a287e9747c2a1..fa92ed97dfe3b 100644
---- a/sound/soc/ti/omap3pandora.c
-+++ b/sound/soc/ti/omap3pandora.c
-@@ -7,7 +7,7 @@
- 
- #include <linux/clk.h>
- #include <linux/platform_device.h>
--#include <linux/gpio.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/delay.h>
- #include <linux/regulator/consumer.h>
- #include <linux/module.h>
-@@ -21,12 +21,11 @@
- 
- #include "omap-mcbsp.h"
- 
--#define OMAP3_PANDORA_DAC_POWER_GPIO	118
--#define OMAP3_PANDORA_AMP_POWER_GPIO	14
+-static int usb_asmedia_wait_write(struct pci_dev *pdev)
+-{
+-	unsigned long retry_count;
+-	unsigned char value;
 -
- #define PREFIX "ASoC omap3pandora: "
- 
- static struct regulator *omap3pandora_dac_reg;
-+static struct gpio_desc *dac_power_gpio;
-+static struct gpio_desc *amp_power_gpio;
- 
- static int omap3pandora_hw_params(struct snd_pcm_substream *substream,
- 	struct snd_pcm_hw_params *params)
-@@ -78,9 +77,9 @@ static int omap3pandora_dac_event(struct snd_soc_dapm_widget *w,
- 			return ret;
- 		}
- 		mdelay(1);
--		gpio_set_value(OMAP3_PANDORA_DAC_POWER_GPIO, 1);
-+		gpiod_set_value(dac_power_gpio, 1);
- 	} else {
--		gpio_set_value(OMAP3_PANDORA_DAC_POWER_GPIO, 0);
-+		gpiod_set_value(dac_power_gpio, 0);
- 		mdelay(1);
- 		regulator_disable(omap3pandora_dac_reg);
- 	}
-@@ -92,9 +91,9 @@ static int omap3pandora_hp_event(struct snd_soc_dapm_widget *w,
- 	struct snd_kcontrol *k, int event)
+-	for (retry_count = 1000; retry_count > 0; --retry_count) {
+-
+-		pci_read_config_byte(pdev, ASMT_CONTROL_REG, &value);
+-
+-		if (value == 0xff) {
+-			dev_err(&pdev->dev, "%s: check_ready ERROR", __func__);
+-			return -EIO;
+-		}
+-
+-		if ((value & ASMT_CONTROL_WRITE_BIT) == 0)
+-			return 0;
+-
+-		udelay(50);
+-	}
+-
+-	dev_warn(&pdev->dev, "%s: check_write_ready timeout", __func__);
+-	return -ETIMEDOUT;
+-}
+-
+-void usb_asmedia_modifyflowcontrol(struct pci_dev *pdev)
+-{
+-	if (usb_asmedia_wait_write(pdev) != 0)
+-		return;
+-
+-	/* send command and address to device */
+-	pci_write_config_dword(pdev, ASMT_DATA_WRITE0_REG, ASMT_WRITEREG_CMD);
+-	pci_write_config_dword(pdev, ASMT_DATA_WRITE1_REG, ASMT_FLOWCTL_ADDR);
+-	pci_write_config_byte(pdev, ASMT_CONTROL_REG, ASMT_CONTROL_WRITE_BIT);
+-
+-	if (usb_asmedia_wait_write(pdev) != 0)
+-		return;
+-
+-	/* send data to device */
+-	pci_write_config_dword(pdev, ASMT_DATA_WRITE0_REG, ASMT_FLOWCTL_DATA);
+-	pci_write_config_dword(pdev, ASMT_DATA_WRITE1_REG, ASMT_PSEUDO_DATA);
+-	pci_write_config_byte(pdev, ASMT_CONTROL_REG, ASMT_CONTROL_WRITE_BIT);
+-}
+-EXPORT_SYMBOL_GPL(usb_asmedia_modifyflowcontrol);
+-
+ void usb_amd_quirk_pll_enable(void)
  {
- 	if (SND_SOC_DAPM_EVENT_ON(event))
--		gpio_set_value(OMAP3_PANDORA_AMP_POWER_GPIO, 1);
-+		gpiod_set_value(amp_power_gpio, 1);
- 	else
--		gpio_set_value(OMAP3_PANDORA_AMP_POWER_GPIO, 0);
-+		gpiod_set_value(amp_power_gpio, 0);
- 
- 	return 0;
+ 	usb_amd_quirk_pll(0);
+@@ -631,6 +588,50 @@ bool usb_amd_pt_check_port(struct device *device, int port)
  }
-@@ -229,35 +228,10 @@ static int __init omap3pandora_soc_init(void)
+ EXPORT_SYMBOL_GPL(usb_amd_pt_check_port);
  
- 	pr_info("OMAP3 Pandora SoC init\n");
- 
--	ret = gpio_request(OMAP3_PANDORA_DAC_POWER_GPIO, "dac_power");
--	if (ret) {
--		pr_err(PREFIX "Failed to get DAC power GPIO\n");
--		return ret;
--	}
--
--	ret = gpio_direction_output(OMAP3_PANDORA_DAC_POWER_GPIO, 0);
--	if (ret) {
--		pr_err(PREFIX "Failed to set DAC power GPIO direction\n");
--		goto fail0;
--	}
--
--	ret = gpio_request(OMAP3_PANDORA_AMP_POWER_GPIO, "amp_power");
--	if (ret) {
--		pr_err(PREFIX "Failed to get amp power GPIO\n");
--		goto fail0;
--	}
--
--	ret = gpio_direction_output(OMAP3_PANDORA_AMP_POWER_GPIO, 0);
--	if (ret) {
--		pr_err(PREFIX "Failed to set amp power GPIO direction\n");
--		goto fail1;
--	}
--
- 	omap3pandora_snd_device = platform_device_alloc("soc-audio", -1);
- 	if (omap3pandora_snd_device == NULL) {
- 		pr_err(PREFIX "Platform device allocation failed\n");
--		ret = -ENOMEM;
--		goto fail1;
-+		return -ENOMEM;
- 	}
- 
- 	platform_set_drvdata(omap3pandora_snd_device, &snd_soc_card_omap3pandora);
-@@ -268,6 +242,20 @@ static int __init omap3pandora_soc_init(void)
- 		goto fail2;
- 	}
- 
-+	dac_power_gpio = devm_gpiod_get(&omap3pandora_snd_device->dev,
-+					"dac", GPIOD_OUT_LOW);
-+	if (IS_ERR(dac_power_gpio)) {
-+		ret = PTR_ERR(dac_power_gpio);
-+		goto fail3;
++static int usb_asmedia_wait_write(struct pci_dev *pdev)
++{
++	unsigned long retry_count;
++	unsigned char value;
++
++	for (retry_count = 1000; retry_count > 0; --retry_count) {
++
++		pci_read_config_byte(pdev, ASMT_CONTROL_REG, &value);
++
++		if (value == 0xff) {
++			dev_err(&pdev->dev, "%s: check_ready ERROR", __func__);
++			return -EIO;
++		}
++
++		if ((value & ASMT_CONTROL_WRITE_BIT) == 0)
++			return 0;
++
++		udelay(50);
 +	}
 +
-+	amp_power_gpio = devm_gpiod_get(&omap3pandora_snd_device->dev,
-+					"amp", GPIOD_OUT_LOW);
-+	if (IS_ERR(amp_power_gpio)) {
-+		ret = PTR_ERR(amp_power_gpio);
-+		goto fail3;
-+	}
++	dev_warn(&pdev->dev, "%s: check_write_ready timeout", __func__);
++	return -ETIMEDOUT;
++}
 +
- 	omap3pandora_dac_reg = regulator_get(&omap3pandora_snd_device->dev, "vcc");
- 	if (IS_ERR(omap3pandora_dac_reg)) {
- 		pr_err(PREFIX "Failed to get DAC regulator from %s: %ld\n",
-@@ -283,10 +271,7 @@ static int __init omap3pandora_soc_init(void)
- 	platform_device_del(omap3pandora_snd_device);
- fail2:
- 	platform_device_put(omap3pandora_snd_device);
--fail1:
--	gpio_free(OMAP3_PANDORA_AMP_POWER_GPIO);
--fail0:
--	gpio_free(OMAP3_PANDORA_DAC_POWER_GPIO);
++void usb_asmedia_modifyflowcontrol(struct pci_dev *pdev)
++{
++	if (usb_asmedia_wait_write(pdev) != 0)
++		return;
 +
- 	return ret;
- }
- module_init(omap3pandora_soc_init);
-@@ -295,8 +280,6 @@ static void __exit omap3pandora_soc_exit(void)
- {
- 	regulator_put(omap3pandora_dac_reg);
- 	platform_device_unregister(omap3pandora_snd_device);
--	gpio_free(OMAP3_PANDORA_AMP_POWER_GPIO);
--	gpio_free(OMAP3_PANDORA_DAC_POWER_GPIO);
- }
- module_exit(omap3pandora_soc_exit);
++	/* send command and address to device */
++	pci_write_config_dword(pdev, ASMT_DATA_WRITE0_REG, ASMT_WRITEREG_CMD);
++	pci_write_config_dword(pdev, ASMT_DATA_WRITE1_REG, ASMT_FLOWCTL_ADDR);
++	pci_write_config_byte(pdev, ASMT_CONTROL_REG, ASMT_CONTROL_WRITE_BIT);
++
++	if (usb_asmedia_wait_write(pdev) != 0)
++		return;
++
++	/* send data to device */
++	pci_write_config_dword(pdev, ASMT_DATA_WRITE0_REG, ASMT_FLOWCTL_DATA);
++	pci_write_config_dword(pdev, ASMT_DATA_WRITE1_REG, ASMT_PSEUDO_DATA);
++	pci_write_config_byte(pdev, ASMT_CONTROL_REG, ASMT_CONTROL_WRITE_BIT);
++}
++EXPORT_SYMBOL_GPL(usb_asmedia_modifyflowcontrol);
++
+ /*
+  * Make sure the controller is completely inactive, unable to
+  * generate interrupts or do DMA.
+diff --git a/drivers/usb/host/pci-quirks.h b/drivers/usb/host/pci-quirks.h
+index e729de21fad7a..cde2263a9d2e4 100644
+--- a/drivers/usb/host/pci-quirks.h
++++ b/drivers/usb/host/pci-quirks.h
+@@ -3,8 +3,6 @@
+ #define __LINUX_USB_PCI_QUIRKS_H
  
+ #ifdef CONFIG_USB_PCI
+-void uhci_reset_hc(struct pci_dev *pdev, unsigned long base);
+-int uhci_check_and_reset_hc(struct pci_dev *pdev, unsigned long base);
+ int usb_hcd_amd_remote_wakeup_quirk(struct pci_dev *pdev);
+ bool usb_amd_hang_symptom_quirk(void);
+ bool usb_amd_prefetch_quirk(void);
+@@ -12,23 +10,27 @@ void usb_amd_dev_put(void);
+ bool usb_amd_quirk_pll_check(void);
+ void usb_amd_quirk_pll_disable(void);
+ void usb_amd_quirk_pll_enable(void);
++void sb800_prefetch(struct device *dev, int on);
++bool usb_amd_pt_check_port(struct device *device, int port);
++
++void uhci_reset_hc(struct pci_dev *pdev, unsigned long base);
++int uhci_check_and_reset_hc(struct pci_dev *pdev, unsigned long base);
+ void usb_asmedia_modifyflowcontrol(struct pci_dev *pdev);
+ void usb_enable_intel_xhci_ports(struct pci_dev *xhci_pdev);
+ void usb_disable_xhci_ports(struct pci_dev *xhci_pdev);
+-void sb800_prefetch(struct device *dev, int on);
+-bool usb_amd_pt_check_port(struct device *device, int port);
+ #else
+ struct pci_dev;
+ static inline void usb_amd_quirk_pll_disable(void) {}
+ static inline void usb_amd_quirk_pll_enable(void) {}
+-static inline void usb_asmedia_modifyflowcontrol(struct pci_dev *pdev) {}
+ static inline void usb_amd_dev_put(void) {}
+-static inline void usb_disable_xhci_ports(struct pci_dev *xhci_pdev) {}
+ static inline void sb800_prefetch(struct device *dev, int on) {}
+ static inline bool usb_amd_pt_check_port(struct device *device, int port)
+ {
+ 	return false;
+ }
++
++static inline void usb_asmedia_modifyflowcontrol(struct pci_dev *pdev) {}
++static inline void usb_disable_xhci_ports(struct pci_dev *xhci_pdev) {}
+ #endif  /* CONFIG_USB_PCI */
+ 
+ #endif  /*  __LINUX_USB_PCI_QUIRKS_H  */
 -- 
 2.43.0
 
