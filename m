@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6802785274;
-	Tue, 23 Apr 2024 21:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EB585274;
+	Tue, 23 Apr 2024 21:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908569; cv=none; b=tHTWFmbBNKKRlFAVU1K9iCA6oirapJs2y5t1+g8mnx4Nvk0QQpKdN0b+/ittW0q4rZoGNLlhGHwPtO9US9T3JnsOPQeF7aTRh7uix2kB8+itBdvEpqOoG5Y0NvrRmoyC/xNlTvDkpdsT0EJpJ+yWCNMD82uywD28eTDLZZPxdyE=
+	t=1713908570; cv=none; b=Bq6+L6GEh/SnNyeJStw5lChPbDB5+q7AOedUVVPeb/+g+A81sasK9MHAffcLBa/hRdlqlSuWIJR+hjw156wyX0VlALDLeG7hHROLUyulza98snH9CDLODBJZ+kuKfrNOcRG/36XN1UyM4T3VHD3pDVFFXH+8/t1R3N3y+Nv8ZL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908569; c=relaxed/simple;
-	bh=1DNpKNDT2aKd7S4XrUQ0nm6r9BBx4hZhESJVRsVsEGw=;
+	s=arc-20240116; t=1713908570; c=relaxed/simple;
+	bh=a4rz/nh8vC1WcKa9/lazYPyI8ifx23oY1o3mfgozs4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBR7A1BcEDSxnBS/jH46FrHQjHGeRqtBog9LzBLeg9PH+nq28JbKAF/uvylvwJDOgZSRKdbvg8QJrMd9GRMgpyKBlFxVLD97//G8Zhq1zYMQMHW8BnnGZXw6jTqC83zEujH5gb5EfDX2kEeIOCWo4YD75AeQjc6I+eH0h3l3yXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MX/63uPj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VViqVfdk12RHk1PJ2a8Bj9s0UiD1FJQ146KgL+/QKqM5j1lEK2jtA7fPxi/wMem94iQ9SVQvAlSBPUCN/ixRR5iFQJnuuYFvx1geix3GcZBoHigYXwo7gU6K5Ny3eL9MwCOKLuzIaHkEQVSKi+kQse0zr5jBl67dOUs6uDrN0SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ergBarCX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MX/63uPj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39839C4AF08;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ergBarCX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E331CC116B1;
 	Tue, 23 Apr 2024 21:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908569;
-	bh=1DNpKNDT2aKd7S4XrUQ0nm6r9BBx4hZhESJVRsVsEGw=;
+	s=korg; t=1713908570;
+	bh=a4rz/nh8vC1WcKa9/lazYPyI8ifx23oY1o3mfgozs4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MX/63uPjsK1vp1+XBRZlk3P6nACoCdk/VNCyYZCvpcgv9FPGJYgGNR/hlByLomepC
-	 pmeZ4Ek/ppfPL6lMjCtywNWXl185/lc1qVxCA0YCLnt80XgMxN2EeggEMApBM9Y7ij
-	 TMec5Q3MoCnpwkF9ZaymzLRxPClMk7fmZwBSDHXU=
+	b=ergBarCXi7Q1h1ZLpHB1CcIOy9SQzIjvSaFw35rtkSVnaknmiA7CzTnw1FOuRyUC6
+	 cDrCa4h8nv11INpriMy7wb1ba291h0D40ZuWXWKgWyrwnULlJ8aMPxtxTZjiuC0lg9
+	 X8z6HNjHQBUaa9FPoosnn8fr3I7T0mDi2o6J+NRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Luca Coelho <luciano.coelho@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 005/158] smb: client: refresh referral without acquiring refpath_lock
-Date: Tue, 23 Apr 2024 14:37:22 -0700
-Message-ID: <20240423213855.867965991@linuxfoundation.org>
+Subject: [PATCH 6.6 006/158] drm/i915: Fix FEC pipe A vs. DDI A mixup
+Date: Tue, 23 Apr 2024 14:37:23 -0700
+Message-ID: <20240423213855.899756664@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -45,123 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 0a05ad21d77a188d06481c36d6016805a881bcc0 ]
+[ Upstream commit 126f94e87e7960ef7ae58180e39c19cc9dcbbf7f ]
 
-Avoid refreshing DFS referral with refpath_lock acquired as the I/O
-could block for a while due to a potentially disconnected or slow DFS
-root server and then making other threads - that use same @server and
-don't require a DFS root server - unable to make any progress.
+On pre-TGL FEC is a port level feature, not a transcoder
+level feature, and it's DDI A which doesn't have it, not
+trancoder A. Check for the correct thing when determining
+whether FEC is supported or not.
 
-Cc: stable@vger.kernel.org # 6.4+
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230502143906.2401-5-ville.syrjala@linux.intel.com
+Reviewed-by: Luca Coelho <luciano.coelho@intel.com>
+Stable-dep-of: 99f855082f22 ("drm/i915/mst: Reject FEC+MST on ICL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/dfs_cache.c | 44 +++++++++++++++++++++------------------
- 1 file changed, 24 insertions(+), 20 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/dfs_cache.c b/fs/smb/client/dfs_cache.c
-index 0552a864ff08f..11c8efecf7aa1 100644
---- a/fs/smb/client/dfs_cache.c
-+++ b/fs/smb/client/dfs_cache.c
-@@ -1172,8 +1172,8 @@ static bool is_ses_good(struct cifs_ses *ses)
- 	return ret;
- }
- 
--/* Refresh dfs referral of tcon and mark it for reconnect if needed */
--static int __refresh_tcon(const char *path, struct cifs_ses *ses, bool force_refresh)
-+/* Refresh dfs referral of @ses and mark it for reconnect if needed */
-+static void __refresh_ses_referral(struct cifs_ses *ses, bool force_refresh)
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index 18ee4f2a87f9e..fff008955cb2c 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -1310,13 +1310,13 @@ bool intel_dp_has_hdmi_sink(struct intel_dp *intel_dp)
+ static bool intel_dp_source_supports_fec(struct intel_dp *intel_dp,
+ 					 const struct intel_crtc_state *pipe_config)
  {
- 	struct TCP_Server_Info *server = ses->server;
- 	DFS_CACHE_TGT_LIST(old_tl);
-@@ -1181,10 +1181,21 @@ static int __refresh_tcon(const char *path, struct cifs_ses *ses, bool force_ref
- 	bool needs_refresh = false;
- 	struct cache_entry *ce;
- 	unsigned int xid;
-+	char *path = NULL;
- 	int rc = 0;
++	struct intel_encoder *encoder = &dp_to_dig_port(intel_dp)->base;
+ 	struct drm_i915_private *dev_priv = dp_to_i915(intel_dp);
  
- 	xid = get_xid();
+-	/* On TGL, FEC is supported on all Pipes */
+ 	if (DISPLAY_VER(dev_priv) >= 12)
+ 		return true;
  
-+	mutex_lock(&server->refpath_lock);
-+	if (server->leaf_fullpath) {
-+		path = kstrdup(server->leaf_fullpath + 1, GFP_ATOMIC);
-+		if (!path)
-+			rc = -ENOMEM;
-+	}
-+	mutex_unlock(&server->refpath_lock);
-+	if (!path)
-+		goto out;
-+
- 	down_read(&htable_rw_lock);
- 	ce = lookup_cache_entry(path);
- 	needs_refresh = force_refresh || IS_ERR(ce) || cache_entry_expired(ce);
-@@ -1218,19 +1229,17 @@ static int __refresh_tcon(const char *path, struct cifs_ses *ses, bool force_ref
- 	free_xid(xid);
- 	dfs_cache_free_tgts(&old_tl);
- 	dfs_cache_free_tgts(&new_tl);
--	return rc;
-+	kfree(path);
- }
+-	if (DISPLAY_VER(dev_priv) == 11 && pipe_config->cpu_transcoder != TRANSCODER_A)
++	if (DISPLAY_VER(dev_priv) == 11 && encoder->port != PORT_A)
+ 		return true;
  
--static int refresh_tcon(struct cifs_tcon *tcon, bool force_refresh)
-+static inline void refresh_ses_referral(struct cifs_ses *ses)
- {
--	struct TCP_Server_Info *server = tcon->ses->server;
--	struct cifs_ses *ses = tcon->ses;
-+	__refresh_ses_referral(ses, false);
-+}
- 
--	mutex_lock(&server->refpath_lock);
--	if (server->leaf_fullpath)
--		__refresh_tcon(server->leaf_fullpath + 1, ses, force_refresh);
--	mutex_unlock(&server->refpath_lock);
--	return 0;
-+static inline void force_refresh_ses_referral(struct cifs_ses *ses)
-+{
-+	__refresh_ses_referral(ses, true);
- }
- 
- /**
-@@ -1271,25 +1280,20 @@ int dfs_cache_remount_fs(struct cifs_sb_info *cifs_sb)
- 	 */
- 	cifs_sb->mnt_cifs_flags |= CIFS_MOUNT_USE_PREFIX_PATH;
- 
--	return refresh_tcon(tcon, true);
-+	force_refresh_ses_referral(tcon->ses);
-+	return 0;
- }
- 
- /* Refresh all DFS referrals related to DFS tcon */
- void dfs_cache_refresh(struct work_struct *work)
- {
--	struct TCP_Server_Info *server;
- 	struct cifs_tcon *tcon;
- 	struct cifs_ses *ses;
- 
- 	tcon = container_of(work, struct cifs_tcon, dfs_cache_work.work);
- 
--	for (ses = tcon->ses; ses; ses = ses->dfs_root_ses) {
--		server = ses->server;
--		mutex_lock(&server->refpath_lock);
--		if (server->leaf_fullpath)
--			__refresh_tcon(server->leaf_fullpath + 1, ses, false);
--		mutex_unlock(&server->refpath_lock);
--	}
-+	for (ses = tcon->ses; ses; ses = ses->dfs_root_ses)
-+		refresh_ses_referral(ses);
- 
- 	queue_delayed_work(dfscache_wq, &tcon->dfs_cache_work,
- 			   atomic_read(&dfs_cache_ttl) * HZ);
+ 	return false;
 -- 
 2.43.0
 
