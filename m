@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F79014389D;
-	Tue, 23 Apr 2024 21:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D2F143895;
+	Tue, 23 Apr 2024 21:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908625; cv=none; b=ECvMjqoXa8Wc4/9qaxDfriliolPGa99Jbl8hHaRUZo92hnRp566l/ol1mmXKTWCLGr3wkwyK/ybpPveKZyjbSezatJxfKKrwtqDU43Y5QYXdVcSAph6r1mbiM94ZwuFLvlpYAIIGo+mlOAmJAuliLygzwFx/GyaCKb5asn214Sc=
+	t=1713908626; cv=none; b=BAFSOIjgtWzM3UhgN11tLwVesUVdnpe5Mw99n7Jz+5DeGKFuyZZi2jt7gOQmKeBd+J3z+CheMZS5Y4TAKgLidjg9r9D+HvP1PRe9P2gXXQ9i5dgcB6JPyHd5NKNQ1p0Eb5CUGlZifQYJlAJrM8T/H9z7/Mp1nFDcSwBaDfE3JB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908625; c=relaxed/simple;
-	bh=8rM2QYdZE+E17kOxB4Xcu6bl6CQ5Afq6hEmjnqejfWA=;
+	s=arc-20240116; t=1713908626; c=relaxed/simple;
+	bh=DHZ6taESmviAUZ3bPhMfWxneDSdFZcpHPfz5Hgge6/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QLcqqKjL2caXexJKHipSBJ2sto8tsHSuVTEfZ3ilbWtWuql3RIXYUqUgBQDB5hyM9x2OwMTlqAj27uFJvcn1kc6nkyB4Oiq7aMneMbZBIbsbddv7jEMwP5uM4k1E109cAmZ5UyEWEN4tERjs3TAdPYMxJUwM6+GUM7CyVHf9nec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dssTMhBG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=juep2MhTDn2rP4nNhSiTcc1iXE2SW5LKtBmanQAFoy9cKoQHPXiwct3deHHu7HgQoYAeAcN3iOHEzghf4cuVjvLB8uuO+R/LGh51/1ff1bkstvLF15WLnWw4ML5H2Xq/j/cVjha1eqyNqa6p0OLrdwbWmiE9GhXNEphLaoaQONY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tu1Y2nD0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dssTMhBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73ED1C3277B;
-	Tue, 23 Apr 2024 21:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tu1Y2nD0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BCD1C32782;
+	Tue, 23 Apr 2024 21:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908625;
-	bh=8rM2QYdZE+E17kOxB4Xcu6bl6CQ5Afq6hEmjnqejfWA=;
+	s=korg; t=1713908626;
+	bh=DHZ6taESmviAUZ3bPhMfWxneDSdFZcpHPfz5Hgge6/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dssTMhBGgG/vkEu+6GvwgOYJpCgVtyoOOgz3FGPmgVcJsAeGJcFAV9vpUGKnp/9wj
-	 QT5b5ML6VsxIFmdrlZkIjZ12F9wUOox00T+qCS+tUrBce1odYTU4y2a853Cv/GWyoU
-	 tUfhRNey03de50cnlLfRqRGQjA45eAKEUaWO7YxU=
+	b=Tu1Y2nD0rFLLOz6NtnQFY6Q5LIT9ml3MgtVkG27N0aQzX1OUzybU/YFJCfk6MW3ZH
+	 OJtDNyKuhvUU0D6ixe6tycM3OnY6Q+Kti+J8Se892+Az18MyHnXG5p3TDuVeO8xTt+
+	 4sqzcP4cl89SnQB+Ls/wg5SpOwIJQ6+j3tsJYgHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Sanath S <Sanath.S@amd.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.6 077/158] thunderbolt: Make tb_switch_reset() support Thunderbolt 2, 3 and USB4 routers
-Date: Tue, 23 Apr 2024 14:38:34 -0700
-Message-ID: <20240423213858.268982176@linuxfoundation.org>
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.6 078/158] thunderbolt: Reset topology created by the boot firmware
+Date: Tue, 23 Apr 2024 14:38:35 -0700
+Message-ID: <20240423213858.303029885@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -53,172 +53,205 @@ Content-Transfer-Encoding: 8bit
 
 From: Sanath S <Sanath.S@amd.com>
 
-commit ec8162b3f0683ae08a21f20517cf49272b07ee0b upstream.
+commit 59a54c5f3dbde00b8ad30aef27fe35b1fe07bf5c upstream.
 
-Currently tb_switch_reset() only did something for Thunderbolt 1
-devices. Expand this to support all generations, including USB4, and
-both host and device routers.
+Boot firmware (typically BIOS) might have created tunnels of its own.
+The tunnel configuration that it does might be sub-optimal. For instance
+it may only support HBR2 monitors so the DisplayPort tunnels it created
+may limit Linux graphics drivers. In addition there is an issue on some
+AMD based systems where the BIOS does not allocate enough PCIe resources
+for future topology extension. By resetting the USB4 topology the PCIe
+links will be reset as well allowing Linux to re-allocate.
 
+This aligns the behavior with Windows Connection Manager.
+
+We already issued host router reset for USB4 v2 routers, now extend it
+to USB4 v1 routers as well. For pre-USB4 (that's Apple systems) we leave
+it as is and continue to discover the existing tunnels.
+
+Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Sanath S <Sanath.S@amd.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/switch.c  |  123 +++++++++++++++++++++++++++++++++++++-----
- drivers/thunderbolt/tb_regs.h |    2 
- 2 files changed, 111 insertions(+), 14 deletions(-)
+ drivers/thunderbolt/domain.c |    5 +++--
+ drivers/thunderbolt/icm.c    |    2 +-
+ drivers/thunderbolt/nhi.c    |   19 +++++++++++++------
+ drivers/thunderbolt/tb.c     |   26 +++++++++++++++++++-------
+ drivers/thunderbolt/tb.h     |    4 ++--
+ 5 files changed, 38 insertions(+), 18 deletions(-)
 
---- a/drivers/thunderbolt/switch.c
-+++ b/drivers/thunderbolt/switch.c
-@@ -1492,29 +1492,124 @@ static void tb_dump_switch(const struct
- 	       regs->__unknown1, regs->__unknown4);
+--- a/drivers/thunderbolt/domain.c
++++ b/drivers/thunderbolt/domain.c
+@@ -423,6 +423,7 @@ err_free:
+ /**
+  * tb_domain_add() - Add domain to the system
+  * @tb: Domain to add
++ * @reset: Issue reset to the host router
+  *
+  * Starts the domain and adds it to the system. Hotplugging devices will
+  * work after this has been returned successfully. In order to remove
+@@ -431,7 +432,7 @@ err_free:
+  *
+  * Return: %0 in case of success and negative errno in case of error
+  */
+-int tb_domain_add(struct tb *tb)
++int tb_domain_add(struct tb *tb, bool reset)
+ {
+ 	int ret;
+ 
+@@ -460,7 +461,7 @@ int tb_domain_add(struct tb *tb)
+ 
+ 	/* Start the domain */
+ 	if (tb->cm_ops->start) {
+-		ret = tb->cm_ops->start(tb);
++		ret = tb->cm_ops->start(tb, reset);
+ 		if (ret)
+ 			goto err_domain_del;
+ 	}
+--- a/drivers/thunderbolt/icm.c
++++ b/drivers/thunderbolt/icm.c
+@@ -2144,7 +2144,7 @@ static int icm_runtime_resume(struct tb
+ 	return 0;
  }
  
-+static int tb_switch_reset_host(struct tb_switch *sw)
-+{
-+	if (sw->generation > 1) {
-+		struct tb_port *port;
+-static int icm_start(struct tb *tb)
++static int icm_start(struct tb *tb, bool not_used)
+ {
+ 	struct icm *icm = tb_priv(tb);
+ 	int ret;
+--- a/drivers/thunderbolt/nhi.c
++++ b/drivers/thunderbolt/nhi.c
+@@ -1221,7 +1221,7 @@ static void nhi_check_iommu(struct tb_nh
+ 		str_enabled_disabled(port_ok));
+ }
+ 
+-static void nhi_reset(struct tb_nhi *nhi)
++static bool nhi_reset(struct tb_nhi *nhi)
+ {
+ 	ktime_t timeout;
+ 	u32 val;
+@@ -1229,11 +1229,11 @@ static void nhi_reset(struct tb_nhi *nhi
+ 	val = ioread32(nhi->iobase + REG_CAPS);
+ 	/* Reset only v2 and later routers */
+ 	if (FIELD_GET(REG_CAPS_VERSION_MASK, val) < REG_CAPS_VERSION_2)
+-		return;
++		return false;
+ 
+ 	if (!host_reset) {
+ 		dev_dbg(&nhi->pdev->dev, "skipping host router reset\n");
+-		return;
++		return false;
+ 	}
+ 
+ 	iowrite32(REG_RESET_HRR, nhi->iobase + REG_RESET);
+@@ -1244,12 +1244,14 @@ static void nhi_reset(struct tb_nhi *nhi
+ 		val = ioread32(nhi->iobase + REG_RESET);
+ 		if (!(val & REG_RESET_HRR)) {
+ 			dev_warn(&nhi->pdev->dev, "host router reset successful\n");
+-			return;
++			return true;
+ 		}
+ 		usleep_range(10, 20);
+ 	} while (ktime_before(ktime_get(), timeout));
+ 
+ 	dev_warn(&nhi->pdev->dev, "timeout resetting host router\n");
 +
-+		tb_switch_for_each_port(sw, port) {
-+			int i, ret;
++	return false;
+ }
+ 
+ static int nhi_init_msi(struct tb_nhi *nhi)
+@@ -1331,6 +1333,7 @@ static int nhi_probe(struct pci_dev *pde
+ 	struct device *dev = &pdev->dev;
+ 	struct tb_nhi *nhi;
+ 	struct tb *tb;
++	bool reset;
+ 	int res;
+ 
+ 	if (!nhi_imr_valid(pdev))
+@@ -1365,7 +1368,11 @@ static int nhi_probe(struct pci_dev *pde
+ 	nhi_check_quirks(nhi);
+ 	nhi_check_iommu(nhi);
+ 
+-	nhi_reset(nhi);
++	/*
++	 * Only USB4 v2 hosts support host reset so if we already did
++	 * that then don't do it again when the domain is initialized.
++	 */
++	reset = nhi_reset(nhi) ? false : host_reset;
+ 
+ 	res = nhi_init_msi(nhi);
+ 	if (res)
+@@ -1392,7 +1399,7 @@ static int nhi_probe(struct pci_dev *pde
+ 
+ 	dev_dbg(dev, "NHI initialized, starting thunderbolt\n");
+ 
+-	res = tb_domain_add(tb);
++	res = tb_domain_add(tb, reset);
+ 	if (res) {
+ 		/*
+ 		 * At this point the RX/TX rings might already have been
+--- a/drivers/thunderbolt/tb.c
++++ b/drivers/thunderbolt/tb.c
+@@ -2131,7 +2131,7 @@ static int tb_scan_finalize_switch(struc
+ 	return 0;
+ }
+ 
+-static int tb_start(struct tb *tb)
++static int tb_start(struct tb *tb, bool reset)
+ {
+ 	struct tb_cm *tcm = tb_priv(tb);
+ 	int ret;
+@@ -2172,12 +2172,24 @@ static int tb_start(struct tb *tb)
+ 	tb_switch_tmu_configure(tb->root_switch, TB_SWITCH_TMU_MODE_LOWRES);
+ 	/* Enable TMU if it is off */
+ 	tb_switch_tmu_enable(tb->root_switch);
+-	/* Full scan to discover devices added before the driver was loaded. */
+-	tb_scan_switch(tb->root_switch);
+-	/* Find out tunnels created by the boot firmware */
+-	tb_discover_tunnels(tb);
+-	/* Add DP resources from the DP tunnels created by the boot firmware */
+-	tb_discover_dp_resources(tb);
 +
-+			/*
-+			 * For lane adapters we issue downstream port
-+			 * reset and clear up path config spaces.
-+			 *
-+			 * For protocol adapters we disable the path and
-+			 * clear path config space one by one (from 8 to
-+			 * Max Input HopID of the adapter).
-+			 */
-+			if (tb_port_is_null(port) && !tb_is_upstream_port(port)) {
-+				ret = tb_port_reset(port);
-+				if (ret)
-+					return ret;
-+			} else if (tb_port_is_usb3_down(port) ||
-+				   tb_port_is_usb3_up(port)) {
-+				tb_usb3_port_enable(port, false);
-+			} else if (tb_port_is_dpin(port) ||
-+				   tb_port_is_dpout(port)) {
-+				tb_dp_port_enable(port, false);
-+			} else if (tb_port_is_pcie_down(port) ||
-+				   tb_port_is_pcie_up(port)) {
-+				tb_pci_port_enable(port, false);
-+			} else {
-+				continue;
-+			}
-+
-+			/* Cleanup path config space of protocol adapter */
-+			for (i = TB_PATH_MIN_HOPID;
-+			     i <= port->config.max_in_hop_id; i++) {
-+				ret = tb_path_deactivate_hop(port, i);
-+				if (ret)
-+					return ret;
-+			}
-+		}
++	/*
++	 * Boot firmware might have created tunnels of its own. Since we
++	 * cannot be sure they are usable for us, tear them down and
++	 * reset the ports to handle it as new hotplug for USB4 v1
++	 * routers (for USB4 v2 and beyond we already do host reset).
++	 */
++	if (reset && usb4_switch_version(tb->root_switch) == 1) {
++		tb_switch_reset(tb->root_switch);
 +	} else {
-+		struct tb_cfg_result res;
-+
-+		/* Thunderbolt 1 uses the "reset" config space packet */
-+		res.err = tb_sw_write(sw, ((u32 *) &sw->config) + 2,
-+				      TB_CFG_SWITCH, 2, 2);
-+		if (res.err)
-+			return res.err;
-+		res = tb_cfg_reset(sw->tb->ctl, tb_route(sw));
-+		if (res.err > 0)
-+			return -EIO;
-+		else if (res.err < 0)
-+			return res.err;
++		/* Full scan to discover devices added before the driver was loaded. */
++		tb_scan_switch(tb->root_switch);
++		/* Find out tunnels created by the boot firmware */
++		tb_discover_tunnels(tb);
++		/* Add DP resources from the DP tunnels created by the boot firmware */
++		tb_discover_dp_resources(tb);
 +	}
 +
-+	return 0;
-+}
-+
-+static int tb_switch_reset_device(struct tb_switch *sw)
-+{
-+	return tb_port_reset(tb_switch_downstream_port(sw));
-+}
-+
-+static bool tb_switch_enumerated(struct tb_switch *sw)
-+{
-+	u32 val;
-+	int ret;
-+
-+	/*
-+	 * Read directly from the hardware because we use this also
-+	 * during system sleep where sw->config.enabled is already set
-+	 * by us.
-+	 */
-+	ret = tb_sw_read(sw, &val, TB_CFG_SWITCH, ROUTER_CS_3, 1);
-+	if (ret)
-+		return false;
-+
-+	return !!(val & ROUTER_CS_3_V);
-+}
-+
- /**
-- * tb_switch_reset() - reconfigure route, enable and send TB_CFG_PKG_RESET
-- * @sw: Switch to reset
-+ * tb_switch_reset() - Perform reset to the router
-+ * @sw: Router to reset
-+ *
-+ * Issues reset to the router @sw. Can be used for any router. For host
-+ * routers, resets all the downstream ports and cleans up path config
-+ * spaces accordingly. For device routers issues downstream port reset
-+ * through the parent router, so as side effect there will be unplug
-+ * soon after this is finished.
-+ *
-+ * If the router is not enumerated does nothing.
-  *
-- * Return: Returns 0 on success or an error code on failure.
-+ * Returns %0 on success or negative errno in case of failure.
+ 	/*
+ 	 * If the boot firmware did not create USB 3.x tunnels create them
+ 	 * now for the whole topology.
+--- a/drivers/thunderbolt/tb.h
++++ b/drivers/thunderbolt/tb.h
+@@ -488,7 +488,7 @@ struct tb_path {
   */
- int tb_switch_reset(struct tb_switch *sw)
- {
--	struct tb_cfg_result res;
-+	int ret;
+ struct tb_cm_ops {
+ 	int (*driver_ready)(struct tb *tb);
+-	int (*start)(struct tb *tb);
++	int (*start)(struct tb *tb, bool reset);
+ 	void (*stop)(struct tb *tb);
+ 	int (*suspend_noirq)(struct tb *tb);
+ 	int (*resume_noirq)(struct tb *tb);
+@@ -735,7 +735,7 @@ int tb_xdomain_init(void);
+ void tb_xdomain_exit(void);
  
--	if (sw->generation > 1)
-+	/*
-+	 * We cannot access the port config spaces unless the router is
-+	 * already enumerated. If the router is not enumerated it is
-+	 * equal to being reset so we can skip that here.
-+	 */
-+	if (!tb_switch_enumerated(sw))
- 		return 0;
- 
--	tb_sw_dbg(sw, "resetting switch\n");
-+	tb_sw_dbg(sw, "resetting\n");
-+
-+	if (tb_route(sw))
-+		ret = tb_switch_reset_device(sw);
-+	else
-+		ret = tb_switch_reset_host(sw);
-+
-+	if (ret)
-+		tb_sw_warn(sw, "failed to reset\n");
- 
--	res.err = tb_sw_write(sw, ((u32 *) &sw->config) + 2,
--			      TB_CFG_SWITCH, 2, 2);
--	if (res.err)
--		return res.err;
--	res = tb_cfg_reset(sw->tb->ctl, tb_route(sw));
--	if (res.err > 0)
--		return -EIO;
--	return res.err;
-+	return ret;
- }
- 
- /**
---- a/drivers/thunderbolt/tb_regs.h
-+++ b/drivers/thunderbolt/tb_regs.h
-@@ -194,6 +194,8 @@ struct tb_regs_switch_header {
- #define USB4_VERSION_MAJOR_MASK			GENMASK(7, 5)
- 
- #define ROUTER_CS_1				0x01
-+#define ROUTER_CS_3				0x03
-+#define ROUTER_CS_3_V				BIT(31)
- #define ROUTER_CS_4				0x04
- /* Used with the router cmuv field */
- #define ROUTER_CS_4_CMUV_V1			0x10
+ struct tb *tb_domain_alloc(struct tb_nhi *nhi, int timeout_msec, size_t privsize);
+-int tb_domain_add(struct tb *tb);
++int tb_domain_add(struct tb *tb, bool reset);
+ void tb_domain_remove(struct tb *tb);
+ int tb_domain_suspend_noirq(struct tb *tb);
+ int tb_domain_resume_noirq(struct tb *tb);
 
 
