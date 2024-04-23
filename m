@@ -1,88 +1,265 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F8419BBA;
-	Tue, 23 Apr 2024 15:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CBF13E3FA;
+	Tue, 23 Apr 2024 18:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713884852; cv=none; b=aPHKOXAyU7YqbeSz8xD0f6Mqi7uGY1DRY9GGYWJ7TvpbsK/F/PitkrZ4eFNqRY4lEUKFPSTFP/BZ4wM/01bTuS90maQD1mc9kw39nIVqGzZhbv06b5v739VOJ5ZjG+jX4T99LnwmgAggs0bhWs6YOhlmu6rEWp/a+PAcfmTmsf0=
+	t=1713898699; cv=none; b=SlnlGewThw+U9qVdFy1RX43YY3unmBS3YAeF12nb2NyS1Xi70kZQXPTIbKajCPRWqry1BPb8rEM1q/sb6B/hZrZHxHAeXSGe5ajm6o83Bw2cMksaFE/K5SE5fWXiR5wcGWbHi8U0GdsaT/qF2ZlbynBEnKuT9Tu8AsSwRekfjE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713884852; c=relaxed/simple;
-	bh=AKBMobjYQ6x2TD8CDoee3DGcDXyOQQFoITtQ9pcukvM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H3JPs/I4dVDuIk1SXkIWbB+D+bEd+sBDylWj+taQY1OBcB54jzv0ohAHY7CF5K6i1Xp+K3Lzxd79+cO+qxLf4/J9O9cAqeyrHl12ElTw0cpgskJHYgyUEA6uxGlf6+qQPqjsCFaT/nMWZIwhDoWAyLildsgVNPqyJCBrZafeNYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kQBQOBcU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713898699; c=relaxed/simple;
+	bh=JtyVKDcukUiMNjeUYyQLDUrnZURfO/x78P+1H9cY32g=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=sVjtcm2ORDc71k6b2XugHHDjIqfyujRT2jE9m7hiK4nMD4AEQfHoqK8vA1joWU7JeWQ1iDYCuX58LjsZk80hBeiYQ46uPGRqXzB4op2C3lTpJczPVv4a7WNIoGJDOgQMjpOHIjT+743Dr0LQTef2+dyVttiGel7GuwOjx3ZDokI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nnEujHg0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kQBQOBcU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B495EC116B1;
-	Tue, 23 Apr 2024 15:07:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nnEujHg0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483BDC116B1;
+	Tue, 23 Apr 2024 18:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713884850;
-	bh=AKBMobjYQ6x2TD8CDoee3DGcDXyOQQFoITtQ9pcukvM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kQBQOBcUB6DxFRkYRr4oNjwNyRODpE0Md48n7Zb5oTuNNRbDZF1TEs9RIkhLA6W1l
-	 DSgBijpsweTdM2j/Dfr+WbeASNgDWuKI+e02uweWMyuuokfPMtmRWSNCJvydqf2WB7
-	 eOIS0r7XygtdDHoNheYn+zXRtQLN+k9acEerv0Zu8DoXhV+BZbMJS7RrOcCblXz+ED
-	 N5KIIWqVP65av1QQnC2YMgPNcHG5Un82QZ7hF1amdgrDpC7Djd95mFyTridA8TUi0X
-	 2sXEs3ag78ZSlhgUTRma6tbt7t/BuuBmUa3OBQiOisRU1iGBpa8Cvzux/5OwEmX2nR
-	 TFnYqAXwI1BfQ==
-Date: Tue, 23 Apr 2024 10:07:28 -0500
-From: Rob Herring <robh@kernel.org>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, devicetree@vger.kernel.org,
-	Rae Moar <rmoar@google.com>, patches@lists.linux.dev,
-	kunit-dev@googlegroups.com,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	"Rafael J . Wysocki" <rafael@kernel.org>,
-	linux-kernel@vger.kernel.org, David Gow <davidgow@google.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-clk@vger.kernel.org, Daniel Latypov <dlatypov@google.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	linux-kselftest@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Maxime Ripard <maxime@cerno.tech>,
-	Saravana Kannan <saravanak@google.com>
-Subject: Re: [PATCH v4 04/10] of: Add a KUnit test for overlays and test
- managed APIs
-Message-ID: <171388483531.238610.10285255210612947227.robh@kernel.org>
-References: <20240422232404.213174-1-sboyd@kernel.org>
- <20240422232404.213174-5-sboyd@kernel.org>
+	s=k20201202; t=1713898698;
+	bh=JtyVKDcukUiMNjeUYyQLDUrnZURfO/x78P+1H9cY32g=;
+	h=From:Date:Subject:To:Cc:From;
+	b=nnEujHg0rYPIf1TszblUkm+/9Y9UHg1M/8ohbLraunc0UopqOMjLsX0tWH2j+Fimi
+	 Ei2GrMd2wRL7rkfDkJwBD1gyEDQMv8oZPm9cwSVpaDYx9OZqrGxENGtX0OpEfxtbxg
+	 FcoBbVDI2kjLUDQyUZPoND9b4gDvh9vdaE62ueg03TM1aaOrDh0k24C3gZjYM5Uflr
+	 z8w0pao4/TC3odim0tfE7p+Ezhrwat7EezEN8pQWmGdzPj4iSxHU/UAdH51tUupoM1
+	 rygKU9yvQJCMuv8r7vDdKsY57BKvmAtSm4sYEJOA7Tr4UDDLBw0+kCrCBEidu7ETqU
+	 /R+ls0PhxzwVA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 23 Apr 2024 11:58:09 -0700
+Subject: [PATCH] bcachefs: Fix type of flags parameter for some ->trigger()
+ implementations
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240422232404.213174-5-sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240423-bcachefs-fix-wifpts-iter_update_trigger_flags-v1-1-c6a521821863@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAMAEKGYC/x3N3QrCMAyG4VsZOTZQ69zEWxEZbZd2AZklqT8wd
+ u8GD5+D9/s2UBImhWu3gdCblZ+r4XjoIC1hLYQ8m8E737venzCmkBbKipm/+OFcmyI3kulV59B
+ oasKlGPMjFMVxHC4+xIHi2YFtViHr/n+3+77/ACQuEvZ/AAAA
+To: kent.overstreet@linux.dev
+Cc: bfoster@redhat.com, linux-bcachefs@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9598; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=JtyVKDcukUiMNjeUYyQLDUrnZURfO/x78P+1H9cY32g=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGkaLKf+3psbvJLhrO2ay0J/3ryaX3eqIW9Vstb/Ax07r
+ n4+8U7kRUcpC4MYF4OsmCJL9WPV44aGc84y3jg1CWYOKxPIEAYuTgGYyFs+RoYJdXOsvTti27Yc
+ 3GNyVNp9ybnK3c+fPbHt6uWuNveoyjjB8N/VonK9RMNU1lnzb25K5bikn+L16f+0uXG696+s2uJ
+ p9JMPAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
+When building with clang's -Wincompatible-function-pointer-types-strict
+(a warning designed to catch potential kCFI failures at build time),
+there are several warnings along the lines of:
 
-On Mon, 22 Apr 2024 16:23:57 -0700, Stephen Boyd wrote:
-> Test the KUnit test managed overlay APIs. Confirm that platform devices
-> are created and destroyed properly. This provides us confidence that the
-> test managed APIs work correctly and can be relied upon to provide tests
-> with fake platform devices and device nodes via overlays compiled into
-> the kernel image.
-> 
-> Cc: Rob Herring <robh@kernel.org>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Cc: Daniel Latypov <dlatypov@google.com>
-> Cc: Brendan Higgins <brendan.higgins@linux.dev>
-> Cc: David Gow <davidgow@google.com>
-> Cc: Rae Moar <rmoar@google.com>
-> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> ---
->  drivers/of/.kunitconfig            |   1 +
->  drivers/of/Kconfig                 |  10 +++
->  drivers/of/Makefile                |   1 +
->  drivers/of/kunit_overlay_test.dtso |   9 +++
->  drivers/of/overlay_test.c          | 115 +++++++++++++++++++++++++++++
->  5 files changed, 136 insertions(+)
->  create mode 100644 drivers/of/kunit_overlay_test.dtso
->  create mode 100644 drivers/of/overlay_test.c
-> 
+  fs/bcachefs/bkey_methods.c:118:2: error: incompatible function pointer types initializing 'int (*)(struct btree_trans *, enum btree_id, unsigned int, struct bkey_s_c, struct bkey_s, enum btree_iter_update_trigger_flags)' with an expression of type 'int (struct btree_trans *, enum btree_id, unsigned int, struct bkey_s_c, struct bkey_s, unsigned int)' [-Werror,-Wincompatible-function-pointer-types-strict]
+    118 |         BCH_BKEY_TYPES()
+        |         ^~~~~~~~~~~~~~~~
+  fs/bcachefs/bcachefs_format.h:394:2: note: expanded from macro 'BCH_BKEY_TYPES'
+    394 |         x(inode,                8)                      \
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~
+  fs/bcachefs/bkey_methods.c:117:41: note: expanded from macro 'x'
+    117 | #define x(name, nr) [KEY_TYPE_##name]   = bch2_bkey_ops_##name,
+        |                                           ^~~~~~~~~~~~~~~~~~~~
+  <scratch space>:277:1: note: expanded from here
+    277 | bch2_bkey_ops_inode
+        | ^~~~~~~~~~~~~~~~~~~
+  fs/bcachefs/inode.h:26:13: note: expanded from macro 'bch2_bkey_ops_inode'
+     26 |         .trigger        = bch2_trigger_inode,           \
+      |                           ^~~~~~~~~~~~~~~~~~
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+There are several functions that did not have their flags parameter
+converted to 'enum btree_iter_update_trigger_flags' in the recent
+unification, which will cause kCFI failures at runtime because the
+types, while ABI compatible (hence no warning from the non-strict
+version of this warning), do not match exactly.
+
+Fix up these functions (as well as a few other obvious functions that
+should have it, even if there are no warnings currently) to resolve the
+warnings and potential kCFI runtime failures.
+
+Fixes: 31e4ef3280c8 ("bcachefs: iter/update/trigger/str_hash flag cleanup")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ fs/bcachefs/alloc_background.c | 2 +-
+ fs/bcachefs/alloc_background.h | 3 ++-
+ fs/bcachefs/inode.c            | 2 +-
+ fs/bcachefs/inode.h            | 3 ++-
+ fs/bcachefs/reflink.c          | 6 ++++--
+ fs/bcachefs/reflink.h          | 2 +-
+ fs/bcachefs/snapshot.c         | 4 ++--
+ fs/bcachefs/snapshot.h         | 3 ++-
+ fs/bcachefs/subvolume.c        | 2 +-
+ fs/bcachefs/subvolume.h        | 3 ++-
+ 10 files changed, 18 insertions(+), 12 deletions(-)
+
+diff --git a/fs/bcachefs/alloc_background.c b/fs/bcachefs/alloc_background.c
+index 5de564baa61e..a66575c1be07 100644
+--- a/fs/bcachefs/alloc_background.c
++++ b/fs/bcachefs/alloc_background.c
+@@ -724,7 +724,7 @@ static noinline int bch2_bucket_gen_update(struct btree_trans *trans,
+ int bch2_trigger_alloc(struct btree_trans *trans,
+ 		       enum btree_id btree, unsigned level,
+ 		       struct bkey_s_c old, struct bkey_s new,
+-		       unsigned flags)
++		       enum btree_iter_update_trigger_flags flags)
+ {
+ 	struct bch_fs *c = trans->c;
+ 	int ret = 0;
+diff --git a/fs/bcachefs/alloc_background.h b/fs/bcachefs/alloc_background.h
+index f9589a2c7a1f..b1224e27eb18 100644
+--- a/fs/bcachefs/alloc_background.h
++++ b/fs/bcachefs/alloc_background.h
+@@ -228,7 +228,8 @@ static inline bool bkey_is_alloc(const struct bkey *k)
+ int bch2_alloc_read(struct bch_fs *);
+ 
+ int bch2_trigger_alloc(struct btree_trans *, enum btree_id, unsigned,
+-		       struct bkey_s_c, struct bkey_s, unsigned);
++		       struct bkey_s_c, struct bkey_s,
++		       enum btree_iter_update_trigger_flags);
+ int bch2_check_alloc_info(struct bch_fs *);
+ int bch2_check_alloc_to_lru_refs(struct bch_fs *);
+ void bch2_do_discards(struct bch_fs *);
+diff --git a/fs/bcachefs/inode.c b/fs/bcachefs/inode.c
+index f0da2b0048cc..cb69a94771ec 100644
+--- a/fs/bcachefs/inode.c
++++ b/fs/bcachefs/inode.c
+@@ -594,7 +594,7 @@ int bch2_trigger_inode(struct btree_trans *trans,
+ 		       enum btree_id btree_id, unsigned level,
+ 		       struct bkey_s_c old,
+ 		       struct bkey_s new,
+-		       unsigned flags)
++		       enum btree_iter_update_trigger_flags flags)
+ {
+ 	s64 nr = bkey_is_inode(new.k) - bkey_is_inode(old.k);
+ 
+diff --git a/fs/bcachefs/inode.h b/fs/bcachefs/inode.h
+index 08e8505dfa33..46477a40846c 100644
+--- a/fs/bcachefs/inode.h
++++ b/fs/bcachefs/inode.h
+@@ -18,7 +18,8 @@ int bch2_inode_v3_invalid(struct bch_fs *, struct bkey_s_c,
+ void bch2_inode_to_text(struct printbuf *, struct bch_fs *, struct bkey_s_c);
+ 
+ int bch2_trigger_inode(struct btree_trans *, enum btree_id, unsigned,
+-			  struct bkey_s_c, struct bkey_s, unsigned);
++		       struct bkey_s_c, struct bkey_s,
++		       enum btree_iter_update_trigger_flags);
+ 
+ #define bch2_bkey_ops_inode ((struct bkey_ops) {	\
+ 	.key_invalid	= bch2_inode_invalid,		\
+diff --git a/fs/bcachefs/reflink.c b/fs/bcachefs/reflink.c
+index a0cf5d97513f..be9bec27be17 100644
+--- a/fs/bcachefs/reflink.c
++++ b/fs/bcachefs/reflink.c
+@@ -282,7 +282,9 @@ bool bch2_reflink_v_merge(struct bch_fs *c, struct bkey_s _l, struct bkey_s_c _r
+ }
+ #endif
+ 
+-static inline void check_indirect_extent_deleting(struct bkey_s new, unsigned *flags)
++static inline void
++check_indirect_extent_deleting(struct bkey_s new,
++			       enum btree_iter_update_trigger_flags *flags)
+ {
+ 	if ((*flags & BTREE_TRIGGER_insert) && !*bkey_refcount(new)) {
+ 		new.k->type = KEY_TYPE_deleted;
+@@ -327,7 +329,7 @@ void bch2_indirect_inline_data_to_text(struct printbuf *out,
+ int bch2_trigger_indirect_inline_data(struct btree_trans *trans,
+ 			      enum btree_id btree_id, unsigned level,
+ 			      struct bkey_s_c old, struct bkey_s new,
+-			      unsigned flags)
++			      enum btree_iter_update_trigger_flags flags)
+ {
+ 	check_indirect_extent_deleting(new, &flags);
+ 
+diff --git a/fs/bcachefs/reflink.h b/fs/bcachefs/reflink.h
+index e34c4bdf7a76..59d4dbae3fb1 100644
+--- a/fs/bcachefs/reflink.h
++++ b/fs/bcachefs/reflink.h
+@@ -44,7 +44,7 @@ void bch2_indirect_inline_data_to_text(struct printbuf *,
+ int bch2_trigger_indirect_inline_data(struct btree_trans *,
+ 					 enum btree_id, unsigned,
+ 			      struct bkey_s_c, struct bkey_s,
+-			      unsigned);
++			      enum btree_iter_update_trigger_flags);
+ 
+ #define bch2_bkey_ops_indirect_inline_data ((struct bkey_ops) {	\
+ 	.key_invalid	= bch2_indirect_inline_data_invalid,	\
+diff --git a/fs/bcachefs/snapshot.c b/fs/bcachefs/snapshot.c
+index 0b26dee17a5a..2368218070d4 100644
+--- a/fs/bcachefs/snapshot.c
++++ b/fs/bcachefs/snapshot.c
+@@ -298,7 +298,7 @@ static void set_is_ancestor_bitmap(struct bch_fs *c, u32 id)
+ static int __bch2_mark_snapshot(struct btree_trans *trans,
+ 		       enum btree_id btree, unsigned level,
+ 		       struct bkey_s_c old, struct bkey_s_c new,
+-		       unsigned flags)
++		       enum btree_iter_update_trigger_flags flags)
+ {
+ 	struct bch_fs *c = trans->c;
+ 	struct snapshot_t *t;
+@@ -352,7 +352,7 @@ static int __bch2_mark_snapshot(struct btree_trans *trans,
+ int bch2_mark_snapshot(struct btree_trans *trans,
+ 		       enum btree_id btree, unsigned level,
+ 		       struct bkey_s_c old, struct bkey_s new,
+-		       unsigned flags)
++		       enum btree_iter_update_trigger_flags flags)
+ {
+ 	return __bch2_mark_snapshot(trans, btree, level, old, new.s_c, flags);
+ }
+diff --git a/fs/bcachefs/snapshot.h b/fs/bcachefs/snapshot.h
+index ccb1f309b8d1..b3c43d579540 100644
+--- a/fs/bcachefs/snapshot.h
++++ b/fs/bcachefs/snapshot.h
+@@ -22,7 +22,8 @@ void bch2_snapshot_to_text(struct printbuf *, struct bch_fs *, struct bkey_s_c);
+ int bch2_snapshot_invalid(struct bch_fs *, struct bkey_s_c,
+ 			  enum bkey_invalid_flags, struct printbuf *);
+ int bch2_mark_snapshot(struct btree_trans *, enum btree_id, unsigned,
+-		       struct bkey_s_c, struct bkey_s, unsigned);
++		       struct bkey_s_c, struct bkey_s,
++		       enum btree_iter_update_trigger_flags);
+ 
+ #define bch2_bkey_ops_snapshot ((struct bkey_ops) {		\
+ 	.key_invalid	= bch2_snapshot_invalid,		\
+diff --git a/fs/bcachefs/subvolume.c b/fs/bcachefs/subvolume.c
+index 33292dae4d50..3341285e7531 100644
+--- a/fs/bcachefs/subvolume.c
++++ b/fs/bcachefs/subvolume.c
+@@ -245,7 +245,7 @@ static int subvolume_children_mod(struct btree_trans *trans, struct bpos pos, bo
+ int bch2_subvolume_trigger(struct btree_trans *trans,
+ 			   enum btree_id btree_id, unsigned level,
+ 			   struct bkey_s_c old, struct bkey_s new,
+-			   unsigned flags)
++			   enum btree_iter_update_trigger_flags flags)
+ {
+ 	if (flags & BTREE_TRIGGER_transactional) {
+ 		struct bpos children_pos_old = subvolume_children_pos(old);
+diff --git a/fs/bcachefs/subvolume.h b/fs/bcachefs/subvolume.h
+index d2015d549bd2..1530a10327ab 100644
+--- a/fs/bcachefs/subvolume.h
++++ b/fs/bcachefs/subvolume.h
+@@ -14,7 +14,8 @@ int bch2_subvolume_invalid(struct bch_fs *, struct bkey_s_c,
+ 			   enum bkey_invalid_flags, struct printbuf *);
+ void bch2_subvolume_to_text(struct printbuf *, struct bch_fs *, struct bkey_s_c);
+ int bch2_subvolume_trigger(struct btree_trans *, enum btree_id, unsigned,
+-			   struct bkey_s_c, struct bkey_s, unsigned);
++			   struct bkey_s_c, struct bkey_s,
++			   enum btree_iter_update_trigger_flags);
+ 
+ #define bch2_bkey_ops_subvolume ((struct bkey_ops) {		\
+ 	.key_invalid	= bch2_subvolume_invalid,		\
+
+---
+base-commit: 711f072a8f7f795e63c4f729cc258ba238851333
+change-id: 20240423-bcachefs-fix-wifpts-iter_update_trigger_flags-77682ab6eb50
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
