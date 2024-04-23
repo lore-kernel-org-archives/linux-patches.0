@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7B6143890;
-	Tue, 23 Apr 2024 21:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F07143882;
+	Tue, 23 Apr 2024 21:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908467; cv=none; b=JqS1O1G5Dph+jG9g2iB904rwTP9BwjksB6JwWqQEyuhxZ1a1BAHhVr1fJLmHfR/C6sVQR/2z8Xv8vXteVLFqw162za0c4xtA4Ot+4qIqKgpbm8tq1A9D4tTU6GzbqtVMSZatxTMPcdzq7r3kkbPetCLO+c4CDXTmLPSBjbrQ8LY=
+	t=1713908468; cv=none; b=oVHzMl+hfQ9Y/NtWyK+qc+8mFoVz8AajLwiD+lMT7Lqpey04BQ6YJHBz8dQ2fV+4OUeoUWXcCyCNcDVPfhJYf8Sgb1MJceqmUIPVjTWd7AE4lAfbZ1m9+O6KMl29bktZXxKCbThdTgkH/l447OJd5B+xUC2mqAStfJCW6twYJE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908467; c=relaxed/simple;
-	bh=3rYUHZtKwxbVROFCr5O1eOoes2rwalcigOlFeLCL8+4=;
+	s=arc-20240116; t=1713908468; c=relaxed/simple;
+	bh=fyUT3hfBtaCKWlCqdPgTGryVzD/rMUA2GpXYmiISMQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XIh+XQUm1MfmLrW/1lwcv3QNAHLaHYeBG16mfjNsyycbaXthtxC3z32F85KWya1Idmh1x6cqR3EOdDq91Mxkd1jqzINcfV33OIUTX5hQpfiqbGzOauWIdB7orJpLQYxS/+hRVPs4Em4ucg8iX5laubxfNHDa35TRswOHkIuYFWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBz9U1BG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DZeqtRtzwgz+Ou6WFO/5wHvpOiHRQr5kv7q7TWZYGOdHkAB0Zh/SvH09PKAhDnqMzMN0zzqWd2ctQPFPOd95L2kuAMITh86uoaExUn56HAuBzDIN+W56i5iBUGu0M/if7Dxz5JO30LoMs7H1V2WW0oO27wuLBJYglh9NqCPVFVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NO4vU45c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBz9U1BG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10ED9C3277B;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NO4vU45c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D1DC116B1;
 	Tue, 23 Apr 2024 21:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908467;
-	bh=3rYUHZtKwxbVROFCr5O1eOoes2rwalcigOlFeLCL8+4=;
+	bh=fyUT3hfBtaCKWlCqdPgTGryVzD/rMUA2GpXYmiISMQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cBz9U1BGSZYJEt/PJ7TpgqYVszbPh4W5LK+xEIXO5fYf78V7r8VBeYDn1K60jGOQe
-	 Z9RQhPC4tKA/XH5+cLosLFImWKVzhr8URnH8fleszyorTsbAF7W8HAREXwU6liqseN
-	 geAwdaz/1SNEUkXu3sXsHJ3fbzFXMCn7TNkQ80LI=
+	b=NO4vU45cFanRwHUF9NyfvChFdTOKBy1Bb9XHdIhKozYMCJNy28g9UGGyuLF4uoNMk
+	 Kwu/rxqqwR3xbthpAS0+t5GmeFYl/4CdpRRilEjyexkHq5VXSWsanxyQ5+sXBkE09b
+	 HzU2xLq4BJEnKgCiIi1hRd2SJdniUgIh1VXHHOo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.8 007/158] scsi: core: Fix handling of SCMD_FAIL_IF_RECOVERING
-Date: Tue, 23 Apr 2024 14:37:09 -0700
-Message-ID: <20240423213856.076960819@linuxfoundation.org>
+	Jarkko Palviainen <jarkko.palviainen@gmail.com>,
+	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.8 008/158] net: usb: ax88179_178a: avoid writing the mac address before first reading
+Date: Tue, 23 Apr 2024 14:37:10 -0700
+Message-ID: <20240423213856.112455477@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -50,40 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-commit ca91259b775f6fd98ae5d23bb4eec101d468ba8d upstream.
+commit 56f78615bcb1c3ba58a5d9911bad3d9185cf141b upstream.
 
-There is code in the SCSI core that sets the SCMD_FAIL_IF_RECOVERING
-flag but there is no code that clears this flag. Instead of only clearing
-SCMD_INITIALIZED in scsi_end_request(), clear all flags. It is never
-necessary to preserve any command flags inside scsi_end_request().
+After the commit d2689b6a86b9 ("net: usb: ax88179_178a: avoid two
+consecutive device resets"), reset operation, in which the default mac
+address from the device is read, is not executed from bind operation and
+the random address, that is pregenerated just in case, is direclty written
+the first time in the device, so the default one from the device is not
+even read. This writing is not dangerous because is volatile and the
+default mac address is not missed.
 
-Cc: stable@vger.kernel.org
-Fixes: 310bcaef6d7e ("scsi: core: Support failing requests while recovering")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20240325224417.1477135-1-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+In order to avoid this and keep the simplification to have only one
+reset and reduce the delays, restore the reset from bind operation and
+remove the reset that is commanded from open operation. The behavior is
+the same but everything is ready for usbnet_probe.
+
+Tested with ASIX AX88179 USB Gigabit Ethernet devices.
+Restore the old behavior for the rest of possible devices because I don't
+have the hardware to test.
+
+cc: stable@vger.kernel.org # 6.6+
+Fixes: d2689b6a86b9 ("net: usb: ax88179_178a: avoid two consecutive device resets")
+Reported-by: Jarkko Palviainen <jarkko.palviainen@gmail.com>
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Link: https://lore.kernel.org/r/20240417085524.219532-1-jtornosm@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_lib.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/usb/ax88179_178a.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -543,10 +543,9 @@ static bool scsi_end_request(struct requ
- 	if (blk_queue_add_random(q))
- 		add_disk_randomness(req->q->disk);
+--- a/drivers/net/usb/ax88179_178a.c
++++ b/drivers/net/usb/ax88179_178a.c
+@@ -1317,6 +1317,8 @@ static int ax88179_bind(struct usbnet *d
  
--	if (!blk_rq_is_passthrough(req)) {
--		WARN_ON_ONCE(!(cmd->flags & SCMD_INITIALIZED));
--		cmd->flags &= ~SCMD_INITIALIZED;
--	}
-+	WARN_ON_ONCE(!blk_rq_is_passthrough(req) &&
-+		     !(cmd->flags & SCMD_INITIALIZED));
-+	cmd->flags = 0;
+ 	netif_set_tso_max_size(dev->net, 16384);
  
- 	/*
- 	 * Calling rcu_barrier() is not necessary here because the
++	ax88179_reset(dev);
++
+ 	return 0;
+ }
+ 
+@@ -1695,7 +1697,6 @@ static const struct driver_info ax88179_
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset = ax88179_reset,
+ 	.stop = ax88179_stop,
+ 	.flags = FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
+@@ -1708,7 +1709,6 @@ static const struct driver_info ax88178a
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset = ax88179_reset,
+ 	.stop = ax88179_stop,
+ 	.flags = FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
 
 
