@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15311143889;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8FF4143889;
 	Tue, 23 Apr 2024 21:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908591; cv=none; b=CwYUq3NmXma5buuekoAiHK6L+Ti3AiNxYtCRQoPsBmY6jP1w500T1TlPg1s2BtnaXRRl0NaY/POQfyzraTe6r36zNl0W7Z/yz+yf6dQnWjbiwmUF9/42vNmm63MgoPovcncDpbHQe4YI+K3xphp0XCzMvBktt3CA27UZL8zEmxs=
+	t=1713908591; cv=none; b=Hr3kJu/A1fm0tHAnX61Wo9gWEW/eDWXl12b+i6W9Su1HSPrVHao0IE64bolRrlBqqsy3dK8x63IHZQVLD1gZ9XWSZl9Yb7m4wlqwEjdv+FJOAj6IBcSbv4XtiY/7vw2WhJTWMgrZFsWTw/i1j3vztRQqatR4WMKGjjC2apgj6qM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908591; c=relaxed/simple;
-	bh=Zo6C0NzIp4kzncTAnAH0pcT8HxFndaZgLA9sjmN9mCw=;
+	bh=yKA9sGgw9uM3qal9s57f3o5GglN8vRr+MehprDlCesw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2I9ugHfVqpk+2h3PFOv8vAPmkVDNFctMgnFptAQnAX2QUwnLqYYUEVTAO7U/KeKQ0IxsFvuvKBt8UVn8i1mPfYhcDNsZYXWl30sVyVWNh06vRSCzUMBt6bQS02xtbY4MP9wDSOp2z/JncxdK6moIIuyD8ZcQSKuXfgVcXxk+m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6ZI5x1r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QHle1h7EVmewb8afhUwIgUR7vHH+v10676maq9R+R/R5wirx6Oy46FT9HdPCw71MKy8KRqWe9lFIqrKWUMLG3w09mzOGp0iAnlm6gwg8N5a4cyI33UgwN5HKyKGjG+0g9ME3q4bNl7otCVoyiyk4M1o33zQLxIp4510L3uuGzus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJU1BGvZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6ZI5x1r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5459C3277B;
-	Tue, 23 Apr 2024 21:43:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJU1BGvZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9ACC4AF08;
+	Tue, 23 Apr 2024 21:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908590;
-	bh=Zo6C0NzIp4kzncTAnAH0pcT8HxFndaZgLA9sjmN9mCw=;
+	s=korg; t=1713908591;
+	bh=yKA9sGgw9uM3qal9s57f3o5GglN8vRr+MehprDlCesw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e6ZI5x1ruRu799lK1QErAzekoEWd0Qq5pvyOUr0SnCAov3t9G37eQKimKoYL1t4AW
-	 SEhhr9z7y+2oXklF3tj2e1u0HBL6+8a/GXiAQptD4tLv4aZfTt4x/+DG6M0/LK56LJ
-	 hfVJWfFWC/7KgT6I4Iut++jD8M+k4l8/AmNeWQ9E=
+	b=RJU1BGvZ9VsCZL+0nmPLaVTd54Sgd7ZnQbR+gSg98NQhQ4htKAjgGVNpETDq8MNft
+	 BH3oCBOW11mHjw5Xt9Pl1S6j1OkbFMG/D8AL64oWVg+xY1Up6y3yzwUEOxlpR/oMwu
+	 TwTV1ZMLuKQM+zl3d4ROv/M/QDdkMZGpwINS8PwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Dillon Varone <dillon.varone@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Yuri Benditovich <yuri.benditovich@daynix.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 016/158] drm/amd/display: Do not recursively call manual trigger programming
-Date: Tue, 23 Apr 2024 14:37:33 -0700
-Message-ID: <20240423213856.243448160@linuxfoundation.org>
+Subject: [PATCH 6.6 044/158] net: change maximum number of UDP segments to 128
+Date: Tue, 23 Apr 2024 14:38:01 -0700
+Message-ID: <20240423213857.204028752@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -53,38 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dillon Varone <dillon.varone@amd.com>
+From: Yuri Benditovich <yuri.benditovich@daynix.com>
 
-[ Upstream commit 953927587f37b731abdeabe46ad44a3b3ec67a52 ]
+[ Upstream commit 1382e3b6a3500c245e5278c66d210c02926f804f ]
 
-[WHY&HOW]
-We should not be recursively calling the manual trigger programming function when
-FAMS is not in use.
+The commit fc8b2a619469
+("net: more strict VIRTIO_NET_HDR_GSO_UDP_L4 validation")
+adds check of potential number of UDP segments vs
+UDP_MAX_SEGMENTS in linux/virtio_net.h.
+After this change certification test of USO guest-to-guest
+transmit on Windows driver for virtio-net device fails,
+for example with packet size of ~64K and mss of 536 bytes.
+In general the USO should not be more restrictive than TSO.
+Indeed, in case of unreasonably small mss a lot of segments
+can cause queue overflow and packet loss on the destination.
+Limit of 128 segments is good for any practical purpose,
+with minimal meaningful mss of 536 the maximal UDP packet will
+be divided to ~120 segments.
+The number of segments for UDP packets is validated vs
+UDP_MAX_SEGMENTS also in udp.c (v4,v6), this does not affect
+quest-to-guest path but does affect packets sent to host, for
+example.
+It is important to mention that UDP_MAX_SEGMENTS is kernel-only
+define and not available to user mode socket applications.
+In order to request MSS smaller than MTU the applications
+just uses setsockopt with SOL_UDP and UDP_SEGMENT and there is
+no limitations on socket API level.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Dillon Varone <dillon.varone@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: fc8b2a619469 ("net: more strict VIRTIO_NET_HDR_GSO_UDP_L4 validation")
+Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c | 3 ---
- 1 file changed, 3 deletions(-)
+ include/linux/udp.h                  | 2 +-
+ tools/testing/selftests/net/udpgso.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
-index e817fa4efeee5..058dee76054ea 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
-@@ -236,9 +236,6 @@ static void optc32_setup_manual_trigger(struct timing_generator *optc)
- 				OTG_V_TOTAL_MAX_SEL, 1,
- 				OTG_FORCE_LOCK_ON_EVENT, 0,
- 				OTG_SET_V_TOTAL_MIN_MASK, (1 << 1)); /* TRIGA */
--
--		// Setup manual flow control for EOF via TRIG_A
--		optc->funcs->setup_manual_trigger(optc);
- 	}
- }
+diff --git a/include/linux/udp.h b/include/linux/udp.h
+index 94e63b2695406..00790bb5cbde6 100644
+--- a/include/linux/udp.h
++++ b/include/linux/udp.h
+@@ -105,7 +105,7 @@ struct udp_sock {
+ #define udp_assign_bit(nr, sk, val)		\
+ 	assign_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags, val)
  
+-#define UDP_MAX_SEGMENTS	(1 << 6UL)
++#define UDP_MAX_SEGMENTS	(1 << 7UL)
+ 
+ #define udp_sk(ptr) container_of_const(ptr, struct udp_sock, inet.sk)
+ 
+diff --git a/tools/testing/selftests/net/udpgso.c b/tools/testing/selftests/net/udpgso.c
+index 7badaf215de28..b02080d09fbc0 100644
+--- a/tools/testing/selftests/net/udpgso.c
++++ b/tools/testing/selftests/net/udpgso.c
+@@ -34,7 +34,7 @@
+ #endif
+ 
+ #ifndef UDP_MAX_SEGMENTS
+-#define UDP_MAX_SEGMENTS	(1 << 6UL)
++#define UDP_MAX_SEGMENTS	(1 << 7UL)
+ #endif
+ 
+ #define CONST_MTU_TEST	1500
 -- 
 2.43.0
 
