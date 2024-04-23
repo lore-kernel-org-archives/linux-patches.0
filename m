@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B137685274;
-	Tue, 23 Apr 2024 21:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6494C85274;
+	Tue, 23 Apr 2024 21:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908566; cv=none; b=KcNbLxtO3cXkolAPF4nTaOFJUGPQEufwiK25Z6lmYPM6q2+/1IC6jEMs3f0aQWsPdQjgCKFU7HDPvcQinmT+RBB3RzfKhMrZjMTGM+mUjcZ7zVgykM33mcjsPO1Urx5YY5h3ueweub9iRADB/cCSPJ9jaE8l7hL4GJWgtlIjImA=
+	t=1713908567; cv=none; b=cBuIhIurxO4fdzbxHGJSWPcs/tozWA6J0EUPLbO8dlz/Yj5OERcflPOMTsrXE3Rh0oovz8JBlITx4l7TSIQo0MYF4edaLZSLAhOASugTobqriNfD93g+B4r0wC0XJMZrGiSnRjVE3SHDJyjN4cJVWTqmtKD4LUgMlhsZzQ/D+cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908566; c=relaxed/simple;
-	bh=hAeCY1TlQ9Ofj1d4WZdla3xHeVLprb5H8LZz1X3xYv8=;
+	s=arc-20240116; t=1713908567; c=relaxed/simple;
+	bh=igbRRTy7T0K4FecNtEs5ykgYDI5c7JqaU//XFl68mGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YKnZmhfYiPFCPdQeSPJC7LQuGim+UlL3eCMwjHG0BhHckXSmrjm1wVhcyZnK7hf39TiR9LoB4MTSaQlpdEgvNqxzOXddTvX+WEFsaQugbXWZzR3wG2FZnMQ3zmEdY734WmHrAAHqk3VFmSS/qSZw3MG+N0BCqTLqEUkNcCCllIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmwJKEMs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X5QDlAjZBeiIWkgRwBNsMcRrEC99fGZqS+d1waKxw8WFeShuddAdV0VM9vpcOy19DpL2Ha3imHnlm1cZx97EARUAw8MDqh7xgehbuACcNi5uy5vf2f2Kj7KUej8kX5KkMCbLqRvvlEyFeuHRbrTQpZzO0KpoyjI9lf+rWOUamu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x146WF+w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmwJKEMs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE1BC32786;
-	Tue, 23 Apr 2024 21:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x146WF+w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3275DC32781;
+	Tue, 23 Apr 2024 21:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908566;
-	bh=hAeCY1TlQ9Ofj1d4WZdla3xHeVLprb5H8LZz1X3xYv8=;
+	s=korg; t=1713908567;
+	bh=igbRRTy7T0K4FecNtEs5ykgYDI5c7JqaU//XFl68mGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hmwJKEMsJg6vaIPw4hyA2M8YF6CN6X3jqJ81gkl+iwvmllpsQHIFL+tp93IupHsyK
-	 /LNEcbBFiDsW/Jy+UHcPmHk7iCFYWI7JDy3Du4t4bpIrWy0/ajGT07v7OE+HTdsv4k
-	 W40rrXyyS7x05oQ3Y9G60gOWNzYPdp1lQbp6ZnOk=
+	b=x146WF+wYPHybZizcuHGLhfvynQU4W10Aj88/KDgv5zrorT75pMLI+9qBTq0p5eOf
+	 XuctOlzvm/Fw5I3iyOMiOzmYxiKuf9pfv+M/+/ela23i5e5GN2dlSaAEFgfdgZBhUt
+	 hz7rsGOpDCaaj6QJdeLQWRibs/2e8ItMbPKoqcu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 015/158] selftests/timers/posix_timers: Reimplement check_timer_distribution()
-Date: Tue, 23 Apr 2024 14:37:32 -0700
-Message-ID: <20240423213856.210564153@linuxfoundation.org>
+Subject: [PATCH 6.6 002/158] smb: client: fix UAF in smb2_reconnect_server()
+Date: Tue, 23 Apr 2024 14:37:19 -0700
+Message-ID: <20240423213855.776896638@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -51,216 +51,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 6d029c25b71f2de2838a6f093ce0fa0e69336154 ]
+[ Upstream commit 24a9799aa8efecd0eb55a75e35f9d8e6400063aa ]
 
-check_timer_distribution() runs ten threads in a busy loop and tries to
-test that the kernel distributes a process posix CPU timer signal to every
-thread over time.
+The UAF bug is due to smb2_reconnect_server() accessing a session that
+is already being teared down by another thread that is executing
+__cifs_put_smb_ses().  This can happen when (a) the client has
+connection to the server but no session or (b) another thread ends up
+setting @ses->ses_status again to something different than
+SES_EXITING.
 
-There is not guarantee that this is true even after commit bcb7ee79029d
-("posix-timers: Prefer delivery of signals to the current thread") because
-that commit only avoids waking up the sleeping process leader thread, but
-that has nothing to do with the actual signal delivery.
+To fix this, we need to make sure to unconditionally set
+@ses->ses_status to SES_EXITING and prevent any other threads from
+setting a new status while we're still tearing it down.
 
-As the signal is process wide the first thread which observes sigpending
-and wins the race to lock sighand will deliver the signal. Testing shows
-that this hangs on a regular base because some threads never win the race.
+The following can be reproduced by adding some delay to right after
+the ipc is freed in __cifs_put_smb_ses() - which will give
+smb2_reconnect_server() worker a chance to run and then accessing
+@ses->ipc:
 
-The comment "This primarily tests that the kernel does not favour any one."
-is wrong. The kernel does favour a thread which hits the timer interrupt
-when CLOCK_PROCESS_CPUTIME_ID expires.
+kinit ...
+mount.cifs //srv/share /mnt/1 -o sec=krb5,nohandlecache,echo_interval=10
+[disconnect srv]
+ls /mnt/1 &>/dev/null
+sleep 30
+kdestroy
+[reconnect srv]
+sleep 10
+umount /mnt/1
+...
+CIFS: VFS: Verify user has a krb5 ticket and keyutils is installed
+CIFS: VFS: \\srv Send error in SessSetup = -126
+CIFS: VFS: Verify user has a krb5 ticket and keyutils is installed
+CIFS: VFS: \\srv Send error in SessSetup = -126
+general protection fault, probably for non-canonical address
+0x6b6b6b6b6b6b6b6b: 0000 [#1] PREEMPT SMP NOPTI
+CPU: 3 PID: 50 Comm: kworker/3:1 Not tainted 6.9.0-rc2 #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-1.fc39
+04/01/2014
+Workqueue: cifsiod smb2_reconnect_server [cifs]
+RIP: 0010:__list_del_entry_valid_or_report+0x33/0xf0
+Code: 4f 08 48 85 d2 74 42 48 85 c9 74 59 48 b8 00 01 00 00 00 00 ad
+de 48 39 c2 74 61 48 b8 22 01 00 00 00 00 74 69 <48> 8b 01 48 39 f8 75
+7b 48 8b 72 08 48 39 c6 0f 85 88 00 00 00 b8
+RSP: 0018:ffffc900001bfd70 EFLAGS: 00010a83
+RAX: dead000000000122 RBX: ffff88810da53838 RCX: 6b6b6b6b6b6b6b6b
+RDX: 6b6b6b6b6b6b6b6b RSI: ffffffffc02f6878 RDI: ffff88810da53800
+RBP: ffff88810da53800 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000001 R12: ffff88810c064000
+R13: 0000000000000001 R14: ffff88810c064000 R15: ffff8881039cc000
+FS: 0000000000000000(0000) GS:ffff888157c00000(0000)
+knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fe3728b1000 CR3: 000000010caa4000 CR4: 0000000000750ef0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? die_addr+0x36/0x90
+ ? exc_general_protection+0x1c1/0x3f0
+ ? asm_exc_general_protection+0x26/0x30
+ ? __list_del_entry_valid_or_report+0x33/0xf0
+ __cifs_put_smb_ses+0x1ae/0x500 [cifs]
+ smb2_reconnect_server+0x4ed/0x710 [cifs]
+ process_one_work+0x205/0x6b0
+ worker_thread+0x191/0x360
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0xe2/0x110
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x34/0x50
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-Rewrite the test so it only checks that the group leader sleeping in join()
-never receives SIGALRM and the thread which burns CPU cycles receives all
-signals.
-
-In older kernels which do not have commit bcb7ee79029d ("posix-timers:
-Prefer delivery of signals to the current thread") the test-case fails
-immediately, the very 1st tick wakes the leader up. Otherwise it quickly
-succeeds after 100 ticks.
-
-CI testing wants to use newer selftest versions on stable kernels. In this
-case the test is guaranteed to fail.
-
-So check in the failure case whether the kernel version is less than v6.3
-and skip the test result in that case.
-
-[ tglx: Massaged change log, renamed the version check helper ]
-
-Fixes: e797203fb3ba ("selftests/timers/posix_timers: Test delivery of signals across threads")
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240409133802.GD29396@redhat.com
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kselftest.h           |  13 +++
- tools/testing/selftests/timers/posix_timers.c | 103 ++++++++----------
- 2 files changed, 60 insertions(+), 56 deletions(-)
+ fs/smb/client/connect.c | 83 +++++++++++++++++------------------------
+ 1 file changed, 34 insertions(+), 49 deletions(-)
 
-diff --git a/tools/testing/selftests/kselftest.h b/tools/testing/selftests/kselftest.h
-index 529d29a359002..68d5a93dff8dc 100644
---- a/tools/testing/selftests/kselftest.h
-+++ b/tools/testing/selftests/kselftest.h
-@@ -49,6 +49,7 @@
- #include <unistd.h>
- #include <stdarg.h>
- #include <stdio.h>
-+#include <sys/utsname.h>
- #endif
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index 556f3c31aedc7..ae35855966afd 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -237,7 +237,13 @@ cifs_mark_tcp_ses_conns_for_reconnect(struct TCP_Server_Info *server,
  
- #ifndef ARRAY_SIZE
-@@ -327,4 +328,16 @@ static inline int ksft_exit_skip(const char *msg, ...)
- 	exit(KSFT_SKIP);
+ 	spin_lock(&cifs_tcp_ses_lock);
+ 	list_for_each_entry_safe(ses, nses, &pserver->smb_ses_list, smb_ses_list) {
+-		/* check if iface is still active */
++		spin_lock(&ses->ses_lock);
++		if (ses->ses_status == SES_EXITING) {
++			spin_unlock(&ses->ses_lock);
++			continue;
++		}
++		spin_unlock(&ses->ses_lock);
++
+ 		spin_lock(&ses->chan_lock);
+ 		if (cifs_ses_get_chan_index(ses, server) ==
+ 		    CIFS_INVAL_CHAN_INDEX) {
+@@ -1960,31 +1966,6 @@ cifs_setup_ipc(struct cifs_ses *ses, struct smb3_fs_context *ctx)
+ 	return rc;
  }
  
-+static inline int ksft_min_kernel_version(unsigned int min_major,
-+					  unsigned int min_minor)
-+{
-+	unsigned int major, minor;
-+	struct utsname info;
-+
-+	if (uname(&info) || sscanf(info.release, "%u.%u.", &major, &minor) != 2)
-+		ksft_exit_fail_msg("Can't parse kernel version\n");
-+
-+	return major > min_major || (major == min_major && minor >= min_minor);
-+}
-+
- #endif /* __KSELFTEST_H */
-diff --git a/tools/testing/selftests/timers/posix_timers.c b/tools/testing/selftests/timers/posix_timers.c
-index 2669c45316b3d..14355d8472110 100644
---- a/tools/testing/selftests/timers/posix_timers.c
-+++ b/tools/testing/selftests/timers/posix_timers.c
-@@ -184,80 +184,71 @@ static int check_timer_create(int which)
- 	return 0;
- }
- 
--int remain;
--__thread int got_signal;
-+static pthread_t ctd_thread;
-+static volatile int ctd_count, ctd_failed;
- 
--static void *distribution_thread(void *arg)
-+static void ctd_sighandler(int sig)
- {
--	while (__atomic_load_n(&remain, __ATOMIC_RELAXED));
--	return NULL;
-+	if (pthread_self() != ctd_thread)
-+		ctd_failed = 1;
-+	ctd_count--;
- }
- 
--static void distribution_handler(int nr)
-+static void *ctd_thread_func(void *arg)
- {
--	if (!__atomic_exchange_n(&got_signal, 1, __ATOMIC_RELAXED))
--		__atomic_fetch_sub(&remain, 1, __ATOMIC_RELAXED);
+-/**
+- * cifs_free_ipc - helper to release the session IPC tcon
+- * @ses: smb session to unmount the IPC from
+- *
+- * Needs to be called everytime a session is destroyed.
+- *
+- * On session close, the IPC is closed and the server must release all tcons of the session.
+- * No need to send a tree disconnect here.
+- *
+- * Besides, it will make the server to not close durable and resilient files on session close, as
+- * specified in MS-SMB2 3.3.5.6 Receiving an SMB2 LOGOFF Request.
+- */
+-static int
+-cifs_free_ipc(struct cifs_ses *ses)
+-{
+-	struct cifs_tcon *tcon = ses->tcon_ipc;
+-
+-	if (tcon == NULL)
+-		return 0;
+-
+-	tconInfoFree(tcon);
+-	ses->tcon_ipc = NULL;
+-	return 0;
 -}
 -
--/*
-- * Test that all running threads _eventually_ receive CLOCK_PROCESS_CPUTIME_ID
-- * timer signals. This primarily tests that the kernel does not favour any one.
-- */
--static int check_timer_distribution(void)
--{
--	int err, i;
--	timer_t id;
--	const int nthreads = 10;
--	pthread_t threads[nthreads];
- 	struct itimerspec val = {
- 		.it_value.tv_sec = 0,
- 		.it_value.tv_nsec = 1000 * 1000,
- 		.it_interval.tv_sec = 0,
- 		.it_interval.tv_nsec = 1000 * 1000,
- 	};
-+	timer_t id;
+ static struct cifs_ses *
+ cifs_find_smb_ses(struct TCP_Server_Info *server, struct smb3_fs_context *ctx)
+ {
+@@ -2016,48 +1997,52 @@ cifs_find_smb_ses(struct TCP_Server_Info *server, struct smb3_fs_context *ctx)
+ void __cifs_put_smb_ses(struct cifs_ses *ses)
+ {
+ 	struct TCP_Server_Info *server = ses->server;
++	struct cifs_tcon *tcon;
+ 	unsigned int xid;
+ 	size_t i;
++	bool do_logoff;
+ 	int rc;
  
--	remain = nthreads + 1;  /* worker threads + this thread */
--	signal(SIGALRM, distribution_handler);
--	err = timer_create(CLOCK_PROCESS_CPUTIME_ID, NULL, &id);
--	if (err < 0) {
--		ksft_perror("Can't create timer");
--		return -1;
++	spin_lock(&cifs_tcp_ses_lock);
+ 	spin_lock(&ses->ses_lock);
+-	if (ses->ses_status == SES_EXITING) {
++	cifs_dbg(FYI, "%s: id=0x%llx ses_count=%d ses_status=%u ipc=%s\n",
++		 __func__, ses->Suid, ses->ses_count, ses->ses_status,
++		 ses->tcon_ipc ? ses->tcon_ipc->tree_name : "none");
++	if (ses->ses_status == SES_EXITING || --ses->ses_count > 0) {
+ 		spin_unlock(&ses->ses_lock);
++		spin_unlock(&cifs_tcp_ses_lock);
+ 		return;
+ 	}
+-	spin_unlock(&ses->ses_lock);
++	/* ses_count can never go negative */
++	WARN_ON(ses->ses_count < 0);
+ 
+-	cifs_dbg(FYI, "%s: ses_count=%d\n", __func__, ses->ses_count);
+-	cifs_dbg(FYI,
+-		 "%s: ses ipc: %s\n", __func__, ses->tcon_ipc ? ses->tcon_ipc->tree_name : "NONE");
++	spin_lock(&ses->chan_lock);
++	cifs_chan_clear_need_reconnect(ses, server);
++	spin_unlock(&ses->chan_lock);
+ 
+-	spin_lock(&cifs_tcp_ses_lock);
+-	if (--ses->ses_count > 0) {
+-		spin_unlock(&cifs_tcp_ses_lock);
+-		return;
 -	}
--	err = timer_settime(id, 0, &val, NULL);
--	if (err < 0) {
--		ksft_perror("Can't set timer");
--		return -1;
--	}
-+	/* 1/10 seconds to ensure the leader sleeps */
-+	usleep(10000);
+-	spin_lock(&ses->ses_lock);
+-	if (ses->ses_status == SES_GOOD)
+-		ses->ses_status = SES_EXITING;
++	do_logoff = ses->ses_status == SES_GOOD && server->ops->logoff;
++	ses->ses_status = SES_EXITING;
++	tcon = ses->tcon_ipc;
++	ses->tcon_ipc = NULL;
+ 	spin_unlock(&ses->ses_lock);
+ 	spin_unlock(&cifs_tcp_ses_lock);
  
--	for (i = 0; i < nthreads; i++) {
--		err = pthread_create(&threads[i], NULL, distribution_thread,
--				     NULL);
--		if (err) {
--			ksft_print_msg("Can't create thread: %s (%d)\n",
--				       strerror(errno), errno);
--			return -1;
--		}
--	}
-+	ctd_count = 100;
-+	if (timer_create(CLOCK_PROCESS_CPUTIME_ID, NULL, &id))
-+		return "Can't create timer\n";
-+	if (timer_settime(id, 0, &val, NULL))
-+		return "Can't set timer\n";
+-	/* ses_count can never go negative */
+-	WARN_ON(ses->ses_count < 0);
+-
+-	spin_lock(&ses->ses_lock);
+-	if (ses->ses_status == SES_EXITING && server->ops->logoff) {
+-		spin_unlock(&ses->ses_lock);
+-		cifs_free_ipc(ses);
++	/*
++	 * On session close, the IPC is closed and the server must release all
++	 * tcons of the session.  No need to send a tree disconnect here.
++	 *
++	 * Besides, it will make the server to not close durable and resilient
++	 * files on session close, as specified in MS-SMB2 3.3.5.6 Receiving an
++	 * SMB2 LOGOFF Request.
++	 */
++	tconInfoFree(tcon);
++	if (do_logoff) {
+ 		xid = get_xid();
+ 		rc = server->ops->logoff(xid, ses);
+ 		if (rc)
+ 			cifs_server_dbg(VFS, "%s: Session Logoff failure rc=%d\n",
+ 				__func__, rc);
+ 		_free_xid(xid);
+-	} else {
+-		spin_unlock(&ses->ses_lock);
+-		cifs_free_ipc(ses);
+ 	}
  
--	/* Wait for all threads to receive the signal. */
--	while (__atomic_load_n(&remain, __ATOMIC_RELAXED));
-+	while (ctd_count > 0 && !ctd_failed)
-+		;
- 
--	for (i = 0; i < nthreads; i++) {
--		err = pthread_join(threads[i], NULL);
--		if (err) {
--			ksft_print_msg("Can't join thread: %s (%d)\n",
--				       strerror(errno), errno);
--			return -1;
--		}
--	}
-+	if (timer_delete(id))
-+		return "Can't delete timer\n";
- 
--	if (timer_delete(id)) {
--		ksft_perror("Can't delete timer");
--		return -1;
--	}
-+	return NULL;
-+}
-+
-+/*
-+ * Test that only the running thread receives the timer signal.
-+ */
-+static int check_timer_distribution(void)
-+{
-+	const char *errmsg;
- 
--	ksft_test_result_pass("check_timer_distribution\n");
-+	signal(SIGALRM, ctd_sighandler);
-+
-+	errmsg = "Can't create thread\n";
-+	if (pthread_create(&ctd_thread, NULL, ctd_thread_func, NULL))
-+		goto err;
-+
-+	errmsg = "Can't join thread\n";
-+	if (pthread_join(ctd_thread, (void **)&errmsg) || errmsg)
-+		goto err;
-+
-+	if (!ctd_failed)
-+		ksft_test_result_pass("check signal distribution\n");
-+	else if (ksft_min_kernel_version(6, 3))
-+		ksft_test_result_fail("check signal distribution\n");
-+	else
-+		ksft_test_result_skip("check signal distribution (old kernel)\n");
- 	return 0;
-+err:
-+	ksft_print_msg(errmsg);
-+	return -1;
- }
- 
- int main(int argc, char **argv)
+ 	spin_lock(&cifs_tcp_ses_lock);
 -- 
 2.43.0
 
