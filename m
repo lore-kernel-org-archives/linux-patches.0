@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54701420BE;
-	Tue, 23 Apr 2024 21:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9489F1420BE;
+	Tue, 23 Apr 2024 21:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908696; cv=none; b=B4O0Q0yug75KUqjnqV1DXP+tPTXCIaqNIT4tBOT7zv36qeVc2n2ce0E9HdMZrodrIPKI7HJQ0AQ+Z0Zunusk7wefEM8/j2GOt+eToS6eBziDG+9dDlZ/dh0TYlttG6OXvs1QmwXRSR44QUxT01bcV32QaR0IRL94F8EdS7Vt7ww=
+	t=1713908696; cv=none; b=ILryCsM92JE070bmkPHE11TI0a0pgwGD/FCKPHO32Y/lHXBW44Pr/lPWpB33r1rGfWozjbuglfUF5+4sPHA0XmQ4EHYnIb6qmd/fHoNIbsj3b+1DxzeF5Gky6HThfvsKU7S2r9EMooQXpdFR0t0+6JJWJaiqV674wg6dB1Glpek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908696; c=relaxed/simple;
-	bh=3Zv+ldmjypFL2w+tpmwwdoiML9X+eRxgYFe0xSnQm7g=;
+	bh=I9Svx+8p/Ks6+/TfsePBYYzO5rnX0N5cHAgJCeHvyPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p9Wu6dbi6bGwqXWimLkATgHPuhIaKYjQ0CfZmPfOXEFQH/dP6puDRJxzNlMJGBk61foKJ/fcB0o2wwIT4klKiF6yJcDgez69cdl7v8HtUkiN1S1p8+goit8vZEJ0BSBq7tBdMzMntLqKg4/8tefgDTQaLsrT8CGtJhW2zV8Q4/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jnuQlrAZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BZttGLAbMHq+g6vdXyGwVRl0+i4AFjRJGciIkw+z0hZCjUYOA4R5aVmN/yaDcPv7izbQpOjxyz/hbbhXOn6mM8svxmcHqMLY7xqgbPCRyqCRZ008+5W0gxxAUTuH0io7kFTOc7FpXKo8tUh0YnF9DLD40LxUi/txOeJfKoL4IYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvWGootP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jnuQlrAZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D57C116B1;
-	Tue, 23 Apr 2024 21:44:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvWGootP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6962DC3277B;
+	Tue, 23 Apr 2024 21:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908695;
-	bh=3Zv+ldmjypFL2w+tpmwwdoiML9X+eRxgYFe0xSnQm7g=;
+	s=korg; t=1713908696;
+	bh=I9Svx+8p/Ks6+/TfsePBYYzO5rnX0N5cHAgJCeHvyPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jnuQlrAZKSuVmUv8VDg4hmDakCfvDOL6iegjHqpB0tQJmmTF9mNwXpmCF6laggalC
-	 8X5DvxYWj/yvlEcLbp2YxaxwiXpJQurf5Kir6naiPjlfl6Wp7Qu8R6yRyTQ95/FriR
-	 h5neC+Qpu3q+/PzCfEZdaEBxxZKkuDLmLC7N86yQ=
+	b=xvWGootPzf+pRzSRFk5FRZp+SSu9VYmOdMZbLhTKtXX3ZJEC/sslD0pxxBGbRZEQr
+	 ombhQFwJ4N5IVITPCsZBI4pkEOnteMqob+cof79qSDA1NIcisNADrcaLE/5oIHTC0v
+	 L9M/3qmGM7Do7H2Mq0EL5r867PBZKUtMLOH1+h3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lei Chen <lei.chen@smartx.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/141] tun: limit printing rate when illegal packet received by tun dev
-Date: Tue, 23 Apr 2024 14:38:33 -0700
-Message-ID: <20240423213854.724148657@linuxfoundation.org>
+Subject: [PATCH 6.1 046/141] net: dsa: mt7530: fix mirroring frames received on local port
+Date: Tue, 23 Apr 2024 14:38:34 -0700
+Message-ID: <20240423213854.752710228@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -49,95 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lei Chen <lei.chen@smartx.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit f8bbc07ac535593139c875ffa19af924b1084540 ]
+[ Upstream commit d59cf049c8378677053703e724808836f180888e ]
 
-vhost_worker will call tun call backs to receive packets. If too many
-illegal packets arrives, tun_do_read will keep dumping packet contents.
-When console is enabled, it will costs much more cpu time to dump
-packet and soft lockup will be detected.
+This switch intellectual property provides a bit on the ARL global control
+register which controls allowing mirroring frames which are received on the
+local port (monitor port). This bit is unset after reset.
 
-net_ratelimit mechanism can be used to limit the dumping rate.
+This ability must be enabled to fully support the port mirroring feature on
+this switch intellectual property.
 
-PID: 33036    TASK: ffff949da6f20000  CPU: 23   COMMAND: "vhost-32980"
- #0 [fffffe00003fce50] crash_nmi_callback at ffffffff89249253
- #1 [fffffe00003fce58] nmi_handle at ffffffff89225fa3
- #2 [fffffe00003fceb0] default_do_nmi at ffffffff8922642e
- #3 [fffffe00003fced0] do_nmi at ffffffff8922660d
- #4 [fffffe00003fcef0] end_repeat_nmi at ffffffff89c01663
-    [exception RIP: io_serial_in+20]
-    RIP: ffffffff89792594  RSP: ffffa655314979e8  RFLAGS: 00000002
-    RAX: ffffffff89792500  RBX: ffffffff8af428a0  RCX: 0000000000000000
-    RDX: 00000000000003fd  RSI: 0000000000000005  RDI: ffffffff8af428a0
-    RBP: 0000000000002710   R8: 0000000000000004   R9: 000000000000000f
-    R10: 0000000000000000  R11: ffffffff8acbf64f  R12: 0000000000000020
-    R13: ffffffff8acbf698  R14: 0000000000000058  R15: 0000000000000000
-    ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
- #5 [ffffa655314979e8] io_serial_in at ffffffff89792594
- #6 [ffffa655314979e8] wait_for_xmitr at ffffffff89793470
- #7 [ffffa65531497a08] serial8250_console_putchar at ffffffff897934f6
- #8 [ffffa65531497a20] uart_console_write at ffffffff8978b605
- #9 [ffffa65531497a48] serial8250_console_write at ffffffff89796558
- #10 [ffffa65531497ac8] console_unlock at ffffffff89316124
- #11 [ffffa65531497b10] vprintk_emit at ffffffff89317c07
- #12 [ffffa65531497b68] printk at ffffffff89318306
- #13 [ffffa65531497bc8] print_hex_dump at ffffffff89650765
- #14 [ffffa65531497ca8] tun_do_read at ffffffffc0b06c27 [tun]
- #15 [ffffa65531497d38] tun_recvmsg at ffffffffc0b06e34 [tun]
- #16 [ffffa65531497d68] handle_rx at ffffffffc0c5d682 [vhost_net]
- #17 [ffffa65531497ed0] vhost_worker at ffffffffc0c644dc [vhost]
- #18 [ffffa65531497f10] kthread at ffffffff892d2e72
- #19 [ffffa65531497f50] ret_from_fork at ffffffff89c0022f
+Therefore, this patch fixes the traffic not being reflected on a port,
+which would be configured like below:
 
-Fixes: ef3db4a59542 ("tun: avoid BUG, dump packet on GSO errors")
-Signed-off-by: Lei Chen <lei.chen@smartx.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://lore.kernel.org/r/20240415020247.2207781-1-lei.chen@smartx.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  tc qdisc add dev swp0 clsact
+
+  tc filter add dev swp0 ingress matchall skip_sw \
+  action mirred egress mirror dev swp0
+
+As a side note, this configuration provides the hairpinning feature for a
+single port.
+
+Fixes: 37feab6076aa ("net: dsa: mt7530: add support for port mirroring")
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/net/dsa/mt7530.c | 6 ++++++
+ drivers/net/dsa/mt7530.h | 4 ++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 922d6f16d99d1..4af1ba5d074c0 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -2121,14 +2121,16 @@ static ssize_t tun_put_user(struct tun_struct *tun,
- 					    tun_is_little_endian(tun), true,
- 					    vlan_hlen)) {
- 			struct skb_shared_info *sinfo = skb_shinfo(skb);
--			pr_err("unexpected GSO type: "
--			       "0x%x, gso_size %d, hdr_len %d\n",
--			       sinfo->gso_type, tun16_to_cpu(tun, gso.gso_size),
--			       tun16_to_cpu(tun, gso.hdr_len));
--			print_hex_dump(KERN_ERR, "tun: ",
--				       DUMP_PREFIX_NONE,
--				       16, 1, skb->head,
--				       min((int)tun16_to_cpu(tun, gso.hdr_len), 64), true);
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index d4515c19a5f34..b5f61a9a378eb 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -2461,6 +2461,9 @@ mt7530_setup(struct dsa_switch *ds)
+ 			   PVC_EG_TAG(MT7530_VLAN_EG_CONSISTENT));
+ 	}
+ 
++	/* Allow mirroring frames received on the local port (monitor port). */
++	mt7530_set(priv, MT753X_AGC, LOCAL_EN);
 +
-+			if (net_ratelimit()) {
-+				netdev_err(tun->dev, "unexpected GSO type: 0x%x, gso_size %d, hdr_len %d\n",
-+					   sinfo->gso_type, tun16_to_cpu(tun, gso.gso_size),
-+					   tun16_to_cpu(tun, gso.hdr_len));
-+				print_hex_dump(KERN_ERR, "tun: ",
-+					       DUMP_PREFIX_NONE,
-+					       16, 1, skb->head,
-+					       min((int)tun16_to_cpu(tun, gso.hdr_len), 64), true);
-+			}
- 			WARN_ON_ONCE(1);
- 			return -EINVAL;
- 		}
+ 	/* Setup VLAN ID 0 for VLAN-unaware bridges */
+ 	ret = mt7530_setup_vlan0(priv);
+ 	if (ret)
+@@ -2577,6 +2580,9 @@ mt7531_setup_common(struct dsa_switch *ds)
+ 			   PVC_EG_TAG(MT7530_VLAN_EG_CONSISTENT));
+ 	}
+ 
++	/* Allow mirroring frames received on the local port (monitor port). */
++	mt7530_set(priv, MT753X_AGC, LOCAL_EN);
++
+ 	/* Flush the FDB table */
+ 	ret = mt7530_fdb_cmd(priv, MT7530_FDB_FLUSH, NULL);
+ 	if (ret < 0)
+diff --git a/drivers/net/dsa/mt7530.h b/drivers/net/dsa/mt7530.h
+index 2d1ea390f05ab..af18f47f22141 100644
+--- a/drivers/net/dsa/mt7530.h
++++ b/drivers/net/dsa/mt7530.h
+@@ -31,6 +31,10 @@ enum mt753x_id {
+ #define SYSC_REG_RSTCTRL		0x34
+ #define  RESET_MCM			BIT(2)
+ 
++/* Register for ARL global control */
++#define MT753X_AGC			0xc
++#define  LOCAL_EN			BIT(7)
++
+ /* Registers to mac forward control for unknown frames */
+ #define MT7530_MFC			0x10
+ #define  BC_FFP(x)			(((x) & 0xff) << 24)
 -- 
 2.43.0
 
