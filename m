@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078EA143C46;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E75B145341;
 	Tue, 23 Apr 2024 21:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908685; cv=none; b=Hs0YuHflLdHjh7J8XUY8AbwJp8FVS5F+oupGEquf4PjfaE3FUR+5l3iT3JdFHLzpCdK/xCjmoXBSnC8wsU4UTbMntqCVI+f9qUXqBUnfrlIpXbUsvx3H971XfwACVsc6lhJgQ0h+UV4uUk5fh4sNCo+OCpjagXSHoeuDUo0IANo=
+	t=1713908685; cv=none; b=TMNuhKlZY63Bi9TKWGxqgzO0ImdzZ7ZPPAHx1lX+KoblOrz32VCoBoYZ1occkwlNw2bYD9slEgNM2usuccARPztGW9i4UQoOZl3MrjuEZgBjXV+fbRQYsAYSfdS+kzrOL6CLFtllR+xTmQ1no/nUE9LizoZasi3hTXh9HNL5ENM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908685; c=relaxed/simple;
-	bh=+0FM8r+mU43uVx8HJ2q85y74PhRyMOIpHF+VcOyXdAc=;
+	bh=0FjosDPKawv2bTC1L3Pu+jN88JWGAikwrB5UnJM5ScI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V0DKdaWdZ2YrKuag1IyI3fXG6OHezkyOnb2SaTS1hMEVry+Xnh19/B4RgYlQwRODqQjzPkrZd38b0Dn+5xHxoB+c7fU6qsNlnDqWSZGV7slLbz+1QV45d/WE9unvVo2pB5tp9TH3nUEjmsLRwMA91U7hTNeWIL9i3scpY93MX2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyPWaLCm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gCM8DLRQCA7PwMHTRLdhTRM8H8AHRaiKuQaCuYzAOlN7gW9PiahbuUrQToFS4QH0fwBza5Uk8f+K57UehFugxiD4nHJTrSTAeeWmVcaF0jl/hSk7aF8s1jcv4AnGRXGD8zIthV0PBvDli28gA46Tmsc8dIN/whWyfbEfQK6PHEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsa4FeJH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyPWaLCm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E19C116B1;
-	Tue, 23 Apr 2024 21:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsa4FeJH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E54C116B1;
+	Tue, 23 Apr 2024 21:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908684;
-	bh=+0FM8r+mU43uVx8HJ2q85y74PhRyMOIpHF+VcOyXdAc=;
+	s=korg; t=1713908685;
+	bh=0FjosDPKawv2bTC1L3Pu+jN88JWGAikwrB5UnJM5ScI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DyPWaLCmMXFIHygMO95FlSrOFUJMMMnGen2YKRen/o4YFi/uB+WCfqsTeQeAnv4JC
-	 odHgTSZ82cHb7jtXtmk39VZKl0juo1lciydMp8X9+rSPE20/5Z6V6QVqb7bxmDBbx6
-	 GkYG1V0a53U2gQIKAJwJubA0m0xhxyga1PoC55Rw=
+	b=rsa4FeJHeeWymOmRtWc52jfUVyThTTcP9ys8XtxbcSTj2bFK5AjtE/weMVd9Md+Yu
+	 HGpr13KL/d5XVYi0wfjx1+OK262i/mg94k/D0P3AVM3DEhg0Wi6F8E6lWywqcNunEK
+	 OWYoLGyB+XrD9aNdmuH8N2C7bPo1kfNIzPdsaOVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Wenlong <houwenlong.hwl@antgroup.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.1 030/141] x86/head/64: Move the __head definition to <asm/init.h>
-Date: Tue, 23 Apr 2024 14:38:18 -0700
-Message-ID: <20240423213854.289965914@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>
+Subject: [PATCH 6.1 031/141] x86/sme: Move early SME kernel encryption handling into .head.text
+Date: Tue, 23 Apr 2024 14:38:19 -0700
+Message-ID: <20240423213854.317658617@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -51,53 +51,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Wenlong <houwenlong.hwl@antgroup.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Commit d2a285d65bfde3218fd0c3b88794d0135ced680b upstream ]
+[ Commit 48204aba801f1b512b3abed10b8e1a63e03f3dd1 upstream ]
 
-Move the __head section definition to a header to widen its use.
+The .head.text section is the initial primary entrypoint of the core
+kernel, and is entered with the CPU executing from a 1:1 mapping of
+memory. Such code must never access global variables using absolute
+references, as these are based on the kernel virtual mapping which is
+not active yet at this point.
 
-An upcoming patch will mark the code as __head in mem_encrypt_identity.c too.
+Given that the SME startup code is also called from this early execution
+context, move it into .head.text as well. This will allow more thorough
+build time checks in the future to ensure that early startup code only
+uses RIP-relative references to global variables.
 
-Signed-off-by: Hou Wenlong <houwenlong.hwl@antgroup.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/0583f57977be184689c373fe540cbd7d85ca2047.1697525407.git.houwenlong.hwl@antgroup.com
+Also replace some occurrences of __pa_symbol() [which relies on the
+compiler generating an absolute reference, which is not guaranteed] and
+an open coded RIP-relative access with RIP_REL_REF().
+
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://lore.kernel.org/r/20240227151907.387873-18-ardb+git@google.com
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/init.h |    2 ++
- arch/x86/kernel/head64.c    |    3 +--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/mem_encrypt.h |    8 +++----
+ arch/x86/mm/mem_encrypt_identity.c |   42 ++++++++++++++-----------------------
+ 2 files changed, 21 insertions(+), 29 deletions(-)
 
---- a/arch/x86/include/asm/init.h
-+++ b/arch/x86/include/asm/init.h
-@@ -2,6 +2,8 @@
- #ifndef _ASM_X86_INIT_H
- #define _ASM_X86_INIT_H
+--- a/arch/x86/include/asm/mem_encrypt.h
++++ b/arch/x86/include/asm/mem_encrypt.h
+@@ -46,8 +46,8 @@ void __init sme_unmap_bootdata(char *rea
+ void __init sme_early_init(void);
+ void __init sev_setup_arch(void);
  
-+#define __head	__section(".head.text")
-+
- struct x86_mapping_info {
- 	void *(*alloc_pgt_page)(void *); /* allocate buf for page table */
- 	void *context;			 /* context for alloc_pgt_page */
---- a/arch/x86/kernel/head64.c
-+++ b/arch/x86/kernel/head64.c
+-void __init sme_encrypt_kernel(struct boot_params *bp);
+-void __init sme_enable(struct boot_params *bp);
++void sme_encrypt_kernel(struct boot_params *bp);
++void sme_enable(struct boot_params *bp);
+ 
+ int __init early_set_memory_decrypted(unsigned long vaddr, unsigned long size);
+ int __init early_set_memory_encrypted(unsigned long vaddr, unsigned long size);
+@@ -80,8 +80,8 @@ static inline void __init sme_unmap_boot
+ static inline void __init sme_early_init(void) { }
+ static inline void __init sev_setup_arch(void) { }
+ 
+-static inline void __init sme_encrypt_kernel(struct boot_params *bp) { }
+-static inline void __init sme_enable(struct boot_params *bp) { }
++static inline void sme_encrypt_kernel(struct boot_params *bp) { }
++static inline void sme_enable(struct boot_params *bp) { }
+ 
+ static inline void sev_es_init_vc_handling(void) { }
+ 
+--- a/arch/x86/mm/mem_encrypt_identity.c
++++ b/arch/x86/mm/mem_encrypt_identity.c
 @@ -41,6 +41,7 @@
- #include <asm/trapnr.h>
- #include <asm/sev.h>
- #include <asm/tdx.h>
+ #include <linux/mem_encrypt.h>
+ #include <linux/cc_platform.h>
+ 
 +#include <asm/init.h>
+ #include <asm/setup.h>
+ #include <asm/sections.h>
+ #include <asm/cmdline.h>
+@@ -98,7 +99,7 @@ static char sme_workarea[2 * PMD_SIZE] _
+ static char sme_cmdline_arg[] __initdata = "mem_encrypt";
+ static char sme_cmdline_on[]  __initdata = "on";
  
- /*
-  * Manage page tables very early on.
-@@ -84,8 +85,6 @@ static struct desc_ptr startup_gdt_descr
- 	.address = 0,
- };
- 
--#define __head	__section(".head.text")
--
- static void __head *fixup_pointer(void *ptr, unsigned long physaddr)
+-static void __init sme_clear_pgd(struct sme_populate_pgd_data *ppd)
++static void __head sme_clear_pgd(struct sme_populate_pgd_data *ppd)
  {
- 	return ptr - (void *)_text + (void *)physaddr;
+ 	unsigned long pgd_start, pgd_end, pgd_size;
+ 	pgd_t *pgd_p;
+@@ -113,7 +114,7 @@ static void __init sme_clear_pgd(struct
+ 	memset(pgd_p, 0, pgd_size);
+ }
+ 
+-static pud_t __init *sme_prepare_pgd(struct sme_populate_pgd_data *ppd)
++static pud_t __head *sme_prepare_pgd(struct sme_populate_pgd_data *ppd)
+ {
+ 	pgd_t *pgd;
+ 	p4d_t *p4d;
+@@ -150,7 +151,7 @@ static pud_t __init *sme_prepare_pgd(str
+ 	return pud;
+ }
+ 
+-static void __init sme_populate_pgd_large(struct sme_populate_pgd_data *ppd)
++static void __head sme_populate_pgd_large(struct sme_populate_pgd_data *ppd)
+ {
+ 	pud_t *pud;
+ 	pmd_t *pmd;
+@@ -166,7 +167,7 @@ static void __init sme_populate_pgd_larg
+ 	set_pmd(pmd, __pmd(ppd->paddr | ppd->pmd_flags));
+ }
+ 
+-static void __init sme_populate_pgd(struct sme_populate_pgd_data *ppd)
++static void __head sme_populate_pgd(struct sme_populate_pgd_data *ppd)
+ {
+ 	pud_t *pud;
+ 	pmd_t *pmd;
+@@ -192,7 +193,7 @@ static void __init sme_populate_pgd(stru
+ 		set_pte(pte, __pte(ppd->paddr | ppd->pte_flags));
+ }
+ 
+-static void __init __sme_map_range_pmd(struct sme_populate_pgd_data *ppd)
++static void __head __sme_map_range_pmd(struct sme_populate_pgd_data *ppd)
+ {
+ 	while (ppd->vaddr < ppd->vaddr_end) {
+ 		sme_populate_pgd_large(ppd);
+@@ -202,7 +203,7 @@ static void __init __sme_map_range_pmd(s
+ 	}
+ }
+ 
+-static void __init __sme_map_range_pte(struct sme_populate_pgd_data *ppd)
++static void __head __sme_map_range_pte(struct sme_populate_pgd_data *ppd)
+ {
+ 	while (ppd->vaddr < ppd->vaddr_end) {
+ 		sme_populate_pgd(ppd);
+@@ -212,7 +213,7 @@ static void __init __sme_map_range_pte(s
+ 	}
+ }
+ 
+-static void __init __sme_map_range(struct sme_populate_pgd_data *ppd,
++static void __head __sme_map_range(struct sme_populate_pgd_data *ppd,
+ 				   pmdval_t pmd_flags, pteval_t pte_flags)
+ {
+ 	unsigned long vaddr_end;
+@@ -236,22 +237,22 @@ static void __init __sme_map_range(struc
+ 	__sme_map_range_pte(ppd);
+ }
+ 
+-static void __init sme_map_range_encrypted(struct sme_populate_pgd_data *ppd)
++static void __head sme_map_range_encrypted(struct sme_populate_pgd_data *ppd)
+ {
+ 	__sme_map_range(ppd, PMD_FLAGS_ENC, PTE_FLAGS_ENC);
+ }
+ 
+-static void __init sme_map_range_decrypted(struct sme_populate_pgd_data *ppd)
++static void __head sme_map_range_decrypted(struct sme_populate_pgd_data *ppd)
+ {
+ 	__sme_map_range(ppd, PMD_FLAGS_DEC, PTE_FLAGS_DEC);
+ }
+ 
+-static void __init sme_map_range_decrypted_wp(struct sme_populate_pgd_data *ppd)
++static void __head sme_map_range_decrypted_wp(struct sme_populate_pgd_data *ppd)
+ {
+ 	__sme_map_range(ppd, PMD_FLAGS_DEC_WP, PTE_FLAGS_DEC_WP);
+ }
+ 
+-static unsigned long __init sme_pgtable_calc(unsigned long len)
++static unsigned long __head sme_pgtable_calc(unsigned long len)
+ {
+ 	unsigned long entries = 0, tables = 0;
+ 
+@@ -288,7 +289,7 @@ static unsigned long __init sme_pgtable_
+ 	return entries + tables;
+ }
+ 
+-void __init sme_encrypt_kernel(struct boot_params *bp)
++void __head sme_encrypt_kernel(struct boot_params *bp)
+ {
+ 	unsigned long workarea_start, workarea_end, workarea_len;
+ 	unsigned long execute_start, execute_end, execute_len;
+@@ -323,9 +324,8 @@ void __init sme_encrypt_kernel(struct bo
+ 	 *     memory from being cached.
+ 	 */
+ 
+-	/* Physical addresses gives us the identity mapped virtual addresses */
+-	kernel_start = __pa_symbol(_text);
+-	kernel_end = ALIGN(__pa_symbol(_end), PMD_SIZE);
++	kernel_start = (unsigned long)RIP_REL_REF(_text);
++	kernel_end = ALIGN((unsigned long)RIP_REL_REF(_end), PMD_SIZE);
+ 	kernel_len = kernel_end - kernel_start;
+ 
+ 	initrd_start = 0;
+@@ -343,14 +343,6 @@ void __init sme_encrypt_kernel(struct bo
+ #endif
+ 
+ 	/*
+-	 * We're running identity mapped, so we must obtain the address to the
+-	 * SME encryption workarea using rip-relative addressing.
+-	 */
+-	asm ("lea sme_workarea(%%rip), %0"
+-	     : "=r" (workarea_start)
+-	     : "p" (sme_workarea));
+-
+-	/*
+ 	 * Calculate required number of workarea bytes needed:
+ 	 *   executable encryption area size:
+ 	 *     stack page (PAGE_SIZE)
+@@ -359,7 +351,7 @@ void __init sme_encrypt_kernel(struct bo
+ 	 *   pagetable structures for the encryption of the kernel
+ 	 *   pagetable structures for workarea (in case not currently mapped)
+ 	 */
+-	execute_start = workarea_start;
++	execute_start = workarea_start = (unsigned long)RIP_REL_REF(sme_workarea);
+ 	execute_end = execute_start + (PAGE_SIZE * 2) + PMD_SIZE;
+ 	execute_len = execute_end - execute_start;
+ 
+@@ -502,7 +494,7 @@ void __init sme_encrypt_kernel(struct bo
+ 	native_write_cr3(__native_read_cr3());
+ }
+ 
+-void __init sme_enable(struct boot_params *bp)
++void __head sme_enable(struct boot_params *bp)
+ {
+ 	const char *cmdline_ptr, *cmdline_arg, *cmdline_on;
+ 	unsigned int eax, ebx, ecx, edx;
 
 
