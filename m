@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE9020B3E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FC320B3E;
 	Tue, 23 Apr 2024 21:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908535; cv=none; b=OZVsunO20dzGufA5ON16OWzcAkWE+8WhNWfN9deqqV4x6muePF5lAhFWmrdcJYKibhrBB3cKTiPa2CQrcREw7pV+MJToZeRpdYw8Pl2ngQM5aH6F/j0WjC/iJeg33l8S//1lpkhppfbMveP071Z2FNLtnteDcdGuZubFEP4zIyw=
+	t=1713908535; cv=none; b=DsU4+DXumZeRPIfV7Or93md0Hmv5ciiZPE6sDDYAdwgKKxVN3ksqYuHRBhQ1uSXgw3AzDGqBlwIvd8dGcRm0wmuopgjXJo5dHE/Nh3nINZmJLKg937JOq7uFcvzvMKhaiUsG8VsK64TqtAP3Q/UZBq4/nIVjkJCkhMCzlTIqaxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908535; c=relaxed/simple;
-	bh=G9okE7Rpv31JyTuKttTfHfftOK0/1gULf43CXxFn2Mk=;
+	bh=3p7qRu5RW/qCTSATi2UQBWEuios5R2smDm5tDb1FJEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=exoovItWX88FDaKAm2xJcLH1Cdaz6gfEr3djKMXAqC4LmLarpc7ripkdCIMt0jICj8+sA/+7adeQvIaU2MivtYwfQqcJyV1mzNgywficPPVWQGqcYbbYYxiL26XVINlbY4X//POs9BTFFvbfkn7/cqhYdl4pK6SYUd5rxGbtwmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lymFTJnQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XmIQYj+8cFsihKTJWfGdYizpv85RwVQ9Vrjgy2Kn0MCb4rl4qi/EsHd67InDNxY09halqWVp1vEyFGLpelby2BkcYDPBwakgRYvS8L/YMWTVX7PQWE5qVxHOo1H/MUx8ZuHA1OwdQPoS4HgrFmHgzpXiqc16XxikRaSmwR+ZRYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0prLTyzn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lymFTJnQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054CAC116B1;
-	Tue, 23 Apr 2024 21:42:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0prLTyzn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A19C3277B;
+	Tue, 23 Apr 2024 21:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908535;
-	bh=G9okE7Rpv31JyTuKttTfHfftOK0/1gULf43CXxFn2Mk=;
+	bh=3p7qRu5RW/qCTSATi2UQBWEuios5R2smDm5tDb1FJEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lymFTJnQn1j0RE3mOoLb2mpJ6xU4GWGuX2IONXZObX1nuuPtqJ9YrFw+YoCEk0QMj
-	 LSQZO9PnnXoJhS0itBwtvP7nfGZOOfNe8LB3gsfAG2S1Ac0l7H6B/SxapmNZ997mpy
-	 H0KGSqCW/nt72QhVsYN1eZV4nXKkEugyJ9Mwhg1k=
+	b=0prLTyznO5FfumI4wd2ERpcWvYzZemqeHpCI46W69rw1zT5rkKj6i/4NXlsg0kOdg
+	 2f55IXClIfWEwgeSm2ULvulsuwvYGCorbIW/H2is4f4SA4sSOh3W9RXKbSaQH//MX0
+	 R1Z0ERfa+KK/8GMcaBn2WQT3Y0bhmYGOsTXZ+Zk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.8 128/158] KVM: x86/pmu: Do not mask LVTPC when handling a PMI on AMD platforms
-Date: Tue, 23 Apr 2024 14:39:10 -0700
-Message-ID: <20240423213900.056351465@linuxfoundation.org>
+	Coia Prant <coiaprant@gmail.com>,
+	Lars Melin <larsm17@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.8 111/158] USB: serial: option: add Lonsung U8300/U9300 product
+Date: Tue, 23 Apr 2024 14:38:53 -0700
+Message-ID: <20240423213859.544492897@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -52,58 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Coia Prant <coiaprant@gmail.com>
 
-commit 49ff3b4aec51e3abfc9369997cc603319b02af9a upstream.
+commit cf16ffa17c398434a77b8a373e69287c95b60de2 upstream.
 
-On AMD and Hygon platforms, the local APIC does not automatically set
-the mask bit of the LVTPC register when handling a PMI and there is
-no need to clear it in the kernel's PMI handler.
+Update the USB serial option driver to support Longsung U8300/U9300.
 
-For guests, the mask bit is currently set by kvm_apic_local_deliver()
-and unless it is cleared by the guest kernel's PMI handler, PMIs stop
-arriving and break use-cases like sampling with perf record.
+For U8300
 
-This does not affect non-PerfMonV2 guests because PMIs are handled in
-the guest kernel by x86_pmu_handle_irq() which always clears the LVTPC
-mask bit irrespective of the vendor.
+Interface 4 is used by for QMI interface in stock firmware of U8300, the
+router which uses U8300 modem.
+Interface 5 is used by for ADB interface in stock firmware of U8300, the
+router which uses U8300 modem.
 
-Before:
+Interface mapping is:
+0: unknown (Debug), 1: AT (Modem), 2: AT, 3: PPP (NDIS / Pipe), 4: QMI, 5: ADB
 
-  $ perf record -e cycles:u true
-  [ perf record: Woken up 1 times to write data ]
-  [ perf record: Captured and wrote 0.001 MB perf.data (1 samples) ]
+T:  Bus=05 Lev=01 Prnt=03 Port=02 Cnt=01 Dev#=  4 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1c9e ProdID=9b05 Rev=03.18
+S:  Manufacturer=Android
+S:  Product=Android
+C:  #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-After:
+For U9300
 
-  $ perf record -e cycles:u true
-  [ perf record: Woken up 1 times to write data ]
-  [ perf record: Captured and wrote 0.002 MB perf.data (19 samples) ]
+Interface 1 is used by for ADB interface in stock firmware of U9300, the
+router which uses U9300 modem.
+Interface 4 is used by for QMI interface in stock firmware of U9300, the
+router which uses U9300 modem.
 
-Fixes: a16eb25b09c0 ("KVM: x86: Mask LVTPC when handling a PMI")
+Interface mapping is:
+0: ADB, 1: AT (Modem), 2: AT, 3: PPP (NDIS / Pipe), 4: QMI
+
+Note: Interface 3 of some models of the U9300 series can send AT commands.
+
+T:  Bus=05 Lev=01 Prnt=05 Port=04 Cnt=01 Dev#=  6 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1c9e ProdID=9b3c Rev=03.18
+S:  Manufacturer=Android
+S:  Product=Android
+C:  #Ifs= 5 Cfg#= 1 Atr=80 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+
+Tested successfully using Modem Manager on U9300.
+Tested successfully AT commands using If=1, If=2 and If=3 on U9300.
+
+Signed-off-by: Coia Prant <coiaprant@gmail.com>
+Reviewed-by: Lars Melin <larsm17@gmail.com>
+[ johan: drop product defines, trim commit message ]
 Cc: stable@vger.kernel.org
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-[sean: use is_intel_compatible instead of !is_amd_or_hygon()]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20240405235603.1173076-3-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -2771,7 +2771,8 @@ int kvm_apic_local_deliver(struct kvm_la
- 		trig_mode = reg & APIC_LVT_LEVEL_TRIGGER;
- 
- 		r = __apic_accept_irq(apic, mode, vector, 1, trig_mode, NULL);
--		if (r && lvt_type == APIC_LVTPC)
-+		if (r && lvt_type == APIC_LVTPC &&
-+		    guest_cpuid_is_intel_compatible(apic->vcpu))
- 			kvm_lapic_set_reg(apic, APIC_LVTPC, reg | APIC_LVT_MASKED);
- 		return r;
- 	}
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2052,6 +2052,10 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(LONGCHEER_VENDOR_ID, 0x9803, 0xff),
+ 	  .driver_info = RSVD(4) },
++	{ USB_DEVICE(LONGCHEER_VENDOR_ID, 0x9b05),	/* Longsung U8300 */
++	  .driver_info = RSVD(4) | RSVD(5) },
++	{ USB_DEVICE(LONGCHEER_VENDOR_ID, 0x9b3c),	/* Longsung U9300 */
++	  .driver_info = RSVD(0) | RSVD(4) },
+ 	{ USB_DEVICE(LONGCHEER_VENDOR_ID, ZOOM_PRODUCT_4597) },
+ 	{ USB_DEVICE(LONGCHEER_VENDOR_ID, IBALL_3_5G_CONNECT) },
+ 	{ USB_DEVICE(HAIER_VENDOR_ID, HAIER_PRODUCT_CE100) },
 
 
