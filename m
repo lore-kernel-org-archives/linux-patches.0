@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD1714885A;
-	Tue, 23 Apr 2024 21:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9B814885A;
+	Tue, 23 Apr 2024 21:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908810; cv=none; b=XG3cir5yHARxmkX1Xf5C0LOTf77MKoggGzRFw8+1oD/1yYgBtO+pYE4H1LCHnoQbVe2CUxR7WjVLDvD+bwIP8HrzaYdS/kc7PDyOlk8LXtHARjbCNUeuHvUPoZSaWl4ovrbErf2OFreqP5/XJoobEGuYTnMiyydm5/0Bbqwrj10=
+	t=1713908811; cv=none; b=s1+IPxXlvXyEgAU3yA9eqvPmDIz+Lxtv9vA7m8ENn3dhTuMaY2fZ8PvSGkf8KXqwsV4zxllPsB0nz2/2x7+NqIt1MVZJODPwkxNQC4v92GoPWnxn1NRd4oBZoaQ0CoYscESnR0LlcsJaHRAcBRrY2SQzdvXs48fGUhfC8ZVhasw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908810; c=relaxed/simple;
-	bh=vq7fsIfQNn4x9er7yC4C7YRA7Jbzbm+wiDl7ME2JlKc=;
+	s=arc-20240116; t=1713908811; c=relaxed/simple;
+	bh=LBwP5xNEZJRWH+wiyiQ9zaXlBP1s7QklJsiO8LLkbxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IRRKtio86zEdGdU+uh/ejzGvh6y0TSGJBlKTCi+Z0z/Uhn8QFI8Iyf8pKO36p8GfjiAbBC9WMw+XPVLGpjM24s6Oq8wim8jD1hKW4JwX07ssDMGZ7FHRx+N7+if48JEiBn0AQ/j2nTT6B5cNUVvITdemCu7X30WTyLwBYZNyFlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xh/kn9A1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d1zJQUdHvTX2dE5Oqf49DKPUyl265gFJEIMNn+y5ZSX+H+y+COkHPU+nHqJa4NwaN0vGhjLTQrqxvCPKTnASk56FNEshRR0tdvfsS6pxZzNyEnIYiFkHm/G9SOu/hxJupztamwKQhWm/BJ63EoXKY2Ire5zWcum5O1AcozTe5cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBvc1eb2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xh/kn9A1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFA8C32783;
-	Tue, 23 Apr 2024 21:46:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBvc1eb2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 217D6C116B1;
+	Tue, 23 Apr 2024 21:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908810;
-	bh=vq7fsIfQNn4x9er7yC4C7YRA7Jbzbm+wiDl7ME2JlKc=;
+	s=korg; t=1713908811;
+	bh=LBwP5xNEZJRWH+wiyiQ9zaXlBP1s7QklJsiO8LLkbxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xh/kn9A1j3J5b9UehqlqK0L7lVVFdh9xGv52Tam79q/RiL7FLitg/rcX5ma1bKlnr
-	 eGcF33eFPyQ0nnCUN68+gG49O7WjJCmTeCldLDau1X0T2/lFFreuOUZt0P/qVG9Qrs
-	 J/naAi4M0stvNRS5XXrYaM1rhQQfiBB8YR8SGd/Q=
+	b=hBvc1eb2kK1iPjizB1c5HbfEy/eqID3ZvDpFpMeVF/mj+dHHIkHQs3PhYFvBAzsGC
+	 H/Z69ZeLhv4xll8N8pDwGo4mS/L94t9gbRkATP04NLMpcZWPKgVisKqdc/JM6oQVAo
+	 QLxF2gj1P4zk7eULddZTpWsbv3VxFgQV+QcNGSbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	Norihiko Hama <Norihiko.Hama@alpsalpine.com>,
 	stable <stable@kernel.org>
-Subject: [PATCH 5.15 54/71] usb: Disable USB3 LPM at shutdown
-Date: Tue, 23 Apr 2024 14:40:07 -0700
-Message-ID: <20240423213846.044156444@linuxfoundation.org>
+Subject: [PATCH 5.15 55/71] usb: gadget: f_ncm: Fix UAF ncm object at re-bind after usb ep transport error
+Date: Tue, 23 Apr 2024 14:40:08 -0700
+Message-ID: <20240423213846.074476206@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
 References: <20240423213844.122920086@linuxfoundation.org>
@@ -50,87 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai-Heng Feng <kai.heng.feng@canonical.com>
+From: Norihiko Hama <Norihiko.Hama@alpsalpine.com>
 
-commit d920a2ed8620be04a3301e1a9c2b7cc1de65f19d upstream.
+commit 6334b8e4553cc69f51e383c9de545082213d785e upstream.
 
-SanDisks USB3 storage may disapper after system reboot:
+When ncm function is working and then stop usb0 interface for link down,
+eth_stop() is called. At this piont, accidentally if usb transport error
+should happen in usb_ep_enable(), 'in_ep' and/or 'out_ep' may not be enabled.
 
-usb usb2-port3: link state change
-xhci_hcd 0000:00:14.0: clear port3 link state change, portsc: 0x2c0
-usb usb2-port3: do warm reset, port only
-xhci_hcd 0000:00:14.0: xhci_hub_status_data: stopping usb2 port polling
-xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x2b0, return 0x2b0
-usb usb2-port3: not warm reset yet, waiting 50ms
-xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x2f0, return 0x2f0
-usb usb2-port3: not warm reset yet, waiting 200ms
-...
-xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x6802c0, return 0x7002c0
-usb usb2-port3: not warm reset yet, waiting 200ms
-xhci_hcd 0000:00:14.0: clear port3 reset change, portsc: 0x4802c0
-xhci_hcd 0000:00:14.0: clear port3 warm(BH) reset change, portsc: 0x4002c0
-xhci_hcd 0000:00:14.0: clear port3 link state change, portsc: 0x2c0
-xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x2c0, return 0x2c0
-usb usb2-port3: not enabled, trying warm reset again...
+After that, ncm_disable() is called to disable for ncm unbind
+but gether_disconnect() is never called since 'in_ep' is not enabled.
 
-This is due to the USB device still cause port change event after xHCI is
-shuted down:
+As the result, ncm object is released in ncm unbind
+but 'dev->port_usb' associated to 'ncm->port' is not NULL.
 
-xhci_hcd 0000:38:00.0: // Setting command ring address to 0xffffe001
-xhci_hcd 0000:38:00.0: xhci_resume: starting usb3 port polling.
-xhci_hcd 0000:38:00.0: xhci_hub_status_data: stopping usb4 port polling
-xhci_hcd 0000:38:00.0: xhci_hub_status_data: stopping usb3 port polling
-xhci_hcd 0000:38:00.0: hcd_pci_runtime_resume: 0
-xhci_hcd 0000:38:00.0: xhci_shutdown: stopping usb3 port polling.
-xhci_hcd 0000:38:00.0: // Halt the HC
-xhci_hcd 0000:38:00.0: xhci_shutdown completed - status = 1
-xhci_hcd 0000:00:14.0: xhci_shutdown: stopping usb1 port polling.
-xhci_hcd 0000:00:14.0: // Halt the HC
-xhci_hcd 0000:00:14.0: xhci_shutdown completed - status = 1
-xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x1203, return 0x203
-xhci_hcd 0000:00:14.0: set port reset, actual port 2-3 status  = 0x1311
-xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x201203, return 0x100203
-xhci_hcd 0000:00:14.0: clear port3 reset change, portsc: 0x1203
-xhci_hcd 0000:00:14.0: clear port3 warm(BH) reset change, portsc: 0x1203
-xhci_hcd 0000:00:14.0: clear port3 link state change, portsc: 0x1203
-xhci_hcd 0000:00:14.0: clear port3 connect change, portsc: 0x1203
-xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x1203, return 0x203
-usb 2-3: device not accepting address 2, error -108
-xhci_hcd 0000:00:14.0: xHCI dying or halted, can't queue_command
-xhci_hcd 0000:00:14.0: Set port 2-3 link state, portsc: 0x1203, write 0x11261
-xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x1263, return 0x263
-xhci_hcd 0000:00:14.0: set port reset, actual port 2-3 status  = 0x1271
-xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x12b1, return 0x2b1
-usb usb2-port3: not reset yet, waiting 60ms
-ACPI: PM: Preparing to enter system sleep state S5
-xhci_hcd 0000:00:14.0: Get port status 2-3 read: 0x12f1, return 0x2f1
-usb usb2-port3: not reset yet, waiting 200ms
-reboot: Restarting system
+And when ncm bind again to recover netdev, ncm object is reallocated
+but usb0 interface is already associated to previous released ncm object.
 
-The port change event is caused by LPM transition, so disabling LPM at shutdown
-to make sure the device is in U0 for warmboot.
+Therefore, once usb0 interface is up and eth_start_xmit() is called,
+released ncm object is dereferrenced and it might cause use-after-free memory.
 
-Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+[function unlink via configfs]
+  usb0: eth_stop dev->port_usb=ffffff9b179c3200
+  --> error happens in usb_ep_enable().
+  NCM: ncm_disable: ncm=ffffff9b179c3200
+  --> no gether_disconnect() since ncm->port.in_ep->enabled is false.
+  NCM: ncm_unbind: ncm unbind ncm=ffffff9b179c3200
+  NCM: ncm_free: ncm free ncm=ffffff9b179c3200   <-- released ncm
+
+[function link via configfs]
+  NCM: ncm_alloc: ncm alloc ncm=ffffff9ac4f8a000
+  NCM: ncm_bind: ncm bind ncm=ffffff9ac4f8a000
+  NCM: ncm_set_alt: ncm=ffffff9ac4f8a000 alt=0
+  usb0: eth_open dev->port_usb=ffffff9b179c3200  <-- previous released ncm
+  usb0: eth_start dev->port_usb=ffffff9b179c3200 <--
+  eth_start_xmit()
+  --> dev->wrap()
+  Unable to handle kernel paging request at virtual address dead00000000014f
+
+This patch addresses the issue by checking if 'ncm->netdev' is not NULL at
+ncm_disable() to call gether_disconnect() to deassociate 'dev->port_usb'.
+It's more reasonable to check 'ncm->netdev' to call gether_connect/disconnect
+rather than check 'ncm->port.in_ep->enabled' since it might not be enabled
+but the gether connection might be established.
+
+Signed-off-by: Norihiko Hama <Norihiko.Hama@alpsalpine.com>
 Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20240305065140.66801-1-kai.heng.feng@canonical.com
+Link: https://lore.kernel.org/r/20240327023550.51214-1-Norihiko.Hama@alpsalpine.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/port.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_ncm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/port.c
-+++ b/drivers/usb/core/port.c
-@@ -295,8 +295,10 @@ static void usb_port_shutdown(struct dev
- {
- 	struct usb_port *port_dev = to_usb_port(dev);
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -888,7 +888,7 @@ static int ncm_set_alt(struct usb_functi
+ 		if (alt > 1)
+ 			goto fail;
  
--	if (port_dev->child)
-+	if (port_dev->child) {
- 		usb_disable_usb2_hardware_lpm(port_dev->child);
-+		usb_unlocked_disable_lpm(port_dev->child);
-+	}
- }
+-		if (ncm->port.in_ep->enabled) {
++		if (ncm->netdev) {
+ 			DBG(cdev, "reset ncm\n");
+ 			ncm->netdev = NULL;
+ 			gether_disconnect(&ncm->port);
+@@ -1373,7 +1373,7 @@ static void ncm_disable(struct usb_funct
  
- static const struct dev_pm_ops usb_port_pm_ops = {
+ 	DBG(cdev, "ncm deactivated\n");
+ 
+-	if (ncm->port.in_ep->enabled) {
++	if (ncm->netdev) {
+ 		ncm->netdev = NULL;
+ 		gether_disconnect(&ncm->port);
+ 	}
 
 
