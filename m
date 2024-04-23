@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B8C143C49;
-	Tue, 23 Apr 2024 21:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D82143C49;
+	Tue, 23 Apr 2024 21:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908724; cv=none; b=ouTsHP8FyOkX9yMwHbvqNIRqOsya4H7UpRiepuhgk08oJS4LYTpcd6Zein2yPHyJ9nMIUiVkmpqtcW8XX6YKhy7fonE4m2N/EBX4EuVigydNM2QCuEWVzgdk/P3KPeyy9jxmNZN4u2trHrAawMMGCo8a7Hqgobre6heqbDmqcRQ=
+	t=1713908725; cv=none; b=NJJ3EPNzOzU6HB2jUTYsL2ljMz/GN38M2G1bH61BFMcCcGBCkOCF9N9Z3A1ctgGRZQD/LmtzTp+COxHTHJJa+VjB2vPP3HOpDfSYT1ZniBCpew+tGcWKAkd6dSvVROeGTDB9iD51a6ciTPogwWOK4uyuQG5u3yZgsfhHZCUyuwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908724; c=relaxed/simple;
-	bh=FZXVtl4Low3OH+KamJDpr7UV8k84fo1eC9LHUBa9VV8=;
+	s=arc-20240116; t=1713908725; c=relaxed/simple;
+	bh=0dna9pcrj1OIaP1tioC4eoqJZTNXlSkxRJwxQ1Q46Ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fpnhmLCU/DZPYawqUytgashD9+czFhLfvpgnzP6isyC6wWxeauf36plZzq8cfAIXVI3XwOkNqL9OUM5FOC5uOS9HQOVuuooVhH2N9CPZEKjFc9MRhr1+11IUHUk+QtInO5P6A884Mnsvfk0nIvrDLrHrmNxbTspTmJiiydFNtRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efxC/W27; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KDzxwjwdjjeY4l2AAdqfIYJFwdYOWcq9ilQo6jcIMHm4cDTkAmdnDoqnI2Zf4iBK6c/1F7ph2Wd3ZJEczl6xLMdiuDio4coTsqQEm420ZAn22xdbxhpPjZoUjWrgqVI0o8vqlE/JU9X0l/xs1NxiGoqjpgiP7rQ3nLnqkLL1+Oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=drOy8IPl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efxC/W27"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F752C116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="drOy8IPl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3AEFC3277B;
 	Tue, 23 Apr 2024 21:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908724;
-	bh=FZXVtl4Low3OH+KamJDpr7UV8k84fo1eC9LHUBa9VV8=;
+	s=korg; t=1713908725;
+	bh=0dna9pcrj1OIaP1tioC4eoqJZTNXlSkxRJwxQ1Q46Ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=efxC/W2777jnKtBpa3FgtRnXqbW55Qg15RqKynlq9DOjdFEFfaJg15t7E4Dt+oKUR
-	 coR4rp4mto2OBIttar7qxFwafXCO/SNXdQBqroMb8eYiAdp9XNYAZyXPHAma/XsxfX
-	 Lnn7Re5vxLgfHcrFwj0hm33D2WEWci4Z7hpLgox4=
+	b=drOy8IPlF0/dfQmVuIA6SwEdB6jz6if0JnMCEUwz/STI9UWm7vB5yPFpFl9BaBSdh
+	 kxCXCD4cTCfZhe/Hcu+Q6M6PlH8Uyx6JiirYIG/iu/GvILkA7/pU5iGe8MxZeNakAy
+	 myEOx6/qYgtklmTzCh4ImK/lyAXG+zkwmpyncrbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chinmoy Ghosh <chinmoyghosh2001@gmail.com>,
-	Mintu Patel <mintupatel89@gmail.com>,
-	Vimal Kumar <vimal.kumar32@gmail.com>,
-	Vishal Badole <badolevishal1116@gmail.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 088/141] clk: Show active consumers of clocks in debugfs
-Date: Tue, 23 Apr 2024 14:39:16 -0700
-Message-ID: <20240423213856.043970866@linuxfoundation.org>
+Subject: [PATCH 6.1 089/141] clk: Get runtime PM before walking tree for clk_summary
+Date: Tue, 23 Apr 2024 14:39:17 -0700
+Message-ID: <20240423213856.074086570@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -54,107 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishal Badole <badolevishal1116@gmail.com>
+From: Stephen Boyd <sboyd@kernel.org>
 
-[ Upstream commit dcce5cc7826e9c6b3a2443e5e6b7f8d02a103c35 ]
+[ Upstream commit 9d1e795f754db1ac3344528b7af0b17b8146f321 ]
 
-This feature lists the clock consumer's name and respective connection
-id. Using this feature user can easily check that which user has
-acquired and enabled a particular clock.
+Similar to the previous commit, we should make sure that all devices are
+runtime resumed before printing the clk_summary through debugfs. Failure
+to do so would result in a deadlock if the thread is resuming a device
+to print clk state and that device is also runtime resuming in another
+thread, e.g the screen is turning on and the display driver is starting
+up. We remove the calls to clk_pm_runtime_{get,put}() in this path
+because they're superfluous now that we know the devices are runtime
+resumed. This also squashes a bug where the return value of
+clk_pm_runtime_get() wasn't checked, leading to an RPM count underflow
+on error paths.
 
-Usage:
->> cat /sys/kernel/debug/clk/clk_summary
-                      enable  prepare  protect
-                                                                          duty  hardware                            Connection
-   clock               count    count    count    rate   accuracy phase  cycle    enable   consumer                         Id
-------------------------------------------------------------------------------------------------------------------------------
- clk_mcasp0_fixed         0        0        0    24576000          0      0  50000     Y   deviceless                     of_clk_get_from_provider
-                                                                                           deviceless                     no_connection_id
-    clk_mcasp0            0        0        0    24576000          0      0  50000     N      simple-audio-card,cpu           no_connection_id
-                                                                                              deviceless                      no_connection_id
-
-Co-developed-by: Chinmoy Ghosh <chinmoyghosh2001@gmail.com>
-Signed-off-by: Chinmoy Ghosh <chinmoyghosh2001@gmail.com>
-Co-developed-by: Mintu Patel <mintupatel89@gmail.com>
-Signed-off-by: Mintu Patel <mintupatel89@gmail.com>
-Co-developed-by: Vimal Kumar <vimal.kumar32@gmail.com>
-Signed-off-by: Vimal Kumar <vimal.kumar32@gmail.com>
-Signed-off-by: Vishal Badole <badolevishal1116@gmail.com>
-Link: https://lore.kernel.org/r/1669569799-8526-1-git-send-email-badolevishal1116@gmail.com
+Fixes: 1bb294a7981c ("clk: Enable/Disable runtime PM for clk_summary")
+Cc: Taniya Das <quic_tdas@quicinc.com>
+Cc: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: 9d1e795f754d ("clk: Get runtime PM before walking tree for clk_summary")
+Link: https://lore.kernel.org/r/20240325184204.745706-6-sboyd@kernel.org
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 34 ++++++++++++++++++++++++----------
- 1 file changed, 24 insertions(+), 10 deletions(-)
+ drivers/clk/clk.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index bf4ac2f52d335..ded4a51323d2e 100644
+index ded4a51323d2e..fe1d45eac837c 100644
 --- a/drivers/clk/clk.c
 +++ b/drivers/clk/clk.c
-@@ -3205,28 +3205,41 @@ static void clk_summary_show_one(struct seq_file *s, struct clk_core *c,
- 				 int level)
+@@ -3247,9 +3247,7 @@ static void clk_summary_show_subtree(struct seq_file *s, struct clk_core *c,
  {
- 	int phase;
-+	struct clk *clk_user;
-+	int multi_node = 0;
+ 	struct clk_core *child;
  
--	seq_printf(s, "%*s%-*s %7d %8d %8d %11lu %10lu ",
-+	seq_printf(s, "%*s%-*s %-7d %-8d %-8d %-11lu %-10lu ",
- 		   level * 3 + 1, "",
--		   30 - level * 3, c->name,
-+		   35 - level * 3, c->name,
- 		   c->enable_count, c->prepare_count, c->protect_count,
- 		   clk_core_get_rate_recalc(c),
- 		   clk_core_get_accuracy_recalc(c));
+-	clk_pm_runtime_get(c);
+ 	clk_summary_show_one(s, c, level);
+-	clk_pm_runtime_put(c);
  
- 	phase = clk_core_get_phase(c);
- 	if (phase >= 0)
--		seq_printf(s, "%5d", phase);
-+		seq_printf(s, "%-5d", phase);
- 	else
- 		seq_puts(s, "-----");
- 
--	seq_printf(s, " %6d", clk_core_get_scaled_duty_cycle(c, 100000));
-+	seq_printf(s, " %-6d", clk_core_get_scaled_duty_cycle(c, 100000));
- 
- 	if (c->ops->is_enabled)
--		seq_printf(s, " %9c\n", clk_core_is_enabled(c) ? 'Y' : 'N');
-+		seq_printf(s, " %5c ", clk_core_is_enabled(c) ? 'Y' : 'N');
- 	else if (!c->ops->enable)
--		seq_printf(s, " %9c\n", 'Y');
-+		seq_printf(s, " %5c ", 'Y');
- 	else
--		seq_printf(s, " %9c\n", '?');
-+		seq_printf(s, " %5c ", '?');
-+
-+	hlist_for_each_entry(clk_user, &c->clks, clks_node) {
-+		seq_printf(s, "%*s%-*s  %-25s\n",
-+			   level * 3 + 2 + 105 * multi_node, "",
-+			   30,
-+			   clk_user->dev_id ? clk_user->dev_id : "deviceless",
-+			   clk_user->con_id ? clk_user->con_id : "no_connection_id");
-+
-+		multi_node = 1;
-+	}
-+
- }
- 
- static void clk_summary_show_subtree(struct seq_file *s, struct clk_core *c,
-@@ -3247,9 +3260,10 @@ static int clk_summary_show(struct seq_file *s, void *data)
+ 	hlist_for_each_entry(child, &c->children, child_node)
+ 		clk_summary_show_subtree(s, child, level + 1);
+@@ -3259,11 +3257,15 @@ static int clk_summary_show(struct seq_file *s, void *data)
+ {
  	struct clk_core *c;
  	struct hlist_head **lists = s->private;
++	int ret;
  
--	seq_puts(s, "                                 enable  prepare  protect                                duty  hardware\n");
--	seq_puts(s, "   clock                          count    count    count        rate   accuracy phase  cycle    enable\n");
--	seq_puts(s, "-------------------------------------------------------------------------------------------------------\n");
-+	seq_puts(s, "                                 enable  prepare  protect                                duty  hardware                            connection\n");
-+	seq_puts(s, "   clock                          count    count    count        rate   accuracy phase  cycle    enable   consumer                         id\n");
-+	seq_puts(s, "---------------------------------------------------------------------------------------------------------------------------------------------\n");
-+
+ 	seq_puts(s, "                                 enable  prepare  protect                                duty  hardware                            connection\n");
+ 	seq_puts(s, "   clock                          count    count    count        rate   accuracy phase  cycle    enable   consumer                         id\n");
+ 	seq_puts(s, "---------------------------------------------------------------------------------------------------------------------------------------------\n");
+ 
++	ret = clk_pm_runtime_get_all();
++	if (ret)
++		return ret;
  
  	clk_prepare_lock();
  
+@@ -3272,6 +3274,7 @@ static int clk_summary_show(struct seq_file *s, void *data)
+ 			clk_summary_show_subtree(s, c, 0);
+ 
+ 	clk_prepare_unlock();
++	clk_pm_runtime_put_all();
+ 
+ 	return 0;
+ }
+@@ -3319,8 +3322,14 @@ static int clk_dump_show(struct seq_file *s, void *data)
+ 	struct clk_core *c;
+ 	bool first_node = true;
+ 	struct hlist_head **lists = s->private;
++	int ret;
++
++	ret = clk_pm_runtime_get_all();
++	if (ret)
++		return ret;
+ 
+ 	seq_putc(s, '{');
++
+ 	clk_prepare_lock();
+ 
+ 	for (; *lists; lists++) {
+@@ -3333,6 +3342,7 @@ static int clk_dump_show(struct seq_file *s, void *data)
+ 	}
+ 
+ 	clk_prepare_unlock();
++	clk_pm_runtime_put_all();
+ 
+ 	seq_puts(s, "}\n");
+ 	return 0;
 -- 
 2.43.0
 
