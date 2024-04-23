@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E5D143C41;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FFA1420BE;
 	Tue, 23 Apr 2024 21:45:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908706; cv=none; b=DxJI058gxAUinzFzq+8SZwDtMxjrmTXMLw/tDXHn7pzwEQH6MVlVWozjcXyTrLbByIseJTvqMMLLPFJNj7XgZlx0dOTmQC174bmgUXyE9UoPKdsQQ5e8nKwC7SeFzKnEitKQKj8jJn4p770Zjep8r/U2uj2CxLb6RzntOsNlFco=
+	t=1713908706; cv=none; b=RXAwem3shV3Dc3Jo3UtIUuGNqwVrYOxfyPbxMIgyqC0QbVjH8T8NVNQz/Ymd6OOI32RdwN+skizKwd8JNLZTE0XhuAbWOTCIPyj008XoXPIsKzglYx+imSOUe5UlMqU6M//blN8P5/LBGFWXXpOmmq+C61qT48JMF6MNVQBVEAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908706; c=relaxed/simple;
-	bh=ttOxlreeqC4NVbTete9S1dmmkXekuNoW7gz4VktxoOU=;
+	bh=4e1ZC0cP302gmIGUtbO5qi/rtqQgv58GLA3NySP4wrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ImPzZ2pSb9zWLK+lYmA/e6ubROidby2rZmS5T1rybqNnMNPsnUB2ngcn20/QY2HhZ0lqiIWLKQqD4a5NzTRImJGsHdwIOiHJMc/M7DpEwBxlWs0G7lknqyYdbSez8SafrPJ3iH/sUT2fEmtJFKRpSK46MfcKCYCeyeDC3TLoe+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RerSEZe9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j5T4Qmx9E6mOAwYxixNv2Un19HYM6fQsOfP4iI+tmLUsCWZsvyFInqkLaTnfVIJkO4m8ixEAOijG3reIqwXTo5ZV3SofBGRRWORcyWZIPjBR37GfwnHZEKMW4FsURl5UfGr1NX4Dzq0Ndvly/LkqDqWHSILYdeWZ7okYb9CKJzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B9IK3lup; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RerSEZe9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE33C116B1;
-	Tue, 23 Apr 2024 21:45:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9IK3lup"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4DBC116B1;
+	Tue, 23 Apr 2024 21:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908706;
-	bh=ttOxlreeqC4NVbTete9S1dmmkXekuNoW7gz4VktxoOU=;
+	bh=4e1ZC0cP302gmIGUtbO5qi/rtqQgv58GLA3NySP4wrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RerSEZe9qUEF29smjOdYCABtVTvBjHKzTj+17aJeYI+x7AtSUE4yIYHMLZIiybHhA
-	 8wfLfU165jfd1nFgwoJ3g7VX/2MF/Pako1Vv/kA9OybWHaNckXUJ3xr3v3kwdWg+YC
-	 0CXMwrEMa8ML5PNhj6iX4cOFrYfpCM3+hzNC4SWU=
+	b=B9IK3lupglwWyotmmvuCwwCTXWqGyQYVbfD7r/cJH8/bIrBnntotI23tSXjrxkWhc
+	 Nzp2adESFnSYbDuV200Zw3L0n0tRvgAdfWleXcWJ9nR2PdhUBXXJ2tCIexzVjc2tT1
+	 PDiUKgWJhnTg4KgrQOXOXwqhQmHjtHzALgMY6ihc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/141] x86/quirks: Include linux/pnp.h for arch_pnpbios_disabled()
-Date: Tue, 23 Apr 2024 14:38:49 -0700
-Message-ID: <20240423213855.230977851@linuxfoundation.org>
+Subject: [PATCH 6.1 062/141] thunderbolt: Log function name of the called quirk
+Date: Tue, 23 Apr 2024 14:38:50 -0700
+Message-ID: <20240423213855.261510671@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -52,36 +50,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 056b44a4d10907ec8153863b2a0564e808ef1440 ]
+[ Upstream commit f14d177e0be652ef7b265753f08f2a7d31935668 ]
 
-arch_pnpbios_disabled() is defined in architecture code on x86, but this
-does not include the appropriate header, causing a warning:
+This is useful when debugging whether a quirk has been matched or not.
 
-arch/x86/kernel/platform-quirks.c:42:13: error: no previous prototype for 'arch_pnpbios_disabled' [-Werror=missing-prototypes]
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Link: https://lore.kernel.org/all/20230516193549.544673-10-arnd%40kernel.org
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/platform-quirks.c | 1 +
+ drivers/thunderbolt/quirks.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kernel/platform-quirks.c b/arch/x86/kernel/platform-quirks.c
-index b348a672f71d5..b525fe6d66571 100644
---- a/arch/x86/kernel/platform-quirks.c
-+++ b/arch/x86/kernel/platform-quirks.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <linux/kernel.h>
- #include <linux/init.h>
-+#include <linux/pnp.h>
+diff --git a/drivers/thunderbolt/quirks.c b/drivers/thunderbolt/quirks.c
+index 638cb5fb22c11..13719a851c719 100644
+--- a/drivers/thunderbolt/quirks.c
++++ b/drivers/thunderbolt/quirks.c
+@@ -130,6 +130,7 @@ void tb_check_quirks(struct tb_switch *sw)
+ 		if (q->device && q->device != sw->device)
+ 			continue;
  
- #include <asm/setup.h>
- #include <asm/bios_ebda.h>
++		tb_sw_dbg(sw, "running %ps\n", q->hook);
+ 		q->hook(sw);
+ 	}
+ }
 -- 
 2.43.0
 
