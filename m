@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A481448F1;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B995D143889;
 	Tue, 23 Apr 2024 21:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908491; cv=none; b=MCw1ZXvd/tdbrvILV2HfZ+A9Az8f+PQIcQXjtyqEjQL39gmG0VbPvC0V7WVBFLhHobzIDBTS/zqJXQSWVZLV4QMts5gHfRCIhgNX5hRnXneVt/K59zkXVe+vVJNl8S9X0kASKyBZY5KM1UOJYiDQKoy3o1NWXPNoOYF7la68Vn8=
+	t=1713908491; cv=none; b=X/HlK6luuJRlLYznrP6T1R9NLhqHT5zVR098rumhi+j+Qqa3vKFh1TrMlcvigTcqtIZDUIiC1uYg2iZ2eRMA37ol8kBjd+8u5hmG0vRa6Fn+te+IE5ag4kHiNPhKvQ11Qk7CIzVRc7fYHMuRb/K7rzYWEfFS2X9LiKd22d9CRuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908491; c=relaxed/simple;
-	bh=82a8pXAkIzByzUtzYOQ7vGVgDBRNhiGXE0YoIkdQBnA=;
+	bh=/Jt0QfQga7hqeydzlkOGzl8dZeyPVeYcT4JFb1plOvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NnoKExi+ZhIiFH+9I1GbdHLm1KeHsP4XJ7YKcAoYu/ptfBoiF9c7pFW7TpoIW0ZFKt3zWhjnSwVvhD4ZMbtWtLjuPfTjwDRcNvoG5DZOcHZ27iuaoUnpbGfgjOl09iHh56vOe8MKARqMjNlL1+QoQt7kypIzvPOR3xm3+N3mL2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XYMOvFoh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ajVuFSN+0+Jaa5DJlYM++jEtycXtiITEmV8bNzanPunWQVBpppdeERnHVTnTyHwRXtEXCBPJs7D8ETOrSlf/tKTSipXxFXVN0eeqUQWqiCfIBNyxw//4eReBPU6x+644mLgO5k8BYlSPIaBm90rBcVLJBfiNv/IfrykfEamiDQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8j9bxwS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XYMOvFoh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FA2C3277B;
-	Tue, 23 Apr 2024 21:41:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8j9bxwS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E31EC32782;
+	Tue, 23 Apr 2024 21:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908491;
-	bh=82a8pXAkIzByzUtzYOQ7vGVgDBRNhiGXE0YoIkdQBnA=;
+	bh=/Jt0QfQga7hqeydzlkOGzl8dZeyPVeYcT4JFb1plOvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XYMOvFoh41oNAJ5a+OBNUuOwQ7EhZHUpZOZmJE1M78Tbr4jUu0vreF3vKbZqwCNbC
-	 XfVxJy5KCZDmhacE1h2lIrBcaNan3OtWGufZHGJvjByMgvenmH15ON7BHYem6VcRBa
-	 Xm9REgvmQaBph9wizEkq7YkFYcyxgs76TNeJDAns=
+	b=s8j9bxwS+IdjPdXRSZXcQkAfJa9K79B+hCW9hFaQKT5GfkgzgjxmGdm6wWbKcE1e0
+	 guOxxluArznERk6zfCYvbU7V6Avl9VAVEbw2wKVLoX9UDaD9K2YUsHPCtReOo627Jd
+	 qiGXcgx/V1ww/XkyIC9GJCbiHoD5OnItOwBCNgTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lokesh Gidra <lokeshgidra@google.com>,
-	David Hildenbrand <david@redhat.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Kalesh Singh <kaleshsingh@google.com>,
-	Nicolas Geoffray <ngeoffray@google.com>,
-	Peter Xu <peterx@redhat.com>,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.8 066/158] userfaultfd: change src_folio after ensuring its unpinned in UFFDIO_MOVE
-Date: Tue, 23 Apr 2024 14:38:08 -0700
-Message-ID: <20240423213858.104342461@linuxfoundation.org>
+	Sanath S <Sanath.S@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.8 067/158] thunderbolt: Introduce tb_port_reset()
+Date: Tue, 23 Apr 2024 14:38:09 -0700
+Message-ID: <20240423213858.140500552@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -57,57 +51,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lokesh Gidra <lokeshgidra@google.com>
+From: Sanath S <Sanath.S@amd.com>
 
-commit c0205eaf3af9f5db14d4b5ee4abacf4a583c3c50 upstream.
+commit 01da6b99d49f60b1edead44e33569b1a2e9f49b7 upstream.
 
-Commit d7a08838ab74 ("mm: userfaultfd: fix unexpected change to src_folio
-when UFFDIO_MOVE fails") moved the src_folio->{mapping, index} changing to
-after clearing the page-table and ensuring that it's not pinned.  This
-avoids failure of swapout+migration and possibly memory corruption.
+Introduce a function that issues Downstream Port Reset to a USB4 port.
+This supports Thunderbolt 2, 3 and USB4 routers.
 
-However, the commit missed fixing it in the huge-page case.
-
-Link: https://lkml.kernel.org/r/20240404171726.2302435-1-lokeshgidra@google.com
-Fixes: adef440691ba ("userfaultfd: UFFDIO_MOVE uABI")
-Signed-off-by: Lokesh Gidra <lokeshgidra@google.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Kalesh Singh <kaleshsingh@google.com>
-Cc: Lokesh Gidra <lokeshgidra@google.com>
-Cc: Nicolas Geoffray <ngeoffray@google.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Lokesh Gidra <lokeshgidra@google.com>
+Signed-off-by: Sanath S <Sanath.S@amd.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/thunderbolt/lc.c      |   45 ++++++++++++++++++++++++++++++++++++++++++
+ drivers/thunderbolt/switch.c  |    7 ++++++
+ drivers/thunderbolt/tb.h      |    2 +
+ drivers/thunderbolt/tb_regs.h |    4 +++
+ drivers/thunderbolt/usb4.c    |   39 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 97 insertions(+)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2244,9 +2244,6 @@ int move_pages_huge_pmd(struct mm_struct
- 		goto unlock_ptls;
- 	}
+--- a/drivers/thunderbolt/lc.c
++++ b/drivers/thunderbolt/lc.c
+@@ -6,6 +6,8 @@
+  * Author: Mika Westerberg <mika.westerberg@linux.intel.com>
+  */
  
--	folio_move_anon_rmap(src_folio, dst_vma);
--	WRITE_ONCE(src_folio->index, linear_page_index(dst_vma, dst_addr));
--
- 	src_pmdval = pmdp_huge_clear_flush(src_vma, src_addr, src_pmd);
- 	/* Folio got pinned from under us. Put it back and fail the move. */
- 	if (folio_maybe_dma_pinned(src_folio)) {
-@@ -2255,6 +2252,9 @@ int move_pages_huge_pmd(struct mm_struct
- 		goto unlock_ptls;
- 	}
- 
-+	folio_move_anon_rmap(src_folio, dst_vma);
-+	WRITE_ONCE(src_folio->index, linear_page_index(dst_vma, dst_addr));
++#include <linux/delay.h>
 +
- 	_dst_pmd = mk_huge_pmd(&src_folio->page, dst_vma->vm_page_prot);
- 	/* Follow mremap() behavior and treat the entry dirty after the move */
- 	_dst_pmd = pmd_mkwrite(pmd_mkdirty(_dst_pmd), dst_vma);
+ #include "tb.h"
+ 
+ /**
+@@ -45,6 +47,49 @@ static int find_port_lc_cap(struct tb_po
+ 	return sw->cap_lc + start + phys * size;
+ }
+ 
++/**
++ * tb_lc_reset_port() - Trigger downstream port reset through LC
++ * @port: Port that is reset
++ *
++ * Triggers downstream port reset through link controller registers.
++ * Returns %0 in case of success negative errno otherwise. Only supports
++ * non-USB4 routers with link controller (that's Thunderbolt 2 and
++ * Thunderbolt 3).
++ */
++int tb_lc_reset_port(struct tb_port *port)
++{
++	struct tb_switch *sw = port->sw;
++	int cap, ret;
++	u32 mode;
++
++	if (sw->generation < 2)
++		return -EINVAL;
++
++	cap = find_port_lc_cap(port);
++	if (cap < 0)
++		return cap;
++
++	ret = tb_sw_read(sw, &mode, TB_CFG_SWITCH, cap + TB_LC_PORT_MODE, 1);
++	if (ret)
++		return ret;
++
++	mode |= TB_LC_PORT_MODE_DPR;
++
++	ret = tb_sw_write(sw, &mode, TB_CFG_SWITCH, cap + TB_LC_PORT_MODE, 1);
++	if (ret)
++		return ret;
++
++	fsleep(10000);
++
++	ret = tb_sw_read(sw, &mode, TB_CFG_SWITCH, cap + TB_LC_PORT_MODE, 1);
++	if (ret)
++		return ret;
++
++	mode &= ~TB_LC_PORT_MODE_DPR;
++
++	return tb_sw_write(sw, &mode, TB_CFG_SWITCH, cap + TB_LC_PORT_MODE, 1);
++}
++
+ static int tb_lc_set_port_configured(struct tb_port *port, bool configured)
+ {
+ 	bool upstream = tb_is_upstream_port(port);
+--- a/drivers/thunderbolt/switch.c
++++ b/drivers/thunderbolt/switch.c
+@@ -676,6 +676,13 @@ int tb_port_disable(struct tb_port *port
+ 	return __tb_port_enable(port, false);
+ }
+ 
++static int tb_port_reset(struct tb_port *port)
++{
++	if (tb_switch_is_usb4(port->sw))
++		return port->cap_usb4 ? usb4_port_reset(port) : 0;
++	return tb_lc_reset_port(port);
++}
++
+ /*
+  * tb_init_port() - initialize a port
+  *
+--- a/drivers/thunderbolt/tb.h
++++ b/drivers/thunderbolt/tb.h
+@@ -1173,6 +1173,7 @@ int tb_drom_read(struct tb_switch *sw);
+ int tb_drom_read_uid_only(struct tb_switch *sw, u64 *uid);
+ 
+ int tb_lc_read_uuid(struct tb_switch *sw, u32 *uuid);
++int tb_lc_reset_port(struct tb_port *port);
+ int tb_lc_configure_port(struct tb_port *port);
+ void tb_lc_unconfigure_port(struct tb_port *port);
+ int tb_lc_configure_xdomain(struct tb_port *port);
+@@ -1305,6 +1306,7 @@ void usb4_switch_remove_ports(struct tb_
+ 
+ int usb4_port_unlock(struct tb_port *port);
+ int usb4_port_hotplug_enable(struct tb_port *port);
++int usb4_port_reset(struct tb_port *port);
+ int usb4_port_configure(struct tb_port *port);
+ void usb4_port_unconfigure(struct tb_port *port);
+ int usb4_port_configure_xdomain(struct tb_port *port, struct tb_xdomain *xd);
+--- a/drivers/thunderbolt/tb_regs.h
++++ b/drivers/thunderbolt/tb_regs.h
+@@ -389,6 +389,7 @@ struct tb_regs_port_header {
+ #define PORT_CS_18_CSA				BIT(22)
+ #define PORT_CS_18_TIP				BIT(24)
+ #define PORT_CS_19				0x13
++#define PORT_CS_19_DPR				BIT(0)
+ #define PORT_CS_19_PC				BIT(3)
+ #define PORT_CS_19_PID				BIT(4)
+ #define PORT_CS_19_WOC				BIT(16)
+@@ -584,6 +585,9 @@ struct tb_regs_hop {
+ #define TB_LC_POWER				0x740
+ 
+ /* Link controller registers */
++#define TB_LC_PORT_MODE				0x26
++#define TB_LC_PORT_MODE_DPR			BIT(0)
++
+ #define TB_LC_CS_42				0x2a
+ #define TB_LC_CS_42_USB_PLUGGED			BIT(31)
+ 
+--- a/drivers/thunderbolt/usb4.c
++++ b/drivers/thunderbolt/usb4.c
+@@ -1113,6 +1113,45 @@ int usb4_port_hotplug_enable(struct tb_p
+ 	return tb_port_write(port, &val, TB_CFG_PORT, ADP_CS_5, 1);
+ }
+ 
++/**
++ * usb4_port_reset() - Issue downstream port reset
++ * @port: USB4 port to reset
++ *
++ * Issues downstream port reset to @port.
++ */
++int usb4_port_reset(struct tb_port *port)
++{
++	int ret;
++	u32 val;
++
++	if (!port->cap_usb4)
++		return -EINVAL;
++
++	ret = tb_port_read(port, &val, TB_CFG_PORT,
++			   port->cap_usb4 + PORT_CS_19, 1);
++	if (ret)
++		return ret;
++
++	val |= PORT_CS_19_DPR;
++
++	ret = tb_port_write(port, &val, TB_CFG_PORT,
++			    port->cap_usb4 + PORT_CS_19, 1);
++	if (ret)
++		return ret;
++
++	fsleep(10000);
++
++	ret = tb_port_read(port, &val, TB_CFG_PORT,
++			   port->cap_usb4 + PORT_CS_19, 1);
++	if (ret)
++		return ret;
++
++	val &= ~PORT_CS_19_DPR;
++
++	return tb_port_write(port, &val, TB_CFG_PORT,
++			     port->cap_usb4 + PORT_CS_19, 1);
++}
++
+ static int usb4_port_set_configured(struct tb_port *port, bool configured)
+ {
+ 	int ret;
 
 
