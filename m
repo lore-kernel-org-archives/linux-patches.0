@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08518143C6B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD16D143C6B;
 	Tue, 23 Apr 2024 21:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908651; cv=none; b=SHCrzqt8SjLLwpWd038XtgF/hZno1SvyjWMP5vNHTQSw/geh83xAyarTmyx2SF975ZzGqFCFlJQ5MzQjzku5muPbiICb/DA37DfXSJH9ecKJHL4s4fylo5wN74ig8ee45ZDTi501yAGi/jI1HwibqKnV6qL2a1lB/Q0A6jBJLIs=
+	t=1713908651; cv=none; b=YCXFt1OATy7LYOjPsBPlC0lCOGw0HZtIKTA4kH4+nwSUs2t033Gl5wjknuLb+qjJCIffpx6anLtKe9FUaW7shuhIEkeX3Af+3MeSDbBS7R/7j3Ymo/gAhFuneLAvsUAHpTov3N4n+C/isuTZthToPpITvAzGHoPOz1s56CQRv44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908651; c=relaxed/simple;
-	bh=hDC2DQ5A4DH32svvLaMWEuSiuJzkyjOrFMM/qB1Ko/8=;
+	bh=it3ytTe7aRU1UvssAj7N70lvDZkOz3f/hCh75jThKWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jrl8h7TjOPCv35I8dszooJ0Tj/4RO2AZjfDX1bzpfoDX3ud98dxeHY0fXRL9LcKMvqDOFU/v97QyyZ1dtyYCKBmZkaIdjP0+msUV1muoMeRfsfk/ktpN5m1qFJDBqr3In9nqMDkNcnqhERuC4cxXyy/ZDJvyvrAaz9fCBSr934U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9YaamZB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hGZ2PjARn09PUmLPsGWefMjV/Buymhuhey+bFK5cZkAKDN+u7nIuG4J9dzWKhpZodieTmZ/Z6SanCKpwgvHuHEnvYeDsGAoytffp7vdK71pyynvJQYCPqZoCvecGWPIFJG0yg+ZHaoZgotzAnEfitBA6luJTw9vnJ6SoKCVOos8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g3ASc+zk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9YaamZB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC507C3277B;
-	Tue, 23 Apr 2024 21:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g3ASc+zk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81226C116B1;
+	Tue, 23 Apr 2024 21:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908650;
-	bh=hDC2DQ5A4DH32svvLaMWEuSiuJzkyjOrFMM/qB1Ko/8=;
+	s=korg; t=1713908651;
+	bh=it3ytTe7aRU1UvssAj7N70lvDZkOz3f/hCh75jThKWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9YaamZBLWLo+Tpr6e5kjaw8bGUqvms7dQwrpw5lpFCHD2T9LHzozwV71+jngkn3k
-	 Pxc0+UzHa4jtel7xADeHPV+COqX36RcALzWtLWLafaHnOi59qWaI1rdfXZfL+0d06P
-	 95xB1FVNiSdrighRRJ5Vf8op1j5aIWoE+Zm1ILnk=
+	b=g3ASc+zkpqXxjYq/6WbOqJim143bSAsJVF7CGKjO4QuKKUvmRP3ErIm6y/qPjCJV6
+	 fkW6x8jw9GdqtkhicHf03xYrhs++OvcIqakOVpVPfOi8pY7LIVvcjmC/jM4M9KG4ov
+	 8cEb/LLW9Ih+G66bTW9q45VcOP3ct2EQ1TVzFiNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.6 131/158] KVM: x86/pmu: Do not mask LVTPC when handling a PMI on AMD platforms
-Date: Tue, 23 Apr 2024 14:39:28 -0700
-Message-ID: <20240423213859.966676304@linuxfoundation.org>
+	Danny Lin <danny@orbstack.dev>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 6.6 140/158] fuse: fix leaked ENOSYS error on first statx call
+Date: Tue, 23 Apr 2024 14:39:37 -0700
+Message-ID: <20240423213900.248253964@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -52,58 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Danny Lin <danny@orbstack.dev>
 
-commit 49ff3b4aec51e3abfc9369997cc603319b02af9a upstream.
+commit eb4b691b9115fae4c844f5941418335575cf667f upstream.
 
-On AMD and Hygon platforms, the local APIC does not automatically set
-the mask bit of the LVTPC register when handling a PMI and there is
-no need to clear it in the kernel's PMI handler.
+FUSE attempts to detect server support for statx by trying it once and
+setting no_statx=1 if it fails with ENOSYS, but consider the following
+scenario:
 
-For guests, the mask bit is currently set by kvm_apic_local_deliver()
-and unless it is cleared by the guest kernel's PMI handler, PMIs stop
-arriving and break use-cases like sampling with perf record.
+- Userspace (e.g. sh) calls stat() on a file
+  * succeeds
+- Userspace (e.g. lsd) calls statx(BTIME) on the same file
+  - request_mask = STATX_BASIC_STATS | STATX_BTIME
+  - first pass: sync=true due to differing cache_mask
+  - statx fails and returns ENOSYS
+  - set no_statx and retry
+  - retry sets mask = STATX_BASIC_STATS
+  - now mask == cache_mask; sync=false (time_before: still valid)
+  - so we take the "else if (stat)" path
+  - "err" is still ENOSYS from the failed statx call
 
-This does not affect non-PerfMonV2 guests because PMIs are handled in
-the guest kernel by x86_pmu_handle_irq() which always clears the LVTPC
-mask bit irrespective of the vendor.
+Fix this by zeroing "err" before retrying the failed call.
 
-Before:
-
-  $ perf record -e cycles:u true
-  [ perf record: Woken up 1 times to write data ]
-  [ perf record: Captured and wrote 0.001 MB perf.data (1 samples) ]
-
-After:
-
-  $ perf record -e cycles:u true
-  [ perf record: Woken up 1 times to write data ]
-  [ perf record: Captured and wrote 0.002 MB perf.data (19 samples) ]
-
-Fixes: a16eb25b09c0 ("KVM: x86: Mask LVTPC when handling a PMI")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-[sean: use is_intel_compatible instead of !is_amd_or_hygon()]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20240405235603.1173076-3-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: d3045530bdd2 ("fuse: implement statx")
+Cc: stable@vger.kernel.org # v6.6
+Signed-off-by: Danny Lin <danny@orbstack.dev>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/fuse/dir.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -2772,7 +2772,8 @@ int kvm_apic_local_deliver(struct kvm_la
- 		trig_mode = reg & APIC_LVT_LEVEL_TRIGGER;
- 
- 		r = __apic_accept_irq(apic, mode, vector, 1, trig_mode, NULL);
--		if (r && lvt_type == APIC_LVTPC)
-+		if (r && lvt_type == APIC_LVTPC &&
-+		    guest_cpuid_is_intel_compatible(apic->vcpu))
- 			kvm_lapic_set_reg(apic, APIC_LVTPC, reg | APIC_LVT_MASKED);
- 		return r;
- 	}
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -1317,6 +1317,7 @@ retry:
+ 			err = fuse_do_statx(inode, file, stat);
+ 			if (err == -ENOSYS) {
+ 				fc->no_statx = 1;
++				err = 0;
+ 				goto retry;
+ 			}
+ 		} else {
 
 
