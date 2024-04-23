@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3DB143889;
-	Tue, 23 Apr 2024 21:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15311143889;
+	Tue, 23 Apr 2024 21:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908590; cv=none; b=mHHndNBzrcsUlVX07Jldg7IPj8XaWtXVHAXVFbYp97dBpzTmfnbaEb71KXx+IPDM1Uue1UEWeYOWDfkglUs3gGnimM/Mbkm+xvvgQVIyKFkLfMUSRtLZ/WK2GFbUPhfZikd8XNGFwYcCYNjPQ6c56wNaQe1AsoDNhc31lWa9JFU=
+	t=1713908591; cv=none; b=CwYUq3NmXma5buuekoAiHK6L+Ti3AiNxYtCRQoPsBmY6jP1w500T1TlPg1s2BtnaXRRl0NaY/POQfyzraTe6r36zNl0W7Z/yz+yf6dQnWjbiwmUF9/42vNmm63MgoPovcncDpbHQe4YI+K3xphp0XCzMvBktt3CA27UZL8zEmxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908590; c=relaxed/simple;
-	bh=0EBA2RYi756TiFfMHYMGVCsqMQcC64MMKfM4J8ktKas=;
+	s=arc-20240116; t=1713908591; c=relaxed/simple;
+	bh=Zo6C0NzIp4kzncTAnAH0pcT8HxFndaZgLA9sjmN9mCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mufQ1ghICL+lTlNQGLjujkcT1COBmOwTQppr2z+C53S1phYczqxZyUVr2/S9giaVZgFKTaC4CHYtyjB9VZPUQDLgtkoQP3bHBtDUBPOZufqtRRBECzEdJ1W5KmlPxSkWyyeLfx/sOGMK/w+pA1XbIWdt/Gx+7sAKeW5WAUSSeHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkKzjcP/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r2I9ugHfVqpk+2h3PFOv8vAPmkVDNFctMgnFptAQnAX2QUwnLqYYUEVTAO7U/KeKQ0IxsFvuvKBt8UVn8i1mPfYhcDNsZYXWl30sVyVWNh06vRSCzUMBt6bQS02xtbY4MP9wDSOp2z/JncxdK6moIIuyD8ZcQSKuXfgVcXxk+m8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6ZI5x1r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkKzjcP/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A65C116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6ZI5x1r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5459C3277B;
 	Tue, 23 Apr 2024 21:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908590;
-	bh=0EBA2RYi756TiFfMHYMGVCsqMQcC64MMKfM4J8ktKas=;
+	bh=Zo6C0NzIp4kzncTAnAH0pcT8HxFndaZgLA9sjmN9mCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mkKzjcP/5EhPjwXTlf9cYEYH9tsfm2dHaQiQt0sb4A17nbTYijWz0pYieomG/K4oP
-	 eT2Z/aQA2mrXcAJwzdmLrMmtySbGFLeyuFrIXLeprMrnSRqANc8UsS7i4E6tFwWOQ7
-	 N0Rpv9S3QpIOtxSPt/inC8ECWzYBFdQEfyGV3aL0=
+	b=e6ZI5x1ruRu799lK1QErAzekoEWd0Qq5pvyOUr0SnCAov3t9G37eQKimKoYL1t4AW
+	 SEhhr9z7y+2oXklF3tj2e1u0HBL6+8a/GXiAQptD4tLv4aZfTt4x/+DG6M0/LK56LJ
+	 hfVJWfFWC/7KgT6I4Iut++jD8M+k4l8/AmNeWQ9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 025/158] SUNRPC: Fix rpcgss_context trace event acceptor field
-Date: Tue, 23 Apr 2024 14:37:42 -0700
-Message-ID: <20240423213856.558697811@linuxfoundation.org>
+	Alvin Lee <alvin.lee2@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 016/158] drm/amd/display: Do not recursively call manual trigger programming
+Date: Tue, 23 Apr 2024 14:37:33 -0700
+Message-ID: <20240423213856.243448160@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -50,54 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Dillon Varone <dillon.varone@amd.com>
 
-commit a4833e3abae132d613ce7da0e0c9a9465d1681fa upstream.
+[ Upstream commit 953927587f37b731abdeabe46ad44a3b3ec67a52 ]
 
-The rpcgss_context trace event acceptor field is a dynamically sized
-string that records the "data" parameter. But this parameter is also
-dependent on the "len" field to determine the size of the data.
-
-It needs to use __string_len() helper macro where the length can be passed
-in. It also incorrectly uses strncpy() to save it instead of
-__assign_str(). As these macros can change, it is not wise to open code
-them in trace events.
-
-As of commit c759e609030c ("tracing: Remove __assign_str_len()"),
-__assign_str() can be used for both __string() and __string_len() fields.
-Before that commit, __assign_str_len() is required to be used. This needs
-to be noted for backporting. (In actuality, commit c1fa617caeb0 ("tracing:
-Rework __assign_str() and __string() to not duplicate getting the string")
-is the commit that makes __string_str_len() obsolete).
+[WHY&HOW]
+We should not be recursively calling the manual trigger programming function when
+FAMS is not in use.
 
 Cc: stable@vger.kernel.org
-Fixes: 0c77668ddb4e ("SUNRPC: Introduce trace points in rpc_auth_gss.ko")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/rpcgss.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/include/trace/events/rpcgss.h
-+++ b/include/trace/events/rpcgss.h
-@@ -609,7 +609,7 @@ TRACE_EVENT(rpcgss_context,
- 		__field(unsigned int, timeout)
- 		__field(u32, window_size)
- 		__field(int, len)
--		__string(acceptor, data)
-+		__string_len(acceptor, data, len)
- 	),
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
+index e817fa4efeee5..058dee76054ea 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
+@@ -236,9 +236,6 @@ static void optc32_setup_manual_trigger(struct timing_generator *optc)
+ 				OTG_V_TOTAL_MAX_SEL, 1,
+ 				OTG_FORCE_LOCK_ON_EVENT, 0,
+ 				OTG_SET_V_TOTAL_MIN_MASK, (1 << 1)); /* TRIGA */
+-
+-		// Setup manual flow control for EOF via TRIG_A
+-		optc->funcs->setup_manual_trigger(optc);
+ 	}
+ }
  
- 	TP_fast_assign(
-@@ -618,7 +618,7 @@ TRACE_EVENT(rpcgss_context,
- 		__entry->timeout = timeout;
- 		__entry->window_size = window_size;
- 		__entry->len = len;
--		strncpy(__get_str(acceptor), data, len);
-+		__assign_str(acceptor, data);
- 	),
- 
- 	TP_printk("win_size=%u expiry=%lu now=%lu timeout=%u acceptor=%.*s",
+-- 
+2.43.0
+
 
 
