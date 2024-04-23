@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F31143891;
-	Tue, 23 Apr 2024 21:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7985D143882;
+	Tue, 23 Apr 2024 21:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908730; cv=none; b=WGzWsSg0miiHtzt7AFH+XxrGZFa0Z6EQ5JVDol/6XqhvzaBvpAAMojXQIq0Sj0uboY0aoCRat5JE8TWPjoIIXW8OUJp6FgZ9IAMElT3PhnhapYiMThvSe8vd+5pV68uHSg1orvagN4trE9NgDRgO98Q5bTpfoUzy+T6hK6qh3/M=
+	t=1713908731; cv=none; b=RsmuL8YWFVy88uxtyYZ0XgWSWTY9mmpC2d2IJwPE3dKl9sWV5pfCfY8HhZWM8NGOuoHvuOoj8zyKJlzpXV8PPjnlihnqMABbwk4GkK3o0l07hc5hVa+5hxNx+PEt0zGBFL7/f5KcFNyF85K459xUHhTMC2XhuC5LR31mskPaqGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908730; c=relaxed/simple;
-	bh=a35MloweNs0zFBodwVbtWmTIRxaVZtkVarUdvzdIn64=;
+	s=arc-20240116; t=1713908731; c=relaxed/simple;
+	bh=Q2j2BRDL1F+dUYkNzS5URkHFpyLo9iiaW6t7bjnu0Kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JbA3mFetd3Scn3B5xbJOdUmRBvJKBUn0IUKLtatQviOtBYkJpiV5ng+4AoGUcKxhfGDzh9doOdng8J7i/2NVKmKlo46ZLR7GwObOVUBjY5FYgPtLUucr4JaN60JopnLuJcI2gOLkuafmpVO4rsrkn9V7OVWKybS6gLDo3RBdQgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oaCN5uWj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sHvvA7F0t6PQDtz228tydgwTskw87+uvcREUQu7xxUquqzBPgHz0RTBXdRnMmQo5LGYz07EhDYk/B1Wi6p9XQB7W0RbsYXZVLBQ1Cymo3kJROdkWwh9UIlSTCB2hMwkWzyULtRdmzKfNSGYVKSdqxEU1oFd/TsiX1xBEHHF75Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3QLsfF0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oaCN5uWj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BD3C32786;
-	Tue, 23 Apr 2024 21:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3QLsfF0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42CD8C32783;
+	Tue, 23 Apr 2024 21:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908730;
-	bh=a35MloweNs0zFBodwVbtWmTIRxaVZtkVarUdvzdIn64=;
+	s=korg; t=1713908731;
+	bh=Q2j2BRDL1F+dUYkNzS5URkHFpyLo9iiaW6t7bjnu0Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oaCN5uWj77Ecm4+RF2ymuNyZGgqkcfV1am1qeWtxlhnOy0AvxxkNIpNb+tUdipBGk
-	 wNcQ5Z8ew1DMN9CpIMLXLCiPJqUuJStljoZiL+JSIodYFWdHtcx2uK9kjVLd9tQoZ2
-	 LeTsA1vnFnBrwIIOSWnideMWpfaHdIOgd7kl89yE=
+	b=q3QLsfF0YImJf0f1/mix9Bm8QsQKBV2Iv+OL3c8ElrWXyM9SzkKANoum3puvMX2wZ
+	 LOT6XTCLBPR2Nne4Pwri/hfDxW8uuhbEE+/fGrhRhmvowx+lTicjZfzhHOZrmsHhyJ
+	 /N/2qnnvQvaAXNjhMlQR0UC/rNua+RJ/nF8Pb7SQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/141] ALSA: scarlett2: Rename scarlett_gen2 to scarlett2
-Date: Tue, 23 Apr 2024 14:39:07 -0700
-Message-ID: <20240423213855.759052560@linuxfoundation.org>
+Subject: [PATCH 6.1 097/141] x86/bugs: Fix BHI retpoline check
+Date: Tue, 23 Apr 2024 14:39:25 -0700
+Message-ID: <20240423213856.321383804@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -51,161 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit efc3d7d20361cc59325a9f0525e079333b4459c0 ]
+[ Upstream commit 69129794d94c544810e68b2b4eaa7e44063f9bf2 ]
 
-This driver was originally developed for the Focusrite Scarlett Gen 2
-series. Since then Focusrite have used a similar protocol for their
-Gen 3, Gen 4, Clarett USB, Clarett+, and Vocaster series.
+Confusingly, X86_FEATURE_RETPOLINE doesn't mean retpolines are enabled,
+as it also includes the original "AMD retpoline" which isn't a retpoline
+at all.
 
-Let's call this common protocol the "Scarlett 2 Protocol" and rename
-the driver to scarlett2 to not imply that it is restricted to Gen 2
-series devices.
+Also replace cpu_feature_enabled() with boot_cpu_has() because this is
+before alternatives are patched and cpu_feature_enabled()'s fallback
+path is slower than plain old boot_cpu_has().
 
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Link: https://lore.kernel.org/r/e1ad7f69a1e20cdb39094164504389160c1a0a0b.1698342632.git.g@b4.vu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: ec9404e40e8f ("x86/bhi: Add BHI mitigation knob")
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/ad3807424a3953f0323c011a643405619f2a4927.1712944776.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- MAINTAINERS                                          |  2 +-
- sound/usb/Makefile                                   |  2 +-
- sound/usb/mixer_quirks.c                             |  4 ++--
- .../usb/{mixer_scarlett_gen2.c => mixer_scarlett2.c} | 12 +++++++-----
- sound/usb/mixer_scarlett2.h                          |  7 +++++++
- sound/usb/mixer_scarlett_gen2.h                      |  7 -------
- 6 files changed, 18 insertions(+), 16 deletions(-)
- rename sound/usb/{mixer_scarlett_gen2.c => mixer_scarlett2.c} (99%)
- create mode 100644 sound/usb/mixer_scarlett2.h
- delete mode 100644 sound/usb/mixer_scarlett_gen2.h
+ arch/x86/kernel/cpu/bugs.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index bbfedb0b20938..ecf4d0c8f446e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -8031,7 +8031,7 @@ M:	Geoffrey D. Bennett <g@b4.vu>
- L:	alsa-devel@alsa-project.org (moderated for non-subscribers)
- S:	Maintained
- T:	git git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound.git
--F:	sound/usb/mixer_scarlett_gen2.c
-+F:	sound/usb/mixer_scarlett2.c
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index 6d69123de3660..3f38592ec7713 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1629,7 +1629,8 @@ static void __init bhi_select_mitigation(void)
+ 		return;
  
- FORCEDETH GIGABIT ETHERNET DRIVER
- M:	Rain River <rain.1986.08.12@gmail.com>
-diff --git a/sound/usb/Makefile b/sound/usb/Makefile
-index 9ccb21a4ff8a8..64a718c766a7a 100644
---- a/sound/usb/Makefile
-+++ b/sound/usb/Makefile
-@@ -12,7 +12,7 @@ snd-usb-audio-objs := 	card.o \
- 			mixer.o \
- 			mixer_quirks.o \
- 			mixer_scarlett.o \
--			mixer_scarlett_gen2.o \
-+			mixer_scarlett2.o \
- 			mixer_us16x08.o \
- 			mixer_s1810c.o \
- 			pcm.o \
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index a331732fed890..c8d48566e1759 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -33,7 +33,7 @@
- #include "mixer.h"
- #include "mixer_quirks.h"
- #include "mixer_scarlett.h"
--#include "mixer_scarlett_gen2.h"
-+#include "mixer_scarlett2.h"
- #include "mixer_us16x08.h"
- #include "mixer_s1810c.h"
- #include "helper.h"
-@@ -3453,7 +3453,7 @@ int snd_usb_mixer_apply_create_quirk(struct usb_mixer_interface *mixer)
- 	case USB_ID(0x1235, 0x820a): /* Focusrite Clarett+ 2Pre */
- 	case USB_ID(0x1235, 0x820b): /* Focusrite Clarett+ 4Pre */
- 	case USB_ID(0x1235, 0x820c): /* Focusrite Clarett+ 8Pre */
--		err = snd_scarlett_gen2_init(mixer);
-+		err = snd_scarlett2_init(mixer);
- 		break;
- 
- 	case USB_ID(0x041e, 0x323b): /* Creative Sound Blaster E1 */
-diff --git a/sound/usb/mixer_scarlett_gen2.c b/sound/usb/mixer_scarlett2.c
-similarity index 99%
-rename from sound/usb/mixer_scarlett_gen2.c
-rename to sound/usb/mixer_scarlett2.c
-index cbdef89ab987f..bcb8b76174065 100644
---- a/sound/usb/mixer_scarlett_gen2.c
-+++ b/sound/usb/mixer_scarlett2.c
-@@ -1,6 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
- /*
-- *   Focusrite Scarlett Gen 2/3 and Clarett USB/Clarett+ Driver for ALSA
-+ *   Focusrite Scarlett 2 Protocol Driver for ALSA
-+ *   (including Scarlett 2nd Gen, 3rd Gen, Clarett USB, and Clarett+
-+ *   series products)
-  *
-  *   Supported models:
-  *   - 6i6/18i8/18i20 Gen 2
-@@ -149,7 +151,7 @@
- #include "mixer.h"
- #include "helper.h"
- 
--#include "mixer_scarlett_gen2.h"
-+#include "mixer_scarlett2.h"
- 
- /* device_setup value to allow turning MSD mode back on */
- #define SCARLETT2_MSD_ENABLE 0x02
-@@ -4251,7 +4253,7 @@ static const struct scarlett2_device_entry *get_scarlett2_device_entry(
- 	return entry;
- }
- 
--static int snd_scarlett_gen2_controls_create(
-+static int snd_scarlett2_controls_create(
- 	struct usb_mixer_interface *mixer,
- 	const struct scarlett2_device_entry *entry)
+ 	/* Retpoline mitigates against BHI unless the CPU has RRSBA behavior */
+-	if (cpu_feature_enabled(X86_FEATURE_RETPOLINE)) {
++	if (boot_cpu_has(X86_FEATURE_RETPOLINE) &&
++	    !boot_cpu_has(X86_FEATURE_RETPOLINE_LFENCE)) {
+ 		spec_ctrl_disable_kernel_rrsba();
+ 		if (rrsba_disabled)
+ 			return;
+@@ -2783,11 +2784,13 @@ static const char *spectre_bhi_state(void)
  {
-@@ -4339,7 +4341,7 @@ static int snd_scarlett_gen2_controls_create(
- 	return 0;
- }
- 
--int snd_scarlett_gen2_init(struct usb_mixer_interface *mixer)
-+int snd_scarlett2_init(struct usb_mixer_interface *mixer)
- {
- 	struct snd_usb_audio *chip = mixer->chip;
- 	const struct scarlett2_device_entry *entry;
-@@ -4378,7 +4380,7 @@ int snd_scarlett_gen2_init(struct usb_mixer_interface *mixer)
- 		entry->series_name,
- 		USB_ID_PRODUCT(chip->usb_id));
- 
--	err = snd_scarlett_gen2_controls_create(mixer, entry);
-+	err = snd_scarlett2_controls_create(mixer, entry);
- 	if (err < 0)
- 		usb_audio_err(mixer->chip,
- 			      "Error initialising %s Mixer Driver: %d",
-diff --git a/sound/usb/mixer_scarlett2.h b/sound/usb/mixer_scarlett2.h
-new file mode 100644
-index 0000000000000..d209362cf41a6
---- /dev/null
-+++ b/sound/usb/mixer_scarlett2.h
-@@ -0,0 +1,7 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef __USB_MIXER_SCARLETT2_H
-+#define __USB_MIXER_SCARLETT2_H
-+
-+int snd_scarlett2_init(struct usb_mixer_interface *mixer);
-+
-+#endif /* __USB_MIXER_SCARLETT2_H */
-diff --git a/sound/usb/mixer_scarlett_gen2.h b/sound/usb/mixer_scarlett_gen2.h
-deleted file mode 100644
-index 668c6b0cb50a6..0000000000000
---- a/sound/usb/mixer_scarlett_gen2.h
-+++ /dev/null
-@@ -1,7 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0 */
--#ifndef __USB_MIXER_SCARLETT_GEN2_H
--#define __USB_MIXER_SCARLETT_GEN2_H
--
--int snd_scarlett_gen2_init(struct usb_mixer_interface *mixer);
--
--#endif /* __USB_MIXER_SCARLETT_GEN2_H */
+ 	if (!boot_cpu_has_bug(X86_BUG_BHI))
+ 		return "; BHI: Not affected";
+-	else if  (boot_cpu_has(X86_FEATURE_CLEAR_BHB_HW))
++	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_HW))
+ 		return "; BHI: BHI_DIS_S";
+-	else if  (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP))
++	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP))
+ 		return "; BHI: SW loop, KVM: SW loop";
+-	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) && rrsba_disabled)
++	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) &&
++		 !boot_cpu_has(X86_FEATURE_RETPOLINE_LFENCE) &&
++		 rrsba_disabled)
+ 		return "; BHI: Retpoline";
+ 	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT))
+ 		return "; BHI: Vulnerable, KVM: SW loop";
 -- 
 2.43.0
 
