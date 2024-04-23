@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF1A143C5F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41883145B14;
 	Tue, 23 Apr 2024 21:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908765; cv=none; b=t/ZDSnfkBzMCn7mUlNWrwUjmfLtw4pkbRiNn8P/NNHqEtukqBWsnJMDDrHCnTOoQ3iy7iU9y7HNcGji4QPapgM9QBiIi9em3dhxOLDYgrx+fYhQ0qV22SVgaBYEGg8LDl+2K+P86GK1mYXqTnFI/eDEvv17zLsYNJk6+hVo86qI=
+	t=1713908766; cv=none; b=VHAiBetMDiF0/xofo2KD+yvBfoTPOsa0kdvCg+PyuYTk8oi5PGiO0gRrd/O3FCnlbGNiT8RfTnDf4eSuKBrPucI1CZalHJLf33bNlPCkjaHPjdaEPtJMXckHU+h0toRYNCpqW1W9EI+RCXHU919fZPHARSp7TrAbioO1Bqs75HM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908765; c=relaxed/simple;
-	bh=wYyBywTJzTpLzlrYIHHu4i586AWslnQN6xsGRXChDNE=;
+	s=arc-20240116; t=1713908766; c=relaxed/simple;
+	bh=oFY/Mb3YlbCm6X3GDVfTH7KcsT+Ql7Xf1jzuaILk5nI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r5wGwnkQzTMbR2euyLJmOAhk6dt5Mx//sYfv4lPRXGF+9DG0Lgbz3WVb7iJL6pZ3a8k7unfOAm2bRUPv9aHRhXiF9iHPcWOUNAAShSVlMvP1OIJhhxxiisDMCd/KXzE5OVsP2vJCXKN8Yh8sR9IgA+T0+cpJ3Z4cAg928+dhQkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzEPpMmj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=POlxqTEtd3h5wI/RbYN7JaQkcEJQYh+1wbur/xQcM3jc/mCmqB8Hc1W3JBueRo6uhf+tDBCKa/GcYUCfpmHbDZ6O1R5xXyzInWa0/dinPm1bxLKMiTKF/42VL/ejX9X15R9Xpfr+YvUhGVoVV7DObwiam/LWJ6V95qGrbGI4AWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=003oD9ni; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzEPpMmj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D24C4AF08;
-	Tue, 23 Apr 2024 21:46:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="003oD9ni"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6175C116B1;
+	Tue, 23 Apr 2024 21:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908765;
-	bh=wYyBywTJzTpLzlrYIHHu4i586AWslnQN6xsGRXChDNE=;
+	bh=oFY/Mb3YlbCm6X3GDVfTH7KcsT+Ql7Xf1jzuaILk5nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wzEPpMmjufIRDjVEl7mtp6+5zDq4FktIIFNPcsQbxIugz7/PaqYMsk/Z/0UkVC+nc
-	 VDwtsFTBBnlYKYi4jCD17h5WY1oN/qjKjtIb3flsFb6u+ZsqTlgJs+I9U92+qWWlD3
-	 k8n90yIcnzhsPHBHQWvJ3S+pbHfKmUnv6o+/L53E=
+	b=003oD9niqACAAqXkzVq9yQ5p+r7xKTKA2GbkaV5APMVbMgpqSPav9iXC09P6MY3Do
+	 AHZOnT/jWjwpdqcYlBAhCiaoZTlvZjKl7Y1A9dmLR5eJwK0p/CApKm57kc/f62d0XS
+	 eWelQ5wRH1C/WtU9POf3n0XFp1TDY5tld2uovldg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marios Makassikis <mmakassikis@freebox.fr>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 139/141] ksmbd: clear RENAME_NOREPLACE before calling vfs_rename
-Date: Tue, 23 Apr 2024 14:40:07 -0700
-Message-ID: <20240423213857.731684068@linuxfoundation.org>
+Subject: [PATCH 6.1 140/141] ksmbd: common: use struct_group_attr instead of struct_group for network_open_info
+Date: Tue, 23 Apr 2024 14:40:08 -0700
+Message-ID: <20240423213857.758001962@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -51,43 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marios Makassikis <mmakassikis@freebox.fr>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 4973b04d3ea577db80c501c5f14e68ec69fe1794 upstream.
+commit 0268a7cc7fdc47d90b6c18859de7718d5059f6f1 upstream.
 
-File overwrite case is explicitly handled, so it is not necessary to
-pass RENAME_NOREPLACE to vfs_rename.
+4byte padding cause the connection issue with the applications of MacOS.
+smb2_close response size increases by 4 bytes by padding, And the smb
+client of MacOS check it and stop the connection. This patch use
+struct_group_attr instead of struct_group for network_open_info to use
+ __packed to avoid padding.
 
-Clearing the flag fixes rename operations when the share is a ntfs-3g
-mount. The latter uses an older version of fuse with no support for
-flags in the ->rename op.
-
+Fixes: 0015eb6e1238 ("smb: client, common: fix fortify warnings")
 Cc: stable@vger.kernel.org
-Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/smb/common/smb2pdu.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -746,10 +746,15 @@ retry:
- 		goto out4;
- 	}
- 
-+	/*
-+	 * explicitly handle file overwrite case, for compatibility with
-+	 * filesystems that may not support rename flags (e.g: fuse)
-+	 */
- 	if ((flags & RENAME_NOREPLACE) && d_is_positive(new_dentry)) {
- 		err = -EEXIST;
- 		goto out4;
- 	}
-+	flags &= ~(RENAME_NOREPLACE);
- 
- 	if (old_child == trap) {
- 		err = -EINVAL;
+--- a/fs/smb/common/smb2pdu.h
++++ b/fs/smb/common/smb2pdu.h
+@@ -699,7 +699,7 @@ struct smb2_close_rsp {
+ 	__le16 StructureSize; /* 60 */
+ 	__le16 Flags;
+ 	__le32 Reserved;
+-	struct_group(network_open_info,
++	struct_group_attr(network_open_info, __packed,
+ 		__le64 CreationTime;
+ 		__le64 LastAccessTime;
+ 		__le64 LastWriteTime;
 
 
