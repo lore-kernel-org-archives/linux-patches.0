@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D73143889;
-	Tue, 23 Apr 2024 21:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186A4143889;
+	Tue, 23 Apr 2024 21:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908588; cv=none; b=OPCijgxC4bAAteJpDkJmqbtwqy8/qkRgcAtdS6RRK11+Ni6YQb0gBoBiYUWFjKb0LKgvme3c0uSo/As8D1gPr2NOWPS+3UCyqJ0TNB2Jti2H0GQFkW6yz97hFRoUg/jl7qQBQlYe8guOvHfh/FQRP2ORDU/7zLBXeOxTe4NJlTM=
+	t=1713908589; cv=none; b=WrTxI7TPREsvyGBYUQQhLgC+28Yg1qSHVy2fRkuEdy7o6YWQqe4VKhpk4Ab4nZD2baykeHMC+U2PodthtzYOEw7gsaUBvNmXNTQO+74LYKpDLC43aPQbEq2y2QJryXhGOg5TVjnhj9u4u871k2e7rh3KdK4reQcTmYxHtr1vMRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908588; c=relaxed/simple;
-	bh=OyedTjjy+XCMhuXxDkKQ0nNFVRTJvKx/Pq60/SVPdTE=;
+	s=arc-20240116; t=1713908589; c=relaxed/simple;
+	bh=12txO5VIjoINW6a3vAA+wOa5YDaG/Uss8xnjiOuW464=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqiVDEaRMPi8tVckK1XRNC5wRtOEngPFDxRVtan9Aa+xUKPRNCmgccCF7cLZRCzklXwGwqynmCUQBqBf3LiUna9Fu5aSLetg53N76XcSnNdFzK6eR+tN5GklIVIaQ/tfLUEbvdbXxc8bfK2Up1DSmRd9XUs7jQME7uFcUPFEycM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxqXs4s/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IRuGURhFJ7urt5O8SxdcMPPOyXE4UZf/yXObYOPiQL73ztY0tivdjiij7U4/4JPjETulkEulMotJQpVpgKbxNzI0TAsHQ+nVLcYEbMAhi0Uc3RSK1MMaPg+5WK8FMMn0SRVmx5rS+EMjE0o816kgLo+vPTpYk90jaH5liJIoslE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YORQrAZR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxqXs4s/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45759C32783;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YORQrAZR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28F7C116B1;
 	Tue, 23 Apr 2024 21:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908588;
-	bh=OyedTjjy+XCMhuXxDkKQ0nNFVRTJvKx/Pq60/SVPdTE=;
+	s=korg; t=1713908589;
+	bh=12txO5VIjoINW6a3vAA+wOa5YDaG/Uss8xnjiOuW464=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sxqXs4s/6yU/2l9Qd2ADOE54gBF0ZPnXq+mNDG2FLGihSleKCjlD0qlvDzCC1qmn6
-	 nigrmdx4uXMelDSiGeI03BuE3Fsm7uHszxH0bVxBswrZu2PiOSa44LEej+1qPEmBgo
-	 flXrjUjb4eEJtWNSy8jrXC/hDAY5DSiur6iupMtc=
+	b=YORQrAZR1sYhW1R1Ep85CHwN5hMGL243dRyXe+rGj+aWKjLUI89eaYso8HP5TLIEU
+	 TN0/3UygLUkzDyx6o6AKMu8jAKouEq5Ae8ZRwkLkP8Q78PC4tUBCIM2uCJyYr+YNCM
+	 mysaEu/HgSjDv71vs/RMNrze7u8Dw4Yr1vvXB9CI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	"Dr. David Alan Gilbert" <dave@treblig.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/158] media: videobuf2: request more buffers for vb2_read
-Date: Tue, 23 Apr 2024 14:37:39 -0700
-Message-ID: <20240423213856.458697122@linuxfoundation.org>
+	Alexey Izbyshev <izbyshev@ispras.ru>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 023/158] io_uring: Fix io_cqring_wait() not restoring sigmask on get_timespec64() failure
+Date: Tue, 23 Apr 2024 14:37:40 -0700
+Message-ID: <20240423213856.489936855@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -52,65 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Alexey Izbyshev <izbyshev@ispras.ru>
 
-[ Upstream commit 350ab13e1382f2afcc2285041a1e75b80d771c2c ]
+Commit 978e5c19dfefc271e5550efba92fcef0d3f62864 upstream.
 
-The vb2 read support requests 1 buffer, leaving it to the driver
-to increase this number to something that works.
+This bug was introduced in commit 950e79dd7313 ("io_uring: minor
+io_cqring_wait() optimization"), which was made in preparation for
+adc8682ec690 ("io_uring: Add support for napi_busy_poll"). The latter
+got reverted in cb3182167325 ("Revert "io_uring: Add support for
+napi_busy_poll""), so simply undo the former as well.
 
-Unfortunately, drivers do not deal with this reliably, and in fact
-this caused problems for the bttv driver and reading from /dev/vbiX,
-causing every other VBI frame to be all 0.
-
-Instead, request as the number of buffers whatever is the maximum of
-2 and q->min_buffers_needed+1.
-
-In order to start streaming you need at least q->min_buffers_needed
-queued buffers, so add 1 buffer for processing. And if that field
-is 0, then choose 2 (again, one buffer is being filled while the
-other one is being processed).
-
-This certainly makes more sense than requesting just 1 buffer, and
-the VBI bttv support is now working again.
-
-It turns out that the old videobuf1 behavior of bttv was to allocate
-8 (video) and 4 (vbi) buffers when used with read(). After the vb2
-conversion that changed to 2 for both. With this patch it is 3, which
-is really all you need.
-
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: b7ec3212a73a ("media: bttv: convert to vb2")
-Tested-by: Dr. David Alan Gilbert <dave@treblig.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 950e79dd7313 ("io_uring: minor io_cqring_wait() optimization")
+Signed-off-by: Alexey Izbyshev <izbyshev@ispras.ru>
+Link: https://lore.kernel.org/r/20240405125551.237142-1-izbyshev@ispras.ru
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/common/videobuf2/videobuf2-core.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |   26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-index cf6727d9c81f3..468191438849e 100644
---- a/drivers/media/common/videobuf2/videobuf2-core.c
-+++ b/drivers/media/common/videobuf2/videobuf2-core.c
-@@ -2648,9 +2648,14 @@ static int __vb2_init_fileio(struct vb2_queue *q, int read)
- 		return -EBUSY;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2559,19 +2559,6 @@ static int io_cqring_wait(struct io_ring
+ 	if (__io_cqring_events_user(ctx) >= min_events)
+ 		return 0;
  
- 	/*
--	 * Start with count 1, driver can increase it in queue_setup()
-+	 * Start with q->min_buffers_needed + 1, driver can increase it in
-+	 * queue_setup()
-+	 *
-+	 * 'min_buffers_needed' buffers need to be queued up before you
-+	 * can start streaming, plus 1 for userspace (or in this case,
-+	 * kernelspace) processing.
- 	 */
--	count = 1;
-+	count = max(2, q->min_buffers_needed + 1);
+-	if (sig) {
+-#ifdef CONFIG_COMPAT
+-		if (in_compat_syscall())
+-			ret = set_compat_user_sigmask((const compat_sigset_t __user *)sig,
+-						      sigsz);
+-		else
+-#endif
+-			ret = set_user_sigmask(sig, sigsz);
+-
+-		if (ret)
+-			return ret;
+-	}
+-
+ 	init_waitqueue_func_entry(&iowq.wq, io_wake_function);
+ 	iowq.wq.private = current;
+ 	INIT_LIST_HEAD(&iowq.wq.entry);
+@@ -2588,6 +2575,19 @@ static int io_cqring_wait(struct io_ring
+ 		iowq.timeout = ktime_add_ns(timespec64_to_ktime(ts), ktime_get_ns());
+ 	}
  
- 	dprintk(q, 3, "setting up file io: mode %s, count %d, read_once %d, write_immediately %d\n",
- 		(read) ? "read" : "write", count, q->fileio_read_once,
--- 
-2.43.0
-
++	if (sig) {
++#ifdef CONFIG_COMPAT
++		if (in_compat_syscall())
++			ret = set_compat_user_sigmask((const compat_sigset_t __user *)sig,
++						      sigsz);
++		else
++#endif
++			ret = set_user_sigmask(sig, sigsz);
++
++		if (ret)
++			return ret;
++	}
++
+ 	trace_io_uring_cqring_wait(ctx, min_events);
+ 	do {
+ 		int nr_wait = (int) iowq.cq_tail - READ_ONCE(ctx->rings->cq.tail);
 
 
