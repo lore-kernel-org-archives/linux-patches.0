@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2401E20B3E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0F920B3E;
 	Tue, 23 Apr 2024 21:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908548; cv=none; b=pQX2f7jEPnlafTRcYWpR5uUomQ47/Jp1/tz7YH0EIinoXjbOjKF9EYruu8eIVnERsvuwZ09S7JEq2tDtkMmvft04A7oj6TrDdbXNe5TasGjBAN92BQSI4siJnxjZzUlEJY66IZjIzXcpL/Z02DiMuu7zIVX0uctFNC4e4/ku3Os=
+	t=1713908548; cv=none; b=cWqzz69aVj/cDpKaegW7eNLYzbUs7WY0gAgSo7r1xvku5s9lNIfpwyg/9wGTOv4G7jxlNu8T2XZBD/mG3Gu2TVW32OFxN+9sNpaaKprN0l4tjqAG3jqGD+8Y1s58Oz9trep2hd2fUoEy3FNrMB2ZOR9otXYNdFjQJq9Og4SGeBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908548; c=relaxed/simple;
-	bh=fyi+lhaaDggmZ9NTpPwEFccfVQQ3+cLGdKynUNDxUIQ=;
+	bh=dkjDUWD88QywDK7X81442WUkPZfBkWoEiTUSVFHgqKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D+N6sgtst/BkMhLrOPsiqlB6iEvTnavKrGWDg+UHuWx8H0YFmQp/0foiCl0Hc2dNCIfO/t6chwPhb9pJuwXSJTAaOvNtENGRDnl1uwqC74BIC5bbjNI+3tEj+FzE/1+52yRX5TaCX8xLVfVLN7ZW115vveKDLJLa1RfeAkjhQ6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfrbKnUb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dfTDFzgu4JVQaks9oiSxRwN/ixSUSQHS8N+e2vIOtu9nwam53kkTmNK84ouuPjMU2mYdJrDSj+bEgC0pMEHcdnCnj/jXywL/3FTYTjJUmqQl0BH/adayhp+lnMPmcwcz8VXlKKaxHnJ1KV6SvwjzWJ652utTmGbsgzKbFg6K2cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SdWsWFsJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfrbKnUb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED83DC3277B;
-	Tue, 23 Apr 2024 21:42:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdWsWFsJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9391DC116B1;
+	Tue, 23 Apr 2024 21:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908548;
-	bh=fyi+lhaaDggmZ9NTpPwEFccfVQQ3+cLGdKynUNDxUIQ=;
+	bh=dkjDUWD88QywDK7X81442WUkPZfBkWoEiTUSVFHgqKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rfrbKnUbNshDvXWfybd9+CxMsSwIBaZwhAaZJKR17Y5NwzE4WnX2/W8N4T3q4XnMz
-	 HJoj508onbxVnUkKHbfrZoZpKeUjpjxTl4H9kMOoVE1b+BQyoRqtE7uWspva1OZcwf
-	 uKHirjzpgg68ex//PdYshuhQld33Zk7GnvqL+NDc=
+	b=SdWsWFsJs/0XGX4p156SvYZXyLDY2fJPHFxqIHaNG+l80qSCkQvsmGY2UEHojUIL9
+	 SzHv/SmK7lBCJXkQptk5tPz24TwtDCx9mKRGleQ5eWj+yWwo1QPs4akLr0ZTiwA118
+	 hzGHadb4EetNLGPZjKDDvpC9GOJB9kviKs78nmu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bolan wang <bolan.wang@fibocom.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.8 109/158] USB: serial: option: add Fibocom FM135-GL variants
-Date: Tue, 23 Apr 2024 14:38:51 -0700
-Message-ID: <20240423213859.476300043@linuxfoundation.org>
+	Vlad Stolyarov <hexed@google.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	xinhui pan <xinhui.pan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.8 140/158] drm/amdgpu: validate the parameters of bo mapping operations more clearly
+Date: Tue, 23 Apr 2024 14:39:22 -0700
+Message-ID: <20240423213900.418891027@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -44,68 +46,145 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: bolan wang <bolan.wang@fibocom.com>
+From: xinhui pan <xinhui.pan@amd.com>
 
-commit 356952b13af5b2c338df1e06889fd1b5e12cbbf4 upstream.
+commit 6fef2d4c00b5b8561ad68dd2b68173f5c6af1e75 upstream.
 
-Update the USB serial option driver support for the Fibocom
-FM135-GL LTE modules.
-- VID:PID 2cb7:0115, FM135-GL for laptop debug M.2 cards(with MBIM
-interface for /Linux/Chrome OS)
+Verify the parameters of
+amdgpu_vm_bo_(map/replace_map/clearing_mappings) in one common place.
 
-0x0115: mbim, diag, at, pipe
-
-Here are the outputs of usb-devices:
-T:  Bus=01 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#= 16 Spd=480 MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2cb7 ProdID=0115 Rev=05.15
-S:  Manufacturer=Fibocom Wireless Inc.
-S:  Product=Fibocom Module
-S:  SerialNumber=12345678
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: bolan wang <bolan.wang@fibocom.com>
+Fixes: dc54d3d1744d ("drm/amdgpu: implement AMDGPU_VA_OP_CLEAR v2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Reported-by: Vlad Stolyarov <hexed@google.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: xinhui pan <xinhui.pan@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |   72 +++++++++++++++++++++------------
+ 1 file changed, 46 insertions(+), 26 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2272,6 +2272,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0xff, 0x30) },	/* Fibocom FG150 Diag */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0, 0) },		/* Fibocom FG150 AT */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0111, 0xff) },			/* Fibocom FM160 (MBIM mode) */
-+	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0115, 0xff),			/* Fibocom FM135 (laptop MBIM) */
-+	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a0, 0xff) },			/* Fibocom NL668-AM/NL652-EU (laptop MBIM) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a2, 0xff) },			/* Fibocom FM101-GL (laptop MBIM) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a3, 0xff) },			/* Fibocom FM101-GL (laptop MBIM) */
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -1559,6 +1559,37 @@ static void amdgpu_vm_bo_insert_map(stru
+ 	trace_amdgpu_vm_bo_map(bo_va, mapping);
+ }
+ 
++/* Validate operation parameters to prevent potential abuse */
++static int amdgpu_vm_verify_parameters(struct amdgpu_device *adev,
++					  struct amdgpu_bo *bo,
++					  uint64_t saddr,
++					  uint64_t offset,
++					  uint64_t size)
++{
++	uint64_t tmp, lpfn;
++
++	if (saddr & AMDGPU_GPU_PAGE_MASK
++	    || offset & AMDGPU_GPU_PAGE_MASK
++	    || size & AMDGPU_GPU_PAGE_MASK)
++		return -EINVAL;
++
++	if (check_add_overflow(saddr, size, &tmp)
++	    || check_add_overflow(offset, size, &tmp)
++	    || size == 0 /* which also leads to end < begin */)
++		return -EINVAL;
++
++	/* make sure object fit at this offset */
++	if (bo && offset + size > amdgpu_bo_size(bo))
++		return -EINVAL;
++
++	/* Ensure last pfn not exceed max_pfn */
++	lpfn = (saddr + size - 1) >> AMDGPU_GPU_PAGE_SHIFT;
++	if (lpfn >= adev->vm_manager.max_pfn)
++		return -EINVAL;
++
++	return 0;
++}
++
+ /**
+  * amdgpu_vm_bo_map - map bo inside a vm
+  *
+@@ -1585,21 +1616,14 @@ int amdgpu_vm_bo_map(struct amdgpu_devic
+ 	struct amdgpu_bo *bo = bo_va->base.bo;
+ 	struct amdgpu_vm *vm = bo_va->base.vm;
+ 	uint64_t eaddr;
++	int r;
+ 
+-	/* validate the parameters */
+-	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
+-		return -EINVAL;
+-	if (saddr + size <= saddr || offset + size <= offset)
+-		return -EINVAL;
+-
+-	/* make sure object fit at this offset */
+-	eaddr = saddr + size - 1;
+-	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
+-	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
+-		return -EINVAL;
++	r = amdgpu_vm_verify_parameters(adev, bo, saddr, offset, size);
++	if (r)
++		return r;
+ 
+ 	saddr /= AMDGPU_GPU_PAGE_SIZE;
+-	eaddr /= AMDGPU_GPU_PAGE_SIZE;
++	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
+ 
+ 	tmp = amdgpu_vm_it_iter_first(&vm->va, saddr, eaddr);
+ 	if (tmp) {
+@@ -1652,17 +1676,9 @@ int amdgpu_vm_bo_replace_map(struct amdg
+ 	uint64_t eaddr;
+ 	int r;
+ 
+-	/* validate the parameters */
+-	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
+-		return -EINVAL;
+-	if (saddr + size <= saddr || offset + size <= offset)
+-		return -EINVAL;
+-
+-	/* make sure object fit at this offset */
+-	eaddr = saddr + size - 1;
+-	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
+-	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
+-		return -EINVAL;
++	r = amdgpu_vm_verify_parameters(adev, bo, saddr, offset, size);
++	if (r)
++		return r;
+ 
+ 	/* Allocate all the needed memory */
+ 	mapping = kmalloc(sizeof(*mapping), GFP_KERNEL);
+@@ -1676,7 +1692,7 @@ int amdgpu_vm_bo_replace_map(struct amdg
+ 	}
+ 
+ 	saddr /= AMDGPU_GPU_PAGE_SIZE;
+-	eaddr /= AMDGPU_GPU_PAGE_SIZE;
++	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
+ 
+ 	mapping->start = saddr;
+ 	mapping->last = eaddr;
+@@ -1763,10 +1779,14 @@ int amdgpu_vm_bo_clear_mappings(struct a
+ 	struct amdgpu_bo_va_mapping *before, *after, *tmp, *next;
+ 	LIST_HEAD(removed);
+ 	uint64_t eaddr;
++	int r;
++
++	r = amdgpu_vm_verify_parameters(adev, NULL, saddr, 0, size);
++	if (r)
++		return r;
+ 
+-	eaddr = saddr + size - 1;
+ 	saddr /= AMDGPU_GPU_PAGE_SIZE;
+-	eaddr /= AMDGPU_GPU_PAGE_SIZE;
++	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
+ 
+ 	/* Allocate all the needed memory */
+ 	before = kzalloc(sizeof(*before), GFP_KERNEL);
 
 
