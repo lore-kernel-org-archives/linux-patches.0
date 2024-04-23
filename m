@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D8414389D;
-	Tue, 23 Apr 2024 21:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511CB14389D;
+	Tue, 23 Apr 2024 21:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908774; cv=none; b=jxmSBg1ttdLP0pd9lCl3a/x+L4LVMhusL7TFaDbclugLpm7zEfbBa3nh5bDWDk4Got43hZ6CEIVqS0+7WFWVlHmz9fRKfpj1/iqtR3mG2x+wAkXsSf7ad+9rcSb65hXMp1NMdk38DxZwJz3c3Rhb92+BmOuFw2VGrACT4DjGC88=
+	t=1713908775; cv=none; b=PEg4A11jnK+Q7gNYO0Cdd5ecBm4N7ZsEomZjvHXRr/zV1itYHETdTpaqyuFz9Xid7MoH0FKT4at0p7gKUIyCfMNVqCinVJUcCQob5PrSQ60C/AQmgdR7BdLS4xaCHD+Kypy9QPqCgHOgBREqp5KtmBHrbXqPuDF4u+zjRoZZ+A8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908774; c=relaxed/simple;
-	bh=H1mZliqvHiSFpcmjzFSB5uXV3XIaf0kGbt0h+Rn2Sgo=;
+	s=arc-20240116; t=1713908775; c=relaxed/simple;
+	bh=swYQ2ScqIWmC0c5blmRAbXtubh5anPe+A7zzF5nPlvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fsF+O7itOCei3IV+OqJ4wKEMQIqbElZ/6nvp8Iembkp1xJ67YkzrTir72Q70Dp3MTPi6JkDdZUmPVzi1QXRryYqX3FET3/lYBBYtlnTxzgU7swI7TPEMU5i3MVZOPBhn72IrjkRIxIyw33QIFVyHrpXTdQmOErLEM8FZayJ1bT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7XYEAWV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HPVTQDBpQMewO1MkTrKZTq4h1Nxb3cjGKOkcbDNz/1wgNi0Yh6fAZyNlXWP1+Y2qFRBPOcjllRpNT1wa9IIJynf1far8LBVz0Wu6oWZk5PJFA0a6qpFxLcL3igMXnKdkXnFCELdgR9rEkYmZeBf9B9UITbixuUCq8E1iB9pp3cM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVTAG/zK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7XYEAWV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B753C116B1;
-	Tue, 23 Apr 2024 21:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVTAG/zK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F5FC32781;
+	Tue, 23 Apr 2024 21:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908774;
-	bh=H1mZliqvHiSFpcmjzFSB5uXV3XIaf0kGbt0h+Rn2Sgo=;
+	s=korg; t=1713908775;
+	bh=swYQ2ScqIWmC0c5blmRAbXtubh5anPe+A7zzF5nPlvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z7XYEAWVEPeXnTXgzf+/rliDz90D0co0TqxHU1Dg7Uw0gce8UZ5JZhTYJP8V6oOcs
-	 Pb1QgzqFby2DBLoRqtv/P57hGGUhe1mDNhnpL76uTRIYkCNZq2p5S1/SF4ntB6DNf7
-	 VdlHH+2JROEn1iEi4emQUrdQA5KJbtaK15s9Y2aY=
+	b=EVTAG/zKCT00ASWi26pCArUfx1lMOb0GEf6VdmiTJhuw32BuSDT+5oNsvcww34qzf
+	 w1LKPGoql+hwYNReI+ESV0gfrhGEWeFVmrVaIoS5Wb56wzK0JM8d/jObuEn2Asx1Fg
+	 2ZYBt5CZNzger5OPwvp8SyQyOlO+x7mcqPZT2CeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Oz Shlomo <ozsh@nvidia.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Chao Ma <machao2019@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 19/71] netfilter: nf_flow_table: count pending offload workqueue tasks
-Date: Tue, 23 Apr 2024 14:39:32 -0700
-Message-ID: <20240423213844.781925919@linuxfoundation.org>
+Subject: [PATCH 5.15 02/71] ksmbd: validate payload size in ipc response
+Date: Tue, 23 Apr 2024 14:39:15 -0700
+Message-ID: <20240423213844.211966035@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
 References: <20240423213844.122920086@linuxfoundation.org>
@@ -52,362 +52,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlad Buslov <vladbu@nvidia.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit b038177636f83bbf87c2b238706474145dd2cd04 ]
+[ Upstream commit a677ebd8ca2f2632ccdecbad7b87641274e15aac ]
 
-To improve hardware offload debuggability count pending 'add', 'del' and
-'stats' flow_table offload workqueue tasks. Counters are incremented before
-scheduling new task and decremented when workqueue handler finishes
-executing. These counters allow user to diagnose congestion on hardware
-offload workqueues that can happen when either CPU is starved and workqueue
-jobs are executed at lower rate than new ones are added or when
-hardware/driver can't keep up with the rate.
+If installing malicious ksmbd-tools, ksmbd.mountd can return invalid ipc
+response to ksmbd kernel server. ksmbd should validate payload size of
+ipc response from ksmbd.mountd to avoid memory overrun or
+slab-out-of-bounds. This patch validate 3 ipc response that has payload.
 
-Implement the described counters as percpu counters inside new struct
-netns_ft which is stored inside struct net. Expose them via new procfs file
-'/proc/net/stats/nf_flowtable' that is similar to existing 'nf_conntrack'
-file.
-
-Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
-Signed-off-by: Oz Shlomo <ozsh@nvidia.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 87b3593bed18 ("netfilter: flowtable: validate pppoe header")
+Cc: stable@vger.kernel.org
+Reported-by: Chao Ma <machao2019@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/net_namespace.h           |  6 ++
- include/net/netfilter/nf_flow_table.h | 21 +++++++
- include/net/netns/flow_table.h        | 14 +++++
- net/netfilter/Kconfig                 |  9 +++
- net/netfilter/Makefile                |  1 +
- net/netfilter/nf_flow_table_core.c    | 62 ++++++++++++++++++++-
- net/netfilter/nf_flow_table_offload.c | 17 +++++-
- net/netfilter/nf_flow_table_procfs.c  | 80 +++++++++++++++++++++++++++
- 8 files changed, 206 insertions(+), 4 deletions(-)
- create mode 100644 include/net/netns/flow_table.h
- create mode 100644 net/netfilter/nf_flow_table_procfs.c
+ fs/ksmbd/ksmbd_netlink.h     |  3 ++-
+ fs/ksmbd/mgmt/share_config.c |  7 ++++++-
+ fs/ksmbd/transport_ipc.c     | 37 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 45 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/net_namespace.h b/include/net/net_namespace.h
-index 2ba326f9e004d..c47baa623ba58 100644
---- a/include/net/net_namespace.h
-+++ b/include/net/net_namespace.h
-@@ -26,6 +26,9 @@
- #if defined(CONFIG_NF_CONNTRACK) || defined(CONFIG_NF_CONNTRACK_MODULE)
- #include <net/netns/conntrack.h>
- #endif
-+#if IS_ENABLED(CONFIG_NF_FLOW_TABLE)
-+#include <net/netns/flow_table.h>
-+#endif
- #include <net/netns/nftables.h>
- #include <net/netns/xfrm.h>
- #include <net/netns/mpls.h>
-@@ -138,6 +141,9 @@ struct net {
- #if defined(CONFIG_NF_TABLES) || defined(CONFIG_NF_TABLES_MODULE)
- 	struct netns_nftables	nft;
- #endif
-+#if IS_ENABLED(CONFIG_NF_FLOW_TABLE)
-+	struct netns_ft ft;
-+#endif
- #endif
- #ifdef CONFIG_WEXT_CORE
- 	struct sk_buff_head	wext_nlevents;
-diff --git a/include/net/netfilter/nf_flow_table.h b/include/net/netfilter/nf_flow_table.h
-index dabd84fa3fd36..6cc0cfbf69b86 100644
---- a/include/net/netfilter/nf_flow_table.h
-+++ b/include/net/netfilter/nf_flow_table.h
-@@ -334,4 +334,25 @@ static inline __be16 nf_flow_pppoe_proto(const struct sk_buff *skb)
- 	return 0;
+diff --git a/fs/ksmbd/ksmbd_netlink.h b/fs/ksmbd/ksmbd_netlink.h
+index ecffcb8a1557a..dc30cd0f6acd0 100644
+--- a/fs/ksmbd/ksmbd_netlink.h
++++ b/fs/ksmbd/ksmbd_netlink.h
+@@ -166,7 +166,8 @@ struct ksmbd_share_config_response {
+ 	__u16	force_uid;
+ 	__u16	force_gid;
+ 	__s8	share_name[KSMBD_REQ_MAX_SHARE_NAME];
+-	__u32	reserved[112];		/* Reserved room */
++	__u32	reserved[111];		/* Reserved room */
++	__u32	payload_sz;
+ 	__u32	veto_list_sz;
+ 	__s8	____payload[];
+ };
+diff --git a/fs/ksmbd/mgmt/share_config.c b/fs/ksmbd/mgmt/share_config.c
+index 328a412259dc1..a2f0a2edceb8a 100644
+--- a/fs/ksmbd/mgmt/share_config.c
++++ b/fs/ksmbd/mgmt/share_config.c
+@@ -158,7 +158,12 @@ static struct ksmbd_share_config *share_config_request(struct unicode_map *um,
+ 	share->name = kstrdup(name, GFP_KERNEL);
+ 
+ 	if (!test_share_config_flag(share, KSMBD_SHARE_FLAG_PIPE)) {
+-		share->path = kstrdup(ksmbd_share_config_path(resp),
++		int path_len = PATH_MAX;
++
++		if (resp->payload_sz)
++			path_len = resp->payload_sz - resp->veto_list_sz;
++
++		share->path = kstrndup(ksmbd_share_config_path(resp), path_len,
+ 				      GFP_KERNEL);
+ 		if (share->path)
+ 			share->path_sz = strlen(share->path);
+diff --git a/fs/ksmbd/transport_ipc.c b/fs/ksmbd/transport_ipc.c
+index 2c9662e327990..d62ebbff1e0f4 100644
+--- a/fs/ksmbd/transport_ipc.c
++++ b/fs/ksmbd/transport_ipc.c
+@@ -65,6 +65,7 @@ struct ipc_msg_table_entry {
+ 	struct hlist_node	ipc_table_hlist;
+ 
+ 	void			*response;
++	unsigned int		msg_sz;
+ };
+ 
+ static struct delayed_work ipc_timer_work;
+@@ -274,6 +275,7 @@ static int handle_response(int type, void *payload, size_t sz)
+ 		}
+ 
+ 		memcpy(entry->response, payload, sz);
++		entry->msg_sz = sz;
+ 		wake_up_interruptible(&entry->wait);
+ 		ret = 0;
+ 		break;
+@@ -452,6 +454,34 @@ static int ipc_msg_send(struct ksmbd_ipc_msg *msg)
+ 	return ret;
  }
  
-+#define NF_FLOW_TABLE_STAT_INC(net, count) __this_cpu_inc((net)->ft.stat->count)
-+#define NF_FLOW_TABLE_STAT_DEC(net, count) __this_cpu_dec((net)->ft.stat->count)
-+#define NF_FLOW_TABLE_STAT_INC_ATOMIC(net, count)	\
-+	this_cpu_inc((net)->ft.stat->count)
-+#define NF_FLOW_TABLE_STAT_DEC_ATOMIC(net, count)	\
-+	this_cpu_dec((net)->ft.stat->count)
-+
-+#ifdef CONFIG_NF_FLOW_TABLE_PROCFS
-+int nf_flow_table_init_proc(struct net *net);
-+void nf_flow_table_fini_proc(struct net *net);
-+#else
-+static inline int nf_flow_table_init_proc(struct net *net)
++static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
 +{
-+	return 0;
-+}
++	unsigned int msg_sz = entry->msg_sz;
 +
-+static inline void nf_flow_table_fini_proc(struct net *net)
-+{
-+}
-+#endif /* CONFIG_NF_FLOW_TABLE_PROCFS */
++	if (entry->type == KSMBD_EVENT_RPC_REQUEST) {
++		struct ksmbd_rpc_command *resp = entry->response;
 +
- #endif /* _NF_FLOW_TABLE_H */
-diff --git a/include/net/netns/flow_table.h b/include/net/netns/flow_table.h
-new file mode 100644
-index 0000000000000..1c5fc657e2675
---- /dev/null
-+++ b/include/net/netns/flow_table.h
-@@ -0,0 +1,14 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef __NETNS_FLOW_TABLE_H
-+#define __NETNS_FLOW_TABLE_H
++		msg_sz = sizeof(struct ksmbd_rpc_command) + resp->payload_sz;
++	} else if (entry->type == KSMBD_EVENT_SPNEGO_AUTHEN_REQUEST) {
++		struct ksmbd_spnego_authen_response *resp = entry->response;
 +
-+struct nf_flow_table_stat {
-+	unsigned int count_wq_add;
-+	unsigned int count_wq_del;
-+	unsigned int count_wq_stats;
-+};
++		msg_sz = sizeof(struct ksmbd_spnego_authen_response) +
++				resp->session_key_len + resp->spnego_blob_len;
++	} else if (entry->type == KSMBD_EVENT_SHARE_CONFIG_REQUEST) {
++		struct ksmbd_share_config_response *resp = entry->response;
 +
-+struct netns_ft {
-+	struct nf_flow_table_stat __percpu *stat;
-+};
-+#endif
-diff --git a/net/netfilter/Kconfig b/net/netfilter/Kconfig
-index 4f645d51c2573..f02ebe4609650 100644
---- a/net/netfilter/Kconfig
-+++ b/net/netfilter/Kconfig
-@@ -728,6 +728,15 @@ config NF_FLOW_TABLE
- 
- 	  To compile it as a module, choose M here.
- 
-+config NF_FLOW_TABLE_PROCFS
-+	bool "Supply flow table statistics in procfs"
-+	default y
-+	depends on PROC_FS
-+	depends on SYSCTL
-+	help
-+	  This option enables for the flow table offload statistics
-+	  to be shown in procfs under net/netfilter/nf_flowtable.
++		if (resp->payload_sz) {
++			if (resp->payload_sz < resp->veto_list_sz)
++				return -EINVAL;
 +
- config NETFILTER_XTABLES
- 	tristate "Netfilter Xtables support (required for ip_tables)"
- 	default m if NETFILTER_ADVANCED=n
-diff --git a/net/netfilter/Makefile b/net/netfilter/Makefile
-index aab20e575ecd8..3f77f20ae39e4 100644
---- a/net/netfilter/Makefile
-+++ b/net/netfilter/Makefile
-@@ -124,6 +124,7 @@ obj-$(CONFIG_NFT_FWD_NETDEV)	+= nft_fwd_netdev.o
- obj-$(CONFIG_NF_FLOW_TABLE)	+= nf_flow_table.o
- nf_flow_table-objs		:= nf_flow_table_core.o nf_flow_table_ip.o \
- 				   nf_flow_table_offload.o
-+nf_flow_table-$(CONFIG_NF_FLOW_TABLE_PROCFS) += nf_flow_table_procfs.o
- 
- obj-$(CONFIG_NF_FLOW_TABLE_INET) += nf_flow_table_inet.o
- 
-diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
-index e78cdd73ef628..beb0e84b5f427 100644
---- a/net/netfilter/nf_flow_table_core.c
-+++ b/net/netfilter/nf_flow_table_core.c
-@@ -606,14 +606,74 @@ void nf_flow_table_free(struct nf_flowtable *flow_table)
- }
- EXPORT_SYMBOL_GPL(nf_flow_table_free);
- 
-+static int nf_flow_table_init_net(struct net *net)
-+{
-+	net->ft.stat = alloc_percpu(struct nf_flow_table_stat);
-+	return net->ft.stat ? 0 : -ENOMEM;
-+}
-+
-+static void nf_flow_table_fini_net(struct net *net)
-+{
-+	free_percpu(net->ft.stat);
-+}
-+
-+static int nf_flow_table_pernet_init(struct net *net)
-+{
-+	int ret;
-+
-+	ret = nf_flow_table_init_net(net);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = nf_flow_table_init_proc(net);
-+	if (ret < 0)
-+		goto out_proc;
-+
-+	return 0;
-+
-+out_proc:
-+	nf_flow_table_fini_net(net);
-+	return ret;
-+}
-+
-+static void nf_flow_table_pernet_exit(struct list_head *net_exit_list)
-+{
-+	struct net *net;
-+
-+	list_for_each_entry(net, net_exit_list, exit_list) {
-+		nf_flow_table_fini_proc(net);
-+		nf_flow_table_fini_net(net);
++			msg_sz = sizeof(struct ksmbd_share_config_response) +
++					resp->payload_sz;
++		}
 +	}
++
++	return entry->msg_sz != msg_sz ? -EINVAL : 0;
 +}
 +
-+static struct pernet_operations nf_flow_table_net_ops = {
-+	.init = nf_flow_table_pernet_init,
-+	.exit_batch = nf_flow_table_pernet_exit,
-+};
-+
- static int __init nf_flow_table_module_init(void)
+ static void *ipc_msg_send_request(struct ksmbd_ipc_msg *msg, unsigned int handle)
  {
--	return nf_flow_table_offload_init();
-+	int ret;
-+
-+	ret = register_pernet_subsys(&nf_flow_table_net_ops);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = nf_flow_table_offload_init();
-+	if (ret)
-+		goto out_offload;
-+
-+	return 0;
-+
-+out_offload:
-+	unregister_pernet_subsys(&nf_flow_table_net_ops);
-+	return ret;
- }
- 
- static void __exit nf_flow_table_module_exit(void)
- {
- 	nf_flow_table_offload_exit();
-+	unregister_pernet_subsys(&nf_flow_table_net_ops);
- }
- 
- module_init(nf_flow_table_module_init);
-diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
-index 336f282a221fd..6ac1ebe17456d 100644
---- a/net/netfilter/nf_flow_table_offload.c
-+++ b/net/netfilter/nf_flow_table_offload.c
-@@ -953,17 +953,22 @@ static void flow_offload_work_stats(struct flow_offload_work *offload)
- static void flow_offload_work_handler(struct work_struct *work)
- {
- 	struct flow_offload_work *offload;
-+	struct net *net;
- 
- 	offload = container_of(work, struct flow_offload_work, work);
-+	net = read_pnet(&offload->flowtable->net);
- 	switch (offload->cmd) {
- 		case FLOW_CLS_REPLACE:
- 			flow_offload_work_add(offload);
-+			NF_FLOW_TABLE_STAT_DEC_ATOMIC(net, count_wq_add);
- 			break;
- 		case FLOW_CLS_DESTROY:
- 			flow_offload_work_del(offload);
-+			NF_FLOW_TABLE_STAT_DEC_ATOMIC(net, count_wq_del);
- 			break;
- 		case FLOW_CLS_STATS:
- 			flow_offload_work_stats(offload);
-+			NF_FLOW_TABLE_STAT_DEC_ATOMIC(net, count_wq_stats);
- 			break;
- 		default:
- 			WARN_ON_ONCE(1);
-@@ -975,12 +980,18 @@ static void flow_offload_work_handler(struct work_struct *work)
- 
- static void flow_offload_queue_work(struct flow_offload_work *offload)
- {
--	if (offload->cmd == FLOW_CLS_REPLACE)
-+	struct net *net = read_pnet(&offload->flowtable->net);
-+
-+	if (offload->cmd == FLOW_CLS_REPLACE) {
-+		NF_FLOW_TABLE_STAT_INC(net, count_wq_add);
- 		queue_work(nf_flow_offload_add_wq, &offload->work);
--	else if (offload->cmd == FLOW_CLS_DESTROY)
-+	} else if (offload->cmd == FLOW_CLS_DESTROY) {
-+		NF_FLOW_TABLE_STAT_INC(net, count_wq_del);
- 		queue_work(nf_flow_offload_del_wq, &offload->work);
--	else
-+	} else {
-+		NF_FLOW_TABLE_STAT_INC(net, count_wq_stats);
- 		queue_work(nf_flow_offload_stats_wq, &offload->work);
+ 	struct ipc_msg_table_entry entry;
+@@ -476,6 +506,13 @@ static void *ipc_msg_send_request(struct ksmbd_ipc_msg *msg, unsigned int handle
+ 	ret = wait_event_interruptible_timeout(entry.wait,
+ 					       entry.response != NULL,
+ 					       IPC_WAIT_TIMEOUT);
++	if (entry.response) {
++		ret = ipc_validate_msg(&entry);
++		if (ret) {
++			kvfree(entry.response);
++			entry.response = NULL;
++		}
 +	}
- }
- 
- static struct flow_offload_work *
-diff --git a/net/netfilter/nf_flow_table_procfs.c b/net/netfilter/nf_flow_table_procfs.c
-new file mode 100644
-index 0000000000000..159b033a43e60
---- /dev/null
-+++ b/net/netfilter/nf_flow_table_procfs.c
-@@ -0,0 +1,80 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+#include <linux/kernel.h>
-+#include <linux/proc_fs.h>
-+#include <net/netfilter/nf_flow_table.h>
-+
-+static void *nf_flow_table_cpu_seq_start(struct seq_file *seq, loff_t *pos)
-+{
-+	struct net *net = seq_file_net(seq);
-+	int cpu;
-+
-+	if (*pos == 0)
-+		return SEQ_START_TOKEN;
-+
-+	for (cpu = *pos - 1; cpu < nr_cpu_ids; ++cpu) {
-+		if (!cpu_possible(cpu))
-+			continue;
-+		*pos = cpu + 1;
-+		return per_cpu_ptr(net->ft.stat, cpu);
-+	}
-+
-+	return NULL;
-+}
-+
-+static void *nf_flow_table_cpu_seq_next(struct seq_file *seq, void *v, loff_t *pos)
-+{
-+	struct net *net = seq_file_net(seq);
-+	int cpu;
-+
-+	for (cpu = *pos; cpu < nr_cpu_ids; ++cpu) {
-+		if (!cpu_possible(cpu))
-+			continue;
-+		*pos = cpu + 1;
-+		return per_cpu_ptr(net->ft.stat, cpu);
-+	}
-+	(*pos)++;
-+	return NULL;
-+}
-+
-+static void nf_flow_table_cpu_seq_stop(struct seq_file *seq, void *v)
-+{
-+}
-+
-+static int nf_flow_table_cpu_seq_show(struct seq_file *seq, void *v)
-+{
-+	const struct nf_flow_table_stat *st = v;
-+
-+	if (v == SEQ_START_TOKEN) {
-+		seq_puts(seq, "wq_add   wq_del   wq_stats\n");
-+		return 0;
-+	}
-+
-+	seq_printf(seq, "%8d %8d %8d\n",
-+		   st->count_wq_add,
-+		   st->count_wq_del,
-+		   st->count_wq_stats
-+		);
-+	return 0;
-+}
-+
-+static const struct seq_operations nf_flow_table_cpu_seq_ops = {
-+	.start	= nf_flow_table_cpu_seq_start,
-+	.next	= nf_flow_table_cpu_seq_next,
-+	.stop	= nf_flow_table_cpu_seq_stop,
-+	.show	= nf_flow_table_cpu_seq_show,
-+};
-+
-+int nf_flow_table_init_proc(struct net *net)
-+{
-+	struct proc_dir_entry *pde;
-+
-+	pde = proc_create_net("nf_flowtable", 0444, net->proc_net_stat,
-+			      &nf_flow_table_cpu_seq_ops,
-+			      sizeof(struct seq_net_private));
-+	return pde ? 0 : -ENOMEM;
-+}
-+
-+void nf_flow_table_fini_proc(struct net *net)
-+{
-+	remove_proc_entry("nf_flowtable", net->proc_net_stat);
-+}
+ out:
+ 	down_write(&ipc_msg_table_lock);
+ 	hash_del(&entry.ipc_table_hlist);
 -- 
 2.43.0
 
