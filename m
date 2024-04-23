@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A502C143C57;
-	Tue, 23 Apr 2024 21:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454F1143C57;
+	Tue, 23 Apr 2024 21:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908606; cv=none; b=LoAg+eTLi0f3oaEux/lviZSpmow+mwN2g0unIBSW+qotQ0TVEDfbowyGsYTf/Peq3663EfVUsMnck/XYG7cVig96dbN8nXN6yJTwVK0YhpTYDwKpPkE/FmatiDN4ikS+LlvZv/1gJwye8Q3G+PbWzANn7D5Y1VT3tt+ULdh9Fsc=
+	t=1713908607; cv=none; b=Bz8ruUMvMlTE4reJ1Z/hsupZSZJOGbCt/L9AdItUOA08irma0mXOgzWi9HaA2NSUIy4NMUpcBQs1l4pYrUiBtpzkl+PEI457HxRwygG5SfXhmhgukr8OuGI1zhZR4HIJHLb7gMvcftKt37d9y1EwBTYoRTzpdyyMiMCYoCOtGd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908606; c=relaxed/simple;
-	bh=RtN8jqDVelFusVvxk5vHl5Yj3x6aYhnMinjBLFhgx70=;
+	s=arc-20240116; t=1713908607; c=relaxed/simple;
+	bh=3wIssquwTqiM+xxrJv1A0ZVICBaFj6PcpDYCT/z8CTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uyz13jRrITUUA37qUQoGKYkpprfIxTUgU1Yo3OpWBrCo3t+UMTbPIFh1eTkYMZUmlEhBLtS3lbh6CMGy2DdV1dUjrhlh8boNLpOu1XcAZy5dIkW2De9c5vPzTig4V4byaAcKoFEcGVm74K47xrNWpGBWiUln7pIrd1b2FrAVNds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6M8dN3+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N8j6uDbrZy07nDVFZdRVxSj+P9o06TrBSOwgS6lGS6YuHh8LxJyBLZ2blKw5eDKBiE3jqeIizI+DzcfdQ0ewT6N2luLGF984VZcjGF9tsS6DrR8U0eMCmtiDpe/0Fip0YdYtcOFcpnPPY8rnz4eCm5fAkRt9ZA0DWdy5FIKL58I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mqm6c7/i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6M8dN3+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EB9C116B1;
-	Tue, 23 Apr 2024 21:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mqm6c7/i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A487C32781;
+	Tue, 23 Apr 2024 21:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908606;
-	bh=RtN8jqDVelFusVvxk5vHl5Yj3x6aYhnMinjBLFhgx70=;
+	s=korg; t=1713908607;
+	bh=3wIssquwTqiM+xxrJv1A0ZVICBaFj6PcpDYCT/z8CTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i6M8dN3+yxpvn+sylenDamT70hKoNmwUD0e+klCckBAc0u+jXosYFvJOWv/cCiDzM
-	 GOYJ51ffJM5YTmPY1Ze9brhogUmN3kL1Y55t0Zt9d+79II62a9x8xP1hKhL/fcqKhH
-	 l6qRUwxEJogUfIVWapPqD+clKmiUWXxD3sc63TCU=
+	b=Mqm6c7/iCUac9TMkVyyfcqQdcQQyScm4YkF3D9ZacYcb0/UWryO3LZ11+m6mo0ujg
+	 3AK+Cc7BGzqn/aCPVcEGolnBw/qE5hQJN1PPwATApzaqNjXyFX5Y9WL8ha99nHNx/E
+	 Xkwbwp+rz9R2HRc3LrlybK6bI+q0/83WDPEA/En0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Romain Gantois <romain.gantois@bootlin.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 046/158] net: stmmac: Apply half-duplex-less constraint for DW QoS Eth only
-Date: Tue, 23 Apr 2024 14:38:03 -0700
-Message-ID: <20240423213857.272080205@linuxfoundation.org>
+Subject: [PATCH 6.6 047/158] net: stmmac: Fix max-speed being ignored on queue re-init
+Date: Tue, 23 Apr 2024 14:38:04 -0700
+Message-ID: <20240423213857.301948064@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -54,93 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Serge Semin <fancer.lancer@gmail.com>
 
-[ Upstream commit 0ebd96f5da4410c0cb8fc75e44f1009530b2f90b ]
+[ Upstream commit 59c3d6ca6cbded6c6599e975b42a9d6a27fcbaf2 ]
 
-There are three DW MAC IP-cores which can have the multiple Tx/Rx queues
-enabled:
-DW GMAC v3.7+ with AV feature,
-DW QoS Eth v4.x/v5.x,
-DW XGMAC/XLGMAC
-Based on the respective HW databooks, only the DW QoS Eth IP-core doesn't
-support the half-duplex link mode in case if more than one queues enabled:
+It's possible to have the maximum link speed being artificially limited on
+the platform-specific basis. It's done either by setting up the
+plat_stmmacenet_data::max_speed field or by specifying the "max-speed"
+DT-property. In such cases it's required that any specific
+MAC-capabilities re-initializations would take the limit into account. In
+particular the link speed capabilities may change during the number of
+active Tx/Rx queues re-initialization. But the currently implemented
+procedure doesn't take the speed limit into account.
 
-"In multiple queue/channel configurations, for half-duplex operation,
-enable only the Q0/CH0 on Tx and Rx. For single queue/channel in
-full-duplex operation, any queue/channel can be enabled."
+Fix that by calling phylink_limit_mac_speed() in the
+stmmac_reinit_queues() method if the speed limitation was required in the
+same way as it's done in the stmmac_phy_setup() function.
 
-The rest of the IP-cores don't have such constraint. Thus in order to have
-the constraint applied for the DW QoS Eth MACs only, let's move the it'
-implementation to the respective MAC-capabilities getter and make sure the
-getter is called in the queues re-init procedure.
-
-Fixes: b6cfffa7ad92 ("stmmac: fix DMA channel hang in half-duplex mode")
+Fixes: 95201f36f395 ("net: stmmac: update MAC capabilities when tx queues are updated")
 Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
 Reviewed-by: Romain Gantois <romain.gantois@bootlin.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/dwmac4_core.c |  7 +++++++
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 19 +++----------------
- 2 files changed, 10 insertions(+), 16 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-index 683c34e609638..434e306876b41 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -71,6 +71,13 @@ static void dwmac4_core_init(struct mac_device_info *hw,
- static void dwmac4_phylink_get_caps(struct stmmac_priv *priv)
- {
- 	priv->phylink_config.mac_capabilities |= MAC_2500FD;
-+
-+	if (priv->plat->tx_queues_to_use > 1)
-+		priv->phylink_config.mac_capabilities &=
-+			~(MAC_10HD | MAC_100HD | MAC_1000HD);
-+	else
-+		priv->phylink_config.mac_capabilities |=
-+			(MAC_10HD | MAC_100HD | MAC_1000HD);
- }
- 
- static void dwmac4_rx_queue_enable(struct mac_device_info *hw,
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index d1adb102a1d49..f3dbbc900d498 100644
+index f3dbbc900d498..2479e9a5f9d22 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -1198,17 +1198,6 @@ static int stmmac_init_phy(struct net_device *dev)
- 	return ret;
- }
- 
--static void stmmac_set_half_duplex(struct stmmac_priv *priv)
--{
--	/* Half-Duplex can only work with single tx queue */
--	if (priv->plat->tx_queues_to_use > 1)
--		priv->phylink_config.mac_capabilities &=
--			~(MAC_10HD | MAC_100HD | MAC_1000HD);
--	else
--		priv->phylink_config.mac_capabilities |=
--			(MAC_10HD | MAC_100HD | MAC_1000HD);
--}
--
- static int stmmac_phy_setup(struct stmmac_priv *priv)
+@@ -7170,6 +7170,7 @@ int stmmac_reinit_queues(struct net_device *dev, u32 rx_cnt, u32 tx_cnt)
  {
- 	struct stmmac_mdio_bus_data *mdio_bus_data;
-@@ -1237,10 +1226,7 @@ static int stmmac_phy_setup(struct stmmac_priv *priv)
- 				    priv->phylink_config.supported_interfaces);
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+ 	int ret = 0, i;
++	int max_speed;
  
- 	priv->phylink_config.mac_capabilities = MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
--						MAC_10FD | MAC_100FD |
--						MAC_1000FD;
--
--	stmmac_set_half_duplex(priv);
-+						MAC_10 | MAC_100 | MAC_1000;
+ 	if (netif_running(dev))
+ 		stmmac_release(dev);
+@@ -7185,6 +7186,10 @@ int stmmac_reinit_queues(struct net_device *dev, u32 rx_cnt, u32 tx_cnt)
  
- 	/* Get the MAC specific capabilities */
  	stmmac_mac_phylink_get_caps(priv);
-@@ -7197,7 +7183,8 @@ int stmmac_reinit_queues(struct net_device *dev, u32 rx_cnt, u32 tx_cnt)
- 			priv->rss.table[i] = ethtool_rxfh_indir_default(i,
- 									rx_cnt);
  
--	stmmac_set_half_duplex(priv);
-+	stmmac_mac_phylink_get_caps(priv);
++	max_speed = priv->plat->max_speed;
++	if (max_speed)
++		phylink_limit_mac_speed(&priv->phylink_config, max_speed);
 +
  	stmmac_napi_add(dev);
  
