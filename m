@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D7F85274;
-	Tue, 23 Apr 2024 21:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511F585274;
+	Tue, 23 Apr 2024 21:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908557; cv=none; b=ZC3xWs3uidSmOS51lNb2iTPcGEDWz7AFJvSpHUauluxscqnhFBAspdzt8kuFlMjhvFHKlxoHcH/ytZyU/9Qz1qPV7nDbvTRY84tRF31MNdzXYvH15G/OCyV7b1sn9UG0JrTTKkTquh/6JIIermonNcW7DY8VPgB6gbiWCLEwcJc=
+	t=1713908558; cv=none; b=KVIjpeFRoLkL+sUrLUCTy2Ndf1MMoOTe67DyrdJViPPQxqUy21ZKqRX5UOGRNgIZrojeUTCD+wpdlYRhb7JsM00CmU5vL94rTCvnlmHQdBLgRFcdj2BBciS0fgeDr8AgvxSw/rzsMpu+FA0GwIpiV9lP6bPNyKElutWpP24GGbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908557; c=relaxed/simple;
-	bh=1HAtiFcCjFyGfI0IiI+flOZ1FxsFuO16oSRcEKjnoIo=;
+	s=arc-20240116; t=1713908558; c=relaxed/simple;
+	bh=LCR5GUpLQ9h0ahYvxvegx9HFKXp6SZ8EFVExXNVDdn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TDgSqFlKyj/g1p19pabp9Gb51C/uPKTqQ97BdmMBezxCM3fWjt17g4LNQlrYoBnI/Olg/Zrkd4HxcdJeIJ8/JTaF4nqdnGs/e13OnGjQiWZyC3nJLm5FFDqvQ4nxVSvpsJHLxwvAPU5Psq+eHo32io6hGhhK/h2ru5NeevkTHM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3rP5aDX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eLz7/0wloqZXbxlMNrIhMndkqXnrmquTvyMyHqE9eSWvZXiImxBATNFpwuLQ6dYaijzpJm4aYqTGOh7O1XVJGb1glB7fALPfsNrC+EoT6+FsQXj4vc1bEpxAL4dxdXfsR4qOS2WCFG0rB8gmXgOKfua+o8X0IvOX4Dz4n/WlIKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9fyUVLH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3rP5aDX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A96EC3277B;
-	Tue, 23 Apr 2024 21:42:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9fyUVLH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2613EC32783;
+	Tue, 23 Apr 2024 21:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908557;
-	bh=1HAtiFcCjFyGfI0IiI+flOZ1FxsFuO16oSRcEKjnoIo=;
+	s=korg; t=1713908558;
+	bh=LCR5GUpLQ9h0ahYvxvegx9HFKXp6SZ8EFVExXNVDdn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M3rP5aDXMmDd9aXu9g2FFEQP/ytp/rC28Ba6AZne2RzfUQST1CK35Wu+C/AsOTQHU
-	 Zf7OzyudXN97Hraw7oW85SxcbQp4AH3B6RUkEwC0wD4FudzIhs6tnIImp5zBNY86Gw
-	 ZIkhyALpsHNNBMroyX0oG+e2DFZLz7jRKtIVs+ts=
+	b=j9fyUVLH46Rm1NZxcoUFnoXxBPoy4aI3hSVgoHu/BWS0F7su/K9uTIR60gMl2o564
+	 HK3kVfLQwlWs2Y0aLKZie+5Zi5cdICslU3KBY3FliacHMaBntA2Jrb7hYN7IC6N7dI
+	 xcEjolWUICaiW/UhA6q5ySbl+Jf0iC5wacHh8CPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>
-Subject: [PATCH 6.8 143/158] drm/ttm: stop pooling cached NUMA pages v2
-Date: Tue, 23 Apr 2024 14:39:25 -0700
-Message-ID: <20240423213900.511839153@linuxfoundation.org>
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.8 144/158] drm/xe: Fix bo leak in intel_fb_bo_framebuffer_init
+Date: Tue, 23 Apr 2024 14:39:26 -0700
+Message-ID: <20240423213900.539304256@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -44,111 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <ckoenig.leichtzumerken@gmail.com>
+From: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
 
-commit b6976f323a8687cc0d55bc92c2086fd934324ed5 upstream.
+commit 652ead9b746a63e4e79d7ad66d3edf0a8a5b0c2f upstream.
 
-We only pool write combined and uncached allocations because they
-require extra overhead on allocation and release.
+Add a unreference bo in the error path, to prevent leaking a bo ref.
 
-If we also pool cached NUMA it not only means some extra unnecessary
-overhead, but also that under memory pressure it can happen that
-pages from the wrong NUMA node enters the pool and are re-used
-over and over again.
+Return 0 on success to clarify the success path.
 
-This can lead to performance reduction after running into memory
-pressure.
-
-v2: restructure and cleanup the code a bit from the internal hack to
-    test this.
-
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Fixes: 4482d3c94d7f ("drm/ttm: add NUMA node id to the pool")
-CC: stable@vger.kernel.org
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240415134821.1919-1-christian.koenig@amd.com
+Signed-off-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Fixes: 44e694958b95 ("drm/xe/display: Implement display support")
+Cc: <stable@vger.kernel.org> # v6.8+
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240404090302.68422-1-maarten.lankhorst@linux.intel.com
+(cherry picked from commit a2f3d731be3893e730417ae3190760fcaffdf549)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ttm/ttm_pool.c |   38 ++++++++++++++++++++++++++++----------
- 1 file changed, 28 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/xe/display/intel_fb_bo.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/ttm/ttm_pool.c
-+++ b/drivers/gpu/drm/ttm/ttm_pool.c
-@@ -288,17 +288,23 @@ static struct ttm_pool_type *ttm_pool_se
- 						  enum ttm_caching caching,
- 						  unsigned int order)
- {
--	if (pool->use_dma_alloc || pool->nid != NUMA_NO_NODE)
-+	if (pool->use_dma_alloc)
- 		return &pool->caching[caching].orders[order];
+diff --git a/drivers/gpu/drm/xe/display/intel_fb_bo.c b/drivers/gpu/drm/xe/display/intel_fb_bo.c
+index b21da7b745a5..a9c1f9885c6b 100644
+--- a/drivers/gpu/drm/xe/display/intel_fb_bo.c
++++ b/drivers/gpu/drm/xe/display/intel_fb_bo.c
+@@ -31,7 +31,7 @@ int intel_fb_bo_framebuffer_init(struct intel_framebuffer *intel_fb,
  
- #ifdef CONFIG_X86
- 	switch (caching) {
- 	case ttm_write_combined:
-+		if (pool->nid != NUMA_NO_NODE)
-+			return &pool->caching[caching].orders[order];
-+
- 		if (pool->use_dma32)
- 			return &global_dma32_write_combined[order];
+ 	ret = ttm_bo_reserve(&bo->ttm, true, false, NULL);
+ 	if (ret)
+-		return ret;
++		goto err;
  
- 		return &global_write_combined[order];
- 	case ttm_uncached:
-+		if (pool->nid != NUMA_NO_NODE)
-+			return &pool->caching[caching].orders[order];
-+
- 		if (pool->use_dma32)
- 			return &global_dma32_uncached[order];
- 
-@@ -566,11 +572,17 @@ void ttm_pool_init(struct ttm_pool *pool
- 	pool->use_dma_alloc = use_dma_alloc;
- 	pool->use_dma32 = use_dma32;
- 
--	if (use_dma_alloc || nid != NUMA_NO_NODE) {
--		for (i = 0; i < TTM_NUM_CACHING_TYPES; ++i)
--			for (j = 0; j < NR_PAGE_ORDERS; ++j)
--				ttm_pool_type_init(&pool->caching[i].orders[j],
--						   pool, i, j);
-+	for (i = 0; i < TTM_NUM_CACHING_TYPES; ++i) {
-+		for (j = 0; j < NR_PAGE_ORDERS; ++j) {
-+			struct ttm_pool_type *pt;
-+
-+			/* Initialize only pool types which are actually used */
-+			pt = ttm_pool_select_type(pool, i, j);
-+			if (pt != &pool->caching[i].orders[j])
-+				continue;
-+
-+			ttm_pool_type_init(pt, pool, i, j);
-+		}
+ 	if (!(bo->flags & XE_BO_SCANOUT_BIT)) {
+ 		/*
+@@ -42,12 +42,16 @@ int intel_fb_bo_framebuffer_init(struct intel_framebuffer *intel_fb,
+ 		 */
+ 		if (XE_IOCTL_DBG(i915, !list_empty(&bo->ttm.base.gpuva.list))) {
+ 			ttm_bo_unreserve(&bo->ttm);
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto err;
+ 		}
+ 		bo->flags |= XE_BO_SCANOUT_BIT;
  	}
+ 	ttm_bo_unreserve(&bo->ttm);
++	return 0;
+ 
++err:
++	xe_bo_put(bo);
+ 	return ret;
  }
- EXPORT_SYMBOL(ttm_pool_init);
-@@ -599,10 +611,16 @@ void ttm_pool_fini(struct ttm_pool *pool
- {
- 	unsigned int i, j;
  
--	if (pool->use_dma_alloc || pool->nid != NUMA_NO_NODE) {
--		for (i = 0; i < TTM_NUM_CACHING_TYPES; ++i)
--			for (j = 0; j < NR_PAGE_ORDERS; ++j)
--				ttm_pool_type_fini(&pool->caching[i].orders[j]);
-+	for (i = 0; i < TTM_NUM_CACHING_TYPES; ++i) {
-+		for (j = 0; j < NR_PAGE_ORDERS; ++j) {
-+			struct ttm_pool_type *pt;
-+
-+			pt = ttm_pool_select_type(pool, i, j);
-+			if (pt != &pool->caching[i].orders[j])
-+				continue;
-+
-+			ttm_pool_type_fini(pt);
-+		}
- 	}
- 
- 	/* We removed the pool types from the LRU, but we need to also make sure
+-- 
+2.44.0
+
 
 
