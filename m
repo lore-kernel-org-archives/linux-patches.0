@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0535143888;
-	Tue, 23 Apr 2024 21:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE3214388A;
+	Tue, 23 Apr 2024 21:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908456; cv=none; b=nl9k4Wz9ihtgaW/vE4q6u+Vdw7/VlDjCwu96SJjH64jBLvcL0P+iSVz/Qq9Su85VWy+UOVywSpMY5dPBZrwT5H2Nip2+uKOcu8+VQsM7dED4Vn13tYdMpWo1QRCyPb5HD0VjeaSgspRYruLrMh+t96/LKJB3QUBaRGxHXsMs370=
+	t=1713908457; cv=none; b=T4w89a8CloVDyI2lenbyU09S6RG183Qycir/NNroT43Z2xEaDiUZ2iJ/PYD0Q6BgeHHQCgKSRYpInkOMHKBr4c3QvNBdM7wSg0cNZwqJOKXExH8Zu7iM/vZyNde3gQne0XxvhUU0j7/lwURrhu+FkOtsalAvRtPx2oLTRVrZfVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908456; c=relaxed/simple;
-	bh=6RNwVzLGrJLDNU9IQw94dhXtHdh5N0hTOLXiMe/YJ3U=;
+	s=arc-20240116; t=1713908457; c=relaxed/simple;
+	bh=6iTR3H5FNMEx9uGlgYJ42sMhf3a1GQIS+df17ecZN6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=liHftjHsUiJ1t3UKpNQVVOw86xAg2KWNZRKQkSIUrM9AuL3OzZO5f4PUwvv5PPi2rq427WD8oSwdOYB8Cqp9FvLFfZbuqUW2SkMy8RY21zKJe9SFr2QHJGxP+LHbQ1VxAlpOVrf3t3FE/ERNU3Gn2eFCjvYlKOtsrdxmPxHRWjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7uCVMxG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FOksG9HQ1ULWYDgnZo5n/r8mxixMDqMpDGDgV78SOUIagcgMeN1Z7fHf91ZbfFMzTc3XTxE+tlo7agiCaytmVoUmYTWDg2IR9TVGPiOShEm3NWJF4X9v5ZzCuiCsD224Eb4FF1ChXdIkmJqliXX+Im/Pvmg3gE7NA8h+QRjJjMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQJYKnjo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7uCVMxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14C9C32781;
-	Tue, 23 Apr 2024 21:40:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQJYKnjo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C9CC116B1;
+	Tue, 23 Apr 2024 21:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908456;
-	bh=6RNwVzLGrJLDNU9IQw94dhXtHdh5N0hTOLXiMe/YJ3U=;
+	s=korg; t=1713908457;
+	bh=6iTR3H5FNMEx9uGlgYJ42sMhf3a1GQIS+df17ecZN6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7uCVMxGgqhP021rWCWR3Z6Wyc9C/GNz4qKQ9LmlvXXGKGfwxtGFr1JaCFdWUHTfX
-	 jxt6nTc3iv6v2/aPSOBBhfUORvR9Ulc39nciuZQaTScRyPrg7MM5xUQXj2mbGGoHGn
-	 AOpNRd1jZoT8VncUzcj1MltgIDsWSLClJDrxua6w=
+	b=MQJYKnjoe2tN2stzJCqkAPsFHely8V9BDtTl0o3YZZoN8tBhcHSo23oA9dB+HGFdW
+	 3dYOwWmGNPoNFg1Lh5xFNIDc/9/dEviiSxasfexwONhCCK1t+tjUqATJbnL6BpqHgn
+	 rGGnAeQBPuRQil27cPU8DPH+06sm6PTUcEKxt4jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 016/158] netfilter: br_netfilter: skip conntrack input hook for promisc packets
-Date: Tue, 23 Apr 2024 14:37:18 -0700
-Message-ID: <20240423213856.381704139@linuxfoundation.org>
+Subject: [PATCH 6.8 017/158] netfilter: nft_set_pipapo: constify lookup fn args where possible
+Date: Tue, 23 Apr 2024 14:37:19 -0700
+Message-ID: <20240423213856.424335489@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -51,217 +51,263 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 751de2012eafa4d46d8081056761fa0e9cc8a178 ]
+[ Upstream commit f04df573faf90bb828a2241b650598c02c074323 ]
 
-For historical reasons, when bridge device is in promisc mode, packets
-that are directed to the taps follow bridge input hook path. This patch
-adds a workaround to reset conntrack for these packets.
+Those get called from packet path, content must not be modified.
+No functional changes intended.
 
-Jianbo Liu reports warning splats in their test infrastructure where
-cloned packets reach the br_netfilter input hook to confirm the
-conntrack object.
-
-Scratch one bit from BR_INPUT_SKB_CB to annotate that this packet has
-reached the input hook because it is passed up to the bridge device to
-reach the taps.
-
-[   57.571874] WARNING: CPU: 1 PID: 0 at net/bridge/br_netfilter_hooks.c:616 br_nf_local_in+0x157/0x180 [br_netfilter]
-[   57.572749] Modules linked in: xt_MASQUERADE nf_conntrack_netlink nfnetlink iptable_nat xt_addrtype xt_conntrack nf_nat br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_registry overlay rpcrdma rdma_ucm ib_iser libiscsi scsi_transport_isc si ib_umad rdma_cm ib_ipoib iw_cm ib_cm mlx5_ib ib_uverbs ib_core mlx5ctl mlx5_core
-[   57.575158] CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.8.0+ #19
-[   57.575700] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-[   57.576662] RIP: 0010:br_nf_local_in+0x157/0x180 [br_netfilter]
-[   57.577195] Code: fe ff ff 41 bd 04 00 00 00 be 04 00 00 00 e9 4a ff ff ff be 04 00 00 00 48 89 ef e8 f3 a9 3c e1 66 83 ad b4 00 00 00 04 eb 91 <0f> 0b e9 f1 fe ff ff 0f 0b e9 df fe ff ff 48 89 df e8 b3 53 47 e1
-[   57.578722] RSP: 0018:ffff88885f845a08 EFLAGS: 00010202
-[   57.579207] RAX: 0000000000000002 RBX: ffff88812dfe8000 RCX: 0000000000000000
-[   57.579830] RDX: ffff88885f845a60 RSI: ffff8881022dc300 RDI: 0000000000000000
-[   57.580454] RBP: ffff88885f845a60 R08: 0000000000000001 R09: 0000000000000003
-[   57.581076] R10: 00000000ffff1300 R11: 0000000000000002 R12: 0000000000000000
-[   57.581695] R13: ffff8881047ffe00 R14: ffff888108dbee00 R15: ffff88814519b800
-[   57.582313] FS:  0000000000000000(0000) GS:ffff88885f840000(0000) knlGS:0000000000000000
-[   57.583040] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   57.583564] CR2: 000000c4206aa000 CR3: 0000000103847001 CR4: 0000000000370eb0
-[   57.584194] DR0: 0000000000000000 DR1: 0000000000000000 DR2:
-0000000000000000
-[   57.584820] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7:
-0000000000000400
-[   57.585440] Call Trace:
-[   57.585721]  <IRQ>
-[   57.585976]  ? __warn+0x7d/0x130
-[   57.586323]  ? br_nf_local_in+0x157/0x180 [br_netfilter]
-[   57.586811]  ? report_bug+0xf1/0x1c0
-[   57.587177]  ? handle_bug+0x3f/0x70
-[   57.587539]  ? exc_invalid_op+0x13/0x60
-[   57.587929]  ? asm_exc_invalid_op+0x16/0x20
-[   57.588336]  ? br_nf_local_in+0x157/0x180 [br_netfilter]
-[   57.588825]  nf_hook_slow+0x3d/0xd0
-[   57.589188]  ? br_handle_vlan+0x4b/0x110
-[   57.589579]  br_pass_frame_up+0xfc/0x150
-[   57.589970]  ? br_port_flags_change+0x40/0x40
-[   57.590396]  br_handle_frame_finish+0x346/0x5e0
-[   57.590837]  ? ipt_do_table+0x32e/0x430
-[   57.591221]  ? br_handle_local_finish+0x20/0x20
-[   57.591656]  br_nf_hook_thresh+0x4b/0xf0 [br_netfilter]
-[   57.592286]  ? br_handle_local_finish+0x20/0x20
-[   57.592802]  br_nf_pre_routing_finish+0x178/0x480 [br_netfilter]
-[   57.593348]  ? br_handle_local_finish+0x20/0x20
-[   57.593782]  ? nf_nat_ipv4_pre_routing+0x25/0x60 [nf_nat]
-[   57.594279]  br_nf_pre_routing+0x24c/0x550 [br_netfilter]
-[   57.594780]  ? br_nf_hook_thresh+0xf0/0xf0 [br_netfilter]
-[   57.595280]  br_handle_frame+0x1f3/0x3d0
-[   57.595676]  ? br_handle_local_finish+0x20/0x20
-[   57.596118]  ? br_handle_frame_finish+0x5e0/0x5e0
-[   57.596566]  __netif_receive_skb_core+0x25b/0xfc0
-[   57.597017]  ? __napi_build_skb+0x37/0x40
-[   57.597418]  __netif_receive_skb_list_core+0xfb/0x220
-
-Fixes: 62e7151ae3eb ("netfilter: bridge: confirm multicast packets before passing them up the stack")
-Reported-by: Jianbo Liu <jianbol@nvidia.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 29b359cf6d95 ("netfilter: nft_set_pipapo: walk over current view on netlink dump")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_input.c                      | 15 +++++++++++----
- net/bridge/br_netfilter_hooks.c            |  6 ++++++
- net/bridge/br_private.h                    |  1 +
- net/bridge/netfilter/nf_conntrack_bridge.c | 14 ++++++++++----
- 4 files changed, 28 insertions(+), 8 deletions(-)
+ net/netfilter/nft_set_pipapo.c      | 18 +++++----
+ net/netfilter/nft_set_pipapo.h      |  6 +--
+ net/netfilter/nft_set_pipapo_avx2.c | 59 +++++++++++++++++------------
+ 3 files changed, 48 insertions(+), 35 deletions(-)
 
-diff --git a/net/bridge/br_input.c b/net/bridge/br_input.c
-index f21097e734827..ceaa5a89b947f 100644
---- a/net/bridge/br_input.c
-+++ b/net/bridge/br_input.c
-@@ -30,7 +30,7 @@ br_netif_receive_skb(struct net *net, struct sock *sk, struct sk_buff *skb)
- 	return netif_receive_skb(skb);
- }
- 
--static int br_pass_frame_up(struct sk_buff *skb)
-+static int br_pass_frame_up(struct sk_buff *skb, bool promisc)
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index b3b282de802de..7756d70af868c 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -360,7 +360,7 @@
+  * Return: -1 on no match, bit position on 'match_only', 0 otherwise.
+  */
+ int pipapo_refill(unsigned long *map, int len, int rules, unsigned long *dst,
+-		  union nft_pipapo_map_bucket *mt, bool match_only)
++		  const union nft_pipapo_map_bucket *mt, bool match_only)
  {
- 	struct net_device *indev, *brdev = BR_INPUT_SKB_CB(skb)->brdev;
- 	struct net_bridge *br = netdev_priv(brdev);
-@@ -65,6 +65,8 @@ static int br_pass_frame_up(struct sk_buff *skb)
- 	br_multicast_count(br, NULL, skb, br_multicast_igmp_type(skb),
- 			   BR_MCAST_DIR_TX);
+ 	unsigned long bitset;
+ 	int k, ret = -1;
+@@ -412,9 +412,9 @@ bool nft_pipapo_lookup(const struct net *net, const struct nft_set *set,
+ 	struct nft_pipapo_scratch *scratch;
+ 	unsigned long *res_map, *fill_map;
+ 	u8 genmask = nft_genmask_cur(net);
++	const struct nft_pipapo_match *m;
++	const struct nft_pipapo_field *f;
+ 	const u8 *rp = (const u8 *)key;
+-	struct nft_pipapo_match *m;
+-	struct nft_pipapo_field *f;
+ 	bool map_index;
+ 	int i;
  
-+	BR_INPUT_SKB_CB(skb)->promisc = promisc;
-+
- 	return NF_HOOK(NFPROTO_BRIDGE, NF_BR_LOCAL_IN,
- 		       dev_net(indev), NULL, skb, indev, NULL,
- 		       br_netif_receive_skb);
-@@ -82,6 +84,7 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
- 	struct net_bridge_mcast *brmctx;
- 	struct net_bridge_vlan *vlan;
- 	struct net_bridge *br;
-+	bool promisc;
- 	u16 vid = 0;
- 	u8 state;
- 
-@@ -137,7 +140,9 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
- 	if (p->flags & BR_LEARNING)
- 		br_fdb_update(br, p, eth_hdr(skb)->h_source, vid, 0);
- 
--	local_rcv = !!(br->dev->flags & IFF_PROMISC);
-+	promisc = !!(br->dev->flags & IFF_PROMISC);
-+	local_rcv = promisc;
-+
- 	if (is_multicast_ether_addr(eth_hdr(skb)->h_dest)) {
- 		/* by definition the broadcast is also a multicast address */
- 		if (is_broadcast_ether_addr(eth_hdr(skb)->h_dest)) {
-@@ -200,7 +205,7 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
- 		unsigned long now = jiffies;
- 
- 		if (test_bit(BR_FDB_LOCAL, &dst->flags))
--			return br_pass_frame_up(skb);
-+			return br_pass_frame_up(skb, false);
- 
- 		if (now != dst->used)
- 			dst->used = now;
-@@ -213,7 +218,7 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
- 	}
- 
- 	if (local_rcv)
--		return br_pass_frame_up(skb);
-+		return br_pass_frame_up(skb, promisc);
- 
- out:
- 	return 0;
-@@ -386,6 +391,8 @@ static rx_handler_result_t br_handle_frame(struct sk_buff **pskb)
- 				goto forward;
- 		}
- 
-+		BR_INPUT_SKB_CB(skb)->promisc = false;
-+
- 		/* The else clause should be hit when nf_hook():
- 		 *   - returns < 0 (drop/error)
- 		 *   - returns = 0 (stolen/nf_queue)
-diff --git a/net/bridge/br_netfilter_hooks.c b/net/bridge/br_netfilter_hooks.c
-index 35e10c5a766d5..22e35623c148a 100644
---- a/net/bridge/br_netfilter_hooks.c
-+++ b/net/bridge/br_netfilter_hooks.c
-@@ -600,11 +600,17 @@ static unsigned int br_nf_local_in(void *priv,
- 				   struct sk_buff *skb,
- 				   const struct nf_hook_state *state)
+@@ -519,11 +519,13 @@ static struct nft_pipapo_elem *pipapo_get(const struct net *net,
  {
-+	bool promisc = BR_INPUT_SKB_CB(skb)->promisc;
- 	struct nf_conntrack *nfct = skb_nfct(skb);
- 	const struct nf_ct_hook *ct_hook;
- 	struct nf_conn *ct;
- 	int ret;
+ 	struct nft_pipapo_elem *ret = ERR_PTR(-ENOENT);
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+-	struct nft_pipapo_match *m = priv->clone;
+ 	unsigned long *res_map, *fill_map = NULL;
+-	struct nft_pipapo_field *f;
++	const struct nft_pipapo_match *m;
++	const struct nft_pipapo_field *f;
+ 	int i;
  
-+	if (promisc) {
-+		nf_reset_ct(skb);
-+		return NF_ACCEPT;
-+	}
++	m = priv->clone;
 +
- 	if (!nfct || skb->pkt_type == PACKET_HOST)
- 		return NF_ACCEPT;
+ 	res_map = kmalloc_array(m->bsize_max, sizeof(*res_map), GFP_ATOMIC);
+ 	if (!res_map) {
+ 		ret = ERR_PTR(-ENOMEM);
+@@ -1597,7 +1599,7 @@ static void pipapo_gc(struct nft_set *set, struct nft_pipapo_match *m)
  
-diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index 86ea5e6689b5c..d4bedc87b1d8f 100644
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -589,6 +589,7 @@ struct br_input_skb_cb {
- #endif
- 	u8 proxyarp_replied:1;
- 	u8 src_port_isolated:1;
-+	u8 promisc:1;
- #ifdef CONFIG_BRIDGE_VLAN_FILTERING
- 	u8 vlan_filtered:1;
- #endif
-diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
-index 6f877e31709ba..c3c51b9a68265 100644
---- a/net/bridge/netfilter/nf_conntrack_bridge.c
-+++ b/net/bridge/netfilter/nf_conntrack_bridge.c
-@@ -294,18 +294,24 @@ static unsigned int nf_ct_bridge_pre(void *priv, struct sk_buff *skb,
- static unsigned int nf_ct_bridge_in(void *priv, struct sk_buff *skb,
- 				    const struct nf_hook_state *state)
+ 	while ((rules_f0 = pipapo_rules_same_key(m->f, first_rule))) {
+ 		union nft_pipapo_map_bucket rulemap[NFT_PIPAPO_MAX_FIELDS];
+-		struct nft_pipapo_field *f;
++		const struct nft_pipapo_field *f;
+ 		int i, start, rules_fx;
+ 
+ 		start = first_rule;
+@@ -2039,8 +2041,8 @@ static void nft_pipapo_walk(const struct nft_ctx *ctx, struct nft_set *set,
  {
--	enum ip_conntrack_info ctinfo;
-+	bool promisc = BR_INPUT_SKB_CB(skb)->promisc;
-+	struct nf_conntrack *nfct = skb_nfct(skb);
- 	struct nf_conn *ct;
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+ 	struct net *net = read_pnet(&set->net);
+-	struct nft_pipapo_match *m;
+-	struct nft_pipapo_field *f;
++	const struct nft_pipapo_match *m;
++	const struct nft_pipapo_field *f;
+ 	int i, r;
  
--	if (skb->pkt_type == PACKET_HOST)
-+	if (promisc) {
-+		nf_reset_ct(skb);
-+		return NF_ACCEPT;
-+	}
-+
-+	if (!nfct || skb->pkt_type == PACKET_HOST)
- 		return NF_ACCEPT;
+ 	rcu_read_lock();
+diff --git a/net/netfilter/nft_set_pipapo.h b/net/netfilter/nft_set_pipapo.h
+index 3842c7341a9f4..42464e7c24ac0 100644
+--- a/net/netfilter/nft_set_pipapo.h
++++ b/net/netfilter/nft_set_pipapo.h
+@@ -187,7 +187,7 @@ struct nft_pipapo_elem {
+ };
  
- 	/* nf_conntrack_confirm() cannot handle concurrent clones,
- 	 * this happens for broad/multicast frames with e.g. macvlan on top
- 	 * of the bridge device.
- 	 */
--	ct = nf_ct_get(skb, &ctinfo);
--	if (!ct || nf_ct_is_confirmed(ct) || nf_ct_is_template(ct))
-+	ct = container_of(nfct, struct nf_conn, ct_general);
-+	if (nf_ct_is_confirmed(ct) || nf_ct_is_template(ct))
- 		return NF_ACCEPT;
+ int pipapo_refill(unsigned long *map, int len, int rules, unsigned long *dst,
+-		  union nft_pipapo_map_bucket *mt, bool match_only);
++		  const union nft_pipapo_map_bucket *mt, bool match_only);
  
- 	/* let inet prerouting call conntrack again */
+ /**
+  * pipapo_and_field_buckets_4bit() - Intersect 4-bit buckets
+@@ -195,7 +195,7 @@ int pipapo_refill(unsigned long *map, int len, int rules, unsigned long *dst,
+  * @dst:	Area to store result
+  * @data:	Input data selecting table buckets
+  */
+-static inline void pipapo_and_field_buckets_4bit(struct nft_pipapo_field *f,
++static inline void pipapo_and_field_buckets_4bit(const struct nft_pipapo_field *f,
+ 						 unsigned long *dst,
+ 						 const u8 *data)
+ {
+@@ -223,7 +223,7 @@ static inline void pipapo_and_field_buckets_4bit(struct nft_pipapo_field *f,
+  * @dst:	Area to store result
+  * @data:	Input data selecting table buckets
+  */
+-static inline void pipapo_and_field_buckets_8bit(struct nft_pipapo_field *f,
++static inline void pipapo_and_field_buckets_8bit(const struct nft_pipapo_field *f,
+ 						 unsigned long *dst,
+ 						 const u8 *data)
+ {
+diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
+index a3a8ddca99189..d08407d589eac 100644
+--- a/net/netfilter/nft_set_pipapo_avx2.c
++++ b/net/netfilter/nft_set_pipapo_avx2.c
+@@ -212,8 +212,9 @@ static int nft_pipapo_avx2_refill(int offset, unsigned long *map,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_4b_2(unsigned long *map, unsigned long *fill,
+-				       struct nft_pipapo_field *f, int offset,
+-				       const u8 *pkt, bool first, bool last)
++				       const struct nft_pipapo_field *f,
++				       int offset, const u8 *pkt,
++				       bool first, bool last)
+ {
+ 	int i, ret = -1, m256_size = f->bsize / NFT_PIPAPO_LONGS_PER_M256, b;
+ 	u8 pg[2] = { pkt[0] >> 4, pkt[0] & 0xf };
+@@ -274,8 +275,9 @@ static int nft_pipapo_avx2_lookup_4b_2(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_4b_4(unsigned long *map, unsigned long *fill,
+-				       struct nft_pipapo_field *f, int offset,
+-				       const u8 *pkt, bool first, bool last)
++				       const struct nft_pipapo_field *f,
++				       int offset, const u8 *pkt,
++				       bool first, bool last)
+ {
+ 	int i, ret = -1, m256_size = f->bsize / NFT_PIPAPO_LONGS_PER_M256, b;
+ 	u8 pg[4] = { pkt[0] >> 4, pkt[0] & 0xf, pkt[1] >> 4, pkt[1] & 0xf };
+@@ -350,8 +352,9 @@ static int nft_pipapo_avx2_lookup_4b_4(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_4b_8(unsigned long *map, unsigned long *fill,
+-				       struct nft_pipapo_field *f, int offset,
+-				       const u8 *pkt, bool first, bool last)
++				       const struct nft_pipapo_field *f,
++				       int offset, const u8 *pkt,
++				       bool first, bool last)
+ {
+ 	u8 pg[8] = {  pkt[0] >> 4,  pkt[0] & 0xf,  pkt[1] >> 4,  pkt[1] & 0xf,
+ 		      pkt[2] >> 4,  pkt[2] & 0xf,  pkt[3] >> 4,  pkt[3] & 0xf,
+@@ -445,8 +448,9 @@ static int nft_pipapo_avx2_lookup_4b_8(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_4b_12(unsigned long *map, unsigned long *fill,
+-				        struct nft_pipapo_field *f, int offset,
+-				        const u8 *pkt, bool first, bool last)
++					const struct nft_pipapo_field *f,
++					int offset, const u8 *pkt,
++					bool first, bool last)
+ {
+ 	u8 pg[12] = {  pkt[0] >> 4,  pkt[0] & 0xf,  pkt[1] >> 4,  pkt[1] & 0xf,
+ 		       pkt[2] >> 4,  pkt[2] & 0xf,  pkt[3] >> 4,  pkt[3] & 0xf,
+@@ -534,8 +538,9 @@ static int nft_pipapo_avx2_lookup_4b_12(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_4b_32(unsigned long *map, unsigned long *fill,
+-					struct nft_pipapo_field *f, int offset,
+-					const u8 *pkt, bool first, bool last)
++					const struct nft_pipapo_field *f,
++					int offset, const u8 *pkt,
++					bool first, bool last)
+ {
+ 	u8 pg[32] = {  pkt[0] >> 4,  pkt[0] & 0xf,  pkt[1] >> 4,  pkt[1] & 0xf,
+ 		       pkt[2] >> 4,  pkt[2] & 0xf,  pkt[3] >> 4,  pkt[3] & 0xf,
+@@ -669,8 +674,9 @@ static int nft_pipapo_avx2_lookup_4b_32(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_8b_1(unsigned long *map, unsigned long *fill,
+-				       struct nft_pipapo_field *f, int offset,
+-				       const u8 *pkt, bool first, bool last)
++				       const struct nft_pipapo_field *f,
++				       int offset, const u8 *pkt,
++				       bool first, bool last)
+ {
+ 	int i, ret = -1, m256_size = f->bsize / NFT_PIPAPO_LONGS_PER_M256, b;
+ 	unsigned long *lt = f->lt, bsize = f->bsize;
+@@ -726,8 +732,9 @@ static int nft_pipapo_avx2_lookup_8b_1(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_8b_2(unsigned long *map, unsigned long *fill,
+-				       struct nft_pipapo_field *f, int offset,
+-				       const u8 *pkt, bool first, bool last)
++				       const struct nft_pipapo_field *f,
++				       int offset, const u8 *pkt,
++				       bool first, bool last)
+ {
+ 	int i, ret = -1, m256_size = f->bsize / NFT_PIPAPO_LONGS_PER_M256, b;
+ 	unsigned long *lt = f->lt, bsize = f->bsize;
+@@ -790,8 +797,9 @@ static int nft_pipapo_avx2_lookup_8b_2(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_8b_4(unsigned long *map, unsigned long *fill,
+-				       struct nft_pipapo_field *f, int offset,
+-				       const u8 *pkt, bool first, bool last)
++				       const struct nft_pipapo_field *f,
++				       int offset, const u8 *pkt,
++				       bool first, bool last)
+ {
+ 	int i, ret = -1, m256_size = f->bsize / NFT_PIPAPO_LONGS_PER_M256, b;
+ 	unsigned long *lt = f->lt, bsize = f->bsize;
+@@ -865,8 +873,9 @@ static int nft_pipapo_avx2_lookup_8b_4(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_8b_6(unsigned long *map, unsigned long *fill,
+-				       struct nft_pipapo_field *f, int offset,
+-				       const u8 *pkt, bool first, bool last)
++				       const struct nft_pipapo_field *f,
++				       int offset, const u8 *pkt,
++				       bool first, bool last)
+ {
+ 	int i, ret = -1, m256_size = f->bsize / NFT_PIPAPO_LONGS_PER_M256, b;
+ 	unsigned long *lt = f->lt, bsize = f->bsize;
+@@ -950,8 +959,9 @@ static int nft_pipapo_avx2_lookup_8b_6(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
+-					struct nft_pipapo_field *f, int offset,
+-					const u8 *pkt, bool first, bool last)
++					const struct nft_pipapo_field *f,
++					int offset, const u8 *pkt,
++					bool first, bool last)
+ {
+ 	int i, ret = -1, m256_size = f->bsize / NFT_PIPAPO_LONGS_PER_M256, b;
+ 	unsigned long *lt = f->lt, bsize = f->bsize;
+@@ -1042,8 +1052,9 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_slow(unsigned long *map, unsigned long *fill,
+-					struct nft_pipapo_field *f, int offset,
+-					const u8 *pkt, bool first, bool last)
++					const struct nft_pipapo_field *f,
++					int offset, const u8 *pkt,
++					bool first, bool last)
+ {
+ 	unsigned long bsize = f->bsize;
+ 	int i, ret = -1, b;
+@@ -1119,9 +1130,9 @@ bool nft_pipapo_avx2_lookup(const struct net *net, const struct nft_set *set,
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+ 	struct nft_pipapo_scratch *scratch;
+ 	u8 genmask = nft_genmask_cur(net);
++	const struct nft_pipapo_match *m;
++	const struct nft_pipapo_field *f;
+ 	const u8 *rp = (const u8 *)key;
+-	struct nft_pipapo_match *m;
+-	struct nft_pipapo_field *f;
+ 	unsigned long *res, *fill;
+ 	bool map_index;
+ 	int i, ret = 0;
 -- 
 2.43.0
 
