@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E1C14A4EE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026A11487C4;
 	Tue, 23 Apr 2024 21:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908751; cv=none; b=RHzBMKQjboe3X6NM569CSYOORghoFIrQFWxFD8m51Z2iLtBqx4qXPHQZPyc44DVnqMcF3m5k7V0hy5XgNvLC6/BDkhXsXOaUPC3LOlzY0RqhkwNerKTSAphGuBb3WT2gHrAXbH+WQq7B40e2r+S9ngrNyELj5CTNWb5uOa6DMFY=
+	t=1713908752; cv=none; b=grjzgutKf/38rnLkN6Jvudrxxh7yrNjcxMgBVYjFXFcDdLQaHTLEOy4WsxVR9Hro7AIUMQgrUvL/SyH8ns66myIjRZ8W4PVvoJGEQD233oweDLv5HsFy6aZBFyIx9kxqV1d6XJykHW9lLKmKsGNbKKZu2Lyc1sbVvmH5knl4854=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908751; c=relaxed/simple;
-	bh=3KqcZfBa1r4VPdQqy3EH0Ou4EHcuJO32t4/gF5F9FJ4=;
+	s=arc-20240116; t=1713908752; c=relaxed/simple;
+	bh=RVOzppF3a+KRNHoxvOwnfOyztYlBJ/JMY6IfM10FKYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZhG0Mf5yPu21wJBBXRpYi46zzNKpf8+gvR/3iojFFV12cw0pns8xLTeDvYnQ0fG3edJduV6m0NIdDh2PiTC/k6jLOaRE6y9chpE1o+7dDnsPEra1e4C/f6kKOlq0pUP6vZpgLkUuyolhGd5jax0UrIdE8bNK7e++E3XEB0+FdRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9DE1+US; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tfuSEnfPmYgTeIDLjobmPAaV5OIT3PRW+tgAQlMdTbT4OQraNCoLt9JabTBuqCmN9JnaBY/uCOtt+NveZNL2bdUg1LjyYRhN/ztrvbjM7pFoCgH5XI3IqmmVBkZjHdAE4HZHIlQcsTrLXOyAMiZgAz7VfHOWVdYI38FSipEa3vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4EGjMmc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9DE1+US"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274C7C3277B;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4EGjMmc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD020C32783;
 	Tue, 23 Apr 2024 21:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908751;
-	bh=3KqcZfBa1r4VPdQqy3EH0Ou4EHcuJO32t4/gF5F9FJ4=;
+	bh=RVOzppF3a+KRNHoxvOwnfOyztYlBJ/JMY6IfM10FKYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9DE1+USXwRpMWb/uT3cqS9FoMtHP7zySLMGeUNgGQzSVCcwJlXu3a0mx6ypBB0+8
-	 qIMgpg5JSiwKWJTC+KlLGg9iUK8ERNK+n8mO12XfceNc64ZdAdcmsClwsEhsMTk1Y2
-	 0X6xMWBY9dUPbPncOI1xeWTOFMhg/r02yxROCquo=
+	b=E4EGjMmcbvxO2nUOAoBE288n5ki394zVIqVZWF05ttn+PZ/Zo7Sl8mjeetFwoBQzB
+	 0b2vwQ/xaBnAJJ7TcbGiy3tGaIST6T0GrvVR6aBhKYAeLfU/YjJL7ehTxZixaq7yoe
+	 hQ9TFaOSgbZYKHi5+T52vTWeTFiwOQezThOkPrnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Jane Chu <jane.chu@oracle.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 126/141] mm/memory-failure: fix deadlock when hugetlb_optimize_vmemmap is enabled
-Date: Tue, 23 Apr 2024 14:39:54 -0700
-Message-ID: <20240423213857.298565951@linuxfoundation.org>
+	Vlad Stolyarov <hexed@google.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	xinhui pan <xinhui.pan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 127/141] drm/amdgpu: validate the parameters of bo mapping operations more clearly
+Date: Tue, 23 Apr 2024 14:39:55 -0700
+Message-ID: <20240423213857.330463061@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -47,173 +46,145 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: xinhui pan <xinhui.pan@amd.com>
 
-commit 1983184c22dd84a4d95a71e5c6775c2638557dc7 upstream.
+commit 6fef2d4c00b5b8561ad68dd2b68173f5c6af1e75 upstream.
 
-When I did hard offline test with hugetlb pages, below deadlock occurs:
+Verify the parameters of
+amdgpu_vm_bo_(map/replace_map/clearing_mappings) in one common place.
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.8.0-11409-gf6cef5f8c37f #1 Not tainted
-------------------------------------------------------
-bash/46904 is trying to acquire lock:
-ffffffffabe68910 (cpu_hotplug_lock){++++}-{0:0}, at: static_key_slow_dec+0x16/0x60
-
-but task is already holding lock:
-ffffffffabf92ea8 (pcp_batch_high_lock){+.+.}-{3:3}, at: zone_pcp_disable+0x16/0x40
-
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #1 (pcp_batch_high_lock){+.+.}-{3:3}:
-       __mutex_lock+0x6c/0x770
-       page_alloc_cpu_online+0x3c/0x70
-       cpuhp_invoke_callback+0x397/0x5f0
-       __cpuhp_invoke_callback_range+0x71/0xe0
-       _cpu_up+0xeb/0x210
-       cpu_up+0x91/0xe0
-       cpuhp_bringup_mask+0x49/0xb0
-       bringup_nonboot_cpus+0xb7/0xe0
-       smp_init+0x25/0xa0
-       kernel_init_freeable+0x15f/0x3e0
-       kernel_init+0x15/0x1b0
-       ret_from_fork+0x2f/0x50
-       ret_from_fork_asm+0x1a/0x30
-
--> #0 (cpu_hotplug_lock){++++}-{0:0}:
-       __lock_acquire+0x1298/0x1cd0
-       lock_acquire+0xc0/0x2b0
-       cpus_read_lock+0x2a/0xc0
-       static_key_slow_dec+0x16/0x60
-       __hugetlb_vmemmap_restore_folio+0x1b9/0x200
-       dissolve_free_huge_page+0x211/0x260
-       __page_handle_poison+0x45/0xc0
-       memory_failure+0x65e/0xc70
-       hard_offline_page_store+0x55/0xa0
-       kernfs_fop_write_iter+0x12c/0x1d0
-       vfs_write+0x387/0x550
-       ksys_write+0x64/0xe0
-       do_syscall_64+0xca/0x1e0
-       entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(pcp_batch_high_lock);
-                               lock(cpu_hotplug_lock);
-                               lock(pcp_batch_high_lock);
-  rlock(cpu_hotplug_lock);
-
- *** DEADLOCK ***
-
-5 locks held by bash/46904:
- #0: ffff98f6c3bb23f0 (sb_writers#5){.+.+}-{0:0}, at: ksys_write+0x64/0xe0
- #1: ffff98f6c328e488 (&of->mutex){+.+.}-{3:3}, at: kernfs_fop_write_iter+0xf8/0x1d0
- #2: ffff98ef83b31890 (kn->active#113){.+.+}-{0:0}, at: kernfs_fop_write_iter+0x100/0x1d0
- #3: ffffffffabf9db48 (mf_mutex){+.+.}-{3:3}, at: memory_failure+0x44/0xc70
- #4: ffffffffabf92ea8 (pcp_batch_high_lock){+.+.}-{3:3}, at: zone_pcp_disable+0x16/0x40
-
-stack backtrace:
-CPU: 10 PID: 46904 Comm: bash Kdump: loaded Not tainted 6.8.0-11409-gf6cef5f8c37f #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x68/0xa0
- check_noncircular+0x129/0x140
- __lock_acquire+0x1298/0x1cd0
- lock_acquire+0xc0/0x2b0
- cpus_read_lock+0x2a/0xc0
- static_key_slow_dec+0x16/0x60
- __hugetlb_vmemmap_restore_folio+0x1b9/0x200
- dissolve_free_huge_page+0x211/0x260
- __page_handle_poison+0x45/0xc0
- memory_failure+0x65e/0xc70
- hard_offline_page_store+0x55/0xa0
- kernfs_fop_write_iter+0x12c/0x1d0
- vfs_write+0x387/0x550
- ksys_write+0x64/0xe0
- do_syscall_64+0xca/0x1e0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-RIP: 0033:0x7fc862314887
-Code: 10 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b7 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 48 89 54 24 18 48 89 74 24
-RSP: 002b:00007fff19311268 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 000000000000000c RCX: 00007fc862314887
-RDX: 000000000000000c RSI: 000056405645fe10 RDI: 0000000000000001
-RBP: 000056405645fe10 R08: 00007fc8623d1460 R09: 000000007fffffff
-R10: 0000000000000000 R11: 0000000000000246 R12: 000000000000000c
-R13: 00007fc86241b780 R14: 00007fc862417600 R15: 00007fc862416a00
-
-In short, below scene breaks the lock dependency chain:
-
- memory_failure
-  __page_handle_poison
-   zone_pcp_disable -- lock(pcp_batch_high_lock)
-   dissolve_free_huge_page
-    __hugetlb_vmemmap_restore_folio
-     static_key_slow_dec
-      cpus_read_lock -- rlock(cpu_hotplug_lock)
-
-Fix this by calling drain_all_pages() instead.
-
-This issue won't occur until commit a6b40850c442 ("mm: hugetlb: replace
-hugetlb_free_vmemmap_enabled with a static_key").  As it introduced
-rlock(cpu_hotplug_lock) in dissolve_free_huge_page() code path while
-lock(pcp_batch_high_lock) is already in the __page_handle_poison().
-
-[linmiaohe@huawei.com: extend comment per Oscar]
-[akpm@linux-foundation.org: reflow block comment]
-Link: https://lkml.kernel.org/r/20240407085456.2798193-1-linmiaohe@huawei.com
-Fixes: a6b40850c442 ("mm: hugetlb: replace hugetlb_free_vmemmap_enabled with a static_key")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Reviewed-by: Jane Chu <jane.chu@oracle.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: dc54d3d1744d ("drm/amdgpu: implement AMDGPU_VA_OP_CLEAR v2")
+Cc: stable@vger.kernel.org
+Reported-by: Vlad Stolyarov <hexed@google.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: xinhui pan <xinhui.pan@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |   72 +++++++++++++++++++++------------
+ 1 file changed, 46 insertions(+), 26 deletions(-)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -84,11 +84,23 @@ static int __page_handle_poison(struct p
- {
- 	int ret;
- 
--	zone_pcp_disable(page_zone(page));
-+	/*
-+	 * zone_pcp_disable() can't be used here. It will
-+	 * hold pcp_batch_high_lock and dissolve_free_huge_page() might hold
-+	 * cpu_hotplug_lock via static_key_slow_dec() when hugetlb vmemmap
-+	 * optimization is enabled. This will break current lock dependency
-+	 * chain and leads to deadlock.
-+	 * Disabling pcp before dissolving the page was a deterministic
-+	 * approach because we made sure that those pages cannot end up in any
-+	 * PCP list. Draining PCP lists expels those pages to the buddy system,
-+	 * but nothing guarantees that those pages do not get back to a PCP
-+	 * queue if we need to refill those.
-+	 */
- 	ret = dissolve_free_huge_page(page);
--	if (!ret)
-+	if (!ret) {
-+		drain_all_pages(page_zone(page));
- 		ret = take_page_off_buddy(page);
--	zone_pcp_enable(page_zone(page));
-+	}
- 
- 	return ret;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -1400,6 +1400,37 @@ static void amdgpu_vm_bo_insert_map(stru
+ 	trace_amdgpu_vm_bo_map(bo_va, mapping);
  }
+ 
++/* Validate operation parameters to prevent potential abuse */
++static int amdgpu_vm_verify_parameters(struct amdgpu_device *adev,
++					  struct amdgpu_bo *bo,
++					  uint64_t saddr,
++					  uint64_t offset,
++					  uint64_t size)
++{
++	uint64_t tmp, lpfn;
++
++	if (saddr & AMDGPU_GPU_PAGE_MASK
++	    || offset & AMDGPU_GPU_PAGE_MASK
++	    || size & AMDGPU_GPU_PAGE_MASK)
++		return -EINVAL;
++
++	if (check_add_overflow(saddr, size, &tmp)
++	    || check_add_overflow(offset, size, &tmp)
++	    || size == 0 /* which also leads to end < begin */)
++		return -EINVAL;
++
++	/* make sure object fit at this offset */
++	if (bo && offset + size > amdgpu_bo_size(bo))
++		return -EINVAL;
++
++	/* Ensure last pfn not exceed max_pfn */
++	lpfn = (saddr + size - 1) >> AMDGPU_GPU_PAGE_SHIFT;
++	if (lpfn >= adev->vm_manager.max_pfn)
++		return -EINVAL;
++
++	return 0;
++}
++
+ /**
+  * amdgpu_vm_bo_map - map bo inside a vm
+  *
+@@ -1426,21 +1457,14 @@ int amdgpu_vm_bo_map(struct amdgpu_devic
+ 	struct amdgpu_bo *bo = bo_va->base.bo;
+ 	struct amdgpu_vm *vm = bo_va->base.vm;
+ 	uint64_t eaddr;
++	int r;
+ 
+-	/* validate the parameters */
+-	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
+-		return -EINVAL;
+-	if (saddr + size <= saddr || offset + size <= offset)
+-		return -EINVAL;
+-
+-	/* make sure object fit at this offset */
+-	eaddr = saddr + size - 1;
+-	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
+-	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
+-		return -EINVAL;
++	r = amdgpu_vm_verify_parameters(adev, bo, saddr, offset, size);
++	if (r)
++		return r;
+ 
+ 	saddr /= AMDGPU_GPU_PAGE_SIZE;
+-	eaddr /= AMDGPU_GPU_PAGE_SIZE;
++	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
+ 
+ 	tmp = amdgpu_vm_it_iter_first(&vm->va, saddr, eaddr);
+ 	if (tmp) {
+@@ -1493,17 +1517,9 @@ int amdgpu_vm_bo_replace_map(struct amdg
+ 	uint64_t eaddr;
+ 	int r;
+ 
+-	/* validate the parameters */
+-	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
+-		return -EINVAL;
+-	if (saddr + size <= saddr || offset + size <= offset)
+-		return -EINVAL;
+-
+-	/* make sure object fit at this offset */
+-	eaddr = saddr + size - 1;
+-	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
+-	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
+-		return -EINVAL;
++	r = amdgpu_vm_verify_parameters(adev, bo, saddr, offset, size);
++	if (r)
++		return r;
+ 
+ 	/* Allocate all the needed memory */
+ 	mapping = kmalloc(sizeof(*mapping), GFP_KERNEL);
+@@ -1517,7 +1533,7 @@ int amdgpu_vm_bo_replace_map(struct amdg
+ 	}
+ 
+ 	saddr /= AMDGPU_GPU_PAGE_SIZE;
+-	eaddr /= AMDGPU_GPU_PAGE_SIZE;
++	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
+ 
+ 	mapping->start = saddr;
+ 	mapping->last = eaddr;
+@@ -1604,10 +1620,14 @@ int amdgpu_vm_bo_clear_mappings(struct a
+ 	struct amdgpu_bo_va_mapping *before, *after, *tmp, *next;
+ 	LIST_HEAD(removed);
+ 	uint64_t eaddr;
++	int r;
++
++	r = amdgpu_vm_verify_parameters(adev, NULL, saddr, 0, size);
++	if (r)
++		return r;
+ 
+-	eaddr = saddr + size - 1;
+ 	saddr /= AMDGPU_GPU_PAGE_SIZE;
+-	eaddr /= AMDGPU_GPU_PAGE_SIZE;
++	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
+ 
+ 	/* Allocate all the needed memory */
+ 	before = kzalloc(sizeof(*before), GFP_KERNEL);
 
 
