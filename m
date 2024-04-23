@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34083143C74;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC94146586;
 	Tue, 23 Apr 2024 21:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908576; cv=none; b=WPjiLSZ4WfkzMc/YrZ8Ln60661MfIzZHRb0eMrpQ4ZBst9nIbnl0468jnxkAnfzbYsyk5QWy2UXex7/bzRYDEBd66t8Z8lq+0Sgc0Ps/043FT4J5I0uRuozOOY7ReFRmdir4Rdt7hfBgNSR1axdAhbHSJtyaRgZihABhLtPyHLE=
+	t=1713908577; cv=none; b=VUcznMycMf+CcWiVAZosVoNv9ua5HVYjO/3jkGc5zPTOqMPdBHT+ySM42ICtrag7ftjFyGARcXMz1j+wi4BL4+DLiWarxNsSp2E5/5JqDbAAiTyjutLgzB8lz2Qo0pDEKqFOUaKd4e05f/tf3HgsMGHeTaMWehUdJ75HrV1xBjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908576; c=relaxed/simple;
-	bh=LhATFkS6z99XI7xOrW4LuQ50cMMLMoDPLN4J26OVFOQ=;
+	s=arc-20240116; t=1713908577; c=relaxed/simple;
+	bh=EV4VYrsqVZLxGTOy3B6WJAhcz3eFFen+xoQpAGHfD9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oP32wpUik7S6AtN53BAJ9EzjMhepElXOdIullTJY/JmqKrM7eFiG80YBZPeZd1odAor55DXMHzxqxScTQUsIPDXN4y/yVCPQSsmK7llCaxooddjEMI51mtpGY08bZGSLkRuk94k3xiyQowWB1hD0sGwz+tEnD5jU2a1rhX/kSjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1qtMUdJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rwMufr/9fOgknEFfBbBOxzP7nGfFIOFogrGptub9WOWmEB2TAzQnfSu3G88iLU/n5DBTR5p4LyqJBkc9VJq9lOXmT7Eyrh9gkZpRY6LVq8hl0/E7jLY1OZDoxbDM0R2x0ZwZXuuCcn7t4kuiLJcaqnDoUf0FvJ/u2rQ/TIe04qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JH6FP0jd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1qtMUdJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09721C116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JH6FP0jd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C32C32786;
 	Tue, 23 Apr 2024 21:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908576;
-	bh=LhATFkS6z99XI7xOrW4LuQ50cMMLMoDPLN4J26OVFOQ=;
+	bh=EV4VYrsqVZLxGTOy3B6WJAhcz3eFFen+xoQpAGHfD9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I1qtMUdJ1a5fkwmkGxw86iGmbjXgg3qXsaYiMVwGPmBTZbusg/XinEWctzZCKtwD4
-	 a+dKidKEEFSsZ8awAd3dZH9QJDvcGOTDuhP8+Xj+xOqonsgf+GnfWPXK4pYQAr28xy
-	 +JQv/7QbVKExctNbp0aODYSZ1C6Cd85CQwzQXSMU=
+	b=JH6FP0jdVQLT2WM1Hu0pwnuys9LLvX5MtiBoQnpgMYw5tMSUQBkX1Ob9nyrjhdMNe
+	 Z/zJZLywAc7Knn3KNHYIhkQp+sdxjCiTPoT/upeTYWqF4J+ev2eGTyZUYydlN9+H5Y
+	 YLRXQSadsyurq73Z9XZmUHgfi/nAG9FHpPrfxP0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Palviainen <jarkko.palviainen@gmail.com>,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 029/158] net: usb: ax88179_178a: avoid writing the mac address before first reading
-Date: Tue, 23 Apr 2024 14:37:46 -0700
-Message-ID: <20240423213856.685888961@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.6 030/158] arm64/mm: Modify range-based tlbi to decrement scale
+Date: Tue, 23 Apr 2024 14:37:47 -0700
+Message-ID: <20240423213856.722796462@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -51,64 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit 56f78615bcb1c3ba58a5d9911bad3d9185cf141b upstream.
+commit e2768b798a197318736f00c506633cb78ff77012 upstream.
 
-After the commit d2689b6a86b9 ("net: usb: ax88179_178a: avoid two
-consecutive device resets"), reset operation, in which the default mac
-address from the device is read, is not executed from bind operation and
-the random address, that is pregenerated just in case, is direclty written
-the first time in the device, so the default one from the device is not
-even read. This writing is not dangerous because is volatile and the
-default mac address is not missed.
+In preparation for adding support for LPA2 to the tlb invalidation
+routines, modify the algorithm used by range-based tlbi to start at the
+highest 'scale' and decrement instead of starting at the lowest 'scale'
+and incrementing. This new approach makes it possible to maintain 64K
+alignment as we work through the range, until the last op (at scale=0).
+This is required when LPA2 is enabled. (This part will be added in a
+subsequent commit).
 
-In order to avoid this and keep the simplification to have only one
-reset and reduce the delays, restore the reset from bind operation and
-remove the reset that is commanded from open operation. The behavior is
-the same but everything is ready for usbnet_probe.
+This change is separated into its own patch because it will also impact
+non-LPA2 systems, and I want to make it easy to bisect in case it leads
+to performance regression (see below for benchmarks that suggest this
+should not be a problem).
 
-Tested with ASIX AX88179 USB Gigabit Ethernet devices.
-Restore the old behavior for the rest of possible devices because I don't
-have the hardware to test.
+The original commit (d1d3aa98 "arm64: tlb: Use the TLBI RANGE feature in
+arm64") stated this as the reason for _incrementing_ scale:
 
-cc: stable@vger.kernel.org # 6.6+
-Fixes: d2689b6a86b9 ("net: usb: ax88179_178a: avoid two consecutive device resets")
-Reported-by: Jarkko Palviainen <jarkko.palviainen@gmail.com>
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Link: https://lore.kernel.org/r/20240417085524.219532-1-jtornosm@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  However, in most scenarios, the pages = 1 when flush_tlb_range() is
+  called. Start from scale = 3 or other proper value (such as scale
+  =ilog2(pages)), will incur extra overhead. So increase 'scale' from 0
+  to maximum.
+
+But pages=1 is already special cased by the non-range invalidation path,
+which will take care of it the first time through the loop (both in the
+original commit and in my change), so I don't think switching to
+decrement scale should have any extra performance impact after all.
+
+Indeed benchmarking kernel compilation, a TLBI-heavy workload, suggests
+that this new approach actually _improves_ performance slightly (using a
+virtual machine on Apple M2):
+
+Table shows time to execute kernel compilation workload with 8 jobs,
+relative to baseline without this patch (more negative number is
+bigger speedup). Repeated 9 times across 3 system reboots:
+
+| counter   |       mean |     stdev |
+|:----------|-----------:|----------:|
+| real-time |      -0.6% |      0.0% |
+| kern-time |      -1.6% |      0.5% |
+| user-time |      -0.4% |      0.1% |
+
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20231127111737.1897081-2-ryan.roberts@arm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/ax88179_178a.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/tlbflush.h |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/net/usb/ax88179_178a.c
-+++ b/drivers/net/usb/ax88179_178a.c
-@@ -1317,6 +1317,8 @@ static int ax88179_bind(struct usbnet *d
+--- a/arch/arm64/include/asm/tlbflush.h
++++ b/arch/arm64/include/asm/tlbflush.h
+@@ -351,14 +351,14 @@ static inline void arch_tlbbatch_flush(s
+  * entries one by one at the granularity of 'stride'. If the TLB
+  * range ops are supported, then:
+  *
+- * 1. If 'pages' is odd, flush the first page through non-range
+- *    operations;
++ * 1. The minimum range granularity is decided by 'scale', so multiple range
++ *    TLBI operations may be required. Start from scale = 3, flush the largest
++ *    possible number of pages ((num+1)*2^(5*scale+1)) that fit into the
++ *    requested range, then decrement scale and continue until one or zero pages
++ *    are left.
+  *
+- * 2. For remaining pages: the minimum range granularity is decided
+- *    by 'scale', so multiple range TLBI operations may be required.
+- *    Start from scale = 0, flush the corresponding number of pages
+- *    ((num+1)*2^(5*scale+1) starting from 'addr'), then increase it
+- *    until no pages left.
++ * 2. If there is 1 page remaining, flush it through non-range operations. Range
++ *    operations can only span an even number of pages.
+  *
+  * Note that certain ranges can be represented by either num = 31 and
+  * scale or num = 0 and scale + 1. The loop below favours the latter
+@@ -368,12 +368,12 @@ static inline void arch_tlbbatch_flush(s
+ 				asid, tlb_level, tlbi_user)		\
+ do {									\
+ 	int num = 0;							\
+-	int scale = 0;							\
++	int scale = 3;							\
+ 	unsigned long addr;						\
+ 									\
+ 	while (pages > 0) {						\
+ 		if (!system_supports_tlb_range() ||			\
+-		    pages % 2 == 1) {					\
++		    pages == 1) {					\
+ 			addr = __TLBI_VADDR(start, asid);		\
+ 			__tlbi_level(op, addr, tlb_level);		\
+ 			if (tlbi_user)					\
+@@ -393,7 +393,7 @@ do {									\
+ 			start += __TLBI_RANGE_PAGES(num, scale) << PAGE_SHIFT; \
+ 			pages -= __TLBI_RANGE_PAGES(num, scale);	\
+ 		}							\
+-		scale++;						\
++		scale--;						\
+ 	}								\
+ } while (0)
  
- 	netif_set_tso_max_size(dev->net, 16384);
- 
-+	ax88179_reset(dev);
-+
- 	return 0;
- }
- 
-@@ -1695,7 +1697,6 @@ static const struct driver_info ax88179_
- 	.unbind = ax88179_unbind,
- 	.status = ax88179_status,
- 	.link_reset = ax88179_link_reset,
--	.reset = ax88179_reset,
- 	.stop = ax88179_stop,
- 	.flags = FLAG_ETHER | FLAG_FRAMING_AX,
- 	.rx_fixup = ax88179_rx_fixup,
-@@ -1708,7 +1709,6 @@ static const struct driver_info ax88178a
- 	.unbind = ax88179_unbind,
- 	.status = ax88179_status,
- 	.link_reset = ax88179_link_reset,
--	.reset = ax88179_reset,
- 	.stop = ax88179_stop,
- 	.flags = FLAG_ETHER | FLAG_FRAMING_AX,
- 	.rx_fixup = ax88179_rx_fixup,
 
 
