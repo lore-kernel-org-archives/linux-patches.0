@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8B0143C5F;
-	Tue, 23 Apr 2024 21:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8809D143C5F;
+	Tue, 23 Apr 2024 21:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908770; cv=none; b=VvxcowUYmyZO2LSqGDCoAoC+f6MHExuAYsBmW05xOMMgW5s4mCQtY8+gVtF143+dMNrQA9iusPGKf2rNPZX4CkVEWWi/RKgeg/gLjxcye/9njDfaHuhIhi5NKh856kzdA7waNwn9cDGPlW1d9aRYnk63xgZ+38nEydP+l/GsS2c=
+	t=1713908770; cv=none; b=fY/LUDjRDQNOK/zk1CLwaPniUL+tou7qtJbAXbsEEs4zxL0g/favNiFJ21VHBQ2fIW3oTsxngky6uWag+5VPg7jPBnnaegpX2QuafDHu51bRy/ImK6l8O9b5yrqdNUZFeb8uVhmoWUlLXaDJpH3fOg7zYOE3HMjjHjjsIT/0xU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908770; c=relaxed/simple;
-	bh=4al6bcW7LOCfN7wNjCP1IUqQ8Zjp44NaNtKL//LmxHI=;
+	bh=RAk9Jg+iL1v76WW4ztnlQh5YqpsIXVVHGDPjHGgV5HQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cchmDU0F+u8KISl0soom3hLIfCtcdE+RZw4Q+5QPc2g+vuPJIaIte0d9SlkcUds6SgWqnat0geW5NuuzzWYit0ST/vM7JajBgj6GFup2ZqdkpUMAMBeoDwpthDO9LWuUrhtaYJK2NJowSzk7kgONFO3ageoD2dK+EjDKf3SeORQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiOwgLhv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hs7DlSxK+IbFXf141ksYAdYUv20Vwtkddq+F4/OYIyy+osxGBH67KV7MUvGavhanZNGI0BoMu4QiW/R5l8dtUqv8nTDpBc8UKlWfZFMTuKS+fCyYn1X3fY9bdjuh/UvwTGSw+M1YCLHYklPMnkWNAYIslhD+98tVG1Lhjvm2d2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dC9eZpPm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiOwgLhv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE353C32781;
-	Tue, 23 Apr 2024 21:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dC9eZpPm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCA4C116B1;
+	Tue, 23 Apr 2024 21:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908769;
-	bh=4al6bcW7LOCfN7wNjCP1IUqQ8Zjp44NaNtKL//LmxHI=;
+	s=korg; t=1713908770;
+	bh=RAk9Jg+iL1v76WW4ztnlQh5YqpsIXVVHGDPjHGgV5HQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xiOwgLhviz2zz9xQ8d/qzuAw2P/SUxOHdnbrrfcZ0K8mL55sV6CQ0/kv8JCpn2SVt
-	 OOit/05f6RgnJjOhHukLYsQVo23m6KmS6zlSB81olwavHTaZQV8N6HtUfLsxpjN0sT
-	 nfuZKvuWhSiIvHfLt+bdA+SwfCg70mdJttrHRM7E=
+	b=dC9eZpPm5fBJXNKRwijyjudtYZ1BQiAI3HHjDd8BHIz+fRXCmG46rB8eilD3lak7J
+	 NufrhjC2U0e/P3drJdo0W40L9hvtr3gvMbDoodT3PJc7WU0bqXn30lRFiq5RrGwHPS
+	 JpMN06NBlj+Y7Y5+j/yCpGt+90SWDSuuSo9ghwjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 5.15 12/71] kprobes: Fix possible use-after-free issue on kprobe registration
-Date: Tue, 23 Apr 2024 14:39:25 -0700
-Message-ID: <20240423213844.541474428@linuxfoundation.org>
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
+	stable@kernel.org
+Subject: [PATCH 5.15 13/71] Revert "tracing/trigger: Fix to return error if failed to alloc snapshot"
+Date: Tue, 23 Apr 2024 14:39:26 -0700
+Message-ID: <20240423213844.574303826@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
 References: <20240423213844.122920086@linuxfoundation.org>
@@ -50,77 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 
-commit 325f3fb551f8cd672dbbfc4cf58b14f9ee3fc9e8 upstream.
+This reverts commit b5085b5ac1d96ea2a8a6240f869655176ce44197 which is
+commit 0958b33ef5a04ed91f61cef4760ac412080c4e08 upstream.
 
-When unloading a module, its state is changing MODULE_STATE_LIVE ->
- MODULE_STATE_GOING -> MODULE_STATE_UNFORMED. Each change will take
-a time. `is_module_text_address()` and `__module_text_address()`
-works with MODULE_STATE_LIVE and MODULE_STATE_GOING.
-If we use `is_module_text_address()` and `__module_text_address()`
-separately, there is a chance that the first one is succeeded but the
-next one is failed because module->state becomes MODULE_STATE_UNFORMED
-between those operations.
+The change has an incorrect assumption about the return value because
+in the current stable trees for versions 5.15 and before, the following
+commit responsible for making 0 a success value is not present:
+b8cc44a4d3c1 ("tracing: Remove logic for registering multiple event triggers at a time")
 
-In `check_kprobe_address_safe()`, if the second `__module_text_address()`
-is failed, that is ignored because it expected a kernel_text address.
-But it may have failed simply because module->state has been changed
-to MODULE_STATE_UNFORMED. In this case, arm_kprobe() will try to modify
-non-exist module text address (use-after-free).
+The return value should be 0 on failure in the current tree, because in
+the functions event_trigger_callback() and event_enable_trigger_func(),
+we have:
 
-To fix this problem, we should not use separated `is_module_text_address()`
-and `__module_text_address()`, but use only `__module_text_address()`
-once and do `try_module_get(module)` which is only available with
-MODULE_STATE_LIVE.
+	ret = cmd_ops->reg(glob, trigger_ops, trigger_data, file);
+	/*
+	 * The above returns on success the # of functions enabled,
+	 * but if it didn't find any functions it returns zero.
+	 * Consider no functions a failure too.
+	 */
+	if (!ret) {
+		ret = -ENOENT;
 
-Link: https://lore.kernel.org/all/20240410015802.265220-1-zhengyejian1@huawei.com/
-
-Fixes: 28f6c37a2910 ("kprobes: Forbid probing on trampoline and BPF code areas")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-[Fix conflict due to lack dependency
-commit 223a76b268c9 ("kprobes: Fix coding style issues")]
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Cc: stable@kernel.org # 5.15, 5.10, 5.4, 4.19
+Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kprobes.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ kernel/trace/trace_events_trigger.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -1564,10 +1564,17 @@ static int check_kprobe_address_safe(str
- 	jump_label_lock();
- 	preempt_disable();
+--- a/kernel/trace/trace_events_trigger.c
++++ b/kernel/trace/trace_events_trigger.c
+@@ -1161,10 +1161,8 @@ register_snapshot_trigger(char *glob, st
+ 			  struct event_trigger_data *data,
+ 			  struct trace_event_file *file)
+ {
+-	int ret = tracing_alloc_snapshot_instance(file->tr);
+-
+-	if (ret < 0)
+-		return ret;
++	if (tracing_alloc_snapshot_instance(file->tr) != 0)
++		return 0;
  
--	/* Ensure it is not in reserved area nor out of text */
--	if (!(core_kernel_text((unsigned long) p->addr) ||
--	    is_module_text_address((unsigned long) p->addr)) ||
--	    in_gate_area_no_mm((unsigned long) p->addr) ||
-+	/* Ensure the address is in a text area, and find a module if exists. */
-+	*probed_mod = NULL;
-+	if (!core_kernel_text((unsigned long) p->addr)) {
-+		*probed_mod = __module_text_address((unsigned long) p->addr);
-+		if (!(*probed_mod)) {
-+			ret = -EINVAL;
-+			goto out;
-+		}
-+	}
-+	/* Ensure it is not in reserved area. */
-+	if (in_gate_area_no_mm((unsigned long) p->addr) ||
- 	    within_kprobe_blacklist((unsigned long) p->addr) ||
- 	    jump_label_text_reserved(p->addr, p->addr) ||
- 	    static_call_text_reserved(p->addr, p->addr) ||
-@@ -1577,8 +1584,7 @@ static int check_kprobe_address_safe(str
- 		goto out;
- 	}
- 
--	/* Check if are we probing a module */
--	*probed_mod = __module_text_address((unsigned long) p->addr);
-+	/* Get module refcount and reject __init functions for loaded modules. */
- 	if (*probed_mod) {
- 		/*
- 		 * We must hold a refcount of the probed module while updating
+ 	return register_trigger(glob, ops, data, file);
+ }
 
 
