@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2158E145B0F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F9014389D;
 	Tue, 23 Apr 2024 21:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908622; cv=none; b=c5eq6YW0p7HtuANLPfBRfOIKIxDzyp18vAe6Vx3eE6y3BcpsZb9CZGBoboSOYvhMnXeFJbk+SAw1Jv1ugVCREK3l70bhGbCtwRohSpL3vp2SePHkgohx1FebO2fMjuZEop3bIMerKzWS+L9nCBahGiui3G0fvh/tpblRzFq7Eqs=
+	t=1713908622; cv=none; b=WIkuCjUGQAgN2pQ5NzPjX39IlYPOBimUt67XPu/jGL1ok/FNBdKOVvx1m5BsLLWQqKswqoQ1hlAPeGIqRICXccM1oKUxWwKyj0yaZHVK+1XOB8ppnoJT+vacS4TCo2qsYaUA6MqqEwwNGf/QsvgG46Y+hzP7Uds+qpHQEEsu6yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908622; c=relaxed/simple;
-	bh=QxYsMVWMynwM9XeE+ticMddsfMXnXsoh5udqcyf4uA8=;
+	bh=SWG0BTvMn9KJmmSBYslhB5gZBu+l94Juq/aYUTxdT6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QK4SyqBpLO8f8PdK6HRMGpxs6qKWa4R+aQ8ITHpYDlH1mTLBcKGojs0wxK6i+iDk0JOu2VOmmxVK1enMB0Bn6ak9dyhy9Y8wbIoBLAk5/MfON/SUES4hJcOvONLhRDw54MeeQUYus682Hw+yOxvVkgqhFR6AxU/r1b+74wp3yXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7DCEDGG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DmcVF0iUE9npgirWd/d7o/45QlazRUmTdguLeAHA4ggzIym/nZmW8CUucLsDxiQbjwXok6Ye3g6ll/oYYAx6B3elLuYxqVp8h3a7qetHtvOVI4DTJSPnG/H3k8vjvtLoQtO7KRSLJ2XI/QJlNaHYU1bdSy+e6SGeIsAQLtjpVbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kx4UPHls; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7DCEDGG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9380C3277B;
-	Tue, 23 Apr 2024 21:43:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kx4UPHls"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A552CC32783;
+	Tue, 23 Apr 2024 21:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908622;
-	bh=QxYsMVWMynwM9XeE+ticMddsfMXnXsoh5udqcyf4uA8=;
+	bh=SWG0BTvMn9KJmmSBYslhB5gZBu+l94Juq/aYUTxdT6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F7DCEDGGWLEP8UFzY3Cj8/N65X/ev4Y62rzIp5Sw0OKGOIWenW1Bg9yffcuXb3/pN
-	 HGEPO+Ko3J4Xx1mFOe5V0QjqokiWGhcgs8TN0YawO9d3MgFYmWodagUisLSNYy88h6
-	 ko2Khi1GAe3SNAqc5ykQaMf3reOBGa6Rgyi2Eik4=
+	b=kx4UPHlsmy6XzkXKcVxRNeLogWQvvV/35QpGmaCTJkoA0+p/1iyM/B/rq5wmwsBv6
+	 KF6mMig1rLbuIffjgBrtt0hO8D70Oz0Z1om+xbUSnwjQ2WMT70SJEh3tzKBVzn2GvV
+	 msg7kJNqzrWAC7+TMdsiz2ve5XGZ5DuKksIScHRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pin-yen Lin <treapking@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 096/158] clk: mediatek: Do a runtime PM get on controllers during probe
-Date: Tue, 23 Apr 2024 14:38:53 -0700
-Message-ID: <20240423213858.867439612@linuxfoundation.org>
+Subject: [PATCH 6.6 097/158] x86/bugs: Fix BHI retpoline check
+Date: Tue, 23 Apr 2024 14:38:54 -0700
+Message-ID: <20240423213858.899778358@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -52,93 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pin-yen Lin <treapking@chromium.org>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 2f7b1d8b5505efb0057cd1ab85fca206063ea4c3 ]
+[ Upstream commit 69129794d94c544810e68b2b4eaa7e44063f9bf2 ]
 
-mt8183-mfgcfg has a mutual dependency with genpd during the probing
-stage, which leads to a deadlock in the following call stack:
+Confusingly, X86_FEATURE_RETPOLINE doesn't mean retpolines are enabled,
+as it also includes the original "AMD retpoline" which isn't a retpoline
+at all.
 
-CPU0:  genpd_lock --> clk_prepare_lock
-genpd_power_off_work_fn()
- genpd_lock()
- generic_pm_domain::power_off()
-    clk_unprepare()
-      clk_prepare_lock()
+Also replace cpu_feature_enabled() with boot_cpu_has() because this is
+before alternatives are patched and cpu_feature_enabled()'s fallback
+path is slower than plain old boot_cpu_has().
 
-CPU1: clk_prepare_lock --> genpd_lock
-clk_register()
-  __clk_core_init()
-    clk_prepare_lock()
-    clk_pm_runtime_get()
-      genpd_lock()
-
-Do a runtime PM get at the probe function to make sure clk_register()
-won't acquire the genpd lock. Instead of only modifying mt8183-mfgcfg,
-do this on all mediatek clock controller probings because we don't
-believe this would cause any regression.
-
-Verified on MT8183 and MT8192 Chromebooks.
-
-Fixes: acddfc2c261b ("clk: mediatek: Add MT8183 clock support")
-Signed-off-by: Pin-yen Lin <treapking@chromium.org>
-
-Link: https://lore.kernel.org/r/20240312115249.3341654-1-treapking@chromium.org
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: ec9404e40e8f ("x86/bhi: Add BHI mitigation knob")
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/ad3807424a3953f0323c011a643405619f2a4927.1712944776.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mtk.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ arch/x86/kernel/cpu/bugs.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mtk.c b/drivers/clk/mediatek/clk-mtk.c
-index 2e55368dc4d82..bd37ab4d1a9bb 100644
---- a/drivers/clk/mediatek/clk-mtk.c
-+++ b/drivers/clk/mediatek/clk-mtk.c
-@@ -13,6 +13,7 @@
- #include <linux/of.h>
- #include <linux/of_address.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
- #include <linux/slab.h>
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index 5ff69b1d39b20..c2dc9b7426acb 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1651,7 +1651,8 @@ static void __init bhi_select_mitigation(void)
+ 		return;
  
- #include "clk-mtk.h"
-@@ -494,6 +495,16 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
- 			return IS_ERR(base) ? PTR_ERR(base) : -ENOMEM;
- 	}
- 
-+
-+	devm_pm_runtime_enable(&pdev->dev);
-+	/*
-+	 * Do a pm_runtime_resume_and_get() to workaround a possible
-+	 * deadlock between clk_register() and the genpd framework.
-+	 */
-+	r = pm_runtime_resume_and_get(&pdev->dev);
-+	if (r)
-+		return r;
-+
- 	/* Calculate how many clk_hw_onecell_data entries to allocate */
- 	num_clks = mcd->num_clks + mcd->num_composite_clks;
- 	num_clks += mcd->num_fixed_clks + mcd->num_factor_clks;
-@@ -574,6 +585,8 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
- 			goto unregister_clks;
- 	}
- 
-+	pm_runtime_put(&pdev->dev);
-+
- 	return r;
- 
- unregister_clks:
-@@ -604,6 +617,8 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
- free_base:
- 	if (mcd->shared_io && base)
- 		iounmap(base);
-+
-+	pm_runtime_put(&pdev->dev);
- 	return r;
- }
- 
+ 	/* Retpoline mitigates against BHI unless the CPU has RRSBA behavior */
+-	if (cpu_feature_enabled(X86_FEATURE_RETPOLINE)) {
++	if (boot_cpu_has(X86_FEATURE_RETPOLINE) &&
++	    !boot_cpu_has(X86_FEATURE_RETPOLINE_LFENCE)) {
+ 		spec_ctrl_disable_kernel_rrsba();
+ 		if (rrsba_disabled)
+ 			return;
+@@ -2803,11 +2804,13 @@ static const char *spectre_bhi_state(void)
+ {
+ 	if (!boot_cpu_has_bug(X86_BUG_BHI))
+ 		return "; BHI: Not affected";
+-	else if  (boot_cpu_has(X86_FEATURE_CLEAR_BHB_HW))
++	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_HW))
+ 		return "; BHI: BHI_DIS_S";
+-	else if  (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP))
++	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP))
+ 		return "; BHI: SW loop, KVM: SW loop";
+-	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) && rrsba_disabled)
++	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) &&
++		 !boot_cpu_has(X86_FEATURE_RETPOLINE_LFENCE) &&
++		 rrsba_disabled)
+ 		return "; BHI: Retpoline";
+ 	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT))
+ 		return "; BHI: Vulnerable, KVM: SW loop";
 -- 
 2.43.0
 
