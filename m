@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E77114389E;
-	Tue, 23 Apr 2024 21:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055CF14389E;
+	Tue, 23 Apr 2024 21:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908520; cv=none; b=sMznKWOPOhq4oYMIyJ0MOuKYJLcGUmh3wVUoYGZXeoyCRq4A1Vs0ygXN3vWF+MkThCzMN8lQWFvVV5m6DnYLYXUOYAVPNR03DZ/M2RqGD1+9NUpFiBWxxRPfE3z3O7J/QQKsvtW1ntWh7ygl83l9GkDck7AOZ8EOs6iqDbwmZMg=
+	t=1713908521; cv=none; b=GZJS4KwxXJbySir5Y4Ue8L5mETTl2KJiD5BwVo6CElD33Z0BXSOPVtzFvQiURTqe6gWpXiVRFTo7WlF3mtEJjlAE86HGYjOoSmmfZGEM2nItAexKLQIIV+zkQxIyW1sfowOHUZDX+6pNI/+DK3kDR8SjkcG77XR94IN+1/57iZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908520; c=relaxed/simple;
-	bh=2qUZBFW6oigOqBK/umkhlGzl65EOwNzAdPmfX9REKsU=;
+	s=arc-20240116; t=1713908521; c=relaxed/simple;
+	bh=mj00SjtXrPKwfq3d8KpnvOBK6pXp02n/jX8bXk1Mma4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nhVC7TnB6l2RhnlTrJNFmqVzopsXAj42blihnBv3FBKIHp3DV/ED80l5v7A15LQh6a5ixT6mVqBcXPe90QRRJU7XUlLtSzo4bKvlyPxJUTA8DpGMWNOt4zbbEznzYFMf7RuRBADycJ48ctcjlWTKelspcoBmUfSu+joJrYYvME0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAqKeof/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M/PXtU8u88O4McbMv8uhw3sQp/372pAPSfoFpYephQPWbk6UOqRJvmZwHPHjzDwYhifYyTDOb/3Pe2t1ukVr8ru6AMJAumka4/ssuUylvdmiwjZObJKSf0vGktl4b+eApPiKRAD301zfakAndR6oIvToSSGp94hPp9eCNMRCXGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQAa8Tco; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAqKeof/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2377DC116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQAa8Tco"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7D1C3277B;
 	Tue, 23 Apr 2024 21:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908520;
-	bh=2qUZBFW6oigOqBK/umkhlGzl65EOwNzAdPmfX9REKsU=;
+	bh=mj00SjtXrPKwfq3d8KpnvOBK6pXp02n/jX8bXk1Mma4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pAqKeof/h5kZr+hgMkW7DmA5JVu6bAw9MRgWGL8ZckHGp41s7G14ZIie97PRCfz/L
-	 fKB3rIRlr7i5BK7RU01E8W+PQM1i8xVn6gbb95//XDtTqWD3fg9i0E7GQnrTADeMPy
-	 TC0e9k86rOxrNjYkxCQGI/A4aTzDYbau1dR57GRo=
+	b=oQAa8TcoeYbRwTK6GlAiaWmACwyFR6/4141OPXAsKMPre/os/1FRjg6uI2Zwo7kLl
+	 Y8140MGdAEgxupOEXlai6l2ygqsm2sSKFPJuaAm4gIvmIABiR+MaITk1D4bu7wjAfy
+	 2/R4hfJxNm7I5FpiqconeQYBNyRSgQgIici2ZWdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Tony Lindgren <tony@atomide.com>
-Subject: [PATCH 6.8 108/158] serial: core: Fix missing shutdown and startup for serial base port
-Date: Tue, 23 Apr 2024 14:38:50 -0700
-Message-ID: <20240423213859.448520987@linuxfoundation.org>
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 085/158] x86/bugs: Fix BHI retpoline check
+Date: Tue, 23 Apr 2024 14:38:27 -0700
+Message-ID: <20240423213858.707765289@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -51,158 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit 1aa4ad4eb695bac1b0a7ba542a16d6833c9c8dd8 upstream.
+[ Upstream commit 69129794d94c544810e68b2b4eaa7e44063f9bf2 ]
 
-We are seeing start_tx being called after port shutdown as noted by Jiri.
-This happens because we are missing the startup and shutdown related
-functions for the serial base port.
+Confusingly, X86_FEATURE_RETPOLINE doesn't mean retpolines are enabled,
+as it also includes the original "AMD retpoline" which isn't a retpoline
+at all.
 
-Let's fix the issue by adding startup and shutdown functions for the
-serial base port to block tx flushing for the serial base port when the
-port is not in use.
+Also replace cpu_feature_enabled() with boot_cpu_has() because this is
+before alternatives are patched and cpu_feature_enabled()'s fallback
+path is slower than plain old boot_cpu_has().
 
-Fixes: 84a9582fd203 ("serial: core: Start managing serial controllers to enable runtime PM")
-Cc: stable <stable@kernel.org>
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20240411055848.38190-1-tony@atomide.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ec9404e40e8f ("x86/bhi: Add BHI mitigation knob")
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/ad3807424a3953f0323c011a643405619f2a4927.1712944776.git.jpoimboe@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial_base.h |    4 ++++
- drivers/tty/serial/serial_core.c |   20 +++++++++++++++++---
- drivers/tty/serial/serial_port.c |   34 ++++++++++++++++++++++++++++++++++
- 3 files changed, 55 insertions(+), 3 deletions(-)
+ arch/x86/kernel/cpu/bugs.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/serial_base.h
-+++ b/drivers/tty/serial/serial_base.h
-@@ -22,6 +22,7 @@ struct serial_ctrl_device {
- struct serial_port_device {
- 	struct device dev;
- 	struct uart_port *port;
-+	unsigned int tx_enabled:1;
- };
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index cbc8c88144e47..e7ceee008bd09 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1651,7 +1651,8 @@ static void __init bhi_select_mitigation(void)
+ 		return;
  
- int serial_base_ctrl_init(void);
-@@ -30,6 +31,9 @@ void serial_base_ctrl_exit(void);
- int serial_base_port_init(void);
- void serial_base_port_exit(void);
- 
-+void serial_base_port_startup(struct uart_port *port);
-+void serial_base_port_shutdown(struct uart_port *port);
-+
- int serial_base_driver_register(struct device_driver *driver);
- void serial_base_driver_unregister(struct device_driver *driver);
- 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -323,16 +323,26 @@ static int uart_startup(struct tty_struc
- 			bool init_hw)
+ 	/* Retpoline mitigates against BHI unless the CPU has RRSBA behavior */
+-	if (cpu_feature_enabled(X86_FEATURE_RETPOLINE)) {
++	if (boot_cpu_has(X86_FEATURE_RETPOLINE) &&
++	    !boot_cpu_has(X86_FEATURE_RETPOLINE_LFENCE)) {
+ 		spec_ctrl_disable_kernel_rrsba();
+ 		if (rrsba_disabled)
+ 			return;
+@@ -2803,11 +2804,13 @@ static const char *spectre_bhi_state(void)
  {
- 	struct tty_port *port = &state->port;
-+	struct uart_port *uport;
- 	int retval;
- 
- 	if (tty_port_initialized(port))
--		return 0;
-+		goto out_base_port_startup;
- 
- 	retval = uart_port_startup(tty, state, init_hw);
--	if (retval)
-+	if (retval) {
- 		set_bit(TTY_IO_ERROR, &tty->flags);
-+		return retval;
-+	}
- 
--	return retval;
-+out_base_port_startup:
-+	uport = uart_port_check(state);
-+	if (!uport)
-+		return -EIO;
-+
-+	serial_base_port_startup(uport);
-+
-+	return 0;
- }
- 
- /*
-@@ -355,6 +365,9 @@ static void uart_shutdown(struct tty_str
- 	if (tty)
- 		set_bit(TTY_IO_ERROR, &tty->flags);
- 
-+	if (uport)
-+		serial_base_port_shutdown(uport);
-+
- 	if (tty_port_initialized(port)) {
- 		tty_port_set_initialized(port, false);
- 
-@@ -1775,6 +1788,7 @@ static void uart_tty_port_shutdown(struc
- 	uport->ops->stop_rx(uport);
- 	uart_port_unlock_irq(uport);
- 
-+	serial_base_port_shutdown(uport);
- 	uart_port_shutdown(port);
- 
- 	/*
---- a/drivers/tty/serial/serial_port.c
-+++ b/drivers/tty/serial/serial_port.c
-@@ -36,8 +36,12 @@ static int serial_port_runtime_resume(st
- 
- 	/* Flush any pending TX for the port */
- 	uart_port_lock_irqsave(port, &flags);
-+	if (!port_dev->tx_enabled)
-+		goto unlock;
- 	if (__serial_port_busy(port))
- 		port->ops->start_tx(port);
-+
-+unlock:
- 	uart_port_unlock_irqrestore(port, flags);
- 
- out:
-@@ -57,6 +61,11 @@ static int serial_port_runtime_suspend(s
- 		return 0;
- 
- 	uart_port_lock_irqsave(port, &flags);
-+	if (!port_dev->tx_enabled) {
-+		uart_port_unlock_irqrestore(port, flags);
-+		return 0;
-+	}
-+
- 	busy = __serial_port_busy(port);
- 	if (busy)
- 		port->ops->start_tx(port);
-@@ -68,6 +77,31 @@ static int serial_port_runtime_suspend(s
- 	return busy ? -EBUSY : 0;
- }
- 
-+static void serial_base_port_set_tx(struct uart_port *port,
-+				    struct serial_port_device *port_dev,
-+				    bool enabled)
-+{
-+	unsigned long flags;
-+
-+	uart_port_lock_irqsave(port, &flags);
-+	port_dev->tx_enabled = enabled;
-+	uart_port_unlock_irqrestore(port, flags);
-+}
-+
-+void serial_base_port_startup(struct uart_port *port)
-+{
-+	struct serial_port_device *port_dev = port->port_dev;
-+
-+	serial_base_port_set_tx(port, port_dev, true);
-+}
-+
-+void serial_base_port_shutdown(struct uart_port *port)
-+{
-+	struct serial_port_device *port_dev = port->port_dev;
-+
-+	serial_base_port_set_tx(port, port_dev, false);
-+}
-+
- static DEFINE_RUNTIME_DEV_PM_OPS(serial_port_pm,
- 				 serial_port_runtime_suspend,
- 				 serial_port_runtime_resume, NULL);
+ 	if (!boot_cpu_has_bug(X86_BUG_BHI))
+ 		return "; BHI: Not affected";
+-	else if  (boot_cpu_has(X86_FEATURE_CLEAR_BHB_HW))
++	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_HW))
+ 		return "; BHI: BHI_DIS_S";
+-	else if  (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP))
++	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP))
+ 		return "; BHI: SW loop, KVM: SW loop";
+-	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) && rrsba_disabled)
++	else if (boot_cpu_has(X86_FEATURE_RETPOLINE) &&
++		 !boot_cpu_has(X86_FEATURE_RETPOLINE_LFENCE) &&
++		 rrsba_disabled)
+ 		return "; BHI: Retpoline";
+ 	else if (boot_cpu_has(X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT))
+ 		return "; BHI: Vulnerable, KVM: SW loop";
+-- 
+2.43.0
+
 
 
