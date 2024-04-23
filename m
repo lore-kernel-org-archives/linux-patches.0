@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9CC143889;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF504143889;
 	Tue, 23 Apr 2024 21:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908599; cv=none; b=GUGWgW8z6b/+yRwvF50F/Qrgt4OoH2gRn/qBncE3LLl5tTKxsYfECx0lGKNFuLQ84CtOWgGfXSNirG/a/TCfmICSA/iVHCHtyK98GHbBsiNfsmBnkdKgfVRtsEZ34E+vs9TfphgFZSzmmEGxaWWim6oYM+F3Lykd8U5VfgehT5Y=
+	t=1713908600; cv=none; b=gVlGWSqZ5L142eWd32y3QKhQ6pnzl3mFnw7C0e1tQ07o1DBynvPeYLlu4nnipSfQXyNBJZbyZbHqTJYxfl49r8DaKRWkaFRTlHiWVdTqfqXf5e0VxqEizhJ7FER6boLRspaW9ju9BzLYHEzQZ0ZRV08uZCYGAXfow8ECi+3DAgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908599; c=relaxed/simple;
-	bh=sXc3rfg34GbXZXY3rElCBaWh4sj1a0ziTLeEQlZo7kg=;
+	s=arc-20240116; t=1713908600; c=relaxed/simple;
+	bh=qaztN/wj2pNS7l6KqYfbAJlzKqDQ9qzhLNvDhvqnAj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D7DWGPbwqEome1fKCVi0PMORxACC8pskt8SEqDb8bIEQwq84S1fPu02sz5HUaSfacVvICRauIi8E1sXULPvQPONnZylgNnHC8snU55UmDimaKTFkZbukio1nQOhCgIymNPXdgK2uLUjpPSDtWrYrYfPXGiGPqFkFNQV2AWEYOP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZmxHU53; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pp+P6Zu3Q1BzFpBhrc1BSWcgo7fPDHjJRXsclsuJXW5jY3Z+UqE+FFDUW6h8VvX0BgHOqCH7/YIk3VMJ4HtaLBcGeSMDF0MKbT6fv9WbGE+7bBXgifH5PkwjG6UE2YcFI13MuKTQnTX/HaXd8BLrvCTZum8VygMfM8+25EY42iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQkQEUI9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZmxHU53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B87C4AF07;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQkQEUI9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB88C32783;
 	Tue, 23 Apr 2024 21:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908599;
-	bh=sXc3rfg34GbXZXY3rElCBaWh4sj1a0ziTLeEQlZo7kg=;
+	bh=qaztN/wj2pNS7l6KqYfbAJlzKqDQ9qzhLNvDhvqnAj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IZmxHU530PdGXMiFYKZ3V7UxLyCWtNARAldjZLE6YU5QSt6DTXRhY8DbsnSA3m886
-	 Z14yMibqK+23a8AgUOfFKcYc6y9njFBpnbnvTlduQdIUIVeUuuhpSFwyShqsxBwFck
-	 FD4DY2ez9p9B8ZJxKSmXx3TFgSw72wUtYWPEvq2k=
+	b=bQkQEUI9S+B4cxd7hIGzKvEhihLNpPArMCrpwSqpO6MStrOKkUZcNEs7p8gxioEbs
+	 A7KV0XMSGRYwp5FteA71hiOFnJVIAJiI0mW7dhIJGGHRKNDQ+ss5gLdXQKZ0/SdHqQ
+	 8B0BWKMnKmytvMKiMaz2Vdn5O9d+B0+pX/50FsUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Song Liu <song@kernel.org>,
+	bpf@vger.kernel.org,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 045/158] octeontx2-pf: fix FLOW_DIS_IS_FRAGMENT implementation
-Date: Tue, 23 Apr 2024 14:38:02 -0700
-Message-ID: <20240423213857.238522628@linuxfoundation.org>
+Subject: [PATCH 6.6 063/158] perf lock contention: Add a missing NULL check
+Date: Tue, 23 Apr 2024 14:38:20 -0700
+Message-ID: <20240423213857.819833980@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -46,64 +48,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 75ce9506ee3dc66648a7d74ab3b0acfa364d6d43 ]
+[ Upstream commit f3408580bac8ce5cd76e7391e529c0a22e7c7eb2 ]
 
-Upon reviewing the flower control flags handling in
-this driver, I notice that the key wasn't being used,
-only the mask.
+I got a report for a failure in BPF verifier on a recent kernel with
+perf lock contention command.  It checks task->sighand->siglock without
+checking if sighand is NULL or not.  Let's add one.
 
-Ie. `tc flower ... ip_flags nofrag` was hardware
-offloaded as `... ip_flags frag`.
+  ; if (&curr->sighand->siglock == (void *)lock)
+  265: (79) r1 = *(u64 *)(r0 +2624)     ; frame1: R0_w=trusted_ptr_task_struct(off=0,imm=0)
+                                        ;         R1_w=rcu_ptr_or_null_sighand_struct(off=0,imm=0)
+  266: (b7) r2 = 0                      ; frame1: R2_w=0
+  267: (0f) r1 += r2
+  R1 pointer arithmetic on rcu_ptr_or_null_ prohibited, null-check it first
+  processed 164 insns (limit 1000000) max_states_per_insn 1 total_states 15 peak_states 15 mark_read 5
+  -- END PROG LOAD LOG --
+  libbpf: prog 'contention_end': failed to load: -13
+  libbpf: failed to load object 'lock_contention_bpf'
+  libbpf: failed to load BPF skeleton 'lock_contention_bpf': -13
+  Failed to load lock-contention BPF skeleton
+  lock contention BPF setup failed
+  lock contention did not detect any lock contention
 
-Only compile tested, no access to HW.
-
-Fixes: c672e3727989 ("octeontx2-pf: Add support to filter packet based on IP fragment")
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1811e82767dcc ("perf lock contention: Track and show siglock with address")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Acked-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Song Liu <song@kernel.org>
+Cc: bpf@vger.kernel.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20240409225542.1870999-1-namhyung@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/perf/util/bpf_skel/lock_contention.bpf.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-index 423ce54eaea69..46bdbee9d38ad 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-@@ -588,6 +588,7 @@ static int otx2_tc_prepare_flow(struct otx2_nic *nic, struct otx2_tc_flow *node,
+diff --git a/tools/perf/util/bpf_skel/lock_contention.bpf.c b/tools/perf/util/bpf_skel/lock_contention.bpf.c
+index 8d3cfbb3cc65b..473106c72c695 100644
+--- a/tools/perf/util/bpf_skel/lock_contention.bpf.c
++++ b/tools/perf/util/bpf_skel/lock_contention.bpf.c
+@@ -238,6 +238,7 @@ static inline __u32 check_lock_type(__u64 lock, __u32 flags)
+ 	struct task_struct *curr;
+ 	struct mm_struct___old *mm_old;
+ 	struct mm_struct___new *mm_new;
++	struct sighand_struct *sighand;
  
- 	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_CONTROL)) {
- 		struct flow_match_control match;
-+		u32 val;
- 
- 		flow_rule_match_control(rule, &match);
- 		if (match.mask->flags & FLOW_DIS_FIRST_FRAG) {
-@@ -596,12 +597,14 @@ static int otx2_tc_prepare_flow(struct otx2_nic *nic, struct otx2_tc_flow *node,
- 		}
- 
- 		if (match.mask->flags & FLOW_DIS_IS_FRAGMENT) {
-+			val = match.key->flags & FLOW_DIS_IS_FRAGMENT;
- 			if (ntohs(flow_spec->etype) == ETH_P_IP) {
--				flow_spec->ip_flag = IPV4_FLAG_MORE;
-+				flow_spec->ip_flag = val ? IPV4_FLAG_MORE : 0;
- 				flow_mask->ip_flag = IPV4_FLAG_MORE;
- 				req->features |= BIT_ULL(NPC_IPFRAG_IPV4);
- 			} else if (ntohs(flow_spec->etype) == ETH_P_IPV6) {
--				flow_spec->next_header = IPPROTO_FRAGMENT;
-+				flow_spec->next_header = val ?
-+							 IPPROTO_FRAGMENT : 0;
- 				flow_mask->next_header = 0xff;
- 				req->features |= BIT_ULL(NPC_IPFRAG_IPV6);
- 			} else {
+ 	switch (flags) {
+ 	case LCB_F_READ:  /* rwsem */
+@@ -259,7 +260,9 @@ static inline __u32 check_lock_type(__u64 lock, __u32 flags)
+ 		break;
+ 	case LCB_F_SPIN:  /* spinlock */
+ 		curr = bpf_get_current_task_btf();
+-		if (&curr->sighand->siglock == (void *)lock)
++		sighand = curr->sighand;
++
++		if (sighand && &sighand->siglock == (void *)lock)
+ 			return LCD_F_SIGHAND_LOCK;
+ 		break;
+ 	default:
 -- 
 2.43.0
 
