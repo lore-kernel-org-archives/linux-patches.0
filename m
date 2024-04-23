@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C9F143899;
-	Tue, 23 Apr 2024 21:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB73143899;
+	Tue, 23 Apr 2024 21:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908454; cv=none; b=iPGAG+e0pNva3YScWULd8OXUb+LfK9OCPgkc+tX69IP66qy4GWmO3yEpiKePd6lAUvd/i0qEO3X1OrF+UmVfPsSNPt6nQf9ZXaYweHHdGCl1+jdKiYHZMEpYS2XqyjEUz5hBwCCYLK7APa/LP0f9yf7AfbAlSLdYZv6ccI6bgeU=
+	t=1713908455; cv=none; b=tjX2vNOrkC7EYNZlXgemDvP7d6EGQN7sG2d7XZ9ZMdZh6ckCWHL5VNq1PGFB+Q/5NRzhxci96r6mDLQl8quQey4H+Xa5QsTjmuPFMXjwaw6H+jkHRVrh0vuzGjiR4a/926DFrp8mOzhkWiSFCyslHXTy9HwkVA+gcu7f0RGSvc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908454; c=relaxed/simple;
-	bh=mBH98hwW/rVngNROlkEIBWoA1XRQ6dc/EkmNpZCI6w0=;
+	s=arc-20240116; t=1713908455; c=relaxed/simple;
+	bh=56HRluF1cyyfMlQwRGWdHSfpHpetGL0NEqZ9Vp91oYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ifnqllbAkN8tS49ycLirRN4yf1GdVk7nDT7N7Ih5LmREGYh5qZ+RFenQuP5uw9ZSsR9fFrU0FkZISLlXla3GGb17siF7R83o5d4rs5bU2P++5KsBWQAG1H9NIdNivNbN/1cOXqCZ9FknsmYIXj4w7FPpC+L3Gt8Vp/DlSk0idrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuFcQJND; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CRWXgbC0a3MZ2nllZoI0sE1xJ8UO+8GVvFjLHJOEwuDLk9diVK12+ert+BzlqyscR2RfbNfDaU2G/MOBJ5vFYxXdUEGL/WzoZdXLqSPskWmyjJ1xYojwELR5K2Kn09DvdkJMMzvlK5Z0wgH0B5MsDHfdXejt+vbF+ejUwhlzWL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndzR0/5+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuFcQJND"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B93C116B1;
-	Tue, 23 Apr 2024 21:40:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndzR0/5+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CE8C3277B;
+	Tue, 23 Apr 2024 21:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908454;
-	bh=mBH98hwW/rVngNROlkEIBWoA1XRQ6dc/EkmNpZCI6w0=;
+	s=korg; t=1713908455;
+	bh=56HRluF1cyyfMlQwRGWdHSfpHpetGL0NEqZ9Vp91oYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WuFcQJNDbC/YaA18E51bTRsi6mUNKhS2EkcPAt/2iudbjUYdVZVCyAZuYLN1Ke/1h
-	 8UXDWJtD+KiNxwhu+02it6JmiIbHm4EuRwX7gMcYxcOghiPIRx2Dv/LHHILdn7ODD8
-	 pBUMJG7axGTBhG2Qzj9FQ2uvw+nmRf2LiwWG/FdQ=
+	b=ndzR0/5+e3lZZ7NzQQPyGqxyFwI5Qzz8mC2lzoTr+4CE/xakDrWRLwzke7tVRqHJ3
+	 6FwO8gu2P12mZI7khNqi4Wh6U5xDOM1NjMgBJ1H3sz01MuGdVnD8YpLOfw4SIjRezz
+	 tPYJXquOHweWAloUqoFh3GYcxo/SMMVdEjfXK2H4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Pundir <amit.pundir@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 013/158] scsi: ufs: qcom: Add missing interconnect bandwidth values for Gear 5
-Date: Tue, 23 Apr 2024 14:37:15 -0700
-Message-ID: <20240423213856.277043241@linuxfoundation.org>
+Subject: [PATCH 6.8 014/158] netfilter: nf_tables: Fix potential data-race in __nft_expr_type_get()
+Date: Tue, 23 Apr 2024 14:37:16 -0700
+Message-ID: <20240423213856.311244326@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -52,70 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit 8db8f6ce556af60ca9a9fd5e826d369ded70fcc7 ]
+[ Upstream commit f969eb84ce482331a991079ab7a5c4dc3b7f89bf ]
 
-These entries are necessary to scale the interconnect bandwidth while
-operating in Gear 5.
+nft_unregister_expr() can concurrent with __nft_expr_type_get(),
+and there is not any protection when iterate over nf_tables_expressions
+list in __nft_expr_type_get(). Therefore, there is potential data-race
+of nf_tables_expressions list entry.
 
-Cc: Amit Pundir <amit.pundir@linaro.org>
-Fixes: 03ce80a1bb86 ("scsi: ufs: qcom: Add support for scaling interconnects")
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240403-ufs-icc-fix-v2-1-958412a5eb45@linaro.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Use list_for_each_entry_rcu() to iterate over nf_tables_expressions
+list in __nft_expr_type_get(), and use rcu_read_lock() in the caller
+nft_expr_type_get() to protect the entire type query process.
+
+Fixes: ef1f7df9170d ("netfilter: nf_tables: expression ops overloading")
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index f532e2c004a25..bcbcf758925be 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -47,7 +47,7 @@ enum {
- 	TSTBUS_MAX,
- };
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 21581bae700c4..a1cf875e5d35f 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -3048,7 +3048,7 @@ static const struct nft_expr_type *__nft_expr_type_get(u8 family,
+ {
+ 	const struct nft_expr_type *type, *candidate = NULL;
  
--#define QCOM_UFS_MAX_GEAR 4
-+#define QCOM_UFS_MAX_GEAR 5
- #define QCOM_UFS_MAX_LANE 2
+-	list_for_each_entry(type, &nf_tables_expressions, list) {
++	list_for_each_entry_rcu(type, &nf_tables_expressions, list) {
+ 		if (!nla_strcmp(nla, type->name)) {
+ 			if (!type->family && !candidate)
+ 				candidate = type;
+@@ -3080,9 +3080,13 @@ static const struct nft_expr_type *nft_expr_type_get(struct net *net,
+ 	if (nla == NULL)
+ 		return ERR_PTR(-EINVAL);
  
- enum {
-@@ -67,26 +67,32 @@ static const struct __ufs_qcom_bw_table {
- 	[MODE_PWM][UFS_PWM_G2][UFS_LANE_1] = { 1844,		1000 },
- 	[MODE_PWM][UFS_PWM_G3][UFS_LANE_1] = { 3688,		1000 },
- 	[MODE_PWM][UFS_PWM_G4][UFS_LANE_1] = { 7376,		1000 },
-+	[MODE_PWM][UFS_PWM_G5][UFS_LANE_1] = { 14752,		1000 },
- 	[MODE_PWM][UFS_PWM_G1][UFS_LANE_2] = { 1844,		1000 },
- 	[MODE_PWM][UFS_PWM_G2][UFS_LANE_2] = { 3688,		1000 },
- 	[MODE_PWM][UFS_PWM_G3][UFS_LANE_2] = { 7376,		1000 },
- 	[MODE_PWM][UFS_PWM_G4][UFS_LANE_2] = { 14752,		1000 },
-+	[MODE_PWM][UFS_PWM_G5][UFS_LANE_2] = { 29504,		1000 },
- 	[MODE_HS_RA][UFS_HS_G1][UFS_LANE_1] = { 127796,		1000 },
- 	[MODE_HS_RA][UFS_HS_G2][UFS_LANE_1] = { 255591,		1000 },
- 	[MODE_HS_RA][UFS_HS_G3][UFS_LANE_1] = { 1492582,	102400 },
- 	[MODE_HS_RA][UFS_HS_G4][UFS_LANE_1] = { 2915200,	204800 },
-+	[MODE_HS_RA][UFS_HS_G5][UFS_LANE_1] = { 5836800,	409600 },
- 	[MODE_HS_RA][UFS_HS_G1][UFS_LANE_2] = { 255591,		1000 },
- 	[MODE_HS_RA][UFS_HS_G2][UFS_LANE_2] = { 511181,		1000 },
- 	[MODE_HS_RA][UFS_HS_G3][UFS_LANE_2] = { 1492582,	204800 },
- 	[MODE_HS_RA][UFS_HS_G4][UFS_LANE_2] = { 2915200,	409600 },
-+	[MODE_HS_RA][UFS_HS_G5][UFS_LANE_2] = { 5836800,	819200 },
- 	[MODE_HS_RB][UFS_HS_G1][UFS_LANE_1] = { 149422,		1000 },
- 	[MODE_HS_RB][UFS_HS_G2][UFS_LANE_1] = { 298189,		1000 },
- 	[MODE_HS_RB][UFS_HS_G3][UFS_LANE_1] = { 1492582,	102400 },
- 	[MODE_HS_RB][UFS_HS_G4][UFS_LANE_1] = { 2915200,	204800 },
-+	[MODE_HS_RB][UFS_HS_G5][UFS_LANE_1] = { 5836800,	409600 },
- 	[MODE_HS_RB][UFS_HS_G1][UFS_LANE_2] = { 298189,		1000 },
- 	[MODE_HS_RB][UFS_HS_G2][UFS_LANE_2] = { 596378,		1000 },
- 	[MODE_HS_RB][UFS_HS_G3][UFS_LANE_2] = { 1492582,	204800 },
- 	[MODE_HS_RB][UFS_HS_G4][UFS_LANE_2] = { 2915200,	409600 },
-+	[MODE_HS_RB][UFS_HS_G5][UFS_LANE_2] = { 5836800,	819200 },
- 	[MODE_MAX][0][0]		    = { 7643136,	307200 },
- };
++	rcu_read_lock();
+ 	type = __nft_expr_type_get(family, nla);
+-	if (type != NULL && try_module_get(type->owner))
++	if (type != NULL && try_module_get(type->owner)) {
++		rcu_read_unlock();
+ 		return type;
++	}
++	rcu_read_unlock();
  
+ 	lockdep_nfnl_nft_mutex_not_held();
+ #ifdef CONFIG_MODULES
 -- 
 2.43.0
 
