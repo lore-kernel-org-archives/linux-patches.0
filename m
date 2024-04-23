@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D857C143C5F;
-	Tue, 23 Apr 2024 21:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F6D14388F;
+	Tue, 23 Apr 2024 21:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908508; cv=none; b=dlRmBX2pg+zjU4ld+v9rMTHn8L+bKsgKT2zAGZZ3kualMhDW8zHLmUD9xvvMtUyH2XYwDpQONvenqpD5dk9DxJBajvy8R1h0l4jGqdU1e0dBFuf7zoy0LFPZ8c4iNuVepaJ+jyDkZON0NBUlK/cAsFmBqbCvZStR0ynMvcYOVjA=
+	t=1713908509; cv=none; b=a+teRE/0g42FUJ43JO2A1SL1PwkOZu3NAzQZfs1EaaNutB7XuhuGuVrAvoFijVPMiRKZFs/Pm5z8kWzzCMM/YwwEdYWOC9omJE89SXkBBtvX06EltnQLtF1nq/JpjuDWBXiTECUV5Xip5025Ypq7xQwpPx2bUp/+3oshXgyAVjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908508; c=relaxed/simple;
-	bh=t0g2+Sh36IZt1BtuSgL5MVZFAtcQ9MDN0y2huZBVdHM=;
+	s=arc-20240116; t=1713908509; c=relaxed/simple;
+	bh=xnRvX7HOn618nWbRmW5jqDDF1xWyfMWAReY/enHeFu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nhLTsIAGenwyg3AA9fjFsl4rVFX7bp+Ttqg8jxRd16PZG3RTFaJVp2CdE5U/r1MSBsaIO68624FsRBx8Yk5e1iSiV7t9yPJQ4GxHtJq39uEZKQ5fHBk/J1Cgjik7Axd4sbEl4NJ6D4rNULXJItHbAVh2qTWTCsGuTTFmzbKBG1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UU5OuED+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZc7mk5DMFkLFTeYgrm1M3fNUnHz11tjsFNF4f8vT4/ogiTTpkLCc/p3M78fZe8htJke+sUYe7RfX6AYlYnBzm4b0ixEEgOMnwvFLvhNb1keZ61zBQG8kf1+9u2rLgzkpxvCxLP/+vwL0kZeHa4zXztWT9OsUbxVelY3FivRHPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6BK+ZH4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UU5OuED+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC59BC116B1;
-	Tue, 23 Apr 2024 21:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6BK+ZH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C533C32786;
+	Tue, 23 Apr 2024 21:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908508;
-	bh=t0g2+Sh36IZt1BtuSgL5MVZFAtcQ9MDN0y2huZBVdHM=;
+	s=korg; t=1713908509;
+	bh=xnRvX7HOn618nWbRmW5jqDDF1xWyfMWAReY/enHeFu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UU5OuED+TLCz1+4u8eiuLGvPmxpD96bP0oqVb6GXg8TBnsNIgWpLRzkAiwE4Ner1/
-	 eW0rYyw5boJ451V+xGyvS3dy/ro6NRP6swx3NclDV+RWP65pjRk13oQIqryOXp36ka
-	 MPBcomjt9vxIf3OyWJ7ANQk4OPzSgKUDhtLx5944=
+	b=z6BK+ZH4PTFdKKZb7gTjRbCYpl9HNFJYs1BHnRlOGQFGNrDRDG9nbVyezXh+bWHME
+	 o2ZF0uwZuq+lE32NFUt1BxiM/Rvd+xNmZlfr7htH9YjcuRCbt8wy8XLsveG/3lOh2q
+	 WR68gDGlAMVUq88MU3naxfA8TGViDZGG0+pBpEc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Ai Chao <aichao@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.8 092/158] ALSA: hda/realtek: Add quirks for Huawei Matebook D14 NBLB-WAX9N
-Date: Tue, 23 Apr 2024 14:38:34 -0700
-Message-ID: <20240423213858.944980722@linuxfoundation.org>
+Subject: [PATCH 6.8 093/158] ALSA: hda/realtek - Enable audio jacks of Haier Boyue G42 with ALC269VC
+Date: Tue, 23 Apr 2024 14:38:35 -0700
+Message-ID: <20240423213858.977739528@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -50,19 +50,17 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab@kernel.org>
+From: Ai Chao <aichao@kylinos.cn>
 
-commit 7caf3daaaf0436fe370834c72c667a97d3671d1a upstream.
+commit 7ee5faad0f8c3ad86c8cfc2f6aac91d2ba29790f upstream.
 
-The headset mic requires a fixup to be properly detected/used.
+The Haier Boyue G42 with ALC269VC cannot detect the MIC of headset,
+the line out and internal speaker until
+ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS quirk applied.
 
-As a reference, this specific model from 2021 reports
-the following devices:
-	https://alsa-project.org/db/?f=1a5ddeb0b151db8fe051407f5bb1c075b7dd3e4a
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Ai Chao <aichao@kylinos.cn>
 Cc: <stable@vger.kernel.org>
-Message-ID: <b92a9e49fb504eec8416bcc6882a52de89450102.1713370457.git.mchehab@kernel.org>
+Message-ID: <20240419082159.476879-1-aichao@kylinos.cn>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -71,13 +69,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -10215,6 +10215,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1462, 0xb120, "MSI Cubi MS-B120", ALC283_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1462, 0xb171, "Cubi N 8GL (MS-B171)", ALC283_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x152d, 0x1082, "Quanta NL3", ALC269_FIXUP_LIFEBOOK),
-+	SND_PCI_QUIRK(0x152d, 0x1262, "Huawei NBLB-WAX9N", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1558, 0x0353, "Clevo V35[05]SN[CDE]Q", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x1323, "Clevo N130ZU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x1325, "Clevo N15[01][CW]U", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+@@ -10444,6 +10444,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1d05, 0x115c, "TongFang GMxTGxx", ALC269_FIXUP_NO_SHUTUP),
+ 	SND_PCI_QUIRK(0x1d05, 0x121b, "TongFang GMxAGxx", ALC269_FIXUP_NO_SHUTUP),
+ 	SND_PCI_QUIRK(0x1d05, 0x1387, "TongFang GMxIXxx", ALC2XX_FIXUP_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1d17, 0x3288, "Haier Boyue G42", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
+ 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
 
 
