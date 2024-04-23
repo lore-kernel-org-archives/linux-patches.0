@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DB920B3E;
-	Tue, 23 Apr 2024 21:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D2F20B3E;
+	Tue, 23 Apr 2024 21:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908487; cv=none; b=cNar6ArCYBjWswzyX/Q1WV5wBb079fDpdmQjeLlvUOuhOzxPnP3BlyahzoCskxqJxbUxH7lvA0qAaNXW4xFy10op7X+2TOsEi/60tewNHRh1bOljhXK+ODeU8ADa9Fn3SH85iS2/nTBmAcZKIJ9sF2oMzcIDNAUD5gUL4rZt1T8=
+	t=1713908488; cv=none; b=jdXkJ0LzuN+fCWwmG50s8K2UPoaVIxuK2kDnbMHrZsVmj8nre7fy0Rq9orVOXkngwf+Y8T3/ruShVqMzzg+k3e+BW6miXDl5piv2tBhZ2WsOJOz7cN7A2bKyFqzJRpE2n977NXbrjIaPBLRr1xxfX7X1byL1AUvxZU6wndeLxUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908487; c=relaxed/simple;
-	bh=VYEBvN8nFOgyDJa3It+yXPpaK9SEG2+pxJjU3c/uD7k=;
+	s=arc-20240116; t=1713908488; c=relaxed/simple;
+	bh=tRikLRhXC6175zRBhXqULWPV/8fdp0phynfcTrjUpf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3n4r3wFPBuj18zS+xenUw0y1dojYZatyMIbjUO5BOU8cuFPKnc0ShwD3rJY9SP4gXKUkdr1BckFCynz60JBEuBvlVKvyDTAqyw5y+1e5rxK+1JWPwFzXe19hsf5pQPy6dudNzrCeklbXB9RHNzbJ/pnoHj1j/GPHL3V2McTWxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6Wz5WBv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aQfWZIdy96PDqPqV+7yyJ3IvmvH6cMSEt8nyCboxMoYaFcoPuP7K6rBBRLY+QHIJprAFdPrNBYIBLlkLmo91iM6HhINCDcZQI3CMHhWL8OpdbnDEIgv3JYi6Nnyz48oeGdn5DljMVnipc4n8QarqI7ccIOpyX/MivHBqXUx+GB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fYHohzfq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6Wz5WBv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF68C116B1;
-	Tue, 23 Apr 2024 21:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fYHohzfq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DCBC32782;
+	Tue, 23 Apr 2024 21:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908487;
-	bh=VYEBvN8nFOgyDJa3It+yXPpaK9SEG2+pxJjU3c/uD7k=;
+	s=korg; t=1713908488;
+	bh=tRikLRhXC6175zRBhXqULWPV/8fdp0phynfcTrjUpf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o6Wz5WBvvKmTgKDnWs8Rg0OXGka/mtKyV9gimBYu2EEDoOWYz695ezORKRYpAsKs5
-	 5lIiJg7iioOwCjtPfPRMOQOvhY6OIaiw4euOp8Udcbdfqm5+4apdPH+8m8os7roMfa
-	 XEnF1C1NX6MERmsZOD+3zg1jAXhFlNJG5d2+CKbQ=
+	b=fYHohzfqUzyHvI84PBMsT+ahEnr0+APHHGZbyQWSrw9H73pWd9knOVRTcH30c9X3Z
+	 AEhkeUPuZ3iH2s6PyHTCSHaWmnGZTmgKd0I8Tsbn0Vatwx2zsQo32lDPhk/Z8dizPa
+	 EWEXFcu7G4ihWLLGj24z6S4PBLsQcihC+aBTZV5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Schuyler Patton <spatton@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 053/158] net: ethernet: ti: am65-cpsw-nuss: cleanup DMA Channels before using them
-Date: Tue, 23 Apr 2024 14:37:55 -0700
-Message-ID: <20240423213857.657580029@linuxfoundation.org>
+Subject: [PATCH 6.8 062/158] iommufd: Add missing IOMMUFD_DRIVER kconfig for the selftest
+Date: Tue, 23 Apr 2024 14:38:04 -0700
+Message-ID: <20240423213857.976896332@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -53,63 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit c24cd679b075b0e953ea167b0aa2b2d59e4eba7f ]
+[ Upstream commit 8541323285994528ad5be2c1bdc759e6c83b936e ]
 
-The TX and RX DMA Channels used by the driver to exchange data with CPSW
-are not guaranteed to be in a clean state during driver initialization.
-The Bootloader could have used the same DMA Channels without cleaning them
-up in the event of failure. Thus, reset and disable the DMA Channels to
-ensure that they are in a clean state before using them.
+Some kconfigs don't automatically include this symbol which results in sub
+functions for some of the dirty tracking related things that are
+non-functional. Thus the test suite will fail. select IOMMUFD_DRIVER in
+the IOMMUFD_TEST kconfig to fix it.
 
-Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
-Reported-by: Schuyler Patton <spatton@ti.com>
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/20240417095425.2253876-1-s-vadapalli@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a9af47e382a4 ("iommufd/selftest: Test IOMMU_HWPT_GET_DIRTY_BITMAP")
+Link: https://lore.kernel.org/r/20240327182050.GA1363414@ziepe.ca
+Tested-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/iommu/iommufd/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 2939a21ca74f3..1d00e21808c1c 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -2793,6 +2793,8 @@ static void am65_cpsw_unregister_devlink(struct am65_cpsw_common *common)
- 
- static int am65_cpsw_nuss_register_ndevs(struct am65_cpsw_common *common)
- {
-+	struct am65_cpsw_rx_chn *rx_chan = &common->rx_chns;
-+	struct am65_cpsw_tx_chn *tx_chan = common->tx_chns;
- 	struct device *dev = common->dev;
- 	struct am65_cpsw_port *port;
- 	int ret = 0, i;
-@@ -2805,6 +2807,22 @@ static int am65_cpsw_nuss_register_ndevs(struct am65_cpsw_common *common)
- 	if (ret)
- 		return ret;
- 
-+	/* The DMA Channels are not guaranteed to be in a clean state.
-+	 * Reset and disable them to ensure that they are back to the
-+	 * clean state and ready to be used.
-+	 */
-+	for (i = 0; i < common->tx_ch_num; i++) {
-+		k3_udma_glue_reset_tx_chn(tx_chan[i].tx_chn, &tx_chan[i],
-+					  am65_cpsw_nuss_tx_cleanup);
-+		k3_udma_glue_disable_tx_chn(tx_chan[i].tx_chn);
-+	}
-+
-+	for (i = 0; i < AM65_CPSW_MAX_RX_FLOWS; i++)
-+		k3_udma_glue_reset_rx_chn(rx_chan->rx_chn, i, rx_chan,
-+					  am65_cpsw_nuss_rx_cleanup, !!i);
-+
-+	k3_udma_glue_disable_rx_chn(rx_chan->rx_chn);
-+
- 	ret = am65_cpsw_nuss_register_devlink(common);
- 	if (ret)
- 		return ret;
+diff --git a/drivers/iommu/iommufd/Kconfig b/drivers/iommu/iommufd/Kconfig
+index 99d4b075df49e..76656fe0470d7 100644
+--- a/drivers/iommu/iommufd/Kconfig
++++ b/drivers/iommu/iommufd/Kconfig
+@@ -37,6 +37,7 @@ config IOMMUFD_TEST
+ 	depends on DEBUG_KERNEL
+ 	depends on FAULT_INJECTION
+ 	depends on RUNTIME_TESTING_MENU
++	select IOMMUFD_DRIVER
+ 	default n
+ 	help
+ 	  This is dangerous, do not enable unless running
 -- 
 2.43.0
 
