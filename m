@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B26085274;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D857C143C5F;
 	Tue, 23 Apr 2024 21:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908508; cv=none; b=YUp5UdjHuYU+BudhlW8pvR5f3wsFzpBCqv7drAun5c2dhdEdR3ZOsph7FLD4p1ZTUuKKQ6n3D1+4hGaxhfsxvVsW02ykkEDXoF72tVbYfJVrY8ycvM86pTRirtoc0fqcxQfYrqQ5z/WjRu6pIL4UOH1JrirtdETdZfZCkSK43cQ=
+	t=1713908508; cv=none; b=dlRmBX2pg+zjU4ld+v9rMTHn8L+bKsgKT2zAGZZ3kualMhDW8zHLmUD9xvvMtUyH2XYwDpQONvenqpD5dk9DxJBajvy8R1h0l4jGqdU1e0dBFuf7zoy0LFPZ8c4iNuVepaJ+jyDkZON0NBUlK/cAsFmBqbCvZStR0ynMvcYOVjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908508; c=relaxed/simple;
-	bh=bZ9PiPN5aV/VTmDPUoxPI5oG2EFbu5yglpKhO0HnYz4=;
+	bh=t0g2+Sh36IZt1BtuSgL5MVZFAtcQ9MDN0y2huZBVdHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aNk7HayV6DzqTM/ucmOx4jofBRovBebdI3lQGT/mVkqt9iE/Xqo9jUdTnvCC3kzRuIlk2b7eFmmQ5B+8KDVCz9em3HBuoduTq7vv+Hakxl8I5kP0g/1MCQqij9dsEJjWiTpdQUvkAeSskSyaqkTzie0knz3Iqrb3yY+OLHGvt04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6+24Ll3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nhLTsIAGenwyg3AA9fjFsl4rVFX7bp+Ttqg8jxRd16PZG3RTFaJVp2CdE5U/r1MSBsaIO68624FsRBx8Yk5e1iSiV7t9yPJQ4GxHtJq39uEZKQ5fHBk/J1Cgjik7Axd4sbEl4NJ6D4rNULXJItHbAVh2qTWTCsGuTTFmzbKBG1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UU5OuED+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6+24Ll3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08230C32783;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UU5OuED+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC59BC116B1;
 	Tue, 23 Apr 2024 21:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908508;
-	bh=bZ9PiPN5aV/VTmDPUoxPI5oG2EFbu5yglpKhO0HnYz4=;
+	bh=t0g2+Sh36IZt1BtuSgL5MVZFAtcQ9MDN0y2huZBVdHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S6+24Ll3ukWEoxMzbS8O45AGb6ldl37YLVtTN0MLKchkkkON+Iax4CXX6VtGhNfti
-	 z5XK56rsDif6ELTYNAdSLiQ8vom3tjQ94K70HZObGRvl619S66yQwgjWKqNexxqGlx
-	 U0ZeaD73eVPICeW8s0Z4zFoimD5sFnRvd3Od0lYs=
+	b=UU5OuED+TLCz1+4u8eiuLGvPmxpD96bP0oqVb6GXg8TBnsNIgWpLRzkAiwE4Ner1/
+	 eW0rYyw5boJ451V+xGyvS3dy/ro6NRP6swx3NclDV+RWP65pjRk13oQIqryOXp36ka
+	 MPBcomjt9vxIf3OyWJ7ANQk4OPzSgKUDhtLx5944=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Shih <sam.shih@mediatek.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 083/158] clk: mediatek: mt7988-infracfg: fix clocks for 2nd PCIe port
-Date: Tue, 23 Apr 2024 14:38:25 -0700
-Message-ID: <20240423213858.644701202@linuxfoundation.org>
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.8 092/158] ALSA: hda/realtek: Add quirks for Huawei Matebook D14 NBLB-WAX9N
+Date: Tue, 23 Apr 2024 14:38:34 -0700
+Message-ID: <20240423213858.944980722@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -53,45 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Mauro Carvalho Chehab <mchehab@kernel.org>
 
-[ Upstream commit d3e8a91a848a5941e3c31ecebd6b2612b37e01a6 ]
+commit 7caf3daaaf0436fe370834c72c667a97d3671d1a upstream.
 
-Due to what seems to be an undocumented oddity in MediaTek's MT7988
-SoC design the CLK_INFRA_PCIE_PERI_26M_CK_P2 clock requires
-CLK_INFRA_PCIE_PERI_26M_CK_P3 to be enabled.
+The headset mic requires a fixup to be properly detected/used.
 
-This currently leads to PCIe port 2 not working in Linux.
+As a reference, this specific model from 2021 reports
+the following devices:
+	https://alsa-project.org/db/?f=1a5ddeb0b151db8fe051407f5bb1c075b7dd3e4a
 
-Reflect the apparent relationship in the clk driver to make sure PCIe
-port 2 of the MT7988 SoC works.
-
-Fixes: 4b4719437d85f ("clk: mediatek: add drivers for MT7988 SoC")
-Suggested-by: Sam Shih <sam.shih@mediatek.com>
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://lore.kernel.org/r/1da2506a51f970706bf4ec9509dd04e0471065e5.1710367453.git.daniel@makrotopia.org
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: <stable@vger.kernel.org>
+Message-ID: <b92a9e49fb504eec8416bcc6882a52de89450102.1713370457.git.mchehab@kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/mediatek/clk-mt7988-infracfg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/mediatek/clk-mt7988-infracfg.c b/drivers/clk/mediatek/clk-mt7988-infracfg.c
-index 8011ef278bea3..df02997c6b7c9 100644
---- a/drivers/clk/mediatek/clk-mt7988-infracfg.c
-+++ b/drivers/clk/mediatek/clk-mt7988-infracfg.c
-@@ -152,7 +152,7 @@ static const struct mtk_gate infra_clks[] = {
- 	GATE_INFRA0(CLK_INFRA_PCIE_PERI_26M_CK_P1, "infra_pcie_peri_ck_26m_ck_p1",
- 		    "csw_infra_f26m_sel", 8),
- 	GATE_INFRA0(CLK_INFRA_PCIE_PERI_26M_CK_P2, "infra_pcie_peri_ck_26m_ck_p2",
--		    "csw_infra_f26m_sel", 9),
-+		    "infra_pcie_peri_ck_26m_ck_p3", 9),
- 	GATE_INFRA0(CLK_INFRA_PCIE_PERI_26M_CK_P3, "infra_pcie_peri_ck_26m_ck_p3",
- 		    "csw_infra_f26m_sel", 10),
- 	/* INFRA1 */
--- 
-2.43.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10215,6 +10215,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1462, 0xb120, "MSI Cubi MS-B120", ALC283_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1462, 0xb171, "Cubi N 8GL (MS-B171)", ALC283_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x152d, 0x1082, "Quanta NL3", ALC269_FIXUP_LIFEBOOK),
++	SND_PCI_QUIRK(0x152d, 0x1262, "Huawei NBLB-WAX9N", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1558, 0x0353, "Clevo V35[05]SN[CDE]Q", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x1323, "Clevo N130ZU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x1325, "Clevo N15[01][CW]U", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
 
 
