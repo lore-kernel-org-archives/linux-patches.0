@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F308E1420BE;
-	Tue, 23 Apr 2024 21:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B444E1420BE;
+	Tue, 23 Apr 2024 21:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908583; cv=none; b=G3LAs2KvLoraG7GttHUd1krjtuYyAMagYCE64BK+pUvGyo4iM9ZgCabsj/g/DP0uftOnaEITNEnR54IBewkkye10QV0Jxy27/Z8nyLcs84xnapww4g1mWDbG4ep8CJ+UdX+PUkV5QfaFj2/iQCyUWW7p+KTJdpeND32PzY5XnZM=
+	t=1713908583; cv=none; b=H18iJlqDsza0vg9VI4+q+ia0uMh1peu2iM40LGV/rp12m0bKHshjwfkdNwtibBOImFCNsxUV+j8A1SF1d8K3kneJA2hUOZmk/Cm07j3PEDvpxIXH9onP5UQ+GRIPCh7CFRra8rTRgwV+cMdcthixrQ1c/KRahravHJDkYcmPR24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908583; c=relaxed/simple;
-	bh=fMjNMjYn27v0uaw0c/XDyj88Ovc7IODYOU96uyY0hbo=;
+	bh=HuAvBjnmsFL491rH6v6nu0QyKjvzLdMAyhB7sISQ3MI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uXYpEtM64Z6Mn904gEMRRREQtFg+TEuMgv/HLhGGWQyptzw+nnECqiLHPulLTRQfz+l1pabdFiM13pd7q6GCu3jxvukCzmbyYrxmaOCuFX40W2P/tD5/SQqk/iOamA6yEhe5nK7MvEf82+AhoVB6krOoOPjKlTDrd0ZO2JUp4KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LRF2QHew; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OZq3U3Bj0f2EFX/kr5f3kpE07CegOqAG3P1jdf5f+lqQTpSJazuTWoHWPqizkbe5FQZR/WKY3Ra/IdAMouq7wuVEG8DJ94d35nFrDblHpeIdPvqyYSp4s897ozqOPlHddTadExaBsFCJM5sodLXxGAZfcc+wIHnUNK6d4sSgn28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ez4mhVMN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LRF2QHew"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F39C32783;
-	Tue, 23 Apr 2024 21:43:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ez4mhVMN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC0AC3277B;
+	Tue, 23 Apr 2024 21:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908582;
-	bh=fMjNMjYn27v0uaw0c/XDyj88Ovc7IODYOU96uyY0hbo=;
+	s=korg; t=1713908583;
+	bh=HuAvBjnmsFL491rH6v6nu0QyKjvzLdMAyhB7sISQ3MI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LRF2QHewBFbkOe/xczk5UCyz/kON9tlcKEBI3rnkOe+ny7A1JoJyCZJx9uVLk26Uk
-	 vxPQQJlNLTDUfHTDuPhZ1M7DTTzoRXPO3QqUGAUTan8RMS8gKohQUmKg+NtnmEClky
-	 nRa8cEugQTcEl5X3W4ONvNPCUl78C43ca3YV5Mj0=
+	b=Ez4mhVMNedhLlAtzezO4w977DduW90P0o0vMoylknvmYRsYQMEfR2WVWHGnfByLr/
+	 PMQu16ppgSvtIgrmsDUwdaqib0TFqk99qFjbS4p5kLlM57uS9pVeubTrbpZbuP2TcH
+	 V6bEM+qpS3FlqeDSHgRvpZYg7+9gWFY1qdmD0FIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/158] netfilter: flowtable: incorrect pppoe tuple
-Date: Tue, 23 Apr 2024 14:37:55 -0700
-Message-ID: <20240423213856.984782518@linuxfoundation.org>
+Subject: [PATCH 6.6 039/158] af_unix: Call manage_oob() for every skb in unix_stream_read_generic().
+Date: Tue, 23 Apr 2024 14:37:56 -0700
+Message-ID: <20240423213857.017365087@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -50,35 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 6db5dc7b351b9569940cd1cf445e237c42cd6d27 ]
+[ Upstream commit 283454c8a123072e5c386a5a2b5fc576aa455b6f ]
 
-pppoe traffic reaching ingress path does not match the flowtable entry
-because the pppoe header is expected to be at the network header offset.
-This bug causes a mismatch in the flow table lookup, so pppoe packets
-enter the classical forwarding path.
+When we call recv() for AF_UNIX socket, we first peek one skb and
+calls manage_oob() to check if the skb is sent with MSG_OOB.
 
-Fixes: 72efd585f714 ("netfilter: flowtable: add pppoe support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+However, when we fetch the next (and the following) skb, manage_oob()
+is not called now, leading a wrong behaviour.
+
+Let's say a socket send()s "hello" with MSG_OOB and the peer tries
+to recv() 5 bytes with MSG_PEEK.  Here, we should get only "hell"
+without 'o', but actually not:
+
+  >>> from socket import *
+  >>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
+  >>> c1.send(b'hello', MSG_OOB)
+  5
+  >>> c2.recv(5, MSG_PEEK)
+  b'hello'
+
+The first skb fills 4 bytes, and the next skb is peeked but not
+properly checked by manage_oob().
+
+Let's move up the again label to call manage_oob() for evry skb.
+
+With this patch:
+
+  >>> from socket import *
+  >>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
+  >>> c1.send(b'hello', MSG_OOB)
+  5
+  >>> c2.recv(5, MSG_PEEK)
+  b'hell'
+
+Fixes: 314001f0bf92 ("af_unix: Add OOB support")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240410171016.7621-2-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_ip.c | 2 +-
+ net/unix/af_unix.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_flow_table_ip.c b/net/netfilter/nf_flow_table_ip.c
-index 9e9e105052dae..5383bed3d3e00 100644
---- a/net/netfilter/nf_flow_table_ip.c
-+++ b/net/netfilter/nf_flow_table_ip.c
-@@ -157,7 +157,7 @@ static void nf_flow_tuple_encap(struct sk_buff *skb,
- 		tuple->encap[i].proto = skb->protocol;
- 		break;
- 	case htons(ETH_P_PPP_SES):
--		phdr = (struct pppoe_hdr *)skb_mac_header(skb);
-+		phdr = (struct pppoe_hdr *)skb_network_header(skb);
- 		tuple->encap[i].id = ntohs(phdr->sid);
- 		tuple->encap[i].proto = skb->protocol;
- 		break;
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 918724844231e..1340cb86f104c 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2665,6 +2665,7 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
+ 		last = skb = skb_peek(&sk->sk_receive_queue);
+ 		last_len = last ? last->len : 0;
+ 
++again:
+ #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
+ 		if (skb) {
+ 			skb = manage_oob(skb, sk, flags, copied);
+@@ -2676,7 +2677,6 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
+ 			}
+ 		}
+ #endif
+-again:
+ 		if (skb == NULL) {
+ 			if (copied >= target)
+ 				goto unlock;
 -- 
 2.43.0
 
