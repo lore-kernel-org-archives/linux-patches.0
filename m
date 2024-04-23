@@ -1,99 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3331014D28F;
-	Tue, 23 Apr 2024 21:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFB41C6BE;
+	Tue, 23 Apr 2024 23:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908816; cv=none; b=UlGOb2kCeCHvKxga7AvAUor5NxmwlKzRi4YN1PEQwYsZHaxeS7vZmdBI1bDwdF7OxFHFyN57kQX7f8xmgdy7gb7c2qI2WQQLmUHrLZbn3G+JMHcPpNmWoGx3BZpVcIMBeVfcjqh81KUtxZTnHmL5ZFG/mRCPOZAGRfyjA+ucPIM=
+	t=1713913205; cv=none; b=HCALKylzOHNRowoSuoXqDRXBJLhQjKUPIXqHSQJSNYxpweyTcNoauhmf9tYeYiDKOlBsZES6TLUnFRTqR1xPEdMdwazi0Fit3nbQWzneWKtk6+DyxqMCWpyDz1jKmH9dYx8He3mWTVgQ1M7ETCHiY/zKM/IE6SkWcw8gJisuxqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908816; c=relaxed/simple;
-	bh=+IKtsH5EfPxX4eVsxn0wDwW6YS6M7MhMgBMKCCEEXf4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lSngBKhBAdeSlWIAGs3JaqkYsvUq1qhFooLxC1NeoGS4kTt5JWXpvYsNNp+Hlu40Nl+tIb8IkVCBCHDMRXfTk68VMWCx8QAnl6URWU2cCiaKboFu82lNJjJtPMVKm5PHRRLQtb9AombVUEr0uIxEeWf3RBv6hWRtSMGDZObHEvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zerYNdlL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713913205; c=relaxed/simple;
+	bh=3mvO4GVsprVt1iFW3+idrrVMdXMu8WnVO3kCE4KvApQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=JwQKLuYiAjkg5pRNVwDNo+WnzUSS/OHUD69NjtUoZO3ZVR+rnqOwDqb/D0icu/TC65UpTIowXWM8gBd144nKMABi241yfAXSaCvCkgbvypUmvTRxvX9lGs50/MPoC7MvLECc4GLxsyJMmhXLysFCqL7lNzP6KCyHEV5Po3N5ozs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ADsHxsE8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zerYNdlL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068B4C116B1;
-	Tue, 23 Apr 2024 21:46:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908816;
-	bh=+IKtsH5EfPxX4eVsxn0wDwW6YS6M7MhMgBMKCCEEXf4=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ADsHxsE8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5CAC116B1;
+	Tue, 23 Apr 2024 23:00:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713913204;
+	bh=3mvO4GVsprVt1iFW3+idrrVMdXMu8WnVO3kCE4KvApQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zerYNdlLvOji5kE3rWEl2HE3Z6S1aWDU8jLKsZqTczxfeiVHh3cqvjkCu+bV/Bny2
-	 L1BGsLe+2vlm5E/TIG8mYH77pB4JgEYvnPDjRfS5Zh/zO0f3T6A6L9stmga+ExRrkA
-	 p3K2dxa6Wc97bnaKpPxzxADboAXSKW0br6Ri0DW4=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	b=ADsHxsE8+WcFvZ3Dl7VmoJOkqCxmMEANfRaC0doXxVqBiUDaAsKGTsGlcJ7P4yhy0
+	 GfE+Cn8Ymn+2q5fLKZaL91QHvxmx1o3VEq3ZBrj/I3e1Iv3tDk0VNaW56H1NHpb2d7
+	 HaTsade2bNmSgwKcciZ0t2TcwwYpuTqwjhIyaFe9u+dFh09GTDLRmuLrC1Hiw+gwct
+	 KxTbakz7a4ZDqTQYDIO078LU7H8m/xdOi85xHRwhjQMtexfQs8LiOQOQ8QXd9ebHgA
+	 4WNSVomgyaT3DPt3WdncoL0n5IZxYNGREzNhQ2RvwqoPW0/US4Un5dzt4EGxswTPVn
+	 zrWuv1XOcmCuw==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	": Aleksander Morgado" <aleksandermj@chromium.org>,
-	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.com>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>
-Subject: [PATCH 5.15 52/71] Revert "usb: cdc-wdm: close race between read and workqueue"
-Date: Tue, 23 Apr 2024 14:40:05 -0700
-Message-ID: <20240423213845.976246095@linuxfoundation.org>
-X-Mailer: git-send-email 2.44.0
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 5.15 00/71] 5.15.157-rc1 review
+Date: Tue, 23 Apr 2024 16:00:01 -0700
+Message-Id: <20240423230001.346377-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
-References: <20240423213844.122920086@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+Hello,
 
-------------------
+On Tue, 23 Apr 2024 14:39:13 -0700 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> This is the start of the stable review cycle for the 5.15.157 release.
+> There are 71 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 25 Apr 2024 21:38:28 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.157-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 
-commit 1607830dadeefc407e4956336d9fcd9e9defd810 upstream.
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-This reverts commit 339f83612f3a569b194680768b22bf113c26a29d.
+Tested-by: SeongJae Park <sj@kernel.org>
 
-It has been found to cause problems in a number of Chromebook devices,
-so revert the change until it can be brought back in a safe way.
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 70f39a25a6b8 ("Linux 5.15.157-rc1")
 
-Link: https://lore.kernel.org/r/385a3519-b45d-48c5-a6fd-a3fdb6bec92f@chromium.org
-Reported-by:: Aleksander Morgado <aleksandermj@chromium.org>
-Fixes: 339f83612f3a ("usb: cdc-wdm: close race between read and workqueue")
-Cc: stable <stable@kernel.org>
-Cc: Oliver Neukum <oneukum@suse.com>
-Cc: Bjørn Mork <bjorn@mork.no>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Thanks,
+SJ
+
+[...]
+
 ---
- drivers/usb/class/cdc-wdm.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/drivers/usb/class/cdc-wdm.c
-+++ b/drivers/usb/class/cdc-wdm.c
-@@ -485,7 +485,6 @@ out_free_mem:
- static int service_outstanding_interrupt(struct wdm_device *desc)
- {
- 	int rv = 0;
--	int used;
- 
- 	/* submit read urb only if the device is waiting for it */
- 	if (!desc->resp_count || !--desc->resp_count)
-@@ -500,10 +499,7 @@ static int service_outstanding_interrupt
- 		goto out;
- 	}
- 
--	used = test_and_set_bit(WDM_RESPONDING, &desc->flags);
--	if (used)
--		goto out;
--
-+	set_bit(WDM_RESPONDING, &desc->flags);
- 	spin_unlock_irq(&desc->iuspin);
- 	rv = usb_submit_urb(desc->response, GFP_KERNEL);
- 	spin_lock_irq(&desc->iuspin);
-
-
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
