@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01BC220B3E;
-	Tue, 23 Apr 2024 21:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50F220B3E;
+	Tue, 23 Apr 2024 21:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908540; cv=none; b=E5t082WC/fTOlhemboZ+BimozccNuQDiX2qItBIsDe42ypmW7q58I9du906yC7r2V0fNMyp6MCVi19MngVK8UmKvMC2b5fjPwGKsIOUlFRs1fxNovFhHBRO2AwBWcnz8jpVU8i5WeQMEIP/fmz5Fix75yaYg3/EE+QR+jz96sQE=
+	t=1713908540; cv=none; b=trZTMg4cjMMwNA4kNqbWihBRiYO5l9xo8sVIOpT4x2MgRaXICHQUwYDkE+amj1J96mr4psFhbUdv5Uy7x8spGXNSy+EyHQfYrGveg2D6bfL89xAa4jSg00bIpw3+4MRreEpIk2CFsOwaqR4trR3V1R1Trtw3MYiKE5b3Yeq+BFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908540; c=relaxed/simple;
-	bh=B1NDa9gK7d7i5n1qWCPYifrhGHh77f/UdZw1PnLqfus=;
+	bh=Y8adk3WgtCqy9su74nP70t3kbl6l3wjCebrmkAF80AI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mM8BccKlzweK4sdDkJmVh3d3qkhPsOrZ0UWj5fJmTcp9i831wsf0dTi9qCaIhrjO0nWU0RJd1Zpsx1J9zhdj2JH2PP2sC9u5bJzrUgrzbKawSN5NyVuDUG6RgwEUmmhCEDNjtlfAb5BKfyX4R+zF85EL0c6xejxJvVjZafBeVDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAOs+krq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GiG1YmPmpxTnf+4nKM9tZF66kOHW9JHhLrzSnWicODYI954coDFLi9CF7PF+TjGoeYaD5G+fa8B/38kjlw1zhjE1duJ2+NOErXynDWHw0cVAy/Qxj5I2M0Of0q/xzYhl1Rm4x/hmI8ju364cSIY+JhBzD9c3uWJnHgdp9ThJwB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KSpb4Knj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAOs+krq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D63C32783;
-	Tue, 23 Apr 2024 21:42:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KSpb4Knj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C21C3277B;
+	Tue, 23 Apr 2024 21:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908539;
-	bh=B1NDa9gK7d7i5n1qWCPYifrhGHh77f/UdZw1PnLqfus=;
+	s=korg; t=1713908540;
+	bh=Y8adk3WgtCqy9su74nP70t3kbl6l3wjCebrmkAF80AI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IAOs+krqzBH4vY6ce5PAcXALrCvrI81Y3rQIYEA40QKSYSVMwXZ8bp1HYrAH7DYlS
-	 ciQ0ESg/5Cpc4jwN2ofpZbfeqt8MaI0wjGml+FBGBg4Lo3g95Kqn2ZUXOE/LkGKHj1
-	 dKCBuNif07wWX6Z+L3K9ubmhOuO/7nnprPQUIl/k=
+	b=KSpb4KnjhXUCoO5KkvUjOUyQF8864oXRltzYwcY81U36/DuKPSzyze6z3USicC8iF
+	 J8ZcNtkaH1wMXgFf5pVmLomEBuzoI4218bRc776cC6ZbxbjzuvLE94jYOkvLjjvV1P
+	 oirTONMblDB13uOQ7aQiBdaeiW9FBimlcaMXPgx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Peter Xu <peterx@redhat.com>,
+	syzbot+b07c8ac8eee3d4d8440f@syzkaller.appspotmail.com,
 	David Hildenbrand <david@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.8 134/158] mm/madvise: make MADV_POPULATE_(READ|WRITE) handle VM_FAULT_RETRY properly
-Date: Tue, 23 Apr 2024 14:39:16 -0700
-Message-ID: <20240423213900.241801542@linuxfoundation.org>
+Subject: [PATCH 6.8 135/158] mm/userfaultfd: allow hugetlb change protection upon poison entry
+Date: Tue, 23 Apr 2024 14:39:17 -0700
+Message-ID: <20240423213900.272242357@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -54,234 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Peter Xu <peterx@redhat.com>
 
-commit 631426ba1d45a8672b177ee85ad4cabe760dd131 upstream.
+commit c5977c95dff182d6ee06f4d6f60bcb0284912969 upstream.
 
-Darrick reports that in some cases where pread() would fail with -EIO and
-mmap()+access would generate a SIGBUS signal, MADV_POPULATE_READ /
-MADV_POPULATE_WRITE will keep retrying forever and not fail with -EFAULT.
+After UFFDIO_POISON, there can be two kinds of hugetlb pte markers, either
+the POISON one or UFFD_WP one.
 
-While the madvise() call can be interrupted by a signal, this is not the
-desired behavior.  MADV_POPULATE_READ / MADV_POPULATE_WRITE should behave
-like page faults in that case: fail and not retry forever.
+Allow change protection to run on a poisoned marker just like !hugetlb
+cases, ignoring the marker irrelevant of the permission.
 
-A reproducer can be found at [1].
+Here the two bits are mutual exclusive.  For example, when install a
+poisoned entry it must not be UFFD_WP already (by checking pte_none()
+before such install).  And it also means if UFFD_WP is set there must have
+no POISON bit set.  It makes sense because UFFD_WP is a bit to reflect
+permission, and permissions do not apply if the pte is poisoned and
+destined to sigbus.
 
-The reason is that __get_user_pages(), as called by
-faultin_vma_page_range(), will not handle VM_FAULT_RETRY in a proper way:
-it will simply return 0 when VM_FAULT_RETRY happened, making
-madvise_populate()->faultin_vma_page_range() retry again and again, never
-setting FOLL_TRIED->FAULT_FLAG_TRIED for __get_user_pages().
+So here we simply check uffd_wp bit set first, do nothing otherwise.
 
-__get_user_pages_locked() does what we want, but duplicating that logic in
-faultin_vma_page_range() feels wrong.
+Attach the Fixes to UFFDIO_POISON work, as before that it should not be
+possible to have poison entry for hugetlb (e.g., hugetlb doesn't do swap,
+so no chance of swapin errors).
 
-So let's use __get_user_pages_locked() instead, that will detect
-VM_FAULT_RETRY and set FOLL_TRIED when retrying, making the fault handler
-return VM_FAULT_SIGBUS (VM_FAULT_ERROR) at some point, propagating -EFAULT
-from faultin_page() to __get_user_pages(), all the way to
-madvise_populate().
-
-But, there is an issue: __get_user_pages_locked() will end up re-taking
-the MM lock and then __get_user_pages() will do another VMA lookup.  In
-the meantime, the VMA layout could have changed and we'd fail with
-different error codes than we'd want to.
-
-As __get_user_pages() will currently do a new VMA lookup either way, let
-it do the VMA handling in a different way, controlled by a new
-FOLL_MADV_POPULATE flag, effectively moving these checks from
-madvise_populate() + faultin_page_range() in there.
-
-With this change, Darricks reproducer properly fails with -EFAULT, as
-documented for MADV_POPULATE_READ / MADV_POPULATE_WRITE.
-
-[1] https://lore.kernel.org/all/20240313171936.GN1927156@frogsfrogsfrogs/
-
-Link: https://lkml.kernel.org/r/20240314161300.382526-1-david@redhat.com
-Link: https://lkml.kernel.org/r/20240314161300.382526-2-david@redhat.com
-Fixes: 4ca9b3859dac ("mm/madvise: introduce MADV_POPULATE_(READ|WRITE) to prefault page tables")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reported-by: Darrick J. Wong <djwong@kernel.org>
-Closes: https://lore.kernel.org/all/20240311223815.GW1927156@frogsfrogsfrogs/
-Cc: Darrick J. Wong <djwong@kernel.org>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: <stable@vger.kernel.org>
+Link: https://lkml.kernel.org/r/20240405231920.1772199-1-peterx@redhat.com
+Link: https://lore.kernel.org/r/000000000000920d5e0615602dd1@google.com
+Fixes: fc71884a5f59 ("mm: userfaultfd: add new UFFDIO_POISON ioctl")
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Reported-by: syzbot+b07c8ac8eee3d4d8440f@syzkaller.appspotmail.com
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Axel Rasmussen <axelrasmussen@google.com>
+Cc: <stable@vger.kernel.org>	[6.6+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/gup.c      |   54 ++++++++++++++++++++++++++++++++----------------------
- mm/internal.h |   10 ++++++----
- mm/madvise.c  |   17 ++---------------
- 3 files changed, 40 insertions(+), 41 deletions(-)
+ mm/hugetlb.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -1206,6 +1206,22 @@ static long __get_user_pages(struct mm_s
- 
- 		/* first iteration or cross vma bound */
- 		if (!vma || start >= vma->vm_end) {
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -6943,9 +6943,13 @@ long hugetlb_change_protection(struct vm
+ 			if (!pte_same(pte, newpte))
+ 				set_huge_pte_at(mm, address, ptep, newpte, psize);
+ 		} else if (unlikely(is_pte_marker(pte))) {
+-			/* No other markers apply for now. */
+-			WARN_ON_ONCE(!pte_marker_uffd_wp(pte));
+-			if (uffd_wp_resolve)
 +			/*
-+			 * MADV_POPULATE_(READ|WRITE) wants to handle VMA
-+			 * lookups+error reporting differently.
++			 * Do nothing on a poison marker; page is
++			 * corrupted, permissons do not apply.  Here
++			 * pte_marker_uffd_wp()==true implies !poison
++			 * because they're mutual exclusive.
 +			 */
-+			if (gup_flags & FOLL_MADV_POPULATE) {
-+				vma = vma_lookup(mm, start);
-+				if (!vma) {
-+					ret = -ENOMEM;
-+					goto out;
-+				}
-+				if (check_vma_flags(vma, gup_flags)) {
-+					ret = -EINVAL;
-+					goto out;
-+				}
-+				goto retry;
-+			}
- 			vma = gup_vma_lookup(mm, start);
- 			if (!vma && in_gate_area(mm, start)) {
- 				ret = get_gate_page(mm, start & PAGE_MASK,
-@@ -1683,35 +1699,35 @@ long populate_vma_page_range(struct vm_a
- }
- 
- /*
-- * faultin_vma_page_range() - populate (prefault) page tables inside the
-- *			      given VMA range readable/writable
-+ * faultin_page_range() - populate (prefault) page tables inside the
-+ *			  given range readable/writable
-  *
-  * This takes care of mlocking the pages, too, if VM_LOCKED is set.
-  *
-- * @vma: target vma
-+ * @mm: the mm to populate page tables in
-  * @start: start address
-  * @end: end address
-  * @write: whether to prefault readable or writable
-  * @locked: whether the mmap_lock is still held
-  *
-- * Returns either number of processed pages in the vma, or a negative error
-- * code on error (see __get_user_pages()).
-+ * Returns either number of processed pages in the MM, or a negative error
-+ * code on error (see __get_user_pages()). Note that this function reports
-+ * errors related to VMAs, such as incompatible mappings, as expected by
-+ * MADV_POPULATE_(READ|WRITE).
-  *
-- * vma->vm_mm->mmap_lock must be held. The range must be page-aligned and
-- * covered by the VMA. If it's released, *@locked will be set to 0.
-+ * The range must be page-aligned.
-+ *
-+ * mm->mmap_lock must be held. If it's released, *@locked will be set to 0.
-  */
--long faultin_vma_page_range(struct vm_area_struct *vma, unsigned long start,
--			    unsigned long end, bool write, int *locked)
-+long faultin_page_range(struct mm_struct *mm, unsigned long start,
-+			unsigned long end, bool write, int *locked)
- {
--	struct mm_struct *mm = vma->vm_mm;
- 	unsigned long nr_pages = (end - start) / PAGE_SIZE;
- 	int gup_flags;
- 	long ret;
- 
- 	VM_BUG_ON(!PAGE_ALIGNED(start));
- 	VM_BUG_ON(!PAGE_ALIGNED(end));
--	VM_BUG_ON_VMA(start < vma->vm_start, vma);
--	VM_BUG_ON_VMA(end > vma->vm_end, vma);
- 	mmap_assert_locked(mm);
- 
- 	/*
-@@ -1723,19 +1739,13 @@ long faultin_vma_page_range(struct vm_ar
- 	 *		  a poisoned page.
- 	 * !FOLL_FORCE: Require proper access permissions.
- 	 */
--	gup_flags = FOLL_TOUCH | FOLL_HWPOISON | FOLL_UNLOCKABLE;
-+	gup_flags = FOLL_TOUCH | FOLL_HWPOISON | FOLL_UNLOCKABLE |
-+		    FOLL_MADV_POPULATE;
- 	if (write)
- 		gup_flags |= FOLL_WRITE;
- 
--	/*
--	 * We want to report -EINVAL instead of -EFAULT for any permission
--	 * problems or incompatible mappings.
--	 */
--	if (check_vma_flags(vma, gup_flags))
--		return -EINVAL;
--
--	ret = __get_user_pages(mm, start, nr_pages, gup_flags,
--			       NULL, locked);
-+	ret = __get_user_pages_locked(mm, start, nr_pages, NULL, locked,
-+				      gup_flags);
- 	lru_add_drain();
- 	return ret;
- }
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -590,9 +590,8 @@ struct anon_vma *folio_anon_vma(struct f
- void unmap_mapping_folio(struct folio *folio);
- extern long populate_vma_page_range(struct vm_area_struct *vma,
- 		unsigned long start, unsigned long end, int *locked);
--extern long faultin_vma_page_range(struct vm_area_struct *vma,
--				   unsigned long start, unsigned long end,
--				   bool write, int *locked);
-+extern long faultin_page_range(struct mm_struct *mm, unsigned long start,
-+		unsigned long end, bool write, int *locked);
- extern bool mlock_future_ok(struct mm_struct *mm, unsigned long flags,
- 			       unsigned long bytes);
- 
-@@ -1031,10 +1030,13 @@ enum {
- 	FOLL_FAST_ONLY = 1 << 20,
- 	/* allow unlocking the mmap lock */
- 	FOLL_UNLOCKABLE = 1 << 21,
-+	/* VMA lookup+checks compatible with MADV_POPULATE_(READ|WRITE) */
-+	FOLL_MADV_POPULATE = 1 << 22,
- };
- 
- #define INTERNAL_GUP_FLAGS (FOLL_TOUCH | FOLL_TRIED | FOLL_REMOTE | FOLL_PIN | \
--			    FOLL_FAST_ONLY | FOLL_UNLOCKABLE)
-+			    FOLL_FAST_ONLY | FOLL_UNLOCKABLE | \
-+			    FOLL_MADV_POPULATE)
- 
- /*
-  * Indicates for which pages that are write-protected in the page table,
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -908,27 +908,14 @@ static long madvise_populate(struct vm_a
- {
- 	const bool write = behavior == MADV_POPULATE_WRITE;
- 	struct mm_struct *mm = vma->vm_mm;
--	unsigned long tmp_end;
- 	int locked = 1;
- 	long pages;
- 
- 	*prev = vma;
- 
- 	while (start < end) {
--		/*
--		 * We might have temporarily dropped the lock. For example,
--		 * our VMA might have been split.
--		 */
--		if (!vma || start >= vma->vm_end) {
--			vma = vma_lookup(mm, start);
--			if (!vma)
--				return -ENOMEM;
--		}
--
--		tmp_end = min_t(unsigned long, end, vma->vm_end);
- 		/* Populate (prefault) page tables readable/writable. */
--		pages = faultin_vma_page_range(vma, start, tmp_end, write,
--					       &locked);
-+		pages = faultin_page_range(mm, start, end, write, &locked);
- 		if (!locked) {
- 			mmap_read_lock(mm);
- 			locked = 1;
-@@ -949,7 +936,7 @@ static long madvise_populate(struct vm_a
- 				pr_warn_once("%s: unhandled return value: %ld\n",
- 					     __func__, pages);
- 				fallthrough;
--			case -ENOMEM:
-+			case -ENOMEM: /* No VMA or out of memory. */
- 				return -ENOMEM;
- 			}
- 		}
++			if (pte_marker_uffd_wp(pte) && uffd_wp_resolve)
+ 				/* Safe to modify directly (non-present->none). */
+ 				huge_pte_clear(mm, address, ptep, psize);
+ 		} else if (!huge_pte_none(pte)) {
 
 
