@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05D5148318;
-	Tue, 23 Apr 2024 21:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98973148318;
+	Tue, 23 Apr 2024 21:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908748; cv=none; b=cMeEgT5yO5E4tv84Yk6XmFhqAEYF0GsGa3QA45kYEW4dKCBeR92OQDbSJV12h/eLlB8Sf3az/B3fSBQb0C8DiZS0JzJ2iUutBe8CrmzKWkNlPPaxOiydCB0B75q3zS4bvpceGLBlZtls/ArjcM72u80XI3t90FFrHetc7kbImIE=
+	t=1713908748; cv=none; b=ZrRYLJMxSwe+tE0PFd39NjoDKFj8XFE1uk14knNCYW2F/tnDUOUg6/xuViWpeoLkfLdBy+wQugh1/LPjKlWJ3oa8J9Aw9xIkq2P9h99nKo+fY5DzMU36y+N/3PzBSQ3xK8OdPE7e/cjrhzzSariwhpEyM9vyEgnca5j9OCBijPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908748; c=relaxed/simple;
-	bh=qQatApJTiY7+TPzm1vAcQ3WWSUuR+HPu8jA2sdEVisw=;
+	bh=UncSxT57T4TWWSalXaD8l1DfjvA8uhjXWPgCjZ7TwRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qQdLaQ8XJ7PrIosavLVWCUVpgyasGARbCQd5+pEvN6B1JA/iCexYMdS/Z54R+YFQEX9cfHsYQvWNzY6r/9Mbsfc1IXPVvHSF8KQSA101bq9FLeFVhzFfCw5QuewF2ug7Wn8391nydDPD0fIRt44X/cqVzF6kKXz6KgTfUDtYgVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tq6fVVK9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eXZLxFAbEVDgHH2DlUh0VUIFtCS3fokhtRfz1hlmnU1WldMXCb7GpEhyl5PMmDSR38ZCMF7uInAutI2VIqVxLGQTaJ66a8rzQiGDfe3Rff4/HY/6v3ynTzYmleJUHWtZb0EqqibAK/Ua/I11q6bVc2XSB8+cDaWvpXdBxkHYKCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4Y6H7Bh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tq6fVVK9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B684AC116B1;
-	Tue, 23 Apr 2024 21:45:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4Y6H7Bh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D1C9C32783;
+	Tue, 23 Apr 2024 21:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908747;
-	bh=qQatApJTiY7+TPzm1vAcQ3WWSUuR+HPu8jA2sdEVisw=;
+	s=korg; t=1713908748;
+	bh=UncSxT57T4TWWSalXaD8l1DfjvA8uhjXWPgCjZ7TwRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tq6fVVK9RSR/NJWf1Gv3DbhmVjHPoWZdwM0gSILGNn4kyO94Wtipu+uobNwE2LXOq
-	 YFxjLDAY1xhDnB320BfdZrqWy3gNjx6A5xP2rgaVukgB9wd7Svba7kaiZNCzTuusrP
-	 GtGGfaKvyRt+O9Ax9oh0a+2vKV3c2t/JO4lms/PM=
+	b=I4Y6H7BhDz0rMW9HxvIH4nW3RiAwtV+BrHlGpFqUp+vTr6eBJrdUkCDA1WxPdY1Pe
+	 VB5N7kgayuLl0zD82Mci2t16Kg98dVEn0Q1t+QJcxT6rZ+Ha09821Gqg0fWpSmK6tF
+	 ybyO0i0wfq6pHYQN8CEgLTirqaDxrZlHOc0BOhyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Like Xu <like.xu.linux@gmail.com>,
-	Mingwei Zhang <mizhang@google.com>,
-	Zhenyu Wang <zhenyuw@linux.intel.com>,
-	Zhang Xiong <xiong.y.zhang@intel.com>,
-	Lv Zhiyuan <zhiyuan.lv@intel.com>,
-	Dapeng Mi <dapeng1.mi@intel.com>,
+	Sandipan Das <sandipan.das@amd.com>,
 	Jim Mattson <jmattson@google.com>,
-	Like Xu <likexu@tencent.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 122/141] KVM: x86/pmu: Disable support for adaptive PEBS
-Date: Tue, 23 Apr 2024 14:39:50 -0700
-Message-ID: <20240423213857.167764795@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.1 123/141] KVM: x86/pmu: Do not mask LVTPC when handling a PMI on AMD platforms
+Date: Tue, 23 Apr 2024 14:39:51 -0700
+Message-ID: <20240423213857.200762395@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -57,104 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Sandipan Das <sandipan.das@amd.com>
 
-commit 9e985cbf2942a1bb8fcef9adc2a17d90fd7ca8ee upstream.
+commit 49ff3b4aec51e3abfc9369997cc603319b02af9a upstream.
 
-Drop support for virtualizing adaptive PEBS, as KVM's implementation is
-architecturally broken without an obvious/easy path forward, and because
-exposing adaptive PEBS can leak host LBRs to the guest, i.e. can leak
-host kernel addresses to the guest.
+On AMD and Hygon platforms, the local APIC does not automatically set
+the mask bit of the LVTPC register when handling a PMI and there is
+no need to clear it in the kernel's PMI handler.
 
-Bug #1 is that KVM doesn't account for the upper 32 bits of
-IA32_FIXED_CTR_CTRL when (re)programming fixed counters, e.g
-fixed_ctrl_field() drops the upper bits, reprogram_fixed_counters()
-stores local variables as u8s and truncates the upper bits too, etc.
+For guests, the mask bit is currently set by kvm_apic_local_deliver()
+and unless it is cleared by the guest kernel's PMI handler, PMIs stop
+arriving and break use-cases like sampling with perf record.
 
-Bug #2 is that, because KVM _always_ sets precise_ip to a non-zero value
-for PEBS events, perf will _always_ generate an adaptive record, even if
-the guest requested a basic record.  Note, KVM will also enable adaptive
-PEBS in individual *counter*, even if adaptive PEBS isn't exposed to the
-guest, but this is benign as MSR_PEBS_DATA_CFG is guaranteed to be zero,
-i.e. the guest will only ever see Basic records.
+This does not affect non-PerfMonV2 guests because PMIs are handled in
+the guest kernel by x86_pmu_handle_irq() which always clears the LVTPC
+mask bit irrespective of the vendor.
 
-Bug #3 is in perf.  intel_pmu_disable_fixed() doesn't clear the upper
-bits either, i.e. leaves ICL_FIXED_0_ADAPTIVE set, and
-intel_pmu_enable_fixed() effectively doesn't clear ICL_FIXED_0_ADAPTIVE
-either.  I.e. perf _always_ enables ADAPTIVE counters, regardless of what
-KVM requests.
+Before:
 
-Bug #4 is that adaptive PEBS *might* effectively bypass event filters set
-by the host, as "Updated Memory Access Info Group" records information
-that might be disallowed by userspace via KVM_SET_PMU_EVENT_FILTER.
+  $ perf record -e cycles:u true
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.001 MB perf.data (1 samples) ]
 
-Bug #5 is that KVM doesn't ensure LBR MSRs hold guest values (or at least
-zeros) when entering a vCPU with adaptive PEBS, which allows the guest
-to read host LBRs, i.e. host RIPs/addresses, by enabling "LBR Entries"
-records.
+After:
 
-Disable adaptive PEBS support as an immediate fix due to the severity of
-the LBR leak in particular, and because fixing all of the bugs will be
-non-trivial, e.g. not suitable for backporting to stable kernels.
+  $ perf record -e cycles:u true
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.002 MB perf.data (19 samples) ]
 
-Note!  This will break live migration, but trying to make KVM play nice
-with live migration would be quite complicated, wouldn't be guaranteed to
-work (i.e. KVM might still kill/confuse the guest), and it's not clear
-that there are any publicly available VMMs that support adaptive PEBS,
-let alone live migrate VMs that support adaptive PEBS, e.g. QEMU doesn't
-support PEBS in any capacity.
-
-Link: https://lore.kernel.org/all/20240306230153.786365-1-seanjc@google.com
-Link: https://lore.kernel.org/all/ZeepGjHCeSfadANM@google.com
-Fixes: c59a1f106f5c ("KVM: x86/pmu: Add IA32_PEBS_ENABLE MSR emulation for extended PEBS")
+Fixes: a16eb25b09c0 ("KVM: x86: Mask LVTPC when handling a PMI")
 Cc: stable@vger.kernel.org
-Cc: Like Xu <like.xu.linux@gmail.com>
-Cc: Mingwei Zhang <mizhang@google.com>
-Cc: Zhenyu Wang <zhenyuw@linux.intel.com>
-Cc: Zhang Xiong <xiong.y.zhang@intel.com>
-Cc: Lv Zhiyuan <zhiyuan.lv@intel.com>
-Cc: Dapeng Mi <dapeng1.mi@intel.com>
-Cc: Jim Mattson <jmattson@google.com>
-Acked-by: Like Xu <likexu@tencent.com>
-Link: https://lore.kernel.org/r/20240307005833.827147-1-seanjc@google.com
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Reviewed-by: Jim Mattson <jmattson@google.com>
+[sean: use is_intel_compatible instead of !is_amd_or_hygon()]
 Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20240405235603.1173076-3-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/vmx.c |   24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ arch/x86/kvm/lapic.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -7742,8 +7742,28 @@ static u64 vmx_get_perf_capabilities(voi
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -2548,7 +2548,8 @@ int kvm_apic_local_deliver(struct kvm_la
+ 		trig_mode = reg & APIC_LVT_LEVEL_TRIGGER;
  
- 	if (vmx_pebs_supported()) {
- 		perf_cap |= host_perf_cap & PERF_CAP_PEBS_MASK;
--		if ((perf_cap & PERF_CAP_PEBS_FORMAT) < 4)
--			perf_cap &= ~PERF_CAP_PEBS_BASELINE;
-+
-+		/*
-+		 * Disallow adaptive PEBS as it is functionally broken, can be
-+		 * used by the guest to read *host* LBRs, and can be used to
-+		 * bypass userspace event filters.  To correctly and safely
-+		 * support adaptive PEBS, KVM needs to:
-+		 *
-+		 * 1. Account for the ADAPTIVE flag when (re)programming fixed
-+		 *    counters.
-+		 *
-+		 * 2. Gain support from perf (or take direct control of counter
-+		 *    programming) to support events without adaptive PEBS
-+		 *    enabled for the hardware counter.
-+		 *
-+		 * 3. Ensure LBR MSRs cannot hold host data on VM-Entry with
-+		 *    adaptive PEBS enabled and MSR_PEBS_DATA_CFG.LBRS=1.
-+		 *
-+		 * 4. Document which PMU events are effectively exposed to the
-+		 *    guest via adaptive PEBS, and make adaptive PEBS mutually
-+		 *    exclusive with KVM_SET_PMU_EVENT_FILTER if necessary.
-+		 */
-+		perf_cap &= ~PERF_CAP_PEBS_BASELINE;
+ 		r = __apic_accept_irq(apic, mode, vector, 1, trig_mode, NULL);
+-		if (r && lvt_type == APIC_LVTPC)
++		if (r && lvt_type == APIC_LVTPC &&
++		    guest_cpuid_is_intel_compatible(apic->vcpu))
+ 			kvm_lapic_set_reg(apic, APIC_LVTPC, reg | APIC_LVT_MASKED);
+ 		return r;
  	}
- 
- 	return perf_cap;
 
 
