@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA8D1420BE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38521420BE;
 	Tue, 23 Apr 2024 21:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908699; cv=none; b=u3SHpu8lJAKYKD0wQCQfJ8kWFLqEuGzIpQrw1vId++nGYuOrXJXhrJC1v7Kk8eURuEFO57bPrzPi99OBVk8If/dJL9xOkU6tWT29r1AFbMx4RYj8AAlMnhUFZ8BTD9a+uGUMU7Q/t2gzGlFzyKGrQdX69dxmvQnUDE3dpS+kyp4=
+	t=1713908700; cv=none; b=YhT0cNJjJyqLESVd5dA1hxoibnLCJ4nMNNlYaSRsODeT6woa1yDWp7Syis6Y27pssKBTtUoNRPItfjUuFiK4p3K7aG48b/JAkC64poXgc3f1w1mEtGQoWLmb9WXO4ppT1NOKH8e6vNQnn6I0CM+LRYVYlcBEZfE9kS+dQyUqnWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908699; c=relaxed/simple;
-	bh=rwG+HKa0UItMR8ZZmZXgTTZVadPeivaBGeUPkY3ssIA=;
+	s=arc-20240116; t=1713908700; c=relaxed/simple;
+	bh=WSaTloa8OI7Zm/+7ALURZMX5rCahwdSRLDyRPEcdhy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hzjfyRqLl3uY4TLghNoiacsYMDbicaKhEUKO7yPpwYEOAYLr5XLE6+R8sC5lgP2W9UdPlSrz9wryg1YdK1lRAJQQ7lzIbbr+4gNDUum0uHYqfjl008ZO9LzcArbzFGLGB/rPT3d/GsoON2if83FWBWPDR9VfZ2Hdr0MoYf26npM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xh36Odvh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nr59bQeH3PTOm1b6sdhvTcQLwCohzXg5qa4urI4L4HaKotXVKQ3Vj5OEPoNNjaidjnUCyPqWgrprw9DfLZ06Ke9jZ+KvqpZcclsYhpS3oeThbOEr8g/7bnZIctvr9PnBkZ9AvLQiIUj9w7CbIMqGIIYvrOaE7ESeLtNLGCcuWOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AG7JhRZw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xh36Odvh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23755C32783;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AG7JhRZw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8DB4C3277B;
 	Tue, 23 Apr 2024 21:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908699;
-	bh=rwG+HKa0UItMR8ZZmZXgTTZVadPeivaBGeUPkY3ssIA=;
+	bh=WSaTloa8OI7Zm/+7ALURZMX5rCahwdSRLDyRPEcdhy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xh36OdvhjjSn3pVF1IYyGXxcPbc52jG0Fc6JscrVw1AOhDGDHW9i6G2/NniS5IcN6
-	 JL6I5eNEsHti8rmBztO4WPUUytKzMBCcdUXpP0HK57ddLQOoSZxETvW3EVXOi7G2MX
-	 Fcdgr1jM3QtCE8xLeJ82sgCpykyGoG1mo+1Fbnxg=
+	b=AG7JhRZwBfu4Bwot/uIqxgYEnuq9SUlw+IbxAXycjc1YuTeRhi2tFmhgske/C3Q3B
+	 vXX/Fq17+c1+n7UNdae+6eUJXpgrW13r7Km9uowAiJzFw0aMwmjWPIDvGnUra+AkbX
+	 x5GEPNJ/FBqoJnFUJqlflBm2LWT20KO3n+Rz1Cec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.1 026/141] x86/boot: Increase section and file alignment to 4k/512
-Date: Tue, 23 Apr 2024 14:38:14 -0700
-Message-ID: <20240423213854.161371681@linuxfoundation.org>
+	Mike Beaton <mjsbeaton@gmail.com>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.1 027/141] x86/efistub: Use 1:1 file:memory mapping for PE/COFF .compat section
+Date: Tue, 23 Apr 2024 14:38:15 -0700
+Message-ID: <20240423213854.194091432@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -52,334 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Commit 3e3eabe26dc88692d34cf76ca0e0dd331481cc15 upstream ]
+[ Commit 1ad55cecf22f05f1c884adf63cc09d3c3e609ebf upstream ]
 
-Align x86 with other EFI architectures, and increase the section
-alignment to the EFI page size (4k), so that firmware is able to honour
-the section permission attributes and map code read-only and data
-non-executable.
+The .compat section is a dummy PE section that contains the address of
+the 32-bit entrypoint of the 64-bit kernel image if it is bootable from
+32-bit firmware (i.e., CONFIG_EFI_MIXED=y)
 
-There are a number of requirements that have to be taken into account:
-- the sign tools get cranky when there are gaps between sections in the
-  file view of the image
-- the virtual offset of each section must be aligned to the image's
-  section alignment
-- the file offset *and size* of each section must be aligned to the
-  image's file alignment
-- the image size must be aligned to the section alignment
-- each section's virtual offset must be greater than or equal to the
-  size of the headers.
+This section is only 8 bytes in size and is only referenced from the
+loader, and so it is placed at the end of the memory view of the image,
+to avoid the need for padding it to 4k, which is required for sections
+appearing in the middle of the image.
 
-In order to meet all these requirements, while avoiding the need for
-lots of padding to accommodate the .compat section, the latter is placed
-at an arbitrary offset towards the end of the image, but aligned to the
-minimum file alignment (512 bytes). The space before the .text section
-is therefore distributed between the PE header, the .setup section and
-the .compat section, leaving no gaps in the file coverage, making the
-signing tools happy.
+Unfortunately, this violates the PE/COFF spec, and even if most EFI
+loaders will work correctly (including the Tianocore reference
+implementation), PE loaders do exist that reject such images, on the
+basis that both the file and memory views of the file contents should be
+described by the section headers in a monotonically increasing manner
+without leaving any gaps.
 
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230915171623.655440-18-ardb@google.com
+So reorganize the sections to avoid this issue. This results in a slight
+padding overhead (< 4k) which can be avoided if desired by disabling
+CONFIG_EFI_MIXED (which is only needed in rare cases these days)
+
+Fixes: 3e3eabe26dc8 ("x86/boot: Increase section and file alignment to 4k/512")
+Reported-by: Mike Beaton <mjsbeaton@gmail.com>
+Link: https://lkml.kernel.org/r/CAHzAAWQ6srV6LVNdmfbJhOwhBw5ZzxxZZ07aHt9oKkfYAdvuQQ%40mail.gmail.com
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/vmlinux.lds.S |    4 -
- arch/x86/boot/header.S                 |   75 +++++++++++++++------------
- arch/x86/boot/setup.ld                 |    7 +-
- arch/x86/boot/tools/build.c            |   90 ---------------------------------
- 4 files changed, 51 insertions(+), 125 deletions(-)
+ arch/x86/boot/header.S |   14 ++++++--------
+ arch/x86/boot/setup.ld |    6 +++---
+ 2 files changed, 9 insertions(+), 11 deletions(-)
 
---- a/arch/x86/boot/compressed/vmlinux.lds.S
-+++ b/arch/x86/boot/compressed/vmlinux.lds.S
-@@ -42,13 +42,13 @@ SECTIONS
- 		*(.rodata.*)
- 		_erodata = . ;
- 	}
--	.data :	{
-+	.data :	ALIGN(0x1000) {
- 		_data = . ;
- 		*(.data)
- 		*(.data.*)
- 
- 		/* Add 4 bytes of extra space for a CRC-32 checksum */
--		. = ALIGN(. + 4, 0x20);
-+		. = ALIGN(. + 4, 0x200);
- 		_edata = . ;
- 	}
- 	. = ALIGN(L1_CACHE_BYTES);
 --- a/arch/x86/boot/header.S
 +++ b/arch/x86/boot/header.S
-@@ -36,6 +36,9 @@ SYSSEG		= 0x1000		/* historical load add
- #define ROOT_RDONLY 1
- #endif
- 
-+	.set	salign, 0x1000
-+	.set	falign, 0x200
-+
- 	.code16
- 	.section ".bstext", "ax"
- #ifdef CONFIG_EFI_STUB
-@@ -81,7 +84,7 @@ optional_header:
- 
- 	.long	setup_size + ZO_efi_pe_entry	# AddressOfEntryPoint
- 
--	.long	0x0200				# BaseOfCode
-+	.long	setup_size			# BaseOfCode
- #ifdef CONFIG_X86_32
- 	.long	0				# data
- #endif
-@@ -92,8 +95,8 @@ extra_header_fields:
- #else
- 	.quad	0				# ImageBase
- #endif
--	.long	0x20				# SectionAlignment
--	.long	0x20				# FileAlignment
-+	.long	salign				# SectionAlignment
-+	.long	falign				# FileAlignment
- 	.word	0				# MajorOperatingSystemVersion
- 	.word	0				# MinorOperatingSystemVersion
- 	.word	LINUX_EFISTUB_MAJOR_VERSION	# MajorImageVersion
-@@ -102,9 +105,10 @@ extra_header_fields:
+@@ -105,8 +105,7 @@ extra_header_fields:
  	.word	0				# MinorSubsystemVersion
  	.long	0				# Win32VersionValue
  
--	.long	setup_size + ZO__end 		# SizeOfImage
-+	.long	setup_size + ZO__end + pecompat_vsize
-+						# SizeOfImage
+-	.long	setup_size + ZO__end + pecompat_vsize
+-						# SizeOfImage
++	.long	setup_size + ZO__end		# SizeOfImage
  
--	.long	0x200				# SizeOfHeaders
-+	.long	salign				# SizeOfHeaders
+ 	.long	salign				# SizeOfHeaders
  	.long	0				# CheckSum
- 	.word	IMAGE_SUBSYSTEM_EFI_APPLICATION	# Subsystem (EFI application)
- #ifdef CONFIG_EFI_DXE_MEM_ATTRIBUTES
-@@ -135,44 +139,51 @@ extra_header_fields:
- 
- 	# Section table
- section_table:
--	#
--	# The offset & size fields are filled in by build.c.
--	#
+@@ -142,7 +141,7 @@ section_table:
  	.ascii	".setup"
  	.byte	0
  	.byte	0
--	.long	0
--	.long	0x0				# startup_{32,64}
--	.long	0				# Size of initialized data
--						# on disk
--	.long	0x0				# startup_{32,64}
--	.long	0				# PointerToRelocations
--	.long	0				# PointerToLineNumbers
--	.word	0				# NumberOfRelocations
--	.word	0				# NumberOfLineNumbers
--	.long	IMAGE_SCN_CNT_CODE		| \
-+	.long	setup_size - salign 		# VirtualSize
-+	.long	salign				# VirtualAddress
-+	.long	pecompat_fstart - salign	# SizeOfRawData
-+	.long	salign				# PointerToRawData
-+
-+	.long	0, 0, 0
-+	.long	IMAGE_SCN_CNT_INITIALIZED_DATA	| \
- 		IMAGE_SCN_MEM_READ		| \
--		IMAGE_SCN_MEM_EXECUTE		# Characteristics
-+		IMAGE_SCN_MEM_DISCARDABLE	# Characteristics
- 
+-	.long	setup_size - salign 		# VirtualSize
++	.long	pecompat_fstart - salign 	# VirtualSize
+ 	.long	salign				# VirtualAddress
+ 	.long	pecompat_fstart - salign	# SizeOfRawData
+ 	.long	salign				# PointerToRawData
+@@ -155,8 +154,8 @@ section_table:
  #ifdef CONFIG_EFI_MIXED
--	#
--	# The offset & size fields are filled in by build.c.
--	#
  	.asciz	".compat"
--	.long	0
--	.long	0x0
--	.long	0				# Size of initialized data
--						# on disk
--	.long	0x0
--	.long	0				# PointerToRelocations
--	.long	0				# PointerToLineNumbers
--	.word	0				# NumberOfRelocations
--	.word	0				# NumberOfLineNumbers
-+
-+	.long	8				# VirtualSize
-+	.long	setup_size + ZO__end		# VirtualAddress
-+	.long	pecompat_fsize			# SizeOfRawData
-+	.long	pecompat_fstart			# PointerToRawData
-+
-+	.long	0, 0, 0
- 	.long	IMAGE_SCN_CNT_INITIALIZED_DATA	| \
- 		IMAGE_SCN_MEM_READ		| \
- 		IMAGE_SCN_MEM_DISCARDABLE	# Characteristics
--#endif
  
-+	/*
-+	 * Put the IA-32 machine type and the associated entry point address in
-+	 * the .compat section, so loaders can figure out which other execution
-+	 * modes this image supports.
-+	 */
-+	.pushsection ".pecompat", "a", @progbits
-+	.balign	falign
-+	.set	pecompat_vsize, salign
-+	.globl	pecompat_fstart
-+pecompat_fstart:
-+	.byte	0x1				# Version
-+	.byte	8				# Size
-+	.word	IMAGE_FILE_MACHINE_I386		# PE machine type
-+	.long	setup_size + ZO_efi32_pe_entry	# Entrypoint
-+	.popsection
-+#else
-+	.set	pecompat_vsize, 0
-+	.set	pecompat_fstart, setup_size
-+#endif
+-	.long	8				# VirtualSize
+-	.long	setup_size + ZO__end		# VirtualAddress
++	.long	pecompat_fsize			# VirtualSize
++	.long	pecompat_fstart			# VirtualAddress
+ 	.long	pecompat_fsize			# SizeOfRawData
+ 	.long	pecompat_fstart			# PointerToRawData
+ 
+@@ -171,17 +170,16 @@ section_table:
+ 	 * modes this image supports.
+ 	 */
+ 	.pushsection ".pecompat", "a", @progbits
+-	.balign	falign
+-	.set	pecompat_vsize, salign
++	.balign	salign
+ 	.globl	pecompat_fstart
+ pecompat_fstart:
+ 	.byte	0x1				# Version
+ 	.byte	8				# Size
+ 	.word	IMAGE_FILE_MACHINE_I386		# PE machine type
+ 	.long	setup_size + ZO_efi32_pe_entry	# Entrypoint
++	.byte	0x0				# Sentinel
+ 	.popsection
+ #else
+-	.set	pecompat_vsize, 0
+ 	.set	pecompat_fstart, setup_size
+ #endif
  	.ascii	".text"
- 	.byte	0
- 	.byte	0
 --- a/arch/x86/boot/setup.ld
 +++ b/arch/x86/boot/setup.ld
-@@ -36,16 +36,17 @@ SECTIONS
- 	. = ALIGN(16);
- 	.data		: { *(.data*) }
+@@ -24,6 +24,9 @@ SECTIONS
+ 	.text		: { *(.text .text.*) }
+ 	.text32		: { *(.text32) }
  
 +	.pecompat	: { *(.pecompat) }
 +	PROVIDE(pecompat_fsize = setup_size - pecompat_fstart);
 +
+ 	. = ALIGN(16);
+ 	.rodata		: { *(.rodata*) }
+ 
+@@ -36,9 +39,6 @@ SECTIONS
+ 	. = ALIGN(16);
+ 	.data		: { *(.data*) }
+ 
+-	.pecompat	: { *(.pecompat) }
+-	PROVIDE(pecompat_fsize = setup_size - pecompat_fstart);
+-
  	.signature	: {
  		setup_sig = .;
  		LONG(0x5a5aaa55)
- 
--		/* Reserve some extra space for the compat section */
--		setup_size = ALIGN(ABSOLUTE(.) + 32, 512);
-+		setup_size = ALIGN(ABSOLUTE(.), 4096);
- 		setup_sects = ABSOLUTE(setup_size / 512);
- 	}
- 
--
- 	. = ALIGN(16);
- 	.bss		:
- 	{
---- a/arch/x86/boot/tools/build.c
-+++ b/arch/x86/boot/tools/build.c
-@@ -47,9 +47,6 @@ typedef unsigned int   u32;
- /* This must be large enough to hold the entire setup */
- u8 buf[SETUP_SECT_MAX*512];
- 
--#define PECOFF_COMPAT_RESERVE 0x20
--
--static unsigned long efi32_pe_entry;
- static unsigned long _edata;
- 
- /*----------------------------------------------------------------------*/
-@@ -136,85 +133,6 @@ static void usage(void)
- 	die("Usage: build setup system zoffset.h image");
- }
- 
--#ifdef CONFIG_EFI_STUB
--
--static void update_pecoff_section_header_fields(char *section_name, u32 vma, u32 size, u32 datasz, u32 offset)
--{
--	unsigned int pe_header;
--	unsigned short num_sections;
--	u8 *section;
--
--	pe_header = get_unaligned_le32(&buf[0x3c]);
--	num_sections = get_unaligned_le16(&buf[pe_header + 6]);
--
--#ifdef CONFIG_X86_32
--	section = &buf[pe_header + 0xa8];
--#else
--	section = &buf[pe_header + 0xb8];
--#endif
--
--	while (num_sections > 0) {
--		if (strncmp((char*)section, section_name, 8) == 0) {
--			/* section header size field */
--			put_unaligned_le32(size, section + 0x8);
--
--			/* section header vma field */
--			put_unaligned_le32(vma, section + 0xc);
--
--			/* section header 'size of initialised data' field */
--			put_unaligned_le32(datasz, section + 0x10);
--
--			/* section header 'file offset' field */
--			put_unaligned_le32(offset, section + 0x14);
--
--			break;
--		}
--		section += 0x28;
--		num_sections--;
--	}
--}
--
--static void update_pecoff_section_header(char *section_name, u32 offset, u32 size)
--{
--	update_pecoff_section_header_fields(section_name, offset, size, size, offset);
--}
--
--static void update_pecoff_setup(unsigned int size)
--{
--	u32 setup_offset = 0x200;
--	u32 compat_offset = size - PECOFF_COMPAT_RESERVE;
--	u32 setup_size = compat_offset - setup_offset;
--
--	update_pecoff_section_header(".setup", setup_offset, setup_size);
--
--#ifdef CONFIG_EFI_MIXED
--	update_pecoff_section_header(".compat", compat_offset, PECOFF_COMPAT_RESERVE);
--
--	/*
--	 * Put the IA-32 machine type (0x14c) and the associated entry point
--	 * address in the .compat section, so loaders can figure out which other
--	 * execution modes this image supports.
--	 */
--	buf[compat_offset] = 0x1;
--	buf[compat_offset + 1] = 0x8;
--	put_unaligned_le16(0x14c, &buf[compat_offset + 2]);
--	put_unaligned_le32(efi32_pe_entry + size, &buf[compat_offset + 4]);
--#endif
--}
--
--#else
--
--static inline void update_pecoff_setup(unsigned int size) {}
--
--#endif /* CONFIG_EFI_STUB */
--
--static int reserve_pecoff_compat_section(int c)
--{
--	/* Reserve 0x20 bytes for .compat section */
--	memset(buf+c, 0, PECOFF_COMPAT_RESERVE);
--	return PECOFF_COMPAT_RESERVE;
--}
--
- /*
-  * Parse zoffset.h and find the entry points. We could just #include zoffset.h
-  * but that would mean tools/build would have to be rebuilt every time. It's
-@@ -243,7 +161,6 @@ static void parse_zoffset(char *fname)
- 	p = (char *)buf;
- 
- 	while (p && *p) {
--		PARSE_ZOFS(p, efi32_pe_entry);
- 		PARSE_ZOFS(p, _edata);
- 
- 		p = strchr(p, '\n');
-@@ -283,17 +200,14 @@ int main(int argc, char ** argv)
- 		die("Boot block hasn't got boot flag (0xAA55)");
- 	fclose(file);
- 
--	c += reserve_pecoff_compat_section(c);
--
- 	/* Pad unused space with zeros */
--	setup_sectors = (c + 511) / 512;
-+	setup_sectors = (c + 4095) / 4096;
-+	setup_sectors *= 8;
- 	if (setup_sectors < SETUP_SECT_MIN)
- 		setup_sectors = SETUP_SECT_MIN;
- 	i = setup_sectors*512;
- 	memset(buf+c, 0, i-c);
- 
--	update_pecoff_setup(i);
--
- 	/* Open and stat the kernel file */
- 	fd = open(argv[2], O_RDONLY);
- 	if (fd < 0)
 
 
