@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1C820B3E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAEE20B3E;
 	Tue, 23 Apr 2024 21:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908527; cv=none; b=Qu/gYDSBZB2vfejZJYwBqpQEuub6bZ5i5Ml8kr1s7tHxxTEV90J76VaravnlQE+hnC+D2Lc48LNDT+p4W2QcPgxVqnUew4LIgUd2Md51DmH6m6uZp12xwau44ED4HLqCw5yGMYVsQKNIKcMl0RSR3rbOpn7btnM/I/SIn4ShbfY=
+	t=1713908527; cv=none; b=ZGOGS5K/yUBi7jbGveJlar57LO0kIKmccEWdTg8AdWgxpESDIoxmBDJg+4C7vo5Z3ug1qJT2p4+yYXXjOs59eOoy7l7qUo6SjhK2xTrGwA7Z2mMEudazFfsUW7Y6npkk9YTJEby/ONefaSiLZD8RNNeRkaIuZgreNC0En2BRBIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908527; c=relaxed/simple;
-	bh=liwvlhRhkfVsQl0Ix0QGzRGbFBOv1LgypwIlkpWfVks=;
+	bh=QZ+qqX+IJqkvqScY+qTQMSgoygtADBJRzWQHuMw++MQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Prmfc30H2yGI2kxxKPCnPy5qRcsnf6TcOSM2MkiWHr2pwkhVEe+ZkJERTt2YL6jQZw9ln2I/kO/w6mEiV4ZTK6QSFwDYOoApySghlGQwVI6DPVfv7SQY6hwVw33kUlKw5c4FTlz/hSr6Dvv3GhFztTLze+i9z5QyAxWi2mJoCrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0PKh+p2P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cpV4caDi6mCgF+Isuw89pI3d4q+ASmYx/tiJ9WtGArAbX8qquJpYNGd4ItjrTGESNVxzmdWb++n/PoNF3/sGxnrLM4y8XlTg5pZM7lm2x2k9rpTCck3uQT+oBBbFjiMdBjEiqpWdQY+OG7jRV2YLPTWqq1GSl/1TcQ/xZwPeQv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jv7uA21w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0PKh+p2P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7609C32781;
-	Tue, 23 Apr 2024 21:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jv7uA21w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9482DC116B1;
+	Tue, 23 Apr 2024 21:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908526;
-	bh=liwvlhRhkfVsQl0Ix0QGzRGbFBOv1LgypwIlkpWfVks=;
+	s=korg; t=1713908527;
+	bh=QZ+qqX+IJqkvqScY+qTQMSgoygtADBJRzWQHuMw++MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0PKh+p2Pljiw5ll7YC3CGgKgMB3nHe/zUKxpc7Pnk00y3R1edtxK0ezspKELL9UB/
-	 x8PEYIQZwSM0nKcXFBRAqs2GAczgAunuqPob9QReqInwUccWT+XVfQS/Zmt6rHU5Yv
-	 kPAsrkerM+RfoLyyb6anaD+yC3Z20GunI1oabD3A=
+	b=Jv7uA21wx0jNLgxogJ2N8LhNrNnW5MQRsVFXCXbKmYCFfEP4zUC4SR0q6lGz3dbTH
+	 MSgxaVNKWi4uAQdMlubhENPnfaJWp4rC/aA/HuTfryPaSJvaSxmnJJ7WFY7nTGq5v9
+	 YwZ5XzlHKtImHWrQevJpsY8OoAewQYCoaO3Xle0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norihiko Hama <Norihiko.Hama@alpsalpine.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.8 119/158] usb: gadget: f_ncm: Fix UAF ncm object at re-bind after usb ep transport error
-Date: Tue, 23 Apr 2024 14:39:01 -0700
-Message-ID: <20240423213859.788670392@linuxfoundation.org>
+	Kyle Tso <kyletso@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.8 120/158] usb: typec: tcpm: Correct the PDO counting in pd_set
+Date: Tue, 23 Apr 2024 14:39:02 -0700
+Message-ID: <20240423213859.818971117@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -50,77 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norihiko Hama <Norihiko.Hama@alpsalpine.com>
+From: Kyle Tso <kyletso@google.com>
 
-commit 6334b8e4553cc69f51e383c9de545082213d785e upstream.
+commit c4128304c2169b4664ed6fb6200f228cead2ab70 upstream.
 
-When ncm function is working and then stop usb0 interface for link down,
-eth_stop() is called. At this piont, accidentally if usb transport error
-should happen in usb_ep_enable(), 'in_ep' and/or 'out_ep' may not be enabled.
+Off-by-one errors happen because nr_snk_pdo and nr_src_pdo are
+incorrectly added one. The index of the loop is equal to the number of
+PDOs to be updated when leaving the loop and it doesn't need to be added
+one.
 
-After that, ncm_disable() is called to disable for ncm unbind
-but gether_disconnect() is never called since 'in_ep' is not enabled.
+When doing the power negotiation, TCPM relies on the "nr_snk_pdo" as
+the size of the local sink PDO array to match the Source capabilities
+of the partner port. If the off-by-one overflow occurs, a wrong RDO
+might be sent and unexpected power transfer might happen such as over
+voltage or over current (than expected).
 
-As the result, ncm object is released in ncm unbind
-but 'dev->port_usb' associated to 'ncm->port' is not NULL.
+"nr_src_pdo" is used to set the Rp level when the port is in Source
+role. It is also the array size of the local Source capabilities when
+filling up the buffer which will be sent as the Source PDOs (such as
+in Power Negotiation). If the off-by-one overflow occurs, a wrong Rp
+level might be set and wrong Source PDOs will be sent to the partner
+port. This could potentially cause over current or port resets.
 
-And when ncm bind again to recover netdev, ncm object is reallocated
-but usb0 interface is already associated to previous released ncm object.
-
-Therefore, once usb0 interface is up and eth_start_xmit() is called,
-released ncm object is dereferrenced and it might cause use-after-free memory.
-
-[function unlink via configfs]
-  usb0: eth_stop dev->port_usb=ffffff9b179c3200
-  --> error happens in usb_ep_enable().
-  NCM: ncm_disable: ncm=ffffff9b179c3200
-  --> no gether_disconnect() since ncm->port.in_ep->enabled is false.
-  NCM: ncm_unbind: ncm unbind ncm=ffffff9b179c3200
-  NCM: ncm_free: ncm free ncm=ffffff9b179c3200   <-- released ncm
-
-[function link via configfs]
-  NCM: ncm_alloc: ncm alloc ncm=ffffff9ac4f8a000
-  NCM: ncm_bind: ncm bind ncm=ffffff9ac4f8a000
-  NCM: ncm_set_alt: ncm=ffffff9ac4f8a000 alt=0
-  usb0: eth_open dev->port_usb=ffffff9b179c3200  <-- previous released ncm
-  usb0: eth_start dev->port_usb=ffffff9b179c3200 <--
-  eth_start_xmit()
-  --> dev->wrap()
-  Unable to handle kernel paging request at virtual address dead00000000014f
-
-This patch addresses the issue by checking if 'ncm->netdev' is not NULL at
-ncm_disable() to call gether_disconnect() to deassociate 'dev->port_usb'.
-It's more reasonable to check 'ncm->netdev' to call gether_connect/disconnect
-rather than check 'ncm->port.in_ep->enabled' since it might not be enabled
-but the gether connection might be established.
-
-Signed-off-by: Norihiko Hama <Norihiko.Hama@alpsalpine.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20240327023550.51214-1-Norihiko.Hama@alpsalpine.com
+Fixes: cd099cde4ed2 ("usb: typec: tcpm: Support multiple capabilities")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kyle Tso <kyletso@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240404133517.2707955-1-kyletso@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |    4 ++--
+ drivers/usb/typec/tcpm/tcpm.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -878,7 +878,7 @@ static int ncm_set_alt(struct usb_functi
- 		if (alt > 1)
- 			goto fail;
- 
--		if (ncm->port.in_ep->enabled) {
-+		if (ncm->netdev) {
- 			DBG(cdev, "reset ncm\n");
- 			ncm->netdev = NULL;
- 			gether_disconnect(&ncm->port);
-@@ -1367,7 +1367,7 @@ static void ncm_disable(struct usb_funct
- 
- 	DBG(cdev, "ncm deactivated\n");
- 
--	if (ncm->port.in_ep->enabled) {
-+	if (ncm->netdev) {
- 		ncm->netdev = NULL;
- 		gether_disconnect(&ncm->port);
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -6111,14 +6111,14 @@ static int tcpm_pd_set(struct typec_port
+ 	if (data->sink_desc.pdo[0]) {
+ 		for (i = 0; i < PDO_MAX_OBJECTS && data->sink_desc.pdo[i]; i++)
+ 			port->snk_pdo[i] = data->sink_desc.pdo[i];
+-		port->nr_snk_pdo = i + 1;
++		port->nr_snk_pdo = i;
+ 		port->operating_snk_mw = data->operating_snk_mw;
  	}
+ 
+ 	if (data->source_desc.pdo[0]) {
+ 		for (i = 0; i < PDO_MAX_OBJECTS && data->source_desc.pdo[i]; i++)
+ 			port->src_pdo[i] = data->source_desc.pdo[i];
+-		port->nr_src_pdo = i + 1;
++		port->nr_src_pdo = i;
+ 	}
+ 
+ 	switch (port->state) {
 
 
