@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBF8144D25;
-	Tue, 23 Apr 2024 21:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798EC14388D;
+	Tue, 23 Apr 2024 21:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908504; cv=none; b=jHB3uy+bhCWykH4DXlcSBmnCgIo/ucmS390BtoMAoAV5DGhh2PqMZOR8SB4RfYRKVSJMR6gNirkONDBIZ4G1A9gGCetslAeQ009E8Zrq/smoMTm4qdlDGvWMQ6lYUO21MZBfZ8t+pbiEt+KqDlQRBymVQM70RpiDkICoPMsREQc=
+	t=1713908505; cv=none; b=rXfuyV9XR05wcC54klvUsYzLLcPZKJq96+jfjudm25uQzIaglkeV6HCPxKaJZLFDx7f1mPYBkLmRyydyTq9XbRGmKbvnkEi6saEvelFTwLRdLsRm35tem5nBlmDb5rPelgL0rxHn67UULHumWtzJDNWkdTtUHXv+X39zB0Vpiwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908504; c=relaxed/simple;
-	bh=yzF7yfYzBSicIOgqhTZXWTI8TljctUb258gWiWtG5WY=;
+	s=arc-20240116; t=1713908505; c=relaxed/simple;
+	bh=CExlSkHgH0tyCbljyaKTd5oE2X8dmxwpHc61O1PkWUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t6Gu1GCD9T6iSSRebTSs6UVoj1CdlreK26m9sga1upLtCikcwxCgO7V53Hm6gHPUGLpAdqYM7KgbUrV4PyjMFSyPTyBSHoPKGMiIXI5J6eoJJDOdfQV7OsKfDkWRPQ2B2+530xDJUw/hyyGFw5v1nd/mdjYTw6hOEZHSNdcQE5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWmfEBw6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O6R8B02pCpJLhOH8WQQoJN6o/I2DlbGD+VoYIHCm4gVCUC13wD3DQ3/cB7vcKeBtyA44BW2UkvgRZt7OvkYWVqkw5LL5KqzZnbuxFyyYyzvj5vfWeAtIVFqSGa5wuWM+XAIlZQOVQHnheH/j3Ft8yxYS8CM0vnBnXQdRDAbxk2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlOD8sg/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWmfEBw6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB7EC116B1;
-	Tue, 23 Apr 2024 21:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlOD8sg/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB23C32783;
+	Tue, 23 Apr 2024 21:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908504;
-	bh=yzF7yfYzBSicIOgqhTZXWTI8TljctUb258gWiWtG5WY=;
+	s=korg; t=1713908505;
+	bh=CExlSkHgH0tyCbljyaKTd5oE2X8dmxwpHc61O1PkWUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hWmfEBw6eXHEaaGIO6sfxvfjRFTpqyDDM3lPO1kOXx5cnEEMXkdWrWJegdtp1ncga
-	 sufpeL3bdqApdhqG8dftJ2gyZmkQhglSjJFQmS+wKM1j5kSOAn4ig82SpGdkehEPXv
-	 52y6KQLNhErlZffLI+y6jNbvOROi+21zxmPq0nQs=
+	b=LlOD8sg/6ximsKtgmGyO57L6OrMAAqBu3CrTMql5sy5W8T4ExRsI4BnVReiZ1b9G1
+	 nIiHBbHUYqhL50rwSWL6YWeLmyaXafn8wM67zKi6XNlK7FHdj/A7FG5VHce8rfsKnE
+	 c4lMUwdQFtGM8Csyuhmx4j5Djykz1QaoozTt+//E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Song Liu <song@kernel.org>,
+	bpf@vger.kernel.org,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 058/158] perf annotate: Make sure to call symbol__annotate2() in TUI
-Date: Tue, 23 Apr 2024 14:38:00 -0700
-Message-ID: <20240423213857.833351553@linuxfoundation.org>
+Subject: [PATCH 6.8 059/158] perf lock contention: Add a missing NULL check
+Date: Tue, 23 Apr 2024 14:38:01 -0700
+Message-ID: <20240423213857.872307501@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -53,59 +56,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 2b8dbf69ec60faf6c7db49e57d7f316409ccec92 ]
+[ Upstream commit f3408580bac8ce5cd76e7391e529c0a22e7c7eb2 ]
 
-The symbol__annotate2() initializes some data structures needed by TUI.
-It has a logic to prevent calling it multiple times by checking if it
-has the annotated source.  But data type profiling uses a different
-code (symbol__annotate) to allocate the annotated lines in advance.
-So TUI missed to call symbol__annotate2() when it shows the annotation
-browser.
+I got a report for a failure in BPF verifier on a recent kernel with
+perf lock contention command.  It checks task->sighand->siglock without
+checking if sighand is NULL or not.  Let's add one.
 
-Make symbol__annotate() reentrant and handle that situation properly.
-This fixes a crash in the annotation browser started by perf report in
-TUI like below.
+  ; if (&curr->sighand->siglock == (void *)lock)
+  265: (79) r1 = *(u64 *)(r0 +2624)     ; frame1: R0_w=trusted_ptr_task_struct(off=0,imm=0)
+                                        ;         R1_w=rcu_ptr_or_null_sighand_struct(off=0,imm=0)
+  266: (b7) r2 = 0                      ; frame1: R2_w=0
+  267: (0f) r1 += r2
+  R1 pointer arithmetic on rcu_ptr_or_null_ prohibited, null-check it first
+  processed 164 insns (limit 1000000) max_states_per_insn 1 total_states 15 peak_states 15 mark_read 5
+  -- END PROG LOAD LOG --
+  libbpf: prog 'contention_end': failed to load: -13
+  libbpf: failed to load object 'lock_contention_bpf'
+  libbpf: failed to load BPF skeleton 'lock_contention_bpf': -13
+  Failed to load lock-contention BPF skeleton
+  lock contention BPF setup failed
+  lock contention did not detect any lock contention
 
-  $ perf report -s type,sym --tui
-  # and press 'a' key and then move down
-
-Fixes: 81e57deec325 ("perf report: Support data type profiling")
+Fixes: 1811e82767dcc ("perf lock contention: Track and show siglock with address")
 Reviewed-by: Ian Rogers <irogers@google.com>
+Acked-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Song Liu <song@kernel.org>
+Cc: bpf@vger.kernel.org
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20240405211800.1412920-2-namhyung@kernel.org
+Link: https://lore.kernel.org/r/20240409225542.1870999-1-namhyung@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/ui/browsers/annotate.c | 2 +-
- tools/perf/util/annotate.c        | 3 +++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ tools/perf/util/bpf_skel/lock_contention.bpf.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/ui/browsers/annotate.c b/tools/perf/ui/browsers/annotate.c
-index ec5e219328760..4790c735599bd 100644
---- a/tools/perf/ui/browsers/annotate.c
-+++ b/tools/perf/ui/browsers/annotate.c
-@@ -970,7 +970,7 @@ int symbol__tui_annotate(struct map_symbol *ms, struct evsel *evsel,
- 	if (dso->annotate_warned)
- 		return -1;
+diff --git a/tools/perf/util/bpf_skel/lock_contention.bpf.c b/tools/perf/util/bpf_skel/lock_contention.bpf.c
+index 95cd8414f6ef8..e5d78565f479f 100644
+--- a/tools/perf/util/bpf_skel/lock_contention.bpf.c
++++ b/tools/perf/util/bpf_skel/lock_contention.bpf.c
+@@ -289,6 +289,7 @@ static inline __u32 check_lock_type(__u64 lock, __u32 flags)
+ 	struct task_struct *curr;
+ 	struct mm_struct___old *mm_old;
+ 	struct mm_struct___new *mm_new;
++	struct sighand_struct *sighand;
  
--	if (not_annotated) {
-+	if (not_annotated || !sym->annotate2) {
- 		err = symbol__annotate2(ms, evsel, &browser.arch);
- 		if (err) {
- 			char msg[BUFSIZ];
-diff --git a/tools/perf/util/annotate.c b/tools/perf/util/annotate.c
-index 9b70ab110ce79..86a996290e9ab 100644
---- a/tools/perf/util/annotate.c
-+++ b/tools/perf/util/annotate.c
-@@ -2435,6 +2435,9 @@ int symbol__annotate(struct map_symbol *ms, struct evsel *evsel,
- 	if (parch)
- 		*parch = arch;
- 
-+	if (!list_empty(&notes->src->source))
-+		return 0;
+ 	switch (flags) {
+ 	case LCB_F_READ:  /* rwsem */
+@@ -310,7 +311,9 @@ static inline __u32 check_lock_type(__u64 lock, __u32 flags)
+ 		break;
+ 	case LCB_F_SPIN:  /* spinlock */
+ 		curr = bpf_get_current_task_btf();
+-		if (&curr->sighand->siglock == (void *)lock)
++		sighand = curr->sighand;
 +
- 	args.arch = arch;
- 	args.ms = *ms;
- 	if (annotate_opts.full_addr)
++		if (sighand && &sighand->siglock == (void *)lock)
+ 			return LCD_F_SIGHAND_LOCK;
+ 		break;
+ 	default:
 -- 
 2.43.0
 
