@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B995D143889;
-	Tue, 23 Apr 2024 21:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A43F143889;
+	Tue, 23 Apr 2024 21:41:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908491; cv=none; b=X/HlK6luuJRlLYznrP6T1R9NLhqHT5zVR098rumhi+j+Qqa3vKFh1TrMlcvigTcqtIZDUIiC1uYg2iZ2eRMA37ol8kBjd+8u5hmG0vRa6Fn+te+IE5ag4kHiNPhKvQ11Qk7CIzVRc7fYHMuRb/K7rzYWEfFS2X9LiKd22d9CRuc=
+	t=1713908492; cv=none; b=OMSyKS/uwC5eNbOSTlG0ovBGD9oEB0Vb1xVhnqjARA6o+OKwg4OKFBj56o0ReJvPrc1m80rTVnkki2ndRbhfODqUyzwBqoOJGCgLF2MZecnLGlHuUz7Q7/A0lGfO2OuZDHEhvRExhzRV3KETnA9fh9j2FO+hGo8ybMsayEHIaVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908491; c=relaxed/simple;
-	bh=/Jt0QfQga7hqeydzlkOGzl8dZeyPVeYcT4JFb1plOvc=;
+	s=arc-20240116; t=1713908492; c=relaxed/simple;
+	bh=CdJ5/+3ESPLwHo/Gi0pzy2eWy2xqtcFTPZD9W+Xj82M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ajVuFSN+0+Jaa5DJlYM++jEtycXtiITEmV8bNzanPunWQVBpppdeERnHVTnTyHwRXtEXCBPJs7D8ETOrSlf/tKTSipXxFXVN0eeqUQWqiCfIBNyxw//4eReBPU6x+644mLgO5k8BYlSPIaBm90rBcVLJBfiNv/IfrykfEamiDQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8j9bxwS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=spHfc/5LS6bbhnCpFfFB5mwV8aJBXn1xNY1bPjFl3YIBV8ThHWuh98xR9O5aThyiHcgSIckyGs4QuaE8du/cTNbmYK8Xex/h7QgFXRMGNOtHq4NUHWxPs2X9TGd9hcGqMXwMWp/u1mrdcZO+K9cIUGYsIaJeNYNTIPKiWVG+RUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1NrUygH4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8j9bxwS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E31EC32782;
-	Tue, 23 Apr 2024 21:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1NrUygH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9C8C116B1;
+	Tue, 23 Apr 2024 21:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908491;
-	bh=/Jt0QfQga7hqeydzlkOGzl8dZeyPVeYcT4JFb1plOvc=;
+	s=korg; t=1713908492;
+	bh=CdJ5/+3ESPLwHo/Gi0pzy2eWy2xqtcFTPZD9W+Xj82M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s8j9bxwS+IdjPdXRSZXcQkAfJa9K79B+hCW9hFaQKT5GfkgzgjxmGdm6wWbKcE1e0
-	 guOxxluArznERk6zfCYvbU7V6Avl9VAVEbw2wKVLoX9UDaD9K2YUsHPCtReOo627Jd
-	 qiGXcgx/V1ww/XkyIC9GJCbiHoD5OnItOwBCNgTg=
+	b=1NrUygH4BWwqdET1+eQLPUggxIdxJWaVaPOyDblzu9Y8/6r3f0DeZNDhR0ZSPEXJd
+	 Tzt/rjERrI0nX4PyBjuQem9UI8KCLDCvKV2jO4sq9XClGpzrnzOg7ESM55eYhTw+mw
+	 WH12rqvsWI/ukUWK0qTA/R0sdiJMZnzdhCucKrE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sanath S <Sanath.S@amd.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.8 067/158] thunderbolt: Introduce tb_port_reset()
-Date: Tue, 23 Apr 2024 14:38:09 -0700
-Message-ID: <20240423213858.140500552@linuxfoundation.org>
+Subject: [PATCH 6.8 068/158] thunderbolt: Introduce tb_path_deactivate_hop()
+Date: Tue, 23 Apr 2024 14:38:10 -0700
+Message-ID: <20240423213858.168958912@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -53,185 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Sanath S <Sanath.S@amd.com>
 
-commit 01da6b99d49f60b1edead44e33569b1a2e9f49b7 upstream.
+commit b35c1d7b11da8c08b14147bbe87c2c92f7a83f8b upstream.
 
-Introduce a function that issues Downstream Port Reset to a USB4 port.
-This supports Thunderbolt 2, 3 and USB4 routers.
+This function can be used to clear path config space of an adapter. Make
+it available for other files in this driver.
 
 Signed-off-by: Sanath S <Sanath.S@amd.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Cc: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/lc.c      |   45 ++++++++++++++++++++++++++++++++++++++++++
- drivers/thunderbolt/switch.c  |    7 ++++++
- drivers/thunderbolt/tb.h      |    2 +
- drivers/thunderbolt/tb_regs.h |    4 +++
- drivers/thunderbolt/usb4.c    |   39 ++++++++++++++++++++++++++++++++++++
- 5 files changed, 97 insertions(+)
+ drivers/thunderbolt/path.c |   13 +++++++++++++
+ drivers/thunderbolt/tb.h   |    1 +
+ 2 files changed, 14 insertions(+)
 
---- a/drivers/thunderbolt/lc.c
-+++ b/drivers/thunderbolt/lc.c
-@@ -6,6 +6,8 @@
-  * Author: Mika Westerberg <mika.westerberg@linux.intel.com>
-  */
- 
-+#include <linux/delay.h>
-+
- #include "tb.h"
- 
- /**
-@@ -45,6 +47,49 @@ static int find_port_lc_cap(struct tb_po
- 	return sw->cap_lc + start + phys * size;
+--- a/drivers/thunderbolt/path.c
++++ b/drivers/thunderbolt/path.c
+@@ -446,6 +446,19 @@ static int __tb_path_deactivate_hop(stru
+ 	return -ETIMEDOUT;
  }
  
 +/**
-+ * tb_lc_reset_port() - Trigger downstream port reset through LC
-+ * @port: Port that is reset
++ * tb_path_deactivate_hop() - Deactivate one path in path config space
++ * @port: Lane or protocol adapter
++ * @hop_index: HopID of the path to be cleared
 + *
-+ * Triggers downstream port reset through link controller registers.
-+ * Returns %0 in case of success negative errno otherwise. Only supports
-+ * non-USB4 routers with link controller (that's Thunderbolt 2 and
-+ * Thunderbolt 3).
++ * This deactivates or clears a single path config space entry at
++ * @hop_index. Returns %0 in success and negative errno otherwise.
 + */
-+int tb_lc_reset_port(struct tb_port *port)
++int tb_path_deactivate_hop(struct tb_port *port, int hop_index)
 +{
-+	struct tb_switch *sw = port->sw;
-+	int cap, ret;
-+	u32 mode;
-+
-+	if (sw->generation < 2)
-+		return -EINVAL;
-+
-+	cap = find_port_lc_cap(port);
-+	if (cap < 0)
-+		return cap;
-+
-+	ret = tb_sw_read(sw, &mode, TB_CFG_SWITCH, cap + TB_LC_PORT_MODE, 1);
-+	if (ret)
-+		return ret;
-+
-+	mode |= TB_LC_PORT_MODE_DPR;
-+
-+	ret = tb_sw_write(sw, &mode, TB_CFG_SWITCH, cap + TB_LC_PORT_MODE, 1);
-+	if (ret)
-+		return ret;
-+
-+	fsleep(10000);
-+
-+	ret = tb_sw_read(sw, &mode, TB_CFG_SWITCH, cap + TB_LC_PORT_MODE, 1);
-+	if (ret)
-+		return ret;
-+
-+	mode &= ~TB_LC_PORT_MODE_DPR;
-+
-+	return tb_sw_write(sw, &mode, TB_CFG_SWITCH, cap + TB_LC_PORT_MODE, 1);
++	return __tb_path_deactivate_hop(port, hop_index, true);
 +}
 +
- static int tb_lc_set_port_configured(struct tb_port *port, bool configured)
+ static void __tb_path_deactivate_hops(struct tb_path *path, int first_hop)
  {
- 	bool upstream = tb_is_upstream_port(port);
---- a/drivers/thunderbolt/switch.c
-+++ b/drivers/thunderbolt/switch.c
-@@ -676,6 +676,13 @@ int tb_port_disable(struct tb_port *port
- 	return __tb_port_enable(port, false);
- }
- 
-+static int tb_port_reset(struct tb_port *port)
-+{
-+	if (tb_switch_is_usb4(port->sw))
-+		return port->cap_usb4 ? usb4_port_reset(port) : 0;
-+	return tb_lc_reset_port(port);
-+}
-+
- /*
-  * tb_init_port() - initialize a port
-  *
+ 	int i, res;
 --- a/drivers/thunderbolt/tb.h
 +++ b/drivers/thunderbolt/tb.h
-@@ -1173,6 +1173,7 @@ int tb_drom_read(struct tb_switch *sw);
- int tb_drom_read_uid_only(struct tb_switch *sw, u64 *uid);
- 
- int tb_lc_read_uuid(struct tb_switch *sw, u32 *uuid);
-+int tb_lc_reset_port(struct tb_port *port);
- int tb_lc_configure_port(struct tb_port *port);
- void tb_lc_unconfigure_port(struct tb_port *port);
- int tb_lc_configure_xdomain(struct tb_port *port);
-@@ -1305,6 +1306,7 @@ void usb4_switch_remove_ports(struct tb_
- 
- int usb4_port_unlock(struct tb_port *port);
- int usb4_port_hotplug_enable(struct tb_port *port);
-+int usb4_port_reset(struct tb_port *port);
- int usb4_port_configure(struct tb_port *port);
- void usb4_port_unconfigure(struct tb_port *port);
- int usb4_port_configure_xdomain(struct tb_port *port, struct tb_xdomain *xd);
---- a/drivers/thunderbolt/tb_regs.h
-+++ b/drivers/thunderbolt/tb_regs.h
-@@ -389,6 +389,7 @@ struct tb_regs_port_header {
- #define PORT_CS_18_CSA				BIT(22)
- #define PORT_CS_18_TIP				BIT(24)
- #define PORT_CS_19				0x13
-+#define PORT_CS_19_DPR				BIT(0)
- #define PORT_CS_19_PC				BIT(3)
- #define PORT_CS_19_PID				BIT(4)
- #define PORT_CS_19_WOC				BIT(16)
-@@ -584,6 +585,9 @@ struct tb_regs_hop {
- #define TB_LC_POWER				0x740
- 
- /* Link controller registers */
-+#define TB_LC_PORT_MODE				0x26
-+#define TB_LC_PORT_MODE_DPR			BIT(0)
-+
- #define TB_LC_CS_42				0x2a
- #define TB_LC_CS_42_USB_PLUGGED			BIT(31)
- 
---- a/drivers/thunderbolt/usb4.c
-+++ b/drivers/thunderbolt/usb4.c
-@@ -1113,6 +1113,45 @@ int usb4_port_hotplug_enable(struct tb_p
- 	return tb_port_write(port, &val, TB_CFG_PORT, ADP_CS_5, 1);
- }
- 
-+/**
-+ * usb4_port_reset() - Issue downstream port reset
-+ * @port: USB4 port to reset
-+ *
-+ * Issues downstream port reset to @port.
-+ */
-+int usb4_port_reset(struct tb_port *port)
-+{
-+	int ret;
-+	u32 val;
-+
-+	if (!port->cap_usb4)
-+		return -EINVAL;
-+
-+	ret = tb_port_read(port, &val, TB_CFG_PORT,
-+			   port->cap_usb4 + PORT_CS_19, 1);
-+	if (ret)
-+		return ret;
-+
-+	val |= PORT_CS_19_DPR;
-+
-+	ret = tb_port_write(port, &val, TB_CFG_PORT,
-+			    port->cap_usb4 + PORT_CS_19, 1);
-+	if (ret)
-+		return ret;
-+
-+	fsleep(10000);
-+
-+	ret = tb_port_read(port, &val, TB_CFG_PORT,
-+			   port->cap_usb4 + PORT_CS_19, 1);
-+	if (ret)
-+		return ret;
-+
-+	val &= ~PORT_CS_19_DPR;
-+
-+	return tb_port_write(port, &val, TB_CFG_PORT,
-+			     port->cap_usb4 + PORT_CS_19, 1);
-+}
-+
- static int usb4_port_set_configured(struct tb_port *port, bool configured)
- {
- 	int ret;
+@@ -1154,6 +1154,7 @@ struct tb_path *tb_path_alloc(struct tb
+ void tb_path_free(struct tb_path *path);
+ int tb_path_activate(struct tb_path *path);
+ void tb_path_deactivate(struct tb_path *path);
++int tb_path_deactivate_hop(struct tb_port *port, int hop_index);
+ bool tb_path_is_invalid(struct tb_path *path);
+ bool tb_path_port_on_path(const struct tb_path *path,
+ 			  const struct tb_port *port);
 
 
