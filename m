@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7D4143C49;
-	Tue, 23 Apr 2024 21:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B8C143C49;
+	Tue, 23 Apr 2024 21:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908723; cv=none; b=Pg57OyZAtm8nRMWQWCd7RLzdcmjiXNPJyU0/4MrGVuBDSJYpJuwLXgwy1Qotz2Vw1DX5P0WRGIxJcPx2ScBltWkwAtQ7kY44Zo0Fub4QCM+4JF4+Q2tEfP9XCqhUx2FHsf9dNeSBzQNJKoobVfLr1Kq9FpFRd5nGXoIz6Y2+awc=
+	t=1713908724; cv=none; b=ouTsHP8FyOkX9yMwHbvqNIRqOsya4H7UpRiepuhgk08oJS4LYTpcd6Zein2yPHyJ9nMIUiVkmpqtcW8XX6YKhy7fonE4m2N/EBX4EuVigydNM2QCuEWVzgdk/P3KPeyy9jxmNZN4u2trHrAawMMGCo8a7Hqgobre6heqbDmqcRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908723; c=relaxed/simple;
-	bh=WbUNBDcsk7eg7ufSXdw5WXt4LnSqBsBaXsjeD7yrGW0=;
+	s=arc-20240116; t=1713908724; c=relaxed/simple;
+	bh=FZXVtl4Low3OH+KamJDpr7UV8k84fo1eC9LHUBa9VV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JtuHvZdqwl56P/tkMFvsVi7k0XWUvjcvWZlM013G5AwGrgvsAZ5pskc2/EkkwcvOI8yzDOr8S7d5nusw8LgCwL2xDk9G35epNRXmRH2rD5nmyFfZ814NDaR6RdcSej8BxNoytjU7AUhWBGhgIlAg8hQbx/qqPmXm7qmcExDuiME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2u6O8ouk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fpnhmLCU/DZPYawqUytgashD9+czFhLfvpgnzP6isyC6wWxeauf36plZzq8cfAIXVI3XwOkNqL9OUM5FOC5uOS9HQOVuuooVhH2N9CPZEKjFc9MRhr1+11IUHUk+QtInO5P6A884Mnsvfk0nIvrDLrHrmNxbTspTmJiiydFNtRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efxC/W27; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2u6O8ouk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1CDC4AF08;
-	Tue, 23 Apr 2024 21:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efxC/W27"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F752C116B1;
+	Tue, 23 Apr 2024 21:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908723;
-	bh=WbUNBDcsk7eg7ufSXdw5WXt4LnSqBsBaXsjeD7yrGW0=;
+	s=korg; t=1713908724;
+	bh=FZXVtl4Low3OH+KamJDpr7UV8k84fo1eC9LHUBa9VV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2u6O8oukX3SVwoTaCpwSdWnk2Pdw/FNtp4ewnlMAd7eAnfFoHKzi918ym7l8gWwD1
-	 kHBubq4frv8e59FBNW0OY2y5WOYh6l9U2KXlFycCmBWifSDWSXreGdr97aKqaOPmZU
-	 Ucwtr6RK0DDylPdZpjM/2sJ5gvog82cQFZR94vSE=
+	b=efxC/W2777jnKtBpa3FgtRnXqbW55Qg15RqKynlq9DOjdFEFfaJg15t7E4Dt+oKUR
+	 coR4rp4mto2OBIttar7qxFwafXCO/SNXdQBqroMb8eYiAdp9XNYAZyXPHAma/XsxfX
+	 Lnn7Re5vxLgfHcrFwj0hm33D2WEWci4Z7hpLgox4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Zhe <yuzhe@nfschina.com>,
+	Chinmoy Ghosh <chinmoyghosh2001@gmail.com>,
+	Mintu Patel <mintupatel89@gmail.com>,
+	Vimal Kumar <vimal.kumar32@gmail.com>,
+	Vishal Badole <badolevishal1116@gmail.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/141] clk: remove unnecessary (void*) conversions
-Date: Tue, 23 Apr 2024 14:39:15 -0700
-Message-ID: <20240423213856.015823139@linuxfoundation.org>
+Subject: [PATCH 6.1 088/141] clk: Show active consumers of clocks in debugfs
+Date: Tue, 23 Apr 2024 14:39:16 -0700
+Message-ID: <20240423213856.043970866@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -51,43 +54,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Zhe <yuzhe@nfschina.com>
+From: Vishal Badole <badolevishal1116@gmail.com>
 
-[ Upstream commit 5b1a1c1ab1f981b15bce778db863344f59bd1501 ]
+[ Upstream commit dcce5cc7826e9c6b3a2443e5e6b7f8d02a103c35 ]
 
-Pointer variables of void * type do not require type cast.
+This feature lists the clock consumer's name and respective connection
+id. Using this feature user can easily check that which user has
+acquired and enabled a particular clock.
 
-Signed-off-by: Yu Zhe <yuzhe@nfschina.com>
-Link: https://lore.kernel.org/r/20230316075826.22754-1-yuzhe@nfschina.com
+Usage:
+>> cat /sys/kernel/debug/clk/clk_summary
+                      enable  prepare  protect
+                                                                          duty  hardware                            Connection
+   clock               count    count    count    rate   accuracy phase  cycle    enable   consumer                         Id
+------------------------------------------------------------------------------------------------------------------------------
+ clk_mcasp0_fixed         0        0        0    24576000          0      0  50000     Y   deviceless                     of_clk_get_from_provider
+                                                                                           deviceless                     no_connection_id
+    clk_mcasp0            0        0        0    24576000          0      0  50000     N      simple-audio-card,cpu           no_connection_id
+                                                                                              deviceless                      no_connection_id
+
+Co-developed-by: Chinmoy Ghosh <chinmoyghosh2001@gmail.com>
+Signed-off-by: Chinmoy Ghosh <chinmoyghosh2001@gmail.com>
+Co-developed-by: Mintu Patel <mintupatel89@gmail.com>
+Signed-off-by: Mintu Patel <mintupatel89@gmail.com>
+Co-developed-by: Vimal Kumar <vimal.kumar32@gmail.com>
+Signed-off-by: Vimal Kumar <vimal.kumar32@gmail.com>
+Signed-off-by: Vishal Badole <badolevishal1116@gmail.com>
+Link: https://lore.kernel.org/r/1669569799-8526-1-git-send-email-badolevishal1116@gmail.com
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Stable-dep-of: 9d1e795f754d ("clk: Get runtime PM before walking tree for clk_summary")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/clk.c | 34 ++++++++++++++++++++++++----------
+ 1 file changed, 24 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index 75d8f7f0de9ba..bf4ac2f52d335 100644
+index bf4ac2f52d335..ded4a51323d2e 100644
 --- a/drivers/clk/clk.c
 +++ b/drivers/clk/clk.c
-@@ -3245,7 +3245,7 @@ static void clk_summary_show_subtree(struct seq_file *s, struct clk_core *c,
- static int clk_summary_show(struct seq_file *s, void *data)
+@@ -3205,28 +3205,41 @@ static void clk_summary_show_one(struct seq_file *s, struct clk_core *c,
+ 				 int level)
  {
- 	struct clk_core *c;
--	struct hlist_head **lists = (struct hlist_head **)s->private;
-+	struct hlist_head **lists = s->private;
+ 	int phase;
++	struct clk *clk_user;
++	int multi_node = 0;
  
- 	seq_puts(s, "                                 enable  prepare  protect                                duty  hardware\n");
- 	seq_puts(s, "   clock                          count    count    count        rate   accuracy phase  cycle    enable\n");
-@@ -3304,7 +3304,7 @@ static int clk_dump_show(struct seq_file *s, void *data)
- {
- 	struct clk_core *c;
- 	bool first_node = true;
--	struct hlist_head **lists = (struct hlist_head **)s->private;
-+	struct hlist_head **lists = s->private;
+-	seq_printf(s, "%*s%-*s %7d %8d %8d %11lu %10lu ",
++	seq_printf(s, "%*s%-*s %-7d %-8d %-8d %-11lu %-10lu ",
+ 		   level * 3 + 1, "",
+-		   30 - level * 3, c->name,
++		   35 - level * 3, c->name,
+ 		   c->enable_count, c->prepare_count, c->protect_count,
+ 		   clk_core_get_rate_recalc(c),
+ 		   clk_core_get_accuracy_recalc(c));
  
- 	seq_putc(s, '{');
+ 	phase = clk_core_get_phase(c);
+ 	if (phase >= 0)
+-		seq_printf(s, "%5d", phase);
++		seq_printf(s, "%-5d", phase);
+ 	else
+ 		seq_puts(s, "-----");
+ 
+-	seq_printf(s, " %6d", clk_core_get_scaled_duty_cycle(c, 100000));
++	seq_printf(s, " %-6d", clk_core_get_scaled_duty_cycle(c, 100000));
+ 
+ 	if (c->ops->is_enabled)
+-		seq_printf(s, " %9c\n", clk_core_is_enabled(c) ? 'Y' : 'N');
++		seq_printf(s, " %5c ", clk_core_is_enabled(c) ? 'Y' : 'N');
+ 	else if (!c->ops->enable)
+-		seq_printf(s, " %9c\n", 'Y');
++		seq_printf(s, " %5c ", 'Y');
+ 	else
+-		seq_printf(s, " %9c\n", '?');
++		seq_printf(s, " %5c ", '?');
++
++	hlist_for_each_entry(clk_user, &c->clks, clks_node) {
++		seq_printf(s, "%*s%-*s  %-25s\n",
++			   level * 3 + 2 + 105 * multi_node, "",
++			   30,
++			   clk_user->dev_id ? clk_user->dev_id : "deviceless",
++			   clk_user->con_id ? clk_user->con_id : "no_connection_id");
++
++		multi_node = 1;
++	}
++
+ }
+ 
+ static void clk_summary_show_subtree(struct seq_file *s, struct clk_core *c,
+@@ -3247,9 +3260,10 @@ static int clk_summary_show(struct seq_file *s, void *data)
+ 	struct clk_core *c;
+ 	struct hlist_head **lists = s->private;
+ 
+-	seq_puts(s, "                                 enable  prepare  protect                                duty  hardware\n");
+-	seq_puts(s, "   clock                          count    count    count        rate   accuracy phase  cycle    enable\n");
+-	seq_puts(s, "-------------------------------------------------------------------------------------------------------\n");
++	seq_puts(s, "                                 enable  prepare  protect                                duty  hardware                            connection\n");
++	seq_puts(s, "   clock                          count    count    count        rate   accuracy phase  cycle    enable   consumer                         id\n");
++	seq_puts(s, "---------------------------------------------------------------------------------------------------------------------------------------------\n");
++
+ 
  	clk_prepare_lock();
+ 
 -- 
 2.43.0
 
