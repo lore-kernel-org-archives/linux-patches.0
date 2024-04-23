@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A17A143898;
-	Tue, 23 Apr 2024 21:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BEE8143898;
+	Tue, 23 Apr 2024 21:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908517; cv=none; b=L+haQeihc5cfHXPQqhggNCC2BmVolLEJuIIpezce5iCqBh2X8mUIK6Pa99C2aKgyEdxDwb1OXGd10c+GejIDx0VwGBvJDJLq9pMGNWwIQxo7Y3jq7cxWvst5xm1C6S+5jS4T7pAbjVJUAsZK+hczaky+cCs/9SD+TD6nMpO9OJE=
+	t=1713908518; cv=none; b=ZaoH1x9l6M+EC/z0iPULLC6BEycxIabsgVpKNoleRTaW+HEo3MczjMcHRBLLQ+0K2dt7jm1fdD9tab0/P7x/To613kPh3lFPno6CLGxjvLFRA8RzFiU8+O0mhtwpCKs2e+g+nmQtFkdK9k0D2M4+6N4We2lK6Qeg0XyEvRlCEXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908517; c=relaxed/simple;
-	bh=K2tTR2ZzIRFEFg7q4VyrbR3zD3RxT/8ijj384SmsbvM=;
+	s=arc-20240116; t=1713908518; c=relaxed/simple;
+	bh=qGnc8NeZ3rTCbDsDRNSA+k+zsB1/K5UHVcsKIJi3vIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=myS9/qwGJn9C1/UeKlZN/6OCcM3kuguxEKj6sl/8IIGfufp8S7nhqyP8yxWtp8hGT9fehFADwrNSgtMT6ikyhfjw9Lf88CzHoA7+du6iBp4gQD4oz/rOz4BbcuhvT1CnCaaM8cyxYfe3aIj6xPOHu45Jqt1BnuhRGTR/HFuVwws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NrA4+LB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eKq/7f1EB0+AkQQmq/UeR9jLwuEy8AIri0R40FDFP46g0fiKHfAiyzocuTs18CKIRIGcxDS5HIPA4YK1O/B4JUI6yhSi+ZmiwkF0i9WQbCbglxuA1vrCqW2GwSByxoPFqRbCtvvs67+PwXvW+vseU4VzFBAZVOKuXZCfdILKloE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ORJij1mh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NrA4+LB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB2EC3277B;
-	Tue, 23 Apr 2024 21:41:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ORJij1mh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2128FC32783;
+	Tue, 23 Apr 2024 21:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908517;
-	bh=K2tTR2ZzIRFEFg7q4VyrbR3zD3RxT/8ijj384SmsbvM=;
+	s=korg; t=1713908518;
+	bh=qGnc8NeZ3rTCbDsDRNSA+k+zsB1/K5UHVcsKIJi3vIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2NrA4+LBrNeHXDk7DBtHF85ma03w52mVh4lPeqMXQ8B1DN2lnV51bTTfFHh3+ar/O
-	 SZ6zDkmTwAH/U0iCWlT2Kg8Lg9IR9W/g77c8NuACk//AbUHybexbUObTok0Xzsnsr4
-	 muxlaKeLFwwlG7kGY3GEKtW6eoR+kT4fTI5EEZpc=
+	b=ORJij1mhOepcGjGio4j6+mS2yuuwZMgNaI04IPJSbQOcPxh6RFIS9G5Av2xANH/fW
+	 4CKp53uhMZJw5atK6j/dWLCehaNYWuyXbGCqZINSiHz3q8fWxOloci/VNYwNtwIwrO
+	 WP61vRVAzNFHDKQBw5Hzn1Kh5KuLJIDgwJyE9VeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Subject: [PATCH 6.8 104/158] serial: stm32: Return IRQ_NONE in the ISR if no handling happend
-Date: Tue, 23 Apr 2024 14:38:46 -0700
-Message-ID: <20240423213859.323299900@linuxfoundation.org>
+Subject: [PATCH 6.8 105/158] serial: stm32: Reset .throttled state in .startup()
+Date: Tue, 23 Apr 2024 14:38:47 -0700
+Message-ID: <20240423213859.354428901@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -52,87 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 13c785323b36b845300b256d0e5963c3727667d7 upstream.
+commit ea2624b5b829b8f93c0dce25721d835969b34faf upstream.
 
-If there is a stuck irq that the handler doesn't address, returning
-IRQ_HANDLED unconditionally makes it impossible for the irq core to
-detect the problem and disable the irq. So only return IRQ_HANDLED if
-an event was handled.
+When an UART is opened that still has .throttled set from a previous
+open, the RX interrupt is enabled but the irq handler doesn't consider
+it. This easily results in a stuck irq with the effect to occupy the CPU
+in a tight loop.
 
-A stuck irq is still problematic, but with this change at least it only
-makes the UART nonfunctional instead of occupying the (usually only) CPU
-by 100% and so stall the whole machine.
+So reset the throttle state in .startup() to ensure that RX irqs are
+handled.
 
-Fixes: 48a6092fb41f ("serial: stm32-usart: Add STM32 USART Driver")
+Fixes: d1ec8a2eabe9 ("serial: stm32: update throttle and unthrottle ops for dma mode")
 Cc: stable@vger.kernel.org
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/5f92603d0dfd8a5b8014b2b10a902d91e0bb881f.1713344161.git.u.kleine-koenig@pengutronix.de
+Link: https://lore.kernel.org/r/a784f80d3414f7db723b2ec66efc56e1ad666cbf.1713344161.git.u.kleine-koenig@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/stm32-usart.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/tty/serial/stm32-usart.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/tty/serial/stm32-usart.c
 +++ b/drivers/tty/serial/stm32-usart.c
-@@ -857,6 +857,7 @@ static irqreturn_t stm32_usart_interrupt
- 	const struct stm32_usart_offsets *ofs = &stm32_port->info->ofs;
- 	u32 sr;
- 	unsigned int size;
-+	irqreturn_t ret = IRQ_NONE;
- 
- 	sr = readl_relaxed(port->membase + ofs->isr);
- 
-@@ -865,11 +866,14 @@ static irqreturn_t stm32_usart_interrupt
- 	    (sr & USART_SR_TC)) {
- 		stm32_usart_tc_interrupt_disable(port);
- 		stm32_usart_rs485_rts_disable(port);
-+		ret = IRQ_HANDLED;
+@@ -1088,6 +1088,7 @@ static int stm32_usart_startup(struct ua
+ 		val |= USART_CR2_SWAP;
+ 		writel_relaxed(val, port->membase + ofs->cr2);
  	}
++	stm32_port->throttled = false;
  
--	if ((sr & USART_SR_RTOF) && ofs->icr != UNDEF_REG)
-+	if ((sr & USART_SR_RTOF) && ofs->icr != UNDEF_REG) {
- 		writel_relaxed(USART_ICR_RTOCF,
- 			       port->membase + ofs->icr);
-+		ret = IRQ_HANDLED;
-+	}
- 
- 	if ((sr & USART_SR_WUF) && ofs->icr != UNDEF_REG) {
- 		/* Clear wake up flag and disable wake up interrupt */
-@@ -878,6 +882,7 @@ static irqreturn_t stm32_usart_interrupt
- 		stm32_usart_clr_bits(port, ofs->cr3, USART_CR3_WUFIE);
- 		if (irqd_is_wakeup_set(irq_get_irq_data(port->irq)))
- 			pm_wakeup_event(tport->tty->dev, 0);
-+		ret = IRQ_HANDLED;
- 	}
- 
- 	/*
-@@ -892,6 +897,7 @@ static irqreturn_t stm32_usart_interrupt
- 			uart_unlock_and_check_sysrq(port);
- 			if (size)
- 				tty_flip_buffer_push(tport);
-+			ret = IRQ_HANDLED;
- 		}
- 	}
- 
-@@ -899,6 +905,7 @@ static irqreturn_t stm32_usart_interrupt
- 		uart_port_lock(port);
- 		stm32_usart_transmit_chars(port);
- 		uart_port_unlock(port);
-+		ret = IRQ_HANDLED;
- 	}
- 
- 	/* Receiver timeout irq for DMA RX */
-@@ -908,9 +915,10 @@ static irqreturn_t stm32_usart_interrupt
- 		uart_unlock_and_check_sysrq(port);
- 		if (size)
- 			tty_flip_buffer_push(tport);
-+		ret = IRQ_HANDLED;
- 	}
- 
--	return IRQ_HANDLED;
-+	return ret;
- }
- 
- static void stm32_usart_set_mctrl(struct uart_port *port, unsigned int mctrl)
+ 	/* RX FIFO Flush */
+ 	if (ofs->rqr != UNDEF_REG)
 
 
