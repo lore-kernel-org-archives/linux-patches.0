@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1846A143889;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92E3143889;
 	Tue, 23 Apr 2024 21:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908587; cv=none; b=KyiKUwRlVLhRtwpHedFIVKvodGyke4sAJKU2yHcoA7qcbmyD5QL2pgiVI/EcQyHMq6hcq+uFoeOd4UCAd/mam6iYpydC5cFf2sP+cD4rGjmthXBATpd8p5w6OyCL0LngHLzYDhKTMhqRxmiD6dJFOcxfFbf6ksexSmkV4KoWepM=
+	t=1713908587; cv=none; b=iQIl6w7arxiCB4jOvoFuo/07fPD62ij5ozSlqMUoieTY1ysa6oiVwAZptkaSMHiAU9vAzqp1Gjnp2K7Eta8bcssrOIeNMeauxiWx8e8eLpB3dJTM2WpOsF4sOA60mnKneM9EHEMFVLgvxtWLKCS0DulmHAbO6YS07Sc/yNfOEzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908587; c=relaxed/simple;
-	bh=DXEW5zkkK3tk1nkeAQHxa4WKGBIIGjRAr6VvIxYb9hg=;
+	bh=lO1+Y5E3z9C+cVKWNZLxQ8loyc8CVISZoxCZ8FQkflI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HMXuE4CSIo47Y+eaaDImplwFRL2qik1bAPs2e/hMGlJ1KQb2X7BoZ3EbrIDAnntW5agWj0KZiMnGCs3dVtN/IGGZzELCAvKHC+0oLqfl4KHoAaWRK55WlhELNoL2hfmjh1wUunJNv460sRN+/asnBM859uonIFZkYMZ6JwdxtJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/6bsfFZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TYaZQwhzxcXMtN2Tfc1AyLGzF27fFaxkwzv0QYHCtetympTj3ESc0PHnbkYj7ZKXKwpY4CEAYCBO3i3XgwU2cle7tdsdamRavrtf7Pdvcx1tTKkbWD/O8/DDlxtQqJPHc12QHbNvzSSbx6QIhxSMu63+Z5Ez8UT5QAph3EA/D8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVtFe6ad; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/6bsfFZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E045FC116B1;
-	Tue, 23 Apr 2024 21:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVtFe6ad"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E814C3277B;
+	Tue, 23 Apr 2024 21:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908587;
-	bh=DXEW5zkkK3tk1nkeAQHxa4WKGBIIGjRAr6VvIxYb9hg=;
+	bh=lO1+Y5E3z9C+cVKWNZLxQ8loyc8CVISZoxCZ8FQkflI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/6bsfFZoBPYK+Rt/eZkxoNX69yOm9JaXNTXotIO74pRuneTy6LnVaXzXwWtwKKjK
-	 EZCBLJedjXcnJ69ekDw9papzbSsMr/J89sjI9R0z+6dhe9YWZXLXM3dh0kHEWV/58d
-	 dDPLYKVbH4jP6QEM06XCkq76CnIMrG+6727THtxk=
+	b=NVtFe6adbz4bY1vFLWob3yplX1oXpqLINOwA8IWor8EFcQb/uKNHByzr7FivuOeSx
+	 nCo+yo0j6UuJicSOViWSQQcrjGa4+Wvx2kzwMBqJkp/3KLmIRlB+sE7ihK6jE07C+O
+	 8JyRaw9248SxRgqUg1ligeQeLs3VB+jnJqw7iVUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Stultz <jstultz@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Justin Stitt <justinstitt@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/158] selftests: timers: Fix posix_timers ksft_print_msg() warning
-Date: Tue, 23 Apr 2024 14:37:37 -0700
-Message-ID: <20240423213856.384807402@linuxfoundation.org>
+Subject: [PATCH 6.6 021/158] drm/msm/dpu: populate SSPP scaler block version
+Date: Tue, 23 Apr 2024 14:37:38 -0700
+Message-ID: <20240423213856.426611562@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -53,45 +51,347 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Stultz <jstultz@google.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit e4a6bceac98eba3c00e874892736b34ea5fdaca3 ]
+[ Upstream commit 46b1f1b839cad600de3ad7ed999bd0155c528746 ]
 
-After commit 6d029c25b71f ("selftests/timers/posix_timers: Reimplement
-check_timer_distribution()") the following warning occurs when building
-with an older gcc:
+The function _dpu_hw_sspp_setup_scaler3() passes and
+dpu_hw_setup_scaler3() uses scaler_blk.version to determine in which way
+the scaler (QSEED3) block should be programmed. However up to now we
+were not setting this field. Set it now, splitting the vig_sblk data
+which has different version fields.
 
-posix_timers.c:250:2: warning: format not a string literal and no format arguments [-Wformat-security]
-  250 |  ksft_print_msg(errmsg);
-      |  ^~~~~~~~~~~~~~
-
-Fix this up by changing it to ksft_print_msg("%s", errmsg)
-
-Fixes: 6d029c25b71f ("selftests/timers/posix_timers: Reimplement check_timer_distribution()")
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Justin Stitt <justinstitt@google.com>
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240410232637.4135564-1-jstultz@google.com
+Reported-by: Marijn Suijten <marijn.suijten@somainline.org>
+Fixes: 9b6f4fedaac2 ("drm/msm/dpu: Add SM6125 support")
+Fixes: 27f0df03f3ff ("drm/msm/dpu: Add SM6375 support")
+Fixes: 3186acba5cdc ("drm/msm/dpu: Add SM6350 support")
+Fixes: efcd0107727c ("drm/msm/dpu: add support for SM8550")
+Fixes: 4a352c2fc15a ("drm/msm/dpu: Introduce SC8280XP")
+Fixes: 0e91bcbb0016 ("drm/msm/dpu: Add SM8350 to hw catalog")
+Fixes: 100d7ef6995d ("drm/msm/dpu: add support for SM8450")
+Fixes: 3581b7062cec ("drm/msm/disp/dpu1: add support for display on SM6115")
+Fixes: dabfdd89eaa9 ("drm/msm/disp/dpu1: add inline rotation support for sc7280")
+Fixes: f3af2d6ee9ab ("drm/msm/dpu: Add SC8180x to hw catalog")
+Fixes: 94391a14fc27 ("drm/msm/dpu1: Add MSM8998 to hw catalog")
+Fixes: af776a3e1c30 ("drm/msm/dpu: add SM8250 to hw catalog")
+Fixes: 386fced3f76f ("drm/msm/dpu: add SM8150 to hw catalog")
+Fixes: b75ab05a3479 ("msm:disp:dpu1: add scaler support on SC7180 display")
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/570098/
+Link: https://lore.kernel.org/r/20231201234234.2065610-2-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/timers/posix_timers.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  8 +-
+ .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  8 +-
+ .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  8 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 95 ++++++++++++++-----
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  3 +-
+ 5 files changed, 87 insertions(+), 35 deletions(-)
 
-diff --git a/tools/testing/selftests/timers/posix_timers.c b/tools/testing/selftests/timers/posix_timers.c
-index 14355d8472110..c001dd79179d5 100644
---- a/tools/testing/selftests/timers/posix_timers.c
-+++ b/tools/testing/selftests/timers/posix_timers.c
-@@ -247,7 +247,7 @@ static int check_timer_distribution(void)
- 		ksft_test_result_skip("check signal distribution (old kernel)\n");
- 	return 0;
- err:
--	ksft_print_msg(errmsg);
-+	ksft_print_msg("%s", errmsg);
- 	return -1;
- }
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+index 99acaf917e430..f0c3804f42587 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+@@ -77,7 +77,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
+ 		.name = "sspp_0", .id = SSPP_VIG0,
+ 		.base = 0x4000, .len = 0x1f0,
+ 		.features = VIG_SDM845_MASK,
+-		.sblk = &sdm845_vig_sblk_0,
++		.sblk = &sm8150_vig_sblk_0,
+ 		.xin_id = 0,
+ 		.type = SSPP_TYPE_VIG,
+ 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+@@ -85,7 +85,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
+ 		.name = "sspp_1", .id = SSPP_VIG1,
+ 		.base = 0x6000, .len = 0x1f0,
+ 		.features = VIG_SDM845_MASK,
+-		.sblk = &sdm845_vig_sblk_1,
++		.sblk = &sm8150_vig_sblk_1,
+ 		.xin_id = 4,
+ 		.type = SSPP_TYPE_VIG,
+ 		.clk_ctrl = DPU_CLK_CTRL_VIG1,
+@@ -93,7 +93,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
+ 		.name = "sspp_2", .id = SSPP_VIG2,
+ 		.base = 0x8000, .len = 0x1f0,
+ 		.features = VIG_SDM845_MASK,
+-		.sblk = &sdm845_vig_sblk_2,
++		.sblk = &sm8150_vig_sblk_2,
+ 		.xin_id = 8,
+ 		.type = SSPP_TYPE_VIG,
+ 		.clk_ctrl = DPU_CLK_CTRL_VIG2,
+@@ -101,7 +101,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
+ 		.name = "sspp_3", .id = SSPP_VIG3,
+ 		.base = 0xa000, .len = 0x1f0,
+ 		.features = VIG_SDM845_MASK,
+-		.sblk = &sdm845_vig_sblk_3,
++		.sblk = &sm8150_vig_sblk_3,
+ 		.xin_id = 12,
+ 		.type = SSPP_TYPE_VIG,
+ 		.clk_ctrl = DPU_CLK_CTRL_VIG3,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+index c92fbf24fbac1..47de71e71e310 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+@@ -76,7 +76,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
+ 		.name = "sspp_0", .id = SSPP_VIG0,
+ 		.base = 0x4000, .len = 0x1f0,
+ 		.features = VIG_SDM845_MASK,
+-		.sblk = &sdm845_vig_sblk_0,
++		.sblk = &sm8150_vig_sblk_0,
+ 		.xin_id = 0,
+ 		.type = SSPP_TYPE_VIG,
+ 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+@@ -84,7 +84,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
+ 		.name = "sspp_1", .id = SSPP_VIG1,
+ 		.base = 0x6000, .len = 0x1f0,
+ 		.features = VIG_SDM845_MASK,
+-		.sblk = &sdm845_vig_sblk_1,
++		.sblk = &sm8150_vig_sblk_1,
+ 		.xin_id = 4,
+ 		.type = SSPP_TYPE_VIG,
+ 		.clk_ctrl = DPU_CLK_CTRL_VIG1,
+@@ -92,7 +92,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
+ 		.name = "sspp_2", .id = SSPP_VIG2,
+ 		.base = 0x8000, .len = 0x1f0,
+ 		.features = VIG_SDM845_MASK,
+-		.sblk = &sdm845_vig_sblk_2,
++		.sblk = &sm8150_vig_sblk_2,
+ 		.xin_id = 8,
+ 		.type = SSPP_TYPE_VIG,
+ 		.clk_ctrl = DPU_CLK_CTRL_VIG2,
+@@ -100,7 +100,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
+ 		.name = "sspp_3", .id = SSPP_VIG3,
+ 		.base = 0xa000, .len = 0x1f0,
+ 		.features = VIG_SDM845_MASK,
+-		.sblk = &sdm845_vig_sblk_3,
++		.sblk = &sm8150_vig_sblk_3,
+ 		.xin_id = 12,
+ 		.type = SSPP_TYPE_VIG,
+ 		.clk_ctrl = DPU_CLK_CTRL_VIG3,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+index 8a19cfa274dea..72a1726371cae 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+@@ -77,7 +77,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
+ 		.name = "sspp_0", .id = SSPP_VIG0,
+ 		.base = 0x4000, .len = 0x32c,
+ 		.features = VIG_SC7180_MASK,
+-		.sblk = &sm8250_vig_sblk_0,
++		.sblk = &sm8450_vig_sblk_0,
+ 		.xin_id = 0,
+ 		.type = SSPP_TYPE_VIG,
+ 		.clk_ctrl = DPU_CLK_CTRL_VIG0,
+@@ -85,7 +85,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
+ 		.name = "sspp_1", .id = SSPP_VIG1,
+ 		.base = 0x6000, .len = 0x32c,
+ 		.features = VIG_SC7180_MASK,
+-		.sblk = &sm8250_vig_sblk_1,
++		.sblk = &sm8450_vig_sblk_1,
+ 		.xin_id = 4,
+ 		.type = SSPP_TYPE_VIG,
+ 		.clk_ctrl = DPU_CLK_CTRL_VIG1,
+@@ -93,7 +93,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
+ 		.name = "sspp_2", .id = SSPP_VIG2,
+ 		.base = 0x8000, .len = 0x32c,
+ 		.features = VIG_SC7180_MASK,
+-		.sblk = &sm8250_vig_sblk_2,
++		.sblk = &sm8450_vig_sblk_2,
+ 		.xin_id = 8,
+ 		.type = SSPP_TYPE_VIG,
+ 		.clk_ctrl = DPU_CLK_CTRL_VIG2,
+@@ -101,7 +101,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
+ 		.name = "sspp_3", .id = SSPP_VIG3,
+ 		.base = 0xa000, .len = 0x32c,
+ 		.features = VIG_SC7180_MASK,
+-		.sblk = &sm8250_vig_sblk_3,
++		.sblk = &sm8450_vig_sblk_3,
+ 		.xin_id = 12,
+ 		.type = SSPP_TYPE_VIG,
+ 		.clk_ctrl = DPU_CLK_CTRL_VIG3,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 713dfc0797181..77d09f961d866 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -250,14 +250,17 @@ static const uint32_t wb2_formats[] = {
+  * SSPP sub blocks config
+  *************************************************************/
  
++#define SSPP_SCALER_VER(maj, min) (((maj) << 16) | (min))
++
+ /* SSPP common configuration */
+-#define _VIG_SBLK(sdma_pri, qseed_ver) \
++#define _VIG_SBLK(sdma_pri, qseed_ver, scaler_ver) \
+ 	{ \
+ 	.maxdwnscale = MAX_DOWNSCALE_RATIO, \
+ 	.maxupscale = MAX_UPSCALE_RATIO, \
+ 	.smart_dma_priority = sdma_pri, \
+ 	.scaler_blk = {.name = "scaler", \
+ 		.id = qseed_ver, \
++		.version = scaler_ver, \
+ 		.base = 0xa00, .len = 0xa0,}, \
+ 	.csc_blk = {.name = "csc", \
+ 		.id = DPU_SSPP_CSC_10BIT, \
+@@ -269,13 +272,14 @@ static const uint32_t wb2_formats[] = {
+ 	.rotation_cfg = NULL, \
+ 	}
+ 
+-#define _VIG_SBLK_ROT(sdma_pri, qseed_ver, rot_cfg) \
++#define _VIG_SBLK_ROT(sdma_pri, qseed_ver, scaler_ver, rot_cfg) \
+ 	{ \
+ 	.maxdwnscale = MAX_DOWNSCALE_RATIO, \
+ 	.maxupscale = MAX_UPSCALE_RATIO, \
+ 	.smart_dma_priority = sdma_pri, \
+ 	.scaler_blk = {.name = "scaler", \
+ 		.id = qseed_ver, \
++		.version = scaler_ver, \
+ 		.base = 0xa00, .len = 0xa0,}, \
+ 	.csc_blk = {.name = "csc", \
+ 		.id = DPU_SSPP_CSC_10BIT, \
+@@ -299,13 +303,17 @@ static const uint32_t wb2_formats[] = {
+ 	}
+ 
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_0 =
+-				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3,
++					  SSPP_SCALER_VER(1, 2));
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_1 =
+-				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3,
++					  SSPP_SCALER_VER(1, 2));
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_2 =
+-				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3,
++					  SSPP_SCALER_VER(1, 2));
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_3 =
+-				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3,
++					  SSPP_SCALER_VER(1, 2));
+ 
+ static const struct dpu_rotation_cfg dpu_rot_sc7280_cfg_v2 = {
+ 	.rot_maxheight = 1088,
+@@ -314,13 +322,30 @@ static const struct dpu_rotation_cfg dpu_rot_sc7280_cfg_v2 = {
+ };
+ 
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_0 =
+-				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED3,
++					  SSPP_SCALER_VER(1, 3));
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_1 =
+-				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED3,
++					  SSPP_SCALER_VER(1, 3));
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_2 =
+-				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED3,
++					  SSPP_SCALER_VER(1, 3));
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_3 =
+-				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED3,
++					  SSPP_SCALER_VER(1, 3));
++
++static const struct dpu_sspp_sub_blks sm8150_vig_sblk_0 =
++				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED3,
++					  SSPP_SCALER_VER(1, 4));
++static const struct dpu_sspp_sub_blks sm8150_vig_sblk_1 =
++				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED3,
++					  SSPP_SCALER_VER(1, 4));
++static const struct dpu_sspp_sub_blks sm8150_vig_sblk_2 =
++				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED3,
++					  SSPP_SCALER_VER(1, 4));
++static const struct dpu_sspp_sub_blks sm8150_vig_sblk_3 =
++				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED3,
++					  SSPP_SCALER_VER(1, 4));
+ 
+ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_0 = _DMA_SBLK(1);
+ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_1 = _DMA_SBLK(2);
+@@ -328,34 +353,60 @@ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_2 = _DMA_SBLK(3);
+ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_3 = _DMA_SBLK(4);
+ 
+ static const struct dpu_sspp_sub_blks sc7180_vig_sblk_0 =
+-				_VIG_SBLK(4, DPU_SSPP_SCALER_QSEED4);
++				_VIG_SBLK(4, DPU_SSPP_SCALER_QSEED4,
++					  SSPP_SCALER_VER(3, 0));
+ 
+ static const struct dpu_sspp_sub_blks sc7280_vig_sblk_0 =
+-			_VIG_SBLK_ROT(4, DPU_SSPP_SCALER_QSEED4, &dpu_rot_sc7280_cfg_v2);
++			_VIG_SBLK_ROT(4, DPU_SSPP_SCALER_QSEED4,
++				      SSPP_SCALER_VER(3, 0),
++				      &dpu_rot_sc7280_cfg_v2);
+ 
+ static const struct dpu_sspp_sub_blks sm6115_vig_sblk_0 =
+-				_VIG_SBLK(2, DPU_SSPP_SCALER_QSEED4);
++				_VIG_SBLK(2, DPU_SSPP_SCALER_QSEED4,
++					  SSPP_SCALER_VER(3, 0));
+ 
+ static const struct dpu_sspp_sub_blks sm6125_vig_sblk_0 =
+-				_VIG_SBLK(3, DPU_SSPP_SCALER_QSEED3LITE);
++				_VIG_SBLK(3, DPU_SSPP_SCALER_QSEED3LITE,
++					  SSPP_SCALER_VER(2, 4));
+ 
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_0 =
+-				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED4);
++				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED4,
++					  SSPP_SCALER_VER(3, 0));
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_1 =
+-				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED4);
++				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED4,
++					  SSPP_SCALER_VER(3, 0));
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_2 =
+-				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED4);
++				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED4,
++					  SSPP_SCALER_VER(3, 0));
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_3 =
+-				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED4);
++				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED4,
++					  SSPP_SCALER_VER(3, 0));
++
++static const struct dpu_sspp_sub_blks sm8450_vig_sblk_0 =
++				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED4,
++					  SSPP_SCALER_VER(3, 1));
++static const struct dpu_sspp_sub_blks sm8450_vig_sblk_1 =
++				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED4,
++					  SSPP_SCALER_VER(3, 1));
++static const struct dpu_sspp_sub_blks sm8450_vig_sblk_2 =
++				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED4,
++					  SSPP_SCALER_VER(3, 1));
++static const struct dpu_sspp_sub_blks sm8450_vig_sblk_3 =
++				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED4,
++					  SSPP_SCALER_VER(3, 1));
+ 
+ static const struct dpu_sspp_sub_blks sm8550_vig_sblk_0 =
+-				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED4);
++				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED4,
++					  SSPP_SCALER_VER(3, 2));
+ static const struct dpu_sspp_sub_blks sm8550_vig_sblk_1 =
+-				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED4);
++				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED4,
++					  SSPP_SCALER_VER(3, 2));
+ static const struct dpu_sspp_sub_blks sm8550_vig_sblk_2 =
+-				_VIG_SBLK(9, DPU_SSPP_SCALER_QSEED4);
++				_VIG_SBLK(9, DPU_SSPP_SCALER_QSEED4,
++					  SSPP_SCALER_VER(3, 2));
+ static const struct dpu_sspp_sub_blks sm8550_vig_sblk_3 =
+-				_VIG_SBLK(10, DPU_SSPP_SCALER_QSEED4);
++				_VIG_SBLK(10, DPU_SSPP_SCALER_QSEED4,
++					  SSPP_SCALER_VER(3, 2));
+ static const struct dpu_sspp_sub_blks sm8550_dma_sblk_4 = _DMA_SBLK(5);
+ static const struct dpu_sspp_sub_blks sm8550_dma_sblk_5 = _DMA_SBLK(6);
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index 6c9634209e9fc..3f82d84bd1c90 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -269,7 +269,8 @@ enum {
+ /**
+  * struct dpu_scaler_blk: Scaler information
+  * @info:   HW register and features supported by this sub-blk
+- * @version: qseed block revision
++ * @version: qseed block revision, on QSEED3+ platforms this is the value of
++ *           scaler_blk.base + QSEED3_HW_VERSION registers.
+  */
+ struct dpu_scaler_blk {
+ 	DPU_HW_SUBBLK_INFO;
 -- 
 2.43.0
 
