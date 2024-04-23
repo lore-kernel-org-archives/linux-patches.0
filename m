@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683F4143C45;
-	Tue, 23 Apr 2024 21:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1391F20B3E;
+	Tue, 23 Apr 2024 21:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908524; cv=none; b=mEuUJ5ThuuAUf6eI7TA14Do3yqml3kzmGWqMAXGE0W60NypHSsRU6QiK0+Ddw62FUzI1z7BiAXuuctCaw0OehUP/hVWBnv0Ow0IajBQ0q6uri5uzd1pxIcpPxatDLCisIeAFK15UkcBzO67eisDUn8601Aw1QuxHhK84mKCg+K4=
+	t=1713908525; cv=none; b=vCpW+SUHQ1JkBZvs4Za47MR1y9OzhGO+e3ju6BUb4YEpQf1qMwY7pKg+XeLzmE/pCfsRe5G8F72uFkzHV09fdYNgcr6bYmu6SrJyGHjInqAFYghMMzTkTuehPPg9A78+aOBCZf2rDG5SEBDOScEmeewFeDfiYC2J4OG90OQSd5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908524; c=relaxed/simple;
-	bh=Eql7X4AVZTS73kG6O9iSjweGdJygx9r0Qe13h1SBfyY=;
+	s=arc-20240116; t=1713908525; c=relaxed/simple;
+	bh=gKT03Iqv9FxluPDj37fvqaLenWrSz9T3q+P3/Ik9eR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KbvCdR8YrBqYONyHY7XtmVuLm4yBkSiE6J6soPQfMKkC6h6tO7KixYb5uUwpuiM6P9oksC2iycJ/zJSc+NWtY7OlKIIgt9axt2oKpzydPrQJ+iMV/OTqj51YRqNIy24n7bQb39lvtnd7SWsSnjkoPOkYfVBUdltJOEF+USdZQRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qouhhAWB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bo42WxR8tjfn5P6WvwZSnk4PvP65NrbNNxqtcgQ9GDEJl/P5ljUFotE8ozQcxlQp8qYDOYnuJOEcbJqQxiLjwSJ24hh3j9X0PSMb+cqtrEybm+42OZdVU3DnkfB5gei+zJGBQzhcOipsan0l09zIrBxHnC4qh/VJ6pS1ouEnJW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVIzrY9n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qouhhAWB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA48C116B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVIzrY9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4ACC32781;
 	Tue, 23 Apr 2024 21:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908524;
-	bh=Eql7X4AVZTS73kG6O9iSjweGdJygx9r0Qe13h1SBfyY=;
+	bh=gKT03Iqv9FxluPDj37fvqaLenWrSz9T3q+P3/Ik9eR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qouhhAWBlEl6vBqHRPfpawGQrYPO+NwJHXl2C+X71Dfs96XWpIAVF2byqUQG6gewW
-	 XSwSoVXapxwO+uQfzeM5eO5cXmN52kUTPDa1JU7bna3DRZkZmacpUyusdYV5XZPWH1
-	 eOKieqZ6Pe0O+Wz0q6s770TUkUPlPI5RUnPfpy5I=
+	b=zVIzrY9ncMwZkLd/b+DfrJdyKbrqqrOLdSs+Q10bhKlSdMuXa85/gdGc5fxwhEm4e
+	 z7AHc8vielvPshtuQBzTVIhnBQ9E0Wru/KHSwIKsnWGxxOC4gO7HgxR1nujUdKNb80
+	 ciWP4ngqg94mpKW0SM1eOfdOwUo9apbUflFyeekU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shenghao Ding <shenghao-ding@ti.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.8 090/158] ALSA: hda/tas2781: correct the register for pow calibrated data
-Date: Tue, 23 Apr 2024 14:38:32 -0700
-Message-ID: <20240423213858.882309895@linuxfoundation.org>
+Subject: [PATCH 6.8 091/158] ALSA: hda/tas2781: Add new vendor_id and subsystem_id to support ThinkPad ICE-1
+Date: Tue, 23 Apr 2024 14:38:33 -0700
+Message-ID: <20240423213858.912930865@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -52,35 +52,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Shenghao Ding <shenghao-ding@ti.com>
 
-commit 0b6f0ff01a4a8c1b66c600263465976d57dcc1a3 upstream.
+commit f74ab0c5e5947bcb3a400ab73d837974e76fad23 upstream.
 
-Calibrated data was written into an incorrect register, which cause
-speaker protection sometimes malfuctions
+Add new vendor_id and subsystem_id to support new Lenovo laptop
+ThinkPad ICE-1
 
-Fixes: 5be27f1e3ec9 ("ALSA: hda/tas2781: Add tas2781 HDA driver")
 Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
 Cc: <stable@vger.kernel.org>
-Message-ID: <20240406132010.341-1-shenghao-ding@ti.com>
+Message-ID: <20240411091823.1644-1-shenghao-ding@ti.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/tas2781_hda_i2c.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/pci/hda/tas2781_hda_i2c.c
-+++ b/sound/pci/hda/tas2781_hda_i2c.c
-@@ -501,10 +501,10 @@ static int tas2563_save_calibration(stru
- static void tas2781_apply_calib(struct tasdevice_priv *tas_priv)
- {
- 	static const unsigned char page_array[CALIB_MAX] = {
--		0x17, 0x18, 0x18, 0x0d, 0x18
-+		0x17, 0x18, 0x18, 0x13, 0x18,
- 	};
- 	static const unsigned char rgno_array[CALIB_MAX] = {
--		0x74, 0x0c, 0x14, 0x3c, 0x7c
-+		0x74, 0x0c, 0x14, 0x70, 0x7c,
- 	};
- 	unsigned char *data;
- 	int i, j, rc;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10320,6 +10320,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x17aa, 0x222e, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
+ 	SND_PCI_QUIRK(0x17aa, 0x2231, "Thinkpad T560", ALC292_FIXUP_TPT460),
+ 	SND_PCI_QUIRK(0x17aa, 0x2233, "Thinkpad", ALC292_FIXUP_TPT460),
++	SND_PCI_QUIRK(0x17aa, 0x2234, "Thinkpad ICE-1", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x2245, "Thinkpad T470", ALC298_FIXUP_TPT470_DOCK),
+ 	SND_PCI_QUIRK(0x17aa, 0x2246, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
+ 	SND_PCI_QUIRK(0x17aa, 0x2247, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
 
 
