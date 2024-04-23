@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BFF14388D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D839414388D;
 	Tue, 23 Apr 2024 21:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908497; cv=none; b=ao46tEaUuyvQgJyL/9LNWyBMUJOnp27cu4lXTpF/KZP/DjLjUSmDkFxopZ50DulDrM6XaVs8gwb9k08ftOMMyWHt4m4eh+BN4PSXr9Xni82DTcRJ+D6zDS98sWfN2vODRvNi4aAbwBC4MS2F4UsL9TWVsQFhoINLBOnXyz0SmGI=
+	t=1713908497; cv=none; b=a7Ae++VCw9pBib0hqSDjduLW8BY3W8gZAAZUN7HPToFsyfkRBLDEAj04ORhdV+XyRPSAEF4v2wnj6mfqNJ+X1L4y6Yjh4lEPazpoRDx+I7dSmpwSJ9oMza/eA24RM0aMBXDHAKFRu3Y03+NzZYBlbS2GbGm1RhDmEZh8dYw3pk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908497; c=relaxed/simple;
-	bh=ecFnaapH1Dva+3bYLXkVaTjeyeOFnljScyNsH/AmVmk=;
+	bh=zgbrH9Yo/IgRaUCcyqlOAOlQ+TMCACupaOb6ApxkDQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iyoR1kbNVR9DI+vhDGEMkZZChGBpXyYG+ePCTgvBWBU09QRUNyPBVKrrP3EH8d9UtTfpQEU6Vf2tfDAYKIbFYG4EdL8EDmCYrMbUTb0kh9nlW6uCpGdMZ6X2k2BQQSBw9obbhJFo2+6L/hDhHFy7OUEc7YAQrMUYowdB656ncpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDC+TILX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q+2Rsh9sMp4UtKoeaVDvwRc+z0WQl+WviL+dFnkmvZP8VAarlGD52Ua6ZbR8EtqpJpfrDuoXeX7lcBPRzmLBFnJ4SIw5VifaZTtpT09BriN6bQ3TDjsunqXIsm/f4r8yNFRHmJN3JKIZTRUGVZk6yfiMKNF7ur4BGRcbeXiEzK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWXNVZaA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDC+TILX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092CDC3277B;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWXNVZaA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96C7C32783;
 	Tue, 23 Apr 2024 21:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1713908497;
-	bh=ecFnaapH1Dva+3bYLXkVaTjeyeOFnljScyNsH/AmVmk=;
+	bh=zgbrH9Yo/IgRaUCcyqlOAOlQ+TMCACupaOb6ApxkDQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CDC+TILX1mRAy4orTy/+j4IdFRpo5ZoIv6IPvl7oy2tU57RRwFswYueWaBwJp0XvM
-	 YS06IfhlbCoTaRsB9Gftwzm4pGidxDfIhKBH9h5dP/bf1jR54/b183YKGViNEec2pJ
-	 IHpGdqanZfNn2CKfCEjuuym5wTez6I34DuUBcK0M=
+	b=jWXNVZaANBTQx+1UqrYF4IXmmjWvg/k4SWgCcdNiY0z6HtTHJs14SjgAGt0qxtKXG
+	 u/ut7Z6VBnQsRQWZvQDMdQoHAiG+7zdFy3OatVZ8EXIK8yuZzM+fMB421fB5NbFhIe
+	 NJT3tg5owzOSBssMCub9PT+RpTjwshTwaJvLf5Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 074/158] thermal/debugfs: Add missing count increment to thermal_debug_tz_trip_up()
-Date: Tue, 23 Apr 2024 14:38:16 -0700
-Message-ID: <20240423213858.365596146@linuxfoundation.org>
+Subject: [PATCH 6.8 075/158] platform/x86/amd/pmc: Extend Framework 13 quirk to more BIOSes
+Date: Tue, 23 Apr 2024 14:38:17 -0700
+Message-ID: <20240423213858.392416386@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -44,59 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit b552f63cd43735048bbe9bfbb7a9dcfce166fbdd ]
+[ Upstream commit f609e7b1b49e4d15cf107d2069673ee63860c398 ]
 
-The count field in struct trip_stats, representing the number of times
-the zone temperature was above the trip point, needs to be incremented
-in thermal_debug_tz_trip_up(), for two reasons.
+BIOS 03.05 still hasn't fixed the spurious IRQ1 issue.  As it's still
+being worked on there is still a possibility that it won't need to
+apply to future BIOS releases.
 
-First, if a trip point is crossed on the way up for the first time,
-thermal_debug_update_temp() called from update_temperature() does
-not see it because it has not been added to trips_crossed[] array
-in the thermal zone's struct tz_debugfs object yet.  Therefore, when
-thermal_debug_tz_trip_up() is called after that, the trip point's
-count value is 0, and the attempt to divide by it during the average
-temperature computation leads to a divide error which causes the kernel
-to crash.  Setting the count to 1 before the division by incrementing it
-fixes this problem.
+Add a quirk for BIOS 03.05 as well.
 
-Second, if a trip point is crossed on the way up, but it has been
-crossed on the way up already before, its count value needs to be
-incremented to make a record of the fact that the zone temperature is
-above the trip now.  Without doing that, if the mitigations applied
-after crossing the trip cause the zone temperature to drop below its
-threshold, the count will not be updated for this episode at all and
-the average temperature in the trip statistics record will be somewhat
-higher than it should be.
-
-Fixes: 7ef01f228c9f ("thermal/debugfs: Add thermal debugfs information for mitigation episodes")
-Cc :6.8+ <stable@vger.kernel.org> # 6.8+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240410141046.433-1-mario.limonciello@amd.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_debugfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/thermal/thermal_debugfs.c b/drivers/thermal/thermal_debugfs.c
-index c617e8b9f0ddf..d78d54ae2605e 100644
---- a/drivers/thermal/thermal_debugfs.c
-+++ b/drivers/thermal/thermal_debugfs.c
-@@ -616,6 +616,7 @@ void thermal_debug_tz_trip_up(struct thermal_zone_device *tz,
- 	tze->trip_stats[trip_id].timestamp = now;
- 	tze->trip_stats[trip_id].max = max(tze->trip_stats[trip_id].max, temperature);
- 	tze->trip_stats[trip_id].min = min(tze->trip_stats[trip_id].min, temperature);
-+	tze->trip_stats[trip_id].count++;
- 	tze->trip_stats[trip_id].avg = tze->trip_stats[trip_id].avg +
- 		(temperature - tze->trip_stats[trip_id].avg) /
- 		tze->trip_stats[trip_id].count;
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index b456370166b6b..b4f49720c87f6 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -208,6 +208,15 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_BIOS_VERSION, "03.03"),
+ 		}
+ 	},
++	{
++		.ident = "Framework Laptop 13 (Phoenix)",
++		.driver_data = &quirk_spurious_8042,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Framework"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Laptop 13 (AMD Ryzen 7040Series)"),
++			DMI_MATCH(DMI_BIOS_VERSION, "03.05"),
++		}
++	},
+ 	{}
+ };
+ 
 -- 
 2.43.0
 
