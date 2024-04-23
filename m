@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6DB143C5A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B689F14389A;
 	Tue, 23 Apr 2024 21:41:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908502; cv=none; b=Q2/f4R3wGQh+WqEGEr3tzNd9MkQBkaFbM3aCn12p4z2uHVvX+rfs2WsDXpkU15iBn1XXso9RZGY5BSkDovYYZw0eeQxDz7CLDY2YSxRCKWddVLOavdJRSrILftMhvedYyCTOdEbpvAVzDeYVGpeuv9i1yHrlU/YnlXMZh+DIn2Q=
+	t=1713908502; cv=none; b=Ztd99W74qEsz3jtO/i/u2xAAh4AEEcgsqjPz5mK17xn2yK3byEBedbNuSXOuPD6mbnstcw3cBF9i0MaRKlDj6hd3VUbw4V7+wi51+Lqs4DDK5zhDBNjtwN3nSkRyF8Y38J3tZZr3WZHT8ckJPiszvAOHUEnc41/UIPpI4n5zKho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713908502; c=relaxed/simple;
-	bh=p/XUCJVADU0pYA8bD0aI9iJx1VA6Do9SrF4FzBSNV6Q=;
+	bh=tNSMIfPsOu72mx+ZFdCy4vtyG7lfD5C3w6yCrqFMQJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RTDsQ+8JB6JV0B02zAAbY73hDaMb7wHLK7rAlkNWeeue1SKXdFMl7WpGvqj5NEqyMtQsd0cYafBq1vVUWcYZvwEAgGiEAjOmVfNr0adL4YN9iFTs78U3Y+UQM2tSgoITwNHvwCeOTKVGzn6lNkOMLJTUqNc++FGgZBC0z9ejxGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=te33cjGb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PtUk7tGz91P5ILDMPd5Q1g3yltFu5meWNcY7QHKnUuuch/gAAHzLdgNTL1Q84J9lscla5hiyIrCxuQe4y7ccz4pBJzGbe/pRyaSxzRJIeei8vqCIiMTXQutVmhHnddwF3jq1gQDMcF0jyNessjK+sVqZJ1iiTLGG2fxM2apiVQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBsdw/mc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="te33cjGb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17ADC4AF07;
-	Tue, 23 Apr 2024 21:41:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBsdw/mc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830A5C32782;
+	Tue, 23 Apr 2024 21:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908501;
-	bh=p/XUCJVADU0pYA8bD0aI9iJx1VA6Do9SrF4FzBSNV6Q=;
+	s=korg; t=1713908502;
+	bh=tNSMIfPsOu72mx+ZFdCy4vtyG7lfD5C3w6yCrqFMQJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=te33cjGbc9b/gKW7oodE3DY7LMp3iUB//UhVshRWSw7uqNgxzNTx1tS36CBiGWEap
-	 p6Gn6rKRbnqcevdKoD2gpLzPYPCYaipIoBSRB+dfnWLzpLnh0+fzoWxGhpZeouCTH8
-	 YslNIyCatdZYc9q2YK0oyllgN9O2AwrjHMBlVwqs=
+	b=bBsdw/mczPmjrWI0yqcOAEgfdVf9xEmIGv6umEfFRzBFP4YcVBaX3DQgkdLVoL7dW
+	 UZyL91tpu/M5Fb6qNL8470kaZIppje7zvfeFCnul5YWafZUjRnKqzLxolMGcJMmE6I
+	 MZ8XzGizb5P60YIwn+L8OaxzPLhHeF/dRH8FUEcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	"Yanjun.Zhu" <yanjun.zhu@linux.dev>,
+	Daisuke Matsuda <matsuda-daisuke@fujitsu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 081/158] clk: Get runtime PM before walking tree for clk_summary
-Date: Tue, 23 Apr 2024 14:38:23 -0700
-Message-ID: <20240423213858.583240245@linuxfoundation.org>
+Subject: [PATCH 6.8 055/158] RDMA/rxe: Fix the problem "mutex_destroy missing"
+Date: Tue, 23 Apr 2024 14:37:57 -0700
+Message-ID: <20240423213857.718738067@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -52,93 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Boyd <sboyd@kernel.org>
+From: Yanjun.Zhu <yanjun.zhu@linux.dev>
 
-[ Upstream commit 9d1e795f754db1ac3344528b7af0b17b8146f321 ]
+[ Upstream commit 481047d7e8391d3842ae59025806531cdad710d9 ]
 
-Similar to the previous commit, we should make sure that all devices are
-runtime resumed before printing the clk_summary through debugfs. Failure
-to do so would result in a deadlock if the thread is resuming a device
-to print clk state and that device is also runtime resuming in another
-thread, e.g the screen is turning on and the display driver is starting
-up. We remove the calls to clk_pm_runtime_{get,put}() in this path
-because they're superfluous now that we know the devices are runtime
-resumed. This also squashes a bug where the return value of
-clk_pm_runtime_get() wasn't checked, leading to an RPM count underflow
-on error paths.
+When a mutex lock is not used any more, the function mutex_destroy
+should be called to mark the mutex lock uninitialized.
 
-Fixes: 1bb294a7981c ("clk: Enable/Disable runtime PM for clk_summary")
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Cc: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20240325184204.745706-6-sboyd@kernel.org
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Signed-off-by: Yanjun.Zhu <yanjun.zhu@linux.dev>
+Link: https://lore.kernel.org/r/20240314065140.27468-1-yanjun.zhu@linux.dev
+Reviewed-by: Daisuke Matsuda <matsuda-daisuke@fujitsu.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/rxe/rxe.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index 7162b45da91f8..cf1fc0edfdbca 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -3321,9 +3321,7 @@ static void clk_summary_show_subtree(struct seq_file *s, struct clk_core *c,
- {
- 	struct clk_core *child;
+diff --git a/drivers/infiniband/sw/rxe/rxe.c b/drivers/infiniband/sw/rxe/rxe.c
+index 54c723a6eddac..6f9ec8db014c7 100644
+--- a/drivers/infiniband/sw/rxe/rxe.c
++++ b/drivers/infiniband/sw/rxe/rxe.c
+@@ -33,6 +33,8 @@ void rxe_dealloc(struct ib_device *ib_dev)
  
--	clk_pm_runtime_get(c);
- 	clk_summary_show_one(s, c, level);
--	clk_pm_runtime_put(c);
- 
- 	hlist_for_each_entry(child, &c->children, child_node)
- 		clk_summary_show_subtree(s, child, level + 1);
-@@ -3333,11 +3331,15 @@ static int clk_summary_show(struct seq_file *s, void *data)
- {
- 	struct clk_core *c;
- 	struct hlist_head **lists = s->private;
-+	int ret;
- 
- 	seq_puts(s, "                                 enable  prepare  protect                                duty  hardware                            connection\n");
- 	seq_puts(s, "   clock                          count    count    count        rate   accuracy phase  cycle    enable   consumer                         id\n");
- 	seq_puts(s, "---------------------------------------------------------------------------------------------------------------------------------------------\n");
- 
-+	ret = clk_pm_runtime_get_all();
-+	if (ret)
-+		return ret;
- 
- 	clk_prepare_lock();
- 
-@@ -3346,6 +3348,7 @@ static int clk_summary_show(struct seq_file *s, void *data)
- 			clk_summary_show_subtree(s, c, 0);
- 
- 	clk_prepare_unlock();
-+	clk_pm_runtime_put_all();
- 
- 	return 0;
+ 	if (rxe->tfm)
+ 		crypto_free_shash(rxe->tfm);
++
++	mutex_destroy(&rxe->usdev_lock);
  }
-@@ -3393,8 +3396,14 @@ static int clk_dump_show(struct seq_file *s, void *data)
- 	struct clk_core *c;
- 	bool first_node = true;
- 	struct hlist_head **lists = s->private;
-+	int ret;
-+
-+	ret = clk_pm_runtime_get_all();
-+	if (ret)
-+		return ret;
  
- 	seq_putc(s, '{');
-+
- 	clk_prepare_lock();
- 
- 	for (; *lists; lists++) {
-@@ -3407,6 +3416,7 @@ static int clk_dump_show(struct seq_file *s, void *data)
- 	}
- 
- 	clk_prepare_unlock();
-+	clk_pm_runtime_put_all();
- 
- 	seq_puts(s, "}\n");
- 	return 0;
+ /* initialize rxe device parameters */
 -- 
 2.43.0
 
