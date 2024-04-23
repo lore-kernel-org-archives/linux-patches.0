@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1965146A94;
-	Tue, 23 Apr 2024 21:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855EB146A94;
+	Tue, 23 Apr 2024 21:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908676; cv=none; b=cfPliw6iIGdpo0hYVf9PZn4kDPEBLO9uQLAjpT9ROGMhwJ3FgUqlIcv0CMtXxkn3P2Gm+f3ezOJEgE/pIdeKudjmFhLLBac/CYlz7rMeoEpilOYzJ5djM7QLhsPtpQwMn2zZpsdAAuLp4bDn1h/TEbKfaswqcFYYRWKyP0g7qKc=
+	t=1713908677; cv=none; b=AtEWUncYJ+Xeyny2Z0+aPVS2ZahioLjotZLjuY6dPM+SZkO/iy+AVNjdOns0yYDZ8u0WPML5MDIwAe7+WiNv1pcxK9bIJfnYFvGtCBQKAgJEgUsrVtSqtIgqoyopBsxIqeKpNYVZ65I+yclhesLyLmh0KNu5f/zErp83Xv0+t3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908676; c=relaxed/simple;
-	bh=URVEljw9wPIIgNtGas089ZStdkK0x3A1InPwPtj9uWw=;
+	s=arc-20240116; t=1713908677; c=relaxed/simple;
+	bh=qqz+eoE+pIxt5I69W3X7UUtgNRjdwparQfkjy9Kkm6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=opcd3bsHvcJz+RXrLxQlb36LVgprWSwbLzeDq1kRVRj71Tl6E3P4hXERuxBVbtREF1LFtQaD6d6b/miDu1+pcg+QZ1LKEfr+sW6LChFIVYkRzqqghJ+RgePAe4IRrVAvX9/up6uu4zkmQzaIIzn0oHZ6M3HzDdgvxB6QeVaEsy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUtyne75; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AFALizL8B623ncD7GHDcPG6YRvInkyYqgiKQX5LXCpPNHC1+SV9I/Pb4c25nKFZq6sYsIbX7usY5Xxap6hQ0bvD9ouwzNrekoC/CLEbi9Gp9tLv4JCS7XUMAIrHHU7/bXPr4RE7mwuFCAdUI9W2m7bUOwpa5r1GkZlHY7ha1d4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYHArx26; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUtyne75"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E91EC116B1;
-	Tue, 23 Apr 2024 21:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYHArx26"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59542C116B1;
+	Tue, 23 Apr 2024 21:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908676;
-	bh=URVEljw9wPIIgNtGas089ZStdkK0x3A1InPwPtj9uWw=;
+	s=korg; t=1713908677;
+	bh=qqz+eoE+pIxt5I69W3X7UUtgNRjdwparQfkjy9Kkm6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QUtyne75UmJs41YFtT49J/+xdxfx/Az3YC20LA8B7g6KpytTKgitBBMFCPPl7/Lds
-	 brbzNTJoetCukESDjfDfL2PnY/RXl9zXexL0t9JMSU2hZMyYw1V64FCOLEqLdf6d16
-	 VE1aZGefhhjqkvHGxalXnVQNW8FKNTPst+4WWUFU=
+	b=QYHArx26iwoP+CGq7DGZF3ObSd/7y2tK1/hqIci1/NSfSkUx/qkFZ/Q0QtN3AkhG+
+	 nZJPHEViYj0lU9Y5QKIcLGfvQRaSMazIAjPlqB9sX1E0WFv2YEPxlei4b36vcQjP0D
+	 oAaNV26LtPq0xkYs/EQ103WEZ8scV766Ox3hQBIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.1 018/141] x86/boot: Drop references to startup_64
-Date: Tue, 23 Apr 2024 14:38:06 -0700
-Message-ID: <20240423213853.924006189@linuxfoundation.org>
+Subject: [PATCH 6.1 019/141] x86/boot: Grab kernel_info offset from zoffset header directly
+Date: Tue, 23 Apr 2024 14:38:07 -0700
+Message-ID: <20240423213853.950783770@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 References: <20240423213853.356988651@linuxfoundation.org>
@@ -52,60 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Commit b618d31f112bea3d2daea19190d63e567f32a4db upstream ]
+[ Commit 2e765c02dcbfc2a8a4527c621a84b9502f6b9bd2 upstream ]
 
-The x86 boot image generation tool assign a default value to startup_64
-and subsequently parses the actual value from zoffset.h but it never
-actually uses the value anywhere. So remove this code.
+Instead of parsing zoffset.h and poking the kernel_info offset value
+into the header from the build tool, just grab the value directly in the
+asm file that describes this header.
 
 This change has no impact on the resulting bzImage binary.
 
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230912090051.4014114-25-ardb@google.com
+Link: https://lore.kernel.org/r/20230915171623.655440-11-ardb@google.com
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/Makefile      |    2 +-
- arch/x86/boot/tools/build.c |    3 ---
- 2 files changed, 1 insertion(+), 4 deletions(-)
+ arch/x86/boot/header.S      |    2 +-
+ arch/x86/boot/tools/build.c |    4 ----
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
---- a/arch/x86/boot/Makefile
-+++ b/arch/x86/boot/Makefile
-@@ -91,7 +91,7 @@ $(obj)/vmlinux.bin: $(obj)/compressed/vm
+--- a/arch/x86/boot/header.S
++++ b/arch/x86/boot/header.S
+@@ -525,7 +525,7 @@ pref_address:		.quad LOAD_PHYSICAL_ADDR
  
- SETUP_OBJS = $(addprefix $(obj)/,$(setup-y))
+ init_size:		.long INIT_SIZE		# kernel initialization size
+ handover_offset:	.long 0			# Filled in by build.c
+-kernel_info_offset:	.long 0			# Filled in by build.c
++kernel_info_offset:	.long ZO_kernel_info
  
--sed-zoffset := -e 's/^\([0-9a-fA-F]*\) [a-zA-Z] \(startup_32\|startup_64\|efi32_stub_entry\|efi64_stub_entry\|efi_pe_entry\|efi32_pe_entry\|input_data\|kernel_info\|_end\|_ehead\|_text\|z_.*\)$$/\#define ZO_\2 0x\1/p'
-+sed-zoffset := -e 's/^\([0-9a-fA-F]*\) [a-zA-Z] \(startup_32\|efi32_stub_entry\|efi64_stub_entry\|efi_pe_entry\|efi32_pe_entry\|input_data\|kernel_info\|_end\|_ehead\|_text\|z_.*\)$$/\#define ZO_\2 0x\1/p'
+ # End of setup header #####################################################
  
- quiet_cmd_zoffset = ZOFFSET $@
-       cmd_zoffset = $(NM) $< | sed -n $(sed-zoffset) > $@
 --- a/arch/x86/boot/tools/build.c
 +++ b/arch/x86/boot/tools/build.c
-@@ -60,7 +60,6 @@ static unsigned long efi64_stub_entry;
+@@ -59,7 +59,6 @@ static unsigned long efi32_stub_entry;
+ static unsigned long efi64_stub_entry;
  static unsigned long efi_pe_entry;
  static unsigned long efi32_pe_entry;
- static unsigned long kernel_info;
--static unsigned long startup_64;
+-static unsigned long kernel_info;
  static unsigned long _end;
  
  /*----------------------------------------------------------------------*/
-@@ -264,7 +263,6 @@ static void efi_stub_defaults(void)
- 	efi_pe_entry = 0x10;
- #else
- 	efi_pe_entry = 0x210;
--	startup_64 = 0x200;
- #endif
- }
- 
-@@ -340,7 +338,6 @@ static void parse_zoffset(char *fname)
+@@ -337,7 +336,6 @@ static void parse_zoffset(char *fname)
+ 		PARSE_ZOFS(p, efi64_stub_entry);
  		PARSE_ZOFS(p, efi_pe_entry);
  		PARSE_ZOFS(p, efi32_pe_entry);
- 		PARSE_ZOFS(p, kernel_info);
--		PARSE_ZOFS(p, startup_64);
+-		PARSE_ZOFS(p, kernel_info);
  		PARSE_ZOFS(p, _end);
  
  		p = strchr(p, '\n');
+@@ -419,8 +417,6 @@ int main(int argc, char ** argv)
+ 	update_pecoff_text(setup_sectors * 512, i + (sys_size * 16));
+ 
+ 	efi_stub_entry_update();
+-	/* Update kernel_info offset. */
+-	put_unaligned_le32(kernel_info, &buf[0x268]);
+ 
+ 	crc = partial_crc32(buf, i, crc);
+ 	if (fwrite(buf, 1, i, dest) != i)
 
 
