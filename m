@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BFD143899;
-	Tue, 23 Apr 2024 21:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD19F20B3E;
+	Tue, 23 Apr 2024 21:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908459; cv=none; b=MX6u+eWPGah1Q8cFJF3QGudhf3K13KzfiZPMs5DGJwRyuxPeKANXh8o7s7YEDWdSbLMjhkzMraDtLRdJpRrx2SY52dVOV0ZeRCVMbeA1txQ7cMwpRpJSpObarc2L4G+CdJMcUUR19o07xyanmI8EADpZVl5JYw69ewaX1+3LS0U=
+	t=1713908460; cv=none; b=m8trShmyRqui6TrP0cN/Il491un9BXU1LnUrIYnoqxi+B99KPqltyC84oP6ZTO8kPSTz5a718bbXSeDrbYpCQ9uLSPh/CDIMp7irnn3/LW2wLVv4z5NsmEeasj3ndYN7sz1L74GwMXlOD2UnNFh3dp/7fM9XXSl4tqwxoQaIQgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908459; c=relaxed/simple;
-	bh=1Qo3zLN/ucCgBWZJ9yrCto5BkpIgZX+4V8nF2x+Av5Q=;
+	s=arc-20240116; t=1713908460; c=relaxed/simple;
+	bh=VLEZAEAobQYCHft0RSL/dTCC84qxW88MKTJwI5ULTow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sslZr4FXmFZlbY8WHlHdQg8Y7EV5F9KXzYFZTZ/5HBbfxypqUeAoqu8tJoYJyHVi68jr5AaM5TbLEDwvT+0wjlI9GryJ9ZwddHa5RPux3Wwoe0PPMK1LdDwFPD9CX3BHbK1UvlKX34LMMMPgWSPFt7AVuzCrRX2dGpw4rGIBA74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4jFef2y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=n4T7Mqdkwt53dtVRWRbIMv1nYs4YzBzIPEHfZHA2S+drwutus/KFLG3sfwKtQZapv0dd7kUXWnIpZZZphTye/kYixerBFuvZD06zaKeJa2SMXLMYXhh3Oh/UU6ms5fnkk2WqFnONmXMJf09zifSSSEmIwcAy01Gsu7NME6pFOY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsNcxXIf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4jFef2y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E7CC3277B;
-	Tue, 23 Apr 2024 21:40:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsNcxXIf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB20C116B1;
+	Tue, 23 Apr 2024 21:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908458;
-	bh=1Qo3zLN/ucCgBWZJ9yrCto5BkpIgZX+4V8nF2x+Av5Q=;
+	s=korg; t=1713908459;
+	bh=VLEZAEAobQYCHft0RSL/dTCC84qxW88MKTJwI5ULTow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X4jFef2yTtg9FTUfxFEdojN17jRZ10FKXh03eMnggh7XEUAQkZiMZX6SEk1N2gVSW
-	 PcljJKpcswIeRbiZBP4LGCkZVoDm+5TXiTkwgCgKNpqkJZG5hQIeiwtk2LgjBaONwf
-	 Km0wyBLX6pfJAd31mLIzB1PY+Q3naF41uU/BuFy8=
+	b=lsNcxXIfxvTB4F4lpkY+zESKawNmt1ElXHtPg3+ZuiCowtn3xcAdhW9suAf5E8s2Y
+	 FI9pZrohHvapAZcKLxOiMkrJc+EHIyBV6exw01D42S7OoWb4TFTNclqK6klHS6rkQZ
+	 h1FxFkCpXbEC1tLyge6Zsi52uThr2wxDfvqafuG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Uma Shankar <uma.shankar@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 019/158] netfilter: nft_set_pipapo: do not free live element
-Date: Tue, 23 Apr 2024 14:37:21 -0700
-Message-ID: <20240423213856.482883461@linuxfoundation.org>
+Subject: [PATCH 6.8 002/158] drm/i915/cdclk: Fix voltage_level programming edge case
+Date: Tue, 23 Apr 2024 14:37:04 -0700
+Message-ID: <20240423213855.907918037@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
 References: <20240423213855.824778126@linuxfoundation.org>
@@ -46,109 +47,129 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 3cfc9ec039af60dbd8965ae085b2c2ccdcfbe1cc ]
+[ Upstream commit 6154cc9177ccea00c89ce0bf93352e474b819ff2 ]
 
-Pablo reports a crash with large batches of elements with a
-back-to-back add/remove pattern.  Quoting Pablo:
+Currently we only consider the relationship of the
+old and new CDCLK frequencies when determining whether
+to do the repgramming from intel_set_cdclk_pre_plane_update()
+or intel_set_cdclk_post_plane_update().
 
-  add_elem("00000000") timeout 100 ms
-  ...
-  add_elem("0000000X") timeout 100 ms
-  del_elem("0000000X") <---------------- delete one that was just added
-  ...
-  add_elem("00005000") timeout 100 ms
+It is technically possible to have a situation where the
+CDCLK frequency is decreasing, but the voltage_level is
+increasing due a DDI port. In this case we should bump
+the voltage level already in intel_set_cdclk_pre_plane_update()
+(so that the voltage_level will have been increased by the
+time the port gets enabled), while leaving the CDCLK frequency
+unchanged (as active planes/etc. may still depend on it).
+We can then reduce the CDCLK frequency to its final value
+from intel_set_cdclk_post_plane_update().
 
-  1) nft_pipapo_remove() removes element 0000000X
-  Then, KASAN shows a splat.
+In order to handle that correctly we shall construct a
+suitable amalgam of the old and new cdclk states in
+intel_set_cdclk_pre_plane_update().
 
-Looking at the remove function there is a chance that we will drop a
-rule that maps to a non-deactivated element.
+And we can simply call intel_set_cdclk() unconditionally
+in both places as it will not do anything if nothing actually
+changes vs. the current hw state.
 
-Removal happens in two steps, first we do a lookup for key k and return the
-to-be-removed element and mark it as inactive in the next generation.
-Then, in a second step, the element gets removed from the set/map.
+v2: Handle cdclk_state->disable_pipes
+v3: Only synchronize the cd2x update against the pipe's vblank
+    when the cdclk frequency is changing during the current
+    commit phase (Gustavo)
 
-The _remove function does not work correctly if we have more than one
-element that share the same key.
-
-This can happen if we insert an element into a set when the set already
-holds an element with same key, but the element mapping to the existing
-key has timed out or is not active in the next generation.
-
-In such case its possible that removal will unmap the wrong element.
-If this happens, we will leak the non-deactivated element, it becomes
-unreachable.
-
-The element that got deactivated (and will be freed later) will
-remain reachable in the set data structure, this can result in
-a crash when such an element is retrieved during lookup (stale
-pointer).
-
-Add a check that the fully matching key does in fact map to the element
-that we have marked as inactive in the deactivation step.
-If not, we need to continue searching.
-
-Add a bug/warn trap at the end of the function as well, the remove
-function must not ever be called with an invisible/unreachable/non-existent
-element.
-
-v2: avoid uneeded temporary variable (Stefano)
-
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Reported-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: stable@vger.kernel.org
+Cc: Gustavo Sousa <gustavo.sousa@intel.com>
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240402155016.13733-3-ville.syrjala@linux.intel.com
+(cherry picked from commit 34d127e2bdef73a923aa0dcd95cbc3257ad5af52)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/i915/display/intel_cdclk.c | 37 ++++++++++++++++------
+ 1 file changed, 27 insertions(+), 10 deletions(-)
 
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index 69b1ab6849e67..979b5e80c400b 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -2002,6 +2002,8 @@ static void nft_pipapo_remove(const struct net *net, const struct nft_set *set,
- 		rules_fx = rules_f0;
+diff --git a/drivers/gpu/drm/i915/display/intel_cdclk.c b/drivers/gpu/drm/i915/display/intel_cdclk.c
+index 6e36a15284537..7ba30d26f620c 100644
+--- a/drivers/gpu/drm/i915/display/intel_cdclk.c
++++ b/drivers/gpu/drm/i915/display/intel_cdclk.c
+@@ -2512,7 +2512,8 @@ intel_set_cdclk_pre_plane_update(struct intel_atomic_state *state)
+ 		intel_atomic_get_old_cdclk_state(state);
+ 	const struct intel_cdclk_state *new_cdclk_state =
+ 		intel_atomic_get_new_cdclk_state(state);
+-	enum pipe pipe = new_cdclk_state->pipe;
++	struct intel_cdclk_config cdclk_config;
++	enum pipe pipe;
  
- 		nft_pipapo_for_each_field(f, i, m) {
-+			bool last = i == m->field_count - 1;
-+
- 			if (!pipapo_match_field(f, start, rules_fx,
- 						match_start, match_end))
- 				break;
-@@ -2014,16 +2016,18 @@ static void nft_pipapo_remove(const struct net *net, const struct nft_set *set,
+ 	if (!intel_cdclk_changed(&old_cdclk_state->actual,
+ 				 &new_cdclk_state->actual))
+@@ -2521,12 +2522,25 @@ intel_set_cdclk_pre_plane_update(struct intel_atomic_state *state)
+ 	if (IS_DG2(i915))
+ 		intel_cdclk_pcode_pre_notify(state);
  
- 			match_start += NFT_PIPAPO_GROUPS_PADDED_SIZE(f);
- 			match_end += NFT_PIPAPO_GROUPS_PADDED_SIZE(f);
--		}
+-	if (new_cdclk_state->disable_pipes ||
+-	    old_cdclk_state->actual.cdclk <= new_cdclk_state->actual.cdclk) {
+-		drm_WARN_ON(&i915->drm, !new_cdclk_state->base.changed);
++	if (new_cdclk_state->disable_pipes) {
++		cdclk_config = new_cdclk_state->actual;
++		pipe = INVALID_PIPE;
++	} else {
++		if (new_cdclk_state->actual.cdclk >= old_cdclk_state->actual.cdclk) {
++			cdclk_config = new_cdclk_state->actual;
++			pipe = new_cdclk_state->pipe;
++		} else {
++			cdclk_config = old_cdclk_state->actual;
++			pipe = INVALID_PIPE;
++		}
  
--		if (i == m->field_count) {
--			priv->dirty = true;
--			pipapo_drop(m, rulemap);
--			return;
-+			if (last && f->mt[rulemap[i].to].e == e) {
-+				priv->dirty = true;
-+				pipapo_drop(m, rulemap);
-+				return;
-+			}
- 		}
- 
- 		first_rule += rules_f0;
+-		intel_set_cdclk(i915, &new_cdclk_state->actual, pipe);
++		cdclk_config.voltage_level = max(new_cdclk_state->actual.voltage_level,
++						 old_cdclk_state->actual.voltage_level);
  	}
 +
-+	WARN_ON_ONCE(1); /* elem_priv not found */
++	drm_WARN_ON(&i915->drm, !new_cdclk_state->base.changed);
++
++	intel_set_cdclk(i915, &cdclk_config, pipe);
  }
  
  /**
+@@ -2544,7 +2558,7 @@ intel_set_cdclk_post_plane_update(struct intel_atomic_state *state)
+ 		intel_atomic_get_old_cdclk_state(state);
+ 	const struct intel_cdclk_state *new_cdclk_state =
+ 		intel_atomic_get_new_cdclk_state(state);
+-	enum pipe pipe = new_cdclk_state->pipe;
++	enum pipe pipe;
+ 
+ 	if (!intel_cdclk_changed(&old_cdclk_state->actual,
+ 				 &new_cdclk_state->actual))
+@@ -2554,11 +2568,14 @@ intel_set_cdclk_post_plane_update(struct intel_atomic_state *state)
+ 		intel_cdclk_pcode_post_notify(state);
+ 
+ 	if (!new_cdclk_state->disable_pipes &&
+-	    old_cdclk_state->actual.cdclk > new_cdclk_state->actual.cdclk) {
+-		drm_WARN_ON(&i915->drm, !new_cdclk_state->base.changed);
++	    new_cdclk_state->actual.cdclk < old_cdclk_state->actual.cdclk)
++		pipe = new_cdclk_state->pipe;
++	else
++		pipe = INVALID_PIPE;
+ 
+-		intel_set_cdclk(i915, &new_cdclk_state->actual, pipe);
+-	}
++	drm_WARN_ON(&i915->drm, !new_cdclk_state->base.changed);
++
++	intel_set_cdclk(i915, &new_cdclk_state->actual, pipe);
+ }
+ 
+ static int intel_pixel_rate_to_cdclk(const struct intel_crtc_state *crtc_state)
 -- 
 2.43.0
 
