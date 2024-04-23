@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667F613FD67;
-	Tue, 23 Apr 2024 21:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1601313FD67;
+	Tue, 23 Apr 2024 21:43:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713908584; cv=none; b=h8V0AvXSEq3hxj6J4FstiaaWwg9SyYeUKQTKyJVmbnx5TNO+rI2GtOM4zO+TBP6R9TFP13ekB89gDZcacrWPtuDvD0Yt5S822dCaBf/cwFVIPPejBXS1AzMlLKlfoajmCYfmwk1neZ8UG/E3n4YhHcstrRuEr21NljNbVd+0xKE=
+	t=1713908585; cv=none; b=WEGsbzG38wD3xJXHvm+IFcBHWavs3JgxgejizA1kZQnEv6dI1TpUaN8PRWki0Uw3tOKFttfikbIdM9BMeeRkYLnZ5qK1I3RJU1XF4XevFu2AVe9DnHW1n6F2KidL+urShUNazQU9qVlyoRDzqfiFGDDlJQ4YZTkbuGiEPXU720I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713908584; c=relaxed/simple;
-	bh=/CZWSdM6pLXqckJqw461whgeWYiqD1fa++gia1tbAKk=;
+	s=arc-20240116; t=1713908585; c=relaxed/simple;
+	bh=ysdSYs1aYiCyc3BmUaasc0d+f7kHGFJlO2alLZ0UjUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I+zBsfd58yEeUa7xzd2zge68sdAISWBmBg6IEWir1SCDmdka235OqN28Yy1l5Yi9XuPbuNhjcwB+vtsQ32HgiP3E5Y3xcxsNGfQYN+rdmTskDzsanbT5OKr8/Cp2h793mm+vPx1R/mFLV24qbJZRNToWngfRyj1sg1BQChhrakU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHcSQxRg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PNo/zsIvqjNT73k+Ykp6E6MCFWbZRImNHGGcqBAfF59PNk5Z5Aj0ppf0RPY+yRdsrAO7byzFA+YsiXmvOhiyh4QMDojPxbCNX5YAtYVk0/6N7bgUe+kI0kaWIo0eRc2pIuEKkETxzLMuAWY8tfF4ZkNoYnaPWsc/JlM6Yazmajo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJvzRS6s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHcSQxRg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3404CC32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJvzRS6s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE78CC116B1;
 	Tue, 23 Apr 2024 21:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1713908584;
-	bh=/CZWSdM6pLXqckJqw461whgeWYiqD1fa++gia1tbAKk=;
+	s=korg; t=1713908585;
+	bh=ysdSYs1aYiCyc3BmUaasc0d+f7kHGFJlO2alLZ0UjUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZHcSQxRgDpJvbVq5rSkfOmueDlrvpzzfYa6eCeyllwu2bhiK5DUAc3fpT8RrnqSiy
-	 83lPRac/xxDgOkS/KuX/HNwMRxUwaLXR/hMLEBZrX6xsIuRxAoBTd2on+CAFyKxczK
-	 3asCqKHnZh29t/O25BdS/KbbEF6fnMnQK1jKNP9Y=
+	b=aJvzRS6sCDFSglYJeZxH0qFAiHe4aacmM+vcjFmnpedzRPF6TlHGS5jnZ9XFo0uMo
+	 yT1Ah/+DlB8WOwO4iKyuSmny0Dx4vH6MlRSq4gsb3i4eQ/9R2cBTKGbJBn+eaxDf6H
+	 riH4eilliZvzfD0rdBis55eiGXPtF+BsiaAk9TzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+	Steen Hegelund <Steen.Hegelund@microchip.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 040/158] af_unix: Dont peek OOB data without MSG_OOB.
-Date: Tue, 23 Apr 2024 14:37:57 -0700
-Message-ID: <20240423213857.050566859@linuxfoundation.org>
+Subject: [PATCH 6.6 041/158] net: sparx5: flower: fix fragment flags handling
+Date: Tue, 23 Apr 2024 14:37:58 -0700
+Message-ID: <20240423213857.092221633@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
 References: <20240423213855.696477232@linuxfoundation.org>
@@ -45,90 +48,170 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit 22dd70eb2c3d754862964377a75abafd3167346b ]
+[ Upstream commit 68aba00483c7c4102429bcdfdece7289a8ab5c8e ]
 
-Currently, we can read OOB data without MSG_OOB by using MSG_PEEK
-when OOB data is sitting on the front row, which is apparently
-wrong.
+I noticed that only 3 out of the 4 input bits were used,
+mt.key->flags & FLOW_DIS_IS_FRAGMENT was never checked.
 
-  >>> from socket import *
-  >>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
-  >>> c1.send(b'a', MSG_OOB)
-  1
-  >>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
-  b'a'
+In order to avoid a complicated maze, I converted it to
+use a 16 byte mapping table.
 
-If manage_oob() is called when no data has been copied, we only
-check if the socket enables SO_OOBINLINE or MSG_PEEK is not used.
-Otherwise, the skb is returned as is.
+As shown in the table below the old heuristics doesn't
+always do the right thing, ie. when FLOW_DIS_IS_FRAGMENT=1/1
+then it used to only match follow-up fragment packets.
 
-However, here we should return NULL if MSG_PEEK is set and no data
-has been copied.
+Here are all the combinations, and their resulting new/old
+VCAP key/mask filter:
 
-Also, in such a case, we should not jump to the redo label because
-we will be caught in the loop and hog the CPU until normal data
-comes in.
+  /- FLOW_DIS_IS_FRAGMENT (key/mask)
+  |    /- FLOW_DIS_FIRST_FRAG (key/mask)
+  |    |    /-- new VCAP fragment (key/mask)
+  v    v    v    v- old VCAP fragment (key/mask)
 
-Then, we need to handle skb == NULL case with the if-clause below
-the manage_oob() block.
+ 0/0  0/0  -/-  -/-     impossible (due to entry cond. on mask)
+ 0/0  0/1  -/-  0/3 !!  invalid (can't match non-fragment + follow-up frag)
+ 0/0  1/0  -/-  -/-     impossible (key > mask)
+ 0/0  1/1  1/3  1/3     first fragment
 
-With this patch:
+ 0/1  0/0  0/3  3/3 !!  not fragmented
+ 0/1  0/1  0/3  3/3 !!  not fragmented (+ not first fragment)
+ 0/1  1/0  -/-  -/-     impossible (key > mask)
+ 0/1  1/1  -/-  1/3 !!  invalid (non-fragment and first frag)
 
-  >>> from socket import *
-  >>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
-  >>> c1.send(b'a', MSG_OOB)
-  1
-  >>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
-  Traceback (most recent call last):
-    File "<stdin>", line 1, in <module>
-  BlockingIOError: [Errno 11] Resource temporarily unavailable
+ 1/0  0/0  -/-  -/-     impossible (key > mask)
+ 1/0  0/1  -/-  -/-     impossible (key > mask)
+ 1/0  1/0  -/-  -/-     impossible (key > mask)
+ 1/0  1/1  -/-  -/-     impossible (key > mask)
 
-Fixes: 314001f0bf92 ("af_unix: Add OOB support")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240410171016.7621-3-kuniyu@amazon.com
+ 1/1  0/0  1/1  3/3 !!  some fragment
+ 1/1  0/1  3/3  3/3     follow-up fragment
+ 1/1  1/0  -/-  -/-     impossible (key > mask)
+ 1/1  1/1  1/3  1/3     first fragment
+
+In the datasheet the VCAP fragment values are documented as:
+ 0 = no fragment
+ 1 = initial fragment
+ 2 = suspicious fragment
+ 3 = valid follow-up fragment
+
+Result: 3 combinations match the old behavior,
+        3 combinations have been corrected,
+        2 combinations are now invalid, and fail,
+        8 combinations are impossible.
+
+It should now be aligned with how FLOW_DIS_IS_FRAGMENT
+and FLOW_DIS_FIRST_FRAG is set in __skb_flow_dissect() in
+net/core/flow_dissector.c
+
+Since the VCAP fragment values are not a bitfield, we have
+to ignore the suspicious fragment value, eg. when matching
+on any kind of fragment with FLOW_DIS_IS_FRAGMENT=1/1.
+
+Only compile tested, and logic tested in userspace, as I
+unfortunately don't have access to this switch chip (yet).
+
+Fixes: d6c2964db3fe ("net: microchip: sparx5: Adding more tc flower keys for the IS2 VCAP")
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Steen Hegelund <Steen.Hegelund@microchip.com>
+Tested-by: Daniel Machon <daniel.machon@microchip.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20240411111321.114095-1-ast@fiberby.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ .../microchip/sparx5/sparx5_tc_flower.c       | 61 ++++++++++++-------
+ 1 file changed, 40 insertions(+), 21 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 1340cb86f104c..6eab35a5e2f3b 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2587,7 +2587,9 @@ static struct sk_buff *manage_oob(struct sk_buff *skb, struct sock *sk,
- 					WRITE_ONCE(u->oob_skb, NULL);
- 					consume_skb(skb);
- 				}
--			} else if (!(flags & MSG_PEEK)) {
-+			} else if (flags & MSG_PEEK) {
-+				skb = NULL;
-+			} else {
- 				skb_unlink(skb, &sk->sk_receive_queue);
- 				WRITE_ONCE(u->oob_skb, NULL);
- 				if (!WARN_ON_ONCE(skb_unref(skb)))
-@@ -2669,11 +2671,9 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
- #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
- 		if (skb) {
- 			skb = manage_oob(skb, sk, flags, copied);
--			if (!skb) {
-+			if (!skb && copied) {
- 				unix_state_unlock(sk);
--				if (copied)
--					break;
--				goto redo;
-+				break;
- 			}
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_tc_flower.c b/drivers/net/ethernet/microchip/sparx5/sparx5_tc_flower.c
+index 523e0c470894f..55f255a3c9db6 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_tc_flower.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_tc_flower.c
+@@ -36,6 +36,27 @@ struct sparx5_tc_flower_template {
+ 	u16 l3_proto; /* protocol specified in the template */
+ };
+ 
++/* SparX-5 VCAP fragment types:
++ * 0 = no fragment, 1 = initial fragment,
++ * 2 = suspicious fragment, 3 = valid follow-up fragment
++ */
++enum {                   /* key / mask */
++	FRAG_NOT   = 0x03, /* 0 / 3 */
++	FRAG_SOME  = 0x11, /* 1 / 1 */
++	FRAG_FIRST = 0x13, /* 1 / 3 */
++	FRAG_LATER = 0x33, /* 3 / 3 */
++	FRAG_INVAL = 0xff, /* invalid */
++};
++
++/* Flower fragment flag to VCAP fragment type mapping */
++static const u8 sparx5_vcap_frag_map[4][4] = {		  /* is_frag */
++	{ FRAG_INVAL, FRAG_INVAL, FRAG_INVAL, FRAG_FIRST }, /* 0/0 */
++	{ FRAG_NOT,   FRAG_NOT,   FRAG_INVAL, FRAG_INVAL }, /* 0/1 */
++	{ FRAG_INVAL, FRAG_INVAL, FRAG_INVAL, FRAG_INVAL }, /* 1/0 */
++	{ FRAG_SOME,  FRAG_LATER, FRAG_INVAL, FRAG_FIRST }  /* 1/1 */
++	/* 0/0	      0/1	  1/0	      1/1 <-- first_frag */
++};
++
+ static int
+ sparx5_tc_flower_es0_tpid(struct vcap_tc_flower_parse_usage *st)
+ {
+@@ -145,29 +166,27 @@ sparx5_tc_flower_handler_control_usage(struct vcap_tc_flower_parse_usage *st)
+ 	flow_rule_match_control(st->frule, &mt);
+ 
+ 	if (mt.mask->flags) {
+-		if (mt.mask->flags & FLOW_DIS_FIRST_FRAG) {
+-			if (mt.key->flags & FLOW_DIS_FIRST_FRAG) {
+-				value = 1; /* initial fragment */
+-				mask = 0x3;
+-			} else {
+-				if (mt.mask->flags & FLOW_DIS_IS_FRAGMENT) {
+-					value = 3; /* follow up fragment */
+-					mask = 0x3;
+-				} else {
+-					value = 0; /* no fragment */
+-					mask = 0x3;
+-				}
+-			}
+-		} else {
+-			if (mt.mask->flags & FLOW_DIS_IS_FRAGMENT) {
+-				value = 3; /* follow up fragment */
+-				mask = 0x3;
+-			} else {
+-				value = 0; /* no fragment */
+-				mask = 0x3;
+-			}
++		u8 is_frag_key = !!(mt.key->flags & FLOW_DIS_IS_FRAGMENT);
++		u8 is_frag_mask = !!(mt.mask->flags & FLOW_DIS_IS_FRAGMENT);
++		u8 is_frag_idx = (is_frag_key << 1) | is_frag_mask;
++
++		u8 first_frag_key = !!(mt.key->flags & FLOW_DIS_FIRST_FRAG);
++		u8 first_frag_mask = !!(mt.mask->flags & FLOW_DIS_FIRST_FRAG);
++		u8 first_frag_idx = (first_frag_key << 1) | first_frag_mask;
++
++		/* Lookup verdict based on the 2 + 2 input bits */
++		u8 vdt = sparx5_vcap_frag_map[is_frag_idx][first_frag_idx];
++
++		if (vdt == FRAG_INVAL) {
++			NL_SET_ERR_MSG_MOD(st->fco->common.extack,
++					   "Match on invalid fragment flag combination");
++			return -EINVAL;
  		}
- #endif
+ 
++		/* Extract VCAP fragment key and mask from verdict */
++		value = (vdt >> 4) & 0x3;
++		mask = vdt & 0x3;
++
+ 		err = vcap_rule_add_key_u32(st->vrule,
+ 					    VCAP_KF_L3_FRAGMENT_TYPE,
+ 					    value, mask);
 -- 
 2.43.0
 
