@@ -1,119 +1,111 @@
-Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAB615EFD5
-	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 15:02:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.154.21.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A1515E1EA;
+	Wed, 24 Apr 2024 16:14:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713970946; cv=none; b=b3AYN5fw+J6VJs8146K4JKdtW1B9JI5LnOq51xOy9577tyEuQwDBwt5vXx1DVsMiyUZflbpZTxphRoQorpy3spCPbG4A5+r2S4qqvNZGU0rPzKG1O05HyMEeFTgY4BrrQ3iPLWhJje8RcFGbPfjweOqKd5+pLXPUYBrjURrglYc=
+	t=1713975248; cv=none; b=BEk7pctenCPnay3cYqC0EcKl2jYLXjAe77+GESYjeGCIsp0gK83ze9ZsT/ylGQ2jY5FwqV1wkD+iusDhc6LOk8jHAv9BZHbIMCNnUFPiu3RQSNMptuKdph37/7MJMTWC6Ut/GVJd297nUTP5Mi6GJCFE4FhjVcIu1t8TUW2Tpg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713970946; c=relaxed/simple;
-	bh=XLGFL+xC3/Alxez9rYkwKhLSznzQjOJqaZBZKON6piI=;
-	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=pB0qZsJVwVU4K2C0zCm/89KF93WziDs/xCVAlVoBJ/TvK2TQbdtoYDYFYjOz6wNJAAfOvUPN8Ee6BFO+RCrsKyJBsCFgakelQYuaf4dGP2YYqbPs/bbxVo1lUTM93+R0Gwp9LlMT612wM6qSOL2x8BdzTg9aG2eWKwXCT4xXNVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omp.ru; spf=pass smtp.mailfrom=omp.ru; arc=none smtp.client-ip=90.154.21.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omp.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=omp.ru
-Received: from [192.168.1.105] (178.176.75.123) by msexch01.omp.ru
- (10.188.4.12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Wed, 24 Apr
- 2024 18:02:10 +0300
-Subject: Re: [PATCH 6.8 050/158] ravb: Group descriptor types used in Rx ring
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, =?UTF-8?Q?Niklas_S=c3=b6derlund?=
-	<niklas.soderlund+renesas@ragnatech.se>, Paul Barker
-	<paul.barker.ct@bp.renesas.com>, "David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-References: <20240423213855.824778126@linuxfoundation.org>
- <20240423213857.537678352@linuxfoundation.org>
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
-Organization: Open Mobile Platform
-Message-ID: <c137268a-b86c-d2d6-822a-d39521076277@omp.ru>
-Date: Wed, 24 Apr 2024 18:02:09 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+	s=arc-20240116; t=1713975248; c=relaxed/simple;
+	bh=gLX2YQyGmAdgLq6u/YnjgsLNR5DZySU5Kt1Sc3fzigg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=nfX8ixADvC+nPvF4XIS+BzBoE5kse2SqvfNngs0HafDCwO40UyV5TKYMWMyBz0TK54xloYtE41iI89abiGOLueFqwxX/MYc5sASl03e3HUbtonfndlY+RKxcj/FpJT8UkKl1qN+Fo++/7zmuXJ9KToYyLbjfjuZa9xww/PUuvIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q4KLqyhm; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q4KLqyhm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3650C113CD;
+	Wed, 24 Apr 2024 16:14:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713975247;
+	bh=gLX2YQyGmAdgLq6u/YnjgsLNR5DZySU5Kt1Sc3fzigg=;
+	h=From:Date:Subject:To:Cc:From;
+	b=q4KLqyhm93bjEfGDwxOu/oZXHejviVibimbuNe6+vK8Qu5SoXvRCuBZqblCHtvksQ
+	 646Ofixj4IpCShiWwbP0RyLRVEN1VSfCQBMOtAw85PkvRD1mCB1/6VprLlDLu92WyC
+	 2cLj/OeNRoR0vQdJiNYqSwduEWbhNkIJmBfGaZnOkVhEMOV6MqgdVm7LXIq44IVIFC
+	 8BIf230ddi6Mrd/DZT2gOFV4DHJstmDLbq2pLSmWL3tTRwP6OZjqXdfijoOpt1gar/
+	 08HGiJkRZwzSLkL4UH7JoVYP7QhhahsCLs0IJqiQDbFQt5bz4AvUoSlEsKsZaW30Ss
+	 don6tvs6P0WiQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 24 Apr 2024 09:14:02 -0700
+Subject: [PATCH] drm/amd/display: Avoid -Wenum-float-conversion in
+ add_margin_and_round_to_dfs_grainularity()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20240423213857.537678352@linuxfoundation.org>
 Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: msexch01.omp.ru (10.188.4.12) To msexch01.omp.ru
- (10.188.4.12)
-X-KSE-ServerInfo: msexch01.omp.ru, 9
-X-KSE-AntiSpam-Interceptor-Info: scan successful
-X-KSE-AntiSpam-Version: 6.1.0, Database issued on: 04/24/2024 14:48:11
-X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
-X-KSE-AntiSpam-Method: none
-X-KSE-AntiSpam-Rate: 59
-X-KSE-AntiSpam-Info: Lua profiles 184901 [Apr 24 2024]
-X-KSE-AntiSpam-Info: Version: 6.1.0.4
-X-KSE-AntiSpam-Info: Envelope from: s.shtylyov@omp.ru
-X-KSE-AntiSpam-Info: LuaCore: 18 0.3.18
- b9d6ada76958f07c6a68617a7ac8df800bc4166c
-X-KSE-AntiSpam-Info: {rep_avail}
-X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
-X-KSE-AntiSpam-Info: {relay has no DNS name}
-X-KSE-AntiSpam-Info: {SMTP from is not routable}
-X-KSE-AntiSpam-Info:
-	omp.ru:7.1.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;127.0.0.199:7.1.2
-X-KSE-AntiSpam-Info: ApMailHostAddress: 178.176.75.123
-X-KSE-AntiSpam-Info: {DNS response errors}
-X-KSE-AntiSpam-Info: Rate: 59
-X-KSE-AntiSpam-Info: Status: not_detected
-X-KSE-AntiSpam-Info: Method: none
-X-KSE-AntiSpam-Info: Auth:dmarc=temperror header.from=omp.ru;spf=temperror
- smtp.mailfrom=omp.ru;dkim=none
-X-KSE-Antiphishing-Info: Clean
-X-KSE-Antiphishing-ScanningType: Heuristic
-X-KSE-Antiphishing-Method: None
-X-KSE-Antiphishing-Bases: 04/24/2024 14:52:00
-X-KSE-Antivirus-Interceptor-Info: scan successful
-X-KSE-Antivirus-Info: Clean, bases: 4/24/2024 1:31:00 PM
-X-KSE-Attachment-Filter-Triggered-Rules: Clean
-X-KSE-Attachment-Filter-Triggered-Filters: Clean
-X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240424-amdgpu-display-dcn401-enum-float-conversion-v1-1-43a2b132ef44@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAMkvKWYC/x3NwQrCMAyA4VcZORtoSxH1VcRDSLMZ2NLSuqGMv
+ bvV43/5/h2aVJUGt2GHKps2zdbDnwbgJ9kkqKk3BBeiiyEiLWkqKyZtZaYPJrboPIqtC45zphd
+ ytk3qz0F2V2Z/CWehAF0sVUZ9/2/3x3F8AUNHqwV9AAAA
+To: harry.wentland@amd.com, sunpeng.li@amd.com, Rodrigo.Siqueira@amd.com, 
+ alexander.deucher@amd.com, christian.koenig@amd.com, Xinhui.Pan@amd.com
+Cc: ndesaulniers@google.com, morbo@google.com, justinstitt@google.com, 
+ arnd@arndb.de, aurabindo.pillai@amd.com, amd-gfx@lists.freedesktop.org, 
+ dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2625; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=gLX2YQyGmAdgLq6u/YnjgsLNR5DZySU5Kt1Sc3fzigg=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGma+ueaZSyMBI9H8yzfOLvpwiaB4up/8ybKL0zJF9kgF
+ O9atmtNRykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZjIn2SGf+pTo9krf/ybkaWw
+ 03PGTKVl0mmCT9z3Ha9mtrDeunHKoceMDKeVOT8qnyqfzFClFvJSaWryWgG3KUlSlUx3ZkRqHkp
+ 24gcA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 4/24/24 12:37 AM, Greg Kroah-Hartman wrote:
+When building with clang 19 or newer (which strengthened some of the
+enum conversion warnings for C), there is a warning (or error with
+CONFIG_WERROR=y) around doing arithmetic with an enumerated type and a
+floating point expression.
 
-> 6.8-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-> 
-> [ Upstream commit 4123c3fbf8632e5c553222bf1c10b3a3e0a8dc06 ]
-> 
-> The Rx ring can either be made up of normal or extended descriptors, not
-> a mix of the two at the same time. Make this explicit by grouping the
-> two variables in a rx_ring union.
-> 
-> The extension of the storage for more than one queue of normal
-> descriptors from a single to NUM_RX_QUEUE queues have no practical
-> effect. But aids in making the code readable as the code that uses it
-> already piggyback on other members of struct ravb_private that are
-> arrays of max length NUM_RX_QUEUE, e.g. rx_desc_dma. This will also make
-> further refactoring easier.
-> 
-> While at it, rename the normal descriptor Rx ring to make it clear it's
-> not strictly related to the GbEthernet E-MAC IP found in RZ/G2L, normal
-> descriptors could be used on R-Car SoCs too.
-> 
-> Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-> Reviewed-by: Paul Barker <paul.barker.ct@bp.renesas.com>
-> Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-> Signed-off-by: David S. Miller <davem@davemloft.net>
-> Stable-dep-of: def52db470df ("net: ravb: Count packets instead of descriptors in R-Car RX path")
+  drivers/gpu/drm/amd/amdgpu/../display/dc/dml2/dml21/src/dml2_dpmm/dml2_dpmm_dcn4.c:181:58: error: arithmetic between enumeration type 'enum dentist_divider_range' and floating-point type 'double' [-Werror,-Wenum-float-conversion]
+    181 |         divider = (unsigned int)(DFS_DIVIDER_RANGE_SCALE_FACTOR * (vco_freq_khz / clock_khz));
+        |                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-   I still highly doubt that this patch is really necessary in -stable.
-This patch shouldn't depend on it...
+This conversion is expected due to the nature of the enumerated value
+and definition, so silence the warning by casting the enumeration to an
+integer explicitly to make it clear to the compiler.
 
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3df48ddedee4 ("drm/amd/display: Add new DCN401 sources")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+Alternatively, perhaps the potential truncation could happen before the
+multiplication?
 
-[...]
+  divider = DFS_DIVIDER_RANGE_SCALE_FACTOR * (unsigned int)(vco_freq_khz / clock_khz);
 
-MBR, Sergey
+I suspect the result of the division is probably not very large
+(certainly not within UINT_MAX / 4), so I would not expect the
+multiplication to overflow, but I was not sure so I decided to take the
+safer, NFC change. I am happy to respin as necessary.
+---
+ .../gpu/drm/amd/display/dc/dml2/dml21/src/dml2_dpmm/dml2_dpmm_dcn4.c    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_dpmm/dml2_dpmm_dcn4.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_dpmm/dml2_dpmm_dcn4.c
+index e6698ee65843..65eb0187e965 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_dpmm/dml2_dpmm_dcn4.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_dpmm/dml2_dpmm_dcn4.c
+@@ -178,7 +178,7 @@ static bool add_margin_and_round_to_dfs_grainularity(double clock_khz, double ma
+ 
+ 	clock_khz *= 1.0 + margin;
+ 
+-	divider = (unsigned int)(DFS_DIVIDER_RANGE_SCALE_FACTOR * (vco_freq_khz / clock_khz));
++	divider = (unsigned int)((int)DFS_DIVIDER_RANGE_SCALE_FACTOR * (vco_freq_khz / clock_khz));
+ 
+ 	/* we want to floor here to get higher clock than required rather than lower */
+ 	if (divider < DFS_DIVIDER_RANGE_2_START) {
+
+---
+base-commit: d60dc4dd72412d5d9566fdf391e4202b05f88912
+change-id: 20240424-amdgpu-display-dcn401-enum-float-conversion-c09cc1826ea2
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
