@@ -1,101 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A900C16D9BD;
-	Wed, 24 Apr 2024 18:19:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71ED31BC46
+	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 18:39:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713982772; cv=none; b=Z+GbVq9MjMqv9GiKB2CzWE1cQLubAwnQ8GaKaKUX8PzSV2En+Wb2TwK9S6Kw0koo17ucEItfF6o+ZtAtixjrhMGn+SzWGXHq55FiySev8MPATb134Fftv8Oy669+iJcBdJZAKV37KVZBMyc1roWTVMlGSBLE9rnDUenPs6pxe+0=
+	t=1713983980; cv=none; b=Db30e4FDyMcR/tgzNcYEfL+XE7/bogB9KIg4J2Xv8R+nJdaEItXPDzAmfmurttj0oODPWRXTkgBRUARCyPdpfkHjwfUDHd8YhbS21dr4X8pxHvk/DkoX7m5AZDz9cdhQHpnIw7PL57oBXqzqYVELmKvDBjWcDp3yRpGp6fFARv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713982772; c=relaxed/simple;
-	bh=wNBG1N4ibHT2sMU2yEE26oOnTyiOJON1lvGd91xK8sc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ltV8kPJR42PnidkJtc6OXVVQNHGCwhl2NRIYadvGn/WTFy0wF/SW2EP5T00nA5q6f38GVPBzrah1tmh3rmklKQMvzb3ssPMB7znJvooHtI+v5bYD3qCqEeEx81sFvbrA+4XIs6d9jtHtTthBTFt28ySNOHdGuRjhHJsE/sdJ3RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jj243eK0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1713983980; c=relaxed/simple;
+	bh=XNCS2vE/uZ8FvuejqdKm2GWopK0U4sgGpwzCY+yux5A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RExfuvv1i/b1Jbf7kSR3gcMRN3uFeUWWk2Zp+0oyN0GILGQti4wp+Bfpi2BxCmjXcjwQ4w97y2WU7NBl4wqSDH0Ss63xUxxuQrPzmu5Wkj5kCrCl5wN5HXELJ/K7PNHvsdVPs6tZDVJiQ8jlczX89oOnx5YRaydF9jzbL3l9O1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VWZRnuNa; arc=none smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jj243eK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1BE2C4AF16;
-	Wed, 24 Apr 2024 18:19:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713982772;
-	bh=wNBG1N4ibHT2sMU2yEE26oOnTyiOJON1lvGd91xK8sc=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=jj243eK0C4W0dptRwKs3lyGHWjxD/cRXiQZaRsS8UzJqkq7IqGN5dzzsLbDYPxgOs
-	 b9lfflFbuMt/X0+nDwcVc5dXopJTyaVdkaWNhkNO26ULdmQ3KIIkK2WCMAu8yloN55
-	 JDn7fKnOioY1/KUC18kfLGJAO4namuy1UT2S+jYgq0dTuJijsGqohAMxLsnvUIpwOP
-	 t6udWcYlCtzhMTe9viG1Eb8uYgCJElCyUcDm9ZhhLh0ms9irWR337QSyF8iN074Wrx
-	 So5LDkDIHWPtIXy/EKd04pM+ZpKbYZB6vEWnODqRuL0IbPgSVHGN3ojTTkGI8fvrMB
-	 kYTd64gViKopg==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 24 Apr 2024 11:19:27 -0700
-Subject: [PATCH 2/2] drm/amd/display: Fix CFLAGS for dml2_core_dcn4_calcs.o
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VWZRnuNa"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1713983980; x=1745519980;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=XNCS2vE/uZ8FvuejqdKm2GWopK0U4sgGpwzCY+yux5A=;
+  b=VWZRnuNaGfHtYIsrnc8juQ0rYUNZxtWEpNGLinAW+gHEY+n1VUndetA8
+   1PYVx+g3lS+qUGGlB57tRa8gcLV/G1Oxwr/eYS9NLGMJq4L1fa0A/mYU6
+   tMUJb+lWWqn/gWav8ehRy5NFGyMgZAbMAwrmmFg7TLbfNE3cQbF6f7kXR
+   pr7UmBT+xEva2z9Q5ob5Dt+2Awo+EvGPEin2bDe1LAROX/hq8Np8+a2vf
+   rvppae2MG4mnlIeCf1wwumWz0AJ/vDPxUNospvz785TWssvGgCtFfWUp+
+   22FMxE/wAuofaGTXLIVzCzU65v8ua4Ev3nEC/uGKfB+V2vsCMTCGGEM8C
+   w==;
+X-CSE-ConnectionGUID: 3azA2j0WTNCydpMFGWcVIg==
+X-CSE-MsgGUID: p2LGD96bQaaRZedtG0yxPw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="13422642"
+X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; 
+   d="scan'208";a="13422642"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2024 11:39:39 -0700
+X-CSE-ConnectionGUID: tKbITtiCTUKFd3D7HQw94w==
+X-CSE-MsgGUID: 3paWN80SQ4mdO5LFlAJ6/w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; 
+   d="scan'208";a="25425096"
+Received: from ttiasha-mobl1.amr.corp.intel.com (HELO [10.209.122.5]) ([10.209.122.5])
+  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2024 11:39:39 -0700
+Message-ID: <9a9ca7a4-e302-40f9-a112-c92bf9c720e7@intel.com>
+Date: Wed, 24 Apr 2024 11:39:38 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 00/71] New Intel CPUID families
+To: Tony Luck <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>
+Cc: x86@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20240424181245.41141-1-tony.luck@intel.com>
+Content-Language: en-US
+From: Dave Hansen <dave.hansen@intel.com>
+Autocrypt: addr=dave.hansen@intel.com; keydata=
+ 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
+In-Reply-To: <20240424181245.41141-1-tony.luck@intel.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240424-amdgpu-dml2-fix-frame-larger-than-dcn401-v1-2-5659f8fa8816@kernel.org>
-References: <20240424-amdgpu-dml2-fix-frame-larger-than-dcn401-v1-0-5659f8fa8816@kernel.org>
-In-Reply-To: <20240424-amdgpu-dml2-fix-frame-larger-than-dcn401-v1-0-5659f8fa8816@kernel.org>
-To: harry.wentland@amd.com, sunpeng.li@amd.com, Rodrigo.Siqueira@amd.com, 
- alexander.deucher@amd.com, christian.koenig@amd.com, Xinhui.Pan@amd.com
-Cc: aurabindo.pillai@amd.com, amd-gfx@lists.freedesktop.org, 
- dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2877; i=nathan@kernel.org;
- h=from:subject:message-id; bh=wNBG1N4ibHT2sMU2yEE26oOnTyiOJON1lvGd91xK8sc=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGmavoZ7WqWTd2zN3O5otKdd/7jNUTGJU8Lx9azG2eaad
- 0XOhMp2lLIwiHExyIopslQ/Vj1uaDjnLOONU5Ng5rAygQxh4OIUgIloPWL475Bbz/zU525+ytRf
- 4nyyK35tZW+7+v29TJsC277g9BXhvgx/5XQmGHpFrlyQ8Ta7Zm70BBm+81eLMyebhso7/tS+cTm
- QCQA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
--Wframe-larger-than=2048 is a part of both CFLAGS and CFLAGS_REMOVE for
-dml2_core_dcn4_calcs.o, which means that it ultimately gets removed
-altogether for 64-bit targets, as 2048 is the default FRAME_WARN value
-for 64-bit platforms, resulting in no -Wframe-larger-than coverage for
-this file.
+On 4/24/24 11:12, Tony Luck wrote:
+> But the tl;dr version is that some surgery is required to make adding
+> CPUs with new CPUID "family" values elegant.
 
-Remove -Wframe-larger-than from CFLAGS_REMOVE_dml2_core_dcn4_calcs.o and
-move to $(frame_warn_flag) for CFLAGS_dml2_core_dcn4_calcs.o, as that
-accounts for the fact that -Wframe-larger-than may need to be larger
-than 2048 in certain situations, such as when the sanitizers are
-enabled.
+Hey Tony,
 
-Fixes: d546a39c6b10 ("drm/amd/display: Add misc DC changes for DCN401")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/gpu/drm/amd/display/dc/dml2/Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/Makefile b/drivers/gpu/drm/amd/display/dc/dml2/Makefile
-index c35212a4a968..904a2d419638 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/Makefile
-@@ -111,7 +111,7 @@ CFLAGS_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_top/dml_top.o := $(dml2_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_top/dml_top_mcache.o := $(dml2_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_top/dml2_top_optimization := $(dml2_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4.o := $(dml2_ccflags)
--CFLAGS_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.o := $(dml2_ccflags) -Wframe-larger-than=2048
-+CFLAGS_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.o := $(dml2_ccflags) $(frame_warn_flag)
- CFLAGS_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_core/dml2_core_factory.o := $(dml2_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_core/dml2_core_shared.o := $(dml2_ccflags) $(frame_warn_flag)
- CFLAGS_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_dpmm/dml2_dpmm_dcn4.o := $(dml2_ccflags)
-@@ -134,7 +134,7 @@ CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_top/dml_top.o := $(dml2_rcfla
- CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_top/dml_top_mcache.o := $(dml2_rcflags)
- CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_top/dml2_top_optimization.o := $(dml2_rcflags)
- CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4.o := $(dml2_rcflags)
--CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.o := $(dml2_rcflags) -Wframe-larger-than=2048
-+CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.o := $(dml2_rcflags)
- CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_core/dml2_core_factory.o := $(dml2_rcflags)
- CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_core/dml2_core_shared.o := $(dml2_rcflags)
- CFLAGS_REMOVE_$(AMDDALPATH)/dc/dml2/dml21/src/dml2_dpmm/dml2_dpmm_dcn4.o := $(dml2_rcflags)
-
--- 
-2.44.0
-
+With the exception of the unavoidable PECI goofiness, this seems like a
+really universal win in readability and compactness.  It's looks really
+nice.  Thanks!
