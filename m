@@ -1,63 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B801E745CB;
-	Wed, 24 Apr 2024 21:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D854A2B9C9;
+	Wed, 24 Apr 2024 21:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713992969; cv=none; b=AX5d5MVYhhcNk83IbIDt3UOdeenAwo5xaU1tlH69dp1kMMKSLDxICsc+cM2OAvasLvbwoWY1uiakmRHaywOvh55jEFpgQgABew5MOq8GRF3yzO9JnzCc8HUD1iS8e05N00X5xiqrFK0fi1q99saPj9oS5sz85uNXEHzhw9SBHb4=
+	t=1713995700; cv=none; b=uS39PsbhO3etYtgUvqqz/uxdFZEcuPbpP9QCXLCSwXbEv9B+BYEICH62eo+QSiGXCHf8J0aCAoJBzn5TW83Uj6F/lNmMW2T3MH2Pldm0vwdZwRbpYXBfu1lLmuyX4QOPKw0GM/BjuKKOAUQbrI84gGG6ynh8D5q7ArxXTfLYFYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713992969; c=relaxed/simple;
-	bh=WtRVZAYfjCSELqE6SJYhA7wi/mQscM6/bN4aAcsYB4s=;
+	s=arc-20240116; t=1713995700; c=relaxed/simple;
+	bh=wKg8z1iS1q3WlH+t61PUrgDi6z87hCpISUOPX2OOyJs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Sw4bPdEP9JtKnHLEnxLR+s4xJFsRk2XS31vbKVVsd3aVbG9Eiu8NqZLNEHfvKu/WnfrdKVCWr0OHoANj4Q8jQtvBnAvjkc6gNCh7PVLmuFhtO1AQjWfK1/LyqFto7ttKun79XCCr28jgSuTKKPaZBthx+uO+v5vTFKL/lFKLjpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tk6CODpc; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=QNDmJ5/NVgIO3WrbIP0l4l5gYI6rMt4t7AreF6TuhC2UpfK/vdWhHdo0oeA7K/zzejgf4GZxYE6XtJZoFQRLoX9VPGHTBH6gvrKNGQhStshhI0PGyPyIq9cszfUIeU5vChwlxxawKf6k6UDda7hjSkSZQyUx0RR+t7ecKoVIkn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSqcKRxV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tk6CODpc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12CABC113CD;
-	Wed, 24 Apr 2024 21:09:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713992969;
-	bh=WtRVZAYfjCSELqE6SJYhA7wi/mQscM6/bN4aAcsYB4s=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSqcKRxV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60563C113CD;
+	Wed, 24 Apr 2024 21:54:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1713995699;
+	bh=wKg8z1iS1q3WlH+t61PUrgDi6z87hCpISUOPX2OOyJs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Tk6CODpcUBs/befweQZ/UTc28JcNAN8SbSNtICHU1iDuyakWoChUZLesJVCH50icO
-	 lrN3fghAX8lPvubQos0fLoQDtWsGquzJVZmQsrOcK8MBf7+y7dn2k7NBXue1tra3ja
-	 nJ4GHhHUl5rtR1LcvvI6OeHzDjNt/SEev8CuaDYvTBUsKCGxX/l1kJ0OSD3weRmHt7
-	 /XV+ND23TPTOgRbDO8DKsj8b4FPFlRAT9KgQZ3+jtjn9E9DLwtrk5/DlJJdutyoYfc
-	 btp8/TxCA7LvvLrqPkbyZgqFj2lC1pN1buvf1iiDhDIcQcOZEiKrFFCGdwMzhswGFn
-	 F5sLcyAk9h2Sw==
-Date: Wed, 24 Apr 2024 14:09:27 -0700
-From: Josh Poimboeuf <jpoimboe@kernel.org>
-To: Tony Luck <tony.luck@intel.com>
-Cc: Borislav Petkov <bp@alien8.de>, Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v4 28/71] x86/bugs: Switch to new Intel CPU model defines
-Message-ID: <20240424210927.woup2cyqajrvpjkw@treble>
-References: <20240424181245.41141-1-tony.luck@intel.com>
- <20240424181507.41693-1-tony.luck@intel.com>
+	b=ZSqcKRxVDglG3ZDx/QqvW49CguxHg3nhkvJSvc7RfVamxtCiDEhbN9bBI1grIcZvb
+	 LaKFWh1ihYP6koL1jN+3wVKqszJgqZvotEyqIrdRzRkyOCFQjVHVP6T4KJO7vWknjc
+	 DKOjiqY7KiDcIb9rsPeA8p1q3YsXRMgwv9Lp0gLw=
+Date: Wed, 24 Apr 2024 14:54:42 -0700
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 6.6 000/158] 6.6.29-rc1 review
+Message-ID: <2024042435-prior-exfoliate-59ca@gregkh>
+References: <20240423213855.696477232@linuxfoundation.org>
+ <ZikNwksfty_Y_dhi@finisterre.sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240424181507.41693-1-tony.luck@intel.com>
+In-Reply-To: <ZikNwksfty_Y_dhi@finisterre.sirena.org.uk>
 
-On Wed, Apr 24, 2024 at 11:15:07AM -0700, Tony Luck wrote:
-> New CPU #defines encode vendor and family as well as model.
+On Wed, Apr 24, 2024 at 10:48:50PM +0900, Mark Brown wrote:
+> On Tue, Apr 23, 2024 at 02:37:17PM -0700, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.6.29 release.
+> > There are 158 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > 
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> This and all the other -rcs break the build of the arm64 selftests due
+> to this:
+> 
+> > Oleg Nesterov <oleg@redhat.com>
+> >     selftests/timers/posix_timers: Reimplement check_timer_distribution()
+> 
+> which was identified as breaking in -next and fixed with 16767502aa990c
+> ("selftests: kselftest: Fix build failure with NOLIBC").
 
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+THanks, now queued up.
 
--- 
-Josh
+greg k-h
