@@ -1,103 +1,150 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765AA15687B
-	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 06:29:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2F6157E9B
+	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 07:21:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713940159; cv=none; b=Cuu07BRp8EOCbSLTMIZF1zYYguMqkuCSLlENwrcDkxXCuFt0+CI2tCXuZziVx/3N1W+4txMrI6Apcj5GTqPwrQIleC4q9RUpN4UR91NB/J45Cl8BJvuVEuEnK4ozTCY0nfs6xlCD/yXOhf6q4UKHZBr5QSSQEYmDeWfkvJjKAuQ=
+	t=1713943277; cv=none; b=VKbroE9gTuDDdbMTOQJqdfHOYr+pS7Ag7VaBUzUMTkTNzc7GVbRD089rdlXXztCJc7stfmOQTt1l2pxkEMxfS+aL4+vpaws+tM/S0SLw2bryJBB1h2LG6yv84DsPP/rMaF+F7J0lE8PpDzMeO1AstSHa5QJIOQpKdxcjgCEW+4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713940159; c=relaxed/simple;
-	bh=rNzymUhZlR5TWL8Kob2LzdNKa7LLakz5e3PB8aOi6NI=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=SJw4OoU16g836rFO46O1LxAp7zv0pvSh+e7JzWwR4Zw+A0qpwvc5xfgGWBZvpwom1/lzuCUOqaw8VW4ThfE/iDW9babJWZvE5ciDOs2aQAdl69MGiqxcW5MXnPfhI+nfctnbWgwhfZyI6ZtFO+MF2r3dUWeAz01yaA/r/vzugSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PTyfYdAg; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PTyfYdAg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3A2C113CE
-	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 06:29:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713940159;
-	bh=rNzymUhZlR5TWL8Kob2LzdNKa7LLakz5e3PB8aOi6NI=;
-	h=In-Reply-To:References:Date:From:To:Cc:Subject:From;
-	b=PTyfYdAgDWqHjSU6jb8HBHCCdIr65jCMPBefLEsccf6aJaocLwpdnzn0UUmqv3bg5
-	 JmF4xDF9gkQuDNbD6eBD0lzv8OLSK06JGS8WS1/R3N7yFMe+RFILy6cz1RfMIw/mR7
-	 XPVHGfTiiYcnRKsZrFTC4DwXG/Nf7DFkrWLND7fqb6ulAEUpih955tSl2SZ56+xi1s
-	 Zf5BemFCUB+QAHN54FAvHn1JlGjXZCFKKxbdO0n859Ej0kjMh7VDRrmyHzyr4fdLFc
-	 PCMb8kxEBu+yuQ4TJzGffWqduHzCGNVzZuoAwx0kwD0Nf7vqAqPjrgXuPKyOrgTaLN
-	 C6RptfCsdq7Mg==
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfauth.nyi.internal (Postfix) with ESMTP id E863D1200032;
-	Wed, 24 Apr 2024 02:29:17 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
-  by compute5.internal (MEProxy); Wed, 24 Apr 2024 02:29:17 -0400
-X-ME-Sender: <xms:vaYoZjiJ_CaA4rSuThfw4dSIZlVw9sGC83ef-EsV-ILt-U55q-rTtw>
-    <xme:vaYoZgDZZNTJEcqpD1ULQcM4NkuhhoOQT7Cleln04ngH7Z7fiOlMCxpHH20zn3-h9
-    TRy1KoEQah1ETd5DDA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudelvddguddtgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdet
-    rhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugeskhgvrhhnvghlrdhorhhgqeenucggtf
-    frrghtthgvrhhnpeelvefgudeiheefledttedthfffgfekudegkeelffdtiedvgfevieet
-    teekheffveenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnhguodhmvghsmhhtphgruhht
-    hhhpvghrshhonhgrlhhithihqdduvdekhedujedtvdegqddvkeejtddtvdeigedqrghrnh
-    gupeepkhgvrhhnvghlrdhorhhgsegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:vaYoZjG9Rg2cULoJC9XYy1NTLeh6CFdZ0GT27Czhwp4Fgyx8rUYTwg>
-    <xmx:vaYoZgQAKGFWjnOSwhmgPoCuf3eJmsPNFu7bnY886Ti6NUFr4n9ZFg>
-    <xmx:vaYoZgxe_wWnzXsnrm7-UjuAPBfkxsNzdC2aFbikd1tigEdz-EhUaw>
-    <xmx:vaYoZm5vMJjleR0SBQpA8rW6aFWadlJF2YUMVCm1TFueGM1y6hDTiw>
-    <xmx:vaYoZlzXweBBsJ5LtnbeUhmeKZrIRVKE5EmGenKjm4EYHmGvFVHltR9R>
-Feedback-ID: i36794607:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id AD03BB6008D; Wed, 24 Apr 2024 02:29:17 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-386-g4cb8e397f9-fm-20240415.001-g4cb8e397
+	s=arc-20240116; t=1713943277; c=relaxed/simple;
+	bh=MrAMw9NiDMTzXplx1v8tQRk0DT6c3nZFJrzglC0myyY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s/hK/Ssym8KfE/axNSfHkE/vwe7/KlJE3t5JxXkNxVIEJ5fPlLnQF6GhKApw6TNti1P6VNnYBIoQQdS/AB4AKJ0FpkW9xavvuYp7sUbe/ODiPH52y/mmksx55tXUTxc1edXcysTeR+HTxWI58lhWlXMFOwifpqg+FpSUgfmiRLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id B61B71C0080; Wed, 24 Apr 2024 09:21:13 +0200 (CEST)
+Date: Wed, 24 Apr 2024 09:21:13 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.1 000/141] 6.1.88-rc1 review
+Message-ID: <Ziiy6cS8Yyg6VFfK@duo.ucw.cz>
+References: <20240423213853.356988651@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-Id: <eaffa3e6-9ef7-4352-8da2-8be633f5741c@app.fastmail.com>
-In-Reply-To: <20240423213855.550710788@linuxfoundation.org>
-References: <20240423213853.356988651@linuxfoundation.org>
- <20240423213855.550710788@linuxfoundation.org>
-Date: Wed, 24 Apr 2024 08:28:55 +0200
-From: "Arnd Bergmann" <arnd@kernel.org>
-To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, "Niklas Schnelle" <schnelle@linux.ibm.com>,
- "Sasha Levin" <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 072/141] usb: pci-quirks: group AMD specific quirk code
- together
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Z8vrHj1uEYz9nP1I"
+Content-Disposition: inline
+In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
 
-On Tue, Apr 23, 2024, at 23:39, Greg Kroah-Hartman wrote:
-> 6.1-stable review patch.  If anyone has any objections, please let me know.
->
-> ------------------
->
-> From: Niklas Schnelle <schnelle@linux.ibm.com>
->
-> [ Upstream commit 7ca9f9ba8aa7380dee5dd8346b57bbaf198b075a ]
->
-> A follow on patch will introduce CONFIG_USB_PCI_AMD governing the AMD
-> quirk and adding its compile time dependency on HAS_IOPORT. In order to
-> minimize the number of #ifdefs in C files and make that patch easier
-> to read first group the code together. This is pure code movement
-> no functional change is intended.
->
-> Co-developed-by: Arnd Bergmann <arnd@kernel.org>
-> Signed-off-by: Arnd Bergmann <arnd@kernel.org>
-> Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-> Link: https://lore.kernel.org/r/20230911125653.1393895-2-schnelle@linux.ibm.com
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-I see now you had it for 6.6 and 6.1, so it has the same
-problem as the other one, with the dependency on fcbfe8121a45
-("Kconfig: introduce HAS_IOPORT option and select it as
-necessary")
+--Z8vrHj1uEYz9nP1I
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-    Arnd
+Hi!
+
+> This is the start of the stable review cycle for the 6.1.88 release.
+> There are 141 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+This causes compilation errors in our testing:
+
+arch/arm/mach-omap2/pdata-quirks.c:259:15: error: variable 'pandora_soc_aud=
+io_gpios' has initializer but incomplete type
+1991  259 | static struct gpiod_lookup_table pandora_soc_audio_gpios =3D {
+1992      |               ^~~~~~~~~~~~~~~~~~
+1993arch/arm/mach-omap2/pdata-quirks.c:260:10: error: 'struct gpiod_lookup_=
+table' has no member named 'dev_id'
+1994  260 |         .dev_id =3D "soc-audio",
+1995      |          ^~~~~~
+1996arch/arm/mach-omap2/pdata-quirks.c:260:19: warning: excess elements in =
+struct initializer
+1997  260 |         .dev_id =3D "soc-audio",
+1998      |                   ^~~~~~~~~~~
+1999arch/arm/mach-omap2/pdata-quirks.c:260:19: note: (near initialization f=
+or 'pandora_soc_audio_gpios')
+2000arch/arm/mach-omap2/pdata-quirks.c:261:10: error: 'struct gpiod_lookup_=
+table' has no member named 'table'
+2001  261 |         .table =3D {
+2002      |          ^~~~~
+2003arch/arm/mach-omap2/pdata-quirks.c:261:18: error: extra brace group at =
+end of initializer
+2004  261 |         .table =3D {
+2005      |                  ^
+2006arch/arm/mach-omap2/pdata-quirks.c:261:18: note: (near initialization f=
+or 'pandora_soc_audio_gpios')
+2007arch/arm/mach-omap2/pdata-quirks.c:262:17: error: implicit declaration =
+of function 'GPIO_LOOKUP'; did you mean 'IOP_LOOKUP'? [-Werror=3Dimplicit-f=
+unction-declaration]
+2008  262 |                 GPIO_LOOKUP("gpio-112-127", 6, "dac", GPIO_ACTI=
+VE_HIGH),
+2009      |                 ^~~~~~~~~~~
+2010      |                 IOP_LOOKUP
+2011arch/arm/mach-omap2/pdata-quirks.c:262:55: error: 'GPIO_ACTIVE_HIGH' un=
+declared here (not in a function); did you mean 'ACPI_ACTIVE_HIGH'?
+2012  262 |                 GPIO_LOOKUP("gpio-112-127", 6, "dac", GPIO_ACTI=
+VE_HIGH),
+2013      |                                                       ^~~~~~~~~=
+~~~~~~~
+2014      |                                                       ACPI_ACTI=
+VE_HIGH
+2015arch/arm/mach-omap2/pdata-quirks.c:264:17: error: extra brace group at =
+end of initializer
+2016  264 |                 { }
+2017      |                 ^
+2018arch/arm/mach-omap2/pdata-quirks.c:264:17: note: (near initialization f=
+or 'pandora_soc_audio_gpios')
+2019arch/arm/mach-omap2/pdata-quirks.c:261:18: warning: excess elements in =
+struct initializer
+2020  261 |         .table =3D {
+2021      |                  ^
+2022arch/arm/mach-omap2/pdata-quirks.c:261:18: note: (near initialization f=
+or 'pandora_soc_audio_gpios')
+2023  CC      net/sched/sch_api.o
+2024arch/arm/mach-omap2/pdata-quirks.c: In function 'omap3_pandora_legacy_i=
+nit':
+2025arch/arm/mach-omap2/pdata-quirks.c:271:9: error: implicit declaration o=
+f function 'gpiod_add_lookup_table' [-Werror=3Dimplicit-function-declaratio=
+n]
+2026  271 |         gpiod_add_lookup_table(&pandora_soc_audio_gpios);
+2027      |         ^~~~~~~~~~~~~~~~~~~~~~
+2028arch/arm/mach-omap2/pdata-quirks.c: At top level:
+2029arch/arm/mach-omap2/pdata-quirks.c:259:34: error: storage size of 'pand=
+ora_soc_audio_gpios' isn't known
+2030  259 | static struct gpiod_lookup_table pandora_soc_audio_gpios =3D {
+2031      |                                  ^~~~~~~~~~~~~~~~~~~~~~~
+2032cc1: some warnings being treated as errors
+2033make[2]: *** [scripts/Makefile.build:250: arch/arm/mach-omap2/pdata-qui=
+rks.o] Error 1
+2034make[1]: *** [scripts/Makefile.build:500: arch/arm/mach-omap2] Error 2
+2035make[1]: *** Waiting for unfinished jobs....
+2036
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/670037=
+1466
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/1=
+265143103
+
+Best regards,
+								Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--Z8vrHj1uEYz9nP1I
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZiiy6QAKCRAw5/Bqldv6
+8vbUAJ9LTKihTTO5zazCV/M7Zb73aYUbBgCgu5+1hRVetQhHn2GgrkBQXnvFPdo=
+=RcgZ
+-----END PGP SIGNATURE-----
+
+--Z8vrHj1uEYz9nP1I--
