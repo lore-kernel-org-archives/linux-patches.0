@@ -1,22 +1,22 @@
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B436D29E
-	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 07:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB02D157A7C
+	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 07:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713943695; cv=none; b=FAEz9my3x12rr3d0m/ZPDPYXZ+b5Q24ZKw9+QBHPkFpXdHuWdwQBaI+znINiZs2ZukJ/COFv8vG9Kp4zFffMp8Wf40+dwLJ4DxMY9K0stVe8h22qaWSgeoLvSPX9ADw+NhoXx5JXLWrzi4JGb0ltBbEr2pDI38cmA3Vge8mID4I=
+	t=1713943948; cv=none; b=QJdwNrfLHxg6BCvk+Y5xC8xnVgnOiW+pcDgZUcM3CGLHwwJV+9/0QUNT0p/HIj71zTVfAPkCfFHlIT8TDCFqfaQwH6/67tgH62EA8ImED0ze7zwWHmFx8xUxrRKK52Ls1Ai9rseYYe+7pwUhdL7lBVdj/QeXDb9iQCQqLRuBgKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713943695; c=relaxed/simple;
-	bh=VblaPkz2M+x/B2o17KTSp7PJSPr89iTr0i3x/hNomCg=;
+	s=arc-20240116; t=1713943948; c=relaxed/simple;
+	bh=4vin/+jqBoIkeq5DXssUkW8KaFT3IjMs3y2j9Ts3CWY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YleucXsbhAD8tlTR/ewSj7MUC18iWwsqQGr36NA9sjzcO1oUrAb6UvM0E0Fcu+Vsj9fh9DoSctnnGkcaXyTOcKyCyxKsoxl5IVNCXjEJdVOsqv2A07bEV0mTB9nXEGP/7kMQ6xGZtTwc3j375w/dZKZ9jzmSl1XBnnuWhRpQAMA=
+	 Content-Type:Content-Disposition:In-Reply-To; b=UJf5tcwoPCKQ0wrf3RimKfApMFbLQ0B8IMjPPvHLYusIghsvLzRmeaPTnwOwA7qUFw6l9EvXSli3oBKQxeyQV7A3sgVEKMTERTSfIHLYa+KrR3/Em349/9Ij8S6lZ1aaZtoS/loCQ5nARyC+jymxgmtS3KRG2dRdEi+wmfd+BYE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
 Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 9A0E51C0080; Wed, 24 Apr 2024 09:28:10 +0200 (CEST)
-Date: Wed, 24 Apr 2024 09:28:10 +0200
+	id 321061C0080; Wed, 24 Apr 2024 09:32:25 +0200 (CEST)
+Date: Wed, 24 Apr 2024 09:32:23 +0200
 From: Pavel Machek <pavel@denx.de>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -26,9 +26,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.8 000/158] 6.8.8-rc1 review
-Message-ID: <Zii0igG0SBKoNfBn@duo.ucw.cz>
-References: <20240423213855.824778126@linuxfoundation.org>
+Subject: Re: [PATCH 5.15 00/71] 5.15.157-rc1 review
+Message-ID: <Zii1h4fQWUnrVwU7@amd.ucw.cz>
+References: <20240423213844.122920086@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,46 +36,54 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Det3Y2CjCsXIUhin"
+	protocol="application/pgp-signature"; boundary="VkFRwN4AvUCW0UVF"
 Content-Disposition: inline
-In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
+In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
 
 
---Det3Y2CjCsXIUhin
+--VkFRwN4AvUCW0UVF
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
 Hi!
 
-> This is the start of the stable review cycle for the 6.8.8 release.
-> There are 158 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.15.157 release.
+> There are 71 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-CIP testing did not find any problems here:
+I realise 5.10 is not released, yet, but current queue results in
+problems.
 
 https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.8.y
+5.10.y
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/670036=
+9930
 
-6.6.x compiles ok, too.
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+kernel/trace/ring_buffer.c: In function 'rb_tail_page_update':
+2028kernel/trace/ring_buffer.c:1479:7: error: implicit declaration of funct=
+ion 'try_cmpxchg'; did you mean 'xa_cmpxchg'? [-Werror=3Dimplicit-function-=
+declaration]
+2029 1479 |   if (try_cmpxchg(&cpu_buffer->tail_page, &tail_page, next_page=
+))
+2030      |       ^~~~~~~~~~~
+2031      |       xa_cmpxchg
 
 Best regards,
-                                                                Pavel
+								Pavel
 --=20
 DENX Software Engineering GmbH,        Managing Director: Erika Unter
 HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
---Det3Y2CjCsXIUhin
+--VkFRwN4AvUCW0UVF
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZii0igAKCRAw5/Bqldv6
-8rP3AJ9JxRp/y05xyEmTwqVrAySMEwhEZgCeOf1Mq4fbTg61/L7krZVRxVm1P4k=
-=/0+P
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZii1hwAKCRAw5/Bqldv6
+8sqzAJ40xhxTI2ZLmnSlN6UiNxkyyqZLuACcCALW8RhnalVQh3e2KasHnmz9g5o=
+=dwkS
 -----END PGP SIGNATURE-----
 
---Det3Y2CjCsXIUhin--
+--VkFRwN4AvUCW0UVF--
