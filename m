@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5921713A401;
-	Wed, 24 Apr 2024 20:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B801E745CB;
+	Wed, 24 Apr 2024 21:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713992119; cv=none; b=pH1D+kPotanEUz4tcNpL3q6pwm6moFmLlweALeJvSO0Q1xWitZP3jMoBEfwW6DrRkm+U0+CUR1ohkNennBB8MNyi0RM11qMkWrcg034bIiE+qMhqRqpUjCB7by7M9L9xbtc4+ObJC/NCLIfnU7VkMCgf1uU83dSTXnYlOuIaX/k=
+	t=1713992969; cv=none; b=AX5d5MVYhhcNk83IbIDt3UOdeenAwo5xaU1tlH69dp1kMMKSLDxICsc+cM2OAvasLvbwoWY1uiakmRHaywOvh55jEFpgQgABew5MOq8GRF3yzO9JnzCc8HUD1iS8e05N00X5xiqrFK0fi1q99saPj9oS5sz85uNXEHzhw9SBHb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713992119; c=relaxed/simple;
-	bh=ZD4tZlZg8iDpJqnTG0WbgD/HGxDLb2UNmsDflXW348I=;
+	s=arc-20240116; t=1713992969; c=relaxed/simple;
+	bh=WtRVZAYfjCSELqE6SJYhA7wi/mQscM6/bN4aAcsYB4s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s9V4s/I21QdSUZlgAkHxJpy+CQvLoLnTsLDXV3taaxpN245UW7JSoA119zc5xYiD8JkZDjvTWTLEx21IZnvpcLUYCake35q6aYse2lrxs9g+Awp2dfGCAfVtv5EVl0K++0SvoJuLIU7cQ/pNU8JoyUx5+fEMKZ7o2jcvmpXGkZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jJzj98ju; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Sw4bPdEP9JtKnHLEnxLR+s4xJFsRk2XS31vbKVVsd3aVbG9Eiu8NqZLNEHfvKu/WnfrdKVCWr0OHoANj4Q8jQtvBnAvjkc6gNCh7PVLmuFhtO1AQjWfK1/LyqFto7ttKun79XCCr28jgSuTKKPaZBthx+uO+v5vTFKL/lFKLjpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tk6CODpc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jJzj98ju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4C7C113CD;
-	Wed, 24 Apr 2024 20:55:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tk6CODpc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12CABC113CD;
+	Wed, 24 Apr 2024 21:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713992119;
-	bh=ZD4tZlZg8iDpJqnTG0WbgD/HGxDLb2UNmsDflXW348I=;
+	s=k20201202; t=1713992969;
+	bh=WtRVZAYfjCSELqE6SJYhA7wi/mQscM6/bN4aAcsYB4s=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jJzj98jupviMeWLvN/eHUpGzvpm4H8cPywyKS0W2BbVvUcKPd+Y2U0Sh4mpRENI9h
-	 4JYQ4CztFu+Q1SuELJF36jG0y4+0DCI4gL7A8/KljNRPRlPz8MJ6E+xLiHva9hxqLv
-	 U4sqROdbBe01rpD7PCVEWHOJUkgZXHbl9vasbFbYe8GbHXXBN0v/WbpJxuJCVKy6HO
-	 YS5zB5eW1o7ZU+eDK4VbFAy4fgodT4bjuFI15Q6BfWWGE3thIdaCPXNipr07oAHlcD
-	 /or6cmsJXGmv4px2eRLEX5pc+8L8uejB9aCyAndLLuVwU4eaxkHuPUs7WVXWLR2jCY
-	 NpmtOHtqbbw4w==
-Date: Wed, 24 Apr 2024 13:55:16 -0700
+	b=Tk6CODpcUBs/befweQZ/UTc28JcNAN8SbSNtICHU1iDuyakWoChUZLesJVCH50icO
+	 lrN3fghAX8lPvubQos0fLoQDtWsGquzJVZmQsrOcK8MBf7+y7dn2k7NBXue1tra3ja
+	 nJ4GHhHUl5rtR1LcvvI6OeHzDjNt/SEev8CuaDYvTBUsKCGxX/l1kJ0OSD3weRmHt7
+	 /XV+ND23TPTOgRbDO8DKsj8b4FPFlRAT9KgQZ3+jtjn9E9DLwtrk5/DlJJdutyoYfc
+	 btp8/TxCA7LvvLrqPkbyZgqFj2lC1pN1buvf1iiDhDIcQcOZEiKrFFCGdwMzhswGFn
+	 F5sLcyAk9h2Sw==
+Date: Wed, 24 Apr 2024 14:09:27 -0700
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 To: Tony Luck <tony.luck@intel.com>
 Cc: Borislav Petkov <bp@alien8.de>, Thomas Gleixner <tglx@linutronix.de>,
-	Peter Zijlstra <peterz@infradead.org>,
 	Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v4 27/71] x86/bugs: Switch to new Intel CPU model defines
-Message-ID: <20240424205516.3l6gpsozvtt2fm3u@treble>
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v4 28/71] x86/bugs: Switch to new Intel CPU model defines
+Message-ID: <20240424210927.woup2cyqajrvpjkw@treble>
 References: <20240424181245.41141-1-tony.luck@intel.com>
- <20240424181506.41673-1-tony.luck@intel.com>
+ <20240424181507.41693-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,9 +50,9 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240424181506.41673-1-tony.luck@intel.com>
+In-Reply-To: <20240424181507.41693-1-tony.luck@intel.com>
 
-On Wed, Apr 24, 2024 at 11:15:06AM -0700, Tony Luck wrote:
+On Wed, Apr 24, 2024 at 11:15:07AM -0700, Tony Luck wrote:
 > New CPU #defines encode vendor and family as well as model.
 > 
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
