@@ -1,65 +1,62 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1668616EBE9
-	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 18:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8661716F0E5
+	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 18:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713982492; cv=none; b=ruKynOssVe8wGVpQeN46NkGDWNvtH08zA27M+mhgcktqS3cKr/ckXGZ1FYWO3ddJ7w0cG7R9rilj6PvDThvNmZ2U/w3vYcEwnfzV7RpwO5pjZVyTLOqLbtD/Qo2LqC4MlEaCDAirvc9zAaywP1ZyVFMd0tnNSMzWG4PjB96XHJU=
+	t=1713982494; cv=none; b=gs47rO/JuAShCLm6JiehFY8Nx1W2CEZSTthb1IQIb1r7lRdtUXXBwSGHJNok2ZpUCL0dHPutVbrMit3ScIcPaz93HvROvQVRHzkr6AGM2ukN/76l9KXYEQ1BKvIvpQ1qGDjTE4p3499hBH/7jDp46v+44k4dkHX5++z3h8NdkWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713982492; c=relaxed/simple;
-	bh=khsp430wCZF85FG8u7FCOLvv9K3w859TzG0TQy2mIZU=;
+	s=arc-20240116; t=1713982494; c=relaxed/simple;
+	bh=X1kVlmKoykgrGIOBnOPbHS/gm0hWrSVAGeWzcm3MPZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f8npXbw9fa0NcnJEdmULqDGknqow6ebHVJNLwwH8DqW5YOsArSOWfnXOqycJo9ICs3iWz1uHVergVl3wDwJR48uoji+dwDjjjJi+xAmha8woNeQjKS/872r9Ic5l7xmgZodAnnaqpngQsAFtIgjkarPfCIKdfN48O747ksCUaBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=C9ZJIpcv; arc=none smtp.client-ip=192.198.163.18
+	 MIME-Version; b=mzkHburXwjcmgVfqzd+c0dkal6MhsiZ5KIYKRt0EefpVQwPvVHQtvc2OhZIKaKYfMI3obmbkvRCxhwLkiR0evF9rjSjuaJuFhbtyaoK6bnsuxlnoh5Fy32mgeydY/huOyfwnLjEFbREedCuhiWHcAh1cHiiQN7VOh0iyw/aubF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=POOJ6F7P; arc=none smtp.client-ip=192.198.163.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="C9ZJIpcv"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="POOJ6F7P"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713982491; x=1745518491;
+  t=1713982492; x=1745518492;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=khsp430wCZF85FG8u7FCOLvv9K3w859TzG0TQy2mIZU=;
-  b=C9ZJIpcv5dnzUt8fzmw8Rt9cy9TcqD8x36qtZQ+Jx0cnEgkWg+Xk76Sw
-   LBRsB2SDQGrg7zyc19o3OWzkcX7eaMT/+jQF/FXixik3tIaMqApkc53lG
-   PEBAQC5uD9yQClUE53EFpzxKz3eVoB6mbL5ZSlxUiw9fHPOgSShpbi12Z
-   orJpUBwvXzDa8IS5Yb00YxC/nn3R5+wb/T1RGIYW0L3DtvsEcddUXTe9Q
-   +JpP0hp5ZUjbhl5liNlKxeei69opYZ3pFSbU1vNGsj6kZX2Jl4BnmrQck
-   6uwpNGDdU1tFXuMSwU8GsQ2woJUgxb8IMaGp2/4JZ8mRR/tBPYKXSzeaZ
-   A==;
-X-CSE-ConnectionGUID: fmFctABkT46umA5BdoHOMQ==
-X-CSE-MsgGUID: 5pE0PWQwQ7SVX3w/j7i/1w==
-X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="9481757"
+  bh=X1kVlmKoykgrGIOBnOPbHS/gm0hWrSVAGeWzcm3MPZU=;
+  b=POOJ6F7PgIWuhHnM+o1wyidRuDsKVd4rgJFTLH+MTMd4P/EL6+PDYiTC
+   BjR5XBoA0xekt9hPu627aYvki1bvD5iz1fq62LTSju3wRO892lJ1LT1Wz
+   a+MTuQzolB9b2m4rYlTtA5gveSCA3vNVdKPJOo+Q9KVIlrYWCKWuz72sl
+   RLbsHHl2sOxZ5Y2Jihv8PRJor/bJ9nKhAiybqFFFWmexHnIzcVRxj+51w
+   5fv+5Y48gvG0//yp0GNmH/ErMZNeA8IVLG5FIeTS8yPUWmO5VA+8tDarB
+   cvaSdvYig9XBjLGUkwU0UM0rxTz1ceVoCC/UuwHO3kXiLuW7IxFrLXf92
+   g==;
+X-CSE-ConnectionGUID: X05rqDXlRq20RHpZEspyJA==
+X-CSE-MsgGUID: 7IlX8IutRVaC1FMYLIZ0Sg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="9481766"
 X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; 
-   d="scan'208";a="9481757"
+   d="scan'208";a="9481766"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2024 11:14:50 -0700
-X-CSE-ConnectionGUID: ArE35bv8SxStrrmql8SDQw==
-X-CSE-MsgGUID: PiYV0wPNTq6UdpwkazL6kQ==
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2024 11:14:51 -0700
+X-CSE-ConnectionGUID: 78Z+j+XtRWK6NDRiJUbofw==
+X-CSE-MsgGUID: hzHSuhLhRrelVlUjNqqVNg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; 
-   d="scan'208";a="29262553"
+   d="scan'208";a="29262558"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2024 11:14:50 -0700
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2024 11:14:51 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Borislav Petkov <bp@alien8.de>,
-	linux-kernel@vger.kernel.org
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>
+Cc: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Len Brown <lenb@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Raag Jadav <raag.jadav@intel.com>,
-	Marius Hoch <mail@mariushoch.de>,
-	Tony Luck <tony.luck@intel.com>,
-	Michal Wilczynski <michal.wilczynski@intel.com>,
-	linux-acpi@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>,
 	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH v4 06/71] ACPI: x86: Switch to new Intel CPU model defines
-Date: Wed, 24 Apr 2024 11:14:49 -0700
-Message-ID: <20240424181450.41270-1-tony.luck@intel.com>
+Subject: [PATCH v4 07/71] cpufreq: intel_pstate: Switch to new Intel CPU model defines
+Date: Wed, 24 Apr 2024 11:14:50 -0700
+Message-ID: <20240424181450.41289-1-tony.luck@intel.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240424181245.41141-1-tony.luck@intel.com>
 References: <20240424181245.41141-1-tony.luck@intel.com>
@@ -76,127 +73,141 @@ New CPU #defines encode vendor and family as well as model.
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 ---
- drivers/acpi/x86/utils.c | 42 ++++++++++++++++++++--------------------
- 1 file changed, 21 insertions(+), 21 deletions(-)
+ drivers/cpufreq/intel_pstate.c | 90 +++++++++++++++++-----------------
+ 1 file changed, 44 insertions(+), 46 deletions(-)
 
-diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
-index 90c3d2eab9e9..2d8203f7bd98 100644
---- a/drivers/acpi/x86/utils.c
-+++ b/drivers/acpi/x86/utils.c
-@@ -45,37 +45,37 @@ struct override_status_id {
- 	unsigned long long status;
+diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
+index dbbf299f4219..685ec80e0af5 100644
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -2402,52 +2402,51 @@ static const struct pstate_funcs knl_funcs = {
+ 	.get_val = core_get_val,
  };
  
--#define ENTRY(status, hid, uid, path, cpu_model, dmi...) {		\
-+#define ENTRY(status, hid, uid, path, cpu_vfm, dmi...) {		\
- 	{ { hid, }, {} },						\
--	{ X86_MATCH_INTEL_FAM6_MODEL(cpu_model, NULL), {} },		\
-+	{ X86_MATCH_VFM(cpu_vfm, NULL), {} },				\
- 	{ { .matches = dmi }, {} },					\
- 	uid,								\
- 	path,								\
- 	status,								\
- }
+-#define X86_MATCH(model, policy)					 \
+-	X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6, INTEL_FAM6_##model, \
+-					   X86_FEATURE_APERFMPERF, &policy)
++#define X86_MATCH(vfm, policy)					 \
++	X86_MATCH_VFM_FEATURE(vfm, X86_FEATURE_APERFMPERF, &policy)
  
--#define PRESENT_ENTRY_HID(hid, uid, cpu_model, dmi...) \
--	ENTRY(ACPI_STA_DEFAULT, hid, uid, NULL, cpu_model, dmi)
-+#define PRESENT_ENTRY_HID(hid, uid, cpu_vfm, dmi...) \
-+	ENTRY(ACPI_STA_DEFAULT, hid, uid, NULL, cpu_vfm, dmi)
+ static const struct x86_cpu_id intel_pstate_cpu_ids[] = {
+-	X86_MATCH(SANDYBRIDGE,		core_funcs),
+-	X86_MATCH(SANDYBRIDGE_X,	core_funcs),
+-	X86_MATCH(ATOM_SILVERMONT,	silvermont_funcs),
+-	X86_MATCH(IVYBRIDGE,		core_funcs),
+-	X86_MATCH(HASWELL,		core_funcs),
+-	X86_MATCH(BROADWELL,		core_funcs),
+-	X86_MATCH(IVYBRIDGE_X,		core_funcs),
+-	X86_MATCH(HASWELL_X,		core_funcs),
+-	X86_MATCH(HASWELL_L,		core_funcs),
+-	X86_MATCH(HASWELL_G,		core_funcs),
+-	X86_MATCH(BROADWELL_G,		core_funcs),
+-	X86_MATCH(ATOM_AIRMONT,		airmont_funcs),
+-	X86_MATCH(SKYLAKE_L,		core_funcs),
+-	X86_MATCH(BROADWELL_X,		core_funcs),
+-	X86_MATCH(SKYLAKE,		core_funcs),
+-	X86_MATCH(BROADWELL_D,		core_funcs),
+-	X86_MATCH(XEON_PHI_KNL,		knl_funcs),
+-	X86_MATCH(XEON_PHI_KNM,		knl_funcs),
+-	X86_MATCH(ATOM_GOLDMONT,	core_funcs),
+-	X86_MATCH(ATOM_GOLDMONT_PLUS,	core_funcs),
+-	X86_MATCH(SKYLAKE_X,		core_funcs),
+-	X86_MATCH(COMETLAKE,		core_funcs),
+-	X86_MATCH(ICELAKE_X,		core_funcs),
+-	X86_MATCH(TIGERLAKE,		core_funcs),
+-	X86_MATCH(SAPPHIRERAPIDS_X,	core_funcs),
+-	X86_MATCH(EMERALDRAPIDS_X,      core_funcs),
++	X86_MATCH(INTEL_SANDYBRIDGE,		core_funcs),
++	X86_MATCH(INTEL_SANDYBRIDGE_X,		core_funcs),
++	X86_MATCH(INTEL_ATOM_SILVERMONT,	silvermont_funcs),
++	X86_MATCH(INTEL_IVYBRIDGE,		core_funcs),
++	X86_MATCH(INTEL_HASWELL,		core_funcs),
++	X86_MATCH(INTEL_BROADWELL,		core_funcs),
++	X86_MATCH(INTEL_IVYBRIDGE_X,		core_funcs),
++	X86_MATCH(INTEL_HASWELL_X,		core_funcs),
++	X86_MATCH(INTEL_HASWELL_L,		core_funcs),
++	X86_MATCH(INTEL_HASWELL_G,		core_funcs),
++	X86_MATCH(INTEL_BROADWELL_G,		core_funcs),
++	X86_MATCH(INTEL_ATOM_AIRMONT,		airmont_funcs),
++	X86_MATCH(INTEL_SKYLAKE_L,		core_funcs),
++	X86_MATCH(INTEL_BROADWELL_X,		core_funcs),
++	X86_MATCH(INTEL_SKYLAKE,		core_funcs),
++	X86_MATCH(INTEL_BROADWELL_D,		core_funcs),
++	X86_MATCH(INTEL_XEON_PHI_KNL,		knl_funcs),
++	X86_MATCH(INTEL_XEON_PHI_KNM,		knl_funcs),
++	X86_MATCH(INTEL_ATOM_GOLDMONT,		core_funcs),
++	X86_MATCH(INTEL_ATOM_GOLDMONT_PLUS,	core_funcs),
++	X86_MATCH(INTEL_SKYLAKE_X,		core_funcs),
++	X86_MATCH(INTEL_COMETLAKE,		core_funcs),
++	X86_MATCH(INTEL_ICELAKE_X,		core_funcs),
++	X86_MATCH(INTEL_TIGERLAKE,		core_funcs),
++	X86_MATCH(INTEL_SAPPHIRERAPIDS_X,	core_funcs),
++	X86_MATCH(INTEL_EMERALDRAPIDS_X,	core_funcs),
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(x86cpu, intel_pstate_cpu_ids);
  
--#define NOT_PRESENT_ENTRY_HID(hid, uid, cpu_model, dmi...) \
--	ENTRY(0, hid, uid, NULL, cpu_model, dmi)
-+#define NOT_PRESENT_ENTRY_HID(hid, uid, cpu_vfm, dmi...) \
-+	ENTRY(0, hid, uid, NULL, cpu_vfm, dmi)
+ static const struct x86_cpu_id intel_pstate_cpu_oob_ids[] __initconst = {
+-	X86_MATCH(BROADWELL_D,		core_funcs),
+-	X86_MATCH(BROADWELL_X,		core_funcs),
+-	X86_MATCH(SKYLAKE_X,		core_funcs),
+-	X86_MATCH(ICELAKE_X,		core_funcs),
+-	X86_MATCH(SAPPHIRERAPIDS_X,	core_funcs),
++	X86_MATCH(INTEL_BROADWELL_D,		core_funcs),
++	X86_MATCH(INTEL_BROADWELL_X,		core_funcs),
++	X86_MATCH(INTEL_SKYLAKE_X,		core_funcs),
++	X86_MATCH(INTEL_ICELAKE_X,		core_funcs),
++	X86_MATCH(INTEL_SAPPHIRERAPIDS_X,	core_funcs),
+ 	{}
+ };
  
--#define PRESENT_ENTRY_PATH(path, cpu_model, dmi...) \
--	ENTRY(ACPI_STA_DEFAULT, "", NULL, path, cpu_model, dmi)
-+#define PRESENT_ENTRY_PATH(path, cpu_vfm, dmi...) \
-+	ENTRY(ACPI_STA_DEFAULT, "", NULL, path, cpu_vfm, dmi)
+ static const struct x86_cpu_id intel_pstate_cpu_ee_disable_ids[] = {
+-	X86_MATCH(KABYLAKE,		core_funcs),
++	X86_MATCH(INTEL_KABYLAKE,		core_funcs),
+ 	{}
+ };
  
--#define NOT_PRESENT_ENTRY_PATH(path, cpu_model, dmi...) \
--	ENTRY(0, "", NULL, path, cpu_model, dmi)
-+#define NOT_PRESENT_ENTRY_PATH(path, cpu_vfm, dmi...) \
-+	ENTRY(0, "", NULL, path, cpu_vfm, dmi)
+@@ -3386,14 +3385,13 @@ static inline void intel_pstate_request_control_from_smm(void) {}
  
- static const struct override_status_id override_status_ids[] = {
- 	/*
- 	 * Bay / Cherry Trail PWM directly poked by GPU driver in win10,
- 	 * but Linux uses a separate PWM driver, harmless if not used.
- 	 */
--	PRESENT_ENTRY_HID("80860F09", "1", ATOM_SILVERMONT, {}),
--	PRESENT_ENTRY_HID("80862288", "1", ATOM_AIRMONT, {}),
-+	PRESENT_ENTRY_HID("80860F09", "1", INTEL_ATOM_SILVERMONT, {}),
-+	PRESENT_ENTRY_HID("80862288", "1", INTEL_ATOM_AIRMONT, {}),
+ #define INTEL_PSTATE_HWP_BROADWELL	0x01
  
- 	/* The Xiaomi Mi Pad 2 uses PWM2 for touchkeys backlight control */
--	PRESENT_ENTRY_HID("80862289", "2", ATOM_AIRMONT, {
-+	PRESENT_ENTRY_HID("80862289", "2", INTEL_ATOM_AIRMONT, {
- 		DMI_MATCH(DMI_SYS_VENDOR, "Xiaomi Inc"),
- 		DMI_MATCH(DMI_PRODUCT_NAME, "Mipad2"),
- 	      }),
-@@ -84,18 +84,18 @@ static const struct override_status_id override_status_ids[] = {
- 	 * The INT0002 device is necessary to clear wakeup interrupt sources
- 	 * on Cherry Trail devices, without it we get nobody cared IRQ msgs.
+-#define X86_MATCH_HWP(model, hwp_mode)					\
+-	X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6, INTEL_FAM6_##model, \
+-					   X86_FEATURE_HWP, hwp_mode)
++#define X86_MATCH_HWP(vfm, hwp_mode)				\
++	X86_MATCH_VFM_FEATURE(vfm, X86_FEATURE_HWP, hwp_mode)
+ 
+ static const struct x86_cpu_id hwp_support_ids[] __initconst = {
+-	X86_MATCH_HWP(BROADWELL_X,	INTEL_PSTATE_HWP_BROADWELL),
+-	X86_MATCH_HWP(BROADWELL_D,	INTEL_PSTATE_HWP_BROADWELL),
+-	X86_MATCH_HWP(ANY,		0),
++	X86_MATCH_HWP(INTEL_BROADWELL_X,	INTEL_PSTATE_HWP_BROADWELL),
++	X86_MATCH_HWP(INTEL_BROADWELL_D,	INTEL_PSTATE_HWP_BROADWELL),
++	X86_MATCH_HWP(INTEL_ANY,		0),
+ 	{}
+ };
+ 
+@@ -3426,15 +3424,15 @@ static const struct x86_cpu_id intel_epp_default[] = {
+ 	 * which can result in one core turbo frequency for
+ 	 * AlderLake Mobile CPUs.
  	 */
--	PRESENT_ENTRY_HID("INT0002", "1", ATOM_AIRMONT, {}),
-+	PRESENT_ENTRY_HID("INT0002", "1", INTEL_ATOM_AIRMONT, {}),
- 	/*
- 	 * On the Dell Venue 11 Pro 7130 and 7139, the DSDT hides
- 	 * the touchscreen ACPI device until a certain time
- 	 * after _SB.PCI0.GFX0.LCD.LCD1._ON gets called has passed
- 	 * *and* _STA has been called at least 3 times since.
- 	 */
--	PRESENT_ENTRY_HID("SYNA7500", "1", HASWELL_L, {
-+	PRESENT_ENTRY_HID("SYNA7500", "1", INTEL_HASWELL_L, {
- 		DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
- 		DMI_MATCH(DMI_PRODUCT_NAME, "Venue 11 Pro 7130"),
- 	      }),
--	PRESENT_ENTRY_HID("SYNA7500", "1", HASWELL_L, {
-+	PRESENT_ENTRY_HID("SYNA7500", "1", INTEL_HASWELL_L, {
- 		DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
- 		DMI_MATCH(DMI_PRODUCT_NAME, "Venue 11 Pro 7139"),
- 	      }),
-@@ -112,19 +112,19 @@ static const struct override_status_id override_status_ids[] = {
- 	 * was copy-pasted from the GPD win, so it has a disabled KIOX000A
- 	 * node which we should not enable, thus we also check the BIOS date.
- 	 */
--	PRESENT_ENTRY_HID("KIOX000A", "1", ATOM_AIRMONT, {
-+	PRESENT_ENTRY_HID("KIOX000A", "1", INTEL_ATOM_AIRMONT, {
- 		DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
- 		DMI_MATCH(DMI_BOARD_NAME, "Default string"),
- 		DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
- 		DMI_MATCH(DMI_BIOS_DATE, "02/21/2017")
- 	      }),
--	PRESENT_ENTRY_HID("KIOX000A", "1", ATOM_AIRMONT, {
-+	PRESENT_ENTRY_HID("KIOX000A", "1", INTEL_ATOM_AIRMONT, {
- 		DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
- 		DMI_MATCH(DMI_BOARD_NAME, "Default string"),
- 		DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
- 		DMI_MATCH(DMI_BIOS_DATE, "03/20/2017")
- 	      }),
--	PRESENT_ENTRY_HID("KIOX000A", "1", ATOM_AIRMONT, {
-+	PRESENT_ENTRY_HID("KIOX000A", "1", INTEL_ATOM_AIRMONT, {
- 		DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
- 		DMI_MATCH(DMI_BOARD_NAME, "Default string"),
- 		DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
-@@ -137,7 +137,7 @@ static const struct override_status_id override_status_ids[] = {
- 	 * method sets a GPIO causing the PCI wifi card to turn off.
- 	 * See above remark about uniqueness of the DMI match.
- 	 */
--	NOT_PRESENT_ENTRY_PATH("\\_SB_.PCI0.SDHB.BRC1", ATOM_AIRMONT, {
-+	NOT_PRESENT_ENTRY_PATH("\\_SB_.PCI0.SDHB.BRC1", INTEL_ATOM_AIRMONT, {
- 		DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
- 		DMI_EXACT_MATCH(DMI_BOARD_NAME, "Default string"),
- 		DMI_EXACT_MATCH(DMI_BOARD_SERIAL, "Default string"),
-@@ -149,7 +149,7 @@ static const struct override_status_id override_status_ids[] = {
- 	 * as both ACCL0001 and MAGN0001. As we can only ever register an
- 	 * i2c client for one of them, ignore MAGN0001.
- 	 */
--	NOT_PRESENT_ENTRY_HID("MAGN0001", "1", ATOM_SILVERMONT, {
-+	NOT_PRESENT_ENTRY_HID("MAGN0001", "1", INTEL_ATOM_SILVERMONT, {
- 		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
- 		DMI_MATCH(DMI_PRODUCT_FAMILY, "YOGATablet2"),
- 	      }),
+-	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L, HWP_SET_DEF_BALANCE_PERF_EPP(102)),
+-	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X, HWP_SET_DEF_BALANCE_PERF_EPP(32)),
+-	X86_MATCH_INTEL_FAM6_MODEL(METEORLAKE_L, HWP_SET_EPP_VALUES(HWP_EPP_POWERSAVE,
+-							HWP_EPP_BALANCE_POWERSAVE, 115, 16)),
++	X86_MATCH_VFM(INTEL_ALDERLAKE_L, HWP_SET_DEF_BALANCE_PERF_EPP(102)),
++	X86_MATCH_VFM(INTEL_SAPPHIRERAPIDS_X, HWP_SET_DEF_BALANCE_PERF_EPP(32)),
++	X86_MATCH_VFM(INTEL_METEORLAKE_L, HWP_SET_EPP_VALUES(HWP_EPP_POWERSAVE,
++		      HWP_EPP_BALANCE_POWERSAVE, 115, 16)),
+ 	{}
+ };
+ 
+ static const struct x86_cpu_id intel_hybrid_scaling_factor[] = {
+-	X86_MATCH_INTEL_FAM6_MODEL(METEORLAKE_L, HYBRID_SCALING_FACTOR_MTL),
++	X86_MATCH_VFM(INTEL_METEORLAKE_L, HYBRID_SCALING_FACTOR_MTL),
+ 	{}
+ };
+ 
 -- 
 2.44.0
 
