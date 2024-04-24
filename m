@@ -1,111 +1,95 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD461422D4
-	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 04:06:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBFF156C5D
+	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 06:24:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713931587; cv=none; b=jamm5VNVpnPiPbdB6F30bk13vERzmcgaRQv+iq95N/qEBedMeIO+XKaFAtmKeH5cBS3ljBUgjE0yuri0Ym44bPtkwF2RORnbcjbAOP+pRH8SXqkVF1I04JFlhfMqCb+Mkz8IjnljKmhsFjTTjBtClunPwYh4NROnh2bxC7BAKv8=
+	t=1713939847; cv=none; b=HNT2Wrf9Ju1YBd3U9HV/NeMeG5Kki50efmo6+JpU/8AC0ZpLWHLM9neXia7nYk6mhPMInoBt5QXM0c1bJ8Ekz4fvfOzj94EBAWesDTUwwx4OZ06PhMR5QzS1GiP6R+5xtW/qitEPFFx3AKCwlMFjJUxcHr4ye7219DIaWJ59ZJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713931587; c=relaxed/simple;
-	bh=f1Dv5zv6/MeC05k9gFS4Dtb4TNI1V2WafkMkhzGBORU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h39cNmJ2LUJb//m7i650391JTLP4BrOH3Aw5MZuCYWYInpckq9U+1cteLA5/Um7HE61lRmIbrB3aO8PeZatPFNsraBPsJq1NrwJB82Chn5uzoaZEZt6a09fjE9ADT7R2x0MOlWNWPgpKs89TjUrY6nGb7LSg8EsivjaJpd9PRlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y0uSy3OM; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1713939847; c=relaxed/simple;
+	bh=TfEx6qd91z2uLEUWKW9RPcV1tYG8MZ+Yacuywdp+ETg=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=RJZRkNYbgd3UPNNTcejmrOfIhoEJ0gqckk7VM88GbjeQRJRXXCFSSnwTzTwUqgKmRnUmOhxPerjP1L8ZuIFmAtHZNDwtvAJkrkP07Xd0VMznBuZFwmpfQi7oSXbab9F2Wk1k23RHbziY6VvgxytHx0jqyyHylhN/tAMGBGMdPHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=herMSuKq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y0uSy3OM"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1e5b6e8f662so51177925ad.0
-        for <patches@lists.linux.dev>; Tue, 23 Apr 2024 21:06:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1713931585; x=1714536385; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=q/O6yWeew57XxnKc/kCg+J/zVlCaUNwIlMUpnlR1Sd4=;
-        b=Y0uSy3OMto0PXCcjLTt+N5qZOkS65LCh0FDFL0tJaLrJEAGbFHgk4xadNvfIQ0AtbB
-         ZLWGTstQFGrWq1enq7+fjgGbC1EjhgVtwxff6rLID6295Oe2xr/0qSQEAeQp6GK+TGtb
-         9bQ6OKSAu3oUr2Osx+mWmjEaozF3s8asDdHT/vuO9FvlrqlueOIORadUnKrVZpAcF0FC
-         xVmzSZvL83XXhcYWjV0tjXC0TBgxC5SOD1YvMC7iPuMPNEXZSshSuSZaY4wfYb5rB8Sc
-         F061rhqs+CnPfV7fG8D/8oHAbt8HO+IQJvP+7PxlrlOX7bqE/Zw8f/nRWrX9dhKt1cRQ
-         ro1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713931585; x=1714536385;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=q/O6yWeew57XxnKc/kCg+J/zVlCaUNwIlMUpnlR1Sd4=;
-        b=KfQWzm3kqRL+WvHnLp1ypN61e7TD32NZXS794zptCo6TZxr6hGnbiUZDn9mt5GlFUG
-         OiiS1Czk4lyrKsIYiVzanO6ZUIXSvNQeqvn1vTP7lKqvTmr5ejhYW79ZARofM6xEhAzw
-         8GsIFwZUMBveBQ712hFQi/OBDoIf0q7fnHNUDWvSp+qqRc6hvMvYeLyWOENxhI6FADc1
-         usQfjfLfFt3zTMpoAUf5aBNk15dlQu2oW77R2LoBcLV2uqw0Qbli3b/W+z7Wtmg79L3H
-         q6gB5pAZw3ibU3YStzGjFcZubHEGXngCyvOqYCulYlvkQg62n5SwHFSCwy3N7oph+Hbl
-         Lu7g==
-X-Gm-Message-State: AOJu0Ywvr4CnJ/Xa3l0cjCzfVzNIlMJ4qc/5uj8QmDrMqYJQH2Zkyeqk
-	FRCayCM99HyS+F8hnyomQtq1HI3zBUoNTvo5GzeIdPx+QQSCk+LU
-X-Google-Smtp-Source: AGHT+IHtBD+jhtIDvgZAHS2pfecScdht7j9Q0KeyrXlemvT0eMOOuJ+KhlcDzUOxFyuoNdDvoRRjpw==
-X-Received: by 2002:a17:902:c40f:b0:1e5:5ccd:30e1 with SMTP id k15-20020a170902c40f00b001e55ccd30e1mr1274214plk.65.1713931585179;
-        Tue, 23 Apr 2024 21:06:25 -0700 (PDT)
-Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id ki14-20020a170903068e00b001e434923462sm10876342plb.50.2024.04.23.21.06.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Apr 2024 21:06:24 -0700 (PDT)
-Received: by archie.me (Postfix, from userid 1000)
-	id EF44F18462BD3; Wed, 24 Apr 2024 11:06:21 +0700 (WIB)
-Date: Wed, 24 Apr 2024 11:06:21 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.8 000/158] 6.8.8-rc1 review
-Message-ID: <ZiiFPdhkEOcw9j6L@archie.me>
-References: <20240423213855.824778126@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="herMSuKq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9966C113CE
+	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 06:24:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1713939847;
+	bh=TfEx6qd91z2uLEUWKW9RPcV1tYG8MZ+Yacuywdp+ETg=;
+	h=In-Reply-To:References:Date:From:To:Cc:Subject:From;
+	b=herMSuKq9O+IfNQ7yb9wslgdZvsVOuB4o8TcVZGpm9qqRL37bATkvdiljrgWPGqi/
+	 8ZjbzgazKybqUln7wJFLh6nbr22B7mS2C9+rwl+OJrYyQS8cwE3IWgSXkvhfozV9lG
+	 2JiY5v4aJ++4vV1E1cu//3t6i5Nt59DK6n10KFgieqFIIKwyn2tyT/q7QkgE2uQLMs
+	 OTXA7b9oBKfpfPHKbd1gIYVFb80l5VfNmChuOihv+zPm8QziElnPAKmoWrV/X2N+NN
+	 yLVobQNsaUIGlRbNPZ1QgmRJGLuZ3dQs/KVsJD3Jz5G6JEIBPksKnpRXkZKCHTxhnw
+	 y+JxLKM+x2AmQ==
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfauth.nyi.internal (Postfix) with ESMTP id EBAF51200032;
+	Wed, 24 Apr 2024 02:24:05 -0400 (EDT)
+Received: from imap51 ([10.202.2.101])
+  by compute5.internal (MEProxy); Wed, 24 Apr 2024 02:24:05 -0400
+X-ME-Sender: <xms:haUoZj0HtSW5NZkWO67opYRYJeLCWfBbRQAhdVil0s2p-bfK62B1Lw>
+    <xme:haUoZiH_xowfS7po7IM9g20Jvvr1NllsOjxhgLHg11Nnt2We27EIer1Q9b2zar_OW
+    REivgws8UGsW8_cov4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudelvddguddtfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdet
+    rhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugeskhgvrhhnvghlrdhorhhgqeenucggtf
+    frrghtthgvrhhnpedvveeigfetudegveeiledvgfevuedvgfetgeefieeijeejffeggeeh
+    udegtdevheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpegrrhhnugdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidquddvkeehudej
+    tddvgedqvdekjedttddvieegqdgrrhhnugeppehkvghrnhgvlhdrohhrghesrghrnhgusg
+    druggv
+X-ME-Proxy: <xmx:haUoZj6fvoElrEKiwo450qHnff4c7WFv057MNQK-xKwUI_hupW4iAQ>
+    <xmx:haUoZo3tRldPOrRAmbP-My2sbh-NQKIoJdWyJ0ZRI5BnSkeVwehBeg>
+    <xmx:haUoZmGX32LpZW9Erp_CnbWj5GXe9VfsMNnJUFJ_dQp_fPMn_myPBQ>
+    <xmx:haUoZp82hyfsMUjrf2WDejTfwLKX6eY_Z2HyAcaTpeedEyckASMjHA>
+    <xmx:haUoZjmt1v5LllEcnB062A2BkMlUaJY86OW7bLj8vi_huCGa3JrwRA8R>
+Feedback-ID: i36794607:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id A08C2B6008D; Wed, 24 Apr 2024 02:24:05 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-386-g4cb8e397f9-fm-20240415.001-g4cb8e397
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="kMDSqLl10Vx85l4k"
-Content-Disposition: inline
-In-Reply-To: <20240423213855.824778126@linuxfoundation.org>
+Message-Id: <a3f702a6-c6b2-46a5-8c15-f048e30dcd31@app.fastmail.com>
+In-Reply-To: <20240423213855.355112439@linuxfoundation.org>
+References: <20240423213853.356988651@linuxfoundation.org>
+ <20240423213855.355112439@linuxfoundation.org>
+Date: Wed, 24 Apr 2024 08:23:44 +0200
+From: "Arnd Bergmann" <arnd@kernel.org>
+To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, "Niklas Schnelle" <schnelle@linux.ibm.com>,
+ "Bjorn Helgaas" <bhelgaas@google.com>, "Sasha Levin" <sashal@kernel.org>
+Subject: Re: [PATCH 6.1 065/141] PCI: Make quirk using inw() depend on HAS_IOPORT
+Content-Type: text/plain
 
+On Tue, Apr 23, 2024, at 23:38, Greg Kroah-Hartman wrote:
+> 6.1-stable review patch.  If anyone has any objections, please let me know.
+>
+> ------------------
+>
+> From: Niklas Schnelle <schnelle@linux.ibm.com>
+>
+> [ Upstream commit f768c75d61582b011962f9dcb9ff8eafb8da0383 ]
+>
+> In the future inw() and friends will not be compiled on architectures
+> without I/O port support.
+>
 
---kMDSqLl10Vx85l4k
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This was only a preparation patch for a coming change, and it
+depends on commit fcbfe8121a45 ("Kconfig: introduce HAS_IOPORT
+option and select it as necessary"), which was not in 6.1.
 
-On Tue, Apr 23, 2024 at 02:37:02PM -0700, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.8.8 release.
-> There are 158 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
+I don't think we want to backport fcbfe8121a45 or any of the
+HAS_IOPORT changes after it.
 
-Successfully compiled and installed the kernel on my computer (Acer
-Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
-
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---kMDSqLl10Vx85l4k
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZiiFOQAKCRD2uYlJVVFO
-o9hmAP9A+ekpvYbmpT+rVVsRulkomktuJw0Js1RqLr5qxc6MRQEAjPuOsaPLop0p
-JnLG2tN2FAMS0dBZpY72nwhdw6fwmA0=
-=n4ej
------END PGP SIGNATURE-----
-
---kMDSqLl10Vx85l4k--
+    Arnd
