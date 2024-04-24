@@ -1,70 +1,61 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D27320FA9D
-	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 18:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AEE20FAA4
+	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 18:15:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713982554; cv=none; b=QmfTAV4BNG+T6lhpbhPAz2aTa1TUB6M14IUUfOaR8GJ6FwGAeHusLiQFPZj61dlBueDeUV4sX1uTwMgMeBZith4HbCJO/TEQUdiYuAYyjZE/jvSxcvL4k04q0bj3n0wx9YDVDF2MsajnnXPYCmUqIVNanJNvWSOb+2jGkVcB/n8=
+	t=1713982555; cv=none; b=qdel1wKdxbyS/0vj6DW8lgvd5Q80qNAUOq8IxkbGGBV/gG0RAajfmO5w2OtV7GuwrNqQUt5rRP57oT5W+bzM3cDcMMsQPUV7hHKdeVzhlazPNHrKdk9p9VgUJUtWmtuC76XnShhlq/sSZp9bAxyZdVoGFrn+5Bzc04r6hgKe4ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713982554; c=relaxed/simple;
-	bh=cqyzuAeGvuhZYodMb9AblLQW+gSz+JxsTr7KnJrT2no=;
+	s=arc-20240116; t=1713982555; c=relaxed/simple;
+	bh=zirzD5gjQx1LhVNoHM15DovF6WfvcOF7SWq+fCxGhz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XDX5bqqSbuhwzG6xomvNtoTSBEEBPkuwXED9tEySujT8FcG6mPzKyaK8OHw1i9y6bgnG06lUZ5GDKgfRxbnfk02KlIldFIHODB9U3XXCIkeUtSQaCLPpCqKp7ZnPveFEwcu82/FciXjD/mXGp2O9N2dh+oyjEtg6DIMZ6sSjf0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IO96u5qG; arc=none smtp.client-ip=198.175.65.16
+	 MIME-Version; b=eyrUFi7VJtUtBV/yEOvSY710Kzw7iGEe5xOZ+9ztrYw2pe8IOFcO3/eojt+5ncI5kCgajSt7aFaRLCwjgD/jaqYRAtRyzSkSeV1DHMzVr83oGQFbBzVtx2Ihn4aR4NhM/g8aZyY2XlaG8FwsA5VW3yc09vk5OF6HaRaTkxUy470=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZXVjhE63; arc=none smtp.client-ip=198.175.65.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IO96u5qG"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZXVjhE63"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713982552; x=1745518552;
+  t=1713982553; x=1745518553;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=cqyzuAeGvuhZYodMb9AblLQW+gSz+JxsTr7KnJrT2no=;
-  b=IO96u5qGEU8ou99rBylwxCR9i7qzs/zYGSLfn3Dyj4q2onrAmjSSMfcg
-   b6iunNfRjyj+SDneHrjtgcIq3jf2QxvmsFbzUMZM3d5aV0JdMudDmcmTZ
-   K/GoII+G+UUNROOcbxmKhpYmbBuoOfr/x7qOYuxAFUmsQonMcNxAS6oRR
-   TlgD899KWRNpJVhWtjfkHTYN68yD1lyDfuvnbfsIz6lUYgEs3ShA4a+F/
-   BbfvLnSYGasB0NksLfSzkLwZhzHlEiq7nvvUtn9hfmr0UuUDqclA4qwgr
-   V+Sy8tSf9rcpVUrP/tQtKA5KYuJEoESmpktzRslFtqF1ihVXVImNSciMG
-   g==;
-X-CSE-ConnectionGUID: fUgHIAgaSriuSY3j1OY+ng==
-X-CSE-MsgGUID: GeA9ozADSBmn3lQXXRr4LQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="9756065"
+  bh=zirzD5gjQx1LhVNoHM15DovF6WfvcOF7SWq+fCxGhz4=;
+  b=ZXVjhE635U7ZVP8lIcD3fiuRFv4QsPLjqouMiZCp2Cc35Vik695qyBAv
+   UnIeukHmkIJQG2I9X7bvx+bxz9WQdgUk19ciSfyv0zN7VHqu3NINlpEhu
+   0xQZaPZX8e/tYjvAqBo88wWUAajGjbOxwDPpi2dBrllms0X9KMkApdAtz
+   Hjw/mCwJD2xU55gIB0YDmZZBajqjeJYL0JDfMRGGP6bt5HI6bjkF5fc8y
+   D6cy2W+dC2bFWcDBHWmCR6oQE7S/SCpaQno+7hCttDbsHFsqSomzBWVve
+   fdWQXy042sQp1rwULrHPui96txsufCrJoXXJ9DJwqC+gxgyOf8Fe7h2JE
+   Q==;
+X-CSE-ConnectionGUID: KcSbjjHqQ9aBzzjEYosY9A==
+X-CSE-MsgGUID: L7H5QvlrShOjD0iJqws6pw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11054"; a="9756078"
 X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; 
-   d="scan'208";a="9756065"
+   d="scan'208";a="9756078"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2024 11:15:52 -0700
-X-CSE-ConnectionGUID: t9CQo1P9SQWV6lxhtd7B2w==
-X-CSE-MsgGUID: wkqUrdg7R5uzIjUmvw3Mvg==
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2024 11:15:53 -0700
+X-CSE-ConnectionGUID: 7y2dXEhIQLWfyjsTXUC4rw==
+X-CSE-MsgGUID: 8gEDJ61bT6SI6zGMF1H9aw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.07,226,1708416000"; 
-   d="scan'208";a="24751198"
+   d="scan'208";a="24751206"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2024 11:15:52 -0700
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2024 11:15:54 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Borislav Petkov <bp@alien8.de>,
 	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	x86@kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	linux-perf-users@vger.kernel.org,
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Tony Luck <tony.luck@intel.com>,
 	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v4 69/71] perf/x86/rapl: Switch to new Intel CPU model defines
-Date: Wed, 24 Apr 2024 11:15:51 -0700
-Message-ID: <20240424181551.42485-1-tony.luck@intel.com>
+	patches@lists.linux.dev
+Subject: [PATCH v4 70/71] x86/cpu/vfm: Delete X86_MATCH_INTEL_FAM6_MODEL[_STEPPING]() macros
+Date: Wed, 24 Apr 2024 11:15:52 -0700
+Message-ID: <20240424181552.42505-1-tony.luck@intel.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240424181245.41141-1-tony.luck@intel.com>
 References: <20240424181245.41141-1-tony.luck@intel.com>
@@ -76,108 +67,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-New CPU #defines encode vendor and family as well as model.
+These macros have been replaced by X86_MATCH_VFM[_STEPPING]()
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/events/rapl.c | 84 +++++++++++++++++++++---------------------
- 1 file changed, 42 insertions(+), 42 deletions(-)
+ arch/x86/include/asm/cpu_device_id.h | 20 --------------------
+ 1 file changed, 20 deletions(-)
 
-diff --git a/arch/x86/events/rapl.c b/arch/x86/events/rapl.c
-index fb2b1961e5a3..45b62ef451aa 100644
---- a/arch/x86/events/rapl.c
-+++ b/arch/x86/events/rapl.c
-@@ -766,48 +766,48 @@ static struct rapl_model model_amd_hygon = {
- };
+diff --git a/arch/x86/include/asm/cpu_device_id.h b/arch/x86/include/asm/cpu_device_id.h
+index cac33812c609..92b54e320294 100644
+--- a/arch/x86/include/asm/cpu_device_id.h
++++ b/arch/x86/include/asm/cpu_device_id.h
+@@ -187,26 +187,6 @@
+ #define X86_MATCH_VENDOR_FAM(vendor, family, data)			\
+ 	X86_MATCH_VENDOR_FAM_MODEL(vendor, family, X86_MODEL_ANY, data)
  
- static const struct x86_cpu_id rapl_model_match[] __initconst = {
--	X86_MATCH_FEATURE(X86_FEATURE_RAPL,		&model_amd_hygon),
--	X86_MATCH_INTEL_FAM6_MODEL(SANDYBRIDGE,		&model_snb),
--	X86_MATCH_INTEL_FAM6_MODEL(SANDYBRIDGE_X,	&model_snbep),
--	X86_MATCH_INTEL_FAM6_MODEL(IVYBRIDGE,		&model_snb),
--	X86_MATCH_INTEL_FAM6_MODEL(IVYBRIDGE_X,		&model_snbep),
--	X86_MATCH_INTEL_FAM6_MODEL(HASWELL,		&model_hsw),
--	X86_MATCH_INTEL_FAM6_MODEL(HASWELL_X,		&model_hsx),
--	X86_MATCH_INTEL_FAM6_MODEL(HASWELL_L,		&model_hsw),
--	X86_MATCH_INTEL_FAM6_MODEL(HASWELL_G,		&model_hsw),
--	X86_MATCH_INTEL_FAM6_MODEL(BROADWELL,		&model_hsw),
--	X86_MATCH_INTEL_FAM6_MODEL(BROADWELL_G,		&model_hsw),
--	X86_MATCH_INTEL_FAM6_MODEL(BROADWELL_X,		&model_hsx),
--	X86_MATCH_INTEL_FAM6_MODEL(BROADWELL_D,		&model_hsx),
--	X86_MATCH_INTEL_FAM6_MODEL(XEON_PHI_KNL,	&model_knl),
--	X86_MATCH_INTEL_FAM6_MODEL(XEON_PHI_KNM,	&model_knl),
--	X86_MATCH_INTEL_FAM6_MODEL(SKYLAKE_L,		&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(SKYLAKE,		&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(SKYLAKE_X,		&model_hsx),
--	X86_MATCH_INTEL_FAM6_MODEL(KABYLAKE_L,		&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(KABYLAKE,		&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(CANNONLAKE_L,	&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(ATOM_GOLDMONT,	&model_hsw),
--	X86_MATCH_INTEL_FAM6_MODEL(ATOM_GOLDMONT_D,	&model_hsw),
--	X86_MATCH_INTEL_FAM6_MODEL(ATOM_GOLDMONT_PLUS,	&model_hsw),
--	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_L,		&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE,		&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_D,		&model_hsx),
--	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_X,		&model_hsx),
--	X86_MATCH_INTEL_FAM6_MODEL(COMETLAKE_L,		&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(COMETLAKE,		&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(TIGERLAKE_L,		&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(TIGERLAKE,		&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE,		&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L,		&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(ATOM_GRACEMONT,	&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X,	&model_spr),
--	X86_MATCH_INTEL_FAM6_MODEL(EMERALDRAPIDS_X,	&model_spr),
--	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE,		&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_P,	&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_S,	&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(METEORLAKE,		&model_skl),
--	X86_MATCH_INTEL_FAM6_MODEL(METEORLAKE_L,	&model_skl),
-+	X86_MATCH_FEATURE(X86_FEATURE_RAPL,	&model_amd_hygon),
-+	X86_MATCH_VFM(INTEL_SANDYBRIDGE,	&model_snb),
-+	X86_MATCH_VFM(INTEL_SANDYBRIDGE_X,	&model_snbep),
-+	X86_MATCH_VFM(INTEL_IVYBRIDGE,		&model_snb),
-+	X86_MATCH_VFM(INTEL_IVYBRIDGE_X,	&model_snbep),
-+	X86_MATCH_VFM(INTEL_HASWELL,		&model_hsw),
-+	X86_MATCH_VFM(INTEL_HASWELL_X,		&model_hsx),
-+	X86_MATCH_VFM(INTEL_HASWELL_L,		&model_hsw),
-+	X86_MATCH_VFM(INTEL_HASWELL_G,		&model_hsw),
-+	X86_MATCH_VFM(INTEL_BROADWELL,		&model_hsw),
-+	X86_MATCH_VFM(INTEL_BROADWELL_G,	&model_hsw),
-+	X86_MATCH_VFM(INTEL_BROADWELL_X,	&model_hsx),
-+	X86_MATCH_VFM(INTEL_BROADWELL_D,	&model_hsx),
-+	X86_MATCH_VFM(INTEL_XEON_PHI_KNL,	&model_knl),
-+	X86_MATCH_VFM(INTEL_XEON_PHI_KNM,	&model_knl),
-+	X86_MATCH_VFM(INTEL_SKYLAKE_L,		&model_skl),
-+	X86_MATCH_VFM(INTEL_SKYLAKE,		&model_skl),
-+	X86_MATCH_VFM(INTEL_SKYLAKE_X,		&model_hsx),
-+	X86_MATCH_VFM(INTEL_KABYLAKE_L,		&model_skl),
-+	X86_MATCH_VFM(INTEL_KABYLAKE,		&model_skl),
-+	X86_MATCH_VFM(INTEL_CANNONLAKE_L,	&model_skl),
-+	X86_MATCH_VFM(INTEL_ATOM_GOLDMONT,	&model_hsw),
-+	X86_MATCH_VFM(INTEL_ATOM_GOLDMONT_D,	&model_hsw),
-+	X86_MATCH_VFM(INTEL_ATOM_GOLDMONT_PLUS,	&model_hsw),
-+	X86_MATCH_VFM(INTEL_ICELAKE_L,		&model_skl),
-+	X86_MATCH_VFM(INTEL_ICELAKE,		&model_skl),
-+	X86_MATCH_VFM(INTEL_ICELAKE_D,		&model_hsx),
-+	X86_MATCH_VFM(INTEL_ICELAKE_X,		&model_hsx),
-+	X86_MATCH_VFM(INTEL_COMETLAKE_L,	&model_skl),
-+	X86_MATCH_VFM(INTEL_COMETLAKE,		&model_skl),
-+	X86_MATCH_VFM(INTEL_TIGERLAKE_L,	&model_skl),
-+	X86_MATCH_VFM(INTEL_TIGERLAKE,		&model_skl),
-+	X86_MATCH_VFM(INTEL_ALDERLAKE,		&model_skl),
-+	X86_MATCH_VFM(INTEL_ALDERLAKE_L,	&model_skl),
-+	X86_MATCH_VFM(INTEL_ATOM_GRACEMONT,	&model_skl),
-+	X86_MATCH_VFM(INTEL_SAPPHIRERAPIDS_X,	&model_spr),
-+	X86_MATCH_VFM(INTEL_EMERALDRAPIDS_X,	&model_spr),
-+	X86_MATCH_VFM(INTEL_RAPTORLAKE,		&model_skl),
-+	X86_MATCH_VFM(INTEL_RAPTORLAKE_P,	&model_skl),
-+	X86_MATCH_VFM(INTEL_RAPTORLAKE_S,	&model_skl),
-+	X86_MATCH_VFM(INTEL_METEORLAKE,		&model_skl),
-+	X86_MATCH_VFM(INTEL_METEORLAKE_L,	&model_skl),
- 	{},
- };
- MODULE_DEVICE_TABLE(x86cpu, rapl_model_match);
+-/**
+- * X86_MATCH_INTEL_FAM6_MODEL - Match vendor INTEL, family 6 and model
+- * @model:	The model name without the INTEL_FAM6_ prefix or ANY
+- *		The model name is expanded to INTEL_FAM6_@model internally
+- * @data:	Driver specific data or NULL. The internal storage
+- *		format is unsigned long. The supplied value, pointer
+- *		etc. is casted to unsigned long internally.
+- *
+- * The vendor is set to INTEL, the family to 6 and all other missing
+- * arguments of X86_MATCH_VENDOR_FAM_MODEL_FEATURE() are set to wildcards.
+- *
+- * See X86_MATCH_VENDOR_FAM_MODEL_FEATURE() for further information.
+- */
+-#define X86_MATCH_INTEL_FAM6_MODEL(model, data)				\
+-	X86_MATCH_VENDOR_FAM_MODEL(INTEL, 6, INTEL_FAM6_##model, data)
+-
+-#define X86_MATCH_INTEL_FAM6_MODEL_STEPPINGS(model, steppings, data)	\
+-	X86_MATCH_VENDOR_FAM_MODEL_STEPPINGS_FEATURE(INTEL, 6, INTEL_FAM6_##model, \
+-						     steppings, X86_FEATURE_ANY, data)
+-
+ /**
+  * X86_MATCH_VFM - Match encoded vendor/family/model
+  * @vfm:	Encoded 8-bits each for vendor, family, model
 -- 
 2.44.0
 
