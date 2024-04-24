@@ -1,172 +1,118 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18808158DBD
-	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 09:48:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CB11598F1
+	for <patches@lists.linux.dev>; Wed, 24 Apr 2024 11:12:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713952116; cv=none; b=hc0uCDIK+GWFOnM6VvUwgkhEO3ugpX5FGLjjJgSUobv+EuzHUwnErFDPA68Gla/HpaYEpu0cPxN4aa42peOiE79hSHmHPUMhlW+JURqpPdmv5bg34zYp1bvr7Pf91dWrsdKRwM5rYnNjLkw5aV57wFlf8iby1KpUeXk021RkOHc=
+	t=1713957180; cv=none; b=hsH/koT12ftTMEDVlEH00a4WTzTvI0zklEK+s3lyihXb90yRuQig+NL4ok6FxeRt5hpBwKfhHOHPjPHpK6jfduAyM/m8YKuy8PtZCsjI0DHuxNYEyBIlTNDMfBOG89a3X+zjS0zYzBwbmmLUwOOITmGSP+Ni+eZuxHoFNUu9zOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713952116; c=relaxed/simple;
-	bh=gjvTM5WoCXZfZuumlfuDjOkBqIB5Kok9g+SQrAlXbwE=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=VPFPnMzlqUIEcBlexDN8x3kJr20MxQYy2zNuAJ0615U9lZCMa2DrM8MQ4TqxDlylJUhQdu26clgO99I+rw1PPcRKhtQ6PuG+NqxiTQgADsDVGiSKil/HbeNhif75qzopSaRGTPYTtTbJACThUHelKuvDY9RhpEr76b9qgky3g9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=lVSVn+oT; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1713957180; c=relaxed/simple;
+	bh=wmj+hvwsoGodyJmaSnIB2YJCBKYfRJbs/41MVJPknx0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=niyCANza1XYlyDiR6MGx9CeKY76RMjy5vceC8Tc8pus7BDZW/dtjRF7CMRqnZfNjUtlDNIRViW5M72COUWilykioUdMvp8aWnA+IlXUTgzNtgnBHBu07ZaGSOAU19zPrVZ6OwTmfY+FmgjnnRRtHbxKrDv2fQbD1BPXDp3/gxXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=J+oan5gh; arc=none smtp.client-ip=209.85.210.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="lVSVn+oT"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 43O8wGvH000580;
-	Wed, 24 Apr 2024 09:48:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=S0JRj5pKLCFlpW9XNhYLC6VhpFJ6oksErg2cwtnNIwA=;
- b=lVSVn+oT24geL8ikK+8OKBUOkD822sF0qrmdAm1Mhxuz2BwRqh5o5+oMCadT1z5MS/er
- FjYR/9TnFlzqX7VsHa9yXa9JZ5DGaMlC1HyOGIHRRXWAXx0UoehRLvNlFPdo7by4/okj
- 5go4aMacrv2g7XkLwI+hGBx4Ekicn8IynUbCz54fDvQfoKdHqT+qbiBkKp5LAce0us3o
- 1FIcpVW+8/E9f18ZKoV62EQfmI/9QRPb9in8OzO7JIOdQrzhEOQenSxuCpJdJiT1u8+6
- 0vkCEfx6Hr5IC0ySYzeNhW7DeeVCXceBaaWk1hi8TWb6fSM/+JAfDvl/fP94nmQebPYL ug== 
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xpy12g38t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Apr 2024 09:48:21 +0000
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43O9mKIZ013420;
-	Wed, 24 Apr 2024 09:48:20 GMT
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xpy12g38q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Apr 2024 09:48:20 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 43O7mRPq023065;
-	Wed, 24 Apr 2024 09:21:21 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xms1p2tv5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Apr 2024 09:21:21 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com [10.39.53.231])
-	by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 43O9LJLx23200476
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 24 Apr 2024 09:21:21 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 10D8258052;
-	Wed, 24 Apr 2024 09:21:19 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 5EF2258050;
-	Wed, 24 Apr 2024 09:21:15 +0000 (GMT)
-Received: from [9.152.212.241] (unknown [9.152.212.241])
-	by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Wed, 24 Apr 2024 09:21:15 +0000 (GMT)
-Message-ID: <3b6b4973-0973-40e4-a107-4c81840c9ed3@linux.ibm.com>
-Date: Wed, 24 Apr 2024 11:21:05 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 00/71] 5.15.157-rc1 review
-To: Naresh Kamboju <naresh.kamboju@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-        linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-        akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-        patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-        jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-        srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-        allen.lkml@gmail.com, broonie@kernel.org, linux-s390@vger.kernel.org,
-        Alexandra Winter <wintera@linux.ibm.com>
-References: <20240423213844.122920086@linuxfoundation.org>
- <CA+G9fYsm9OYUh+H9X2kpJWXsPdde36=WbSWc+mU0vO0i-QaWOw@mail.gmail.com>
-Content-Language: en-US
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
-In-Reply-To: <CA+G9fYsm9OYUh+H9X2kpJWXsPdde36=WbSWc+mU0vO0i-QaWOw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: tz9a1ZkTDNaYgCbEfl71qQD-ElGlqFD3
-X-Proofpoint-GUID: cWVFI8ZpF-PAsklbHzHAdnBTc4Y9cm5k
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="J+oan5gh"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-6f043f9e6d7so7043605b3a.3
+        for <patches@lists.linux.dev>; Wed, 24 Apr 2024 04:12:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1713957178; x=1714561978; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Jvc+crjB2MZ5Tq2wExAFBrGTQzTAygNqkxLF7Cs1xYc=;
+        b=J+oan5ghR2Xv7KuDevwPUIXMaLvB0qU8z3beNTaZepr+EwixkBKga8Sp2S7aEnanGZ
+         ryLJClUBxhk/vhkV4ZAXw6yNmbXThADS14EDx9kEfFnov6qwWsTT5mo7Pjo7uVavPhwg
+         VouD1ttBOEVHexD6K2sCBa/WTCDwPYuy7JVUBpoHLmGS7cWor01AveMNGThqqI5Jqzg1
+         SVy/CJK8ybYsVyHAFDLrSENs/mk/yH+ebIStZHjbON48BmzTcx4xq/Iwn3zarWAs18xa
+         dhsaFNhXnF2FzAh+S+YzuP4pdkq5LFf3xzE1cd+pFhKiJfmdO4j6V8zEdjVgmM0bt/Mb
+         wKmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713957178; x=1714561978;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Jvc+crjB2MZ5Tq2wExAFBrGTQzTAygNqkxLF7Cs1xYc=;
+        b=MIlBIUOOSQ1E9YFwUDskpvj0GXInA2sorWGyLjp8FmsrKDmE4PXxxEuj948HmfIzsA
+         WmGH6SzwcKMIIi4RydqfTLSspcPIZ7sEKU6yXPCjQi/J92sqYK+JqTWZdShcRNB8VPHv
+         GIobH/K5+r6DFmir28x3cCmwceSsM2x2JXCE9jp7zrsy3VSKX9JBk/kz6YHiEScLQ52a
+         Y3auzOfmLpHgJoUQFHH5b9cjzNJxiGwEZRIqqJgkxHVvtDGVXdZbIMirCCK0LyAOT1Ga
+         nLHmt1MAddUBXa1U2YOIP6aXz3tVYm2eQMTgT7LkWxLxoOkoSXALfr9DZcC+IQ3Ihh0p
+         cGIg==
+X-Forwarded-Encrypted: i=1; AJvYcCWqIHqfWbuPEaBfBlRwT++hlfwc0UfkOEVCX80y3VLVSzwsxDnUnENLD7K8g62wJox4et2Kx2MkGfQQG67cLVRnOL9ep68mVQ==
+X-Gm-Message-State: AOJu0Yz4wK6gpyIXO7FkzuaH8WqcwwrXV/D0mWinSeYcyIMsbo2hT13p
+	GXFOCXTFMAvPrWTi0a9es67t7dF+960uctpoaWX0qjAIvRPKo47u0Lp4CGblWVBPdAh9bfEOI0V
+	4sYqq9i0SSGFCXmO/KTs2HGpF0pCGKHAR9DiJeQ==
+X-Google-Smtp-Source: AGHT+IFcZaHSY2rAs7RgXGpaZVJigXC9oX79iU65HlIGhBiIOwEOvRFy714w1FqNIYaJfLgwqpFMCv02vu2I4l7RZoo=
+X-Received: by 2002:a05:6a21:788c:b0:1a7:39a8:6ca4 with SMTP id
+ bf12-20020a056a21788c00b001a739a86ca4mr2434665pzc.29.1713957177991; Wed, 24
+ Apr 2024 04:12:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-24_07,2024-04-23_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
- phishscore=0 adultscore=0 bulkscore=0 mlxlogscore=999 clxscore=1011
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2404240041
+References: <20240423213855.696477232@linuxfoundation.org>
+In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Wed, 24 Apr 2024 20:12:47 +0900
+Message-ID: <CAKL4bV6MWQQunGgCZRBzvO9RP=516Au2s-VD=16MfFvDgTGWZw@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/158] 6.6.29-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 24.04.2024 09:57, Naresh Kamboju wrote:
-> On Wed, 24 Apr 2024 at 03:16, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
->>
->> This is the start of the stable review cycle for the 5.15.157 release.
->> There are 71 patches in this series, all will be posted as a response
->> to this one.  If anyone has any issues with these being applied, please
->> let me know.
->>
->> Responses should be made by Thu, 25 Apr 2024 21:38:28 +0000.
->> Anything received after that time might be too late.
->>
->> The whole patch series can be found in one patch at:
->>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.157-rc1.gz
->> or in the git tree and branch at:
->>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
->> and the diffstat can be found below.
->>
->> thanks,
->>
->> greg k-h
-> 
-> 
-> The s390 defconfig build failed with gcc-12 and clang-17 on the Linux
-> stable-rc linux.5.15.y branch.
-> 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> Build log:
-> ---
-> drivers/s390/cio/qdio_main.c: In function 'qdio_int_handler':
-> drivers/s390/cio/qdio_main.c:761:52: error: incompatible type for
-> argument 2 of 'ccw_device_start'
->   761 |                 rc = ccw_device_start(cdev, irq_ptr->ccw,
-> intparm, 0, 0);
->       |                                             ~~~~~~~^~~~~
->       |                                                    |
->       |                                                    struct ccw1
-> In file included from arch/s390/include/asm/qdio.h:13,
->                  from drivers/s390/cio/qdio_main.c:18:
-> arch/s390/include/asm/ccwdev.h:172:50: note: expected 'struct ccw1 *'
-> but argument is of type 'struct ccw1'
->   172 | extern int ccw_device_start(struct ccw_device *, struct ccw1 *,
->       |                                                  ^~~~~~~~~~~~~
-> make[3]: *** [scripts/Makefile.build:289: drivers/s390/cio/qdio_main.o] Error 1
-> 
-> 
-> Suspected commit:
-> --------
-> s390/qdio: handle deferred cc1
->   [ Upstream commit 607638faf2ff1cede37458111496e7cc6c977f6f ]
+Hi Greg
 
-This is due to a type change of field 'ccw' in 'struct qdio_irq' that
-was introduced in v5.17 via commit 718ce9e10171 ("s390/qdio: avoid
-allocating the qdio_irq with GFP_DMA").
+On Wed, Apr 24, 2024 at 6:44=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.6.29 release.
+> There are 158 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 25 Apr 2024 21:38:28 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.29-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-The following change to commit 607638faf2ff ("s390/qdio: handle deferred
-cc1") fixes the compile error on v5.15:
+6.6.29-rc1 tested.
 
---- a/drivers/s390/cio/qdio_main.c
-+++ b/drivers/s390/cio/qdio_main.c
-@@ -758,7 +758,7 @@ void qdio_int_handler(struct ccw_device *cdev, unsigned long intparm,
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
- 	if (rc == -EAGAIN) {
- 		DBF_DEV_EVENT(DBF_INFO, irq_ptr, "qint retry");
--		rc = ccw_device_start(cdev, irq_ptr->ccw, intparm, 0, 0);
-+		rc = ccw_device_start(cdev, &irq_ptr->ccw, intparm, 0, 0);
- 		if (!rc)
- 			return;
- 		DBF_ERROR("%4x RETRY ERR", irq_ptr->schid.sch_no);
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
 
+[    0.000000] Linux version 6.6.29-rc1rv
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 13.2.1 20230801, GNU ld (GNU
+Binutils) 2.42.0) #1 SMP PREEMPT_DYNAMIC Wed Apr 24 18:35:14 JST 2024
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
