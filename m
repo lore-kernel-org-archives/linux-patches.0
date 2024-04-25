@@ -1,80 +1,68 @@
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E03A15250D
-	for <patches@lists.linux.dev>; Thu, 25 Apr 2024 20:19:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0FF5B697
+	for <patches@lists.linux.dev>; Thu, 25 Apr 2024 20:35:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714076361; cv=none; b=SZKPHD89o1hJ8KArREK5vYtF89aLWlf3IsRuccYwPTj/j6t8nbRn6BzBLAjlTLp/DL8umydZ+CjFQtSKeCzvqTi/10RY8QvjJi6ua2L4px52i6Sa2IWHslbpjQ/TEEVVUw6xeEWBdFGwIo4KehsfWREPKSqF1mYAbzpevehMB6o=
+	t=1714077347; cv=none; b=KQKp5Q9ei6qiaroVDW7UxK4mK0d3vwP8G3outkc4qgSz11kHNHvzox7coJ9R1O8doUYRrTjvmE6mWKpcKfa2zx041DO9oI74XAycSQs14d00WwIYkXHwNOjNHxSUegqla68XJJHSNR5I4SLOPzifEycz+m9ytGuqc4GKmcShEso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714076361; c=relaxed/simple;
-	bh=Th3djsGTVHRdDs+lvt8P7lxA+O49hf8OM2PZNr5JrtQ=;
-	h=From:In-Reply-To:Content-Type:References:Date:Cc:To:MIME-Version:
-	 Message-ID:Subject; b=DhnCi4cqZ/l41nwAWwa9zk/MIZie+46wSXoU2CQivgfgZD4YU3V8VAYOiXAd9Bg4n0A/m84X5DJtaVGYgXgIdTTt9l6eiapI0sdNvyamo94m0pvouvhffj73L9knQpoSK+zEsA55SkorFiCY8KsorcaT0tAMfTA/debcqjEe3Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-Received: from harlem.collaboradmins.com (harlem.collaboradmins.com [IPv6:2a01:4f8:1c0c:5936::1])
-	by madrid.collaboradmins.com (Postfix) with ESMTP id 107EC378045F;
-	Thu, 25 Apr 2024 20:19:16 +0000 (UTC)
-From: "Shreeya Patel" <shreeya.patel@collabora.com>
-In-Reply-To: <20240423213844.122920086@linuxfoundation.org>
-Content-Type: text/plain; charset="utf-8"
-X-Forward: 127.0.0.1
-References: <20240423213844.122920086@linuxfoundation.org>
-Date: Thu, 25 Apr 2024 21:19:16 +0100
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org, "Gustavo Padovan" <gustavo.padovan@collabora.com>, "kernelci-regressions mailing list" <kernelci-regressions@lists.collabora.co.uk>
-To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
+	s=arc-20240116; t=1714077347; c=relaxed/simple;
+	bh=bCiSpeEajhHeA3ZWzQjdXp4dGEPuM9XZsenh7JoVOkM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UmCvcoDuoB+GkN99gFCbsvz/WXtgSCCwFXCMAs248IhIZlUNg+oQUin/gslX+GGIvQiY/95Nnr387Hf9TqjA7b8z1l/Mu3qJx8bkANEQXQ1K/OUm0HIP+BG2sSBgt7kVCStNInfhN8nsWkt/7FNRTknJPtLl2aPOzbImlc5OXAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cMJBnkB0; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cMJBnkB0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021BAC32781
+	for <patches@lists.linux.dev>; Thu, 25 Apr 2024 20:35:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714077347;
+	bh=bCiSpeEajhHeA3ZWzQjdXp4dGEPuM9XZsenh7JoVOkM=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=cMJBnkB0xuPUAztL5bdOA2MPWFd+gixqRvNwcrDdFio6t8yQR6gqbKIfAhETHj3Qv
+	 kPBtuVp+L2itSJLsYISZuRufwA4jBt4VGgeqqlWYZbHwDSkV63/wxYpa1ibby6/4mU
+	 PkO2YkkwX6lYMirtOKARsI7h3YLTE7vF/CISPDiwvTpqvcSqDZe9iSj94YIM0ztK0C
+	 tXujfgFirjT1p3q529XL/nusjWCsoVhVLUzuaHT2bfkCfpQafDEBiYM3I0F6o5fHPM
+	 YmCN7Q5wE3DXn2t2c2RsKnM9jigvwD0EEJnciTLSDy3ZVYpNhYFKXLtsrZla0cwqi3
+	 1l2aQlt5yqbnQ==
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2db13ca0363so22488321fa.3
+        for <patches@lists.linux.dev>; Thu, 25 Apr 2024 13:35:46 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVJGUolBzYQJ9oeJ+1RUp1+uiegaGEwUO9PrSZbl75hFRwxCUe7U1PQXDb7SvjQlJs+MvzoaEg5K0mjKgsm9rZKjkbew/QAXg==
+X-Gm-Message-State: AOJu0Yw/F7GM7l4A36HBNz9etlzh1IyHHx2yE0rH0M1LAeKLTOOfRMhx
+	gIlNn+CaFBgspIbVwJHnhUwEN8rYUuiOU5unO8lAncfv4vaYCG/T95anbhG5AG4xaxygp4SlXgm
+	Gahho68rJwvBwetL/MtC+iVDnqQ==
+X-Google-Smtp-Source: AGHT+IH0jiWIh0gTBhNm2YA98qh5jrinfKFsibAguPX98MIifI5V5pnmVMwPJxq9jBukg3E5QxvEmCk36DlAbIM05Uo=
+X-Received: by 2002:a2e:a286:0:b0:2d4:5370:5e8a with SMTP id
+ k6-20020a2ea286000000b002d453705e8amr335215lja.22.1714077345322; Thu, 25 Apr
+ 2024 13:35:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <99f49-662abb00-5-1a63b1e0@13200930>
-Subject: =?utf-8?q?Re=3A?= [PATCH =?utf-8?q?5=2E15?= 00/71] 
- =?utf-8?q?5=2E15=2E157-rc1?= review
-User-Agent: SOGoMail 5.10.0
+References: <20240423213853.356988651@linuxfoundation.org> <20240423213855.436093838@linuxfoundation.org>
+In-Reply-To: <20240423213855.436093838@linuxfoundation.org>
+From: Rob Herring <robh@kernel.org>
+Date: Thu, 25 Apr 2024 15:35:32 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqJHa4j5p8V_wkWFf6G4Xem5P9X+2vK5p0DYbBShXLdM4Q@mail.gmail.com>
+Message-ID: <CAL_JsqJHa4j5p8V_wkWFf6G4Xem5P9X+2vK5p0DYbBShXLdM4Q@mail.gmail.com>
+Subject: Re: [PATCH 6.1 068/141] ARM: davinci: Drop unused includes
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Sasha Levin <sashal@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wednesday, April 24, 2024 03:09 IST, Greg Kroah-Hartman <gregkh@linu=
-xfoundation.org> wrote:
+On Tue, Apr 23, 2024 at 4:45=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> 6.1-stable review patch.  If anyone has any objections, please let me kno=
+w.
 
-> This is the start of the stable review cycle for the 5.15.157 release=
-.
-> There are 71 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, plea=
-se
-> let me know.
->=20
-> Responses should be made by Thu, 25 Apr 2024 21:38:28 +0000.
-> Anything received after that time might be too late.
->=20
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.1=
-5.157-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc=
-.git linux-5.15.y
-> and the diffstat can be found below.
->=20
+This doesn't seem like something needed for stable. Are the hundreds
+of other commits like this going too?
 
-KernelCI report for stable-rc/linux-5.15.y for this week.
-
-## stable-rc HEAD for linux-5.15.y:
-Date: 2024-04-23
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.=
-git/log/?h=3D70f39a25a6b86d04f5693eac9b6f203ed23d8260
-
-## Build failures:
-No build failures seen for the stable-rc/linux-5.15.y commit head \o/
-
-## Boot failures:
-No **new** boot failures seen for the stable-rc/linux-5.15.y commit hea=
-d \o/
-
-Tested-by: kernelci.org bot <bot@kernelci.org>
-
-Thanks,
-Shreeya Patel
-
+Rob
