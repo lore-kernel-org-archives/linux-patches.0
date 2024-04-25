@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4AC9131746;
-	Thu, 25 Apr 2024 16:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC54131746;
+	Thu, 25 Apr 2024 16:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714064183; cv=none; b=AmB/XYc7PozHsr1hYNuZRLb7o9GFxVkbs2TLituGmfFhf4Ldlipa6KH11CFGJvTxBolOCD+Hx71cbUapp3a1yis5rarayg3xzmqA+JZPO0+A1vKDtntan6mJFlY1ONEdTobwNRTxoLI/HJAHStiSUUWjjlyoDqqxQ0V3KGaW4uk=
+	t=1714064184; cv=none; b=rizXfR5z/jih3+oXhCATha8ltO3BHmDAtNDymdVt76+7ZeJXM/iXk+lU89NOSAvZhBUvrYY4Ex5EVPkIK+yshORQ5K5xd6HeluICfJ+8YOFLjKWIynvWRHRNnBzWziFRUee1lLW/blC5VizRl+a1C8RFmMOk7q4OHI3x8OhQNGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714064183; c=relaxed/simple;
-	bh=SXGhBnlcLWFdwE2aSUT7wEcsxWYKFItR1ihqD0HbrNk=;
+	s=arc-20240116; t=1714064184; c=relaxed/simple;
+	bh=xOZM1ewaEE8webcrxae6fRZ3lapbeFGOs6WCFr8o9mU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=E7YwPzxGlgbkWKVs+hArDRjSWb4mjD8C9evVPn6n6Loss7/cV1VbVGTvPQWRw9rc+/Zv4nV9UN1u6GREFeMN2LTN82ZZqaske9uMERbqwZH5sr5B/l6c3GXgvQF8+8RCmbBqJvc0fnBt0cieu7K645Il1/FRZsr14oX+ipit1/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SXedzSuh; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=gxF35AdsrsXXz0H0t7cdXiR/0YoXhIQ8f90no21ZkbQBeyl4QDKvIxNaCBYeA2RytJebMLvRqjHdy6VhaegLU8GPz0jRoa2S8ucp3XwjSLGZ5dQuXgJVvzOJuqYP8+XkIOsHkaoj1sdZGjypcIK0pqEtYBUSAwKMzf5Cb83PwNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aBmRapsv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SXedzSuh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6F4C2BD10;
-	Thu, 25 Apr 2024 16:56:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aBmRapsv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86EC4C4AF0D;
+	Thu, 25 Apr 2024 16:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714064183;
-	bh=SXGhBnlcLWFdwE2aSUT7wEcsxWYKFItR1ihqD0HbrNk=;
+	s=k20201202; t=1714064184;
+	bh=xOZM1ewaEE8webcrxae6fRZ3lapbeFGOs6WCFr8o9mU=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=SXedzSuhCjqQhQnjFPccHZuxE/yKDIwxVATHRECZco3Ko4VUsEv60lSE+TOye2eYu
-	 QqwyN4G9LJ3CluI9Vy+tMrTImddixFCOmcu0SlWNM4cjUfbGEzJGh4yPXiR1TPIZnm
-	 S+ncfXh9u2E3hEPp8NZmUxAn3mS7kUOrSHJoAXLlgOklYC0LTCVNDkP353s4hN2y4A
-	 Qb8u+qas5+ppBneMSTMei4tbkhYLG11I6G8gs2yuQqLeqL6X+NtsEsqs62/RAdA6oN
-	 B6f/6ul9VM+H1I98hIF9GM9GuI0UvXqD4GmlE5CE7rn/LEbmv2FxFacIsa8+NfxL2X
-	 tB7LMbWiOSH5Q==
+	b=aBmRapsv6IaKBvdiQYhwCmEf62JM5xoaIdiZiuzQMg+cDdNZ5fUPBS0dvn02e3av9
+	 zI2nOSy20qcJz3Vvu6so2xEacDjHl5ORFeYDK8ApeaQwQJkHbbQ8Bf4QDslxjjJv+Y
+	 oLDNM5DU10WXbvFj1NVqBfIxdsS7RjR25TBTrRN5h7Avx0QCbfSFuzbilZlZ3xr82q
+	 y13aputd6YFD4hjuFFtnmMn9BNWvTaMgZ6K+Y/I/ZlpdYlOhKVjAewRdxcu/yBXU+9
+	 O2Ga2ovz2u7oU/CviciWQV/ZmGoZ6mwAqQnM6aHY3q94S0XD0Gwv4eKiMzUYVsLSgB
+	 c1kRGKIZXJn/Q==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 25 Apr 2024 09:55:51 -0700
-Subject: [PATCH 1/2] clk: bcm: dvp: Assign ->num before accessing ->hws
+Date: Thu, 25 Apr 2024 09:55:52 -0700
+Subject: [PATCH 2/2] clk: bcm: rpi: Assign ->num before accessing ->hws
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,7 +37,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240425-cbl-bcm-assign-counted-by-val-before-access-v1-1-e2db3b82d5ef@kernel.org>
+Message-Id: <20240425-cbl-bcm-assign-counted-by-val-before-access-v1-2-e2db3b82d5ef@kernel.org>
 References: <20240425-cbl-bcm-assign-counted-by-val-before-access-v1-0-e2db3b82d5ef@kernel.org>
 In-Reply-To: <20240425-cbl-bcm-assign-counted-by-val-before-access-v1-0-e2db3b82d5ef@kernel.org>
 To: Michael Turquette <mturquette@baylibre.com>, 
@@ -51,12 +51,12 @@ Cc: Kees Cook <keescook@chromium.org>,
  llvm@lists.linux.dev, stable@vger.kernel.org, 
  Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1901; i=nathan@kernel.org;
- h=from:subject:message-id; bh=SXGhBnlcLWFdwE2aSUT7wEcsxWYKFItR1ihqD0HbrNk=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGla3aYz4qUdrfPXzgicc4iB6eMTl9Seha2nKj8tnvs76
- c/5sxzmHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAi/jcYGZZutL6S0KV8ZM8O
- Ebvl7kstffrsutoP+bAfn86/L7G5m5vhv/uLuwc3ZTDy7elOXtTQ3P7Wi22vYYusWfX2Yq8Tj9c
- 0sgMA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1678; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=xOZM1ewaEE8webcrxae6fRZ3lapbeFGOs6WCFr8o9mU=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGla3abTn9y8tqDHMf/Qn/N85dnXVnov523rf7SlcaFbR
+ 2b1jttqHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAiPKUM/1MLZtRPneq48r76
+ vu2NLyLVtxv1zLwQaPcvwZZv+ulgOV1GhgXn/XQKJgfuK7uWwHxp29VlqtZzb4XqTdmabG4lH3B
+ DkwMA
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
@@ -68,11 +68,11 @@ bounds. As noted in that change, the __counted_by member must be
 initialized with the number of elements before the first array access
 happens, otherwise there will be a warning from each access prior to the
 initialization because the number of elements is zero. This occurs in
-clk_dvp_probe() due to ->num being assigned after ->hws has been
-accessed:
+raspberrypi_discover_clocks() due to ->num being assigned after ->hws
+has been accessed:
 
-  UBSAN: array-index-out-of-bounds in drivers/clk/bcm/clk-bcm2711-dvp.c:59:2
-  index 0 is out of range for type 'struct clk_hw *[] __counted_by(num)' (aka 'struct clk_hw *[]')
+  UBSAN: array-index-out-of-bounds in drivers/clk/bcm/clk-raspberrypi.c:374:4
+  index 3 is out of range for type 'struct clk_hw *[] __counted_by(num)' (aka 'struct clk_hw *[]')
 
 Move the ->num initialization to before the first access of ->hws, which
 clears up the warning.
@@ -81,30 +81,23 @@ Cc: stable@vger.kernel.org
 Fixes: f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with __counted_by")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/clk/bcm/clk-bcm2711-dvp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/bcm/clk-raspberrypi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/bcm/clk-bcm2711-dvp.c b/drivers/clk/bcm/clk-bcm2711-dvp.c
-index e4fbbf3c40fe..3cb235df9d37 100644
---- a/drivers/clk/bcm/clk-bcm2711-dvp.c
-+++ b/drivers/clk/bcm/clk-bcm2711-dvp.c
-@@ -56,6 +56,8 @@ static int clk_dvp_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/clk/bcm/clk-raspberrypi.c b/drivers/clk/bcm/clk-raspberrypi.c
+index 829406dc44a2..4d411408e4af 100644
+--- a/drivers/clk/bcm/clk-raspberrypi.c
++++ b/drivers/clk/bcm/clk-raspberrypi.c
+@@ -371,8 +371,8 @@ static int raspberrypi_discover_clocks(struct raspberrypi_clk *rpi,
+ 			if (IS_ERR(hw))
+ 				return PTR_ERR(hw);
  
-+	data->num = NR_CLOCKS;
-+
- 	data->hws[0] = clk_hw_register_gate_parent_data(&pdev->dev,
- 							"hdmi0-108MHz",
- 							&clk_dvp_parent, 0,
-@@ -76,7 +78,6 @@ static int clk_dvp_probe(struct platform_device *pdev)
- 		goto unregister_clk0;
- 	}
+-			data->hws[clks->id] = hw;
+ 			data->num = clks->id + 1;
++			data->hws[clks->id] = hw;
+ 		}
  
--	data->num = NR_CLOCKS;
- 	ret = of_clk_add_hw_provider(pdev->dev.of_node, of_clk_hw_onecell_get,
- 				     data);
- 	if (ret)
+ 		clks++;
 
 -- 
 2.44.0
