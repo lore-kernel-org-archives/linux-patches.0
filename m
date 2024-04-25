@@ -1,88 +1,92 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F1F4C98;
-	Thu, 25 Apr 2024 00:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37E635F0C;
+	Thu, 25 Apr 2024 04:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714006702; cv=none; b=vF6GJHaDRZDvgqdGoswyD6lkuOctSTFX2p71sQ0981q4Y8ETnD4MkdvelXyPCrWUDRpESztEcqjmi7C2x38KhG1vAdixKQxj8/fbintfb6U28xfS/Y+ql8ci1D62ffnj3SsRrSxSPDXGsqdQtKD/COysxyELbrNA0SsjDTOg9E8=
+	t=1714020501; cv=none; b=IJgkaJJmC/SGqapakHZB0m/Owygd2xXM5GJYO1TqPTLnIzrL2E3hNE3dt02l8fiIYtrIMjlyam3haUn+6DWPfd1CSgkjJ9HAH0wnTwgyUPOS3agSFYtMnXkp7HkEJLqiyi31u2Mef6Q7tpdF+DwlVxbbE5BCF9AXHpW5vf1c9vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714006702; c=relaxed/simple;
-	bh=ieGhYtG2g3/12L0LUEaCPkUzRxfucBkJXELVtQElB/o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zjp5zSRPvaWqoGL4s6l/yOFovIVxuTlCR9WM1q7xIeJE98MNRBhNn3u1U5PKwyJsXab66RpsgDzfunQ3bmMzvrMvD8KNoKPweJcclaRBq/8nUVrNkXavKbs7/mFI+vCDyWet7oXSNDx92lOrZYjvDbFICAcE1vA+++BmFm7TjX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MMS5vYGQ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1714020501; c=relaxed/simple;
+	bh=N0fWpzpqQhKoXcrRNMKIEbA2taNqTuDY6Kw85Strf/8=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=qSiRNdS/lleJpAWd/Ol9rXrneYhgmqnGxUz8AS2M5fiHLk8KQZlDouSGJoW9uUzbaTga0aK0RiaNAohmigh2dqLElzTHwOXnHTND5Eju74W37kfzhKOaDsAHv/bCvI32oqtb9BW0SVlB24KNTl4n4n1sIf7eRGoLR5heuqvqrWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZE7fWK8L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MMS5vYGQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0139C113CD;
-	Thu, 25 Apr 2024 00:58:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZE7fWK8L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC12DC113CC;
+	Thu, 25 Apr 2024 04:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714006702;
-	bh=ieGhYtG2g3/12L0LUEaCPkUzRxfucBkJXELVtQElB/o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MMS5vYGQrb2MZA3RaQKbV4Lqduqmsw0+pthcKCXdHnk5eZjGAIeJuFdehFXXDgN3N
-	 mVn5m3c09YpyiKpmgV8fuwpLvJw86pjSv4QwfUIHRHUIXRFEF20zb/vXKnO8NtunWA
-	 U+UdFaiMpQnK4ScRnpIXSOE0dgbuPw93SHm1OI7L0TwIn7IdJarFwa9ujfIYY0ZYPO
-	 4iaLSsRmco0v44yGiEJTGHwZBt3NjOTzg0XvFpSUH+j4wir7xemKOqM8aCG/34Q6TP
-	 n5bqe00/vF9QXBUD/G7NPbQ6MO320goTVlMB6NSlL4KnYl3LBVw1DPcX0uXyhNLoVE
-	 Gn14ep6aClvnw==
-Date: Thu, 25 Apr 2024 09:58:18 +0900
-From: Mark Brown <broonie@kernel.org>
-To: Tony Luck <tony.luck@intel.com>
-Cc: Borislav Petkov <bp@alien8.de>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Amadeusz =?utf-8?B?U8WCYXdpxYRza2k=?= <amadeuszx.slawinski@linux.intel.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	alsa-devel@alsa-project.org, linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v4 68/71] ASoC: Intel: avs: es8336: Switch to new Intel
- CPU model defines
-Message-ID: <ZimqqtNxeNPAYnJe@finisterre.sirena.org.uk>
-References: <20240424181245.41141-1-tony.luck@intel.com>
- <20240424181550.42466-1-tony.luck@intel.com>
+	s=k20201202; t=1714020501;
+	bh=N0fWpzpqQhKoXcrRNMKIEbA2taNqTuDY6Kw85Strf/8=;
+	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
+	b=ZE7fWK8LiRoxobTQShGT2MHn3A92vGIt7B4BC4Q109IoiK1RWRu1BjpyATQbBHiTi
+	 EnrSZPZQlCc1I4SrouS/ymjYlmcJkErG6vpV2we5DN1RjfU5AJu00jR3w6afj4HJPI
+	 OZnrvxht4DMOwwf7frSkhhwJ6pbXJQVec6m0bNnDgs90DCn+h0PF6StaAf36HpT68L
+	 W/VwIw5MFIaL/Zo1SGwqY1ACUw3CRzGGWBPJveWsfAq5joW7ZETVZdeiGDI1YYJehH
+	 2luc/rOwgxfCa8MnqRK+JPhJj/3UHoqxeuCOoyhv8gNB/xRN8Ng76vyKENNXN78IUq
+	 hMA7R0Q914x6A==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="E32mvQqMNueXGFVT"
-Content-Disposition: inline
-In-Reply-To: <20240424181550.42466-1-tony.luck@intel.com>
-X-Cookie: TANSTAAFL
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 25 Apr 2024 07:48:17 +0300
+Message-Id: <D0SXK2EUPF4G.M74BAD7ZDET9@kernel.org>
+Cc: "Jason Gunthorpe" <jgg@ziepe.ca>, <linux-integrity@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
+Subject: Re: [PATCH v4 01/71] tpm: Switch to new Intel CPU model defines
+From: "Jarkko Sakkinen" <jarkko@kernel.org>
+To: "Tony Luck" <tony.luck@intel.com>, "Borislav Petkov" <bp@alien8.de>,
+ "Peter Huewe" <peterhuewe@gmx.de>
+X-Mailer: aerc 0.17.0
+References: <20240424181245.41141-1-tony.luck@intel.com>
+ <20240424181444.41174-1-tony.luck@intel.com>
+In-Reply-To: <20240424181444.41174-1-tony.luck@intel.com>
 
-
---E32mvQqMNueXGFVT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Wed, Apr 24, 2024 at 11:15:50AM -0700, Tony Luck wrote:
+On Wed Apr 24, 2024 at 9:14 PM EEST, Tony Luck wrote:
 > New CPU #defines encode vendor and family as well as model.
+>
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+> ---
+>  drivers/char/tpm/tpm.h          | 2 +-
+>  drivers/char/tpm/tpm_tis_core.h | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/char/tpm/tpm.h b/drivers/char/tpm/tpm.h
+> index 61445f1dc46d..7b38ce007bdc 100644
+> --- a/drivers/char/tpm/tpm.h
+> +++ b/drivers/char/tpm/tpm.h
+> @@ -28,7 +28,7 @@
+>  #include <linux/tpm_eventlog.h>
+> =20
+>  #ifdef CONFIG_X86
+> -#include <asm/intel-family.h>
+> +#include <asm/cpu_device_id.h>
+>  #endif
+> =20
+>  #define TPM_MINOR		224	/* officially assigned */
+> diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_c=
+ore.h
+> index 13e99cf65efe..c940fd18988e 100644
+> --- a/drivers/char/tpm/tpm_tis_core.h
+> +++ b/drivers/char/tpm/tpm_tis_core.h
+> @@ -210,7 +210,7 @@ static inline int tpm_tis_verify_crc(struct tpm_tis_d=
+ata *data, size_t len,
+>  static inline bool is_bsw(void)
+>  {
+>  #ifdef CONFIG_X86
+> -	return ((boot_cpu_data.x86_model =3D=3D INTEL_FAM6_ATOM_AIRMONT) ? 1 : =
+0);
+> +	return ((boot_cpu_data.x86_vfm =3D=3D INTEL_ATOM_AIRMONT) ? 1 : 0);
+>  #else
+>  	return false;
+>  #endif
 
-Acked-by: Mark Brown <broonie@kernel.org>
++1
 
---E32mvQqMNueXGFVT
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmYpqqoACgkQJNaLcl1U
-h9ACyQf+PzrGpxX4H1xd/ifpOXOFK3ZiBbC9zJKm4uNj/qbml5F6d8h6jRi9JDdt
-YLMES3X8Xb/XwviletXFrjCKPVydEuEovntVr7zrIYHB8pT3pLiUKO8i7+oRWs8M
-6dULTZe1TctUQdGigUzHdnwthwifqJhKztgOF7aRzfoH6XSh4X1ukIVdjQhpYJf1
-/zpsaWmMzZOaAqCAmVVXElrTdm8U46jONmC/i3D5V1S0Qyq2ohNFLNHcK6Hhv6fi
-7aIe8Unn49wJC2bCu7ex6RPe1ucoMdNRISgNWfKgV0XpuduAKwmIDqO1xyvk5Fw/
-+ZGemR5LPlZfdV8ye9x0wHyv8aL2Bg==
-=CCkV
------END PGP SIGNATURE-----
-
---E32mvQqMNueXGFVT--
+BR, Jarkko
