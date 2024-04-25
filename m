@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0BAF131746;
-	Thu, 25 Apr 2024 16:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4AC9131746;
+	Thu, 25 Apr 2024 16:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714064183; cv=none; b=GzO74ixVL0S2W3TV+4jgYePW0tHouhjzkpeCmldzTvpvG3qsuCIIjdoRaC/fOn0e8SXuw9OrX7SMLla154dfL/zHLmf2lopT1EoJekgnV/93PsKYTCA3j5n2HTMUyzRfSkd4uJaTXPqMPUx5DH9PxQ2eZ3cQlBPiyQvdzRLDtHo=
+	t=1714064183; cv=none; b=AmB/XYc7PozHsr1hYNuZRLb7o9GFxVkbs2TLituGmfFhf4Ldlipa6KH11CFGJvTxBolOCD+Hx71cbUapp3a1yis5rarayg3xzmqA+JZPO0+A1vKDtntan6mJFlY1ONEdTobwNRTxoLI/HJAHStiSUUWjjlyoDqqxQ0V3KGaW4uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1714064183; c=relaxed/simple;
-	bh=pqXBKkfg16S/wSwcWzhP5AcwQgNcYGD8sQW2Qy6S2gE=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=nEYsWs3NPgqwgUTXIPIsjDWrcNJCQpIWcADeGb5PI5dHsxAaysX2kBNtEc773y5G/VtPhPhS/fUOV/mrEO1bynu9m7ZT4DNGMJP4Y4izkZPh1owo50YWow4nvBaTv5V8Bvs3+ILVoQnc9vkF5fA3EqEde4HfcnHYRXUXZPZJars=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SL9MpaGf; arc=none smtp.client-ip=10.30.226.201
+	bh=SXGhBnlcLWFdwE2aSUT7wEcsxWYKFItR1ihqD0HbrNk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=E7YwPzxGlgbkWKVs+hArDRjSWb4mjD8C9evVPn6n6Loss7/cV1VbVGTvPQWRw9rc+/Zv4nV9UN1u6GREFeMN2LTN82ZZqaske9uMERbqwZH5sr5B/l6c3GXgvQF8+8RCmbBqJvc0fnBt0cieu7K645Il1/FRZsr14oX+ipit1/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SXedzSuh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SL9MpaGf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B274FC113CC;
-	Thu, 25 Apr 2024 16:56:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SXedzSuh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6F4C2BD10;
+	Thu, 25 Apr 2024 16:56:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714064182;
-	bh=pqXBKkfg16S/wSwcWzhP5AcwQgNcYGD8sQW2Qy6S2gE=;
-	h=From:Subject:Date:To:Cc:From;
-	b=SL9MpaGfbXcWzu9Uv1a79Wr92gN6jiJcV684kZW+4XurbeG/EN2FP72lQUjdCdNRR
-	 sJ80EkmgXtGdWWm6RRusMZ1L3p6ucWGWxUpCIzFDO2/V3AU+DjYVxlrPT0NFlkLe2H
-	 RjdfljbIKaAyAOdawrwGS5i537euKB+WcAZMPwFrdt+Vv+SML2T+YIucXUqohqhnO5
-	 Z91H4akeaY3xAs7cpwOV4/Kdl+GoC0LwfIVN/7dsl6Bm/ZqVdfEPJzNAs0WD0Fe/Ov
-	 cI+PVSp9rm+za59x5V//1nybtJTsNHD7s6+4cy5m1jHJc13gMA6RtdATW/GCV5dj/a
-	 cwgn/EO04N8jg==
+	s=k20201202; t=1714064183;
+	bh=SXGhBnlcLWFdwE2aSUT7wEcsxWYKFItR1ihqD0HbrNk=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=SXedzSuhCjqQhQnjFPccHZuxE/yKDIwxVATHRECZco3Ko4VUsEv60lSE+TOye2eYu
+	 QqwyN4G9LJ3CluI9Vy+tMrTImddixFCOmcu0SlWNM4cjUfbGEzJGh4yPXiR1TPIZnm
+	 S+ncfXh9u2E3hEPp8NZmUxAn3mS7kUOrSHJoAXLlgOklYC0LTCVNDkP353s4hN2y4A
+	 Qb8u+qas5+ppBneMSTMei4tbkhYLG11I6G8gs2yuQqLeqL6X+NtsEsqs62/RAdA6oN
+	 B6f/6ul9VM+H1I98hIF9GM9GuI0UvXqD4GmlE5CE7rn/LEbmv2FxFacIsa8+NfxL2X
+	 tB7LMbWiOSH5Q==
 From: Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 0/2] clk: bcm: Move a couple of __counted_by
- initializations
-Date: Thu, 25 Apr 2024 09:55:50 -0700
-Message-Id: <20240425-cbl-bcm-assign-counted-by-val-before-access-v1-0-e2db3b82d5ef@kernel.org>
+Date: Thu, 25 Apr 2024 09:55:51 -0700
+Subject: [PATCH 1/2] clk: bcm: dvp: Assign ->num before accessing ->hws
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,9 +37,9 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIABaLKmYC/x2NQQqDMBAAvyJ77kKMoWC/UnpINhtdaJOSraKIf
- zf0OAzMHKBchRUe3QGVV1EpuUF/64BmnydGiY3BGuuMsw4pvDHQB72qTBmpLPnHEcOOq2+GU6m
- MnohVkVI/xvtgkg0OWvFbOcn2vz1f53kBHlj2WH0AAAA=
+Message-Id: <20240425-cbl-bcm-assign-counted-by-val-before-access-v1-1-e2db3b82d5ef@kernel.org>
+References: <20240425-cbl-bcm-assign-counted-by-val-before-access-v1-0-e2db3b82d5ef@kernel.org>
+In-Reply-To: <20240425-cbl-bcm-assign-counted-by-val-before-access-v1-0-e2db3b82d5ef@kernel.org>
 To: Michael Turquette <mturquette@baylibre.com>, 
  Stephen Boyd <sboyd@kernel.org>, 
  Florian Fainelli <florian.fainelli@broadcom.com>
@@ -52,43 +51,61 @@ Cc: Kees Cook <keescook@chromium.org>,
  llvm@lists.linux.dev, stable@vger.kernel.org, 
  Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1140; i=nathan@kernel.org;
- h=from:subject:message-id; bh=pqXBKkfg16S/wSwcWzhP5AcwQgNcYGD8sQW2Qy6S2gE=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGla3abLrAoyVDOP535XeDTxamfGtwvcnaemf4tpfvwwY
- ELsZ46nHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAinzIZ/udP3uh/yvPh92e8
- c/zCBb6f0b7G9iD6ouLqSyWvNj85d1Wa4a9ccah26p59wQyHkv667c78Hdv+8do+3Uemtcu/HbX
- YbcAHAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1901; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=SXGhBnlcLWFdwE2aSUT7wEcsxWYKFItR1ihqD0HbrNk=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGla3aYz4qUdrfPXzgicc4iB6eMTl9Seha2nKj8tnvs76
+ c/5sxzmHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAi/jcYGZZutL6S0KV8ZM8O
+ Ebvl7kstffrsutoP+bAfn86/L7G5m5vhv/uLuwc3ZTDy7elOXtTQ3P7Wi22vYYusWfX2Yq8Tj9c
+ 0sgMA
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hi all,
+Commit f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with
+__counted_by") annotated the hws member of 'struct clk_hw_onecell_data'
+with __counted_by, which informs the bounds sanitizer about the number
+of elements in hws, so that it can warn when hws is accessed out of
+bounds. As noted in that change, the __counted_by member must be
+initialized with the number of elements before the first array access
+happens, otherwise there will be a warning from each access prior to the
+initialization because the number of elements is zero. This occurs in
+clk_dvp_probe() due to ->num being assigned after ->hws has been
+accessed:
 
-This series addresses two UBSAN warnings I see on my Raspberry Pi 4 with
-recent releases of clang that support __counted_by by moving the
-initializations of the element count member before any accesses of the
-flexible array member.
+  UBSAN: array-index-out-of-bounds in drivers/clk/bcm/clk-bcm2711-dvp.c:59:2
+  index 0 is out of range for type 'struct clk_hw *[] __counted_by(num)' (aka 'struct clk_hw *[]')
 
-I marked these for stable because more distributions are enabling the
-bounds sanitizer [1][2], so the warnings will show up when the kernel is
-built with a compiler that supports __counted_by, so it seems worth
-fixing this for future users.
+Move the ->num initialization to before the first access of ->hws, which
+clears up the warning.
 
-[1]: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1914685
-[2]: https://src.fedoraproject.org/rpms/kernel/c/79a2207963b8fea452acfc5dea13ed54bd36c7e1
-
+Cc: stable@vger.kernel.org
+Fixes: f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with __counted_by")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
-Nathan Chancellor (2):
-      clk: bcm: dvp: Assign ->num before accessing ->hws
-      clk: bcm: rpi: Assign ->num before accessing ->hws
-
  drivers/clk/bcm/clk-bcm2711-dvp.c | 3 ++-
- drivers/clk/bcm/clk-raspberrypi.c | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
----
-base-commit: ed30a4a51bb196781c8058073ea720133a65596f
-change-id: 20240424-cbl-bcm-assign-counted-by-val-before-access-cf19d630f2b4
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Best regards,
+diff --git a/drivers/clk/bcm/clk-bcm2711-dvp.c b/drivers/clk/bcm/clk-bcm2711-dvp.c
+index e4fbbf3c40fe..3cb235df9d37 100644
+--- a/drivers/clk/bcm/clk-bcm2711-dvp.c
++++ b/drivers/clk/bcm/clk-bcm2711-dvp.c
+@@ -56,6 +56,8 @@ static int clk_dvp_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
++	data->num = NR_CLOCKS;
++
+ 	data->hws[0] = clk_hw_register_gate_parent_data(&pdev->dev,
+ 							"hdmi0-108MHz",
+ 							&clk_dvp_parent, 0,
+@@ -76,7 +78,6 @@ static int clk_dvp_probe(struct platform_device *pdev)
+ 		goto unregister_clk0;
+ 	}
+ 
+-	data->num = NR_CLOCKS;
+ 	ret = of_clk_add_hw_provider(pdev->dev.of_node, of_clk_hw_onecell_get,
+ 				     data);
+ 	if (ret)
+
 -- 
-Nathan Chancellor <nathan@kernel.org>
+2.44.0
 
