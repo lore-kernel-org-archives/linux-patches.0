@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B82E1CF8A
-	for <patches@lists.linux.dev>; Thu, 25 Apr 2024 15:49:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D6514B08F
+	for <patches@lists.linux.dev>; Thu, 25 Apr 2024 15:58:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714060192; cv=none; b=NXIIsS8GkUZrEZTOvRsHFZ/YlTvHuO/f7aa74ji2k9+rK37kUBvq+XWPv1jjOKQimqczXL+oefvEDeK0Y2b7LDK/+jydSKNhq2jT/HZzItTDVMSrhJThMXN8SGDfb4PhODdywYoYm4HL9ZjEi/T1Br5kM5VC9InhOCD1MnjmGT8=
+	t=1714060726; cv=none; b=b3ZvqES9BWdyVMX23JCY7MaydnDxRCMx5p3OdC5E3ri8U95/7mA2sZJdsb/QC92rdzE0XgJhYXCoB6xZjJ4Neh7c3jZmJm1Sl+TIc1q2FBNca0kNzdHpnLv2AcbC0zINxdCeo3ISgMLaSXWgkFPzX6C00KSYcMwCTwpUstRP8u8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714060192; c=relaxed/simple;
-	bh=6DBK8R4wCwdCifMOJxQXAGlpH4AfEbH+Huzamecuaac=;
+	s=arc-20240116; t=1714060726; c=relaxed/simple;
+	bh=7DIHRS9/+j8YljOfBYLa5xBIkAhd8xyDYQAK6sxFY8s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ce3WV6jqU2JuL0Jua+bKJyAvoD96upxoxttAsqGcU2IT/7sbni2CoUbq/O65Q+ATUJ/NyadyBMUGBFauTDXCKQ0KwpAqVK0qokwqNVTR6G6wY16zHsNPg+OHJ1SqFEHfyKIoRqrJkLUXiu++bDVNHh3hXIdYBXSL7+iC8x0Aag0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AxVW07pd; arc=none smtp.client-ip=198.175.65.13
+	 In-Reply-To:Content-Type; b=BApB9aQ1FX363ZWkj0MHt6z21SCcpUJG5e1Xx24pZOsD0Zyc5FveRVN/ESxjaIzux4jHC+0sGHznHGJyrJDx2EKH8Z1kLgAD5LP7FdHziJKnc+Tbyox2k13waCjgxcahPfNNIA6YGAey17pQ+UwKZ5d7pz3gjkrlVak+Q88e59c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZoiIb6Ed; arc=none smtp.client-ip=192.198.163.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AxVW07pd"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZoiIb6Ed"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1714060191; x=1745596191;
+  t=1714060725; x=1745596725;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=6DBK8R4wCwdCifMOJxQXAGlpH4AfEbH+Huzamecuaac=;
-  b=AxVW07pdp16G+AZ54PvyVshaUzR6pPjz/zEy9hHyWDHGHH84ARniJ20X
-   ywfGJa4rtIqQ+P2AULu/GYZopU5s9EUif6QGun94+Alz6lnei9RCli0RS
-   rjOqqUlnoq/NJpE7VC9TNreK389JOFFvqM+TBOxZTu2zNIvfeKyygZuSF
-   rcCN8fFmCk2+xSJln+HMj1Kun4tCIOsUyDN9zOmF+ucgqkqSbGQ49/qUU
-   Wr53ictpKJgkNVSR006v7qxilL2pjZziFIPfjXAVuVAuVLMZuL5eHtlTu
-   TA+j/SBlgMWyxU4nhGeMqYvppOcsMkeWraXSvxlOXSVLn4zmP9doQA3OU
+  bh=7DIHRS9/+j8YljOfBYLa5xBIkAhd8xyDYQAK6sxFY8s=;
+  b=ZoiIb6Edxmg8Zk9pHIqdLhXWTEcUbeZ7EbPij8+wslF92lFl4MyTOwrB
+   LQ7iKmQ6vNA93n1mYBSnw7P62hmEqI6NOa6RU5cDYTprwUetoTueRK9PO
+   z5y9/X9BYVlNUXkJOfQBVuEFRf70q25W+y6Q7nsdCTs3MY4/2kIW3lsxJ
+   w0rE47c0wHHFG/RbR1EaH7GD6TY9Mx4ET3cOXlMARQyOqsHAX6m36LoU2
+   /QwKAdhq/jT4vq0v+8SeBNeB9lI0IROPVk1m//VB+DHpRuncv98ghtMsG
+   iK+oVt5IFUxLN9Pwe3NxaOYd9NgDKd9SGp3cfcMz/zW7xs+aD9f0yRIme
    w==;
-X-CSE-ConnectionGUID: i1ZdRMx4SySzBW8QPCTHNg==
-X-CSE-MsgGUID: DU4h4yJjQ7G5aoxirJbCoA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11055"; a="20911142"
+X-CSE-ConnectionGUID: NYxhKPzfRmuSXPEGLSFvRQ==
+X-CSE-MsgGUID: gABEyJIlQJGCEnzw7rh6XQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11055"; a="9606332"
 X-IronPort-AV: E=Sophos;i="6.07,229,1708416000"; 
-   d="scan'208";a="20911142"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2024 08:49:50 -0700
-X-CSE-ConnectionGUID: RHNdTWRARWSqA0DqftWG0A==
-X-CSE-MsgGUID: nFEMauJCRHS4HhqezoOysg==
+   d="scan'208";a="9606332"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2024 08:58:44 -0700
+X-CSE-ConnectionGUID: tlc3JDqvR9KvqXD9VoLr6Q==
+X-CSE-MsgGUID: gxjtV0M8Qcy0FU4AszxLQg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.07,229,1708416000"; 
-   d="scan'208";a="25208352"
+   d="scan'208";a="25112711"
 Received: from pdkerr-mobl2.amr.corp.intel.com (HELO [10.255.228.33]) ([10.255.228.33])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2024 08:49:49 -0700
-Message-ID: <3f70c656-f583-4360-b321-31a0e92fc844@intel.com>
-Date: Thu, 25 Apr 2024 08:49:48 -0700
+  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2024 08:58:43 -0700
+Message-ID: <62b58fca-26ff-4c86-96a5-a1ec2b541437@intel.com>
+Date: Thu, 25 Apr 2024 08:58:41 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,7 +52,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 24/71] perf/x86/msr: Switch to new Intel CPU model
+Subject: Re: [PATCH v4 20/71] perf/x86/intel/pt: Switch to new Intel CPU model
  defines
 To: Tony Luck <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>,
  Thomas Gleixner <tglx@linutronix.de>,
@@ -66,7 +66,7 @@ Cc: Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
  linux-perf-users@vger.kernel.org, linux-kernel@vger.kernel.org,
  patches@lists.linux.dev
 References: <20240424181245.41141-1-tony.luck@intel.com>
- <20240424181503.41614-1-tony.luck@intel.com>
+ <20240424181500.41538-1-tony.luck@intel.com>
 Content-Language: en-US
 From: Dave Hansen <dave.hansen@intel.com>
 Autocrypt: addr=dave.hansen@intel.com; keydata=
@@ -112,15 +112,25 @@ Autocrypt: addr=dave.hansen@intel.com; keydata=
  MTsCeQDdjpgHsj+P2ZDeEKCbma4m6Ez/YWs4+zDm1X8uZDkZcfQlD9NldbKDJEXLIjYWo1PH
  hYepSffIWPyvBMBTW2W5FRjJ4vLRrJSUoEfJuPQ3vW9Y73foyo/qFoURHO48AinGPZ7PC7TF
  vUaNOTjKedrqHkaOcqB185ahG2had0xnFsDPlx5y
-In-Reply-To: <20240424181503.41614-1-tony.luck@intel.com>
+In-Reply-To: <20240424181500.41538-1-tony.luck@intel.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 4/24/24 11:15, Tony Luck wrote:
-> @@ -43,75 +43,75 @@ static bool test_intel(int idx, void *data)
->  	    boot_cpu_data.x86 != 6)
->  		return false;
+>  	/* model-specific quirks */
+> -	switch (boot_cpu_data.x86_model) {
+> -	case INTEL_FAM6_BROADWELL:
+> -	case INTEL_FAM6_BROADWELL_D:
+> -	case INTEL_FAM6_BROADWELL_G:
+> -	case INTEL_FAM6_BROADWELL_X:
+> +	switch (boot_cpu_data.x86_vfm) {
+> +	case INTEL_BROADWELL:
+> +	case INTEL_BROADWELL_D:
+> +	case INTEL_BROADWELL_G:
+> +	case INTEL_BROADWELL_X:
+>  		/* not setting BRANCH_EN will #GP, erratum BDM106 */
+>  		pt_pmu.branch_en_always_on = true;
+>  		break;
 
-It arguably makes these easier to review when you _aren't_ removing the
-explicit family 6 checks, but what's the plan for these?  They can go
-away now, right?
+Hah, and this actually fixes a theoretical bug because there's no check
+for family 6 in this code.
