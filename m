@@ -1,28 +1,50 @@
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112CD3BBE6
-	for <patches@lists.linux.dev>; Thu, 25 Apr 2024 15:01:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.14.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B82E1CF8A
+	for <patches@lists.linux.dev>; Thu, 25 Apr 2024 15:49:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714057271; cv=none; b=btqqRDvsW0hpOtOfQPWu0TwhOs77eLzoK8NmhL+S2R8RSm+PU7tNKEat0OLYSL5L4GrmOgqdd4czVYxyI7Ve5XY6uZk37Fn9orvSKYZGp/fHTZ4JrfJnZlETrUz2p9XX41JNsE3eQf6b5435k2g1psSoFTXzIpEOWXJ7KcEMyiY=
+	t=1714060192; cv=none; b=NXIIsS8GkUZrEZTOvRsHFZ/YlTvHuO/f7aa74ji2k9+rK37kUBvq+XWPv1jjOKQimqczXL+oefvEDeK0Y2b7LDK/+jydSKNhq2jT/HZzItTDVMSrhJThMXN8SGDfb4PhODdywYoYm4HL9ZjEi/T1Br5kM5VC9InhOCD1MnjmGT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714057271; c=relaxed/simple;
-	bh=NVwRECnrVwS6dImQ6/t48TBCeF5r7XV0lPZl8u1LZhw=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=D/HQpPZuDAu/MFX9AWgpPeDUijgIHqPRklucuHVxdPH/Ez0t7jedDSvupNRNwly4Y1Q2LNnULygObW64gfwukEoelcSEigXL+gKTp7ZnWJYsoRVagW/nwvZqHwnAl3amjyrae3Qet+qelj81gB8vP9JxK5QkUllmpw9h0yl2CY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass smtp.mailfrom=molgen.mpg.de; arc=none smtp.client-ip=141.14.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molgen.mpg.de
-Received: from [141.14.31.7] (theinternet.molgen.mpg.de [141.14.31.7])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: buczek)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id B26FA61E5FE06;
-	Thu, 25 Apr 2024 17:00:36 +0200 (CEST)
-Message-ID: <75d0a0ca-3780-4840-ad45-61a02419605e@molgen.mpg.de>
-Date: Thu, 25 Apr 2024 17:00:36 +0200
+	s=arc-20240116; t=1714060192; c=relaxed/simple;
+	bh=6DBK8R4wCwdCifMOJxQXAGlpH4AfEbH+Huzamecuaac=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ce3WV6jqU2JuL0Jua+bKJyAvoD96upxoxttAsqGcU2IT/7sbni2CoUbq/O65Q+ATUJ/NyadyBMUGBFauTDXCKQ0KwpAqVK0qokwqNVTR6G6wY16zHsNPg+OHJ1SqFEHfyKIoRqrJkLUXiu++bDVNHh3hXIdYBXSL7+iC8x0Aag0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AxVW07pd; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AxVW07pd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1714060191; x=1745596191;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=6DBK8R4wCwdCifMOJxQXAGlpH4AfEbH+Huzamecuaac=;
+  b=AxVW07pdp16G+AZ54PvyVshaUzR6pPjz/zEy9hHyWDHGHH84ARniJ20X
+   ywfGJa4rtIqQ+P2AULu/GYZopU5s9EUif6QGun94+Alz6lnei9RCli0RS
+   rjOqqUlnoq/NJpE7VC9TNreK389JOFFvqM+TBOxZTu2zNIvfeKyygZuSF
+   rcCN8fFmCk2+xSJln+HMj1Kun4tCIOsUyDN9zOmF+ucgqkqSbGQ49/qUU
+   Wr53ictpKJgkNVSR006v7qxilL2pjZziFIPfjXAVuVAuVLMZuL5eHtlTu
+   TA+j/SBlgMWyxU4nhGeMqYvppOcsMkeWraXSvxlOXSVLn4zmP9doQA3OU
+   w==;
+X-CSE-ConnectionGUID: i1ZdRMx4SySzBW8QPCTHNg==
+X-CSE-MsgGUID: DU4h4yJjQ7G5aoxirJbCoA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11055"; a="20911142"
+X-IronPort-AV: E=Sophos;i="6.07,229,1708416000"; 
+   d="scan'208";a="20911142"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2024 08:49:50 -0700
+X-CSE-ConnectionGUID: RHNdTWRARWSqA0DqftWG0A==
+X-CSE-MsgGUID: nFEMauJCRHS4HhqezoOysg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,229,1708416000"; 
+   d="scan'208";a="25208352"
+Received: from pdkerr-mobl2.amr.corp.intel.com (HELO [10.255.228.33]) ([10.255.228.33])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2024 08:49:49 -0700
+Message-ID: <3f70c656-f583-4360-b321-31a0e92fc844@intel.com>
+Date: Thu, 25 Apr 2024 08:49:48 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -30,268 +52,75 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 108/476] mm/sparsemem: fix race in accessing
- memory_section->usage
-From: Donald Buczek <buczek@molgen.mpg.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Charan Teja Kalla <quic_charante@quicinc.com>,
- "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
- Dan Williams <dan.j.williams@intel.com>, David Hildenbrand
- <david@redhat.com>, Mel Gorman <mgorman@techsingularity.net>,
- Oscar Salvador <osalvador@suse.de>, Vlastimil Babka <vbabka@suse.cz>,
- Andrew Morton <akpm@linux-foundation.org>, Sasha Levin <sashal@kernel.org>,
- it+linux@molgen.mpg.de
-References: <20240221130007.738356493@linuxfoundation.org>
- <20240221130011.965182720@linuxfoundation.org>
- <d3adab65-b962-4530-886a-631f0faf1107@molgen.mpg.de>
+Subject: Re: [PATCH v4 24/71] perf/x86/msr: Switch to new Intel CPU model
+ defines
+To: Tony Luck <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>,
+ Thomas Gleixner <tglx@linutronix.de>,
+ Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org
+Cc: Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
+ Arnaldo Carvalho de Melo <acme@kernel.org>,
+ Namhyung Kim <namhyung@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>,
+ Adrian Hunter <adrian.hunter@intel.com>, "H. Peter Anvin" <hpa@zytor.com>,
+ linux-perf-users@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+References: <20240424181245.41141-1-tony.luck@intel.com>
+ <20240424181503.41614-1-tony.luck@intel.com>
 Content-Language: en-US
-In-Reply-To: <d3adab65-b962-4530-886a-631f0faf1107@molgen.mpg.de>
+From: Dave Hansen <dave.hansen@intel.com>
+Autocrypt: addr=dave.hansen@intel.com; keydata=
+ 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
+In-Reply-To: <20240424181503.41614-1-tony.luck@intel.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 4/25/24 16:55, Donald Buczek wrote:
-> On 2/21/24 14:02, Greg Kroah-Hartman wrote:
->> 5.15-stable review patch.  If anyone has any objections, please let me know.
->>
->> ------------------
->>
->> From: Charan Teja Kalla <quic_charante@quicinc.com>
->>
->> [ Upstream commit 5ec8e8ea8b7783fab150cf86404fc38cb4db8800 ]
->>
->> The below race is observed on a PFN which falls into the device memory
->> region with the system memory configuration where PFN's are such that
->> [ZONE_NORMAL ZONE_DEVICE ZONE_NORMAL].  Since normal zone start and end
->> pfn contains the device memory PFN's as well, the compaction triggered
->> will try on the device memory PFN's too though they end up in NOP(because
->> pfn_to_online_page() returns NULL for ZONE_DEVICE memory sections).  When
->> from other core, the section mappings are being removed for the
->> ZONE_DEVICE region, that the PFN in question belongs to, on which
->> compaction is currently being operated is resulting into the kernel crash
->> with CONFIG_SPASEMEM_VMEMAP enabled.  The crash logs can be seen at [1].
->>
->> compact_zone()			memunmap_pages
->> -------------			---------------
->> __pageblock_pfn_to_page
->>    ......
->>  (a)pfn_valid():
->>      valid_section()//return true
->> 			      (b)__remove_pages()->
->> 				  sparse_remove_section()->
->> 				    section_deactivate():
->> 				    [Free the array ms->usage and set
->> 				     ms->usage = NULL]
->>      pfn_section_valid()
->>      [Access ms->usage which
->>      is NULL]
->>
->> NOTE: From the above it can be said that the race is reduced to between
->> the pfn_valid()/pfn_section_valid() and the section deactivate with
->> SPASEMEM_VMEMAP enabled.
->>
->> The commit b943f045a9af("mm/sparse: fix kernel crash with
->> pfn_section_valid check") tried to address the same problem by clearing
->> the SECTION_HAS_MEM_MAP with the expectation of valid_section() returns
->> false thus ms->usage is not accessed.
->>
->> Fix this issue by the below steps:
->>
->> a) Clear SECTION_HAS_MEM_MAP before freeing the ->usage.
->>
->> b) RCU protected read side critical section will either return NULL
->>    when SECTION_HAS_MEM_MAP is cleared or can successfully access ->usage.
->>
->> c) Free the ->usage with kfree_rcu() and set ms->usage = NULL.  No
->>    attempt will be made to access ->usage after this as the
->>    SECTION_HAS_MEM_MAP is cleared thus valid_section() return false.
->>
->> Thanks to David/Pavan for their inputs on this patch.
->>
->> [1] https://lore.kernel.org/linux-mm/994410bb-89aa-d987-1f50-f514903c55aa@quicinc.com/
->>
->> On Snapdragon SoC, with the mentioned memory configuration of PFN's as
->> [ZONE_NORMAL ZONE_DEVICE ZONE_NORMAL], we are able to see bunch of
->> issues daily while testing on a device farm.
->>
->> For this particular issue below is the log.  Though the below log is
->> not directly pointing to the pfn_section_valid(){ ms->usage;}, when we
->> loaded this dump on T32 lauterbach tool, it is pointing.
->>
->> [  540.578056] Unable to handle kernel NULL pointer dereference at
->> virtual address 0000000000000000
->> [  540.578068] Mem abort info:
->> [  540.578070]   ESR = 0x0000000096000005
->> [  540.578073]   EC = 0x25: DABT (current EL), IL = 32 bits
->> [  540.578077]   SET = 0, FnV = 0
->> [  540.578080]   EA = 0, S1PTW = 0
->> [  540.578082]   FSC = 0x05: level 1 translation fault
->> [  540.578085] Data abort info:
->> [  540.578086]   ISV = 0, ISS = 0x00000005
->> [  540.578088]   CM = 0, WnR = 0
->> [  540.579431] pstate: 82400005 (Nzcv daif +PAN -UAO +TCO -DIT -SSBSBTYPE=--)
->> [  540.579436] pc : __pageblock_pfn_to_page+0x6c/0x14c
->> [  540.579454] lr : compact_zone+0x994/0x1058
->> [  540.579460] sp : ffffffc03579b510
->> [  540.579463] x29: ffffffc03579b510 x28: 0000000000235800 x27:000000000000000c
->> [  540.579470] x26: 0000000000235c00 x25: 0000000000000068 x24:ffffffc03579b640
->> [  540.579477] x23: 0000000000000001 x22: ffffffc03579b660 x21:0000000000000000
->> [  540.579483] x20: 0000000000235bff x19: ffffffdebf7e3940 x18:ffffffdebf66d140
->> [  540.579489] x17: 00000000739ba063 x16: 00000000739ba063 x15:00000000009f4bff
->> [  540.579495] x14: 0000008000000000 x13: 0000000000000000 x12:0000000000000001
->> [  540.579501] x11: 0000000000000000 x10: 0000000000000000 x9 :ffffff897d2cd440
->> [  540.579507] x8 : 0000000000000000 x7 : 0000000000000000 x6 :ffffffc03579b5b4
->> [  540.579512] x5 : 0000000000027f25 x4 : ffffffc03579b5b8 x3 :0000000000000001
->> [  540.579518] x2 : ffffffdebf7e3940 x1 : 0000000000235c00 x0 :0000000000235800
->> [  540.579524] Call trace:
->> [  540.579527]  __pageblock_pfn_to_page+0x6c/0x14c
->> [  540.579533]  compact_zone+0x994/0x1058
->> [  540.579536]  try_to_compact_pages+0x128/0x378
->> [  540.579540]  __alloc_pages_direct_compact+0x80/0x2b0
->> [  540.579544]  __alloc_pages_slowpath+0x5c0/0xe10
->> [  540.579547]  __alloc_pages+0x250/0x2d0
->> [  540.579550]  __iommu_dma_alloc_noncontiguous+0x13c/0x3fc
->> [  540.579561]  iommu_dma_alloc+0xa0/0x320
->> [  540.579565]  dma_alloc_attrs+0xd4/0x108
->>
->> [quic_charante@quicinc.com: use kfree_rcu() in place of synchronize_rcu(), per David]
->>   Link: https://lkml.kernel.org/r/1698403778-20938-1-git-send-email-quic_charante@quicinc.com
->> Link: https://lkml.kernel.org/r/1697202267-23600-1-git-send-email-quic_charante@quicinc.com
->> Fixes: f46edbd1b151 ("mm/sparsemem: add helpers track active portions of a section at boot")
->> Signed-off-by: Charan Teja Kalla <quic_charante@quicinc.com>
->> Cc: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
->> Cc: Dan Williams <dan.j.williams@intel.com>
->> Cc: David Hildenbrand <david@redhat.com>
->> Cc: Mel Gorman <mgorman@techsingularity.net>
->> Cc: Oscar Salvador <osalvador@suse.de>
->> Cc: Vlastimil Babka <vbabka@suse.cz>
->> Cc: <stable@vger.kernel.org>
->> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
->> Signed-off-by: Sasha Levin <sashal@kernel.org>
->> ---
->>  include/linux/mmzone.h | 14 +++++++++++---
->>  mm/sparse.c            | 17 +++++++++--------
->>  2 files changed, 20 insertions(+), 11 deletions(-)
->>
->> diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
->> index 9e1485083398..8b8349ffa1cd 100644
->> --- a/include/linux/mmzone.h
->> +++ b/include/linux/mmzone.h
->> @@ -1287,6 +1287,7 @@ static inline unsigned long section_nr_to_pfn(unsigned long sec)
->>  #define SUBSECTION_ALIGN_DOWN(pfn) ((pfn) & PAGE_SUBSECTION_MASK)
->>  
->>  struct mem_section_usage {
->> +	struct rcu_head rcu;
->>  #ifdef CONFIG_SPARSEMEM_VMEMMAP
->>  	DECLARE_BITMAP(subsection_map, SUBSECTIONS_PER_SECTION);
->>  #endif
->> @@ -1457,7 +1458,7 @@ static inline int pfn_section_valid(struct mem_section *ms, unsigned long pfn)
->>  {
->>  	int idx = subsection_map_index(pfn);
->>  
->> -	return test_bit(idx, ms->usage->subsection_map);
->> +	return test_bit(idx, READ_ONCE(ms->usage)->subsection_map);
->>  }
->>  #else
->>  static inline int pfn_section_valid(struct mem_section *ms, unsigned long pfn)
->> @@ -1481,6 +1482,7 @@ static inline int pfn_section_valid(struct mem_section *ms, unsigned long pfn)
->>  static inline int pfn_valid(unsigned long pfn)
->>  {
->>  	struct mem_section *ms;
->> +	int ret;
->>  
->>  	/*
->>  	 * Ensure the upper PAGE_SHIFT bits are clear in the
->> @@ -1494,13 +1496,19 @@ static inline int pfn_valid(unsigned long pfn)
->>  	if (pfn_to_section_nr(pfn) >= NR_MEM_SECTIONS)
->>  		return 0;
->>  	ms = __pfn_to_section(pfn);
->> -	if (!valid_section(ms))
->> +	rcu_read_lock();
->> +	if (!valid_section(ms)) {
->> +		rcu_read_unlock();
->>  		return 0;
->> +	}
->>  	/*
->>  	 * Traditionally early sections always returned pfn_valid() for
->>  	 * the entire section-sized span.
->>  	 */
->> -	return early_section(ms) || pfn_section_valid(ms, pfn);
->> +	ret = early_section(ms) || pfn_section_valid(ms, pfn);
->> +	rcu_read_unlock();
->> +
->> +	return ret;
->>  }
->>  #endif
->>  
->> diff --git a/mm/sparse.c b/mm/sparse.c
->> index 120bc8ea5293..27092badd15b 100644
->> --- a/mm/sparse.c
->> +++ b/mm/sparse.c
->> @@ -789,6 +789,13 @@ static void section_deactivate(unsigned long pfn, unsigned long nr_pages,
->>  	if (empty) {
->>  		unsigned long section_nr = pfn_to_section_nr(pfn);
->>  
->> +		/*
->> +		 * Mark the section invalid so that valid_section()
->> +		 * return false. This prevents code from dereferencing
->> +		 * ms->usage array.
->> +		 */
->> +		ms->section_mem_map &= ~SECTION_HAS_MEM_MAP;
->> +
->>  		/*
->>  		 * When removing an early section, the usage map is kept (as the
->>  		 * usage maps of other sections fall into the same page). It
->> @@ -797,16 +804,10 @@ static void section_deactivate(unsigned long pfn, unsigned long nr_pages,
->>  		 * was allocated during boot.
->>  		 */
->>  		if (!PageReserved(virt_to_page(ms->usage))) {
->> -			kfree(ms->usage);
->> -			ms->usage = NULL;
->> +			kfree_rcu(ms->usage, rcu);
->> +			WRITE_ONCE(ms->usage, NULL);
->>  		}
->>  		memmap = sparse_decode_mem_map(ms->section_mem_map, section_nr);
->> -		/*
->> -		 * Mark the section invalid so that valid_section()
->> -		 * return false. This prevents code from dereferencing
->> -		 * ms->usage array.
->> -		 */
->> -		ms->section_mem_map &= ~SECTION_HAS_MEM_MAP;
->>  	}
->>  
->>  	/*
-> 
-> Maybe this is already known, but just FYI I wanted to drop the note that for some
-> reasons I don't understand, this patch prevents me from compiling the proprietary
-> Nvidia Unix driver with versions 510.108.03 and 535.104.05 in the 5.15 series.
-> No problems with the 6.5 series, although the patch is included there as well.
-> 
-> linux-5.15.155 , nvidia 535.104.05 :
-> 
->     make -j $(nproc) CC=gcc SYSSRC=/scratch/local/linux clean && make -j $(nproc) CC=gcc SYSSRC=/scratch/local/linux V=2 modules
->     [...]
->     MODPOST /scratch/local/bee-buczek/nvidia/test_535-104-05/kernel/Module.symvers - due to target missing
->     ERROR: modpost: GPL-incompatible module nvidia.ko uses GPL-only symbol 'rcu_read_unlock_strict'
->     make[2]: *** [scripts/Makefile.modpost:133: /scratch/local/bee-buczek/nvidia/test_535-104-05/kernel/Module.symvers] Error 1
->     make[2]: *** Deleting file '/scratch/local/bee-buczek/nvidia/test_535-104-05/kernel/Module.symvers'
->     make[1]: *** [Makefile:1826: modules] Error 2
->     make[1]: Leaving directory '/scratch/local/linux'
->     make: *** [Makefile:82: modules] Error 2
-> 
-> 
-> With fd117d03cefd15 ("mm/sparsemem: fix race in accessing memory_section->usage") reverted,
-> the build completes.
+On 4/24/24 11:15, Tony Luck wrote:
+> @@ -43,75 +43,75 @@ static bool test_intel(int idx, void *data)
+>  	    boot_cpu_data.x86 != 6)
+>  		return false;
 
-Sorry, that was my revert patch. Its b448de2459b6d6 ("mm/sparsemem: fix race in accessing memory_section->usage").
-
-D.
-
-> 
-> Best
->   Donald
-
--- 
-Donald Buczek
-buczek@molgen.mpg.de
-Tel: +49 30 8413 1433
-
+It arguably makes these easier to review when you _aren't_ removing the
+explicit family 6 checks, but what's the plan for these?  They can go
+away now, right?
