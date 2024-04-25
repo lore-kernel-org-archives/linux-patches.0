@@ -1,166 +1,277 @@
-Received: from mx-out.tlen.pl (mx-out.tlen.pl [193.222.135.142])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE3515218A
-	for <patches@lists.linux.dev>; Thu, 25 Apr 2024 19:34:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.222.135.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F136152531
+	for <patches@lists.linux.dev>; Thu, 25 Apr 2024 19:58:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714073672; cv=none; b=LS/IEQaEjeaL5PxCTLmJmGJxTlJrSfD02eUd1FyF7HLMxaRGbccrnJuveI2LuSO+wCN40zpedlPodakLq7K+rODlBTMZjhNJtB5enXukLzK8jaXyLO1Z144N6Um90t8aaWl4Pf7mugHdqa7LJ77M3wyTbc1/bxJw5ST9Gu/0pPY=
+	t=1714075140; cv=none; b=XL483hmwo2ewsO6732aasheWCLs/VL5dGIT/qHVIW7+jP7U4kj+TnYS3BkMrYNfDwDZPNxx58L3X8WUiede3HBXsNANputV0KGXuTFP/0rGS/CFGTNhRV2N2Z51xKEAQv6YBdD7fU6PYlZGoiZbZZ+PyjPGcQW8onVNhFu7lss0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714073672; c=relaxed/simple;
-	bh=eP1LntgbjhoIRPSkkjsl22K+d50sv2WZ/qu2bUdGDhk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UilqH5nJkcozlP5XfkDIWqAIC52jVMAcHxMXJwxyHfSWdHALdUn8gclZlHR7Lh6xs3xdXH92QEWN1SfF3VhzZdZUan0L6tTTG4u3OPgcO9OtzUZq7Z2rwg7WbIwF48nI4lQzTHb1xzFuzzmsWBb8YJ/ftpICnk0o722JmwBrvnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=o2.pl; spf=pass smtp.mailfrom=o2.pl; dkim=pass (1024-bit key) header.d=o2.pl header.i=@o2.pl header.b=mKQ9hcWn; arc=none smtp.client-ip=193.222.135.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=o2.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=o2.pl
+	s=arc-20240116; t=1714075140; c=relaxed/simple;
+	bh=K+LnRA9rA0OZfzN254cwx2NMgEMzqaxNC8jXXCB/Mjo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XUKGJe/ocJJXfeTavz4dbwzno98tGhrw0W+XvYAJ6VLI984l/UpshcrA3Z80Nx2cyqwjLSJH6jMIQ51Okh5Xjo4A+WWmEZCJZZ6N6ECMHvEbF567lT5B0PbNiISth1lTTFDkfa+9ACIMaaLjrKE8bUzsYFetcNUYMET81Sx6Rbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Q4dmDCFw; arc=none smtp.client-ip=192.198.163.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=o2.pl header.i=@o2.pl header.b="mKQ9hcWn"
-Received: (wp-smtpd smtp.tlen.pl 2521 invoked from network); 25 Apr 2024 21:27:46 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=o2.pl; s=1024a;
-          t=1714073266; bh=KN8tQaCbnTIod3SjtdQclzz+4/BGVVTDDbR44Xz0bxQ=;
-          h=Subject:To:Cc:From;
-          b=mKQ9hcWno+1fwmGy0Y6OGg4HNBMpgZKYkQNGuvXqq/u8oUGsgrFHycRFKETlzJCGb
-           kDHmDLji6wKbY+3W/8wZHqUYKELogY+mg3QbbKyUKMGKZKaIK4KTIZn+zHoPT+rYuF
-           TFEaOJjyQMm44P3AvIjd2Mc1djtjqQRIQcCjwsMA=
-Received: from aaem228.neoplus.adsl.tpnet.pl (HELO [192.168.1.22]) (mat.jonczyk@o2.pl@[83.4.116.228])
-          (envelope-sender <mat.jonczyk@o2.pl>)
-          by smtp.tlen.pl (WP-SMTPD) with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP
-          for <gregkh@linuxfoundation.org>; 25 Apr 2024 21:27:46 +0200
-Message-ID: <47802338-79cf-4701-8f59-bc7354ab0256@o2.pl>
-Date: Thu, 25 Apr 2024 21:27:44 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Q4dmDCFw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1714075138; x=1745611138;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=K+LnRA9rA0OZfzN254cwx2NMgEMzqaxNC8jXXCB/Mjo=;
+  b=Q4dmDCFwPZOhq6bX1P9VhMXz+xmvNA0/pjSROkjwhCJ1/Cic/C0Vvwy2
+   exUmMwuKhvMGj5AFhZJXUXRaAnJ5i7q5ZhJ1sTuUgP72ksZXFcXuDJOgP
+   O0kBnFAAOsujk+aEQAgAOfzTfQ+u7Rlly5NCP62TfXJKGgt+gh6Qtz/9t
+   VJhhLjN+68Iejvi2MMpDI/pyf5We5FS+giTblLh7cMhVjQU4jr7Sg6bG0
+   UbjpDpUhCQWjFB9bVUbaKsmPCp9ItWfS587B7W6UgZIpEm6lfzC9ER7Kt
+   O7Nf2xpMLW9FXuzC2hRhTiSB76WpM3n8U/CFfhr2g3Rv+K1fPRMrCpfJs
+   Q==;
+X-CSE-ConnectionGUID: NPAzX8dyTV6u+Mcx/Kwhew==
+X-CSE-MsgGUID: kO9c4tI/Tz6NMJ8Zr/149g==
+X-IronPort-AV: E=McAfee;i="6600,9927,11055"; a="10005944"
+X-IronPort-AV: E=Sophos;i="6.07,230,1708416000"; 
+   d="scan'208";a="10005944"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2024 12:58:57 -0700
+X-CSE-ConnectionGUID: kHiGaN+bQ9eNgQed/KhcLg==
+X-CSE-MsgGUID: 1CKdV80RSVmEwPdCd3zOSA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,230,1708416000"; 
+   d="scan'208";a="29637700"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.105])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2024 12:58:57 -0700
+Date: Thu, 25 Apr 2024 12:58:56 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Guenter Roeck <linux@roeck-us.net>, Borislav Petkov <bp@alien8.de>,
+	Jean Delvare <jdelvare@suse.com>
+Cc: "Winiarska, Iwona" <iwona.winiarska@intel.com>,
+	"linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH v4 55/71] hwmon: (peci/cputemp) Switch to new Intel CPU
+ model defines
+Message-ID: <Ziq2AMcJUyikTtxK@agluck-desk3>
+References: <20240424181245.41141-1-tony.luck@intel.com>
+ <20240424181534.42216-1-tony.luck@intel.com>
+ <8b138aec-9565-4847-8c7c-8a1fe6972a04@roeck-us.net>
+ <SJ1PR11MB6083E8AFB8E001855DE4162EFC102@SJ1PR11MB6083.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 000/141] 6.1.88-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20240423213853.356988651@linuxfoundation.org>
-Content-Language: en-GB
-From: =?UTF-8?Q?Mateusz_Jo=C5=84czyk?= <mat.jonczyk@o2.pl>
-Autocrypt: addr=mat.jonczyk@o2.pl; keydata=
- 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
- TANkZ3QqXNX2
-In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-WP-MailID: 12764b7abd09ea0cd9156327450a7376
-X-WP-AV: skaner antywirusowy Poczty o2
-X-WP-SPAM: NO 0000000 [QVME]                               
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <SJ1PR11MB6083E8AFB8E001855DE4162EFC102@SJ1PR11MB6083.namprd11.prod.outlook.com>
 
-W dniu 23.04.2024 o 23:37, Greg Kroah-Hartman pisze:
-> This is the start of the stable review cycle for the 6.1.88 release.
-> There are 141 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 25 Apr 2024 21:38:28 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.88-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+> Is drivers/peci/device.c: peci_get_cpu_id() specific to Intel CPUs? It seems
+> to retrieve a value in the format of CPUID(EAX=1).EAX that would apply to
+> both Intel and AMD. Yet I don't see any checking of vendor id before looking
+> at the model id.
 
-Hello,
+Some web wearching indicates that PECI is an Intel specific protocol, so
+no need for vendor checks.
 
-Tested-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
+I've re-worked the peci patches (combining the core and hwmon bits) to
+switch from separate "family" and "model" fields and checks to using
+the same x86_vfm combined value.
 
-Tested on a HP 17-by0001nw laptop with an Intel Kaby Lake CPU and Ubuntu 20.04.
+The peci patch is included below. But you can see it in context in:
 
-Stack:
-- amd64,
-- ext4 on top of LVM on top of LUKS on top of mdraid on top of
-  NVMe and SATA drives (the SATA drive in the write-mostly mode).
+git://git.kernel.org/pub/scm/linux/kernel/git/aegl/linux.git new_families_v5_wip
 
-Tested (lightly):
-- suspend to RAM,
-- suspend to disk,
-- virtual machines in QEMU (both i386 and amd64 guests),
+The x86 build of these bits works. But I don't have cross-compile
+enviroment to check non-X86 builds. Also no way to test.
 
-- GPU (Intel HD Graphics 620, with 2 Unigine benchmarks)
-- WiFi (Realtek RTL8822BE),
-- Bluetooth (Realtek RTL8822BE),
+-Tony
 
-- PCI soundcard (Intel HD Audio),
-- USB soundcard (Logitech Pro X),
-- webcam.
+---
 
-Filesystems tested very lightly (mounting, listing and opening files):
-- NFS,
-- exFAT
-- NTFS via FUSE
+From 34cc093cbebaf596a52b123c4f8c3ef2df45a240 Mon Sep 17 00:00:00 2001
+From: Tony Luck <tony.luck@intel.com>
+Date: Thu, 25 Apr 2024 12:27:39 -0700
+Subject: [PATCH] peci, hwmon: Switch to new Intel CPU model defines
 
-Nitpicks:
-- three times, the USB keyboard stopped working during boot or thaw from hibernation:
-    [  692.295997] usb 1-3.4.3: device descriptor read/64, error -32
-    [  692.568182] usb 1-3.4.3: device descriptor read/64, error -32
-    [  693.008193] usb 1-3.4.3: device descriptor read/64, error -32
-    [  693.280333] usb 1-3.4.3: device descriptor read/64, error -32
-    [  693.552617] usb 1-3.4.3: Device not responding to setup address.
-    [  693.760552] usb 1-3.4.3: Device not responding to setup address.
-    [  693.968383] usb 1-3.4.3: device not accepting address 7, error -71
-    [...]
-    [  698.660224] usb 1-3.4.3: device not accepting address 11, error -71
-    [  698.660303] usb 1-3.4-port3: unable to enumerate USB device
+Update peci subsystem to use the same vendor-family-model
+combined definition that core x86 code uses.
 
-  It happened later on Linux 6.1.86-rc1 (twice), so I suspect faulty hardware.
-  The keyboard is connected via an external hub.
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ include/linux/peci-cpu.h     | 24 ++++++++++++++++++++++++
+ include/linux/peci.h         |  3 +--
+ drivers/peci/internal.h      |  3 +--
+ drivers/hwmon/peci/cputemp.c |  8 ++++----
+ drivers/peci/core.c          |  5 ++---
+ drivers/peci/cpu.c           | 21 +++++++--------------
+ drivers/peci/device.c        |  3 +--
+ 7 files changed, 40 insertions(+), 27 deletions(-)
 
-- Bluetooth: inability to send files from mobile phone to laptop unless the BT session was established beforehand,
-    - did not happen after restart, too many variables to blame kernel upgrade.
-
-Greetings,
-
-Mateusz
-
+diff --git a/include/linux/peci-cpu.h b/include/linux/peci-cpu.h
+index ff8ae9c26c80..601cdd086bf6 100644
+--- a/include/linux/peci-cpu.h
++++ b/include/linux/peci-cpu.h
+@@ -6,6 +6,30 @@
+ 
+ #include <linux/types.h>
+ 
++/* Copied from x86 <asm/processor.h> */
++#define X86_VENDOR_INTEL       0
++
++/* Copied from x86 <asm/cpu_device_id.h> */
++#define VFM_MODEL_BIT	0
++#define VFM_FAMILY_BIT	8
++#define VFM_VENDOR_BIT	16
++#define VFM_RSVD_BIT	24
++
++#define	VFM_MODEL_MASK	GENMASK(VFM_FAMILY_BIT - 1, VFM_MODEL_BIT)
++#define	VFM_FAMILY_MASK	GENMASK(VFM_VENDOR_BIT - 1, VFM_FAMILY_BIT)
++#define	VFM_VENDOR_MASK	GENMASK(VFM_RSVD_BIT - 1, VFM_VENDOR_BIT)
++
++#define VFM_MODEL(vfm)	(((vfm) & VFM_MODEL_MASK) >> VFM_MODEL_BIT)
++#define VFM_FAMILY(vfm)	(((vfm) & VFM_FAMILY_MASK) >> VFM_FAMILY_BIT)
++#define VFM_VENDOR(vfm)	(((vfm) & VFM_VENDOR_MASK) >> VFM_VENDOR_BIT)
++
++#define	VFM_MAKE(_vendor, _family, _model) (	\
++	((_model) << VFM_MODEL_BIT) |		\
++	((_family) << VFM_FAMILY_BIT) |		\
++	((_vendor) << VFM_VENDOR_BIT)		\
++)
++/* End of copied code */
++
+ #include "../../arch/x86/include/asm/intel-family.h"
+ 
+ #define PECI_PCS_PKG_ID			0  /* Package Identifier Read */
+diff --git a/include/linux/peci.h b/include/linux/peci.h
+index 9b3d36aff431..0db8b5dd09d9 100644
+--- a/include/linux/peci.h
++++ b/include/linux/peci.h
+@@ -74,8 +74,7 @@ static inline struct peci_controller *to_peci_controller(void *d)
+ struct peci_device {
+ 	struct device dev;
+ 	struct {
+-		u16 family;
+-		u8 model;
++		u32 x86_vfm;
+ 		u8 peci_revision;
+ 		u8 socket_id;
+ 	} info;
+diff --git a/drivers/peci/internal.h b/drivers/peci/internal.h
+index 9d75ea54504c..7ead53e5598f 100644
+--- a/drivers/peci/internal.h
++++ b/drivers/peci/internal.h
+@@ -71,8 +71,7 @@ struct peci_request *peci_xfer_ep_mmio64_readl(struct peci_device *device, u8 ba
+  */
+ struct peci_device_id {
+ 	const void *data;
+-	u16 family;
+-	u8 model;
++	u32 x86_vfm;
+ };
+ 
+ extern struct device_type peci_device_type;
+diff --git a/drivers/hwmon/peci/cputemp.c b/drivers/hwmon/peci/cputemp.c
+index a812c15948d9..5a682195b98f 100644
+--- a/drivers/hwmon/peci/cputemp.c
++++ b/drivers/hwmon/peci/cputemp.c
+@@ -360,10 +360,10 @@ static int init_core_mask(struct peci_cputemp *priv)
+ 	int ret;
+ 
+ 	/* Get the RESOLVED_CORES register value */
+-	switch (peci_dev->info.model) {
+-	case INTEL_FAM6_ICELAKE_X:
+-	case INTEL_FAM6_ICELAKE_D:
+-	case INTEL_FAM6_SAPPHIRERAPIDS_X:
++	switch (peci_dev->info.x86_vfm) {
++	case INTEL_ICELAKE_X:
++	case INTEL_ICELAKE_D:
++	case INTEL_SAPPHIRERAPIDS_X:
+ 		ret = peci_ep_pci_local_read(peci_dev, 0, reg->bus, reg->dev,
+ 					     reg->func, reg->offset + 4, &data);
+ 		if (ret)
+diff --git a/drivers/peci/core.c b/drivers/peci/core.c
+index 0f83a9c6093b..b2d7adf05ba0 100644
+--- a/drivers/peci/core.c
++++ b/drivers/peci/core.c
+@@ -163,9 +163,8 @@ EXPORT_SYMBOL_NS_GPL(devm_peci_controller_add, PECI);
+ static const struct peci_device_id *
+ peci_bus_match_device_id(const struct peci_device_id *id, struct peci_device *device)
+ {
+-	while (id->family != 0) {
+-		if (id->family == device->info.family &&
+-		    id->model == device->info.model)
++	while (id->x86_vfm != 0) {
++		if (id->x86_vfm == device->info.x86_vfm)
+ 			return id;
+ 		id++;
+ 	}
+diff --git a/drivers/peci/cpu.c b/drivers/peci/cpu.c
+index bd990acd92b8..152bbd8e717a 100644
+--- a/drivers/peci/cpu.c
++++ b/drivers/peci/cpu.c
+@@ -294,38 +294,31 @@ peci_cpu_probe(struct peci_device *device, const struct peci_device_id *id)
+ 
+ static const struct peci_device_id peci_cpu_device_ids[] = {
+ 	{ /* Haswell Xeon */
+-		.family	= 6,
+-		.model	= INTEL_FAM6_HASWELL_X,
++		.x86_vfm = INTEL_HASWELL_X,
+ 		.data	= "hsx",
+ 	},
+ 	{ /* Broadwell Xeon */
+-		.family	= 6,
+-		.model	= INTEL_FAM6_BROADWELL_X,
++		.x86_vfm = INTEL_BROADWELL_X,
+ 		.data	= "bdx",
+ 	},
+ 	{ /* Broadwell Xeon D */
+-		.family	= 6,
+-		.model	= INTEL_FAM6_BROADWELL_D,
++		.x86_vfm = INTEL_BROADWELL_D,
+ 		.data	= "bdxd",
+ 	},
+ 	{ /* Skylake Xeon */
+-		.family	= 6,
+-		.model	= INTEL_FAM6_SKYLAKE_X,
++		.x86_vfm = INTEL_SKYLAKE_X,
+ 		.data	= "skx",
+ 	},
+ 	{ /* Icelake Xeon */
+-		.family	= 6,
+-		.model	= INTEL_FAM6_ICELAKE_X,
++		.x86_vfm = INTEL_ICELAKE_X,
+ 		.data	= "icx",
+ 	},
+ 	{ /* Icelake Xeon D */
+-		.family	= 6,
+-		.model	= INTEL_FAM6_ICELAKE_D,
++		.x86_vfm = INTEL_ICELAKE_D,
+ 		.data	= "icxd",
+ 	},
+ 	{ /* Sapphire Rapids Xeon */
+-		.family	= 6,
+-		.model	= INTEL_FAM6_SAPPHIRERAPIDS_X,
++		.x86_vfm = INTEL_SAPPHIRERAPIDS_X,
+ 		.data	= "spr",
+ 	},
+ 	{ }
+diff --git a/drivers/peci/device.c b/drivers/peci/device.c
+index e6b0bffb14f4..5eb57b503c81 100644
+--- a/drivers/peci/device.c
++++ b/drivers/peci/device.c
+@@ -100,8 +100,7 @@ static int peci_device_info_init(struct peci_device *device)
+ 	if (ret)
+ 		return ret;
+ 
+-	device->info.family = peci_x86_cpu_family(cpu_id);
+-	device->info.model = peci_x86_cpu_model(cpu_id);
++	device->info.x86_vfm = IFM(peci_x86_cpu_family(cpu_id), peci_x86_cpu_model(cpu_id));
+ 
+ 	ret = peci_get_revision(device, &revision);
+ 	if (ret)
+-- 
+2.44.0
 
