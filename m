@@ -1,56 +1,56 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8251553B9
-	for <patches@lists.linux.dev>; Thu, 25 Apr 2024 21:26:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D8515574A
+	for <patches@lists.linux.dev>; Thu, 25 Apr 2024 21:26:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714080373; cv=none; b=HqqbIBATVxa5sWjJFqb1Z6hRHbAFLsKEABKCqfqebzgqJYhtsHZ1jETWiGkcd0XkGAwG8e3hB+TFilnNAzkbZ3eUmdpfpBcA4v3+vZkDKI91qnPRamF+k9v3Ksa9S5Sr3/z4BFDaWXhcVbBnO0yAbgeay59OqUp8ao/PgGkeaqo=
+	t=1714080395; cv=none; b=V9R5wvg3h+TNn0Xh9tskdek5gydhFjiF4cOW4WvDXAmbNNZY+L+zLNlc5p6l3v+1bhnKq1lf5ZJm7cxsMw3ZWeI3ILF6ok3J/ll+H32ucbHG2+4osLmYPPItz/Erc10eQomib7yg15BBTFQ5NTxCvmXo+X9yiFJdXAIXZ+QldqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714080373; c=relaxed/simple;
-	bh=re9zmJSeJXBNOX8oPj0whWI0Bev6/r8VXIttxxV5iD8=;
+	s=arc-20240116; t=1714080395; c=relaxed/simple;
+	bh=MnCbincCFdl6XJbg9zRB+canEhGS2nhR8DcJdQPfr8g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O67jElhDnj1QZF8bf4V6iuePaNxeAeWHAVOfECHm8nib84b10FctwI0UVeR+pJcnpIerNZq7DqssXR8rIjbC8GpM8IQg4fvMxyDejRGyJZtcuz3glSCCKpqs3j3fahlzxqM26gadOuEX43sE1mCkBSZ39UeKbdt2Is4VlrPsNmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=WT6y9uUL; arc=none smtp.client-ip=209.85.160.173
+	 In-Reply-To:Content-Type; b=ZRYeT3pqF2Vr8ai07ehFli0Uaku58kKepymFAgshPmbN0SaVgw7fyU/RAj8W2d+h8GjgPOcvTgp37qcV9SBGWBu60zbeElVyI9fabPB5NtTloMbBVOjz/7XUETuwdH/L+9gQEleKCCPy6PaJNuQLJ0Mf1IW5Typ+B3x6WU6TaKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=EQ4U56cW; arc=none smtp.client-ip=209.85.219.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="WT6y9uUL"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-434d0f63c31so9232221cf.1
-        for <patches@lists.linux.dev>; Thu, 25 Apr 2024 14:26:11 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="EQ4U56cW"
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-69b514d3cf4so15288826d6.0
+        for <patches@lists.linux.dev>; Thu, 25 Apr 2024 14:26:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1714080371; x=1714685171; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1714080393; x=1714685193; darn=lists.linux.dev;
         h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UHLcWiV12p90IKdptXFABqrpZNXcvp5VAJ8ti/w1s2E=;
-        b=WT6y9uULJvdHOcar84YiG0BYudJhKK/WEyJp7CkmvtF/HpaSv1edpVUL7Ola2gVggf
-         daujsVcbB3dypnFZQU59/bqTdRLolM1qtAAHqsG0BLq64QXlj3qywwKuJeF+CImBUb3d
-         +/DwLNVHa2PFKIPbjG9+1jVqNWICw4PvJn3lU=
+        bh=iaswaqnptbAC33OIWUvYFeEqekS61Lz22wsRt7wpfus=;
+        b=EQ4U56cWsqw2RuMKNGfDnFyFbCuBlBwIdajxDEzFkDIAXQIaDcemQEeh+Y30HnMWbw
+         htD0hIZJ5DIvrpZSGN1Np8SmeaWSXFWvL9MeLKn9nAfm/OH7iisWJqFMSJ403YMkch82
+         WAwTYq1gDiBIXxHbrxPxFUgfH5kZei8VI1HGk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714080371; x=1714685171;
+        d=1e100.net; s=20230601; t=1714080393; x=1714685193;
         h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=UHLcWiV12p90IKdptXFABqrpZNXcvp5VAJ8ti/w1s2E=;
-        b=rU4rhH7FhZv58X91cp0iK9cLTiHBrXUFfoMdHavL0jNbPvz9kqe3W1/zTISFGTgH/3
-         4dPpjgFcDat47XruFasdUNFc/04RLx+XaJk7++tosgEFAoPfgT0nvSpAFKFixa0Z8bbz
-         vIPJ4zUW/Q81CUxNZ2J9oh5I5jKF57hpcxdjp7KbeXlNFtIxRBK8FdGOPyUZNbF5P31u
-         UjAMUQRpIUfnFCAsktEDSlqPoXO8HhVeImQ06opQpfxI5kYYX9sVJO3QJLTckjznqZ6p
-         O2U/i0Qz193ltBesQ80wv/T54uCasbUcL/jwe4zdg48tbxBqmf6eCs41IhdfG2yRphoc
-         bRVA==
-X-Forwarded-Encrypted: i=1; AJvYcCXlS1t5StLiLE8pBmCRoEy/43EJlB0xxob02vowvUjpS8guKpdiwmYtTypUOSlojoKyGaihfaiHR3k47Hu/84jp/TLJRpT0xw==
-X-Gm-Message-State: AOJu0Yz4+T7+JDR8DHygJjLdlceoQzqYsOm18QBtSdazjpQinQit1oC5
-	x3IQgAna6jNzcSBJcX8/iGGg5Ka/SJzXeeqpj3o69C8oqNiqKnXmJO1RlE8NGw==
-X-Google-Smtp-Source: AGHT+IHVkRUlXpIoBCnmRsjNwdAxJOUNnT4nLYqTiINPWIm3BCvWPUKwcip0SME2q6dYDhR4wEfShA==
-X-Received: by 2002:a05:622a:11c8:b0:43a:7484:d66e with SMTP id n8-20020a05622a11c800b0043a7484d66emr14917qtk.37.1714080370640;
-        Thu, 25 Apr 2024 14:26:10 -0700 (PDT)
+        bh=iaswaqnptbAC33OIWUvYFeEqekS61Lz22wsRt7wpfus=;
+        b=jlUGLJ29qAVEQWbmMNDNnESFjwmx8FD/oBQjjlRD0z7BwggY1cByL6a3ZFaowcD9c5
+         walp/GqvW9k28kkIa+gPbovCYGTNeP7ccyLGU3So20J7Vl5FlRuaqSaH/uCLOciCkPJf
+         cj/TcMGp1SB7EmowZIqtT5o7b5qSMfP6s64AGaROCTbFJEDuxMlTUdTjEg6gLpNF4tfT
+         wgW0dalmIFMUZ3Ydjlnyf5zzGTDRX2HW2l9eoD0wbI+xc+KaX8ysm6DraYpvJt6o//oU
+         /j49ZKLwQoj9Gc0McVR0Q0cpO8YapG6FuCTCRNhZvwc+KFQ/a25AetFMN6EQOySyD1L+
+         NoMA==
+X-Forwarded-Encrypted: i=1; AJvYcCWdl7JmXtqM+IzPp9KY8mHT+mx8AQqZYLW4fvc20RbIiILwkZ/dvzLLQPjCt0/mKjBso8BCCHxXF8M7izrbVVs9IRaBf/o2Vg==
+X-Gm-Message-State: AOJu0Yxg7tZK//uDKPotqcV1/Uc8b+r1Pbga8J+zB+Z9224zBedEZMlg
+	AiCFsAMkGFKiIAw1lq1DXee/TRmvbjt5XkpgAmd+RyIgyo7vK9xVDvkBa30rXA==
+X-Google-Smtp-Source: AGHT+IGyPWZWvDFOWPXs5zONJ5jZNE8C7BDorr7QvJCSv/LD/fJkVQmIJ9NpqNvEfkGXmviteDtLGw==
+X-Received: by 2002:ad4:5748:0:b0:6a0:85df:3506 with SMTP id q8-20020ad45748000000b006a085df3506mr1302099qvx.23.1714080393157;
+        Thu, 25 Apr 2024 14:26:33 -0700 (PDT)
 Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id jt56-20020a05622aa03800b00434ec509ce9sm7352146qtb.46.2024.04.25.14.26.07
+        by smtp.gmail.com with ESMTPSA id i18-20020a0cf392000000b0069b65ce60f2sm7328545qvk.55.2024.04.25.14.26.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Apr 2024 14:26:09 -0700 (PDT)
-Message-ID: <112f8951-9df9-46e9-9e31-f856a2aa8f89@broadcom.com>
-Date: Thu, 25 Apr 2024 14:26:06 -0700
+        Thu, 25 Apr 2024 14:26:32 -0700 (PDT)
+Message-ID: <caba838a-35cd-4cf7-a3e3-429275ac76cb@broadcom.com>
+Date: Thu, 25 Apr 2024 14:26:29 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -58,7 +58,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] clk: bcm: dvp: Assign ->num before accessing ->hws
+Subject: Re: [PATCH 2/2] clk: bcm: rpi: Assign ->num before accessing ->hws
 To: Nathan Chancellor <nathan@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
 Cc: Kees Cook <keescook@chromium.org>,
@@ -68,7 +68,7 @@ Cc: Kees Cook <keescook@chromium.org>,
  linux-hardening@vger.kernel.org, patches@lists.linux.dev,
  llvm@lists.linux.dev, stable@vger.kernel.org
 References: <20240425-cbl-bcm-assign-counted-by-val-before-access-v1-0-e2db3b82d5ef@kernel.org>
- <20240425-cbl-bcm-assign-counted-by-val-before-access-v1-1-e2db3b82d5ef@kernel.org>
+ <20240425-cbl-bcm-assign-counted-by-val-before-access-v1-2-e2db3b82d5ef@kernel.org>
 From: Florian Fainelli <florian.fainelli@broadcom.com>
 Autocrypt: addr=florian.fainelli@broadcom.com; keydata=
  xsBNBFPAG8ABCAC3EO02urEwipgbUNJ1r6oI2Vr/+uE389lSEShN2PmL3MVnzhViSAtrYxeT
@@ -102,11 +102,11 @@ Autocrypt: addr=florian.fainelli@broadcom.com; keydata=
  MIlnaE6V0U8f5zNHB7Y46yJjjYT/Ds1TJo3pvwevDWPvv6rdBeV07D9s43frUS6xYd1uFxHC
  7dZYWJjZmyUf5evr1W1gCgwLXG0PEi9n3qmz1lelQ8lSocmvxBKtMbX/OKhAfuP/iIwnTsww
  95A2SaPiQZA51NywV8OFgsN0ITl2PlZ4Tp9hHERDe6nQCsNI/Us=
-In-Reply-To: <20240425-cbl-bcm-assign-counted-by-val-before-access-v1-1-e2db3b82d5ef@kernel.org>
+In-Reply-To: <20240425-cbl-bcm-assign-counted-by-val-before-access-v1-2-e2db3b82d5ef@kernel.org>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000a145680616f26fda"
+	boundary="000000000000f8f7200616f27014"
 
---000000000000a145680616f26fda
+--000000000000f8f7200616f27014
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
@@ -120,11 +120,11 @@ On 4/25/24 09:55, Nathan Chancellor wrote:
 > initialized with the number of elements before the first array access
 > happens, otherwise there will be a warning from each access prior to the
 > initialization because the number of elements is zero. This occurs in
-> clk_dvp_probe() due to ->num being assigned after ->hws has been
-> accessed:
+> raspberrypi_discover_clocks() due to ->num being assigned after ->hws
+> has been accessed:
 > 
->    UBSAN: array-index-out-of-bounds in drivers/clk/bcm/clk-bcm2711-dvp.c:59:2
->    index 0 is out of range for type 'struct clk_hw *[] __counted_by(num)' (aka 'struct clk_hw *[]')
+>    UBSAN: array-index-out-of-bounds in drivers/clk/bcm/clk-raspberrypi.c:374:4
+>    index 3 is out of range for type 'struct clk_hw *[] __counted_by(num)' (aka 'struct clk_hw *[]')
 > 
 > Move the ->num initialization to before the first access of ->hws, which
 > clears up the warning.
@@ -138,7 +138,7 @@ Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Florian
 
 
---000000000000a145680616f26fda
+--000000000000f8f7200616f27014
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -209,14 +209,14 @@ kNGap1mHJ+JngGzZCz+dDiHRQKGpXLxkHX0BvEDZLW6LGOJ83ImrW38YMOo3ZYnCYNHA9qDOakiw
 NxADYvcRBA0ySL6sZpj8BIIhWiXiuusuBmt2Mak2eEv0xDbovE6Z6hYyl/ZnRadbgK/ClgbY3w+O
 AfUXEZ0xggJtMIICaQIBATBrMFsxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52
 LXNhMTEwLwYDVQQDEyhHbG9iYWxTaWduIEdDQyBSMyBQZXJzb25hbFNpZ24gMiBDQSAyMDIwAgwT
-/D/YSkVckoN0L+QwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIAUKYWrzgXgq849s
-IJbpvwLnEyTambbP8FkrJ9OUfDvaMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcN
-AQkFMQ8XDTI0MDQyNTIxMjYxMVowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZI
+/D/YSkVckoN0L+QwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIFMtGABPfsbXTHg9
+RQeMU6fJonaJPS3JX+8MoNdYc4QLMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcN
+AQkFMQ8XDTI0MDQyNTIxMjYzM1owaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZI
 AWUDBAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEH
-MAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQCCkT2YOHWZStTkE1Hl1y/BiHpjBW38nlXW
-1dJQoej8W8jEjH3qXqKLL8NxJnYuHX4D3+26jqD/KtypmOCMY83aY0YiMxCPF61m6s3kk9XEM9Eh
-6uNIsVdhu2oixFd2Tb+D2DN5mOANPZs9SBa/+E44oJodeosFNAvdAbn7iJsqyBVw5nX/PJx4D8FH
-AnTp2S7lwmwU1/5WyLgaWA21XcL79qIWUUU8BrTPZOv+0eqyJOuz9FhjoSbneF/UHtWD01ULrgJm
-ENgtx3/yOix6C7q9UXdsvyLTHyAKl+vqyAPy2WFDB7ilqjg+KzlaJaO4ALuaod0ohwR6kqhRBsHG
-V4M+
---000000000000a145680616f26fda--
+MAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQCK0YBP/3IjVDfLsa3wVgMh5v2uU2ptpCUW
+WTnU/W912nzkRiogE25et61Xt3tZJrCX4/gZWZQfXiwwiCcDf8pOQGZZSirKogdi1+yZ2+RshKax
+V+tjoaw9KhHf5nsBLokCd56WB1kl4h6PLoi8okxETWNjXad7KYx7SRlfGiuiAmHDL4B7TF6E6D8d
+vKsPSCFNpM38BkA5zVdRhXIpn0v/s2t7kFbnzHR0YOFnkxOGzgWZQ/yzkpUw9QclcmkU2+xw0BWn
+xWFIhPQhxQ9mYxdj8Z6Muo98BbsrDaR+xJAIRPCBOULQHcoMo02Dv/u8XhImuE8BGaMazazOUmh0
+ZDrj
+--000000000000f8f7200616f27014--
