@@ -1,106 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B3043AC5;
-	Fri, 26 Apr 2024 08:44:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BAA13F01A
+	for <patches@lists.linux.dev>; Fri, 26 Apr 2024 10:44:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714121068; cv=none; b=rYTnXwOA7Qb+3IEFZYADz4InWZux0zUbhhVKZOEqoeEAh9MSeiXh0nqdaeIckMN35UmmUYuf2qQoBkamqNrd4vSw77rTtr6bls7XfQ6zQLkz9X31M23oSvy63clQciU8+uaMxrRMNUH9fRb5UY/kwmvPsR3hGRrq4L0EvSGxVOk=
+	t=1714128265; cv=none; b=u3/xIKz45bIdggeZglropcZwkgBwHK8lHrsIw0tjR+PIB3OjfE/HfWowRWpE+ydH1VAzTy4yWqdI01vblxdOT5EveNYNOhNEA0rRHlYv1yK0z0WtxM93XANfO/BeYu6KLvtub5UnYCm8Oxk8wOGVfSYvi6us8wXfOaKCJ83fOLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714121068; c=relaxed/simple;
-	bh=4wvOYv8+NIdUpdRb7Grmdgfv9If4faaLPcCOfZoDlE4=;
+	s=arc-20240116; t=1714128265; c=relaxed/simple;
+	bh=oiJnEtXecqKBogjajw76z6JmscL3oLdmGCyxcj19DIA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UvDZm2xUa6+kh9Z86+bXJXyS5HjLFM9tx3qy2ufgxqc7BFakL43zoziwcdI2KqKjA6Lc3NSbMijONoNuh8gM754xEipVbxNDni7R0qyGpIewcQoZC0b8mLSuTvTvY9CztUpwqQO6GPLZ0nLix4Nbt8xaZdLjPMrjaMcaL5Yqn7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E+4H8Rpd; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+4H8Rpd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00E9C113CD;
-	Fri, 26 Apr 2024 08:44:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714121067;
-	bh=4wvOYv8+NIdUpdRb7Grmdgfv9If4faaLPcCOfZoDlE4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=E+4H8Rpd6Cp58EWOWAjvv0PVZSWobDuIWzJvMc3meXBqGv5BkMauw98WEWTFTnwtx
-	 ka/qKcLZu0uyQeQtYiXju71UOIVvQMjUxHu8cYy0qHTwwHyIi7wAma9KwI/G4uPknf
-	 Z9v9rZJqFCnWpNLrv3iLR3WKKMMrQYi6YR5WGLTo=
-Date: Fri, 26 Apr 2024 10:44:18 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
+	 Content-Type:Content-Disposition:In-Reply-To; b=RpIGvZVBhDZmlX34mOW2l8uwnMZreKagWhZBJIcmD5H1yuHtxC9IXwELNWumqMDZFWf33VJ8h0T+pfkLGF4LddRV2pGk3MYnqOcm2oiZ6rQiwsC35+XbwDxppvvxC7l+jX90PlO4H/CY/OaXmm9EzXvIEoYtk9QxicSdhD899iM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 95E8C1C0080; Fri, 26 Apr 2024 12:44:21 +0200 (CEST)
+Date: Fri, 26 Apr 2024 12:44:21 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, dianders@google.com, briannorris@google.com,
-	momohatt@google.com, Herbert Xu <herbert@gondor.apana.org.au>
-Subject: Re: [PATCH 5.15 000/476] 5.15.149-rc1 review
-Message-ID: <2024042603-sleek-janitor-34f8@gregkh>
-References: <20240221130007.738356493@linuxfoundation.org>
- <aceda6e2-cefb-4146-aef8-ff4bafa56e56@roeck-us.net>
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	dmitry.torokhov@gmail.com, mmyangfl@gmail.com,
+	schnelle@linux.ibm.com, g@b4.vu
+Subject: Re: [PATCH 6.1 000/141] 6.1.88-rc1 review
+Message-ID: <ZiuFhTU4fPezFe1M@duo.ucw.cz>
+References: <20240423213853.356988651@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="4jHhyeEcumdBQ39D"
+Content-Disposition: inline
+In-Reply-To: <20240423213853.356988651@linuxfoundation.org>
+
+
+--4jHhyeEcumdBQ39D
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aceda6e2-cefb-4146-aef8-ff4bafa56e56@roeck-us.net>
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Apr 25, 2024 at 03:46:18PM -0700, Guenter Roeck wrote:
-> Hi,
-> 
-> On 2/21/24 05:00, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.15.149 release.
-> > There are 476 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Fri, 23 Feb 2024 12:59:02 +0000.
-> > Anything received after that time might be too late.
-> > 
-> [ ... ]
-> 
-> > Herbert Xu <herbert@gondor.apana.org.au>
-> >      crypto: api - Disallow identical driver names
-> > 
-> 
-> This patch results in a severe performance regression on arm64 systems;
-> there is more than 50% throughput loss on some sequential read tests.
-> The problem affects v5.15.y and older kernel branches.
-> 
-> Analysis shows that v5.15.y and older kernel _do_ try to register the same
-> crypto algorithm twice, once through
-> 
->  __crypto_register_alg
->  crypto_register_alg
->  crypto_register_skciphers
->  aes_init
-> 
-> and then again through
-> 
->  __crypto_register_alg
->  crypto_register_alg
->  crypto_register_skcipher
->  simd_skcipher_create_compat
->  aes_init
-> 
-> After above patch was applied, the second registration fails, resulting
-> in the regression.
-> 
-> The problem is not seen in later kernels due to commit 676e508122d9
-> ("crypto: arm64/aes-ce - stop using SIMD helper for skciphers"). Applying this
-> commit or reverting above commit fixes the regression in v5.15.y and older.
-> 
-> Thanks is due to Momoko Hattori for reporting the problem and finding the
-> offending patch, Doug Anderson for finding the duplicate registration attempt,
-> and Brian Norris for finding the fix. I copied them on this e-mail in case
-> there are further questions.
+Hi!
 
-Thanks for the report.  I got a report that this breaks some android
-systems as well due to some FIPS crypto code that happens to duplicate
-the names as well.  I think reverting it makes sense and I'll queue that
-up for the next round of releases.
+> This is the start of the stable review cycle for the 6.1.88 release.
+> There are 141 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-greg k-h
+> Dmitry Torokhov <dmitry.torokhov@gmail.com>
+>     ARM: OMAP2+: pdata-quirks: stop including wl12xx.h
+>=20
+> Dmitry Torokhov <dmitry.torokhov@gmail.com>
+>     ARM: omap2: n8x0: stop instantiating codec platform data
+
+Cleanups. This code is so old it should not really be touched in stable.
+
+> David Yang <mmyangfl@gmail.com>
+>     HID: kye: Sort kye devices
+
+I guess this is some kind of preparation for something we don't have
+in 6.1?
+
+> Niklas Schnelle <schnelle@linux.ibm.com>
+>     PCI: Make quirk using inw() depend on HAS_IOPORT
+
+This is preparation for patches we won't take to 6.1.
+
+> Niklas Schnelle <schnelle@linux.ibm.com>
+>     usb: pci-quirks: group AMD specific quirk code together
+
+This is preparation for patches we won't take to 6.1.
+
+> Geoffrey D. Bennett <g@b4.vu>
+>     ALSA: scarlett2: Rename scarlett_gen2 to scarlett2
+
+Big rename, and it comes after relevant patches, so unneeded.
+
+Best regards,
+							Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--4jHhyeEcumdBQ39D
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZiuFhQAKCRAw5/Bqldv6
+8tEDAJ9PDsVDATvVvsujHzDbM8c83KehcgCdGdlEBGVdOKJBfWVzl8M92J0btsk=
+=jA80
+-----END PGP SIGNATURE-----
+
+--4jHhyeEcumdBQ39D--
