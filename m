@@ -1,130 +1,86 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AED14F888;
-	Sat, 27 Apr 2024 14:26:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4398928F4
+	for <patches@lists.linux.dev>; Sat, 27 Apr 2024 19:38:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.14.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714227967; cv=none; b=FEhH26UaBsM3nk2wPSTLvBhbGSkJuAtZiBkv1WgIgDs3/hdKlpe4y+cqLkcLc0P2Kve4vYA4T2khAuZHV8gwXdR6FCCou985NaOFYLeI5dAohBqqSuK5Bq15dlt6kL6LemM6/D3a2JiQBSB0BGzmRzpIRP8UG8JEWlLVMfAuG+0=
+	t=1714246708; cv=none; b=PCoq6zhCV3xVzNPkrC1lBxRj2v9UTzOw+/BSLklOcdSLWsq6OuY3e/1dt/qywNhmTybO416+FbFxW9Th0we9b8DJPj65GlZTFOfbkor3OC6RhC4hwpeArldMLBlUbXx63LWCbA4xCkkQcw6a769LnJHMBwqm5XbAWdDmo/U28A0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714227967; c=relaxed/simple;
-	bh=t/apW+NTFNF4ubyJBw+vwSAslJlVBGHf0Ykms0SIwzE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YRAkr1ZRH5WaNcE8le1Ubo9XITeDW6IAh6EnoY1IVPhi3PEvJpAW5rqqXQmmYSAEvJVuhvjJpOU7oZLr+a+gbb5tTE8YtXewFCFml+A4NGt455Gf/HIGDsFGbQApRxP7NzNmGr6rqjcyMgO5H0u3986BAuQTtjl9T2FEsu5Mp4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QljWQy1j; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QljWQy1j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63DEC113CE;
-	Sat, 27 Apr 2024 14:26:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714227967;
-	bh=t/apW+NTFNF4ubyJBw+vwSAslJlVBGHf0Ykms0SIwzE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QljWQy1j6T1fBvnrVOQ0OTHQltI9XvKWK8WO9LbKVYCDgJ1VyIk2jlJP0NeWoJwJ9
-	 6ksVP9DX/QhwT53mY74+g8J3Xu03mNpnn+bfUkIZGIfTlqJ4OAgZSGxznZ7T0xMCba
-	 xXELV103kWwCMPk/T11BXOs2gHxHKKiW4zPE6jrI=
-Date: Sat, 27 Apr 2024 16:26:04 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Peter Oberparleiter <oberpar@linux.ibm.com>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, broonie@kernel.org,
-	linux-s390@vger.kernel.org,
-	Alexandra Winter <wintera@linux.ibm.com>
-Subject: Re: [PATCH 5.15 00/71] 5.15.157-rc1 review
-Message-ID: <2024042757--e526@gregkh>
-References: <20240423213844.122920086@linuxfoundation.org>
- <CA+G9fYsm9OYUh+H9X2kpJWXsPdde36=WbSWc+mU0vO0i-QaWOw@mail.gmail.com>
- <3b6b4973-0973-40e4-a107-4c81840c9ed3@linux.ibm.com>
+	s=arc-20240116; t=1714246708; c=relaxed/simple;
+	bh=v1+ZE2uyA6TekGXVo1wGcwErU907kS2bR6YdmBIJ+Gc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CSm3SraykORYFW1p7s9lsl5MTmnHWHd2WognHwCJ7a0cGtOFETyTMlhQf49sVmgakHVKoncTmpo8j/B/ekjTk49VEUf3qzyJz3glYKbIxHb4kaYnE1l+sSTxpa8WH1bt79yQBZtehg3CTrUR84LZRKLpqkRdWf1YyRN7fNW1N/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass smtp.mailfrom=molgen.mpg.de; arc=none smtp.client-ip=141.14.17.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molgen.mpg.de
+Received: from [192.168.2.30] (p4fee269d.dip0.t-ipconnect.de [79.238.38.157])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: buczek)
+	by mx.molgen.mpg.de (Postfix) with ESMTPSA id 3282961E5FE06;
+	Sat, 27 Apr 2024 21:37:42 +0200 (CEST)
+Message-ID: <c7f4a6e8-8e29-4be6-9671-8b89d037c889@molgen.mpg.de>
+Date: Sat, 27 Apr 2024 21:37:41 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3b6b4973-0973-40e4-a107-4c81840c9ed3@linux.ibm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.15 108/476] mm/sparsemem: fix race in accessing
+ memory_section->usage
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ Charan Teja Kalla <quic_charante@quicinc.com>,
+ "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+ Dan Williams <dan.j.williams@intel.com>, David Hildenbrand
+ <david@redhat.com>, Mel Gorman <mgorman@techsingularity.net>,
+ Oscar Salvador <osalvador@suse.de>, Vlastimil Babka <vbabka@suse.cz>,
+ Andrew Morton <akpm@linux-foundation.org>, Sasha Levin <sashal@kernel.org>,
+ it+linux@molgen.mpg.de
+References: <20240221130007.738356493@linuxfoundation.org>
+ <20240221130011.965182720@linuxfoundation.org>
+ <d3adab65-b962-4530-886a-631f0faf1107@molgen.mpg.de>
+ <2024042742--0602@gregkh>
+Content-Language: en-US
+From: Donald Buczek <buczek@molgen.mpg.de>
+In-Reply-To: <2024042742--0602@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Apr 24, 2024 at 11:21:05AM +0200, Peter Oberparleiter wrote:
-> On 24.04.2024 09:57, Naresh Kamboju wrote:
-> > On Wed, 24 Apr 2024 at 03:16, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> >>
-> >> This is the start of the stable review cycle for the 5.15.157 release.
-> >> There are 71 patches in this series, all will be posted as a response
-> >> to this one.  If anyone has any issues with these being applied, please
-> >> let me know.
-> >>
-> >> Responses should be made by Thu, 25 Apr 2024 21:38:28 +0000.
-> >> Anything received after that time might be too late.
-> >>
-> >> The whole patch series can be found in one patch at:
-> >>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.157-rc1.gz
-> >> or in the git tree and branch at:
-> >>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> >> and the diffstat can be found below.
-> >>
-> >> thanks,
-> >>
-> >> greg k-h
-> > 
-> > 
-> > The s390 defconfig build failed with gcc-12 and clang-17 on the Linux
-> > stable-rc linux.5.15.y branch.
-> > 
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > 
-> > Build log:
-> > ---
-> > drivers/s390/cio/qdio_main.c: In function 'qdio_int_handler':
-> > drivers/s390/cio/qdio_main.c:761:52: error: incompatible type for
-> > argument 2 of 'ccw_device_start'
-> >   761 |                 rc = ccw_device_start(cdev, irq_ptr->ccw,
-> > intparm, 0, 0);
-> >       |                                             ~~~~~~~^~~~~
-> >       |                                                    |
-> >       |                                                    struct ccw1
-> > In file included from arch/s390/include/asm/qdio.h:13,
-> >                  from drivers/s390/cio/qdio_main.c:18:
-> > arch/s390/include/asm/ccwdev.h:172:50: note: expected 'struct ccw1 *'
-> > but argument is of type 'struct ccw1'
-> >   172 | extern int ccw_device_start(struct ccw_device *, struct ccw1 *,
-> >       |                                                  ^~~~~~~~~~~~~
-> > make[3]: *** [scripts/Makefile.build:289: drivers/s390/cio/qdio_main.o] Error 1
-> > 
-> > 
-> > Suspected commit:
-> > --------
-> > s390/qdio: handle deferred cc1
-> >   [ Upstream commit 607638faf2ff1cede37458111496e7cc6c977f6f ]
+On 4/27/24 16:24, Greg Kroah-Hartman wrote:
+> On Thu, Apr 25, 2024 at 04:55:35PM +0200, Donald Buczek wrote:
+>> Maybe this is already known, but just FYI I wanted to drop the note that for some
+>> reasons I don't understand, this patch prevents me from compiling the proprietary
+>> Nvidia Unix driver with versions 510.108.03 and 535.104.05 in the 5.15 series.
 > 
-> This is due to a type change of field 'ccw' in 'struct qdio_irq' that
-> was introduced in v5.17 via commit 718ce9e10171 ("s390/qdio: avoid
-> allocating the qdio_irq with GFP_DMA").
+> For obvious reasons, we do not, and can not, care one bit about closed
+> source kernel modules or any other sort of kernel code that is outside
+> of our kernel tree.  The companies involved in doing stuff like this
+> take full responsibility for keeping their code up to date, all the
+> while forcing you to be the one that violates the license of the kernel.
 > 
-> The following change to commit 607638faf2ff ("s390/qdio: handle deferred
-> cc1") fixes the compile error on v5.15:
-> 
-> --- a/drivers/s390/cio/qdio_main.c
-> +++ b/drivers/s390/cio/qdio_main.c
-> @@ -758,7 +758,7 @@ void qdio_int_handler(struct ccw_device *cdev, unsigned long intparm,
-> 
->  	if (rc == -EAGAIN) {
->  		DBF_DEV_EVENT(DBF_INFO, irq_ptr, "qint retry");
-> -		rc = ccw_device_start(cdev, irq_ptr->ccw, intparm, 0, 0);
-> +		rc = ccw_device_start(cdev, &irq_ptr->ccw, intparm, 0, 0);
->  		if (!rc)
->  			return;
->  		DBF_ERROR("%4x RETRY ERR", irq_ptr->schid.sch_no);
-> 
-> 
+> In other words, please ask them for support for stuff like this, they
+> are the ones you are paying money to for support for this type of thing,
+> and the ones that are putting you at risk of legal issues, and there's
+> nothing that we could do about it even if we wanted to.
 
-Fix now made, thanks for this!
+Really? Did I ask anything? Wasn't "just FYI" not clear enough? Maybe you
+are not interested, but maybe somebody else is. And if you think my mail
+is just noise, why did you reply at all?
 
-greg k-h
+Best
+
+   Donald
+
+> best of luck,
+> 
+> greg k-h
+
+-- 
+Donald Buczek
+buczek@molgen.mpg.de
+Tel: +49 30 8413 1433
