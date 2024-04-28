@@ -1,198 +1,93 @@
 Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BDAF74297
-	for <patches@lists.linux.dev>; Sun, 28 Apr 2024 18:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48C6405C6
+	for <patches@lists.linux.dev>; Sun, 28 Apr 2024 18:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714328510; cv=none; b=bOKBKTYI9XByrYdk3iMi8XbB9gIrg/YuztQztqSVjfsbSMFgks8YHalAFX6+arYIQBhx0c79HWGEY4aRyASDPJYaE33+XrGNs69JeMwd/Fk1IqXE6+Is8oRwtzw9FuyZwnfwYmqVzStesFS4+rnBjWZi47+Klk62Pi4iDHKP3MA=
+	t=1714328855; cv=none; b=d8yd4idZ1sYTPQn6xjtRW1kG84qvCv5CLmVBnSFo2+RNd52gYEA8Jq5AbvYWtMS69tUZLqA4vTkKo55Z/XCOf+2UKiYSp4UmWStfkgjEVpaEHuHVW1ygFBkD3CqBEobHpMZ7KX0yuv11QZiWw6s8bWApujfRe19QlxWZCxpcP+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714328510; c=relaxed/simple;
-	bh=zU+HLK0DPGMZjwJN7McVaXApdO43oLoITJs1JVkgncM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=S3pKlLG+8dRB/xVdG8cK3jxWAPFJ4rnxYNlk1yOFTfkrlyNLfJEnKAt35vTycAhnW8OXzPZoCcrJdx+uM9kacbghSJj9TELaeGJnN0s2jdo15BR1FnH5J6WVFxYryCd0v5BSCV8vfe0103kXfPea5aVarv6aodEFoKM2p032oY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=O1pDocx0; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=oWaG4iRI; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+	s=arc-20240116; t=1714328855; c=relaxed/simple;
+	bh=5l4qF059Jl+xZK4vczGzOFodQkWmNupernBCDwDVl/0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JyggzSYwjg3vGmNwqJ2Ln0jkP+GUhtbpWTrX9q7e3DeLxZS8VDEf1LtktaEOsnAl+Xs+1N7CFP+RbkkuYGMnieDAagr87gzfVQOqbncXx6w9eNJpal1rGDq/UkGYUm3thpdq4nKLth0lVUbb45krHw2RI0y+s5k+qTYMZ2k+yZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=CJDRk3rb; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="O1pDocx0";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="oWaG4iRI"
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="CJDRk3rb"
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 3024740E0249
-	for <patches@lists.linux.dev>; Sun, 28 Apr 2024 18:21:46 +0000 (UTC)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id D0E1940E0187;
+	Sun, 28 Apr 2024 18:27:31 +0000 (UTC)
 X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
 Received: from mail.alien8.de ([127.0.0.1])
 	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id sKymE2jWPBQ7 for <patches@lists.linux.dev>;
-	Sun, 28 Apr 2024 18:21:41 +0000 (UTC)
+	with ESMTP id jHKaPin2l2oW; Sun, 28 Apr 2024 18:27:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1714328847; bh=8LO+Vbu0GXOa88VCWMTXRnKezCCEZXtnWJGdmYc8JQg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=CJDRk3rb863RBLi84AgiqtF9j/5FQmQO8m9PxU8fWffYIgxzeHilmsTdUSN4B5Mh4
+	 eIQlQalZscgCkLtbm7RKM3u9BuMoBIU+LKBWg/SxY6wEvaAT8j/Z5ptMqcM/S8TfRv
+	 cL8Rm5wgDodX53uYuDpfMJpEGcy/e5yT0DN6++5XsALrEQ67aoD5IH09qcWN9ztCUA
+	 BYLUNMRawuObmtXv5cri+AtGx7IzBHx6PMJ0gZD5aUUehOp99VdvNAZ73Q/bgR8fsA
+	 Yw9TZQvHC034TEIWD5VnjwPh5S/h2tlhI47r5Nx/JmbOLoXu6WHMNJ+yy1zjQISxgT
+	 ZXLZwZdin8+rSRZ9DBKdOoEEo5hjyUOwiomIv0dIIgc6uRpju3lMmcPbRD1CQ/fsEk
+	 exUXJP0OMPX0yjBdFlsV4FNicfdqwIuk1JHHBIZUOcHkfXRIjL54zBIt74PoD7z81l
+	 /ZTjvRI2S9kyKV1jhGvmKsY6JonhRG+oDvlIfzezpyl4m979A6E6tod5llqcqEruV5
+	 fCWg3ubwMHKy1P9LLDNrOB00IyD/MYaxjxPrHIonaI/e2sLF/HiPBK9pPm++5x29Fc
+	 kjNy40YCN0cq3WYxN/0w8ujFmzYTGR+qC/J3pTYQX4PhezmWlBTsIEop2DD37p7WV7
+	 mBA2KAfy3N3hr8uHq1L8vedI=
 Received: from zn.tnic (pd953020b.dip0.t-ipconnect.de [217.83.2.11])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
 	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 67FAC40E0205
-	for <patches@lists.linux.dev>; Sun, 28 Apr 2024 18:21:40 +0000 (UTC)
-Resent-From: Borislav Petkov <bp@alien8.de>
-Resent-Date: Sun, 28 Apr 2024 20:21:39 +0200
-Resent-Message-ID: <20240428182139.GEZi6Ts_dRuNstwAbj@fat_crate.local>
-Resent-To: patches <patches@lists.linux.dev>
-Received: from mail.alien8.de
-	by mad with LMTP
-	id IG4qBp7ZKmYhkxoAc81XFw
-	(envelope-from <tglx@linutronix.de>)
-	for <bp@alien8.de>; Thu, 25 Apr 2024 22:30:54 +0000
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id EA19A40E01C5
-	for <bp@alien8.de>; Thu, 25 Apr 2024 22:30:53 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id RynOVu3nbrRE for <bp@alien8.de>;
-	Thu, 25 Apr 2024 22:30:48 +0000 (UTC)
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPS id 0E22A40E00C7
-	for <bp@alien8.de>; Thu, 25 Apr 2024 22:30:41 +0000 (UTC)
-From: Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1714084239;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Hob8dDlH0Re1iEGHVPYkvQV+NW+0K67fDwBWu/fzKlI=;
-	b=O1pDocx0H4iIfkF03B+XPWmGCEewSOVlZuovpnKLihhfJ+NkndIjjgMNfdSelHa34ekzDf
-	wsjYQeL+xLyp9j4nrtPxD7PfDZFszztxuRKdhIa8oU8WSPuhObq1qiowexL3xEo8BbMSv1
-	L+JzmzVEOORI/NQLCYd3Ek1k6vbGvUqKdHNGl5FvqLmQMLa+npXTbNsgAYoVvAjNeT+feo
-	eJtii2jm43ilhCzc7c6APC5S8h/gN0Z0N7AHIbSps5uXn+uAL9V0hhCRsD+doRUJFFFtcv
-	8+bBavwwk+DnOqhirXyoSNcH/0mFbMiMgSLu77Yc1zYCBAGtk97zmJnEwjjpYw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1714084239;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Hob8dDlH0Re1iEGHVPYkvQV+NW+0K67fDwBWu/fzKlI=;
-	b=oWaG4iRIGtbeSJSaM0sgGgFJKK/3V7DUzRDWJ7+lTP+0sBlI/DG1uSrTH0JTZ85KPUbmWQ
-	dmtw1xABpqwaJsBQ==
-To: Adrian Huang12 <ahuang12@lenovo.com>, Adrian Huang
- <adrianhuang0701@gmail.com>, Ingo Molnar <mingo@redhat.com>, Borislav
- Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "x86@kernel.org" <x86@kernel.org>, Adrian Huang <adrianhuang0701@gmail.com>
-Subject: [PATCH] x86/apic: Don't access the APIC when disabling X2APIC
-In-Reply-To: <TYZPR03MB61928B8AE3F14E86069BDE6BB34D2@TYZPR03MB6192.apcprd03.prod.outlook.com>
-References: <20240130145601.7063-1-adrianhuang0701@gmail.com>
- <87eddggvlh.ffs@tglx>
- <TYZPR03MB61928B8AE3F14E86069BDE6BB34D2@TYZPR03MB6192.apcprd03.prod.outlook.com>
-Date: Fri, 26 Apr 2024 00:30:36 +0200
-Message-ID: <875xw5t6r7.ffs@tglx>
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 936A240E016B;
+	Sun, 28 Apr 2024 18:27:15 +0000 (UTC)
+Date: Sun, 28 Apr 2024 20:27:14 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: "Luck, Tony" <tony.luck@intel.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"x86@kernel.org" <x86@kernel.org>, "H. Peter Anvin" <hpa@zytor.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	"Raj, Ashok" <ashok.raj@intel.com>,
+	"Si, Bingsong" <sibs@chinatelecom.cn>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH v4 29/71] x86/cpu/intel: Switch to new Intel CPU model
+ defines
+Message-ID: <20240428182714.GGZi6VAr-oBybEOXnO@fat_crate.local>
+References: <20240424181245.41141-1-tony.luck@intel.com>
+ <20240424181508.41713-1-tony.luck@intel.com>
+ <20240425104624.GCZio0gDJABGjzoan1@fat_crate.local>
+ <SJ1PR11MB6083654145DEDC921F7E39BAFC172@SJ1PR11MB6083.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 0E22A40E00C7
-X-Spamd-Result: default: False [-3.50 / 20.00];
-	 TO_DN_EQ_ADDR_SOME(0.00)[];
-	 ARC_NA(0.00)[];
-	 R_DKIM_ALLOW(-0.20)[linutronix.de:s=2020,linutronix.de:s=2020e];
-	 FROM_HAS_DN(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 R_SPF_ALLOW(-0.20)[+mx];
-	 MIME_GOOD(-0.10)[text/plain];
-	 MAILSPIKE_FAIL(0.00)[193.142.43.55:query timed out];
-	 TO_MATCH_ENVRCPT_SOME(0.00)[];
-	 DKIM_TRACE(0.00)[linutronix.de:+];
-	 DMARC_POLICY_ALLOW(-0.50)[linutronix.de,none];
-	 RCPT_COUNT_SEVEN(0.00)[7];
-	 NEURAL_HAM(-0.00)[-1.000];
-	 FREEMAIL_TO(0.00)[lenovo.com,gmail.com,redhat.com,alien8.de,linux.intel.com];
-	 RCVD_COUNT_ZERO(0.00)[0];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 MID_RHS_NOT_FQDN(0.50)[];
-	 ASN(0.00)[asn:48314, ipnet:193.142.43.0/24, country:DE];
-	 FREEMAIL_CC(0.00)[kernel.org,gmail.com];
-	 BAYES_HAM(-3.00)[99.99%]
-X-Rspamd-Server: mad
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <SJ1PR11MB6083654145DEDC921F7E39BAFC172@SJ1PR11MB6083.namprd11.prod.outlook.com>
 
-With 'iommu=off' on the kernel command line and X2APIC enabled by the BIOS
-the code which disables the X2APIC triggers an unchecked MSR access error:
+On Thu, Apr 25, 2024 at 04:29:37PM +0000, Luck, Tony wrote:
+> But since it is only used in one place, I should just do that test inline without
+> a helper:
+> 
+> 	if (c->x86_vfm == spectre_bad_microcodes[i].vfm &&
+> 	    c->x86_stepping == spectre_bad_microcodes[i].stepping)
+> 		return (c->microcode <= spectre_bad_microcodes[i].microcode);
 
-  RDMSR from 0x802 at rIP: 0xffffffff94079992 (native_apic_msr_read+0x12/0x50)                                                                                                                                      
+Right.
 
-This is happens because default_acpi_madt_oem_check() selects an X2APIC
-driver before the X2APIC is disabled.
+Thx.
 
-When the X2APIC is disabled because interrupt remapping cannot be enabled
-due to 'iommu=off' on the command line, x2apic_disable() invokes
-apic_set_fixmap() which in turn tries to read the APIC ID. This triggers
-the MSR warning because X2APIC is disabled, but the APIC driver is still
-X2APIC based.
+-- 
+Regards/Gruss,
+    Boris.
 
-Prevent that by adding an argument to apic_set_fixmap() which makes the
-APIC ID read out conditional and set it to false from the X2APIC disable
-path. That's correct as the APIC ID has already been read out during early
-discovery.
- 
-Fixes: d10a904435fa ("x86/apic: Consolidate boot_cpu_physical_apicid initialization sites")
-Reported-by: Adrian Huang <ahuang12@lenovo.com>                                                                                                                                                                                             
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Adrian Huang <ahuang12@lenovo.com>                                                                                                                                                                                             
-Cc: stable@vger.kernel.org
----
- arch/x86/kernel/apic/apic.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
-
---- a/arch/x86/kernel/apic/apic.c
-+++ b/arch/x86/kernel/apic/apic.c
-@@ -1771,7 +1771,7 @@ void x2apic_setup(void)
- 	__x2apic_enable();
- }
- 
--static __init void apic_set_fixmap(void);
-+static __init void apic_set_fixmap(bool read_apic);
- 
- static __init void x2apic_disable(void)
- {
-@@ -1793,7 +1793,12 @@ static __init void x2apic_disable(void)
- 	}
- 
- 	__x2apic_disable();
--	apic_set_fixmap();
-+	/*
-+	 * Don't reread the APIC ID as it was already done from
-+	 * check_x2apic() and the apic driver still is a x2APIC variant,
-+	 * which fails to do the read after x2APIC was disabled.
-+	 */
-+	apic_set_fixmap(false);
- }
- 
- static __init void x2apic_enable(void)
-@@ -2057,13 +2062,14 @@ void __init init_apic_mappings(void)
- 	}
- }
- 
--static __init void apic_set_fixmap(void)
-+static __init void apic_set_fixmap(bool read_apic)
- {
- 	set_fixmap_nocache(FIX_APIC_BASE, mp_lapic_addr);
- 	apic_mmio_base = APIC_BASE;
- 	apic_printk(APIC_VERBOSE, "mapped APIC to %16lx (%16lx)\n",
- 		    apic_mmio_base, mp_lapic_addr);
--	apic_read_boot_cpu_id(false);
-+	if (read_apic)
-+		apic_read_boot_cpu_id(false);
- }
- 
- void __init register_lapic_address(unsigned long address)
-@@ -2073,7 +2079,7 @@ void __init register_lapic_address(unsig
- 	mp_lapic_addr = address;
- 
- 	if (!x2apic_mode)
--		apic_set_fixmap();
-+		apic_set_fixmap(true);
- }
- 
- /*
+https://people.kernel.org/tglx/notes-about-netiquette
