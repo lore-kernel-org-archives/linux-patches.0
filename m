@@ -1,101 +1,108 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A66883D
-	for <patches@lists.linux.dev>; Mon, 29 Apr 2024 03:19:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3F02C9E;
+	Mon, 29 Apr 2024 04:40:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714360783; cv=none; b=duaffHrnK91GmNBMb4Jh5/382YGnKCbZd+ltdMzVEXONFnGcLtEI0dJb7nqFzpZ8/6CmYMm3uo7Zw+k6TSmRmEblVc+6nm0K4cXLKNWd1AtuUPlP30VyVlKdvOZererof0vri7xbg4pGFvR26u40ubPDUNqcOBhxktnm12r8rNE=
+	t=1714365622; cv=none; b=bksWjzpHKu4+V07desNAj4PGtBLvSimNX5Gta4rOWo8QF/JNwkL8PnyNmp2iNBAGCR1Yvexsiz1ktAiqsroqHGkIekyDzlbAU9w1ERc4Ujgi3OB3ISz9AciIO4yQ5FJliHk0y706BvVArkJ0lD9rzNJ+UllOpjbXziwfycQ/yDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714360783; c=relaxed/simple;
-	bh=hcBy8KBLGpmqDcJu/8Kra/+TTVV/W23KaHdONXzXp3s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mfk4DOz5voJ0tMNHPtB8VmGk6sZaR8NAivNhQdxroHtwL8Tdeg41BKeVSeBNzK6RpwtFBuIxHg654GCVQVFX8lmGPxY3HZwtS/kDlDmrLjoSO/oT4aqv7vaJNU/tij+NRTNvMlX2sOaM9OKH/kPQCuBKwhMooOOjy4WNO69qXv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FJCp7i9P; arc=none smtp.client-ip=192.198.163.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1714365622; c=relaxed/simple;
+	bh=Y3Yw4fqjgMfx5qt0BxUNSBzAYTKoCa7xwgWrGN8ZRHU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hTJhwaqb0yyeoWlAL49NXEIUpGnvhN5+0i81kTeDAb2WCFB999WPc/5jLmAkBzDXiJYdSX3wj7TLQAxl+zC1uZXV28g+X4W+1tjDOl9rfWfkZFm84mcdTNAvCNLl7rlV1NrFkLfMZfEV7xWGyseJbM3WQkLi+vdpmr9nc1ZGVAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=4k5UAY5J; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FJCp7i9P"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1714360782; x=1745896782;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=hcBy8KBLGpmqDcJu/8Kra/+TTVV/W23KaHdONXzXp3s=;
-  b=FJCp7i9PC+r6hfiHHVw9BmX3vV0Bbu4rpo7gp3MXEVq7dBCcfggJspfb
-   DXc/gxuLEODwE5zF1kGqc2tSr04J8H0AvIslc1BWNSXsHW1dX+5Et+yj7
-   RCAuKmFu24e7Z8a/DS8D+sfPcYLx0qjN8yMYjr7C+0UP7QJzlNPdbQQHw
-   5rjoJBRP0bfXB0FcXG4JWgbynDXvU3kG1qTsBcyC/ZHDnuQUa+ovIAx2T
-   yaDQgnaQjZr3mcmih0sQLqf1uGTHkazT1d20JMj734/U8EV3XTy/8ImVI
-   1yum/RyzIOruaciHp7obXk4CTeqBzuKPDgAgWS0ruvTIZZki/fWoETLIh
-   w==;
-X-CSE-ConnectionGUID: zl2QiCncRKeYtDVxi+lgsA==
-X-CSE-MsgGUID: yQjVYyuLTrqopuf9bWZorQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11057"; a="10547582"
-X-IronPort-AV: E=Sophos;i="6.07,238,1708416000"; 
-   d="scan'208";a="10547582"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2024 20:19:41 -0700
-X-CSE-ConnectionGUID: Lye3sIonSZmI12SduFNr4Q==
-X-CSE-MsgGUID: zSPNO42wT/qM4Mt935SwWQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,238,1708416000"; 
-   d="scan'208";a="49201472"
-Received: from kscheema-mobl.amr.corp.intel.com (HELO [10.251.17.13]) ([10.251.17.13])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2024 20:19:40 -0700
-Message-ID: <88428faf-edae-4c43-96b3-a6d6bf7e3c83@linux.intel.com>
-Date: Sun, 28 Apr 2024 20:19:40 -0700
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="4k5UAY5J"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=DElu1HvIyaA3nI0Xb23ShaONautF5mIMDWu29gQbPi0=; b=4k5UAY5Jzfz3S+tN7NCALEjg13
+	kBc/lnwuF6G8ZTTptTdmF0PHldWt27CDW3mj1G/7qWSSvUHHrba3FeuAiP1Hz0wTfAZxN3Wn7O2yb
+	yLITyU49tjUy8FxagDp/ojJq0Wyq8LZJ3DGahdEhjAbluGiJho4DF608NnpDCm9QIWWgqkU+Eq8g0
+	Cam+0HbFK1ITEEFrEeksp5aBf3P3we3dzAmYUEpoWptTSUBSgh/McHQrL9mMrKYN5yb5bCNzaWTgA
+	/JtfeT0anK4y8aaZs3DtPWFUv5+c5CGfA8XlG8PDNaPvDg4+rINkI/eDhtxvTGdFGZCVk2S1RMIbZ
+	lkU6G9ow==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1s1IoO-00000001R8T-0LHY;
+	Mon, 29 Apr 2024 04:40:20 +0000
+Date: Sun, 28 Apr 2024 21:40:20 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Zorro Lang <zlang@redhat.com>
+Cc: fstests@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	willy@infradead.org, p.raghav@samsung.com, da.gomez@samsung.com,
+	hare@suse.de, john.g.garry@oracle.com, ziy@nvidia.com,
+	linux-xfs@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [RFC] fstests: add fsstress + writeback + debugfs folio split
+ test
+Message-ID: <Zi8ktG914Oc5_bl1@bombadil.infradead.org>
+References: <20240424224649.1494092-1-mcgrof@kernel.org>
+ <20240425053150.tx7pdosbfv5adat6@dell-per750-06-vm-08.rhts.eng.pek2.redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 59/71] platform/x86: intel_scu_wdt: Switch to new Intel
- CPU model defines
-To: Tony Luck <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>,
- Mika Westerberg <mika.westerberg@linux.intel.com>,
- Hans de Goede <hdegoede@redhat.com>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Cc: platform-driver-x86@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <20240424181245.41141-1-tony.luck@intel.com>
- <20240424181538.42292-1-tony.luck@intel.com>
-Content-Language: en-US
-From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-In-Reply-To: <20240424181538.42292-1-tony.luck@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240425053150.tx7pdosbfv5adat6@dell-per750-06-vm-08.rhts.eng.pek2.redhat.com>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Hi,
+On Thu, Apr 25, 2024 at 01:31:50PM +0800, Zorro Lang wrote:
+> On Wed, Apr 24, 2024 at 03:46:48PM -0700, Luis Chamberlain wrote:
+> > This is dangerous at the moment as its using
+> > a debugfs API which requires two out of tree fixes [0] [1] which will
+> > be posted shortly.
+> I can't find "boot_params" in /sys/kernel/debug/. So we might need to
+> fix this helper, and then call it in debugfs related test cases.
+> 
+> I'll send another patch to talk about that fix. For this case, it needs
+> _require_debugfs and $DEBUGFS_MNT.
 
-On 4/24/24 11:15 AM, Tony Luck wrote:
-> New CPU #defines encode vendor and family as well as model.
->
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> ---
+Sure I'll wait until you send patches to fix this.
 
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+> > +_begin_fstest long_rw stress soak smoketest dangerous_fuzzers
+> 
+> Just double check, is it a dangerous_fuzzers test, and not good to be in auto group?
 
->  drivers/platform/x86/intel_scu_wdt.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/platform/x86/intel_scu_wdt.c b/drivers/platform/x86/intel_scu_wdt.c
-> index a5031a25632e..d0b6637861d3 100644
-> --- a/drivers/platform/x86/intel_scu_wdt.c
-> +++ b/drivers/platform/x86/intel_scu_wdt.c
-> @@ -50,7 +50,7 @@ static struct intel_mid_wdt_pdata tangier_pdata = {
->  };
->  
->  static const struct x86_cpu_id intel_mid_cpu_ids[] = {
-> -	X86_MATCH_INTEL_FAM6_MODEL(ATOM_SILVERMONT_MID, &tangier_pdata),
-> +	X86_MATCH_VFM(INTEL_ATOM_SILVERMONT_MID, &tangier_pdata),
->  	{}
->  };
->  
+Yes for the explanation quoted above from the commit log, today the
+existing code requires fixes which I just posted. The sscanf bug is also
+hard to reproduce but I manged to reproduce it so this simple fix is
+still being discussed. So for now only those in the know of what they
+are doing should run this test.
 
--- 
-Sathyanarayanan Kuppuswamy
-Linux Kernel Developer
+> > +blocksize=$(_get_file_block_size $SCRATCH_MNT)
+> > +export XFS_DIO_MIN=$((blocksize * 2))
+> 
+> Oh, I even forgot we have this parameter in fsstress.c :)
 
+Yes, but its not well documented for good reason too, its only for DIO.
+
+> > +test -n "$SOAK_DURATION" && fsstress_args+=(--duration="$SOAK_DURATION")
+> > +
+> > +# Our general goal here is to race with ops which can stress folio addition,
+> > +# removal, edits, and writeback.
+> > +
+> > +# zero frequencies for write ops to minimize writeback
+> > +fsstress_args+=(-R)
+> 
+> But you set "fsstress_args=(-w -d $SCRATCH_MNT/test -n $nr_ops -p $nr_cpus)" above,
+> so you zeros frequencies of non-write operations (-w) and then zeros frequencies of
+> write operations (-R). Do you want to use "-z" directly, to zeros frequencies of
+> all operations ?
+
+You know, it took a whileto figure out the right values here but I've
+done more experimentation and we can just go with the defaults, what we
+also needed is to add compaction so to help reproduce the real crash I
+was trying to aim for. Now its cooked up.
+
+For now I'll just post a v2 RFC and leave the cleanup stuff you've
+requested for a v3. Right now this is just useful for folks who want
+to help debug truncation + writeback + compaction races we are
+uncovering with min order.
+
+  Luis
