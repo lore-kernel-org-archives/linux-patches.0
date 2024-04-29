@@ -1,93 +1,116 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48C6405C6
-	for <patches@lists.linux.dev>; Sun, 28 Apr 2024 18:27:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D4A8C1D
+	for <patches@lists.linux.dev>; Mon, 29 Apr 2024 03:19:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714328855; cv=none; b=d8yd4idZ1sYTPQn6xjtRW1kG84qvCv5CLmVBnSFo2+RNd52gYEA8Jq5AbvYWtMS69tUZLqA4vTkKo55Z/XCOf+2UKiYSp4UmWStfkgjEVpaEHuHVW1ygFBkD3CqBEobHpMZ7KX0yuv11QZiWw6s8bWApujfRe19QlxWZCxpcP+M=
+	t=1714360761; cv=none; b=jMWrVHQKVzDgUDfND64FP6Ney+b6ukuNnIDbjkQC6xAjY4SF7uD5nSbAdyLE/RJ/jZF1mWoCBIFfBnNqv58hHSWSRdh36UpC7+ImZEaxIJlgaguGYGs1vfnQ1mz/OUi/IwzovrLXXMnkJTu9vubtxW9YMdYnv3A3lCD5d6Eehcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714328855; c=relaxed/simple;
-	bh=5l4qF059Jl+xZK4vczGzOFodQkWmNupernBCDwDVl/0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JyggzSYwjg3vGmNwqJ2Ln0jkP+GUhtbpWTrX9q7e3DeLxZS8VDEf1LtktaEOsnAl+Xs+1N7CFP+RbkkuYGMnieDAagr87gzfVQOqbncXx6w9eNJpal1rGDq/UkGYUm3thpdq4nKLth0lVUbb45krHw2RI0y+s5k+qTYMZ2k+yZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=CJDRk3rb; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	s=arc-20240116; t=1714360761; c=relaxed/simple;
+	bh=OciEEx6Xa4RgJ2yE5vkIFxrnfJLD6otTLW5rQZyujT8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XC28YjaudJGLcFrGT1HQ5CnN9Y8YkYW+4LXVZvt53NXPEUmqmV89FyYS/QjtMWWC4OBZXotDKj2eX+5A/c1ssolIo4GsFvdsWGb6R6lUbwj7TczlXhBuQ8dPGsvQ7V8d4qpquYIT3vQjtXpLMIkqHNVccI6SnQCfX7Yl6l74KHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CtEYzdkF; arc=none smtp.client-ip=192.198.163.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="CJDRk3rb"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id D0E1940E0187;
-	Sun, 28 Apr 2024 18:27:31 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id jHKaPin2l2oW; Sun, 28 Apr 2024 18:27:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1714328847; bh=8LO+Vbu0GXOa88VCWMTXRnKezCCEZXtnWJGdmYc8JQg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CJDRk3rb863RBLi84AgiqtF9j/5FQmQO8m9PxU8fWffYIgxzeHilmsTdUSN4B5Mh4
-	 eIQlQalZscgCkLtbm7RKM3u9BuMoBIU+LKBWg/SxY6wEvaAT8j/Z5ptMqcM/S8TfRv
-	 cL8Rm5wgDodX53uYuDpfMJpEGcy/e5yT0DN6++5XsALrEQ67aoD5IH09qcWN9ztCUA
-	 BYLUNMRawuObmtXv5cri+AtGx7IzBHx6PMJ0gZD5aUUehOp99VdvNAZ73Q/bgR8fsA
-	 Yw9TZQvHC034TEIWD5VnjwPh5S/h2tlhI47r5Nx/JmbOLoXu6WHMNJ+yy1zjQISxgT
-	 ZXLZwZdin8+rSRZ9DBKdOoEEo5hjyUOwiomIv0dIIgc6uRpju3lMmcPbRD1CQ/fsEk
-	 exUXJP0OMPX0yjBdFlsV4FNicfdqwIuk1JHHBIZUOcHkfXRIjL54zBIt74PoD7z81l
-	 /ZTjvRI2S9kyKV1jhGvmKsY6JonhRG+oDvlIfzezpyl4m979A6E6tod5llqcqEruV5
-	 fCWg3ubwMHKy1P9LLDNrOB00IyD/MYaxjxPrHIonaI/e2sLF/HiPBK9pPm++5x29Fc
-	 kjNy40YCN0cq3WYxN/0w8ujFmzYTGR+qC/J3pTYQX4PhezmWlBTsIEop2DD37p7WV7
-	 mBA2KAfy3N3hr8uHq1L8vedI=
-Received: from zn.tnic (pd953020b.dip0.t-ipconnect.de [217.83.2.11])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 936A240E016B;
-	Sun, 28 Apr 2024 18:27:15 +0000 (UTC)
-Date: Sun, 28 Apr 2024 20:27:14 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"x86@kernel.org" <x86@kernel.org>, "H. Peter Anvin" <hpa@zytor.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	"Raj, Ashok" <ashok.raj@intel.com>,
-	"Si, Bingsong" <sibs@chinatelecom.cn>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v4 29/71] x86/cpu/intel: Switch to new Intel CPU model
- defines
-Message-ID: <20240428182714.GGZi6VAr-oBybEOXnO@fat_crate.local>
-References: <20240424181245.41141-1-tony.luck@intel.com>
- <20240424181508.41713-1-tony.luck@intel.com>
- <20240425104624.GCZio0gDJABGjzoan1@fat_crate.local>
- <SJ1PR11MB6083654145DEDC921F7E39BAFC172@SJ1PR11MB6083.namprd11.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CtEYzdkF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1714360760; x=1745896760;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=OciEEx6Xa4RgJ2yE5vkIFxrnfJLD6otTLW5rQZyujT8=;
+  b=CtEYzdkFPZw5UIz4RxjGFx13WYyneUt/pt28pUQkMahnBlC1CFnKv5eP
+   7nAYcW7oPFoFQBitKTeCwf6OmziTJTJ0mrUQBqjPU4G1eNKeCWn/Lg4ip
+   /RFIEtYXBIqu+6hXUEpbLeVc+pYAAYaDtz3c6SX0dRJOeq4PAdo4x9Tbz
+   BikuFpyg2W0g5wO/SreCRhcXmVMiwJBR6+eobvqiSgCJjJ1bHNzJaPMFg
+   By+THTZajTtqLEFATn1H3gsz7Q27ryYiwKVPB+FsBGVgs6dyq2ubJb9Jg
+   D4JDwSQgeynWSi3v4kMd/VAR3x5OCWrx37n+oWz1I6hKyzuIIV04r+huM
+   A==;
+X-CSE-ConnectionGUID: NWonPspvQNadc7oTaTct0w==
+X-CSE-MsgGUID: 2Nd2j0OZSMKvRwavf5vMyg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11057"; a="10226901"
+X-IronPort-AV: E=Sophos;i="6.07,238,1708416000"; 
+   d="scan'208";a="10226901"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2024 20:19:19 -0700
+X-CSE-ConnectionGUID: CJ2Vjf+9STq/TRcESaF6hw==
+X-CSE-MsgGUID: wyUBUmKiR3mGXD/N8gFbVQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,238,1708416000"; 
+   d="scan'208";a="56876978"
+Received: from kscheema-mobl.amr.corp.intel.com (HELO [10.251.17.13]) ([10.251.17.13])
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2024 20:19:18 -0700
+Message-ID: <96c53b0a-5123-4542-8bb2-f8a3f25f112c@linux.intel.com>
+Date: Sun, 28 Apr 2024 20:19:16 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <SJ1PR11MB6083654145DEDC921F7E39BAFC172@SJ1PR11MB6083.namprd11.prod.outlook.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 02/71] platform/x86/intel/ifs: Switch to new Intel CPU
+ model defines
+To: Tony Luck <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>,
+ Jithu Joseph <jithu.joseph@intel.com>, Hans de Goede <hdegoede@redhat.com>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Cc: Ashok Raj <ashok.raj@intel.com>, platform-driver-x86@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20240424181245.41141-1-tony.luck@intel.com>
+ <20240424181445.41193-1-tony.luck@intel.com>
+Content-Language: en-US
+From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+In-Reply-To: <20240424181445.41193-1-tony.luck@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Apr 25, 2024 at 04:29:37PM +0000, Luck, Tony wrote:
-> But since it is only used in one place, I should just do that test inline without
-> a helper:
-> 
-> 	if (c->x86_vfm == spectre_bad_microcodes[i].vfm &&
-> 	    c->x86_stepping == spectre_bad_microcodes[i].stepping)
-> 		return (c->microcode <= spectre_bad_microcodes[i].microcode);
+Hi,
 
-Right.
+On 4/24/24 11:14 AM, Tony Luck wrote:
+> New CPU #defines encode vendor and family as well as model.
+>
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> Reviewed-by: Jithu Joseph <jithu.joseph@intel.com>
+> ---
 
-Thx.
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+
+>  drivers/platform/x86/intel/ifs/core.c | 15 +++++++--------
+>  1 file changed, 7 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+> index 7b11198d85a1..33412a584836 100644
+> --- a/drivers/platform/x86/intel/ifs/core.c
+> +++ b/drivers/platform/x86/intel/ifs/core.c
+> @@ -11,16 +11,15 @@
+>  
+>  #include "ifs.h"
+>  
+> -#define X86_MATCH(model, array_gen)				\
+> -	X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6,	\
+> -		INTEL_FAM6_##model, X86_FEATURE_CORE_CAPABILITIES, array_gen)
+> +#define X86_MATCH(vfm, array_gen)				\
+> +	X86_MATCH_VFM_FEATURE(vfm, X86_FEATURE_CORE_CAPABILITIES, array_gen)
+>  
+>  static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
+> -	X86_MATCH(SAPPHIRERAPIDS_X, ARRAY_GEN0),
+> -	X86_MATCH(EMERALDRAPIDS_X, ARRAY_GEN0),
+> -	X86_MATCH(GRANITERAPIDS_X, ARRAY_GEN0),
+> -	X86_MATCH(GRANITERAPIDS_D, ARRAY_GEN0),
+> -	X86_MATCH(ATOM_CRESTMONT_X, ARRAY_GEN1),
+> +	X86_MATCH(INTEL_SAPPHIRERAPIDS_X, ARRAY_GEN0),
+> +	X86_MATCH(INTEL_EMERALDRAPIDS_X, ARRAY_GEN0),
+> +	X86_MATCH(INTEL_GRANITERAPIDS_X, ARRAY_GEN0),
+> +	X86_MATCH(INTEL_GRANITERAPIDS_D, ARRAY_GEN0),
+> +	X86_MATCH(INTEL_ATOM_CRESTMONT_X, ARRAY_GEN1),
+>  	{}
+>  };
+>  MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
 
 -- 
-Regards/Gruss,
-    Boris.
+Sathyanarayanan Kuppuswamy
+Linux Kernel Developer
 
-https://people.kernel.org/tglx/notes-about-netiquette
