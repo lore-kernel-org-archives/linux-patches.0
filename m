@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F0F12CD9B;
-	Tue, 30 Apr 2024 11:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2508012D1EA;
+	Tue, 30 Apr 2024 11:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475705; cv=none; b=LI7blnWliRm3SPlD+TxkVabgx4GsnNHs4x1ARBTp2KLKJECjlcNwTr12zdPuH4Bpfuv0Eyblz6Ot51HS1Fs2VcvOzsaRykQnhWAZJWH1CsLnYTHU2w6UYBysIeISoIo15DgYggxpGr5IqhrZQ22Ue9QXl6gqAOQzV3G138MzBjI=
+	t=1714475708; cv=none; b=c7O3Zoozl1+ZkmylaOpECMeQw+7eP1b7xbINzo3fmyh/zuF9/V6W05eRohp8EvdWSpk72w4zOrgNw2pQFBehfSvSdVrx5Q3uh/xWjDDtyDT1tns0R48ZEMHUg9IN4iHaGoJJL+g4v8avwEmSxI3d2nqCtZf1mF0T33Ai2+KtnyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475705; c=relaxed/simple;
-	bh=uKR3p7HHsAJQ44tDIyvKSlWrgUFWBitQXWGG0qoIDIQ=;
+	s=arc-20240116; t=1714475708; c=relaxed/simple;
+	bh=MVROt6RcWBNBpWrwwQWc+B6pQGC56VP+C6eVPiNQxuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zjq2EhDaT5mj35aYjl94+rKdhJYRhEOLzuS48S44AVRwcpx6z7Mkf92TgJtx2bESu9DRkkAWpL1vEK7jaDq6qIFbjxoctHsU/Hi/E3DQqZDa+n1QKLkIj9c7UkouQM63Qe8t81e3/egN7u/qnDPkvr3eFvueYGCHKliIpS3s1LI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlpy6Gje; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j9qbZKJbAMz8TfvTThcTejuQ3yMHhz6u42fCbh+Ly4cfHnyA6xlAqRxuLVZ1wqxz3d1+yOabCN8dASiOuwvl3AwQfMpl8f2Wg1ILz0DjcHWwWztK6l02njLlF0I1CVy4yOINE+6UXXF9pVffV+MGrkSTY9tVQijLSqRvYMVSeAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjEiLOds; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlpy6Gje"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F5AC2BBFC;
-	Tue, 30 Apr 2024 11:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjEiLOds"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E924C2BBFC;
+	Tue, 30 Apr 2024 11:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475704;
-	bh=uKR3p7HHsAJQ44tDIyvKSlWrgUFWBitQXWGG0qoIDIQ=;
+	s=korg; t=1714475708;
+	bh=MVROt6RcWBNBpWrwwQWc+B6pQGC56VP+C6eVPiNQxuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rlpy6Gje8ubpSYLhNEgnBIbceBfmLkMANWxXqftWJqdQhPIaSVk077Al0qy1ZDkmE
-	 pgoDfa0HlHsfleSJScZIDKISNrVvz8qCKHSO44WFwabvCMNY68KViXfF2wfFsbt8a5
-	 p4p/r6Ep0hLjG/FNfjTczduM67jpbbDSlYlETKhs=
+	b=PjEiLOdsagy0Lqm7/rPmbnMrJ4LEi0un3Ijr2zWsw4nDqy0GE7YlMLrCp6623lYXc
+	 ehYIoE9Ovhf+WZGZqujbP1BNEhj+pPFatJ7pW4G2pK/X2edJleJ0ow8++U6I3MvqBs
+	 hzEnfxtLIKlv0IWinX93kFTxGcQiFkrKj0cX3t9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergei Trofimovich <slyich@gmail.com>,
-	Igor Raits <igor@gooddata.com>,
-	Breno Leitao <leitao@debian.org>,
-	kernel test robot <oliver.sang@intel.com>,
-	Yujie Liu <yujie.liu@intel.com>,
-	Xuewen Yan <xuewen.yan@unisoc.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Chen Yu <yu.c.chen@intel.com>
-Subject: [PATCH 6.6 178/186] sched/eevdf: Prevent vlag from going out of bounds in reweight_eevdf()
-Date: Tue, 30 Apr 2024 12:40:30 +0200
-Message-ID: <20240430103103.198157606@linuxfoundation.org>
+	Baruch Siach <baruch@tkos.co.il>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 179/186] i2c: smbus: fix NULL function pointer dereference
+Date: Tue, 30 Apr 2024 12:40:31 +0200
+Message-ID: <20240430103103.227018407@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -57,83 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuewen Yan <xuewen.yan@unisoc.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 1560d1f6eb6b398bddd80c16676776c0325fe5fe ]
+[ Upstream commit 91811a31b68d3765b3065f4bb6d7d6d84a7cfc9f ]
 
-It was possible to have pick_eevdf() return NULL, which then causes a
-NULL-deref. This turned out to be due to entity_eligible() returning
-falsely negative because of a s64 multiplcation overflow.
+Baruch reported an OOPS when using the designware controller as target
+only. Target-only modes break the assumption of one transfer function
+always being available. Fix this by always checking the pointer in
+__i2c_transfer.
 
-Specifically, reweight_eevdf() computes the vlag without considering
-the limit placed upon vlag as update_entity_lag() does, and then the
-scaling multiplication (remember that weight is 20bit fixed point) can
-overflow. This then leads to the new vruntime being weird which then
-causes the above entity_eligible() to go side-ways and claim nothing
-is eligible.
-
-Thus limit the range of vlag accordingly.
-
-All this was quite rare, but fatal when it does happen.
-
-Closes: https://lore.kernel.org/all/ZhuYyrh3mweP_Kd8@nz.home/
-Closes: https://lore.kernel.org/all/CA+9S74ih+45M_2TPUY_mPPVDhNvyYfy1J1ftSix+KjiTVxg8nw@mail.gmail.com/
-Closes: https://lore.kernel.org/lkml/202401301012.2ed95df0-oliver.sang@intel.com/
-Fixes: eab03c23c2a1 ("sched/eevdf: Fix vruntime adjustment on reweight")
-Reported-by: Sergei Trofimovich <slyich@gmail.com>
-Reported-by: Igor Raits <igor@gooddata.com>
-Reported-by: Breno Leitao <leitao@debian.org>
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Reported-by: Yujie Liu <yujie.liu@intel.com>
-Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
-Reviewed-and-tested-by: Chen Yu <yu.c.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240422082238.5784-1-xuewen.yan@unisoc.com
+Reported-by: Baruch Siach <baruch@tkos.co.il>
+Closes: https://lore.kernel.org/r/4269631780e5ba789cf1ae391eec1b959def7d99.1712761976.git.baruch@tkos.co.il
+Fixes: 4b1acc43331d ("i2c: core changes for slave support")
+[wsa: dropped the simplification in core-smbus to avoid theoretical regressions]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Tested-by: Baruch Siach <baruch@tkos.co.il>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/i2c/i2c-core-base.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index a5466eb6a1f15..397ef27c9bdb1 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -707,15 +707,21 @@ u64 avg_vruntime(struct cfs_rq *cfs_rq)
+diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
+index 7f30bcceebaed..3642d42463209 100644
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -2187,13 +2187,18 @@ static int i2c_check_for_quirks(struct i2c_adapter *adap, struct i2c_msg *msgs,
+  * Returns negative errno, else the number of messages executed.
   *
-  * XXX could add max_slice to the augmented data to track this.
+  * Adapter lock must be held when calling this function. No debug logging
+- * takes place. adap->algo->master_xfer existence isn't checked.
++ * takes place.
   */
--static void update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
-+static s64 entity_lag(u64 avruntime, struct sched_entity *se)
+ int __i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
  {
--	s64 lag, limit;
-+	s64 vlag, limit;
+ 	unsigned long orig_jiffies;
+ 	int ret, try;
+ 
++	if (!adap->algo->master_xfer) {
++		dev_dbg(&adap->dev, "I2C level transfers not supported\n");
++		return -EOPNOTSUPP;
++	}
 +
-+	vlag = avruntime - se->vruntime;
-+	limit = calc_delta_fair(max_t(u64, 2*se->slice, TICK_NSEC), se);
-+
-+	return clamp(vlag, -limit, limit);
-+}
+ 	if (WARN_ON(!msgs || num < 1))
+ 		return -EINVAL;
  
-+static void update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
-+{
- 	SCHED_WARN_ON(!se->on_rq);
--	lag = avg_vruntime(cfs_rq) - se->vruntime;
+@@ -2260,11 +2265,6 @@ int i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ {
+ 	int ret;
  
--	limit = calc_delta_fair(max_t(u64, 2*se->slice, TICK_NSEC), se);
--	se->vlag = clamp(lag, -limit, limit);
-+	se->vlag = entity_lag(avg_vruntime(cfs_rq), se);
- }
- 
- /*
-@@ -3710,7 +3716,7 @@ static void reweight_eevdf(struct sched_entity *se, u64 avruntime,
- 	 *	   = V  - vl'
- 	 */
- 	if (avruntime != se->vruntime) {
--		vlag = (s64)(avruntime - se->vruntime);
-+		vlag = entity_lag(avruntime, se);
- 		vlag = div_s64(vlag * old_weight, weight);
- 		se->vruntime = avruntime - vlag;
- 	}
+-	if (!adap->algo->master_xfer) {
+-		dev_dbg(&adap->dev, "I2C level transfers not supported\n");
+-		return -EOPNOTSUPP;
+-	}
+-
+ 	/* REVISIT the fault reporting model here is weak:
+ 	 *
+ 	 *  - When we get an error after receiving N bytes from a slave,
 -- 
 2.43.0
 
