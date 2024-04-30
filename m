@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660C71292C8;
-	Tue, 30 Apr 2024 10:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D9C1292C8;
+	Tue, 30 Apr 2024 10:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474009; cv=none; b=W4W6Nh4JBzoUjZSQaKJIknmMQD5Hz50LnSAwXx3nTrpBzY+ObKK4cgOPmTLyQDBENm4+M53kApwYDhHpSuhAnVI6zzZLhzZeTeeE5Ha3Q8HZGYnTBqLQZi9mmYM86TeD5QzQkkPR5LrVp9FfHWWc6JJhDe4uxctNIy+Ll6GZRek=
+	t=1714474012; cv=none; b=Oz8MwFAc5WKbIUzKwcZOzLeH3M4NtT5j2SHyXznkuB/DiiSihctllRJbg9m4jFfX7qszrX1tGZQNiCe9cQ/svpbKqp0XiQNej9eaAswivVCFfwDQQKPeZcsqDP56g6JzuhNgBgVuootNZGYMg4e0zi2Di4Pal6ALZG7jNKhbPJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474009; c=relaxed/simple;
-	bh=jJOcq85pZrQDvPFA9YgtdbQsF9URnvHjm9MNsVY2Vzw=;
+	s=arc-20240116; t=1714474012; c=relaxed/simple;
+	bh=BpFEz+70OYUlnR+ZdWsrTOJcT83aKAzgYQE03lfJ47I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RdWasWem01G+5uyF3euuWunaTqa3pEjSIkZKgs2X7/FOtInh48uztP1T8Ds+eBCvn4RqS5+gB9x8fTdbf9nFdqTfRUvzE5a+ZsvlKS5uJ8yam+NwaMO66z+EmOUgxmJbZu3t9YGQlixhYh4sk2MrZW4rDP904WRSCGbHOOChD50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5mK3b7m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KDzUnVZyUprxX2hwsXQeFc2mddBI6Y8rmQ1kHOnTO64P3HpckWuGisGJNW7sfzBRfw5IrGQdIOwdgEIP0XE+GY29iMqlo6KXCuA+DgStTnomCEH3rVfxYK9V/SLya77jnEVNw5WNll1tg4fu6GzYKGrYbH8kdsOIiDtyO8/GFFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spa/P/Y5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5mK3b7m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81495C2BBFC;
-	Tue, 30 Apr 2024 10:46:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spa/P/Y5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8110C4AF1A;
+	Tue, 30 Apr 2024 10:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474009;
-	bh=jJOcq85pZrQDvPFA9YgtdbQsF9URnvHjm9MNsVY2Vzw=;
+	s=korg; t=1714474012;
+	bh=BpFEz+70OYUlnR+ZdWsrTOJcT83aKAzgYQE03lfJ47I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m5mK3b7m944oDgCh6Us8uZ9tEAa8vK0p+3tu2Rhf5UAABhJBPyq4lSBr0ooA8h3w3
-	 EezHeqT2ii0ZJd1Fqjo6bdji+Rf8/cEvGZRScLXuwuE5ZgsJ2vzRVsIYDqlbop/xqd
-	 dECw1KbXahf2RZZgXz7tFTb0fnYITYPBLrqE1ZS8=
+	b=spa/P/Y56+mngCrFSyiXK5cerEIr+K+pMm+9oojoLpvVGTF962nIpmd2ec02MK3Kj
+	 /JsToQCcC4UrhxRtfY04LJnDUZ6ayBhOcPaTk0SNHlPYkuRHrAj5V8TvWLekmDs8j+
+	 U5WdenuMyxZFP0Q166+GDtuun2o2V2zVqxX955KU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 016/228] arm64: dts: mediatek: mt8195: Add missing gce-client-reg to mutex1
-Date: Tue, 30 Apr 2024 12:36:34 +0200
-Message-ID: <20240430103104.283554636@linuxfoundation.org>
+Subject: [PATCH 6.8 034/228] block: fix module reference leakage from bdev_open_by_dev error path
+Date: Tue, 30 Apr 2024 12:36:52 +0200
+Message-ID: <20240430103104.801197164@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -45,44 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 58f126296c3c52d02bf3fad1f68c331d718c4a9b ]
+[ Upstream commit 9617cd6f24b294552a817f80f5225431ef67b540 ]
 
-Add the missing mediatek,gce-client-reg property to the mutex1 node to
-allow it to use the GCE. This prevents the "can't parse gce-client-reg
-property" error from being printed and should result in better
-performance.
+At the time bdev_may_open() is called, module reference is grabbed
+already, hence module reference should be released if bdev_may_open()
+failed.
 
-Fixes: 92d2c23dc269 ("arm64: dts: mt8195: add display node for vdosys1")
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://lore.kernel.org/r/20240229-gce-client-reg-add-missing-mt8192-95-v1-4-b12c233a8a33@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+This problem is found by code review.
+
+Fixes: ed5cc702d311 ("block: Add config option to not allow writing to mounted devices")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20240406090930.2252838-22-yukuai1@huaweicloud.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ block/bdev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index 6cea6612e2feb..4dd7f755630ea 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -3305,6 +3305,7 @@
- 			power-domains = <&spm MT8195_POWER_DOMAIN_VDOSYS1>;
- 			clocks = <&vdosys1 CLK_VDO1_DISP_MUTEX>;
- 			clock-names = "vdo1_mutex";
-+			mediatek,gce-client-reg = <&gce0 SUBSYS_1c10XXXX 0x1000 0x1000>;
- 			mediatek,gce-events = <CMDQ_EVENT_VDO1_STREAM_DONE_ENG_0>;
- 		};
- 
+diff --git a/block/bdev.c b/block/bdev.c
+index 2b0f97651a0a7..812872cdc0bef 100644
+--- a/block/bdev.c
++++ b/block/bdev.c
+@@ -873,7 +873,7 @@ struct bdev_handle *bdev_open_by_dev(dev_t dev, blk_mode_t mode, void *holder,
+ 		goto abort_claiming;
+ 	ret = -EBUSY;
+ 	if (!bdev_may_open(bdev, mode))
+-		goto abort_claiming;
++		goto put_module;
+ 	if (bdev_is_partition(bdev))
+ 		ret = blkdev_get_part(bdev, mode);
+ 	else
 -- 
 2.43.0
 
