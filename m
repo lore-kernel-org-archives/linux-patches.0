@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D722812BF21;
-	Tue, 30 Apr 2024 10:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5289129E81;
+	Tue, 30 Apr 2024 10:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473766; cv=none; b=elVQfy0jCyutJ2A1p4df4YIm3iDccbQ0qMgp7tEwALKKWC9r3yyDKurYFoyGE5dypCHB7YrljZOqDUmEx8UI17RB5s6fJxVzuE3vKs5Vj4pe8JuZ1+lfsgUeKb2m6eI0Bve8iH72fxSSSu4kTDb85VjKKtN9RaAyZi7rpLxnlww=
+	t=1714473769; cv=none; b=iriZSGYyegJtaWT1kqBrZ7YHWxCEpJzyeRav3C5DPavpIBn9+FwI6IusOBjZ9rYoXvhCvOprj/SFY+YapzqygL3wAm5Hmjpi3iOwmE/D6BgqrJ4fqkwcEL5n5PsOSLu4D+N+pYKxmHBlKa1Ccxpa/p+X+qRAGn7ceEIcyRxOQIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473766; c=relaxed/simple;
-	bh=xDfJOzT6eSeA6UcH2PcaUtAYMM2iaezGcR0HlLQOdPM=;
+	s=arc-20240116; t=1714473769; c=relaxed/simple;
+	bh=hAy7FjLwADrv2uPEm3Nt5fkA/tSsAE3YTCrmRXVOOFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZCCEAldcHyXHNNdvV24NncDPyNB1XY0yrl3oqNxXCms5FZ70dluVUjQDODEHTZF+UbZO/Yu0fNMfhFWDvKVT6c/XtHhNcF+yp7dZY6mW2Bxyw8y2Pyo06SRHknRiornzthwsHBUUBrorsXcVga4uPqGcyXCjOis2kL5t/v6tilQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQKEYLaW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kiHV2SdK6/UsCvE7XFWxWPQQTc5I5H2xbkCv4e458eRnxETGjZMEFcfLcSB6M6vmeTe8vGJN6PS8KogwKnM5EANmzWw79eWdDevOVg80bBBcnjSLrnSAyGNCigMY6/4OCgGIxOGBBwxDgxNWzarmh9WTFcKNjhKynnrCbbnV+yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yC6S1QBc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQKEYLaW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60231C2BBFC;
-	Tue, 30 Apr 2024 10:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yC6S1QBc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F01EC2BBFC;
+	Tue, 30 Apr 2024 10:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473766;
-	bh=xDfJOzT6eSeA6UcH2PcaUtAYMM2iaezGcR0HlLQOdPM=;
+	s=korg; t=1714473769;
+	bh=hAy7FjLwADrv2uPEm3Nt5fkA/tSsAE3YTCrmRXVOOFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uQKEYLaWxoxRpgpIAUHlWlD540n2MVjWVeNFHAHJO5b9KKrZoFgDGM67s2EmZSly3
-	 Cd5W2LFqqCAy/kGK4PAp+nIbsYDHRT9SF6GEtJ2eInsveZUBiomz1K13k3nurDAt1b
-	 lyVv/YcXcEgdeELZmKa053fw8bLNECYuBJcRsnww=
+	b=yC6S1QBc7iT6QVhvMFRVZZYbQDIjZkBtrHr8NmAMwL8H5ytNRbzD+cu+UOeHVSfUn
+	 EvbDHcouGC5xV3VGSyhhA2YXGQ3WAKzIq/KFDqD6rBMCurcbiY2a35Qp7tYucID3+g
+	 N/hy19GXn+3+vkX6Dg0x4GGmUevsQCdH4m2y6AWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Thibault <samuel.thibault@ens-lyon.org>
-Subject: [PATCH 4.19 32/77] speakup: Avoid crash on very long word
-Date: Tue, 30 Apr 2024 12:39:11 +0200
-Message-ID: <20240430103042.079698881@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 4.19 33/77] fs: sysfs: Fix reference leak in sysfs_break_active_protection()
+Date: Tue, 30 Apr 2024 12:39:12 +0200
+Message-ID: <20240430103042.109430405@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -49,32 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Thibault <samuel.thibault@ens-lyon.org>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit c8d2f34ea96ea3bce6ba2535f867f0d4ee3b22e1 upstream.
+commit a90bca2228c0646fc29a72689d308e5fe03e6d78 upstream.
 
-In case a console is set up really large and contains a really long word
-(> 256 characters), we have to stop before the length of the word buffer.
+The sysfs_break_active_protection() routine has an obvious reference
+leak in its error path.  If the call to kernfs_find_and_get() fails then
+kn will be NULL, so the companion sysfs_unbreak_active_protection()
+routine won't get called (and would only cause an access violation by
+trying to dereference kn->parent if it was called).  As a result, the
+reference to kobj acquired at the start of the function will never be
+released.
 
-Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Fixes: c6e3fd22cd538 ("Staging: add speakup to the staging directory")
+Fix the leak by adding an explicit kobject_put() call when kn is NULL.
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 2afc9166f79b ("scsi: sysfs: Introduce sysfs_{un,}break_active_protection()")
+Cc: Bart Van Assche <bvanassche@acm.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240323164843.1426997-1-samuel.thibault@ens-lyon.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/8a4d3f0f-c5e3-4b70-a188-0ca433f9e6f9@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/speakup/main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/sysfs/file.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/staging/speakup/main.c
-+++ b/drivers/staging/speakup/main.c
-@@ -577,7 +577,7 @@ static u_long get_word(struct vc_data *v
- 	}
- 	attr_ch = get_char(vc, (u_short *)tmp_pos, &spk_attr);
- 	buf[cnt++] = attr_ch;
--	while (tmpx < vc->vc_cols - 1) {
-+	while (tmpx < vc->vc_cols - 1 && cnt < sizeof(buf) - 1) {
- 		tmp_pos += 2;
- 		tmpx++;
- 		ch = get_char(vc, (u_short *)tmp_pos, &temp);
+--- a/fs/sysfs/file.c
++++ b/fs/sysfs/file.c
+@@ -429,6 +429,8 @@ struct kernfs_node *sysfs_break_active_p
+ 	kn = kernfs_find_and_get(kobj->sd, attr->name);
+ 	if (kn)
+ 		kernfs_break_active_protection(kn);
++	else
++		kobject_put(kobj);
+ 	return kn;
+ }
+ EXPORT_SYMBOL_GPL(sysfs_break_active_protection);
 
 
