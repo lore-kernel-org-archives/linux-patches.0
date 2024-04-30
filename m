@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A237912C462;
-	Tue, 30 Apr 2024 10:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B686D12C534;
+	Tue, 30 Apr 2024 10:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474552; cv=none; b=FD/njwn9mz0hgxqBXpmUjVKiGxSdfRMqvDjgtUNdDBcMKBLyXHiyyleXXXBRWvkKbIPGMSWYT+aVdY1BR3iOpwNhnHJ87hPja7ztsgt2RXXVv5x8QJOQsqIsLGFHc/6FYAylk5uLDjw85mhGkfPoUt4+LWv4iwVHG2/vG6JHncc=
+	t=1714474560; cv=none; b=VmhVrPd51D5x/fExd1I5GhKII8AUp7GczZh9/T0k4y6uIiGSWtZ66S9OSG6SXyMy85vFFvKA6VnFJdUa1ZHOjok7jIBobye6UUxgt7zMYuznjXdObr/t+ZnlhFC//CbRePFW9Rh5BPSKRy0iOCvt593UVecsIMPrRZHWvIBX1OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474552; c=relaxed/simple;
-	bh=CnPL1QINPj4EANswjwcDm1Z9IhPMqHexVW1UlPrCgWI=;
+	s=arc-20240116; t=1714474560; c=relaxed/simple;
+	bh=gcZeJUkJM8JVWj1Nvii9UYlbGPkSLFRxhfuzeYwDPVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uo2gv86d+dJYA8aPpRSXC5ayaRUbYIJfmZjmrk3M3Q0XWBuZ3eXNY53dzyfybDJ8DDL0SQtxWUHCcFYpFMjDqJZWw5z8szLPEWP2/P4oT2UtE3eeaN2eszRZ9WFlhEoODLHyATMy2FvfKJBv5GrH7VLVall4NS0fM3qa8uHQL6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oFnXUNt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uzsxllIpxPo1x3GkqsQf3ey1Lp+geNs7CIjj5UU1V7lLN2jyg6a8IaUjuVUhm/VgowYjovEH08KIGEfPuquObO7UD8gNM5s8hHEMlPjX/ZDUbFm1o9AZCMVdT8Uv8y9FphBxZg88Arwb3fMee6EZmDpY5aAEB2w8c98nfU3rVKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLeCjjyI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oFnXUNt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D10C4AF19;
-	Tue, 30 Apr 2024 10:55:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLeCjjyI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FFDC2BBFC;
+	Tue, 30 Apr 2024 10:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474552;
-	bh=CnPL1QINPj4EANswjwcDm1Z9IhPMqHexVW1UlPrCgWI=;
+	s=korg; t=1714474560;
+	bh=gcZeJUkJM8JVWj1Nvii9UYlbGPkSLFRxhfuzeYwDPVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0oFnXUNtQ6zmOh1fw9aNc/6RbfNvxPmxTpdQ+jFP6pPXpQ2DK6+9D1DXbUqdd8wZs
-	 B0wg9XOhVu55eWTtSMDXQeDx5wXyW2trtOC07uq17gikQswmMdGLL2EF0SY3Hp9tR9
-	 lhAZEhF/hJGnIepDc3aRSnvSFWLKYA6sFjLNlf8M=
+	b=rLeCjjyIPNvCREJiBBZYAdOIToI98mxIhPNEp6REvNarG4tWP6Lj91MT2C9e/MvsA
+	 12VHzj6ZhsUplmWZ9JhdvuWNcs6ItzGZWodkgNiu/+P1vftfZ9nVDujQAV7V9YW0M5
+	 W9r9X8utBp2QLAQHy9zL7dMBse6eab/XYoxTfx4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.8 193/228] mtd: limit OTP NVMEM cell parse to non-NAND devices
-Date: Tue, 30 Apr 2024 12:39:31 +0200
-Message-ID: <20240430103109.368580430@linuxfoundation.org>
+Subject: [PATCH 6.8 194/228] mtd: diskonchip: work around ubsan link failure
+Date: Tue, 30 Apr 2024 12:39:32 +0200
+Message-ID: <20240430103109.397683679@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -50,57 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit d2d73a6dd17365c43e109263841f7c26da55cfb0 upstream.
+commit 21c9fb611c25d5cd038f6fe485232e7884bb0b3d upstream.
 
-MTD OTP logic is very fragile on parsing NVMEM cell and can be
-problematic with some specific kind of devices.
+I ran into a randconfig build failure with UBSAN using gcc-13.2:
 
-The problem was discovered by e87161321a40 ("mtd: rawnand: macronix:
-OTP access for MX30LFxG18AC") where OTP support was added to a NAND
-device. With the case of NAND devices, it does require a node where ECC
-info are declared and all the fixed partitions, and this cause the OTP
-codepath to parse this node as OTP NVMEM cells, making probe fail and
-the NAND device registration fail.
+arm-linux-gnueabi-ld: error: unplaced orphan section `.bss..Lubsan_data31' from `drivers/mtd/nand/raw/diskonchip.o'
 
-MTD OTP parsing should have been limited to always using compatible to
-prevent this error by using node with compatible "otp-user" or
-"otp-factory".
+I'm not entirely sure what is going on here, but I suspect this has something
+to do with the check for the end of the doc_locations[] array that contains
+an (unsigned long)0xffffffff element, which is compared against the signed
+(int)0xffffffff. If this is the case, we should get a runtime check for
+undefined behavior, but we instead get an unexpected build-time error.
 
-NVMEM across the years had various iteration on how cells could be
-declared in DT, in some old implementation, no_of_node should have been
-enabled but now add_legacy_fixed_of_cells should be used to disable
-NVMEM to parse child node as NVMEM cell.
+I would have expected this to work fine on 32-bit architectures despite the
+signed integer overflow, though on 64-bit architectures this likely won't
+ever work.
 
-To fix this and limit any regression with other MTD that makes use of
-declaring OTP as direct child of the dev node, disable
-add_legacy_fixed_of_cells if we detect the MTD type is Nand.
+Changing the contition to instead check for the size of the array makes the
+code safe everywhere and avoids the ubsan check that leads to the link
+error. The loop code goes back to before 2.6.12.
 
-With the following logic, the OTP NVMEM entry is correctly created with
-no cells and the MTD Nand is correctly probed and partitions are
-correctly exposed.
-
-Fixes: 4b361cfa8624 ("mtd: core: add OTP nvmem provider support")
-Cc: <stable@vger.kernel.org> # v6.7+
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240412105030.1598-1-ansuelsmth@gmail.com
+Link: https://lore.kernel.org/linux-mtd/20240405143015.717429-1-arnd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdcore.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/diskonchip.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -900,7 +900,7 @@ static struct nvmem_device *mtd_otp_nvme
- 	config.name = compatible;
- 	config.id = NVMEM_DEVID_AUTO;
- 	config.owner = THIS_MODULE;
--	config.add_legacy_fixed_of_cells = true;
-+	config.add_legacy_fixed_of_cells = !mtd_type_is_nand(mtd);
- 	config.type = NVMEM_TYPE_OTP;
- 	config.root_only = true;
- 	config.ignore_wp = true;
+--- a/drivers/mtd/nand/raw/diskonchip.c
++++ b/drivers/mtd/nand/raw/diskonchip.c
+@@ -53,7 +53,7 @@ static unsigned long doc_locations[] __i
+ 	0xe8000, 0xea000, 0xec000, 0xee000,
+ #endif
+ #endif
+-	0xffffffff };
++};
+ 
+ static struct mtd_info *doclist = NULL;
+ 
+@@ -1554,7 +1554,7 @@ static int __init init_nanddoc(void)
+ 		if (ret < 0)
+ 			return ret;
+ 	} else {
+-		for (i = 0; (doc_locations[i] != 0xffffffff); i++) {
++		for (i = 0; i < ARRAY_SIZE(doc_locations); i++) {
+ 			doc_probe(doc_locations[i]);
+ 		}
+ 	}
 
 
