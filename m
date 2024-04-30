@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC16128816;
-	Tue, 30 Apr 2024 10:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F4C12B176;
+	Tue, 30 Apr 2024 10:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474693; cv=none; b=jgtVva/sD08g1VL3jySe4p9jdNj3YoooEO7KogCVPl6bsgeDoP5FkXBxTC1fHggSXX1GumUVgq2Om8Vjj6qw6c+AZj6GpITZ2d4/cmfoQhmwsR8lU68+KreWkWcMAPU9lqkhZyKuyakkT5c0j8UrQUfaSadEDrpbLS+0fMDXFCo=
+	t=1714474697; cv=none; b=J7FsQjavtVJx70qXzYLivDBUO+vIQHx/dIPDQzBz/TEQ/8jbhLzGcA3MNw4ptEbhnfk9ki+/WH1Hs1NVDP2xMvS29/hK83ROypb7xLaU2OXvNf9RwJAL4x1CGmfCzq/9lqRxcPx6sjtCc7UYTjt0lSis1FILbt0iEzf6ZunpU9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474693; c=relaxed/simple;
-	bh=sVNrfHH8Gw53TRd8SrCLd2co5Vr7hRPlnnfye1u5/7I=;
+	s=arc-20240116; t=1714474697; c=relaxed/simple;
+	bh=uCTjn1BA2rB6wfqZnqAgHz2wsuGpAfIBgzeLMZa8PLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q5rW5GQ8HgoteqW2aNLWdEflWZypkJ4c+yHypyh4qZRFIE/d3sRWMvygjTYGYbT7HTTGMpcKQ4MHkRBtYtyvW5FPXl9Zs0v5ScP4QaIuPtljRzcWYryKOe/KJVqYirMAihGaBRthdnqfE6XtruRoBw1+s4j52qHb+yJkGdNBHtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IU/8w3zC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jvzaFsylhIxvY5GFGG3REAOH+Iz1RM9QIXhOs05lDvbG360wnTpi662XEOvjj2StCtwKdWkpn05J09weOml98j7yCyVjkX+SDICCk3qDVE051yoU1MzL2Dl7wDAHJ2s57K6CxFK6bJ7hgu8G+Gu/7yHgVVF87jS7mYxDDqWoDCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFjQUF6v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IU/8w3zC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58B4C2BBFC;
-	Tue, 30 Apr 2024 10:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFjQUF6v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F12B0C2BBFC;
+	Tue, 30 Apr 2024 10:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474693;
-	bh=sVNrfHH8Gw53TRd8SrCLd2co5Vr7hRPlnnfye1u5/7I=;
+	s=korg; t=1714474697;
+	bh=uCTjn1BA2rB6wfqZnqAgHz2wsuGpAfIBgzeLMZa8PLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IU/8w3zC0Eh5qbyp+1bwKK35DO0faDXCz65f65VPmUhAt9rAnZFdM3X3dJXSBUH1E
-	 LfIcWpH9XSppgNUw7ZbtI6/EKy7WfUZof5XgWCq7Yg55q9JQuKqlrWSlo0poKnMMdg
-	 gR0PMu2cfsJUtN8c4MGAaMIsFmtqwpEyHFXqu8uI=
+	b=TFjQUF6vK+M31U2GIE+rjtVYD9arMG1SZ/NjAgH4t03T+TpshWf5oCQJg+xvICDiq
+	 BlJIjt4leT4xi83almDKGxE5mtkAO0UMV9Hckda1rsN5oAfRGNyHIsmpSiyRXECXco
+	 bgjb28MLy0AGymGO90M+D6aPMA8lXy4uNCqW7Np4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.8 228/228] Bluetooth: hci_sync: Fix UAF on hci_abort_conn_sync
-Date: Tue, 30 Apr 2024 12:40:06 +0200
-Message-ID: <20240430103110.381831659@linuxfoundation.org>
+	Woodrow Shen <woodrow.shen@sifive.com>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 222/228] RISC-V: selftests: cbo: Ensure asm operands match constraints, take 2
+Date: Tue, 30 Apr 2024 12:40:00 +0200
+Message-ID: <20240430103110.208792996@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -49,66 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Andrew Jones <ajones@ventanamicro.com>
 
-commit 7453847fb22c7c45334c43cc6a02ea5df5b9961d upstream.
+[ Upstream commit 49408400d683ae4f41e414dfcb615166cc93be5c ]
 
-Fixes the following trace where hci_acl_create_conn_sync attempts to
-call hci_abort_conn_sync after timeout:
+Commit 0de65288d75f ("RISC-V: selftests: cbo: Ensure asm operands
+match constraints") attempted to ensure MK_CBO() would always
+provide to a compile-time constant when given a constant, but
+cpu_to_le32() isn't necessarily going to do that. Switch to manually
+shifting the bytes, when needed, to finally get this right.
 
-BUG: KASAN: slab-use-after-free in hci_abort_conn_sync
-(net/bluetooth/hci_sync.c:5439)
-Read of size 2 at addr ffff88800322c032 by task kworker/u3:2/36
-
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-1.fc38
-04/01/2014
-Workqueue: hci0 hci_cmd_sync_work
-Call Trace:
-<TASK>
-dump_stack_lvl (./arch/x86/include/asm/irqflags.h:26
-./arch/x86/include/asm/irqflags.h:67 ./arch/x86/include/asm/irqflags.h:127
-lib/dump_stack.c:107)
-print_report (mm/kasan/report.c:378 mm/kasan/report.c:488)
-? preempt_count_sub (kernel/sched/core.c:5889)
-? __virt_addr_valid (./arch/x86/include/asm/preempt.h:103 (discriminator 1)
-./include/linux/rcupdate.h:865 (discriminator 1)
-./include/linux/mmzone.h:2026 (discriminator 1)
-arch/x86/mm/physaddr.c:65 (discriminator 1))
-? hci_abort_conn_sync (net/bluetooth/hci_sync.c:5439)
-kasan_report (mm/kasan/report.c:603)
-? hci_abort_conn_sync (net/bluetooth/hci_sync.c:5439)
-hci_abort_conn_sync (net/bluetooth/hci_sync.c:5439)
-? __pfx_hci_abort_conn_sync (net/bluetooth/hci_sync.c:5433)
-hci_acl_create_conn_sync (net/bluetooth/hci_sync.c:6681)
-
-Fixes: 45340097ce6e ("Bluetooth: hci_conn: Only do ACL connections sequentially")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Woodrow Shen <woodrow.shen@sifive.com>
+Closes: https://lore.kernel.org/all/CABquHATcBTUwfLpd9sPObBgNobqQKEAZ2yxk+TWSpyO5xvpXpg@mail.gmail.com/
+Fixes: a29e2a48afe3 ("RISC-V: selftests: Add CBO tests")
+Fixes: 0de65288d75f ("RISC-V: selftests: cbo: Ensure asm operands match constraints")
+Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+Link: https://lore.kernel.org/r/20240322134728.151255-2-ajones@ventanamicro.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c |   13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ tools/testing/selftests/riscv/hwprobe/cbo.c     |  2 +-
+ tools/testing/selftests/riscv/hwprobe/hwprobe.h | 10 ++++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6735,15 +6735,10 @@ static int hci_acl_create_conn_sync(stru
- 	else
- 		cp.role_switch = 0x00;
+diff --git a/tools/testing/selftests/riscv/hwprobe/cbo.c b/tools/testing/selftests/riscv/hwprobe/cbo.c
+index c537d52fafc58..a40541bb7c7de 100644
+--- a/tools/testing/selftests/riscv/hwprobe/cbo.c
++++ b/tools/testing/selftests/riscv/hwprobe/cbo.c
+@@ -19,7 +19,7 @@
+ #include "hwprobe.h"
+ #include "../../kselftest.h"
  
--	err = __hci_cmd_sync_status_sk(hdev, HCI_OP_CREATE_CONN,
--				       sizeof(cp), &cp,
--				       HCI_EV_CONN_COMPLETE,
--				       conn->conn_timeout, NULL);
--
--	if (err == -ETIMEDOUT)
--		hci_abort_conn_sync(hdev, conn, HCI_ERROR_LOCAL_HOST_TERM);
--
--	return err;
-+	return __hci_cmd_sync_status_sk(hdev, HCI_OP_CREATE_CONN,
-+					sizeof(cp), &cp,
-+					HCI_EV_CONN_COMPLETE,
-+					conn->conn_timeout, NULL);
- }
+-#define MK_CBO(fn) cpu_to_le32((fn) << 20 | 10 << 15 | 2 << 12 | 0 << 7 | 15)
++#define MK_CBO(fn) le32_bswap((uint32_t)(fn) << 20 | 10 << 15 | 2 << 12 | 0 << 7 | 15)
  
- int hci_connect_acl_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ static char mem[4096] __aligned(4096) = { [0 ... 4095] = 0xa5 };
+ 
+diff --git a/tools/testing/selftests/riscv/hwprobe/hwprobe.h b/tools/testing/selftests/riscv/hwprobe/hwprobe.h
+index e3fccb390c4dc..f3de970c32227 100644
+--- a/tools/testing/selftests/riscv/hwprobe/hwprobe.h
++++ b/tools/testing/selftests/riscv/hwprobe/hwprobe.h
+@@ -4,6 +4,16 @@
+ #include <stddef.h>
+ #include <asm/hwprobe.h>
+ 
++#if __BYTE_ORDER == __BIG_ENDIAN
++# define le32_bswap(_x)				\
++	((((_x) & 0x000000ffU) << 24) |		\
++	 (((_x) & 0x0000ff00U) <<  8) |		\
++	 (((_x) & 0x00ff0000U) >>  8) |		\
++	 (((_x) & 0xff000000U) >> 24))
++#else
++# define le32_bswap(_x) (_x)
++#endif
++
+ /*
+  * Rather than relying on having a new enough libc to define this, just do it
+  * ourselves.  This way we don't need to be coupled to a new-enough libc to
+-- 
+2.43.0
+
 
 
