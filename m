@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF971292C8;
-	Tue, 30 Apr 2024 10:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0724112C48B;
+	Tue, 30 Apr 2024 10:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474137; cv=none; b=RUg4fIE47a3NZyRIDFbzxCAlJGIMX0Y6/RD69pH/EBDj8hQRNeVqdaDRIbIRBqDFW1BA3Ie8z4ms4MazeVbWpPx+8uW4b77M8eYGvPmjgPRvhzQ+qwg83yKwY3vMRJKyog5yG6lSu4fG3oRfQUjX4vYfxNttOlyfPhPARRssX7w=
+	t=1714474141; cv=none; b=hIqKM/vk9eoF1N0vU+BZ273Cf79vCQa8X7mYNuZGmz02J0+hP6pwy9tRUiCFsN+/yE6Z2jgceYb0Z5UQWcTeE/LzRFyKs3bjWg03Ygg8/pBN9t0EBZ8KP96P8IRnKcpGMb7eVc2mD0fOYg+t0EEHyjVjVArgT4IMAYuHHnq0Rdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474137; c=relaxed/simple;
-	bh=45Irq4r6mHvjqv56TuSilZTAdojhAVinqjxnj/S3rJs=;
+	s=arc-20240116; t=1714474141; c=relaxed/simple;
+	bh=9+njhMydE3LnLJWLFlV/TPzzxRLjUAVHixd8r6j2uDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fg6PaRMudJhLXugg+7ilIj6jrCzWLIiSIiDDlMCDClwfnKeIlCfjyUkNJbBeNFuQ1PzNNqxikn4YMZdOtfQXCjY516zibE8J0hVNDej+TK2gF2emlGBC8LI8fjchJFWeP7M+wN/FAM8tdEUUZEeMWovkdD3XxCrgPCKgXGNZaIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCUwI5FL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T/04ry5eV4+tc5UELXQZitgBH2u5uUf+ZwWRZybrQukN6JYxsjW6JFSkICdC9awt+5L+diBx9q1Y7y/wk9GcIu9ljpvjPXh4t5ifiHoAiC1Hww65/d1N1wqjoa9PXWsvin4X7NNPr8xo2qxAotMol5BTZBflar7gIKDpZwgbWyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwluZi8P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCUwI5FL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A43C2BBFC;
-	Tue, 30 Apr 2024 10:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwluZi8P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF66C2BBFC;
+	Tue, 30 Apr 2024 10:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474137;
-	bh=45Irq4r6mHvjqv56TuSilZTAdojhAVinqjxnj/S3rJs=;
+	s=korg; t=1714474140;
+	bh=9+njhMydE3LnLJWLFlV/TPzzxRLjUAVHixd8r6j2uDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RCUwI5FL34RPp6X0FcNdhSVfiVkostgGjC0FcggpfwUfz/BTJicjYO6qOdmnTLt+o
-	 qO3uQLoLeVKMNB2Ch0o2I3eQ4TzPM3EmcauJ1MKNxKH/5HWNkY5hue4jUcpPs23JMM
-	 krvhECKKqnbTMJ7uP3JONSaAQnHA9VAn+V6Uk5UY=
+	b=fwluZi8PTpEFFaYzpy1eGVhpyhz2VIJ+mCLQ9UB/u25NS1pOjxyAD/fNzoDle+gri
+	 O+22y1dz4aQ1KstbDzi4ARaxWLZ2H92YzrgzQ3r19sPymqicZ6MHLb6o//EGmjeWlk
+	 vvBhdz1ZvFNnyWFOUkBBouDr6xH934Cb6FJF2nJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Heathcote <jonathan.heathcote@bbc.co.uk>,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Soheil Hassas Yeganeh <soheil@google.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 068/228] net: fix sk_memory_allocated_{add|sub} vs softirqs
-Date: Tue, 30 Apr 2024 12:37:26 +0200
-Message-ID: <20240430103105.770461297@linuxfoundation.org>
+Subject: [PATCH 6.8 069/228] ipv4: check for NULL idev in ip_route_use_hint()
+Date: Tue, 30 Apr 2024 12:37:27 +0200
+Message-ID: <20240430103105.799261618@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -56,98 +55,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3584718cf2ec7e79b6814f2596dcf398c5fb2eca ]
+[ Upstream commit 58a4c9b1e5a3e53c9148e80b90e1e43897ce77d1 ]
 
-Jonathan Heathcote reported a regression caused by blamed commit
-on aarch64 architecture.
+syzbot was able to trigger a NULL deref in fib_validate_source()
+in an old tree [1].
 
-x86 happens to have irq-safe __this_cpu_add_return()
-and __this_cpu_sub(), but this is not generic.
+It appears the bug exists in latest trees.
 
-I think my confusion came from "struct sock" argument,
-because these helpers are called with a locked socket.
-But the memory accounting is per-proto (and per-cpu after
-the blamed commit). We might cleanup these helpers later
-to directly accept a "struct proto *proto" argument.
+All calls to __in_dev_get_rcu() must be checked for a NULL result.
 
-Switch to this_cpu_add_return() and this_cpu_xchg()
-operations, and get rid of preempt_disable()/preempt_enable() pairs.
+[1]
+general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 2 PID: 3257 Comm: syz-executor.3 Not tainted 5.10.0-syzkaller #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+ RIP: 0010:fib_validate_source+0xbf/0x15a0 net/ipv4/fib_frontend.c:425
+Code: 18 f2 f2 f2 f2 42 c7 44 20 23 f3 f3 f3 f3 48 89 44 24 78 42 c6 44 20 27 f3 e8 5d 88 48 fc 4c 89 e8 48 c1 e8 03 48 89 44 24 18 <42> 80 3c 20 00 74 08 4c 89 ef e8 d2 15 98 fc 48 89 5c 24 10 41 bf
+RSP: 0018:ffffc900015fee40 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff88800f7a4000 RCX: ffff88800f4f90c0
+RDX: 0000000000000000 RSI: 0000000004001eac RDI: ffff8880160c64c0
+RBP: ffffc900015ff060 R08: 0000000000000000 R09: ffff88800f7a4000
+R10: 0000000000000002 R11: ffff88800f4f90c0 R12: dffffc0000000000
+R13: 0000000000000000 R14: 0000000000000000 R15: ffff88800f7a4000
+FS:  00007f938acfe6c0(0000) GS:ffff888058c00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f938acddd58 CR3: 000000001248e000 CR4: 0000000000352ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+  ip_route_use_hint+0x410/0x9b0 net/ipv4/route.c:2231
+  ip_rcv_finish_core+0x2c4/0x1a30 net/ipv4/ip_input.c:327
+  ip_list_rcv_finish net/ipv4/ip_input.c:612 [inline]
+  ip_sublist_rcv+0x3ed/0xe50 net/ipv4/ip_input.c:638
+  ip_list_rcv+0x422/0x470 net/ipv4/ip_input.c:673
+  __netif_receive_skb_list_ptype net/core/dev.c:5572 [inline]
+  __netif_receive_skb_list_core+0x6b1/0x890 net/core/dev.c:5620
+  __netif_receive_skb_list net/core/dev.c:5672 [inline]
+  netif_receive_skb_list_internal+0x9f9/0xdc0 net/core/dev.c:5764
+  netif_receive_skb_list+0x55/0x3e0 net/core/dev.c:5816
+  xdp_recv_frames net/bpf/test_run.c:257 [inline]
+  xdp_test_run_batch net/bpf/test_run.c:335 [inline]
+  bpf_test_run_xdp_live+0x1818/0x1d00 net/bpf/test_run.c:363
+  bpf_prog_test_run_xdp+0x81f/0x1170 net/bpf/test_run.c:1376
+  bpf_prog_test_run+0x349/0x3c0 kernel/bpf/syscall.c:3736
+  __sys_bpf+0x45c/0x710 kernel/bpf/syscall.c:5115
+  __do_sys_bpf kernel/bpf/syscall.c:5201 [inline]
+  __se_sys_bpf kernel/bpf/syscall.c:5199 [inline]
+  __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5199
 
-Fast path becomes a bit faster as a result :)
-
-Many thanks to Jonathan Heathcote for his awesome report and
-investigations.
-
-Fixes: 3cd3399dd7a8 ("net: implement per-cpu reserves for memory_allocated")
-Reported-by: Jonathan Heathcote <jonathan.heathcote@bbc.co.uk>
-Closes: https://lore.kernel.org/netdev/VI1PR01MB42407D7947B2EA448F1E04EFD10D2@VI1PR01MB4240.eurprd01.prod.exchangelabs.com/
+Fixes: 02b24941619f ("ipv4: use dst hint for ipv4 list receive")
+Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Soheil Hassas Yeganeh <soheil@google.com>
-Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
-Link: https://lore.kernel.org/r/20240421175248.1692552-1-edumazet@google.com
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/20240421184326.1704930-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 38 ++++++++++++++++++++------------------
- 1 file changed, 20 insertions(+), 18 deletions(-)
+ net/ipv4/route.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 6855c50a70f1b..54a7967613348 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1431,32 +1431,34 @@ sk_memory_allocated(const struct sock *sk)
- #define SK_MEMORY_PCPU_RESERVE (1 << (20 - PAGE_SHIFT))
- extern int sysctl_mem_pcpu_rsv;
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 15c37c8113fc8..f67d3d6fe9345 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -2166,6 +2166,9 @@ int ip_route_use_hint(struct sk_buff *skb, __be32 daddr, __be32 saddr,
+ 	int err = -EINVAL;
+ 	u32 tag = 0;
  
-+static inline void proto_memory_pcpu_drain(struct proto *proto)
-+{
-+	int val = this_cpu_xchg(*proto->per_cpu_fw_alloc, 0);
++	if (!in_dev)
++		return -EINVAL;
 +
-+	if (val)
-+		atomic_long_add(val, proto->memory_allocated);
-+}
-+
- static inline void
--sk_memory_allocated_add(struct sock *sk, int amt)
-+sk_memory_allocated_add(const struct sock *sk, int val)
- {
--	int local_reserve;
-+	struct proto *proto = sk->sk_prot;
+ 	if (ipv4_is_multicast(saddr) || ipv4_is_lbcast(saddr))
+ 		goto martian_source;
  
--	preempt_disable();
--	local_reserve = __this_cpu_add_return(*sk->sk_prot->per_cpu_fw_alloc, amt);
--	if (local_reserve >= READ_ONCE(sysctl_mem_pcpu_rsv)) {
--		__this_cpu_sub(*sk->sk_prot->per_cpu_fw_alloc, local_reserve);
--		atomic_long_add(local_reserve, sk->sk_prot->memory_allocated);
--	}
--	preempt_enable();
-+	val = this_cpu_add_return(*proto->per_cpu_fw_alloc, val);
-+
-+	if (unlikely(val >= READ_ONCE(sysctl_mem_pcpu_rsv)))
-+		proto_memory_pcpu_drain(proto);
- }
- 
- static inline void
--sk_memory_allocated_sub(struct sock *sk, int amt)
-+sk_memory_allocated_sub(const struct sock *sk, int val)
- {
--	int local_reserve;
-+	struct proto *proto = sk->sk_prot;
- 
--	preempt_disable();
--	local_reserve = __this_cpu_sub_return(*sk->sk_prot->per_cpu_fw_alloc, amt);
--	if (local_reserve <= -READ_ONCE(sysctl_mem_pcpu_rsv)) {
--		__this_cpu_sub(*sk->sk_prot->per_cpu_fw_alloc, local_reserve);
--		atomic_long_add(local_reserve, sk->sk_prot->memory_allocated);
--	}
--	preempt_enable();
-+	val = this_cpu_sub_return(*proto->per_cpu_fw_alloc, val);
-+
-+	if (unlikely(val <= -READ_ONCE(sysctl_mem_pcpu_rsv)))
-+		proto_memory_pcpu_drain(proto);
- }
- 
- #define SK_ALLOC_PERCPU_COUNTER_BATCH 16
 -- 
 2.43.0
 
