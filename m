@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC1112C549;
-	Tue, 30 Apr 2024 10:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999F012D74E;
+	Tue, 30 Apr 2024 10:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474437; cv=none; b=FAtlNSQBKhoOBqyCx/UmrSrcpgUWZyZ2Z8SRpYmzPaux2HX6+ZUSQ6SAlhq4CIsI3uS9xyLaf9kTp8lgBkJDeAkaUkS0q0iGT1MaF9gCrY8FJxAtCqyw7D9wd9heSuF64f2GOo9x73atWVXdPbn4Q/Cc4BWPT+pJBMW4lZx/hQg=
+	t=1714474440; cv=none; b=UI6TUJ+Fxo3FQZ6obOTpO615sp4aNhGuTmnREikL+dxGLTXCdKedPrSuUNlR7nM+QiR8F88dEOIVR1Sn+qfoiTox101AJo2GVHQqLQLNTVjcXEJkJRITMz5SKRQdBxaqTsVwZ4LqZ5mQ7iKBPANO7SyH8ZL1Pi2ZSyoS7hb5Xok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474437; c=relaxed/simple;
-	bh=c81V8q9JKrbV7u2R6DWFPum6OB3c5FvM4N7JkcaX7SI=;
+	s=arc-20240116; t=1714474440; c=relaxed/simple;
+	bh=o3Cj6Ykt//eiuFceFaCbl1c2F5rRt9ZbH9wJ81DXOC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fld3nkSFBET55MpnV/j8muIjzsB/mc3Jj7ngqZkqRFkYO5Ngmkw1MBcG/6r3e9WURf4Ng5kKhgppuftZUVHgSo2ReTEFZBrLZ0+is0Q+WQnPnuxeAsRRYO7jvWnNg6I1auschPdJffP4HPi3wj+GkO/OYlLHe1qT44MKt2sLhxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTNceiTk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W64wE7K2r1mUNjjS8R8K6k0n23z/krC6DCWfpFAOtrvbsayzGWecA90ZhkDR0cKT5thmaIGrzT1UWMwbPGmt6gxb2NSxFbGU+bNe4EXFMjER/VARueGjIRR4hRK+gLAHeibGyTYao0CC8e7VbK/MMIwRX3rq2BnuVU73bRxQa38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lG3EhPtG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTNceiTk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC25C2BBFC;
-	Tue, 30 Apr 2024 10:53:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lG3EhPtG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A3BC2BBFC;
+	Tue, 30 Apr 2024 10:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474437;
-	bh=c81V8q9JKrbV7u2R6DWFPum6OB3c5FvM4N7JkcaX7SI=;
+	s=korg; t=1714474440;
+	bh=o3Cj6Ykt//eiuFceFaCbl1c2F5rRt9ZbH9wJ81DXOC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KTNceiTk5XDR/rI0FKXAmgsjjkWV0sNH3svxis04m9kXTVLNvIJ86a9Dlk9PozboZ
-	 nMlV8BWe4CuKGdkG8L8V1mRu7KtAZHf/JJEErqaBQz1REONLsoQ8M1fdMzll3JH177
-	 vwUR0eestkg1YR5mEhgeB1ysCo8FxlzWZ8i++Cao=
+	b=lG3EhPtGxnsK8DqfDSezzWj5yc/LX0+vjqJLwSjSexhjwkbwQy4W3Lau97YlmqOWQ
+	 7GJOcnCFpW6NE9v64csUapj/QXWDz2ij/o5yPbeJPoOWe9COMg/0L7I1ksq+ZtL6xx
+	 ThEhRwix0WJW4h8GUiOIYSU7loBR/EMfdleLGSfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenny Levinsen <kl@kl.wtf>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.8 157/228] HID: i2c-hid: Revert to await reset ACK before reading report descriptor
-Date: Tue, 30 Apr 2024 12:38:55 +0200
-Message-ID: <20240430103108.336349432@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Neal Gompa <neal@gompa.dev>,
+	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.8 158/228] btrfs: fallback if compressed IO fails for ENOSPC
+Date: Tue, 30 Apr 2024 12:38:56 +0200
+Message-ID: <20240430103108.365110573@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -52,116 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kenny Levinsen <kl@kl.wtf>
+From: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
 
-commit ea36bf1827462e4a52365bf8e3f7d1712c5d9600 upstream.
+commit 131a821a243f89be312ced9e62ccc37b2cf3846c upstream.
 
-In af93a167eda9, i2c_hid_parse was changed to continue with reading the
-report descriptor before waiting for reset to be acknowledged.
+In commit b4ccace878f4 ("btrfs: refactor submit_compressed_extents()"), if
+an async extent compressed but failed to find enough space, we changed
+from falling back to an uncompressed write to just failing the write
+altogether. The principle was that if there's not enough space to write
+the compressed version of the data, there can't possibly be enough space
+to write the larger, uncompressed version of the data.
 
-This has lead to two regressions:
+However, this isn't necessarily true: due to fragmentation, there could
+be enough discontiguous free blocks to write the uncompressed version,
+but not enough contiguous free blocks to write the smaller but
+unsplittable compressed version.
 
-1. We fail to handle reset acknowledgment if it happens while reading
-   the report descriptor. The transfer sets I2C_HID_READ_PENDING, which
-   causes the IRQ handler to return without doing anything.
+This has occurred to an internal workload which relied on write()'s
+return value indicating there was space. While rare, it has happened a
+few times.
 
-   This affects both a Wacom touchscreen and a Sensel touchpad.
+Thus, in order to prevent early ENOSPC, re-add a fallback to
+uncompressed writing.
 
-2. On a Sensel touchpad, reading the report descriptor this quickly
-   after reset results in all zeroes or partial zeroes.
-
-The issues were observed on the Lenovo Thinkpad Z16 Gen 2.
-
-The change in question was made based on a Microsoft article[0] stating
-that Windows 8 *may* read the report descriptor in parallel with
-awaiting reset acknowledgment, intended as a slight reset performance
-optimization. Perhaps they only do this if reset is not completing
-quickly enough for their tastes?
-
-As the code is not currently ready to read registers in parallel with a
-pending reset acknowledgment, and as reading quickly breaks the report
-descriptor on the Sensel touchpad, revert to waiting for reset
-acknowledgment before proceeding to read the report descriptor.
-
-[0]: https://learn.microsoft.com/en-us/windows-hardware/drivers/hid/plug-and-play-support-and-power-management
-
-Fixes: af93a167eda9 ("HID: i2c-hid: Move i2c_hid_finish_hwreset() to after reading the report-descriptor")
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2271136
-Cc: stable@vger.kernel.org
-Signed-off-by: Kenny Levinsen <kl@kl.wtf>
-Link: https://lore.kernel.org/r/20240331182440.14477-1-kl@kl.wtf
-[hdegoede@redhat.com Drop no longer necessary abort_reset error exit path]
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: b4ccace878f4 ("btrfs: refactor submit_compressed_extents()")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Co-developed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c | 29 ++++++++---------------------
- 1 file changed, 8 insertions(+), 21 deletions(-)
+ fs/btrfs/inode.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 1c86c97688e9..d965382196c6 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -726,12 +726,15 @@ static int i2c_hid_parse(struct hid_device *hid)
- 	mutex_lock(&ihid->reset_lock);
- 	do {
- 		ret = i2c_hid_start_hwreset(ihid);
--		if (ret)
-+		if (ret == 0)
-+			ret = i2c_hid_finish_hwreset(ihid);
-+		else
- 			msleep(1000);
- 	} while (tries-- > 0 && ret);
-+	mutex_unlock(&ihid->reset_lock);
- 
- 	if (ret)
--		goto abort_reset;
-+		return ret;
- 
- 	use_override = i2c_hid_get_dmi_hid_report_desc_override(client->name,
- 								&rsize);
-@@ -741,11 +744,8 @@ static int i2c_hid_parse(struct hid_device *hid)
- 		i2c_hid_dbg(ihid, "Using a HID report descriptor override\n");
- 	} else {
- 		rdesc = kzalloc(rsize, GFP_KERNEL);
--
--		if (!rdesc) {
--			ret = -ENOMEM;
--			goto abort_reset;
--		}
-+		if (!rdesc)
-+			return -ENOMEM;
- 
- 		i2c_hid_dbg(ihid, "asking HID report descriptor\n");
- 
-@@ -754,23 +754,10 @@ static int i2c_hid_parse(struct hid_device *hid)
- 					    rdesc, rsize);
- 		if (ret) {
- 			hid_err(hid, "reading report descriptor failed\n");
--			goto abort_reset;
-+			goto out;
- 		}
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -1144,13 +1144,13 @@ static void submit_one_async_extent(stru
+ 				   0, *alloc_hint, &ins, 1, 1);
+ 	if (ret) {
+ 		/*
+-		 * Here we used to try again by going back to non-compressed
+-		 * path for ENOSPC.  But we can't reserve space even for
+-		 * compressed size, how could it work for uncompressed size
+-		 * which requires larger size?  So here we directly go error
+-		 * path.
++		 * We can't reserve contiguous space for the compressed size.
++		 * Unlikely, but it's possible that we could have enough
++		 * non-contiguous space for the uncompressed size instead.  So
++		 * fall back to uncompressed.
+ 		 */
+-		goto out_free;
++		submit_uncompressed_range(inode, async_extent, locked_page);
++		goto done;
  	}
  
--	/*
--	 * Windows directly reads the report-descriptor after sending reset
--	 * and then waits for resets completion afterwards. Some touchpads
--	 * actually wait for the report-descriptor to be read before signalling
--	 * reset completion.
--	 */
--	ret = i2c_hid_finish_hwreset(ihid);
--abort_reset:
--	clear_bit(I2C_HID_RESET_PENDING, &ihid->flags);
--	mutex_unlock(&ihid->reset_lock);
--	if (ret)
--		goto out;
--
- 	i2c_hid_dbg(ihid, "Report Descriptor: %*ph\n", rsize, rdesc);
- 
- 	ret = hid_parse_report(hid, rdesc, rsize);
--- 
-2.44.0
-
+ 	/* Here we're doing allocation and writeback of the compressed pages */
+@@ -1202,7 +1202,6 @@ done:
+ out_free_reserve:
+ 	btrfs_dec_block_group_reservations(fs_info, ins.objectid);
+ 	btrfs_free_reserved_extent(fs_info, ins.objectid, ins.offset, 1);
+-out_free:
+ 	mapping_set_error(inode->vfs_inode.i_mapping, -EIO);
+ 	extent_clear_unlock_delalloc(inode, start, end,
+ 				     NULL, EXTENT_LOCKED | EXTENT_DELALLOC |
 
 
