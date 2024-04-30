@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F8D12C49A;
-	Tue, 30 Apr 2024 10:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26B012C7E3;
+	Tue, 30 Apr 2024 10:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473850; cv=none; b=UxYfF02un3Svbgb8Ae4K/wtN/XrX0X6NJXNKz0mzJUbaLrKkPqjnee59edVNUzDwr9dRUV8yVQYQ1z9KGFgqajh0R6bF6ZxZx7oLE6c49/nVIC3gj6ITESlXEU5nni6d0RVhu1iQbTzEc4iu8CApQoJZx30jQZ8elOn7sC0H2HQ=
+	t=1714473853; cv=none; b=rcNaGY7fWSGuP3UPWYVOMZSlAmyADrHQM9psPxsVZSwWo1LNvrS73CRfcQ7JSHK2vxhEfRQO+ROWjVZmmf3FHr3v4qI8ZkQ/4r2tGwGRrMe0CJu9J1RsWrt5uc+n7MuGw7ppGrsg91pOM4gc7dzEJ4FapZyORZBVyoPZlQ4Xf7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473850; c=relaxed/simple;
-	bh=nFUnYfwnagLsWBf8kRrAO+JjXsTaPP2/f48D+WqBVP8=;
+	s=arc-20240116; t=1714473853; c=relaxed/simple;
+	bh=6TltmW1IjyMliMHTXCzWdMI3g4VV7pesox8b+X5aZUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VJYrhCII6zjwodvT3Dq5KvNZFQglSFqTp8jZUm0NmZbIKCCnMhq7cT90hkdCzvhEqnBRwWvWRDTcOAvTYYw/RRZmwDGdJtlrIuFxxVvrJhFuIEQ70Hmt2jsliBJFtarYeWIOyI1GHX4mrlutxln6dU84V8BHX2CPzV9bvBkHGSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOvOSlvn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HYQdVUL4DifLPWBEUjrlSCdFn+J3tjNzJtG1hudU80nRjAehBkJeqnMtgJ137ythiQitMZSOtM2giIiP7GkYaPsJYvuV/wP9I2LFJPKXU4KnLfOb+78+xCMaq3v/fnZ8qKpj4eRcqT3iFOXKK7eEQfVVnVBqY7u3EZiOxt5WfJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnUhpKO9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOvOSlvn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434E2C2BBFC;
-	Tue, 30 Apr 2024 10:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnUhpKO9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BDCEC2BBFC;
+	Tue, 30 Apr 2024 10:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473850;
-	bh=nFUnYfwnagLsWBf8kRrAO+JjXsTaPP2/f48D+WqBVP8=;
+	s=korg; t=1714473853;
+	bh=6TltmW1IjyMliMHTXCzWdMI3g4VV7pesox8b+X5aZUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vOvOSlvnxQB7JbTcv4Mz9f/jQnolnDGsOuQNSy/DI8NSRa7izrD9IXGOTjSpP5D3V
-	 VDMA7C5l2z9S2Kv9Mzc8a93sZKkZICJhhavc/ezPur9lNGRlXe1+BEpDGyVMMfOVGd
-	 UJdTtpyBOqsRvmwo+RoXH+VUCuKtcsPJVYcENPxQ=
+	b=fnUhpKO9beNIODFUE7DIBo2VX5+7eDBwa//jTBKAyvf5qDXNd8Ztzid+g7VtG5pZk
+	 IGN1lO1y1hJvM7T/A0ZJd3UcCEHabr5/dER4BZqkvebh85Tcql7D504wIQArcYAxaG
+	 5Hb+JB0k695L8O1WdStpZf0IhNN+UkchGsn0U7MY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kobuk <m.kobuk@ispras.ru>,
-	Danilo Krummrich <dakr@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 21/77] drm: nv04: Fix out of bounds access
-Date: Tue, 30 Apr 2024 12:39:00 +0200
-Message-ID: <20240430103041.753275789@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	syzbot+5f29dc6a889fc42bd896@syzkaller.appspotmail.com
+Subject: [PATCH 4.19 22/77] comedi: vmk80xx: fix incomplete endpoint checking
+Date: Tue, 30 Apr 2024 12:39:01 +0200
+Message-ID: <20240430103041.783158093@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -51,81 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Kobuk <m.kobuk@ispras.ru>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit cf92bb778eda7830e79452c6917efa8474a30c1e ]
+commit d1718530e3f640b7d5f0050e725216eab57a85d8 upstream.
 
-When Output Resource (dcb->or) value is assigned in
-fabricate_dcb_output(), there may be out of bounds access to
-dac_users array in case dcb->or is zero because ffs(dcb->or) is
-used as index there.
-The 'or' argument of fabricate_dcb_output() must be interpreted as a
-number of bit to set, not value.
+While vmk80xx does have endpoint checking implemented, some things
+can fall through the cracks. Depending on the hardware model,
+URBs can have either bulk or interrupt type, and current version
+of vmk80xx_find_usb_endpoints() function does not take that fully
+into account. While this warning does not seem to be too harmful,
+at the very least it will crash systems with 'panic_on_warn' set on
+them.
 
-Utilize macros from 'enum nouveau_or' in calls instead of hardcoding.
+Fix the issue found by Syzkaller [1] by somewhat simplifying the
+endpoint checking process with usb_find_common_endpoints() and
+ensuring that only expected endpoint types are present.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This patch has not been tested on real hardware.
 
-Fixes: 2e5702aff395 ("drm/nouveau: fabricate DCB encoder table for iMac G4")
-Fixes: 670820c0e6a9 ("drm/nouveau: Workaround incorrect DCB entry on a GeForce3 Ti 200.")
-Signed-off-by: Mikhail Kobuk <m.kobuk@ispras.ru>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240411110854.16701-1-m.kobuk@ispras.ru
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[1] Syzkaller report:
+usb 1-1: BOGUS urb xfer, pipe 1 != type 3
+WARNING: CPU: 0 PID: 781 at drivers/usb/core/urb.c:504 usb_submit_urb+0xc4e/0x18c0 drivers/usb/core/urb.c:503
+...
+Call Trace:
+ <TASK>
+ usb_start_wait_urb+0x113/0x520 drivers/usb/core/message.c:59
+ vmk80xx_reset_device drivers/comedi/drivers/vmk80xx.c:227 [inline]
+ vmk80xx_auto_attach+0xa1c/0x1a40 drivers/comedi/drivers/vmk80xx.c:818
+ comedi_auto_config+0x238/0x380 drivers/comedi/drivers.c:1067
+ usb_probe_interface+0x5cd/0xb00 drivers/usb/core/driver.c:399
+...
+
+Similar issue also found by Syzkaller:
+Link: https://syzkaller.appspot.com/bug?extid=5205eb2f17de3e01946e
+
+Reported-and-tested-by: syzbot+5f29dc6a889fc42bd896@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Fixes: 49253d542cc0 ("staging: comedi: vmk80xx: factor out usb endpoint detection")
+Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://lore.kernel.org/r/20240408171633.31649-1-n.zhandarovich@fintech.ru
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_bios.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/staging/comedi/drivers/vmk80xx.c |   35 ++++++++++---------------------
+ 1 file changed, 12 insertions(+), 23 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_bios.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_bios.c
-@@ -25,6 +25,7 @@
- #include <drm/drmP.h>
+--- a/drivers/staging/comedi/drivers/vmk80xx.c
++++ b/drivers/staging/comedi/drivers/vmk80xx.c
+@@ -642,33 +642,22 @@ static int vmk80xx_find_usb_endpoints(st
+ 	struct vmk80xx_private *devpriv = dev->private;
+ 	struct usb_interface *intf = comedi_to_usb_interface(dev);
+ 	struct usb_host_interface *iface_desc = intf->cur_altsetting;
+-	struct usb_endpoint_descriptor *ep_desc;
+-	int i;
++	struct usb_endpoint_descriptor *ep_rx_desc, *ep_tx_desc;
++	int ret;
  
- #include "nouveau_drv.h"
-+#include "nouveau_bios.h"
- #include "nouveau_reg.h"
- #include "dispnv04/hw.h"
- #include "nouveau_encoder.h"
-@@ -1674,7 +1675,7 @@ apply_dcb_encoder_quirks(struct drm_devi
- 	 */
- 	if (nv_match_device(dev, 0x0201, 0x1462, 0x8851)) {
- 		if (*conn == 0xf2005014 && *conf == 0xffffffff) {
--			fabricate_dcb_output(dcb, DCB_OUTPUT_TMDS, 1, 1, 1);
-+			fabricate_dcb_output(dcb, DCB_OUTPUT_TMDS, 1, 1, DCB_OUTPUT_B);
- 			return false;
- 		}
- 	}
-@@ -1760,26 +1761,26 @@ fabricate_dcb_encoder_table(struct drm_d
- #ifdef __powerpc__
- 	/* Apple iMac G4 NV17 */
- 	if (of_machine_is_compatible("PowerMac4,5")) {
--		fabricate_dcb_output(dcb, DCB_OUTPUT_TMDS, 0, all_heads, 1);
--		fabricate_dcb_output(dcb, DCB_OUTPUT_ANALOG, 1, all_heads, 2);
-+		fabricate_dcb_output(dcb, DCB_OUTPUT_TMDS, 0, all_heads, DCB_OUTPUT_B);
-+		fabricate_dcb_output(dcb, DCB_OUTPUT_ANALOG, 1, all_heads, DCB_OUTPUT_C);
- 		return;
- 	}
- #endif
+-	if (iface_desc->desc.bNumEndpoints != 2)
+-		return -ENODEV;
+-
+-	for (i = 0; i < iface_desc->desc.bNumEndpoints; i++) {
+-		ep_desc = &iface_desc->endpoint[i].desc;
+-
+-		if (usb_endpoint_is_int_in(ep_desc) ||
+-		    usb_endpoint_is_bulk_in(ep_desc)) {
+-			if (!devpriv->ep_rx)
+-				devpriv->ep_rx = ep_desc;
+-			continue;
+-		}
++	if (devpriv->model == VMK8061_MODEL)
++		ret = usb_find_common_endpoints(iface_desc, &ep_rx_desc,
++						&ep_tx_desc, NULL, NULL);
++	else
++		ret = usb_find_common_endpoints(iface_desc, NULL, NULL,
++						&ep_rx_desc, &ep_tx_desc);
  
- 	/* Make up some sane defaults */
- 	fabricate_dcb_output(dcb, DCB_OUTPUT_ANALOG,
--			     bios->legacy.i2c_indices.crt, 1, 1);
-+			     bios->legacy.i2c_indices.crt, 1, DCB_OUTPUT_B);
+-		if (usb_endpoint_is_int_out(ep_desc) ||
+-		    usb_endpoint_is_bulk_out(ep_desc)) {
+-			if (!devpriv->ep_tx)
+-				devpriv->ep_tx = ep_desc;
+-			continue;
+-		}
+-	}
+-
+-	if (!devpriv->ep_rx || !devpriv->ep_tx)
++	if (ret)
+ 		return -ENODEV;
  
- 	if (nv04_tv_identify(dev, bios->legacy.i2c_indices.tv) >= 0)
- 		fabricate_dcb_output(dcb, DCB_OUTPUT_TV,
- 				     bios->legacy.i2c_indices.tv,
--				     all_heads, 0);
-+				     all_heads, DCB_OUTPUT_A);
++	devpriv->ep_rx = ep_rx_desc;
++	devpriv->ep_tx = ep_tx_desc;
++
+ 	if (!usb_endpoint_maxp(devpriv->ep_rx) || !usb_endpoint_maxp(devpriv->ep_tx))
+ 		return -EINVAL;
  
- 	else if (bios->tmds.output0_script_ptr ||
- 		 bios->tmds.output1_script_ptr)
- 		fabricate_dcb_output(dcb, DCB_OUTPUT_TMDS,
- 				     bios->legacy.i2c_indices.panel,
--				     all_heads, 1);
-+				     all_heads, DCB_OUTPUT_B);
- }
- 
- static int
 
 
