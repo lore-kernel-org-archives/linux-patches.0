@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF4C211C;
-	Tue, 30 Apr 2024 11:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979488801;
+	Tue, 30 Apr 2024 11:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475771; cv=none; b=RU1aZ8eCqsN4UgqFQe9e7YJsb4G6Q2l7F2RSq4zMjs89aiAQRY0lMgpIoZaVr61yWjdbk3zMu7duZ1WBy5MjOl3TwUfFRM4D+P8Rpm592copNcvnB9BQU1K3icL3+onF+UfZe3NNb+Id3q2XZWt5vrYRKvY+H69jiCxOw6foU7A=
+	t=1714475774; cv=none; b=Q3P4iEGUivmISBAZIYFG0zaG8Ix078X1ICMfEvYop+aoAbW126AbfSD2usta4Qvx8q1inPPH2tmtLrgEWk7cC/+o6AyBM9knra+Onvt6AUbTfqbd+vwXOESU4jn7nYSd2YLvgH5Ggq9jgjM4vy0nDo/Bpc/E1b5/Lbs8cDPjAR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475771; c=relaxed/simple;
-	bh=gzfBHz60bbBDBr1Ch+ZM3uSJQWXPNaxIp9urXb8INEc=;
+	s=arc-20240116; t=1714475774; c=relaxed/simple;
+	bh=J3eA7GYb1BH6z60Ou6DRaGHpmCK1+JFscjhNZo+9r8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X3PJGhaydrEaC2/hf3kwDR4FKAHp9toQMyx3X+aiJf5rXXL2F3ZSSmpzmUoqszk0ibTogrGPS571uA10ANL+d3AAsMCEkljtzKkeyItU79A45LwGhSCbr9Qc93wLCCOKeIocxthbx2Ja1beb7MKmVVE8XaZIVDxMCasyJj5fjbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWzB4cMz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=l61jqKbq0v5nfH8QOrLYozUIBvZZOThlMVpuVWRe0Ud7C/DlQvUppkLT0iZXEXtw3r0Dnf/9hl5WqJqzAsj8Qdxvu4QfFB7EUByNhOTULv6pgsygb1rJrIbX1Zy6kVaH7NxHDwn5pBEvkpeGxaAtComatZbIhcDBZxrg5NUZcRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wm4wvyd1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWzB4cMz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA65DC2BBFC;
-	Tue, 30 Apr 2024 11:16:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wm4wvyd1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3212C2BBFC;
+	Tue, 30 Apr 2024 11:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475771;
-	bh=gzfBHz60bbBDBr1Ch+ZM3uSJQWXPNaxIp9urXb8INEc=;
+	s=korg; t=1714475774;
+	bh=J3eA7GYb1BH6z60Ou6DRaGHpmCK1+JFscjhNZo+9r8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MWzB4cMzqZwBmvMJaO2uCO2E+nSqpBWa/DOEsnXr6Sfub7vDQjuzjj5VkpR/DbP8s
-	 XAFpg9f2pdtVOzbIXSzgc86DTHzQvfLMuWg1smycXwD4yhUD2HLemP/EJ5hhdiGkdF
-	 /JWQuF6V55bcoDQNfwg9VZ9epQPtsuGxkqkGFfJk=
+	b=wm4wvyd1wRKLmX4R/uQKMCC3vN/dd2KTDiIvMftfmInNL43V53u/bJqzk7yB+Vau6
+	 XJs3sDqvChXVBPWB6LYrmJ6+wz9RrsE/C1Vq1U75/9fl6FurMl+NdtTrXp+LJc4w1a
+	 C96jCOpZsoSEnyyD0YJQvUoV6NhOgShmR3HSNrcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 13/80] arm64: dts: mediatek: mt7622: fix IR nodename
-Date: Tue, 30 Apr 2024 12:39:45 +0200
-Message-ID: <20240430103043.804055449@linuxfoundation.org>
+Subject: [PATCH 5.15 14/80] arm64: dts: mediatek: mt7622: fix ethernet controller "compatible"
+Date: Tue, 30 Apr 2024 12:39:46 +0200
+Message-ID: <20240430103043.833345106@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -54,35 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 800dc93c3941e372c94278bf4059e6e82f60bd66 ]
+[ Upstream commit 208add29ce5b7291f6c466e4dfd9cbf61c72888e ]
 
 Fix following validation error:
-arch/arm64/boot/dts/mediatek/mt7622-rfb1.dtb: cir@10009000: $nodename:0: 'cir@10009000' does not match '^ir(-receiver)?(@[a-f0-9]+)?$'
-        from schema $id: http://devicetree.org/schemas/media/mediatek,mt7622-cir.yaml#
+arch/arm64/boot/dts/mediatek/mt7622-rfb1.dtb: ethernet@1b100000: compatible: ['mediatek,mt7622-eth', 'mediatek,mt2701-eth', 'syscon'] is too long
+        from schema $id: http://devicetree.org/schemas/net/mediatek,net.yaml#
+(and other complains about wrong clocks).
 
-Fixes: ae457b7679c4 ("arm64: dts: mt7622: add SoC and peripheral related device nodes")
+Fixes: 5f599b3a0bb8 ("arm64: dts: mt7622: add ethernet device nodes")
 Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240317221050.18595-3-zajec5@gmail.com
+Link: https://lore.kernel.org/r/20240317221050.18595-4-zajec5@gmail.com
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7622.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt7622.dtsi | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/mediatek/mt7622.dtsi b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-index a5395d1d098c0..f3bc89ac0bef4 100644
+index f3bc89ac0bef4..7a54af96e1d90 100644
 --- a/arch/arm64/boot/dts/mediatek/mt7622.dtsi
 +++ b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-@@ -244,7 +244,7 @@
- 		clock-names = "hif_sel";
+@@ -935,9 +935,7 @@
  	};
  
--	cir: cir@10009000 {
-+	cir: ir-receiver@10009000 {
- 		compatible = "mediatek,mt7622-cir";
- 		reg = <0 0x10009000 0 0x1000>;
- 		interrupts = <GIC_SPI 175 IRQ_TYPE_LEVEL_LOW>;
+ 	eth: ethernet@1b100000 {
+-		compatible = "mediatek,mt7622-eth",
+-			     "mediatek,mt2701-eth",
+-			     "syscon";
++		compatible = "mediatek,mt7622-eth";
+ 		reg = <0 0x1b100000 0 0x20000>;
+ 		interrupts = <GIC_SPI 223 IRQ_TYPE_LEVEL_LOW>,
+ 			     <GIC_SPI 224 IRQ_TYPE_LEVEL_LOW>,
 -- 
 2.43.0
 
