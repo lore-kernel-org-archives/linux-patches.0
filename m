@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD6012C47A;
-	Tue, 30 Apr 2024 10:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D618312C476;
+	Tue, 30 Apr 2024 10:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474532; cv=none; b=JT6Xm3zcd6no7Iqvnj2AQiCZS9cOFzCq7bH5uEMeDrin5POLlHzbWX7zdJTs91mr8Nc2P8c8T71kqDH9m21YXzR6g9dvewYHMYWcav4B7fYLDJSxhDH0a+y2XQ2r1ipLTZcM6AT9diD4u80srHdVtIQSrjbPlNeCUdPRpTGaiP4=
+	t=1714474535; cv=none; b=C9kOZO3Zcx25mv4ra8RH+8RxZg83gUdBB68lwnBHqxUyJQ4Qscs8Gd0tBj0viFHeAyVV0aGkihvy53PXAJgXEQZcD//JJCBGPJG8x/X1QsG/h3h0hcvm7cyUdnEJRa4jxjxwHkpeuH7+guYUv3mioj7OvXw25KqgQSKk12waPEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474532; c=relaxed/simple;
-	bh=d3rHV8uKZYDJQXWdCSlMgcLIWqAQRD2uwjQGBIAEK74=;
+	s=arc-20240116; t=1714474535; c=relaxed/simple;
+	bh=9XNgg5wwkW19YbfRGKtFpxZo8Qt9xkRoEvWYzxwvQck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I30iJFgDUZHyLiRUuEhKY+EJdZBNG9xT9yvrVKhWqTqNxYbgFGECDKnEFMJTjwvmGW86yDoaqPVHfVEdp7JRxI/LgumV1d2PaArzsYk1KmL96WQ3EJkcUBQ0LYy3ya7fKcgopUXsb8mPaWYyclDkNAev0RsZkntljcPTUjy+ixg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OeucSfiA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O9cfIoIgR6TupIbnKpUBWqiW0b6Vp+Bmuwnjekr6u0fzvYmgCwcE3+zqhnigzGdnry4/OnzrcIXb/U0Hg8iOD5791aY+nEPoyntXnlbWBKf/JJkxUN5RdjK474kSieORYBlDPfMdWtt8pbSMi65nvmT8AT7Io59IAnQbzv9kS7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjVGwM17; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OeucSfiA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224ADC2BBFC;
-	Tue, 30 Apr 2024 10:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjVGwM17"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF8EC4AF18;
+	Tue, 30 Apr 2024 10:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474532;
-	bh=d3rHV8uKZYDJQXWdCSlMgcLIWqAQRD2uwjQGBIAEK74=;
+	s=korg; t=1714474535;
+	bh=9XNgg5wwkW19YbfRGKtFpxZo8Qt9xkRoEvWYzxwvQck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OeucSfiA4eqticRhrUeS0mr1XPQr/3rTkYoG5cc2NhIuuCqpVaTg0oBw5wWl9Z/zD
-	 xWc7scTdt4J1z7iXve5QAxiCGRRGoGiC9q1iYF8upehYh8Ekg/7O+jqU7IMOPQEwB9
-	 DAT3zjvywu+uLNQgsyi/ucnibWpkOE6TwxiJzfn4=
+	b=NjVGwM17jDf1oj86ZFfAt+KtbGgvbWmh/JpT8B852SSL1OCbsjH5p8CQcTPzIys4l
+	 Ckk61JdxWPQtKzvaGOyABVuRe+TTTHeIcAnzKAY52CfbiSkMvTnCcAVxVkC0gnSXvB
+	 5czVyTW6EJSMBdRPQRuPE4wNfDQuu4KWAlZrUwA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mantas Pucka <mantas@8devices.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.8 148/228] mmc: sdhci-msm: pervent access to suspended controller
-Date: Tue, 30 Apr 2024 12:38:46 +0200
-Message-ID: <20240430103108.078914404@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.8 139/228] kbuild: rust: remove unneeded `@rustc_cfg` to avoid ICE
+Date: Tue, 30 Apr 2024 12:38:37 +0200
+Message-ID: <20240430103107.811616753@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -51,64 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mantas Pucka <mantas@8devices.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit f8def10f73a516b771051a2f70f2f0446902cb4f upstream.
+commit 50cfe93b01475ba36878b65d35d812e1bb48ac71 upstream.
 
-Generic sdhci code registers LED device and uses host->runtime_suspended
-flag to protect access to it. The sdhci-msm driver doesn't set this flag,
-which causes a crash when LED is accessed while controller is runtime
-suspended. Fix this by setting the flag correctly.
+When KUnit tests are enabled, under very big kernel configurations
+(e.g. `allyesconfig`), we can trigger a `rustdoc` ICE [1]:
+
+      RUSTDOC TK rust/kernel/lib.rs
+    error: the compiler unexpectedly panicked. this is a bug.
+
+The reason is that this build step has a duplicated `@rustc_cfg` argument,
+which contains the kernel configuration, and thus a lot of arguments. The
+factor 2 happens to be enough to reach the ICE.
+
+Thus remove the unneeded `@rustc_cfg`. By doing so, we clean up the
+command and workaround the ICE.
+
+The ICE has been fixed in the upcoming Rust 1.79 [2].
 
 Cc: stable@vger.kernel.org
-Fixes: 67e6db113c90 ("mmc: sdhci-msm: Add pm_runtime and system PM support")
-Signed-off-by: Mantas Pucka <mantas@8devices.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20240321-sdhci-mmc-suspend-v1-1-fbc555a64400@8devices.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: a66d733da801 ("rust: support running Rust documentation tests as KUnit ones")
+Link: https://github.com/rust-lang/rust/issues/122722 [1]
+Link: https://github.com/rust-lang/rust/pull/122840 [2]
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20240422091215.526688-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-msm.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ rust/Makefile |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -2694,6 +2694,11 @@ static __maybe_unused int sdhci_msm_runt
- 	struct sdhci_host *host = dev_get_drvdata(dev);
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&host->lock, flags);
-+	host->runtime_suspended = true;
-+	spin_unlock_irqrestore(&host->lock, flags);
- 
- 	/* Drop the performance vote */
- 	dev_pm_opp_set_rate(dev, 0);
-@@ -2708,6 +2713,7 @@ static __maybe_unused int sdhci_msm_runt
- 	struct sdhci_host *host = dev_get_drvdata(dev);
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+	unsigned long flags;
- 	int ret;
- 
- 	ret = clk_bulk_prepare_enable(ARRAY_SIZE(msm_host->bulk_clks),
-@@ -2726,7 +2732,15 @@ static __maybe_unused int sdhci_msm_runt
- 
- 	dev_pm_opp_set_rate(dev, msm_host->clk_rate);
- 
--	return sdhci_msm_ice_resume(msm_host);
-+	ret = sdhci_msm_ice_resume(msm_host);
-+	if (ret)
-+		return ret;
-+
-+	spin_lock_irqsave(&host->lock, flags);
-+	host->runtime_suspended = false;
-+	spin_unlock_irqrestore(&host->lock, flags);
-+
-+	return ret;
- }
- 
- static const struct dev_pm_ops sdhci_msm_pm_ops = {
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -175,7 +175,6 @@ quiet_cmd_rustdoc_test_kernel = RUSTDOC
+ 	mkdir -p $(objtree)/$(obj)/test/doctests/kernel; \
+ 	OBJTREE=$(abspath $(objtree)) \
+ 	$(RUSTDOC) --test $(rust_flags) \
+-		@$(objtree)/include/generated/rustc_cfg \
+ 		-L$(objtree)/$(obj) --extern alloc --extern kernel \
+ 		--extern build_error --extern macros \
+ 		--extern bindings --extern uapi \
 
 
