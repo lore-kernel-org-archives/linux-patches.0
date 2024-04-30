@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B194612B176;
-	Tue, 30 Apr 2024 11:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3EE712C462;
+	Tue, 30 Apr 2024 11:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474885; cv=none; b=JkgmcO2KMQmpNDAAzj3cVKdJqUJqr3wVKJRJzsR+iTJcuSSEn6GEIHU8MmQ+5e0sx0+RdCocJtiXrgAaxTmgx1++sABIqhoLSd35CU0dXk8ysW2pMUTUnl70CB6P5c1cYIxx5gdxLBZR1mBmGHnRV19RkxEUyadBIkjqlbY7XzA=
+	t=1714474888; cv=none; b=n1J8Rs/+dCZ+u3o314Anx6vqo/GZ7c2spl7VcG+D2TALQPFTjanQ5CZ4/SfLA1w9b1RWxTUzO96/+ULXZ/CbbZkFD4Zxvhp9Myn6lRBi1u8rPMUYEiiYNoK6bcxF0HxYb0QQrkjTp/Fftgv+fm0p+/wjTVKnfX3R7CcArgh31YE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474885; c=relaxed/simple;
-	bh=FJ5WJInlAGYh3sz6qFrWhDp+XrviwiBff/CNsSoJR9c=;
+	s=arc-20240116; t=1714474888; c=relaxed/simple;
+	bh=blvGQYZkQolPD/F40j/3wuCjuUXtqM0nQ53igxogk4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SjqpnjBqTwlItWKdhNWqud41XwBhfFe5TGbBCiLRrP90WSJrXg2dzFicUaBeyLQiPXQ7EPQ2iUr8Dx7wWQvcLLYHDCT9QMwRdV8/b9Z9kQZz+Rj0Hw3Ygte4oz96vHPY2GNg5SS/dOpljBw6qpEUmac70oK8invaBqcRXr61388=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RnLrXBvc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RcFOThSPATxxi2X0svQUvo+TSXhCOGzAcMG/Hhy0Eegv/p72K0WkRA6f5TOmp8i78a5RpN1MGT+eIUtiLdJU3wqJyfuHwi44QZLuyZN8WlZ31puk1sQ2lHaT597KvG2vgnRu1pyF+8ZeMDneKmlhGkQskOg8DCuij60GNJ8UESA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peY0XZIo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RnLrXBvc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5BCAC4AF18;
-	Tue, 30 Apr 2024 11:01:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peY0XZIo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D0CC2BBFC;
+	Tue, 30 Apr 2024 11:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474885;
-	bh=FJ5WJInlAGYh3sz6qFrWhDp+XrviwiBff/CNsSoJR9c=;
+	s=korg; t=1714474888;
+	bh=blvGQYZkQolPD/F40j/3wuCjuUXtqM0nQ53igxogk4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RnLrXBvc7QCB7cbpgCL/jm3eIlCCKzHjbnjgO8xrzHbvZIHOWFicXA38WYbO2uJoh
-	 95NNtDSsQ5PkGhPSgJlDBOc3zoM9svAll2djI7IPQ0TxyRtYWFlMuxwkWovtUGWAbe
-	 RfiKvlahIm2SHH0E2HeSsSwYWZD4vhwZnL5ZhQYQ=
+	b=peY0XZIoR8JAXP/Eq7pm+qlL/AbUxnHpk9asIV48QYY7kkHmt1/y8P1LNSy5B/Gr+
+	 +H1mBcQDmUoUF0xwRvhvQk8x4OCz2j/be59UvszOFbYEUlPvkwT7hUz1pd87PIuGYV
+	 XOQtZw6gh6PWIPoTXya5lPnGptvy9w0hecHAw9BI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Tomas Winkler <tomas.winkler@intel.com>
-Subject: [PATCH 5.10 065/138] mei: me: disable RPL-S on SPS and IGN firmwares
-Date: Tue, 30 Apr 2024 12:39:10 +0200
-Message-ID: <20240430103051.337123111@linuxfoundation.org>
+	Samuel Thibault <samuel.thibault@ens-lyon.org>
+Subject: [PATCH 5.10 066/138] speakup: Avoid crash on very long word
+Date: Tue, 30 Apr 2024 12:39:11 +0200
+Message-ID: <20240430103051.365943721@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -50,34 +49,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Samuel Thibault <samuel.thibault@ens-lyon.org>
 
-commit 0dc04112bee6fdd6eb847ccb32214703022c0269 upstream.
+commit c8d2f34ea96ea3bce6ba2535f867f0d4ee3b22e1 upstream.
 
-Extend the quirk to disable MEI interface on Intel PCH Ignition (IGN)
-and SPS firmwares for RPL-S devices. These firmwares do not support
-the MEI protocol.
+In case a console is set up really large and contains a really long word
+(> 256 characters), we have to stop before the length of the word buffer.
 
-Fixes: 3ed8c7d39cfe ("mei: me: add raptor lake point S DID")
+Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Fixes: c6e3fd22cd538 ("Staging: add speakup to the staging directory")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20240312051958.118478-1-tomas.winkler@intel.com
+Link: https://lore.kernel.org/r/20240323164843.1426997-1-samuel.thibault@ens-lyon.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/pci-me.c |    2 +-
+ drivers/accessibility/speakup/main.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -115,7 +115,7 @@ static const struct pci_device_id mei_me
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_ADP_P, MEI_ME_PCH15_CFG)},
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_ADP_N, MEI_ME_PCH15_CFG)},
- 
--	{MEI_PCI_DEVICE(MEI_DEV_ID_RPL_S, MEI_ME_PCH15_CFG)},
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_RPL_S, MEI_ME_PCH15_SPS_CFG)},
- 
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_MTL_M, MEI_ME_PCH15_CFG)},
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_S, MEI_ME_PCH15_CFG)},
+--- a/drivers/accessibility/speakup/main.c
++++ b/drivers/accessibility/speakup/main.c
+@@ -576,7 +576,7 @@ static u_long get_word(struct vc_data *v
+ 	}
+ 	attr_ch = get_char(vc, (u_short *)tmp_pos, &spk_attr);
+ 	buf[cnt++] = attr_ch;
+-	while (tmpx < vc->vc_cols - 1) {
++	while (tmpx < vc->vc_cols - 1 && cnt < sizeof(buf) - 1) {
+ 		tmp_pos += 2;
+ 		tmpx++;
+ 		ch = get_char(vc, (u_short *)tmp_pos, &temp);
 
 
