@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00FD12C49F;
-	Tue, 30 Apr 2024 10:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4737512B176;
+	Tue, 30 Apr 2024 10:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474231; cv=none; b=W145uptgfUN1dK3ddBE4vyGDkUPQ23JeejKd+Z1jh5hNnYafPjGd05Fj7v0IfnIEiEHOgimELqlZx5fIEn3YoOgH3BWmMWvyOamzzMgLJbXgTHyX0OGkadmH7NxXoR9Zru7TTsMq0JXglYsOv81EObCriYNvq1OSRfMMG/fCyOc=
+	t=1714474234; cv=none; b=QJZ+9l6AxJY4lvKg/0bYJ7MCUwffTtaY9FwAR+S28eIu7s+e+se31TWx5tpEbF5CqdNyoUckViL1wewoWujdAKMoyyYrU6iXb1jlXLMNYsBbSm9KGjmC+NJIgJFaFF5wnlLNZ3ClUymK5DpvudDXPKCliqlCon/HViwgn/RicFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474231; c=relaxed/simple;
-	bh=1VZoNoooSxGauXvFdla9H4gL3zkXTwCGgi65/pKXsBs=;
+	s=arc-20240116; t=1714474234; c=relaxed/simple;
+	bh=9uL6tDCODBLvxCnL1h4zmD8m2GfjJcqpsk0TMOWeeiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F14akCBjNLCShGj1kWVI1fXRSj/TRF2U5hNEqPT6PAk16DdVKoI909UKAdzIuqLmQCIjhxj4hYmuLdFCqA7lCDDcs4oYcrncJtlVYkLV2/YaK8UGcNT6D9CJyq0VebpZ/70ZwHuNJu+s9EXrvJRwEe2TMo1AtfDUBnNVf+9T/W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jeiTvh6u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jSWkKqceeEPS15LFA05HpBxmSkRHbm7by8qyHqI9j78Ex4EkGCoEh3U493c3Qc42SoNiRY7FojVOjZmnWXGDa3bVJXKxXdHxd2Z5ZkG8ln3aGz1Suomd8ZEmga0DrMAd2O+DIQPs0LW8Tvml9pBU5YysZZI6lKQSJcN5PJqvNpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IVw1j11U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jeiTvh6u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684E6C4AF18;
-	Tue, 30 Apr 2024 10:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IVw1j11U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBABC4AF1A;
+	Tue, 30 Apr 2024 10:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474230;
-	bh=1VZoNoooSxGauXvFdla9H4gL3zkXTwCGgi65/pKXsBs=;
+	s=korg; t=1714474234;
+	bh=9uL6tDCODBLvxCnL1h4zmD8m2GfjJcqpsk0TMOWeeiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jeiTvh6uCbhRSJ6bguljMBCgwklJs81W6aFtevFQp4AxzXztuULYjLlqZiNh2w6vp
-	 mDzpG7Vyd+yns+grakWdatYLgp7LULC0SSvrtn2TBhNIBDKkscTv9ap7GyYPUxgQVo
-	 jILH2+NNANnWg1JDAtHYyLHvIUqbaIZuj60nv9Jc=
+	b=IVw1j11UHUTWJp1nmutmtqREWrkdZurVL2lHmM+8b2Ab+dQSVGDECOFRQ69i014ys
+	 aaSm1fU16DByGEPF1cIBbgSqHPhx1GYXZdXMt9rMZAwMslRhGfJ3OYq3L0xa4dN387
+	 5IR6SqAq7Lmxh+RiAe6mU50d9sCj39sMuo7Ay43E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Cohen <amcohen@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Alexander Zubkov <green@qrator.net>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kwangjin Ko <kwangjin.ko@sk.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 095/228] mlxsw: spectrum_acl_tcam: Fix race in region ID allocation
-Date: Tue, 30 Apr 2024 12:37:53 +0200
-Message-ID: <20240430103106.542540025@linuxfoundation.org>
+Subject: [PATCH 6.8 060/228] cxl/core: Fix potential payload size confusion in cxl_mem_get_poison()
+Date: Tue, 30 Apr 2024 12:37:18 +0200
+Message-ID: <20240430103105.540845976@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -55,180 +54,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 627f9c1bb882765a84aa78015abbacd783d429be ]
+[ Upstream commit 4b759dd5765503bd466defac7d93aca14c23a15d ]
 
-Region identifiers can be allocated both when user space tries to insert
-a new tc filter and when filters are migrated from one region to another
-as part of the rehash delayed work.
+A recent change to cxl_mem_get_records_log() [1] highlighted a subtle
+nuance of looping calls to cxl_internal_send_cmd(), i.e. that
+cxl_internal_send_cmd() modifies the 'size_out' member of the @mbox_cmd
+argument. That mechanism is useful for communicating underflow, but it
+is unwanted when reusing @mbox_cmd for a subsequent submission. It turns
+out that cxl_xfer_log() avoids this scenario by always redefining
+@mbox_cmd each iteration.
 
-There is no lock protecting the bitmap from which these identifiers are
-allocated from, which is racy and leads to bad parameter errors from the
-device's firmware.
+Update cxl_mem_get_records_log() and cxl_mem_get_poison() to follow the
+same style as cxl_xfer_log(), i.e. re-define @mbox_cmd each iteration.
+The cxl_mem_get_records_log() change is just a style fixup, but the
+cxl_mem_get_poison() change is a potential fix, per Alison [2]:
 
-Fix by converting the bitmap to IDA which handles its own locking. For
-consistency, do the same for the group identifiers that are part of the
-same structure.
+    Poison list retrieval can hit this case if the MORE flag is set and
+    a follow on read of the list delivers more records than the previous
+    read.  ie. device gives one record, sets the _MORE flag, then gives 5.
 
-Fixes: 2bffc5322fd8 ("mlxsw: spectrum_acl: Don't take mutex in mlxsw_sp_acl_tcam_vregion_rehash_work()")
-Reported-by: Amit Cohen <amcohen@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/ce494b7940cadfe84f3e18da7785b51ef5f776e3.1713797103.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Not an urgent fix since this behavior has not been seen in the wild,
+but worth tracking as a fix.
+
+Cc: Kwangjin Ko <kwangjin.ko@sk.com>
+Cc: Alison Schofield <alison.schofield@intel.com>
+Fixes: ed83f7ca398b ("cxl/mbox: Add GET_POISON_LIST mailbox command")
+Link: http://lore.kernel.org/r/20240402081404.1106-2-kwangjin.ko@sk.com [1]
+Link: http://lore.kernel.org/r/ZhAhAL/GOaWFrauw@aschofie-mobl2 [2]
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://lore.kernel.org/r/171235441633.2716581.12330082428680958635.stgit@dwillia2-xfh.jf.intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlxsw/spectrum_acl_tcam.c        | 61 ++++++++-----------
- .../mellanox/mlxsw/spectrum_acl_tcam.h        |  5 +-
- 2 files changed, 30 insertions(+), 36 deletions(-)
+ drivers/cxl/core/mbox.c | 38 +++++++++++++++++---------------------
+ 1 file changed, 17 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index f20052776b3f2..b6a4652a6475a 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -10,6 +10,7 @@
- #include <linux/netdevice.h>
- #include <linux/mutex.h>
- #include <linux/refcount.h>
-+#include <linux/idr.h>
- #include <net/devlink.h>
- #include <trace/events/mlxsw.h>
+diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+index f0f54aeccc872..65185c9fa0013 100644
+--- a/drivers/cxl/core/mbox.c
++++ b/drivers/cxl/core/mbox.c
+@@ -946,25 +946,22 @@ static void cxl_mem_get_records_log(struct cxl_memdev_state *mds,
+ 	struct cxl_memdev *cxlmd = mds->cxlds.cxlmd;
+ 	struct device *dev = mds->cxlds.dev;
+ 	struct cxl_get_event_payload *payload;
+-	struct cxl_mbox_cmd mbox_cmd;
+ 	u8 log_type = type;
+ 	u16 nr_rec;
  
-@@ -58,41 +59,43 @@ int mlxsw_sp_acl_tcam_priority_get(struct mlxsw_sp *mlxsw_sp,
- static int mlxsw_sp_acl_tcam_region_id_get(struct mlxsw_sp_acl_tcam *tcam,
- 					   u16 *p_id)
- {
--	u16 id;
-+	int id;
+ 	mutex_lock(&mds->event.log_lock);
+ 	payload = mds->event.buf;
  
--	id = find_first_zero_bit(tcam->used_regions, tcam->max_regions);
--	if (id < tcam->max_regions) {
--		__set_bit(id, tcam->used_regions);
--		*p_id = id;
--		return 0;
--	}
--	return -ENOBUFS;
-+	id = ida_alloc_max(&tcam->used_regions, tcam->max_regions - 1,
-+			   GFP_KERNEL);
-+	if (id < 0)
-+		return id;
+-	mbox_cmd = (struct cxl_mbox_cmd) {
+-		.opcode = CXL_MBOX_OP_GET_EVENT_RECORD,
+-		.payload_in = &log_type,
+-		.size_in = sizeof(log_type),
+-		.payload_out = payload,
+-		.min_out = struct_size(payload, records, 0),
+-	};
+-
+ 	do {
+ 		int rc, i;
+-
+-		mbox_cmd.size_out = mds->payload_size;
++		struct cxl_mbox_cmd mbox_cmd = (struct cxl_mbox_cmd) {
++			.opcode = CXL_MBOX_OP_GET_EVENT_RECORD,
++			.payload_in = &log_type,
++			.size_in = sizeof(log_type),
++			.payload_out = payload,
++			.size_out = mds->payload_size,
++			.min_out = struct_size(payload, records, 0),
++		};
+ 
+ 		rc = cxl_internal_send_cmd(mds, &mbox_cmd);
+ 		if (rc) {
+@@ -1297,7 +1294,6 @@ int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
+ 	struct cxl_memdev_state *mds = to_cxl_memdev_state(cxlmd->cxlds);
+ 	struct cxl_mbox_poison_out *po;
+ 	struct cxl_mbox_poison_in pi;
+-	struct cxl_mbox_cmd mbox_cmd;
+ 	int nr_records = 0;
+ 	int rc;
+ 
+@@ -1309,16 +1305,16 @@ int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
+ 	pi.offset = cpu_to_le64(offset);
+ 	pi.length = cpu_to_le64(len / CXL_POISON_LEN_MULT);
+ 
+-	mbox_cmd = (struct cxl_mbox_cmd) {
+-		.opcode = CXL_MBOX_OP_GET_POISON,
+-		.size_in = sizeof(pi),
+-		.payload_in = &pi,
+-		.size_out = mds->payload_size,
+-		.payload_out = po,
+-		.min_out = struct_size(po, record, 0),
+-	};
+-
+ 	do {
++		struct cxl_mbox_cmd mbox_cmd = (struct cxl_mbox_cmd){
++			.opcode = CXL_MBOX_OP_GET_POISON,
++			.size_in = sizeof(pi),
++			.payload_in = &pi,
++			.size_out = mds->payload_size,
++			.payload_out = po,
++			.min_out = struct_size(po, record, 0),
++		};
 +
-+	*p_id = id;
-+
-+	return 0;
- }
- 
- static void mlxsw_sp_acl_tcam_region_id_put(struct mlxsw_sp_acl_tcam *tcam,
- 					    u16 id)
- {
--	__clear_bit(id, tcam->used_regions);
-+	ida_free(&tcam->used_regions, id);
- }
- 
- static int mlxsw_sp_acl_tcam_group_id_get(struct mlxsw_sp_acl_tcam *tcam,
- 					  u16 *p_id)
- {
--	u16 id;
-+	int id;
- 
--	id = find_first_zero_bit(tcam->used_groups, tcam->max_groups);
--	if (id < tcam->max_groups) {
--		__set_bit(id, tcam->used_groups);
--		*p_id = id;
--		return 0;
--	}
--	return -ENOBUFS;
-+	id = ida_alloc_max(&tcam->used_groups, tcam->max_groups - 1,
-+			   GFP_KERNEL);
-+	if (id < 0)
-+		return id;
-+
-+	*p_id = id;
-+
-+	return 0;
- }
- 
- static void mlxsw_sp_acl_tcam_group_id_put(struct mlxsw_sp_acl_tcam *tcam,
- 					   u16 id)
- {
--	__clear_bit(id, tcam->used_groups);
-+	ida_free(&tcam->used_groups, id);
- }
- 
- struct mlxsw_sp_acl_tcam_pattern {
-@@ -1549,19 +1552,11 @@ int mlxsw_sp_acl_tcam_init(struct mlxsw_sp *mlxsw_sp,
- 	if (max_tcam_regions < max_regions)
- 		max_regions = max_tcam_regions;
- 
--	tcam->used_regions = bitmap_zalloc(max_regions, GFP_KERNEL);
--	if (!tcam->used_regions) {
--		err = -ENOMEM;
--		goto err_alloc_used_regions;
--	}
-+	ida_init(&tcam->used_regions);
- 	tcam->max_regions = max_regions;
- 
- 	max_groups = MLXSW_CORE_RES_GET(mlxsw_sp->core, ACL_MAX_GROUPS);
--	tcam->used_groups = bitmap_zalloc(max_groups, GFP_KERNEL);
--	if (!tcam->used_groups) {
--		err = -ENOMEM;
--		goto err_alloc_used_groups;
--	}
-+	ida_init(&tcam->used_groups);
- 	tcam->max_groups = max_groups;
- 	tcam->max_group_size = MLXSW_CORE_RES_GET(mlxsw_sp->core,
- 						  ACL_MAX_GROUP_SIZE);
-@@ -1575,10 +1570,8 @@ int mlxsw_sp_acl_tcam_init(struct mlxsw_sp *mlxsw_sp,
- 	return 0;
- 
- err_tcam_init:
--	bitmap_free(tcam->used_groups);
--err_alloc_used_groups:
--	bitmap_free(tcam->used_regions);
--err_alloc_used_regions:
-+	ida_destroy(&tcam->used_groups);
-+	ida_destroy(&tcam->used_regions);
- 	mlxsw_sp_acl_tcam_rehash_params_unregister(mlxsw_sp);
- err_rehash_params_register:
- 	mutex_destroy(&tcam->lock);
-@@ -1591,8 +1584,8 @@ void mlxsw_sp_acl_tcam_fini(struct mlxsw_sp *mlxsw_sp,
- 	const struct mlxsw_sp_acl_tcam_ops *ops = mlxsw_sp->acl_tcam_ops;
- 
- 	ops->fini(mlxsw_sp, tcam->priv);
--	bitmap_free(tcam->used_groups);
--	bitmap_free(tcam->used_regions);
-+	ida_destroy(&tcam->used_groups);
-+	ida_destroy(&tcam->used_regions);
- 	mlxsw_sp_acl_tcam_rehash_params_unregister(mlxsw_sp);
- 	mutex_destroy(&tcam->lock);
- }
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.h b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.h
-index 462bf448497d3..79a1d86065125 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.h
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.h
-@@ -6,15 +6,16 @@
- 
- #include <linux/list.h>
- #include <linux/parman.h>
-+#include <linux/idr.h>
- 
- #include "reg.h"
- #include "spectrum.h"
- #include "core_acl_flex_keys.h"
- 
- struct mlxsw_sp_acl_tcam {
--	unsigned long *used_regions; /* bit array */
-+	struct ida used_regions;
- 	unsigned int max_regions;
--	unsigned long *used_groups;  /* bit array */
-+	struct ida used_groups;
- 	unsigned int max_groups;
- 	unsigned int max_group_size;
- 	struct mutex lock; /* guards vregion list */
+ 		rc = cxl_internal_send_cmd(mds, &mbox_cmd);
+ 		if (rc)
+ 			break;
 -- 
 2.43.0
 
