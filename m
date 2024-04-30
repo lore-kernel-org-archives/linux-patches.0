@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97239127B70;
-	Tue, 30 Apr 2024 10:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88535127B70;
+	Tue, 30 Apr 2024 10:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473728; cv=none; b=aBxLbf8CL5aMNvYgS4pphgGeuTFesbtcUs1VY7NSa5M21Eyboj1yEHEO2tTRKsTtlWhkiACrSG3sGNLZ4OR/GR33CxbkY74vUZ/EgZQez1nJ4oYnXRP8YeCBcmHyWVZS2Wa+cKaj8rZ/rMbb/wArd3KFJAOXbTFx0eNimo6XKDQ=
+	t=1714473731; cv=none; b=dtszliZZVf9oPjL9qeXpGB8UDFd6R9PzV9Bktp4tiAUmOclFKCWSXEl3U8M1A1DBrJqE4uderk5xqyO09mVSftJCuzW+hHL1DJnvOJOQaIT2p6/ERc2O/74v9z9RXLTOIwbAdxCpwVP9aUVMzT4Tx84jh3OG/0BPTmWC+GxHQf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473728; c=relaxed/simple;
-	bh=8CEX8DEvzGLrH4cFgZUcyUrufg43Ji5/U9rCUekMVhM=;
+	s=arc-20240116; t=1714473731; c=relaxed/simple;
+	bh=MXtu1OhLTto9ZJynNeX5d31OwnMTQBN4FcWGT2KvWY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kGxQeOBkUwSWaTic3Wu2/H3UbQO2zu/6WpuajNnpcMckRTXUSvKJxUzCWL+1uGRplUK8XHIgIIo5b6OuRTzdMY0HIXsil3+GuqPQwWrM/bxEokHucVNG6ELNL7wQzAMiJcs8CzAaBO445bGZJyRPVo6733nK94pf44Fi8y9+0kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxXT9T+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GDYI8gRj4r2I7GKsstJ+oE6PC4lg9g1ZN1+nKeX3fVa84M76egcxv6CEmaddKa4o+qK3eNv/y4KUbcjn8OxwiGi09+dNyOV9UpvYW0zntlZdsVdkn2y/2nhGGphffQm229k22U5J3c49UPsUs0Yy53MmN4lX9LQj2veZSDUufU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTt+IQH6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxXT9T+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1667DC2BBFC;
-	Tue, 30 Apr 2024 10:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTt+IQH6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104D8C2BBFC;
+	Tue, 30 Apr 2024 10:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473728;
-	bh=8CEX8DEvzGLrH4cFgZUcyUrufg43Ji5/U9rCUekMVhM=;
+	s=korg; t=1714473731;
+	bh=MXtu1OhLTto9ZJynNeX5d31OwnMTQBN4FcWGT2KvWY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VxXT9T+YRHjro+JcznqHgbwdVRUjXCnLqove52LNHScrYZdtoZwCrCFpYOe5n+zUk
-	 UqQJ6GVDxJHtZfI5l3hTTF+frDHptLGybO7WF+/kQL99wr2DcaBEyAj44yMySxQn7v
-	 HociIQ+hxfwYTW+YbHnOcOczF/vp51SS4/Pkorkw=
+	b=YTt+IQH6hv2Cm8b9T7MhpLanDcObTiHh+dpNlZndz2xQvggvYN26geobv4YRnWkzw
+	 GMWnkil9krml6KiN1mr0KJTV4oti8pyfvPTvNMIjXfsDrDCpB6Gbxl7452DmpEdstl
+	 vZm6dmi+HKLTph6L6hmsWc/rrID1+7FUNk2MZrnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jiri Benc <jbenc@redhat.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 07/77] ipv6: fix race condition between ipv6_get_ifaddr and ipv6_del_addr
-Date: Tue, 30 Apr 2024 12:38:46 +0200
-Message-ID: <20240430103041.336912300@linuxfoundation.org>
+Subject: [PATCH 4.19 08/77] net/mlx5: Properly link new fs rules into the tree
+Date: Tue, 30 Apr 2024 12:38:47 +0200
+Message-ID: <20240430103041.366183008@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -53,131 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Benc <jbenc@redhat.com>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit 7633c4da919ad51164acbf1aa322cc1a3ead6129 ]
+[ Upstream commit 7c6782ad4911cbee874e85630226ed389ff2e453 ]
 
-Although ipv6_get_ifaddr walks inet6_addr_lst under the RCU lock, it
-still means hlist_for_each_entry_rcu can return an item that got removed
-from the list. The memory itself of such item is not freed thanks to RCU
-but nothing guarantees the actual content of the memory is sane.
+Previously, add_rule_fg would only add newly created rules from the
+handle into the tree when they had a refcount of 1. On the other hand,
+create_flow_handle tries hard to find and reference already existing
+identical rules instead of creating new ones.
 
-In particular, the reference count can be zero. This can happen if
-ipv6_del_addr is called in parallel. ipv6_del_addr removes the entry
-from inet6_addr_lst (hlist_del_init_rcu(&ifp->addr_lst)) and drops all
-references (__in6_ifa_put(ifp) + in6_ifa_put(ifp)). With bad enough
-timing, this can happen:
+These two behaviors can result in a situation where create_flow_handle
+1) creates a new rule and references it, then
+2) in a subsequent step during the same handle creation references it
+   again,
+resulting in a rule with a refcount of 2 that is not linked into the
+tree, will have a NULL parent and root and will result in a crash when
+the flow group is deleted because del_sw_hw_rule, invoked on rule
+deletion, assumes node->parent is != NULL.
 
-1. In ipv6_get_ifaddr, hlist_for_each_entry_rcu returns an entry.
+This happened in the wild, due to another bug related to incorrect
+handling of duplicate pkt_reformat ids, which lead to the code in
+create_flow_handle incorrectly referencing a just-added rule in the same
+flow handle, resulting in the problem described above. Full details are
+at [1].
 
-2. Then, the whole ipv6_del_addr is executed for the given entry. The
-   reference count drops to zero and kfree_rcu is scheduled.
+This patch changes add_rule_fg to add new rules without parents into
+the tree, properly initializing them and avoiding the crash. This makes
+it more consistent with how rules are added to an FTE in
+create_flow_handle.
 
-3. ipv6_get_ifaddr continues and tries to increments the reference count
-   (in6_ifa_hold).
-
-4. The rcu is unlocked and the entry is freed.
-
-5. The freed entry is returned.
-
-Prevent increasing of the reference count in such case. The name
-in6_ifa_hold_safe is chosen to mimic the existing fib6_info_hold_safe.
-
-[   41.506330] refcount_t: addition on 0; use-after-free.
-[   41.506760] WARNING: CPU: 0 PID: 595 at lib/refcount.c:25 refcount_warn_saturate+0xa5/0x130
-[   41.507413] Modules linked in: veth bridge stp llc
-[   41.507821] CPU: 0 PID: 595 Comm: python3 Not tainted 6.9.0-rc2.main-00208-g49563be82afa #14
-[   41.508479] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-[   41.509163] RIP: 0010:refcount_warn_saturate+0xa5/0x130
-[   41.509586] Code: ad ff 90 0f 0b 90 90 c3 cc cc cc cc 80 3d c0 30 ad 01 00 75 a0 c6 05 b7 30 ad 01 01 90 48 c7 c7 38 cc 7a 8c e8 cc 18 ad ff 90 <0f> 0b 90 90 c3 cc cc cc cc 80 3d 98 30 ad 01 00 0f 85 75 ff ff ff
-[   41.510956] RSP: 0018:ffffbda3c026baf0 EFLAGS: 00010282
-[   41.511368] RAX: 0000000000000000 RBX: ffff9e9c46914800 RCX: 0000000000000000
-[   41.511910] RDX: ffff9e9c7ec29c00 RSI: ffff9e9c7ec1c900 RDI: ffff9e9c7ec1c900
-[   41.512445] RBP: ffff9e9c43660c9c R08: 0000000000009ffb R09: 00000000ffffdfff
-[   41.512998] R10: 00000000ffffdfff R11: ffffffff8ca58a40 R12: ffff9e9c4339a000
-[   41.513534] R13: 0000000000000001 R14: ffff9e9c438a0000 R15: ffffbda3c026bb48
-[   41.514086] FS:  00007fbc4cda1740(0000) GS:ffff9e9c7ec00000(0000) knlGS:0000000000000000
-[   41.514726] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   41.515176] CR2: 000056233b337d88 CR3: 000000000376e006 CR4: 0000000000370ef0
-[   41.515713] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[   41.516252] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[   41.516799] Call Trace:
-[   41.517037]  <TASK>
-[   41.517249]  ? __warn+0x7b/0x120
-[   41.517535]  ? refcount_warn_saturate+0xa5/0x130
-[   41.517923]  ? report_bug+0x164/0x190
-[   41.518240]  ? handle_bug+0x3d/0x70
-[   41.518541]  ? exc_invalid_op+0x17/0x70
-[   41.520972]  ? asm_exc_invalid_op+0x1a/0x20
-[   41.521325]  ? refcount_warn_saturate+0xa5/0x130
-[   41.521708]  ipv6_get_ifaddr+0xda/0xe0
-[   41.522035]  inet6_rtm_getaddr+0x342/0x3f0
-[   41.522376]  ? __pfx_inet6_rtm_getaddr+0x10/0x10
-[   41.522758]  rtnetlink_rcv_msg+0x334/0x3d0
-[   41.523102]  ? netlink_unicast+0x30f/0x390
-[   41.523445]  ? __pfx_rtnetlink_rcv_msg+0x10/0x10
-[   41.523832]  netlink_rcv_skb+0x53/0x100
-[   41.524157]  netlink_unicast+0x23b/0x390
-[   41.524484]  netlink_sendmsg+0x1f2/0x440
-[   41.524826]  __sys_sendto+0x1d8/0x1f0
-[   41.525145]  __x64_sys_sendto+0x1f/0x30
-[   41.525467]  do_syscall_64+0xa5/0x1b0
-[   41.525794]  entry_SYSCALL_64_after_hwframe+0x72/0x7a
-[   41.526213] RIP: 0033:0x7fbc4cfcea9a
-[   41.526528] Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
-[   41.527942] RSP: 002b:00007ffcf54012a8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-[   41.528593] RAX: ffffffffffffffda RBX: 00007ffcf5401368 RCX: 00007fbc4cfcea9a
-[   41.529173] RDX: 000000000000002c RSI: 00007fbc4b9d9bd0 RDI: 0000000000000005
-[   41.529786] RBP: 00007fbc4bafb040 R08: 00007ffcf54013e0 R09: 000000000000000c
-[   41.530375] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-[   41.530977] R13: ffffffffc4653600 R14: 0000000000000001 R15: 00007fbc4ca85d1b
-[   41.531573]  </TASK>
-
-Fixes: 5c578aedcb21d ("IPv6: convert addrconf hash list to RCU")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Jiri Benc <jbenc@redhat.com>
-Link: https://lore.kernel.org/r/8ab821e36073a4a406c50ec83c9e8dc586c539e4.1712585809.git.jbenc@redhat.com
+Fixes: 74491de93712 ("net/mlx5: Add multi dest support")
+Link: https://lore.kernel.org/netdev/ea5264d6-6b55-4449-a602-214c6f509c1e@163.com/T/#u [1]
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://lore.kernel.org/r/20240409190820.227554-5-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/addrconf.h | 4 ++++
- net/ipv6/addrconf.c    | 7 ++++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/addrconf.h b/include/net/addrconf.h
-index 9583d3bbab039..10d270f004f0d 100644
---- a/include/net/addrconf.h
-+++ b/include/net/addrconf.h
-@@ -443,6 +443,10 @@ static inline void in6_ifa_hold(struct inet6_ifaddr *ifp)
- 	refcount_inc(&ifp->refcnt);
- }
- 
-+static inline bool in6_ifa_hold_safe(struct inet6_ifaddr *ifp)
-+{
-+	return refcount_inc_not_zero(&ifp->refcnt);
-+}
- 
- /*
-  *	compute link-local solicited-node multicast address
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 5ffa8777ab098..cadc424c1a712 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -1965,9 +1965,10 @@ struct inet6_ifaddr *ipv6_get_ifaddr(struct net *net, const struct in6_addr *add
- 		if (ipv6_addr_equal(&ifp->addr, addr)) {
- 			if (!dev || ifp->idev->dev == dev ||
- 			    !(ifp->scope&(IFA_LINK|IFA_HOST) || strict)) {
--				result = ifp;
--				in6_ifa_hold(ifp);
--				break;
-+				if (in6_ifa_hold_safe(ifp)) {
-+					result = ifp;
-+					break;
-+				}
- 			}
- 		}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+index f0aa7f0e54803..d2b8d284b1995 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+@@ -1452,8 +1452,9 @@ static struct mlx5_flow_handle *add_rule_fg(struct mlx5_flow_group *fg,
  	}
+ 	trace_mlx5_fs_set_fte(fte, false);
+ 
++	/* Link newly added rules into the tree. */
+ 	for (i = 0; i < handle->num_rules; i++) {
+-		if (refcount_read(&handle->rule[i]->node.refcount) == 1) {
++		if (!handle->rule[i]->node.parent) {
+ 			tree_add_node(&handle->rule[i]->node, &fte->node);
+ 			trace_mlx5_fs_add_rule(handle->rule[i]);
+ 		}
 -- 
 2.43.0
 
