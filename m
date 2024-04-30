@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D6E12C462;
-	Tue, 30 Apr 2024 11:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BADA7464;
+	Tue, 30 Apr 2024 11:00:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474833; cv=none; b=HFTllZyfb9onxsj9gk2IesRy8jYB/bT9T4q3Ni7WEcaNe102vWhoCO+f4af3WvaYbvN7dRUmSuELGNrm8JfmPxXhWsARs0RH68N9z46mfwDyYUENKg4nvJTy9tM2Ca3WzhMjAX1djHw5T8nP3SZMon7gKQRQZOyOPDbY5Na9XYQ=
+	t=1714474836; cv=none; b=VcGh9yLHWB3c57WkkFdTHxHFHC9LJnhT8n7VrqesrzaDcWLy9NJdB9w8IYlzWc0j+iESy0FFAv6n/gtdwcXJjQBEMOap1tjkk6yPXQFx9x3w8D4jVbBF5+0QCdhL5m/ZyUSjoZzYA4HQGxpQlWxE98I/sCO+YN0Bi4FpSGXpT64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474833; c=relaxed/simple;
-	bh=SYB/Ec5RlhKqf15G7r/G2opjNi4BPh/zeTMntPSCQaQ=;
+	s=arc-20240116; t=1714474836; c=relaxed/simple;
+	bh=2G0H4LbhCwV2kDlpr9mm3Fzq9nsTrmvCAkGQwVQY++k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FR9eaDBz/4F/8wr0ti1lioTCnHYh/UoaWCCwMX1IbNc8hyIn4K0gPNqQTdKRh6T8M7+Kq1aB8+x7dET8xB9VqeKIYX2MYo33kEyrbPf2ZGvfnN6fz5df7yJ5bpQIpMYmvkoGFjId23RXyAOUzUBSChbkRqpDiCcI1UYJ7iwq89k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j55HrT+z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rfNsrPJgpC9+ocj6xst1Y8xoDgRbsuxo1xdACieiXL5WKKejK0km0wgArTzdx2gePN3Jiz89Gl1fZlPnt/bS5rKHeiPxz/y3GHPyrdIjzgsHdVyTvyvRkFEbuKbxMyYuj2alKRgVWnFhKPyoeTvkS5cv6x2Jc7suY79uLsy+/7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmSdzsbf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j55HrT+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B15C2BBFC;
-	Tue, 30 Apr 2024 11:00:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmSdzsbf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02996C2BBFC;
+	Tue, 30 Apr 2024 11:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474833;
-	bh=SYB/Ec5RlhKqf15G7r/G2opjNi4BPh/zeTMntPSCQaQ=;
+	s=korg; t=1714474836;
+	bh=2G0H4LbhCwV2kDlpr9mm3Fzq9nsTrmvCAkGQwVQY++k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j55HrT+zn4pxgKJl7MiyYQ9nKU/y91oe1EAGatUfsNMTaqbe53Cya8M2vW4sZ3ZHy
-	 rKWqMuGYIc5NKnjHrw9D5Qk6NyfJeqw6KsmVv2kfxB8M3xHg0bTwEZh9RnRD6ZretU
-	 XWCq0yUCAy20n2YPjptNDaYQAiPLORw8yqW3sv6c=
+	b=tmSdzsbf9oPtRXHyBrB57aZEmPratKWCArfd/VjLxEAr+/xE0HwTeYKKUVrQgAWm5
+	 Fb9ytt6Fx0eX+CGUNu4sgmGGiECgPUhhP94Kpu3w3PGyWAqtL7fm8pZ1NEVhCSFIqX
+	 Mbzxu34iU6XVAVEq66+XNJHtNqvXqZn/6Z8Rqcr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 050/138] x86/cpufeatures: Fix dependencies for GFNI, VAES, and VPCLMULQDQ
-Date: Tue, 30 Apr 2024 12:38:55 +0200
-Message-ID: <20240430103050.901120108@linuxfoundation.org>
+	Carlos Llamas <cmllamas@google.com>,
+	Todd Kjos <tkjos@google.com>
+Subject: [PATCH 5.10 051/138] binder: check offset alignment in binder_get_object()
+Date: Tue, 30 Apr 2024 12:38:56 +0200
+Message-ID: <20240430103050.930848932@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -52,59 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-[ Upstream commit 9543f6e26634537997b6e909c20911b7bf4876de ]
+commit aaef73821a3b0194a01bd23ca77774f704a04d40 upstream.
 
-Fix cpuid_deps[] to list the correct dependencies for GFNI, VAES, and
-VPCLMULQDQ.  These features don't depend on AVX512, and there exist CPUs
-that support these features but not AVX512.  GFNI actually doesn't even
-depend on AVX.
+Commit 6d98eb95b450 ("binder: avoid potential data leakage when copying
+txn") introduced changes to how binder objects are copied. In doing so,
+it unintentionally removed an offset alignment check done through calls
+to binder_alloc_copy_from_buffer() -> check_buffer().
 
-This prevents GFNI from being unnecessarily disabled if AVX is disabled
-to mitigate the GDS vulnerability.
+These calls were replaced in binder_get_object() with copy_from_user(),
+so now an explicit offset alignment check is needed here. This avoids
+later complications when unwinding the objects gets harder.
 
-This also prevents all three features from being unnecessarily disabled
-if AVX512VL (or its dependency AVX512F) were to be disabled, but it
-looks like there isn't any case where this happens anyway.
+It is worth noting this check existed prior to commit 7a67a39320df
+("binder: add function to copy binder object from buffer"), likely
+removed due to redundancy at the time.
 
-Fixes: c128dbfa0f87 ("x86/cpufeatures: Enable new SSE/AVX/AVX512 CPU features")
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/r/20240417060434.47101-1-ebiggers@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 6d98eb95b450 ("binder: avoid potential data leakage when copying txn")
+Cc: stable@vger.kernel.org
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Acked-by: Todd Kjos <tkjos@google.com>
+Link: https://lore.kernel.org/r/20240330190115.1877819-1-cmllamas@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/cpuid-deps.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/android/binder.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/cpuid-deps.c b/arch/x86/kernel/cpu/cpuid-deps.c
-index d502241995a39..24fca3d56c7f3 100644
---- a/arch/x86/kernel/cpu/cpuid-deps.c
-+++ b/arch/x86/kernel/cpu/cpuid-deps.c
-@@ -44,7 +44,10 @@ static const struct cpuid_dep cpuid_deps[] = {
- 	{ X86_FEATURE_F16C,			X86_FEATURE_XMM2,     },
- 	{ X86_FEATURE_AES,			X86_FEATURE_XMM2      },
- 	{ X86_FEATURE_SHA_NI,			X86_FEATURE_XMM2      },
-+	{ X86_FEATURE_GFNI,			X86_FEATURE_XMM2      },
- 	{ X86_FEATURE_FMA,			X86_FEATURE_AVX       },
-+	{ X86_FEATURE_VAES,			X86_FEATURE_AVX       },
-+	{ X86_FEATURE_VPCLMULQDQ,		X86_FEATURE_AVX       },
- 	{ X86_FEATURE_AVX2,			X86_FEATURE_AVX,      },
- 	{ X86_FEATURE_AVX512F,			X86_FEATURE_AVX,      },
- 	{ X86_FEATURE_AVX512IFMA,		X86_FEATURE_AVX512F   },
-@@ -56,9 +59,6 @@ static const struct cpuid_dep cpuid_deps[] = {
- 	{ X86_FEATURE_AVX512VL,			X86_FEATURE_AVX512F   },
- 	{ X86_FEATURE_AVX512VBMI,		X86_FEATURE_AVX512F   },
- 	{ X86_FEATURE_AVX512_VBMI2,		X86_FEATURE_AVX512VL  },
--	{ X86_FEATURE_GFNI,			X86_FEATURE_AVX512VL  },
--	{ X86_FEATURE_VAES,			X86_FEATURE_AVX512VL  },
--	{ X86_FEATURE_VPCLMULQDQ,		X86_FEATURE_AVX512VL  },
- 	{ X86_FEATURE_AVX512_VNNI,		X86_FEATURE_AVX512VL  },
- 	{ X86_FEATURE_AVX512_BITALG,		X86_FEATURE_AVX512VL  },
- 	{ X86_FEATURE_AVX512_4VNNIW,		X86_FEATURE_AVX512F   },
--- 
-2.43.0
-
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -2042,8 +2042,10 @@ static size_t binder_get_object(struct b
+ 	size_t object_size = 0;
+ 
+ 	read_size = min_t(size_t, sizeof(*object), buffer->data_size - offset);
+-	if (offset > buffer->data_size || read_size < sizeof(*hdr))
++	if (offset > buffer->data_size || read_size < sizeof(*hdr) ||
++	    !IS_ALIGNED(offset, sizeof(u32)))
+ 		return 0;
++
+ 	if (u) {
+ 		if (copy_from_user(object, u + offset, read_size))
+ 			return 0;
 
 
