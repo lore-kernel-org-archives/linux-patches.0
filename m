@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F84212C46D;
-	Tue, 30 Apr 2024 10:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C8F12C46B;
+	Tue, 30 Apr 2024 10:48:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474085; cv=none; b=OknrJUFlZXRNE3kl12Jvzl4gQpzMvBQLIZNkliw5kuqgqDFZVccgWXx7rR45z4Ij3zughhEDPCB3QhhLmZbtfqKJBdwPvaklSoRHBwl48jdUGhwLvMbD9phMoAnlCPBGleLMMaBoIQAn78cbzD0MU+xqIWzi1mNrs6xVxhMMugA=
+	t=1714474088; cv=none; b=NejQ8/swyAsPPbXwecigN8/BxmLp4fMXIAhmWcDEPgPWByeW4k0MXcGaaVZtMwjIC3suXDoi81nWjilYj7+OSGpErwaIl7hTyLbvwq3sphG+hCHm3dMWSWJAmLeGG4qH0l7s5CaGJKFoQqCEBRyG+JfRdTRD+C213XGHuRI0U4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474085; c=relaxed/simple;
-	bh=xHPxUBCryXvurBPQd8a9blCGZph+jAi2dxENZnavGUY=;
+	s=arc-20240116; t=1714474088; c=relaxed/simple;
+	bh=7RILrJCM6aSdprwvV64bwDaadOPGbKRi/Lgv++GzYL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AxnOqqFgx5VYtbQiqBzC+Ftjh3yB9VaQ85KcLeomNXZgCLZwHZ9JjkLC+0FuFmAjUOcIf/aE+WlBPAlUb6r/yJ1YVaFKFTiLAObl3hiMcsPY4MDwCfnaIPCfB0YvV84mEcKXxK6/MGN4VNeRtX9k7OptOjrZdfW0UrYoWdWHmHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0tiJQSzI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RX5f/rL6PL/cqENUpFuH7sO3U1F1dYBW5YBagCtznVHjB5Ac67PxDiYByurxppDNh4D/SUT4klZPNa0heItluWsB1NvZWr9Bo7RTNmKUCcQdT+hzPw9gkKPNzfSgUXCP8wRRVG8QqrL8pconY2b+1JrcshjvbI8WI7dGTSKDD7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K49fB1jy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0tiJQSzI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64487C2BBFC;
-	Tue, 30 Apr 2024 10:48:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K49fB1jy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED769C2BBFC;
+	Tue, 30 Apr 2024 10:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474085;
-	bh=xHPxUBCryXvurBPQd8a9blCGZph+jAi2dxENZnavGUY=;
+	s=korg; t=1714474088;
+	bh=7RILrJCM6aSdprwvV64bwDaadOPGbKRi/Lgv++GzYL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0tiJQSzI05eq8dZ+k/2nGwRDnt1lxuYM3qqP2iRQpD34PY3E6XXQOsn1mmkIOf2WH
-	 o+UbZZYDR8Jl/Si34RWrtX8pwdYb0EqcnbJBUoyfmTClfW5S7OO5x1y4ovL6UvPOe0
-	 ErhJ0NBagvW6fSUcFeR3FQwOFR0RQvhBFpLvknPg=
+	b=K49fB1jyJOdTx8py6aaBPsNiSJmv8fFprcwCJWRjXZ8r1xdEMxiSfu44LgPCiDbQ3
+	 e7LwPuT+2LW5qLeRP41yab9OZjjNQ7I4ygm8M1mQg6mI6s42iGWVASw/EOZkiSM/c/
+	 S6rsI7TnG7U6iwibrpq4yfG8jX8hSHb2FaDHhmSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,11 +31,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Petr Machata <petrm@nvidia.com>,
 	Simon Horman <horms@kernel.org>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 052/228] mlxsw: core_env: Fix driver initialization with old firmware
-Date: Tue, 30 Apr 2024 12:37:10 +0200
-Message-ID: <20240430103105.313437839@linuxfoundation.org>
+Subject: [PATCH 6.8 053/228] mlxsw: pci: Fix driver initialization with old firmware
+Date: Tue, 30 Apr 2024 12:37:11 +0200
+Message-ID: <20240430103105.341958502@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -56,11 +57,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 7e2050a8366315aeaf0316b3d362e67cf58f3ea8 ]
+[ Upstream commit 773501d01e6bc3f2557882a25679392d982d5f3e ]
 
 The driver queries the Management Capabilities Mask (MCAM) register
-during initialization to understand if it can read up to 128 bytes from
-transceiver modules.
+during initialization to understand if a new and deeper reset flow is
+supported.
 
 However, not all firmware versions support this register, leading to the
 driver failing to load.
@@ -68,70 +69,48 @@ driver failing to load.
 Fix by treating an error in the register query as an indication that the
 feature is not supported.
 
-Fixes: 1f4aea1f72da ("mlxsw: core_env: Read transceiver module EEPROM in 128 bytes chunks")
+Fixes: f257c73e5356 ("mlxsw: pci: Add support for new reset flow")
 Reported-by: Tim 'mithro' Ansell <me@mith.ro>
 Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/0afa8b2e8bac178f5f88211344429176dcc72281.1713446092.git.petrm@nvidia.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Link: https://lore.kernel.org/r/ee968c49d53bac96a4c66d1b09ebbd097d81aca5.1713446092.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlxsw/core_env.c    | 20 ++++++-------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/pci.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_env.c b/drivers/net/ethernet/mellanox/mlxsw/core_env.c
-index 53b150b7ae4e7..6c06b05927608 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/core_env.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/core_env.c
-@@ -1357,24 +1357,20 @@ static struct mlxsw_linecards_event_ops mlxsw_env_event_ops = {
- 	.got_inactive = mlxsw_env_got_inactive,
- };
- 
--static int mlxsw_env_max_module_eeprom_len_query(struct mlxsw_env *mlxsw_env)
-+static void mlxsw_env_max_module_eeprom_len_query(struct mlxsw_env *mlxsw_env)
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/pci.c b/drivers/net/ethernet/mellanox/mlxsw/pci.c
+index af99bf17eb36d..f42a1b1c93687 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/pci.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/pci.c
+@@ -1530,7 +1530,7 @@ mlxsw_pci_reset(struct mlxsw_pci *mlxsw_pci, const struct pci_device_id *id)
  {
+ 	struct pci_dev *pdev = mlxsw_pci->pdev;
  	char mcam_pl[MLXSW_REG_MCAM_LEN];
--	bool mcia_128b_supported;
-+	bool mcia_128b_supported = false;
+-	bool pci_reset_supported;
++	bool pci_reset_supported = false;
+ 	u32 sys_status;
  	int err;
  
+@@ -1548,11 +1548,9 @@ mlxsw_pci_reset(struct mlxsw_pci *mlxsw_pci, const struct pci_device_id *id)
  	mlxsw_reg_mcam_pack(mcam_pl,
  			    MLXSW_REG_MCAM_FEATURE_GROUP_ENHANCED_FEATURES);
- 	err = mlxsw_reg_query(mlxsw_env->core, MLXSW_REG(mcam), mcam_pl);
+ 	err = mlxsw_reg_query(mlxsw_pci->core, MLXSW_REG(mcam), mcam_pl);
 -	if (err)
 -		return err;
 -
--	mlxsw_reg_mcam_unpack(mcam_pl, MLXSW_REG_MCAM_MCIA_128B,
--			      &mcia_128b_supported);
+-	mlxsw_reg_mcam_unpack(mcam_pl, MLXSW_REG_MCAM_PCI_RESET,
+-			      &pci_reset_supported);
 +	if (!err)
-+		mlxsw_reg_mcam_unpack(mcam_pl, MLXSW_REG_MCAM_MCIA_128B,
-+				      &mcia_128b_supported);
++		mlxsw_reg_mcam_unpack(mcam_pl, MLXSW_REG_MCAM_PCI_RESET,
++				      &pci_reset_supported);
  
- 	mlxsw_env->max_eeprom_len = mcia_128b_supported ? 128 : 48;
--
--	return 0;
- }
- 
- int mlxsw_env_init(struct mlxsw_core *mlxsw_core,
-@@ -1445,15 +1441,11 @@ int mlxsw_env_init(struct mlxsw_core *mlxsw_core,
- 	if (err)
- 		goto err_type_set;
- 
--	err = mlxsw_env_max_module_eeprom_len_query(env);
--	if (err)
--		goto err_eeprom_len_query;
--
-+	mlxsw_env_max_module_eeprom_len_query(env);
- 	env->line_cards[0]->active = true;
- 
- 	return 0;
- 
--err_eeprom_len_query:
- err_type_set:
- 	mlxsw_env_module_event_disable(env, 0);
- err_mlxsw_env_module_event_enable:
+ 	if (pci_reset_supported) {
+ 		pci_dbg(pdev, "Starting PCI reset flow\n");
 -- 
 2.43.0
 
