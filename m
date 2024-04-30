@@ -1,505 +1,223 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C86171E66;
-	Tue, 30 Apr 2024 13:43:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714484609; cv=none; b=MmyRf69GIJvhmL98C3QGAsDzgz2BdMwAHpoRw6voOYDVN64akAFW2+Io34otfpMTvY6I9fnKOJGqhObD/6C7XU9QGfWm4n9988YUb+Gju6G5Xz3fWtPxX2BIA80sFFyC3tAvVY7BmI3z6ghcC6PoI3MIhvLylLhtGNVZrYtQYEA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714484609; c=relaxed/simple;
-	bh=32Tj/PvB56S7awoUQdRXI2aDxCLwLAKzbmehVe0xzRU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hqRPhdcxoKxxrSjO23SB7llO1rBOabNlEIjRg1lWR4rGzlsM7y4/FsI7BgFgMeCnlkEs9vJPAcY6K3nQo4Hm540rG53CgEuJI2NO9L2AcmuNX4H4HUObpG+Mqs/tamfKYUlASAy1hmo62KzziWkplcL6R6pOnoltQUamDxZahro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GoduuMrm; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7051F5FA
+	for <patches@lists.linux.dev>; Tue, 30 Apr 2024 16:20:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1714494004; cv=fail; b=MGiv2eHKj80OiwmFa9ZzYwk3jB3xtnBFvzMyhNxMdC7C72jp9inxhhQAdCxKdLUgiZE1lDrNLgUSjCO+Krve3KWsRHVW9D7lY53WrJtvu5lBQgDrnGhDVQWw9WHoWx08twAG9XoOco5S0PE7ChZ9Nkw0FrP4i8573cbWSQVDZ9Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1714494004; c=relaxed/simple;
+	bh=JojFtxSL80FF2qeSKbwXDC7cgAY/dnf+3IFiUnqMJMc=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=TbmmaUkuSL2a54ILqQL/FJ0pAkDKOTrEiXDKb3Czr5xZbMASERe/5Mk0ECUL67lPjfDhpjbqfBkcSbAiNzWB/P4Lu1Ebdwh8BtWkwX2jcndn3UKB+EAKD/3OT0/CcpjbY36ZWhgG7pegW3rdLceafwBAQZL/ZNW96wR3Mp9/CWo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=akqXwXz4; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=tvMhtL1n; arc=fail smtp.client-ip=205.220.165.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GoduuMrm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1342CC4AF18;
-	Tue, 30 Apr 2024 13:43:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714484608;
-	bh=32Tj/PvB56S7awoUQdRXI2aDxCLwLAKzbmehVe0xzRU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=GoduuMrmCfgxGLoMmU8pYvWH4sKR5nMw9z12lG3fjulU1oBTgyZggdpdf30SX6apf
-	 wx+dw8M/Ad22eSZvNSfuegGH+SJSqzfu/W+OKkhnRObyAEDLLuz8OphseNY9RIP5i3
-	 0B0SUp2HE9ZvGLifTq7lZx/Gcs6g4kAcwSLQY05A=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org
-Subject: [PATCH 5.4 000/106] 5.4.275-rc2 review
-Date: Tue, 30 Apr 2024 15:43:24 +0200
-Message-ID: <20240430134021.555330198@linuxfoundation.org>
-X-Mailer: git-send-email 2.44.0
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="akqXwXz4";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="tvMhtL1n"
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 43UCXc8A011904;
+	Tue, 30 Apr 2024 16:19:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-11-20;
+ bh=IM3+m3wRPZckeRifgB8k+ZSJpi8A8vt9MJDWWyxNG1o=;
+ b=akqXwXz4ZcWbdrGQsHE1QYhSb1Sm3ezA3V32I+P0U9RP5QMQqQ/yF/8umhcSSYWm+LPx
+ Ioyk3+WsmRhrCamvLj6w0NXMZ509xaqe+GlHtTVACAZjnnDSC2K/bet8b8eArxiHWoAV
+ yjtQ6L5qXPFs9+NoFsvCGN/bykxJR9f4aTQqkj29QqLdj3k/Lqf+2dVuj8/2HWYFrj5f
+ +U8wofx5V5yvKvOvVM9cweWlqqlwGrcMvgny+LO41FF6kd0dx7/tt/GKmaAXI8Nq9u1r
+ vL6hmVexio4pfX+AjuupQskZbJNUFNbs/y3mkyp3MqvN2sihB3omh7S1sxwW9gcOM/9k sg== 
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xrswvnj0c-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 30 Apr 2024 16:19:47 +0000
+Received: from pps.filterd (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 43UGIFCG033276;
+	Tue, 30 Apr 2024 16:19:46 GMT
+Received: from nam02-bn1-obe.outbound.protection.outlook.com (mail-bn1nam02lp2041.outbound.protection.outlook.com [104.47.51.41])
+	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3xrqt7xk5k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 30 Apr 2024 16:19:46 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=gb4jVgOk2M969+JG0mkdZwdFP0M9tmH8MBFyjHXMzfHeFsd4WIDE4+na+M4T0hmWexOEBWpsdemRJrBCmTfeVq55yuSChWNtzOrGUkzShHPMVXCatxyaesKvhYtOheRyumdNE+NK2FswGjLJHpVZoZkB3s9ZPEsqu0uGEHQQZgeNoQrCM9Nkp3qy2hx9EqWDugdbTmbOGFIZdeYiw1Lpr5B09hztl0gy3D7QryX4p5YIwDTaMhA4dTAqpJltAECLnatxwXx4oXq+PAfS7+K88UqS+9OL3dkXFns0SE8j+e+/2uXod4rhv+C1cPUr8SA9/5XurqCbek6wSxAiYbJwpw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=IM3+m3wRPZckeRifgB8k+ZSJpi8A8vt9MJDWWyxNG1o=;
+ b=QWtme05JP9j1yBh6pWSEPiAXH5NPM2INADZzwhUeIOiecVVLfgvHfl4p6pT5TY9gHC64DtoQQCwFO1IIryzQSoMv3N8H9GjQ9Ge1Pys6oL7lJhvwNhalbUI9ZXlFf+g7uc43cnUiCAY7y8HcjDyn6ShKoGjeICMkS2zapxP+3nsS8xgd0S5V/J9s73SObaERTQyTYdXr3VySFMgX7n6CR57v5JcfBOSrVn+bsNGAXQp4nPpkbO6gDxpLO0la3ekf1RC6rE1TJrVr4l0igBFUqIDjM0qzRw+hvEOcHf9SLqLXmi1OLZywxIxN5SHIJ7KhJVh0ijDqbodbsPwar5aXEg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IM3+m3wRPZckeRifgB8k+ZSJpi8A8vt9MJDWWyxNG1o=;
+ b=tvMhtL1nQqOT5MsrEkRA6QDT/wo9/7vvlwYHDhjskFvjLnt9bT8dCP/729hsSGjvRo4C3vWN1TNwtBRHJUi4tGuWiRtYvFidY7VpCVZEl2jAp4PoLDgk7C6rkKag7EypKRXk304S8shqB5aeC3rHbT5e61cLDFzG49mcB82bB94=
+Received: from PH8PR10MB6290.namprd10.prod.outlook.com (2603:10b6:510:1c1::7)
+ by DS7PR10MB5037.namprd10.prod.outlook.com (2603:10b6:5:3a9::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7519.36; Tue, 30 Apr
+ 2024 16:19:43 +0000
+Received: from PH8PR10MB6290.namprd10.prod.outlook.com
+ ([fe80::309b:26bb:11d5:cc76]) by PH8PR10MB6290.namprd10.prod.outlook.com
+ ([fe80::309b:26bb:11d5:cc76%7]) with mapi id 15.20.7519.031; Tue, 30 Apr 2024
+ 16:19:43 +0000
+Message-ID: <8f0db8d6-288e-4db1-b89e-2e5e6c1c52ed@oracle.com>
+Date: Tue, 30 Apr 2024 21:49:30 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 000/186] 6.6.30-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+        torvalds@linux-foundation.org, akpm@linux-foundation.org,
+        linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+        lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+        f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+        rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com,
+        broonie@kernel.org, Vegard Nossum <vegard.nossum@oracle.com>,
+        Darren Kenny <darren.kenny@oracle.com>
+References: <20240430103058.010791820@linuxfoundation.org>
+Content-Language: en-US
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2PR03CA0086.apcprd03.prod.outlook.com
+ (2603:1096:4:7c::14) To PH8PR10MB6290.namprd10.prod.outlook.com
+ (2603:10b6:510:1c1::7)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.275-rc2.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.4.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.4.275-rc2
-X-KernelTest-Deadline: 2024-05-02T13:40+00:00
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-This is the start of the stable review cycle for the 5.4.275 release.
-There are 106 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
-
-Responses should be made by Thu, 02 May 2024 13:40:04 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.275-rc2.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.4.275-rc2
-
-Randy Dunlap <rdunlap@infradead.org>
-    serial: core: fix kernel-doc for uart_port_unlock_irqrestore()
-
-Yick Xie <yick.xie@gmail.com>
-    udp: preserve the connected status if only UDP cmsg
-
-Mikulas Patocka <mpatocka@redhat.com>
-    dm: limit the number of targets and parameter size area
-
-Matthew Wilcox (Oracle) <willy@infradead.org>
-    bounds: Use the right number of bits for power-of-two CONFIG_NR_CPUS
-
-Nam Cao <namcao@linutronix.de>
-    HID: i2c-hid: remove I2C_HID_READ_PENDING flag to prevent lock-up
-
-Wolfram Sang <wsa+renesas@sang-engineering.com>
-    i2c: smbus: fix NULL function pointer dereference
-
-Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-    idma64: Don't try to serve interrupts when device is powered off
-
-Arnd Bergmann <arnd@arndb.de>
-    dmaengine: owl: fix register access functions
-
-Eric Dumazet <edumazet@google.com>
-    tcp: Fix NEW_SYN_RECV handling in inet_twsk_purge()
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    tcp: Clean up kernel listener's reqsk in inet_twsk_purge()
-
-Arnd Bergmann <arnd@arndb.de>
-    mtd: diskonchip: work around ubsan link failure
-
-Andrey Ryabinin <ryabinin.a.a@gmail.com>
-    stackdepot: respect __GFP_NOLOCKDEP allocation flag
-
-Peter Münster <pm@a16n.net>
-    net: b44: set pause params only when interface is up
-
-Rahul Rameshbabu <rrameshbabu@nvidia.com>
-    ethernet: Add helper for assigning packet type when dest address does not match device address
-
-Guanrui Huang <guanrui.huang@linux.alibaba.com>
-    irqchip/gic-v3-its: Prevent double free on error
-
-Mukul Joshi <mukul.joshi@amd.com>
-    drm/amdgpu: Fix leak when GPU memory allocation fails
-
-Iskander Amara <iskander.amara@theobroma-systems.com>
-    arm64: dts: rockchip: enable internal pull-up for Q7_THRM# on RK3399 Puma
-
-Johannes Thumshirn <johannes.thumshirn@wdc.com>
-    btrfs: fix information leak in btrfs_ioctl_logical_to_ino()
-
-WangYuli <wangyuli@uniontech.com>
-    Bluetooth: btusb: Add Realtek RTL8852BE support ID 0x0bda:0x4853
-
-Nathan Chancellor <nathan@kernel.org>
-    Bluetooth: Fix type of len in {l2cap,sco}_sock_getsockopt_old()
-
-Robin H. Johnson <robbat2@gentoo.org>
-    tracing: Increase PERF_MAX_TRACE_SIZE to handle Sentinel1 and docker together
-
-Robin H. Johnson <robbat2@gentoo.org>
-    tracing: Show size of requested perf buffer
-
-Shifeng Li <lishifeng@sangfor.com.cn>
-    net/mlx5e: Fix a race in command alloc flow
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "crypto: api - Disallow identical driver names"
-
-xinhui pan <xinhui.pan@amd.com>
-    drm/amdgpu: validate the parameters of bo mapping operations more clearly
-
-Chia-I Wu <olvaffe@gmail.com>
-    amdgpu: validate offset_in_bo of drm_amdgpu_gem_va
-
-Rajneesh Bhardwaj <rajneesh.bhardwaj@amd.com>
-    drm/amdgpu: restrict bo mapping within gpu address limits
-
-Emil Kronborg <emil.kronborg@protonmail.com>
-    serial: mxs-auart: add spinlock around changing cts state
-
-Thomas Gleixner <tglx@linutronix.de>
-    serial: core: Provide port lock wrappers
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    af_unix: Suppress false-positive lockdep splat for spin_lock() in __unix_gc().
-
-Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>
-    iavf: Fix TC config comparison with existing adapter TC config
-
-Sindhu Devale <sindhu.devale@intel.com>
-    i40e: Do not use WQ_MEM_RECLAIM flag for workqueue
-
-Ido Schimmel <idosch@nvidia.com>
-    mlxsw: spectrum_acl_tcam: Fix memory leak when canceling rehash work
-
-Ido Schimmel <idosch@nvidia.com>
-    mlxsw: spectrum_acl_tcam: Fix incorrect list API usage
-
-Ido Schimmel <idosch@nvidia.com>
-    mlxsw: spectrum_acl_tcam: Fix warning during rehash
-
-Ido Schimmel <idosch@nvidia.com>
-    mlxsw: spectrum_acl_tcam: Fix memory leak during rehash
-
-Ido Schimmel <idosch@nvidia.com>
-    mlxsw: spectrum_acl_tcam: Rate limit error message
-
-Ido Schimmel <idosch@nvidia.com>
-    mlxsw: spectrum_acl_tcam: Fix possible use-after-free during rehash
-
-Ido Schimmel <idosch@nvidia.com>
-    mlxsw: spectrum_acl_tcam: Fix possible use-after-free during activity update
-
-Ido Schimmel <idosch@nvidia.com>
-    mlxsw: spectrum_acl_tcam: Fix race during rehash delayed work
-
-Hyunwoo Kim <v4bel@theori.io>
-    net: openvswitch: Fix Use-After-Free in ovs_ct_exit
-
-Ismael Luceno <iluceno@suse.de>
-    ipvs: Fix checksumming on GSO of SCTP packets
-
-Hyunwoo Kim <v4bel@theori.io>
-    net: gtp: Fix Use-After-Free in gtp_dellink
-
-Eric Dumazet <edumazet@google.com>
-    net: usb: ax88179_178a: stop lying about skb->truesize
-
-Paul Geurts <paul_geurts@live.nl>
-    NFC: trf7970a: disable all regulators on removal
-
-Ido Schimmel <idosch@nvidia.com>
-    mlxsw: core: Unregister EMAD trap using FORWARD action
-
-David Bauer <mail@david-bauer.net>
-    vxlan: drop packets from invalid src-address
-
-Alexey Brodkin <Alexey.Brodkin@synopsys.com>
-    ARC: [plat-hsdk]: Remove misplaced interrupt-cells property
-
-Rafał Miłecki <rafal@milecki.pl>
-    arm64: dts: mediatek: mt2712: fix validation errors
-
-Biao Huang <biao.huang@mediatek.com>
-    arm64: dts: mt2712: add ethernet device node
-
-Rafał Miłecki <rafal@milecki.pl>
-    arm64: dts: mediatek: mt7622: drop "reset-names" from thermal block
-
-Rafał Miłecki <rafal@milecki.pl>
-    arm64: dts: mediatek: mt7622: fix ethernet controller "compatible"
-
-Rafał Miłecki <rafal@milecki.pl>
-    arm64: dts: mediatek: mt7622: fix IR nodename
-
-Quentin Schulz <quentin.schulz@theobroma-systems.com>
-    arm64: dts: rockchip: enable internal pull-up on PCIE_WAKE# for RK3399 Puma
-
-Iskander Amara <iskander.amara@theobroma-systems.com>
-    arm64: dts: rockchip: fix alphabetical ordering RK3399 puma
-
-Vitaly Kuznetsov <vkuznets@redhat.com>
-    KVM: async_pf: Cleanup kvm_setup_async_pf()
-
-Jeongjun Park <aha310510@gmail.com>
-    nilfs2: fix OOB in nilfs_set_de_type
-
-Dave Airlie <airlied@redhat.com>
-    nouveau: fix instmem race condition around ptr stores
-
-Alan Stern <stern@rowland.harvard.edu>
-    fs: sysfs: Fix reference leak in sysfs_break_active_protection()
-
-Samuel Thibault <samuel.thibault@ens-lyon.org>
-    speakup: Avoid crash on very long word
-
-Kai-Heng Feng <kai.heng.feng@canonical.com>
-    usb: Disable USB3 LPM at shutdown
-
-Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
-    usb: dwc2: host: Fix dereference issue in DDMA completion flow.
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "usb: cdc-wdm: close race between read and workqueue"
-
-Daniele Palmas <dnlplm@gmail.com>
-    USB: serial: option: add Telit FN920C04 rmnet compositions
-
-Vanillan Wang <vanillanwang@163.com>
-    USB: serial: option: add Rolling RW101-GL and RW135-GL support
-
-Jerry Meng <jerry-meng@foxmail.com>
-    USB: serial: option: support Quectel EM060K sub-models
-
-Coia Prant <coiaprant@gmail.com>
-    USB: serial: option: add Lonsung U8300/U9300 product
-
-Chuanhong Guo <gch981213@gmail.com>
-    USB: serial: option: add support for Fibocom FM650/FG650
-
-bolan wang <bolan.wang@fibocom.com>
-    USB: serial: option: add Fibocom FM135-GL variants
-
-Finn Thain <fthain@linux-m68k.org>
-    serial/pmac_zilog: Remove flawed mitigation for rx irq flood
-
-Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-    comedi: vmk80xx: fix incomplete endpoint checking
-
-Carlos Llamas <cmllamas@google.com>
-    binder: check offset alignment in binder_get_object()
-
-Eric Biggers <ebiggers@google.com>
-    x86/cpufeatures: Fix dependencies for GFNI, VAES, and VPCLMULQDQ
-
-Stephen Boyd <sboyd@kernel.org>
-    clk: Get runtime PM before walking tree during disable_unused
-
-Stephen Boyd <sboyd@kernel.org>
-    clk: Initialize struct clk_core kref earlier
-
-Konrad Dybcio <konrad.dybcio@linaro.org>
-    clk: Print an info line before disabling unused clocks
-
-Claudiu Beznea <claudiu.beznea@microchip.com>
-    clk: remove extra empty line
-
-Stephen Boyd <sboyd@kernel.org>
-    clk: Mark 'all_lists' as const
-
-Stephen Boyd <sboyd@kernel.org>
-    clk: Remove prepare_lock hold assertion in __clk_release()
-
-Mikhail Kobuk <m.kobuk@ispras.ru>
-    drm: nv04: Fix out of bounds access
-
-Michael Guralnik <michaelgur@nvidia.com>
-    RDMA/mlx5: Fix port number for counter query in multi-port configuration
-
-Yanjun.Zhu <yanjun.zhu@linux.dev>
-    RDMA/rxe: Fix the problem "mutex_destroy missing"
-
-Lei Chen <lei.chen@smartx.com>
-    tun: limit printing rate when illegal packet received by tun dev
-
-Ziyang Xuan <william.xuanziyang@huawei.com>
-    netfilter: nf_tables: Fix potential data-race in __nft_expr_type_get()
-
-Siddh Raman Pant <siddh.raman.pant@oracle.com>
-    Revert "tracing/trigger: Fix to return error if failed to alloc snapshot"
-
-Zheng Yejian <zhengyejian1@huawei.com>
-    kprobes: Fix possible use-after-free issue on kprobe registration
-
-Yuanhe Shu <xiangzao@linux.alibaba.com>
-    selftests/ftrace: Limit length in subsystem-enable tests
-
-Boris Burkov <boris@bur.io>
-    btrfs: record delayed inode root in transaction
-
-Adam Dunlap <acdunlap@google.com>
-    x86/apic: Force native_apic_mem_read() to use the MOV instruction
-
-John Stultz <jstultz@google.com>
-    selftests: timers: Fix abs() warning in posix_timers test
-
-Gavin Shan <gshan@redhat.com>
-    vhost: Add smp_rmb() in vhost_vq_avail_empty()
-
-Ville Syrjälä <ville.syrjala@linux.intel.com>
-    drm/client: Fully protect modes[] with dev->mode_config.mutex
-
-Boris Burkov <boris@bur.io>
-    btrfs: qgroup: correctly model root qgroup rsv in convert
-
-David Arinzon <darinzon@amazon.com>
-    net: ena: Fix potential sign extension issue
-
-Michal Luczaj <mhal@rbox.co>
-    af_unix: Fix garbage collector racing against connect()
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    af_unix: Do not use atomic ops for unix_sk(sk)->inflight.
-
-Cosmin Ratiu <cratiu@nvidia.com>
-    net/mlx5: Properly link new fs rules into the tree
-
-Jiri Benc <jbenc@redhat.com>
-    ipv6: fix race condition between ipv6_get_ifaddr and ipv6_del_addr
-
-Arnd Bergmann <arnd@arndb.de>
-    ipv4/route: avoid unused-but-set-variable warning
-
-Arnd Bergmann <arnd@arndb.de>
-    ipv6: fib: hide unused 'pn' variable
-
-Eric Dumazet <edumazet@google.com>
-    geneve: fix header validation in geneve[6]_xmit_skb
-
-Petr Tesarik <petr@tesarici.cz>
-    u64_stats: fix u64_stats_init() for lockdep when used repeatedly in one file
-
-Ilya Maximets <i.maximets@ovn.org>
-    net: openvswitch: fix unwanted error log on timeout policy probing
-
-Arnd Bergmann <arnd@arndb.de>
-    nouveau: fix function cast warning
-
-Dmitry Antipov <dmantipov@yandex.ru>
-    Bluetooth: Fix memory leak in hci_req_sync_complete()
-
-Sven Eckelmann <sven@narfation.org>
-    batman-adv: Avoid infinite loop trying to resize local TT
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |   4 +-
- arch/arc/boot/dts/hsdk.dts                         |   1 -
- arch/arm64/boot/dts/mediatek/mt2712-evb.dts        |  78 ++++++++++-
- arch/arm64/boot/dts/mediatek/mt2712e.dtsi          |  68 ++++++++-
- arch/arm64/boot/dts/mediatek/mt7622.dtsi           |   7 +-
- arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi      |  29 +++-
- arch/x86/include/asm/apic.h                        |   3 +-
- arch/x86/kernel/cpu/cpuid-deps.c                   |   6 +-
- crypto/algapi.c                                    |   1 -
- drivers/android/binder.c                           |   4 +-
- drivers/bluetooth/btusb.c                          |   2 +
- drivers/clk/clk.c                                  | 154 ++++++++++++++++-----
- drivers/dma/idma64.c                               |   4 +
- drivers/dma/owl-dma.c                              |   4 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c   |   1 +
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c             |  70 ++++++----
- drivers/gpu/drm/drm_client_modeset.c               |   3 +-
- drivers/gpu/drm/nouveau/nouveau_bios.c             |  13 +-
- .../gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c    |   7 +-
- drivers/gpu/drm/nouveau/nvkm/subdev/instmem/nv50.c |   7 +-
- drivers/hid/i2c-hid/i2c-hid-core.c                 |   8 --
- drivers/i2c/i2c-core-base.c                        |  12 +-
- drivers/infiniband/hw/mlx5/mad.c                   |   3 +-
- drivers/infiniband/sw/rxe/rxe.c                    |   2 +
- drivers/irqchip/irq-gic-v3-its.c                   |   9 +-
- drivers/md/dm-core.h                               |   2 +
- drivers/md/dm-ioctl.c                              |   3 +-
- drivers/md/dm-table.c                              |   9 +-
- drivers/mtd/nand/raw/diskonchip.c                  |   4 +-
- drivers/net/ethernet/amazon/ena/ena_com.c          |   2 +-
- drivers/net/ethernet/broadcom/b44.c                |  14 +-
- drivers/net/ethernet/intel/i40e/i40e_main.c        |   2 +-
- drivers/net/ethernet/intel/iavf/iavf_main.c        |  30 +++-
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c      |  12 +-
- drivers/net/ethernet/mellanox/mlx5/core/fs_core.c  |   3 +-
- drivers/net/ethernet/mellanox/mlxsw/core.c         |   2 +-
- .../ethernet/mellanox/mlxsw/spectrum_acl_tcam.c    |  54 ++++++--
- drivers/net/geneve.c                               |   4 +-
- drivers/net/gtp.c                                  |   3 +-
- drivers/net/tun.c                                  |  18 +--
- drivers/net/usb/ax88179_178a.c                     |  11 +-
- drivers/net/vxlan.c                                |   4 +
- drivers/nfc/trf7970a.c                             |  42 +++---
- drivers/staging/comedi/drivers/vmk80xx.c           |  35 ++---
- drivers/staging/speakup/main.c                     |   2 +-
- drivers/tty/serial/mxs-auart.c                     |   8 +-
- drivers/tty/serial/pmac_zilog.c                    |  14 --
- drivers/usb/class/cdc-wdm.c                        |   6 +-
- drivers/usb/core/port.c                            |   4 +-
- drivers/usb/dwc2/hcd_ddma.c                        |   4 +-
- drivers/usb/serial/option.c                        |  40 ++++++
- drivers/vhost/vhost.c                              |  14 +-
- fs/btrfs/backref.c                                 |  12 +-
- fs/btrfs/delayed-inode.c                           |   3 +
- fs/btrfs/qgroup.c                                  |   2 +
- fs/nilfs2/dir.c                                    |   2 +-
- fs/sysfs/file.c                                    |   2 +
- include/linux/etherdevice.h                        |  25 ++++
- include/linux/serial_core.h                        |  79 +++++++++++
- include/linux/trace_events.h                       |   2 +-
- include/linux/u64_stats_sync.h                     |   6 +-
- include/net/addrconf.h                             |   4 +
- include/net/af_unix.h                              |   5 +-
- include/net/ip_tunnels.h                           |  33 +++++
- kernel/bounds.c                                    |   2 +-
- kernel/kprobes.c                                   |  18 ++-
- kernel/trace/trace_event_perf.c                    |   3 +-
- kernel/trace/trace_events_trigger.c                |   6 +-
- lib/stackdepot.c                                   |   4 +-
- net/batman-adv/translation-table.c                 |   2 +-
- net/bluetooth/hci_request.c                        |   4 +-
- net/bluetooth/l2cap_sock.c                         |   7 +-
- net/bluetooth/sco.c                                |   7 +-
- net/ethernet/eth.c                                 |  12 +-
- net/ipv4/inet_timewait_sock.c                      |  34 +++--
- net/ipv4/route.c                                   |   4 +-
- net/ipv4/udp.c                                     |   5 +-
- net/ipv6/addrconf.c                                |   7 +-
- net/ipv6/ip6_fib.c                                 |   7 +-
- net/ipv6/udp.c                                     |   5 +-
- net/netfilter/ipvs/ip_vs_proto_sctp.c              |   6 +-
- net/netfilter/nf_tables_api.c                      |   8 +-
- net/openvswitch/conntrack.c                        |   9 +-
- net/unix/af_unix.c                                 |   4 +-
- net/unix/garbage.c                                 |  35 +++--
- net/unix/scm.c                                     |   8 +-
- .../ftrace/test.d/event/subsystem-enable.tc        |   6 +-
- tools/testing/selftests/timers/posix_timers.c      |   2 +-
- virt/kvm/async_pf.c                                |  19 +--
- 89 files changed, 905 insertions(+), 340 deletions(-)
-
-
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH8PR10MB6290:EE_|DS7PR10MB5037:EE_
+X-MS-Office365-Filtering-Correlation-Id: 518b9de5-efee-44a0-1d79-08dc69315838
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|1800799015|376005|7416005|366007;
+X-Microsoft-Antispam-Message-Info: 
+	=?utf-8?B?WHROZTEvMGU1RyswYzErR3liQVJCYVNHZFRyTUZCVzNpNEpaYkYrV3Bvc2lY?=
+ =?utf-8?B?WHhObkliWmEyUE1JNkZEZ1FHRDBXUXVOTHZ5bFl1RE5sU0dlNmRSM3hOV0ww?=
+ =?utf-8?B?cVlHeUtKVGxGNWtuVlBWVGNRMmNqT1VLQ1QrQ05RaXJuTXhaTXEyZ1BXQXZG?=
+ =?utf-8?B?djgyOUhJTGpxbmp2enczZmxCWjFscVhnK0ZDdHBiR0dJSEtVblUyRTY5cmwv?=
+ =?utf-8?B?MXhJVnpjNG81dWFNYVJhUjFrbWVTZ1plZkFuS2pEZFdyRVUwYWx2ZVlCTDJH?=
+ =?utf-8?B?d3ZwVnVkdWF0VVpMYm5jM29rUHNRYXpOMXAxM0s0cDRNcHFVOE1KYjJNbXd4?=
+ =?utf-8?B?dFFrS2UxNEhBREpDN29hMFliSDRHajZOSHhQa1IwUytIM3FObHZjOGdaSGtx?=
+ =?utf-8?B?eVl6ZU93ZUlsRUplckRPNEdCN0FLQzUvUWEwNVFPdTg3Ti9LeHhjVVZOaXZk?=
+ =?utf-8?B?ei82dm44eFRkOHZDcUZIUHlWR1VBOWcremc1YW9CbTRXV0xxTkZHQUF6bC9E?=
+ =?utf-8?B?R0xkUSt3ak9nQS85dUFLU09kMjdiSTRqYXd2S1hqOFBWVEI0NWpyOGpTQlBQ?=
+ =?utf-8?B?dUxRZWFXUDQySitDRUw1MFBxUHYvY0ZKdGJVaXpya2xtTExRVUh1ZHdDamJP?=
+ =?utf-8?B?eEJJcmRmRWdaVTVmNTNpRVpDdWRCNGVnelZ6SnhrRUFCMUZCREZ5OVVIMmJx?=
+ =?utf-8?B?N0pFTWt6RUNlb0lsRWtLbWUvcUE2Y2dOYkVNcHdXTklza1gyOEYyRW9SSnZ3?=
+ =?utf-8?B?ekhzSHlUbFBQVFpEZUNBdGF2M3hTQThEeDBnRTVXL3NRRTJheWJXYmZwakN1?=
+ =?utf-8?B?L0EvNXI4dldPbFlvRTdqV1Byc04rcWY4a2Y0SEhLWEtwS0hOT0J5cVQ0d1NJ?=
+ =?utf-8?B?Rmc4bndpSG53VVhSaEFxR0VGQTlEcVZkZjJ3aE5sSW9McFVTdTg4MGdRNTN0?=
+ =?utf-8?B?WHFLNEVzL2dvWUN0MVlCMWpIN3BranVwb2xjSmhOdTdmTEZyQ2wyTVplQW14?=
+ =?utf-8?B?ZlVZc1NEMm96R2tJUVgxZ1QrQnBLcEdTU3FOZ2xOczJMVWNGSVh6c242OTN6?=
+ =?utf-8?B?cS84UGpPSWZBZzVlajlic05rTldDYTd1c1p6T2FYL2JXV1hZaXVuVDZ3cS9E?=
+ =?utf-8?B?Y3JNVE5NMTV2cUFsOW1jN3pTbXNyUFlZc2h3VHIrSjNYeHc5dUxFbTZtTC9h?=
+ =?utf-8?B?TGxON044ODdrTWRiS21JWjA0dTFIcWpGMWcwUjdvb2kxQTRUV2ZvWHo0MkFL?=
+ =?utf-8?B?d2xEMFJ3RVFsL0lzRG5VaXpBbGJJTVBEQUpuaHFNZlJnb1Z4Q0h3bFBLS1NJ?=
+ =?utf-8?B?MGw1dHBvcjdLRElPZzNnRFcrUWZLK2tONThlY1YvaW4vajNVT2Q0eG40bFlv?=
+ =?utf-8?B?VElSMEwvS3RJZkJVanV2VzBhUGtXcUR0ZEFMcytVZzI1TmYvNXpuSWx2ZmZB?=
+ =?utf-8?B?c1haSXptcjZNeFNvSkxldGdVdEJqbGhYVkdyeDNuK2lBZ3FUOVc0UTVvUncx?=
+ =?utf-8?B?MEY0RUJNeWswRWFJa2h5R1hoWTlOUmhVV2ZJT1BzN1IxOVNOb0xhNkNIeFF3?=
+ =?utf-8?B?OWNuRG5rZVR0azgvRnduVWliYkxzbkZKMmNxejlLemx1VEd4MEMzTG55VG05?=
+ =?utf-8?B?VVJsRS90UFV4dTF5d0llTjFvRWJYbEQ3TnhFenkwSzJGSW83dzhYTyttNHdk?=
+ =?utf-8?B?dXgvRVlTUmd2UTNnanNpUnQ3blkvSTZOSktLK3BKTlFxa1RtMldoTzZnPT0=?=
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR10MB6290.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(376005)(7416005)(366007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?utf-8?B?WkcxUGpSVFROeE9zc0RWa2t4a3Q5OGU3NVQwTUFqNGp5ekJVdjNsVlJCTFRr?=
+ =?utf-8?B?akp6VU5yTUFYWXlFaCtMNVYvcFZyTDdIRkZ2SW9HeUYvMUxXUkc3dTNsV0Jp?=
+ =?utf-8?B?MGNVQVNBbDIwOTI4WDNWZU15Rjc3ZUtxV3E0djVLbThwYlNXcU5jQVZJQ0d0?=
+ =?utf-8?B?OXo1VnpVUjBzRnRmVkxJVWwxaUVVaWJncmpNSUxXa2ZtRmMwTSt6NkI0OFhy?=
+ =?utf-8?B?NFozamNlZk4waUs3bDhyQmdsOEc1RkU5cFNpcGhBdkFiZlRSTGJKSEx3cUUv?=
+ =?utf-8?B?R0cwWWh6ZHY0aHpaM2REK0sweXhKUTZnSHYxMWxFT3MxRy9jSjYrVEpTZUV1?=
+ =?utf-8?B?ekpMa3JhNjBRWmVndWV2U1dIN0k2T3pFaDFCcGpSNzVveHFtNER4Qm9yTnRJ?=
+ =?utf-8?B?QWd1Q2M2aTRtUVlmaHpKYmpKbStqZ2JxQjBTMVRCbVVsRkxCQU5oY015Vi9R?=
+ =?utf-8?B?dzNWVDYrR2JSR0lUKzZCQkVBTEp5UkRLMXp0ZDZkNXp5eWtDM0NtTzVDd1dm?=
+ =?utf-8?B?bE1hVUpuUkVzUksvUWdQOTlGaHQ0b2JtZ1pqM0dObWVUNDYrcWJKSmR0ZzJK?=
+ =?utf-8?B?WUtXTllHbm5UQ0JhSXlXMHZ0ZFZ4aW1PRHdLRlpwd1krS2FsTVlkcGpmQ2tj?=
+ =?utf-8?B?UUFyeVZxbkdPRE9LelMyTXJoV3VXS3J1YXd4Z0lrTndpTmxiMWNlZTJKMlda?=
+ =?utf-8?B?Znh3ZzBGSWlPM0VzMkd4RElOZzkrSVRJNk1nVmFHU2pJN0lnUlFqUTUxQnpG?=
+ =?utf-8?B?SmFtci9uS2xJZ1BPbUtocm1nd1UzcXE3YklPajBDR3dUa2FCTTQ3ekh5SkZY?=
+ =?utf-8?B?eTRiWk9lRUNqVC93R0ViVW85ampkUUxsZkVEcFlrcDlqM2U0Tm51YUJQNElv?=
+ =?utf-8?B?WkMzMnBhVHZQOHlZK0xJWWlOUHUwakpHZHZ2SmZjSWJqclo2dWxVb3lFdC9i?=
+ =?utf-8?B?WWd1RjN4Wk9lRWkxdUlKT2t3RnJsN0l1TzZkZkVEVTA1dXJUT09SZ0xvcHVO?=
+ =?utf-8?B?YXdDSkpiM0tMSGp1SFdNNjhDN2NsRUFoVDVvS1IwcmxqdWxLTWxUMzNEMFpS?=
+ =?utf-8?B?aG9VY0YrLytLbnJ2bU5Ta014K0RnTm4zRjZuMUh6Z0FKK1phTWh1ZEdQdjNR?=
+ =?utf-8?B?OGtWL1N4dUFraGkyczBBL0UzVXpKbm9WSFVyNUxlb1lDMDA4TnVGeTBEQ2Q2?=
+ =?utf-8?B?UlFyTnQrUGtTZSt6cWVZUlN6Vm1XcHdCYzdBK3pINmpNUGJKVi9FcVhlVGNM?=
+ =?utf-8?B?dTYrSnJYcFREVTFnNU5qNE9id05USVY2UUtHYmpyTEJqdlZLL0NRUkF5cUJY?=
+ =?utf-8?B?YkZVbTYyQUJIZXQrRUdmd0xwQ1FBM0JEZjlVYnQ0NWJ0d0JKMG50QTZkZ3kv?=
+ =?utf-8?B?WlJmdnZJSjVxeFJVUkw4RUFsek1PYTREZ0V6RGZDa29SbDR1eXVMNWpKbUZh?=
+ =?utf-8?B?ZXJrVU9DNVJBVU5md1RUak9zVmZBam01WTlhMEpNY0VYSXJnZ2EyN2JZYzl6?=
+ =?utf-8?B?NFh4ZEN4ZlhKZ1BGMUs0Ukd5WEFkdlFDTk1jdkJIODUzQXhYZEtNb0VRSWNz?=
+ =?utf-8?B?dWNpS3hQcytXVCt4Q0xpclVvOTFNMFNWZ055OCsxS2Vmdlp2OHlHem5kdXFz?=
+ =?utf-8?B?UWZwOWo1QWJQK3hPQUpvYWp0VlpqQjRGM1UwU0Q5bjI3RGQ0bDZnMEc1OUYw?=
+ =?utf-8?B?Rk1UaFcxMC9rSGtLR240d04rL1pUL3RWeXJtcklpUFZKMmhSUXFRVDlpaDF6?=
+ =?utf-8?B?cVI4Ynh5bDJkOXBtWmhHSnBJc05WNHdHYnlqOEJkNzY1NkFrWWVLTTFJQkoz?=
+ =?utf-8?B?eldGQ1FCZzJuZVF5TUFCTjFvU2NKL2w3Z3F3ZktkMXBzVDJXMHBWTk1rV2xo?=
+ =?utf-8?B?SUpWUmZrTmdTVHJZRGViZ1J6ZlRVbFY4cjJENm51MklJQThsdkZMRGM4TWpt?=
+ =?utf-8?B?NCt6RGc2R0xRUDZ5NkJqQUU3UkwrZnA0a2hHdkxjZkl1RHFSRnJHSGI3by84?=
+ =?utf-8?B?RXU4SnUyWFFSaXlmNmg4L2dEVG9TRHg0UE91SFBYbW9oZVVEaURjRlJpTVV0?=
+ =?utf-8?B?UTNtcjdaRjREMjZESTk2dG5JU09NbmR1d3VTVjJhaSs1blEzYnJMb09BNWlG?=
+ =?utf-8?B?aFNMYWc4SE5EcTFkYk1pT0Uxc3RwMGx6L0p5Rms0U0JyL3kzR2h4N0VRcHBm?=
+ =?utf-8?Q?Z/7Yk4ougLQTnjYs8Xww1as=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
+	gTb8TbsVcv3FCrVyOZQqPiFHdi4witMHLzy/gepxWn38qyNKAi9VZ35DwAthyTkhAjcTaJ5CAa2vGz21rP17gjQcrUBwdhx28INvIChoRCCUhNomcEMMCav3b7Lb4bjQ8jhmW+rn4pQaDP4OAM/yngtqztmaw/rfjgyKCrEu+e4tqDKM5rT9rMEDxV3h/I46x8OUYvWis9KkZJktuk4+Aonv6SPUAUl5tY4/QJiQ6/nzVirnKevtlV/2NR5a4yeG5a8k8VQGDDUJrc4v7W6fwpjUVhmrmovr6PGlarv8h+P+KWiwM4Qxq4zjzjwNkGbIHKoHG9kMyh5VvimtaI0ZwUOHFZdNB8LFgRVR4+TprKN+v+soeI8uszP+H3KPlOhMROT3tMeYOD3mX2LBx0a+9Dn+0eqU9o9s3OVyJJlJ3HwupfQtx6XQyj7auQvrr3bHc4HZGKLq6bXOoVXuQJWushTUTYerd/cct5JUIa1M044wcfBVVyiPekIIQt5MSu54IgbNYrXfNIW7nk9JSmyjnC7Sjnlx+2EBd9JbY2fnZTlJjWAEklF3+JpQXE5iwcisB7WCchd/8Aic8TqKcYD74HTY3SQ7VnJbm0EJHWnGmdA=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 518b9de5-efee-44a0-1d79-08dc69315838
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR10MB6290.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Apr 2024 16:19:43.7624
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: LJ2cdPsOezXTr584ZpLf0+Zu/RUTzyM80aPc6Hm3SC3AnpBUaE1nbE0QFgwo9u7f9x7tCi2asO7qCMax0TyF3Es9MutzCF9LAwfG8CPsirTw38JTKHsYeE7ZWS1H0qwi
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR10MB5037
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-30_09,2024-04-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 phishscore=0 bulkscore=0
+ suspectscore=0 malwarescore=0 spamscore=0 adultscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2404010000
+ definitions=main-2404300116
+X-Proofpoint-GUID: b1W7JilWJL5MLnuGJGcDy8Mcltj55xl6
+X-Proofpoint-ORIG-GUID: b1W7JilWJL5MLnuGJGcDy8Mcltj55xl6
+
+Hi Greg,
+
+On 30/04/24 16:07, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.30 release.
+> There are 186 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 02 May 2024 10:30:27 +0000.
+> Anything received after that time might be too late.
+> 
+No problems seen on x86_64 and aarch64 with our testing.
+
+Tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+
+Thanks,
+Harshit
+
+
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.30-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
