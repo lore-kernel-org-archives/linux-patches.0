@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C9B12D1F1;
-	Tue, 30 Apr 2024 11:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F0F12CD9B;
+	Tue, 30 Apr 2024 11:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475701; cv=none; b=KkuRjo8Bt/q7NbPgJJqtxgjIamLCHkAFk5lSpOdqQaCAlUd30u8Drdp309Atujwlupgxro5AQgJgfntN7QQmi+Ksqz9S76z/+NfhLCF48F7Rt2dIz3JR3b5RFNCEg4/tzZxmQ/2mVnPR02QU32VzP3vS23jjZ1FCZkoZ4vZ26SE=
+	t=1714475705; cv=none; b=LI7blnWliRm3SPlD+TxkVabgx4GsnNHs4x1ARBTp2KLKJECjlcNwTr12zdPuH4Bpfuv0Eyblz6Ot51HS1Fs2VcvOzsaRykQnhWAZJWH1CsLnYTHU2w6UYBysIeISoIo15DgYggxpGr5IqhrZQ22Ue9QXl6gqAOQzV3G138MzBjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475701; c=relaxed/simple;
-	bh=j1zC3fxSRM/0u6BDBimoylFMx4H/dIV7Hyf1pc8duYQ=;
+	s=arc-20240116; t=1714475705; c=relaxed/simple;
+	bh=uKR3p7HHsAJQ44tDIyvKSlWrgUFWBitQXWGG0qoIDIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lli9hQ1zZh4MWtwu7404UiAibhx5xDzLnOLMU9hJ/+CxndY7xtcso/Lik8GATzQAlauh2fwzmzzM9avD3ziKqxT9Dh91WoUL9W9TzCsGIch/F/fo9JgezHiHPstyddU1cmSsy0sste8zWF1RPbp5V0JBC+RVK6NQbfdEpvfYoIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTBZld3g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zjq2EhDaT5mj35aYjl94+rKdhJYRhEOLzuS48S44AVRwcpx6z7Mkf92TgJtx2bESu9DRkkAWpL1vEK7jaDq6qIFbjxoctHsU/Hi/E3DQqZDa+n1QKLkIj9c7UkouQM63Qe8t81e3/egN7u/qnDPkvr3eFvueYGCHKliIpS3s1LI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlpy6Gje; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTBZld3g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E1BC2BBFC;
-	Tue, 30 Apr 2024 11:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlpy6Gje"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F5AC2BBFC;
+	Tue, 30 Apr 2024 11:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475701;
-	bh=j1zC3fxSRM/0u6BDBimoylFMx4H/dIV7Hyf1pc8duYQ=;
+	s=korg; t=1714475704;
+	bh=uKR3p7HHsAJQ44tDIyvKSlWrgUFWBitQXWGG0qoIDIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PTBZld3gKBKrT+12AYs9sGK3UhvUVXSZ24TszyUWN00zpHJw+gxfYYSscxlWoXrhu
-	 UfOc6fyshY0oNc5zk3RrCSuiEaSWkg55awqH98jLd3FrQ15GvVVddhzUBgh4YFiYQs
-	 JOFhg91uUQLDMaqK4jl7byeQepdEmyHGEwVXYNow=
+	b=rlpy6Gje8ubpSYLhNEgnBIbceBfmLkMANWxXqftWJqdQhPIaSVk077Al0qy1ZDkmE
+	 pgoDfa0HlHsfleSJScZIDKISNrVvz8qCKHSO44WFwabvCMNY68KViXfF2wfFsbt8a5
+	 p4p/r6Ep0hLjG/FNfjTczduM67jpbbDSlYlETKhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 160/186] idma64: Dont try to serve interrupts when device is powered off
-Date: Tue, 30 Apr 2024 12:40:12 +0200
-Message-ID: <20240430103102.678198444@linuxfoundation.org>
+	Sergei Trofimovich <slyich@gmail.com>,
+	Igor Raits <igor@gooddata.com>,
+	Breno Leitao <leitao@debian.org>,
+	kernel test robot <oliver.sang@intel.com>,
+	Yujie Liu <yujie.liu@intel.com>,
+	Xuewen Yan <xuewen.yan@unisoc.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Chen Yu <yu.c.chen@intel.com>
+Subject: [PATCH 6.6 178/186] sched/eevdf: Prevent vlag from going out of bounds in reweight_eevdf()
+Date: Tue, 30 Apr 2024 12:40:30 +0200
+Message-ID: <20240430103103.198157606@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -52,42 +57,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Xuewen Yan <xuewen.yan@unisoc.com>
 
-[ Upstream commit 9140ce47872bfd89fca888c2f992faa51d20c2bc ]
+[ Upstream commit 1560d1f6eb6b398bddd80c16676776c0325fe5fe ]
 
-When iDMA 64-bit device is powered off, the IRQ status register
-is all 1:s. This is never happen in real case and signalling that
-the device is simply powered off. Don't try to serve interrupts
-that are not ours.
+It was possible to have pick_eevdf() return NULL, which then causes a
+NULL-deref. This turned out to be due to entity_eligible() returning
+falsely negative because of a s64 multiplcation overflow.
 
-Fixes: 667dfed98615 ("dmaengine: add a driver for Intel integrated DMA 64-bit")
-Reported-by: Heiner Kallweit <hkallweit1@gmail.com>
-Closes: https://lore.kernel.org/r/700bbb84-90e1-4505-8ff0-3f17ea8bc631@gmail.com
-Tested-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240321120453.1360138-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Specifically, reweight_eevdf() computes the vlag without considering
+the limit placed upon vlag as update_entity_lag() does, and then the
+scaling multiplication (remember that weight is 20bit fixed point) can
+overflow. This then leads to the new vruntime being weird which then
+causes the above entity_eligible() to go side-ways and claim nothing
+is eligible.
+
+Thus limit the range of vlag accordingly.
+
+All this was quite rare, but fatal when it does happen.
+
+Closes: https://lore.kernel.org/all/ZhuYyrh3mweP_Kd8@nz.home/
+Closes: https://lore.kernel.org/all/CA+9S74ih+45M_2TPUY_mPPVDhNvyYfy1J1ftSix+KjiTVxg8nw@mail.gmail.com/
+Closes: https://lore.kernel.org/lkml/202401301012.2ed95df0-oliver.sang@intel.com/
+Fixes: eab03c23c2a1 ("sched/eevdf: Fix vruntime adjustment on reweight")
+Reported-by: Sergei Trofimovich <slyich@gmail.com>
+Reported-by: Igor Raits <igor@gooddata.com>
+Reported-by: Breno Leitao <leitao@debian.org>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Reported-by: Yujie Liu <yujie.liu@intel.com>
+Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
+Reviewed-and-tested-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240422082238.5784-1-xuewen.yan@unisoc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idma64.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/sched/fair.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/idma64.c b/drivers/dma/idma64.c
-index 0ac634a51c5e3..f86939fa33b95 100644
---- a/drivers/dma/idma64.c
-+++ b/drivers/dma/idma64.c
-@@ -171,6 +171,10 @@ static irqreturn_t idma64_irq(int irq, void *dev)
- 	u32 status_err;
- 	unsigned short i;
- 
-+	/* Since IRQ may be shared, check if DMA controller is powered on */
-+	if (status == GENMASK(31, 0))
-+		return IRQ_NONE;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index a5466eb6a1f15..397ef27c9bdb1 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -707,15 +707,21 @@ u64 avg_vruntime(struct cfs_rq *cfs_rq)
+  *
+  * XXX could add max_slice to the augmented data to track this.
+  */
+-static void update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
++static s64 entity_lag(u64 avruntime, struct sched_entity *se)
+ {
+-	s64 lag, limit;
++	s64 vlag, limit;
 +
- 	dev_vdbg(idma64->dma.dev, "%s: status=%#x\n", __func__, status);
++	vlag = avruntime - se->vruntime;
++	limit = calc_delta_fair(max_t(u64, 2*se->slice, TICK_NSEC), se);
++
++	return clamp(vlag, -limit, limit);
++}
  
- 	/* Check if we have any interrupt from the DMA controller */
++static void update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
++{
+ 	SCHED_WARN_ON(!se->on_rq);
+-	lag = avg_vruntime(cfs_rq) - se->vruntime;
+ 
+-	limit = calc_delta_fair(max_t(u64, 2*se->slice, TICK_NSEC), se);
+-	se->vlag = clamp(lag, -limit, limit);
++	se->vlag = entity_lag(avg_vruntime(cfs_rq), se);
+ }
+ 
+ /*
+@@ -3710,7 +3716,7 @@ static void reweight_eevdf(struct sched_entity *se, u64 avruntime,
+ 	 *	   = V  - vl'
+ 	 */
+ 	if (avruntime != se->vruntime) {
+-		vlag = (s64)(avruntime - se->vruntime);
++		vlag = entity_lag(avruntime, se);
+ 		vlag = div_s64(vlag * old_weight, weight);
+ 		se->vruntime = avruntime - vlag;
+ 	}
 -- 
 2.43.0
 
