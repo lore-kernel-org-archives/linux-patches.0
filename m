@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0B8128816;
-	Tue, 30 Apr 2024 11:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC9E12D745;
+	Tue, 30 Apr 2024 11:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476695; cv=none; b=UOpmbxgUA3biquBc3gKckthnpXPXWKVfMDuTxDkI5vy5OWSqE9SfEaDnpNsKqW7iLXsmP5bn+zlETcXe1toEHuqSk5ESd2UiKepSKLpaQ/bMMghLysgobHZO3N00dbeVuqVENbYQ+Rw7XFKcj5hncSZAoPOH/dgD0CUxZK44bE4=
+	t=1714476698; cv=none; b=vC6pZ4mDDVoijaE32Y9z46RInX7KfCW3b2tlgEq+yVIK9QGFSV3XtOGDp5CrkPQHyr9zWqrV+3Hub9303hYrLkB6wTMgvq9sh5f3pkO/gdKeBDArywZTkO8HRGYFcWyRYAjyRpUHbaffXW7z/EFnLf4kokI+xPb5hkLF5zmu4jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476695; c=relaxed/simple;
-	bh=S73grUK3po/myPetf6l7TEpP0imMgP2KnJQlvB4pGxs=;
+	s=arc-20240116; t=1714476698; c=relaxed/simple;
+	bh=DfMsGM0XCF8LhtcD8QYCMs50yhreSuSaLqtcLoC8Fks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kMbs5Ycesf56Sx8dLKbHJlmBsCbnVsxuTV8yDQuXjAJKFABEBLo4YA5Q8VDPsQ138LTh/CZhInJw8MKdxcNeX66WdNre01ozr8Qc5AcJVQaUkBhPAePQsdDBdTljm5CLUSYoS4Qj5wNdNJXom+sw04wCgUQBKkNB11yBXihk7jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ybhqs7bD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LaovRho6HXoiGjdX/QpKqVkA0NAQDgrqoz21Cxoc9I+t/AzehtrXC3EItPbVEeQbwu/edsZahxez+IEkvUQObhQ8hwaIBircDJBRH47ywYo8SOP4n0nplFTMTBkBkMpPawFd4z4etaw4JiE2OKt1Cs6xCeNwClXM+Qp5QwrOA/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOzBrGJa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ybhqs7bD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A95C2BBFC;
-	Tue, 30 Apr 2024 11:31:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOzBrGJa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D953EC2BBFC;
+	Tue, 30 Apr 2024 11:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476695;
-	bh=S73grUK3po/myPetf6l7TEpP0imMgP2KnJQlvB4pGxs=;
+	s=korg; t=1714476698;
+	bh=DfMsGM0XCF8LhtcD8QYCMs50yhreSuSaLqtcLoC8Fks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ybhqs7bDhjGtDprXhQG+qRZY7fXqG7uHoLDpBdh8AhOzY6EXBBxgESZlISCWJOzko
-	 TLBme0FvnWWDZU5+4LgMCdSnQcfagGNRCdTAxrtyk8HJOviuWdI4MVFdYyjDwZkOmw
-	 Y/AoqdNfIy9Io27t5YgClUzzYZtddb2RXz4Dbyiw=
+	b=oOzBrGJa8+AkIt3Rle+5mov29rb4w9gnv/YfwWix2T60ob5bNsyOSWlhmL0tNlra3
+	 asXTYpOzNwS9POFqd6Nr2Djf6WkxE44IDBL2KwRxqNa9AjNgJ4U2TM8cnNOIESxWPA
+	 irPZvjW8ir/RPO2ISTw43u4PSvyx5oA6qYt37jWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikhail Kobuk <m.kobuk@ispras.ru>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/110] phy: marvell: a3700-comphy: Fix out of bounds read
-Date: Tue, 30 Apr 2024 12:41:04 +0200
-Message-ID: <20240430103050.377570661@linuxfoundation.org>
+Subject: [PATCH 6.1 096/110] phy: marvell: a3700-comphy: Fix hardcoded array size
+Date: Tue, 30 Apr 2024 12:41:05 +0200
+Message-ID: <20240430103050.407253355@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -54,46 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikhail Kobuk <m.kobuk@ispras.ru>
 
-[ Upstream commit e4308bc22b9d46cf33165c9dfaeebcf29cd56f04 ]
+[ Upstream commit 627207703b73615653eea5ab7a841d5b478d961e ]
 
-There is an out of bounds read access of 'gbe_phy_init_fix[fix_idx].addr'
-every iteration after 'fix_idx' reaches 'ARRAY_SIZE(gbe_phy_init_fix)'.
-
-Make sure 'gbe_phy_init[addr]' is used when all elements of
-'gbe_phy_init_fix' array are handled.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Replace hardcoded 'gbe_phy_init' array size by explicit one.
 
 Fixes: 934337080c6c ("phy: marvell: phy-mvebu-a3700-comphy: Add native kernel implementation")
 Signed-off-by: Mikhail Kobuk <m.kobuk@ispras.ru>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/r/20240321164734.49273-1-m.kobuk@ispras.ru
+Link: https://lore.kernel.org/r/20240321164734.49273-2-m.kobuk@ispras.ru
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/marvell/phy-mvebu-a3700-comphy.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/phy/marvell/phy-mvebu-a3700-comphy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/phy/marvell/phy-mvebu-a3700-comphy.c b/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
-index d641b345afa35..392a8ae1bc667 100644
+index 392a8ae1bc667..251e1aedd4a6e 100644
 --- a/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
 +++ b/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
-@@ -610,11 +610,12 @@ static void comphy_gbe_phy_init(struct mvebu_a3700_comphy_lane *lane,
- 		 * comparison to 3.125 Gbps values. These register values are
- 		 * stored in "gbe_phy_init_fix" array.
- 		 */
--		if (!is_1gbps && gbe_phy_init_fix[fix_idx].addr == addr) {
-+		if (!is_1gbps &&
-+		    fix_idx < ARRAY_SIZE(gbe_phy_init_fix) &&
-+		    gbe_phy_init_fix[fix_idx].addr == addr) {
- 			/* Use new value */
- 			val = gbe_phy_init_fix[fix_idx].value;
--			if (fix_idx < ARRAY_SIZE(gbe_phy_init_fix))
--				fix_idx++;
-+			fix_idx++;
- 		} else {
- 			val = gbe_phy_init[addr];
- 		}
+@@ -602,7 +602,7 @@ static void comphy_gbe_phy_init(struct mvebu_a3700_comphy_lane *lane,
+ 	u16 val;
+ 
+ 	fix_idx = 0;
+-	for (addr = 0; addr < 512; addr++) {
++	for (addr = 0; addr < ARRAY_SIZE(gbe_phy_init); addr++) {
+ 		/*
+ 		 * All PHY register values are defined in full for 3.125Gbps
+ 		 * SERDES speed. The values required for 1.25 Gbps are almost
 -- 
 2.43.0
 
