@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CB417592;
-	Tue, 30 Apr 2024 11:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D231017592;
+	Tue, 30 Apr 2024 11:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476476; cv=none; b=DJqrsstMEaKvWXb4wDJ5RnYBLOEJLY+yv9fRIqB0A6bHMs0FVTKEHdtLjj+R1U6/Z79jG6MEBvo6rHnFAaMkpBMNRFg7LPuHacrzb3Y3XCQ6opPTHzk2FHM2mS0CqXGtCLWxc/4kwEgEVnuXuWqRELUBOkrY8lNy3H8/GgpGB64=
+	t=1714476479; cv=none; b=LchFvtrWlqvZzdtSLLLF1GMUjZAAbVP1yzBD4S9sViedLRAS8MUk4A3lOcL9ESuFuL3zZWxFp4xjKkjqVwLz0Ij+uE9LNnN09JaYPQg//RfoiSwgq2nZ+0z6mDdT0hFcks1RU0qHJmb31rsog2sQXHtQW+s85NZwHlUdfVREEZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476476; c=relaxed/simple;
-	bh=VAHXJEPYIchjv+JAJ22qzh+88pai8blMlfTxFFnZM1c=;
+	s=arc-20240116; t=1714476479; c=relaxed/simple;
+	bh=6cQnw30DmOAlT3cICvUi5vd+ekMYYB0Pwjlz7c/YsAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZrgDEWQMQN8aJdx8cCBa8jPGNfYMJEo4z5EZiiJhLq6jkWwqerevKfVFR7rHP4Oe4XvKkgSQ8dUTgq+A08h59Zxj//CWTnqCavMnww1whpMLm83/tDh6kXzCNJsOpGzZ/DDRD/l9wluwalrMP5KgF6YgKP+7hMXB7XqWXgjTIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oehUWzkF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N93QA+8C9Ofs9ep2PS8kdEHTbWOnZ14U+QncC1ysWdsI9HJnZkrY4uFuQTYEIxRrFWkT0o+KVhu+uiGKq4VzfSyY0uTeHMXHCfZyIq8uIvVdiw4giNSI0QzXgxzYKRK1bhBZGJ0I9GKziVIvzt+jucE0gmtbqYgN/JDBdX4qfKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NT5OdwmF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oehUWzkF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA0FC2BBFC;
-	Tue, 30 Apr 2024 11:27:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NT5OdwmF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522F9C2BBFC;
+	Tue, 30 Apr 2024 11:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476476;
-	bh=VAHXJEPYIchjv+JAJ22qzh+88pai8blMlfTxFFnZM1c=;
+	s=korg; t=1714476479;
+	bh=6cQnw30DmOAlT3cICvUi5vd+ekMYYB0Pwjlz7c/YsAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oehUWzkFS/XRAjhZPXNsc2NeMwRbPYe8pCHUOSHiK5WZICONvLLY7OjbZZ82AlqzT
-	 uCvAqx4TVjnv14VPxdClichlbu8P4buuv6/mGn284MrCrdwSPyDU7/FWywVNefHBOs
-	 jEqOVQqss3KUfBldryx5MV3AQxv3FeYfVYQ5074k=
+	b=NT5OdwmFa2CeRFgwMQD8z1xLpFVQ2UcROZAFnb3J1J1xloYDpuhnKyDOsU7VCKRuK
+	 8MIqZf05RiE82WA7uCNsIsF3mdFfoBMW4vyBAqa2kUw9rqWagKEqzY4YPGMoCjZ0Jb
+	 jtMbjsXocFhkeaVXTzeBykD52YzTwoOIb7/7n+44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
-	Eric Dumazet <edumazet@google.com>,
-	Aaron Conole <aconole@redhat.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Alexander Zubkov <green@qrator.net>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/110] net: openvswitch: Fix Use-After-Free in ovs_ct_exit
-Date: Tue, 30 Apr 2024 12:40:12 +0200
-Message-ID: <20240430103048.838851168@linuxfoundation.org>
+Subject: [PATCH 6.1 044/110] mlxsw: spectrum_acl_tcam: Fix race during rehash delayed work
+Date: Tue, 30 Apr 2024 12:40:13 +0200
+Message-ID: <20240430103048.868518163@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -53,44 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <v4bel@theori.io>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 5ea7b72d4fac2fdbc0425cd8f2ea33abe95235b2 ]
+[ Upstream commit d90cfe20562407d9f080d24123078d666d730707 ]
 
-Since kfree_rcu, which is called in the hlist_for_each_entry_rcu traversal
-of ovs_ct_limit_exit, is not part of the RCU read critical section, it
-is possible that the RCU grace period will pass during the traversal and
-the key will be free.
+The purpose of the rehash delayed work is to reduce the number of masks
+(eRPs) used by an ACL region as the eRP bank is a global and limited
+resource.
 
-To prevent this, it should be changed to hlist_for_each_entry_safe.
+This is done in three steps:
 
-Fixes: 11efd5cb04a1 ("openvswitch: Support conntrack zone limit")
-Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://lore.kernel.org/r/ZiYvzQN/Ry5oeFQW@v4bel-B760M-AORUS-ELITE-AX
+1. Creating a new set of masks and a new ACL region which will use the
+   new masks and to which the existing filters will be migrated to. The
+   new region is assigned to 'vregion->region' and the region from which
+   the filters are migrated from is assigned to 'vregion->region2'.
+
+2. Migrating all the filters from the old region to the new region.
+
+3. Destroying the old region and setting 'vregion->region2' to NULL.
+
+Only the second steps is performed under the 'vregion->lock' mutex
+although its comments says that among other things it "Protects
+consistency of region, region2 pointers".
+
+This is problematic as the first step can race with filter insertion
+from user space that uses 'vregion->region', but under the mutex.
+
+Fix by holding the mutex across the entirety of the delayed work and not
+only during the second step.
+
+Fixes: 2bffc5322fd8 ("mlxsw: spectrum_acl: Don't take mutex in mlxsw_sp_acl_tcam_vregion_rehash_work()")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Alexander Zubkov <green@qrator.net>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/1ec1d54edf2bad0a369e6b4fa030aba64e1f124b.1713797103.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/conntrack.c | 4 ++--
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
-index e4ba86b84b9b1..2302bae1e0128 100644
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -1920,9 +1920,9 @@ static void ovs_ct_limit_exit(struct net *net, struct ovs_net *ovs_net)
- 	for (i = 0; i < CT_LIMIT_HASH_BUCKETS; ++i) {
- 		struct hlist_head *head = &info->limits[i];
- 		struct ovs_ct_limit *ct_limit;
-+		struct hlist_node *next;
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+index 41eac7dfb67e7..508c0b1b80fd9 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+@@ -780,7 +780,9 @@ static void mlxsw_sp_acl_tcam_vregion_rehash_work(struct work_struct *work)
+ 			     rehash.dw.work);
+ 	int credits = MLXSW_SP_ACL_TCAM_VREGION_REHASH_CREDITS;
  
--		hlist_for_each_entry_rcu(ct_limit, head, hlist_node,
--					 lockdep_ovsl_is_held())
-+		hlist_for_each_entry_safe(ct_limit, next, head, hlist_node)
- 			kfree_rcu(ct_limit, rcu);
++	mutex_lock(&vregion->lock);
+ 	mlxsw_sp_acl_tcam_vregion_rehash(vregion->mlxsw_sp, vregion, &credits);
++	mutex_unlock(&vregion->lock);
+ 	if (credits < 0)
+ 		/* Rehash gone out of credits so it was interrupted.
+ 		 * Schedule the work as soon as possible to continue.
+@@ -1420,7 +1422,6 @@ mlxsw_sp_acl_tcam_vregion_migrate(struct mlxsw_sp *mlxsw_sp,
+ 	int err, err2;
+ 
+ 	trace_mlxsw_sp_acl_tcam_vregion_migrate(mlxsw_sp, vregion);
+-	mutex_lock(&vregion->lock);
+ 	err = mlxsw_sp_acl_tcam_vchunk_migrate_all(mlxsw_sp, vregion,
+ 						   ctx, credits);
+ 	if (err) {
+@@ -1440,7 +1441,6 @@ mlxsw_sp_acl_tcam_vregion_migrate(struct mlxsw_sp *mlxsw_sp,
+ 			/* Let the rollback to be continued later on. */
+ 		}
  	}
- 	kfree(info->limits);
+-	mutex_unlock(&vregion->lock);
+ 	trace_mlxsw_sp_acl_tcam_vregion_migrate_end(mlxsw_sp, vregion);
+ 	return err;
+ }
 -- 
 2.43.0
 
