@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E94B17592;
-	Tue, 30 Apr 2024 11:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFC312D1F1;
+	Tue, 30 Apr 2024 11:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476153; cv=none; b=EY+vUZnqB2zxlIylMdEQoTGuiLOsytjXQFMSbh971dHqy0sBpa5rOdPR+R2rsNx6D3crU/9kXHTclXXGHSX38Y4bwffbIZLvRa8NfFyqoFna3sJWlbirXOnE5P7dV+ltn87kZJ3CaRxiVHGVhTPfM+QDFFSpmSIT3LQvr6uAFMk=
+	t=1714476156; cv=none; b=ss17lDWwzUGBw0a2K0HPGTmbK4NvVRDyvEQ890zkzbN3W5VM1WcXNAiheQnlR8nK6YRg3lz4GhDu8yyzPKn9C8uvEaoQDVRbRHl4rgVYLu/EBXyGAPWn02hsVcl04WJkXj+9qa91IphUSMbCppZGziMzw66RPplta7woop5V2ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476153; c=relaxed/simple;
-	bh=fgWBIAkIllrPTXsOceRCpjOqxUzNoApWefsIeVkz/iU=;
+	s=arc-20240116; t=1714476156; c=relaxed/simple;
+	bh=i/yR1hRtB94Pc+m5rqVYOUAnMsoPfOP5loAGqEMeLgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s4Vfrayc9jgi8ck9w56kx2dTlAq7LSWHvJPaKmUfApPCXGkrxsK1nfmdH9OSHxiK+1BPdymZB4pWqaUuyU/Vzaj0pDi/kF4Yj4eZATyQAOIcaF7BwMwqXrExoIXhY8kzetKTI7cDFEgk7VCU+jtNMHFSVTHBual+J3N7uxUZ8WI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=prXaIeER; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hqOwovMAj1PXdnm2sHCvA9pdxKNM5xIwsMvHc0vPRi61JeFcvrlYKxmMuzJoC8/IPrZq2T4YIfaYQEjD0rN53fS//cdtbdZ/850Rv+kXEUJQi0pau5h/uFrmj67TfAEWxoo+xhahBffZQOhkcSFKWBwY6ucDYEOMcvVQwX8n53I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmGCQ2dg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="prXaIeER"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB538C2BBFC;
-	Tue, 30 Apr 2024 11:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmGCQ2dg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFB8C2BBFC;
+	Tue, 30 Apr 2024 11:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476153;
-	bh=fgWBIAkIllrPTXsOceRCpjOqxUzNoApWefsIeVkz/iU=;
+	s=korg; t=1714476156;
+	bh=i/yR1hRtB94Pc+m5rqVYOUAnMsoPfOP5loAGqEMeLgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=prXaIeERp8cHmvp651TEN22dHss8SMJFYQbrzNh4nOZphORwQdikRZLIGtuUpXZRX
-	 2BdI+L7PVaq8It738gXSReCD2t1TKQA45/LaUpiAFNs4RQs+NP6CQ03mADa7+XsF3V
-	 VIpxJae6a/yx2L8l3sZNwq7SMX/4D6g4gXfctnNw=
+	b=hmGCQ2dgq++B54nt2ldtqRsemXx2iCOQbwyU4gpGn5UPsqm4t3VdtqBMft5yzAitT
+	 OgqLDftiglvhnux3Wj7GcTgUwdk/stdeK01XLWK0uziEYi1N7k6WiepNcZbogXGv0n
+	 zcYw+07jMB2VRxdEOKHJmA39EYFTKWEgGKKd4a4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Sean Christopherson <sean.j.christopherson@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.4 051/107] KVM: async_pf: Cleanup kvm_setup_async_pf()
-Date: Tue, 30 Apr 2024 12:40:11 +0200
-Message-ID: <20240430103046.164175677@linuxfoundation.org>
+	Iskander Amara <iskander.amara@theobroma-systems.com>,
+	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 052/107] arm64: dts: rockchip: fix alphabetical ordering RK3399 puma
+Date: Tue, 30 Apr 2024 12:40:12 +0200
+Message-ID: <20240430103046.193748002@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -52,70 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
+From: Iskander Amara <iskander.amara@theobroma-systems.com>
 
-commit 7863e346e1089b40cac1c7d9098314c405e2e1e3 upstream.
+[ Upstream commit f0abb4b2c7acf3c3e4130dc3f54cd90cf2ae62bc ]
 
-schedule_work() returns 'false' only when the work is already on the queue
-and this can't happen as kvm_setup_async_pf() always allocates a new one.
-Also, to avoid potential race, it makes sense to to schedule_work() at the
-very end after we've added it to the queue.
+Nodes overridden by their reference should be ordered alphabetically to
+make it easier to read the DTS. pinctrl node is defined in the wrong
+location so let's reorder it.
 
-While on it, do some minor cleanup. gfn_to_pfn_async() mentioned in a
-comment does not currently exist and, moreover, we can check
-kvm_is_error_hva() at the very beginning, before we try to allocate work so
-'retry_sync' label can go away completely.
-
-Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Message-Id: <20200610175532.779793-1-vkuznets@redhat.com>
-Reviewed-by: Sean Christopherson <sean.j.christopherson@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Iskander Amara <iskander.amara@theobroma-systems.com>
+Reviewed-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Link: https://lore.kernel.org/r/20240308085243.69903-2-iskander.amara@theobroma-systems.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Stable-dep-of: 945a7c857091 ("arm64: dts: rockchip: enable internal pull-up on PCIE_WAKE# for RK3399 Puma")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- virt/kvm/async_pf.c |   19 ++++++-------------
- 1 file changed, 6 insertions(+), 13 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/virt/kvm/async_pf.c
-+++ b/virt/kvm/async_pf.c
-@@ -195,7 +195,9 @@ int kvm_setup_async_pf(struct kvm_vcpu *
- 	if (vcpu->async_pf.queued >= ASYNC_PF_PER_VCPU)
- 		return 0;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
+index 365fa9a3c5bfb..ecef3d9b0b93e 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
+@@ -425,15 +425,6 @@
+ 	gpio1830-supply = <&vcc_1v8>;
+ };
  
--	/* setup delayed work */
-+	/* Arch specific code should not do async PF in this case */
-+	if (unlikely(kvm_is_error_hva(hva)))
-+		return 0;
- 
- 	/*
- 	 * do alloc nowait since if we are going to sleep anyway we
-@@ -213,24 +215,15 @@ int kvm_setup_async_pf(struct kvm_vcpu *
- 	work->mm = current->mm;
- 	mmget(work->mm);
- 
--	/* this can't really happen otherwise gfn_to_pfn_async
--	   would succeed */
--	if (unlikely(kvm_is_error_hva(work->addr)))
--		goto retry_sync;
+-&pmu_io_domains {
+-	status = "okay";
+-	pmu1830-supply = <&vcc_1v8>;
+-};
 -
- 	INIT_WORK(&work->work, async_pf_execute);
--	if (!schedule_work(&work->work))
--		goto retry_sync;
+-&pwm2 {
+-	status = "okay";
+-};
+-
+ &pinctrl {
+ 	i2c8 {
+ 		i2c8_xfer_a: i2c8-xfer {
+@@ -465,6 +456,15 @@
+ 	};
+ };
  
- 	list_add_tail(&work->queue, &vcpu->async_pf.queue);
- 	vcpu->async_pf.queued++;
- 	kvm_arch_async_page_not_present(vcpu, work);
++&pmu_io_domains {
++	status = "okay";
++	pmu1830-supply = <&vcc_1v8>;
++};
 +
-+	schedule_work(&work->work);
++&pwm2 {
++	status = "okay";
++};
 +
- 	return 1;
--retry_sync:
--	kvm_put_kvm(work->vcpu->kvm);
--	mmput(work->mm);
--	kmem_cache_free(async_pf_cache, work);
--	return 0;
- }
- 
- int kvm_async_pf_wakeup_all(struct kvm_vcpu *vcpu)
+ &sdhci {
+ 	/*
+ 	 * Signal integrity isn't great at 200MHz but 100MHz has proven stable
+-- 
+2.43.0
+
 
 
