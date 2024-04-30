@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC32F17592;
-	Tue, 30 Apr 2024 11:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633B217592;
+	Tue, 30 Apr 2024 11:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475928; cv=none; b=I+wakIB/HwAbeRjjKbic3ugTUWRugdzFYWz1VxLBUcwGw62knVOxsmxM/5Kr/03oaj6GvNPfDj1wGfdygR4fmY5hTiaLpbZFuUiiLw1Qldw1uUSLKB2y/OfNgfgl4h+Uvf2fE9sBMQY8rINgCPWW8SPReb/RffCpStjLRCi9IS4=
+	t=1714475931; cv=none; b=qU90SE/KIKW60LDyfTabTjWnxqy7jOoL6C1E3ugKAGFG40IUgIO0hjNvPV+qB1ga9GGZHXVxm2m14Vr1QR3mgt0iOtpUWXZ+V/T3XM+Wd8/KArTCI9srw8JO2qWJbCTzKmZZ+DBL2cdChr2+xAT/xKejanXysAsNn07lpSz8feg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475928; c=relaxed/simple;
-	bh=PQ6fOeAC6LISs0YFli51fAEP/TIESwZA8lE7ooae03M=;
+	s=arc-20240116; t=1714475931; c=relaxed/simple;
+	bh=Hzz5iBI/lnSqJzghNsZmxecc7Cd7DBwthdcGzN8N7NY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l2Y/NdARo67WjQP5ljorqmEQynVns6Es0WHcW8R8i/LvXo/KW5jteCUCJ4iM25YawtHg2FW3Jp9DaTMahx79zxQBtaIkIU/7qMvg0h/IMuW08NJ88FMOqsA9nFrgUNd5SjFWjt3INlnaCEidO3S3/6DFqljJXFXBvE8CQbvm30Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TsvopX+m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rtBtGUOjg3eKUHKdQ8NQBdJ1D9qk/HQzEcTaNMN2HGm8XO6kQBkWMrR+b2lImBANsZTqlquAVzGKOTvpC4BANSf2fWJ6HSfD5oINZNAuTtfuEhKjfRIGYgZHK6dU8k6N+DQQ9K7QdMtUIMmZnxKgFl/rT+te5Jsi/w/BBSyDtSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKke6I8V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TsvopX+m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDF0C4AF18;
-	Tue, 30 Apr 2024 11:18:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKke6I8V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6F3C2BBFC;
+	Tue, 30 Apr 2024 11:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475927;
-	bh=PQ6fOeAC6LISs0YFli51fAEP/TIESwZA8lE7ooae03M=;
+	s=korg; t=1714475930;
+	bh=Hzz5iBI/lnSqJzghNsZmxecc7Cd7DBwthdcGzN8N7NY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TsvopX+mI19qaKSc/lZ5kt2k0xBzbaqfEWqfYxg/wst+JK5McucRX/lLO37jWcKQ3
-	 SwoHHoQDgAb41kKjuAHI5SYcYyWitKPLR3e1WoM8EZ9Hhq9g2cCmNvnPVXHZkY8V2y
-	 ddCmK/T9Bqoj9zbV/igXKDl3Hi4CFKjDS0Tj2Ao0=
+	b=PKke6I8VtFyYxo4APoz8Eu3YiK7eYnl21mnOQecF2Pawng0AvaEUpxOX3hoXqwE/q
+	 GZLf2KtIzkLbX65qTA5NuzlqyuKvb7y+ykOOCgESz87v7rWZakwYQ+o7k0dCXbVFr/
+	 cbvL2WqCUP4xZ0FAraVKCWd5GY7F009uBDuoF270=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Mukul Joshi <mukul.joshi@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 60/80] drm/amdgpu/sdma5.2: use legacy HDP flush for SDMA2/3
-Date: Tue, 30 Apr 2024 12:40:32 +0200
-Message-ID: <20240430103045.190842891@linuxfoundation.org>
+Subject: [PATCH 5.15 61/80] drm/amdgpu: Fix leak when GPU memory allocation fails
+Date: Tue, 30 Apr 2024 12:40:33 +0200
+Message-ID: <20240430103045.220114699@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -44,61 +44,37 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Mukul Joshi <mukul.joshi@amd.com>
 
-commit 9792b7cc18aaa0c2acae6af5d0acf249bcb1ab0d upstream.
+commit 25e9227c6afd200bed6774c866980b8e36d033af upstream.
 
-This avoids a potential conflict with firmwares with the newer
-HDP flush mechanism.
+Free the sync object if the memory allocation fails for any
+reason.
 
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Mukul Joshi <mukul.joshi@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c |   24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
-@@ -404,17 +404,21 @@ static void sdma_v5_2_ring_emit_hdp_flus
- 	u32 ref_and_mask = 0;
- 	const struct nbio_hdp_flush_reg *nbio_hf_reg = adev->nbio.hdp_flush_reg;
- 
--	ref_and_mask = nbio_hf_reg->ref_and_mask_sdma0 << ring->me;
-+	if (ring->me > 1) {
-+		amdgpu_asic_flush_hdp(adev, ring);
-+	} else {
-+		ref_and_mask = nbio_hf_reg->ref_and_mask_sdma0 << ring->me;
- 
--	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_POLL_REGMEM) |
--			  SDMA_PKT_POLL_REGMEM_HEADER_HDP_FLUSH(1) |
--			  SDMA_PKT_POLL_REGMEM_HEADER_FUNC(3)); /* == */
--	amdgpu_ring_write(ring, (adev->nbio.funcs->get_hdp_flush_done_offset(adev)) << 2);
--	amdgpu_ring_write(ring, (adev->nbio.funcs->get_hdp_flush_req_offset(adev)) << 2);
--	amdgpu_ring_write(ring, ref_and_mask); /* reference */
--	amdgpu_ring_write(ring, ref_and_mask); /* mask */
--	amdgpu_ring_write(ring, SDMA_PKT_POLL_REGMEM_DW5_RETRY_COUNT(0xfff) |
--			  SDMA_PKT_POLL_REGMEM_DW5_INTERVAL(10)); /* retry count, poll interval */
-+		amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_POLL_REGMEM) |
-+				  SDMA_PKT_POLL_REGMEM_HEADER_HDP_FLUSH(1) |
-+				  SDMA_PKT_POLL_REGMEM_HEADER_FUNC(3)); /* == */
-+		amdgpu_ring_write(ring, (adev->nbio.funcs->get_hdp_flush_done_offset(adev)) << 2);
-+		amdgpu_ring_write(ring, (adev->nbio.funcs->get_hdp_flush_req_offset(adev)) << 2);
-+		amdgpu_ring_write(ring, ref_and_mask); /* reference */
-+		amdgpu_ring_write(ring, ref_and_mask); /* mask */
-+		amdgpu_ring_write(ring, SDMA_PKT_POLL_REGMEM_DW5_RETRY_COUNT(0xfff) |
-+				  SDMA_PKT_POLL_REGMEM_DW5_INTERVAL(10)); /* retry count, poll interval */
-+	}
- }
- 
- /**
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -1502,6 +1502,7 @@ err_node_allow:
+ err_bo_create:
+ 	unreserve_mem_limit(adev, size, alloc_domain, !!sg);
+ err_reserve_limit:
++	amdgpu_sync_free(&(*mem)->sync);
+ 	mutex_destroy(&(*mem)->lock);
+ 	if (gobj)
+ 		drm_gem_object_put(gobj);
 
 
