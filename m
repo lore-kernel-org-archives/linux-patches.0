@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6113F12C805;
-	Tue, 30 Apr 2024 10:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C54012CD99;
+	Tue, 30 Apr 2024 10:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474507; cv=none; b=Ddminwx3DSQBOkfxRajW88cjzQXMGQgFLHkFy00sjtp+Fprn80GJfri4Az8MdA4EY6uHH/k+4dd4UzmTLcLQOkE8v2y4qCXGOX4kj//+/yMT3oPZkz7UAygava4NevCXWtK8y3jARX/c5EOtEASy2EcE3wdtfaK4v8hxfOIZ6uc=
+	t=1714474510; cv=none; b=gM8KA1WTqcwa7K+D7PjoO5wXzOGFdnStCiyyF9AxowteB9wK6uYvvLpLXud2nNaffOAXp+5Xwri5AoIUEq8fFgDaGWcvBZatoWgOX5DFCoLG6hOwKRzOLF3yJyikFrne/HFamhRTKj265Rzb2hgRwkfxrlVWOdUOk3zui20g6sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474507; c=relaxed/simple;
-	bh=l6VVWWY3Pzi42Y9W1FLDlNXghuNGapa5KnTqMu6ZFXU=;
+	s=arc-20240116; t=1714474510; c=relaxed/simple;
+	bh=9kQxTwDpKyBlkoMxTKSkbDTEX68bKsMw3WxVKV4s5bU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lkPDNq86s/O4wwSJzj6sIo387cJ5h2GMY0j1QVFSLNMjIwHe+xtn6RZCBL45fOSR3TpkMRu7q89HZ1p1qkqdc/OWEJnGf3qbgbCvS6rYyImGBQQsV959PQM7aingb17p7xa6L/CaJvJ9Hhm3lIujGMyElOJKtzxcts2SwgY0fSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaybEbBk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tt1HrWS0jdflbPzkn75D00XyfgZfKnOhx5TD5NDtTi9bugwUASC+/VLuX/8Zs7U77wsQvYxtQBCzI8emxgnzXpSWuMwNjTPTSzk0nIDrTI44Q8UIozOk8YOQKTgDAZW6yRqKVUioUD5sQvIrVpSqWF7PXut4v/TnSvCbfLTO8DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jD3gMfWj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaybEbBk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE621C2BBFC;
-	Tue, 30 Apr 2024 10:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jD3gMfWj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECA3BC2BBFC;
+	Tue, 30 Apr 2024 10:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474507;
-	bh=l6VVWWY3Pzi42Y9W1FLDlNXghuNGapa5KnTqMu6ZFXU=;
+	s=korg; t=1714474510;
+	bh=9kQxTwDpKyBlkoMxTKSkbDTEX68bKsMw3WxVKV4s5bU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aaybEbBkkBUfvDt2oYTHAJKp/TzDAq09n13TtZ8wCxuc00paOrXsGwy1INbcZOTYJ
-	 LqmvWMLXpRBQ4oECFQno9ye8sNl02b9FW/UkNjlLV8pRRVOYlsdySv9SR22m25UppI
-	 E3ukukLi6U1m8NyOfkBMoNgs7OSDqHijna0061ng=
+	b=jD3gMfWjDHqIKtL5EdCmEygLxftUznFkX0U33BzVHobrAzytix01L+sCfRNzsJUOi
+	 B2OVWbNw++DsLIoSA1+AlnY25sF7KoRkbaki0v6i8FK538X08bzbdLq2kZdT9d1kcx
+	 +q42a/64567p5+c5lckIsJKw+YzZgCFqsn/gCxKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lang Yu <Lang.Yu@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Veerabadhran Gopalakrishnan <Veerabadhran.Gopalakrishnan@amd.com>,
+	Mukul Joshi <mukul.joshi@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.8 177/228] drm/amdgpu/umsch: dont execute umsch test when GPU is in reset/suspend
-Date: Tue, 30 Apr 2024 12:39:15 +0200
-Message-ID: <20240430103108.912086639@linuxfoundation.org>
+Subject: [PATCH 6.8 178/228] drm/amdgpu: Fix leak when GPU memory allocation fails
+Date: Tue, 30 Apr 2024 12:39:16 +0200
+Message-ID: <20240430103108.940551902@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -46,42 +44,37 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lang Yu <Lang.Yu@amd.com>
+From: Mukul Joshi <mukul.joshi@amd.com>
 
-commit 661d71ee5a010bdc0663e0db701931aff920e8e1 upstream.
+commit 25e9227c6afd200bed6774c866980b8e36d033af upstream.
 
-umsch test needs full GPU functionality(e.g., VM update, TLB flush,
-possibly buffer moving under memory pressure) which may be not ready
-under these states. Just skip it to avoid potential issues.
+Free the sync object if the memory allocation fails for any
+reason.
 
-Signed-off-by: Lang Yu <Lang.Yu@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Veerabadhran Gopalakrishnan <Veerabadhran.Gopalakrishnan@amd.com>
+Signed-off-by: Mukul Joshi <mukul.joshi@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_umsch_mm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_umsch_mm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_umsch_mm.c
-@@ -766,6 +766,9 @@ static int umsch_mm_late_init(void *hand
- {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
- 
-+	if (amdgpu_in_reset(adev) || adev->in_s0ix || adev->in_suspend)
-+		return 0;
-+
- 	return umsch_mm_test(adev);
- }
- 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -1851,6 +1851,7 @@ err_node_allow:
+ err_bo_create:
+ 	amdgpu_amdkfd_unreserve_mem_limit(adev, aligned_size, flags, xcp_id);
+ err_reserve_limit:
++	amdgpu_sync_free(&(*mem)->sync);
+ 	mutex_destroy(&(*mem)->lock);
+ 	if (gobj)
+ 		drm_gem_object_put(gobj);
 
 
