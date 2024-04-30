@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8539312C530;
-	Tue, 30 Apr 2024 11:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DBD1E50A;
+	Tue, 30 Apr 2024 11:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475219; cv=none; b=gusWU2+GUa1LVW3AnSwhTQ/lr/N+Mw0K+hfM+Cc2m+YucMpesK3qiK+f615n7A6T1AFMW9S+q7YDu3ddaahwi78TPciGad/3yPuugOPdOvHfaPTWmBEd9wcXkpSjuvBbZP6M5GIUeyHyxXyaoRXpKpCOAyqj8w3rRp5zOLVGu98=
+	t=1714475222; cv=none; b=AAkDCF7MEqJfj0Mzb6+IA0ubDYkbHf3a0vwSVY0sdjbgMUBGO83bUcAt5k/xhYzjfY0t4HCiOoiGIUq5eJ2zAr+fpxf17Fxxj3NbV+Qd2Lady0pA92KJuU+PMM0NCmuuow9m/NeS8b1/DKP+sXrcWEjlqL+ImtY2NXg9JUoKp44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475219; c=relaxed/simple;
-	bh=e+Y/bKTor1y3nHMSwk+boAPjsv62OfODT6vxn+ffNPs=;
+	s=arc-20240116; t=1714475222; c=relaxed/simple;
+	bh=JWL+zLCFShKRtN2Te10MlFcXsRdR+BRR+FPd7VFxXwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GKChqIu2p8WhASbmFHOjppW0E4iOFINZT8/QkwpEVKxM8xGHMtJjNc52cW2FXgtKcxaeoDOHObXGKTdEVL1/eydJ6XM/gBuPKZHyRGDAMVWwcujedxMklyNcXxOwwFSB1zqrKCFkP4My81PFoLzeD47SDzi3C/D8eC4Np/UzjIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njGEgUT1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VklvQ0nMLvFQ6c1Xv/ZWKZa8SwMYUfUeWkyGeiY4QZkYg2BW2hRO5sKFCErRaO/ygI4rNolGox53WK2GrASY2h+C8C8e3ly0WFzCgyyocvrgpmSOfYBFTrYI8OGNNqPMSe/hFA2uH6CuD3szIJts4gsf9f8vO/0+DqblywvCIP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oXIPzQAz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njGEgUT1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F131C2BBFC;
-	Tue, 30 Apr 2024 11:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oXIPzQAz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF043C2BBFC;
+	Tue, 30 Apr 2024 11:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475219;
-	bh=e+Y/bKTor1y3nHMSwk+boAPjsv62OfODT6vxn+ffNPs=;
+	s=korg; t=1714475222;
+	bh=JWL+zLCFShKRtN2Te10MlFcXsRdR+BRR+FPd7VFxXwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=njGEgUT1grlDENjABeoBjB9/88Vs0ACeMJr41dslxmisqQcE0hrlmZKj6ohieB8gG
-	 5/EPZi3s1xRqUP5NiRfGU2UwsUsMPEe8qhb61Xqb76IlULSYcDLsUW8oA+HebXhs+q
-	 9ARDpM54PPNonY0DkuldGXxA5HKNZptsoPJJVKyc=
+	b=oXIPzQAzLGHRxe/tqy6/q2dTN72l13hIYfy8C6BvZblErjN/9YqbPooEaoimUjbD7
+	 BZp8hILsegzjk9mozM+QFufRj9D73xIvf0Bi/3HxlTfoUVeQAni1hOLkcPlyGwU6G+
+	 dMxgV0Jt8Va93XvxVnrrYOqilduMVOoblDYkQRuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takayuki Nagata <tnagata@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Ronnie Sahlberg <lsahlber@redhat.com>,
-	Tom Talpey <tom@talpey.com>,
-	Steve French <stfrench@microsoft.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 003/186] cifs: reinstate original behavior again for forceuid/forcegid
-Date: Tue, 30 Apr 2024 12:37:35 +0200
-Message-ID: <20240430103058.115824144@linuxfoundation.org>
+Subject: [PATCH 6.6 030/186] arm64: dts: mediatek: mt7986: prefix BPI-R3 cooling maps with "map-"
+Date: Tue, 30 Apr 2024 12:38:02 +0200
+Message-ID: <20240430103058.905186642@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -48,86 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takayuki Nagata <tnagata@redhat.com>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 77d8aa79ecfb209308e0644c02f655122b31def7 ]
+[ Upstream commit f8c65a5e4560781f2ea175d8f26cd75ac98e8d78 ]
 
-forceuid/forcegid should be enabled by default when uid=/gid= options are
-specified, but commit 24e0a1eff9e2 ("cifs: switch to new mount api")
-changed the behavior. Due to the change, a mounted share does not show
-intentional uid/gid for files and directories even though uid=/gid=
-options are specified since forceuid/forcegid are not enabled.
+This fixes:
+arch/arm64/boot/dts/mediatek/mt7986a-bananapi-bpi-r3.dtb: thermal-zones: cpu-thermal:cooling-maps: 'cpu-active-high', 'cpu-active-low', 'cpu-active-med' do not match any of the regexes: '^map[-a-zA-Z0-9]*$', 'pinctrl-[0-9]+'
+        from schema $id: http://devicetree.org/schemas/thermal/thermal-zones.yaml#
 
-This patch reinstates original behavior that overrides uid/gid with
-specified uid/gid by the options.
-
-Fixes: 24e0a1eff9e2 ("cifs: switch to new mount api")
-Signed-off-by: Takayuki Nagata <tnagata@redhat.com>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Acked-by: Ronnie Sahlberg <lsahlber@redhat.com>
-Acked-by: Tom Talpey <tom@talpey.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: c26f779a2295 ("arm64: dts: mt7986: add pwm-fan and cooling-maps to BPI-R3 dts")
+Cc: Daniel Golle <daniel@makrotopia.org>
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20240213061459.17917-1-zajec5@gmail.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/fs_context.c | 12 ++++++++++++
- fs/smb/client/fs_context.h |  2 ++
- 2 files changed, 14 insertions(+)
+ arch/arm64/boot/dts/mediatek/mt7986a-bananapi-bpi-r3.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
-index 58567ae617b9f..103421791bb5d 100644
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -714,6 +714,16 @@ static int smb3_fs_context_validate(struct fs_context *fc)
- 	/* set the port that we got earlier */
- 	cifs_set_port((struct sockaddr *)&ctx->dstaddr, ctx->port);
+diff --git a/arch/arm64/boot/dts/mediatek/mt7986a-bananapi-bpi-r3.dts b/arch/arm64/boot/dts/mediatek/mt7986a-bananapi-bpi-r3.dts
+index e1ec2cccf4444..aba6686eb34a3 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7986a-bananapi-bpi-r3.dts
++++ b/arch/arm64/boot/dts/mediatek/mt7986a-bananapi-bpi-r3.dts
+@@ -146,19 +146,19 @@
  
-+	if (ctx->uid_specified && !ctx->forceuid_specified) {
-+		ctx->override_uid = 1;
-+		pr_notice("enabling forceuid mount option implicitly because uid= option is specified\n");
-+	}
-+
-+	if (ctx->gid_specified && !ctx->forcegid_specified) {
-+		ctx->override_gid = 1;
-+		pr_notice("enabling forcegid mount option implicitly because gid= option is specified\n");
-+	}
-+
- 	if (ctx->override_uid && !ctx->uid_specified) {
- 		ctx->override_uid = 0;
- 		pr_notice("ignoring forceuid mount option specified with no uid= option\n");
-@@ -983,12 +993,14 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
- 			ctx->override_uid = 0;
- 		else
- 			ctx->override_uid = 1;
-+		ctx->forceuid_specified = true;
- 		break;
- 	case Opt_forcegid:
- 		if (result.negated)
- 			ctx->override_gid = 0;
- 		else
- 			ctx->override_gid = 1;
-+		ctx->forcegid_specified = true;
- 		break;
- 	case Opt_perm:
- 		if (result.negated)
-diff --git a/fs/smb/client/fs_context.h b/fs/smb/client/fs_context.h
-index 8cfc25b609b6b..4e409238fe8f7 100644
---- a/fs/smb/client/fs_context.h
-+++ b/fs/smb/client/fs_context.h
-@@ -155,6 +155,8 @@ enum cifs_param {
- };
+ &cpu_thermal {
+ 	cooling-maps {
+-		cpu-active-high {
++		map-cpu-active-high {
+ 			/* active: set fan to cooling level 2 */
+ 			cooling-device = <&fan 2 2>;
+ 			trip = <&cpu_trip_active_high>;
+ 		};
  
- struct smb3_fs_context {
-+	bool forceuid_specified;
-+	bool forcegid_specified;
- 	bool uid_specified;
- 	bool cruid_specified;
- 	bool gid_specified;
+-		cpu-active-med {
++		map-cpu-active-med {
+ 			/* active: set fan to cooling level 1 */
+ 			cooling-device = <&fan 1 1>;
+ 			trip = <&cpu_trip_active_med>;
+ 		};
+ 
+-		cpu-active-low {
++		map-cpu-active-low {
+ 			/* active: set fan to cooling level 0 */
+ 			cooling-device = <&fan 0 0>;
+ 			trip = <&cpu_trip_active_low>;
 -- 
 2.43.0
 
