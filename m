@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8BE8801;
-	Tue, 30 Apr 2024 11:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2289A8801;
+	Tue, 30 Apr 2024 11:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476014; cv=none; b=D578jCMmdWHrY1/LahTySXP5whAsT34GijxJ/VZxuVZUwpdqirovR00qLeOfeQDpbqLY31fNkwO5PAoPi1Cp9ji0AL/3V3nltUecBip0/bMwpsxqNL7M/Zv7ypGzqlz78+yZXIp3vpDyQemhgECoGefFXCaIc44OBdCnbC1FLA4=
+	t=1714476018; cv=none; b=u3kcAyQe0q/pTq+gzAp8d5O2/amHO0PPuRTIwQUoInUF2eOhDYubWl5NkOpTrT0/FyEUh8U1oESNNQHiSYyOD2aI7DSb10KWMFq9ItueJ20AUnIYXfUKRHxVibqV/HEdOjiZyX6jsABeN23E8P/ZMuHnEudk3/TJRrIp0p3c1/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476014; c=relaxed/simple;
-	bh=mK9D4+PGONL46s0Uwmp22T4CyXnS6DSrJT0V1C/7r4w=;
+	s=arc-20240116; t=1714476018; c=relaxed/simple;
+	bh=nFwLMQvRWsHyXb5UbI/RJRUv7oU5Q+Y9nSbuBvIgqCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bp+PGuhkhrFD+lJV8FShEq/QjE556Re9JKylMwZRIYsIbYcN/FJO2Zag8M+CE1D6LrbU1h4dknb5Fbr7F+VRTbYQwQzkKahbmuf/elCplGVgfsKLD/OB99FsjAp/kHjZbBD6DGn423p7cn8kEWVv5fym/RvrOyGVH1X9jKhHkqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bo70pF5o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PTepBIlNzWddNxsDcfwpuue3gDeR0ZN7GxrPIsfjRBeFhKoRSHLav1YrT4489C1K8dN59/qwZMSZ/yd0wHeyez3XW62zWxa6bVS3ZOdMnMqqInXMZMKFK+ypJJfw4A3a66Pq9BQpojtoSF+vkUPffMV1TwxFvKOuhVXImN+7oK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WESD4NSM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bo70pF5o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A26C2BBFC;
-	Tue, 30 Apr 2024 11:20:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WESD4NSM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9242EC4AF18;
+	Tue, 30 Apr 2024 11:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476014;
-	bh=mK9D4+PGONL46s0Uwmp22T4CyXnS6DSrJT0V1C/7r4w=;
+	s=korg; t=1714476018;
+	bh=nFwLMQvRWsHyXb5UbI/RJRUv7oU5Q+Y9nSbuBvIgqCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bo70pF5od5SgGuVQ+e93kZWwlXhxsKTenNvNYG642s4WVuWQaEQGSwejBE4TMwXrx
-	 cgqV1i0Q4gHbFTED3B/kVrXkRKNkTIFhHMRflmKAN8moEvFGsGFgbS0bveG89CF1/I
-	 Fyg1FEKxaSB9JwjIDCWvgKdkI08MNB3LSOc9yWZw=
+	b=WESD4NSMtVqNH9NUcEaxfb6T2jNqU0DPl9lbn2ZhiXyFBBMFSThheDY5k6xccUMHs
+	 Mmiz9ka687FAq49pND/cHB6jofA9Q6sq5hV6aOHee2uQWKeHzm+wMgCUCedlsp6Ud6
+	 eL+nryNAz4m2aQppuSNtGoMifw4qPLWJeYoleXlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 69/80] dmaengine: owl: fix register access functions
-Date: Tue, 30 Apr 2024 12:40:41 +0200
-Message-ID: <20240430103045.453152807@linuxfoundation.org>
+	syzbot+a6a4b5bb3da165594cff@syzkaller.appspotmail.com,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 5.4 001/107] batman-adv: Avoid infinite loop trying to resize local TT
+Date: Tue, 30 Apr 2024 12:39:21 +0200
+Message-ID: <20240430103044.701842056@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
-References: <20240430103043.397234724@linuxfoundation.org>
+In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
+References: <20240430103044.655968143@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,62 +47,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 43c633ef93a5d293c96ebcedb40130df13128428 ]
+commit b1f532a3b1e6d2e5559c7ace49322922637a28aa upstream.
 
-When building with 'make W=1', clang notices that the computed register
-values are never actually written back but instead the wrong variable
-is set:
+If the MTU of one of an attached interface becomes too small to transmit
+the local translation table then it must be resized to fit inside all
+fragments (when enabled) or a single packet.
 
-drivers/dma/owl-dma.c:244:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
-  244 |         u32 regval;
-      |             ^
-drivers/dma/owl-dma.c:268:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
-  268 |         u32 regval;
-      |             ^
+But if the MTU becomes too low to transmit even the header + the VLAN
+specific part then the resizing of the local TT will never succeed. This
+can for example happen when the usable space is 110 bytes and 11 VLANs are
+on top of batman-adv. In this case, at least 116 byte would be needed.
+There will just be an endless spam of
 
-Change these to what was most likely intended.
+   batman_adv: batadv0: Forced to purge local tt entries to fit new maximum fragment MTU (110)
 
-Fixes: 47e20577c24d ("dmaengine: Add Actions Semi Owl family S900 DMA driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Peter Korsgaard <peter@korsgaard.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240322132116.906475-1-arnd@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+in the log but the function will never finish. Problem here is that the
+timeout will be halved all the time and will then stagnate at 0 and
+therefore never be able to reduce the table even more.
+
+There are other scenarios possible with a similar result. The number of
+BATADV_TT_CLIENT_NOPURGE entries in the local TT can for example be too
+high to fit inside a packet. Such a scenario can therefore happen also with
+only a single VLAN + 7 non-purgable addresses - requiring at least 120
+bytes.
+
+While this should be handled proactively when:
+
+* interface with too low MTU is added
+* VLAN is added
+* non-purgeable local mac is added
+* MTU of an attached interface is reduced
+* fragmentation setting gets disabled (which most likely requires dropping
+  attached interfaces)
+
+not all of these scenarios can be prevented because batman-adv is only
+consuming events without the the possibility to prevent these actions
+(non-purgable MAC address added, MTU of an attached interface is reduced).
+It is therefore necessary to also make sure that the code is able to handle
+also the situations when there were already incompatible system
+configuration are present.
+
+Cc: stable@vger.kernel.org
+Fixes: a19d3d85e1b8 ("batman-adv: limit local translation table max size")
+Reported-by: syzbot+a6a4b5bb3da165594cff@syzkaller.appspotmail.com
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/owl-dma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/batman-adv/translation-table.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/owl-dma.c b/drivers/dma/owl-dma.c
-index 1f0bbaed4643a..9739c6c62123d 100644
---- a/drivers/dma/owl-dma.c
-+++ b/drivers/dma/owl-dma.c
-@@ -249,7 +249,7 @@ static void pchan_update(struct owl_dma_pchan *pchan, u32 reg,
- 	else
- 		regval &= ~val;
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -4190,7 +4190,7 @@ void batadv_tt_local_resize_to_mtu(struc
  
--	writel(val, pchan->base + reg);
-+	writel(regval, pchan->base + reg);
- }
+ 	spin_lock_bh(&bat_priv->tt.commit_lock);
  
- static void pchan_writel(struct owl_dma_pchan *pchan, u32 reg, u32 data)
-@@ -273,7 +273,7 @@ static void dma_update(struct owl_dma *od, u32 reg, u32 val, bool state)
- 	else
- 		regval &= ~val;
- 
--	writel(val, od->base + reg);
-+	writel(regval, od->base + reg);
- }
- 
- static void dma_writel(struct owl_dma *od, u32 reg, u32 data)
--- 
-2.43.0
-
+-	while (true) {
++	while (timeout) {
+ 		table_size = batadv_tt_local_table_transmit_size(bat_priv);
+ 		if (packet_size_max >= table_size)
+ 			break;
 
 
