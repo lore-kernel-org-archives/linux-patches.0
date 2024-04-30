@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07EF17592;
-	Tue, 30 Apr 2024 11:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83A317592;
+	Tue, 30 Apr 2024 11:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476301; cv=none; b=MKrgsLvPgNXsOL/4yzGCkBf+Qcb4dpbQnmvJaZ3TjXb5ST0pkxBa15/4567dEV/8xT8wyas79FVM42IfFCsW1/C8SWt4HkXmQu0X5Wgja5ydLIqpe2Rpzds8++lm20FWDPR285Cy9osSQ+NInFH6k6tEG/SatE8gcABfn36zETo=
+	t=1714476305; cv=none; b=idcl3YZtU0ER4EO7fnLCC8GQr9MTYNCktXhelRe1DUCNc4BxV+eo2o6qtsSqUXTC8uAtsAb8BnaECxTzZfkdTCT+GeMSO5sN1IUuiy3ClG2ShTw/on0CApdG8esDgZ894ZHtF7lJM/X9qBfdffsosuhZfjT1kKX+OxHYvRWdOsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476301; c=relaxed/simple;
-	bh=aWi3YtVWgMb2H7YGd7WGRinB2Y2r09BwuQKEerkB4y4=;
+	s=arc-20240116; t=1714476305; c=relaxed/simple;
+	bh=DXW2NIzk+2v+4uYTB/qeozxDiRfcbgkJSPRfSJPcFE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r17KnJSnczwKaBccehY3Mav4+1hnNYvK/nqEOZnhbnS3MNrE4IUxOs/gmtXKIFGgnBMTyLb0tuPxX5ex9CgdNhBPKXsEFWKYsxnmVkM9emytT8YsIcMXUVeVbh/VKb1yOogt+7iYI28YGrvEkg+y1/B1pxL1kP8jFJgGZin6LUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQddrriT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i/l90uT/QzBzbeUXAckGH48JoIVLQl+hN93uVlxa5SMDRXd6DKn7X51fAaqr+LVKHwX2A7aOp5XgKLbIDxZaZAIJSI23iXNf5u1+kwJXXwZU/wlSsiI7DtnhOpfefpsyyJO/c6Fo9Iayw5ePbZxKr/aDfE2ji6/nabfTMnm+mC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ge+Rl7b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQddrriT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D0EBC2BBFC;
-	Tue, 30 Apr 2024 11:25:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ge+Rl7b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643AAC2BBFC;
+	Tue, 30 Apr 2024 11:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476301;
-	bh=aWi3YtVWgMb2H7YGd7WGRinB2Y2r09BwuQKEerkB4y4=;
+	s=korg; t=1714476304;
+	bh=DXW2NIzk+2v+4uYTB/qeozxDiRfcbgkJSPRfSJPcFE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZQddrriTN+Ne3xpu9WTLl6fkaB+5gQBAhq7CEW93Ww14O6bg2LK++Kz/icsqrtbZC
-	 7DGzDuxeib1cQljwUA6B7E3Lxr94o8RJ3yLAkTu8oc6V6Eeht0LSkD9SKwlfdTg6+s
-	 K0Jl2/V9H+EOlgSU2CMLBEnzLlaz+UHWdy64zqZQ=
+	b=2ge+Rl7b0TAuY/54bxaxn5x27mI0stliSr3yFiqyCIaTl6QxIFeWzGrECB4uqwiks
+	 gnznKqgt+nLn5ggsfwcl6bE+/wfVrwK0CO7V8gTj4sGrlDGpx+Xx/ukRviIENix91M
+	 rUWQW+MyN403VCbZkPBSofBe4ub6a7xFWrL0jdy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Zhengchao Shao <shaozhengchao@huawei.com>
-Subject: [PATCH 5.4 098/107] tcp: Clean up kernel listeners reqsk in inet_twsk_purge()
-Date: Tue, 30 Apr 2024 12:40:58 +0200
-Message-ID: <20240430103047.550538724@linuxfoundation.org>
+Subject: [PATCH 5.4 099/107] tcp: Fix NEW_SYN_RECV handling in inet_twsk_purge()
+Date: Tue, 30 Apr 2024 12:40:59 +0200
+Message-ID: <20240430103047.580639725@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -53,101 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 740ea3c4a0b2e326b23d7cdf05472a0e92aa39bc upstream.
+commit 1c4e97dd2d3c9a3e84f7e26346aa39bc426d3249 upstream.
 
-Eric Dumazet reported a use-after-free related to the per-netns ehash
-series. [0]
+inet_twsk_purge() uses rcu to find TIME_WAIT and NEW_SYN_RECV
+objects to purge.
 
-When we create a TCP socket from userspace, the socket always holds a
-refcnt of the netns.  This guarantees that a reqsk timer is always fired
-before netns dismantle.  Each reqsk has a refcnt of its listener, so the
-listener is not freed before the reqsk, and the net is not freed before
-the listener as well.
+These objects use SLAB_TYPESAFE_BY_RCU semantic and need special
+care. We need to use refcount_inc_not_zero(&sk->sk_refcnt).
 
-OTOH, when in-kernel users create a TCP socket, it might not hold a refcnt
-of its netns.  Thus, a reqsk timer can be fired after the netns dismantle
-and access freed per-netns ehash.
+Reuse the existing correct logic I wrote for TIME_WAIT,
+because both structures have common locations for
+sk_state, sk_family, and netns pointer.
 
-To avoid the use-after-free, we need to clean up TCP_NEW_SYN_RECV sockets
-in inet_twsk_purge() if the netns uses a per-netns ehash.
+If after the refcount_inc_not_zero() the object fields longer match
+the keys, use sock_gen_put(sk) to release the refcount.
 
-[0]: https://lore.kernel.org/netdev/CANn89iLXMup0dRD_Ov79Xt8N9FM0XdhCHEN05sf3eLwxKweM6w@mail.gmail.com/
+Then we can call inet_twsk_deschedule_put() for TIME_WAIT,
+inet_csk_reqsk_queue_drop_and_put() for NEW_SYN_RECV sockets,
+with BH disabled.
 
-BUG: KASAN: use-after-free in tcp_or_dccp_get_hashinfo
-include/net/inet_hashtables.h:181 [inline]
-BUG: KASAN: use-after-free in reqsk_queue_unlink+0x320/0x350
-net/ipv4/inet_connection_sock.c:913
-Read of size 8 at addr ffff88807545bd80 by task syz-executor.2/8301
+Then we need to restart the loop because we had drop rcu_read_lock().
 
-CPU: 1 PID: 8301 Comm: syz-executor.2 Not tainted
-6.0.0-syzkaller-02757-gaf7d23f9d96a #0
-Hardware name: Google Google Compute Engine/Google Compute Engine,
-BIOS Google 09/22/2022
-Call Trace:
-<IRQ>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
-print_address_description mm/kasan/report.c:317 [inline]
-print_report.cold+0x2ba/0x719 mm/kasan/report.c:433
-kasan_report+0xb1/0x1e0 mm/kasan/report.c:495
-tcp_or_dccp_get_hashinfo include/net/inet_hashtables.h:181 [inline]
-reqsk_queue_unlink+0x320/0x350 net/ipv4/inet_connection_sock.c:913
-inet_csk_reqsk_queue_drop net/ipv4/inet_connection_sock.c:927 [inline]
-inet_csk_reqsk_queue_drop_and_put net/ipv4/inet_connection_sock.c:939 [inline]
-reqsk_timer_handler+0x724/0x1160 net/ipv4/inet_connection_sock.c:1053
-call_timer_fn+0x1a0/0x6b0 kernel/time/timer.c:1474
-expire_timers kernel/time/timer.c:1519 [inline]
-__run_timers.part.0+0x674/0xa80 kernel/time/timer.c:1790
-__run_timers kernel/time/timer.c:1768 [inline]
-run_timer_softirq+0xb3/0x1d0 kernel/time/timer.c:1803
-__do_softirq+0x1d0/0x9c8 kernel/softirq.c:571
-invoke_softirq kernel/softirq.c:445 [inline]
-__irq_exit_rcu+0x123/0x180 kernel/softirq.c:650
-irq_exit_rcu+0x5/0x20 kernel/softirq.c:662
-sysvec_apic_timer_interrupt+0x93/0xc0 arch/x86/kernel/apic/apic.c:1107
-</IRQ>
-
-Fixes: d1e5e6408b30 ("tcp: Introduce optional per-netns ehash.")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Reported-by: Eric Dumazet <edumazet@google.com>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20221012145036.74960-1-kuniyu@amazon.com
+Fixes: 740ea3c4a0b2 ("tcp: Clean up kernel listener's reqsk in inet_twsk_purge()")
+Link: https://lore.kernel.org/netdev/CANn89iLvFuuihCtt9PME2uS1WJATnf5fKjDToa1WzVnRzHnPfg@mail.gmail.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240308200122.64357-2-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 [shaozhengchao: resolved conflicts in 5.10]
 Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_timewait_sock.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ net/ipv4/inet_timewait_sock.c |   41 +++++++++++++++++++----------------------
+ 1 file changed, 19 insertions(+), 22 deletions(-)
 
 --- a/net/ipv4/inet_timewait_sock.c
 +++ b/net/ipv4/inet_timewait_sock.c
-@@ -268,8 +268,21 @@ restart_rcu:
+@@ -254,12 +254,12 @@ void __inet_twsk_schedule(struct inet_ti
+ }
+ EXPORT_SYMBOL_GPL(__inet_twsk_schedule);
+ 
++/* Remove all non full sockets (TIME_WAIT and NEW_SYN_RECV) for dead netns */
+ void inet_twsk_purge(struct inet_hashinfo *hashinfo, int family)
+ {
+-	struct inet_timewait_sock *tw;
+-	struct sock *sk;
+ 	struct hlist_nulls_node *node;
+ 	unsigned int slot;
++	struct sock *sk;
+ 
+ 	for (slot = 0; slot <= hashinfo->ehash_mask; slot++) {
+ 		struct inet_ehash_bucket *head = &hashinfo->ehash[slot];
+@@ -268,38 +268,35 @@ restart_rcu:
  		rcu_read_lock();
  restart:
  		sk_nulls_for_each_rcu(sk, node, &head->chain) {
--			if (sk->sk_state != TCP_TIME_WAIT)
-+			if (sk->sk_state != TCP_TIME_WAIT) {
-+				/* A kernel listener socket might not hold refcnt for net,
-+				 * so reqsk_timer_handler() could be fired after net is
-+				 * freed.  Userspace listener and reqsk never exist here.
-+				 */
-+				if (unlikely(sk->sk_state == TCP_NEW_SYN_RECV &&
-+					     hashinfo->pernet)) {
-+					struct request_sock *req = inet_reqsk(sk);
-+
-+					inet_csk_reqsk_queue_drop_and_put(req->rsk_listener, req);
-+				}
-+
+-			if (sk->sk_state != TCP_TIME_WAIT) {
+-				/* A kernel listener socket might not hold refcnt for net,
+-				 * so reqsk_timer_handler() could be fired after net is
+-				 * freed.  Userspace listener and reqsk never exist here.
+-				 */
+-				if (unlikely(sk->sk_state == TCP_NEW_SYN_RECV &&
+-					     hashinfo->pernet)) {
+-					struct request_sock *req = inet_reqsk(sk);
+-
+-					inet_csk_reqsk_queue_drop_and_put(req->rsk_listener, req);
+-				}
++			int state = inet_sk_state_load(sk);
+ 
++			if ((1 << state) & ~(TCPF_TIME_WAIT |
++					     TCPF_NEW_SYN_RECV))
  				continue;
-+			}
+-			}
+ 
+-			tw = inet_twsk(sk);
+-			if ((tw->tw_family != family) ||
+-				refcount_read(&twsk_net(tw)->count))
++			if (sk->sk_family != family ||
++			    refcount_read(&sock_net(sk)->count))
+ 				continue;
+ 
+-			if (unlikely(!refcount_inc_not_zero(&tw->tw_refcnt)))
++			if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
+ 				continue;
+ 
+-			if (unlikely((tw->tw_family != family) ||
+-				     refcount_read(&twsk_net(tw)->count))) {
+-				inet_twsk_put(tw);
++			if (unlikely(sk->sk_family != family ||
++				     refcount_read(&sock_net(sk)->count))) {
++				sock_gen_put(sk);
+ 				goto restart;
+ 			}
+ 
+ 			rcu_read_unlock();
+ 			local_bh_disable();
+-			inet_twsk_deschedule_put(tw);
++			if (state == TCP_TIME_WAIT) {
++				inet_twsk_deschedule_put(inet_twsk(sk));
++			} else {
++				struct request_sock *req = inet_reqsk(sk);
 +
- 			tw = inet_twsk(sk);
- 			if ((tw->tw_family != family) ||
- 				refcount_read(&twsk_net(tw)->count))
++				inet_csk_reqsk_queue_drop_and_put(req->rsk_listener,
++								  req);
++			}
+ 			local_bh_enable();
+ 			goto restart_rcu;
+ 		}
 
 
