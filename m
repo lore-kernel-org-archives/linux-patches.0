@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B43E560;
-	Tue, 30 Apr 2024 10:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3936B12C461;
+	Tue, 30 Apr 2024 10:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473919; cv=none; b=u5Bn7DvFs6nTvbtrzUR4m6X/8myYphb2rBCJa62v25Yc+8YQMeBMt/HjkorrfJuOQVhFXxO3dBz+hHVaM3roGqgLU5nEUWUfSvcT1NQnJmIPB90BZTLde2l5Z0qNSwEJS9zDKUXYNC8pKUpqNa2y4ifG9YbzwdrTJlApH/t9jEE=
+	t=1714473922; cv=none; b=T7xuNmHsMZY7BLWAC/NAL8exVwq/Y0RNI5lvJ07dYB/zgnu4cGcwdqVjN59utSasyiEf5bD2j6mGphAUlt3u7UBBrXyqWBdKNCJLx7zC4OOnUWwC4CLiUx96NPrZN3CkscN3N+hYwGBrtuSELSY0wiVixXVbkh8+WniMi60v/Qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473919; c=relaxed/simple;
-	bh=FWR5Ez/pktRQ8+Dr7xPXOUlsGyCSbS0u1+s64fBsE30=;
+	s=arc-20240116; t=1714473922; c=relaxed/simple;
+	bh=EHCuvdOpnLWkIyn4CbtMVFYnQXrS5Nlol9131yErSF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Boab9nPhGzLxpJJUUbAaU6pATf9agIJpcLgQQnfO+xp9wWJTAs9Dss5C94XXtvZLfD9AaHkVnsDpZe0XvXSiX3ngGnliLXHzkV7Ue4ci+aCrAkU3Ogr8+RaDbWTi00Jg++K2aOT0oCqpB2UDRniSrdHMI5l5p7z61PT50+/8iqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6XZ1wXE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rbp8rycj/IZOwRSrEigs5/IQTgAVewdcSCXPyU0hpnjNfE7UA8CGECN9JD+GNw0Ot8V49lnfhE20XtU3/3InNwne+x1F2zfFTjT4MCXYPEGLWM/OGjzGq7cbFU7wOW/e28LeW9mETnOjw6V1jxkhe6DVSgRXxTxfeJXctrt/IUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIwU5XAR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6XZ1wXE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF205C2BBFC;
-	Tue, 30 Apr 2024 10:45:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIwU5XAR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1F3C2BBFC;
+	Tue, 30 Apr 2024 10:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473919;
-	bh=FWR5Ez/pktRQ8+Dr7xPXOUlsGyCSbS0u1+s64fBsE30=;
+	s=korg; t=1714473922;
+	bh=EHCuvdOpnLWkIyn4CbtMVFYnQXrS5Nlol9131yErSF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S6XZ1wXEBVvu5RWPoyrch+0Zq1nfZtK6rYuxLds//ZtldBSZz43yXvkGNQgn2s5jO
-	 XsD05D86WOcf1sWryfR1iePft4cWM8rV7wi6OIsTBZCvqhsaiXjIhzLl9LpPF6Ukxw
-	 RMI1yY/s/108G5tqYlxkLTbaTYMr/cU0LEkmlzq0=
+	b=lIwU5XARWAx6xM07oSe8udkYH27YGFLdC2FewnBtZSgJ8aDXzXGb07pBFzOn0JTDr
+	 gRMt2OSBKpqtHh/t51pycnPXQQ6HQM9mDwIyGfv0761PiF3lv16p39qY7Hl5L+G9Xt
+	 q3FRF5A7x/ZgWjCcVwUA3GiZnKNghyPurkMVgCKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+510a1abbb8116eeb341d@syzkaller.appspotmail.com,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Johannes Thumshirn <Johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 4.19 62/77] btrfs: fix information leak in btrfs_ioctl_logical_to_ino()
-Date: Tue, 30 Apr 2024 12:39:41 +0200
-Message-ID: <20240430103042.967410647@linuxfoundation.org>
+	Iskander Amara <iskander.amara@theobroma-systems.com>,
+	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 4.19 63/77] arm64: dts: rockchip: enable internal pull-up for Q7_THRM# on RK3399 Puma
+Date: Tue, 30 Apr 2024 12:39:42 +0200
+Message-ID: <20240430103042.998345183@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -53,95 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Iskander Amara <iskander.amara@theobroma-systems.com>
 
-commit 2f7ef5bb4a2f3e481ef05fab946edb97c84f67cf upstream.
+commit 0ac417b8f124427c90ec8c2ef4f632b821d924cc upstream.
 
-Syzbot reported the following information leak for in
-btrfs_ioctl_logical_to_ino():
+Q7_THRM# pin is connected to a diode on the module which is used
+as a level shifter, and the pin have a pull-down enabled by
+default. We need to configure it to internal pull-up, other-
+wise whenever the pin is configured as INPUT and we try to
+control it externally the value will always remain zero.
 
-  BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-  BUG: KMSAN: kernel-infoleak in _copy_to_user+0xbc/0x110 lib/usercopy.c:40
-   instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-   _copy_to_user+0xbc/0x110 lib/usercopy.c:40
-   copy_to_user include/linux/uaccess.h:191 [inline]
-   btrfs_ioctl_logical_to_ino+0x440/0x750 fs/btrfs/ioctl.c:3499
-   btrfs_ioctl+0x714/0x1260
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:904 [inline]
-   __se_sys_ioctl+0x261/0x450 fs/ioctl.c:890
-   __x64_sys_ioctl+0x96/0xe0 fs/ioctl.c:890
-   x64_sys_call+0x1883/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:17
-   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-  Uninit was created at:
-   __kmalloc_large_node+0x231/0x370 mm/slub.c:3921
-   __do_kmalloc_node mm/slub.c:3954 [inline]
-   __kmalloc_node+0xb07/0x1060 mm/slub.c:3973
-   kmalloc_node include/linux/slab.h:648 [inline]
-   kvmalloc_node+0xc0/0x2d0 mm/util.c:634
-   kvmalloc include/linux/slab.h:766 [inline]
-   init_data_container+0x49/0x1e0 fs/btrfs/backref.c:2779
-   btrfs_ioctl_logical_to_ino+0x17c/0x750 fs/btrfs/ioctl.c:3480
-   btrfs_ioctl+0x714/0x1260
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:904 [inline]
-   __se_sys_ioctl+0x261/0x450 fs/ioctl.c:890
-   __x64_sys_ioctl+0x96/0xe0 fs/ioctl.c:890
-   x64_sys_call+0x1883/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:17
-   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-  Bytes 40-65535 of 65536 are uninitialized
-  Memory access of size 65536 starts at ffff888045a40000
-
-This happens, because we're copying a 'struct btrfs_data_container' back
-to user-space. This btrfs_data_container is allocated in
-'init_data_container()' via kvmalloc(), which does not zero-fill the
-memory.
-
-Fix this by using kvzalloc() which zeroes out the memory on allocation.
-
-CC: stable@vger.kernel.org # 4.14+
-Reported-by:  <syzbot+510a1abbb8116eeb341d@syzkaller.appspotmail.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Johannes Thumshirn <Johannes.thumshirn@wdc.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Iskander Amara <iskander.amara@theobroma-systems.com>
+Fixes: 2c66fc34e945 ("arm64: dts: rockchip: add RK3399-Q7 (Puma) SoM")
+Reviewed-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240308085243.69903-1-iskander.amara@theobroma-systems.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/backref.c |   12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/fs/btrfs/backref.c
-+++ b/fs/btrfs/backref.c
-@@ -2236,20 +2236,14 @@ struct btrfs_data_container *init_data_c
- 	size_t alloc_bytes;
+--- a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
+@@ -432,6 +432,16 @@
+ };
  
- 	alloc_bytes = max_t(size_t, total_bytes, sizeof(*data));
--	data = kvmalloc(alloc_bytes, GFP_KERNEL);
-+	data = kvzalloc(alloc_bytes, GFP_KERNEL);
- 	if (!data)
- 		return ERR_PTR(-ENOMEM);
- 
--	if (total_bytes >= sizeof(*data)) {
-+	if (total_bytes >= sizeof(*data))
- 		data->bytes_left = total_bytes - sizeof(*data);
--		data->bytes_missing = 0;
--	} else {
-+	else
- 		data->bytes_missing = sizeof(*data) - total_bytes;
--		data->bytes_left = 0;
--	}
--
--	data->elem_cnt = 0;
--	data->elem_missed = 0;
- 
- 	return data;
- }
+ &pinctrl {
++	pinctrl-names = "default";
++	pinctrl-0 = <&q7_thermal_pin>;
++
++	gpios {
++		q7_thermal_pin: q7-thermal-pin {
++			rockchip,pins =
++				<0 RK_PA3 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++	};
++
+ 	i2c8 {
+ 		i2c8_xfer_a: i2c8-xfer {
+ 			rockchip,pins =
 
 
