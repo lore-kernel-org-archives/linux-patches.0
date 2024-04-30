@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EF48801;
-	Tue, 30 Apr 2024 11:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C3F8801;
+	Tue, 30 Apr 2024 11:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476216; cv=none; b=oo7B/7o1T0TxEC88jZqXOcB3qPUlDUexKoZ/0xyL171tmFvg8ML04cEWek10jMWnkCjRzO/X6MHTER6R4wq10ZAgN63KGFMsCPi+jbstl1SV71pGpHdKgRLW7+SuLI7C2yYTa7H0OqQQVniolKYrj9q7kSWY8Zm7Utwg1QviwWU=
+	t=1714476219; cv=none; b=m5FihLRalR2Cxtjw19XgpTXEBACBHH7EP2meTVnzHdRPSYmqBDcC1GHUDjwpj1xOD+FN+k+ozFSDttEpn9+HTyVN/U1RVW3SCMBB3xqc3GYuBG4tdeFo+Zfrk1mw0gOsCtD37QqZ+QlKZ1OzIN5CJKKKVODf6Q2UDQ8Ev8GJEjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476216; c=relaxed/simple;
-	bh=2R+zLLxi0nUS13BpOZQUnirOT6W2t/K4LT5R/bLWmxQ=;
+	s=arc-20240116; t=1714476219; c=relaxed/simple;
+	bh=0NVB2QWKdVU3W6JYLb4KME/Nq4nMTjmYlq9BfXH+xd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VaxfykOTog+v1tQGJ67Gxto0VxG8MUmmhy8zYCuLw7M9mq87WT4E2N6JXauxClPl9bOeTr0akac3X9JO7VJCZgHs0r3cZs8is5gJe5iofhFyW/iP7h979zD/tfE4grGQilroJ6UhBf7WLjo5g9LWXasIwPGAXujD01Y8oNvV4CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLzojzS/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QHV5Yz2vkOtwpHjR+YjmTHxfebrIVTWeyj+7es1Zd3AVBV9yrLnX/V68/EnNaDQT6LsZSqagvwzMU5x7foZDYPRnS6sVX6ZRPiQrHrCbJs+X827f5Tt/ITrrxK/fJymLI4AxQBZ9NTkGh4sPj4F+gCOg+SETNWvCn2HS1a8cQQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kj/4zbRV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLzojzS/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5EFC2BBFC;
-	Tue, 30 Apr 2024 11:23:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kj/4zbRV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3EC1C2BBFC;
+	Tue, 30 Apr 2024 11:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476216;
-	bh=2R+zLLxi0nUS13BpOZQUnirOT6W2t/K4LT5R/bLWmxQ=;
+	s=korg; t=1714476219;
+	bh=0NVB2QWKdVU3W6JYLb4KME/Nq4nMTjmYlq9BfXH+xd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RLzojzS/P8a31aCPEXZy5HzCaLafMVgxiaktOQ7oEXSkjPWoYe5Rntz9Fd+iDSd63
-	 gIo3nwslF7d3InkAA4i5f6tINyhC4c0gw3P2ErSJSk+tb/yDsGWHRfCtW/DzkREnqL
-	 8NLRpiusZe3U3i5cOMiBlwbNFWCVO5QgiKTLNfpU=
+	b=kj/4zbRVax3nWXppxY7efc8vIwIkaRW31GUoCmPt68hB0JMHgRHAq1Oc9kY0N3wDG
+	 yD2jZt95HvfCgphK2kHas32brpdsxnkcqfKzlOD2NCZ4H3t3ySQk+nPjlgXCtxXfEl
+	 9nAVFCWZsUUW620fSp0Oyzzw+OkCC3OP8nxIajDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Palmas <dnlplm@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.4 043/107] USB: serial: option: add Telit FN920C04 rmnet compositions
-Date: Tue, 30 Apr 2024 12:40:03 +0200
-Message-ID: <20240430103045.929736089@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	Alexander Zubkov <green@qrator.net>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 070/107] mlxsw: spectrum_acl_tcam: Fix possible use-after-free during rehash
+Date: Tue, 30 Apr 2024 12:40:30 +0200
+Message-ID: <20240430103046.722020866@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -50,107 +54,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Palmas <dnlplm@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 582ee2f9d268d302595db3e36b985e5cbb93284d upstream.
+[ Upstream commit 54225988889931467a9b55fdbef534079b665519 ]
 
-Add the following Telit FN920C04 compositions:
+The rehash delayed work migrates filters from one region to another
+according to the number of available credits.
 
-0x10a0: rmnet + tty (AT/NMEA) + tty (AT) + tty (diag)
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#=  5 Spd=480  MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10a0 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+The migrated from region is destroyed at the end of the work if the
+number of credits is non-negative as the assumption is that this is
+indicative of migration being complete. This assumption is incorrect as
+a non-negative number of credits can also be the result of a failed
+migration.
 
-0x10a4: rmnet + tty (AT) + tty (AT) + tty (diag)
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#=  8 Spd=480  MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10a4 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+The destruction of a region that still has filters referencing it can
+result in a use-after-free [1].
 
-0x10a9: rmnet + tty (AT) + tty (diag) + DPL (data packet logging) + adb
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#=  9 Spd=480  MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10a9 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Fix by not destroying the region if migration failed.
 
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[1]
+BUG: KASAN: slab-use-after-free in mlxsw_sp_acl_ctcam_region_entry_remove+0x21d/0x230
+Read of size 8 at addr ffff8881735319e8 by task kworker/0:31/3858
+
+CPU: 0 PID: 3858 Comm: kworker/0:31 Tainted: G        W          6.9.0-rc2-custom-00782-gf2275c2157d8 #5
+Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
+Workqueue: mlxsw_core mlxsw_sp_acl_tcam_vregion_rehash_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xc6/0x120
+ print_report+0xce/0x670
+ kasan_report+0xd7/0x110
+ mlxsw_sp_acl_ctcam_region_entry_remove+0x21d/0x230
+ mlxsw_sp_acl_ctcam_entry_del+0x2e/0x70
+ mlxsw_sp_acl_atcam_entry_del+0x81/0x210
+ mlxsw_sp_acl_tcam_vchunk_migrate_all+0x3cd/0xb50
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0x157/0x1300
+ process_one_work+0x8eb/0x19b0
+ worker_thread+0x6c9/0xf70
+ kthread+0x2c9/0x3b0
+ ret_from_fork+0x4d/0x80
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Allocated by task 174:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x8f/0xa0
+ __kmalloc+0x19c/0x360
+ mlxsw_sp_acl_tcam_region_create+0xdf/0x9c0
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0x954/0x1300
+ process_one_work+0x8eb/0x19b0
+ worker_thread+0x6c9/0xf70
+ kthread+0x2c9/0x3b0
+ ret_from_fork+0x4d/0x80
+ ret_from_fork_asm+0x1a/0x30
+
+Freed by task 7:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3b/0x60
+ poison_slab_object+0x102/0x170
+ __kasan_slab_free+0x14/0x30
+ kfree+0xc1/0x290
+ mlxsw_sp_acl_tcam_region_destroy+0x272/0x310
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0x731/0x1300
+ process_one_work+0x8eb/0x19b0
+ worker_thread+0x6c9/0xf70
+ kthread+0x2c9/0x3b0
+ ret_from_fork+0x4d/0x80
+ ret_from_fork_asm+0x1a/0x30
+
+Fixes: c9c9af91f1d9 ("mlxsw: spectrum_acl: Allow to interrupt/continue rehash work")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Alexander Zubkov <green@qrator.net>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/3e412b5659ec2310c5c615760dfe5eac18dd7ebd.1713797103.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1376,6 +1376,12 @@ static const struct usb_device_id option
- 	  .driver_info = NCTRL(2) | RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1083, 0xff),	/* Telit FE990 (ECM) */
- 	  .driver_info = NCTRL(0) | RSVD(1) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a0, 0xff),	/* Telit FN20C04 (rmnet) */
-+	  .driver_info = RSVD(0) | NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a4, 0xff),	/* Telit FN20C04 (rmnet) */
-+	  .driver_info = RSVD(0) | NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a9, 0xff),	/* Telit FN20C04 (rmnet) */
-+	  .driver_info = RSVD(0) | NCTRL(2) | RSVD(3) | RSVD(4) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910),
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(3) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910_DUAL_MODEM),
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+index 7cd3338ed4742..7e5dc664c55c7 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+@@ -1522,6 +1522,7 @@ mlxsw_sp_acl_tcam_vregion_rehash(struct mlxsw_sp *mlxsw_sp,
+ 						ctx, credits);
+ 	if (err) {
+ 		dev_err(mlxsw_sp->bus_info->dev, "Failed to migrate vregion\n");
++		return;
+ 	}
+ 
+ 	if (*credits >= 0)
+-- 
+2.43.0
+
 
 
