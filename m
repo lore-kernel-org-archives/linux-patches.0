@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADC212C48B;
-	Tue, 30 Apr 2024 10:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348CA12C816;
+	Tue, 30 Apr 2024 10:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474015; cv=none; b=ZFRfIcsboSmrIEjAhHHGv9d18HW3qlC7Rfs9V6Iu5qraC2V1NArsJ+Qzp+/TRfX0THiu4lmgREJCsoIW12fWeancIHgzA3Wn9jqPXRGous6H9modPQdLkK8NcihY1ejZiheCWuOGFg0SbcIF4xPZqzmWjy7gBv9mIea5u9cQmbo=
+	t=1714474019; cv=none; b=mADHtRBlxb4zRcXKaljKTQtD6VdopfZRVTXJAGh/sXmrGTTd/+VucVmbCeq/bsQ/MikrLTclvZMP+3LT8oj8NSUuUf8DkNG2M8BNvmeH5Lzc3407uKKEBhrkC9Az6qsO8TPlaRRv0mAC/dDf4DHzpdliPz1Ug6+XgJxpNt5qXJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474015; c=relaxed/simple;
-	bh=u2SBcP75nlSy7AUpJFHYA3dPahEeHvCjIqDiqCxV4b0=;
+	s=arc-20240116; t=1714474019; c=relaxed/simple;
+	bh=eqgrsHDs7PPwahUBFGRkfG6rxyUN5C3Yol2cnPgh1VE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nHOqfCOIDf9WDupN7n1DnRveXFSsrNOD8VX4fQF1XoHqn95cWNR4hZ5/6zl8+n+8uELlO7bpYS7DX0/URhN94CD99R17vRF9cKMtqbHxBb2IzAw3/49tp0BjzUitm6yG8TleCcEl1ufUnJUPxc8rCNfZqBpF52nagqENAemIK2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHe7tzph; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JnJe7nlIXN8x1GmbA2jZ6sR28peQ37/2nYUSkMgJ4wsM9oIbVLGjbwYYygKI0tl1zeJX3Tz3Dz3omVvI3gQxqMBIUk+lAzTqyAoxdkxmaEp5hLCIE+O98Ifa3+OsZrMtIwnD/itnVE1CRbVdwhvbCmJ20Xs5/njkWJ4tyUcmiBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDfmWpXQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHe7tzph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF28C2BBFC;
-	Tue, 30 Apr 2024 10:46:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDfmWpXQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60FFAC4AF1A;
+	Tue, 30 Apr 2024 10:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474015;
-	bh=u2SBcP75nlSy7AUpJFHYA3dPahEeHvCjIqDiqCxV4b0=;
+	s=korg; t=1714474018;
+	bh=eqgrsHDs7PPwahUBFGRkfG6rxyUN5C3Yol2cnPgh1VE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RHe7tzph8O30cPM8z5NyQzTHiTmr044sFC8T/47Jc+p0Cd7sMwxXa7m5U3fJ0wqpD
-	 SSqW/CmXzax9qByp+mvonxL4TeibVogMzm1L8FYfL+ThIoJ3ZOFodwq1OGe7iQ60ld
-	 tm8zXLHzibkQoQojjFupkSBn2cDfkPvvtznW8Dms=
+	b=DDfmWpXQyC7huxcQyOKYQ714qhbgUIXvjGtPVG3Goy4hdsE3K9mUGNQzyUZmLD96B
+	 JgrWlpfh4hfagTYXCXapUrB63jxzATMSudf/vT09/CDSm7CRyK0lUK7TJCxS4Mc1Ua
+	 x/s97Oo3oicUOlUcLgGB+PCf/R7O2eKFQLsr9xmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 035/228] arm64: dts: qcom: Fix type of "wdog" IRQs for remoteprocs
-Date: Tue, 30 Apr 2024 12:36:53 +0200
-Message-ID: <20240430103104.829462298@linuxfoundation.org>
+Subject: [PATCH 6.8 036/228] arm64: dts: qcom: x1e80100: Fix the compatible for cluster idle states
+Date: Tue, 30 Apr 2024 12:36:54 +0200
+Message-ID: <20240430103104.857566654@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -51,160 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Rajendra Nayak <quic_rjendra@quicinc.com>
 
-[ Upstream commit f011688162ec4c492c12ee7cced74c097270baa2 ]
+[ Upstream commit cb939b9b35426852896790aba2f18f46df34e596 ]
 
-The code in qcom_q6v5_init() requests the "wdog" IRQ as
-IRQF_TRIGGER_RISING. If dt defines the interrupt type as LEVEL_HIGH then
-the driver will have issues getting the IRQ again after probe deferral
-with an error like:
+The compatible's for the cluster/domain idle states of x1e80100
+are wrong, fix it.
 
-  irq: type mismatch, failed to map hwirq-14 for interrupt-controller@b220000!
-
-Fix that by updating the devicetrees to use IRQ_TYPE_EDGE_RISING for
-these interrupts, as is already used in most dt's. Also the driver was
-already using the interrupts with that type.
-
-Fixes: 3658e411efcb ("arm64: dts: qcom: sc7280: Add ADSP node")
-Fixes: df62402e5ff9 ("arm64: dts: qcom: sc7280: Add CDSP node")
-Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-Fixes: 8eb5287e8a42 ("arm64: dts: qcom: sm6350: Add CDSP nodes")
-Fixes: efc33c969f23 ("arm64: dts: qcom: sm6350: Add ADSP nodes")
-Fixes: fe6fd26aeddf ("arm64: dts: qcom: sm6375: Add ADSP&CDSP")
-Fixes: 23a8903785b9 ("arm64: dts: qcom: sm8250: Add remoteprocs")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Link: https://lore.kernel.org/r/20240219-remoteproc-irqs-v1-1-c5aeb02334bd@fairphone.com
-[bjorn: Added fixes references]
+Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
+Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240317132918.1068817-1-quic_rjendra@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi   | 4 ++--
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 6 +++---
- arch/arm64/boot/dts/qcom/sm6350.dtsi   | 4 ++--
- arch/arm64/boot/dts/qcom/sm6375.dtsi   | 2 +-
- arch/arm64/boot/dts/qcom/sm8250.dtsi   | 6 +++---
- 5 files changed, 11 insertions(+), 11 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 7dc2c37716e84..46545cd6964a9 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -3650,7 +3650,7 @@
- 			compatible = "qcom,sc7280-adsp-pas";
- 			reg = <0 0x03700000 0 0x100>;
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index be1285d9919e0..5ba7924aa4355 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -278,7 +278,7 @@
  
--			interrupts-extended = <&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
- 					      <&adsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&adsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&adsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-@@ -3887,7 +3887,7 @@
- 			compatible = "qcom,sc7280-cdsp-pas";
- 			reg = <0 0x0a300000 0 0x10000>;
+ 		domain-idle-states {
+ 			CLUSTER_CL4: cluster-sleep-0 {
+-				compatible = "arm,idle-state";
++				compatible = "domain-idle-state";
+ 				idle-state-name = "l2-ret";
+ 				arm,psci-suspend-param = <0x01000044>;
+ 				entry-latency-us = <350>;
+@@ -287,7 +287,7 @@
+ 			};
  
--			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
- 					      <&cdsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&cdsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&cdsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index febf28356ff8b..e47c58e06c395 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -2635,7 +2635,7 @@
- 			compatible = "qcom,sc8280xp-adsp-pas";
- 			reg = <0 0x03000000 0 0x100>;
- 
--			interrupts-extended = <&intc GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&intc GIC_SPI 162 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
-@@ -4407,7 +4407,7 @@
- 			compatible = "qcom,sc8280xp-nsp0-pas";
- 			reg = <0 0x1b300000 0 0x100>;
- 
--			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_nsp0_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_nsp0_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_nsp0_in 2 IRQ_TYPE_EDGE_RISING>,
-@@ -4538,7 +4538,7 @@
- 			compatible = "qcom,sc8280xp-nsp1-pas";
- 			reg = <0 0x21300000 0 0x100>;
- 
--			interrupts-extended = <&intc GIC_SPI 887 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&intc GIC_SPI 887 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_nsp1_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_nsp1_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_nsp1_in 2 IRQ_TYPE_EDGE_RISING>,
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 43cffe8e1247e..7532107580aee 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -1249,7 +1249,7 @@
- 			compatible = "qcom,sm6350-adsp-pas";
- 			reg = <0 0x03000000 0 0x100>;
- 
--			interrupts-extended = <&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
-@@ -1509,7 +1509,7 @@
- 			compatible = "qcom,sm6350-cdsp-pas";
- 			reg = <0 0x08300000 0 0x10000>;
- 
--			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp_in 2 IRQ_TYPE_EDGE_RISING>,
-diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-index 7ac8bf26dda3a..a74472ac6186d 100644
---- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-@@ -1559,7 +1559,7 @@
- 			compatible = "qcom,sm6375-adsp-pas";
- 			reg = <0 0x0a400000 0 0x100>;
- 
--			interrupts-extended = <&intc GIC_SPI 282 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&intc GIC_SPI 282 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 760501c1301a6..b07a3bad6eb96 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3025,7 +3025,7 @@
- 			compatible = "qcom,sm8250-slpi-pas";
- 			reg = <0 0x05c00000 0 0x4000>;
- 
--			interrupts-extended = <&pdc 9 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&pdc 9 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_slpi_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_slpi_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_slpi_in 2 IRQ_TYPE_EDGE_RISING>,
-@@ -3729,7 +3729,7 @@
- 			compatible = "qcom,sm8250-cdsp-pas";
- 			reg = <0 0x08300000 0 0x10000>;
- 
--			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp_in 2 IRQ_TYPE_EDGE_RISING>,
-@@ -5887,7 +5887,7 @@
- 			compatible = "qcom,sm8250-adsp-pas";
- 			reg = <0 0x17300000 0 0x100>;
- 
--			interrupts-extended = <&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+ 			CLUSTER_CL5: cluster-sleep-1 {
+-				compatible = "arm,idle-state";
++				compatible = "domain-idle-state";
+ 				idle-state-name = "ret-pll-off";
+ 				arm,psci-suspend-param = <0x01000054>;
+ 				entry-latency-us = <2200>;
 -- 
 2.43.0
 
