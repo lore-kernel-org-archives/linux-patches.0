@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4239412B176;
-	Tue, 30 Apr 2024 11:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7C912C7FB;
+	Tue, 30 Apr 2024 11:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474940; cv=none; b=AF6l68XR0sZcm0fVIlEDH0EPf6cP6S/vkNKxs2xRI5BHXVBap3otmbHsKEBN6Z0wEhUezrdyTr/cH3RiON/TtR/2sGmlonCSzUG45rIdcBotNEZeEskkomyv8qKsq1FH9F4WHDiOPb/wi5Tc8cIOF4mTJU2gwgyGEE1Xz1dIEPU=
+	t=1714474943; cv=none; b=T4lFUbUnC4KN7IPGUm1PZShexPFqK+vcdECksvQU8mID9sqRGqXzL9NGPYoU4LOVqRjEdPFTBKOHR8aop1mjdBfvkc0rzLQe5+CPEJidAKejpZzKOi4AYGN9kBdL1pgFS42Uvqkk6ZGT1NdkxVj3p1KPIXZ/4RJ+dUM2oiU+11s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474940; c=relaxed/simple;
-	bh=Z5G67t5DrMJzbA1B2/vIowCOdUxC3TPzslA9H++X6CA=;
+	s=arc-20240116; t=1714474943; c=relaxed/simple;
+	bh=4zSkOEyQeFk1s+GQcu2ZePjEDODfxrd72dv5jY4eH2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eboIR6ARHEk04+yazpoQr+eNjQ1cgd17nMi7lSBbUL0yyeGCBhzSSpiKzyxw0LTSybAx17Wtacd+h2lAM9FllCwXS8ifPai7MM+ZeeXDBAR1v/HcqQw9tSU+1AyVvcJ6Qk+dh9anBiIuqNzUlqBgOPXbFlrINuxTyFD0+jwGD4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hM5Uuk7H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ISHEGg4/wOJLDhVDcAorAIdjiTvLqPwRVmUcmKaDAIU0ULgtlhdJovokEhQPG4MexiDQYlNlzgxcV8NGb/Sk/O/ff++4ZIoFoWrHqD8FzIoonS5qVrf8QSoeksBFdQ6ziYeRNnLS2zVPLiC8dlcEuGwbht4dG85I/aLlarBuOPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mrzyUT4c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hM5Uuk7H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88969C2BBFC;
-	Tue, 30 Apr 2024 11:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrzyUT4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D29AC2BBFC;
+	Tue, 30 Apr 2024 11:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474939;
-	bh=Z5G67t5DrMJzbA1B2/vIowCOdUxC3TPzslA9H++X6CA=;
+	s=korg; t=1714474943;
+	bh=4zSkOEyQeFk1s+GQcu2ZePjEDODfxrd72dv5jY4eH2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hM5Uuk7HBfpRUzEGKdo5kynFlCDGYYLUW2B3FpI1RNgDXw0ohpdNMU6YhGvEAks2v
-	 P/rHllA3u7hx8Pvr6azj3EQ0j++Hy8vdgykK/rNOmxC4pexFwlYCdB6vWQcVjtyE/8
-	 QSDfAWCZPbx5yMG6OulVn/pGyUKt6R7ZQJLtzzXM=
+	b=mrzyUT4cJSqLzY9latXXQmFiooWQ3cyOoXMRzZdzqNbMDfz7Q1TSNmxMiM2np+5aA
+	 qec/k+CpjP7Ctaouo42JO5IgW4S8jHkjQ1VQnFEqHmh2uWL6OpNg2yek0/fvdV25Ns
+	 iWbV/I6k3Un5aKvTRTehAg/ZB1n6tlmlrDZsmpkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 080/138] arm64: dts: mediatek: mt7622: fix ethernet controller "compatible"
-Date: Tue, 30 Apr 2024 12:39:25 +0200
-Message-ID: <20240430103051.778519046@linuxfoundation.org>
+Subject: [PATCH 5.10 044/138] clk: Remove prepare_lock hold assertion in __clk_release()
+Date: Tue, 30 Apr 2024 12:38:49 +0200
+Message-ID: <20240430103050.728409902@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -45,47 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Stephen Boyd <sboyd@kernel.org>
 
-[ Upstream commit 208add29ce5b7291f6c466e4dfd9cbf61c72888e ]
+[ Upstream commit 8358a76cfb47c9a5af627a0c4e7168aa14fa25f6 ]
 
-Fix following validation error:
-arch/arm64/boot/dts/mediatek/mt7622-rfb1.dtb: ethernet@1b100000: compatible: ['mediatek,mt7622-eth', 'mediatek,mt2701-eth', 'syscon'] is too long
-        from schema $id: http://devicetree.org/schemas/net/mediatek,net.yaml#
-(and other complains about wrong clocks).
+Removing this assertion lets us move the kref_put() call outside the
+prepare_lock section. We don't need to hold the prepare_lock here to
+free memory and destroy the clk_core structure. We've already unlinked
+the clk from the clk tree and by the time the release function runs
+nothing holds a reference to the clk_core anymore so anything with the
+pointer can't access the memory that's being freed anyway. Way back in
+commit 496eadf821c2 ("clk: Use lockdep asserts to find missing hold of
+prepare_lock") we didn't need to have this assertion either.
 
-Fixes: 5f599b3a0bb8 ("arm64: dts: mt7622: add ethernet device nodes")
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240317221050.18595-4-zajec5@gmail.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 496eadf821c2 ("clk: Use lockdep asserts to find missing hold of prepare_lock")
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/20240325184204.745706-2-sboyd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7622.dtsi | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/clk/clk.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt7622.dtsi b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-index bf0856d37eda8..974520bd3d8fb 100644
---- a/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-@@ -934,9 +934,7 @@
- 	};
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index aa2f1f8aa2994..67a882e03dfdd 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -4006,8 +4006,6 @@ static void __clk_release(struct kref *ref)
+ {
+ 	struct clk_core *core = container_of(ref, struct clk_core, ref);
  
- 	eth: ethernet@1b100000 {
--		compatible = "mediatek,mt7622-eth",
--			     "mediatek,mt2701-eth",
--			     "syscon";
-+		compatible = "mediatek,mt7622-eth";
- 		reg = <0 0x1b100000 0 0x20000>;
- 		interrupts = <GIC_SPI 223 IRQ_TYPE_LEVEL_LOW>,
- 			     <GIC_SPI 224 IRQ_TYPE_LEVEL_LOW>,
+-	lockdep_assert_held(&prepare_lock);
+-
+ 	clk_core_free_parent_map(core);
+ 	kfree_const(core->name);
+ 	kfree(core);
 -- 
 2.43.0
 
