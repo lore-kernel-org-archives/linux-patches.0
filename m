@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5321212C47A;
-	Tue, 30 Apr 2024 11:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AE012C805;
+	Tue, 30 Apr 2024 11:25:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476349; cv=none; b=RaMwq0VNrgaVeXWtHtoMGEyuILIeHeashKVmEFU5qFzHxnmLd4S0L684AtaTAIAgM8U9+EblDg3IOJw0qA8KFlyYq3eZw8mu3V7rFUQOB7nDxlvETmh0QqEZmJ81d32syHgnYPZ4z6swZM35w3OCoPvNgG4V1FMbelsjlXK9z3Y=
+	t=1714476352; cv=none; b=HdB5J9jbw9/2bLb45Qh9a18v+aPp3twtvY6R7WtxbTMWaxuEv6qvlCnV4+YUpKXd5XAHP/6/RJEMBMchUnHT1NSIOr+cYz2m7eWyvqWM0Spu/LTaGffMlTHs70c4kwu5bw8YTtMWxJC1ktQckv16sfHAiJUKOPUtOBd//e/WSWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476349; c=relaxed/simple;
-	bh=9UlOT9HEzGvkMj9cZh/v7LwuIYDyn6HrgBZMS2qXuEY=;
+	s=arc-20240116; t=1714476352; c=relaxed/simple;
+	bh=gmAtmXbONLn7Cw4iqwM2/LkI5eA/tl/UcE4Ots08iOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NdShYz670OzVdy8rW+uCkb+NLoImBTBgzRPBzvHmsc+02H6tdyc9wg0Zwwr4nigkoe8NvGDqurNad5EoAISRDysu6LYkumsRqb58/DPNNUUZoOTJdi8jLH1FeIhu7g8CP+qBkaxevFk2m9L9H0WLAElQeG4YW5WKxBK+8sc05TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5QcjqGz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BE58HbsxSDIWRXWBTjx7kiLss49yBClJukWAG9W1Rq8BaqMh75kkvRUbx7xd3H6N1T7/Edbi76Ea/eUUWIoQI/ZMjUTCBNu1YEiAK2PkQeYq7Nz6/bD2/4IuWvQhOzix5qKUEr2qlfTAw0ZqIWeRna2HxyNWkIfk2185CXlEU30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFAQrt4V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5QcjqGz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 614C4C2BBFC;
-	Tue, 30 Apr 2024 11:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFAQrt4V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5C1C2BBFC;
+	Tue, 30 Apr 2024 11:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476348;
-	bh=9UlOT9HEzGvkMj9cZh/v7LwuIYDyn6HrgBZMS2qXuEY=;
+	s=korg; t=1714476352;
+	bh=gmAtmXbONLn7Cw4iqwM2/LkI5eA/tl/UcE4Ots08iOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a5QcjqGzFF0Dy77uILAomy9rqXmNAyUdy0SRjAYGF1HyYEdg1DS72oK48cC6m4bBl
-	 KMNSDf2uunW8QodMSI9/HTxVLa7P++V+hdwpf4QyANO9IqZh2eh1yQeXvJ1NkVErJq
-	 cLi3rh5fM76YHkAR9hr+a5VddljBcQm87SqpjX5c=
+	b=jFAQrt4VRvZl2FBxPYOb4jflarsuZYgeU+/yFmzabER284OZ/wPoJVpjfAeH1gaL/
+	 6wfi6lzQKG/4aRPou4cUkCkBFeeyW+a3kyY7hH4N6yq55Q23cJi5NBNRwOKaIfAj6u
+	 +fGdTIQtW/bAvpCt/fs+SeUsU+KE49NXYdBZ1C8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Justin Stitt <justinstitt@google.com>,
+	Larry Finger <Larry.Finger@lwfinger.net>,
+	WangYuli <wangyuli@uniontech.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.4 088/107] Bluetooth: Fix type of len in {l2cap,sco}_sock_getsockopt_old()
-Date: Tue, 30 Apr 2024 12:40:48 +0200
-Message-ID: <20240430103047.254811120@linuxfoundation.org>
+Subject: [PATCH 5.4 089/107] Bluetooth: btusb: Add Realtek RTL8852BE support ID 0x0bda:0x4853
+Date: Tue, 30 Apr 2024 12:40:49 +0200
+Message-ID: <20240430103047.284039658@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -51,128 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: WangYuli <wangyuli@uniontech.com>
 
-commit 9bf4e919ccad613b3596eebf1ff37b05b6405307 upstream.
+commit d1a5a7eede2977da3d2002d5ea3b519019cc1a98 upstream.
 
-After an innocuous optimization change in LLVM main (19.0.0), x86_64
-allmodconfig (which enables CONFIG_KCSAN / -fsanitize=thread) fails to
-build due to the checks in check_copy_size():
+Add the support ID(0x0bda, 0x4853) to usb_device_id table for
+Realtek RTL8852BE.
 
-  In file included from net/bluetooth/sco.c:27:
-  In file included from include/linux/module.h:13:
-  In file included from include/linux/stat.h:19:
-  In file included from include/linux/time.h:60:
-  In file included from include/linux/time32.h:13:
-  In file included from include/linux/timex.h:67:
-  In file included from arch/x86/include/asm/timex.h:6:
-  In file included from arch/x86/include/asm/tsc.h:10:
-  In file included from arch/x86/include/asm/msr.h:15:
-  In file included from include/linux/percpu.h:7:
-  In file included from include/linux/smp.h:118:
-  include/linux/thread_info.h:244:4: error: call to '__bad_copy_from'
-  declared with 'error' attribute: copy source size is too small
-    244 |                         __bad_copy_from();
-        |                         ^
+Without this change the device utilizes an obsolete version of
+the firmware that is encoded in it rather than the updated Realtek
+firmware and config files from the firmware directory. The latter
+files implement many new features.
 
-The same exact error occurs in l2cap_sock.c. The copy_to_user()
-statements that are failing come from l2cap_sock_getsockopt_old() and
-sco_sock_getsockopt_old(). This does not occur with GCC with or without
-KCSAN or Clang without KCSAN enabled.
+The device table is as follows:
 
-len is defined as an 'int' because it is assigned from
-'__user int *optlen'. However, it is clamped against the result of
-sizeof(), which has a type of 'size_t' ('unsigned long' for 64-bit
-platforms). This is done with min_t() because min() requires compatible
-types, which results in both len and the result of sizeof() being casted
-to 'unsigned int', meaning len changes signs and the result of sizeof()
-is truncated. From there, len is passed to copy_to_user(), which has a
-third parameter type of 'unsigned long', so it is widened and changes
-signs again. This excessive casting in combination with the KCSAN
-instrumentation causes LLVM to fail to eliminate the __bad_copy_from()
-call, failing the build.
-
-The official recommendation from LLVM developers is to consistently use
-long types for all size variables to avoid the unnecessary casting in
-the first place. Change the type of len to size_t in both
-l2cap_sock_getsockopt_old() and sco_sock_getsockopt_old(). This clears
-up the error while allowing min_t() to be replaced with min(), resulting
-in simpler code with no casts and fewer implicit conversions. While len
-is a different type than optlen now, it should result in no functional
-change because the result of sizeof() will clamp all values of optlen in
-the same manner as before.
+T: Bus=03 Lev=01 Prnt=01 Port=09 Cnt=03 Dev#= 4 Spd=12 MxCh= 0
+D: Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs= 1
+P: Vendor=0bda ProdID=4853 Rev= 0.00
+S: Manufacturer=Realtek
+S: Product=Bluetooth Radio
+S: SerialNumber=00e04c000001
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=81(I) Atr=03(Int.) MxPS= 16 Ivl=1ms
+E: Ad=02(O) Atr=02(Bulk) MxPS= 64 Ivl=0ms
+E: Ad=82(I) Atr=02(Bulk) MxPS= 64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 0 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 0 Ivl=1ms
+I: If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 9 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 9 Ivl=1ms
+I: If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 17 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 17 Ivl=1ms
+I: If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 25 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 25 Ivl=1ms
+I: If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 33 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 33 Ivl=1ms
+I: If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E: Ad=03(O) Atr=01(Isoc) MxPS= 49 Ivl=1ms
+E: Ad=83(I) Atr=01(Isoc) MxPS= 49 Ivl=1ms
 
 Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2007
-Link: https://github.com/llvm/llvm-project/issues/85647
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Justin Stitt <justinstitt@google.com>
+Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_sock.c |    7 ++++---
- net/bluetooth/sco.c        |    7 ++++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/bluetooth/btusb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -405,7 +405,8 @@ static int l2cap_sock_getsockopt_old(str
- 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
- 	struct l2cap_options opts;
- 	struct l2cap_conninfo cinfo;
--	int len, err = 0;
-+	int err = 0;
-+	size_t len;
- 	u32 opt;
- 
- 	BT_DBG("sk %p", sk);
-@@ -450,7 +451,7 @@ static int l2cap_sock_getsockopt_old(str
- 		opts.max_tx   = chan->max_tx;
- 		opts.txwin_size = chan->tx_win;
- 
--		len = min_t(unsigned int, len, sizeof(opts));
-+		len = min(len, sizeof(opts));
- 		if (copy_to_user(optval, (char *) &opts, len))
- 			err = -EFAULT;
- 
-@@ -500,7 +501,7 @@ static int l2cap_sock_getsockopt_old(str
- 		cinfo.hci_handle = chan->conn->hcon->handle;
- 		memcpy(cinfo.dev_class, chan->conn->hcon->dev_class, 3);
- 
--		len = min_t(unsigned int, len, sizeof(cinfo));
-+		len = min(len, sizeof(cinfo));
- 		if (copy_to_user(optval, (char *) &cinfo, len))
- 			err = -EFAULT;
- 
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -880,7 +880,8 @@ static int sco_sock_getsockopt_old(struc
- 	struct sock *sk = sock->sk;
- 	struct sco_options opts;
- 	struct sco_conninfo cinfo;
--	int len, err = 0;
-+	int err = 0;
-+	size_t len;
- 
- 	BT_DBG("sk %p", sk);
- 
-@@ -902,7 +903,7 @@ static int sco_sock_getsockopt_old(struc
- 
- 		BT_DBG("mtu %d", opts.mtu);
- 
--		len = min_t(unsigned int, len, sizeof(opts));
-+		len = min(len, sizeof(opts));
- 		if (copy_to_user(optval, (char *)&opts, len))
- 			err = -EFAULT;
- 
-@@ -920,7 +921,7 @@ static int sco_sock_getsockopt_old(struc
- 		cinfo.hci_handle = sco_pi(sk)->conn->hcon->handle;
- 		memcpy(cinfo.dev_class, sco_pi(sk)->conn->hcon->dev_class, 3);
- 
--		len = min_t(unsigned int, len, sizeof(cinfo));
-+		len = min(len, sizeof(cinfo));
- 		if (copy_to_user(optval, (char *)&cinfo, len))
- 			err = -EFAULT;
- 
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -360,6 +360,8 @@ static const struct usb_device_id blackl
+ 	/* Realtek 8852BE Bluetooth devices */
+ 	{ USB_DEVICE(0x0cb8, 0xc559), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0bda, 0x4853), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0bda, 0x887b), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0bda, 0xb85b), .driver_info = BTUSB_REALTEK |
 
 
