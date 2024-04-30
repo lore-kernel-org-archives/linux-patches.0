@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9A212D1FC;
-	Tue, 30 Apr 2024 10:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9ABA12D201;
+	Tue, 30 Apr 2024 10:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474410; cv=none; b=Mu/izlvtUvle31Ulze84QZoy7F2ANSaNvBNOWXfyrvlK0NbTzC8UvsIjCbo8tz+5Gt9KXRHeeQaSJ2bG5sXb9K5ZZrmuTAvYSRdundJ+kEbDI5/2EeSzHmwSRG2StpltRhl9u9PLAzLd7ODbxEYgO5euQRR9wCjdLbpWuYKQsLc=
+	t=1714474412; cv=none; b=boLU6es2MYcotT5KVmwyHDdEtB2Jrs72lp1k7MJA6J4s7JF+mOfQ9XuVT3dYgv+I3gbRCcEiTVxwI2RFPxlSv1so4pjw66pJ46QNr8c18tkVxSlG4jBcS7m3ROTzdY3aGKcjXLbDJ8CxrxQ0robr/CrJLjKiRFfG2sLUs8uRy7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474410; c=relaxed/simple;
-	bh=6GjzXq1kGhgHQjK4OsBtH897CEl3DXIUlPtP6463DqM=;
+	s=arc-20240116; t=1714474412; c=relaxed/simple;
+	bh=lS8zDl5f5RzQRQ4RlQ1cq/Fm3LmvmJdmJ8phFwqwbPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LgasVQlsxU8Y62bvjyH2j8pO54AzLDNhDJHPDNkTwgKz1LABJXPDHfhG0yB9LCEmHtWv4o40dVGLs4M6eJkLubdhHvFSeH76XHYoEkOd6EjJEsQYsvd2wvkEcsuaka0lB+NrCavw0sslWpFK2Aw61e28fZaAz9JtT2+Lb+jf+Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+f3Kftr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r5AMIhGy+FiNhja0wAySa4iD9rffiB7Qnkys51wIGi+VC+Im9rBW+tUAi4XKZrl1aLDtnTETD6IOWync9a8E6itH0QUn5OE9F9llV4XMogGQ+l8qhLhY7oGwwGXFz9ck9D2JfWfNUT676M/H8xhv2+87mvqa48oogwB00Yv/if8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VivQwJip; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+f3Kftr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E31FC2BBFC;
-	Tue, 30 Apr 2024 10:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VivQwJip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BFBC2BBFC;
+	Tue, 30 Apr 2024 10:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474409;
-	bh=6GjzXq1kGhgHQjK4OsBtH897CEl3DXIUlPtP6463DqM=;
+	s=korg; t=1714474412;
+	bh=lS8zDl5f5RzQRQ4RlQ1cq/Fm3LmvmJdmJ8phFwqwbPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s+f3KftrlFlGTPvdMnrNFbPCs1GN+kKWfx6OTScF7Dq/9Ide+hqAZoDeYNmvAPLHt
-	 eJk5K+P8Pw1NbH2JWkVVuzgTG0o7IN5VwmT4oVH3beX2VTCqVqYAVqN7Mx1yA3o+jH
-	 myxL35F5j58V/DegU2qd+jgj4jj+WAp9pbvkZEAA=
+	b=VivQwJippFb2TfsnJDs+TccuCCIjDR0MhcmxhW5YiPkJjp5CazBnD+AQy4K2W04c8
+	 3lT6bB8M2VUWcuHzJkglYk3mQLlLpULjrbVXFFxY0QadmbJnAsq/uB5GMfWctkuA6O
+	 /13b7N6gi4C6kbrP9Bex0o3V16g8Xnr6llvgB1dE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Drew Fustini <drew@pdp7.com>,
-	Xi Ruoyao <xry111@xry111.site>,
-	Maksim Kiselev <bigunclemax@gmail.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.8 149/228] mmc: sdhci-of-dwcmshc: th1520: Increase tuning loop count to 128
-Date: Tue, 30 Apr 2024 12:38:47 +0200
-Message-ID: <20240430103108.107266347@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	David Hildenbrand <david@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.8 150/228] mm: create FOLIO_FLAG_FALSE and FOLIO_TYPE_OPS macros
+Date: Tue, 30 Apr 2024 12:38:48 +0200
+Message-ID: <20240430103108.135563162@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -53,39 +55,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maksim Kiselev <bigunclemax@gmail.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit ace323f80b9bc6734289a4e8a77938a3ce964c7d upstream.
+commit 12bbaae7635a56049779db3bef6e7140d9aa5f67 upstream.
 
-Fix SD card tuning error by increasing tuning loop count
-from 40(MAX_TUNING_LOOP) to 128.
+Following the separation of FOLIO_FLAGS from PAGEFLAGS, separate
+FOLIO_FLAG_FALSE from PAGEFLAG_FALSE and FOLIO_TYPE_OPS from
+PAGE_TYPE_OPS.
 
-For some reason the tuning algorithm requires to move through all the taps
-of delay line even if the THRESHOLD_MODE (bit 2 in AT_CTRL_R) is used
-instead of the LARGEST_WIN_MODE.
-
-Tested-by: Drew Fustini <drew@pdp7.com>
-Tested-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Maksim Kiselev <bigunclemax@gmail.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Fixes: 43658a542ebf ("mmc: sdhci-of-dwcmshc: Add support for T-Head TH1520")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240402093539.184287-1-bigunclemax@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lkml.kernel.org/r/20240321142448.1645400-3-willy@infradead.org
+Fixes: 9c5ccf2db04b ("mm: remove HUGETLB_PAGE_DTOR")
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-of-dwcmshc.c |    1 +
- 1 file changed, 1 insertion(+)
+ include/linux/page-flags.h |   70 ++++++++++++++++++++++++++++++---------------
+ 1 file changed, 47 insertions(+), 23 deletions(-)
 
---- a/drivers/mmc/host/sdhci-of-dwcmshc.c
-+++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
-@@ -612,6 +612,7 @@ static int th1520_execute_tuning(struct
+--- a/include/linux/page-flags.h
++++ b/include/linux/page-flags.h
+@@ -432,30 +432,51 @@ static __always_inline int TestClearPage
+ 	TESTSETFLAG(uname, lname, policy)				\
+ 	TESTCLEARFLAG(uname, lname, policy)
  
- 	/* perform tuning */
- 	sdhci_start_tuning(host);
-+	host->tuning_loop_count = 128;
- 	host->tuning_err = __sdhci_execute_tuning(host, opcode);
- 	if (host->tuning_err) {
- 		/* disable auto-tuning upon tuning error */
++#define FOLIO_TEST_FLAG_FALSE(name)					\
++static inline bool folio_test_##name(const struct folio *folio)		\
++{ return false; }
++#define FOLIO_SET_FLAG_NOOP(name)					\
++static inline void folio_set_##name(struct folio *folio) { }
++#define FOLIO_CLEAR_FLAG_NOOP(name)					\
++static inline void folio_clear_##name(struct folio *folio) { }
++#define __FOLIO_SET_FLAG_NOOP(name)					\
++static inline void __folio_set_##name(struct folio *folio) { }
++#define __FOLIO_CLEAR_FLAG_NOOP(name)					\
++static inline void __folio_clear_##name(struct folio *folio) { }
++#define FOLIO_TEST_SET_FLAG_FALSE(name)					\
++static inline bool folio_test_set_##name(struct folio *folio)		\
++{ return false; }
++#define FOLIO_TEST_CLEAR_FLAG_FALSE(name)				\
++static inline bool folio_test_clear_##name(struct folio *folio)		\
++{ return false; }
++
++#define FOLIO_FLAG_FALSE(name)						\
++FOLIO_TEST_FLAG_FALSE(name)						\
++FOLIO_SET_FLAG_NOOP(name)						\
++FOLIO_CLEAR_FLAG_NOOP(name)
++
+ #define TESTPAGEFLAG_FALSE(uname, lname)				\
+-static inline bool folio_test_##lname(const struct folio *folio) { return false; } \
++FOLIO_TEST_FLAG_FALSE(lname)						\
+ static inline int Page##uname(const struct page *page) { return 0; }
+ 
+ #define SETPAGEFLAG_NOOP(uname, lname)					\
+-static inline void folio_set_##lname(struct folio *folio) { }		\
++FOLIO_SET_FLAG_NOOP(lname)						\
+ static inline void SetPage##uname(struct page *page) {  }
+ 
+ #define CLEARPAGEFLAG_NOOP(uname, lname)				\
+-static inline void folio_clear_##lname(struct folio *folio) { }		\
++FOLIO_CLEAR_FLAG_NOOP(lname)						\
+ static inline void ClearPage##uname(struct page *page) {  }
+ 
+ #define __CLEARPAGEFLAG_NOOP(uname, lname)				\
+-static inline void __folio_clear_##lname(struct folio *folio) { }	\
++__FOLIO_CLEAR_FLAG_NOOP(lname)						\
+ static inline void __ClearPage##uname(struct page *page) {  }
+ 
+ #define TESTSETFLAG_FALSE(uname, lname)					\
+-static inline bool folio_test_set_##lname(struct folio *folio)		\
+-{ return 0; }								\
++FOLIO_TEST_SET_FLAG_FALSE(lname)					\
+ static inline int TestSetPage##uname(struct page *page) { return 0; }
+ 
+ #define TESTCLEARFLAG_FALSE(uname, lname)				\
+-static inline bool folio_test_clear_##lname(struct folio *folio)	\
+-{ return 0; }								\
++FOLIO_TEST_CLEAR_FLAG_FALSE(lname)					\
+ static inline int TestClearPage##uname(struct page *page) { return 0; }
+ 
+ #define PAGEFLAG_FALSE(uname, lname) TESTPAGEFLAG_FALSE(uname, lname)	\
+@@ -951,35 +972,38 @@ static inline int page_has_type(struct p
+ 	return page_type_has_type(page->page_type);
+ }
+ 
++#define FOLIO_TYPE_OPS(lname, fname)					\
++static __always_inline bool folio_test_##fname(const struct folio *folio)\
++{									\
++	return folio_test_type(folio, PG_##lname);			\
++}									\
++static __always_inline void __folio_set_##fname(struct folio *folio)	\
++{									\
++	VM_BUG_ON_FOLIO(!folio_test_type(folio, 0), folio);		\
++	folio->page.page_type &= ~PG_##lname;				\
++}									\
++static __always_inline void __folio_clear_##fname(struct folio *folio)	\
++{									\
++	VM_BUG_ON_FOLIO(!folio_test_##fname(folio), folio);		\
++	folio->page.page_type |= PG_##lname;				\
++}
++
+ #define PAGE_TYPE_OPS(uname, lname, fname)				\
++FOLIO_TYPE_OPS(lname, fname)						\
+ static __always_inline int Page##uname(const struct page *page)		\
+ {									\
+ 	return PageType(page, PG_##lname);				\
+ }									\
+-static __always_inline int folio_test_##fname(const struct folio *folio)\
+-{									\
+-	return folio_test_type(folio, PG_##lname);			\
+-}									\
+ static __always_inline void __SetPage##uname(struct page *page)		\
+ {									\
+ 	VM_BUG_ON_PAGE(!PageType(page, 0), page);			\
+ 	page->page_type &= ~PG_##lname;					\
+ }									\
+-static __always_inline void __folio_set_##fname(struct folio *folio)	\
+-{									\
+-	VM_BUG_ON_FOLIO(!folio_test_type(folio, 0), folio);		\
+-	folio->page.page_type &= ~PG_##lname;				\
+-}									\
+ static __always_inline void __ClearPage##uname(struct page *page)	\
+ {									\
+ 	VM_BUG_ON_PAGE(!Page##uname(page), page);			\
+ 	page->page_type |= PG_##lname;					\
+-}									\
+-static __always_inline void __folio_clear_##fname(struct folio *folio)	\
+-{									\
+-	VM_BUG_ON_FOLIO(!folio_test_##fname(folio), folio);		\
+-	folio->page.page_type |= PG_##lname;				\
+-}									\
++}
+ 
+ /*
+  * PageBuddy() indicates that the page is free and in the buddy system
 
 
