@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D109712BF32;
-	Tue, 30 Apr 2024 11:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBAC12D761;
+	Tue, 30 Apr 2024 11:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476650; cv=none; b=ijvFv5K1VM34TCTqrMjfN1sjzKOMZ/QtZ7nrQqcR2Ij2yp343W/NqnN2P1RuZLE2lBM1tR5jLoT/RyqeJ/kr0ozSno9EhR5PAHwuHBJKTkNO7ZfLUqC4DqPkSkrpKGz0BdYTU0njonuiywGx2zYV2VX+46I4VvkXnNn4zSDqtPo=
+	t=1714476653; cv=none; b=rz1eJ4rSYZRyUZc4vGsUdOAOrdAtZidIMCXIBIINAi0UFq1PKgg2LZF25EWUxFEqR67+BozOQsxClRSDct5Gd/148mWyVwFpXX7ImU8x+myyVOz5/mS4A4i0YFuBIqIaVkg/J94NI4+0LGRPdurRWs5q/YTc72sRGCt9Ny1mttg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476650; c=relaxed/simple;
-	bh=lY0VpeJ01/6oXlAh2iohPBCFNqwhEYRGNnYE884DM6k=;
+	s=arc-20240116; t=1714476653; c=relaxed/simple;
+	bh=5tmK6AAsw7J6JBP4mtjWzeyr/hA2J12oPswQVjKOL5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l3UPsofxCOZ3+vkvGrHjDnJ6IuHGmRYQhws/UTB/ounrdRucrjpXS7xq9UaG4VBESSnhNkmmhp+PsIMTpG8zWxSd4lG1s+Np6L6E9GVV6bQVLp0AZj+48gkN+2bbqQabaTZPqNNHp34QSUOH40k1vwJhVatvhbr0HsvH4kwx/uQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QOfeV662; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hGmOsj0/ZIJhfGfVWJ6vDFXuV/ai0toruAh15v96nkiNRo9uLj+AwsUzPNMik35BZoNaAkjQ4knrZl5Lm93y8Cda1Fn6ylzEj21/ma9rSjSkbpvaypNGkt12v3jEelpi5EMfhFz84t7xNcrgX5JyMxZbGfmkb2ctrsn8pemCPvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IgrCCt27; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QOfeV662"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B557C4AF19;
-	Tue, 30 Apr 2024 11:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IgrCCt27"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B62FC2BBFC;
+	Tue, 30 Apr 2024 11:30:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476650;
-	bh=lY0VpeJ01/6oXlAh2iohPBCFNqwhEYRGNnYE884DM6k=;
+	s=korg; t=1714476653;
+	bh=5tmK6AAsw7J6JBP4mtjWzeyr/hA2J12oPswQVjKOL5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QOfeV662mZ+yLjWC9re4d+Ooj2z9JPu5za8Ceuf/REWZNH7SUFPB36cOcJyCYn4eG
-	 0Bjw+Gwj4xGeuGMzPF2HYpgmERXAhVQ5GLMBNqfYTD+qvZWf3v042Eg6Sk4bBJiV68
-	 /1WTkMD8HqVPyV7mNmZf+qT40gSkg+una/Ekix9c=
+	b=IgrCCt275Na82IRfZqVbdCUstHyzrlUyNQz4F8r6EVWBE4hqP0W+nnvNbFpP67OZK
+	 A0OQoBBiLsbqBSWV2c5yMT+TQASVEJOa9UyqjSRAZAmmrbB1MUW8Mv5eqaRY54Resl
+	 LiHYvh9WfyylVHDZsZZgnxXMd5THHkzg2NurR8kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Alexander Zubkov <green@qrator.net>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Peter Korsgaard <peter@korsgaard.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 050/110] mlxsw: spectrum_acl_tcam: Fix incorrect list API usage
-Date: Tue, 30 Apr 2024 12:40:19 +0200
-Message-ID: <20240430103049.044173548@linuxfoundation.org>
+Subject: [PATCH 6.1 092/110] dmaengine: owl: fix register access functions
+Date: Tue, 30 Apr 2024 12:41:01 +0200
+Message-ID: <20240430103050.286810239@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -54,82 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit b377add0f0117409c418ddd6504bd682ebe0bf79 ]
+[ Upstream commit 43c633ef93a5d293c96ebcedb40130df13128428 ]
 
-Both the function that migrates all the chunks within a region and the
-function that migrates all the entries within a chunk call
-list_first_entry() on the respective lists without checking that the
-lists are not empty. This is incorrect usage of the API, which leads to
-the following warning [1].
+When building with 'make W=1', clang notices that the computed register
+values are never actually written back but instead the wrong variable
+is set:
 
-Fix by returning if the lists are empty as there is nothing to migrate
-in this case.
+drivers/dma/owl-dma.c:244:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
+  244 |         u32 regval;
+      |             ^
+drivers/dma/owl-dma.c:268:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
+  268 |         u32 regval;
+      |             ^
 
-[1]
-WARNING: CPU: 0 PID: 6437 at drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c:1266 mlxsw_sp_acl_tcam_vchunk_migrate_all+0x1f1/0>
-Modules linked in:
-CPU: 0 PID: 6437 Comm: kworker/0:37 Not tainted 6.9.0-rc3-custom-00883-g94a65f079ef6 #39
-Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
-Workqueue: mlxsw_core mlxsw_sp_acl_tcam_vregion_rehash_work
-RIP: 0010:mlxsw_sp_acl_tcam_vchunk_migrate_all+0x1f1/0x2c0
-[...]
-Call Trace:
- <TASK>
- mlxsw_sp_acl_tcam_vregion_rehash_work+0x6c/0x4a0
- process_one_work+0x151/0x370
- worker_thread+0x2cb/0x3e0
- kthread+0xd0/0x100
- ret_from_fork+0x34/0x50
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+Change these to what was most likely intended.
 
-Fixes: 6f9579d4e302 ("mlxsw: spectrum_acl: Remember where to continue rehash migration")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/4628e9a22d1d84818e28310abbbc498e7bc31bc9.1713797103.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 47e20577c24d ("dmaengine: Add Actions Semi Owl family S900 DMA driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Peter Korsgaard <peter@korsgaard.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240322132116.906475-1-arnd@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/dma/owl-dma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index 1a6c774c8b7b0..d0c7cb059616c 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -1351,6 +1351,9 @@ mlxsw_sp_acl_tcam_vchunk_migrate_one(struct mlxsw_sp *mlxsw_sp,
- 		return 0;
- 	}
+diff --git a/drivers/dma/owl-dma.c b/drivers/dma/owl-dma.c
+index b6e0ac8314e5c..0819f19c87cc5 100644
+--- a/drivers/dma/owl-dma.c
++++ b/drivers/dma/owl-dma.c
+@@ -249,7 +249,7 @@ static void pchan_update(struct owl_dma_pchan *pchan, u32 reg,
+ 	else
+ 		regval &= ~val;
  
-+	if (list_empty(&vchunk->ventry_list))
-+		goto out;
-+
- 	/* If the migration got interrupted, we have the ventry to start from
- 	 * stored in context.
- 	 */
-@@ -1402,6 +1405,7 @@ mlxsw_sp_acl_tcam_vchunk_migrate_one(struct mlxsw_sp *mlxsw_sp,
- 		}
- 	}
- 
-+out:
- 	mlxsw_sp_acl_tcam_vchunk_migrate_end(mlxsw_sp, vchunk, ctx);
- 	return 0;
+-	writel(val, pchan->base + reg);
++	writel(regval, pchan->base + reg);
  }
-@@ -1415,6 +1419,9 @@ mlxsw_sp_acl_tcam_vchunk_migrate_all(struct mlxsw_sp *mlxsw_sp,
- 	struct mlxsw_sp_acl_tcam_vchunk *vchunk;
- 	int err;
  
-+	if (list_empty(&vregion->vchunk_list))
-+		return 0;
-+
- 	/* If the migration got interrupted, we have the vchunk
- 	 * we are working on stored in context.
- 	 */
+ static void pchan_writel(struct owl_dma_pchan *pchan, u32 reg, u32 data)
+@@ -273,7 +273,7 @@ static void dma_update(struct owl_dma *od, u32 reg, u32 val, bool state)
+ 	else
+ 		regval &= ~val;
+ 
+-	writel(val, od->base + reg);
++	writel(regval, od->base + reg);
+ }
+ 
+ static void dma_writel(struct owl_dma *od, u32 reg, u32 data)
 -- 
 2.43.0
 
