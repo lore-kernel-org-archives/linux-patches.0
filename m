@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E33B12C805;
-	Tue, 30 Apr 2024 11:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0EA12BF32;
+	Tue, 30 Apr 2024 11:29:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476573; cv=none; b=rU2hRqyzw/MTwQyerRZiTfv8rP1jTfAs3Z6BjFfawJVSRug2dWH6ThXEokEPbMpl4xDn0+a16luf0miFAcq93mNiH6FQ1uX/LB5wpNqedYL+vIbtfLMVBB9p20HSFVH7lG4TuaU9uJYW5rUEXkK9aM2QkTkU56UIUObzReIJ5fA=
+	t=1714476576; cv=none; b=NMomipL7SnxE05s1CSC2+SU/fb3oSi6gY/335F+EDkWFl1pyP3+n8CUhYGHfWL13KAbEHp0MIuGEhdGC5P6zBEbzw8TpDC38hNhBZwIIwIqFSjCjcFtNqrrH2y3G92/d9DdswCc6MCUqqgLoFRfTQZrn4GQZJF9KFafGt0gYZW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476573; c=relaxed/simple;
-	bh=XdhTJ1sRmoQ4i2IfOGIjQmoXVM/draYtZf+PVhy7T6E=;
+	s=arc-20240116; t=1714476576; c=relaxed/simple;
+	bh=ihLveYCqHF4ZC1MVSJFboz/bMorK+skfySnJvsKs718=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XX614wK2rSexpUY2WUUP4hDTaX2ruORJERqgUaFp9UvdG1oZhJx5+PzchuIplqsOqgQ91Vb19NtKafYkXoTfT3tQ2dTF/ascOvSLnJbAjYRw2eur7stFz0h24J1r9yZLh176fQ1+DDcKf01lSF8tdExxIqmqWZyCLEfJUnmjiWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1lc3vyK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HlFKuXwBVTnluNxnHwpuQg6nCLlLrNhKDQ4wjj5quUAGylnzDfNCXAugRI9le7mLVY54xU2Yd8hwCBB2unVjxBGHVtwjTg1iV3tuPPluIEhnu/fyvtqrcfWYTQxUJmNyq6qWQzDkh2pKplOGFXm5bpKp5nAoZsGavuCu32qo63k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKBC/CM8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1lc3vyK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D9CC2BBFC;
-	Tue, 30 Apr 2024 11:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKBC/CM8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1222EC4AF19;
+	Tue, 30 Apr 2024 11:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476573;
-	bh=XdhTJ1sRmoQ4i2IfOGIjQmoXVM/draYtZf+PVhy7T6E=;
+	s=korg; t=1714476576;
+	bh=ihLveYCqHF4ZC1MVSJFboz/bMorK+skfySnJvsKs718=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R1lc3vyKEFQWSOOFgKhuLEE90rUI1FrCNsXiPeQMUGTkvsHYpxoGwk4X7nOMK4W5Y
-	 r+IfSsvbS9IhnEhNiGCDIK3f37xahbTUo75vrXcbUJHSg1dGvmbXmGJ9uCwrXRPEt6
-	 b4IvuGDD2NaR+/F+qhU9ufV/wwWKcaQpEf1AxtVY=
+	b=EKBC/CM8C1RMjecGHkdBeGT7DSr0Oa5bubHtOwUAl8ZPRMGyxkHTT44OlRw8hlK5f
+	 2E5ytk/MzprOR/r8H61G/DT3vkYlxieXpL8mGC60pRHbnA+4WXpP894jxbsdaWBW5k
+	 6WFefMqz1CunhA0DPRxzGFIWJvywgTiDUeAIxsbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Sean Christopherson <seanjc@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>
-Subject: [PATCH 6.1 074/110] cpu: Re-enable CPU mitigations by default for !X86 architectures
-Date: Tue, 30 Apr 2024 12:40:43 +0200
-Message-ID: <20240430103049.751443523@linuxfoundation.org>
+	Youling Tang <tangyouling@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 075/110] LoongArch: Fix callchain parse error with kernel tracepoint events
+Date: Tue, 30 Apr 2024 12:40:44 +0200
+Message-ID: <20240430103049.781083238@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -54,108 +50,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit fe42754b94a42d08cf9501790afc25c4f6a5f631 upstream.
+commit d3119bc985fb645ad3b2a9cf9952c1d56d9daaa3 upstream.
 
-Rename x86's to CPU_MITIGATIONS, define it in generic code, and force it
-on for all architectures exception x86.  A recent commit to turn
-mitigations off by default if SPECULATION_MITIGATIONS=n kinda sorta
-missed that "cpu_mitigations" is completely generic, whereas
-SPECULATION_MITIGATIONS is x86-specific.
+In order to fix perf's callchain parse error for LoongArch, we implement
+perf_arch_fetch_caller_regs() which fills several necessary registers
+used for callchain unwinding, including sp, fp, and era. This is similar
+to the following commits.
 
-Rename x86's SPECULATIVE_MITIGATIONS instead of keeping both and have it
-select CPU_MITIGATIONS, as having two configs for the same thing is
-unnecessary and confusing.  This will also allow x86 to use the knob to
-manage mitigations that aren't strictly related to speculative
-execution.
+commit b3eac0265bf6:
+("arm: perf: Fix callchain parse error with kernel tracepoint events")
 
-Use another Kconfig to communicate to common code that CPU_MITIGATIONS
-is already defined instead of having x86's menu depend on the common
-CPU_MITIGATIONS.  This allows keeping a single point of contact for all
-of x86's mitigations, and it's not clear that other architectures *want*
-to allow disabling mitigations at compile-time.
+commit 5b09a094f2fb:
+("arm64: perf: Fix callchain parse error with kernel tracepoint events")
 
-Fixes: f337a6a21e2f ("x86/cpu: Actually turn off mitigations by default for SPECULATION_MITIGATIONS=n")
-Closes: https://lkml.kernel.org/r/20240413115324.53303a68%40canb.auug.org.au
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Reported-by: Michael Ellerman <mpe@ellerman.id.au>
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+commit 9a7e8ec0d4cc:
+("riscv: perf: Fix callchain parse error with kernel tracepoint events")
+
+Test with commands:
+
+ perf record -e sched:sched_switch -g --call-graph dwarf
+ perf report
+
+Without this patch:
+
+ Children      Self  Command        Shared Object      Symbol
+ ........  ........  .............  .................  ....................
+
+ 43.41%    43.41%  swapper          [unknown]          [k] 0000000000000000
+
+ 10.94%    10.94%  loong-container  [unknown]          [k] 0000000000000000
+         |
+         |--5.98%--0x12006ba38
+         |
+         |--2.56%--0x12006bb84
+         |
+          --2.40%--0x12006b6b8
+
+With this patch, callchain can be parsed correctly:
+
+ Children      Self  Command        Shared Object      Symbol
+ ........  ........  .............  .................  ....................
+
+ 47.57%    47.57%  swapper          [kernel.vmlinux]   [k] __schedule
+         |
+         ---__schedule
+
+ 26.76%    26.76%  loong-container  [kernel.vmlinux]   [k] __schedule
+         |
+         |--13.78%--0x12006ba38
+         |          |
+         |          |--9.19%--__schedule
+         |          |
+         |           --4.59%--handle_syscall
+         |                     do_syscall
+         |                     sys_futex
+         |                     do_futex
+         |                     futex_wait
+         |                     futex_wait_queue_me
+         |                     hrtimer_start_range_ns
+         |                     __schedule
+         |
+         |--8.38%--0x12006bb84
+         |          handle_syscall
+         |          do_syscall
+         |          sys_epoll_pwait
+         |          do_epoll_wait
+         |          schedule_hrtimeout_range_clock
+         |          hrtimer_start_range_ns
+         |          __schedule
+         |
+          --4.59%--0x12006b6b8
+                    handle_syscall
+                    do_syscall
+                    sys_nanosleep
+                    hrtimer_nanosleep
+                    do_nanosleep
+                    hrtimer_start_range_ns
+                    __schedule
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240420000556.2645001-2-seanjc@google.com
+Fixes: b37042b2bb7cd751f0 ("LoongArch: Add perf events support")
+Reported-by: Youling Tang <tangyouling@kylinos.cn>
+Suggested-by: Youling Tang <tangyouling@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/Kconfig     |    8 ++++++++
- arch/x86/Kconfig |   11 ++++++-----
- kernel/cpu.c     |    4 ++--
- 3 files changed, 16 insertions(+), 7 deletions(-)
+ arch/loongarch/include/asm/perf_event.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/arch/Kconfig
-+++ b/arch/Kconfig
-@@ -9,6 +9,14 @@
- #
- source "arch/$(SRCARCH)/Kconfig"
+diff --git a/arch/loongarch/include/asm/perf_event.h b/arch/loongarch/include/asm/perf_event.h
+index 2a35a0bc2aaa..52b638059e40 100644
+--- a/arch/loongarch/include/asm/perf_event.h
++++ b/arch/loongarch/include/asm/perf_event.h
+@@ -7,6 +7,14 @@
+ #ifndef __LOONGARCH_PERF_EVENT_H__
+ #define __LOONGARCH_PERF_EVENT_H__
  
-+config ARCH_CONFIGURES_CPU_MITIGATIONS
-+	bool
++#include <asm/ptrace.h>
 +
-+if !ARCH_CONFIGURES_CPU_MITIGATIONS
-+config CPU_MITIGATIONS
-+	def_bool y
-+endif
+ #define perf_arch_bpf_user_pt_regs(regs) (struct user_pt_regs *)regs
+ 
++#define perf_arch_fetch_caller_regs(regs, __ip) { \
++	(regs)->csr_era = (__ip); \
++	(regs)->regs[3] = current_stack_pointer; \
++	(regs)->regs[22] = (unsigned long) __builtin_frame_address(0); \
++}
 +
- menu "General architecture-dependent options"
- 
- config CRASH_CORE
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -61,6 +61,7 @@ config X86
- 	select ACPI_SYSTEM_POWER_STATES_SUPPORT	if ACPI
- 	select ARCH_32BIT_OFF_T			if X86_32
- 	select ARCH_CLOCKSOURCE_INIT
-+	select ARCH_CONFIGURES_CPU_MITIGATIONS
- 	select ARCH_CORRECT_STACKTRACE_ON_KRETPROBE
- 	select ARCH_ENABLE_HUGEPAGE_MIGRATION if X86_64 && HUGETLB_PAGE && MIGRATION
- 	select ARCH_ENABLE_MEMORY_HOTPLUG if X86_64
-@@ -2449,17 +2450,17 @@ config CC_HAS_SLS
- config CC_HAS_RETURN_THUNK
- 	def_bool $(cc-option,-mfunction-return=thunk-extern)
- 
--menuconfig SPECULATION_MITIGATIONS
--	bool "Mitigations for speculative execution vulnerabilities"
-+menuconfig CPU_MITIGATIONS
-+	bool "Mitigations for CPU vulnerabilities"
- 	default y
- 	help
--	  Say Y here to enable options which enable mitigations for
--	  speculative execution hardware vulnerabilities.
-+	  Say Y here to enable options which enable mitigations for hardware
-+	  vulnerabilities (usually related to speculative execution).
- 
- 	  If you say N, all mitigations will be disabled. You really
- 	  should know what you are doing to say so.
- 
--if SPECULATION_MITIGATIONS
-+if CPU_MITIGATIONS
- 
- config PAGE_TABLE_ISOLATION
- 	bool "Remove the kernel mapping in user mode"
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -2788,8 +2788,8 @@ enum cpu_mitigations {
- };
- 
- static enum cpu_mitigations cpu_mitigations __ro_after_init =
--	IS_ENABLED(CONFIG_SPECULATION_MITIGATIONS) ? CPU_MITIGATIONS_AUTO :
--						     CPU_MITIGATIONS_OFF;
-+	IS_ENABLED(CONFIG_CPU_MITIGATIONS) ? CPU_MITIGATIONS_AUTO :
-+					     CPU_MITIGATIONS_OFF;
- 
- static int __init mitigations_parse_cmdline(char *arg)
- {
+ #endif /* __LOONGARCH_PERF_EVENT_H__ */
+-- 
+2.44.0
+
 
 
