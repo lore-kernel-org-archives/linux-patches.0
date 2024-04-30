@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B168801;
-	Tue, 30 Apr 2024 11:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8BE8801;
+	Tue, 30 Apr 2024 11:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476011; cv=none; b=NXwhrv1gYm4c+RhN50JAoDUmxHIeZ/4wR/Z+nQQiYVnzU6piPWSAKK/ZALz/YLTNvMJJOaWjIJ3rga9rrmhSc58OBAIRZIGl69XZuiHabDvZw4S+KIPWwQkK7bmPVlBE5FNVXXHMBpEwzxsHdtgXlcuId0Ljiw3ga3Hx/sYEBgE=
+	t=1714476014; cv=none; b=D578jCMmdWHrY1/LahTySXP5whAsT34GijxJ/VZxuVZUwpdqirovR00qLeOfeQDpbqLY31fNkwO5PAoPi1Cp9ji0AL/3V3nltUecBip0/bMwpsxqNL7M/Zv7ypGzqlz78+yZXIp3vpDyQemhgECoGefFXCaIc44OBdCnbC1FLA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476011; c=relaxed/simple;
-	bh=5QX7CriXz4xYszr5zmoIBBa/ofyaAs0zuxMnbwucq94=;
+	s=arc-20240116; t=1714476014; c=relaxed/simple;
+	bh=mK9D4+PGONL46s0Uwmp22T4CyXnS6DSrJT0V1C/7r4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Gp0PhXKQyFmbo7qujdaGC/q68WUZnLZUzW0kkP4CgbaFVKPxuDQZp1Ya1jZlcZoVRM0PJHmG45ByHItl+j1x5ywsWMhQ3u5FaCRIzLflI5ysGgqGgt3MuWRC9kNqNJQ9wJqK+8a+IagDpqHhMY62CeOEVYGL7T2EAApKpMvoy5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/4VF3nx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bp+PGuhkhrFD+lJV8FShEq/QjE556Re9JKylMwZRIYsIbYcN/FJO2Zag8M+CE1D6LrbU1h4dknb5Fbr7F+VRTbYQwQzkKahbmuf/elCplGVgfsKLD/OB99FsjAp/kHjZbBD6DGn423p7cn8kEWVv5fym/RvrOyGVH1X9jKhHkqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bo70pF5o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/4VF3nx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4600BC2BBFC;
-	Tue, 30 Apr 2024 11:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bo70pF5o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A26C2BBFC;
+	Tue, 30 Apr 2024 11:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476011;
-	bh=5QX7CriXz4xYszr5zmoIBBa/ofyaAs0zuxMnbwucq94=;
+	s=korg; t=1714476014;
+	bh=mK9D4+PGONL46s0Uwmp22T4CyXnS6DSrJT0V1C/7r4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y/4VF3nxChUs7jD+6YzbzIm46coPPZAw2TWR0dxZWhlzfRlwsRsLAhYfI9PgzaLpV
-	 sIEv8LgxU75qXI40ZbYN+VKuWZIvqtdSAgLAcoSqmPCTlzXXYmthmHCToi7bdKLOQg
-	 DEwWhPz9zxOQ/WHLMDnl/DIQPTXBm+cwMkCI0WzI=
+	b=Bo70pF5od5SgGuVQ+e93kZWwlXhxsKTenNvNYG642s4WVuWQaEQGSwejBE4TMwXrx
+	 cgqV1i0Q4gHbFTED3B/kVrXkRKNkTIFhHMRflmKAN8moEvFGsGFgbS0bveG89CF1/I
+	 Fyg1FEKxaSB9JwjIDCWvgKdkI08MNB3LSOc9yWZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=D0=9C=D0=B8=D1=85=D0=B0=D0=B8=D0=BB=20=D0=9D=D0=BE=D0=B2=D0=BE=D1=81=D0=B5=D0=BB=D0=BE=D0=B2?= <m.novosyolov@rosalinux.ru>,
-	=?UTF-8?q?=D0=98=D0=BB=D1=8C=D1=84=D0=B0=D1=82=20=D0=93=D0=B0=D0=BF=D1=82=D1=80=D0=B0=D1=85=D0=BC=D0=B0=D0=BD=D0=BE=D0=B2?= <i.gaptrakhmanov@rosalinux.ru>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Rik van Riel <riel@surriel.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 78/80] bounds: Use the right number of bits for power-of-two CONFIG_NR_CPUS
-Date: Tue, 30 Apr 2024 12:40:50 +0200
-Message-ID: <20240430103045.714249719@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Peter Korsgaard <peter@korsgaard.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 69/80] dmaengine: owl: fix register access functions
+Date: Tue, 30 Apr 2024 12:40:41 +0200
+Message-ID: <20240430103045.453152807@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -51,48 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 5af385f5f4cddf908f663974847a4083b2ff2c79 upstream.
+[ Upstream commit 43c633ef93a5d293c96ebcedb40130df13128428 ]
 
-bits_per() rounds up to the next power of two when passed a power of
-two.  This causes crashes on some machines and configurations.
+When building with 'make W=1', clang notices that the computed register
+values are never actually written back but instead the wrong variable
+is set:
 
-Reported-by: Михаил Новоселов <m.novosyolov@rosalinux.ru>
-Tested-by: Ильфат Гаптрахманов <i.gaptrakhmanov@rosalinux.ru>
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3347
-Link: https://lore.kernel.org/all/1c978cf1-2934-4e66-e4b3-e81b04cb3571@rosalinux.ru/
-Fixes: f2d5dcb48f7b (bounds: support non-power-of-two CONFIG_NR_CPUS)
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+drivers/dma/owl-dma.c:244:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
+  244 |         u32 regval;
+      |             ^
+drivers/dma/owl-dma.c:268:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
+  268 |         u32 regval;
+      |             ^
+
+Change these to what was most likely intended.
+
+Fixes: 47e20577c24d ("dmaengine: Add Actions Semi Owl family S900 DMA driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Peter Korsgaard <peter@korsgaard.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240322132116.906475-1-arnd@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bounds.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/owl-dma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/bounds.c
-+++ b/kernel/bounds.c
-@@ -19,7 +19,7 @@ int main(void)
- 	DEFINE(NR_PAGEFLAGS, __NR_PAGEFLAGS);
- 	DEFINE(MAX_NR_ZONES, __MAX_NR_ZONES);
- #ifdef CONFIG_SMP
--	DEFINE(NR_CPUS_BITS, bits_per(CONFIG_NR_CPUS));
-+	DEFINE(NR_CPUS_BITS, order_base_2(CONFIG_NR_CPUS));
- #endif
- 	DEFINE(SPINLOCK_SIZE, sizeof(spinlock_t));
- 	/* End of constants */
+diff --git a/drivers/dma/owl-dma.c b/drivers/dma/owl-dma.c
+index 1f0bbaed4643a..9739c6c62123d 100644
+--- a/drivers/dma/owl-dma.c
++++ b/drivers/dma/owl-dma.c
+@@ -249,7 +249,7 @@ static void pchan_update(struct owl_dma_pchan *pchan, u32 reg,
+ 	else
+ 		regval &= ~val;
+ 
+-	writel(val, pchan->base + reg);
++	writel(regval, pchan->base + reg);
+ }
+ 
+ static void pchan_writel(struct owl_dma_pchan *pchan, u32 reg, u32 data)
+@@ -273,7 +273,7 @@ static void dma_update(struct owl_dma *od, u32 reg, u32 val, bool state)
+ 	else
+ 		regval &= ~val;
+ 
+-	writel(val, od->base + reg);
++	writel(regval, od->base + reg);
+ }
+ 
+ static void dma_writel(struct owl_dma *od, u32 reg, u32 data)
+-- 
+2.43.0
+
 
 
