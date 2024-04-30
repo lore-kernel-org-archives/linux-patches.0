@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D0112CD91;
-	Tue, 30 Apr 2024 10:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC71312C7FB;
+	Tue, 30 Apr 2024 10:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474257; cv=none; b=aYuR7P0pb8Zkz0Q+tJoXGcLuJltPUz4Rs5mJY6sG//6Q5A97ehNeJp79Is9OqhbpqM3OoovJAJIbENT8OsEn8aMWW09/sc5qin/woJh4arflciTBIKtOUaqfsafTirtuqFFI/wIEYBHVoz+vBOxLdixELzHYdUZhzST5qLUKYdk=
+	t=1714474261; cv=none; b=GorWpM7aENkDWmiudRZJk8bKPSSJq8WHktj0hI8/6RvBfRWJsCszbe4juJjhssZynNtmn4R09MpDekQaN4h0/ZCNZAB5vsrDdr3XSVpzqJWa9ogbf4909NUnHpDSrtST+D/f19nAv2ei70EYwOxH0mPcrWuKsWg9+2TQIxj+da0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474257; c=relaxed/simple;
-	bh=dD474iZjxdTOnDyK+knPb4VT3LTleoi3WQ8Da94+g94=;
+	s=arc-20240116; t=1714474261; c=relaxed/simple;
+	bh=5bRbo1ymQgGaUnA61BVouMicYXe0cA+RbgEqWpSiLGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=No0K9/dcN8kFXfvNxmRZlUbuJ6nUOL9AFT9Qwbq2T/Nj54fkCH1d/Uq8qSvcWv2mFSOWlfr3j1YyO+PM+I7I5f81I0bMLi273zVQtRfXzR3lF/nG4Jdtz52so/MI2+c6rMUSQMcKljCa8gIyIltGH0sOGl0+ZhbsEGpLTFhTDNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i20nAI5h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ROdpmmcLzfP8SLenHR4TJSA8Ve4jCUvvJSpiULfYyBBc4lwTMI7MJmPlHoe3ZgZylRFycIn7Y/WT3EKX3DmId7ekAXJlgbFlhDiqjKDpq5LEb2rkPThGL4AoWV9+lrO1YJ0eXxR5EQk7uGnQgvb+2WXCe3VVyypEna80iL+mYBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSNUtSwY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i20nAI5h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0FFC2BBFC;
-	Tue, 30 Apr 2024 10:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSNUtSwY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F2DC2BBFC;
+	Tue, 30 Apr 2024 10:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474257;
-	bh=dD474iZjxdTOnDyK+knPb4VT3LTleoi3WQ8Da94+g94=;
+	s=korg; t=1714474260;
+	bh=5bRbo1ymQgGaUnA61BVouMicYXe0cA+RbgEqWpSiLGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i20nAI5h0ur9zW4OovyO5GW18j7jMAiYk+yfnGATUfhxlI3X1rmS1TU9FFkaMS1+e
-	 2GHxIHLOUrseRRlBBvZFs5IJDOZeYHbGr4F9Gt4uRiuJeicHO9iV55XhsAZcIsy0Ye
-	 3Cn4xUwpi6UEqxvUgyMHZgmfy53oRv8xenTekG1U=
+	b=CSNUtSwY9kldClWflI4f+8cVj7MSEox0NvvK37hug6KuIyFkywY2niAVY21Qy1EZf
+	 C1Wk1KJM2FX5N1C8liY5YkqHonFLVpiEVNSfAELZnlj7MbU6sOamM7Qjm1eCwKfViZ
+	 AvOuwQR40PcwVn3fOREfnzEVbUtN0LEvuEYvJA3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 065/228] soc: mediatek: mtk-svs: Append "-thermal" to thermal zone names
-Date: Tue, 30 Apr 2024 12:37:23 +0200
-Message-ID: <20240430103105.684117215@linuxfoundation.org>
+Subject: [PATCH 6.8 056/228] bridge/br_netlink.c: no need to return void function
+Date: Tue, 30 Apr 2024 12:37:14 +0200
+Message-ID: <20240430103105.426941585@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -50,50 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 7ca803b489455b9242c81b4befe546ea3a692e5c ]
+[ Upstream commit 4fd1edcdf13c0d234543ecf502092be65c5177db ]
 
-The thermal framework registers thermal zones as specified in DT and
-including the "-thermal" suffix: append that to the driver specified
-tzone_name to actually match the thermal zone name as registered by
-the thermal API.
+br_info_notify is a void function. There is no need to return.
 
-Fixes: 2bfbf82956e2 ("soc: mediatek: mtk-svs: Constify runtime-immutable members of svs_bank")
-Link: https://lore.kernel.org/r/20240318113237.125802-1-angelogioacchino.delregno@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: b6d0425b816e ("bridge: cfm: Netlink Notifications.")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/mediatek/mtk-svs.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/bridge/br_netlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/mediatek/mtk-svs.c b/drivers/soc/mediatek/mtk-svs.c
-index c832f5c670bcf..9a91298c12539 100644
---- a/drivers/soc/mediatek/mtk-svs.c
-+++ b/drivers/soc/mediatek/mtk-svs.c
-@@ -1768,6 +1768,7 @@ static int svs_bank_resource_setup(struct svs_platform *svsp)
- 	const struct svs_bank_pdata *bdata;
- 	struct svs_bank *svsb;
- 	struct dev_pm_opp *opp;
-+	char tz_name_buf[20];
- 	unsigned long freq;
- 	int count, ret;
- 	u32 idx, i;
-@@ -1819,10 +1820,12 @@ static int svs_bank_resource_setup(struct svs_platform *svsp)
- 		}
+diff --git a/net/bridge/br_netlink.c b/net/bridge/br_netlink.c
+index 5ad4abfcb7ba3..d415833fce91f 100644
+--- a/net/bridge/br_netlink.c
++++ b/net/bridge/br_netlink.c
+@@ -666,7 +666,7 @@ void br_ifinfo_notify(int event, const struct net_bridge *br,
+ {
+ 	u32 filter = RTEXT_FILTER_BRVLAN_COMPRESSED;
  
- 		if (!IS_ERR_OR_NULL(bdata->tzone_name)) {
--			svsb->tzd = thermal_zone_get_zone_by_name(bdata->tzone_name);
-+			snprintf(tz_name_buf, ARRAY_SIZE(tz_name_buf),
-+				 "%s-thermal", bdata->tzone_name);
-+			svsb->tzd = thermal_zone_get_zone_by_name(tz_name_buf);
- 			if (IS_ERR(svsb->tzd)) {
- 				dev_err(svsb->dev, "cannot get \"%s\" thermal zone\n",
--					bdata->tzone_name);
-+					tz_name_buf);
- 				return PTR_ERR(svsb->tzd);
- 			}
- 		}
+-	return br_info_notify(event, br, port, filter);
++	br_info_notify(event, br, port, filter);
+ }
+ 
+ /*
 -- 
 2.43.0
 
