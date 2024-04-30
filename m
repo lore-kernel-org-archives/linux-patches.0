@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207DD12CDAE;
-	Tue, 30 Apr 2024 11:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E294212CD90;
+	Tue, 30 Apr 2024 11:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475563; cv=none; b=dgRKb3JLx15hN73S58X8WWUgIpN3LkeQkKn3kp9xHg4hYQ6dwIUoJ/nG5oTSFh7aDQ1E2YFXqW9rSianxc03aX/EZkf6vcZbg9boWvZPh4LNKCOKaM2bjJiY8XrNp0mLa0aLzrBFy6xa3eS3xK7FDYaryg2gBi/zreKB8TVstzE=
+	t=1714475566; cv=none; b=Ddb2R+Jl3IEiLw2ZdMf6SmcD7fnVzljtQjscQdzq3lcAZhUcknPVz4NcnT3UarXIZkFNGOA/WHKxtGihZcfM4awZDthnAJ4Wxkh9JVhtW6sVFZUSdiUxbSFvA5LxKFyeBM6NhAK/8RU1vrPNv/Dhz23n7e1DgN5+Ninz6KC6LIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475563; c=relaxed/simple;
-	bh=XvHnYHMHPzIKItCKjMfRnEhq17KP9yd7a9A7hp6kVPI=;
+	s=arc-20240116; t=1714475566; c=relaxed/simple;
+	bh=/42Qa+37PkcVcfisYc7U1sUihuV5fDU8GMSaMVq/tUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZsZRSZS4FheurlbudOk5Iw15EjvuZ0Qpg6+Am7/zLCWnLlx4aIFPOvootWFL56klY290Mcx8e5+Cky+CEGVj1KGWz/MdBoNMICI6LIqPTE53tJ1DEBFlxFyx+J/BVS05hK2Fz6dcnO0sy3Q2fT2bhqWooXJJvpXZwpm125rIkyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2rMjcoU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c4E+Vw0XwO9a/H66O+MtuQDq7N1+8yr/qQqpvVzpkVywc3pVNKwfEQgLHBrLV6nMHqFML/REo13WjbIad7V2roCsFfKi4zGHgeJuKKVYfJfp8dHtKaFlhd7WuEx/H49+iSiCt1Ggcs3o1u3IaegMvHwL0pM7/s1xhW8UQy3d4zE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3WFq93R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2rMjcoU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D44C2BBFC;
-	Tue, 30 Apr 2024 11:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3WFq93R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631ECC2BBFC;
+	Tue, 30 Apr 2024 11:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475562;
-	bh=XvHnYHMHPzIKItCKjMfRnEhq17KP9yd7a9A7hp6kVPI=;
+	s=korg; t=1714475565;
+	bh=/42Qa+37PkcVcfisYc7U1sUihuV5fDU8GMSaMVq/tUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2rMjcoUQajGKd23S4oS0Uf5tpg9bZzV74rknUfhoqAt1WoYJz+E2ozszb0Iq3YCd
-	 Ym1VfqryI+jDrrpNuhRtOm7keI+Y/VkAMeQ6CD8HUWB9rqMh/W2KuBjDW5GqrMhlm5
-	 XCmPTwUO+UnyojlDbraE68y3rrV6bfDglngjTEfU=
+	b=X3WFq93RKZdYH/peB7jfv73iMdzujfYQTMN/O0d9B/wXds6FMhjcsG6AwXMTb/jPt
+	 OBCt3zmVgw3Aj5mlN8qqSZRbvRXDzEe0d3ZiIHhFi6WqVNCUqEXvwZOuXLs9mpFOHN
+	 MpHVshrYJ30iNTo7avgUTHM/JqCrT8343GlGSHis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Sean Christopherson <seanjc@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>
-Subject: [PATCH 6.6 135/186] cpu: Re-enable CPU mitigations by default for !X86 architectures
-Date: Tue, 30 Apr 2024 12:39:47 +0200
-Message-ID: <20240430103101.951962770@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Justin Stitt <justinstitt@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 118/186] Bluetooth: Fix type of len in {l2cap,sco}_sock_getsockopt_old()
+Date: Tue, 30 Apr 2024 12:39:30 +0200
+Message-ID: <20240430103101.458759942@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -54,108 +51,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit fe42754b94a42d08cf9501790afc25c4f6a5f631 upstream.
+commit 9bf4e919ccad613b3596eebf1ff37b05b6405307 upstream.
 
-Rename x86's to CPU_MITIGATIONS, define it in generic code, and force it
-on for all architectures exception x86.  A recent commit to turn
-mitigations off by default if SPECULATION_MITIGATIONS=n kinda sorta
-missed that "cpu_mitigations" is completely generic, whereas
-SPECULATION_MITIGATIONS is x86-specific.
+After an innocuous optimization change in LLVM main (19.0.0), x86_64
+allmodconfig (which enables CONFIG_KCSAN / -fsanitize=thread) fails to
+build due to the checks in check_copy_size():
 
-Rename x86's SPECULATIVE_MITIGATIONS instead of keeping both and have it
-select CPU_MITIGATIONS, as having two configs for the same thing is
-unnecessary and confusing.  This will also allow x86 to use the knob to
-manage mitigations that aren't strictly related to speculative
-execution.
+  In file included from net/bluetooth/sco.c:27:
+  In file included from include/linux/module.h:13:
+  In file included from include/linux/stat.h:19:
+  In file included from include/linux/time.h:60:
+  In file included from include/linux/time32.h:13:
+  In file included from include/linux/timex.h:67:
+  In file included from arch/x86/include/asm/timex.h:6:
+  In file included from arch/x86/include/asm/tsc.h:10:
+  In file included from arch/x86/include/asm/msr.h:15:
+  In file included from include/linux/percpu.h:7:
+  In file included from include/linux/smp.h:118:
+  include/linux/thread_info.h:244:4: error: call to '__bad_copy_from'
+  declared with 'error' attribute: copy source size is too small
+    244 |                         __bad_copy_from();
+        |                         ^
 
-Use another Kconfig to communicate to common code that CPU_MITIGATIONS
-is already defined instead of having x86's menu depend on the common
-CPU_MITIGATIONS.  This allows keeping a single point of contact for all
-of x86's mitigations, and it's not clear that other architectures *want*
-to allow disabling mitigations at compile-time.
+The same exact error occurs in l2cap_sock.c. The copy_to_user()
+statements that are failing come from l2cap_sock_getsockopt_old() and
+sco_sock_getsockopt_old(). This does not occur with GCC with or without
+KCSAN or Clang without KCSAN enabled.
 
-Fixes: f337a6a21e2f ("x86/cpu: Actually turn off mitigations by default for SPECULATION_MITIGATIONS=n")
-Closes: https://lkml.kernel.org/r/20240413115324.53303a68%40canb.auug.org.au
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Reported-by: Michael Ellerman <mpe@ellerman.id.au>
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+len is defined as an 'int' because it is assigned from
+'__user int *optlen'. However, it is clamped against the result of
+sizeof(), which has a type of 'size_t' ('unsigned long' for 64-bit
+platforms). This is done with min_t() because min() requires compatible
+types, which results in both len and the result of sizeof() being casted
+to 'unsigned int', meaning len changes signs and the result of sizeof()
+is truncated. From there, len is passed to copy_to_user(), which has a
+third parameter type of 'unsigned long', so it is widened and changes
+signs again. This excessive casting in combination with the KCSAN
+instrumentation causes LLVM to fail to eliminate the __bad_copy_from()
+call, failing the build.
+
+The official recommendation from LLVM developers is to consistently use
+long types for all size variables to avoid the unnecessary casting in
+the first place. Change the type of len to size_t in both
+l2cap_sock_getsockopt_old() and sco_sock_getsockopt_old(). This clears
+up the error while allowing min_t() to be replaced with min(), resulting
+in simpler code with no casts and fewer implicit conversions. While len
+is a different type than optlen now, it should result in no functional
+change because the result of sizeof() will clamp all values of optlen in
+the same manner as before.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240420000556.2645001-2-seanjc@google.com
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2007
+Link: https://github.com/llvm/llvm-project/issues/85647
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Justin Stitt <justinstitt@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/Kconfig     |    8 ++++++++
- arch/x86/Kconfig |   11 ++++++-----
- kernel/cpu.c     |    4 ++--
- 3 files changed, 16 insertions(+), 7 deletions(-)
+ net/bluetooth/l2cap_sock.c |    7 ++++---
+ net/bluetooth/sco.c        |    7 ++++---
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
---- a/arch/Kconfig
-+++ b/arch/Kconfig
-@@ -9,6 +9,14 @@
- #
- source "arch/$(SRCARCH)/Kconfig"
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -438,7 +438,8 @@ static int l2cap_sock_getsockopt_old(str
+ 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
+ 	struct l2cap_options opts;
+ 	struct l2cap_conninfo cinfo;
+-	int len, err = 0;
++	int err = 0;
++	size_t len;
+ 	u32 opt;
  
-+config ARCH_CONFIGURES_CPU_MITIGATIONS
-+	bool
-+
-+if !ARCH_CONFIGURES_CPU_MITIGATIONS
-+config CPU_MITIGATIONS
-+	def_bool y
-+endif
-+
- menu "General architecture-dependent options"
+ 	BT_DBG("sk %p", sk);
+@@ -485,7 +486,7 @@ static int l2cap_sock_getsockopt_old(str
  
- config ARCH_HAS_SUBPAGE_FAULTS
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -62,6 +62,7 @@ config X86
- 	select ACPI_SYSTEM_POWER_STATES_SUPPORT	if ACPI
- 	select ARCH_32BIT_OFF_T			if X86_32
- 	select ARCH_CLOCKSOURCE_INIT
-+	select ARCH_CONFIGURES_CPU_MITIGATIONS
- 	select ARCH_CORRECT_STACKTRACE_ON_KRETPROBE
- 	select ARCH_ENABLE_HUGEPAGE_MIGRATION if X86_64 && HUGETLB_PAGE && MIGRATION
- 	select ARCH_ENABLE_MEMORY_HOTPLUG if X86_64
-@@ -2421,17 +2422,17 @@ config PREFIX_SYMBOLS
- 	def_bool y
- 	depends on CALL_PADDING && !CFI_CLANG
+ 		BT_DBG("mode 0x%2.2x", chan->mode);
  
--menuconfig SPECULATION_MITIGATIONS
--	bool "Mitigations for speculative execution vulnerabilities"
-+menuconfig CPU_MITIGATIONS
-+	bool "Mitigations for CPU vulnerabilities"
- 	default y
- 	help
--	  Say Y here to enable options which enable mitigations for
--	  speculative execution hardware vulnerabilities.
-+	  Say Y here to enable options which enable mitigations for hardware
-+	  vulnerabilities (usually related to speculative execution).
+-		len = min_t(unsigned int, len, sizeof(opts));
++		len = min(len, sizeof(opts));
+ 		if (copy_to_user(optval, (char *) &opts, len))
+ 			err = -EFAULT;
  
- 	  If you say N, all mitigations will be disabled. You really
- 	  should know what you are doing to say so.
+@@ -535,7 +536,7 @@ static int l2cap_sock_getsockopt_old(str
+ 		cinfo.hci_handle = chan->conn->hcon->handle;
+ 		memcpy(cinfo.dev_class, chan->conn->hcon->dev_class, 3);
  
--if SPECULATION_MITIGATIONS
-+if CPU_MITIGATIONS
+-		len = min_t(unsigned int, len, sizeof(cinfo));
++		len = min(len, sizeof(cinfo));
+ 		if (copy_to_user(optval, (char *) &cinfo, len))
+ 			err = -EFAULT;
  
- config PAGE_TABLE_ISOLATION
- 	bool "Remove the kernel mapping in user mode"
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -3208,8 +3208,8 @@ enum cpu_mitigations {
- };
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -963,7 +963,8 @@ static int sco_sock_getsockopt_old(struc
+ 	struct sock *sk = sock->sk;
+ 	struct sco_options opts;
+ 	struct sco_conninfo cinfo;
+-	int len, err = 0;
++	int err = 0;
++	size_t len;
  
- static enum cpu_mitigations cpu_mitigations __ro_after_init =
--	IS_ENABLED(CONFIG_SPECULATION_MITIGATIONS) ? CPU_MITIGATIONS_AUTO :
--						     CPU_MITIGATIONS_OFF;
-+	IS_ENABLED(CONFIG_CPU_MITIGATIONS) ? CPU_MITIGATIONS_AUTO :
-+					     CPU_MITIGATIONS_OFF;
+ 	BT_DBG("sk %p", sk);
  
- static int __init mitigations_parse_cmdline(char *arg)
- {
+@@ -985,7 +986,7 @@ static int sco_sock_getsockopt_old(struc
+ 
+ 		BT_DBG("mtu %u", opts.mtu);
+ 
+-		len = min_t(unsigned int, len, sizeof(opts));
++		len = min(len, sizeof(opts));
+ 		if (copy_to_user(optval, (char *)&opts, len))
+ 			err = -EFAULT;
+ 
+@@ -1003,7 +1004,7 @@ static int sco_sock_getsockopt_old(struc
+ 		cinfo.hci_handle = sco_pi(sk)->conn->hcon->handle;
+ 		memcpy(cinfo.dev_class, sco_pi(sk)->conn->hcon->dev_class, 3);
+ 
+-		len = min_t(unsigned int, len, sizeof(cinfo));
++		len = min(len, sizeof(cinfo));
+ 		if (copy_to_user(optval, (char *)&cinfo, len))
+ 			err = -EFAULT;
+ 
 
 
