@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495C612C7FB;
-	Tue, 30 Apr 2024 10:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739D112C487;
+	Tue, 30 Apr 2024 10:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474567; cv=none; b=VCaqDI8HHgisfXBrto1C4qaaFnmVe3VAhEtySTWESxXI5KRRuj0sgacfMTL/O0wvDUg9OqsVUgx4YHBx3JazLZjfUVYY8EZo8xZZVpIaQWE/ZIXaN70+GMZb1n6almHUIoSEH38+CscKlsO/TdkKSjbiFiIvZQ40piCSO8cafBU=
+	t=1714474570; cv=none; b=jHlPXSJuYluhIRrF09e7ujR7nyXYDVBILABQBPlSbAZbJ0Oww/brJ9HZ/udmQo0MHW5wbBwT/6p9iIzkHE4S2ILUiY+2NB2Y0lMH9bF+VodxyXtj3YCWGI3X0ErsPp3m0bXWZ9k2otpHMl32AhuzJiI+nL78PjcY8pplLko+BJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474567; c=relaxed/simple;
-	bh=3Oz8ifsHIeUIOEn/eTKTVf2FvH8CYW9wCxyTZY/L6nA=;
+	s=arc-20240116; t=1714474570; c=relaxed/simple;
+	bh=EjtyEZjcgtRdQtVIeiNiAQ3VTB+ccRqFIHlQSmxnWM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OyQJyhZGkyGq7UtOSMlgkTbz0ytObe1GbfgnG4bOwK6aA8ZjevMBrrzAVSmPVLhNtoTCwQdcbWFKAkGsR9kZQVhSn7fUWARcl25woO8OpSbE0BgBZ9RZp8FiqGe5UHXbVhlYGWPzi2iDVOOw9u1yYcYnyskL8v+H7u/KwDT7Zl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wCNl0nn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X3KeVhF/e39IiUAc0XNZfYGfnmLc4KIz2iuAxdm1pWWBQfCvFBQ8GV+WShCHJdVORgWgKOQzcoaTMzYqtUTOCUL5tcGfI6LG1nYNiBcTXXQqA+z9OtdbxEabP+Gfo/mo6t9JviQQLEgWMRf31Lsiqvn45SqOX4juHzFCkgIgKrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/oZonSl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wCNl0nn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986A2C2BBFC;
-	Tue, 30 Apr 2024 10:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/oZonSl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B9EC2BBFC;
+	Tue, 30 Apr 2024 10:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474567;
-	bh=3Oz8ifsHIeUIOEn/eTKTVf2FvH8CYW9wCxyTZY/L6nA=;
+	s=korg; t=1714474570;
+	bh=EjtyEZjcgtRdQtVIeiNiAQ3VTB+ccRqFIHlQSmxnWM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0wCNl0nn37xjq5SK+POJ73zoLc7yYP1rHWZ/2xG+BKPrCnaCao1FuFmtJc8g2pp6V
-	 Z5Uj7htgr2FFav+ojgeFNyhpBCMZh39QUs7dYDXfQPBg8S7/WwhrGMv6CgkH0P3bvY
-	 cWfzFt/+xfsMlaDyx8iP1yfk2Y0Hlw9n2+gET030=
+	b=C/oZonSlG274iHL1Jrj8Ni0u7vbPassK0qCGowtTnLz0TiL0LE2nW1HgPF67vPqJ5
+	 +2zQUGu1MRbMWGh9KoVNCo5I1TLXhDh3kmWHkVERFWXE0CWaurjb2br6cH5BqFEaLF
+	 Z02G6hGDZ/6fgabueK32fnNaEGiiArK9pPUUBEbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,16 +30,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Douglas Anderson <dianders@chromium.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Steev Klimaszewski <steev@kali.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
 	Stephen Boyd <swboyd@chromium.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.8 196/228] phy: qcom: qmp-combo: Fix register base for QSERDES_DP_PHY_MODE
-Date: Tue, 30 Apr 2024 12:39:34 +0200
-Message-ID: <20240430103109.455550148@linuxfoundation.org>
+Subject: [PATCH 6.8 197/228] phy: qcom: qmp-combo: Fix VCO div offset on v3
+Date: Tue, 30 Apr 2024 12:39:35 +0200
+Message-ID: <20240430103109.485781279@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -60,53 +55,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Stephen Boyd <swboyd@chromium.org>
 
-commit ee13e1f3c72b9464a4d73017c060ab503eed653a upstream.
+commit 5abed58a8bde6d349bde364a160510b5bb904d18 upstream.
 
-The register base that was used to write to the QSERDES_DP_PHY_MODE
-register was 'dp_dp_phy' before commit 815891eee668 ("phy:
-qcom-qmp-combo: Introduce orientation variable"). There isn't any
-explanation in the commit why this is changed, so I suspect it was an
-oversight or happened while being extracted from some other series.
-Oddly the value being 0x4c or 0x5c doesn't seem to matter for me, so I
-suspect this is dead code, but that can be fixed in another patch. It's
-not good to write to the wrong register space, and maybe some other
-version of this phy relies on this.
+Commit ec17373aebd0 ("phy: qcom: qmp-combo: extract common function to
+setup clocks") changed the offset that is used to write to
+DP_PHY_VCO_DIV from QSERDES_V3_DP_PHY_VCO_DIV to
+QSERDES_V4_DP_PHY_VCO_DIV. Unfortunately, this offset is different
+between v3 and v4 phys:
+
+ #define QSERDES_V3_DP_PHY_VCO_DIV                 0x064
+ #define QSERDES_V4_DP_PHY_VCO_DIV                 0x070
+
+meaning that we write the wrong register on v3 phys now. Add another
+generic register to 'regs' and use it here instead of a version specific
+define to fix this.
+
+This was discovered after Abhinav looked over register dumps with me
+from sc7180 Trogdor devices that started failing to light up the
+external display with v6.6 based kernels. It turns out that some
+monitors are very specific about their link clk frequency and if the
+default power on reset value is still there the monitor will show a
+blank screen or a garbled display. Other monitors are perfectly happy to
+get a bad clock signal.
 
 Cc: Douglas Anderson <dianders@chromium.org>
 Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Abel Vesa <abel.vesa@linaro.org>
-Cc: Steev Klimaszewski <steev@kali.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: stable@vger.kernel.org      # 6.5
-Fixes: 815891eee668 ("phy: qcom-qmp-combo: Introduce orientation variable")
+Fixes: ec17373aebd0 ("phy: qcom: qmp-combo: extract common function to setup clocks")
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240405000111.1450598-1-swboyd@chromium.org
+Link: https://lore.kernel.org/r/20240404234345.1446300-1-swboyd@chromium.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -2211,9 +2211,9 @@ static bool qmp_combo_configure_dp_mode(
- 	writel(val, qmp->dp_dp_phy + QSERDES_DP_PHY_PD_CTL);
+@@ -112,6 +112,7 @@ enum qphy_reg_layout {
+ 	QPHY_COM_BIAS_EN_CLKBUFLR_EN,
  
- 	if (reverse)
--		writel(0x4c, qmp->pcs + QSERDES_DP_PHY_MODE);
-+		writel(0x4c, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
- 	else
--		writel(0x5c, qmp->pcs + QSERDES_DP_PHY_MODE);
-+		writel(0x5c, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
+ 	QPHY_DP_PHY_STATUS,
++	QPHY_DP_PHY_VCO_DIV,
  
- 	return reverse;
- }
+ 	QPHY_TX_TX_POL_INV,
+ 	QPHY_TX_TX_DRV_LVL,
+@@ -137,6 +138,7 @@ static const unsigned int qmp_v3_usb3phy
+ 	[QPHY_COM_BIAS_EN_CLKBUFLR_EN]	= QSERDES_V3_COM_BIAS_EN_CLKBUFLR_EN,
+ 
+ 	[QPHY_DP_PHY_STATUS]		= QSERDES_V3_DP_PHY_STATUS,
++	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V3_DP_PHY_VCO_DIV,
+ 
+ 	[QPHY_TX_TX_POL_INV]		= QSERDES_V3_TX_TX_POL_INV,
+ 	[QPHY_TX_TX_DRV_LVL]		= QSERDES_V3_TX_TX_DRV_LVL,
+@@ -161,6 +163,7 @@ static const unsigned int qmp_v45_usb3ph
+ 	[QPHY_COM_BIAS_EN_CLKBUFLR_EN]	= QSERDES_V4_COM_BIAS_EN_CLKBUFLR_EN,
+ 
+ 	[QPHY_DP_PHY_STATUS]		= QSERDES_V4_DP_PHY_STATUS,
++	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V4_DP_PHY_VCO_DIV,
+ 
+ 	[QPHY_TX_TX_POL_INV]		= QSERDES_V4_TX_TX_POL_INV,
+ 	[QPHY_TX_TX_DRV_LVL]		= QSERDES_V4_TX_TX_DRV_LVL,
+@@ -2223,6 +2226,7 @@ static int qmp_combo_configure_dp_clocks
+ 	const struct phy_configure_opts_dp *dp_opts = &qmp->dp_opts;
+ 	u32 phy_vco_div;
+ 	unsigned long pixel_freq;
++	const struct qmp_phy_cfg *cfg = qmp->cfg;
+ 
+ 	switch (dp_opts->link_rate) {
+ 	case 1620:
+@@ -2245,7 +2249,7 @@ static int qmp_combo_configure_dp_clocks
+ 		/* Other link rates aren't supported */
+ 		return -EINVAL;
+ 	}
+-	writel(phy_vco_div, qmp->dp_dp_phy + QSERDES_V4_DP_PHY_VCO_DIV);
++	writel(phy_vco_div, qmp->dp_dp_phy + cfg->regs[QPHY_DP_PHY_VCO_DIV]);
+ 
+ 	clk_set_rate(qmp->dp_link_hw.clk, dp_opts->link_rate * 100000);
+ 	clk_set_rate(qmp->dp_pixel_hw.clk, pixel_freq);
 
 
