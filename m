@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409C212C47A;
-	Tue, 30 Apr 2024 11:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA2317592;
+	Tue, 30 Apr 2024 11:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476419; cv=none; b=iqMW4BYCJUhkUvEUveW6eFj9Bzegw3E2uQapm5/Bmkf2lxJ5YheAODur8bgGLpLlrJfsMf39vKcDErxVvh9kxFLMFNBgZ/Oz/fN/jkDkpzEk6YlGlTi//iM6RLs7X+zJZn2vMZVmuCosW8DtwPIM8Myene2AKTQgSDB45clspOc=
+	t=1714476422; cv=none; b=NYeu4T2K9Ik9MVYf8wT6dlWFc+4okXXTGYicMVRWpqat/Pg+NM0yiQeoyNBBDO+3bYIKyy5p7iSYIYm3yBUvdsHZKIff5H/g331bFcCvFJRUacUCvFIkx9taaUIpo7kfTB5jCtaHj+c8MYkO4ZTIyu88aYFM2JL6hKVPsvyDeXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476419; c=relaxed/simple;
-	bh=MdWnSpwCQQOZoKzhD9dNyhqJGksuaEWMzuu28bXYy5g=;
+	s=arc-20240116; t=1714476422; c=relaxed/simple;
+	bh=i6q1u6WhYHlStZ6XNz5nthnmfv9hZQntGw6YQ4if2Kg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FqegnA3zZS7SbFQ1cSl+/MN2Lt2oCh2z49NXPdEDNDmxtrXb1OY81eGFpivn3fE98J5/ZNhED8a3bR6V/03nZIQ5a++vwVZOR9N+x7jubSg1qBgjMfQvNOUqQgBmo5F6lGmETtzxFxlyKkA8drbqypN/0JCLTm4Orh635pZRO0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2eIjJYEo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qbWjnSK/8hZxQAfCr4H4RDJWkkfB0om6S7YphpC4ATYo1N0O/Lr/rjrI8xMb7+3oyDiS1LPSULQc5SdWxjrXZJsKdSrr8K50OzIUYKjEh6Y/PFX2gHw2fAWJlHyR6eideUisKdLWLnbsg55SsY+Y3GyH4LSmtWVwn/BtVQfjcOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiv2Tt8F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eIjJYEo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A49C2BBFC;
-	Tue, 30 Apr 2024 11:26:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiv2Tt8F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1686C2BBFC;
+	Tue, 30 Apr 2024 11:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476419;
-	bh=MdWnSpwCQQOZoKzhD9dNyhqJGksuaEWMzuu28bXYy5g=;
+	s=korg; t=1714476422;
+	bh=i6q1u6WhYHlStZ6XNz5nthnmfv9hZQntGw6YQ4if2Kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2eIjJYEoprQppRRQY8CUUiM4SGuDYjj4Tuv+zUx6LYr0iJVjO9MMMFP/hxWTVcuPO
-	 veSzPMsldhWBp9ZIRdbeZImIHTpQbf1981I+owWjt6JI3sEtAjoFGNAQ+dmxzLW8Yw
-	 W9mDpDw4l2Vsr4vw1REYAY1CogyrbT5I0ENDAD9o=
+	b=tiv2Tt8FsTFp3e+8p8JjV+eTiOfzNjZ5ImhWTo8FenE+O2W4pi0fBvzQ6ehbrzIBF
+	 QUr+g3Ccvp0j0jvzNER3uj/jAMVS3dFSQSUW5slNo3gU574H8t8yCLyMMNPmRrf3du
+	 TwExXUtpDCAhmFR52U17kwhN7i/UOutkGu2bLm2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Simion <andrei.simion@microchip.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Weiyi Lu <weiyi.lu@mediatek.com>,
+	Ikjoon Jang <ikjn@chromium.org>,
+	Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 027/110] ARM: dts: microchip: at91-sama7g5ek: Replace regulator-suspend-voltage with the valid property
-Date: Tue, 30 Apr 2024 12:39:56 +0200
-Message-ID: <20240430103048.371091715@linuxfoundation.org>
+Subject: [PATCH 6.1 010/110] arm64: dts: mediatek: mt8183: Add power-domains properity to mfgcfg
+Date: Tue, 30 Apr 2024 12:39:39 +0200
+Message-ID: <20240430103047.873706537@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -52,68 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Simion <andrei.simion@microchip.com>
+From: Ikjoon Jang <ikjn@chromium.org>
 
-[ Upstream commit e027b71762e84ee9d4ba9ad5401b956b9e83ed2a ]
+[ Upstream commit 1781f2c461804c0123f59afc7350e520a88edffb ]
 
-By checking the pmic node with microchip,mcp16502.yaml#
-'regulator-suspend-voltage' does not match any of the
-regexes 'pinctrl-[0-9]+' from schema microchip,mcp16502.yaml#
-which inherits regulator.yaml#. So replace regulator-suspend-voltage
-with regulator-suspend-microvolt to avoid the inconsitency.
+mfgcfg clock is under MFG_ASYNC power domain.
 
-Fixes: 85b1304b9daa ("ARM: dts: at91: sama7g5ek: set regulator voltages for standby state")
-Signed-off-by: Andrei Simion <andrei.simion@microchip.com>
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Link: https://lore.kernel.org/r/20240404123824.19182-2-andrei.simion@microchip.com
-[claudiu.beznea: added a dot before starting the last sentence in commit
- description]
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Fixes: e526c9bc11f8 ("arm64: dts: Add Mediatek SoC MT8183 and evaluation board dts and Makefile")
+Fixes: 37fb78b9aeb7 ("arm64: dts: mediatek: Add mt8183 power domains controller")
+Signed-off-by: Weiyi Lu <weiyi.lu@mediatek.com>
+Signed-off-by: Ikjoon Jang <ikjn@chromium.org>
+Reviewed-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://lore.kernel.org/r/20240223091122.2430037-1-wenst@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/at91-sama7g5ek.dts | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/at91-sama7g5ek.dts b/arch/arm/boot/dts/at91-sama7g5ek.dts
-index 4af8a1c96ed63..bede6e88ae110 100644
---- a/arch/arm/boot/dts/at91-sama7g5ek.dts
-+++ b/arch/arm/boot/dts/at91-sama7g5ek.dts
-@@ -293,7 +293,7 @@
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+index d5d9b954c449a..2147e152683bf 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+@@ -1554,6 +1554,7 @@
+ 			compatible = "mediatek,mt8183-mfgcfg", "syscon";
+ 			reg = <0 0x13000000 0 0x1000>;
+ 			#clock-cells = <1>;
++			power-domains = <&spm MT8183_POWER_DOMAIN_MFG_ASYNC>;
+ 		};
  
- 					regulator-state-standby {
- 						regulator-on-in-suspend;
--						regulator-suspend-voltage = <1150000>;
-+						regulator-suspend-microvolt = <1150000>;
- 						regulator-mode = <4>;
- 					};
- 
-@@ -314,7 +314,7 @@
- 
- 					regulator-state-standby {
- 						regulator-on-in-suspend;
--						regulator-suspend-voltage = <1050000>;
-+						regulator-suspend-microvolt = <1050000>;
- 						regulator-mode = <4>;
- 					};
- 
-@@ -331,7 +331,7 @@
- 					regulator-always-on;
- 
- 					regulator-state-standby {
--						regulator-suspend-voltage = <1800000>;
-+						regulator-suspend-microvolt = <1800000>;
- 						regulator-on-in-suspend;
- 					};
- 
-@@ -346,7 +346,7 @@
- 					regulator-max-microvolt = <3700000>;
- 
- 					regulator-state-standby {
--						regulator-suspend-voltage = <1800000>;
-+						regulator-suspend-microvolt = <1800000>;
- 						regulator-on-in-suspend;
- 					};
- 
+ 		gpu: gpu@13040000 {
 -- 
 2.43.0
 
