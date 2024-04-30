@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0724112C48B;
-	Tue, 30 Apr 2024 10:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D091292C8;
+	Tue, 30 Apr 2024 10:49:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474141; cv=none; b=hIqKM/vk9eoF1N0vU+BZ273Cf79vCQa8X7mYNuZGmz02J0+hP6pwy9tRUiCFsN+/yE6Z2jgceYb0Z5UQWcTeE/LzRFyKs3bjWg03Ygg8/pBN9t0EBZ8KP96P8IRnKcpGMb7eVc2mD0fOYg+t0EEHyjVjVArgT4IMAYuHHnq0Rdg=
+	t=1714474144; cv=none; b=YxWLlkl2jWM+D3oVb10p7SLkIjPlNelYilNZ4Bd4cZLZ3CbEKMrswGrgFCcPDVPuchvM+nfW/G2J723Ss8JC/cVOb6WqCrTYuL31KZ554yoU8kXTjru05tT23ZJfMUjWxMVJbcmXkrCOLxFXBu7lj8nwAlGExB3RJ9qJi4bTeIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474141; c=relaxed/simple;
-	bh=9+njhMydE3LnLJWLFlV/TPzzxRLjUAVHixd8r6j2uDQ=;
+	s=arc-20240116; t=1714474144; c=relaxed/simple;
+	bh=YC/d6xIiFYnbpkGSoM75fwgcwNejj+0wIVc8bX5PRe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/04ry5eV4+tc5UELXQZitgBH2u5uUf+ZwWRZybrQukN6JYxsjW6JFSkICdC9awt+5L+diBx9q1Y7y/wk9GcIu9ljpvjPXh4t5ifiHoAiC1Hww65/d1N1wqjoa9PXWsvin4X7NNPr8xo2qxAotMol5BTZBflar7gIKDpZwgbWyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwluZi8P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YR2MgE9Qv8ne8wNyX494/zSSXurYY4BVaEeK9yxaZZLZgQYvVU1D7JKTbs3s/RbYp858cNjBeQhmBRpyMGKkk390ozVWpAcEVyX+kGT/6+Uo2D4xtu8Z+eeRaVzCcmxpDaVQX6z5XgQOY550R5uwVuTLyyTLQNp2vqweIqbEEpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QD5EMT+l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwluZi8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF66C2BBFC;
-	Tue, 30 Apr 2024 10:49:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QD5EMT+l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDA1C2BBFC;
+	Tue, 30 Apr 2024 10:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474140;
-	bh=9+njhMydE3LnLJWLFlV/TPzzxRLjUAVHixd8r6j2uDQ=;
+	s=korg; t=1714474144;
+	bh=YC/d6xIiFYnbpkGSoM75fwgcwNejj+0wIVc8bX5PRe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fwluZi8PTpEFFaYzpy1eGVhpyhz2VIJ+mCLQ9UB/u25NS1pOjxyAD/fNzoDle+gri
-	 O+22y1dz4aQ1KstbDzi4ARaxWLZ2H92YzrgzQ3r19sPymqicZ6MHLb6o//EGmjeWlk
-	 vvBhdz1ZvFNnyWFOUkBBouDr6xH934Cb6FJF2nJg=
+	b=QD5EMT+lJvxa3ZUyWPFIDaKkIOw8V3kWDu9R02BxpoVHkjsKzA0Hynj72k/Oh6/ta
+	 2GJwHbZ1CqWQz7OeZXgjpFp/80YAs98QZ3R2NR6+hD54oBN2jijAIBDxs5LLtdhS70
+	 l2ZKLR20bqZOdGdGnufOyrx7zaRiwtAa0KapbYWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
+	shironeko <shironeko@tesaguri.club>,
 	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jose Alonso <joalonsof@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 069/228] ipv4: check for NULL idev in ip_route_use_hint()
-Date: Tue, 30 Apr 2024 12:37:27 +0200
-Message-ID: <20240430103105.799261618@linuxfoundation.org>
+Subject: [PATCH 6.8 070/228] net: usb: ax88179_178a: stop lying about skb->truesize
+Date: Tue, 30 Apr 2024 12:37:28 +0200
+Message-ID: <20240430103105.827033565@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -55,78 +56,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 58a4c9b1e5a3e53c9148e80b90e1e43897ce77d1 ]
+[ Upstream commit 4ce62d5b2f7aecd4900e7d6115588ad7f9acccca ]
 
-syzbot was able to trigger a NULL deref in fib_validate_source()
-in an old tree [1].
+Some usb drivers try to set small skb->truesize and break
+core networking stacks.
 
-It appears the bug exists in latest trees.
+In this patch, I removed one of the skb->truesize overide.
 
-All calls to __in_dev_get_rcu() must be checked for a NULL result.
+I also replaced one skb_clone() by an allocation of a fresh
+and small skb, to get minimally sized skbs, like we did
+in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
+in rx path")
 
-[1]
-general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 2 PID: 3257 Comm: syz-executor.3 Not tainted 5.10.0-syzkaller #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
- RIP: 0010:fib_validate_source+0xbf/0x15a0 net/ipv4/fib_frontend.c:425
-Code: 18 f2 f2 f2 f2 42 c7 44 20 23 f3 f3 f3 f3 48 89 44 24 78 42 c6 44 20 27 f3 e8 5d 88 48 fc 4c 89 e8 48 c1 e8 03 48 89 44 24 18 <42> 80 3c 20 00 74 08 4c 89 ef e8 d2 15 98 fc 48 89 5c 24 10 41 bf
-RSP: 0018:ffffc900015fee40 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffff88800f7a4000 RCX: ffff88800f4f90c0
-RDX: 0000000000000000 RSI: 0000000004001eac RDI: ffff8880160c64c0
-RBP: ffffc900015ff060 R08: 0000000000000000 R09: ffff88800f7a4000
-R10: 0000000000000002 R11: ffff88800f4f90c0 R12: dffffc0000000000
-R13: 0000000000000000 R14: 0000000000000000 R15: ffff88800f7a4000
-FS:  00007f938acfe6c0(0000) GS:ffff888058c00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f938acddd58 CR3: 000000001248e000 CR4: 0000000000352ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-  ip_route_use_hint+0x410/0x9b0 net/ipv4/route.c:2231
-  ip_rcv_finish_core+0x2c4/0x1a30 net/ipv4/ip_input.c:327
-  ip_list_rcv_finish net/ipv4/ip_input.c:612 [inline]
-  ip_sublist_rcv+0x3ed/0xe50 net/ipv4/ip_input.c:638
-  ip_list_rcv+0x422/0x470 net/ipv4/ip_input.c:673
-  __netif_receive_skb_list_ptype net/core/dev.c:5572 [inline]
-  __netif_receive_skb_list_core+0x6b1/0x890 net/core/dev.c:5620
-  __netif_receive_skb_list net/core/dev.c:5672 [inline]
-  netif_receive_skb_list_internal+0x9f9/0xdc0 net/core/dev.c:5764
-  netif_receive_skb_list+0x55/0x3e0 net/core/dev.c:5816
-  xdp_recv_frames net/bpf/test_run.c:257 [inline]
-  xdp_test_run_batch net/bpf/test_run.c:335 [inline]
-  bpf_test_run_xdp_live+0x1818/0x1d00 net/bpf/test_run.c:363
-  bpf_prog_test_run_xdp+0x81f/0x1170 net/bpf/test_run.c:1376
-  bpf_prog_test_run+0x349/0x3c0 kernel/bpf/syscall.c:3736
-  __sys_bpf+0x45c/0x710 kernel/bpf/syscall.c:5115
-  __do_sys_bpf kernel/bpf/syscall.c:5201 [inline]
-  __se_sys_bpf kernel/bpf/syscall.c:5199 [inline]
-  __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5199
-
-Fixes: 02b24941619f ("ipv4: use dst hint for ipv4 list receive")
-Reported-by: syzbot <syzkaller@googlegroups.com>
+Fixes: f8ebb3ac881b ("net: usb: ax88179_178a: Fix packet receiving")
+Reported-by: shironeko <shironeko@tesaguri.club>
+Closes: https://lore.kernel.org/netdev/c110f41a0d2776b525930f213ca9715c@tesaguri.club/
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240421184326.1704930-1-edumazet@google.com
+Cc: Jose Alonso <joalonsof@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240421193828.1966195-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/usb/ax88179_178a.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 15c37c8113fc8..f67d3d6fe9345 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -2166,6 +2166,9 @@ int ip_route_use_hint(struct sk_buff *skb, __be32 daddr, __be32 saddr,
- 	int err = -EINVAL;
- 	u32 tag = 0;
+diff --git a/drivers/net/usb/ax88179_178a.c b/drivers/net/usb/ax88179_178a.c
+index 3078511f76083..21b6c4d94a632 100644
+--- a/drivers/net/usb/ax88179_178a.c
++++ b/drivers/net/usb/ax88179_178a.c
+@@ -1456,21 +1456,16 @@ static int ax88179_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			/* Skip IP alignment pseudo header */
+ 			skb_pull(skb, 2);
  
-+	if (!in_dev)
-+		return -EINVAL;
-+
- 	if (ipv4_is_multicast(saddr) || ipv4_is_lbcast(saddr))
- 		goto martian_source;
+-			skb->truesize = SKB_TRUESIZE(pkt_len_plus_padd);
+ 			ax88179_rx_checksum(skb, pkt_hdr);
+ 			return 1;
+ 		}
+ 
+-		ax_skb = skb_clone(skb, GFP_ATOMIC);
++		ax_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len);
+ 		if (!ax_skb)
+ 			return 0;
+-		skb_trim(ax_skb, pkt_len);
++		skb_put(ax_skb, pkt_len);
++		memcpy(ax_skb->data, skb->data + 2, pkt_len);
+ 
+-		/* Skip IP alignment pseudo header */
+-		skb_pull(ax_skb, 2);
+-
+-		skb->truesize = pkt_len_plus_padd +
+-				SKB_DATA_ALIGN(sizeof(struct sk_buff));
+ 		ax88179_rx_checksum(ax_skb, pkt_hdr);
+ 		usbnet_skb_return(dev, ax_skb);
  
 -- 
 2.43.0
