@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BFAD8801;
-	Tue, 30 Apr 2024 11:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810028801;
+	Tue, 30 Apr 2024 11:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475896; cv=none; b=bFOx4nQB+UlcyeLK3Vm23EfgfV3h8ik/6Wuamldjm23qAPp8TRIJuI3cns0AOF0mF96sBBGC8ac1courzc7+02wD0PO4xKAxMapVfj1uk7TbRolFc+OJt/YXgXNrRadmEYX+hwoQTOFyykWQeE/gP0HWsHOFMxMu82PbKysKHuk=
+	t=1714475899; cv=none; b=OENESs1Xa6F0ntw12bMtWbLfQO2GOPvy7zQ8sdto1XuyYzBpbAMakqisNI5osZeOXe7k0SSK/coc0TS7fK5QGvANBaibrj3KTxlrlsDvHDRn8W5aMruWOSOnqV1M7230J9s1+YDUsxx80nCwooJrtZih83ZRes3YwoTFRcC2bBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475896; c=relaxed/simple;
-	bh=yko6Kud/4P4g4CNP/Xg3fZiXx11W81rrL1PcV9DuIAM=;
+	s=arc-20240116; t=1714475899; c=relaxed/simple;
+	bh=MJByaQLO9ThzVfG8Qu+Zf6i520tvZ9d611LOwJ+pD9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FYimTAycq1ffgQ7X+Fv6folCdCMfp/fqXGzVrR9fWUkTQe3mlVYA4JOiZ2SFRfpOzzJEItvQGMC1c7Eryj/vXTyrE5nAkUg9cY+IJIzRktG0oUjKxZsO+LR0Ysyw1j7TUQAfexjePIhDRH9K2EFYydX24+HVVJTftQnqwjeLlf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dbaqlj9d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y24grwsOLxEXyDUcDmWy3EKUS6xN00pSqaZqKYDfdh1MtEcequCACMu43V9Jn4gELpJ4u3TFQzzs+tLlFIxdBX5HoKpAW6SbXWT/pO/G8pKp1aDB37H31gkDjtoGBcKjZiHxS32t/00e1G+l9PuoVytHOfe2UbQ8Q2marNVMsQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fp4N618h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dbaqlj9d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC9C5C2BBFC;
-	Tue, 30 Apr 2024 11:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fp4N618h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07CABC2BBFC;
+	Tue, 30 Apr 2024 11:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475896;
-	bh=yko6Kud/4P4g4CNP/Xg3fZiXx11W81rrL1PcV9DuIAM=;
+	s=korg; t=1714475899;
+	bh=MJByaQLO9ThzVfG8Qu+Zf6i520tvZ9d611LOwJ+pD9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dbaqlj9dVfG3AM747w//i8ss9NNDmDRgYjngS+QY+xiI3S+SvUAQ5Oor8VQueXqLH
-	 Dr5+mCWFrHckMYfrmL2JQRxmEtKTXrAFFWDworLq4tULzSN6bCMTArfUVoyAncEKlc
-	 ACr++xhyY+T4bmlVuFcMkPaYwWJkY0NR9FT+C5JU=
+	b=fp4N618hR6S2/bBFJYtgSMK2J2v1pkGff/D+U0YLfD2t8FH/vk7kSLFz37lXLOU7a
+	 QB6CRjQDjJJAcof6uKkyY3INArklY15GEoefVH1jvF2bsmFBg0EL2Mb9XTgtGC1LEG
+	 y82e88k0mj57qeOV2lMOWIEeLAIrfi+AIErm8ULo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 5.15 51/80] tracing: Increase PERF_MAX_TRACE_SIZE to handle Sentinel1 and docker together
-Date: Tue, 30 Apr 2024 12:40:23 +0200
-Message-ID: <20240430103044.925551047@linuxfoundation.org>
+	David Kaplan <david.kaplan@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 5.15 52/80] x86/cpu: Fix check for RDPKRU in __show_regs()
+Date: Tue, 30 Apr 2024 12:40:24 +0200
+Message-ID: <20240430103044.954452437@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -51,85 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin H. Johnson <robbat2@gentoo.org>
+From: David Kaplan <david.kaplan@amd.com>
 
-commit e531e90b5ab0f7ce5ff298e165214c1aec6ed187 upstream.
+commit b53c6bd5d271d023857174b8fd3e32f98ae51372 upstream.
 
-Running endpoint security solutions like Sentinel1 that use perf-based
-tracing heavily lead to this repeated dump complaining about dockerd.
-The default value of 2048 is nowhere near not large enough.
+cpu_feature_enabled(X86_FEATURE_OSPKE) does not necessarily reflect
+whether CR4.PKE is set on the CPU.  In particular, they may differ on
+non-BSP CPUs before setup_pku() is executed.  In this scenario, RDPKRU
+will #UD causing the system to hang.
 
-Using the prior patch "tracing: show size of requested buffer", we get
-"perf buffer not large enough, wanted 6644, have 6144", after repeated
-up-sizing (I did 2/4/6/8K). With 8K, the problem doesn't occur at all,
-so below is the trace for 6K.
+Fix by checking CR4 for PKE enablement which is always correct for the
+current CPU.
 
-I'm wondering if this value should be selectable at boot time, but this
-is a good starting point.
+The scenario happens by inserting a WARN* before setup_pku() in
+identiy_cpu() or some other diagnostic which would lead to calling
+__show_regs().
 
-```
-------------[ cut here ]------------
-perf buffer not large enough, wanted 6644, have 6144
-WARNING: CPU: 1 PID: 4997 at kernel/trace/trace_event_perf.c:402 perf_trace_buf_alloc+0x8c/0xa0
-Modules linked in: [..]
-CPU: 1 PID: 4997 Comm: sh Tainted: G                T 5.13.13-x86_64-00039-gb3959163488e #63
-Hardware name: LENOVO 20KH002JUS/20KH002JUS, BIOS N23ET66W (1.41 ) 09/02/2019
-RIP: 0010:perf_trace_buf_alloc+0x8c/0xa0
-Code: 80 3d 43 97 d0 01 00 74 07 31 c0 5b 5d 41 5c c3 ba 00 18 00 00 89 ee 48 c7 c7 00 82 7d 91 c6 05 25 97 d0 01 01 e8 22 ee bc 00 <0f> 0b 31 c0 eb db 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 55 89
-RSP: 0018:ffffb922026b7d58 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: ffff9da5ee012000 RCX: 0000000000000027
-RDX: ffff9da881657828 RSI: 0000000000000001 RDI: ffff9da881657820
-RBP: 00000000000019f4 R08: 0000000000000000 R09: ffffb922026b7b80
-R10: ffffb922026b7b78 R11: ffffffff91dda688 R12: 000000000000000f
-R13: ffff9da5ee012108 R14: ffff9da8816570a0 R15: ffffb922026b7e30
-FS:  00007f420db1a080(0000) GS:ffff9da881640000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000060 CR3: 00000002504a8006 CR4: 00000000003706e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- kprobe_perf_func+0x11e/0x270
- ? do_execveat_common.isra.0+0x1/0x1c0
- ? do_execveat_common.isra.0+0x5/0x1c0
- kprobe_ftrace_handler+0x10e/0x1d0
- 0xffffffffc03aa0c8
- ? do_execveat_common.isra.0+0x1/0x1c0
- do_execveat_common.isra.0+0x5/0x1c0
- __x64_sys_execve+0x33/0x40
- do_syscall_64+0x6b/0xc0
- ? do_syscall_64+0x11/0xc0
- entry_SYSCALL_64_after_hwframe+0x44/0xae
-RIP: 0033:0x7f420dc1db37
-Code: ff ff 76 e7 f7 d8 64 41 89 00 eb df 0f 1f 80 00 00 00 00 f7 d8 64 41 89 00 eb dc 0f 1f 84 00 00 00 00 00 b8 3b 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 01 43 0f 00 f7 d8 64 89 01 48
-RSP: 002b:00007ffd4e8b4e38 EFLAGS: 00000246 ORIG_RAX: 000000000000003b
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f420dc1db37
-RDX: 0000564338d1e740 RSI: 0000564338d32d50 RDI: 0000564338d28f00
-RBP: 0000564338d28f00 R08: 0000564338d32d50 R09: 0000000000000020
-R10: 00000000000001b6 R11: 0000000000000246 R12: 0000564338d28f00
-R13: 0000564338d32d50 R14: 0000564338d1e740 R15: 0000564338d28c60
----[ end trace 83ab3e8e16275e49 ]---
-```
+  [ bp: Massage commit message. ]
 
-Link: https://lkml.kernel.org/r/20210831043723.13481-2-robbat2@gentoo.org
-
-Signed-off-by: Robin H. Johnson <robbat2@gentoo.org>
-Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: David Kaplan <david.kaplan@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20240421191728.32239-1-bp@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/trace_events.h |    2 +-
+ arch/x86/kernel/process_64.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -676,7 +676,7 @@ struct trace_event_file {
- 	}								\
- 	early_initcall(trace_init_perf_perm_##name);
+--- a/arch/x86/kernel/process_64.c
++++ b/arch/x86/kernel/process_64.c
+@@ -137,7 +137,7 @@ void __show_regs(struct pt_regs *regs, e
+ 		       log_lvl, d3, d6, d7);
+ 	}
  
--#define PERF_MAX_TRACE_SIZE	2048
-+#define PERF_MAX_TRACE_SIZE	8192
- 
- #define MAX_FILTER_STR_VAL	256U	/* Should handle KSYM_SYMBOL_LEN */
+-	if (cpu_feature_enabled(X86_FEATURE_OSPKE))
++	if (cr4 & X86_CR4_PKE)
+ 		printk("%sPKRU: %08x\n", log_lvl, read_pkru());
+ }
  
 
 
