@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB17412CDAE;
-	Tue, 30 Apr 2024 11:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9CB12CDAE;
+	Tue, 30 Apr 2024 11:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475556; cv=none; b=cyu9Ce0U5TSGNO0zcTlA33yp4KAyo/VvQ7ipsbFls++KA/uo3+9Rn6N7zmSaTI1LVc4v5i3QFxOE1SH9BD4Rn5OoPw1FEqfo4FQGLj6GJ9lhRVVhNH+38UrCFRcfYlVAiCx5kuYokKcoF/VjnaRkukDRsYlwbQUko/Be0BdaiB4=
+	t=1714475560; cv=none; b=LBOU7HUMzB/pyYCVibR0mi1o5dBRASK1HN5njqGds026O3ELIrhjURS3mUid5PBV8rWSxun96PKBhzB7Yb6ATHlpPV+ejQhvJDAxd9wdovNEW2EhJsRP8kBG3zXLamh0I+apqs1vAPL9MGUjqpyoOQRaM2KzRwae7jVVbpmdeqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475556; c=relaxed/simple;
-	bh=Ghssd5D9AYThsk4qoJ6xnTJnKLUVtoS6zOjnvFou/kE=;
+	s=arc-20240116; t=1714475560; c=relaxed/simple;
+	bh=kUy7hWKy7S0wwXMJzRXZjO71FhsvR+SvoczCeLHoNjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=py5baVR7UJcnYHx6gMOt21NY/gWJhCw8qQlzWWww2eOcucaGGIYzo/RJ98YykbwezW2qzIhhKDmNRAZPJxKQ/OxNwCzvA3t9d2qBteqXBPFNEkSbTUG8hvjg7PvZe1s+m1hSpOSK9ZucUnJLQymrJJ8ZkgJkEyr1GUBhBVod3H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m34S6+a7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XZrHcO7xVEtzcAaTvk8KeuIVfWBKTMAKpcK558MloL829j+Smj8OSkPGUD8gq1NJEsC1YB9UNV/r/G6D12zwYavP/k9O56TS+EjI01fxSGqqT+N8rr4VgNMp7NkWKdL0nkdXE5DwPvEeLbmfX+61QyeqVFaNR0X9fjklsFAEGPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7VQhomV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m34S6+a7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1712AC2BBFC;
-	Tue, 30 Apr 2024 11:12:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7VQhomV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF58C2BBFC;
+	Tue, 30 Apr 2024 11:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475556;
-	bh=Ghssd5D9AYThsk4qoJ6xnTJnKLUVtoS6zOjnvFou/kE=;
+	s=korg; t=1714475559;
+	bh=kUy7hWKy7S0wwXMJzRXZjO71FhsvR+SvoczCeLHoNjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m34S6+a7UZJpvqVjmNbR9gdD/Rw+bdMtroGFctlxpTnzW6Qop4unbcm/1u8qLVx1i
-	 ydNaDTmdfkeluDBWzC7iaG9x6QmwB15PWdTYEYdxHvJ9xIeKeVt84XWn8BwbkpwAtG
-	 J18j5nvP5Qsj/7f1O1J9B4vEbvw7aEg//8H1huW4=
+	b=F7VQhomVOuKbPQRByiya1rFQqQeac4FINxsaYtTsppuvBIMJkbvZsH0WIObcOaffu
+	 u0x9jNy80ftsf3Wo58OfN2nVs6dOdnjg6zX+viXzP7hRxhpLvsxpskv5MF5GspjwEV
+	 9pObOWRe37nThPzhwSLRRjII6JCO5G0JCPaBNxMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+510a1abbb8116eeb341d@syzkaller.appspotmail.com,
 	Qu Wenruo <wqu@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Johannes Thumshirn <Johannes.thumshirn@wdc.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 133/186] btrfs: scrub: run relocation repair when/only needed
-Date: Tue, 30 Apr 2024 12:39:45 +0200
-Message-ID: <20240430103101.892312292@linuxfoundation.org>
+Subject: [PATCH 6.6 134/186] btrfs: fix information leak in btrfs_ioctl_logical_to_ino()
+Date: Tue, 30 Apr 2024 12:39:46 +0200
+Message-ID: <20240430103101.921880698@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -52,69 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-commit 7192833c4e55b26e8f15ef58577867a1bc808036 upstream.
+commit 2f7ef5bb4a2f3e481ef05fab946edb97c84f67cf upstream.
 
-When btrfs scrub finds an error, it reads mirrors to find correct data. If
-all the errors are fixed, sctx->error_bitmap is cleared for the stripe
-range. However, in the zoned mode, it runs relocation to repair scrub
-errors when the bitmap is *not* empty, which is a flipped condition.
+Syzbot reported the following information leak for in
+btrfs_ioctl_logical_to_ino():
 
-Also, it runs the relocation even if the scrub is read-only. This was
-missed by a fix in commit 1f2030ff6e49 ("btrfs: scrub: respect the
-read-only flag during repair").
+  BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+  BUG: KMSAN: kernel-infoleak in _copy_to_user+0xbc/0x110 lib/usercopy.c:40
+   instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+   _copy_to_user+0xbc/0x110 lib/usercopy.c:40
+   copy_to_user include/linux/uaccess.h:191 [inline]
+   btrfs_ioctl_logical_to_ino+0x440/0x750 fs/btrfs/ioctl.c:3499
+   btrfs_ioctl+0x714/0x1260
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:904 [inline]
+   __se_sys_ioctl+0x261/0x450 fs/ioctl.c:890
+   __x64_sys_ioctl+0x96/0xe0 fs/ioctl.c:890
+   x64_sys_call+0x1883/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:17
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-The repair is only necessary when there is a repaired sector and should be
-done on read-write scrub. So, tweak the condition for both regular and
-zoned case.
+  Uninit was created at:
+   __kmalloc_large_node+0x231/0x370 mm/slub.c:3921
+   __do_kmalloc_node mm/slub.c:3954 [inline]
+   __kmalloc_node+0xb07/0x1060 mm/slub.c:3973
+   kmalloc_node include/linux/slab.h:648 [inline]
+   kvmalloc_node+0xc0/0x2d0 mm/util.c:634
+   kvmalloc include/linux/slab.h:766 [inline]
+   init_data_container+0x49/0x1e0 fs/btrfs/backref.c:2779
+   btrfs_ioctl_logical_to_ino+0x17c/0x750 fs/btrfs/ioctl.c:3480
+   btrfs_ioctl+0x714/0x1260
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:904 [inline]
+   __se_sys_ioctl+0x261/0x450 fs/ioctl.c:890
+   __x64_sys_ioctl+0x96/0xe0 fs/ioctl.c:890
+   x64_sys_call+0x1883/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:17
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fixes: 54765392a1b9 ("btrfs: scrub: introduce helper to queue a stripe for scrub")
-Fixes: 1f2030ff6e49 ("btrfs: scrub: respect the read-only flag during repair")
-CC: stable@vger.kernel.org # 6.6+
+  Bytes 40-65535 of 65536 are uninitialized
+  Memory access of size 65536 starts at ffff888045a40000
+
+This happens, because we're copying a 'struct btrfs_data_container' back
+to user-space. This btrfs_data_container is allocated in
+'init_data_container()' via kvmalloc(), which does not zero-fill the
+memory.
+
+Fix this by using kvzalloc() which zeroes out the memory on allocation.
+
+CC: stable@vger.kernel.org # 4.14+
+Reported-by:  <syzbot+510a1abbb8116eeb341d@syzkaller.appspotmail.com>
 Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Johannes Thumshirn <Johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/scrub.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ fs/btrfs/backref.c |   12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -1013,6 +1013,7 @@ static void scrub_stripe_read_repair_wor
- 	struct btrfs_fs_info *fs_info = sctx->fs_info;
- 	int num_copies = btrfs_num_copies(fs_info, stripe->bg->start,
- 					  stripe->bg->length);
-+	unsigned long repaired;
- 	int mirror;
- 	int i;
+--- a/fs/btrfs/backref.c
++++ b/fs/btrfs/backref.c
+@@ -2770,20 +2770,14 @@ struct btrfs_data_container *init_data_c
+ 	size_t alloc_bytes;
  
-@@ -1079,16 +1080,15 @@ out:
- 	 * Submit the repaired sectors.  For zoned case, we cannot do repair
- 	 * in-place, but queue the bg to be relocated.
- 	 */
--	if (btrfs_is_zoned(fs_info)) {
--		if (!bitmap_empty(&stripe->error_bitmap, stripe->nr_sectors))
-+	bitmap_andnot(&repaired, &stripe->init_error_bitmap, &stripe->error_bitmap,
-+		      stripe->nr_sectors);
-+	if (!sctx->readonly && !bitmap_empty(&repaired, stripe->nr_sectors)) {
-+		if (btrfs_is_zoned(fs_info)) {
- 			btrfs_repair_one_zone(fs_info, sctx->stripes[0].bg->start);
--	} else if (!sctx->readonly) {
--		unsigned long repaired;
+ 	alloc_bytes = max_t(size_t, total_bytes, sizeof(*data));
+-	data = kvmalloc(alloc_bytes, GFP_KERNEL);
++	data = kvzalloc(alloc_bytes, GFP_KERNEL);
+ 	if (!data)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	if (total_bytes >= sizeof(*data)) {
++	if (total_bytes >= sizeof(*data))
+ 		data->bytes_left = total_bytes - sizeof(*data);
+-		data->bytes_missing = 0;
+-	} else {
++	else
+ 		data->bytes_missing = sizeof(*data) - total_bytes;
+-		data->bytes_left = 0;
+-	}
 -
--		bitmap_andnot(&repaired, &stripe->init_error_bitmap,
--			      &stripe->error_bitmap, stripe->nr_sectors);
--		scrub_write_sectors(sctx, stripe, repaired, false);
--		wait_scrub_stripe_io(stripe);
-+		} else {
-+			scrub_write_sectors(sctx, stripe, repaired, false);
-+			wait_scrub_stripe_io(stripe);
-+		}
- 	}
+-	data->elem_cnt = 0;
+-	data->elem_missed = 0;
  
- 	scrub_stripe_report_errors(sctx, stripe);
+ 	return data;
+ }
 
 
