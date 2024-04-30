@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E4412BF32;
-	Tue, 30 Apr 2024 11:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4159212BF32;
+	Tue, 30 Apr 2024 11:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476567; cv=none; b=PHtqkrIgimCvTN4Y78yTOijbMvW3RCVfmOCQqk4ih8x/yRxZrWTnO0MzDoOhhksRZctFu5ae3vgxCgZucmaZdpEoEDCESaObc2Re9i3Fwz3hMKk2QdtoAb4jWAlMbw9VgQtK/Z99UzXzXbV5gdFhStc55ZYR8aeh7hLGCHxWiaU=
+	t=1714476570; cv=none; b=ADQaftnAyAVFdAlxrhhtDfz3/RANypoBoko5vG51GRg1RvfCf6KczTHO8IiVBWwlmnYS7TOC/W/S3ALZMvBJ3QYHbuHmft2EUG96OH1CA193wP+N9ASZy8uOrP6FwDnHTbcbBb5Z2UR24Z55TeVU5DaoCSuhHpExT8+hxMZm57c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476567; c=relaxed/simple;
-	bh=LBXcx3zeYADjd2H7AVArw+n6dtIIduAKI3WJ4R6NQp8=;
+	s=arc-20240116; t=1714476570; c=relaxed/simple;
+	bh=h1dxi7Q/RQbWeIUWsMbDtLxeGb7RwUM0SxPyCYIifg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/yb670QrRJpXGsKpk/ORz+zitWeD2llybM1YiDqO9oE9jREQD2OQ9EFcXj6oqtMub+kHTT9aA3q7jWUsx5Np3VUNm7XhEFkjF3JqE86syfokTGORICks8PH0bLDIrWkV95epxCdO9sfrVxp+s2gcXrhmRk67d4K7o9Iv3LZNkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6OHCyxv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kHemCYl9nAID3bD/NoPBMzu9jJKZy2yyHkq01mpm+EnTl1dSj3Xkbb9bvPENDGpFRVO+Nd53+qkX4cRzL29nHt12MtmK1SYl3vutg9IhbAztcuR/s3qYhOIhlF8oU6Eu0RzLL8F+N6sIGnDV1imqQ0zk9l35AB+ix2wPeSmLT3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YpOzaxPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6OHCyxv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95162C2BBFC;
-	Tue, 30 Apr 2024 11:29:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YpOzaxPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF77CC2BBFC;
+	Tue, 30 Apr 2024 11:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476567;
-	bh=LBXcx3zeYADjd2H7AVArw+n6dtIIduAKI3WJ4R6NQp8=;
+	s=korg; t=1714476570;
+	bh=h1dxi7Q/RQbWeIUWsMbDtLxeGb7RwUM0SxPyCYIifg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a6OHCyxvFaHlHR5NgrYPW/BeYyx9Oeb80yw665NiBmkmQlbEgIimCk/HNRnHrGCyC
-	 fd6c5zu+TZ4RAQuxTuBzteBj1EHPVL/aJGXzJtQVXsgfaZ6eU/T7edVPCVREbS64z5
-	 D27skiBv7V8TBFGVohNcgGbRmhLsbNlVb+dJcveU=
+	b=YpOzaxPS/X23vjrxTX95E9pP4U850nB6wBKIP10Pt8spxj0nYCQWXcFfAN5RJxc8s
+	 jvqnbvFB24h/2AlVdJCmeybY19syiNobQ/7EmhSis2dEOI3m2Q4duv+VBVzuGLgMaw
+	 /oqcDsz5BK/tYOSAyCEFqQNgVz6Qd0HmAE8h8DdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Jiri Kosina <jkosina@suse.com>,
-	Eva Kurchatova <nyandarknessgirl@gmail.com>
-Subject: [PATCH 6.1 072/110] HID: i2c-hid: remove I2C_HID_READ_PENDING flag to prevent lock-up
-Date: Tue, 30 Apr 2024 12:40:41 +0200
-Message-ID: <20240430103049.691797296@linuxfoundation.org>
+	syzbot+510a1abbb8116eeb341d@syzkaller.appspotmail.com,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Johannes Thumshirn <Johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 073/110] btrfs: fix information leak in btrfs_ioctl_logical_to_ino()
+Date: Tue, 30 Apr 2024 12:40:42 +0200
+Message-ID: <20240430103049.720552097@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -51,71 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-commit 9c0f59e47a90c54d0153f8ddc0f80d7a36207d0e upstream.
+commit 2f7ef5bb4a2f3e481ef05fab946edb97c84f67cf upstream.
 
-The flag I2C_HID_READ_PENDING is used to serialize I2C operations.
-However, this is not necessary, because I2C core already has its own
-locking for that.
+Syzbot reported the following information leak for in
+btrfs_ioctl_logical_to_ino():
 
-More importantly, this flag can cause a lock-up: if the flag is set in
-i2c_hid_xfer() and an interrupt happens, the interrupt handler
-(i2c_hid_irq) will check this flag and return immediately without doing
-anything, then the interrupt handler will be invoked again in an
-infinite loop.
+  BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+  BUG: KMSAN: kernel-infoleak in _copy_to_user+0xbc/0x110 lib/usercopy.c:40
+   instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+   _copy_to_user+0xbc/0x110 lib/usercopy.c:40
+   copy_to_user include/linux/uaccess.h:191 [inline]
+   btrfs_ioctl_logical_to_ino+0x440/0x750 fs/btrfs/ioctl.c:3499
+   btrfs_ioctl+0x714/0x1260
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:904 [inline]
+   __se_sys_ioctl+0x261/0x450 fs/ioctl.c:890
+   __x64_sys_ioctl+0x96/0xe0 fs/ioctl.c:890
+   x64_sys_call+0x1883/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:17
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Since interrupt handler is an RT task, it takes over the CPU and the
-flag-clearing task never gets scheduled, thus we have a lock-up.
+  Uninit was created at:
+   __kmalloc_large_node+0x231/0x370 mm/slub.c:3921
+   __do_kmalloc_node mm/slub.c:3954 [inline]
+   __kmalloc_node+0xb07/0x1060 mm/slub.c:3973
+   kmalloc_node include/linux/slab.h:648 [inline]
+   kvmalloc_node+0xc0/0x2d0 mm/util.c:634
+   kvmalloc include/linux/slab.h:766 [inline]
+   init_data_container+0x49/0x1e0 fs/btrfs/backref.c:2779
+   btrfs_ioctl_logical_to_ino+0x17c/0x750 fs/btrfs/ioctl.c:3480
+   btrfs_ioctl+0x714/0x1260
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:904 [inline]
+   __se_sys_ioctl+0x261/0x450 fs/ioctl.c:890
+   __x64_sys_ioctl+0x96/0xe0 fs/ioctl.c:890
+   x64_sys_call+0x1883/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:17
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Delete this unnecessary flag.
+  Bytes 40-65535 of 65536 are uninitialized
+  Memory access of size 65536 starts at ffff888045a40000
 
-Reported-and-tested-by: Eva Kurchatova <nyandarknessgirl@gmail.com>
-Closes: https://lore.kernel.org/r/CA+eeCSPUDpUg76ZO8dszSbAGn+UHjcyv8F1J-CUPVARAzEtW9w@mail.gmail.com
-Fixes: 4a200c3b9a40 ("HID: i2c-hid: introduce HID over i2c specification implementation")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+This happens, because we're copying a 'struct btrfs_data_container' back
+to user-space. This btrfs_data_container is allocated in
+'init_data_container()' via kvmalloc(), which does not zero-fill the
+memory.
+
+Fix this by using kvzalloc() which zeroes out the memory on allocation.
+
+CC: stable@vger.kernel.org # 4.14+
+Reported-by:  <syzbot+510a1abbb8116eeb341d@syzkaller.appspotmail.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Johannes Thumshirn <Johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c |    9 ---------
- 1 file changed, 9 deletions(-)
+ fs/btrfs/backref.c |   12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -61,7 +61,6 @@
- /* flags */
- #define I2C_HID_STARTED		0
- #define I2C_HID_RESET_PENDING	1
--#define I2C_HID_READ_PENDING	2
+--- a/fs/btrfs/backref.c
++++ b/fs/btrfs/backref.c
+@@ -2475,20 +2475,14 @@ struct btrfs_data_container *init_data_c
+ 	size_t alloc_bytes;
  
- #define I2C_HID_PWR_ON		0x00
- #define I2C_HID_PWR_SLEEP	0x01
-@@ -193,15 +192,10 @@ static int i2c_hid_xfer(struct i2c_hid *
- 		msgs[n].len = recv_len;
- 		msgs[n].buf = recv_buf;
- 		n++;
+ 	alloc_bytes = max_t(size_t, total_bytes, sizeof(*data));
+-	data = kvmalloc(alloc_bytes, GFP_KERNEL);
++	data = kvzalloc(alloc_bytes, GFP_KERNEL);
+ 	if (!data)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	if (total_bytes >= sizeof(*data)) {
++	if (total_bytes >= sizeof(*data))
+ 		data->bytes_left = total_bytes - sizeof(*data);
+-		data->bytes_missing = 0;
+-	} else {
++	else
+ 		data->bytes_missing = sizeof(*data) - total_bytes;
+-		data->bytes_left = 0;
+-	}
 -
--		set_bit(I2C_HID_READ_PENDING, &ihid->flags);
- 	}
+-	data->elem_cnt = 0;
+-	data->elem_missed = 0;
  
- 	ret = i2c_transfer(client->adapter, msgs, n);
- 
--	if (recv_len)
--		clear_bit(I2C_HID_READ_PENDING, &ihid->flags);
--
- 	if (ret != n)
- 		return ret < 0 ? ret : -EIO;
- 
-@@ -569,9 +563,6 @@ static irqreturn_t i2c_hid_irq(int irq,
- {
- 	struct i2c_hid *ihid = dev_id;
- 
--	if (test_bit(I2C_HID_READ_PENDING, &ihid->flags))
--		return IRQ_HANDLED;
--
- 	i2c_hid_get_input(ihid);
- 
- 	return IRQ_HANDLED;
+ 	return data;
+ }
 
 
