@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F1D12CD9B;
-	Tue, 30 Apr 2024 11:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABF512CD96;
+	Tue, 30 Apr 2024 11:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475262; cv=none; b=VES+HI/mxLkHtKldIoogB00uBAyRh/WsWC6KOm0lB1sSQUonokfAOL7y1XH0eTc06LWYfaE3C6jPuODktfLK/09OL1eNejPuNQqgHg2DOiNEoYQeqBF3a/D9L/AKskLMrwqQnYWGkfz8C79C2W8Q8kpqkprYZ370cGhEDhuiLyE=
+	t=1714475265; cv=none; b=PxjgYHGLtIvF+vRyhDQYLnfI5jV+62JO2+0I/0xLZiBWMquMgun99BljObb8akJ7SEclsEJ7BCU3YB/QeMb7Z53Ubhb0nGIcliQMeb1qGNQACEI2psUEV7f3NWUR3cMxrtwqIry2q+NzwrIqjqR/XCINXC2LJ9D20EiMntHRlP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475262; c=relaxed/simple;
-	bh=ieXGq9iDTKDY2YQzbcwOSu68tRwjw7f8O/zwc7+Usrg=;
+	s=arc-20240116; t=1714475265; c=relaxed/simple;
+	bh=5MTYlhQGztHr/eoHoZEeNm/cSiRL/SIbfC0PBUV9qq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cCFzr95YmWDdruKTUkrq12K8xz2sZJL35saPIr+C6O2TpVT2nsCmsUFBBW50ubHoZJ823n3cIZ1gzOwtgLsWEFG2Dq6XOLhEAPnQ5CymamYOEfAGYRjWGp8UhbhsjLVkqnAtbcwJ9dh/tQuea+v+jf5nENMTKyQkSSVq7ZqlUGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBmYNphS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ck9H4X83QgtXW5i7/O6ri/GqLwoNjqL9X6jeDfouymF+YJ1tKn0IbvOG5Stv7JgT3K+UjqNV7Y2nmOYn2rYlkHrjwDGNrAyTMr+WOcaXPjPAHr5e+tTA38trVBpysU7xGu356JB6ZvRf+zZYMIqKDbyy0QFLa1o/ZAmo4+p1Iyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebtI52bn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBmYNphS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D791C2BBFC;
-	Tue, 30 Apr 2024 11:07:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebtI52bn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3C8C2BBFC;
+	Tue, 30 Apr 2024 11:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475262;
-	bh=ieXGq9iDTKDY2YQzbcwOSu68tRwjw7f8O/zwc7+Usrg=;
+	s=korg; t=1714475265;
+	bh=5MTYlhQGztHr/eoHoZEeNm/cSiRL/SIbfC0PBUV9qq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xBmYNphSDk78dmRBDaVNzcj2YzEGyzLlMrIuU8J68ZmwGVUYG7cNAV5Dt2PQS28J/
-	 GDi+BKgjGUifGWjw/kW0t1CDJdha55dj0n969CfUr1/pnJd4HM1ghKpGciyn5oYNwk
-	 BJP/YnP+uwknPDDOKkS1F+Zy9ABjoNSYc7OR0a9E=
+	b=ebtI52bnoKoOlVbY+T5CyIAeNkNFrBRW97mFtbXpI9kXoaQ/UtkkO6O3Hte1O/Aio
+	 nu9eZw3PcWe8Fv5Z7hIVxcEPtgbYvRflyOoAVzuo++5qjQYu9BFhnVuTkcUVoCqNFb
+	 RV3p6ypZvVQgRKmdyAsITtX7Y9VrI4+/mK2c84og=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duanqiang Wen <duanqiangwen@net-swift.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Bauer <mail@david-bauer.net>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 044/186] net: libwx: fix alloc msix vectors failed
-Date: Tue, 30 Apr 2024 12:38:16 +0200
-Message-ID: <20240430103059.311606449@linuxfoundation.org>
+Subject: [PATCH 6.6 045/186] vxlan: drop packets from invalid src-address
+Date: Tue, 30 Apr 2024 12:38:17 +0200
+Message-ID: <20240430103059.339937793@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -51,41 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duanqiang Wen <duanqiangwen@net-swift.com>
+From: David Bauer <mail@david-bauer.net>
 
-[ Upstream commit 69197dfc64007b5292cc960581548f41ccd44828 ]
+[ Upstream commit f58f45c1e5b92975e91754f5407250085a6ae7cf ]
 
-driver needs queue msix vectors and one misc irq vector,
-but only queue vectors need irq affinity.
-when num_online_cpus is less than chip max msix vectors,
-driver will acquire (num_online_cpus + 1) vecotrs, and
-call pci_alloc_irq_vectors_affinity functions with affinity
-params without setting pre_vectors or post_vectors, it will
-cause return error code -ENOSPC.
-Misc irq vector is vector 0, driver need to set affinity params
-.pre_vectors = 1.
+The VXLAN driver currently does not check if the inner layer2
+source-address is valid.
 
-Fixes: 3f703186113f ("net: libwx: Add irq flow functions")
-Signed-off-by: Duanqiang Wen <duanqiangwen@net-swift.com>
+In case source-address snooping/learning is enabled, a entry in the FDB
+for the invalid address is created with the layer3 address of the tunnel
+endpoint.
+
+If the frame happens to have a non-unicast address set, all this
+non-unicast traffic is subsequently not flooded to the tunnel network
+but sent to the learnt host in the FDB. To make matters worse, this FDB
+entry does not expire.
+
+Apply the same filtering for packets as it is done for bridges. This not
+only drops these invalid packets but avoids them from being learnt into
+the FDB.
+
+Fixes: d342894c5d2f ("vxlan: virtual extensible lan")
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: David Bauer <mail@david-bauer.net>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_lib.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/vxlan/vxlan_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-index e078f4071dc23..be434c833c69c 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -1585,7 +1585,7 @@ static void wx_set_num_queues(struct wx *wx)
-  */
- static int wx_acquire_msix_vectors(struct wx *wx)
- {
--	struct irq_affinity affd = {0, };
-+	struct irq_affinity affd = { .pre_vectors = 1 };
- 	int nvecs, i;
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 99ede13124194..ecdf0276004f9 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -1615,6 +1615,10 @@ static bool vxlan_set_mac(struct vxlan_dev *vxlan,
+ 	if (ether_addr_equal(eth_hdr(skb)->h_source, vxlan->dev->dev_addr))
+ 		return false;
  
- 	nvecs = min_t(int, num_online_cpus(), wx->mac.max_msix_vectors);
++	/* Ignore packets from invalid src-address */
++	if (!is_valid_ether_addr(eth_hdr(skb)->h_source))
++		return false;
++
+ 	/* Get address from the outer IP header */
+ 	if (vxlan_get_sk_family(vs) == AF_INET) {
+ 		saddr.sin.sin_addr.s_addr = ip_hdr(skb)->saddr;
 -- 
 2.43.0
 
