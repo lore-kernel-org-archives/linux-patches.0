@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D3D12C462;
-	Tue, 30 Apr 2024 10:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9085412C47A;
+	Tue, 30 Apr 2024 10:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474526; cv=none; b=Z7jDpbAzX4tnq1LrdhbiWNa5M4k2uuHgQIX5jY7XKhoLCTh92a8aNRbpuIwtXw0nNBZu5xgHcQkiqRhqiZl45C7QuVt86CsQyDG/eS0rQfiISWXxPcEDKFn8pO0EWsyn9FPWsO9ipUqgar2i3EJNm/gjmBTpwuTwpQjOFKiaUeM=
+	t=1714474529; cv=none; b=EOHWt8pHy0fVNogsYDC0YuuDiMgp54swJBPy5Ru44evk6iZXPXjv57Zjv9EWK4LXW8XCinJhSnYz2hMT+zljx5inhKEBRgudRETDKsiyrxqZFrK9n21TXYN/X6UrI5t6qwjiG8cPk9U+IPLPki5ynq/2a2lvEsuaOsnrvIWT2/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474526; c=relaxed/simple;
-	bh=ccxykEZmSWeVMumi4I37R+0OcieXeser6G/C2bpKr4g=;
+	s=arc-20240116; t=1714474529; c=relaxed/simple;
+	bh=FJVCFCmbA8z00j5VuAr1u5A3pYl7BfJCI6eNk6DT/u4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=THbtWwErqU/0T84iKhF6yV2jtvuo2JuJvO2cDYzdx9IorSPA2/xq0QDyWjNBl+Yzh8ec5jZF72FBBi0GN3LwrFzrmPJm4LX9lkUzc1aZPCWnwoQ3D02Xu9owQL5dyFx+Bu39eqC2IXSsmiCJLTAqXtjBaqfZV1SPmJuRdpSS480=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpAES3kE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gvTb/5INTb+Y6JOs+yaPZRO52NFOpXH3xJdxl85LJzKFX4RV+bDede63E2VF/tAVcCZ+XvCKago+0n4fmzYMcVcktFn7Zz2EVGxETh7WmWtS1SduDgwBMHUetggSh19gZiF0g11zssT+Cy9QVbwpONIPcy3sOG7yPowQScGkMlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJ+zOF0d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpAES3kE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FF7C2BBFC;
-	Tue, 30 Apr 2024 10:55:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJ+zOF0d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A56CC2BBFC;
+	Tue, 30 Apr 2024 10:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474526;
-	bh=ccxykEZmSWeVMumi4I37R+0OcieXeser6G/C2bpKr4g=;
+	s=korg; t=1714474529;
+	bh=FJVCFCmbA8z00j5VuAr1u5A3pYl7BfJCI6eNk6DT/u4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JpAES3kEUxiACXWxSSsaXJU2mpBz/2fPgx+r3GCQN9c0qGGerHJtyI3Cn/5Ir/Yld
-	 wIfaht8v5sMMGaovVtCisI982ZUHnKufWu621RbM9AkbS/Ez4rtSjOSSu1Mc7MuERN
-	 Frodoyek3TmSIlHyPaaO20i3o6NcmZbz9SMl0hjI=
+	b=dJ+zOF0dhIuuLFaZbq3yIpJFADdvbPq90S7g+p2KNWurwjPecA5lhyh8HXtIoE97c
+	 SkRh8FON8fDmCdsuoQ1hWsyLuXMqy6eKxbAlQUT/Nj0YfAdgAee0elMXxdqJjD+7hG
+	 jhj2rNRG4p4h6xkhy0txB3JsjqpuQqrR9PnPtLK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.8 146/228] mtd: rawnand: qcom: Fix broken OP_RESET_DEVICE command in qcom_misc_cmd_type_exec()
-Date: Tue, 30 Apr 2024 12:38:44 +0200
-Message-ID: <20240430103108.021601111@linuxfoundation.org>
+	Peter Xu <peterx@redhat.com>,
+	syzbot+4b8077a5fccc61c385a1@syzkaller.appspotmail.com,
+	Mina Almasry <almasrymina@google.com>,
+	David Hildenbrand <david@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.8 147/228] mm/hugetlb: fix missing hugetlb_lock for resv uncharge
+Date: Tue, 30 Apr 2024 12:38:45 +0200
+Message-ID: <20240430103108.050279662@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -51,54 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Peter Xu <peterx@redhat.com>
 
-commit b61bb5bc2c1cd00bb53db42f705735db6e8700f0 upstream.
+commit b76b46902c2d0395488c8412e1116c2486cdfcb2 upstream.
 
-While migrating to exec_ops in commit a82990c8a409 ("mtd: rawnand: qcom:
-Add read/read_start ops in exec_op path"), OP_RESET_DEVICE command handling
-got broken unintentionally. Right now for the OP_RESET_DEVICE command,
-qcom_misc_cmd_type_exec() will simply return 0 without handling it. Even,
-if that gets fixed, an unnecessary FLASH_STATUS read descriptor command is
-being added in the middle and that seems to be causing the command to fail
-on IPQ806x devices.
+There is a recent report on UFFDIO_COPY over hugetlb:
 
-So let's fix the above two issues to make OP_RESET_DEVICE command working
-again.
+https://lore.kernel.org/all/000000000000ee06de0616177560@google.com/
 
-Fixes: a82990c8a409 ("mtd: rawnand: qcom: Add read/read_start ops in exec_op path")
-Cc: stable@vger.kernel.org
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240404083157.940-1-ansuelsmth@gmail.com
+350:	lockdep_assert_held(&hugetlb_lock);
+
+Should be an issue in hugetlb but triggered in an userfault context, where
+it goes into the unlikely path where two threads modifying the resv map
+together.  Mike has a fix in that path for resv uncharge but it looks like
+the locking criteria was overlooked: hugetlb_cgroup_uncharge_folio_rsvd()
+will update the cgroup pointer, so it requires to be called with the lock
+held.
+
+Link: https://lkml.kernel.org/r/20240417211836.2742593-3-peterx@redhat.com
+Fixes: 79aa925bf239 ("hugetlb_cgroup: fix reservation accounting")
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Reported-by: syzbot+4b8077a5fccc61c385a1@syzkaller.appspotmail.com
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/qcom_nandc.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ mm/hugetlb.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/qcom_nandc.c
-+++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -2815,7 +2815,7 @@ static int qcom_misc_cmd_type_exec(struc
- 			      host->cfg0_raw & ~(7 << CW_PER_PAGE));
- 		nandc_set_reg(chip, NAND_DEV0_CFG1, host->cfg1_raw);
- 		instrs = 3;
--	} else {
-+	} else if (q_op.cmd_reg != OP_RESET_DEVICE) {
- 		return 0;
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -3266,9 +3266,12 @@ struct folio *alloc_hugetlb_folio(struct
+ 
+ 		rsv_adjust = hugepage_subpool_put_pages(spool, 1);
+ 		hugetlb_acct_memory(h, -rsv_adjust);
+-		if (deferred_reserve)
++		if (deferred_reserve) {
++			spin_lock_irq(&hugetlb_lock);
+ 			hugetlb_cgroup_uncharge_folio_rsvd(hstate_index(h),
+ 					pages_per_huge_page(h), folio);
++			spin_unlock_irq(&hugetlb_lock);
++		}
  	}
  
-@@ -2830,9 +2830,8 @@ static int qcom_misc_cmd_type_exec(struc
- 	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
- 
- 	write_reg_dma(nandc, NAND_FLASH_CMD, instrs, NAND_BAM_NEXT_SGL);
--	(q_op.cmd_reg == OP_BLOCK_ERASE) ? write_reg_dma(nandc, NAND_DEV0_CFG0,
--	2, NAND_BAM_NEXT_SGL) : read_reg_dma(nandc,
--	NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
-+	if (q_op.cmd_reg == OP_BLOCK_ERASE)
-+		write_reg_dma(nandc, NAND_DEV0_CFG0, 2, NAND_BAM_NEXT_SGL);
- 
- 	write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
- 	read_reg_dma(nandc, NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
+ 	if (!memcg_charge_ret)
 
 
