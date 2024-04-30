@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019B412C49E;
-	Tue, 30 Apr 2024 10:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD7412CDA5;
+	Tue, 30 Apr 2024 10:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473842; cv=none; b=E4YWxb9azUdw6x+ERmiP+B4hSTpaM4vZiaf7vhRhC1QSopH6z15J20qtha7bBDEhRwy1WAteriq8CNlGK6JOO0KROlrUk3xUy31pfH48xA28CWuk6Ah7rvywoUI5Dj5E5WHy3kYduQIbXBtqbX+Bmlut9De5WINamsLiDm+rKQ4=
+	t=1714473845; cv=none; b=LgH9HnOnWSVu2/MR42Gyk2QZXO833HgUFoYNhXm5Q61qp4a1dS0aq66u91uEde68b0ANePifghKs1gk5muyFka+OIVrQ42yvTfRNdlCWBkDKWDQk+oGUYsQGcn8CPWkC6GzlzheeDxuIfOKQERHqGikDqc8JBAakOTHgMZxwYLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473842; c=relaxed/simple;
-	bh=7bDadnZU89zv16zi0xSwLJzP6Xu9xu2O3gyIwbt3NwQ=;
+	s=arc-20240116; t=1714473845; c=relaxed/simple;
+	bh=OxXseO1Qkdite7mGXlN1pH0zpXM2Wy/Bqxc8VpptDa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eUPLEKk36W6VmmIe41p11SiXuy00TyA1W/QuxqA3H0lBjchle9FG86TxloLgZtmQfqhF1Btir6X1s5qaVyiDoAcm1PXqwGtnZ0mWZvH/xQYpqARK0BqoS2eIjBbKXkG+butoi3QBLlCfXeL1XJ+Os9MF8Vj33aWE38I/uQPHUiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJMHJG5D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lOsyCoj2wTMj8Zd8MUpY2NLK9aX9Lv6gzmiwnhZuKCrOMeyFPBkADhN6phyCa1a5IjtbCruvEB/VYVB7mOS+Q2WFVnuNUHp+ygIJWqHN5gOwdbjXLWowKsk5cZmjwLMkmK09/B9GZeSEIYXYIPC6QbWQNL0CicTTKU/aZ3Dazgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDhl79sE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJMHJG5D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79BD2C2BBFC;
-	Tue, 30 Apr 2024 10:44:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDhl79sE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66678C4AF14;
+	Tue, 30 Apr 2024 10:44:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473841;
-	bh=7bDadnZU89zv16zi0xSwLJzP6Xu9xu2O3gyIwbt3NwQ=;
+	s=korg; t=1714473844;
+	bh=OxXseO1Qkdite7mGXlN1pH0zpXM2Wy/Bqxc8VpptDa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rJMHJG5DcFOl3oZYhdNZY4m7qm0UUUCzpJUgkz9O0CJCeSb9mLaxH9qAlqqqnjZEN
-	 dErTBil7Y/umR+0cxS29RQLAYuZLkVDG5P2ro98THUpN+dZXAnfD5HQhFEioJI2PrK
-	 K157GUQ73mbQbS4kNfG3+A2OKEuzNY69E6xLT138=
+	b=FDhl79sEyAKu3UMAyK6ljxBQ0liyWvyeRLEf04WlyzbPtRd/4269LyOVIfO9Oy1uE
+	 iuprVxSW73WKVb8HMUvKFl2tz0lHMh/UZSCNucVUBPt5cQR298fvuLO3zsjONxhOUZ
+	 BMTagaHc9lW68EudROx2hmcfb29qbECKbCdNUAoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Emil Kronborg <emil.kronborg@protonmail.com>,
+	Lei Chen <lei.chen@smartx.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 54/77] serial: mxs-auart: add spinlock around changing cts state
-Date: Tue, 30 Apr 2024 12:39:33 +0200
-Message-ID: <20240430103042.732668552@linuxfoundation.org>
+Subject: [PATCH 4.19 19/77] tun: limit printing rate when illegal packet received by tun dev
+Date: Tue, 30 Apr 2024 12:38:58 +0200
+Message-ID: <20240430103041.694052409@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -51,65 +55,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Kronborg <emil.kronborg@protonmail.com>
+From: Lei Chen <lei.chen@smartx.com>
 
-[ Upstream commit 54c4ec5f8c471b7c1137a1f769648549c423c026 ]
+[ Upstream commit f8bbc07ac535593139c875ffa19af924b1084540 ]
 
-The uart_handle_cts_change() function in serial_core expects the caller
-to hold uport->lock. For example, I have seen the below kernel splat,
-when the Bluetooth driver is loaded on an i.MX28 board.
+vhost_worker will call tun call backs to receive packets. If too many
+illegal packets arrives, tun_do_read will keep dumping packet contents.
+When console is enabled, it will costs much more cpu time to dump
+packet and soft lockup will be detected.
 
-    [   85.119255] ------------[ cut here ]------------
-    [   85.124413] WARNING: CPU: 0 PID: 27 at /drivers/tty/serial/serial_core.c:3453 uart_handle_cts_change+0xb4/0xec
-    [   85.134694] Modules linked in: hci_uart bluetooth ecdh_generic ecc wlcore_sdio configfs
-    [   85.143314] CPU: 0 PID: 27 Comm: kworker/u3:0 Not tainted 6.6.3-00021-gd62a2f068f92 #1
-    [   85.151396] Hardware name: Freescale MXS (Device Tree)
-    [   85.156679] Workqueue: hci0 hci_power_on [bluetooth]
-    (...)
-    [   85.191765]  uart_handle_cts_change from mxs_auart_irq_handle+0x380/0x3f4
-    [   85.198787]  mxs_auart_irq_handle from __handle_irq_event_percpu+0x88/0x210
-    (...)
+net_ratelimit mechanism can be used to limit the dumping rate.
 
-Cc: stable@vger.kernel.org
-Fixes: 4d90bb147ef6 ("serial: core: Document and assert lock requirements for irq helpers")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Emil Kronborg <emil.kronborg@protonmail.com>
-Link: https://lore.kernel.org/r/20240320121530.11348-1-emil.kronborg@protonmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+PID: 33036    TASK: ffff949da6f20000  CPU: 23   COMMAND: "vhost-32980"
+ #0 [fffffe00003fce50] crash_nmi_callback at ffffffff89249253
+ #1 [fffffe00003fce58] nmi_handle at ffffffff89225fa3
+ #2 [fffffe00003fceb0] default_do_nmi at ffffffff8922642e
+ #3 [fffffe00003fced0] do_nmi at ffffffff8922660d
+ #4 [fffffe00003fcef0] end_repeat_nmi at ffffffff89c01663
+    [exception RIP: io_serial_in+20]
+    RIP: ffffffff89792594  RSP: ffffa655314979e8  RFLAGS: 00000002
+    RAX: ffffffff89792500  RBX: ffffffff8af428a0  RCX: 0000000000000000
+    RDX: 00000000000003fd  RSI: 0000000000000005  RDI: ffffffff8af428a0
+    RBP: 0000000000002710   R8: 0000000000000004   R9: 000000000000000f
+    R10: 0000000000000000  R11: ffffffff8acbf64f  R12: 0000000000000020
+    R13: ffffffff8acbf698  R14: 0000000000000058  R15: 0000000000000000
+    ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
+ #5 [ffffa655314979e8] io_serial_in at ffffffff89792594
+ #6 [ffffa655314979e8] wait_for_xmitr at ffffffff89793470
+ #7 [ffffa65531497a08] serial8250_console_putchar at ffffffff897934f6
+ #8 [ffffa65531497a20] uart_console_write at ffffffff8978b605
+ #9 [ffffa65531497a48] serial8250_console_write at ffffffff89796558
+ #10 [ffffa65531497ac8] console_unlock at ffffffff89316124
+ #11 [ffffa65531497b10] vprintk_emit at ffffffff89317c07
+ #12 [ffffa65531497b68] printk at ffffffff89318306
+ #13 [ffffa65531497bc8] print_hex_dump at ffffffff89650765
+ #14 [ffffa65531497ca8] tun_do_read at ffffffffc0b06c27 [tun]
+ #15 [ffffa65531497d38] tun_recvmsg at ffffffffc0b06e34 [tun]
+ #16 [ffffa65531497d68] handle_rx at ffffffffc0c5d682 [vhost_net]
+ #17 [ffffa65531497ed0] vhost_worker at ffffffffc0c644dc [vhost]
+ #18 [ffffa65531497f10] kthread at ffffffff892d2e72
+ #19 [ffffa65531497f50] ret_from_fork at ffffffff89c0022f
+
+Fixes: ef3db4a59542 ("tun: avoid BUG, dump packet on GSO errors")
+Signed-off-by: Lei Chen <lei.chen@smartx.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://lore.kernel.org/r/20240415020247.2207781-1-lei.chen@smartx.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/mxs-auart.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/tun.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/tty/serial/mxs-auart.c b/drivers/tty/serial/mxs-auart.c
-index 63810eefa44b8..9ac2f21be8d72 100644
---- a/drivers/tty/serial/mxs-auart.c
-+++ b/drivers/tty/serial/mxs-auart.c
-@@ -1128,11 +1128,13 @@ static void mxs_auart_set_ldisc(struct uart_port *port,
- 
- static irqreturn_t mxs_auart_irq_handle(int irq, void *context)
- {
--	u32 istat;
-+	u32 istat, stat;
- 	struct mxs_auart_port *s = context;
- 	u32 mctrl_temp = s->mctrl_prev;
--	u32 stat = mxs_read(s, REG_STAT);
- 
-+	uart_port_lock(&s->port);
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index 625525275539a..5d1502772fb8e 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -2168,14 +2168,16 @@ static ssize_t tun_put_user(struct tun_struct *tun,
+ 					    tun_is_little_endian(tun), true,
+ 					    vlan_hlen)) {
+ 			struct skb_shared_info *sinfo = skb_shinfo(skb);
+-			pr_err("unexpected GSO type: "
+-			       "0x%x, gso_size %d, hdr_len %d\n",
+-			       sinfo->gso_type, tun16_to_cpu(tun, gso.gso_size),
+-			       tun16_to_cpu(tun, gso.hdr_len));
+-			print_hex_dump(KERN_ERR, "tun: ",
+-				       DUMP_PREFIX_NONE,
+-				       16, 1, skb->head,
+-				       min((int)tun16_to_cpu(tun, gso.hdr_len), 64), true);
 +
-+	stat = mxs_read(s, REG_STAT);
- 	istat = mxs_read(s, REG_INTR);
- 
- 	/* ack irq */
-@@ -1168,6 +1170,8 @@ static irqreturn_t mxs_auart_irq_handle(int irq, void *context)
- 		istat &= ~AUART_INTR_TXIS;
- 	}
- 
-+	uart_port_unlock(&s->port);
-+
- 	return IRQ_HANDLED;
- }
- 
++			if (net_ratelimit()) {
++				netdev_err(tun->dev, "unexpected GSO type: 0x%x, gso_size %d, hdr_len %d\n",
++					   sinfo->gso_type, tun16_to_cpu(tun, gso.gso_size),
++					   tun16_to_cpu(tun, gso.hdr_len));
++				print_hex_dump(KERN_ERR, "tun: ",
++					       DUMP_PREFIX_NONE,
++					       16, 1, skb->head,
++					       min((int)tun16_to_cpu(tun, gso.hdr_len), 64), true);
++			}
+ 			WARN_ON_ONCE(1);
+ 			return -EINVAL;
+ 		}
 -- 
 2.43.0
 
