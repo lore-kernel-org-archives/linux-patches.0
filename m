@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DEC1E50A;
-	Tue, 30 Apr 2024 11:10:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2700D12C46E;
+	Tue, 30 Apr 2024 11:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475411; cv=none; b=UcbvAGbsuDaqoYq9aU0tz1+t0lGNC+8aGCvwoQktBEi1OIDp9Z5CZL1SNGBxcmV1cB/FawV3oZ0LYm1LGerbafOkPlpcM3a2VDPsBlPY3kj9/TGl02i4kByFqkoIwTvD2ZYxY2+RE20W7h3HRqrf3V4PDRSsfZKujvVpqJTjEK8=
+	t=1714475414; cv=none; b=hLtch0u9x9VE+4DBFrbO5XFvMo4/ndI7GoZ7fypLWlK+ir67vwQ4lAtEVrxOYYrbb6t2txF6UuHu0mAk7MI9/wgaBo2FBS0K+HA9ksG2OCObBp6Kt7N7ITBNATzNJtynMRhF8ePUg0lZzn/x/DjR1oNikJXQb1EePtPCsjLXQT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475411; c=relaxed/simple;
-	bh=ruFcnDPBcK9qXr5wSPzOCISlrudimcnwMaurYehdjco=;
+	s=arc-20240116; t=1714475414; c=relaxed/simple;
+	bh=X5ozm7nw+7sCi/XqNl1WqpacrqUoihbfuzfmA+0C1G4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHaU2ukva7EVTqj2CRBSRPbhua4MW9c6Id7saP9e/ghDRw0ezkABP5SksD9EWRStTa+1/fS+wnX+qwhosCOMxF0QxV3WPGm6FoOxVTO4h4tUYaACBM4xZKPzYk7DSUpBaIdpXcNyrD8Diu3d7j66S+i6WNI3JsoUSGRuHU9qapU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbOpp5R1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TYYnVD/CgSaF2x+X1piKf34fP5xvn+Rp5WNZk13skthwjmemTlTeWsA7Rzasfk53+uhjaZINoqLSUAFONfyMtms+vt+yvL11MAlkWfD0qts5GUe6BcwevD0bo6d/ndIyUpX2gKNu6N0kIDg3D3m50jk80UmfiOIjwQui05XbGo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qpJb3uZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbOpp5R1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 928D6C2BBFC;
-	Tue, 30 Apr 2024 11:10:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qpJb3uZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4409C2BBFC;
+	Tue, 30 Apr 2024 11:10:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475411;
-	bh=ruFcnDPBcK9qXr5wSPzOCISlrudimcnwMaurYehdjco=;
+	s=korg; t=1714475414;
+	bh=X5ozm7nw+7sCi/XqNl1WqpacrqUoihbfuzfmA+0C1G4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LbOpp5R1gh+a0B68F1NOA+3WJqtuZzE/GJwWnu5gWKqgJ2iwiNo9frNUtx1YLCni+
-	 PGDJVko1luBCwAiESOHSxnY1WKXe1P6nZnAqEBCTeUWqTMYYHEismH8FAe21qOt2EM
-	 mAfGCzoVVu3jFPflbS545OS7XbAm1dAExuz9puUk=
+	b=1qpJb3uZDpc3OIkcDW7BLgKWZ092rQ3cbLrI8YqJ3GI4RI1w6ukknik38xhHAitI4
+	 mddFz+j2Djly2bP27JWS+LTA4KcTwU8R1FYZOYuxZF8ca+SJTKsT7SoHdPf+SkasSa
+	 iUVUAh91Cno3cFSk3DfHSlxOJpgmmdFIZmrkXDLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Roger Quadros <rogerq@kernel.org>,
 	MD Danish Anwar <danishanwar@ti.com>,
-	Ravi Gunasekaran <r-gunasekaran@ti.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 087/186] net: phy: dp83869: Fix MII mode failure
-Date: Tue, 30 Apr 2024 12:38:59 +0200
-Message-ID: <20240430103100.559513024@linuxfoundation.org>
+Subject: [PATCH 6.6 088/186] net: ti: icssg-prueth: Fix signedness bug in prueth_init_rx_chns()
+Date: Tue, 30 Apr 2024 12:39:00 +0200
+Message-ID: <20240430103100.587928278@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -52,48 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: MD Danish Anwar <danishanwar@ti.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 6c9cd59dbcb09a2122b5ce0dfc07c74e6fc00dc0 ]
+[ Upstream commit 4dcd0e83ea1d1df9b2e0174a6d3e795b3477d64e ]
 
-The DP83869 driver sets the MII bit (needed for PHY to work in MII mode)
-only if the op-mode is either DP83869_100M_MEDIA_CONVERT or
-DP83869_RGMII_100_BASE.
+The rx_chn->irq[] array is unsigned int but it should be signed for the
+error handling to work.  Also if k3_udma_glue_rx_get_irq() returns zero
+then we should return -ENXIO instead of success.
 
-Some drivers i.e. ICSSG support MII mode with op-mode as
-DP83869_RGMII_COPPER_ETHERNET for which the MII bit is not set in dp83869
-driver. As a result MII mode on ICSSG doesn't work and below log is seen.
-
-TI DP83869 300b2400.mdio:0f: selected op-mode is not valid with MII mode
-icssg-prueth icssg1-eth: couldn't connect to phy ethernet-phy@0
-icssg-prueth icssg1-eth: can't phy connect port MII0
-
-Fix this by setting MII bit for DP83869_RGMII_COPPER_ETHERNET op-mode as
-well.
-
-Fixes: 94e86ef1b801 ("net: phy: dp83869: support mii mode when rgmii strap cfg is used")
-Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
-Reviewed-by: Ravi Gunasekaran <r-gunasekaran@ti.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 128d5874c082 ("net: ti: icssg-prueth: Add ICSSG ethernet driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Reviewed-by: MD Danish Anwar <danishanwar@ti.com>
+Link: https://lore.kernel.org/r/05282415-e7f4-42f3-99f8-32fde8f30936@moroto.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/dp83869.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ti/icssg/icssg_prueth.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/dp83869.c b/drivers/net/phy/dp83869.c
-index fa8c6fdcf3018..d7aaefb5226b6 100644
---- a/drivers/net/phy/dp83869.c
-+++ b/drivers/net/phy/dp83869.c
-@@ -695,7 +695,8 @@ static int dp83869_configure_mode(struct phy_device *phydev,
- 	phy_ctrl_val = dp83869->mode;
- 	if (phydev->interface == PHY_INTERFACE_MODE_MII) {
- 		if (dp83869->mode == DP83869_100M_MEDIA_CONVERT ||
--		    dp83869->mode == DP83869_RGMII_100_BASE) {
-+		    dp83869->mode == DP83869_RGMII_100_BASE ||
-+		    dp83869->mode == DP83869_RGMII_COPPER_ETHERNET) {
- 			phy_ctrl_val |= DP83869_OP_MODE_MII;
- 		} else {
- 			phydev_err(phydev, "selected op-mode is not valid with MII mode\n");
+diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.c b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
+index c09ecb3da7723..925044c16c6ae 100644
+--- a/drivers/net/ethernet/ti/icssg/icssg_prueth.c
++++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
+@@ -421,12 +421,14 @@ static int prueth_init_rx_chns(struct prueth_emac *emac,
+ 		if (!i)
+ 			fdqring_id = k3_udma_glue_rx_flow_get_fdq_id(rx_chn->rx_chn,
+ 								     i);
+-		rx_chn->irq[i] = k3_udma_glue_rx_get_irq(rx_chn->rx_chn, i);
+-		if (rx_chn->irq[i] <= 0) {
+-			ret = rx_chn->irq[i];
++		ret = k3_udma_glue_rx_get_irq(rx_chn->rx_chn, i);
++		if (ret <= 0) {
++			if (!ret)
++				ret = -ENXIO;
+ 			netdev_err(ndev, "Failed to get rx dma irq");
+ 			goto fail;
+ 		}
++		rx_chn->irq[i] = ret;
+ 	}
+ 
+ 	return 0;
 -- 
 2.43.0
 
