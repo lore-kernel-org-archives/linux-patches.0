@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568A68801;
-	Tue, 30 Apr 2024 11:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4633E8801;
+	Tue, 30 Apr 2024 11:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476229; cv=none; b=fj2ppC67Ygwd/nrXoBpIB/dkRS9engNGual8fBiJO8ks7yqTz8tgCa4uajjA5ydq5l3V26zQsdIp9aOaFba81StT2Bdw1GztyYTmJGducjzQzFN8eRbC677RgbIn0Q2mcM1VnDP6qKkAwpi46qwbOnQ4E1Mj0hvJFb5dapnYHJI=
+	t=1714476232; cv=none; b=KOVOdYklu9FD+IzGa48QRDlB8ZFaSpXMoZCkDUmvfjDyyzc27gvxbh5/dgy/vImRqIvXe9qgEZcSejVzpAzl9XQniA2WrhtAwpMpQ24iMy4Loezj93C9ztX0mmBsyN8rfDK84Ze0fpVErmCiHpcMhI+JO91HouzgscztaStzYAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476229; c=relaxed/simple;
-	bh=Wv51L9a5mXv3GwcNmiT2/Y+t+pkOaZ/GeULdGgrOSJo=;
+	s=arc-20240116; t=1714476232; c=relaxed/simple;
+	bh=et/evpRVxLl3KeVrgIEWZTsxizSPvD1LzqxTZwXJC0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=phmdKYb/lMq7T3ZwwwsMqB33SiraAKg3ejYZdGUBXB3luE0xvpvPHz4fcv2J9TmJmhFKqHs9MER4dc7VB/7lrPN8IrYMcgt/hZVQwWAwyGWLw7ncf+mtsQn8AQLSOmrj5sOLOwCki4fdbu1AvhHJJ+Cjk2Y0mGf3jBKM0jaX/L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzbqvX48; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lhm6BebmPbubvtBMVhdIypHHgDtPRJT0Oyq9ZTYYMrw0AA2HN87lzE9X4Io3Zgi1pzqx/vJeNfovdBWtEFA6Fo9L3jFFKEI+DDHK1m+RXWgiZ48FzpF3sh5POnjGLTs5AzSpQtCyE1KrCRi7GKIWkI+fxNvWnDxNTwPGog/Kep4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XevwZyQl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzbqvX48"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75186C2BBFC;
-	Tue, 30 Apr 2024 11:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XevwZyQl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95F3C4AF1A;
+	Tue, 30 Apr 2024 11:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476228;
-	bh=Wv51L9a5mXv3GwcNmiT2/Y+t+pkOaZ/GeULdGgrOSJo=;
+	s=korg; t=1714476232;
+	bh=et/evpRVxLl3KeVrgIEWZTsxizSPvD1LzqxTZwXJC0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SzbqvX48p2Mh5KOZ1wjbse+JwswqFsqFPyfUavDpGlY8dbww5DTBRTi4ZRV0udXBA
-	 LlcIHuRK2/EzmCnAHidCcyl11v5MNyNZGSYhEob/+N4Q/XVpndtjRT1d0HRPtLVc75
-	 GsJo5xYc/EkUHmdaGMX/F+vfl6Iqp4UlzP9UAgS4=
+	b=XevwZyQl8bd/owcj8wIC6pW7NP2hWWtsMHeLsERAHfwdWd4mNpLB3ChJySiBhR7WG
+	 qSOZqTvPJEU0d2w2Br4gK5doH3mz0iDNlWPHAlITVjw9BQbKGOOOh19ZGWIUDNcCSo
+	 MXndxohhmienJx14ZxF7OtsDBu6H27bk08wgsD5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 073/107] mlxsw: spectrum_acl_tcam: Fix warning during rehash
-Date: Tue, 30 Apr 2024 12:40:33 +0200
-Message-ID: <20240430103046.810215047@linuxfoundation.org>
+Subject: [PATCH 5.4 074/107] mlxsw: spectrum_acl_tcam: Fix incorrect list API usage
+Date: Tue, 30 Apr 2024 12:40:34 +0200
+Message-ID: <20240430103046.839839701@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -56,48 +56,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 743edc8547a92b6192aa1f1b6bb78233fa21dc9b ]
+[ Upstream commit b377add0f0117409c418ddd6504bd682ebe0bf79 ]
 
-As previously explained, the rehash delayed work migrates filters from
-one region to another. This is done by iterating over all chunks (all
-the filters with the same priority) in the region and in each chunk
-iterating over all the filters.
+Both the function that migrates all the chunks within a region and the
+function that migrates all the entries within a chunk call
+list_first_entry() on the respective lists without checking that the
+lists are not empty. This is incorrect usage of the API, which leads to
+the following warning [1].
 
-When the work runs out of credits it stores the current chunk and entry
-as markers in the per-work context so that it would know where to resume
-the migration from the next time the work is scheduled.
-
-Upon error, the chunk marker is reset to NULL, but without resetting the
-entry markers despite being relative to it. This can result in migration
-being resumed from an entry that does not belong to the chunk being
-migrated. In turn, this will eventually lead to a chunk being iterated
-over as if it is an entry. Because of how the two structures happen to
-be defined, this does not lead to KASAN splats, but to warnings such as
-[1].
-
-Fix by creating a helper that resets all the markers and call it from
-all the places the currently only reset the chunk marker. For good
-measures also call it when starting a completely new rehash. Add a
-warning to avoid future cases.
+Fix by returning if the lists are empty as there is nothing to migrate
+in this case.
 
 [1]
-WARNING: CPU: 7 PID: 1076 at drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c:407 mlxsw_afk_encode+0x242/0x2f0
+WARNING: CPU: 0 PID: 6437 at drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c:1266 mlxsw_sp_acl_tcam_vchunk_migrate_all+0x1f1/0>
 Modules linked in:
-CPU: 7 PID: 1076 Comm: kworker/7:24 Tainted: G        W          6.9.0-rc3-custom-00880-g29e61d91b77b #29
+CPU: 0 PID: 6437 Comm: kworker/0:37 Not tainted 6.9.0-rc3-custom-00883-g94a65f079ef6 #39
 Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
 Workqueue: mlxsw_core mlxsw_sp_acl_tcam_vregion_rehash_work
-RIP: 0010:mlxsw_afk_encode+0x242/0x2f0
+RIP: 0010:mlxsw_sp_acl_tcam_vchunk_migrate_all+0x1f1/0x2c0
 [...]
 Call Trace:
  <TASK>
- mlxsw_sp_acl_atcam_entry_add+0xd9/0x3c0
- mlxsw_sp_acl_tcam_entry_create+0x5e/0xa0
- mlxsw_sp_acl_tcam_vchunk_migrate_all+0x109/0x290
- mlxsw_sp_acl_tcam_vregion_rehash_work+0x6c/0x470
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0x6c/0x4a0
  process_one_work+0x151/0x370
  worker_thread+0x2cb/0x3e0
  kthread+0xd0/0x100
  ret_from_fork+0x34/0x50
+ ret_from_fork_asm+0x1a/0x30
  </TASK>
 
 Fixes: 6f9579d4e302 ("mlxsw: spectrum_acl: Remember where to continue rehash migration")
@@ -106,79 +91,45 @@ Tested-by: Alexander Zubkov <green@qrator.net>
 Reviewed-by: Petr Machata <petrm@nvidia.com>
 Signed-off-by: Petr Machata <petrm@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/cc17eed86b41dd829d39b07906fec074a9ce580e.1713797103.git.petrm@nvidia.com
+Link: https://lore.kernel.org/r/4628e9a22d1d84818e28310abbbc498e7bc31bc9.1713797103.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlxsw/spectrum_acl_tcam.c        | 20 ++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index abfa4b44f468d..26042c859cf68 100644
+index 26042c859cf68..89ce9b1233bd9 100644
 --- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
 +++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -768,6 +768,17 @@ static void mlxsw_sp_acl_tcam_vregion_rehash_work(struct work_struct *work)
- 		mlxsw_sp_acl_tcam_vregion_rehash_work_schedule(vregion);
- }
+@@ -1325,6 +1325,9 @@ mlxsw_sp_acl_tcam_vchunk_migrate_one(struct mlxsw_sp *mlxsw_sp,
+ 		return 0;
+ 	}
  
-+static void
-+mlxsw_sp_acl_tcam_rehash_ctx_vchunk_reset(struct mlxsw_sp_acl_tcam_rehash_ctx *ctx)
-+{
-+	/* The entry markers are relative to the current chunk and therefore
-+	 * needs to be reset together with the chunk marker.
-+	 */
-+	ctx->current_vchunk = NULL;
-+	ctx->start_ventry = NULL;
-+	ctx->stop_ventry = NULL;
-+}
++	if (list_empty(&vchunk->ventry_list))
++		goto out;
 +
- static void
- mlxsw_sp_acl_tcam_rehash_ctx_vchunk_changed(struct mlxsw_sp_acl_tcam_vchunk *vchunk)
- {
-@@ -790,7 +801,7 @@ mlxsw_sp_acl_tcam_rehash_ctx_vregion_changed(struct mlxsw_sp_acl_tcam_vregion *v
- 	 * the current chunk pointer to make sure all chunks
- 	 * are properly migrated.
+ 	/* If the migration got interrupted, we have the ventry to start from
+ 	 * stored in context.
  	 */
--	vregion->rehash.ctx.current_vchunk = NULL;
-+	mlxsw_sp_acl_tcam_rehash_ctx_vchunk_reset(&vregion->rehash.ctx);
- }
+@@ -1376,6 +1379,7 @@ mlxsw_sp_acl_tcam_vchunk_migrate_one(struct mlxsw_sp *mlxsw_sp,
+ 		}
+ 	}
  
- static struct mlxsw_sp_acl_tcam_vregion *
-@@ -1291,7 +1302,7 @@ mlxsw_sp_acl_tcam_vchunk_migrate_end(struct mlxsw_sp *mlxsw_sp,
- {
- 	mlxsw_sp_acl_tcam_chunk_destroy(mlxsw_sp, vchunk->chunk2);
- 	vchunk->chunk2 = NULL;
--	ctx->current_vchunk = NULL;
-+	mlxsw_sp_acl_tcam_rehash_ctx_vchunk_reset(ctx);
- }
- 
- static int
-@@ -1323,6 +1334,8 @@ mlxsw_sp_acl_tcam_vchunk_migrate_one(struct mlxsw_sp *mlxsw_sp,
- 		ventry = list_first_entry(&vchunk->ventry_list,
- 					  typeof(*ventry), list);
- 
-+	WARN_ON(ventry->vchunk != vchunk);
-+
- 	list_for_each_entry_from(ventry, &vchunk->ventry_list, list) {
- 		/* During rollback, once we reach the ventry that failed
- 		 * to migrate, we are done.
-@@ -1414,7 +1427,7 @@ mlxsw_sp_acl_tcam_vregion_migrate(struct mlxsw_sp *mlxsw_sp,
- 		 * to vregion->region.
- 		 */
- 		swap(vregion->region, vregion->region2);
--		ctx->current_vchunk = NULL;
-+		mlxsw_sp_acl_tcam_rehash_ctx_vchunk_reset(ctx);
- 		ctx->this_is_rollback = true;
- 		err2 = mlxsw_sp_acl_tcam_vchunk_migrate_all(mlxsw_sp, vregion,
- 							    ctx, credits);
-@@ -1473,6 +1486,7 @@ mlxsw_sp_acl_tcam_vregion_rehash_start(struct mlxsw_sp *mlxsw_sp,
- 
- 	ctx->hints_priv = hints_priv;
- 	ctx->this_is_rollback = false;
-+	mlxsw_sp_acl_tcam_rehash_ctx_vchunk_reset(ctx);
- 
++out:
+ 	mlxsw_sp_acl_tcam_vchunk_migrate_end(mlxsw_sp, vchunk, ctx);
  	return 0;
+ }
+@@ -1389,6 +1393,9 @@ mlxsw_sp_acl_tcam_vchunk_migrate_all(struct mlxsw_sp *mlxsw_sp,
+ 	struct mlxsw_sp_acl_tcam_vchunk *vchunk;
+ 	int err;
  
++	if (list_empty(&vregion->vchunk_list))
++		return 0;
++
+ 	/* If the migration got interrupted, we have the vchunk
+ 	 * we are working on stored in context.
+ 	 */
 -- 
 2.43.0
 
