@@ -1,57 +1,57 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A468E199E85
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67AE1C0DD1
 	for <patches@lists.linux.dev>; Tue, 30 Apr 2024 16:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714495908; cv=none; b=VsNOKHmja1w/Fx7o4PcC3dxLZV3lU+xF6YF7MIi50I5as6gxFBazaOR3bUaqJRkjTeZRJ2rBy7dyN+XQXnrks7tiVc+bpcDpC41YVgf6Cyyc5JcdG5EELBVBOu95C41pa8oPbONmwZ0YUKNHfQ2tZLqcuto8sOW73bNL2Rm3xGg=
+	t=1714495908; cv=none; b=ufVFl277R/Wdxm3zQW3I7EKAAhFudidpE4xaLp7i5BW+0UTGk2eLyUt4ZvjUO6LyhoKvOTW7Px3gla3VVmA5rKW4hdGXjeHW4aYHK6PuEvIAeNIJsM/8wdi3LPlw/Q8PML3LSHeWMMbuMVEspJlKr65o6SRC8NrO+y98/MJPl38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1714495908; c=relaxed/simple;
-	bh=obhXYEmt6d4ZPBEnG583vH7Ox14Ir+rTrmmNAEgF6jg=;
+	bh=/JbFqsT4QboTVC5nN5+7Tn0VrIVjmy0ALnM5ZmCJwqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emojKYgsAiy+QeL27Rmnq9d/92gjOb4xcNbb1JwM4dukt1J7j3XMVJn5gOla05BaIUzIXEtrJ1Egl8Q2npxwjhyqvyY5z3D+Ly3JP4HIlNsZRAlTgXTkYmGH6R0906Vvv+qTk+/Gu7PD6VCPC7h1Oxr6FrTDBOR4jT85PEp9uoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iY4cwB5y; arc=none smtp.client-ip=198.175.65.19
+	 MIME-Version; b=m/4e4PdCyMXjD6bDYgz95S982DyAjX4sWn4VBRJ4u/JAMSN5WLGXQJbttEMyGGz4YPualhyYolUcueLqFPD3CeOx71JiqupfUcGUXUvxaXXL24F1b8HaDkCCHbzsXsQoV1Lv7984lm0G58Gd9Hq9yUaVqf5ZkIeCXwed98jjt/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CYSrGovo; arc=none smtp.client-ip=198.175.65.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iY4cwB5y"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CYSrGovo"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1714495907; x=1746031907;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=obhXYEmt6d4ZPBEnG583vH7Ox14Ir+rTrmmNAEgF6jg=;
-  b=iY4cwB5yHpS5ZteuRUGHnIjx0H6ibCy20L5lhIMdelwxZ1ZJZsg50fB5
-   L7hsIl0LzG+D2+PPgNiDp1f4sI3+/bAWdZ0FDzjRfy4adCAkM5EUBlevE
-   ozMvVrVFOVIK/WuePaitKqB5xyH/IUUIJkotcmO1Rm/W4qoY4uelElJFx
-   ge+0ka5Sx70YIw8XtD0i8YyXaBL0lCevG80Wj2QDWm2W3L+kovE1AX5sZ
-   MSPp/k68/w4QSMOGfCBlpMpVB7kJi5TnFT6ivgYyKCFfI6WJQV/MAMMz3
-   F/3ppWGGNyG1awvgM/oOe72DYdhGvYJ35YSTrR8vXoXPQcZcTRuie1u7y
-   Q==;
-X-CSE-ConnectionGUID: 6bsA3yPRTPaRebzOleFYxg==
-X-CSE-MsgGUID: rcoDlovQRE+nYFwQjqgtqg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11060"; a="10075727"
+  bh=/JbFqsT4QboTVC5nN5+7Tn0VrIVjmy0ALnM5ZmCJwqg=;
+  b=CYSrGovojppHF7LB5n5IxXYwsguNJKHDlN8iyo3mtqjKrIxP8eKdY9tI
+   XKLkgjI5XdJB0fXz6j0s2Dh+4JFW6oKe2jC9TezHmn2uL8oLznjEOMIA4
+   CVaT6dhGsD7kFcwF9XKU/vRjJITzgWoGGfLyVTL6bJ49L9V37JCwvgkLo
+   gwPOwCu4xqEwoUV+Kck8cMZUp1hwTOG/CztnTNyFxd9E1kuOehDCsQKrD
+   xHRCPpwHbA8qQIRQFCtEkocRyIcwqZeJvqffpEOWnpZasUOEyqohul+W0
+   FypE3u8GmeGTa0qGaco9M54g2EiQ86n0ys60++ACNisK5cJJ6nPAcnF94
+   A==;
+X-CSE-ConnectionGUID: Cvy7Q94SR5GqNU6nlYbqNg==
+X-CSE-MsgGUID: Jbg4FHKiS/6xGqtxT73o/Q==
+X-IronPort-AV: E=McAfee;i="6600,9927,11060"; a="10075738"
 X-IronPort-AV: E=Sophos;i="6.07,242,1708416000"; 
-   d="scan'208";a="10075727"
+   d="scan'208";a="10075738"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2024 09:51:22 -0700
-X-CSE-ConnectionGUID: 1VIQhD5STK64SEfSaYb4xg==
-X-CSE-MsgGUID: I8gnMd1JT+aIYIRSAY9Agg==
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2024 09:51:23 -0700
+X-CSE-ConnectionGUID: R7a3kwDARDe5wiji/wbUkw==
+X-CSE-MsgGUID: bg3AbzpATYiqGL4g0vHHAw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.07,242,1708416000"; 
-   d="scan'208";a="26515488"
+   d="scan'208";a="26515501"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2024 09:51:18 -0700
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2024 09:51:19 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Borislav Petkov <bp@alien8.de>
 Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v5 27/47] x86/PCI: Switch to new Intel CPU model defines
-Date: Tue, 30 Apr 2024 09:50:40 -0700
-Message-ID: <20240430165100.73491-27-tony.luck@intel.com>
+Subject: [PATCH v5 33/47] EDAC/i10nm: Switch to new Intel CPU model defines
+Date: Tue, 30 Apr 2024 09:50:46 -0700
+Message-ID: <20240430165100.73491-33-tony.luck@intel.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430165100.73491-1-tony.luck@intel.com>
 References: <20240430164913.73473-1-tony.luck@intel.com>
@@ -68,31 +68,40 @@ New CPU #defines encode vendor and family as well as model.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/pci/intel_mid_pci.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/edac/i10nm_base.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/arch/x86/pci/intel_mid_pci.c b/arch/x86/pci/intel_mid_pci.c
-index 8edd62206604..933ff795e53e 100644
---- a/arch/x86/pci/intel_mid_pci.c
-+++ b/arch/x86/pci/intel_mid_pci.c
-@@ -216,7 +216,7 @@ static int pci_write(struct pci_bus *bus, unsigned int devfn, int where,
- }
- 
- static const struct x86_cpu_id intel_mid_cpu_ids[] = {
--	X86_MATCH_INTEL_FAM6_MODEL(ATOM_SILVERMONT_MID, NULL),
-+	X86_MATCH_VFM(INTEL_ATOM_SILVERMONT_MID, NULL),
- 	{}
+diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
+index 3fd22a1eb1a9..24dd896d9a9d 100644
+--- a/drivers/edac/i10nm_base.c
++++ b/drivers/edac/i10nm_base.c
+@@ -942,16 +942,16 @@ static struct res_config gnr_cfg = {
  };
  
-@@ -243,7 +243,7 @@ static int intel_mid_pci_irq_enable(struct pci_dev *dev)
- 		model = id->model;
- 
- 	switch (model) {
--	case INTEL_FAM6_ATOM_SILVERMONT_MID:
-+	case VFM_MODEL(INTEL_ATOM_SILVERMONT_MID):
- 		polarity_low = false;
- 
- 		/* Special treatment for IRQ0 */
+ static const struct x86_cpu_id i10nm_cpuids[] = {
+-	X86_MATCH_INTEL_FAM6_MODEL_STEPPINGS(ATOM_TREMONT_D,	X86_STEPPINGS(0x0, 0x3), &i10nm_cfg0),
+-	X86_MATCH_INTEL_FAM6_MODEL_STEPPINGS(ATOM_TREMONT_D,	X86_STEPPINGS(0x4, 0xf), &i10nm_cfg1),
+-	X86_MATCH_INTEL_FAM6_MODEL_STEPPINGS(ICELAKE_X,		X86_STEPPINGS(0x0, 0x3), &i10nm_cfg0),
+-	X86_MATCH_INTEL_FAM6_MODEL_STEPPINGS(ICELAKE_X,		X86_STEPPINGS(0x4, 0xf), &i10nm_cfg1),
+-	X86_MATCH_INTEL_FAM6_MODEL_STEPPINGS(ICELAKE_D,		X86_STEPPINGS(0x0, 0xf), &i10nm_cfg1),
+-	X86_MATCH_INTEL_FAM6_MODEL_STEPPINGS(SAPPHIRERAPIDS_X,	X86_STEPPINGS(0x0, 0xf), &spr_cfg),
+-	X86_MATCH_INTEL_FAM6_MODEL_STEPPINGS(EMERALDRAPIDS_X,	X86_STEPPINGS(0x0, 0xf), &spr_cfg),
+-	X86_MATCH_INTEL_FAM6_MODEL_STEPPINGS(GRANITERAPIDS_X,	X86_STEPPINGS(0x0, 0xf), &gnr_cfg),
+-	X86_MATCH_INTEL_FAM6_MODEL_STEPPINGS(ATOM_CRESTMONT_X,	X86_STEPPINGS(0x0, 0xf), &gnr_cfg),
+-	X86_MATCH_INTEL_FAM6_MODEL_STEPPINGS(ATOM_CRESTMONT,	X86_STEPPINGS(0x0, 0xf), &gnr_cfg),
++	X86_MATCH_VFM_STEPPINGS(INTEL_ATOM_TREMONT_D,	X86_STEPPINGS(0x0, 0x3), &i10nm_cfg0),
++	X86_MATCH_VFM_STEPPINGS(INTEL_ATOM_TREMONT_D,	X86_STEPPINGS(0x4, 0xf), &i10nm_cfg1),
++	X86_MATCH_VFM_STEPPINGS(INTEL_ICELAKE_X,	X86_STEPPINGS(0x0, 0x3), &i10nm_cfg0),
++	X86_MATCH_VFM_STEPPINGS(INTEL_ICELAKE_X,	X86_STEPPINGS(0x4, 0xf), &i10nm_cfg1),
++	X86_MATCH_VFM_STEPPINGS(INTEL_ICELAKE_D,	X86_STEPPINGS(0x0, 0xf), &i10nm_cfg1),
++	X86_MATCH_VFM_STEPPINGS(INTEL_SAPPHIRERAPIDS_X,	X86_STEPPINGS(0x0, 0xf), &spr_cfg),
++	X86_MATCH_VFM_STEPPINGS(INTEL_EMERALDRAPIDS_X,	X86_STEPPINGS(0x0, 0xf), &spr_cfg),
++	X86_MATCH_VFM_STEPPINGS(INTEL_GRANITERAPIDS_X,	X86_STEPPINGS(0x0, 0xf), &gnr_cfg),
++	X86_MATCH_VFM_STEPPINGS(INTEL_ATOM_CRESTMONT_X,	X86_STEPPINGS(0x0, 0xf), &gnr_cfg),
++	X86_MATCH_VFM_STEPPINGS(INTEL_ATOM_CRESTMONT,	X86_STEPPINGS(0x0, 0xf), &gnr_cfg),
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(x86cpu, i10nm_cpuids);
 -- 
 2.44.0
 
