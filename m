@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301DD12C462;
-	Tue, 30 Apr 2024 10:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E2F12C487;
+	Tue, 30 Apr 2024 10:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474336; cv=none; b=hJbRnPI803ouzGHCTDhmSQjVOcmOxqRPRqZEDjViwCbCmWnhbe1Rrq1P32rrR9n6qk8vl0mFmsnwcbBjcc8RVT90QX7bP05SftQzUpyJAq1ex4Q+ScFpwW3X96yU2Cr/EfkyJHnnw/XXXxhTA2DHR8mHzB9+N//r4WAi8HpnYAA=
+	t=1714474339; cv=none; b=rShxT+VqSoO4A8YphjiMpZeTg+nhf1KagwmVhy+YneIRxwLTd70yhGjiGh7IJXKap6SI3N7lYchVCKvSM3//kb8AKiWiQVG0Jjr+UDwhYPimLmUGwmiT1ftL4uH2tCzS4zXYeLCTUozLe5d33waGAoe1LRERKNM0R3XjXopbDBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474336; c=relaxed/simple;
-	bh=4cvZtG5dUxpBmAEmJ56CodOxWne388P0LPOeMbD5RjI=;
+	s=arc-20240116; t=1714474339; c=relaxed/simple;
+	bh=IXAokeOem87J8/nxHyzHuo/UxK2MUOcroGjWsnQKwog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HFl5kh6a/0tk9wEwU6H+SsEYnUcBhsdZXUz3pf6WVfegJSeKOfC3eLg5gqY34SGbsspl2W4dznnWgdIuv7gmZx0GgSIxCNlYoe1ygyp8T1pTvrbaNtzdClbxzUdx5spQpxEUTVAAkBxFW1WsIXucZokM/Aht5CdMwaGQLYVh59Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXJVNQmJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P1dk3UzdZZdLk6dM9dXESzuIcgnAzoCtxkQKoODkZhXE9jXpTATsx2JH8XDlYIvG1Ufj/YUheWT5lE7cjWMQmiVAuqYhD+S4jLQS+1f2x6J6Ljz1gYmX6GQ8nk86/bWcYgF1J2aiLlh3zUQrMBcqAw0y46IgXjCavH+FgMUv6qI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6i4HfqV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXJVNQmJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA13BC2BBFC;
-	Tue, 30 Apr 2024 10:52:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6i4HfqV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62F2C2BBFC;
+	Tue, 30 Apr 2024 10:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474336;
-	bh=4cvZtG5dUxpBmAEmJ56CodOxWne388P0LPOeMbD5RjI=;
+	s=korg; t=1714474339;
+	bh=IXAokeOem87J8/nxHyzHuo/UxK2MUOcroGjWsnQKwog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aXJVNQmJX/NsclLi94V+PN1EHS6nZ4eYcZ9LCIdFoCxTyWXqjaZSropQI8NLRQaU/
-	 g/hzZc3yNeOioUVoucbNPlVhiLJgxs7yGOplpBny9JkF7WDioPrZaGGKxLEXjN5PC9
-	 MJYWowTnx/SQ0tlwHbQa7LbM+n8LMbEqazmg8EV8=
+	b=r6i4HfqVDeQi2kV2hd8mN81YRKz1KNtjUptOpkl3pMaGDGFMqBTX01w85ez0mUgFZ
+	 7MwRtfoMbk1cae/x7Q48FgTzq4cfwE99fkBddF1vf6rqUe3JXEJFTGZqHCNOT5mn6J
+	 QIOdsrpdxzZgBr/cYtLDta3fzUHhdbEJ2nB0k+r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Alexander Zubkov <green@qrator.net>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Rob Clark <robdclark@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.keonig@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 100/228] mlxsw: spectrum_acl_tcam: Fix memory leak during rehash
-Date: Tue, 30 Apr 2024 12:37:58 +0200
-Message-ID: <20240430103106.684757911@linuxfoundation.org>
+Subject: [PATCH 6.8 127/228] drm/amdgpu: add shared fdinfo stats
+Date: Tue, 30 Apr 2024 12:38:25 +0200
+Message-ID: <20240430103107.471549116@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -48,95 +47,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 8ca3f7a7b61393804c46f170743c3b839df13977 ]
+[ Upstream commit ba1a58d5b907bdf1814f8f57434aebc86233430f ]
 
-The rehash delayed work migrates filters from one region to another.
-This is done by iterating over all chunks (all the filters with the same
-priority) in the region and in each chunk iterating over all the
-filters.
+Add shared stats.  Useful for seeing shared memory.
 
-If the migration fails, the code tries to migrate the filters back to
-the old region. However, the rollback itself can also fail in which case
-another migration will be erroneously performed. Besides the fact that
-this ping pong is not a very good idea, it also creates a problem.
+v2: take dma-buf into account as well
+v3: use the new gem helper
 
-Each virtual chunk references two chunks: The currently used one
-('vchunk->chunk') and a backup ('vchunk->chunk2'). During migration the
-first holds the chunk we want to migrate filters to and the second holds
-the chunk we are migrating filters from.
-
-The code currently assumes - but does not verify - that the backup chunk
-does not exist (NULL) if the currently used chunk does not reference the
-target region. This assumption breaks when we are trying to rollback a
-rollback, resulting in the backup chunk being overwritten and leaked
-[1].
-
-Fix by not rolling back a failed rollback and add a warning to avoid
-future cases.
-
-[1]
-WARNING: CPU: 5 PID: 1063 at lib/parman.c:291 parman_destroy+0x17/0x20
-Modules linked in:
-CPU: 5 PID: 1063 Comm: kworker/5:11 Tainted: G        W          6.9.0-rc2-custom-00784-gc6a05c468a0b #14
-Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
-Workqueue: mlxsw_core mlxsw_sp_acl_tcam_vregion_rehash_work
-RIP: 0010:parman_destroy+0x17/0x20
-[...]
-Call Trace:
- <TASK>
- mlxsw_sp_acl_atcam_region_fini+0x19/0x60
- mlxsw_sp_acl_tcam_region_destroy+0x49/0xf0
- mlxsw_sp_acl_tcam_vregion_rehash_work+0x1f1/0x470
- process_one_work+0x151/0x370
- worker_thread+0x2cb/0x3e0
- kthread+0xd0/0x100
- ret_from_fork+0x34/0x50
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-Fixes: 843500518509 ("mlxsw: spectrum_acl: Do rollback as another call to mlxsw_sp_acl_tcam_vchunk_migrate_all()")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/d5edd4f4503934186ae5cfe268503b16345b4e0f.1713797103.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/all/20231207180225.439482-1-alexander.deucher@amd.com/
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Rob Clark <robdclark@gmail.com>
+Reviewed-by: Christian König <christian.keonig@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Stable-dep-of: a6ff969fe9cb ("drm/amdgpu: fix visible VRAM handling during faults")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_fdinfo.c |  4 ++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.c | 11 +++++++++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.h |  6 ++++++
+ 3 files changed, 21 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index 568ae7092fe0e..0902eb7651e14 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -1200,6 +1200,8 @@ mlxsw_sp_acl_tcam_vchunk_migrate_start(struct mlxsw_sp *mlxsw_sp,
- {
- 	struct mlxsw_sp_acl_tcam_chunk *new_chunk;
- 
-+	WARN_ON(vchunk->chunk2);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_fdinfo.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_fdinfo.c
+index 5706b282a0c7e..c7df7fa3459f1 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fdinfo.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fdinfo.c
+@@ -97,6 +97,10 @@ void amdgpu_show_fdinfo(struct drm_printer *p, struct drm_file *file)
+ 		   stats.requested_visible_vram/1024UL);
+ 	drm_printf(p, "amd-requested-gtt:\t%llu KiB\n",
+ 		   stats.requested_gtt/1024UL);
++	drm_printf(p, "drm-shared-vram:\t%llu KiB\n", stats.vram_shared/1024UL);
++	drm_printf(p, "drm-shared-gtt:\t%llu KiB\n", stats.gtt_shared/1024UL);
++	drm_printf(p, "drm-shared-cpu:\t%llu KiB\n", stats.cpu_shared/1024UL);
 +
- 	new_chunk = mlxsw_sp_acl_tcam_chunk_create(mlxsw_sp, vchunk, region);
- 	if (IS_ERR(new_chunk))
- 		return PTR_ERR(new_chunk);
-@@ -1334,6 +1336,8 @@ mlxsw_sp_acl_tcam_vregion_migrate(struct mlxsw_sp *mlxsw_sp,
- 	err = mlxsw_sp_acl_tcam_vchunk_migrate_all(mlxsw_sp, vregion,
- 						   ctx, credits);
- 	if (err) {
-+		if (ctx->this_is_rollback)
-+			return err;
- 		/* In case migration was not successful, we need to swap
- 		 * so the original region pointer is assigned again
- 		 * to vregion->region.
+ 	for (hw_ip = 0; hw_ip < AMDGPU_HW_IP_NUM; ++hw_ip) {
+ 		if (!usage[hw_ip])
+ 			continue;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+index 425cebcc5cbff..e6f69fce539b5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+@@ -1276,25 +1276,36 @@ void amdgpu_bo_get_memory(struct amdgpu_bo *bo,
+ 			  struct amdgpu_mem_stats *stats)
+ {
+ 	uint64_t size = amdgpu_bo_size(bo);
++	struct drm_gem_object *obj;
+ 	unsigned int domain;
++	bool shared;
+ 
+ 	/* Abort if the BO doesn't currently have a backing store */
+ 	if (!bo->tbo.resource)
+ 		return;
+ 
++	obj = &bo->tbo.base;
++	shared = drm_gem_object_is_shared_for_memory_stats(obj);
++
+ 	domain = amdgpu_mem_type_to_domain(bo->tbo.resource->mem_type);
+ 	switch (domain) {
+ 	case AMDGPU_GEM_DOMAIN_VRAM:
+ 		stats->vram += size;
+ 		if (amdgpu_bo_in_cpu_visible_vram(bo))
+ 			stats->visible_vram += size;
++		if (shared)
++			stats->vram_shared += size;
+ 		break;
+ 	case AMDGPU_GEM_DOMAIN_GTT:
+ 		stats->gtt += size;
++		if (shared)
++			stats->gtt_shared += size;
+ 		break;
+ 	case AMDGPU_GEM_DOMAIN_CPU:
+ 	default:
+ 		stats->cpu += size;
++		if (shared)
++			stats->cpu_shared += size;
+ 		break;
+ 	}
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h
+index a3ea8a82db23a..be679c42b0b8c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h
+@@ -138,12 +138,18 @@ struct amdgpu_bo_vm {
+ struct amdgpu_mem_stats {
+ 	/* current VRAM usage, includes visible VRAM */
+ 	uint64_t vram;
++	/* current shared VRAM usage, includes visible VRAM */
++	uint64_t vram_shared;
+ 	/* current visible VRAM usage */
+ 	uint64_t visible_vram;
+ 	/* current GTT usage */
+ 	uint64_t gtt;
++	/* current shared GTT usage */
++	uint64_t gtt_shared;
+ 	/* current system memory usage */
+ 	uint64_t cpu;
++	/* current shared system memory usage */
++	uint64_t cpu_shared;
+ 	/* sum of evicted buffers, includes visible VRAM */
+ 	uint64_t evicted_vram;
+ 	/* sum of evicted buffers due to CPU access */
 -- 
 2.43.0
 
