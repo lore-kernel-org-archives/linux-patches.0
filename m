@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A4112C46B;
-	Tue, 30 Apr 2024 10:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2681812C46B;
+	Tue, 30 Apr 2024 10:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474157; cv=none; b=EzJaRsm8t+y8zfs8WxmEP2JdD1+Wzs4ikgxAnigRwNEu0KjT59FGGiLspMDZ9d7eO7Vx7mk6/+lZcK0zJ+4Ihr1cdR94CRhAXhRr4j6JSR7XfjPXmc2twYq9+wln19l+2CQaps+aiHIIxDkSa8t4v4/ZWAfdDRZVRN70prZM34M=
+	t=1714474161; cv=none; b=Sz6tKvE8MapZ/OZXfw2tVLQXZh/Nlvqbqr4wLN2ui2ZzpyV++UxWCacpPaZ7MKUyvtAkWfr3hn9watugnym9P1v/DjA3l2drmgLwFgnAduT+28JSHNbUOr5Kifio7JEf5gbBuhcFBSVWmbUf5+h0q5kfcUNAiF5Fhwi0G0ggn8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474157; c=relaxed/simple;
-	bh=Nxjq9E3L1jNLtqQG2a2NPDgAUkPJC6Y0r5Ykw+g3Tjk=;
+	s=arc-20240116; t=1714474161; c=relaxed/simple;
+	bh=u0BYwd5aq/m/RTUk81UL7kEJx65JZZL57r1Dh2PjgAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L23zIZaagj3/GqsarngQ7HYchY45cFC3ABSUCvIJ+ZZvHV1u0ER+8mB4BNam/65ghmSNganRyR7nZR97WJrQVgYa7Fvx26aP/zQNjuibatRZboypR/W40IxXiEJ5viucfxDeZ6RyATCTe1mOuXK+gcyzSYbyyBI+HaAtWWVkzWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9W/FWVr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gUg2M6fXen10iyW9UGKmbQbwqnxjyJN65H3QS9R8ETEZo+3NfD+5vqdySi0qGpFvsGT5gealZhZgrpiku9YEEnwpqGbz3RppOKsD7OHB2wHORZMcuUyW3fbtky6kJ7PlmwkD0O6UaT1YSq4h0llNcc21+m9QhNemn2hTsJkzfpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysu+xIJi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9W/FWVr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A055C2BBFC;
-	Tue, 30 Apr 2024 10:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysu+xIJi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92835C2BBFC;
+	Tue, 30 Apr 2024 10:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474157;
-	bh=Nxjq9E3L1jNLtqQG2a2NPDgAUkPJC6Y0r5Ykw+g3Tjk=;
+	s=korg; t=1714474161;
+	bh=u0BYwd5aq/m/RTUk81UL7kEJx65JZZL57r1Dh2PjgAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9W/FWVrmzMEPA9xEEwZ3df8cnXkFTqDRwHHZ26LVOUd/0HCpV7r8RBEANpL8tT8n
-	 6OEEufwhGcyJtLGaOZhQysrLJyCNkR+kpye49vJIbYE+1n/xdz/lsbsRoNpq//yXp5
-	 t1YPxJp/nMomLRsQroL5BHqd/7mz86jMj7AhH1+A=
+	b=ysu+xIJi2Cbv3aUNpnaUcr4by155tZB2Af41P0aZWugyGgOosQe2HswEsMuvJHlQq
+	 go3c8zZ6fvJ3pUGyIY+TWN5aFY7f1PIi9D0DS5VsVyVd9voJhpIQxihTXVJV7UKr4k
+	 +9qG9WTJ0DVsGm4VbpZvSUpLJZToDwN1UaxZ+tEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Shete <pshete@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 074/228] gpio: tegra186: Fix tegra186_gpio_is_accessible() check
-Date: Tue, 30 Apr 2024 12:37:32 +0200
-Message-ID: <20240430103105.941150666@linuxfoundation.org>
+Subject: [PATCH 6.8 075/228] drm/xe: Remove sysfs only once on action add failure
+Date: Tue, 30 Apr 2024 12:37:33 +0200
+Message-ID: <20240430103105.969224762@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -52,79 +54,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Shete <pshete@nvidia.com>
+From: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
 
-[ Upstream commit d806f474a9a7993648a2c70642ee129316d8deff ]
+[ Upstream commit d6dab9017b7cf155e73ba5c7f498de1beb5f8e24 ]
 
-The controller has several register bits describing access control
-information for a given GPIO pin. When SCR_SEC_[R|W]EN is unset, it
-means we have full read/write access to all the registers for given GPIO
-pin. When SCR_SEC[R|W]EN is set, it means we need to further check the
-accompanying SCR_SEC_G1[R|W] bit to determine read/write access to all
-the registers for given GPIO pin.
+The drmm_add_action_or_reset function automatically invokes the action
+(sysfs removal) in the event of a failure; therefore, there's no
+necessity to call it within the return check.
 
-This check was previously declaring that a GPIO pin was accessible
-only if either of the following conditions were met:
+Modify the return type of xe_gt_ccs_mode_sysfs_init to int, allowing the
+caller to pass errors up the call chain. Should sysfs creation or
+drmm_add_action_or_reset fail, error propagation will prompt a driver
+load abort.
 
-  - SCR_SEC_REN + SCR_SEC_WEN both set
+-v2
+Edit commit message (Nikula/Lucas)
+use err_force_wake label instead of new. (Lucas)
+Avoid unnecessary warn/error messages. (Lucas)
 
-    or
-
-  - SCR_SEC_REN + SCR_SEC_WEN both set and
-    SCR_SEC_G1R + SCR_SEC_G1W both set
-
-Update the check to properly handle cases where only one of
-SCR_SEC_REN or SCR_SEC_WEN is set.
-
-Fixes: b2b56a163230 ("gpio: tegra186: Check GPIO pin permission before access.")
-Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20240424095514.24397-1-pshete@nvidia.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: f3bc5bb4d53d ("drm/xe: Allow userspace to configure CCS mode")
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: Jani Nikula <jani.nikula@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240412181211.1155732-3-himal.prasad.ghimiray@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+(cherry picked from commit a99641e38704202ae2a97202b3d249208c9cda7f)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-tegra186.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/xe/xe_gt.c          |  4 +++-
+ drivers/gpu/drm/xe/xe_gt_ccs_mode.c | 19 +++++++------------
+ drivers/gpu/drm/xe/xe_gt_ccs_mode.h |  2 +-
+ 3 files changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index d87dd06db40d0..9130c691a2dd3 100644
---- a/drivers/gpio/gpio-tegra186.c
-+++ b/drivers/gpio/gpio-tegra186.c
-@@ -36,12 +36,6 @@
- #define  TEGRA186_GPIO_SCR_SEC_REN		BIT(27)
- #define  TEGRA186_GPIO_SCR_SEC_G1W		BIT(9)
- #define  TEGRA186_GPIO_SCR_SEC_G1R		BIT(1)
--#define  TEGRA186_GPIO_FULL_ACCESS		(TEGRA186_GPIO_SCR_SEC_WEN | \
--						 TEGRA186_GPIO_SCR_SEC_REN | \
--						 TEGRA186_GPIO_SCR_SEC_G1R | \
--						 TEGRA186_GPIO_SCR_SEC_G1W)
--#define  TEGRA186_GPIO_SCR_SEC_ENABLE		(TEGRA186_GPIO_SCR_SEC_WEN | \
--						 TEGRA186_GPIO_SCR_SEC_REN)
+diff --git a/drivers/gpu/drm/xe/xe_gt.c b/drivers/gpu/drm/xe/xe_gt.c
+index 35474ddbaf97e..d23ee1397cf07 100644
+--- a/drivers/gpu/drm/xe/xe_gt.c
++++ b/drivers/gpu/drm/xe/xe_gt.c
+@@ -384,7 +384,9 @@ static int gt_fw_domain_init(struct xe_gt *gt)
+ 			 err);
  
- /* control registers */
- #define TEGRA186_GPIO_ENABLE_CONFIG 0x00
-@@ -177,10 +171,18 @@ static inline bool tegra186_gpio_is_accessible(struct tegra_gpio *gpio, unsigned
+ 	/* Initialize CCS mode sysfs after early initialization of HW engines */
+-	xe_gt_ccs_mode_sysfs_init(gt);
++	err = xe_gt_ccs_mode_sysfs_init(gt);
++	if (err)
++		goto err_force_wake;
  
- 	value = __raw_readl(secure + TEGRA186_GPIO_SCR);
+ 	err = xe_force_wake_put(gt_to_fw(gt), XE_FW_GT);
+ 	XE_WARN_ON(err);
+diff --git a/drivers/gpu/drm/xe/xe_gt_ccs_mode.c b/drivers/gpu/drm/xe/xe_gt_ccs_mode.c
+index 529fc286cd06c..396aeb5b99242 100644
+--- a/drivers/gpu/drm/xe/xe_gt_ccs_mode.c
++++ b/drivers/gpu/drm/xe/xe_gt_ccs_mode.c
+@@ -167,25 +167,20 @@ static void xe_gt_ccs_mode_sysfs_fini(struct drm_device *drm, void *arg)
+  * and it is expected that there are no open drm clients while doing so.
+  * The number of available compute slices is exposed to user through a per-gt
+  * 'num_cslices' sysfs interface.
++ *
++ * Returns: Returns error value for failure and 0 for success.
+  */
+-void xe_gt_ccs_mode_sysfs_init(struct xe_gt *gt)
++int xe_gt_ccs_mode_sysfs_init(struct xe_gt *gt)
+ {
+ 	struct xe_device *xe = gt_to_xe(gt);
+ 	int err;
  
--	if ((value & TEGRA186_GPIO_SCR_SEC_ENABLE) == 0)
--		return true;
-+	/*
-+	 * When SCR_SEC_[R|W]EN is unset, then we have full read/write access to all the
-+	 * registers for given GPIO pin.
-+	 * When SCR_SEC[R|W]EN is set, then there is need to further check the accompanying
-+	 * SCR_SEC_G1[R|W] bit to determine read/write access to all the registers for given
-+	 * GPIO pin.
-+	 */
+ 	if (!xe_gt_ccs_mode_enabled(gt))
+-		return;
++		return 0;
  
--	if ((value & TEGRA186_GPIO_FULL_ACCESS) == TEGRA186_GPIO_FULL_ACCESS)
-+	if (((value & TEGRA186_GPIO_SCR_SEC_REN) == 0 ||
-+	     ((value & TEGRA186_GPIO_SCR_SEC_REN) && (value & TEGRA186_GPIO_SCR_SEC_G1R))) &&
-+	     ((value & TEGRA186_GPIO_SCR_SEC_WEN) == 0 ||
-+	     ((value & TEGRA186_GPIO_SCR_SEC_WEN) && (value & TEGRA186_GPIO_SCR_SEC_G1W))))
- 		return true;
+ 	err = sysfs_create_files(gt->sysfs, gt_ccs_mode_attrs);
+-	if (err) {
+-		drm_warn(&xe->drm, "Sysfs creation for ccs_mode failed err: %d\n", err);
+-		return;
+-	}
++	if (err)
++		return err;
  
- 	return false;
+-	err = drmm_add_action_or_reset(&xe->drm, xe_gt_ccs_mode_sysfs_fini, gt);
+-	if (err) {
+-		sysfs_remove_files(gt->sysfs, gt_ccs_mode_attrs);
+-		drm_warn(&xe->drm, "%s: drmm_add_action_or_reset failed, err: %d\n",
+-			 __func__, err);
+-	}
++	return drmm_add_action_or_reset(&xe->drm, xe_gt_ccs_mode_sysfs_fini, gt);
+ }
+diff --git a/drivers/gpu/drm/xe/xe_gt_ccs_mode.h b/drivers/gpu/drm/xe/xe_gt_ccs_mode.h
+index f39975aaaab0d..f8779852cf0d2 100644
+--- a/drivers/gpu/drm/xe/xe_gt_ccs_mode.h
++++ b/drivers/gpu/drm/xe/xe_gt_ccs_mode.h
+@@ -12,7 +12,7 @@
+ #include "xe_platform_types.h"
+ 
+ void xe_gt_apply_ccs_mode(struct xe_gt *gt);
+-void xe_gt_ccs_mode_sysfs_init(struct xe_gt *gt);
++int xe_gt_ccs_mode_sysfs_init(struct xe_gt *gt);
+ 
+ static inline bool xe_gt_ccs_mode_enabled(const struct xe_gt *gt)
+ {
 -- 
 2.43.0
 
