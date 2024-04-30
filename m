@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35B612B176;
-	Tue, 30 Apr 2024 11:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A4512B176;
+	Tue, 30 Apr 2024 11:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474908; cv=none; b=B2vl3lXyLk5w4szIySd6r1YMfxcC1xNIoLz6KVxkmRQTqYk+UZcEjufXFxfDhkU/PKUzPWX8MZE+TpF1Fb9F5hjixEedvbNCP0EuL6vS6u++V1t3trguASD5N+x7scgMn+gypLyhcFjGaohKEYHxXVoHtsQ4kSumyZzJSk2lNdE=
+	t=1714474911; cv=none; b=qQBNuihH/z2tGnj+PqqOWqZNMIpgV06oBXnwAjBGOlVZCS6lTKf4pcqEvXNsx7bU/p8GocSTEEpOxdCE3iPWGiyEq33pEXtDyEh7KvJbEDswlCKAHYq+jgMliverfAue30d2lWGg7aVOG31r2F3b31M0Ue6xBT6pq7g6imFpy3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474908; c=relaxed/simple;
-	bh=YzvIiYo84HsCgIHo29UfsYyziKf52i/I4Be0XbD00kM=;
+	s=arc-20240116; t=1714474911; c=relaxed/simple;
+	bh=FK8Ej/IgYBMQMu4ybbPyTqH/S17av5Ld6a8nqGgt1gQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QaE1dcQfJ+fvwsZ4ks7XaJqp51sURD+/Z2oS1CGpbqy/tkG0JqxHM5KumqV0ph0ILeHaF3t1l6SC4IV5rTeBXZjMAIB33InKioBLPkPpvwLdZCCcC/R/Ros+G8Wtb8ls1juMeVIJiiuz7Uzval/7+9rFhJFg05QlS1CvBMwOEDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtBDW+1i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LH2tKB5R9oNZo9UABPMGPZlYR76rGTOO7kUP2S+C0c70b3fENRkrT9VtWJH94scbxJVxlunqaO9JaNGrh5/3Ar/Ik9ZhVcWfEnFoGUdMgVFTYkoZOFQhh+Rqs5WC/VybDAaBKrEPVzOLvteOvHVPJioS7uoZBTIAhR89RENxsjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzmIy4mv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtBDW+1i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61ECDC2BBFC;
-	Tue, 30 Apr 2024 11:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzmIy4mv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDFDC4AF1A;
+	Tue, 30 Apr 2024 11:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474907;
-	bh=YzvIiYo84HsCgIHo29UfsYyziKf52i/I4Be0XbD00kM=;
+	s=korg; t=1714474911;
+	bh=FK8Ej/IgYBMQMu4ybbPyTqH/S17av5Ld6a8nqGgt1gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OtBDW+1ifzD25qT63mqESGA6w7J/IoueZ35QXUeU37I39KTm3jYC0TNKnYkVyAg8a
-	 ejZBPkGl9K2KmO4tOJZAIb+5SVqrIOvkQG/80EGauQ2lzTmlCfzIP0VhjmC2f0hKqj
-	 TN+v5gnfRLPbx5k0KFQ28ifw2PQn3veHVI5waV/U=
+	b=WzmIy4mv1Hlrll+s/HbPVQVyhstKmmEWVOKy//86Cny/RstWKd4hfSDZs0nHns0Gu
+	 yxEWwvDOiWb7aT06OfJZXmNM3dyFIIgn4y6jjwKXXJgbdP+cJSoj0OnI9fBK26XPZs
+	 V39d/VAgBwRactF2WvBL1EZ/94ne1TJUKwBF5HPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2e22057de05b9f3b30d8@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 071/138] nilfs2: fix OOB in nilfs_set_de_type
-Date: Tue, 30 Apr 2024 12:39:16 +0200
-Message-ID: <20240430103051.519230970@linuxfoundation.org>
+	Iskander Amara <iskander.amara@theobroma-systems.com>,
+	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 072/138] arm64: dts: rockchip: fix alphabetical ordering RK3399 puma
+Date: Tue, 30 Apr 2024 12:39:17 +0200
+Message-ID: <20240430103051.548181280@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -52,53 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Iskander Amara <iskander.amara@theobroma-systems.com>
 
-commit c4a7dc9523b59b3e73fd522c73e95e072f876b16 upstream.
+[ Upstream commit f0abb4b2c7acf3c3e4130dc3f54cd90cf2ae62bc ]
 
-The size of the nilfs_type_by_mode array in the fs/nilfs2/dir.c file is
-defined as "S_IFMT >> S_SHIFT", but the nilfs_set_de_type() function,
-which uses this array, specifies the index to read from the array in the
-same way as "(mode & S_IFMT) >> S_SHIFT".
+Nodes overridden by their reference should be ordered alphabetically to
+make it easier to read the DTS. pinctrl node is defined in the wrong
+location so let's reorder it.
 
-static void nilfs_set_de_type(struct nilfs_dir_entry *de, struct inode
- *inode)
-{
-	umode_t mode = inode->i_mode;
-
-	de->file_type = nilfs_type_by_mode[(mode & S_IFMT)>>S_SHIFT]; // oob
-}
-
-However, when the index is determined this way, an out-of-bounds (OOB)
-error occurs by referring to an index that is 1 larger than the array size
-when the condition "mode & S_IFMT == S_IFMT" is satisfied.  Therefore, a
-patch to resize the nilfs_type_by_mode array should be applied to prevent
-OOB errors.
-
-Link: https://lkml.kernel.org/r/20240415182048.7144-1-konishi.ryusuke@gmail.com
-Reported-by: syzbot+2e22057de05b9f3b30d8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2e22057de05b9f3b30d8
-Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Iskander Amara <iskander.amara@theobroma-systems.com>
+Reviewed-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Link: https://lore.kernel.org/r/20240308085243.69903-2-iskander.amara@theobroma-systems.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Stable-dep-of: 945a7c857091 ("arm64: dts: rockchip: enable internal pull-up on PCIE_WAKE# for RK3399 Puma")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/dir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -243,7 +243,7 @@ nilfs_filetype_table[NILFS_FT_MAX] = {
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
+index 95bc7a5f61dd5..aaa042fba1ebf 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
+@@ -430,15 +430,6 @@
+ 	gpio1830-supply = <&vcc_1v8>;
+ };
  
- #define S_SHIFT 12
- static unsigned char
--nilfs_type_by_mode[S_IFMT >> S_SHIFT] = {
-+nilfs_type_by_mode[(S_IFMT >> S_SHIFT) + 1] = {
- 	[S_IFREG >> S_SHIFT]	= NILFS_FT_REG_FILE,
- 	[S_IFDIR >> S_SHIFT]	= NILFS_FT_DIR,
- 	[S_IFCHR >> S_SHIFT]	= NILFS_FT_CHRDEV,
+-&pmu_io_domains {
+-	status = "okay";
+-	pmu1830-supply = <&vcc_1v8>;
+-};
+-
+-&pwm2 {
+-	status = "okay";
+-};
+-
+ &pinctrl {
+ 	i2c8 {
+ 		i2c8_xfer_a: i2c8-xfer {
+@@ -470,6 +461,15 @@
+ 	};
+ };
+ 
++&pmu_io_domains {
++	status = "okay";
++	pmu1830-supply = <&vcc_1v8>;
++};
++
++&pwm2 {
++	status = "okay";
++};
++
+ &sdhci {
+ 	/*
+ 	 * Signal integrity isn't great at 200MHz but 100MHz has proven stable
+-- 
+2.43.0
+
 
 
