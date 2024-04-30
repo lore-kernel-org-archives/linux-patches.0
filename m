@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 555351E50A;
-	Tue, 30 Apr 2024 11:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594041E50A;
+	Tue, 30 Apr 2024 11:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475184; cv=none; b=PlCCpvMCd85MC3bt/pxQn+fVQeHQmMV/2gjVFEMNuxZpBi+DGxMPup3MF+Vl76xW9fu+yCNNie5qyUnBLuZyXvTjXQZLzA8CNjjx2JKSSAiPnXIe365OET3r797/AxTj7AWv6OMSsMDfcM/Vx+I4Sg69RVp891WgSdh/gxM8kRk=
+	t=1714475187; cv=none; b=gs2F77XAl1kDkjTso9iYDu1f9wtZyYA3UM88WdRZka9lotrM6uOeKPqbVZpsHOLU3FYi6ljTr9N8G6kHpaKUjkK+dW+sZSeCM0ab09baAoPZrOhGNILkoK73r75WBLtG2K0LBYjvXBJpdjCHU88/ceazAqsDRSoI63SzNYkvjDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475184; c=relaxed/simple;
-	bh=m+i7NVb+7tlRPAS8F49bZZ1hnTX0ZK4ukOhkTSiqj2I=;
+	s=arc-20240116; t=1714475187; c=relaxed/simple;
+	bh=catForpKr/9+q4zTM5jZDWDlQ2mNsCWAItOlI56yGDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yh51AbtzUTeGUbUiEHRHeWSgFhXZH3fowlY8v1R6O3Qx7wwS7cQ6FgpNWjbDiO1KIm/wksnVgsvTNCHvLBrL86fzOYubCedM4Oq0yaMpDaaWQPOCCQWTVh2kELBD9L8zUA8hM5ao1dODLYc+uxDdyvDwg+aFBy7kLBtcsdO0fAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSix1EYI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b9+kuHmZo8Qjogu08cothodjVSQUjRbGNRpwdUV8Ho71+QXvScxyPd4JHIn8m7ZKUk6VCketN2G4ef5X2ZVZuzQ0F8xxJfHs8Ni1OXtG854w+RgLH1LV4KafF2YtRhSKvtycNw+gzCglsAwuHFJpjUTYIr3MZEUk0zkW/dniAUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gz7QCces; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSix1EYI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B12C2BBFC;
-	Tue, 30 Apr 2024 11:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gz7QCces"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33F6C4AF19;
+	Tue, 30 Apr 2024 11:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475184;
-	bh=m+i7NVb+7tlRPAS8F49bZZ1hnTX0ZK4ukOhkTSiqj2I=;
+	s=korg; t=1714475187;
+	bh=catForpKr/9+q4zTM5jZDWDlQ2mNsCWAItOlI56yGDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wSix1EYIDeNKSaZSF/kil7BYvM+v4EMZXhOrNhOecssbls8S/UO6lPPVMMPY4aoS1
-	 7M7Rb1P0sOfx7JirAuNQAqQq84ovsSeQypux14xCpGXdMwXLTQgDzYknuXZvYtGhtH
-	 YyvPN5JDdh8eX0+FKCySBQBCNu9wiYwvQxt7zDfg=
+	b=Gz7QCcesgmt2MtnIoN3PrYKu8c3YpEGskkP3rAdQtYduEukv7D0oaEtdWOrEsKoN/
+	 mYkDujo2U6T3JUqt+N/WgtXm1ErH2Lca/HDZ75u1AYaiVa9AkqzJLGKh0v04JDHZfy
+	 byjqp6gt/A82/lF0mPNKSzxaA2VS4/HRhBH6K24g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Pin-yen Lin <treapking@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 002/186] smb: client: fix rename(2) regression against samba
-Date: Tue, 30 Apr 2024 12:37:34 +0200
-Message-ID: <20240430103058.087050293@linuxfoundation.org>
+Subject: [PATCH 6.6 020/186] arm64: dts: mediatek: mt8183-kukui: Use default min voltage for MT6358
+Date: Tue, 30 Apr 2024 12:37:52 +0200
+Message-ID: <20240430103058.607562601@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -51,54 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Pin-yen Lin <treapking@chromium.org>
 
-[ Upstream commit 18d86965e31f9be4d477da0744a7cdc9815858de ]
+[ Upstream commit 296118a8dc297de47d9b3a364b9743f8446bd612 ]
 
-After commit 2c7d399e551c ("smb: client: reuse file lease key in
-compound operations") the client started reusing lease keys for
-rename, unlink and set path size operations to prevent it from
-breaking its own leases and thus causing unnecessary lease breaks to
-same connection.
+The requested voltage could be lower than the minimum voltage on the
+GPU OPP table when the MTK Smart Voltage Scaling (SVS) driver is
+enabled, so removing the definition in mt8183-kukui to use the default
+minimum voltage (500000 uV) defined in mt6358.dtsi.
 
-The implementation relies on positive dentries and
-cifsInodeInfo::lease_granted to decide whether reusing lease keys for
-the compound requests.  cifsInodeInfo::lease_granted was introduced by
-commit 0ab95c2510b6 ("Defer close only when lease is enabled.") to
-indicate whether lease caching is granted for a specific file, but
-that can only happen until file is open, so
-cifsInodeInfo::lease_granted was left uninitialised in ->alloc_inode
-and then client started sending random lease keys for files that
-hadn't any leases.
-
-This fixes the following test case against samba:
-
-mount.cifs //srv/share /mnt/1 -o ...,nosharesock
-mount.cifs //srv/share /mnt/2 -o ...,nosharesock
-touch /mnt/1/foo; tail -f /mnt/1/foo & pid=$!
-mv /mnt/2/foo /mnt/2/bar # fails with -EIO
-kill $pid
-
-Fixes: 0ab95c2510b6 ("Defer close only when lease is enabled.")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 31c6732da9d5 ("arm64: dts: mediatek: mt8183-kukui: Override vgpu/vsram_gpu constraints")
+Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20240315111621.2263159-4-treapking@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index fcb93a66e47cb..44e2cc37a8b63 100644
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -392,6 +392,7 @@ cifs_alloc_inode(struct super_block *sb)
- 	 * server, can not assume caching of file data or metadata.
- 	 */
- 	cifs_set_oplock_level(cifs_inode, 0);
-+	cifs_inode->lease_granted = false;
- 	cifs_inode->flags = 0;
- 	spin_lock_init(&cifs_inode->writers_lock);
- 	cifs_inode->writers = 0;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
+index 70becf10cacb8..d846342c1d3b2 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
+@@ -405,7 +405,6 @@
+ };
+ 
+ &mt6358_vgpu_reg {
+-	regulator-min-microvolt = <625000>;
+ 	regulator-max-microvolt = <900000>;
+ 
+ 	regulator-coupled-with = <&mt6358_vsram_gpu_reg>;
 -- 
 2.43.0
 
