@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65118801;
-	Tue, 30 Apr 2024 11:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071E48801;
+	Tue, 30 Apr 2024 11:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475950; cv=none; b=nQMHRoFF764Pi1ahjgjfyncZKSNRJkwRUxHjEHxGyQ503NuQKWTilyjT/2nrAwJPSuxCNFl//jc+T00RNpButoVHo2Vl7qZ+yt2DNS8OWb56WJr8g82JIyLv+DqKWxcfD7e1f3rpWcO3K9D5aD/ay+2ZTZXiVFWj+qeztnutgBA=
+	t=1714475954; cv=none; b=rgM36i5ihXktgZ0EUfjSJQqjeMD+rC/FRiWw9qPkqkmi9R5tmo5V9+JpFl7SPdNNqsDyYV6iMfq5hi4RgWPust5cMAjBWJlDu+CIGTmmPg+tRCtSywFNAaKxo503+YJn24YE122FmiWp4AC15COjRw3m3qp4jekxq1ceH1ecuaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475950; c=relaxed/simple;
-	bh=lxXAPNBcm+IpNnsOfck79ax2Q2VeOtpx8GHbIZ+8Pt4=;
+	s=arc-20240116; t=1714475954; c=relaxed/simple;
+	bh=mUYeBMvpm6S9pk16imF2dmUD//4E5J10XX8V1DBWXHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s2RM/W+zx4R2ex7r2+/gd1lcjEjkkXc1iUMnV3kHschhInnwmHtjW3ZO+lKcT/ZAj70r92celvGAJUUAs28k1QHMLszvE7MWlJzdk8HLrFp9FAf3XgOcyi7z+vhJ2ktJe7UGC5GkHUl9rRprq/BbFZp8OhRRHZDiciU7XECdY3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GD5UdTay; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N09CjqvJo3ZtBK030Tr1Z/+6Dhye3surG9nspPh76SEBm31pkFfshhnIl8/Then4L0F3InNsyg2OfyNFKxckNN/30zPWvURFcoB6N+RaV8jZSpiwUdncEombxDn1O+xo9dc/rr6kqDVFUTz01kbzZS668iTj1ICBSdNklIIl1SQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzkPMsF5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GD5UdTay"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25883C2BBFC;
-	Tue, 30 Apr 2024 11:19:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzkPMsF5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697FDC2BBFC;
+	Tue, 30 Apr 2024 11:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475950;
-	bh=lxXAPNBcm+IpNnsOfck79ax2Q2VeOtpx8GHbIZ+8Pt4=;
+	s=korg; t=1714475953;
+	bh=mUYeBMvpm6S9pk16imF2dmUD//4E5J10XX8V1DBWXHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GD5UdTayczMJkEvWatk270hlA90UYe2B7yBcpjWN4xR0SzS4ey7CY+l4P3MVWZsn0
-	 OSA/rrU7gBWiQLEUDJrCYb/oHfjnHIyEsLCU3wiX+G4ZWRjPcgSjE1ML/bqZO3R4hj
-	 /gr+HiC8DGi+WsaIyXgkpcZyxub4TKY4Em79GhgQ=
+	b=HzkPMsF5oMhOjY+4/XLJ5Oqd8Y5xhGfFseiGSYoIIrglTmxuUWMxFK/lfxV+AjM6D
+	 e411luPc5lqNdpYSEZ7LofCb0+ZbzXIpNK/Fv6U7srJmoiqZaJCboR6yUUMaJ5/Plj
+	 tcy5hkR28jhxl6OO4djOU0d8HN5kCQPgKVwJBaDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Alexander Zubkov <green@qrator.net>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 31/80] mlxsw: spectrum_acl_tcam: Fix possible use-after-free during activity update
-Date: Tue, 30 Apr 2024 12:40:03 +0200
-Message-ID: <20240430103044.335561990@linuxfoundation.org>
+	Zhengchao Shao <shaozhengchao@huawei.com>
+Subject: [PATCH 5.15 67/80] tcp: Clean up kernel listeners reqsk in inet_twsk_purge()
+Date: Tue, 30 Apr 2024 12:40:39 +0200
+Message-ID: <20240430103045.395477566@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -54,106 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 79b5b4b18bc85b19d3a518483f9abbbe6d7b3ba4 ]
+commit 740ea3c4a0b2e326b23d7cdf05472a0e92aa39bc upstream.
 
-The rule activity update delayed work periodically traverses the list of
-configured rules and queries their activity from the device.
+Eric Dumazet reported a use-after-free related to the per-netns ehash
+series. [0]
 
-As part of this task it accesses the entry pointed by 'ventry->entry',
-but this entry can be changed concurrently by the rehash delayed work,
-leading to a use-after-free [1].
+When we create a TCP socket from userspace, the socket always holds a
+refcnt of the netns.  This guarantees that a reqsk timer is always fired
+before netns dismantle.  Each reqsk has a refcnt of its listener, so the
+listener is not freed before the reqsk, and the net is not freed before
+the listener as well.
 
-Fix by closing the race and perform the activity query under the
-'vregion->lock' mutex.
+OTOH, when in-kernel users create a TCP socket, it might not hold a refcnt
+of its netns.  Thus, a reqsk timer can be fired after the netns dismantle
+and access freed per-netns ehash.
 
-[1]
-BUG: KASAN: slab-use-after-free in mlxsw_sp_acl_tcam_flower_rule_activity_get+0x121/0x140
-Read of size 8 at addr ffff8881054ed808 by task kworker/0:18/181
+To avoid the use-after-free, we need to clean up TCP_NEW_SYN_RECV sockets
+in inet_twsk_purge() if the netns uses a per-netns ehash.
 
-CPU: 0 PID: 181 Comm: kworker/0:18 Not tainted 6.9.0-rc2-custom-00781-gd5ab772d32f7 #2
-Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
-Workqueue: mlxsw_core mlxsw_sp_acl_rule_activity_update_work
+[0]: https://lore.kernel.org/netdev/CANn89iLXMup0dRD_Ov79Xt8N9FM0XdhCHEN05sf3eLwxKweM6w@mail.gmail.com/
+
+BUG: KASAN: use-after-free in tcp_or_dccp_get_hashinfo
+include/net/inet_hashtables.h:181 [inline]
+BUG: KASAN: use-after-free in reqsk_queue_unlink+0x320/0x350
+net/ipv4/inet_connection_sock.c:913
+Read of size 8 at addr ffff88807545bd80 by task syz-executor.2/8301
+
+CPU: 1 PID: 8301 Comm: syz-executor.2 Not tainted
+6.0.0-syzkaller-02757-gaf7d23f9d96a #0
+Hardware name: Google Google Compute Engine/Google Compute Engine,
+BIOS Google 09/22/2022
 Call Trace:
- <TASK>
- dump_stack_lvl+0xc6/0x120
- print_report+0xce/0x670
- kasan_report+0xd7/0x110
- mlxsw_sp_acl_tcam_flower_rule_activity_get+0x121/0x140
- mlxsw_sp_acl_rule_activity_update_work+0x219/0x400
- process_one_work+0x8eb/0x19b0
- worker_thread+0x6c9/0xf70
- kthread+0x2c9/0x3b0
- ret_from_fork+0x4d/0x80
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+<IRQ>
+__dump_stack lib/dump_stack.c:88 [inline]
+dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
+print_address_description mm/kasan/report.c:317 [inline]
+print_report.cold+0x2ba/0x719 mm/kasan/report.c:433
+kasan_report+0xb1/0x1e0 mm/kasan/report.c:495
+tcp_or_dccp_get_hashinfo include/net/inet_hashtables.h:181 [inline]
+reqsk_queue_unlink+0x320/0x350 net/ipv4/inet_connection_sock.c:913
+inet_csk_reqsk_queue_drop net/ipv4/inet_connection_sock.c:927 [inline]
+inet_csk_reqsk_queue_drop_and_put net/ipv4/inet_connection_sock.c:939 [inline]
+reqsk_timer_handler+0x724/0x1160 net/ipv4/inet_connection_sock.c:1053
+call_timer_fn+0x1a0/0x6b0 kernel/time/timer.c:1474
+expire_timers kernel/time/timer.c:1519 [inline]
+__run_timers.part.0+0x674/0xa80 kernel/time/timer.c:1790
+__run_timers kernel/time/timer.c:1768 [inline]
+run_timer_softirq+0xb3/0x1d0 kernel/time/timer.c:1803
+__do_softirq+0x1d0/0x9c8 kernel/softirq.c:571
+invoke_softirq kernel/softirq.c:445 [inline]
+__irq_exit_rcu+0x123/0x180 kernel/softirq.c:650
+irq_exit_rcu+0x5/0x20 kernel/softirq.c:662
+sysvec_apic_timer_interrupt+0x93/0xc0 arch/x86/kernel/apic/apic.c:1107
+</IRQ>
 
-Allocated by task 1039:
- kasan_save_stack+0x33/0x60
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x8f/0xa0
- __kmalloc+0x19c/0x360
- mlxsw_sp_acl_tcam_entry_create+0x7b/0x1f0
- mlxsw_sp_acl_tcam_vchunk_migrate_all+0x30d/0xb50
- mlxsw_sp_acl_tcam_vregion_rehash_work+0x157/0x1300
- process_one_work+0x8eb/0x19b0
- worker_thread+0x6c9/0xf70
- kthread+0x2c9/0x3b0
- ret_from_fork+0x4d/0x80
- ret_from_fork_asm+0x1a/0x30
-
-Freed by task 1039:
- kasan_save_stack+0x33/0x60
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3b/0x60
- poison_slab_object+0x102/0x170
- __kasan_slab_free+0x14/0x30
- kfree+0xc1/0x290
- mlxsw_sp_acl_tcam_vchunk_migrate_all+0x3d7/0xb50
- mlxsw_sp_acl_tcam_vregion_rehash_work+0x157/0x1300
- process_one_work+0x8eb/0x19b0
- worker_thread+0x6c9/0xf70
- kthread+0x2c9/0x3b0
- ret_from_fork+0x4d/0x80
- ret_from_fork_asm+0x1a/0x30
-
-Fixes: 2bffc5322fd8 ("mlxsw: spectrum_acl: Don't take mutex in mlxsw_sp_acl_tcam_vregion_rehash_work()")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/1fcce0a60b231ebeb2515d91022284ba7b4ffe7a.1713797103.git.petrm@nvidia.com
+Fixes: d1e5e6408b30 ("tcp: Introduce optional per-netns ehash.")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Reported-by: Eric Dumazet <edumazet@google.com>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20221012145036.74960-1-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[shaozhengchao: resolved conflicts in 5.15]
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c    | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/ipv4/inet_timewait_sock.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index 1dce4e9958c90..f663cb0fd19a3 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -1189,8 +1189,14 @@ mlxsw_sp_acl_tcam_ventry_activity_get(struct mlxsw_sp *mlxsw_sp,
- 				      struct mlxsw_sp_acl_tcam_ventry *ventry,
- 				      bool *activity)
- {
--	return mlxsw_sp_acl_tcam_entry_activity_get(mlxsw_sp,
--						    ventry->entry, activity);
-+	struct mlxsw_sp_acl_tcam_vregion *vregion = ventry->vchunk->vregion;
-+	int err;
+--- a/net/ipv4/inet_timewait_sock.c
++++ b/net/ipv4/inet_timewait_sock.c
+@@ -268,8 +268,21 @@ restart_rcu:
+ 		rcu_read_lock();
+ restart:
+ 		sk_nulls_for_each_rcu(sk, node, &head->chain) {
+-			if (sk->sk_state != TCP_TIME_WAIT)
++			if (sk->sk_state != TCP_TIME_WAIT) {
++				/* A kernel listener socket might not hold refcnt for net,
++				 * so reqsk_timer_handler() could be fired after net is
++				 * freed.  Userspace listener and reqsk never exist here.
++				 */
++				if (unlikely(sk->sk_state == TCP_NEW_SYN_RECV &&
++					     hashinfo->pernet)) {
++					struct request_sock *req = inet_reqsk(sk);
 +
-+	mutex_lock(&vregion->lock);
-+	err = mlxsw_sp_acl_tcam_entry_activity_get(mlxsw_sp, ventry->entry,
-+						   activity);
-+	mutex_unlock(&vregion->lock);
-+	return err;
- }
- 
- static int
--- 
-2.43.0
-
++					inet_csk_reqsk_queue_drop_and_put(req->rsk_listener, req);
++				}
++
+ 				continue;
++			}
++
+ 			tw = inet_twsk(sk);
+ 			if ((tw->tw_family != family) ||
+ 				refcount_read(&twsk_net(tw)->ns.count))
 
 
