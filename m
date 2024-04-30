@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31F912C805;
-	Tue, 30 Apr 2024 11:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D734512D745;
+	Tue, 30 Apr 2024 11:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476238; cv=none; b=HYeLK+h1KF79lm+y0g7fN/3HMOcJ06P8QJUCgn885/UXzI240JYorJhKCdic2f4ZqeJAL+ba+f0kSg1s+VqwJNovoRcEr4FRhhqzqCw63H9kVMtL/zlnWC6cDgJK9S+IAaUj9h+UT+UjqEctj3S0VTTjS/TJUVoX+iUNR5UTuQk=
+	t=1714476241; cv=none; b=V7Tj9R4/RY3jHf2uxOUyJvDYeL7e5fvPUy3ONapPkHxN1EmYCWmT6V9dUoc9rkoF1rnMGdCWt3PZVX6RnPXFMA5Gl62ugQP/amEBSPVEkLVIOhv39zg+tummQoizm3iHIH93f2XBlw7uaKHqng2Rke1TVItRsyjZFTaShIzX1nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476238; c=relaxed/simple;
-	bh=MdsF9BZV+3ciiUJOijxj9OyFyKVtETDz4uhJpgsdvpg=;
+	s=arc-20240116; t=1714476241; c=relaxed/simple;
+	bh=7E3r3RXG6A3JCCOe2TV/f9NpxcnDvo4v9V9PDtBZa2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iaZY5X6emruM6Ao86LRJTiKm8oWuE3uME0z3Z2GUVHYtrLoeP0q60GigJyW9tz7fAham2omj+GQxg102Lm3j0G5tkkjIdUayEDU6Ug+MrIZHKNnAj4xlX/p9rEX7pniPKObyqo+c87C4ZwpuI4EeZ6TqQUV5D+4AUujJjmmu9HU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5cUGo8D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G9JNfazIBx7xsmV40+iepgGiuQ4iBXDk+Yd80hyIhvNAgs1HfwEHk/KJsWX1EHTARKAhnG0MYYAmpKaL6wKrFj+i+ucK1x/IKCWiZG3vPOIYx0j9tMYyndH8om9wpHf5m/xzEumvdO/PKBnLkcDBDINC+uWV4h/R72BSUiDQ6UI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+sTKIwF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5cUGo8D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1CCC2BBFC;
-	Tue, 30 Apr 2024 11:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+sTKIwF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59BA4C4AF1A;
+	Tue, 30 Apr 2024 11:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476238;
-	bh=MdsF9BZV+3ciiUJOijxj9OyFyKVtETDz4uhJpgsdvpg=;
+	s=korg; t=1714476241;
+	bh=7E3r3RXG6A3JCCOe2TV/f9NpxcnDvo4v9V9PDtBZa2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y5cUGo8D9Op+mZ+km2h8lbxd4uHDN37ProhW2JdxM1IB4t2FdV1OR/n0msmmS0n2A
-	 ZO0UWTQuvFcyseo3mXQmtGRs/ZaNNlSR0JPgYaFzjSAsPhoPdGcHOd2Szoi0JVBjm7
-	 fhHKWPfs8EA2VakB6efbGIwZ2MbcnKSoxFmceg28=
+	b=V+sTKIwFNpnHNePcCD3LxMbAp3XV4ynhaAZyD+GBWeq9d8TkZPlb7EBBGrbZzLj5m
+	 4NvSfd4y0NPZjt6ozewpl1QxQhuL0dC3amYEQorvnVe1k/FL6Q42jAHotaWtnvTSp9
+	 2hZjnUb/m+rW1CE8DtJBp4fMbmpqjJxy99En3qsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sindhu Devale <sindhu.devale@intel.com>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Mateusz Polchlopek <mateusz.polchlopek@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Robert Ganzynkowicz <robert.ganzynkowicz@intel.com>,
+	Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 076/107] i40e: Do not use WQ_MEM_RECLAIM flag for workqueue
-Date: Tue, 30 Apr 2024 12:40:36 +0200
-Message-ID: <20240430103046.898968352@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Mineri Bhange <minerix.bhange@intel.com>
+Subject: [PATCH 5.4 077/107] iavf: Fix TC config comparison with existing adapter TC config
+Date: Tue, 30 Apr 2024 12:40:37 +0200
+Message-ID: <20240430103046.928807355@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -56,123 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sindhu Devale <sindhu.devale@intel.com>
+From: Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>
 
-[ Upstream commit 2cc7d150550cc981aceedf008f5459193282425c ]
+[ Upstream commit 54976cf58d6168b8d15cebb395069f23b2f34b31 ]
 
-Issue reported by customer during SRIOV testing, call trace:
-When both i40e and the i40iw driver are loaded, a warning
-in check_flush_dependency is being triggered. This seems
-to be because of the i40e driver workqueue is allocated with
-the WQ_MEM_RECLAIM flag, and the i40iw one is not.
+Same number of TCs doesn't imply that underlying TC configs are
+same. The config could be different due to difference in number
+of queues in each TC. Add utility function to determine if TC
+configs are same.
 
-Similar error was encountered on ice too and it was fixed by
-removing the flag. Do the same for i40e too.
-
-[Feb 9 09:08] ------------[ cut here ]------------
-[  +0.000004] workqueue: WQ_MEM_RECLAIM i40e:i40e_service_task [i40e] is
-flushing !WQ_MEM_RECLAIM infiniband:0x0
-[  +0.000060] WARNING: CPU: 0 PID: 937 at kernel/workqueue.c:2966
-check_flush_dependency+0x10b/0x120
-[  +0.000007] Modules linked in: snd_seq_dummy snd_hrtimer snd_seq
-snd_timer snd_seq_device snd soundcore nls_utf8 cifs cifs_arc4
-nls_ucs2_utils rdma_cm iw_cm ib_cm cifs_md4 dns_resolver netfs qrtr
-rfkill sunrpc vfat fat intel_rapl_msr intel_rapl_common irdma
-intel_uncore_frequency intel_uncore_frequency_common ice ipmi_ssif
-isst_if_common skx_edac nfit libnvdimm x86_pkg_temp_thermal
-intel_powerclamp gnss coretemp ib_uverbs rapl intel_cstate ib_core
-iTCO_wdt iTCO_vendor_support acpi_ipmi mei_me ipmi_si intel_uncore
-ioatdma i2c_i801 joydev pcspkr mei ipmi_devintf lpc_ich
-intel_pch_thermal i2c_smbus ipmi_msghandler acpi_power_meter acpi_pad
-xfs libcrc32c ast sd_mod drm_shmem_helper t10_pi drm_kms_helper sg ixgbe
-drm i40e ahci crct10dif_pclmul libahci crc32_pclmul igb crc32c_intel
-libata ghash_clmulni_intel i2c_algo_bit mdio dca wmi dm_mirror
-dm_region_hash dm_log dm_mod fuse
-[  +0.000050] CPU: 0 PID: 937 Comm: kworker/0:3 Kdump: loaded Not
-tainted 6.8.0-rc2-Feb-net_dev-Qiueue-00279-gbd43c5687e05 #1
-[  +0.000003] Hardware name: Intel Corporation S2600BPB/S2600BPB, BIOS
-SE5C620.86B.02.01.0013.121520200651 12/15/2020
-[  +0.000001] Workqueue: i40e i40e_service_task [i40e]
-[  +0.000024] RIP: 0010:check_flush_dependency+0x10b/0x120
-[  +0.000003] Code: ff 49 8b 54 24 18 48 8d 8b b0 00 00 00 49 89 e8 48
-81 c6 b0 00 00 00 48 c7 c7 b0 97 fa 9f c6 05 8a cc 1f 02 01 e8 35 b3 fd
-ff <0f> 0b e9 10 ff ff ff 80 3d 78 cc 1f 02 00 75 94 e9 46 ff ff ff 90
-[  +0.000002] RSP: 0018:ffffbd294976bcf8 EFLAGS: 00010282
-[  +0.000002] RAX: 0000000000000000 RBX: ffff94d4c483c000 RCX:
-0000000000000027
-[  +0.000001] RDX: ffff94d47f620bc8 RSI: 0000000000000001 RDI:
-ffff94d47f620bc0
-[  +0.000001] RBP: 0000000000000000 R08: 0000000000000000 R09:
-00000000ffff7fff
-[  +0.000001] R10: ffffbd294976bb98 R11: ffffffffa0be65e8 R12:
-ffff94c5451ea180
-[  +0.000001] R13: ffff94c5ab5e8000 R14: ffff94c5c20b6e05 R15:
-ffff94c5f1330ab0
-[  +0.000001] FS:  0000000000000000(0000) GS:ffff94d47f600000(0000)
-knlGS:0000000000000000
-[  +0.000002] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  +0.000001] CR2: 00007f9e6f1fca70 CR3: 0000000038e20004 CR4:
-00000000007706f0
-[  +0.000000] DR0: 0000000000000000 DR1: 0000000000000000 DR2:
-0000000000000000
-[  +0.000001] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7:
-0000000000000400
-[  +0.000001] PKRU: 55555554
-[  +0.000001] Call Trace:
-[  +0.000001]  <TASK>
-[  +0.000002]  ? __warn+0x80/0x130
-[  +0.000003]  ? check_flush_dependency+0x10b/0x120
-[  +0.000002]  ? report_bug+0x195/0x1a0
-[  +0.000005]  ? handle_bug+0x3c/0x70
-[  +0.000003]  ? exc_invalid_op+0x14/0x70
-[  +0.000002]  ? asm_exc_invalid_op+0x16/0x20
-[  +0.000006]  ? check_flush_dependency+0x10b/0x120
-[  +0.000002]  ? check_flush_dependency+0x10b/0x120
-[  +0.000002]  __flush_workqueue+0x126/0x3f0
-[  +0.000015]  ib_cache_cleanup_one+0x1c/0xe0 [ib_core]
-[  +0.000056]  __ib_unregister_device+0x6a/0xb0 [ib_core]
-[  +0.000023]  ib_unregister_device_and_put+0x34/0x50 [ib_core]
-[  +0.000020]  i40iw_close+0x4b/0x90 [irdma]
-[  +0.000022]  i40e_notify_client_of_netdev_close+0x54/0xc0 [i40e]
-[  +0.000035]  i40e_service_task+0x126/0x190 [i40e]
-[  +0.000024]  process_one_work+0x174/0x340
-[  +0.000003]  worker_thread+0x27e/0x390
-[  +0.000001]  ? __pfx_worker_thread+0x10/0x10
-[  +0.000002]  kthread+0xdf/0x110
-[  +0.000002]  ? __pfx_kthread+0x10/0x10
-[  +0.000002]  ret_from_fork+0x2d/0x50
-[  +0.000003]  ? __pfx_kthread+0x10/0x10
-[  +0.000001]  ret_from_fork_asm+0x1b/0x30
-[  +0.000004]  </TASK>
-[  +0.000001] ---[ end trace 0000000000000000 ]---
-
-Fixes: 4d5957cbdecd ("i40e: remove WQ_UNBOUND and the task limit of our workqueue")
-Signed-off-by: Sindhu Devale <sindhu.devale@intel.com>
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Reviewed-by: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Robert Ganzynkowicz <robert.ganzynkowicz@intel.com>
+Fixes: d5b33d024496 ("i40evf: add ndo_setup_tc callback to i40evf")
+Signed-off-by: Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>
+Tested-by: Mineri Bhange <minerix.bhange@intel.com> (A Contingent Worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20240423182723.740401-2-anthony.l.nguyen@intel.com
+Link: https://lore.kernel.org/r/20240423182723.740401-4-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 30 ++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index f7d41ba110a7f..dfa06737ff05e 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -15971,7 +15971,7 @@ static int __init i40e_init_module(void)
- 	 * since we need to be able to guarantee forward progress even under
- 	 * memory pressure.
- 	 */
--	i40e_wq = alloc_workqueue("%s", WQ_MEM_RECLAIM, 0, i40e_driver_name);
-+	i40e_wq = alloc_workqueue("%s", 0, 0, i40e_driver_name);
- 	if (!i40e_wq) {
- 		pr_err("%s: Failed to create workqueue\n", i40e_driver_name);
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 9cf556fedc704..8cc20db625c22 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -2647,6 +2647,34 @@ static void iavf_del_all_cloud_filters(struct iavf_adapter *adapter)
+ 	spin_unlock_bh(&adapter->cloud_filter_list_lock);
+ }
+ 
++/**
++ * iavf_is_tc_config_same - Compare the mqprio TC config with the
++ * TC config already configured on this adapter.
++ * @adapter: board private structure
++ * @mqprio_qopt: TC config received from kernel.
++ *
++ * This function compares the TC config received from the kernel
++ * with the config already configured on the adapter.
++ *
++ * Return: True if configuration is same, false otherwise.
++ **/
++static bool iavf_is_tc_config_same(struct iavf_adapter *adapter,
++				   struct tc_mqprio_qopt *mqprio_qopt)
++{
++	struct virtchnl_channel_info *ch = &adapter->ch_config.ch_info[0];
++	int i;
++
++	if (adapter->num_tc != mqprio_qopt->num_tc)
++		return false;
++
++	for (i = 0; i < adapter->num_tc; i++) {
++		if (ch[i].count != mqprio_qopt->count[i] ||
++		    ch[i].offset != mqprio_qopt->offset[i])
++			return false;
++	}
++	return true;
++}
++
+ /**
+  * __iavf_setup_tc - configure multiple traffic classes
+  * @netdev: network interface device structure
+@@ -2703,7 +2731,7 @@ static int __iavf_setup_tc(struct net_device *netdev, void *type_data)
+ 		if (ret)
+ 			return ret;
+ 		/* Return if same TC config is requested */
+-		if (adapter->num_tc == num_tc)
++		if (iavf_is_tc_config_same(adapter, &mqprio_qopt->qopt))
+ 			return 0;
+ 		adapter->num_tc = num_tc;
+ 
 -- 
 2.43.0
 
