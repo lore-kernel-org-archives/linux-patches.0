@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1C7211C;
-	Tue, 30 Apr 2024 11:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4026612CDA5;
+	Tue, 30 Apr 2024 11:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475671; cv=none; b=E1LTRVlYZ7GsbWafpyrSuoX5na+mB6V8mzvYg2nQPHdBkyw8Qw+KID4PyaQL/FAgyIFGn4CX+zp+DYxe/6xgbpPS6S2TA4pHfJeZlJlZeHPfimXioiabVppoL7MTld7GZRHJjOQfmSlZkG3hnjS+mK7K+k1fZcfEMt56yjXpJgA=
+	t=1714475675; cv=none; b=KnwbuTejxaJfp/7/GdPBZWXGfQFXjft4D1ZgaAKpy2+P/tUo+3UJjd0J+krqjpUTidOaxT+b/pcS9YnmOkpyCslAIpwhoIHSygG1vSv2ucbvEfksJwQKUWeE+wqjdSo8+hGejvV23MtEzQvyvfmUsHg3VusYxqXxAzhySz+OxuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475671; c=relaxed/simple;
-	bh=JopcXuHVk5sHneoZ1ww5Za3LtXluvchCx6rsME/oeTc=;
+	s=arc-20240116; t=1714475675; c=relaxed/simple;
+	bh=+hWHZIOj2xCdGaJPmakFzQLIzcurj5B5slOlTkuDkTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ju4Nap9PtrAJcUiu1zU6xjFZAbUCIrasYJ9hiAdjwUni7QV8gV9o4nnxKE1F/twq3itWjEXdjDqf2XuioFhmnqZ2gCMkU3hYWyKbqxmA/dlnFtd4tvokR5jgyryKXLW22GBp5yrG8DiGGiDLiBbpKYMwAUPdkPcea6Ys3miR094=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stoQLNxV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SHgtUlVnMJ5kDR8qBL+veZZxLP7nsuC6RMonjTxZWZ3lW4Ub0ewngSKTnNcT9ztSinE1JQnvae4usq71m3grqg+/JKo5AQLDUUdAOzokQZg6/PnQJX69N0vPFIAlAh19yBuyWWl13/UeYky83vACJ5qcr58PVfSz+GpsGANvMg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDoAJxEy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stoQLNxV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5B9C2BBFC;
-	Tue, 30 Apr 2024 11:14:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDoAJxEy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB524C2BBFC;
+	Tue, 30 Apr 2024 11:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475671;
-	bh=JopcXuHVk5sHneoZ1ww5Za3LtXluvchCx6rsME/oeTc=;
+	s=korg; t=1714475675;
+	bh=+hWHZIOj2xCdGaJPmakFzQLIzcurj5B5slOlTkuDkTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=stoQLNxVEaxWFDqSkGB9vvifxWAnZP8ReKSdnn1qlFCUGEvXQ414YUkKhLFx8OSkQ
-	 9vDkq5aJLEiBi39VZWtmrIB7HuS6kXaJ52gTsk+lQCLSa0huvSZDjEEYDSaQMQ25jd
-	 lqDj2kaN2r88h/nbnwLaGS9qPqQ2sMu+S+nfzPqk=
+	b=RDoAJxEyzFegq0Z8XkVXGq1HsY+XAKCzHgt8JyNaiu6x9xPfNSx20THkn0lLu8lec
+	 mgtrTvuQEQ2ALhx1YyuSm2FknOofl4XooAX61+iOmUr+4WS5TI1Bt4oC5SAcJbu3PX
+	 wZBbpMFsRwNT4Bg5ImBzSMt2G92wcSt6Dhz7MKP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rex Zhang <rex.zhang@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Lijun Pan <lijun.pan@intel.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 169/186] dmaengine: idxd: Convert spinlock to mutex to lock evl workqueue
-Date: Tue, 30 Apr 2024 12:40:21 +0200
-Message-ID: <20240430103102.937340951@linuxfoundation.org>
+Subject: [PATCH 6.6 170/186] dma: xilinx_dpdma: Fix locking
+Date: Tue, 30 Apr 2024 12:40:22 +0200
+Message-ID: <20240430103102.966083542@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -54,202 +52,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rex Zhang <rex.zhang@intel.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit d5638de827cff0fce77007e426ec0ffdedf68a44 ]
+[ Upstream commit 244296cc3a155199a8b080d19e645d7d49081a38 ]
 
-drain_workqueue() cannot be called safely in a spinlocked context due to
-possible task rescheduling. In the multi-task scenario, calling
-queue_work() while drain_workqueue() will lead to a Call Trace as
-pushing a work on a draining workqueue is not permitted in spinlocked
-context.
-    Call Trace:
-    <TASK>
-    ? __warn+0x7d/0x140
-    ? __queue_work+0x2b2/0x440
-    ? report_bug+0x1f8/0x200
-    ? handle_bug+0x3c/0x70
-    ? exc_invalid_op+0x18/0x70
-    ? asm_exc_invalid_op+0x1a/0x20
-    ? __queue_work+0x2b2/0x440
-    queue_work_on+0x28/0x30
-    idxd_misc_thread+0x303/0x5a0 [idxd]
-    ? __schedule+0x369/0xb40
-    ? __pfx_irq_thread_fn+0x10/0x10
-    ? irq_thread+0xbc/0x1b0
-    irq_thread_fn+0x21/0x70
-    irq_thread+0x102/0x1b0
-    ? preempt_count_add+0x74/0xa0
-    ? __pfx_irq_thread_dtor+0x10/0x10
-    ? __pfx_irq_thread+0x10/0x10
-    kthread+0x103/0x140
-    ? __pfx_kthread+0x10/0x10
-    ret_from_fork+0x31/0x50
-    ? __pfx_kthread+0x10/0x10
-    ret_from_fork_asm+0x1b/0x30
-    </TASK>
+There are several places where either chan->lock or chan->vchan.lock was
+not held. Add appropriate locking. This fixes lockdep warnings like
 
-The current implementation uses a spinlock to protect event log workqueue
-and will lead to the Call Trace due to potential task rescheduling.
+[   31.077578] ------------[ cut here ]------------
+[   31.077831] WARNING: CPU: 2 PID: 40 at drivers/dma/xilinx/xilinx_dpdma.c:834 xilinx_dpdma_chan_queue_transfer+0x274/0x5e0
+[   31.077953] Modules linked in:
+[   31.078019] CPU: 2 PID: 40 Comm: kworker/u12:1 Not tainted 6.6.20+ #98
+[   31.078102] Hardware name: xlnx,zynqmp (DT)
+[   31.078169] Workqueue: events_unbound deferred_probe_work_func
+[   31.078272] pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   31.078377] pc : xilinx_dpdma_chan_queue_transfer+0x274/0x5e0
+[   31.078473] lr : xilinx_dpdma_chan_queue_transfer+0x270/0x5e0
+[   31.078550] sp : ffffffc083bb2e10
+[   31.078590] x29: ffffffc083bb2e10 x28: 0000000000000000 x27: ffffff880165a168
+[   31.078754] x26: ffffff880164e920 x25: ffffff880164eab8 x24: ffffff880164d480
+[   31.078920] x23: ffffff880165a148 x22: ffffff880164e988 x21: 0000000000000000
+[   31.079132] x20: ffffffc082aa3000 x19: ffffff880164e880 x18: 0000000000000000
+[   31.079295] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+[   31.079453] x14: 0000000000000000 x13: ffffff8802263dc0 x12: 0000000000000001
+[   31.079613] x11: 0001ffc083bb2e34 x10: 0001ff880164e98f x9 : 0001ffc082aa3def
+[   31.079824] x8 : 0001ffc082aa3dec x7 : 0000000000000000 x6 : 0000000000000516
+[   31.079982] x5 : ffffffc7f8d43000 x4 : ffffff88003c9c40 x3 : ffffffffffffffff
+[   31.080147] x2 : ffffffc7f8d43000 x1 : 00000000000000c0 x0 : 0000000000000000
+[   31.080307] Call trace:
+[   31.080340]  xilinx_dpdma_chan_queue_transfer+0x274/0x5e0
+[   31.080518]  xilinx_dpdma_issue_pending+0x11c/0x120
+[   31.080595]  zynqmp_disp_layer_update+0x180/0x3ac
+[   31.080712]  zynqmp_dpsub_plane_atomic_update+0x11c/0x21c
+[   31.080825]  drm_atomic_helper_commit_planes+0x20c/0x684
+[   31.080951]  drm_atomic_helper_commit_tail+0x5c/0xb0
+[   31.081139]  commit_tail+0x234/0x294
+[   31.081246]  drm_atomic_helper_commit+0x1f8/0x210
+[   31.081363]  drm_atomic_commit+0x100/0x140
+[   31.081477]  drm_client_modeset_commit_atomic+0x318/0x384
+[   31.081634]  drm_client_modeset_commit_locked+0x8c/0x24c
+[   31.081725]  drm_client_modeset_commit+0x34/0x5c
+[   31.081812]  __drm_fb_helper_restore_fbdev_mode_unlocked+0x104/0x168
+[   31.081899]  drm_fb_helper_set_par+0x50/0x70
+[   31.081971]  fbcon_init+0x538/0xc48
+[   31.082047]  visual_init+0x16c/0x23c
+[   31.082207]  do_bind_con_driver.isra.0+0x2d0/0x634
+[   31.082320]  do_take_over_console+0x24c/0x33c
+[   31.082429]  do_fbcon_takeover+0xbc/0x1b0
+[   31.082503]  fbcon_fb_registered+0x2d0/0x34c
+[   31.082663]  register_framebuffer+0x27c/0x38c
+[   31.082767]  __drm_fb_helper_initial_config_and_unlock+0x5c0/0x91c
+[   31.082939]  drm_fb_helper_initial_config+0x50/0x74
+[   31.083012]  drm_fbdev_dma_client_hotplug+0xb8/0x108
+[   31.083115]  drm_client_register+0xa0/0xf4
+[   31.083195]  drm_fbdev_dma_setup+0xb0/0x1cc
+[   31.083293]  zynqmp_dpsub_drm_init+0x45c/0x4e0
+[   31.083431]  zynqmp_dpsub_probe+0x444/0x5e0
+[   31.083616]  platform_probe+0x8c/0x13c
+[   31.083713]  really_probe+0x258/0x59c
+[   31.083793]  __driver_probe_device+0xc4/0x224
+[   31.083878]  driver_probe_device+0x70/0x1c0
+[   31.083961]  __device_attach_driver+0x108/0x1e0
+[   31.084052]  bus_for_each_drv+0x9c/0x100
+[   31.084125]  __device_attach+0x100/0x298
+[   31.084207]  device_initial_probe+0x14/0x20
+[   31.084292]  bus_probe_device+0xd8/0xdc
+[   31.084368]  deferred_probe_work_func+0x11c/0x180
+[   31.084451]  process_one_work+0x3ac/0x988
+[   31.084643]  worker_thread+0x398/0x694
+[   31.084752]  kthread+0x1bc/0x1c0
+[   31.084848]  ret_from_fork+0x10/0x20
+[   31.084932] irq event stamp: 64549
+[   31.084970] hardirqs last  enabled at (64548): [<ffffffc081adf35c>] _raw_spin_unlock_irqrestore+0x80/0x90
+[   31.085157] hardirqs last disabled at (64549): [<ffffffc081adf010>] _raw_spin_lock_irqsave+0xc0/0xdc
+[   31.085277] softirqs last  enabled at (64503): [<ffffffc08001071c>] __do_softirq+0x47c/0x500
+[   31.085390] softirqs last disabled at (64498): [<ffffffc080017134>] ____do_softirq+0x10/0x1c
+[   31.085501] ---[ end trace 0000000000000000 ]---
 
-To address the locking issue, convert the spinlock to mutex, allowing
-the drain_workqueue() to be called in a safe mutex-locked context.
-
-This change ensures proper synchronization when accessing the event log
-workqueue, preventing potential Call Trace and improving the overall
-robustness of the code.
-
-Fixes: c40bd7d9737b ("dmaengine: idxd: process user page faults for completion record")
-Signed-off-by: Rex Zhang <rex.zhang@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Fenghua Yu <fenghua.yu@intel.com>
-Reviewed-by: Lijun Pan <lijun.pan@intel.com>
-Link: https://lore.kernel.org/r/20240404223949.2885604-1-fenghua.yu@intel.com
+Fixes: 7cbb0c63de3f ("dmaengine: xilinx: dpdma: Add the Xilinx DisplayPort DMA engine driver")
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240308210034.3634938-2-sean.anderson@linux.dev
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/cdev.c    | 5 ++---
- drivers/dma/idxd/debugfs.c | 4 ++--
- drivers/dma/idxd/device.c  | 8 ++++----
- drivers/dma/idxd/idxd.h    | 2 +-
- drivers/dma/idxd/init.c    | 2 +-
- drivers/dma/idxd/irq.c     | 4 ++--
- 6 files changed, 12 insertions(+), 13 deletions(-)
+ drivers/dma/xilinx/xilinx_dpdma.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index 4eeec95a66751..ad7b55dd9596d 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -342,7 +342,7 @@ static void idxd_cdev_evl_drain_pasid(struct idxd_wq *wq, u32 pasid)
- 	if (!evl)
- 		return;
+diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilinx_dpdma.c
+index 84dc5240a8074..93938ed80fc83 100644
+--- a/drivers/dma/xilinx/xilinx_dpdma.c
++++ b/drivers/dma/xilinx/xilinx_dpdma.c
+@@ -214,7 +214,8 @@ struct xilinx_dpdma_tx_desc {
+  * @running: true if the channel is running
+  * @first_frame: flag for the first frame of stream
+  * @video_group: flag if multi-channel operation is needed for video channels
+- * @lock: lock to access struct xilinx_dpdma_chan
++ * @lock: lock to access struct xilinx_dpdma_chan. Must be taken before
++ *        @vchan.lock, if both are to be held.
+  * @desc_pool: descriptor allocation pool
+  * @err_task: error IRQ bottom half handler
+  * @desc: References to descriptors being processed
+@@ -1097,12 +1098,14 @@ static void xilinx_dpdma_chan_vsync_irq(struct  xilinx_dpdma_chan *chan)
+ 	 * Complete the active descriptor, if any, promote the pending
+ 	 * descriptor to active, and queue the next transfer, if any.
+ 	 */
++	spin_lock(&chan->vchan.lock);
+ 	if (chan->desc.active)
+ 		vchan_cookie_complete(&chan->desc.active->vdesc);
+ 	chan->desc.active = pending;
+ 	chan->desc.pending = NULL;
  
--	spin_lock(&evl->lock);
-+	mutex_lock(&evl->lock);
- 	status.bits = ioread64(idxd->reg_base + IDXD_EVLSTATUS_OFFSET);
- 	t = status.tail;
- 	h = status.head;
-@@ -354,9 +354,8 @@ static void idxd_cdev_evl_drain_pasid(struct idxd_wq *wq, u32 pasid)
- 			set_bit(h, evl->bmap);
- 		h = (h + 1) % size;
- 	}
--	spin_unlock(&evl->lock);
--
- 	drain_workqueue(wq->wq);
-+	mutex_unlock(&evl->lock);
+ 	xilinx_dpdma_chan_queue_transfer(chan);
++	spin_unlock(&chan->vchan.lock);
+ 
+ out:
+ 	spin_unlock_irqrestore(&chan->lock, flags);
+@@ -1264,10 +1267,12 @@ static void xilinx_dpdma_issue_pending(struct dma_chan *dchan)
+ 	struct xilinx_dpdma_chan *chan = to_xilinx_chan(dchan);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chan->vchan.lock, flags);
++	spin_lock_irqsave(&chan->lock, flags);
++	spin_lock(&chan->vchan.lock);
+ 	if (vchan_issue_pending(&chan->vchan))
+ 		xilinx_dpdma_chan_queue_transfer(chan);
+-	spin_unlock_irqrestore(&chan->vchan.lock, flags);
++	spin_unlock(&chan->vchan.lock);
++	spin_unlock_irqrestore(&chan->lock, flags);
  }
  
- static int idxd_cdev_release(struct inode *node, struct file *filep)
-diff --git a/drivers/dma/idxd/debugfs.c b/drivers/dma/idxd/debugfs.c
-index f3f25ee676f30..ad4245cb301d5 100644
---- a/drivers/dma/idxd/debugfs.c
-+++ b/drivers/dma/idxd/debugfs.c
-@@ -66,7 +66,7 @@ static int debugfs_evl_show(struct seq_file *s, void *d)
- 	if (!evl || !evl->log)
- 		return 0;
+ static int xilinx_dpdma_config(struct dma_chan *dchan,
+@@ -1495,7 +1500,9 @@ static void xilinx_dpdma_chan_err_task(struct tasklet_struct *t)
+ 		    XILINX_DPDMA_EINTR_CHAN_ERR_MASK << chan->id);
  
--	spin_lock(&evl->lock);
-+	mutex_lock(&evl->lock);
- 
- 	evl_status.bits = ioread64(idxd->reg_base + IDXD_EVLSTATUS_OFFSET);
- 	t = evl_status.tail;
-@@ -87,7 +87,7 @@ static int debugfs_evl_show(struct seq_file *s, void *d)
- 		dump_event_entry(idxd, s, i, &count, processed);
- 	}
- 
--	spin_unlock(&evl->lock);
-+	mutex_unlock(&evl->lock);
- 	return 0;
+ 	spin_lock_irqsave(&chan->lock, flags);
++	spin_lock(&chan->vchan.lock);
+ 	xilinx_dpdma_chan_queue_transfer(chan);
++	spin_unlock(&chan->vchan.lock);
+ 	spin_unlock_irqrestore(&chan->lock, flags);
  }
  
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index fa0f880beae64..542d340552dd7 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -770,7 +770,7 @@ static int idxd_device_evl_setup(struct idxd_device *idxd)
- 		goto err_alloc;
- 	}
- 
--	spin_lock(&evl->lock);
-+	mutex_lock(&evl->lock);
- 	evl->log = addr;
- 	evl->dma = dma_addr;
- 	evl->log_size = size;
-@@ -791,7 +791,7 @@ static int idxd_device_evl_setup(struct idxd_device *idxd)
- 	gencfg.evl_en = 1;
- 	iowrite32(gencfg.bits, idxd->reg_base + IDXD_GENCFG_OFFSET);
- 
--	spin_unlock(&evl->lock);
-+	mutex_unlock(&evl->lock);
- 	return 0;
- 
- err_alloc:
-@@ -814,7 +814,7 @@ static void idxd_device_evl_free(struct idxd_device *idxd)
- 	if (!gencfg.evl_en)
- 		return;
- 
--	spin_lock(&evl->lock);
-+	mutex_lock(&evl->lock);
- 	gencfg.evl_en = 0;
- 	iowrite32(gencfg.bits, idxd->reg_base + IDXD_GENCFG_OFFSET);
- 
-@@ -831,7 +831,7 @@ static void idxd_device_evl_free(struct idxd_device *idxd)
- 	evl_dma = evl->dma;
- 	evl->log = NULL;
- 	evl->size = IDXD_EVL_SIZE_MIN;
--	spin_unlock(&evl->lock);
-+	mutex_unlock(&evl->lock);
- 
- 	dma_free_coherent(dev, evl_log_size, evl_log, evl_dma);
- }
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 6fc79deb99bfd..df62dd1291189 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -279,7 +279,7 @@ struct idxd_driver_data {
- 
- struct idxd_evl {
- 	/* Lock to protect event log access. */
--	spinlock_t lock;
-+	struct mutex lock;
- 	void *log;
- 	dma_addr_t dma;
- 	/* Total size of event log = number of entries * entry size. */
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index d09a8553ea71d..2e323c9b2068d 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -353,7 +353,7 @@ static int idxd_init_evl(struct idxd_device *idxd)
- 	if (!evl)
- 		return -ENOMEM;
- 
--	spin_lock_init(&evl->lock);
-+	mutex_init(&evl->lock);
- 	evl->size = IDXD_EVL_SIZE_MIN;
- 
- 	idxd_name = dev_name(idxd_confdev(idxd));
-diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
-index 0bbc6bdc6145e..b2ca9c1f194c9 100644
---- a/drivers/dma/idxd/irq.c
-+++ b/drivers/dma/idxd/irq.c
-@@ -363,7 +363,7 @@ static void process_evl_entries(struct idxd_device *idxd)
- 	evl_status.bits = 0;
- 	evl_status.int_pending = 1;
- 
--	spin_lock(&evl->lock);
-+	mutex_lock(&evl->lock);
- 	/* Clear interrupt pending bit */
- 	iowrite32(evl_status.bits_upper32,
- 		  idxd->reg_base + IDXD_EVLSTATUS_OFFSET + sizeof(u32));
-@@ -380,7 +380,7 @@ static void process_evl_entries(struct idxd_device *idxd)
- 
- 	evl_status.head = h;
- 	iowrite32(evl_status.bits_lower32, idxd->reg_base + IDXD_EVLSTATUS_OFFSET);
--	spin_unlock(&evl->lock);
-+	mutex_unlock(&evl->lock);
- }
- 
- irqreturn_t idxd_misc_thread(int vec, void *data)
 -- 
 2.43.0
 
