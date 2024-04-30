@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D560212D753;
-	Tue, 30 Apr 2024 11:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC40C12D74E;
+	Tue, 30 Apr 2024 11:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475503; cv=none; b=k2ywi8uh64GdhIvYowlukNwiWK8PK/Gq3Szc1tYORDkt45moNSJvmY8I+IZvPd0dSyh3k8aHdyNjnxlf5ncWTzuRD826cD2qq5nv8UIGDT1yfYQJMFufz8nCXZRQ5J3qLaTkC2mnRCCBU7CTubzeuTSMAkz3KGoCf8bGZI5jZIo=
+	t=1714475506; cv=none; b=USDwRYNzJIYQCuYMzkCdIaQQK/J7VSrqPcmz62a4tq36IRb78hY8EQsAhsSPHo82zD74VjtM7mVs9vuBNALY3CLj9oSHDgFuJlREicBwNbb5oEtle32uPxVgrDhARQ+Ee1xhrSKR0BORuH0UgoA3zDA2cw9vGLDVRq6HZX8P1i8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475503; c=relaxed/simple;
-	bh=l6D8ver5jj290xtoPMjvkhD4atFKhWPEiKyeY5fMSDU=;
+	s=arc-20240116; t=1714475506; c=relaxed/simple;
+	bh=d+Zc8s4XOyVXH9IHqsbigNBoLZW7l/kabF1+lj+Zcjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UL30ianlPm3ceCAJ/XGTsYnPegYHZIiLh0m10qnr5eXCP14pULVONi1wnuTFrfMmyzJHgcwx0cEUvNMcG9n5qJFcFuxBAEczLbsTsjJAWTGckWQhPVY+LWRZfsT4HwT/k/4PwVTup4tuDGTeucKoYztaFuatoeva8giEc+XbbFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVN/ehdw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J4rCSuyBpi338kfUMTsCJZ5j/aSf+f+rPQxNcAFcWT1PzOFcDcWzGP33FnsK+ZEgRX+FFw+BtB+wAO8jvT+T3EL3wjzNeQWIHYwEouD818Qj8aMT+FZIedKu5AQiajzUFCDP6PtOOkENkz9ONC8VEuhck53T4JjJ5xKomkzpsY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5kHhpGs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVN/ehdw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA222C2BBFC;
-	Tue, 30 Apr 2024 11:11:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5kHhpGs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BACC2BBFC;
+	Tue, 30 Apr 2024 11:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475503;
-	bh=l6D8ver5jj290xtoPMjvkhD4atFKhWPEiKyeY5fMSDU=;
+	s=korg; t=1714475506;
+	bh=d+Zc8s4XOyVXH9IHqsbigNBoLZW7l/kabF1+lj+Zcjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oVN/ehdwMd9jsderDkPgh/BuZUvC7JhoqQdsftadLfAGO6wVuzaRFwdsiwQY7S9aX
-	 hHK1YChhQdMsB3yv/w9CjGNF/5ZXkx4ovrG7bKPMffTX8CLTgxSEtoiZvxujYZS9G/
-	 5l0lJ6y7LFvjAnJGuO4eInsAa3R4RDSorYQZxtHg=
+	b=a5kHhpGsR0HqMvDyfPMYwqpgQ73nXfoJBCfLIv0vZpoRnaCvV5ZQcjtDm6prvafBh
+	 XbOMhb6FfM1tYIAOXmJ70GSfI5kj3Hr25gTJtokbq9xCn89QJEqFcPseIrSa6y3nlT
+	 lmg8jvx/7bOtWJdGmgxiSsK0/VNvMITR3SpQ+Chg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.6 114/186] rust: make mutually exclusive with CFI_CLANG
-Date: Tue, 30 Apr 2024 12:39:26 +0200
-Message-ID: <20240430103101.342149379@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	Alexander Zubkov <green@qrator.net>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 079/186] mlxsw: spectrum_acl_tcam: Rate limit error message
+Date: Tue, 30 Apr 2024 12:38:51 +0200
+Message-ID: <20240430103100.330720607@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -51,50 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 8933cf4651e02853ca679be7b2d978dfcdcc5e0c upstream.
+[ Upstream commit 5bcf925587e9b5d36420d572a0b4d131c90fb306 ]
 
-On RISC-V and arm64, and presumably x86, if CFI_CLANG is enabled,
-loading a rust module will trigger a kernel panic. Support for
-sanitisers, including kcfi (CFI_CLANG), is in the works, but for now
-they're nightly-only options in rustc. Make RUST depend on !CFI_CLANG
-to prevent configuring a kernel without symmetrical support for kfi.
+In the rare cases when the device resources are exhausted it is likely
+that the rehash delayed work will fail. An error message will be printed
+whenever this happens which can be overwhelming considering the fact
+that the work is per-region and that there can be hundreds of regions.
 
-[ Matthew Maurer writes [1]:
+Fix by rate limiting the error message.
 
-    This patch is fine by me - the last patch needed for KCFI to be
-    functional in Rust just landed upstream last night, so we should
-    revisit this (in the form of enabling it) once we move to
-    `rustc-1.79.0` or later.
-
-  Ramon de C Valle also gave feedback [2] on the status of KCFI for
-  Rust and created a tracking issue [3] in upstream Rust.   - Miguel ]
-
-Fixes: 2f7ab1267dc9 ("Kbuild: add Rust support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Acked-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/rust-for-linux/CAGSQo024u1gHJgzsO38Xg3c4or+JupoPABQx_+0BLEpPg0cOEA@mail.gmail.com/ [1]
-Link: https://lore.kernel.org/rust-for-linux/CAOcBZOS2kPyH0Dm7Fuh4GC3=v7nZhyzBj_-dKu3PfAnrHZvaxg@mail.gmail.com/ [2]
-Link: https://github.com/rust-lang/rust/issues/123479 [3]
-Link: https://lore.kernel.org/r/20240404-providing-emporium-e652e359c711@spud
-[ Added feedback from the list, links, and used Cc for the tag. ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e5e7962ee5c2 ("mlxsw: spectrum_acl: Implement region migration according to hints")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Alexander Zubkov <green@qrator.net>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/c510763b2ebd25e7990d80183feff91cde593145.1713797103.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -1894,6 +1894,7 @@ config RUST
- 	bool "Rust support"
- 	depends on HAVE_RUST
- 	depends on RUST_IS_AVAILABLE
-+	depends on !CFI_CLANG
- 	depends on !MODVERSIONS
- 	depends on !GCC_PLUGINS
- 	depends on !RANDSTRUCT
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+index 1ff0b2c7c11de..568ae7092fe0e 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+@@ -1450,7 +1450,7 @@ mlxsw_sp_acl_tcam_vregion_rehash(struct mlxsw_sp *mlxsw_sp,
+ 	err = mlxsw_sp_acl_tcam_vregion_migrate(mlxsw_sp, vregion,
+ 						ctx, credits);
+ 	if (err) {
+-		dev_err(mlxsw_sp->bus_info->dev, "Failed to migrate vregion\n");
++		dev_err_ratelimited(mlxsw_sp->bus_info->dev, "Failed to migrate vregion\n");
+ 		return;
+ 	}
+ 
+-- 
+2.43.0
+
 
 
