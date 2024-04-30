@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E387217592;
-	Tue, 30 Apr 2024 11:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F77317592;
+	Tue, 30 Apr 2024 11:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476429; cv=none; b=RPEGRSmTDS+6HoRuhOvynNQD3vPEKdwoDQHxt3tHp1gAFWlf91bJPhvrXA0uvq6McJfnRqL9YYdNkw8yxvYSt3NvnPzkNOGwBbiFupzyVJgh+GrtAQg7IlisEss25PyVpM0xNJTOHj68f4IACqa1v5nEOFEx2FBO0eg5Xow6YEA=
+	t=1714476432; cv=none; b=gtQmo3i/IGFy2hejMxSZyVBKvFlEHebT6uD30loKO8BrjbDdpny7gcV4uwEzynehloySFv0S6OWNMjERw0QMAuhBxGBmOi/KedWR2R9MgZkLGxoqgCSdMqdI9MRTBDQdPU4VjstqPG0/uGeiiMWZKRRi3jUyF5CmzwnbseiTq6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476429; c=relaxed/simple;
-	bh=VEwVqhdG8zplwv9hgvQQiIza+yj/i4evhYY6SypqrxM=;
+	s=arc-20240116; t=1714476432; c=relaxed/simple;
+	bh=ntpSzpZKu82fmNVeMkLF7nt0dvdDJM443KAGlDQjqNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IoNj4q4OLhEQj9ZK3vSGG7M6npBQnNDbiHqLqU+lGZIVWBzETE2RvNpe6Zje+k/X2QTeKhjXuS8yMssE20+5vGvHvUFdO1prOeKMAioE2NWsJ0KZ5hJ7ZeBbpkbHxk6/pnfN9by0yV8cfk9rTLceLRyHz35EaMkqeVMbH/6JBQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NS2dTeAP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YdeYircAEUZeyoyugpVxN8SZWC6o4owizqCFshlbftuYamOWYdzaG3Ay5CsAi2hhZi7wlE/MECsVYLXLQ5L0VfuPTKgqXKmil3AlNFcY+l+jBEy7A8Del5YwK/41ya1nadqNyzjYiv4hN2Bu5QOaLNucq1tlyfoae4mtX0l2ZIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IxZoHKT4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NS2dTeAP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A440C2BBFC;
-	Tue, 30 Apr 2024 11:27:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IxZoHKT4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8518BC4AF1A;
+	Tue, 30 Apr 2024 11:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476428;
-	bh=VEwVqhdG8zplwv9hgvQQiIza+yj/i4evhYY6SypqrxM=;
+	s=korg; t=1714476432;
+	bh=ntpSzpZKu82fmNVeMkLF7nt0dvdDJM443KAGlDQjqNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NS2dTeAPv8w4oRbRhGbzyN/eNjkkepRX6UvlPs6TwveuSmbCO0PzgOUhXPYV2a9M8
-	 RXER1o/9rpQYiFBoD+IqI2tgMSk7nmuTNGh5n+FaTWWdj2Nc2rF2141cOvWvRLAQtT
-	 29YCg9AywYl3q3uRdLJuz2JuaNCWawsPw4G/Q1OA=
+	b=IxZoHKT4iEbtLbh1ciUsFCm+IPNlWkglqSYwuVLDF4iZB6aIYj99f7g6ad67Qz5W6
+	 M/xOQdDqAkSD63iu7s+Ti5N09UbiHqfRZ56s0KZypLqJWO99RsDAPQm8v9Inzokwha
+	 AzvMOGrgE23rpza40B7V8iEKY5snmRvpVxGbJ9kA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Vikas Gupta <vikas.gupta@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/110] bridge/br_netlink.c: no need to return void function
-Date: Tue, 30 Apr 2024 12:39:58 +0200
-Message-ID: <20240430103048.429387202@linuxfoundation.org>
+Subject: [PATCH 6.1 030/110] bnxt_en: refactor reset close code
+Date: Tue, 30 Apr 2024 12:39:59 +0200
+Message-ID: <20240430103048.458751219@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -52,34 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Vikas Gupta <vikas.gupta@broadcom.com>
 
-[ Upstream commit 4fd1edcdf13c0d234543ecf502092be65c5177db ]
+[ Upstream commit 7474b1c82be3780692d537d331f9aa7fc1e5a368 ]
 
-br_info_notify is a void function. There is no need to return.
+Introduce bnxt_fw_fatal_close() API which can be used
+to stop data path and disable device when firmware
+is in fatal state.
 
-Fixes: b6d0425b816e ("bridge: cfm: Netlink Notifications.")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: Vikas Gupta <vikas.gupta@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: a1acdc226bae ("bnxt_en: Fix the PCI-AER routines")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/net/bridge/br_netlink.c b/net/bridge/br_netlink.c
-index d087fd4c784ac..d38eff27767dc 100644
---- a/net/bridge/br_netlink.c
-+++ b/net/bridge/br_netlink.c
-@@ -650,7 +650,7 @@ void br_ifinfo_notify(int event, const struct net_bridge *br,
- {
- 	u32 filter = RTEXT_FILTER_BRVLAN_COMPRESSED;
- 
--	return br_info_notify(event, br, port, filter);
-+	br_info_notify(event, br, port, filter);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 0d0aad7141c15..e889017e3a7fb 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -11812,6 +11812,16 @@ static void bnxt_rx_ring_reset(struct bnxt *bp)
+ 	bnxt_rtnl_unlock_sp(bp);
  }
  
- /*
++static void bnxt_fw_fatal_close(struct bnxt *bp)
++{
++	bnxt_tx_disable(bp);
++	bnxt_disable_napi(bp);
++	bnxt_disable_int_sync(bp);
++	bnxt_free_irq(bp);
++	bnxt_clear_int_mode(bp);
++	pci_disable_device(bp->pdev);
++}
++
+ static void bnxt_fw_reset_close(struct bnxt *bp)
+ {
+ 	bnxt_ulp_stop(bp);
+@@ -11825,12 +11835,7 @@ static void bnxt_fw_reset_close(struct bnxt *bp)
+ 		pci_read_config_word(bp->pdev, PCI_SUBSYSTEM_ID, &val);
+ 		if (val == 0xffff)
+ 			bp->fw_reset_min_dsecs = 0;
+-		bnxt_tx_disable(bp);
+-		bnxt_disable_napi(bp);
+-		bnxt_disable_int_sync(bp);
+-		bnxt_free_irq(bp);
+-		bnxt_clear_int_mode(bp);
+-		pci_disable_device(bp->pdev);
++		bnxt_fw_fatal_close(bp);
+ 	}
+ 	__bnxt_close_nic(bp, true, false);
+ 	bnxt_vf_reps_free(bp);
 -- 
 2.43.0
 
