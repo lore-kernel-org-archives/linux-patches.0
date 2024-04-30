@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B531E50A;
-	Tue, 30 Apr 2024 11:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1223612C549;
+	Tue, 30 Apr 2024 11:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475323; cv=none; b=iK3wPcaDiX4kawwMtxTHmx5G40ojk0BRzrxlEKjZnEowoqOx7EmzTGVKZuO3EoZpIaH2tvgNrQe+BQa5hROSrPIIMbZF3SEQPj8pRHus6ZJSTlu29/QCF0eG3WJI0Dh/dHSICBiFb05AI9r9GKGj7l59Y5KebUGsMOkvHvODQEA=
+	t=1714475326; cv=none; b=DlBVfYHTD3dv5/bOd5cATJadD2MIkQstoH0KUo3JOxXSinhleHrp1ZzGfdbd8j2MGilWy49t+RoaP5HLDNSWPAZUaDlbv3UHOXsukraUDjo2z8WdnFwMYmfnBOaWf4H+OlYz6F+FfAEg9kE9hdExKg1raIP8+QpwRUvvVTRxFxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475323; c=relaxed/simple;
-	bh=ien2W0vUjyEyqPDY0Pvplgmb1ZVEZ9UZ64X8Er97ePY=;
+	s=arc-20240116; t=1714475326; c=relaxed/simple;
+	bh=AFsEALVEWxWUN+jVmKj60wOsgVoAcuj3IJ92pVb/3/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oCREnggdNYk53cRV0X8UJfC1vaDRlXUhEPrlyTefikQRepdJ82LFMfZCzMh9IZsudFfxJrHh8GUmPF0q8+/FiqeloN8/PJfDzuAW8Sv5laDLngcHrIQKM+ii+Z1KWH3+z9QUJt76VUCS3txV5n3mOR/7tmnZmHJBKOlQmmwpbuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTnYg0tb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u7DqRt4nlbqyCtlz1+WfxjaP87jAgmTxvc7+Ia2xQnjHCT/DUGXwwDAEOhQPwIPR0myoefha7+Kz8oGeXUk68MAoj3FPe4qT8OHsHSPa+Y8SiRX3wAsAc7C3nigD1WMhn3/CfavnohHKh40MMt1laNJ/3ZIaTUfcqOzsKz/v8K8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqGFFpDB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTnYg0tb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 864C7C2BBFC;
-	Tue, 30 Apr 2024 11:08:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqGFFpDB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 901ABC2BBFC;
+	Tue, 30 Apr 2024 11:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475323;
-	bh=ien2W0vUjyEyqPDY0Pvplgmb1ZVEZ9UZ64X8Er97ePY=;
+	s=korg; t=1714475325;
+	bh=AFsEALVEWxWUN+jVmKj60wOsgVoAcuj3IJ92pVb/3/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iTnYg0tbG++oUcbriN0V52cFGfyznkSHaPhL9sAZx8p9AXNsd7mhjTdPkdp2hLyS3
-	 2Bo8u5CaQRXoXfN/ta8gJYAayrzFD2pT2RPLYjI0nHB27fEjISYT1mDIfvMOVMrMJ+
-	 ZOCvv4H0YN5OSEW0c8yYBKefMWSKiQ3s7ERhmgns=
+	b=oqGFFpDBEFZ7p+eJdfz/J7PI0zDcOFXbjPTRxmAejqAEccFQaIPGPLwVB0vQP6VO3
+	 E3N0ZyyBKk8fX63bBaWhy7szV+McFXCwMDyqiQSd1no9IQL6HUJ7Ytt8rdCvjarTPw
+	 3/sNHIZcQfrSF3HPK6Y+ssFYEVwMD8dZS2unK0lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shironeko <shironeko@tesaguri.club>,
-	Eric Dumazet <edumazet@google.com>,
-	Jose Alonso <joalonsof@gmail.com>,
+	Colin Ian King <colin.i.king@intel.com>,
 	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/186] net: usb: ax88179_178a: stop lying about skb->truesize
-Date: Tue, 30 Apr 2024 12:38:34 +0200
-Message-ID: <20240430103059.839419178@linuxfoundation.org>
+Subject: [PATCH 6.6 036/186] wifi: mac80211: clean up assignments to pointer cache.
+Date: Tue, 30 Apr 2024 12:38:08 +0200
+Message-ID: <20240430103059.078763211@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -54,62 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Colin Ian King <colin.i.king@intel.com>
 
-[ Upstream commit 4ce62d5b2f7aecd4900e7d6115588ad7f9acccca ]
+[ Upstream commit ba4b1fa3128b2fbf14e167230315cbd9074b629b ]
 
-Some usb drivers try to set small skb->truesize and break
-core networking stacks.
+The assignment to pointer cache in function mesh_fast_tx_gc can
+be made at the declaration time rather than a later assignment.
+There are also 3 functions where pointer cache is being initialized
+at declaration time and later re-assigned again with the same
+value, these are redundant and can be removed.
 
-In this patch, I removed one of the skb->truesize overide.
+Cleans up code and three clang scan build warnings:
+warning: Value stored to 'cache' during its initialization is never
+read [deadcode.DeadStores]
 
-I also replaced one skb_clone() by an allocation of a fresh
-and small skb, to get minimally sized skbs, like we did
-in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
-in rx path")
-
-Fixes: f8ebb3ac881b ("net: usb: ax88179_178a: Fix packet receiving")
-Reported-by: shironeko <shironeko@tesaguri.club>
-Closes: https://lore.kernel.org/netdev/c110f41a0d2776b525930f213ca9715c@tesaguri.club/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Jose Alonso <joalonsof@gmail.com>
+Signed-off-by: Colin Ian King <colin.i.king@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240421193828.1966195-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://msgid.link/20240215232151.2075483-1-colin.i.king@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 8c75cdcdf869 ("wifi: mac80211: split mesh fast tx cache into local/proxied/forwarded")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/ax88179_178a.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ net/mac80211/mesh_pathtbl.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/net/usb/ax88179_178a.c b/drivers/net/usb/ax88179_178a.c
-index 3078511f76083..21b6c4d94a632 100644
---- a/drivers/net/usb/ax88179_178a.c
-+++ b/drivers/net/usb/ax88179_178a.c
-@@ -1456,21 +1456,16 @@ static int ax88179_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 			/* Skip IP alignment pseudo header */
- 			skb_pull(skb, 2);
+diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
+index 3e52aaa57b1fc..c7173190f9b93 100644
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -595,11 +595,10 @@ void mesh_fast_tx_cache(struct ieee80211_sub_if_data *sdata,
+ void mesh_fast_tx_gc(struct ieee80211_sub_if_data *sdata)
+ {
+ 	unsigned long timeout = msecs_to_jiffies(MESH_FAST_TX_CACHE_TIMEOUT);
+-	struct mesh_tx_cache *cache;
++	struct mesh_tx_cache *cache = &sdata->u.mesh.tx_cache;
+ 	struct ieee80211_mesh_fast_tx *entry;
+ 	struct hlist_node *n;
  
--			skb->truesize = SKB_TRUESIZE(pkt_len_plus_padd);
- 			ax88179_rx_checksum(skb, pkt_hdr);
- 			return 1;
- 		}
+-	cache = &sdata->u.mesh.tx_cache;
+ 	if (atomic_read(&cache->rht.nelems) < MESH_FAST_TX_CACHE_THRESHOLD_SIZE)
+ 		return;
  
--		ax_skb = skb_clone(skb, GFP_ATOMIC);
-+		ax_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len);
- 		if (!ax_skb)
- 			return 0;
--		skb_trim(ax_skb, pkt_len);
-+		skb_put(ax_skb, pkt_len);
-+		memcpy(ax_skb->data, skb->data + 2, pkt_len);
+@@ -617,7 +616,6 @@ void mesh_fast_tx_flush_mpath(struct mesh_path *mpath)
+ 	struct ieee80211_mesh_fast_tx *entry;
+ 	struct hlist_node *n;
  
--		/* Skip IP alignment pseudo header */
--		skb_pull(ax_skb, 2);
--
--		skb->truesize = pkt_len_plus_padd +
--				SKB_DATA_ALIGN(sizeof(struct sk_buff));
- 		ax88179_rx_checksum(ax_skb, pkt_hdr);
- 		usbnet_skb_return(dev, ax_skb);
+-	cache = &sdata->u.mesh.tx_cache;
+ 	spin_lock_bh(&cache->walk_lock);
+ 	hlist_for_each_entry_safe(entry, n, &cache->walk_head, walk_list)
+ 		if (entry->mpath == mpath)
+@@ -632,7 +630,6 @@ void mesh_fast_tx_flush_sta(struct ieee80211_sub_if_data *sdata,
+ 	struct ieee80211_mesh_fast_tx *entry;
+ 	struct hlist_node *n;
  
+-	cache = &sdata->u.mesh.tx_cache;
+ 	spin_lock_bh(&cache->walk_lock);
+ 	hlist_for_each_entry_safe(entry, n, &cache->walk_head, walk_list)
+ 		if (rcu_access_pointer(entry->mpath->next_hop) == sta)
+@@ -646,7 +643,6 @@ void mesh_fast_tx_flush_addr(struct ieee80211_sub_if_data *sdata,
+ 	struct mesh_tx_cache *cache = &sdata->u.mesh.tx_cache;
+ 	struct ieee80211_mesh_fast_tx *entry;
+ 
+-	cache = &sdata->u.mesh.tx_cache;
+ 	spin_lock_bh(&cache->walk_lock);
+ 	entry = rhashtable_lookup_fast(&cache->rht, addr, fast_tx_rht_params);
+ 	if (entry)
 -- 
 2.43.0
 
