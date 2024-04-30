@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31ECE12D1E8;
-	Tue, 30 Apr 2024 11:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443D312CD90;
+	Tue, 30 Apr 2024 11:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475288; cv=none; b=RpdZqgbqGcFU1vlVUMrEKUk4CeVEg6MepAjj3IbRjxYKMhoDb/4W09ZVMaJB0LGgybRmZAeaGHDI+ur6hyNQ3x8AeZc1FOPcH8dEZM742xykx6Xvxd2mGmIbGa5AExMJJXuiZej6mkciUAEd9u8Ee8jR419E2OBm4urZtv+AKEk=
+	t=1714475291; cv=none; b=icEabwO/MNyJBoEqJYk+4Crl/LdADW+8dYmxKrEtqv3+x5iZVnABTbiOyP/IRzVb4g8Kqy9u+PmLcGxLV5A7bTcq9Zx3EM95n9ZjfMc4l3wxqbteGKmVdks23hu4BeTAWvDpIjF/4Mic0eukYFXrZQtG+7Xr8iCOfpK91ggFs2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475288; c=relaxed/simple;
-	bh=swF9UoJpOGcVFvBue55Jk6ugeaTqFKF8jgdH2G4giqs=;
+	s=arc-20240116; t=1714475291; c=relaxed/simple;
+	bh=sbAgJdxQD90A9R+EYFt24Wq6oL2b9C8YyomkU/z9a3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X8FDrModrWM4j7RJ7KM9Vzb23NVzhcNG0dIQAKbplhRPwS+hEVPQDHUck3DzsKuznEUr/Kt+96SnbitVsNRXN/GLxDr6hxHdGmNdZKsQfI0XFfS+hh+ODiZFbwF0kyRXB6Hfnr7mdOetg1JlU86KioSB8AO+FIUE5DM+2ULnuxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ohlctfzF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GP9ENQXbgOxI3sLq+NFueBd2elZayYJxF9wOla81CdZIWoPs6P2ZDlMn7WpBd1AjMsErrj5U5l3qbYvsCIIB7BWeV6fwh+KT19YDo92qeE0ZaUV1BniS48GbGv+VLbQpYvMZyXFPOgQOKdRQhHiK2xDa0rhmIMuEEU2gUpfIgWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVtm3py5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohlctfzF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97644C2BBFC;
-	Tue, 30 Apr 2024 11:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVtm3py5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA64DC2BBFC;
+	Tue, 30 Apr 2024 11:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475288;
-	bh=swF9UoJpOGcVFvBue55Jk6ugeaTqFKF8jgdH2G4giqs=;
+	s=korg; t=1714475291;
+	bh=sbAgJdxQD90A9R+EYFt24Wq6oL2b9C8YyomkU/z9a3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ohlctfzFhwCMwpRR6qsXLuOhCBBo7k0N4xJZjWaUuzdm3PLKz+uevQIaFLqSmdRpq
-	 Bn70iTcGgNweFq+YRcCg0dAaIXGDSj5p3G7nLSKiWLFc70ITQSjippuioJik31dgXE
-	 lXyrykAMx3qKCXDWBiKXJnKPYIMH5Vh+oXaW9h8M=
+	b=MVtm3py5dYTbukGjWmRxgn9uX2yZntePyg/xqpunQqiTlht3zyUQWF2fHWq207v6M
+	 Fyt6lvNpzjdaFWrJOeIhrz7JmV1YAjiZeWx/a3rPtOBrGZpE6O/H1x8MzpB+4ev4ne
+	 ms9HgkLM8JS4s6Y5YLiPLJY7UXqsgTgYHpeG6eNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vikas Gupta <vikas.gupta@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Vineet Gupta <vgupta@kernel.org>,
+	Alexey Brodkin <abrodkin@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/186] bnxt_en: refactor reset close code
-Date: Tue, 30 Apr 2024 12:38:24 +0200
-Message-ID: <20240430103059.542414673@linuxfoundation.org>
+Subject: [PATCH 6.6 035/186] ARC: [plat-hsdk]: Remove misplaced interrupt-cells property
+Date: Tue, 30 Apr 2024 12:38:07 +0200
+Message-ID: <20240430103059.050221568@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -52,58 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vikas Gupta <vikas.gupta@broadcom.com>
+From: Alexey Brodkin <Alexey.Brodkin@synopsys.com>
 
-[ Upstream commit 7474b1c82be3780692d537d331f9aa7fc1e5a368 ]
+[ Upstream commit 61231eb8113ce47991f35024f9c20810b37996bf ]
 
-Introduce bnxt_fw_fatal_close() API which can be used
-to stop data path and disable device when firmware
-is in fatal state.
+"gmac" node stands for just an ordinary Ethernet controller,
+which is by no means a provider of interrupts, i.e. it doesn't serve
+as an interrupt controller, thus "#interrupt-cells" property doesn't
+belong to it and so we remove it.
 
-Signed-off-by: Vikas Gupta <vikas.gupta@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: a1acdc226bae ("bnxt_en: Fix the PCI-AER routines")
+Fixes:
+------------>8------------
+  DTC     arch/arc/boot/dts/hsdk.dtb
+arch/arc/boot/dts/hsdk.dts:207.23-235.5: Warning (interrupt_provider): /soc/ethernet@8000: '#interrupt-cells' found, but node is not an interrupt provider
+arch/arc/boot/dts/hsdk.dtb: Warning (interrupt_map): Failed prerequisite 'interrupt_provider'
+------------>8------------
+
+Reported-by: Vineet Gupta <vgupta@kernel.org>
+Signed-off-by: Alexey Brodkin <abrodkin@synopsys.com>
+Signed-off-by: Vineet Gupta <vgupta@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ arch/arc/boot/dts/hsdk.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 38e3b2225ff1c..1cf4aae8702b4 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -11807,6 +11807,16 @@ static void bnxt_rx_ring_reset(struct bnxt *bp)
- 	bnxt_rtnl_unlock_sp(bp);
- }
+diff --git a/arch/arc/boot/dts/hsdk.dts b/arch/arc/boot/dts/hsdk.dts
+index 6691f42550778..41b980df862b1 100644
+--- a/arch/arc/boot/dts/hsdk.dts
++++ b/arch/arc/boot/dts/hsdk.dts
+@@ -205,7 +205,6 @@
+ 		};
  
-+static void bnxt_fw_fatal_close(struct bnxt *bp)
-+{
-+	bnxt_tx_disable(bp);
-+	bnxt_disable_napi(bp);
-+	bnxt_disable_int_sync(bp);
-+	bnxt_free_irq(bp);
-+	bnxt_clear_int_mode(bp);
-+	pci_disable_device(bp->pdev);
-+}
-+
- static void bnxt_fw_reset_close(struct bnxt *bp)
- {
- 	bnxt_ulp_stop(bp);
-@@ -11820,12 +11830,7 @@ static void bnxt_fw_reset_close(struct bnxt *bp)
- 		pci_read_config_word(bp->pdev, PCI_SUBSYSTEM_ID, &val);
- 		if (val == 0xffff)
- 			bp->fw_reset_min_dsecs = 0;
--		bnxt_tx_disable(bp);
--		bnxt_disable_napi(bp);
--		bnxt_disable_int_sync(bp);
--		bnxt_free_irq(bp);
--		bnxt_clear_int_mode(bp);
--		pci_disable_device(bp->pdev);
-+		bnxt_fw_fatal_close(bp);
- 	}
- 	__bnxt_close_nic(bp, true, false);
- 	bnxt_vf_reps_free(bp);
+ 		gmac: ethernet@8000 {
+-			#interrupt-cells = <1>;
+ 			compatible = "snps,dwmac";
+ 			reg = <0x8000 0x2000>;
+ 			interrupts = <10>;
 -- 
 2.43.0
 
