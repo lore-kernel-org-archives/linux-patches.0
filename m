@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BF617592;
-	Tue, 30 Apr 2024 11:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560F817592;
+	Tue, 30 Apr 2024 11:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476276; cv=none; b=BvYt2vpMcTsjUKGRQ6jLc8Aq48Qb0S/KHVVmsM4yo9R9tnb4QdMkdm78WCdenoXKIKJ5veqSLquSIsM8Dky9KmlbEZ6WR8MEK8dkCR9FGYiHpmIf5nWn+auU58TvGtDyQ0GAHSAhCdmr+IKcwSHogTtMB0Eve6FHMv+/0fvduEw=
+	t=1714476279; cv=none; b=nn3n2eMUdAOXP2xWoXKvR6nxNasI/Y18rtW79vC5dwZQchGZG00JLgl8dYdEx6dnkxdpVQr1J+pMiYbwa7Il+Vy2MubViiMki4POn6epbv7gLhriN5Nqp9roOETYOEWfAf8PwL/itfuNLW7fjU1N/uMrf2JkfNTnCxvKkPHf5Xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476276; c=relaxed/simple;
-	bh=vCDxj6RLG+Ob7In9CB3ZYCeEmIhfqCJ0ArfOgQb5ZvA=;
+	s=arc-20240116; t=1714476279; c=relaxed/simple;
+	bh=OEZ9oXwKggg/X2MCUWUdeSinCN+dgXipmDJW76SxbZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YseILeZBBgd9nIScjPR+h3gF715BNq1NGQubCET28uL/7adnF5LFUb5lmmEBlWxoNJO/30NTj/wckXF0jAE9+1AlJaPmiHK476/DKpj5xscjXTNNEMql/ExdC/jsmJBcwlazzhxT4WqNevyqgu1jYeaNAEPwkxennbXKiivSYUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+5ai4rd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mOjwETryjT/jXLtSlt4ibfQj8ZExrmc2hYKULTQgbDGDSVjWfiR+CNDDT3j/ow9P4IagoGwb4aAqWASSoAgZN5Q+WgeLpk2+m07LdkFTFIcTn48UIVx7V2JyLQMcfbuHFNxvh+MmyBhCUwwWGjyoR23moBxHfF9TMw8NVdgBOi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrxPfnbG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+5ai4rd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC400C2BBFC;
-	Tue, 30 Apr 2024 11:24:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrxPfnbG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D289FC2BBFC;
+	Tue, 30 Apr 2024 11:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476276;
-	bh=vCDxj6RLG+Ob7In9CB3ZYCeEmIhfqCJ0ArfOgQb5ZvA=;
+	s=korg; t=1714476279;
+	bh=OEZ9oXwKggg/X2MCUWUdeSinCN+dgXipmDJW76SxbZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z+5ai4rdwI+lsRLnbyJq7YGtqn4TixY0m9O52ApXGRNCnwXeKfH9BQD77UeKfMfAr
-	 AodcZl99id8i3Sso5fgo1o2AUdW2oFV3qfcy+yJ0t1PrcecBpqYPtmrFIPw5aWsew+
-	 NcfaS4u8uaJx55R4sx+CMlptQDdqFAD+xtrWsgOU=
+	b=wrxPfnbGkSbxBz3cMKmj7Opk4mv1+YBZIJdrK1yy6F3hTZmMvMdTlHWMxBMb1311q
+	 iJh9XSkPm1bCRfrFKjJv16B4VRFvCS0KHoVlOe5BX0max8Af6l+x85h665bnbPZLDJ
+	 saGBYDHjcdj5LJaIVdhdmxj7NtwP3IAf4OycHlo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Chia-I Wu <olvaffe@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 082/107] amdgpu: validate offset_in_bo of drm_amdgpu_gem_va
-Date: Tue, 30 Apr 2024 12:40:42 +0200
-Message-ID: <20240430103047.078992846@linuxfoundation.org>
+	Iskander Amara <iskander.amara@theobroma-systems.com>,
+	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 5.4 091/107] arm64: dts: rockchip: enable internal pull-up for Q7_THRM# on RK3399 Puma
+Date: Tue, 30 Apr 2024 12:40:51 +0200
+Message-ID: <20240430103047.344503249@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -46,78 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chia-I Wu <olvaffe@gmail.com>
+From: Iskander Amara <iskander.amara@theobroma-systems.com>
 
-[ Upstream commit 9f0bcf49e9895cb005d78b33a5eebfa11711b425 ]
+commit 0ac417b8f124427c90ec8c2ef4f632b821d924cc upstream.
 
-This is motivated by OOB access in amdgpu_vm_update_range when
-offset_in_bo+map_size overflows.
+Q7_THRM# pin is connected to a diode on the module which is used
+as a level shifter, and the pin have a pull-down enabled by
+default. We need to configure it to internal pull-up, other-
+wise whenever the pin is configured as INPUT and we try to
+control it externally the value will always remain zero.
 
-v2: keep the validations in amdgpu_vm_bo_map
-v3: add the validations to amdgpu_vm_bo_map/amdgpu_vm_bo_replace_map
-    rather than to amdgpu_gem_va_ioctl
-
-Fixes: 9f7eb5367d00 ("drm/amdgpu: actually use the VM map parameters")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 6fef2d4c00b5 ("drm/amdgpu: validate the parameters of bo mapping operations more clearly")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Iskander Amara <iskander.amara@theobroma-systems.com>
+Fixes: 2c66fc34e945 ("arm64: dts: rockchip: add RK3399-Q7 (Puma) SoM")
+Reviewed-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240308085243.69903-1-iskander.amara@theobroma-systems.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-index 88f2707c69ce7..dfec651ec0b45 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2123,14 +2123,14 @@ int amdgpu_vm_bo_map(struct amdgpu_device *adev,
- 	uint64_t eaddr;
+--- a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
+@@ -431,6 +431,16 @@
+ };
  
- 	/* validate the parameters */
--	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK ||
--	    size == 0 || size & ~PAGE_MASK)
-+	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
-+		return -EINVAL;
-+	if (saddr + size <= saddr || offset + size <= offset)
- 		return -EINVAL;
- 
- 	/* make sure object fit at this offset */
- 	eaddr = saddr + size - 1;
--	if (saddr >= eaddr ||
--	    (bo && offset + size > amdgpu_bo_size(bo)) ||
-+	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
- 	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
- 		return -EINVAL;
- 
-@@ -2189,14 +2189,14 @@ int amdgpu_vm_bo_replace_map(struct amdgpu_device *adev,
- 	int r;
- 
- 	/* validate the parameters */
--	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK ||
--	    size == 0 || size & ~PAGE_MASK)
-+	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
-+		return -EINVAL;
-+	if (saddr + size <= saddr || offset + size <= offset)
- 		return -EINVAL;
- 
- 	/* make sure object fit at this offset */
- 	eaddr = saddr + size - 1;
--	if (saddr >= eaddr ||
--	    (bo && offset + size > amdgpu_bo_size(bo)) ||
-+	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
- 	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
- 		return -EINVAL;
- 
--- 
-2.43.0
-
+ &pinctrl {
++	pinctrl-names = "default";
++	pinctrl-0 = <&q7_thermal_pin>;
++
++	gpios {
++		q7_thermal_pin: q7-thermal-pin {
++			rockchip,pins =
++				<0 RK_PA3 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++	};
++
+ 	i2c8 {
+ 		i2c8_xfer_a: i2c8-xfer {
+ 			rockchip,pins =
 
 
