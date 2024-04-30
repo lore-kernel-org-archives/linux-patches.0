@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E90129E89;
-	Tue, 30 Apr 2024 10:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE82812C487;
+	Tue, 30 Apr 2024 10:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474516; cv=none; b=cKR7XAgXylmLub+Q2S7RXA9idvBWz34iofL6AW76n143WFdNw7W5NFTDiFgWB9ynTZdkP7dNkcjzBM/La0CeYkLw9H/2O3v7TRdIibmqC+PSZf+1T/OSb6QkPSx/PI/wrYnHPYlG8mukJ9O+HxJ40DhUzLFbpIQgj2htUlIbs04=
+	t=1714474519; cv=none; b=U6IqwncAAmAnr/ufsSPYqQM/V6+q1IDnBQhBkkyMpBvcVUciqjgRfNMMxYjsKN7NAvjIO7Le9f34JmCLgKlr/uKkYti3W9XTIvu8vSOuef5oQqJ/n79HN9bdI9GHUdOFNyGD6BXJvlccOFD1WuFFvBpfosSXLnCINirijw/9Lig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474516; c=relaxed/simple;
-	bh=ht9jEVNJtM2+W+UZ5cklyYV8/66Obq+Mor1zUTtsoVs=;
+	s=arc-20240116; t=1714474519; c=relaxed/simple;
+	bh=29t/t/bMbzy9IVK9dMB6oct62xFBq9bZEnEiw+7HnSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L3LXzl+bXIRyXHFZPpeVETvO4xZtY3BtJpQkROq6CaEeDmL582lmjwhXujTeK9SzTA2dZ8AVjXAJ0Ns3uEJiMV6kj+43faoOYYBsd4ic82hrjvu/9+Ckw5A1zr/Y0d/2rri+7k/CvfF3vgS0cDkNwtMO1MXuWNfsZrodEzwz+lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/Q2Tc0w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KZTri9ic89svV+ehYRrwvrO3rzao7zSC0Kn51u3c0kCVINJyj8QuJHaN0A7WdKAaZFyBoYnc7kqiGhjBbYbuicsHrK7PNNI1WbiYBLrvNKqTEZXYf1x1KFTBi3Za70ci+RxrouN9kA9JOdP6lytwXL6Pw/bzyJyvFUyFt/T/oBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dH35O5TT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/Q2Tc0w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070CDC2BBFC;
-	Tue, 30 Apr 2024 10:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dH35O5TT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A00C2BBFC;
+	Tue, 30 Apr 2024 10:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474516;
-	bh=ht9jEVNJtM2+W+UZ5cklyYV8/66Obq+Mor1zUTtsoVs=;
+	s=korg; t=1714474519;
+	bh=29t/t/bMbzy9IVK9dMB6oct62xFBq9bZEnEiw+7HnSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E/Q2Tc0wLsIWZcFJvmlRuqo4nNxi3+WOOzREsJCbZprbGncEDMdZ2rCg8PKgxPNPY
-	 FZtdTDoMrc+6PBapQgJ+iEYjlMOzp8EXCxxLAyI/xZqDuBhOmkCsmU/d9tvrGRu77a
-	 x0uLbjTFeOB1paMnFH7PFBemhFTNOReGr9p0rL9c=
+	b=dH35O5TT7l2xMiYdPp9b2b1Pb5tFLyuSTR7LrAputoJoFLt8NeVKiyRp214BKBLSl
+	 fS8wfro7ciHgki2YvHKxYXNpJSq9h+PRXnBHWIMQ+pV1kGS260t0hIFdqQdNxHR4fb
+	 EX2vLngI+mZKAuOsSOYf9YE/50SVdfRpE/CBUeBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Philip Yang <Philip.Yang@amd.com>,
-	Yunxiang Li <Yunxiang.Li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.8 179/228] drm/amdkfd: Fix rescheduling of restore worker
-Date: Tue, 30 Apr 2024 12:39:17 +0200
-Message-ID: <20240430103108.968747917@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.8 144/228] Bluetooth: qca: fix NULL-deref on non-serdev suspend
+Date: Tue, 30 Apr 2024 12:38:42 +0200
+Message-ID: <20240430103107.953680051@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -52,38 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Kuehling <felix.kuehling@amd.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit e26305f369ed0e087a043c2cdc76f3d9a6efb3bd upstream.
+commit 73e87c0a49fda31d7b589edccf4c72e924411371 upstream.
 
-Handle the case that the restore worker was already scheduled by another
-eviction while the restore was in progress.
+Qualcomm ROME controllers can be registered from the Bluetooth line
+discipline and in this case the HCI UART serdev pointer is NULL.
 
-Fixes: 9a1c1339abf9 ("drm/amdkfd: Run restore_workers on freezable WQs")
-Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
-Reviewed-by: Philip Yang <Philip.Yang@amd.com>
-Tested-by: Yunxiang Li <Yunxiang.Li@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Add the missing sanity check to prevent a NULL-pointer dereference when
+wakeup() is called for a non-serdev controller during suspend.
+
+Just return true for now to restore the original behaviour and address
+the crash with pre-6.2 kernels, which do not have commit e9b3e5b8c657
+("Bluetooth: hci_qca: only assign wakeup with serial port support") that
+causes the crash to happen already at setup() time.
+
+Fixes: c1a74160eaf1 ("Bluetooth: hci_qca: Add device_may_wakeup support")
+Cc: stable@vger.kernel.org      # 5.13
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/bluetooth/hci_qca.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -2011,9 +2011,9 @@ static void restore_process_worker(struc
- 	if (ret) {
- 		pr_debug("Failed to restore BOs of pasid 0x%x, retry after %d ms\n",
- 			 p->pasid, PROCESS_BACK_OFF_TIME_MS);
--		ret = queue_delayed_work(kfd_restore_wq, &p->restore_work,
--				msecs_to_jiffies(PROCESS_BACK_OFF_TIME_MS));
--		WARN(!ret, "reschedule restore work failed\n");
-+		if (mod_delayed_work(kfd_restore_wq, &p->restore_work,
-+				     msecs_to_jiffies(PROCESS_RESTORE_TIME_MS)))
-+			kfd_process_restore_queues(p);
- 	}
- }
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1672,6 +1672,9 @@ static bool qca_wakeup(struct hci_dev *h
+ 	struct hci_uart *hu = hci_get_drvdata(hdev);
+ 	bool wakeup;
  
++	if (!hu->serdev)
++		return true;
++
+ 	/* BT SoC attached through the serial bus is handled by the serdev driver.
+ 	 * So we need to use the device handle of the serdev driver to get the
+ 	 * status of device may wakeup.
 
 
