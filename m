@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F7412D74E;
-	Tue, 30 Apr 2024 10:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491F512C817;
+	Tue, 30 Apr 2024 10:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474428; cv=none; b=hZw3oIQOhtkIF1mgjIYBamMcx+qIO4yqLoDJtUAlMcaNwgLtxItjJoJQeD+PkAPjtfOsSzsXfLm30KS+C+FtHVU0ZAS65YzSODyZ25DrmM3V+YCpqfKRbHL0M31NiaCF7WkwFju5WJGq3Aby7bUGWGdsv1ka9feJSoSBmcWeCf0=
+	t=1714474431; cv=none; b=k6DkHwGiRqmQN6zX7qeKUtbHYYmYTT7mBbbcfkI5ezws8qulNF31AKcx/SGrxh0ePunJSdb88tkDCRwOdJPmmiFLDGYq4I7XSW2S9TFRZDvl97kcnOprVrAizydev1z/KLGBTh3rDbIgAyKgUpY3f1ZNXMCVgkNA0yk0gnybStY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474428; c=relaxed/simple;
-	bh=ism03/T73x/IMDVKntwB7n5K5lzMiSvNmw4VFsFT5hk=;
+	s=arc-20240116; t=1714474431; c=relaxed/simple;
+	bh=cEJ/ICwgk5113syVatDaBbmMp7Lf+4+6zCiuRMxuxz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nGJJbz5XPb8yZDpzWYDZW7LjLSKvi6XNfSRymKm9fye1bZpxPx8WMyRHBLe8rf0NX1JiDcROQBv1PIxI1ikbLsLIjNFxi8y1j1++tl+IMwQLD4quawsgz2uZXd2YYaKXvCfLT8FbXyadPShGhhyxuBCq5yG7nM2ZzCnlymFDjuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOVMkdhv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gDOSQUCeFZ2iPnq7ovEjPiJR3CewfXa8GYGFW21UMagCBK3vdYEQbbP0+622KhW2vEzJ9OPx9R7G65rjnsyLcPQzFFDrWRKYTYd7Ow+pChLgisHYFSwUfCDnDfXDPc8Z3EiGR6wjMoO5sahYBwgVapjlcdND6JyocydfmcnNNzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzzGYFW+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOVMkdhv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C6C9C2BBFC;
-	Tue, 30 Apr 2024 10:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzzGYFW+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8155EC2BBFC;
+	Tue, 30 Apr 2024 10:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474427;
-	bh=ism03/T73x/IMDVKntwB7n5K5lzMiSvNmw4VFsFT5hk=;
+	s=korg; t=1714474430;
+	bh=cEJ/ICwgk5113syVatDaBbmMp7Lf+4+6zCiuRMxuxz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kOVMkdhvogyAIPQuM7MPAhTfdJxsg3U+bcziKwB/3dZmsXR4P7EHvf2JgXYp0Z806
-	 s+ZFhZw6YzjyD+rmUpxgzcZM1Dj7oehwXEJ78z2eQjf3/4w6m0Sc7bVg3lmHr81CDV
-	 V54MG0dlNrc8GPQKdt93G1hwyIZTZo6MSvvSidQs=
+	b=KzzGYFW+kNmBdqJ098cIo7aXBzwVd8x+Z5V9Lz8hlH3RXeS9ESJPkKVzuHM5yHLrw
+	 PMj3Oy2+8bSXovus9kML9M+4kKvoZZk01StY5alkjkHne7VWKL+nbGrzPxmb2WhvgI
+	 XLPG+yPOkyQr6GA+zfPUx+lYMPPz+ItMPyJ7D5fI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shyam Prasad N <sprasad@microsoft.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.8 154/228] smb3: missing lock when picking channel
-Date: Tue, 30 Apr 2024 12:38:52 +0200
-Message-ID: <20240430103108.250483717@linuxfoundation.org>
+Subject: [PATCH 6.8 155/228] smb3: fix lock ordering potential deadlock in cifs_sync_mid_result
+Date: Tue, 30 Apr 2024 12:38:53 +0200
+Message-ID: <20240430103108.279110509@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -52,34 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Steve French <stfrench@microsoft.com>
 
-commit 8094a600245e9b28eb36a13036f202ad67c1f887 upstream.
+commit 8861fd5180476f45f9e8853db154600469a0284f upstream.
 
-Coverity spotted a place where we should have been holding the
-channel lock when accessing the ses channel index.
+Coverity spotted that the cifs_sync_mid_result function could deadlock
 
-Addresses-Coverity: 1582039 ("Data race condition (MISSING_LOCK)")
+"Thread deadlock (ORDER_REVERSAL) lock_order: Calling spin_lock acquires
+lock TCP_Server_Info.srv_lock while holding lock TCP_Server_Info.mid_lock"
+
+Addresses-Coverity: 1590401 ("Thread deadlock (ORDER_REVERSAL)")
 Cc: stable@vger.kernel.org
 Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/transport.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/client/transport.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/fs/smb/client/transport.c
 +++ b/fs/smb/client/transport.c
-@@ -1057,9 +1057,11 @@ struct TCP_Server_Info *cifs_pick_channe
- 		index = (uint)atomic_inc_return(&ses->chan_seq);
- 		index %= ses->chan_count;
+@@ -909,12 +909,15 @@ cifs_sync_mid_result(struct mid_q_entry
+ 			list_del_init(&mid->qhead);
+ 			mid->mid_flags |= MID_DELETED;
+ 		}
++		spin_unlock(&server->mid_lock);
+ 		cifs_server_dbg(VFS, "%s: invalid mid state mid=%llu state=%d\n",
+ 			 __func__, mid->mid, mid->mid_state);
+ 		rc = -EIO;
++		goto sync_mid_done;
  	}
-+
-+	server = ses->chans[index].server;
- 	spin_unlock(&ses->chan_lock);
+ 	spin_unlock(&server->mid_lock);
  
--	return ses->chans[index].server;
-+	return server;
++sync_mid_done:
+ 	release_mid(mid);
+ 	return rc;
  }
- 
- int
 
 
