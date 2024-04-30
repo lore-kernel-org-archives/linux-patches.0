@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96C812BF32;
-	Tue, 30 Apr 2024 11:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6519F12D215;
+	Tue, 30 Apr 2024 11:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476638; cv=none; b=ir0tkeUHbSJr2FCM2sQ9EZ+6YRXqf8ubXGK56sE5XHBSFD9gBasOfDUetNjvYv3GTGl4ral1R1vF/fwyf+3usGdzAxo1oX90Z5Yq9o8OEsaU5O4xOEQ6KreVUPB1z20dcPddsay1/1lKYdvxKxSSARWLvleihoQv+vDXfN5gtEs=
+	t=1714476642; cv=none; b=i4BcNWl/Cxx+HjJp3ZNNB5tbegFomcbvEs7OF7ZgUfcFMmw8tELqGj4zZc5F8toVazr5Is8Ruknk1GR+gOGKDijkLrjnOt7t4eFFuNLkCidGhdXaOGq8jcwx6Tbzntm0t5rXUbm7QnTCqVQYMzh7ch3QcClcba/7tBRIktIfTB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476638; c=relaxed/simple;
-	bh=B8yibZWfRahkhGFA4ENZbrda8wQGTpNGtVocNF0u8Wc=;
+	s=arc-20240116; t=1714476642; c=relaxed/simple;
+	bh=OmtcX3E9cnXVwdAvIXeSK5Ys5PUISyYvo4ISNEHbrlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShpUtW1ghf+z8LtPN5fo/l4vg3i/26ulQGSg11kBt12wJ5E3TlL9y1R7D1NMX6vF9Dg6728rw9p3+liImsmUK7t6Zt9Z7/KM94ZR6r0pN0k0PiJgRvyce8mK1EdzHgEzSSJy90WfaAuwKHUG8Lfy8d2rrBppNFSogGU5A0IL1Zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rMOQOgHR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OKpIiIloF0SvZkkpxYVD9b7sRskMNVNG0aWZ1Tg3J21i6joTZEyvtd1djGLY8eu9nWOlpVIP3+eTsILeAKij7JFm67SzdbRjPCitx8n/JXh+LqGyUewim+ieVSPBKfrg2X9+6P1YTU4z8K9moWOIq8CBgxU9lzIj5dYPv5aVMQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BBLUHQL4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rMOQOgHR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59EA8C2BBFC;
-	Tue, 30 Apr 2024 11:30:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBLUHQL4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D92AC4AF19;
+	Tue, 30 Apr 2024 11:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476637;
-	bh=B8yibZWfRahkhGFA4ENZbrda8wQGTpNGtVocNF0u8Wc=;
+	s=korg; t=1714476641;
+	bh=OmtcX3E9cnXVwdAvIXeSK5Ys5PUISyYvo4ISNEHbrlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rMOQOgHRbrEvb2ATW6IHhC+YS2P34K/ecNX+gXUOUPZgJckzVhPBFOlqKTOTupIm3
-	 9XIqsto3/mETaSFWwju/kzjxQ8fKXWzCDpA5wjRoOYKDfTFsDtnt+qAWzyQ/AFMIUJ
-	 JfxnmTALjsIWu9hlF+CkMa3SG97sE7NJhdlzcQNQ=
+	b=BBLUHQL4iXJD84EXmMiyS8r8naYLBcIuVBiaJ6SvQAjEGGng5RpJHSmOJapSdImhg
+	 yg1jZEg5PktwfEJnufn/dYJfiSvlpw9WJz8B0npaAAGlKeOHPnTRIJxPxB4qIJV1P5
+	 5GsstJHk6YeiEVZSEc7t5HkbJeOy/XHSqW1gOgxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jason Reeder <jreeder@ti.com>,
+	Ravi Gunasekaran <r-gunasekaran@ti.com>,
+	Ed Trexel <ed.trexel@hp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Mineri Bhange <minerix.bhange@intel.com>
-Subject: [PATCH 6.1 056/110] iavf: Fix TC config comparison with existing adapter TC config
-Date: Tue, 30 Apr 2024 12:40:25 +0200
-Message-ID: <20240430103049.219205126@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 057/110] net: ethernet: ti: am65-cpts: Fix PTPv1 message type on TX packets
+Date: Tue, 30 Apr 2024 12:40:26 +0200
+Message-ID: <20240430103049.249985653@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -53,73 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>
+From: Jason Reeder <jreeder@ti.com>
 
-[ Upstream commit 54976cf58d6168b8d15cebb395069f23b2f34b31 ]
+[ Upstream commit 1b9e743e923b256e353a9a644195372285e5a6c0 ]
 
-Same number of TCs doesn't imply that underlying TC configs are
-same. The config could be different due to difference in number
-of queues in each TC. Add utility function to determine if TC
-configs are same.
+The CPTS, by design, captures the messageType (Sync, Delay_Req, etc.)
+field from the second nibble of the PTP header which is defined in the
+PTPv2 (1588-2008) specification. In the PTPv1 (1588-2002) specification
+the first two bytes of the PTP header are defined as the versionType
+which is always 0x0001. This means that any PTPv1 packets that are
+tagged for TX timestamping by the CPTS will have their messageType set
+to 0x0 which corresponds to a Sync message type. This causes issues
+when a PTPv1 stack is expecting a Delay_Req (messageType: 0x1)
+timestamp that never appears.
 
-Fixes: d5b33d024496 ("i40evf: add ndo_setup_tc callback to i40evf")
-Signed-off-by: Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>
-Tested-by: Mineri Bhange <minerix.bhange@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20240423182723.740401-4-anthony.l.nguyen@intel.com
+Fix this by checking if the ptp_class of the timestamped TX packet is
+PTP_CLASS_V1 and then matching the PTP sequence ID to the stored
+sequence ID in the skb->cb data structure. If the sequence IDs match
+and the packet is of type PTPv1 then there is a chance that the
+messageType has been incorrectly stored by the CPTS so overwrite the
+messageType stored by the CPTS with the messageType from the skb->cb
+data structure. This allows the PTPv1 stack to receive TX timestamps
+for Delay_Req packets which are necessary to lock onto a PTP Leader.
+
+Signed-off-by: Jason Reeder <jreeder@ti.com>
+Signed-off-by: Ravi Gunasekaran <r-gunasekaran@ti.com>
+Tested-by: Ed Trexel <ed.trexel@hp.com>
+Fixes: f6bd59526ca5 ("net: ethernet: ti: introduce am654 common platform time sync driver")
+Link: https://lore.kernel.org/r/20240424071626.32558-1-r-gunasekaran@ti.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 30 ++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ti/am65-cpts.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index b9c4b311cd625..53b9fe35d8035 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -3631,6 +3631,34 @@ static void iavf_del_all_cloud_filters(struct iavf_adapter *adapter)
- 	spin_unlock_bh(&adapter->cloud_filter_list_lock);
- }
+diff --git a/drivers/net/ethernet/ti/am65-cpts.c b/drivers/net/ethernet/ti/am65-cpts.c
+index 9948ac14e68db..c1bdf045e9815 100644
+--- a/drivers/net/ethernet/ti/am65-cpts.c
++++ b/drivers/net/ethernet/ti/am65-cpts.c
+@@ -649,6 +649,11 @@ static bool am65_cpts_match_tx_ts(struct am65_cpts *cpts,
+ 		struct am65_cpts_skb_cb_data *skb_cb =
+ 					(struct am65_cpts_skb_cb_data *)skb->cb;
  
-+/**
-+ * iavf_is_tc_config_same - Compare the mqprio TC config with the
-+ * TC config already configured on this adapter.
-+ * @adapter: board private structure
-+ * @mqprio_qopt: TC config received from kernel.
-+ *
-+ * This function compares the TC config received from the kernel
-+ * with the config already configured on the adapter.
-+ *
-+ * Return: True if configuration is same, false otherwise.
-+ **/
-+static bool iavf_is_tc_config_same(struct iavf_adapter *adapter,
-+				   struct tc_mqprio_qopt *mqprio_qopt)
-+{
-+	struct virtchnl_channel_info *ch = &adapter->ch_config.ch_info[0];
-+	int i;
++		if ((ptp_classify_raw(skb) & PTP_CLASS_V1) &&
++		    ((mtype_seqid & AM65_CPTS_EVENT_1_SEQUENCE_ID_MASK) ==
++		     (skb_cb->skb_mtype_seqid & AM65_CPTS_EVENT_1_SEQUENCE_ID_MASK)))
++			mtype_seqid = skb_cb->skb_mtype_seqid;
 +
-+	if (adapter->num_tc != mqprio_qopt->num_tc)
-+		return false;
-+
-+	for (i = 0; i < adapter->num_tc; i++) {
-+		if (ch[i].count != mqprio_qopt->count[i] ||
-+		    ch[i].offset != mqprio_qopt->offset[i])
-+			return false;
-+	}
-+	return true;
-+}
-+
- /**
-  * __iavf_setup_tc - configure multiple traffic classes
-  * @netdev: network interface device structure
-@@ -3688,7 +3716,7 @@ static int __iavf_setup_tc(struct net_device *netdev, void *type_data)
- 		if (ret)
- 			return ret;
- 		/* Return if same TC config is requested */
--		if (adapter->num_tc == num_tc)
-+		if (iavf_is_tc_config_same(adapter, &mqprio_qopt->qopt))
- 			return 0;
- 		adapter->num_tc = num_tc;
+ 		if (mtype_seqid == skb_cb->skb_mtype_seqid) {
+ 			u64 ns = event->timestamp;
  
 -- 
 2.43.0
