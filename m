@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CBEA1E50A;
-	Tue, 30 Apr 2024 11:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC3512D1F1;
+	Tue, 30 Apr 2024 11:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475462; cv=none; b=DyT4GEVdC7yRs65zVPdCkVHddQ6uXzDy2Xk343JSTiFRPY50xhglTyRt/dT1PwXTMeA4sDH9kmMs9w9my6QHUC2Wg2Dtv7iU9+B0+MhDB3XEgaTXjgC5ZpSf7qQOkcSLLIUcFimbQca6EphUpBTvMgka/9Vlcz93nHF7feHwBfw=
+	t=1714475465; cv=none; b=J4+vxe7v9oke314DyBvX0EYEZOoSmSwwAprXI7bHlFUlJSTwYa2c5AQw70l/twcq1TQgn6vWUHz5nYDY8tkS6dBilb3ybHfjH9ZrcuukP0nkB1RoviDK2P1AySqHGPEZNlUddBAMsbLTZev2HnOAxZxT899oX+TAHox4a7gWwfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475462; c=relaxed/simple;
-	bh=q12usDy5CwHEv1VBHfP5jPlmwihos83n/OIoU0Eoh9c=;
+	s=arc-20240116; t=1714475465; c=relaxed/simple;
+	bh=0Yh4q8SuiXBleWM1JRF07ubV6xJZmybtKW9h3AiJb8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eSw1ZQb6lmZkJTuSdKmoeGSZIiNjLYziFnl7T9LSYNIPNPvEv4XLktOh5MllRRo5e2+V0FprN7ZRNQNPQqO9/Wq/Ec5Gp1ZuU6kQa39RF9O0cSkQjp7m8a99GuW4KyqckSAoipxmsc2pPUOPPlktEjLW+3gLY8W/ZWGPFs4JH0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEaSeIlM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HHpDtpHAnGvPuQsMnCdDAqp99lZZwooTrsBOEZPBXJMUFQWkuVAQAV4lziwLhOuhE1E9+hTBkWmEIfDz5Cjo1E6MjG5Fex1BKAMEoUMuoSXHDj7ijBcrkVk9Ei86uDY9yekaLDNiYMj0K0zoXQ4o/TAh31MabDAjKSu5elKEi+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aWQQrWlA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEaSeIlM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BE0C2BBFC;
-	Tue, 30 Apr 2024 11:11:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aWQQrWlA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66995C2BBFC;
+	Tue, 30 Apr 2024 11:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475461;
-	bh=q12usDy5CwHEv1VBHfP5jPlmwihos83n/OIoU0Eoh9c=;
+	s=korg; t=1714475464;
+	bh=0Yh4q8SuiXBleWM1JRF07ubV6xJZmybtKW9h3AiJb8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jEaSeIlMxGuECvf9Hu55EnyM3H/X1760BoJFVilRHIrrHQsAcxJR4Cv5/ebxbYSn+
-	 5I8JOOtzOEFNuQH3PggUuX08qrQMlESnJwQYCRREZAzTn/VhxVAnSKsdrN/JZ2Vreb
-	 SdGC5QR/rH78NBeGDXBdT8QOaHYS4oXNJ5PzTesY=
+	b=aWQQrWlAc7MN19XGq3Q/CImvId3Jl4kRQCCF51297ki15rPJRfgX43DcxcCEu1Kir
+	 Cj9DgwbQa51RAOPOsqJ8aWipjSWRmzsTd7NJ03bw6d22Gc/AchkDveezOL4kbtINoL
+	 xzr+wwZ153Q5rpv22xUZjb4dzFs56nzLFtt1QSVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 102/186] drm/amdgpu: fix visible VRAM handling during faults
-Date: Tue, 30 Apr 2024 12:39:14 +0200
-Message-ID: <20240430103100.996640270@linuxfoundation.org>
+Subject: [PATCH 6.6 103/186] mm, treewide: introduce NR_PAGE_ORDERS
+Date: Tue, 30 Apr 2024 12:39:15 +0200
+Message-ID: <20240430103101.025540430@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -45,285 +47,445 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit a6ff969fe9cbf369e3cd0ac54261fec1122682ec ]
+[ Upstream commit fd37721803c6e73619108f76ad2e12a9aa5fafaf ]
 
-When we removed the hacky start code check we actually didn't took into
-account that *all* VRAM pages needs to be CPU accessible.
+NR_PAGE_ORDERS defines the number of page orders supported by the page
+allocator, ranging from 0 to MAX_ORDER, MAX_ORDER + 1 in total.
 
-Clean up the code and unify the handling into a single helper which
-checks if the whole resource is CPU accessible.
+NR_PAGE_ORDERS assists in defining arrays of page orders and allows for
+more natural iteration over them.
 
-The only place where a partial check would make sense is during
-eviction, but that is neglitible.
-
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Fixes: aed01a68047b ("drm/amdgpu: Remove TTM resource->start visible VRAM condition v2")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-CC: stable@vger.kernel.org
+[kirill.shutemov@linux.intel.com: fixup for kerneldoc warning]
+  Link: https://lkml.kernel.org/r/20240101111512.7empzyifq7kxtzk3@box
+Link: https://lkml.kernel.org/r/20231228144704.14033-1-kirill.shutemov@linux.intel.com
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: b6976f323a86 ("drm/ttm: stop pooling cached NUMA pages v2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c     |  2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_object.c | 22 ++++----
- drivers/gpu/drm/amd/amdgpu/amdgpu_object.h | 22 --------
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c    | 61 ++++++++++++++--------
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h    |  3 ++
- 5 files changed, 53 insertions(+), 57 deletions(-)
+ .../admin-guide/kdump/vmcoreinfo.rst          |  6 +++---
+ arch/arm64/kvm/hyp/include/nvhe/gfp.h         |  2 +-
+ arch/sparc/kernel/traps_64.c                  |  2 +-
+ drivers/gpu/drm/ttm/tests/ttm_device_test.c   |  2 +-
+ drivers/gpu/drm/ttm/ttm_pool.c                | 20 +++++++++----------
+ include/drm/ttm/ttm_pool.h                    |  2 +-
+ include/linux/mmzone.h                        |  6 ++++--
+ kernel/crash_core.c                           |  2 +-
+ lib/test_meminit.c                            |  2 +-
+ mm/compaction.c                               |  2 +-
+ mm/kmsan/init.c                               |  2 +-
+ mm/page_alloc.c                               | 13 ++++++------
+ mm/page_reporting.c                           |  2 +-
+ mm/show_mem.c                                 |  8 ++++----
+ mm/vmstat.c                                   | 12 +++++------
+ 15 files changed, 42 insertions(+), 41 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index c0a3afe81bb1a..4294f5e7bff9a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -819,7 +819,7 @@ static int amdgpu_cs_bo_validate(void *param, struct amdgpu_bo *bo)
+diff --git a/Documentation/admin-guide/kdump/vmcoreinfo.rst b/Documentation/admin-guide/kdump/vmcoreinfo.rst
+index 599e8d3bcbc31..9235cf4fbabff 100644
+--- a/Documentation/admin-guide/kdump/vmcoreinfo.rst
++++ b/Documentation/admin-guide/kdump/vmcoreinfo.rst
+@@ -172,7 +172,7 @@ variables.
+ Offset of the free_list's member. This value is used to compute the number
+ of free pages.
  
- 	p->bytes_moved += ctx.bytes_moved;
- 	if (!amdgpu_gmc_vram_full_visible(&adev->gmc) &&
--	    amdgpu_bo_in_cpu_visible_vram(bo))
-+	    amdgpu_res_cpu_visible(adev, bo->tbo.resource))
- 		p->bytes_moved_vis += ctx.bytes_moved;
+-Each zone has a free_area structure array called free_area[MAX_ORDER + 1].
++Each zone has a free_area structure array called free_area[NR_PAGE_ORDERS].
+ The free_list represents a linked list of free page blocks.
  
- 	if (unlikely(r == -ENOMEM) && domain != bo->allowed_domains) {
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-index 394f475877e3b..361f2cc94e8e5 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-@@ -625,8 +625,7 @@ int amdgpu_bo_create(struct amdgpu_device *adev,
- 		return r;
+ (list_head, next|prev)
+@@ -189,8 +189,8 @@ Offsets of the vmap_area's members. They carry vmalloc-specific
+ information. Makedumpfile gets the start address of the vmalloc region
+ from this.
  
- 	if (!amdgpu_gmc_vram_full_visible(&adev->gmc) &&
--	    bo->tbo.resource->mem_type == TTM_PL_VRAM &&
--	    amdgpu_bo_in_cpu_visible_vram(bo))
-+	    amdgpu_res_cpu_visible(adev, bo->tbo.resource))
- 		amdgpu_cs_report_moved_bytes(adev, ctx.bytes_moved,
- 					     ctx.bytes_moved);
- 	else
-@@ -1280,23 +1279,25 @@ void amdgpu_bo_move_notify(struct ttm_buffer_object *bo, bool evict)
- void amdgpu_bo_get_memory(struct amdgpu_bo *bo,
- 			  struct amdgpu_mem_stats *stats)
+-(zone.free_area, MAX_ORDER + 1)
+--------------------------------
++(zone.free_area, NR_PAGE_ORDERS)
++--------------------------------
+ 
+ Free areas descriptor. User-space tools use this value to iterate the
+ free_area ranges. MAX_ORDER is used by the zone buddy allocator.
+diff --git a/arch/arm64/kvm/hyp/include/nvhe/gfp.h b/arch/arm64/kvm/hyp/include/nvhe/gfp.h
+index fe5472a184a37..97c527ef53c2a 100644
+--- a/arch/arm64/kvm/hyp/include/nvhe/gfp.h
++++ b/arch/arm64/kvm/hyp/include/nvhe/gfp.h
+@@ -16,7 +16,7 @@ struct hyp_pool {
+ 	 * API at EL2.
+ 	 */
+ 	hyp_spinlock_t lock;
+-	struct list_head free_area[MAX_ORDER + 1];
++	struct list_head free_area[NR_PAGE_ORDERS];
+ 	phys_addr_t range_start;
+ 	phys_addr_t range_end;
+ 	unsigned short max_order;
+diff --git a/arch/sparc/kernel/traps_64.c b/arch/sparc/kernel/traps_64.c
+index 08ffd17d5ec34..523a6e5ee9251 100644
+--- a/arch/sparc/kernel/traps_64.c
++++ b/arch/sparc/kernel/traps_64.c
+@@ -897,7 +897,7 @@ void __init cheetah_ecache_flush_init(void)
+ 
+ 	/* Now allocate error trap reporting scoreboard. */
+ 	sz = NR_CPUS * (2 * sizeof(struct cheetah_err_info));
+-	for (order = 0; order <= MAX_ORDER; order++) {
++	for (order = 0; order < NR_PAGE_ORDERS; order++) {
+ 		if ((PAGE_SIZE << order) >= sz)
+ 			break;
+ 	}
+diff --git a/drivers/gpu/drm/ttm/tests/ttm_device_test.c b/drivers/gpu/drm/ttm/tests/ttm_device_test.c
+index b1b423b68cdf1..19eaff22e6ae0 100644
+--- a/drivers/gpu/drm/ttm/tests/ttm_device_test.c
++++ b/drivers/gpu/drm/ttm/tests/ttm_device_test.c
+@@ -175,7 +175,7 @@ static void ttm_device_init_pools(struct kunit *test)
+ 
+ 	if (params->pools_init_expected) {
+ 		for (int i = 0; i < TTM_NUM_CACHING_TYPES; ++i) {
+-			for (int j = 0; j <= MAX_ORDER; ++j) {
++			for (int j = 0; j < NR_PAGE_ORDERS; ++j) {
+ 				pt = pool->caching[i].orders[j];
+ 				KUNIT_EXPECT_PTR_EQ(test, pt.pool, pool);
+ 				KUNIT_EXPECT_EQ(test, pt.caching, i);
+diff --git a/drivers/gpu/drm/ttm/ttm_pool.c b/drivers/gpu/drm/ttm/ttm_pool.c
+index 9b60222511d65..c8ec6a2cac5d4 100644
+--- a/drivers/gpu/drm/ttm/ttm_pool.c
++++ b/drivers/gpu/drm/ttm/ttm_pool.c
+@@ -65,11 +65,11 @@ module_param(page_pool_size, ulong, 0644);
+ 
+ static atomic_long_t allocated_pages;
+ 
+-static struct ttm_pool_type global_write_combined[MAX_ORDER + 1];
+-static struct ttm_pool_type global_uncached[MAX_ORDER + 1];
++static struct ttm_pool_type global_write_combined[NR_PAGE_ORDERS];
++static struct ttm_pool_type global_uncached[NR_PAGE_ORDERS];
+ 
+-static struct ttm_pool_type global_dma32_write_combined[MAX_ORDER + 1];
+-static struct ttm_pool_type global_dma32_uncached[MAX_ORDER + 1];
++static struct ttm_pool_type global_dma32_write_combined[NR_PAGE_ORDERS];
++static struct ttm_pool_type global_dma32_uncached[NR_PAGE_ORDERS];
+ 
+ static spinlock_t shrinker_lock;
+ static struct list_head shrinker_list;
+@@ -565,7 +565,7 @@ void ttm_pool_init(struct ttm_pool *pool, struct device *dev,
+ 
+ 	if (use_dma_alloc || nid != NUMA_NO_NODE) {
+ 		for (i = 0; i < TTM_NUM_CACHING_TYPES; ++i)
+-			for (j = 0; j <= MAX_ORDER; ++j)
++			for (j = 0; j < NR_PAGE_ORDERS; ++j)
+ 				ttm_pool_type_init(&pool->caching[i].orders[j],
+ 						   pool, i, j);
+ 	}
+@@ -586,7 +586,7 @@ void ttm_pool_fini(struct ttm_pool *pool)
+ 
+ 	if (pool->use_dma_alloc || pool->nid != NUMA_NO_NODE) {
+ 		for (i = 0; i < TTM_NUM_CACHING_TYPES; ++i)
+-			for (j = 0; j <= MAX_ORDER; ++j)
++			for (j = 0; j < NR_PAGE_ORDERS; ++j)
+ 				ttm_pool_type_fini(&pool->caching[i].orders[j]);
+ 	}
+ 
+@@ -641,7 +641,7 @@ static void ttm_pool_debugfs_header(struct seq_file *m)
+ 	unsigned int i;
+ 
+ 	seq_puts(m, "\t ");
+-	for (i = 0; i <= MAX_ORDER; ++i)
++	for (i = 0; i < NR_PAGE_ORDERS; ++i)
+ 		seq_printf(m, " ---%2u---", i);
+ 	seq_puts(m, "\n");
+ }
+@@ -652,7 +652,7 @@ static void ttm_pool_debugfs_orders(struct ttm_pool_type *pt,
  {
-+	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
-+	struct ttm_resource *res = bo->tbo.resource;
- 	uint64_t size = amdgpu_bo_size(bo);
- 	struct drm_gem_object *obj;
- 	unsigned int domain;
- 	bool shared;
+ 	unsigned int i;
  
- 	/* Abort if the BO doesn't currently have a backing store */
--	if (!bo->tbo.resource)
-+	if (!res)
- 		return;
+-	for (i = 0; i <= MAX_ORDER; ++i)
++	for (i = 0; i < NR_PAGE_ORDERS; ++i)
+ 		seq_printf(m, " %8u", ttm_pool_type_count(&pt[i]));
+ 	seq_puts(m, "\n");
+ }
+@@ -761,7 +761,7 @@ int ttm_pool_mgr_init(unsigned long num_pages)
+ 	spin_lock_init(&shrinker_lock);
+ 	INIT_LIST_HEAD(&shrinker_list);
  
- 	obj = &bo->tbo.base;
- 	shared = drm_gem_object_is_shared_for_memory_stats(obj);
- 
--	domain = amdgpu_mem_type_to_domain(bo->tbo.resource->mem_type);
-+	domain = amdgpu_mem_type_to_domain(res->mem_type);
- 	switch (domain) {
- 	case AMDGPU_GEM_DOMAIN_VRAM:
- 		stats->vram += size;
--		if (amdgpu_bo_in_cpu_visible_vram(bo))
-+		if (amdgpu_res_cpu_visible(adev, bo->tbo.resource))
- 			stats->visible_vram += size;
- 		if (shared)
- 			stats->vram_shared += size;
-@@ -1395,10 +1396,7 @@ vm_fault_t amdgpu_bo_fault_reserve_notify(struct ttm_buffer_object *bo)
- 	/* Remember that this BO was accessed by the CPU */
- 	abo->flags |= AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED;
- 
--	if (bo->resource->mem_type != TTM_PL_VRAM)
--		return 0;
--
--	if (amdgpu_bo_in_cpu_visible_vram(abo))
-+	if (amdgpu_res_cpu_visible(adev, bo->resource))
- 		return 0;
- 
- 	/* Can't move a pinned BO to visible VRAM */
-@@ -1422,7 +1420,7 @@ vm_fault_t amdgpu_bo_fault_reserve_notify(struct ttm_buffer_object *bo)
- 
- 	/* this should never happen */
- 	if (bo->resource->mem_type == TTM_PL_VRAM &&
--	    !amdgpu_bo_in_cpu_visible_vram(abo))
-+	    !amdgpu_res_cpu_visible(adev, bo->resource))
- 		return VM_FAULT_SIGBUS;
- 
- 	ttm_bo_move_to_lru_tail_unlocked(bo);
-@@ -1582,6 +1580,7 @@ uint32_t amdgpu_bo_get_preferred_domain(struct amdgpu_device *adev,
-  */
- u64 amdgpu_bo_print_info(int id, struct amdgpu_bo *bo, struct seq_file *m)
+-	for (i = 0; i <= MAX_ORDER; ++i) {
++	for (i = 0; i < NR_PAGE_ORDERS; ++i) {
+ 		ttm_pool_type_init(&global_write_combined[i], NULL,
+ 				   ttm_write_combined, i);
+ 		ttm_pool_type_init(&global_uncached[i], NULL, ttm_uncached, i);
+@@ -794,7 +794,7 @@ void ttm_pool_mgr_fini(void)
  {
-+	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
- 	struct dma_buf_attachment *attachment;
- 	struct dma_buf *dma_buf;
- 	const char *placement;
-@@ -1590,10 +1589,11 @@ u64 amdgpu_bo_print_info(int id, struct amdgpu_bo *bo, struct seq_file *m)
+ 	unsigned int i;
  
- 	if (dma_resv_trylock(bo->tbo.base.resv)) {
- 		unsigned int domain;
+-	for (i = 0; i <= MAX_ORDER; ++i) {
++	for (i = 0; i < NR_PAGE_ORDERS; ++i) {
+ 		ttm_pool_type_fini(&global_write_combined[i]);
+ 		ttm_pool_type_fini(&global_uncached[i]);
+ 
+diff --git a/include/drm/ttm/ttm_pool.h b/include/drm/ttm/ttm_pool.h
+index 30a347e5aa114..4490d43c63e33 100644
+--- a/include/drm/ttm/ttm_pool.h
++++ b/include/drm/ttm/ttm_pool.h
+@@ -74,7 +74,7 @@ struct ttm_pool {
+ 	bool use_dma32;
+ 
+ 	struct {
+-		struct ttm_pool_type orders[MAX_ORDER + 1];
++		struct ttm_pool_type orders[NR_PAGE_ORDERS];
+ 	} caching[TTM_NUM_CACHING_TYPES];
+ };
+ 
+diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
+index 0f62786269d0c..1acbc6ce1fe43 100644
+--- a/include/linux/mmzone.h
++++ b/include/linux/mmzone.h
+@@ -34,6 +34,8 @@
+ 
+ #define IS_MAX_ORDER_ALIGNED(pfn) IS_ALIGNED(pfn, MAX_ORDER_NR_PAGES)
+ 
++#define NR_PAGE_ORDERS (MAX_ORDER + 1)
 +
- 		domain = amdgpu_mem_type_to_domain(bo->tbo.resource->mem_type);
- 		switch (domain) {
- 		case AMDGPU_GEM_DOMAIN_VRAM:
--			if (amdgpu_bo_in_cpu_visible_vram(bo))
-+			if (amdgpu_res_cpu_visible(adev, bo->tbo.resource))
- 				placement = "VRAM VISIBLE";
- 			else
- 				placement = "VRAM";
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h
-index be679c42b0b8c..fa03d9e4874cc 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h
-@@ -250,28 +250,6 @@ static inline u64 amdgpu_bo_mmap_offset(struct amdgpu_bo *bo)
- 	return drm_vma_node_offset_addr(&bo->tbo.base.vma_node);
+ /*
+  * PAGE_ALLOC_COSTLY_ORDER is the order at which allocations are deemed
+  * costly to service.  That is between allocation orders which should
+@@ -95,7 +97,7 @@ static inline bool migratetype_is_mergeable(int mt)
  }
  
--/**
-- * amdgpu_bo_in_cpu_visible_vram - check if BO is (partly) in visible VRAM
-- */
--static inline bool amdgpu_bo_in_cpu_visible_vram(struct amdgpu_bo *bo)
--{
--	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
--	struct amdgpu_res_cursor cursor;
--
--	if (!bo->tbo.resource || bo->tbo.resource->mem_type != TTM_PL_VRAM)
--		return false;
--
--	amdgpu_res_first(bo->tbo.resource, 0, amdgpu_bo_size(bo), &cursor);
--	while (cursor.remaining) {
--		if (cursor.start < adev->gmc.visible_vram_size)
--			return true;
--
--		amdgpu_res_next(&cursor, cursor.size);
--	}
--
--	return false;
--}
--
- /**
-  * amdgpu_bo_explicit_sync - return whether the bo is explicitly synced
-  */
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-index 1124e2d4f8530..d1687b5725693 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -137,7 +137,7 @@ static void amdgpu_evict_flags(struct ttm_buffer_object *bo,
- 			amdgpu_bo_placement_from_domain(abo, AMDGPU_GEM_DOMAIN_CPU);
- 		} else if (!amdgpu_gmc_vram_full_visible(&adev->gmc) &&
- 			   !(abo->flags & AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED) &&
--			   amdgpu_bo_in_cpu_visible_vram(abo)) {
-+			   amdgpu_res_cpu_visible(adev, bo->resource)) {
+ #define for_each_migratetype_order(order, type) \
+-	for (order = 0; order <= MAX_ORDER; order++) \
++	for (order = 0; order < NR_PAGE_ORDERS; order++) \
+ 		for (type = 0; type < MIGRATE_TYPES; type++)
  
- 			/* Try evicting to the CPU inaccessible part of VRAM
- 			 * first, but only set GTT as busy placement, so this
-@@ -408,40 +408,55 @@ static int amdgpu_move_blit(struct ttm_buffer_object *bo,
- 	return r;
- }
+ extern int page_group_by_mobility_disabled;
+@@ -929,7 +931,7 @@ struct zone {
+ 	CACHELINE_PADDING(_pad1_);
  
--/*
-- * amdgpu_mem_visible - Check that memory can be accessed by ttm_bo_move_memcpy
-+/**
-+ * amdgpu_res_cpu_visible - Check that resource can be accessed by CPU
-+ * @adev: amdgpu device
-+ * @res: the resource to check
-  *
-- * Called by amdgpu_bo_move()
-+ * Returns: true if the full resource is CPU visible, false otherwise.
-  */
--static bool amdgpu_mem_visible(struct amdgpu_device *adev,
--			       struct ttm_resource *mem)
-+bool amdgpu_res_cpu_visible(struct amdgpu_device *adev,
-+			    struct ttm_resource *res)
- {
--	u64 mem_size = (u64)mem->size;
- 	struct amdgpu_res_cursor cursor;
--	u64 end;
+ 	/* free areas of different sizes */
+-	struct free_area	free_area[MAX_ORDER + 1];
++	struct free_area	free_area[NR_PAGE_ORDERS];
  
--	if (mem->mem_type == TTM_PL_SYSTEM ||
--	    mem->mem_type == TTM_PL_TT)
-+	if (!res)
-+		return false;
-+
-+	if (res->mem_type == TTM_PL_SYSTEM || res->mem_type == TTM_PL_TT ||
-+	    res->mem_type == AMDGPU_PL_PREEMPT)
- 		return true;
--	if (mem->mem_type != TTM_PL_VRAM)
-+
-+	if (res->mem_type != TTM_PL_VRAM)
- 		return false;
+ #ifdef CONFIG_UNACCEPTED_MEMORY
+ 	/* Pages to be accepted. All pages on the list are MAX_ORDER */
+diff --git a/kernel/crash_core.c b/kernel/crash_core.c
+index 2f675ef045d40..b685e94605841 100644
+--- a/kernel/crash_core.c
++++ b/kernel/crash_core.c
+@@ -660,7 +660,7 @@ static int __init crash_save_vmcoreinfo_init(void)
+ 	VMCOREINFO_OFFSET(list_head, prev);
+ 	VMCOREINFO_OFFSET(vmap_area, va_start);
+ 	VMCOREINFO_OFFSET(vmap_area, list);
+-	VMCOREINFO_LENGTH(zone.free_area, MAX_ORDER + 1);
++	VMCOREINFO_LENGTH(zone.free_area, NR_PAGE_ORDERS);
+ 	log_buf_vmcoreinfo_setup();
+ 	VMCOREINFO_LENGTH(free_area.free_list, MIGRATE_TYPES);
+ 	VMCOREINFO_NUMBER(NR_FREE_PAGES);
+diff --git a/lib/test_meminit.c b/lib/test_meminit.c
+index 0ae35223d7733..0dc173849a542 100644
+--- a/lib/test_meminit.c
++++ b/lib/test_meminit.c
+@@ -93,7 +93,7 @@ static int __init test_pages(int *total_failures)
+ 	int failures = 0, num_tests = 0;
+ 	int i;
  
--	amdgpu_res_first(mem, 0, mem_size, &cursor);
--	end = cursor.start + cursor.size;
-+	amdgpu_res_first(res, 0, res->size, &cursor);
- 	while (cursor.remaining) {
-+		if ((cursor.start + cursor.size) >= adev->gmc.visible_vram_size)
-+			return false;
- 		amdgpu_res_next(&cursor, cursor.size);
-+	}
+-	for (i = 0; i <= MAX_ORDER; i++)
++	for (i = 0; i < NR_PAGE_ORDERS; i++)
+ 		num_tests += do_alloc_pages_order(i, &failures);
  
--		if (!cursor.remaining)
--			break;
-+	return true;
-+}
+ 	REPORT_FAILURES_IN_FN();
+diff --git a/mm/compaction.c b/mm/compaction.c
+index 5a3c644c978e2..61c741f11e9bb 100644
+--- a/mm/compaction.c
++++ b/mm/compaction.c
+@@ -2225,7 +2225,7 @@ static enum compact_result __compact_finished(struct compact_control *cc)
  
--		/* ttm_resource_ioremap only supports contiguous memory */
--		if (end != cursor.start)
--			return false;
-+/*
-+ * amdgpu_res_copyable - Check that memory can be accessed by ttm_bo_move_memcpy
-+ *
-+ * Called by amdgpu_bo_move()
-+ */
-+static bool amdgpu_res_copyable(struct amdgpu_device *adev,
-+				struct ttm_resource *mem)
-+{
-+	if (!amdgpu_res_cpu_visible(adev, mem))
-+		return false;
+ 	/* Direct compactor: Is a suitable page free? */
+ 	ret = COMPACT_NO_SUITABLE_PAGE;
+-	for (order = cc->order; order <= MAX_ORDER; order++) {
++	for (order = cc->order; order < NR_PAGE_ORDERS; order++) {
+ 		struct free_area *area = &cc->zone->free_area[order];
+ 		bool can_steal;
  
--		end = cursor.start + cursor.size;
--	}
-+	/* ttm_resource_ioremap only supports contiguous memory */
-+	if (mem->mem_type == TTM_PL_VRAM &&
-+	    !(mem->placement & TTM_PL_FLAG_CONTIGUOUS))
-+		return false;
- 
--	return end <= adev->gmc.visible_vram_size;
-+	return true;
- }
+diff --git a/mm/kmsan/init.c b/mm/kmsan/init.c
+index ffedf4dbc49d7..103e2e88ea033 100644
+--- a/mm/kmsan/init.c
++++ b/mm/kmsan/init.c
+@@ -96,7 +96,7 @@ void __init kmsan_init_shadow(void)
+ struct metadata_page_pair {
+ 	struct page *shadow, *origin;
+ };
+-static struct metadata_page_pair held_back[MAX_ORDER + 1] __initdata;
++static struct metadata_page_pair held_back[NR_PAGE_ORDERS] __initdata;
  
  /*
-@@ -534,8 +549,8 @@ static int amdgpu_bo_move(struct ttm_buffer_object *bo, bool evict,
+  * Eager metadata allocation. When the memblock allocator is freeing pages to
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index ab71417350127..6b4c30fcae1c9 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -1570,7 +1570,7 @@ struct page *__rmqueue_smallest(struct zone *zone, unsigned int order,
+ 	struct page *page;
  
- 	if (r) {
- 		/* Check that all memory is CPU accessible */
--		if (!amdgpu_mem_visible(adev, old_mem) ||
--		    !amdgpu_mem_visible(adev, new_mem)) {
-+		if (!amdgpu_res_copyable(adev, old_mem) ||
-+		    !amdgpu_res_copyable(adev, new_mem)) {
- 			pr_err("Move buffer fallback to memcpy unavailable\n");
- 			return r;
+ 	/* Find a page of the appropriate size in the preferred list */
+-	for (current_order = order; current_order <= MAX_ORDER; ++current_order) {
++	for (current_order = order; current_order < NR_PAGE_ORDERS; ++current_order) {
+ 		area = &(zone->free_area[current_order]);
+ 		page = get_page_from_free_area(area, migratetype);
+ 		if (!page)
+@@ -1940,7 +1940,7 @@ static bool unreserve_highatomic_pageblock(const struct alloc_context *ac,
+ 			continue;
+ 
+ 		spin_lock_irqsave(&zone->lock, flags);
+-		for (order = 0; order <= MAX_ORDER; order++) {
++		for (order = 0; order < NR_PAGE_ORDERS; order++) {
+ 			struct free_area *area = &(zone->free_area[order]);
+ 
+ 			page = get_page_from_free_area(area, MIGRATE_HIGHATOMIC);
+@@ -2050,8 +2050,7 @@ __rmqueue_fallback(struct zone *zone, int order, int start_migratetype,
+ 	return false;
+ 
+ find_smallest:
+-	for (current_order = order; current_order <= MAX_ORDER;
+-							current_order++) {
++	for (current_order = order; current_order < NR_PAGE_ORDERS; current_order++) {
+ 		area = &(zone->free_area[current_order]);
+ 		fallback_mt = find_suitable_fallback(area, current_order,
+ 				start_migratetype, false, &can_steal);
+@@ -2884,7 +2883,7 @@ bool __zone_watermark_ok(struct zone *z, unsigned int order, unsigned long mark,
+ 		return true;
+ 
+ 	/* For a high-order request, check at least one suitable page is free */
+-	for (o = order; o <= MAX_ORDER; o++) {
++	for (o = order; o < NR_PAGE_ORDERS; o++) {
+ 		struct free_area *area = &z->free_area[o];
+ 		int mt;
+ 
+@@ -6442,7 +6441,7 @@ bool is_free_buddy_page(struct page *page)
+ 	unsigned long pfn = page_to_pfn(page);
+ 	unsigned int order;
+ 
+-	for (order = 0; order <= MAX_ORDER; order++) {
++	for (order = 0; order < NR_PAGE_ORDERS; order++) {
+ 		struct page *page_head = page - (pfn & ((1 << order) - 1));
+ 
+ 		if (PageBuddy(page_head) &&
+@@ -6501,7 +6500,7 @@ bool take_page_off_buddy(struct page *page)
+ 	bool ret = false;
+ 
+ 	spin_lock_irqsave(&zone->lock, flags);
+-	for (order = 0; order <= MAX_ORDER; order++) {
++	for (order = 0; order < NR_PAGE_ORDERS; order++) {
+ 		struct page *page_head = page - (pfn & ((1 << order) - 1));
+ 		int page_order = buddy_order(page_head);
+ 
+diff --git a/mm/page_reporting.c b/mm/page_reporting.c
+index b021f482a4cb3..66369cc5279bf 100644
+--- a/mm/page_reporting.c
++++ b/mm/page_reporting.c
+@@ -276,7 +276,7 @@ page_reporting_process_zone(struct page_reporting_dev_info *prdev,
+ 		return err;
+ 
+ 	/* Process each free list starting from lowest order/mt */
+-	for (order = page_reporting_order; order <= MAX_ORDER; order++) {
++	for (order = page_reporting_order; order < NR_PAGE_ORDERS; order++) {
+ 		for (mt = 0; mt < MIGRATE_TYPES; mt++) {
+ 			/* We do not pull pages from the isolate free list */
+ 			if (is_migrate_isolate(mt))
+diff --git a/mm/show_mem.c b/mm/show_mem.c
+index 4b888b18bddea..b896e54e3a26c 100644
+--- a/mm/show_mem.c
++++ b/mm/show_mem.c
+@@ -355,8 +355,8 @@ static void show_free_areas(unsigned int filter, nodemask_t *nodemask, int max_z
+ 
+ 	for_each_populated_zone(zone) {
+ 		unsigned int order;
+-		unsigned long nr[MAX_ORDER + 1], flags, total = 0;
+-		unsigned char types[MAX_ORDER + 1];
++		unsigned long nr[NR_PAGE_ORDERS], flags, total = 0;
++		unsigned char types[NR_PAGE_ORDERS];
+ 
+ 		if (zone_idx(zone) > max_zone_idx)
+ 			continue;
+@@ -366,7 +366,7 @@ static void show_free_areas(unsigned int filter, nodemask_t *nodemask, int max_z
+ 		printk(KERN_CONT "%s: ", zone->name);
+ 
+ 		spin_lock_irqsave(&zone->lock, flags);
+-		for (order = 0; order <= MAX_ORDER; order++) {
++		for (order = 0; order < NR_PAGE_ORDERS; order++) {
+ 			struct free_area *area = &zone->free_area[order];
+ 			int type;
+ 
+@@ -380,7 +380,7 @@ static void show_free_areas(unsigned int filter, nodemask_t *nodemask, int max_z
+ 			}
  		}
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
-index 65ec82141a8e0..32cf6b6f6efd9 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
-@@ -139,6 +139,9 @@ int amdgpu_vram_mgr_reserve_range(struct amdgpu_vram_mgr *mgr,
- int amdgpu_vram_mgr_query_page_status(struct amdgpu_vram_mgr *mgr,
- 				      uint64_t start);
+ 		spin_unlock_irqrestore(&zone->lock, flags);
+-		for (order = 0; order <= MAX_ORDER; order++) {
++		for (order = 0; order < NR_PAGE_ORDERS; order++) {
+ 			printk(KERN_CONT "%lu*%lukB ",
+ 			       nr[order], K(1UL) << order);
+ 			if (nr[order])
+diff --git a/mm/vmstat.c b/mm/vmstat.c
+index 00e81e99c6ee2..e9616c4ca12db 100644
+--- a/mm/vmstat.c
++++ b/mm/vmstat.c
+@@ -1055,7 +1055,7 @@ static void fill_contig_page_info(struct zone *zone,
+ 	info->free_blocks_total = 0;
+ 	info->free_blocks_suitable = 0;
  
-+bool amdgpu_res_cpu_visible(struct amdgpu_device *adev,
-+			    struct ttm_resource *res);
-+
- int amdgpu_ttm_init(struct amdgpu_device *adev);
- void amdgpu_ttm_fini(struct amdgpu_device *adev);
- void amdgpu_ttm_set_buffer_funcs_status(struct amdgpu_device *adev,
+-	for (order = 0; order <= MAX_ORDER; order++) {
++	for (order = 0; order < NR_PAGE_ORDERS; order++) {
+ 		unsigned long blocks;
+ 
+ 		/*
+@@ -1471,7 +1471,7 @@ static void frag_show_print(struct seq_file *m, pg_data_t *pgdat,
+ 	int order;
+ 
+ 	seq_printf(m, "Node %d, zone %8s ", pgdat->node_id, zone->name);
+-	for (order = 0; order <= MAX_ORDER; ++order)
++	for (order = 0; order < NR_PAGE_ORDERS; ++order)
+ 		/*
+ 		 * Access to nr_free is lockless as nr_free is used only for
+ 		 * printing purposes. Use data_race to avoid KCSAN warning.
+@@ -1500,7 +1500,7 @@ static void pagetypeinfo_showfree_print(struct seq_file *m,
+ 					pgdat->node_id,
+ 					zone->name,
+ 					migratetype_names[mtype]);
+-		for (order = 0; order <= MAX_ORDER; ++order) {
++		for (order = 0; order < NR_PAGE_ORDERS; ++order) {
+ 			unsigned long freecount = 0;
+ 			struct free_area *area;
+ 			struct list_head *curr;
+@@ -1540,7 +1540,7 @@ static void pagetypeinfo_showfree(struct seq_file *m, void *arg)
+ 
+ 	/* Print header */
+ 	seq_printf(m, "%-43s ", "Free pages count per migrate type at order");
+-	for (order = 0; order <= MAX_ORDER; ++order)
++	for (order = 0; order < NR_PAGE_ORDERS; ++order)
+ 		seq_printf(m, "%6d ", order);
+ 	seq_putc(m, '\n');
+ 
+@@ -2176,7 +2176,7 @@ static void unusable_show_print(struct seq_file *m,
+ 	seq_printf(m, "Node %d, zone %8s ",
+ 				pgdat->node_id,
+ 				zone->name);
+-	for (order = 0; order <= MAX_ORDER; ++order) {
++	for (order = 0; order < NR_PAGE_ORDERS; ++order) {
+ 		fill_contig_page_info(zone, order, &info);
+ 		index = unusable_free_index(order, &info);
+ 		seq_printf(m, "%d.%03d ", index / 1000, index % 1000);
+@@ -2228,7 +2228,7 @@ static void extfrag_show_print(struct seq_file *m,
+ 	seq_printf(m, "Node %d, zone %8s ",
+ 				pgdat->node_id,
+ 				zone->name);
+-	for (order = 0; order <= MAX_ORDER; ++order) {
++	for (order = 0; order < NR_PAGE_ORDERS; ++order) {
+ 		fill_contig_page_info(zone, order, &info);
+ 		index = __fragmentation_index(order, &info);
+ 		seq_printf(m, "%2d.%03d ", index / 1000, index % 1000);
 -- 
 2.43.0
 
