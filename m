@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F7112CDA5;
-	Tue, 30 Apr 2024 11:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1CF211C;
+	Tue, 30 Apr 2024 11:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475484; cv=none; b=SqVIisRDwpHwh3egwCARcvg2fcajAavZzh4CnWjL++KwmjrVS+mgS9bkBQgCu8fC8PjZnaBQReZUj5FPQGstHlF6fhagLBi63Dx7FgWjY1/+plOK93LN6pOySXjSfqRfPcvRE4Ku3MbYiUcY9nU+ALxrq9I/NIq6oHk1QdU3r7g=
+	t=1714475487; cv=none; b=KV7Uu+xjPiFE7r3vtDok68pvA77jr2qXZ3mSfPgTtAAfhlFFxTwl31xk6G9NKkEqQcRyG8A6FwYTXjTolr82jlWBLKmI11GWbBPoe5dVs8o/xieNXxOfV81jjvqQv6jTyuSb+Mm96QlnxcDDBHmlWe/AtCvf7r81nCPHi/0lfP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475484; c=relaxed/simple;
-	bh=rJsdoz7cE1rJMzRa/gLBiNYBBJMdUSWegWZnNTp5bnQ=;
+	s=arc-20240116; t=1714475487; c=relaxed/simple;
+	bh=sSBpdqNHnsW8KsoKYI0yl12W2l1SfqkpVEWxXtmK5sQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MA4OPBfMWXuuzCp7GJll38rHr0tEUAlhfx+5mrF+58WvmY4bz9ki7NidrBJ8QhPjpiB/tVDLN+H8ES6yVEliFeN4VdIphBZjNTOQUAvuWvj1JNgBG+4BlFX7KE81X2aIvOh3lRAlvTP5lL5PXeeLKr8Ge+JMQYa+86r0T6n47ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Atelq23j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZsyZoIWCEJg8vuaYuHurXVFwjH3qAe6C0jliOasXdxugo6ObmLgrs8Hfvk5/EBMmcIiqo++xRKgjloHLpwdcwBqOJjPJBQLdJYp8mVDAMQiHSZ3ffAyv2VX5QMHk1AqO0kV2mYs4JXr23nHpIezmc8pEbtVkrtqiuhAgnRg1GXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcYXXi9V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Atelq23j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D646C2BBFC;
-	Tue, 30 Apr 2024 11:11:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcYXXi9V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ECD5C2BBFC;
+	Tue, 30 Apr 2024 11:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475484;
-	bh=rJsdoz7cE1rJMzRa/gLBiNYBBJMdUSWegWZnNTp5bnQ=;
+	s=korg; t=1714475487;
+	bh=sSBpdqNHnsW8KsoKYI0yl12W2l1SfqkpVEWxXtmK5sQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Atelq23j+rpo45Wj0KE65BbayfKYotFaZhE/hov02o2xCKWW+4LNAgPadvrw47CT0
-	 4HvAwS2xpQk+a4SlcBOpEzIlPmuyYL6AwFonBaf8+lIv8qoHzxoVd9SzjElZJrcbwq
-	 4IHWg300twWdYstart8O+YWG+vcve7A5Mr2j4sLE=
+	b=qcYXXi9VE7/uXQ2IeEzhmUsseQx3Gs09rpMbktbP6l01yGTtrsyTD8IPTLIXfeM28
+	 C+/2QDTeBq5VTK0BuwqwA7PpUmZPz1KoDrh5DNcuH9WG8+My9Dat3VhhP2i8w6BZxL
+	 HmYnWD5Y7wn/rz77PjqS6mnjEv91gDl5ymv8PvYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Terry Tritton <terry.tritton@linaro.org>,
 	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.6 108/186] selftests/seccomp: Change the syscall used in KILL_THREAD test
-Date: Tue, 30 Apr 2024 12:39:20 +0200
-Message-ID: <20240430103101.169185926@linuxfoundation.org>
+Subject: [PATCH 6.6 109/186] selftests/seccomp: Handle EINVAL on unshare(CLONE_NEWPID)
+Date: Tue, 30 Apr 2024 12:39:21 +0200
+Message-ID: <20240430103101.197772428@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -52,56 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Terry Tritton <terry.tritton@linaro.org>
 
-commit 471dbc547612adeaa769e48498ef591c6c95a57a upstream.
+commit ecaaa55c9fa5e8058445a8b891070b12208cdb6d upstream.
 
-The Bionic version of pthread_create used on Android calls the prctl
-function to give the stack and thread local storage a useful name. This
-will cause the KILL_THREAD test to fail as it will kill the thread as
-soon as it is created.
+unshare(CLONE_NEWPID) can return EINVAL if the kernel does not have the
+CONFIG_PID_NS option enabled.
 
-change the test to use getpid instead of prctl.
+Add a check on these calls to skip the test if we receive EINVAL.
 
 Signed-off-by: Terry Tritton <terry.tritton@linaro.org>
-Link: https://lore.kernel.org/r/20240124141357.1243457-3-terry.tritton@linaro.org
+Link: https://lore.kernel.org/r/20240124141357.1243457-2-terry.tritton@linaro.org
 Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/seccomp/seccomp_bpf.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/testing/selftests/seccomp/seccomp_bpf.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 --- a/tools/testing/selftests/seccomp/seccomp_bpf.c
 +++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
-@@ -784,7 +784,7 @@ void *kill_thread(void *data)
- 	bool die = (bool)data;
+@@ -3709,7 +3709,12 @@ TEST(user_notification_sibling_pid_ns)
+ 	ASSERT_GE(pid, 0);
  
- 	if (die) {
--		prctl(PR_GET_SECCOMP, 0, 0, 0, 0);
-+		syscall(__NR_getpid);
- 		return (void *)SIBLING_EXIT_FAILURE;
+ 	if (pid == 0) {
+-		ASSERT_EQ(unshare(CLONE_NEWPID), 0);
++		ASSERT_EQ(unshare(CLONE_NEWPID), 0) {
++			if (errno == EPERM)
++				SKIP(return, "CLONE_NEWPID requires CAP_SYS_ADMIN");
++			else if (errno == EINVAL)
++				SKIP(return, "CLONE_NEWPID is invalid (missing CONFIG_PID_NS?)");
++		}
+ 
+ 		pid2 = fork();
+ 		ASSERT_GE(pid2, 0);
+@@ -3727,6 +3732,8 @@ TEST(user_notification_sibling_pid_ns)
+ 	ASSERT_EQ(unshare(CLONE_NEWPID), 0) {
+ 		if (errno == EPERM)
+ 			SKIP(return, "CLONE_NEWPID requires CAP_SYS_ADMIN");
++		else if (errno == EINVAL)
++			SKIP(return, "CLONE_NEWPID is invalid (missing CONFIG_PID_NS?)");
  	}
+ 	ASSERT_EQ(errno, 0);
  
-@@ -803,11 +803,11 @@ void kill_thread_or_group(struct __test_
- {
- 	pthread_t thread;
- 	void *status;
--	/* Kill only when calling __NR_prctl. */
-+	/* Kill only when calling __NR_getpid. */
- 	struct sock_filter filter_thread[] = {
- 		BPF_STMT(BPF_LD|BPF_W|BPF_ABS,
- 			offsetof(struct seccomp_data, nr)),
--		BPF_JUMP(BPF_JMP|BPF_JEQ|BPF_K, __NR_prctl, 0, 1),
-+		BPF_JUMP(BPF_JMP|BPF_JEQ|BPF_K, __NR_getpid, 0, 1),
- 		BPF_STMT(BPF_RET|BPF_K, SECCOMP_RET_KILL_THREAD),
- 		BPF_STMT(BPF_RET|BPF_K, SECCOMP_RET_ALLOW),
- 	};
-@@ -819,7 +819,7 @@ void kill_thread_or_group(struct __test_
- 	struct sock_filter filter_process[] = {
- 		BPF_STMT(BPF_LD|BPF_W|BPF_ABS,
- 			offsetof(struct seccomp_data, nr)),
--		BPF_JUMP(BPF_JMP|BPF_JEQ|BPF_K, __NR_prctl, 0, 1),
-+		BPF_JUMP(BPF_JMP|BPF_JEQ|BPF_K, __NR_getpid, 0, 1),
- 		BPF_STMT(BPF_RET|BPF_K, kill),
- 		BPF_STMT(BPF_RET|BPF_K, SECCOMP_RET_ALLOW),
- 	};
 
 
