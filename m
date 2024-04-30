@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D81612C54B;
-	Tue, 30 Apr 2024 11:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A5612C530;
+	Tue, 30 Apr 2024 11:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475149; cv=none; b=jmG9/gA00QBO6fDCF67jKmhB7tDu/kq1voQKPB+A/EpAHoaEeM9qTogJg2FkQCJgB5+QyJOGF1pzXQRnSC7xphBUAxtjwrYjHAbMlQMneR8Gw8y+Wj2NsW7JeViun+fDGKpN50aPVtl3zTRPM+UuUeslFGBUxOTUQZy5wUUcd64=
+	t=1714475152; cv=none; b=S1egtrqfX8T4OFKpFvJ8kKjA9qFT+UM4YoNxNm3DyfM/Nuh3tJ8VPsiufW7lCA1bIH9SIFv4entuyjInhIi7oB89x8xJaey41+qR2P3L59OEY/I+AMguKpejzZ1dTunEA35VQ6pJuU2GwV2Oyzu8IOjC8nApnGlTgwlZWiW3sWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475149; c=relaxed/simple;
-	bh=ysq95aXlSazU5zyelbUcdOD9YyGhOfOxAxnmZDbKpDo=;
+	s=arc-20240116; t=1714475152; c=relaxed/simple;
+	bh=2waA15l35+VW0f4uzFUcA8qsIcV122iMy7fXGgkTh18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b2LEwe5w8r8bgy9GPyEcJC1wVU3CnKvwnTXqZEbOun59r8qgr+yQ1zRPvEfy20POvAQVckFzvCtBibeHwLtrXcY6yVd5cOMnpk8kjNBrXNWnOrG3IfpeEyXWh3lTxXpUgqsFZjr3CjRNza0NqQZ3B0z3uBqFMuX5fdZ67ol6Bqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwvc6zh6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QeEcAhf7Hij8XvPb8C3QLXOl4wba3HpWCc4Rd7A8NbAikqoB+cW23DfHfdBo1SRVzrHtAg7m8rjjvo8sZiuBHkEomISjQP+j5OVzD8PK7cyaXamjeOscyTiq7EtkdfjHOd1KsqsY7WzdojY62qYm3wrRhMcKZEqeoS8rvjNLuq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0IWCTlUa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwvc6zh6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB970C2BBFC;
-	Tue, 30 Apr 2024 11:05:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0IWCTlUa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8BDC2BBFC;
+	Tue, 30 Apr 2024 11:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475149;
-	bh=ysq95aXlSazU5zyelbUcdOD9YyGhOfOxAxnmZDbKpDo=;
+	s=korg; t=1714475152;
+	bh=2waA15l35+VW0f4uzFUcA8qsIcV122iMy7fXGgkTh18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xwvc6zh6hSEn+X+YrZSlbzvFu6BbCl6ACX9C61A63TttAI0Ue/9tyxsZqfgp+K2kJ
-	 g1nfv59QiqwriwyFUQPwAQEC7r4WmI/aCq+PHgB+5KOWMMO2s4ONzN5YEHOU9MAszP
-	 tDc53qJFWd3cAT6YSdTnx1CaEp38Iryu3fJE+VGU=
+	b=0IWCTlUaBOAuMouEAqUe3+i0wqyOUiS3oPImdD3M3R5nMQmHkK/tzQ1vAEwK4VWyx
+	 utEXlXYn7SZndg1yOGqGG3MhCRL0OxvOU3VQFegshffr1kjxTh4S3sk3twF19MARCZ
+	 ch1pVhncvcNxKwrW2okylETT2R+1kXvclXjB2hlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 001/186] cifs: Fix reacquisition of volume cookie on still-live connection
-Date: Tue, 30 Apr 2024 12:37:33 +0200
-Message-ID: <20240430103058.058048644@linuxfoundation.org>
+Subject: [PATCH 6.6 010/186] arm64: dts: rockchip: Remove unsupported node from the Pinebook Pro dts
+Date: Tue, 30 Apr 2024 12:37:42 +0200
+Message-ID: <20240430103058.319107737@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -55,117 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Dragan Simic <dsimic@manjaro.org>
 
-[ Upstream commit dad80c6bff770d25f67ec25fe011730e4a463008 ]
+[ Upstream commit 43853e843aa6c3d47ff2b0cce898318839483d05 ]
 
-During mount, cifs_mount_get_tcon() gets a tcon resource connection record
-and then attaches an fscache volume cookie to it.  However, it does this
-irrespective of whether or not the tcon returned from cifs_get_tcon() is a
-new record or one that's already in use.  This leads to a warning about a
-volume cookie collision and a leaked volume cookie because tcon->fscache
-gets reset.
+Remove a redundant node from the Pine64 Pinebook Pro dts, which is intended
+to provide a value for the delay in PCI Express enumeration, but that isn't
+supported without additional out-of-tree kernel patches.
 
-Fix this be adding a mutex and a "we've already tried this" flag and only
-doing it once for the lifetime of the tcon.
+There were already efforts to upstream those kernel patches, because they
+reportedly make some PCI Express cards (such as LSI SAS HBAs) usable in
+Pine64 RockPro64 (which is also based on the RK3399);  otherwise, those PCI
+Express cards fail to enumerate.  However, providing the required background
+and explanations proved to be a tough nut to crack, which is the reason why
+those patches remain outside of the kernel mainline for now.
 
-[!] Note: Looking at cifs_mount_get_tcon(), a more general solution may
-actually be required.  Reacquiring the volume cookie isn't the only thing
-that function does: it also partially reinitialises the tcon record without
-any locking - which may cause live filesystem ops already using the tcon
-through a previous mount to malfunction.
+If those out-of-tree patches eventually become upstreamed, the resulting
+device-tree changes will almost surely belong to the RK3399 SoC dtsi.  Also,
+the above-mentioned unusable-without-out-of-tree-patches PCI Express devices
+are in all fairness not usable in a Pinebook Pro without some extensive
+hardware modifications, which is another reason to delete this redundant
+node.  When it comes to the Pinebook Pro, only M.2 NVMe SSDs can be installed
+out of the box (using an additional passive adapter PCB sold separately by
+Pine64), which reportedly works fine with no additional patches.
 
-This can be reproduced simply by something like:
-
-    mount //example.com/test /xfstest.test -o user=shares,pass=xxx,fsc
-    mount //example.com/test /mnt -o user=shares,pass=xxx,fsc
-
-Fixes: 70431bfd825d ("cifs: Support fscache indexing rewrite")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-cc: Shyam Prasad N <sprasad@microsoft.com>
-cc: linux-cifs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 5a65505a6988 ("arm64: dts: rockchip: Add initial support for Pinebook Pro")
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://lore.kernel.org/r/0f82c3f97cb798d012270d13b34d8d15305ef293.1711923520.git.dsimic@manjaro.org
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsglob.h |  2 ++
- fs/smb/client/fscache.c  | 13 +++++++++++++
- fs/smb/client/misc.c     |  3 +++
- 3 files changed, 18 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index 68fd61a564089..12a48e1d80c3f 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -1247,7 +1247,9 @@ struct cifs_tcon {
- 	__u32 max_cached_dirs;
- #ifdef CONFIG_CIFS_FSCACHE
- 	u64 resource_id;		/* server resource id */
-+	bool fscache_acquired;		/* T if we've tried acquiring a cookie */
- 	struct fscache_volume *fscache;	/* cookie for share */
-+	struct mutex fscache_lock;	/* Prevent regetting a cookie */
- #endif
- 	struct list_head pending_opens;	/* list of incomplete opens */
- 	struct cached_fids *cfids;
-diff --git a/fs/smb/client/fscache.c b/fs/smb/client/fscache.c
-index a4ee801b29394..ecabc4b400535 100644
---- a/fs/smb/client/fscache.c
-+++ b/fs/smb/client/fscache.c
-@@ -43,12 +43,23 @@ int cifs_fscache_get_super_cookie(struct cifs_tcon *tcon)
- 	char *key;
- 	int ret = -ENOMEM;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+index 054c6a4d1a45f..294eb2de263de 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+@@ -779,7 +779,6 @@
+ };
  
-+	if (tcon->fscache_acquired)
-+		return 0;
-+
-+	mutex_lock(&tcon->fscache_lock);
-+	if (tcon->fscache_acquired) {
-+		mutex_unlock(&tcon->fscache_lock);
-+		return 0;
-+	}
-+	tcon->fscache_acquired = true;
-+
- 	tcon->fscache = NULL;
- 	switch (sa->sa_family) {
- 	case AF_INET:
- 	case AF_INET6:
- 		break;
- 	default:
-+		mutex_unlock(&tcon->fscache_lock);
- 		cifs_dbg(VFS, "Unknown network family '%d'\n", sa->sa_family);
- 		return -EINVAL;
- 	}
-@@ -57,6 +68,7 @@ int cifs_fscache_get_super_cookie(struct cifs_tcon *tcon)
- 
- 	sharename = extract_sharename(tcon->tree_name);
- 	if (IS_ERR(sharename)) {
-+		mutex_unlock(&tcon->fscache_lock);
- 		cifs_dbg(FYI, "%s: couldn't extract sharename\n", __func__);
- 		return PTR_ERR(sharename);
- 	}
-@@ -90,6 +102,7 @@ int cifs_fscache_get_super_cookie(struct cifs_tcon *tcon)
- 	kfree(key);
- out:
- 	kfree(sharename);
-+	mutex_unlock(&tcon->fscache_lock);
- 	return ret;
- }
- 
-diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
-index 74627d647818a..0d13db80e67c9 100644
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -141,6 +141,9 @@ tcon_info_alloc(bool dir_leases_enabled)
- 	atomic_set(&ret_buf->num_local_opens, 0);
- 	atomic_set(&ret_buf->num_remote_opens, 0);
- 	ret_buf->stats_from_time = ktime_get_real_seconds();
-+#ifdef CONFIG_CIFS_FSCACHE
-+	mutex_init(&ret_buf->fscache_lock);
-+#endif
- 
- 	return ret_buf;
- }
+ &pcie0 {
+-	bus-scan-delay-ms = <1000>;
+ 	ep-gpios = <&gpio2 RK_PD4 GPIO_ACTIVE_HIGH>;
+ 	num-lanes = <4>;
+ 	pinctrl-names = "default";
 -- 
 2.43.0
 
