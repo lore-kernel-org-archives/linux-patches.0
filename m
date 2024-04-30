@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C65C12C819;
-	Tue, 30 Apr 2024 11:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901701E50A;
+	Tue, 30 Apr 2024 11:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475351; cv=none; b=iwXw7sjF5agOWWwYxzdvFQ/+nO9P+WJcf2hYTZVEmmTwr4NxS0wNXBFq3lW1a/DoU0H51ndsMU28QIcL71CFbsLpgIQeSEMMqwuKVtswHKARyEvL9FEtghELk/XbA/1K8/dBlr7P1yzJf1PqNd/qXKphX8k0yRvI+mGdhUifxMk=
+	t=1714475355; cv=none; b=fs0q6eiaTlIzFRaCXvDJRTystVyzYVqg38oBzrn/M5TlTdOtHBTARxtl488RcVtHLp38BjWTBQlPNGCUqJDbMk14964GbMKHiRzy7KhK1EGpM1of1Nf/1DC6pXb5y5WtXcR6cUUetbnCg65IKqiJnynofZ9a6UOVJaUl7rtE/6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475351; c=relaxed/simple;
-	bh=KtD+gYgDoZJqVdi3w+WxrbemQTZ4U/krqmFX2iizxbU=;
+	s=arc-20240116; t=1714475355; c=relaxed/simple;
+	bh=OCmBBX6XHK8/+Nxuw7hBJHrI9XzHGDLdB5Ms8vPK+oE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZS5T9fcO40ty2Njaald55JhXffjwPLno7SLJY7OngAOyK//5DGb2boJbHie56hROhrdmdViGdAzhhs3/pDoEgYrJMz3GOYbhYrbxIxzuYZa0/WcmFv4DcO4yPS52xxmdMHua22UlISB4xe88LxICc2gWR24iL6P3vbOAldNQrWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaIMxyhK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gccSDLastkDVFVXwAby7A6J7nrRXiUDq7uk/C2eXiOAwdlVjofCXJvoELQb2ffF4JZjiB84A0CSTmIAieLN7P28Bu9uDTXq8i4FLBFxe9p+p7vBQ0pd7BUFxCd7hWefC6IFWD5AWn9SNqrzMIw6uNZzrS5rGjN/sSPuhGyxnfn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNVNi0Nz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaIMxyhK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03155C4AF18;
-	Tue, 30 Apr 2024 11:09:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNVNi0Nz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14EDFC2BBFC;
+	Tue, 30 Apr 2024 11:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475351;
-	bh=KtD+gYgDoZJqVdi3w+WxrbemQTZ4U/krqmFX2iizxbU=;
+	s=korg; t=1714475355;
+	bh=OCmBBX6XHK8/+Nxuw7hBJHrI9XzHGDLdB5Ms8vPK+oE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UaIMxyhKtKfEEZr9X5dR3f0igelYBMKXgDC3wAIpkSCal8gzBMXwJvXeX2NLOhdc1
-	 42YIKJoNA+4+Ed4sbrzOgSciZueAoMAXNwOXo2MMGmtEMoQ6GlthyK32XxU/2Wqj8z
-	 234RhvmyptFhWeZ0N+q1mvTsQovTDmm3KQeBbHBg=
+	b=hNVNi0NzTo8uwwWYOE1ClD7uxYhkGqnUb5x2M4/Q3FbhU8fbt22hhSHZHlWJHCWzL
+	 hRyyBfbImJf4o9iWlGS6wPZ4F5evPy9y5xkCMRL5+jzBr2iH1nzazbIDozM5iChaCp
+	 sgRORQ+yFtPvF57l//bb4q2R/5SOGcjP+SMdYEq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wren Turkal <wt@penguintechs.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Manish Mandlik <mmandlik@google.com>,
-	Archie Pusaka <apusaka@chromium.org>,
-	Miao-chen Chou <mcchou@chromium.org>,
-	Chun-Yi Lee <jlee@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 070/186] Bluetooth: hci_sync: Using hci_cmd_sync_submit when removing Adv Monitor
-Date: Tue, 30 Apr 2024 12:38:42 +0200
-Message-ID: <20240430103100.069296016@linuxfoundation.org>
+Subject: [PATCH 6.6 071/186] Bluetooth: qca: set power_ctrl_enabled on NULL returned by gpiod_get_optional()
+Date: Tue, 30 Apr 2024 12:38:43 +0200
+Message-ID: <20240430103100.098412795@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -54,55 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chun-Yi Lee <jlee@suse.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 88cd6e6b2d327faa13e4505b07f1e380e51b21ff ]
+[ Upstream commit 3d05fc82237aa97162d0d7dc300b55bb34e91d02 ]
 
-Since the d883a4669a1de be introduced in v6.4, bluetooth daemon
-got the following failed message of MGMT_OP_REMOVE_ADV_MONITOR
-command when controller is power-off:
+Any return value from gpiod_get_optional() other than a pointer to a
+GPIO descriptor or a NULL-pointer is an error and the driver should
+abort probing. That being said: commit 56d074d26c58 ("Bluetooth: hci_qca:
+don't use IS_ERR_OR_NULL() with gpiod_get_optional()") no longer sets
+power_ctrl_enabled on NULL-pointer returned by
+devm_gpiod_get_optional(). Restore this behavior but bail-out on errors.
+While at it: also bail-out on error returned when trying to get the
+"swctrl" GPIO.
 
-bluetoothd[20976]:
-src/adapter.c:reset_adv_monitors_complete() Failed to reset Adv
-Monitors: Failed>
-
-Normally this situation is happened when the bluetoothd deamon
-be started manually after system booting. Which means that
-bluetoothd received MGMT_EV_INDEX_ADDED event after kernel
-runs hci_power_off().
-
-Base on doc/mgmt-api.txt, the MGMT_OP_REMOVE_ADV_MONITOR command
-can be used when the controller is not powered. This patch changes
-the code in remove_adv_monitor() to use hci_cmd_sync_submit()
-instead of hci_cmd_sync_queue().
-
-Fixes: d883a4669a1de ("Bluetooth: hci_sync: Only allow hci_cmd_sync_queue if running")
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc: Manish Mandlik <mmandlik@google.com>
-Cc: Archie Pusaka <apusaka@chromium.org>
-Cc: Miao-chen Chou <mcchou@chromium.org>
-Signed-off-by: Chun-Yi Lee <jlee@suse.com>
+Reported-by: Wren Turkal <wt@penguintechs.org>
+Reported-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Closes: https://lore.kernel.org/linux-bluetooth/1713449192-25926-2-git-send-email-quic_zijuhu@quicinc.com/
+Fixes: 56d074d26c58 ("Bluetooth: hci_qca: don't use IS_ERR_OR_NULL() with gpiod_get_optional()")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Tested-by: Wren Turkal <wt@penguintechs.org>
+Reported-by: Wren Turkal <wt@penguintechs.org>
+Reported-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Reviewed-by: Krzysztof Kozlowski<krzysztof.kozlowski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bluetooth/hci_qca.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 6d41bc0e7896a..ac693e64f1f9f 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -5477,8 +5477,8 @@ static int remove_adv_monitor(struct sock *sk, struct hci_dev *hdev,
- 		goto unlock;
- 	}
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 8861b8017fbdf..b491dd9acf315 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -2298,16 +2298,21 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+ 		    (data->soc_type == QCA_WCN6750 ||
+ 		     data->soc_type == QCA_WCN6855)) {
+ 			dev_err(&serdev->dev, "failed to acquire BT_EN gpio\n");
+-			power_ctrl_enabled = false;
++			return PTR_ERR(qcadev->bt_en);
+ 		}
  
--	err = hci_cmd_sync_queue(hdev, mgmt_remove_adv_monitor_sync, cmd,
--				 mgmt_remove_adv_monitor_complete);
-+	err = hci_cmd_sync_submit(hdev, mgmt_remove_adv_monitor_sync, cmd,
-+				  mgmt_remove_adv_monitor_complete);
++		if (!qcadev->bt_en)
++			power_ctrl_enabled = false;
++
+ 		qcadev->sw_ctrl = devm_gpiod_get_optional(&serdev->dev, "swctrl",
+ 					       GPIOD_IN);
+ 		if (IS_ERR(qcadev->sw_ctrl) &&
+ 		    (data->soc_type == QCA_WCN6750 ||
+ 		     data->soc_type == QCA_WCN6855 ||
+-		     data->soc_type == QCA_WCN7850))
+-			dev_warn(&serdev->dev, "failed to acquire SW_CTRL gpio\n");
++		     data->soc_type == QCA_WCN7850)) {
++			dev_err(&serdev->dev, "failed to acquire SW_CTRL gpio\n");
++			return PTR_ERR(qcadev->sw_ctrl);
++		}
  
- 	if (err) {
- 		mgmt_pending_remove(cmd);
+ 		qcadev->susclk = devm_clk_get_optional(&serdev->dev, NULL);
+ 		if (IS_ERR(qcadev->susclk)) {
+@@ -2326,10 +2331,13 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+ 		qcadev->bt_en = devm_gpiod_get_optional(&serdev->dev, "enable",
+ 					       GPIOD_OUT_LOW);
+ 		if (IS_ERR(qcadev->bt_en)) {
+-			dev_warn(&serdev->dev, "failed to acquire enable gpio\n");
+-			power_ctrl_enabled = false;
++			dev_err(&serdev->dev, "failed to acquire enable gpio\n");
++			return PTR_ERR(qcadev->bt_en);
+ 		}
+ 
++		if (!qcadev->bt_en)
++			power_ctrl_enabled = false;
++
+ 		qcadev->susclk = devm_clk_get_optional(&serdev->dev, NULL);
+ 		if (IS_ERR(qcadev->susclk)) {
+ 			dev_warn(&serdev->dev, "failed to acquire clk\n");
 -- 
 2.43.0
 
