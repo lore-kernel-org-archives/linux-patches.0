@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85088801;
-	Tue, 30 Apr 2024 11:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96B28801;
+	Tue, 30 Apr 2024 11:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475777; cv=none; b=S+NfZ8Y5J3du2iaAbBteLOf2EAwzZTQH9tz/X84EQIaC+1YY+f7oVowkvjgoAhLPoeU23PC5IV8QHAdF4fQ5Qf1ovy50pHm8F6t4ZraWhBdXCMej3KFKZz6LJqji2FgAlY6OEAxNaVGdVHSUrpIhy29u+z9sJBdiqajKWYBnoXk=
+	t=1714475781; cv=none; b=VClh0wUdfVb3PrlucG2G6btK/js8ih/3mXCJp8zp9Mvl/dZ2Lx+eEGu1pZcCOWE2YXQEIT36AG5KiGVWI68aOVDRmY50XLbF72wTghio9ysrkJy1//Tv9TPE/+s0dRkpdrF/bSTZChgUauJcluz6aRdtN1M9HTP4LUTnbLDrHg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475777; c=relaxed/simple;
-	bh=E+n2M29YgJFCgxEf0il+JIMO3yi93WBL2Ry1+coo1Rc=;
+	s=arc-20240116; t=1714475781; c=relaxed/simple;
+	bh=114TG7kxfb8kd6J9URDLo3W5skHiYEceCIA6423SVlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=miBqZi9gXo936bPRonaYB4bcxbRhXsNOiX26yk/te2DHTFKfiH/fMgQODQGanEoDpjemlActwNSUkXD/1Q7SQzL/5G0/IfgBCpM7mrV3gefsDH4jr4tdYwmdmXmQs63pyidRtPY6zVFHpdxXCZuJWP5RvRc+TbvP63hNtzU4M+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w50WLuA+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OxBh/jjqzsFniur52T6h0dLdKK9oKv+uU6o3rc+xKUiNyjWol2shzmjiuxCC6y4Cil79w/P7hiQ+PB8etafHK508fReGUryYCpA9rEvQlnCmu1shm8U8WXEIhsexW6zFE4m7gG0wg4xmVEwdP9wvpydkFszJdrVKvNlZDan0DaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHIYmtDr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w50WLuA+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 175FFC2BBFC;
-	Tue, 30 Apr 2024 11:16:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHIYmtDr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E2BC4AF18;
+	Tue, 30 Apr 2024 11:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475777;
-	bh=E+n2M29YgJFCgxEf0il+JIMO3yi93WBL2Ry1+coo1Rc=;
+	s=korg; t=1714475780;
+	bh=114TG7kxfb8kd6J9URDLo3W5skHiYEceCIA6423SVlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w50WLuA+3bFQ5bgXZwtd1vS20Le9kxEMEjpjhNDk1o0BPO88C8QtPomMe3fk1qyko
-	 Rx7lSC70BjRaPjiZyVvrN08OJsoAVpOp55YfdKQ9cm6DJOuV8RD5YHYClnwKJEi9vZ
-	 84enDnJwWCSRZgyVdXeuAUACFoRZ7y8je3J61lAA=
+	b=CHIYmtDrpvDdwNFKB614ORdwSWd/MFd2H8WEzFxKAUV4xwgzvpUEOCL5ccheL6BOq
+	 4IzNqEBahZjsktkE9LkQdmS2PM0E50VA0oPO1eiDXiNto1n3vTMnerE00V28UWkHRq
+	 aj7BWXpiqLO2/lP8CzoxKA8H0GQ9XTvHUj3POino=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 15/80] arm64: dts: mediatek: mt7622: drop "reset-names" from thermal block
-Date: Tue, 30 Apr 2024 12:39:47 +0200
-Message-ID: <20240430103043.862080347@linuxfoundation.org>
+Subject: [PATCH 5.15 16/80] arm64: dts: mediatek: mt2712: fix validation errors
+Date: Tue, 30 Apr 2024 12:39:48 +0200
+Message-ID: <20240430103043.892425367@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -54,37 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit ecb5b0034f5bcc35003b4b965cf50c6e98316e79 ]
+[ Upstream commit 3baac7291effb501c4d52df7019ebf52011e5772 ]
 
-Binding doesn't specify "reset-names" property and Linux driver also
-doesn't use it.
+1. Fixup infracfg clock controller binding
+   It also acts as reset controller so #reset-cells is required.
+2. Use -pins suffix for pinctrl
 
-Fix following validation error:
-arch/arm64/boot/dts/mediatek/mt7622-rfb1.dtb: thermal@1100b000: Unevaluated properties are not allowed ('reset-names' was unexpected)
-        from schema $id: http://devicetree.org/schemas/thermal/mediatek,thermal.yaml#
+This fixes:
+arch/arm64/boot/dts/mediatek/mt2712-evb.dtb: syscon@10001000: '#reset-cells' is a required property
+        from schema $id: http://devicetree.org/schemas/arm/mediatek/mediatek,infracfg.yaml#
+arch/arm64/boot/dts/mediatek/mt2712-evb.dtb: pinctrl@1000b000: 'eth_default', 'eth_sleep', 'usb0_iddig', 'usb1_iddig' do not match any of the regexes: 'pinctrl-[0-9]+', 'pins$'
+        from schema $id: http://devicetree.org/schemas/pinctrl/mediatek,mt65xx-pinctrl.yaml#
 
-Fixes: ae457b7679c4 ("arm64: dts: mt7622: add SoC and peripheral related device nodes")
 Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240317221050.18595-5-zajec5@gmail.com
+Link: https://lore.kernel.org/r/20240301074741.8362-1-zajec5@gmail.com
+[Angelo: Added Fixes tags]
+Fixes: 5d4839709c8e ("arm64: dts: mt2712: Add clock controller device nodes")
+Fixes: 1724f4cc5133 ("arm64: dts: Add USB3 related nodes for MT2712")
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7622.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt2712-evb.dts | 8 ++++----
+ arch/arm64/boot/dts/mediatek/mt2712e.dtsi   | 3 ++-
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt7622.dtsi b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-index 7a54af96e1d90..5f21f1e95d095 100644
---- a/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-@@ -505,7 +505,6 @@
- 			 <&pericfg CLK_PERI_AUXADC_PD>;
- 		clock-names = "therm", "auxadc";
- 		resets = <&pericfg MT7622_PERI_THERM_SW_RST>;
--		reset-names = "therm";
- 		mediatek,auxadc = <&auxadc>;
- 		mediatek,apmixedsys = <&apmixedsys>;
- 		nvmem-cells = <&thermal_calibration>;
+diff --git a/arch/arm64/boot/dts/mediatek/mt2712-evb.dts b/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
+index 9d20cabf4f699..99515c13da3cf 100644
+--- a/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
++++ b/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
+@@ -127,7 +127,7 @@
+ };
+ 
+ &pio {
+-	eth_default: eth_default {
++	eth_default: eth-default-pins {
+ 		tx_pins {
+ 			pinmux = <MT2712_PIN_71_GBE_TXD3__FUNC_GBE_TXD3>,
+ 				 <MT2712_PIN_72_GBE_TXD2__FUNC_GBE_TXD2>,
+@@ -154,7 +154,7 @@
+ 		};
+ 	};
+ 
+-	eth_sleep: eth_sleep {
++	eth_sleep: eth-sleep-pins {
+ 		tx_pins {
+ 			pinmux = <MT2712_PIN_71_GBE_TXD3__FUNC_GPIO71>,
+ 				 <MT2712_PIN_72_GBE_TXD2__FUNC_GPIO72>,
+@@ -180,14 +180,14 @@
+ 		};
+ 	};
+ 
+-	usb0_id_pins_float: usb0_iddig {
++	usb0_id_pins_float: usb0-iddig-pins {
+ 		pins_iddig {
+ 			pinmux = <MT2712_PIN_12_IDDIG_P0__FUNC_IDDIG_A>;
+ 			bias-pull-up;
+ 		};
+ 	};
+ 
+-	usb1_id_pins_float: usb1_iddig {
++	usb1_id_pins_float: usb1-iddig-pins {
+ 		pins_iddig {
+ 			pinmux = <MT2712_PIN_14_IDDIG_P1__FUNC_IDDIG_B>;
+ 			bias-pull-up;
+diff --git a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
+index 993a03d7fff14..57e9c39fabea4 100644
+--- a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
+@@ -249,10 +249,11 @@
+ 		#clock-cells = <1>;
+ 	};
+ 
+-	infracfg: syscon@10001000 {
++	infracfg: clock-controller@10001000 {
+ 		compatible = "mediatek,mt2712-infracfg", "syscon";
+ 		reg = <0 0x10001000 0 0x1000>;
+ 		#clock-cells = <1>;
++		#reset-cells = <1>;
+ 	};
+ 
+ 	pericfg: syscon@10003000 {
 -- 
 2.43.0
 
