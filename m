@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49295127B70;
-	Tue, 30 Apr 2024 10:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56989127B70;
+	Tue, 30 Apr 2024 10:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473704; cv=none; b=dGCAfW5J4AyE9bNAd7cLhl3IJ6w8WoIDOY8TPHkzOLfnP03hWDYG7QjbL1a1W/NZegdWmYMMqpKRa2Egq2kR9v7VcDBv80vjj+8x01RZbAMHSPoTffyKoH0pONjyCVzVtz+tvhBBcz6fDw8lbcTPZp8Cd87RNMVvHaQkJDTJVdQ=
+	t=1714473707; cv=none; b=qrjRJrxcOjjlGggDgqZL7fjCzJWLD6KP2FZI21qDpaQvggCqmE4Fg8tzMXf4OP5wtMFC5fPaqTGF7R1J+P8tCwstWV1n96aHKL70y6ExVBIRdjyBJmu/livQvnCAswqhdFsrBzzGBD/pCYyJ2rwz564QNIUwoI+VTPRKP/+oobE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473704; c=relaxed/simple;
-	bh=PD7AQffOmYiwZ3qYYM3m9al8l4CrDvezHmzgu/swMrQ=;
+	s=arc-20240116; t=1714473707; c=relaxed/simple;
+	bh=GTqcUG1yt4g716vPn8LVNbEzcEfNGvcDQqJKLGM+Txk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YlG369DD5JDz5jlLTT7KMGWzRLYydI1CdrMHF23wSEszRjq9hMNmCRNGofugUCdLdT5SteUDyI2xqTGnWXHS5C2WUd3TWOPqNe2NGpoAH+Y953sCiIMvAuWSg35nlSLOcCI+4qgTyW7gGASWwkWljPwxfQ3X7V3zYtjhbRPHFNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g3j8E/FO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tjwbletg4P4jQU7X0D/8Zo2LG6+qANxkmUPZ/vd1BzhD+AlE7+Xh/r9RAYPXpKuB7WBHh6uHTlKx6L+T9lwPAzjC6r4MEhUgWIadZVilPhZFLBqJV+1P2hK4YYJ/Cwjl/Uc7FmIfwkqCVjNVD78ACk33L3apnPvq5zscZkujDJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BCYMuMTM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g3j8E/FO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD9BC2BBFC;
-	Tue, 30 Apr 2024 10:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BCYMuMTM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4B0C4AF19;
+	Tue, 30 Apr 2024 10:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473703;
-	bh=PD7AQffOmYiwZ3qYYM3m9al8l4CrDvezHmzgu/swMrQ=;
+	s=korg; t=1714473706;
+	bh=GTqcUG1yt4g716vPn8LVNbEzcEfNGvcDQqJKLGM+Txk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g3j8E/FOCDAFUIWovdR4swcSvHR9c2GI2D3SmP1j4MIuAosL+SLadMQ/XriiDXL3Q
-	 p4KQ5BKoAz2xDlRHkXTSDZgzhaizXZZuUs64ZFmXpCwW6hDOlQUpoBbR00WETMsyyO
-	 SF7eC2+//z7iDMNqWWhchplNIyQe7xdyuPgCKzpI=
+	b=BCYMuMTMvxqp+sD8khRzquvk1TRgxjl+HobsGoN6vIr3kq29Q1SepREzp5SCGdIqv
+	 5cADVKK83lT7rGezeqJcVOA2lHl+gIOFC/ZijMDXw3M8yzvus+kPIJWfWRb1Mqbr32
+	 JSAcWGb2eOS2sOAY4vxDsQkjHHmRI3BoL8gbsCMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Stultz <jstultz@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 4.19 11/77] selftests: timers: Fix abs() warning in posix_timers test
-Date: Tue, 30 Apr 2024 12:38:50 +0200
-Message-ID: <20240430103041.455656659@linuxfoundation.org>
+	Adam Dunlap <acdunlap@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Kevin Loughlin <kevinloughlin@google.com>
+Subject: [PATCH 4.19 12/77] x86/apic: Force native_apic_mem_read() to use the MOV instruction
+Date: Tue, 30 Apr 2024 12:38:51 +0200
+Message-ID: <20240430103041.485191195@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -50,39 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Stultz <jstultz@google.com>
+From: Adam Dunlap <acdunlap@google.com>
 
-commit ed366de8ec89d4f960d66c85fc37d9de22f7bf6d upstream.
+commit 5ce344beaca688f4cdea07045e0b8f03dc537e74 upstream.
 
-Building with clang results in the following warning:
+When done from a virtual machine, instructions that touch APIC memory
+must be emulated. By convention, MMIO accesses are typically performed
+via io.h helpers such as readl() or writeq() to simplify instruction
+emulation/decoding (ex: in KVM hosts and SEV guests) [0].
 
-  posix_timers.c:69:6: warning: absolute value function 'abs' given an
-      argument of type 'long long' but has parameter of type 'int' which may
-      cause truncation of value [-Wabsolute-value]
-        if (abs(diff - DELAY * USECS_PER_SEC) > USECS_PER_SEC / 2) {
-            ^
-So switch to using llabs() instead.
+Currently, native_apic_mem_read() does not follow this convention,
+allowing the compiler to emit instructions other than the MOV
+instruction generated by readl(). In particular, when the kernel is
+compiled with clang and run as a SEV-ES or SEV-SNP guest, the compiler
+would emit a TESTL instruction which is not supported by the SEV-ES
+emulator, causing a boot failure in that environment. It is likely the
+same problem would happen in a TDX guest as that uses the same
+instruction emulator as SEV-ES.
 
-Fixes: 0bc4b0cf1570 ("selftests: add basic posix timers selftests")
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240410232637.4135564-3-jstultz@google.com
+To make sure all emulators can emulate APIC memory reads via MOV, use
+the readl() function in native_apic_mem_read(). It is expected that any
+emulator would support MOV in any addressing mode as it is the most
+generic and is what is usually emitted currently.
+
+The TESTL instruction is emitted when native_apic_mem_read() is inlined
+into apic_mem_wait_icr_idle(). The emulator comes from
+insn_decode_mmio() in arch/x86/lib/insn-eval.c. It's not worth it to
+extend insn_decode_mmio() to support more instructions since, in theory,
+the compiler could choose to output nearly any instruction for such
+reads which would bloat the emulator beyond reason.
+
+  [0] https://lore.kernel.org/all/20220405232939.73860-12-kirill.shutemov@linux.intel.com/
+
+  [ bp: Massage commit message, fix typos. ]
+
+Signed-off-by: Adam Dunlap <acdunlap@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Tested-by: Kevin Loughlin <kevinloughlin@google.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240318230927.2191933-1-acdunlap@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/timers/posix_timers.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/apic.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/timers/posix_timers.c
-+++ b/tools/testing/selftests/timers/posix_timers.c
-@@ -67,7 +67,7 @@ static int check_diff(struct timeval sta
- 	diff = end.tv_usec - start.tv_usec;
- 	diff += (end.tv_sec - start.tv_sec) * USECS_PER_SEC;
+--- a/arch/x86/include/asm/apic.h
++++ b/arch/x86/include/asm/apic.h
+@@ -11,6 +11,7 @@
+ #include <asm/mpspec.h>
+ #include <asm/msr.h>
+ #include <asm/hardirq.h>
++#include <asm/io.h>
  
--	if (abs(diff - DELAY * USECS_PER_SEC) > USECS_PER_SEC / 2) {
-+	if (llabs(diff - DELAY * USECS_PER_SEC) > USECS_PER_SEC / 2) {
- 		printf("Diff too high: %lld..", diff);
- 		return -1;
- 	}
+ #define ARCH_APICTIMER_STOPS_ON_C3	1
+ 
+@@ -110,7 +111,7 @@ static inline void native_apic_mem_write
+ 
+ static inline u32 native_apic_mem_read(u32 reg)
+ {
+-	return *((volatile u32 *)(APIC_BASE + reg));
++	return readl((void __iomem *)(APIC_BASE + reg));
+ }
+ 
+ extern void native_apic_wait_icr_idle(void);
 
 
