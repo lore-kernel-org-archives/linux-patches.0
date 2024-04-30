@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05898801;
-	Tue, 30 Apr 2024 11:10:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E300C12CD90;
+	Tue, 30 Apr 2024 11:10:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475440; cv=none; b=tyojp01uxWYadMvxO1kXYj3tMceH9MmTq46opSbcTuDIk8PdT+4NIzk4/3j45xqStidzTdU/wiaOUD9ta6k/SKOHS+4OYTMOUATRB/PUSGF+LhuVHudWhO2W+hN3jrOQSEFPkaOkk1iYD2/f1dSfq/e4jdtLMfj6rTSKlUd+IHc=
+	t=1714475443; cv=none; b=Zs6XcclImXk7m+MYWRWRYbigz7wdosjoapupPfa7lFUiHtEjL9POBAupGX+L8ftbHAAjSVIdyzeVyQebX8J3IDeB0UmgIa4bipFp3cxbEYaJrl6xNSW9E4U6w6V9v/4ThRmt4WhaSvAWkfNnjTPYlH4qaIAahcY8bGXijjes07Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475440; c=relaxed/simple;
-	bh=n1Qg6BTDb43kokqf2MAxjx6lEHzpCrOtTaA368TlF5s=;
+	s=arc-20240116; t=1714475443; c=relaxed/simple;
+	bh=kJpBOzvmxtbZOl9SZ/bJnquaxGEkVz/CX+2LeMKd8mU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RSdN3mjSQpVkWm/6he2Zg3w+MMtr7duSuACekBNBfUV9CekuOdpyos6f8ORg0Xou/+yAcKjJxwdalKkRx+NKrRzazHwqiZLLWXjURysQplUcKWQZqlQZZAfjfAcBWBFXtQKgoTJO86tVvPaHeqFYbAP7iIbHT4qcT2kwqemZZh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJOVR8CN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NDz/NdifvHRcyM78+ory9oxnU+hri+16MEtHhIJ23AmuwvZ9z90hsqT+eK20/vPiArmMgOVvb3jcgQn8TrwKoXzZs0n5nKWuZSFgP9+1ra76SP3IBs8gYR+J3j9rNXkmIKgE0DjRrd4ewcgqL5hlhrg1ss+2IqA+1S49lfNwvn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XCOr9QgQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJOVR8CN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7D6C2BBFC;
-	Tue, 30 Apr 2024 11:10:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XCOr9QgQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB48C2BBFC;
+	Tue, 30 Apr 2024 11:10:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475439;
-	bh=n1Qg6BTDb43kokqf2MAxjx6lEHzpCrOtTaA368TlF5s=;
+	s=korg; t=1714475442;
+	bh=kJpBOzvmxtbZOl9SZ/bJnquaxGEkVz/CX+2LeMKd8mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kJOVR8CNwK0a/oRUyV4LsODiLjmbWTCP3++G7kyr6sJXKJ1F9LS4Iw/FLJY8u43Ug
-	 KKBuW3HhY4SfzVPe4KkL5I0Z/210Pra20cmVcj83OQUPvpBrDt032yRI/Nw6dsU2A8
-	 AlYMZR4BvsGNxnd0RIDqQf9GhFPlN/L6xKVsOLs4=
+	b=XCOr9QgQDRnMezZ4hw5Nhjl4tZhSbSmbUaZHYv65U+vjadEwX2fOt+mggYPnDAT1b
+	 qLTv3FBGbD585Y1UFqwSVK8Td6gSODjyHzeS1iOLiYaWEqRbvwtVo/XJyJpYpskLZw
+	 FACSoUkncW5RflJMd4yyH+oDc5HjQeIRSel5rTFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+fa379358c28cc87cc307@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 095/186] af_unix: Suppress false-positive lockdep splat for spin_lock() in __unix_gc().
-Date: Tue, 30 Apr 2024 12:39:07 +0200
-Message-ID: <20240430103100.790899284@linuxfoundation.org>
+	Konstantin Khorenko <khorenko@virtuozzo.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 096/186] KVM: x86/pmu: Zero out PMU metadata on AMD if PMU is disabled
+Date: Tue, 30 Apr 2024 12:39:08 +0200
+Message-ID: <20240430103100.820071742@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -52,168 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 1971d13ffa84a551d29a81fdf5b5ec5be166ac83 ]
+[ Upstream commit f933b88e20150f15787390e2a1754a7e412754ed ]
 
-syzbot reported a lockdep splat regarding unix_gc_lock and
-unix_state_lock().
+Move the purging of common PMU metadata from intel_pmu_refresh() to
+kvm_pmu_refresh(), and invoke the vendor refresh() hook if and only if
+the VM is supposed to have a vPMU.
 
-One is called from recvmsg() for a connected socket, and another
-is called from GC for TCP_LISTEN socket.
+KVM already denies access to the PMU based on kvm->arch.enable_pmu, as
+get_gp_pmc_amd() returns NULL for all PMCs in that case, i.e. KVM already
+violates AMD's architecture by not virtualizing a PMU (kernels have long
+since learned to not panic when the PMU is unavailable).  But configuring
+the PMU as if it were enabled causes unwanted side effects, e.g. calls to
+kvm_pmu_trigger_event() waste an absurd number of cycles due to the
+all_valid_pmc_idx bitmap being non-zero.
 
-So, the splat is false-positive.
-
-Let's add a dedicated lock class for the latter to suppress the splat.
-
-Note that this change is not necessary for net-next.git as the issue
-is only applied to the old GC impl.
-
-[0]:
-WARNING: possible circular locking dependency detected
-6.9.0-rc5-syzkaller-00007-g4d2008430ce8 #0 Not tainted
- -----------------------------------------------------
-kworker/u8:1/11 is trying to acquire lock:
-ffff88807cea4e70 (&u->lock){+.+.}-{2:2}, at: spin_lock include/linux/spinlock.h:351 [inline]
-ffff88807cea4e70 (&u->lock){+.+.}-{2:2}, at: __unix_gc+0x40e/0xf70 net/unix/garbage.c:302
-
-but task is already holding lock:
-ffffffff8f6ab638 (unix_gc_lock){+.+.}-{2:2}, at: spin_lock include/linux/spinlock.h:351 [inline]
-ffffffff8f6ab638 (unix_gc_lock){+.+.}-{2:2}, at: __unix_gc+0x117/0xf70 net/unix/garbage.c:261
-
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
- -> #1 (unix_gc_lock){+.+.}-{2:2}:
-       lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
-       __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
-       _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:154
-       spin_lock include/linux/spinlock.h:351 [inline]
-       unix_notinflight+0x13d/0x390 net/unix/garbage.c:140
-       unix_detach_fds net/unix/af_unix.c:1819 [inline]
-       unix_destruct_scm+0x221/0x350 net/unix/af_unix.c:1876
-       skb_release_head_state+0x100/0x250 net/core/skbuff.c:1188
-       skb_release_all net/core/skbuff.c:1200 [inline]
-       __kfree_skb net/core/skbuff.c:1216 [inline]
-       kfree_skb_reason+0x16d/0x3b0 net/core/skbuff.c:1252
-       kfree_skb include/linux/skbuff.h:1262 [inline]
-       manage_oob net/unix/af_unix.c:2672 [inline]
-       unix_stream_read_generic+0x1125/0x2700 net/unix/af_unix.c:2749
-       unix_stream_splice_read+0x239/0x320 net/unix/af_unix.c:2981
-       do_splice_read fs/splice.c:985 [inline]
-       splice_file_to_pipe+0x299/0x500 fs/splice.c:1295
-       do_splice+0xf2d/0x1880 fs/splice.c:1379
-       __do_splice fs/splice.c:1436 [inline]
-       __do_sys_splice fs/splice.c:1652 [inline]
-       __se_sys_splice+0x331/0x4a0 fs/splice.c:1634
-       do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-       do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
-       entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
- -> #0 (&u->lock){+.+.}-{2:2}:
-       check_prev_add kernel/locking/lockdep.c:3134 [inline]
-       check_prevs_add kernel/locking/lockdep.c:3253 [inline]
-       validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
-       __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
-       lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
-       __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
-       _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:154
-       spin_lock include/linux/spinlock.h:351 [inline]
-       __unix_gc+0x40e/0xf70 net/unix/garbage.c:302
-       process_one_work kernel/workqueue.c:3254 [inline]
-       process_scheduled_works+0xa10/0x17c0 kernel/workqueue.c:3335
-       worker_thread+0x86d/0xd70 kernel/workqueue.c:3416
-       kthread+0x2f0/0x390 kernel/kthread.c:388
-       ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
-       ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(unix_gc_lock);
-                               lock(&u->lock);
-                               lock(unix_gc_lock);
-  lock(&u->lock);
-
- *** DEADLOCK ***
-
-3 locks held by kworker/u8:1/11:
- #0: ffff888015089148 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3229 [inline]
- #0: ffff888015089148 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_scheduled_works+0x8e0/0x17c0 kernel/workqueue.c:3335
- #1: ffffc90000107d00 (unix_gc_work){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3230 [inline]
- #1: ffffc90000107d00 (unix_gc_work){+.+.}-{0:0}, at: process_scheduled_works+0x91b/0x17c0 kernel/workqueue.c:3335
- #2: ffffffff8f6ab638 (unix_gc_lock){+.+.}-{2:2}, at: spin_lock include/linux/spinlock.h:351 [inline]
- #2: ffffffff8f6ab638 (unix_gc_lock){+.+.}-{2:2}, at: __unix_gc+0x117/0xf70 net/unix/garbage.c:261
-
-stack backtrace:
-CPU: 0 PID: 11 Comm: kworker/u8:1 Not tainted 6.9.0-rc5-syzkaller-00007-g4d2008430ce8 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-Workqueue: events_unbound __unix_gc
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
- check_noncircular+0x36a/0x4a0 kernel/locking/lockdep.c:2187
- check_prev_add kernel/locking/lockdep.c:3134 [inline]
- check_prevs_add kernel/locking/lockdep.c:3253 [inline]
- validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
- __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
- lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
- __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
- _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:154
- spin_lock include/linux/spinlock.h:351 [inline]
- __unix_gc+0x40e/0xf70 net/unix/garbage.c:302
- process_one_work kernel/workqueue.c:3254 [inline]
- process_scheduled_works+0xa10/0x17c0 kernel/workqueue.c:3335
- worker_thread+0x86d/0xd70 kernel/workqueue.c:3416
- kthread+0x2f0/0x390 kernel/kthread.c:388
- ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
- </TASK>
-
-Fixes: 47d8ac011fe1 ("af_unix: Fix garbage collector racing against connect()")
-Reported-and-tested-by: syzbot+fa379358c28cc87cc307@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fa379358c28cc87cc307
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240424170443.9832-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b1d66dad65dc ("KVM: x86/svm: Add module param to control PMU virtualization")
+Reported-by: Konstantin Khorenko <khorenko@virtuozzo.com>
+Closes: https://lore.kernel.org/all/20231109180646.2963718-2-khorenko@virtuozzo.com
+Link: https://lore.kernel.org/r/20231110022857.1273836-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Stable-dep-of: de120e1d692d ("KVM: x86/pmu: Set enable bits for GP counters in PERF_GLOBAL_CTRL at "RESET"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/af_unix.h | 3 +++
- net/unix/garbage.c    | 2 +-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/kvm/pmu.c           | 20 ++++++++++++++++++--
+ arch/x86/kvm/vmx/pmu_intel.c | 16 ++--------------
+ 2 files changed, 20 insertions(+), 16 deletions(-)
 
-diff --git a/include/net/af_unix.h b/include/net/af_unix.h
-index d1b07ddbe677e..77bf30203d3cf 100644
---- a/include/net/af_unix.h
-+++ b/include/net/af_unix.h
-@@ -77,6 +77,9 @@ enum unix_socket_lock_class {
- 	U_LOCK_NORMAL,
- 	U_LOCK_SECOND,	/* for double locking, see unix_state_double_lock(). */
- 	U_LOCK_DIAG, /* used while dumping icons, see sk_diag_dump_icons(). */
-+	U_LOCK_GC_LISTENER, /* used for listening socket while determining gc
-+			     * candidates to close a small race window.
-+			     */
- };
+diff --git a/arch/x86/kvm/pmu.c b/arch/x86/kvm/pmu.c
+index dc8e8e907cfbf..fa6f5cd70d4c8 100644
+--- a/arch/x86/kvm/pmu.c
++++ b/arch/x86/kvm/pmu.c
+@@ -691,6 +691,8 @@ void kvm_pmu_reset(struct kvm_vcpu *vcpu)
+  */
+ void kvm_pmu_refresh(struct kvm_vcpu *vcpu)
+ {
++	struct kvm_pmu *pmu = vcpu_to_pmu(vcpu);
++
+ 	if (KVM_BUG_ON(kvm_vcpu_has_run(vcpu), vcpu->kvm))
+ 		return;
  
- static inline void unix_state_lock_nested(struct sock *sk,
-diff --git a/net/unix/garbage.c b/net/unix/garbage.c
-index 8734c0c1fc197..2a758531e1027 100644
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -260,7 +260,7 @@ void unix_gc(void)
- 			__set_bit(UNIX_GC_MAYBE_CYCLE, &u->gc_flags);
+@@ -700,8 +702,22 @@ void kvm_pmu_refresh(struct kvm_vcpu *vcpu)
+ 	 */
+ 	kvm_pmu_reset(vcpu);
  
- 			if (sk->sk_state == TCP_LISTEN) {
--				unix_state_lock(sk);
-+				unix_state_lock_nested(sk, U_LOCK_GC_LISTENER);
- 				unix_state_unlock(sk);
- 			}
- 		}
+-	bitmap_zero(vcpu_to_pmu(vcpu)->all_valid_pmc_idx, X86_PMC_IDX_MAX);
+-	static_call(kvm_x86_pmu_refresh)(vcpu);
++	pmu->version = 0;
++	pmu->nr_arch_gp_counters = 0;
++	pmu->nr_arch_fixed_counters = 0;
++	pmu->counter_bitmask[KVM_PMC_GP] = 0;
++	pmu->counter_bitmask[KVM_PMC_FIXED] = 0;
++	pmu->reserved_bits = 0xffffffff00200000ull;
++	pmu->raw_event_mask = X86_RAW_EVENT_MASK;
++	pmu->global_ctrl_mask = ~0ull;
++	pmu->global_status_mask = ~0ull;
++	pmu->fixed_ctr_ctrl_mask = ~0ull;
++	pmu->pebs_enable_mask = ~0ull;
++	pmu->pebs_data_cfg_mask = ~0ull;
++	bitmap_zero(pmu->all_valid_pmc_idx, X86_PMC_IDX_MAX);
++
++	if (vcpu->kvm->arch.enable_pmu)
++		static_call(kvm_x86_pmu_refresh)(vcpu);
+ }
+ 
+ void kvm_pmu_init(struct kvm_vcpu *vcpu)
+diff --git a/arch/x86/kvm/vmx/pmu_intel.c b/arch/x86/kvm/vmx/pmu_intel.c
+index 1549461fa42b7..48a2f77f62ef3 100644
+--- a/arch/x86/kvm/vmx/pmu_intel.c
++++ b/arch/x86/kvm/vmx/pmu_intel.c
+@@ -493,19 +493,6 @@ static void intel_pmu_refresh(struct kvm_vcpu *vcpu)
+ 	u64 counter_mask;
+ 	int i;
+ 
+-	pmu->nr_arch_gp_counters = 0;
+-	pmu->nr_arch_fixed_counters = 0;
+-	pmu->counter_bitmask[KVM_PMC_GP] = 0;
+-	pmu->counter_bitmask[KVM_PMC_FIXED] = 0;
+-	pmu->version = 0;
+-	pmu->reserved_bits = 0xffffffff00200000ull;
+-	pmu->raw_event_mask = X86_RAW_EVENT_MASK;
+-	pmu->global_ctrl_mask = ~0ull;
+-	pmu->global_status_mask = ~0ull;
+-	pmu->fixed_ctr_ctrl_mask = ~0ull;
+-	pmu->pebs_enable_mask = ~0ull;
+-	pmu->pebs_data_cfg_mask = ~0ull;
+-
+ 	memset(&lbr_desc->records, 0, sizeof(lbr_desc->records));
+ 
+ 	/*
+@@ -517,8 +504,9 @@ static void intel_pmu_refresh(struct kvm_vcpu *vcpu)
+ 		return;
+ 
+ 	entry = kvm_find_cpuid_entry(vcpu, 0xa);
+-	if (!entry || !vcpu->kvm->arch.enable_pmu)
++	if (!entry)
+ 		return;
++
+ 	eax.full = entry->eax;
+ 	edx.full = entry->edx;
+ 
 -- 
 2.43.0
 
