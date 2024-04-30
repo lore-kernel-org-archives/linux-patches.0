@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4159212BF32;
-	Tue, 30 Apr 2024 11:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E33B12C805;
+	Tue, 30 Apr 2024 11:29:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476570; cv=none; b=ADQaftnAyAVFdAlxrhhtDfz3/RANypoBoko5vG51GRg1RvfCf6KczTHO8IiVBWwlmnYS7TOC/W/S3ALZMvBJ3QYHbuHmft2EUG96OH1CA193wP+N9ASZy8uOrP6FwDnHTbcbBb5Z2UR24Z55TeVU5DaoCSuhHpExT8+hxMZm57c=
+	t=1714476573; cv=none; b=rU2hRqyzw/MTwQyerRZiTfv8rP1jTfAs3Z6BjFfawJVSRug2dWH6ThXEokEPbMpl4xDn0+a16luf0miFAcq93mNiH6FQ1uX/LB5wpNqedYL+vIbtfLMVBB9p20HSFVH7lG4TuaU9uJYW5rUEXkK9aM2QkTkU56UIUObzReIJ5fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476570; c=relaxed/simple;
-	bh=h1dxi7Q/RQbWeIUWsMbDtLxeGb7RwUM0SxPyCYIifg4=;
+	s=arc-20240116; t=1714476573; c=relaxed/simple;
+	bh=XdhTJ1sRmoQ4i2IfOGIjQmoXVM/draYtZf+PVhy7T6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kHemCYl9nAID3bD/NoPBMzu9jJKZy2yyHkq01mpm+EnTl1dSj3Xkbb9bvPENDGpFRVO+Nd53+qkX4cRzL29nHt12MtmK1SYl3vutg9IhbAztcuR/s3qYhOIhlF8oU6Eu0RzLL8F+N6sIGnDV1imqQ0zk9l35AB+ix2wPeSmLT3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YpOzaxPS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XX614wK2rSexpUY2WUUP4hDTaX2ruORJERqgUaFp9UvdG1oZhJx5+PzchuIplqsOqgQ91Vb19NtKafYkXoTfT3tQ2dTF/ascOvSLnJbAjYRw2eur7stFz0h24J1r9yZLh176fQ1+DDcKf01lSF8tdExxIqmqWZyCLEfJUnmjiWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1lc3vyK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YpOzaxPS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF77CC2BBFC;
-	Tue, 30 Apr 2024 11:29:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1lc3vyK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D9CC2BBFC;
+	Tue, 30 Apr 2024 11:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476570;
-	bh=h1dxi7Q/RQbWeIUWsMbDtLxeGb7RwUM0SxPyCYIifg4=;
+	s=korg; t=1714476573;
+	bh=XdhTJ1sRmoQ4i2IfOGIjQmoXVM/draYtZf+PVhy7T6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YpOzaxPS/X23vjrxTX95E9pP4U850nB6wBKIP10Pt8spxj0nYCQWXcFfAN5RJxc8s
-	 jvqnbvFB24h/2AlVdJCmeybY19syiNobQ/7EmhSis2dEOI3m2Q4duv+VBVzuGLgMaw
-	 /oqcDsz5BK/tYOSAyCEFqQNgVz6Qd0HmAE8h8DdM=
+	b=R1lc3vyKEFQWSOOFgKhuLEE90rUI1FrCNsXiPeQMUGTkvsHYpxoGwk4X7nOMK4W5Y
+	 r+IfSsvbS9IhnEhNiGCDIK3f37xahbTUo75vrXcbUJHSg1dGvmbXmGJ9uCwrXRPEt6
+	 b4IvuGDD2NaR+/F+qhU9ufV/wwWKcaQpEf1AxtVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+510a1abbb8116eeb341d@syzkaller.appspotmail.com,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Johannes Thumshirn <Johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 073/110] btrfs: fix information leak in btrfs_ioctl_logical_to_ino()
-Date: Tue, 30 Apr 2024 12:40:42 +0200
-Message-ID: <20240430103049.720552097@linuxfoundation.org>
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Sean Christopherson <seanjc@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>
+Subject: [PATCH 6.1 074/110] cpu: Re-enable CPU mitigations by default for !X86 architectures
+Date: Tue, 30 Apr 2024 12:40:43 +0200
+Message-ID: <20240430103049.751443523@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -53,95 +54,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 2f7ef5bb4a2f3e481ef05fab946edb97c84f67cf upstream.
+commit fe42754b94a42d08cf9501790afc25c4f6a5f631 upstream.
 
-Syzbot reported the following information leak for in
-btrfs_ioctl_logical_to_ino():
+Rename x86's to CPU_MITIGATIONS, define it in generic code, and force it
+on for all architectures exception x86.  A recent commit to turn
+mitigations off by default if SPECULATION_MITIGATIONS=n kinda sorta
+missed that "cpu_mitigations" is completely generic, whereas
+SPECULATION_MITIGATIONS is x86-specific.
 
-  BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-  BUG: KMSAN: kernel-infoleak in _copy_to_user+0xbc/0x110 lib/usercopy.c:40
-   instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-   _copy_to_user+0xbc/0x110 lib/usercopy.c:40
-   copy_to_user include/linux/uaccess.h:191 [inline]
-   btrfs_ioctl_logical_to_ino+0x440/0x750 fs/btrfs/ioctl.c:3499
-   btrfs_ioctl+0x714/0x1260
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:904 [inline]
-   __se_sys_ioctl+0x261/0x450 fs/ioctl.c:890
-   __x64_sys_ioctl+0x96/0xe0 fs/ioctl.c:890
-   x64_sys_call+0x1883/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:17
-   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Rename x86's SPECULATIVE_MITIGATIONS instead of keeping both and have it
+select CPU_MITIGATIONS, as having two configs for the same thing is
+unnecessary and confusing.  This will also allow x86 to use the knob to
+manage mitigations that aren't strictly related to speculative
+execution.
 
-  Uninit was created at:
-   __kmalloc_large_node+0x231/0x370 mm/slub.c:3921
-   __do_kmalloc_node mm/slub.c:3954 [inline]
-   __kmalloc_node+0xb07/0x1060 mm/slub.c:3973
-   kmalloc_node include/linux/slab.h:648 [inline]
-   kvmalloc_node+0xc0/0x2d0 mm/util.c:634
-   kvmalloc include/linux/slab.h:766 [inline]
-   init_data_container+0x49/0x1e0 fs/btrfs/backref.c:2779
-   btrfs_ioctl_logical_to_ino+0x17c/0x750 fs/btrfs/ioctl.c:3480
-   btrfs_ioctl+0x714/0x1260
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:904 [inline]
-   __se_sys_ioctl+0x261/0x450 fs/ioctl.c:890
-   __x64_sys_ioctl+0x96/0xe0 fs/ioctl.c:890
-   x64_sys_call+0x1883/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:17
-   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Use another Kconfig to communicate to common code that CPU_MITIGATIONS
+is already defined instead of having x86's menu depend on the common
+CPU_MITIGATIONS.  This allows keeping a single point of contact for all
+of x86's mitigations, and it's not clear that other architectures *want*
+to allow disabling mitigations at compile-time.
 
-  Bytes 40-65535 of 65536 are uninitialized
-  Memory access of size 65536 starts at ffff888045a40000
-
-This happens, because we're copying a 'struct btrfs_data_container' back
-to user-space. This btrfs_data_container is allocated in
-'init_data_container()' via kvmalloc(), which does not zero-fill the
-memory.
-
-Fix this by using kvzalloc() which zeroes out the memory on allocation.
-
-CC: stable@vger.kernel.org # 4.14+
-Reported-by:  <syzbot+510a1abbb8116eeb341d@syzkaller.appspotmail.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Johannes Thumshirn <Johannes.thumshirn@wdc.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: f337a6a21e2f ("x86/cpu: Actually turn off mitigations by default for SPECULATION_MITIGATIONS=n")
+Closes: https://lkml.kernel.org/r/20240413115324.53303a68%40canb.auug.org.au
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Reported-by: Michael Ellerman <mpe@ellerman.id.au>
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240420000556.2645001-2-seanjc@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/backref.c |   12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ arch/Kconfig     |    8 ++++++++
+ arch/x86/Kconfig |   11 ++++++-----
+ kernel/cpu.c     |    4 ++--
+ 3 files changed, 16 insertions(+), 7 deletions(-)
 
---- a/fs/btrfs/backref.c
-+++ b/fs/btrfs/backref.c
-@@ -2475,20 +2475,14 @@ struct btrfs_data_container *init_data_c
- 	size_t alloc_bytes;
+--- a/arch/Kconfig
++++ b/arch/Kconfig
+@@ -9,6 +9,14 @@
+ #
+ source "arch/$(SRCARCH)/Kconfig"
  
- 	alloc_bytes = max_t(size_t, total_bytes, sizeof(*data));
--	data = kvmalloc(alloc_bytes, GFP_KERNEL);
-+	data = kvzalloc(alloc_bytes, GFP_KERNEL);
- 	if (!data)
- 		return ERR_PTR(-ENOMEM);
++config ARCH_CONFIGURES_CPU_MITIGATIONS
++	bool
++
++if !ARCH_CONFIGURES_CPU_MITIGATIONS
++config CPU_MITIGATIONS
++	def_bool y
++endif
++
+ menu "General architecture-dependent options"
  
--	if (total_bytes >= sizeof(*data)) {
-+	if (total_bytes >= sizeof(*data))
- 		data->bytes_left = total_bytes - sizeof(*data);
--		data->bytes_missing = 0;
--	} else {
-+	else
- 		data->bytes_missing = sizeof(*data) - total_bytes;
--		data->bytes_left = 0;
--	}
--
--	data->elem_cnt = 0;
--	data->elem_missed = 0;
+ config CRASH_CORE
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -61,6 +61,7 @@ config X86
+ 	select ACPI_SYSTEM_POWER_STATES_SUPPORT	if ACPI
+ 	select ARCH_32BIT_OFF_T			if X86_32
+ 	select ARCH_CLOCKSOURCE_INIT
++	select ARCH_CONFIGURES_CPU_MITIGATIONS
+ 	select ARCH_CORRECT_STACKTRACE_ON_KRETPROBE
+ 	select ARCH_ENABLE_HUGEPAGE_MIGRATION if X86_64 && HUGETLB_PAGE && MIGRATION
+ 	select ARCH_ENABLE_MEMORY_HOTPLUG if X86_64
+@@ -2449,17 +2450,17 @@ config CC_HAS_SLS
+ config CC_HAS_RETURN_THUNK
+ 	def_bool $(cc-option,-mfunction-return=thunk-extern)
  
- 	return data;
- }
+-menuconfig SPECULATION_MITIGATIONS
+-	bool "Mitigations for speculative execution vulnerabilities"
++menuconfig CPU_MITIGATIONS
++	bool "Mitigations for CPU vulnerabilities"
+ 	default y
+ 	help
+-	  Say Y here to enable options which enable mitigations for
+-	  speculative execution hardware vulnerabilities.
++	  Say Y here to enable options which enable mitigations for hardware
++	  vulnerabilities (usually related to speculative execution).
+ 
+ 	  If you say N, all mitigations will be disabled. You really
+ 	  should know what you are doing to say so.
+ 
+-if SPECULATION_MITIGATIONS
++if CPU_MITIGATIONS
+ 
+ config PAGE_TABLE_ISOLATION
+ 	bool "Remove the kernel mapping in user mode"
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -2788,8 +2788,8 @@ enum cpu_mitigations {
+ };
+ 
+ static enum cpu_mitigations cpu_mitigations __ro_after_init =
+-	IS_ENABLED(CONFIG_SPECULATION_MITIGATIONS) ? CPU_MITIGATIONS_AUTO :
+-						     CPU_MITIGATIONS_OFF;
++	IS_ENABLED(CONFIG_CPU_MITIGATIONS) ? CPU_MITIGATIONS_AUTO :
++					     CPU_MITIGATIONS_OFF;
+ 
+ static int __init mitigations_parse_cmdline(char *arg)
+ {
 
 
