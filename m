@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272A212C46D;
-	Tue, 30 Apr 2024 10:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342BB12C46D;
+	Tue, 30 Apr 2024 10:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473955; cv=none; b=LBDTNTarjIDi7kSrkk04rNm54cUmeKr+GnDzkeXxBbLGgoQgQkfGZShw8ggWHPm7Z0hD6bzjw4r0jmY7emPIuioOycNp63oLHbSmqS6tQNot+pS3anTgfBs2sGVNPluzW8/7zKSI8nye3e5mA9dmZCojgjWtWQc4lq8Lk7oIrEE=
+	t=1714473958; cv=none; b=nKosVNtpCtX0vzm+4jigeh1y2NxoTdXWytQShViBu5JBj471ylGEfKP/xsRRdU7GwgLFKkpec2CUgzpoaq6I7/4R8gdVJ1VtbI1v6iMDxCVHXdpxkUQJ8H8z1bkXchqwfuLk/tqJxUggz1oKMXdpgBkoHmM3N5sTzQBiU3jVX8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473955; c=relaxed/simple;
-	bh=6q4YuXVWY1uR/Re224ukMBVCosPBIMczk58ozihi0mg=;
+	s=arc-20240116; t=1714473958; c=relaxed/simple;
+	bh=BGr4QGybHaxuwCMYFvzCh6ZWJk9xI9aO78KMkSgan+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2tFeefS4vGWb7Ke85TxIatQydBOc+AiL/ZuMqGd7WaOr8Tdu6lYmyTxMPrVDkHfJ90d7AqOP6QUZJ9qIgvzADR9ZPl/UwT3gvUmocs0/bzFuJvoJEDRsper+MlcYPE3wHZ+oWKMQ+6Hi3H+K/ftbbWlNHf7bKtcQSrugahOlwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ng9K+Hi9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=m1re1rzHHJCWn52ipHL6YDj+7KpaOzTmZDqssuDvnv6z3VnnDb9CmJwHuo4iccNmPOI7Guhzpd7iS5Ycil7+wDCgCJXC5bPwejUJgQ2eXI/KjoNRCVb74DyfycL38VNeAFzzwpFyjs5CURoQucSdMeA7TH648iuTBde6XlWSlVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMMYG0fG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ng9K+Hi9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44D5C2BBFC;
-	Tue, 30 Apr 2024 10:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMMYG0fG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98081C4AF14;
+	Tue, 30 Apr 2024 10:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473955;
-	bh=6q4YuXVWY1uR/Re224ukMBVCosPBIMczk58ozihi0mg=;
+	s=korg; t=1714473958;
+	bh=BGr4QGybHaxuwCMYFvzCh6ZWJk9xI9aO78KMkSgan+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ng9K+Hi9Lz6ZO6YGv7fwJ+AjIHB4VQT7ehMKAl0TdyYeaewM2UPCx456YhJmChLQw
-	 oRIeJjtVucPtbdyqyObBxqIlby7Ig+9BTSx8EkRlOP44QKCOrJJslkokNO+eJLhZry
-	 E447I4tBsBEmcI36EqnUFCU9hhu96WXqol6yEnUk=
+	b=OMMYG0fG7g9sahltAXOXbD7yt+e1TchS04euUtmU8tvATySNQWAoqlW9+yFJ97L1x
+	 w8ZPue4R6oVOslGOg3FKkDSEJKMhAxZt54cqK0zYtDb7dZ/T+0mj9JwyjXfBX3pTSp
+	 BaxKwGNg0ouJII5+GSLUr65s/paXKyGgBtK6X154=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaraslau Furman <yaro330@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 005/228] HID: logitech-dj: allow mice to use all types of reports
-Date: Tue, 30 Apr 2024 12:36:23 +0200
-Message-ID: <20240430103103.968985923@linuxfoundation.org>
+Subject: [PATCH 6.8 006/228] arm64: dts: rockchip: set PHY address of MT7531 switch to 0x1f
+Date: Tue, 30 Apr 2024 12:36:24 +0200
+Message-ID: <20240430103103.997834713@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -46,43 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yaraslau Furman <yaro330@gmail.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit 21f28a7eb78dea6c59be6b0a5e0b47bf3d25fcbb ]
+[ Upstream commit a2ac2a1b02590a22a236c43c455f421cdede45f5 ]
 
-You can bind whatever action you want to the mouse's reprogrammable
-buttons using Windows application. Allow Linux to receive multimedia keycodes.
+The MT7531 switch listens on PHY address 0x1f on an MDIO bus. I've got two
+findings that support this. There's no bootstrapping option to change the
+PHY address of the switch. The Linux driver hardcodes 0x1f as the PHY
+address of the switch. So the reg property on the device tree is currently
+ignored by the Linux driver.
 
-Fixes: 3ed224e273ac ("HID: logitech-dj: Fix 064d:c52f receiver support")
-Signed-off-by: Yaraslau Furman <yaro330@gmail.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Therefore, describe the correct PHY address on Banana Pi BPI-R2 Pro that
+has this switch.
+
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Fixes: c1804463e5c6 ("arm64: dts: rockchip: Add mt7531 dsa node to BPI-R2-Pro board")
+Link: https://lore.kernel.org/r/20240314-for-rockchip-mt7531-phy-address-v1-1-743b5873358f@arinc9.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-dj.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-logitech-dj.c b/drivers/hid/hid-logitech-dj.c
-index e6a8b6d8eab70..3c3c497b6b911 100644
---- a/drivers/hid/hid-logitech-dj.c
-+++ b/drivers/hid/hid-logitech-dj.c
-@@ -965,9 +965,7 @@ static void logi_hidpp_dev_conn_notif_equad(struct hid_device *hdev,
- 		}
- 		break;
- 	case REPORT_TYPE_MOUSE:
--		workitem->reports_supported |= STD_MOUSE | HIDPP;
--		if (djrcv_dev->type == recvr_type_mouse_only)
--			workitem->reports_supported |= MULTIMEDIA;
-+		workitem->reports_supported |= STD_MOUSE | HIDPP | MULTIMEDIA;
- 		break;
- 	}
- }
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts b/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts
+index f9127ddfbb7df..87c45d8be420f 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts
+@@ -525,9 +525,9 @@
+ 	#address-cells = <1>;
+ 	#size-cells = <0>;
+ 
+-	switch@0 {
++	switch@1f {
+ 		compatible = "mediatek,mt7531";
+-		reg = <0>;
++		reg = <0x1f>;
+ 
+ 		ports {
+ 			#address-cells = <1>;
 -- 
 2.43.0
 
