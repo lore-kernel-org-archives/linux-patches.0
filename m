@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B144E560;
-	Tue, 30 Apr 2024 10:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B43E560;
+	Tue, 30 Apr 2024 10:45:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473916; cv=none; b=q0fNf29acPymcCN+7Z1uCbSARPCmC0gm1JJl7StZ37CWR3PnU8nDJywy9ecfNtP/20BSq85c7w3fYGozQxeNl22g27of9RIEsSVGY6e5jbANV6pulhhuMNKqiSaW1EfYkqv+SgNMfFwXIq7cCQEJkn8tLw3Ew51fgwHUoY8/qv4=
+	t=1714473919; cv=none; b=u5Bn7DvFs6nTvbtrzUR4m6X/8myYphb2rBCJa62v25Yc+8YQMeBMt/HjkorrfJuOQVhFXxO3dBz+hHVaM3roGqgLU5nEUWUfSvcT1NQnJmIPB90BZTLde2l5Z0qNSwEJS9zDKUXYNC8pKUpqNa2y4ifG9YbzwdrTJlApH/t9jEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473916; c=relaxed/simple;
-	bh=9Q1XXABVnzo+8UlPosnyQ61d401f1J06jLzeaFwe/0Q=;
+	s=arc-20240116; t=1714473919; c=relaxed/simple;
+	bh=FWR5Ez/pktRQ8+Dr7xPXOUlsGyCSbS0u1+s64fBsE30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u4TFnLEarq2YzJq+cxcivJx2P/Ine2WRE5FDdxQ8DWv8dSj6afHAfvefLc8vE9jZgZ+48YMnkCekA4SrQYo3oxukLiW4Utknbb9ghP4Jkh8oDW1TM8/N2DLx4FecNzACwGh1phgxvvJ90+UBSROnMFVU/dMSFHxdZPbKjrxx63M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MiLPYNB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Boab9nPhGzLxpJJUUbAaU6pATf9agIJpcLgQQnfO+xp9wWJTAs9Dss5C94XXtvZLfD9AaHkVnsDpZe0XvXSiX3ngGnliLXHzkV7Ue4ci+aCrAkU3Ogr8+RaDbWTi00Jg++K2aOT0oCqpB2UDRniSrdHMI5l5p7z61PT50+/8iqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6XZ1wXE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MiLPYNB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8752C2BBFC;
-	Tue, 30 Apr 2024 10:45:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6XZ1wXE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF205C2BBFC;
+	Tue, 30 Apr 2024 10:45:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473916;
-	bh=9Q1XXABVnzo+8UlPosnyQ61d401f1J06jLzeaFwe/0Q=;
+	s=korg; t=1714473919;
+	bh=FWR5Ez/pktRQ8+Dr7xPXOUlsGyCSbS0u1+s64fBsE30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0MiLPYNB6cwTuz3M9bsRr6B3dmoIt9l8tRqb27sCtwem1nvycCfk48s6gF3Qws26a
-	 lLnGEL9Bzfe+iNkGJXthyRpssFBtilZa2wjRyknknEwSacxJ+oxF3Pfd1dyFImENC5
-	 mY93LptmDtv58l4qYcBmDMJ1OSnCe7iWwHGaiXkU=
+	b=S6XZ1wXEBVvu5RWPoyrch+0Zq1nfZtK6rYuxLds//ZtldBSZz43yXvkGNQgn2s5jO
+	 XsD05D86WOcf1sWryfR1iePft4cWM8rV7wi6OIsTBZCvqhsaiXjIhzLl9LpPF6Ukxw
+	 RMI1yY/s/108G5tqYlxkLTbaTYMr/cU0LEkmlzq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Justin Stitt <justinstitt@google.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 4.19 61/77] Bluetooth: Fix type of len in {l2cap,sco}_sock_getsockopt_old()
-Date: Tue, 30 Apr 2024 12:39:40 +0200
-Message-ID: <20240430103042.937903261@linuxfoundation.org>
+	syzbot+510a1abbb8116eeb341d@syzkaller.appspotmail.com,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Johannes Thumshirn <Johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 4.19 62/77] btrfs: fix information leak in btrfs_ioctl_logical_to_ino()
+Date: Tue, 30 Apr 2024 12:39:41 +0200
+Message-ID: <20240430103042.967410647@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -51,128 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-commit 9bf4e919ccad613b3596eebf1ff37b05b6405307 upstream.
+commit 2f7ef5bb4a2f3e481ef05fab946edb97c84f67cf upstream.
 
-After an innocuous optimization change in LLVM main (19.0.0), x86_64
-allmodconfig (which enables CONFIG_KCSAN / -fsanitize=thread) fails to
-build due to the checks in check_copy_size():
+Syzbot reported the following information leak for in
+btrfs_ioctl_logical_to_ino():
 
-  In file included from net/bluetooth/sco.c:27:
-  In file included from include/linux/module.h:13:
-  In file included from include/linux/stat.h:19:
-  In file included from include/linux/time.h:60:
-  In file included from include/linux/time32.h:13:
-  In file included from include/linux/timex.h:67:
-  In file included from arch/x86/include/asm/timex.h:6:
-  In file included from arch/x86/include/asm/tsc.h:10:
-  In file included from arch/x86/include/asm/msr.h:15:
-  In file included from include/linux/percpu.h:7:
-  In file included from include/linux/smp.h:118:
-  include/linux/thread_info.h:244:4: error: call to '__bad_copy_from'
-  declared with 'error' attribute: copy source size is too small
-    244 |                         __bad_copy_from();
-        |                         ^
+  BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+  BUG: KMSAN: kernel-infoleak in _copy_to_user+0xbc/0x110 lib/usercopy.c:40
+   instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+   _copy_to_user+0xbc/0x110 lib/usercopy.c:40
+   copy_to_user include/linux/uaccess.h:191 [inline]
+   btrfs_ioctl_logical_to_ino+0x440/0x750 fs/btrfs/ioctl.c:3499
+   btrfs_ioctl+0x714/0x1260
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:904 [inline]
+   __se_sys_ioctl+0x261/0x450 fs/ioctl.c:890
+   __x64_sys_ioctl+0x96/0xe0 fs/ioctl.c:890
+   x64_sys_call+0x1883/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:17
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-The same exact error occurs in l2cap_sock.c. The copy_to_user()
-statements that are failing come from l2cap_sock_getsockopt_old() and
-sco_sock_getsockopt_old(). This does not occur with GCC with or without
-KCSAN or Clang without KCSAN enabled.
+  Uninit was created at:
+   __kmalloc_large_node+0x231/0x370 mm/slub.c:3921
+   __do_kmalloc_node mm/slub.c:3954 [inline]
+   __kmalloc_node+0xb07/0x1060 mm/slub.c:3973
+   kmalloc_node include/linux/slab.h:648 [inline]
+   kvmalloc_node+0xc0/0x2d0 mm/util.c:634
+   kvmalloc include/linux/slab.h:766 [inline]
+   init_data_container+0x49/0x1e0 fs/btrfs/backref.c:2779
+   btrfs_ioctl_logical_to_ino+0x17c/0x750 fs/btrfs/ioctl.c:3480
+   btrfs_ioctl+0x714/0x1260
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:904 [inline]
+   __se_sys_ioctl+0x261/0x450 fs/ioctl.c:890
+   __x64_sys_ioctl+0x96/0xe0 fs/ioctl.c:890
+   x64_sys_call+0x1883/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:17
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-len is defined as an 'int' because it is assigned from
-'__user int *optlen'. However, it is clamped against the result of
-sizeof(), which has a type of 'size_t' ('unsigned long' for 64-bit
-platforms). This is done with min_t() because min() requires compatible
-types, which results in both len and the result of sizeof() being casted
-to 'unsigned int', meaning len changes signs and the result of sizeof()
-is truncated. From there, len is passed to copy_to_user(), which has a
-third parameter type of 'unsigned long', so it is widened and changes
-signs again. This excessive casting in combination with the KCSAN
-instrumentation causes LLVM to fail to eliminate the __bad_copy_from()
-call, failing the build.
+  Bytes 40-65535 of 65536 are uninitialized
+  Memory access of size 65536 starts at ffff888045a40000
 
-The official recommendation from LLVM developers is to consistently use
-long types for all size variables to avoid the unnecessary casting in
-the first place. Change the type of len to size_t in both
-l2cap_sock_getsockopt_old() and sco_sock_getsockopt_old(). This clears
-up the error while allowing min_t() to be replaced with min(), resulting
-in simpler code with no casts and fewer implicit conversions. While len
-is a different type than optlen now, it should result in no functional
-change because the result of sizeof() will clamp all values of optlen in
-the same manner as before.
+This happens, because we're copying a 'struct btrfs_data_container' back
+to user-space. This btrfs_data_container is allocated in
+'init_data_container()' via kvmalloc(), which does not zero-fill the
+memory.
 
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2007
-Link: https://github.com/llvm/llvm-project/issues/85647
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Justin Stitt <justinstitt@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fix this by using kvzalloc() which zeroes out the memory on allocation.
+
+CC: stable@vger.kernel.org # 4.14+
+Reported-by:  <syzbot+510a1abbb8116eeb341d@syzkaller.appspotmail.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Johannes Thumshirn <Johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_sock.c |    7 ++++---
- net/bluetooth/sco.c        |    7 ++++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ fs/btrfs/backref.c |   12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -405,7 +405,8 @@ static int l2cap_sock_getsockopt_old(str
- 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
- 	struct l2cap_options opts;
- 	struct l2cap_conninfo cinfo;
--	int len, err = 0;
-+	int err = 0;
-+	size_t len;
- 	u32 opt;
+--- a/fs/btrfs/backref.c
++++ b/fs/btrfs/backref.c
+@@ -2236,20 +2236,14 @@ struct btrfs_data_container *init_data_c
+ 	size_t alloc_bytes;
  
- 	BT_DBG("sk %p", sk);
-@@ -436,7 +437,7 @@ static int l2cap_sock_getsockopt_old(str
- 		opts.max_tx   = chan->max_tx;
- 		opts.txwin_size = chan->tx_win;
+ 	alloc_bytes = max_t(size_t, total_bytes, sizeof(*data));
+-	data = kvmalloc(alloc_bytes, GFP_KERNEL);
++	data = kvzalloc(alloc_bytes, GFP_KERNEL);
+ 	if (!data)
+ 		return ERR_PTR(-ENOMEM);
  
--		len = min_t(unsigned int, len, sizeof(opts));
-+		len = min(len, sizeof(opts));
- 		if (copy_to_user(optval, (char *) &opts, len))
- 			err = -EFAULT;
+-	if (total_bytes >= sizeof(*data)) {
++	if (total_bytes >= sizeof(*data))
+ 		data->bytes_left = total_bytes - sizeof(*data);
+-		data->bytes_missing = 0;
+-	} else {
++	else
+ 		data->bytes_missing = sizeof(*data) - total_bytes;
+-		data->bytes_left = 0;
+-	}
+-
+-	data->elem_cnt = 0;
+-	data->elem_missed = 0;
  
-@@ -486,7 +487,7 @@ static int l2cap_sock_getsockopt_old(str
- 		cinfo.hci_handle = chan->conn->hcon->handle;
- 		memcpy(cinfo.dev_class, chan->conn->hcon->dev_class, 3);
- 
--		len = min_t(unsigned int, len, sizeof(cinfo));
-+		len = min(len, sizeof(cinfo));
- 		if (copy_to_user(optval, (char *) &cinfo, len))
- 			err = -EFAULT;
- 
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -880,7 +880,8 @@ static int sco_sock_getsockopt_old(struc
- 	struct sock *sk = sock->sk;
- 	struct sco_options opts;
- 	struct sco_conninfo cinfo;
--	int len, err = 0;
-+	int err = 0;
-+	size_t len;
- 
- 	BT_DBG("sk %p", sk);
- 
-@@ -902,7 +903,7 @@ static int sco_sock_getsockopt_old(struc
- 
- 		BT_DBG("mtu %d", opts.mtu);
- 
--		len = min_t(unsigned int, len, sizeof(opts));
-+		len = min(len, sizeof(opts));
- 		if (copy_to_user(optval, (char *)&opts, len))
- 			err = -EFAULT;
- 
-@@ -920,7 +921,7 @@ static int sco_sock_getsockopt_old(struc
- 		cinfo.hci_handle = sco_pi(sk)->conn->hcon->handle;
- 		memcpy(cinfo.dev_class, sco_pi(sk)->conn->hcon->dev_class, 3);
- 
--		len = min_t(unsigned int, len, sizeof(cinfo));
-+		len = min(len, sizeof(cinfo));
- 		if (copy_to_user(optval, (char *)&cinfo, len))
- 			err = -EFAULT;
- 
+ 	return data;
+ }
 
 
