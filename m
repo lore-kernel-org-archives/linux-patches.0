@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813398801;
-	Tue, 30 Apr 2024 11:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31F912C805;
+	Tue, 30 Apr 2024 11:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476235; cv=none; b=h4zibsO0ZWlfXT02s6xw0h+egzdU07p1qBcUzA9b4G8mb5gUnY+okEOc7g1i+VDyj5uACIRvBNygKgTllOMF86h2ctpqELOeollPY6h5/iMIx1KF5wqPas4QAkmUY1TUrVpeLIpie+JiErycIUVboFbedfRPXIwzeZvjmd04AoI=
+	t=1714476238; cv=none; b=HYeLK+h1KF79lm+y0g7fN/3HMOcJ06P8QJUCgn885/UXzI240JYorJhKCdic2f4ZqeJAL+ba+f0kSg1s+VqwJNovoRcEr4FRhhqzqCw63H9kVMtL/zlnWC6cDgJK9S+IAaUj9h+UT+UjqEctj3S0VTTjS/TJUVoX+iUNR5UTuQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476235; c=relaxed/simple;
-	bh=d96LhXm3R43dY1xUkvmcvtu+73SUaU2KYAfkiXof4KU=;
+	s=arc-20240116; t=1714476238; c=relaxed/simple;
+	bh=MdsF9BZV+3ciiUJOijxj9OyFyKVtETDz4uhJpgsdvpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hUzXYO7lL+TOXdvtGq4pYBvdnO4Q3LBRAnEqg/21ED80Lyqp+jGg7omhGidlLt4J6KpZPIRbYNWqMlsuISfPnpJyd6Xu5OEm4ttqkKknVEFMRqBcwlXAP8u9IDEAz+oP13BhZsW4728yC3FY9AauJw6Ne1uXAQJheIw1ZX1PVnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MN8oyB3/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iaZY5X6emruM6Ao86LRJTiKm8oWuE3uME0z3Z2GUVHYtrLoeP0q60GigJyW9tz7fAham2omj+GQxg102Lm3j0G5tkkjIdUayEDU6Ug+MrIZHKNnAj4xlX/p9rEX7pniPKObyqo+c87C4ZwpuI4EeZ6TqQUV5D+4AUujJjmmu9HU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5cUGo8D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MN8oyB3/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BD9C2BBFC;
-	Tue, 30 Apr 2024 11:23:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5cUGo8D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1CCC2BBFC;
+	Tue, 30 Apr 2024 11:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476235;
-	bh=d96LhXm3R43dY1xUkvmcvtu+73SUaU2KYAfkiXof4KU=;
+	s=korg; t=1714476238;
+	bh=MdsF9BZV+3ciiUJOijxj9OyFyKVtETDz4uhJpgsdvpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MN8oyB3/CEY/ce+76fBxr6ec/chRI5SaoOjI4Q4ddF18oZnJ6ZccC+c+mgk8/33Qq
-	 uXKeb7dI7eNXrbQ/3DrP35Aa1dAlk6KuimgEXUX/tvTWH1XqFPRo54eIcOy6S7VveU
-	 D1Z3VVAL/ZHyTqBG7zw9Do4cao5gtEatKJTIa3y0=
+	b=y5cUGo8D9Op+mZ+km2h8lbxd4uHDN37ProhW2JdxM1IB4t2FdV1OR/n0msmmS0n2A
+	 ZO0UWTQuvFcyseo3mXQmtGRs/ZaNNlSR0JPgYaFzjSAsPhoPdGcHOd2Szoi0JVBjm7
+	 fhHKWPfs8EA2VakB6efbGIwZ2MbcnKSoxFmceg28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Alexander Zubkov <green@qrator.net>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	Sindhu Devale <sindhu.devale@intel.com>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Mateusz Polchlopek <mateusz.polchlopek@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Robert Ganzynkowicz <robert.ganzynkowicz@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 075/107] mlxsw: spectrum_acl_tcam: Fix memory leak when canceling rehash work
-Date: Tue, 30 Apr 2024 12:40:35 +0200
-Message-ID: <20240430103046.869562895@linuxfoundation.org>
+Subject: [PATCH 5.4 076/107] i40e: Do not use WQ_MEM_RECLAIM flag for workqueue
+Date: Tue, 30 Apr 2024 12:40:36 +0200
+Message-ID: <20240430103046.898968352@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -54,80 +56,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Sindhu Devale <sindhu.devale@intel.com>
 
-[ Upstream commit fb4e2b70a7194b209fc7320bbf33b375f7114bd5 ]
+[ Upstream commit 2cc7d150550cc981aceedf008f5459193282425c ]
 
-The rehash delayed work is rescheduled with a delay if the number of
-credits at end of the work is not negative as supposedly it means that
-the migration ended. Otherwise, it is rescheduled immediately.
+Issue reported by customer during SRIOV testing, call trace:
+When both i40e and the i40iw driver are loaded, a warning
+in check_flush_dependency is being triggered. This seems
+to be because of the i40e driver workqueue is allocated with
+the WQ_MEM_RECLAIM flag, and the i40iw one is not.
 
-After "mlxsw: spectrum_acl_tcam: Fix possible use-after-free during
-rehash" the above is no longer accurate as a non-negative number of
-credits is no longer indicative of the migration being done. It can also
-happen if the work encountered an error in which case the migration will
-resume the next time the work is scheduled.
+Similar error was encountered on ice too and it was fixed by
+removing the flag. Do the same for i40e too.
 
-The significance of the above is that it is possible for the work to be
-pending and associated with hints that were allocated when the migration
-started. This leads to the hints being leaked [1] when the work is
-canceled while pending as part of ACL region dismantle.
+[Feb 9 09:08] ------------[ cut here ]------------
+[  +0.000004] workqueue: WQ_MEM_RECLAIM i40e:i40e_service_task [i40e] is
+flushing !WQ_MEM_RECLAIM infiniband:0x0
+[  +0.000060] WARNING: CPU: 0 PID: 937 at kernel/workqueue.c:2966
+check_flush_dependency+0x10b/0x120
+[  +0.000007] Modules linked in: snd_seq_dummy snd_hrtimer snd_seq
+snd_timer snd_seq_device snd soundcore nls_utf8 cifs cifs_arc4
+nls_ucs2_utils rdma_cm iw_cm ib_cm cifs_md4 dns_resolver netfs qrtr
+rfkill sunrpc vfat fat intel_rapl_msr intel_rapl_common irdma
+intel_uncore_frequency intel_uncore_frequency_common ice ipmi_ssif
+isst_if_common skx_edac nfit libnvdimm x86_pkg_temp_thermal
+intel_powerclamp gnss coretemp ib_uverbs rapl intel_cstate ib_core
+iTCO_wdt iTCO_vendor_support acpi_ipmi mei_me ipmi_si intel_uncore
+ioatdma i2c_i801 joydev pcspkr mei ipmi_devintf lpc_ich
+intel_pch_thermal i2c_smbus ipmi_msghandler acpi_power_meter acpi_pad
+xfs libcrc32c ast sd_mod drm_shmem_helper t10_pi drm_kms_helper sg ixgbe
+drm i40e ahci crct10dif_pclmul libahci crc32_pclmul igb crc32c_intel
+libata ghash_clmulni_intel i2c_algo_bit mdio dca wmi dm_mirror
+dm_region_hash dm_log dm_mod fuse
+[  +0.000050] CPU: 0 PID: 937 Comm: kworker/0:3 Kdump: loaded Not
+tainted 6.8.0-rc2-Feb-net_dev-Qiueue-00279-gbd43c5687e05 #1
+[  +0.000003] Hardware name: Intel Corporation S2600BPB/S2600BPB, BIOS
+SE5C620.86B.02.01.0013.121520200651 12/15/2020
+[  +0.000001] Workqueue: i40e i40e_service_task [i40e]
+[  +0.000024] RIP: 0010:check_flush_dependency+0x10b/0x120
+[  +0.000003] Code: ff 49 8b 54 24 18 48 8d 8b b0 00 00 00 49 89 e8 48
+81 c6 b0 00 00 00 48 c7 c7 b0 97 fa 9f c6 05 8a cc 1f 02 01 e8 35 b3 fd
+ff <0f> 0b e9 10 ff ff ff 80 3d 78 cc 1f 02 00 75 94 e9 46 ff ff ff 90
+[  +0.000002] RSP: 0018:ffffbd294976bcf8 EFLAGS: 00010282
+[  +0.000002] RAX: 0000000000000000 RBX: ffff94d4c483c000 RCX:
+0000000000000027
+[  +0.000001] RDX: ffff94d47f620bc8 RSI: 0000000000000001 RDI:
+ffff94d47f620bc0
+[  +0.000001] RBP: 0000000000000000 R08: 0000000000000000 R09:
+00000000ffff7fff
+[  +0.000001] R10: ffffbd294976bb98 R11: ffffffffa0be65e8 R12:
+ffff94c5451ea180
+[  +0.000001] R13: ffff94c5ab5e8000 R14: ffff94c5c20b6e05 R15:
+ffff94c5f1330ab0
+[  +0.000001] FS:  0000000000000000(0000) GS:ffff94d47f600000(0000)
+knlGS:0000000000000000
+[  +0.000002] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  +0.000001] CR2: 00007f9e6f1fca70 CR3: 0000000038e20004 CR4:
+00000000007706f0
+[  +0.000000] DR0: 0000000000000000 DR1: 0000000000000000 DR2:
+0000000000000000
+[  +0.000001] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7:
+0000000000000400
+[  +0.000001] PKRU: 55555554
+[  +0.000001] Call Trace:
+[  +0.000001]  <TASK>
+[  +0.000002]  ? __warn+0x80/0x130
+[  +0.000003]  ? check_flush_dependency+0x10b/0x120
+[  +0.000002]  ? report_bug+0x195/0x1a0
+[  +0.000005]  ? handle_bug+0x3c/0x70
+[  +0.000003]  ? exc_invalid_op+0x14/0x70
+[  +0.000002]  ? asm_exc_invalid_op+0x16/0x20
+[  +0.000006]  ? check_flush_dependency+0x10b/0x120
+[  +0.000002]  ? check_flush_dependency+0x10b/0x120
+[  +0.000002]  __flush_workqueue+0x126/0x3f0
+[  +0.000015]  ib_cache_cleanup_one+0x1c/0xe0 [ib_core]
+[  +0.000056]  __ib_unregister_device+0x6a/0xb0 [ib_core]
+[  +0.000023]  ib_unregister_device_and_put+0x34/0x50 [ib_core]
+[  +0.000020]  i40iw_close+0x4b/0x90 [irdma]
+[  +0.000022]  i40e_notify_client_of_netdev_close+0x54/0xc0 [i40e]
+[  +0.000035]  i40e_service_task+0x126/0x190 [i40e]
+[  +0.000024]  process_one_work+0x174/0x340
+[  +0.000003]  worker_thread+0x27e/0x390
+[  +0.000001]  ? __pfx_worker_thread+0x10/0x10
+[  +0.000002]  kthread+0xdf/0x110
+[  +0.000002]  ? __pfx_kthread+0x10/0x10
+[  +0.000002]  ret_from_fork+0x2d/0x50
+[  +0.000003]  ? __pfx_kthread+0x10/0x10
+[  +0.000001]  ret_from_fork_asm+0x1b/0x30
+[  +0.000004]  </TASK>
+[  +0.000001] ---[ end trace 0000000000000000 ]---
 
-Fix by freeing the hints if hints are associated with a work that was
-canceled while pending.
-
-Blame the original commit since the reliance on not having a pending
-work associated with hints is fragile.
-
-[1]
-unreferenced object 0xffff88810e7c3000 (size 256):
-  comm "kworker/0:16", pid 176, jiffies 4295460353
-  hex dump (first 32 bytes):
-    00 30 95 11 81 88 ff ff 61 00 00 00 00 00 00 80  .0......a.......
-    00 00 61 00 40 00 00 00 00 00 00 00 04 00 00 00  ..a.@...........
-  backtrace (crc 2544ddb9):
-    [<00000000cf8cfab3>] kmalloc_trace+0x23f/0x2a0
-    [<000000004d9a1ad9>] objagg_hints_get+0x42/0x390
-    [<000000000b143cf3>] mlxsw_sp_acl_erp_rehash_hints_get+0xca/0x400
-    [<0000000059bdb60a>] mlxsw_sp_acl_tcam_vregion_rehash_work+0x868/0x1160
-    [<00000000e81fd734>] process_one_work+0x59c/0xf20
-    [<00000000ceee9e81>] worker_thread+0x799/0x12c0
-    [<00000000bda6fe39>] kthread+0x246/0x300
-    [<0000000070056d23>] ret_from_fork+0x34/0x70
-    [<00000000dea2b93e>] ret_from_fork_asm+0x1a/0x30
-
-Fixes: c9c9af91f1d9 ("mlxsw: spectrum_acl: Allow to interrupt/continue rehash work")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/0cc12ebb07c4d4c41a1265ee2c28b392ff997a86.1713797103.git.petrm@nvidia.com
+Fixes: 4d5957cbdecd ("i40e: remove WQ_UNBOUND and the task limit of our workqueue")
+Signed-off-by: Sindhu Devale <sindhu.devale@intel.com>
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Reviewed-by: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Robert Ganzynkowicz <robert.ganzynkowicz@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20240423182723.740401-2-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index 89ce9b1233bd9..9ccbd65d5b2e6 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -874,10 +874,14 @@ mlxsw_sp_acl_tcam_vregion_destroy(struct mlxsw_sp *mlxsw_sp,
- 	struct mlxsw_sp_acl_tcam *tcam = vregion->tcam;
- 
- 	if (vgroup->vregion_rehash_enabled && ops->region_rehash_hints_get) {
-+		struct mlxsw_sp_acl_tcam_rehash_ctx *ctx = &vregion->rehash.ctx;
-+
- 		mutex_lock(&tcam->lock);
- 		list_del(&vregion->tlist);
- 		mutex_unlock(&tcam->lock);
--		cancel_delayed_work_sync(&vregion->rehash.dw);
-+		if (cancel_delayed_work_sync(&vregion->rehash.dw) &&
-+		    ctx->hints_priv)
-+			ops->region_rehash_hints_put(ctx->hints_priv);
- 	}
- 	mlxsw_sp_acl_tcam_vgroup_vregion_detach(mlxsw_sp, vregion);
- 	if (vregion->region2)
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index f7d41ba110a7f..dfa06737ff05e 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -15971,7 +15971,7 @@ static int __init i40e_init_module(void)
+ 	 * since we need to be able to guarantee forward progress even under
+ 	 * memory pressure.
+ 	 */
+-	i40e_wq = alloc_workqueue("%s", WQ_MEM_RECLAIM, 0, i40e_driver_name);
++	i40e_wq = alloc_workqueue("%s", 0, 0, i40e_driver_name);
+ 	if (!i40e_wq) {
+ 		pr_err("%s: Failed to create workqueue\n", i40e_driver_name);
+ 		return -ENOMEM;
 -- 
 2.43.0
 
