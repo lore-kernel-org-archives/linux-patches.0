@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC3912C462;
-	Tue, 30 Apr 2024 10:52:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E2A12C487;
+	Tue, 30 Apr 2024 10:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474366; cv=none; b=tHnXBnGJWh1J0mmPoE8UCI/vyNV+bXEUaITWO3ml0i8oodePuTf1Kfe1T1suYevbl0z3Hl308ORrtlne79qnpePr6VwdwqXjzWFL5FkxXVqjiaQZ3F2j6fxfwsVBFtjQX00Rnn23/upiT2KDVjNFAHHOzCpCnwXC/7C/64+alyE=
+	t=1714474369; cv=none; b=ETKtm2zirMHtK6zLSwUAH20mh5p+uwUYYPPksJurc8F8QBNhZHzC252JL03QgIORq2GgHT6Dc5NdM2OaED7yx6ry5bu8NdVwLGZ5ZSAxTOxX3hFLLTnjTfk8vgf05fEwarQLlP+uqBUomdwE5VaNC5uifkgj1P7TvqATgvvaunk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474366; c=relaxed/simple;
-	bh=LYUvsh9nILT2+SkXpiOSDJAHNoXtRJLJ7COuFHTBJT4=;
+	s=arc-20240116; t=1714474369; c=relaxed/simple;
+	bh=SWcoPSLxCXskqVVJwNefBCmsM8mmi2ZGqxRrrm7wX4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KEYlarD1lbK8czlXSFglzpU3s74AE7NmcP4yAg9S9abf2yW2C/8bJbzadLKIYROqOKKvYjit5V9aLM+U2MzFDSNPpShbLfDexZQy7V6T4SEyiVq6uTJFLLjYzQgiMSewjA5DAW8W3r1H4T4ikReAGFd8/H5nxKlA1b+zF+nHiUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xb05J+Up; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CLPY0gUR7gInH4Ob94R4oMfjarwVJTpiyNiANnYWynuJEA/qyZgcEWqFTUmiP0CMiqUJeyzjfqe2FuRL0UqQztdOiJMKWsRolFklRt5+cO1ySfcum8tPW8emGVvsLomwsiqPNujRCJhrpxy/PkDO8wyqOqktfI8H/eS4pikxgXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuCif9Jm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xb05J+Up"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15BD0C2BBFC;
-	Tue, 30 Apr 2024 10:52:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuCif9Jm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3658CC2BBFC;
+	Tue, 30 Apr 2024 10:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474366;
-	bh=LYUvsh9nILT2+SkXpiOSDJAHNoXtRJLJ7COuFHTBJT4=;
+	s=korg; t=1714474369;
+	bh=SWcoPSLxCXskqVVJwNefBCmsM8mmi2ZGqxRrrm7wX4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xb05J+UpA1Dmlu7FTwgn/MjPK8SRhE5BGTOiTbVx1W0f9gU2UFdRn8W91G5+kSzM0
-	 xtOb3YTcs4CJQEg6EUttFFOvVAogCLmYB7SSa/JX+pufzxQrpmNwK+82nGemnNeKom
-	 aVzB2R+KRtw3Arr5jDzuBy5Gyyj11JbKl87ZRacM=
+	b=tuCif9Jmu7k4vaml3uak6BgErhvAE6yL1Pz6zolQwGFJTz4PxwgGlD5hg2Ltp7Xum
+	 3XDPvxVonZLL0kOQLq3Y0Gdwn9daRhAN7j7Rw+HtOYeZvGlU+TFVQxyoYpB9Vgc/4q
+	 E3/ESe3nPdrY1do2J1jppQZtq+qlX3J8O9fcaT1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wedson Almeida Filho <walmeida@microsoft.com>,
 	Alice Ryhl <aliceryhl@google.com>,
 	Benno Lossin <benno.lossin@proton.me>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.8 135/228] rust: kernel: require `Send` for `Module` implementations
-Date: Tue, 30 Apr 2024 12:38:33 +0200
-Message-ID: <20240430103107.697790011@linuxfoundation.org>
+Subject: [PATCH 6.8 136/228] rust: dont select CONSTRUCTORS
+Date: Tue, 30 Apr 2024 12:38:34 +0200
+Message-ID: <20240430103107.726554402@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -52,39 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wedson Almeida Filho <walmeida@microsoft.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 323617f649c0966ad5e741e47e27e06d3a680d8f upstream.
+commit 7d49f53af4b988b188d3932deac2c9c80fd7d9ce upstream.
 
-The thread that calls the module initialisation code when a module is
-loaded is not guaranteed [in fact, it is unlikely] to be the same one
-that calls the module cleanup code on module unload, therefore, `Module`
-implementations must be `Send` to account for them moving from one
-thread to another implicitly.
+This was originally part of commit 4b9a68f2e59a0 ("rust: add support for
+static synchronisation primitives") from the old Rust branch, which used
+module constructors to initialize globals containing various
+synchronisation primitives with pin-init. That commit has never been
+upstreamed, but the `select CONSTRUCTORS` statement ended up being
+included in the patch that initially added Rust support to the Linux
+Kernel.
 
-Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+We are not using module constructors, so let's remove the select.
+
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 Reviewed-by: Benno Lossin <benno.lossin@proton.me>
-Cc: stable@vger.kernel.org # 6.8.x: df70d04d5697: rust: phy: implement `Send` for `Registration`
 Cc: stable@vger.kernel.org
-Fixes: 247b365dc8dc ("rust: add `kernel` crate")
-Link: https://lore.kernel.org/r/20240328195457.225001-3-wedsonaf@gmail.com
+Fixes: 2f7ab1267dc9 ("Kbuild: add Rust support")
+Link: https://lore.kernel.org/r/20240308-constructors-v1-1-4c811342391c@google.com
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/lib.rs |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ init/Kconfig |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -66,7 +66,7 @@ const __LOG_PREFIX: &[u8] = b"rust_kerne
- /// The top level entrypoint to implementing a kernel module.
- ///
- /// For any teardown or cleanup operations, your type may implement [`Drop`].
--pub trait Module: Sized + Sync {
-+pub trait Module: Sized + Sync + Send {
-     /// Called at module initialization time.
-     ///
-     /// Use this method to perform whatever setup or registration your module
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -1908,7 +1908,6 @@ config RUST
+ 	depends on !GCC_PLUGINS
+ 	depends on !RANDSTRUCT
+ 	depends on !DEBUG_INFO_BTF || PAHOLE_HAS_LANG_EXCLUDE
+-	select CONSTRUCTORS
+ 	help
+ 	  Enables Rust support in the kernel.
+ 
 
 
