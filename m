@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBCA7464;
-	Tue, 30 Apr 2024 10:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F5112B176;
+	Tue, 30 Apr 2024 10:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474735; cv=none; b=REIb9pHrfJ9dhDbOWemzjTTY6zOoLWTAnnwJAeYXOQtWIJ30yWraTP3STHCIk85biDx+66HHMlMBsP22pES7FLIpbE+q1gUiFA0yvXYF0HtP7LwxMd+9ZEc5XaakZ9NlUWXtJKDW9P4/xa7Xkj+j3oFiN3CLABDMjIeMU9NY9xY=
+	t=1714474738; cv=none; b=q04YlcPBJMolDoSNKpHErseEojVN/hQcX9Kv7rF/yCJHQKYptRHWA7qvUEdOCdyKdDoSt7HPkc2TX8x+hY1sEa6Omg07mwfh26ruMC/hac8n+xUTzMJgsVpupFAFJQWz4Vk+TNiBEIVAiQ0t1UfBKHI5MU4bVMA27z2XghKL328=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474735; c=relaxed/simple;
-	bh=CJKBWvH/xrlUdDdIFOTGKh4hqM3+Ns5oCr4sN67BRmk=;
+	s=arc-20240116; t=1714474738; c=relaxed/simple;
+	bh=88K6vLAHWimZBZVJ9BRZ3Y08l8vE3sBKGUL5vnQeoxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j3k/oF2mre/pAohza7Kcyo99PeBVaeu7eIkzaTDTwd3+lYZtfDKRWjYpK9K44PMsG3qpXU3LX0/kzKN4R+9+gRjVt3L1Z5jYocc/VdJfd/F8E5JfBnbyaX5QiUrT2SuiUEi/fNwwaOqeKGM1wWVl9uFOoTxGwk9FEnl+/nqfgNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j4pG4wkZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CA7OUG18bVBdjt9RJ4gBsAY+iKZoAIUE9w8YFMWrb98o/XvMlII4MIV4co9al0ws03iedwfE/q4VgkqnNh4m6aOn9CM1vO86FNuXkwmzlEmQVHL9WmkbzYB3XISJb320f8fxTHjctj+JaXJRKjHT1nMO2GhsvX6DHLA/wuEw/6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrpHidgP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j4pG4wkZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257F0C2BBFC;
-	Tue, 30 Apr 2024 10:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrpHidgP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1593AC2BBFC;
+	Tue, 30 Apr 2024 10:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474735;
-	bh=CJKBWvH/xrlUdDdIFOTGKh4hqM3+Ns5oCr4sN67BRmk=;
+	s=korg; t=1714474738;
+	bh=88K6vLAHWimZBZVJ9BRZ3Y08l8vE3sBKGUL5vnQeoxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j4pG4wkZBmfgCLRq6/LgkN2IAlHSMSleO8LQijP0zLfeJroRZZePJ0YPkqakyHjx6
-	 9oh9JzZP1rZPdcoxcvjzSJ4TF6r7qbUc+Dq/1k9lmqO4bhnLe/GV5Kze6z6zNarbkX
-	 DkX/IR+kYEWGyUxe+/4PpNMsNU9VqtDyPslWD2Jc=
+	b=KrpHidgP1g7w5h05igdumfO1Y0ywZLnGHiUUQtBKdaV2IYVJG0c5+EmzEc9WJsDcx
+	 OTWm2gPP2b98qF/G/P9T2cpJwM1Z7WR+LcQFQk7/90SCHmFoDWyrFfsm+DrAvrV864
+	 HquH5GaSm5lO5RfM5tHvFbqT9Ce0013H/hNl6s74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+39ec16ff6cc18b1d066d@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 002/138] Bluetooth: Fix memory leak in hci_req_sync_complete()
-Date: Tue, 30 Apr 2024 12:38:07 +0200
-Message-ID: <20240430103049.498047877@linuxfoundation.org>
+	Shay Agroskin <shayagr@amazon.com>,
+	David Arinzon <darinzon@amazon.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 020/138] net: ena: Fix incorrect descriptor free behavior
+Date: Tue, 30 Apr 2024 12:38:25 +0200
+Message-ID: <20240430103050.021609374@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -51,37 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: David Arinzon <darinzon@amazon.com>
 
-commit 45d355a926ab40f3ae7bc0b0a00cb0e3e8a5a810 upstream.
+[ Upstream commit bf02d9fe00632d22fa91d34749c7aacf397b6cde ]
 
-In 'hci_req_sync_complete()', always free the previous sync
-request state before assigning reference to a new one.
+ENA has two types of TX queues:
+- queues which only process TX packets arriving from the network stack
+- queues which only process TX packets forwarded to it by XDP_REDIRECT
+  or XDP_TX instructions
 
-Reported-by: syzbot+39ec16ff6cc18b1d066d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=39ec16ff6cc18b1d066d
-Cc: stable@vger.kernel.org
-Fixes: f60cb30579d3 ("Bluetooth: Convert hci_req_sync family of function to new request API")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The ena_free_tx_bufs() cycles through all descriptors in a TX queue
+and unmaps + frees every descriptor that hasn't been acknowledged yet
+by the device (uncompleted TX transactions).
+The function assumes that the processed TX queue is necessarily from
+the first category listed above and ends up using napi_consume_skb()
+for descriptors belonging to an XDP specific queue.
+
+This patch solves a bug in which, in case of a VF reset, the
+descriptors aren't freed correctly, leading to crashes.
+
+Fixes: 548c4940b9f1 ("net: ena: Implement XDP_TX action")
+Signed-off-by: Shay Agroskin <shayagr@amazon.com>
+Signed-off-by: David Arinzon <darinzon@amazon.com>
+Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_request.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/hci_request.c
-+++ b/net/bluetooth/hci_request.c
-@@ -107,8 +107,10 @@ static void hci_req_sync_complete(struct
- 	if (hdev->req_status == HCI_REQ_PEND) {
- 		hdev->req_result = result;
- 		hdev->req_status = HCI_REQ_DONE;
--		if (skb)
-+		if (skb) {
-+			kfree_skb(hdev->req_skb);
- 			hdev->req_skb = skb_get(skb);
-+		}
- 		wake_up_interruptible(&hdev->req_wait_q);
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+index f403a5acda5b0..9149c82c0a564 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -1105,8 +1105,11 @@ static void ena_unmap_tx_buff(struct ena_ring *tx_ring,
+ static void ena_free_tx_bufs(struct ena_ring *tx_ring)
+ {
+ 	bool print_once = true;
++	bool is_xdp_ring;
+ 	u32 i;
+ 
++	is_xdp_ring = ENA_IS_XDP_INDEX(tx_ring->adapter, tx_ring->qid);
++
+ 	for (i = 0; i < tx_ring->ring_size; i++) {
+ 		struct ena_tx_buffer *tx_info = &tx_ring->tx_buffer_info[i];
+ 
+@@ -1126,10 +1129,15 @@ static void ena_free_tx_bufs(struct ena_ring *tx_ring)
+ 
+ 		ena_unmap_tx_buff(tx_ring, tx_info);
+ 
+-		dev_kfree_skb_any(tx_info->skb);
++		if (is_xdp_ring)
++			xdp_return_frame(tx_info->xdpf);
++		else
++			dev_kfree_skb_any(tx_info->skb);
  	}
+-	netdev_tx_reset_queue(netdev_get_tx_queue(tx_ring->netdev,
+-						  tx_ring->qid));
++
++	if (!is_xdp_ring)
++		netdev_tx_reset_queue(netdev_get_tx_queue(tx_ring->netdev,
++							  tx_ring->qid));
  }
+ 
+ static void ena_free_all_tx_bufs(struct ena_adapter *adapter)
+-- 
+2.43.0
+
 
 
