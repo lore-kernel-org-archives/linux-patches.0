@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBCD8801;
-	Tue, 30 Apr 2024 11:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A6C12C805;
+	Tue, 30 Apr 2024 11:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475914; cv=none; b=jWFqQx586ra7YJ4jONDwn/rO/fXXNL7EtEv2pNkThbqrOsEZMSx1/G2l69U6ohr4oD0xCnbBx4cX0ITw7NaFdblWdet2dqkqNKp1j0VVa2C4P0BU1iR2tMd2mVci5DQlr1vXHiA81l4n1rRRlQAR36OhpVACgU8KXSRRnZ9D38o=
+	t=1714475918; cv=none; b=UldLmRXE46m+Inrz9+yKA4KACL6HWvn4UDVub5AiQEVTpOZMLfNslO/YuxZwU7feIvD7KOVgg56V0wu7CArrzzbfIJZP3br9fljVMPA+OzZzAJ6kzlk4ug3gOEYqTlAHKPvNeWLXAChPs5tItrsvk0XN6053g4e9YShac9l7UZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475914; c=relaxed/simple;
-	bh=Vei1KnH3Mltiu6nHSvCl16x088BWTHdKsK6jc+QcS4s=;
+	s=arc-20240116; t=1714475918; c=relaxed/simple;
+	bh=tC/cEWiKCFjFItPJOL5n6uO/fAjICtNMCiZurj6py38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TGfSXNm98O4MXkvSToboeWseGJ36bBvNYyLim+y8DoMnvVgzJrhOk7z2JgrGWHiUnOKtoWUaZfwRK/5BZNjXF8ekn0+rpfB34PqB+S+Qe9fKQ9qyrHXsciC+izlu/M5BtTuLv6YBwwgePt+YduFYoirQ0UlDUQMtOE7eEPl6Azw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1R+B4rE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GCHH3QYk5PnUH0Mar9Uj/E/uOFzYlYYN0/rTSUR1JWoabWT2Rj3eWO+0b4TGNNpkZrkzbtPs1CEZ2QvNyICiyEEhqP6uIz2sJmYUwSQj1WkzL5xhKLhFe9G6TFHnM6fRR21ytz2fDnVU/YXgTEt6fW79AKCuLJSAhp5qa8F0jVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbAsLdxw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1R+B4rE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C7AC2BBFC;
-	Tue, 30 Apr 2024 11:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbAsLdxw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B98C2BBFC;
+	Tue, 30 Apr 2024 11:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475914;
-	bh=Vei1KnH3Mltiu6nHSvCl16x088BWTHdKsK6jc+QcS4s=;
+	s=korg; t=1714475917;
+	bh=tC/cEWiKCFjFItPJOL5n6uO/fAjICtNMCiZurj6py38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1R+B4rEIfxzx8xysjrhlQYsWrf8rtm7tf474op2y0ocYEZj921aQezvjNbbjzHdP
-	 R7dTQJnhi1MeiixEoUvwEKq7BLE0rxlUKZBxU+lgpgnKc7x6cUW7P2Aii6O7aQ0IuD
-	 mvZxkCnGl5sxzgkU7gy/d/FZElVtSDHg4Rsqi6M0=
+	b=MbAsLdxwpKekwqD++i3fgkjRGVR6qBDi1TA6YZ8aDZmuTO/jXMSLDRrcbr5pza3Ji
+	 JC7oZdWWt0CCNxPdagGNZAp6+SZyMCWIH4+JQSjbAdMhP8ViIstQpcT9BjEPKQK9QL
+	 Pvn9Z+5fCgOSqM89g58MfULHtmxg0sFGaEXcDcAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Alexander Zubkov <green@qrator.net>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 30/80] mlxsw: spectrum_acl_tcam: Fix race during rehash delayed work
-Date: Tue, 30 Apr 2024 12:40:02 +0200
-Message-ID: <20240430103044.306056015@linuxfoundation.org>
+	syzbot+510a1abbb8116eeb341d@syzkaller.appspotmail.com,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Johannes Thumshirn <Johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 57/80] btrfs: fix information leak in btrfs_ioctl_logical_to_ino()
+Date: Tue, 30 Apr 2024 12:40:29 +0200
+Message-ID: <20240430103045.102146876@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -54,80 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit d90cfe20562407d9f080d24123078d666d730707 ]
+commit 2f7ef5bb4a2f3e481ef05fab946edb97c84f67cf upstream.
 
-The purpose of the rehash delayed work is to reduce the number of masks
-(eRPs) used by an ACL region as the eRP bank is a global and limited
-resource.
+Syzbot reported the following information leak for in
+btrfs_ioctl_logical_to_ino():
 
-This is done in three steps:
+  BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+  BUG: KMSAN: kernel-infoleak in _copy_to_user+0xbc/0x110 lib/usercopy.c:40
+   instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+   _copy_to_user+0xbc/0x110 lib/usercopy.c:40
+   copy_to_user include/linux/uaccess.h:191 [inline]
+   btrfs_ioctl_logical_to_ino+0x440/0x750 fs/btrfs/ioctl.c:3499
+   btrfs_ioctl+0x714/0x1260
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:904 [inline]
+   __se_sys_ioctl+0x261/0x450 fs/ioctl.c:890
+   __x64_sys_ioctl+0x96/0xe0 fs/ioctl.c:890
+   x64_sys_call+0x1883/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:17
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-1. Creating a new set of masks and a new ACL region which will use the
-   new masks and to which the existing filters will be migrated to. The
-   new region is assigned to 'vregion->region' and the region from which
-   the filters are migrated from is assigned to 'vregion->region2'.
+  Uninit was created at:
+   __kmalloc_large_node+0x231/0x370 mm/slub.c:3921
+   __do_kmalloc_node mm/slub.c:3954 [inline]
+   __kmalloc_node+0xb07/0x1060 mm/slub.c:3973
+   kmalloc_node include/linux/slab.h:648 [inline]
+   kvmalloc_node+0xc0/0x2d0 mm/util.c:634
+   kvmalloc include/linux/slab.h:766 [inline]
+   init_data_container+0x49/0x1e0 fs/btrfs/backref.c:2779
+   btrfs_ioctl_logical_to_ino+0x17c/0x750 fs/btrfs/ioctl.c:3480
+   btrfs_ioctl+0x714/0x1260
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:904 [inline]
+   __se_sys_ioctl+0x261/0x450 fs/ioctl.c:890
+   __x64_sys_ioctl+0x96/0xe0 fs/ioctl.c:890
+   x64_sys_call+0x1883/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:17
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-2. Migrating all the filters from the old region to the new region.
+  Bytes 40-65535 of 65536 are uninitialized
+  Memory access of size 65536 starts at ffff888045a40000
 
-3. Destroying the old region and setting 'vregion->region2' to NULL.
+This happens, because we're copying a 'struct btrfs_data_container' back
+to user-space. This btrfs_data_container is allocated in
+'init_data_container()' via kvmalloc(), which does not zero-fill the
+memory.
 
-Only the second steps is performed under the 'vregion->lock' mutex
-although its comments says that among other things it "Protects
-consistency of region, region2 pointers".
+Fix this by using kvzalloc() which zeroes out the memory on allocation.
 
-This is problematic as the first step can race with filter insertion
-from user space that uses 'vregion->region', but under the mutex.
-
-Fix by holding the mutex across the entirety of the delayed work and not
-only during the second step.
-
-Fixes: 2bffc5322fd8 ("mlxsw: spectrum_acl: Don't take mutex in mlxsw_sp_acl_tcam_vregion_rehash_work()")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/1ec1d54edf2bad0a369e6b4fa030aba64e1f124b.1713797103.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CC: stable@vger.kernel.org # 4.14+
+Reported-by:  <syzbot+510a1abbb8116eeb341d@syzkaller.appspotmail.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Johannes Thumshirn <Johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/backref.c |   12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index 483c8b75bebb8..1dce4e9958c90 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -713,7 +713,9 @@ static void mlxsw_sp_acl_tcam_vregion_rehash_work(struct work_struct *work)
- 			     rehash.dw.work);
- 	int credits = MLXSW_SP_ACL_TCAM_VREGION_REHASH_CREDITS;
+--- a/fs/btrfs/backref.c
++++ b/fs/btrfs/backref.c
+@@ -2315,20 +2315,14 @@ struct btrfs_data_container *init_data_c
+ 	size_t alloc_bytes;
  
-+	mutex_lock(&vregion->lock);
- 	mlxsw_sp_acl_tcam_vregion_rehash(vregion->mlxsw_sp, vregion, &credits);
-+	mutex_unlock(&vregion->lock);
- 	if (credits < 0)
- 		/* Rehash gone out of credits so it was interrupted.
- 		 * Schedule the work as soon as possible to continue.
-@@ -1353,7 +1355,6 @@ mlxsw_sp_acl_tcam_vregion_migrate(struct mlxsw_sp *mlxsw_sp,
- 	int err, err2;
+ 	alloc_bytes = max_t(size_t, total_bytes, sizeof(*data));
+-	data = kvmalloc(alloc_bytes, GFP_KERNEL);
++	data = kvzalloc(alloc_bytes, GFP_KERNEL);
+ 	if (!data)
+ 		return ERR_PTR(-ENOMEM);
  
- 	trace_mlxsw_sp_acl_tcam_vregion_migrate(mlxsw_sp, vregion);
--	mutex_lock(&vregion->lock);
- 	err = mlxsw_sp_acl_tcam_vchunk_migrate_all(mlxsw_sp, vregion,
- 						   ctx, credits);
- 	if (err) {
-@@ -1373,7 +1374,6 @@ mlxsw_sp_acl_tcam_vregion_migrate(struct mlxsw_sp *mlxsw_sp,
- 			/* Let the rollback to be continued later on. */
- 		}
- 	}
--	mutex_unlock(&vregion->lock);
- 	trace_mlxsw_sp_acl_tcam_vregion_migrate_end(mlxsw_sp, vregion);
- 	return err;
+-	if (total_bytes >= sizeof(*data)) {
++	if (total_bytes >= sizeof(*data))
+ 		data->bytes_left = total_bytes - sizeof(*data);
+-		data->bytes_missing = 0;
+-	} else {
++	else
+ 		data->bytes_missing = sizeof(*data) - total_bytes;
+-		data->bytes_left = 0;
+-	}
+-
+-	data->elem_cnt = 0;
+-	data->elem_missed = 0;
+ 
+ 	return data;
  }
--- 
-2.43.0
-
 
 
