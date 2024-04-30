@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56989127B70;
-	Tue, 30 Apr 2024 10:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8367A12C47F;
+	Tue, 30 Apr 2024 10:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473707; cv=none; b=qrjRJrxcOjjlGggDgqZL7fjCzJWLD6KP2FZI21qDpaQvggCqmE4Fg8tzMXf4OP5wtMFC5fPaqTGF7R1J+P8tCwstWV1n96aHKL70y6ExVBIRdjyBJmu/livQvnCAswqhdFsrBzzGBD/pCYyJ2rwz564QNIUwoI+VTPRKP/+oobE=
+	t=1714473710; cv=none; b=bwFv/BLyDimt7V+PoqvUR0+M0IKWcLyZol7AfdwlWABVKjJtkO+Cp/jWzJuKEU54hlSQADp6oGmUsDH3j+YoAgZFl2uUJsTFFf+DYSD8gcoZy/rXw0agbogXIn57fAGUh7Z2+w664WLdHxj+Df0PFqyKjoda+H12UeQZ1B6QHrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473707; c=relaxed/simple;
-	bh=GTqcUG1yt4g716vPn8LVNbEzcEfNGvcDQqJKLGM+Txk=;
+	s=arc-20240116; t=1714473710; c=relaxed/simple;
+	bh=qvl4q71NxBmznRRcgjBzkcuWg2HaN/RbXs4ERXWOkGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tjwbletg4P4jQU7X0D/8Zo2LG6+qANxkmUPZ/vd1BzhD+AlE7+Xh/r9RAYPXpKuB7WBHh6uHTlKx6L+T9lwPAzjC6r4MEhUgWIadZVilPhZFLBqJV+1P2hK4YYJ/Cwjl/Uc7FmIfwkqCVjNVD78ACk33L3apnPvq5zscZkujDJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BCYMuMTM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XmPuTDzRCanVQTLCe0cab2Gyfm0Le0I0/4zp8xXBm7Gds1u07EF2ucEoD/Tx4CHhfqEGvzYV4DOwtBHFGSRVxW/T0LgZOty25diyp4KTEjTX1EgjmuzqJWKgZhTQFdn1mnDKj6y7gN7hPLNBQBCpwYHQ9nSLNxdXFkrU/ao+5wI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3YlpQ5/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BCYMuMTM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4B0C4AF19;
-	Tue, 30 Apr 2024 10:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3YlpQ5/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE65C2BBFC;
+	Tue, 30 Apr 2024 10:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473706;
-	bh=GTqcUG1yt4g716vPn8LVNbEzcEfNGvcDQqJKLGM+Txk=;
+	s=korg; t=1714473710;
+	bh=qvl4q71NxBmznRRcgjBzkcuWg2HaN/RbXs4ERXWOkGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BCYMuMTMvxqp+sD8khRzquvk1TRgxjl+HobsGoN6vIr3kq29Q1SepREzp5SCGdIqv
-	 5cADVKK83lT7rGezeqJcVOA2lHl+gIOFC/ZijMDXw3M8yzvus+kPIJWfWRb1Mqbr32
-	 JSAcWGb2eOS2sOAY4vxDsQkjHHmRI3BoL8gbsCMM=
+	b=H3YlpQ5/7hLi1zv9rKX2muU8fpzuVkihOq15kzatZxqhGv1IZGBuaj7i1lRXtiN24
+	 iBHq2R7BokW5/P1l2FRHxjrfdYtg8YYQ1vm6bilQVo/BkciaqX3/XB7QHD3wAvoN+B
+	 pL1IJFnWqhgPhmZA2lgk7aQDnfWuGKuRokNDdL/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Dunlap <acdunlap@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Kevin Loughlin <kevinloughlin@google.com>
-Subject: [PATCH 4.19 12/77] x86/apic: Force native_apic_mem_read() to use the MOV instruction
-Date: Tue, 30 Apr 2024 12:38:51 +0200
-Message-ID: <20240430103041.485191195@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 13/77] btrfs: record delayed inode root in transaction
+Date: Tue, 30 Apr 2024 12:38:52 +0200
+Message-ID: <20240430103041.515285767@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -53,70 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Dunlap <acdunlap@google.com>
+From: Boris Burkov <boris@bur.io>
 
-commit 5ce344beaca688f4cdea07045e0b8f03dc537e74 upstream.
+[ Upstream commit 71537e35c324ea6fbd68377a4f26bb93a831ae35 ]
 
-When done from a virtual machine, instructions that touch APIC memory
-must be emulated. By convention, MMIO accesses are typically performed
-via io.h helpers such as readl() or writeq() to simplify instruction
-emulation/decoding (ex: in KVM hosts and SEV guests) [0].
+When running delayed inode updates, we do not record the inode's root in
+the transaction, but we do allocate PREALLOC and thus converted PERTRANS
+space for it. To be sure we free that PERTRANS meta rsv, we must ensure
+that we record the root in the transaction.
 
-Currently, native_apic_mem_read() does not follow this convention,
-allowing the compiler to emit instructions other than the MOV
-instruction generated by readl(). In particular, when the kernel is
-compiled with clang and run as a SEV-ES or SEV-SNP guest, the compiler
-would emit a TESTL instruction which is not supported by the SEV-ES
-emulator, causing a boot failure in that environment. It is likely the
-same problem would happen in a TDX guest as that uses the same
-instruction emulator as SEV-ES.
-
-To make sure all emulators can emulate APIC memory reads via MOV, use
-the readl() function in native_apic_mem_read(). It is expected that any
-emulator would support MOV in any addressing mode as it is the most
-generic and is what is usually emitted currently.
-
-The TESTL instruction is emitted when native_apic_mem_read() is inlined
-into apic_mem_wait_icr_idle(). The emulator comes from
-insn_decode_mmio() in arch/x86/lib/insn-eval.c. It's not worth it to
-extend insn_decode_mmio() to support more instructions since, in theory,
-the compiler could choose to output nearly any instruction for such
-reads which would bloat the emulator beyond reason.
-
-  [0] https://lore.kernel.org/all/20220405232939.73860-12-kirill.shutemov@linux.intel.com/
-
-  [ bp: Massage commit message, fix typos. ]
-
-Signed-off-by: Adam Dunlap <acdunlap@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Tested-by: Kevin Loughlin <kevinloughlin@google.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240318230927.2191933-1-acdunlap@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4f5427ccce5d ("btrfs: delayed-inode: Use new qgroup meta rsv for delayed inode and item")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/apic.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/delayed-inode.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/x86/include/asm/apic.h
-+++ b/arch/x86/include/asm/apic.h
-@@ -11,6 +11,7 @@
- #include <asm/mpspec.h>
- #include <asm/msr.h>
- #include <asm/hardirq.h>
-+#include <asm/io.h>
+--- a/fs/btrfs/delayed-inode.c
++++ b/fs/btrfs/delayed-inode.c
+@@ -1133,6 +1133,9 @@ __btrfs_commit_inode_delayed_items(struc
+ 	if (ret)
+ 		return ret;
  
- #define ARCH_APICTIMER_STOPS_ON_C3	1
- 
-@@ -110,7 +111,7 @@ static inline void native_apic_mem_write
- 
- static inline u32 native_apic_mem_read(u32 reg)
- {
--	return *((volatile u32 *)(APIC_BASE + reg));
-+	return readl((void __iomem *)(APIC_BASE + reg));
++	ret = btrfs_record_root_in_trans(trans, node->root);
++	if (ret)
++		return ret;
+ 	ret = btrfs_update_delayed_inode(trans, node->root, path, node);
+ 	return ret;
  }
- 
- extern void native_apic_wait_icr_idle(void);
 
 
