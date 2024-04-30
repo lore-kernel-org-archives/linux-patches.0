@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30DF412CDAE;
-	Tue, 30 Apr 2024 11:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BF617592;
+	Tue, 30 Apr 2024 11:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476273; cv=none; b=jreapMCxlFv2zoBO76V5n55S4GtB4cwtNX7MyL/AhMfrdMVdP4xTT+WQVzUb04FIlr08SFKa42SEQjEB+DG4hZDtqAgn7p3D1WVyizXocTveeqFK95uO6hkpUtzc2anzZL8k0dbFSVLFPyZFvoJpj86yCSFC2aWDx+vHk/zGpck=
+	t=1714476276; cv=none; b=BvYt2vpMcTsjUKGRQ6jLc8Aq48Qb0S/KHVVmsM4yo9R9tnb4QdMkdm78WCdenoXKIKJ5veqSLquSIsM8Dky9KmlbEZ6WR8MEK8dkCR9FGYiHpmIf5nWn+auU58TvGtDyQ0GAHSAhCdmr+IKcwSHogTtMB0Eve6FHMv+/0fvduEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476273; c=relaxed/simple;
-	bh=rMN9/b3K5u7wkK6Ut/XvtAfZwCUvl3TeLY148J+V0OM=;
+	s=arc-20240116; t=1714476276; c=relaxed/simple;
+	bh=vCDxj6RLG+Ob7In9CB3ZYCeEmIhfqCJ0ArfOgQb5ZvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GfrBvAMP8tyzy11LC8HbZzIoFQUdDD0P3/DYtJ3dX7lu6kvhWzvR5AZ4PTB3cC0Vpq8D3AhTEclkeAQpaiYn30v5RjchM0R9uSZcAusG84AXsJUiHaz6hHHV0esh6kzsIGwvwxVcCEGog+suFzTD/q5t9qNh/Ybdl+7uYeHPPGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuvs967H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YseILeZBBgd9nIScjPR+h3gF715BNq1NGQubCET28uL/7adnF5LFUb5lmmEBlWxoNJO/30NTj/wckXF0jAE9+1AlJaPmiHK476/DKpj5xscjXTNNEMql/ExdC/jsmJBcwlazzhxT4WqNevyqgu1jYeaNAEPwkxennbXKiivSYUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+5ai4rd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuvs967H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965C0C2BBFC;
-	Tue, 30 Apr 2024 11:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+5ai4rd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC400C2BBFC;
+	Tue, 30 Apr 2024 11:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476273;
-	bh=rMN9/b3K5u7wkK6Ut/XvtAfZwCUvl3TeLY148J+V0OM=;
+	s=korg; t=1714476276;
+	bh=vCDxj6RLG+Ob7In9CB3ZYCeEmIhfqCJ0ArfOgQb5ZvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uuvs967Hki4iKqUoqPCYXNJxsD5ZA+v3u7VU070Xf6gIwMsIwU/nSntpbbBjQbCyc
-	 zrmiNgKA83tTWNA57xtGMfOubplzQSrFVPfEFJoeTczAPEwO5pMXGW+A2HIl3QpYFa
-	 QWeS+6+Rqo2GV8fRSuWfUbLAv4H3m2FiN9/TKFr8=
+	b=z+5ai4rdwI+lsRLnbyJq7YGtqn4TixY0m9O52ApXGRNCnwXeKfH9BQD77UeKfMfAr
+	 AodcZl99id8i3Sso5fgo1o2AUdW2oFV3qfcy+yJ0t1PrcecBpqYPtmrFIPw5aWsew+
+	 NcfaS4u8uaJx55R4sx+CMlptQDdqFAD+xtrWsgOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Coia Prant <coiaprant@gmail.com>,
-	Lars Melin <larsm17@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.4 040/107] USB: serial: option: add Lonsung U8300/U9300 product
-Date: Tue, 30 Apr 2024 12:40:00 +0200
-Message-ID: <20240430103045.841121822@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Chia-I Wu <olvaffe@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 082/107] amdgpu: validate offset_in_bo of drm_amdgpu_gem_va
+Date: Tue, 30 Apr 2024 12:40:42 +0200
+Message-ID: <20240430103047.078992846@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -45,120 +46,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Coia Prant <coiaprant@gmail.com>
+From: Chia-I Wu <olvaffe@gmail.com>
 
-commit cf16ffa17c398434a77b8a373e69287c95b60de2 upstream.
+[ Upstream commit 9f0bcf49e9895cb005d78b33a5eebfa11711b425 ]
 
-Update the USB serial option driver to support Longsung U8300/U9300.
+This is motivated by OOB access in amdgpu_vm_update_range when
+offset_in_bo+map_size overflows.
 
-For U8300
+v2: keep the validations in amdgpu_vm_bo_map
+v3: add the validations to amdgpu_vm_bo_map/amdgpu_vm_bo_replace_map
+    rather than to amdgpu_gem_va_ioctl
 
-Interface 4 is used by for QMI interface in stock firmware of U8300, the
-router which uses U8300 modem.
-Interface 5 is used by for ADB interface in stock firmware of U8300, the
-router which uses U8300 modem.
-
-Interface mapping is:
-0: unknown (Debug), 1: AT (Modem), 2: AT, 3: PPP (NDIS / Pipe), 4: QMI, 5: ADB
-
-T:  Bus=05 Lev=01 Prnt=03 Port=02 Cnt=01 Dev#=  4 Spd=480 MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1c9e ProdID=9b05 Rev=03.18
-S:  Manufacturer=Android
-S:  Product=Android
-C:  #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-For U9300
-
-Interface 1 is used by for ADB interface in stock firmware of U9300, the
-router which uses U9300 modem.
-Interface 4 is used by for QMI interface in stock firmware of U9300, the
-router which uses U9300 modem.
-
-Interface mapping is:
-0: ADB, 1: AT (Modem), 2: AT, 3: PPP (NDIS / Pipe), 4: QMI
-
-Note: Interface 3 of some models of the U9300 series can send AT commands.
-
-T:  Bus=05 Lev=01 Prnt=05 Port=04 Cnt=01 Dev#=  6 Spd=480 MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1c9e ProdID=9b3c Rev=03.18
-S:  Manufacturer=Android
-S:  Product=Android
-C:  #Ifs= 5 Cfg#= 1 Atr=80 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-
-Tested successfully using Modem Manager on U9300.
-Tested successfully AT commands using If=1, If=2 and If=3 on U9300.
-
-Signed-off-by: Coia Prant <coiaprant@gmail.com>
-Reviewed-by: Lars Melin <larsm17@gmail.com>
-[ johan: drop product defines, trim commit message ]
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9f7eb5367d00 ("drm/amdgpu: actually use the VM map parameters")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 6fef2d4c00b5 ("drm/amdgpu: validate the parameters of bo mapping operations more clearly")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2052,6 +2052,10 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(LONGCHEER_VENDOR_ID, 0x9803, 0xff),
- 	  .driver_info = RSVD(4) },
-+	{ USB_DEVICE(LONGCHEER_VENDOR_ID, 0x9b05),	/* Longsung U8300 */
-+	  .driver_info = RSVD(4) | RSVD(5) },
-+	{ USB_DEVICE(LONGCHEER_VENDOR_ID, 0x9b3c),	/* Longsung U9300 */
-+	  .driver_info = RSVD(0) | RSVD(4) },
- 	{ USB_DEVICE(LONGCHEER_VENDOR_ID, ZOOM_PRODUCT_4597) },
- 	{ USB_DEVICE(LONGCHEER_VENDOR_ID, IBALL_3_5G_CONNECT) },
- 	{ USB_DEVICE(HAIER_VENDOR_ID, HAIER_PRODUCT_CE100) },
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+index 88f2707c69ce7..dfec651ec0b45 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -2123,14 +2123,14 @@ int amdgpu_vm_bo_map(struct amdgpu_device *adev,
+ 	uint64_t eaddr;
+ 
+ 	/* validate the parameters */
+-	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK ||
+-	    size == 0 || size & ~PAGE_MASK)
++	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
++		return -EINVAL;
++	if (saddr + size <= saddr || offset + size <= offset)
+ 		return -EINVAL;
+ 
+ 	/* make sure object fit at this offset */
+ 	eaddr = saddr + size - 1;
+-	if (saddr >= eaddr ||
+-	    (bo && offset + size > amdgpu_bo_size(bo)) ||
++	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
+ 	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
+ 		return -EINVAL;
+ 
+@@ -2189,14 +2189,14 @@ int amdgpu_vm_bo_replace_map(struct amdgpu_device *adev,
+ 	int r;
+ 
+ 	/* validate the parameters */
+-	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK ||
+-	    size == 0 || size & ~PAGE_MASK)
++	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
++		return -EINVAL;
++	if (saddr + size <= saddr || offset + size <= offset)
+ 		return -EINVAL;
+ 
+ 	/* make sure object fit at this offset */
+ 	eaddr = saddr + size - 1;
+-	if (saddr >= eaddr ||
+-	    (bo && offset + size > amdgpu_bo_size(bo)) ||
++	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
+ 	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
+ 		return -EINVAL;
+ 
+-- 
+2.43.0
+
 
 
