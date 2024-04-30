@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F67B12D210;
-	Tue, 30 Apr 2024 11:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52A612D209;
+	Tue, 30 Apr 2024 11:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475752; cv=none; b=m+gslXdK7jOt+Ey95tE2lS3IDtM8OQa+AlRY6O6Ui8cdk3JdT0G7MmLjWTDkMvhAPQs8+8d5nQ2Kc7vCPs1Vh6HCbT48b6yVutNw4BtEShB46KG7SoZSobPeeCyQotrDQzc9Idh65YOzVc2dp9fnNkG8aLaaG4tuQwvOMm/DEJQ=
+	t=1714475755; cv=none; b=g+euNloa5UVITbxUHjoPskSjmo84GB3o44CDHS+8L5MfKn/1incoy2FYdH1kxkljGszEchhMEZ6BdGPAcok3O2sgjULLaA6kQmxvN+XzGO+Kafbskiy5SJZ1TixxKP3fEoCcgyNT+UKpqWcB4MFDDJKIz0XAQWIGH47VlbigyiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475752; c=relaxed/simple;
-	bh=yp54RYhoryWo2nHsg/MPU7jS8VujuZRoIPa2NWMy/8U=;
+	s=arc-20240116; t=1714475755; c=relaxed/simple;
+	bh=yoEf/jLkskwEwiUGktfhWNELYT8knpZ8ZgCjdMamZBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HFbE+AR3b8TIQ6hwNZPq5JYa4pIkrsyepqcK+pu5TeUbqXPb5gwHKIGMxnf1EiwBsO3WaLMUDWTVxld0jfbeyCY/faaRj6ZIg5/fvZc9snEJ68V/dpKdMzq1cWH5siNYv8DiA4pfKGKDx8xIMTqylH57rOt99QfIC2yJ2qxCjF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVwIlud7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yf6ttyCwQYkaO3YEDWXTlQ/1O2OwCh9z0jJNN5v6qQBlpz8X6d55Uyby1RZl1pmMuSOgH2tli7RKBT74dEJLpIbiBFy+C34CUcx8byqv23aDiqcEiVGQYG8rblScXgWm5jYJjc/uAoPWvxTWeQkgNx7VHTBN9LP8wy6+xFV8SEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2fL8qBV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVwIlud7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3C98C2BBFC;
-	Tue, 30 Apr 2024 11:15:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2fL8qBV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD01C2BBFC;
+	Tue, 30 Apr 2024 11:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475752;
-	bh=yp54RYhoryWo2nHsg/MPU7jS8VujuZRoIPa2NWMy/8U=;
+	s=korg; t=1714475755;
+	bh=yoEf/jLkskwEwiUGktfhWNELYT8knpZ8ZgCjdMamZBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZVwIlud77FEFFB7Aw2gIYDx181EplrOgZTCNViw2MQLCpPLZxpYGUq87pdoJgVfdL
-	 umZQoX2Vxgc5pRRN54LgoojU1LFTg0fGvEczSJWv+rvI5t2bCD7ewEbBgcwrFxmbeE
-	 nogA4aBZZhnKyibIARGMpIB1CDJZ30UUlXmcRpnc=
+	b=h2fL8qBVnLqZ9fLHhkjLK74qlv80NqrUFOFCxPFPgZCnq5KY/25b/yFYGRdF+TXDq
+	 8LaG0IVfB5yW6yzv70pK0Tw1u0CnJd6IprvtR7yoC3HScV2JTsp9fecrc0ouJLGasI
+	 s6iCMwvVaMqzaZ+wfVr7TnWSn1FoXibg0fHKVCyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Tomek <mtdev79b@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Peter Korsgaard <peter@korsgaard.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 167/186] phy: rockchip: naneng-combphy: Fix mux on rk3588
-Date: Tue, 30 Apr 2024 12:40:19 +0200
-Message-ID: <20240430103102.879764510@linuxfoundation.org>
+Subject: [PATCH 6.6 158/186] dmaengine: owl: fix register access functions
+Date: Tue, 30 Apr 2024 12:40:10 +0200
+Message-ID: <20240430103102.620125596@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -53,132 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit d16d4002fea69b6609b852dd8db1f5844c02fbe4 ]
+[ Upstream commit 43c633ef93a5d293c96ebcedb40130df13128428 ]
 
-The pcie1l0_sel and pcie1l1_sel bits in PCIESEL_CON configure the
-mux for PCIe1L0 and PCIe1L1 to either the PIPE Combo PHYs or the
-PCIe3 PHY. Thus this configuration interfers with the data-lanes
-configuration done by the PCIe3 PHY.
+When building with 'make W=1', clang notices that the computed register
+values are never actually written back but instead the wrong variable
+is set:
 
-RK3588 has three Combo PHYs. The first one has a dedicated PCIe
-controller and is not affected by this. For the other two Combo
-PHYs, there is one mux for each of them.
+drivers/dma/owl-dma.c:244:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
+  244 |         u32 regval;
+      |             ^
+drivers/dma/owl-dma.c:268:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
+  268 |         u32 regval;
+      |             ^
 
-pcie1l0_sel selects if PCIe 1L0 is muxed to Combo PHY 1 when
-bit is set to 0 or to the PCIe3 PHY when bit is set to 1.
+Change these to what was most likely intended.
 
-pcie1l1_sel selects if PCIe 1L1 is muxed to Combo PHY 2 when
-bit is set to 0 or to the PCIe3 PHY when bit is set to 1.
-
-Currently the code always muxes 1L0 and 1L1 to the Combi PHYs
-once one of them is being used in PCIe mode. This is obviously
-wrong when at least one of the ports should be muxed to the
-PCIe3 PHY.
-
-Fix this by introducing Combo PHY identification and then only
-setting up the required bit.
-
-Fixes: a03c44277253 ("phy: rockchip: Add naneng combo phy support for RK3588")
-Reported-by: Michal Tomek <mtdev79b@gmail.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20240404-rk3588-pcie-bifurcation-fixes-v1-3-9907136eeafd@kernel.org
+Fixes: 47e20577c24d ("dmaengine: Add Actions Semi Owl family S900 DMA driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Peter Korsgaard <peter@korsgaard.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240322132116.906475-1-arnd@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../rockchip/phy-rockchip-naneng-combphy.c    | 36 +++++++++++++++++--
- 1 file changed, 33 insertions(+), 3 deletions(-)
+ drivers/dma/owl-dma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-index 5de5e2e97ffa0..26b157f53f3da 100644
---- a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-+++ b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-@@ -125,12 +125,15 @@ struct rockchip_combphy_grfcfg {
- };
+diff --git a/drivers/dma/owl-dma.c b/drivers/dma/owl-dma.c
+index 384476757c5e3..3bcf73ef69dc7 100644
+--- a/drivers/dma/owl-dma.c
++++ b/drivers/dma/owl-dma.c
+@@ -250,7 +250,7 @@ static void pchan_update(struct owl_dma_pchan *pchan, u32 reg,
+ 	else
+ 		regval &= ~val;
  
- struct rockchip_combphy_cfg {
-+	unsigned int num_phys;
-+	unsigned int phy_ids[3];
- 	const struct rockchip_combphy_grfcfg *grfcfg;
- 	int (*combphy_cfg)(struct rockchip_combphy_priv *priv);
- };
+-	writel(val, pchan->base + reg);
++	writel(regval, pchan->base + reg);
+ }
  
- struct rockchip_combphy_priv {
- 	u8 type;
-+	int id;
- 	void __iomem *mmio;
- 	int num_clks;
- 	struct clk_bulk_data *clks;
-@@ -320,7 +323,7 @@ static int rockchip_combphy_probe(struct platform_device *pdev)
- 	struct rockchip_combphy_priv *priv;
- 	const struct rockchip_combphy_cfg *phy_cfg;
- 	struct resource *res;
--	int ret;
-+	int ret, id;
+ static void pchan_writel(struct owl_dma_pchan *pchan, u32 reg, u32 data)
+@@ -274,7 +274,7 @@ static void dma_update(struct owl_dma *od, u32 reg, u32 val, bool state)
+ 	else
+ 		regval &= ~val;
  
- 	phy_cfg = of_device_get_match_data(dev);
- 	if (!phy_cfg) {
-@@ -338,6 +341,15 @@ static int rockchip_combphy_probe(struct platform_device *pdev)
- 		return ret;
- 	}
+-	writel(val, od->base + reg);
++	writel(regval, od->base + reg);
+ }
  
-+	/* find the phy-id from the io address */
-+	priv->id = -ENODEV;
-+	for (id = 0; id < phy_cfg->num_phys; id++) {
-+		if (res->start == phy_cfg->phy_ids[id]) {
-+			priv->id = id;
-+			break;
-+		}
-+	}
-+
- 	priv->dev = dev;
- 	priv->type = PHY_NONE;
- 	priv->cfg = phy_cfg;
-@@ -562,6 +574,12 @@ static const struct rockchip_combphy_grfcfg rk3568_combphy_grfcfgs = {
- };
- 
- static const struct rockchip_combphy_cfg rk3568_combphy_cfgs = {
-+	.num_phys = 3,
-+	.phy_ids = {
-+		0xfe820000,
-+		0xfe830000,
-+		0xfe840000,
-+	},
- 	.grfcfg		= &rk3568_combphy_grfcfgs,
- 	.combphy_cfg	= rk3568_combphy_cfg,
- };
-@@ -578,8 +596,14 @@ static int rk3588_combphy_cfg(struct rockchip_combphy_priv *priv)
- 		rockchip_combphy_param_write(priv->phy_grf, &cfg->con1_for_pcie, true);
- 		rockchip_combphy_param_write(priv->phy_grf, &cfg->con2_for_pcie, true);
- 		rockchip_combphy_param_write(priv->phy_grf, &cfg->con3_for_pcie, true);
--		rockchip_combphy_param_write(priv->pipe_grf, &cfg->pipe_pcie1l0_sel, true);
--		rockchip_combphy_param_write(priv->pipe_grf, &cfg->pipe_pcie1l1_sel, true);
-+		switch (priv->id) {
-+		case 1:
-+			rockchip_combphy_param_write(priv->pipe_grf, &cfg->pipe_pcie1l0_sel, true);
-+			break;
-+		case 2:
-+			rockchip_combphy_param_write(priv->pipe_grf, &cfg->pipe_pcie1l1_sel, true);
-+			break;
-+		}
- 		break;
- 	case PHY_TYPE_USB3:
- 		/* Set SSC downward spread spectrum */
-@@ -736,6 +760,12 @@ static const struct rockchip_combphy_grfcfg rk3588_combphy_grfcfgs = {
- };
- 
- static const struct rockchip_combphy_cfg rk3588_combphy_cfgs = {
-+	.num_phys = 3,
-+	.phy_ids = {
-+		0xfee00000,
-+		0xfee10000,
-+		0xfee20000,
-+	},
- 	.grfcfg		= &rk3588_combphy_grfcfgs,
- 	.combphy_cfg	= rk3588_combphy_cfg,
- };
+ static void dma_writel(struct owl_dma *od, u32 reg, u32 data)
 -- 
 2.43.0
 
