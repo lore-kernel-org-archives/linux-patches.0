@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8356312C462;
-	Tue, 30 Apr 2024 11:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD4312C462;
+	Tue, 30 Apr 2024 11:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475101; cv=none; b=HPKSF9csnJfwYYvNCugXtAzTeZd0MbvEk0X3wQauXETNCmLBXgnDDs2/k5xhrWxZfPbMI4bsWHmRRIuOYqAwAg80FTjV7DqafneSRBmFxKo3ki8ql0MnQkpkb2zH+Re1ie48T0N9OONW4OEdFtKPTuPCcZqCHiGIXUgPUDuz3mQ=
+	t=1714475104; cv=none; b=RGsZkUQUUoqDte6lMd9oH4xje8SnuuCG/kuUhWt3456FErDS0BVoSAFpFUHP1eQSJRhUElIOtvSaypPSgqKvoIRiXG0csxDs1dEk3pKeETaMVWun4VYgkGTU9gUKRlVE22sJQgVuZMeNBEwuP54tRl1/DihGlXno+QZZ0U5m9b8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475101; c=relaxed/simple;
-	bh=EcSrvuPDDzoxJbD5tokqF6mYopUaGKakWcsvvXrGwfs=;
+	s=arc-20240116; t=1714475104; c=relaxed/simple;
+	bh=SKWKuR5sLVLj8gGI77wXf4mZbY2sO54eNOAOVHPNYkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYvkAr92cKQbD3cekQ9bHJj+IRWqhtnTUibTGCDaxOFm+xxYfM9SuzRiix/W6VnNk+vUcoEF0sOGMTY+6NNI2cL5woE1fsDlfYO0QPNlIBMyVXCRsaJtMcJxTo9LyVpkBtzSntiASOeaHNfrtIbPub0TJjhx4UsGuzHLrrikvBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmpoCcYy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kFoow+y5zJGEwFvqKnJNDbODCsBlE//6yYYtp4heZykZ4B138CjaVdN4p6QKBWVnEfceNxANCEMpT8u4JLm2X84M8AzeVpEDn9Xfre7b05Y29dckJBDdaeXG/mjltlXc1IEm1oIIgIdjs+IzibhFwECU9+0pzUfN/LflRTQaX5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nf381xHW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmpoCcYy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07542C2BBFC;
-	Tue, 30 Apr 2024 11:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nf381xHW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A32AC2BBFC;
+	Tue, 30 Apr 2024 11:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475101;
-	bh=EcSrvuPDDzoxJbD5tokqF6mYopUaGKakWcsvvXrGwfs=;
+	s=korg; t=1714475104;
+	bh=SKWKuR5sLVLj8gGI77wXf4mZbY2sO54eNOAOVHPNYkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hmpoCcYypP73etCwxa+Ks6K4a6lEKO0oIFnX18VvghMf2QEK7x3Qju7+eQKTw9ohL
-	 zvUDO8vKeocTvGDuY6KJd3DZBQs6ICfcB70XpbGJg/P+w/yE/TWexeFFdNwFhZD75o
-	 V1kZOrFbypVUiDW3wd7T9X1R72tfJSpcuDCZB8a0=
+	b=nf381xHWdf5soy9kslTctmv/M0KMO1RFGuQXc9u6XXGHFa7frdIkCRUlr8rF+r/zi
+	 fmrXOlCiG/aPjbZV7kz3zv0ePXbPe4ClpvbeIjJDm8jZbijDHzBs7uioOZb7FhM54a
+	 y3CnlV4Utq5HRAJz6dynORRbnsR7MwUlLbXMeiuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baruch Siach <baruch@tkos.co.il>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 133/138] i2c: smbus: fix NULL function pointer dereference
-Date: Tue, 30 Apr 2024 12:40:18 +0200
-Message-ID: <20240430103053.316745832@linuxfoundation.org>
+	Nam Cao <namcao@linutronix.de>,
+	Jiri Kosina <jkosina@suse.com>,
+	Eva Kurchatova <nyandarknessgirl@gmail.com>
+Subject: [PATCH 5.10 134/138] HID: i2c-hid: remove I2C_HID_READ_PENDING flag to prevent lock-up
+Date: Tue, 30 Apr 2024 12:40:19 +0200
+Message-ID: <20240430103053.346373367@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -51,64 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Nam Cao <namcao@linutronix.de>
 
-[ Upstream commit 91811a31b68d3765b3065f4bb6d7d6d84a7cfc9f ]
+commit 9c0f59e47a90c54d0153f8ddc0f80d7a36207d0e upstream.
 
-Baruch reported an OOPS when using the designware controller as target
-only. Target-only modes break the assumption of one transfer function
-always being available. Fix this by always checking the pointer in
-__i2c_transfer.
+The flag I2C_HID_READ_PENDING is used to serialize I2C operations.
+However, this is not necessary, because I2C core already has its own
+locking for that.
 
-Reported-by: Baruch Siach <baruch@tkos.co.il>
-Closes: https://lore.kernel.org/r/4269631780e5ba789cf1ae391eec1b959def7d99.1712761976.git.baruch@tkos.co.il
-Fixes: 4b1acc43331d ("i2c: core changes for slave support")
-[wsa: dropped the simplification in core-smbus to avoid theoretical regressions]
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Tested-by: Baruch Siach <baruch@tkos.co.il>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+More importantly, this flag can cause a lock-up: if the flag is set in
+i2c_hid_xfer() and an interrupt happens, the interrupt handler
+(i2c_hid_irq) will check this flag and return immediately without doing
+anything, then the interrupt handler will be invoked again in an
+infinite loop.
+
+Since interrupt handler is an RT task, it takes over the CPU and the
+flag-clearing task never gets scheduled, thus we have a lock-up.
+
+Delete this unnecessary flag.
+
+Reported-and-tested-by: Eva Kurchatova <nyandarknessgirl@gmail.com>
+Closes: https://lore.kernel.org/r/CA+eeCSPUDpUg76ZO8dszSbAGn+UHjcyv8F1J-CUPVARAzEtW9w@mail.gmail.com
+Fixes: 4a200c3b9a40 ("HID: i2c-hid: introduce HID over i2c specification implementation")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+[apply to v4.19 -> v5.15]
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-base.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/hid/i2c-hid/i2c-hid-core.c |    8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
-index 34fecf97a355b..e8a89e18c640e 100644
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -2013,13 +2013,18 @@ static int i2c_check_for_quirks(struct i2c_adapter *adap, struct i2c_msg *msgs,
-  * Returns negative errno, else the number of messages executed.
-  *
-  * Adapter lock must be held when calling this function. No debug logging
-- * takes place. adap->algo->master_xfer existence isn't checked.
-+ * takes place.
-  */
- int __i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
- {
- 	unsigned long orig_jiffies;
- 	int ret, try;
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -56,7 +56,6 @@
+ /* flags */
+ #define I2C_HID_STARTED		0
+ #define I2C_HID_RESET_PENDING	1
+-#define I2C_HID_READ_PENDING	2
  
-+	if (!adap->algo->master_xfer) {
-+		dev_dbg(&adap->dev, "I2C level transfers not supported\n");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	if (WARN_ON(!msgs || num < 1))
- 		return -EINVAL;
+ #define I2C_HID_PWR_ON		0x00
+ #define I2C_HID_PWR_SLEEP	0x01
+@@ -256,7 +255,6 @@ static int __i2c_hid_command(struct i2c_
+ 		msg[1].len = data_len;
+ 		msg[1].buf = buf_recv;
+ 		msg_num = 2;
+-		set_bit(I2C_HID_READ_PENDING, &ihid->flags);
+ 	}
  
-@@ -2086,11 +2091,6 @@ int i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
- {
- 	int ret;
+ 	if (wait)
+@@ -264,9 +262,6 @@ static int __i2c_hid_command(struct i2c_
  
--	if (!adap->algo->master_xfer) {
--		dev_dbg(&adap->dev, "I2C level transfers not supported\n");
--		return -EOPNOTSUPP;
--	}
+ 	ret = i2c_transfer(client->adapter, msg, msg_num);
+ 
+-	if (data_len > 0)
+-		clear_bit(I2C_HID_READ_PENDING, &ihid->flags);
 -
- 	/* REVISIT the fault reporting model here is weak:
- 	 *
- 	 *  - When we get an error after receiving N bytes from a slave,
--- 
-2.43.0
-
+ 	if (ret != msg_num)
+ 		return ret < 0 ? ret : -EIO;
+ 
+@@ -538,9 +533,6 @@ static irqreturn_t i2c_hid_irq(int irq,
+ {
+ 	struct i2c_hid *ihid = dev_id;
+ 
+-	if (test_bit(I2C_HID_READ_PENDING, &ihid->flags))
+-		return IRQ_HANDLED;
+-
+ 	i2c_hid_get_input(ihid);
+ 
+ 	return IRQ_HANDLED;
 
 
