@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D4417592;
-	Tue, 30 Apr 2024 11:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2FC12D745;
+	Tue, 30 Apr 2024 11:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476251; cv=none; b=pCtbgWPkjBnsQW5EdchrHsd7+DcnflrB0A8fA1yBAg5rIt/RhvG3+5pBHCmnVCp7LjjMSpH6hcpNfBc7G4D11kkmSd1mBu7QaJHfHH8kxm5jhJ4kBIHqg9k3MrbSwcpa8VlqBR4JJDUISw4+DUKjI4TcsfgEU7dDFq54jkUBPW4=
+	t=1714476254; cv=none; b=iPA1Ji1+nEn8KFdBUfohCkJYcyoP7l/NYBDAm1OQ7I5hQ9Wf4x+soqzI8QLW8fBwJd/tXYLSpZps8AcSHntnyGF9BPkhLzbjuApgNc4L4gkH5OxrX3ERmKRIsGInR+KU5RF14JKMf/mOxdx3tUZM200e5P39XvdDaKnQhUArH/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476251; c=relaxed/simple;
-	bh=Wnc2Q0IixtIvc91cNJNv0B84xRNdx5EagQOM+TRg3W4=;
+	s=arc-20240116; t=1714476254; c=relaxed/simple;
+	bh=QjN3qMx1vOTq2vdWSNykbsp+/4pffcGkXAi8puLoWPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mQjvCBY8FQsqTswV/9wUuFi2EsyyTtKvHL7UqVrgLlnZFF1x5k5ygrp2qfjhzQfHWvLOjy1qRWm44uS0KQx99AySE9lGugg0IUx2j5zUPCLePgllHWamRnVOwIHw9tq0y/6a5IBdNnuCyfk8zdX2VvFYBBcWfq5YVOzkda0uPMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pC8NTYBj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fOUtrW2scH8EEw8V0h/+Jn4E/sg2YreZquVh0KdbNhxbtyyL1QPwKD9CDf3fqXiEvynYef2ZS+cLz22am0mBIjRVZQ/ra5qu2HWwhakMNSDueXnueOTLhiNE8Q34biZwKlmCv1yzKQV+UCFdWCFd0zCMzFtOVRBvIm6dY3BVbn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BB4eMT8M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pC8NTYBj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD28C2BBFC;
-	Tue, 30 Apr 2024 11:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BB4eMT8M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57BDC2BBFC;
+	Tue, 30 Apr 2024 11:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476251;
-	bh=Wnc2Q0IixtIvc91cNJNv0B84xRNdx5EagQOM+TRg3W4=;
+	s=korg; t=1714476254;
+	bh=QjN3qMx1vOTq2vdWSNykbsp+/4pffcGkXAi8puLoWPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pC8NTYBjQH/RcJHZV5Yza8gzEwHI8tgyhBvrYqCDIdWJdIQKOsjop7dglJiK5zWp+
-	 3zJHEgKW7xnFxntBnbGi2MBbzJTcQSZEWB4XSV7IR4aEk+xiQXvOUZLpx0WZlTAW+p
-	 np8CFifkH+WWyj5vNkAn+qPpNmszWgtvktz+/fOU=
+	b=BB4eMT8MfWfN8vecCwSIKHJuFokSuPpXd1zyTcDclW+8Bn2IPyo2Xs6qqGUFBA4aP
+	 WnEDe/7u3Yac7nhbJ3G2ykvy61qzgec6LhsdKBg8EqH/nm1hNBNeWs+18WC9+pXPaG
+	 fFgSFqZSwMUEdJHUjL29vfAxYIgiA57oVfm34Ofo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	": Aleksander Morgado" <aleksandermj@chromium.org>,
-	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.com>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>
-Subject: [PATCH 5.4 044/107] Revert "usb: cdc-wdm: close race between read and workqueue"
-Date: Tue, 30 Apr 2024 12:40:04 +0200
-Message-ID: <20240430103045.958916067@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Emil Kronborg <emil.kronborg@protonmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 080/107] serial: mxs-auart: add spinlock around changing cts state
+Date: Tue, 30 Apr 2024 12:40:40 +0200
+Message-ID: <20240430103047.019012601@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -46,54 +45,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Emil Kronborg <emil.kronborg@protonmail.com>
 
-commit 1607830dadeefc407e4956336d9fcd9e9defd810 upstream.
+[ Upstream commit 54c4ec5f8c471b7c1137a1f769648549c423c026 ]
 
-This reverts commit 339f83612f3a569b194680768b22bf113c26a29d.
+The uart_handle_cts_change() function in serial_core expects the caller
+to hold uport->lock. For example, I have seen the below kernel splat,
+when the Bluetooth driver is loaded on an i.MX28 board.
 
-It has been found to cause problems in a number of Chromebook devices,
-so revert the change until it can be brought back in a safe way.
+    [   85.119255] ------------[ cut here ]------------
+    [   85.124413] WARNING: CPU: 0 PID: 27 at /drivers/tty/serial/serial_core.c:3453 uart_handle_cts_change+0xb4/0xec
+    [   85.134694] Modules linked in: hci_uart bluetooth ecdh_generic ecc wlcore_sdio configfs
+    [   85.143314] CPU: 0 PID: 27 Comm: kworker/u3:0 Not tainted 6.6.3-00021-gd62a2f068f92 #1
+    [   85.151396] Hardware name: Freescale MXS (Device Tree)
+    [   85.156679] Workqueue: hci0 hci_power_on [bluetooth]
+    (...)
+    [   85.191765]  uart_handle_cts_change from mxs_auart_irq_handle+0x380/0x3f4
+    [   85.198787]  mxs_auart_irq_handle from __handle_irq_event_percpu+0x88/0x210
+    (...)
 
-Link: https://lore.kernel.org/r/385a3519-b45d-48c5-a6fd-a3fdb6bec92f@chromium.org
-Reported-by:: Aleksander Morgado <aleksandermj@chromium.org>
-Fixes: 339f83612f3a ("usb: cdc-wdm: close race between read and workqueue")
-Cc: stable <stable@kernel.org>
-Cc: Oliver Neukum <oneukum@suse.com>
-Cc: Bjørn Mork <bjorn@mork.no>
+Cc: stable@vger.kernel.org
+Fixes: 4d90bb147ef6 ("serial: core: Document and assert lock requirements for irq helpers")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Emil Kronborg <emil.kronborg@protonmail.com>
+Link: https://lore.kernel.org/r/20240320121530.11348-1-emil.kronborg@protonmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/class/cdc-wdm.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/tty/serial/mxs-auart.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/class/cdc-wdm.c
-+++ b/drivers/usb/class/cdc-wdm.c
-@@ -471,7 +471,6 @@ out_free_mem:
- static int service_outstanding_interrupt(struct wdm_device *desc)
- {
- 	int rv = 0;
--	int used;
+diff --git a/drivers/tty/serial/mxs-auart.c b/drivers/tty/serial/mxs-auart.c
+index 5d483e996514f..a8eb98e37af48 100644
+--- a/drivers/tty/serial/mxs-auart.c
++++ b/drivers/tty/serial/mxs-auart.c
+@@ -1126,11 +1126,13 @@ static void mxs_auart_set_ldisc(struct uart_port *port,
  
- 	/* submit read urb only if the device is waiting for it */
- 	if (!desc->resp_count || !--desc->resp_count)
-@@ -486,10 +485,7 @@ static int service_outstanding_interrupt
- 		goto out;
+ static irqreturn_t mxs_auart_irq_handle(int irq, void *context)
+ {
+-	u32 istat;
++	u32 istat, stat;
+ 	struct mxs_auart_port *s = context;
+ 	u32 mctrl_temp = s->mctrl_prev;
+-	u32 stat = mxs_read(s, REG_STAT);
+ 
++	uart_port_lock(&s->port);
++
++	stat = mxs_read(s, REG_STAT);
+ 	istat = mxs_read(s, REG_INTR);
+ 
+ 	/* ack irq */
+@@ -1166,6 +1168,8 @@ static irqreturn_t mxs_auart_irq_handle(int irq, void *context)
+ 		istat &= ~AUART_INTR_TXIS;
  	}
  
--	used = test_and_set_bit(WDM_RESPONDING, &desc->flags);
--	if (used)
--		goto out;
--
-+	set_bit(WDM_RESPONDING, &desc->flags);
- 	spin_unlock_irq(&desc->iuspin);
- 	rv = usb_submit_urb(desc->response, GFP_KERNEL);
- 	spin_lock_irq(&desc->iuspin);
++	uart_port_unlock(&s->port);
++
+ 	return IRQ_HANDLED;
+ }
+ 
+-- 
+2.43.0
+
 
 
