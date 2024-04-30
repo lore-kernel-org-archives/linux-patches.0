@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED781E50A;
-	Tue, 30 Apr 2024 11:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DEC1E50A;
+	Tue, 30 Apr 2024 11:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475408; cv=none; b=JkItknfLioSnlpmKAJRrcBgLGlESYFaMP6D1X12Ss+iG2Q/m0OeCdeDScBbPukq5FvYR9eP7XXrqCObk2fjke2Uorhm0m8MNVtX4I7tD5Z0Gmebc1J5bl+3pXTnxQtEQIWYbbEM9CwoxaIHYPCKFkd0+fQ6n19nR4EOxCXYwbFQ=
+	t=1714475411; cv=none; b=UcbvAGbsuDaqoYq9aU0tz1+t0lGNC+8aGCvwoQktBEi1OIDp9Z5CZL1SNGBxcmV1cB/FawV3oZ0LYm1LGerbafOkPlpcM3a2VDPsBlPY3kj9/TGl02i4kByFqkoIwTvD2ZYxY2+RE20W7h3HRqrf3V4PDRSsfZKujvVpqJTjEK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475408; c=relaxed/simple;
-	bh=uIGphSZsDV8P7BxXl47ELQB83mGPB/qKy8srE7sWJK8=;
+	s=arc-20240116; t=1714475411; c=relaxed/simple;
+	bh=ruFcnDPBcK9qXr5wSPzOCISlrudimcnwMaurYehdjco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=efQcVASNkHI4mmzTQhWtvH9CDeaykkK4fVd4FW6KIHKILO9Pl5hZlxnC1V1lOvsg5CeTSRppyzv+F4ozryg+0BbiPT3rKnj/R63dspnqNnjbOctTNAfPxi66iTZuPVlp0hZIdV8ejTwoJcfnV7/EF9h58isYk6TL9QdbgObdCmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OkOV4ZZ2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UHaU2ukva7EVTqj2CRBSRPbhua4MW9c6Id7saP9e/ghDRw0ezkABP5SksD9EWRStTa+1/fS+wnX+qwhosCOMxF0QxV3WPGm6FoOxVTO4h4tUYaACBM4xZKPzYk7DSUpBaIdpXcNyrD8Diu3d7j66S+i6WNI3JsoUSGRuHU9qapU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbOpp5R1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OkOV4ZZ2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B247C2BBFC;
-	Tue, 30 Apr 2024 11:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbOpp5R1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 928D6C2BBFC;
+	Tue, 30 Apr 2024 11:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475407;
-	bh=uIGphSZsDV8P7BxXl47ELQB83mGPB/qKy8srE7sWJK8=;
+	s=korg; t=1714475411;
+	bh=ruFcnDPBcK9qXr5wSPzOCISlrudimcnwMaurYehdjco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OkOV4ZZ2ivX/BEKrngl9gp66dfyLKwa1hxJscetUWzLYUgEpA60cjXYtffQrYqZ+o
-	 pulCcuYExjbTUudYQedGwycAj1RB/q3Izl4vmdIY5XcLwFqxmX++HCppQ+AzohiDhJ
-	 JcLSG0iYd3HdPqSc7C5dtRufkO9q8EUKhy33feNI=
+	b=LbOpp5R1gh+a0B68F1NOA+3WJqtuZzE/GJwWnu5gWKqgJ2iwiNo9frNUtx1YLCni+
+	 PGDJVko1luBCwAiESOHSxnY1WKXe1P6nZnAqEBCTeUWqTMYYHEismH8FAe21qOt2EM
+	 mAfGCzoVVu3jFPflbS545OS7XbAm1dAExuz9puUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	MD Danish Anwar <danishanwar@ti.com>,
+	Ravi Gunasekaran <r-gunasekaran@ti.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 086/186] netfilter: nf_tables: honor table dormant flag from netdev release event path
-Date: Tue, 30 Apr 2024 12:38:58 +0200
-Message-ID: <20240430103100.530765094@linuxfoundation.org>
+Subject: [PATCH 6.6 087/186] net: phy: dp83869: Fix MII mode failure
+Date: Tue, 30 Apr 2024 12:38:59 +0200
+Message-ID: <20240430103100.559513024@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -50,70 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: MD Danish Anwar <danishanwar@ti.com>
 
-[ Upstream commit 8e30abc9ace4f0add4cd761dfdbfaebae5632dd2 ]
+[ Upstream commit 6c9cd59dbcb09a2122b5ce0dfc07c74e6fc00dc0 ]
 
-Check for table dormant flag otherwise netdev release event path tries
-to unregister an already unregistered hook.
+The DP83869 driver sets the MII bit (needed for PHY to work in MII mode)
+only if the op-mode is either DP83869_100M_MEDIA_CONVERT or
+DP83869_RGMII_100_BASE.
 
-[524854.857999] ------------[ cut here ]------------
-[524854.858010] WARNING: CPU: 0 PID: 3386599 at net/netfilter/core.c:501 __nf_unregister_net_hook+0x21a/0x260
-[...]
-[524854.858848] CPU: 0 PID: 3386599 Comm: kworker/u32:2 Not tainted 6.9.0-rc3+ #365
-[524854.858869] Workqueue: netns cleanup_net
-[524854.858886] RIP: 0010:__nf_unregister_net_hook+0x21a/0x260
-[524854.858903] Code: 24 e8 aa 73 83 ff 48 63 43 1c 83 f8 01 0f 85 3d ff ff ff e8 98 d1 f0 ff 48 8b 3c 24 e8 8f 73 83 ff 48 63 43 1c e9 26 ff ff ff <0f> 0b 48 83 c4 18 48 c7 c7 00 68 e9 82 5b 5d 41 5c 41 5d 41 5e 41
-[524854.858914] RSP: 0018:ffff8881e36d79e0 EFLAGS: 00010246
-[524854.858926] RAX: 0000000000000000 RBX: ffff8881339ae790 RCX: ffffffff81ba524a
-[524854.858936] RDX: dffffc0000000000 RSI: 0000000000000008 RDI: ffff8881c8a16438
-[524854.858945] RBP: ffff8881c8a16438 R08: 0000000000000001 R09: ffffed103c6daf34
-[524854.858954] R10: ffff8881e36d79a7 R11: 0000000000000000 R12: 0000000000000005
-[524854.858962] R13: ffff8881c8a16000 R14: 0000000000000000 R15: ffff8881351b5a00
-[524854.858971] FS:  0000000000000000(0000) GS:ffff888390800000(0000) knlGS:0000000000000000
-[524854.858982] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[524854.858991] CR2: 00007fc9be0f16f4 CR3: 00000001437cc004 CR4: 00000000001706f0
-[524854.859000] Call Trace:
-[524854.859006]  <TASK>
-[524854.859013]  ? __warn+0x9f/0x1a0
-[524854.859027]  ? __nf_unregister_net_hook+0x21a/0x260
-[524854.859044]  ? report_bug+0x1b1/0x1e0
-[524854.859060]  ? handle_bug+0x3c/0x70
-[524854.859071]  ? exc_invalid_op+0x17/0x40
-[524854.859083]  ? asm_exc_invalid_op+0x1a/0x20
-[524854.859100]  ? __nf_unregister_net_hook+0x6a/0x260
-[524854.859116]  ? __nf_unregister_net_hook+0x21a/0x260
-[524854.859135]  nf_tables_netdev_event+0x337/0x390 [nf_tables]
-[524854.859304]  ? __pfx_nf_tables_netdev_event+0x10/0x10 [nf_tables]
-[524854.859461]  ? packet_notifier+0xb3/0x360
-[524854.859476]  ? _raw_spin_unlock_irqrestore+0x11/0x40
-[524854.859489]  ? dcbnl_netdevice_event+0x35/0x140
-[524854.859507]  ? __pfx_nf_tables_netdev_event+0x10/0x10 [nf_tables]
-[524854.859661]  notifier_call_chain+0x7d/0x140
-[524854.859677]  unregister_netdevice_many_notify+0x5e1/0xae0
+Some drivers i.e. ICSSG support MII mode with op-mode as
+DP83869_RGMII_COPPER_ETHERNET for which the MII bit is not set in dp83869
+driver. As a result MII mode on ICSSG doesn't work and below log is seen.
 
-Fixes: d54725cd11a5 ("netfilter: nf_tables: support for multiple devices per netdev hook")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+TI DP83869 300b2400.mdio:0f: selected op-mode is not valid with MII mode
+icssg-prueth icssg1-eth: couldn't connect to phy ethernet-phy@0
+icssg-prueth icssg1-eth: can't phy connect port MII0
+
+Fix this by setting MII bit for DP83869_RGMII_COPPER_ETHERNET op-mode as
+well.
+
+Fixes: 94e86ef1b801 ("net: phy: dp83869: support mii mode when rgmii strap cfg is used")
+Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
+Reviewed-by: Ravi Gunasekaran <r-gunasekaran@ti.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_chain_filter.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/phy/dp83869.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_chain_filter.c b/net/netfilter/nft_chain_filter.c
-index 274b6f7e6bb57..d170758a1eb5d 100644
---- a/net/netfilter/nft_chain_filter.c
-+++ b/net/netfilter/nft_chain_filter.c
-@@ -338,7 +338,9 @@ static void nft_netdev_event(unsigned long event, struct net_device *dev,
- 		return;
- 
- 	if (n > 1) {
--		nf_unregister_net_hook(ctx->net, &found->ops);
-+		if (!(ctx->chain->table->flags & NFT_TABLE_F_DORMANT))
-+			nf_unregister_net_hook(ctx->net, &found->ops);
-+
- 		list_del_rcu(&found->list);
- 		kfree_rcu(found, rcu);
- 		return;
+diff --git a/drivers/net/phy/dp83869.c b/drivers/net/phy/dp83869.c
+index fa8c6fdcf3018..d7aaefb5226b6 100644
+--- a/drivers/net/phy/dp83869.c
++++ b/drivers/net/phy/dp83869.c
+@@ -695,7 +695,8 @@ static int dp83869_configure_mode(struct phy_device *phydev,
+ 	phy_ctrl_val = dp83869->mode;
+ 	if (phydev->interface == PHY_INTERFACE_MODE_MII) {
+ 		if (dp83869->mode == DP83869_100M_MEDIA_CONVERT ||
+-		    dp83869->mode == DP83869_RGMII_100_BASE) {
++		    dp83869->mode == DP83869_RGMII_100_BASE ||
++		    dp83869->mode == DP83869_RGMII_COPPER_ETHERNET) {
+ 			phy_ctrl_val |= DP83869_OP_MODE_MII;
+ 		} else {
+ 			phydev_err(phydev, "selected op-mode is not valid with MII mode\n");
 -- 
 2.43.0
 
