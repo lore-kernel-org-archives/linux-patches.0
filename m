@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D00812C499;
-	Tue, 30 Apr 2024 10:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5643F12C476;
+	Tue, 30 Apr 2024 10:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474616; cv=none; b=dOCBly6RgvSnjphcaKwiVNpNBJT0oS+6eoolPnBlkBer4kWrbEuTHlSVZFeBfW7ouQjgCAN7jFnle6KMAMYlSF6WAVtArmoxBuWi1aAbK2Jj4/H3kcvuqWWGBPovZSJhA9P0qkL2kf6OWPFSPDRfF/FgQRSrzfe2UXbcH/NkWbU=
+	t=1714474619; cv=none; b=OVTLSY3G25fJsVd3BxVO1Hw6yAox0DWiIkfbhbea3AoGkpTl3EDkuLypq3XnL1N6tFSLiDN82lpLwDUQJTCHgbagL0VpMW76GUxn4u2BLp2yiWv4QoELOVrSFWosTePGY6n2DWRCGRzzkAw+0cg7Dd/aj6YVFt7/rj4MDYiqNoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474616; c=relaxed/simple;
-	bh=3LmBwj1A00Us3JgxM3GPDLNrywKJw5PHzpP/zuwTq8Y=;
+	s=arc-20240116; t=1714474619; c=relaxed/simple;
+	bh=mFgdl9O4zt1mKFB+CUoc6grKNsx38EX1ReKLM0EULgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AciuZi1VKv6r+WtLh+l6TJm87i/uB08IH1iXeA9lqIllkj0tdqvZCHUXVid+pprdjiGG8juxLZoH/Ck3iZ3QhZvpPV0jR7tm2XorwVlZY6q8Dba2UxBl4dXd03I6pIKAbWEXMgQlCDkt2y/1gkrq99o6FcQjva2+9X+uXovLAuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YtGqBUjH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eoLCnY8FPxFwhRSBTJWGIg0f/FeucnzlhifrVHTDIo2o1/40/uhFQaqc0VgYv12GzMkpBhW+mrah7Gj0c3FA2rawZG8xorML+x++HAnI/XQeFPggjmpRd0y8U17SpLZB0iZ/FUnTAAJFqOq+dJsb87+mFdhaZi/V/dzs09KsGts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHDf3piH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YtGqBUjH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B8EC2BBFC;
-	Tue, 30 Apr 2024 10:56:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHDf3piH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 737D0C2BBFC;
+	Tue, 30 Apr 2024 10:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474615;
-	bh=3LmBwj1A00Us3JgxM3GPDLNrywKJw5PHzpP/zuwTq8Y=;
+	s=korg; t=1714474618;
+	bh=mFgdl9O4zt1mKFB+CUoc6grKNsx38EX1ReKLM0EULgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YtGqBUjH67cBzyKNEIXNg3NAXdWLzEejANzGU54+b8psbjy4ZO6acfidlOLpLDt85
-	 Pr8DOLm5ToWzBdAXghX1t4fpldGUQN9c+xCiy+GqwW1fI3iSS9Zw1WNwEmSZ0vQ5vQ
-	 PclXOLdeHHZkOfy5ZNkhmPJDRlqh/7w9v8EiWwQo=
+	b=RHDf3piHfdvVPrt0vydS4BvqhiHyEwWjB4k8MSoaObUhDauugRBKUsLzbMFWJNn2J
+	 bcO6RQwbparKhU1YgosodnZ8Z7qOvxu3NgCAh5yoyzOWoLE7RSCcVAo85SWl67eqO+
+	 v9sg8wth8Cxnin6EENFAZPWo9sayWEzTScl4EpVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarred White <jarredwhite@linux.microsoft.com>,
-	Vanshidhar Konda <vanshikonda@os.amperecomputing.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.8 183/228] ACPI: CPPC: Fix bit_offset shift in MASK_VAL() macro
-Date: Tue, 30 Apr 2024 12:39:21 +0200
-Message-ID: <20240430103109.083890570@linuxfoundation.org>
+	Varadarajan Narayanan <quic_varada@quicinc.com>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 210/228] phy: qcom: m31: match requested regulator name with dt schema
+Date: Tue, 30 Apr 2024 12:39:48 +0200
+Message-ID: <20240430103109.865311483@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -51,42 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarred White <jarredwhite@linux.microsoft.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-commit 05d92ee782eeb7b939bdd0189e6efcab9195bf95 upstream.
+[ Upstream commit 47b3e2f3914ae5e8d9025d65ae5cffcbb54bc9c3 ]
 
-Commit 2f4a4d63a193 ("ACPI: CPPC: Use access_width over bit_width for
-system memory accesses") neglected to properly wrap the bit_offset shift
-when it comes to applying the mask. This may cause incorrect values to be
-read and may cause the cpufreq module not be loaded.
+According to the 'qcom,ipq5332-usb-hsphy.yaml' schema, the 5V
+supply regulator must be defined via the 'vdd-supply' property.
+The driver however requests for the 'vdda-phy' regulator which
+results in the following message when the driver is probed on
+a IPQ5018 based board with a device tree matching to the schema:
 
-[   11.059751] cpu_capacity: CPU0 missing/invalid highest performance.
-[   11.066005] cpu_capacity: partial information: fallback to 1024 for all CPUs
+  qcom-m31usb-phy 5b000.phy: supply vdda-phy not found, using dummy regulator
+  qcom-m31usb-phy 5b000.phy: Registered M31 USB phy
 
-Also, corrected the bitmask generation in GENMASK (extra bit being added).
+This means that the regulator specified in the device tree never
+gets enabled.
 
-Fixes: 2f4a4d63a193 ("ACPI: CPPC: Use access_width over bit_width for system memory accesses")
-Signed-off-by: Jarred White <jarredwhite@linux.microsoft.com>
-Cc: 5.15+ <stable@vger.kernel.org> # 5.15+
-Reviewed-by: Vanshidhar Konda <vanshikonda@os.amperecomputing.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Change the driver to use the 'vdd' name for the regulator as per
+defined in the schema in order to ensure that the corresponding
+regulator gets enabled.
+
+Fixes: 08e49af50701 ("phy: qcom: Introduce M31 USB PHY driver")
+Reviewed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240406-phy-qcom-m31-regulator-fix-v2-1-c8e9795bc071@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-m31.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -170,8 +170,8 @@ show_cppc_data(cppc_get_perf_ctrs, cppc_
- #define GET_BIT_WIDTH(reg) ((reg)->access_width ? (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
+diff --git a/drivers/phy/qualcomm/phy-qcom-m31.c b/drivers/phy/qualcomm/phy-qcom-m31.c
+index 03fb0d4b75d74..20d4c020a83c1 100644
+--- a/drivers/phy/qualcomm/phy-qcom-m31.c
++++ b/drivers/phy/qualcomm/phy-qcom-m31.c
+@@ -297,7 +297,7 @@ static int m31usb_phy_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, PTR_ERR(qphy->phy),
+ 				     "failed to create phy\n");
  
- /* Shift and apply the mask for CPC reads/writes */
--#define MASK_VAL(reg, val) ((val) >> ((reg)->bit_offset & 			\
--					GENMASK(((reg)->bit_width), 0)))
-+#define MASK_VAL(reg, val) (((val) >> (reg)->bit_offset) & 			\
-+					GENMASK(((reg)->bit_width) - 1, 0))
- 
- static ssize_t show_feedback_ctrs(struct kobject *kobj,
- 		struct kobj_attribute *attr, char *buf)
+-	qphy->vreg = devm_regulator_get(dev, "vdda-phy");
++	qphy->vreg = devm_regulator_get(dev, "vdd");
+ 	if (IS_ERR(qphy->vreg))
+ 		return dev_err_probe(dev, PTR_ERR(qphy->vreg),
+ 				     "failed to get vreg\n");
+-- 
+2.43.0
+
 
 
