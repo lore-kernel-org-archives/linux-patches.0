@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A2412CD90;
-	Tue, 30 Apr 2024 11:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4CE12C47A;
+	Tue, 30 Apr 2024 11:04:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475050; cv=none; b=A6NP9Dw8kXJJ6fXY7vBajcYzocUygrwBPNCBedfNp/b5iCFpRfGfKgzpqW1i0VJg8nr85gcKaz3BDn4yOuP58VvJtmqPGZmNPxbcxzJT/J82aIPfsO8DJU0ZoHiLW2iRX6U81o3u7gL2zhHtCNH02Xk3A4PlqvYEs/NRiCYsNSA=
+	t=1714475053; cv=none; b=mvGQboxzyM+Fvca8CBZiplKbfy/ypeAdjpzy5nnEVEgIyFk/QnyZRHkWwApbgWRg5FowMo43mEA+8F8EIVL3WeLH/Nz33hkWGqDT5v2DfXvoqrYyq50el5hYy1tFonl9juJlGzTOlhYIK3u5yb0LmGFgknIO3g51sW3Smz0V/+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475050; c=relaxed/simple;
-	bh=OOmXKWuTJdfuCYfYiMx11ORnMF8fZE/Vp39Y5UjdAfI=;
+	s=arc-20240116; t=1714475053; c=relaxed/simple;
+	bh=k3MFD4OuxxtFKGs4eAkF8JwEFCUrSMToivGnX0sy6o8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H5EkJ5VkYJMFKQAzuTDMGPOHXfhjw2mxfeDHWtfI7e4VKrHtn+iXqt9mnH0j+zoZWfZLgo6IKKmzDu60uTCMf0hlhgc+ObblG95xB8rINYqqteF12IIbGzq8JoRVCurZD5sdIDXwECI0fHcB4E9U8mh46y6LOBmHVxZdGZ7s2yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PayOuH8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lrNlwmXtAwXlOPHojzLCHFTnVoIlmVZx+ziIb1Xe+6+wcjitPjNbzswHkY1WqCeYk2+oEiqdC/LdUzWp1pl5nK9KOqVnAAxZPpT9tuH9fJhGFqKWnqwg2WDsy5k1FPx3zbFVM6gS0/Lvh9o8SV4JMrS2eAQ/8fxNkZBLyETUplk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8pr7M5n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PayOuH8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A4A5C2BBFC;
-	Tue, 30 Apr 2024 11:04:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8pr7M5n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97136C2BBFC;
+	Tue, 30 Apr 2024 11:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475049;
-	bh=OOmXKWuTJdfuCYfYiMx11ORnMF8fZE/Vp39Y5UjdAfI=;
+	s=korg; t=1714475053;
+	bh=k3MFD4OuxxtFKGs4eAkF8JwEFCUrSMToivGnX0sy6o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2PayOuH8VoyYyJyBpP6mexqSWy3llwBMR8I4tMVpB1OVXO7eKiochINpSyfVJ002+
-	 nrV8PTRfNRwRBQmbaYdeYTpGjtygKVLCn2+QKVVwGkr/xrsYes/vr3zWBGRMAK+mig
-	 3vrzYGTkxRZAT+CqmE0MPWaq0t6Woq0m+KWFdQR0=
+	b=p8pr7M5nZJn3CuZyXDULLRHOSVcc0zjfgd8aGX1ZkNXdGmUGMFirm05sYh2O7Jd42
+	 OHvU5EMFE+rxTSpjbUqXgS7J1enPQ4VbpJSblMad1Me4We8tZQTsbewq3muvFY/EkZ
+	 8ShcVE858XoQkDTPkms+EQleAF/kDhOsjUn+DD+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Larry Finger <Larry.Finger@lwfinger.net>,
-	WangYuli <wangyuli@uniontech.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 115/138] Bluetooth: btusb: Add Realtek RTL8852BE support ID 0x0bda:0x4853
-Date: Tue, 30 Apr 2024 12:40:00 +0200
-Message-ID: <20240430103052.793020446@linuxfoundation.org>
+	syzbot+510a1abbb8116eeb341d@syzkaller.appspotmail.com,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Johannes Thumshirn <Johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.10 116/138] btrfs: fix information leak in btrfs_ioctl_logical_to_ino()
+Date: Tue, 30 Apr 2024 12:40:01 +0200
+Message-ID: <20240430103052.821954056@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -51,69 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-commit d1a5a7eede2977da3d2002d5ea3b519019cc1a98 upstream.
+commit 2f7ef5bb4a2f3e481ef05fab946edb97c84f67cf upstream.
 
-Add the support ID(0x0bda, 0x4853) to usb_device_id table for
-Realtek RTL8852BE.
+Syzbot reported the following information leak for in
+btrfs_ioctl_logical_to_ino():
 
-Without this change the device utilizes an obsolete version of
-the firmware that is encoded in it rather than the updated Realtek
-firmware and config files from the firmware directory. The latter
-files implement many new features.
+  BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+  BUG: KMSAN: kernel-infoleak in _copy_to_user+0xbc/0x110 lib/usercopy.c:40
+   instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+   _copy_to_user+0xbc/0x110 lib/usercopy.c:40
+   copy_to_user include/linux/uaccess.h:191 [inline]
+   btrfs_ioctl_logical_to_ino+0x440/0x750 fs/btrfs/ioctl.c:3499
+   btrfs_ioctl+0x714/0x1260
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:904 [inline]
+   __se_sys_ioctl+0x261/0x450 fs/ioctl.c:890
+   __x64_sys_ioctl+0x96/0xe0 fs/ioctl.c:890
+   x64_sys_call+0x1883/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:17
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-The device table is as follows:
+  Uninit was created at:
+   __kmalloc_large_node+0x231/0x370 mm/slub.c:3921
+   __do_kmalloc_node mm/slub.c:3954 [inline]
+   __kmalloc_node+0xb07/0x1060 mm/slub.c:3973
+   kmalloc_node include/linux/slab.h:648 [inline]
+   kvmalloc_node+0xc0/0x2d0 mm/util.c:634
+   kvmalloc include/linux/slab.h:766 [inline]
+   init_data_container+0x49/0x1e0 fs/btrfs/backref.c:2779
+   btrfs_ioctl_logical_to_ino+0x17c/0x750 fs/btrfs/ioctl.c:3480
+   btrfs_ioctl+0x714/0x1260
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:904 [inline]
+   __se_sys_ioctl+0x261/0x450 fs/ioctl.c:890
+   __x64_sys_ioctl+0x96/0xe0 fs/ioctl.c:890
+   x64_sys_call+0x1883/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:17
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-T: Bus=03 Lev=01 Prnt=01 Port=09 Cnt=03 Dev#= 4 Spd=12 MxCh= 0
-D: Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs= 1
-P: Vendor=0bda ProdID=4853 Rev= 0.00
-S: Manufacturer=Realtek
-S: Product=Bluetooth Radio
-S: SerialNumber=00e04c000001
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=81(I) Atr=03(Int.) MxPS= 16 Ivl=1ms
-E: Ad=02(O) Atr=02(Bulk) MxPS= 64 Ivl=0ms
-E: Ad=82(I) Atr=02(Bulk) MxPS= 64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 0 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 0 Ivl=1ms
-I: If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 9 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 9 Ivl=1ms
-I: If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 17 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 17 Ivl=1ms
-I: If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 25 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 25 Ivl=1ms
-I: If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 33 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 33 Ivl=1ms
-I: If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 49 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 49 Ivl=1ms
+  Bytes 40-65535 of 65536 are uninitialized
+  Memory access of size 65536 starts at ffff888045a40000
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This happens, because we're copying a 'struct btrfs_data_container' back
+to user-space. This btrfs_data_container is allocated in
+'init_data_container()' via kvmalloc(), which does not zero-fill the
+memory.
+
+Fix this by using kvzalloc() which zeroes out the memory on allocation.
+
+CC: stable@vger.kernel.org # 4.14+
+Reported-by:  <syzbot+510a1abbb8116eeb341d@syzkaller.appspotmail.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Johannes Thumshirn <Johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/btrfs/backref.c |   12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -418,6 +418,8 @@ static const struct usb_device_id blackl
- 	/* Realtek 8852BE Bluetooth devices */
- 	{ USB_DEVICE(0x0cb8, 0xc559), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0bda, 0x4853), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0bda, 0x887b), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0bda, 0xb85b), .driver_info = BTUSB_REALTEK |
+--- a/fs/btrfs/backref.c
++++ b/fs/btrfs/backref.c
+@@ -2315,20 +2315,14 @@ struct btrfs_data_container *init_data_c
+ 	size_t alloc_bytes;
+ 
+ 	alloc_bytes = max_t(size_t, total_bytes, sizeof(*data));
+-	data = kvmalloc(alloc_bytes, GFP_KERNEL);
++	data = kvzalloc(alloc_bytes, GFP_KERNEL);
+ 	if (!data)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	if (total_bytes >= sizeof(*data)) {
++	if (total_bytes >= sizeof(*data))
+ 		data->bytes_left = total_bytes - sizeof(*data);
+-		data->bytes_missing = 0;
+-	} else {
++	else
+ 		data->bytes_missing = sizeof(*data) - total_bytes;
+-		data->bytes_left = 0;
+-	}
+-
+-	data->elem_cnt = 0;
+-	data->elem_missed = 0;
+ 
+ 	return data;
+ }
 
 
