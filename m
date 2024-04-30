@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2697464;
-	Tue, 30 Apr 2024 10:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6357464;
+	Tue, 30 Apr 2024 10:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474764; cv=none; b=G99BasKcYYgnaHGdUwhC65VuOXgh2+O5om439cpVnEAcXOFFvYVwFuLAB8bDz1L2lDywGtQgSVmVX2+Ibuso02riwHY9xmLj8KMN8tWBMIZQLmXdIDRssUgWovJDWt5Er4GhLG2qoWoWneAQ5Rq4jXYe3Y211FCYlA7pfyxLosM=
+	t=1714474767; cv=none; b=ZduCMoB9vZ2FmMAf7zpXrpBrT/bYKkGFfHedxaW3/Ljz3sZ1Wzz2Pbz828VTAmh7hgLNWeHr+/1FBmcS71cfYexwDOLkgLEcRGOwkvKh9zHBaNLtlcIm0eCxfMyOW5+t20onb/scAzFaUOGB4rCk7Pc2aVPGXYt2WWnVxELEM4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474764; c=relaxed/simple;
-	bh=XeX2DQ6cR+sg5T4j/H8vw3v4FXPRfkRRZ/n/J6vv7qE=;
+	s=arc-20240116; t=1714474767; c=relaxed/simple;
+	bh=sYRzUwvaCiVL+qfZJTHVInPFLt1Za6h7upf6ujLwnp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JDnzhaF66QhC7NfeNs/5kcju/RdNhNEej9J8SrzJsPYTXW6tFLZ24powd7PuMZ0EPqFg2+wIX4QsmvWiUNZe/ycKT4DtU4TOANBM70AF7Al+DFktjsbWt+ifrlCL7jvTipFiH3SNsj5l5slaqqf03ANV+44Glh7tk0hxx65I+UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYG3K1u/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ss6MUuKMPaKV3roQYVSuKq8uamBKf8vBWtLYcT5KwjIjdT468XWrYmALM/pKEqdWfDjEN9UC7ww0CJ8PXGMUKBec9qzhYl0XSqC2TyLVLtTAMmczKKtmVpecBL+T+9Kf97m2GD7jrKCcuqjE3/25PJLYmeGdjaiDOJfdUVDIDZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXD1gNlF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYG3K1u/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99CF9C4AF18;
-	Tue, 30 Apr 2024 10:59:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXD1gNlF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9487C2BBFC;
+	Tue, 30 Apr 2024 10:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474764;
-	bh=XeX2DQ6cR+sg5T4j/H8vw3v4FXPRfkRRZ/n/J6vv7qE=;
+	s=korg; t=1714474767;
+	bh=sYRzUwvaCiVL+qfZJTHVInPFLt1Za6h7upf6ujLwnp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oYG3K1u/1ZGQFwHj8HJMgIxB9qnv5HXoKoXT2F3xjOQJxSgQES4kcvgRrGTRMHpcg
-	 Xw3Yq/2Tl2bRg0pJZPnogSgvn1sIoBFvfCXZQZCB9aZm4kI/WMJ3wpZx2GcKv3mug2
-	 XgQnpoRCxZOUCEoiNSlIBTYVtbwOr2YHMXkrZeOc=
+	b=XXD1gNlFUpQYqEBtblg6gsqGlPXPGgfmsfQXnsY3bMvJ16qwK2fWD0AsHQELowWRD
+	 E8nza3s/SD3vgc/JHScn0IThaHH8kEr0ure8SEP5do8tvwQlFSGbgjzWp/acfmi8cF
+	 IBaCrgg2yVKatFYSVGYqlEl/HYeOrcn80KHxKeXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Dunlap <acdunlap@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	kernel test robot <lkp@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Kevin Loughlin <kevinloughlin@google.com>
-Subject: [PATCH 5.10 028/138] x86/apic: Force native_apic_mem_read() to use the MOV instruction
-Date: Tue, 30 Apr 2024 12:38:33 +0200
-Message-ID: <20240430103050.258792193@linuxfoundation.org>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Subject: [PATCH 5.10 029/138] irqflags: Explicitly ignore lockdep_hrtimer_exit() argument
+Date: Tue, 30 Apr 2024 12:38:34 +0200
+Message-ID: <20240430103050.287574503@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -53,70 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Dunlap <acdunlap@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 5ce344beaca688f4cdea07045e0b8f03dc537e74 upstream.
+commit c1d11fc2c8320871b40730991071dd0a0b405bc8 upstream.
 
-When done from a virtual machine, instructions that touch APIC memory
-must be emulated. By convention, MMIO accesses are typically performed
-via io.h helpers such as readl() or writeq() to simplify instruction
-emulation/decoding (ex: in KVM hosts and SEV guests) [0].
+When building with 'make W=1' but CONFIG_TRACE_IRQFLAGS=n, the
+unused argument to lockdep_hrtimer_exit() causes a warning:
 
-Currently, native_apic_mem_read() does not follow this convention,
-allowing the compiler to emit instructions other than the MOV
-instruction generated by readl(). In particular, when the kernel is
-compiled with clang and run as a SEV-ES or SEV-SNP guest, the compiler
-would emit a TESTL instruction which is not supported by the SEV-ES
-emulator, causing a boot failure in that environment. It is likely the
-same problem would happen in a TDX guest as that uses the same
-instruction emulator as SEV-ES.
+kernel/time/hrtimer.c:1655:14: error: variable 'expires_in_hardirq' set but not used [-Werror=unused-but-set-variable]
 
-To make sure all emulators can emulate APIC memory reads via MOV, use
-the readl() function in native_apic_mem_read(). It is expected that any
-emulator would support MOV in any addressing mode as it is the most
-generic and is what is usually emitted currently.
+This is intentional behavior, so add a cast to void to shut up the warning.
 
-The TESTL instruction is emitted when native_apic_mem_read() is inlined
-into apic_mem_wait_icr_idle(). The emulator comes from
-insn_decode_mmio() in arch/x86/lib/insn-eval.c. It's not worth it to
-extend insn_decode_mmio() to support more instructions since, in theory,
-the compiler could choose to output nearly any instruction for such
-reads which would bloat the emulator beyond reason.
-
-  [0] https://lore.kernel.org/all/20220405232939.73860-12-kirill.shutemov@linux.intel.com/
-
-  [ bp: Massage commit message, fix typos. ]
-
-Signed-off-by: Adam Dunlap <acdunlap@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Tested-by: Kevin Loughlin <kevinloughlin@google.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240318230927.2191933-1-acdunlap@google.com
+Fixes: 73d20564e0dc ("hrtimer: Don't dereference the hrtimer pointer after the callback")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240408074609.3170807-1-arnd@kernel.org
+Closes: https://lore.kernel.org/oe-kbuild-all/202311191229.55QXHVc6-lkp@intel.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/apic.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/irqflags.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/apic.h
-+++ b/arch/x86/include/asm/apic.h
-@@ -12,6 +12,7 @@
- #include <asm/mpspec.h>
- #include <asm/msr.h>
- #include <asm/hardirq.h>
-+#include <asm/io.h>
- 
- #define ARCH_APICTIMER_STOPS_ON_C3	1
- 
-@@ -111,7 +112,7 @@ static inline void native_apic_mem_write
- 
- static inline u32 native_apic_mem_read(u32 reg)
- {
--	return *((volatile u32 *)(APIC_BASE + reg));
-+	return readl((void __iomem *)(APIC_BASE + reg));
- }
- 
- extern void native_apic_wait_icr_idle(void);
+--- a/include/linux/irqflags.h
++++ b/include/linux/irqflags.h
+@@ -133,7 +133,7 @@ do {						\
+ # define lockdep_softirq_enter()		do { } while (0)
+ # define lockdep_softirq_exit()			do { } while (0)
+ # define lockdep_hrtimer_enter(__hrtimer)	false
+-# define lockdep_hrtimer_exit(__context)	do { } while (0)
++# define lockdep_hrtimer_exit(__context)	do { (void)(__context); } while (0)
+ # define lockdep_posixtimer_enter()		do { } while (0)
+ # define lockdep_posixtimer_exit()		do { } while (0)
+ # define lockdep_irq_work_enter(__work)		do { } while (0)
 
 
