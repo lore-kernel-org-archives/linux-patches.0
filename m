@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B3912C49E;
-	Tue, 30 Apr 2024 10:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B144E560;
+	Tue, 30 Apr 2024 10:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473913; cv=none; b=f7uo4cr2JJE4yguqYRDcuiUxyi+vpnrFiB7tX3yz5G9q7MAh9I1vLtFsQQlO+b4X3tC8ADDxMpCmXhoNBPD61QTSHyX182Cr3lSNw1FqEEj3tZ7tNjZLqBlEiCgpice/cV0ODwQzMcrXJkgEylkihNwxdTWkAJB7WGBkRokcyfI=
+	t=1714473916; cv=none; b=q0fNf29acPymcCN+7Z1uCbSARPCmC0gm1JJl7StZ37CWR3PnU8nDJywy9ecfNtP/20BSq85c7w3fYGozQxeNl22g27of9RIEsSVGY6e5jbANV6pulhhuMNKqiSaW1EfYkqv+SgNMfFwXIq7cCQEJkn8tLw3Ew51fgwHUoY8/qv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473913; c=relaxed/simple;
-	bh=LD0C/o5hCLDexRGmPLHVy4m6OHVk+ul83ycdeEDizqM=;
+	s=arc-20240116; t=1714473916; c=relaxed/simple;
+	bh=9Q1XXABVnzo+8UlPosnyQ61d401f1J06jLzeaFwe/0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lMQo1C0w+jPrRqiXDz/HrYSOgFH7DM8j/BFQ1Jf+FVucKEBzgIQgNyU4zD78/HQ6pk3MVPq1HSbp/0aPw5Mq25p3XxKwH55du7IdLnM0yvrNOivfR+8GjesHZn3MAFqhUXQiyJ+mago3ErtsWGcSlMjRsXU+2+SQEaAIYP4UON8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbpE3d89; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u4TFnLEarq2YzJq+cxcivJx2P/Ine2WRE5FDdxQ8DWv8dSj6afHAfvefLc8vE9jZgZ+48YMnkCekA4SrQYo3oxukLiW4Utknbb9ghP4Jkh8oDW1TM8/N2DLx4FecNzACwGh1phgxvvJ90+UBSROnMFVU/dMSFHxdZPbKjrxx63M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MiLPYNB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbpE3d89"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC25CC2BBFC;
-	Tue, 30 Apr 2024 10:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MiLPYNB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8752C2BBFC;
+	Tue, 30 Apr 2024 10:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473913;
-	bh=LD0C/o5hCLDexRGmPLHVy4m6OHVk+ul83ycdeEDizqM=;
+	s=korg; t=1714473916;
+	bh=9Q1XXABVnzo+8UlPosnyQ61d401f1J06jLzeaFwe/0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TbpE3d89a8ojTcj1kjlWNwhplCWmfIKbEjXloooGpeUPslwv/bm7uo+TeqZw3KhGC
-	 7Ox70RjpEFksbSM89MNXyoM2znVr3owrMAajt50JweVxFmDy1u4vUnQPHwgmkMMdSq
-	 2POZmMvQDSSpkoF5LMVsD6RY+/DNAXPKwW3uYmYs=
+	b=0MiLPYNB6cwTuz3M9bsRr6B3dmoIt9l8tRqb27sCtwem1nvycCfk48s6gF3Qws26a
+	 lLnGEL9Bzfe+iNkGJXthyRpssFBtilZa2wjRyknknEwSacxJ+oxF3Pfd1dyFImENC5
+	 mY93LptmDtv58l4qYcBmDMJ1OSnCe7iWwHGaiXkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 4.19 60/77] tracing: Increase PERF_MAX_TRACE_SIZE to handle Sentinel1 and docker together
-Date: Tue, 30 Apr 2024 12:39:39 +0200
-Message-ID: <20240430103042.908450116@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Justin Stitt <justinstitt@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 4.19 61/77] Bluetooth: Fix type of len in {l2cap,sco}_sock_getsockopt_old()
+Date: Tue, 30 Apr 2024 12:39:40 +0200
+Message-ID: <20240430103042.937903261@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -51,85 +51,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin H. Johnson <robbat2@gentoo.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit e531e90b5ab0f7ce5ff298e165214c1aec6ed187 upstream.
+commit 9bf4e919ccad613b3596eebf1ff37b05b6405307 upstream.
 
-Running endpoint security solutions like Sentinel1 that use perf-based
-tracing heavily lead to this repeated dump complaining about dockerd.
-The default value of 2048 is nowhere near not large enough.
+After an innocuous optimization change in LLVM main (19.0.0), x86_64
+allmodconfig (which enables CONFIG_KCSAN / -fsanitize=thread) fails to
+build due to the checks in check_copy_size():
 
-Using the prior patch "tracing: show size of requested buffer", we get
-"perf buffer not large enough, wanted 6644, have 6144", after repeated
-up-sizing (I did 2/4/6/8K). With 8K, the problem doesn't occur at all,
-so below is the trace for 6K.
+  In file included from net/bluetooth/sco.c:27:
+  In file included from include/linux/module.h:13:
+  In file included from include/linux/stat.h:19:
+  In file included from include/linux/time.h:60:
+  In file included from include/linux/time32.h:13:
+  In file included from include/linux/timex.h:67:
+  In file included from arch/x86/include/asm/timex.h:6:
+  In file included from arch/x86/include/asm/tsc.h:10:
+  In file included from arch/x86/include/asm/msr.h:15:
+  In file included from include/linux/percpu.h:7:
+  In file included from include/linux/smp.h:118:
+  include/linux/thread_info.h:244:4: error: call to '__bad_copy_from'
+  declared with 'error' attribute: copy source size is too small
+    244 |                         __bad_copy_from();
+        |                         ^
 
-I'm wondering if this value should be selectable at boot time, but this
-is a good starting point.
+The same exact error occurs in l2cap_sock.c. The copy_to_user()
+statements that are failing come from l2cap_sock_getsockopt_old() and
+sco_sock_getsockopt_old(). This does not occur with GCC with or without
+KCSAN or Clang without KCSAN enabled.
 
-```
-------------[ cut here ]------------
-perf buffer not large enough, wanted 6644, have 6144
-WARNING: CPU: 1 PID: 4997 at kernel/trace/trace_event_perf.c:402 perf_trace_buf_alloc+0x8c/0xa0
-Modules linked in: [..]
-CPU: 1 PID: 4997 Comm: sh Tainted: G                T 5.13.13-x86_64-00039-gb3959163488e #63
-Hardware name: LENOVO 20KH002JUS/20KH002JUS, BIOS N23ET66W (1.41 ) 09/02/2019
-RIP: 0010:perf_trace_buf_alloc+0x8c/0xa0
-Code: 80 3d 43 97 d0 01 00 74 07 31 c0 5b 5d 41 5c c3 ba 00 18 00 00 89 ee 48 c7 c7 00 82 7d 91 c6 05 25 97 d0 01 01 e8 22 ee bc 00 <0f> 0b 31 c0 eb db 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 55 89
-RSP: 0018:ffffb922026b7d58 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: ffff9da5ee012000 RCX: 0000000000000027
-RDX: ffff9da881657828 RSI: 0000000000000001 RDI: ffff9da881657820
-RBP: 00000000000019f4 R08: 0000000000000000 R09: ffffb922026b7b80
-R10: ffffb922026b7b78 R11: ffffffff91dda688 R12: 000000000000000f
-R13: ffff9da5ee012108 R14: ffff9da8816570a0 R15: ffffb922026b7e30
-FS:  00007f420db1a080(0000) GS:ffff9da881640000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000060 CR3: 00000002504a8006 CR4: 00000000003706e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- kprobe_perf_func+0x11e/0x270
- ? do_execveat_common.isra.0+0x1/0x1c0
- ? do_execveat_common.isra.0+0x5/0x1c0
- kprobe_ftrace_handler+0x10e/0x1d0
- 0xffffffffc03aa0c8
- ? do_execveat_common.isra.0+0x1/0x1c0
- do_execveat_common.isra.0+0x5/0x1c0
- __x64_sys_execve+0x33/0x40
- do_syscall_64+0x6b/0xc0
- ? do_syscall_64+0x11/0xc0
- entry_SYSCALL_64_after_hwframe+0x44/0xae
-RIP: 0033:0x7f420dc1db37
-Code: ff ff 76 e7 f7 d8 64 41 89 00 eb df 0f 1f 80 00 00 00 00 f7 d8 64 41 89 00 eb dc 0f 1f 84 00 00 00 00 00 b8 3b 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 01 43 0f 00 f7 d8 64 89 01 48
-RSP: 002b:00007ffd4e8b4e38 EFLAGS: 00000246 ORIG_RAX: 000000000000003b
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f420dc1db37
-RDX: 0000564338d1e740 RSI: 0000564338d32d50 RDI: 0000564338d28f00
-RBP: 0000564338d28f00 R08: 0000564338d32d50 R09: 0000000000000020
-R10: 00000000000001b6 R11: 0000000000000246 R12: 0000564338d28f00
-R13: 0000564338d32d50 R14: 0000564338d1e740 R15: 0000564338d28c60
----[ end trace 83ab3e8e16275e49 ]---
-```
+len is defined as an 'int' because it is assigned from
+'__user int *optlen'. However, it is clamped against the result of
+sizeof(), which has a type of 'size_t' ('unsigned long' for 64-bit
+platforms). This is done with min_t() because min() requires compatible
+types, which results in both len and the result of sizeof() being casted
+to 'unsigned int', meaning len changes signs and the result of sizeof()
+is truncated. From there, len is passed to copy_to_user(), which has a
+third parameter type of 'unsigned long', so it is widened and changes
+signs again. This excessive casting in combination with the KCSAN
+instrumentation causes LLVM to fail to eliminate the __bad_copy_from()
+call, failing the build.
 
-Link: https://lkml.kernel.org/r/20210831043723.13481-2-robbat2@gentoo.org
+The official recommendation from LLVM developers is to consistently use
+long types for all size variables to avoid the unnecessary casting in
+the first place. Change the type of len to size_t in both
+l2cap_sock_getsockopt_old() and sco_sock_getsockopt_old(). This clears
+up the error while allowing min_t() to be replaced with min(), resulting
+in simpler code with no casts and fewer implicit conversions. While len
+is a different type than optlen now, it should result in no functional
+change because the result of sizeof() will clamp all values of optlen in
+the same manner as before.
 
-Signed-off-by: Robin H. Johnson <robbat2@gentoo.org>
-Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2007
+Link: https://github.com/llvm/llvm-project/issues/85647
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Justin Stitt <justinstitt@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/trace_events.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/l2cap_sock.c |    7 ++++---
+ net/bluetooth/sco.c        |    7 ++++---
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -414,7 +414,7 @@ struct trace_event_file {
- 	}								\
- 	early_initcall(trace_init_perf_perm_##name);
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -405,7 +405,8 @@ static int l2cap_sock_getsockopt_old(str
+ 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
+ 	struct l2cap_options opts;
+ 	struct l2cap_conninfo cinfo;
+-	int len, err = 0;
++	int err = 0;
++	size_t len;
+ 	u32 opt;
  
--#define PERF_MAX_TRACE_SIZE	2048
-+#define PERF_MAX_TRACE_SIZE	8192
+ 	BT_DBG("sk %p", sk);
+@@ -436,7 +437,7 @@ static int l2cap_sock_getsockopt_old(str
+ 		opts.max_tx   = chan->max_tx;
+ 		opts.txwin_size = chan->tx_win;
  
- #define MAX_FILTER_STR_VAL	256	/* Should handle KSYM_SYMBOL_LEN */
+-		len = min_t(unsigned int, len, sizeof(opts));
++		len = min(len, sizeof(opts));
+ 		if (copy_to_user(optval, (char *) &opts, len))
+ 			err = -EFAULT;
+ 
+@@ -486,7 +487,7 @@ static int l2cap_sock_getsockopt_old(str
+ 		cinfo.hci_handle = chan->conn->hcon->handle;
+ 		memcpy(cinfo.dev_class, chan->conn->hcon->dev_class, 3);
+ 
+-		len = min_t(unsigned int, len, sizeof(cinfo));
++		len = min(len, sizeof(cinfo));
+ 		if (copy_to_user(optval, (char *) &cinfo, len))
+ 			err = -EFAULT;
+ 
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -880,7 +880,8 @@ static int sco_sock_getsockopt_old(struc
+ 	struct sock *sk = sock->sk;
+ 	struct sco_options opts;
+ 	struct sco_conninfo cinfo;
+-	int len, err = 0;
++	int err = 0;
++	size_t len;
+ 
+ 	BT_DBG("sk %p", sk);
+ 
+@@ -902,7 +903,7 @@ static int sco_sock_getsockopt_old(struc
+ 
+ 		BT_DBG("mtu %d", opts.mtu);
+ 
+-		len = min_t(unsigned int, len, sizeof(opts));
++		len = min(len, sizeof(opts));
+ 		if (copy_to_user(optval, (char *)&opts, len))
+ 			err = -EFAULT;
+ 
+@@ -920,7 +921,7 @@ static int sco_sock_getsockopt_old(struc
+ 		cinfo.hci_handle = sco_pi(sk)->conn->hcon->handle;
+ 		memcpy(cinfo.dev_class, sco_pi(sk)->conn->hcon->dev_class, 3);
+ 
+-		len = min_t(unsigned int, len, sizeof(cinfo));
++		len = min(len, sizeof(cinfo));
+ 		if (copy_to_user(optval, (char *)&cinfo, len))
+ 			err = -EFAULT;
  
 
 
