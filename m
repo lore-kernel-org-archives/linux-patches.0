@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2364F17592;
-	Tue, 30 Apr 2024 11:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C9C8801;
+	Tue, 30 Apr 2024 11:17:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475874; cv=none; b=Vrh6gcl6gN3jHjVzzATGxZ0s36ymgl9x0dyU04X8XST9ytBh1B/2wq+Yj06fpXQoWsgO+/mmLotoqKKI54SwvHVE2qo6Wr5pdZPBBJpeEKtMEDKPvwDFc7cX/um1q8L0vMsGbvK9WX59VyHrFGZPpkJ9cpiKFRtFgCDDOtYKsoc=
+	t=1714475877; cv=none; b=ALO67O2UnIzLOCnDAcwkHhPSSU68H5T3E7GXxXYRDBExgDg+BZM4PSM9wBQ8sHTj1Yk6+gxXNjYzpBZtDA8DvEs22LX+UhKK/0hHqhltn3eoVBjA3n8Uc7oACLbVy96qjpm1OaJvylLL7T64tUfjxfYHKdFL7aOPIDZ//ZhFsxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475874; c=relaxed/simple;
-	bh=5z9j8Jya+JlwhYbdZlLZmNGiY78lLV0WA860yvLC4FQ=;
+	s=arc-20240116; t=1714475877; c=relaxed/simple;
+	bh=aDn7CEskH/niRsIE2UFHLSrHzLbEkc4iWCmQhLP9LCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plZN8m9hTb3ZttpgMfc0SE2SibGjNN1l4VJqMSEpoKVAPWuJzJXaIO3eiCXikJ51PNDLfmlSte04mJo+Y8bMhDTpTna3b1foN176HQobfawYscAfuiOH4jVnkBG52A5MlAMhFJFsEYgm9ZoqpOgbnszr5uQ4E7eirhaquc8KBqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZJoWpqN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aPRZN8Ab61/t9jQs8SoOCgYlkfgZbEGtXa3EXDJfwlkUZ4UVLRM3LaPZtDrgE2nyhRtoXf4F/XlrkKA89LsOryHc1i1t9TIGTUcoN1n/RU6fXnZz86QQfadcW4GzOpJWnNnZ+onz3XnNBS79+wKfwUE/qbykCn6BfIJklGFyOdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhrpfUw9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZJoWpqN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DA5C4AF18;
-	Tue, 30 Apr 2024 11:17:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhrpfUw9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF9EC2BBFC;
+	Tue, 30 Apr 2024 11:17:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475873;
-	bh=5z9j8Jya+JlwhYbdZlLZmNGiY78lLV0WA860yvLC4FQ=;
+	s=korg; t=1714475877;
+	bh=aDn7CEskH/niRsIE2UFHLSrHzLbEkc4iWCmQhLP9LCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UZJoWpqNgymCVORztpfFrjlwvGTj8wG5gXAPiXv52skkCqH6pjye6yhvFyByES77a
-	 T88GsmKxhkgfotRbxv84Jasjyd17BT4Yfvc+PdwGGXm2Az2mDKdEXE0pIKIZ1sTW/d
-	 KPDccsLqbMB7GOn0f54k6b6uwVUb5vlxJeuz1zEs=
+	b=RhrpfUw9YwZ2wId4v7DoRhaLODHftZl0Dt6pj4Rwk5FOYmwJuLC4whXQdK6B7WPnE
+	 TIsUF3uLs8ttC2oaTMKPC6n4Py836gObKyiPHGVpGDMhxyCgcXcoO7nNqXgUyRQtzS
+	 r6a2D6EImT/YQvUzlBbwQc5KunWV0m9lj8ntwPew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Emil Kronborg <emil.kronborg@protonmail.com>,
+	Jim Cromie <jim.cromie@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 45/80] serial: mxs-auart: add spinlock around changing cts state
-Date: Tue, 30 Apr 2024 12:40:17 +0200
-Message-ID: <20240430103044.750129582@linuxfoundation.org>
+Subject: [PATCH 5.15 46/80] drm-print: add drm_dbg_driver to improve namespace symmetry
+Date: Tue, 30 Apr 2024 12:40:18 +0200
+Message-ID: <20240430103044.779441109@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -51,65 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Kronborg <emil.kronborg@protonmail.com>
+From: Jim Cromie <jim.cromie@gmail.com>
 
-[ Upstream commit 54c4ec5f8c471b7c1137a1f769648549c423c026 ]
+[ Upstream commit 95a77b6331c2d2313aa843fa77ec91cd092ab0e4 ]
 
-The uart_handle_cts_change() function in serial_core expects the caller
-to hold uport->lock. For example, I have seen the below kernel splat,
-when the Bluetooth driver is loaded on an i.MX28 board.
+drm_print defines all of these:
+    drm_dbg_{core,kms,prime,atomic,vbl,lease,_dp,_drmres}
 
-    [   85.119255] ------------[ cut here ]------------
-    [   85.124413] WARNING: CPU: 0 PID: 27 at /drivers/tty/serial/serial_core.c:3453 uart_handle_cts_change+0xb4/0xec
-    [   85.134694] Modules linked in: hci_uart bluetooth ecdh_generic ecc wlcore_sdio configfs
-    [   85.143314] CPU: 0 PID: 27 Comm: kworker/u3:0 Not tainted 6.6.3-00021-gd62a2f068f92 #1
-    [   85.151396] Hardware name: Freescale MXS (Device Tree)
-    [   85.156679] Workqueue: hci0 hci_power_on [bluetooth]
-    (...)
-    [   85.191765]  uart_handle_cts_change from mxs_auart_irq_handle+0x380/0x3f4
-    [   85.198787]  mxs_auart_irq_handle from __handle_irq_event_percpu+0x88/0x210
-    (...)
+but not drm_dbg_driver itself, since it was the original drm_dbg.
 
-Cc: stable@vger.kernel.org
-Fixes: 4d90bb147ef6 ("serial: core: Document and assert lock requirements for irq helpers")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Emil Kronborg <emil.kronborg@protonmail.com>
-Link: https://lore.kernel.org/r/20240320121530.11348-1-emil.kronborg@protonmail.com
+To improve namespace symmetry, change the drm_dbg defn to
+drm_dbg_driver, and redef grandfathered name to symmetric one.
+
+This will help with nouveau, which uses its own stack of macros to
+construct calls to dev_info, dev_dbg, etc, for which adaptation means
+drm_dbg_##driver constructs.
+
+Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
+Link: https://lore.kernel.org/r/20220912052852.1123868-7-jim.cromie@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: a60ccade88f9 ("drm/vmwgfx: Fix crtc's atomic check conditional")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/mxs-auart.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/drm/drm_print.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/mxs-auart.c b/drivers/tty/serial/mxs-auart.c
-index ac45f3386e974..dfedd3f1130e4 100644
---- a/drivers/tty/serial/mxs-auart.c
-+++ b/drivers/tty/serial/mxs-auart.c
-@@ -1094,11 +1094,13 @@ static void mxs_auart_set_ldisc(struct uart_port *port,
+diff --git a/include/drm/drm_print.h b/include/drm/drm_print.h
+index 15a089a87c225..f7ece14b10227 100644
+--- a/include/drm/drm_print.h
++++ b/include/drm/drm_print.h
+@@ -444,7 +444,7 @@ void drm_dev_dbg(const struct device *dev, enum drm_debug_category category,
  
- static irqreturn_t mxs_auart_irq_handle(int irq, void *context)
- {
--	u32 istat;
-+	u32 istat, stat;
- 	struct mxs_auart_port *s = context;
- 	u32 mctrl_temp = s->mctrl_prev;
--	u32 stat = mxs_read(s, REG_STAT);
+ #define drm_dbg_core(drm, fmt, ...)					\
+ 	drm_dev_dbg((drm) ? (drm)->dev : NULL, DRM_UT_CORE, fmt, ##__VA_ARGS__)
+-#define drm_dbg(drm, fmt, ...)						\
++#define drm_dbg_driver(drm, fmt, ...)						\
+ 	drm_dev_dbg((drm) ? (drm)->dev : NULL, DRM_UT_DRIVER, fmt, ##__VA_ARGS__)
+ #define drm_dbg_kms(drm, fmt, ...)					\
+ 	drm_dev_dbg((drm) ? (drm)->dev : NULL, DRM_UT_KMS, fmt, ##__VA_ARGS__)
+@@ -463,6 +463,7 @@ void drm_dev_dbg(const struct device *dev, enum drm_debug_category category,
+ #define drm_dbg_drmres(drm, fmt, ...)					\
+ 	drm_dev_dbg((drm) ? (drm)->dev : NULL, DRM_UT_DRMRES, fmt, ##__VA_ARGS__)
  
-+	uart_port_lock(&s->port);
-+
-+	stat = mxs_read(s, REG_STAT);
- 	istat = mxs_read(s, REG_INTR);
++#define drm_dbg(drm, fmt, ...)	drm_dbg_driver(drm, fmt, ##__VA_ARGS__)
  
- 	/* ack irq */
-@@ -1134,6 +1136,8 @@ static irqreturn_t mxs_auart_irq_handle(int irq, void *context)
- 		istat &= ~AUART_INTR_TXIS;
- 	}
- 
-+	uart_port_unlock(&s->port);
-+
- 	return IRQ_HANDLED;
- }
- 
+ /*
+  * printk based logging
 -- 
 2.43.0
 
