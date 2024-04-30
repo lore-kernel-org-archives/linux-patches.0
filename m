@@ -1,69 +1,136 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD7A12B176
-	for <patches@lists.linux.dev>; Tue, 30 Apr 2024 10:50:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCB812C48F;
+	Tue, 30 Apr 2024 10:50:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474217; cv=none; b=RZNJ1GLfQTYzTLxJ/Bfu4BAoZJwgukqpFFOI02wIxs5zRl9O3DXhFWpRCZmiKOzRWmNKIFROKQ8XoAPC3GKB2vGITvRpdhe6G0gMaqZLCFkctX5bjlzXQAtsmBK5hORpAollNvLhPp6xCgcoRKANrRk/9Rg/srvyuqpNLxX6P+c=
+	t=1714474217; cv=none; b=c9IuLRl7Som4ZireL8YLqvDAjrXbhY6b8h7vEePzxNUI+EK7+65xZYyBJi1nuIXeyxrEccOk7t6bo2PuydXK3Z88IsFDlpxssovQOiv2p7L4Dme8kgpHyrvnmouRxKmMdfix0IYwTmacJTv8nbpPA0x4tNuD8SoWr30DFbFkSA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1714474217; c=relaxed/simple;
-	bh=7wGs1ukNqFTp5ioS5F5kldi1JfixR8rNBIjJtj2eJ4w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=e+Kd1ab8ocFkQF0RdCZ4UsZbX8zDSzN8kxW31Zb1ZEYBr6JIM7BRYVG6i1es6hFeCW+6oQBh0PWJJSHWgM1OoImJjlmBlwfnkSr3lTbuz++qCY9/gshP5lj8hU6jyF4r1SsJOEu5LmLu7m55HS/LDvZkDTvKSS/oj+7E7DNT5P8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=doHX7cjJ; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=2VWCNKA5; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	bh=uVE7egw5XoMWpUm7YqbBkRX0ESd5kJVR984LXkCtGjU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=KmEAaXcAWsHRPaAESc+zjzKFJaDdZwopMuC4ZZ9owuDjubHP5QkLBTEwxNFnZGcL2h08stJSbV1ME89cJfeSnIU9P9bwyOvV4eCFoljkX79VU42zqIQ6412O5EAa9TzKG2lzZ6glbonEQdHq1BQ4PN5xUWscQHyltbsuAV9LFXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YB6w+5M7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="doHX7cjJ";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="2VWCNKA5"
-From: John Ogness <john.ogness@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1714474214;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=b1nSsl8gX9k7rDgh6y225F4fW1E1kraFns5KyShrcNs=;
-	b=doHX7cjJahmUZrkNE11FZSljWFYmeYMWwn5jkAc2DLNGuccPT9Bau+fPQACq99SZmOb+sX
-	EV78/HHLuxxeDT8KtYiv52E3uL1Z91MKczcwtur7EwOyJApfpYD9X7eEUfeKFQGL9g9w3N
-	xapXAl2vWqjmuXkpeGI8VXlglc3BW7ImMNJ9GZTPp4XMtbTayk9fNsLa1nHEDfxCi5znEO
-	PJPAxS2bBTj0u2rAUUROSgQtds8f4v3ZVewqGWteHrj8WlcNvg/lqn6Q36PYmLWHXyCGIS
-	H0W59LVX7k3NNqgeKCsMzwUghPkXXi2bEUUUM6jZBXgDCzrH2IErM3NCT8r5VQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1714474214;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=b1nSsl8gX9k7rDgh6y225F4fW1E1kraFns5KyShrcNs=;
-	b=2VWCNKA5uQwmhrXULpNUBNfiUtM0Sxdv313QNqxLT8m7SGm/Nhn4b4ylIac6vt1sshUWxG
-	enjmZDl2d7pzTpCg==
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YB6w+5M7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF31C4AF19;
+	Tue, 30 Apr 2024 10:50:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1714474217;
+	bh=uVE7egw5XoMWpUm7YqbBkRX0ESd5kJVR984LXkCtGjU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=YB6w+5M7S2noMpqd/uJjWyyvmjPMx4Tmox1kbImlyHsEroI4vmB1LyUSQ56sN+Qek
+	 hQjPqnGxCs4Oks02+M0abvKaBdZwTcZHRFcjDVgnXZ4DkrXSPizJFT7w0qgdvPjVrE
+	 xl6AUqAIBalrczMw5WNbxXs21uRN138Xnm2QBdYo=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- patches@lists.linux.dev, Thomas Gleixner <tglx@linutronix.de>, Ilpo
- =?utf-8?Q?J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, Sasha Levin
- <sashal@kernel.org>
-Subject: Re: [PATCH 4.19 53/77] serial: core: Provide port lock wrappers
-In-Reply-To: <20240430103042.703277875@linuxfoundation.org>
-References: <20240430103041.111219002@linuxfoundation.org>
- <20240430103042.703277875@linuxfoundation.org>
-Date: Tue, 30 Apr 2024 12:56:11 +0206
-Message-ID: <87y18v5dlo.fsf@jogness.linutronix.de>
+	patches@lists.linux.dev,
+	Wren Turkal <wt@penguintechs.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 091/228] Bluetooth: qca: set power_ctrl_enabled on NULL returned by gpiod_get_optional()
+Date: Tue, 30 Apr 2024 12:37:49 +0200
+Message-ID: <20240430103106.429305038@linuxfoundation.org>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
+References: <20240430103103.806426847@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Hi Greg,
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
-On 2024-04-30, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> 4.19-stable review patch.  If anyone has any objections, please let me know.
+------------------
 
-The port lock wrappers are only needed for the new threaded/atomic
-consoles that are still being developed for mainline. I would not
-recommend backporting all of that work when it is done and therefore I
-see no reason to backport the port lock wrappers.
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-John Ogness
+[ Upstream commit 3d05fc82237aa97162d0d7dc300b55bb34e91d02 ]
+
+Any return value from gpiod_get_optional() other than a pointer to a
+GPIO descriptor or a NULL-pointer is an error and the driver should
+abort probing. That being said: commit 56d074d26c58 ("Bluetooth: hci_qca:
+don't use IS_ERR_OR_NULL() with gpiod_get_optional()") no longer sets
+power_ctrl_enabled on NULL-pointer returned by
+devm_gpiod_get_optional(). Restore this behavior but bail-out on errors.
+While at it: also bail-out on error returned when trying to get the
+"swctrl" GPIO.
+
+Reported-by: Wren Turkal <wt@penguintechs.org>
+Reported-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Closes: https://lore.kernel.org/linux-bluetooth/1713449192-25926-2-git-send-email-quic_zijuhu@quicinc.com/
+Fixes: 56d074d26c58 ("Bluetooth: hci_qca: don't use IS_ERR_OR_NULL() with gpiod_get_optional()")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Tested-by: Wren Turkal <wt@penguintechs.org>
+Reported-by: Wren Turkal <wt@penguintechs.org>
+Reported-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Reviewed-by: Krzysztof Kozlowski<krzysztof.kozlowski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/bluetooth/hci_qca.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index ecbc52eaf1010..2f7ae38d85eb0 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -2329,16 +2329,21 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+ 		    (data->soc_type == QCA_WCN6750 ||
+ 		     data->soc_type == QCA_WCN6855)) {
+ 			dev_err(&serdev->dev, "failed to acquire BT_EN gpio\n");
+-			power_ctrl_enabled = false;
++			return PTR_ERR(qcadev->bt_en);
+ 		}
+ 
++		if (!qcadev->bt_en)
++			power_ctrl_enabled = false;
++
+ 		qcadev->sw_ctrl = devm_gpiod_get_optional(&serdev->dev, "swctrl",
+ 					       GPIOD_IN);
+ 		if (IS_ERR(qcadev->sw_ctrl) &&
+ 		    (data->soc_type == QCA_WCN6750 ||
+ 		     data->soc_type == QCA_WCN6855 ||
+-		     data->soc_type == QCA_WCN7850))
+-			dev_warn(&serdev->dev, "failed to acquire SW_CTRL gpio\n");
++		     data->soc_type == QCA_WCN7850)) {
++			dev_err(&serdev->dev, "failed to acquire SW_CTRL gpio\n");
++			return PTR_ERR(qcadev->sw_ctrl);
++		}
+ 
+ 		qcadev->susclk = devm_clk_get_optional(&serdev->dev, NULL);
+ 		if (IS_ERR(qcadev->susclk)) {
+@@ -2357,10 +2362,13 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+ 		qcadev->bt_en = devm_gpiod_get_optional(&serdev->dev, "enable",
+ 					       GPIOD_OUT_LOW);
+ 		if (IS_ERR(qcadev->bt_en)) {
+-			dev_warn(&serdev->dev, "failed to acquire enable gpio\n");
+-			power_ctrl_enabled = false;
++			dev_err(&serdev->dev, "failed to acquire enable gpio\n");
++			return PTR_ERR(qcadev->bt_en);
+ 		}
+ 
++		if (!qcadev->bt_en)
++			power_ctrl_enabled = false;
++
+ 		qcadev->susclk = devm_clk_get_optional(&serdev->dev, NULL);
+ 		if (IS_ERR(qcadev->susclk)) {
+ 			dev_warn(&serdev->dev, "failed to acquire clk\n");
+-- 
+2.43.0
+
+
+
