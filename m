@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7975612DDBF;
-	Tue, 30 Apr 2024 10:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B694412E1EE;
+	Tue, 30 Apr 2024 10:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474400; cv=none; b=JAl/1dre54csxgwb9u8qOG+4Gfg7RngZzjgXIv56NGsWccsskSWX4qMoHxE02gATQ9ruosXfXIsI7mTBkE/r6M4LSZh20QocAEgIwMbc+usvgGwolHaNwyaIbSUHzhLdTryG5d0Ih8toR4X34DilCqXbZ3Vy8jUuEnpPkmSHDNo=
+	t=1714474403; cv=none; b=BkwDYQ1cYDgAqYXs2PIWecnBTxh8zdeNH1h1VbTGzq8kQyggXm6Ne+HHjdzvoq/lglcbLW2Ych4VXG3VaxyRvD7o6eFlpejFVXcXNes3qQOLPxBqkyknCumOYAMF4kLXGkeBK5DmJfxf1Msc0F7lwo0C1hzLjmScpAEl0Lyy84E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474400; c=relaxed/simple;
-	bh=Z4BOIb0P7uaBsDzaBOe9a53aKDXEHAPXcRNWWH6MXsU=;
+	s=arc-20240116; t=1714474403; c=relaxed/simple;
+	bh=XHWrKld61d0c7dBTLSr1sny11oQ4ew85Zpd7HoRZ/h4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sKYg4VhVv9kReUj5QHJIeufMM5qfyPI3Gx5sp+coJ5YI6fEbbmWyiBHtnU4gw9wUq73rcFt9+7qIc6KdFMQebznakJsSbeTAi5hTr9JZA+UIbyvMteNz+riRHBqV7B95iffKCkFtOv6F3IJvKLtOu23u5qwjUo2WTbc/OxZ6wD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEOzrRhd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aznI6GMZ9SI5C5YykVbmmfPuFmG8V6FEkr+hvH07RQpR3ulFxBFxUHQnJDDyReAQpM/hxr5y1gmcZyHANdKW0qIKOkZEtjiK8GVm1XPzZntpxgQbfJ6ZMJxKM3tJ+m263FAoASw+JtI4E5ovpnYoKCCeVeeD1OZcYYXyK0Oyfrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wiV5Ve+C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEOzrRhd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2C6C4AF18;
-	Tue, 30 Apr 2024 10:53:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wiV5Ve+C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F05BC4AF1A;
+	Tue, 30 Apr 2024 10:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474400;
-	bh=Z4BOIb0P7uaBsDzaBOe9a53aKDXEHAPXcRNWWH6MXsU=;
+	s=korg; t=1714474403;
+	bh=XHWrKld61d0c7dBTLSr1sny11oQ4ew85Zpd7HoRZ/h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qEOzrRhdc4dbTGu1C2JY5JqizKv77S5CvSFToCpK3i4ZXoaEFfIdeQIcsuXaxG28+
-	 G0Mx546A78ITnSqjlULc8vMeL0zK+AHlw27RnuoLO6DeEOR2wsNZXYchJ0A0mIvGnV
-	 ULmyXpxi6uTk//PRDEnYx2nLeBW4ehstFDbzFZNY=
+	b=wiV5Ve+CkuXNGDtoxG8AOgF7lZJ5Koek+orNGevnD+pdvcavK6pWl803gnPSb4Vam
+	 /yX4GqzPvDIfp88eA9PyaFjpDjQWvEWJfOzd7cL18SW/UfOlUrFLQ8+oJKXc8pXsf1
+	 r0Cc/GW4NdSF5RDXQl3S0xgUGrLsFFXkHYBe3Id0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Alexander Zubkov <green@qrator.net>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 106/228] netfilter: nf_tables: honor table dormant flag from netdev release event path
-Date: Tue, 30 Apr 2024 12:38:04 +0200
-Message-ID: <20240430103106.854969643@linuxfoundation.org>
+Subject: [PATCH 6.8 097/228] mlxsw: spectrum_acl_tcam: Fix possible use-after-free during activity update
+Date: Tue, 30 Apr 2024 12:37:55 +0200
+Message-ID: <20240430103106.599340272@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -50,70 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 8e30abc9ace4f0add4cd761dfdbfaebae5632dd2 ]
+[ Upstream commit 79b5b4b18bc85b19d3a518483f9abbbe6d7b3ba4 ]
 
-Check for table dormant flag otherwise netdev release event path tries
-to unregister an already unregistered hook.
+The rule activity update delayed work periodically traverses the list of
+configured rules and queries their activity from the device.
 
-[524854.857999] ------------[ cut here ]------------
-[524854.858010] WARNING: CPU: 0 PID: 3386599 at net/netfilter/core.c:501 __nf_unregister_net_hook+0x21a/0x260
-[...]
-[524854.858848] CPU: 0 PID: 3386599 Comm: kworker/u32:2 Not tainted 6.9.0-rc3+ #365
-[524854.858869] Workqueue: netns cleanup_net
-[524854.858886] RIP: 0010:__nf_unregister_net_hook+0x21a/0x260
-[524854.858903] Code: 24 e8 aa 73 83 ff 48 63 43 1c 83 f8 01 0f 85 3d ff ff ff e8 98 d1 f0 ff 48 8b 3c 24 e8 8f 73 83 ff 48 63 43 1c e9 26 ff ff ff <0f> 0b 48 83 c4 18 48 c7 c7 00 68 e9 82 5b 5d 41 5c 41 5d 41 5e 41
-[524854.858914] RSP: 0018:ffff8881e36d79e0 EFLAGS: 00010246
-[524854.858926] RAX: 0000000000000000 RBX: ffff8881339ae790 RCX: ffffffff81ba524a
-[524854.858936] RDX: dffffc0000000000 RSI: 0000000000000008 RDI: ffff8881c8a16438
-[524854.858945] RBP: ffff8881c8a16438 R08: 0000000000000001 R09: ffffed103c6daf34
-[524854.858954] R10: ffff8881e36d79a7 R11: 0000000000000000 R12: 0000000000000005
-[524854.858962] R13: ffff8881c8a16000 R14: 0000000000000000 R15: ffff8881351b5a00
-[524854.858971] FS:  0000000000000000(0000) GS:ffff888390800000(0000) knlGS:0000000000000000
-[524854.858982] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[524854.858991] CR2: 00007fc9be0f16f4 CR3: 00000001437cc004 CR4: 00000000001706f0
-[524854.859000] Call Trace:
-[524854.859006]  <TASK>
-[524854.859013]  ? __warn+0x9f/0x1a0
-[524854.859027]  ? __nf_unregister_net_hook+0x21a/0x260
-[524854.859044]  ? report_bug+0x1b1/0x1e0
-[524854.859060]  ? handle_bug+0x3c/0x70
-[524854.859071]  ? exc_invalid_op+0x17/0x40
-[524854.859083]  ? asm_exc_invalid_op+0x1a/0x20
-[524854.859100]  ? __nf_unregister_net_hook+0x6a/0x260
-[524854.859116]  ? __nf_unregister_net_hook+0x21a/0x260
-[524854.859135]  nf_tables_netdev_event+0x337/0x390 [nf_tables]
-[524854.859304]  ? __pfx_nf_tables_netdev_event+0x10/0x10 [nf_tables]
-[524854.859461]  ? packet_notifier+0xb3/0x360
-[524854.859476]  ? _raw_spin_unlock_irqrestore+0x11/0x40
-[524854.859489]  ? dcbnl_netdevice_event+0x35/0x140
-[524854.859507]  ? __pfx_nf_tables_netdev_event+0x10/0x10 [nf_tables]
-[524854.859661]  notifier_call_chain+0x7d/0x140
-[524854.859677]  unregister_netdevice_many_notify+0x5e1/0xae0
+As part of this task it accesses the entry pointed by 'ventry->entry',
+but this entry can be changed concurrently by the rehash delayed work,
+leading to a use-after-free [1].
 
-Fixes: d54725cd11a5 ("netfilter: nf_tables: support for multiple devices per netdev hook")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fix by closing the race and perform the activity query under the
+'vregion->lock' mutex.
+
+[1]
+BUG: KASAN: slab-use-after-free in mlxsw_sp_acl_tcam_flower_rule_activity_get+0x121/0x140
+Read of size 8 at addr ffff8881054ed808 by task kworker/0:18/181
+
+CPU: 0 PID: 181 Comm: kworker/0:18 Not tainted 6.9.0-rc2-custom-00781-gd5ab772d32f7 #2
+Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
+Workqueue: mlxsw_core mlxsw_sp_acl_rule_activity_update_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xc6/0x120
+ print_report+0xce/0x670
+ kasan_report+0xd7/0x110
+ mlxsw_sp_acl_tcam_flower_rule_activity_get+0x121/0x140
+ mlxsw_sp_acl_rule_activity_update_work+0x219/0x400
+ process_one_work+0x8eb/0x19b0
+ worker_thread+0x6c9/0xf70
+ kthread+0x2c9/0x3b0
+ ret_from_fork+0x4d/0x80
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Allocated by task 1039:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x8f/0xa0
+ __kmalloc+0x19c/0x360
+ mlxsw_sp_acl_tcam_entry_create+0x7b/0x1f0
+ mlxsw_sp_acl_tcam_vchunk_migrate_all+0x30d/0xb50
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0x157/0x1300
+ process_one_work+0x8eb/0x19b0
+ worker_thread+0x6c9/0xf70
+ kthread+0x2c9/0x3b0
+ ret_from_fork+0x4d/0x80
+ ret_from_fork_asm+0x1a/0x30
+
+Freed by task 1039:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3b/0x60
+ poison_slab_object+0x102/0x170
+ __kasan_slab_free+0x14/0x30
+ kfree+0xc1/0x290
+ mlxsw_sp_acl_tcam_vchunk_migrate_all+0x3d7/0xb50
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0x157/0x1300
+ process_one_work+0x8eb/0x19b0
+ worker_thread+0x6c9/0xf70
+ kthread+0x2c9/0x3b0
+ ret_from_fork+0x4d/0x80
+ ret_from_fork_asm+0x1a/0x30
+
+Fixes: 2bffc5322fd8 ("mlxsw: spectrum_acl: Don't take mutex in mlxsw_sp_acl_tcam_vregion_rehash_work()")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Alexander Zubkov <green@qrator.net>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/1fcce0a60b231ebeb2515d91022284ba7b4ffe7a.1713797103.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_chain_filter.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c    | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_chain_filter.c b/net/netfilter/nft_chain_filter.c
-index 274b6f7e6bb57..d170758a1eb5d 100644
---- a/net/netfilter/nft_chain_filter.c
-+++ b/net/netfilter/nft_chain_filter.c
-@@ -338,7 +338,9 @@ static void nft_netdev_event(unsigned long event, struct net_device *dev,
- 		return;
- 
- 	if (n > 1) {
--		nf_unregister_net_hook(ctx->net, &found->ops);
-+		if (!(ctx->chain->table->flags & NFT_TABLE_F_DORMANT))
-+			nf_unregister_net_hook(ctx->net, &found->ops);
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+index 9c0c728bb42dc..7e69225c057de 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+@@ -1159,8 +1159,14 @@ mlxsw_sp_acl_tcam_ventry_activity_get(struct mlxsw_sp *mlxsw_sp,
+ 				      struct mlxsw_sp_acl_tcam_ventry *ventry,
+ 				      bool *activity)
+ {
+-	return mlxsw_sp_acl_tcam_entry_activity_get(mlxsw_sp,
+-						    ventry->entry, activity);
++	struct mlxsw_sp_acl_tcam_vregion *vregion = ventry->vchunk->vregion;
++	int err;
 +
- 		list_del_rcu(&found->list);
- 		kfree_rcu(found, rcu);
- 		return;
++	mutex_lock(&vregion->lock);
++	err = mlxsw_sp_acl_tcam_entry_activity_get(mlxsw_sp, ventry->entry,
++						   activity);
++	mutex_unlock(&vregion->lock);
++	return err;
+ }
+ 
+ static int
 -- 
 2.43.0
 
