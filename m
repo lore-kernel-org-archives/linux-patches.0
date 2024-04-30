@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3A912C550;
-	Tue, 30 Apr 2024 10:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD61012C534;
+	Tue, 30 Apr 2024 10:56:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474573; cv=none; b=jnOe0EdwhHa4tQDSR0tb4vD8L3sHsw+5AjWtBE2h03kQcerrZIrnWv+ZK5bsI623ltl4s7P+T0ueHXJ+2REdH/YD9ufv1/NCNw7RBOXJ9NQxu+vS5x63I6Wa9szO4IUJxc1i8sEoc8HMolurfNF4v8WbXLT6vQ+pCU/QJFNlXVg=
+	t=1714474576; cv=none; b=XEt9SUJHXv+VM1BK9dHRr/73SG5IbpDkvgpXeZWR7sR24ke2isV6T9rzGpqFVfaUR1L3KXjlTyCOiofneElErdL+CX73PqpohJfZXCjH/YXr4uKcpFHJuPCaFvOcA2BF01MR8HJyw5x3VF01dWH+hvwrv9aTc45mVMPBzxnRca4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474573; c=relaxed/simple;
-	bh=Cfx8HrDeAFuxI007umRq8jxsPMCS+y3o+pjNu0rQZpo=;
+	s=arc-20240116; t=1714474576; c=relaxed/simple;
+	bh=AO6y+YKJoirzJpk/UyWJsmb/mThT2G68Rv7R+xWkic8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CQVuCyhqrOUA6qlwtUTtYKZZwAe4u4TWdzYwCRVha+Nhn7Q6ktIu5xeJWqArtOoowA0m2iwbV9su3HYltEfWwA07FvNz6BO8EY2MZAUGPn9j4VZwmsTYolbAWKDMZfWAD4fgyArALd/ihCqEkQjetWTeeV7wJfWkj15+KGd625Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8qFLAon; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q9xYuJ0jYo/XZ2R98pA0VZiQy56+WYJu9GotaAMgUM03YafmNhLgtoe7dtga8Amavh1tpdvYjkjR9s/wFk9xKcBXVnC8q0L4BPFVunQHIXGEdNr1o673k+smyfNOD6ocygW20MDu8KMJAuAFjAz5Clb8eZ2A7WGHLaJydWWGK5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtdzgfS1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8qFLAon"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290CCC2BBFC;
-	Tue, 30 Apr 2024 10:56:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtdzgfS1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0E3C2BBFC;
+	Tue, 30 Apr 2024 10:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474573;
-	bh=Cfx8HrDeAFuxI007umRq8jxsPMCS+y3o+pjNu0rQZpo=;
+	s=korg; t=1714474576;
+	bh=AO6y+YKJoirzJpk/UyWJsmb/mThT2G68Rv7R+xWkic8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V8qFLAon9tZJ/xPGx3JCZiU0e87JY01Fw8LikuqcgO9n70SJLI4B5PzJGtlVpvPDr
-	 8wFrS0dwDn204vZtBlZsVsfyZpSi/he+a544ZSNgcE6uPISxIdORIsQYJ+PmeuxcDT
-	 gtsvclnSlsARi55iIr+UIMp/QHfS/zB4RaZz5EOk=
+	b=qtdzgfS1kSlPxUbd8gg19j4LArnnTCzlcAiA5AN5CoKGKAaD3B/rYWAbFSuy1+H3j
+	 gCr3bMM4iT+jIhZmmkJqkxtSRCb8S02oPnz50TF+8RQyCWfQLIxGda4AkcRcnT5oL3
+	 UJ/A+XbSHsqf3Dgm7c7GRS49sLttr2ag4mYTsWHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	David Hildenbrand <david@redhat.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Christian Heusel <christian@heusel.eu>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Yosry Ahmed <yosryahmed@google.com>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Dan Streetman <ddstreet@ieee.org>,
+	"Richard W.M. Jones" <rjones@redhat.com>,
+	Seth Jennings <sjenning@redhat.com>,
+	Vitaly Wool <vitaly.wool@konsulko.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.8 198/228] mm: turn folio_test_hugetlb into a PageType
-Date: Tue, 30 Apr 2024 12:39:36 +0200
-Message-ID: <20240430103109.516145359@linuxfoundation.org>
+Subject: [PATCH 6.8 199/228] mm: zswap: fix shrinker NULL crash with cgroup_disable=memory
+Date: Tue, 30 Apr 2024 12:39:37 +0200
+Message-ID: <20240430103109.544924480@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -56,239 +58,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-commit d99e3140a4d33e26066183ff727d8f02f56bec64 upstream.
+commit 682886ec69d22363819a83ddddd5d66cb5c791e1 upstream.
 
-The current folio_test_hugetlb() can be fooled by a concurrent folio split
-into returning true for a folio which has never belonged to hugetlbfs.
-This can't happen if the caller holds a refcount on it, but we have a few
-places (memory-failure, compaction, procfs) which do not and should not
-take a speculative reference.
+Christian reports a NULL deref in zswap that he bisected down to the zswap
+shrinker.  The issue also cropped up in the bug trackers of libguestfs [1]
+and the Red Hat bugzilla [2].
 
-Since hugetlb pages do not use individual page mapcounts (they are always
-fully mapped and use the entire_mapcount field to record the number of
-mappings), the PageType field is available now that page_mapcount()
-ignores the value in this field.
+The problem is that when memcg is disabled with the boot time flag, the
+zswap shrinker might get called with sc->memcg == NULL.  This is okay in
+many places, like the lruvec operations.  But it crashes in
+memcg_page_state() - which is only used due to the non-node accounting of
+cgroup's the zswap memory to begin with.
 
-In compaction and with CONFIG_DEBUG_VM enabled, the current implementation
-can result in an oops, as reported by Luis. This happens since 9c5ccf2db04b
-("mm: remove HUGETLB_PAGE_DTOR") effectively added some VM_BUG_ON() checks
-in the PageHuge() testing path.
+Nhat spotted that the memcg can be NULL in the memcg-disabled case, and I
+was then able to reproduce the crash locally as well.
 
-[willy@infradead.org: update vmcoreinfo]
-  Link: https://lkml.kernel.org/r/ZgGZUvsdhaT1Va-T@casper.infradead.org
-Link: https://lkml.kernel.org/r/20240321142448.1645400-6-willy@infradead.org
-Fixes: 9c5ccf2db04b ("mm: remove HUGETLB_PAGE_DTOR")
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Reported-by: Luis Chamberlain <mcgrof@kernel.org>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218227
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
+[1] https://github.com/libguestfs/libguestfs/issues/139
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=2275252
+
+Link: https://lkml.kernel.org/r/20240418124043.GC1055428@cmpxchg.org
+Link: https://lkml.kernel.org/r/20240417143324.GA1055428@cmpxchg.org
+Fixes: b5ba474f3f51 ("zswap: shrink zswap pool based on memory pressure")
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Reported-by: Christian Heusel <christian@heusel.eu>
+Debugged-by: Nhat Pham <nphamcs@gmail.com>
+Suggested-by: Nhat Pham <nphamcs@gmail.com>
+Tested-by: Christian Heusel <christian@heusel.eu>
+Acked-by: Yosry Ahmed <yosryahmed@google.com>
+Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: Dan Streetman <ddstreet@ieee.org>
+Cc: Richard W.M. Jones <rjones@redhat.com>
+Cc: Seth Jennings <sjenning@redhat.com>
+Cc: Vitaly Wool <vitaly.wool@konsulko.com>
+Cc: <stable@vger.kernel.org>	[v6.8]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/page-flags.h     |   70 +++++++++++++++++++----------------------
- include/trace/events/mmflags.h |    1 
- kernel/crash_core.c            |    5 +-
- mm/hugetlb.c                   |   22 +-----------
- 4 files changed, 39 insertions(+), 59 deletions(-)
+ mm/zswap.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
---- a/include/linux/page-flags.h
-+++ b/include/linux/page-flags.h
-@@ -190,7 +190,6 @@ enum pageflags {
+Two minor conflicts in the else branch:
+- zswap_pool_total_size was get_zswap_pool_size() in 6.8
+- zswap_nr_stored was pool->nr_stored in 6.8
+
+--- a/mm/zswap.c
++++ b/mm/zswap.c
+@@ -653,15 +653,22 @@ static unsigned long zswap_shrinker_coun
+ 	if (!gfp_has_io_fs(sc->gfp_mask))
+ 		return 0;
  
- 	/* At least one page in this folio has the hwpoison flag set */
- 	PG_has_hwpoisoned = PG_error,
--	PG_hugetlb = PG_active,
- 	PG_large_rmappable = PG_workingset, /* anon or file-backed */
- };
- 
-@@ -850,29 +849,6 @@ TESTPAGEFLAG_FALSE(LargeRmappable, large
- 
- #define PG_head_mask ((1UL << PG_head))
- 
--#ifdef CONFIG_HUGETLB_PAGE
--int PageHuge(struct page *page);
--SETPAGEFLAG(HugeTLB, hugetlb, PF_SECOND)
--CLEARPAGEFLAG(HugeTLB, hugetlb, PF_SECOND)
--
--/**
-- * folio_test_hugetlb - Determine if the folio belongs to hugetlbfs
-- * @folio: The folio to test.
-- *
-- * Context: Any context.  Caller should have a reference on the folio to
-- * prevent it from being turned into a tail page.
-- * Return: True for hugetlbfs folios, false for anon folios or folios
-- * belonging to other filesystems.
-- */
--static inline bool folio_test_hugetlb(struct folio *folio)
--{
--	return folio_test_large(folio) &&
--		test_bit(PG_hugetlb, folio_flags(folio, 1));
--}
+-#ifdef CONFIG_MEMCG_KMEM
+-	mem_cgroup_flush_stats(memcg);
+-	nr_backing = memcg_page_state(memcg, MEMCG_ZSWAP_B) >> PAGE_SHIFT;
+-	nr_stored = memcg_page_state(memcg, MEMCG_ZSWAPPED);
 -#else
--TESTPAGEFLAG_FALSE(Huge, hugetlb)
+-	/* use pool stats instead of memcg stats */
+-	nr_backing = get_zswap_pool_size(pool) >> PAGE_SHIFT;
+-	nr_stored = atomic_read(&pool->nr_stored);
 -#endif
--
- #ifdef CONFIG_TRANSPARENT_HUGEPAGE
- /*
-  * PageHuge() only returns true for hugetlbfs pages, but not for
-@@ -929,18 +905,6 @@ PAGEFLAG_FALSE(HasHWPoisoned, has_hwpois
- #endif
++	/*
++	 * For memcg, use the cgroup-wide ZSWAP stats since we don't
++	 * have them per-node and thus per-lruvec. Careful if memcg is
++	 * runtime-disabled: we can get sc->memcg == NULL, which is ok
++	 * for the lruvec, but not for memcg_page_state().
++	 *
++	 * Without memcg, use the zswap pool-wide metrics.
++	 */
++	if (!mem_cgroup_disabled()) {
++		mem_cgroup_flush_stats(memcg);
++		nr_backing = memcg_page_state(memcg, MEMCG_ZSWAP_B) >> PAGE_SHIFT;
++		nr_stored = memcg_page_state(memcg, MEMCG_ZSWAPPED);
++	} else {
++		nr_backing = get_zswap_pool_size(pool) >> PAGE_SHIFT;
++		nr_stored = atomic_read(&pool->nr_stored);
++	}
  
- /*
-- * Check if a page is currently marked HWPoisoned. Note that this check is
-- * best effort only and inherently racy: there is no way to synchronize with
-- * failing hardware.
-- */
--static inline bool is_page_hwpoison(struct page *page)
--{
--	if (PageHWPoison(page))
--		return true;
--	return PageHuge(page) && PageHWPoison(compound_head(page));
--}
--
--/*
-  * For pages that are never mapped to userspace (and aren't PageSlab),
-  * page_type may be used.  Because it is initialised to -1, we invert the
-  * sense of the bit, so __SetPageFoo *clears* the bit used for PageFoo, and
-@@ -956,6 +920,7 @@ static inline bool is_page_hwpoison(stru
- #define PG_offline	0x00000100
- #define PG_table	0x00000200
- #define PG_guard	0x00000400
-+#define PG_hugetlb	0x00000800
- 
- #define PageType(page, flag)						\
- 	((page->page_type & (PAGE_TYPE_BASE | flag)) == PAGE_TYPE_BASE)
-@@ -1050,6 +1015,37 @@ PAGE_TYPE_OPS(Table, table, pgtable)
-  */
- PAGE_TYPE_OPS(Guard, guard, guard)
- 
-+#ifdef CONFIG_HUGETLB_PAGE
-+FOLIO_TYPE_OPS(hugetlb, hugetlb)
-+#else
-+FOLIO_TEST_FLAG_FALSE(hugetlb)
-+#endif
-+
-+/**
-+ * PageHuge - Determine if the page belongs to hugetlbfs
-+ * @page: The page to test.
-+ *
-+ * Context: Any context.
-+ * Return: True for hugetlbfs pages, false for anon pages or pages
-+ * belonging to other filesystems.
-+ */
-+static inline bool PageHuge(const struct page *page)
-+{
-+	return folio_test_hugetlb(page_folio(page));
-+}
-+
-+/*
-+ * Check if a page is currently marked HWPoisoned. Note that this check is
-+ * best effort only and inherently racy: there is no way to synchronize with
-+ * failing hardware.
-+ */
-+static inline bool is_page_hwpoison(struct page *page)
-+{
-+	if (PageHWPoison(page))
-+		return true;
-+	return PageHuge(page) && PageHWPoison(compound_head(page));
-+}
-+
- extern bool is_free_buddy_page(struct page *page);
- 
- PAGEFLAG(Isolated, isolated, PF_ANY);
-@@ -1116,7 +1112,7 @@ static __always_inline void __ClearPageA
-  */
- #define PAGE_FLAGS_SECOND						\
- 	(0xffUL /* order */		| 1UL << PG_has_hwpoisoned |	\
--	 1UL << PG_hugetlb		| 1UL << PG_large_rmappable)
-+	 1UL << PG_large_rmappable)
- 
- #define PAGE_FLAGS_PRIVATE				\
- 	(1UL << PG_private | 1UL << PG_private_2)
---- a/include/trace/events/mmflags.h
-+++ b/include/trace/events/mmflags.h
-@@ -135,6 +135,7 @@ IF_HAVE_PG_ARCH_X(arch_3)
- #define DEF_PAGETYPE_NAME(_name) { PG_##_name, __stringify(_name) }
- 
- #define __def_pagetype_names						\
-+	DEF_PAGETYPE_NAME(hugetlb),					\
- 	DEF_PAGETYPE_NAME(offline),					\
- 	DEF_PAGETYPE_NAME(guard),					\
- 	DEF_PAGETYPE_NAME(table),					\
---- a/kernel/crash_core.c
-+++ b/kernel/crash_core.c
-@@ -814,11 +814,10 @@ static int __init crash_save_vmcoreinfo_
- 	VMCOREINFO_NUMBER(PG_head_mask);
- #define PAGE_BUDDY_MAPCOUNT_VALUE	(~PG_buddy)
- 	VMCOREINFO_NUMBER(PAGE_BUDDY_MAPCOUNT_VALUE);
--#ifdef CONFIG_HUGETLB_PAGE
--	VMCOREINFO_NUMBER(PG_hugetlb);
-+#define PAGE_HUGETLB_MAPCOUNT_VALUE	(~PG_hugetlb)
-+	VMCOREINFO_NUMBER(PAGE_HUGETLB_MAPCOUNT_VALUE);
- #define PAGE_OFFLINE_MAPCOUNT_VALUE	(~PG_offline)
- 	VMCOREINFO_NUMBER(PAGE_OFFLINE_MAPCOUNT_VALUE);
--#endif
- 
- #ifdef CONFIG_KALLSYMS
- 	VMCOREINFO_SYMBOL(kallsyms_names);
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -1623,7 +1623,7 @@ static inline void __clear_hugetlb_destr
- {
- 	lockdep_assert_held(&hugetlb_lock);
- 
--	folio_clear_hugetlb(folio);
-+	__folio_clear_hugetlb(folio);
- }
- 
- /*
-@@ -1710,7 +1710,7 @@ static void add_hugetlb_folio(struct hst
- 		h->surplus_huge_pages_node[nid]++;
- 	}
- 
--	folio_set_hugetlb(folio);
-+	__folio_set_hugetlb(folio);
- 	folio_change_private(folio, NULL);
- 	/*
- 	 * We have to set hugetlb_vmemmap_optimized again as above
-@@ -2048,7 +2048,7 @@ static void __prep_account_new_huge_page
- 
- static void init_new_hugetlb_folio(struct hstate *h, struct folio *folio)
- {
--	folio_set_hugetlb(folio);
-+	__folio_set_hugetlb(folio);
- 	INIT_LIST_HEAD(&folio->lru);
- 	hugetlb_set_folio_subpool(folio, NULL);
- 	set_hugetlb_cgroup(folio, NULL);
-@@ -2159,22 +2159,6 @@ static bool prep_compound_gigantic_folio
- }
- 
- /*
-- * PageHuge() only returns true for hugetlbfs pages, but not for normal or
-- * transparent huge pages.  See the PageTransHuge() documentation for more
-- * details.
-- */
--int PageHuge(struct page *page)
--{
--	struct folio *folio;
--
--	if (!PageCompound(page))
--		return 0;
--	folio = page_folio(page);
--	return folio_test_hugetlb(folio);
--}
--EXPORT_SYMBOL_GPL(PageHuge);
--
--/*
-  * Find and lock address space (mapping) in write mode.
-  *
-  * Upon entry, the page is locked which means that page_mapping() is
+ 	if (!nr_stored)
+ 		return 0;
 
 
