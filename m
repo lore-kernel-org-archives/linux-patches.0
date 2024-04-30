@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1163B12C476;
-	Tue, 30 Apr 2024 10:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571CE12B176;
+	Tue, 30 Apr 2024 10:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474745; cv=none; b=Qzx48UAs9EaJxStv1KpUZwAfN+jvLbXaB8S4/Bw5K0PO2xarktDxn67RIxkiqs/gv/dgAJdSKZ3ltpdcHdVOh+y2hG3yVVtot4sBNPNhEQaQv8Ub4EiF/mSOyUGwWNMvFlEHmo6qXXasPofwkx2WRICeeXvVfDm14ZA6z05Js6A=
+	t=1714474748; cv=none; b=CNtHzBKoAl3FvY9gBckIu8933F5PyiNYPRWqcNBBqBdrAtkBlrjVkB1jIfiUutlWUsjTmiQRpGya84mPFrchnXz7aUUXVcPrr4MJH+NbpXWDCZ4Kx/ZvtX5LbBiARIfXiOlXfTXslh0jgT7XQCseC2eV7p/toQ8+Sx+hzHwkr9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474745; c=relaxed/simple;
-	bh=06phHfyLc1xEoQ4L2Gcf/Otiwq8fl8RlQZcXpPLPWiI=;
+	s=arc-20240116; t=1714474748; c=relaxed/simple;
+	bh=0tmYN4/7vK/iQr6jMn+UoNHUKZmND2Wk6cRFGFEbnaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GvC/d9D0adQpDZfxXmXVAs9zsQPZc1RAZkr9Aw1Td8rkij/AgMCc9yzD8R0grcv2qWurjn+Ta0wrOFDcDU35ERPbTcL/VEg6f2PUnpdw3HGXSoVlstYNVFkgVOD6zgRy1771+KGnRF4Q8LylkvdLXfqlpuVgz1YDm66vIbe/RvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XiydRy7W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NhJ/qZ7odDNadxa2nUvKTqxM4XAXwOimCJ1uvjx1r6rnG7Jpd/3WfcRX0xCkw5kfR9dV64r+Mz8wNoSz6cKrFEtjrpK90aRau6MMkrq+R7VuXw7HAiem6/60M+UplHWDjRP1Ni+Slk174akjuHuMQn+b9KyF9yhHMgLJPLDMSqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OiTl4Y31; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XiydRy7W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775CFC4AF19;
-	Tue, 30 Apr 2024 10:59:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OiTl4Y31"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DADC4AF19;
+	Tue, 30 Apr 2024 10:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474744;
-	bh=06phHfyLc1xEoQ4L2Gcf/Otiwq8fl8RlQZcXpPLPWiI=;
+	s=korg; t=1714474748;
+	bh=0tmYN4/7vK/iQr6jMn+UoNHUKZmND2Wk6cRFGFEbnaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XiydRy7WgFbf6FsW/iZgN/idfDxPash0SJ85fg0BHK/7jM9LB5sKvpttRU0T3h0RV
-	 XpMOUWediyJNDExtsQ51YI2nu9+JIdwkCM92j9j2So+nqsBcMnOl4B0/F8K//a5Cf7
-	 9j17EFaZdVY3j8tX0C3VhBHY2ZhktcRdgwzveAnU=
+	b=OiTl4Y310s7c48pKJ/qNcSsfjHo+aRNSHwtpspf0cMfc84O5kicIrsL52KRu5C5/a
+	 Arh+FIkTGe0qBOUo42n9NJxCpddK9GdcJ5wivUDKQ1qBWZafHPmnFqQvSmwJcP3+mR
+	 sPCFPLMJ4U9TIIdXB3+zq76+q4jcShEGYWR7lvLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daisuke Mizobuchi <mizo@atmark-techno.com>,
-	Dominique Martinet <dominique.martinet@atmark-techno.com>,
-	Peng Fan <peng.fan@nxp.com>
-Subject: [PATCH 5.10 022/138] mailbox: imx: fix suspend failue
-Date: Tue, 30 Apr 2024 12:38:27 +0200
-Message-ID: <20240430103050.080946563@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.10 023/138] btrfs: qgroup: correctly model root qgroup rsv in convert
+Date: Tue, 30 Apr 2024 12:38:28 +0200
+Message-ID: <20240430103050.109356737@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -51,77 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daisuke Mizobuchi <mizo@atmark-techno.com>
+From: Boris Burkov <boris@bur.io>
 
-imx_mu_isr() always calls pm_system_wakeup() even when it should not,
-making the system unable to enter sleep.
+commit 141fb8cd206ace23c02cd2791c6da52c1d77d42a upstream.
 
-Suspend fails as follows:
- armadillo:~# echo mem > /sys/power/state
- [ 2614.602432] PM: suspend entry (deep)
- [ 2614.610640] Filesystems sync: 0.004 seconds
- [ 2614.618016] Freezing user space processes ... (elapsed 0.001 seconds) done.
- [ 2614.626555] OOM killer disabled.
- [ 2614.629792] Freezing remaining freezable tasks ... (elapsed 0.001 seconds) done.
- [ 2614.638456] printk: Suspending console(s) (use no_console_suspend to debug)
- [ 2614.649504] PM: Some devices failed to suspend, or early wake event detected
- [ 2614.730103] PM: resume devices took 0.080 seconds
- [ 2614.741924] OOM killer enabled.
- [ 2614.745073] Restarting tasks ... done.
- [ 2614.754532] PM: suspend exit
- ash: write error: Resource busy
- armadillo:~#
+We use add_root_meta_rsv and sub_root_meta_rsv to track prealloc and
+pertrans reservations for subvolumes when quotas are enabled. The
+convert function does not properly increment pertrans after decrementing
+prealloc, so the count is not accurate.
 
-Upstream commit 892cb524ae8a is correct, so this seems to be a
-mistake during cherry-pick.
+Note: we check that the fs is not read-only to mirror the logic in
+qgroup_convert_meta, which checks that before adding to the pertrans rsv.
 
-Cc: <stable@vger.kernel.org>
-Fixes: a16f5ae8ade1 ("mailbox: imx: fix wakeup failure from freeze mode")
-Signed-off-by: Daisuke Mizobuchi <mizo@atmark-techno.com>
-Reviewed-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Fixes: 8287475a2055 ("btrfs: qgroup: Use root::qgroup_meta_rsv_* to record qgroup meta reserved space")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/imx-mailbox.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/btrfs/qgroup.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mailbox/imx-mailbox.c
-+++ b/drivers/mailbox/imx-mailbox.c
-@@ -331,8 +331,6 @@ static int imx_mu_startup(struct mbox_ch
- 		break;
- 	}
- 
--	priv->suspend = true;
--
- 	return 0;
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -4114,6 +4114,8 @@ void btrfs_qgroup_convert_reserved_meta(
+ 				      BTRFS_QGROUP_RSV_META_PREALLOC);
+ 	trace_qgroup_meta_convert(root, num_bytes);
+ 	qgroup_convert_meta(fs_info, root->root_key.objectid, num_bytes);
++	if (!sb_rdonly(fs_info->sb))
++		add_root_meta_rsv(root, num_bytes, BTRFS_QGROUP_RSV_META_PERTRANS);
  }
  
-@@ -550,8 +548,6 @@ static int imx_mu_probe(struct platform_
- 
- 	clk_disable_unprepare(priv->clk);
- 
--	priv->suspend = false;
--
- 	return 0;
- 
- disable_runtime_pm:
-@@ -614,6 +610,8 @@ static int __maybe_unused imx_mu_suspend
- 	if (!priv->clk)
- 		priv->xcr = imx_mu_read(priv, priv->dcfg->xCR);
- 
-+	priv->suspend = true;
-+
- 	return 0;
- }
- 
-@@ -632,6 +630,8 @@ static int __maybe_unused imx_mu_resume_
- 	if (!imx_mu_read(priv, priv->dcfg->xCR) && !priv->clk)
- 		imx_mu_write(priv, priv->xcr, priv->dcfg->xCR);
- 
-+	priv->suspend = false;
-+
- 	return 0;
- }
- 
+ /*
 
 
