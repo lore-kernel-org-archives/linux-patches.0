@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C198801;
-	Tue, 30 Apr 2024 11:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B168801;
+	Tue, 30 Apr 2024 11:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476008; cv=none; b=jgU5/kfjkedGfPrRh+ZzaQAu44U23hwvkxFFLarqWU0qD3Ngljg7Id2hXvSNKOZM+5xFuyZ8RHjT+S0vFCd9ttPjpI5qeHpm1+b8v9wEs2IWsvoHNKsfnIaKJPzOfH/pg/LiPxnl31CzNk2xHgfkbDSv/ePqo2HFd0H9L3VTnHM=
+	t=1714476011; cv=none; b=NXwhrv1gYm4c+RhN50JAoDUmxHIeZ/4wR/Z+nQQiYVnzU6piPWSAKK/ZALz/YLTNvMJJOaWjIJ3rga9rrmhSc58OBAIRZIGl69XZuiHabDvZw4S+KIPWwQkK7bmPVlBE5FNVXXHMBpEwzxsHdtgXlcuId0Ljiw3ga3Hx/sYEBgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476008; c=relaxed/simple;
-	bh=GdLeS1Ssq7m2y6Yyl5v7Q3k/wa9oXVpQ3HEfM1Qkr9U=;
+	s=arc-20240116; t=1714476011; c=relaxed/simple;
+	bh=5QX7CriXz4xYszr5zmoIBBa/ofyaAs0zuxMnbwucq94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXirf5RjMFWQYJTOc8VTZdDxbHVE5bxdQX7864hvU6Y+1nNwGecjVh7Qv4Yibzg8aiaQGwm6tMKThsCtM6KMvaMxeJ16ADKRQTeS46YkXL/j8andnzgtARY4eqtO3AOhsTsBY+h87f8LBylpSkKMIaxPHemO/JrND6VGXf7P8bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUuPJV2x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Gp0PhXKQyFmbo7qujdaGC/q68WUZnLZUzW0kkP4CgbaFVKPxuDQZp1Ya1jZlcZoVRM0PJHmG45ByHItl+j1x5ywsWMhQ3u5FaCRIzLflI5ysGgqGgt3MuWRC9kNqNJQ9wJqK+8a+IagDpqHhMY62CeOEVYGL7T2EAApKpMvoy5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/4VF3nx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUuPJV2x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5F7C2BBFC;
-	Tue, 30 Apr 2024 11:20:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/4VF3nx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4600BC2BBFC;
+	Tue, 30 Apr 2024 11:20:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476008;
-	bh=GdLeS1Ssq7m2y6Yyl5v7Q3k/wa9oXVpQ3HEfM1Qkr9U=;
+	s=korg; t=1714476011;
+	bh=5QX7CriXz4xYszr5zmoIBBa/ofyaAs0zuxMnbwucq94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IUuPJV2xJF7TvxjUJobfS/J3Hn7z/96YXiVrLlazk23yz6rqmrPexX/lbYXeR71v6
-	 MhYgeZLrecIf1/3U9KcXxV/9D1ljsBkKoT/jhxYvWj9wOB1rJjSIIykKF1BLOco/44
-	 Oc5AGFfKBemQxjY9C23SuhZzqOMrb53POby5u5OI=
+	b=y/4VF3nxChUs7jD+6YzbzIm46coPPZAw2TWR0dxZWhlzfRlwsRsLAhYfI9PgzaLpV
+	 sIEv8LgxU75qXI40ZbYN+VKuWZIvqtdSAgLAcoSqmPCTlzXXYmthmHCToi7bdKLOQg
+	 DEwWhPz9zxOQ/WHLMDnl/DIQPTXBm+cwMkCI0WzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Jiri Kosina <jkosina@suse.com>,
-	Eva Kurchatova <nyandarknessgirl@gmail.com>
-Subject: [PATCH 5.15 77/80] HID: i2c-hid: remove I2C_HID_READ_PENDING flag to prevent lock-up
-Date: Tue, 30 Apr 2024 12:40:49 +0200
-Message-ID: <20240430103045.685119702@linuxfoundation.org>
+	=?UTF-8?q?=D0=9C=D0=B8=D1=85=D0=B0=D0=B8=D0=BB=20=D0=9D=D0=BE=D0=B2=D0=BE=D1=81=D0=B5=D0=BB=D0=BE=D0=B2?= <m.novosyolov@rosalinux.ru>,
+	=?UTF-8?q?=D0=98=D0=BB=D1=8C=D1=84=D0=B0=D1=82=20=D0=93=D0=B0=D0=BF=D1=82=D1=80=D0=B0=D1=85=D0=BC=D0=B0=D0=BD=D0=BE=D0=B2?= <i.gaptrakhmanov@rosalinux.ru>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Rik van Riel <riel@surriel.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.15 78/80] bounds: Use the right number of bits for power-of-two CONFIG_NR_CPUS
+Date: Tue, 30 Apr 2024 12:40:50 +0200
+Message-ID: <20240430103045.714249719@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -45,81 +51,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit 9c0f59e47a90c54d0153f8ddc0f80d7a36207d0e upstream.
+commit 5af385f5f4cddf908f663974847a4083b2ff2c79 upstream.
 
-The flag I2C_HID_READ_PENDING is used to serialize I2C operations.
-However, this is not necessary, because I2C core already has its own
-locking for that.
+bits_per() rounds up to the next power of two when passed a power of
+two.  This causes crashes on some machines and configurations.
 
-More importantly, this flag can cause a lock-up: if the flag is set in
-i2c_hid_xfer() and an interrupt happens, the interrupt handler
-(i2c_hid_irq) will check this flag and return immediately without doing
-anything, then the interrupt handler will be invoked again in an
-infinite loop.
-
-Since interrupt handler is an RT task, it takes over the CPU and the
-flag-clearing task never gets scheduled, thus we have a lock-up.
-
-Delete this unnecessary flag.
-
-Reported-and-tested-by: Eva Kurchatova <nyandarknessgirl@gmail.com>
-Closes: https://lore.kernel.org/r/CA+eeCSPUDpUg76ZO8dszSbAGn+UHjcyv8F1J-CUPVARAzEtW9w@mail.gmail.com
-Fixes: 4a200c3b9a40 ("HID: i2c-hid: introduce HID over i2c specification implementation")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-[apply to v4.19 -> v5.15]
-Signed-off-by: Nam Cao <namcao@linutronix.de>
+Reported-by: Михаил Новоселов <m.novosyolov@rosalinux.ru>
+Tested-by: Ильфат Гаптрахманов <i.gaptrakhmanov@rosalinux.ru>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3347
+Link: https://lore.kernel.org/all/1c978cf1-2934-4e66-e4b3-e81b04cb3571@rosalinux.ru/
+Fixes: f2d5dcb48f7b (bounds: support non-power-of-two CONFIG_NR_CPUS)
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c |    8 --------
- 1 file changed, 8 deletions(-)
+ kernel/bounds.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -51,7 +51,6 @@
- /* flags */
- #define I2C_HID_STARTED		0
- #define I2C_HID_RESET_PENDING	1
--#define I2C_HID_READ_PENDING	2
- 
- #define I2C_HID_PWR_ON		0x00
- #define I2C_HID_PWR_SLEEP	0x01
-@@ -251,7 +250,6 @@ static int __i2c_hid_command(struct i2c_
- 		msg[1].len = data_len;
- 		msg[1].buf = buf_recv;
- 		msg_num = 2;
--		set_bit(I2C_HID_READ_PENDING, &ihid->flags);
- 	}
- 
- 	if (wait)
-@@ -259,9 +257,6 @@ static int __i2c_hid_command(struct i2c_
- 
- 	ret = i2c_transfer(client->adapter, msg, msg_num);
- 
--	if (data_len > 0)
--		clear_bit(I2C_HID_READ_PENDING, &ihid->flags);
--
- 	if (ret != msg_num)
- 		return ret < 0 ? ret : -EIO;
- 
-@@ -533,9 +528,6 @@ static irqreturn_t i2c_hid_irq(int irq,
- {
- 	struct i2c_hid *ihid = dev_id;
- 
--	if (test_bit(I2C_HID_READ_PENDING, &ihid->flags))
--		return IRQ_HANDLED;
--
- 	i2c_hid_get_input(ihid);
- 
- 	return IRQ_HANDLED;
+--- a/kernel/bounds.c
++++ b/kernel/bounds.c
+@@ -19,7 +19,7 @@ int main(void)
+ 	DEFINE(NR_PAGEFLAGS, __NR_PAGEFLAGS);
+ 	DEFINE(MAX_NR_ZONES, __MAX_NR_ZONES);
+ #ifdef CONFIG_SMP
+-	DEFINE(NR_CPUS_BITS, bits_per(CONFIG_NR_CPUS));
++	DEFINE(NR_CPUS_BITS, order_base_2(CONFIG_NR_CPUS));
+ #endif
+ 	DEFINE(SPINLOCK_SIZE, sizeof(spinlock_t));
+ 	/* End of constants */
 
 
