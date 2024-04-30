@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4058412C487;
-	Tue, 30 Apr 2024 11:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABF212C462;
+	Tue, 30 Apr 2024 11:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474947; cv=none; b=fxghKrmgl3eqlMx4Gtaaxa292FyoikMCEy0AEsu5wlYLKULQSTOCJngsBiyyreq/uIy77J+rHDrNPaD3SPMDZcr8KpNOYK1tR61dy5/744e/4ZpFbFv5txMDoEgbWiwTZEI5RFvZnjwxuzvn0pyhRG2WnFLgj8mAlvI/Unb6xk0=
+	t=1714474949; cv=none; b=JVzA0oLgDP4vV2htfxJPFvNHtvJF8XoneigoVoD+hZt5t9PA4pVLFnEjrExOPYgfSzmkw2yISmvPoBe0ocH60FjnUtdIZKKcOwh2+dwc7pgpN5qx4NdfAADEICy2euUkWeq7MxVjJEcgmYXcrhKLdXVcA0oXWLQuyJPHMR56bNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474947; c=relaxed/simple;
-	bh=UW4EtsvpQoQZAqwxanLNoEHefzL3BzLPD6NIuQSNGZk=;
+	s=arc-20240116; t=1714474949; c=relaxed/simple;
+	bh=CTlGQwnt6zZ4gRDjl6Pq2EvwdRcBr0GNI04fCXD7VuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bTPXHCs8wUvG0/HcRUbpRXkGnbE+ZUMyTwcdWLeqgWUffHdHzO63w6TxlUS/pj8JvVrNxNhwOYEpZAkze5LZHs0rQHXk57BJercPJYAUd6fkHvVYooBrXlkwiEdEVoBm5gMhjta8JgkyZc8Mwqgv1uJsx4MEh5fXOeBQzpwjprQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cx3tDrT5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MuHVTQ5sJKg7CjhSznMjngID1rPdtMDAF5JOWNXsY1PGfe0tJCvFyc1tpkMQQwCtk2aDPKoQJs1n3RXGpcfKoE/z3UQoBswozGQ20tUi/KGX6yF9kn5iNCWLlqDpOV7+wjOkV0Ak5kg00oIRx6SfF+gpicVJwpH3OFDkvX9dYrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=op6q2jDX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cx3tDrT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75476C2BBFC;
-	Tue, 30 Apr 2024 11:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="op6q2jDX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6DA2C2BBFC;
+	Tue, 30 Apr 2024 11:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474945;
-	bh=UW4EtsvpQoQZAqwxanLNoEHefzL3BzLPD6NIuQSNGZk=;
+	s=korg; t=1714474949;
+	bh=CTlGQwnt6zZ4gRDjl6Pq2EvwdRcBr0GNI04fCXD7VuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cx3tDrT5TWC045Dw/n7+fwh4Q9ZWRLiAdtKEjPiOT00qnWeOZL4DzQSnECCFKSkcE
-	 LVSeaJyvvAz36XNmh1i7Nhi7UuUlprX2XkfkmqbRLXdbp+KRo43fLqZYgp/E8GtOlb
-	 q3LXIUv++3dVqeBAfWLyanqn5Io+BWWAPfBX1w4Q=
+	b=op6q2jDXxoyqGn+iYHW8/6IWxhehqo9HPw123+/giYY6vRV6QZDim5IjxcylukE8o
+	 D36MGFAhfZlqG3DZw25oYouBHAXsczRUs5zp0BeNFibxhDY91ryd9zZUMcHTTNojJM
+	 NKjehBrenIXqZLv8ApWl3kmMyw+PK17mIhLII8K8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 045/138] clk: Mark all_lists as const
-Date: Tue, 30 Apr 2024 12:38:50 +0200
-Message-ID: <20240430103050.757333072@linuxfoundation.org>
+Subject: [PATCH 5.10 046/138] clk: remove extra empty line
+Date: Tue, 30 Apr 2024 12:38:51 +0200
+Message-ID: <20240430103050.785575397@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -50,43 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Boyd <sboyd@kernel.org>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit 75061a6ff49ba3482c6319ded0c26e6a526b0967 ]
+[ Upstream commit 79806d338829b2bf903480428d8ce5aab8e2d24b ]
 
-This list array doesn't change at runtime. Mark it const to move to RO
-memory.
+Remove extra empty line.
 
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20220630151205.3935560-1-claudiu.beznea@microchip.com
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20220217220554.2711696-2-sboyd@kernel.org
 Stable-dep-of: e581cf5d2162 ("clk: Get runtime PM before walking tree during disable_unused")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/clk.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index 67a882e03dfdd..1043addcd38f6 100644
+index 1043addcd38f6..f6be526005bbe 100644
 --- a/drivers/clk/clk.c
 +++ b/drivers/clk/clk.c
-@@ -37,7 +37,7 @@ static HLIST_HEAD(clk_root_list);
- static HLIST_HEAD(clk_orphan_list);
- static LIST_HEAD(clk_notifier_list);
+@@ -3631,7 +3631,6 @@ static int __clk_core_init(struct clk_core *core)
  
--static struct hlist_head *all_lists[] = {
-+static const struct hlist_head *all_lists[] = {
- 	&clk_root_list,
- 	&clk_orphan_list,
- 	NULL,
-@@ -4063,7 +4063,7 @@ static void clk_core_evict_parent_cache_subtree(struct clk_core *root,
- /* Remove this clk from all parent caches */
- static void clk_core_evict_parent_cache(struct clk_core *core)
- {
--	struct hlist_head **lists;
-+	const struct hlist_head **lists;
- 	struct clk_core *root;
+ 	clk_core_reparent_orphans_nolock();
  
- 	lockdep_assert_held(&prepare_lock);
+-
+ 	kref_init(&core->ref);
+ out:
+ 	clk_pm_runtime_put(core);
 -- 
 2.43.0
 
