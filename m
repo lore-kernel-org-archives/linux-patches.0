@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0C612C549;
-	Tue, 30 Apr 2024 10:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DA412C46B;
+	Tue, 30 Apr 2024 10:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474237; cv=none; b=Ck3s9MC0f9pAgFtk/wjS+1YsoLcPm6yHOrdKpInbMTnmKHMkGz1p6WzExVx59Z4QD11OP0TA9mX80zY4q3bxoGuYyNHrSszXWs8ZjizgTpi05zpWRMVzQdsPZrznPIGwI8GPZrNUfvmNNu8PF+JCOJ/ISkzeZb2w5cWSgbx5j/g=
+	t=1714474245; cv=none; b=uqA9fxctmjJr0YBRDSeNXNlKmu9dxzsoUcwdhWKuv6DUUo/pWfypdUJWO8oKAycfSQEDYbuPUHyqnvmtyb1tMvKY/kvjMONdsIfdoJhfCOoTttes2Usaxc+079fs/Cqmc/mPZIBvByuvXaQE5Ho8skv6B5G1lSiD3yYSHhPlmrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474237; c=relaxed/simple;
-	bh=977QWhXbIGE3LNJjzDDH3hAQaNMyDPB6d56dKTJRyz4=;
+	s=arc-20240116; t=1714474245; c=relaxed/simple;
+	bh=d1NWWD1x150+6QwCLG176rMtWXCqVAOvwnLByxIy0Gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ir821q7myfsOxaa4w/LE8BMyAbUooNDGGhbUDc6ycFvbIZIzW2YEfLIHzpFUFEfZa0KW1iCKPSiu0j4tpcfAEEnXWv6LtDcwH/h8Y9Cycix6ewoqnPj7FW+3Ev6WTbmCP4mNoyqce/z+uoOGB8MoLCxIdV3D5Xik51dNkM7CDqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NZFZrJ4N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xg9NylakBNiHqiKab7KQrGdrpcmCcgR5FPbiIbCKM2BFbbVAVI+IUGLvRuV+aHVoRNtvfvOcGN1HoSf3HkdoIoSBewME4LpvF5nxxtc2HivtH7Rl0SBiTK4T8J0deEu3RPtjlKtV5rO9UJhhSXrQCu8xAs2iD7zlp4mqDd69HQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uqc2p/GG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NZFZrJ4N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B0AC2BBFC;
-	Tue, 30 Apr 2024 10:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uqc2p/GG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95E5C4AF1A;
+	Tue, 30 Apr 2024 10:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474237;
-	bh=977QWhXbIGE3LNJjzDDH3hAQaNMyDPB6d56dKTJRyz4=;
+	s=korg; t=1714474245;
+	bh=d1NWWD1x150+6QwCLG176rMtWXCqVAOvwnLByxIy0Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NZFZrJ4NQhon3aBMBjWu+GvZywuN2EaVXUX7Iza4lg/4YRXQZjJZma/Z2FUrxzg7b
-	 go5Ekv1d++dAigPjrRmt5/blUcz5M4X5lDJeuBofCDETE5YZQsfGHcNqvilhR+6wGQ
-	 dbgnJCnM3kRFc6/3WrcmjGnpRZZR4RHt2gcENbbo=
+	b=Uqc2p/GGiqioXG/J4piaFc6K/qhhZ/GVAESsxqq48sc8KAaqFf1bzRuWs00eAnN5l
+	 wnkqID2BdZ55jfCYv/5AEGegXo5HE/DQglew2rVdlO8oD5rAeB5qBXcnzSzYqjCrps
+	 cHveDUYaufJikeo2DnoI4QFyTNDbx0qwLGajSWYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Alexander Zubkov <green@qrator.net>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 096/228] mlxsw: spectrum_acl_tcam: Fix race during rehash delayed work
-Date: Tue, 30 Apr 2024 12:37:54 +0200
-Message-ID: <20240430103106.571098977@linuxfoundation.org>
+Subject: [PATCH 6.8 061/228] net: dsa: mv88e6xx: fix supported_interfaces setup in mv88e6250_phylink_get_caps()
+Date: Tue, 30 Apr 2024 12:37:19 +0200
+Message-ID: <20240430103105.569767426@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -54,78 +51,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
 
-[ Upstream commit d90cfe20562407d9f080d24123078d666d730707 ]
+[ Upstream commit a4e3899065ffa87d49dc20e8c17501edbc189692 ]
 
-The purpose of the rehash delayed work is to reduce the number of masks
-(eRPs) used by an ACL region as the eRP bank is a global and limited
-resource.
+With the recent PHYLINK changes requiring supported_interfaces to be set,
+MV88E6250 family switches like the 88E6020 fail to probe - cmode is
+never initialized on these devices, so mv88e6250_phylink_get_caps() does
+not set any supported_interfaces flags.
 
-This is done in three steps:
+Instead of a cmode, on 88E6250 we have a read-only port mode value that
+encodes similar information. There is no reason to bother mapping port
+mode to the cmodes of other switch models; instead we introduce a
+mv88e6250_setup_supported_interfaces() that is called directly from
+mv88e6250_phylink_get_caps().
 
-1. Creating a new set of masks and a new ACL region which will use the
-   new masks and to which the existing filters will be migrated to. The
-   new region is assigned to 'vregion->region' and the region from which
-   the filters are migrated from is assigned to 'vregion->region2'.
-
-2. Migrating all the filters from the old region to the new region.
-
-3. Destroying the old region and setting 'vregion->region2' to NULL.
-
-Only the second steps is performed under the 'vregion->lock' mutex
-although its comments says that among other things it "Protects
-consistency of region, region2 pointers".
-
-This is problematic as the first step can race with filter insertion
-from user space that uses 'vregion->region', but under the mutex.
-
-Fix by holding the mutex across the entirety of the delayed work and not
-only during the second step.
-
-Fixes: 2bffc5322fd8 ("mlxsw: spectrum_acl: Don't take mutex in mlxsw_sp_acl_tcam_vregion_rehash_work()")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/1ec1d54edf2bad0a369e6b4fa030aba64e1f124b.1713797103.git.petrm@nvidia.com
+Fixes: de5c9bf40c45 ("net: phylink: require supported_interfaces to be filled")
+Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20240417103737.166651-1-matthias.schiffer@ew.tq-group.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 56 +++++++++++++++++++++++++++++---
+ drivers/net/dsa/mv88e6xxx/port.h | 23 ++++++++++---
+ 2 files changed, 71 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index b6a4652a6475a..9c0c728bb42dc 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -718,7 +718,9 @@ static void mlxsw_sp_acl_tcam_vregion_rehash_work(struct work_struct *work)
- 			     rehash.dw.work);
- 	int credits = MLXSW_SP_ACL_TCAM_VREGION_REHASH_CREDITS;
- 
-+	mutex_lock(&vregion->lock);
- 	mlxsw_sp_acl_tcam_vregion_rehash(vregion->mlxsw_sp, vregion, &credits);
-+	mutex_unlock(&vregion->lock);
- 	if (credits < 0)
- 		/* Rehash gone out of credits so it was interrupted.
- 		 * Schedule the work as soon as possible to continue.
-@@ -1323,7 +1325,6 @@ mlxsw_sp_acl_tcam_vregion_migrate(struct mlxsw_sp *mlxsw_sp,
- 	int err, err2;
- 
- 	trace_mlxsw_sp_acl_tcam_vregion_migrate(mlxsw_sp, vregion);
--	mutex_lock(&vregion->lock);
- 	err = mlxsw_sp_acl_tcam_vchunk_migrate_all(mlxsw_sp, vregion,
- 						   ctx, credits);
- 	if (err) {
-@@ -1343,7 +1344,6 @@ mlxsw_sp_acl_tcam_vregion_migrate(struct mlxsw_sp *mlxsw_sp,
- 			/* Let the rollback to be continued later on. */
- 		}
- 	}
--	mutex_unlock(&vregion->lock);
- 	trace_mlxsw_sp_acl_tcam_vregion_migrate_end(mlxsw_sp, vregion);
- 	return err;
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 7de8a9c9e4576..32416d8802ca4 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -566,13 +566,61 @@ static void mv88e6xxx_translate_cmode(u8 cmode, unsigned long *supported)
+ 		phy_interface_set_rgmii(supported);
  }
+ 
+-static void mv88e6250_phylink_get_caps(struct mv88e6xxx_chip *chip, int port,
+-				       struct phylink_config *config)
++static void
++mv88e6250_setup_supported_interfaces(struct mv88e6xxx_chip *chip, int port,
++				     struct phylink_config *config)
+ {
+ 	unsigned long *supported = config->supported_interfaces;
++	int err;
++	u16 reg;
+ 
+-	/* Translate the default cmode */
+-	mv88e6xxx_translate_cmode(chip->ports[port].cmode, supported);
++	err = mv88e6xxx_port_read(chip, port, MV88E6XXX_PORT_STS, &reg);
++	if (err) {
++		dev_err(chip->dev, "p%d: failed to read port status\n", port);
++		return;
++	}
++
++	switch (reg & MV88E6250_PORT_STS_PORTMODE_MASK) {
++	case MV88E6250_PORT_STS_PORTMODE_MII_10_HALF_PHY:
++	case MV88E6250_PORT_STS_PORTMODE_MII_100_HALF_PHY:
++	case MV88E6250_PORT_STS_PORTMODE_MII_10_FULL_PHY:
++	case MV88E6250_PORT_STS_PORTMODE_MII_100_FULL_PHY:
++		__set_bit(PHY_INTERFACE_MODE_REVMII, supported);
++		break;
++
++	case MV88E6250_PORT_STS_PORTMODE_MII_HALF:
++	case MV88E6250_PORT_STS_PORTMODE_MII_FULL:
++		__set_bit(PHY_INTERFACE_MODE_MII, supported);
++		break;
++
++	case MV88E6250_PORT_STS_PORTMODE_MII_DUAL_100_RMII_FULL_PHY:
++	case MV88E6250_PORT_STS_PORTMODE_MII_200_RMII_FULL_PHY:
++	case MV88E6250_PORT_STS_PORTMODE_MII_10_100_RMII_HALF_PHY:
++	case MV88E6250_PORT_STS_PORTMODE_MII_10_100_RMII_FULL_PHY:
++		__set_bit(PHY_INTERFACE_MODE_REVRMII, supported);
++		break;
++
++	case MV88E6250_PORT_STS_PORTMODE_MII_DUAL_100_RMII_FULL:
++	case MV88E6250_PORT_STS_PORTMODE_MII_10_100_RMII_FULL:
++		__set_bit(PHY_INTERFACE_MODE_RMII, supported);
++		break;
++
++	case MV88E6250_PORT_STS_PORTMODE_MII_100_RGMII:
++		__set_bit(PHY_INTERFACE_MODE_RGMII, supported);
++		break;
++
++	default:
++		dev_err(chip->dev,
++			"p%d: invalid port mode in status register: %04x\n",
++			port, reg);
++	}
++}
++
++static void mv88e6250_phylink_get_caps(struct mv88e6xxx_chip *chip, int port,
++				       struct phylink_config *config)
++{
++	if (!mv88e6xxx_phy_is_internal(chip, port))
++		mv88e6250_setup_supported_interfaces(chip, port, config);
+ 
+ 	config->mac_capabilities = MAC_SYM_PAUSE | MAC_10 | MAC_100;
+ }
+diff --git a/drivers/net/dsa/mv88e6xxx/port.h b/drivers/net/dsa/mv88e6xxx/port.h
+index 86deeb347cbc1..ddadeb9bfdaee 100644
+--- a/drivers/net/dsa/mv88e6xxx/port.h
++++ b/drivers/net/dsa/mv88e6xxx/port.h
+@@ -25,10 +25,25 @@
+ #define MV88E6250_PORT_STS_PORTMODE_PHY_100_HALF	0x0900
+ #define MV88E6250_PORT_STS_PORTMODE_PHY_10_FULL		0x0a00
+ #define MV88E6250_PORT_STS_PORTMODE_PHY_100_FULL	0x0b00
+-#define MV88E6250_PORT_STS_PORTMODE_MII_10_HALF		0x0c00
+-#define MV88E6250_PORT_STS_PORTMODE_MII_100_HALF	0x0d00
+-#define MV88E6250_PORT_STS_PORTMODE_MII_10_FULL		0x0e00
+-#define MV88E6250_PORT_STS_PORTMODE_MII_100_FULL	0x0f00
++/* - Modes with PHY suffix use output instead of input clock
++ * - Modes without RMII or RGMII use MII
++ * - Modes without speed do not have a fixed speed specified in the manual
++ *   ("DC to x MHz" - variable clock support?)
++ */
++#define MV88E6250_PORT_STS_PORTMODE_MII_DISABLED		0x0000
++#define MV88E6250_PORT_STS_PORTMODE_MII_100_RGMII		0x0100
++#define MV88E6250_PORT_STS_PORTMODE_MII_DUAL_100_RMII_FULL_PHY	0x0200
++#define MV88E6250_PORT_STS_PORTMODE_MII_200_RMII_FULL_PHY	0x0400
++#define MV88E6250_PORT_STS_PORTMODE_MII_DUAL_100_RMII_FULL	0x0600
++#define MV88E6250_PORT_STS_PORTMODE_MII_10_100_RMII_FULL	0x0700
++#define MV88E6250_PORT_STS_PORTMODE_MII_HALF			0x0800
++#define MV88E6250_PORT_STS_PORTMODE_MII_10_100_RMII_HALF_PHY	0x0900
++#define MV88E6250_PORT_STS_PORTMODE_MII_FULL			0x0a00
++#define MV88E6250_PORT_STS_PORTMODE_MII_10_100_RMII_FULL_PHY	0x0b00
++#define MV88E6250_PORT_STS_PORTMODE_MII_10_HALF_PHY		0x0c00
++#define MV88E6250_PORT_STS_PORTMODE_MII_100_HALF_PHY		0x0d00
++#define MV88E6250_PORT_STS_PORTMODE_MII_10_FULL_PHY		0x0e00
++#define MV88E6250_PORT_STS_PORTMODE_MII_100_FULL_PHY		0x0f00
+ #define MV88E6XXX_PORT_STS_LINK			0x0800
+ #define MV88E6XXX_PORT_STS_DUPLEX		0x0400
+ #define MV88E6XXX_PORT_STS_SPEED_MASK		0x0300
 -- 
 2.43.0
 
