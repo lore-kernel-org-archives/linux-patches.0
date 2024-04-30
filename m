@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132628801;
-	Tue, 30 Apr 2024 11:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA271E50A;
+	Tue, 30 Apr 2024 11:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475833; cv=none; b=gQ4vF7iTdP8ItuRZzBDkDcRbKjikl7aPPJIeJiLq7DbIDQ3P1zN0Tc6PnBtBrFLIVBGND3QPErbyj6FPrS3NP4PdkJr6Vtka2HSAdISGQ5Z/ZeP4pUHoj/jB7dUjSkzzKBF4M1b0gW+c/Y7VyuNc+wUBH5lEnEGfrMHCd94Lk+Y=
+	t=1714475836; cv=none; b=JnJyPU4zb2owdqaY4lKxzUhuN7FLaOLDL6nhrW/dqgn+qFIr6V8jFJ4CgsfJRt6ShYNZIro1e6Kmoi5gu5EgP874tN+bkfaAo4HuKaFirlc8xUaZNTGnW+6h4qRGt+ydaZ6sw8hII3E9+Fs+f0hzH4HPOYzDm0uuTfilQLYZRI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475833; c=relaxed/simple;
-	bh=g9WL2HxjbBW5Mo6W6slDYENElOmw2RZwwrCkaXG79Zk=;
+	s=arc-20240116; t=1714475836; c=relaxed/simple;
+	bh=J+L5GHvDk54ZPsYbW9yBU0UCi5zae6vAGQqhX/Gye08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K/wjPssd0iv8sNiYQtxMVXjpdkOT1bRH+gZ7Ci7uzl0AidNc+JqQzaUbyX/rV8cIUjH5fbxBlSsiC9GVykY5FcQvHbctZ9gf7KfF1UDyD51vsgu7H7L9JUuCh0QPKDFuG+LI8uIaQZgpbxbWuwHQ9xAANPRsNJo2KqlMF71+3Ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=um6oILc3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gmpki4Pb8137Tiibwt/g6DY4O4Kun/UZud91iczROL1Mn4I3i6O6cejk4BybH+3arPegSxMIWZyovTUmCWBJiKN6jURj6T5dbDsJBubOiBUV7McvG6FAbPQiwVaMuPCPYW7yrJpdR3/Sk/yRBSphJU4rFFvcnGS+OG7oLCTlHB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oedqhrAp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="um6oILc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79043C2BBFC;
-	Tue, 30 Apr 2024 11:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oedqhrAp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F48C2BBFC;
+	Tue, 30 Apr 2024 11:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475832;
-	bh=g9WL2HxjbBW5Mo6W6slDYENElOmw2RZwwrCkaXG79Zk=;
+	s=korg; t=1714475836;
+	bh=J+L5GHvDk54ZPsYbW9yBU0UCi5zae6vAGQqhX/Gye08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=um6oILc3B9RtuE/mqW661ERR1hmlOtaHFze/eSaWER0cGyBSsugH/c4LwXJISuJZY
-	 IUv4WE71luhXGo0boPZx8aDQODMjy4/ANUN8soAGm7WmjxnVqQJZextUkU4US1VT/B
-	 uXcSiNNadm+rsBn4LmluKtZZ1hO+EaFRCffkoxPo=
+	b=oedqhrApYs1X49ky+X9TP9cYHy1BT3HUznnIjZWSDZF/sF8w9OOhif5vUqWsSgUJO
+	 dB1wNHtqMGTPbVlpLcYq89f6klA3s5xMMBaHN4VTpFSNqjgsV6bFcn3F4BpNwjpUz3
+	 Xxq6J0u+J9kYOTUslYNknHPDU2EVLZr7CvG6QIEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+	Dragan Simic <dsimic@manjaro.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 07/80] arm64: dts: rockchip: enable internal pull-up on PCIE_WAKE# for RK3399 Puma
-Date: Tue, 30 Apr 2024 12:39:39 +0200
-Message-ID: <20240430103043.625656293@linuxfoundation.org>
+Subject: [PATCH 5.15 08/80] arm64: dts: rockchip: Remove unsupported node from the Pinebook Pro dts
+Date: Tue, 30 Apr 2024 12:39:40 +0200
+Message-ID: <20240430103043.654915861@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -51,41 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+From: Dragan Simic <dsimic@manjaro.org>
 
-[ Upstream commit 945a7c8570916650a415757d15d83e0fa856a686 ]
+[ Upstream commit 43853e843aa6c3d47ff2b0cce898318839483d05 ]
 
-The PCIE_WAKE# has a diode used as a level-shifter, and is used as an
-input pin. While the SoC default is to enable the pull-up, the core
-rk3399 pinconf for this pin opted for pull-none. So as to not disturb
-the behaviour of other boards which may rely on pull-none instead of
-pull-up, set the needed pull-up only for RK3399 Puma.
+Remove a redundant node from the Pine64 Pinebook Pro dts, which is intended
+to provide a value for the delay in PCI Express enumeration, but that isn't
+supported without additional out-of-tree kernel patches.
 
-Fixes: 60fd9f72ce8a ("arm64: dts: rockchip: add Haikou baseboard with RK3399-Q7 SoM")
-Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Link: https://lore.kernel.org/r/20240308-puma-diode-pu-v2-2-309f83da110a@theobroma-systems.com
+There were already efforts to upstream those kernel patches, because they
+reportedly make some PCI Express cards (such as LSI SAS HBAs) usable in
+Pine64 RockPro64 (which is also based on the RK3399);  otherwise, those PCI
+Express cards fail to enumerate.  However, providing the required background
+and explanations proved to be a tough nut to crack, which is the reason why
+those patches remain outside of the kernel mainline for now.
+
+If those out-of-tree patches eventually become upstreamed, the resulting
+device-tree changes will almost surely belong to the RK3399 SoC dtsi.  Also,
+the above-mentioned unusable-without-out-of-tree-patches PCI Express devices
+are in all fairness not usable in a Pinebook Pro without some extensive
+hardware modifications, which is another reason to delete this redundant
+node.  When it comes to the Pinebook Pro, only M.2 NVMe SSDs can be installed
+out of the box (using an additional passive adapter PCB sold separately by
+Pine64), which reportedly works fine with no additional patches.
+
+Fixes: 5a65505a6988 ("arm64: dts: rockchip: Add initial support for Pinebook Pro")
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://lore.kernel.org/r/0f82c3f97cb798d012270d13b34d8d15305ef293.1711923520.git.dsimic@manjaro.org
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-index 14d343aae53f4..1c10baa25ffa3 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-@@ -390,6 +390,11 @@
- 	gpio1830-supply = <&vcc_1v8>;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+index 9e5d07f5712e6..e5d057ef8160e 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+@@ -790,7 +790,6 @@
  };
  
-+&pcie_clkreqn_cpm {
-+	rockchip,pins =
-+		<2 RK_PD2 RK_FUNC_GPIO &pcfg_pull_up>;
-+};
-+
- &pinctrl {
- 	i2c8 {
- 		i2c8_xfer_a: i2c8-xfer {
+ &pcie0 {
+-	bus-scan-delay-ms = <1000>;
+ 	ep-gpios = <&gpio2 RK_PD4 GPIO_ACTIVE_HIGH>;
+ 	num-lanes = <4>;
+ 	pinctrl-names = "default";
 -- 
 2.43.0
 
