@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB6F12C805;
-	Tue, 30 Apr 2024 11:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFE112C805;
+	Tue, 30 Apr 2024 11:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476088; cv=none; b=IqYyN7nbEBkKp1YUsjP7PYfBwjrzEQbtXMYJCcs0Kkg4QpnE6v6bavj5fBEXszCZ1q2pmpi7ZwoTZb4/xWDfHEErENlBfdoeRwzm9I4ZkPshiYwekNULMDs+j21I0XJNFYg30a/YXyW1IrC1F8SWn1sx2yZbdkYNC73S+k5cNp8=
+	t=1714476091; cv=none; b=bgnOc4Sn2pOt0RB7XvjztMGpBrZit/RIMnd19T2oXyVYJfkRLWl0dfgeTLSSX+RT9fXGLRDeFCyVmH7STN/sOe0WNDk1ruwBQJHrjJ3kV2u4yxKji2T4kldH7FgP77itI7Gj9PuLhMKPbjhlsyVCasjgAYqAKfCGHcED9lKPrWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476088; c=relaxed/simple;
-	bh=uHhMbJX/tj6aP0gocKNsXJ7EhVRajLf4dv4erULeQl0=;
+	s=arc-20240116; t=1714476091; c=relaxed/simple;
+	bh=U7YtRZtBioJtm9rI4wi/Qzd1baIK5F6lWsJegfQnD6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pv1itJxYfcM8oqHQ82vUT+nRB5Dgd6UZ40uDfjnr6jKpHcn+Nhjz5bzYXGZ4odrh81LoSYl610vqxc4YfWzCXTje5Y4SZpM3WSWLY6lXY7oQF5H7Ff2WuDq3crWdRoCos/iMi1WC9JTu3rQaocIS4eqRK/U8pf3ntbpVdke6XqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orygfRat; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JpvkJPAv0mLcMA+13cz35wc5jFqrKpgi0TgWWKhESLYoKKc4mgdSwbBj/3T6e5rR1bqdNxmgNvFQDuO0VbDFyE+Fw7eS84ZGH6RR2GwcoU2O1G1mHCOpbLywC8IZwIH+GKiAJA7MxTReR4QEm+hVqarPXw+gHma3bGGRY18mOGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGfnyRkd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orygfRat"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C839C4AF1A;
-	Tue, 30 Apr 2024 11:21:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGfnyRkd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E3BC2BBFC;
+	Tue, 30 Apr 2024 11:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476088;
-	bh=uHhMbJX/tj6aP0gocKNsXJ7EhVRajLf4dv4erULeQl0=;
+	s=korg; t=1714476091;
+	bh=U7YtRZtBioJtm9rI4wi/Qzd1baIK5F6lWsJegfQnD6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=orygfRatyhy4/bk4q9ORt7tVXA5lwkahWThs76res+5gqI/m2i6jUwYEJ1gCT88DD
-	 /nTsyvnkYXGNzfRsDaBn0XILWEaNxOpNZDsRNYrRs+TcOe1iaZWm3LB5NqGjhoIN7v
-	 Vj3m+6x82rtMrRvNaxFqGl6h/uzYMSx9VM9uq8KI=
+	b=NGfnyRkd4rH+mFhv5TS7sRuoC2C6nBWPFr5KSr8kUB6szr+qxpd0OIecpzkZPoyLm
+	 V3UGgURR7EF0TAYWr8MTH0a8u1XQIF7pJMFVQVWD8ttZYekum3mhlnUYgG4meyrF3u
+	 WrfUfnZmxSWKZ5scSMpJ6EAb3aGyU2sbCI8K5uPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Danilo Krummrich <dakr@redhat.com>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 003/107] nouveau: fix function cast warning
-Date: Tue, 30 Apr 2024 12:39:23 +0200
-Message-ID: <20240430103044.759249028@linuxfoundation.org>
+Subject: [PATCH 5.4 030/107] clk: remove extra empty line
+Date: Tue, 30 Apr 2024 12:39:50 +0200
+Message-ID: <20240430103045.550888780@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -51,49 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit 185fdb4697cc9684a02f2fab0530ecdd0c2f15d4 ]
+[ Upstream commit 79806d338829b2bf903480428d8ce5aab8e2d24b ]
 
-Calling a function through an incompatible pointer type causes breaks
-kcfi, so clang warns about the assignment:
+Remove extra empty line.
 
-drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c:73:10: error: cast from 'void (*)(const void *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
-   73 |         .fini = (void(*)(void *))kfree,
-
-Avoid this with a trivial wrapper.
-
-Fixes: c39f472e9f14 ("drm/nouveau: remove symlinks, move core/ to nvkm/ (no code changes)")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240404160234.2923554-1-arnd@kernel.org
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20220630151205.3935560-1-claudiu.beznea@microchip.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: e581cf5d2162 ("clk: Get runtime PM before walking tree during disable_unused")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/clk/clk.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c
-index 4bf486b571013..cb05f7f48a98b 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowof.c
-@@ -66,11 +66,16 @@ of_init(struct nvkm_bios *bios, const char *name)
- 	return ERR_PTR(-EINVAL);
- }
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index f9d89b42b8f9d..276b8a1f3c3f3 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -3508,7 +3508,6 @@ static int __clk_core_init(struct clk_core *core)
  
-+static void of_fini(void *p)
-+{
-+	kfree(p);
-+}
-+
- const struct nvbios_source
- nvbios_of = {
- 	.name = "OpenFirmware",
- 	.init = of_init,
--	.fini = (void(*)(void *))kfree,
-+	.fini = of_fini,
- 	.read = of_read,
- 	.size = of_size,
- 	.rw = false,
+ 	clk_core_reparent_orphans_nolock();
+ 
+-
+ 	kref_init(&core->ref);
+ out:
+ 	clk_pm_runtime_put(core);
 -- 
 2.43.0
 
