@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0C612C801;
-	Tue, 30 Apr 2024 10:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571D512DDAF;
+	Tue, 30 Apr 2024 10:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474386; cv=none; b=YMGrJAY2XanUbbAm7wtZcDo5wIF4bUmfZkI1M/4qKmzblsx0vJTAXbZaMlGaSxFK4FLOkRM4CGRp9ziJifl1CbxR+zx14VvwNPW2uelg2kqRunSaXoGcDhdIYcqRmu1uZ04nDOW79SxInAZpiDkkjKT/I28tw/MAFwHGcYSY/Ag=
+	t=1714474394; cv=none; b=WeQ2rbrcrikTVxyIBH54fbaQs6/QtsEwBsee1GIPdvGL09UhJvDV8eEKSBwBTDLO2zuW+OX8KVl8jXJRSxi8ZGttDbBLxU/jDrSTHz3YvPFSPyhVPBKF00gA9TOKwQBRtIE8yfakWXBMjapppM0Flv8+MsnKiNGGl2TXt3SHDfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474386; c=relaxed/simple;
-	bh=GIycAF5IWz24yyoIbCrrV7NpRpHI0PnXZiBV/BuSCWY=;
+	s=arc-20240116; t=1714474394; c=relaxed/simple;
+	bh=qmwWlpgpYJ+3BgM02E0MvgRyR5NPfWSnr4qou+Dxj/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NInrKzPoiBYkXiC73+yT/F3gTaEqnL6KEYMHrUYXD7kifmNyuOjuOKeBOvIRsbpophdGPQRR99bXrEbMbErklIxCJBL8J5FLL8F+PcGDR6A8P8Bne2TZVo5KvT4iWM+yHbK9bU22LI5mGx3CaBfglJ4YfGkPoIlJYdyI5xXw7zA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMBrG5hz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iNZwthmXZfIv8pguHCTnCZRd6pQGmRp1icV+ijKuxJBwaWIyNNe66lH+iW/di4RNHn7rzGAqoMOzwKQs0NP+dErx66VNshdYBE25/Hwqh5S6m3mgDYs1PhGUA5LiTytFnYymIb3usfBKDpJyqlJNcXxSrTSDZsID++X2iNKkjtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mQO3/sG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMBrG5hz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9ECC2BBFC;
-	Tue, 30 Apr 2024 10:53:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mQO3/sG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33B0C2BBFC;
+	Tue, 30 Apr 2024 10:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474385;
-	bh=GIycAF5IWz24yyoIbCrrV7NpRpHI0PnXZiBV/BuSCWY=;
+	s=korg; t=1714474394;
+	bh=qmwWlpgpYJ+3BgM02E0MvgRyR5NPfWSnr4qou+Dxj/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bMBrG5hzrHpOyhHrpD+LeNVv2x1NEMvmOI+fUTdM66l4yhEgabaUP0RLz0WhyDvNR
-	 d6KENIq/FXMbFc7luENCj7yboORr43B5mc3yp16Ffa0pgMNaFBz8R/7+DPEODqknEP
-	 NdmVGywIUdSFUgIrQlGdIp0hdcxI6MCZSk7e8wFI=
+	b=1mQO3/sGXiS3z02hotfTSe6Zegx2u25HvuOrYjfpOMfH3tCj/jTAxlptFVCpDHp8z
+	 ysQTJ9nxyztro4ozZ7oL+g5T+W/OFchsI5kz1WB0HidrsNSHaRYE3EpEMj4LamiJ/p
+	 +KjzO0wVb0hr1Q6c3ch5xmDMhi4f2qdBzo2NWbqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Alexander Zubkov <green@qrator.net>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 103/228] mlxsw: spectrum_acl_tcam: Fix memory leak when canceling rehash work
-Date: Tue, 30 Apr 2024 12:38:01 +0200
-Message-ID: <20240430103106.770890995@linuxfoundation.org>
+Subject: [PATCH 6.8 104/228] eth: bnxt: fix counting packets discarded due to OOM and netpoll
+Date: Tue, 30 Apr 2024 12:38:02 +0200
+Message-ID: <20240430103106.798855931@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -54,80 +51,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit fb4e2b70a7194b209fc7320bbf33b375f7114bd5 ]
+[ Upstream commit 730117730709992c9f6535dd7b47638ee561ec45 ]
 
-The rehash delayed work is rescheduled with a delay if the number of
-credits at end of the work is not negative as supposedly it means that
-the migration ended. Otherwise, it is rescheduled immediately.
+I added OOM and netpoll discard counters, naively assuming that
+the cpr pointer is pointing to a common completion ring.
+Turns out that is usually *a* completion ring but not *the*
+completion ring which bnapi->cp_ring points to. bnapi->cp_ring
+is where the stats are read from, so we end up reporting 0
+thru ethtool -S and qstat even though the drop events have happened.
+Make 100% sure we're recording statistics in the correct structure.
 
-After "mlxsw: spectrum_acl_tcam: Fix possible use-after-free during
-rehash" the above is no longer accurate as a non-negative number of
-credits is no longer indicative of the migration being done. It can also
-happen if the work encountered an error in which case the migration will
-resume the next time the work is scheduled.
-
-The significance of the above is that it is possible for the work to be
-pending and associated with hints that were allocated when the migration
-started. This leads to the hints being leaked [1] when the work is
-canceled while pending as part of ACL region dismantle.
-
-Fix by freeing the hints if hints are associated with a work that was
-canceled while pending.
-
-Blame the original commit since the reliance on not having a pending
-work associated with hints is fragile.
-
-[1]
-unreferenced object 0xffff88810e7c3000 (size 256):
-  comm "kworker/0:16", pid 176, jiffies 4295460353
-  hex dump (first 32 bytes):
-    00 30 95 11 81 88 ff ff 61 00 00 00 00 00 00 80  .0......a.......
-    00 00 61 00 40 00 00 00 00 00 00 00 04 00 00 00  ..a.@...........
-  backtrace (crc 2544ddb9):
-    [<00000000cf8cfab3>] kmalloc_trace+0x23f/0x2a0
-    [<000000004d9a1ad9>] objagg_hints_get+0x42/0x390
-    [<000000000b143cf3>] mlxsw_sp_acl_erp_rehash_hints_get+0xca/0x400
-    [<0000000059bdb60a>] mlxsw_sp_acl_tcam_vregion_rehash_work+0x868/0x1160
-    [<00000000e81fd734>] process_one_work+0x59c/0xf20
-    [<00000000ceee9e81>] worker_thread+0x799/0x12c0
-    [<00000000bda6fe39>] kthread+0x246/0x300
-    [<0000000070056d23>] ret_from_fork+0x34/0x70
-    [<00000000dea2b93e>] ret_from_fork_asm+0x1a/0x30
-
-Fixes: c9c9af91f1d9 ("mlxsw: spectrum_acl: Allow to interrupt/continue rehash work")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/0cc12ebb07c4d4c41a1265ee2c28b392ff997a86.1713797103.git.petrm@nvidia.com
+Fixes: 907fd4a294db ("bnxt: count discards due to memory allocation errors")
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/20240424002148.3937059-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 44 ++++++++++-------------
+ 1 file changed, 18 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index 89a5ebc3463ff..92a406f02eae7 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -836,10 +836,14 @@ mlxsw_sp_acl_tcam_vregion_destroy(struct mlxsw_sp *mlxsw_sp,
- 	struct mlxsw_sp_acl_tcam *tcam = vregion->tcam;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 5b4d810748f2a..e133a412a13fc 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -1735,7 +1735,7 @@ static inline struct sk_buff *bnxt_tpa_end(struct bnxt *bp,
+ 		skb = bnxt_copy_skb(bnapi, data_ptr, len, mapping);
+ 		if (!skb) {
+ 			bnxt_abort_tpa(cpr, idx, agg_bufs);
+-			cpr->sw_stats.rx.rx_oom_discards += 1;
++			cpr->bnapi->cp_ring.sw_stats.rx.rx_oom_discards += 1;
+ 			return NULL;
+ 		}
+ 	} else {
+@@ -1745,7 +1745,7 @@ static inline struct sk_buff *bnxt_tpa_end(struct bnxt *bp,
+ 		new_data = __bnxt_alloc_rx_frag(bp, &new_mapping, GFP_ATOMIC);
+ 		if (!new_data) {
+ 			bnxt_abort_tpa(cpr, idx, agg_bufs);
+-			cpr->sw_stats.rx.rx_oom_discards += 1;
++			cpr->bnapi->cp_ring.sw_stats.rx.rx_oom_discards += 1;
+ 			return NULL;
+ 		}
  
- 	if (vgroup->vregion_rehash_enabled && ops->region_rehash_hints_get) {
-+		struct mlxsw_sp_acl_tcam_rehash_ctx *ctx = &vregion->rehash.ctx;
-+
- 		mutex_lock(&tcam->lock);
- 		list_del(&vregion->tlist);
- 		mutex_unlock(&tcam->lock);
--		cancel_delayed_work_sync(&vregion->rehash.dw);
-+		if (cancel_delayed_work_sync(&vregion->rehash.dw) &&
-+		    ctx->hints_priv)
-+			ops->region_rehash_hints_put(ctx->hints_priv);
+@@ -1761,7 +1761,7 @@ static inline struct sk_buff *bnxt_tpa_end(struct bnxt *bp,
+ 		if (!skb) {
+ 			skb_free_frag(data);
+ 			bnxt_abort_tpa(cpr, idx, agg_bufs);
+-			cpr->sw_stats.rx.rx_oom_discards += 1;
++			cpr->bnapi->cp_ring.sw_stats.rx.rx_oom_discards += 1;
+ 			return NULL;
+ 		}
+ 		skb_reserve(skb, bp->rx_offset);
+@@ -1772,7 +1772,7 @@ static inline struct sk_buff *bnxt_tpa_end(struct bnxt *bp,
+ 		skb = bnxt_rx_agg_pages_skb(bp, cpr, skb, idx, agg_bufs, true);
+ 		if (!skb) {
+ 			/* Page reuse already handled by bnxt_rx_pages(). */
+-			cpr->sw_stats.rx.rx_oom_discards += 1;
++			cpr->bnapi->cp_ring.sw_stats.rx.rx_oom_discards += 1;
+ 			return NULL;
+ 		}
  	}
- 	mlxsw_sp_acl_tcam_vgroup_vregion_detach(mlxsw_sp, vregion);
- 	if (vregion->region2)
+@@ -2051,11 +2051,8 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
+ 			u32 frag_len = bnxt_rx_agg_pages_xdp(bp, cpr, &xdp,
+ 							     cp_cons, agg_bufs,
+ 							     false);
+-			if (!frag_len) {
+-				cpr->sw_stats.rx.rx_oom_discards += 1;
+-				rc = -ENOMEM;
+-				goto next_rx;
+-			}
++			if (!frag_len)
++				goto oom_next_rx;
+ 		}
+ 		xdp_active = true;
+ 	}
+@@ -2078,9 +2075,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
+ 				else
+ 					bnxt_xdp_buff_frags_free(rxr, &xdp);
+ 			}
+-			cpr->sw_stats.rx.rx_oom_discards += 1;
+-			rc = -ENOMEM;
+-			goto next_rx;
++			goto oom_next_rx;
+ 		}
+ 	} else {
+ 		u32 payload;
+@@ -2091,29 +2086,21 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
+ 			payload = 0;
+ 		skb = bp->rx_skb_func(bp, rxr, cons, data, data_ptr, dma_addr,
+ 				      payload | len);
+-		if (!skb) {
+-			cpr->sw_stats.rx.rx_oom_discards += 1;
+-			rc = -ENOMEM;
+-			goto next_rx;
+-		}
++		if (!skb)
++			goto oom_next_rx;
+ 	}
+ 
+ 	if (agg_bufs) {
+ 		if (!xdp_active) {
+ 			skb = bnxt_rx_agg_pages_skb(bp, cpr, skb, cp_cons, agg_bufs, false);
+-			if (!skb) {
+-				cpr->sw_stats.rx.rx_oom_discards += 1;
+-				rc = -ENOMEM;
+-				goto next_rx;
+-			}
++			if (!skb)
++				goto oom_next_rx;
+ 		} else {
+ 			skb = bnxt_xdp_build_skb(bp, skb, agg_bufs, rxr->page_pool, &xdp, rxcmp1);
+ 			if (!skb) {
+ 				/* we should be able to free the old skb here */
+ 				bnxt_xdp_buff_frags_free(rxr, &xdp);
+-				cpr->sw_stats.rx.rx_oom_discards += 1;
+-				rc = -ENOMEM;
+-				goto next_rx;
++				goto oom_next_rx;
+ 			}
+ 		}
+ 	}
+@@ -2191,6 +2178,11 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
+ 	*raw_cons = tmp_raw_cons;
+ 
+ 	return rc;
++
++oom_next_rx:
++	cpr->bnapi->cp_ring.sw_stats.rx.rx_oom_discards += 1;
++	rc = -ENOMEM;
++	goto next_rx;
+ }
+ 
+ /* In netpoll mode, if we are using a combined completion ring, we need to
+@@ -2237,7 +2229,7 @@ static int bnxt_force_rx_discard(struct bnxt *bp,
+ 	}
+ 	rc = bnxt_rx_pkt(bp, cpr, raw_cons, event);
+ 	if (rc && rc != -EBUSY)
+-		cpr->sw_stats.rx.rx_netpoll_discards += 1;
++		cpr->bnapi->cp_ring.sw_stats.rx.rx_netpoll_discards += 1;
+ 	return rc;
+ }
+ 
 -- 
 2.43.0
 
