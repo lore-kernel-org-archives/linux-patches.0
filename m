@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFB112C805;
-	Tue, 30 Apr 2024 11:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB7E12C47A;
+	Tue, 30 Apr 2024 11:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476285; cv=none; b=ZsRyRyjhcd4juRc3C0WSnvYd+ajqW3zmjnHTctWfJRIqZ8UQ/WJIxr6ysa/A8ntw9wvgfBhYeXzD6bndZi20kbMQercaPpPUFACbq+etZiDFgEwQRNqZulNj/1E/Zwkr/07kuD0Zziy6UkDQSe0N2QD3nwW3f9GhcuAbHXF4Lhk=
+	t=1714476289; cv=none; b=QbHDAMuBlD8SdxtlrJyFvTT1Tg7IGP0i1d4DXi7ydPCIun7H3TD4JUuv55D8TjXgk1WDjSw/VU4EVXsJzOSAupgF/4u6ZrXwc29Ze6bsPx0KfxJxWMsprUNkcVsEzhH9Nf4Bz+XcQWhfLTo9jWt6aAVaKZEOcCGzO7jTU6Cd7tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476285; c=relaxed/simple;
-	bh=3w+7MTX2Oeiz+dLzkrp7hAbf3xPwnTQC0QeW7SEIhfI=;
+	s=arc-20240116; t=1714476289; c=relaxed/simple;
+	bh=5u5amtbsZmtUSotF/5X8qlmYceNx23czu+Wlvf86g/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FnWYc68wufjY6sc83Q2vsX6ewwmt5d2eCfCsxljSVyBuT9gyY8YL0zMeq9FxXaeBCukb9skZsxZ3YPOTCCEGBiaSYp46XT9vTf3MtGiqf2h7ex0C5FVspUJBeIkk9YJvXYWwuLcCXLFbBSFQcupAHgJB1P+jWq+E4a+p5tXgOy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1tmHwHB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XwC0Oojisv4YBwjBEK9bVNX01is35GCyfb0ADAaL+rn886ISSqtQdbifmBBOjehdCMdXQ10QuiGMJRuc/SBY7PHrKfIc15vG9967sMHiekau+darlEUwd3XtlqTg3a91MmcyWrNiVUWccRM2qLo/9MEtXdfKxxNieyt/PwjvMuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Py6zVVzX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1tmHwHB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD1DC2BBFC;
-	Tue, 30 Apr 2024 11:24:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Py6zVVzX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFF4C2BBFC;
+	Tue, 30 Apr 2024 11:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476285;
-	bh=3w+7MTX2Oeiz+dLzkrp7hAbf3xPwnTQC0QeW7SEIhfI=;
+	s=korg; t=1714476288;
+	bh=5u5amtbsZmtUSotF/5X8qlmYceNx23czu+Wlvf86g/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x1tmHwHBl1sbM5w5+IRYDk06/LBW5FSybxuk83W2+h+GfyifVtPY4bxxpXhS1tatq
-	 u1hQgb9Lpw7nt/UC4rlUywptVLZPEcXy8mWoCcxrtSFJKcRDm+a/sQtDwTGOGLkefY
-	 nk9Dtgyej9LVxQCgi9UZjQ+Q2gv92HNGOwAJ7EPw=
+	b=Py6zVVzXphTZuCoH6AWKvR6kCDVnBTsQ1LRZw5bKdILcVJrR8W+rySI6wSz9WN+Og
+	 XYdEKJKf0RFhC6RHXhduVWJ86hFBM4mxd3BXI1lDlywcfulgm60H2/mkE5fUI6c+Cu
+	 hTYbFhbPnaV2cfs/heIYa8OxSwBXy3gEO+8ofgCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanrui Huang <guanrui.huang@linux.alibaba.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Marc Zyngier <maz@kernel.org>,
-	Zenghui Yu <yuzenghui@huawei.com>
-Subject: [PATCH 5.4 093/107] irqchip/gic-v3-its: Prevent double free on error
-Date: Tue, 30 Apr 2024 12:40:53 +0200
-Message-ID: <20240430103047.401784173@linuxfoundation.org>
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 094/107] ethernet: Add helper for assigning packet type when dest address does not match device address
+Date: Tue, 30 Apr 2024 12:40:54 +0200
+Message-ID: <20240430103047.432051153@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -52,52 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanrui Huang <guanrui.huang@linux.alibaba.com>
+From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
 
-commit c26591afd33adce296c022e3480dea4282b7ef91 upstream.
+commit 6e159fd653d7ebf6290358e0330a0cb8a75cf73b upstream.
 
-The error handling path in its_vpe_irq_domain_alloc() causes a double free
-when its_vpe_init() fails after successfully allocating at least one
-interrupt. This happens because its_vpe_irq_domain_free() frees the
-interrupts along with the area bitmap and the vprop_page and
-its_vpe_irq_domain_alloc() subsequently frees the area bitmap and the
-vprop_page again.
+Enable reuse of logic in eth_type_trans for determining packet type.
 
-Fix this by unconditionally invoking its_vpe_irq_domain_free() which
-handles all cases correctly and by removing the bitmap/vprop_page freeing
-from its_vpe_irq_domain_alloc().
-
-[ tglx: Massaged change log ]
-
-Fixes: 7d75bbb4bc1a ("irqchip/gic-v3-its: Add VPE irq domain allocation/teardown")
-Signed-off-by: Guanrui Huang <guanrui.huang@linux.alibaba.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
+Suggested-by: Sabrina Dubroca <sd@queasysnail.net>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240418061053.96803-2-guanrui.huang@linux.alibaba.com
+Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/20240423181319.115860-3-rrameshbabu@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c |    9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ include/linux/etherdevice.h |   25 +++++++++++++++++++++++++
+ net/ethernet/eth.c          |   12 +-----------
+ 2 files changed, 26 insertions(+), 11 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -3121,13 +3121,8 @@ static int its_vpe_irq_domain_alloc(stru
- 		set_bit(i, bitmap);
- 	}
- 
--	if (err) {
--		if (i > 0)
--			its_vpe_irq_domain_free(domain, virq, i);
--
--		its_lpi_free(bitmap, base, nr_ids);
--		its_free_prop_table(vprop_page);
--	}
-+	if (err)
-+		its_vpe_irq_domain_free(domain, virq, i);
- 
- 	return err;
+--- a/include/linux/etherdevice.h
++++ b/include/linux/etherdevice.h
+@@ -532,6 +532,31 @@ static inline unsigned long compare_ethe
  }
+ 
+ /**
++ * eth_skb_pkt_type - Assign packet type if destination address does not match
++ * @skb: Assigned a packet type if address does not match @dev address
++ * @dev: Network device used to compare packet address against
++ *
++ * If the destination MAC address of the packet does not match the network
++ * device address, assign an appropriate packet type.
++ */
++static inline void eth_skb_pkt_type(struct sk_buff *skb,
++				    const struct net_device *dev)
++{
++	const struct ethhdr *eth = eth_hdr(skb);
++
++	if (unlikely(!ether_addr_equal_64bits(eth->h_dest, dev->dev_addr))) {
++		if (unlikely(is_multicast_ether_addr_64bits(eth->h_dest))) {
++			if (ether_addr_equal_64bits(eth->h_dest, dev->broadcast))
++				skb->pkt_type = PACKET_BROADCAST;
++			else
++				skb->pkt_type = PACKET_MULTICAST;
++		} else {
++			skb->pkt_type = PACKET_OTHERHOST;
++		}
++	}
++}
++
++/**
+  * eth_skb_pad - Pad buffer to mininum number of octets for Ethernet frame
+  * @skb: Buffer to pad
+  *
+--- a/net/ethernet/eth.c
++++ b/net/ethernet/eth.c
+@@ -164,17 +164,7 @@ __be16 eth_type_trans(struct sk_buff *sk
+ 	eth = (struct ethhdr *)skb->data;
+ 	skb_pull_inline(skb, ETH_HLEN);
+ 
+-	if (unlikely(!ether_addr_equal_64bits(eth->h_dest,
+-					      dev->dev_addr))) {
+-		if (unlikely(is_multicast_ether_addr_64bits(eth->h_dest))) {
+-			if (ether_addr_equal_64bits(eth->h_dest, dev->broadcast))
+-				skb->pkt_type = PACKET_BROADCAST;
+-			else
+-				skb->pkt_type = PACKET_MULTICAST;
+-		} else {
+-			skb->pkt_type = PACKET_OTHERHOST;
+-		}
+-	}
++	eth_skb_pkt_type(skb, dev);
+ 
+ 	/*
+ 	 * Some variants of DSA tagging don't have an ethertype field
 
 
