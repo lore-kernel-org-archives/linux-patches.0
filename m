@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4E0211C;
-	Tue, 30 Apr 2024 11:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1EB211C;
+	Tue, 30 Apr 2024 11:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475765; cv=none; b=itWGQ3w4DqBmoHAWSeLfPRLuBypaOQ2rnxLwnZp1ZS5L3omQZ9d1K6h788DO6Ld4O+SsDoumDQYiZKgjQj5B/XzG9QVx4tprAOx3lUdQhR+TWlGY6ESwX3TROsVRSKY6bS3nbGBY8OHtR47GaRDkMGM4WaS32vxivgLLl0+BIA8=
+	t=1714475768; cv=none; b=KNm2uhsMtiHNChkDCgHwc5eoV9+aIB/fuuo5kJWI4C20geNIDMwFICQCk6+G0Uybmb5iNPQx1wZF5IDT3k1Z2oLpD1r6ZyhaNOQlbP8g7lmo5HlzyK+YAJHqUQmxFO3/S1hRIvsIW7oUxuRzATraYj4egmwwikr9V1yWn18GU0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475765; c=relaxed/simple;
-	bh=6F5tmjA5CRXY5sVLeXtn/sB6Tz9CzlKfceX033SoZ+g=;
+	s=arc-20240116; t=1714475768; c=relaxed/simple;
+	bh=f1r36kzcRmiIcvPbiAWjd03LlFUn+u2XS0nbCJa5HJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d2DuonU9atad19NT1BtO24ozvKv5LPr0asjBdf4Mtrfxpyiep16s1U442GZVj6Toddz0j+7OJvxGtRZlLWpeumhAM7y4ZYjRk5T70vBU79vRE4MQSjj5tobmxw/PqwtYOTukXnLurg9Uq2byZCr1xR0q5YDGdcNgSo8AGvghtFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrplhVQY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=M+ggBJ0+fSBrJWmP8XENmIBR7+Wyfu/rPzm+SnDwqo9sHoCovBJLQRmoYNUTU0uNWi6od2X9kJiRZm1Fw0nQHpmkUDahO9BCu8B+V0hZZOY64sBOm6ZlPojGY5JPBtfii2twmFts3vo/7tpRuUP0cd0E5G7p9UFJUPnJjzKKhxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CumSNnpD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrplhVQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94461C2BBFC;
-	Tue, 30 Apr 2024 11:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CumSNnpD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8EBC4AF18;
+	Tue, 30 Apr 2024 11:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475765;
-	bh=6F5tmjA5CRXY5sVLeXtn/sB6Tz9CzlKfceX033SoZ+g=;
+	s=korg; t=1714475768;
+	bh=f1r36kzcRmiIcvPbiAWjd03LlFUn+u2XS0nbCJa5HJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zrplhVQY/vHo+PdLZXYgB7cRTS1ZVkrDjCsrUPt97cZV9ElrH7FX4oD/utG2Wv/bE
-	 CKGJ0goAqyrmBdfp8Tq2l6SaGScfo12KYlnn5b33TM1C9pOloumlDJSZk+9kzvY10n
-	 a8jUEI0u09jGt1oSmCc5saW71vxQXE9o3pbANWOk=
+	b=CumSNnpD7s0kqSaaNJsV7KndwQobzpGC1UYeM+wj/9DdmigHM0Kcs+57fzsPV4EPk
+	 pSfhGOCAmQbFXJwuQf3yh/v+zIWp/RjApcVb0H4nwma79xlCsQU/eeAb38Pxk5FjQ+
+	 hhBdD4HU3ArZsXRUES10PhO0jVDYs4X9obhtwcF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	"David S. Miller" <davem@davemloft.net>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 11/80] arm64: dts: mediatek: mt7622: introduce nodes for Wireless Ethernet Dispatch
-Date: Tue, 30 Apr 2024 12:39:43 +0200
-Message-ID: <20240430103043.745012657@linuxfoundation.org>
+Subject: [PATCH 5.15 12/80] arm64: dts: mediatek: mt7622: fix clock controllers
+Date: Tue, 30 Apr 2024 12:39:44 +0200
+Message-ID: <20240430103043.774603252@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -45,80 +45,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit e9b65ecb7c3050dd34ee22ce17f1cf95e8405b15 ]
+[ Upstream commit 3ba5a61594347ab46e7c2cff6cd63ea0f1282efb ]
 
-Introduce wed0 and wed1 nodes in order to enable offloading forwarding
-between ethernet and wireless devices on the mt7622 chipset.
+1. Drop unneeded "syscon"s (bindings were updated recently)
+2. Use "clock-controller" in nodenames
+3. Add missing "#clock-cells"
 
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 3ba5a6159434 ("arm64: dts: mediatek: mt7622: fix clock controllers")
+Fixes: d7167881e03e ("arm64: dts: mt7622: add clock controller device nodes")
+Fixes: e9b65ecb7c30 ("arm64: dts: mediatek: mt7622: introduce nodes for Wireless Ethernet Dispatch")
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20240317221050.18595-2-zajec5@gmail.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7622.dtsi | 28 ++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ arch/arm64/boot/dts/mediatek/mt7622.dtsi | 27 +++++++++++-------------
+ 1 file changed, 12 insertions(+), 15 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/mediatek/mt7622.dtsi b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-index 8a332a3d3718a..636783511779a 100644
+index 636783511779a..a5395d1d098c0 100644
 --- a/arch/arm64/boot/dts/mediatek/mt7622.dtsi
 +++ b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-@@ -894,6 +894,11 @@
+@@ -275,16 +275,14 @@
  		};
  	};
  
-+	hifsys: syscon@1af00000 {
-+		compatible = "mediatek,mt7622-hifsys", "syscon";
-+		reg = <0 0x1af00000 0 0x70>;
-+	};
-+
- 	ethsys: syscon@1b000000 {
- 		compatible = "mediatek,mt7622-ethsys",
- 			     "syscon";
-@@ -912,6 +917,26 @@
- 		#dma-cells = <1>;
+-	apmixedsys: apmixedsys@10209000 {
+-		compatible = "mediatek,mt7622-apmixedsys",
+-			     "syscon";
++	apmixedsys: clock-controller@10209000 {
++		compatible = "mediatek,mt7622-apmixedsys";
+ 		reg = <0 0x10209000 0 0x1000>;
+ 		#clock-cells = <1>;
  	};
  
-+	pcie_mirror: pcie-mirror@10000400 {
-+		compatible = "mediatek,mt7622-pcie-mirror",
-+			     "syscon";
-+		reg = <0 0x10000400 0 0x10>;
-+	};
-+
-+	wed0: wed@1020a000 {
-+		compatible = "mediatek,mt7622-wed",
-+			     "syscon";
-+		reg = <0 0x1020a000 0 0x1000>;
-+		interrupts = <GIC_SPI 214 IRQ_TYPE_LEVEL_LOW>;
-+	};
-+
-+	wed1: wed@1020b000 {
-+		compatible = "mediatek,mt7622-wed",
-+			     "syscon";
-+		reg = <0 0x1020b000 0 0x1000>;
-+		interrupts = <GIC_SPI 215 IRQ_TYPE_LEVEL_LOW>;
-+	};
-+
- 	eth: ethernet@1b100000 {
- 		compatible = "mediatek,mt7622-eth",
- 			     "mediatek,mt2701-eth",
-@@ -939,6 +964,9 @@
- 		mediatek,ethsys = <&ethsys>;
- 		mediatek,sgmiisys = <&sgmiisys>;
- 		mediatek,cci-control = <&cci_control2>;
-+		mediatek,wed = <&wed0>, <&wed1>;
-+		mediatek,pcie-mirror = <&pcie_mirror>;
-+		mediatek,hifsys = <&hifsys>;
- 		dma-coherent;
- 		#address-cells = <1>;
- 		#size-cells = <0>;
+-	topckgen: topckgen@10210000 {
+-		compatible = "mediatek,mt7622-topckgen",
+-			     "syscon";
++	topckgen: clock-controller@10210000 {
++		compatible = "mediatek,mt7622-topckgen";
+ 		reg = <0 0x10210000 0 0x1000>;
+ 		#clock-cells = <1>;
+ 	};
+@@ -715,9 +713,8 @@
+ 		power-domains = <&scpsys MT7622_POWER_DOMAIN_WB>;
+ 	};
+ 
+-	ssusbsys: ssusbsys@1a000000 {
+-		compatible = "mediatek,mt7622-ssusbsys",
+-			     "syscon";
++	ssusbsys: clock-controller@1a000000 {
++		compatible = "mediatek,mt7622-ssusbsys";
+ 		reg = <0 0x1a000000 0 0x1000>;
+ 		#clock-cells = <1>;
+ 		#reset-cells = <1>;
+@@ -774,9 +771,8 @@
+ 		};
+ 	};
+ 
+-	pciesys: pciesys@1a100800 {
+-		compatible = "mediatek,mt7622-pciesys",
+-			     "syscon";
++	pciesys: clock-controller@1a100800 {
++		compatible = "mediatek,mt7622-pciesys";
+ 		reg = <0 0x1a100800 0 0x1000>;
+ 		#clock-cells = <1>;
+ 		#reset-cells = <1>;
+@@ -894,12 +890,13 @@
+ 		};
+ 	};
+ 
+-	hifsys: syscon@1af00000 {
+-		compatible = "mediatek,mt7622-hifsys", "syscon";
++	hifsys: clock-controller@1af00000 {
++		compatible = "mediatek,mt7622-hifsys";
+ 		reg = <0 0x1af00000 0 0x70>;
++		#clock-cells = <1>;
+ 	};
+ 
+-	ethsys: syscon@1b000000 {
++	ethsys: clock-controller@1b000000 {
+ 		compatible = "mediatek,mt7622-ethsys",
+ 			     "syscon";
+ 		reg = <0 0x1b000000 0 0x1000>;
 -- 
 2.43.0
 
