@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D811E50A;
-	Tue, 30 Apr 2024 11:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA171E50A;
+	Tue, 30 Apr 2024 11:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475206; cv=none; b=d7tmqNvzxqGSLipem+EYnGJIBL/YgFdNM8i9MJK5As1K1ahT8Hy2JHiCr6+GuXMK5mdqcN8tXUHOgN6sN0Z2h/oli/FKmfRQepg5PfgW6WoozWksdGMRCbc7Sjbm8IJARnqA1s8Igwwmc/wquy5AYnTOZhuliUA7yr5dks0/qks=
+	t=1714475209; cv=none; b=q3JKWm55bJQ/+3CySUWQcIPjlmwKJHWkVBfUrKvyKpZjUdV4QNXpX2ELWQYRHlfMoOt65P7nblde9PLG9ipGpGvJ0qB4RxuW6yMya7sSNS9e3l9eJ+x/68PgYq124KvW4X38WaOYqFpiXXyiA+NbPzsglbn4CjHSR6YvyV5Z830=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475206; c=relaxed/simple;
-	bh=i1v9ST8zHdL4eBJUkOHSxiAud0m3Sm17+Sux0oOcXqI=;
+	s=arc-20240116; t=1714475209; c=relaxed/simple;
+	bh=x7P6F0DKKDQR7BDiIm+YlGFzqvf5xaYF6LeOOYk8A2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RdiX3pRPHzXi6BEem3ip8mbEMhWmf9zS829ZY6qihwPRcogV4LZjfh/2JEZqfIzP55lMOdOJnqNA2J24mB4lq4dYYbGQiPX0KFAZpZr5Oikp7L5ShvE12P6HEEfcNf7L3PTZJJZtaUSVTo9EmuWpZXiOj5y3T7q32gryKB1OQD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJ30uAQN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=o3uH3z4tvNTjvQbCayDSrcwT3rRlfw+ghjZ/QxqM/Uw0jgem3Kcl2DdKCsfb5SFybf0llbTuIiGpbGuUrAO4xpOR9eYROsm9aZQcpSdaGmDyv15sGBe7JfqawNRgt/Kkpqk1ey1ufjuEcq5cAwAZdjM7CD6/iPSJ56/uEbDEqlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PJ+FIYQ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJ30uAQN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF59C2BBFC;
-	Tue, 30 Apr 2024 11:06:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PJ+FIYQ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4764C2BBFC;
+	Tue, 30 Apr 2024 11:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475206;
-	bh=i1v9ST8zHdL4eBJUkOHSxiAud0m3Sm17+Sux0oOcXqI=;
+	s=korg; t=1714475209;
+	bh=x7P6F0DKKDQR7BDiIm+YlGFzqvf5xaYF6LeOOYk8A2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QJ30uAQN30yHa8Qo6I1kXX9uPDIiQDWffrY3tYSmiZQVz2ThLnX1xtK217XM7QqcW
-	 IipRbvfdYwvvvQv2Hve46IIqo94oKgOO/aB6aStxgHRL/nFCW6JEicmgJfOCbmaroE
-	 f2cplDL1lCh7Roqqd/nAEXqYyJ+yFHugWoTLNZJ4=
+	b=PJ+FIYQ5UtIi6Cuq+ntUhrwFhqdVg531xB5G7DbZoZWzuet5GnttLSoMMVZv2739u
+	 hwmnaZzqY79nBG9+X5MmQAxBud1sfqoCNSr3KtbHVmyWOaGlwr+51wUz5+ngXwCA00
+	 3vpa2wbOT1zSlYsvBvYVFw2C94yGRf780dDKXnBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Shih <sam.shih@mediatek.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/186] arm64: dts: mediatek: mt7986: drop invalid properties from ethsys
-Date: Tue, 30 Apr 2024 12:37:58 +0200
-Message-ID: <20240430103058.787704535@linuxfoundation.org>
+Subject: [PATCH 6.6 027/186] arm64: dts: mediatek: mt7986: drop "#reset-cells" from Ethernet controller
+Date: Tue, 30 Apr 2024 12:37:59 +0200
+Message-ID: <20240430103058.816307777@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -55,40 +55,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 3b449bfd2ff6c5d3ceecfcb18528ff8e1b4ac2fd ]
+[ Upstream commit 9bd88afc94c3570289a0f1c696578b3e1f4e3169 ]
 
-Mediatek ethsys controller / syscon binding doesn't allow any subnodes
-so "#address-cells" and "#size-cells" are redundant (actually:
-disallowed).
+Ethernet block doesn't include or act as a reset controller.
+Documentation also doesn't document "#reset-cells" for it.
 
 This fixes:
-arch/arm64/boot/dts/mediatek/mt7986a-bananapi-bpi-r3.dtb: syscon@15000000: '#address-cells', '#size-cells' do not match any of the regexes: 'pinctrl-[0-9]+'
-        from schema $id: http://devicetree.org/schemas/clock/mediatek,ethsys.yaml#
+arch/arm64/boot/dts/mediatek/mt7986a-bananapi-bpi-r3.dtb: ethernet@15100000: Unevaluated properties are not allowed ('#reset-cells' was unexpected)
+        from schema $id: http://devicetree.org/schemas/net/mediatek,net.yaml#
 
-Fixes: 1f9986b258c2 ("arm64: dts: mediatek: add clock support for mt7986a")
-Cc: Sam Shih <sam.shih@mediatek.com>
+Fixes: 082ff36bd5c0 ("arm64: dts: mediatek: mt7986: introduce ethernet nodes")
+Cc: Lorenzo Bianconi <lorenzo@kernel.org>
 Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240213053739.14387-1-zajec5@gmail.com
+Link: https://lore.kernel.org/r/20240213053739.14387-2-zajec5@gmail.com
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7986a.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt7986a.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
-index eba5e27a1bbea..850b664dfa13d 100644
+index 850b664dfa13d..5c2fe2f43a142 100644
 --- a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
 +++ b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
-@@ -501,8 +501,6 @@
- 			 compatible = "mediatek,mt7986-ethsys",
- 				      "syscon";
- 			 reg = <0 0x15000000 0 0x1000>;
--			 #address-cells = <1>;
--			 #size-cells = <1>;
- 			 #clock-cells = <1>;
- 			 #reset-cells = <1>;
- 		};
+@@ -577,7 +577,6 @@
+ 					  <&topckgen CLK_TOP_SGM_325M_SEL>;
+ 			assigned-clock-parents = <&apmixedsys CLK_APMIXED_NET2PLL>,
+ 						 <&apmixedsys CLK_APMIXED_SGMPLL>;
+-			#reset-cells = <1>;
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+ 			mediatek,ethsys = <&ethsys>;
 -- 
 2.43.0
 
