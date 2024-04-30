@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB29712C46D;
-	Tue, 30 Apr 2024 10:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0611E12CDAF;
+	Tue, 30 Apr 2024 10:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473931; cv=none; b=kpwMvCat6eLC1gxsKpw78gMuqe9tkKIlU3zHMLdBcjvRRDnv11IsVbCmviNgTqUetUXEWo2K0apCCi2fsgfIrBacId6u+ByIqS/eOO4scxN1iABkS+bK1URxx2oLm83HPqu0VRWgn7KpQfSv8ZMPJu/EZMEk1Lg+I7y54cZ3grg=
+	t=1714473934; cv=none; b=UOPQ+GDb9d9YEaN/GkLoxQFDx2PgqaKivM/Qtvrl0ywVHj2DcALToPVWHelt9xjho5ILNNzMXe8nuzA6/zxGz1KIQKSKBNbJLPcvhxc86P5oHQlPpMKXN8z1Wi2dXr6pTFuHh4uWwh9N7p4zgs6FQq55/glAtEOxfWVosmd3M0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473931; c=relaxed/simple;
-	bh=hC03OIiMJ2E4WTpiCERA8rGnU2TYGA64/c3TJ4UGlt4=;
+	s=arc-20240116; t=1714473934; c=relaxed/simple;
+	bh=zG5NiwLrKbtFedl4rprSD9mUHFLp0eTWgcbZHcA8310=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FN6GjTiW3BadvO6RXxMsJ6E7NvfiJjd5Wl03d1IS5RpeNlyS10SdkU/u5xugvKXs1RssH1cvNWeKjcqpDYJrO3E2aHWKK4nP7ymTiXi+YwBmN7VDQ+92YF4ZlP0ygTX+QpkpY63ssE3mL1rtdjeomDTbKIQx4O6JrD+tSWsp8VA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oU9XsoDl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WqLXu3U9qkuOw7L7/I/M7YOyQqKML6R/loHkr+1v8zY87WkRVTFkVbvmMwDq1HoXUl+9d/xqOweomPpMQo6IbBr1G5uFCakT0Nd2p+b2sqZXBdLb4OZbzbUi8N+dAzXfBSet6zOLsshaKx+RGudaXhUTr5rNyV+0BeJ3E+DudYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPCHVQJU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oU9XsoDl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6246AC2BBFC;
-	Tue, 30 Apr 2024 10:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPCHVQJU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8579FC2BBFC;
+	Tue, 30 Apr 2024 10:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473930;
-	bh=hC03OIiMJ2E4WTpiCERA8rGnU2TYGA64/c3TJ4UGlt4=;
+	s=korg; t=1714473933;
+	bh=zG5NiwLrKbtFedl4rprSD9mUHFLp0eTWgcbZHcA8310=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oU9XsoDlh1RblRLeqiReO+FmlMLHrzABWziPnjGRYojNMD80fTZdRIs028EVzhHeF
-	 gqCHR/3Pt7AXKBP+PlWY50IBKMRPfG9U7nZr2SMX9dUft74ZdYIkcLanJYuYNig1Jr
-	 8C2nqj8Hamt/zRmzV91UIiDdnQie1uPbsTiIrb88=
+	b=MPCHVQJU4Lmk9mA0g6ZkWMWMndcNQhoHws7Q90G0mzRhs1qKGxNR1T3vDq9B2FFtO
+	 XEaDjMu0tDPDknyTBgAricoXnZWQIFWAHybg3G6cOXhq9+63vryx8OXQ88TnJFFcFd
+	 lzHYGqtBqN36WZia5xi/mdWQJeIsUH2O84XpKYkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+	Andy Yan <andyshrk@163.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 001/228] cifs: Fix reacquisition of volume cookie on still-live connection
-Date: Tue, 30 Apr 2024 12:36:19 +0200
-Message-ID: <20240430103103.852592498@linuxfoundation.org>
+Subject: [PATCH 6.8 010/228] arm64: dts: rockchip: Fix the i2c address of es8316 on Cool Pi CM5
+Date: Tue, 30 Apr 2024 12:36:28 +0200
+Message-ID: <20240430103104.112287821@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -55,117 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Andy Yan <andyshrk@163.com>
 
-[ Upstream commit dad80c6bff770d25f67ec25fe011730e4a463008 ]
+[ Upstream commit 64da060dd4eb625646970d7c96a16de617412ec5 ]
 
-During mount, cifs_mount_get_tcon() gets a tcon resource connection record
-and then attaches an fscache volume cookie to it.  However, it does this
-irrespective of whether or not the tcon returned from cifs_get_tcon() is a
-new record or one that's already in use.  This leads to a warning about a
-volume cookie collision and a leaked volume cookie because tcon->fscache
-gets reset.
+According to the hardware design, the i2c address of audio codec es8316
+on Cool Pi CM5 is 0x10.
 
-Fix this be adding a mutex and a "we've already tried this" flag and only
-doing it once for the lifetime of the tcon.
+This fix the read/write error like bellow:
+es8316 7-0011: ASoC: error at soc_component_write_no_lock on es8316.7-0011 for register: [0x0000000c] -6
+es8316 7-0011: ASoC: error at soc_component_write_no_lock on es8316.7-0011 for register: [0x00000003] -6
+es8316 7-0011: ASoC: error at soc_component_read_no_lock on es8316.7-0011 for register: [0x00000016] -6
+es8316 7-0011: ASoC: error at soc_component_read_no_lock on es8316.7-0011 for register: [0x00000016] -6
 
-[!] Note: Looking at cifs_mount_get_tcon(), a more general solution may
-actually be required.  Reacquiring the volume cookie isn't the only thing
-that function does: it also partially reinitialises the tcon record without
-any locking - which may cause live filesystem ops already using the tcon
-through a previous mount to malfunction.
-
-This can be reproduced simply by something like:
-
-    mount //example.com/test /xfstest.test -o user=shares,pass=xxx,fsc
-    mount //example.com/test /mnt -o user=shares,pass=xxx,fsc
-
-Fixes: 70431bfd825d ("cifs: Support fscache indexing rewrite")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-cc: Shyam Prasad N <sprasad@microsoft.com>
-cc: linux-cifs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 791c154c3982 ("arm64: dts: rockchip: Add support for rk3588 based board Cool Pi CM5 EVB")
+Signed-off-by: Andy Yan <andyshrk@163.com>
+Link: https://lore.kernel.org/r/20240324112833.2181961-1-andyshrk@163.com
+[also adapted the node name to audio-codec@10]
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsglob.h |  2 ++
- fs/smb/client/fscache.c  | 13 +++++++++++++
- fs/smb/client/misc.c     |  3 +++
- 3 files changed, 18 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index 844afda090d05..0c3311de5dc0a 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -1261,7 +1261,9 @@ struct cifs_tcon {
- 	__u32 max_cached_dirs;
- #ifdef CONFIG_CIFS_FSCACHE
- 	u64 resource_id;		/* server resource id */
-+	bool fscache_acquired;		/* T if we've tried acquiring a cookie */
- 	struct fscache_volume *fscache;	/* cookie for share */
-+	struct mutex fscache_lock;	/* Prevent regetting a cookie */
- #endif
- 	struct list_head pending_opens;	/* list of incomplete opens */
- 	struct cached_fids *cfids;
-diff --git a/fs/smb/client/fscache.c b/fs/smb/client/fscache.c
-index 340efce8f0529..113bde8f1e613 100644
---- a/fs/smb/client/fscache.c
-+++ b/fs/smb/client/fscache.c
-@@ -43,12 +43,23 @@ int cifs_fscache_get_super_cookie(struct cifs_tcon *tcon)
- 	char *key;
- 	int ret = -ENOMEM;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5.dtsi
+index cce1c8e835877..94ecb9b4f98f8 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5.dtsi
+@@ -216,9 +216,9 @@
+ 	pinctrl-0 = <&i2c7m0_xfer>;
+ 	status = "okay";
  
-+	if (tcon->fscache_acquired)
-+		return 0;
-+
-+	mutex_lock(&tcon->fscache_lock);
-+	if (tcon->fscache_acquired) {
-+		mutex_unlock(&tcon->fscache_lock);
-+		return 0;
-+	}
-+	tcon->fscache_acquired = true;
-+
- 	tcon->fscache = NULL;
- 	switch (sa->sa_family) {
- 	case AF_INET:
- 	case AF_INET6:
- 		break;
- 	default:
-+		mutex_unlock(&tcon->fscache_lock);
- 		cifs_dbg(VFS, "Unknown network family '%d'\n", sa->sa_family);
- 		return -EINVAL;
- 	}
-@@ -57,6 +68,7 @@ int cifs_fscache_get_super_cookie(struct cifs_tcon *tcon)
- 
- 	sharename = extract_sharename(tcon->tree_name);
- 	if (IS_ERR(sharename)) {
-+		mutex_unlock(&tcon->fscache_lock);
- 		cifs_dbg(FYI, "%s: couldn't extract sharename\n", __func__);
- 		return PTR_ERR(sharename);
- 	}
-@@ -90,6 +102,7 @@ int cifs_fscache_get_super_cookie(struct cifs_tcon *tcon)
- 	kfree(key);
- out:
- 	kfree(sharename);
-+	mutex_unlock(&tcon->fscache_lock);
- 	return ret;
- }
- 
-diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
-index 74627d647818a..0d13db80e67c9 100644
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -141,6 +141,9 @@ tcon_info_alloc(bool dir_leases_enabled)
- 	atomic_set(&ret_buf->num_local_opens, 0);
- 	atomic_set(&ret_buf->num_remote_opens, 0);
- 	ret_buf->stats_from_time = ktime_get_real_seconds();
-+#ifdef CONFIG_CIFS_FSCACHE
-+	mutex_init(&ret_buf->fscache_lock);
-+#endif
- 
- 	return ret_buf;
- }
+-	es8316: audio-codec@11 {
++	es8316: audio-codec@10 {
+ 		compatible = "everest,es8316";
+-		reg = <0x11>;
++		reg = <0x10>;
+ 		assigned-clocks = <&cru I2S0_8CH_MCLKOUT>;
+ 		assigned-clock-rates = <12288000>;
+ 		clocks = <&cru I2S0_8CH_MCLKOUT>;
 -- 
 2.43.0
 
