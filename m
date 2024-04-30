@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCB812C48F;
-	Tue, 30 Apr 2024 10:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2335B12C48B;
+	Tue, 30 Apr 2024 10:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474217; cv=none; b=c9IuLRl7Som4ZireL8YLqvDAjrXbhY6b8h7vEePzxNUI+EK7+65xZYyBJi1nuIXeyxrEccOk7t6bo2PuydXK3Z88IsFDlpxssovQOiv2p7L4Dme8kgpHyrvnmouRxKmMdfix0IYwTmacJTv8nbpPA0x4tNuD8SoWr30DFbFkSA8=
+	t=1714474221; cv=none; b=LeVavwVOMc79VYQCu05riL+D16iHz97FpnRTajn6t6frNX/YUzch7pR5k16SyZ3oIBbhp0PLrdyEB//ovm73w2OzDZ587CZtnSyHBgmv+rCGqfcy7aolZE/UF0MCNSQcJONERfOLyGYzhVAq6Tnd6aY6ejP3Lp0xBC4nT34nFR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474217; c=relaxed/simple;
-	bh=uVE7egw5XoMWpUm7YqbBkRX0ESd5kJVR984LXkCtGjU=;
+	s=arc-20240116; t=1714474221; c=relaxed/simple;
+	bh=voYEgcErQVaMVkciTRp7zsMhk2GT4Xs7rbqXYeG7lEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KmEAaXcAWsHRPaAESc+zjzKFJaDdZwopMuC4ZZ9owuDjubHP5QkLBTEwxNFnZGcL2h08stJSbV1ME89cJfeSnIU9P9bwyOvV4eCFoljkX79VU42zqIQ6412O5EAa9TzKG2lzZ6glbonEQdHq1BQ4PN5xUWscQHyltbsuAV9LFXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YB6w+5M7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p83FuQcC6fCBTdS34cwZeTwDT/bmjLLB7wiPnxxZqW5OnsC4RJokimErx4tg8697DbG7KaDPjxpWkPkEdwOWjU/YMOA/H1pAcN2LiFHqzyRoH5T7orJItJOwxi25Y8M59OwG5Dkl4TB9Xe/PNRYhAChENFtPa8bx6tppfbSxkDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQweahaU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YB6w+5M7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF31C4AF19;
-	Tue, 30 Apr 2024 10:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQweahaU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44DDBC2BBFC;
+	Tue, 30 Apr 2024 10:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474217;
-	bh=uVE7egw5XoMWpUm7YqbBkRX0ESd5kJVR984LXkCtGjU=;
+	s=korg; t=1714474220;
+	bh=voYEgcErQVaMVkciTRp7zsMhk2GT4Xs7rbqXYeG7lEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YB6w+5M7S2noMpqd/uJjWyyvmjPMx4Tmox1kbImlyHsEroI4vmB1LyUSQ56sN+Qek
-	 hQjPqnGxCs4Oks02+M0abvKaBdZwTcZHRFcjDVgnXZ4DkrXSPizJFT7w0qgdvPjVrE
-	 xl6AUqAIBalrczMw5WNbxXs21uRN138Xnm2QBdYo=
+	b=BQweahaUmb7S7FHCG4XL6BkU+pccga7Q6BqTSUdcbj8HV9TTZDG7lIA6Y336h2B2S
+	 5bdnlq+UvZ2dDaJPHO42Tafu0+R1VhHVqI6xHeADIJXsX9qOZj8y+mE0LEV8Fl7NCE
+	 E2TdeGgBHSX3ia7wHITPvjGcT3aw9ngAJIN7tse0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wren Turkal <wt@penguintechs.org>,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 091/228] Bluetooth: qca: set power_ctrl_enabled on NULL returned by gpiod_get_optional()
-Date: Tue, 30 Apr 2024 12:37:49 +0200
-Message-ID: <20240430103106.429305038@linuxfoundation.org>
+	Ismael Luceno <iluceno@suse.de>,
+	Andreas Taschner <andreas.taschner@suse.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Firo Yang <firo.yang@suse.com>
+Subject: [PATCH 6.8 092/228] ipvs: Fix checksumming on GSO of SCTP packets
+Date: Tue, 30 Apr 2024 12:37:50 +0200
+Message-ID: <20240430103106.457773062@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -54,81 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Ismael Luceno <iluceno@suse.de>
 
-[ Upstream commit 3d05fc82237aa97162d0d7dc300b55bb34e91d02 ]
+[ Upstream commit e10d3ba4d434ed172914617ed8d74bd411421193 ]
 
-Any return value from gpiod_get_optional() other than a pointer to a
-GPIO descriptor or a NULL-pointer is an error and the driver should
-abort probing. That being said: commit 56d074d26c58 ("Bluetooth: hci_qca:
-don't use IS_ERR_OR_NULL() with gpiod_get_optional()") no longer sets
-power_ctrl_enabled on NULL-pointer returned by
-devm_gpiod_get_optional(). Restore this behavior but bail-out on errors.
-While at it: also bail-out on error returned when trying to get the
-"swctrl" GPIO.
+It was observed in the wild that pairs of consecutive packets would leave
+the IPVS with the same wrong checksum, and the issue only went away when
+disabling GSO.
 
-Reported-by: Wren Turkal <wt@penguintechs.org>
-Reported-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Closes: https://lore.kernel.org/linux-bluetooth/1713449192-25926-2-git-send-email-quic_zijuhu@quicinc.com/
-Fixes: 56d074d26c58 ("Bluetooth: hci_qca: don't use IS_ERR_OR_NULL() with gpiod_get_optional()")
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Tested-by: Wren Turkal <wt@penguintechs.org>
-Reported-by: Wren Turkal <wt@penguintechs.org>
-Reported-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Reviewed-by: Krzysztof Kozlowski<krzysztof.kozlowski@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+IPVS needs to avoid computing the SCTP checksum when using GSO.
+
+Fixes: 90017accff61 ("sctp: Add GSO support")
+Co-developed-by: Firo Yang <firo.yang@suse.com>
+Signed-off-by: Ismael Luceno <iluceno@suse.de>
+Tested-by: Andreas Taschner <andreas.taschner@suse.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ net/netfilter/ipvs/ip_vs_proto_sctp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index ecbc52eaf1010..2f7ae38d85eb0 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -2329,16 +2329,21 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 		    (data->soc_type == QCA_WCN6750 ||
- 		     data->soc_type == QCA_WCN6855)) {
- 			dev_err(&serdev->dev, "failed to acquire BT_EN gpio\n");
--			power_ctrl_enabled = false;
-+			return PTR_ERR(qcadev->bt_en);
- 		}
- 
-+		if (!qcadev->bt_en)
-+			power_ctrl_enabled = false;
-+
- 		qcadev->sw_ctrl = devm_gpiod_get_optional(&serdev->dev, "swctrl",
- 					       GPIOD_IN);
- 		if (IS_ERR(qcadev->sw_ctrl) &&
- 		    (data->soc_type == QCA_WCN6750 ||
- 		     data->soc_type == QCA_WCN6855 ||
--		     data->soc_type == QCA_WCN7850))
--			dev_warn(&serdev->dev, "failed to acquire SW_CTRL gpio\n");
-+		     data->soc_type == QCA_WCN7850)) {
-+			dev_err(&serdev->dev, "failed to acquire SW_CTRL gpio\n");
-+			return PTR_ERR(qcadev->sw_ctrl);
-+		}
- 
- 		qcadev->susclk = devm_clk_get_optional(&serdev->dev, NULL);
- 		if (IS_ERR(qcadev->susclk)) {
-@@ -2357,10 +2362,13 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 		qcadev->bt_en = devm_gpiod_get_optional(&serdev->dev, "enable",
- 					       GPIOD_OUT_LOW);
- 		if (IS_ERR(qcadev->bt_en)) {
--			dev_warn(&serdev->dev, "failed to acquire enable gpio\n");
--			power_ctrl_enabled = false;
-+			dev_err(&serdev->dev, "failed to acquire enable gpio\n");
-+			return PTR_ERR(qcadev->bt_en);
- 		}
- 
-+		if (!qcadev->bt_en)
-+			power_ctrl_enabled = false;
-+
- 		qcadev->susclk = devm_clk_get_optional(&serdev->dev, NULL);
- 		if (IS_ERR(qcadev->susclk)) {
- 			dev_warn(&serdev->dev, "failed to acquire clk\n");
+diff --git a/net/netfilter/ipvs/ip_vs_proto_sctp.c b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+index a0921adc31a9f..1e689c7141271 100644
+--- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+@@ -126,7 +126,8 @@ sctp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	if (sctph->source != cp->vport || payload_csum ||
+ 	    skb->ip_summed == CHECKSUM_PARTIAL) {
+ 		sctph->source = cp->vport;
+-		sctp_nat_csum(skb, sctph, sctphoff);
++		if (!skb_is_gso(skb) || !skb_is_gso_sctp(skb))
++			sctp_nat_csum(skb, sctph, sctphoff);
+ 	} else {
+ 		skb->ip_summed = CHECKSUM_UNNECESSARY;
+ 	}
+@@ -174,7 +175,8 @@ sctp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	    (skb->ip_summed == CHECKSUM_PARTIAL &&
+ 	     !(skb_dst(skb)->dev->features & NETIF_F_SCTP_CRC))) {
+ 		sctph->dest = cp->dport;
+-		sctp_nat_csum(skb, sctph, sctphoff);
++		if (!skb_is_gso(skb) || !skb_is_gso_sctp(skb))
++			sctp_nat_csum(skb, sctph, sctphoff);
+ 	} else if (skb->ip_summed != CHECKSUM_PARTIAL) {
+ 		skb->ip_summed = CHECKSUM_UNNECESSARY;
+ 	}
 -- 
 2.43.0
 
