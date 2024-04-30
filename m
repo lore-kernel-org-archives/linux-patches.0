@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFE112C805;
-	Tue, 30 Apr 2024 11:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F2812CD9B;
+	Tue, 30 Apr 2024 11:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476091; cv=none; b=bgnOc4Sn2pOt0RB7XvjztMGpBrZit/RIMnd19T2oXyVYJfkRLWl0dfgeTLSSX+RT9fXGLRDeFCyVmH7STN/sOe0WNDk1ruwBQJHrjJ3kV2u4yxKji2T4kldH7FgP77itI7Gj9PuLhMKPbjhlsyVCasjgAYqAKfCGHcED9lKPrWg=
+	t=1714476094; cv=none; b=hCYMc5qfPwA9ApEAWCpWY81H2AU1z1TaKcaLkvytGPDI7oeiFvDY173ZbN8jppHD1qNjfrS9k8mgGfU0AShnFnPWvsYkbMI3RQNgpSkIMd+pqAKLC4nF2q35OVqTENoLKOXakh96fDEfcI5woqZ9706DLNQjgIEB0ZEeC53aKIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476091; c=relaxed/simple;
-	bh=U7YtRZtBioJtm9rI4wi/Qzd1baIK5F6lWsJegfQnD6I=;
+	s=arc-20240116; t=1714476094; c=relaxed/simple;
+	bh=urSgdWURu3YxGP/gPKEEYNOTJWRKylw92VEI5AhwAiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JpvkJPAv0mLcMA+13cz35wc5jFqrKpgi0TgWWKhESLYoKKc4mgdSwbBj/3T6e5rR1bqdNxmgNvFQDuO0VbDFyE+Fw7eS84ZGH6RR2GwcoU2O1G1mHCOpbLywC8IZwIH+GKiAJA7MxTReR4QEm+hVqarPXw+gHma3bGGRY18mOGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGfnyRkd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FcxtHtvdSSdeTdEhnNvSgfEIid+M0bIWUfc7a0iLjdigPV+2o0XNTLe/eYzKeupWsjrUE8jev3s/oMi8LRSNPkL2x9SPWBNoEEsAaB+mPnoL2Nf0tOaAqpsQqhe1af+bUcJuYVNlmxApc+AmakH1UoNXyDE05rXkmoihejl1+BE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbgNpKru; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGfnyRkd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E3BC2BBFC;
-	Tue, 30 Apr 2024 11:21:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbgNpKru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEC8C2BBFC;
+	Tue, 30 Apr 2024 11:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476091;
-	bh=U7YtRZtBioJtm9rI4wi/Qzd1baIK5F6lWsJegfQnD6I=;
+	s=korg; t=1714476094;
+	bh=urSgdWURu3YxGP/gPKEEYNOTJWRKylw92VEI5AhwAiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NGfnyRkd4rH+mFhv5TS7sRuoC2C6nBWPFr5KSr8kUB6szr+qxpd0OIecpzkZPoyLm
-	 V3UGgURR7EF0TAYWr8MTH0a8u1XQIF7pJMFVQVWD8ttZYekum3mhlnUYgG4meyrF3u
-	 WrfUfnZmxSWKZ5scSMpJ6EAb3aGyU2sbCI8K5uPE=
+	b=UbgNpKrusGp+FM9V1UBNPsQzEfQ7MocUPlE3pjZ8CZN6QOHQkt0SEu8UHl+OSwj/p
+	 NbWb8ydxT+OulBlttG6zcReJmNglWOM7mYhpEE7VOs7MSqoUjz/PGAKNkpl3RPLfy/
+	 bZARlAlVpIozOVpz5bJ1aGavhSkczrr5mhg0Xqng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 030/107] clk: remove extra empty line
-Date: Tue, 30 Apr 2024 12:39:50 +0200
-Message-ID: <20240430103045.550888780@linuxfoundation.org>
+Subject: [PATCH 5.4 031/107] clk: Print an info line before disabling unused clocks
+Date: Tue, 30 Apr 2024 12:39:51 +0200
+Message-ID: <20240430103045.579898800@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -51,33 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 79806d338829b2bf903480428d8ce5aab8e2d24b ]
+[ Upstream commit 12ca59b91d04df32e41be5a52f0cabba912c11de ]
 
-Remove extra empty line.
+Currently, the regulator framework informs us before calling into
+their unused cleanup paths, which eases at least some debugging. The
+same could be beneficial for clocks, so that random shutdowns shortly
+after most initcalls are done can be less of a guess.
 
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20220630151205.3935560-1-claudiu.beznea@microchip.com
+Add a pr_info before disabling unused clocks to do so.
+
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230307132928.3887737-1-konrad.dybcio@linaro.org
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Stable-dep-of: e581cf5d2162 ("clk: Get runtime PM before walking tree during disable_unused")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/clk/clk.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index f9d89b42b8f9d..276b8a1f3c3f3 100644
+index 276b8a1f3c3f3..7c92dd209a99d 100644
 --- a/drivers/clk/clk.c
 +++ b/drivers/clk/clk.c
-@@ -3508,7 +3508,6 @@ static int __clk_core_init(struct clk_core *core)
+@@ -1315,6 +1315,8 @@ static int clk_disable_unused(void)
+ 		return 0;
+ 	}
  
- 	clk_core_reparent_orphans_nolock();
++	pr_info("clk: Disabling unused clocks\n");
++
+ 	clk_prepare_lock();
  
--
- 	kref_init(&core->ref);
- out:
- 	clk_pm_runtime_put(core);
+ 	hlist_for_each_entry(core, &clk_root_list, child_node)
 -- 
 2.43.0
 
