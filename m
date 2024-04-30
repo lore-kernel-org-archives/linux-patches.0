@@ -1,41 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88535127B70;
-	Tue, 30 Apr 2024 10:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B41127B70;
+	Tue, 30 Apr 2024 10:42:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473731; cv=none; b=dtszliZZVf9oPjL9qeXpGB8UDFd6R9PzV9Bktp4tiAUmOclFKCWSXEl3U8M1A1DBrJqE4uderk5xqyO09mVSftJCuzW+hHL1DJnvOJOQaIT2p6/ERc2O/74v9z9RXLTOIwbAdxCpwVP9aUVMzT4Tx84jh3OG/0BPTmWC+GxHQf4=
+	t=1714473734; cv=none; b=uw7vG4KErbrxENijzvao2FJIxw00JhgZ3baGsGYKFyrd0tzcqwr9zrk1RdcbwJEuHgC51jAAVH4QSUd/YydkRv51joY7J7Z8ga7hCKgKW0ZyBNdyFbuRWwj847OUwFMo8CIeY4IkUYH1W2sdKad+Jc/ZAZgf0kRYYHZr6z43stA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473731; c=relaxed/simple;
-	bh=MXtu1OhLTto9ZJynNeX5d31OwnMTQBN4FcWGT2KvWY0=;
+	s=arc-20240116; t=1714473734; c=relaxed/simple;
+	bh=kOxIqRD/O+3VSnI4BCB9E0otHSiLmg5IpBB96fxW1d0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GDYI8gRj4r2I7GKsstJ+oE6PC4lg9g1ZN1+nKeX3fVa84M76egcxv6CEmaddKa4o+qK3eNv/y4KUbcjn8OxwiGi09+dNyOV9UpvYW0zntlZdsVdkn2y/2nhGGphffQm229k22U5J3c49UPsUs0Yy53MmN4lX9LQj2veZSDUufU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTt+IQH6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uo8j3++PegS7Az2ixR/g3DHpZWYr+jXDUoL+vkMXuuX+sYyOpWeqDOGUAb4sdrhFYI/gLsYUqGlxwNg/z5iFiO8761HZzuEs8jRkXaYB2Ky9QbG8c+9l5+53dpu9Su6VKihKlpp6JuVPG/4+Tmgqgw91/AbPgQEKDyB9WJSWiBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0idgx68c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTt+IQH6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104D8C2BBFC;
-	Tue, 30 Apr 2024 10:42:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0idgx68c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9117C2BBFC;
+	Tue, 30 Apr 2024 10:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473731;
-	bh=MXtu1OhLTto9ZJynNeX5d31OwnMTQBN4FcWGT2KvWY0=;
+	s=korg; t=1714473734;
+	bh=kOxIqRD/O+3VSnI4BCB9E0otHSiLmg5IpBB96fxW1d0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YTt+IQH6hv2Cm8b9T7MhpLanDcObTiHh+dpNlZndz2xQvggvYN26geobv4YRnWkzw
-	 GMWnkil9krml6KiN1mr0KJTV4oti8pyfvPTvNMIjXfsDrDCpB6Gbxl7452DmpEdstl
-	 vZm6dmi+HKLTph6L6hmsWc/rrID1+7FUNk2MZrnY=
+	b=0idgx68cc5CC0amEAs1h9qhdlecRGn1Pk7Mwz3jz0UvtZ3yss1D7gWYT6LkwOJNyA
+	 KVIW4NV/qraL+pA0LKBkazZi3FR7rT+PMKqMMwnY+6gkG49yM68avfuUcnp/HYzM+3
+	 wICwDu5WlfkPgXEmASyUa+UF1P/2F/Y8UzhGY6Eg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Kees Cook <keescook@chromium.org>,
+	Ajay Kaher <akaher@vmware.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Tzvetomir Stoyanov (VMware)" <tz.stoyanov@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 08/77] net/mlx5: Properly link new fs rules into the tree
-Date: Tue, 30 Apr 2024 12:38:47 +0200
-Message-ID: <20240430103041.366183008@linuxfoundation.org>
+Subject: [PATCH 4.19 09/77] tracing: hide unused ftrace_event_id_fops
+Date: Tue, 30 Apr 2024 12:38:48 +0200
+Message-ID: <20240430103041.395760584@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -48,72 +55,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 7c6782ad4911cbee874e85630226ed389ff2e453 ]
+[ Upstream commit 5281ec83454d70d98b71f1836fb16512566c01cd ]
 
-Previously, add_rule_fg would only add newly created rules from the
-handle into the tree when they had a refcount of 1. On the other hand,
-create_flow_handle tries hard to find and reference already existing
-identical rules instead of creating new ones.
+When CONFIG_PERF_EVENTS, a 'make W=1' build produces a warning about the
+unused ftrace_event_id_fops variable:
 
-These two behaviors can result in a situation where create_flow_handle
-1) creates a new rule and references it, then
-2) in a subsequent step during the same handle creation references it
-   again,
-resulting in a rule with a refcount of 2 that is not linked into the
-tree, will have a NULL parent and root and will result in a crash when
-the flow group is deleted because del_sw_hw_rule, invoked on rule
-deletion, assumes node->parent is != NULL.
+kernel/trace/trace_events.c:2155:37: error: 'ftrace_event_id_fops' defined but not used [-Werror=unused-const-variable=]
+ 2155 | static const struct file_operations ftrace_event_id_fops = {
 
-This happened in the wild, due to another bug related to incorrect
-handling of duplicate pkt_reformat ids, which lead to the code in
-create_flow_handle incorrectly referencing a just-added rule in the same
-flow handle, resulting in the problem described above. Full details are
-at [1].
+Hide this in the same #ifdef as the reference to it.
 
-This patch changes add_rule_fg to add new rules without parents into
-the tree, properly initializing them and avoiding the crash. This makes
-it more consistent with how rules are added to an FTE in
-create_flow_handle.
+Link: https://lore.kernel.org/linux-trace-kernel/20240403080702.3509288-7-arnd@kernel.org
 
-Fixes: 74491de93712 ("net/mlx5: Add multi dest support")
-Link: https://lore.kernel.org/netdev/ea5264d6-6b55-4449-a602-214c6f509c1e@163.com/T/#u [1]
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20240409190820.227554-5-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Zheng Yejian <zhengyejian1@huawei.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Ajay Kaher <akaher@vmware.com>
+Cc: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: Clément Léger <cleger@rivosinc.com>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: "Tzvetomir Stoyanov (VMware)" <tz.stoyanov@gmail.com>
+Fixes: 620a30e97feb ("tracing: Don't pass file_operations array to event_create_dir()")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/trace_events.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-index f0aa7f0e54803..d2b8d284b1995 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-@@ -1452,8 +1452,9 @@ static struct mlx5_flow_handle *add_rule_fg(struct mlx5_flow_group *fg,
- 	}
- 	trace_mlx5_fs_set_fte(fte, false);
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -1309,6 +1309,7 @@ static int trace_format_open(struct inod
+ 	return 0;
+ }
  
-+	/* Link newly added rules into the tree. */
- 	for (i = 0; i < handle->num_rules; i++) {
--		if (refcount_read(&handle->rule[i]->node.refcount) == 1) {
-+		if (!handle->rule[i]->node.parent) {
- 			tree_add_node(&handle->rule[i]->node, &fte->node);
- 			trace_mlx5_fs_add_rule(handle->rule[i]);
- 		}
--- 
-2.43.0
-
++#ifdef CONFIG_PERF_EVENTS
+ static ssize_t
+ event_id_read(struct file *filp, char __user *ubuf, size_t cnt, loff_t *ppos)
+ {
+@@ -1323,6 +1324,7 @@ event_id_read(struct file *filp, char __
+ 
+ 	return simple_read_from_buffer(ubuf, cnt, ppos, buf, len);
+ }
++#endif
+ 
+ static ssize_t
+ event_filter_read(struct file *filp, char __user *ubuf, size_t cnt,
+@@ -1727,10 +1729,12 @@ static const struct file_operations ftra
+ 	.release = seq_release,
+ };
+ 
++#ifdef CONFIG_PERF_EVENTS
+ static const struct file_operations ftrace_event_id_fops = {
+ 	.read = event_id_read,
+ 	.llseek = default_llseek,
+ };
++#endif
+ 
+ static const struct file_operations ftrace_event_filter_fops = {
+ 	.open = tracing_open_generic,
 
 
