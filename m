@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606C512CDAE;
-	Tue, 30 Apr 2024 11:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC90812D1E8;
+	Tue, 30 Apr 2024 11:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476409; cv=none; b=QyVFD8qsDTR6nIFqnwiUfcsleN/p4ntZ/RT1hSwmMMgpaxXSp3jt4++ETeAKOvPeT0sAWlFo1g6LTkRsBvQODjgmIiicKxedLpwNUaD9naA59lvws3FhHwmOTqjwQQlZ0AAzXjT6Bi6kCVlQwYawuCq+wlhB22/dKtpCzI2jtC8=
+	t=1714476412; cv=none; b=dTmqCehNEYfU2tPUTHxkoMQ+Uhj/0mQUKOqpqwkIvsS16AMdC/k+WY9g0+EPwgsCHEbPNBJGPfUYfWedmPv6uLGUED80jry1kkIdVkkEaeglYTc8TBVDWiTZu3ssTnakrW6hZ9K8k7Qn/fEMrUizZVaxgbjMBpmD7cuMS7+FkNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476409; c=relaxed/simple;
-	bh=m8BHI10bUtVnXXK5hAd/q/GJ5iUf8fNLjWIeJNHp/U0=;
+	s=arc-20240116; t=1714476412; c=relaxed/simple;
+	bh=Sq3TtLdiSoliTcev8Uodj3mh4bdqPmL8WqWww14lXcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i0DC1Ydp2kUNcon4Mi+x5YD2wcO7N/uxILsJDaafciWuixZiLMxNkHVPXtVfLq/ZQYfxrvbfM7kE9AJy7AEwi+J8f9uNBlRQAC7GNwtObdIVuf3V5AeX0xkWmm15gfHqfrP3A8oox40nsIL89mPh8A/rvY2KLKiEFXif56gMxYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOAWOqM6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gjE1s2tqj/MAeDsudi2/ZYEdNqmH71bh5m/X8Zldi4W7b8bIJiTdv7WRUoF6Nm/aZwPSmPeO5Qg6R/+Dszp1z2yQZmge8AsI/h7APy4m56hFPzmm/1tctYj8YZP8E8usf2AEMiOVD3uIDComEXcUbZv29xVbraDmSVLFKF+CaWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2rcITNX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOAWOqM6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC8DC2BBFC;
-	Tue, 30 Apr 2024 11:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2rcITNX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0D1C2BBFC;
+	Tue, 30 Apr 2024 11:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476409;
-	bh=m8BHI10bUtVnXXK5hAd/q/GJ5iUf8fNLjWIeJNHp/U0=;
+	s=korg; t=1714476412;
+	bh=Sq3TtLdiSoliTcev8Uodj3mh4bdqPmL8WqWww14lXcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IOAWOqM6CmGBtjQObEzZsB5jbVTuMX83rWlMyyjiyir5fUt4EPbq0hFPBIbOARXjB
-	 674f9DpdX5JeWGyitMmpz9ZELLb53gXQDR8Wea5btqhyp7CejA0ZzQp1lhHwSYB+BE
-	 geii6NzW3YPZt6yT/2pOqUDSgi+gBGesDnN2GDaQ=
+	b=m2rcITNXXNET4N0rt5R9FTGkwQkyvZWDu6NrLTeGgwlmXTzCpUpshilXXJY4XlbEE
+	 lbXjN3ecjYzQ+kjJ3yWUuEjM0BSeicRH+nyoPPmgGmj3UYoJqYX+SsOUOgaAi4PS+g
+	 NX3IPFiP+h9WjxtycqFHCJR60T/Y44ck75aOPaxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Bauer <mail@david-bauer.net>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/110] wifi: iwlwifi: mvm: return uid from iwl_mvm_build_scan_cmd
-Date: Tue, 30 Apr 2024 12:39:53 +0200
-Message-ID: <20240430103048.283840608@linuxfoundation.org>
+Subject: [PATCH 6.1 025/110] vxlan: drop packets from invalid src-address
+Date: Tue, 30 Apr 2024 12:39:54 +0200
+Message-ID: <20240430103048.312901887@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -52,42 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: David Bauer <mail@david-bauer.net>
 
-[ Upstream commit bada85a3f584763deadd201147778c3e791d279c ]
+[ Upstream commit f58f45c1e5b92975e91754f5407250085a6ae7cf ]
 
-This function is supposed to return a uid on success, and an errno in
-failure.
-But it currently returns the return value of the specific cmd version
-handler, which in turn returns 0 on success and errno otherwise.
-This means that on success, iwl_mvm_build_scan_cmd will return 0
-regardless if the actual uid.
-Fix this by returning the uid if the handler succeeded.
+The VXLAN driver currently does not check if the inner layer2
+source-address is valid.
 
-Fixes: 687db6ff5b70 ("iwlwifi: scan: make new scan req versioning flow")
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Link: https://msgid.link/20240415114847.5e2d602b3190.I4c4931021be74a67a869384c8f8ee7463e0c7857@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+In case source-address snooping/learning is enabled, a entry in the FDB
+for the invalid address is created with the layer3 address of the tunnel
+endpoint.
+
+If the frame happens to have a non-unicast address set, all this
+non-unicast traffic is subsequently not flooded to the tunnel network
+but sent to the learnt host in the FDB. To make matters worse, this FDB
+entry does not expire.
+
+Apply the same filtering for packets as it is done for bridges. This not
+only drops these invalid packets but avoids them from being learnt into
+the FDB.
+
+Fixes: d342894c5d2f ("vxlan: virtual extensible lan")
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: David Bauer <mail@david-bauer.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/vxlan/vxlan_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index acd8803dbcdd6..b20d64dbba1ad 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -2650,7 +2650,8 @@ static int iwl_mvm_build_scan_cmd(struct iwl_mvm *mvm,
- 		if (ver_handler->version != scan_ver)
- 			continue;
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 619dd71c9d75e..fbd36dff9ec27 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -1662,6 +1662,10 @@ static bool vxlan_set_mac(struct vxlan_dev *vxlan,
+ 	if (ether_addr_equal(eth_hdr(skb)->h_source, vxlan->dev->dev_addr))
+ 		return false;
  
--		return ver_handler->handler(mvm, vif, params, type, uid);
-+		err = ver_handler->handler(mvm, vif, params, type, uid);
-+		return err ? : uid;
- 	}
- 
- 	err = iwl_mvm_scan_umac(mvm, vif, params, type, uid);
++	/* Ignore packets from invalid src-address */
++	if (!is_valid_ether_addr(eth_hdr(skb)->h_source))
++		return false;
++
+ 	/* Get address from the outer IP header */
+ 	if (vxlan_get_sk_family(vs) == AF_INET) {
+ 		saddr.sin.sin_addr.s_addr = ip_hdr(skb)->saddr;
 -- 
 2.43.0
 
