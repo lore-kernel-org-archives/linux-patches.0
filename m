@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D78211C;
-	Tue, 30 Apr 2024 11:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2EF8801;
+	Tue, 30 Apr 2024 11:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475607; cv=none; b=myCWQBTZ1dSFYVYMfjyy/Zyx9yvt62SD11At+dX8kM9bF6/MVJGAnhzoL0oeFzz5yirhAv/TydX98BiCVO12B7LKApcg3Bx3wnuIjkHChns5Hc43PrRvfRQ45xf5jLDZsFlTWCGBR64FtHxxTpp0mgl5mdHaVJk2waQPwUjVNd8=
+	t=1714475610; cv=none; b=BUlS5sI1vw360iGu4g7P0yThOkRb8Ijpp1wsT+peOWyTforOVJNzw8lmJsXJBFri04/8/ng4bGDjnOg9Qd/8dShRJy41U6/DQTYkOTcmQBujrLS3rdqR/HhOWRU9bdZ9xkwBheZ4bAMho3GNX5KKnkDdLcZvIdcM6A5pp/iuXVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475607; c=relaxed/simple;
-	bh=FkwwFCMNv06pAcMTdmK5OUJmRW7zhqoOP9t4mHbF3bk=;
+	s=arc-20240116; t=1714475610; c=relaxed/simple;
+	bh=+cGhsZNLBaGvAYeTP7Ou1qNpOdyLBjh12Z4lZzq9YUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cmI9+uhnOmSqaQ8sgOEERKL038XdxRo/xd9ppfbxTy4Y8lDDxRFtC7E0s9b0L3IoftnrbBhSWMNFD6G9uhjdIX1aFikEmENm9DZS43MYOe0E9bSjhp6hVGuK5loXVF2WzbYu/4QQxgd55fa/XzZrlr/Y/7uZKQqHHtVLS9B1I1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmCRP6PP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fUYFUq0gemiVFkP/MtW5RNWXQGNSwdVYVj7IRiaa0//TA1rPel7Bsv65PAhMOCkYLKzAzPUKOGQiZnyQxr+RZsO4KdyfydCPCSOT4oPY4OANZYZ/Nyjmc1WuGa7mtEyDNDdx5bisU4WNb52wFWOIrctaZbmr621lV78/4iawtao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VD6OvBKv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmCRP6PP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A6C8C2BBFC;
-	Tue, 30 Apr 2024 11:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VD6OvBKv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF4CC2BBFC;
+	Tue, 30 Apr 2024 11:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475606;
-	bh=FkwwFCMNv06pAcMTdmK5OUJmRW7zhqoOP9t4mHbF3bk=;
+	s=korg; t=1714475610;
+	bh=+cGhsZNLBaGvAYeTP7Ou1qNpOdyLBjh12Z4lZzq9YUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xmCRP6PPPhUc7/T2fn2O/3AaeRFdBslbPwaa+q/dU3Y2vrsTB4byt5sYzaBCNFqHR
-	 6UxuMgnhbbekVZUt4V+DxdpJIypJCawdLqvsdsnWZn6C3nZyA1kZLCgV0aL8VEnNHs
-	 pDCVocs42bnAn53BArE4zF1DtRQ3ghW91hVOZDdc=
+	b=VD6OvBKvPoNM0Ux3COHhet7DHdAR9ezP71FI8PfZ54A9NErk1Gxq5ZD1HCs/G4P/H
+	 hPsPqS9ZGiUdwsztV5RoBctgAHRixuUUgpVUb/DitL7l1uB6LeMs2uqbLPUeAbWOY1
+	 F1FWWCmm9QcL03E2rwZZHekXUa9iDr8IkeFd9hRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vanshidhar Konda <vanshikonda@os.amperecomputing.com>,
-	Jarred White <jarredwhite@linux.microsoft.com>,
-	Easwar Hariharan <eahariha@linux.microsoft.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 147/186] ACPI: CPPC: Fix access width used for PCC registers
-Date: Tue, 30 Apr 2024 12:39:59 +0200
-Message-ID: <20240430103102.300972434@linuxfoundation.org>
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 148/186] ethernet: Add helper for assigning packet type when dest address does not match device address
+Date: Tue, 30 Apr 2024 12:40:00 +0200
+Message-ID: <20240430103102.330279041@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -52,155 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vanshidhar Konda <vanshikonda@os.amperecomputing.com>
+From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
 
-commit f489c948028b69cea235d9c0de1cc10eeb26a172 upstream.
+commit 6e159fd653d7ebf6290358e0330a0cb8a75cf73b upstream.
 
-commit 2f4a4d63a193 ("ACPI: CPPC: Use access_width over bit_width for system
-memory accesses") modified cpc_read()/cpc_write() to use access_width to
-read CPC registers.
+Enable reuse of logic in eth_type_trans for determining packet type.
 
-However, for PCC registers the access width field in the ACPI register
-macro specifies the PCC subspace ID.  For non-zero PCC subspace ID it is
-incorrectly treated as access width. This causes errors when reading
-from PCC registers in the CPPC driver.
-
-For PCC registers, base the size of read/write on the bit width field.
-The debug message in cpc_read()/cpc_write() is updated to print relevant
-information for the address space type used to read the register.
-
-Fixes: 2f4a4d63a193 ("ACPI: CPPC: Use access_width over bit_width for system memory accesses")
-Signed-off-by: Vanshidhar Konda <vanshikonda@os.amperecomputing.com>
-Tested-by: Jarred White <jarredwhite@linux.microsoft.com>
-Reviewed-by: Jarred White <jarredwhite@linux.microsoft.com>
-Reviewed-by: Easwar Hariharan <eahariha@linux.microsoft.com>
-Cc: 5.15+ <stable@vger.kernel.org> # 5.15+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Suggested-by: Sabrina Dubroca <sd@queasysnail.net>
+Cc: stable@vger.kernel.org
+Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/20240423181319.115860-3-rrameshbabu@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/cppc_acpi.c |   53 ++++++++++++++++++++++++++++++++---------------
- 1 file changed, 37 insertions(+), 16 deletions(-)
+ include/linux/etherdevice.h |   25 +++++++++++++++++++++++++
+ net/ethernet/eth.c          |   12 +-----------
+ 2 files changed, 26 insertions(+), 11 deletions(-)
 
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -999,14 +999,14 @@ static int cpc_read(int cpu, struct cpc_
- 	}
+--- a/include/linux/etherdevice.h
++++ b/include/linux/etherdevice.h
+@@ -608,6 +608,31 @@ static inline void eth_hw_addr_gen(struc
+ }
  
- 	*val = 0;
-+	size = GET_BIT_WIDTH(reg);
- 
- 	if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_IO) {
--		u32 width = GET_BIT_WIDTH(reg);
- 		u32 val_u32;
- 		acpi_status status;
- 
- 		status = acpi_os_read_port((acpi_io_address)reg->address,
--					   &val_u32, width);
-+					   &val_u32, size);
- 		if (ACPI_FAILURE(status)) {
- 			pr_debug("Error: Failed to read SystemIO port %llx\n",
- 				 reg->address);
-@@ -1015,17 +1015,22 @@ static int cpc_read(int cpu, struct cpc_
- 
- 		*val = val_u32;
- 		return 0;
--	} else if (reg->space_id == ACPI_ADR_SPACE_PLATFORM_COMM && pcc_ss_id >= 0)
-+	} else if (reg->space_id == ACPI_ADR_SPACE_PLATFORM_COMM && pcc_ss_id >= 0) {
-+		/*
-+		 * For registers in PCC space, the register size is determined
-+		 * by the bit width field; the access size is used to indicate
-+		 * the PCC subspace id.
-+		 */
-+		size = reg->bit_width;
- 		vaddr = GET_PCC_VADDR(reg->address, pcc_ss_id);
-+	}
- 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
- 		vaddr = reg_res->sys_mem_vaddr;
- 	else if (reg->space_id == ACPI_ADR_SPACE_FIXED_HARDWARE)
- 		return cpc_read_ffh(cpu, reg, val);
- 	else
- 		return acpi_os_read_memory((acpi_physical_address)reg->address,
--				val, reg->bit_width);
--
--	size = GET_BIT_WIDTH(reg);
-+				val, size);
- 
- 	switch (size) {
- 	case 8:
-@@ -1041,8 +1046,13 @@ static int cpc_read(int cpu, struct cpc_
- 		*val = readq_relaxed(vaddr);
- 		break;
- 	default:
--		pr_debug("Error: Cannot read %u bit width from PCC for ss: %d\n",
--			 reg->bit_width, pcc_ss_id);
-+		if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY) {
-+			pr_debug("Error: Cannot read %u bit width from system memory: 0x%llx\n",
-+				size, reg->address);
-+		} else if (reg->space_id == ACPI_ADR_SPACE_PLATFORM_COMM) {
-+			pr_debug("Error: Cannot read %u bit width from PCC for ss: %d\n",
-+				size, pcc_ss_id);
-+		}
- 		return -EFAULT;
- 	}
- 
-@@ -1060,12 +1070,13 @@ static int cpc_write(int cpu, struct cpc
- 	int pcc_ss_id = per_cpu(cpu_pcc_subspace_idx, cpu);
- 	struct cpc_reg *reg = &reg_res->cpc_entry.reg;
- 
-+	size = GET_BIT_WIDTH(reg);
+ /**
++ * eth_skb_pkt_type - Assign packet type if destination address does not match
++ * @skb: Assigned a packet type if address does not match @dev address
++ * @dev: Network device used to compare packet address against
++ *
++ * If the destination MAC address of the packet does not match the network
++ * device address, assign an appropriate packet type.
++ */
++static inline void eth_skb_pkt_type(struct sk_buff *skb,
++				    const struct net_device *dev)
++{
++	const struct ethhdr *eth = eth_hdr(skb);
 +
- 	if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_IO) {
--		u32 width = GET_BIT_WIDTH(reg);
- 		acpi_status status;
- 
- 		status = acpi_os_write_port((acpi_io_address)reg->address,
--					    (u32)val, width);
-+					    (u32)val, size);
- 		if (ACPI_FAILURE(status)) {
- 			pr_debug("Error: Failed to write SystemIO port %llx\n",
- 				 reg->address);
-@@ -1073,17 +1084,22 @@ static int cpc_write(int cpu, struct cpc
- 		}
- 
- 		return 0;
--	} else if (reg->space_id == ACPI_ADR_SPACE_PLATFORM_COMM && pcc_ss_id >= 0)
-+	} else if (reg->space_id == ACPI_ADR_SPACE_PLATFORM_COMM && pcc_ss_id >= 0) {
-+		/*
-+		 * For registers in PCC space, the register size is determined
-+		 * by the bit width field; the access size is used to indicate
-+		 * the PCC subspace id.
-+		 */
-+		size = reg->bit_width;
- 		vaddr = GET_PCC_VADDR(reg->address, pcc_ss_id);
-+	}
- 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
- 		vaddr = reg_res->sys_mem_vaddr;
- 	else if (reg->space_id == ACPI_ADR_SPACE_FIXED_HARDWARE)
- 		return cpc_write_ffh(cpu, reg, val);
- 	else
- 		return acpi_os_write_memory((acpi_physical_address)reg->address,
--				val, reg->bit_width);
--
--	size = GET_BIT_WIDTH(reg);
-+				val, size);
- 
- 	if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
- 		val = MASK_VAL(reg, val);
-@@ -1102,8 +1118,13 @@ static int cpc_write(int cpu, struct cpc
- 		writeq_relaxed(val, vaddr);
- 		break;
- 	default:
--		pr_debug("Error: Cannot write %u bit width to PCC for ss: %d\n",
--			 reg->bit_width, pcc_ss_id);
-+		if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY) {
-+			pr_debug("Error: Cannot write %u bit width to system memory: 0x%llx\n",
-+				size, reg->address);
-+		} else if (reg->space_id == ACPI_ADR_SPACE_PLATFORM_COMM) {
-+			pr_debug("Error: Cannot write %u bit width to PCC for ss: %d\n",
-+				size, pcc_ss_id);
++	if (unlikely(!ether_addr_equal_64bits(eth->h_dest, dev->dev_addr))) {
++		if (unlikely(is_multicast_ether_addr_64bits(eth->h_dest))) {
++			if (ether_addr_equal_64bits(eth->h_dest, dev->broadcast))
++				skb->pkt_type = PACKET_BROADCAST;
++			else
++				skb->pkt_type = PACKET_MULTICAST;
++		} else {
++			skb->pkt_type = PACKET_OTHERHOST;
 +		}
- 		ret_val = -EFAULT;
- 		break;
- 	}
++	}
++}
++
++/**
+  * eth_skb_pad - Pad buffer to mininum number of octets for Ethernet frame
+  * @skb: Buffer to pad
+  *
+--- a/net/ethernet/eth.c
++++ b/net/ethernet/eth.c
+@@ -164,17 +164,7 @@ __be16 eth_type_trans(struct sk_buff *sk
+ 	eth = (struct ethhdr *)skb->data;
+ 	skb_pull_inline(skb, ETH_HLEN);
+ 
+-	if (unlikely(!ether_addr_equal_64bits(eth->h_dest,
+-					      dev->dev_addr))) {
+-		if (unlikely(is_multicast_ether_addr_64bits(eth->h_dest))) {
+-			if (ether_addr_equal_64bits(eth->h_dest, dev->broadcast))
+-				skb->pkt_type = PACKET_BROADCAST;
+-			else
+-				skb->pkt_type = PACKET_MULTICAST;
+-		} else {
+-			skb->pkt_type = PACKET_OTHERHOST;
+-		}
+-	}
++	eth_skb_pkt_type(skb, dev);
+ 
+ 	/*
+ 	 * Some variants of DSA tagging don't have an ethertype field
 
 
