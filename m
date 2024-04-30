@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755E41E50A;
-	Tue, 30 Apr 2024 11:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C36B1E50A;
+	Tue, 30 Apr 2024 11:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475398; cv=none; b=bOzBtgdik/fkRPIJDSvODlwFguncftOOe+0kg9snzcET0EnfdNaXJvo7gTRTDjKmdzEuz5A1Bz3u/H3jq0/ZqDLNxiko4K9wBAgeQ/YsXMikmlI15woT318t21IOH37Z9iubPe+anjItpxmD3pPcz9DxtSVr92DxMVmyxLA1OsA=
+	t=1714475401; cv=none; b=eQejL0AiCLBRB/9j5S1r5sHRRbtXvjeE0I2yq6QkocXRq/rRtIGVW4u2WAFZTxzTMeu6CfNWmHSakVhASjbxFEr2c2+C/FlN2qG70FIU2M+cPC6cFBxOUt/FYCOGWTh/D4m2riRq9XzThfUTCB6+lHAcfpj4j7l9pT1XI5vYYQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475398; c=relaxed/simple;
-	bh=0OrvmGWLHO2gG0AIluVW6p62FWMK7ETXVKYQFb6GZBA=;
+	s=arc-20240116; t=1714475401; c=relaxed/simple;
+	bh=Xp5fUGKytgrTTMae2mzti197VHuc+RvHgMOCOCXAbyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=acpTFZDe53TH56wUJhMDyoxFvCv/127EpIMY/cKmpuTueMjEQ/ZmvHuatyVBIeHVp4iPfWQbY6x4Ck1AxsqLUDf4/VyK+7/rtrls8DcCmZwqnZGBUxs/hbB8VSBVrGkFnw8eVU1/8J5VjBaycU9CgBM8NU5BqiaELPQOFocM8qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00+Wn3u+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D8nY0GUkdHetHvehWhn8e0iU3fqnrJ+BLskP3EdwkJYswEEFTpMTsC0viWD+Y2+1sC3oSArvskp/s3IPZXY+LMKiPA6hGPqtBLWYR/cXVu5AZ/zi1zGIREizPWx5yOq7yZ8I6a+VdszFt8nMwgBKWQJuirY9YtzAmwO4SSFycuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRFrLsbO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00+Wn3u+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D79C2BBFC;
-	Tue, 30 Apr 2024 11:09:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRFrLsbO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D585CC2BBFC;
+	Tue, 30 Apr 2024 11:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475398;
-	bh=0OrvmGWLHO2gG0AIluVW6p62FWMK7ETXVKYQFb6GZBA=;
+	s=korg; t=1714475401;
+	bh=Xp5fUGKytgrTTMae2mzti197VHuc+RvHgMOCOCXAbyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=00+Wn3u+2gv10RQSgPCa1aMSpBhF7cABKMnI2Fxk3y8D16zUjMlyXNBfohvBL1Rao
-	 g/1X0M8QtblNDAs/rHIr/QUZ92owhumk4p7hpapSPmKtGmaFe8KaFtyihokpAjqB+5
-	 VCinxlzQQfWiLcfZ6bupTanXo0W7ukV/4Kd8nVBo=
+	b=lRFrLsbOel8jBN7N6ZltWuvYIvYvoKH9HS9pb9CwDQl+8ni2t7ANtWwNIu2QCzD3N
+	 M5BolbGSxNP0QcJukD2SI5QY7EvvY1UGRhV4MoFrAP5vqL9Ih/CncP2xMDtestcC+h
+	 sJYFacPP4D9TV87s/Mypxo6gYaO4pZ4MtevOahO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Alexander Zubkov <green@qrator.net>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/186] arm64: dts: qcom: sc8180x: Fix ss_phy_irq for secondary USB controller
-Date: Tue, 30 Apr 2024 12:38:05 +0200
-Message-ID: <20240430103058.991801832@linuxfoundation.org>
+Subject: [PATCH 6.6 076/186] mlxsw: spectrum_acl_tcam: Fix race during rehash delayed work
+Date: Tue, 30 Apr 2024 12:38:48 +0200
+Message-ID: <20240430103100.244539624@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -51,70 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilian Luz <luzmaximilian@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit ecda8309098402f878c96184f29a1b7ec682d772 ]
+[ Upstream commit d90cfe20562407d9f080d24123078d666d730707 ]
 
-The ACPI DSDT of the Surface Pro X (SQ2) specifies the interrupts for
-the secondary UBS controller as
+The purpose of the rehash delayed work is to reduce the number of masks
+(eRPs) used by an ACL region as the eRP bank is a global and limited
+resource.
 
-    Name (_CRS, ResourceTemplate ()
-    {
-        Interrupt (ResourceConsumer, Level, ActiveHigh, Shared, ,, )
-        {
-            0x000000AA,
-        }
-        Interrupt (ResourceConsumer, Level, ActiveHigh, SharedAndWake, ,, )
-        {
-            0x000000A7,     // hs_phy_irq: &intc GIC_SPI 136
-        }
-        Interrupt (ResourceConsumer, Level, ActiveHigh, SharedAndWake, ,, )
-        {
-            0x00000228,     // ss_phy_irq: &pdc 40
-        }
-        Interrupt (ResourceConsumer, Edge, ActiveHigh, SharedAndWake, ,, )
-        {
-            0x0000020A,     // dm_hs_phy_irq: &pdc 10
-        }
-        Interrupt (ResourceConsumer, Edge, ActiveHigh, SharedAndWake, ,, )
-        {
-            0x0000020B,     // dp_hs_phy_irq: &pdc 11
-        }
-    })
+This is done in three steps:
 
-Generally, the interrupts above 0x200 map to the PDC interrupts (as used
-in the devicetree) as ACPI_NUMBER - 0x200. Note that this lines up with
-dm_hs_phy_irq and dp_hs_phy_irq (as well as the interrupts for the
-primary USB controller).
+1. Creating a new set of masks and a new ACL region which will use the
+   new masks and to which the existing filters will be migrated to. The
+   new region is assigned to 'vregion->region' and the region from which
+   the filters are migrated from is assigned to 'vregion->region2'.
 
-Based on the snippet above, ss_phy_irq should therefore be PDC 40 (=
-0x28) and not PDC 7. The latter is according to ACPI instead used as
-ss_phy_irq for port 0 of the multiport USB controller). Fix this by
-setting ss_phy_irq to '&pdc 40'.
+2. Migrating all the filters from the old region to the new region.
 
-Fixes: b080f53a8f44 ("arm64: dts: qcom: sc8180x: Add remoteprocs, wifi and usb nodes")
-Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20240328022224.336938-1-luzmaximilian@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+3. Destroying the old region and setting 'vregion->region2' to NULL.
+
+Only the second steps is performed under the 'vregion->lock' mutex
+although its comments says that among other things it "Protects
+consistency of region, region2 pointers".
+
+This is problematic as the first step can race with filter insertion
+from user space that uses 'vregion->region', but under the mutex.
+
+Fix by holding the mutex across the entirety of the delayed work and not
+only during the second step.
+
+Fixes: 2bffc5322fd8 ("mlxsw: spectrum_acl: Don't take mutex in mlxsw_sp_acl_tcam_vregion_rehash_work()")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Alexander Zubkov <green@qrator.net>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/1ec1d54edf2bad0a369e6b4fa030aba64e1f124b.1713797103.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index 6eb4c5eb6bb8c..fbb9bf09078a0 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -2644,7 +2644,7 @@
- 			resets = <&gcc GCC_USB30_SEC_BCR>;
- 			power-domains = <&gcc USB30_SEC_GDSC>;
- 			interrupts-extended = <&intc GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
--					      <&pdc 7 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&pdc 40 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&pdc 10 IRQ_TYPE_EDGE_BOTH>,
- 					      <&pdc 11 IRQ_TYPE_EDGE_BOTH>;
- 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+index b6a4652a6475a..9c0c728bb42dc 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+@@ -718,7 +718,9 @@ static void mlxsw_sp_acl_tcam_vregion_rehash_work(struct work_struct *work)
+ 			     rehash.dw.work);
+ 	int credits = MLXSW_SP_ACL_TCAM_VREGION_REHASH_CREDITS;
+ 
++	mutex_lock(&vregion->lock);
+ 	mlxsw_sp_acl_tcam_vregion_rehash(vregion->mlxsw_sp, vregion, &credits);
++	mutex_unlock(&vregion->lock);
+ 	if (credits < 0)
+ 		/* Rehash gone out of credits so it was interrupted.
+ 		 * Schedule the work as soon as possible to continue.
+@@ -1323,7 +1325,6 @@ mlxsw_sp_acl_tcam_vregion_migrate(struct mlxsw_sp *mlxsw_sp,
+ 	int err, err2;
+ 
+ 	trace_mlxsw_sp_acl_tcam_vregion_migrate(mlxsw_sp, vregion);
+-	mutex_lock(&vregion->lock);
+ 	err = mlxsw_sp_acl_tcam_vchunk_migrate_all(mlxsw_sp, vregion,
+ 						   ctx, credits);
+ 	if (err) {
+@@ -1343,7 +1344,6 @@ mlxsw_sp_acl_tcam_vregion_migrate(struct mlxsw_sp *mlxsw_sp,
+ 			/* Let the rollback to be continued later on. */
+ 		}
+ 	}
+-	mutex_unlock(&vregion->lock);
+ 	trace_mlxsw_sp_acl_tcam_vregion_migrate_end(mlxsw_sp, vregion);
+ 	return err;
+ }
 -- 
 2.43.0
 
