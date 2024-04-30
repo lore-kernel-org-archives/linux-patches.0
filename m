@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00ACC12C46B;
-	Tue, 30 Apr 2024 10:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09BA612C49E;
+	Tue, 30 Apr 2024 10:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474199; cv=none; b=Kf1KsSksbm0WwUODfMFSCdOi1A9o0Swl5be76/rwEbGLcIuKzVx/5lyK/U8jqix8Ec68i3A2sfAV2B+SwsnMwQ9MXETrTvaHUwXSZJl7BjBpnpbS8O0l67Xxy8dkSwRwU6tgOXHqZDfNMsb8QQDIzcXkbLyhgEUiv3DaLDj+h1M=
+	t=1714474202; cv=none; b=iQjljQrUgdWnJulXtOrEQeBDal2IRZ5PFBUtgzxnARCa8Mbx+DJ6m7jhhnd07Xq1RK3D3EdN+87NnaOgYk1iOVVA3+awmr9huSRW7fwYhxH3Bt/TKFvsiW1MLlVl09EwKT4byTo23h8wg9ImfLLAEmWgmN9B3n8NDSlfqyfKwQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474199; c=relaxed/simple;
-	bh=ToIrrOJ7K1KIPFFaoc4DeW2po+QS2kYRa2xPVkB89S8=;
+	s=arc-20240116; t=1714474202; c=relaxed/simple;
+	bh=XEjVfg+Vw2DiYZg/SBqVwQlY7bd+Y8uH3NBhPmzUmwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E0cPRecltXetSpc+QNVp2sBEqrjbquBYa0zk6DqQP3TaqUMzR4Bbfh54vAERVp0Co4wg6J68czRJZPsMG8LAyao6qUfKZyiU4qJ8QnJKR88HMs2qYSd16+PXuYkRl2wmnbYxQ7tWsb5f5dnQ/f0TO1lj10ARFTVXPivAewBErSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBQ+pnS1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=szRtVqZodZK1qNs9CW9wcKten8CummMUh7R3OdP/6npWJzDOpNtgdqh6DeHukgIQrsKUF7+WWFbmxM7bo/kGLCM6IQ602P3Ap2K/ZXpVdBc7nLJwTtodo+0FLMOOtLv41qydDK2bBzxTxGJm58WW9dLDPzfLdh8htGqFPX1tu94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p1kEhk8M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBQ+pnS1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E21FC2BBFC;
-	Tue, 30 Apr 2024 10:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p1kEhk8M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85022C2BBFC;
+	Tue, 30 Apr 2024 10:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474198;
-	bh=ToIrrOJ7K1KIPFFaoc4DeW2po+QS2kYRa2xPVkB89S8=;
+	s=korg; t=1714474201;
+	bh=XEjVfg+Vw2DiYZg/SBqVwQlY7bd+Y8uH3NBhPmzUmwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sBQ+pnS1jmgd9+5GbQjUM68lfQIkV31GPBJ7wf/ednFJUfrDJzECOBvORt98dntyp
-	 YB3i725lrqpNkNdNVzK3KpSAVdn2dyQNJYAHl6S0QQBXPSGioNsevT+maueoK7jAI3
-	 Tx4F55XpT4j/4gQl+5UlQ9aaXIEnHDn+/vlxGW38=
+	b=p1kEhk8MqEkA2jjgXK0cmrH+Zvrfm7261rXVf+Aj2zP7kOW6aWqKGGF25s2L9+1M2
+	 Z4Ka3NQAnbxp0I+2+MFv0tTbb2GkzTUVyluQyK+FVY547O852G6Wu/oHr89+UrmqY4
+	 6TuwSB1HI/d2ptZRXwaDOe8hVmekyyzygMYB5oV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Chan <michael.chan@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 059/228] bnxt_en: Fix error recovery for 5760X (P7) chips
-Date: Tue, 30 Apr 2024 12:37:17 +0200
-Message-ID: <20240430103105.511763577@linuxfoundation.org>
+Subject: [PATCH 6.8 086/228] Bluetooth: btusb: Fix triggering coredump implementation for QCA
+Date: Tue, 30 Apr 2024 12:37:44 +0200
+Message-ID: <20240430103106.284111763@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -51,53 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 41e54045b741daf61e03c82d442227af3d12111f ]
+[ Upstream commit b23d98d46d2858dcc0fd016caff165cbdc24e70a ]
 
-During error recovery, such as AER fatal error slot reset, we call
-bnxt_try_map_fw_health_reg() to try to get access to the health
-register to determine the firmware state.  Fix
-bnxt_try_map_fw_health_reg() to recognize the P7 chip correctly
-and set up the health register.
+btusb_coredump_qca() uses __hci_cmd_sync() to send a vendor-specific
+command to trigger firmware coredump, but the command does not
+have any event as its sync response, so it is not suitable to use
+__hci_cmd_sync(), fixed by using __hci_cmd_send().
 
-This fixes this type of AER slot reset failure:
-
-bnxt_en 0000:04:00.0: AER: PCIe Bus Error: severity=Uncorrectable (Fatal), type=Inaccessible, (Unregistered Agent ID)
-bnxt_en 0000:04:00.0 enp4s0f0np0: PCI I/O error detected
-bnxt_en 0000:04:00.0 bnxt_re0: Handle device suspend call
-bnxt_en 0000:04:00.1 enp4s0f1np1: PCI I/O error detected
-bnxt_en 0000:04:00.1 bnxt_re1: Handle device suspend call
-pcieport 0000:00:02.0: AER: Root Port link has been reset (0)
-bnxt_en 0000:04:00.0 enp4s0f0np0: PCI Slot Reset
-bnxt_en 0000:04:00.0: enabling device (0000 -> 0002)
-bnxt_en 0000:04:00.0: Firmware not ready
-bnxt_en 0000:04:00.1 enp4s0f1np1: PCI Slot Reset
-bnxt_en 0000:04:00.1: enabling device (0000 -> 0002)
-bnxt_en 0000:04:00.1: Firmware not ready
-pcieport 0000:00:02.0: AER: device recovery failed
-
-Fixes: a432a45bdba4 ("bnxt_en: Define basic P7 macros")
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 20981ce2d5a5 ("Bluetooth: btusb: Add WCN6855 devcoredump support")
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 6bdd8c2607898..5b4d810748f2a 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -8906,7 +8906,7 @@ static void bnxt_try_map_fw_health_reg(struct bnxt *bp)
- 					     BNXT_FW_HEALTH_WIN_BASE +
- 					     BNXT_GRC_REG_CHIP_NUM);
- 		}
--		if (!BNXT_CHIP_P5(bp))
-+		if (!BNXT_CHIP_P5_PLUS(bp))
- 			return;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index f684108dc2f1c..58faada874f5c 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3463,13 +3463,12 @@ static void btusb_dump_hdr_qca(struct hci_dev *hdev, struct sk_buff *skb)
  
- 		status_loc = BNXT_GRC_REG_STATUS_P5 |
+ static void btusb_coredump_qca(struct hci_dev *hdev)
+ {
++	int err;
+ 	static const u8 param[] = { 0x26 };
+-	struct sk_buff *skb;
+ 
+-	skb = __hci_cmd_sync(hdev, 0xfc0c, 1, param, HCI_CMD_TIMEOUT);
+-	if (IS_ERR(skb))
+-		bt_dev_err(hdev, "%s: triggle crash failed (%ld)", __func__, PTR_ERR(skb));
+-	kfree_skb(skb);
++	err = __hci_cmd_send(hdev, 0xfc0c, 1, param);
++	if (err < 0)
++		bt_dev_err(hdev, "%s: triggle crash failed (%d)", __func__, err);
+ }
+ 
+ /*
 -- 
 2.43.0
 
