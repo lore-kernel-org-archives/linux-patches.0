@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D064A12BF3E;
-	Tue, 30 Apr 2024 10:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1452DE560;
+	Tue, 30 Apr 2024 10:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473892; cv=none; b=a4oDzO2aMilZh09xYsM76FavnMPoEGVEb5IS4f7x6DQYzoBig2M1CeCapczDD3zP+MjEDyNk6GNyDjvly4FWaX35KymlBDvnaSV1V9P/rNeg6n8MIOtTQCvBRARxpgbwqgoVpThuZ6ugsE6AJhJORhEj3RiZ8qA3bpti+uDerMA=
+	t=1714473896; cv=none; b=T9mUiaYoBiyT2TQp3FpMZ2DlGBa71MA0qHuIUqkhvU0tOInipagx7SPmZwpmwiaSZ2ojkrMzc/vFBd/Q7AdDfWqe+d8gBtcccfkMmQF+oSW5cQVWNzXH+OHILFbWh4itjwXazKDt8yWjfLiMPsM2j0GFSmUCWXC4U//Wlomfo/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473892; c=relaxed/simple;
-	bh=opuDb0nt3FKq+On+6dhJXOYqo17MejKvNtsvV1hzJjM=;
+	s=arc-20240116; t=1714473896; c=relaxed/simple;
+	bh=SoQgfHumlvbMfS+qxyKQFHZaCtqTImSk2hQfeSPUT+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l/Q2t2Yeg64DFqEBA8SVFCY+DPdC9y2gKlbr2Oupp82/dAxgmM0okqyuzecxEUdg2v55tIKfhw70xXwJN9RJZ+FHSuR4jW4Qk/a33iHrLOo6IejJxIiueDiRNQKr/qj6IUnmYO078Oeo26p8xk7jM5XHedyArPjD7eGrjqSEa10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXgc0Giw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VXVkqTdnA2sQc1V43MQJXc+xFZk2/buB1oZqZcUGL+B5nhJBHy+kUn5U7Q0tQY6V+hTxE58Q6xAS2gB8juUa8X7DEBMoAemthmoPTKnKOb9PhKRpe1wrOoelxPPaEFbgFZCHvKfLF3b5b4TpNTrHx8iX5/RHL+AV/hgE9uIF7v0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kU77FsMB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXgc0Giw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABFBC2BBFC;
-	Tue, 30 Apr 2024 10:44:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kU77FsMB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4643AC2BBFC;
+	Tue, 30 Apr 2024 10:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473892;
-	bh=opuDb0nt3FKq+On+6dhJXOYqo17MejKvNtsvV1hzJjM=;
+	s=korg; t=1714473895;
+	bh=SoQgfHumlvbMfS+qxyKQFHZaCtqTImSk2hQfeSPUT+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zXgc0GiwLnqlwoK7rw3bVd9O4bZ2KJg4C33HgFSuQAOF1Q7ya1GL+EKM99mb6Kedz
-	 3SjwHeEDsp4ZUejlP4E462QVIxU+MZCKXvEQdjezRKVsGji/u2GIZtpnXc0kwtJPfo
-	 DRjQks+TN0cduG+tqBQPWJRH2GRXMGzYOdwe8tHI=
+	b=kU77FsMBk5khALrepbwiTWpqAadmuElvCskuN+S1dghR5hryLAUvG9t0OmRKmjoSz
+	 oGIWMMVL4xztsZtzk/h3tzoSaHTvWPp0RzJtigLL9O9kPgEDy22W6yVcTPRPi7XCWN
+	 RrMJu4u5ny/cTepCIMvo1bP4uyQq+w8LwmK1GDOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hutchings <ben@decadent.org.uk>
-Subject: [PATCH 4.19 74/77] Revert "loop: Remove sector_t truncation checks"
-Date: Tue, 30 Apr 2024 12:39:53 +0200
-Message-ID: <20240430103043.324611036@linuxfoundation.org>
+	Vlad Stolyarov <hexed@google.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	xinhui pan <xinhui.pan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 57/77] drm/amdgpu: validate the parameters of bo mapping operations more clearly
+Date: Tue, 30 Apr 2024 12:39:36 +0200
+Message-ID: <20240430103042.821548307@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -43,94 +47,150 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ben Hutchings <ben@decadent.org.uk>
+From: xinhui pan <xinhui.pan@amd.com>
 
-This reverts commit f92a3b0d003b9f7eb1f452598966a08802183f47, which
-was commit 083a6a50783ef54256eec3499e6575237e0e3d53 upstream.  In 4.19
-there is still an option to use 32-bit sector_t on 32-bit
-architectures, so we need to keep checking for truncation.
+[ Upstream commit 6fef2d4c00b5b8561ad68dd2b68173f5c6af1e75 ]
 
-Since loop_set_status() was refactored by subsequent patches, this
-reintroduces its truncation check in loop_set_status_from_info()
-instead.
+Verify the parameters of
+amdgpu_vm_bo_(map/replace_map/clearing_mappings) in one common place.
 
-I tested that the loop ioctl operations have the expected behaviour on
-x86_64, x86_32 with CONFIG_LBDAF=y, and (the special case) x86_32 with
-CONFIG_LBDAF=n.
-
-Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: dc54d3d1744d ("drm/amdgpu: implement AMDGPU_VA_OP_CLEAR v2")
+Cc: stable@vger.kernel.org
+Reported-by: Vlad Stolyarov <hexed@google.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: xinhui pan <xinhui.pan@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c | 72 ++++++++++++++++----------
+ 1 file changed, 46 insertions(+), 26 deletions(-)
 
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -243,12 +243,16 @@ static void loop_set_size(struct loop_de
- 	kobject_uevent(&disk_to_dev(bdev->bd_disk)->kobj, KOBJ_CHANGE);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+index aa972448284dd..7fd0343518a99 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -2048,6 +2048,37 @@ static void amdgpu_vm_bo_insert_map(struct amdgpu_device *adev,
+ 	trace_amdgpu_vm_bo_map(bo_va, mapping);
  }
  
--static void
-+static int
- figure_loop_size(struct loop_device *lo, loff_t offset, loff_t sizelimit)
- {
- 	loff_t size = get_size(offset, sizelimit, lo->lo_backing_file);
-+	sector_t x = (sector_t)size;
- 
-+	if (unlikely((loff_t)x != size))
-+		return -EFBIG;
- 	loop_set_size(lo, size);
-+	return 0;
- }
- 
- static inline int
-@@ -996,7 +1000,10 @@ static int loop_set_fd(struct loop_devic
- 	    !file->f_op->write_iter)
- 		lo_flags |= LO_FLAGS_READ_ONLY;
- 
-+	error = -EFBIG;
- 	size = get_loop_size(lo, file);
-+	if ((loff_t)(sector_t)size != size)
-+		goto out_unlock;
- 
- 	error = loop_prepare_queue(lo);
- 	if (error)
-@@ -1246,6 +1253,7 @@ loop_set_status_from_info(struct loop_de
- 	int err;
- 	struct loop_func_table *xfer;
- 	kuid_t uid = current_uid();
-+	loff_t new_size;
- 
- 	if ((unsigned int) info->lo_encrypt_key_size > LO_KEY_SIZE)
- 		return -EINVAL;
-@@ -1273,6 +1281,11 @@ loop_set_status_from_info(struct loop_de
- 	if (info->lo_offset > LLONG_MAX || info->lo_sizelimit > LLONG_MAX)
- 		return -EOVERFLOW;
- 
-+	new_size = get_size(info->lo_offset, info->lo_sizelimit,
-+			    lo->lo_backing_file);
-+	if ((loff_t)(sector_t)new_size != new_size)
-+		return -EFBIG;
++/* Validate operation parameters to prevent potential abuse */
++static int amdgpu_vm_verify_parameters(struct amdgpu_device *adev,
++					  struct amdgpu_bo *bo,
++					  uint64_t saddr,
++					  uint64_t offset,
++					  uint64_t size)
++{
++	uint64_t tmp, lpfn;
 +
- 	lo->lo_offset = info->lo_offset;
- 	lo->lo_sizelimit = info->lo_sizelimit;
++	if (saddr & AMDGPU_GPU_PAGE_MASK
++	    || offset & AMDGPU_GPU_PAGE_MASK
++	    || size & AMDGPU_GPU_PAGE_MASK)
++		return -EINVAL;
++
++	if (check_add_overflow(saddr, size, &tmp)
++	    || check_add_overflow(offset, size, &tmp)
++	    || size == 0 /* which also leads to end < begin */)
++		return -EINVAL;
++
++	/* make sure object fit at this offset */
++	if (bo && offset + size > amdgpu_bo_size(bo))
++		return -EINVAL;
++
++	/* Ensure last pfn not exceed max_pfn */
++	lpfn = (saddr + size - 1) >> AMDGPU_GPU_PAGE_SHIFT;
++	if (lpfn >= adev->vm_manager.max_pfn)
++		return -EINVAL;
++
++	return 0;
++}
++
+ /**
+  * amdgpu_vm_bo_map - map bo inside a vm
+  *
+@@ -2074,21 +2105,14 @@ int amdgpu_vm_bo_map(struct amdgpu_device *adev,
+ 	struct amdgpu_bo *bo = bo_va->base.bo;
+ 	struct amdgpu_vm *vm = bo_va->base.vm;
+ 	uint64_t eaddr;
++	int r;
  
-@@ -1531,9 +1544,7 @@ static int loop_set_capacity(struct loop
- 	if (unlikely(lo->lo_state != Lo_bound))
- 		return -ENXIO;
- 
--	figure_loop_size(lo, lo->lo_offset, lo->lo_sizelimit);
+-	/* validate the parameters */
+-	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
+-		return -EINVAL;
+-	if (saddr + size <= saddr || offset + size <= offset)
+-		return -EINVAL;
 -
--	return 0;
-+	return figure_loop_size(lo, lo->lo_offset, lo->lo_sizelimit);
- }
+-	/* make sure object fit at this offset */
+-	eaddr = saddr + size - 1;
+-	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
+-	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
+-		return -EINVAL;
++	r = amdgpu_vm_verify_parameters(adev, bo, saddr, offset, size);
++	if (r)
++		return r;
  
- static int loop_set_dio(struct loop_device *lo, unsigned long arg)
+ 	saddr /= AMDGPU_GPU_PAGE_SIZE;
+-	eaddr /= AMDGPU_GPU_PAGE_SIZE;
++	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
+ 
+ 	tmp = amdgpu_vm_it_iter_first(&vm->va, saddr, eaddr);
+ 	if (tmp) {
+@@ -2141,17 +2165,9 @@ int amdgpu_vm_bo_replace_map(struct amdgpu_device *adev,
+ 	uint64_t eaddr;
+ 	int r;
+ 
+-	/* validate the parameters */
+-	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
+-		return -EINVAL;
+-	if (saddr + size <= saddr || offset + size <= offset)
+-		return -EINVAL;
+-
+-	/* make sure object fit at this offset */
+-	eaddr = saddr + size - 1;
+-	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
+-	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
+-		return -EINVAL;
++	r = amdgpu_vm_verify_parameters(adev, bo, saddr, offset, size);
++	if (r)
++		return r;
+ 
+ 	/* Allocate all the needed memory */
+ 	mapping = kmalloc(sizeof(*mapping), GFP_KERNEL);
+@@ -2165,7 +2181,7 @@ int amdgpu_vm_bo_replace_map(struct amdgpu_device *adev,
+ 	}
+ 
+ 	saddr /= AMDGPU_GPU_PAGE_SIZE;
+-	eaddr /= AMDGPU_GPU_PAGE_SIZE;
++	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
+ 
+ 	mapping->start = saddr;
+ 	mapping->last = eaddr;
+@@ -2252,10 +2268,14 @@ int amdgpu_vm_bo_clear_mappings(struct amdgpu_device *adev,
+ 	struct amdgpu_bo_va_mapping *before, *after, *tmp, *next;
+ 	LIST_HEAD(removed);
+ 	uint64_t eaddr;
++	int r;
++
++	r = amdgpu_vm_verify_parameters(adev, NULL, saddr, 0, size);
++	if (r)
++		return r;
+ 
+-	eaddr = saddr + size - 1;
+ 	saddr /= AMDGPU_GPU_PAGE_SIZE;
+-	eaddr /= AMDGPU_GPU_PAGE_SIZE;
++	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
+ 
+ 	/* Allocate all the needed memory */
+ 	before = kzalloc(sizeof(*before), GFP_KERNEL);
+-- 
+2.43.0
+
 
 
