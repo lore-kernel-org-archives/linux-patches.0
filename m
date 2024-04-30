@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6956612C549;
-	Tue, 30 Apr 2024 10:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7337512C462;
+	Tue, 30 Apr 2024 10:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474358; cv=none; b=g4Vf0nvB4GYGhxmmcfVxnfo8VC67VOdHGk7K2MZECYfsWE0AIZqVZ5pdhn+xJLm9WsqO37Qz7DEP1tzpQHUFMZyf0W3M7YwRQ5zRHwfih/7IW60jo1tfOOktu6jAmRFq6bSnX0bckOiGQ8h9EQIa6H7G0ex69Ms++ZLB11a5qGc=
+	t=1714474361; cv=none; b=BMZQkEQY6wjamosKe/5FVlFkK4jMMW32AzsDNpwZDL4Xw0yzZR5Hxtbv1lNMC0rvUvhtkjug2KKuoNhgJYiIHeJXi8Sz0lvgJE9YKqCYpodOhcmEFsqbxH/Azt68WZg4jYV3Am6lAhnIRYE+RjzBLfIQWn0kaGWTvnu843PYvhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474358; c=relaxed/simple;
-	bh=CnhEU1qekt1b4tzVYBfRJfwByvCJcPzSyJrWCJDmjvM=;
+	s=arc-20240116; t=1714474361; c=relaxed/simple;
+	bh=z5E1Qe0r1JPXHxogUTE9REMIZ7g0izBa04rQ9E7vaZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vGkzKJbAh9UM7pCDq7WxKKwoY3Jt04ldQW/ZAexJhL8xCsqO1bklLkkHFUitAN/ak6d9NEcbBVTJBQtMs/AEyjnETkMJuInx+da98nOrZhr3+3zSWlTyn0TUGg2SGOoqg2fWMrCNiSiG8DuMh3/WbZGuevYRur2EqqDkBHm4dBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvwcIhvm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rFjMpUnvYYepGAxhcVO793ohT5TmeboCjh/VpFqvmybnDwDIRhZz2hEADkOgpz9MPkGFU3KkQaUg2U+CbPSPeNZdLsPwZBEi2VA0zXYHxCjjaYdeVezkLnTHoNqZRI7QBByMO2tfpJOmh6NAJtRlY17+vMOtszt9EfvpU3r9giQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T4cYw7rb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvwcIhvm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31EEC2BBFC;
-	Tue, 30 Apr 2024 10:52:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T4cYw7rb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C0EC2BBFC;
+	Tue, 30 Apr 2024 10:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474358;
-	bh=CnhEU1qekt1b4tzVYBfRJfwByvCJcPzSyJrWCJDmjvM=;
+	s=korg; t=1714474361;
+	bh=z5E1Qe0r1JPXHxogUTE9REMIZ7g0izBa04rQ9E7vaZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qvwcIhvm1LiF26ZfuuIeaF2IZIty7cuTN43+1dEadePYVeCt4m65WMRcyNppZKENJ
-	 ws4fWb2F3MXGfmcjojkK/XJ/WIGBCMYkboUsoKy9L3jTH+23tHg3YeBlthkWqvfSqM
-	 N+E54ECv1v4Sb+Ya9LzdnbcuxQ8Jt0Mf+6Mw17vc=
+	b=T4cYw7rbxJw1OpyQY1Nyd8EG0V//pjE6d8qK4s3JlvhlXuNaEVuEWqW8xg+AqeS2z
+	 XcCNP7xATefpdMk+CJoN/Ao7aqnyzotCLqz5N4fkMayOPKeqenIBRZaqm2jE1zEbFp
+	 pRg/hSh6qrMM4wUij+ocq9CinvgFJdpIILwNoh0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Kaplan <david.kaplan@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.8 133/228] x86/cpu: Fix check for RDPKRU in __show_regs()
-Date: Tue, 30 Apr 2024 12:38:31 +0200
-Message-ID: <20240430103107.641207462@linuxfoundation.org>
+	FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	netdev@vger.kernel.org,
+	Wedson Almeida Filho <walmeida@microsoft.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.8 134/228] rust: phy: implement `Send` for `Registration`
+Date: Tue, 30 Apr 2024 12:38:32 +0200
+Message-ID: <20240430103107.669490717@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -50,42 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Kaplan <david.kaplan@amd.com>
+From: Wedson Almeida Filho <walmeida@microsoft.com>
 
-commit b53c6bd5d271d023857174b8fd3e32f98ae51372 upstream.
+commit df70d04d56975f527b9c965322cf56e245909071 upstream.
 
-cpu_feature_enabled(X86_FEATURE_OSPKE) does not necessarily reflect
-whether CR4.PKE is set on the CPU.  In particular, they may differ on
-non-BSP CPUs before setup_pku() is executed.  In this scenario, RDPKRU
-will #UD causing the system to hang.
+In preparation for requiring `Send` for `Module` implementations in the
+next patch.
 
-Fix by checking CR4 for PKE enablement which is always correct for the
-current CPU.
-
-The scenario happens by inserting a WARN* before setup_pku() in
-identiy_cpu() or some other diagnostic which would lead to calling
-__show_regs().
-
-  [ bp: Massage commit message. ]
-
-Signed-off-by: David Kaplan <david.kaplan@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20240421191728.32239-1-bp@kernel.org
+Cc: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Cc: Trevor Gross <tmgross@umich.edu>
+Cc: netdev@vger.kernel.org
+Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20240328195457.225001-2-wedsonaf@gmail.com
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/process_64.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/kernel/net/phy.rs |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/x86/kernel/process_64.c
-+++ b/arch/x86/kernel/process_64.c
-@@ -138,7 +138,7 @@ void __show_regs(struct pt_regs *regs, e
- 		       log_lvl, d3, d6, d7);
- 	}
- 
--	if (cpu_feature_enabled(X86_FEATURE_OSPKE))
-+	if (cr4 & X86_CR4_PKE)
- 		printk("%sPKRU: %08x\n", log_lvl, read_pkru());
+--- a/rust/kernel/net/phy.rs
++++ b/rust/kernel/net/phy.rs
+@@ -640,6 +640,10 @@ pub struct Registration {
+     drivers: Pin<&'static mut [DriverVTable]>,
  }
  
++// SAFETY: The only action allowed in a `Registration` instance is dropping it, which is safe to do
++// from any thread because `phy_drivers_unregister` can be called from any thread context.
++unsafe impl Send for Registration {}
++
+ impl Registration {
+     /// Registers a PHY driver.
+     pub fn register(
 
 
