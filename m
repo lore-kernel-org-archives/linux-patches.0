@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C750512BF3E;
-	Tue, 30 Apr 2024 10:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D064A12BF3E;
+	Tue, 30 Apr 2024 10:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473889; cv=none; b=oXuevF/9DRmHs8gh0OWHLvJlTiW+g2ISAfaYzIvxgy5FYbj8AIJl+mUKu7CTo/n2K6/u0/ntO+OAvDjgXwhjutOgzGvOYPPaKrUjrIqZlvGSgF3g31EUqpW55JJQ2DC/a4IZsUNfeXFhvb1MZpg4A+3Wp/Y+HKB2emquDoJQBh4=
+	t=1714473892; cv=none; b=a4oDzO2aMilZh09xYsM76FavnMPoEGVEb5IS4f7x6DQYzoBig2M1CeCapczDD3zP+MjEDyNk6GNyDjvly4FWaX35KymlBDvnaSV1V9P/rNeg6n8MIOtTQCvBRARxpgbwqgoVpThuZ6ugsE6AJhJORhEj3RiZ8qA3bpti+uDerMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473889; c=relaxed/simple;
-	bh=CnbwM04Z1eBImR6CVRJaUOUR+H5uKlK3KHL8Z8U32/U=;
+	s=arc-20240116; t=1714473892; c=relaxed/simple;
+	bh=opuDb0nt3FKq+On+6dhJXOYqo17MejKvNtsvV1hzJjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A7kfkFwq5I3ViRy2OpmXtHjJSzc5bWujzdhxHX2W9cdqNGJEzvMzArdQmlrvJHUqNNyDF/ENi0lNV2oqiwqkwI39hKEu3dik/K4gZurApOBpWx0uiBE6KO2jNvzKlvQA5Dh4sG1JR+Kk3aCZWyW3j3YAtN6CZMh8r6MLUNYYJYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXXw8fIp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l/Q2t2Yeg64DFqEBA8SVFCY+DPdC9y2gKlbr2Oupp82/dAxgmM0okqyuzecxEUdg2v55tIKfhw70xXwJN9RJZ+FHSuR4jW4Qk/a33iHrLOo6IejJxIiueDiRNQKr/qj6IUnmYO078Oeo26p8xk7jM5XHedyArPjD7eGrjqSEa10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXgc0Giw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXXw8fIp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4C9C2BBFC;
-	Tue, 30 Apr 2024 10:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXgc0Giw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABFBC2BBFC;
+	Tue, 30 Apr 2024 10:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473889;
-	bh=CnbwM04Z1eBImR6CVRJaUOUR+H5uKlK3KHL8Z8U32/U=;
+	s=korg; t=1714473892;
+	bh=opuDb0nt3FKq+On+6dhJXOYqo17MejKvNtsvV1hzJjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xXXw8fIpDDDzagT7HDbAD/RuM4KKVE/F9PgijkXJZcgMQYsq2vxj8OD35fC6Q+KxX
-	 +NQ58ysPz+6E7XgTiyGtxuEhTFhUv0un0wSqVjGWgTMW7EmPCapoI+p5vrB/7KExxP
-	 8QxZ2rann2OHqwJfjRxcCKtPEjG8zhNVmRWKfdhw=
+	b=zXgc0GiwLnqlwoK7rw3bVd9O4bZ2KJg4C33HgFSuQAOF1Q7ya1GL+EKM99mb6Kedz
+	 3SjwHeEDsp4ZUejlP4E462QVIxU+MZCKXvEQdjezRKVsGji/u2GIZtpnXc0kwtJPfo
+	 DRjQks+TN0cduG+tqBQPWJRH2GRXMGzYOdwe8tHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Jiri Kosina <jkosina@suse.com>,
-	Eva Kurchatova <nyandarknessgirl@gmail.com>
-Subject: [PATCH 4.19 73/77] HID: i2c-hid: remove I2C_HID_READ_PENDING flag to prevent lock-up
-Date: Tue, 30 Apr 2024 12:39:52 +0200
-Message-ID: <20240430103043.294857512@linuxfoundation.org>
+	Ben Hutchings <ben@decadent.org.uk>
+Subject: [PATCH 4.19 74/77] Revert "loop: Remove sector_t truncation checks"
+Date: Tue, 30 Apr 2024 12:39:53 +0200
+Message-ID: <20240430103043.324611036@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -51,75 +49,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Ben Hutchings <ben@decadent.org.uk>
 
-commit 9c0f59e47a90c54d0153f8ddc0f80d7a36207d0e upstream.
+This reverts commit f92a3b0d003b9f7eb1f452598966a08802183f47, which
+was commit 083a6a50783ef54256eec3499e6575237e0e3d53 upstream.  In 4.19
+there is still an option to use 32-bit sector_t on 32-bit
+architectures, so we need to keep checking for truncation.
 
-The flag I2C_HID_READ_PENDING is used to serialize I2C operations.
-However, this is not necessary, because I2C core already has its own
-locking for that.
+Since loop_set_status() was refactored by subsequent patches, this
+reintroduces its truncation check in loop_set_status_from_info()
+instead.
 
-More importantly, this flag can cause a lock-up: if the flag is set in
-i2c_hid_xfer() and an interrupt happens, the interrupt handler
-(i2c_hid_irq) will check this flag and return immediately without doing
-anything, then the interrupt handler will be invoked again in an
-infinite loop.
+I tested that the loop ioctl operations have the expected behaviour on
+x86_64, x86_32 with CONFIG_LBDAF=y, and (the special case) x86_32 with
+CONFIG_LBDAF=n.
 
-Since interrupt handler is an RT task, it takes over the CPU and the
-flag-clearing task never gets scheduled, thus we have a lock-up.
-
-Delete this unnecessary flag.
-
-Reported-and-tested-by: Eva Kurchatova <nyandarknessgirl@gmail.com>
-Closes: https://lore.kernel.org/r/CA+eeCSPUDpUg76ZO8dszSbAGn+UHjcyv8F1J-CUPVARAzEtW9w@mail.gmail.com
-Fixes: 4a200c3b9a40 ("HID: i2c-hid: introduce HID over i2c specification implementation")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-[apply to v4.19 -> v5.15]
-Signed-off-by: Nam Cao <namcao@linutronix.de>
+Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c |    8 --------
- 1 file changed, 8 deletions(-)
+ drivers/block/loop.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -58,7 +58,6 @@
- /* flags */
- #define I2C_HID_STARTED		0
- #define I2C_HID_RESET_PENDING	1
--#define I2C_HID_READ_PENDING	2
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -243,12 +243,16 @@ static void loop_set_size(struct loop_de
+ 	kobject_uevent(&disk_to_dev(bdev->bd_disk)->kobj, KOBJ_CHANGE);
+ }
  
- #define I2C_HID_PWR_ON		0x00
- #define I2C_HID_PWR_SLEEP	0x01
-@@ -259,7 +258,6 @@ static int __i2c_hid_command(struct i2c_
- 		msg[1].len = data_len;
- 		msg[1].buf = buf_recv;
- 		msg_num = 2;
--		set_bit(I2C_HID_READ_PENDING, &ihid->flags);
- 	}
- 
- 	if (wait)
-@@ -267,9 +265,6 @@ static int __i2c_hid_command(struct i2c_
- 
- 	ret = i2c_transfer(client->adapter, msg, msg_num);
- 
--	if (data_len > 0)
--		clear_bit(I2C_HID_READ_PENDING, &ihid->flags);
--
- 	if (ret != msg_num)
- 		return ret < 0 ? ret : -EIO;
- 
-@@ -550,9 +545,6 @@ static irqreturn_t i2c_hid_irq(int irq,
+-static void
++static int
+ figure_loop_size(struct loop_device *lo, loff_t offset, loff_t sizelimit)
  {
- 	struct i2c_hid *ihid = dev_id;
+ 	loff_t size = get_size(offset, sizelimit, lo->lo_backing_file);
++	sector_t x = (sector_t)size;
  
--	if (test_bit(I2C_HID_READ_PENDING, &ihid->flags))
--		return IRQ_HANDLED;
++	if (unlikely((loff_t)x != size))
++		return -EFBIG;
+ 	loop_set_size(lo, size);
++	return 0;
+ }
+ 
+ static inline int
+@@ -996,7 +1000,10 @@ static int loop_set_fd(struct loop_devic
+ 	    !file->f_op->write_iter)
+ 		lo_flags |= LO_FLAGS_READ_ONLY;
+ 
++	error = -EFBIG;
+ 	size = get_loop_size(lo, file);
++	if ((loff_t)(sector_t)size != size)
++		goto out_unlock;
+ 
+ 	error = loop_prepare_queue(lo);
+ 	if (error)
+@@ -1246,6 +1253,7 @@ loop_set_status_from_info(struct loop_de
+ 	int err;
+ 	struct loop_func_table *xfer;
+ 	kuid_t uid = current_uid();
++	loff_t new_size;
+ 
+ 	if ((unsigned int) info->lo_encrypt_key_size > LO_KEY_SIZE)
+ 		return -EINVAL;
+@@ -1273,6 +1281,11 @@ loop_set_status_from_info(struct loop_de
+ 	if (info->lo_offset > LLONG_MAX || info->lo_sizelimit > LLONG_MAX)
+ 		return -EOVERFLOW;
+ 
++	new_size = get_size(info->lo_offset, info->lo_sizelimit,
++			    lo->lo_backing_file);
++	if ((loff_t)(sector_t)new_size != new_size)
++		return -EFBIG;
++
+ 	lo->lo_offset = info->lo_offset;
+ 	lo->lo_sizelimit = info->lo_sizelimit;
+ 
+@@ -1531,9 +1544,7 @@ static int loop_set_capacity(struct loop
+ 	if (unlikely(lo->lo_state != Lo_bound))
+ 		return -ENXIO;
+ 
+-	figure_loop_size(lo, lo->lo_offset, lo->lo_sizelimit);
 -
- 	i2c_hid_get_input(ihid);
+-	return 0;
++	return figure_loop_size(lo, lo->lo_offset, lo->lo_sizelimit);
+ }
  
- 	return IRQ_HANDLED;
+ static int loop_set_dio(struct loop_device *lo, unsigned long arg)
 
 
