@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD6A12C487;
-	Tue, 30 Apr 2024 10:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301DD12C462;
+	Tue, 30 Apr 2024 10:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474333; cv=none; b=Lr0vjdflfXoaxf00GuYdSQZuRaGfDvFk1k/eq3vjsJ/0pzFsHy3F0dtNrDPUftqNIeVJhWW08JgGt5N9HFCMJyFQJ3c0QiVQsqw42IJ7O9xCxko0dEl84JXoersxH0Wm4fF/MdNNqBrdmY6l0gylzMvG3EWpRx9g6wFlV2yZ8bY=
+	t=1714474336; cv=none; b=hJbRnPI803ouzGHCTDhmSQjVOcmOxqRPRqZEDjViwCbCmWnhbe1Rrq1P32rrR9n6qk8vl0mFmsnwcbBjcc8RVT90QX7bP05SftQzUpyJAq1ex4Q+ScFpwW3X96yU2Cr/EfkyJHnnw/XXXxhTA2DHR8mHzB9+N//r4WAi8HpnYAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474333; c=relaxed/simple;
-	bh=5AN3uE5hrB5Z3q1tDWVKXPqET8e3T0glW5RMJRo7wdk=;
+	s=arc-20240116; t=1714474336; c=relaxed/simple;
+	bh=4cvZtG5dUxpBmAEmJ56CodOxWne388P0LPOeMbD5RjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q+K3TCTMMwJCocichx34vWMYoi5lNGylG9RCyNjy4hcVo2HszT7FsIXSq0TVzcDv5d9RmfpG2cvLyDVREYuVizSgHRWLoD2DBc/50EUluYRD611oN0Pr9FHp9d6zNp+jugS7y6Yc7GfcFckS5omOOf+fGjJPUqEhu6yyxdoXP2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYig0/bV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HFl5kh6a/0tk9wEwU6H+SsEYnUcBhsdZXUz3pf6WVfegJSeKOfC3eLg5gqY34SGbsspl2W4dznnWgdIuv7gmZx0GgSIxCNlYoe1ygyp8T1pTvrbaNtzdClbxzUdx5spQpxEUTVAAkBxFW1WsIXucZokM/Aht5CdMwaGQLYVh59Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXJVNQmJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYig0/bV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EDC9C2BBFC;
-	Tue, 30 Apr 2024 10:52:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXJVNQmJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA13BC2BBFC;
+	Tue, 30 Apr 2024 10:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474332;
-	bh=5AN3uE5hrB5Z3q1tDWVKXPqET8e3T0glW5RMJRo7wdk=;
+	s=korg; t=1714474336;
+	bh=4cvZtG5dUxpBmAEmJ56CodOxWne388P0LPOeMbD5RjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uYig0/bVU2VF7HxgNxBPJKxQukDIEtaBJhszPQKqdHz2My9wSA8GtdMAHD5ZG/INo
-	 VZLN8QjhUKggusteSgLmVeyo/0M3v/ycpwmK3vas90SdwpWrLwrVyEwqQ56HjWLTnJ
-	 JouSoWvVJnGpoix1t+4lLzXuSCZiCd/01tGrDhoc=
+	b=aXJVNQmJX/NsclLi94V+PN1EHS6nZ4eYcZ9LCIdFoCxTyWXqjaZSropQI8NLRQaU/
+	 g/hzZc3yNeOioUVoucbNPlVhiLJgxs7yGOplpBny9JkF7WDioPrZaGGKxLEXjN5PC9
+	 MJYWowTnx/SQ0tlwHbQa7LbM+n8LMbEqazmg8EV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.keonig@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Subject: [PATCH 6.8 126/228] drm: add drm_gem_object_is_shared_for_memory_stats() helper
-Date: Tue, 30 Apr 2024 12:38:24 +0200
-Message-ID: <20240430103107.442520638@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	Alexander Zubkov <green@qrator.net>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 100/228] mlxsw: spectrum_acl_tcam: Fix memory leak during rehash
+Date: Tue, 30 Apr 2024 12:37:58 +0200
+Message-ID: <20240430103106.684757911@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -47,61 +48,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit b31f5eba32ae8cc28e7cfa5a55ec8670d8c718e2 ]
+[ Upstream commit 8ca3f7a7b61393804c46f170743c3b839df13977 ]
 
-Add a helper so that drm drivers can consistently report
-shared status via the fdinfo shared memory stats interface.
+The rehash delayed work migrates filters from one region to another.
+This is done by iterating over all chunks (all the filters with the same
+priority) in the region and in each chunk iterating over all the
+filters.
 
-In addition to handle count, show buffers as shared if they
-are shared via dma-buf as well (e.g., shared with v4l or some
-other subsystem).
+If the migration fails, the code tries to migrate the filters back to
+the old region. However, the rollback itself can also fail in which case
+another migration will be erroneously performed. Besides the fact that
+this ping pong is not a very good idea, it also creates a problem.
 
-v2: switch to inline function
+Each virtual chunk references two chunks: The currently used one
+('vchunk->chunk') and a backup ('vchunk->chunk2'). During migration the
+first holds the chunk we want to migrate filters to and the second holds
+the chunk we are migrating filters from.
 
-Link: https://lore.kernel.org/all/20231207180225.439482-1-alexander.deucher@amd.com/
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com> (v1)
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Christian König <christian.keonig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Stable-dep-of: a6ff969fe9cb ("drm/amdgpu: fix visible VRAM handling during faults")
+The code currently assumes - but does not verify - that the backup chunk
+does not exist (NULL) if the currently used chunk does not reference the
+target region. This assumption breaks when we are trying to rollback a
+rollback, resulting in the backup chunk being overwritten and leaked
+[1].
+
+Fix by not rolling back a failed rollback and add a warning to avoid
+future cases.
+
+[1]
+WARNING: CPU: 5 PID: 1063 at lib/parman.c:291 parman_destroy+0x17/0x20
+Modules linked in:
+CPU: 5 PID: 1063 Comm: kworker/5:11 Tainted: G        W          6.9.0-rc2-custom-00784-gc6a05c468a0b #14
+Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
+Workqueue: mlxsw_core mlxsw_sp_acl_tcam_vregion_rehash_work
+RIP: 0010:parman_destroy+0x17/0x20
+[...]
+Call Trace:
+ <TASK>
+ mlxsw_sp_acl_atcam_region_fini+0x19/0x60
+ mlxsw_sp_acl_tcam_region_destroy+0x49/0xf0
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0x1f1/0x470
+ process_one_work+0x151/0x370
+ worker_thread+0x2cb/0x3e0
+ kthread+0xd0/0x100
+ ret_from_fork+0x34/0x50
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Fixes: 843500518509 ("mlxsw: spectrum_acl: Do rollback as another call to mlxsw_sp_acl_tcam_vchunk_migrate_all()")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Alexander Zubkov <green@qrator.net>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/d5edd4f4503934186ae5cfe268503b16345b4e0f.1713797103.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/drm_gem.h | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
-index 369505447acd8..2ebec3984cd44 100644
---- a/include/drm/drm_gem.h
-+++ b/include/drm/drm_gem.h
-@@ -553,6 +553,19 @@ unsigned long drm_gem_lru_scan(struct drm_gem_lru *lru,
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+index 568ae7092fe0e..0902eb7651e14 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+@@ -1200,6 +1200,8 @@ mlxsw_sp_acl_tcam_vchunk_migrate_start(struct mlxsw_sp *mlxsw_sp,
+ {
+ 	struct mlxsw_sp_acl_tcam_chunk *new_chunk;
  
- int drm_gem_evict(struct drm_gem_object *obj);
- 
-+/**
-+ * drm_gem_object_is_shared_for_memory_stats - helper for shared memory stats
-+ *
-+ * This helper should only be used for fdinfo shared memory stats to determine
-+ * if a GEM object is shared.
-+ *
-+ * @obj: obj in question
-+ */
-+static inline bool drm_gem_object_is_shared_for_memory_stats(struct drm_gem_object *obj)
-+{
-+	return (obj->handle_count > 1) || obj->dma_buf;
-+}
++	WARN_ON(vchunk->chunk2);
 +
- #ifdef CONFIG_LOCKDEP
- /**
-  * drm_gem_gpuva_set_lock() - Set the lock protecting accesses to the gpuva list.
+ 	new_chunk = mlxsw_sp_acl_tcam_chunk_create(mlxsw_sp, vchunk, region);
+ 	if (IS_ERR(new_chunk))
+ 		return PTR_ERR(new_chunk);
+@@ -1334,6 +1336,8 @@ mlxsw_sp_acl_tcam_vregion_migrate(struct mlxsw_sp *mlxsw_sp,
+ 	err = mlxsw_sp_acl_tcam_vchunk_migrate_all(mlxsw_sp, vregion,
+ 						   ctx, credits);
+ 	if (err) {
++		if (ctx->this_is_rollback)
++			return err;
+ 		/* In case migration was not successful, we need to swap
+ 		 * so the original region pointer is assigned again
+ 		 * to vregion->region.
 -- 
 2.43.0
 
