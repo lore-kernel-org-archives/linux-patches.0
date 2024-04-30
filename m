@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C4E12B176;
-	Tue, 30 Apr 2024 10:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839D212C46B;
+	Tue, 30 Apr 2024 10:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474211; cv=none; b=ZHVv3mgxkVFfNrkz7xsMIQj+dt/CU8rV+OWAfqOk+v1rEdWg9jwdm5adJHVYMJhbAPRVhToKLz3Cc9Xv8txIerMxkhjrVgudJlkIrde9m1XwM+iadVDUes8BA5Xw7xDpzWvUtrgazjYyTxLzo2tt3GEH8MD6WSmdDPRPE+IDMw4=
+	t=1714474214; cv=none; b=g+X72XIjKJt3BxW6xKkt0ob5y/ZapEV4V4AdsooChY8Kq1+220gDqCx78gY0lc7Fpe5FKFY7+0qnnJlHZH000ajCkMmEZtPjH05n9XLbILDMQ4k2ObvA4D7CyOM9K5v545yYqtOCbckHPuQB21xOc/BnNRvDjTRPeRzUDIiR4Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474211; c=relaxed/simple;
-	bh=0MvhvPI2mi2P7YjGhCXWkCncm7S5Wss6+8NjzwZu5zA=;
+	s=arc-20240116; t=1714474214; c=relaxed/simple;
+	bh=gbALSvvARqq52ywOsyP/8NLCCAopAhgYLdwXBd6BN7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nzTp7NWV78jnVQmNcsS7Z8MQN6O3f+MHQYDHPei99/CxsZIWEOX8jRnazVBNf1GbUNNjY0CectbknWorz8RpoAU8gcw4UkXW0sn2/uiESs7bldc4njwYnpuSuNPK2umDwmsJ+Tc4mceAYtrN7fWTCGnDyaoiy3/WJvJ3lZPs6zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gnj+cs/5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nx7lTY7fSMSEYmM4Sq3uTzaoqvFVv4nEVrN92y2wx1rD87u8dkoE2jnQLyHyrfxis2Xkit7AK9eb9IOmLr8Y5Z6SlyaOceJ/4Om48fVDQzHoqFAo2AJngNkaJ0/KMLWaCm3CnpzmKZmIPML/qWjckytUGwdg6ZMNcDfmSAJDC5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CP3sVO2L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gnj+cs/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C16C2BBFC;
-	Tue, 30 Apr 2024 10:50:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CP3sVO2L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E690FC2BBFC;
+	Tue, 30 Apr 2024 10:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474211;
-	bh=0MvhvPI2mi2P7YjGhCXWkCncm7S5Wss6+8NjzwZu5zA=;
+	s=korg; t=1714474214;
+	bh=gbALSvvARqq52ywOsyP/8NLCCAopAhgYLdwXBd6BN7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gnj+cs/5Y3dlSUk0hHKHYyBbCg94uXuxhtRoxSkfbuc8+/q9C2vy+EAKziXwknOns
-	 4EFVLvHZidYbnRK3ZkZapuylvjNxMugFwixvEGPCj9xRnAnwp6Io+MFSH4Uvb2Dwm5
-	 OUtmLsnAUwXHC7OLjEAs8KWU6Yhm6xASf1qPU68o=
+	b=CP3sVO2L9vdSvXKZTuiHRVWixVYighYTotf2xge1yaf5BYwyx2Iv1Jjb5BTz2AFlt
+	 U4RNamXL2VqBWFHSL7pcAeMELmarF11Ppexljy3b8wY1k28wT6T7DdsCqogDALg11w
+	 3KO2lrKC60zqmQrOrsmLn6RLG+pN/Rw9LOtybkOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Wang <sean.wang@mediatek.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Manish Mandlik <mmandlik@google.com>,
+	Archie Pusaka <apusaka@chromium.org>,
+	Miao-chen Chou <mcchou@chromium.org>,
+	Chun-Yi Lee <jlee@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 089/228] Bluetooth: btusb: mediatek: Fix double free of skb in coredump
-Date: Tue, 30 Apr 2024 12:37:47 +0200
-Message-ID: <20240430103106.371852475@linuxfoundation.org>
+Subject: [PATCH 6.8 090/228] Bluetooth: hci_sync: Using hci_cmd_sync_submit when removing Adv Monitor
+Date: Tue, 30 Apr 2024 12:37:48 +0200
+Message-ID: <20240430103106.401118883@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -51,48 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Wang <sean.wang@mediatek.com>
+From: Chun-Yi Lee <jlee@suse.com>
 
-[ Upstream commit 18bdb386a1a30e7a3d7732a98e45e69cf6b5710d ]
+[ Upstream commit 88cd6e6b2d327faa13e4505b07f1e380e51b21ff ]
 
-hci_devcd_append() would free the skb on error so the caller don't
-have to free it again otherwise it would cause the double free of skb.
+Since the d883a4669a1de be introduced in v6.4, bluetooth daemon
+got the following failed message of MGMT_OP_REMOVE_ADV_MONITOR
+command when controller is power-off:
 
-Fixes: 0b7015132878 ("Bluetooth: btusb: mediatek: add MediaTek devcoredump support")
-Reported-by : Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+bluetoothd[20976]:
+src/adapter.c:reset_adv_monitors_complete() Failed to reset Adv
+Monitors: Failed>
+
+Normally this situation is happened when the bluetoothd deamon
+be started manually after system booting. Which means that
+bluetoothd received MGMT_EV_INDEX_ADDED event after kernel
+runs hci_power_off().
+
+Base on doc/mgmt-api.txt, the MGMT_OP_REMOVE_ADV_MONITOR command
+can be used when the controller is not powered. This patch changes
+the code in remove_adv_monitor() to use hci_cmd_sync_submit()
+instead of hci_cmd_sync_queue().
+
+Fixes: d883a4669a1de ("Bluetooth: hci_sync: Only allow hci_cmd_sync_queue if running")
+Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: Manish Mandlik <mmandlik@google.com>
+Cc: Archie Pusaka <apusaka@chromium.org>
+Cc: Miao-chen Chou <mcchou@chromium.org>
+Signed-off-by: Chun-Yi Lee <jlee@suse.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmtk.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ net/bluetooth/mgmt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
-index ac8ebccd35075..812fd2a8f853e 100644
---- a/drivers/bluetooth/btmtk.c
-+++ b/drivers/bluetooth/btmtk.c
-@@ -380,8 +380,10 @@ int btmtk_process_coredump(struct hci_dev *hdev, struct sk_buff *skb)
- 	switch (data->cd_info.state) {
- 	case HCI_DEVCOREDUMP_IDLE:
- 		err = hci_devcd_init(hdev, MTK_COREDUMP_SIZE);
--		if (err < 0)
-+		if (err < 0) {
-+			kfree_skb(skb);
- 			break;
-+		}
- 		data->cd_info.cnt = 0;
- 
- 		/* It is supposed coredump can be done within 5 seconds */
-@@ -407,9 +409,6 @@ int btmtk_process_coredump(struct hci_dev *hdev, struct sk_buff *skb)
- 		break;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 7e56cb3d377a1..b8e05ddeedba9 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -5478,8 +5478,8 @@ static int remove_adv_monitor(struct sock *sk, struct hci_dev *hdev,
+ 		goto unlock;
  	}
  
--	if (err < 0)
--		kfree_skb(skb);
--
- 	return err;
- }
- EXPORT_SYMBOL_GPL(btmtk_process_coredump);
+-	err = hci_cmd_sync_queue(hdev, mgmt_remove_adv_monitor_sync, cmd,
+-				 mgmt_remove_adv_monitor_complete);
++	err = hci_cmd_sync_submit(hdev, mgmt_remove_adv_monitor_sync, cmd,
++				  mgmt_remove_adv_monitor_complete);
+ 
+ 	if (err) {
+ 		mgmt_pending_remove(cmd);
 -- 
 2.43.0
 
