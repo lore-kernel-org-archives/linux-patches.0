@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC4712B176;
-	Tue, 30 Apr 2024 10:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C4E12B176;
+	Tue, 30 Apr 2024 10:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474208; cv=none; b=dcVrmEwFBtFZusXddwBEbuBbK3Fug02mDhi9GlczsM/OzTQPqaxUXZTDP5NMTRF4tGmLYuHa8l1Ks136myGmIKK+Oyc2B8uOwXkeVRIR3Aa/sqcYnm5GcFHvsny/2e6pRvfMeqfWyQ8IenTSkYXx1RGJhh5dA0hry27vwEcdYto=
+	t=1714474211; cv=none; b=ZHVv3mgxkVFfNrkz7xsMIQj+dt/CU8rV+OWAfqOk+v1rEdWg9jwdm5adJHVYMJhbAPRVhToKLz3Cc9Xv8txIerMxkhjrVgudJlkIrde9m1XwM+iadVDUes8BA5Xw7xDpzWvUtrgazjYyTxLzo2tt3GEH8MD6WSmdDPRPE+IDMw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474208; c=relaxed/simple;
-	bh=7qJCk5cYk0S6LgFEhDEtoXiuM0vxOOoAMMbK8YSspRg=;
+	s=arc-20240116; t=1714474211; c=relaxed/simple;
+	bh=0MvhvPI2mi2P7YjGhCXWkCncm7S5Wss6+8NjzwZu5zA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6SaSRxd8jaLzTnIY4MYClMLIlutanIMqWuhKHV8oEA+D7DGfttbTzDEcrcO6t6gjmvjlbO/G+ikvdNBElAFTrhIGaenZvh5Bn21ih0SVIFPvUZt1lQ7R4WL2DirW5RJ2D2kHSY1R6PtCCp2ZcLcqpRR44ZOSqpZBG50ZvwhS34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8LEkPHa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nzTp7NWV78jnVQmNcsS7Z8MQN6O3f+MHQYDHPei99/CxsZIWEOX8jRnazVBNf1GbUNNjY0CectbknWorz8RpoAU8gcw4UkXW0sn2/uiESs7bldc4njwYnpuSuNPK2umDwmsJ+Tc4mceAYtrN7fWTCGnDyaoiy3/WJvJ3lZPs6zI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gnj+cs/5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8LEkPHa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E48C2BBFC;
-	Tue, 30 Apr 2024 10:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gnj+cs/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C16C2BBFC;
+	Tue, 30 Apr 2024 10:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474208;
-	bh=7qJCk5cYk0S6LgFEhDEtoXiuM0vxOOoAMMbK8YSspRg=;
+	s=korg; t=1714474211;
+	bh=0MvhvPI2mi2P7YjGhCXWkCncm7S5Wss6+8NjzwZu5zA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M8LEkPHaMqBJeJ/ulKOoBNKa/MqfdZeWkEexDw0dNB6UlG4Zc+C14xD45uLPwMJUD
-	 lJ95j7naLmI+JoQb9PK5DqhMAjcWW3Mvx2QDPSMbvUnIZJ5LChyfJdcRd5TMgI7TDB
-	 UGINfLodaEZn4H9gkVBV/61pDCu2n78y2EIadq/A=
+	b=Gnj+cs/5Y3dlSUk0hHKHYyBbCg94uXuxhtRoxSkfbuc8+/q9C2vy+EAKziXwknOns
+	 4EFVLvHZidYbnRK3ZkZapuylvjNxMugFwixvEGPCj9xRnAnwp6Io+MFSH4Uvb2Dwm5
+	 OUtmLsnAUwXHC7OLjEAs8KWU6Yhm6xASf1qPU68o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sean Wang <sean.wang@mediatek.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 088/228] Bluetooth: MGMT: Fix failing to MGMT_OP_ADD_UUID/MGMT_OP_REMOVE_UUID
-Date: Tue, 30 Apr 2024 12:37:46 +0200
-Message-ID: <20240430103106.342777197@linuxfoundation.org>
+Subject: [PATCH 6.8 089/228] Bluetooth: btusb: mediatek: Fix double free of skb in coredump
+Date: Tue, 30 Apr 2024 12:37:47 +0200
+Message-ID: <20240430103106.371852475@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -50,68 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit 6eb5fcc416f127f220b9177a5c9ae751cac1cda8 ]
+[ Upstream commit 18bdb386a1a30e7a3d7732a98e45e69cf6b5710d ]
 
-These commands don't require the adapter to be up and running so don't
-use hci_cmd_sync_queue which would check that flag, instead use
-hci_cmd_sync_submit which would ensure mgmt_class_complete is set
-properly regardless if any command was actually run or not.
+hci_devcd_append() would free the skb on error so the caller don't
+have to free it again otherwise it would cause the double free of skb.
 
-Link: https://github.com/bluez/bluez/issues/809
-Fixes: d883a4669a1d ("Bluetooth: hci_sync: Only allow hci_cmd_sync_queue if running")
+Fixes: 0b7015132878 ("Bluetooth: btusb: mediatek: add MediaTek devcoredump support")
+Reported-by : Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/bluetooth/btmtk.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 0759975be6479..7e56cb3d377a1 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2616,7 +2616,11 @@ static int add_uuid(struct sock *sk, struct hci_dev *hdev, void *data, u16 len)
- 		goto failed;
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index ac8ebccd35075..812fd2a8f853e 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -380,8 +380,10 @@ int btmtk_process_coredump(struct hci_dev *hdev, struct sk_buff *skb)
+ 	switch (data->cd_info.state) {
+ 	case HCI_DEVCOREDUMP_IDLE:
+ 		err = hci_devcd_init(hdev, MTK_COREDUMP_SIZE);
+-		if (err < 0)
++		if (err < 0) {
++			kfree_skb(skb);
+ 			break;
++		}
+ 		data->cd_info.cnt = 0;
+ 
+ 		/* It is supposed coredump can be done within 5 seconds */
+@@ -407,9 +409,6 @@ int btmtk_process_coredump(struct hci_dev *hdev, struct sk_buff *skb)
+ 		break;
  	}
  
--	err = hci_cmd_sync_queue(hdev, add_uuid_sync, cmd, mgmt_class_complete);
-+	/* MGMT_OP_ADD_UUID don't require adapter the UP/Running so use
-+	 * hci_cmd_sync_submit instead of hci_cmd_sync_queue.
-+	 */
-+	err = hci_cmd_sync_submit(hdev, add_uuid_sync, cmd,
-+				  mgmt_class_complete);
- 	if (err < 0) {
- 		mgmt_pending_free(cmd);
- 		goto failed;
-@@ -2710,8 +2714,11 @@ static int remove_uuid(struct sock *sk, struct hci_dev *hdev, void *data,
- 		goto unlock;
- 	}
- 
--	err = hci_cmd_sync_queue(hdev, remove_uuid_sync, cmd,
--				 mgmt_class_complete);
-+	/* MGMT_OP_REMOVE_UUID don't require adapter the UP/Running so use
-+	 * hci_cmd_sync_submit instead of hci_cmd_sync_queue.
-+	 */
-+	err = hci_cmd_sync_submit(hdev, remove_uuid_sync, cmd,
-+				  mgmt_class_complete);
- 	if (err < 0)
- 		mgmt_pending_free(cmd);
- 
-@@ -2777,8 +2784,11 @@ static int set_dev_class(struct sock *sk, struct hci_dev *hdev, void *data,
- 		goto unlock;
- 	}
- 
--	err = hci_cmd_sync_queue(hdev, set_class_sync, cmd,
--				 mgmt_class_complete);
-+	/* MGMT_OP_SET_DEV_CLASS don't require adapter the UP/Running so use
-+	 * hci_cmd_sync_submit instead of hci_cmd_sync_queue.
-+	 */
-+	err = hci_cmd_sync_submit(hdev, set_class_sync, cmd,
-+				  mgmt_class_complete);
- 	if (err < 0)
- 		mgmt_pending_free(cmd);
- 
+-	if (err < 0)
+-		kfree_skb(skb);
+-
+ 	return err;
+ }
+ EXPORT_SYMBOL_GPL(btmtk_process_coredump);
 -- 
 2.43.0
 
