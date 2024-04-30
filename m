@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F22212B176;
-	Tue, 30 Apr 2024 11:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B434412B176;
+	Tue, 30 Apr 2024 11:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474901; cv=none; b=pb7hV36FwgsHSY+fQUNOm/lsh1I08jP4X5/0vL49xaAY4yl5dW++ZHLMTIGlhJdKj7qtc2tudFGm4LfyYpRLtmc+AdbZ1GrjvillPkYw0oGcqB9tBEtFJCrHAiutZRuIdxjTF8vaRF0Nb8KCuwP+Jgz+9kE8ejf+RJXsaaJJI6I=
+	t=1714474904; cv=none; b=l/aZ6rNvi0I9/0b82SenAaQINgAU3C5RGx7uAP9CoIKQUls8nS6W77wLnixS7gSo5XwASJfCa6+3s6fBanZunfSMVZVA98r33UKxEx+SwyTWYb2FsdYzy3WtwcR8uM3nIrSH4XcYAyZAxffOiuFrFHAm80ME1Ij08RaCwokthZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474901; c=relaxed/simple;
-	bh=C396LPbgj9FxOUjrCobVVlvcyu2B3Utl/jkgFFIycAc=;
+	s=arc-20240116; t=1714474904; c=relaxed/simple;
+	bh=M5EusQVvfLqQKHujh9/yje0vFJEhl/G2vi2G0G5lOm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eygz/oGGLD5le7looaYvPOd5fu1QzRpVFpsYQOc1n3UzbM6XBRWbZ6Pni/hrLOCDMuAViIa04gF97kZWXf3WFd1XaL8o0ctOeo8QL+ORgC9bK8LNLx6xcdPCqtr/fBvXZcvzhzhGKpeRtLB2grjb/FW0sM4K6EaCSyNJu0nzWz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Id6ekRSj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K9kWr+7Gr4gM7t2UPyl7pefyHVdNcKF5B3cg/0OVtzKdyr20SRStez9ZPQ4cO55rZMcKPTLo89ZYncl4A/eRJv/i1jZ4iLSpNznhm5vNHAhBqEaz2Q4V0q8ggjfc9BP7iDlYnL8JyufwnaM5U0nD8TuDkrRJMX6JVd1NmdXl4eI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvemdYva; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Id6ekRSj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6C4C2BBFC;
-	Tue, 30 Apr 2024 11:01:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvemdYva"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FCE3C2BBFC;
+	Tue, 30 Apr 2024 11:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474901;
-	bh=C396LPbgj9FxOUjrCobVVlvcyu2B3Utl/jkgFFIycAc=;
+	s=korg; t=1714474904;
+	bh=M5EusQVvfLqQKHujh9/yje0vFJEhl/G2vi2G0G5lOm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Id6ekRSjIFPdmlLg05bmK4Bgz6Fm7JZ8BkMHYFZNL2cnd+Or2kEQuWGNN8efEeRzV
-	 8/anu/NN6lguHyljQU7bZz/tZ5+e+/lgTxn9UPgkBtcKV/PFSKz0Z8Is/tHIbPxCpl
-	 c4+9lyqXkSLjTvaiyAhxLttayp+zBDMz2mosai28=
+	b=cvemdYvamBKr/Caho4QucGQfWtPsT+lJ1m4vPW43ID89p/kFghZmv6DBlW3SpNHiG
+	 lFgd+BTDEM3xGc2PDufLNajMZd/UeIR7Wamr3dV/qcyhvOF0ORFjzJ1Y4Bx/o8IEF2
+	 oh5iYs1gM9T7s2CMiUJ1dezgZIhc4DLhdo8Rx6vQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Stolyarov <hexed@google.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	xinhui pan <xinhui.pan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.10 069/138] drm/amdgpu: validate the parameters of bo mapping operations more clearly
-Date: Tue, 30 Apr 2024 12:39:14 +0200
-Message-ID: <20240430103051.461858507@linuxfoundation.org>
+	Dave Airlie <airlied@redhat.com>,
+	Danilo Krummrich <dakr@redhat.com>
+Subject: [PATCH 5.10 070/138] nouveau: fix instmem race condition around ptr stores
+Date: Tue, 30 Apr 2024 12:39:15 +0200
+Message-ID: <20240430103051.490902176@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -46,145 +44,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: xinhui pan <xinhui.pan@amd.com>
+From: Dave Airlie <airlied@redhat.com>
 
-commit 6fef2d4c00b5b8561ad68dd2b68173f5c6af1e75 upstream.
+commit fff1386cc889d8fb4089d285f883f8cba62d82ce upstream.
 
-Verify the parameters of
-amdgpu_vm_bo_(map/replace_map/clearing_mappings) in one common place.
+Running a lot of VK CTS in parallel against nouveau, once every
+few hours you might see something like this crash.
 
-Fixes: dc54d3d1744d ("drm/amdgpu: implement AMDGPU_VA_OP_CLEAR v2")
-Cc: stable@vger.kernel.org
-Reported-by: Vlad Stolyarov <hexed@google.com>
-Suggested-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: xinhui pan <xinhui.pan@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+BUG: kernel NULL pointer dereference, address: 0000000000000008
+PGD 8000000114e6e067 P4D 8000000114e6e067 PUD 109046067 PMD 0
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 7 PID: 53891 Comm: deqp-vk Not tainted 6.8.0-rc6+ #27
+Hardware name: Gigabyte Technology Co., Ltd. Z390 I AORUS PRO WIFI/Z390 I AORUS PRO WIFI-CF, BIOS F8 11/05/2021
+RIP: 0010:gp100_vmm_pgt_mem+0xe3/0x180 [nouveau]
+Code: c7 48 01 c8 49 89 45 58 85 d2 0f 84 95 00 00 00 41 0f b7 46 12 49 8b 7e 08 89 da 42 8d 2c f8 48 8b 47 08 41 83 c7 01 48 89 ee <48> 8b 40 08 ff d0 0f 1f 00 49 8b 7e 08 48 89 d9 48 8d 75 04 48 c1
+RSP: 0000:ffffac20c5857838 EFLAGS: 00010202
+RAX: 0000000000000000 RBX: 00000000004d8001 RCX: 0000000000000001
+RDX: 00000000004d8001 RSI: 00000000000006d8 RDI: ffffa07afe332180
+RBP: 00000000000006d8 R08: ffffac20c5857ad0 R09: 0000000000ffff10
+R10: 0000000000000001 R11: ffffa07af27e2de0 R12: 000000000000001c
+R13: ffffac20c5857ad0 R14: ffffa07a96fe9040 R15: 000000000000001c
+FS:  00007fe395eed7c0(0000) GS:ffffa07e2c980000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000008 CR3: 000000011febe001 CR4: 00000000003706f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+
+...
+
+ ? gp100_vmm_pgt_mem+0xe3/0x180 [nouveau]
+ ? gp100_vmm_pgt_mem+0x37/0x180 [nouveau]
+ nvkm_vmm_iter+0x351/0xa20 [nouveau]
+ ? __pfx_nvkm_vmm_ref_ptes+0x10/0x10 [nouveau]
+ ? __pfx_gp100_vmm_pgt_mem+0x10/0x10 [nouveau]
+ ? __pfx_gp100_vmm_pgt_mem+0x10/0x10 [nouveau]
+ ? __lock_acquire+0x3ed/0x2170
+ ? __pfx_gp100_vmm_pgt_mem+0x10/0x10 [nouveau]
+ nvkm_vmm_ptes_get_map+0xc2/0x100 [nouveau]
+ ? __pfx_nvkm_vmm_ref_ptes+0x10/0x10 [nouveau]
+ ? __pfx_gp100_vmm_pgt_mem+0x10/0x10 [nouveau]
+ nvkm_vmm_map_locked+0x224/0x3a0 [nouveau]
+
+Adding any sort of useful debug usually makes it go away, so I hand
+wrote the function in a line, and debugged the asm.
+
+Every so often pt->memory->ptrs is NULL. This ptrs ptr is set in
+the nv50_instobj_acquire called from nvkm_kmap.
+
+If Thread A and Thread B both get to nv50_instobj_acquire around
+the same time, and Thread A hits the refcount_set line, and in
+lockstep thread B succeeds at refcount_inc_not_zero, there is a
+chance the ptrs value won't have been stored since refcount_set
+is unordered. Force a memory barrier here, I picked smp_mb, since
+we want it on all CPUs and it's write followed by a read.
+
+v2: use paired smp_rmb/smp_wmb.
+
+Cc: <stable@vger.kernel.org>
+Fixes: be55287aa5ba ("drm/nouveau/imem/nv50: embed nvkm_instobj directly into nv04_instobj")
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240411011510.2546857-1-airlied@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |   72 +++++++++++++++++++++------------
- 1 file changed, 46 insertions(+), 26 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/instmem/nv50.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2201,6 +2201,37 @@ static void amdgpu_vm_bo_insert_map(stru
- 	trace_amdgpu_vm_bo_map(bo_va, mapping);
- }
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/instmem/nv50.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/instmem/nv50.c
+@@ -221,8 +221,11 @@ nv50_instobj_acquire(struct nvkm_memory
+ 	void __iomem *map = NULL;
  
-+/* Validate operation parameters to prevent potential abuse */
-+static int amdgpu_vm_verify_parameters(struct amdgpu_device *adev,
-+					  struct amdgpu_bo *bo,
-+					  uint64_t saddr,
-+					  uint64_t offset,
-+					  uint64_t size)
-+{
-+	uint64_t tmp, lpfn;
-+
-+	if (saddr & AMDGPU_GPU_PAGE_MASK
-+	    || offset & AMDGPU_GPU_PAGE_MASK
-+	    || size & AMDGPU_GPU_PAGE_MASK)
-+		return -EINVAL;
-+
-+	if (check_add_overflow(saddr, size, &tmp)
-+	    || check_add_overflow(offset, size, &tmp)
-+	    || size == 0 /* which also leads to end < begin */)
-+		return -EINVAL;
-+
-+	/* make sure object fit at this offset */
-+	if (bo && offset + size > amdgpu_bo_size(bo))
-+		return -EINVAL;
-+
-+	/* Ensure last pfn not exceed max_pfn */
-+	lpfn = (saddr + size - 1) >> AMDGPU_GPU_PAGE_SHIFT;
-+	if (lpfn >= adev->vm_manager.max_pfn)
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+
- /**
-  * amdgpu_vm_bo_map - map bo inside a vm
-  *
-@@ -2227,21 +2258,14 @@ int amdgpu_vm_bo_map(struct amdgpu_devic
- 	struct amdgpu_bo *bo = bo_va->base.bo;
- 	struct amdgpu_vm *vm = bo_va->base.vm;
- 	uint64_t eaddr;
-+	int r;
+ 	/* Already mapped? */
+-	if (refcount_inc_not_zero(&iobj->maps))
++	if (refcount_inc_not_zero(&iobj->maps)) {
++		/* read barrier match the wmb on refcount set */
++		smp_rmb();
+ 		return iobj->map;
++	}
  
--	/* validate the parameters */
--	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
--		return -EINVAL;
--	if (saddr + size <= saddr || offset + size <= offset)
--		return -EINVAL;
--
--	/* make sure object fit at this offset */
--	eaddr = saddr + size - 1;
--	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
--	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
--		return -EINVAL;
-+	r = amdgpu_vm_verify_parameters(adev, bo, saddr, offset, size);
-+	if (r)
-+		return r;
- 
- 	saddr /= AMDGPU_GPU_PAGE_SIZE;
--	eaddr /= AMDGPU_GPU_PAGE_SIZE;
-+	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
- 
- 	tmp = amdgpu_vm_it_iter_first(&vm->va, saddr, eaddr);
- 	if (tmp) {
-@@ -2294,17 +2318,9 @@ int amdgpu_vm_bo_replace_map(struct amdg
- 	uint64_t eaddr;
- 	int r;
- 
--	/* validate the parameters */
--	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
--		return -EINVAL;
--	if (saddr + size <= saddr || offset + size <= offset)
--		return -EINVAL;
--
--	/* make sure object fit at this offset */
--	eaddr = saddr + size - 1;
--	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
--	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
--		return -EINVAL;
-+	r = amdgpu_vm_verify_parameters(adev, bo, saddr, offset, size);
-+	if (r)
-+		return r;
- 
- 	/* Allocate all the needed memory */
- 	mapping = kmalloc(sizeof(*mapping), GFP_KERNEL);
-@@ -2318,7 +2334,7 @@ int amdgpu_vm_bo_replace_map(struct amdg
+ 	/* Take the lock, and re-check that another thread hasn't
+ 	 * already mapped the object in the meantime.
+@@ -249,6 +252,8 @@ nv50_instobj_acquire(struct nvkm_memory
+ 			iobj->base.memory.ptrs = &nv50_instobj_fast;
+ 		else
+ 			iobj->base.memory.ptrs = &nv50_instobj_slow;
++		/* barrier to ensure the ptrs are written before refcount is set */
++		smp_wmb();
+ 		refcount_set(&iobj->maps, 1);
  	}
  
- 	saddr /= AMDGPU_GPU_PAGE_SIZE;
--	eaddr /= AMDGPU_GPU_PAGE_SIZE;
-+	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
- 
- 	mapping->start = saddr;
- 	mapping->last = eaddr;
-@@ -2405,10 +2421,14 @@ int amdgpu_vm_bo_clear_mappings(struct a
- 	struct amdgpu_bo_va_mapping *before, *after, *tmp, *next;
- 	LIST_HEAD(removed);
- 	uint64_t eaddr;
-+	int r;
-+
-+	r = amdgpu_vm_verify_parameters(adev, NULL, saddr, 0, size);
-+	if (r)
-+		return r;
- 
--	eaddr = saddr + size - 1;
- 	saddr /= AMDGPU_GPU_PAGE_SIZE;
--	eaddr /= AMDGPU_GPU_PAGE_SIZE;
-+	eaddr = saddr + (size - 1) / AMDGPU_GPU_PAGE_SIZE;
- 
- 	/* Allocate all the needed memory */
- 	before = kzalloc(sizeof(*before), GFP_KERNEL);
 
 
