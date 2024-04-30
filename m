@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABF512CD96;
-	Tue, 30 Apr 2024 11:07:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9B112D210;
+	Tue, 30 Apr 2024 11:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475265; cv=none; b=PxjgYHGLtIvF+vRyhDQYLnfI5jV+62JO2+0I/0xLZiBWMquMgun99BljObb8akJ7SEclsEJ7BCU3YB/QeMb7Z53Ubhb0nGIcliQMeb1qGNQACEI2psUEV7f3NWUR3cMxrtwqIry2q+NzwrIqjqR/XCINXC2LJ9D20EiMntHRlP8=
+	t=1714475269; cv=none; b=l5Me/J94MjfVxOQvtTRglU9smYgk9VbhR6gqycLiePHMHsyJ0IFYNXU4lttnaUIrAAqvBX/wKWPpx6obYbd9qN1/JykaywNgzmFyqYwEHzVECKoWFYU5/a7shHedHZ7/V0iLJEWEkY0FOnQjtLUax1VAvcbmMRFi7ZPzIK4bX/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475265; c=relaxed/simple;
-	bh=5MTYlhQGztHr/eoHoZEeNm/cSiRL/SIbfC0PBUV9qq8=;
+	s=arc-20240116; t=1714475269; c=relaxed/simple;
+	bh=j+SUTutyCciRHI+WUuS3GGR2RZ0zQ1YB8x+CaAdRjJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ck9H4X83QgtXW5i7/O6ri/GqLwoNjqL9X6jeDfouymF+YJ1tKn0IbvOG5Stv7JgT3K+UjqNV7Y2nmOYn2rYlkHrjwDGNrAyTMr+WOcaXPjPAHr5e+tTA38trVBpysU7xGu356JB6ZvRf+zZYMIqKDbyy0QFLa1o/ZAmo4+p1Iyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebtI52bn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=beSM0XOMf3SbRL9q78J+98pG5Xw4LTzRl2c/Rjal4wiDPY8y8LmjhWh9ZTwrDakDOd1L3C4wceEC8SXEnjifrGlC1A8QLHV91ekcwTmCq31fU1bZ/w5JAmJ06xMg1nCGJhIFJoZB2Mkrf8xRZzuwnvvcmRJdcz0er4Jj51Yh5Nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dwejM/Dv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebtI52bn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3C8C2BBFC;
-	Tue, 30 Apr 2024 11:07:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dwejM/Dv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED21CC2BBFC;
+	Tue, 30 Apr 2024 11:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475265;
-	bh=5MTYlhQGztHr/eoHoZEeNm/cSiRL/SIbfC0PBUV9qq8=;
+	s=korg; t=1714475269;
+	bh=j+SUTutyCciRHI+WUuS3GGR2RZ0zQ1YB8x+CaAdRjJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ebtI52bnoKoOlVbY+T5CyIAeNkNFrBRW97mFtbXpI9kXoaQ/UtkkO6O3Hte1O/Aio
-	 nu9eZw3PcWe8Fv5Z7hIVxcEPtgbYvRflyOoAVzuo++5qjQYu9BFhnVuTkcUVoCqNFb
-	 RV3p6ypZvVQgRKmdyAsITtX7Y9VrI4+/mK2c84og=
+	b=dwejM/DvcBkrpq5M7B99GWABL4K3Bd2YTtWYkZj4tyDO9wz7dK7kLD4PcHBN2PTSX
+	 fOJ745mNocfrFXCEcpzZ9fJCMiZa62ujiG5Tdssf1JlMxkBTdtbEOH58+OWW9GXDUs
+	 W0idrqkpI77ydu8KUskLVtMP3Y7JX0wCV5v++z38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Bauer <mail@david-bauer.net>,
-	"David S. Miller" <davem@davemloft.net>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 045/186] vxlan: drop packets from invalid src-address
-Date: Tue, 30 Apr 2024 12:38:17 +0200
-Message-ID: <20240430103059.339937793@linuxfoundation.org>
+Subject: [PATCH 6.6 046/186] net: bcmasp: fix memory leak when bringing down interface
+Date: Tue, 30 Apr 2024 12:38:18 +0200
+Message-ID: <20240430103059.368794743@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -52,50 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Bauer <mail@david-bauer.net>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit f58f45c1e5b92975e91754f5407250085a6ae7cf ]
+[ Upstream commit 9f898fc2c31fbf0ac5ecd289f528a716464cb005 ]
 
-The VXLAN driver currently does not check if the inner layer2
-source-address is valid.
+When bringing down the TX rings we flush the rings but forget to
+reclaimed the flushed packets. This leads to a memory leak since we
+do not free the dma mapped buffers. This also leads to tx control
+block corruption when bringing down the interface for power
+management.
 
-In case source-address snooping/learning is enabled, a entry in the FDB
-for the invalid address is created with the layer3 address of the tunnel
-endpoint.
-
-If the frame happens to have a non-unicast address set, all this
-non-unicast traffic is subsequently not flooded to the tunnel network
-but sent to the learnt host in the FDB. To make matters worse, this FDB
-entry does not expire.
-
-Apply the same filtering for packets as it is done for bridges. This not
-only drops these invalid packets but avoids them from being learnt into
-the FDB.
-
-Fixes: d342894c5d2f ("vxlan: virtual extensible lan")
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: David Bauer <mail@david-bauer.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240418180541.2271719-1-justin.chen@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../net/ethernet/broadcom/asp2/bcmasp_intf.c  | 21 ++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 99ede13124194..ecdf0276004f9 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -1615,6 +1615,10 @@ static bool vxlan_set_mac(struct vxlan_dev *vxlan,
- 	if (ether_addr_equal(eth_hdr(skb)->h_source, vxlan->dev->dev_addr))
- 		return false;
+diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
+index b3d04f49f77e9..6bf149d645941 100644
+--- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
++++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
+@@ -435,10 +435,8 @@ static void umac_init(struct bcmasp_intf *intf)
+ 	umac_wl(intf, 0x800, UMC_RX_MAX_PKT_SZ);
+ }
  
-+	/* Ignore packets from invalid src-address */
-+	if (!is_valid_ether_addr(eth_hdr(skb)->h_source))
-+		return false;
+-static int bcmasp_tx_poll(struct napi_struct *napi, int budget)
++static int bcmasp_tx_reclaim(struct bcmasp_intf *intf)
+ {
+-	struct bcmasp_intf *intf =
+-		container_of(napi, struct bcmasp_intf, tx_napi);
+ 	struct bcmasp_intf_stats64 *stats = &intf->stats64;
+ 	struct device *kdev = &intf->parent->pdev->dev;
+ 	unsigned long read, released = 0;
+@@ -481,10 +479,16 @@ static int bcmasp_tx_poll(struct napi_struct *napi, int budget)
+ 							DESC_RING_COUNT);
+ 	}
+ 
+-	/* Ensure all descriptors have been written to DRAM for the hardware
+-	 * to see updated contents.
+-	 */
+-	wmb();
++	return released;
++}
 +
- 	/* Get address from the outer IP header */
- 	if (vxlan_get_sk_family(vs) == AF_INET) {
- 		saddr.sin.sin_addr.s_addr = ip_hdr(skb)->saddr;
++static int bcmasp_tx_poll(struct napi_struct *napi, int budget)
++{
++	struct bcmasp_intf *intf =
++		container_of(napi, struct bcmasp_intf, tx_napi);
++	int released = 0;
++
++	released = bcmasp_tx_reclaim(intf);
+ 
+ 	napi_complete(&intf->tx_napi);
+ 
+@@ -794,6 +798,7 @@ static int bcmasp_init_tx(struct bcmasp_intf *intf)
+ 
+ 	intf->tx_spb_index = 0;
+ 	intf->tx_spb_clean_index = 0;
++	memset(intf->tx_cbs, 0, sizeof(struct bcmasp_tx_cb) * DESC_RING_COUNT);
+ 
+ 	netif_napi_add_tx(intf->ndev, &intf->tx_napi, bcmasp_tx_poll);
+ 
+@@ -904,6 +909,8 @@ static void bcmasp_netif_deinit(struct net_device *dev)
+ 	} while (timeout-- > 0);
+ 	tx_spb_dma_wl(intf, 0x0, TX_SPB_DMA_FIFO_CTRL);
+ 
++	bcmasp_tx_reclaim(intf);
++
+ 	umac_enable_set(intf, UMC_CMD_TX_EN, 0);
+ 
+ 	phy_stop(dev->phydev);
 -- 
 2.43.0
 
