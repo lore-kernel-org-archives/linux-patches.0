@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E9C8801;
-	Tue, 30 Apr 2024 11:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD6012C47A;
+	Tue, 30 Apr 2024 11:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475474; cv=none; b=ti/f/hhmH/2HctzlCkofxeGamNMKj214GMtv4A9e/Lv4gI8Sv2ao+e+62hwYPaYbROcbUftHs2vTLTWyXTfVLgMQbW7vbxhwLPl8YzL1dKF2uiwMokdaXctpHGoTMOnZX0CIG9S1zk+Eroen78FrmWbzfIUonVPV6aOjXT6fNpc=
+	t=1714475477; cv=none; b=e7JC5mCryvYMIjYuScbDj6HxLICTiDCWtl0Pc/6qFOWyB9Z6cUNTPex4etatfHCWb/Watju0BNcT0veyro/qxsx+0FjOQv5QeaH7jy7LzfIG6spexme4AU7BaTi7GmY993iNidOtwHGXZq6WShBYCvQhiVKK6XRgWvnzfX4KTvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475474; c=relaxed/simple;
-	bh=l7hJm2E4iu4K7FZ9J+qI87juqw7S3rnOTKYdo9QzluU=;
+	s=arc-20240116; t=1714475477; c=relaxed/simple;
+	bh=WtF8LeylarSCf7ltqtkUCLRqTHVPKUJeSc94Yxd3LR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AovozSBLDlvgjqCxO8BmknfvAcRveyoo3MWHYSlTIp16tPoyjYJekxPguac5OI4LmZgEiW+rnUQpvU02+XOt2MczTb502MzC4aJSahy9qac5yCWAXO+G1zYmUST6rP0YX+FdUSjeUTZbTLMYkL7BCMMcT+F1EFMTXqyk3Dc28eY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOIc4qOU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tM3eI8Rmr82j9UNNtPF1tuwvQIZQDTfegIn2qX1Ksz/LYkygujEKRqRq/K9ahpDfFwPMXi/lR9HUjoD+gbY8baLIRHQkimWjJJOVjoU2vWlizTrR1aiaDLSN6nrkRu1BW+AMG7pwi599fJOYrqE5M3b7Mfgt4L8EoCIfWUst0lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=waE8vY8y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOIc4qOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9395C2BBFC;
-	Tue, 30 Apr 2024 11:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="waE8vY8y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122C3C2BBFC;
+	Tue, 30 Apr 2024 11:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475474;
-	bh=l7hJm2E4iu4K7FZ9J+qI87juqw7S3rnOTKYdo9QzluU=;
+	s=korg; t=1714475477;
+	bh=WtF8LeylarSCf7ltqtkUCLRqTHVPKUJeSc94Yxd3LR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOIc4qOUUYC4q6PcI1XrZsrUPbjqN/aepWhKUGmpyi0loue57nAPkhIYgQArCvUE9
-	 djqiIP6i8e7NTBMurN25Ucj2KD0x4m6WEqV6uzi+bay9EdeiLYQAeAxCHUrgSAm9zf
-	 Q84jWNAZK50oW8PE42nP91JwKy0cAyTftt3OXAAk=
+	b=waE8vY8ycHZT0h4j4Y4vZQzVmrt08miEptwexB6bM/xfswflIpDRx3wfzJswav843
+	 Dlw6gIO6bEjL7aobTEzuZeMKQa4I5SohPZMPCuUWjMoS137FRHkOoGXac1gNBnk+0U
+	 m9QWeJ/833T/L1X/vHpXQ14KXVAedSpXNv5312b0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	"Ubisectech Sirius" <bugreport@ubisectech.com>,
 	Christian Brauner <brauner@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/186] squashfs: convert to new timestamp accessors
-Date: Tue, 30 Apr 2024 12:39:17 +0200
-Message-ID: <20240430103101.082843463@linuxfoundation.org>
+Subject: [PATCH 6.6 106/186] Squashfs: check the inode number is not the invalid value of zero
+Date: Tue, 30 Apr 2024 12:39:18 +0200
+Message-ID: <20240430103101.111709753@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -51,38 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Phillip Lougher <phillip@squashfs.org.uk>
 
-[ Upstream commit a1f13ed8c74893ed31d41c5bca156a623b0e9a86 ]
+[ Upstream commit 9253c54e01b6505d348afbc02abaa4d9f8a01395 ]
 
-Convert to using the new inode timestamp accessor functions.
+Syskiller has produced an out of bounds access in fill_meta_index().
 
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://lore.kernel.org/r/20231004185347.80880-68-jlayton@kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 9253c54e01b6 ("Squashfs: check the inode number is not the invalid value of zero")
+That out of bounds access is ultimately caused because the inode
+has an inode number with the invalid value of zero, which was not checked.
+
+The reason this causes the out of bounds access is due to following
+sequence of events:
+
+1. Fill_meta_index() is called to allocate (via empty_meta_index())
+   and fill a metadata index.  It however suffers a data read error
+   and aborts, invalidating the newly returned empty metadata index.
+   It does this by setting the inode number of the index to zero,
+   which means unused (zero is not a valid inode number).
+
+2. When fill_meta_index() is subsequently called again on another
+   read operation, locate_meta_index() returns the previous index
+   because it matches the inode number of 0.  Because this index
+   has been returned it is expected to have been filled, and because
+   it hasn't been, an out of bounds access is performed.
+
+This patch adds a sanity check which checks that the inode number
+is not zero when the inode is created and returns -EINVAL if it is.
+
+[phillip@squashfs.org.uk: whitespace fix]
+  Link: https://lkml.kernel.org/r/20240409204723.446925-1-phillip@squashfs.org.uk
+Link: https://lkml.kernel.org/r/20240408220206.435788-1-phillip@squashfs.org.uk
+Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
+Reported-by: "Ubisectech Sirius" <bugreport@ubisectech.com>
+Closes: https://lore.kernel.org/lkml/87f5c007-b8a5-41ae-8b57-431e924c5915.bugreport@ubisectech.com/
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/squashfs/inode.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/squashfs/inode.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/fs/squashfs/inode.c b/fs/squashfs/inode.c
-index c6e626b00546b..aa3411354e66d 100644
+index aa3411354e66d..16bd693d0b3aa 100644
 --- a/fs/squashfs/inode.c
 +++ b/fs/squashfs/inode.c
-@@ -59,9 +59,9 @@ static int squashfs_new_inode(struct super_block *sb, struct inode *inode,
+@@ -48,6 +48,10 @@ static int squashfs_new_inode(struct super_block *sb, struct inode *inode,
+ 	gid_t i_gid;
+ 	int err;
+ 
++	inode->i_ino = le32_to_cpu(sqsh_ino->inode_number);
++	if (inode->i_ino == 0)
++		return -EINVAL;
++
+ 	err = squashfs_get_id(sb, le16_to_cpu(sqsh_ino->uid), &i_uid);
+ 	if (err)
+ 		return err;
+@@ -58,7 +62,6 @@ static int squashfs_new_inode(struct super_block *sb, struct inode *inode,
+ 
  	i_uid_write(inode, i_uid);
  	i_gid_write(inode, i_gid);
- 	inode->i_ino = le32_to_cpu(sqsh_ino->inode_number);
--	inode->i_mtime.tv_sec = le32_to_cpu(sqsh_ino->mtime);
--	inode->i_atime.tv_sec = inode->i_mtime.tv_sec;
--	inode_set_ctime(inode, inode->i_mtime.tv_sec, 0);
-+	inode_set_mtime(inode, le32_to_cpu(sqsh_ino->mtime), 0);
-+	inode_set_atime(inode, inode_get_mtime_sec(inode), 0);
-+	inode_set_ctime(inode, inode_get_mtime_sec(inode), 0);
- 	inode->i_mode = le16_to_cpu(sqsh_ino->mode);
- 	inode->i_size = 0;
- 
+-	inode->i_ino = le32_to_cpu(sqsh_ino->inode_number);
+ 	inode_set_mtime(inode, le32_to_cpu(sqsh_ino->mtime), 0);
+ 	inode_set_atime(inode, inode_get_mtime_sec(inode), 0);
+ 	inode_set_ctime(inode, inode_get_mtime_sec(inode), 0);
 -- 
 2.43.0
 
