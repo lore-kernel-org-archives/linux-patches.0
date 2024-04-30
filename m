@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCDE8801;
-	Tue, 30 Apr 2024 11:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E397B8801;
+	Tue, 30 Apr 2024 11:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476187; cv=none; b=gvd9MH9W34Sop6rilDBmOq+b8rqmvYo9E4uHIQXkdc1ehgRUyaEM7+XxWpjwyB+IqdlJX5BOOP0Uw7N69UyZrycR2U3DoYAZe63PjdHOI3tJvCCJ+ESRpCitbWowNSubGnb1zP5Bj43FGvpSJuiZtIMe+zZdwxKN0qoDBELGWFY=
+	t=1714476191; cv=none; b=ZyPhFk4rvzJ57v452fAA0SowqioMxS6rKhCm4Cb5NLRsbsrCfU1H72d1AA2NdHU+keurK6f6+6WiehYHyyt60y+k3SG7ewnuxSazIaaEUTQPc7HowWQvuZcQSG/az6SBUGhBdd6t4Up/QgZpiHORSKcX8TUILMl1Z3hN3y6qvtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476187; c=relaxed/simple;
-	bh=/fs1jtg+XMVc6t5YkVGCLTRChYOWzRvZ6XNerhl76fE=;
+	s=arc-20240116; t=1714476191; c=relaxed/simple;
+	bh=3k9CdTI/8OVdl52+BaJCE8aHJlrXvaKWJOQ/S5QkmBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e5OiQSKzUr+/YaSMs9h9Z2S9Vc3dhg7IOaC3gBGqDo9pLgaAvaDFJZZbzwqfy4jFhqqLd9ij2gmxdDzAoXL0tFqClUV5igPkftmJNSAuSazLdPzxA1mujTdhLxkNWGN2wl7DEbncDz9MN28dM8UpMcIGy6whjNNIrq6Afx7ZdRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eAbNxeSD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oN1toqxikieGCDG2pjeGXm0arg1LBSQBMDqHal1e6js81q+La2EI9XibSoWafQ9GHUWOYd1icXQhF+oB7xw2qZbyrAlyXnCR1AmyZJJF4yS9RDOEJq1fuMdjmE2V8cYDt8biZkDJzfv+OalLNCpCNHNbbZnjtrPlzFyBfyHcD9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=caWMEO/d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eAbNxeSD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D050C4AF1A;
-	Tue, 30 Apr 2024 11:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="caWMEO/d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FC8C2BBFC;
+	Tue, 30 Apr 2024 11:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476187;
-	bh=/fs1jtg+XMVc6t5YkVGCLTRChYOWzRvZ6XNerhl76fE=;
+	s=korg; t=1714476190;
+	bh=3k9CdTI/8OVdl52+BaJCE8aHJlrXvaKWJOQ/S5QkmBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eAbNxeSD4nPWCLpQG4V79LrjtwisPtTRDY1pZFLT2llS6qeVlaX+RnoGrTyDK1PYa
-	 nh3mRwPfepwQDlNkDVAuOlgJ4fXuIwQLVrYc2/p4dvd9X1VFKilaDYsr+sRDzNxRoZ
-	 JbZmWLoK/Xj9qW8QWGgRd0FXviuN3MuDSHZKM2iE=
+	b=caWMEO/dJ60ZtPKXsxwt7JOzseW+zRxGYXyBXdL0ZGo59O1ZlmA3fUSt7vXovJTI5
+	 oJQBKQ0mWreaApkh5InHAu5hHGcTPNB3XiLDoWZsiyNIDTnXNJYcz3jTWeWXgB+I3u
+	 T4crvWIYAm2tCWWZdY1s9Cole88Il4KOH/HC6V5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jiri Pirko <jiri@resnulli.us>,
+	Amit Cohen <amcohen@nvidia.com>,
 	Ido Schimmel <idosch@nvidia.com>,
-	David Bauer <mail@david-bauer.net>,
-	"David S. Miller" <davem@davemloft.net>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 061/107] vxlan: drop packets from invalid src-address
-Date: Tue, 30 Apr 2024 12:40:21 +0200
-Message-ID: <20240430103046.456825241@linuxfoundation.org>
+Subject: [PATCH 5.4 062/107] mlxsw: core: Unregister EMAD trap using FORWARD action
+Date: Tue, 30 Apr 2024 12:40:22 +0200
+Message-ID: <20240430103046.486478356@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -52,50 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Bauer <mail@david-bauer.net>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit f58f45c1e5b92975e91754f5407250085a6ae7cf ]
+[ Upstream commit 976c44af48141cd8595601c0af2a19a43c5b228b ]
 
-The VXLAN driver currently does not check if the inner layer2
-source-address is valid.
+The device's manual (PRM - Programmer's Reference Manual) classifies the
+trap that is used to deliver EMAD responses as an "event trap". Among
+other things, it means that the only actions that can be associated with
+the trap are TRAP and FORWARD (NOP).
 
-In case source-address snooping/learning is enabled, a entry in the FDB
-for the invalid address is created with the layer3 address of the tunnel
-endpoint.
+Currently, during driver de-initialization the driver unregisters the
+trap by setting its action to DISCARD, which violates the above
+guideline. Future firmware versions will prevent such misuses by
+returning an error. This does not prevent the driver from working, but
+an error will be printed to the kernel log during module removal /
+devlink reload:
 
-If the frame happens to have a non-unicast address set, all this
-non-unicast traffic is subsequently not flooded to the tunnel network
-but sent to the learnt host in the FDB. To make matters worse, this FDB
-entry does not expire.
+mlxsw_spectrum 0000:03:00.0: Reg cmd access status failed (status=7(bad parameter))
+mlxsw_spectrum 0000:03:00.0: Reg cmd access failed (reg_id=7003(hpkt),type=write)
 
-Apply the same filtering for packets as it is done for bridges. This not
-only drops these invalid packets but avoids them from being learnt into
-the FDB.
+Suppress the error message by aligning the driver to the manual and use
+a FORWARD (NOP) action when unregistering the trap.
 
-Fixes: d342894c5d2f ("vxlan: virtual extensible lan")
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: David Bauer <mail@david-bauer.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 4ec14b7634b2 ("mlxsw: Add interface to access registers and process events")
+Cc: Jiri Pirko <jiri@resnulli.us>
+Cc: Amit Cohen <amcohen@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Link: https://lore.kernel.org/r/753a89e14008fde08cb4a2c1e5f537b81d8eb2d6.1713446092.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/mellanox/mlxsw/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/vxlan.c b/drivers/net/vxlan.c
-index 8808a6540b190..f70500c85e2a2 100644
---- a/drivers/net/vxlan.c
-+++ b/drivers/net/vxlan.c
-@@ -1605,6 +1605,10 @@ static bool vxlan_set_mac(struct vxlan_dev *vxlan,
- 	if (ether_addr_equal(eth_hdr(skb)->h_source, vxlan->dev->dev_addr))
- 		return false;
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/core.c b/drivers/net/ethernet/mellanox/mlxsw/core.c
+index 2d39bade89e33..bb9299481b45b 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/core.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/core.c
+@@ -566,7 +566,7 @@ static void mlxsw_emad_rx_listener_func(struct sk_buff *skb, u8 local_port,
  
-+	/* Ignore packets from invalid src-address */
-+	if (!is_valid_ether_addr(eth_hdr(skb)->h_source))
-+		return false;
-+
- 	/* Get address from the outer IP header */
- 	if (vxlan_get_sk_family(vs) == AF_INET) {
- 		saddr.sin.sin_addr.s_addr = ip_hdr(skb)->saddr;
+ static const struct mlxsw_listener mlxsw_emad_rx_listener =
+ 	MLXSW_RXL(mlxsw_emad_rx_listener_func, ETHEMAD, TRAP_TO_CPU, false,
+-		  EMAD, DISCARD);
++		  EMAD, FORWARD);
+ 
+ static int mlxsw_emad_init(struct mlxsw_core *mlxsw_core)
+ {
 -- 
 2.43.0
 
