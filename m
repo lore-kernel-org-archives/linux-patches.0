@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCBB8801;
-	Tue, 30 Apr 2024 11:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83F78801;
+	Tue, 30 Apr 2024 11:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475803; cv=none; b=fYs91abWyHSjK8pc2Nwlo0J0HYvs85jPLrVKX39mCzJH9/EpH0+vpFMiRrIrujCFfnlIXzQfSsSB+gSKy0gFe0pFH6hxf0T+lPaRpTEBftUAMTNzpgsqsSt/Sdeu6zsw98UqeorkowIoLAoJUSmUinfLvuFcgKg/550Q8ctUwGY=
+	t=1714475807; cv=none; b=l2mM6yN/I4HJsesXMf+bwFZD2k/qMEah98OqpW8Db2iDy8q0w1S958zGfJL7PJCXoNNOO4poRfXs1Xu0GK24Jv4O84hEjTHdIjjJQ7APauY//+R2iKT0ul8KgNR4kkmeYy5KuRHSCvZdc2G26m87RyBDQEiM5c5+r4WVRjrpGLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475803; c=relaxed/simple;
-	bh=bTEtPEJVnqx+nBkhu3BKb0Esep3lmNxfeKgk94vowHE=;
+	s=arc-20240116; t=1714475807; c=relaxed/simple;
+	bh=ehIWqThAQzhCcCGHbHtKC78Q9xhaZfkgCwE725AIKF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=naknpWIHARZCHrlpL3FVtSo+Gdse44tgy3XdEefRIWH8V+f+iP5nVoAU71UI/vhkn5hopTSsxN2jBcIO8IPlXRPtBpwzChPDhmuUi9NMG7lJ7vBjPJAZHVcqwkmUf6c0GdLcPXPCXlDDJ4goU7zjMjjYtgBiYxJB4U/Jvq0U+Gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kcq6FGh2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GU9Y8TjsnserKyVYfqgHJD1QK/H/2wVrTdNC4Wa1ScCxF21YvE0g5FazNHMMz28BJlKz/pX0/hCuS4vx27pgQhnqmBS6h6Fg+Pbsg9rBpIPQ97nBE97gomj6+Htp2lcqMc4D2kpuDq8aY1FOnDNrtyitMaQ3fE18waVWx5A18Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwB6FDBT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kcq6FGh2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D7EC2BBFC;
-	Tue, 30 Apr 2024 11:16:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwB6FDBT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E112C2BBFC;
+	Tue, 30 Apr 2024 11:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475802;
-	bh=bTEtPEJVnqx+nBkhu3BKb0Esep3lmNxfeKgk94vowHE=;
+	s=korg; t=1714475806;
+	bh=ehIWqThAQzhCcCGHbHtKC78Q9xhaZfkgCwE725AIKF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kcq6FGh2UcSsF4ZlLT+dbNelexzjKzCcmY+fe0ukQ7U0j3y/OfvtzTQqbFRI0Rr3x
-	 G3Q5K1wFKUctnf8Cvcbo+9GsHfMj9+SS9QEMs2z6wuEumWb2X2Pwwryqs8K6413Yl3
-	 4yqXBxxmjYkOalh2Ehc8jmiW3yi6lu6gHocCyPGw=
+	b=QwB6FDBTzWquL2HfpxTFL7cqoA2VCM3PZZOTzFwfR+u9AFkgBbwEDHHqFli63JB72
+	 LscqYpB2p5sWBZta+rmTLl2piJ8jW9DtoNw/vXrHyx63R2AlsIEd8qCTgA+XNncgj8
+	 Ze6sMSMT1oZW/iVxB6ZGprbDsxVotmHYl7gSU1C4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Andreas Roeseler <andreas.a.roeseler@gmail.com>,
-	David Ahern <dsahern@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 22/80] icmp: prevent possible NULL dereferences from icmp_build_probe()
-Date: Tue, 30 Apr 2024 12:39:54 +0200
-Message-ID: <20240430103044.071126150@linuxfoundation.org>
+Subject: [PATCH 5.15 23/80] bridge/br_netlink.c: no need to return void function
+Date: Tue, 30 Apr 2024 12:39:55 +0200
+Message-ID: <20240430103044.101067543@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -53,72 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit c58e88d49097bd12dfcfef4f075b43f5d5830941 ]
+[ Upstream commit 4fd1edcdf13c0d234543ecf502092be65c5177db ]
 
-First problem is a double call to __in_dev_get_rcu(), because
-the second one could return NULL.
+br_info_notify is a void function. There is no need to return.
 
-if (__in_dev_get_rcu(dev) && __in_dev_get_rcu(dev)->ifa_list)
-
-Second problem is a read from dev->ip6_ptr with no NULL check:
-
-if (!list_empty(&rcu_dereference(dev->ip6_ptr)->addr_list))
-
-Use the correct RCU API to fix these.
-
-v2: add missing include <net/addrconf.h>
-
-Fixes: d329ea5bd884 ("icmp: add response to RFC 8335 PROBE messages")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Andreas Roeseler <andreas.a.roeseler@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
+Fixes: b6d0425b816e ("bridge: cfm: Netlink Notifications.")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/icmp.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ net/bridge/br_netlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
-index 7b749a98327c2..38b30f6790294 100644
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -92,6 +92,7 @@
- #include <net/inet_common.h>
- #include <net/ip_fib.h>
- #include <net/l3mdev.h>
-+#include <net/addrconf.h>
+diff --git a/net/bridge/br_netlink.c b/net/bridge/br_netlink.c
+index e365cf82f0615..a1a703b7d5235 100644
+--- a/net/bridge/br_netlink.c
++++ b/net/bridge/br_netlink.c
+@@ -619,7 +619,7 @@ void br_ifinfo_notify(int event, const struct net_bridge *br,
+ {
+ 	u32 filter = RTEXT_FILTER_BRVLAN_COMPRESSED;
+ 
+-	return br_info_notify(event, br, port, filter);
++	br_info_notify(event, br, port, filter);
+ }
  
  /*
-  *	Build xmit assembly blocks
-@@ -1035,6 +1036,8 @@ bool icmp_build_probe(struct sk_buff *skb, struct icmphdr *icmphdr)
- 	struct icmp_ext_hdr *ext_hdr, _ext_hdr;
- 	struct icmp_ext_echo_iio *iio, _iio;
- 	struct net *net = dev_net(skb->dev);
-+	struct inet6_dev *in6_dev;
-+	struct in_device *in_dev;
- 	struct net_device *dev;
- 	char buff[IFNAMSIZ];
- 	u16 ident_len;
-@@ -1118,10 +1121,15 @@ bool icmp_build_probe(struct sk_buff *skb, struct icmphdr *icmphdr)
- 	/* Fill bits in reply message */
- 	if (dev->flags & IFF_UP)
- 		status |= ICMP_EXT_ECHOREPLY_ACTIVE;
--	if (__in_dev_get_rcu(dev) && __in_dev_get_rcu(dev)->ifa_list)
-+
-+	in_dev = __in_dev_get_rcu(dev);
-+	if (in_dev && rcu_access_pointer(in_dev->ifa_list))
- 		status |= ICMP_EXT_ECHOREPLY_IPV4;
--	if (!list_empty(&rcu_dereference(dev->ip6_ptr)->addr_list))
-+
-+	in6_dev = __in6_dev_get(dev);
-+	if (in6_dev && !list_empty(&in6_dev->addr_list))
- 		status |= ICMP_EXT_ECHOREPLY_IPV6;
-+
- 	dev_put(dev);
- 	icmphdr->un.echo.sequence |= htons(status);
- 	return true;
 -- 
 2.43.0
 
