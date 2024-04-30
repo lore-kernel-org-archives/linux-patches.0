@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687EF8801;
-	Tue, 30 Apr 2024 11:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C198801;
+	Tue, 30 Apr 2024 11:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476005; cv=none; b=psKU3iAyLjELdEXiHv9CoO2VhlKD3sycpe6mpXzuBNPxDePKni5CYJMRtGABhns3weow9fON8fvilKJoMsn3nymyVxEmr3VhgUSVkmm9aUVbi7+8dn3r6G+BLW5eClQIbMCWpL0WeryBMNNF+pUQIz1EEtH/UkwF2hT79smJh24=
+	t=1714476008; cv=none; b=jgU5/kfjkedGfPrRh+ZzaQAu44U23hwvkxFFLarqWU0qD3Ngljg7Id2hXvSNKOZM+5xFuyZ8RHjT+S0vFCd9ttPjpI5qeHpm1+b8v9wEs2IWsvoHNKsfnIaKJPzOfH/pg/LiPxnl31CzNk2xHgfkbDSv/ePqo2HFd0H9L3VTnHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476005; c=relaxed/simple;
-	bh=jdrLYYb2pPU/uE5/TRPWVEZjHf5LtJzyzlGsQpwBlu8=;
+	s=arc-20240116; t=1714476008; c=relaxed/simple;
+	bh=GdLeS1Ssq7m2y6Yyl5v7Q3k/wa9oXVpQ3HEfM1Qkr9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IsUFW3YwkXqp8p/N8zCDkg19M6m6vz2cGc9JRqgoQxd763X55f66/5+QFTZ0kZg+qfhWL7pHViEExTGJ0LdJdg1si0tpg6SY6VJiGkNe87eqE7WAvuchGbySXwsQuMdhVHn7yhvCIhFf6y+ZRvQUySsIInpZw8UCWlzqgyOr2EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLMTrAlZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pXirf5RjMFWQYJTOc8VTZdDxbHVE5bxdQX7864hvU6Y+1nNwGecjVh7Qv4Yibzg8aiaQGwm6tMKThsCtM6KMvaMxeJ16ADKRQTeS46YkXL/j8andnzgtARY4eqtO3AOhsTsBY+h87f8LBylpSkKMIaxPHemO/JrND6VGXf7P8bY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUuPJV2x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLMTrAlZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFA6CC2BBFC;
-	Tue, 30 Apr 2024 11:20:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUuPJV2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5F7C2BBFC;
+	Tue, 30 Apr 2024 11:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476005;
-	bh=jdrLYYb2pPU/uE5/TRPWVEZjHf5LtJzyzlGsQpwBlu8=;
+	s=korg; t=1714476008;
+	bh=GdLeS1Ssq7m2y6Yyl5v7Q3k/wa9oXVpQ3HEfM1Qkr9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eLMTrAlZS3eN2jlmKQm0TAT3c5GMi0IK93YElgUBeXhHXWCPzoiniGDfJo/LehJ6c
-	 80sqhg05iUNSsUICFE7QQtX0t+C8N/v2Z57IGKkhWSdfcIFAF6x/CLsqyxjQI75uYu
-	 jognZ1/8EQOtj8zWFuBN7sIJrWNdpgJ9iT1l37RM=
+	b=IUuPJV2xJF7TvxjUJobfS/J3Hn7z/96YXiVrLlazk23yz6rqmrPexX/lbYXeR71v6
+	 MhYgeZLrecIf1/3U9KcXxV/9D1ljsBkKoT/jhxYvWj9wOB1rJjSIIykKF1BLOco/44
+	 Oc5AGFfKBemQxjY9C23SuhZzqOMrb53POby5u5OI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Nam Cao <namcao@linutronix.de>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 5.15 76/80] fbdev: fix incorrect address computation in deferred IO
-Date: Tue, 30 Apr 2024 12:40:48 +0200
-Message-ID: <20240430103045.656528789@linuxfoundation.org>
+	Jiri Kosina <jkosina@suse.com>,
+	Eva Kurchatova <nyandarknessgirl@gmail.com>
+Subject: [PATCH 5.15 77/80] HID: i2c-hid: remove I2C_HID_READ_PENDING flag to prevent lock-up
+Date: Tue, 30 Apr 2024 12:40:49 +0200
+Message-ID: <20240430103045.685119702@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -53,55 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Nam Cao <namcao@linutronix.de>
 
-commit 78d9161d2bcd442d93d917339297ffa057dbee8c upstream.
+commit 9c0f59e47a90c54d0153f8ddc0f80d7a36207d0e upstream.
 
-With deferred IO enabled, a page fault happens when data is written to the
-framebuffer device. Then driver determines which page is being updated by
-calculating the offset of the written virtual address within the virtual
-memory area, and uses this offset to get the updated page within the
-internal buffer. This page is later copied to hardware (thus the name
-"deferred IO").
+The flag I2C_HID_READ_PENDING is used to serialize I2C operations.
+However, this is not necessary, because I2C core already has its own
+locking for that.
 
-This offset calculation is only correct if the virtual memory area is
-mapped to the beginning of the internal buffer. Otherwise this is wrong.
-For example, if users do:
-    mmap(ptr, 4096, PROT_WRITE, MAP_FIXED | MAP_SHARED, fd, 0xff000);
+More importantly, this flag can cause a lock-up: if the flag is set in
+i2c_hid_xfer() and an interrupt happens, the interrupt handler
+(i2c_hid_irq) will check this flag and return immediately without doing
+anything, then the interrupt handler will be invoked again in an
+infinite loop.
 
-Then the virtual memory area will mapped at offset 0xff000 within the
-internal buffer. This offset 0xff000 is not accounted for, and wrong page
-is updated.
+Since interrupt handler is an RT task, it takes over the CPU and the
+flag-clearing task never gets scheduled, thus we have a lock-up.
 
-Correct the calculation by using vmf->pgoff instead. With this change, the
-variable "offset" will no longer hold the exact offset value, but it is
-rounded down to multiples of PAGE_SIZE. But this is still correct, because
-this variable is only used to calculate the page offset.
+Delete this unnecessary flag.
 
-Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Closes: https://lore.kernel.org/linux-fbdev/271372d6-e665-4e7f-b088-dee5f4ab341a@oracle.com
-Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
+Reported-and-tested-by: Eva Kurchatova <nyandarknessgirl@gmail.com>
+Closes: https://lore.kernel.org/r/CA+eeCSPUDpUg76ZO8dszSbAGn+UHjcyv8F1J-CUPVARAzEtW9w@mail.gmail.com
+Fixes: 4a200c3b9a40 ("HID: i2c-hid: introduce HID over i2c specification implementation")
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Nam Cao <namcao@linutronix.de>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240423115053.4490-1-namcao@linutronix.de
-[rebase to v5.15]
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+[apply to v4.19 -> v5.15]
 Signed-off-by: Nam Cao <namcao@linutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fb_defio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/i2c-hid/i2c-hid-core.c |    8 --------
+ 1 file changed, 8 deletions(-)
 
---- a/drivers/video/fbdev/core/fb_defio.c
-+++ b/drivers/video/fbdev/core/fb_defio.c
-@@ -149,7 +149,7 @@ static vm_fault_t fb_deferred_io_mkwrite
- 	unsigned long offset;
- 	vm_fault_t ret;
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -51,7 +51,6 @@
+ /* flags */
+ #define I2C_HID_STARTED		0
+ #define I2C_HID_RESET_PENDING	1
+-#define I2C_HID_READ_PENDING	2
  
--	offset = (vmf->address - vmf->vma->vm_start);
-+	offset = vmf->pgoff << PAGE_SHIFT;
+ #define I2C_HID_PWR_ON		0x00
+ #define I2C_HID_PWR_SLEEP	0x01
+@@ -251,7 +250,6 @@ static int __i2c_hid_command(struct i2c_
+ 		msg[1].len = data_len;
+ 		msg[1].buf = buf_recv;
+ 		msg_num = 2;
+-		set_bit(I2C_HID_READ_PENDING, &ihid->flags);
+ 	}
  
- 	/* this is a callback we get when userspace first tries to
- 	write to the page. we schedule a workqueue. that workqueue
+ 	if (wait)
+@@ -259,9 +257,6 @@ static int __i2c_hid_command(struct i2c_
+ 
+ 	ret = i2c_transfer(client->adapter, msg, msg_num);
+ 
+-	if (data_len > 0)
+-		clear_bit(I2C_HID_READ_PENDING, &ihid->flags);
+-
+ 	if (ret != msg_num)
+ 		return ret < 0 ? ret : -EIO;
+ 
+@@ -533,9 +528,6 @@ static irqreturn_t i2c_hid_irq(int irq,
+ {
+ 	struct i2c_hid *ihid = dev_id;
+ 
+-	if (test_bit(I2C_HID_READ_PENDING, &ihid->flags))
+-		return IRQ_HANDLED;
+-
+ 	i2c_hid_get_input(ihid);
+ 
+ 	return IRQ_HANDLED;
 
 
