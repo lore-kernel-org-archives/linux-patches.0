@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA1D17592;
-	Tue, 30 Apr 2024 11:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4507717592;
+	Tue, 30 Apr 2024 11:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476461; cv=none; b=Q1DQktP4kopZysPWr9Bv1VaTqzpbThJl9RxpPiCmy7YVQTaJEC6bbE+HGRrU0pNkRrtl4tC/n9qPfZNSy0Xld4R3f9/HmKAyEjY1E4IiR3Bji59IhQm2VvhtrS8jSxqEba7q6ImeH50ll+lUHbzEjP5ZIBzwdt2K7wFgdYaPNVg=
+	t=1714476464; cv=none; b=qH/A2tPuNdT9OfE/sh3NyEFr5AYgrOSYIVTlgNEhOPjvywGNgG+jxt0QB4OeOO/gGwXFQl8j7mcejdgJ1PZj4xKJmwrGqmF/FAzQSSHzRsduT+L9Df3yCPpDgQpoEisefrORI+GRzoUwXDRJzK92m69vQOj+ON7k/6/Ys40MS7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476461; c=relaxed/simple;
-	bh=Yr9paaAySumC4hTejCvu+xO4Mq+qKDpPsIga0E87Vhg=;
+	s=arc-20240116; t=1714476464; c=relaxed/simple;
+	bh=PbTv/EFG0/qtQCfRg9a1UCjuqRBJ0K/yIe5IwJz6vXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HIBgTVga1+6OObmI+ApwA7IjQWPcMyZR61q6oHp0CpdQJ7TPgOHWyA3HZi3Ki4KnR+sql71Ofody546Rh30O9A+8I+MZUSw3GEIBw0/yiOhT2YhXSBgzRXs5IDUAHXrtDkh0GZwJehTF2sjLwjCZRLKS2je+IPUzOeWvZULXzKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvMpbV71; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ig5bMCh9wbkWokkZAiEsJPeHFiR0NlyL+3oL/i6ynZEVD5Uvwes9rnO1S3pGFouY87EDUEpnlMMdUX9s7NOIKrErreXeg6jnseWd0qImBJLZr9yiOzcbcwNr5vh0hZEgmNv7k5gdGgGJx19vA92AZoKW3CKyIOKZbA35TSCuWMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHONzlL0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvMpbV71"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80FC2C2BBFC;
-	Tue, 30 Apr 2024 11:27:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHONzlL0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C290CC2BBFC;
+	Tue, 30 Apr 2024 11:27:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476461;
-	bh=Yr9paaAySumC4hTejCvu+xO4Mq+qKDpPsIga0E87Vhg=;
+	s=korg; t=1714476464;
+	bh=PbTv/EFG0/qtQCfRg9a1UCjuqRBJ0K/yIe5IwJz6vXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IvMpbV71i5bNJR9bC5iaUM6qLNgZ88fT2J8jMcFjJHzTStkbW9OHLPLXCOsn6k/X/
-	 9pmzsAMezJqoTbZ78lbPJlL3onLtG1GRI1NEsdn4V/jhOFFaYpsw9gEGNesxgyGfU0
-	 0FTNZXUHPz092X03Vv5lnguryPOh2I9ALYWbCEFY=
+	b=WHONzlL0ZfW+wNdzIpId/SAqYqv2/wrDLftjyN0LdS1Xl3JRSqYP4rXWyHdAzyWfA
+	 zTHU9LQgOOO/ScS82sPDIdD83bzQR+/gZdrKX7pfUS+JxjYmotqQ+xxj5MezN1vIny
+	 DagkRQ5nJGei89fJ/SKnIDBlDdgI++t2nM20xmew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/110] net: gtp: Fix Use-After-Free in gtp_dellink
-Date: Tue, 30 Apr 2024 12:40:07 +0200
-Message-ID: <20240430103048.692252642@linuxfoundation.org>
+Subject: [PATCH 6.1 039/110] Bluetooth: MGMT: Fix failing to MGMT_OP_ADD_UUID/MGMT_OP_REMOVE_UUID
+Date: Tue, 30 Apr 2024 12:40:08 +0200
+Message-ID: <20240430103048.721488480@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -52,44 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <v4bel@theori.io>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit f2a904107ee2b647bb7794a1a82b67740d7c8a64 ]
+[ Upstream commit 6eb5fcc416f127f220b9177a5c9ae751cac1cda8 ]
 
-Since call_rcu, which is called in the hlist_for_each_entry_rcu traversal
-of gtp_dellink, is not part of the RCU read critical section, it
-is possible that the RCU grace period will pass during the traversal and
-the key will be free.
+These commands don't require the adapter to be up and running so don't
+use hci_cmd_sync_queue which would check that flag, instead use
+hci_cmd_sync_submit which would ensure mgmt_class_complete is set
+properly regardless if any command was actually run or not.
 
-To prevent this, it should be changed to hlist_for_each_entry_safe.
-
-Fixes: 94dc550a5062 ("gtp: fix an use-after-free in ipv4_pdp_find()")
-Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://github.com/bluez/bluez/issues/809
+Fixes: d883a4669a1d ("Bluetooth: hci_sync: Only allow hci_cmd_sync_queue if running")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bluetooth/mgmt.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index 7086acfed5b90..05b5914d83582 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -1110,11 +1110,12 @@ static int gtp_newlink(struct net *src_net, struct net_device *dev,
- static void gtp_dellink(struct net_device *dev, struct list_head *head)
- {
- 	struct gtp_dev *gtp = netdev_priv(dev);
-+	struct hlist_node *next;
- 	struct pdp_ctx *pctx;
- 	int i;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 716f6dc4934b7..4f4b394370bf2 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -2680,7 +2680,11 @@ static int add_uuid(struct sock *sk, struct hci_dev *hdev, void *data, u16 len)
+ 		goto failed;
+ 	}
  
- 	for (i = 0; i < gtp->hash_size; i++)
--		hlist_for_each_entry_rcu(pctx, &gtp->tid_hash[i], hlist_tid)
-+		hlist_for_each_entry_safe(pctx, next, &gtp->tid_hash[i], hlist_tid)
- 			pdp_context_delete(pctx);
+-	err = hci_cmd_sync_queue(hdev, add_uuid_sync, cmd, mgmt_class_complete);
++	/* MGMT_OP_ADD_UUID don't require adapter the UP/Running so use
++	 * hci_cmd_sync_submit instead of hci_cmd_sync_queue.
++	 */
++	err = hci_cmd_sync_submit(hdev, add_uuid_sync, cmd,
++				  mgmt_class_complete);
+ 	if (err < 0) {
+ 		mgmt_pending_free(cmd);
+ 		goto failed;
+@@ -2774,8 +2778,11 @@ static int remove_uuid(struct sock *sk, struct hci_dev *hdev, void *data,
+ 		goto unlock;
+ 	}
  
- 	list_del_rcu(&gtp->list);
+-	err = hci_cmd_sync_queue(hdev, remove_uuid_sync, cmd,
+-				 mgmt_class_complete);
++	/* MGMT_OP_REMOVE_UUID don't require adapter the UP/Running so use
++	 * hci_cmd_sync_submit instead of hci_cmd_sync_queue.
++	 */
++	err = hci_cmd_sync_submit(hdev, remove_uuid_sync, cmd,
++				  mgmt_class_complete);
+ 	if (err < 0)
+ 		mgmt_pending_free(cmd);
+ 
+@@ -2841,8 +2848,11 @@ static int set_dev_class(struct sock *sk, struct hci_dev *hdev, void *data,
+ 		goto unlock;
+ 	}
+ 
+-	err = hci_cmd_sync_queue(hdev, set_class_sync, cmd,
+-				 mgmt_class_complete);
++	/* MGMT_OP_SET_DEV_CLASS don't require adapter the UP/Running so use
++	 * hci_cmd_sync_submit instead of hci_cmd_sync_queue.
++	 */
++	err = hci_cmd_sync_submit(hdev, set_class_sync, cmd,
++				  mgmt_class_complete);
+ 	if (err < 0)
+ 		mgmt_pending_free(cmd);
+ 
 -- 
 2.43.0
 
