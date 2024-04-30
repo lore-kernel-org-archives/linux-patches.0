@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4950512C819;
-	Tue, 30 Apr 2024 10:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5816812C80B;
+	Tue, 30 Apr 2024 10:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474317; cv=none; b=Nu7fOJVdvtegljn6UeLPaVKxjpmBHV1aU6mT9sdv+Kx3T8po3fxdLOkXcrazMlv8lLs7w8OM104g3wQTvFYWXOWWUTJcgn/G+N8TWuB7EAyU6BwSygOI7yE1eNTtQeswkj3AcjRavf+flxZdVVlsQmMSwurbfMI1UNh6e4eCiHM=
+	t=1714474320; cv=none; b=spPkBAPgsGWx5SCV3k0r9eo1yZXpoyUoT90KscSPPQzFV82ItfS0mAIG8QrFwn4Q22jhf0qKZDe5PPDcNeM/i6AFM8f4AwaQev9wOGSJMktQmA5pMQVfbL3JHgbvlbjkrXYkJESMk043viHOUdNd/o1pIUahgjwsxcPdSi2cVoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474317; c=relaxed/simple;
-	bh=gvcuYK+I1eqn+uJphWXRk6ea4XRDTBC9JFXB8a18W8A=;
+	s=arc-20240116; t=1714474320; c=relaxed/simple;
+	bh=EWdcG+wFoFVY8OEybVQjNVm513k1Yn4CBKUzHka4miM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JqCWoPkvwyn5Npy/JAPYdyhzBVgVYdHuywBXXp/SXj0nVHqGYkdLQs+ug9oTOTIlbAsc8FWzEz69WyzM6Cl/LRLjK0Erjz7+beRkLifw3kefx6nwTyDH1ZlKUN6v98FvYjmIIaUZ186PjQKi2fTcLk+iQrW/c6ZER+pdyUEpgj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kUFrS35; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r8FW2n3WuR9miYB5BIEXLoPGSBsTaecDj08auEsLOCAHF0D9CFLnpZjKquQ+l1kj4t3aCshtri8zWiZEGPgwCzqp5HidWJ45QeqRNcmpsp9Ww+Gpq6vFQN89XnXu7hv0GQAS12UcXszvWOVCN7d34wGhC58Mh90Xw9NDDWs4yxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0GbWHmW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kUFrS35"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C560C4AF19;
-	Tue, 30 Apr 2024 10:51:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0GbWHmW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91A3C2BBFC;
+	Tue, 30 Apr 2024 10:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474316;
-	bh=gvcuYK+I1eqn+uJphWXRk6ea4XRDTBC9JFXB8a18W8A=;
+	s=korg; t=1714474320;
+	bh=EWdcG+wFoFVY8OEybVQjNVm513k1Yn4CBKUzHka4miM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0kUFrS35SI8+KjeHCEpi3gbZd9N1ODN1gONv4YU15E7PyEKwaIzqBJDUMnAOgbw2Y
-	 MG+2Un5wmCB5pWKlFttNSuWJrE8ZpsBOk9QUvkE4zuqg0VVVoK9vn331i3jqG6g8Dn
-	 hWCeL4efjpnI2JAs/R9zlSHhrhTA5yg3jRBnFWrE=
+	b=Y0GbWHmW5+QqAFUiLzuaZ976b7c0fOPNpY+y4rinImtzptiIkSHaSNG0nfzHfmYeF
+	 x0/KCphG7HmJE+2D3SrzJ4uvSVyaRbEE2m7uMzb1Xqd8XhjfWBx1xLBabBWvFcq5Tn
+	 l9x93IOimd4toTEpHcaLIaH/f8cjTcGAZ7bIeKN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Muhammad Ahmed <ahmed.ahmed@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 121/228] Revert "drm/amd/display: fix USB-C flag update after enc10 feature init"
-Date: Tue, 30 Apr 2024 12:38:19 +0200
-Message-ID: <20240430103107.299104640@linuxfoundation.org>
+Subject: [PATCH 6.8 122/228] xhci: move event processing for one interrupter to a separate function
+Date: Tue, 30 Apr 2024 12:38:20 +0200
+Message-ID: <20240430103107.327603443@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -55,73 +51,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 91f10a3d21f2313485178d49efef8a3ba02bd8c7 ]
+[ Upstream commit 84ac5e4fa517f5d1da0054547a82ce905678dc08 ]
 
-This reverts commit b5abd7f983e14054593dc91d6df2aa5f8cc67652.
+Split the main XHCI interrupt handler into a different API, so that other
+potential interrupters can utilize similar event ring handling.  A scenario
+would be if a secondary interrupter required to skip pending events in the
+event ring, which would warrant a similar set of operations.
 
-This change breaks DSC on 4k monitors at 144Hz over USB-C.
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3254
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: Muhammad Ahmed <ahmed.ahmed@amd.com>
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Charlene Liu <charlene.liu@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: stable@vger.kernel.org
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+Link: https://lore.kernel.org/r/20240217001017.29969-7-quic_wcheng@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 5bfc311dd6c3 ("usb: xhci: correct return value in case of STS_HCE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/dcn32/dcn32_dio_link_encoder.c | 8 +++-----
- .../gpu/drm/amd/display/dc/dcn35/dcn35_dio_link_encoder.c | 4 ++--
- 2 files changed, 5 insertions(+), 7 deletions(-)
+ drivers/usb/host/xhci-ring.c | 87 +++++++++++++++++-------------------
+ 1 file changed, 42 insertions(+), 45 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dio_link_encoder.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dio_link_encoder.c
-index e224a028d68ac..8a0460e863097 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dio_link_encoder.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dio_link_encoder.c
-@@ -248,14 +248,12 @@ void dcn32_link_encoder_construct(
- 	enc10->base.hpd_source = init_data->hpd_source;
- 	enc10->base.connector = init_data->connector;
- 
--	enc10->base.preferred_engine = ENGINE_ID_UNKNOWN;
--
--	enc10->base.features = *enc_features;
- 	if (enc10->base.connector.id == CONNECTOR_ID_USBC)
- 		enc10->base.features.flags.bits.DP_IS_USB_C = 1;
- 
--	if (enc10->base.connector.id == CONNECTOR_ID_USBC)
--		enc10->base.features.flags.bits.DP_IS_USB_C = 1;
-+	enc10->base.preferred_engine = ENGINE_ID_UNKNOWN;
-+
-+	enc10->base.features = *enc_features;
- 
- 	enc10->base.transmitter = init_data->transmitter;
- 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn35/dcn35_dio_link_encoder.c b/drivers/gpu/drm/amd/display/dc/dcn35/dcn35_dio_link_encoder.c
-index 81e349d5835bb..da94e5309fbaf 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn35/dcn35_dio_link_encoder.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn35/dcn35_dio_link_encoder.c
-@@ -184,6 +184,8 @@ void dcn35_link_encoder_construct(
- 	enc10->base.hpd_source = init_data->hpd_source;
- 	enc10->base.connector = init_data->connector;
- 
-+	if (enc10->base.connector.id == CONNECTOR_ID_USBC)
-+		enc10->base.features.flags.bits.DP_IS_USB_C = 1;
- 
- 	enc10->base.preferred_engine = ENGINE_ID_UNKNOWN;
- 
-@@ -238,8 +240,6 @@ void dcn35_link_encoder_construct(
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 61bd29dd71a2f..2306a95d6251a 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -3075,6 +3075,46 @@ static void xhci_clear_interrupt_pending(struct xhci_hcd *xhci,
  	}
+ }
  
- 	enc10->base.features.flags.bits.HDMI_6GB_EN = 1;
--	if (enc10->base.connector.id == CONNECTOR_ID_USBC)
--		enc10->base.features.flags.bits.DP_IS_USB_C = 1;
++static int xhci_handle_events(struct xhci_hcd *xhci, struct xhci_interrupter *ir)
++{
++	int event_loop = 0;
++	u64 temp;
++
++	xhci_clear_interrupt_pending(xhci, ir);
++
++	if (xhci->xhc_state & XHCI_STATE_DYING ||
++	    xhci->xhc_state & XHCI_STATE_HALTED) {
++		xhci_dbg(xhci, "xHCI dying, ignoring interrupt. Shouldn't IRQs be disabled?\n");
++
++		/* Clear the event handler busy flag (RW1C) */
++		temp = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
++		xhci_write_64(xhci, temp | ERST_EHB, &ir->ir_set->erst_dequeue);
++		return -ENODEV;
++	}
++
++	while (xhci_handle_event(xhci, ir) > 0) {
++		/*
++		 * If half a segment of events have been handled in one go then
++		 * update ERDP, and force isoc trbs to interrupt more often
++		 */
++		if (event_loop++ > TRBS_PER_SEGMENT / 2) {
++			xhci_update_erst_dequeue(xhci, ir, false);
++
++			if (ir->isoc_bei_interval > AVOID_BEI_INTERVAL_MIN)
++				ir->isoc_bei_interval = ir->isoc_bei_interval / 2;
++
++			event_loop = 0;
++		}
++
++		/* Update SW event ring dequeue pointer */
++		inc_deq(xhci, ir->event_ring);
++	}
++
++	xhci_update_erst_dequeue(xhci, ir, true);
++
++	return 0;
++}
++
+ /*
+  * xHCI spec says we can get an interrupt, and if the HC has an error condition,
+  * we might get bad data out of the event ring.  Section 4.10.2.7 has a list of
+@@ -3083,11 +3123,8 @@ static void xhci_clear_interrupt_pending(struct xhci_hcd *xhci,
+ irqreturn_t xhci_irq(struct usb_hcd *hcd)
+ {
+ 	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
+-	struct xhci_interrupter *ir;
+ 	irqreturn_t ret = IRQ_NONE;
+-	u64 temp_64;
+ 	u32 status;
+-	int event_loop = 0;
  
- 	if (bp_funcs->get_connector_speed_cap_info)
- 		result = bp_funcs->get_connector_speed_cap_info(enc10->base.ctx->dc_bios,
+ 	spin_lock(&xhci->lock);
+ 	/* Check if the xHC generated the interrupt, or the irq is shared */
+@@ -3120,50 +3157,10 @@ irqreturn_t xhci_irq(struct usb_hcd *hcd)
+ 	 */
+ 	status |= STS_EINT;
+ 	writel(status, &xhci->op_regs->status);
+-
+-	/* This is the handler of the primary interrupter */
+-	ir = xhci->interrupters[0];
+-
+-	xhci_clear_interrupt_pending(xhci, ir);
+-
+-	if (xhci->xhc_state & XHCI_STATE_DYING ||
+-	    xhci->xhc_state & XHCI_STATE_HALTED) {
+-		xhci_dbg(xhci, "xHCI dying, ignoring interrupt. "
+-				"Shouldn't IRQs be disabled?\n");
+-		/* Clear the event handler busy flag (RW1C);
+-		 * the event ring should be empty.
+-		 */
+-		temp_64 = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
+-		xhci_write_64(xhci, temp_64 | ERST_EHB,
+-				&ir->ir_set->erst_dequeue);
+-		ret = IRQ_HANDLED;
+-		goto out;
+-	}
+-
+-	/* FIXME this should be a delayed service routine
+-	 * that clears the EHB.
+-	 */
+-	while (xhci_handle_event(xhci, ir) > 0) {
+-		/*
+-		 * If half a segment of events have been handled in one go then
+-		 * update ERDP, and force isoc trbs to interrupt more often
+-		 */
+-		if (event_loop++ > TRBS_PER_SEGMENT / 2) {
+-			xhci_update_erst_dequeue(xhci, ir, false);
+-
+-			if (ir->isoc_bei_interval > AVOID_BEI_INTERVAL_MIN)
+-				ir->isoc_bei_interval = ir->isoc_bei_interval / 2;
+-
+-			event_loop = 0;
+-		}
+-
+-		/* Update SW event ring dequeue pointer */
+-		inc_deq(xhci, ir->event_ring);
+-	}
+-
+-	xhci_update_erst_dequeue(xhci, ir, true);
+ 	ret = IRQ_HANDLED;
+ 
++	/* This is the handler of the primary interrupter */
++	xhci_handle_events(xhci, xhci->interrupters[0]);
+ out:
+ 	spin_unlock(&xhci->lock);
+ 
 -- 
 2.43.0
 
