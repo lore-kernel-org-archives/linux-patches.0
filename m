@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930728801;
-	Tue, 30 Apr 2024 11:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C15E8801;
+	Tue, 30 Apr 2024 11:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475793; cv=none; b=fYk6o5P1LWB9iSqIni1OsWK6cQxWv2jYlSsSNvH+Cm65p153PkTbUkvo0sREpVvvOoBkWtcCaW9AocUgAG3kPWdEOgLzpc6t8GzC2AZM9mewlFbqeDEE6nGXZ320fFI5nGKfQC4sAnv1MxQtpikRzmJlVzEWRHedhO0q9joOE9s=
+	t=1714475796; cv=none; b=FFVWLiJHKYPtsekAamN38aRn9spNmUL7QmSG2j2RcBdRENfG3cg8OZL2aIcbGWTOUArZVvVA1TaVLKla/ra5/6SpvwSGEaN+YJsqmOr7d4cat0Tt1xwezaUSq2nwbHVSb+DRcohJX1ygVbusesJTp987c1D7tWUYN+ywmD2SPcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475793; c=relaxed/simple;
-	bh=xIG2xB27LslhjcbnFoBJBiqjaxGyQcuh3q27YgV2rZk=;
+	s=arc-20240116; t=1714475796; c=relaxed/simple;
+	bh=P1fiImdVaC51LPyXqwaerbt1q0QUZBkf6K9wmqSFsFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BWy1lP8SC05sVrWBJ88bO7xXZPn1wp19wD0RkdVIeVos9EdDQ6Ub5rhtVIXXZ3zL0vPnUDGxV/V1ynwXHvkn8ynV+ev/WbKR9i6gXQwKUlvXh3/uHj5noVZfhDmOF21q62ddl5asVgpSblEh344pEkTfNvPwCkHx2ZWbtKnF3fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nCGAzng7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RajkqDN1F548FwLl9Qltxx6AD50hQt0Y1UEKsYLgqKAIBnWOSVtClr3W3WBuN99IM47YZ/CuIdwa/r+2u9JzkNT8L4ia2ObKDsfs9KADRhcgwx2IkArqPryzgP3EHDj1kYTwze/b2c/l/zdkRbgB4payT6t1QkysfTyfBdkr1qE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0e+DXPm8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nCGAzng7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B362C2BBFC;
-	Tue, 30 Apr 2024 11:16:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0e+DXPm8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D33C2BBFC;
+	Tue, 30 Apr 2024 11:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475793;
-	bh=xIG2xB27LslhjcbnFoBJBiqjaxGyQcuh3q27YgV2rZk=;
+	s=korg; t=1714475796;
+	bh=P1fiImdVaC51LPyXqwaerbt1q0QUZBkf6K9wmqSFsFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nCGAzng7rpCkQyDuTkEiqCKkBpu1ojB1/afwo5gRO9ldNU+jMQkBIDwkgggyot/Eq
-	 WaHjSetk+0pamxJx/G087iaHukAEJyIhSCiiZFsZLfZbGL0l8pnvVF2w4AF5Hn4h9e
-	 vMQAcwkC9FOKg+XU0RVdn4JzbsBPnopUYxaSrba8=
+	b=0e+DXPm88rrxg/oEeMwIjaYs7S/Qf2ISKqJnnMbJmsvuqEwCZswR98tl4resplPX9
+	 4TkKSiLgKJHxEE1YdkifD5zgWdw0r/+3KXUyIFI6t6YhIyUrqBRMyZ4VtwHrJPggaN
+	 gizKjCtkchUu77Z60CZW19l1f/rUDCezGaAC9lVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takayuki Nagata <tnagata@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Ronnie Sahlberg <lsahlber@redhat.com>,
-	Tom Talpey <tom@talpey.com>,
-	Steve French <stfrench@microsoft.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Bauer <mail@david-bauer.net>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 02/80] cifs: reinstate original behavior again for forceuid/forcegid
-Date: Tue, 30 Apr 2024 12:39:34 +0200
-Message-ID: <20240430103043.473550585@linuxfoundation.org>
+Subject: [PATCH 5.15 20/80] vxlan: drop packets from invalid src-address
+Date: Tue, 30 Apr 2024 12:39:52 +0200
+Message-ID: <20240430103044.011746921@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -54,80 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takayuki Nagata <tnagata@redhat.com>
+From: David Bauer <mail@david-bauer.net>
 
-[ Upstream commit 77d8aa79ecfb209308e0644c02f655122b31def7 ]
+[ Upstream commit f58f45c1e5b92975e91754f5407250085a6ae7cf ]
 
-forceuid/forcegid should be enabled by default when uid=/gid= options are
-specified, but commit 24e0a1eff9e2 ("cifs: switch to new mount api")
-changed the behavior. Due to the change, a mounted share does not show
-intentional uid/gid for files and directories even though uid=/gid=
-options are specified since forceuid/forcegid are not enabled.
+The VXLAN driver currently does not check if the inner layer2
+source-address is valid.
 
-This patch reinstates original behavior that overrides uid/gid with
-specified uid/gid by the options.
+In case source-address snooping/learning is enabled, a entry in the FDB
+for the invalid address is created with the layer3 address of the tunnel
+endpoint.
 
-Fixes: 24e0a1eff9e2 ("cifs: switch to new mount api")
-Signed-off-by: Takayuki Nagata <tnagata@redhat.com>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Acked-by: Ronnie Sahlberg <lsahlber@redhat.com>
-Acked-by: Tom Talpey <tom@talpey.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+If the frame happens to have a non-unicast address set, all this
+non-unicast traffic is subsequently not flooded to the tunnel network
+but sent to the learnt host in the FDB. To make matters worse, this FDB
+entry does not expire.
+
+Apply the same filtering for packets as it is done for bridges. This not
+only drops these invalid packets but avoids them from being learnt into
+the FDB.
+
+Fixes: d342894c5d2f ("vxlan: virtual extensible lan")
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: David Bauer <mail@david-bauer.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/fs_context.c | 12 ++++++++++++
- fs/cifs/fs_context.h |  2 ++
- 2 files changed, 14 insertions(+)
+ drivers/net/vxlan/vxlan_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/cifs/fs_context.c b/fs/cifs/fs_context.c
-index 6347e759b5ccf..fb3651513f83a 100644
---- a/fs/cifs/fs_context.c
-+++ b/fs/cifs/fs_context.c
-@@ -672,6 +672,16 @@ static int smb3_fs_context_validate(struct fs_context *fc)
- 	/* set the port that we got earlier */
- 	cifs_set_port((struct sockaddr *)&ctx->dstaddr, ctx->port);
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 41b1b23fdd3e9..2e61041a11131 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -1779,6 +1779,10 @@ static bool vxlan_set_mac(struct vxlan_dev *vxlan,
+ 	if (ether_addr_equal(eth_hdr(skb)->h_source, vxlan->dev->dev_addr))
+ 		return false;
  
-+	if (ctx->uid_specified && !ctx->forceuid_specified) {
-+		ctx->override_uid = 1;
-+		pr_notice("enabling forceuid mount option implicitly because uid= option is specified\n");
-+	}
++	/* Ignore packets from invalid src-address */
++	if (!is_valid_ether_addr(eth_hdr(skb)->h_source))
++		return false;
 +
-+	if (ctx->gid_specified && !ctx->forcegid_specified) {
-+		ctx->override_gid = 1;
-+		pr_notice("enabling forcegid mount option implicitly because gid= option is specified\n");
-+	}
-+
- 	if (ctx->override_uid && !ctx->uid_specified) {
- 		ctx->override_uid = 0;
- 		pr_notice("ignoring forceuid mount option specified with no uid= option\n");
-@@ -903,12 +913,14 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
- 			ctx->override_uid = 0;
- 		else
- 			ctx->override_uid = 1;
-+		ctx->forceuid_specified = true;
- 		break;
- 	case Opt_forcegid:
- 		if (result.negated)
- 			ctx->override_gid = 0;
- 		else
- 			ctx->override_gid = 1;
-+		ctx->forcegid_specified = true;
- 		break;
- 	case Opt_perm:
- 		if (result.negated)
-diff --git a/fs/cifs/fs_context.h b/fs/cifs/fs_context.h
-index 3cf8d6235162d..74bb19ec7c839 100644
---- a/fs/cifs/fs_context.h
-+++ b/fs/cifs/fs_context.h
-@@ -152,6 +152,8 @@ enum cifs_param {
- };
- 
- struct smb3_fs_context {
-+	bool forceuid_specified;
-+	bool forcegid_specified;
- 	bool uid_specified;
- 	bool cruid_specified;
- 	bool gid_specified;
+ 	/* Get address from the outer IP header */
+ 	if (vxlan_get_sk_family(vs) == AF_INET) {
+ 		saddr.sin.sin_addr.s_addr = ip_hdr(skb)->saddr;
 -- 
 2.43.0
 
