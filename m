@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D23A1E50A;
-	Tue, 30 Apr 2024 11:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8641E50A;
+	Tue, 30 Apr 2024 11:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475335; cv=none; b=b6x3fR9XnpjFWhxjcz9rX3xQtnRPVrm1NUBFIiaVWhFu0P5Fa7EWg8Nbogj+nMEtUQxuYj2yDFMhMQ+LL30sgBVvvWL+xUjYeFGlRdlSyn8FSo27iZQsm3FeZORJGxZ6YLhXPF5Bi7ugZRgcRAtKcFeQnGYdUE+KOLxKgntEUQ8=
+	t=1714475338; cv=none; b=YWW6XiQphRdzRtUXta9ZG/LdTZiRPnfleOK/UAYGKAk58X4MTtizjfuDLq793sa+dhJzfE776CRPCANcavTMn57CdBUreYH2vZiqY+g1x0YWoL8pc5V7ZuHW0BS8hToCd5gDgqRWNWg58/yadf/vOotoLc7qsdSvMPSlwOr2Qfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475335; c=relaxed/simple;
-	bh=jrudaymR2ZCXgg/5bCEB0HdBsJDzYzgovRMG3Y47WAk=;
+	s=arc-20240116; t=1714475338; c=relaxed/simple;
+	bh=X16JHhIvIM4aEs2f2OQVqGS5SE8jqtimzoKzEJKQf0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M3mQpGU2raMmP9VWisImm3DFmFH105TDhlHFgaIwRWesW+xOtUMeY3fG9YPvx71ti/XqtGw8sXeH8jILKWulnMIuYfxzqke2tWBvQ8hKqvZJT9Ore5OnxqX1EG+eneFHJH5yz++Iobx8iAnLFSnUMYvexitmqEXeMtODtzD7J/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xipHmtt8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fJXT0/bMs/bn96qK3Qai0AaNwe6h110RmX/Ll5l2et0LDZn3k2N9+Pekn7oq7JYPoU2mDCGk/7JyQ8s6rqCkBS8CGCEo5ITxC2zHywf2Sm4PzfsUvOQHjzx3RxgJAxZVaq7JOTj2mHDuq4txiC0qHoB1vAf7TaNL93fFRSopAVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W397aLvy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xipHmtt8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEDF4C2BBFC;
-	Tue, 30 Apr 2024 11:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W397aLvy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9CEC2BBFC;
+	Tue, 30 Apr 2024 11:08:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475335;
-	bh=jrudaymR2ZCXgg/5bCEB0HdBsJDzYzgovRMG3Y47WAk=;
+	s=korg; t=1714475338;
+	bh=X16JHhIvIM4aEs2f2OQVqGS5SE8jqtimzoKzEJKQf0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xipHmtt8wwIN78nIau/A15fp67RXtgHcYz4qJlFEngGdHaVGelltkTLXDgVCS4LkU
-	 eq0+NVIvvBz5scvDX8GXOBAnNIldmoM3yD+6UonA4bg2CiKFGASjbAzBKXtwLTr9EN
-	 +iZ7NwCpqNL+zDEJlM4eA9ydUUerLx/blxveP3a0=
+	b=W397aLvywMeogf3RooHoX9tML1pMlzQqYBqL7QtC2WptgG0klV8+yPqjjVZdaefs9
+	 zEptid/dauK5ctknI2cqw/7bU/0vBlbIqs4HG+gl5awsRBXp/wHI9MZ46fFAz8WIUa
+	 87+ajG8L0TxpJI/VvqHRX2oCR+eIH0dRfD4WFmTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Shete <pshete@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/186] gpio: tegra186: Fix tegra186_gpio_is_accessible() check
-Date: Tue, 30 Apr 2024 12:38:37 +0200
-Message-ID: <20240430103059.925276313@linuxfoundation.org>
+Subject: [PATCH 6.6 066/186] Bluetooth: btusb: Fix triggering coredump implementation for QCA
+Date: Tue, 30 Apr 2024 12:38:38 +0200
+Message-ID: <20240430103059.954218233@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -52,79 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Shete <pshete@nvidia.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit d806f474a9a7993648a2c70642ee129316d8deff ]
+[ Upstream commit b23d98d46d2858dcc0fd016caff165cbdc24e70a ]
 
-The controller has several register bits describing access control
-information for a given GPIO pin. When SCR_SEC_[R|W]EN is unset, it
-means we have full read/write access to all the registers for given GPIO
-pin. When SCR_SEC[R|W]EN is set, it means we need to further check the
-accompanying SCR_SEC_G1[R|W] bit to determine read/write access to all
-the registers for given GPIO pin.
+btusb_coredump_qca() uses __hci_cmd_sync() to send a vendor-specific
+command to trigger firmware coredump, but the command does not
+have any event as its sync response, so it is not suitable to use
+__hci_cmd_sync(), fixed by using __hci_cmd_send().
 
-This check was previously declaring that a GPIO pin was accessible
-only if either of the following conditions were met:
-
-  - SCR_SEC_REN + SCR_SEC_WEN both set
-
-    or
-
-  - SCR_SEC_REN + SCR_SEC_WEN both set and
-    SCR_SEC_G1R + SCR_SEC_G1W both set
-
-Update the check to properly handle cases where only one of
-SCR_SEC_REN or SCR_SEC_WEN is set.
-
-Fixes: b2b56a163230 ("gpio: tegra186: Check GPIO pin permission before access.")
-Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20240424095514.24397-1-pshete@nvidia.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: 20981ce2d5a5 ("Bluetooth: btusb: Add WCN6855 devcoredump support")
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-tegra186.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/bluetooth/btusb.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
-index d87dd06db40d0..9130c691a2dd3 100644
---- a/drivers/gpio/gpio-tegra186.c
-+++ b/drivers/gpio/gpio-tegra186.c
-@@ -36,12 +36,6 @@
- #define  TEGRA186_GPIO_SCR_SEC_REN		BIT(27)
- #define  TEGRA186_GPIO_SCR_SEC_G1W		BIT(9)
- #define  TEGRA186_GPIO_SCR_SEC_G1R		BIT(1)
--#define  TEGRA186_GPIO_FULL_ACCESS		(TEGRA186_GPIO_SCR_SEC_WEN | \
--						 TEGRA186_GPIO_SCR_SEC_REN | \
--						 TEGRA186_GPIO_SCR_SEC_G1R | \
--						 TEGRA186_GPIO_SCR_SEC_G1W)
--#define  TEGRA186_GPIO_SCR_SEC_ENABLE		(TEGRA186_GPIO_SCR_SEC_WEN | \
--						 TEGRA186_GPIO_SCR_SEC_REN)
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 1976593bc804e..02f38417aae3d 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3457,13 +3457,12 @@ static void btusb_dump_hdr_qca(struct hci_dev *hdev, struct sk_buff *skb)
  
- /* control registers */
- #define TEGRA186_GPIO_ENABLE_CONFIG 0x00
-@@ -177,10 +171,18 @@ static inline bool tegra186_gpio_is_accessible(struct tegra_gpio *gpio, unsigned
+ static void btusb_coredump_qca(struct hci_dev *hdev)
+ {
++	int err;
+ 	static const u8 param[] = { 0x26 };
+-	struct sk_buff *skb;
  
- 	value = __raw_readl(secure + TEGRA186_GPIO_SCR);
+-	skb = __hci_cmd_sync(hdev, 0xfc0c, 1, param, HCI_CMD_TIMEOUT);
+-	if (IS_ERR(skb))
+-		bt_dev_err(hdev, "%s: triggle crash failed (%ld)", __func__, PTR_ERR(skb));
+-	kfree_skb(skb);
++	err = __hci_cmd_send(hdev, 0xfc0c, 1, param);
++	if (err < 0)
++		bt_dev_err(hdev, "%s: triggle crash failed (%d)", __func__, err);
+ }
  
--	if ((value & TEGRA186_GPIO_SCR_SEC_ENABLE) == 0)
--		return true;
-+	/*
-+	 * When SCR_SEC_[R|W]EN is unset, then we have full read/write access to all the
-+	 * registers for given GPIO pin.
-+	 * When SCR_SEC[R|W]EN is set, then there is need to further check the accompanying
-+	 * SCR_SEC_G1[R|W] bit to determine read/write access to all the registers for given
-+	 * GPIO pin.
-+	 */
- 
--	if ((value & TEGRA186_GPIO_FULL_ACCESS) == TEGRA186_GPIO_FULL_ACCESS)
-+	if (((value & TEGRA186_GPIO_SCR_SEC_REN) == 0 ||
-+	     ((value & TEGRA186_GPIO_SCR_SEC_REN) && (value & TEGRA186_GPIO_SCR_SEC_G1R))) &&
-+	     ((value & TEGRA186_GPIO_SCR_SEC_WEN) == 0 ||
-+	     ((value & TEGRA186_GPIO_SCR_SEC_WEN) && (value & TEGRA186_GPIO_SCR_SEC_G1W))))
- 		return true;
- 
- 	return false;
+ /*
 -- 
 2.43.0
 
