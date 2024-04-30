@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E2C211C;
-	Tue, 30 Apr 2024 11:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0486211C;
+	Tue, 30 Apr 2024 11:13:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475626; cv=none; b=K5WQ94gjDnvlt/xQgf3VeH2iEF92vrJJt9RsYCQWlvXhG7SaFhcPsruW9wLGKPfMJRk+eNB9CVI41aHGVP8i3aD2XIpuawfwxdHMbXn3K0ajohKQvD1F7HWRXJZrYmA2H5YsUhZxvw1zAeqVZKZOm1hdayn2yW9P6n6XDac2zJg=
+	t=1714475629; cv=none; b=AXa37pqVgF51703q978t2xLl1IK/c0IL3w0TLfDpoKkuzsSJwQQGakCAH5q/wA7Ojd1nrsEe3ki8EWPHoomOn27q004Grgzc0ICGzqAPYrQwgh7FIxAEf129MiveKBncsFkEfnjBLy9UfcSumV+GjjRwc5n3Ltn5I7BENgqF6ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475626; c=relaxed/simple;
-	bh=xaZlMGuoBQQpWEACIAYRigKSuIuTGvu41kmcIM2kXRc=;
+	s=arc-20240116; t=1714475629; c=relaxed/simple;
+	bh=ocUHaCR5VhFkzBvzAuPGqa8FS/z/qxShnf5xBJugNWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=leJKqErfwKrboDj/OlAdQG3ethMO3/adWfh9TJ/ZT2zJGvBmVX8v92a7lmZu7yRxgMZTmlbtuv9VUxcVye6F4hDgiljbTL5DGFmizS8NualfK7r573VVWK+2bAyzz2TDGThm0xYZfnWxX3Gl1Sw8/f6jPLr3ViO0t5Wi0+Bbxug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSSpx+Ny; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZXg2rjL06HajpZUi/YzzIRaghZIr9WEL5euRKo9Mrkwxfc2zQPe9TrxekgwyJ7giQd7HqiY6xiY6CqoHQ3VTTxEqw8JqoDfxpKx48dys/ZHXMVma1MJ0v/qmIncC95YOxxWHCNkVhMOEtPJBPPukkQwukGBL8OGVfENd8TCV2mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5v2ym37; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSSpx+Ny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CBAC2BBFC;
-	Tue, 30 Apr 2024 11:13:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5v2ym37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D25B6C2BBFC;
+	Tue, 30 Apr 2024 11:13:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475626;
-	bh=xaZlMGuoBQQpWEACIAYRigKSuIuTGvu41kmcIM2kXRc=;
+	s=korg; t=1714475629;
+	bh=ocUHaCR5VhFkzBvzAuPGqa8FS/z/qxShnf5xBJugNWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FSSpx+NyIcY9L6XeYnPBOU8Xy5SLW/cbDW/fMbHFNQwN9RnXhxczijWeoJCb8k0x3
-	 O26wcowNwysWt1ckXJR7tKeOIvAn4DPXYB9x2EDS+4/O8xDG+dEMHvRLR/EdaT21Wr
-	 u+PDXbnIwrqh5hcIkjM4SdH1DOQlX3W3l6+Fm6ss=
+	b=c5v2ym37tjTB4NExF774E75g8lZVsAUqeP3dF29EkNl75Ius87Ztz2l2JR8lrs8Ql
+	 B4FhMOcWVbgbS6m8QLX2BIpMxqvRinkglyLnJpB/ZsEs2dt41vSpcasE2ANxeTgNlC
+	 4Y75qFSOre/NEzia50JcFu7yJYsxlt+KmPWnea9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.6 153/186] mtd: diskonchip: work around ubsan link failure
-Date: Tue, 30 Apr 2024 12:40:05 +0200
-Message-ID: <20240430103102.475647456@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Steev Klimaszewski <steev@kali.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.6 154/186] phy: qcom: qmp-combo: Fix register base for QSERDES_DP_PHY_MODE
+Date: Tue, 30 Apr 2024 12:40:06 +0200
+Message-ID: <20240430103102.504458827@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -50,56 +58,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Stephen Boyd <swboyd@chromium.org>
 
-commit 21c9fb611c25d5cd038f6fe485232e7884bb0b3d upstream.
+commit ee13e1f3c72b9464a4d73017c060ab503eed653a upstream.
 
-I ran into a randconfig build failure with UBSAN using gcc-13.2:
+The register base that was used to write to the QSERDES_DP_PHY_MODE
+register was 'dp_dp_phy' before commit 815891eee668 ("phy:
+qcom-qmp-combo: Introduce orientation variable"). There isn't any
+explanation in the commit why this is changed, so I suspect it was an
+oversight or happened while being extracted from some other series.
+Oddly the value being 0x4c or 0x5c doesn't seem to matter for me, so I
+suspect this is dead code, but that can be fixed in another patch. It's
+not good to write to the wrong register space, and maybe some other
+version of this phy relies on this.
 
-arm-linux-gnueabi-ld: error: unplaced orphan section `.bss..Lubsan_data31' from `drivers/mtd/nand/raw/diskonchip.o'
-
-I'm not entirely sure what is going on here, but I suspect this has something
-to do with the check for the end of the doc_locations[] array that contains
-an (unsigned long)0xffffffff element, which is compared against the signed
-(int)0xffffffff. If this is the case, we should get a runtime check for
-undefined behavior, but we instead get an unexpected build-time error.
-
-I would have expected this to work fine on 32-bit architectures despite the
-signed integer overflow, though on 64-bit architectures this likely won't
-ever work.
-
-Changing the contition to instead check for the size of the array makes the
-code safe everywhere and avoids the ubsan check that leads to the link
-error. The loop code goes back to before 2.6.12.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240405143015.717429-1-arnd@kernel.org
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Abel Vesa <abel.vesa@linaro.org>
+Cc: Steev Klimaszewski <steev@kali.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: stable@vger.kernel.org      # 6.5
+Fixes: 815891eee668 ("phy: qcom-qmp-combo: Introduce orientation variable")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20240405000111.1450598-1-swboyd@chromium.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/diskonchip.c |    4 ++--
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mtd/nand/raw/diskonchip.c
-+++ b/drivers/mtd/nand/raw/diskonchip.c
-@@ -53,7 +53,7 @@ static unsigned long doc_locations[] __i
- 	0xe8000, 0xea000, 0xec000, 0xee000,
- #endif
- #endif
--	0xffffffff };
-+};
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -2047,9 +2047,9 @@ static bool qmp_combo_configure_dp_mode(
+ 	writel(val, qmp->dp_dp_phy + QSERDES_DP_PHY_PD_CTL);
  
- static struct mtd_info *doclist = NULL;
+ 	if (reverse)
+-		writel(0x4c, qmp->pcs + QSERDES_DP_PHY_MODE);
++		writel(0x4c, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
+ 	else
+-		writel(0x5c, qmp->pcs + QSERDES_DP_PHY_MODE);
++		writel(0x5c, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
  
-@@ -1552,7 +1552,7 @@ static int __init init_nanddoc(void)
- 		if (ret < 0)
- 			return ret;
- 	} else {
--		for (i = 0; (doc_locations[i] != 0xffffffff); i++) {
-+		for (i = 0; i < ARRAY_SIZE(doc_locations); i++) {
- 			doc_probe(doc_locations[i]);
- 		}
- 	}
+ 	return reverse;
+ }
 
 
