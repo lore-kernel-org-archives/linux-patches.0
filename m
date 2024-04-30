@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E595D8801;
-	Tue, 30 Apr 2024 11:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B878801;
+	Tue, 30 Apr 2024 11:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475817; cv=none; b=U/VHkP7RPuRFDNKAJ4ngB3DWIpXyet5mBzeMgVpJaxq5LWymf4z0cENzkh3F/0OO37CJqrqAyBWNKW2FTrnXsJv3KfTv+GZDle+xz6xa2A+0xoWmoi376rEhtKsF5JDrDiVe47hwgZBAF9F+mq3puUYr3Z8uDKTZCjVUUxwSrpo=
+	t=1714475820; cv=none; b=H+ELSHbVvxYy58d3rDEZ2/APfZt7x6il/Yt6gOuAe82crsWVWY7EkloRtZg2547I3elMAAkbAbvM5dpUlaIllzL/wSDiC/sVZLqtvomwRDxoy0AUtv27FxOpgS6DZj0hBe81Le0ogskyiMuEQc4mROyRy833WMzUL47pwd5MuKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475817; c=relaxed/simple;
-	bh=Oamz2ng+i9a3aGidEiyeGF6Hv4gxp76k5xLW4b7yliw=;
+	s=arc-20240116; t=1714475820; c=relaxed/simple;
+	bh=pT4zJmUQICGgDmA3NJ4m1+kLcEsMY/cPMpd2TYnMXt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ok7d8QvtAfNVzYaZGaHq1e5ULT+uQ6wx8feMn+GEIxnCSTOMP13PSv0moNtaxgOiXU/DqCGXiGGA5cM3mb/Ub1zVf3Lkn9Y7+9ecQI4rO7A0jE6+L1t7VQ5GnZifvF73oE+u4aoa/yLT+fBcWsJmESMq+BgeJxFdRi15lhLuMek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/gph0sw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C5Q7DgeiERb9lX4yslii8OC0dQUuMP8HizKnquGVWhv6xUazpKs6SmyzrjmnoGNIAnnNg4Iuv/W/mXrrn0qRsCzSXREyilIqYICQES6OJMRR4ahSHowbI0FaNwYPF93xVpi8c1wWZTJGGYatONVtgsnzA+d9OIbn6fmNt8N3DGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vCHzH4wG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/gph0sw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E26EC2BBFC;
-	Tue, 30 Apr 2024 11:16:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vCHzH4wG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90662C4AF18;
+	Tue, 30 Apr 2024 11:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475816;
-	bh=Oamz2ng+i9a3aGidEiyeGF6Hv4gxp76k5xLW4b7yliw=;
+	s=korg; t=1714475820;
+	bh=pT4zJmUQICGgDmA3NJ4m1+kLcEsMY/cPMpd2TYnMXt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/gph0swVWG6JsETfAqIQ7g5qDRpGg3if9UhgEwr9NGn1I76A8Z8KQPTGYmf4YyZI
-	 CfdxZ8XO0H43Eta4xNyuzRmpqVq+OwoFmkOh225DQQcOqKxqR8XhIZWYrZ35m/nsmY
-	 oFC6RNq8T7f6dyfwbjDfLkxIaQ910PnyXT5Zuz+Q=
+	b=vCHzH4wGOxXASinLcUqDZwZUlXlAhNAMvVGGSsPVbO6t9FHUvxg2rpJKsN+/1Hxfn
+	 vWWNRwEEU0oe+o67L23MS2HOmQn+HGN7hfluLkRfYSC6sjhyA4YkiixBp2obBAws4e
+	 WZU5sloLv4yink+v7qUxfsrQkZ9fYdJU3SRstv5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shironeko <shironeko@tesaguri.club>,
-	Eric Dumazet <edumazet@google.com>,
-	Jose Alonso <joalonsof@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Lixu <lixu.zhang@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 26/80] net: usb: ax88179_178a: stop lying about skb->truesize
-Date: Tue, 30 Apr 2024 12:39:58 +0200
-Message-ID: <20240430103044.189037435@linuxfoundation.org>
+Subject: [PATCH 5.15 03/80] HID: intel-ish-hid: ipc: Fix dev_err usage with uninitialized dev->devc
+Date: Tue, 30 Apr 2024 12:39:35 +0200
+Message-ID: <20240430103043.502582644@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -54,62 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Zhang Lixu <lixu.zhang@intel.com>
 
-[ Upstream commit 4ce62d5b2f7aecd4900e7d6115588ad7f9acccca ]
+[ Upstream commit 92826905ae340b7f2b25759a06c8c60bfc476b9f ]
 
-Some usb drivers try to set small skb->truesize and break
-core networking stacks.
+The variable dev->devc in ish_dev_init was utilized by dev_err before it
+was properly assigned. To rectify this, the assignment of dev->devc has
+been moved to immediately follow memory allocation.
 
-In this patch, I removed one of the skb->truesize overide.
+Without this change "(NULL device *)" is printed for device information.
 
-I also replaced one skb_clone() by an allocation of a fresh
-and small skb, to get minimally sized skbs, like we did
-in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
-in rx path")
-
-Fixes: f8ebb3ac881b ("net: usb: ax88179_178a: Fix packet receiving")
-Reported-by: shironeko <shironeko@tesaguri.club>
-Closes: https://lore.kernel.org/netdev/c110f41a0d2776b525930f213ca9715c@tesaguri.club/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Jose Alonso <joalonsof@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240421193828.1966195-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8ae2f2b0a284 ("HID: intel-ish-hid: ipc: Fix potential use-after-free in work function")
+Fixes: ae02e5d40d5f ("HID: intel-ish-hid: ipc layer")
+Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/ax88179_178a.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/hid/intel-ish-hid/ipc/ipc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/ax88179_178a.c b/drivers/net/usb/ax88179_178a.c
-index f11748cc5b228..868fad2f8c78a 100644
---- a/drivers/net/usb/ax88179_178a.c
-+++ b/drivers/net/usb/ax88179_178a.c
-@@ -1478,21 +1478,16 @@ static int ax88179_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 			/* Skip IP alignment pseudo header */
- 			skb_pull(skb, 2);
+diff --git a/drivers/hid/intel-ish-hid/ipc/ipc.c b/drivers/hid/intel-ish-hid/ipc/ipc.c
+index 6c942dd1abca2..ba45605fc6b52 100644
+--- a/drivers/hid/intel-ish-hid/ipc/ipc.c
++++ b/drivers/hid/intel-ish-hid/ipc/ipc.c
+@@ -944,6 +944,7 @@ struct ishtp_device *ish_dev_init(struct pci_dev *pdev)
+ 	if (!dev)
+ 		return NULL;
  
--			skb->truesize = SKB_TRUESIZE(pkt_len_plus_padd);
- 			ax88179_rx_checksum(skb, pkt_hdr);
- 			return 1;
- 		}
++	dev->devc = &pdev->dev;
+ 	ishtp_device_init(dev);
  
--		ax_skb = skb_clone(skb, GFP_ATOMIC);
-+		ax_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len);
- 		if (!ax_skb)
- 			return 0;
--		skb_trim(ax_skb, pkt_len);
-+		skb_put(ax_skb, pkt_len);
-+		memcpy(ax_skb->data, skb->data + 2, pkt_len);
+ 	init_waitqueue_head(&dev->wait_hw_ready);
+@@ -979,7 +980,6 @@ struct ishtp_device *ish_dev_init(struct pci_dev *pdev)
+ 	}
  
--		/* Skip IP alignment pseudo header */
--		skb_pull(ax_skb, 2);
--
--		skb->truesize = pkt_len_plus_padd +
--				SKB_DATA_ALIGN(sizeof(struct sk_buff));
- 		ax88179_rx_checksum(ax_skb, pkt_hdr);
- 		usbnet_skb_return(dev, ax_skb);
- 
+ 	dev->ops = &ish_hw_ops;
+-	dev->devc = &pdev->dev;
+ 	dev->mtu = IPC_PAYLOAD_SIZE - sizeof(struct ishtp_msg_hdr);
+ 	return dev;
+ }
 -- 
 2.43.0
 
