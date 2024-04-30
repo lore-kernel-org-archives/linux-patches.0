@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD3B12B176;
-	Tue, 30 Apr 2024 11:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989E412C801;
+	Tue, 30 Apr 2024 11:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474978; cv=none; b=SQ537hyelS/6fN8D5FZ7BEFTvTmeha9JaOHJZHJSbcVWmM7I/wBdALISdJJMRYKPweduLe3YlMPzGzrNhCHA7w0Cz9DT4cKEOWtpIMev0zR1QPcAJp/vAkTmeWFxezzU/c2l+DAZ0sTfDSoEeVnszotSq70tMdojU/UeA1vKTlY=
+	t=1714474981; cv=none; b=m5qav1gXECQLv7NhA87ExjCARnbR6ZMmXDRtVygtY/x+uQQQnQo+Riy+QV5YFgFnh01x4/SaLQ2yIPw/rkCEXlZ8NvltHr20qv/7QocW3/X417xTPLpgCMgkNUSi6u2KSc5SrApCvhiHFGLuyyXEPIrxfP3PbOJ5tG6ssw6T8VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474978; c=relaxed/simple;
-	bh=tNvJq4yWdumy6L1pOSZE+5RgacrnDt5ld/ZKY74HaCU=;
+	s=arc-20240116; t=1714474981; c=relaxed/simple;
+	bh=GZ45Rssixe6/htk9FPrGhTBkpDjTcYsgKxSr1C6M8FM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HOOnZQ6ZAcx7bpYckigbOtyNAU4oavms5W7WHLLJc7I9qBAF9jYo8rsI4T+4QuX5Reb6McBehjErXSVdXMYM+Oktp1q+XTHc3TqCN1wzzDBNBReQrxCRBxAyqVAD/5WTNwzPEuDCIy2nPuIzMl4XRR9OcbBgqLr3zCfWhrt/Ths=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFncKIC+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NXgX2I3XaJn7rvhtBkxpmAvwe0qc2sY46YF9VAthYT7UrKlJ0rkrSoLUW/hJBNotJMDyJw6kAdLFM1poAIcXcO5TtP4a8hxv+3TCYK71Qb2CRzSeBtUxMEKbW/JLaK81XJWSJgfu+AD+b0+UgfOKpJscaCNmudtI4kBNZ2hB06o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEU3vY1R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFncKIC+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9764C4AF19;
-	Tue, 30 Apr 2024 11:02:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEU3vY1R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 089D3C2BBFC;
+	Tue, 30 Apr 2024 11:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474978;
-	bh=tNvJq4yWdumy6L1pOSZE+5RgacrnDt5ld/ZKY74HaCU=;
+	s=korg; t=1714474981;
+	bh=GZ45Rssixe6/htk9FPrGhTBkpDjTcYsgKxSr1C6M8FM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFncKIC+oght0O1hN3BocLbIy4TWnKjf3NNpVkez73Nb5HtgZKiogTHE5MNiyvf6+
-	 O9UOyIpzIrSDmlhiKGp2SuVE6XFKswX6qRqk1k17gqIs89H+A+DBOQ6KiCge6ZCTb3
-	 zZ55JAge7BoO7fpl7Pk7PfDdEvc8H+EiRLTyqrKs=
+	b=cEU3vY1R8k4L7VsORDEUIF6lE5eNWKvsxTEGjat0tfJ8k/aNaEobq5Md4EO5PhhZx
+	 YV/T/rdYz7rdg2Sb4C2ad6lYkqPGO17Jr+Fo8+tJoMn5ZCegsLsyZM50fK76Odsg6v
+	 eppioEn6lKkMzimBfdHDNtZOSxs47xbBsHlMeEVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 095/138] mlxsw: spectrum_acl_tcam: Fix possible use-after-free during rehash
-Date: Tue, 30 Apr 2024 12:39:40 +0200
-Message-ID: <20240430103052.212883130@linuxfoundation.org>
+Subject: [PATCH 5.10 096/138] mlxsw: spectrum_acl_tcam: Rate limit error message
+Date: Tue, 30 Apr 2024 12:39:41 +0200
+Message-ID: <20240430103052.241409133@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -56,99 +56,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 54225988889931467a9b55fdbef534079b665519 ]
+[ Upstream commit 5bcf925587e9b5d36420d572a0b4d131c90fb306 ]
 
-The rehash delayed work migrates filters from one region to another
-according to the number of available credits.
+In the rare cases when the device resources are exhausted it is likely
+that the rehash delayed work will fail. An error message will be printed
+whenever this happens which can be overwhelming considering the fact
+that the work is per-region and that there can be hundreds of regions.
 
-The migrated from region is destroyed at the end of the work if the
-number of credits is non-negative as the assumption is that this is
-indicative of migration being complete. This assumption is incorrect as
-a non-negative number of credits can also be the result of a failed
-migration.
+Fix by rate limiting the error message.
 
-The destruction of a region that still has filters referencing it can
-result in a use-after-free [1].
-
-Fix by not destroying the region if migration failed.
-
-[1]
-BUG: KASAN: slab-use-after-free in mlxsw_sp_acl_ctcam_region_entry_remove+0x21d/0x230
-Read of size 8 at addr ffff8881735319e8 by task kworker/0:31/3858
-
-CPU: 0 PID: 3858 Comm: kworker/0:31 Tainted: G        W          6.9.0-rc2-custom-00782-gf2275c2157d8 #5
-Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
-Workqueue: mlxsw_core mlxsw_sp_acl_tcam_vregion_rehash_work
-Call Trace:
- <TASK>
- dump_stack_lvl+0xc6/0x120
- print_report+0xce/0x670
- kasan_report+0xd7/0x110
- mlxsw_sp_acl_ctcam_region_entry_remove+0x21d/0x230
- mlxsw_sp_acl_ctcam_entry_del+0x2e/0x70
- mlxsw_sp_acl_atcam_entry_del+0x81/0x210
- mlxsw_sp_acl_tcam_vchunk_migrate_all+0x3cd/0xb50
- mlxsw_sp_acl_tcam_vregion_rehash_work+0x157/0x1300
- process_one_work+0x8eb/0x19b0
- worker_thread+0x6c9/0xf70
- kthread+0x2c9/0x3b0
- ret_from_fork+0x4d/0x80
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-Allocated by task 174:
- kasan_save_stack+0x33/0x60
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x8f/0xa0
- __kmalloc+0x19c/0x360
- mlxsw_sp_acl_tcam_region_create+0xdf/0x9c0
- mlxsw_sp_acl_tcam_vregion_rehash_work+0x954/0x1300
- process_one_work+0x8eb/0x19b0
- worker_thread+0x6c9/0xf70
- kthread+0x2c9/0x3b0
- ret_from_fork+0x4d/0x80
- ret_from_fork_asm+0x1a/0x30
-
-Freed by task 7:
- kasan_save_stack+0x33/0x60
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3b/0x60
- poison_slab_object+0x102/0x170
- __kasan_slab_free+0x14/0x30
- kfree+0xc1/0x290
- mlxsw_sp_acl_tcam_region_destroy+0x272/0x310
- mlxsw_sp_acl_tcam_vregion_rehash_work+0x731/0x1300
- process_one_work+0x8eb/0x19b0
- worker_thread+0x6c9/0xf70
- kthread+0x2c9/0x3b0
- ret_from_fork+0x4d/0x80
- ret_from_fork_asm+0x1a/0x30
-
-Fixes: c9c9af91f1d9 ("mlxsw: spectrum_acl: Allow to interrupt/continue rehash work")
+Fixes: e5e7962ee5c2 ("mlxsw: spectrum_acl: Implement region migration according to hints")
 Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Tested-by: Alexander Zubkov <green@qrator.net>
 Reviewed-by: Petr Machata <petrm@nvidia.com>
 Signed-off-by: Petr Machata <petrm@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/3e412b5659ec2310c5c615760dfe5eac18dd7ebd.1713797103.git.petrm@nvidia.com
+Link: https://lore.kernel.org/r/c510763b2ebd25e7990d80183feff91cde593145.1713797103.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index f663cb0fd19a3..a60d511f00eaa 100644
+index a60d511f00eaa..cdad4772b60a0 100644
 --- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
 +++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -1481,6 +1481,7 @@ mlxsw_sp_acl_tcam_vregion_rehash(struct mlxsw_sp *mlxsw_sp,
+@@ -1480,7 +1480,7 @@ mlxsw_sp_acl_tcam_vregion_rehash(struct mlxsw_sp *mlxsw_sp,
+ 	err = mlxsw_sp_acl_tcam_vregion_migrate(mlxsw_sp, vregion,
  						ctx, credits);
  	if (err) {
- 		dev_err(mlxsw_sp->bus_info->dev, "Failed to migrate vregion\n");
-+		return;
+-		dev_err(mlxsw_sp->bus_info->dev, "Failed to migrate vregion\n");
++		dev_err_ratelimited(mlxsw_sp->bus_info->dev, "Failed to migrate vregion\n");
+ 		return;
  	}
  
- 	if (*credits >= 0)
 -- 
 2.43.0
 
