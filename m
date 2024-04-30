@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8797312B176;
-	Tue, 30 Apr 2024 11:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAB812D215;
+	Tue, 30 Apr 2024 11:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475030; cv=none; b=lT5HVM0MUAPfiTRzckDLC5LPYZWtJrqP0U/sol0Pj9KpicLeuPTnW3ODKPHCWmUyLVz1Chfkn2B2pOcXlYVUmW1nnuXpU22ZH1CM89rfY64FYjr24vIheIJfHJwWAKkXupu0tAxkPq6R4/YTx+s0ivUUQ+7DN/etVypS87lOHHw=
+	t=1714475034; cv=none; b=qczPX4/hYIkoOfhXLNFCELehjfTnZVI2z7dMqLYndOFqakqebpEa/T1YAvFkmuTvwsUpFSFobLlcWamdLqr674Z6iHKpimoDKwU8Dn4vzGc03H6tzwOKrvCX64cFD75eKbAco6tUQURbmTw4wprR7RxHZFMTSJGVMnX8BRR8Q4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475030; c=relaxed/simple;
-	bh=KE2hPOFnxxYxHNxmud4GXmpxpbeY0kqq/j82VP6E7bc=;
+	s=arc-20240116; t=1714475034; c=relaxed/simple;
+	bh=s5HtLo6wUIcDvY2GnloYrw9PZ+5JaOVRb9Mn7qGv6gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QrXhlwhk/Zpdfg7W4g9AT/WrjA245isHj9V8Q7M4kvsAq3ByQKtFSCoPFyhFYDEduO+cZD+07Q0xcpHu7ACKm08/i+Kv7safjHaAzlKwBa7TOQxKzP/LeGKMMhu0poFbTx1aYZrPZjWJzGOc9n8Znc8MHLrEuGBxtQ/gpOssi+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+r6oYRU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LNZPQ1O4ifrID7OI4oaBKuWGWRqY0W28TOV5W3vGjoxEEhw51rwwHcG0Y7pEVB3nUV5O/WqVHaKQDXW6+h5iotabxrr1apySH09seeo9QM2CioHX63JrOVSoIFFyi942T5xzgBTrHpHiF+RYwGhlg82drPu3WfET5lJBfbJf5WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYVvnrVK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+r6oYRU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06733C2BBFC;
-	Tue, 30 Apr 2024 11:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYVvnrVK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25348C4AF1C;
+	Tue, 30 Apr 2024 11:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475030;
-	bh=KE2hPOFnxxYxHNxmud4GXmpxpbeY0kqq/j82VP6E7bc=;
+	s=korg; t=1714475033;
+	bh=s5HtLo6wUIcDvY2GnloYrw9PZ+5JaOVRb9Mn7qGv6gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s+r6oYRUJ7NRdKYDBBpylvsLWesuqKPDMKHgxDgESnJpO/RwsVhvtxqb4L2DKFX2X
-	 qonieMi4whkgYcVBt2accbjW+Gap4Eu8cXn/ixZQiA/uns8aYID3g3NhSMLiazxmdi
-	 YnipSTfFUTPvTPBa5yDN+Us42DqHBL2wVbqSDhLA=
+	b=GYVvnrVKR3AYUFqfan5v+LeZbsjRwI0n3WqnZh4/38scWYC2SP6ljVsgiC7l67D5q
+	 MaCD6SCHRQ9GEeOK/hvtHlx+VHiHn5IIxXnOc+Qzx/wBRqcdf+rurmhNmCr5WtGiy8
+	 KeeOg/pFJG71rbag00z0GpZv8vj3tDJg66i0bj5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Shifeng Li <lishifeng@sangfor.com.cn>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Subject: [PATCH 5.10 110/138] net/mlx5e: Fix a race in command alloc flow
-Date: Tue, 30 Apr 2024 12:39:55 +0200
-Message-ID: <20240430103052.648236458@linuxfoundation.org>
+	Avraham Stern <avraham.stern@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 084/138] wifi: iwlwifi: mvm: remove old PASN station when adding a new one
+Date: Tue, 30 Apr 2024 12:39:29 +0200
+Message-ID: <20240430103051.893656709@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -52,122 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shifeng Li <lishifeng@sangfor.com.cn>
+From: Avraham Stern <avraham.stern@intel.com>
 
-commit 8f5100da56b3980276234e812ce98d8f075194cd upstream.
+[ Upstream commit dbfff5bf9292714f02ace002fea8ce6599ea1145 ]
 
-Fix a cmd->ent use after free due to a race on command entry.
-Such race occurs when one of the commands releases its last refcount and
-frees its index and entry while another process running command flush
-flow takes refcount to this command entry. The process which handles
-commands flush may see this command as needed to be flushed if the other
-process allocated a ent->idx but didn't set ent to cmd->ent_arr in
-cmd_work_handler(). Fix it by moving the assignment of cmd->ent_arr into
-the spin lock.
+If a PASN station is added, and an old PASN station already exists
+for the same mac address, remove the old station before adding the
+new one. Keeping the old station caueses old security context to
+be used in measurements.
 
-[70013.081955] BUG: KASAN: use-after-free in mlx5_cmd_trigger_completions+0x1e2/0x4c0 [mlx5_core]
-[70013.081967] Write of size 4 at addr ffff88880b1510b4 by task kworker/26:1/1433361
-[70013.081968]
-[70013.082028] Workqueue: events aer_isr
-[70013.082053] Call Trace:
-[70013.082067]  dump_stack+0x8b/0xbb
-[70013.082086]  print_address_description+0x6a/0x270
-[70013.082102]  kasan_report+0x179/0x2c0
-[70013.082173]  mlx5_cmd_trigger_completions+0x1e2/0x4c0 [mlx5_core]
-[70013.082267]  mlx5_cmd_flush+0x80/0x180 [mlx5_core]
-[70013.082304]  mlx5_enter_error_state+0x106/0x1d0 [mlx5_core]
-[70013.082338]  mlx5_try_fast_unload+0x2ea/0x4d0 [mlx5_core]
-[70013.082377]  remove_one+0x200/0x2b0 [mlx5_core]
-[70013.082409]  pci_device_remove+0xf3/0x280
-[70013.082439]  device_release_driver_internal+0x1c3/0x470
-[70013.082453]  pci_stop_bus_device+0x109/0x160
-[70013.082468]  pci_stop_and_remove_bus_device+0xe/0x20
-[70013.082485]  pcie_do_fatal_recovery+0x167/0x550
-[70013.082493]  aer_isr+0x7d2/0x960
-[70013.082543]  process_one_work+0x65f/0x12d0
-[70013.082556]  worker_thread+0x87/0xb50
-[70013.082571]  kthread+0x2e9/0x3a0
-[70013.082592]  ret_from_fork+0x1f/0x40
-
-The logical relationship of this error is as follows:
-
-             aer_recover_work              |          ent->work
--------------------------------------------+------------------------------
-aer_recover_work_func                      |
-|- pcie_do_recovery                        |
-  |- report_error_detected                 |
-    |- mlx5_pci_err_detected               |cmd_work_handler
-      |- mlx5_enter_error_state            |  |- cmd_alloc_index
-        |- enter_error_state               |    |- lock cmd->alloc_lock
-          |- mlx5_cmd_flush                |    |- clear_bit
-            |- mlx5_cmd_trigger_completions|    |- unlock cmd->alloc_lock
-              |- lock cmd->alloc_lock      |
-              |- vector = ~dev->cmd.vars.bitmask
-              |- for_each_set_bit          |
-                |- cmd_ent_get(cmd->ent_arr[i]) (UAF)
-              |- unlock cmd->alloc_lock    |  |- cmd->ent_arr[ent->idx]=ent
-
-The cmd->ent_arr[ent->idx] assignment and the bit clearing are not
-protected by the cmd->alloc_lock in cmd_work_handler().
-
-Fixes: 50b2412b7e78 ("net/mlx5: Avoid possible free of command entry while timeout comp handler")
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Shifeng Li <lishifeng@sangfor.com.cn>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0739a7d70e00 ("iwlwifi: mvm: initiator: add option for adding a PASN responder")
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240415114847.ef3544a416f2.I4e8c7c8ca22737f4f908ae5cd4fc0b920c703dd3@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/ftm-initiator.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -114,15 +114,18 @@ static u8 alloc_token(struct mlx5_cmd *c
- 	return token;
- }
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ftm-initiator.c b/drivers/net/wireless/intel/iwlwifi/mvm/ftm-initiator.c
+index b1335fe3b01a2..e2df8ddc1a56a 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/ftm-initiator.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/ftm-initiator.c
+@@ -106,6 +106,8 @@ int iwl_mvm_ftm_add_pasn_sta(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
+ 	if (!pasn)
+ 		return -ENOBUFS;
  
--static int cmd_alloc_index(struct mlx5_cmd *cmd)
-+static int cmd_alloc_index(struct mlx5_cmd *cmd, struct mlx5_cmd_work_ent *ent)
- {
- 	unsigned long flags;
- 	int ret;
++	iwl_mvm_ftm_remove_pasn_sta(mvm, addr);
++
+ 	pasn->cipher = iwl_mvm_cipher_to_location_cipher(cipher);
  
- 	spin_lock_irqsave(&cmd->alloc_lock, flags);
- 	ret = find_first_bit(&cmd->bitmask, cmd->max_reg_cmds);
--	if (ret < cmd->max_reg_cmds)
-+	if (ret < cmd->max_reg_cmds) {
- 		clear_bit(ret, &cmd->bitmask);
-+		ent->idx = ret;
-+		cmd->ent_arr[ent->idx] = ent;
-+	}
- 	spin_unlock_irqrestore(&cmd->alloc_lock, flags);
- 
- 	return ret < cmd->max_reg_cmds ? ret : -ENOMEM;
-@@ -912,7 +915,7 @@ static void cmd_work_handler(struct work
- 	sem = ent->page_queue ? &cmd->pages_sem : &cmd->sem;
- 	down(sem);
- 	if (!ent->page_queue) {
--		alloc_ret = cmd_alloc_index(cmd);
-+		alloc_ret = cmd_alloc_index(cmd, ent);
- 		if (alloc_ret < 0) {
- 			mlx5_core_err_rl(dev, "failed to allocate command entry\n");
- 			if (ent->callback) {
-@@ -927,15 +930,14 @@ static void cmd_work_handler(struct work
- 			up(sem);
- 			return;
- 		}
--		ent->idx = alloc_ret;
- 	} else {
- 		ent->idx = cmd->max_reg_cmds;
- 		spin_lock_irqsave(&cmd->alloc_lock, flags);
- 		clear_bit(ent->idx, &cmd->bitmask);
-+		cmd->ent_arr[ent->idx] = ent;
- 		spin_unlock_irqrestore(&cmd->alloc_lock, flags);
- 	}
- 
--	cmd->ent_arr[ent->idx] = ent;
- 	lay = get_inst(cmd, ent->idx);
- 	ent->lay = lay;
- 	memset(lay, 0, sizeof(*lay));
+ 	switch (pasn->cipher) {
+-- 
+2.43.0
+
 
 
