@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B757464;
-	Tue, 30 Apr 2024 10:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781EA7464;
+	Tue, 30 Apr 2024 10:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474790; cv=none; b=QN8H75UiQHP9cTfJd79sSS9uo17w0uPukp7UleNSfTsAJUD3D7vydAfc4TmM3UWaqCgpaCrbhiMP1MR5olC6/V67G5QEsZrBgMf3XgIsZzVZ8thKaKsRcXfZ07nlrxJMXUUQkDF+T+3FTee8yD+GMKZp/gtPEcN5bEDASB386KU=
+	t=1714474793; cv=none; b=dKh3+INN6FgxMa/MS6y6rqhV29sFOZmMvJk8kEpUVofR8x5MR1F1iQlsIEA8NES0l+zyHB5zasZ438S/HCSlGfDk1k/zoVnSJf+TcqQoPnFu2/swbYcMYl/epmF8mcpD9y8d3r/pps1DulzmftW/Swisq9k9y7ELbiaXer3AxJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474790; c=relaxed/simple;
-	bh=HtNmzvynLCxq5xKdbFT3KlL+LkgWnK6dKS/wRjeND5I=;
+	s=arc-20240116; t=1714474793; c=relaxed/simple;
+	bh=QE0ozTjOGAqffMoR7bJCZEq1hXarnmqW90mZxp1nUjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCl8wzyb4wFtALPxkn74rcT8UXB2Qb4N9OO9OGcFASEa/l/t8hmdlb2up9Wu41vGoe7RBMSZhg0hwNPxNLSknJLln22DKHr8VNCTA/wD0ioBu5E+w+93Ra98SEz5qZwdE6tGIdVZ9cv8bz3wDYdjVz3tb0rS+7bTF0LyR21wwzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEk96hip; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=la5eqLmUUAVHiEKWZC3V7zKs8OksgfMBfEjNolhaWyybfMrQwMqPySwO3CpLKkwsZ1n4E8xy72nj1q7IOcRvZh33gIAoaiMBzXI+BqXcHXbJwdhQ0yg+KF/+wDp5t1AKkex1Q1z1YC26PmTNzsdqbo5wfnQX7LoflSuk5n4k0cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7PCsvtO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEk96hip"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B1AC2BBFC;
-	Tue, 30 Apr 2024 10:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7PCsvtO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF22C2BBFC;
+	Tue, 30 Apr 2024 10:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474790;
-	bh=HtNmzvynLCxq5xKdbFT3KlL+LkgWnK6dKS/wRjeND5I=;
+	s=korg; t=1714474793;
+	bh=QE0ozTjOGAqffMoR7bJCZEq1hXarnmqW90mZxp1nUjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YEk96hipKT5oL62cwZNt1w8RoCiMeO2DGz/UayEgekJe8Yr7ELFTWbJyKVv1mgdZo
-	 HI8EeUO9vaW6Hm9qcHNov7LKDxQfAdWUdvCbJytu6vcftrOBzGKIDqBY5r9HmZ0Bu1
-	 bpnw6p+246G/ex0LNT4aSKi2BoYYSkOayD9cRLW4=
+	b=V7PCsvtOJrmMws18u1kuf6OX25JOLHfTY/fYy26O4U+84Mf71Wq8poRe9SnivBr5b
+	 prCWONTUgZNXTHgraxJuQxYneIgeLIsVEvDoZhJYhIbNDpmHmcjDjtk0HwZeropRlA
+	 DDqE5OtfHywDQoD8kNR+Sl9ww2oxQuNpnrF395OY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
-	stable@kernel.org
-Subject: [PATCH 5.10 035/138] Revert "tracing/trigger: Fix to return error if failed to alloc snapshot"
-Date: Tue, 30 Apr 2024 12:38:40 +0200
-Message-ID: <20240430103050.464958146@linuxfoundation.org>
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 036/138] netfilter: nf_tables: Fix potential data-race in __nft_expr_type_get()
+Date: Tue, 30 Apr 2024 12:38:41 +0200
+Message-ID: <20240430103050.495694063@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -50,50 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-This reverts commit 56cfbe60710772916a5ba092c99542332b48e870 which is
-commit 0958b33ef5a04ed91f61cef4760ac412080c4e08 upstream.
+[ Upstream commit f969eb84ce482331a991079ab7a5c4dc3b7f89bf ]
 
-The change has an incorrect assumption about the return value because
-in the current stable trees for versions 5.15 and before, the following
-commit responsible for making 0 a success value is not present:
-b8cc44a4d3c1 ("tracing: Remove logic for registering multiple event triggers at a time")
+nft_unregister_expr() can concurrent with __nft_expr_type_get(),
+and there is not any protection when iterate over nf_tables_expressions
+list in __nft_expr_type_get(). Therefore, there is potential data-race
+of nf_tables_expressions list entry.
 
-The return value should be 0 on failure in the current tree, because in
-the functions event_trigger_callback() and event_enable_trigger_func(),
-we have:
+Use list_for_each_entry_rcu() to iterate over nf_tables_expressions
+list in __nft_expr_type_get(), and use rcu_read_lock() in the caller
+nft_expr_type_get() to protect the entire type query process.
 
-	ret = cmd_ops->reg(glob, trigger_ops, trigger_data, file);
-	/*
-	 * The above returns on success the # of functions enabled,
-	 * but if it didn't find any functions it returns zero.
-	 * Consider no functions a failure too.
-	 */
-	if (!ret) {
-		ret = -ENOENT;
-
-Cc: stable@kernel.org # 5.15, 5.10, 5.4, 4.19
-Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ef1f7df9170d ("netfilter: nf_tables: expression ops overloading")
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_trigger.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/netfilter/nf_tables_api.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_events_trigger.c
-+++ b/kernel/trace/trace_events_trigger.c
-@@ -1140,10 +1140,8 @@ register_snapshot_trigger(char *glob, st
- 			  struct event_trigger_data *data,
- 			  struct trace_event_file *file)
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index ab7f7e45b9846..858d09b54eaa4 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -2739,7 +2739,7 @@ static const struct nft_expr_type *__nft_expr_type_get(u8 family,
  {
--	int ret = tracing_alloc_snapshot_instance(file->tr);
--
--	if (ret < 0)
--		return ret;
-+	if (tracing_alloc_snapshot_instance(file->tr) != 0)
-+		return 0;
+ 	const struct nft_expr_type *type, *candidate = NULL;
  
- 	return register_trigger(glob, ops, data, file);
- }
+-	list_for_each_entry(type, &nf_tables_expressions, list) {
++	list_for_each_entry_rcu(type, &nf_tables_expressions, list) {
+ 		if (!nla_strcmp(nla, type->name)) {
+ 			if (!type->family && !candidate)
+ 				candidate = type;
+@@ -2771,9 +2771,13 @@ static const struct nft_expr_type *nft_expr_type_get(struct net *net,
+ 	if (nla == NULL)
+ 		return ERR_PTR(-EINVAL);
+ 
++	rcu_read_lock();
+ 	type = __nft_expr_type_get(family, nla);
+-	if (type != NULL && try_module_get(type->owner))
++	if (type != NULL && try_module_get(type->owner)) {
++		rcu_read_unlock();
+ 		return type;
++	}
++	rcu_read_unlock();
+ 
+ 	lockdep_nfnl_nft_mutex_not_held();
+ #ifdef CONFIG_MODULES
+-- 
+2.43.0
+
 
 
