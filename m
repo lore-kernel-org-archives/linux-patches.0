@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83A317592;
-	Tue, 30 Apr 2024 11:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0575717592;
+	Tue, 30 Apr 2024 11:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476305; cv=none; b=idcl3YZtU0ER4EO7fnLCC8GQr9MTYNCktXhelRe1DUCNc4BxV+eo2o6qtsSqUXTC8uAtsAb8BnaECxTzZfkdTCT+GeMSO5sN1IUuiy3ClG2ShTw/on0CApdG8esDgZ894ZHtF7lJM/X9qBfdffsosuhZfjT1kKX+OxHYvRWdOsQ=
+	t=1714476308; cv=none; b=S9r7vGZbL4J+yr/geF8Idtv7SueakKWofO5sEHxrR3YJqxI66dOuArwHhvF9/R3cfclmmkJ1bSFdtGSYI6g7x33a+BaOgZDZdDBmSAfdaPA7aYo3HxirHfZ2DtmaV7s+g75corCHRYmzhnNdnBwt1xrKIXPM2C4I7ABh9m4ApAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476305; c=relaxed/simple;
-	bh=DXW2NIzk+2v+4uYTB/qeozxDiRfcbgkJSPRfSJPcFE4=;
+	s=arc-20240116; t=1714476308; c=relaxed/simple;
+	bh=rMgRMbReZJ4SKrtFD7J/pEbF0mN+RvzUweNjfTWfH5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i/l90uT/QzBzbeUXAckGH48JoIVLQl+hN93uVlxa5SMDRXd6DKn7X51fAaqr+LVKHwX2A7aOp5XgKLbIDxZaZAIJSI23iXNf5u1+kwJXXwZU/wlSsiI7DtnhOpfefpsyyJO/c6Fo9Iayw5ePbZxKr/aDfE2ji6/nabfTMnm+mC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ge+Rl7b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XAgkgWaOXIF/aukcwcdHYLP+SFUaJtw2Sdmkku8W9Kg6jn5Nw1CyEA5obn+wfJBPRbmOg+47DHq6lQu3BSL6k0KsF8PVlxr9ivo1UmCYcdknhdU3M5b68nVuO4r5QqxdcLfCD7U6AQZap9JTHmoBlur6JiYq0qYQSKoCy4eUi6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqIdHto5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ge+Rl7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643AAC2BBFC;
-	Tue, 30 Apr 2024 11:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqIdHto5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696E8C2BBFC;
+	Tue, 30 Apr 2024 11:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476304;
-	bh=DXW2NIzk+2v+4uYTB/qeozxDiRfcbgkJSPRfSJPcFE4=;
+	s=korg; t=1714476307;
+	bh=rMgRMbReZJ4SKrtFD7J/pEbF0mN+RvzUweNjfTWfH5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ge+Rl7b0TAuY/54bxaxn5x27mI0stliSr3yFiqyCIaTl6QxIFeWzGrECB4uqwiks
-	 gnznKqgt+nLn5ggsfwcl6bE+/wfVrwK0CO7V8gTj4sGrlDGpx+Xx/ukRviIENix91M
-	 rUWQW+MyN403VCbZkPBSofBe4ub6a7xFWrL0jdy8=
+	b=NqIdHto528dBXfX3oeJCjFGtpsG661xFyC0Hj3btKkhdGl2lXoml7p7CQDZkMvyn3
+	 Y8alJ4dthYi+6saKJ4qOnoS1UlMCKl8moEGl55kgXWfzcXMryiKvKgfd+ZlQuGdKvM
+	 nYnAtrWFpCpq97HZkbbyGBqtKMy8cMAPwF7f1D7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Zhengchao Shao <shaozhengchao@huawei.com>
-Subject: [PATCH 5.4 099/107] tcp: Fix NEW_SYN_RECV handling in inet_twsk_purge()
-Date: Tue, 30 Apr 2024 12:40:59 +0200
-Message-ID: <20240430103047.580639725@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Peter Korsgaard <peter@korsgaard.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 100/107] dmaengine: owl: fix register access functions
+Date: Tue, 30 Apr 2024 12:41:00 +0200
+Message-ID: <20240430103047.609775874@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -51,113 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 1c4e97dd2d3c9a3e84f7e26346aa39bc426d3249 upstream.
+[ Upstream commit 43c633ef93a5d293c96ebcedb40130df13128428 ]
 
-inet_twsk_purge() uses rcu to find TIME_WAIT and NEW_SYN_RECV
-objects to purge.
+When building with 'make W=1', clang notices that the computed register
+values are never actually written back but instead the wrong variable
+is set:
 
-These objects use SLAB_TYPESAFE_BY_RCU semantic and need special
-care. We need to use refcount_inc_not_zero(&sk->sk_refcnt).
+drivers/dma/owl-dma.c:244:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
+  244 |         u32 regval;
+      |             ^
+drivers/dma/owl-dma.c:268:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
+  268 |         u32 regval;
+      |             ^
 
-Reuse the existing correct logic I wrote for TIME_WAIT,
-because both structures have common locations for
-sk_state, sk_family, and netns pointer.
+Change these to what was most likely intended.
 
-If after the refcount_inc_not_zero() the object fields longer match
-the keys, use sock_gen_put(sk) to release the refcount.
-
-Then we can call inet_twsk_deschedule_put() for TIME_WAIT,
-inet_csk_reqsk_queue_drop_and_put() for NEW_SYN_RECV sockets,
-with BH disabled.
-
-Then we need to restart the loop because we had drop rcu_read_lock().
-
-Fixes: 740ea3c4a0b2 ("tcp: Clean up kernel listener's reqsk in inet_twsk_purge()")
-Link: https://lore.kernel.org/netdev/CANn89iLvFuuihCtt9PME2uS1WJATnf5fKjDToa1WzVnRzHnPfg@mail.gmail.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240308200122.64357-2-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[shaozhengchao: resolved conflicts in 5.10]
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 47e20577c24d ("dmaengine: Add Actions Semi Owl family S900 DMA driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Peter Korsgaard <peter@korsgaard.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240322132116.906475-1-arnd@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_timewait_sock.c |   41 +++++++++++++++++++----------------------
- 1 file changed, 19 insertions(+), 22 deletions(-)
+ drivers/dma/owl-dma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/ipv4/inet_timewait_sock.c
-+++ b/net/ipv4/inet_timewait_sock.c
-@@ -254,12 +254,12 @@ void __inet_twsk_schedule(struct inet_ti
+diff --git a/drivers/dma/owl-dma.c b/drivers/dma/owl-dma.c
+index bb9c361e224bc..3e4ade21cf413 100644
+--- a/drivers/dma/owl-dma.c
++++ b/drivers/dma/owl-dma.c
+@@ -238,7 +238,7 @@ static void pchan_update(struct owl_dma_pchan *pchan, u32 reg,
+ 	else
+ 		regval &= ~val;
+ 
+-	writel(val, pchan->base + reg);
++	writel(regval, pchan->base + reg);
  }
- EXPORT_SYMBOL_GPL(__inet_twsk_schedule);
  
-+/* Remove all non full sockets (TIME_WAIT and NEW_SYN_RECV) for dead netns */
- void inet_twsk_purge(struct inet_hashinfo *hashinfo, int family)
- {
--	struct inet_timewait_sock *tw;
--	struct sock *sk;
- 	struct hlist_nulls_node *node;
- 	unsigned int slot;
-+	struct sock *sk;
+ static void pchan_writel(struct owl_dma_pchan *pchan, u32 reg, u32 data)
+@@ -262,7 +262,7 @@ static void dma_update(struct owl_dma *od, u32 reg, u32 val, bool state)
+ 	else
+ 		regval &= ~val;
  
- 	for (slot = 0; slot <= hashinfo->ehash_mask; slot++) {
- 		struct inet_ehash_bucket *head = &hashinfo->ehash[slot];
-@@ -268,38 +268,35 @@ restart_rcu:
- 		rcu_read_lock();
- restart:
- 		sk_nulls_for_each_rcu(sk, node, &head->chain) {
--			if (sk->sk_state != TCP_TIME_WAIT) {
--				/* A kernel listener socket might not hold refcnt for net,
--				 * so reqsk_timer_handler() could be fired after net is
--				 * freed.  Userspace listener and reqsk never exist here.
--				 */
--				if (unlikely(sk->sk_state == TCP_NEW_SYN_RECV &&
--					     hashinfo->pernet)) {
--					struct request_sock *req = inet_reqsk(sk);
--
--					inet_csk_reqsk_queue_drop_and_put(req->rsk_listener, req);
--				}
-+			int state = inet_sk_state_load(sk);
+-	writel(val, od->base + reg);
++	writel(regval, od->base + reg);
+ }
  
-+			if ((1 << state) & ~(TCPF_TIME_WAIT |
-+					     TCPF_NEW_SYN_RECV))
- 				continue;
--			}
- 
--			tw = inet_twsk(sk);
--			if ((tw->tw_family != family) ||
--				refcount_read(&twsk_net(tw)->count))
-+			if (sk->sk_family != family ||
-+			    refcount_read(&sock_net(sk)->count))
- 				continue;
- 
--			if (unlikely(!refcount_inc_not_zero(&tw->tw_refcnt)))
-+			if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
- 				continue;
- 
--			if (unlikely((tw->tw_family != family) ||
--				     refcount_read(&twsk_net(tw)->count))) {
--				inet_twsk_put(tw);
-+			if (unlikely(sk->sk_family != family ||
-+				     refcount_read(&sock_net(sk)->count))) {
-+				sock_gen_put(sk);
- 				goto restart;
- 			}
- 
- 			rcu_read_unlock();
- 			local_bh_disable();
--			inet_twsk_deschedule_put(tw);
-+			if (state == TCP_TIME_WAIT) {
-+				inet_twsk_deschedule_put(inet_twsk(sk));
-+			} else {
-+				struct request_sock *req = inet_reqsk(sk);
-+
-+				inet_csk_reqsk_queue_drop_and_put(req->rsk_listener,
-+								  req);
-+			}
- 			local_bh_enable();
- 			goto restart_rcu;
- 		}
+ static void dma_writel(struct owl_dma *od, u32 reg, u32 data)
+-- 
+2.43.0
+
 
 
