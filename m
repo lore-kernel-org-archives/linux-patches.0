@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C688801;
-	Tue, 30 Apr 2024 11:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDA917592;
+	Tue, 30 Apr 2024 11:19:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475980; cv=none; b=VVB46Zm2mLEei2kzyC6K2Y3hPSiAeEj1CR852dbtLRlQWXSWtnDQ9QIrdBo/s7Dq0Wl3zMsChWwiQ+769KGXRK7uo2+hS1cDfAYSEa9b6hmc5bZNdKjc+yzydQcF7Rlpi+3IFx0R5a73f04ZFq+9DEYhmi+x/WtnDLsVpSIicmo=
+	t=1714475983; cv=none; b=S9lwS62/2nK6tFKKFQWfqXfD0QHKpUvKiY70lFly71hHDuudli92BQDb8Wg4BK7E7XuN8yXP+at80WhyF+5KtR4UmPYT1N94nw/bM93DKxyR6SgVfD9JQmfy/i/jgWNm6ReXXlZlarTbTsTYKL5v8FUQR9/cvzwnxB95zjMVovo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475980; c=relaxed/simple;
-	bh=zMXijcaXM8wbNPZqv/oVyvbN6WnpTPI6Mr1gOH+AEYk=;
+	s=arc-20240116; t=1714475983; c=relaxed/simple;
+	bh=fl1ZbdRvPVVe1BgFd1B8kuOgNo4CMgv0xR9jVL+T22k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uAzu0slEkaYgRSovRtXUc8qFeEuUg/9IzOydDWeM4iXds7VuwLnch0SRCFRwo6wL3csFoH4H0xxjbjItuJ1RXGpbyt9hy3PCSiV5uIxlMFVgqF0tJcPGjjNEuta67c8PCXDsMsloC1qiM5Zr5O2uMEimXIOWZZFXXs6353tmFcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pi527fok; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vAF4FobA223w8rHoNXm00sOcaY7tRDGPeNrk8DbQ8TRKhfeiQjLKl9X+/Ax/F6JnNqrAO0mjhvvX4Dy8zQGoNffo82KmQtjY9lXiARcge/LtXhe95Ip0ysblqT38yNgJf/TrwYiu1u3XG1DJQfZh/YCv0M/uvSyywIe/LB10AOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIgfgU3D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pi527fok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B4DC2BBFC;
-	Tue, 30 Apr 2024 11:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIgfgU3D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90645C2BBFC;
+	Tue, 30 Apr 2024 11:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475979;
-	bh=zMXijcaXM8wbNPZqv/oVyvbN6WnpTPI6Mr1gOH+AEYk=;
+	s=korg; t=1714475983;
+	bh=fl1ZbdRvPVVe1BgFd1B8kuOgNo4CMgv0xR9jVL+T22k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pi527fokkWPYZN8TMXVOFc1fRq1SWn8qpv+gaZlxpCKTqZ2NpDUQpOir5dCHKdP/H
-	 r0qjhgObhrhCg7DPJv3lIwehEjjqs21EwmY4u4JVr4e97US5PS601MqUGkogmaxID3
-	 RlzASza7hS7ZYCEjT0KDcU6k7/cDtF9sRUXWn70c=
+	b=pIgfgU3DXufmmmTG6in8zoMRKeJxIJT8BAPBVMzTTCh75rpLScE6CX0KjE3xxcM73
+	 AL7yjv7swKc3w6kepfR7Vy01yp76vq3Wcwjorp+H3oz+FDevFHzHdDmc7rnYagwVrl
+	 3+WthWbzBlIXIfl+ukMr5CT3bM/e9hwHu6SmZAqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 70/80] idma64: Dont try to serve interrupts when device is powered off
-Date: Tue, 30 Apr 2024 12:40:42 +0200
-Message-ID: <20240430103045.482345345@linuxfoundation.org>
+	Yick Xie <yick.xie@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 79/80] udp: preserve the connected status if only UDP cmsg
+Date: Tue, 30 Apr 2024 12:40:51 +0200
+Message-ID: <20240430103045.743086530@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -52,44 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Yick Xie <yick.xie@gmail.com>
 
-[ Upstream commit 9140ce47872bfd89fca888c2f992faa51d20c2bc ]
+commit 680d11f6e5427b6af1321932286722d24a8b16c1 upstream.
 
-When iDMA 64-bit device is powered off, the IRQ status register
-is all 1:s. This is never happen in real case and signalling that
-the device is simply powered off. Don't try to serve interrupts
-that are not ours.
+If "udp_cmsg_send()" returned 0 (i.e. only UDP cmsg),
+"connected" should not be set to 0. Otherwise it stops
+the connected socket from using the cached route.
 
-Fixes: 667dfed98615 ("dmaengine: add a driver for Intel integrated DMA 64-bit")
-Reported-by: Heiner Kallweit <hkallweit1@gmail.com>
-Closes: https://lore.kernel.org/r/700bbb84-90e1-4505-8ff0-3f17ea8bc631@gmail.com
-Tested-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240321120453.1360138-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2e8de8576343 ("udp: add gso segment cmsg")
+Signed-off-by: Yick Xie <yick.xie@gmail.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20240418170610.867084-1-yick.xie@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yick Xie <yick.xie@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/idma64.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv4/udp.c |    5 +++--
+ net/ipv6/udp.c |    5 +++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/idma64.c b/drivers/dma/idma64.c
-index f4c07ad3be15b..af8777a1ec2e3 100644
---- a/drivers/dma/idma64.c
-+++ b/drivers/dma/idma64.c
-@@ -167,6 +167,10 @@ static irqreturn_t idma64_irq(int irq, void *dev)
- 	u32 status_err;
- 	unsigned short i;
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -1139,16 +1139,17 @@ int udp_sendmsg(struct sock *sk, struct
  
-+	/* Since IRQ may be shared, check if DMA controller is powered on */
-+	if (status == GENMASK(31, 0))
-+		return IRQ_NONE;
-+
- 	dev_vdbg(idma64->dma.dev, "%s: status=%#x\n", __func__, status);
+ 	if (msg->msg_controllen) {
+ 		err = udp_cmsg_send(sk, msg, &ipc.gso_size);
+-		if (err > 0)
++		if (err > 0) {
+ 			err = ip_cmsg_send(sk, msg, &ipc,
+ 					   sk->sk_family == AF_INET6);
++			connected = 0;
++		}
+ 		if (unlikely(err < 0)) {
+ 			kfree(ipc.opt);
+ 			return err;
+ 		}
+ 		if (ipc.opt)
+ 			free = 1;
+-		connected = 0;
+ 	}
+ 	if (!ipc.opt) {
+ 		struct ip_options_rcu *inet_opt;
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -1479,9 +1479,11 @@ do_udp_sendmsg:
+ 		ipc6.opt = opt;
  
- 	/* Check if we have any interrupt from the DMA controller */
--- 
-2.43.0
-
+ 		err = udp_cmsg_send(sk, msg, &ipc6.gso_size);
+-		if (err > 0)
++		if (err > 0) {
+ 			err = ip6_datagram_send_ctl(sock_net(sk), sk, msg, &fl6,
+ 						    &ipc6);
++			connected = false;
++		}
+ 		if (err < 0) {
+ 			fl6_sock_release(flowlabel);
+ 			return err;
+@@ -1493,7 +1495,6 @@ do_udp_sendmsg:
+ 		}
+ 		if (!(opt->opt_nflen|opt->opt_flen))
+ 			opt = NULL;
+-		connected = false;
+ 	}
+ 	if (!opt) {
+ 		opt = txopt_get(np);
 
 
