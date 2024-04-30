@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D7412B176;
-	Tue, 30 Apr 2024 10:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EBF12CDB2;
+	Tue, 30 Apr 2024 10:43:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473815; cv=none; b=TRZPZ6OzoJKjawRYVEu0g0Fp7YqcHLLwu7Q4Kv37M4bRIscQiTFIz6HDu9IQk6sfcPQOn+sJ9LiGxHU6/OZpEy0E0OCxkq9HDTJjS9nQT/XCo1iRAWhvG1R3z+KzRkmLjoLFrDq5MLQldrX7LXFGiTI3AIWj+hrDcnPopeti+RU=
+	t=1714473818; cv=none; b=lKsXJ059aUC0UkWSDmtGiCR8Mmkw+8gZ5+LkoSbRsOlHP7nOKXcQ1gkzoO8uwsMcrhIUXX5WPAg2FNDoLn94AOZgdJlDpoHuvWvq/Cavu+5t5dJ0fNf0dA280jpXLk+ZwkuWws7fQRFYYVm/txAPOlPyK81ylEAblJj9oXkg9EQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473815; c=relaxed/simple;
-	bh=24LxoezVm/Kdwhp16cHC4eOoneVaLuiW7Glyxqf+8XQ=;
+	s=arc-20240116; t=1714473818; c=relaxed/simple;
+	bh=enEdUj7yDmIlfCH1NsSYMrSF9V63EscIV0MjUeDkDIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U++GwNOQaVRg8HYD24qXJ6JijnBgTPoOpZwzlAQjpnP5tfru2ctXPnsb+ndooQXOQ6AIz+/wGwDi5y7UUEWFD2+fZPobMMpZ1F9nTLoNaRT9/lTgErgEFq5yNrOrVGrtFXzUsSZtphcDaIdu8EZydTlIyBOuEQg9W+Xwl1ziHVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qgw5x+kU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fD0HfTt2CctvASkjWiqsovT5TTsh2waBcQ+uWqC9qR+XcXl4/FNR72/2mTVHgq2qhYIBCx/i7nis5F9c+WpSLuAgAai1d8ySqVVFY/Hw1rKFoeZIcgXLeqm2IwwDGbQPB6OgfFukQ+zDzE+4DGU2TLH9GsBsmb5QMFTVakkxPtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1pHTDk+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgw5x+kU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5346C4AF1B;
-	Tue, 30 Apr 2024 10:43:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1pHTDk+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7DAC4AF5F;
+	Tue, 30 Apr 2024 10:43:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473815;
-	bh=24LxoezVm/Kdwhp16cHC4eOoneVaLuiW7Glyxqf+8XQ=;
+	s=korg; t=1714473818;
+	bh=enEdUj7yDmIlfCH1NsSYMrSF9V63EscIV0MjUeDkDIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgw5x+kUq+OFLb4QILQMSrm8164aOlHG9/02CHbD5HrP0HyET6Ep3cEcAtCJrDQTF
-	 K8JMwjAouyoXlt17pJr4kJjJE0urEn/+3Qz1LDLaVZSNNWYVEsZc0BdPcAI5/+ToNg
-	 3vkebwBVtevgGydm6LXoktbypjBRDjeuG32Ib0mQ=
+	b=n1pHTDk+xXwRU3w94CbQIgLsouGpOCt9Oi67oWvff9Ls3kWIRVAJn2zQhCP3/5jEx
+	 ZnlsB0rdqL/nPW3xrqzlTz+/jisSd+vGx4OpBH0jlEkLdpvuWohCA3x0Lao5fXddIM
+	 Lb9tT/jnUyBw/Wh9/0Vj2pcU++01MiMrHYMuNjNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Geurts <paul_geurts@live.nl>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	shironeko <shironeko@tesaguri.club>,
+	Eric Dumazet <edumazet@google.com>,
+	Jose Alonso <joalonsof@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 46/77] NFC: trf7970a: disable all regulators on removal
-Date: Tue, 30 Apr 2024 12:39:25 +0200
-Message-ID: <20240430103042.495877941@linuxfoundation.org>
+Subject: [PATCH 4.19 47/77] net: usb: ax88179_178a: stop lying about skb->truesize
+Date: Tue, 30 Apr 2024 12:39:26 +0200
+Message-ID: <20240430103042.524688351@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -52,142 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Geurts <paul_geurts@live.nl>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6bea4f03c6a4e973ef369e15aac88f37981db49e ]
+[ Upstream commit 4ce62d5b2f7aecd4900e7d6115588ad7f9acccca ]
 
-During module probe, regulator 'vin' and 'vdd-io' are used and enabled,
-but the vdd-io regulator overwrites the 'vin' regulator pointer. During
-remove, only the vdd-io is disabled, as the vin regulator pointer is not
-available anymore. When regulator_put() is called during resource
-cleanup a kernel warning is given, as the regulator is still enabled.
+Some usb drivers try to set small skb->truesize and break
+core networking stacks.
 
-Store the two regulators in separate pointers and disable both the
-regulators on module remove.
+In this patch, I removed one of the skb->truesize overide.
 
-Fixes: 49d22c70aaf0 ("NFC: trf7970a: Add device tree option of 1.8 Volt IO voltage")
-Signed-off-by: Paul Geurts <paul_geurts@live.nl>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/DB7PR09MB26847A4EBF88D9EDFEB1DA0F950E2@DB7PR09MB2684.eurprd09.prod.outlook.com
+I also replaced one skb_clone() by an allocation of a fresh
+and small skb, to get minimally sized skbs, like we did
+in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
+in rx path")
+
+Fixes: f8ebb3ac881b ("net: usb: ax88179_178a: Fix packet receiving")
+Reported-by: shironeko <shironeko@tesaguri.club>
+Closes: https://lore.kernel.org/netdev/c110f41a0d2776b525930f213ca9715c@tesaguri.club/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Jose Alonso <joalonsof@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240421193828.1966195-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/trf7970a.c | 42 +++++++++++++++++++++++-------------------
- 1 file changed, 23 insertions(+), 19 deletions(-)
+ drivers/net/usb/ax88179_178a.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/nfc/trf7970a.c b/drivers/nfc/trf7970a.c
-index eee5cc1a92204..5ad5baf1d6f81 100644
---- a/drivers/nfc/trf7970a.c
-+++ b/drivers/nfc/trf7970a.c
-@@ -427,7 +427,8 @@ struct trf7970a {
- 	enum trf7970a_state		state;
- 	struct device			*dev;
- 	struct spi_device		*spi;
--	struct regulator		*regulator;
-+	struct regulator		*vin_regulator;
-+	struct regulator		*vddio_regulator;
- 	struct nfc_digital_dev		*ddev;
- 	u32				quirks;
- 	bool				is_initiator;
-@@ -1886,7 +1887,7 @@ static int trf7970a_power_up(struct trf7970a *trf)
- 	if (trf->state != TRF7970A_ST_PWR_OFF)
- 		return 0;
+diff --git a/drivers/net/usb/ax88179_178a.c b/drivers/net/usb/ax88179_178a.c
+index 3df203feb09c5..812361e832fd5 100644
+--- a/drivers/net/usb/ax88179_178a.c
++++ b/drivers/net/usb/ax88179_178a.c
+@@ -1465,21 +1465,16 @@ static int ax88179_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			/* Skip IP alignment pseudo header */
+ 			skb_pull(skb, 2);
  
--	ret = regulator_enable(trf->regulator);
-+	ret = regulator_enable(trf->vin_regulator);
- 	if (ret) {
- 		dev_err(trf->dev, "%s - Can't enable VIN: %d\n", __func__, ret);
- 		return ret;
-@@ -1929,7 +1930,7 @@ static int trf7970a_power_down(struct trf7970a *trf)
- 	if (trf->en2_gpiod && !(trf->quirks & TRF7970A_QUIRK_EN2_MUST_STAY_LOW))
- 		gpiod_set_value_cansleep(trf->en2_gpiod, 0);
+-			skb->truesize = SKB_TRUESIZE(pkt_len_plus_padd);
+ 			ax88179_rx_checksum(skb, pkt_hdr);
+ 			return 1;
+ 		}
  
--	ret = regulator_disable(trf->regulator);
-+	ret = regulator_disable(trf->vin_regulator);
- 	if (ret)
- 		dev_err(trf->dev, "%s - Can't disable VIN: %d\n", __func__,
- 			ret);
-@@ -2068,37 +2069,37 @@ static int trf7970a_probe(struct spi_device *spi)
- 	mutex_init(&trf->lock);
- 	INIT_DELAYED_WORK(&trf->timeout_work, trf7970a_timeout_work_handler);
+-		ax_skb = skb_clone(skb, GFP_ATOMIC);
++		ax_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len);
+ 		if (!ax_skb)
+ 			return 0;
+-		skb_trim(ax_skb, pkt_len);
++		skb_put(ax_skb, pkt_len);
++		memcpy(ax_skb->data, skb->data + 2, pkt_len);
  
--	trf->regulator = devm_regulator_get(&spi->dev, "vin");
--	if (IS_ERR(trf->regulator)) {
--		ret = PTR_ERR(trf->regulator);
-+	trf->vin_regulator = devm_regulator_get(&spi->dev, "vin");
-+	if (IS_ERR(trf->vin_regulator)) {
-+		ret = PTR_ERR(trf->vin_regulator);
- 		dev_err(trf->dev, "Can't get VIN regulator: %d\n", ret);
- 		goto err_destroy_lock;
- 	}
- 
--	ret = regulator_enable(trf->regulator);
-+	ret = regulator_enable(trf->vin_regulator);
- 	if (ret) {
- 		dev_err(trf->dev, "Can't enable VIN: %d\n", ret);
- 		goto err_destroy_lock;
- 	}
- 
--	uvolts = regulator_get_voltage(trf->regulator);
-+	uvolts = regulator_get_voltage(trf->vin_regulator);
- 	if (uvolts > 4000000)
- 		trf->chip_status_ctrl = TRF7970A_CHIP_STATUS_VRS5_3;
- 
--	trf->regulator = devm_regulator_get(&spi->dev, "vdd-io");
--	if (IS_ERR(trf->regulator)) {
--		ret = PTR_ERR(trf->regulator);
-+	trf->vddio_regulator = devm_regulator_get(&spi->dev, "vdd-io");
-+	if (IS_ERR(trf->vddio_regulator)) {
-+		ret = PTR_ERR(trf->vddio_regulator);
- 		dev_err(trf->dev, "Can't get VDD_IO regulator: %d\n", ret);
--		goto err_destroy_lock;
-+		goto err_disable_vin_regulator;
- 	}
- 
--	ret = regulator_enable(trf->regulator);
-+	ret = regulator_enable(trf->vddio_regulator);
- 	if (ret) {
- 		dev_err(trf->dev, "Can't enable VDD_IO: %d\n", ret);
--		goto err_destroy_lock;
-+		goto err_disable_vin_regulator;
- 	}
- 
--	if (regulator_get_voltage(trf->regulator) == 1800000) {
-+	if (regulator_get_voltage(trf->vddio_regulator) == 1800000) {
- 		trf->io_ctrl = TRF7970A_REG_IO_CTRL_IO_LOW;
- 		dev_dbg(trf->dev, "trf7970a config vdd_io to 1.8V\n");
- 	}
-@@ -2111,7 +2112,7 @@ static int trf7970a_probe(struct spi_device *spi)
- 	if (!trf->ddev) {
- 		dev_err(trf->dev, "Can't allocate NFC digital device\n");
- 		ret = -ENOMEM;
--		goto err_disable_regulator;
-+		goto err_disable_vddio_regulator;
- 	}
- 
- 	nfc_digital_set_parent_dev(trf->ddev, trf->dev);
-@@ -2140,8 +2141,10 @@ static int trf7970a_probe(struct spi_device *spi)
- 	trf7970a_shutdown(trf);
- err_free_ddev:
- 	nfc_digital_free_device(trf->ddev);
--err_disable_regulator:
--	regulator_disable(trf->regulator);
-+err_disable_vddio_regulator:
-+	regulator_disable(trf->vddio_regulator);
-+err_disable_vin_regulator:
-+	regulator_disable(trf->vin_regulator);
- err_destroy_lock:
- 	mutex_destroy(&trf->lock);
- 	return ret;
-@@ -2160,7 +2163,8 @@ static int trf7970a_remove(struct spi_device *spi)
- 	nfc_digital_unregister_device(trf->ddev);
- 	nfc_digital_free_device(trf->ddev);
- 
--	regulator_disable(trf->regulator);
-+	regulator_disable(trf->vddio_regulator);
-+	regulator_disable(trf->vin_regulator);
- 
- 	mutex_destroy(&trf->lock);
+-		/* Skip IP alignment pseudo header */
+-		skb_pull(ax_skb, 2);
+-
+-		skb->truesize = pkt_len_plus_padd +
+-				SKB_DATA_ALIGN(sizeof(struct sk_buff));
+ 		ax88179_rx_checksum(ax_skb, pkt_hdr);
+ 		usbnet_skb_return(dev, ax_skb);
  
 -- 
 2.43.0
