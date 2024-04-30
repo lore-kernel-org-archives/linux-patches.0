@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7D312CDBA;
-	Tue, 30 Apr 2024 10:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F8D12C49A;
+	Tue, 30 Apr 2024 10:44:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473848; cv=none; b=mb8Ni3wNwWgGAL3o026qMaPHpWPYrV2bq2HN5xZdnkILva1WIML4417Y+aP4di2K2LYqRgnsm7Ioo2TxomhIk5VID9EpHHY0XvPbgKod6tGrGgUmiQg9bLS1BFY9BxNsxZhehzzvSG8f7g6hfrugaJadBYTD+un2uLFIRv4KXes=
+	t=1714473850; cv=none; b=UxYfF02un3Svbgb8Ae4K/wtN/XrX0X6NJXNKz0mzJUbaLrKkPqjnee59edVNUzDwr9dRUV8yVQYQ1z9KGFgqajh0R6bF6ZxZx7oLE6c49/nVIC3gj6ITESlXEU5nni6d0RVhu1iQbTzEc4iu8CApQoJZx30jQZ8elOn7sC0H2HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473848; c=relaxed/simple;
-	bh=FZJAR/BLOlfsEe05P7PU9qtQ4shl0I9WrYoFPsr9B9w=;
+	s=arc-20240116; t=1714473850; c=relaxed/simple;
+	bh=nFUnYfwnagLsWBf8kRrAO+JjXsTaPP2/f48D+WqBVP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxeWwmppXYlWp7mxL/fAHFF41PHjDVhqXoLb2B9sjrdKoIx89KzXFBD7Tz2xRcAghGJ0ZR0Db/6w0eiMn5QMgdfcKYmNKZZ3D8OOZ4bTFzlqlaqWObbQZKqYeTCGFUdNFqrpiXiPGpyYmq5UkJE1ybuS1y2Q8uERSyDxj27cmTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJxq2BiG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VJYrhCII6zjwodvT3Dq5KvNZFQglSFqTp8jZUm0NmZbIKCCnMhq7cT90hkdCzvhEqnBRwWvWRDTcOAvTYYw/RRZmwDGdJtlrIuFxxVvrJhFuIEQ70Hmt2jsliBJFtarYeWIOyI1GHX4mrlutxln6dU84V8BHX2CPzV9bvBkHGSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOvOSlvn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJxq2BiG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB5FC2BBFC;
-	Tue, 30 Apr 2024 10:44:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOvOSlvn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434E2C2BBFC;
+	Tue, 30 Apr 2024 10:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473847;
-	bh=FZJAR/BLOlfsEe05P7PU9qtQ4shl0I9WrYoFPsr9B9w=;
+	s=korg; t=1714473850;
+	bh=nFUnYfwnagLsWBf8kRrAO+JjXsTaPP2/f48D+WqBVP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MJxq2BiG5aB9+QA9dqwKJ01BZXgDGWwuVCTzbbK7tbkkgdBOfE0xlzm8DwAGT2M3K
-	 EgLZupNpm8E4Xm6ZLd4WoEEmRlHVUv6bGtaguWfTBUjVC0z2QZR9nP/s4ZfM4miLiU
-	 ErWXnE2xgOFVAgUrvkcOwOY/TTNDSg8vP/zGqrsc=
+	b=vOvOSlvnxQB7JbTcv4Mz9f/jQnolnDGsOuQNSy/DI8NSRa7izrD9IXGOTjSpP5D3V
+	 VDMA7C5l2z9S2Kv9Mzc8a93sZKkZICJhhavc/ezPur9lNGRlXe1+BEpDGyVMMfOVGd
+	 UJdTtpyBOqsRvmwo+RoXH+VUCuKtcsPJVYcENPxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Mikhail Kobuk <m.kobuk@ispras.ru>,
+	Danilo Krummrich <dakr@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 20/77] RDMA/mlx5: Fix port number for counter query in multi-port configuration
-Date: Tue, 30 Apr 2024 12:38:59 +0200
-Message-ID: <20240430103041.723830473@linuxfoundation.org>
+Subject: [PATCH 4.19 21/77] drm: nv04: Fix out of bounds access
+Date: Tue, 30 Apr 2024 12:39:00 +0200
+Message-ID: <20240430103041.753275789@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -51,40 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Guralnik <michaelgur@nvidia.com>
+From: Mikhail Kobuk <m.kobuk@ispras.ru>
 
-[ Upstream commit be121ffb384f53e966ee7299ffccc6eeb61bc73d ]
+[ Upstream commit cf92bb778eda7830e79452c6917efa8474a30c1e ]
 
-Set the correct port when querying PPCNT in multi-port configuration.
-Distinguish between cases where switchdev mode was enabled to multi-port
-configuration and don't overwrite the queried port to 1 in multi-port
-case.
+When Output Resource (dcb->or) value is assigned in
+fabricate_dcb_output(), there may be out of bounds access to
+dac_users array in case dcb->or is zero because ffs(dcb->or) is
+used as index there.
+The 'or' argument of fabricate_dcb_output() must be interpreted as a
+number of bit to set, not value.
 
-Fixes: 74b30b3ad5ce ("RDMA/mlx5: Set local port to one when accessing counters")
-Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://lore.kernel.org/r/9bfcc8ade958b760a51408c3ad654a01b11f7d76.1712134988.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Utilize macros from 'enum nouveau_or' in calls instead of hardcoding.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 2e5702aff395 ("drm/nouveau: fabricate DCB encoder table for iMac G4")
+Fixes: 670820c0e6a9 ("drm/nouveau: Workaround incorrect DCB entry on a GeForce3 Ti 200.")
+Signed-off-by: Mikhail Kobuk <m.kobuk@ispras.ru>
+Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240411110854.16701-1-m.kobuk@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/mad.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nouveau_bios.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/mad.c b/drivers/infiniband/hw/mlx5/mad.c
-index fb6dcd12db254..a7b20db03901c 100644
---- a/drivers/infiniband/hw/mlx5/mad.c
-+++ b/drivers/infiniband/hw/mlx5/mad.c
-@@ -216,7 +216,8 @@ static int process_pma_cmd(struct mlx5_ib_dev *dev, u8 port_num,
- 		mdev = dev->mdev;
- 		mdev_port_num = 1;
+--- a/drivers/gpu/drm/nouveau/nouveau_bios.c
++++ b/drivers/gpu/drm/nouveau/nouveau_bios.c
+@@ -25,6 +25,7 @@
+ #include <drm/drmP.h>
+ 
+ #include "nouveau_drv.h"
++#include "nouveau_bios.h"
+ #include "nouveau_reg.h"
+ #include "dispnv04/hw.h"
+ #include "nouveau_encoder.h"
+@@ -1674,7 +1675,7 @@ apply_dcb_encoder_quirks(struct drm_devi
+ 	 */
+ 	if (nv_match_device(dev, 0x0201, 0x1462, 0x8851)) {
+ 		if (*conn == 0xf2005014 && *conf == 0xffffffff) {
+-			fabricate_dcb_output(dcb, DCB_OUTPUT_TMDS, 1, 1, 1);
++			fabricate_dcb_output(dcb, DCB_OUTPUT_TMDS, 1, 1, DCB_OUTPUT_B);
+ 			return false;
+ 		}
  	}
--	if (MLX5_CAP_GEN(dev->mdev, num_ports) == 1) {
-+	if (MLX5_CAP_GEN(dev->mdev, num_ports) == 1 &&
-+	    !mlx5_core_mp_enabled(mdev)) {
- 		/* set local port to one for Function-Per-Port HCA. */
- 		mdev = dev->mdev;
- 		mdev_port_num = 1;
--- 
-2.43.0
-
+@@ -1760,26 +1761,26 @@ fabricate_dcb_encoder_table(struct drm_d
+ #ifdef __powerpc__
+ 	/* Apple iMac G4 NV17 */
+ 	if (of_machine_is_compatible("PowerMac4,5")) {
+-		fabricate_dcb_output(dcb, DCB_OUTPUT_TMDS, 0, all_heads, 1);
+-		fabricate_dcb_output(dcb, DCB_OUTPUT_ANALOG, 1, all_heads, 2);
++		fabricate_dcb_output(dcb, DCB_OUTPUT_TMDS, 0, all_heads, DCB_OUTPUT_B);
++		fabricate_dcb_output(dcb, DCB_OUTPUT_ANALOG, 1, all_heads, DCB_OUTPUT_C);
+ 		return;
+ 	}
+ #endif
+ 
+ 	/* Make up some sane defaults */
+ 	fabricate_dcb_output(dcb, DCB_OUTPUT_ANALOG,
+-			     bios->legacy.i2c_indices.crt, 1, 1);
++			     bios->legacy.i2c_indices.crt, 1, DCB_OUTPUT_B);
+ 
+ 	if (nv04_tv_identify(dev, bios->legacy.i2c_indices.tv) >= 0)
+ 		fabricate_dcb_output(dcb, DCB_OUTPUT_TV,
+ 				     bios->legacy.i2c_indices.tv,
+-				     all_heads, 0);
++				     all_heads, DCB_OUTPUT_A);
+ 
+ 	else if (bios->tmds.output0_script_ptr ||
+ 		 bios->tmds.output1_script_ptr)
+ 		fabricate_dcb_output(dcb, DCB_OUTPUT_TMDS,
+ 				     bios->legacy.i2c_indices.panel,
+-				     all_heads, 1);
++				     all_heads, DCB_OUTPUT_B);
+ }
+ 
+ static int
 
 
