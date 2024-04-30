@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C4612C539;
-	Tue, 30 Apr 2024 10:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F84212C46D;
+	Tue, 30 Apr 2024 10:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474081; cv=none; b=b8+yWsFRAgT8NmO/B4UBnjIR6b52tFvdsqBTW5Q9TeC35V60bnk3PxfBXc6kLj/oNbdwwLIe61EO4Nkzvl2YpDGzGU0CXdKH8TLJFEV04XQV4e0SPU9j5yPu6ap6iGBXCSEJFI+sESjPIIPMUw78kh0rIzoNfjpw7DcJYU6yHtI=
+	t=1714474085; cv=none; b=OknrJUFlZXRNE3kl12Jvzl4gQpzMvBQLIZNkliw5kuqgqDFZVccgWXx7rR45z4Ij3zughhEDPCB3QhhLmZbtfqKJBdwPvaklSoRHBwl48jdUGhwLvMbD9phMoAnlCPBGleLMMaBoIQAn78cbzD0MU+xqIWzi1mNrs6xVxhMMugA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474081; c=relaxed/simple;
-	bh=sDwUWcd+2EaIf7O6MbixDQufoh8oYDDmoStp3KZJUtg=;
+	s=arc-20240116; t=1714474085; c=relaxed/simple;
+	bh=xHPxUBCryXvurBPQd8a9blCGZph+jAi2dxENZnavGUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5f3IhRugRxRbtzRB+T4+HpRanJMqyIyphcyIRDi4TfFbPag3VucUYCmBtr2gV4Cxsh8lR87Xje+QiQNgMMGxd8bCcyEvf9bDIIQNqO/hxqsHxp2JLe8XV2A0nw1TmQ2m6nQO0cYLWFGb4zL96N3WKWIInSv0RW8o6/jZbbQk2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yhRe0SIS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AxnOqqFgx5VYtbQiqBzC+Ftjh3yB9VaQ85KcLeomNXZgCLZwHZ9JjkLC+0FuFmAjUOcIf/aE+WlBPAlUb6r/yJ1YVaFKFTiLAObl3hiMcsPY4MDwCfnaIPCfB0YvV84mEcKXxK6/MGN4VNeRtX9k7OptOjrZdfW0UrYoWdWHmHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0tiJQSzI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhRe0SIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DB8C4AF19;
-	Tue, 30 Apr 2024 10:48:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0tiJQSzI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64487C2BBFC;
+	Tue, 30 Apr 2024 10:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474081;
-	bh=sDwUWcd+2EaIf7O6MbixDQufoh8oYDDmoStp3KZJUtg=;
+	s=korg; t=1714474085;
+	bh=xHPxUBCryXvurBPQd8a9blCGZph+jAi2dxENZnavGUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yhRe0SISHxjjCGJGDfmEX21DBAF8+p/fPDtmaKlYqx0OkxWD7HDEubdxOAZ5EnXpk
-	 e3BiqBTQQpI1sQ3rNQSyYF2QHv1WVI4uUKBYL84tdZrmZFo3u0Z2llDiki0bgIQqvL
-	 MbIO0VwthZ8pVDMCDBn5Fmqb55g8oiaqHCzTp59A=
+	b=0tiJQSzI05eq8dZ+k/2nGwRDnt1lxuYM3qqP2iRQpD34PY3E6XXQOsn1mmkIOf2WH
+	 o+UbZZYDR8Jl/Si34RWrtX8pwdYb0EqcnbJBUoyfmTClfW5S7OO5x1y4ovL6UvPOe0
+	 ErhJ0NBagvW6fSUcFeR3FQwOFR0RQvhBFpLvknPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@resnulli.us>,
-	Amit Cohen <amcohen@nvidia.com>,
+	Tim mithro Ansell <me@mith.ro>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Petr Machata <petrm@nvidia.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 051/228] mlxsw: core: Unregister EMAD trap using FORWARD action
-Date: Tue, 30 Apr 2024 12:37:09 +0200
-Message-ID: <20240430103105.284505820@linuxfoundation.org>
+Subject: [PATCH 6.8 052/228] mlxsw: core_env: Fix driver initialization with old firmware
+Date: Tue, 30 Apr 2024 12:37:10 +0200
+Message-ID: <20240430103105.313437839@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -57,53 +56,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 976c44af48141cd8595601c0af2a19a43c5b228b ]
+[ Upstream commit 7e2050a8366315aeaf0316b3d362e67cf58f3ea8 ]
 
-The device's manual (PRM - Programmer's Reference Manual) classifies the
-trap that is used to deliver EMAD responses as an "event trap". Among
-other things, it means that the only actions that can be associated with
-the trap are TRAP and FORWARD (NOP).
+The driver queries the Management Capabilities Mask (MCAM) register
+during initialization to understand if it can read up to 128 bytes from
+transceiver modules.
 
-Currently, during driver de-initialization the driver unregisters the
-trap by setting its action to DISCARD, which violates the above
-guideline. Future firmware versions will prevent such misuses by
-returning an error. This does not prevent the driver from working, but
-an error will be printed to the kernel log during module removal /
-devlink reload:
+However, not all firmware versions support this register, leading to the
+driver failing to load.
 
-mlxsw_spectrum 0000:03:00.0: Reg cmd access status failed (status=7(bad parameter))
-mlxsw_spectrum 0000:03:00.0: Reg cmd access failed (reg_id=7003(hpkt),type=write)
+Fix by treating an error in the register query as an indication that the
+feature is not supported.
 
-Suppress the error message by aligning the driver to the manual and use
-a FORWARD (NOP) action when unregistering the trap.
-
-Fixes: 4ec14b7634b2 ("mlxsw: Add interface to access registers and process events")
-Cc: Jiri Pirko <jiri@resnulli.us>
-Cc: Amit Cohen <amcohen@nvidia.com>
+Fixes: 1f4aea1f72da ("mlxsw: core_env: Read transceiver module EEPROM in 128 bytes chunks")
+Reported-by: Tim 'mithro' Ansell <me@mith.ro>
 Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Reviewed-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://lore.kernel.org/r/753a89e14008fde08cb4a2c1e5f537b81d8eb2d6.1713446092.git.petrm@nvidia.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/0afa8b2e8bac178f5f88211344429176dcc72281.1713446092.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/mellanox/mlxsw/core_env.c    | 20 ++++++-------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/core.c b/drivers/net/ethernet/mellanox/mlxsw/core.c
-index e4d7739bd7c88..4a79c0d7e7ad8 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/core.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/core.c
-@@ -849,7 +849,7 @@ static void mlxsw_emad_rx_listener_func(struct sk_buff *skb, u16 local_port,
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_env.c b/drivers/net/ethernet/mellanox/mlxsw/core_env.c
+index 53b150b7ae4e7..6c06b05927608 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/core_env.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/core_env.c
+@@ -1357,24 +1357,20 @@ static struct mlxsw_linecards_event_ops mlxsw_env_event_ops = {
+ 	.got_inactive = mlxsw_env_got_inactive,
+ };
  
- static const struct mlxsw_listener mlxsw_emad_rx_listener =
- 	MLXSW_RXL(mlxsw_emad_rx_listener_func, ETHEMAD, TRAP_TO_CPU, false,
--		  EMAD, DISCARD);
-+		  EMAD, FORWARD);
- 
- static int mlxsw_emad_tlv_enable(struct mlxsw_core *mlxsw_core)
+-static int mlxsw_env_max_module_eeprom_len_query(struct mlxsw_env *mlxsw_env)
++static void mlxsw_env_max_module_eeprom_len_query(struct mlxsw_env *mlxsw_env)
  {
+ 	char mcam_pl[MLXSW_REG_MCAM_LEN];
+-	bool mcia_128b_supported;
++	bool mcia_128b_supported = false;
+ 	int err;
+ 
+ 	mlxsw_reg_mcam_pack(mcam_pl,
+ 			    MLXSW_REG_MCAM_FEATURE_GROUP_ENHANCED_FEATURES);
+ 	err = mlxsw_reg_query(mlxsw_env->core, MLXSW_REG(mcam), mcam_pl);
+-	if (err)
+-		return err;
+-
+-	mlxsw_reg_mcam_unpack(mcam_pl, MLXSW_REG_MCAM_MCIA_128B,
+-			      &mcia_128b_supported);
++	if (!err)
++		mlxsw_reg_mcam_unpack(mcam_pl, MLXSW_REG_MCAM_MCIA_128B,
++				      &mcia_128b_supported);
+ 
+ 	mlxsw_env->max_eeprom_len = mcia_128b_supported ? 128 : 48;
+-
+-	return 0;
+ }
+ 
+ int mlxsw_env_init(struct mlxsw_core *mlxsw_core,
+@@ -1445,15 +1441,11 @@ int mlxsw_env_init(struct mlxsw_core *mlxsw_core,
+ 	if (err)
+ 		goto err_type_set;
+ 
+-	err = mlxsw_env_max_module_eeprom_len_query(env);
+-	if (err)
+-		goto err_eeprom_len_query;
+-
++	mlxsw_env_max_module_eeprom_len_query(env);
+ 	env->line_cards[0]->active = true;
+ 
+ 	return 0;
+ 
+-err_eeprom_len_query:
+ err_type_set:
+ 	mlxsw_env_module_event_disable(env, 0);
+ err_mlxsw_env_module_event_enable:
 -- 
 2.43.0
 
