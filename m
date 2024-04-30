@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A0912D1EA;
-	Tue, 30 Apr 2024 11:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3A717592;
+	Tue, 30 Apr 2024 11:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476133; cv=none; b=MMhGIg4APwrDbgHcbNUicva9szcjN327YgTGnfc4ab50OLD087LQ/fzxLimT1NA7wnNkJcP/AXMrEA7OUUfByZrO13N7sNOQBMAAV3hdX5H82LxgV+98DXLJhulCB+Rcb1KctufLTRlMJESu3jP7/CEOUDx5nyrUYx2EIjJMals=
+	t=1714476136; cv=none; b=Y3UjLTYxAx3ubi5/1KxEz+U9DuGX/ETWabx2DXvYHAmG8a0bZ2JZhKNLK8ItmHY0oKdLs3LpCzEuLA4lHYKdyF+snHT2W+FaZkZ69PDvHY8la+6tFLCmaqJx6zPGcJmwNQ6JM44bAD6GsrN/BzOhgeI3iWWTMfxnd1gePOuIwMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476133; c=relaxed/simple;
-	bh=mShDFB0iKg2PxgpFeMJ8AJB+YLGhu+oLZBR7MhOzYPQ=;
+	s=arc-20240116; t=1714476136; c=relaxed/simple;
+	bh=SdKUnH21HoQ3pycF4VoZLScAdJXYRzXzorQpVroB2Kg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5ZDJIzLcBf12879/QywBCRmiM0+5wtnH3Cp8Or6KqRLztDZ3Zw6D6flI5IZPtkK5OJUCg5/BX9fwwhzjeMLV4hliuy/7ENo0TIJoS0jvM7b4ifSF799K2q0fAx2y3gD2bwrWkNIfhTBZ3f8bNDYuwJPYVxcFAgIuvFxlzva2Dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwxoABP3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VA/IFh5dNliv3nLV4MQm4cgcGjG0iMJuz5CpJPQLmJVqMW+J4f8Q+ZyB7zx7Nu/ZFEd06cPzs8eTjerlnkRWJD25pIksirtrdtCEkTu/GWqfTg/e3Xxg8BbHQoRkBAjHXyP1Uz9D5Zq0d2KWpxizh8S76mMidENb7tjKlbsIko4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwHNXqq1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwxoABP3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB079C2BBFC;
-	Tue, 30 Apr 2024 11:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwHNXqq1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C690AC4AF49;
+	Tue, 30 Apr 2024 11:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476133;
-	bh=mShDFB0iKg2PxgpFeMJ8AJB+YLGhu+oLZBR7MhOzYPQ=;
+	s=korg; t=1714476136;
+	bh=SdKUnH21HoQ3pycF4VoZLScAdJXYRzXzorQpVroB2Kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VwxoABP3ynAsfgXf+lo2J/08t6ADx5BpbcQEyg80iSql9+wjA3Rzo2Ry9+6A099PI
-	 nfSqqbvoV1iCpSaVXpppccGBCx9FNvbn0Pmw9Qn7FWR4i2O7fPV4m+bPT/9xKZmK9q
-	 x2Cwn36P/am4cjFeKI4d5H2KZOceMRK9GvDAk7tE=
+	b=XwHNXqq1kOhXkOpOrCm++b8LsdFLKZDQOP0tIxRPpkJg5PEOUqBo1zAyJATgtkvFZ
+	 ptp9ezwy6FigCA9EW1PKrZplgtfiQlvrUziL9Q06JRjjVasxrBeYYqB7dgU2aZkB/j
+	 DH8E+ao9FehACyDQsgi6AyJJuM1cP7n4dmIrTpek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 007/107] ipv6: fib: hide unused pn variable
-Date: Tue, 30 Apr 2024 12:39:27 +0200
-Message-ID: <20240430103044.875067966@linuxfoundation.org>
+Subject: [PATCH 5.4 008/107] ipv4/route: avoid unused-but-set-variable warning
+Date: Tue, 30 Apr 2024 12:39:28 +0200
+Message-ID: <20240430103044.904563692@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -55,56 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 74043489fcb5e5ca4074133582b5b8011b67f9e7 ]
+[ Upstream commit cf1b7201df59fb936f40f4a807433fe3f2ce310a ]
 
-When CONFIG_IPV6_SUBTREES is disabled, the only user is hidden, causing
-a 'make W=1' warning:
+The log_martians variable is only used in an #ifdef, causing a 'make W=1'
+warning with gcc:
 
-net/ipv6/ip6_fib.c: In function 'fib6_add':
-net/ipv6/ip6_fib.c:1388:32: error: variable 'pn' set but not used [-Werror=unused-but-set-variable]
+net/ipv4/route.c: In function 'ip_rt_send_redirect':
+net/ipv4/route.c:880:13: error: variable 'log_martians' set but not used [-Werror=unused-but-set-variable]
 
-Add another #ifdef around the variable declaration, matching the other
-uses in this file.
+Change the #ifdef to an equivalent IS_ENABLED() to let the compiler
+see where the variable is used.
 
-Fixes: 66729e18df08 ("[IPV6] ROUTE: Make sure we have fn->leaf when adding a node on subtree.")
-Link: https://lore.kernel.org/netdev/20240322131746.904943-1-arnd@kernel.org/
+Fixes: 30038fc61adf ("net: ip_rt_send_redirect() optimization")
 Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240408074219.3030256-1-arnd@kernel.org
+Link: https://lore.kernel.org/r/20240408074219.3030256-2-arnd@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_fib.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/ipv4/route.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index 7d593e50977cf..3afc32fe9b07b 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -1307,7 +1307,10 @@ int fib6_add(struct fib6_node *root, struct fib6_info *rt,
- 	     struct nl_info *info, struct netlink_ext_ack *extack)
- {
- 	struct fib6_table *table = rt->fib6_table;
--	struct fib6_node *fn, *pn = NULL;
-+	struct fib6_node *fn;
-+#ifdef CONFIG_IPV6_SUBTREES
-+	struct fib6_node *pn = NULL;
-+#endif
- 	int err = -ENOMEM;
- 	int allow_create = 1;
- 	int replace_required = 0;
-@@ -1331,9 +1334,9 @@ int fib6_add(struct fib6_node *root, struct fib6_info *rt,
- 		goto out;
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 902296ef3e5aa..5b008d838e2b9 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -945,13 +945,11 @@ void ip_rt_send_redirect(struct sk_buff *skb)
+ 		icmp_send(skb, ICMP_REDIRECT, ICMP_REDIR_HOST, gw);
+ 		peer->rate_last = jiffies;
+ 		++peer->n_redirects;
+-#ifdef CONFIG_IP_ROUTE_VERBOSE
+-		if (log_martians &&
++		if (IS_ENABLED(CONFIG_IP_ROUTE_VERBOSE) && log_martians &&
+ 		    peer->n_redirects == ip_rt_redirect_number)
+ 			net_warn_ratelimited("host %pI4/if%d ignores redirects for %pI4 to %pI4\n",
+ 					     &ip_hdr(skb)->saddr, inet_iif(skb),
+ 					     &ip_hdr(skb)->daddr, &gw);
+-#endif
  	}
- 
-+#ifdef CONFIG_IPV6_SUBTREES
- 	pn = fn;
- 
--#ifdef CONFIG_IPV6_SUBTREES
- 	if (rt->fib6_src.plen) {
- 		struct fib6_node *sn;
- 
+ out_put_peer:
+ 	inet_putpeer(peer);
 -- 
 2.43.0
 
