@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFFD12D769;
-	Tue, 30 Apr 2024 11:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56C812D1E8;
+	Tue, 30 Apr 2024 11:21:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476111; cv=none; b=q66y1D7pXnP86RIQavB27DWEVP4XqQO0JEWiQKidmPsogN+fZVCjYWqboJlIdodzIWcKicJOrgwHCAY8qBpqNIMuKwe7JJT6kAokJoBd0QXVp0KiiQ5ZS1qRf4qLVJtI4H88Ar52587izkb3fwp8mAUiVMTkt8gWny7KCFHDKUQ=
+	t=1714476113; cv=none; b=CNFZY65LegwJk1VpwLKVzCDN8f06e/e6M4bA/Yi63ZEpF2Qj7aN9f/iRX/ZtiY5ZKEyIdnX2wWKnJG5HcRzRQSq6cLdDHhpIRx8SXtuhteLdgBeaNj12z7/fuBACrtGrNWf+/sPkmaY8MRwqGS9PqbGnoF5X61av3+0nD+VUBNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476111; c=relaxed/simple;
-	bh=DyBJqiPrMNstheWA6N95hGSp0sVuiFWJBGX3GhLE6MY=;
+	s=arc-20240116; t=1714476113; c=relaxed/simple;
+	bh=4MX5XKy1uzzHIsAGFpkz1OnXNsilD0HZDCFAV2L2Y2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O5k4Jrzmd4nLXy1Lez3dIF0rZHAo0VK+BN52s/PX7hWgDRmJwWF43slq+jjn51y89+Ll8E+t5+y1ZzdN0A6IcV6icuSg984GKh6JWIRVFYRRI/UPhu8dcN7NgBzecip4FLAeQY03E5T7BskBqZ5sSwdn5du8mNd9V6OC+pLNQ9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r0RkMXzb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QVUTTAjch2KCvkYGuYT05Ce8dvNg1ixRSJqdu3XJlepCtG36+QWsJxYldrkJNow1NYYA7mpl0xAiUqWcuQDHVoY44tsJLnBgnaLycCw8YaBps/M88jbjhkm2AjOwSJwmWYLkq4NQ7ok3MYbxVvhOJvzoVN2Pr6vyHxaMYvUquO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDwX8Tjt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r0RkMXzb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A074C2BBFC;
-	Tue, 30 Apr 2024 11:21:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDwX8Tjt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C768C2BBFC;
+	Tue, 30 Apr 2024 11:21:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476110;
-	bh=DyBJqiPrMNstheWA6N95hGSp0sVuiFWJBGX3GhLE6MY=;
+	s=korg; t=1714476113;
+	bh=4MX5XKy1uzzHIsAGFpkz1OnXNsilD0HZDCFAV2L2Y2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r0RkMXzbv0KlQn2nV3/bIz7VbiUJ0YxOwWpOmxkxq0aZfg87kHgyqBpoR+3PPPjZj
-	 WL77McWg+xDJ7JbvUl3RsWOvORUTA7AXSTxCKwpmWJHlr8DrNBB6SNRi7iY2gCnHFK
-	 dlumti3IislyHcFwS75yj8YfRVwgz1Ycxt1xVi9A=
+	b=kDwX8Tjt+hyBPIkGdiWCVCD7bKUT+MtuuVA+zFm7O1VhCoWoB+RNVkURocBujAu43
+	 RNOdImPWuJx3pw0CaH3mPwuitB5j65u+ds1eY5hpSZXWfbRikd6xPb5bCdOhsGtYmp
+	 FYrWWFDgPWTcKHbXKtt0ceLiKnsA82c1Ufvnsw8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	syzbot+5f29dc6a889fc42bd896@syzkaller.appspotmail.com
-Subject: [PATCH 5.4 036/107] comedi: vmk80xx: fix incomplete endpoint checking
-Date: Tue, 30 Apr 2024 12:39:56 +0200
-Message-ID: <20240430103045.725038745@linuxfoundation.org>
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+	"Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	stable@kernel.org,
+	linux-m68k@lists.linux-m68k.org,
+	Finn Thain <fthain@linux-m68k.org>
+Subject: [PATCH 5.4 037/107] serial/pmac_zilog: Remove flawed mitigation for rx irq flood
+Date: Tue, 30 Apr 2024 12:39:57 +0200
+Message-ID: <20240430103045.754334412@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -52,98 +58,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Finn Thain <fthain@linux-m68k.org>
 
-commit d1718530e3f640b7d5f0050e725216eab57a85d8 upstream.
+commit 1be3226445362bfbf461c92a5bcdb1723f2e4907 upstream.
 
-While vmk80xx does have endpoint checking implemented, some things
-can fall through the cracks. Depending on the hardware model,
-URBs can have either bulk or interrupt type, and current version
-of vmk80xx_find_usb_endpoints() function does not take that fully
-into account. While this warning does not seem to be too harmful,
-at the very least it will crash systems with 'panic_on_warn' set on
-them.
+The mitigation was intended to stop the irq completely. That may be
+better than a hard lock-up but it turns out that you get a crash anyway
+if you're using pmac_zilog as a serial console:
 
-Fix the issue found by Syzkaller [1] by somewhat simplifying the
-endpoint checking process with usb_find_common_endpoints() and
-ensuring that only expected endpoint types are present.
+ttyPZ0: pmz: rx irq flood !
+BUG: spinlock recursion on CPU#0, swapper/0
 
-This patch has not been tested on real hardware.
+That's because the pr_err() call in pmz_receive_chars() results in
+pmz_console_write() attempting to lock a spinlock already locked in
+pmz_interrupt(). With CONFIG_DEBUG_SPINLOCK=y, this produces a fatal
+BUG splat. The spinlock in question is the one in struct uart_port.
 
-[1] Syzkaller report:
-usb 1-1: BOGUS urb xfer, pipe 1 != type 3
-WARNING: CPU: 0 PID: 781 at drivers/usb/core/urb.c:504 usb_submit_urb+0xc4e/0x18c0 drivers/usb/core/urb.c:503
-...
-Call Trace:
- <TASK>
- usb_start_wait_urb+0x113/0x520 drivers/usb/core/message.c:59
- vmk80xx_reset_device drivers/comedi/drivers/vmk80xx.c:227 [inline]
- vmk80xx_auto_attach+0xa1c/0x1a40 drivers/comedi/drivers/vmk80xx.c:818
- comedi_auto_config+0x238/0x380 drivers/comedi/drivers.c:1067
- usb_probe_interface+0x5cd/0xb00 drivers/usb/core/driver.c:399
-...
+Even when it's not fatal, the serial port rx function ceases to work.
+Also, the iteration limit doesn't play nicely with QEMU, as can be
+seen in the bug report linked below.
 
-Similar issue also found by Syzkaller:
-Link: https://syzkaller.appspot.com/bug?extid=5205eb2f17de3e01946e
+A web search for other reports of the error message "pmz: rx irq flood"
+didn't produce anything. So I don't think this code is needed any more.
+Remove it.
 
-Reported-and-tested-by: syzbot+5f29dc6a889fc42bd896@syzkaller.appspotmail.com
+Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+Cc: Naveen N. Rao <naveen.n.rao@linux.ibm.com>
+Cc: Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc: stable@kernel.org
+Cc: linux-m68k@lists.linux-m68k.org
+Link: https://github.com/vivier/qemu-m68k/issues/44
+Link: https://lore.kernel.org/all/1078874617.9746.36.camel@gaston/
+Acked-by: Michael Ellerman <mpe@ellerman.id.au>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable <stable@kernel.org>
-Fixes: 49253d542cc0 ("staging: comedi: vmk80xx: factor out usb endpoint detection")
-Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://lore.kernel.org/r/20240408171633.31649-1-n.zhandarovich@fintech.ru
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Link: https://lore.kernel.org/r/e853cf2c762f23101cd2ddec0cc0c2be0e72685f.1712568223.git.fthain@linux-m68k.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/comedi/drivers/vmk80xx.c |   35 ++++++++++---------------------
- 1 file changed, 12 insertions(+), 23 deletions(-)
+ drivers/tty/serial/pmac_zilog.c |   14 --------------
+ 1 file changed, 14 deletions(-)
 
---- a/drivers/staging/comedi/drivers/vmk80xx.c
-+++ b/drivers/staging/comedi/drivers/vmk80xx.c
-@@ -642,33 +642,22 @@ static int vmk80xx_find_usb_endpoints(st
- 	struct vmk80xx_private *devpriv = dev->private;
- 	struct usb_interface *intf = comedi_to_usb_interface(dev);
- 	struct usb_host_interface *iface_desc = intf->cur_altsetting;
--	struct usb_endpoint_descriptor *ep_desc;
--	int i;
-+	struct usb_endpoint_descriptor *ep_rx_desc, *ep_tx_desc;
-+	int ret;
+--- a/drivers/tty/serial/pmac_zilog.c
++++ b/drivers/tty/serial/pmac_zilog.c
+@@ -220,7 +220,6 @@ static bool pmz_receive_chars(struct uar
+ {
+ 	struct tty_port *port;
+ 	unsigned char ch, r1, drop, flag;
+-	int loops = 0;
  
--	if (iface_desc->desc.bNumEndpoints != 2)
--		return -ENODEV;
--
--	for (i = 0; i < iface_desc->desc.bNumEndpoints; i++) {
--		ep_desc = &iface_desc->endpoint[i].desc;
--
--		if (usb_endpoint_is_int_in(ep_desc) ||
--		    usb_endpoint_is_bulk_in(ep_desc)) {
--			if (!devpriv->ep_rx)
--				devpriv->ep_rx = ep_desc;
--			continue;
--		}
-+	if (devpriv->model == VMK8061_MODEL)
-+		ret = usb_find_common_endpoints(iface_desc, &ep_rx_desc,
-+						&ep_tx_desc, NULL, NULL);
-+	else
-+		ret = usb_find_common_endpoints(iface_desc, NULL, NULL,
-+						&ep_rx_desc, &ep_tx_desc);
+ 	/* Sanity check, make sure the old bug is no longer happening */
+ 	if (uap->port.state == NULL) {
+@@ -301,25 +300,12 @@ static bool pmz_receive_chars(struct uar
+ 		if (r1 & Rx_OVR)
+ 			tty_insert_flip_char(port, 0, TTY_OVERRUN);
+ 	next_char:
+-		/* We can get stuck in an infinite loop getting char 0 when the
+-		 * line is in a wrong HW state, we break that here.
+-		 * When that happens, I disable the receive side of the driver.
+-		 * Note that what I've been experiencing is a real irq loop where
+-		 * I'm getting flooded regardless of the actual port speed.
+-		 * Something strange is going on with the HW
+-		 */
+-		if ((++loops) > 1000)
+-			goto flood;
+ 		ch = read_zsreg(uap, R0);
+ 		if (!(ch & Rx_CH_AV))
+ 			break;
+ 	}
  
--		if (usb_endpoint_is_int_out(ep_desc) ||
--		    usb_endpoint_is_bulk_out(ep_desc)) {
--			if (!devpriv->ep_tx)
--				devpriv->ep_tx = ep_desc;
--			continue;
--		}
--	}
--
--	if (!devpriv->ep_rx || !devpriv->ep_tx)
-+	if (ret)
- 		return -ENODEV;
+ 	return true;
+- flood:
+-	pmz_interrupt_control(uap, 0);
+-	pmz_error("pmz: rx irq flood !\n");
+-	return true;
+ }
  
-+	devpriv->ep_rx = ep_rx_desc;
-+	devpriv->ep_tx = ep_tx_desc;
-+
- 	if (!usb_endpoint_maxp(devpriv->ep_rx) || !usb_endpoint_maxp(devpriv->ep_tx))
- 		return -EINVAL;
- 
+ static void pmz_status_handle(struct uart_pmac_port *uap)
 
 
