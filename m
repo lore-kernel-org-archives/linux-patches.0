@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C9D17592;
-	Tue, 30 Apr 2024 11:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3FE17592;
+	Tue, 30 Apr 2024 11:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476327; cv=none; b=amQS6/m08o+BAB+8MRjI2+ZHze2m92vt/tLp7LnwmeQBitDQkpVumd/NJGLqa3oGcaVZ0f0rgSCosV9o+xllvyRlKQIWw+zT5uh+x4WfX+RplVYyKQ/wJceDTBrCh2TJIBdIezq1WLZWfWMvCBG5M2zx0CxFL3MUlXx/JtIUK3Y=
+	t=1714476330; cv=none; b=lOyPB4NUOPimQjt1x++b6YvCP6j2DW9dJq2A0C0JoTg5TjrfF4qtUG8shE+Voy8KuOgF3qJaTIyqweqr4oCnG3H70sJvnyOR4cY2TzgOB7pA7yoJw+mHHBTVR9jtcQejeYSG0VhDvE07WCyixD14KclVno7NDgR4u9Zqa2pKMVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476327; c=relaxed/simple;
-	bh=ghxOQxqgBBREFQj0o1DwNFpGx/4relanajtpITxGlW0=;
+	s=arc-20240116; t=1714476330; c=relaxed/simple;
+	bh=VrTrHh6tgtxitncQ5mznkLhTiVldJ8nhtMjWDzNVUEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QjzLdrfpfJGg919xNPvRYnmVMwox5XlkPpi1K6mHafzTEzvH75Vix2vWw27uYR7Ht9LRAO8Dqs6iuxf//zJMKWccr1tFPapYUkh0BuEcpl1q7tChM1Qp2uVbknFvfn9LAyI003D/QrLCRc+6V1gISORU6t/yUAf6jGFG3WOYfk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMAiWDLE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YfK8OkP2nNBoO2VoytarFhx9o9u/WbYnChl+N3tses2jg8RB9ib29FwJoBSszs2Wym6JPlcdSQbnXsOh++g8e8aoGcEGT6G0TjSSsEJlwTSfHDuJY23MHcAPdb5AegTIUsIdavFiHIIaHEF+BBo6S+pi9CogJ5EMWxTp5kLCYQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nm+ZaK7j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMAiWDLE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E115C2BBFC;
-	Tue, 30 Apr 2024 11:25:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nm+ZaK7j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFFF7C2BBFC;
+	Tue, 30 Apr 2024 11:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476326;
-	bh=ghxOQxqgBBREFQj0o1DwNFpGx/4relanajtpITxGlW0=;
+	s=korg; t=1714476330;
+	bh=VrTrHh6tgtxitncQ5mznkLhTiVldJ8nhtMjWDzNVUEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bMAiWDLEbUtbwUoLIuwQ7SaI0aqjuvDDjAcYBZ2m6DrvbgDXM+th/qVneMIlzKpL+
-	 N4CsTr8I7RhQMs3PuzERZHWIWOFg93jxWPpE1Og/H/+HULKExFI3t3gm5kOCe302kH
-	 xH74HiJBoCcVk1snjaCoNB57IYsJjdy2xH3J5Vuo=
+	b=Nm+ZaK7jvmA8yHwuA7YvK80k8edfJHxvZXlsp/xInrOvxbrg3DxcTVH91McFKkvkR
+	 HTdoC6Hz1Y6JyqqsvFnG2o5v7+v33Bknv4mzE2HHj3EJMbrpgKl3jQ1JejZfdjh3QG
+	 I948kNISoYCSvpm2riZ9R2A8uayWnV5HS4YhyudY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Srish Srinivasan <srish.srinivasan@broadcom.com>
-Subject: [PATCH 5.4 105/107] dm: limit the number of targets and parameter size area
-Date: Tue, 30 Apr 2024 12:41:05 +0200
-Message-ID: <20240430103047.757379292@linuxfoundation.org>
+	Yick Xie <yick.xie@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 106/107] udp: preserve the connected status if only UDP cmsg
+Date: Tue, 30 Apr 2024 12:41:06 +0200
+Message-ID: <20240430103047.786196673@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -51,74 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Yick Xie <yick.xie@gmail.com>
 
-commit bd504bcfec41a503b32054da5472904b404341a4 upstream.
+commit 680d11f6e5427b6af1321932286722d24a8b16c1 upstream.
 
-The kvmalloc function fails with a warning if the size is larger than
-INT_MAX. The warning was triggered by a syscall testing robot.
+If "udp_cmsg_send()" returned 0 (i.e. only UDP cmsg),
+"connected" should not be set to 0. Otherwise it stops
+the connected socket from using the cached route.
 
-In order to avoid the warning, this commit limits the number of targets to
-1048576 and the size of the parameter area to 1073741824.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-[srish: Apply to stable branch linux-5.4.y]
-Signed-off-by: Srish Srinivasan <srish.srinivasan@broadcom.com>
+Fixes: 2e8de8576343 ("udp: add gso segment cmsg")
+Signed-off-by: Yick Xie <yick.xie@gmail.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20240418170610.867084-1-yick.xie@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yick Xie <yick.xie@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-core.h  |    2 ++
- drivers/md/dm-ioctl.c |    3 ++-
- drivers/md/dm-table.c |    9 +++++++--
- 3 files changed, 11 insertions(+), 3 deletions(-)
+ net/ipv4/udp.c |    5 +++--
+ net/ipv6/udp.c |    5 +++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/md/dm-core.h
-+++ b/drivers/md/dm-core.h
-@@ -18,6 +18,8 @@
- #include "dm.h"
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -1054,16 +1054,17 @@ int udp_sendmsg(struct sock *sk, struct
  
- #define DM_RESERVED_MAX_IOS		1024
-+#define DM_MAX_TARGETS			1048576
-+#define DM_MAX_TARGET_PARAMS		1024
- 
- struct dm_kobject_holder {
- 	struct kobject kobj;
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -1760,7 +1760,8 @@ static int copy_params(struct dm_ioctl _
- 	if (copy_from_user(param_kernel, user, minimum_data_size))
- 		return -EFAULT;
- 
--	if (param_kernel->data_size < minimum_data_size)
-+	if (unlikely(param_kernel->data_size < minimum_data_size) ||
-+	    unlikely(param_kernel->data_size > DM_MAX_TARGETS * DM_MAX_TARGET_PARAMS))
- 		return -EINVAL;
- 
- 	secure_data = param_kernel->flags & DM_SECURE_DATA_FLAG;
---- a/drivers/md/dm-table.c
-+++ b/drivers/md/dm-table.c
-@@ -184,7 +184,12 @@ static int alloc_targets(struct dm_table
- int dm_table_create(struct dm_table **result, fmode_t mode,
- 		    unsigned num_targets, struct mapped_device *md)
- {
--	struct dm_table *t = kzalloc(sizeof(*t), GFP_KERNEL);
-+	struct dm_table *t;
-+
-+	if (num_targets > DM_MAX_TARGETS)
-+		return -EOVERFLOW;
-+
-+	t = kzalloc(sizeof(*t), GFP_KERNEL);
- 
- 	if (!t)
- 		return -ENOMEM;
-@@ -199,7 +204,7 @@ int dm_table_create(struct dm_table **re
- 
- 	if (!num_targets) {
- 		kfree(t);
--		return -ENOMEM;
-+		return -EOVERFLOW;
+ 	if (msg->msg_controllen) {
+ 		err = udp_cmsg_send(sk, msg, &ipc.gso_size);
+-		if (err > 0)
++		if (err > 0) {
+ 			err = ip_cmsg_send(sk, msg, &ipc,
+ 					   sk->sk_family == AF_INET6);
++			connected = 0;
++		}
+ 		if (unlikely(err < 0)) {
+ 			kfree(ipc.opt);
+ 			return err;
+ 		}
+ 		if (ipc.opt)
+ 			free = 1;
+-		connected = 0;
  	}
+ 	if (!ipc.opt) {
+ 		struct ip_options_rcu *inet_opt;
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -1387,9 +1387,11 @@ do_udp_sendmsg:
+ 		ipc6.opt = opt;
  
- 	if (alloc_targets(t, num_targets)) {
+ 		err = udp_cmsg_send(sk, msg, &ipc6.gso_size);
+-		if (err > 0)
++		if (err > 0) {
+ 			err = ip6_datagram_send_ctl(sock_net(sk), sk, msg, &fl6,
+ 						    &ipc6);
++			connected = false;
++		}
+ 		if (err < 0) {
+ 			fl6_sock_release(flowlabel);
+ 			return err;
+@@ -1401,7 +1403,6 @@ do_udp_sendmsg:
+ 		}
+ 		if (!(opt->opt_nflen|opt->opt_flen))
+ 			opt = NULL;
+-		connected = false;
+ 	}
+ 	if (!opt) {
+ 		opt = txopt_get(np);
 
 
