@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B68D17592;
-	Tue, 30 Apr 2024 11:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409C212C47A;
+	Tue, 30 Apr 2024 11:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476416; cv=none; b=NnRyj2qCW9qgofF/Qz29tEgKe2Zwfy6bZ+AFqk8aVdwKCu3L/YftF4NqKcUWMkYcVuPONROntnY6GFQEdmgxXNT0DgSMtNwtSNoR2DfTsJa1oPd/ZlVPIFDhvtnWHwhUtgn+XPSaXPbHTgl7xDkUkG7GGhamWXs9SQJaTebbkAs=
+	t=1714476419; cv=none; b=iqMW4BYCJUhkUvEUveW6eFj9Bzegw3E2uQapm5/Bmkf2lxJ5YheAODur8bgGLpLlrJfsMf39vKcDErxVvh9kxFLMFNBgZ/Oz/fN/jkDkpzEk6YlGlTi//iM6RLs7X+zJZn2vMZVmuCosW8DtwPIM8Myene2AKTQgSDB45clspOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476416; c=relaxed/simple;
-	bh=IrdqwWEqcGkEZPDr/zACjrltGCO1brGw4QjoCDloe5c=;
+	s=arc-20240116; t=1714476419; c=relaxed/simple;
+	bh=MdWnSpwCQQOZoKzhD9dNyhqJGksuaEWMzuu28bXYy5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p92g9eo0Lhn/SFfUowQGV93/g5WbHejTrh87Ema2yMDdLY3/dxgq5HJmYMX/0zyJ1XoZJLjD7d0aVmZr6bJeq6/KzwX3phcbLsA6SaLYsG+uIziUJvsy7WtENrRvh+pM1Ik6FiAc/KI7aYP5/OczZLivPKDbG18jod300q6iMA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUlL5hs5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FqegnA3zZS7SbFQ1cSl+/MN2Lt2oCh2z49NXPdEDNDmxtrXb1OY81eGFpivn3fE98J5/ZNhED8a3bR6V/03nZIQ5a++vwVZOR9N+x7jubSg1qBgjMfQvNOUqQgBmo5F6lGmETtzxFxlyKkA8drbqypN/0JCLTm4Orh635pZRO0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2eIjJYEo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUlL5hs5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716E1C4AF19;
-	Tue, 30 Apr 2024 11:26:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eIjJYEo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A49C2BBFC;
+	Tue, 30 Apr 2024 11:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476415;
-	bh=IrdqwWEqcGkEZPDr/zACjrltGCO1brGw4QjoCDloe5c=;
+	s=korg; t=1714476419;
+	bh=MdWnSpwCQQOZoKzhD9dNyhqJGksuaEWMzuu28bXYy5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mUlL5hs58/SGh0MNnkfkwZubCf883gzLMDyOSy5SnC7G9J7Oo6hiazhdsHbXuTdj+
-	 LI6rm2XQj54XIafYWOGlCMh8yk00ua5GkiaSjqF18wnAJBpgX9wIqh4VC6cH623/Jf
-	 VKUhzYwyA0HUrW2i/iFDyGpo6aSv100FPzvwddt0=
+	b=2eIjJYEoprQppRRQY8CUUiM4SGuDYjj4Tuv+zUx6LYr0iJVjO9MMMFP/hxWTVcuPO
+	 veSzPMsldhWBp9ZIRdbeZImIHTpQbf1981I+owWjt6JI3sEtAjoFGNAQ+dmxzLW8Yw
+	 W9mDpDw4l2Vsr4vw1REYAY1CogyrbT5I0ENDAD9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@resnulli.us>,
-	Amit Cohen <amcohen@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andrei Simion <andrei.simion@microchip.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/110] mlxsw: core: Unregister EMAD trap using FORWARD action
-Date: Tue, 30 Apr 2024 12:39:55 +0200
-Message-ID: <20240430103048.341744238@linuxfoundation.org>
+Subject: [PATCH 6.1 027/110] ARM: dts: microchip: at91-sama7g5ek: Replace regulator-suspend-voltage with the valid property
+Date: Tue, 30 Apr 2024 12:39:56 +0200
+Message-ID: <20240430103048.371091715@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -55,55 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Andrei Simion <andrei.simion@microchip.com>
 
-[ Upstream commit 976c44af48141cd8595601c0af2a19a43c5b228b ]
+[ Upstream commit e027b71762e84ee9d4ba9ad5401b956b9e83ed2a ]
 
-The device's manual (PRM - Programmer's Reference Manual) classifies the
-trap that is used to deliver EMAD responses as an "event trap". Among
-other things, it means that the only actions that can be associated with
-the trap are TRAP and FORWARD (NOP).
+By checking the pmic node with microchip,mcp16502.yaml#
+'regulator-suspend-voltage' does not match any of the
+regexes 'pinctrl-[0-9]+' from schema microchip,mcp16502.yaml#
+which inherits regulator.yaml#. So replace regulator-suspend-voltage
+with regulator-suspend-microvolt to avoid the inconsitency.
 
-Currently, during driver de-initialization the driver unregisters the
-trap by setting its action to DISCARD, which violates the above
-guideline. Future firmware versions will prevent such misuses by
-returning an error. This does not prevent the driver from working, but
-an error will be printed to the kernel log during module removal /
-devlink reload:
-
-mlxsw_spectrum 0000:03:00.0: Reg cmd access status failed (status=7(bad parameter))
-mlxsw_spectrum 0000:03:00.0: Reg cmd access failed (reg_id=7003(hpkt),type=write)
-
-Suppress the error message by aligning the driver to the manual and use
-a FORWARD (NOP) action when unregistering the trap.
-
-Fixes: 4ec14b7634b2 ("mlxsw: Add interface to access registers and process events")
-Cc: Jiri Pirko <jiri@resnulli.us>
-Cc: Amit Cohen <amcohen@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://lore.kernel.org/r/753a89e14008fde08cb4a2c1e5f537b81d8eb2d6.1713446092.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 85b1304b9daa ("ARM: dts: at91: sama7g5ek: set regulator voltages for standby state")
+Signed-off-by: Andrei Simion <andrei.simion@microchip.com>
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20240404123824.19182-2-andrei.simion@microchip.com
+[claudiu.beznea: added a dot before starting the last sentence in commit
+ description]
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/at91-sama7g5ek.dts | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/core.c b/drivers/net/ethernet/mellanox/mlxsw/core.c
-index e2a985ec2c765..f36a416ffcfe9 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/core.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/core.c
-@@ -792,7 +792,7 @@ static void mlxsw_emad_rx_listener_func(struct sk_buff *skb, u16 local_port,
+diff --git a/arch/arm/boot/dts/at91-sama7g5ek.dts b/arch/arm/boot/dts/at91-sama7g5ek.dts
+index 4af8a1c96ed63..bede6e88ae110 100644
+--- a/arch/arm/boot/dts/at91-sama7g5ek.dts
++++ b/arch/arm/boot/dts/at91-sama7g5ek.dts
+@@ -293,7 +293,7 @@
  
- static const struct mlxsw_listener mlxsw_emad_rx_listener =
- 	MLXSW_RXL(mlxsw_emad_rx_listener_func, ETHEMAD, TRAP_TO_CPU, false,
--		  EMAD, DISCARD);
-+		  EMAD, FORWARD);
+ 					regulator-state-standby {
+ 						regulator-on-in-suspend;
+-						regulator-suspend-voltage = <1150000>;
++						regulator-suspend-microvolt = <1150000>;
+ 						regulator-mode = <4>;
+ 					};
  
- static int mlxsw_emad_init(struct mlxsw_core *mlxsw_core)
- {
+@@ -314,7 +314,7 @@
+ 
+ 					regulator-state-standby {
+ 						regulator-on-in-suspend;
+-						regulator-suspend-voltage = <1050000>;
++						regulator-suspend-microvolt = <1050000>;
+ 						regulator-mode = <4>;
+ 					};
+ 
+@@ -331,7 +331,7 @@
+ 					regulator-always-on;
+ 
+ 					regulator-state-standby {
+-						regulator-suspend-voltage = <1800000>;
++						regulator-suspend-microvolt = <1800000>;
+ 						regulator-on-in-suspend;
+ 					};
+ 
+@@ -346,7 +346,7 @@
+ 					regulator-max-microvolt = <3700000>;
+ 
+ 					regulator-state-standby {
+-						regulator-suspend-voltage = <1800000>;
++						regulator-suspend-microvolt = <1800000>;
+ 						regulator-on-in-suspend;
+ 					};
+ 
 -- 
 2.43.0
 
