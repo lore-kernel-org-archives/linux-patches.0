@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC40C12D74E;
-	Tue, 30 Apr 2024 11:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FAB12D1EA;
+	Tue, 30 Apr 2024 11:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475506; cv=none; b=USDwRYNzJIYQCuYMzkCdIaQQK/J7VSrqPcmz62a4tq36IRb78hY8EQsAhsSPHo82zD74VjtM7mVs9vuBNALY3CLj9oSHDgFuJlREicBwNbb5oEtle32uPxVgrDhARQ+Ee1xhrSKR0BORuH0UgoA3zDA2cw9vGLDVRq6HZX8P1i8=
+	t=1714475510; cv=none; b=n5hTi9dggbvrBnuQvk6te8XY/z+jeIj8nj7QVHxsutRCFepfOiujC07xxG33v5O0mXwPrFQ0HSA24RrYR4CW/xn6zy9Ycg99hpIFULmW7l2jh6qle5BNu4DMNPe1Kz6ejnIKttJYEhHsML7/iMhgzGVsTsw6ijQm26vysui7PNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475506; c=relaxed/simple;
-	bh=d+Zc8s4XOyVXH9IHqsbigNBoLZW7l/kabF1+lj+Zcjc=;
+	s=arc-20240116; t=1714475510; c=relaxed/simple;
+	bh=Oqun/sJoVDl3iMS4GT082TTqhpMjchOClV3yvdbzgPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J4rCSuyBpi338kfUMTsCJZ5j/aSf+f+rPQxNcAFcWT1PzOFcDcWzGP33FnsK+ZEgRX+FFw+BtB+wAO8jvT+T3EL3wjzNeQWIHYwEouD818Qj8aMT+FZIedKu5AQiajzUFCDP6PtOOkENkz9ONC8VEuhck53T4JjJ5xKomkzpsY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5kHhpGs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eA7JozjuJvT+gXkOFW7iqTUdJ+kopWI5PXTOBDllY5SDnHs8hrTeW0ZEk0/o8AgWmJoIy4/vGHEAAALuFjm5RtwLFn46MF65ixmj+AtHC4n3+gVjXGfweCOP7LXitdmG8BGrWctoxbEQEp2b0bo0Ixre38q2deLMIkl2RdOv1BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZ2I/JdB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5kHhpGs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BACC2BBFC;
-	Tue, 30 Apr 2024 11:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZ2I/JdB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357C4C2BBFC;
+	Tue, 30 Apr 2024 11:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475506;
-	bh=d+Zc8s4XOyVXH9IHqsbigNBoLZW7l/kabF1+lj+Zcjc=;
+	s=korg; t=1714475509;
+	bh=Oqun/sJoVDl3iMS4GT082TTqhpMjchOClV3yvdbzgPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a5kHhpGsR0HqMvDyfPMYwqpgQ73nXfoJBCfLIv0vZpoRnaCvV5ZQcjtDm6prvafBh
-	 XbOMhb6FfM1tYIAOXmJ70GSfI5kj3Hr25gTJtokbq9xCn89QJEqFcPseIrSa6y3nlT
-	 lmg8jvx/7bOtWJdGmgxiSsK0/VNvMITR3SpQ+Chg=
+	b=XZ2I/JdBTJVj51IkRZFn7Zs8zqhYb4MrLr8zBWl2IP6Z9D/WOcLOh3Bg+ma1mRCOu
+	 0/Lj7t6L/EqKJYZqH5YknbJsJ+dtVZZgUC9hdWOIhZ2a22TuWVT0y+eivf5SZUuKyV
+	 EMa4M+JR95LH8hy0fsEomA4NcwPS36TZXInVn3u8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Alexander Zubkov <green@qrator.net>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/186] mlxsw: spectrum_acl_tcam: Rate limit error message
-Date: Tue, 30 Apr 2024 12:38:51 +0200
-Message-ID: <20240430103100.330720607@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.6 115/186] kbuild: rust: remove unneeded `@rustc_cfg` to avoid ICE
+Date: Tue, 30 Apr 2024 12:39:27 +0200
+Message-ID: <20240430103101.371382867@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -54,45 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit 5bcf925587e9b5d36420d572a0b4d131c90fb306 ]
+commit 50cfe93b01475ba36878b65d35d812e1bb48ac71 upstream.
 
-In the rare cases when the device resources are exhausted it is likely
-that the rehash delayed work will fail. An error message will be printed
-whenever this happens which can be overwhelming considering the fact
-that the work is per-region and that there can be hundreds of regions.
+When KUnit tests are enabled, under very big kernel configurations
+(e.g. `allyesconfig`), we can trigger a `rustdoc` ICE [1]:
 
-Fix by rate limiting the error message.
+      RUSTDOC TK rust/kernel/lib.rs
+    error: the compiler unexpectedly panicked. this is a bug.
 
-Fixes: e5e7962ee5c2 ("mlxsw: spectrum_acl: Implement region migration according to hints")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/c510763b2ebd25e7990d80183feff91cde593145.1713797103.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The reason is that this build step has a duplicated `@rustc_cfg` argument,
+which contains the kernel configuration, and thus a lot of arguments. The
+factor 2 happens to be enough to reach the ICE.
+
+Thus remove the unneeded `@rustc_cfg`. By doing so, we clean up the
+command and workaround the ICE.
+
+The ICE has been fixed in the upcoming Rust 1.79 [2].
+
+Cc: stable@vger.kernel.org
+Fixes: a66d733da801 ("rust: support running Rust documentation tests as KUnit ones")
+Link: https://github.com/rust-lang/rust/issues/122722 [1]
+Link: https://github.com/rust-lang/rust/pull/122840 [2]
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20240422091215.526688-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/Makefile |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index 1ff0b2c7c11de..568ae7092fe0e 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -1450,7 +1450,7 @@ mlxsw_sp_acl_tcam_vregion_rehash(struct mlxsw_sp *mlxsw_sp,
- 	err = mlxsw_sp_acl_tcam_vregion_migrate(mlxsw_sp, vregion,
- 						ctx, credits);
- 	if (err) {
--		dev_err(mlxsw_sp->bus_info->dev, "Failed to migrate vregion\n");
-+		dev_err_ratelimited(mlxsw_sp->bus_info->dev, "Failed to migrate vregion\n");
- 		return;
- 	}
- 
--- 
-2.43.0
-
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -173,7 +173,6 @@ quiet_cmd_rustdoc_test_kernel = RUSTDOC
+ 	mkdir -p $(objtree)/$(obj)/test/doctests/kernel; \
+ 	OBJTREE=$(abspath $(objtree)) \
+ 	$(RUSTDOC) --test $(rust_flags) \
+-		@$(objtree)/include/generated/rustc_cfg \
+ 		-L$(objtree)/$(obj) --extern alloc --extern kernel \
+ 		--extern build_error --extern macros \
+ 		--extern bindings --extern uapi \
 
 
