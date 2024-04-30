@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DDC12C462;
-	Tue, 30 Apr 2024 10:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A237912C462;
+	Tue, 30 Apr 2024 10:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474549; cv=none; b=d6wnqvG/QWLp4ayQsC+c0fhwOdz9QdtfpHfzowGzRPlId3FMrrdJt8QG1Bxzp+czdQyf5unCIWo6D4OiYReRv/VHb+B1WOowVRzXgdXnr7QsuWk9+JLe6sjkCovtd/WGQJm6y5fIoef9uvoe230V5iO3L26QHRcRtAi975dGL18=
+	t=1714474552; cv=none; b=FD/njwn9mz0hgxqBXpmUjVKiGxSdfRMqvDjgtUNdDBcMKBLyXHiyyleXXXBRWvkKbIPGMSWYT+aVdY1BR3iOpwNhnHJ87hPja7ztsgt2RXXVv5x8QJOQsqIsLGFHc/6FYAylk5uLDjw85mhGkfPoUt4+LWv4iwVHG2/vG6JHncc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474549; c=relaxed/simple;
-	bh=I57b3cwvCNdi5XKb/ysa6mULLbFU61OS+W6uiMS1COI=;
+	s=arc-20240116; t=1714474552; c=relaxed/simple;
+	bh=CnPL1QINPj4EANswjwcDm1Z9IhPMqHexVW1UlPrCgWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i6utRnbWBjvBK3odQPnKQDPZ9jXip7U0dl2jHTAD4t77WQ7gMpeeok05vnAg9xkdo82iOJ5vS7u2JyCwIyks0IAsT0IEtUfTwo+zppFcWnqFk+Fe1imd9KYL/J15CoAePd+cu+S+Axi12I1g6eGD09xKGD0lbJzG9ff7/kbo5VM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ch+V0mIc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uo2gv86d+dJYA8aPpRSXC5ayaRUbYIJfmZjmrk3M3Q0XWBuZ3eXNY53dzyfybDJ8DDL0SQtxWUHCcFYpFMjDqJZWw5z8szLPEWP2/P4oT2UtE3eeaN2eszRZ9WFlhEoODLHyATMy2FvfKJBv5GrH7VLVall4NS0fM3qa8uHQL6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oFnXUNt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ch+V0mIc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E59BC2BBFC;
-	Tue, 30 Apr 2024 10:55:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oFnXUNt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D10C4AF19;
+	Tue, 30 Apr 2024 10:55:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474549;
-	bh=I57b3cwvCNdi5XKb/ysa6mULLbFU61OS+W6uiMS1COI=;
+	s=korg; t=1714474552;
+	bh=CnPL1QINPj4EANswjwcDm1Z9IhPMqHexVW1UlPrCgWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ch+V0mIcy4ZB2z1kPrCdpZ903wfAsiiZhLkTHflBirGII0ow6RXiHbO15qbsfsINF
-	 Zq0+qY8cUpifSRSk7XUX2sXl1BFaDk4xHfKJDMGY0wxYW6bflJ5gxoPLDRlYqIzz5n
-	 QGvjZLwH0gRXHJFoeWTe3MmSOZTB++KGyzy4S9AI=
+	b=0oFnXUNtQ6zmOh1fw9aNc/6RbfNvxPmxTpdQ+jFP6pPXpQ2DK6+9D1DXbUqdd8wZs
+	 B0wg9XOhVu55eWTtSMDXQeDx5wXyW2trtOC07uq17gikQswmMdGLL2EF0SY3Hp9tR9
+	 lhAZEhF/hJGnIepDc3aRSnvSFWLKYA6sFjLNlf8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yick Xie <yick.xie@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.8 192/228] udp: preserve the connected status if only UDP cmsg
-Date: Tue, 30 Apr 2024 12:39:30 +0200
-Message-ID: <20240430103109.339867059@linuxfoundation.org>
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.8 193/228] mtd: limit OTP NVMEM cell parse to non-NAND devices
+Date: Tue, 30 Apr 2024 12:39:31 +0200
+Message-ID: <20240430103109.368580430@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -51,70 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yick Xie <yick.xie@gmail.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit 680d11f6e5427b6af1321932286722d24a8b16c1 upstream.
+commit d2d73a6dd17365c43e109263841f7c26da55cfb0 upstream.
 
-If "udp_cmsg_send()" returned 0 (i.e. only UDP cmsg),
-"connected" should not be set to 0. Otherwise it stops
-the connected socket from using the cached route.
+MTD OTP logic is very fragile on parsing NVMEM cell and can be
+problematic with some specific kind of devices.
 
-Fixes: 2e8de8576343 ("udp: add gso segment cmsg")
-Signed-off-by: Yick Xie <yick.xie@gmail.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20240418170610.867084-1-yick.xie@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The problem was discovered by e87161321a40 ("mtd: rawnand: macronix:
+OTP access for MX30LFxG18AC") where OTP support was added to a NAND
+device. With the case of NAND devices, it does require a node where ECC
+info are declared and all the fixed partitions, and this cause the OTP
+codepath to parse this node as OTP NVMEM cells, making probe fail and
+the NAND device registration fail.
+
+MTD OTP parsing should have been limited to always using compatible to
+prevent this error by using node with compatible "otp-user" or
+"otp-factory".
+
+NVMEM across the years had various iteration on how cells could be
+declared in DT, in some old implementation, no_of_node should have been
+enabled but now add_legacy_fixed_of_cells should be used to disable
+NVMEM to parse child node as NVMEM cell.
+
+To fix this and limit any regression with other MTD that makes use of
+declaring OTP as direct child of the dev node, disable
+add_legacy_fixed_of_cells if we detect the MTD type is Nand.
+
+With the following logic, the OTP NVMEM entry is correctly created with
+no cells and the MTD Nand is correctly probed and partitions are
+correctly exposed.
+
+Fixes: 4b361cfa8624 ("mtd: core: add OTP nvmem provider support")
+Cc: <stable@vger.kernel.org> # v6.7+
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240412105030.1598-1-ansuelsmth@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/udp.c |    5 +++--
- net/ipv6/udp.c |    5 +++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/mtd/mtdcore.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -1125,16 +1125,17 @@ int udp_sendmsg(struct sock *sk, struct
- 
- 	if (msg->msg_controllen) {
- 		err = udp_cmsg_send(sk, msg, &ipc.gso_size);
--		if (err > 0)
-+		if (err > 0) {
- 			err = ip_cmsg_send(sk, msg, &ipc,
- 					   sk->sk_family == AF_INET6);
-+			connected = 0;
-+		}
- 		if (unlikely(err < 0)) {
- 			kfree(ipc.opt);
- 			return err;
- 		}
- 		if (ipc.opt)
- 			free = 1;
--		connected = 0;
- 	}
- 	if (!ipc.opt) {
- 		struct ip_options_rcu *inet_opt;
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1476,9 +1476,11 @@ do_udp_sendmsg:
- 		ipc6.opt = opt;
- 
- 		err = udp_cmsg_send(sk, msg, &ipc6.gso_size);
--		if (err > 0)
-+		if (err > 0) {
- 			err = ip6_datagram_send_ctl(sock_net(sk), sk, msg, fl6,
- 						    &ipc6);
-+			connected = false;
-+		}
- 		if (err < 0) {
- 			fl6_sock_release(flowlabel);
- 			return err;
-@@ -1490,7 +1492,6 @@ do_udp_sendmsg:
- 		}
- 		if (!(opt->opt_nflen|opt->opt_flen))
- 			opt = NULL;
--		connected = false;
- 	}
- 	if (!opt) {
- 		opt = txopt_get(np);
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -900,7 +900,7 @@ static struct nvmem_device *mtd_otp_nvme
+ 	config.name = compatible;
+ 	config.id = NVMEM_DEVID_AUTO;
+ 	config.owner = THIS_MODULE;
+-	config.add_legacy_fixed_of_cells = true;
++	config.add_legacy_fixed_of_cells = !mtd_type_is_nand(mtd);
+ 	config.type = NVMEM_TYPE_OTP;
+ 	config.root_only = true;
+ 	config.ignore_wp = true;
 
 
