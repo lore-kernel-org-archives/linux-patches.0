@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5894412C462;
-	Tue, 30 Apr 2024 11:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8356312C462;
+	Tue, 30 Apr 2024 11:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475098; cv=none; b=PFnPuidbbeTYPAZ3qlwbJVkekHYPtr07962YiYmmSr6edNlptWxyX+81mrltTYhsOo8GNtjkyK+yLyByKxxMF51HZJw+uuzI7Iozjx/WJAtFgYxsof+orAOohfONJTDBULMH+y2cLpQzRf0PKrPKzZnqE0fu1J7XRNA5gdWhQ1M=
+	t=1714475101; cv=none; b=HPKSF9csnJfwYYvNCugXtAzTeZd0MbvEk0X3wQauXETNCmLBXgnDDs2/k5xhrWxZfPbMI4bsWHmRRIuOYqAwAg80FTjV7DqafneSRBmFxKo3ki8ql0MnQkpkb2zH+Re1ie48T0N9OONW4OEdFtKPTuPCcZqCHiGIXUgPUDuz3mQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475098; c=relaxed/simple;
-	bh=Qw0hIr41ecjcdViz1nemcXvNboxAeRC5fVFyd+rXsPQ=;
+	s=arc-20240116; t=1714475101; c=relaxed/simple;
+	bh=EcSrvuPDDzoxJbD5tokqF6mYopUaGKakWcsvvXrGwfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HvFmzcOJnpHGPN274EQkFZKGremXng26jS+wmOZvVWpiixrnzxW5QdwaSvF7gMBe19SNOZABUR02T1HpuL8WBt8ev5oIMh7wchVJU2JTD0St+/clMIc9mWyh4LOin6tz3RnPp3uB5vA18LXXf0U4bTFj0xmY43GEwTNV97uiRMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOkCpkz8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BYvkAr92cKQbD3cekQ9bHJj+IRWqhtnTUibTGCDaxOFm+xxYfM9SuzRiix/W6VnNk+vUcoEF0sOGMTY+6NNI2cL5woE1fsDlfYO0QPNlIBMyVXCRsaJtMcJxTo9LyVpkBtzSntiASOeaHNfrtIbPub0TJjhx4UsGuzHLrrikvBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmpoCcYy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOkCpkz8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD119C2BBFC;
-	Tue, 30 Apr 2024 11:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmpoCcYy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07542C2BBFC;
+	Tue, 30 Apr 2024 11:05:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475098;
-	bh=Qw0hIr41ecjcdViz1nemcXvNboxAeRC5fVFyd+rXsPQ=;
+	s=korg; t=1714475101;
+	bh=EcSrvuPDDzoxJbD5tokqF6mYopUaGKakWcsvvXrGwfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WOkCpkz8oBX1t+Lhcr1VjRtHAkpIS1oFPcXZifuCZbjjJBqN/pYsnva+/B8pa6qUy
-	 5F8PvgNkObJtlMEEYyq5kmwTtm6vcz7AGtvxY76VK/QMCnnypqMbaOXZZ1zc1Uo18G
-	 G9zakLRMoe341tbROlkA1y4schMrckWoK6XaQa8E=
+	b=hmpoCcYypP73etCwxa+Ks6K4a6lEKO0oIFnX18VvghMf2QEK7x3Qju7+eQKTw9ohL
+	 zvUDO8vKeocTvGDuY6KJd3DZBQs6ICfcB70XpbGJg/P+w/yE/TWexeFFdNwFhZD75o
+	 V1kZOrFbypVUiDW3wd7T9X1R72tfJSpcuDCZB8a0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Xiubo Li <xiubli@redhat.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Dave Chinner <david@fromorbit.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	Alexander Potapenko <glider@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 124/138] stackdepot: respect __GFP_NOLOCKDEP allocation flag
-Date: Tue, 30 Apr 2024 12:40:09 +0200
-Message-ID: <20240430103053.055123422@linuxfoundation.org>
+	Baruch Siach <baruch@tkos.co.il>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 133/138] i2c: smbus: fix NULL function pointer dereference
+Date: Tue, 30 Apr 2024 12:40:18 +0200
+Message-ID: <20240430103053.316745832@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -55,95 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-commit 6fe60465e1d53ea321ee909be26d97529e8f746c upstream.
+[ Upstream commit 91811a31b68d3765b3065f4bb6d7d6d84a7cfc9f ]
 
-If stack_depot_save_flags() allocates memory it always drops
-__GFP_NOLOCKDEP flag.  So when KASAN tries to track __GFP_NOLOCKDEP
-allocation we may end up with lockdep splat like bellow:
+Baruch reported an OOPS when using the designware controller as target
+only. Target-only modes break the assumption of one transfer function
+always being available. Fix this by always checking the pointer in
+__i2c_transfer.
 
-======================================================
- WARNING: possible circular locking dependency detected
- 6.9.0-rc3+ #49 Not tainted
- ------------------------------------------------------
- kswapd0/149 is trying to acquire lock:
- ffff88811346a920
-(&xfs_nondir_ilock_class){++++}-{4:4}, at: xfs_reclaim_inode+0x3ac/0x590
-[xfs]
-
- but task is already holding lock:
- ffffffff8bb33100 (fs_reclaim){+.+.}-{0:0}, at:
-balance_pgdat+0x5d9/0xad0
-
- which lock already depends on the new lock.
-
- the existing dependency chain (in reverse order) is:
- -> #1 (fs_reclaim){+.+.}-{0:0}:
-        __lock_acquire+0x7da/0x1030
-        lock_acquire+0x15d/0x400
-        fs_reclaim_acquire+0xb5/0x100
- prepare_alloc_pages.constprop.0+0xc5/0x230
-        __alloc_pages+0x12a/0x3f0
-        alloc_pages_mpol+0x175/0x340
-        stack_depot_save_flags+0x4c5/0x510
-        kasan_save_stack+0x30/0x40
-        kasan_save_track+0x10/0x30
-        __kasan_slab_alloc+0x83/0x90
-        kmem_cache_alloc+0x15e/0x4a0
-        __alloc_object+0x35/0x370
-        __create_object+0x22/0x90
- __kmalloc_node_track_caller+0x477/0x5b0
-        krealloc+0x5f/0x110
-        xfs_iext_insert_raw+0x4b2/0x6e0 [xfs]
-        xfs_iext_insert+0x2e/0x130 [xfs]
-        xfs_iread_bmbt_block+0x1a9/0x4d0 [xfs]
-        xfs_btree_visit_block+0xfb/0x290 [xfs]
-        xfs_btree_visit_blocks+0x215/0x2c0 [xfs]
-        xfs_iread_extents+0x1a2/0x2e0 [xfs]
- xfs_buffered_write_iomap_begin+0x376/0x10a0 [xfs]
-        iomap_iter+0x1d1/0x2d0
- iomap_file_buffered_write+0x120/0x1a0
-        xfs_file_buffered_write+0x128/0x4b0 [xfs]
-        vfs_write+0x675/0x890
-        ksys_write+0xc3/0x160
-        do_syscall_64+0x94/0x170
- entry_SYSCALL_64_after_hwframe+0x71/0x79
-
-Always preserve __GFP_NOLOCKDEP to fix this.
-
-Link: https://lkml.kernel.org/r/20240418141133.22950-1-ryabinin.a.a@gmail.com
-Fixes: cd11016e5f52 ("mm, kasan: stackdepot implementation. Enable stackdepot for SLAB")
-Signed-off-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Reported-by: Xiubo Li <xiubli@redhat.com>
-Closes: https://lore.kernel.org/all/a0caa289-ca02-48eb-9bf2-d86fd47b71f4@redhat.com/
-Reported-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Closes: https://lore.kernel.org/all/f9ff999a-e170-b66b-7caf-293f2b147ac2@opensource.wdc.com/
-Suggested-by: Dave Chinner <david@fromorbit.com>
-Tested-by: Xiubo Li <xiubli@redhat.com>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Baruch Siach <baruch@tkos.co.il>
+Closes: https://lore.kernel.org/r/4269631780e5ba789cf1ae391eec1b959def7d99.1712761976.git.baruch@tkos.co.il
+Fixes: 4b1acc43331d ("i2c: core changes for slave support")
+[wsa: dropped the simplification in core-smbus to avoid theoretical regressions]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Tested-by: Baruch Siach <baruch@tkos.co.il>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/stackdepot.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/i2c/i2c-core-base.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/lib/stackdepot.c
-+++ b/lib/stackdepot.c
-@@ -271,10 +271,10 @@ depot_stack_handle_t stack_depot_save(un
- 		/*
- 		 * Zero out zone modifiers, as we don't have specific zone
- 		 * requirements. Keep the flags related to allocation in atomic
--		 * contexts and I/O.
-+		 * contexts, I/O, nolockdep.
- 		 */
- 		alloc_flags &= ~GFP_ZONEMASK;
--		alloc_flags &= (GFP_ATOMIC | GFP_KERNEL);
-+		alloc_flags &= (GFP_ATOMIC | GFP_KERNEL | __GFP_NOLOCKDEP);
- 		alloc_flags |= __GFP_NOWARN;
- 		page = alloc_pages(alloc_flags, STACK_ALLOC_ORDER);
- 		if (page)
+diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
+index 34fecf97a355b..e8a89e18c640e 100644
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -2013,13 +2013,18 @@ static int i2c_check_for_quirks(struct i2c_adapter *adap, struct i2c_msg *msgs,
+  * Returns negative errno, else the number of messages executed.
+  *
+  * Adapter lock must be held when calling this function. No debug logging
+- * takes place. adap->algo->master_xfer existence isn't checked.
++ * takes place.
+  */
+ int __i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ {
+ 	unsigned long orig_jiffies;
+ 	int ret, try;
+ 
++	if (!adap->algo->master_xfer) {
++		dev_dbg(&adap->dev, "I2C level transfers not supported\n");
++		return -EOPNOTSUPP;
++	}
++
+ 	if (WARN_ON(!msgs || num < 1))
+ 		return -EINVAL;
+ 
+@@ -2086,11 +2091,6 @@ int i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ {
+ 	int ret;
+ 
+-	if (!adap->algo->master_xfer) {
+-		dev_dbg(&adap->dev, "I2C level transfers not supported\n");
+-		return -EOPNOTSUPP;
+-	}
+-
+ 	/* REVISIT the fault reporting model here is weak:
+ 	 *
+ 	 *  - When we get an error after receiving N bytes from a slave,
+-- 
+2.43.0
+
 
 
