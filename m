@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272691E50A;
-	Tue, 30 Apr 2024 11:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED781E50A;
+	Tue, 30 Apr 2024 11:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475405; cv=none; b=BEaGumeY9JeDXyp93OBIuBKaT+kP8plMUPNAG5Zdg+gHDRZF97ISpOtBH0wgMHBLhIZ8N0F5yDuuSxDYfZFreM168W2PB3kBxRVOUS1eMGLDcY2MlRlUC/S18v+DMXZLWhz9RbK6TBFcLBCuldHS0GZfDpW4vEq/vqWedCfyXiw=
+	t=1714475408; cv=none; b=JkItknfLioSnlpmKAJRrcBgLGlESYFaMP6D1X12Ss+iG2Q/m0OeCdeDScBbPukq5FvYR9eP7XXrqCObk2fjke2Uorhm0m8MNVtX4I7tD5Z0Gmebc1J5bl+3pXTnxQtEQIWYbbEM9CwoxaIHYPCKFkd0+fQ6n19nR4EOxCXYwbFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475405; c=relaxed/simple;
-	bh=/jBvmapyQJ694o2UsZ0v/dSLFfYqGmUFzPhkf7g7z5k=;
+	s=arc-20240116; t=1714475408; c=relaxed/simple;
+	bh=uIGphSZsDV8P7BxXl47ELQB83mGPB/qKy8srE7sWJK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yms/PWz4VwkiHzXZ1YRANrgJPQ97bNXMmbCvj9aErI8xvDh6zGTaG+ygnEQHyf0pd583qAt8PJl8LkfNZr454siqVti7iXCbjZbQbrrGa6D5LPonyQwGOGn75k+DkspzVW1/3T81EtQPPDqyBbkOPL2/S2mHzKJUG59IGwjHbco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XrYPEhpb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=efQcVASNkHI4mmzTQhWtvH9CDeaykkK4fVd4FW6KIHKILO9Pl5hZlxnC1V1lOvsg5CeTSRppyzv+F4ozryg+0BbiPT3rKnj/R63dspnqNnjbOctTNAfPxi66iTZuPVlp0hZIdV8ejTwoJcfnV7/EF9h58isYk6TL9QdbgObdCmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OkOV4ZZ2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XrYPEhpb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5CCC2BBFC;
-	Tue, 30 Apr 2024 11:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OkOV4ZZ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B247C2BBFC;
+	Tue, 30 Apr 2024 11:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475404;
-	bh=/jBvmapyQJ694o2UsZ0v/dSLFfYqGmUFzPhkf7g7z5k=;
+	s=korg; t=1714475407;
+	bh=uIGphSZsDV8P7BxXl47ELQB83mGPB/qKy8srE7sWJK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XrYPEhpb/dZ8DzMcstBTcWc53dE3M2JB2rnRpAzutHUVUzHeFPUlsXDLeqgcPsY60
-	 hvYYsInvsIjfvXBLHDvHYtpVHIRn2to9DtPt0GH2z1k7dctNaJU5qdY0fsausi/QbU
-	 9WRBx26xakcBqq+3yTsASrtPmpOGi9xF2C5SqEp8=
+	b=OkOV4ZZ2ivX/BEKrngl9gp66dfyLKwa1hxJscetUWzLYUgEpA60cjXYtffQrYqZ+o
+	 pulCcuYExjbTUudYQedGwycAj1RB/q3Izl4vmdIY5XcLwFqxmX++HCppQ+AzohiDhJ
+	 JcLSG0iYd3HdPqSc7C5dtRufkO9q8EUKhy33feNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Heimpold <michael.heimpold@chargebyte.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 085/186] ARM: dts: imx6ull-tarragon: fix USB over-current polarity
-Date: Tue, 30 Apr 2024 12:38:57 +0200
-Message-ID: <20240430103100.501645495@linuxfoundation.org>
+Subject: [PATCH 6.6 086/186] netfilter: nf_tables: honor table dormant flag from netdev release event path
+Date: Tue, 30 Apr 2024 12:38:58 +0200
+Message-ID: <20240430103100.530765094@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -52,34 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Heimpold <michael.heimpold@chargebyte.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit d7f3040a565214a30e2f07dc9b91566d316e2d36 ]
+[ Upstream commit 8e30abc9ace4f0add4cd761dfdbfaebae5632dd2 ]
 
-Our Tarragon platform uses a active-low signal to inform
-the i.MX6ULL about the over-current detection.
+Check for table dormant flag otherwise netdev release event path tries
+to unregister an already unregistered hook.
 
-Fixes: 5e4f393ccbf0 ("ARM: dts: imx6ull: Add chargebyte Tarragon support")
-Signed-off-by: Michael Heimpold <michael.heimpold@chargebyte.com>
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+[524854.857999] ------------[ cut here ]------------
+[524854.858010] WARNING: CPU: 0 PID: 3386599 at net/netfilter/core.c:501 __nf_unregister_net_hook+0x21a/0x260
+[...]
+[524854.858848] CPU: 0 PID: 3386599 Comm: kworker/u32:2 Not tainted 6.9.0-rc3+ #365
+[524854.858869] Workqueue: netns cleanup_net
+[524854.858886] RIP: 0010:__nf_unregister_net_hook+0x21a/0x260
+[524854.858903] Code: 24 e8 aa 73 83 ff 48 63 43 1c 83 f8 01 0f 85 3d ff ff ff e8 98 d1 f0 ff 48 8b 3c 24 e8 8f 73 83 ff 48 63 43 1c e9 26 ff ff ff <0f> 0b 48 83 c4 18 48 c7 c7 00 68 e9 82 5b 5d 41 5c 41 5d 41 5e 41
+[524854.858914] RSP: 0018:ffff8881e36d79e0 EFLAGS: 00010246
+[524854.858926] RAX: 0000000000000000 RBX: ffff8881339ae790 RCX: ffffffff81ba524a
+[524854.858936] RDX: dffffc0000000000 RSI: 0000000000000008 RDI: ffff8881c8a16438
+[524854.858945] RBP: ffff8881c8a16438 R08: 0000000000000001 R09: ffffed103c6daf34
+[524854.858954] R10: ffff8881e36d79a7 R11: 0000000000000000 R12: 0000000000000005
+[524854.858962] R13: ffff8881c8a16000 R14: 0000000000000000 R15: ffff8881351b5a00
+[524854.858971] FS:  0000000000000000(0000) GS:ffff888390800000(0000) knlGS:0000000000000000
+[524854.858982] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[524854.858991] CR2: 00007fc9be0f16f4 CR3: 00000001437cc004 CR4: 00000000001706f0
+[524854.859000] Call Trace:
+[524854.859006]  <TASK>
+[524854.859013]  ? __warn+0x9f/0x1a0
+[524854.859027]  ? __nf_unregister_net_hook+0x21a/0x260
+[524854.859044]  ? report_bug+0x1b1/0x1e0
+[524854.859060]  ? handle_bug+0x3c/0x70
+[524854.859071]  ? exc_invalid_op+0x17/0x40
+[524854.859083]  ? asm_exc_invalid_op+0x1a/0x20
+[524854.859100]  ? __nf_unregister_net_hook+0x6a/0x260
+[524854.859116]  ? __nf_unregister_net_hook+0x21a/0x260
+[524854.859135]  nf_tables_netdev_event+0x337/0x390 [nf_tables]
+[524854.859304]  ? __pfx_nf_tables_netdev_event+0x10/0x10 [nf_tables]
+[524854.859461]  ? packet_notifier+0xb3/0x360
+[524854.859476]  ? _raw_spin_unlock_irqrestore+0x11/0x40
+[524854.859489]  ? dcbnl_netdevice_event+0x35/0x140
+[524854.859507]  ? __pfx_nf_tables_netdev_event+0x10/0x10 [nf_tables]
+[524854.859661]  notifier_call_chain+0x7d/0x140
+[524854.859677]  unregister_netdevice_many_notify+0x5e1/0xae0
+
+Fixes: d54725cd11a5 ("netfilter: nf_tables: support for multiple devices per netdev hook")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx6ull-tarragon-common.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nft_chain_filter.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx6ull-tarragon-common.dtsi b/arch/arm/boot/dts/nxp/imx/imx6ull-tarragon-common.dtsi
-index 3fdece5bd31f9..5248a058230c8 100644
---- a/arch/arm/boot/dts/nxp/imx/imx6ull-tarragon-common.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx6ull-tarragon-common.dtsi
-@@ -805,6 +805,7 @@
- 		     &pinctrl_usb_pwr>;
- 	dr_mode = "host";
- 	power-active-high;
-+	over-current-active-low;
- 	disable-over-current;
- 	status = "okay";
- };
+diff --git a/net/netfilter/nft_chain_filter.c b/net/netfilter/nft_chain_filter.c
+index 274b6f7e6bb57..d170758a1eb5d 100644
+--- a/net/netfilter/nft_chain_filter.c
++++ b/net/netfilter/nft_chain_filter.c
+@@ -338,7 +338,9 @@ static void nft_netdev_event(unsigned long event, struct net_device *dev,
+ 		return;
+ 
+ 	if (n > 1) {
+-		nf_unregister_net_hook(ctx->net, &found->ops);
++		if (!(ctx->chain->table->flags & NFT_TABLE_F_DORMANT))
++			nf_unregister_net_hook(ctx->net, &found->ops);
++
+ 		list_del_rcu(&found->list);
+ 		kfree_rcu(found, rcu);
+ 		return;
 -- 
 2.43.0
 
