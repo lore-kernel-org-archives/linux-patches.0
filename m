@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E41512D1E8;
-	Tue, 30 Apr 2024 11:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D7A1E50A;
+	Tue, 30 Apr 2024 11:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475572; cv=none; b=moF/HgNypCX1op9wPDYJ/3o2idxPpQBCdqR7KFNg+5wbzuuMbl2n24sbT6GURNxRyTyJI7OEF29f1kO6Eg0gmefmP4mrVpplM+vcto/a9Q8Ke6qaDhiF4U7cy57OK6XKqLepXAUES4ZPAVBVmuizqd47ZDjpJZJxfQ/446j2Q1Q=
+	t=1714475575; cv=none; b=teiM+dVUp39z5wbsM7voAV/mcrg6e6dOlalYmoPTAtkUNEyIczRGDnzaonGxBo5Ko38ClEdjKRbUOg+ECyxc2B4lswg9slNT2KLv6y0hy+wxD4o/lVrOAPQFbuuB7z91d+3l8roG4LMAexjbHuAi7m2sHxreRsbidxIIgtyE++A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475572; c=relaxed/simple;
-	bh=NBfnvJx0VXjiVwqx8qsDHYxoqK1uvi4yLKAJg4vGu2Q=;
+	s=arc-20240116; t=1714475575; c=relaxed/simple;
+	bh=QI3hJTguCJhIWrqWON2Ye0I30rrtKfRuvTFw6r8oEGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rp3DoQ037gpaZ3GTHuYvyGa2/FOOyjzgRJcrTlmnxBRE1dT5J0Lz0mShUYBnXDu3YhfoupxKmxIj3VT6//N4s08Jq5nn5kbOp8FJqKyV+StEgW+3GC+GuhvSTE5SEF364qyS7MeW5rHZYTXwsFbf0uXkc3IbLimsxBky7mvWy6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/gFFiSw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eynZWqboqSKiHHezWh2Ab9ZKTpz/KElWPJ8w2ZHDIxzPRLAg8cyzgcI7X746h/6Y3aWNT0m+gKRqj6XBs893Z61/GPjuOOZ+qI2rH9lSAmxuvGF2tCK/SP8Bt73LHBuqdhyv5pg7LPAmJ3RjTNBrkYohXEsQTIVj0+QLzgjHe9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yj6tzmNc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/gFFiSw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82480C2BBFC;
-	Tue, 30 Apr 2024 11:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yj6tzmNc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9FDC2BBFC;
+	Tue, 30 Apr 2024 11:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475571;
-	bh=NBfnvJx0VXjiVwqx8qsDHYxoqK1uvi4yLKAJg4vGu2Q=;
+	s=korg; t=1714475575;
+	bh=QI3hJTguCJhIWrqWON2Ye0I30rrtKfRuvTFw6r8oEGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/gFFiSw5fuN8m2z5Gz0c5ZkhuiPYGqYvI+HePm9dfnqrBmugjrL9RNZ+X0dHwn9k
-	 NA6ugv6MWc5BV+qtq72jHpIHfWGypjlM+lzVRlG2gP+KRfbLBeI5RRFR9h/B2MYR83
-	 NemkHZ4CbZ1CyZxu4ddCDWEH+XviotuImXBQHsaI=
+	b=yj6tzmNcqIBALL36LB1nJnzuLb/xYOg7VueG9ikRgF7WZ8sk6dq+oPaZFN42qcl6z
+	 PPSf/y755V7PIqoNs/KaZ8ic4gHsdAzc8/L2kjOzkammTxhu7pLOwHx3/Qf3fZuHj9
+	 tbJgk3tl7cDkQCgvAKrnwcG7Ga1lwryQpuuJ7BDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiantao Shan <shanjiantao@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 137/186] LoongArch: Fix access error when read fault on a write-only VMA
-Date: Tue, 30 Apr 2024 12:39:49 +0200
-Message-ID: <20240430103102.010267865@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 138/186] arm64: dts: qcom: sc8280xp: add missing PCIe minimum OPP
+Date: Tue, 30 Apr 2024 12:39:50 +0200
+Message-ID: <20240430103102.038896408@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -50,42 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiantao Shan <shanjiantao@loongson.cn>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit efb44ff64c95340b06331fc48634b99efc9dd77c upstream.
+commit 8b8ec83a1d7d3b6605d9163d2e306971295a4ce8 upstream.
 
-As with most architectures, allow handling of read faults in VMAs that
-have VM_WRITE but without VM_READ (WRITE implies READ).
+Add the missing PCIe CX performance level votes to avoid relying on
+other drivers (e.g. USB or UFS) to maintain the nominal performance
+level required for Gen3 speeds.
 
-Otherwise, reading before writing a write-only memory will error while
-reading after writing everything is fine.
-
-BTW, move the VM_EXEC judgement before VM_READ/VM_WRITE to make logic a
-little clearer.
-
-Cc: stable@vger.kernel.org
-Fixes: 09cfefb7fa70c3af01 ("LoongArch: Add memory management")
-Signed-off-by: Jiantao Shan <shanjiantao@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 813e83157001 ("arm64: dts: qcom: sc8280xp/sa8540p: add PCIe2-4 nodes")
+Cc: stable@vger.kernel.org      # 6.2
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20240306095651.4551-5-johan+linaro@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/mm/fault.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/loongarch/mm/fault.c
-+++ b/arch/loongarch/mm/fault.c
-@@ -202,10 +202,10 @@ good_area:
- 		if (!(vma->vm_flags & VM_WRITE))
- 			goto bad_area;
- 	} else {
--		if (!(vma->vm_flags & VM_READ) && address != exception_era(regs))
--			goto bad_area;
- 		if (!(vma->vm_flags & VM_EXEC) && address == exception_era(regs))
- 			goto bad_area;
-+		if (!(vma->vm_flags & (VM_READ | VM_WRITE)) && address != exception_era(regs))
-+			goto bad_area;
- 	}
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -1773,6 +1773,7 @@
+ 			reset-names = "pci";
  
- 	/*
+ 			power-domains = <&gcc PCIE_4_GDSC>;
++			required-opps = <&rpmhpd_opp_nom>;
+ 
+ 			phys = <&pcie4_phy>;
+ 			phy-names = "pciephy";
+@@ -1871,6 +1872,7 @@
+ 			reset-names = "pci";
+ 
+ 			power-domains = <&gcc PCIE_3B_GDSC>;
++			required-opps = <&rpmhpd_opp_nom>;
+ 
+ 			phys = <&pcie3b_phy>;
+ 			phy-names = "pciephy";
+@@ -1969,6 +1971,7 @@
+ 			reset-names = "pci";
+ 
+ 			power-domains = <&gcc PCIE_3A_GDSC>;
++			required-opps = <&rpmhpd_opp_nom>;
+ 
+ 			phys = <&pcie3a_phy>;
+ 			phy-names = "pciephy";
+@@ -2070,6 +2073,7 @@
+ 			reset-names = "pci";
+ 
+ 			power-domains = <&gcc PCIE_2B_GDSC>;
++			required-opps = <&rpmhpd_opp_nom>;
+ 
+ 			phys = <&pcie2b_phy>;
+ 			phy-names = "pciephy";
+@@ -2168,6 +2172,7 @@
+ 			reset-names = "pci";
+ 
+ 			power-domains = <&gcc PCIE_2A_GDSC>;
++			required-opps = <&rpmhpd_opp_nom>;
+ 
+ 			phys = <&pcie2a_phy>;
+ 			phy-names = "pciephy";
 
 
