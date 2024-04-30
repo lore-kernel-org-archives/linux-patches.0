@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0EA12BF32;
-	Tue, 30 Apr 2024 11:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB23F12BF32;
+	Tue, 30 Apr 2024 11:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476576; cv=none; b=NMomipL7SnxE05s1CSC2+SU/fb3oSi6gY/335F+EDkWFl1pyP3+n8CUhYGHfWL13KAbEHp0MIuGEhdGC5P6zBEbzw8TpDC38hNhBZwIIwIqFSjCjcFtNqrrH2y3G92/d9DdswCc6MCUqqgLoFRfTQZrn4GQZJF9KFafGt0gYZW4=
+	t=1714476579; cv=none; b=UB8GorLsskl5HBfrPDs0+YFb+Dc2SDJR8D8OAoRXDb5+cuzysHeRzTozp1jGwEH7nA3avcThmPoJMLjJbEmEHVBRVPgB0BqQh8F/shgWqdf8/DoR3gMxy/gam7uw85OPlf1dlw1+8ti86AkxquKFkDR5SKRZ/Uk9rjtToI72qw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476576; c=relaxed/simple;
-	bh=ihLveYCqHF4ZC1MVSJFboz/bMorK+skfySnJvsKs718=;
+	s=arc-20240116; t=1714476579; c=relaxed/simple;
+	bh=I0T9B/BHBDTZYRwqFOn48zFYEB4QNEAW5MZWg5h1Bgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HlFKuXwBVTnluNxnHwpuQg6nCLlLrNhKDQ4wjj5quUAGylnzDfNCXAugRI9le7mLVY54xU2Yd8hwCBB2unVjxBGHVtwjTg1iV3tuPPluIEhnu/fyvtqrcfWYTQxUJmNyq6qWQzDkh2pKplOGFXm5bpKp5nAoZsGavuCu32qo63k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKBC/CM8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CI4VvXOa1349K26IA04swfQ1rcYiwOH9C6TKrxzahGFdV95VZuSwnWTOD/8Mo52kNAgyPA3V272pyXaG9mHiLXz1LVgCoJT63Eu9s6wrWopR/HpSWnHyzixl4yc25rJDO8AtJKdHwsFyZ+8iK/dOZQifFAfkplaWonsND6bf8Hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHnbvO2y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKBC/CM8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1222EC4AF19;
-	Tue, 30 Apr 2024 11:29:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHnbvO2y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65984C2BBFC;
+	Tue, 30 Apr 2024 11:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476576;
-	bh=ihLveYCqHF4ZC1MVSJFboz/bMorK+skfySnJvsKs718=;
+	s=korg; t=1714476579;
+	bh=I0T9B/BHBDTZYRwqFOn48zFYEB4QNEAW5MZWg5h1Bgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EKBC/CM8C1RMjecGHkdBeGT7DSr0Oa5bubHtOwUAl8ZPRMGyxkHTT44OlRw8hlK5f
-	 2E5ytk/MzprOR/r8H61G/DT3vkYlxieXpL8mGC60pRHbnA+4WXpP894jxbsdaWBW5k
-	 6WFefMqz1CunhA0DPRxzGFIWJvywgTiDUeAIxsbg=
+	b=VHnbvO2yvYVWrOuX6IAUnx+/FqCz8lxHPFbJRaZf1ZXECvfurhJFkh7bOjsFyncrK
+	 HmFZ+qnCng9sXcY53xL1Gs73gqBYiDvqu4ht7alrZkh/e6zl8BaWjAlssXdNzvdjCi
+	 QIHCoynGf4zXh/0MpTJTf69YldZ8yuRuLjLe6RXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youling Tang <tangyouling@kylinos.cn>,
+	Jiantao Shan <shanjiantao@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 075/110] LoongArch: Fix callchain parse error with kernel tracepoint events
-Date: Tue, 30 Apr 2024 12:40:44 +0200
-Message-ID: <20240430103049.781083238@linuxfoundation.org>
+Subject: [PATCH 6.1 076/110] LoongArch: Fix access error when read fault on a write-only VMA
+Date: Tue, 30 Apr 2024 12:40:45 +0200
+Message-ID: <20240430103049.810033677@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -50,117 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Jiantao Shan <shanjiantao@loongson.cn>
 
-commit d3119bc985fb645ad3b2a9cf9952c1d56d9daaa3 upstream.
+commit efb44ff64c95340b06331fc48634b99efc9dd77c upstream.
 
-In order to fix perf's callchain parse error for LoongArch, we implement
-perf_arch_fetch_caller_regs() which fills several necessary registers
-used for callchain unwinding, including sp, fp, and era. This is similar
-to the following commits.
+As with most architectures, allow handling of read faults in VMAs that
+have VM_WRITE but without VM_READ (WRITE implies READ).
 
-commit b3eac0265bf6:
-("arm: perf: Fix callchain parse error with kernel tracepoint events")
+Otherwise, reading before writing a write-only memory will error while
+reading after writing everything is fine.
 
-commit 5b09a094f2fb:
-("arm64: perf: Fix callchain parse error with kernel tracepoint events")
-
-commit 9a7e8ec0d4cc:
-("riscv: perf: Fix callchain parse error with kernel tracepoint events")
-
-Test with commands:
-
- perf record -e sched:sched_switch -g --call-graph dwarf
- perf report
-
-Without this patch:
-
- Children      Self  Command        Shared Object      Symbol
- ........  ........  .............  .................  ....................
-
- 43.41%    43.41%  swapper          [unknown]          [k] 0000000000000000
-
- 10.94%    10.94%  loong-container  [unknown]          [k] 0000000000000000
-         |
-         |--5.98%--0x12006ba38
-         |
-         |--2.56%--0x12006bb84
-         |
-          --2.40%--0x12006b6b8
-
-With this patch, callchain can be parsed correctly:
-
- Children      Self  Command        Shared Object      Symbol
- ........  ........  .............  .................  ....................
-
- 47.57%    47.57%  swapper          [kernel.vmlinux]   [k] __schedule
-         |
-         ---__schedule
-
- 26.76%    26.76%  loong-container  [kernel.vmlinux]   [k] __schedule
-         |
-         |--13.78%--0x12006ba38
-         |          |
-         |          |--9.19%--__schedule
-         |          |
-         |           --4.59%--handle_syscall
-         |                     do_syscall
-         |                     sys_futex
-         |                     do_futex
-         |                     futex_wait
-         |                     futex_wait_queue_me
-         |                     hrtimer_start_range_ns
-         |                     __schedule
-         |
-         |--8.38%--0x12006bb84
-         |          handle_syscall
-         |          do_syscall
-         |          sys_epoll_pwait
-         |          do_epoll_wait
-         |          schedule_hrtimeout_range_clock
-         |          hrtimer_start_range_ns
-         |          __schedule
-         |
-          --4.59%--0x12006b6b8
-                    handle_syscall
-                    do_syscall
-                    sys_nanosleep
-                    hrtimer_nanosleep
-                    do_nanosleep
-                    hrtimer_start_range_ns
-                    __schedule
+BTW, move the VM_EXEC judgement before VM_READ/VM_WRITE to make logic a
+little clearer.
 
 Cc: stable@vger.kernel.org
-Fixes: b37042b2bb7cd751f0 ("LoongArch: Add perf events support")
-Reported-by: Youling Tang <tangyouling@kylinos.cn>
-Suggested-by: Youling Tang <tangyouling@kylinos.cn>
+Fixes: 09cfefb7fa70c3af01 ("LoongArch: Add memory management")
+Signed-off-by: Jiantao Shan <shanjiantao@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/perf_event.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/loongarch/mm/fault.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/perf_event.h b/arch/loongarch/include/asm/perf_event.h
-index 2a35a0bc2aaa..52b638059e40 100644
---- a/arch/loongarch/include/asm/perf_event.h
-+++ b/arch/loongarch/include/asm/perf_event.h
-@@ -7,6 +7,14 @@
- #ifndef __LOONGARCH_PERF_EVENT_H__
- #define __LOONGARCH_PERF_EVENT_H__
+--- a/arch/loongarch/mm/fault.c
++++ b/arch/loongarch/mm/fault.c
+@@ -193,10 +193,10 @@ good_area:
+ 		if (!(vma->vm_flags & VM_WRITE))
+ 			goto bad_area;
+ 	} else {
+-		if (!(vma->vm_flags & VM_READ) && address != exception_era(regs))
+-			goto bad_area;
+ 		if (!(vma->vm_flags & VM_EXEC) && address == exception_era(regs))
+ 			goto bad_area;
++		if (!(vma->vm_flags & (VM_READ | VM_WRITE)) && address != exception_era(regs))
++			goto bad_area;
+ 	}
  
-+#include <asm/ptrace.h>
-+
- #define perf_arch_bpf_user_pt_regs(regs) (struct user_pt_regs *)regs
- 
-+#define perf_arch_fetch_caller_regs(regs, __ip) { \
-+	(regs)->csr_era = (__ip); \
-+	(regs)->regs[3] = current_stack_pointer; \
-+	(regs)->regs[22] = (unsigned long) __builtin_frame_address(0); \
-+}
-+
- #endif /* __LOONGARCH_PERF_EVENT_H__ */
--- 
-2.44.0
-
+ 	/*
 
 
