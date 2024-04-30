@@ -1,57 +1,59 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8862A1C8FC8
-	for <patches@lists.linux.dev>; Tue, 30 Apr 2024 16:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BD61C9EAA
+	for <patches@lists.linux.dev>; Tue, 30 Apr 2024 16:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714495915; cv=none; b=lbD11qu/zZ/TPfQAWltrG5e/PHvzLPUwc5MWACGF6e8U0caE1DJ7oaCuTDRFm0ROLoPttaTHSrIpDuRbGJoU7WjM1iI0AgyB5V3B5dSK3fwoxREj7dL8N9aQShg7/wU9Ww3kr0OB5OHYjfgxeb9uE+KVbGsTGCZC1RTahgsDW9Q=
+	t=1714495915; cv=none; b=jUCAOMKooMCYH59i1ETwxUFQ5BbhZ/ySWYe2ZpxX0hODNz4/24d5oZCOLm18iiokPeQRwQkGaAQz9i6yYAqv7u9HKOLbkGaWteJNHs/czJglS7yozPjkun8MMLZqWHkqg08Fy5D4bi3sXkzVfkNpAppHRdMXZ6TpCf2n9DzD7R8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1714495915; c=relaxed/simple;
-	bh=DG8cr7rk4xOq94LLqhelPZm3zqtB92Ey59ukepvPlu0=;
+	bh=KI0qEXYT6wupWkGzuL3OY5xqFep3SpstABMy3/LeX9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H32wITCagKaxq/U26YOCoxyjgl6E/XNl8lo1JY63qrwCOOJzzcqfF/53rhedMIDf+68cxSYQ1DRcIUe0t3reBVdMJl3BgwCtb2wK985Q6enBoigl9m7Dbj2HzzbNBuMYmm+7CTv/1FAjVcezoHl/buUrQiEaQBHDuGa8dBwbICg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=akdsiBMY; arc=none smtp.client-ip=198.175.65.19
+	 MIME-Version; b=ODLLVjiylyCuRbomTzj3IIqLwxdJGTgBT7JV6zYibSHN8rMlN/55Hmb6mJYEHpNzetPX6oKP0fnAwNOJ5bOswL2+ANwkcCjBr9MJM59J5uyJHvN4Uqd7o2KnikznEO5y4vXXAYMQOho31SRtK+A/FG9hf1DBlBnEGemRI/au4jA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=aQyCFrZt; arc=none smtp.client-ip=198.175.65.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="akdsiBMY"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aQyCFrZt"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1714495913; x=1746031913;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=DG8cr7rk4xOq94LLqhelPZm3zqtB92Ey59ukepvPlu0=;
-  b=akdsiBMYJO/vrgx6xAUZ6Z4XB3Jss3kwh+YuEJCjTe00/Fp//qNLb8VX
-   O0ZW8hbX1kWoO1bB4kyVTj1zAFY/OO95tC1UQe1gSw/iYUFcOlICHamdz
-   hz5Pkt0qgk0Fm39LCL9TOMHyV7YJjiJ2Q5GLLF/mQTYYt29NmNDs3Z+zC
-   vxQowPtOQtWaAhAbqtVE93XduhMRo8zrVGw3KhW9qsGLE+0aJsAKdgokx
-   lvUtoebyY3XFu6uHHpIj+GfBBdH9BlduUSE6sRzEiEVIM6W0x0IluLd9D
-   n0Mc5emnhhv/XyT6ld6eNM8c6DRP7MABdQyqWdDAhbGdjdbYNaJQ/OnzO
-   w==;
-X-CSE-ConnectionGUID: 4ui1tvLHTr+fXLPyVevAUQ==
-X-CSE-MsgGUID: CSqmZBTeQa+EHTu6mFNC0g==
-X-IronPort-AV: E=McAfee;i="6600,9927,11060"; a="10075789"
+  bh=KI0qEXYT6wupWkGzuL3OY5xqFep3SpstABMy3/LeX9E=;
+  b=aQyCFrZtXAvbAbQseEqxXrBo8A6QgIikQWRGNld6UQKJvCrxwtV8sA7r
+   4Y8HOKVon4TvZWUt0vLfVp+7xRfM0WzL/gFO+OOB2YXzQ7e47C/Dg7zFj
+   ASs2xrBeBD6zW+DHKQg6UstvVSqLOcp7VB6oV7viCRplNVuxwQ4tDscoP
+   7PaS+35mxkVageBP2dNMSmgaTV6tgtSuXUmOWzflJQTre1zc8hpA0UDD+
+   /B20RJEdkgBz1Fy2LvOzTBhANXRI4OzJs8aUbsvOv0d5eMQwg18BK/4p+
+   fH68gCZnMIR2YYveqLM8s8UaRhO4e9X0Mpskl7oD016RE8yQIo2tKPg68
+   g==;
+X-CSE-ConnectionGUID: 2E/O/JTpTEa3wXka82/jOA==
+X-CSE-MsgGUID: 9ux3NFvcRZqE+bmCWorhvA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11060"; a="10075784"
 X-IronPort-AV: E=Sophos;i="6.07,242,1708416000"; 
-   d="scan'208";a="10075789"
+   d="scan'208";a="10075784"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
   by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2024 09:51:23 -0700
-X-CSE-ConnectionGUID: TihDvkh/Q9iLo6NlzQc/Pw==
-X-CSE-MsgGUID: lIw38uGPQxevRvZKYdPZCQ==
+X-CSE-ConnectionGUID: vLqWvcXHQROUmtpcfjSoqw==
+X-CSE-MsgGUID: A34n5mQ3RV+fPpMRYckiTQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.07,242,1708416000"; 
-   d="scan'208";a="26515532"
+   d="scan'208";a="26515522"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2024 09:51:21 -0700
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2024 09:51:20 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Borislav Petkov <bp@alien8.de>
 Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v5 47/47] x86/cpu/vfm: Delete all the *_FAM6_ CPU #defines
-Date: Tue, 30 Apr 2024 09:51:00 -0700
-Message-ID: <20240430165100.73491-47-tony.luck@intel.com>
+	Tony Luck <tony.luck@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH v5 42/47] platform/x86: ISST: Switch to new Intel CPU model defines
+Date: Tue, 30 Apr 2024 09:50:55 -0700
+Message-ID: <20240430165100.73491-42-tony.luck@intel.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430165100.73491-1-tony.luck@intel.com>
 References: <20240430164913.73473-1-tony.luck@intel.com>
@@ -64,243 +66,30 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-All code has been converted to use the vendor/family/model versions.
+New CPU #defines encode vendor and family as well as model.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Acked-by: Hans de Goede <hdegoede@redhat.com>
 ---
- arch/x86/include/asm/intel-family.h | 85 +----------------------------
- 1 file changed, 2 insertions(+), 83 deletions(-)
+ drivers/platform/x86/intel/speed_select_if/isst_if_common.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
-index f81a851c46dc..f7289094a483 100644
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -10,7 +10,7 @@
-  * that group keep the CPUID for the variants sorted by model number.
-  *
-  * The defined symbol names have the following form:
-- *	INTEL_FAM6{OPTFAMILY}_{MICROARCH}{OPTDIFF}
-+ *	INTEL_{OPTFAMILY}_{MICROARCH}{OPTDIFF}
-  * where:
-  * OPTFAMILY	Describes the family of CPUs that this belongs to. Default
-  *		is assumed to be "_CORE" (and should be omitted). Other values
-@@ -42,215 +42,134 @@
+diff --git a/drivers/platform/x86/intel/speed_select_if/isst_if_common.c b/drivers/platform/x86/intel/speed_select_if/isst_if_common.c
+index 08df9494603c..96f3b221b6c8 100644
+--- a/drivers/platform/x86/intel/speed_select_if/isst_if_common.c
++++ b/drivers/platform/x86/intel/speed_select_if/isst_if_common.c
+@@ -719,8 +719,8 @@ static struct miscdevice isst_if_char_driver = {
+ };
  
- #define IFM(_fam, _model)	VFM_MAKE(X86_VENDOR_INTEL, _fam, _model)
+ static const struct x86_cpu_id hpm_cpu_ids[] = {
+-	X86_MATCH_INTEL_FAM6_MODEL(GRANITERAPIDS_X,	NULL),
+-	X86_MATCH_INTEL_FAM6_MODEL(ATOM_CRESTMONT_X,	NULL),
++	X86_MATCH_VFM(INTEL_GRANITERAPIDS_X,	NULL),
++	X86_MATCH_VFM(INTEL_ATOM_CRESTMONT_X,	NULL),
+ 	{}
+ };
  
--/* Wildcard match for FAM6 so X86_MATCH_INTEL_FAM6_MODEL(ANY) works */
--#define INTEL_FAM6_ANY			X86_MODEL_ANY
--/* Wildcard match for FAM6 so X86_MATCH_VFM(ANY) works */
-+/* Wildcard match so X86_MATCH_VFM(ANY) works */
- #define INTEL_ANY			IFM(X86_FAMILY_ANY, X86_MODEL_ANY)
- 
--#define INTEL_FAM6_CORE_YONAH		0x0E
- #define INTEL_CORE_YONAH		IFM(6, 0x0E)
- 
--#define INTEL_FAM6_CORE2_MEROM		0x0F
- #define INTEL_CORE2_MEROM		IFM(6, 0x0F)
--#define INTEL_FAM6_CORE2_MEROM_L	0x16
- #define INTEL_CORE2_MEROM_L		IFM(6, 0x16)
--#define INTEL_FAM6_CORE2_PENRYN		0x17
- #define INTEL_CORE2_PENRYN		IFM(6, 0x17)
--#define INTEL_FAM6_CORE2_DUNNINGTON	0x1D
- #define INTEL_CORE2_DUNNINGTON		IFM(6, 0x1D)
- 
--#define INTEL_FAM6_NEHALEM		0x1E
- #define INTEL_NEHALEM			IFM(6, 0x1E)
--#define INTEL_FAM6_NEHALEM_G		0x1F /* Auburndale / Havendale */
- #define INTEL_NEHALEM_G			IFM(6, 0x1F) /* Auburndale / Havendale */
--#define INTEL_FAM6_NEHALEM_EP		0x1A
- #define INTEL_NEHALEM_EP		IFM(6, 0x1A)
--#define INTEL_FAM6_NEHALEM_EX		0x2E
- #define INTEL_NEHALEM_EX		IFM(6, 0x2E)
- 
--#define INTEL_FAM6_WESTMERE		0x25
- #define INTEL_WESTMERE			IFM(6, 0x25)
--#define INTEL_FAM6_WESTMERE_EP		0x2C
- #define INTEL_WESTMERE_EP		IFM(6, 0x2C)
--#define INTEL_FAM6_WESTMERE_EX		0x2F
- #define INTEL_WESTMERE_EX		IFM(6, 0x2F)
- 
--#define INTEL_FAM6_SANDYBRIDGE		0x2A
- #define INTEL_SANDYBRIDGE		IFM(6, 0x2A)
--#define INTEL_FAM6_SANDYBRIDGE_X	0x2D
- #define INTEL_SANDYBRIDGE_X		IFM(6, 0x2D)
--#define INTEL_FAM6_IVYBRIDGE		0x3A
- #define INTEL_IVYBRIDGE			IFM(6, 0x3A)
--#define INTEL_FAM6_IVYBRIDGE_X		0x3E
- #define INTEL_IVYBRIDGE_X		IFM(6, 0x3E)
- 
--#define INTEL_FAM6_HASWELL		0x3C
- #define INTEL_HASWELL			IFM(6, 0x3C)
--#define INTEL_FAM6_HASWELL_X		0x3F
- #define INTEL_HASWELL_X			IFM(6, 0x3F)
--#define INTEL_FAM6_HASWELL_L		0x45
- #define INTEL_HASWELL_L			IFM(6, 0x45)
--#define INTEL_FAM6_HASWELL_G		0x46
- #define INTEL_HASWELL_G			IFM(6, 0x46)
- 
--#define INTEL_FAM6_BROADWELL		0x3D
- #define INTEL_BROADWELL			IFM(6, 0x3D)
--#define INTEL_FAM6_BROADWELL_G		0x47
- #define INTEL_BROADWELL_G		IFM(6, 0x47)
--#define INTEL_FAM6_BROADWELL_X		0x4F
- #define INTEL_BROADWELL_X		IFM(6, 0x4F)
--#define INTEL_FAM6_BROADWELL_D		0x56
- #define INTEL_BROADWELL_D		IFM(6, 0x56)
- 
--#define INTEL_FAM6_SKYLAKE_L		0x4E	/* Sky Lake             */
- #define INTEL_SKYLAKE_L			IFM(6, 0x4E) /* Sky Lake */
--#define INTEL_FAM6_SKYLAKE		0x5E	/* Sky Lake             */
- #define INTEL_SKYLAKE			IFM(6, 0x5E) /* Sky Lake */
--#define INTEL_FAM6_SKYLAKE_X		0x55	/* Sky Lake             */
- #define INTEL_SKYLAKE_X			IFM(6, 0x55) /* Sky Lake */
- /*                 CASCADELAKE_X	0x55	   Sky Lake -- s: 7     */
- /*                 COOPERLAKE_X		0x55	   Sky Lake -- s: 11    */
- 
--#define INTEL_FAM6_KABYLAKE_L		0x8E	/* Sky Lake             */
- #define INTEL_KABYLAKE_L		IFM(6, 0x8E) /* Sky Lake */
- /*                 AMBERLAKE_L		0x8E	   Sky Lake -- s: 9     */
- /*                 COFFEELAKE_L		0x8E	   Sky Lake -- s: 10    */
- /*                 WHISKEYLAKE_L	0x8E       Sky Lake -- s: 11,12 */
- 
--#define INTEL_FAM6_KABYLAKE		0x9E	/* Sky Lake             */
- #define INTEL_KABYLAKE			IFM(6, 0x9E) /* Sky Lake */
- /*                 COFFEELAKE		0x9E	   Sky Lake -- s: 10-13 */
- 
--#define INTEL_FAM6_COMETLAKE		0xA5	/* Sky Lake             */
- #define INTEL_COMETLAKE			IFM(6, 0xA5) /* Sky Lake */
--#define INTEL_FAM6_COMETLAKE_L		0xA6	/* Sky Lake             */
- #define INTEL_COMETLAKE_L		IFM(6, 0xA6) /* Sky Lake */
- 
--#define INTEL_FAM6_CANNONLAKE_L		0x66	/* Palm Cove */
- #define INTEL_CANNONLAKE_L		IFM(6, 0x66) /* Palm Cove */
- 
--#define INTEL_FAM6_ICELAKE_X		0x6A	/* Sunny Cove */
- #define INTEL_ICELAKE_X			IFM(6, 0x6A) /* Sunny Cove */
--#define INTEL_FAM6_ICELAKE_D		0x6C	/* Sunny Cove */
- #define INTEL_ICELAKE_D			IFM(6, 0x6C) /* Sunny Cove */
--#define INTEL_FAM6_ICELAKE		0x7D	/* Sunny Cove */
- #define INTEL_ICELAKE			IFM(6, 0x7D) /* Sunny Cove */
--#define INTEL_FAM6_ICELAKE_L		0x7E	/* Sunny Cove */
- #define INTEL_ICELAKE_L			IFM(6, 0x7E) /* Sunny Cove */
--#define INTEL_FAM6_ICELAKE_NNPI		0x9D	/* Sunny Cove */
- #define INTEL_ICELAKE_NNPI		IFM(6, 0x9D) /* Sunny Cove */
- 
--#define INTEL_FAM6_ROCKETLAKE		0xA7	/* Cypress Cove */
- #define INTEL_ROCKETLAKE		IFM(6, 0xA7) /* Cypress Cove */
- 
--#define INTEL_FAM6_TIGERLAKE_L		0x8C	/* Willow Cove */
- #define INTEL_TIGERLAKE_L		IFM(6, 0x8C) /* Willow Cove */
--#define INTEL_FAM6_TIGERLAKE		0x8D	/* Willow Cove */
- #define INTEL_TIGERLAKE			IFM(6, 0x8D) /* Willow Cove */
- 
--#define INTEL_FAM6_SAPPHIRERAPIDS_X	0x8F	/* Golden Cove */
- #define INTEL_SAPPHIRERAPIDS_X		IFM(6, 0x8F) /* Golden Cove */
- 
--#define INTEL_FAM6_EMERALDRAPIDS_X	0xCF
- #define INTEL_EMERALDRAPIDS_X		IFM(6, 0xCF)
- 
--#define INTEL_FAM6_GRANITERAPIDS_X	0xAD
- #define INTEL_GRANITERAPIDS_X		IFM(6, 0xAD)
--#define INTEL_FAM6_GRANITERAPIDS_D	0xAE
- #define INTEL_GRANITERAPIDS_D		IFM(6, 0xAE)
- 
- /* "Hybrid" Processors (P-Core/E-Core) */
- 
--#define INTEL_FAM6_LAKEFIELD		0x8A	/* Sunny Cove / Tremont */
- #define INTEL_LAKEFIELD			IFM(6, 0x8A) /* Sunny Cove / Tremont */
- 
--#define INTEL_FAM6_ALDERLAKE		0x97	/* Golden Cove / Gracemont */
- #define INTEL_ALDERLAKE			IFM(6, 0x97) /* Golden Cove / Gracemont */
--#define INTEL_FAM6_ALDERLAKE_L		0x9A	/* Golden Cove / Gracemont */
- #define INTEL_ALDERLAKE_L		IFM(6, 0x9A) /* Golden Cove / Gracemont */
- 
--#define INTEL_FAM6_RAPTORLAKE		0xB7	/* Raptor Cove / Enhanced Gracemont */
- #define INTEL_RAPTORLAKE		IFM(6, 0xB7) /* Raptor Cove / Enhanced Gracemont */
--#define INTEL_FAM6_RAPTORLAKE_P		0xBA
- #define INTEL_RAPTORLAKE_P		IFM(6, 0xBA)
--#define INTEL_FAM6_RAPTORLAKE_S		0xBF
- #define INTEL_RAPTORLAKE_S		IFM(6, 0xBF)
- 
--#define INTEL_FAM6_METEORLAKE		0xAC
- #define INTEL_METEORLAKE		IFM(6, 0xAC)
--#define INTEL_FAM6_METEORLAKE_L		0xAA
- #define INTEL_METEORLAKE_L		IFM(6, 0xAA)
- 
--#define INTEL_FAM6_ARROWLAKE_H		0xC5
- #define INTEL_ARROWLAKE_H		IFM(6, 0xC5)
--#define INTEL_FAM6_ARROWLAKE		0xC6
- #define INTEL_ARROWLAKE			IFM(6, 0xC6)
--#define INTEL_FAM6_ARROWLAKE_U		0xB5
- #define INTEL_ARROWLAKE_U		IFM(6, 0xB5)
- 
--#define INTEL_FAM6_LUNARLAKE_M		0xBD
- #define INTEL_LUNARLAKE_M		IFM(6, 0xBD)
- 
- /* "Small Core" Processors (Atom/E-Core) */
- 
--#define INTEL_FAM6_ATOM_BONNELL		0x1C /* Diamondville, Pineview */
- #define INTEL_ATOM_BONNELL		IFM(6, 0x1C) /* Diamondville, Pineview */
--#define INTEL_FAM6_ATOM_BONNELL_MID	0x26 /* Silverthorne, Lincroft */
- #define INTEL_ATOM_BONNELL_MID		IFM(6, 0x26) /* Silverthorne, Lincroft */
- 
--#define INTEL_FAM6_ATOM_SALTWELL	0x36 /* Cedarview */
- #define INTEL_ATOM_SALTWELL		IFM(6, 0x36) /* Cedarview */
--#define INTEL_FAM6_ATOM_SALTWELL_MID	0x27 /* Penwell */
- #define INTEL_ATOM_SALTWELL_MID		IFM(6, 0x27) /* Penwell */
--#define INTEL_FAM6_ATOM_SALTWELL_TABLET	0x35 /* Cloverview */
- #define INTEL_ATOM_SALTWELL_TABLET	IFM(6, 0x35) /* Cloverview */
- 
--#define INTEL_FAM6_ATOM_SILVERMONT	0x37 /* Bay Trail, Valleyview */
- #define INTEL_ATOM_SILVERMONT		IFM(6, 0x37) /* Bay Trail, Valleyview */
--#define INTEL_FAM6_ATOM_SILVERMONT_D	0x4D /* Avaton, Rangely */
- #define INTEL_ATOM_SILVERMONT_D		IFM(6, 0x4D) /* Avaton, Rangely */
--#define INTEL_FAM6_ATOM_SILVERMONT_MID	0x4A /* Merriefield */
- #define INTEL_ATOM_SILVERMONT_MID	IFM(6, 0x4A) /* Merriefield */
- 
--#define INTEL_FAM6_ATOM_AIRMONT		0x4C /* Cherry Trail, Braswell */
- #define INTEL_ATOM_AIRMONT		IFM(6, 0x4C) /* Cherry Trail, Braswell */
--#define INTEL_FAM6_ATOM_AIRMONT_MID	0x5A /* Moorefield */
- #define INTEL_ATOM_AIRMONT_MID		IFM(6, 0x5A) /* Moorefield */
--#define INTEL_FAM6_ATOM_AIRMONT_NP	0x75 /* Lightning Mountain */
- #define INTEL_ATOM_AIRMONT_NP		IFM(6, 0x75) /* Lightning Mountain */
- 
--#define INTEL_FAM6_ATOM_GOLDMONT	0x5C /* Apollo Lake */
- #define INTEL_ATOM_GOLDMONT		IFM(6, 0x5C) /* Apollo Lake */
--#define INTEL_FAM6_ATOM_GOLDMONT_D	0x5F /* Denverton */
- #define INTEL_ATOM_GOLDMONT_D		IFM(6, 0x5F) /* Denverton */
- 
- /* Note: the micro-architecture is "Goldmont Plus" */
--#define INTEL_FAM6_ATOM_GOLDMONT_PLUS	0x7A /* Gemini Lake */
- #define INTEL_ATOM_GOLDMONT_PLUS	IFM(6, 0x7A) /* Gemini Lake */
- 
--#define INTEL_FAM6_ATOM_TREMONT_D	0x86 /* Jacobsville */
- #define INTEL_ATOM_TREMONT_D		IFM(6, 0x86) /* Jacobsville */
--#define INTEL_FAM6_ATOM_TREMONT		0x96 /* Elkhart Lake */
- #define INTEL_ATOM_TREMONT		IFM(6, 0x96) /* Elkhart Lake */
--#define INTEL_FAM6_ATOM_TREMONT_L	0x9C /* Jasper Lake */
- #define INTEL_ATOM_TREMONT_L		IFM(6, 0x9C) /* Jasper Lake */
- 
--#define INTEL_FAM6_ATOM_GRACEMONT	0xBE /* Alderlake N */
- #define INTEL_ATOM_GRACEMONT		IFM(6, 0xBE) /* Alderlake N */
- 
--#define INTEL_FAM6_ATOM_CRESTMONT_X	0xAF /* Sierra Forest */
- #define INTEL_ATOM_CRESTMONT_X		IFM(6, 0xAF) /* Sierra Forest */
--#define INTEL_FAM6_ATOM_CRESTMONT	0xB6 /* Grand Ridge */
- #define INTEL_ATOM_CRESTMONT		IFM(6, 0xB6) /* Grand Ridge */
- 
--#define INTEL_FAM6_ATOM_DARKMONT_X	0xDD /* Clearwater Forest */
- #define INTEL_ATOM_DARKMONT_X		IFM(6, 0xDD) /* Clearwater Forest */
- 
- /* Xeon Phi */
- 
--#define INTEL_FAM6_XEON_PHI_KNL		0x57 /* Knights Landing */
- #define INTEL_XEON_PHI_KNL		IFM(6, 0x57) /* Knights Landing */
--#define INTEL_FAM6_XEON_PHI_KNM		0x85 /* Knights Mill */
- #define INTEL_XEON_PHI_KNM		IFM(6, 0x85) /* Knights Mill */
- 
- /* Family 5 */
 -- 
 2.44.0
 
