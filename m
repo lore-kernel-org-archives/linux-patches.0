@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524D112D766;
-	Tue, 30 Apr 2024 11:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0961E50A;
+	Tue, 30 Apr 2024 11:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475452; cv=none; b=uv5LXaHerOGIVe7gASq45eXLvNkQR+XPnvbSiLPOeT52Qvv2TsPS0moTzxYVn8FGwE0diAmMZGFLaNPU9q84iDKXEvnqhG84vf7/KArnc5PByazu4WWVG6flG0AD4zL2ZFo/CQKcFsDhrWzSgJh7mXqg3WVd+iQHtlsU8VVJjNs=
+	t=1714475455; cv=none; b=Qo9BSnVxnqcyJc7aXbWTMOXFEAiiPvY12h8fNBMMhHyH8Qx7bXICmUieFhNEqnZd7f/eJTQ7P8CXwJG6vcRGgapH0keLPIuEW+ZCklmYzLjFCMZzHXjRIISt+HmzykfxKtVmNvoxuTVb3k4hpOjJixcVxZatBW/ToSNv2w2yhPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475452; c=relaxed/simple;
-	bh=uIdOoCHYL9iEYOeBT3rdRGtYh+NbHp9MGQ51kyeJsY4=;
+	s=arc-20240116; t=1714475455; c=relaxed/simple;
+	bh=LkKlqpAy5c58GNlo1hbrGFwzx0XyCgHv5wyBPemNBuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uziQ8vBCO8GX6gpbdTCtK3vhVOOLJadMuJAo1Ddoc1dV3jHBLofT0mFjgsjYm32BU7RZjfDiZ4eaXcRS7vAX1AlUo/XRhvt/YsC4++uu/OHNSkYJTt1/cJx3uMMyWdr+iBBiccq7aZzPL+D3S9A26gOwc8ZGFQg9vliZzfu3mUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfGEs1ID; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MN+XAqZCKKRpXSz8FkvA4tdlRiz0WlG8HsBz9XseppK42IcPDXTV1xl5IxBAaMRn7WS/YVpzfKpfOPkP0zTmVtOTRD/xRVDXcNtWHy9Bylptt6cCx7myORoeRDYIIxH+XAquQxPPDj4OqVSyWB/Hw8tWbPgFUuAWVbjfVc05fJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ieTmiARh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfGEs1ID"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D117AC4AF1A;
-	Tue, 30 Apr 2024 11:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ieTmiARh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD928C2BBFC;
+	Tue, 30 Apr 2024 11:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475452;
-	bh=uIdOoCHYL9iEYOeBT3rdRGtYh+NbHp9MGQ51kyeJsY4=;
+	s=korg; t=1714475455;
+	bh=LkKlqpAy5c58GNlo1hbrGFwzx0XyCgHv5wyBPemNBuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfGEs1IDpU/175gRhB7+phz/1l8sIGOfvs6JFE8lIQlQDxY+7iFBN+uWN5uE73agH
-	 L0VykXAM1+wAKcd2vxSxm8EWqlpAxvSx5yEsl9orwari60VF/DON3fmzonwpDd1yrg
-	 AI/vjHhnN7tv72WlGwECjTB7BgJsV3l1eq27FIjE=
+	b=ieTmiARhEa4llZbSEdvi5VPB/0X7ikWmMwmez0t2q5EXxqjbGz8Qi3CZ/C/7FBS8n
+	 9gD4m8q5AXlNLApRVJQeNXnBmJImRNb5BTWNkiZe2FJE+KsTakUn/EBi7KXjW8IUuL
+	 Flw7sZBIQOKhIBzqD/LQsRVqXe1WT9puX1l3uWsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 099/186] mm/madvise: make MADV_POPULATE_(READ|WRITE) handle VM_FAULT_RETRY properly
-Date: Tue, 30 Apr 2024 12:39:11 +0200
-Message-ID: <20240430103100.908485970@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.keonig@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Subject: [PATCH 6.6 100/186] drm: add drm_gem_object_is_shared_for_memory_stats() helper
+Date: Tue, 30 Apr 2024 12:39:12 +0200
+Message-ID: <20240430103100.937717138@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -49,247 +47,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 631426ba1d45a8672b177ee85ad4cabe760dd131 ]
+[ Upstream commit b31f5eba32ae8cc28e7cfa5a55ec8670d8c718e2 ]
 
-Darrick reports that in some cases where pread() would fail with -EIO and
-mmap()+access would generate a SIGBUS signal, MADV_POPULATE_READ /
-MADV_POPULATE_WRITE will keep retrying forever and not fail with -EFAULT.
+Add a helper so that drm drivers can consistently report
+shared status via the fdinfo shared memory stats interface.
 
-While the madvise() call can be interrupted by a signal, this is not the
-desired behavior.  MADV_POPULATE_READ / MADV_POPULATE_WRITE should behave
-like page faults in that case: fail and not retry forever.
+In addition to handle count, show buffers as shared if they
+are shared via dma-buf as well (e.g., shared with v4l or some
+other subsystem).
 
-A reproducer can be found at [1].
+v2: switch to inline function
 
-The reason is that __get_user_pages(), as called by
-faultin_vma_page_range(), will not handle VM_FAULT_RETRY in a proper way:
-it will simply return 0 when VM_FAULT_RETRY happened, making
-madvise_populate()->faultin_vma_page_range() retry again and again, never
-setting FOLL_TRIED->FAULT_FLAG_TRIED for __get_user_pages().
-
-__get_user_pages_locked() does what we want, but duplicating that logic in
-faultin_vma_page_range() feels wrong.
-
-So let's use __get_user_pages_locked() instead, that will detect
-VM_FAULT_RETRY and set FOLL_TRIED when retrying, making the fault handler
-return VM_FAULT_SIGBUS (VM_FAULT_ERROR) at some point, propagating -EFAULT
-from faultin_page() to __get_user_pages(), all the way to
-madvise_populate().
-
-But, there is an issue: __get_user_pages_locked() will end up re-taking
-the MM lock and then __get_user_pages() will do another VMA lookup.  In
-the meantime, the VMA layout could have changed and we'd fail with
-different error codes than we'd want to.
-
-As __get_user_pages() will currently do a new VMA lookup either way, let
-it do the VMA handling in a different way, controlled by a new
-FOLL_MADV_POPULATE flag, effectively moving these checks from
-madvise_populate() + faultin_page_range() in there.
-
-With this change, Darricks reproducer properly fails with -EFAULT, as
-documented for MADV_POPULATE_READ / MADV_POPULATE_WRITE.
-
-[1] https://lore.kernel.org/all/20240313171936.GN1927156@frogsfrogsfrogs/
-
-Link: https://lkml.kernel.org/r/20240314161300.382526-1-david@redhat.com
-Link: https://lkml.kernel.org/r/20240314161300.382526-2-david@redhat.com
-Fixes: 4ca9b3859dac ("mm/madvise: introduce MADV_POPULATE_(READ|WRITE) to prefault page tables")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reported-by: Darrick J. Wong <djwong@kernel.org>
-Closes: https://lore.kernel.org/all/20240311223815.GW1927156@frogsfrogsfrogs/
-Cc: Darrick J. Wong <djwong@kernel.org>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/all/20231207180225.439482-1-alexander.deucher@amd.com/
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com> (v1)
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Christian König <christian.keonig@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Stable-dep-of: a6ff969fe9cb ("drm/amdgpu: fix visible VRAM handling during faults")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup.c      | 54 ++++++++++++++++++++++++++++++---------------------
- mm/internal.h | 10 ++++++----
- mm/madvise.c  | 17 ++--------------
- 3 files changed, 40 insertions(+), 41 deletions(-)
+ include/drm/drm_gem.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/mm/gup.c b/mm/gup.c
-index b21b33d1787e1..cfc0a66d951b9 100644
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -1204,6 +1204,22 @@ static long __get_user_pages(struct mm_struct *mm,
+diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
+index bc9f6aa2f3fec..7c2ec139c464a 100644
+--- a/include/drm/drm_gem.h
++++ b/include/drm/drm_gem.h
+@@ -544,6 +544,19 @@ unsigned long drm_gem_lru_scan(struct drm_gem_lru *lru,
  
- 		/* first iteration or cross vma bound */
- 		if (!vma || start >= vma->vm_end) {
-+			/*
-+			 * MADV_POPULATE_(READ|WRITE) wants to handle VMA
-+			 * lookups+error reporting differently.
-+			 */
-+			if (gup_flags & FOLL_MADV_POPULATE) {
-+				vma = vma_lookup(mm, start);
-+				if (!vma) {
-+					ret = -ENOMEM;
-+					goto out;
-+				}
-+				if (check_vma_flags(vma, gup_flags)) {
-+					ret = -EINVAL;
-+					goto out;
-+				}
-+				goto retry;
-+			}
- 			vma = gup_vma_lookup(mm, start);
- 			if (!vma && in_gate_area(mm, start)) {
- 				ret = get_gate_page(mm, start & PAGE_MASK,
-@@ -1670,35 +1686,35 @@ long populate_vma_page_range(struct vm_area_struct *vma,
- }
+ int drm_gem_evict(struct drm_gem_object *obj);
  
- /*
-- * faultin_vma_page_range() - populate (prefault) page tables inside the
-- *			      given VMA range readable/writable
-+ * faultin_page_range() - populate (prefault) page tables inside the
-+ *			  given range readable/writable
-  *
-  * This takes care of mlocking the pages, too, if VM_LOCKED is set.
-  *
-- * @vma: target vma
-+ * @mm: the mm to populate page tables in
-  * @start: start address
-  * @end: end address
-  * @write: whether to prefault readable or writable
-  * @locked: whether the mmap_lock is still held
-  *
-- * Returns either number of processed pages in the vma, or a negative error
-- * code on error (see __get_user_pages()).
-+ * Returns either number of processed pages in the MM, or a negative error
-+ * code on error (see __get_user_pages()). Note that this function reports
-+ * errors related to VMAs, such as incompatible mappings, as expected by
-+ * MADV_POPULATE_(READ|WRITE).
-  *
-- * vma->vm_mm->mmap_lock must be held. The range must be page-aligned and
-- * covered by the VMA. If it's released, *@locked will be set to 0.
-+ * The range must be page-aligned.
++/**
++ * drm_gem_object_is_shared_for_memory_stats - helper for shared memory stats
 + *
-+ * mm->mmap_lock must be held. If it's released, *@locked will be set to 0.
-  */
--long faultin_vma_page_range(struct vm_area_struct *vma, unsigned long start,
--			    unsigned long end, bool write, int *locked)
-+long faultin_page_range(struct mm_struct *mm, unsigned long start,
-+			unsigned long end, bool write, int *locked)
- {
--	struct mm_struct *mm = vma->vm_mm;
- 	unsigned long nr_pages = (end - start) / PAGE_SIZE;
- 	int gup_flags;
- 	long ret;
- 
- 	VM_BUG_ON(!PAGE_ALIGNED(start));
- 	VM_BUG_ON(!PAGE_ALIGNED(end));
--	VM_BUG_ON_VMA(start < vma->vm_start, vma);
--	VM_BUG_ON_VMA(end > vma->vm_end, vma);
- 	mmap_assert_locked(mm);
- 
- 	/*
-@@ -1710,19 +1726,13 @@ long faultin_vma_page_range(struct vm_area_struct *vma, unsigned long start,
- 	 *		  a poisoned page.
- 	 * !FOLL_FORCE: Require proper access permissions.
- 	 */
--	gup_flags = FOLL_TOUCH | FOLL_HWPOISON | FOLL_UNLOCKABLE;
-+	gup_flags = FOLL_TOUCH | FOLL_HWPOISON | FOLL_UNLOCKABLE |
-+		    FOLL_MADV_POPULATE;
- 	if (write)
- 		gup_flags |= FOLL_WRITE;
- 
--	/*
--	 * We want to report -EINVAL instead of -EFAULT for any permission
--	 * problems or incompatible mappings.
--	 */
--	if (check_vma_flags(vma, gup_flags))
--		return -EINVAL;
--
--	ret = __get_user_pages(mm, start, nr_pages, gup_flags,
--			       NULL, locked);
-+	ret = __get_user_pages_locked(mm, start, nr_pages, NULL, locked,
-+				      gup_flags);
- 	lru_add_drain();
- 	return ret;
- }
-diff --git a/mm/internal.h b/mm/internal.h
-index 50cf76d30a88f..abed947f784b7 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -581,9 +581,8 @@ struct anon_vma *folio_anon_vma(struct folio *folio);
- void unmap_mapping_folio(struct folio *folio);
- extern long populate_vma_page_range(struct vm_area_struct *vma,
- 		unsigned long start, unsigned long end, int *locked);
--extern long faultin_vma_page_range(struct vm_area_struct *vma,
--				   unsigned long start, unsigned long end,
--				   bool write, int *locked);
-+extern long faultin_page_range(struct mm_struct *mm, unsigned long start,
-+		unsigned long end, bool write, int *locked);
- extern bool mlock_future_ok(struct mm_struct *mm, unsigned long flags,
- 			       unsigned long bytes);
- /*
-@@ -962,10 +961,13 @@ enum {
- 	FOLL_FAST_ONLY = 1 << 20,
- 	/* allow unlocking the mmap lock */
- 	FOLL_UNLOCKABLE = 1 << 21,
-+	/* VMA lookup+checks compatible with MADV_POPULATE_(READ|WRITE) */
-+	FOLL_MADV_POPULATE = 1 << 22,
- };
- 
- #define INTERNAL_GUP_FLAGS (FOLL_TOUCH | FOLL_TRIED | FOLL_REMOTE | FOLL_PIN | \
--			    FOLL_FAST_ONLY | FOLL_UNLOCKABLE)
-+			    FOLL_FAST_ONLY | FOLL_UNLOCKABLE | \
-+			    FOLL_MADV_POPULATE)
- 
- /*
-  * Indicates for which pages that are write-protected in the page table,
-diff --git a/mm/madvise.c b/mm/madvise.c
-index 4dded5d27e7ea..98fdb9288a68a 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -917,27 +917,14 @@ static long madvise_populate(struct vm_area_struct *vma,
- {
- 	const bool write = behavior == MADV_POPULATE_WRITE;
- 	struct mm_struct *mm = vma->vm_mm;
--	unsigned long tmp_end;
- 	int locked = 1;
- 	long pages;
- 
- 	*prev = vma;
- 
- 	while (start < end) {
--		/*
--		 * We might have temporarily dropped the lock. For example,
--		 * our VMA might have been split.
--		 */
--		if (!vma || start >= vma->vm_end) {
--			vma = vma_lookup(mm, start);
--			if (!vma)
--				return -ENOMEM;
--		}
--
--		tmp_end = min_t(unsigned long, end, vma->vm_end);
- 		/* Populate (prefault) page tables readable/writable. */
--		pages = faultin_vma_page_range(vma, start, tmp_end, write,
--					       &locked);
-+		pages = faultin_page_range(mm, start, end, write, &locked);
- 		if (!locked) {
- 			mmap_read_lock(mm);
- 			locked = 1;
-@@ -958,7 +945,7 @@ static long madvise_populate(struct vm_area_struct *vma,
- 				pr_warn_once("%s: unhandled return value: %ld\n",
- 					     __func__, pages);
- 				fallthrough;
--			case -ENOMEM:
-+			case -ENOMEM: /* No VMA or out of memory. */
- 				return -ENOMEM;
- 			}
- 		}
++ * This helper should only be used for fdinfo shared memory stats to determine
++ * if a GEM object is shared.
++ *
++ * @obj: obj in question
++ */
++static inline bool drm_gem_object_is_shared_for_memory_stats(struct drm_gem_object *obj)
++{
++	return (obj->handle_count > 1) || obj->dma_buf;
++}
++
+ #ifdef CONFIG_LOCKDEP
+ /**
+  * drm_gem_gpuva_set_lock() - Set the lock protecting accesses to the gpuva list.
 -- 
 2.43.0
 
