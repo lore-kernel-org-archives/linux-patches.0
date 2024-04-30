@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFC312D1F1;
-	Tue, 30 Apr 2024 11:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7CD98801;
+	Tue, 30 Apr 2024 11:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476156; cv=none; b=ss17lDWwzUGBw0a2K0HPGTmbK4NvVRDyvEQ890zkzbN3W5VM1WcXNAiheQnlR8nK6YRg3lz4GhDu8yyzPKn9C8uvEaoQDVRbRHl4rgVYLu/EBXyGAPWn02hsVcl04WJkXj+9qa91IphUSMbCppZGziMzw66RPplta7woop5V2ic=
+	t=1714476159; cv=none; b=avacNUEtqHhpPW+idVlmcgXhQqxyBHTRqQjBJSDnXlLcLwsvWfGPAXlJpgxKJB4ZJt1G78yfhgIBiKhQ5oGKzWhJf8cFqIaARFewRU+qPsz2aIUpBjISzcc94EzvnlHeNFC3ZnNVhxOtoK66LZ8HuPf65eVg+HxOTyNOL2mtjws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476156; c=relaxed/simple;
-	bh=i/yR1hRtB94Pc+m5rqVYOUAnMsoPfOP5loAGqEMeLgE=;
+	s=arc-20240116; t=1714476159; c=relaxed/simple;
+	bh=mfzMJrE64t4RHLZ4XMmIsMMqFeSHYp/9+mZPDDrYkMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hqOwovMAj1PXdnm2sHCvA9pdxKNM5xIwsMvHc0vPRi61JeFcvrlYKxmMuzJoC8/IPrZq2T4YIfaYQEjD0rN53fS//cdtbdZ/850Rv+kXEUJQi0pau5h/uFrmj67TfAEWxoo+xhahBffZQOhkcSFKWBwY6ucDYEOMcvVQwX8n53I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmGCQ2dg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Suk7JJIgziYlIck8+hkQWc+PYyafJi+PwEJeGxmtyVOZuhgxMAq45U5/rQw52BRCWvtwG4yw7CHfVULu+y5Lf4x4N1MTECO/3laPOgg1tRT8122eTeFJynXvuQFdTyZSvBXJQV6cjQlz7PBsyCCzLCBVGWUqy72NxwrFnL9zA18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HmCyk54j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmGCQ2dg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFB8C2BBFC;
-	Tue, 30 Apr 2024 11:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmCyk54j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31193C2BBFC;
+	Tue, 30 Apr 2024 11:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476156;
-	bh=i/yR1hRtB94Pc+m5rqVYOUAnMsoPfOP5loAGqEMeLgE=;
+	s=korg; t=1714476159;
+	bh=mfzMJrE64t4RHLZ4XMmIsMMqFeSHYp/9+mZPDDrYkMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hmGCQ2dgq++B54nt2ldtqRsemXx2iCOQbwyU4gpGn5UPsqm4t3VdtqBMft5yzAitT
-	 OgqLDftiglvhnux3Wj7GcTgUwdk/stdeK01XLWK0uziEYi1N7k6WiepNcZbogXGv0n
-	 zcYw+07jMB2VRxdEOKHJmA39EYFTKWEgGKKd4a4Y=
+	b=HmCyk54jPVRlV57kvJ3V1+vn2QamiD2NbmV7Tlf09a46+CtUVSQ1jHQLWxolUfyEh
+	 Y8lSt+UraUu3xrDidrmbEKt3E1dM0lcbrZDJbQt8OCLi8xBs4dl6xDhX5g5CXRs55q
+	 nN/MxWe4o4pIGbLJWw+PbWpI5tDICz6nEdedinBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iskander Amara <iskander.amara@theobroma-systems.com>,
 	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 052/107] arm64: dts: rockchip: fix alphabetical ordering RK3399 puma
-Date: Tue, 30 Apr 2024 12:40:12 +0200
-Message-ID: <20240430103046.193748002@linuxfoundation.org>
+Subject: [PATCH 5.4 053/107] arm64: dts: rockchip: enable internal pull-up on PCIE_WAKE# for RK3399 Puma
+Date: Tue, 30 Apr 2024 12:40:13 +0200
+Message-ID: <20240430103046.222787291@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -52,60 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Iskander Amara <iskander.amara@theobroma-systems.com>
+From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
 
-[ Upstream commit f0abb4b2c7acf3c3e4130dc3f54cd90cf2ae62bc ]
+[ Upstream commit 945a7c8570916650a415757d15d83e0fa856a686 ]
 
-Nodes overridden by their reference should be ordered alphabetically to
-make it easier to read the DTS. pinctrl node is defined in the wrong
-location so let's reorder it.
+The PCIE_WAKE# has a diode used as a level-shifter, and is used as an
+input pin. While the SoC default is to enable the pull-up, the core
+rk3399 pinconf for this pin opted for pull-none. So as to not disturb
+the behaviour of other boards which may rely on pull-none instead of
+pull-up, set the needed pull-up only for RK3399 Puma.
 
-Signed-off-by: Iskander Amara <iskander.amara@theobroma-systems.com>
-Reviewed-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Link: https://lore.kernel.org/r/20240308085243.69903-2-iskander.amara@theobroma-systems.com
+Fixes: 60fd9f72ce8a ("arm64: dts: rockchip: add Haikou baseboard with RK3399-Q7 SoM")
+Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Link: https://lore.kernel.org/r/20240308-puma-diode-pu-v2-2-309f83da110a@theobroma-systems.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Stable-dep-of: 945a7c857091 ("arm64: dts: rockchip: enable internal pull-up on PCIE_WAKE# for RK3399 Puma")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-index 365fa9a3c5bfb..ecef3d9b0b93e 100644
+index ecef3d9b0b93e..5382c2f0b6421 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-@@ -425,15 +425,6 @@
+@@ -425,6 +425,11 @@
  	gpio1830-supply = <&vcc_1v8>;
  };
  
--&pmu_io_domains {
--	status = "okay";
--	pmu1830-supply = <&vcc_1v8>;
--};
--
--&pwm2 {
--	status = "okay";
--};
--
++&pcie_clkreqn_cpm {
++	rockchip,pins =
++		<2 RK_PD2 RK_FUNC_GPIO &pcfg_pull_up>;
++};
++
  &pinctrl {
  	i2c8 {
  		i2c8_xfer_a: i2c8-xfer {
-@@ -465,6 +456,15 @@
- 	};
- };
- 
-+&pmu_io_domains {
-+	status = "okay";
-+	pmu1830-supply = <&vcc_1v8>;
-+};
-+
-+&pwm2 {
-+	status = "okay";
-+};
-+
- &sdhci {
- 	/*
- 	 * Signal integrity isn't great at 200MHz but 100MHz has proven stable
 -- 
 2.43.0
 
