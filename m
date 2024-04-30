@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA50F128816;
-	Tue, 30 Apr 2024 10:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0863D2940D;
+	Tue, 30 Apr 2024 10:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474599; cv=none; b=poeJTHI+5TnKH/5GpMnkRmmTof+VoOQcBmDErk4hHCtOkY04qaOYTgWLJfLKpJegVhsJsRhVKKSYn43BjM+0Tr6hW9KDkIxGuS4+q4TKTDRgSWPaf5fqyfvwCBoWpv3ybPS2O5SeskxumBhOmBzsxSQHriUyPKBS7z5qy442rSY=
+	t=1714474603; cv=none; b=Ey8ftkh0J0jgTxk1Ea0E7L93vyU67yLnNPbbCRkEAfDpDuFmd9d8wsfUmr532a84359SBK4BeKc9mJE2eQfB3L1q0qUvtLQE5z8Pv0DhHgSC3Kfe3ywEYKP5vOCzDt4sstHgwM+1VCBo/muL4I37LECG9UbOtZr2R9ARBQ5fA9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474599; c=relaxed/simple;
-	bh=tVvF6Nf5OTNXNxA3IoMoQ+/Gydnuhce2PUgqhAbFQiA=;
+	s=arc-20240116; t=1714474603; c=relaxed/simple;
+	bh=RXauIFv/PFTrtnCdOpD7XIOGJB1ZvGTsA0NEBoS8Qmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QWUhxAIowwf0ZIYEOdX+stla6c85rKKekHAkn/N1xltqErQB20B8PMIGihlNjTjFjzXCiB2J2C3rtnUxNFZzdRVS8qnyxTsgUkhFLxCfa6+YnTK88sU7IyNm/sO/rBWiwRFN7s+WwS1fc8awxfTlr1+XmTyi/BFZ+LYDUWKmUhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xc2KF1Y8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U+fHLIo2kzT4+f/BQoalRGtDWA4YBxs+6cLQzyX6F2MqgiKl+3fu0afsmd21jlEksPQT1eopyprm7NNG2NqkhL3X42zfyF0TsSCmdEE2i4JRWUKB93J40wuKds+mBIuVYiRwLpUTR47mg86C7QjN95Iky5zruj5hc8TQWqvE8EY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSGTPeFF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xc2KF1Y8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32376C2BBFC;
-	Tue, 30 Apr 2024 10:56:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSGTPeFF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824B8C2BBFC;
+	Tue, 30 Apr 2024 10:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474599;
-	bh=tVvF6Nf5OTNXNxA3IoMoQ+/Gydnuhce2PUgqhAbFQiA=;
+	s=korg; t=1714474602;
+	bh=RXauIFv/PFTrtnCdOpD7XIOGJB1ZvGTsA0NEBoS8Qmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xc2KF1Y8pl5WVu1G9ehAbQIyrArj5E3zSgipGjWnFRa8HqDV3P+LIUwdPklPsjlFu
-	 3xUaXipinriseT/1KZyMSkq4xjFBAN+RmKXZsaGTSvWyRCZ/oFIUHjB+RlT+iHk0pC
-	 5j6qB3thZnESu+4pfhGPXgdNgSzHloS7XMHp2Nxg=
+	b=YSGTPeFFmoaeXKiki9w9eBrSy7lvD4//11sWMwFAXtpCGTKqifySDrzjkqSBAWvKc
+	 HGFXI641lnx7r+HUBUlXCZehmuwbHEY1de+9RRjIdB3dmF/xhefnz+2rDQDykp0adc
+	 +sPZ5FoDBmX1kBrDe52IapCk9GUGNqnbd9ZECZCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kobuk <m.kobuk@ispras.ru>,
+	Marcel Ziswiler <marcel.ziswiler@toradex.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 205/228] phy: marvell: a3700-comphy: Fix hardcoded array size
-Date: Tue, 30 Apr 2024 12:39:43 +0200
-Message-ID: <20240430103109.716295234@linuxfoundation.org>
+Subject: [PATCH 6.8 206/228] phy: freescale: imx8m-pcie: fix pcie link-up instability
+Date: Tue, 30 Apr 2024 12:39:44 +0200
+Message-ID: <20240430103109.750044691@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -51,34 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Kobuk <m.kobuk@ispras.ru>
+From: Marcel Ziswiler <marcel.ziswiler@toradex.com>
 
-[ Upstream commit 627207703b73615653eea5ab7a841d5b478d961e ]
+[ Upstream commit 3a161017f1de55cc48be81f6156004c151f32677 ]
 
-Replace hardcoded 'gbe_phy_init' array size by explicit one.
+Leaving AUX_PLL_REFCLK_SEL at its reset default of AUX_IN (PLL clock)
+proves to be more stable on the i.MX 8M Mini.
 
-Fixes: 934337080c6c ("phy: marvell: phy-mvebu-a3700-comphy: Add native kernel implementation")
-Signed-off-by: Mikhail Kobuk <m.kobuk@ispras.ru>
-Link: https://lore.kernel.org/r/20240321164734.49273-2-m.kobuk@ispras.ru
+Fixes: 1aa97b002258 ("phy: freescale: pcie: Initialize the imx8 pcie standalone phy driver")
+
+Signed-off-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
+Reviewed-by: Richard Zhu <hongxing.zhu@nxp.com>
+Link: https://lore.kernel.org/r/20240322130646.1016630-2-marcel@ziswiler.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/marvell/phy-mvebu-a3700-comphy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/freescale/phy-fsl-imx8m-pcie.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/marvell/phy-mvebu-a3700-comphy.c b/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
-index e2d0bf92a9ada..27f221a0f922d 100644
---- a/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
-+++ b/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
-@@ -603,7 +603,7 @@ static void comphy_gbe_phy_init(struct mvebu_a3700_comphy_lane *lane,
- 	u16 val;
- 
- 	fix_idx = 0;
--	for (addr = 0; addr < 512; addr++) {
-+	for (addr = 0; addr < ARRAY_SIZE(gbe_phy_init); addr++) {
- 		/*
- 		 * All PHY register values are defined in full for 3.125Gbps
- 		 * SERDES speed. The values required for 1.25 Gbps are almost
+diff --git a/drivers/phy/freescale/phy-fsl-imx8m-pcie.c b/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
+index b700f52b7b679..11fcb1867118c 100644
+--- a/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
++++ b/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
+@@ -110,8 +110,10 @@ static int imx8_pcie_phy_power_on(struct phy *phy)
+ 		/* Source clock from SoC internal PLL */
+ 		writel(ANA_PLL_CLK_OUT_TO_EXT_IO_SEL,
+ 		       imx8_phy->base + IMX8MM_PCIE_PHY_CMN_REG062);
+-		writel(AUX_PLL_REFCLK_SEL_SYS_PLL,
+-		       imx8_phy->base + IMX8MM_PCIE_PHY_CMN_REG063);
++		if (imx8_phy->drvdata->variant != IMX8MM) {
++			writel(AUX_PLL_REFCLK_SEL_SYS_PLL,
++			       imx8_phy->base + IMX8MM_PCIE_PHY_CMN_REG063);
++		}
+ 		val = ANA_AUX_RX_TX_SEL_TX | ANA_AUX_TX_TERM;
+ 		writel(val | ANA_AUX_RX_TERM_GND_EN,
+ 		       imx8_phy->base + IMX8MM_PCIE_PHY_CMN_REG064);
 -- 
 2.43.0
 
