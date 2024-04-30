@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB63211C;
-	Tue, 30 Apr 2024 11:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DDF1E50A;
+	Tue, 30 Apr 2024 11:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475759; cv=none; b=FLJjKbuFSOJCBY/oVLu6groDMSfbi/gs2ZiAzDlrtuVHjcs3QQJBGPyNljU1rNtRAHnirD6+yONzdEEVZIUzkkoGlv/IWrmKs09aOQlrSEKYstIwwrGblAgGN+r7D4PpkJyQLHbAWj8Myk64pBRy+p4o12FGqBjTUKvoHJurARs=
+	t=1714475762; cv=none; b=fJzhvmHqI6Fj2KitpYxHyB0Cg7NkRKAJCTwlRTfq07waOJp88KHvMUv/IECzArbelcnYZGKWUV9XRt5ydM0DmPLVHFHu+yYF04xgF0SLvNE/U585+C9fadu498w32stOkZz3bGwtvIS6aixFGCuMHwMo1ZGnLo16IrLY8XIVTFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475759; c=relaxed/simple;
-	bh=BEWgrd1dVAYkHvB7mbEj2gdqsFOHavQwMyZ57lKqWfc=;
+	s=arc-20240116; t=1714475762; c=relaxed/simple;
+	bh=GwXKrXLDCJ1ioIZRPXman09GoEJGD5ieR5lMVCu1pVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QWjHgbVqccvXmUtDvmSRtEeQ6/PymZ2bD27y3R/G9s018D4wmCcCkXYYQMMFmS48IqCZKwu0ZyNodH9ajbAWijzFDX8+qjEJ55F6mr9hcwKFc4MBo0TgCxd9az3HzT10LKK2wL9ff0sIkqZWo/QijnIdBQJNrCSTWa6eV83AAYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjEeu4Ix; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CHx5xOjt/KNsViWhtIZE2WI+fbDa6b2ekHoREMB3Olyy/CTexOv2UVY4Nv1LgII7OKS3IVf8P/I5h/Wfvd4hlSWshb6pX8ZqQqcCbjttTqLl0MEWxBVoEqfcdo0GDdYQAqjhleBcfltLKNpantYOoDuA0INKHTCbumjcpKIo8pM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xl6W+7c3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjEeu4Ix"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524CFC2BBFC;
-	Tue, 30 Apr 2024 11:15:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xl6W+7c3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92AD4C2BBFC;
+	Tue, 30 Apr 2024 11:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475758;
-	bh=BEWgrd1dVAYkHvB7mbEj2gdqsFOHavQwMyZ57lKqWfc=;
+	s=korg; t=1714475762;
+	bh=GwXKrXLDCJ1ioIZRPXman09GoEJGD5ieR5lMVCu1pVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vjEeu4IxQ0XOZvXBY610iavMnjZ3EliE6TRzBXoijZe92zXDChqUGG0X6R1O40f4F
-	 b1AlaHn83EfiJTsPEFI1HD0NcEeKgNhLQltU2eMtE7R3soAPjOain1++vJ5X6+Y13V
-	 OD85QXSm6x48IwkeEY+6MfnIilkvEtov38KZoT/M=
+	b=xl6W+7c3iSQRDa1CXS3tJbXwIiEQJH2JpYW3IuUFWS1uxN87r+esZvHbTkHhyEL1K
+	 z9El/tzE7rhWqIxDcq3dnqLCMXjycZD94psWvg+gA9WsHbyPoQQzQoyfuDfSQcJl0h
+	 2YJJYzM7bUIjEVPcJ+xFsmXDW6i5aurKyK2t1OTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 01/80] smb: client: fix rename(2) regression against samba
-Date: Tue, 30 Apr 2024 12:39:33 +0200
-Message-ID: <20240430103043.444334807@linuxfoundation.org>
+Subject: [PATCH 5.15 10/80] arm64: dts: mediatek: mt7622: add support for coherent DMA
+Date: Tue, 30 Apr 2024 12:39:42 +0200
+Message-ID: <20240430103043.714905546@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -51,54 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 18d86965e31f9be4d477da0744a7cdc9815858de ]
+[ Upstream commit 3abd063019b6a01762f9fccc39505f29d029360a ]
 
-After commit 2c7d399e551c ("smb: client: reuse file lease key in
-compound operations") the client started reusing lease keys for
-rename, unlink and set path size operations to prevent it from
-breaking its own leases and thus causing unnecessary lease breaks to
-same connection.
+It improves performance by eliminating the need for a cache flush on rx and tx
 
-The implementation relies on positive dentries and
-cifsInodeInfo::lease_granted to decide whether reusing lease keys for
-the compound requests.  cifsInodeInfo::lease_granted was introduced by
-commit 0ab95c2510b6 ("Defer close only when lease is enabled.") to
-indicate whether lease caching is granted for a specific file, but
-that can only happen until file is open, so
-cifsInodeInfo::lease_granted was left uninitialised in ->alloc_inode
-and then client started sending random lease keys for files that
-hadn't any leases.
-
-This fixes the following test case against samba:
-
-mount.cifs //srv/share /mnt/1 -o ...,nosharesock
-mount.cifs //srv/share /mnt/2 -o ...,nosharesock
-touch /mnt/1/foo; tail -f /mnt/1/foo & pid=$!
-mv /mnt/2/foo /mnt/2/bar # fails with -EIO
-kill $pid
-
-Fixes: 0ab95c2510b6 ("Defer close only when lease is enabled.")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 3ba5a6159434 ("arm64: dts: mediatek: mt7622: fix clock controllers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifsfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/mediatek/mt7622.dtsi | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/cifs/cifsfs.c b/fs/cifs/cifsfs.c
-index 9bbead15a0287..d3adcb9e70a66 100644
---- a/fs/cifs/cifsfs.c
-+++ b/fs/cifs/cifsfs.c
-@@ -374,6 +374,7 @@ cifs_alloc_inode(struct super_block *sb)
- 	 * server, can not assume caching of file data or metadata.
- 	 */
- 	cifs_set_oplock_level(cifs_inode, 0);
-+	cifs_inode->lease_granted = false;
- 	cifs_inode->flags = 0;
- 	spin_lock_init(&cifs_inode->writers_lock);
- 	cifs_inode->writers = 0;
+diff --git a/arch/arm64/boot/dts/mediatek/mt7622.dtsi b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
+index a4c48b2abd209..8a332a3d3718a 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7622.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
+@@ -357,7 +357,7 @@
+ 		};
+ 
+ 		cci_control2: slave-if@5000 {
+-			compatible = "arm,cci-400-ctrl-if";
++			compatible = "arm,cci-400-ctrl-if", "syscon";
+ 			interface-type = "ace";
+ 			reg = <0x5000 0x1000>;
+ 		};
+@@ -938,6 +938,8 @@
+ 		power-domains = <&scpsys MT7622_POWER_DOMAIN_ETHSYS>;
+ 		mediatek,ethsys = <&ethsys>;
+ 		mediatek,sgmiisys = <&sgmiisys>;
++		mediatek,cci-control = <&cci_control2>;
++		dma-coherent;
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		status = "disabled";
 -- 
 2.43.0
 
