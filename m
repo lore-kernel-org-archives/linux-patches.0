@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A3617592;
-	Tue, 30 Apr 2024 11:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C1E8801;
+	Tue, 30 Apr 2024 11:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475957; cv=none; b=qXIZ7Bt2oessqaQfjc2WwKtC9lRl3/iDMFsxxpV0G/dEJ/rKedw+mJhv553N4EKfC2LOFN9EzziAScvoamDkW3F3IAqpg2LBpXCnVGJ+Kl4qu/CKxwHoibg0iVcgMjaoR7TWpUy14zA4shUCWu6la0C21qBhCIf1DfBBi/ax9/c=
+	t=1714475960; cv=none; b=WSBMzgvq2AH7ekLdWNhszEIb9VP8OaLnnj7jJ6uinkoJONUP2ZxRhcetIqhhPRgpZPnQWKZP2xX5J7zkapQq5PeyY3dQIx+Uxbc10xLNzQEOd+L21q/os48xJ1ZDh8TJ56/feW9ASZ5U3GtgNrU5R1Xa1MRNXGr6lnlW23MASEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475957; c=relaxed/simple;
-	bh=pllNQiRF9y62eQocaOi+0i45UrGClZK8RXPZxFrm4lA=;
+	s=arc-20240116; t=1714475960; c=relaxed/simple;
+	bh=g91tD2vti/ZaU1/0Fws7SS9TH6j7tkDKFRQXntWQjcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XQOtCdcBfIOJz1TgccF/vo/o5XdRucH9C57+nlxtQpXYOkREB4fisOsECSEbXr0wu0dJrYCOFZjfSrQIG5zu/9ObhhF6D3zkHavOtTb/2F9xMubeJRUvBfIvzgKQpHAOE8LQc8Dv5e1v9M59+YD0SmwL9Yc4wr0CiioaP5uHn5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlutY5dx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tOTBjb3/BM/5cdCXm60EN0SXA3plpI4CI81Paf2wV8LP7tHtSCDV/ciXTqslRO4FJgs3PFDFFopz8NgejIqtnWwlr2QnGaxS3vpifpQe5zU/BnLIY472D2bXULANbhc6acxtyj4RaltuKANdxBUmuMpU/gjP6NskHVleq7VvpZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/JGJIcd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlutY5dx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE266C2BBFC;
-	Tue, 30 Apr 2024 11:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/JGJIcd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9DDEC2BBFC;
+	Tue, 30 Apr 2024 11:19:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475957;
-	bh=pllNQiRF9y62eQocaOi+0i45UrGClZK8RXPZxFrm4lA=;
+	s=korg; t=1714475960;
+	bh=g91tD2vti/ZaU1/0Fws7SS9TH6j7tkDKFRQXntWQjcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UlutY5dxTKG2KLzKamvXCBPddFOuXJ6QKgdZM13h4jKOyQZ6zMc886OI/31taP2UD
-	 hYipph2UGGVqR5mJXKtEUsCWnOXkPjqmU1tiJeiomRaJ7w0deI7nkdZIa39Zyzq+G+
-	 CNVKwGVSxgFkPiFrHk07Z0Enwgw3yHUg0fLmbh9Y=
+	b=O/JGJIcd3ACMKoxThiD/JIAcqeBgVsBqAAfrt9gfEKgzphixwKQDucM4aBeFwAjd2
+	 ChtDZYyVYVfliHDPCRKjXys5lcmteOUYWETIA5CvZIV4loQCSVHfa2iNWqwr9ixjbs
+	 dEfuoocLPdoe6cr6Gvi4vGaYVZBvDWWCeSMROxHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Alexander Zubkov <green@qrator.net>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Zhengchao Shao <shaozhengchao@huawei.com>
-Subject: [PATCH 5.15 68/80] tcp: Fix NEW_SYN_RECV handling in inet_twsk_purge()
-Date: Tue, 30 Apr 2024 12:40:40 +0200
-Message-ID: <20240430103045.424319786@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 32/80] mlxsw: spectrum_acl_tcam: Fix possible use-after-free during rehash
+Date: Tue, 30 Apr 2024 12:40:04 +0200
+Message-ID: <20240430103044.365689652@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -51,112 +54,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 1c4e97dd2d3c9a3e84f7e26346aa39bc426d3249 upstream.
+[ Upstream commit 54225988889931467a9b55fdbef534079b665519 ]
 
-inet_twsk_purge() uses rcu to find TIME_WAIT and NEW_SYN_RECV
-objects to purge.
+The rehash delayed work migrates filters from one region to another
+according to the number of available credits.
 
-These objects use SLAB_TYPESAFE_BY_RCU semantic and need special
-care. We need to use refcount_inc_not_zero(&sk->sk_refcnt).
+The migrated from region is destroyed at the end of the work if the
+number of credits is non-negative as the assumption is that this is
+indicative of migration being complete. This assumption is incorrect as
+a non-negative number of credits can also be the result of a failed
+migration.
 
-Reuse the existing correct logic I wrote for TIME_WAIT,
-because both structures have common locations for
-sk_state, sk_family, and netns pointer.
+The destruction of a region that still has filters referencing it can
+result in a use-after-free [1].
 
-If after the refcount_inc_not_zero() the object fields longer match
-the keys, use sock_gen_put(sk) to release the refcount.
+Fix by not destroying the region if migration failed.
 
-Then we can call inet_twsk_deschedule_put() for TIME_WAIT,
-inet_csk_reqsk_queue_drop_and_put() for NEW_SYN_RECV sockets,
-with BH disabled.
+[1]
+BUG: KASAN: slab-use-after-free in mlxsw_sp_acl_ctcam_region_entry_remove+0x21d/0x230
+Read of size 8 at addr ffff8881735319e8 by task kworker/0:31/3858
 
-Then we need to restart the loop because we had drop rcu_read_lock().
+CPU: 0 PID: 3858 Comm: kworker/0:31 Tainted: G        W          6.9.0-rc2-custom-00782-gf2275c2157d8 #5
+Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
+Workqueue: mlxsw_core mlxsw_sp_acl_tcam_vregion_rehash_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xc6/0x120
+ print_report+0xce/0x670
+ kasan_report+0xd7/0x110
+ mlxsw_sp_acl_ctcam_region_entry_remove+0x21d/0x230
+ mlxsw_sp_acl_ctcam_entry_del+0x2e/0x70
+ mlxsw_sp_acl_atcam_entry_del+0x81/0x210
+ mlxsw_sp_acl_tcam_vchunk_migrate_all+0x3cd/0xb50
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0x157/0x1300
+ process_one_work+0x8eb/0x19b0
+ worker_thread+0x6c9/0xf70
+ kthread+0x2c9/0x3b0
+ ret_from_fork+0x4d/0x80
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-Fixes: 740ea3c4a0b2 ("tcp: Clean up kernel listener's reqsk in inet_twsk_purge()")
-Link: https://lore.kernel.org/netdev/CANn89iLvFuuihCtt9PME2uS1WJATnf5fKjDToa1WzVnRzHnPfg@mail.gmail.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240308200122.64357-2-kuniyu@amazon.com
+Allocated by task 174:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x8f/0xa0
+ __kmalloc+0x19c/0x360
+ mlxsw_sp_acl_tcam_region_create+0xdf/0x9c0
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0x954/0x1300
+ process_one_work+0x8eb/0x19b0
+ worker_thread+0x6c9/0xf70
+ kthread+0x2c9/0x3b0
+ ret_from_fork+0x4d/0x80
+ ret_from_fork_asm+0x1a/0x30
+
+Freed by task 7:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3b/0x60
+ poison_slab_object+0x102/0x170
+ __kasan_slab_free+0x14/0x30
+ kfree+0xc1/0x290
+ mlxsw_sp_acl_tcam_region_destroy+0x272/0x310
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0x731/0x1300
+ process_one_work+0x8eb/0x19b0
+ worker_thread+0x6c9/0xf70
+ kthread+0x2c9/0x3b0
+ ret_from_fork+0x4d/0x80
+ ret_from_fork_asm+0x1a/0x30
+
+Fixes: c9c9af91f1d9 ("mlxsw: spectrum_acl: Allow to interrupt/continue rehash work")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Alexander Zubkov <green@qrator.net>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/3e412b5659ec2310c5c615760dfe5eac18dd7ebd.1713797103.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_timewait_sock.c |   41 +++++++++++++++++++----------------------
- 1 file changed, 19 insertions(+), 22 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/ipv4/inet_timewait_sock.c
-+++ b/net/ipv4/inet_timewait_sock.c
-@@ -254,12 +254,12 @@ void __inet_twsk_schedule(struct inet_ti
- }
- EXPORT_SYMBOL_GPL(__inet_twsk_schedule);
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+index f663cb0fd19a3..a60d511f00eaa 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+@@ -1481,6 +1481,7 @@ mlxsw_sp_acl_tcam_vregion_rehash(struct mlxsw_sp *mlxsw_sp,
+ 						ctx, credits);
+ 	if (err) {
+ 		dev_err(mlxsw_sp->bus_info->dev, "Failed to migrate vregion\n");
++		return;
+ 	}
  
-+/* Remove all non full sockets (TIME_WAIT and NEW_SYN_RECV) for dead netns */
- void inet_twsk_purge(struct inet_hashinfo *hashinfo, int family)
- {
--	struct inet_timewait_sock *tw;
--	struct sock *sk;
- 	struct hlist_nulls_node *node;
- 	unsigned int slot;
-+	struct sock *sk;
- 
- 	for (slot = 0; slot <= hashinfo->ehash_mask; slot++) {
- 		struct inet_ehash_bucket *head = &hashinfo->ehash[slot];
-@@ -268,38 +268,35 @@ restart_rcu:
- 		rcu_read_lock();
- restart:
- 		sk_nulls_for_each_rcu(sk, node, &head->chain) {
--			if (sk->sk_state != TCP_TIME_WAIT) {
--				/* A kernel listener socket might not hold refcnt for net,
--				 * so reqsk_timer_handler() could be fired after net is
--				 * freed.  Userspace listener and reqsk never exist here.
--				 */
--				if (unlikely(sk->sk_state == TCP_NEW_SYN_RECV &&
--					     hashinfo->pernet)) {
--					struct request_sock *req = inet_reqsk(sk);
--
--					inet_csk_reqsk_queue_drop_and_put(req->rsk_listener, req);
--				}
-+			int state = inet_sk_state_load(sk);
- 
-+			if ((1 << state) & ~(TCPF_TIME_WAIT |
-+					     TCPF_NEW_SYN_RECV))
- 				continue;
--			}
- 
--			tw = inet_twsk(sk);
--			if ((tw->tw_family != family) ||
--				refcount_read(&twsk_net(tw)->ns.count))
-+			if (sk->sk_family != family ||
-+			    refcount_read(&sock_net(sk)->ns.count))
- 				continue;
- 
--			if (unlikely(!refcount_inc_not_zero(&tw->tw_refcnt)))
-+			if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
- 				continue;
- 
--			if (unlikely((tw->tw_family != family) ||
--				     refcount_read(&twsk_net(tw)->ns.count))) {
--				inet_twsk_put(tw);
-+			if (unlikely(sk->sk_family != family ||
-+				     refcount_read(&sock_net(sk)->ns.count))) {
-+				sock_gen_put(sk);
- 				goto restart;
- 			}
- 
- 			rcu_read_unlock();
- 			local_bh_disable();
--			inet_twsk_deschedule_put(tw);
-+			if (state == TCP_TIME_WAIT) {
-+				inet_twsk_deschedule_put(inet_twsk(sk));
-+			} else {
-+				struct request_sock *req = inet_reqsk(sk);
-+
-+				inet_csk_reqsk_queue_drop_and_put(req->rsk_listener,
-+								  req);
-+			}
- 			local_bh_enable();
- 			goto restart_rcu;
- 		}
+ 	if (*credits >= 0)
+-- 
+2.43.0
+
 
 
