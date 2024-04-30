@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEBBA17592;
-	Tue, 30 Apr 2024 11:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0876217592;
+	Tue, 30 Apr 2024 11:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476200; cv=none; b=GR5bQAQeIodL0Xq1ubik1SgeGRjpF2gjZodEOvDmV3czfH68wHISV30bDxrj3AOBurpEp3/kArur0vpLDYXPum2MT/qUfq095Im89CGZxsnNnKjahhvWcU9mm+yjByje+WOhvcTmN9+4yn9qZjYtwoYsUF8/9VxX7XurSm8q5GE=
+	t=1714476203; cv=none; b=FisQRgdSx16/saBQZWF1bZcPwG2pw9eZiuPO/6OOoxgL0zwbdIbkARzz3vrXtNI6hmvt4Bg8ZQhLyT8v4lOZFyegts+iXGbJAwY5Nb0qlyWGGUjkhBdQW+O2XEustWbmZHQs49o5sT/qivbdT4lIIhFWSfsdty6c2Depl+QGxWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476200; c=relaxed/simple;
-	bh=TYePNH1LP027FHcNmpkEob3HnpyGgnA21/XKqGu8kRw=;
+	s=arc-20240116; t=1714476203; c=relaxed/simple;
+	bh=QHO4ZGk9QFyGpxF77Y1exEle0qMCQmdy3AtuAongPPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jw2+inTEmsq4JxGTin5eKfFOjnOYO6IWlWPQ8bGgQ/mlWIA3Kcq+6N3LqULXVeJiGd17LVc7O7mK6VXd24wxE4GqBH4t78KqvdZe627+L12aownejrmuMGdLe2DQKExY3WTk9KFNuVRadH6TTar9iTzkgP4Nn4nMbTxoKLr39FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqT7YCol; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a6Ph1xRIT0Fi1GUSmSpNnxL8SMsgnEzGixOBtPALyQcCvU/E0oDpA9R/D7tov7m1IuZ+SMvpIBTje4B89n2YAFFbB0VL+sDp4PE7ght/8fr0AV9bbuHbT+EGSmCQyZ37Q4TOsr0mCgm+9ngwFg6ObNLU045vKqnzbW9B1UxTJkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pe0W2EX6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqT7YCol"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F5AC2BBFC;
-	Tue, 30 Apr 2024 11:23:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pe0W2EX6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749FEC2BBFC;
+	Tue, 30 Apr 2024 11:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476199;
-	bh=TYePNH1LP027FHcNmpkEob3HnpyGgnA21/XKqGu8kRw=;
+	s=korg; t=1714476202;
+	bh=QHO4ZGk9QFyGpxF77Y1exEle0qMCQmdy3AtuAongPPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wqT7YColMzfhQjIczcrUh6vUssWH9+PUU0PrGoozeIyWEfS3/26Oly0dJhyQm6tmC
-	 C6MklUBxM/2iKc82KOS2bjL+zSHa0pnDuWHltYCC55tWKTYSFnLn/J6RzQb6LUTddu
-	 W41pnjkdRv5T2KcHGFQ36+UXJrsnE+XS0J3weBbQ=
+	b=pe0W2EX6giQJnKepQGF5UWPG/pT2pmmRfggD4JhsDXCu0JSRVe3BEPNHHyNhdTJTJ
+	 SJHChs9kvviycFPBpt/djndC7l4TtP0PMm/PLv3gHV01ik1LJlD4fi2wBx8YK+VYEe
+	 gWvj3S23Zm9X/FUbU00WWSxKMXZjMPTyE2qRFSHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 065/107] net: gtp: Fix Use-After-Free in gtp_dellink
-Date: Tue, 30 Apr 2024 12:40:25 +0200
-Message-ID: <20240430103046.574716495@linuxfoundation.org>
+	Ismael Luceno <iluceno@suse.de>,
+	Andreas Taschner <andreas.taschner@suse.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Firo Yang <firo.yang@suse.com>
+Subject: [PATCH 5.4 066/107] ipvs: Fix checksumming on GSO of SCTP packets
+Date: Tue, 30 Apr 2024 12:40:26 +0200
+Message-ID: <20240430103046.604570738@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -52,44 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <v4bel@theori.io>
+From: Ismael Luceno <iluceno@suse.de>
 
-[ Upstream commit f2a904107ee2b647bb7794a1a82b67740d7c8a64 ]
+[ Upstream commit e10d3ba4d434ed172914617ed8d74bd411421193 ]
 
-Since call_rcu, which is called in the hlist_for_each_entry_rcu traversal
-of gtp_dellink, is not part of the RCU read critical section, it
-is possible that the RCU grace period will pass during the traversal and
-the key will be free.
+It was observed in the wild that pairs of consecutive packets would leave
+the IPVS with the same wrong checksum, and the issue only went away when
+disabling GSO.
 
-To prevent this, it should be changed to hlist_for_each_entry_safe.
+IPVS needs to avoid computing the SCTP checksum when using GSO.
 
-Fixes: 94dc550a5062 ("gtp: fix an use-after-free in ipv4_pdp_find()")
-Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 90017accff61 ("sctp: Add GSO support")
+Co-developed-by: Firo Yang <firo.yang@suse.com>
+Signed-off-by: Ismael Luceno <iluceno@suse.de>
+Tested-by: Andreas Taschner <andreas.taschner@suse.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/ipvs/ip_vs_proto_sctp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index e5961082a4afd..0d6d2fe9eabdb 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -706,11 +706,12 @@ static int gtp_newlink(struct net *src_net, struct net_device *dev,
- static void gtp_dellink(struct net_device *dev, struct list_head *head)
- {
- 	struct gtp_dev *gtp = netdev_priv(dev);
-+	struct hlist_node *next;
- 	struct pdp_ctx *pctx;
- 	int i;
- 
- 	for (i = 0; i < gtp->hash_size; i++)
--		hlist_for_each_entry_rcu(pctx, &gtp->tid_hash[i], hlist_tid)
-+		hlist_for_each_entry_safe(pctx, next, &gtp->tid_hash[i], hlist_tid)
- 			pdp_context_delete(pctx);
- 
- 	list_del_rcu(&gtp->list);
+diff --git a/net/netfilter/ipvs/ip_vs_proto_sctp.c b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+index a0921adc31a9f..1e689c7141271 100644
+--- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+@@ -126,7 +126,8 @@ sctp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	if (sctph->source != cp->vport || payload_csum ||
+ 	    skb->ip_summed == CHECKSUM_PARTIAL) {
+ 		sctph->source = cp->vport;
+-		sctp_nat_csum(skb, sctph, sctphoff);
++		if (!skb_is_gso(skb) || !skb_is_gso_sctp(skb))
++			sctp_nat_csum(skb, sctph, sctphoff);
+ 	} else {
+ 		skb->ip_summed = CHECKSUM_UNNECESSARY;
+ 	}
+@@ -174,7 +175,8 @@ sctp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	    (skb->ip_summed == CHECKSUM_PARTIAL &&
+ 	     !(skb_dst(skb)->dev->features & NETIF_F_SCTP_CRC))) {
+ 		sctph->dest = cp->dport;
+-		sctp_nat_csum(skb, sctph, sctphoff);
++		if (!skb_is_gso(skb) || !skb_is_gso_sctp(skb))
++			sctp_nat_csum(skb, sctph, sctphoff);
+ 	} else if (skb->ip_summed != CHECKSUM_PARTIAL) {
+ 		skb->ip_summed = CHECKSUM_UNNECESSARY;
+ 	}
 -- 
 2.43.0
 
