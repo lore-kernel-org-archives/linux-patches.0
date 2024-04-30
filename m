@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB89612C47A;
-	Tue, 30 Apr 2024 10:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A1312C49C;
+	Tue, 30 Apr 2024 10:44:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473883; cv=none; b=OT2x//CrkixxXEo1YL1IwrgcB6WBK9Ihzt6ca4ThVZM3qggN7XhWy6qyBSfoBLcEWW3mgR0ox0Dzk1hhTY5lrQ/Xe/rdcSmdrk5urIcLjZ8NKE53ZzsN1WI8afHKjuYmUA8BQezzKNIlWx8fjwQiV6DBG9L2GBbgXJ2HK9Zoh7Q=
+	t=1714473886; cv=none; b=SbNcmsQdh4cTpJPrBPOHlr67kgfh/tE+bwddZffizu4Tz71Ubq09v4JtTd2D2jaxZLn6gwRwEo8rLbxyqsDpL5StkiTclGN8KDBTcJ2ib46xQnoluv4QlftCmg6bkcvhnRzmbktlHt1+X53YiUzOYb91zdVVTxxHYro3GSOWyYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473883; c=relaxed/simple;
-	bh=LSgtHiTVy1r4DHM3bC86e4XAHL2SF1qgK61lD2IXvME=;
+	s=arc-20240116; t=1714473886; c=relaxed/simple;
+	bh=uhjzMqo/PcgTF3CPi5JbUx0e0XG/cd+rxb+g6zig7ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEvwhg8Xe8b1eYI6EXxdDUAnYhO3smrKaDkbgQiQq6I7ZAMVer441DzJTyTPR2w78s4BJV24S4FDIsyuaU1qQgjboFIbx9vP/99xKGip75YmlY5rtgII2zth1/hcFuXXfqxcpzEyZVAdSyW4K4+wb2MmfgEE2s2uRQl6af9WUao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dn0Z//Gm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f6hBSLX3xi+ZxlHEfiow+4xfE8oDnvMq7SR0p54//be1dnuaHu/dYoW1NyC1iEcF1irdklYdCUmhziv/Q+arrxYde3iJ+TaUIeh+CGffjTOfoRjzjjfMQVgrOzvVEb/4IS4r2l6APbLpgR+esBDIfPpiQ9AwQRU3TyRETfp0GNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kb+zATHE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dn0Z//Gm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF4EC2BBFC;
-	Tue, 30 Apr 2024 10:44:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kb+zATHE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C16C2BBFC;
+	Tue, 30 Apr 2024 10:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473883;
-	bh=LSgtHiTVy1r4DHM3bC86e4XAHL2SF1qgK61lD2IXvME=;
+	s=korg; t=1714473886;
+	bh=uhjzMqo/PcgTF3CPi5JbUx0e0XG/cd+rxb+g6zig7ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dn0Z//GmiCHkPsYrIYUXcNuC4Q9T8VrXbHtuniHJcZCl+r0ze7fxaY6nWBDvdAAgm
-	 BtbnDwbYDp7soT0UI0SR3pU6sMuPvxu5mUhvYQjCWrqSggZVX5gcy62hhXBtkiqy6+
-	 IzbiX33vMSOcTfnVkTRC/r6Q3WxKqNf8wWI33EGU=
+	b=kb+zATHEtxdJ1pnZFi3yVAH7RV2j6q7CS6oMEpTkkmtXJ4wLtSEFa3DMwE8OVmwy9
+	 KzyEYd054G1lNd7WAR43ejJYOibSIdqeiBsKDuka17P0A9g6ryQxC9TMPLcWxzbhgB
+	 jeDHahYD9InxefXVm2fRjh1NGAcJ4jJx8eeoDAU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Baruch Siach <baruch@tkos.co.il>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 71/77] idma64: Dont try to serve interrupts when device is powered off
-Date: Tue, 30 Apr 2024 12:39:50 +0200
-Message-ID: <20240430103043.235435483@linuxfoundation.org>
+Subject: [PATCH 4.19 72/77] i2c: smbus: fix NULL function pointer dereference
+Date: Tue, 30 Apr 2024 12:39:51 +0200
+Message-ID: <20240430103043.265162617@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -52,42 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 9140ce47872bfd89fca888c2f992faa51d20c2bc ]
+[ Upstream commit 91811a31b68d3765b3065f4bb6d7d6d84a7cfc9f ]
 
-When iDMA 64-bit device is powered off, the IRQ status register
-is all 1:s. This is never happen in real case and signalling that
-the device is simply powered off. Don't try to serve interrupts
-that are not ours.
+Baruch reported an OOPS when using the designware controller as target
+only. Target-only modes break the assumption of one transfer function
+always being available. Fix this by always checking the pointer in
+__i2c_transfer.
 
-Fixes: 667dfed98615 ("dmaengine: add a driver for Intel integrated DMA 64-bit")
-Reported-by: Heiner Kallweit <hkallweit1@gmail.com>
-Closes: https://lore.kernel.org/r/700bbb84-90e1-4505-8ff0-3f17ea8bc631@gmail.com
-Tested-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240321120453.1360138-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reported-by: Baruch Siach <baruch@tkos.co.il>
+Closes: https://lore.kernel.org/r/4269631780e5ba789cf1ae391eec1b959def7d99.1712761976.git.baruch@tkos.co.il
+Fixes: 4b1acc43331d ("i2c: core changes for slave support")
+[wsa: dropped the simplification in core-smbus to avoid theoretical regressions]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Tested-by: Baruch Siach <baruch@tkos.co.il>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idma64.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/i2c/i2c-core-base.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/idma64.c b/drivers/dma/idma64.c
-index 89c5e5b460687..920e98dc7113e 100644
---- a/drivers/dma/idma64.c
-+++ b/drivers/dma/idma64.c
-@@ -172,6 +172,10 @@ static irqreturn_t idma64_irq(int irq, void *dev)
- 	u32 status_err;
- 	unsigned short i;
+diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
+index 9079be0d51d15..2bdb8bc4cc829 100644
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -1872,13 +1872,18 @@ static int i2c_check_for_quirks(struct i2c_adapter *adap, struct i2c_msg *msgs,
+  * Returns negative errno, else the number of messages executed.
+  *
+  * Adapter lock must be held when calling this function. No debug logging
+- * takes place. adap->algo->master_xfer existence isn't checked.
++ * takes place.
+  */
+ int __i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ {
+ 	unsigned long orig_jiffies;
+ 	int ret, try;
  
-+	/* Since IRQ may be shared, check if DMA controller is powered on */
-+	if (status == GENMASK(31, 0))
-+		return IRQ_NONE;
++	if (!adap->algo->master_xfer) {
++		dev_dbg(&adap->dev, "I2C level transfers not supported\n");
++		return -EOPNOTSUPP;
++	}
 +
- 	dev_vdbg(idma64->dma.dev, "%s: status=%#x\n", __func__, status);
+ 	if (WARN_ON(!msgs || num < 1))
+ 		return -EINVAL;
  
- 	/* Check if we have any interrupt from the DMA controller */
 -- 
 2.43.0
 
