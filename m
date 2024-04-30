@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53C512D743;
-	Tue, 30 Apr 2024 10:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D00812C499;
+	Tue, 30 Apr 2024 10:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474612; cv=none; b=cWuF+A9B3bl9SA3l4zWQCFvBadPN5ocpmwjtciyHegq5T76qkZjOGD0nssL8mN4VlorCgA1b//Cp7TBWqVK7o4103DOeqmYPb/CV+LUdvkvZ6h8z+LooqzeDA5VUh/h6KV01wOnW3sszy/fKNjjWHPEcK4X1nVOHhJvhaqO8JM4=
+	t=1714474616; cv=none; b=dOCBly6RgvSnjphcaKwiVNpNBJT0oS+6eoolPnBlkBer4kWrbEuTHlSVZFeBfW7ouQjgCAN7jFnle6KMAMYlSF6WAVtArmoxBuWi1aAbK2Jj4/H3kcvuqWWGBPovZSJhA9P0qkL2kf6OWPFSPDRfF/FgQRSrzfe2UXbcH/NkWbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474612; c=relaxed/simple;
-	bh=AH6Nbcywd42InuOe7kF8CfCqyoMzA5xpSt2oF6Jxl28=;
+	s=arc-20240116; t=1714474616; c=relaxed/simple;
+	bh=3LmBwj1A00Us3JgxM3GPDLNrywKJw5PHzpP/zuwTq8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ek1aL0rwK7LGoZVLN9hVEkc9PEq4yWh7O2CPvQ/SfBAAt3T21p1CIMhBKxC5r/hoOuESc9ZWaI+SCd5Q0nHxMmdEsF8pugynQNf1uK3SCgEQvV+9SPSf20FrttM9ErZ6MkasvI1wJND4cUR6S9uFj+RXn/3fwc/nFUCuZwFTI0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3Cvt9+0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AciuZi1VKv6r+WtLh+l6TJm87i/uB08IH1iXeA9lqIllkj0tdqvZCHUXVid+pprdjiGG8juxLZoH/Ck3iZ3QhZvpPV0jR7tm2XorwVlZY6q8Dba2UxBl4dXd03I6pIKAbWEXMgQlCDkt2y/1gkrq99o6FcQjva2+9X+uXovLAuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YtGqBUjH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3Cvt9+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45603C2BBFC;
-	Tue, 30 Apr 2024 10:56:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YtGqBUjH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B8EC2BBFC;
+	Tue, 30 Apr 2024 10:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474612;
-	bh=AH6Nbcywd42InuOe7kF8CfCqyoMzA5xpSt2oF6Jxl28=;
+	s=korg; t=1714474615;
+	bh=3LmBwj1A00Us3JgxM3GPDLNrywKJw5PHzpP/zuwTq8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c3Cvt9+0qyG37ngVAKB8in8VIP+bbKXZ9832gQFelDYUEanwhgXvvWyXVi4Y7fYVy
-	 0S0r4QZY6VH4lQqhiDAXxnxsfq0K+IcwGzmwn3zbBQpccSZfUF1iern0akY3cSv//t
-	 5EHtZeSIj9ODCsCDq4cKWcrC3rvUYf2xbtpzMwVA=
+	b=YtGqBUjH67cBzyKNEIXNg3NAXdWLzEejANzGU54+b8psbjy4ZO6acfidlOLpLDt85
+	 Pr8DOLm5ToWzBdAXghX1t4fpldGUQN9c+xCiy+GqwW1fI3iSS9Zw1WNwEmSZ0vQ5vQ
+	 PclXOLdeHHZkOfy5ZNkhmPJDRlqh/7w9v8EiWwQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Tomek <mtdev79b@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 209/228] phy: rockchip: naneng-combphy: Fix mux on rk3588
-Date: Tue, 30 Apr 2024 12:39:47 +0200
-Message-ID: <20240430103109.836361544@linuxfoundation.org>
+	Jarred White <jarredwhite@linux.microsoft.com>,
+	Vanshidhar Konda <vanshikonda@os.amperecomputing.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.8 183/228] ACPI: CPPC: Fix bit_offset shift in MASK_VAL() macro
+Date: Tue, 30 Apr 2024 12:39:21 +0200
+Message-ID: <20240430103109.083890570@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -53,134 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Jarred White <jarredwhite@linux.microsoft.com>
 
-[ Upstream commit d16d4002fea69b6609b852dd8db1f5844c02fbe4 ]
+commit 05d92ee782eeb7b939bdd0189e6efcab9195bf95 upstream.
 
-The pcie1l0_sel and pcie1l1_sel bits in PCIESEL_CON configure the
-mux for PCIe1L0 and PCIe1L1 to either the PIPE Combo PHYs or the
-PCIe3 PHY. Thus this configuration interfers with the data-lanes
-configuration done by the PCIe3 PHY.
+Commit 2f4a4d63a193 ("ACPI: CPPC: Use access_width over bit_width for
+system memory accesses") neglected to properly wrap the bit_offset shift
+when it comes to applying the mask. This may cause incorrect values to be
+read and may cause the cpufreq module not be loaded.
 
-RK3588 has three Combo PHYs. The first one has a dedicated PCIe
-controller and is not affected by this. For the other two Combo
-PHYs, there is one mux for each of them.
+[   11.059751] cpu_capacity: CPU0 missing/invalid highest performance.
+[   11.066005] cpu_capacity: partial information: fallback to 1024 for all CPUs
 
-pcie1l0_sel selects if PCIe 1L0 is muxed to Combo PHY 1 when
-bit is set to 0 or to the PCIe3 PHY when bit is set to 1.
+Also, corrected the bitmask generation in GENMASK (extra bit being added).
 
-pcie1l1_sel selects if PCIe 1L1 is muxed to Combo PHY 2 when
-bit is set to 0 or to the PCIe3 PHY when bit is set to 1.
-
-Currently the code always muxes 1L0 and 1L1 to the Combi PHYs
-once one of them is being used in PCIe mode. This is obviously
-wrong when at least one of the ports should be muxed to the
-PCIe3 PHY.
-
-Fix this by introducing Combo PHY identification and then only
-setting up the required bit.
-
-Fixes: a03c44277253 ("phy: rockchip: Add naneng combo phy support for RK3588")
-Reported-by: Michal Tomek <mtdev79b@gmail.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20240404-rk3588-pcie-bifurcation-fixes-v1-3-9907136eeafd@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2f4a4d63a193 ("ACPI: CPPC: Use access_width over bit_width for system memory accesses")
+Signed-off-by: Jarred White <jarredwhite@linux.microsoft.com>
+Cc: 5.15+ <stable@vger.kernel.org> # 5.15+
+Reviewed-by: Vanshidhar Konda <vanshikonda@os.amperecomputing.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../rockchip/phy-rockchip-naneng-combphy.c    | 36 +++++++++++++++++--
- 1 file changed, 33 insertions(+), 3 deletions(-)
+ drivers/acpi/cppc_acpi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-index 5de5e2e97ffa0..26b157f53f3da 100644
---- a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-+++ b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-@@ -125,12 +125,15 @@ struct rockchip_combphy_grfcfg {
- };
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -170,8 +170,8 @@ show_cppc_data(cppc_get_perf_ctrs, cppc_
+ #define GET_BIT_WIDTH(reg) ((reg)->access_width ? (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
  
- struct rockchip_combphy_cfg {
-+	unsigned int num_phys;
-+	unsigned int phy_ids[3];
- 	const struct rockchip_combphy_grfcfg *grfcfg;
- 	int (*combphy_cfg)(struct rockchip_combphy_priv *priv);
- };
+ /* Shift and apply the mask for CPC reads/writes */
+-#define MASK_VAL(reg, val) ((val) >> ((reg)->bit_offset & 			\
+-					GENMASK(((reg)->bit_width), 0)))
++#define MASK_VAL(reg, val) (((val) >> (reg)->bit_offset) & 			\
++					GENMASK(((reg)->bit_width) - 1, 0))
  
- struct rockchip_combphy_priv {
- 	u8 type;
-+	int id;
- 	void __iomem *mmio;
- 	int num_clks;
- 	struct clk_bulk_data *clks;
-@@ -320,7 +323,7 @@ static int rockchip_combphy_probe(struct platform_device *pdev)
- 	struct rockchip_combphy_priv *priv;
- 	const struct rockchip_combphy_cfg *phy_cfg;
- 	struct resource *res;
--	int ret;
-+	int ret, id;
- 
- 	phy_cfg = of_device_get_match_data(dev);
- 	if (!phy_cfg) {
-@@ -338,6 +341,15 @@ static int rockchip_combphy_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	/* find the phy-id from the io address */
-+	priv->id = -ENODEV;
-+	for (id = 0; id < phy_cfg->num_phys; id++) {
-+		if (res->start == phy_cfg->phy_ids[id]) {
-+			priv->id = id;
-+			break;
-+		}
-+	}
-+
- 	priv->dev = dev;
- 	priv->type = PHY_NONE;
- 	priv->cfg = phy_cfg;
-@@ -562,6 +574,12 @@ static const struct rockchip_combphy_grfcfg rk3568_combphy_grfcfgs = {
- };
- 
- static const struct rockchip_combphy_cfg rk3568_combphy_cfgs = {
-+	.num_phys = 3,
-+	.phy_ids = {
-+		0xfe820000,
-+		0xfe830000,
-+		0xfe840000,
-+	},
- 	.grfcfg		= &rk3568_combphy_grfcfgs,
- 	.combphy_cfg	= rk3568_combphy_cfg,
- };
-@@ -578,8 +596,14 @@ static int rk3588_combphy_cfg(struct rockchip_combphy_priv *priv)
- 		rockchip_combphy_param_write(priv->phy_grf, &cfg->con1_for_pcie, true);
- 		rockchip_combphy_param_write(priv->phy_grf, &cfg->con2_for_pcie, true);
- 		rockchip_combphy_param_write(priv->phy_grf, &cfg->con3_for_pcie, true);
--		rockchip_combphy_param_write(priv->pipe_grf, &cfg->pipe_pcie1l0_sel, true);
--		rockchip_combphy_param_write(priv->pipe_grf, &cfg->pipe_pcie1l1_sel, true);
-+		switch (priv->id) {
-+		case 1:
-+			rockchip_combphy_param_write(priv->pipe_grf, &cfg->pipe_pcie1l0_sel, true);
-+			break;
-+		case 2:
-+			rockchip_combphy_param_write(priv->pipe_grf, &cfg->pipe_pcie1l1_sel, true);
-+			break;
-+		}
- 		break;
- 	case PHY_TYPE_USB3:
- 		/* Set SSC downward spread spectrum */
-@@ -736,6 +760,12 @@ static const struct rockchip_combphy_grfcfg rk3588_combphy_grfcfgs = {
- };
- 
- static const struct rockchip_combphy_cfg rk3588_combphy_cfgs = {
-+	.num_phys = 3,
-+	.phy_ids = {
-+		0xfee00000,
-+		0xfee10000,
-+		0xfee20000,
-+	},
- 	.grfcfg		= &rk3588_combphy_grfcfgs,
- 	.combphy_cfg	= rk3588_combphy_cfg,
- };
--- 
-2.43.0
-
+ static ssize_t show_feedback_ctrs(struct kobject *kobj,
+ 		struct kobj_attribute *attr, char *buf)
 
 
