@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3883512D1EA;
-	Tue, 30 Apr 2024 11:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486C712D1EA;
+	Tue, 30 Apr 2024 11:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475711; cv=none; b=AVcecBc/z1ImpU1qwNsx3Bwdqik0TUG6aAMvCbmO0yCV6QhjWKcdkQm3GovpD4o/CvEZTQXfLDIjyTSZoB9WCNaatrHAw71F3Y/tgZdQ/3guo8Kt39Ra1YbR32QD4d+i0jRUMTSxRER/PwTqWqOvyrhLcGMQdO2enGD1Y6IJcXc=
+	t=1714475714; cv=none; b=AAs1OxYoq8Rd+9hqg69Cx41ei4epIQ3tMaKA1JyXxgFE7SmP/XsiJw6LMkqVA1sOVH6B8FmpM+YHB6/leB5gocRCCIEB7QxO7HyU+sXIXpO/jJWNrtgou4qiyREkoYWT81nYr2+5izMSVGE3ogiGJXwMXiHt2KYhSPEVgYREZtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475711; c=relaxed/simple;
-	bh=xG80Km175HfsjMWSeADEL4voQtMWmtjZVI2RRDTHvyc=;
+	s=arc-20240116; t=1714475714; c=relaxed/simple;
+	bh=db2GWncdnCfVpSkptLL+1MOVlYMIsdL2Q2xJTW5TuiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aEb6aHVDakZbo5J+MKGoJrPYMnuOXc19NYioLN8vOiYwOClxM5nAIiIgNMsK9QOhnWAFtUGteGg6CpIvJu8y3GcVHPdhW58kW1mJWQWwWrxzhGzrO52uT+sZWXDu7HqxTdBtU5uKHJ/td46natVmAO0Wr4C3bUxB8n3zsw9fLEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTPS15/p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XyWeY3GAfp4Acd5N2BtGMvXGMcwUfLYCOZvyju522xXDRDKTUX6i3EiqtNgvE3Jc6WT32PbS2EIyLGB1zHpEb4JzXpfO/+Q1b9F3UKfpyGYU/JmmcuzYgT3PHp0warOgoaidIr04Q+M6K8WZ1UWgmiLo7s2HaUlAinqlbH272vU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3WKpzuX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTPS15/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC60C2BBFC;
-	Tue, 30 Apr 2024 11:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3WKpzuX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9B6C2BBFC;
+	Tue, 30 Apr 2024 11:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475711;
-	bh=xG80Km175HfsjMWSeADEL4voQtMWmtjZVI2RRDTHvyc=;
+	s=korg; t=1714475714;
+	bh=db2GWncdnCfVpSkptLL+1MOVlYMIsdL2Q2xJTW5TuiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vTPS15/pkSwBtgTMJ0y1I+QKawuBWwyMmTinW6anBJ2tdSiwAvDPkKAxJ4UqEb7jT
-	 rNoZPaf0kL7Z2uMMa2f4tMbuI1xWQ8j/B8jsHT53OIHnSTnse+yxHvxsJatRYOoyC/
-	 hOFdulLOCaJjhRtJN+qw9zDqeMSdP1gHnZUWE/8M=
+	b=K3WKpzuXt9OSqDQVRJW8Iv6FCPV/tfXVuA4LOfFQ7vlwmIIAXJAUWh99/3WTeXShn
+	 1zhyeDqt9GO5KU06UztGsn4vWxyVph7C2cGjQAPc5yW0Tasa45MQUvIPoXObZNNbth
+	 zCRE0c49Zc1q/ea83mND7CvSS+MiKYL6szqMsgmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <swboyd@chromium.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 180/186] phy: qcom: qmp-combo: fix VCO div offset on v5_5nm and v6
-Date: Tue, 30 Apr 2024 12:40:32 +0200
-Message-ID: <20240430103103.256047466@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	syzbot+26eedf3631650972f17c@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>
+Subject: [PATCH 6.6 181/186] ovl: fix memory leak in ovl_parse_param()
+Date: Tue, 30 Apr 2024 12:40:33 +0200
+Message-ID: <20240430103103.285965689@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -53,68 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 025a6f7448f7bb5f4fceb62498ee33d89ae266bb upstream.
+commit 37f32f52643869131ec01bb69bdf9f404f6109fb upstream.
 
-Commit 5abed58a8bde ("phy: qcom: qmp-combo: Fix VCO div offset on v3")
-fixed a regression introduced in 6.5 by making sure that the correct
-offset is used for the DP_PHY_VCO_DIV register on v3 hardware.
+On failure to parse parameters in ovl_parse_param_lowerdir(), it is
+necessary to update ctx->nr with the correct nr before using
+ovl_reset_lowerdirs() to release l->name.
 
-Unfortunately, that fix instead broke DisplayPort on v5_5nm and v6
-hardware as it failed to add the corresponding offsets also to those
-register tables.
-
-Fixes: 815891eee668 ("phy: qcom-qmp-combo: Introduce orientation variable")
-Fixes: 5abed58a8bde ("phy: qcom: qmp-combo: Fix VCO div offset on v3")
-Cc: stable@vger.kernel.org	# 6.5: 5abed58a8bde
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Link: https://lore.kernel.org/r/20240408093023.506-1-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reported-and-tested-by: syzbot+26eedf3631650972f17c@syzkaller.appspotmail.com
+Fixes: c835110b588a ("ovl: remove unused code in lowerdir param parsing")
+Co-authored-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c |    2 ++
- drivers/phy/qualcomm/phy-qcom-qmp.h       |    2 ++
- 2 files changed, 4 insertions(+)
+ fs/overlayfs/params.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -188,6 +188,7 @@ static const unsigned int qmp_v5_5nm_usb
- 	[QPHY_COM_BIAS_EN_CLKBUFLR_EN]	= QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN,
+--- a/fs/overlayfs/params.c
++++ b/fs/overlayfs/params.c
+@@ -438,7 +438,7 @@ static int ovl_parse_param_lowerdir(cons
+ 	struct ovl_fs_context *ctx = fc->fs_private;
+ 	struct ovl_fs_context_layer *l;
+ 	char *dup = NULL, *iter;
+-	ssize_t nr_lower = 0, nr = 0, nr_data = 0;
++	ssize_t nr_lower, nr;
+ 	bool data_layer = false;
  
- 	[QPHY_DP_PHY_STATUS]		= QSERDES_V5_DP_PHY_STATUS,
-+	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V5_DP_PHY_VCO_DIV,
+ 	/*
+@@ -490,6 +490,7 @@ static int ovl_parse_param_lowerdir(cons
+ 	iter = dup;
+ 	l = ctx->lower;
+ 	for (nr = 0; nr < nr_lower; nr++, l++) {
++		ctx->nr++;
+ 		memset(l, 0, sizeof(*l));
  
- 	[QPHY_TX_TX_POL_INV]		= QSERDES_V5_5NM_TX_TX_POL_INV,
- 	[QPHY_TX_TX_DRV_LVL]		= QSERDES_V5_5NM_TX_TX_DRV_LVL,
-@@ -212,6 +213,7 @@ static const unsigned int qmp_v6_usb3phy
- 	[QPHY_COM_BIAS_EN_CLKBUFLR_EN]	= QSERDES_V6_COM_PLL_BIAS_EN_CLK_BUFLR_EN,
+ 		err = ovl_mount_dir(iter, &l->path);
+@@ -506,10 +507,10 @@ static int ovl_parse_param_lowerdir(cons
+ 			goto out_put;
  
- 	[QPHY_DP_PHY_STATUS]		= QSERDES_V6_DP_PHY_STATUS,
-+	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V6_DP_PHY_VCO_DIV,
+ 		if (data_layer)
+-			nr_data++;
++			ctx->nr_data++;
  
- 	[QPHY_TX_TX_POL_INV]		= QSERDES_V6_TX_TX_POL_INV,
- 	[QPHY_TX_TX_DRV_LVL]		= QSERDES_V6_TX_TX_DRV_LVL,
---- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-@@ -134,9 +134,11 @@
- #define QPHY_V4_PCS_MISC_TYPEC_STATUS			0x10
- #define QPHY_V4_PCS_MISC_PLACEHOLDER_STATUS		0x14
+ 		/* Calling strchr() again would overrun. */
+-		if ((nr + 1) == nr_lower)
++		if (ctx->nr == nr_lower)
+ 			break;
  
-+#define QSERDES_V5_DP_PHY_VCO_DIV			0x070
- #define QSERDES_V5_DP_PHY_STATUS			0x0dc
- 
- /* Only for QMP V6 PHY - DP PHY registers */
-+#define QSERDES_V6_DP_PHY_VCO_DIV			0x070
- #define QSERDES_V6_DP_PHY_AUX_INTERRUPT_STATUS		0x0e0
- #define QSERDES_V6_DP_PHY_STATUS			0x0e4
+ 		err = -EINVAL;
+@@ -519,7 +520,7 @@ static int ovl_parse_param_lowerdir(cons
+ 			 * This is a regular layer so we require that
+ 			 * there are no data layers.
+ 			 */
+-			if ((ctx->nr_data + nr_data) > 0) {
++			if (ctx->nr_data > 0) {
+ 				pr_err("regular lower layers cannot follow data lower layers");
+ 				goto out_put;
+ 			}
+@@ -532,8 +533,6 @@ static int ovl_parse_param_lowerdir(cons
+ 		data_layer = true;
+ 		iter++;
+ 	}
+-	ctx->nr = nr_lower;
+-	ctx->nr_data += nr_data;
+ 	kfree(dup);
+ 	return 0;
  
 
 
