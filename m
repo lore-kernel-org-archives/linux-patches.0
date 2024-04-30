@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D66612C47A;
-	Tue, 30 Apr 2024 11:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841AF12BF32;
+	Tue, 30 Apr 2024 11:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476498; cv=none; b=soq7AbQW80OHtJgRO58qxv5uLwPGNTp4lFATzfOK+F1veD/smktorgsFrAV4ZorsutwsVzW2yBUOa+U3WpuxdPliXna2iQRJainhcdu4vagsjFpDij6VY1sfsrOLQfiycJnvVJTJpTsT9+ZIgUfAwdzV7ecmwX42LGz38HvyZjo=
+	t=1714476501; cv=none; b=kEAlNQBSGHJQUHTJl5WISDkViJdiGAGppxmVs2bIoA8NbKbOQMYQNs01b2c9iPIwbMjcwtbxwJc5OHW1n2u20mMNDs8nV5xcKreKGDuL2uloegPsimhJUz7uWCYy7tS3MooBQffKuUQKsts9qyvGTJFn9FmOpUCv3nHqe8A6WE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476498; c=relaxed/simple;
-	bh=f2YcC8l7hDFJEqXXpkn/F5FGnLgSa3w5NRt/kClzInA=;
+	s=arc-20240116; t=1714476501; c=relaxed/simple;
+	bh=C15xDCfyaD482pGx+HZE1Rj97RH8zZl/4YopgtXhvSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=np/o7BzGuEHRiup8NZnj2Yigbnd73czTF55P8/E44CUgJz+SznIOI6VlJhzMgnyYK06goVRk/wunHiZgddOwiEMje8KDzDc92FVdyD69AUuAyHTXbIf3HaQgK+ztumf4W9EqodoV18x/6QEX5nOS6wLfkWq2YoxcdZPEak7oZKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IcAUJfZC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mN/vm5v42HW3VsOJrboa+6I6RpZtVVwMipMC8VaGu/A7ZkG2mKSDuolRAUY8fa6uauv3dAY0UHZjCq79QgMcZNDwOqAPi5I+X+wAqX9qppQWu2h13CkKtaCF7QbwhVTdsKosQJXDhpCE5tfowxgg7nCBVx95ZSWvXn4uK6NKE5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xlNA+HS3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IcAUJfZC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035E4C2BBFC;
-	Tue, 30 Apr 2024 11:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xlNA+HS3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F00CC2BBFC;
+	Tue, 30 Apr 2024 11:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476498;
-	bh=f2YcC8l7hDFJEqXXpkn/F5FGnLgSa3w5NRt/kClzInA=;
+	s=korg; t=1714476501;
+	bh=C15xDCfyaD482pGx+HZE1Rj97RH8zZl/4YopgtXhvSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IcAUJfZCwzugc+P822D3wnwPRqJDgye3fE1XAo3gsijzuj59JSjsJXH8uNSliLF0h
-	 +53C30FGMwdYAL3yJK4QlFndVwYm9cFLyoB9isA3vwhhZLmwbq2buO7A1iPCnSKRMp
-	 amoI8x5EmmXmIEhvYLWN2F2P3iZfc6q6hvNYkaYk=
+	b=xlNA+HS3DgwV9vXLVL+Wh9jIIEk0W1e5LDaFgYDACZ0WA2zTJ5EaBjMDlISVHpk/8
+	 BIvviomwheFEFM1ar3U6dfQSRPeJ7Cg4Jfeo6ckguI45lcIlkiPDaON+El53vqAQtP
+	 Hb6ARlQJcehNR7B11hmzP8wq0nkx9IDjOX06MZBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Alexander Zubkov <green@qrator.net>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/110] mlxsw: spectrum_acl_tcam: Fix warning during rehash
-Date: Tue, 30 Apr 2024 12:40:18 +0200
-Message-ID: <20240430103049.015408146@linuxfoundation.org>
+Subject: [PATCH 6.1 013/110] arm64: dts: mediatek: mt8195: Add missing gce-client-reg to mutex
+Date: Tue, 30 Apr 2024 12:39:42 +0200
+Message-ID: <20240430103047.961690738@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -48,136 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 743edc8547a92b6192aa1f1b6bb78233fa21dc9b ]
+[ Upstream commit 3b129949184a1251e6a42db714f6d68b75fabedd ]
 
-As previously explained, the rehash delayed work migrates filters from
-one region to another. This is done by iterating over all chunks (all
-the filters with the same priority) in the region and in each chunk
-iterating over all the filters.
+Add the missing mediatek,gce-client-reg property to the mutex node to
+allow it to use the GCE. This prevents the "can't parse gce-client-reg
+property" error from being printed and should result in better
+performance.
 
-When the work runs out of credits it stores the current chunk and entry
-as markers in the per-work context so that it would know where to resume
-the migration from the next time the work is scheduled.
-
-Upon error, the chunk marker is reset to NULL, but without resetting the
-entry markers despite being relative to it. This can result in migration
-being resumed from an entry that does not belong to the chunk being
-migrated. In turn, this will eventually lead to a chunk being iterated
-over as if it is an entry. Because of how the two structures happen to
-be defined, this does not lead to KASAN splats, but to warnings such as
-[1].
-
-Fix by creating a helper that resets all the markers and call it from
-all the places the currently only reset the chunk marker. For good
-measures also call it when starting a completely new rehash. Add a
-warning to avoid future cases.
-
-[1]
-WARNING: CPU: 7 PID: 1076 at drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c:407 mlxsw_afk_encode+0x242/0x2f0
-Modules linked in:
-CPU: 7 PID: 1076 Comm: kworker/7:24 Tainted: G        W          6.9.0-rc3-custom-00880-g29e61d91b77b #29
-Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
-Workqueue: mlxsw_core mlxsw_sp_acl_tcam_vregion_rehash_work
-RIP: 0010:mlxsw_afk_encode+0x242/0x2f0
-[...]
-Call Trace:
- <TASK>
- mlxsw_sp_acl_atcam_entry_add+0xd9/0x3c0
- mlxsw_sp_acl_tcam_entry_create+0x5e/0xa0
- mlxsw_sp_acl_tcam_vchunk_migrate_all+0x109/0x290
- mlxsw_sp_acl_tcam_vregion_rehash_work+0x6c/0x470
- process_one_work+0x151/0x370
- worker_thread+0x2cb/0x3e0
- kthread+0xd0/0x100
- ret_from_fork+0x34/0x50
- </TASK>
-
-Fixes: 6f9579d4e302 ("mlxsw: spectrum_acl: Remember where to continue rehash migration")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/cc17eed86b41dd829d39b07906fec074a9ce580e.1713797103.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b852ee68fd72 ("arm64: dts: mt8195: Add display node for vdosys0")
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Link: https://lore.kernel.org/r/20240229-gce-client-reg-add-missing-mt8192-95-v1-3-b12c233a8a33@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlxsw/spectrum_acl_tcam.c        | 20 ++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index adaad9fc5fa50..1a6c774c8b7b0 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -792,6 +792,17 @@ static void mlxsw_sp_acl_tcam_vregion_rehash_work(struct work_struct *work)
- 		mlxsw_sp_acl_tcam_vregion_rehash_work_schedule(vregion);
- }
- 
-+static void
-+mlxsw_sp_acl_tcam_rehash_ctx_vchunk_reset(struct mlxsw_sp_acl_tcam_rehash_ctx *ctx)
-+{
-+	/* The entry markers are relative to the current chunk and therefore
-+	 * needs to be reset together with the chunk marker.
-+	 */
-+	ctx->current_vchunk = NULL;
-+	ctx->start_ventry = NULL;
-+	ctx->stop_ventry = NULL;
-+}
-+
- static void
- mlxsw_sp_acl_tcam_rehash_ctx_vchunk_changed(struct mlxsw_sp_acl_tcam_vchunk *vchunk)
- {
-@@ -814,7 +825,7 @@ mlxsw_sp_acl_tcam_rehash_ctx_vregion_changed(struct mlxsw_sp_acl_tcam_vregion *v
- 	 * the current chunk pointer to make sure all chunks
- 	 * are properly migrated.
- 	 */
--	vregion->rehash.ctx.current_vchunk = NULL;
-+	mlxsw_sp_acl_tcam_rehash_ctx_vchunk_reset(&vregion->rehash.ctx);
- }
- 
- static struct mlxsw_sp_acl_tcam_vregion *
-@@ -1317,7 +1328,7 @@ mlxsw_sp_acl_tcam_vchunk_migrate_end(struct mlxsw_sp *mlxsw_sp,
- {
- 	mlxsw_sp_acl_tcam_chunk_destroy(mlxsw_sp, vchunk->chunk2);
- 	vchunk->chunk2 = NULL;
--	ctx->current_vchunk = NULL;
-+	mlxsw_sp_acl_tcam_rehash_ctx_vchunk_reset(ctx);
- }
- 
- static int
-@@ -1349,6 +1360,8 @@ mlxsw_sp_acl_tcam_vchunk_migrate_one(struct mlxsw_sp *mlxsw_sp,
- 		ventry = list_first_entry(&vchunk->ventry_list,
- 					  typeof(*ventry), list);
- 
-+	WARN_ON(ventry->vchunk != vchunk);
-+
- 	list_for_each_entry_from(ventry, &vchunk->ventry_list, list) {
- 		/* During rollback, once we reach the ventry that failed
- 		 * to migrate, we are done.
-@@ -1440,7 +1453,7 @@ mlxsw_sp_acl_tcam_vregion_migrate(struct mlxsw_sp *mlxsw_sp,
- 		 * to vregion->region.
- 		 */
- 		swap(vregion->region, vregion->region2);
--		ctx->current_vchunk = NULL;
-+		mlxsw_sp_acl_tcam_rehash_ctx_vchunk_reset(ctx);
- 		ctx->this_is_rollback = true;
- 		err2 = mlxsw_sp_acl_tcam_vchunk_migrate_all(mlxsw_sp, vregion,
- 							    ctx, credits);
-@@ -1499,6 +1512,7 @@ mlxsw_sp_acl_tcam_vregion_rehash_start(struct mlxsw_sp *mlxsw_sp,
- 
- 	ctx->hints_priv = hints_priv;
- 	ctx->this_is_rollback = false;
-+	mlxsw_sp_acl_tcam_rehash_ctx_vchunk_reset(ctx);
- 
- 	return 0;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index 8f33b3226435a..bdf002e9cece1 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -2088,6 +2088,7 @@
+ 			interrupts = <GIC_SPI 658 IRQ_TYPE_LEVEL_HIGH 0>;
+ 			power-domains = <&spm MT8195_POWER_DOMAIN_VDOSYS0>;
+ 			clocks = <&vdosys0 CLK_VDO0_DISP_MUTEX0>;
++			mediatek,gce-client-reg = <&gce0 SUBSYS_1c01XXXX 0x6000 0x1000>;
+ 			mediatek,gce-events = <CMDQ_EVENT_VDO0_DISP_STREAM_DONE_0>;
+ 		};
  
 -- 
 2.43.0
