@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5289129E81;
-	Tue, 30 Apr 2024 10:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37E5127B70;
+	Tue, 30 Apr 2024 10:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473769; cv=none; b=iriZSGYyegJtaWT1kqBrZ7YHWxCEpJzyeRav3C5DPavpIBn9+FwI6IusOBjZ9rYoXvhCvOprj/SFY+YapzqygL3wAm5Hmjpi3iOwmE/D6BgqrJ4fqkwcEL5n5PsOSLu4D+N+pYKxmHBlKa1Ccxpa/p+X+qRAGn7ceEIcyRxOQIM=
+	t=1714473773; cv=none; b=fdMGKwn3N87JzMBb3lg7uy9d1sVPU3ddYnYkuKzmXKdarHvVndPyKXZGbUokqHUKTJKYlkWCu7Q+203sKaCl6xBx43/NRhfjrt2HJLxpbP3hnCbwSIDyt7yAXq1zm4h09MsAouVDd6gxsZ0PZUG5/PxLd3XnKnTKFqPUB2JewrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473769; c=relaxed/simple;
-	bh=hAy7FjLwADrv2uPEm3Nt5fkA/tSsAE3YTCrmRXVOOFw=;
+	s=arc-20240116; t=1714473773; c=relaxed/simple;
+	bh=YGTLPgDFSMmZc49bhfn5cbmK8e3H7l1PzpynqRn5yGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kiHV2SdK6/UsCvE7XFWxWPQQTc5I5H2xbkCv4e458eRnxETGjZMEFcfLcSB6M6vmeTe8vGJN6PS8KogwKnM5EANmzWw79eWdDevOVg80bBBcnjSLrnSAyGNCigMY6/4OCgGIxOGBBwxDgxNWzarmh9WTFcKNjhKynnrCbbnV+yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yC6S1QBc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UTNsfk1bSh4pnphjQvCQvqSxNSobM3PZaQ5ol2doQLaFIONdhi+b8B/spJgMzidvcUdcW8zOne2EVZ5wQ+nne88sVNKLMNY1fh/8svEu0MO16PfNU8SSt2N8LnHm0GQ9bSCxBmT7Fzh14ChabLbMB9jr1fHKAVa8lpPSp7lmKSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvhcLRDp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yC6S1QBc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F01EC2BBFC;
-	Tue, 30 Apr 2024 10:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvhcLRDp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6973EC2BBFC;
+	Tue, 30 Apr 2024 10:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473769;
-	bh=hAy7FjLwADrv2uPEm3Nt5fkA/tSsAE3YTCrmRXVOOFw=;
+	s=korg; t=1714473772;
+	bh=YGTLPgDFSMmZc49bhfn5cbmK8e3H7l1PzpynqRn5yGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yC6S1QBc7iT6QVhvMFRVZZYbQDIjZkBtrHr8NmAMwL8H5ytNRbzD+cu+UOeHVSfUn
-	 EvbDHcouGC5xV3VGSyhhA2YXGQ3WAKzIq/KFDqD6rBMCurcbiY2a35Qp7tYucID3+g
-	 N/hy19GXn+3+vkX6Dg0x4GGmUevsQCdH4m2y6AWs=
+	b=AvhcLRDp5D2hFIYGkAYSaQ7wW7Ur5YFjfkxGkrYfOAOKjZ2ot6ewa/MA7V3Hch+6E
+	 CDjXxtTTd6ABR3jcat+ndStThZ0L/Oskew50bBBpf8XXxgcA7XouWk16sVg4yqwacf
+	 0bRG/jX7eZF+CF5vJOsnC8FUqAhaV8qyi2zXOW0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 4.19 33/77] fs: sysfs: Fix reference leak in sysfs_break_active_protection()
-Date: Tue, 30 Apr 2024 12:39:12 +0200
-Message-ID: <20240430103042.109430405@linuxfoundation.org>
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
+	stable@kernel.org
+Subject: [PATCH 4.19 16/77] Revert "tracing/trigger: Fix to return error if failed to alloc snapshot"
+Date: Tue, 30 Apr 2024 12:38:55 +0200
+Message-ID: <20240430103041.603847893@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -51,42 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 
-commit a90bca2228c0646fc29a72689d308e5fe03e6d78 upstream.
+This reverts commit bcf4a115a5068f3331fafb8c176c1af0da3d8b19 which is
+commit 0958b33ef5a04ed91f61cef4760ac412080c4e08 upstream.
 
-The sysfs_break_active_protection() routine has an obvious reference
-leak in its error path.  If the call to kernfs_find_and_get() fails then
-kn will be NULL, so the companion sysfs_unbreak_active_protection()
-routine won't get called (and would only cause an access violation by
-trying to dereference kn->parent if it was called).  As a result, the
-reference to kobj acquired at the start of the function will never be
-released.
+The change has an incorrect assumption about the return value because
+in the current stable trees for versions 5.15 and before, the following
+commit responsible for making 0 a success value is not present:
+b8cc44a4d3c1 ("tracing: Remove logic for registering multiple event triggers at a time")
 
-Fix the leak by adding an explicit kobject_put() call when kn is NULL.
+The return value should be 0 on failure in the current tree, because in
+the functions event_trigger_callback() and event_enable_trigger_func(),
+we have:
 
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 2afc9166f79b ("scsi: sysfs: Introduce sysfs_{un,}break_active_protection()")
-Cc: Bart Van Assche <bvanassche@acm.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/8a4d3f0f-c5e3-4b70-a188-0ca433f9e6f9@rowland.harvard.edu
+	ret = cmd_ops->reg(glob, trigger_ops, trigger_data, file);
+	/*
+	 * The above returns on success the # of functions enabled,
+	 * but if it didn't find any functions it returns zero.
+	 * Consider no functions a failure too.
+	 */
+	if (!ret) {
+		ret = -ENOENT;
+
+Cc: stable@kernel.org # 5.15, 5.10, 5.4, 4.19
+Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/sysfs/file.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/trace_events_trigger.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/sysfs/file.c
-+++ b/fs/sysfs/file.c
-@@ -429,6 +429,8 @@ struct kernfs_node *sysfs_break_active_p
- 	kn = kernfs_find_and_get(kobj->sd, attr->name);
- 	if (kn)
- 		kernfs_break_active_protection(kn);
-+	else
-+		kobject_put(kobj);
- 	return kn;
+--- a/kernel/trace/trace_events_trigger.c
++++ b/kernel/trace/trace_events_trigger.c
+@@ -1133,10 +1133,8 @@ register_snapshot_trigger(char *glob, st
+ 			  struct event_trigger_data *data,
+ 			  struct trace_event_file *file)
+ {
+-	int ret = tracing_alloc_snapshot_instance(file->tr);
+-
+-	if (ret < 0)
+-		return ret;
++	if (tracing_alloc_snapshot_instance(file->tr) != 0)
++		return 0;
+ 
+ 	return register_trigger(glob, ops, data, file);
  }
- EXPORT_SYMBOL_GPL(sysfs_break_active_protection);
 
 
