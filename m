@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17567464;
-	Tue, 30 Apr 2024 10:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA13E7464;
+	Tue, 30 Apr 2024 10:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474700; cv=none; b=l7Z9vWBgGqpS5L76wA72f1QhjM18CDXm+JN0sWj0KBcbQuHbrOhBjgdPAwPG07lD3HDp0rQcBLnmvxCHHveTFW0uU3N85cbEI2JeyOJOf6J2xBmD1Gf+9h16XFJ0iTjM8XTngQHGmqWN7sI1QoPwF3OrAvZez8yH/8Cgc2O4el4=
+	t=1714474704; cv=none; b=mp0wmfz/cW7E7G+Kk/cUeLpIpfAplj/j0FcgjQNadQrBgJK/bMZvy0tR0DHMmHgWGJxqlcZ6xEw5QAog0aRNRIOGuBP9f5kYFhyxc1Qqlcs8jayIdex8rRUKCTdkbLX7iiDHLjtZDzINHsZ69ioUv2epMqrFbeM8krfpwsogyU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474700; c=relaxed/simple;
-	bh=VaY7pxNAYLE4M6wueR1n0yDgvE3bSa+i00vZHnP52/w=;
+	s=arc-20240116; t=1714474704; c=relaxed/simple;
+	bh=SCRCmc9iv0El1vUKO1fTXmCmBxRfM7bLYBkwrk4j2ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TwLYdlGPLh6pUc1Qle9x2FI+79IlI+0/QI6h9y3sTu0Q/yKfvDsbK+H89J0leLGJUeJIEUFGLOQYDb5gR0gyaSmcRWFKCOz0x1s/38PWQ/aPUYe1aaGy0p58aHKKV0g21z4wHkV0JwuXfPKaTUdiYMeZWgfE1gI9BpspE1joIcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/V4C12b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gPp3b/FX6Kk68wyG4NrlM5Gp8XqjQtHQAWlqH00zw1ztiDagIGADrXUe3KXLGky5XoFDtbOgGBo3P0Rqvnea1DB3T28STKL7JkJcxcncfEajfIFBKPvBdOjER3O9129US6pusCGYO+g88gD4P9VWhT6l5HE5jSUKXHG1HMeQgYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SYsB/PVl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/V4C12b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDBDC2BBFC;
-	Tue, 30 Apr 2024 10:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SYsB/PVl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59681C2BBFC;
+	Tue, 30 Apr 2024 10:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474700;
-	bh=VaY7pxNAYLE4M6wueR1n0yDgvE3bSa+i00vZHnP52/w=;
+	s=korg; t=1714474703;
+	bh=SCRCmc9iv0El1vUKO1fTXmCmBxRfM7bLYBkwrk4j2ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C/V4C12bLSp+SqwOPO8IXrZhcj0UOkD7Q1zslSfg8WD3PMFniOGZcYOODUqZQlbF8
-	 yPZsuMw2ggUdjuuuVvSJBuuJTRP4O0Q4LAAcZRUFyf8OUSbeE5tyBtz0mY5RR1ycVp
-	 Alg4eciG6NwKWLa8HIfEktp+iMA+4x58Rloun6j0=
+	b=SYsB/PVlEGRF9NdkZZQf8InAsI6cKfuqi7lOKWOzejyXGoPVgkqhxxGR65FEzdKPK
+	 mqEo+QIo3mXJIW7+LPfoi0fnsaGlZxDHyJNl2Uow1EIYKNjNTLmcx8At7NOEOcAZgY
+	 YYoPxKCksAKHzjCdIF6aWK8dkq4jB8Ys8Nn5Re0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a6a4b5bb3da165594cff@syzkaller.appspotmail.com,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 5.10 001/138] batman-adv: Avoid infinite loop trying to resize local TT
-Date: Tue, 30 Apr 2024 12:38:06 +0200
-Message-ID: <20240430103049.469038967@linuxfoundation.org>
+	David Ahern <dsahern@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 010/138] ipv6: fib: hide unused pn variable
+Date: Tue, 30 Apr 2024 12:38:15 +0200
+Message-ID: <20240430103049.729902832@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -51,68 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit b1f532a3b1e6d2e5559c7ace49322922637a28aa upstream.
+[ Upstream commit 74043489fcb5e5ca4074133582b5b8011b67f9e7 ]
 
-If the MTU of one of an attached interface becomes too small to transmit
-the local translation table then it must be resized to fit inside all
-fragments (when enabled) or a single packet.
+When CONFIG_IPV6_SUBTREES is disabled, the only user is hidden, causing
+a 'make W=1' warning:
 
-But if the MTU becomes too low to transmit even the header + the VLAN
-specific part then the resizing of the local TT will never succeed. This
-can for example happen when the usable space is 110 bytes and 11 VLANs are
-on top of batman-adv. In this case, at least 116 byte would be needed.
-There will just be an endless spam of
+net/ipv6/ip6_fib.c: In function 'fib6_add':
+net/ipv6/ip6_fib.c:1388:32: error: variable 'pn' set but not used [-Werror=unused-but-set-variable]
 
-   batman_adv: batadv0: Forced to purge local tt entries to fit new maximum fragment MTU (110)
+Add another #ifdef around the variable declaration, matching the other
+uses in this file.
 
-in the log but the function will never finish. Problem here is that the
-timeout will be halved all the time and will then stagnate at 0 and
-therefore never be able to reduce the table even more.
-
-There are other scenarios possible with a similar result. The number of
-BATADV_TT_CLIENT_NOPURGE entries in the local TT can for example be too
-high to fit inside a packet. Such a scenario can therefore happen also with
-only a single VLAN + 7 non-purgable addresses - requiring at least 120
-bytes.
-
-While this should be handled proactively when:
-
-* interface with too low MTU is added
-* VLAN is added
-* non-purgeable local mac is added
-* MTU of an attached interface is reduced
-* fragmentation setting gets disabled (which most likely requires dropping
-  attached interfaces)
-
-not all of these scenarios can be prevented because batman-adv is only
-consuming events without the the possibility to prevent these actions
-(non-purgable MAC address added, MTU of an attached interface is reduced).
-It is therefore necessary to also make sure that the code is able to handle
-also the situations when there were already incompatible system
-configuration are present.
-
-Cc: stable@vger.kernel.org
-Fixes: a19d3d85e1b8 ("batman-adv: limit local translation table max size")
-Reported-by: syzbot+a6a4b5bb3da165594cff@syzkaller.appspotmail.com
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 66729e18df08 ("[IPV6] ROUTE: Make sure we have fn->leaf when adding a node on subtree.")
+Link: https://lore.kernel.org/netdev/20240322131746.904943-1-arnd@kernel.org/
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240408074219.3030256-1-arnd@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/translation-table.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ip6_fib.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -4188,7 +4188,7 @@ void batadv_tt_local_resize_to_mtu(struc
+diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
+index d70783283a417..b79e571e5a863 100644
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -1373,7 +1373,10 @@ int fib6_add(struct fib6_node *root, struct fib6_info *rt,
+ 	     struct nl_info *info, struct netlink_ext_ack *extack)
+ {
+ 	struct fib6_table *table = rt->fib6_table;
+-	struct fib6_node *fn, *pn = NULL;
++	struct fib6_node *fn;
++#ifdef CONFIG_IPV6_SUBTREES
++	struct fib6_node *pn = NULL;
++#endif
+ 	int err = -ENOMEM;
+ 	int allow_create = 1;
+ 	int replace_required = 0;
+@@ -1397,9 +1400,9 @@ int fib6_add(struct fib6_node *root, struct fib6_info *rt,
+ 		goto out;
+ 	}
  
- 	spin_lock_bh(&bat_priv->tt.commit_lock);
++#ifdef CONFIG_IPV6_SUBTREES
+ 	pn = fn;
  
--	while (true) {
-+	while (timeout) {
- 		table_size = batadv_tt_local_table_transmit_size(bat_priv);
- 		if (packet_size_max >= table_size)
- 			break;
+-#ifdef CONFIG_IPV6_SUBTREES
+ 	if (rt->fib6_src.plen) {
+ 		struct fib6_node *sn;
+ 
+-- 
+2.43.0
+
 
 
