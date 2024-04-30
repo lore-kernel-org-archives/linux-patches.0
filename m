@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE3F17107A;
-	Tue, 30 Apr 2024 12:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1790E171640;
+	Tue, 30 Apr 2024 13:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714480851; cv=none; b=h5AkGyiMZVdkmKZC9MNkv5+iZ6g75fHuVQDfXVdJnSEPBK5RmSNyzUPosLQzjYG7qC3ax9+hvp6vZEQp5kncgL2DitevEE4q/s9Mg28HeRHm9z8eZjrAzVMWx1OWvCtbQJ8DBXeOLbX+qJM41WoQuRaT1AzQbyT/GcuggHLvjQg=
+	t=1714484314; cv=none; b=ctnYhg1UKQOrC8tVVmAY9PSeuxN5Wc7ugAxVkRCGUuTW77Qk/wArt6MkXjZVN6Qsbu3ZACuq+vHD1PVjzBOzS3BMLN72U34JsqD+CIMTvNM9QwkyopKRLSJrrHEwQCsp1OTGTB8b6pQ+9lEJGnj/lw31qOozRNUqDxHjeTft7C8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714480851; c=relaxed/simple;
-	bh=lKF5yYwf45tf/pLmCzzpRrx+avgtdDcGZOBBNdlOw9o=;
+	s=arc-20240116; t=1714484314; c=relaxed/simple;
+	bh=85423548L6PkpsrwZWJTzPuUBKlJs5S0cRwmVvzOFMA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aNsLL7ukOcIF43rZ41p6OE9zCvYrHJo2WoQoPuQxoIsyp3ZlMKMwxlWdvWCMXFF/AGxV8MgBGTVDD3a+R7cSqGB6TbbqcDYUD9PGmg8aJD8ad8zPOVSH1qKAqtCZBL9YQLgzJoE1fJ7WDez4B81v+VkzxJu3Ya+jlwW7rsi2oHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ky4Qyp6; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=gGCbErArsWH9AJXu2RvAr3W1Ihj7+EPydduZ4FNumJrx06qXHO12MsYHVIVHs19UxCBdy+TZ1Q0YcXpHBicrK6IwYSkb21dgnkKCFESMC6I2UJQ3HxmU2Boz8bTUBXYSX0N4rBgfB7vOzQ7b4h0stxUm86vZvSZi4ijfPTaL1I0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3rsOOIE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ky4Qyp6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0549C2BBFC;
-	Tue, 30 Apr 2024 12:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3rsOOIE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B3DC2BBFC;
+	Tue, 30 Apr 2024 13:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714480850;
-	bh=lKF5yYwf45tf/pLmCzzpRrx+avgtdDcGZOBBNdlOw9o=;
+	s=korg; t=1714484313;
+	bh=85423548L6PkpsrwZWJTzPuUBKlJs5S0cRwmVvzOFMA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=2ky4Qyp61k6tz0U+Zau6xqQPvPj+s6oAO8++qtRfhQ+KS/auhA2nFpo0ptAfS9VtG
-	 O6rXPURcPVf06Gw4NnIpb2G4ZVc37ZUWEqH60zmMxkry0Le5hMz+MX88Kg36DbRaXM
-	 WFvGrmmcwsIcqklZBpOKWb5ORr3FgdMBq2UDdMv4=
-Date: Tue, 30 Apr 2024 14:40:47 +0200
+	b=B3rsOOIEMN/S7NDgWQFYK0GTXRvljckyWMXgkxsV0Rs7Xe2cC2w6KrpNR//3abj+B
+	 wh3p89w6cE2aGW22aPWGJg4ClWln1e7LezSKNlw8BwsHZ5spDEwFKp16yXOvpP8bxw
+	 KNQ49qoqFb2mE1MJKY5PZ1iqJFaASvE4pnW6f6Q0=
+Date: Tue, 30 Apr 2024 15:38:30 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: John Ogness <john.ogness@linutronix.de>
+To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 4.19 53/77] serial: core: Provide port lock wrappers
-Message-ID: <2024043021-dried-ferocious-dd3c@gregkh>
-References: <20240430103041.111219002@linuxfoundation.org>
- <20240430103042.703277875@linuxfoundation.org>
- <87y18v5dlo.fsf@jogness.linutronix.de>
- <87r0en59vg.fsf@jogness.linutronix.de>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Darren Kenny <darren.kenny@oracle.com>
+Subject: Re: [PATCH 5.4 000/107] 5.4.275-rc1 review
+Message-ID: <2024043018-freely-outscore-38c6@gregkh>
+References: <20240430103044.655968143@linuxfoundation.org>
+ <c114e341-be56-4e30-9e55-2b08f983c916@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,29 +47,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87r0en59vg.fsf@jogness.linutronix.de>
+In-Reply-To: <c114e341-be56-4e30-9e55-2b08f983c916@oracle.com>
 
-On Tue, Apr 30, 2024 at 02:16:43PM +0206, John Ogness wrote:
-> On 2024-04-30, John Ogness <john.ogness@linutronix.de> wrote:
-> > On 2024-04-30, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> >> 4.19-stable review patch.  If anyone has any objections, please let me know.
-> >
-> > The port lock wrappers are only needed for the new threaded/atomic
-> > consoles that are still being developed for mainline. I would not
-> > recommend backporting all of that work when it is done and therefore I
-> > see no reason to backport the port lock wrappers.
+On Tue, Apr 30, 2024 at 05:40:44PM +0530, Harshit Mogalapalli wrote:
+> Hi Greg,
 > 
-> I took a look at the full series and noticed you are pulling in some
-> uart fixes that are using the port lock wrappers. In that case I suppose
-> it makes sense to include the port lock wrappers.
 > 
-> So I am fine with this going back to 4.19. It has no functional change
-> anyway.
+> > Responses should be made by Thu, 02 May 2024 10:30:27 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.275-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> > and the diffstat can be found below.
+> > 
+> ...
+> 
+> > Ikjoon Jang <ikjn@chromium.org>
+> >      arm64: dts: mediatek: mt8183: Add power-domains properity to mfgcfg
+> > 
+> BUILDSTDERR: Error: arch/arm64/boot/dts/mediatek/mt8183.dtsi:580.26-27
+> syntax error
+> BUILDSTDERR: FATAL ERROR: Unable to parse input tree
+> BUILDSTDERR: make[2]: *** [scripts/Makefile.lib:285:
+> arch/arm64/boot/dts/mediatek/mt8183-evb.dtb] Error 1
+> BUILDSTDERR: make[1]: *** [scripts/Makefile.build:497:
+> arch/arm64/boot/dts/mediatek] Error 2
+> BUILDSTDERR: make: *** [Makefile:1290: dtbs] Error 2
+> 
+> aarch64 builds are failing with the above error
 
-Yes, that's why this was taken, you beat me to the response :)
-
-This makes backporting things easier.
-
-thanks for the review!
+Thanks, will go drop it from 5.10 and 5.4 queues and push out a -rc2.
 
 greg k-h
