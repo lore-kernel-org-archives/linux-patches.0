@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDB112C490;
-	Tue, 30 Apr 2024 10:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDC712CD99;
+	Tue, 30 Apr 2024 10:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474456; cv=none; b=JrpaxRh+fjajRUMymWltU+8FeHevPzizqqjGZGfUpD8NuQmpOUOAdG1uXSWEyg7pLQoUGorfGhSBTz3cZRVe2rCUBFi3RxcXC3amHP3cFm8Fl6Ku6wWP51h0gQafSe7NXenY/L4tScDM6Cvd2CzRm61aZfQyiHEjQVhBSZYKTrg=
+	t=1714474460; cv=none; b=gU3Ur4uAkxDceG8ftzn+5yfZIIJJIMt2I4kOGJn/oqVB7v+N9aq7U1bxK7IHsCob/hDGEtYgbp9BiejAeKYvGuynJtS8ULCiLAoYDIxBlF0jv9NY2k7tsO1NgvkQDKoxccavzB9VPv1E1OAMqq/BLITOKd6UT9KN8mbEoVscFnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474456; c=relaxed/simple;
-	bh=hoCHWzuuQrhPPA+WtiyBDPcMLiMz97454kIdaEvUA6Q=;
+	s=arc-20240116; t=1714474460; c=relaxed/simple;
+	bh=VO1eHLIUEVVVaD7kzKfGi8fHpLBqaAlQJqpEB4ZclJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s/U6hitMQkLjKyXe90wl+M+mp1KXoRoP8rid0oR1YceB2lsbxR8jkH+pOY8dMx/kLEY/TSe3v8k5sFd/1tQwJJrofWc6axGSaTMA69SZuQ0Qg1RLRi3ZVBNaNv0/tTJvPtfHGL/9q2qm0hTjF42bjOwgsiB8in4pF7felZXKd/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMpvKk3t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jDDDOBk1ARm8OZm1uKUfA09K+EHO212XXQxW77aAJEHDxBnAVlP0yjMXZKIuIzmMRVALcnSKgW5vrI1C9hrvbUkyp1Wl0QU7cPBxsOJjAZWs6uSVn12xO6++KMcR/GB1OsLhGiXNYuqpqrGOGbD9qOm3n4IVwKWQS2yjptsEBRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2U6k2acn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMpvKk3t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDD7C2BBFC;
-	Tue, 30 Apr 2024 10:54:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2U6k2acn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423F0C2BBFC;
+	Tue, 30 Apr 2024 10:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474456;
-	bh=hoCHWzuuQrhPPA+WtiyBDPcMLiMz97454kIdaEvUA6Q=;
+	s=korg; t=1714474459;
+	bh=VO1eHLIUEVVVaD7kzKfGi8fHpLBqaAlQJqpEB4ZclJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DMpvKk3tH12Mg2k4V63AWQ83SdCfE1xrPuqIS3BqWFvLTTTm+R0891TvXD+3JcMIn
-	 fscmwSn4lWaSZi359EHNRnKi+AEfRvftAgUucbv1jMqigdUmBvwf3d0ISJieN+8Z25
-	 QnNDK3e0l6LCrRalORiexOsiIueuCz9mYaNSJ8A4=
+	b=2U6k2acnqTIs4yTy8/kj3T8WD0jtnCTng+3TGhBMb900jzNdwujVHrt0Cyr/xwBrl
+	 lHaeyTREx9dHSBDRKzYtK8BCM7tvTF+TrKBE7ziUnXyRYo0gbIinxXgY4kHDD+9knr
+	 +uy04UBt7a/NQnxDi8mEMwNDtjhtnfn/l1EqDduk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Chris Oo <cho@microsoft.com>
-Subject: [PATCH 6.8 162/228] x86/tdx: Preserve shared bit on mprotect()
-Date: Tue, 30 Apr 2024 12:39:00 +0200
-Message-ID: <20240430103108.482787659@linuxfoundation.org>
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Sean Christopherson <seanjc@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>
+Subject: [PATCH 6.8 163/228] cpu: Re-enable CPU mitigations by default for !X86 architectures
+Date: Tue, 30 Apr 2024 12:39:01 +0200
+Message-ID: <20240430103108.511314772@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -54,66 +54,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit a0a8d15a798be4b8f20aca2ba91bf6b688c6a640 upstream.
+commit fe42754b94a42d08cf9501790afc25c4f6a5f631 upstream.
 
-The TDX guest platform takes one bit from the physical address to
-indicate if the page is shared (accessible by VMM). This bit is not part
-of the physical_mask and is not preserved during mprotect(). As a
-result, the 'shared' bit is lost during mprotect() on shared mappings.
+Rename x86's to CPU_MITIGATIONS, define it in generic code, and force it
+on for all architectures exception x86.  A recent commit to turn
+mitigations off by default if SPECULATION_MITIGATIONS=n kinda sorta
+missed that "cpu_mitigations" is completely generic, whereas
+SPECULATION_MITIGATIONS is x86-specific.
 
-_COMMON_PAGE_CHG_MASK specifies which PTE bits need to be preserved
-during modification. AMD includes 'sme_me_mask' in the define to
-preserve the 'encrypt' bit.
+Rename x86's SPECULATIVE_MITIGATIONS instead of keeping both and have it
+select CPU_MITIGATIONS, as having two configs for the same thing is
+unnecessary and confusing.  This will also allow x86 to use the knob to
+manage mitigations that aren't strictly related to speculative
+execution.
 
-To cover both Intel and AMD cases, include 'cc_mask' in
-_COMMON_PAGE_CHG_MASK instead of 'sme_me_mask'.
+Use another Kconfig to communicate to common code that CPU_MITIGATIONS
+is already defined instead of having x86's menu depend on the common
+CPU_MITIGATIONS.  This allows keeping a single point of contact for all
+of x86's mitigations, and it's not clear that other architectures *want*
+to allow disabling mitigations at compile-time.
 
-Reported-and-tested-by: Chris Oo <cho@microsoft.com>
-
-Fixes: 41394e33f3a0 ("x86/tdx: Extend the confidential computing API to support TDX guests")
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Fixes: f337a6a21e2f ("x86/cpu: Actually turn off mitigations by default for SPECULATION_MITIGATIONS=n")
+Closes: https://lkml.kernel.org/r/20240413115324.53303a68%40canb.auug.org.au
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Reported-by: Michael Ellerman <mpe@ellerman.id.au>
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240424082035.4092071-1-kirill.shutemov%40linux.intel.com
+Link: https://lore.kernel.org/r/20240420000556.2645001-2-seanjc@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/coco.h          |    1 +
- arch/x86/include/asm/pgtable_types.h |    3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ arch/Kconfig     |    8 ++++++++
+ arch/x86/Kconfig |   11 ++++++-----
+ kernel/cpu.c     |    4 ++--
+ 3 files changed, 16 insertions(+), 7 deletions(-)
 
---- a/arch/x86/include/asm/coco.h
-+++ b/arch/x86/include/asm/coco.h
-@@ -24,6 +24,7 @@ u64 cc_mkdec(u64 val);
- void cc_random_init(void);
- #else
- #define cc_vendor (CC_VENDOR_NONE)
-+static const u64 cc_mask = 0;
+--- a/arch/Kconfig
++++ b/arch/Kconfig
+@@ -9,6 +9,14 @@
+ #
+ source "arch/$(SRCARCH)/Kconfig"
  
- static inline u64 cc_mkenc(u64 val)
- {
---- a/arch/x86/include/asm/pgtable_types.h
-+++ b/arch/x86/include/asm/pgtable_types.h
-@@ -148,7 +148,7 @@
- #define _COMMON_PAGE_CHG_MASK	(PTE_PFN_MASK | _PAGE_PCD | _PAGE_PWT |	\
- 				 _PAGE_SPECIAL | _PAGE_ACCESSED |	\
- 				 _PAGE_DIRTY_BITS | _PAGE_SOFT_DIRTY |	\
--				 _PAGE_DEVMAP | _PAGE_ENC | _PAGE_UFFD_WP)
-+				 _PAGE_DEVMAP | _PAGE_CC | _PAGE_UFFD_WP)
- #define _PAGE_CHG_MASK	(_COMMON_PAGE_CHG_MASK | _PAGE_PAT)
- #define _HPAGE_CHG_MASK (_COMMON_PAGE_CHG_MASK | _PAGE_PSE | _PAGE_PAT_LARGE)
++config ARCH_CONFIGURES_CPU_MITIGATIONS
++	bool
++
++if !ARCH_CONFIGURES_CPU_MITIGATIONS
++config CPU_MITIGATIONS
++	def_bool y
++endif
++
+ menu "General architecture-dependent options"
  
-@@ -173,6 +173,7 @@ enum page_cache_mode {
+ config ARCH_HAS_SUBPAGE_FAULTS
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -62,6 +62,7 @@ config X86
+ 	select ACPI_HOTPLUG_CPU			if ACPI_PROCESSOR && HOTPLUG_CPU
+ 	select ARCH_32BIT_OFF_T			if X86_32
+ 	select ARCH_CLOCKSOURCE_INIT
++	select ARCH_CONFIGURES_CPU_MITIGATIONS
+ 	select ARCH_CORRECT_STACKTRACE_ON_KRETPROBE
+ 	select ARCH_ENABLE_HUGEPAGE_MIGRATION if X86_64 && HUGETLB_PAGE && MIGRATION
+ 	select ARCH_ENABLE_MEMORY_HOTPLUG if X86_64
+@@ -2467,17 +2468,17 @@ config PREFIX_SYMBOLS
+ 	def_bool y
+ 	depends on CALL_PADDING && !CFI_CLANG
+ 
+-menuconfig SPECULATION_MITIGATIONS
+-	bool "Mitigations for speculative execution vulnerabilities"
++menuconfig CPU_MITIGATIONS
++	bool "Mitigations for CPU vulnerabilities"
+ 	default y
+ 	help
+-	  Say Y here to enable options which enable mitigations for
+-	  speculative execution hardware vulnerabilities.
++	  Say Y here to enable options which enable mitigations for hardware
++	  vulnerabilities (usually related to speculative execution).
+ 
+ 	  If you say N, all mitigations will be disabled. You really
+ 	  should know what you are doing to say so.
+ 
+-if SPECULATION_MITIGATIONS
++if CPU_MITIGATIONS
+ 
+ config PAGE_TABLE_ISOLATION
+ 	bool "Remove the kernel mapping in user mode"
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -3207,8 +3207,8 @@ enum cpu_mitigations {
  };
- #endif
  
-+#define _PAGE_CC		(_AT(pteval_t, cc_mask))
- #define _PAGE_ENC		(_AT(pteval_t, sme_me_mask))
+ static enum cpu_mitigations cpu_mitigations __ro_after_init =
+-	IS_ENABLED(CONFIG_SPECULATION_MITIGATIONS) ? CPU_MITIGATIONS_AUTO :
+-						     CPU_MITIGATIONS_OFF;
++	IS_ENABLED(CONFIG_CPU_MITIGATIONS) ? CPU_MITIGATIONS_AUTO :
++					     CPU_MITIGATIONS_OFF;
  
- #define _PAGE_CACHE_MASK	(_PAGE_PWT | _PAGE_PCD | _PAGE_PAT)
+ static int __init mitigations_parse_cmdline(char *arg)
+ {
 
 
