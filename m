@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D8A12C46D;
-	Tue, 30 Apr 2024 10:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E36412C46D;
+	Tue, 30 Apr 2024 10:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474022; cv=none; b=b4D0lmzX07W0ERk2nuBvKYprYuBnk1cOJ1Sad/2iMz/jE4rIyVZwx50iU2Zm3gIcnN0xULKIeCQNaCxYifP5tksB3hpDSTcEUlO5/Tx3RF60c82O6I3nVCIf+DazZODX7OphQxhrfw+6pfrKmEU+HSb2d+AV47Orgzl7Ojrw5no=
+	t=1714474025; cv=none; b=FyWIAeHdJpXJGi42imfBPy8YVu+fqiAG7+L1b1xSk06EQka3b9pf6dffwiTnrfOB5c7OtRvioy1q5lJT1HG34FW9/zwJ3i8PBrp2kv0tcBQjHrGDuHU1a5Wm9uHw9gWH/pXuQF25fS9SN75XMtNS/emJxwkKv/v2hEzmzZLhgUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474022; c=relaxed/simple;
-	bh=L1ppSyMdUApVPFpAYDkAgKVH3Tu0tkw7gL7YVQguauY=;
+	s=arc-20240116; t=1714474025; c=relaxed/simple;
+	bh=x3/stRiWdxfNNuxoYQ4188LhRUWAEqzAfDaaB9z7Wvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jkRiw+M3R2U42JqgV4Qn0yFG2N2BEUJNbn6H+QZmJUqxy0sjX4Rrgwn3uCDtAaBBZ1lKkONVQE0O261mB6UP6MAdfew2kLOqLrQS65sGJjtprzxbx3fLPYvUgT3fiV9DLt9YMycySv+jcGcy6bHaSs/z/K9EuoPLw+nzOgrdYFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrENPTKl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CGkDMykBJ9eo+j9evre1VHCKd+CGKhVlxscTmK7SygBIO1SAPgpk0+5tXIpkOn3TQc1DFllzFkRav0uUfLECejFehv0Vb40pjkLhW3nr4xmH1H+uMpYcXYYCdgVavHQwjoNr9yvaeLHR2nm/8zquPOQqu/hFidTbmfCxeUV77YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iXNLAwAF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrENPTKl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8A5C2BBFC;
-	Tue, 30 Apr 2024 10:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iXNLAwAF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F9DC2BBFC;
+	Tue, 30 Apr 2024 10:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474021;
-	bh=L1ppSyMdUApVPFpAYDkAgKVH3Tu0tkw7gL7YVQguauY=;
+	s=korg; t=1714474025;
+	bh=x3/stRiWdxfNNuxoYQ4188LhRUWAEqzAfDaaB9z7Wvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KrENPTKl5fvLRin51srDr7ooZ8p3aKouThVV9aEdiAY6Y5LCxFhpt/6cgEFEpTDlw
-	 sMDU5iZa+ztOCb3qph3D9L1FDacUjrOlJBWXhgxWhu0ICYiz2oLebp6f+X+I1pt7Mm
-	 mxzjErgkVd35W2SaT8p5dpY/VlT4sxy8cfrXd9eE=
+	b=iXNLAwAFUeBhw5bNcCfBF1M99++m8cP7MnDyoHm/zv+Dagkf1G8tmIOLIBB6AmCKG
+	 mR7m2wGfJQ1USJq5EAl35wK4tvR98g67nCVJWlTDyer9sUl1pHcErQlEqxxCQEDXa6
+	 78KmwAqH7czsSDaBMLcQiBDAdSi06zX+KBXxDDnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 037/228] arm64: dts: qcom: sc8180x: Fix ss_phy_irq for secondary USB controller
-Date: Tue, 30 Apr 2024 12:36:55 +0200
-Message-ID: <20240430103104.886137896@linuxfoundation.org>
+Subject: [PATCH 6.8 038/228] gpio: tangier: Use correct type for the IRQ chip data
+Date: Tue, 30 Apr 2024 12:36:56 +0200
+Message-ID: <20240430103104.914600439@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -51,70 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilian Luz <luzmaximilian@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit ecda8309098402f878c96184f29a1b7ec682d772 ]
+[ Upstream commit 7d045025a24b6336d444d359bd4312f351d017f9 ]
 
-The ACPI DSDT of the Surface Pro X (SQ2) specifies the interrupts for
-the secondary UBS controller as
+IRQ chip data contains a pointer to the GPIO chip. Luckily we have
+the pointers the same, but strictly speaking it's not guaranteed.
+Even though, still better to fix this.
 
-    Name (_CRS, ResourceTemplate ()
-    {
-        Interrupt (ResourceConsumer, Level, ActiveHigh, Shared, ,, )
-        {
-            0x000000AA,
-        }
-        Interrupt (ResourceConsumer, Level, ActiveHigh, SharedAndWake, ,, )
-        {
-            0x000000A7,     // hs_phy_irq: &intc GIC_SPI 136
-        }
-        Interrupt (ResourceConsumer, Level, ActiveHigh, SharedAndWake, ,, )
-        {
-            0x00000228,     // ss_phy_irq: &pdc 40
-        }
-        Interrupt (ResourceConsumer, Edge, ActiveHigh, SharedAndWake, ,, )
-        {
-            0x0000020A,     // dm_hs_phy_irq: &pdc 10
-        }
-        Interrupt (ResourceConsumer, Edge, ActiveHigh, SharedAndWake, ,, )
-        {
-            0x0000020B,     // dp_hs_phy_irq: &pdc 11
-        }
-    })
-
-Generally, the interrupts above 0x200 map to the PDC interrupts (as used
-in the devicetree) as ACPI_NUMBER - 0x200. Note that this lines up with
-dm_hs_phy_irq and dp_hs_phy_irq (as well as the interrupts for the
-primary USB controller).
-
-Based on the snippet above, ss_phy_irq should therefore be PDC 40 (=
-0x28) and not PDC 7. The latter is according to ACPI instead used as
-ss_phy_irq for port 0 of the multiport USB controller). Fix this by
-setting ss_phy_irq to '&pdc 40'.
-
-Fixes: b080f53a8f44 ("arm64: dts: qcom: sc8180x: Add remoteprocs, wifi and usb nodes")
-Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20240328022224.336938-1-luzmaximilian@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: ccf6fd6dcc86 ("gpio: merrifield: Introduce GPIO driver to support Merrifield")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-tangier.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index c0dd44f146748..b481c15b255ce 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -2641,7 +2641,7 @@
- 			resets = <&gcc GCC_USB30_SEC_BCR>;
- 			power-domains = <&gcc USB30_SEC_GDSC>;
- 			interrupts-extended = <&intc GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
--					      <&pdc 7 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&pdc 40 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&pdc 10 IRQ_TYPE_EDGE_BOTH>,
- 					      <&pdc 11 IRQ_TYPE_EDGE_BOTH>;
- 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+diff --git a/drivers/gpio/gpio-tangier.c b/drivers/gpio/gpio-tangier.c
+index b75e0b12087ac..4b29abafecf6a 100644
+--- a/drivers/gpio/gpio-tangier.c
++++ b/drivers/gpio/gpio-tangier.c
+@@ -195,7 +195,8 @@ static int tng_gpio_set_config(struct gpio_chip *chip, unsigned int offset,
+ 
+ static void tng_irq_ack(struct irq_data *d)
+ {
+-	struct tng_gpio *priv = irq_data_get_irq_chip_data(d);
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct tng_gpio *priv = gpiochip_get_data(gc);
+ 	irq_hw_number_t gpio = irqd_to_hwirq(d);
+ 	void __iomem *gisr;
+ 	u8 shift;
+@@ -227,7 +228,8 @@ static void tng_irq_unmask_mask(struct tng_gpio *priv, u32 gpio, bool unmask)
+ 
+ static void tng_irq_mask(struct irq_data *d)
+ {
+-	struct tng_gpio *priv = irq_data_get_irq_chip_data(d);
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct tng_gpio *priv = gpiochip_get_data(gc);
+ 	irq_hw_number_t gpio = irqd_to_hwirq(d);
+ 
+ 	tng_irq_unmask_mask(priv, gpio, false);
+@@ -236,7 +238,8 @@ static void tng_irq_mask(struct irq_data *d)
+ 
+ static void tng_irq_unmask(struct irq_data *d)
+ {
+-	struct tng_gpio *priv = irq_data_get_irq_chip_data(d);
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct tng_gpio *priv = gpiochip_get_data(gc);
+ 	irq_hw_number_t gpio = irqd_to_hwirq(d);
+ 
+ 	gpiochip_enable_irq(&priv->chip, gpio);
 -- 
 2.43.0
 
