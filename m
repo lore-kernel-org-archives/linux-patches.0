@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0431E50A;
-	Tue, 30 Apr 2024 11:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C719D1E50A;
+	Tue, 30 Apr 2024 11:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475229; cv=none; b=JWRJdZLrOkcD08JerlnDtKHrj46NygtF0+nMxYsMYnsKSH2ttQ5rjO3SRXF6GACHxZ+ZY54lvMj176FbsgAZOLOS+K4/C7IL8i3gy7aCmIRt7i7nxsq4rWcxgjJo0oscUNayKj/UziuGHJnYPedALhS47pzGZrrM+jzio9XiCuA=
+	t=1714475232; cv=none; b=AzuwPhteSP9Gnvxoy4VfjCE4PvD+AbTyIxZgkuGT11l5NQDwSE5xosm0yv353SoYTfIVzMetfa/7+HxZDvOB0jgp5O4Z9lbnMuCyrx5dHcY9gnwNT+9K6pXPo9VqnxCzZWsodZ2MHrOyY4KX+Cutg2fs3k8oe0yJRbx7d/la3XM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475229; c=relaxed/simple;
-	bh=lBXjIRJrlULslvLQ1cn8+VukW8HznqYLwrLmwlylrvI=;
+	s=arc-20240116; t=1714475232; c=relaxed/simple;
+	bh=904ZY2ur2vwE19nA3j0UUL3blDAqjfkCbVn7G9DjSWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VkVVL/iNWqrKprUmKXtRRkdCG/DkNOOjQb5pKdYYpjupYteADsTDocETxNECE0mOkfAwwV2kXgI7yA8V171sC/s3vpS42U2wV6IvSduAX+jVwQqmjowFBzQpzRGuMmi0RnYSbm3mNriVBXmBq1Fzkdb2WUtps9g2G4e68wYih8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fO/a+PIs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mYG9FOHWrQqrB7QXp60jJIh7wFERFSeEiU2AFKH5k2EtrI8HvjtRjHADRlzqHP7CGdNp0P4c5W1a4cO8nQ59MsfGA4Bp1QKD5iAYTy0zIeidQiILZ6ZmEgguWMjMeR4oRAygBDROoJx4A3JLqdNQS+RLB/3mQKIl7/Id4B2rXvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJfHJXce; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fO/a+PIs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9523C4AF19;
-	Tue, 30 Apr 2024 11:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJfHJXce"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EBFC2BBFC;
+	Tue, 30 Apr 2024 11:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475229;
-	bh=lBXjIRJrlULslvLQ1cn8+VukW8HznqYLwrLmwlylrvI=;
+	s=korg; t=1714475232;
+	bh=904ZY2ur2vwE19nA3j0UUL3blDAqjfkCbVn7G9DjSWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fO/a+PIsUJ63iyduppZd5YObCuvmZ8GV4GMCBGvc3oEQAq4bBk/dbg817/OtgCJqS
-	 3hgMRvqEPkJk6YAfusgYWLo55ybEGj179aqVW6eacnkEPFoi95mkEEydM57lZSHSRB
-	 ALedTZR/wlg/oKvsPdZlRWB6kSPNkNeQOwbHXJ6s=
+	b=wJfHJXceFm5f3CRqZwqVEXRH3jyiJtYGDocl99Li75dGHPJAT2tOhF9MIa7Xh5H08
+	 wEemcV1siqwaYXUnFTo7NkqDz9EghPY+bbiUCuzrAXhBwKiJtKevGTFsy4628okpUn
+	 EyzJGV/ihXu6mqxafR2cJCRCbnqWfyeDTzzxMVCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Zhang Lixu <lixu.zhang@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/186] arm64: dts: rockchip: regulator for sd needs to be always on for BPI-R2Pro
-Date: Tue, 30 Apr 2024 12:38:04 +0200
-Message-ID: <20240430103058.963461538@linuxfoundation.org>
+Subject: [PATCH 6.6 004/186] HID: intel-ish-hid: ipc: Fix dev_err usage with uninitialized dev->devc
+Date: Tue, 30 Apr 2024 12:37:36 +0200
+Message-ID: <20240430103058.144950993@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -51,40 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Zhang Lixu <lixu.zhang@intel.com>
 
-[ Upstream commit 433d54818f64a2fe0562f8c04c7a81f562368515 ]
+[ Upstream commit 92826905ae340b7f2b25759a06c8c60bfc476b9f ]
 
-With default dts configuration for BPI-R2Pro, the regulator for sd card is
-powered off when reboot is commanded, and the only solution to detect the
-sd card again, and therefore, allow rebooting from there, is to do a
-hardware reset.
+The variable dev->devc in ish_dev_init was utilized by dev_err before it
+was properly assigned. To rectify this, the assignment of dev->devc has
+been moved to immediately follow memory allocation.
 
-Configure the regulator for sd to be always on for BPI-R2Pro in order to
-avoid this issue.
+Without this change "(NULL device *)" is printed for device information.
 
-Fixes: f901aaadaa2a ("arm64: dts: rockchip: Add Bananapi R2 Pro")
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Link: https://lore.kernel.org/r/20240305143222.189413-1-jtornosm@redhat.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 8ae2f2b0a284 ("HID: intel-ish-hid: ipc: Fix potential use-after-free in work function")
+Fixes: ae02e5d40d5f ("HID: intel-ish-hid: ipc layer")
+Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/intel-ish-hid/ipc/ipc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts b/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts
-index 87c45d8be420f..dc5892d25c100 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-bpi-r2-pro.dts
-@@ -416,6 +416,8 @@
+diff --git a/drivers/hid/intel-ish-hid/ipc/ipc.c b/drivers/hid/intel-ish-hid/ipc/ipc.c
+index a49c6affd7c4c..dd5fc60874ba1 100644
+--- a/drivers/hid/intel-ish-hid/ipc/ipc.c
++++ b/drivers/hid/intel-ish-hid/ipc/ipc.c
+@@ -948,6 +948,7 @@ struct ishtp_device *ish_dev_init(struct pci_dev *pdev)
+ 	if (!dev)
+ 		return NULL;
  
- 			vccio_sd: LDO_REG5 {
- 				regulator-name = "vccio_sd";
-+				regulator-always-on;
-+				regulator-boot-on;
- 				regulator-min-microvolt = <1800000>;
- 				regulator-max-microvolt = <3300000>;
++	dev->devc = &pdev->dev;
+ 	ishtp_device_init(dev);
  
+ 	init_waitqueue_head(&dev->wait_hw_ready);
+@@ -983,7 +984,6 @@ struct ishtp_device *ish_dev_init(struct pci_dev *pdev)
+ 	}
+ 
+ 	dev->ops = &ish_hw_ops;
+-	dev->devc = &pdev->dev;
+ 	dev->mtu = IPC_PAYLOAD_SIZE - sizeof(struct ishtp_msg_hdr);
+ 	return dev;
+ }
 -- 
 2.43.0
 
