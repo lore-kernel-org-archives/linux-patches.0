@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D5912C462;
-	Tue, 30 Apr 2024 11:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688AF12C462;
+	Tue, 30 Apr 2024 11:06:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475168; cv=none; b=gc5pJ6pXwCj3EGUR7zwvgmPYdLloZCnDqicDE/9fFuEILPu7JXtA4bdxTxwU0rHU2MPsZZoH1B2khZ6fYuCiIQF+icQWElnd+LnXZpgjY/7R2RfjyFnzPAk8HhkOZou+CQ4EKkWvuuIWrJoZTJOu9gTQacjGq+8DaUnZ79FTYPo=
+	t=1714475171; cv=none; b=HJdPWM9krAbfQPC1flZ3S8kbmDc/2Rn2ZKZjI7C4UEY8o1nIhoOguwMEttOmTtbdvhAdl39/fVaJ2+iE634fWHFpWH0eo7bsqPBmy1ud3FdkiyLg5GNBnC1C1y6bXhso1BLhiO/tuAofBip/MH7boy4rg+PU45dN0x3TZF00e+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475168; c=relaxed/simple;
-	bh=ZTS0vDH/S2dfaLlU9vKOyDhrfWWNZKsf0hpjiLatg6g=;
+	s=arc-20240116; t=1714475171; c=relaxed/simple;
+	bh=7w6ONEjZQTbAqWSLmluxYTirRdlfjaZDoKJScZO+oe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L1Ckic8GVB7NkPYIfqXbXViZWcHTeBiW0YTWOV12jKAVv4cyqaohaRczOgOyOPK8dlYe/5hjrLr6CoGmXH0jbvQ8/hegmhE9oaxi3JIBrIsjYA6MlKQ+/MZ9m2w4/S8Ynf/aSb9yM+8iRS6Oqxze/bcupOVIcQ+VGLe63NRlEw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JoFy+Ssy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E8Qg1x46BOUpwOoJbp/iuoI8NDNYnL8x0beINKJEdvO52eXVsrmjPZKjVcIZ/0dbGG5gLIFVqbGVr70ghHR5rt8vg2Q6jPXtL7AEVoWW+znvkqKIBKjrMgGmaGVuR1F0s00G1nL0O3B/BSUPfBCjngawZtma4kdfpWD3s680zhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwY4DMII; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JoFy+Ssy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68ABC2BBFC;
-	Tue, 30 Apr 2024 11:06:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwY4DMII"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55F1C2BBFC;
+	Tue, 30 Apr 2024 11:06:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475168;
-	bh=ZTS0vDH/S2dfaLlU9vKOyDhrfWWNZKsf0hpjiLatg6g=;
+	s=korg; t=1714475171;
+	bh=7w6ONEjZQTbAqWSLmluxYTirRdlfjaZDoKJScZO+oe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JoFy+SsyvhjNtW9xPnczHpqt76u79mMWcOmhakljzV7FSqS8xYSCj9zrD0V/HDmeD
-	 K3JoJPk6R8hZfCpnNT/wWxQSjnRXpK3XZKcJbWdJr9W6Xyp/K+ErsCSTEkdfxFDEA3
-	 6UmekuP2HOGPOvtf2VElBlmCkuvtkgQolH3KB7ts=
+	b=wwY4DMIIUeNddMYa78HsqVP0qFmkVmtdwaarn2GdjerJFUbG3Zp4gCs7vurEGC91V
+	 u/+VdO287PIozk9XBOp01dqUpiara1yLu1898sWuacksy+bP5tCfz5SrZPW0qxkQc8
+	 hYA5PmCcSrNTQiAAZy4obJqByRS1I82OrjdSeLgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 015/186] arm64: dts: mediatek: mt8195: Add missing gce-client-reg to mutex1
-Date: Tue, 30 Apr 2024 12:37:47 +0200
-Message-ID: <20240430103058.463640978@linuxfoundation.org>
+Subject: [PATCH 6.6 016/186] arm64: dts: mediatek: cherry: Add platform thermal configuration
+Date: Tue, 30 Apr 2024 12:37:48 +0200
+Message-ID: <20240430103058.492161590@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -45,44 +46,162 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 58f126296c3c52d02bf3fad1f68c331d718c4a9b ]
+[ Upstream commit 729f30eac8bce6783f889cf8390ea869d03407e6 ]
 
-Add the missing mediatek,gce-client-reg property to the mutex1 node to
-allow it to use the GCE. This prevents the "can't parse gce-client-reg
-property" error from being printed and should result in better
-performance.
+This platform has three auxiliary NTC thermistors, connected to the
+SoC's ADC pins. Enable the auxadc in order to be able to read the
+ADC values, add a generic-adc-thermal LUT for each and finally assign
+them to the SoC's thermal zones.
 
-Fixes: 92d2c23dc269 ("arm64: dts: mt8195: add display node for vdosys1")
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://lore.kernel.org/r/20240229-gce-client-reg-add-missing-mt8192-95-v1-4-b12c233a8a33@collabora.com
+Tested-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230424112523.1436926-2-angelogioacchino.delregno@collabora.com
+Stable-dep-of: 17b33dd9e4a3 ("arm64: dts: mediatek: cherry: Describe CPU supplies")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ .../boot/dts/mediatek/mt8195-cherry.dtsi      | 105 ++++++++++++++++++
+ 1 file changed, 105 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index 884e56f4a93bb..2bb9d9aa65fed 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -2850,6 +2850,7 @@
- 			power-domains = <&spm MT8195_POWER_DOMAIN_VDOSYS1>;
- 			clocks = <&vdosys1 CLK_VDO1_DISP_MUTEX>;
- 			clock-names = "vdo1_mutex";
-+			mediatek,gce-client-reg = <&gce0 SUBSYS_1c10XXXX 0x1000 0x1000>;
- 			mediatek,gce-events = <CMDQ_EVENT_VDO1_STREAM_DONE_ENG_0>;
- 		};
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
+index 3f508e5c18434..d721ddb230747 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
+@@ -114,6 +114,77 @@
+ 		regulator-boot-on;
+ 	};
  
++	/* Murata NCP03WF104F05RL */
++	tboard_thermistor1: thermal-sensor-t1 {
++		compatible = "generic-adc-thermal";
++		#thermal-sensor-cells = <0>;
++		io-channels = <&auxadc 0>;
++		io-channel-names = "sensor-channel";
++		temperature-lookup-table = <	(-10000) 1553
++						(-5000) 1485
++						0 1406
++						5000 1317
++						10000 1219
++						15000 1115
++						20000 1007
++						25000 900
++						30000 796
++						35000 697
++						40000 605
++						45000 523
++						50000 449
++						55000 384
++						60000 327
++						65000 279
++						70000 237
++						75000 202
++						80000 172
++						85000 147
++						90000 125
++						95000 107
++						100000 92
++						105000 79
++						110000 68
++						115000 59
++						120000 51
++						125000 44>;
++	};
++
++	tboard_thermistor2: thermal-sensor-t2 {
++		compatible = "generic-adc-thermal";
++		#thermal-sensor-cells = <0>;
++		io-channels = <&auxadc 1>;
++		io-channel-names = "sensor-channel";
++		temperature-lookup-table = <	(-10000) 1553
++						(-5000) 1485
++						0 1406
++						5000 1317
++						10000 1219
++						15000 1115
++						20000 1007
++						25000 900
++						30000 796
++						35000 697
++						40000 605
++						45000 523
++						50000 449
++						55000 384
++						60000 327
++						65000 279
++						70000 237
++						75000 202
++						80000 172
++						85000 147
++						90000 125
++						95000 107
++						100000 92
++						105000 79
++						110000 68
++						115000 59
++						120000 51
++						125000 44>;
++	};
++
+ 	usb_vbus: regulator-5v0-usb-vbus {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "usb-vbus";
+@@ -176,6 +247,10 @@
+ 	memory-region = <&afe_mem>;
+ };
+ 
++&auxadc {
++	status = "okay";
++};
++
+ &dp_intf0 {
+ 	status = "okay";
+ 
+@@ -1127,6 +1202,36 @@
+ 	};
+ };
+ 
++&thermal_zones {
++	soc-area-thermal {
++		polling-delay = <1000>;
++		polling-delay-passive = <250>;
++		thermal-sensors = <&tboard_thermistor1>;
++
++		trips {
++			trip-crit {
++				temperature = <84000>;
++				hysteresis = <1000>;
++				type = "critical";
++			};
++		};
++	};
++
++	pmic-area-thermal {
++		polling-delay = <1000>;
++		polling-delay-passive = <0>;
++		thermal-sensors = <&tboard_thermistor2>;
++
++		trips {
++			trip-crit {
++				temperature = <84000>;
++				hysteresis = <1000>;
++				type = "critical";
++			};
++		};
++	};
++};
++
+ &u3phy0 {
+ 	status = "okay";
+ };
 -- 
 2.43.0
 
