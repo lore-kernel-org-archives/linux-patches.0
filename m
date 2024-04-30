@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93087129E89;
-	Tue, 30 Apr 2024 10:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEDF129E89;
+	Tue, 30 Apr 2024 10:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474641; cv=none; b=Si82DWvgrp78bV2jIdWkVRKlnHogFk4j5FgXgLSeMls53TUVK8IBzPgz3i4pcBLj5L8JkehQjPY7GWLyPqfzy3ofJydgyxy9MWYugWBi6TIKklloTu+UFWtqbAisahGE31Rcb3DB2pXaXYqstSRS2FMrJXGlIbBc/7ZGgZG+Aa4=
+	t=1714474644; cv=none; b=SSoLqruyoOnI/xPhG+V7fvfXaVCjeTkqQug/NE9ZpUG/Q7Pg/axpzayFhbBL15RfSXCgsBJnWflKhyekTfteGdltuHjmFJhga1AkVdHvPnp33qSrktCnu0j3F3WnpH3B4INcdXCUvoQ+0nP5ZyIw7L2A1utAUo+BDpMhVWQ7Ut4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474641; c=relaxed/simple;
-	bh=qa7YbAGl0fTGj5Cz2w+RR7lppzY0bGgUCir0hmrUX3A=;
+	s=arc-20240116; t=1714474644; c=relaxed/simple;
+	bh=92nkpVf0d5g0Nr4I/uOGeSvr7tOvaLmD3U+lsRHZFqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U1l/Ef3CWD6w6USzhNQx5K+MczGQ+mHVV8Nj8APGUuwW1aeQFukKbOvBGa+4q74ozxOPQC7ywc7nB/uXuFk88Vg8qujeb00562o1j4+io8ib9VBnSYwPSl3b+IyQPjejtzb//E+U13iwL7w8Jc7AUGQOma7alD6L8pjSpXFLsG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPaR1WrE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YbeMaDF79vRQnzG0jQdt6u4KeSxTZC6iduy+qFJ9rEiiccJp/r+vkvxrximPXp+myLzTzm3iDO1rLdChLSaF5Ry98lFXjRg/DtLMSjGIn3qwAnIGotYXONsBvB/UC/dnYe/q/bpltNpOnupJMMLfvGx+TksjGol/8X8+dYbdaTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/w3CIuO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPaR1WrE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA76C2BBFC;
-	Tue, 30 Apr 2024 10:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/w3CIuO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E659C2BBFC;
+	Tue, 30 Apr 2024 10:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474641;
-	bh=qa7YbAGl0fTGj5Cz2w+RR7lppzY0bGgUCir0hmrUX3A=;
+	s=korg; t=1714474644;
+	bh=92nkpVf0d5g0Nr4I/uOGeSvr7tOvaLmD3U+lsRHZFqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zPaR1WrEiQ5Ut7VXP2/GP5L3UhA8DgJKiIW1a0jBvotrE+oLfSHAZdPHt7ejWfN+7
-	 WafNk+AWNxg4aYj+VwPRBYYEGuGPAiMU9nbOwoLzjnoegGlLoAMq3fde3NM6ll0n2O
-	 nFJUGmj/wjrIHbKapaerzgNXQNcMtfE9nfY+wDj4=
+	b=p/w3CIuOo6Dvm63BHM+8QLmXRiMav8Cd3HZSKknanfzjUrLeUhs6pzjI9StrTlO6K
+	 vJFw9aO+DuDJp+Io9vTaoTmgYaYTyK165CkXid1Z4EjqV/2XQCLAzD8UK9jgKj/kQt
+	 lz4gnyzF2mh3QBCGrGerdZ57l9T1yM3TrvWufUpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Marek Vasut <marex@denx.de>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Abel Wu <wuyun.abel@bytedance.com>,
+	Tianchen Ding <dtcccc@linux.alibaba.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Chen Yu <yu.c.chen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 217/228] dt-bindings: eeprom: at24: Fix ST M24C64-D compatible schema
-Date: Tue, 30 Apr 2024 12:39:55 +0200
-Message-ID: <20240430103110.066914329@linuxfoundation.org>
+Subject: [PATCH 6.8 218/228] sched/eevdf: Always update V if se->on_rq when reweighting
+Date: Tue, 30 Apr 2024 12:39:56 +0200
+Message-ID: <20240430103110.095255652@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -53,57 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring <robh@kernel.org>
+From: Tianchen Ding <dtcccc@linux.alibaba.com>
 
-[ Upstream commit b3de7b433a323bb80303d77e69f1281bfab0a70b ]
+[ Upstream commit 11b1b8bc2b98e21ddf47e08b56c21502c685b2c3 ]
 
-The schema for the ST M24C64-D compatible string doesn't work.
-Validation fails as the 'd-wl' suffix is not added to the preceeding
-schema which defines the entries and vendors. The actual users are
-incorrect as well because the vendor is listed as Atmel whereas the
-part is made by ST.
+reweight_eevdf() needs the latest V to do accurate calculation for new
+ve and vd. So update V unconditionally when se is runnable.
 
-As this part doesn't appear to have multiple vendors, move it to its own
-entry.
-
-Fixes: 0997ff1fc143 ("dt-bindings: at24: add ST M24C64-D Additional Write lockable page")
-Fixes: c761068f484c ("dt-bindings: at24: add ST M24C32-D Additional Write lockable page")
-Signed-off-by: Rob Herring <robh@kernel.org>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: eab03c23c2a1 ("sched/eevdf: Fix vruntime adjustment on reweight")
+Suggested-by: Abel Wu <wuyun.abel@bytedance.com>
+Signed-off-by: Tianchen Ding <dtcccc@linux.alibaba.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Abel Wu <wuyun.abel@bytedance.com>
+Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Tested-by: Chen Yu <yu.c.chen@intel.com>
+Link: https://lore.kernel.org/r/20240306022133.81008-2-dtcccc@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/eeprom/at24.yaml | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ kernel/sched/fair.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/eeprom/at24.yaml b/Documentation/devicetree/bindings/eeprom/at24.yaml
-index 1812ef31d5f1e..3c36cd0510de8 100644
---- a/Documentation/devicetree/bindings/eeprom/at24.yaml
-+++ b/Documentation/devicetree/bindings/eeprom/at24.yaml
-@@ -68,14 +68,10 @@ properties:
-                   pattern: cs16$
-               - items:
-                   pattern: c32$
--              - items:
--                  pattern: c32d-wl$
-               - items:
-                   pattern: cs32$
-               - items:
-                   pattern: c64$
--              - items:
--                  pattern: c64d-wl$
-               - items:
-                   pattern: cs64$
-               - items:
-@@ -136,6 +132,7 @@ properties:
-               - renesas,r1ex24128
-               - samsung,s524ad0xd1
-           - const: atmel,24c128
-+      - pattern: '^atmel,24c(32|64)d-wl$' # Actual vendor is st
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index e2b4e0396af84..69d2158873429 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -3784,9 +3784,8 @@ static void reweight_entity(struct cfs_rq *cfs_rq, struct sched_entity *se,
  
-   label:
-     description: Descriptive name of the EEPROM.
+ 	if (se->on_rq) {
+ 		/* commit outstanding execution time */
+-		if (curr)
+-			update_curr(cfs_rq);
+-		else
++		update_curr(cfs_rq);
++		if (!curr)
+ 			__dequeue_entity(cfs_rq, se);
+ 		update_load_sub(&cfs_rq->load, se->load.weight);
+ 	}
 -- 
 2.43.0
 
