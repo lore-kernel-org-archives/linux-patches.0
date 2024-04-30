@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC24812C805;
-	Tue, 30 Apr 2024 11:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370F11E50A;
+	Tue, 30 Apr 2024 11:10:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475433; cv=none; b=T3F0SskGxcX0MP2ACjkaY75Lc2gUQQe52JkNIydQH0IK/trEczOVU7TjdBjEAWB88b4JVip+iMPQS3+pERmhY9nuTMIqUJ81pKRUmsN635OUrSNtlu9io8G50hovDSQUCts7n/iih7ascGsvR6OuJIWsEYh2vL+TTzn4jAy+FCk=
+	t=1714475436; cv=none; b=S2/HkyO6UeE7AE3Ygcn4LiknDwk5E7Gxr0imHbDLoB5CxdhMGAwWPvlKXdmM8M2fMhVdAH8AcHUJkEreK7urtiz9uDdC+VRHeQLO9D4rP7h2Zm7mgtTV7S2JYrfg9zH+nRe6PzyqCOEG5wKEQmsgYyp4dmpG97j627g/+MSzxQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475433; c=relaxed/simple;
-	bh=7NbZDcnupIFVUhSeALla8HCYiCLjlYZ1qzr1PWb1LWw=;
+	s=arc-20240116; t=1714475436; c=relaxed/simple;
+	bh=8b68tgCsYn+U4eTwtFR58kAfhqqdLYFwiP3ItgV58uM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GCoDg3xM6DG9Q55RtbPlzkDfc7aArDxTSl5V8qRjV4QQK/DUttNx8hTEktWd4f1siYnHCXpZ0s6vZQNb+8XL5k2v7uwP85drcTav4bL7nS41lZX025T1FmyKDF1IOgTYrqY4ilTY4AI6/5HEVTNPxGv3GP5bUDYAHtdoSWsTghk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKyQanoB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G7zOhg0tdOH2+h4V36qCNodHIzAf/lXSMZuwnzEF2agslxZWojpBzfW23r0KNGnHkv+bTfcXzVTROxlDc7LDxwc2wQ8gHD7wpu0LeG120sgr3+hbd/blgMH5kh/UPvaeYkDrJGfgt9OzqbiCxxpKFC7WAxzEHaF37oeFmKYddOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyqHBK+5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKyQanoB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B98C2BBFC;
-	Tue, 30 Apr 2024 11:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyqHBK+5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9137EC2BBFC;
+	Tue, 30 Apr 2024 11:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475432;
-	bh=7NbZDcnupIFVUhSeALla8HCYiCLjlYZ1qzr1PWb1LWw=;
+	s=korg; t=1714475436;
+	bh=8b68tgCsYn+U4eTwtFR58kAfhqqdLYFwiP3ItgV58uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZKyQanoBYco/bgty65eNWiYE2N5dy3iuL082rT0gFHvb8E2qoLsdfDCUUdk+6fEr4
-	 hL2Hs9qYPZueB8pDcyABe0GxXegywylVyLCyP+CNQLK2ZHR/5geYrCb8zOeKuIvSky
-	 Z7nsH0Oe25W5TqdFKZEfqtCnnwEGVox05ImOXCzU=
+	b=XyqHBK+5pgH5Uimk3q6a/cRvuB/IGK6iemAwhvq2DNBEtui5mtWgPjUykMun4Qm2B
+	 jpCHB5Y4bRisjBUdXtrB6ZyzrwamE6cWXDIljbYMFg2bySiL/sA2i+vogPzrPwGURJ
+	 EleXfXRvtM3lK3bFPuBEhn00ui7zPi3Jo7unBKbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Alexander Zubkov <green@qrator.net>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 094/186] tls: fix lockless read of strp->msg_ready in ->poll
-Date: Tue, 30 Apr 2024 12:39:06 +0200
-Message-ID: <20240430103100.762460830@linuxfoundation.org>
+Subject: [PATCH 6.6 077/186] mlxsw: spectrum_acl_tcam: Fix possible use-after-free during activity update
+Date: Tue, 30 Apr 2024 12:38:49 +0200
+Message-ID: <20240430103100.273117676@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -51,84 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 0844370f8945086eb9335739d10205dcea8d707b ]
+[ Upstream commit 79b5b4b18bc85b19d3a518483f9abbbe6d7b3ba4 ]
 
-tls_sk_poll is called without locking the socket, and needs to read
-strp->msg_ready (via tls_strp_msg_ready). Convert msg_ready to a bool
-and use READ_ONCE/WRITE_ONCE where needed. The remaining reads are
-only performed when the socket is locked.
+The rule activity update delayed work periodically traverses the list of
+configured rules and queries their activity from the device.
 
-Fixes: 121dca784fc0 ("tls: suppress wakeups unless we have a full record")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://lore.kernel.org/r/0b7ee062319037cf86af6b317b3d72f7bfcd2e97.1713797701.git.sd@queasysnail.net
+As part of this task it accesses the entry pointed by 'ventry->entry',
+but this entry can be changed concurrently by the rehash delayed work,
+leading to a use-after-free [1].
+
+Fix by closing the race and perform the activity query under the
+'vregion->lock' mutex.
+
+[1]
+BUG: KASAN: slab-use-after-free in mlxsw_sp_acl_tcam_flower_rule_activity_get+0x121/0x140
+Read of size 8 at addr ffff8881054ed808 by task kworker/0:18/181
+
+CPU: 0 PID: 181 Comm: kworker/0:18 Not tainted 6.9.0-rc2-custom-00781-gd5ab772d32f7 #2
+Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
+Workqueue: mlxsw_core mlxsw_sp_acl_rule_activity_update_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xc6/0x120
+ print_report+0xce/0x670
+ kasan_report+0xd7/0x110
+ mlxsw_sp_acl_tcam_flower_rule_activity_get+0x121/0x140
+ mlxsw_sp_acl_rule_activity_update_work+0x219/0x400
+ process_one_work+0x8eb/0x19b0
+ worker_thread+0x6c9/0xf70
+ kthread+0x2c9/0x3b0
+ ret_from_fork+0x4d/0x80
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Allocated by task 1039:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x8f/0xa0
+ __kmalloc+0x19c/0x360
+ mlxsw_sp_acl_tcam_entry_create+0x7b/0x1f0
+ mlxsw_sp_acl_tcam_vchunk_migrate_all+0x30d/0xb50
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0x157/0x1300
+ process_one_work+0x8eb/0x19b0
+ worker_thread+0x6c9/0xf70
+ kthread+0x2c9/0x3b0
+ ret_from_fork+0x4d/0x80
+ ret_from_fork_asm+0x1a/0x30
+
+Freed by task 1039:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3b/0x60
+ poison_slab_object+0x102/0x170
+ __kasan_slab_free+0x14/0x30
+ kfree+0xc1/0x290
+ mlxsw_sp_acl_tcam_vchunk_migrate_all+0x3d7/0xb50
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0x157/0x1300
+ process_one_work+0x8eb/0x19b0
+ worker_thread+0x6c9/0xf70
+ kthread+0x2c9/0x3b0
+ ret_from_fork+0x4d/0x80
+ ret_from_fork_asm+0x1a/0x30
+
+Fixes: 2bffc5322fd8 ("mlxsw: spectrum_acl: Don't take mutex in mlxsw_sp_acl_tcam_vregion_rehash_work()")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Alexander Zubkov <green@qrator.net>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/1fcce0a60b231ebeb2515d91022284ba7b4ffe7a.1713797103.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tls.h  | 3 ++-
- net/tls/tls.h      | 2 +-
- net/tls/tls_strp.c | 6 +++---
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ .../net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c    | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/tls.h b/include/net/tls.h
-index 5fdd5dd251df2..2ad28545b15f0 100644
---- a/include/net/tls.h
-+++ b/include/net/tls.h
-@@ -110,7 +110,8 @@ struct tls_strparser {
- 	u32 stopped : 1;
- 	u32 copy_mode : 1;
- 	u32 mixed_decrypted : 1;
--	u32 msg_ready : 1;
-+
-+	bool msg_ready;
- 
- 	struct strp_msg stm;
- 
-diff --git a/net/tls/tls.h b/net/tls/tls.h
-index 28a8c0e80e3c5..02038d0381b75 100644
---- a/net/tls/tls.h
-+++ b/net/tls/tls.h
-@@ -212,7 +212,7 @@ static inline struct sk_buff *tls_strp_msg(struct tls_sw_context_rx *ctx)
- 
- static inline bool tls_strp_msg_ready(struct tls_sw_context_rx *ctx)
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+index 9c0c728bb42dc..7e69225c057de 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+@@ -1159,8 +1159,14 @@ mlxsw_sp_acl_tcam_ventry_activity_get(struct mlxsw_sp *mlxsw_sp,
+ 				      struct mlxsw_sp_acl_tcam_ventry *ventry,
+ 				      bool *activity)
  {
--	return ctx->strp.msg_ready;
-+	return READ_ONCE(ctx->strp.msg_ready);
+-	return mlxsw_sp_acl_tcam_entry_activity_get(mlxsw_sp,
+-						    ventry->entry, activity);
++	struct mlxsw_sp_acl_tcam_vregion *vregion = ventry->vchunk->vregion;
++	int err;
++
++	mutex_lock(&vregion->lock);
++	err = mlxsw_sp_acl_tcam_entry_activity_get(mlxsw_sp, ventry->entry,
++						   activity);
++	mutex_unlock(&vregion->lock);
++	return err;
  }
  
- static inline bool tls_strp_msg_mixed_decrypted(struct tls_sw_context_rx *ctx)
-diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
-index ca1e0e198ceb4..5df08d848b5c9 100644
---- a/net/tls/tls_strp.c
-+++ b/net/tls/tls_strp.c
-@@ -360,7 +360,7 @@ static int tls_strp_copyin(read_descriptor_t *desc, struct sk_buff *in_skb,
- 	if (strp->stm.full_len && strp->stm.full_len == skb->len) {
- 		desc->count = 0;
- 
--		strp->msg_ready = 1;
-+		WRITE_ONCE(strp->msg_ready, 1);
- 		tls_rx_msg_ready(strp);
- 	}
- 
-@@ -528,7 +528,7 @@ static int tls_strp_read_sock(struct tls_strparser *strp)
- 	if (!tls_strp_check_queue_ok(strp))
- 		return tls_strp_read_copy(strp, false);
- 
--	strp->msg_ready = 1;
-+	WRITE_ONCE(strp->msg_ready, 1);
- 	tls_rx_msg_ready(strp);
- 
- 	return 0;
-@@ -580,7 +580,7 @@ void tls_strp_msg_done(struct tls_strparser *strp)
- 	else
- 		tls_strp_flush_anchor_copy(strp);
- 
--	strp->msg_ready = 0;
-+	WRITE_ONCE(strp->msg_ready, 0);
- 	memset(&strp->stm, 0, sizeof(strp->stm));
- 
- 	tls_strp_check_rcv(strp);
+ static int
 -- 
 2.43.0
 
