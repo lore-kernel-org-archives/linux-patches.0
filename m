@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52A612D209;
-	Tue, 30 Apr 2024 11:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB63211C;
+	Tue, 30 Apr 2024 11:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475755; cv=none; b=g+euNloa5UVITbxUHjoPskSjmo84GB3o44CDHS+8L5MfKn/1incoy2FYdH1kxkljGszEchhMEZ6BdGPAcok3O2sgjULLaA6kQmxvN+XzGO+Kafbskiy5SJZ1TixxKP3fEoCcgyNT+UKpqWcB4MFDDJKIz0XAQWIGH47VlbigyiM=
+	t=1714475759; cv=none; b=FLJjKbuFSOJCBY/oVLu6groDMSfbi/gs2ZiAzDlrtuVHjcs3QQJBGPyNljU1rNtRAHnirD6+yONzdEEVZIUzkkoGlv/IWrmKs09aOQlrSEKYstIwwrGblAgGN+r7D4PpkJyQLHbAWj8Myk64pBRy+p4o12FGqBjTUKvoHJurARs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475755; c=relaxed/simple;
-	bh=yoEf/jLkskwEwiUGktfhWNELYT8knpZ8ZgCjdMamZBQ=;
+	s=arc-20240116; t=1714475759; c=relaxed/simple;
+	bh=BEWgrd1dVAYkHvB7mbEj2gdqsFOHavQwMyZ57lKqWfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yf6ttyCwQYkaO3YEDWXTlQ/1O2OwCh9z0jJNN5v6qQBlpz8X6d55Uyby1RZl1pmMuSOgH2tli7RKBT74dEJLpIbiBFy+C34CUcx8byqv23aDiqcEiVGQYG8rblScXgWm5jYJjc/uAoPWvxTWeQkgNx7VHTBN9LP8wy6+xFV8SEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2fL8qBV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QWjHgbVqccvXmUtDvmSRtEeQ6/PymZ2bD27y3R/G9s018D4wmCcCkXYYQMMFmS48IqCZKwu0ZyNodH9ajbAWijzFDX8+qjEJ55F6mr9hcwKFc4MBo0TgCxd9az3HzT10LKK2wL9ff0sIkqZWo/QijnIdBQJNrCSTWa6eV83AAYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjEeu4Ix; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2fL8qBV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD01C2BBFC;
-	Tue, 30 Apr 2024 11:15:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjEeu4Ix"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524CFC2BBFC;
+	Tue, 30 Apr 2024 11:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475755;
-	bh=yoEf/jLkskwEwiUGktfhWNELYT8knpZ8ZgCjdMamZBQ=;
+	s=korg; t=1714475758;
+	bh=BEWgrd1dVAYkHvB7mbEj2gdqsFOHavQwMyZ57lKqWfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h2fL8qBVnLqZ9fLHhkjLK74qlv80NqrUFOFCxPFPgZCnq5KY/25b/yFYGRdF+TXDq
-	 8LaG0IVfB5yW6yzv70pK0Tw1u0CnJd6IprvtR7yoC3HScV2JTsp9fecrc0ouJLGasI
-	 s6iCMwvVaMqzaZ+wfVr7TnWSn1FoXibg0fHKVCyQ=
+	b=vjEeu4IxQ0XOZvXBY610iavMnjZ3EliE6TRzBXoijZe92zXDChqUGG0X6R1O40f4F
+	 b1AlaHn83EfiJTsPEFI1HD0NcEeKgNhLQltU2eMtE7R3soAPjOain1++vJ5X6+Y13V
+	 OD85QXSm6x48IwkeEY+6MfnIilkvEtov38KZoT/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 158/186] dmaengine: owl: fix register access functions
-Date: Tue, 30 Apr 2024 12:40:10 +0200
-Message-ID: <20240430103102.620125596@linuxfoundation.org>
+Subject: [PATCH 5.15 01/80] smb: client: fix rename(2) regression against samba
+Date: Tue, 30 Apr 2024 12:39:33 +0200
+Message-ID: <20240430103043.444334807@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
-References: <20240430103058.010791820@linuxfoundation.org>
+In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
+References: <20240430103043.397234724@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,60 +47,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 43c633ef93a5d293c96ebcedb40130df13128428 ]
+[ Upstream commit 18d86965e31f9be4d477da0744a7cdc9815858de ]
 
-When building with 'make W=1', clang notices that the computed register
-values are never actually written back but instead the wrong variable
-is set:
+After commit 2c7d399e551c ("smb: client: reuse file lease key in
+compound operations") the client started reusing lease keys for
+rename, unlink and set path size operations to prevent it from
+breaking its own leases and thus causing unnecessary lease breaks to
+same connection.
 
-drivers/dma/owl-dma.c:244:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
-  244 |         u32 regval;
-      |             ^
-drivers/dma/owl-dma.c:268:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
-  268 |         u32 regval;
-      |             ^
+The implementation relies on positive dentries and
+cifsInodeInfo::lease_granted to decide whether reusing lease keys for
+the compound requests.  cifsInodeInfo::lease_granted was introduced by
+commit 0ab95c2510b6 ("Defer close only when lease is enabled.") to
+indicate whether lease caching is granted for a specific file, but
+that can only happen until file is open, so
+cifsInodeInfo::lease_granted was left uninitialised in ->alloc_inode
+and then client started sending random lease keys for files that
+hadn't any leases.
 
-Change these to what was most likely intended.
+This fixes the following test case against samba:
 
-Fixes: 47e20577c24d ("dmaengine: Add Actions Semi Owl family S900 DMA driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Peter Korsgaard <peter@korsgaard.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240322132116.906475-1-arnd@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+mount.cifs //srv/share /mnt/1 -o ...,nosharesock
+mount.cifs //srv/share /mnt/2 -o ...,nosharesock
+touch /mnt/1/foo; tail -f /mnt/1/foo & pid=$!
+mv /mnt/2/foo /mnt/2/bar # fails with -EIO
+kill $pid
+
+Fixes: 0ab95c2510b6 ("Defer close only when lease is enabled.")
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/owl-dma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/cifs/cifsfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/owl-dma.c b/drivers/dma/owl-dma.c
-index 384476757c5e3..3bcf73ef69dc7 100644
---- a/drivers/dma/owl-dma.c
-+++ b/drivers/dma/owl-dma.c
-@@ -250,7 +250,7 @@ static void pchan_update(struct owl_dma_pchan *pchan, u32 reg,
- 	else
- 		regval &= ~val;
- 
--	writel(val, pchan->base + reg);
-+	writel(regval, pchan->base + reg);
- }
- 
- static void pchan_writel(struct owl_dma_pchan *pchan, u32 reg, u32 data)
-@@ -274,7 +274,7 @@ static void dma_update(struct owl_dma *od, u32 reg, u32 val, bool state)
- 	else
- 		regval &= ~val;
- 
--	writel(val, od->base + reg);
-+	writel(regval, od->base + reg);
- }
- 
- static void dma_writel(struct owl_dma *od, u32 reg, u32 data)
+diff --git a/fs/cifs/cifsfs.c b/fs/cifs/cifsfs.c
+index 9bbead15a0287..d3adcb9e70a66 100644
+--- a/fs/cifs/cifsfs.c
++++ b/fs/cifs/cifsfs.c
+@@ -374,6 +374,7 @@ cifs_alloc_inode(struct super_block *sb)
+ 	 * server, can not assume caching of file data or metadata.
+ 	 */
+ 	cifs_set_oplock_level(cifs_inode, 0);
++	cifs_inode->lease_granted = false;
+ 	cifs_inode->flags = 0;
+ 	spin_lock_init(&cifs_inode->writers_lock);
+ 	cifs_inode->writers = 0;
 -- 
 2.43.0
 
