@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741F612BF32;
-	Tue, 30 Apr 2024 11:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8331912D210;
+	Tue, 30 Apr 2024 11:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476557; cv=none; b=WklEduAPtnBPsDV8Yx5kVYpmDoWD60gqS1NyNOQCWKMiFqz3w8xxnXa7zmSDCClP/y83WBuStcJ9N0EfjzJhA1KBvwApRs4i2Pp4whKvHHkp1/kLkG0E2Zu1cHIMKykWbc8WOsjRKOVDi4yuwCJPvwDaktYp/dIKTbmXLhv9SqE=
+	t=1714476560; cv=none; b=i7IhVJ33Hp0m02Ee80GMSYgkjao0+fJ2PhBF1KHk+clZksuGTR69fr6af/DbGvKlxlZPUkPLltJbJ6a1GLdN0G82T1HyawfA9saHySmvhGVQv/0tpVSo5omSKmiMUp3yKett7ybqmnpd3GsJokQDGKJfGAnvaWY83VZs7AqjBfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476557; c=relaxed/simple;
-	bh=AdxRXs4MqDrMgh/fXmt0zPXat8wP/5HDmT0pFjFZmqc=;
+	s=arc-20240116; t=1714476560; c=relaxed/simple;
+	bh=/uTO0Lxae3e0/tAGlNQlZ6sJdP0ToSXZ/Abv/FzW2hY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VxIC3OAMEtDDhUmxDPZFQVuk6ii3Vijfmg2yaGxbI0XNipV+Pg6SlLapUU1B4doLQUTQ1/WTEsynF+9bTYWJCJzOI/o38GF7cFhG3gbZ+tusuD6sFq0P7FV4bW+oSxW/RiX+f1b4TtER30nnpzetoJ7JkGM5NSEInybIrcVewZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTTxjV37; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G4ttPwkWprCyqe6Libnyd/mc/8wqXV2hShCrZpFZbXh2bs35iATfExFD9IC6HXokmKQKOhN2dE+991pDf0nQDJ54eYsmwmvu6AQoSD6PNH7Wsj4Xj16o2tGn1arbes7V8WhgU66ajvL4GvTOdM7Hlk8LdpwC+auY2hhJtOxaSWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KLWXMvMK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTTxjV37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83B9C4AF1A;
-	Tue, 30 Apr 2024 11:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLWXMvMK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A0AC2BBFC;
+	Tue, 30 Apr 2024 11:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476557;
-	bh=AdxRXs4MqDrMgh/fXmt0zPXat8wP/5HDmT0pFjFZmqc=;
+	s=korg; t=1714476560;
+	bh=/uTO0Lxae3e0/tAGlNQlZ6sJdP0ToSXZ/Abv/FzW2hY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTTxjV37U7+3Sv2dBKK31F0PBKYk5A86Q8HJlKAqaQdNHtxBCx6Y96npfUBcbAT+l
-	 4C31VEbPhklXUyGRTpNYzsGUMxrPYCSNZUA/2Y4KW5cXPj0DoZiGRaMt24+/58Ienu
-	 E7+TYc0d9/HQUSsxvRRG1GM2zKBqaHMPf38GfwEw=
+	b=KLWXMvMKRdhKhLTbTr1g0z70Kw3QwYPJFkUrmSSSOliKgT6b6Zb6cn/knucOrvyG3
+	 QVUCAQSZJ54IBrabzJRzKC12BFTlKM4YWxbRjzgLVaOl95nbOvIfCengzkgDxw4oqh
+	 pZeFnwp3pzrvfIJEa0w25mS/C1mQKdGA07JJ3IoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/110] eth: bnxt: fix counting packets discarded due to OOM and netpoll
-Date: Tue, 30 Apr 2024 12:40:21 +0200
-Message-ID: <20240430103049.102337925@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 070/110] smb: client: Fix struct_group() usage in __packed structs
+Date: Tue, 30 Apr 2024 12:40:39 +0200
+Message-ID: <20240430103049.633425160@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -51,150 +51,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit 730117730709992c9f6535dd7b47638ee561ec45 ]
+commit 9a1f1d04f63c59550a5364858b46eeffdf03e8d6 upstream.
 
-I added OOM and netpoll discard counters, naively assuming that
-the cpr pointer is pointing to a common completion ring.
-Turns out that is usually *a* completion ring but not *the*
-completion ring which bnapi->cp_ring points to. bnapi->cp_ring
-is where the stats are read from, so we end up reporting 0
-thru ethtool -S and qstat even though the drop events have happened.
-Make 100% sure we're recording statistics in the correct structure.
+Use struct_group_attr() in __packed structs, instead of struct_group().
 
-Fixes: 907fd4a294db ("bnxt: count discards due to memory allocation errors")
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://lore.kernel.org/r/20240424002148.3937059-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Below you can see the pahole output before/after changes:
+
+pahole -C smb2_file_network_open_info fs/smb/client/smb2ops.o
+struct smb2_file_network_open_info {
+	union {
+		struct {
+			__le64     CreationTime;         /*     0     8 */
+			__le64     LastAccessTime;       /*     8     8 */
+			__le64     LastWriteTime;        /*    16     8 */
+			__le64     ChangeTime;           /*    24     8 */
+			__le64     AllocationSize;       /*    32     8 */
+			__le64     EndOfFile;            /*    40     8 */
+			__le32     Attributes;           /*    48     4 */
+		};                                       /*     0    56 */
+		struct {
+			__le64     CreationTime;         /*     0     8 */
+			__le64     LastAccessTime;       /*     8     8 */
+			__le64     LastWriteTime;        /*    16     8 */
+			__le64     ChangeTime;           /*    24     8 */
+			__le64     AllocationSize;       /*    32     8 */
+			__le64     EndOfFile;            /*    40     8 */
+			__le32     Attributes;           /*    48     4 */
+		} network_open_info;                     /*     0    56 */
+	};                                               /*     0    56 */
+	__le32                     Reserved;             /*    56     4 */
+
+	/* size: 60, cachelines: 1, members: 2 */
+	/* last cacheline: 60 bytes */
+} __attribute__((__packed__));
+
+pahole -C smb2_file_network_open_info fs/smb/client/smb2ops.o
+struct smb2_file_network_open_info {
+	union {
+		struct {
+			__le64     CreationTime;         /*     0     8 */
+			__le64     LastAccessTime;       /*     8     8 */
+			__le64     LastWriteTime;        /*    16     8 */
+			__le64     ChangeTime;           /*    24     8 */
+			__le64     AllocationSize;       /*    32     8 */
+			__le64     EndOfFile;            /*    40     8 */
+			__le32     Attributes;           /*    48     4 */
+		} __attribute__((__packed__));           /*     0    52 */
+		struct {
+			__le64     CreationTime;         /*     0     8 */
+			__le64     LastAccessTime;       /*     8     8 */
+			__le64     LastWriteTime;        /*    16     8 */
+			__le64     ChangeTime;           /*    24     8 */
+			__le64     AllocationSize;       /*    32     8 */
+			__le64     EndOfFile;            /*    40     8 */
+			__le32     Attributes;           /*    48     4 */
+		} __attribute__((__packed__)) network_open_info;       /*     0    52 */
+	};                                               /*     0    52 */
+	__le32                     Reserved;             /*    52     4 */
+
+	/* size: 56, cachelines: 1, members: 2 */
+	/* last cacheline: 56 bytes */
+};
+
+pahole -C smb_com_open_rsp fs/smb/client/cifssmb.o
+struct smb_com_open_rsp {
+	...
+
+	union {
+		struct {
+			__le64     CreationTime;         /*    48     8 */
+			__le64     LastAccessTime;       /*    56     8 */
+			/* --- cacheline 1 boundary (64 bytes) --- */
+			__le64     LastWriteTime;        /*    64     8 */
+			__le64     ChangeTime;           /*    72     8 */
+			__le32     FileAttributes;       /*    80     4 */
+		};                                       /*    48    40 */
+		struct {
+			__le64     CreationTime;         /*    48     8 */
+			__le64     LastAccessTime;       /*    56     8 */
+			/* --- cacheline 1 boundary (64 bytes) --- */
+			__le64     LastWriteTime;        /*    64     8 */
+			__le64     ChangeTime;           /*    72     8 */
+			__le32     FileAttributes;       /*    80     4 */
+		} common_attributes;                     /*    48    40 */
+	};                                               /*    48    40 */
+
+	...
+
+	/* size: 111, cachelines: 2, members: 14 */
+	/* last cacheline: 47 bytes */
+} __attribute__((__packed__));
+
+pahole -C smb_com_open_rsp fs/smb/client/cifssmb.o
+struct smb_com_open_rsp {
+	...
+
+	union {
+		struct {
+			__le64     CreationTime;         /*    48     8 */
+			__le64     LastAccessTime;       /*    56     8 */
+			/* --- cacheline 1 boundary (64 bytes) --- */
+			__le64     LastWriteTime;        /*    64     8 */
+			__le64     ChangeTime;           /*    72     8 */
+			__le32     FileAttributes;       /*    80     4 */
+		} __attribute__((__packed__));           /*    48    36 */
+		struct {
+			__le64     CreationTime;         /*    48     8 */
+			__le64     LastAccessTime;       /*    56     8 */
+			/* --- cacheline 1 boundary (64 bytes) --- */
+			__le64     LastWriteTime;        /*    64     8 */
+			__le64     ChangeTime;           /*    72     8 */
+			__le32     FileAttributes;       /*    80     4 */
+		} __attribute__((__packed__)) common_attributes;       /*    48    36 */
+	};                                               /*    48    36 */
+
+	...
+
+	/* size: 107, cachelines: 2, members: 14 */
+	/* last cacheline: 43 bytes */
+} __attribute__((__packed__));
+
+pahole -C FILE_ALL_INFO fs/smb/client/cifssmb.o
+typedef struct {
+	union {
+		struct {
+			__le64     CreationTime;         /*     0     8 */
+			__le64     LastAccessTime;       /*     8     8 */
+			__le64     LastWriteTime;        /*    16     8 */
+			__le64     ChangeTime;           /*    24     8 */
+			__le32     Attributes;           /*    32     4 */
+		};                                       /*     0    40 */
+		struct {
+			__le64     CreationTime;         /*     0     8 */
+			__le64     LastAccessTime;       /*     8     8 */
+			__le64     LastWriteTime;        /*    16     8 */
+			__le64     ChangeTime;           /*    24     8 */
+			__le32     Attributes;           /*    32     4 */
+		} common_attributes;                     /*     0    40 */
+	};                                               /*     0    40 */
+
+	...
+
+	/* size: 113, cachelines: 2, members: 17 */
+	/* last cacheline: 49 bytes */
+} __attribute__((__packed__)) FILE_ALL_INFO;
+
+pahole -C FILE_ALL_INFO fs/smb/client/cifssmb.o
+typedef struct {
+	union {
+		struct {
+			__le64     CreationTime;         /*     0     8 */
+			__le64     LastAccessTime;       /*     8     8 */
+			__le64     LastWriteTime;        /*    16     8 */
+			__le64     ChangeTime;           /*    24     8 */
+			__le32     Attributes;           /*    32     4 */
+		} __attribute__((__packed__));           /*     0    36 */
+		struct {
+			__le64     CreationTime;         /*     0     8 */
+			__le64     LastAccessTime;       /*     8     8 */
+			__le64     LastWriteTime;        /*    16     8 */
+			__le64     ChangeTime;           /*    24     8 */
+			__le32     Attributes;           /*    32     4 */
+		} __attribute__((__packed__)) common_attributes;       /*     0    36 */
+	};                                               /*     0    36 */
+
+	...
+
+	/* size: 109, cachelines: 2, members: 17 */
+	/* last cacheline: 45 bytes */
+} __attribute__((__packed__)) FILE_ALL_INFO;
+
+Fixes: 0015eb6e1238 ("smb: client, common: fix fortify warnings")
+Cc: stable@vger.kernel.org
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 44 ++++++++++-------------
- 1 file changed, 18 insertions(+), 26 deletions(-)
+ fs/smb/client/cifspdu.h |    4 ++--
+ fs/smb/client/smb2pdu.h |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 70021b5eb54a6..77ea19bcdc6fe 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -1697,7 +1697,7 @@ static inline struct sk_buff *bnxt_tpa_end(struct bnxt *bp,
- 		skb = bnxt_copy_skb(bnapi, data_ptr, len, mapping);
- 		if (!skb) {
- 			bnxt_abort_tpa(cpr, idx, agg_bufs);
--			cpr->sw_stats.rx.rx_oom_discards += 1;
-+			cpr->bnapi->cp_ring.sw_stats.rx.rx_oom_discards += 1;
- 			return NULL;
- 		}
- 	} else {
-@@ -1707,7 +1707,7 @@ static inline struct sk_buff *bnxt_tpa_end(struct bnxt *bp,
- 		new_data = __bnxt_alloc_rx_frag(bp, &new_mapping, GFP_ATOMIC);
- 		if (!new_data) {
- 			bnxt_abort_tpa(cpr, idx, agg_bufs);
--			cpr->sw_stats.rx.rx_oom_discards += 1;
-+			cpr->bnapi->cp_ring.sw_stats.rx.rx_oom_discards += 1;
- 			return NULL;
- 		}
+--- a/fs/smb/client/cifspdu.h
++++ b/fs/smb/client/cifspdu.h
+@@ -882,7 +882,7 @@ typedef struct smb_com_open_rsp {
+ 	__u8 OplockLevel;
+ 	__u16 Fid;
+ 	__le32 CreateAction;
+-	struct_group(common_attributes,
++	struct_group_attr(common_attributes, __packed,
+ 		__le64 CreationTime;
+ 		__le64 LastAccessTime;
+ 		__le64 LastWriteTime;
+@@ -2270,7 +2270,7 @@ typedef struct {
+ /* QueryFileInfo/QueryPathinfo (also for SetPath/SetFile) data buffer formats */
+ /******************************************************************************/
+ typedef struct { /* data block encoding of response to level 263 QPathInfo */
+-	struct_group(common_attributes,
++	struct_group_attr(common_attributes, __packed,
+ 		__le64 CreationTime;
+ 		__le64 LastAccessTime;
+ 		__le64 LastWriteTime;
+--- a/fs/smb/client/smb2pdu.h
++++ b/fs/smb/client/smb2pdu.h
+@@ -339,7 +339,7 @@ struct smb2_file_reparse_point_info {
+ } __packed;
  
-@@ -1723,7 +1723,7 @@ static inline struct sk_buff *bnxt_tpa_end(struct bnxt *bp,
- 		if (!skb) {
- 			skb_free_frag(data);
- 			bnxt_abort_tpa(cpr, idx, agg_bufs);
--			cpr->sw_stats.rx.rx_oom_discards += 1;
-+			cpr->bnapi->cp_ring.sw_stats.rx.rx_oom_discards += 1;
- 			return NULL;
- 		}
- 		skb_reserve(skb, bp->rx_offset);
-@@ -1734,7 +1734,7 @@ static inline struct sk_buff *bnxt_tpa_end(struct bnxt *bp,
- 		skb = bnxt_rx_agg_pages_skb(bp, cpr, skb, idx, agg_bufs, true);
- 		if (!skb) {
- 			/* Page reuse already handled by bnxt_rx_pages(). */
--			cpr->sw_stats.rx.rx_oom_discards += 1;
-+			cpr->bnapi->cp_ring.sw_stats.rx.rx_oom_discards += 1;
- 			return NULL;
- 		}
- 	}
-@@ -1950,11 +1950,8 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 			u32 frag_len = bnxt_rx_agg_pages_xdp(bp, cpr, &xdp,
- 							     cp_cons, agg_bufs,
- 							     false);
--			if (!frag_len) {
--				cpr->sw_stats.rx.rx_oom_discards += 1;
--				rc = -ENOMEM;
--				goto next_rx;
--			}
-+			if (!frag_len)
-+				goto oom_next_rx;
- 		}
- 		xdp_active = true;
- 	}
-@@ -1977,9 +1974,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 				else
- 					bnxt_xdp_buff_frags_free(rxr, &xdp);
- 			}
--			cpr->sw_stats.rx.rx_oom_discards += 1;
--			rc = -ENOMEM;
--			goto next_rx;
-+			goto oom_next_rx;
- 		}
- 	} else {
- 		u32 payload;
-@@ -1990,29 +1985,21 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 			payload = 0;
- 		skb = bp->rx_skb_func(bp, rxr, cons, data, data_ptr, dma_addr,
- 				      payload | len);
--		if (!skb) {
--			cpr->sw_stats.rx.rx_oom_discards += 1;
--			rc = -ENOMEM;
--			goto next_rx;
--		}
-+		if (!skb)
-+			goto oom_next_rx;
- 	}
- 
- 	if (agg_bufs) {
- 		if (!xdp_active) {
- 			skb = bnxt_rx_agg_pages_skb(bp, cpr, skb, cp_cons, agg_bufs, false);
--			if (!skb) {
--				cpr->sw_stats.rx.rx_oom_discards += 1;
--				rc = -ENOMEM;
--				goto next_rx;
--			}
-+			if (!skb)
-+				goto oom_next_rx;
- 		} else {
- 			skb = bnxt_xdp_build_skb(bp, skb, agg_bufs, rxr->page_pool, &xdp, rxcmp1);
- 			if (!skb) {
- 				/* we should be able to free the old skb here */
- 				bnxt_xdp_buff_frags_free(rxr, &xdp);
--				cpr->sw_stats.rx.rx_oom_discards += 1;
--				rc = -ENOMEM;
--				goto next_rx;
-+				goto oom_next_rx;
- 			}
- 		}
- 	}
-@@ -2090,6 +2077,11 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 	*raw_cons = tmp_raw_cons;
- 
- 	return rc;
-+
-+oom_next_rx:
-+	cpr->bnapi->cp_ring.sw_stats.rx.rx_oom_discards += 1;
-+	rc = -ENOMEM;
-+	goto next_rx;
- }
- 
- /* In netpoll mode, if we are using a combined completion ring, we need to
-@@ -2135,7 +2127,7 @@ static int bnxt_force_rx_discard(struct bnxt *bp,
- 	}
- 	rc = bnxt_rx_pkt(bp, cpr, raw_cons, event);
- 	if (rc && rc != -EBUSY)
--		cpr->sw_stats.rx.rx_netpoll_discards += 1;
-+		cpr->bnapi->cp_ring.sw_stats.rx.rx_netpoll_discards += 1;
- 	return rc;
- }
- 
--- 
-2.43.0
-
+ struct smb2_file_network_open_info {
+-	struct_group(network_open_info,
++	struct_group_attr(network_open_info, __packed,
+ 		__le64 CreationTime;
+ 		__le64 LastAccessTime;
+ 		__le64 LastWriteTime;
 
 
