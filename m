@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC03A8801;
-	Tue, 30 Apr 2024 11:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C688801;
+	Tue, 30 Apr 2024 11:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475976; cv=none; b=pAD/lXUKK7nFZHnzNwsZqFiY7RhsW0m6t6wIcJgVDOHL9j4cpFT2U4PczEtrV0u8S+8gqMRAno5kMl3iMhd0P3ReynnZYIcsh4AjKTXRhOnJLrsGU7T1Lv/uXiaQ/O41NYebHWuGM/7Shqf/TDWnfAQdQWYxS4ZWwh/JWowI/ic=
+	t=1714475980; cv=none; b=VVB46Zm2mLEei2kzyC6K2Y3hPSiAeEj1CR852dbtLRlQWXSWtnDQ9QIrdBo/s7Dq0Wl3zMsChWwiQ+769KGXRK7uo2+hS1cDfAYSEa9b6hmc5bZNdKjc+yzydQcF7Rlpi+3IFx0R5a73f04ZFq+9DEYhmi+x/WtnDLsVpSIicmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475976; c=relaxed/simple;
-	bh=1xo8Q7ZVa1c/IZVP6TdILx6HiV90yNyi4/B2ZNRJBe8=;
+	s=arc-20240116; t=1714475980; c=relaxed/simple;
+	bh=zMXijcaXM8wbNPZqv/oVyvbN6WnpTPI6Mr1gOH+AEYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T9xQ+CZvOH6sZGIQ4pqTVcW315fBrZK9FiqFvgO2KssoHrVCA0f75xzpnRdBxX4srRb/x667aYG2juwdc3bpduJKD+XbTeAYaZZx3eggxElLwSlARb30An+GTi0WARRcqah5ZZVBOos5RKo7bi1EKd4U5rDZqtky4M1I0I1W1cE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKylsNjC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uAzu0slEkaYgRSovRtXUc8qFeEuUg/9IzOydDWeM4iXds7VuwLnch0SRCFRwo6wL3csFoH4H0xxjbjItuJ1RXGpbyt9hy3PCSiV5uIxlMFVgqF0tJcPGjjNEuta67c8PCXDsMsloC1qiM5Zr5O2uMEimXIOWZZFXXs6353tmFcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pi527fok; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKylsNjC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416A6C2BBFC;
-	Tue, 30 Apr 2024 11:19:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pi527fok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B4DC2BBFC;
+	Tue, 30 Apr 2024 11:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475976;
-	bh=1xo8Q7ZVa1c/IZVP6TdILx6HiV90yNyi4/B2ZNRJBe8=;
+	s=korg; t=1714475979;
+	bh=zMXijcaXM8wbNPZqv/oVyvbN6WnpTPI6Mr1gOH+AEYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jKylsNjCF59grvcF/j9fFqGaIg4nOQLDxJd0gULqAC8stj1KO/M4qX3NKRFz9DtMo
-	 adCI7pwimBQzW9j4+kMVjVkrdWYlG8WiSa3Bk7SGCjFnZNMdcO6II1WYGuSewuT5Pz
-	 CmTx5cguJ5S4pkouT150Ppu8B+p8aoq7H7JNAv8M=
+	b=Pi527fokkWPYZN8TMXVOFc1fRq1SWn8qpv+gaZlxpCKTqZ2NpDUQpOir5dCHKdP/H
+	 r0qjhgObhrhCg7DPJv3lIwehEjjqs21EwmY4u4JVr4e97US5PS601MqUGkogmaxID3
+	 RlzASza7hS7ZYCEjT0KDcU6k7/cDtF9sRUXWn70c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 27/80] net: gtp: Fix Use-After-Free in gtp_dellink
-Date: Tue, 30 Apr 2024 12:39:59 +0200
-Message-ID: <20240430103044.217964054@linuxfoundation.org>
+Subject: [PATCH 5.15 70/80] idma64: Dont try to serve interrupts when device is powered off
+Date: Tue, 30 Apr 2024 12:40:42 +0200
+Message-ID: <20240430103045.482345345@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 References: <20240430103043.397234724@linuxfoundation.org>
@@ -52,44 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <v4bel@theori.io>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit f2a904107ee2b647bb7794a1a82b67740d7c8a64 ]
+[ Upstream commit 9140ce47872bfd89fca888c2f992faa51d20c2bc ]
 
-Since call_rcu, which is called in the hlist_for_each_entry_rcu traversal
-of gtp_dellink, is not part of the RCU read critical section, it
-is possible that the RCU grace period will pass during the traversal and
-the key will be free.
+When iDMA 64-bit device is powered off, the IRQ status register
+is all 1:s. This is never happen in real case and signalling that
+the device is simply powered off. Don't try to serve interrupts
+that are not ours.
 
-To prevent this, it should be changed to hlist_for_each_entry_safe.
-
-Fixes: 94dc550a5062 ("gtp: fix an use-after-free in ipv4_pdp_find()")
-Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 667dfed98615 ("dmaengine: add a driver for Intel integrated DMA 64-bit")
+Reported-by: Heiner Kallweit <hkallweit1@gmail.com>
+Closes: https://lore.kernel.org/r/700bbb84-90e1-4505-8ff0-3f17ea8bc631@gmail.com
+Tested-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20240321120453.1360138-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma/idma64.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index ce93316f5f116..3271428e64b8c 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -713,11 +713,12 @@ static int gtp_newlink(struct net *src_net, struct net_device *dev,
- static void gtp_dellink(struct net_device *dev, struct list_head *head)
- {
- 	struct gtp_dev *gtp = netdev_priv(dev);
-+	struct hlist_node *next;
- 	struct pdp_ctx *pctx;
- 	int i;
+diff --git a/drivers/dma/idma64.c b/drivers/dma/idma64.c
+index f4c07ad3be15b..af8777a1ec2e3 100644
+--- a/drivers/dma/idma64.c
++++ b/drivers/dma/idma64.c
+@@ -167,6 +167,10 @@ static irqreturn_t idma64_irq(int irq, void *dev)
+ 	u32 status_err;
+ 	unsigned short i;
  
- 	for (i = 0; i < gtp->hash_size; i++)
--		hlist_for_each_entry_rcu(pctx, &gtp->tid_hash[i], hlist_tid)
-+		hlist_for_each_entry_safe(pctx, next, &gtp->tid_hash[i], hlist_tid)
- 			pdp_context_delete(pctx);
++	/* Since IRQ may be shared, check if DMA controller is powered on */
++	if (status == GENMASK(31, 0))
++		return IRQ_NONE;
++
+ 	dev_vdbg(idma64->dma.dev, "%s: status=%#x\n", __func__, status);
  
- 	list_del_rcu(&gtp->list);
+ 	/* Check if we have any interrupt from the DMA controller */
 -- 
 2.43.0
 
