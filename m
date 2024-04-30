@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E397B8801;
-	Tue, 30 Apr 2024 11:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B750A12CDAE;
+	Tue, 30 Apr 2024 11:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476191; cv=none; b=ZyPhFk4rvzJ57v452fAA0SowqioMxS6rKhCm4Cb5NLRsbsrCfU1H72d1AA2NdHU+keurK6f6+6WiehYHyyt60y+k3SG7ewnuxSazIaaEUTQPc7HowWQvuZcQSG/az6SBUGhBdd6t4Up/QgZpiHORSKcX8TUILMl1Z3hN3y6qvtk=
+	t=1714476193; cv=none; b=UORLyMNA0RksVyBM4jv9q9duonljOtNlRSoJU0D0p0ojP/9war+XrBRgWXYpXQBqno3VSjjTUSgeYA9L5Vbz/J3uE5EAMGnwOv3UAW2yIuCZ01aKDjwwZh2QTaupbZD6VQDFrBmNszQyj0Am7MW65UrzZnc3uOGiU44dpCHsWZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476191; c=relaxed/simple;
-	bh=3k9CdTI/8OVdl52+BaJCE8aHJlrXvaKWJOQ/S5QkmBw=;
+	s=arc-20240116; t=1714476193; c=relaxed/simple;
+	bh=0vAZGj0uPhgDwajkrw7LiwfcPuazIod0iVkHFGaZheQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oN1toqxikieGCDG2pjeGXm0arg1LBSQBMDqHal1e6js81q+La2EI9XibSoWafQ9GHUWOYd1icXQhF+oB7xw2qZbyrAlyXnCR1AmyZJJF4yS9RDOEJq1fuMdjmE2V8cYDt8biZkDJzfv+OalLNCpCNHNbbZnjtrPlzFyBfyHcD9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=caWMEO/d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KcZV1S6YzmUz+zECQnok2xrMH2NSMnSgPlOZIHJKGWhPqNvDWqNmDRl1dvH0k7YP+kq9RzKtujAvez9xZpdfxy9vSU0T9+Z5AQvQ0vru0WAK1V6BRsZPq3T0cTnXmcG7KzrUWlyARqiLvFnF/fZxPXdR8saMeTXpzQidNtiBo78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWEqxiaK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="caWMEO/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FC8C2BBFC;
-	Tue, 30 Apr 2024 11:23:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWEqxiaK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F01C2BBFC;
+	Tue, 30 Apr 2024 11:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476190;
-	bh=3k9CdTI/8OVdl52+BaJCE8aHJlrXvaKWJOQ/S5QkmBw=;
+	s=korg; t=1714476193;
+	bh=0vAZGj0uPhgDwajkrw7LiwfcPuazIod0iVkHFGaZheQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=caWMEO/dJ60ZtPKXsxwt7JOzseW+zRxGYXyBXdL0ZGo59O1ZlmA3fUSt7vXovJTI5
-	 oJQBKQ0mWreaApkh5InHAu5hHGcTPNB3XiLDoWZsiyNIDTnXNJYcz3jTWeWXgB+I3u
-	 T4crvWIYAm2tCWWZdY1s9Cole88Il4KOH/HC6V5k=
+	b=YWEqxiaKciZR0oTCp9QvkQvI1PLEPJ2vycc3w+m03Lgvlnc0r8yZtxJFBF6QiDvr0
+	 rhZuBYinPS7J91J8JLvoY/Zilly/R9drF/9y5ltm98co5jrIr+81d7ZxK50G7Yy1Y7
+	 2LdLiVnj6c1vQru/o7FW+RkNDOP/jNKQ68LBX988=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@resnulli.us>,
-	Amit Cohen <amcohen@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	Paul Geurts <paul_geurts@live.nl>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 062/107] mlxsw: core: Unregister EMAD trap using FORWARD action
-Date: Tue, 30 Apr 2024 12:40:22 +0200
-Message-ID: <20240430103046.486478356@linuxfoundation.org>
+Subject: [PATCH 5.4 063/107] NFC: trf7970a: disable all regulators on removal
+Date: Tue, 30 Apr 2024 12:40:23 +0200
+Message-ID: <20240430103046.515406476@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -55,55 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Paul Geurts <paul_geurts@live.nl>
 
-[ Upstream commit 976c44af48141cd8595601c0af2a19a43c5b228b ]
+[ Upstream commit 6bea4f03c6a4e973ef369e15aac88f37981db49e ]
 
-The device's manual (PRM - Programmer's Reference Manual) classifies the
-trap that is used to deliver EMAD responses as an "event trap". Among
-other things, it means that the only actions that can be associated with
-the trap are TRAP and FORWARD (NOP).
+During module probe, regulator 'vin' and 'vdd-io' are used and enabled,
+but the vdd-io regulator overwrites the 'vin' regulator pointer. During
+remove, only the vdd-io is disabled, as the vin regulator pointer is not
+available anymore. When regulator_put() is called during resource
+cleanup a kernel warning is given, as the regulator is still enabled.
 
-Currently, during driver de-initialization the driver unregisters the
-trap by setting its action to DISCARD, which violates the above
-guideline. Future firmware versions will prevent such misuses by
-returning an error. This does not prevent the driver from working, but
-an error will be printed to the kernel log during module removal /
-devlink reload:
+Store the two regulators in separate pointers and disable both the
+regulators on module remove.
 
-mlxsw_spectrum 0000:03:00.0: Reg cmd access status failed (status=7(bad parameter))
-mlxsw_spectrum 0000:03:00.0: Reg cmd access failed (reg_id=7003(hpkt),type=write)
-
-Suppress the error message by aligning the driver to the manual and use
-a FORWARD (NOP) action when unregistering the trap.
-
-Fixes: 4ec14b7634b2 ("mlxsw: Add interface to access registers and process events")
-Cc: Jiri Pirko <jiri@resnulli.us>
-Cc: Amit Cohen <amcohen@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://lore.kernel.org/r/753a89e14008fde08cb4a2c1e5f537b81d8eb2d6.1713446092.git.petrm@nvidia.com
+Fixes: 49d22c70aaf0 ("NFC: trf7970a: Add device tree option of 1.8 Volt IO voltage")
+Signed-off-by: Paul Geurts <paul_geurts@live.nl>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/DB7PR09MB26847A4EBF88D9EDFEB1DA0F950E2@DB7PR09MB2684.eurprd09.prod.outlook.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nfc/trf7970a.c | 42 +++++++++++++++++++++++-------------------
+ 1 file changed, 23 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/core.c b/drivers/net/ethernet/mellanox/mlxsw/core.c
-index 2d39bade89e33..bb9299481b45b 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/core.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/core.c
-@@ -566,7 +566,7 @@ static void mlxsw_emad_rx_listener_func(struct sk_buff *skb, u8 local_port,
+diff --git a/drivers/nfc/trf7970a.c b/drivers/nfc/trf7970a.c
+index e46adaac1c635..153ed0c0c2b19 100644
+--- a/drivers/nfc/trf7970a.c
++++ b/drivers/nfc/trf7970a.c
+@@ -424,7 +424,8 @@ struct trf7970a {
+ 	enum trf7970a_state		state;
+ 	struct device			*dev;
+ 	struct spi_device		*spi;
+-	struct regulator		*regulator;
++	struct regulator		*vin_regulator;
++	struct regulator		*vddio_regulator;
+ 	struct nfc_digital_dev		*ddev;
+ 	u32				quirks;
+ 	bool				is_initiator;
+@@ -1883,7 +1884,7 @@ static int trf7970a_power_up(struct trf7970a *trf)
+ 	if (trf->state != TRF7970A_ST_PWR_OFF)
+ 		return 0;
  
- static const struct mlxsw_listener mlxsw_emad_rx_listener =
- 	MLXSW_RXL(mlxsw_emad_rx_listener_func, ETHEMAD, TRAP_TO_CPU, false,
--		  EMAD, DISCARD);
-+		  EMAD, FORWARD);
+-	ret = regulator_enable(trf->regulator);
++	ret = regulator_enable(trf->vin_regulator);
+ 	if (ret) {
+ 		dev_err(trf->dev, "%s - Can't enable VIN: %d\n", __func__, ret);
+ 		return ret;
+@@ -1926,7 +1927,7 @@ static int trf7970a_power_down(struct trf7970a *trf)
+ 	if (trf->en2_gpiod && !(trf->quirks & TRF7970A_QUIRK_EN2_MUST_STAY_LOW))
+ 		gpiod_set_value_cansleep(trf->en2_gpiod, 0);
  
- static int mlxsw_emad_init(struct mlxsw_core *mlxsw_core)
- {
+-	ret = regulator_disable(trf->regulator);
++	ret = regulator_disable(trf->vin_regulator);
+ 	if (ret)
+ 		dev_err(trf->dev, "%s - Can't disable VIN: %d\n", __func__,
+ 			ret);
+@@ -2065,37 +2066,37 @@ static int trf7970a_probe(struct spi_device *spi)
+ 	mutex_init(&trf->lock);
+ 	INIT_DELAYED_WORK(&trf->timeout_work, trf7970a_timeout_work_handler);
+ 
+-	trf->regulator = devm_regulator_get(&spi->dev, "vin");
+-	if (IS_ERR(trf->regulator)) {
+-		ret = PTR_ERR(trf->regulator);
++	trf->vin_regulator = devm_regulator_get(&spi->dev, "vin");
++	if (IS_ERR(trf->vin_regulator)) {
++		ret = PTR_ERR(trf->vin_regulator);
+ 		dev_err(trf->dev, "Can't get VIN regulator: %d\n", ret);
+ 		goto err_destroy_lock;
+ 	}
+ 
+-	ret = regulator_enable(trf->regulator);
++	ret = regulator_enable(trf->vin_regulator);
+ 	if (ret) {
+ 		dev_err(trf->dev, "Can't enable VIN: %d\n", ret);
+ 		goto err_destroy_lock;
+ 	}
+ 
+-	uvolts = regulator_get_voltage(trf->regulator);
++	uvolts = regulator_get_voltage(trf->vin_regulator);
+ 	if (uvolts > 4000000)
+ 		trf->chip_status_ctrl = TRF7970A_CHIP_STATUS_VRS5_3;
+ 
+-	trf->regulator = devm_regulator_get(&spi->dev, "vdd-io");
+-	if (IS_ERR(trf->regulator)) {
+-		ret = PTR_ERR(trf->regulator);
++	trf->vddio_regulator = devm_regulator_get(&spi->dev, "vdd-io");
++	if (IS_ERR(trf->vddio_regulator)) {
++		ret = PTR_ERR(trf->vddio_regulator);
+ 		dev_err(trf->dev, "Can't get VDD_IO regulator: %d\n", ret);
+-		goto err_destroy_lock;
++		goto err_disable_vin_regulator;
+ 	}
+ 
+-	ret = regulator_enable(trf->regulator);
++	ret = regulator_enable(trf->vddio_regulator);
+ 	if (ret) {
+ 		dev_err(trf->dev, "Can't enable VDD_IO: %d\n", ret);
+-		goto err_destroy_lock;
++		goto err_disable_vin_regulator;
+ 	}
+ 
+-	if (regulator_get_voltage(trf->regulator) == 1800000) {
++	if (regulator_get_voltage(trf->vddio_regulator) == 1800000) {
+ 		trf->io_ctrl = TRF7970A_REG_IO_CTRL_IO_LOW;
+ 		dev_dbg(trf->dev, "trf7970a config vdd_io to 1.8V\n");
+ 	}
+@@ -2108,7 +2109,7 @@ static int trf7970a_probe(struct spi_device *spi)
+ 	if (!trf->ddev) {
+ 		dev_err(trf->dev, "Can't allocate NFC digital device\n");
+ 		ret = -ENOMEM;
+-		goto err_disable_regulator;
++		goto err_disable_vddio_regulator;
+ 	}
+ 
+ 	nfc_digital_set_parent_dev(trf->ddev, trf->dev);
+@@ -2137,8 +2138,10 @@ static int trf7970a_probe(struct spi_device *spi)
+ 	trf7970a_shutdown(trf);
+ err_free_ddev:
+ 	nfc_digital_free_device(trf->ddev);
+-err_disable_regulator:
+-	regulator_disable(trf->regulator);
++err_disable_vddio_regulator:
++	regulator_disable(trf->vddio_regulator);
++err_disable_vin_regulator:
++	regulator_disable(trf->vin_regulator);
+ err_destroy_lock:
+ 	mutex_destroy(&trf->lock);
+ 	return ret;
+@@ -2157,7 +2160,8 @@ static int trf7970a_remove(struct spi_device *spi)
+ 	nfc_digital_unregister_device(trf->ddev);
+ 	nfc_digital_free_device(trf->ddev);
+ 
+-	regulator_disable(trf->regulator);
++	regulator_disable(trf->vddio_regulator);
++	regulator_disable(trf->vin_regulator);
+ 
+ 	mutex_destroy(&trf->lock);
+ 
 -- 
 2.43.0
 
