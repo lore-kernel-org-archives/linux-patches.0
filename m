@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CECE7464;
-	Tue, 30 Apr 2024 11:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1457464;
+	Tue, 30 Apr 2024 11:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474817; cv=none; b=GwtSzjccfTu5F647x/2pY98VNSTT3/WnQjIt6al+vvxtewoSdQMs3jFfwgvpEFiccRRH7uQzHbjWRn8/vQ/Bk9vkWxKiaPvVRTsRk4Job8CUEVnk7yXdplVNtltB0J9UNtkcRCxuESfSM0f6h0sDly9aqKiF+nhIkB7JbqfAU+k=
+	t=1714474820; cv=none; b=b+saZc0y17tTxur+xuDiGXbxfHa3IspDyRZTEJexhXzyTBGsV0Zk5TVMZ4Z7VLiq8y20mtd5YA2XKtNizjCaZU6FnnbitqTdskCCCIljCeO+ZuOcYFJlEnUhE+vcS7MOmH2W1W9UYA2nKYt+jMfz8kIo2Px7CMbBAUei7HcEaMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474817; c=relaxed/simple;
-	bh=XTmQ0ssi4hQIGuHALZFLujV7wKv/oEuckRXWqnfB98M=;
+	s=arc-20240116; t=1714474820; c=relaxed/simple;
+	bh=qJwB5hpzcbPj/By/4ijKwCdo2FA3ml51+CYNfq3kQ3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ftTfSbcALfOkvShMv/uCTG7RZryaXlIdiG79rRTm8rqWcWfNBExPsgPKlSfiH6fRyRVRYRNtbHk8HGTEzIWr9roqQYzG0kEnYVHylSJpFG7/BsugBheIMyyNOQpk8wVIaGoUarDovnq2dYtV7RgQ16oS/rMkwnymcIwo1XWCEc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDmDz8dP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n0Zg7n12cXkbj75q7Ch46l9cbRiixxDIwLNHxzu9QmRfrDqDy/HyLttfwp8DZzMIylxTPh05CFaaCgDLZ4a8L5CSneESzBzX/j00c1LFSvGUKE9zBSdNahmQ548X7rj8jSpAon6CW1ffQzBvDzEGH64D2TI3zA0YpkC3N0qq7yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDsNxj9J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDmDz8dP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E2AC2BBFC;
-	Tue, 30 Apr 2024 11:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDsNxj9J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205C8C2BBFC;
+	Tue, 30 Apr 2024 11:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474817;
-	bh=XTmQ0ssi4hQIGuHALZFLujV7wKv/oEuckRXWqnfB98M=;
+	s=korg; t=1714474820;
+	bh=qJwB5hpzcbPj/By/4ijKwCdo2FA3ml51+CYNfq3kQ3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vDmDz8dPXB0yiRdoGK79242jN4PjeUbr+2kDkQ1cb222syCmmyNIbPRknB1HdReq7
-	 GgNqr/UUzDq4NNgs3Nyc4/32xfw4JxzIvk8rR74x10W7V+aUnutz2lbnOrIpV7pLT4
-	 oionrkismvdvzuXgrTBooATB7/QR3Z90i8wMWYWk=
+	b=KDsNxj9JQWbKU48lBkufInjZM3blrOTMpZ8/pHHPjT3CrZHfE0Aqq3bOT/dru9Zyu
+	 lPx1qvuqrGpMMQVSAQZhKUnDofAoi52svLEuezHpyYc/r9JVYJyI9X/QGEG/ZHQdBa
+	 P8FyC5fewUFdJAevN6lqNcch6kMO/BM5+8f8+nTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9ee20ec1de7b3168db09@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Phillip Potter <phil@philpotter.co.uk>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	"David S. Miller" <davem@davemloft.net>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 008/138] geneve: fix header validation in geneve[6]_xmit_skb
-Date: Tue, 30 Apr 2024 12:38:13 +0200
-Message-ID: <20240430103049.670950440@linuxfoundation.org>
+Subject: [PATCH 5.10 009/138] octeontx2-af: Fix NIX SQ mode and BP config
+Date: Tue, 30 Apr 2024 12:38:14 +0200
+Message-ID: <20240430103049.700228407@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -54,164 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit d8a6213d70accb403b82924a1c229e733433a5ef ]
+[ Upstream commit faf23006185e777db18912685922c5ddb2df383f ]
 
-syzbot is able to trigger an uninit-value in geneve_xmit() [1]
+NIX SQ mode and link backpressure configuration is required for
+all platforms. But in current driver this code is wrongly placed
+under specific platform check. This patch fixes the issue by
+moving the code out of platform check.
 
-Problem : While most ip tunnel helpers (like ip_tunnel_get_dsfield())
-uses skb_protocol(skb, true), pskb_inet_may_pull() is only using
-skb->protocol.
-
-If anything else than ETH_P_IPV6 or ETH_P_IP is found in skb->protocol,
-pskb_inet_may_pull() does nothing at all.
-
-If a vlan tag was provided by the caller (af_packet in the syzbot case),
-the network header might not point to the correct location, and skb
-linear part could be smaller than expected.
-
-Add skb_vlan_inet_prepare() to perform a complete mac validation.
-
-Use this in geneve for the moment, I suspect we need to adopt this
-more broadly.
-
-v4 - Jakub reported v3 broke l2_tos_ttl_inherit.sh selftest
-   - Only call __vlan_get_protocol() for vlan types.
-Link: https://lore.kernel.org/netdev/20240404100035.3270a7d5@kernel.org/
-
-v2,v3 - Addressed Sabrina comments on v1 and v2
-Link: https://lore.kernel.org/netdev/Zg1l9L2BNoZWZDZG@hog/
-
-[1]
-
-BUG: KMSAN: uninit-value in geneve_xmit_skb drivers/net/geneve.c:910 [inline]
- BUG: KMSAN: uninit-value in geneve_xmit+0x302d/0x5420 drivers/net/geneve.c:1030
-  geneve_xmit_skb drivers/net/geneve.c:910 [inline]
-  geneve_xmit+0x302d/0x5420 drivers/net/geneve.c:1030
-  __netdev_start_xmit include/linux/netdevice.h:4903 [inline]
-  netdev_start_xmit include/linux/netdevice.h:4917 [inline]
-  xmit_one net/core/dev.c:3531 [inline]
-  dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3547
-  __dev_queue_xmit+0x348d/0x52c0 net/core/dev.c:4335
-  dev_queue_xmit include/linux/netdevice.h:3091 [inline]
-  packet_xmit+0x9c/0x6c0 net/packet/af_packet.c:276
-  packet_snd net/packet/af_packet.c:3081 [inline]
-  packet_sendmsg+0x8bb0/0x9ef0 net/packet/af_packet.c:3113
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  __sys_sendto+0x685/0x830 net/socket.c:2191
-  __do_sys_sendto net/socket.c:2203 [inline]
-  __se_sys_sendto net/socket.c:2199 [inline]
-  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2199
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:3804 [inline]
-  slab_alloc_node mm/slub.c:3845 [inline]
-  kmem_cache_alloc_node+0x613/0xc50 mm/slub.c:3888
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:577
-  __alloc_skb+0x35b/0x7a0 net/core/skbuff.c:668
-  alloc_skb include/linux/skbuff.h:1318 [inline]
-  alloc_skb_with_frags+0xc8/0xbf0 net/core/skbuff.c:6504
-  sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2795
-  packet_alloc_skb net/packet/af_packet.c:2930 [inline]
-  packet_snd net/packet/af_packet.c:3024 [inline]
-  packet_sendmsg+0x722d/0x9ef0 net/packet/af_packet.c:3113
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:745
-  __sys_sendto+0x685/0x830 net/socket.c:2191
-  __do_sys_sendto net/socket.c:2203 [inline]
-  __se_sys_sendto net/socket.c:2199 [inline]
-  __x64_sys_sendto+0x125/0x1d0 net/socket.c:2199
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-CPU: 0 PID: 5033 Comm: syz-executor346 Not tainted 6.9.0-rc1-syzkaller-00005-g928a87efa423 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/29/2024
-
-Fixes: d13f048dd40e ("net: geneve: modify IP header check in geneve6_xmit_skb and geneve_xmit_skb")
-Reported-by: syzbot+9ee20ec1de7b3168db09@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/000000000000d19c3a06152f9ee4@google.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Phillip Potter <phil@philpotter.co.uk>
-Cc: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Phillip Potter <phil@philpotter.co.uk>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 5d9b976d4480 ("octeontx2-af: Support fixed transmit scheduler topology")
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Link: https://lore.kernel.org/r/20240408063643.26288-1-gakula@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/geneve.c     |  4 ++--
- include/net/ip_tunnels.h | 33 +++++++++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+), 2 deletions(-)
+ .../ethernet/marvell/octeontx2/af/rvu_nix.c   | 20 +++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
-index 2bb9820c66641..af35361a3dcee 100644
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -907,7 +907,7 @@ static int geneve_xmit_skb(struct sk_buff *skb, struct net_device *dev,
- 	__be16 sport;
- 	int err;
- 
--	if (!pskb_inet_may_pull(skb))
-+	if (!skb_vlan_inet_prepare(skb))
- 		return -EINVAL;
- 
- 	sport = udp_flow_src_port(geneve->net, skb, 1, USHRT_MAX, true);
-@@ -1004,7 +1004,7 @@ static int geneve6_xmit_skb(struct sk_buff *skb, struct net_device *dev,
- 	__be16 sport;
- 	int err;
- 
--	if (!pskb_inet_may_pull(skb))
-+	if (!skb_vlan_inet_prepare(skb))
- 		return -EINVAL;
- 
- 	sport = udp_flow_src_port(geneve->net, skb, 1, USHRT_MAX, true);
-diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
-index 58d8e6260aa13..1f016af0622bd 100644
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -333,6 +333,39 @@ static inline bool pskb_inet_may_pull(struct sk_buff *skb)
- 	return pskb_network_may_pull(skb, nhlen);
- }
- 
-+/* Variant of pskb_inet_may_pull().
-+ */
-+static inline bool skb_vlan_inet_prepare(struct sk_buff *skb)
-+{
-+	int nhlen = 0, maclen = ETH_HLEN;
-+	__be16 type = skb->protocol;
-+
-+	/* Essentially this is skb_protocol(skb, true)
-+	 * And we get MAC len.
-+	 */
-+	if (eth_type_vlan(type))
-+		type = __vlan_get_protocol(skb, type, &maclen);
-+
-+	switch (type) {
-+#if IS_ENABLED(CONFIG_IPV6)
-+	case htons(ETH_P_IPV6):
-+		nhlen = sizeof(struct ipv6hdr);
-+		break;
-+#endif
-+	case htons(ETH_P_IP):
-+		nhlen = sizeof(struct iphdr);
-+		break;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index e549b09c347a7..fb4b18be503c5 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -3146,18 +3146,18 @@ int rvu_nix_init(struct rvu *rvu)
+ 		 */
+ 		rvu_write64(rvu, blkaddr, NIX_AF_CFG,
+ 			    rvu_read64(rvu, blkaddr, NIX_AF_CFG) | 0x40ULL);
 +	}
-+	/* For ETH_P_IPV6/ETH_P_IP we make sure to pull
-+	 * a base network header in skb->head.
+ 
+-		/* Set chan/link to backpressure TL3 instead of TL2 */
+-		rvu_write64(rvu, blkaddr, NIX_AF_PSE_CHANNEL_LEVEL, 0x01);
++	/* Set chan/link to backpressure TL3 instead of TL2 */
++	rvu_write64(rvu, blkaddr, NIX_AF_PSE_CHANNEL_LEVEL, 0x01);
+ 
+-		/* Disable SQ manager's sticky mode operation (set TM6 = 0)
+-		 * This sticky mode is known to cause SQ stalls when multiple
+-		 * SQs are mapped to same SMQ and transmitting pkts at a time.
+-		 */
+-		cfg = rvu_read64(rvu, blkaddr, NIX_AF_SQM_DBG_CTL_STATUS);
+-		cfg &= ~BIT_ULL(15);
+-		rvu_write64(rvu, blkaddr, NIX_AF_SQM_DBG_CTL_STATUS, cfg);
+-	}
++	/* Disable SQ manager's sticky mode operation (set TM6 = 0)
++	 * This sticky mode is known to cause SQ stalls when multiple
++	 * SQs are mapped to same SMQ and transmitting pkts at a time.
 +	 */
-+	if (!pskb_may_pull(skb, maclen + nhlen))
-+		return false;
-+
-+	skb_set_network_header(skb, maclen);
-+	return true;
-+}
-+
- static inline int ip_encap_hlen(struct ip_tunnel_encap *e)
- {
- 	const struct ip_tunnel_encap_ops *ops;
++	cfg = rvu_read64(rvu, blkaddr, NIX_AF_SQM_DBG_CTL_STATUS);
++	cfg &= ~BIT_ULL(15);
++	rvu_write64(rvu, blkaddr, NIX_AF_SQM_DBG_CTL_STATUS, cfg);
+ 
+ 	ltdefs = rvu->kpu.lt_def;
+ 	/* Calibrate X2P bus to check if CGX/LBK links are fine */
 -- 
 2.43.0
 
