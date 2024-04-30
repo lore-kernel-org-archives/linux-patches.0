@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946291E50A;
-	Tue, 30 Apr 2024 11:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC958801;
+	Tue, 30 Apr 2024 11:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475420; cv=none; b=hhL0EYvjjc0v5C4CcbbhSukNYfhvfA+MF+rO1J5rqw6cNOFRstfwFxmm7bKZKRwCbCrRyztEpE32Vu0LuhvoFQODmVC9Q1+jfH3QzbZxtOdAdFmV39OSCfHjhY4UxD8agAWEfS6JVrd8wET9s/rEueY1q0bJemzlDEQZvNR3avE=
+	t=1714475423; cv=none; b=idgYq7RMnDD/pmCU0bpZbxFO6pJiHkgEIL4bfarRFdyNz62SGzwU5kwSHi64IX9iWdvzfUpTX3f1kcUqXCedOEOJu+jyo79PSbw7IhpnMHRJxAg7B/KFl11VhvZKZOIsiZeEFWSXoWFchhr/FuNAzwPbsPhLQtG/CkpvgGLSKyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475420; c=relaxed/simple;
-	bh=DH7HNXwQ5Cvn6FPjNJUr0f4CwvhhKNfgHRhgxRBtsOY=;
+	s=arc-20240116; t=1714475423; c=relaxed/simple;
+	bh=t4CeHmxFjfc44fTGwl9Cil+nVJcw6ajgL1eAJff4ejQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XS3v0oGTg7OO1UAO0YHG1vhiA55pLVImrAg7vLakDIuP3XNcECzzJ5RVau/OJBP7hKzrM6M3nAUnHPqTJmrQLdyIIPakgqG3hzDC9WDnSlEsZbuMx03rEeq3h7CIRPOGou8p07bR/eE0dfmfC/fw5C2w1GcDqhHMFW88HbtKZ/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aw3/CrrK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l4NTJ7NYqtqBX/ye9JuuItl7QHQ9F7AKlxaTmF0b20WUh9XORR93CW+CBUAIu/zGfmEszblSD1u/JilifsbHDgkBOY3s6RcWQIXblvEbkrD3MYzaKuuJQLMvYzqle2GF+Sv2vlrQybCZjb6/0fFnQ4nu+qN1nRFTJF9LnZaep1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDxztt55; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aw3/CrrK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BFD4C2BBFC;
-	Tue, 30 Apr 2024 11:10:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDxztt55"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBA8C2BBFC;
+	Tue, 30 Apr 2024 11:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475420;
-	bh=DH7HNXwQ5Cvn6FPjNJUr0f4CwvhhKNfgHRhgxRBtsOY=;
+	s=korg; t=1714475423;
+	bh=t4CeHmxFjfc44fTGwl9Cil+nVJcw6ajgL1eAJff4ejQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aw3/CrrKUvO6Vr5p7zHGkUQvavLrHVPNn+nuo59uohwQoUbVjlNwyHFlXxz1TkLJM
-	 DrRhdyYRsdQN4iS1nHvNvwJBLkwMQBAihs/kkIdf075GK/heAfpXgQLXTQLk4oQOS5
-	 MPSMwHBJuJBHc+87VZHFEihM2WyqPu28QHPf0KUI=
+	b=NDxztt550J/lk0lC+Ax6CHQomUhtngMC1qWRAggf9bXzCxRjVE2SaljQcq7pD3xEh
+	 1DURIoCfIvKNARNLuIgdUHuBURNJPLyTC9nGyQKEqXbtRaXEdCXzyfuPt1VT9/nTQx
+	 PRJLq6L/n2svIjno41HAsBxgR3zhEZycuS7I//3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erwan Velu <e.velu@criteo.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Brelinski <tony.brelinski@intel.com>,
+	Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 090/186] i40e: Report MFS in decimal base instead of hex
-Date: Tue, 30 Apr 2024 12:39:02 +0200
-Message-ID: <20240430103100.645694978@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Mineri Bhange <minerix.bhange@intel.com>
+Subject: [PATCH 6.6 091/186] iavf: Fix TC config comparison with existing adapter TC config
+Date: Tue, 30 Apr 2024 12:39:03 +0200
+Message-ID: <20240430103100.674547008@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -54,57 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erwan Velu <e.velu@criteo.com>
+From: Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>
 
-[ Upstream commit ef3c313119ea448c22da10366faa26b5b4b1a18e ]
+[ Upstream commit 54976cf58d6168b8d15cebb395069f23b2f34b31 ]
 
-If the MFS is set below the default (0x2600), a warning message is
-reported like the following :
+Same number of TCs doesn't imply that underlying TC configs are
+same. The config could be different due to difference in number
+of queues in each TC. Add utility function to determine if TC
+configs are same.
 
-	MFS for port 1 has been set below the default: 600
-
-This message is a bit confusing as the number shown here (600) is in
-fact an hexa number: 0x600 = 1536
-
-Without any explicit "0x" prefix, this message is read like the MFS is
-set to 600 bytes.
-
-MFS, as per MTUs, are usually expressed in decimal base.
-
-This commit reports both current and default MFS values in decimal
-so it's less confusing for end-users.
-
-A typical warning message looks like the following :
-
-	MFS for port 1 (1536) has been set below the default (9728)
-
-Signed-off-by: Erwan Velu <e.velu@criteo.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Tony Brelinski <tony.brelinski@intel.com>
+Fixes: d5b33d024496 ("i40evf: add ndo_setup_tc callback to i40evf")
+Signed-off-by: Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>
+Tested-by: Mineri Bhange <minerix.bhange@intel.com> (A Contingent Worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Fixes: 3a2c6ced90e1 ("i40e: Add a check to see if MFS is set")
-Link: https://lore.kernel.org/r/20240423182723.740401-3-anthony.l.nguyen@intel.com
+Link: https://lore.kernel.org/r/20240423182723.740401-4-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 30 ++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 54d3bd8ec5ea3..f8d1a994c2f65 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -16237,8 +16237,8 @@ static int i40e_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	val = (rd32(&pf->hw, I40E_PRTGL_SAH) &
- 	       I40E_PRTGL_SAH_MFS_MASK) >> I40E_PRTGL_SAH_MFS_SHIFT;
- 	if (val < MAX_FRAME_SIZE_DEFAULT)
--		dev_warn(&pdev->dev, "MFS for port %x has been set below the default: %x\n",
--			 pf->hw.port, val);
-+		dev_warn(&pdev->dev, "MFS for port %x (%d) has been set below the default (%d)\n",
-+			 pf->hw.port, val, MAX_FRAME_SIZE_DEFAULT);
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 257865647c865..ce0b919995264 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -3574,6 +3574,34 @@ static void iavf_del_all_cloud_filters(struct iavf_adapter *adapter)
+ 	spin_unlock_bh(&adapter->cloud_filter_list_lock);
+ }
  
- 	/* Add a filter to drop all Flow control frames from any VSI from being
- 	 * transmitted. By doing so we stop a malicious VF from sending out
++/**
++ * iavf_is_tc_config_same - Compare the mqprio TC config with the
++ * TC config already configured on this adapter.
++ * @adapter: board private structure
++ * @mqprio_qopt: TC config received from kernel.
++ *
++ * This function compares the TC config received from the kernel
++ * with the config already configured on the adapter.
++ *
++ * Return: True if configuration is same, false otherwise.
++ **/
++static bool iavf_is_tc_config_same(struct iavf_adapter *adapter,
++				   struct tc_mqprio_qopt *mqprio_qopt)
++{
++	struct virtchnl_channel_info *ch = &adapter->ch_config.ch_info[0];
++	int i;
++
++	if (adapter->num_tc != mqprio_qopt->num_tc)
++		return false;
++
++	for (i = 0; i < adapter->num_tc; i++) {
++		if (ch[i].count != mqprio_qopt->count[i] ||
++		    ch[i].offset != mqprio_qopt->offset[i])
++			return false;
++	}
++	return true;
++}
++
+ /**
+  * __iavf_setup_tc - configure multiple traffic classes
+  * @netdev: network interface device structure
+@@ -3631,7 +3659,7 @@ static int __iavf_setup_tc(struct net_device *netdev, void *type_data)
+ 		if (ret)
+ 			return ret;
+ 		/* Return if same TC config is requested */
+-		if (adapter->num_tc == num_tc)
++		if (iavf_is_tc_config_same(adapter, &mqprio_qopt->qopt))
+ 			return 0;
+ 		adapter->num_tc = num_tc;
+ 
 -- 
 2.43.0
 
