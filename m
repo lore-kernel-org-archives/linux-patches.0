@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594041E50A;
-	Tue, 30 Apr 2024 11:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C42D1E50A;
+	Tue, 30 Apr 2024 11:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475187; cv=none; b=gs2F77XAl1kDkjTso9iYDu1f9wtZyYA3UM88WdRZka9lotrM6uOeKPqbVZpsHOLU3FYi6ljTr9N8G6kHpaKUjkK+dW+sZSeCM0ab09baAoPZrOhGNILkoK73r75WBLtG2K0LBYjvXBJpdjCHU88/ceazAqsDRSoI63SzNYkvjDI=
+	t=1714475190; cv=none; b=lXaERp8fhVlmANlpXWJE5xr3a+Zz4ixU3hJfKk7+r12sBshiAtW3K85F+nyrrcs7g0Fqlvm+9tUUof2DeQs0rZkglThOoJKAUYwL2IgLH+X4FJKmY8qmgQz/jRl6jJSpU/c4p2e03k/Tqo2fCOtVDufDXFDEUz5JqtueLu6adJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475187; c=relaxed/simple;
-	bh=catForpKr/9+q4zTM5jZDWDlQ2mNsCWAItOlI56yGDE=;
+	s=arc-20240116; t=1714475190; c=relaxed/simple;
+	bh=OgWyBMeIsy+jldY05LckkCQAAyIajT3wg9w0rrtbl4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b9+kuHmZo8Qjogu08cothodjVSQUjRbGNRpwdUV8Ho71+QXvScxyPd4JHIn8m7ZKUk6VCketN2G4ef5X2ZVZuzQ0F8xxJfHs8Ni1OXtG854w+RgLH1LV4KafF2YtRhSKvtycNw+gzCglsAwuHFJpjUTYIr3MZEUk0zkW/dniAUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gz7QCces; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=atpuRlsEIXrGWf/VNhUwJCrakjFiIzrE4cqQ2DCzveP+BsXGZauxe64lYtWc2KVe72RynGpystPu5twBqAWA/ppSK3nfURSCB5PiLyN18j22LWNtCzqgqkXYAwB998BV72N4S4QLOgeasoM3zubKc5vuFhIyw//eaJqTMVx4+ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txoRhQV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gz7QCces"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33F6C4AF19;
-	Tue, 30 Apr 2024 11:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txoRhQV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4D6C2BBFC;
+	Tue, 30 Apr 2024 11:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475187;
-	bh=catForpKr/9+q4zTM5jZDWDlQ2mNsCWAItOlI56yGDE=;
+	s=korg; t=1714475190;
+	bh=OgWyBMeIsy+jldY05LckkCQAAyIajT3wg9w0rrtbl4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gz7QCcesgmt2MtnIoN3PrYKu8c3YpEGskkP3rAdQtYduEukv7D0oaEtdWOrEsKoN/
-	 mYkDujo2U6T3JUqt+N/WgtXm1ErH2Lca/HDZ75u1AYaiVa9AkqzJLGKh0v04JDHZfy
-	 byjqp6gt/A82/lF0mPNKSzxaA2VS4/HRhBH6K24g=
+	b=txoRhQV2Of464J9PBnyKDHwDLDphUFeHyH0q53OvhzPq7dYc3ipeT3RmIB7K7DpLC
+	 4v/4AnkYB6uJIalV08ybhv6v5ffFWoCK3HY1IVIPGThkSwbqdRKp6se6Vci9Za5cm1
+	 rPWYpcYfXaMTOx/HtKY9QltqxGai9ouZijvZMIfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pin-yen Lin <treapking@chromium.org>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/186] arm64: dts: mediatek: mt8183-kukui: Use default min voltage for MT6358
-Date: Tue, 30 Apr 2024 12:37:52 +0200
-Message-ID: <20240430103058.607562601@linuxfoundation.org>
+Subject: [PATCH 6.6 021/186] arm64: dts: mediatek: mt7622: fix clock controllers
+Date: Tue, 30 Apr 2024 12:37:53 +0200
+Message-ID: <20240430103058.636377432@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -45,43 +45,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pin-yen Lin <treapking@chromium.org>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 296118a8dc297de47d9b3a364b9743f8446bd612 ]
+[ Upstream commit 3ba5a61594347ab46e7c2cff6cd63ea0f1282efb ]
 
-The requested voltage could be lower than the minimum voltage on the
-GPU OPP table when the MTK Smart Voltage Scaling (SVS) driver is
-enabled, so removing the definition in mt8183-kukui to use the default
-minimum voltage (500000 uV) defined in mt6358.dtsi.
+1. Drop unneeded "syscon"s (bindings were updated recently)
+2. Use "clock-controller" in nodenames
+3. Add missing "#clock-cells"
 
-Fixes: 31c6732da9d5 ("arm64: dts: mediatek: mt8183-kukui: Override vgpu/vsram_gpu constraints")
-Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+Fixes: d7167881e03e ("arm64: dts: mt7622: add clock controller device nodes")
+Fixes: e9b65ecb7c30 ("arm64: dts: mediatek: mt7622: introduce nodes for Wireless Ethernet Dispatch")
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240315111621.2263159-4-treapking@chromium.org
+Link: https://lore.kernel.org/r/20240317221050.18595-2-zajec5@gmail.com
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt7622.dtsi | 27 +++++++++++-------------
+ 1 file changed, 12 insertions(+), 15 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-index 70becf10cacb8..d846342c1d3b2 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-@@ -405,7 +405,6 @@
- };
+diff --git a/arch/arm64/boot/dts/mediatek/mt7622.dtsi b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
+index 3ee9266fa8e98..283fdf7d2d8b9 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7622.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
+@@ -283,16 +283,14 @@
+ 		};
+ 	};
  
- &mt6358_vgpu_reg {
--	regulator-min-microvolt = <625000>;
- 	regulator-max-microvolt = <900000>;
+-	apmixedsys: apmixedsys@10209000 {
+-		compatible = "mediatek,mt7622-apmixedsys",
+-			     "syscon";
++	apmixedsys: clock-controller@10209000 {
++		compatible = "mediatek,mt7622-apmixedsys";
+ 		reg = <0 0x10209000 0 0x1000>;
+ 		#clock-cells = <1>;
+ 	};
  
- 	regulator-coupled-with = <&mt6358_vsram_gpu_reg>;
+-	topckgen: topckgen@10210000 {
+-		compatible = "mediatek,mt7622-topckgen",
+-			     "syscon";
++	topckgen: clock-controller@10210000 {
++		compatible = "mediatek,mt7622-topckgen";
+ 		reg = <0 0x10210000 0 0x1000>;
+ 		#clock-cells = <1>;
+ 	};
+@@ -734,9 +732,8 @@
+ 		power-domains = <&scpsys MT7622_POWER_DOMAIN_WB>;
+ 	};
+ 
+-	ssusbsys: ssusbsys@1a000000 {
+-		compatible = "mediatek,mt7622-ssusbsys",
+-			     "syscon";
++	ssusbsys: clock-controller@1a000000 {
++		compatible = "mediatek,mt7622-ssusbsys";
+ 		reg = <0 0x1a000000 0 0x1000>;
+ 		#clock-cells = <1>;
+ 		#reset-cells = <1>;
+@@ -793,9 +790,8 @@
+ 		};
+ 	};
+ 
+-	pciesys: pciesys@1a100800 {
+-		compatible = "mediatek,mt7622-pciesys",
+-			     "syscon";
++	pciesys: clock-controller@1a100800 {
++		compatible = "mediatek,mt7622-pciesys";
+ 		reg = <0 0x1a100800 0 0x1000>;
+ 		#clock-cells = <1>;
+ 		#reset-cells = <1>;
+@@ -921,12 +917,13 @@
+ 		};
+ 	};
+ 
+-	hifsys: syscon@1af00000 {
+-		compatible = "mediatek,mt7622-hifsys", "syscon";
++	hifsys: clock-controller@1af00000 {
++		compatible = "mediatek,mt7622-hifsys";
+ 		reg = <0 0x1af00000 0 0x70>;
++		#clock-cells = <1>;
+ 	};
+ 
+-	ethsys: syscon@1b000000 {
++	ethsys: clock-controller@1b000000 {
+ 		compatible = "mediatek,mt7622-ethsys",
+ 			     "syscon";
+ 		reg = <0 0x1b000000 0 0x1000>;
 -- 
 2.43.0
 
