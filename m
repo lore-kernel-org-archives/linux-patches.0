@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DA412C46B;
-	Tue, 30 Apr 2024 10:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844A912B176;
+	Tue, 30 Apr 2024 10:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474245; cv=none; b=uqA9fxctmjJr0YBRDSeNXNlKmu9dxzsoUcwdhWKuv6DUUo/pWfypdUJWO8oKAycfSQEDYbuPUHyqnvmtyb1tMvKY/kvjMONdsIfdoJhfCOoTttes2Usaxc+079fs/Cqmc/mPZIBvByuvXaQE5Ho8skv6B5G1lSiD3yYSHhPlmrg=
+	t=1714474248; cv=none; b=jGic++qxJkC1ytTV+AOvPEYr3XQgRTZS+bzkDKEOs2RqnKFVY1Rzmj5l9ugjPZ5n1VMUq3IUOjS8JbrSZpZ7FPsYEc/zIbe17klDOVXBIvxUAII9kePCsXYOfHZqn4uhhF0pxPy8YWTvWgHr9jK5KyafRadOXGqikWeYA0D2Tf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474245; c=relaxed/simple;
-	bh=d1NWWD1x150+6QwCLG176rMtWXCqVAOvwnLByxIy0Gc=;
+	s=arc-20240116; t=1714474248; c=relaxed/simple;
+	bh=m9mlUYzLyCJrSuy6JCldv0Q4xC70A2bdAaInjt2KorI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xg9NylakBNiHqiKab7KQrGdrpcmCcgR5FPbiIbCKM2BFbbVAVI+IUGLvRuV+aHVoRNtvfvOcGN1HoSf3HkdoIoSBewME4LpvF5nxxtc2HivtH7Rl0SBiTK4T8J0deEu3RPtjlKtV5rO9UJhhSXrQCu8xAs2iD7zlp4mqDd69HQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uqc2p/GG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=urHLMCZrjAWH4qNmMiovWxKU6PlclHKO4EL7i9Xfv31ePgUc5dwYa3FqwkdtE3zx5dsSJfY8EZ/qZkAMZabAx15zULJZne3IrZCeMxlIAGVG+1sn//YiA5w2f9V0F4DUmMwLk32bOuVjK5LgaWva5F854vjrYOEmHCxlGt+CabY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKsr93kw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uqc2p/GG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95E5C4AF1A;
-	Tue, 30 Apr 2024 10:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKsr93kw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C77EC2BBFC;
+	Tue, 30 Apr 2024 10:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474245;
-	bh=d1NWWD1x150+6QwCLG176rMtWXCqVAOvwnLByxIy0Gc=;
+	s=korg; t=1714474248;
+	bh=m9mlUYzLyCJrSuy6JCldv0Q4xC70A2bdAaInjt2KorI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uqc2p/GGiqioXG/J4piaFc6K/qhhZ/GVAESsxqq48sc8KAaqFf1bzRuWs00eAnN5l
-	 wnkqID2BdZ55jfCYv/5AEGegXo5HE/DQglew2rVdlO8oD5rAeB5qBXcnzSzYqjCrps
-	 cHveDUYaufJikeo2DnoI4QFyTNDbx0qwLGajSWYU=
+	b=PKsr93kw+mEE2L3Z0dvGLalD8UCu5f5+zqj5vdL0EB/n1Aypg25gOMIPluQlmg5tj
+	 r0FKxufHMzNV2nIe0GxSEkVVomfPME5Ph8TJtTwoljZS98qrgnIHo1BlBNSPUiEt0N
+	 Md06Rxcds5/gvVsDHHKbV7ZDSuRRHE2tfi2edfYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Paul Geurts <paul_geurts@live.nl>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 061/228] net: dsa: mv88e6xx: fix supported_interfaces setup in mv88e6250_phylink_get_caps()
-Date: Tue, 30 Apr 2024 12:37:19 +0200
-Message-ID: <20240430103105.569767426@linuxfoundation.org>
+Subject: [PATCH 6.8 062/228] NFC: trf7970a: disable all regulators on removal
+Date: Tue, 30 Apr 2024 12:37:20 +0200
+Message-ID: <20240430103105.598411667@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -51,135 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+From: Paul Geurts <paul_geurts@live.nl>
 
-[ Upstream commit a4e3899065ffa87d49dc20e8c17501edbc189692 ]
+[ Upstream commit 6bea4f03c6a4e973ef369e15aac88f37981db49e ]
 
-With the recent PHYLINK changes requiring supported_interfaces to be set,
-MV88E6250 family switches like the 88E6020 fail to probe - cmode is
-never initialized on these devices, so mv88e6250_phylink_get_caps() does
-not set any supported_interfaces flags.
+During module probe, regulator 'vin' and 'vdd-io' are used and enabled,
+but the vdd-io regulator overwrites the 'vin' regulator pointer. During
+remove, only the vdd-io is disabled, as the vin regulator pointer is not
+available anymore. When regulator_put() is called during resource
+cleanup a kernel warning is given, as the regulator is still enabled.
 
-Instead of a cmode, on 88E6250 we have a read-only port mode value that
-encodes similar information. There is no reason to bother mapping port
-mode to the cmodes of other switch models; instead we introduce a
-mv88e6250_setup_supported_interfaces() that is called directly from
-mv88e6250_phylink_get_caps().
+Store the two regulators in separate pointers and disable both the
+regulators on module remove.
 
-Fixes: de5c9bf40c45 ("net: phylink: require supported_interfaces to be filled")
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20240417103737.166651-1-matthias.schiffer@ew.tq-group.com
+Fixes: 49d22c70aaf0 ("NFC: trf7970a: Add device tree option of 1.8 Volt IO voltage")
+Signed-off-by: Paul Geurts <paul_geurts@live.nl>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/DB7PR09MB26847A4EBF88D9EDFEB1DA0F950E2@DB7PR09MB2684.eurprd09.prod.outlook.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 56 +++++++++++++++++++++++++++++---
- drivers/net/dsa/mv88e6xxx/port.h | 23 ++++++++++---
- 2 files changed, 71 insertions(+), 8 deletions(-)
+ drivers/nfc/trf7970a.c | 42 +++++++++++++++++++++++-------------------
+ 1 file changed, 23 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 7de8a9c9e4576..32416d8802ca4 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -566,13 +566,61 @@ static void mv88e6xxx_translate_cmode(u8 cmode, unsigned long *supported)
- 		phy_interface_set_rgmii(supported);
+diff --git a/drivers/nfc/trf7970a.c b/drivers/nfc/trf7970a.c
+index 7eb17f46a8153..9e1a34e23af26 100644
+--- a/drivers/nfc/trf7970a.c
++++ b/drivers/nfc/trf7970a.c
+@@ -424,7 +424,8 @@ struct trf7970a {
+ 	enum trf7970a_state		state;
+ 	struct device			*dev;
+ 	struct spi_device		*spi;
+-	struct regulator		*regulator;
++	struct regulator		*vin_regulator;
++	struct regulator		*vddio_regulator;
+ 	struct nfc_digital_dev		*ddev;
+ 	u32				quirks;
+ 	bool				is_initiator;
+@@ -1883,7 +1884,7 @@ static int trf7970a_power_up(struct trf7970a *trf)
+ 	if (trf->state != TRF7970A_ST_PWR_OFF)
+ 		return 0;
+ 
+-	ret = regulator_enable(trf->regulator);
++	ret = regulator_enable(trf->vin_regulator);
+ 	if (ret) {
+ 		dev_err(trf->dev, "%s - Can't enable VIN: %d\n", __func__, ret);
+ 		return ret;
+@@ -1926,7 +1927,7 @@ static int trf7970a_power_down(struct trf7970a *trf)
+ 	if (trf->en2_gpiod && !(trf->quirks & TRF7970A_QUIRK_EN2_MUST_STAY_LOW))
+ 		gpiod_set_value_cansleep(trf->en2_gpiod, 0);
+ 
+-	ret = regulator_disable(trf->regulator);
++	ret = regulator_disable(trf->vin_regulator);
+ 	if (ret)
+ 		dev_err(trf->dev, "%s - Can't disable VIN: %d\n", __func__,
+ 			ret);
+@@ -2065,37 +2066,37 @@ static int trf7970a_probe(struct spi_device *spi)
+ 	mutex_init(&trf->lock);
+ 	INIT_DELAYED_WORK(&trf->timeout_work, trf7970a_timeout_work_handler);
+ 
+-	trf->regulator = devm_regulator_get(&spi->dev, "vin");
+-	if (IS_ERR(trf->regulator)) {
+-		ret = PTR_ERR(trf->regulator);
++	trf->vin_regulator = devm_regulator_get(&spi->dev, "vin");
++	if (IS_ERR(trf->vin_regulator)) {
++		ret = PTR_ERR(trf->vin_regulator);
+ 		dev_err(trf->dev, "Can't get VIN regulator: %d\n", ret);
+ 		goto err_destroy_lock;
+ 	}
+ 
+-	ret = regulator_enable(trf->regulator);
++	ret = regulator_enable(trf->vin_regulator);
+ 	if (ret) {
+ 		dev_err(trf->dev, "Can't enable VIN: %d\n", ret);
+ 		goto err_destroy_lock;
+ 	}
+ 
+-	uvolts = regulator_get_voltage(trf->regulator);
++	uvolts = regulator_get_voltage(trf->vin_regulator);
+ 	if (uvolts > 4000000)
+ 		trf->chip_status_ctrl = TRF7970A_CHIP_STATUS_VRS5_3;
+ 
+-	trf->regulator = devm_regulator_get(&spi->dev, "vdd-io");
+-	if (IS_ERR(trf->regulator)) {
+-		ret = PTR_ERR(trf->regulator);
++	trf->vddio_regulator = devm_regulator_get(&spi->dev, "vdd-io");
++	if (IS_ERR(trf->vddio_regulator)) {
++		ret = PTR_ERR(trf->vddio_regulator);
+ 		dev_err(trf->dev, "Can't get VDD_IO regulator: %d\n", ret);
+-		goto err_destroy_lock;
++		goto err_disable_vin_regulator;
+ 	}
+ 
+-	ret = regulator_enable(trf->regulator);
++	ret = regulator_enable(trf->vddio_regulator);
+ 	if (ret) {
+ 		dev_err(trf->dev, "Can't enable VDD_IO: %d\n", ret);
+-		goto err_destroy_lock;
++		goto err_disable_vin_regulator;
+ 	}
+ 
+-	if (regulator_get_voltage(trf->regulator) == 1800000) {
++	if (regulator_get_voltage(trf->vddio_regulator) == 1800000) {
+ 		trf->io_ctrl = TRF7970A_REG_IO_CTRL_IO_LOW;
+ 		dev_dbg(trf->dev, "trf7970a config vdd_io to 1.8V\n");
+ 	}
+@@ -2108,7 +2109,7 @@ static int trf7970a_probe(struct spi_device *spi)
+ 	if (!trf->ddev) {
+ 		dev_err(trf->dev, "Can't allocate NFC digital device\n");
+ 		ret = -ENOMEM;
+-		goto err_disable_regulator;
++		goto err_disable_vddio_regulator;
+ 	}
+ 
+ 	nfc_digital_set_parent_dev(trf->ddev, trf->dev);
+@@ -2137,8 +2138,10 @@ static int trf7970a_probe(struct spi_device *spi)
+ 	trf7970a_shutdown(trf);
+ err_free_ddev:
+ 	nfc_digital_free_device(trf->ddev);
+-err_disable_regulator:
+-	regulator_disable(trf->regulator);
++err_disable_vddio_regulator:
++	regulator_disable(trf->vddio_regulator);
++err_disable_vin_regulator:
++	regulator_disable(trf->vin_regulator);
+ err_destroy_lock:
+ 	mutex_destroy(&trf->lock);
+ 	return ret;
+@@ -2157,7 +2160,8 @@ static void trf7970a_remove(struct spi_device *spi)
+ 	nfc_digital_unregister_device(trf->ddev);
+ 	nfc_digital_free_device(trf->ddev);
+ 
+-	regulator_disable(trf->regulator);
++	regulator_disable(trf->vddio_regulator);
++	regulator_disable(trf->vin_regulator);
+ 
+ 	mutex_destroy(&trf->lock);
  }
- 
--static void mv88e6250_phylink_get_caps(struct mv88e6xxx_chip *chip, int port,
--				       struct phylink_config *config)
-+static void
-+mv88e6250_setup_supported_interfaces(struct mv88e6xxx_chip *chip, int port,
-+				     struct phylink_config *config)
- {
- 	unsigned long *supported = config->supported_interfaces;
-+	int err;
-+	u16 reg;
- 
--	/* Translate the default cmode */
--	mv88e6xxx_translate_cmode(chip->ports[port].cmode, supported);
-+	err = mv88e6xxx_port_read(chip, port, MV88E6XXX_PORT_STS, &reg);
-+	if (err) {
-+		dev_err(chip->dev, "p%d: failed to read port status\n", port);
-+		return;
-+	}
-+
-+	switch (reg & MV88E6250_PORT_STS_PORTMODE_MASK) {
-+	case MV88E6250_PORT_STS_PORTMODE_MII_10_HALF_PHY:
-+	case MV88E6250_PORT_STS_PORTMODE_MII_100_HALF_PHY:
-+	case MV88E6250_PORT_STS_PORTMODE_MII_10_FULL_PHY:
-+	case MV88E6250_PORT_STS_PORTMODE_MII_100_FULL_PHY:
-+		__set_bit(PHY_INTERFACE_MODE_REVMII, supported);
-+		break;
-+
-+	case MV88E6250_PORT_STS_PORTMODE_MII_HALF:
-+	case MV88E6250_PORT_STS_PORTMODE_MII_FULL:
-+		__set_bit(PHY_INTERFACE_MODE_MII, supported);
-+		break;
-+
-+	case MV88E6250_PORT_STS_PORTMODE_MII_DUAL_100_RMII_FULL_PHY:
-+	case MV88E6250_PORT_STS_PORTMODE_MII_200_RMII_FULL_PHY:
-+	case MV88E6250_PORT_STS_PORTMODE_MII_10_100_RMII_HALF_PHY:
-+	case MV88E6250_PORT_STS_PORTMODE_MII_10_100_RMII_FULL_PHY:
-+		__set_bit(PHY_INTERFACE_MODE_REVRMII, supported);
-+		break;
-+
-+	case MV88E6250_PORT_STS_PORTMODE_MII_DUAL_100_RMII_FULL:
-+	case MV88E6250_PORT_STS_PORTMODE_MII_10_100_RMII_FULL:
-+		__set_bit(PHY_INTERFACE_MODE_RMII, supported);
-+		break;
-+
-+	case MV88E6250_PORT_STS_PORTMODE_MII_100_RGMII:
-+		__set_bit(PHY_INTERFACE_MODE_RGMII, supported);
-+		break;
-+
-+	default:
-+		dev_err(chip->dev,
-+			"p%d: invalid port mode in status register: %04x\n",
-+			port, reg);
-+	}
-+}
-+
-+static void mv88e6250_phylink_get_caps(struct mv88e6xxx_chip *chip, int port,
-+				       struct phylink_config *config)
-+{
-+	if (!mv88e6xxx_phy_is_internal(chip, port))
-+		mv88e6250_setup_supported_interfaces(chip, port, config);
- 
- 	config->mac_capabilities = MAC_SYM_PAUSE | MAC_10 | MAC_100;
- }
-diff --git a/drivers/net/dsa/mv88e6xxx/port.h b/drivers/net/dsa/mv88e6xxx/port.h
-index 86deeb347cbc1..ddadeb9bfdaee 100644
---- a/drivers/net/dsa/mv88e6xxx/port.h
-+++ b/drivers/net/dsa/mv88e6xxx/port.h
-@@ -25,10 +25,25 @@
- #define MV88E6250_PORT_STS_PORTMODE_PHY_100_HALF	0x0900
- #define MV88E6250_PORT_STS_PORTMODE_PHY_10_FULL		0x0a00
- #define MV88E6250_PORT_STS_PORTMODE_PHY_100_FULL	0x0b00
--#define MV88E6250_PORT_STS_PORTMODE_MII_10_HALF		0x0c00
--#define MV88E6250_PORT_STS_PORTMODE_MII_100_HALF	0x0d00
--#define MV88E6250_PORT_STS_PORTMODE_MII_10_FULL		0x0e00
--#define MV88E6250_PORT_STS_PORTMODE_MII_100_FULL	0x0f00
-+/* - Modes with PHY suffix use output instead of input clock
-+ * - Modes without RMII or RGMII use MII
-+ * - Modes without speed do not have a fixed speed specified in the manual
-+ *   ("DC to x MHz" - variable clock support?)
-+ */
-+#define MV88E6250_PORT_STS_PORTMODE_MII_DISABLED		0x0000
-+#define MV88E6250_PORT_STS_PORTMODE_MII_100_RGMII		0x0100
-+#define MV88E6250_PORT_STS_PORTMODE_MII_DUAL_100_RMII_FULL_PHY	0x0200
-+#define MV88E6250_PORT_STS_PORTMODE_MII_200_RMII_FULL_PHY	0x0400
-+#define MV88E6250_PORT_STS_PORTMODE_MII_DUAL_100_RMII_FULL	0x0600
-+#define MV88E6250_PORT_STS_PORTMODE_MII_10_100_RMII_FULL	0x0700
-+#define MV88E6250_PORT_STS_PORTMODE_MII_HALF			0x0800
-+#define MV88E6250_PORT_STS_PORTMODE_MII_10_100_RMII_HALF_PHY	0x0900
-+#define MV88E6250_PORT_STS_PORTMODE_MII_FULL			0x0a00
-+#define MV88E6250_PORT_STS_PORTMODE_MII_10_100_RMII_FULL_PHY	0x0b00
-+#define MV88E6250_PORT_STS_PORTMODE_MII_10_HALF_PHY		0x0c00
-+#define MV88E6250_PORT_STS_PORTMODE_MII_100_HALF_PHY		0x0d00
-+#define MV88E6250_PORT_STS_PORTMODE_MII_10_FULL_PHY		0x0e00
-+#define MV88E6250_PORT_STS_PORTMODE_MII_100_FULL_PHY		0x0f00
- #define MV88E6XXX_PORT_STS_LINK			0x0800
- #define MV88E6XXX_PORT_STS_DUPLEX		0x0400
- #define MV88E6XXX_PORT_STS_SPEED_MASK		0x0300
 -- 
 2.43.0
 
