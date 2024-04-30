@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81121211C;
-	Tue, 30 Apr 2024 11:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD69211C;
+	Tue, 30 Apr 2024 11:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475600; cv=none; b=lay/5XYtiAg9eX4WflSL9cC8I5haF1txja7Q+nxn/5U0h4Rzv93fER/uI/hoDT0Yu+U62HP8r3IgMiW+L8yFrwWTPY0bTPtS6rixKNVoAZ2Mqzm5ff+t8f4x59zePaVwV2I4YP+TD49ezrifo6UKgOS3h/Aphbe3XgJbbL8lhig=
+	t=1714475603; cv=none; b=jgjDaKPEOB3NSLE1MQdtptCqEbSmOsHYtq4gKRqVtda2wOVTg48u8LbS53PqNcQV6hkcjb912/DRMTC7CmAUZeJWXKRSsIGIZ/oI7NdP+Lb4/Wq7M0SB4ApagZP9okoqpdQwBdvJMyRZoA22lfl9FZ2nW745S4Ok3siscQtUD5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475600; c=relaxed/simple;
-	bh=SEOU7XbcW33hYXOZavlvJx/1ELThw9EnRt/D0cqBlW8=;
+	s=arc-20240116; t=1714475603; c=relaxed/simple;
+	bh=cQc5GczSyO/FDFoRWVIhMNchZtditPgqscvpLi3186s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/Cw6tgg3jkG88I3by+RHBHcftZxtdagoA+PGnJqVojUdSTGgPBSVa7dZraKXJeBJrQXjJNruW+duKzdtJVMucHgyyIcRx1Gd/1r9dFqIb4Xj2r7NZy74M09BMjujYso3yrLTw/aIZXXcPVLRTPAj8uh1RsaSp31ccxz3ZksXVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqFOXXaw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KWdqzNVhwX0e/EGxce6IWrd1sCYJ1TpRnCNJ9VPr0EzHnmnAsCUrIZfqw2ZjbMpfDh09IdTVVwar7mELw9NGmckVe5JrveXSdNGttzeKOS+r5zIbIa/uXX2zDU+byx4DPLTejUpeW8yBkBtHX4hXRTZA2JyHEA9XFQE+w/Iohqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RdnAqx1Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqFOXXaw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A95C2BBFC;
-	Tue, 30 Apr 2024 11:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdnAqx1Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178ECC2BBFC;
+	Tue, 30 Apr 2024 11:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475600;
-	bh=SEOU7XbcW33hYXOZavlvJx/1ELThw9EnRt/D0cqBlW8=;
+	s=korg; t=1714475603;
+	bh=cQc5GczSyO/FDFoRWVIhMNchZtditPgqscvpLi3186s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DqFOXXaweP4zAS/ZRejrXlf1beHvv6PKg0u+0iZmb79YBFZCP9NtEr+P/t6kOl2Op
-	 EQk4rR5XG4//rq4Abzdg8sDzYnxoruOBRHGvFIp1BTc9wWwH3EipLEtDixc3zLRs4r
-	 ZhpACOvChT1f0RhgEBXco72lziQZ2wIz1N9hY+eQ=
+	b=RdnAqx1Y+KuYWoLVQ1ropOWMqYyIESPpP3pUt8wX4h4ZKtwjvj+YQGh7CfPd2lUlF
+	 aSxdSaJZVNn65WFIQEqRKRbyvHfp8OQEoadvqM+7YcNDIhRkBGaTz19ajXdE4Z8t9g
+	 YWIkxWcudT5eF4kmjKALymQ3kxkvM1bt+Bb7OLDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Larry Finger <Larry.Finger@lwfinger.net>,
-	WangYuli <wangyuli@uniontech.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 119/186] Bluetooth: btusb: Add Realtek RTL8852BE support ID 0x0bda:0x4853
-Date: Tue, 30 Apr 2024 12:39:31 +0200
-Message-ID: <20240430103101.487518963@linuxfoundation.org>
+	Jarred White <jarredwhite@linux.microsoft.com>,
+	Vanshidhar Konda <vanshikonda@os.amperecomputing.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 146/186] ACPI: CPPC: Fix bit_offset shift in MASK_VAL() macro
+Date: Tue, 30 Apr 2024 12:39:58 +0200
+Message-ID: <20240430103102.271340009@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -51,69 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Jarred White <jarredwhite@linux.microsoft.com>
 
-commit d1a5a7eede2977da3d2002d5ea3b519019cc1a98 upstream.
+commit 05d92ee782eeb7b939bdd0189e6efcab9195bf95 upstream.
 
-Add the support ID(0x0bda, 0x4853) to usb_device_id table for
-Realtek RTL8852BE.
+Commit 2f4a4d63a193 ("ACPI: CPPC: Use access_width over bit_width for
+system memory accesses") neglected to properly wrap the bit_offset shift
+when it comes to applying the mask. This may cause incorrect values to be
+read and may cause the cpufreq module not be loaded.
 
-Without this change the device utilizes an obsolete version of
-the firmware that is encoded in it rather than the updated Realtek
-firmware and config files from the firmware directory. The latter
-files implement many new features.
+[   11.059751] cpu_capacity: CPU0 missing/invalid highest performance.
+[   11.066005] cpu_capacity: partial information: fallback to 1024 for all CPUs
 
-The device table is as follows:
+Also, corrected the bitmask generation in GENMASK (extra bit being added).
 
-T: Bus=03 Lev=01 Prnt=01 Port=09 Cnt=03 Dev#= 4 Spd=12 MxCh= 0
-D: Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs= 1
-P: Vendor=0bda ProdID=4853 Rev= 0.00
-S: Manufacturer=Realtek
-S: Product=Bluetooth Radio
-S: SerialNumber=00e04c000001
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=81(I) Atr=03(Int.) MxPS= 16 Ivl=1ms
-E: Ad=02(O) Atr=02(Bulk) MxPS= 64 Ivl=0ms
-E: Ad=82(I) Atr=02(Bulk) MxPS= 64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 0 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 0 Ivl=1ms
-I: If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 9 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 9 Ivl=1ms
-I: If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 17 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 17 Ivl=1ms
-I: If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 25 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 25 Ivl=1ms
-I: If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 33 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 33 Ivl=1ms
-I: If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E: Ad=03(O) Atr=01(Isoc) MxPS= 49 Ivl=1ms
-E: Ad=83(I) Atr=01(Isoc) MxPS= 49 Ivl=1ms
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 2f4a4d63a193 ("ACPI: CPPC: Use access_width over bit_width for system memory accesses")
+Signed-off-by: Jarred White <jarredwhite@linux.microsoft.com>
+Cc: 5.15+ <stable@vger.kernel.org> # 5.15+
+Reviewed-by: Vanshidhar Konda <vanshikonda@os.amperecomputing.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/acpi/cppc_acpi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -541,6 +541,8 @@ static const struct usb_device_id quirks
- 	/* Realtek 8852BE Bluetooth devices */
- 	{ USB_DEVICE(0x0cb8, 0xc559), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0bda, 0x4853), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0bda, 0x887b), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0bda, 0xb85b), .driver_info = BTUSB_REALTEK |
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -167,8 +167,8 @@ show_cppc_data(cppc_get_perf_ctrs, cppc_
+ #define GET_BIT_WIDTH(reg) ((reg)->access_width ? (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
+ 
+ /* Shift and apply the mask for CPC reads/writes */
+-#define MASK_VAL(reg, val) ((val) >> ((reg)->bit_offset & 			\
+-					GENMASK(((reg)->bit_width), 0)))
++#define MASK_VAL(reg, val) (((val) >> (reg)->bit_offset) & 			\
++					GENMASK(((reg)->bit_width) - 1, 0))
+ 
+ static ssize_t show_feedback_ctrs(struct kobject *kobj,
+ 		struct kobj_attribute *attr, char *buf)
 
 
