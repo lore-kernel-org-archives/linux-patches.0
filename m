@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696BEE560;
-	Tue, 30 Apr 2024 10:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BDA12C54A;
+	Tue, 30 Apr 2024 10:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474303; cv=none; b=t3YPvv8rUs6oBWpPe22VG/blkT06DxHlbLnvkTSBisaGeHQ55vL8KjRqfGeCZTxHJUyljWB+0OksDAjOhkDydg66WX3yp8pipYsP0JtrXiDbYurZD2JREWs7bYhRmPbIHqOBa3OO4GPv+N9AOUcOFS3r4K5isd+UYLdyJAGMLTs=
+	t=1714474307; cv=none; b=OuGHBVL+s/Hwr11VSmn8OLxHZ6R4skrRep8nALmyjTF5leeTaiJSSbBYwW3QtqtZymcbJxLX16Z61Ow3tfGocJife6aRkBtYgVT0zzzAIouEIPyYlNXlwc5FExTZqsxvJJaE0zZDwAzv11OzkN56sHygWn4FF4G2cJDll5uhY6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474303; c=relaxed/simple;
-	bh=KnbB/6VHUQrV0a19zvwlhqnFElOInqdz2opf7h/4O5Y=;
+	s=arc-20240116; t=1714474307; c=relaxed/simple;
+	bh=1p6/RkXCXFuaSkoXPITI3lCnMNsJMzEbLKblL0rQ1qE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jzkB6Cxyt8vt3BWczKYfML2l85qEoo+wa5GqAiy7b92navijkIlhvRgC6R2TNMq/GLKAA1pcNvpitC+4z2N/kxOwn3TGj11ERVTs/8dR2w7f4PeCxpyZQSGwXS+Y//i9q6XhD70GZbXleM9ZQpdhcnuNrHrmdF/mapERt8zoq0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HudfDgGC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i1yOjeKOx1cncJr23EXFyGuyGRRSYuyivMvhG0SrmUbYW7e3W11kr4sZnXkD5btFLKfLp8EToIZrfBAqBAhJBX0vzgRrA83TUFwtN/NkZs/DwgZu6W96j8ixMoUaU8srWV43GydElXItFgnoDBr9+nNB2sDNYNe603g7GFBhEh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCwWIhvj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HudfDgGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9BC6C2BBFC;
-	Tue, 30 Apr 2024 10:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCwWIhvj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FAE5C2BBFC;
+	Tue, 30 Apr 2024 10:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474303;
-	bh=KnbB/6VHUQrV0a19zvwlhqnFElOInqdz2opf7h/4O5Y=;
+	s=korg; t=1714474306;
+	bh=1p6/RkXCXFuaSkoXPITI3lCnMNsJMzEbLKblL0rQ1qE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HudfDgGC0wgGfMlCYYoW5K2FkNtIbrfd0O/bxSn6okoPV67kVwONAv9e1cpETWGZz
-	 vPkiRbT9Af/zrypfcJoCepVOMQPdHqljy2tuA2wFVL5DnYi61nYD0dCEy6CMBzUX9t
-	 DgNUNgIkqImjqetI7nOyzmA8bTz/qb/PjImmxKPg=
+	b=dCwWIhvjdzQQ4EkT2bLIQ7qhIGOmBl+eueAHGftsz0RgvEPNT+sIUPv6SVkxkzvjI
+	 PWAUZwk3VMEselYQRESmT4j0Qo20eULQQb1dcEpjlyYgNdLLPtYb4/LeqepkXE4mkr
+	 kmTHkhhYJLaVltmAhUOZdH+iewno0qpkL0tbBB00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 117/228] tls: fix lockless read of strp->msg_ready in ->poll
-Date: Tue, 30 Apr 2024 12:38:15 +0200
-Message-ID: <20240430103107.185384526@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+fa379358c28cc87cc307@syzkaller.appspotmail.com
+Subject: [PATCH 6.8 118/228] af_unix: Suppress false-positive lockdep splat for spin_lock() in __unix_gc().
+Date: Tue, 30 Apr 2024 12:38:16 +0200
+Message-ID: <20240430103107.213660070@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -51,84 +52,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 0844370f8945086eb9335739d10205dcea8d707b ]
+[ Upstream commit 1971d13ffa84a551d29a81fdf5b5ec5be166ac83 ]
 
-tls_sk_poll is called without locking the socket, and needs to read
-strp->msg_ready (via tls_strp_msg_ready). Convert msg_ready to a bool
-and use READ_ONCE/WRITE_ONCE where needed. The remaining reads are
-only performed when the socket is locked.
+syzbot reported a lockdep splat regarding unix_gc_lock and
+unix_state_lock().
 
-Fixes: 121dca784fc0 ("tls: suppress wakeups unless we have a full record")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://lore.kernel.org/r/0b7ee062319037cf86af6b317b3d72f7bfcd2e97.1713797701.git.sd@queasysnail.net
+One is called from recvmsg() for a connected socket, and another
+is called from GC for TCP_LISTEN socket.
+
+So, the splat is false-positive.
+
+Let's add a dedicated lock class for the latter to suppress the splat.
+
+Note that this change is not necessary for net-next.git as the issue
+is only applied to the old GC impl.
+
+[0]:
+WARNING: possible circular locking dependency detected
+6.9.0-rc5-syzkaller-00007-g4d2008430ce8 #0 Not tainted
+ -----------------------------------------------------
+kworker/u8:1/11 is trying to acquire lock:
+ffff88807cea4e70 (&u->lock){+.+.}-{2:2}, at: spin_lock include/linux/spinlock.h:351 [inline]
+ffff88807cea4e70 (&u->lock){+.+.}-{2:2}, at: __unix_gc+0x40e/0xf70 net/unix/garbage.c:302
+
+but task is already holding lock:
+ffffffff8f6ab638 (unix_gc_lock){+.+.}-{2:2}, at: spin_lock include/linux/spinlock.h:351 [inline]
+ffffffff8f6ab638 (unix_gc_lock){+.+.}-{2:2}, at: __unix_gc+0x117/0xf70 net/unix/garbage.c:261
+
+which lock already depends on the new lock.
+
+the existing dependency chain (in reverse order) is:
+
+ -> #1 (unix_gc_lock){+.+.}-{2:2}:
+       lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
+       __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
+       _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:154
+       spin_lock include/linux/spinlock.h:351 [inline]
+       unix_notinflight+0x13d/0x390 net/unix/garbage.c:140
+       unix_detach_fds net/unix/af_unix.c:1819 [inline]
+       unix_destruct_scm+0x221/0x350 net/unix/af_unix.c:1876
+       skb_release_head_state+0x100/0x250 net/core/skbuff.c:1188
+       skb_release_all net/core/skbuff.c:1200 [inline]
+       __kfree_skb net/core/skbuff.c:1216 [inline]
+       kfree_skb_reason+0x16d/0x3b0 net/core/skbuff.c:1252
+       kfree_skb include/linux/skbuff.h:1262 [inline]
+       manage_oob net/unix/af_unix.c:2672 [inline]
+       unix_stream_read_generic+0x1125/0x2700 net/unix/af_unix.c:2749
+       unix_stream_splice_read+0x239/0x320 net/unix/af_unix.c:2981
+       do_splice_read fs/splice.c:985 [inline]
+       splice_file_to_pipe+0x299/0x500 fs/splice.c:1295
+       do_splice+0xf2d/0x1880 fs/splice.c:1379
+       __do_splice fs/splice.c:1436 [inline]
+       __do_sys_splice fs/splice.c:1652 [inline]
+       __se_sys_splice+0x331/0x4a0 fs/splice.c:1634
+       do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+       do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+       entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+ -> #0 (&u->lock){+.+.}-{2:2}:
+       check_prev_add kernel/locking/lockdep.c:3134 [inline]
+       check_prevs_add kernel/locking/lockdep.c:3253 [inline]
+       validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
+       __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
+       lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
+       __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
+       _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:154
+       spin_lock include/linux/spinlock.h:351 [inline]
+       __unix_gc+0x40e/0xf70 net/unix/garbage.c:302
+       process_one_work kernel/workqueue.c:3254 [inline]
+       process_scheduled_works+0xa10/0x17c0 kernel/workqueue.c:3335
+       worker_thread+0x86d/0xd70 kernel/workqueue.c:3416
+       kthread+0x2f0/0x390 kernel/kthread.c:388
+       ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+       ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+
+other info that might help us debug this:
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(unix_gc_lock);
+                               lock(&u->lock);
+                               lock(unix_gc_lock);
+  lock(&u->lock);
+
+ *** DEADLOCK ***
+
+3 locks held by kworker/u8:1/11:
+ #0: ffff888015089148 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3229 [inline]
+ #0: ffff888015089148 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_scheduled_works+0x8e0/0x17c0 kernel/workqueue.c:3335
+ #1: ffffc90000107d00 (unix_gc_work){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3230 [inline]
+ #1: ffffc90000107d00 (unix_gc_work){+.+.}-{0:0}, at: process_scheduled_works+0x91b/0x17c0 kernel/workqueue.c:3335
+ #2: ffffffff8f6ab638 (unix_gc_lock){+.+.}-{2:2}, at: spin_lock include/linux/spinlock.h:351 [inline]
+ #2: ffffffff8f6ab638 (unix_gc_lock){+.+.}-{2:2}, at: __unix_gc+0x117/0xf70 net/unix/garbage.c:261
+
+stack backtrace:
+CPU: 0 PID: 11 Comm: kworker/u8:1 Not tainted 6.9.0-rc5-syzkaller-00007-g4d2008430ce8 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+Workqueue: events_unbound __unix_gc
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
+ check_noncircular+0x36a/0x4a0 kernel/locking/lockdep.c:2187
+ check_prev_add kernel/locking/lockdep.c:3134 [inline]
+ check_prevs_add kernel/locking/lockdep.c:3253 [inline]
+ validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
+ __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
+ lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
+ __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
+ _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:154
+ spin_lock include/linux/spinlock.h:351 [inline]
+ __unix_gc+0x40e/0xf70 net/unix/garbage.c:302
+ process_one_work kernel/workqueue.c:3254 [inline]
+ process_scheduled_works+0xa10/0x17c0 kernel/workqueue.c:3335
+ worker_thread+0x86d/0xd70 kernel/workqueue.c:3416
+ kthread+0x2f0/0x390 kernel/kthread.c:388
+ ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ </TASK>
+
+Fixes: 47d8ac011fe1 ("af_unix: Fix garbage collector racing against connect()")
+Reported-and-tested-by: syzbot+fa379358c28cc87cc307@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fa379358c28cc87cc307
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240424170443.9832-1-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tls.h  | 3 ++-
- net/tls/tls.h      | 2 +-
- net/tls/tls_strp.c | 6 +++---
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ include/net/af_unix.h | 3 +++
+ net/unix/garbage.c    | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/tls.h b/include/net/tls.h
-index 340ad43971e47..33f657d3c0510 100644
---- a/include/net/tls.h
-+++ b/include/net/tls.h
-@@ -111,7 +111,8 @@ struct tls_strparser {
- 	u32 stopped : 1;
- 	u32 copy_mode : 1;
- 	u32 mixed_decrypted : 1;
--	u32 msg_ready : 1;
-+
-+	bool msg_ready;
+diff --git a/include/net/af_unix.h b/include/net/af_unix.h
+index d1b07ddbe677e..77bf30203d3cf 100644
+--- a/include/net/af_unix.h
++++ b/include/net/af_unix.h
+@@ -77,6 +77,9 @@ enum unix_socket_lock_class {
+ 	U_LOCK_NORMAL,
+ 	U_LOCK_SECOND,	/* for double locking, see unix_state_double_lock(). */
+ 	U_LOCK_DIAG, /* used while dumping icons, see sk_diag_dump_icons(). */
++	U_LOCK_GC_LISTENER, /* used for listening socket while determining gc
++			     * candidates to close a small race window.
++			     */
+ };
  
- 	struct strp_msg stm;
+ static inline void unix_state_lock_nested(struct sock *sk,
+diff --git a/net/unix/garbage.c b/net/unix/garbage.c
+index 8734c0c1fc197..2a758531e1027 100644
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -260,7 +260,7 @@ void unix_gc(void)
+ 			__set_bit(UNIX_GC_MAYBE_CYCLE, &u->gc_flags);
  
-diff --git a/net/tls/tls.h b/net/tls/tls.h
-index 762f424ff2d59..e5e47452308ab 100644
---- a/net/tls/tls.h
-+++ b/net/tls/tls.h
-@@ -215,7 +215,7 @@ static inline struct sk_buff *tls_strp_msg(struct tls_sw_context_rx *ctx)
- 
- static inline bool tls_strp_msg_ready(struct tls_sw_context_rx *ctx)
- {
--	return ctx->strp.msg_ready;
-+	return READ_ONCE(ctx->strp.msg_ready);
- }
- 
- static inline bool tls_strp_msg_mixed_decrypted(struct tls_sw_context_rx *ctx)
-diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
-index ca1e0e198ceb4..5df08d848b5c9 100644
---- a/net/tls/tls_strp.c
-+++ b/net/tls/tls_strp.c
-@@ -360,7 +360,7 @@ static int tls_strp_copyin(read_descriptor_t *desc, struct sk_buff *in_skb,
- 	if (strp->stm.full_len && strp->stm.full_len == skb->len) {
- 		desc->count = 0;
- 
--		strp->msg_ready = 1;
-+		WRITE_ONCE(strp->msg_ready, 1);
- 		tls_rx_msg_ready(strp);
- 	}
- 
-@@ -528,7 +528,7 @@ static int tls_strp_read_sock(struct tls_strparser *strp)
- 	if (!tls_strp_check_queue_ok(strp))
- 		return tls_strp_read_copy(strp, false);
- 
--	strp->msg_ready = 1;
-+	WRITE_ONCE(strp->msg_ready, 1);
- 	tls_rx_msg_ready(strp);
- 
- 	return 0;
-@@ -580,7 +580,7 @@ void tls_strp_msg_done(struct tls_strparser *strp)
- 	else
- 		tls_strp_flush_anchor_copy(strp);
- 
--	strp->msg_ready = 0;
-+	WRITE_ONCE(strp->msg_ready, 0);
- 	memset(&strp->stm, 0, sizeof(strp->stm));
- 
- 	tls_strp_check_rcv(strp);
+ 			if (sk->sk_state == TCP_LISTEN) {
+-				unix_state_lock(sk);
++				unix_state_lock_nested(sk, U_LOCK_GC_LISTENER);
+ 				unix_state_unlock(sk);
+ 			}
+ 		}
 -- 
 2.43.0
 
