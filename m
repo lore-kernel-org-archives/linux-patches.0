@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5816812C80B;
-	Tue, 30 Apr 2024 10:52:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F073212C487;
+	Tue, 30 Apr 2024 10:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474320; cv=none; b=spPkBAPgsGWx5SCV3k0r9eo1yZXpoyUoT90KscSPPQzFV82ItfS0mAIG8QrFwn4Q22jhf0qKZDe5PPDcNeM/i6AFM8f4AwaQev9wOGSJMktQmA5pMQVfbL3JHgbvlbjkrXYkJESMk043viHOUdNd/o1pIUahgjwsxcPdSi2cVoY=
+	t=1714474324; cv=none; b=kYdUH+QfEeDPZ6h6JK3gsmR4WVgseJVSrSgfxLUhSvnXd7UICDVOOirlcC+jxYnCeO3Ut81aPVS1DmMy1Gs83aZxgKBOqVLQbzvKDYxTdxLpq5qwOXQhc8NTJ4elSS26pi9id6tuUIct+/mAbu+q5wk2IJfWLO4gIAs486y9eh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474320; c=relaxed/simple;
-	bh=EWdcG+wFoFVY8OEybVQjNVm513k1Yn4CBKUzHka4miM=;
+	s=arc-20240116; t=1714474324; c=relaxed/simple;
+	bh=BscQzC8MejwO+Ouxt+Gsp1yUuuNTKjlzdz4W+5O5CAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8FW2n3WuR9miYB5BIEXLoPGSBsTaecDj08auEsLOCAHF0D9CFLnpZjKquQ+l1kj4t3aCshtri8zWiZEGPgwCzqp5HidWJ45QeqRNcmpsp9Ww+Gpq6vFQN89XnXu7hv0GQAS12UcXszvWOVCN7d34wGhC58Mh90Xw9NDDWs4yxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0GbWHmW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B4uhlGW1Z2RT0O9itbcXwgFxB9urzCaoKTMpOGfDtZ37FqiAOvlsTlvX929FnFKd1GA8fxoGNEeh48qlmzz8tkwZ6SPE2O3DNkjh+XrRmkO6Sop3x+pV9/WR6gNQR8a4G+c6mogkiEhDkYEHIibJTfcPDRGL8Suxxnfv1AfuSCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLk84hpX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0GbWHmW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91A3C2BBFC;
-	Tue, 30 Apr 2024 10:51:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLk84hpX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01165C2BBFC;
+	Tue, 30 Apr 2024 10:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474320;
-	bh=EWdcG+wFoFVY8OEybVQjNVm513k1Yn4CBKUzHka4miM=;
+	s=korg; t=1714474323;
+	bh=BscQzC8MejwO+Ouxt+Gsp1yUuuNTKjlzdz4W+5O5CAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y0GbWHmW5+QqAFUiLzuaZ976b7c0fOPNpY+y4rinImtzptiIkSHaSNG0nfzHfmYeF
-	 x0/KCphG7HmJE+2D3SrzJ4uvSVyaRbEE2m7uMzb1Xqd8XhjfWBx1xLBabBWvFcq5Tn
-	 l9x93IOimd4toTEpHcaLIaH/f8cjTcGAZ7bIeKN8=
+	b=XLk84hpXw8OWPDQ7VSaP+k6BG7W6OgQFDBT/3tDLUFMbHdUx4Rv3f4nuyLb/UvwpI
+	 FYwGK9LluqCazpe/N5k2blmFW7SEwWCMGPPCwI1BGqQrcVy1VmdQCicizDJir56KLe
+	 CWnuWo+R0enwvbvG1VXuroPkfvRmWqgXM6w4AGbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Oliver Neukum <oneukum@suse.com>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 122/228] xhci: move event processing for one interrupter to a separate function
-Date: Tue, 30 Apr 2024 12:38:20 +0200
-Message-ID: <20240430103107.327603443@linuxfoundation.org>
+Subject: [PATCH 6.8 123/228] usb: xhci: correct return value in case of STS_HCE
+Date: Tue, 30 Apr 2024 12:38:21 +0200
+Message-ID: <20240430103107.355977146@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -51,141 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 84ac5e4fa517f5d1da0054547a82ce905678dc08 ]
+[ Upstream commit 5bfc311dd6c376d350b39028b9000ad766ddc934 ]
 
-Split the main XHCI interrupt handler into a different API, so that other
-potential interrupters can utilize similar event ring handling.  A scenario
-would be if a secondary interrupter required to skip pending events in the
-event ring, which would warrant a similar set of operations.
+If we get STS_HCE we give up on the interrupt, but for the purpose
+of IRQ handling that still counts as ours. We may return IRQ_NONE
+only if we are positive that it wasn't ours. Hence correct the default.
 
+Fixes: 2a25e66d676d ("xhci: print warning when HCE was set")
+Cc: stable@vger.kernel.org # v6.2+
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Link: https://lore.kernel.org/r/20240217001017.29969-7-quic_wcheng@quicinc.com
+Link: https://lore.kernel.org/r/20240404121106.2842417-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 5bfc311dd6c3 ("usb: xhci: correct return value in case of STS_HCE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 87 +++++++++++++++++-------------------
- 1 file changed, 42 insertions(+), 45 deletions(-)
+ drivers/usb/host/xhci-ring.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 61bd29dd71a2f..2306a95d6251a 100644
+index 2306a95d6251a..b2868217de941 100644
 --- a/drivers/usb/host/xhci-ring.c
 +++ b/drivers/usb/host/xhci-ring.c
-@@ -3075,6 +3075,46 @@ static void xhci_clear_interrupt_pending(struct xhci_hcd *xhci,
- 	}
- }
- 
-+static int xhci_handle_events(struct xhci_hcd *xhci, struct xhci_interrupter *ir)
-+{
-+	int event_loop = 0;
-+	u64 temp;
-+
-+	xhci_clear_interrupt_pending(xhci, ir);
-+
-+	if (xhci->xhc_state & XHCI_STATE_DYING ||
-+	    xhci->xhc_state & XHCI_STATE_HALTED) {
-+		xhci_dbg(xhci, "xHCI dying, ignoring interrupt. Shouldn't IRQs be disabled?\n");
-+
-+		/* Clear the event handler busy flag (RW1C) */
-+		temp = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
-+		xhci_write_64(xhci, temp | ERST_EHB, &ir->ir_set->erst_dequeue);
-+		return -ENODEV;
-+	}
-+
-+	while (xhci_handle_event(xhci, ir) > 0) {
-+		/*
-+		 * If half a segment of events have been handled in one go then
-+		 * update ERDP, and force isoc trbs to interrupt more often
-+		 */
-+		if (event_loop++ > TRBS_PER_SEGMENT / 2) {
-+			xhci_update_erst_dequeue(xhci, ir, false);
-+
-+			if (ir->isoc_bei_interval > AVOID_BEI_INTERVAL_MIN)
-+				ir->isoc_bei_interval = ir->isoc_bei_interval / 2;
-+
-+			event_loop = 0;
-+		}
-+
-+		/* Update SW event ring dequeue pointer */
-+		inc_deq(xhci, ir->event_ring);
-+	}
-+
-+	xhci_update_erst_dequeue(xhci, ir, true);
-+
-+	return 0;
-+}
-+
- /*
-  * xHCI spec says we can get an interrupt, and if the HC has an error condition,
-  * we might get bad data out of the event ring.  Section 4.10.2.7 has a list of
-@@ -3083,11 +3123,8 @@ static void xhci_clear_interrupt_pending(struct xhci_hcd *xhci,
+@@ -3123,7 +3123,7 @@ static int xhci_handle_events(struct xhci_hcd *xhci, struct xhci_interrupter *ir
  irqreturn_t xhci_irq(struct usb_hcd *hcd)
  {
  	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
--	struct xhci_interrupter *ir;
- 	irqreturn_t ret = IRQ_NONE;
--	u64 temp_64;
+-	irqreturn_t ret = IRQ_NONE;
++	irqreturn_t ret = IRQ_HANDLED;
  	u32 status;
--	int event_loop = 0;
  
  	spin_lock(&xhci->lock);
- 	/* Check if the xHC generated the interrupt, or the irq is shared */
-@@ -3120,50 +3157,10 @@ irqreturn_t xhci_irq(struct usb_hcd *hcd)
+@@ -3131,12 +3131,13 @@ irqreturn_t xhci_irq(struct usb_hcd *hcd)
+ 	status = readl(&xhci->op_regs->status);
+ 	if (status == ~(u32)0) {
+ 		xhci_hc_died(xhci);
+-		ret = IRQ_HANDLED;
+ 		goto out;
+ 	}
+ 
+-	if (!(status & STS_EINT))
++	if (!(status & STS_EINT)) {
++		ret = IRQ_NONE;
+ 		goto out;
++	}
+ 
+ 	if (status & STS_HCE) {
+ 		xhci_warn(xhci, "WARNING: Host Controller Error\n");
+@@ -3146,7 +3147,6 @@ irqreturn_t xhci_irq(struct usb_hcd *hcd)
+ 	if (status & STS_FATAL) {
+ 		xhci_warn(xhci, "WARNING: Host System Error\n");
+ 		xhci_halt(xhci);
+-		ret = IRQ_HANDLED;
+ 		goto out;
+ 	}
+ 
+@@ -3157,7 +3157,6 @@ irqreturn_t xhci_irq(struct usb_hcd *hcd)
  	 */
  	status |= STS_EINT;
  	writel(status, &xhci->op_regs->status);
--
--	/* This is the handler of the primary interrupter */
--	ir = xhci->interrupters[0];
--
--	xhci_clear_interrupt_pending(xhci, ir);
--
--	if (xhci->xhc_state & XHCI_STATE_DYING ||
--	    xhci->xhc_state & XHCI_STATE_HALTED) {
--		xhci_dbg(xhci, "xHCI dying, ignoring interrupt. "
--				"Shouldn't IRQs be disabled?\n");
--		/* Clear the event handler busy flag (RW1C);
--		 * the event ring should be empty.
--		 */
--		temp_64 = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
--		xhci_write_64(xhci, temp_64 | ERST_EHB,
--				&ir->ir_set->erst_dequeue);
--		ret = IRQ_HANDLED;
--		goto out;
--	}
--
--	/* FIXME this should be a delayed service routine
--	 * that clears the EHB.
--	 */
--	while (xhci_handle_event(xhci, ir) > 0) {
--		/*
--		 * If half a segment of events have been handled in one go then
--		 * update ERDP, and force isoc trbs to interrupt more often
--		 */
--		if (event_loop++ > TRBS_PER_SEGMENT / 2) {
--			xhci_update_erst_dequeue(xhci, ir, false);
--
--			if (ir->isoc_bei_interval > AVOID_BEI_INTERVAL_MIN)
--				ir->isoc_bei_interval = ir->isoc_bei_interval / 2;
--
--			event_loop = 0;
--		}
--
--		/* Update SW event ring dequeue pointer */
--		inc_deq(xhci, ir->event_ring);
--	}
--
--	xhci_update_erst_dequeue(xhci, ir, true);
- 	ret = IRQ_HANDLED;
+-	ret = IRQ_HANDLED;
  
-+	/* This is the handler of the primary interrupter */
-+	xhci_handle_events(xhci, xhci->interrupters[0]);
- out:
- 	spin_unlock(&xhci->lock);
- 
+ 	/* This is the handler of the primary interrupter */
+ 	xhci_handle_events(xhci, xhci->interrupters[0]);
 -- 
 2.43.0
 
