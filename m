@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8A4128816;
-	Tue, 30 Apr 2024 10:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063F0129E89;
+	Tue, 30 Apr 2024 10:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474656; cv=none; b=qf2M9+cwSLYPZCcW27WkuMpdVpvrUotnVyLN4t1pkgWWAQ+wqdWXsQZk1gilVjARwMTUz8CCu4kaqLs3wuY9O/h6+TA/wFLBorDPlXj1N8kynlRZteGcRN7+Bp/n8L9MmfzFo6OAO8rebi95wTbX62Q+96qJPUYraNLA/VQKU/A=
+	t=1714474660; cv=none; b=DuXbAFBNPemorE/nhY8sB6KRRmNnHJAqnkMocJs7RfRR5wH50DpPHz3Nx/HEaXnwkyI9Rd/OZCNZc5bILib+E4YGXCp3CpgrfV17XvG93JNh6YaSNrmQHmRLU+y9Jm50fMKE+c0iLVmX6+1G9MExZsA4hdEL/+3ZAG60q88KFCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474656; c=relaxed/simple;
-	bh=WMfvIpjnDsdbCIEZvwI410ILxwMxzDo+VbOFQo2H7jM=;
+	s=arc-20240116; t=1714474660; c=relaxed/simple;
+	bh=VT6fUH+BQLW/P6aF0aZYJzJlmuX09tKV9N+LOr/EhQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q7IDaYQ5bnD6DAYrily9rHxEFE3QzdUcZFvPsRMQNSOOz7GXsjMfD/mKYEwnbJFgWFbYai4/tTTXzInAoXSZMq5BfolRNZ5UO+kJ1uaucNha1+r7BdaRDaDF7nEY3K0uDiYFt1g7Pb0VNV9fCHwXRX52EhAGC7ptVU1BClWl4J8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ShwTEWRW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S5uF4QTzLTCREY8Ye1UVJFUt1VCjSriea+KMcDreKrRhGpjgenIiKEPNZmWcfkk9k0J7+C47IQPIDAA0DlvHTJ79aebIt5xVH2ZwnO5gplKW0APFC2raZWmfrCXlq1gtmoHY0X0TXfwGygQCOuY9YRkOrxD3ymDqx1lDntFnqNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYWIAKDR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShwTEWRW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591D7C4AF19;
-	Tue, 30 Apr 2024 10:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYWIAKDR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCECC4AF18;
+	Tue, 30 Apr 2024 10:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474656;
-	bh=WMfvIpjnDsdbCIEZvwI410ILxwMxzDo+VbOFQo2H7jM=;
+	s=korg; t=1714474659;
+	bh=VT6fUH+BQLW/P6aF0aZYJzJlmuX09tKV9N+LOr/EhQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ShwTEWRWa/XdCK+re/8oyh0vCuyn/gjqKfGG9dfWqt15W6YSSRcDuSWpQ4ZHBsxTJ
-	 jab0E1kFityo0pghpGDdexKshnsYDQVaATfiIROnadsOx14p/Yg14F5mFROlcZ6uxu
-	 /5gARfpRKAyJKjGqGjoqqF9aMp4MpdCOIi/LOcxQ=
+	b=AYWIAKDRRs6bmu5MeVPUdHt5lDc5V+qNhpQ3JkCA7CRzg7tSbaztQtG5vbXNZjsPv
+	 zPw/cLbj1dnd8YNsr19cFbUMk/ux/udhL0sjMckwyD0Zk0tZLrlGTBWwv5Hyq8yTaS
+	 fTU+iIoAUOj40Y0ieajX7Jgp4X1dp+3f5GNdpON8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 221/228] riscv: hwprobe: fix invalid sign extension for RISCV_HWPROBE_EXT_ZVFHMIN
-Date: Tue, 30 Apr 2024 12:39:59 +0200
-Message-ID: <20240430103110.180657241@linuxfoundation.org>
+	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
+	Benjamin Poirier <bpoirier@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.8 185/228] net/mlx5e: Advertise mlx5 ethernet driver updates sk_buff md_dst for MACsec
+Date: Tue, 30 Apr 2024 12:39:23 +0200
+Message-ID: <20240430103109.141807309@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -46,46 +47,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clément Léger <cleger@rivosinc.com>
+From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
 
-[ Upstream commit 5ea6764d9095e234b024054f75ebbccc4f0eb146 ]
+commit 39d26a8f2efcb8b5665fe7d54a7dba306a8f1dff upstream.
 
-The current definition yields a negative 32bits signed value which
-result in a mask with is obviously incorrect. Replace it by using a
-1ULL bit shift value to obtain a single set bit mask.
+mlx5 Rx flow steering and CQE handling enable the driver to be able to
+update an skb's md_dst attribute as MACsec when MACsec traffic arrives when
+a device is configured for offloading. Advertise this to the core stack to
+take advantage of this capability.
 
-Fixes: 5dadda5e6a59 ("riscv: hwprobe: export Zvfh[min] ISA extensions")
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20240409143839.558784-1-cleger@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: b7c9400cbc48 ("net/mlx5e: Implement MACsec Rx data path using MACsec skb_metadata_dst")
+Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+Reviewed-by: Benjamin Poirier <bpoirier@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/20240423181319.115860-5-rrameshbabu@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/uapi/asm/hwprobe.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/riscv/include/uapi/asm/hwprobe.h b/arch/riscv/include/uapi/asm/hwprobe.h
-index 9f2a8e3ff2048..2902f68dc913a 100644
---- a/arch/riscv/include/uapi/asm/hwprobe.h
-+++ b/arch/riscv/include/uapi/asm/hwprobe.h
-@@ -54,7 +54,7 @@ struct riscv_hwprobe {
- #define		RISCV_HWPROBE_EXT_ZFHMIN	(1 << 28)
- #define		RISCV_HWPROBE_EXT_ZIHINTNTL	(1 << 29)
- #define		RISCV_HWPROBE_EXT_ZVFH		(1 << 30)
--#define		RISCV_HWPROBE_EXT_ZVFHMIN	(1 << 31)
-+#define		RISCV_HWPROBE_EXT_ZVFHMIN	(1ULL << 31)
- #define		RISCV_HWPROBE_EXT_ZFA		(1ULL << 32)
- #define		RISCV_HWPROBE_EXT_ZTSO		(1ULL << 33)
- #define		RISCV_HWPROBE_EXT_ZACAS		(1ULL << 34)
--- 
-2.43.0
-
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
+@@ -1640,6 +1640,7 @@ static const struct macsec_ops macsec_of
+ 	.mdo_add_secy = mlx5e_macsec_add_secy,
+ 	.mdo_upd_secy = mlx5e_macsec_upd_secy,
+ 	.mdo_del_secy = mlx5e_macsec_del_secy,
++	.rx_uses_md_dst = true,
+ };
+ 
+ bool mlx5e_macsec_handle_tx_skb(struct mlx5e_macsec *macsec, struct sk_buff *skb)
 
 
