@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2508012D1EA;
-	Tue, 30 Apr 2024 11:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3883512D1EA;
+	Tue, 30 Apr 2024 11:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475708; cv=none; b=c7O3Zoozl1+ZkmylaOpECMeQw+7eP1b7xbINzo3fmyh/zuF9/V6W05eRohp8EvdWSpk72w4zOrgNw2pQFBehfSvSdVrx5Q3uh/xWjDDtyDT1tns0R48ZEMHUg9IN4iHaGoJJL+g4v8avwEmSxI3d2nqCtZf1mF0T33Ai2+KtnyA=
+	t=1714475711; cv=none; b=AVcecBc/z1ImpU1qwNsx3Bwdqik0TUG6aAMvCbmO0yCV6QhjWKcdkQm3GovpD4o/CvEZTQXfLDIjyTSZoB9WCNaatrHAw71F3Y/tgZdQ/3guo8Kt39Ra1YbR32QD4d+i0jRUMTSxRER/PwTqWqOvyrhLcGMQdO2enGD1Y6IJcXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475708; c=relaxed/simple;
-	bh=MVROt6RcWBNBpWrwwQWc+B6pQGC56VP+C6eVPiNQxuw=;
+	s=arc-20240116; t=1714475711; c=relaxed/simple;
+	bh=xG80Km175HfsjMWSeADEL4voQtMWmtjZVI2RRDTHvyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9qbZKJbAMz8TfvTThcTejuQ3yMHhz6u42fCbh+Ly4cfHnyA6xlAqRxuLVZ1wqxz3d1+yOabCN8dASiOuwvl3AwQfMpl8f2Wg1ILz0DjcHWwWztK6l02njLlF0I1CVy4yOINE+6UXXF9pVffV+MGrkSTY9tVQijLSqRvYMVSeAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjEiLOds; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aEb6aHVDakZbo5J+MKGoJrPYMnuOXc19NYioLN8vOiYwOClxM5nAIiIgNMsK9QOhnWAFtUGteGg6CpIvJu8y3GcVHPdhW58kW1mJWQWwWrxzhGzrO52uT+sZWXDu7HqxTdBtU5uKHJ/td46natVmAO0Wr4C3bUxB8n3zsw9fLEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTPS15/p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjEiLOds"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E924C2BBFC;
-	Tue, 30 Apr 2024 11:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTPS15/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC60C2BBFC;
+	Tue, 30 Apr 2024 11:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475708;
-	bh=MVROt6RcWBNBpWrwwQWc+B6pQGC56VP+C6eVPiNQxuw=;
+	s=korg; t=1714475711;
+	bh=xG80Km175HfsjMWSeADEL4voQtMWmtjZVI2RRDTHvyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PjEiLOdsagy0Lqm7/rPmbnMrJ4LEi0un3Ijr2zWsw4nDqy0GE7YlMLrCp6623lYXc
-	 ehYIoE9Ovhf+WZGZqujbP1BNEhj+pPFatJ7pW4G2pK/X2edJleJ0ow8++U6I3MvqBs
-	 hzEnfxtLIKlv0IWinX93kFTxGcQiFkrKj0cX3t9Q=
+	b=vTPS15/pkSwBtgTMJ0y1I+QKawuBWwyMmTinW6anBJ2tdSiwAvDPkKAxJ4UqEb7jT
+	 rNoZPaf0kL7Z2uMMa2f4tMbuI1xWQ8j/B8jsHT53OIHnSTnse+yxHvxsJatRYOoyC/
+	 hOFdulLOCaJjhRtJN+qw9zDqeMSdP1gHnZUWE/8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baruch Siach <baruch@tkos.co.il>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 179/186] i2c: smbus: fix NULL function pointer dereference
-Date: Tue, 30 Apr 2024 12:40:31 +0200
-Message-ID: <20240430103103.227018407@linuxfoundation.org>
+	Stephen Boyd <swboyd@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.6 180/186] phy: qcom: qmp-combo: fix VCO div offset on v5_5nm and v6
+Date: Tue, 30 Apr 2024 12:40:32 +0200
+Message-ID: <20240430103103.256047466@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -51,64 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 91811a31b68d3765b3065f4bb6d7d6d84a7cfc9f ]
+commit 025a6f7448f7bb5f4fceb62498ee33d89ae266bb upstream.
 
-Baruch reported an OOPS when using the designware controller as target
-only. Target-only modes break the assumption of one transfer function
-always being available. Fix this by always checking the pointer in
-__i2c_transfer.
+Commit 5abed58a8bde ("phy: qcom: qmp-combo: Fix VCO div offset on v3")
+fixed a regression introduced in 6.5 by making sure that the correct
+offset is used for the DP_PHY_VCO_DIV register on v3 hardware.
 
-Reported-by: Baruch Siach <baruch@tkos.co.il>
-Closes: https://lore.kernel.org/r/4269631780e5ba789cf1ae391eec1b959def7d99.1712761976.git.baruch@tkos.co.il
-Fixes: 4b1acc43331d ("i2c: core changes for slave support")
-[wsa: dropped the simplification in core-smbus to avoid theoretical regressions]
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Tested-by: Baruch Siach <baruch@tkos.co.il>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Unfortunately, that fix instead broke DisplayPort on v5_5nm and v6
+hardware as it failed to add the corresponding offsets also to those
+register tables.
+
+Fixes: 815891eee668 ("phy: qcom-qmp-combo: Introduce orientation variable")
+Fixes: 5abed58a8bde ("phy: qcom: qmp-combo: Fix VCO div offset on v3")
+Cc: stable@vger.kernel.org	# 6.5: 5abed58a8bde
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Link: https://lore.kernel.org/r/20240408093023.506-1-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/i2c/i2c-core-base.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c |    2 ++
+ drivers/phy/qualcomm/phy-qcom-qmp.h       |    2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
-index 7f30bcceebaed..3642d42463209 100644
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -2187,13 +2187,18 @@ static int i2c_check_for_quirks(struct i2c_adapter *adap, struct i2c_msg *msgs,
-  * Returns negative errno, else the number of messages executed.
-  *
-  * Adapter lock must be held when calling this function. No debug logging
-- * takes place. adap->algo->master_xfer existence isn't checked.
-+ * takes place.
-  */
- int __i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
- {
- 	unsigned long orig_jiffies;
- 	int ret, try;
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -188,6 +188,7 @@ static const unsigned int qmp_v5_5nm_usb
+ 	[QPHY_COM_BIAS_EN_CLKBUFLR_EN]	= QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN,
  
-+	if (!adap->algo->master_xfer) {
-+		dev_dbg(&adap->dev, "I2C level transfers not supported\n");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	if (WARN_ON(!msgs || num < 1))
- 		return -EINVAL;
+ 	[QPHY_DP_PHY_STATUS]		= QSERDES_V5_DP_PHY_STATUS,
++	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V5_DP_PHY_VCO_DIV,
  
-@@ -2260,11 +2265,6 @@ int i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
- {
- 	int ret;
+ 	[QPHY_TX_TX_POL_INV]		= QSERDES_V5_5NM_TX_TX_POL_INV,
+ 	[QPHY_TX_TX_DRV_LVL]		= QSERDES_V5_5NM_TX_TX_DRV_LVL,
+@@ -212,6 +213,7 @@ static const unsigned int qmp_v6_usb3phy
+ 	[QPHY_COM_BIAS_EN_CLKBUFLR_EN]	= QSERDES_V6_COM_PLL_BIAS_EN_CLK_BUFLR_EN,
  
--	if (!adap->algo->master_xfer) {
--		dev_dbg(&adap->dev, "I2C level transfers not supported\n");
--		return -EOPNOTSUPP;
--	}
--
- 	/* REVISIT the fault reporting model here is weak:
- 	 *
- 	 *  - When we get an error after receiving N bytes from a slave,
--- 
-2.43.0
-
+ 	[QPHY_DP_PHY_STATUS]		= QSERDES_V6_DP_PHY_STATUS,
++	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V6_DP_PHY_VCO_DIV,
+ 
+ 	[QPHY_TX_TX_POL_INV]		= QSERDES_V6_TX_TX_POL_INV,
+ 	[QPHY_TX_TX_DRV_LVL]		= QSERDES_V6_TX_TX_DRV_LVL,
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.h
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
+@@ -134,9 +134,11 @@
+ #define QPHY_V4_PCS_MISC_TYPEC_STATUS			0x10
+ #define QPHY_V4_PCS_MISC_PLACEHOLDER_STATUS		0x14
+ 
++#define QSERDES_V5_DP_PHY_VCO_DIV			0x070
+ #define QSERDES_V5_DP_PHY_STATUS			0x0dc
+ 
+ /* Only for QMP V6 PHY - DP PHY registers */
++#define QSERDES_V6_DP_PHY_VCO_DIV			0x070
+ #define QSERDES_V6_DP_PHY_AUX_INTERRUPT_STATUS		0x0e0
+ #define QSERDES_V6_DP_PHY_STATUS			0x0e4
+ 
 
 
