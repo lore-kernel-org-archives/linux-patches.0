@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999F012D74E;
-	Tue, 30 Apr 2024 10:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4912712D74E;
+	Tue, 30 Apr 2024 10:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474440; cv=none; b=UI6TUJ+Fxo3FQZ6obOTpO615sp4aNhGuTmnREikL+dxGLTXCdKedPrSuUNlR7nM+QiR8F88dEOIVR1Sn+qfoiTox101AJo2GVHQqLQLNTVjcXEJkJRITMz5SKRQdBxaqTsVwZ4LqZ5mQ7iKBPANO7SyH8ZL1Pi2ZSyoS7hb5Xok=
+	t=1714474444; cv=none; b=ceyAEHWNySYh23ahpzxgjnPcxj7p3XO5STYOdQaNTY1I1d168MUl44ZrUWGKVfZ3SYgtd3rd7ksAQQoURLwmTp1zjC2ZHC/yBjj1p5rKs1zzYPFHZ39D+8FJdPrJ/tDbVv+ndGukdnRB9c40ZrAS0+zBpayFeiiz96x2OyAeAG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474440; c=relaxed/simple;
-	bh=o3Cj6Ykt//eiuFceFaCbl1c2F5rRt9ZbH9wJ81DXOC4=;
+	s=arc-20240116; t=1714474444; c=relaxed/simple;
+	bh=+FbspavUHQkOjtFXjuCtNPHj8JXW90QO9aPjQu8/Os4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W64wE7K2r1mUNjjS8R8K6k0n23z/krC6DCWfpFAOtrvbsayzGWecA90ZhkDR0cKT5thmaIGrzT1UWMwbPGmt6gxb2NSxFbGU+bNe4EXFMjER/VARueGjIRR4hRK+gLAHeibGyTYao0CC8e7VbK/MMIwRX3rq2BnuVU73bRxQa38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lG3EhPtG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hKIyhnGqeiOi1RtI1oG+0dzQOhG4/OehwnXid5mIu/pb7nyhYgNFKh3ybc9W7fZyZWfsHt8JYbfJPHGDmNA/dwGKz9mYzL1zjLg1pl/m8eXXZHazvnTDrY//6eSk5kb3BC15Nn35tg8JcvWz67furn6WqmuhSqgcaq435Pq8p7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9A07FGC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lG3EhPtG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A3BC2BBFC;
-	Tue, 30 Apr 2024 10:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9A07FGC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A954C4AF19;
+	Tue, 30 Apr 2024 10:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474440;
-	bh=o3Cj6Ykt//eiuFceFaCbl1c2F5rRt9ZbH9wJ81DXOC4=;
+	s=korg; t=1714474443;
+	bh=+FbspavUHQkOjtFXjuCtNPHj8JXW90QO9aPjQu8/Os4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lG3EhPtGxnsK8DqfDSezzWj5yc/LX0+vjqJLwSjSexhjwkbwQy4W3Lau97YlmqOWQ
-	 7GJOcnCFpW6NE9v64csUapj/QXWDz2ij/o5yPbeJPoOWe9COMg/0L7I1ksq+ZtL6xx
-	 ThEhRwix0WJW4h8GUiOIYSU7loBR/EMfdleLGSfU=
+	b=f9A07FGC68/ZJFDDHYJhlS8fj81WiQxSLTfb1F+JMLTHhmxW8GbAibf/cpKgM2uA3
+	 aAZDPsYL2YtO6iOWP+w2D9wwJBAGkbiAXJAzw9UmxDceOWuBoJtRpRXEuwz2Kcv2L3
+	 DDTbhw/6Y3f6wJPyzOVvynPmPxDxnhJMD/xpTEkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Neal Gompa <neal@gompa.dev>,
-	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.8 158/228] btrfs: fallback if compressed IO fails for ENOSPC
-Date: Tue, 30 Apr 2024 12:38:56 +0200
-Message-ID: <20240430103108.365110573@linuxfoundation.org>
+	Aswin Unnikrishnan <aswinunni01@gmail.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.8 141/228] rust: remove `params` from `module` macro example
+Date: Tue, 30 Apr 2024 12:38:39 +0200
+Message-ID: <20240430103107.869091565@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -52,71 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+From: Aswin Unnikrishnan <aswinunni01@gmail.com>
 
-commit 131a821a243f89be312ced9e62ccc37b2cf3846c upstream.
+commit 19843452dca40e28d6d3f4793d998b681d505c7f upstream.
 
-In commit b4ccace878f4 ("btrfs: refactor submit_compressed_extents()"), if
-an async extent compressed but failed to find enough space, we changed
-from falling back to an uncompressed write to just failing the write
-altogether. The principle was that if there's not enough space to write
-the compressed version of the data, there can't possibly be enough space
-to write the larger, uncompressed version of the data.
+Remove argument `params` from the `module` macro example, because the
+macro does not currently support module parameters since it was not sent
+with the initial merge.
 
-However, this isn't necessarily true: due to fragmentation, there could
-be enough discontiguous free blocks to write the uncompressed version,
-but not enough contiguous free blocks to write the smaller but
-unsplittable compressed version.
-
-This has occurred to an internal workload which relied on write()'s
-return value indicating there was space. While rare, it has happened a
-few times.
-
-Thus, in order to prevent early ENOSPC, re-add a fallback to
-uncompressed writing.
-
-Fixes: b4ccace878f4 ("btrfs: refactor submit_compressed_extents()")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Co-developed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Aswin Unnikrishnan <aswinunni01@gmail.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Cc: stable@vger.kernel.org
+Fixes: 1fbde52bde73 ("rust: add `macros` crate")
+Link: https://lore.kernel.org/r/20240419215015.157258-1-aswinunni01@gmail.com
+[ Reworded slightly. ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ rust/macros/lib.rs |   12 ------------
+ 1 file changed, 12 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -1144,13 +1144,13 @@ static void submit_one_async_extent(stru
- 				   0, *alloc_hint, &ins, 1, 1);
- 	if (ret) {
- 		/*
--		 * Here we used to try again by going back to non-compressed
--		 * path for ENOSPC.  But we can't reserve space even for
--		 * compressed size, how could it work for uncompressed size
--		 * which requires larger size?  So here we directly go error
--		 * path.
-+		 * We can't reserve contiguous space for the compressed size.
-+		 * Unlikely, but it's possible that we could have enough
-+		 * non-contiguous space for the uncompressed size instead.  So
-+		 * fall back to uncompressed.
- 		 */
--		goto out_free;
-+		submit_uncompressed_range(inode, async_extent, locked_page);
-+		goto done;
- 	}
- 
- 	/* Here we're doing allocation and writeback of the compressed pages */
-@@ -1202,7 +1202,6 @@ done:
- out_free_reserve:
- 	btrfs_dec_block_group_reservations(fs_info, ins.objectid);
- 	btrfs_free_reserved_extent(fs_info, ins.objectid, ins.offset, 1);
--out_free:
- 	mapping_set_error(inode->vfs_inode.i_mapping, -EIO);
- 	extent_clear_unlock_delalloc(inode, start, end,
- 				     NULL, EXTENT_LOCKED | EXTENT_DELALLOC |
+--- a/rust/macros/lib.rs
++++ b/rust/macros/lib.rs
+@@ -35,18 +35,6 @@ use proc_macro::TokenStream;
+ ///     author: "Rust for Linux Contributors",
+ ///     description: "My very own kernel module!",
+ ///     license: "GPL",
+-///     params: {
+-///        my_i32: i32 {
+-///            default: 42,
+-///            permissions: 0o000,
+-///            description: "Example of i32",
+-///        },
+-///        writeable_i32: i32 {
+-///            default: 42,
+-///            permissions: 0o644,
+-///            description: "Example of i32",
+-///        },
+-///    },
+ /// }
+ ///
+ /// struct MyModule;
 
 
