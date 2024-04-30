@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED97212C487;
-	Tue, 30 Apr 2024 11:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B58012B176;
+	Tue, 30 Apr 2024 11:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474924; cv=none; b=YMls9sDZShyg7czVIX15VO2FtqkDbrVHI1zhtJF5jZZjwyqK8y2/GpeOXwgnmO2h8A6x0OleEY438ZOjwBtSfsNySH4nACSow/IOH9eCepjxLwgWQ8/wvK12EU9nOUu7wfBRRD0keAqcugkatynKVF9aSOkA2BMZQJMguVXi8qw=
+	t=1714474927; cv=none; b=tIQ+uF8Cqf8xzK092TzseU5uO2tMHoUVUwWgRv0JgI9pKbYn1SSvybzpn+bfUtAyOjzlyT4tQx5xIj9xz/WkJnkNbOCAZ4JsUz+Bz5hnYkQfv0cwX/hdhUPeKtjh1do577+cIZMEGsZWxLE/O5MxInRE/OtCkUG+1sDdmy6PCoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474924; c=relaxed/simple;
-	bh=GcrgBWzP1trt2iApl+YVp3HY3/qoul3cng9K9iE8yYg=;
+	s=arc-20240116; t=1714474927; c=relaxed/simple;
+	bh=0d/iwT6mTbtvXcAg7UR7t4v2nH+r5rnd04bCOLt8KAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BrRRpRCPWSMXKjFoRI+8BWnn4cjQkdk5HsuPiCWvK5/ve/bGzfci5F33Yq4v/N0z9Oy+pJbkPdoWDPO3U3W+20VzzuXYBMbA1qM1uiy9mSFnhGeK9qu/d4jcpWw5kbimXa6Hj2sqYjddFbfnqHL0hKvLCFLeBvrmEKiEF3+NdXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQ2ZCvNj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j3Vu2BNjuJnht2uqUnpRimI2qYIpWIZUWI8C/PEJY+g3V182shKb4uXPtEe6Vg83z6TYzjB6nY4TNA/+07m1Y1CE4bM18lGHW2VvlvYzbJALPatFFm4lZdZuJedUiC5Dq6WTyCFVmH0gFMrobOg8M02gf7fRAZ4bfwEcRjGWiRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmrgKaHW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQ2ZCvNj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7525EC4AF19;
-	Tue, 30 Apr 2024 11:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmrgKaHW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865B1C4AF18;
+	Tue, 30 Apr 2024 11:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474923;
-	bh=GcrgBWzP1trt2iApl+YVp3HY3/qoul3cng9K9iE8yYg=;
+	s=korg; t=1714474926;
+	bh=0d/iwT6mTbtvXcAg7UR7t4v2nH+r5rnd04bCOLt8KAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQ2ZCvNjfUakfH4onEUOrlu4erdo8uqbJKU0RzJ2lKre2LBrWWLiRwWHhL0tXRJJ0
-	 7leU0TDtlKtYJcvF/HWjY0p54jK4y6qcjUmrJM2VA7sjQMMKuZGjgCUEq99z/uV+S3
-	 J1lA5/aVegWogztkJAjdtx3oimVJakHLy5VO92DM=
+	b=XmrgKaHWn+af7Bemfzq9XyKW3Sky0VnBxshxwXXF3TIEE56uD2Qylk0ABx4qttxmb
+	 XtXMSkndqEfxyDwOgQO3ScuV2JGvAUKhJtWh3hoeZyJMtk7F9MZSngwsKZ3Ngi+Jq4
+	 jQt0HnNvRS6po6ekNgXfG1s9/PNQjZr9le9GIaGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 076/138] arm64: dts: mediatek: mt7622: add support for coherent DMA
-Date: Tue, 30 Apr 2024 12:39:21 +0200
-Message-ID: <20240430103051.664251527@linuxfoundation.org>
+Subject: [PATCH 5.10 077/138] arm64: dts: mediatek: mt7622: introduce nodes for Wireless Ethernet Dispatch
+Date: Tue, 30 Apr 2024 12:39:22 +0200
+Message-ID: <20240430103051.692592901@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -53,40 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 3abd063019b6a01762f9fccc39505f29d029360a ]
+[ Upstream commit e9b65ecb7c3050dd34ee22ce17f1cf95e8405b15 ]
 
-It improves performance by eliminating the need for a cache flush on rx and tx
+Introduce wed0 and wed1 nodes in order to enable offloading forwarding
+between ethernet and wireless devices on the mt7622 chipset.
 
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 3ba5a6159434 ("arm64: dts: mediatek: mt7622: fix clock controllers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7622.dtsi | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt7622.dtsi | 28 ++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/mediatek/mt7622.dtsi b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-index 884930a5849a2..07b4d3ba55612 100644
+index 07b4d3ba55612..ab218229b7ea1 100644
 --- a/arch/arm64/boot/dts/mediatek/mt7622.dtsi
 +++ b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
-@@ -357,7 +357,7 @@
+@@ -893,6 +893,11 @@
  		};
+ 	};
  
- 		cci_control2: slave-if@5000 {
--			compatible = "arm,cci-400-ctrl-if";
-+			compatible = "arm,cci-400-ctrl-if", "syscon";
- 			interface-type = "ace";
- 			reg = <0x5000 0x1000>;
- 		};
-@@ -937,6 +937,8 @@
- 		power-domains = <&scpsys MT7622_POWER_DOMAIN_ETHSYS>;
++	hifsys: syscon@1af00000 {
++		compatible = "mediatek,mt7622-hifsys", "syscon";
++		reg = <0 0x1af00000 0 0x70>;
++	};
++
+ 	ethsys: syscon@1b000000 {
+ 		compatible = "mediatek,mt7622-ethsys",
+ 			     "syscon";
+@@ -911,6 +916,26 @@
+ 		#dma-cells = <1>;
+ 	};
+ 
++	pcie_mirror: pcie-mirror@10000400 {
++		compatible = "mediatek,mt7622-pcie-mirror",
++			     "syscon";
++		reg = <0 0x10000400 0 0x10>;
++	};
++
++	wed0: wed@1020a000 {
++		compatible = "mediatek,mt7622-wed",
++			     "syscon";
++		reg = <0 0x1020a000 0 0x1000>;
++		interrupts = <GIC_SPI 214 IRQ_TYPE_LEVEL_LOW>;
++	};
++
++	wed1: wed@1020b000 {
++		compatible = "mediatek,mt7622-wed",
++			     "syscon";
++		reg = <0 0x1020b000 0 0x1000>;
++		interrupts = <GIC_SPI 215 IRQ_TYPE_LEVEL_LOW>;
++	};
++
+ 	eth: ethernet@1b100000 {
+ 		compatible = "mediatek,mt7622-eth",
+ 			     "mediatek,mt2701-eth",
+@@ -938,6 +963,9 @@
  		mediatek,ethsys = <&ethsys>;
  		mediatek,sgmiisys = <&sgmiisys>;
-+		mediatek,cci-control = <&cci_control2>;
-+		dma-coherent;
+ 		mediatek,cci-control = <&cci_control2>;
++		mediatek,wed = <&wed0>, <&wed1>;
++		mediatek,pcie-mirror = <&pcie_mirror>;
++		mediatek,hifsys = <&hifsys>;
+ 		dma-coherent;
  		#address-cells = <1>;
  		#size-cells = <0>;
- 		status = "disabled";
 -- 
 2.43.0
 
