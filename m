@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7702E12C47A;
-	Tue, 30 Apr 2024 10:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE4912C47A;
+	Tue, 30 Apr 2024 10:49:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474176; cv=none; b=peqloZ1wTRQc9o64z8dDkdYrR13gHOUQf9BNvnvHoKYZONL6msipsQHupSP31OojiFGdAcVwS+ZX5Eg8jlNKbFzjX/wODlv/UGIEJWEmOUmVA1TSd07FU+YQkTm70hKNK3pW1pVOBxTgW7Yo0fET40pIopmtf2cWoBwk27H95Fg=
+	t=1714474179; cv=none; b=RSXGRrTzq718iymG9mh7NeHoqEhrBaFtC+ko3PRfMT3Wm9mUoNf+rDBrxUpOsSbS8v1vaDU9gFgpXI/NlImxrvorDB5bMx8bN5kXx5oTML3w5iWI6/WedvxPK3sEwCWActKOau1nhX6zNh8K8gcNa7h6i7aIPkQICvkdkrjH3DY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474176; c=relaxed/simple;
-	bh=ZinmeS8O3dPwej8dhaNARbUpzuyOGlQpsrczL6oRks0=;
+	s=arc-20240116; t=1714474179; c=relaxed/simple;
+	bh=+aS5K3enQMSVMZvAYJxWSvYJ1n0y8LK0RbBn/jVLzao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TYsXuUkl7dOF8GC1lYEvqvLcMr4R9TEP7G8w0eOWhnQkDLsMRChLxelouRM1+y0cctMCJ3hPZEs0nRMrLtOfaY9TQlKn936awJkG1hneuolhPk7EmoUkoBKRkd1APQPXAE6J8Yr5wvVezcHwW0EKXd7OiYTlbFXX6/im5w5r8Ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQZF8rOd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q42BEsIygDusLgWWUVWhHSwd3mnN3vjs4azL6YZLyxGcIziqX9+ikxqV2xEQ3SJebkkcjVPtSlL0vcoPH8KuHhhijn8Y3nOgO2JKSe3FoW8MeizekmACMNKcXDVirnNSI0k/5BBRYmhBNWR7IEIY7zbVtvxlQZBNv8G4yXtAkUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4PwGBTo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQZF8rOd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01792C2BBFC;
-	Tue, 30 Apr 2024 10:49:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4PwGBTo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 052F5C2BBFC;
+	Tue, 30 Apr 2024 10:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474176;
-	bh=ZinmeS8O3dPwej8dhaNARbUpzuyOGlQpsrczL6oRks0=;
+	s=korg; t=1714474179;
+	bh=+aS5K3enQMSVMZvAYJxWSvYJ1n0y8LK0RbBn/jVLzao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQZF8rOd2St7H/KyTD2FDhcVO/7UzRO38A0i4oU9rsfaZJaaHiuz4x3/ZTX7JySER
-	 hwGFvid6tmzjxDFMh7cgDsUcAEv7RUzK9JHjuVsygKgTcrI5Fz5S3xIdvpWcPyFc2H
-	 01gPaZ9ywDhOW0HX44YnrrSj9drhzRzvLYlVob/g=
+	b=w4PwGBTolgE3AL/lZUbYzMLg4JSagCIlWL3J8+Ffp7fK9gICOKgMQ92o6lnJUBUZG
+	 4UhvmpkPHf+aK05ZeTKxGxJgPoWRWHI8vjoHAb4fta2P7ue+Hr3G5BN+v+O1xY22X2
+	 dhrzj6bSKl5+mv116eR0rjCHQ6ogYSt3DZQszYIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonas=20Dre=C3=9Fler?= <verdre@v0yd.nl>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 079/228] Bluetooth: Remove pending ACL connection attempts
-Date: Tue, 30 Apr 2024 12:37:37 +0200
-Message-ID: <20240430103106.084233795@linuxfoundation.org>
+Subject: [PATCH 6.8 080/228] Bluetooth: hci_conn: Always use sk_timeo as conn_timeout
+Date: Tue, 30 Apr 2024 12:37:38 +0200
+Message-ID: <20240430103106.113175395@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -45,154 +44,210 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Dreßler <verdre@v0yd.nl>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 4aa42119d971603dc9e4d8cf4f53d5fcf082ea7d ]
+[ Upstream commit bf98feea5b65ced367a871cf35fc044dedbcfb85 ]
 
-With the last commit we moved to using the hci_sync queue for "Create
-Connection" requests, removing the need for retrying the paging after
-finished/failed "Create Connection" requests and after the end of
-inquiries.
+This aligns the use socket sk_timeo as conn_timeout when initiating a
+connection and then use it when scheduling the resulting HCI command,
+that way the command is actually aborted synchronously thus not
+blocking commands generated by hci_abort_conn_sync to inform the
+controller the connection is to be aborted.
 
-hci_conn_check_pending() was used to trigger this retry, we can remove it
-now.
-
-Note that we can also remove the special handling for COMMAND_DISALLOWED
-errors in the completion handler of "Create Connection", because "Create
-Connection" requests are now always serialized.
-
-This is somewhat reverting commit 4c67bc74f016 ("[Bluetooth] Support
-concurrent connect requests").
-
-With this, the BT_CONNECT2 state of ACL hci_conn objects should now be
-back to meaning only one thing: That we received a "Connection Request"
-from another device (see hci_conn_request_evt), but the response to that
-is going to be deferred.
-
-Signed-off-by: Jonas Dreßler <verdre@v0yd.nl>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Stable-dep-of: 2e7ed5f5e69b ("Bluetooth: hci_sync: Use advertised PHYs on hci_le_ext_create_conn_sync")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h |  1 -
- net/bluetooth/hci_conn.c         | 16 ----------------
- net/bluetooth/hci_event.c        | 21 ++++-----------------
- 3 files changed, 4 insertions(+), 34 deletions(-)
+ include/net/bluetooth/hci_core.h |  5 +++--
+ include/net/bluetooth/l2cap.h    |  2 +-
+ net/bluetooth/6lowpan.c          |  2 +-
+ net/bluetooth/hci_conn.c         |  8 +++++---
+ net/bluetooth/hci_sync.c         |  2 +-
+ net/bluetooth/l2cap_core.c       | 10 ++++------
+ net/bluetooth/l2cap_sock.c       |  3 ++-
+ net/bluetooth/mgmt.c             |  3 ++-
+ net/bluetooth/sco.c              |  3 ++-
+ 9 files changed, 21 insertions(+), 17 deletions(-)
 
 diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index d1228857b1d0f..ddbf287ee64fb 100644
+index ddbf287ee64fb..65da50f216069 100644
 --- a/include/net/bluetooth/hci_core.h
 +++ b/include/net/bluetooth/hci_core.h
-@@ -1481,7 +1481,6 @@ struct hci_conn *hci_conn_add_unset(struct hci_dev *hdev, int type,
- 				    bdaddr_t *dst, u8 role);
- void hci_conn_del(struct hci_conn *conn);
- void hci_conn_hash_flush(struct hci_dev *hdev);
--void hci_conn_check_pending(struct hci_dev *hdev);
+@@ -1496,9 +1496,10 @@ struct hci_conn *hci_connect_le(struct hci_dev *hdev, bdaddr_t *dst,
+ 				u16 conn_timeout, u8 role);
+ struct hci_conn *hci_connect_acl(struct hci_dev *hdev, bdaddr_t *dst,
+ 				 u8 sec_level, u8 auth_type,
+-				 enum conn_reasons conn_reason);
++				 enum conn_reasons conn_reason, u16 timeout);
+ struct hci_conn *hci_connect_sco(struct hci_dev *hdev, int type, bdaddr_t *dst,
+-				 __u16 setting, struct bt_codec *codec);
++				 __u16 setting, struct bt_codec *codec,
++				 u16 timeout);
+ struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
+ 			      __u8 dst_type, struct bt_iso_qos *qos);
+ struct hci_conn *hci_bind_bis(struct hci_dev *hdev, bdaddr_t *dst,
+diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
+index 92d7197f9a563..a4278aa618ab1 100644
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -939,7 +939,7 @@ int l2cap_add_scid(struct l2cap_chan *chan,  __u16 scid);
+ struct l2cap_chan *l2cap_chan_create(void);
+ void l2cap_chan_close(struct l2cap_chan *chan, int reason);
+ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
+-		       bdaddr_t *dst, u8 dst_type);
++		       bdaddr_t *dst, u8 dst_type, u16 timeout);
+ int l2cap_chan_reconfigure(struct l2cap_chan *chan, __u16 mtu);
+ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len);
+ void l2cap_chan_busy(struct l2cap_chan *chan, int busy);
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index 4eb1b3ced0d27..715cbafbf6631 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -892,7 +892,7 @@ static int bt_6lowpan_connect(bdaddr_t *addr, u8 dst_type)
+ 	chan->ops = &bt_6lowpan_chan_ops;
  
- struct hci_chan *hci_chan_create(struct hci_conn *conn);
- void hci_chan_del(struct hci_chan *chan);
+ 	err = l2cap_chan_connect(chan, cpu_to_le16(L2CAP_PSM_IPSP), 0,
+-				 addr, dst_type);
++				 addr, dst_type, L2CAP_CONN_TIMEOUT);
+ 
+ 	BT_DBG("chan %p err %d", chan, err);
+ 	if (err < 0)
 diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index d21e39ae67658..13481f08e47ee 100644
+index 13481f08e47ee..47f117874479d 100644
 --- a/net/bluetooth/hci_conn.c
 +++ b/net/bluetooth/hci_conn.c
-@@ -2592,22 +2592,6 @@ void hci_conn_hash_flush(struct hci_dev *hdev)
- 	}
- }
+@@ -1607,7 +1607,7 @@ struct hci_conn *hci_connect_le_scan(struct hci_dev *hdev, bdaddr_t *dst,
  
--/* Check pending connect attempts */
--void hci_conn_check_pending(struct hci_dev *hdev)
--{
--	struct hci_conn *conn;
--
--	BT_DBG("hdev %s", hdev->name);
--
--	hci_dev_lock(hdev);
--
--	conn = hci_conn_hash_lookup_state(hdev, ACL_LINK, BT_CONNECT2);
--	if (conn)
--		hci_acl_create_connection_sync(hdev, conn);
--
--	hci_dev_unlock(hdev);
--}
--
- static u32 get_link_mode(struct hci_conn *conn)
+ struct hci_conn *hci_connect_acl(struct hci_dev *hdev, bdaddr_t *dst,
+ 				 u8 sec_level, u8 auth_type,
+-				 enum conn_reasons conn_reason)
++				 enum conn_reasons conn_reason, u16 timeout)
  {
- 	u32 link_mode = 0;
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index a59b5b4711a46..f5d77c8089d81 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -118,8 +118,6 @@ static u8 hci_cc_inquiry_cancel(struct hci_dev *hdev, void *data,
- 		hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
- 	hci_dev_unlock(hdev);
+ 	struct hci_conn *acl;
  
--	hci_conn_check_pending(hdev);
--
- 	return rp->status;
+@@ -1643,6 +1643,7 @@ struct hci_conn *hci_connect_acl(struct hci_dev *hdev, bdaddr_t *dst,
+ 		acl->sec_level = BT_SECURITY_LOW;
+ 		acl->pending_sec_level = sec_level;
+ 		acl->auth_type = auth_type;
++		acl->conn_timeout = timeout;
+ 
+ 		err = hci_acl_create_connection_sync(hdev, acl);
+ 		if (err) {
+@@ -1683,14 +1684,15 @@ static struct hci_link *hci_conn_link(struct hci_conn *parent,
  }
  
-@@ -150,8 +148,6 @@ static u8 hci_cc_exit_periodic_inq(struct hci_dev *hdev, void *data,
- 
- 	hci_dev_clear_flag(hdev, HCI_PERIODIC_INQ);
- 
--	hci_conn_check_pending(hdev);
--
- 	return rp->status;
- }
- 
-@@ -2312,10 +2308,8 @@ static void hci_cs_inquiry(struct hci_dev *hdev, __u8 status)
+ struct hci_conn *hci_connect_sco(struct hci_dev *hdev, int type, bdaddr_t *dst,
+-				 __u16 setting, struct bt_codec *codec)
++				 __u16 setting, struct bt_codec *codec,
++				 u16 timeout)
  {
- 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
+ 	struct hci_conn *acl;
+ 	struct hci_conn *sco;
+ 	struct hci_link *link;
  
--	if (status) {
--		hci_conn_check_pending(hdev);
-+	if (status)
- 		return;
--	}
+ 	acl = hci_connect_acl(hdev, dst, BT_SECURITY_LOW, HCI_AT_NO_BONDING,
+-			      CONN_REASON_SCO_CONNECT);
++			      CONN_REASON_SCO_CONNECT, timeout);
+ 	if (IS_ERR(acl))
+ 		return acl;
  
- 	if (hci_sent_cmd_data(hdev, HCI_OP_INQUIRY))
- 		set_bit(HCI_INQUIRY, &hdev->flags);
-@@ -2340,12 +2334,9 @@ static void hci_cs_create_conn(struct hci_dev *hdev, __u8 status)
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index e4f89b6e917e2..816fd9c38ae04 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6607,7 +6607,7 @@ static int __hci_acl_create_connection_sync(struct hci_dev *hdev, void *data)
+ 	err = __hci_cmd_sync_status_sk(hdev, HCI_OP_CREATE_CONN,
+ 				       sizeof(cp), &cp,
+ 				       HCI_EV_CONN_COMPLETE,
+-				       HCI_ACL_CONN_TIMEOUT, NULL);
++				       conn->conn_timeout, NULL);
  
- 	if (status) {
- 		if (conn && conn->state == BT_CONNECT) {
--			if (status != HCI_ERROR_COMMAND_DISALLOWED || conn->attempt > 2) {
--				conn->state = BT_CLOSED;
--				hci_connect_cfm(conn, status);
--				hci_conn_del(conn);
--			} else
--				conn->state = BT_CONNECT2;
-+			conn->state = BT_CLOSED;
-+			hci_connect_cfm(conn, status);
-+			hci_conn_del(conn);
- 		}
+ 	if (err == -ETIMEDOUT)
+ 		hci_abort_conn_sync(hdev, conn, HCI_ERROR_LOCAL_HOST_TERM);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 706d2478ddb33..dc08974087936 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6924,7 +6924,7 @@ static void l2cap_chan_by_pid(struct l2cap_chan *chan, void *data)
+ }
+ 
+ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
+-		       bdaddr_t *dst, u8 dst_type)
++		       bdaddr_t *dst, u8 dst_type, u16 timeout)
+ {
+ 	struct l2cap_conn *conn;
+ 	struct hci_conn *hcon;
+@@ -7017,19 +7017,17 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
+ 
+ 		if (hci_dev_test_flag(hdev, HCI_ADVERTISING))
+ 			hcon = hci_connect_le(hdev, dst, dst_type, false,
+-					      chan->sec_level,
+-					      HCI_LE_CONN_TIMEOUT,
++					      chan->sec_level, timeout,
+ 					      HCI_ROLE_SLAVE);
+ 		else
+ 			hcon = hci_connect_le_scan(hdev, dst, dst_type,
+-						   chan->sec_level,
+-						   HCI_LE_CONN_TIMEOUT,
++						   chan->sec_level, timeout,
+ 						   CONN_REASON_L2CAP_CHAN);
+ 
  	} else {
- 		if (!conn) {
-@@ -3035,8 +3026,6 @@ static void hci_inquiry_complete_evt(struct hci_dev *hdev, void *data,
+ 		u8 auth_type = l2cap_get_auth_type(chan);
+ 		hcon = hci_connect_acl(hdev, dst, chan->sec_level, auth_type,
+-				       CONN_REASON_L2CAP_CHAN);
++				       CONN_REASON_L2CAP_CHAN, timeout);
+ 	}
  
- 	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
+ 	if (IS_ERR(hcon)) {
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 1eeea5d1306c2..e7d810b23082f 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -254,7 +254,8 @@ static int l2cap_sock_connect(struct socket *sock, struct sockaddr *addr,
+ 		chan->mode = L2CAP_MODE_LE_FLOWCTL;
  
--	hci_conn_check_pending(hdev);
--
- 	if (!test_and_clear_bit(HCI_INQUIRY, &hdev->flags))
- 		return;
+ 	err = l2cap_chan_connect(chan, la.l2_psm, __le16_to_cpu(la.l2_cid),
+-				 &la.l2_bdaddr, la.l2_bdaddr_type);
++				 &la.l2_bdaddr, la.l2_bdaddr_type,
++				 sk->sk_sndtimeo);
+ 	if (err)
+ 		return err;
  
-@@ -3283,8 +3272,6 @@ static void hci_conn_complete_evt(struct hci_dev *hdev, void *data,
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 640d6d54ac6ba..0759975be6479 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -3436,7 +3436,8 @@ static int pair_device(struct sock *sk, struct hci_dev *hdev, void *data,
  
- unlock:
- 	hci_dev_unlock(hdev);
--
--	hci_conn_check_pending(hdev);
- }
+ 	if (cp->addr.type == BDADDR_BREDR) {
+ 		conn = hci_connect_acl(hdev, &cp->addr.bdaddr, sec_level,
+-				       auth_type, CONN_REASON_PAIR_DEVICE);
++				       auth_type, CONN_REASON_PAIR_DEVICE,
++				       HCI_ACL_CONN_TIMEOUT);
+ 	} else {
+ 		u8 addr_type = le_addr_type(cp->addr.type);
+ 		struct hci_conn_params *p;
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index 8e4f39b8601cb..368e026f4d15c 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -264,7 +264,8 @@ static int sco_connect(struct sock *sk)
+ 	}
  
- static void hci_reject_conn(struct hci_dev *hdev, bdaddr_t *bdaddr)
+ 	hcon = hci_connect_sco(hdev, type, &sco_pi(sk)->dst,
+-			       sco_pi(sk)->setting, &sco_pi(sk)->codec);
++			       sco_pi(sk)->setting, &sco_pi(sk)->codec,
++			       sk->sk_sndtimeo);
+ 	if (IS_ERR(hcon)) {
+ 		err = PTR_ERR(hcon);
+ 		goto unlock;
 -- 
 2.43.0
 
