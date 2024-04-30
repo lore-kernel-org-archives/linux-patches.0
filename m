@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1B612C462;
-	Tue, 30 Apr 2024 10:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494387464;
+	Tue, 30 Apr 2024 10:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474713; cv=none; b=e8KfMwaYOjZSoepJFgGRGsDpSbkHz9oBMK74exP0w1JjWJ78PknCtWGGf3Gr5tQU7dsQI4KGaQkJ2jfF1j62NVWN/KIXnul0+B0IfY6EGPefTCRblmtuG02TJUMeCUVIDVjx3auIHj0vfjCEQ3vSAoialQhcCmLLzQdIVkKOU7c=
+	t=1714474716; cv=none; b=kExyGcPuKr1rfebb55j99ahHz0eUb6HuL9gRBIRciRUlvr9j9pcrOvzU7KfuyMdS8EQFMVvVFbXQYAbqAiiBbdqZnimmeYMCKyWzvW5PMOfmvJAfGjPPKhUTn1Ev5JTDs37lpd0VORl0sKPBsXo+FFPKzW2MzdySe665oRU11KE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474713; c=relaxed/simple;
-	bh=JbfmYnG58FfuIWCxLGPrrz0HqX/XzYOZw+9Yp+6R5aQ=;
+	s=arc-20240116; t=1714474716; c=relaxed/simple;
+	bh=y+0CakNk45QuvNGH/5HYSPWkt/Sr42nuJ+z825LhVCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dT53elA6rBzYBcyxWFgqc9J4GtD0Bx+Eh1NWgy6Ugp9PUrrbgII8C9/CP7ax0k/mz6VErcfWIPV8N1ZDymORXJA5wlWdtR+WKe4HR9+B2+GQbzv5H9TowNSi+cQU4wyXQpoeDccjTIieL5CLwzHVXTKVw+x63vcU2eSYPwY1l7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eVQhVMcO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TzXnzqcRqBGRaHtgDjGHtatnhCnjwL+RJyAF24N/h5qIeK6pK6eGWnl2rcFTsd3+5Ncy2jcGPXLvdtI1TZ+mtxG0VVZzgdKjjKzv3qiut/wgjlbjmicURKp+rf3HFM4KcGW7+7zxq6TDoc6IBX3CVe0ixtNqlRBAqWfrlpJHfqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lb0Z0NM4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVQhVMcO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A04C2BBFC;
-	Tue, 30 Apr 2024 10:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lb0Z0NM4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BE1C2BBFC;
+	Tue, 30 Apr 2024 10:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474713;
-	bh=JbfmYnG58FfuIWCxLGPrrz0HqX/XzYOZw+9Yp+6R5aQ=;
+	s=korg; t=1714474716;
+	bh=y+0CakNk45QuvNGH/5HYSPWkt/Sr42nuJ+z825LhVCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eVQhVMcOPCbAnEw5WHD/EE0rfUGsbscvcVIfwev4IUqilPJcpihM2Fz6esHYCeitW
-	 omJyRJ/vbx+SMSFvekRz6jNhsYeu0NnQ7aziZX6/1qs6ClD1EAlxG6IshLmaSU0toE
-	 eBihEU2li3VKImuCTeJ+DYBbt8c2h+odQS2FN8dI=
+	b=lb0Z0NM4jh0HX+FV97AuyICvwkuY8/QOTEVrA5n2piQzomka7cKEatM9opCkZMh9C
+	 GZRoRNfOF2dw7x9yA4P7iOAruYYO4ZgpK2EF+2Li/9+SWz7MikEJVP5hSQsrY2UnYT
+	 ltPP9TUO3KXJb65qWKVnqmeP3EKcrvyHC3obkaqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 013/138] Bluetooth: SCO: Fix not validating setsockopt user input
-Date: Tue, 30 Apr 2024 12:38:18 +0200
-Message-ID: <20240430103049.817748874@linuxfoundation.org>
+Subject: [PATCH 5.10 014/138] netfilter: complete validation of user input
+Date: Tue, 30 Apr 2024 12:38:19 +0200
+Message-ID: <20240430103049.845645451@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -52,103 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 51eda36d33e43201e7a4fd35232e069b2c850b01 ]
+[ Upstream commit 65acf6e0501ac8880a4f73980d01b5d27648b956 ]
 
-syzbot reported sco_sock_setsockopt() is copying data without
-checking user input length.
+In my recent commit, I missed that do_replace() handlers
+use copy_from_sockptr() (which I fixed), followed
+by unsafe copy_from_sockptr_offset() calls.
 
-BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset
-include/linux/sockptr.h:49 [inline]
-BUG: KASAN: slab-out-of-bounds in copy_from_sockptr
-include/linux/sockptr.h:55 [inline]
-BUG: KASAN: slab-out-of-bounds in sco_sock_setsockopt+0xc0b/0xf90
-net/bluetooth/sco.c:893
-Read of size 4 at addr ffff88805f7b15a3 by task syz-executor.5/12578
+In all functions, we can perform the @optlen validation
+before even calling xt_alloc_table_info() with the following
+check:
 
-Fixes: ad10b1a48754 ("Bluetooth: Add Bluetooth socket voice option")
-Fixes: b96e9c671b05 ("Bluetooth: Add BT_DEFER_SETUP option to sco socket")
-Fixes: 00398e1d5183 ("Bluetooth: Add support for BT_PKT_STATUS CMSG data for SCO connections")
-Fixes: f6873401a608 ("Bluetooth: Allow setting of codec for HFP offload use case")
+if ((u64)optlen < (u64)tmp.size + sizeof(tmp))
+        return -EINVAL;
+
+Fixes: 0c83842df40f ("netfilter: validate user input for expected length")
 Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lore.kernel.org/r/20240409120741.3538135-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/bluetooth.h |    9 +++++++++
- net/bluetooth/sco.c               |   19 ++++++++-----------
- 2 files changed, 17 insertions(+), 11 deletions(-)
+ net/ipv4/netfilter/arp_tables.c | 4 ++++
+ net/ipv4/netfilter/ip_tables.c  | 4 ++++
+ net/ipv6/netfilter/ip6_tables.c | 4 ++++
+ 3 files changed, 12 insertions(+)
 
---- a/include/net/bluetooth/bluetooth.h
-+++ b/include/net/bluetooth/bluetooth.h
-@@ -487,6 +487,15 @@ static inline struct sk_buff *bt_skb_sen
- 	return skb;
- }
- 
-+static inline int bt_copy_from_sockptr(void *dst, size_t dst_size,
-+				       sockptr_t src, size_t src_size)
-+{
-+	if (dst_size > src_size)
+diff --git a/net/ipv4/netfilter/arp_tables.c b/net/ipv4/netfilter/arp_tables.c
+index 48c6aa3d91ae8..5823e89b8a734 100644
+--- a/net/ipv4/netfilter/arp_tables.c
++++ b/net/ipv4/netfilter/arp_tables.c
+@@ -965,6 +965,8 @@ static int do_replace(struct net *net, sockptr_t arg, unsigned int len)
+ 		return -ENOMEM;
+ 	if (tmp.num_counters == 0)
+ 		return -EINVAL;
++	if ((u64)len < (u64)tmp.size + sizeof(tmp))
 +		return -EINVAL;
-+
-+	return copy_from_sockptr(dst, src, dst_size);
-+}
-+
- int bt_to_errno(u16 code);
  
- void hci_sock_set_flag(struct sock *sk, int nr);
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -825,7 +825,7 @@ static int sco_sock_setsockopt(struct so
- 			       sockptr_t optval, unsigned int optlen)
- {
- 	struct sock *sk = sock->sk;
--	int len, err = 0;
-+	int err = 0;
- 	struct bt_voice voice;
- 	u32 opt;
+ 	tmp.name[sizeof(tmp.name)-1] = 0;
  
-@@ -841,10 +841,9 @@ static int sco_sock_setsockopt(struct so
- 			break;
- 		}
+@@ -1265,6 +1267,8 @@ static int compat_do_replace(struct net *net, sockptr_t arg, unsigned int len)
+ 		return -ENOMEM;
+ 	if (tmp.num_counters == 0)
+ 		return -EINVAL;
++	if ((u64)len < (u64)tmp.size + sizeof(tmp))
++		return -EINVAL;
  
--		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
-+		if (err)
- 			break;
--		}
+ 	tmp.name[sizeof(tmp.name)-1] = 0;
  
- 		if (opt)
- 			set_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags);
-@@ -861,11 +860,10 @@ static int sco_sock_setsockopt(struct so
+diff --git a/net/ipv4/netfilter/ip_tables.c b/net/ipv4/netfilter/ip_tables.c
+index b46d58b9f3fe4..22e9ff592cd75 100644
+--- a/net/ipv4/netfilter/ip_tables.c
++++ b/net/ipv4/netfilter/ip_tables.c
+@@ -1119,6 +1119,8 @@ do_replace(struct net *net, sockptr_t arg, unsigned int len)
+ 		return -ENOMEM;
+ 	if (tmp.num_counters == 0)
+ 		return -EINVAL;
++	if ((u64)len < (u64)tmp.size + sizeof(tmp))
++		return -EINVAL;
  
- 		voice.setting = sco_pi(sk)->setting;
+ 	tmp.name[sizeof(tmp.name)-1] = 0;
  
--		len = min_t(unsigned int, sizeof(voice), optlen);
--		if (copy_from_sockptr(&voice, optval, len)) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&voice, sizeof(voice), optval,
-+					   optlen);
-+		if (err)
- 			break;
--		}
+@@ -1505,6 +1507,8 @@ compat_do_replace(struct net *net, sockptr_t arg, unsigned int len)
+ 		return -ENOMEM;
+ 	if (tmp.num_counters == 0)
+ 		return -EINVAL;
++	if ((u64)len < (u64)tmp.size + sizeof(tmp))
++		return -EINVAL;
  
- 		/* Explicitly check for these values */
- 		if (voice.setting != BT_VOICE_TRANSPARENT &&
-@@ -878,10 +876,9 @@ static int sco_sock_setsockopt(struct so
- 		break;
+ 	tmp.name[sizeof(tmp.name)-1] = 0;
  
- 	case BT_PKT_STATUS:
--		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
--			err = -EFAULT;
-+		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
-+		if (err)
- 			break;
--		}
+diff --git a/net/ipv6/netfilter/ip6_tables.c b/net/ipv6/netfilter/ip6_tables.c
+index d013395be05fc..df7cd3d285e4f 100644
+--- a/net/ipv6/netfilter/ip6_tables.c
++++ b/net/ipv6/netfilter/ip6_tables.c
+@@ -1137,6 +1137,8 @@ do_replace(struct net *net, sockptr_t arg, unsigned int len)
+ 		return -ENOMEM;
+ 	if (tmp.num_counters == 0)
+ 		return -EINVAL;
++	if ((u64)len < (u64)tmp.size + sizeof(tmp))
++		return -EINVAL;
  
- 		if (opt)
- 			sco_pi(sk)->cmsg_mask |= SCO_CMSG_PKT_STATUS;
+ 	tmp.name[sizeof(tmp.name)-1] = 0;
+ 
+@@ -1515,6 +1517,8 @@ compat_do_replace(struct net *net, sockptr_t arg, unsigned int len)
+ 		return -ENOMEM;
+ 	if (tmp.num_counters == 0)
+ 		return -EINVAL;
++	if ((u64)len < (u64)tmp.size + sizeof(tmp))
++		return -EINVAL;
+ 
+ 	tmp.name[sizeof(tmp.name)-1] = 0;
+ 
+-- 
+2.43.0
+
 
 
