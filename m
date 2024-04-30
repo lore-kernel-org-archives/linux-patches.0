@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B04317592;
-	Tue, 30 Apr 2024 11:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A2D17592;
+	Tue, 30 Apr 2024 11:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476442; cv=none; b=e0tNyeglg6jcZz6AXQo1QXeppNknDtfadFnXLrxwywvqZK/IcDaehFLVvlaKd+6m1dwoxGb0JMe+0q5tbIE//Lx15c39zZQ45RLhaTHT96hAh/kA47Ff1iNrZBcX4GsUgO59h2Wn3E440jttao/tLfYM4c9tW/FsNAsNpJEl/7o=
+	t=1714476445; cv=none; b=sHlGEvAAAwzfUxTGHX9DxNSzBCBmDlV9d10B4e8ZWc+T63XyNa7YGtEOhcuyz3vuxGoXoWt64oqHVO/cBjlgLdgV6i/QrLMCDFpfgS7md4f3PT4m5bt/QXAnDOFQTbiOVqyUsc0s8NVk7/7RNy8dmnWwQSrPFqhwkoUGrV0BO5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476442; c=relaxed/simple;
-	bh=iEEIfj/U5hYqidZh5uFCop7GLy23uzXFpOYTFaZP6rs=;
+	s=arc-20240116; t=1714476445; c=relaxed/simple;
+	bh=VXGkVtYtRAPDAhCEVRS3QeKY93HcHWQ2cp2eyi2rJ2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=krjWmca8P5UEESmtrqb870EZGZI8W8fWA9Wa75J3KHnO8vcMuXNDZNLrFhkoA3QBrWcInlWNj2tdyGixfGVBYJXWFv1/B114pPFsYvYEe3PpS13HyLl0UBeazLqM8wOlmjWTHqNVhUX3CxJT4R5WkrcQa0JnGnlAUuHSLNJZ0bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0aviCfnL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MUi+KxuxIalOylQh24OVDirbjCDQ8hDO5Cb1lfMXl8JVHpHKL9EJ9SQQNxXtuZJpWp0vMRz3uafDfK9Z5vBNzeEO8tuit+cXGJ/6DLuWEOZuTd9GJagOo8ISfi8E4DGh4iH6zI6f8+nMAd1RvPBEjqqehPdgBokxfwYp4gIZqck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z50m99ji; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0aviCfnL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF26FC2BBFC;
-	Tue, 30 Apr 2024 11:27:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z50m99ji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE9AC2BBFC;
+	Tue, 30 Apr 2024 11:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476442;
-	bh=iEEIfj/U5hYqidZh5uFCop7GLy23uzXFpOYTFaZP6rs=;
+	s=korg; t=1714476445;
+	bh=VXGkVtYtRAPDAhCEVRS3QeKY93HcHWQ2cp2eyi2rJ2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0aviCfnLQRSc7aXhBKqH/GqTf0xs2fA/LqXWP4ckajwdqDpUj6NSk/D/vyZ3YUcaR
-	 VdTq0AfMg+vojZviSkkNjoLWOmUFW9Fzt8NnkTPrLLa/P+DpQY5U6n8y31s8QZV5Nd
-	 9k31gFSWcv3Pxvid+rFw6uFTcgy/kCVtergmbN3k=
+	b=z50m99jiUYV6IXgpPMmVW5SqnbkM1+CliKRzVuudnzZbW1E+bzf61EEKsLbPhNNGl
+	 +2qf3mogyBd5SBzCO/UhyaJFlvGzOinjSfFKlGOZYsvRLczdCaFkaRr9SdpFtFRKvb
+	 54/jLiYX42TBO1nD6IohU3pKbfLOnYJz7rNwvBKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Adam Li <adamli@os.amperecomputing.com>,
+	"Christoph Lameter (Ampere)" <cl@linux.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/110] ax25: Fix netdev refcount issue
-Date: Tue, 30 Apr 2024 12:40:02 +0200
-Message-ID: <20240430103048.546745310@linuxfoundation.org>
+Subject: [PATCH 6.1 034/110] net: make SK_MEMORY_PCPU_RESERV tunable
+Date: Tue, 30 Apr 2024 12:40:03 +0200
+Message-ID: <20240430103048.575884108@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
 References: <20240430103047.561802595@linuxfoundation.org>
@@ -51,93 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Adam Li <adamli@os.amperecomputing.com>
 
-[ Upstream commit 467324bcfe1a31ec65d0cf4aa59421d6b7a7d52b ]
+[ Upstream commit 12a686c2e761f1f1f6e6e2117a9ab9c6de2ac8a7 ]
 
-The dev_tracker is added to ax25_cb in ax25_bind(). When the
-ax25 device is detaching, the dev_tracker of ax25_cb should be
-deallocated in ax25_kill_by_device() instead of the dev_tracker
-of ax25_dev. The log reported by ref_tracker is shown below:
+This patch adds /proc/sys/net/core/mem_pcpu_rsv sysctl file,
+to make SK_MEMORY_PCPU_RESERV tunable.
 
-[   80.884935] ref_tracker: reference already released.
-[   80.885150] ref_tracker: allocated in:
-[   80.885349]  ax25_dev_device_up+0x105/0x540
-[   80.885730]  ax25_device_event+0xa4/0x420
-[   80.885730]  notifier_call_chain+0xc9/0x1e0
-[   80.885730]  __dev_notify_flags+0x138/0x280
-[   80.885730]  dev_change_flags+0xd7/0x180
-[   80.885730]  dev_ifsioc+0x6a9/0xa30
-[   80.885730]  dev_ioctl+0x4d8/0xd90
-[   80.885730]  sock_do_ioctl+0x1c2/0x2d0
-[   80.885730]  sock_ioctl+0x38b/0x4f0
-[   80.885730]  __se_sys_ioctl+0xad/0xf0
-[   80.885730]  do_syscall_64+0xc4/0x1b0
-[   80.885730]  entry_SYSCALL_64_after_hwframe+0x67/0x6f
-[   80.885730] ref_tracker: freed in:
-[   80.885730]  ax25_device_event+0x272/0x420
-[   80.885730]  notifier_call_chain+0xc9/0x1e0
-[   80.885730]  dev_close_many+0x272/0x370
-[   80.885730]  unregister_netdevice_many_notify+0x3b5/0x1180
-[   80.885730]  unregister_netdev+0xcf/0x120
-[   80.885730]  sixpack_close+0x11f/0x1b0
-[   80.885730]  tty_ldisc_kill+0xcb/0x190
-[   80.885730]  tty_ldisc_hangup+0x338/0x3d0
-[   80.885730]  __tty_hangup+0x504/0x740
-[   80.885730]  tty_release+0x46e/0xd80
-[   80.885730]  __fput+0x37f/0x770
-[   80.885730]  __x64_sys_close+0x7b/0xb0
-[   80.885730]  do_syscall_64+0xc4/0x1b0
-[   80.885730]  entry_SYSCALL_64_after_hwframe+0x67/0x6f
-[   80.893739] ------------[ cut here ]------------
-[   80.894030] WARNING: CPU: 2 PID: 140 at lib/ref_tracker.c:255 ref_tracker_free+0x47b/0x6b0
-[   80.894297] Modules linked in:
-[   80.894929] CPU: 2 PID: 140 Comm: ax25_conn_rel_6 Not tainted 6.9.0-rc4-g8cd26fd90c1a #11
-[   80.895190] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qem4
-[   80.895514] RIP: 0010:ref_tracker_free+0x47b/0x6b0
-[   80.895808] Code: 83 c5 18 4c 89 eb 48 c1 eb 03 8a 04 13 84 c0 0f 85 df 01 00 00 41 83 7d 00 00 75 4b 4c 89 ff 9
-[   80.896171] RSP: 0018:ffff888009edf8c0 EFLAGS: 00000286
-[   80.896339] RAX: 1ffff1100141ac00 RBX: 1ffff1100149463b RCX: dffffc0000000000
-[   80.896502] RDX: 0000000000000001 RSI: 0000000000000246 RDI: ffff88800a0d6518
-[   80.896925] RBP: ffff888009edf9b0 R08: ffff88806d3288d3 R09: 1ffff1100da6511a
-[   80.897212] R10: dffffc0000000000 R11: ffffed100da6511b R12: ffff88800a4a31d4
-[   80.897859] R13: ffff88800a4a31d8 R14: dffffc0000000000 R15: ffff88800a0d6518
-[   80.898279] FS:  00007fd88b7fe700(0000) GS:ffff88806d300000(0000) knlGS:0000000000000000
-[   80.899436] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   80.900181] CR2: 00007fd88c001d48 CR3: 000000000993e000 CR4: 00000000000006f0
-...
-[   80.935774] ref_tracker: sp%d@000000000bb9df3d has 1/1 users at
-[   80.935774]      ax25_bind+0x424/0x4e0
-[   80.935774]      __sys_bind+0x1d9/0x270
-[   80.935774]      __x64_sys_bind+0x75/0x80
-[   80.935774]      do_syscall_64+0xc4/0x1b0
-[   80.935774]      entry_SYSCALL_64_after_hwframe+0x67/0x6f
+Commit 3cd3399dd7a8 ("net: implement per-cpu reserves for
+memory_allocated") introduced per-cpu forward alloc cache:
 
-Change ax25_dev->dev_tracker to the dev_tracker of ax25_cb
-in order to mitigate the bug.
+"Implement a per-cpu cache of +1/-1 MB, to reduce number
+of changes to sk->sk_prot->memory_allocated, which
+would otherwise be cause of false sharing."
 
-Fixes: feef318c855a ("ax25: fix UAF bugs of net_device caused by rebinding operation")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://lore.kernel.org/r/20240419020456.29826-1-duoming@zju.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+sk_prot->memory_allocated points to global atomic variable:
+atomic_long_t tcp_memory_allocated ____cacheline_aligned_in_smp;
+
+If increasing the per-cpu cache size from 1MB to e.g. 16MB,
+changes to sk->sk_prot->memory_allocated can be further reduced.
+Performance may be improved on system with many cores.
+
+Signed-off-by: Adam Li <adamli@os.amperecomputing.com>
+Reviewed-by: Christoph Lameter (Ampere) <cl@linux.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 3584718cf2ec ("net: fix sk_memory_allocated_{add|sub} vs softirqs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/af_ax25.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/admin-guide/sysctl/net.rst | 5 +++++
+ include/net/sock.h                       | 5 +++--
+ net/core/sock.c                          | 1 +
+ net/core/sysctl_net_core.c               | 9 +++++++++
+ 4 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 6b4c25a923774..0bffac238b615 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -103,7 +103,7 @@ static void ax25_kill_by_device(struct net_device *dev)
- 			s->ax25_dev = NULL;
- 			if (sk->sk_socket) {
- 				netdev_put(ax25_dev->dev,
--					   &ax25_dev->dev_tracker);
-+					   &s->dev_tracker);
- 				ax25_dev_put(ax25_dev);
- 			}
- 			ax25_cb_del(s);
+diff --git a/Documentation/admin-guide/sysctl/net.rst b/Documentation/admin-guide/sysctl/net.rst
+index 6394f5dc2303d..e3894c928118c 100644
+--- a/Documentation/admin-guide/sysctl/net.rst
++++ b/Documentation/admin-guide/sysctl/net.rst
+@@ -205,6 +205,11 @@ Will increase power usage.
+ 
+ Default: 0 (off)
+ 
++mem_pcpu_rsv
++------------
++
++Per-cpu reserved forward alloc cache size in page units. Default 1MB per CPU.
++
+ rmem_default
+ ------------
+ 
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 60577751ea9e8..6ef6ce43a2edc 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1483,6 +1483,7 @@ sk_memory_allocated(const struct sock *sk)
+ 
+ /* 1 MB per cpu, in page units */
+ #define SK_MEMORY_PCPU_RESERVE (1 << (20 - PAGE_SHIFT))
++extern int sysctl_mem_pcpu_rsv;
+ 
+ static inline void
+ sk_memory_allocated_add(struct sock *sk, int amt)
+@@ -1491,7 +1492,7 @@ sk_memory_allocated_add(struct sock *sk, int amt)
+ 
+ 	preempt_disable();
+ 	local_reserve = __this_cpu_add_return(*sk->sk_prot->per_cpu_fw_alloc, amt);
+-	if (local_reserve >= SK_MEMORY_PCPU_RESERVE) {
++	if (local_reserve >= READ_ONCE(sysctl_mem_pcpu_rsv)) {
+ 		__this_cpu_sub(*sk->sk_prot->per_cpu_fw_alloc, local_reserve);
+ 		atomic_long_add(local_reserve, sk->sk_prot->memory_allocated);
+ 	}
+@@ -1505,7 +1506,7 @@ sk_memory_allocated_sub(struct sock *sk, int amt)
+ 
+ 	preempt_disable();
+ 	local_reserve = __this_cpu_sub_return(*sk->sk_prot->per_cpu_fw_alloc, amt);
+-	if (local_reserve <= -SK_MEMORY_PCPU_RESERVE) {
++	if (local_reserve <= -READ_ONCE(sysctl_mem_pcpu_rsv)) {
+ 		__this_cpu_sub(*sk->sk_prot->per_cpu_fw_alloc, local_reserve);
+ 		atomic_long_add(local_reserve, sk->sk_prot->memory_allocated);
+ 	}
+diff --git a/net/core/sock.c b/net/core/sock.c
+index c8803b95ea0da..550af616f5359 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -279,6 +279,7 @@ __u32 sysctl_rmem_max __read_mostly = SK_RMEM_MAX;
+ EXPORT_SYMBOL(sysctl_rmem_max);
+ __u32 sysctl_wmem_default __read_mostly = SK_WMEM_MAX;
+ __u32 sysctl_rmem_default __read_mostly = SK_RMEM_MAX;
++int sysctl_mem_pcpu_rsv __read_mostly = SK_MEMORY_PCPU_RESERVE;
+ 
+ /* Maximal space eaten by iovec or ancillary data plus some space */
+ int sysctl_optmem_max __read_mostly = sizeof(unsigned long)*(2*UIO_MAXIOV+512);
+diff --git a/net/core/sysctl_net_core.c b/net/core/sysctl_net_core.c
+index 5b1ce656baa1d..d281d5343ff4a 100644
+--- a/net/core/sysctl_net_core.c
++++ b/net/core/sysctl_net_core.c
+@@ -29,6 +29,7 @@ static int int_3600 = 3600;
+ static int min_sndbuf = SOCK_MIN_SNDBUF;
+ static int min_rcvbuf = SOCK_MIN_RCVBUF;
+ static int max_skb_frags = MAX_SKB_FRAGS;
++static int min_mem_pcpu_rsv = SK_MEMORY_PCPU_RESERVE;
+ 
+ static int net_msg_warn;	/* Unused, but still a sysctl */
+ 
+@@ -348,6 +349,14 @@ static struct ctl_table net_core_table[] = {
+ 		.proc_handler	= proc_dointvec_minmax,
+ 		.extra1		= &min_rcvbuf,
+ 	},
++	{
++		.procname	= "mem_pcpu_rsv",
++		.data		= &sysctl_mem_pcpu_rsv,
++		.maxlen		= sizeof(int),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= &min_mem_pcpu_rsv,
++	},
+ 	{
+ 		.procname	= "dev_weight",
+ 		.data		= &weight_p,
 -- 
 2.43.0
 
