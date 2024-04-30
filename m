@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7E11E50A;
-	Tue, 30 Apr 2024 11:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D23A1E50A;
+	Tue, 30 Apr 2024 11:08:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475332; cv=none; b=fJ5PZH5lJuKqPwrvzvai2yJtsfkF/UW+jr1vN2UNtWn1OTszqGe8abUdW2z9ky/EwlxnOl+9IxaKOk/HEgT8yuqDlIB0VgVD9MYMlz/iKAg0zIePYQtye34eB5PDi/ANVcN41OpOT3JbrQx8tCoK2CYgeejuZPWKZJ33jrACavM=
+	t=1714475335; cv=none; b=b6x3fR9XnpjFWhxjcz9rX3xQtnRPVrm1NUBFIiaVWhFu0P5Fa7EWg8Nbogj+nMEtUQxuYj2yDFMhMQ+LL30sgBVvvWL+xUjYeFGlRdlSyn8FSo27iZQsm3FeZORJGxZ6YLhXPF5Bi7ugZRgcRAtKcFeQnGYdUE+KOLxKgntEUQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475332; c=relaxed/simple;
-	bh=/xr2OAPd0PJ7NxjcmgEAgy33vvMHsB6r1arZ4oshd1U=;
+	s=arc-20240116; t=1714475335; c=relaxed/simple;
+	bh=jrudaymR2ZCXgg/5bCEB0HdBsJDzYzgovRMG3Y47WAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SWzleleGP37lxaGDM7zVKqUC1prejro4lxu5GlnnFT+NojkToYqtbOFn1aNVzJn5WOAXx00FEswBU6Cysux69rMMHVUfSJIDOsOTW/e+H5tnuqTmeETS9Y0PyxDwyhIppH6/AiYvhDsV79/b8RDEdhqtONMSFcmIVFCVEYnXaGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGXhEEiF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M3mQpGU2raMmP9VWisImm3DFmFH105TDhlHFgaIwRWesW+xOtUMeY3fG9YPvx71ti/XqtGw8sXeH8jILKWulnMIuYfxzqke2tWBvQ8hKqvZJT9Ore5OnxqX1EG+eneFHJH5yz++Iobx8iAnLFSnUMYvexitmqEXeMtODtzD7J/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xipHmtt8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGXhEEiF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5511C2BBFC;
-	Tue, 30 Apr 2024 11:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xipHmtt8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEDF4C2BBFC;
+	Tue, 30 Apr 2024 11:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475332;
-	bh=/xr2OAPd0PJ7NxjcmgEAgy33vvMHsB6r1arZ4oshd1U=;
+	s=korg; t=1714475335;
+	bh=jrudaymR2ZCXgg/5bCEB0HdBsJDzYzgovRMG3Y47WAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oGXhEEiF9U2jJWIbrrimtHmaxQVpD7pI1qRNeM+b4LQoY5elGJOcUCPop/LwZ3fWo
-	 /abjdcTYmB9isEUE4ad6MKkPB5YwmaAkAJZr1ZHk2Fqt9WNHK9Mnld172xR6SE1gXJ
-	 dwPW6FILrnqTDuO0ltGCPhXol2vXHX6RrijVkrF0=
+	b=xipHmtt8wwIN78nIau/A15fp67RXtgHcYz4qJlFEngGdHaVGelltkTLXDgVCS4LkU
+	 eq0+NVIvvBz5scvDX8GXOBAnNIldmoM3yD+6UonA4bg2CiKFGASjbAzBKXtwLTr9EN
+	 +iZ7NwCpqNL+zDEJlM4eA9ydUUerLx/blxveP3a0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Prathamesh Shete <pshete@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 064/186] net: phy: mediatek-ge-soc: follow netdev LED trigger semantics
-Date: Tue, 30 Apr 2024 12:38:36 +0200
-Message-ID: <20240430103059.896400653@linuxfoundation.org>
+Subject: [PATCH 6.6 065/186] gpio: tegra186: Fix tegra186_gpio_is_accessible() check
+Date: Tue, 30 Apr 2024 12:38:37 +0200
+Message-ID: <20240430103059.925276313@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -51,131 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Prathamesh Shete <pshete@nvidia.com>
 
-[ Upstream commit 5b5f724b05c550e10693a53a81cadca901aefd16 ]
+[ Upstream commit d806f474a9a7993648a2c70642ee129316d8deff ]
 
-Only blink if the link is up on a LED which is programmed to also
-indicate link-status.
+The controller has several register bits describing access control
+information for a given GPIO pin. When SCR_SEC_[R|W]EN is unset, it
+means we have full read/write access to all the registers for given GPIO
+pin. When SCR_SEC[R|W]EN is set, it means we need to further check the
+accompanying SCR_SEC_G1[R|W] bit to determine read/write access to all
+the registers for given GPIO pin.
 
-Otherwise, if both LEDs are in use to indicate different speeds, the
-resulting blinking being inverted on LEDs which aren't switched on at
-a specific speed is quite counter-intuitive.
+This check was previously declaring that a GPIO pin was accessible
+only if either of the following conditions were met:
 
-Also make sure that state left behind by reset or the bootloader is
-recognized correctly including the half-duplex and full-duplex bits as
-well as the (unsupported by Linux netdev trigger semantics) link-down
-bit.
+  - SCR_SEC_REN + SCR_SEC_WEN both set
 
-Fixes: c66937b0f8db ("net: phy: mediatek-ge-soc: support PHY LEDs")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+    or
+
+  - SCR_SEC_REN + SCR_SEC_WEN both set and
+    SCR_SEC_G1R + SCR_SEC_G1W both set
+
+Update the check to properly handle cases where only one of
+SCR_SEC_REN or SCR_SEC_WEN is set.
+
+Fixes: b2b56a163230 ("gpio: tegra186: Check GPIO pin permission before access.")
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20240424095514.24397-1-pshete@nvidia.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mediatek-ge-soc.c | 43 +++++++++++++++++++------------
- 1 file changed, 26 insertions(+), 17 deletions(-)
+ drivers/gpio/gpio-tegra186.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/phy/mediatek-ge-soc.c b/drivers/net/phy/mediatek-ge-soc.c
-index 0f3a1538a8b8e..f4f9412d0cd7e 100644
---- a/drivers/net/phy/mediatek-ge-soc.c
-+++ b/drivers/net/phy/mediatek-ge-soc.c
-@@ -216,6 +216,9 @@
- #define   MTK_PHY_LED_ON_LINK1000		BIT(0)
- #define   MTK_PHY_LED_ON_LINK100		BIT(1)
- #define   MTK_PHY_LED_ON_LINK10			BIT(2)
-+#define   MTK_PHY_LED_ON_LINK			(MTK_PHY_LED_ON_LINK10 |\
-+						 MTK_PHY_LED_ON_LINK100 |\
-+						 MTK_PHY_LED_ON_LINK1000)
- #define   MTK_PHY_LED_ON_LINKDOWN		BIT(3)
- #define   MTK_PHY_LED_ON_FDX			BIT(4) /* Full duplex */
- #define   MTK_PHY_LED_ON_HDX			BIT(5) /* Half duplex */
-@@ -231,6 +234,12 @@
- #define   MTK_PHY_LED_BLINK_100RX		BIT(3)
- #define   MTK_PHY_LED_BLINK_10TX		BIT(4)
- #define   MTK_PHY_LED_BLINK_10RX		BIT(5)
-+#define   MTK_PHY_LED_BLINK_RX			(MTK_PHY_LED_BLINK_10RX |\
-+						 MTK_PHY_LED_BLINK_100RX |\
-+						 MTK_PHY_LED_BLINK_1000RX)
-+#define   MTK_PHY_LED_BLINK_TX			(MTK_PHY_LED_BLINK_10TX |\
-+						 MTK_PHY_LED_BLINK_100TX |\
-+						 MTK_PHY_LED_BLINK_1000TX)
- #define   MTK_PHY_LED_BLINK_COLLISION		BIT(6)
- #define   MTK_PHY_LED_BLINK_RX_CRC_ERR		BIT(7)
- #define   MTK_PHY_LED_BLINK_RX_IDLE_ERR		BIT(8)
-@@ -1247,11 +1256,9 @@ static int mt798x_phy_led_hw_control_get(struct phy_device *phydev, u8 index,
- 	if (blink < 0)
- 		return -EIO;
+diff --git a/drivers/gpio/gpio-tegra186.c b/drivers/gpio/gpio-tegra186.c
+index d87dd06db40d0..9130c691a2dd3 100644
+--- a/drivers/gpio/gpio-tegra186.c
++++ b/drivers/gpio/gpio-tegra186.c
+@@ -36,12 +36,6 @@
+ #define  TEGRA186_GPIO_SCR_SEC_REN		BIT(27)
+ #define  TEGRA186_GPIO_SCR_SEC_G1W		BIT(9)
+ #define  TEGRA186_GPIO_SCR_SEC_G1R		BIT(1)
+-#define  TEGRA186_GPIO_FULL_ACCESS		(TEGRA186_GPIO_SCR_SEC_WEN | \
+-						 TEGRA186_GPIO_SCR_SEC_REN | \
+-						 TEGRA186_GPIO_SCR_SEC_G1R | \
+-						 TEGRA186_GPIO_SCR_SEC_G1W)
+-#define  TEGRA186_GPIO_SCR_SEC_ENABLE		(TEGRA186_GPIO_SCR_SEC_WEN | \
+-						 TEGRA186_GPIO_SCR_SEC_REN)
  
--	if ((on & (MTK_PHY_LED_ON_LINK1000 | MTK_PHY_LED_ON_LINK100 |
--		   MTK_PHY_LED_ON_LINK10)) ||
--	    (blink & (MTK_PHY_LED_BLINK_1000RX | MTK_PHY_LED_BLINK_100RX |
--		      MTK_PHY_LED_BLINK_10RX | MTK_PHY_LED_BLINK_1000TX |
--		      MTK_PHY_LED_BLINK_100TX | MTK_PHY_LED_BLINK_10TX)))
-+	if ((on & (MTK_PHY_LED_ON_LINK | MTK_PHY_LED_ON_FDX | MTK_PHY_LED_ON_HDX |
-+		   MTK_PHY_LED_ON_LINKDOWN)) ||
-+	    (blink & (MTK_PHY_LED_BLINK_RX | MTK_PHY_LED_BLINK_TX)))
- 		set_bit(bit_netdev, &priv->led_state);
- 	else
- 		clear_bit(bit_netdev, &priv->led_state);
-@@ -1269,7 +1276,7 @@ static int mt798x_phy_led_hw_control_get(struct phy_device *phydev, u8 index,
- 	if (!rules)
- 		return 0;
+ /* control registers */
+ #define TEGRA186_GPIO_ENABLE_CONFIG 0x00
+@@ -177,10 +171,18 @@ static inline bool tegra186_gpio_is_accessible(struct tegra_gpio *gpio, unsigned
  
--	if (on & (MTK_PHY_LED_ON_LINK1000 | MTK_PHY_LED_ON_LINK100 | MTK_PHY_LED_ON_LINK10))
-+	if (on & MTK_PHY_LED_ON_LINK)
- 		*rules |= BIT(TRIGGER_NETDEV_LINK);
+ 	value = __raw_readl(secure + TEGRA186_GPIO_SCR);
  
- 	if (on & MTK_PHY_LED_ON_LINK10)
-@@ -1287,10 +1294,10 @@ static int mt798x_phy_led_hw_control_get(struct phy_device *phydev, u8 index,
- 	if (on & MTK_PHY_LED_ON_HDX)
- 		*rules |= BIT(TRIGGER_NETDEV_HALF_DUPLEX);
+-	if ((value & TEGRA186_GPIO_SCR_SEC_ENABLE) == 0)
+-		return true;
++	/*
++	 * When SCR_SEC_[R|W]EN is unset, then we have full read/write access to all the
++	 * registers for given GPIO pin.
++	 * When SCR_SEC[R|W]EN is set, then there is need to further check the accompanying
++	 * SCR_SEC_G1[R|W] bit to determine read/write access to all the registers for given
++	 * GPIO pin.
++	 */
  
--	if (blink & (MTK_PHY_LED_BLINK_1000RX | MTK_PHY_LED_BLINK_100RX | MTK_PHY_LED_BLINK_10RX))
-+	if (blink & MTK_PHY_LED_BLINK_RX)
- 		*rules |= BIT(TRIGGER_NETDEV_RX);
+-	if ((value & TEGRA186_GPIO_FULL_ACCESS) == TEGRA186_GPIO_FULL_ACCESS)
++	if (((value & TEGRA186_GPIO_SCR_SEC_REN) == 0 ||
++	     ((value & TEGRA186_GPIO_SCR_SEC_REN) && (value & TEGRA186_GPIO_SCR_SEC_G1R))) &&
++	     ((value & TEGRA186_GPIO_SCR_SEC_WEN) == 0 ||
++	     ((value & TEGRA186_GPIO_SCR_SEC_WEN) && (value & TEGRA186_GPIO_SCR_SEC_G1W))))
+ 		return true;
  
--	if (blink & (MTK_PHY_LED_BLINK_1000TX | MTK_PHY_LED_BLINK_100TX | MTK_PHY_LED_BLINK_10TX))
-+	if (blink & MTK_PHY_LED_BLINK_TX)
- 		*rules |= BIT(TRIGGER_NETDEV_TX);
- 
- 	return 0;
-@@ -1323,15 +1330,19 @@ static int mt798x_phy_led_hw_control_set(struct phy_device *phydev, u8 index,
- 		on |= MTK_PHY_LED_ON_LINK1000;
- 
- 	if (rules & BIT(TRIGGER_NETDEV_RX)) {
--		blink |= MTK_PHY_LED_BLINK_10RX  |
--			 MTK_PHY_LED_BLINK_100RX |
--			 MTK_PHY_LED_BLINK_1000RX;
-+		blink |= (on & MTK_PHY_LED_ON_LINK) ?
-+			  (((on & MTK_PHY_LED_ON_LINK10) ? MTK_PHY_LED_BLINK_10RX : 0) |
-+			   ((on & MTK_PHY_LED_ON_LINK100) ? MTK_PHY_LED_BLINK_100RX : 0) |
-+			   ((on & MTK_PHY_LED_ON_LINK1000) ? MTK_PHY_LED_BLINK_1000RX : 0)) :
-+			  MTK_PHY_LED_BLINK_RX;
- 	}
- 
- 	if (rules & BIT(TRIGGER_NETDEV_TX)) {
--		blink |= MTK_PHY_LED_BLINK_10TX  |
--			 MTK_PHY_LED_BLINK_100TX |
--			 MTK_PHY_LED_BLINK_1000TX;
-+		blink |= (on & MTK_PHY_LED_ON_LINK) ?
-+			  (((on & MTK_PHY_LED_ON_LINK10) ? MTK_PHY_LED_BLINK_10TX : 0) |
-+			   ((on & MTK_PHY_LED_ON_LINK100) ? MTK_PHY_LED_BLINK_100TX : 0) |
-+			   ((on & MTK_PHY_LED_ON_LINK1000) ? MTK_PHY_LED_BLINK_1000TX : 0)) :
-+			  MTK_PHY_LED_BLINK_TX;
- 	}
- 
- 	if (blink || on)
-@@ -1344,9 +1355,7 @@ static int mt798x_phy_led_hw_control_set(struct phy_device *phydev, u8 index,
- 				MTK_PHY_LED0_ON_CTRL,
- 			     MTK_PHY_LED_ON_FDX     |
- 			     MTK_PHY_LED_ON_HDX     |
--			     MTK_PHY_LED_ON_LINK10  |
--			     MTK_PHY_LED_ON_LINK100 |
--			     MTK_PHY_LED_ON_LINK1000,
-+			     MTK_PHY_LED_ON_LINK,
- 			     on);
- 
- 	if (ret)
+ 	return false;
 -- 
 2.43.0
 
