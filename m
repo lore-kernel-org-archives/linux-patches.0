@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F15412C490;
-	Tue, 30 Apr 2024 11:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA65712C54B;
+	Tue, 30 Apr 2024 11:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475155; cv=none; b=L+x9c66y1pYcYrvUFB0+0adHCEh2BADBlkEWXXWWYaLvTaGC/lIGadwF/zFiey+3WU5Rjklw8y0OxcHRqT3hdRn6hv0TtYozZ8009g9dckcbQwjNOFimZwcr0z2/1u0Q6diXAVzSYwf7He66TgSAwm5UHJt4B3/jnjza9u9gWp0=
+	t=1714475158; cv=none; b=s5peMAF6ZbiQTx+/EN3rz2AYk76ASi7mmMFnGaKthPl8ysXn86J9DrmH+OVczopQZ0Xayy5s7QsnMd9teE1mCb7nk6V9j+DzEpR/tVSKpm/MhFewr34s/kruN+GRY7jaqtPQN6GxtAw7oMIzI3H9LiYsawPixZHyafeomDndRGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475155; c=relaxed/simple;
-	bh=V0mIK2COzCpDHEJIpA2GZql7TkbxZIEU2zk35+jRzTk=;
+	s=arc-20240116; t=1714475158; c=relaxed/simple;
+	bh=gOEQFUX8Y9QlZSS9gbo6GFwz/oiLzDGOaWC4woxRRa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VvfYVN4BupK1ivJglCMhndg9EEeY6KXTYdwRVTJybqUKvitXiiLPOn4/mICNPfdGoe1mkRA9wVosXC8POxVemA3T8BpyxJe7tYHhWRL/FYHMIjwzp6Oxyac4/u9XSXnhMJPGTSWD5Gba/Zs90lacL+MNMkJAtB/BMY+E3K3MYrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDuCtFTn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HPY3MLZ8d7vlWWwRlKUgbOtz8RZcAh7+yeD+ozHHf0LQ+dhn+DKyrN5tjbgPxwNb0jWJSP+dbJffuFWEWlEzm8jLAxTk9Wwug2bbZUgm2t+K3HqBZnkgOEOU8XDjnaDeg2nNAnxeqXIBYI/J2Mh3mpAPCrxbxPNqTVE/On3DZE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ByDvRHI8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDuCtFTn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245D9C2BBFC;
-	Tue, 30 Apr 2024 11:05:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByDvRHI8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC39C2BBFC;
+	Tue, 30 Apr 2024 11:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714475155;
-	bh=V0mIK2COzCpDHEJIpA2GZql7TkbxZIEU2zk35+jRzTk=;
+	s=korg; t=1714475158;
+	bh=gOEQFUX8Y9QlZSS9gbo6GFwz/oiLzDGOaWC4woxRRa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wDuCtFTnmd8X9TwFG0tzzKvXbyDo7ppR33sui43EkX6kxf703B/TRbujFtVXUshVQ
-	 z/wFP+Mbk+6fqOIYSaVJiH69Qd0i90hzRRzXa+zvXX2On3qpEkeMWZ5lzSkM2hlPJc
-	 CxZopt4NNW8Fi5c97McTV9C4klEBn45CefASt+l4=
+	b=ByDvRHI8Kq/Eib40qM8jQ7HVnnRx+bh/1qcRdNSEUDh+9I3/FWCjb0GACwjI/Hfte
+	 PQ+YRkdWxHygnJpgkI/LjCkI6OXtY+zgPUcq4odgbfbE1E9Z4IX/hj9u6AbXODsM69
+	 mJlTnb53CjgMMKL77+QPxvaHU0MDDHWnmeKwyRx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiyi Lu <weiyi.lu@mediatek.com>,
-	Ikjoon Jang <ikjn@chromium.org>,
-	Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 011/186] arm64: dts: mediatek: mt8183: Add power-domains properity to mfgcfg
-Date: Tue, 30 Apr 2024 12:37:43 +0200
-Message-ID: <20240430103058.347996107@linuxfoundation.org>
+Subject: [PATCH 6.6 012/186] arm64: dts: mediatek: mt8192: Add missing gce-client-reg to mutex
+Date: Tue, 30 Apr 2024 12:37:44 +0200
+Message-ID: <20240430103058.376950966@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103058.010791820@linuxfoundation.org>
 References: <20240430103058.010791820@linuxfoundation.org>
@@ -48,43 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ikjoon Jang <ikjn@chromium.org>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 1781f2c461804c0123f59afc7350e520a88edffb ]
+[ Upstream commit 00bcc8810d9dd69d3899a4189e2f3964f263a600 ]
 
-mfgcfg clock is under MFG_ASYNC power domain.
+Add the missing mediatek,gce-client-reg property to the mutex node to
+allow it to use the GCE. This prevents the "can't parse gce-client-reg
+property" error from being printed and should result in better
+performance.
 
-Fixes: e526c9bc11f8 ("arm64: dts: Add Mediatek SoC MT8183 and evaluation board dts and Makefile")
-Fixes: 37fb78b9aeb7 ("arm64: dts: mediatek: Add mt8183 power domains controller")
-Signed-off-by: Weiyi Lu <weiyi.lu@mediatek.com>
-Signed-off-by: Ikjoon Jang <ikjn@chromium.org>
-Reviewed-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20240223091122.2430037-1-wenst@chromium.org
+Fixes: b4b75bac952b ("arm64: dts: mt8192: Add display nodes")
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20240229-gce-client-reg-add-missing-mt8192-95-v1-1-b12c233a8a33@collabora.com
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183.dtsi | 1 +
+ arch/arm64/boot/dts/mediatek/mt8192.dtsi | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-index df6e9990cd5fa..8721a5ffca30a 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-@@ -1628,6 +1628,7 @@
- 			compatible = "mediatek,mt8183-mfgcfg", "syscon";
- 			reg = <0 0x13000000 0 0x1000>;
- 			#clock-cells = <1>;
-+			power-domains = <&spm MT8183_POWER_DOMAIN_MFG_ASYNC>;
- 		};
- 
- 		gpu: gpu@13040000 {
+diff --git a/arch/arm64/boot/dts/mediatek/mt8192.dtsi b/arch/arm64/boot/dts/mediatek/mt8192.dtsi
+index f1fc14e53f8c7..b1443adc55aab 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8192.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8192.dtsi
+@@ -1412,6 +1412,7 @@
+ 			reg = <0 0x14001000 0 0x1000>;
+ 			interrupts = <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH 0>;
+ 			clocks = <&mmsys CLK_MM_DISP_MUTEX0>;
++			mediatek,gce-client-reg = <&gce SUBSYS_1400XXXX 0x1000 0x1000>;
+ 			mediatek,gce-events = <CMDQ_EVENT_DISP_STREAM_DONE_ENG_EVENT_0>,
+ 					      <CMDQ_EVENT_DISP_STREAM_DONE_ENG_EVENT_1>;
+ 			power-domains = <&spm MT8192_POWER_DOMAIN_DISP>;
 -- 
 2.43.0
 
