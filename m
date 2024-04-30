@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441C512C550;
-	Tue, 30 Apr 2024 10:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7662A2940D;
+	Tue, 30 Apr 2024 10:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473987; cv=none; b=Dt+WhEvTx5DDxv/Xgtdwu7DF83XopY7+RhuYvqSvvCQZY7VZakn6Jh3zKvHGqhNFpKIkzko2BtNOx7lpUBzSjooaIzKzYYnw55aXMxT+SUWMflyNFirRJ3U2yGENExozOFDmHiKUAaBfQ+Lzp/2Qb6KONme9wQuM3OE5NIgTS3Y=
+	t=1714473990; cv=none; b=jAHZGq4CYpmddF8Y7hzgYICl5iAxayjyGpnCiXIBMKSnLVGi+oc4UlGnGWoVZxHtMEPtxO8qP/jlcQFIWMnWZwYxYpy9878EKThjHMknzMzVbyD/dDqfTvuYDzG5hzTkuCRfkHw9ZcKt/4oTHVA6hRHsJO+StAoGQcFlJ5Fg7Fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473987; c=relaxed/simple;
-	bh=jJtcFrFS/uMthklN2hyrDdzMaxMRTAOHlYpZmBE9MoE=;
+	s=arc-20240116; t=1714473990; c=relaxed/simple;
+	bh=qtREh92M47BeChGUVky6ZEE/vt8bHxZsGM6dpJjIrqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aRz+ixYpR5dV6uLflYN0331aklD5lJs2rcJA/DIUHoNbmPHvozQViXjD//zRn7Yzxi89Huq3zrm9GfzHKYTcbIb2QMIy5/MGsc4+43p1LeYFlSlTsm/Rih10gICuSvD0fOo6ZykCjpmWmJGPn7/MpGh932GlV0I56IdUQSlp2SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGlMw5dd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LHcntpXFJdknk5Hpu+bjFiKT7fmkT2xSNA0vH0X7gfVgxck0mfxiZ6fqfIKTqBbWn89AVNRIg7gOcjMvYHojJun5mPRUim05HmQ0FWVYo2GOzZJ62sUPYHXv9DuoxamE/XSGHI9Ka76uEHQkjBfgia3yWMpNVVm66K1cLXVuDPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpV9+5nf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGlMw5dd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A23C2BBFC;
-	Tue, 30 Apr 2024 10:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpV9+5nf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFD9C2BBFC;
+	Tue, 30 Apr 2024 10:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473987;
-	bh=jJtcFrFS/uMthklN2hyrDdzMaxMRTAOHlYpZmBE9MoE=;
+	s=korg; t=1714473990;
+	bh=qtREh92M47BeChGUVky6ZEE/vt8bHxZsGM6dpJjIrqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fGlMw5ddDbYkOXJRn+WSvhCgVvkC84U94XhnLIdzEJb34hKiccRTZzh+gCT5C4cjz
-	 4V6osHZX3E4mcBTLO1vczuEq5Uz++upkZpZTX/0xSRJmRY+UQA8qzKuWOXypQhfw3O
-	 75VmfcJAEfM/+XMfdFp9imKM+UMWhu6b2F2x+s24=
+	b=DpV9+5nf2grWJXZWRPrxSko2CnYhvqOrQKtGbKzR8qVtSIadtzCr+1qWbjAtnHRBP
+	 yZRIShAOAM0PMFl8Q1zk1OdAG/XcAei6P3M/Sb77giNnY1PDxKsZwfP3OW6l/4Huj7
+	 +hz2cmhGfeXf23e5MtXHmUqJTJZpUneUBkKF3rTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
 	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 027/228] arm64: dts: mediatek: mt7986: drop "#reset-cells" from Ethernet controller
-Date: Tue, 30 Apr 2024 12:36:45 +0200
-Message-ID: <20240430103104.598124779@linuxfoundation.org>
+Subject: [PATCH 6.8 028/228] arm64: dts: mediatek: mt7986: reorder nodes
+Date: Tue, 30 Apr 2024 12:36:46 +0200
+Message-ID: <20240430103104.626333344@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -55,38 +54,209 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 9bd88afc94c3570289a0f1c696578b3e1f4e3169 ]
+[ Upstream commit 3f79e8f3364499750d7442767b101b7bc5864ddf ]
 
-Ethernet block doesn't include or act as a reset controller.
-Documentation also doesn't document "#reset-cells" for it.
+Use order described as preferred in DTS Coding Style:
+1. Sort bus nodes by unit address
+2. Use alpha-numerical order for the rest
 
-This fixes:
-arch/arm64/boot/dts/mediatek/mt7986a-bananapi-bpi-r3.dtb: ethernet@15100000: Unevaluated properties are not allowed ('#reset-cells' was unexpected)
-        from schema $id: http://devicetree.org/schemas/net/mediatek,net.yaml#
-
-Fixes: 082ff36bd5c0 ("arm64: dts: mediatek: mt7986: introduce ethernet nodes")
-Cc: Lorenzo Bianconi <lorenzo@kernel.org>
 Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240213053739.14387-2-zajec5@gmail.com
+Link: https://lore.kernel.org/r/20240212121620.15035-2-zajec5@gmail.com
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Stable-dep-of: 970f8b01bd77 ("arm64: dts: mediatek: mt7986: drop invalid thermal block clock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7986a.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt7986a.dtsi | 116 +++++++++++-----------
+ 1 file changed, 58 insertions(+), 58 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
-index 850b664dfa13d..5c2fe2f43a142 100644
+index 5c2fe2f43a142..f3a2a89fada41 100644
 --- a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
 +++ b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
-@@ -577,7 +577,6 @@
- 					  <&topckgen CLK_TOP_SGM_325M_SEL>;
- 			assigned-clock-parents = <&apmixedsys CLK_APMIXED_NET2PLL>,
- 						 <&apmixedsys CLK_APMIXED_SGMPLL>;
--			#reset-cells = <1>;
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			mediatek,ethsys = <&ethsys>;
+@@ -16,13 +16,6 @@
+ 	#address-cells = <2>;
+ 	#size-cells = <2>;
+ 
+-	clk40m: oscillator-40m {
+-		compatible = "fixed-clock";
+-		clock-frequency = <40000000>;
+-		#clock-cells = <0>;
+-		clock-output-names = "clkxtal";
+-	};
+-
+ 	cpus {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+@@ -59,6 +52,13 @@
+ 		};
+ 	};
+ 
++	clk40m: oscillator-40m {
++		compatible = "fixed-clock";
++		clock-frequency = <40000000>;
++		#clock-cells = <0>;
++		clock-output-names = "clkxtal";
++	};
++
+ 	psci {
+ 		compatible = "arm,psci-0.2";
+ 		method = "smc";
+@@ -121,15 +121,6 @@
+ 
+ 	};
+ 
+-	timer {
+-		compatible = "arm,armv8-timer";
+-		interrupt-parent = <&gic>;
+-		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+-			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+-			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+-			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
+-	};
+-
+ 	soc {
+ 		compatible = "simple-bus";
+ 		ranges;
+@@ -203,6 +194,19 @@
+ 			#interrupt-cells = <2>;
+ 		};
+ 
++		pwm: pwm@10048000 {
++			compatible = "mediatek,mt7986-pwm";
++			reg = <0 0x10048000 0 0x1000>;
++			#pwm-cells = <2>;
++			interrupts = <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&topckgen CLK_TOP_PWM_SEL>,
++				 <&infracfg CLK_INFRA_PWM_STA>,
++				 <&infracfg CLK_INFRA_PWM1_CK>,
++				 <&infracfg CLK_INFRA_PWM2_CK>;
++			clock-names = "top", "main", "pwm1", "pwm2";
++			status = "disabled";
++		};
++
+ 		sgmiisys0: syscon@10060000 {
+ 			compatible = "mediatek,mt7986-sgmiisys_0",
+ 				     "syscon";
+@@ -240,19 +244,6 @@
+ 			status = "disabled";
+ 		};
+ 
+-		pwm: pwm@10048000 {
+-			compatible = "mediatek,mt7986-pwm";
+-			reg = <0 0x10048000 0 0x1000>;
+-			#pwm-cells = <2>;
+-			interrupts = <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&topckgen CLK_TOP_PWM_SEL>,
+-				 <&infracfg CLK_INFRA_PWM_STA>,
+-				 <&infracfg CLK_INFRA_PWM1_CK>,
+-				 <&infracfg CLK_INFRA_PWM2_CK>;
+-			clock-names = "top", "main", "pwm1", "pwm2";
+-			status = "disabled";
+-		};
+-
+ 		uart0: serial@11002000 {
+ 			compatible = "mediatek,mt7986-uart",
+ 				     "mediatek,mt6577-uart";
+@@ -336,6 +327,21 @@
+ 			status = "disabled";
+ 		};
+ 
++		thermal: thermal@1100c800 {
++			compatible = "mediatek,mt7986-thermal";
++			reg = <0 0x1100c800 0 0x800>;
++			interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&infracfg CLK_INFRA_THERM_CK>,
++				 <&infracfg CLK_INFRA_ADC_26M_CK>,
++				 <&infracfg CLK_INFRA_ADC_FRC_CK>;
++			clock-names = "therm", "auxadc", "adc_32k";
++			nvmem-cells = <&thermal_calibration>;
++			nvmem-cell-names = "calibration-data";
++			#thermal-sensor-cells = <1>;
++			mediatek,auxadc = <&auxadc>;
++			mediatek,apmixedsys = <&apmixedsys>;
++		};
++
+ 		auxadc: adc@1100d000 {
+ 			compatible = "mediatek,mt7986-auxadc";
+ 			reg = <0 0x1100d000 0 0x1000>;
+@@ -387,21 +393,6 @@
+ 			status = "disabled";
+ 		};
+ 
+-		thermal: thermal@1100c800 {
+-			compatible = "mediatek,mt7986-thermal";
+-			reg = <0 0x1100c800 0 0x800>;
+-			interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&infracfg CLK_INFRA_THERM_CK>,
+-				 <&infracfg CLK_INFRA_ADC_26M_CK>,
+-				 <&infracfg CLK_INFRA_ADC_FRC_CK>;
+-			clock-names = "therm", "auxadc", "adc_32k";
+-			nvmem-cells = <&thermal_calibration>;
+-			nvmem-cell-names = "calibration-data";
+-			#thermal-sensor-cells = <1>;
+-			mediatek,auxadc = <&auxadc>;
+-			mediatek,apmixedsys = <&apmixedsys>;
+-		};
+-
+ 		pcie: pcie@11280000 {
+ 			compatible = "mediatek,mt7986-pcie",
+ 				     "mediatek,mt8192-pcie";
+@@ -531,20 +522,6 @@
+ 			mediatek,wo-ccif = <&wo_ccif1>;
+ 		};
+ 
+-		wo_ccif0: syscon@151a5000 {
+-			compatible = "mediatek,mt7986-wo-ccif", "syscon";
+-			reg = <0 0x151a5000 0 0x1000>;
+-			interrupt-parent = <&gic>;
+-			interrupts = <GIC_SPI 211 IRQ_TYPE_LEVEL_HIGH>;
+-		};
+-
+-		wo_ccif1: syscon@151ad000 {
+-			compatible = "mediatek,mt7986-wo-ccif", "syscon";
+-			reg = <0 0x151ad000 0 0x1000>;
+-			interrupt-parent = <&gic>;
+-			interrupts = <GIC_SPI 212 IRQ_TYPE_LEVEL_HIGH>;
+-		};
+-
+ 		eth: ethernet@15100000 {
+ 			compatible = "mediatek,mt7986-eth";
+ 			reg = <0 0x15100000 0 0x80000>;
+@@ -586,6 +563,20 @@
+ 			status = "disabled";
+ 		};
+ 
++		wo_ccif0: syscon@151a5000 {
++			compatible = "mediatek,mt7986-wo-ccif", "syscon";
++			reg = <0 0x151a5000 0 0x1000>;
++			interrupt-parent = <&gic>;
++			interrupts = <GIC_SPI 211 IRQ_TYPE_LEVEL_HIGH>;
++		};
++
++		wo_ccif1: syscon@151ad000 {
++			compatible = "mediatek,mt7986-wo-ccif", "syscon";
++			reg = <0 0x151ad000 0 0x1000>;
++			interrupt-parent = <&gic>;
++			interrupts = <GIC_SPI 212 IRQ_TYPE_LEVEL_HIGH>;
++		};
++
+ 		wifi: wifi@18000000 {
+ 			compatible = "mediatek,mt7986-wmac";
+ 			reg = <0 0x18000000 0 0x1000000>,
+@@ -643,4 +634,13 @@
+ 			};
+ 		};
+ 	};
++
++	timer {
++		compatible = "arm,armv8-timer";
++		interrupt-parent = <&gic>;
++		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
++			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
++			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
++			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
++	};
+ };
 -- 
 2.43.0
 
