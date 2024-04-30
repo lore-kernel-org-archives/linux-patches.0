@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDC712CD99;
-	Tue, 30 Apr 2024 10:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF7812CDB1;
+	Tue, 30 Apr 2024 10:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474460; cv=none; b=gU3Ur4uAkxDceG8ftzn+5yfZIIJJIMt2I4kOGJn/oqVB7v+N9aq7U1bxK7IHsCob/hDGEtYgbp9BiejAeKYvGuynJtS8ULCiLAoYDIxBlF0jv9NY2k7tsO1NgvkQDKoxccavzB9VPv1E1OAMqq/BLITOKd6UT9KN8mbEoVscFnE=
+	t=1714474463; cv=none; b=KZo+IyDvqZIWShj7kOuRvI4xUmkSLmDANef2mWya26aZnxChYSTQwct9DHoFQ/+Rg6Dujqs0yvnyW4YbJCeLX1Qz/m63hCihcrhBLWQC0/08WIHa/VgLL/kW1S1grsyCUskGdqiy22h65OcFEI+3RwQOLynMWdRylw3Jb10zBkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474460; c=relaxed/simple;
-	bh=VO1eHLIUEVVVaD7kzKfGi8fHpLBqaAlQJqpEB4ZclJE=;
+	s=arc-20240116; t=1714474463; c=relaxed/simple;
+	bh=APU8sp3IpD5t97Uoo7KNQr7h+b2NhYbAvd0D8nN8wdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jDDDOBk1ARm8OZm1uKUfA09K+EHO212XXQxW77aAJEHDxBnAVlP0yjMXZKIuIzmMRVALcnSKgW5vrI1C9hrvbUkyp1Wl0QU7cPBxsOJjAZWs6uSVn12xO6++KMcR/GB1OsLhGiXNYuqpqrGOGbD9qOm3n4IVwKWQS2yjptsEBRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2U6k2acn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UYby6wJd5vhrBgbliiSoG0u1TivTgL1H666iqwIWpiONKTNv8lSiQuhinszMdVmoxl/8ZQ1VdlN5fwQUOUUCCG5HFJ7JVp96nMsrpvBM12x/a0+wKhPAHGswd2+Vs0XSA8EKhh6f9VqtYlaUW79tWrBcMzrHmmQqVRUH2y4/1Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uO2OnjJ4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2U6k2acn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423F0C2BBFC;
-	Tue, 30 Apr 2024 10:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uO2OnjJ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64BA1C2BBFC;
+	Tue, 30 Apr 2024 10:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474459;
-	bh=VO1eHLIUEVVVaD7kzKfGi8fHpLBqaAlQJqpEB4ZclJE=;
+	s=korg; t=1714474462;
+	bh=APU8sp3IpD5t97Uoo7KNQr7h+b2NhYbAvd0D8nN8wdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2U6k2acnqTIs4yTy8/kj3T8WD0jtnCTng+3TGhBMb900jzNdwujVHrt0Cyr/xwBrl
-	 lHaeyTREx9dHSBDRKzYtK8BCM7tvTF+TrKBE7ziUnXyRYo0gbIinxXgY4kHDD+9knr
-	 +uy04UBt7a/NQnxDi8mEMwNDtjhtnfn/l1EqDduk=
+	b=uO2OnjJ4uTorcwQXBnG2oE5gKfaWkvrsBZJunzFCaU0gIB1joUkVF8SES/PLcR6P+
+	 oqUO9Qxuv4bPIp0HOlK9vMf2BvAvs60VzAC7tn68l2EPF7LniAfNz+qFJl5g/D+Mux
+	 qUvYLUWdNHVD/DDqxXH93qqgUpJJ+bPiEBKub3l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Sean Christopherson <seanjc@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>
-Subject: [PATCH 6.8 163/228] cpu: Re-enable CPU mitigations by default for !X86 architectures
-Date: Tue, 30 Apr 2024 12:39:01 +0200
-Message-ID: <20240430103108.511314772@linuxfoundation.org>
+	Daniel Okazaki <dtokazaki@google.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.8 164/228] eeprom: at24: fix memory corruption race condition
+Date: Tue, 30 Apr 2024 12:39:02 +0200
+Message-ID: <20240430103108.539492167@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -54,108 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Daniel Okazaki <dtokazaki@google.com>
 
-commit fe42754b94a42d08cf9501790afc25c4f6a5f631 upstream.
+commit f42c97027fb75776e2e9358d16bf4a99aeb04cf2 upstream.
 
-Rename x86's to CPU_MITIGATIONS, define it in generic code, and force it
-on for all architectures exception x86.  A recent commit to turn
-mitigations off by default if SPECULATION_MITIGATIONS=n kinda sorta
-missed that "cpu_mitigations" is completely generic, whereas
-SPECULATION_MITIGATIONS is x86-specific.
+If the eeprom is not accessible, an nvmem device will be registered, the
+read will fail, and the device will be torn down. If another driver
+accesses the nvmem device after the teardown, it will reference
+invalid memory.
 
-Rename x86's SPECULATIVE_MITIGATIONS instead of keeping both and have it
-select CPU_MITIGATIONS, as having two configs for the same thing is
-unnecessary and confusing.  This will also allow x86 to use the knob to
-manage mitigations that aren't strictly related to speculative
-execution.
+Move the failure point before registering the nvmem device.
 
-Use another Kconfig to communicate to common code that CPU_MITIGATIONS
-is already defined instead of having x86's menu depend on the common
-CPU_MITIGATIONS.  This allows keeping a single point of contact for all
-of x86's mitigations, and it's not clear that other architectures *want*
-to allow disabling mitigations at compile-time.
-
-Fixes: f337a6a21e2f ("x86/cpu: Actually turn off mitigations by default for SPECULATION_MITIGATIONS=n")
-Closes: https://lkml.kernel.org/r/20240413115324.53303a68%40canb.auug.org.au
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Reported-by: Michael Ellerman <mpe@ellerman.id.au>
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Daniel Okazaki <dtokazaki@google.com>
+Fixes: b20eb4c1f026 ("eeprom: at24: drop unnecessary label")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240420000556.2645001-2-seanjc@google.com
+Link: https://lore.kernel.org/r/20240422174337.2487142-1-dtokazaki@google.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/Kconfig     |    8 ++++++++
- arch/x86/Kconfig |   11 ++++++-----
- kernel/cpu.c     |    4 ++--
- 3 files changed, 16 insertions(+), 7 deletions(-)
+ drivers/misc/eeprom/at24.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/arch/Kconfig
-+++ b/arch/Kconfig
-@@ -9,6 +9,14 @@
- #
- source "arch/$(SRCARCH)/Kconfig"
+--- a/drivers/misc/eeprom/at24.c
++++ b/drivers/misc/eeprom/at24.c
+@@ -758,15 +758,6 @@ static int at24_probe(struct i2c_client
+ 	}
+ 	pm_runtime_enable(dev);
  
-+config ARCH_CONFIGURES_CPU_MITIGATIONS
-+	bool
+-	at24->nvmem = devm_nvmem_register(dev, &nvmem_config);
+-	if (IS_ERR(at24->nvmem)) {
+-		pm_runtime_disable(dev);
+-		if (!pm_runtime_status_suspended(dev))
+-			regulator_disable(at24->vcc_reg);
+-		return dev_err_probe(dev, PTR_ERR(at24->nvmem),
+-				     "failed to register nvmem\n");
+-	}
+-
+ 	/*
+ 	 * Perform a one-byte test read to verify that the chip is functional,
+ 	 * unless powering on the device is to be avoided during probe (i.e.
+@@ -782,6 +773,15 @@ static int at24_probe(struct i2c_client
+ 		}
+ 	}
+ 
++	at24->nvmem = devm_nvmem_register(dev, &nvmem_config);
++	if (IS_ERR(at24->nvmem)) {
++		pm_runtime_disable(dev);
++		if (!pm_runtime_status_suspended(dev))
++			regulator_disable(at24->vcc_reg);
++		return dev_err_probe(dev, PTR_ERR(at24->nvmem),
++				     "failed to register nvmem\n");
++	}
 +
-+if !ARCH_CONFIGURES_CPU_MITIGATIONS
-+config CPU_MITIGATIONS
-+	def_bool y
-+endif
-+
- menu "General architecture-dependent options"
- 
- config ARCH_HAS_SUBPAGE_FAULTS
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -62,6 +62,7 @@ config X86
- 	select ACPI_HOTPLUG_CPU			if ACPI_PROCESSOR && HOTPLUG_CPU
- 	select ARCH_32BIT_OFF_T			if X86_32
- 	select ARCH_CLOCKSOURCE_INIT
-+	select ARCH_CONFIGURES_CPU_MITIGATIONS
- 	select ARCH_CORRECT_STACKTRACE_ON_KRETPROBE
- 	select ARCH_ENABLE_HUGEPAGE_MIGRATION if X86_64 && HUGETLB_PAGE && MIGRATION
- 	select ARCH_ENABLE_MEMORY_HOTPLUG if X86_64
-@@ -2467,17 +2468,17 @@ config PREFIX_SYMBOLS
- 	def_bool y
- 	depends on CALL_PADDING && !CFI_CLANG
- 
--menuconfig SPECULATION_MITIGATIONS
--	bool "Mitigations for speculative execution vulnerabilities"
-+menuconfig CPU_MITIGATIONS
-+	bool "Mitigations for CPU vulnerabilities"
- 	default y
- 	help
--	  Say Y here to enable options which enable mitigations for
--	  speculative execution hardware vulnerabilities.
-+	  Say Y here to enable options which enable mitigations for hardware
-+	  vulnerabilities (usually related to speculative execution).
- 
- 	  If you say N, all mitigations will be disabled. You really
- 	  should know what you are doing to say so.
- 
--if SPECULATION_MITIGATIONS
-+if CPU_MITIGATIONS
- 
- config PAGE_TABLE_ISOLATION
- 	bool "Remove the kernel mapping in user mode"
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -3207,8 +3207,8 @@ enum cpu_mitigations {
- };
- 
- static enum cpu_mitigations cpu_mitigations __ro_after_init =
--	IS_ENABLED(CONFIG_SPECULATION_MITIGATIONS) ? CPU_MITIGATIONS_AUTO :
--						     CPU_MITIGATIONS_OFF;
-+	IS_ENABLED(CONFIG_CPU_MITIGATIONS) ? CPU_MITIGATIONS_AUTO :
-+					     CPU_MITIGATIONS_OFF;
- 
- static int __init mitigations_parse_cmdline(char *arg)
- {
+ 	/* If this a SPD EEPROM, probe for DDR3 thermal sensor */
+ 	if (cdata == &at24_data_spd)
+ 		at24_probe_temp_sensor(client);
 
 
