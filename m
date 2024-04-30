@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C846812C487;
-	Tue, 30 Apr 2024 10:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB89612C47A;
+	Tue, 30 Apr 2024 10:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473880; cv=none; b=ANz1J8pJ/11o/pZGDdgumuzgIi1EJMSwh2Ynnpks/YBjcV/eRIyGZGxW+vALEW4k6vq6c/pyrCKu9vmv7mDyEvqc6XFfbeLvQGzKYYlt6BNCZG/oiq8zcUC6Wj3Gq2RYhSfMMsUdsr1kkj5WG0driysRgZaZcp6AMLQdQXr3JSc=
+	t=1714473883; cv=none; b=OT2x//CrkixxXEo1YL1IwrgcB6WBK9Ihzt6ca4ThVZM3qggN7XhWy6qyBSfoBLcEWW3mgR0ox0Dzk1hhTY5lrQ/Xe/rdcSmdrk5urIcLjZ8NKE53ZzsN1WI8afHKjuYmUA8BQezzKNIlWx8fjwQiV6DBG9L2GBbgXJ2HK9Zoh7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473880; c=relaxed/simple;
-	bh=4uO/oMX7byzZBqIcvKa818s368Ea7A8uA86QpxkVCIA=;
+	s=arc-20240116; t=1714473883; c=relaxed/simple;
+	bh=LSgtHiTVy1r4DHM3bC86e4XAHL2SF1qgK61lD2IXvME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bMb8e5Xwxh17XxWs2wJz5wXEGzQeEkRfzp+iJXUgHXtI/HKo0XqKu8x1pXVDVF/gjW6LnNQD5x67N2fOR4iVIBiKHUo8g6XQW9jPeqQwww+HuulW8eOatDU4kNXMHSF0x3NSyuvJsIBDTlBb6YjnqIHZSCPF7EFRCZtyBLhUSAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDvcYrNU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bEvwhg8Xe8b1eYI6EXxdDUAnYhO3smrKaDkbgQiQq6I7ZAMVer441DzJTyTPR2w78s4BJV24S4FDIsyuaU1qQgjboFIbx9vP/99xKGip75YmlY5rtgII2zth1/hcFuXXfqxcpzEyZVAdSyW4K4+wb2MmfgEE2s2uRQl6af9WUao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dn0Z//Gm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDvcYrNU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489E2C2BBFC;
-	Tue, 30 Apr 2024 10:44:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dn0Z//Gm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF4EC2BBFC;
+	Tue, 30 Apr 2024 10:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473880;
-	bh=4uO/oMX7byzZBqIcvKa818s368Ea7A8uA86QpxkVCIA=;
+	s=korg; t=1714473883;
+	bh=LSgtHiTVy1r4DHM3bC86e4XAHL2SF1qgK61lD2IXvME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hDvcYrNUrF8MUmWX1+Mgx2c3jLpf0iXdUwOMCINdvGfQiSo0P5y2IknRYNn/z+Eqg
-	 bbhvzRrO00ayTahtq2MSnoMGcYsYv8/AmIO7yhUXEDcankis+BqhmI2nlFN12Pgc6O
-	 k4ChjCV7zpCUEDfY52w/Cb7lFc0+gsZqQgdeiC0s=
+	b=Dn0Z//GmiCHkPsYrIYUXcNuC4Q9T8VrXbHtuniHJcZCl+r0ze7fxaY6nWBDvdAAgm
+	 BtbnDwbYDp7soT0UI0SR3pU6sMuPvxu5mUhvYQjCWrqSggZVX5gcy62hhXBtkiqy6+
+	 IzbiX33vMSOcTfnVkTRC/r6Q3WxKqNf8wWI33EGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 70/77] dmaengine: owl: fix register access functions
-Date: Tue, 30 Apr 2024 12:39:49 +0200
-Message-ID: <20240430103043.205649839@linuxfoundation.org>
+Subject: [PATCH 4.19 71/77] idma64: Dont try to serve interrupts when device is powered off
+Date: Tue, 30 Apr 2024 12:39:50 +0200
+Message-ID: <20240430103043.235435483@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -53,56 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 43c633ef93a5d293c96ebcedb40130df13128428 ]
+[ Upstream commit 9140ce47872bfd89fca888c2f992faa51d20c2bc ]
 
-When building with 'make W=1', clang notices that the computed register
-values are never actually written back but instead the wrong variable
-is set:
+When iDMA 64-bit device is powered off, the IRQ status register
+is all 1:s. This is never happen in real case and signalling that
+the device is simply powered off. Don't try to serve interrupts
+that are not ours.
 
-drivers/dma/owl-dma.c:244:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
-  244 |         u32 regval;
-      |             ^
-drivers/dma/owl-dma.c:268:6: error: variable 'regval' set but not used [-Werror,-Wunused-but-set-variable]
-  268 |         u32 regval;
-      |             ^
-
-Change these to what was most likely intended.
-
-Fixes: 47e20577c24d ("dmaengine: Add Actions Semi Owl family S900 DMA driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Peter Korsgaard <peter@korsgaard.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240322132116.906475-1-arnd@kernel.org
+Fixes: 667dfed98615 ("dmaengine: add a driver for Intel integrated DMA 64-bit")
+Reported-by: Heiner Kallweit <hkallweit1@gmail.com>
+Closes: https://lore.kernel.org/r/700bbb84-90e1-4505-8ff0-3f17ea8bc631@gmail.com
+Tested-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20240321120453.1360138-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/owl-dma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/idma64.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/dma/owl-dma.c b/drivers/dma/owl-dma.c
-index da5050ab7f387..c12968075abc9 100644
---- a/drivers/dma/owl-dma.c
-+++ b/drivers/dma/owl-dma.c
-@@ -230,7 +230,7 @@ static void pchan_update(struct owl_dma_pchan *pchan, u32 reg,
- 	else
- 		regval &= ~val;
+diff --git a/drivers/dma/idma64.c b/drivers/dma/idma64.c
+index 89c5e5b460687..920e98dc7113e 100644
+--- a/drivers/dma/idma64.c
++++ b/drivers/dma/idma64.c
+@@ -172,6 +172,10 @@ static irqreturn_t idma64_irq(int irq, void *dev)
+ 	u32 status_err;
+ 	unsigned short i;
  
--	writel(val, pchan->base + reg);
-+	writel(regval, pchan->base + reg);
- }
++	/* Since IRQ may be shared, check if DMA controller is powered on */
++	if (status == GENMASK(31, 0))
++		return IRQ_NONE;
++
+ 	dev_vdbg(idma64->dma.dev, "%s: status=%#x\n", __func__, status);
  
- static void pchan_writel(struct owl_dma_pchan *pchan, u32 reg, u32 data)
-@@ -254,7 +254,7 @@ static void dma_update(struct owl_dma *od, u32 reg, u32 val, bool state)
- 	else
- 		regval &= ~val;
- 
--	writel(val, od->base + reg);
-+	writel(regval, od->base + reg);
- }
- 
- static void dma_writel(struct owl_dma *od, u32 reg, u32 data)
+ 	/* Check if we have any interrupt from the DMA controller */
 -- 
 2.43.0
 
