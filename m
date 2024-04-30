@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510A612B176;
-	Tue, 30 Apr 2024 10:43:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C76D12C49D;
+	Tue, 30 Apr 2024 10:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714473836; cv=none; b=u8KRgvLt0XXdGA+Dfk2yJvtwnLaMGomnAh949psJPdhAqeTfl4m2dcawI+QMtpMJL8TEy1hicGdcCXgTGoy2rijE+/UFO0aw+Uyvoi/6HWCXPCg/ZyqXHIzUfvCXdTvdLxsg/uYxSUnVGeeA1wC4/NxbqKhm58FCUvrZjpdYwzU=
+	t=1714473839; cv=none; b=DlohdbiijmKr0Ixk4asdN8KW1yEYf6Rwdi2tHBjlY02+kvckUaWrKKdqdECMevpYA0/SWBrCTywW4VOp9h1AGoAmOQTalmxoigK+AuA2VdLgg6ySScddEPWgAOS5Is6r3NvsmIxnVC/InM8KIpBEEOshyVCb3yqDbaOhze8IbRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714473836; c=relaxed/simple;
-	bh=mrTtu8dqNle0I1wVaCM6QGDp/pHK3r1QTdefX7H2w3M=;
+	s=arc-20240116; t=1714473839; c=relaxed/simple;
+	bh=sYOLsmVOqkl3BMtqzOJc+ZMTjbFJsNU7XQtDlu0RvOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W5YnB7j3zKpPSnAC/uTrxhEydjScjso+jzjxPxwIyc1qW2XuGqLPcOKBsCngTRZqe5UkOuyVVjUYwgK3nmQZPTASddmz8iHkaW2/NagHUQOsNCvJ+cw1RIBVPCSdXLTh1AKK+SuUQfyu3vaYUK4V2v1iwyHybSLJNn1Bm9yqdBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxCCQt7W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VWX8Ukqg61BsDXBQZ92d6dH3LVgPliTagIeTRz7IT8c6M+62tPQJ2tdQ6DeyG3ixrjzRGfQRAWLa+2wc279DpJtmvVhVciS9dGez9470eLbPg7VNZtrw6XOE8V1WXOYbIpaQDaobg+vx8ILPg+pFI6+c1Qp4GOFUxdpW/ZIji64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQWTCHLu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxCCQt7W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC41C2BBFC;
-	Tue, 30 Apr 2024 10:43:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQWTCHLu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9345DC2BBFC;
+	Tue, 30 Apr 2024 10:43:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714473835;
-	bh=mrTtu8dqNle0I1wVaCM6QGDp/pHK3r1QTdefX7H2w3M=;
+	s=korg; t=1714473839;
+	bh=sYOLsmVOqkl3BMtqzOJc+ZMTjbFJsNU7XQtDlu0RvOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zxCCQt7WKK6okqy3I72ftiZ6IvqtnkfbC2CtHWXdQqMYRM3o3igmXnsEzZ+Um2JMN
-	 0mlwGMYGNP194Y+REEVDNEKBzuCm5HupSSQTI1Ielu+HyJ6deinsl+fP7fXlPlZuMc
-	 KU1XFuScGm0UW1V5MCxuzc98Plj26z2L/CBm6FUo=
+	b=sQWTCHLujWaByYtQSxlsEI1JWCgnDNGp4k1ctcACLP/kFgG78FzFwNRZEa6dqlVJA
+	 rjoQ9de/bDmEz/218pLCs6bJzKGHo5dPZ+SZkGdWV6cWwyy79dBegXk1JMgnvBlY1H
+	 aBCMJ1u60YdlgTab/Odp+fLLR9DKMMIYYUO4IBsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	John Ogness <john.ogness@linutronix.de>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 53/77] serial: core: Provide port lock wrappers
-Date: Tue, 30 Apr 2024 12:39:32 +0200
-Message-ID: <20240430103042.703277875@linuxfoundation.org>
+Subject: [PATCH 4.19 18/77] netfilter: nf_tables: Fix potential data-race in __nft_expr_type_get()
+Date: Tue, 30 Apr 2024 12:38:57 +0200
+Message-ID: <20240430103041.665346458@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103041.111219002@linuxfoundation.org>
 References: <20240430103041.111219002@linuxfoundation.org>
@@ -46,138 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit b0af4bcb49464c221ad5f95d40f2b1b252ceedcc ]
+[ Upstream commit f969eb84ce482331a991079ab7a5c4dc3b7f89bf ]
 
-When a serial port is used for kernel console output, then all
-modifications to the UART registers which are done from other contexts,
-e.g. getty, termios, are interference points for the kernel console.
+nft_unregister_expr() can concurrent with __nft_expr_type_get(),
+and there is not any protection when iterate over nf_tables_expressions
+list in __nft_expr_type_get(). Therefore, there is potential data-race
+of nf_tables_expressions list entry.
 
-So far this has been ignored and the printk output is based on the
-principle of hope. The rework of the console infrastructure which aims to
-support threaded and atomic consoles, requires to mark sections which
-modify the UART registers as unsafe. This allows the atomic write function
-to make informed decisions and eventually to restore operational state. It
-also allows to prevent the regular UART code from modifying UART registers
-while printk output is in progress.
+Use list_for_each_entry_rcu() to iterate over nf_tables_expressions
+list in __nft_expr_type_get(), and use rcu_read_lock() in the caller
+nft_expr_type_get() to protect the entire type query process.
 
-All modifications of UART registers are guarded by the UART port lock,
-which provides an obvious synchronization point with the console
-infrastructure.
-
-Provide wrapper functions for spin_[un]lock*(port->lock) invocations so
-that the console mechanics can be applied later on at a single place and
-does not require to copy the same logic all over the drivers.
-
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Link: https://lore.kernel.org/r/20230914183831.587273-2-john.ogness@linutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 54c4ec5f8c47 ("serial: mxs-auart: add spinlock around changing cts state")
+Fixes: ef1f7df9170d ("netfilter: nf_tables: expression ops overloading")
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/serial_core.h | 79 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
+ net/netfilter/nf_tables_api.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/serial_core.h b/include/linux/serial_core.h
-index af8143fb644cc..22735ba8c19c4 100644
---- a/include/linux/serial_core.h
-+++ b/include/linux/serial_core.h
-@@ -264,6 +264,85 @@ struct uart_port {
- 	void			*private_data;		/* generic platform data pointer */
- };
- 
-+/**
-+ * uart_port_lock - Lock the UART port
-+ * @up:		Pointer to UART port structure
-+ */
-+static inline void uart_port_lock(struct uart_port *up)
-+{
-+	spin_lock(&up->lock);
-+}
-+
-+/**
-+ * uart_port_lock_irq - Lock the UART port and disable interrupts
-+ * @up:		Pointer to UART port structure
-+ */
-+static inline void uart_port_lock_irq(struct uart_port *up)
-+{
-+	spin_lock_irq(&up->lock);
-+}
-+
-+/**
-+ * uart_port_lock_irqsave - Lock the UART port, save and disable interrupts
-+ * @up:		Pointer to UART port structure
-+ * @flags:	Pointer to interrupt flags storage
-+ */
-+static inline void uart_port_lock_irqsave(struct uart_port *up, unsigned long *flags)
-+{
-+	spin_lock_irqsave(&up->lock, *flags);
-+}
-+
-+/**
-+ * uart_port_trylock - Try to lock the UART port
-+ * @up:		Pointer to UART port structure
-+ *
-+ * Returns: True if lock was acquired, false otherwise
-+ */
-+static inline bool uart_port_trylock(struct uart_port *up)
-+{
-+	return spin_trylock(&up->lock);
-+}
-+
-+/**
-+ * uart_port_trylock_irqsave - Try to lock the UART port, save and disable interrupts
-+ * @up:		Pointer to UART port structure
-+ * @flags:	Pointer to interrupt flags storage
-+ *
-+ * Returns: True if lock was acquired, false otherwise
-+ */
-+static inline bool uart_port_trylock_irqsave(struct uart_port *up, unsigned long *flags)
-+{
-+	return spin_trylock_irqsave(&up->lock, *flags);
-+}
-+
-+/**
-+ * uart_port_unlock - Unlock the UART port
-+ * @up:		Pointer to UART port structure
-+ */
-+static inline void uart_port_unlock(struct uart_port *up)
-+{
-+	spin_unlock(&up->lock);
-+}
-+
-+/**
-+ * uart_port_unlock_irq - Unlock the UART port and re-enable interrupts
-+ * @up:		Pointer to UART port structure
-+ */
-+static inline void uart_port_unlock_irq(struct uart_port *up)
-+{
-+	spin_unlock_irq(&up->lock);
-+}
-+
-+/**
-+ * uart_port_lock_irqrestore - Unlock the UART port, restore interrupts
-+ * @up:		Pointer to UART port structure
-+ * @flags:	The saved interrupt flags for restore
-+ */
-+static inline void uart_port_unlock_irqrestore(struct uart_port *up, unsigned long flags)
-+{
-+	spin_unlock_irqrestore(&up->lock, flags);
-+}
-+
- static inline int serial_port_in(struct uart_port *up, int offset)
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 79d0545badcab..db453d19f2a0f 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -2083,7 +2083,7 @@ static const struct nft_expr_type *__nft_expr_type_get(u8 family,
  {
- 	return up->serial_in(up, offset);
+ 	const struct nft_expr_type *type, *candidate = NULL;
+ 
+-	list_for_each_entry(type, &nf_tables_expressions, list) {
++	list_for_each_entry_rcu(type, &nf_tables_expressions, list) {
+ 		if (!nla_strcmp(nla, type->name)) {
+ 			if (!type->family && !candidate)
+ 				candidate = type;
+@@ -2103,9 +2103,13 @@ static const struct nft_expr_type *nft_expr_type_get(struct net *net,
+ 	if (nla == NULL)
+ 		return ERR_PTR(-EINVAL);
+ 
++	rcu_read_lock();
+ 	type = __nft_expr_type_get(family, nla);
+-	if (type != NULL && try_module_get(type->owner))
++	if (type != NULL && try_module_get(type->owner)) {
++		rcu_read_unlock();
+ 		return type;
++	}
++	rcu_read_unlock();
+ 
+ 	lockdep_nfnl_nft_mutex_not_held();
+ #ifdef CONFIG_MODULES
 -- 
 2.43.0
 
