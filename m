@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4601292C8;
-	Tue, 30 Apr 2024 10:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F511292C8;
+	Tue, 30 Apr 2024 10:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474102; cv=none; b=UsovqCmJ7jJbgXMUJbrvsomuzjyeO4wDtiHZK8mYn8KWnJTm343PSrRqCXaX6bKLwzJuUogS8IXM/PV1ke5PIcN9gy8/BMd9XUsjg8aNo81SFWRSMCF6wLT6r/wtV7bVmVt4mDv8mYaQTK+qLf/8PPO3OI0p82hIOn3z6qnMW50=
+	t=1714474105; cv=none; b=cKEWK14ipB4r4eA98Xml14yWQBNXkA2kOb2bserPdODSBxi2xGUS+brDEZKJmwtBRTMvSVZGC8FaDrOlmng4v5t2bUagJnVOHSfUibIAOkfrUQjRmsxVwGXIQlncWExH6djQjPIhxXuB8ABHr2b/YgxPNk7JK/9K6PDgkW/bu2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474102; c=relaxed/simple;
-	bh=xUlV9dqqKCzEhHo0CSfePqkZAYx+uJncVZUVt/cC8T4=;
+	s=arc-20240116; t=1714474105; c=relaxed/simple;
+	bh=gMV7VdArtLC4T8PtXq/Kz7Q3Nd35E//yc3wg3QHhHWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ukEOt9ByZRK11iI6pPZadIRCkat3Rc3XDHoeXpTrPFtDUeh/EH9UrIpjUZwIShYPN+rp6wSYPvivsJowBjDokFjorweQSt/PCfZYo7mSLCyc2WCFdV49XxJvMwF7x5v3dLDlcNDj+K6ViVHevmBuApDidnK+rpO1m/9zNsqRL+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O5RYayMr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H7F0QyUhc+CPyRH9wDUv+wcIdXujg4e2qDFfqwxAEIM/Bva1jcV+w39hQttekXIIOcTyYBBE4P/3uMzC+54S8VlKn5HwftqT6Ms6RQfvT9XU9rFyGHufkkHOmCu3uCNUC7getB8ac/5hZYs4jaKSSjKHecr5lz1wc/4kr07N0P0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxag6E0g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O5RYayMr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C14C2BBFC;
-	Tue, 30 Apr 2024 10:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxag6E0g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2438CC2BBFC;
+	Tue, 30 Apr 2024 10:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474102;
-	bh=xUlV9dqqKCzEhHo0CSfePqkZAYx+uJncVZUVt/cC8T4=;
+	s=korg; t=1714474105;
+	bh=gMV7VdArtLC4T8PtXq/Kz7Q3Nd35E//yc3wg3QHhHWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O5RYayMrX3Hl8jeyIMRFemIKEVu9NrczZtWPlRDcCTgYNSDvrChtuDh0G4ANMbg86
-	 dEjGFY5s5o19CVpBEP8c+D6rN5tYhsSbzSOpHR+RleKsM0tG1BE6BenUnHuaklJazH
-	 ZtseXMXfetrNa3ll+lgQVrX1tlfgEI/su0CqX22U=
+	b=zxag6E0gu/tTrYkEDaWGF8DGHdZgzpmDW6qXlAcMHltZ5ZaFGvTM9GmpY/IJY9Ykf
+	 ei7W7465/vrpS+5WbyZX3LBrABdV8KbKjfNHq6Axwfw0D6XyjreDeuA7Ik/1KOQ9Cr
+	 /jc0/hN/BxSKcZtdp/jKEooZTdOnpG0s5lkyA87U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pin-yen Lin <treapking@chromium.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 019/228] arm64: dts: mediatek: mt8195-cherry: Update min voltage constraint for MT6315
-Date: Tue, 30 Apr 2024 12:36:37 +0200
-Message-ID: <20240430103104.369221723@linuxfoundation.org>
+Subject: [PATCH 6.8 020/228] arm64: dts: mediatek: mt8183-kukui: Use default min voltage for MT6358
+Date: Tue, 30 Apr 2024 12:36:38 +0200
+Message-ID: <20240430103104.397462658@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
 References: <20240430103103.806426847@linuxfoundation.org>
@@ -53,48 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Pin-yen Lin <treapking@chromium.org>
 
-[ Upstream commit e9a6b8b5c61350535c7eb5ea9b2dde0d5745bd1b ]
+[ Upstream commit 296118a8dc297de47d9b3a364b9743f8446bd612 ]
 
-Update the minimum voltage from 300000 uV to 400000 uV so it matches
-the MT6315 datasheet.
+The requested voltage could be lower than the minimum voltage on the
+GPU OPP table when the MTK Smart Voltage Scaling (SVS) driver is
+enabled, so removing the definition in mt8183-kukui to use the default
+minimum voltage (500000 uV) defined in mt6358.dtsi.
 
-Also update the minimum voltage for Vgpu regulator from 625000 uV to
-400000 uV because the requested voltage could be lower than the minimum
-voltage on the GPU OPP table when the MTK Smart Voltage Scaling (SVS)
-driver is enabled.
-
-Fixes: 260c04d425eb ("arm64: dts: mediatek: cherry: Enable MT6315 regulators on SPMI bus")
+Fixes: 31c6732da9d5 ("arm64: dts: mediatek: mt8183-kukui: Override vgpu/vsram_gpu constraints")
 Signed-off-by: Pin-yen Lin <treapking@chromium.org>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240315111621.2263159-3-treapking@chromium.org
+Link: https://lore.kernel.org/r/20240315111621.2263159-4-treapking@chromium.org
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
-index 1f3a6755f1550..121dfd91da07b 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
-@@ -1245,7 +1245,7 @@
- 			mt6315_6_vbuck1: vbuck1 {
- 				regulator-compatible = "vbuck1";
- 				regulator-name = "Vbcpu";
--				regulator-min-microvolt = <300000>;
-+				regulator-min-microvolt = <400000>;
- 				regulator-max-microvolt = <1193750>;
- 				regulator-enable-ramp-delay = <256>;
- 				regulator-ramp-delay = <6250>;
-@@ -1263,7 +1263,7 @@
- 			mt6315_7_vbuck1: vbuck1 {
- 				regulator-compatible = "vbuck1";
- 				regulator-name = "Vgpu";
--				regulator-min-microvolt = <625000>;
-+				regulator-min-microvolt = <400000>;
- 				regulator-max-microvolt = <1193750>;
- 				regulator-enable-ramp-delay = <256>;
- 				regulator-ramp-delay = <6250>;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
+index 90c5ad917a9ba..41aef6c3edfc5 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
+@@ -433,7 +433,6 @@
+ };
+ 
+ &mt6358_vgpu_reg {
+-	regulator-min-microvolt = <625000>;
+ 	regulator-max-microvolt = <900000>;
+ 
+ 	regulator-coupled-with = <&mt6358_vsram_gpu_reg>;
 -- 
 2.43.0
 
