@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9AAA12B176;
-	Tue, 30 Apr 2024 11:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED97212C487;
+	Tue, 30 Apr 2024 11:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474920; cv=none; b=HzAZuL72AiIftEaSSbA3ZJt1izvrsoCK6CrSGyd9iqEEP18qoRuOdYaPIveqjWLg0HLOaWnMxjBUBaGX6eQpK2QptqrJOCIPLF/UyEKFjRm89gkiCQ0dxkrkN0VPxtFyLVLb40cFfYRvjU6plZiRlRQ5IInGL6jM7ISwGe54sDo=
+	t=1714474924; cv=none; b=YMls9sDZShyg7czVIX15VO2FtqkDbrVHI1zhtJF5jZZjwyqK8y2/GpeOXwgnmO2h8A6x0OleEY438ZOjwBtSfsNySH4nACSow/IOH9eCepjxLwgWQ8/wvK12EU9nOUu7wfBRRD0keAqcugkatynKVF9aSOkA2BMZQJMguVXi8qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474920; c=relaxed/simple;
-	bh=xj0bh8eZbWvGSkjv1xvPB4fA/VfvPK+y0SsvP9K+Jtw=;
+	s=arc-20240116; t=1714474924; c=relaxed/simple;
+	bh=GcrgBWzP1trt2iApl+YVp3HY3/qoul3cng9K9iE8yYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IrEYo04BPL9MvoUsl6L7oJf0JUZSUYmezFnWXTx9Pf6rrXNuUEN6emEn59pxXcFTPkj2RRtYkhF4cb6fUYO+t8RWV4BMKcIAcNh7Q8VODb0nDc0fJkahmgjaA1oVfuc89ESLzOLg4WcZCy3QRDV7mr12AslFZvflgRCOj+RKxS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=slGyGx1b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BrRRpRCPWSMXKjFoRI+8BWnn4cjQkdk5HsuPiCWvK5/ve/bGzfci5F33Yq4v/N0z9Oy+pJbkPdoWDPO3U3W+20VzzuXYBMbA1qM1uiy9mSFnhGeK9qu/d4jcpWw5kbimXa6Hj2sqYjddFbfnqHL0hKvLCFLeBvrmEKiEF3+NdXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQ2ZCvNj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="slGyGx1b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8CCC2BBFC;
-	Tue, 30 Apr 2024 11:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQ2ZCvNj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7525EC4AF19;
+	Tue, 30 Apr 2024 11:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714474920;
-	bh=xj0bh8eZbWvGSkjv1xvPB4fA/VfvPK+y0SsvP9K+Jtw=;
+	s=korg; t=1714474923;
+	bh=GcrgBWzP1trt2iApl+YVp3HY3/qoul3cng9K9iE8yYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=slGyGx1bjZDVIDa5iomFBc7H3jMGT9hYLWH063Sl4L8AI03wOlLjuYfOfmpf/njsj
-	 JHBQv7ApPZXO5+lO8thW5C/eWSXlDNk9OI1ZNLXGKFcV7EQE+6FVcmE1mu/JHRFtxc
-	 14HCaF2aXlxDhdI6wXXJ5WuF5Gx8YPLcxoJfnhow=
+	b=xQ2ZCvNjfUakfH4onEUOrlu4erdo8uqbJKU0RzJ2lKre2LBrWWLiRwWHhL0tXRJJ0
+	 7leU0TDtlKtYJcvF/HWjY0p54jK4y6qcjUmrJM2VA7sjQMMKuZGjgCUEq99z/uV+S3
+	 J1lA5/aVegWogztkJAjdtx3oimVJakHLy5VO92DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiyi Lu <weiyi.lu@mediatek.com>,
-	Ikjoon Jang <ikjn@chromium.org>,
-	Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 075/138] arm64: dts: mediatek: mt8183: Add power-domains properity to mfgcfg
-Date: Tue, 30 Apr 2024 12:39:20 +0200
-Message-ID: <20240430103051.634928570@linuxfoundation.org>
+Subject: [PATCH 5.10 076/138] arm64: dts: mediatek: mt7622: add support for coherent DMA
+Date: Tue, 30 Apr 2024 12:39:21 +0200
+Message-ID: <20240430103051.664251527@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103049.422035273@linuxfoundation.org>
 References: <20240430103049.422035273@linuxfoundation.org>
@@ -54,37 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ikjoon Jang <ikjn@chromium.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 1781f2c461804c0123f59afc7350e520a88edffb ]
+[ Upstream commit 3abd063019b6a01762f9fccc39505f29d029360a ]
 
-mfgcfg clock is under MFG_ASYNC power domain.
+It improves performance by eliminating the need for a cache flush on rx and tx
 
-Fixes: e526c9bc11f8 ("arm64: dts: Add Mediatek SoC MT8183 and evaluation board dts and Makefile")
-Fixes: 37fb78b9aeb7 ("arm64: dts: mediatek: Add mt8183 power domains controller")
-Signed-off-by: Weiyi Lu <weiyi.lu@mediatek.com>
-Signed-off-by: Ikjoon Jang <ikjn@chromium.org>
-Reviewed-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20240223091122.2430037-1-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 3ba5a6159434 ("arm64: dts: mediatek: mt7622: fix clock controllers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/mediatek/mt7622.dtsi | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-index 31bc8bae8cff8..d5c73e5166412 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-@@ -765,6 +765,7 @@
- 			compatible = "mediatek,mt8183-mfgcfg", "syscon";
- 			reg = <0 0x13000000 0 0x1000>;
- 			#clock-cells = <1>;
-+			power-domains = <&spm MT8183_POWER_DOMAIN_MFG_ASYNC>;
+diff --git a/arch/arm64/boot/dts/mediatek/mt7622.dtsi b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
+index 884930a5849a2..07b4d3ba55612 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7622.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt7622.dtsi
+@@ -357,7 +357,7 @@
  		};
  
- 		mmsys: syscon@14000000 {
+ 		cci_control2: slave-if@5000 {
+-			compatible = "arm,cci-400-ctrl-if";
++			compatible = "arm,cci-400-ctrl-if", "syscon";
+ 			interface-type = "ace";
+ 			reg = <0x5000 0x1000>;
+ 		};
+@@ -937,6 +937,8 @@
+ 		power-domains = <&scpsys MT7622_POWER_DOMAIN_ETHSYS>;
+ 		mediatek,ethsys = <&ethsys>;
+ 		mediatek,sgmiisys = <&sgmiisys>;
++		mediatek,cci-control = <&cci_control2>;
++		dma-coherent;
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		status = "disabled";
 -- 
 2.43.0
 
