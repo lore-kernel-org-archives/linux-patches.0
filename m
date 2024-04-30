@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBDE58801;
-	Tue, 30 Apr 2024 11:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EF48801;
+	Tue, 30 Apr 2024 11:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714476213; cv=none; b=kUJkplndDmwrOHZoC8ocyCZNa87GFlu01mNYjkb99mgC7QROUoxabg2kXeDI20uJvvKGLRcCI1wPxwoz+TXwTiA24FsFUGqdXWnIR1Exx3pSmXPUJD2kDBlKWbjAi58dY52LABlgKu6YRfBYUgFW9sUQ2ekVNJUDrJh1/qAd3e8=
+	t=1714476216; cv=none; b=oo7B/7o1T0TxEC88jZqXOcB3qPUlDUexKoZ/0xyL171tmFvg8ML04cEWek10jMWnkCjRzO/X6MHTER6R4wq10ZAgN63KGFMsCPi+jbstl1SV71pGpHdKgRLW7+SuLI7C2yYTa7H0OqQQVniolKYrj9q7kSWY8Zm7Utwg1QviwWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714476213; c=relaxed/simple;
-	bh=AtfsVBkrLgSKtra31nGC6zRnS4SOVWssr+o9Mcc+kck=;
+	s=arc-20240116; t=1714476216; c=relaxed/simple;
+	bh=2R+zLLxi0nUS13BpOZQUnirOT6W2t/K4LT5R/bLWmxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tP09d+rEsGrl2t65khYleHXh9l9Lt5d8CX663MuVt+RmNiNBsg3fkBPgleBhtKejW3i/6QwMjv+7mRQQpT2WDiyQ3vkfGtHF4q9SrNi8pApYTX2jPwEM//IaGV2/0RYin3wZ7aE23cHjf6S4+UG4tvWB5vKFia3Pv1OeChURLeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6jkg7mz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VaxfykOTog+v1tQGJ67Gxto0VxG8MUmmhy8zYCuLw7M9mq87WT4E2N6JXauxClPl9bOeTr0akac3X9JO7VJCZgHs0r3cZs8is5gJe5iofhFyW/iP7h979zD/tfE4grGQilroJ6UhBf7WLjo5g9LWXasIwPGAXujD01Y8oNvV4CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLzojzS/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6jkg7mz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62199C2BBFC;
-	Tue, 30 Apr 2024 11:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLzojzS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5EFC2BBFC;
+	Tue, 30 Apr 2024 11:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1714476212;
-	bh=AtfsVBkrLgSKtra31nGC6zRnS4SOVWssr+o9Mcc+kck=;
+	s=korg; t=1714476216;
+	bh=2R+zLLxi0nUS13BpOZQUnirOT6W2t/K4LT5R/bLWmxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e6jkg7mzuuRs15PJRCqziQ0B18t2xp6O4UdN0Xx0gaSKNJkiEZJF3KQ/hFRyqK6Yt
-	 pRIPjoaFcJlOSawre2TC6NsRQN7BvCioz/Meo6+6/EG1QLg3uvtoPWe4qFBlsTx6U6
-	 j5MNMQfeCPqMrHK7nYqKwVkCnE+tGUw6wWcpBiIc=
+	b=RLzojzS/P8a31aCPEXZy5HzCaLafMVgxiaktOQ7oEXSkjPWoYe5Rntz9Fd+iDSd63
+	 gIo3nwslF7d3InkAA4i5f6tINyhC4c0gw3P2ErSJSk+tb/yDsGWHRfCtW/DzkREnqL
+	 8NLRpiusZe3U3i5cOMiBlwbNFWCVO5QgiKTLNfpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Alexander Zubkov <green@qrator.net>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 069/107] mlxsw: spectrum_acl_tcam: Fix possible use-after-free during activity update
-Date: Tue, 30 Apr 2024 12:40:29 +0200
-Message-ID: <20240430103046.692775509@linuxfoundation.org>
+	Daniele Palmas <dnlplm@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.4 043/107] USB: serial: option: add Telit FN920C04 rmnet compositions
+Date: Tue, 30 Apr 2024 12:40:03 +0200
+Message-ID: <20240430103045.929736089@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240430103044.655968143@linuxfoundation.org>
 References: <20240430103044.655968143@linuxfoundation.org>
@@ -54,106 +50,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-[ Upstream commit 79b5b4b18bc85b19d3a518483f9abbbe6d7b3ba4 ]
+commit 582ee2f9d268d302595db3e36b985e5cbb93284d upstream.
 
-The rule activity update delayed work periodically traverses the list of
-configured rules and queries their activity from the device.
+Add the following Telit FN920C04 compositions:
 
-As part of this task it accesses the entry pointed by 'ventry->entry',
-but this entry can be changed concurrently by the rehash delayed work,
-leading to a use-after-free [1].
+0x10a0: rmnet + tty (AT/NMEA) + tty (AT) + tty (diag)
+T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#=  5 Spd=480  MxCh= 0
+D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10a0 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN920
+S:  SerialNumber=92c4c4d8
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Fix by closing the race and perform the activity query under the
-'vregion->lock' mutex.
+0x10a4: rmnet + tty (AT) + tty (AT) + tty (diag)
+T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#=  8 Spd=480  MxCh= 0
+D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10a4 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN920
+S:  SerialNumber=92c4c4d8
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-[1]
-BUG: KASAN: slab-use-after-free in mlxsw_sp_acl_tcam_flower_rule_activity_get+0x121/0x140
-Read of size 8 at addr ffff8881054ed808 by task kworker/0:18/181
+0x10a9: rmnet + tty (AT) + tty (diag) + DPL (data packet logging) + adb
+T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#=  9 Spd=480  MxCh= 0
+D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10a9 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN920
+S:  SerialNumber=92c4c4d8
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-CPU: 0 PID: 181 Comm: kworker/0:18 Not tainted 6.9.0-rc2-custom-00781-gd5ab772d32f7 #2
-Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
-Workqueue: mlxsw_core mlxsw_sp_acl_rule_activity_update_work
-Call Trace:
- <TASK>
- dump_stack_lvl+0xc6/0x120
- print_report+0xce/0x670
- kasan_report+0xd7/0x110
- mlxsw_sp_acl_tcam_flower_rule_activity_get+0x121/0x140
- mlxsw_sp_acl_rule_activity_update_work+0x219/0x400
- process_one_work+0x8eb/0x19b0
- worker_thread+0x6c9/0xf70
- kthread+0x2c9/0x3b0
- ret_from_fork+0x4d/0x80
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-Allocated by task 1039:
- kasan_save_stack+0x33/0x60
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x8f/0xa0
- __kmalloc+0x19c/0x360
- mlxsw_sp_acl_tcam_entry_create+0x7b/0x1f0
- mlxsw_sp_acl_tcam_vchunk_migrate_all+0x30d/0xb50
- mlxsw_sp_acl_tcam_vregion_rehash_work+0x157/0x1300
- process_one_work+0x8eb/0x19b0
- worker_thread+0x6c9/0xf70
- kthread+0x2c9/0x3b0
- ret_from_fork+0x4d/0x80
- ret_from_fork_asm+0x1a/0x30
-
-Freed by task 1039:
- kasan_save_stack+0x33/0x60
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3b/0x60
- poison_slab_object+0x102/0x170
- __kasan_slab_free+0x14/0x30
- kfree+0xc1/0x290
- mlxsw_sp_acl_tcam_vchunk_migrate_all+0x3d7/0xb50
- mlxsw_sp_acl_tcam_vregion_rehash_work+0x157/0x1300
- process_one_work+0x8eb/0x19b0
- worker_thread+0x6c9/0xf70
- kthread+0x2c9/0x3b0
- ret_from_fork+0x4d/0x80
- ret_from_fork_asm+0x1a/0x30
-
-Fixes: 2bffc5322fd8 ("mlxsw: spectrum_acl: Don't take mutex in mlxsw_sp_acl_tcam_vregion_rehash_work()")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/1fcce0a60b231ebeb2515d91022284ba7b4ffe7a.1713797103.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c    | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/usb/serial/option.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-index 5c0ff3d612e3c..7cd3338ed4742 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
-@@ -1230,8 +1230,14 @@ mlxsw_sp_acl_tcam_ventry_activity_get(struct mlxsw_sp *mlxsw_sp,
- 				      struct mlxsw_sp_acl_tcam_ventry *ventry,
- 				      bool *activity)
- {
--	return mlxsw_sp_acl_tcam_entry_activity_get(mlxsw_sp,
--						    ventry->entry, activity);
-+	struct mlxsw_sp_acl_tcam_vregion *vregion = ventry->vchunk->vregion;
-+	int err;
-+
-+	mutex_lock(&vregion->lock);
-+	err = mlxsw_sp_acl_tcam_entry_activity_get(mlxsw_sp, ventry->entry,
-+						   activity);
-+	mutex_unlock(&vregion->lock);
-+	return err;
- }
- 
- static int
--- 
-2.43.0
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1376,6 +1376,12 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(2) | RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1083, 0xff),	/* Telit FE990 (ECM) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a0, 0xff),	/* Telit FN20C04 (rmnet) */
++	  .driver_info = RSVD(0) | NCTRL(3) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a4, 0xff),	/* Telit FN20C04 (rmnet) */
++	  .driver_info = RSVD(0) | NCTRL(3) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a9, 0xff),	/* Telit FN20C04 (rmnet) */
++	  .driver_info = RSVD(0) | NCTRL(2) | RSVD(3) | RSVD(4) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910),
+ 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(3) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910_DUAL_MODEM),
 
 
