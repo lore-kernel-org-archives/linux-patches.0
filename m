@@ -1,144 +1,192 @@
-Received: from mx-out.tlen.pl (mx-out.tlen.pl [193.222.135.140])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70E214A8B
-	for <patches@lists.linux.dev>; Wed,  1 May 2024 19:51:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.222.135.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC934F897;
+	Wed,  1 May 2024 22:55:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714593111; cv=none; b=SXY93sKvNMcNNpd1US2ExNi8SvE6UXc/J5EzOyijqz7iHFWM/Ep8f0TVbo/Pd6sCfn9YFNoZUUrCujuipk/r+5/G/ZruAhmWn+CBW0M+GARPJUJM31zzzMhjsBcRmNlsXlRzz3QE34bEzYgUunND0G1iBqqhsofZ7yNeqh3UcRw=
+	t=1714604134; cv=none; b=LJv8vaErXVwB7s3g0zFyX7ny7gqs1QHuImoMm5yB0UrtyiDcboHDk5fFB9a0QO/UGNH/9wgN+IZO8Jj7Q+qbsf0NvYMAv/blxgahFR1GDRKMHpuPrAFFM7BzmzEfkEuttmyFYia+SK/bDGhcGrptVvKY4Gv4Hkef6OoybuPAdUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714593111; c=relaxed/simple;
-	bh=saYPb+BDSE6LXTo1/NYR49eSaP0WuaNty0pqiQBmA0A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CYKwP+wWtQXoWbGyosYCEjexHjkSUi1auUwsZz1sh8G/9TO9tZ1XMpYzTpPlmVKiQstOpoodM0e5BVUAa8kW/EiDIbCANzGUVF13ATzScEXWSREqqhdDxC5njt0Ey23Vg331uGmng4LJadtmQVG79izFtUEKWBplHgmwz1Up+aQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=o2.pl; spf=pass smtp.mailfrom=o2.pl; dkim=pass (1024-bit key) header.d=o2.pl header.i=@o2.pl header.b=w85t0HJZ; arc=none smtp.client-ip=193.222.135.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=o2.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=o2.pl
+	s=arc-20240116; t=1714604134; c=relaxed/simple;
+	bh=jj5Po6i6bhNWS4WRCJD7MS6k4QGArNUryRqACxKTrq4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=MwKvrpTfjQpASDDfTUcP9spcloIJEvx0r9HQrlzivMfeAIFHWDo0XeNNuBcL+yoh6I7AW/F77vAWB8Hg7YFI7zpFGoBLYdXfoSMG6oyK0XgIEJz/6eTeeu+7LfX2UH2uHYK7s1UDPprKZ4Z1mJO8syj2H0cEpMxsummR95qxt34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OByP5kph; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=o2.pl header.i=@o2.pl header.b="w85t0HJZ"
-Received: (wp-smtpd smtp.tlen.pl 38637 invoked from network); 1 May 2024 21:45:04 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=o2.pl; s=1024a;
-          t=1714592704; bh=jJmsPQcYc5f91/0SfiZQAIAPH7PdC9Cn/x90ovcGBbw=;
-          h=Subject:To:Cc:From;
-          b=w85t0HJZEEDu3GemgKashUhOpbBIheCyoZLf1wqLZndu5e7kOQLcePj+NUHHW/MKD
-           RrMy+taaZ8zEuimhEKC1PKxbMSIwIJf1j8utly8qTjv8RlaTx5atqgb9S6kzhIiqYk
-           I2OsOgkA/OTLJoY0drBjTka5zbnaIl2QgH4aMIQA=
-Received: from aaem228.neoplus.adsl.tpnet.pl (HELO [192.168.1.22]) (mat.jonczyk@o2.pl@[83.4.116.228])
-          (envelope-sender <mat.jonczyk@o2.pl>)
-          by smtp.tlen.pl (WP-SMTPD) with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP
-          for <gregkh@linuxfoundation.org>; 1 May 2024 21:45:04 +0200
-Message-ID: <154c0186-6998-40e0-8992-1b65dd27d1f4@o2.pl>
-Date: Wed, 1 May 2024 21:45:02 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OByP5kph"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D163BC072AA;
+	Wed,  1 May 2024 22:55:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714604133;
+	bh=jj5Po6i6bhNWS4WRCJD7MS6k4QGArNUryRqACxKTrq4=;
+	h=From:Date:Subject:To:Cc:From;
+	b=OByP5kph77hHZK59VyfQjQvcru7O5KiqstijuGhg6FQIC71EB9PD1vyHeNDvWYRci
+	 WhYHxL8qgo22t9T4vNN9AL71Tj8I4OkhF1kNwjP3qtoqhIdEAolevhw3nOEcXOgttB
+	 Xa+2GzILKMXSqlVRbbXuUcYXcVhPSp/uH7F6PTQohzzmmRb8Bw9L5gdyND+YxppiiZ
+	 XZ6CqlntxQjXDao7EaWVkOr8PfFHlHcgOfanDBuk56ycAf+lzzK2OS44uCAhWzfc+Z
+	 CKrzG/fYUWMQG9VWphAVXSINXc4czpnz3XVbyNrDHVy0Mq8un/LgYFHHmF1L4Ede64
+	 pIqXc0NgiJVtw==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 01 May 2024 15:55:25 -0700
+Subject: [PATCH] kbuild: Remove support for Clang's ThinLTO caching
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 000/110] 6.1.90-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20240430103047.561802595@linuxfoundation.org>
-Content-Language: en-GB
-From: =?UTF-8?Q?Mateusz_Jo=C5=84czyk?= <mat.jonczyk@o2.pl>
-Autocrypt: addr=mat.jonczyk@o2.pl; keydata=
- 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
- TANkZ3QqXNX2
-In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-WP-MailID: b5d2aa5e15d3e18cf600ace67d9cfa42
-X-WP-AV: skaner antywirusowy Poczty o2
-X-WP-SPAM: NO 0000000 [QSPE]                               
+Message-Id: <20240501-kbuild-llvm-drop-thinlto-cache-v1-1-c117cc50a24b@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAFzIMmYC/x3NQQ6DIBBA0auYWTsJEivqVYwLC4NMRDBgTRPj3
+ Uu6fJv/b8iUmDKM1Q2JLs4cQ0FTV6DdElZCNsUghWzFSzS4vT/sDXp/7WhSPPB0HPwZUS/aEdp
+ 2UEqJbpC2hxI5Eln+/gfT/Dw/yr0i4XAAAAA=
+To: masahiroy@kernel.org, morbo@google.com, justinstitt@google.com
+Cc: nicolas@fjasle.eu, keescook@chromium.org, samitolvanen@google.com, 
+ linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ stable@vger.kernel.org, Yifan Hong <elsk@google.com>, 
+ Masami Hiramatsu <mhiramat@kernel.org>, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5033; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=jj5Po6i6bhNWS4WRCJD7MS6k4QGArNUryRqACxKTrq4=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGlGJ1IeBmpE54rbSgTM4Fshcjh3cc5jnWSjjwufKwV8O
+ +NS/Mylo5SFQYyLQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAEzk2gNGhm8ZAacSNwux9C3p
+ rjWKPB9ZpdiUskzDed3G6yXff7NMncfIsGOroo07H4tWQ/u6BzNOy74pqj9VGn3lROmaazN9Wx3
+ leAE=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-W dniu 30.04.2024 o 12:39, Greg Kroah-Hartman pisze:
-> This is the start of the stable review cycle for the 6.1.90 release.
-> There are 110 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 02 May 2024 10:30:27 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.90-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+There is an issue in clang's ThinLTO caching (enabled for the kernel via
+'--thinlto-cache-dir') with .incbin, which the kernel occasionally uses
+to include data within the kernel, such as the .config file for
+/proc/config.gz. For example, when changing the .config and rebuilding
+vmlinux, the copy of .config in vmlinux does not match the copy of
+.config in the build folder:
 
-Hello,
+  $ echo 'CONFIG_LTO_NONE=n
+  CONFIG_LTO_CLANG_THIN=y
+  CONFIG_IKCONFIG=y
+  CONFIG_HEADERS_INSTALL=y' >kernel/configs/repro.config
 
-Tested-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
+  $ make -skj"$(nproc)" ARCH=x86_64 LLVM=1 clean defconfig repro.config vmlinux
+  ...
 
-Tested on a HP 17-by0001nw laptop with an Intel Kaby Lake CPU and Ubuntu 20.04.
+  $ grep CONFIG_HEADERS_INSTALL .config
+  CONFIG_HEADERS_INSTALL=y
 
-Stack:
-- amd64,
-- ext4 on top of LVM on top of LUKS on top of mdraid on top of
-  NVMe and SATA drives (the SATA drive in the write-mostly mode).
+  $ scripts/extract-ikconfig vmlinux | grep CONFIG_HEADERS_INSTALL
+  CONFIG_HEADERS_INSTALL=y
 
-Tested (lightly):
-- suspend to RAM,
-- suspend to disk,
-- virtual machines in QEMU (both i386 and amd64 guests),
+  $ scripts/config -d HEADERS_INSTALL
 
-- GPU (Intel HD Graphics 620, tested with an old game on Proton (Wine fork) and an Unigine benchmark)
-- WiFi (Realtek RTL8822BE),
-- Bluetooth (Realtek RTL8822BE),
+  $ make -kj"$(nproc)" ARCH=x86_64 LLVM=1 vmlinux
+  ...
+    UPD     kernel/config_data
+    GZIP    kernel/config_data.gz
+    CC      kernel/configs.o
+  ...
+    LD      vmlinux
+  ...
 
-- PCI soundcard (Intel HD Audio),
-- USB soundcard (Logitech Pro X),
-- webcam.
+  $ grep CONFIG_HEADERS_INSTALL .config
+  # CONFIG_HEADERS_INSTALL is not set
 
-Nitpicks:
-- Bluetooth: inability to send files from mobile phone to laptop unless the BT session was established beforehand,
-      - also present on 6.1.88-rc1 and probably other releases,
+  $ scripts/extract-ikconfig vmlinux | grep CONFIG_HEADERS_INSTALL
+  CONFIG_HEADERS_INSTALL=y
 
-Greetings,
-Mateusz
+Without '--thinlto-cache-dir' or when using full LTO, this issue does
+not occur.
+
+Benchmarking incremental builds on a few different machines with and
+without the cache shows a 20% increase in incremental build time without
+the cache when measured by touching init/main.c and running 'make all'.
+
+ARCH=arm64 defconfig + CONFIG_LTO_CLANG_THIN=y on an arm64 host:
+
+  Benchmark 1: With ThinLTO cache
+    Time (mean ± σ):     56.347 s ±  0.163 s    [User: 83.768 s, System: 24.661 s]
+    Range (min … max):   56.109 s … 56.594 s    10 runs
+
+  Benchmark 2: Without ThinLTO cache
+    Time (mean ± σ):     67.740 s ±  0.479 s    [User: 718.458 s, System: 31.797 s]
+    Range (min … max):   67.059 s … 68.556 s    10 runs
+
+  Summary
+    With ThinLTO cache ran
+      1.20 ± 0.01 times faster than Without ThinLTO cache
+
+ARCH=x86_64 defconfig + CONFIG_LTO_CLANG_THIN=y on an x86_64 host:
+
+  Benchmark 1: With ThinLTO cache
+    Time (mean ± σ):     85.772 s ±  0.252 s    [User: 91.505 s, System: 8.408 s]
+    Range (min … max):   85.447 s … 86.244 s    10 runs
+
+  Benchmark 2: Without ThinLTO cache
+    Time (mean ± σ):     103.833 s ±  0.288 s    [User: 232.058 s, System: 8.569 s]
+    Range (min … max):   103.286 s … 104.124 s    10 runs
+
+  Summary
+    With ThinLTO cache ran
+      1.21 ± 0.00 times faster than Without ThinLTO cache
+
+While it is unfortunate to take this performance improvement off the
+table, correctness is more important. If/when this is fixed in LLVM, it
+can potentially be brought back in a conditional manner. Alternatively,
+a developer can just disable LTO if doing incremental compiles quickly
+is important, as a full compile cycle can still take over a minute even
+with the cache and it is unlikely that LTO will result in functional
+differences for a kernel change.
+
+Cc: stable@vger.kernel.org
+Fixes: dc5723b02e52 ("kbuild: add support for Clang LTO")
+Reported-by: Yifan Hong <elsk@google.com>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2021
+Reported-by: Masami Hiramatsu <mhiramat@kernel.org>
+Closes: https://lore.kernel.org/r/20220327115526.cc4b0ff55fc53c97683c3e4d@kernel.org/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+This is an alternative (and arguably more robust) fix to Yifan's patch
+at https://lore.kernel.org/20240429220756.979347-2-elsk@google.com/.
+---
+ Makefile | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 40fb2ca6fe4c..6b6a4a757062 100644
+--- a/Makefile
++++ b/Makefile
+@@ -942,7 +942,6 @@ endif
+ ifdef CONFIG_LTO_CLANG
+ ifdef CONFIG_LTO_CLANG_THIN
+ CC_FLAGS_LTO	:= -flto=thin -fsplit-lto-unit
+-KBUILD_LDFLAGS	+= --thinlto-cache-dir=$(extmod_prefix).thinlto-cache
+ else
+ CC_FLAGS_LTO	:= -flto
+ endif
+@@ -1477,7 +1476,7 @@ endif # CONFIG_MODULES
+ # Directories & files removed with 'make clean'
+ CLEAN_FILES += vmlinux.symvers modules-only.symvers \
+ 	       modules.builtin modules.builtin.modinfo modules.nsdeps \
+-	       compile_commands.json .thinlto-cache rust/test \
++	       compile_commands.json rust/test \
+ 	       rust-project.json .vmlinux.objs .vmlinux.export.c
+ 
+ # Directories & files removed with 'make mrproper'
+@@ -1783,7 +1782,7 @@ PHONY += compile_commands.json
+ 
+ clean-dirs := $(KBUILD_EXTMOD)
+ clean: rm-files := $(KBUILD_EXTMOD)/Module.symvers $(KBUILD_EXTMOD)/modules.nsdeps \
+-	$(KBUILD_EXTMOD)/compile_commands.json $(KBUILD_EXTMOD)/.thinlto-cache
++	$(KBUILD_EXTMOD)/compile_commands.json
+ 
+ PHONY += prepare
+ # now expand this into a simple variable to reduce the cost of shell evaluations
+
+---
+base-commit: e67572cd2204894179d89bd7b984072f19313b03
+change-id: 20240501-kbuild-llvm-drop-thinlto-cache-f497770692f8
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
