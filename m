@@ -1,66 +1,72 @@
-Received: from 0.smtp.remotehost.it (0.smtp.remotehost.it [213.190.28.75])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6DD1CAA5
-	for <patches@lists.linux.dev>; Thu,  2 May 2024 06:47:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.190.28.75
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520831B800;
+	Thu,  2 May 2024 06:50:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714632449; cv=none; b=Bkzqdx8OXzavWse7FIVfBFCbwviO9swCaPLulfyUwq42l7RxmcrypRAAQjr1vAsQ82CmR/ayYtaEAJjc3d62x7scW29NxueYz0aqbSHWFe7kXapgQ1mh8dXvj3/BCmR36taDYnNY3Bo3zJNgx6Rx7TfiOFRpytAGaIXwvnIi+GI=
+	t=1714632639; cv=none; b=XjMM9bAGSYH86/w75tEmZj3Ds4yxY585ySxtyatAUkAlAdb9SxVYNEKuiNkdj/lTLKPFl1+1kW5TKKL1uY8a96R6yAy28vEnqj3ym/vxPceIm052Fpe+g9ZuFv+sQl0BoQ0E3ZxqE1gQ+dMz3wlwByvtFa6wcfqqfyxaIKKFUwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714632449; c=relaxed/simple;
-	bh=8nrCqHmR8DI15VzIKjBKRM4ja7aQLPI8bwpgUN0NccA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EAC3F2SfeF8XCFHzctDmIVuELrkyHC8MTtc39atruyGNAHr48hiCza465tMnAxT74GJMiNnIQWdWSnHaXTt6lKM4WlKiUXmLyQ8PQfYCtAHpvY9pRkGYKMguZSzwwtQ6y2YlnNDKNJQVmXhs31j4+/lQbG6FYYsntu3SeO+a+f0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net; spf=pass smtp.mailfrom=hardfalcon.net; dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b=yl/qs0VU; arc=none smtp.client-ip=213.190.28.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hardfalcon.net
+	s=arc-20240116; t=1714632639; c=relaxed/simple;
+	bh=xUROgI/ZajIQoWeMQfgRdgy7GUCyUj9o84+NUFZWShg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eWQhT5WhkVqEhJQztuN7Q540DumAOV4cq8L5hd4aLPUR3yEuUkPZQTyXR6cDEUrvpaQG0IVLadYjGtmlVZrVOeMGrRouZIuN8iPVdnldSMiF/NT9g26i+fetZyiOEYIbubfdd/zv06ZyLnmN/FvR3sbOixanZYp4VHMdnztNjdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ISh8Kvc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b="yl/qs0VU"
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=hardfalcon.net;
-	s=dkim_2024-02-03; t=1714631893;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8nrCqHmR8DI15VzIKjBKRM4ja7aQLPI8bwpgUN0NccA=;
-	b=yl/qs0VUbvzyk5o1aXLXLSenJ+rz9Hxn0mrMmQSXDflrLmM++bulrv+qWq60zzNG8uooKp
-	uqHLDYS0L7uOX9BQ==
-Message-ID: <81f04913-36c5-4ef6-8089-abef9c458cab@hardfalcon.net>
-Date: Thu, 2 May 2024 08:38:12 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ISh8Kvc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42DD8C116B1;
+	Thu,  2 May 2024 06:50:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1714632638;
+	bh=xUROgI/ZajIQoWeMQfgRdgy7GUCyUj9o84+NUFZWShg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=0ISh8Kvc7tFScTfj1qNpowrdqd9YJtVVwTKt9D2knXCMaNvSDvtmboOIA9fU+V0A6
+	 0rVOwJD4w9ZH4rjIh6LB4eC6Z4VlU+yul3zgJFYaH5RenGrFT5IS3spafDwBG5IBgb
+	 eoTSA4zGQ+vTQ6wfzIPIiOh+Ev6zYayRRkFDKHiU=
+Date: Thu, 2 May 2024 08:50:36 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Pascal Ernster <git@hardfalcon.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.6 000/186] 6.6.30-rc1 review
+Message-ID: <2024050218-olive-majestic-f64b@gregkh>
+References: <20240430103058.010791820@linuxfoundation.org>
+ <356c4202-875f-4277-885e-31fdbfd746c1@hardfalcon.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 5.15 00/80] 5.15.158-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240430103043.397234724@linuxfoundation.org>
-Content-Language: en-US
-From: Pascal Ernster <git@hardfalcon.net>
-In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <356c4202-875f-4277-885e-31fdbfd746c1@hardfalcon.net>
 
-WzIwMjQtMDQtMzAgMTI6MzldIEdyZWcgS3JvYWgtSGFydG1hbjoNCj4gVGhpcyBpcyB0aGUg
-c3RhcnQgb2YgdGhlIHN0YWJsZSByZXZpZXcgY3ljbGUgZm9yIHRoZSA1LjE1LjE1OCByZWxl
-YXNlLg0KPiBUaGVyZSBhcmUgODAgcGF0Y2hlcyBpbiB0aGlzIHNlcmllcywgYWxsIHdpbGwg
-YmUgcG9zdGVkIGFzIGEgcmVzcG9uc2UNCj4gdG8gdGhpcyBvbmUuICBJZiBhbnlvbmUgaGFz
-IGFueSBpc3N1ZXMgd2l0aCB0aGVzZSBiZWluZyBhcHBsaWVkLCBwbGVhc2UNCj4gbGV0IG1l
-IGtub3cuDQo+IA0KPiBSZXNwb25zZXMgc2hvdWxkIGJlIG1hZGUgYnkgVGh1LCAwMiBNYXkg
-MjAyNCAxMDozMDoyNyArMDAwMC4NCj4gQW55dGhpbmcgcmVjZWl2ZWQgYWZ0ZXIgdGhhdCB0
-aW1lIG1pZ2h0IGJlIHRvbyBsYXRlLg0KDQpIaSwgNS4xNS4xNTgtcmMxIGlzIHJ1bm5pbmcg
-ZmluZSBvbiBhIE5ldGdlYXIgR1MxMDhUIHYzICh0aGUgU29DIGlzIGEgDQpSZWFsdGVrIFJU
-TDgzODBNLCB3aGljaCBoYXMgYSBNSVBTIDRLRWMgY29yZSkuDQoNCk5vdGUgdGhhdCBJIGhh
-dmUgKm5vdCogdGVzdGVkIGJ1aWxkaW5nIHRoZSBrZXJuZWwgZG9jdW1lbnRhdGlvbiwgYW5k
-IEkgDQpzdXNwZWN0IHRoYXQgYnVpbGRpbmcgdGhlIGRvY3VtZW50YXRpb24gd2l0aCBkb2N1
-dGlscyA+PSAwLjIxIHdvdWxkIA0KbGlrZWx5IGZhaWwgd2l0aG91dCB0aGUgcGF0Y2ggZnJv
-bQ0KDQpodHRwczovL2xvcmUua2VybmVsLm9yZy9hbGwvZmFmNWZhNDUtMmE5ZC00NTczLTlk
-MmUtMzkzMGJkYzFlZDY1QGdtYWlsLmNvbS8NCg0KVGVzdGVkLWJ5OiBQYXNjYWwgRXJuc3Rl
-ciA8Z2l0QGhhcmRmYWxjb24ubmV0Pg0KDQpSZWdhcmRzDQpQYXNjYWwNCg==
+On Thu, May 02, 2024 at 08:44:30AM +0200, Pascal Ernster wrote:
+> [2024-04-30 12:37] Greg Kroah-Hartman:
+> > This is the start of the stable review cycle for the 6.6.30 release.
+> > There are 186 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Thu, 02 May 2024 10:30:27 +0000.
+> > Anything received after that time might be too late.
+> 
+> Hi, 6.6.30-rc1 is running fine on an x86_64 Haswell VM.
+> 
+> Note that I have *not* tested building the kernel documentation, and I
+> suspect that building the documentation with docutils >= 0.21 would likely
+> fail without the patch from
+> 
+> https://lore.kernel.org/all/faf5fa45-2a9d-4573-9d2e-3930bdc1ed65@gmail.com/
+
+What is the git id of this in Linus's tree?
+
+thanks,
+
+greg k-h
