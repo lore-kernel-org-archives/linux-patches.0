@@ -1,192 +1,164 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC934F897;
-	Wed,  1 May 2024 22:55:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEEA3207
+	for <patches@lists.linux.dev>; Thu,  2 May 2024 00:20:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714604134; cv=none; b=LJv8vaErXVwB7s3g0zFyX7ny7gqs1QHuImoMm5yB0UrtyiDcboHDk5fFB9a0QO/UGNH/9wgN+IZO8Jj7Q+qbsf0NvYMAv/blxgahFR1GDRKMHpuPrAFFM7BzmzEfkEuttmyFYia+SK/bDGhcGrptVvKY4Gv4Hkef6OoybuPAdUc=
+	t=1714609222; cv=none; b=XpLIqfDPMSsPTpnXdtxDBXvo/rXOeRjY76U8A5cw5dPAx6fTD1gMp09wXAlH64/dlW97R113bsfG2nLc0whwQYeTZ6iheDxIVjZuxT84wXM/RBmyt7Xeju32EX4YsiVHJ+SRfpkoeVwyzo+7uQtcIepklnvyIlzy8sv6Gk8Bmfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714604134; c=relaxed/simple;
-	bh=jj5Po6i6bhNWS4WRCJD7MS6k4QGArNUryRqACxKTrq4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=MwKvrpTfjQpASDDfTUcP9spcloIJEvx0r9HQrlzivMfeAIFHWDo0XeNNuBcL+yoh6I7AW/F77vAWB8Hg7YFI7zpFGoBLYdXfoSMG6oyK0XgIEJz/6eTeeu+7LfX2UH2uHYK7s1UDPprKZ4Z1mJO8syj2H0cEpMxsummR95qxt34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OByP5kph; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1714609222; c=relaxed/simple;
+	bh=u41EwqRKzoIPMnwx3uJD5HnTN0ef2JtTmKQdCY/Erwc=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kyv76VG5x/6IU2yAR1TK1tuA87f1QZmL8U+umjDLqGpyVA+VJCh3hr1NOCwFp/Fna7yFz58bhliQR9fjwor1xfva1L3M9KCf6E72e7Dkt4yJfXE5rJlfxe01o3ZHbzDXtL7LgCUJF73f3bk8tR1wscG+pYdfgyZvnf8AelAlESc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=lRE+Of99; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OByP5kph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D163BC072AA;
-	Wed,  1 May 2024 22:55:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714604133;
-	bh=jj5Po6i6bhNWS4WRCJD7MS6k4QGArNUryRqACxKTrq4=;
-	h=From:Date:Subject:To:Cc:From;
-	b=OByP5kph77hHZK59VyfQjQvcru7O5KiqstijuGhg6FQIC71EB9PD1vyHeNDvWYRci
-	 WhYHxL8qgo22t9T4vNN9AL71Tj8I4OkhF1kNwjP3qtoqhIdEAolevhw3nOEcXOgttB
-	 Xa+2GzILKMXSqlVRbbXuUcYXcVhPSp/uH7F6PTQohzzmmRb8Bw9L5gdyND+YxppiiZ
-	 XZ6CqlntxQjXDao7EaWVkOr8PfFHlHcgOfanDBuk56ycAf+lzzK2OS44uCAhWzfc+Z
-	 CKrzG/fYUWMQG9VWphAVXSINXc4czpnz3XVbyNrDHVy0Mq8un/LgYFHHmF1L4Ede64
-	 pIqXc0NgiJVtw==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 01 May 2024 15:55:25 -0700
-Subject: [PATCH] kbuild: Remove support for Clang's ThinLTO caching
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="lRE+Of99"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-69b514d3cf4so80599676d6.0
+        for <patches@lists.linux.dev>; Wed, 01 May 2024 17:20:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1714609219; x=1715214019; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=u41EwqRKzoIPMnwx3uJD5HnTN0ef2JtTmKQdCY/Erwc=;
+        b=lRE+Of99D3F5ObZHois01UJyiQdyObJEbzvdxeJbkGXXH7RdNV+DUg7D+EJKs36n7x
+         bNwlVRndf6jTZ6kB8quC+AU+ho454XLxLjhWVNYGPX8ORse0PAKaAo+ZOynlJ1/Ipe+T
+         /ASRf6wwqyS3a8nRhjlO1qtD1Akjjh1DLF7Ek=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714609219; x=1715214019;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=u41EwqRKzoIPMnwx3uJD5HnTN0ef2JtTmKQdCY/Erwc=;
+        b=Scv0shZYl4aCGQE0jW9jg3gTcTer9InANJGqZkmo4/988gwehfMoIXdNWvFPz47PCp
+         yge5O3m9dDd4ErXu2kL3k7DOBEVbNXE31d+L8TnVpYAtnoRYL2HdxhTkn8496Qp94QYD
+         mtDe33pHeL0F5MzEfLn+Ak2N5UwoHtu5yvcjssfY7UoaAC6kaZBrYNEzUvxkLntunPx8
+         vhvDkL2+F/PUKPJ+FjyPslUdXtD/7S78jMCcA0YexmHLAWJ5H7DBIncFaoeSLITHyX4Z
+         crTAoJW1dgOk98Zw2w1F2DCTmQ+Q/UQJEdBImpTPmBOWOkXrXD22FCMAFPimiNchooSZ
+         JiYA==
+X-Forwarded-Encrypted: i=1; AJvYcCXHIscnODscKI2BTTXCvsV9vpVwuCDyGZsU8fr6saCpWrIWk2chbx6cIPrTKk3bBUoZKgZBusM2MrkcegnWEFytSeO31lYnGw==
+X-Gm-Message-State: AOJu0YzkREb+7AcTK5VX3PGEsmyLKYTkXFMoAI/pzLeh5l34d79uDUwD
+	CPEzqSgMivpRTsC0fa8s7H7wOmPGzkKtPGFanfaIMEOBnk/+N5r8mFPSyrj4oG3CX7FYFjw0rDQ
+	90geBGnjGBYvgH1dZPh1UDKSrjV8yOMm4PmTT
+X-Google-Smtp-Source: AGHT+IEc1eTRsFE6XeEVTYHiMbtnza7LGG/rlt3ScVq6rOvZPlhWc3Y03+hhqJKXzOZ75M3+vGyimImWhMVDRjS2H9g=
+X-Received: by 2002:ad4:5baa:0:b0:6a0:8511:98e0 with SMTP id
+ 10-20020ad45baa000000b006a0851198e0mr443958qvq.22.1714609219471; Wed, 01 May
+ 2024 17:20:19 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 1 May 2024 17:20:18 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240501-kbuild-llvm-drop-thinlto-cache-v1-1-c117cc50a24b@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAFzIMmYC/x3NQQ6DIBBA0auYWTsJEivqVYwLC4NMRDBgTRPj3
- Uu6fJv/b8iUmDKM1Q2JLs4cQ0FTV6DdElZCNsUghWzFSzS4vT/sDXp/7WhSPPB0HPwZUS/aEdp
- 2UEqJbpC2hxI5Eln+/gfT/Dw/yr0i4XAAAAA=
-To: masahiroy@kernel.org, morbo@google.com, justinstitt@google.com
-Cc: nicolas@fjasle.eu, keescook@chromium.org, samitolvanen@google.com, 
- linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- stable@vger.kernel.org, Yifan Hong <elsk@google.com>, 
- Masami Hiramatsu <mhiramat@kernel.org>, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5033; i=nathan@kernel.org;
- h=from:subject:message-id; bh=jj5Po6i6bhNWS4WRCJD7MS6k4QGArNUryRqACxKTrq4=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGlGJ1IeBmpE54rbSgTM4Fshcjh3cc5jnWSjjwufKwV8O
- +NS/Mylo5SFQYyLQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAEzk2gNGhm8ZAacSNwux9C3p
- rjWKPB9ZpdiUskzDed3G6yXff7NMncfIsGOroo07H4tWQ/u6BzNOy74pqj9VGn3lROmaazN9Wx3
- leAE=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+In-Reply-To: <CAA8EJpqVGHqufKo1kV52RzQCNL5D92mmnCzUwKZn4o+5=wF9pQ@mail.gmail.com>
+References: <20240327202740.3075378-1-swboyd@chromium.org> <CAD=FV=VLwa0AFsrXXxKGG+hcyW+h7u7-tyg3uoDB8M_XdPti_Q@mail.gmail.com>
+ <CAE-0n51osUcpqqh6o9OhURLbRKjcWbRZT-5oHLi_mwfJsUngEw@mail.gmail.com> <CAA8EJpqVGHqufKo1kV52RzQCNL5D92mmnCzUwKZn4o+5=wF9pQ@mail.gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 1 May 2024 17:20:18 -0700
+Message-ID: <CAE-0n52knCL3DP35jg8UhTJP6wxQ5Fueq9Qa796O9hKuEFPRQg@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Fix a black screen on sc7180 Trogdor devices
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Doug Anderson <dianders@chromium.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, 
+	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>, 
+	Laura Nao <laura.nao@collabora.com>
+Content-Type: text/plain; charset="UTF-8"
 
-There is an issue in clang's ThinLTO caching (enabled for the kernel via
-'--thinlto-cache-dir') with .incbin, which the kernel occasionally uses
-to include data within the kernel, such as the .config file for
-/proc/config.gz. For example, when changing the .config and rebuilding
-vmlinux, the copy of .config in vmlinux does not match the copy of
-.config in the build folder:
+Quoting Dmitry Baryshkov (2024-05-01 11:11:14)
+> On Wed, 1 May 2024 at 03:17, Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > Quoting Doug Anderson (2024-03-28 09:39:54)
+> > >
+> > > I spent a bunch of time discussing this offline with Stephen and I'll
+> > > try to summarize. Hopefully this isn't too much nonsense...
+> > >
+> > > 1. We'll likely land the patches downstream in ChromeOS for now while
+> > > we're figuring things out since we're seeing actual breakages. Whether
+> > > to land upstream is a question. The first patch is a bit of a hack but
+> > > unlikely to cause any real problems. The second patch seems correct
+> > > but it also feels like it's going to cause stuck clocks for a pile of
+> > > other SoCs because we're not adding hacks similar to the sc7180 hack
+> > > for all the other SoCs. I guess we could hope we get lucky or play
+> > > whack-a-mole? ...or we try to find a more generic solution... Dunno
+> > > what others think.
+> >
+> > I think we should hope to get lucky or play whack-a-mole and merge
+> > something like this series. If we have to we can similarly turn off RCGs
+> > or branches during driver probe that are using shared parents like we
+> > have on sc7180.
+> >
+> > Put simply, the shared RCG implementation is broken because it reports
+> > the wrong parent for clk_ops::get_parent() and doesn't clear the force
+> > enable bit. With the current code we're switching the parent to XO when
+> > the clk is enabled the first time. That's an obvious bug that we should
+> > fix regardless of implementing proper clk handoff. We haven't
+> > implemented handoff in over a decade. Blocking this bug fix on
+> > implementing handoff isn't practical.
+>
+> Yes, that needs to be fixed. My approach was to drop the XO parent and
+> consider the clock to be off if it is fed by the XO.
+>
+> > Furthermore, we're relying on clk
+> > consumers to clear that force enable bit by enabling the clk once. That
+> > doesn't make any sense, although we could use that force enable bit to
+> > consider the RCG as enabled for clk_disable_unused.
+>
+> That patch seems fine to me. Will it work if we take the force-enable
+> bit into account when considering the clock to be on or off?
 
-  $ echo 'CONFIG_LTO_NONE=n
-  CONFIG_LTO_CLANG_THIN=y
-  CONFIG_IKCONFIG=y
-  CONFIG_HEADERS_INSTALL=y' >kernel/configs/repro.config
+What is "that patch"?
 
-  $ make -skj"$(nproc)" ARCH=x86_64 LLVM=1 clean defconfig repro.config vmlinux
-  ...
+It would work to consider the rcg clk as on or off. During rcg clk
+registration if a branch child is found to be enabled we would go and
+write the force enable bit in the parent rcg. And similarly we would
+modify the rcg clk_ops to set that bit whenever the clk is enabled and
+clear it whenever it is disabled. This avoids the feedback mechanism
+from confusing us about the enable state of the rcg, at the cost of
+writing the register.
 
-  $ grep CONFIG_HEADERS_INSTALL .config
-  CONFIG_HEADERS_INSTALL=y
+It wouldn't fix the problem that we have on Trogdor though. That's
+because the display GDSC is turned off when the rotator clk is enabled
+and parented to the display PLL, which is also turned off. We have to
+either turn off the rotator clk, or switch the parent to something that
+is always on, XO, or keep the display GDSC on until the rotator clk can
+be turned off. On other SoCs we may need to turn off even more clks
+depending on which ones the display GDSC is controlling.
 
-  $ scripts/extract-ikconfig vmlinux | grep CONFIG_HEADERS_INSTALL
-  CONFIG_HEADERS_INSTALL=y
+>
+> >
+> > An alternative approach to this series would be to force all shared RCGs
+> > to be parented to XO at clk registration time, and continue to clear
+> > that RCG force enable bit. That's sort of what Dmitry was going for
+> > earlier. Doing this would break anything that's relying on the clks
+> > staying enabled at some frequency through boot, but that isn't supported
+> > anyway because clk handoff isn't implemented. It avoids the problem that
+> > the first patch is for too because XO doesn't turn off causing a clk to
+> > get stuck on. I can certainly craft this patch up if folks think that's
+> > better.
+>
+> I think this approach makes sense too (and might be preferable to
+> boot-time hacks).
+> On most of the platforms we are already resetting the MDSS as soon as
+> the mdss (root device) is being probed. Then the display is going to
+> be broken until DPU collects all the coonectors and outpus and finally
+> creates the DRM device.
 
-  $ scripts/config -d HEADERS_INSTALL
+Ok. I'm leaning towards this approach now because it seems like keeping
+the clk at whatever it was set at boot isn't useful. If it becomes
+useful at some point we can implement a better handoff mechanism. I have
+some idea how to do that by using the 'clocks' DT property to find child
+clks that haven't probed yet. I'll test out this alternate approach to
+park shared clks at probe and send the patch.
 
-  $ make -kj"$(nproc)" ARCH=x86_64 LLVM=1 vmlinux
-  ...
-    UPD     kernel/config_data
-    GZIP    kernel/config_data.gz
-    CC      kernel/configs.o
-  ...
-    LD      vmlinux
-  ...
+>
+> But I think we should fix the get_parent() too irrespectively of this.
+>
 
-  $ grep CONFIG_HEADERS_INSTALL .config
-  # CONFIG_HEADERS_INSTALL is not set
-
-  $ scripts/extract-ikconfig vmlinux | grep CONFIG_HEADERS_INSTALL
-  CONFIG_HEADERS_INSTALL=y
-
-Without '--thinlto-cache-dir' or when using full LTO, this issue does
-not occur.
-
-Benchmarking incremental builds on a few different machines with and
-without the cache shows a 20% increase in incremental build time without
-the cache when measured by touching init/main.c and running 'make all'.
-
-ARCH=arm64 defconfig + CONFIG_LTO_CLANG_THIN=y on an arm64 host:
-
-  Benchmark 1: With ThinLTO cache
-    Time (mean ± σ):     56.347 s ±  0.163 s    [User: 83.768 s, System: 24.661 s]
-    Range (min … max):   56.109 s … 56.594 s    10 runs
-
-  Benchmark 2: Without ThinLTO cache
-    Time (mean ± σ):     67.740 s ±  0.479 s    [User: 718.458 s, System: 31.797 s]
-    Range (min … max):   67.059 s … 68.556 s    10 runs
-
-  Summary
-    With ThinLTO cache ran
-      1.20 ± 0.01 times faster than Without ThinLTO cache
-
-ARCH=x86_64 defconfig + CONFIG_LTO_CLANG_THIN=y on an x86_64 host:
-
-  Benchmark 1: With ThinLTO cache
-    Time (mean ± σ):     85.772 s ±  0.252 s    [User: 91.505 s, System: 8.408 s]
-    Range (min … max):   85.447 s … 86.244 s    10 runs
-
-  Benchmark 2: Without ThinLTO cache
-    Time (mean ± σ):     103.833 s ±  0.288 s    [User: 232.058 s, System: 8.569 s]
-    Range (min … max):   103.286 s … 104.124 s    10 runs
-
-  Summary
-    With ThinLTO cache ran
-      1.21 ± 0.00 times faster than Without ThinLTO cache
-
-While it is unfortunate to take this performance improvement off the
-table, correctness is more important. If/when this is fixed in LLVM, it
-can potentially be brought back in a conditional manner. Alternatively,
-a developer can just disable LTO if doing incremental compiles quickly
-is important, as a full compile cycle can still take over a minute even
-with the cache and it is unlikely that LTO will result in functional
-differences for a kernel change.
-
-Cc: stable@vger.kernel.org
-Fixes: dc5723b02e52 ("kbuild: add support for Clang LTO")
-Reported-by: Yifan Hong <elsk@google.com>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2021
-Reported-by: Masami Hiramatsu <mhiramat@kernel.org>
-Closes: https://lore.kernel.org/r/20220327115526.cc4b0ff55fc53c97683c3e4d@kernel.org/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-This is an alternative (and arguably more robust) fix to Yifan's patch
-at https://lore.kernel.org/20240429220756.979347-2-elsk@google.com/.
----
- Makefile | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 40fb2ca6fe4c..6b6a4a757062 100644
---- a/Makefile
-+++ b/Makefile
-@@ -942,7 +942,6 @@ endif
- ifdef CONFIG_LTO_CLANG
- ifdef CONFIG_LTO_CLANG_THIN
- CC_FLAGS_LTO	:= -flto=thin -fsplit-lto-unit
--KBUILD_LDFLAGS	+= --thinlto-cache-dir=$(extmod_prefix).thinlto-cache
- else
- CC_FLAGS_LTO	:= -flto
- endif
-@@ -1477,7 +1476,7 @@ endif # CONFIG_MODULES
- # Directories & files removed with 'make clean'
- CLEAN_FILES += vmlinux.symvers modules-only.symvers \
- 	       modules.builtin modules.builtin.modinfo modules.nsdeps \
--	       compile_commands.json .thinlto-cache rust/test \
-+	       compile_commands.json rust/test \
- 	       rust-project.json .vmlinux.objs .vmlinux.export.c
- 
- # Directories & files removed with 'make mrproper'
-@@ -1783,7 +1782,7 @@ PHONY += compile_commands.json
- 
- clean-dirs := $(KBUILD_EXTMOD)
- clean: rm-files := $(KBUILD_EXTMOD)/Module.symvers $(KBUILD_EXTMOD)/modules.nsdeps \
--	$(KBUILD_EXTMOD)/compile_commands.json $(KBUILD_EXTMOD)/.thinlto-cache
-+	$(KBUILD_EXTMOD)/compile_commands.json
- 
- PHONY += prepare
- # now expand this into a simple variable to reduce the cost of shell evaluations
-
----
-base-commit: e67572cd2204894179d89bd7b984072f19313b03
-change-id: 20240501-kbuild-llvm-drop-thinlto-cache-f497770692f8
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Sure, but it becomes sorta moot if we force the parent to be XO.
