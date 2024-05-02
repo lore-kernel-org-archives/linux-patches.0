@@ -1,39 +1,39 @@
 Received: from 0.smtp.remotehost.it (0.smtp.remotehost.it [213.190.28.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BF779FD
-	for <patches@lists.linux.dev>; Thu,  2 May 2024 06:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6DD1CAA5
+	for <patches@lists.linux.dev>; Thu,  2 May 2024 06:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.190.28.75
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714632439; cv=none; b=KyhYQdaDpsLoQegaLUPJW/ICyh/r3tY5qzbiPAC9p9otMXxzlqXozsXjtT2hWx0tAHezXd1Cr6uuieoKif8zKfVLijD9+uPpX7KkesdOvb7felK2FdeSMmujE2L8XWhb5HOzNf3sCvkpxz6fFjNB7Z+L7cKc8sWVEMM+JrysbbI=
+	t=1714632449; cv=none; b=Bkzqdx8OXzavWse7FIVfBFCbwviO9swCaPLulfyUwq42l7RxmcrypRAAQjr1vAsQ82CmR/ayYtaEAJjc3d62x7scW29NxueYz0aqbSHWFe7kXapgQ1mh8dXvj3/BCmR36taDYnNY3Bo3zJNgx6Rx7TfiOFRpytAGaIXwvnIi+GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714632439; c=relaxed/simple;
-	bh=MgN6WvuiUylFTNdRKNrLtXZ0I2A9tlEMneDXVaYeQDo=;
+	s=arc-20240116; t=1714632449; c=relaxed/simple;
+	bh=8nrCqHmR8DI15VzIKjBKRM4ja7aQLPI8bwpgUN0NccA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fu20/gJW8Rsql997FQvnWFzDyTJn0Toj1a0bRnij7+Nn18OhCZWVirM+d+u+WQkAQKO9GHaHbjBKw9r4ingWV+gAEcsDhnZRAjp1ZUqLY9fPXI1Fq6Pq0ZIS6yfuYXkUVVoVXvHWcuzFxPg7UzJh9o6E4pJPfjeYSQ5Zws1KDYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net; spf=pass smtp.mailfrom=hardfalcon.net; dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b=oxxgXb6P; arc=none smtp.client-ip=213.190.28.75
+	 In-Reply-To:Content-Type; b=EAC3F2SfeF8XCFHzctDmIVuELrkyHC8MTtc39atruyGNAHr48hiCza465tMnAxT74GJMiNnIQWdWSnHaXTt6lKM4WlKiUXmLyQ8PQfYCtAHpvY9pRkGYKMguZSzwwtQ6y2YlnNDKNJQVmXhs31j4+/lQbG6FYYsntu3SeO+a+f0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net; spf=pass smtp.mailfrom=hardfalcon.net; dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b=yl/qs0VU; arc=none smtp.client-ip=213.190.28.75
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hardfalcon.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b="oxxgXb6P"
+	dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b="yl/qs0VU"
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=hardfalcon.net;
-	s=dkim_2024-02-03; t=1714632435;
+	s=dkim_2024-02-03; t=1714631893;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=xsG96rRIPyvj3pi8mOZeqyiz+Dbsmx2Z77DJBrRJPHI=;
-	b=oxxgXb6P/nA9lHONeXronDYvTSeEwmvK48+GtHBiMJG8+n7ZgU2bmDkjVRoWW90oC+j+Z2
-	DeSPClLFaFd+2mCg==
-Message-ID: <5f324947-bf9e-4c37-a87f-1ce05c0cd08c@hardfalcon.net>
-Date: Thu, 2 May 2024 08:47:14 +0200
+	bh=8nrCqHmR8DI15VzIKjBKRM4ja7aQLPI8bwpgUN0NccA=;
+	b=yl/qs0VUbvzyk5o1aXLXLSenJ+rz9Hxn0mrMmQSXDflrLmM++bulrv+qWq60zzNG8uooKp
+	uqHLDYS0L7uOX9BQ==
+Message-ID: <81f04913-36c5-4ef6-8089-abef9c458cab@hardfalcon.net>
+Date: Thu, 2 May 2024 08:38:12 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 6.8 000/228] 6.8.9-rc1 review
+Subject: Re: [PATCH 5.15 00/80] 5.15.158-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -41,31 +41,26 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
  rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240430103103.806426847@linuxfoundation.org>
+References: <20240430103043.397234724@linuxfoundation.org>
 Content-Language: en-US
 From: Pascal Ernster <git@hardfalcon.net>
-In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
+In-Reply-To: <20240430103043.397234724@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
 
-[2024-04-30 12:36] Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.8.9 release.
-> There are 228 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 02 May 2024 10:30:27 +0000.
-> Anything received after that time might be too late.
-
-Hi, 6.8.9-rc1 is running fine on various x86_64 bare metal and virtual 
-machines of mine (Haswell, Kaby Lake, Coffee Lake).
-
-However, building the kernel documentation with docutils >= 0.21 fails 
-without the patch from
-
-https://lore.kernel.org/all/faf5fa45-2a9d-4573-9d2e-3930bdc1ed65@gmail.com/
-
-Tested-by: Pascal Ernster <git@hardfalcon.net>
-
-Regards
-Pascal
+WzIwMjQtMDQtMzAgMTI6MzldIEdyZWcgS3JvYWgtSGFydG1hbjoNCj4gVGhpcyBpcyB0aGUg
+c3RhcnQgb2YgdGhlIHN0YWJsZSByZXZpZXcgY3ljbGUgZm9yIHRoZSA1LjE1LjE1OCByZWxl
+YXNlLg0KPiBUaGVyZSBhcmUgODAgcGF0Y2hlcyBpbiB0aGlzIHNlcmllcywgYWxsIHdpbGwg
+YmUgcG9zdGVkIGFzIGEgcmVzcG9uc2UNCj4gdG8gdGhpcyBvbmUuICBJZiBhbnlvbmUgaGFz
+IGFueSBpc3N1ZXMgd2l0aCB0aGVzZSBiZWluZyBhcHBsaWVkLCBwbGVhc2UNCj4gbGV0IG1l
+IGtub3cuDQo+IA0KPiBSZXNwb25zZXMgc2hvdWxkIGJlIG1hZGUgYnkgVGh1LCAwMiBNYXkg
+MjAyNCAxMDozMDoyNyArMDAwMC4NCj4gQW55dGhpbmcgcmVjZWl2ZWQgYWZ0ZXIgdGhhdCB0
+aW1lIG1pZ2h0IGJlIHRvbyBsYXRlLg0KDQpIaSwgNS4xNS4xNTgtcmMxIGlzIHJ1bm5pbmcg
+ZmluZSBvbiBhIE5ldGdlYXIgR1MxMDhUIHYzICh0aGUgU29DIGlzIGEgDQpSZWFsdGVrIFJU
+TDgzODBNLCB3aGljaCBoYXMgYSBNSVBTIDRLRWMgY29yZSkuDQoNCk5vdGUgdGhhdCBJIGhh
+dmUgKm5vdCogdGVzdGVkIGJ1aWxkaW5nIHRoZSBrZXJuZWwgZG9jdW1lbnRhdGlvbiwgYW5k
+IEkgDQpzdXNwZWN0IHRoYXQgYnVpbGRpbmcgdGhlIGRvY3VtZW50YXRpb24gd2l0aCBkb2N1
+dGlscyA+PSAwLjIxIHdvdWxkIA0KbGlrZWx5IGZhaWwgd2l0aG91dCB0aGUgcGF0Y2ggZnJv
+bQ0KDQpodHRwczovL2xvcmUua2VybmVsLm9yZy9hbGwvZmFmNWZhNDUtMmE5ZC00NTczLTlk
+MmUtMzkzMGJkYzFlZDY1QGdtYWlsLmNvbS8NCg0KVGVzdGVkLWJ5OiBQYXNjYWwgRXJuc3Rl
+ciA8Z2l0QGhhcmRmYWxjb24ubmV0Pg0KDQpSZWdhcmRzDQpQYXNjYWwNCg==
