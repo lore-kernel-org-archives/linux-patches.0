@@ -1,164 +1,101 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEEA3207
-	for <patches@lists.linux.dev>; Thu,  2 May 2024 00:20:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E34417571
+	for <patches@lists.linux.dev>; Thu,  2 May 2024 02:11:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714609222; cv=none; b=XpLIqfDPMSsPTpnXdtxDBXvo/rXOeRjY76U8A5cw5dPAx6fTD1gMp09wXAlH64/dlW97R113bsfG2nLc0whwQYeTZ6iheDxIVjZuxT84wXM/RBmyt7Xeju32EX4YsiVHJ+SRfpkoeVwyzo+7uQtcIepklnvyIlzy8sv6Gk8Bmfs=
+	t=1714615865; cv=none; b=EsQAxMYxv/RCyClHSCHTGi7tCHafL7ZVEb5McHArWhSEMZ/q/SKNrt5/cop+gWjEFmc/JlQCKibiYNQQGPyi7EYHqwic44jLgCYVcIpVoLPoaNM5jtYrjvJP4YSZAePZw5hIEu6fRPd4iLRIE+k1LlyWTSg0lBboH2KorFYKJCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714609222; c=relaxed/simple;
-	bh=u41EwqRKzoIPMnwx3uJD5HnTN0ef2JtTmKQdCY/Erwc=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kyv76VG5x/6IU2yAR1TK1tuA87f1QZmL8U+umjDLqGpyVA+VJCh3hr1NOCwFp/Fna7yFz58bhliQR9fjwor1xfva1L3M9KCf6E72e7Dkt4yJfXE5rJlfxe01o3ZHbzDXtL7LgCUJF73f3bk8tR1wscG+pYdfgyZvnf8AelAlESc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=lRE+Of99; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1714615865; c=relaxed/simple;
+	bh=iRqFjcp2JS4wJru6lJM4cL35QVmiTQNsqCV46bY/XCs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NTlkhRSdcRggqCnFt9tW7uGBe+L4r4xscD30+mdZF9X64wDFFl0TOZUGT8d+rb+w5fYNZJtmEKQfG2PSIgIInt5v/kRkbQKM9iZdabMjGd9UVB1nuRVhrDOndVajJMTn5YUAcV6tfXdqdYumzyeCzd0MrEVw6RAtNdxAlR4pJIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3gNQbNU; arc=none smtp.client-ip=209.85.166.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="lRE+Of99"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-69b514d3cf4so80599676d6.0
-        for <patches@lists.linux.dev>; Wed, 01 May 2024 17:20:20 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3gNQbNU"
+Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-7dee034225eso20886639f.2
+        for <patches@lists.linux.dev>; Wed, 01 May 2024 19:11:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1714609219; x=1715214019; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=u41EwqRKzoIPMnwx3uJD5HnTN0ef2JtTmKQdCY/Erwc=;
-        b=lRE+Of99D3F5ObZHois01UJyiQdyObJEbzvdxeJbkGXXH7RdNV+DUg7D+EJKs36n7x
-         bNwlVRndf6jTZ6kB8quC+AU+ho454XLxLjhWVNYGPX8ORse0PAKaAo+ZOynlJ1/Ipe+T
-         /ASRf6wwqyS3a8nRhjlO1qtD1Akjjh1DLF7Ek=
+        d=linuxfoundation.org; s=google; t=1714615862; x=1715220662; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ux36Du+V3TKAlinHlEmK9kfOgnPDluyCdGYd1Ayjxyk=;
+        b=A3gNQbNUsm3sQkXc3iqO+aEnbsIzbJF45q6H9vHeZ+L19k44y/8LBhjVQ2Q6oC3+gI
+         qfmG//NLscS3gfDRkyC/gEzoo4CgLyKLnZ82WzWhYLd1PgZxtDqTh+FGdiv+GxS0HRdt
+         D8sTDUZFvzpyhOTm8oYZDWtaqXJr/GPVnWNe0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714609219; x=1715214019;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u41EwqRKzoIPMnwx3uJD5HnTN0ef2JtTmKQdCY/Erwc=;
-        b=Scv0shZYl4aCGQE0jW9jg3gTcTer9InANJGqZkmo4/988gwehfMoIXdNWvFPz47PCp
-         yge5O3m9dDd4ErXu2kL3k7DOBEVbNXE31d+L8TnVpYAtnoRYL2HdxhTkn8496Qp94QYD
-         mtDe33pHeL0F5MzEfLn+Ak2N5UwoHtu5yvcjssfY7UoaAC6kaZBrYNEzUvxkLntunPx8
-         vhvDkL2+F/PUKPJ+FjyPslUdXtD/7S78jMCcA0YexmHLAWJ5H7DBIncFaoeSLITHyX4Z
-         crTAoJW1dgOk98Zw2w1F2DCTmQ+Q/UQJEdBImpTPmBOWOkXrXD22FCMAFPimiNchooSZ
-         JiYA==
-X-Forwarded-Encrypted: i=1; AJvYcCXHIscnODscKI2BTTXCvsV9vpVwuCDyGZsU8fr6saCpWrIWk2chbx6cIPrTKk3bBUoZKgZBusM2MrkcegnWEFytSeO31lYnGw==
-X-Gm-Message-State: AOJu0YzkREb+7AcTK5VX3PGEsmyLKYTkXFMoAI/pzLeh5l34d79uDUwD
-	CPEzqSgMivpRTsC0fa8s7H7wOmPGzkKtPGFanfaIMEOBnk/+N5r8mFPSyrj4oG3CX7FYFjw0rDQ
-	90geBGnjGBYvgH1dZPh1UDKSrjV8yOMm4PmTT
-X-Google-Smtp-Source: AGHT+IEc1eTRsFE6XeEVTYHiMbtnza7LGG/rlt3ScVq6rOvZPlhWc3Y03+hhqJKXzOZ75M3+vGyimImWhMVDRjS2H9g=
-X-Received: by 2002:ad4:5baa:0:b0:6a0:8511:98e0 with SMTP id
- 10-20020ad45baa000000b006a0851198e0mr443958qvq.22.1714609219471; Wed, 01 May
- 2024 17:20:19 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 1 May 2024 17:20:18 -0700
+        d=1e100.net; s=20230601; t=1714615862; x=1715220662;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ux36Du+V3TKAlinHlEmK9kfOgnPDluyCdGYd1Ayjxyk=;
+        b=fwZ/ghUtKlnUljnIbGN2QYaJjLEnMbuuvMlcboPAB/65ItNeob0BG6KKcj/X48SmSP
+         mVyTEdaFK6/qGrIZNQNt0GPOFR2wglHoEcN1joa97tnA9oSYx8VR/duHLt93DcLwBvVr
+         BwmAQ+lbBVMXL6iJYjO/EkMDgl1nWYDGQkhq4ztyqlvXUGldL1Vat0ybikKUguUuOsn4
+         w+gUx8UtVN/IjWHv1J392GGK7rzGkX9BLAdpZc1GftFKZRkynkQ60jiW3ExA+KZ+1Sw6
+         Hb9VbNiXaRcyQ86ryjcg2WnDewSHfuE9W6O0K4cV44qUJ5K4zGots1dW0+t90w9vl9di
+         nlbg==
+X-Gm-Message-State: AOJu0YwS0bIn7j0kafCwo63xE/DJ8BobgwTtus+hyhRkdpa6sMtDQnZu
+	wDsK584UgDB6jATxO4inVSQOg11RoLs65HFvUJdqFXPB5Kza4xFCKhkJieUV2Lc=
+X-Google-Smtp-Source: AGHT+IFk7Iv7uzyxXIfPDJ7VEbUGp3sjzrH395PU9dimMM9OWz98WD5XY4sa+Y76BZDYtMhmCFUdQg==
+X-Received: by 2002:a05:6e02:1fe5:b0:36c:5572:f69d with SMTP id dt5-20020a056e021fe500b0036c5572f69dmr5487322ilb.1.1714615862413;
+        Wed, 01 May 2024 19:11:02 -0700 (PDT)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id s12-20020a056e02216c00b0036c5d1d1cf3sm923789ilv.87.2024.05.01.19.11.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 May 2024 19:11:01 -0700 (PDT)
+Message-ID: <fc4fff68-3012-4c90-beea-3d28dd1d7d61@linuxfoundation.org>
+Date: Wed, 1 May 2024 20:11:00 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <CAA8EJpqVGHqufKo1kV52RzQCNL5D92mmnCzUwKZn4o+5=wF9pQ@mail.gmail.com>
-References: <20240327202740.3075378-1-swboyd@chromium.org> <CAD=FV=VLwa0AFsrXXxKGG+hcyW+h7u7-tyg3uoDB8M_XdPti_Q@mail.gmail.com>
- <CAE-0n51osUcpqqh6o9OhURLbRKjcWbRZT-5oHLi_mwfJsUngEw@mail.gmail.com> <CAA8EJpqVGHqufKo1kV52RzQCNL5D92mmnCzUwKZn4o+5=wF9pQ@mail.gmail.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Wed, 1 May 2024 17:20:18 -0700
-Message-ID: <CAE-0n52knCL3DP35jg8UhTJP6wxQ5Fueq9Qa796O9hKuEFPRQg@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Fix a black screen on sc7180 Trogdor devices
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Doug Anderson <dianders@chromium.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>, 
-	Laura Nao <laura.nao@collabora.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.8 000/228] 6.8.9-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20240430103103.806426847@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20240430103103.806426847@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Quoting Dmitry Baryshkov (2024-05-01 11:11:14)
-> On Wed, 1 May 2024 at 03:17, Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > Quoting Doug Anderson (2024-03-28 09:39:54)
-> > >
-> > > I spent a bunch of time discussing this offline with Stephen and I'll
-> > > try to summarize. Hopefully this isn't too much nonsense...
-> > >
-> > > 1. We'll likely land the patches downstream in ChromeOS for now while
-> > > we're figuring things out since we're seeing actual breakages. Whether
-> > > to land upstream is a question. The first patch is a bit of a hack but
-> > > unlikely to cause any real problems. The second patch seems correct
-> > > but it also feels like it's going to cause stuck clocks for a pile of
-> > > other SoCs because we're not adding hacks similar to the sc7180 hack
-> > > for all the other SoCs. I guess we could hope we get lucky or play
-> > > whack-a-mole? ...or we try to find a more generic solution... Dunno
-> > > what others think.
-> >
-> > I think we should hope to get lucky or play whack-a-mole and merge
-> > something like this series. If we have to we can similarly turn off RCGs
-> > or branches during driver probe that are using shared parents like we
-> > have on sc7180.
-> >
-> > Put simply, the shared RCG implementation is broken because it reports
-> > the wrong parent for clk_ops::get_parent() and doesn't clear the force
-> > enable bit. With the current code we're switching the parent to XO when
-> > the clk is enabled the first time. That's an obvious bug that we should
-> > fix regardless of implementing proper clk handoff. We haven't
-> > implemented handoff in over a decade. Blocking this bug fix on
-> > implementing handoff isn't practical.
->
-> Yes, that needs to be fixed. My approach was to drop the XO parent and
-> consider the clock to be off if it is fed by the XO.
->
-> > Furthermore, we're relying on clk
-> > consumers to clear that force enable bit by enabling the clk once. That
-> > doesn't make any sense, although we could use that force enable bit to
-> > consider the RCG as enabled for clk_disable_unused.
->
-> That patch seems fine to me. Will it work if we take the force-enable
-> bit into account when considering the clock to be on or off?
+On 4/30/24 04:36, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.8.9 release.
+> There are 228 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 02 May 2024 10:30:27 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.9-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-What is "that patch"?
+Compiled and booted on my test system. No dmesg regressions.
 
-It would work to consider the rcg clk as on or off. During rcg clk
-registration if a branch child is found to be enabled we would go and
-write the force enable bit in the parent rcg. And similarly we would
-modify the rcg clk_ops to set that bit whenever the clk is enabled and
-clear it whenever it is disabled. This avoids the feedback mechanism
-from confusing us about the enable state of the rcg, at the cost of
-writing the register.
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-It wouldn't fix the problem that we have on Trogdor though. That's
-because the display GDSC is turned off when the rotator clk is enabled
-and parented to the display PLL, which is also turned off. We have to
-either turn off the rotator clk, or switch the parent to something that
-is always on, XO, or keep the display GDSC on until the rotator clk can
-be turned off. On other SoCs we may need to turn off even more clks
-depending on which ones the display GDSC is controlling.
-
->
-> >
-> > An alternative approach to this series would be to force all shared RCGs
-> > to be parented to XO at clk registration time, and continue to clear
-> > that RCG force enable bit. That's sort of what Dmitry was going for
-> > earlier. Doing this would break anything that's relying on the clks
-> > staying enabled at some frequency through boot, but that isn't supported
-> > anyway because clk handoff isn't implemented. It avoids the problem that
-> > the first patch is for too because XO doesn't turn off causing a clk to
-> > get stuck on. I can certainly craft this patch up if folks think that's
-> > better.
->
-> I think this approach makes sense too (and might be preferable to
-> boot-time hacks).
-> On most of the platforms we are already resetting the MDSS as soon as
-> the mdss (root device) is being probed. Then the display is going to
-> be broken until DPU collects all the coonectors and outpus and finally
-> creates the DRM device.
-
-Ok. I'm leaning towards this approach now because it seems like keeping
-the clk at whatever it was set at boot isn't useful. If it becomes
-useful at some point we can implement a better handoff mechanism. I have
-some idea how to do that by using the 'clocks' DT property to find child
-clks that haven't probed yet. I'll test out this alternate approach to
-park shared clks at probe and send the patch.
-
->
-> But I think we should fix the get_parent() too irrespectively of this.
->
-
-Sure, but it becomes sorta moot if we force the parent to be XO.
+thanks,
+-- Shuah
