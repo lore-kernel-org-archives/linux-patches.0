@@ -1,89 +1,72 @@
-Received: from submarine.notk.org (62-210-214-84.rev.poneytelecom.eu [62.210.214.84])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62672101E6
-	for <patches@lists.linux.dev>; Thu,  2 May 2024 04:17:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
+Received: from 0.smtp.remotehost.it (0.smtp.remotehost.it [213.190.28.75])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FEE79FD
+	for <patches@lists.linux.dev>; Thu,  2 May 2024 06:41:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.190.28.75
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714623437; cv=none; b=FOqzvPF5ZZhpdbr4CgUtUxPhOxgVnjIFtDvsMiz7cilN0599W3SsadE/TF+crtHRSVnwFMmdkU4MlE8XflTdPcPBBjHGkppc0MdZG1ewGhQae1NcmTYRZyqOhybPiGGJk1wZYv/uvCPmzGH0l4Avpv18JG3i0Jc6GWyP2ikdgHg=
+	t=1714632071; cv=none; b=eayLwmNC6xfVSBY7M4ZQouRPbUJm9kPRVgNa5N/EL+oRbcW67X4aq0jCin3uUGPJI11Zg0gzzzZ+YL/O8h4e+FvI7b0eUiMsIl/jtrOWeKSvycmVjlYOFwBlyiqeONhV7uuX2o3gs0ztElshzWfu1x3HTjYqVfiyJ/hD5s38JJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714623437; c=relaxed/simple;
-	bh=7enw3TgrUm6s1q6EZ76vT8AArzxFfakAenWWCecpFYQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Kpy7USsHIHYnUlpA7dqGkWtPJs94ZcgtE6wF24fwwj3gQ2Gjn78AbC8bTjaKEMdV5i91IDXl18cO80BrFNTcA9GvAEklBoA1O/ul7HLPyFPosx1JgiuGMCJfHuVXa6aHQ+sAvI4VmCfIK1kaQ6tPDnamUeXAxEcMgevDlex/Nsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=03sbbkhy; arc=none smtp.client-ip=62.210.214.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+	s=arc-20240116; t=1714632071; c=relaxed/simple;
+	bh=y16Kulm7GuIB4w0cXKXc95gA3DzzCvHJ4ghEutGBNoE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DpOBGs5lzWJLeUivsAf//mKy5vgG9oHyh1E3NlE36YDSRPSEhRlst1+Kc7ZkAbkO/yzVpBP2VLpwSig8H54CSfgdpA61otXApMqYKaboA2shZxHIzCp02kxTSOVILT75ioP8iVjltolbFxV0poinz6cpwtBnQ94BtIuuCSWQZsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net; spf=pass smtp.mailfrom=hardfalcon.net; dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b=u+9HfPLx; arc=none smtp.client-ip=213.190.28.75
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hardfalcon.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="03sbbkhy"
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by submarine.notk.org (Postfix) with ESMTPS id EFEC914C2D7;
-	Thu,  2 May 2024 06:07:40 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
-	s=2; t=1714622866;
+	dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b="u+9HfPLx"
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=hardfalcon.net;
+	s=dkim_2024-02-03; t=1714632066;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=BxhnbEMYdyo/gkIHwPCI1uVhemd0gHqCGSpwgksrIhI=;
-	b=03sbbkhykEwud2norN4uGRYUoA+b56S9cYeINdD42BsbsnbTcPFV3h5GFCrfoNAwnLx6qz
-	1w9cJPEtKp99DY4mbQPTF5HOs5dYgIaktPIh/f2NFm/AUOuJXfFM1T8z8WJBCyq9HASwDb
-	hJ1tS3hnoyKU/IcGc7D/88gv8XnwPBMem0tt4i0YbFfFR1sacjIWd4sDlFo23CFFX53pOo
-	i+QmKKf58hfjbLSQsT2oMvGUCVf1SWrs1favInf0DISRkqo8FKKQ5dWnVOOWiLA77/bTDf
-	cjyOGT1KcpXS78VvtUius/sGYPXf/DmKkW+TCcJVy2oodmg65epkiNc64D4VkQ==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 3e3ea492;
-	Thu, 2 May 2024 04:07:36 +0000 (UTC)
-Date: Thu, 2 May 2024 13:07:21 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 5.10 000/137] 5.10.216-rc2 review
-Message-ID: <ZjMReaMNjx8WJSsW@codewreck.org>
-References: <20240430134024.771744897@linuxfoundation.org>
+	bh=10wXGK1h2+gkH0wUgW6fYCI4MjswRALv+lI2lWqR/MA=;
+	b=u+9HfPLxQcb02xn6DyAByDQuCAqXs3Id4LBWnHxNpvzcDKg8iIhYJA5YvcSEc4hwCUTdyJ
+	ejOYvMEIsf+FafBQ==
+Message-ID: <c565faef-bf23-4704-a3e4-b95abd964e35@hardfalcon.net>
+Date: Thu, 2 May 2024 08:41:05 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240430134024.771744897@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 000/110] 6.1.90-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240430103047.561802595@linuxfoundation.org>
+Content-Language: en-US
+From: Pascal Ernster <git@hardfalcon.net>
+In-Reply-To: <20240430103047.561802595@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Greg Kroah-Hartman wrote on Tue, Apr 30, 2024 at 03:43:17PM +0200:
-> This is the start of the stable review cycle for the 5.10.216 release.
-> There are 137 patches in this series, all will be posted as a response
+[2024-04-30 12:39] Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.1.90 release.
+> There are 110 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Thu, 02 May 2024 13:40:03 +0000.
+> Responses should be made by Thu, 02 May 2024 10:30:27 +0000.
 > Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.216-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
 
-Tested 4d39cb0f1c9c ("Linux 5.10.216-rc2") on:
-- arm i.MX6ULL (Armadillo 640)
-- arm64 i.MX8MP (Armadillo G4)
+Hi, 6.1.90-rc1 is running fine on a TP-Link Archer C7 v4 (the SoC is a 
+Qualcomm Atheros QCA9563, which has a 74Kc MIPS core).
 
-No obvious regression in dmesg or basic tests:
-Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Note that I have *not* tested building the kernel documentation, and I 
+suspect that building the documentation with docutils >= 0.21 would 
+likely fail without the patch from
 
-> Daisuke Mizobuchi <mizo@atmark-techno.com>
->     mailbox: imx: fix suspend failue
+https://lore.kernel.org/all/faf5fa45-2a9d-4573-9d2e-3930bdc1ed65@gmail.com/
 
-Sorry I didn't check after you replied, the commit message seems to
-mostly have been updated to v2 but the 'failure' in the summary is still
-'failue'.
-That doesn't overly matter, so feel free to keep it that way if you want
-to keep commits as they are.
+Tested-by: Pascal Ernster <git@hardfalcon.net>
 
--- 
-Dominique Martinet | Asmadeus
+Regards
+Pascal
