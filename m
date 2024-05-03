@@ -1,101 +1,226 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF171CAA1
-	for <patches@lists.linux.dev>; Thu,  2 May 2024 23:34:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2415F36B;
+	Fri,  3 May 2024 00:36:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714692890; cv=none; b=TMFZ3xari4hbaiioHzjJ7zsPtzV3rO0o/uoodtZUVH1dGD5DUp2ZcQIlnMqxijmveHsB5u+PpiDLQdO+bog1nTl/VFbtdrIQFN0kmliT+S5ivCEIMReuiz2z4yiJVK2DViXHUj20V8XPSiG2c5YlSyyxoJ6FMnWbFNrYlDIsc8Y=
+	t=1714696575; cv=none; b=LcSo3Dj7gSGG+mfdXOO+jHOaaU3lPUk3aCKPmjkV96EqzulEI+hUhRen6AxOfCwTNVwdkdJqkSiBuqyog2NrQ48czGhmUYZCklddcNR08QNa1g77qJQ8RROPADtwp2l2tSlyT6JarzQ9agiU3RCAQNidczcPazX0NGSJLVQmlnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714692890; c=relaxed/simple;
-	bh=+oAJcfJZ0iVz0HfgcZd1hd5sbZu4K44B4j8j7JhkyHE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IsUE0eP0hNxOEAtp6VUpHWSSSB107WnBjmHM+JgPnWfMVE8ZilOw5ygVrYuHx2HWHMuDBV6nICUDLKY1YaUlKCvoQcVAPD/aKtqs+fojGf3wXpxzS2AIrZ6HbkJAAJoAS3Lc1VI2bXFUaKieq1vX/Gp62pZpem25Jd9haQfHSfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=KZGxMFDl; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1714696575; c=relaxed/simple;
+	bh=bKhaQEnzeCgUZSUgaPavvVhtFMZ1NYjHum4LxmtOFXU=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=DQfRZqhrB1h24cTkH2YKDL2tb5rE1rQVof6QMQ3VHVrc+GvJXtuuNJKJ3n0xBzVWlgLcBS3fDvim/U1H/lCmggrHSn1BDCHLovKMn5LwrffTGGEtyJRhYXrCwsBkI1DKMYGiB3xo0I1tUqmPV/05Q/rmEkXpoQvWHGs6fofeHF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YoKHnsKm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="KZGxMFDl"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1e4c4fb6af3so17578605ad.0
-        for <patches@lists.linux.dev>; Thu, 02 May 2024 16:34:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1714692889; x=1715297689; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yZPhCGRyt2DJnFXWEm7SVWPd/lIZ+/DjudobDa5jvRA=;
-        b=KZGxMFDl6u/ogeGO81mW/XpJ2ans0zCqMH0UuBuywypL453cHVlDTspUYX0cba9QMx
-         0ofXlBC8su/lZ4lCncDC3rmLd2DL1wqY4wDdhV5bHa1sVCT0ApRnwgsbr0lVEfPZmviN
-         HtmR7cFV0n64vmuhSPytS8m/nDgppdI27HYyg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714692889; x=1715297689;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yZPhCGRyt2DJnFXWEm7SVWPd/lIZ+/DjudobDa5jvRA=;
-        b=OmbyjB2gzuAH72lIOqarGrFNMojGcrENAe1fUC6Ms6+K2O2eX3bGi9Lk0m9IpDm3qj
-         eycJ0JFuMmVTyjoqWHg2fA3NHfNK2PVNNLJjYFECgPOPBkBS2B6Yu9NO7pIAx4hbgAOl
-         hQWWmLLOkbijAK16awBgJxCuBL/wLNfjmKPF82udWLu4x+6R0L5lEdWSXQxmN76r4Y+t
-         QjXJQb2QZHBDbll7Xjcr7BIOymrOB1u+s2r8I5iiS2rUiPhu/vG2Prw54qMroWoYZQA4
-         WOtm3lW3H36orqwJAM2YPK0/ltIs6DsR2/tLxhg21oHRZ/zsjIIVKY263vZP0ET8nYiK
-         b1TA==
-X-Forwarded-Encrypted: i=1; AJvYcCVOBUtyduvnPRE+4rL+sHs19IrVsOwKrUd6i+pIf91PHsHyTFgQVBW1uY2CRLWBpgBlQ0fOyoBuM+bwfpM4CHssj2rsPyUawg==
-X-Gm-Message-State: AOJu0YxctK8InWnRM9T8tcIaxCkENPlWpOdqDPFtjIK0v65zd9ayoaZl
-	HLWEpYQqNwuYlTc169zy1S+ohHxBQzpDshNQ6ORXaE5Nz/A8m+3zMMyMsRImKA==
-X-Google-Smtp-Source: AGHT+IFKEyZC+FYK5ZAlKbPbSEB4TliBsHleowx8lMo5aBrupO2xayGkJ0+wK22L0fS4s7UHuycCxg==
-X-Received: by 2002:a17:902:b085:b0:1ec:7084:3d8d with SMTP id p5-20020a170902b08500b001ec70843d8dmr5177281plr.9.1714692888764;
-        Thu, 02 May 2024 16:34:48 -0700 (PDT)
-Received: from localhost (4.198.125.34.bc.googleusercontent.com. [34.125.198.4])
-        by smtp.gmail.com with UTF8SMTPSA id la13-20020a170902fa0d00b001ec412676adsm1903006plb.275.2024.05.02.16.34.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 May 2024 16:34:48 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Thomas Gleixner <tglx@linutronix.de>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	dann frazier <dann.frazier@canonical.com>,
-	Hanjun Guo <hanjun.guo@linaro.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>
-Subject: [PATCH] clocksource/drivers/arm_arch_timer: Mark hisi_161010101_oem_info const
-Date: Thu,  2 May 2024 16:34:46 -0700
-Message-ID: <20240502233447.420888-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.45.0.rc1.225.g2a3ae87e7f-goog
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YoKHnsKm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9808FC113CC;
+	Fri,  3 May 2024 00:36:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714696574;
+	bh=bKhaQEnzeCgUZSUgaPavvVhtFMZ1NYjHum4LxmtOFXU=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=YoKHnsKmaE8a1q4sq+Ino4j5K8nMsHjk/WrDO62RcRZiYdWXlosAgtujF2c9QlAIP
+	 cQ7chKKKUSPiQAqMBFPlHwBMRqT4Cvzm6Kj83mYTyj5XJD1PQors+OSuSOIyZBjWJt
+	 nQsHRtL0UUIC3V1zIrK+hkkXk842bkgtfZk40+5Q6KILqYJV6mv7Cund5ixvAVolSz
+	 2WlCqScuTEX4ORnGm4GJA17f4c7nN6s7zQuFDHzsku1zOuiNDKNWDuHFtiSyivulAo
+	 PtP5qxuDzKrzEf9Mx0DltaI0Y19tHOm4TGEcEbXWppHRLYkUiPjclovypRnWtvVwZm
+	 8ajDlOzXhSABw==
+Message-ID: <15345b349077f57935e8f1d3d69f66f9.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CABVgOSm_Qce1AZQjH8wE4t238hxLYTNswNf1AkEDbWtqDTK7Ow@mail.gmail.com>
+References: <20240422232404.213174-1-sboyd@kernel.org> <20240422232404.213174-2-sboyd@kernel.org> <CABVgOSm_Qce1AZQjH8wE4t238hxLYTNswNf1AkEDbWtqDTK7Ow@mail.gmail.com>
+Subject: Re: [PATCH v4 01/10] of: Add test managed wrappers for of_overlay_apply()/of_node_put()
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
+To: David Gow <davidgow@google.com>
+Date: Thu, 02 May 2024 17:36:12 -0700
+User-Agent: alot/0.10
 
-This isn't modified at runtime. Mark it const so it can move to
-read-only data.
+Quoting David Gow (2024-05-01 00:55:10)
+> On Tue, 23 Apr 2024 at 07:24, Stephen Boyd <sboyd@kernel.org> wrote:
+> > diff --git a/Documentation/dev-tools/kunit/api/index.rst b/Documentatio=
+n/dev-tools/kunit/api/index.rst
+> > index 2d8f756aab56..282befa17edf 100644
+> > --- a/Documentation/dev-tools/kunit/api/index.rst
+> > +++ b/Documentation/dev-tools/kunit/api/index.rst
+> > @@ -9,11 +9,15 @@ API Reference
+> >         test
+> >         resource
+> >         functionredirection
+> > +       of
+> >
+> >
+> >  This page documents the KUnit kernel testing API. It is divided into t=
+he
+> >  following sections:
+> >
+> > +Core KUnit API
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> >  Documentation/dev-tools/kunit/api/test.rst
+> >
+> >   - Documents all of the standard testing API
+> > @@ -25,3 +29,10 @@ Documentation/dev-tools/kunit/api/resource.rst
+> >  Documentation/dev-tools/kunit/api/functionredirection.rst
+> >
+> >   - Documents the KUnit Function Redirection API
+> > +
+> > +Driver KUnit API
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> If we're adding a separate 'Driver' section here, it's probably
+> sensible to move the existing device/driver helper documentation here,
+> rather than leaving it in resource.rst as-is. I'm happy to do that in
+> a follow-up patch, though.
 
-Cc: dann frazier <dann.frazier@canonical.com>
-Cc: Hanjun Guo <hanjun.guo@linaro.org>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/clocksource/arm_arch_timer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+To clarify, you're talking about "Managed Devices"? Looks like that can
+be a follow-up to split it into a new file and then put it here. If
+you're happy to do that then I'll leave it to you.
 
-diff --git a/drivers/clocksource/arm_arch_timer.c b/drivers/clocksource/arm_arch_timer.c
-index 8d4a52056684..5bb43cc1a8df 100644
---- a/drivers/clocksource/arm_arch_timer.c
-+++ b/drivers/clocksource/arm_arch_timer.c
-@@ -331,7 +331,7 @@ static u64 notrace hisi_161010101_read_cntvct_el0(void)
- 	return __hisi_161010101_read_reg(cntvct_el0);
- }
- 
--static struct ate_acpi_oem_info hisi_161010101_oem_info[] = {
-+static const struct ate_acpi_oem_info hisi_161010101_oem_info[] = {
- 	/*
- 	 * Note that trailing spaces are required to properly match
- 	 * the OEM table information.
+>=20
+> > +
+> > +Documentation/dev-tools/kunit/api/of.rst
+> > +
+> > + - Documents the KUnit device tree (OF) API
+> > diff --git a/Documentation/dev-tools/kunit/api/of.rst b/Documentation/d=
+ev-tools/kunit/api/of.rst
+> > new file mode 100644
+> > index 000000000000..8587591c3e78
+> > --- /dev/null
+> > +++ b/Documentation/dev-tools/kunit/api/of.rst
+> > @@ -0,0 +1,13 @@
+> > +.. SPDX-License-Identifier: GPL-2.0
+> > +
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +Device Tree (OF) API
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> > +The KUnit device tree API is used to test device tree (of_*) dependent=
+ code.
+> > +
+> > +.. kernel-doc:: include/kunit/of.h
+> > +   :internal:
+> > +
+> > +.. kernel-doc:: drivers/of/of_kunit.c
+> > +   :export:
+> > diff --git a/drivers/of/Makefile b/drivers/of/Makefile
+> > index 251d33532148..0dfd05079313 100644
+> > --- a/drivers/of/Makefile
+> > +++ b/drivers/of/Makefile
+> > @@ -19,6 +19,7 @@ obj-y +=3D kexec.o
+> >  endif
+> >  endif
+> >
+> > +obj-$(CONFIG_KUNIT) +=3D of_kunit.o
+>=20
+> I'm tempted to have this either live in lib/kunit, or be behind a
+> separate Kconfig option, particularly since this will end up as a
+> separate module, as-is.
 
-base-commit: 4cece764965020c22cff7665b18a012006359095
--- 
-https://chromeos.dev
+Is the idea to have a single module that has all the kunit "stuff" in it
+so we can just load one module and be done? Is there any discussion on
+the list I can read to see the argument for this?
 
+>=20
+> >  obj-$(CONFIG_OF_KUNIT_TEST) +=3D of_test.o
+> >
+> >  obj-$(CONFIG_OF_UNITTEST) +=3D unittest-data/
+> > diff --git a/drivers/of/of_kunit.c b/drivers/of/of_kunit.c
+> > new file mode 100644
+> > index 000000000000..f63527268a51
+> > --- /dev/null
+> > +++ b/drivers/of/of_kunit.c
+> > @@ -0,0 +1,99 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +/*
+> > + * Test managed device tree APIs
+> > + */
+> > +
+> > +#include <linux/of.h>
+> > +#include <linux/of_fdt.h>
+> > +
+> > +#include <kunit/of.h>
+> > +#include <kunit/test.h>
+> > +#include <kunit/resource.h>
+> > +
+> > +static void of_overlay_fdt_apply_kunit_exit(void *ovcs_id)
+> > +{
+> > +       of_overlay_remove(ovcs_id);
+> > +}
+> > +
+> > +/**
+> > + * of_overlay_fdt_apply_kunit() - Test managed of_overlay_fdt_apply()
+> > + * @test: test context
+> > + * @overlay_fdt: device tree overlay to apply
+> > + * @overlay_fdt_size: size in bytes of @overlay_fdt
+> > + * @ovcs_id: identifier of overlay, used to remove the overlay
+> > + *
+> > + * Just like of_overlay_fdt_apply(), except the overlay is managed by =
+the test
+> > + * case and is automatically removed with of_overlay_remove() after th=
+e test
+> > + * case concludes.
+> > + *
+> > + * Return: 0 on success, negative errno on failure
+> > + */
+> > +int of_overlay_fdt_apply_kunit(struct kunit *test, void *overlay_fdt,
+> > +                              u32 overlay_fdt_size, int *ovcs_id)
+>=20
+> We're using kunit_ as a prefix for the device helpers (e.g.
+> kunit_device_register()), so it may make sense to do that here, too.
+> It's not as important as with the platform_device helpers, which are
+> very similar to the existing device ones, but if we want to treat
+> these as "part of KUnit which deals with of_overlays", rather than
+> "part of "of_overlay which deals with KUnit", this may fit better.
+>=20
+> Thoughts?
+
+I'm fine either way with the name. I recall that last time we put a
+kunit postfix to make it easier to tab complete or something like that.
+
+I find it hard to understand the distinction you're trying to make
+though. I guess you're saying the difference is what subsystem maintains
+the code, kunit or of. When they're simple wrappers it is easier to
+extract them out to lib/kunit and thus they can (should?) have the kunit
+prefix. Maybe that always holds true, because kunit wrappers are
+typically another API consumer, and if the API is exported either in a
+linux/ header or as an exported symbol it can be wrapped in lib/kunit
+easily. Did I follow correctly? When would of_overlay ever deal with
+KUnit?
+
+> > diff --git a/include/kunit/of.h b/include/kunit/of.h
+> > new file mode 100644
+> > index 000000000000..9981442ba578
+> > --- /dev/null
+> > +++ b/include/kunit/of.h
+> > @@ -0,0 +1,94 @@
+> > +/* SPDX-License-Identifier: GPL-2.0 */
+> > +#ifndef _KUNIT_OF_H
+> > +#define _KUNIT_OF_H
+> > +
+> > +#include <kunit/test.h>
+> > +
+> > +struct device_node;
+> > +
+> > +#ifdef CONFIG_OF
+>=20
+> Do we also need to check for CONFIG_OF_OVERLAY here?
+>=20
+> Also, how useful is it to compile but skip tests without
+> CONFIG_OF{,_OVERLAY} enabled? The other option is a compile error,
+> which may make it more obvious that these are disabled if it's
+> unexpected.
+>=20
+> Thoughts?
+
+I've tried to make it so that tests skip if an option isn't enabled. I
+suppose the CONFIG_OF_OVERLAY check can be hoisted up here as well so
+that the skip isn't buried in lower levels.
