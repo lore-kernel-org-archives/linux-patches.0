@@ -1,133 +1,217 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E49ABE58;
-	Fri,  3 May 2024 01:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05E1150984;
+	Fri,  3 May 2024 10:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714699665; cv=none; b=foVcCsvTd/+kNL/3DcYXnr+CV21WKnXdpU+XiN/AqNc/cbfNnQA+VXoH/hIqeYJKCHe52ITKbOorVp/xiPxaLi6repF4Th8c9kHA2FNey4PctHiiYBS2m+459y4AVmP6SFrZC4mlOWG3icciMLN7YIy/a8riO/39zOPVtLuPGh0=
+	t=1714731635; cv=none; b=oaT7j0prMVOUIbadL1eNCyZWPw2u3CtlvDRw72Y94mH44UnIzEeMuyR0UzTBg06js0Fz1VGPM55fhondmmpiGHNEZLLKFvxdDBmqzpMcLERSp2l/Is/tEKpp4eAIAj5JUN1GmCY3pMMqscLnmopXOWPgSok1ukEEmbnNRM4294M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714699665; c=relaxed/simple;
-	bh=7+OCs1frOmX7fsw9+l60/r+QLonvowdRmW1VMJOzAxM=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=b4zaahVHhtnAlk7WPDgsd1uTmFLL50MNikSXbvJfiuh9rD45Nvwt6fptrnASazFdXODrM9rFwph8AlvYBjNhRZuHEob4s/RFZmySUREwa4V7c05mEajRo4Sb+KdpbnSEHCYDPUmS7y6Lu48q20+BDyiJCjKSIpeo16cPilboAaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FqHjGmHa; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1714731635; c=relaxed/simple;
+	bh=24aSrLJ980/RB/v2Nlvzh56b4DixaRTX3cGcyelsRuc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VPrQChEf8ndk3J46w4Q34CAI9eaxHV/zWSZR6aKe2BtMnkZgU3GolKUl2vkxo54uXo+fzc3Y5ZCT+c1DJFETjzurKiwpWXO2UBQgD6z5JlHv9oI7pCRH4iunyAJD2HaRTE4CHJMZaLBmiybIhhZRzVhmTeZgQ4h/N9u7tPJ7oMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TKsiSOoD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FqHjGmHa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732E4C113CC;
-	Fri,  3 May 2024 01:27:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TKsiSOoD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A408C4AF14;
+	Fri,  3 May 2024 10:20:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714699664;
-	bh=7+OCs1frOmX7fsw9+l60/r+QLonvowdRmW1VMJOzAxM=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=FqHjGmHatbLDqkXvPJmO2CWsjca1qAHGrHoekNT0AToQpwZKIGZldXBtXSSCK4ACa
-	 6ga+UZssczhA5iau0MzVvkwqvVli26agjx1ej4nz7G0dN23snKsLxe2Hlg9x1u2sM8
-	 IAD32WifcPNlG0lHA2JPWvgbsj4kRkrp9PbHt1y0HwFbM83+HSJZrW5/ow2Alx+JSz
-	 cLtNLL3upK2nW1AU9hUHOQqk1HdPvNzT2AVbK+ksS1pHlFFgF1IfbQn9A6i/wDY9rr
-	 rU+L/REE1z9Wr360oJkxXOMtPUW1U0zdCY8HKJM7ZX0iSpQkYiKI+JGWsLlJ60l7M7
-	 ohmHw4l1fyIFw==
-Message-ID: <b822c6a5488c4098059b6d3c35eecbbd.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1714731634;
+	bh=24aSrLJ980/RB/v2Nlvzh56b4DixaRTX3cGcyelsRuc=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=TKsiSOoDd5jB05QHwZq2d2Q/AzExqeeIX86Wkpemm60/wZPvfSXpIJbcO8UAm7lJx
+	 t9TGE1DNdo7HV/NkQWKlD2iP257cbJW5kClI3UVy2mi2PMDIiLVietNaZzbUqTygjs
+	 lkBnOv1iMS60L7swl/KgZMjmQjZA0oEzWsniVu+vRPWulpyCopmXeL83OzQEbkbR+j
+	 ruXAeB5AmI1ctS6reRcFmCsqtnMn1JJ77QYWrFgM8dW6jQ+BFgKzPUH06pvsd+XqLW
+	 nt/WvQpBW1sq/29YiQ7vgNwTdxj9MhSw2I6bB8wDtSYOHz/jPmoMyUfun4NQHU97UY
+	 Opkyur0NHvqYw==
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2dd041acff1so106170711fa.1;
+        Fri, 03 May 2024 03:20:34 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCU1mPA/kuaJpZbhHL2C8d6Go7A9wZtaxoZhVhFDg4xsY1TZVqvRdTIkzoyjpWEl/AmYhCp+tfZTEtg6cuICfhCxvRF7CZMELEOBIR2eMH8w5mWOLkqG9/kuSbSBcwU=
+X-Gm-Message-State: AOJu0YwAtgXlvJCvF5BooA1BT0JNt2BOjX9uFIZGLT/PK7qdbNXBWohV
+	jy0tju6bd4Sb/PkosriyJFO0xNBDGnY80rZ/82Q5iAD9fLKGxb11XXGwbLwZa4LAdsqtdAGBTAo
+	YIMbeo11oyCt8Ik4LZt5Xsz64ntQ=
+X-Google-Smtp-Source: AGHT+IGP+uIRNlslkXUU92myicxqENqhyk49hCdj5sLaZzOrOjfvk8c1FOJPdJcIA1SaaE6JH4OMhhHWlN7aU5J3wms=
+X-Received: by 2002:a2e:9ed4:0:b0:2df:97b1:e21c with SMTP id
+ h20-20020a2e9ed4000000b002df97b1e21cmr1464379ljk.31.1714731633251; Fri, 03
+ May 2024 03:20:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+References: <20240501-kbuild-llvm-drop-thinlto-cache-v1-1-c117cc50a24b@kernel.org>
+In-Reply-To: <20240501-kbuild-llvm-drop-thinlto-cache-v1-1-c117cc50a24b@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Fri, 3 May 2024 19:19:56 +0900
+X-Gmail-Original-Message-ID: <CAK7LNATm7dp+vuhNpvw7f50akKGNP0Pp+PQHRC1d3zTAZrmBLg@mail.gmail.com>
+Message-ID: <CAK7LNATm7dp+vuhNpvw7f50akKGNP0Pp+PQHRC1d3zTAZrmBLg@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: Remove support for Clang's ThinLTO caching
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: morbo@google.com, justinstitt@google.com, nicolas@fjasle.eu, 
+	keescook@chromium.org, samitolvanen@google.com, linux-kbuild@vger.kernel.org, 
+	llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org, 
+	Yifan Hong <elsk@google.com>, Masami Hiramatsu <mhiramat@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CABVgOSmgUJp3FijpYGCphi1OzRUNvmYQmPDdL6mN59YnbkR2iQ@mail.gmail.com>
-References: <20240422232404.213174-1-sboyd@kernel.org> <CABVgOSmgUJp3FijpYGCphi1OzRUNvmYQmPDdL6mN59YnbkR2iQ@mail.gmail.com>
-Subject: Re: [PATCH v4 00/10] clk: Add kunit tests for fixed rate and parent data
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
-To: David Gow <davidgow@google.com>
-Date: Thu, 02 May 2024 18:27:42 -0700
-User-Agent: alot/0.10
 
-Quoting David Gow (2024-05-01 01:08:11)
->=20
-> Thanks very much. I'm about halfway through reviewing these, and I
-> like them a lot so far.
->=20
-> Most of my thoughts are just naming ideas. I fear some of them may be
-> the reverse of previous suggestions, as we've since landed the KUnit
-> device wrappers in include/kunit/device.h, which we decided would live
-> as part of KUnit, not as part of the device infrastructure. I don't
-> enormously mind if we make the opposite decision for these, though it
-> does seem a bit inconsistent if we do 'devices' differently from
-> 'platform_devices'. Thoughts?
+On Thu, May 2, 2024 at 7:55=E2=80=AFAM Nathan Chancellor <nathan@kernel.org=
+> wrote:
+>
+> There is an issue in clang's ThinLTO caching (enabled for the kernel via
+> '--thinlto-cache-dir') with .incbin, which the kernel occasionally uses
+> to include data within the kernel, such as the .config file for
+> /proc/config.gz. For example, when changing the .config and rebuilding
+> vmlinux, the copy of .config in vmlinux does not match the copy of
+> .config in the build folder:
+>
+>   $ echo 'CONFIG_LTO_NONE=3Dn
+>   CONFIG_LTO_CLANG_THIN=3Dy
+>   CONFIG_IKCONFIG=3Dy
+>   CONFIG_HEADERS_INSTALL=3Dy' >kernel/configs/repro.config
+>
+>   $ make -skj"$(nproc)" ARCH=3Dx86_64 LLVM=3D1 clean defconfig repro.conf=
+ig vmlinux
+>   ...
+>
+>   $ grep CONFIG_HEADERS_INSTALL .config
+>   CONFIG_HEADERS_INSTALL=3Dy
+>
+>   $ scripts/extract-ikconfig vmlinux | grep CONFIG_HEADERS_INSTALL
+>   CONFIG_HEADERS_INSTALL=3Dy
+>
+>   $ scripts/config -d HEADERS_INSTALL
+>
+>   $ make -kj"$(nproc)" ARCH=3Dx86_64 LLVM=3D1 vmlinux
+>   ...
+>     UPD     kernel/config_data
+>     GZIP    kernel/config_data.gz
+>     CC      kernel/configs.o
+>   ...
+>     LD      vmlinux
+>   ...
+>
+>   $ grep CONFIG_HEADERS_INSTALL .config
+>   # CONFIG_HEADERS_INSTALL is not set
+>
+>   $ scripts/extract-ikconfig vmlinux | grep CONFIG_HEADERS_INSTALL
+>   CONFIG_HEADERS_INSTALL=3Dy
+>
+> Without '--thinlto-cache-dir' or when using full LTO, this issue does
+> not occur.
+>
+> Benchmarking incremental builds on a few different machines with and
+> without the cache shows a 20% increase in incremental build time without
+> the cache when measured by touching init/main.c and running 'make all'.
+>
+> ARCH=3Darm64 defconfig + CONFIG_LTO_CLANG_THIN=3Dy on an arm64 host:
+>
+>   Benchmark 1: With ThinLTO cache
+>     Time (mean =C2=B1 =CF=83):     56.347 s =C2=B1  0.163 s    [User: 83.=
+768 s, System: 24.661 s]
+>     Range (min =E2=80=A6 max):   56.109 s =E2=80=A6 56.594 s    10 runs
+>
+>   Benchmark 2: Without ThinLTO cache
+>     Time (mean =C2=B1 =CF=83):     67.740 s =C2=B1  0.479 s    [User: 718=
+.458 s, System: 31.797 s]
+>     Range (min =E2=80=A6 max):   67.059 s =E2=80=A6 68.556 s    10 runs
+>
+>   Summary
+>     With ThinLTO cache ran
+>       1.20 =C2=B1 0.01 times faster than Without ThinLTO cache
+>
+> ARCH=3Dx86_64 defconfig + CONFIG_LTO_CLANG_THIN=3Dy on an x86_64 host:
+>
+>   Benchmark 1: With ThinLTO cache
+>     Time (mean =C2=B1 =CF=83):     85.772 s =C2=B1  0.252 s    [User: 91.=
+505 s, System: 8.408 s]
+>     Range (min =E2=80=A6 max):   85.447 s =E2=80=A6 86.244 s    10 runs
+>
+>   Benchmark 2: Without ThinLTO cache
+>     Time (mean =C2=B1 =CF=83):     103.833 s =C2=B1  0.288 s    [User: 23=
+2.058 s, System: 8.569 s]
+>     Range (min =E2=80=A6 max):   103.286 s =E2=80=A6 104.124 s    10 runs
+>
+>   Summary
+>     With ThinLTO cache ran
+>       1.21 =C2=B1 0.00 times faster than Without ThinLTO cache
+>
+> While it is unfortunate to take this performance improvement off the
+> table, correctness is more important. If/when this is fixed in LLVM, it
+> can potentially be brought back in a conditional manner. Alternatively,
+> a developer can just disable LTO if doing incremental compiles quickly
+> is important, as a full compile cycle can still take over a minute even
+> with the cache and it is unlikely that LTO will result in functional
+> differences for a kernel change.
+>
+> Cc: stable@vger.kernel.org
+> Fixes: dc5723b02e52 ("kbuild: add support for Clang LTO")
+> Reported-by: Yifan Hong <elsk@google.com>
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/2021
+> Reported-by: Masami Hiramatsu <mhiramat@kernel.org>
+> Closes: https://lore.kernel.org/r/20220327115526.cc4b0ff55fc53c97683c3e4d=
+@kernel.org/
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Let's discuss on one of the patches.
+Applied to linux-kbuild.
+Thanks.
 
->=20
-> The other thing I've noted so far is that the
-> of_apply_kunit_platform_device and of_overlay_apply_kunit_cleanup
-> tests fail (and BUG() with a NULL pointer) on powerpc:
-> > [15:18:51]     # of_overlay_apply_kunit_platform_device: EXPECTATION FA=
-ILED at drivers/of/overlay_test.c:47
-> > [15:18:51]     Expected pdev is not null, but is
-> > [15:18:51] BUG: Kernel NULL pointer dereference at 0x0000004c
 
-This seems to be because pdev is NULL and we call put_device(&pdev->dev)
-on it. We could be nicer and have an 'if (pdev)' check there. I wonder
-if that fixes the other two below?
 
----8<---
-diff --git a/drivers/of/overlay_test.c b/drivers/of/overlay_test.c
-index 223e5a5c23c5..85cfbe6bb132 100644
---- a/drivers/of/overlay_test.c
-+++ b/drivers/of/overlay_test.c
-@@ -45,7 +45,8 @@ static void of_overlay_apply_kunit_platform_device(struct=
- kunit *test)
-=20
- 	pdev =3D of_find_device_by_node(np);
- 	KUNIT_EXPECT_NOT_ERR_OR_NULL(test, pdev);
--	put_device(&pdev->dev);
-+	if (pdev)
-+		put_device(&pdev->dev);
- }
-=20
- static int of_overlay_bus_match_compatible(struct device *dev, const void =
-*data)
-@@ -77,8 +78,8 @@ static void of_overlay_apply_kunit_cleanup(struct kunit *=
-test)
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, np);
-=20
- 	pdev =3D of_find_device_by_node(np);
--	put_device(&pdev->dev); /* Not derefing 'pdev' after this */
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pdev);
-+	put_device(&pdev->dev); /* Not derefing 'pdev' after this */
-=20
- 	/* Remove overlay */
- 	kunit_cleanup(&fake);
-@@ -91,7 +92,8 @@ static void of_overlay_apply_kunit_cleanup(struct kunit *=
-test)
- 	dev =3D bus_find_device(&platform_bus_type, NULL, kunit_compatible,
- 			      of_overlay_bus_match_compatible);
- 	KUNIT_EXPECT_PTR_EQ(test, NULL, dev);
--	put_device(dev);
-+	if (dev)
-+		put_device(dev);
- }
-=20
- static struct kunit_case of_overlay_apply_kunit_test_cases[] =3D {
 
-> > [15:18:51]     # of_overlay_apply_kunit_platform_device: try faulted: l=
-ast line seen lib/kunit/resource.c:99
-> > [15:18:51]     # of_overlay_apply_kunit_platform_device: internal error=
- occurred preventing test case from running: -4
-> > [15:18:51] [FAILED] of_overlay_apply_kunit_platform_device
->=20
-> > [15:18:51] BUG: Kernel NULL pointer dereference at 0x0000004c
-> > [15:18:51] note: kunit_try_catch[698] exited with irqs disabled
-> > [15:18:51]     # of_overlay_apply_kunit_cleanup: try faulted: last line=
- seen drivers/of/overlay_test.c:77
-> > [15:18:51]     # of_overlay_apply_kunit_cleanup: internal error occurre=
-d preventing test case from running: -4
-> > [15:18:51] [FAILED] of_overlay_apply_kunit_cleanup
->=20
-> I've not had a chance to dig into it any further, yet, but it appears
-> to work on all of the other architectures I tried.
+> ---
+> This is an alternative (and arguably more robust) fix to Yifan's patch
+> at https://lore.kernel.org/20240429220756.979347-2-elsk@google.com/.
+> ---
+>  Makefile | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index 40fb2ca6fe4c..6b6a4a757062 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -942,7 +942,6 @@ endif
+>  ifdef CONFIG_LTO_CLANG
+>  ifdef CONFIG_LTO_CLANG_THIN
+>  CC_FLAGS_LTO   :=3D -flto=3Dthin -fsplit-lto-unit
+> -KBUILD_LDFLAGS +=3D --thinlto-cache-dir=3D$(extmod_prefix).thinlto-cache
+>  else
+>  CC_FLAGS_LTO   :=3D -flto
+>  endif
+> @@ -1477,7 +1476,7 @@ endif # CONFIG_MODULES
+>  # Directories & files removed with 'make clean'
+>  CLEAN_FILES +=3D vmlinux.symvers modules-only.symvers \
+>                modules.builtin modules.builtin.modinfo modules.nsdeps \
+> -              compile_commands.json .thinlto-cache rust/test \
+> +              compile_commands.json rust/test \
+>                rust-project.json .vmlinux.objs .vmlinux.export.c
+>
+>  # Directories & files removed with 'make mrproper'
+> @@ -1783,7 +1782,7 @@ PHONY +=3D compile_commands.json
+>
+>  clean-dirs :=3D $(KBUILD_EXTMOD)
+>  clean: rm-files :=3D $(KBUILD_EXTMOD)/Module.symvers $(KBUILD_EXTMOD)/mo=
+dules.nsdeps \
+> -       $(KBUILD_EXTMOD)/compile_commands.json $(KBUILD_EXTMOD)/.thinlto-=
+cache
+> +       $(KBUILD_EXTMOD)/compile_commands.json
+>
+>  PHONY +=3D prepare
+>  # now expand this into a simple variable to reduce the cost of shell eva=
+luations
+>
+> ---
+> base-commit: e67572cd2204894179d89bd7b984072f19313b03
+> change-id: 20240501-kbuild-llvm-drop-thinlto-cache-f497770692f8
+>
+> Best regards,
+> --
+> Nathan Chancellor <nathan@kernel.org>
+>
 
-Cool. I don't know why powerpc doesn't make devices. Maybe it has a
-similar design to sparc to create resources. I'll check it out.
+
+--
+Best Regards
+Masahiro Yamada
