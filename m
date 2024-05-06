@@ -1,60 +1,60 @@
 Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33EFB15B12E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E8C15B12B;
 	Mon,  6 May 2024 19:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715024712; cv=none; b=kFAjx+U+Zf0BNFNBKGtuc4D8kUq42GDuGP2mSjc5wToIOp4zjQlus/UdJsBtlV3exAD+3UmJkgC0kuG7iWROI733BIcDMjHPpOqZaQl+mNDS9TvJg93c0Xz4cV0nb1/IxhDWsjQD0/nkp6+2y1Tb10td+h1+GFiG3EN1GVHZ78w=
+	t=1715024713; cv=none; b=PvN4Kl/vMvH29mFAnxV6MLxRhyC9SjyU6Q9EhwsJ8WwDlWToiauHuF3YidBkYx8yms/YEZkLtDoCw/YuCu3Y4mbKlrXS+xaYw4o7lKZAqI115tp9inwQVEtdiVtxbihVboxXacy+MTl76VyIE/bJotdXpos2fly8c30+83r26xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715024712; c=relaxed/simple;
-	bh=IPEkwIxoEulrJ72TUcnrk2IFwrdAChz+rfxSTwedrfY=;
+	s=arc-20240116; t=1715024713; c=relaxed/simple;
+	bh=hobxgUa9md8vhEMYysjs2d0rh4MHe2RJutk0e+kK8io=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=nF5XEbx1tMLw5rDe8iipNVfH2zSgjKnqVLMNxk4Dj1Ibc9+ZyQzj2UMCM2k5wCEqYfiL7Fa6i4ez+4HE1hSYrPEh83rv//ZFCsvm2UCn91xS3RS8U4jZwOgunu81PSRGbUjV2MFH5+glfEuSDepCQECoCEdla916dEhzhhACkpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=m8vOlx5e; arc=none smtp.client-ip=148.163.156.1
+	 MIME-Version; b=hk5J72qlch2xAisFDDQ23DyBGaJIYmnfQ0tYbhaWCRRdFZ/zGyLbDK9m5DyGr+ZjzJ314LbIIWSOb0WjTjwp3pgbGiCcyyqaVi5Xxi2AoiKYhZMS81B1jgdyKvaZxdL40BGSSP32G5jcsGYL0UW+RasWuzHutGduzKDrA+pk2Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Gr5qyrjU; arc=none smtp.client-ip=148.163.156.1
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="m8vOlx5e"
-Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 446JgUp4019316;
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Gr5qyrjU"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 446JbPe2030879;
 	Mon, 6 May 2024 19:45:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding; s=pp1;
- bh=Ss4WavEiatm1ir88BkwsnzQ07rzsa9F6DU8Ne8r2NDw=;
- b=m8vOlx5etgKVTxL0HvFNlx9/5mo7EfXu/NbfSNwZPBYMAffef9887EV/hqxFzAuoe6zQ
- VEb81paUtpekpIHppbvdAXmYxDpBIu81n72qvx9HWQsgr456y9BjfKdUUqETD4aoxQ2K
- WEcnPvvnm6R/+iWkXfEZsx8R6tlKCCZhonOzN801qxnuC+fmd6PWqWe480SrM4tcXNwF
- U+TX0yxuQMWCUAs3Gv+35PVrgh7mNmoOz3uHoyI2ehvbW3gQW7wNd1UYwxyY9Wofa2/j
- UKH9+CCFDDWtxnEO0RauYDbPJscbF41Pa8vZf2rOUIb2opB3fdB9lmF7HWSxiWFLILil OA== 
+ bh=2PvoPCDO8nol9n2uO9aGwkRni06cXrRjL/lIHpG13do=;
+ b=Gr5qyrjUrZju2ZUW3sEd4M/ZjZ/EBeVpqTwoEUOgynbIHjGckZtr+TuZwMxe3oeqV4Cj
+ LL2jNYyHjFR55MHZ8FvwfcTiORsdMITGVQYrwNe++/lUyxn3i96y+AUtdB1pEfWrB9uj
+ xEdLyR9Nl2ageRbHJ8f/WCRo87S2ox/nOsiySLn7SLvSrkPPLryB0rQkQvGnqOwtWzKl
+ kOq1kEFYPZ2/gK8uU2e/WfJbbys+M4bZ1AhDYj6WEAcNbjOThICkK2t5K4Z2WgVqXFK+
+ bEZQmGRpbmw7SP6sPZC4CyfHvIEmuSb+BKwkD7IV7MwktQNgoXWOc6cjrNNlBmHPL7UZ yQ== 
 Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xy5kg805e-1
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xy5h5g0jv-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Mon, 06 May 2024 19:45:03 +0000
-Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 446Jj2Pk023400;
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 446Jj2CI011624;
 	Mon, 6 May 2024 19:45:02 GMT
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xy5kg805a-1
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xy5h5g0jr-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Mon, 06 May 2024 19:45:02 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 446J9SSD010584;
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 446I8lp0030881;
 	Mon, 6 May 2024 19:45:01 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xx0bp1vhq-1
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xwybtt4mt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Mon, 06 May 2024 19:45:01 +0000
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
-	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 446JitEe57475558
+	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 446JiuMH44630448
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 6 May 2024 19:44:57 GMT
+	Mon, 6 May 2024 19:44:58 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4281A20040;
-	Mon,  6 May 2024 19:44:55 +0000 (GMT)
+	by IMSVA (Postfix) with ESMTP id 2BCAB20063;
+	Mon,  6 May 2024 19:44:56 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 0F48C2004E;
+	by IMSVA (Postfix) with ESMTP id ECBE820065;
 	Mon,  6 May 2024 19:44:55 +0000 (GMT)
 Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.152.85.9])
 	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
@@ -73,9 +73,9 @@ Cc: linux-kernel@vger.kernel.org, linux-s390@vger.kernel.org,
         llvm@lists.linux.dev, patches@lists.linux.dev,
         Sven Schnelle <svens@linux.ibm.com>,
         Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 1/6] s390/iucv: Provide iucv_alloc_device() / iucv_release_device()
-Date: Mon,  6 May 2024 21:44:49 +0200
-Message-Id: <20240506194454.1160315-2-hca@linux.ibm.com>
+Subject: [PATCH 5/6] tty: hvc-iucv: Make use of iucv_alloc_device()
+Date: Mon,  6 May 2024 21:44:53 +0200
+Message-Id: <20240506194454.1160315-6-hca@linux.ibm.com>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240506194454.1160315-1-hca@linux.ibm.com>
 References: <20240506194454.1160315-1-hca@linux.ibm.com>
@@ -87,91 +87,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: NI5UqJqy5yI21YRFMWhlVVdMDHGq3wxT
-X-Proofpoint-GUID: 3I0mMeMmdoUrsRpXqKpTJR846LFxVYfN
+X-Proofpoint-GUID: fhGfvkRjpd2GrMBCIBWnVL5W7MqX9c8H
+X-Proofpoint-ORIG-GUID: GmAuUpDS5E85UqLlW5dJPlfD_P6SJ_aC
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-05-06_14,2024-05-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 bulkscore=0 phishscore=0 malwarescore=0 suspectscore=0
- mlxscore=0 clxscore=1015 mlxlogscore=716 impostorscore=0
- priorityscore=1501 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2404010000 definitions=main-2405060142
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=999 priorityscore=1501 bulkscore=0 spamscore=0 adultscore=0
+ phishscore=0 suspectscore=0 malwarescore=0 clxscore=1015 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2405060142
 
-Provide iucv_alloc_device() and iucv_release_device() helper functions,
-which can be used to deduplicate more or less identical IUCV device
-allocation and release code in four different drivers.
+Make use of iucv_alloc_device() to get rid of quite some code.
 
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 ---
- include/net/iucv/iucv.h |  6 ++++++
- net/iucv/iucv.c         | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+)
+ drivers/tty/hvc/hvc_iucv.c | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
-diff --git a/include/net/iucv/iucv.h b/include/net/iucv/iucv.h
-index 5cd7871127c9..b3736e66fe1a 100644
---- a/include/net/iucv/iucv.h
-+++ b/include/net/iucv/iucv.h
-@@ -84,6 +84,12 @@ struct iucv_array {
- extern const struct bus_type iucv_bus;
- extern struct device *iucv_root;
+diff --git a/drivers/tty/hvc/hvc_iucv.c b/drivers/tty/hvc/hvc_iucv.c
+index b1149bc62ca1..ed4bf40278a7 100644
+--- a/drivers/tty/hvc/hvc_iucv.c
++++ b/drivers/tty/hvc/hvc_iucv.c
+@@ -1035,11 +1035,6 @@ static const struct attribute_group *hvc_iucv_dev_attr_groups[] = {
+ 	NULL,
+ };
  
-+struct device_driver;
-+
-+struct device *iucv_alloc_device(const struct attribute_group **attrs,
-+				 struct device_driver *driver, void *priv,
-+				 const char *fmt, ...) __printf(4, 5);
-+
- /*
-  * struct iucv_path
-  * pathid: 16 bit path identification
-diff --git a/net/iucv/iucv.c b/net/iucv/iucv.c
-index a4ab615ca3e3..9db7c2c0ae72 100644
---- a/net/iucv/iucv.c
-+++ b/net/iucv/iucv.c
-@@ -76,6 +76,41 @@ EXPORT_SYMBOL(iucv_bus);
- struct device *iucv_root;
- EXPORT_SYMBOL(iucv_root);
+-static void hvc_iucv_free(struct device *data)
+-{
+-	kfree(data);
+-}
+-
+ /**
+  * hvc_iucv_alloc() - Allocates a new struct hvc_iucv_private instance
+  * @id:			hvc_iucv_table index
+@@ -1090,18 +1085,12 @@ static int __init hvc_iucv_alloc(int id, unsigned int is_console)
+ 	memcpy(priv->srv_name, name, 8);
+ 	ASCEBC(priv->srv_name, 8);
  
-+static void iucv_release_device(struct device *device)
-+{
-+	kfree(device);
-+}
-+
-+struct device *iucv_alloc_device(const struct attribute_group **attrs,
-+				 struct device_driver *driver,
-+				 void *priv, const char *fmt, ...)
-+{
-+	struct device *dev;
-+	va_list vargs;
-+	int rc;
-+
-+	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
-+	if (!dev)
-+		goto out_error;
-+	va_start(vargs, fmt);
-+	rc = dev_set_name(dev, fmt, vargs);
-+	va_end(vargs);
-+	if (rc)
-+		goto out_error;
-+	dev->bus = &iucv_bus;
-+	dev->parent = iucv_root;
-+	dev->driver = driver;
-+	dev->groups = attrs;
-+	dev->release = iucv_release_device;
-+	dev_set_drvdata(dev, priv);
-+	return dev;
-+
-+out_error:
-+	kfree(dev);
-+	return NULL;
-+}
-+EXPORT_SYMBOL(iucv_alloc_device);
-+
- static int iucv_available;
- 
- /* General IUCV interrupt structure */
+-	/* create and setup device */
+-	priv->dev = kzalloc(sizeof(*priv->dev), GFP_KERNEL);
++	priv->dev = iucv_alloc_device(hvc_iucv_dev_attr_groups, NULL,
++				      priv, "hvc_iucv%d", id);
+ 	if (!priv->dev) {
+ 		rc = -ENOMEM;
+ 		goto out_error_dev;
+ 	}
+-	dev_set_name(priv->dev, "hvc_iucv%d", id);
+-	dev_set_drvdata(priv->dev, priv);
+-	priv->dev->bus = &iucv_bus;
+-	priv->dev->parent = iucv_root;
+-	priv->dev->groups = hvc_iucv_dev_attr_groups;
+-	priv->dev->release = hvc_iucv_free;
+ 	rc = device_register(priv->dev);
+ 	if (rc) {
+ 		put_device(priv->dev);
 -- 
 2.40.1
 
