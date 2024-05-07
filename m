@@ -1,173 +1,288 @@
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2065.outbound.protection.outlook.com [40.107.92.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE22953E18;
-	Tue,  7 May 2024 12:55:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.237.130.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715086521; cv=none; b=u78ON5nt4q8B1d4zlE5mj/uQqpiE9ZMCE7emYJXlNbm9JzLDj2aqWwythu5zTAlB6S04BqDPb2XUlGAwGP81NfonXjRIpYGRG3L5Gqh6BBLlhEj/o4+k4SnOYsMHmljhqOctwHzhgTLZSjtmsQDUNwpj3dHK+b3uffSDVeAVfyY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715086521; c=relaxed/simple;
-	bh=GovtL26z0dynz0gsr8OxVZGCQxL/xlw+mALGp/zzkes=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SH3mOp47HD20yCRra6si9WjPiCn49ZDCQJyAWJj+wIwTSXSkqUr6sVEgOizN8s028tQnPcwJr34UWtn78gWOSUuqVq68dU4W6hGQGLgvgS9kd8Sa7fKmAU68pdNaak9+SpCcEf3LfQBDDlhqRbTbHHtzpNnHwTxURI6KfyNizrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info; spf=pass smtp.mailfrom=leemhuis.info; dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b=lmO9wPwd; arc=none smtp.client-ip=80.237.130.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=leemhuis.info
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71A415E7F3;
+	Tue,  7 May 2024 13:21:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.65
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1715088081; cv=fail; b=j744nwSwDf36q5moELZmr9xbzh5+4C3sBdLe2IbU1YdWIvMVuF2dTEcdiOYG6J3kHHWBni2iH4/Usdt3lIXGVmJTBDfSzqTcZVSjE/NsbtgQ7BdkPOtz4ZFYx7ss5nESdtQ/QE2exHMNQr3ZbHe2liHihZZGGwIAYoRVaG0wVak=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1715088081; c=relaxed/simple;
+	bh=Ty8katO+KsnJwNRhEil8IHeS/Mfi4v4JzMZmeo4JNBU=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=hPreLQejDiouZBvu27qQ23ATnbR7nryXCLbZ5z2UBVaDIsxy7hmVXw4dl0rX+dALvCHFQIF4An4czdX+n+inl10wvY7zO3NBdjvEnaSBX9En3ZcRiVwKHOUzSbX8S7eRnAhFDClshfyeVY4+GvM9FNEzJV+R9TvqsbJXw+PY2+E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=WeWw1Zon; arc=fail smtp.client-ip=40.107.92.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b="lmO9wPwd"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=leemhuis.info; s=he214686; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:
-	Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
-	References; bh=ES1ZQRLMgFTcBN79n1CwBZhWvJ0hzyo/xnanjpamae4=; t=1715086519;
-	x=1715518519; b=lmO9wPwdoEDj+g66so3q5Cb5833F38LnQdnrYFEf4CCqPleXAG7iISCZL1WpU
-	y19Nk/CFx7pE5c+hdQajCH1cVZit0gHhPuNE2C/ofYfAkbULXSv09jH3C5znziecUihJOqORwcOhf
-	OQ1HfpF9lGJRGV9EgySbzervdgZD/6BqWo3zdz3VSuLmIx1UoJS+cWAN8ueTXdH40b7Zn3hUV7jQ9
-	SeRuuRg/aBGmZ59+UmfkzZ4DzjUwJAsoGHcpD0VSYEimCVXTbNPvLFNcFzAXI/ricUeANelvXPFK9
-	X6WezdGSiR3tclvv0TulgCMcSWEtuJV0wkKNVprLLaqc0H9f+Q==;
-Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
-	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-	id 1s4KLi-0003Lq-01; Tue, 07 May 2024 14:55:14 +0200
-Message-ID: <b276b76a-1b71-475b-b5ca-a07e7d8d9e52@leemhuis.info>
-Date: Tue, 7 May 2024 14:55:13 +0200
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="WeWw1Zon"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=VDWp6QrH7dcnjHPQEgaBNpmBj+yIdWvI9+PdCgKyi1/6aIUvxhm4Ol06aS1ex7eB6Mp2Bg7XFSdNbDfHvU2uKxJtc4dfqeC1aQ5DtHr9t0h/K27o1nLX4v9LzgMyOhvQa6A3u5+r5WSXaumoH3Jdpop6BGPd8Qx5qJzYdzJN9neA4rwt0FZCjd0NXLjNI0dVXffbCUhT/6Jcwsk9yEcl1Ajyl/zB3KB09M8aJtrc8lbn49nwgBI4d8CQ8eBVlgySn9O5ogQbHMUBgxOCEqyYsFtVuTvXFExGHgVq/HAZcCbwT2YiIp9cplRHwCJwD4MMuSzCqGo9ykn5lfbmRj9msg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DL76QyXnglH30HCjWVVYhpRpxxhXXj31vn2o2IjfpGM=;
+ b=oDilzGAnex674UHU2kIZWY6ZWeA7nLVMq1jMqPDtQw53rU8t5WbJi9/IKiJ5tNVPVUZPELqxikZjU4SCFXwIpfJ6etT5iEmvv2lyLK4Iu6zd674YbkcxoeIMEOrfegmObEJGuJOjdCYKbw6kz0dxKci/FRmyPkneaQwEqHBvjbJPsqM+L/S1wplXmCRE+zHfO2PzdErVqn2fghtiNUndtQp26JOcmD/Adez+MhdUvwLRB0X/XWXAQPn0W7KZfXbNSzWvLXe0eHGfQqXN0RaIK5M28NbMxcKFnoVpovaPL8KKtdd7hFaI37zTb6mkmcEVaFurp6FSY8EIVX9OXY4FFA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DL76QyXnglH30HCjWVVYhpRpxxhXXj31vn2o2IjfpGM=;
+ b=WeWw1ZonLgHUhjQ7bkYEYX9VC919GVO0X9ahMUeGEZloX0KX4B63JhLhxso0Uu935WKB787fB3nO9pObO0ahkgWfiFnwVfNq5ki6k6DfI7+7pBrUWMUDXP9xouvmtxj6KOjEnWDje9/oVPrci+KywpiC2QQC1eA9mdwirHbvqek8C921DwFxq/QZpB/1FWleqkQu2F7/scSgTyEPSXLqisLHaK4NvijoTK99sxojed3l3BJt74+8G9qv9VwuAQnBWNWC4l2pfLVhYm0JaHSWhZOz/rbq0ec9Edqo0i5QP8/R1J6AgwQr2L5av/cAElzSTeYdrTqvjGuwLaVac2OOoA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
+ by MW4PR12MB7118.namprd12.prod.outlook.com (2603:10b6:303:213::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.42; Tue, 7 May
+ 2024 13:21:12 +0000
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::c296:774b:a5fc:965e]) by DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::c296:774b:a5fc:965e%3]) with mapi id 15.20.7544.041; Tue, 7 May 2024
+ 13:21:12 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>
+Cc: Thorsten Leemhuis <linux@leemhuis.info>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	patches@lists.linux.dev,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH] iommu/arm-smmu-v3: Make the kunit into a module
+Date: Tue,  7 May 2024 10:21:10 -0300
+Message-ID: <0-v1-24cba6c0f404+2ae-smmu_kunit_module_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SN6PR04CA0075.namprd04.prod.outlook.com
+ (2603:10b6:805:f2::16) To DM6PR12MB3849.namprd12.prod.outlook.com
+ (2603:10b6:5:1c7::26)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Build error on -next: Unexpected GOT/PLT entries detected! (was
- Re: [PATCH v9 9/9] iommu/arm-smmu-v3: Add unit tests for
- arm_smmu_write_entry)
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- linux-arm-kernel@lists.infradead.org, Robin Murphy <robin.murphy@arm.com>,
- Will Deacon <will@kernel.org>, Eric Auger <eric.auger@redhat.com>,
- Moritz Fischer <mdf@kernel.org>, Moritz Fischer <moritzf@google.com>,
- Michael Shavit <mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>,
- patches@lists.linux.dev,
- Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- Mostafa Saleh <smostafa@google.com>
-References: <9-v9-5040dc602008+177d7-smmuv3_newapi_p2_jgg@nvidia.com>
- <aeea8546-5bce-4c51-b506-5d2008e52fef@leemhuis.info>
- <20240507124134.GN3341011@nvidia.com>
-From: Thorsten Leemhuis <linux@leemhuis.info>
-Content-Language: en-US, de-DE
-Autocrypt: addr=linux@leemhuis.info; keydata=
- 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 n7RI
-In-Reply-To: <20240507124134.GN3341011@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;linux@leemhuis.info;1715086519;980fd8b1;
-X-HE-SMSGID: 1s4KLi-0003Lq-01
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|MW4PR12MB7118:EE_
+X-MS-Office365-Filtering-Correlation-Id: 65ed1bbe-5f30-420b-d09f-08dc6e98909c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|376005|1800799015|366007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?iQ0QFUuHs98t6py+iN73+v1ABw1vXkrI5xIP0H3tGM2uqFFj4twNQuLXwrvm?=
+ =?us-ascii?Q?u2Cn5TV2gfsGFw9xdX5+XR6z5MfpAknJq+mdFntsd6ePKpmsuog6BWgXdjDt?=
+ =?us-ascii?Q?+0WweiA4J/k9EuwkUIFcHzBzIyyflpitnfhF4ADPUqfoce9CuiTixtE+dY19?=
+ =?us-ascii?Q?mSZCnLpQGxt8hYljr+MwgXh5UMQgG0ZUryoE8mOhL1CfAky8/324gVpFJBp8?=
+ =?us-ascii?Q?xuvacZaC9xFFNcBOfss/S2LmXeZ8r4pGQjA8MKSN5eLqxBYsBNa0qEYxLa3v?=
+ =?us-ascii?Q?bAoyrDUkkvhj8mkk16HBLblSb5apyUlBxpIFj7v/0TyFVL4pmpbopupFXR8K?=
+ =?us-ascii?Q?R99SjtA4t4NVo1Vb1itiscN49h4uL2TZIZXaunLJZnWAkpiOhppJEPZNByPd?=
+ =?us-ascii?Q?uPYmra4yhJiJinJ95w3xPjJbG00kgBjQuNVIgmBOY7135oh7dUSrILVkbN3Z?=
+ =?us-ascii?Q?nCVifZjpySpRUS3oAZneCknN7lANQLpIxnQXr72lQ76oKIlvZCIKRS2s0mAR?=
+ =?us-ascii?Q?D17Gy+OAN6R8fNPV4cyiQ+BaCxn8iEazyJ8dAywp8Lolyp7LxEjzSM49lORi?=
+ =?us-ascii?Q?zM3oeZFzCwj+2anmbTuGD0wSPfwUcdDYKu4NoObaulsMiw90fqJq4wrsdfop?=
+ =?us-ascii?Q?UcPeP/b8W4KQcSMGMSy5orrsDRjPmhXvqvEFCptP14StmTjRzNlXKaxWjwpP?=
+ =?us-ascii?Q?EDGg9zkmd/mBQigd68kzyzEFgk2k2YMrrcKHdGPQEbj/bhmz6gOKRoj7VxDW?=
+ =?us-ascii?Q?E98+CSLvOz9+A0SJkCyU2RCBUkZ/Hh83ZjrStPmiuSXijupZVfwZUli1OrJi?=
+ =?us-ascii?Q?+anS1WAjFeKLmn1F0tFygKByh3ihBhx/u1/NtTqZrXbrB3oIjV/gUTxSZX2y?=
+ =?us-ascii?Q?mI7hn8laUpAuaonWmeP5ersnpU8VIMq/TC+zqiF33PwSLIJNrgIEve+S0Ag2?=
+ =?us-ascii?Q?7HHZKad0jG/S8B9YxOW0Yp9F9DTvid/ORLqlGuN1zoUU3dIkh3aQ11ByzuVv?=
+ =?us-ascii?Q?z4zZmBPSGlsX1Uj5L6j72BvaOQ+sntc7N1L9kd1fffxnQHP5nDwXuI74+n6K?=
+ =?us-ascii?Q?Jmj8KAVxEjSI+itO0deESbzcboM9S1fCa5HY8wjbEa6jDpCsw4ciJOpYjB29?=
+ =?us-ascii?Q?+uqTgJ/jtgUTUN2XsCJgb8zgMNsSgJvTOC6L1UootIri76IM9KLbb3qu9xBN?=
+ =?us-ascii?Q?KiZn3tv8IBnV0zcER5ruD+XVINW+kVES64obMOF+nAoBU5dU3SaHL003RCxY?=
+ =?us-ascii?Q?H0LclmFKvbq4TH565lhu8kb0+8dpI7AKprkSdvPd0Q=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(1800799015)(366007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?Zgd7lVE/jkjwv2JiPYtbM3bp5uXVCSkvu67RNKkKw/Ed3XirG21DaN5w8R8T?=
+ =?us-ascii?Q?8kjvaPMjmWQc6VqvdwQF5Zn3G6rn2fLOmq+5EBPxiEEBdRIh2nAyE5Ac1UsM?=
+ =?us-ascii?Q?qqFVzkJKwdPpaGxB2w2n/EFfSoOD9onJsZX4vL3WvynvFYA2AUrJgrl+yY6R?=
+ =?us-ascii?Q?luUVzaY3rNefhjeqbn5pBKFFSYZxiSwkjlg7zgr90GZ5rCsU5IMMDxXDuRED?=
+ =?us-ascii?Q?wC64RjuSoldwHTVpaYVkC+srGTYHyWLWBYocFfRBb2lpN43t1/0vNDpW8avL?=
+ =?us-ascii?Q?gLnE5BQ8uH87vUvWEUx3xDa68DURvNV0po3q3z8SHW4p5hTfzwYZ3Jbk6e4t?=
+ =?us-ascii?Q?qK0Zq7gAEOBFG4Pg/rp4wnjiwvhMq01L7bJ79GPjjdTZWSme3DZDS86KXDoc?=
+ =?us-ascii?Q?Dq/LDFqmflCKBkTeW8b5DvQXVSu2RrtXr+7FHyMHl1R5+83ULLam2fg9Fc52?=
+ =?us-ascii?Q?UwBKaJ4rhTMBS/wlDa+DJcNX5K+r2D1G1PK8bi0KyrTLm1m6VAEVk2zv5O1a?=
+ =?us-ascii?Q?5XODcbhOAPP2t+mCWqtnJoVqgk5yoTuqrSUtkIXiql4ssGPi91UZvZg5LfD0?=
+ =?us-ascii?Q?83Rg63DMrnMfMKoo/68iOZIS7I/d8MdLVofsTFheInAvvLOEtVXsS7U4aTBT?=
+ =?us-ascii?Q?mSc/tVSsEiQsadDIxUpA5kli6dhVesMDYQhNNKExvhV3CZ5QMaSn5xAiYMNE?=
+ =?us-ascii?Q?1UROtpq14XUV1OdMyAcqBRz5gRj7ar+9lJYJwxauFVe3NlgM4h5Vkwa+8Dbz?=
+ =?us-ascii?Q?9ukoD8g1I16ZmjpCYPCpqAE80Az35gNEK2K5zZ+Nb+kII/aRXTJEyYPOVYGg?=
+ =?us-ascii?Q?r0Ebu6DTk5nkvBa2L++cdMOhHGntuBmjNJKF3OgleiM+ASkJGw86dosHEa7C?=
+ =?us-ascii?Q?KvcWkJGeU9UCkVSseqUhmlkcti/J14ufBhdKlrhMOr2oIVu7Upkpf9DJ2diJ?=
+ =?us-ascii?Q?2GgLF2ssWB8YKrLo6ECK8MnoMgYwb0cf5MPPJRYx6jRE+yq8y/CODfej8WJA?=
+ =?us-ascii?Q?tsDqoXFRsXJyxGvRwqIxNw7zhjUPZltJw6uaDYzaMdAWlImRqR1psGUieSnj?=
+ =?us-ascii?Q?zD9jRTRjrl1DXltMRxdastTOtv1GLVQ3HwyGteY2CJaAqjXdAznHkrO+J84e?=
+ =?us-ascii?Q?CCJ0sIv5VloJEwxGwKRvoSqy7c7xikluV9yDX9FzQKkAwAGvoaume+qh+7hi?=
+ =?us-ascii?Q?qwDERjeakUPmH1Csr6+tqLn0OtshymTt/ouAgban9Va0XXMTnNgENDgIdksS?=
+ =?us-ascii?Q?LyAsoID0IrVdpXUH3yKKugh6Egj1cjAUghP/zGZi7gnTjkpJsb4hvRUYbm7e?=
+ =?us-ascii?Q?Wpc2fzJFAkee9XQvDCInNbOJXlOhKGhfIJKhU4Ta3ZnEpbWa1Yg9hRrmyg2c?=
+ =?us-ascii?Q?1SwlsHnLDZwiY3pz8kuYoK4yvgM3BNlZ4FuXmKgU8K0CmZXLfO08F6jxwL8E?=
+ =?us-ascii?Q?FyFTay67mTLHmZLJmi2cZwwZvy2OMYawTBPWVvpoqaBbQhlJ8eh+ReIJDUEk?=
+ =?us-ascii?Q?VYZQOCZ0so0g8LK4AR3zJqjnX4BsFyhCOU4tOcH9rAQQ5HhuI43Woz7o7FZw?=
+ =?us-ascii?Q?QH6mfG/H1vuXM9yq7NyddcICOj5ok0G9xK/ZJ5Hi?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 65ed1bbe-5f30-420b-d09f-08dc6e98909c
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 May 2024 13:21:12.1174
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Fjaj+mLm0LSAOwc1ewHC10W2FafFow23JuelUN/6KNnr+8nlGhTM7pBtKMsAdFXS
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7118
 
-On 07.05.24 14:41, Jason Gunthorpe wrote:
-> On Tue, May 07, 2024 at 02:15:51PM +0200, Thorsten Leemhuis wrote:
->> On 30.04.24 19:21, Jason Gunthorpe wrote:
->>> Add tests for some of the more common STE update operations that we expect
->>> to see, as well as some artificial STE updates to test the edges of
->>> arm_smmu_write_entry. These also serve as a record of which common
->>> operation is expected to be hitless, and how many syncs they require.
->>>
->>> arm_smmu_write_entry implements a generic algorithm that updates an STE/CD
->>> to any other abritrary STE/CD configuration. The update requires a
->>> sequence of write+sync operations with some invariants that must be held
->>> true after each sync. arm_smmu_write_entry lends itself well to
->>> unit-testing since the function's interaction with the STE/CD is already
->>> abstracted by input callbacks that we can hook to introspect into the
->>> sequence of operations. We can use these hooks to guarantee that
->>> invariants are held throughout the entire update operation.
->>>
->>> [...]
->>>
->>> +static void arm_smmu_v3_test_ste_expect_transition(
->>> +	struct kunit *test, const struct arm_smmu_ste *cur,
->>> +	const struct arm_smmu_ste *target, unsigned int num_syncs_expected,
->>> +	bool hitless)
->>> +{
->>> +	struct arm_smmu_ste cur_copy = *cur;
->>> [...]
->>
->> Lo! My daily -next builds of vanilla kernel RPM packages for all
->> current Fedora releases started all to fail today on ARM64.
-> 
-> Fedora enables kunit in a production kernel????
+It turns out kconfig has problems ensuring the SMMU module and the KUNIT
+module are consistently y/m to allow linking. It will permit KUNIT to be a
+module while SMMU is built in.
 
-FWIW, I'm just a interested Fedora downstream party here that uses
-Fedora's mechanisms as a base for daily -next builds.
+Also, Fedora apparently enables kunit on production kernels.
 
-But yes, kunit is enabled by default. All the modules then then go into
-a sub-package that is shipped, but normally not installed.
->> I currently lack time to investigate this properly, so feel free to
->> ignore this, maybe this is a false alarm and cause by the build
->> instructions in the RPM .spec file doing something stupid.
-> 
-> That's surprising to me.. this has been in 0-day for months now and
-> it's kconfig randomizer didn't hit this combination.
+So, put the entire kunit in its own module using the
+VISIBLE_IF_KUNIT/EXPORT_SYMBOL_IF_KUNIT machinery. This keeps it out of
+vmlinus on Fedora and makes the kconfig work in the normal way. There is
+no cost if kunit is disabled.
 
-Wild guess: maybe the Fedora stuff that generates the kernel
-configuration does something odd that later confuses olddefconfig to let
-this pass?
+Fixes: 56e1a4cc2588 ("iommu/arm-smmu-v3: Add unit tests for arm_smmu_write_entry")
+Reported-by: Thorsten Leemhuis <linux@leemhuis.info>
+Link: https://lore.kernel.org/all/aeea8546-5bce-4c51-b506-5d2008e52fef@leemhuis.info
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ drivers/iommu/Kconfig                            | 2 +-
+ drivers/iommu/arm/arm-smmu-v3/Makefile           | 3 ++-
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c  | 1 +
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c | 3 +++
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c      | 8 ++++++++
+ 5 files changed, 15 insertions(+), 2 deletions(-)
 
->> /usr/bin/make -s 'HOSTCFLAGS=-O2  -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 \
->> -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 \
->> -mbranch-protection=standard -fasynchronous-unwind-tables -fstack-clash-protection   ' 'HOSTLDFLAGS=-Wl,-z,relro -Wl,--as-needed 
->> -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld-errors -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 \
->> -Wl,--build-id=sha1 -specs=/usr/lib/rpm/redhat/redhat-package-notes ' ARCH=arm64 'KCFLAGS= ' WITH_GCOV=0 -j4 vmlinuz.efi
->> [...]
->> ld: Unexpected GOT/PLT entries detected!
->> ld: Unexpected run-time procedure linkages detected!
->> ld: drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.o: in function `arm_smmu_v3_test_ste_expect_transition':
->> /builddir/build/BUILD/kernel-next-20240507/linux-6.9.0-0.0.next.20240507.458.vanilla.fc41.aarch64/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c:144:(.text+0x6f8): undefined reference to `kunit_mem_assert_format'
-> 
-> It is because your .config has kunit as modular but smmu is not. I
-> thought the kconfig prevented that in the usual way, but I see it
-> doesn't work :\
+Joerg, can you pick this to solve the linux-next issue for Thorsten?
 
-Ohh. And thx!
+Thanks,
+Jason
 
-Ciao, Thorsten
+diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+index 66325210c8c986..c04584be30893f 100644
+--- a/drivers/iommu/Kconfig
++++ b/drivers/iommu/Kconfig
+@@ -415,7 +415,7 @@ config ARM_SMMU_V3_SVA
+ 	  and PRI.
+ 
+ config ARM_SMMU_V3_KUNIT_TEST
+-	bool "KUnit tests for arm-smmu-v3 driver"  if !KUNIT_ALL_TESTS
++	tristate "KUnit tests for arm-smmu-v3 driver"  if !KUNIT_ALL_TESTS
+ 	depends on KUNIT
+ 	depends on ARM_SMMU_V3_SVA
+ 	default KUNIT_ALL_TESTS
+diff --git a/drivers/iommu/arm/arm-smmu-v3/Makefile b/drivers/iommu/arm/arm-smmu-v3/Makefile
+index 0b97054b3929b7..014a997753a8a2 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/Makefile
++++ b/drivers/iommu/arm/arm-smmu-v3/Makefile
+@@ -2,5 +2,6 @@
+ obj-$(CONFIG_ARM_SMMU_V3) += arm_smmu_v3.o
+ arm_smmu_v3-objs-y += arm-smmu-v3.o
+ arm_smmu_v3-objs-$(CONFIG_ARM_SMMU_V3_SVA) += arm-smmu-v3-sva.o
+-arm_smmu_v3-objs-$(CONFIG_ARM_SMMU_V3_KUNIT_TEST) += arm-smmu-v3-test.o
+ arm_smmu_v3-objs := $(arm_smmu_v3-objs-y)
++
++obj-$(CONFIG_ARM_SMMU_V3_KUNIT_TEST) += arm-smmu-v3-test.o
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+index 34a977a0767d46..e490ffb3801545 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+@@ -185,6 +185,7 @@ void arm_smmu_make_sva_cd(struct arm_smmu_cd *target,
+ 	 */
+ 	target->data[3] = cpu_to_le64(read_sysreg(mair_el1));
+ }
++EXPORT_SYMBOL_IF_KUNIT(arm_smmu_make_sva_cd);
+ 
+ static struct arm_smmu_ctx_desc *arm_smmu_alloc_shared_cd(struct mm_struct *mm)
+ {
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
+index 417804392ff089..315e487fd990eb 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c
+@@ -463,3 +463,6 @@ static struct kunit_suite arm_smmu_v3_test_module = {
+ 	.test_cases = arm_smmu_v3_test_cases,
+ };
+ kunit_test_suites(&arm_smmu_v3_test_module);
++
++MODULE_IMPORT_NS(EXPORTED_FOR_KUNIT_TESTING);
++MODULE_LICENSE("GPL v2");
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 4820b8b5dd81b3..ab415e107054c1 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -1007,6 +1007,7 @@ void arm_smmu_get_ste_used(const __le64 *ent, __le64 *used_bits)
+ 	if (cfg == STRTAB_STE_0_CFG_BYPASS)
+ 		used_bits[1] |= cpu_to_le64(STRTAB_STE_1_SHCFG);
+ }
++EXPORT_SYMBOL_IF_KUNIT(arm_smmu_get_ste_used);
+ 
+ /*
+  * Figure out if we can do a hitless update of entry to become target. Returns a
+@@ -1141,6 +1142,7 @@ void arm_smmu_write_entry(struct arm_smmu_entry_writer *writer, __le64 *entry,
+ 			entry_set(writer, entry, target, 0, NUM_ENTRY_QWORDS));
+ 	}
+ }
++EXPORT_SYMBOL_IF_KUNIT(arm_smmu_write_entry);
+ 
+ static void arm_smmu_sync_cd(struct arm_smmu_master *master,
+ 			     int ssid, bool leaf)
+@@ -1268,6 +1270,7 @@ void arm_smmu_get_cd_used(const __le64 *ent, __le64 *used_bits)
+ 		used_bits[1] &= ~cpu_to_le64(CTXDESC_CD_1_TTB0_MASK);
+ 	}
+ }
++EXPORT_SYMBOL_IF_KUNIT(arm_smmu_get_cd_used);
+ 
+ static void arm_smmu_cd_writer_sync_entry(struct arm_smmu_entry_writer *writer)
+ {
+@@ -1332,6 +1335,7 @@ void arm_smmu_make_s1_cd(struct arm_smmu_cd *target,
+ 				      CTXDESC_CD_1_TTB0_MASK);
+ 	target->data[3] = cpu_to_le64(pgtbl_cfg->arm_lpae_s1_cfg.mair);
+ }
++EXPORT_SYMBOL_IF_KUNIT(arm_smmu_make_s1_cd);
+ 
+ void arm_smmu_clear_cd(struct arm_smmu_master *master, ioasid_t ssid)
+ {
+@@ -1515,6 +1519,7 @@ void arm_smmu_make_abort_ste(struct arm_smmu_ste *target)
+ 		STRTAB_STE_0_V |
+ 		FIELD_PREP(STRTAB_STE_0_CFG, STRTAB_STE_0_CFG_ABORT));
+ }
++EXPORT_SYMBOL_IF_KUNIT(arm_smmu_make_abort_ste);
+ 
+ VISIBLE_IF_KUNIT
+ void arm_smmu_make_bypass_ste(struct arm_smmu_device *smmu,
+@@ -1529,6 +1534,7 @@ void arm_smmu_make_bypass_ste(struct arm_smmu_device *smmu,
+ 		target->data[1] = cpu_to_le64(FIELD_PREP(STRTAB_STE_1_SHCFG,
+ 							 STRTAB_STE_1_SHCFG_INCOMING));
+ }
++EXPORT_SYMBOL_IF_KUNIT(arm_smmu_make_bypass_ste);
+ 
+ VISIBLE_IF_KUNIT
+ void arm_smmu_make_cdtable_ste(struct arm_smmu_ste *target,
+@@ -1580,6 +1586,7 @@ void arm_smmu_make_cdtable_ste(struct arm_smmu_ste *target,
+ 			cpu_to_le64(FIELD_PREP(STRTAB_STE_2_S2VMID, 0));
+ 	}
+ }
++EXPORT_SYMBOL_IF_KUNIT(arm_smmu_make_cdtable_ste);
+ 
+ VISIBLE_IF_KUNIT
+ void arm_smmu_make_s2_domain_ste(struct arm_smmu_ste *target,
+@@ -1627,6 +1634,7 @@ void arm_smmu_make_s2_domain_ste(struct arm_smmu_ste *target,
+ 	target->data[3] = cpu_to_le64(pgtbl_cfg->arm_lpae_s2_cfg.vttbr &
+ 				      STRTAB_STE_3_S2TTB_MASK);
+ }
++EXPORT_SYMBOL_IF_KUNIT(arm_smmu_make_s2_domain_ste);
+ 
+ /*
+  * This can safely directly manipulate the STE memory without a sync sequence
+
+base-commit: 36bb003ed6860aa478c0503a6c44725064679085
+-- 
+2.43.2
+
