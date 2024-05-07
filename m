@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078EE77658;
-	Tue,  7 May 2024 21:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860B578C6D;
+	Tue,  7 May 2024 21:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715116092; cv=none; b=UjUQDypz+GT9iXDAun7qvP+EYMSu4+GmkR1/mpXhbrHixThDd6JRTPnpeeTOiVuk7urWRZduve9dGw30uuykpuCBB+bU89G7PCGx2emoQSsgECVcNrC+px2XLFlB2pygSGQH4O6ikJsKvGIuXDa66SA4RUJ1DyJ+U76kdcsUEes=
+	t=1715116092; cv=none; b=QeZcd1pLsvYmW5beETJN1nVR/ZL+8HbOelsnwHEULf6xIeGgFZNvHO7ddfHBuCVEQOdRBxqlqoQTVlQmwZpRLK3evWnL2/whq1T2NcaglHNWw0NZxHxhpHk9ngwrrYg6P5NvhsW4dBkfgCog8hRdywIv4vCLflBjYkV0Uy0iZXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1715116092; c=relaxed/simple;
-	bh=2N1QLk52W+2c9Q6iDFOhjfPP4CuRAqXoC2EDY1JuuaQ=;
+	bh=vTdduva3vrK34NCEK9Tt5brJHXAQ1aJfLa13W+BOfIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RMIrZDpQvLOtaOC84dWzwfEzumzhquD7G6cBIFXtha1kjccUovnc2uWZ6L4n9N4ckLt7CA9zGaLNSzWAm1rT0DeVjRDtNu+XEL3t5G6YGeedfC03g0tkTNOvsrglUEikyQECI5sYd40l3u4QICHrua/dL313ALm2kA8geqKf0c8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h7Z1i0Xh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JypQn5YmLoCECf8ZM+MWSzTMNtwT0hW0Cc0CqqTNZ+itwBcBneZh4D+dXHv25XCAE4o7Tzz9cwGiO3B/JSUaNSzpsiy5qi8jYQZTxPPOqiHnKqQ0XjbDBlYdTktAwGb5KdceQJE7QTc3OUJ1zKYlJCf0ka4Zb5jH3dS0VoHQ73M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=POgFa+Yd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h7Z1i0Xh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A97C4AF17;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="POgFa+Yd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C55DDC4AF67;
 	Tue,  7 May 2024 21:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715116091;
-	bh=2N1QLk52W+2c9Q6iDFOhjfPP4CuRAqXoC2EDY1JuuaQ=;
+	s=k20201202; t=1715116092;
+	bh=vTdduva3vrK34NCEK9Tt5brJHXAQ1aJfLa13W+BOfIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h7Z1i0Xh6stpuP5TEXsyM+/07LVKZoZfxmP06k1j/FCCD8EVSGC4itTi6NChIi/6s
-	 K5JpfJMtFF0FFiChhE/uBOkCg6krRA/aHdTRZa4em5DiC5bImpNGJ+WB6isCNWYELV
-	 hKhhev3GqBOCO9khnVrBWHONGGHw7AvqOKf9WGduQHLNwLcuzMtfz/29rcEMKJfsmg
-	 WTyVOnKH/xwg9A47zoD96vfIzJz2FppesiD84xpy/EvEvZ4qnqceDbDXbkwT2Jck9I
-	 0ywpS5x4/JoPPssLRg4y3USnKTl8cisQ8oGGcoGjcceu8nev1EPqDAB30zF2NEU1q0
-	 ZUo50o+/0hl+Q==
+	b=POgFa+YdhtsVHrGZDBEFTcWO5xnKAL1zmQ7/xfLkLVjH06XcRvcdIm75uBiyUwVtI
+	 j7EO97YscuOA14A50YyB06Mr46CvB/hzJuOcMiu8BPtpQIxKinQ69b95lzXE4jMrN+
+	 1MbtLmak3b3bmCfLRdDpKOYvIOD7+YAHvQ9Ln3Ydzap3gv+b+s4n3k7mo7kjoPt8f9
+	 7S8u5g4VeGwOzz1kRUEQB+GIHSjgPsEo3LODFT4qhXKT09AFw1c/p9VGoe7nZ1lODK
+	 i1FN4iRp/VoHAMVEkTwW8rwVTtj4Ivj9eWc9Gh/2SyRObIDY7R52CceUoVGWvjXd+i
+	 Vy2QPjCCgErNw==
 From: Stephen Boyd <sboyd@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: "Ricardo B. Marliere" <ricardo@marliere.net>,
+Cc: Johan Hovold <johan+linaro@kernel.org>,
 	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH 01/12] spmi: make spmi_bus_type const
-Date: Tue,  7 May 2024 14:07:38 -0700
-Message-ID: <20240507210809.3479953-2-sboyd@kernel.org>
+	patches@lists.linux.dev,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 02/12] dt-bindings: spmi: hisilicon,hisi-spmi-controller: fix binding references
+Date: Tue,  7 May 2024 14:07:39 -0700
+Message-ID: <20240507210809.3479953-3-sboyd@kernel.org>
 X-Mailer: git-send-email 2.45.0.rc1.225.g2a3ae87e7f-goog
 In-Reply-To: <20240507210809.3479953-1-sboyd@kernel.org>
 References: <20240507210809.3479953-1-sboyd@kernel.org>
@@ -45,35 +46,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: "Ricardo B. Marliere" <ricardo@marliere.net>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-Now that the driver core can properly handle constant struct bus_type,
-move the spmi_bus_type variable to be a constant structure as well,
-placing it into read-only memory which can not be modified at runtime.
+Fix up the free text binding references which were not updated when
+moving the bindings out of staging and which had a leading current
+directory component, respectively.
 
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
-Link: https://lore.kernel.org/r/20240204-bus_cleanup-spmi-v1-1-ef7f278f1987@marliere.net
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9bd9e0de1cf5 ("mfd: hi6421-spmi-pmic: move driver from staging")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20231130173757.13011-2-johan+linaro@kernel.org
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 ---
- drivers/spmi/spmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../bindings/spmi/hisilicon,hisi-spmi-controller.yaml         | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
-index 3a60fd2e09e1..667085cb199d 100644
---- a/drivers/spmi/spmi.c
-+++ b/drivers/spmi/spmi.c
-@@ -378,7 +378,7 @@ static int spmi_drv_uevent(const struct device *dev, struct kobj_uevent_env *env
- 	return 0;
- }
+diff --git a/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml b/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
+index f882903769f9..eee7c8d4cf4a 100644
+--- a/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
++++ b/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
+@@ -14,7 +14,7 @@ description: |
+   It is a MIPI System Power Management (SPMI) controller.
  
--static struct bus_type spmi_bus_type = {
-+static const struct bus_type spmi_bus_type = {
- 	.name		= "spmi",
- 	.match		= spmi_device_match,
- 	.probe		= spmi_drv_probe,
+   The PMIC part is provided by
+-  ./Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml.
++  Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml.
+ 
+ allOf:
+   - $ref: spmi.yaml#
+@@ -48,7 +48,7 @@ patternProperties:
+       PMIC properties, which are specific to the used SPMI PMIC device(s).
+       When used in combination with HiSilicon 6421v600, the properties
+       are documented at
+-      drivers/staging/hikey9xx/hisilicon,hi6421-spmi-pmic.yaml.
++      Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml
+ 
+ unevaluatedProperties: false
+ 
 -- 
 https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
 https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
