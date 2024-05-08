@@ -1,62 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1716127E22
-	for <patches@lists.linux.dev>; Wed,  8 May 2024 15:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D86A12836A
+	for <patches@lists.linux.dev>; Wed,  8 May 2024 15:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715180887; cv=none; b=u4rNVD937Dq0kH1vttPN07tObwA5kfYIUWsfTQ0ZGBotuQo6DcjC54iQVjh0YgD7YBy6Hd/DLBs/mDMnof+2rn1UN4X0y27Qp4sjp8EaWVNjRdsnaj1q8LqKtPoaaKO6dDrlhF3jylSDDvNseB4mgGzmMCgSuCW7v1Qp/crc4Rs=
+	t=1715181730; cv=none; b=izNI8O4Kz+6eTlyGNVjguMErVmRIT/GdVHMQ/wvxb/kRyN9S2787oXyYec3NeJGJuZxsDuEmzXEmwk0wUQE1wMMX+dQwPEAqGNgJk9buwAQ/W3oA2t0lqq9HKZrqB9euvgYBFDDF6PHlyFOMqzOlQdhybgfMvBefialYjDUTQSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715180887; c=relaxed/simple;
-	bh=fk7GxC1PPEc7qrUG7K+DrVTUtdnP9TQkDTTKR3NFiQ0=;
+	s=arc-20240116; t=1715181730; c=relaxed/simple;
+	bh=IeU+ikK/RaXL2dTlSwtTJbI5IL9t+dI2CSxMLaAcXE4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ozoumkEuUCBSBAJAacSm2AyUIdCh+YNZT4YGgbp4v2gS00KWFgVxBN2nDkXPAJzcZkEwvmaCtlSIksPfvIu9mCAdAG9Rbh/JGahZznk+wlftXkiZUWGBCsG9QAW6cJgOG3kB0hu8NzWwa37zf3v3RcPxQJ57TpeHzNoCKEpmVOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kqmfmjgz; arc=none smtp.client-ip=10.30.226.201
+	 To:Cc:Content-Type; b=OzzmEohggOSw1yuFAYhklBzY37j04fLYOP3BhcCw/dMbHtmRfJhUkSbE653BiZbSLAP7tfb5EGQh7cqAH06bh3pIq64WOzmJX1kjT9OQtb1psKlezFHKhllOiZUN9kTu7f50PxRxclwzqMxK5SwPi1VbLabWMyO+4LnxjQoo0tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l/AEFCd0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kqmfmjgz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F2B3C2BD10
-	for <patches@lists.linux.dev>; Wed,  8 May 2024 15:08:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l/AEFCd0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E863AC113CC
+	for <patches@lists.linux.dev>; Wed,  8 May 2024 15:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715180886;
-	bh=fk7GxC1PPEc7qrUG7K+DrVTUtdnP9TQkDTTKR3NFiQ0=;
+	s=k20201202; t=1715181729;
+	bh=IeU+ikK/RaXL2dTlSwtTJbI5IL9t+dI2CSxMLaAcXE4=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=KqmfmjgzfA7SCpd2skvs5EweP4UWYpe/EgQw5Lblio/1CGIa1/NkjQS6dEbb7S39u
-	 yQncy7lQGMK+0nszk3GR6UszEIjI3jjl1CbKuGm6RbpPInIpWfB90wJOi5EzNj6I4V
-	 00Exk/vWptXodaaUrIPT1HnDfYj9wCjwQl8Cizzfdl3d6rL2fHlNAoEfFrN4lc/J6S
-	 isItL+ip8wu+UDzsAnTQLHxZAHvSTneo17zvkmSGSJeOE7Pfwsy1jAFfocjGEZs9DB
-	 dzNvwUME9rt/OxHUTKsXegGfuDiKTQRJum/VCBfdCZOumi5ZePTTNgm8KlFnSTYMS+
-	 FCljcJbpxqrwA==
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-5b20318a866so2319723eaf.0
-        for <patches@lists.linux.dev>; Wed, 08 May 2024 08:08:06 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXW+OVcpRziTipR5mjP4R1UBzW4BGnZMNyf9IcpcklnyddJPzc0V1BmwSIwGL55vHiZvkBTbcMu6oPl2P7ZDgJB18b3pXXoPQ==
-X-Gm-Message-State: AOJu0YxbjxWwDFZySgvauc6rTqVw7u+bHtn6W+DojMGTSukeR1Vi+oO5
-	XHZ/J+NjD7tnUbW2M4oVc035q5GKESPlWNAWaYVFsPNmB3Jf/bkKgA4lJuk7PaxgwvYew8gKRje
-	TnEVjSvtNCxw/IRmZW1kHdwy9xi0=
-X-Google-Smtp-Source: AGHT+IFz6Ek/HKY5LqapHYp2J3UPciEFtCHWRtdaW10My+nmaYFrHG+n4/M/edgWSE1MPtgvRcB47UJ6HiFsKanjCPQ=
-X-Received: by 2002:a4a:aa86:0:b0:5aa:4a0c:d99e with SMTP id
- 006d021491bc7-5b24d75c1b8mr2668167eaf.8.1715180886050; Wed, 08 May 2024
- 08:08:06 -0700 (PDT)
+	b=l/AEFCd0cfEsmR8a8toANnWQTBK4qScSH7VjKXJxtlwsVFVa3mOdEnifg73C1sEsh
+	 eWXBwK1un9FDj4jhr8DG3dU3LVrzEYquLdCGeabQmiFRXR+IEys4RTh92EGTsKfLvj
+	 vS558nAZ9Uh8ZkKSXq7lpXrNYNpSjI0U2vEbKTNJVSsrVuFiGU0HHZu65l7Z7RPcKN
+	 uvO3eQ4qTPFUX5KAmvPgPXpSXTaj9qttMSBF1kwtMa9p5BZ1A1xCUDwzySw0zR+EmQ
+	 5IHCgU80dAx/YS8CVYHWd7iwoEbLv4/54uF6xM8HGIkDM+lSqem4eAUX8x+n5ghyth
+	 4tNRoqhYJZsfQ==
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-5aa28cde736so2788315eaf.1
+        for <patches@lists.linux.dev>; Wed, 08 May 2024 08:22:09 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXBeYDo7J7wFuV93u7D486t9PmY0e9kZ7RB2MyqNgKlKVHe/1A4NYlUfe1QVJ7191XHkwUKq3ejyzrO8bFayUU1F1v74ptAJg==
+X-Gm-Message-State: AOJu0Yx8bXJzlrfi9tR+ecLLs5+j6bAI+fR1yyZQBEy4uzj5j4A5hZxv
+	WXyRnvaWp7u1qGQn61KHlXgS/zGavHonMGS/sMR15MPMpBSP/gWMcsTkAFjzkkxz2aHJm2IiqCN
+	bLoz8EA1F/BQXIQnoB+cHtQvHNPw=
+X-Google-Smtp-Source: AGHT+IGjHQEBzb2A3WtWhJ9cAaHhTvD8SsmC4FBLoWmoQo8odbmOSyDXd3MvOug2Dy3zswo3tsF+kJr5h3reyQ1MRZs=
+X-Received: by 2002:a4a:8c6b:0:b0:5af:a5d8:c445 with SMTP id
+ 006d021491bc7-5b24ca90b69mr3095826eaf.0.1715181729390; Wed, 08 May 2024
+ 08:22:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240416211941.9369-1-tony.luck@intel.com> <20240416212214.9586-1-tony.luck@intel.com>
-In-Reply-To: <20240416212214.9586-1-tony.luck@intel.com>
+References: <20240424181245.41141-1-tony.luck@intel.com> <20240424181532.42178-1-tony.luck@intel.com>
+In-Reply-To: <20240424181532.42178-1-tony.luck@intel.com>
 From: Chanwoo Choi <chanwoo@kernel.org>
-Date: Thu, 9 May 2024 00:07:29 +0900
-X-Gmail-Original-Message-ID: <CAGTfZH3UTdOVd+RAY6jTVHWFRgsFNCoTM7g0TLaL8GQqVTM86Q@mail.gmail.com>
-Message-ID: <CAGTfZH3UTdOVd+RAY6jTVHWFRgsFNCoTM7g0TLaL8GQqVTM86Q@mail.gmail.com>
-Subject: Re: [PATCH v3 49/74] x86/cpu/vfm: Update drivers/extcon/extcon-axp288.c
+Date: Thu, 9 May 2024 00:21:32 +0900
+X-Gmail-Original-Message-ID: <CAGTfZH0vVrrJTeUTvAK0NrWUqiVB7yqzmpYj4PvZn4w10mGSOw@mail.gmail.com>
+Message-ID: <CAGTfZH0vVrrJTeUTvAK0NrWUqiVB7yqzmpYj4PvZn4w10mGSOw@mail.gmail.com>
+Subject: Re: [PATCH v4 53/71] extcon: axp288: Switch to new Intel CPU model defines
 To: Tony Luck <tony.luck@intel.com>
-Cc: MyungJoo Ham <myungjoo.ham@samsung.com>, Chanwoo Choi <cw00.choi@samsung.com>, 
-	Chen-Yu Tsai <wens@csie.org>, Hans de Goede <hdegoede@redhat.com>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
+Cc: Borislav Petkov <bp@alien8.de>, MyungJoo Ham <myungjoo.ham@samsung.com>, 
+	Chanwoo Choi <cw00.choi@samsung.com>, Hans de Goede <hdegoede@redhat.com>, 
+	Chen-Yu Tsai <wens@csie.org>, linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 17, 2024 at 6:31=E2=80=AFAM Tony Luck <tony.luck@intel.com> wro=
+On Thu, Apr 25, 2024 at 3:29=E2=80=AFAM Tony Luck <tony.luck@intel.com> wro=
 te:
 >
 > New CPU #defines encode vendor and family as well as model.
