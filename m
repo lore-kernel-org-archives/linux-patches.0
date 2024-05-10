@@ -1,71 +1,67 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337A6524DC
-	for <patches@lists.linux.dev>; Fri, 10 May 2024 21:24:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDD813BAE8
+	for <patches@lists.linux.dev>; Fri, 10 May 2024 21:24:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.14
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715376262; cv=fail; b=e9XZ32RBkHVRfkaVVJKdrgjl/TETtrn+cvNgsqFzKW0BXtX6tG3Og4han0ic/hevIQDiDpWG3I8yCEQmwgFv6ie1xgFvL24vXRuG4WlbVT/H6RoGr7ex3UErOPkc6ZBzTyiSY78ROACKyRJdP+w35RGm6zoHcTLUnXEVM4AdAME=
+	t=1715376298; cv=fail; b=s3BnbUToebgTVGXIB+yrBv9Ee7r/yEMYVqQneQc7DHcc2IEe9eTsYTzyJP61GisoxGp7DOSeXl5VdRNegWbur9Ee3sAthyutlJQTCM3qoy7YpsMm039xmslutWpQ54HYLcEDlTHRQ5zzj9ziaBXbrZv0IZ3U1P1w5A8GBibWKmM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715376262; c=relaxed/simple;
-	bh=K9YsHUEy5A2VuOBRx2VCuV53QMRYGU/QtgOcJITdgMY=;
+	s=arc-20240116; t=1715376298; c=relaxed/simple;
+	bh=er8E020ZWjUbGqnSvoeGSvi89Gfbv9oa0bU7GkgfCF0=;
 	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=Lrbq5BjtYNZtXgNQ+kFjwsQVZeSrZ/pFvStwpr/Gq9wjqFA/RricxKyr7Ix0eoJd+kCDyJ6u81ub+BA+Pe4mHiEhjcJY0XIYgrlONYwi1q9O95oMxQcPsS4faXVTBoUOv/+DIP1D5r/I6FYPGyvcVR1bTlYzZbF4o/idr+jX7O0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=BwPnV+OL; arc=fail smtp.client-ip=192.198.163.11
+	 Content-Type:MIME-Version; b=f8/oO1MGOwDHPBko4wPxk5PjLvedXnrgUmq9PVJAYqtCvq8ovG+iCeFIa9ZospYjFDfPa+alJw7oiBVaSCm6u5ynfQcMqTY889FqiRWcAmZ0BrPPMBsPwIAEKGdYppvgK1z3FSG/Q67MwcwShctWL9OUX5b19M23b7uEjeIEOIg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GmxyAzOi; arc=fail smtp.client-ip=192.198.163.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BwPnV+OL"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GmxyAzOi"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1715376260; x=1746912260;
+  t=1715376296; x=1746912296;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=K9YsHUEy5A2VuOBRx2VCuV53QMRYGU/QtgOcJITdgMY=;
-  b=BwPnV+OL9KS5dsrHuTkkjMaRdfuQphTxyNr/8h5ps7FC+TzyZ27QDKGC
-   NEwOEozALH05nVZLJoTXtv8Bea3TPwuUh5iASLlZVjXx4G8pJ4QVxz3+y
-   Oo00GzBt50bThXCJ/XcrDp6j9dKjBC+uhps94TmsmFsQHx9KWbFVElFjw
-   4kDnbWvdbUgx879A9fVZn9Rwfyyq9OxRhOKC9Ddchx6r17uP1FbOG76Fi
-   j4zpYKMnHAUIUaSj22ZgnzgvkZDiQu0gnmfl0YH3R6rJcNTMl5B19ULjG
-   O229tldThrZP7OuQfPbI4uELbiWfnm5EeaPyytu7D+BuPmDX/TZObNS33
-   Q==;
-X-CSE-ConnectionGUID: 56lvCXyMRsemyWULH0qPow==
-X-CSE-MsgGUID: msUg+QquTIW51weDQ6KMNg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11069"; a="21978722"
+  bh=er8E020ZWjUbGqnSvoeGSvi89Gfbv9oa0bU7GkgfCF0=;
+  b=GmxyAzOiPO/NRkVR9aLkjkc3XMDBC0ZgKkOAJnDtReiRBFNtvrLnVS2v
+   vigdnNeJLimF/5EpZUJq5NJFkN0E/k676FP60l+bO71mgzSlPh/7qtMpK
+   3nnEQyfu+IdKBO51Y9UtKE5EHs0UTZbSRUGoeZcL8IWCihBgEk21y3b+D
+   xxsh3mpeuTJoncvQgzQAusCJ+DlVbmfaONElFN/Jyt2u6W4/rsDfTDiuB
+   iQsxX1StlaWJgcUPmugHMAXXoRo6WLMlpo6SN73wKUOFIO66tAT3227Tw
+   uniEK5EluFDE1ekZEX399iF7dxBwlkJ8a5nMQEE8fkAKgRTA7cD6GxrZh
+   w==;
+X-CSE-ConnectionGUID: RXAEk++5TSONeucByNkXnQ==
+X-CSE-MsgGUID: FZTDzMRkRnS9wpjXTs6EXQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11069"; a="11593823"
 X-IronPort-AV: E=Sophos;i="6.08,152,1712646000"; 
-   d="scan'208";a="21978722"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2024 14:24:19 -0700
-X-CSE-ConnectionGUID: mU7j8oQdRPOjIDQO/HxO+g==
-X-CSE-MsgGUID: KkyNi2ozRgWGRkz/GYg3Fg==
+   d="scan'208";a="11593823"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2024 14:24:55 -0700
+X-CSE-ConnectionGUID: FEqWTjJJQgOPfIsA7P+68Q==
+X-CSE-MsgGUID: tkXZI78xT4ykHyQFKwC50w==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.08,152,1712646000"; 
-   d="scan'208";a="60587382"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
-  by orviesa002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 10 May 2024 14:24:19 -0700
-Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+   d="scan'208";a="34499179"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+  by orviesa005.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 10 May 2024 14:24:55 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Fri, 10 May 2024 14:24:19 -0700
-Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
- ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ 15.1.2507.35; Fri, 10 May 2024 14:24:54 -0700
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Fri, 10 May 2024 14:24:18 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Fri, 10 May 2024 14:24:18 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.101)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ 15.1.2507.35 via Frontend Transport; Fri, 10 May 2024 14:24:54 -0700
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.168)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Fri, 10 May 2024 14:24:18 -0700
+ 15.1.2507.35; Fri, 10 May 2024 14:24:54 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Wr0AerUAT8h7czZKdKuTzP6Ey8Kt8GNSqtdERWH4mQNklP+o3+MHqC9ua9Iz7UsQmvRWQ9N3JJCsh6EKKJOOui1ojKSYvEDd9M45hghmRJMAngbEIJ2ZxDk5fMk8ZtYMElMsfaCAtg3RuLlPm43brXMrI0VU+jpDGttU6mV/sXx77ohQGd4u2UAdcJQDEFtKuh3WkTbokwkeSVwXj2UtiDacHkQ1bzMs+LjRIXVoCllDEsnOgJhB4mUd4sns5dIu9K8vCu4qTDArKy3z8ELe8bplgHzyGhGZQNsxVPFB8dteZJtEFX4LcdRW9ZiZ6r1SBtcANKFK6qfXWuohZrXodg==
+ b=EO7mp/0zliFUh/mWTMW9Fk/5sA+jPBvxjNPww1bDmUaWBkCEELpbEXOCP3Zrf9eddfgndC7G2Aw06cQkBsvu7cGO5r+VCbLFXte7LCXSAcuRp9dHOgZbnfnZ87bOMYrH6C3fFxUAKhOart/g5O3CwfKKRJxq+FUYOkiIJ/arlSrm18wOxnqYYn+4/xyn1sLAHrerPM6H7iNdb3BWhZvsUPu71uBOc30RvYUQUCoZEPH7hppCMMvAuAhs+hjFM7eYqLr0F/hutQMhTp8fcsk3AqxBwV1KZJsImaTdBMCtmxawekdcFUV8tTE26ivE87KEJBc1ZrnGixhylOWzU9nVcQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zKC/Ezg4TksKxJCUyPdMf05izgZvVOWlB1EzwYRvoAM=;
- b=ULTBqZaXa6eP3Ns218ea+PcpY3umGP0Bkbtf/ejUYJmjowIyT5de7IHwb+zZnHJi4I8LUrhe61b27Y/PCvvbsLTTm+HsSH1Dff9K8Bkm1RAbV/oUsvBneq85IQ7bKMF00XnljZRFo8K5u6f/zIekOhbSiOg6iJ+Do8bLpNyneRHg0m2jxy3ksR2fRbQmebyX50TombM/3Lx3p11b/ZyrezA7dZgt5V9uZUIyZdIWujWcTZGgEKPB2w53+se0OAqLp9EyukUjY1Z/dZs3pSVf7wXX2211tIgKNnfcggTiWidRKCRDE6Q1TL+PJFla5L1HZNZM9BnJLwG+/cVu709LFg==
+ bh=3a8mizuZrSyFyLzisXO57svEt5m6IMsDx6iCTiIjPwk=;
+ b=GHLVqKiTvxWNi9gzlfg6mW/XmhlAk8NqU/xb2eQ3Gsi8VCtb311x9SKFVSwEH2xMy4HyjP+4y+OTX7ZFQSWMOY+Z5avVNOcEIPCMf9CWVKah8Wn7Icvvk1jjL1mOMsR12dTPslV9rtz87B7ncKipgtLTHkn183D/yTOycfT7eyFnZ3N3DZxSm+dfd7vfZr0VTwoldqesztd/wAs5dUcQDwIJLBRHL7LNyOWSXQPBs0jw7V6ZYzHapqaBMnTMH71PWvXtVq3xTdKkcnwWcT96VixmtnF2R3wyIAspbpJfIz/HgUPgNp+30Ldr9XK4+DzonUsp0+5j4tVS1U0gv8JWXA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -75,32 +71,32 @@ Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
  by CY8PR11MB6914.namprd11.prod.outlook.com (2603:10b6:930:5a::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.30; Fri, 10 May
- 2024 21:24:15 +0000
+ 2024 21:24:52 +0000
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::b394:287f:b57e:2519]) by SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::b394:287f:b57e:2519%4]) with mapi id 15.20.7544.046; Fri, 10 May 2024
- 21:24:15 +0000
-Message-ID: <0178e84e-d55f-47bf-b8b0-58e05fcaa108@intel.com>
-Date: Fri, 10 May 2024 14:24:13 -0700
+ 21:24:52 +0000
+Message-ID: <570e0c1d-8df8-45c6-a9a8-972e1ff2cf66@intel.com>
+Date: Fri, 10 May 2024 14:24:49 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 7/9] x86/resctrl: Add new monitor files for Sub-NUMA
- cluster (SNC) monitoring
-To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>, Maciej
- Wieczor-Retman <maciej.wieczor-retman@intel.com>, Peter Newman
+Subject: Re: [PATCH v17 8/9] x86/resctrl: Sub NUMA Cluster detection and
+ enable
+To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>,
+	"Maciej Wieczor-Retman" <maciej.wieczor-retman@intel.com>, Peter Newman
 	<peternewman@google.com>, James Morse <james.morse@arm.com>, Babu Moger
 	<babu.moger@amd.com>, Drew Fustini <dfustini@baylibre.com>, Dave Martin
 	<Dave.Martin@arm.com>
 CC: <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
 	<patches@lists.linux.dev>
 References: <20240503203325.21512-1-tony.luck@intel.com>
- <20240503203325.21512-8-tony.luck@intel.com>
+ <20240503203325.21512-9-tony.luck@intel.com>
 Content-Language: en-US
 From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <20240503203325.21512-8-tony.luck@intel.com>
+In-Reply-To: <20240503203325.21512-9-tony.luck@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR04CA0342.namprd04.prod.outlook.com
- (2603:10b6:303:8a::17) To SJ2PR11MB7573.namprd11.prod.outlook.com
+X-ClientProxiedBy: MW4PR04CA0337.namprd04.prod.outlook.com
+ (2603:10b6:303:8a::12) To SJ2PR11MB7573.namprd11.prod.outlook.com
  (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -110,559 +106,273 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|CY8PR11MB6914:EE_
-X-MS-Office365-Filtering-Correlation-Id: fae8193d-98a9-45c3-5711-08dc71378b4c
+X-MS-Office365-Filtering-Correlation-Id: 320f6a83-4925-4486-f688-08dc7137a118
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|376005|1800799015;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?UFFxQm1BUnZwNXNDSTB2MTFUL29CQTZsR1JFakx1NnF0TndodHptcVhObmxB?=
- =?utf-8?B?Q2wvY3p6anhmUVYwMWFxTGhNZFBJRWhiaERmdXZaWWYrSkc3c1hyYTFzZW1s?=
- =?utf-8?B?VXNhaDNyQ01qUFowV2dJYXV5V1NuZkRjVFk2OC9XeVloTVAxZkgzUDlEK2tq?=
- =?utf-8?B?TFNMQWdTQUlGMFJZb0dJUHFuaGxlTm5XS0VveUFIRlljSmtGWkpKZWVIK1Ex?=
- =?utf-8?B?ZGxxejFCcmZjVFUrTzBXbkNGYmpWS0RvbmtCSHJYYUc1SGMrT2hwc3NEU3pM?=
- =?utf-8?B?NnRZM0xPd3haWFVaV2ZYMy91VXA2elRydG9ma0hVZlF6dzl1QU0zcXVSaWZN?=
- =?utf-8?B?aCtUVkhONGF3N0JJVmxvQmxTRmluQXlPWWRVTHFHdnpPNmJFRXhkUnQ2UlZD?=
- =?utf-8?B?U0pXUm92SVRSRkltVERWWVZQRU1vZzVZeThBaFh5b0pYOU8xelcyNnoySGsy?=
- =?utf-8?B?Z2JVeXV1ckhwZTZ5am16d2orbk9uNjFsbTJGQ3pTeTNFN3ZSRFFORUQ4MFFM?=
- =?utf-8?B?VGkzVTd6UjAyRTNaNkFkYkJOOTBVRDFkRDhWQWtGNmNyRE1FRFB0cGo5YUJV?=
- =?utf-8?B?QVRnNE9CMDB0ZmtzbERTZ1E1bWZ5Q0lrV2QrTS9taWpmZXdmbnl6MzVvdHdZ?=
- =?utf-8?B?QnNndy9SK2swdTczYzM3TllCdmRxaGxQY3RHUDd1Y2laSWZ0c0pKdWpUUjE0?=
- =?utf-8?B?ZlhYcTNaQW9kQ0VVZ2E2UzVkbUlVN09lMi9PbmUrdXpZWkpKNlRIdTYzQUxQ?=
- =?utf-8?B?aEtyalA3bEc2b1BEMVR3eEE1MG10dlMwbCtKOFF3NkQ1dldnOGVKOTJyWFlH?=
- =?utf-8?B?bjVITmQ0K2M4SUJqSmwzZXVvUTFHZkJmL0syZW5hbkxxcmZSTEtjS2VscUE3?=
- =?utf-8?B?RVVDRGs2R3liOUNXR0tZQTVnSEp2d292K1B1RDJtWGxUNlQxYTNjQmlPQ0VV?=
- =?utf-8?B?Y0RaSTMyRjc1ZW9YQ0JaZTJhTnUrOTh5Y1BmdDZXRmZRMmI2UVFMNzhncGF0?=
- =?utf-8?B?OWpLWUFERUZsT3krSE9CMU1JZHgySjhTYkUzTUV5OUlUeXkxMjZJdTJhaW5P?=
- =?utf-8?B?QWhYN2g2c0NsTzE0QXU5b1ZZczc0NjhaWVE2aUl3dUZRYnNqL0NkejNGZUF1?=
- =?utf-8?B?NEtTc1dZeEYxaFJaZWhwdTUxbVNqUG5lbmlUYXlydlFTU3NwMEE1aitjS2lY?=
- =?utf-8?B?MTl4c2pxMHNZeXhvRlZnU3U0TVc2TVdtT0VTOXY1VjNGb0ZKVFdINDE0UG1Q?=
- =?utf-8?B?RUZQM3dzcUNkYlZ0SVhHTC9wUUEzTTJnN1lRMUcxRCtYbkNjNjhRZFpyVE1W?=
- =?utf-8?B?SzJLUUFyVmpxTW5iRCtuN0JPK0ZmYXF1MXVVOUE2NDBtSjJ6dkdLeldrUWZR?=
- =?utf-8?B?bmtoVUZrT080aHF3LzJEVElzalFCVkd4eXpsb3FxWlRZWVBTWUlYNmZSdzY3?=
- =?utf-8?B?VU03bFM5UCsyY0t0TDdoZTNYOVZaanpBV3MrMG14SHBHL3psb0x4QjN3M3F6?=
- =?utf-8?B?RXRIMDdVbHBWbFBNMVR5WXJiWUtQZ2dENUhSMjAwYVZmYThjOUtENWpUS1Ns?=
- =?utf-8?B?OEYrL3pSZGFWaHRpaTcxN1NGS2xzcktkNU9BcnY2Lzh4L1ZUVDVBZWN0SVNJ?=
- =?utf-8?B?VDB2WGh4aFozNzZrekRUWk5qMlZhdHo5YzdCWFpuODJ4TG5XRWtYc1JSOVN6?=
- =?utf-8?B?c0s0WDFSYmVZcW84NVEwQU1jMnlHdjNYSmZhdXVWekl3SEJqSkF6c2RRPT0=?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?QkRtZFdXMHVKSHh4QzF6R2k3Y21tdjI3SldQc3RmT3ZOY0YyV1NlVklpMzJV?=
+ =?utf-8?B?Z1N6VE5rTmtpcGs3Z1Jiam1qVG9qeC9FU21hd2hjTVpNRW82cStuMW5xcTRh?=
+ =?utf-8?B?ZVJLTkhaNFpQYkJyRU1jcFJ2SitZb29LQWxwZGZKZjF3ZW9uMEZzUDBldlIv?=
+ =?utf-8?B?YWh2dmM0eEM4UjA3L3JvaWNMbnhnSDJRd09kVllxcVVVa1JVUE5tOG5SN2tz?=
+ =?utf-8?B?VkVqOUErbjAvSTFrS3FZbURNK0NmNEVZeWNaa1VRUkNXNXRWZXAyOFNGeVNL?=
+ =?utf-8?B?U3BRR1lnTUxVUGtRay8rbGdOZE95bnMycTZ3eTZ5cDNHV2lBZXBLRXUvdzd0?=
+ =?utf-8?B?cmJTV2Q5K21IbGtmSEN1U09oWlpmSHorWVg0ZTY1clNTbVRIRm1oUWh0RFE3?=
+ =?utf-8?B?Z00rVDNKYTRZRW5NclgxSklIcTBBTm5idXlLZHVPb05wQ2F1aU5IYUZoYjA4?=
+ =?utf-8?B?NWZSSTdKSEFCbnBaaVVkT2dTM3pYY21BdmhuNFZJcVQ3UFN1d0NUa0ovT05x?=
+ =?utf-8?B?ZTA1b25GZ2ZTT291Rm16eHE5dHdLcmxKZ1BYVWFKTWZZMUVTd3gyc3NPYmVs?=
+ =?utf-8?B?eXZ0ZkRtZVBBSTRMd1hLZkUyalA0bUhEcjZWYzJLUngya0tlbjR6RHYwcHJJ?=
+ =?utf-8?B?Uk5rRHRQZDdFLzIrNVRKQXlJazR4enJtWDhXTVYzNmhOZFU2NXVOOVY0VXlJ?=
+ =?utf-8?B?Yi8yUVlNY0EvUVVzaCt4djhKNmFFYTNKa1ljK0d2SWdYUmNqSThpTVBMWkZU?=
+ =?utf-8?B?Y2tIcWI0TDhjaDV1Qm00WmdhTXVxcnUxdTNUciszRDhmZUdBb2s5SWFNdHlh?=
+ =?utf-8?B?T0ZMN3U5M0Q3MzdtWDN6NkpJTzRKV3JsS3cxSmdEbEM0L2dUSU9xOW91bGxX?=
+ =?utf-8?B?b3NidG84QnE4QTNtaStnNFJ5Y2ZranhUUlhZOTJTclJRV2x4cVlFbFYrVmVC?=
+ =?utf-8?B?OFpCL3B5WWplZlZieFNSMWJjN0N4UTQyU2M5SWlrRXU2NTRQanZUUFllMXE4?=
+ =?utf-8?B?RmVmazh5bGxkTG9zc1gyOEZDR2RDS0pjNVFra0EyV1MzS0ZGQzlvc1FjQUE0?=
+ =?utf-8?B?eHZHRVV5MUtiZmhPYlk1QkcwZ0tDa1pXV0xIM0xQdkt1WU1IaS9INnNRc1E3?=
+ =?utf-8?B?QWNFOEsrUTFOS1dkN3V3NDQ3SmFiZHc0L3c1b2JTQkNBNTJyYWRxNGszcGdI?=
+ =?utf-8?B?ek5IQ1Y5OFNZeXF4Z2dkVE0ycFQ5Vmk0N01IYkp5a3F1TW5LNlF1bjluZXlD?=
+ =?utf-8?B?NjRXbm5WU3hRekI2VUNhY01VMTl6NkZ3Q1l1U3NGSjNZYUROc0c4eWxUUG5K?=
+ =?utf-8?B?Y0l6bmlzZzhMc0g4d1FGTllMaW50RmhrZ1ZTZ0t5NDZKNlh4VkhiaGxTVnZo?=
+ =?utf-8?B?T2lIbWtISkZ1M1dWUEQ4NW0weDNvR0YvNUZqS1A0L0M1TVZDVWRHeGJNU3NN?=
+ =?utf-8?B?SzgweTBHNUo2anpPNW9iTW5IYkExS1cxY0pKeVhSWnppM1V5VVBnUU91NHYy?=
+ =?utf-8?B?R3RQZWI4UlR4SlVXVlJrR2VzTTlpdDRMOGwyTnFMVGdqWmxVbDFUdFdYcXlz?=
+ =?utf-8?B?L1dZbnBFL3JDNi8rbTBmRy9tMVpCUnhaWTFBVkd1SHk2Z1Qvc3NMaXhiUG1w?=
+ =?utf-8?Q?74fy7oDWOBZkHDyy19dcDUBAnQInmbrFlpWPAQJVt9ws=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366007)(376005)(1800799015);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aWU5OU55SzBYbG9LMFBJL1VhM1JqazllQ2NMRjcrUUE0bmtPNnF1eEJla2Z3?=
- =?utf-8?B?OWdCTzFoZjNyTE4vYVhESGJrOGJIZ2Rqb2VMWW9EcTFtOEt5V3pYQlI4cGRK?=
- =?utf-8?B?ZXlPZEtleW1Na0RFNHNDdm1PdVcvSm1oZDlUTTdFQmVMZktpR0JaOXRhMit0?=
- =?utf-8?B?YmdGakM0WFFKZFROY2FmMlRNUHJyQ2UwbWFTSnpoZ2Fzcm1YVWpPOFZKL1hX?=
- =?utf-8?B?d3NIT1NLbVpjNnYrQVpDWmorV2d1aU5ERDErampOb09xN0NKRDc3dk5nZ0Vq?=
- =?utf-8?B?cUoxdm1wSU5SU1VGOTN4Y1k4YW91dVRjS0hRdklHUEZUWDdRZ2MrVzVrcU1h?=
- =?utf-8?B?S01Va0dGSExpOHg1akdSbUFDZjdKWTFUWWpzcDl2NlEzNkQwMkNjZ0VOVmc4?=
- =?utf-8?B?M0RvRGlhSUFtTHlSK3NwODNyVU03enJGdGRMckZ2dUd2UXV1a1BIanJ2ZDNn?=
- =?utf-8?B?aTZqWk1uWnVINmxROGpZMUNhK1p5cUNac3hGQTBuUkwwV2p6elltOEFpTGtS?=
- =?utf-8?B?UENmaFc3d0VETDdyQVlod1hibk5JV09VQzBTb0VQY3R0WHR1Qmh4ZjN5MmQx?=
- =?utf-8?B?Q3BFeStlcW5nUW8xNUQ2SUR0V0ZXZzZPSG1NYlhlRkk1N0FudU0vOWlxTGhQ?=
- =?utf-8?B?U0dsc2kzSHRJNWxVNjdSYUZodmZ6VTlrMjNsbkpidWpIb0p0aTNldWQrb0RI?=
- =?utf-8?B?Y09zZWVCZ1kwS3l0MGtFZTViSXJLYkhvQjRwdkZRYkFZMWd2aWY1RElyaUxo?=
- =?utf-8?B?WkRtL3lRamIrVSt1b3NZSGZHaWRNU2lHSFhOT0ZDMU1jbWZpRlVPT0c1dmdy?=
- =?utf-8?B?cWRjY1d3RDJNd0hMd0lXNzRFUjJHUmtlT081M01ibVR1ZmREM1YvYzNFRkJW?=
- =?utf-8?B?OXJsNDFBODBQT0lTWCtjMDJTWnRCOGY3T29LNTNuSlJMQnorV29XaVlBWjRq?=
- =?utf-8?B?bTdvb252R3VqcWI4WlcxTWJmK2U3aHAxOFBBdzdYWFpOU2dPVXBTOGVjS1pO?=
- =?utf-8?B?UDNvYnpOSmMzazMxeUJQYm8wYTR5MDVpeTM5bFBZelAyWGZYRWN4d2JSV0ZO?=
- =?utf-8?B?eDRKQWR5eHZ0b0l1dnIxL1VrOS91UVR2Rm9YeVdnRzY3WWRPSCtScS9tT3Rz?=
- =?utf-8?B?R0czUm8zVmdxeVAzM0ZZVzlPUmRVYlFrTjNKY2VoS0ZqNXFiK1UxNU0wSEpa?=
- =?utf-8?B?NGlkZ2NSRTE3ZWc0WTZWZXZuYkpGem1EZWpPd29ydjRobmJRODNJMEQ3ZEx2?=
- =?utf-8?B?VHpBZHU3b3BaVkd5anlESnNQTlQvWm9ET2w3WXF6VEd2SWhmMm4vOEJaRTQz?=
- =?utf-8?B?WVVVTnBiUkNLRWc3eXlYTW95S3YzZlA3czIxU0lqMTdkeCt6bEdPMzd6NlIv?=
- =?utf-8?B?ZDBHVE5ZRGI0UEc4c0lMb3hzbnhOeko0TnpoVE9ZRTdtTWpkaWtrK2NoYlJj?=
- =?utf-8?B?bVdIZnNtdW4wSnVNUThXa2RsUkNVNFNjbnpaTUlDZFdHZkxSZnZwQzU2VEVl?=
- =?utf-8?B?VGJ1YVNqaGxCUkl4NjY1OHFTbThTQnNacVBEWUZWVHhYTzJKQjM2WmZia3hU?=
- =?utf-8?B?R1QzR0g0d1hBeURhelRwc282NjV1dWRUQnJHU1g0V1lxblYxU1dJRkJObFRt?=
- =?utf-8?B?ZU5MZmRPR2dhR2VGZFJEc08wK2xPNHpjSTR4WVY3ZzFGQ3ZmbFNOU1g5cGoy?=
- =?utf-8?B?clZaOWpKMmdVaXFDSDVkdjVLd3FTSkdhOVVNbG5PbjkxK0RFWkV1UFhwclBF?=
- =?utf-8?B?Zm9QOTVGbkJoQ0dyZXVlT0lNL0tMWEs5UmphLzBvN0d6VW1ZdmxqT3ZtSmtM?=
- =?utf-8?B?RmtncmgxcThCNThPNlJRVlMxbGI2WFhUMDA0bXpnYUF1YnAxM0xYNmE4SkFI?=
- =?utf-8?B?WFJlTVE2QnBhMnZPUUYzajZ3VUhzOFF3UE1tYVJHNE9lTGFNMG4ycnRaRjc5?=
- =?utf-8?B?MW9EcjdDTWxRZ1RvMkZmVGVNZHJWbERaWld4b3FreVl5T2dQbm5sOEZrQ3Jo?=
- =?utf-8?B?QkFhUWkzZVVhV2NRR3lwS2N3ZXp5VnptUG5vWi9iLzQzUU4rd1o4UmFEVUJ5?=
- =?utf-8?B?UHpNUVpSSFJHbGZ2L2ZzdDNiQVAvbWsvczRNNVBCSEhEVlFRaGh5dUJzZVEw?=
- =?utf-8?B?VDMwTGJkTGtvMjhuc2M4YzFyQm95czNKbVFXUkZqRUxJVStVN1VyOHNPbVMz?=
- =?utf-8?B?RHc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: fae8193d-98a9-45c3-5711-08dc71378b4c
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SzNBZDc2UnNKMFMrN3orUHhzSCtZemhDenExWVoySkYydnBuZ3ZGVHhSa1NG?=
+ =?utf-8?B?WFE3UlBRMXlJdFpjMUV0a2xwaFVIMG4veGZSOGYvcE1kWVpaRTZ3U1EyVi9W?=
+ =?utf-8?B?ajJ3MVlEc0lTdk15RW52dlBFKzMxWXJXTEx3OTBRci8xZDhVRmhwdXpRRHZB?=
+ =?utf-8?B?SDF4OElkeTFHQ25RWklYSU14ZXVtUFRHREIyZVIrV0dteVFEUGgrZjlBSW9m?=
+ =?utf-8?B?aE9lWnA0bTYxdHBMZ1djSldoZks2WTd4RDQ0MURnb1ZzM3QyQi9ESFRMbzZp?=
+ =?utf-8?B?a09hYk92OUcrSVdnK3BheGVaMkNyVVZOL2Nva1lVWWZWeVZLeDBBMXpzS2xs?=
+ =?utf-8?B?TWtKWjR0d1p5VUZVdjdkcTJBb3lwZVNGZFBNRVhKRjVBTE4rZStjUjFjMjZ3?=
+ =?utf-8?B?L3FYVUY0T29VVkVoWXFrRFkxM0R2Q3lvNGExZnNTY3dEd3l3WjB5cFFLVFZy?=
+ =?utf-8?B?VkZlNXJyTVN3QnlWdG9aMVFoUkZNYUdQR3RuRmVBVExhVGhRMHAwOGRWU0Zo?=
+ =?utf-8?B?Nk5PT0tCUUFhK2FNUHcyUzJKTUJ1V2tackRtOUo1ZEZlSU4wL3pvNVZKc215?=
+ =?utf-8?B?YkJWRE4xNFN6alAzeUFscUN1TFlVaGM1cDZDbUlOUUpQLzRrbHluV0RJRFNo?=
+ =?utf-8?B?MDdwbXZqdDZHcUd1UUZDRGJLWGVINWxWQktsQS9FUUxtTmRmMXVNUFdRL1JQ?=
+ =?utf-8?B?VmU0dndtWlY2T0pOZVArKzBUSWlnWjBrTEN2Z2RRNW85bHpDRTZZeER2eEcy?=
+ =?utf-8?B?MXcyTlpTZXFoam90a05hc0p1VnQvOWVFaGxGWmF3MUlZNkZoL1QxQVZFRlhi?=
+ =?utf-8?B?eUo3V1dTbTRiZ3hCWUZmckF1cU1qRDZxaW1Icm9ZS0ZhbXY0YTlYWkQ5V3Bz?=
+ =?utf-8?B?MGFCZHJSOTJFNERRaWJZWTgwVHdQYkVwcDNvcVJ3b0F6V2l0UEZUU3BKYzh1?=
+ =?utf-8?B?ZGFNTmJjNVBMdC80dHFnZGxwbnNLR0d3czZoUkxnZ3lOUWlNYWEvYVNFNEs3?=
+ =?utf-8?B?elVvUjJMRWxnclNOUDRqc2RBRFZocjBTZ0RiTHdRQmlkaTdpMjFVVWMrdnZU?=
+ =?utf-8?B?dERNTWFYZFdaSGdPdm85MHVVQjhYM2JRMlY2Z0FUVEt6Yi9pcENIa0NhaDRY?=
+ =?utf-8?B?TEhtZVJTMjYrWjIrYnlmUG5HL2FmbTU4Tno0NnhNNFJoaUlsZVYyNFZ5LzRG?=
+ =?utf-8?B?SWZMQkxPVkdWRFlKUGlXdTIwNUJLUnBwQVZMTjFRdmNJdFl3NEt1dndnN2hm?=
+ =?utf-8?B?VThRNnZyUVU5cXR4YkppRDNyVmlxam9hMGl0c05nR04vcUtReGpLK2FTN2x2?=
+ =?utf-8?B?KzJ3d0RDdUJzWWlpZDJiRnl0dEFHZTNPQlpvUWRFeStEOU5mRWdCbk1WL3Uy?=
+ =?utf-8?B?NVNhNVU5Zml6MXJZUFVjaEhEWmRjL0dQc0pLYXFrRkZGMFBTWS9ibjNxMGF1?=
+ =?utf-8?B?dDZjM0xyVlR6eFhYd256VHJ0QitMMHQ2cDY1VVJ6U0VudzFoNENGUmJTMWp4?=
+ =?utf-8?B?QlJJQnplSmFOUjZEMDZzTVNiV05KNzlZRnp6OHJrVUhtdDVJaldUVXA1SHFl?=
+ =?utf-8?B?VTlvVVhpMExLMnNVSUdhdDJCSFJkNGRZMmM2QW5JZ29sYlFlZ0liSHpoNG0w?=
+ =?utf-8?B?V3lGYmlmV0kxR2JEdTB4QjhYbFIwMC9RbmowT3V2UlFsdEtGV3RYM2c1bU9r?=
+ =?utf-8?B?Z1prTEU5ZUY1SFFzVFFKckpzcGxhSHAwOFFSSytDbEc4VDdOT1hvNkhDR2ly?=
+ =?utf-8?B?cGJEYUJlOFgwSzJJNkFWUHZONVVGUDlxVG5MaE5UVEJBem5lcmhCZ1ZkbUow?=
+ =?utf-8?B?bi84bmx6WHdNUzNDaG9PNUVJVFM3ZkhVQjdYNFQ1WDNpT2JKUkx4TVN3Tjhh?=
+ =?utf-8?B?WkpUVlV1SG1MOXEvUFdKNTh3OVVDQUIzRVF2V3lYRWVERFpjVllRU01WVGN5?=
+ =?utf-8?B?Q2kvK0I5dXlwaVF1ZjN5YUpZT05ZeDZRTFR3SUhxZzE3QSttZTA5YVg4aXRC?=
+ =?utf-8?B?YlNZQ1d3cWpLYk51M01NV2lvRlNHanVnMkJZNGIvNjlKMElVQzJQL2R2U1dT?=
+ =?utf-8?B?RkdldS92Z0pTRDdkSzcwbm1tZzlKcG12QjNaU0Q1QWt6T2F3TDVjYnZFSjU3?=
+ =?utf-8?B?YzV1MWNQajI4Wm5WWHludXpaNFpWY05WMERPbWFkajhQNjcrYzgxWFdFWGx1?=
+ =?utf-8?B?a2c9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 320f6a83-4925-4486-f688-08dc7137a118
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 May 2024 21:24:15.5390
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 May 2024 21:24:52.0702
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: x0Eli6HpunVWs4527+vs3OeV7Qh2lgrEPaevHeDnJyErW5hwq0MAnzPveI19J3ZVRUNES9bRFFqhKZRhATVMeKVI2+3islUC6stYMnvG7bg=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8R2o1JmGkm8Mn9Qnux3q5nuopVy6GnIZ+kUgy5JJ3HSAjXFvCFsuQBpfuv8lZmOU7HnNx0qMd9UyykxwCmqD1AS4HmMIIK3aYps3qc2KyVg=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR11MB6914
 X-OriginatorOrg: intel.com
 
 Hi Tony,
 
 On 5/3/2024 1:33 PM, Tony Luck wrote:
-
-(Could you please start the changelog with some context?)
-
-> Add a field to the rdt_resource structure to track whether monitoring
-> resources are tracked by hardware at a different scope (NODE) from
-> the legacy L3 scope.
-
-This seems to describe @mon_scope that was introduced in patch #3?
-
+> There isn't a simple hardware bit that indicates whether a CPU is
+> running in Sub NUMA Cluster (SNC) mode. Infer the state by comparing
+> the ratio of NUMA nodes to L3 cache instances.
 > 
-> Add a field to the rdt_mon_domain structure to track the L3 cache id
-> which can be used to find all the domains that need resource counts
-> summed to provide accurate values in the legacy monitoring files.
-
-Why is this field necessary? Can this not be obtained dynamically?
-
-
+> When SNC mode is detected, reconfigure the RMID counters by updating
+> the MSR_RMID_SNC_CONFIG MSR on each socket as CPUs are seen.
 > 
-> When SNC is enabled create extra directories and files in each mon_data
-> directory to report per-SNC node counts.
-
-The above cryptic sentence is the closest the changelog gets to explaining
-what this patch aims to do. Could you please enhance the changelog to
-describe what this patch aims to do and more importantly how it goes about
-doing so? This patch contains a significant number of undocumented quirks 
-and between the cryptic changelog and undocumented quirks in the patch I find
-it very hard to understand what it is trying to do and why.
-
+> Clearing bit zero of the MSR divides the RMIDs and renumbers the ones
+> on the second SNC node to start from zero.
 > 
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 > ---
->  include/linux/resctrl.h                   |   4 +
->  arch/x86/kernel/cpu/resctrl/internal.h    |   5 +-
->  arch/x86/kernel/cpu/resctrl/core.c        |   2 +
->  arch/x86/kernel/cpu/resctrl/ctrlmondata.c |   1 +
->  arch/x86/kernel/cpu/resctrl/monitor.c     |  52 +++++++---
->  arch/x86/kernel/cpu/resctrl/rdtgroup.c    | 115 +++++++++++++++++-----
->  6 files changed, 137 insertions(+), 42 deletions(-)
+>  arch/x86/include/asm/msr-index.h   |   1 +
+>  arch/x86/kernel/cpu/resctrl/core.c | 119 +++++++++++++++++++++++++++++
+>  2 files changed, 120 insertions(+)
 > 
-> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-> index 5c7775343c3e..2f8ac925bc18 100644
-> --- a/include/linux/resctrl.h
-> +++ b/include/linux/resctrl.h
-> @@ -96,6 +96,7 @@ struct rdt_ctrl_domain {
->  /**
->   * struct rdt_mon_domain - group of CPUs sharing a resctrl monitor resource
->   * @hdr:		common header for different domain types
-> + * @display_id:		shared id used to identify domains to be summed for display
->   * @rmid_busy_llc:	bitmap of which limbo RMIDs are above threshold
->   * @mbm_total:		saved state for MBM total bandwidth
->   * @mbm_local:		saved state for MBM local bandwidth
-> @@ -106,6 +107,7 @@ struct rdt_ctrl_domain {
->   */
->  struct rdt_mon_domain {
->  	struct rdt_domain_hdr		hdr;
-> +	int				display_id;
-
-(it is not clear to me why this is needed)
-
->  	unsigned long			*rmid_busy_llc;
->  	struct mbm_state		*mbm_total;
->  	struct mbm_state		*mbm_local;
-> @@ -187,6 +189,7 @@ enum resctrl_scope {
->   * @num_rmid:		Number of RMIDs available
->   * @ctrl_scope:		Scope of this resource for control functions
->   * @mon_scope:		Scope of this resource for monitor functions
-> + * @mon_display_scope:	Scope for user reporting monitor functions
->   * @cache:		Cache allocation related data
->   * @membw:		If the component has bandwidth controls, their properties.
->   * @ctrl_domains:	RCU list of all control domains for this resource
-> @@ -207,6 +210,7 @@ struct rdt_resource {
->  	int			num_rmid;
->  	enum resctrl_scope	ctrl_scope;
->  	enum resctrl_scope	mon_scope;
-> +	enum resctrl_scope	mon_display_scope;
->  	struct resctrl_cache	cache;
->  	struct resctrl_membw	membw;
->  	struct list_head	ctrl_domains;
-> diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-> index 49440f194253..d41b388bb499 100644
-> --- a/arch/x86/kernel/cpu/resctrl/internal.h
-> +++ b/arch/x86/kernel/cpu/resctrl/internal.h
-> @@ -132,6 +132,7 @@ struct mon_evt {
->   *                     as kernfs private data
->   * @rid:               Resource id associated with the event file
->   * @evtid:             Event id associated with the event file
-> + * @sum:               Sum across domains with same display_id
->   * @domid:             The domain to which the event file belongs
->   * @u:                 Name of the bit fields struct
->   */
-> @@ -139,7 +140,8 @@ union mon_data_bits {
->  	void *priv;
->  	struct {
->  		unsigned int rid		: 10;
-> -		enum resctrl_event_id evtid	: 8;
-> +		enum resctrl_event_id evtid	: 7;
-> +		unsigned int sum		: 1;
->  		unsigned int domid		: 14;
->  	} u;
-
-(No explanation about why evtid had to shrink and why it is ok
-to do so.)
-
->  };
-> @@ -150,6 +152,7 @@ struct rmid_read {
->  	struct rdt_mon_domain	*d;
->  	enum resctrl_event_id	evtid;
->  	bool			first;
-> +	bool			sumdomains;
->  	int			err;
->  	u64			val;
->  	void			*arch_mon_ctx;
+> diff --git a/arch/x86/include/asm/msr-index.h b/arch/x86/include/asm/msr-index.h
+> index e72c2b872957..ce54a1ffe1e5 100644
+> --- a/arch/x86/include/asm/msr-index.h
+> +++ b/arch/x86/include/asm/msr-index.h
+> @@ -1165,6 +1165,7 @@
+>  #define MSR_IA32_QM_CTR			0xc8e
+>  #define MSR_IA32_PQR_ASSOC		0xc8f
+>  #define MSR_IA32_L3_CBM_BASE		0xc90
+> +#define MSR_RMID_SNC_CONFIG		0xca0
+>  #define MSR_IA32_L2_CBM_BASE		0xd10
+>  #define MSR_IA32_MBA_THRTL_BASE		0xd50
+>  
 > diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-> index cb181796f73b..a949e69308cd 100644
+> index a949e69308cd..6a1727ea1dfe 100644
 > --- a/arch/x86/kernel/cpu/resctrl/core.c
 > +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> @@ -71,6 +71,7 @@ struct rdt_hw_resource rdt_resources_all[] = {
->  			.name			= "L3",
->  			.ctrl_scope		= RESCTRL_L3_CACHE,
->  			.mon_scope		= RESCTRL_L3_CACHE,
-> +			.mon_display_scope	= RESCTRL_L3_CACHE,
->  			.ctrl_domains		= ctrl_domain_init(RDT_RESOURCE_L3),
->  			.mon_domains		= mon_domain_init(RDT_RESOURCE_L3),
->  			.parse_ctrlval		= parse_cbm,
-> @@ -613,6 +614,7 @@ static void domain_add_cpu_mon(int cpu, struct rdt_resource *r)
+> @@ -21,7 +21,9 @@
+>  #include <linux/err.h>
+>  #include <linux/cacheinfo.h>
+>  #include <linux/cpuhotplug.h>
+> +#include <linux/mod_devicetable.h>
 >  
->  	d = &hw_dom->d_resctrl;
->  	d->hdr.id = id;
-> +	d->display_id = get_domain_id_from_scope(cpu, r->mon_display_scope);
->  	d->hdr.type = RESCTRL_MON_DOMAIN;
->  	cpumask_set_cpu(cpu, &d->hdr.cpu_mask);
->  
-> diff --git a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-> index 3b9383612c35..a4ead8ffbaf3 100644
-> --- a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-> +++ b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-> @@ -575,6 +575,7 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
->  	resid = md.u.rid;
->  	domid = md.u.domid;
->  	evtid = md.u.evtid;
-> +	rr.sumdomains = md.u.sum;
->  
->  	r = &rdt_resources_all[resid].r_resctrl;
->  	hdr = rdt_find_domain(&r->mon_domains, domid, NULL);
-> diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-> index d0bbeb410750..2e795b261b6f 100644
-> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
-> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-> @@ -16,6 +16,7 @@
->   */
->  
->  #include <linux/cpu.h>
-> +#include <linux/cacheinfo.h>
-
-Can this be alphabetical?
-
->  #include <linux/module.h>
->  #include <linux/sizes.h>
->  #include <linux/slab.h>
-> @@ -187,18 +188,8 @@ static inline struct rmid_entry *__rmid_entry(u32 idx)
->  
->  static int __rmid_read(u32 rmid, enum resctrl_event_id eventid, u64 *val)
->  {
-> -	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
-> -	int cpu = smp_processor_id();
-> -	int rmid_offset = 0;
->  	u64 msr_val;
->  
-> -	/*
-> -	 * When SNC mode is on, need to compute the offset to read the
-> -	 * physical RMID counter for the node to which this CPU belongs.
-> -	 */
-> -	if (snc_nodes_per_l3_cache > 1)
-> -		rmid_offset = (cpu_to_node(cpu) % snc_nodes_per_l3_cache) * r->num_rmid;
-> -
-
-This removes code that was just added in previous patch. Can the end goal
-be reached without this churn? I expect doing so will make this patch easier to
-follow.
-
->  	/*
->  	 * As per the SDM, when IA32_QM_EVTSEL.EvtID (bits 7:0) is configured
->  	 * with a valid event code for supported resource type and the bits
-> @@ -207,7 +198,7 @@ static int __rmid_read(u32 rmid, enum resctrl_event_id eventid, u64 *val)
->  	 * IA32_QM_CTR.Error (bit 63) and IA32_QM_CTR.Unavailable (bit 62)
->  	 * are error bits.
->  	 */
-> -	wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid + rmid_offset);
-> +	wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid);
->  	rdmsrl(MSR_IA32_QM_CTR, msr_val);
->  
->  	if (msr_val & RMID_VAL_ERROR)
-> @@ -291,7 +282,7 @@ int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_mon_domain *d,
->  
->  	resctrl_arch_rmid_read_context_check();
->  
-> -	if (!cpumask_test_cpu(smp_processor_id(), &d->hdr.cpu_mask))
-> +	if (d->display_id != get_cpu_cacheinfo_id(smp_processor_id(), r->mon_display_scope))
->  		return -EINVAL;
-
-Does this mean that when SNC is enabled then reading data for an event within a particular
-monitor domain ("node scope") can read its data from any CPU within the L3 domain
-("mon_display_scope") even if that CPU is not associated with the node for which it
-is reading the data?
-
-If so this really turns many resctrl assumptions and architecture on its head since the
-resctrl expectation is that only CPUs within a domain's cpumask can be used to interact
-with the domain. This in turn makes this seemingly general feature actually SNC specific.
-
-  
->  	ret = __rmid_read(rmid, eventid, &msr_val);
-> @@ -556,7 +547,7 @@ static struct mbm_state *get_mbm_state(struct rdt_mon_domain *d, u32 closid,
->  	}
+> +#include <asm/cpu_device_id.h>
+>  #include <asm/intel-family.h>
+>  #include <asm/resctrl.h>
+>  #include "internal.h"
+> @@ -746,11 +748,42 @@ static void clear_closid_rmid(int cpu)
+>  	      RESCTRL_RESERVED_CLOSID);
 >  }
 >  
-> -static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
-> +static int ___mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr, u64 *rrval)
->  {
->  	struct mbm_state *m;
->  	u64 tval = 0;
-> @@ -574,11 +565,44 @@ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
->  	if (rr->err)
->  		return rr->err;
->  
-> -	rr->val += tval;
-> +	*rrval += tval;
->  
-
-Why is rrval needed?
-
->  	return 0;
->  }
->  
-> +static u32 get_node_rmid(struct rdt_resource *r, struct rdt_mon_domain *d, u32 rmid)
+> +/*
+> + * The power-on reset value of MSR_RMID_SNC_CONFIG is 0x1
+> + * which indicates that RMIDs are configured in legacy mode.
+> + * This mode is incompatible with Linux resctrl semantics
+> + * as RMIDs are partitioned between SNC nodes, which requires
+> + * a user to know which RMID is allocated to a task.
+> + * Clearing bit 0 reconfigures the RMID counters for use
+> + * in Sub NUMA Cluster mode. This mode is better for Linux.
+> + * The RMID space is divided between all SNC nodes with the
+> + * RMIDs renumbered to start from zero in each node when
+> + * couning operations from tasks. Code to read the counters
+> + * must adjust RMID counter numbers based on SNC node. See
+> + * __rmid_read() for code that does this.
+> + */
+> +static void snc_remap_rmids(int cpu)
 > +{
-> +	int cpu = cpumask_any(&d->hdr.cpu_mask);
+> +	u64 val;
 > +
-> +	return rmid + (cpu_to_node(cpu) % snc_nodes_per_l3_cache) * r->num_rmid;
+> +	/* Only need to enable once per package. */
+> +	if (cpumask_first(topology_core_cpumask(cpu)) != cpu)
+> +		return;
+> +
+> +	rdmsrl(MSR_RMID_SNC_CONFIG, val);
+> +	val &= ~BIT_ULL(0);
+> +	wrmsrl(MSR_RMID_SNC_CONFIG, val);
 > +}
 > +
-> +static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+>  static int resctrl_arch_online_cpu(unsigned int cpu)
+>  {
+>  	struct rdt_resource *r;
+>  
+>  	mutex_lock(&domain_list_lock);
+> +
+> +	if (snc_nodes_per_l3_cache > 1)
+> +		snc_remap_rmids(cpu);
+> +
+>  	for_each_capable_rdt_resource(r)
+>  		domain_add_cpu(cpu, r);
+>  	mutex_unlock(&domain_list_lock);
+> @@ -990,11 +1023,97 @@ static __init bool get_rdt_resources(void)
+>  	return (rdt_mon_capable || rdt_alloc_capable);
+>  }
+>  
+> +/* CPU models that support MSR_RMID_SNC_CONFIG */
+> +static const struct x86_cpu_id snc_cpu_ids[] __initconst = {
+> +	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_X, 0),
+> +	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X, 0),
+> +	X86_MATCH_INTEL_FAM6_MODEL(EMERALDRAPIDS_X, 0),
+> +	X86_MATCH_INTEL_FAM6_MODEL(GRANITERAPIDS_X, 0),
+> +	X86_MATCH_INTEL_FAM6_MODEL(ATOM_CRESTMONT_X, 0),
+> +	{}
+> +};
+> +
+> +/*
+> + * There isn't a simple hardware bit that indicates whether a CPU is running
+> + * in Sub NUMA Cluster (SNC) mode. Infer the state by comparing the
+> + * ratio of NUMA nodes to L3 cache instances.
+> + * It is not possible to accurately determine SNC state if the system is
+> + * booted with a maxcpus=N parameter. That distorts the ratio of SNC nodes
+> + * to L3 caches. It will be OK if system is booted with hyperthreading
+> + * disabled (since this doesn't affect the ratio).
+> + */
+> +static __init int snc_get_config(void)
 > +{
-> +	struct rdt_mon_domain *d;
-> +	struct rmid_read tmp;
-> +	u32 node_rmid;
-> +	int ret = 0;
+> +	unsigned long *node_caches;
+> +	int mem_only_nodes = 0;
+> +	int cpu, node, ret;
+> +	int num_l3_caches;
+> +	int cache_id;
 > +
-> +	if (!rr->sumdomains) {
-> +		node_rmid = get_node_rmid(rr->r, rr->d, rmid);
-> +		return ___mon_event_count(closid, node_rmid, rr, &rr->val);
-> +	}
+> +	if (!x86_match_cpu(snc_cpu_ids))
+> +		return 1;
 > +
-> +	tmp = *rr;
-> +	list_for_each_entry(d, &rr->r->mon_domains, hdr.list) {
-> +		if (d->display_id == rr->d->display_id) {
-> +			tmp.d = d;
-> +			node_rmid = get_node_rmid(rr->r, d, rmid);
-> +			ret = ___mon_event_count(closid, node_rmid, &tmp, &rr->val);
-
-If I understand correctly this function is run per IPI on a CPU associated
-with one of the monitor domains (depends on which one came online first),
-and then it will read the monitor data of the other domains from the same
-CPU? This is unexpected since the expectation is that monitor data
-needs to be read from a CPU associated with the domain it is
-reading data for.
-
-Also, providing tmp as well as rr->val seems unnecessary?
-
-> +			if (ret)
-> +				break;
+> +	node_caches = bitmap_zalloc(num_possible_cpus(), GFP_KERNEL);
+> +	if (!node_caches)
+> +		return 1;
+> +
+> +	cpus_read_lock();
+> +
+> +	if (num_online_cpus() != num_present_cpus())
+> +		pr_warn("Some CPUs offline, SNC detection may be incorrect\n");
+> +
+> +	for_each_node(node) {
+> +		cpu = cpumask_first(cpumask_of_node(node));
+> +		if (cpu < nr_cpu_ids) {
+> +			cache_id = get_cpu_cacheinfo_id(cpu, 3);
+> +			if (cache_id != -1)
+> +				set_bit(cache_id, node_caches);
+> +		} else {
+> +			mem_only_nodes++;
 > +		}
+> +	}
+> +	cpus_read_unlock();
+> +
+> +	num_l3_caches = bitmap_weight(node_caches, num_possible_cpus());
+> +	kfree(node_caches);
+> +
+> +	if (!num_l3_caches)
+> +		goto insane;
+> +
+> +	/* sanity check #1: Number of CPU nodes must be multiple of num_l3_caches */
+> +	if ((nr_node_ids - mem_only_nodes) % num_l3_caches)
+> +		goto insane;
+> +
+> +	ret = (nr_node_ids - mem_only_nodes) / num_l3_caches;
+> +
+> +	/* sanity check #2: Only valid results are 1, 2, 3, 4 */
+> +	switch (ret) {
+> +	case 1:
+> +		break;
+> +	case 2:
+> +	case 3:
+> +	case 4:
+> +		pr_info("Sub-NUMA cluster detected with %d nodes per L3 cache\n", ret);
+> +		rdt_resources_all[RDT_RESOURCE_L3].r_resctrl.mon_scope = RESCTRL_NODE;
+> +		break;
+> +	default:
+> +		goto insane;
 > +	}
 > +
 > +	return ret;
+> +insane:
+> +	pr_warn("SNC insanity: CPU nodes = %d num_l3_caches = %d\n",
+> +		(nr_node_ids - mem_only_nodes), num_l3_caches);
+> +	return 1;
 > +}
-> +
->  /*
->   * mbm_bw_count() - Update bw count from values previously read by
->   *		    __mon_event_count().
-> diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> index 0923492a8bd0..a56ae08ca255 100644
-> --- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> +++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> @@ -3011,57 +3011,118 @@ static int mon_addfile(struct kernfs_node *parent_kn, const char *name,
->   * and monitor groups with given domain id.
->   */
->  static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
-> -					   unsigned int dom_id)
-> +					   struct rdt_mon_domain *d)
->  {
->  	struct rdtgroup *prgrp, *crgrp;
-> +	struct rdt_mon_domain *dom;
-> +	bool remove_all = true;
-> +	struct kernfs_node *kn;
-> +	char subname[32];
->  	char name[32];
->  
-> +	sprintf(name, "mon_%s_%02d", r->name, d->display_id);
-> +	if (r->mon_scope != r->mon_display_scope) {
-> +		int count = 0;
-> +
-> +		list_for_each_entry(dom, &r->mon_domains, hdr.list)
-> +			if (d->display_id == dom->display_id)
-> +				count++;
-> +		if (count > 1) {
-> +			remove_all = false;
-> +			sprintf(subname, "mon_sub_%s_%02d", r->name, d->hdr.id);
-> +		}
-> +	}
 
-
-This seems awkward. I wonder if it may not be simpler to just
-remove the directory and on completion check if the parent has
-any subdirectories left and remove the parent if there are no
-subdirectories remaining. Something possible via reading the inode's
-i_nlink that is accessible via kernfs_get_inode(). What do you think?
-
-> +
->  	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
-> -		sprintf(name, "mon_%s_%02d", r->name, dom_id);
-> -		kernfs_remove_by_name(prgrp->mon.mon_data_kn, name);
-> +		if (remove_all) {
-> +			kernfs_remove_by_name(prgrp->mon.mon_data_kn, name);
-> +		} else {
-> +			kn = kernfs_find_and_get_ns(prgrp->mon.mon_data_kn, name, NULL);
-> +			if (kn)
-> +				kernfs_remove_by_name(kn, subname);
-> +		}
->  
-> -		list_for_each_entry(crgrp, &prgrp->mon.crdtgrp_list, mon.crdtgrp_list)
-> -			kernfs_remove_by_name(crgrp->mon.mon_data_kn, name);
-> +		list_for_each_entry(crgrp, &prgrp->mon.crdtgrp_list, mon.crdtgrp_list) {
-> +			if (remove_all) {
-> +				kernfs_remove_by_name(crgrp->mon.mon_data_kn, name);
-> +			} else {
-> +				kn = kernfs_find_and_get_ns(prgrp->mon.mon_data_kn, name, NULL);
-> +				if (kn)
-> +					kernfs_remove_by_name(kn, subname);
-> +			}
-> +		}
->  	}
->  }
->  
-> -static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
-> -				struct rdt_mon_domain *d,
-> -				struct rdt_resource *r, struct rdtgroup *prgrp)
-> +static int mon_add_all_files(struct kernfs_node *kn, struct rdt_mon_domain *d,
-> +			     struct rdt_resource *r, struct rdtgroup *prgrp,
-> +			     bool do_sum)
->  {
->  	union mon_data_bits priv;
-> -	struct kernfs_node *kn;
->  	struct mon_evt *mevt;
->  	struct rmid_read rr;
-> -	char name[32];
->  	int ret;
->  
-> -	sprintf(name, "mon_%s_%02d", r->name, d->hdr.id);
-> -	/* create the directory */
-> -	kn = kernfs_create_dir(parent_kn, name, parent_kn->mode, prgrp);
-> -	if (IS_ERR(kn))
-> -		return PTR_ERR(kn);
-> -
-> -	ret = rdtgroup_kn_set_ugid(kn);
-> -	if (ret)
-> -		goto out_destroy;
-> -
-> -	if (WARN_ON(list_empty(&r->evt_list))) {
-> -		ret = -EPERM;
-> -		goto out_destroy;
-> -	}
-> +	if (WARN_ON(list_empty(&r->evt_list)))
-> +		return -EPERM;
->  
->  	priv.u.rid = r->rid;
->  	priv.u.domid = d->hdr.id;
-> +	priv.u.sum = do_sum;
->  	list_for_each_entry(mevt, &r->evt_list, list) {
->  		priv.u.evtid = mevt->evtid;
->  		ret = mon_addfile(kn, mevt->name, priv.priv);
->  		if (ret)
-> -			goto out_destroy;
-> +			return ret;
->  
->  		if (is_mbm_event(mevt->evtid))
->  			mon_event_read(&rr, r, d, prgrp, mevt->evtid, true);
-
-I do not think that the "do_sum" file should be doing any initialization, this
-will be repeated for the "real" mon domain, no?
-
->  	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
-> +				struct rdt_mon_domain *d,
-> +				struct rdt_resource *r, struct rdtgroup *prgrp)
-> +{
-> +	struct kernfs_node *kn, *ckn;
-> +	char name[32];
-> +	bool do_sum;
-> +	int ret;
-> +
-> +	do_sum = r->mon_scope != r->mon_display_scope;
-> +	sprintf(name, "mon_%s_%02d", r->name, d->display_id);
-> +	kn = kernfs_find_and_get_ns(parent_kn, name, NULL);
-> +	if (!kn) {
-> +		/* create the directory */
-> +		kn = kernfs_create_dir(parent_kn, name, parent_kn->mode, prgrp);
-> +		if (IS_ERR(kn))
-> +			return PTR_ERR(kn);
-> +
-> +		ret = rdtgroup_kn_set_ugid(kn);
-> +		if (ret)
-> +			goto out_destroy;
-> +		ret = mon_add_all_files(kn, d, r, prgrp, do_sum);
-
-This does not look right. If I understand correctly the private data
-of these event files will have whichever mon domain came up first as
-its domain id. That seems completely arbitrary and does not reflect
-accurate state for this file. Since "do_sum" is essentially a "flag"
-on how this file can be treated, can its "dom_id" not rather be
-the "monitor scope domain id"? Could that not help to eliminate 
-that per-domain "display_id"?
-
-> +		if (ret)
-> +			goto out_destroy;
-> +	}
-> +
-> +	if (do_sum) {
-> +		sprintf(name, "mon_sub_%s_%02d", r->name, d->hdr.id);
-> +		ckn = kernfs_create_dir(kn, name, parent_kn->mode, prgrp);
-> +		if (IS_ERR(ckn))
-> +			goto out_destroy;
-> +
-> +		ret = rdtgroup_kn_set_ugid(ckn);
-> +		if (ret)
-> +			goto out_destroy;
-> +
-> +		ret = mon_add_all_files(ckn, d, r, prgrp, false);
-> +		if (ret)
-> +			goto out_destroy;
-> +	}
-> +
->  	kernfs_activate(kn);
->  	return 0;
->  
-> @@ -3077,8 +3138,8 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
->  static void mkdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
->  					   struct rdt_mon_domain *d)
->  {
-> -	struct kernfs_node *parent_kn;
->  	struct rdtgroup *prgrp, *crgrp;
-> +	struct kernfs_node *parent_kn;
->  	struct list_head *head;
->  
->  	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
-> @@ -3950,7 +4011,7 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d
->  	 * per domain monitor data directories.
->  	 */
->  	if (resctrl_mounted && resctrl_arch_mon_capable())
-> -		rmdir_mondata_subdir_allrdtgrp(r, d->hdr.id);
-> +		rmdir_mondata_subdir_allrdtgrp(r, d);
->  
->  	if (is_mbm_enabled())
->  		cancel_delayed_work(&d->mbm_over);
+I find it confusing how dramatically this SNC detection code changed without
+any explanations. This detection seems to match the SNC detection code from v16 but
+after v16 you posted a new SNC detection implementation that did SNC detection totally
+differently [1] from v16. Instead of keeping with the "new" detection this implements
+what was in v16. Could you please help me understand what motivated the different
+implementations and why the big differences?
 
 Reinette
+
+
+[1] https://lore.kernel.org/lkml/20240327200352.236835-11-tony.luck@intel.com/
