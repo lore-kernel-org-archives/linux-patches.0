@@ -1,123 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2068914C5A3;
-	Mon, 13 May 2024 13:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C88A179A3
+	for <patches@lists.linux.dev>; Mon, 13 May 2024 15:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715605351; cv=none; b=g4nPQ3imKFfYa79wvLH+E9MpNv7VWcJLo40OCM9VvDx7hNT4bS8MqOhzC/mAAqczO7zulJ5bgym3pMYoOaLe4dFRcakQeOp/WEAyqDTUzmN2nNCUPX5W5UVZOxlhaJL401sRf2AW+O1OLM/IWGxa/VRbIihEE4Lmd+79MHwfjiE=
+	t=1715614839; cv=none; b=N1pSdqF4sA2xHBH/823R1UfRHgYhJq6JgztX+rP4qluIZJFYxkcUe5N2UDbZk9F9zPrjmnf/vYS9+TGgeHOn1ed8OH9ByXrTAFRWy3VK81HktJvOhjTjpGGV0J3zn+/jD2RH93jkaiqeQWWE+swp9a+rrfrA3gRVj7vxP/Uypzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715605351; c=relaxed/simple;
-	bh=unu2bcr+QOslnGcsSu84g6oQGRqK01Q/I7nKU+QPcwQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N0RJypUERFVVWnJ3PG9l4N1FZiNpnaN8mxXOTRwhzJu6eG4DhCw9/SWGrsxsl+FFF/VD7+6m2TAQE931kn6a5rSuoHEV3Au8A0Zele4tsXLs6mwYGUiOVcDYZVyP6uDHtodxXrXPCuHLDnpao881zZ9p0PKfGdzvCZXY8kELFW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRVplcMc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1715614839; c=relaxed/simple;
+	bh=dRf1wpTYcfdxHsutpWJSXKMZr7IAOjWboVwaF2rz86c=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=KSQsePbovwuNfyZaahOttkCUmaZlazMmQrwpZzzh1g+hJtFfvX9SiYvVMdjpO1qa6y0t7JeYvbUjbxesXAYupvpzDwBzrNywjF5l8/V8IBeDckJn9dnxXSxq9Vi5K0az+d4RAxIatDl5qVPA7ieY1NR81j8ZMDoW/bArDfQT76c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dfzfv0Ay; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRVplcMc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BFA0C113CC;
-	Mon, 13 May 2024 13:02:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715605350;
-	bh=unu2bcr+QOslnGcsSu84g6oQGRqK01Q/I7nKU+QPcwQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eRVplcMc9Nq3hLquSHorT2/50e4+ttDNN8aenzyV2SCtqPDg2jHbUhwwumJ0dVh10
-	 9rgwK9AtGn12pJAIhxAP+eqXWKDah3j0NkmDLGPAJl2l+oj4N3m0xwCNiD47LWzTAL
-	 OptFyCHpXy0R7xPEabtkOJU4tfUQbdavBSMLN/fM=
-Date: Mon, 13 May 2024 15:02:27 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: "Christian A. Ehrhardt" <lk@c--e.de>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 6.1 251/272] usb: typec: ucsi: Check for notifications
- after init
-Message-ID: <2024051320-expansive-acid-c651@gregkh>
-References: <20240401152530.237785232@linuxfoundation.org>
- <20240401152538.859016197@linuxfoundation.org>
- <ZgsWLUHW8nqUv7pi@cae.in-ulm.de>
- <2024040216-cahoots-gizzard-4ffb@gregkh>
- <ZgugfCVW2j1Uwm4J@cae.in-ulm.de>
- <2024040223-steerable-regretful-a9f9@gregkh>
- <ZjKTsuw2/ZyzVYtN@cae.in-ulm.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dfzfv0Ay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81CBAC113CC;
+	Mon, 13 May 2024 15:40:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715614838;
+	bh=dRf1wpTYcfdxHsutpWJSXKMZr7IAOjWboVwaF2rz86c=;
+	h=From:Date:Subject:To:Cc:From;
+	b=Dfzfv0AyKyq8OMQXpwoGft1iuXOqN6CMSaWQd7wjz+sTvG3X97PAzx48lhUr/U4vW
+	 eUCq6FgmRL4GwWKR9l9NNwdLxpl1TZyS22k2IVn1dn+sjacIEsRxhw1J8/U552XNSU
+	 eEEMbhzDjBGWp4NCCRp0+c3VgNn/gl4MG7gpFbv9AFRn7ojJep1fhsPFFMoQdeysPq
+	 cTG1nSuJp7WVgSrXQOUx3Qz+Ev2G1221xwcRHQ/BV94TCZ80GzilNYP5v9k+3rZ5FF
+	 YVZTGpdSQCBO53FtEM6BaqLEBG/C16fFDLxFT8BK8k+UHHVYTdI7OSPy1g3Cbj7Heh
+	 rYIssbO9f6vFQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 13 May 2024 08:40:27 -0700
+Subject: [PATCH] f2fs: Add inline to f2fs_build_fault_attr() stub
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZjKTsuw2/ZyzVYtN@cae.in-ulm.de>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240513-f2fs-add-missing-inline-to-f2fs_build_fault_attr-v1-1-c3ce1c995fa2@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAGo0QmYC/x2N0QqDMAwAf0XyvEDsLLL9yhils6kLdHU0dQzEf
+ 7f4eBzcbaBchBXu3QaFf6Ky5Ab9pYPp7fPMKKExGDID2f6K0URFHwJ+RFXyjJKTZMa6nMq9Vkn
+ BRb+m6nytBQ2N3tJ0G4kstOy3cJT/uXw89/0AO0//ioIAAAA=
+To: Jaegeuk Kim <jaegeuk@kernel.org>, Chao Yu <chao@kernel.org>
+Cc: linux-f2fs-devel@lists.sourceforge.net, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1569; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=dRf1wpTYcfdxHsutpWJSXKMZr7IAOjWboVwaF2rz86c=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGlOJmXXtls2ay3XvJ+62Xf+9k/Tjxr3WZ5dr3psz3NV2
+ RaR98vvd5SyMIhxMciKKbJUP1Y9bmg45yzjjVOTYOawMoEMYeDiFICJrPrP8D9nVeEzwyUt935e
+ Xt5kMEHp0IIXqy0Tuf8+XWdzybuqsLSb4X9k5SOxiOQFN99KvS47Jjcn+MW1iisGptlT7cu+ejo
+ X5rAAAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Wed, May 01, 2024 at 09:10:42PM +0200, Christian A. Ehrhardt wrote:
-> 
-> Hi Greg,
-> 
-> On Tue, Apr 02, 2024 at 09:52:47AM +0200, Greg Kroah-Hartman wrote:
-> > On Tue, Apr 02, 2024 at 08:06:52AM +0200, Christian A. Ehrhardt wrote:
-> > > 
-> > > Hi Greg,
-> > > 
-> > > On Tue, Apr 02, 2024 at 07:40:43AM +0200, Greg Kroah-Hartman wrote:
-> > > > On Mon, Apr 01, 2024 at 10:16:45PM +0200, Christian A. Ehrhardt wrote:
-> > > > > 
-> > > > > Hi Greg,
-> > > > > 
-> > > > > On Mon, Apr 01, 2024 at 05:47:21PM +0200, Greg Kroah-Hartman wrote:
-> > > > > > 6.1-stable review patch.  If anyone has any objections, please let me know.
-> > > > > > 
-> > > > > > ------------------
-> > > > > > 
-> > > > > > From: Christian A. Ehrhardt <lk@c--e.de>
-> > > > > > 
-> > > > > > commit 808a8b9e0b87bbc72bcc1f7ddfe5d04746e7ce56 upstream.
-> > > > > > 
-> > > > > > The completion notification for the final SET_NOTIFICATION_ENABLE
-> > > > > > command during initialization can include a connector change
-> > > > > > notification.  However, at the time this completion notification is
-> > > > > > processed, the ucsi struct is not ready to handle this notification.
-> > > > > > As a result the notification is ignored and the controller
-> > > > > > never sends an interrupt again.
-> > > > > > 
-> > > > > > Re-check CCI for a pending connector state change after
-> > > > > > initialization is complete. Adjust the corresponding debug
-> > > > > > message accordingly.
-> > > > > > 
-> > > > > > Fixes: 71a1fa0df2a3 ("usb: typec: ucsi: Store the notification mask")
-> > > > > > Cc: stable@vger.kernel.org
-> > > > > > Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-> > > > > > Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-> > > > > > Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-> > > > > > Link: https://lore.kernel.org/r/20240320073927.1641788-3-lk@c--e.de
-> > > > > > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > > > > > ---
-> > > > > >  drivers/usb/typec/ucsi/ucsi.c |   10 +++++++++-
-> > > > > >  1 file changed, 9 insertions(+), 1 deletion(-)
-> > > > > 
-> > > > > This change has an out of bounds memory access. Please drop it from
-> > > > > the stable trees until a fix is available.
-> > > > 
-> > > > Shouldn't we get a fix for Linus's tree too?  Have I missed that
-> > > > somewhere?  Or should this just be reverted now?
-> > > 
-> > > I posted the fix a few hours after sending this mail. It is here:
-> > >     https://lore.kernel.org/all/20240401210515.1902048-1-lk@c--e.de/
-> > > 
-> > > Either this should be fast tracked to Linus or the original change
-> > > reverted, yes.
-> > 
-> > I've dropped the offending commit from the stable queues now.  Once this
-> > fix gets into Linus's tree, let us know and I will add both in then.
-> 
-> The fix for
->     808a8b9e0b87 ("usb: typec: ucsi: Check for notifications after init")
-> has hit Linus's tree as 
->     ce4c8d21054a ("usb: typec: ucsi: Fix connector check on init")
-> 
-> There is no urgency but this is to let you know that the original commit
-> is eligible for -stable again, provided that the follow up commit is
-> backported, too.
+When building without CONFIG_F2FS_FAULT_INJECTION, there is a warning
+from each file that includes f2fs.h because the stub for
+f2fs_build_fault_attr() is missing inline:
 
-Thanks, all now queued up.
+  In file included from fs/f2fs/segment.c:21:
+  fs/f2fs/f2fs.h:4605:12: warning: 'f2fs_build_fault_attr' defined but not used [-Wunused-function]
+   4605 | static int f2fs_build_fault_attr(struct f2fs_sb_info *sbi, unsigned long rate,
+        |            ^~~~~~~~~~~~~~~~~~~~~
 
-greg k-h
+Add the missing inline to resolve all of the warnings for this
+configuration.
+
+Fixes: 4ed886b187f4 ("f2fs: check validation of fault attrs in f2fs_build_fault_attr()")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ fs/f2fs/f2fs.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index ef7de97be647..1974b6aff397 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -4602,8 +4602,8 @@ static inline bool f2fs_need_verity(const struct inode *inode, pgoff_t idx)
+ extern int f2fs_build_fault_attr(struct f2fs_sb_info *sbi, unsigned long rate,
+ 							unsigned long type);
+ #else
+-static int f2fs_build_fault_attr(struct f2fs_sb_info *sbi, unsigned long rate,
+-							unsigned long type)
++static inline int f2fs_build_fault_attr(struct f2fs_sb_info *sbi,
++					unsigned long rate, unsigned long type)
+ {
+ 	return 0;
+ }
+
+---
+base-commit: 991b6bdf1b009832256f8bc3035d4bcba664657b
+change-id: 20240513-f2fs-add-missing-inline-to-f2fs_build_fault_attr-207a50c97005
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
