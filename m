@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6DB1E495;
-	Tue, 14 May 2024 11:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531921E495;
+	Tue, 14 May 2024 11:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684939; cv=none; b=oRwclKcI19TKnUehRG0Ixgg2DcBOpuGN6gp1HNBLDpCKBI5mMRRsT2fSLNFMkDRc5cV7A6Pz4Qtusv/L0jqdcRE47zhhihdxb2fxj+tdVfFZzq3C36Yv2Rjc2mlaCMdyaFEB2whUhWS2p/SB8KcsoLXvT8MLkIqJH3+2U0C+zQ8=
+	t=1715684947; cv=none; b=PdEQZQES76PY/5cr7WbBvy+jXzkzRNJrU5jDlE9Ie1NY50VQ2y9ogDseK2bY4W816MjOrO80o0jNAeRU68he3z8w67gBjtKsjhxNR3KyypGJS1gnIi94ItfFCdgPJjdERZ4vO7v1fWwzrgRrU3y98BNRfwkhs2nXRBW2WpIivVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684939; c=relaxed/simple;
-	bh=Gcx6EfecaZ0FSwj4i887naUW2yA6ALPAdeMXdWqfNQw=;
+	s=arc-20240116; t=1715684947; c=relaxed/simple;
+	bh=ULY86lZKmLB81mcT59Yx0I+rJ9YZk0exOEJdvzZI7yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jOh8qaM3TTvioy9/seqZ92X04c2QyW1UFhr7XuqVUKgY5ENcG2Z0rUzqilfn/E+asUN0v1kZx2iWTa3/cx84bcqrCXqfyg9iXQ7DyU82J3j8L0SjJfuovcdY4k2nNmYj3Zp7tsjuLRObigEBpR/LnXJZKnBzEDRAPiZR83Uv9Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+NrFsij; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TogeUOcrt+jKhLS0YDWsCK1Mg7zfR2juT8txqMXNbghcLhEUs9JD6zUDA/szwtVB6gmTQPbykk1u7bx4ILsZ+MCLvnBjlZLFB2YvpCiolxJs563n+Fcl4norF6kwtprBLxPZpUhPyuN6Nkl0JoX2lcs8F9nr6PN0SccVbq0hlC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1o1vtI6d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+NrFsij"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D111C2BD10;
-	Tue, 14 May 2024 11:08:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1o1vtI6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FB0C2BD10;
+	Tue, 14 May 2024 11:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684939;
-	bh=Gcx6EfecaZ0FSwj4i887naUW2yA6ALPAdeMXdWqfNQw=;
+	s=korg; t=1715684947;
+	bh=ULY86lZKmLB81mcT59Yx0I+rJ9YZk0exOEJdvzZI7yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p+NrFsijMpZAr4b1VzcTFCQoZwuVQw3fvDpTEoLGde/iCO81NU058+oSNElGNqTyI
-	 kt+GMDMlD7k4h7Hm51Yqv4eA5Jq9CNGoJEb5DXROMw+g/EVzOmSrAgL7auYCXLnXxf
-	 wf8vWy1kGLuyQG5Q7t3lKRI4WvCUrTYb7VoSVc0Q=
+	b=1o1vtI6dl/8u8dNGMgtifa3/+C6Gt7H7lwwHJuBtzK2TcELzGjr7JERQ3BRT3TXAo
+	 sOk05R9jYm0s6fpG7FlKCxfpCCJc8UOKx/HdYCzHWzUpqF+09XZ06Ui9j3Uz5fEjhi
+	 NRs7rFtnxhCfsIdEuZbx1Sbw3umhZM4ltVJXorzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangwu Zhang <guazhang@redhat.com>,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Zenghui Yu <yuzenghui@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 111/301] scsi: bnx2fc: Remove spin_lock_bh while releasing resources after upload
-Date: Tue, 14 May 2024 12:16:22 +0200
-Message-ID: <20240514101036.443147666@linuxfoundation.org>
+Subject: [PATCH 6.6 094/301] KVM: arm64: vgic-v2: Use cpuid from userspace as vcpu_id
+Date: Tue, 14 May 2024 12:16:05 +0200
+Message-ID: <20240514101035.800993349@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -47,120 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Saurav Kashyap <skashyap@marvell.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit c214ed2a4dda35b308b0b28eed804d7ae66401f9 ]
+[ Upstream commit 4e7728c81a54b17bd33be402ac140bc11bb0c4f4 ]
 
-The session resources are used by FW and driver when session is offloaded,
-once session is uploaded these resources are not used. The lock is not
-required as these fields won't be used any longer. The offload and upload
-calls are sequential, hence lock is not required.
+When parsing a GICv2 attribute that contains a cpuid, handle this
+as the vcpu_id, not a vcpu_idx, as userspace cannot really know
+the mapping between the two. For this, use kvm_get_vcpu_by_id()
+instead of kvm_get_vcpu().
 
-This will suppress following BUG_ON():
+Take this opportunity to get rid of the pointless check against
+online_vcpus, which doesn't make much sense either, and switch
+to FIELD_GET as a way to extract the vcpu_id.
 
-[  449.843143] ------------[ cut here ]------------
-[  449.848302] kernel BUG at mm/vmalloc.c:2727!
-[  449.853072] invalid opcode: 0000 [#1] PREEMPT SMP PTI
-[  449.858712] CPU: 5 PID: 1996 Comm: kworker/u24:2 Not tainted 5.14.0-118.=
-el9.x86_64 #1
-Rebooting.
-[  449.867454] Hardware name: Dell Inc. PowerEdge R730/0WCJNT, BIOS 2.3.4 1=
-1/08/2016
-[  449.876966] Workqueue: fc_rport_eq fc_rport_work [libfc]
-[  449.882910] RIP: 0010:vunmap+0x2e/0x30
-[  449.887098] Code: 00 65 8b 05 14 a2 f0 4a a9 00 ff ff 00 75 1b 55 48 89 =
-fd e8 34 36 79 00 48 85 ed 74 0b 48 89 ef 31 f6 5d e9 14 fc ff ff 5d c3 <0f=
-> 0b 0f 1f 44 00 00 41 57 41 56 49 89 ce 41 55 49 89 fd 41 54 41
-[  449.908054] RSP: 0018:ffffb83d878b3d68 EFLAGS: 00010206
-[  449.913887] RAX: 0000000080000201 RBX: ffff8f4355133550 RCX: 000000000d4=
-00005
-[  449.921843] RDX: 0000000000000001 RSI: 0000000000001000 RDI: ffffb83da53=
-f5000
-[  449.929808] RBP: ffff8f4ac6675800 R08: ffffb83d878b3d30 R09: 00000000000=
-efbdf
-[  449.937774] R10: 0000000000000003 R11: ffff8f434573e000 R12: 00000000000=
-01000
-[  449.945736] R13: 0000000000001000 R14: ffffb83da53f5000 R15: ffff8f43d4e=
-a3ae0
-[  449.953701] FS:  0000000000000000(0000) GS:ffff8f529fc80000(0000) knlGS:=
-0000000000000000
-[  449.962732] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  449.969138] CR2: 00007f8cf993e150 CR3: 0000000efbe10003 CR4: 00000000003=
-706e0
-[  449.977102] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 00000000000=
-00000
-[  449.985065] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 00000000000=
-00400
-[  449.993028] Call Trace:
-[  449.995756]  __iommu_dma_free+0x96/0x100
-[  450.000139]  bnx2fc_free_session_resc+0x67/0x240 [bnx2fc]
-[  450.006171]  bnx2fc_upload_session+0xce/0x100 [bnx2fc]
-[  450.011910]  bnx2fc_rport_event_handler+0x9f/0x240 [bnx2fc]
-[  450.018136]  fc_rport_work+0x103/0x5b0 [libfc]
-[  450.023103]  process_one_work+0x1e8/0x3c0
-[  450.027581]  worker_thread+0x50/0x3b0
-[  450.031669]  ? rescuer_thread+0x370/0x370
-[  450.036143]  kthread+0x149/0x170
-[  450.039744]  ? set_kthread_struct+0x40/0x40
-[  450.044411]  ret_from_fork+0x22/0x30
-[  450.048404] Modules linked in: vfat msdos fat xfs nfs_layout_nfsv41_file=
-s rpcsec_gss_krb5 auth_rpcgss nfsv4 dns_resolver dm_service_time qedf qed c=
-rc8 bnx2fc libfcoe libfc scsi_transport_fc intel_rapl_msr intel_rapl_common=
- x86_pkg_temp_thermal intel_powerclamp dcdbas rapl intel_cstate intel_uncor=
-e mei_me pcspkr mei ipmi_ssif lpc_ich ipmi_si fuse zram ext4 mbcache jbd2 l=
-oop nfsv3 nfs_acl nfs lockd grace fscache netfs irdma ice sd_mod t10_pi sg =
-ib_uverbs ib_core 8021q garp mrp stp llc mgag200 i2c_algo_bit drm_kms_helpe=
-r syscopyarea sysfillrect sysimgblt mxm_wmi fb_sys_fops cec crct10dif_pclmu=
-l ahci crc32_pclmul bnx2x drm ghash_clmulni_intel libahci rfkill i40e libat=
-a megaraid_sas mdio wmi sunrpc lrw dm_crypt dm_round_robin dm_multipath dm_=
-snapshot dm_bufio dm_mirror dm_region_hash dm_log dm_zero dm_mod linear rai=
-d10 raid456 async_raid6_recov async_memcpy async_pq async_xor async_tx raid=
-6_pq libcrc32c crc32c_intel raid1 raid0 iscsi_ibft squashfs be2iscsi bnx2i =
-cnic uio cxgb4i cxgb4 tls
-[  450.048497]  libcxgbi libcxgb qla4xxx iscsi_boot_sysfs iscsi_tcp libiscs=
-i_tcp libiscsi scsi_transport_iscsi edd ipmi_devintf ipmi_msghandler
-[  450.159753] ---[ end trace 712de2c57c64abc8 ]---
-
-Reported-by: Guangwu Zhang <guazhang@redhat.com>
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240315071427.31842-1-skashyap@marvell.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230927090911.3355209-5-maz@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Stable-dep-of: 6ddb4f372fc6 ("KVM: arm64: vgic-v2: Check for non-NULL vCPU in vgic_v2_parse_attr()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/bnx2fc/bnx2fc_tgt.c | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/kvm/vgic/vgic-kvm-device.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/bnx2fc/bnx2fc_tgt.c b/drivers/scsi/bnx2fc/bnx2fc_=
-tgt.c
-index 2c246e80c1c4d..d91659811eb3c 100644
---- a/drivers/scsi/bnx2fc/bnx2fc_tgt.c
-+++ b/drivers/scsi/bnx2fc/bnx2fc_tgt.c
-@@ -833,7 +833,6 @@ static void bnx2fc_free_session_resc(struct bnx2fc_hba =
-*hba,
-=20
- 	BNX2FC_TGT_DBG(tgt, "Freeing up session resources\n");
-=20
--	spin_lock_bh(&tgt->cq_lock);
- 	ctx_base_ptr =3D tgt->ctx_base;
- 	tgt->ctx_base =3D NULL;
-=20
-@@ -889,7 +888,6 @@ static void bnx2fc_free_session_resc(struct bnx2fc_hba =
-*hba,
- 				    tgt->sq, tgt->sq_dma);
- 		tgt->sq =3D NULL;
- 	}
--	spin_unlock_bh(&tgt->cq_lock);
-=20
- 	if (ctx_base_ptr)
- 		iounmap(ctx_base_ptr);
---=20
+diff --git a/arch/arm64/kvm/vgic/vgic-kvm-device.c b/arch/arm64/kvm/vgic/vgic-kvm-device.c
+index 212b73a715c1c..c11962f901e0c 100644
+--- a/arch/arm64/kvm/vgic/vgic-kvm-device.c
++++ b/arch/arm64/kvm/vgic/vgic-kvm-device.c
+@@ -339,13 +339,9 @@ int vgic_v2_parse_attr(struct kvm_device *dev, struct kvm_device_attr *attr,
+ {
+ 	int cpuid;
+ 
+-	cpuid = (attr->attr & KVM_DEV_ARM_VGIC_CPUID_MASK) >>
+-		 KVM_DEV_ARM_VGIC_CPUID_SHIFT;
++	cpuid = FIELD_GET(KVM_DEV_ARM_VGIC_CPUID_MASK, attr->attr);
+ 
+-	if (cpuid >= atomic_read(&dev->kvm->online_vcpus))
+-		return -EINVAL;
+-
+-	reg_attr->vcpu = kvm_get_vcpu(dev->kvm, cpuid);
++	reg_attr->vcpu = kvm_get_vcpu_by_id(dev->kvm, cpuid);
+ 	reg_attr->addr = attr->attr & KVM_DEV_ARM_VGIC_OFFSET_MASK;
+ 
+ 	return 0;
+-- 
 2.43.0
 
 
