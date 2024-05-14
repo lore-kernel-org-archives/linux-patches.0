@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E10C2D60A;
-	Tue, 14 May 2024 11:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2E42D60A;
+	Tue, 14 May 2024 11:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687120; cv=none; b=pylWKkPbAjodELJx4naku7XFMrJ93vKmmmd3zvyD/kUXjsrXSMe9r7IUZ2/Um9Ff2O+QLdFsd8pS4Lg97h9Xhv+5LqD7hPkUtNCAgHskYF/qzv+Bee9+uT8VibE88jLOdig7n8TGcZdTjgQHuqfEUgzKhHVin19pqltVCfAOdwY=
+	t=1715687123; cv=none; b=C1IxvrILLsgLlIQL/dkpADYwUHcxVUkW/5gqlj0XcU5ADBROKLRw2AfG7iN5eOR14sKBp1soMv2U98PvFj+EhJ0Tup494ShWrul4B/hT8Ub2e5WzCmWLeToPeZIlEDzMd4uJkOMTzFLeibkT7/kBS2E8Yz4OO+RrsaOz+ACGCpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687120; c=relaxed/simple;
-	bh=DYPQrCAncxBJz1WgZkoHl8T9kUwyGc62VDnTLb+Mo74=;
+	s=arc-20240116; t=1715687123; c=relaxed/simple;
+	bh=eBCs5NISTj+wMXyPYqNw/iaUrgm0UqUCM+CjGLpmDXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bg3Kni8/zHx73UxQUBqVbJAYIQAH+x3N0pp0y6OcXra2zC1yB0OXsWS8YS2a8LDIF3+VVoP0F1SGu9igTM1zcwijtW55nYsyxNxdYSptsj/w1fS5dyaarSLdc/W/nL1OGj43bwTyjlelUUjonHpYnlZRAVvmLUEyyXvrJLsYM54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAijF4A+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LVM6L/88ZTCl0vGuJbeVZHsiEK4+X7R/30Yu2Y8uYY5waaEHJIbQ2/ZDxQa8yBTRvvXOSy7tL+hxPO388mT1eSd28Q5G9ZhJMCnd8APrXi+XpqFoNOYsHP8wJ94CRfDmitIe/dmTH3shWiVUNa/pu1IxI6yRV21iWFA80LZYEsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a1ZVlpTx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAijF4A+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FEBC2BD10;
-	Tue, 14 May 2024 11:45:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a1ZVlpTx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03998C2BD10;
+	Tue, 14 May 2024 11:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687120;
-	bh=DYPQrCAncxBJz1WgZkoHl8T9kUwyGc62VDnTLb+Mo74=;
+	s=korg; t=1715687123;
+	bh=eBCs5NISTj+wMXyPYqNw/iaUrgm0UqUCM+CjGLpmDXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IAijF4A+7yk7UwIJqZ+yA/cI3mr9ZVyT3CFbPKqzLDbO9+gkq3ht8EDLmOBUoMM8n
-	 Tn/jW1qaNyEWGhtK7UyoH/bgpOgAdaqEYaL9xOHqw53HpJsuhr+BG8Cy7GLGx83XNL
-	 a77RFfPQKXc/n/AVTJcglLGzCN1PIEYtU50ixRHg=
+	b=a1ZVlpTxEgJH9/di8pgBGD7nQyj43PsRTBToTQG0/qvv15EpEVWe/TeewgTHBhRbb
+	 rGpKUJ/+M4K3quQUa+Kg2E5vPTDKsZswJhZn3OUOEWzmoIuz1VA67nNOnHSqVTDOAH
+	 K0ylo5T3HOH7XgLeXpDiA0rE631VbrpZCIyxof9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 72/84] net: qede: use return from qede_parse_flow_attr() for flower
-Date: Tue, 14 May 2024 12:20:23 +0200
-Message-ID: <20240514100954.390790821@linuxfoundation.org>
+	Thanassis Avgerinos <thanassis.avgerinos@gmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Subject: [PATCH 5.4 73/84] firewire: nosy: ensure user_length is taken into account when fetching packet contents
+Date: Tue, 14 May 2024 12:20:24 +0200
+Message-ID: <20240514100954.427303247@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100951.686412426@linuxfoundation.org>
 References: <20240514100951.686412426@linuxfoundation.org>
@@ -46,62 +44,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+From: Thanassis Avgerinos <thanassis.avgerinos@gmail.com>
 
-[ Upstream commit fcee2065a178f78be6fd516302830378b17dba3d ]
+commit 38762a0763c10c24a4915feee722d7aa6e73eb98 upstream.
 
-In qede_add_tc_flower_fltr(), when calling
-qede_parse_flow_attr() then the return code
-was only used for a non-zero check, and then
--EINVAL was returned.
+Ensure that packet_buffer_get respects the user_length provided. If
+the length of the head packet exceeds the user_length, packet_buffer_get
+will now return 0 to signify to the user that no data were read
+and a larger buffer size is required. Helps prevent user space overflows.
 
-qede_parse_flow_attr() can currently fail with:
-* -EINVAL
-* -EOPNOTSUPP
-* -EPROTONOSUPPORT
-
-This patch changes the code to use the actual
-return code, not just return -EINVAL.
-
-The blaimed commit introduced these functions.
-
-Only compile tested.
-
-Fixes: 2ce9c93eaca6 ("qede: Ingress tc flower offload (drop action) support.")
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Thanassis Avgerinos <thanassis.avgerinos@gmail.com>
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_filter.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/firewire/nosy.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qede/qede_filter.c b/drivers/net/ethernet/qlogic/qede/qede_filter.c
-index c02938002278f..3142d92a98f02 100644
---- a/drivers/net/ethernet/qlogic/qede/qede_filter.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_filter.c
-@@ -1960,10 +1960,9 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
- 	}
+--- a/drivers/firewire/nosy.c
++++ b/drivers/firewire/nosy.c
+@@ -148,10 +148,12 @@ packet_buffer_get(struct client *client,
+ 	if (atomic_read(&buffer->size) == 0)
+ 		return -ENODEV;
  
- 	/* parse flower attribute and prepare filter */
--	if (qede_parse_flow_attr(edev, proto, f->rule, &t)) {
--		rc = -EINVAL;
-+	rc = qede_parse_flow_attr(edev, proto, f->rule, &t);
-+	if (rc)
- 		goto unlock;
--	}
+-	/* FIXME: Check length <= user_length. */
++	length = buffer->head->length;
++
++	if (length > user_length)
++		return 0;
  
- 	/* Validate profile mode and number of filters */
- 	if ((edev->arfs->filter_count && edev->arfs->mode != t.mode) ||
--- 
-2.43.0
-
+ 	end = buffer->data + buffer->capacity;
+-	length = buffer->head->length;
+ 
+ 	if (&buffer->head->data[length] < end) {
+ 		if (copy_to_user(data, buffer->head->data, length))
 
 
