@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14C212E1DD;
-	Tue, 14 May 2024 10:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CD3433BE;
+	Tue, 14 May 2024 10:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682282; cv=none; b=Yh+xrSPJayCQkHLcKFl/plbQ7cHdwbiZ+t1CPwyYxNRYA5fsbyevFCuCc+ZQpimcN9imN5CXK63qZxyefSRZRtJxs8a1HDzYpXboxYVtRNJFxcKrpjzM0sXA6/BUBeG8iL3Wor/p46xwfr/vLYdqRUrnr3vPdvfDH6fIvbe4mtQ=
+	t=1715682288; cv=none; b=hf6dv0Fk/u6pt1leEq/pPRBdWyg1uWKksKQ//NeuNDdchg+kRATOfZBoN4ZqU1HNHlIATAaZILLrF2Su6M9s2hU2N1WCsPMxDdczu5jUpqLHXvDt4Oez1R3QzALU1yjhn56Y27RolAL1yNCXOS+kqmL0CVkJBWR+ObQWg00k2rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682282; c=relaxed/simple;
-	bh=T2rqoDBYEObTRoO4M81ahDKXlIM4rxnJ3qYU53wKml0=;
+	s=arc-20240116; t=1715682288; c=relaxed/simple;
+	bh=a5M/7CzBJarqnCx0woFEfZJ7Vgzscd24tWYUNKipa/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DBLynVB7SOQT6/yPF3LGRzxX2CLZzT7T1U8i0a6VO+3qoIdQifzv336+3uwfOr4wRLgimoyD0hVZmg+DuhxPCshnVh3tYDhovGXoh/lpNLhO3eVG9x9IAvjmGvKOHC/BErnsUkhAu7RdXMcQmzcEEad/iT7pm3qNLxDwL2T8QUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAkP8KRz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZueAWVCvn5KSTf86FuIDwLhQKf7yECtOswtsTn4g2xMLt/xCule6MAzx87o0cyb8g9/cE+sWY6S6lX51wDAgbhPcbP3gxUhSpRD6eGQ3tzJFUCXUfOqCW3/IZSFXGHYa9+FJB8Of9FPR/bN0d6eRGsOc+ESINZMWIafvemZyOpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nmwpb66l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAkP8KRz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3142FC2BD10;
-	Tue, 14 May 2024 10:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nmwpb66l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5813C2BD10;
+	Tue, 14 May 2024 10:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682282;
-	bh=T2rqoDBYEObTRoO4M81ahDKXlIM4rxnJ3qYU53wKml0=;
+	s=korg; t=1715682287;
+	bh=a5M/7CzBJarqnCx0woFEfZJ7Vgzscd24tWYUNKipa/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fAkP8KRzksu026JNP6QyRR6oWCi7WpO8KahWih+T1zJ+0/ZUEkSdtRl2gMOKGZxm0
-	 530ei2HKTfQ5te8d2SB72GQD5AOd5n6UqL3yx1QOH/KEgTEjPdbjeo0NdfQTJVpTja
-	 0gSBLw/e878dRw7VzC3aCBkdsAVsqcvKqfUA/pNU=
+	b=Nmwpb66lR0EnUYphyT5uhRdqqo3aR0eJp3EcFsgwjNzlfoY4kEf/mqY72GJbmMzyF
+	 avcVpfEy2pwkC4aR5+mqcUQp/mgAY5Eux3vjKgIQ9OgeZ5DPXybEbsOY7wicELj0TY
+	 Q8lrYN1Zct73MMSF35RyK4kP7vfx0wGB3CFbM8uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 010/336] nfs: expose /proc/net/sunrpc/nfs in net namespaces
-Date: Tue, 14 May 2024 12:13:34 +0200
-Message-ID: <20240514101038.993967473@linuxfoundation.org>
+Subject: [PATCH 6.8 011/336] nfs: make the rpc_stat per net namespace
+Date: Tue, 14 May 2024 12:13:35 +0200
+Message-ID: <20240514101039.031143425@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -53,67 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit d47151b79e3220e72ae323b8b8e9d6da20dc884e ]
+[ Upstream commit 1548036ef1204df65ca5a16e8b199c858cb80075 ]
 
-We're using nfs mounts inside of containers in production and noticed
-that the nfs stats are not exposed in /proc.  This is a problem for us
-as we use these stats for monitoring, and have to do this awkward bind
-mount from the main host into the container in order to get to these
-states.
-
-Add the rpc_proc_register call to the pernet operations entry and exit
-points so these stats can be exposed inside of network namespaces.
+Now that we're exposing the rpc stats on a per-network namespace basis,
+move this struct into struct nfs_net and use that to make sure only the
+per-network namespace stats are exposed.
 
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Stable-dep-of: 24457f1be29f ("nfs: Handle error of rpc_proc_register() in nfs_net_init().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/inode.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/nfs/client.c   | 5 ++++-
+ fs/nfs/inode.c    | 4 +++-
+ fs/nfs/internal.h | 2 --
+ fs/nfs/netns.h    | 2 ++
+ 4 files changed, 9 insertions(+), 4 deletions(-)
 
+diff --git a/fs/nfs/client.c b/fs/nfs/client.c
+index fbdc9ca80f714..a8fad331dff6b 100644
+--- a/fs/nfs/client.c
++++ b/fs/nfs/client.c
+@@ -73,7 +73,6 @@ const struct rpc_program nfs_program = {
+ 	.number			= NFS_PROGRAM,
+ 	.nrvers			= ARRAY_SIZE(nfs_version),
+ 	.version		= nfs_version,
+-	.stats			= &nfs_rpcstat,
+ 	.pipe_dir_name		= NFS_PIPE_DIRNAME,
+ };
+ 
+@@ -502,6 +501,7 @@ int nfs_create_rpc_client(struct nfs_client *clp,
+ 			  const struct nfs_client_initdata *cl_init,
+ 			  rpc_authflavor_t flavor)
+ {
++	struct nfs_net		*nn = net_generic(clp->cl_net, nfs_net_id);
+ 	struct rpc_clnt		*clnt = NULL;
+ 	struct rpc_create_args args = {
+ 		.net		= clp->cl_net,
+@@ -513,6 +513,7 @@ int nfs_create_rpc_client(struct nfs_client *clp,
+ 		.servername	= clp->cl_hostname,
+ 		.nodename	= cl_init->nodename,
+ 		.program	= &nfs_program,
++		.stats		= &nn->rpcstats,
+ 		.version	= clp->rpc_ops->version,
+ 		.authflavor	= flavor,
+ 		.cred		= cl_init->cred,
+@@ -1182,6 +1183,8 @@ void nfs_clients_init(struct net *net)
+ #endif
+ 	spin_lock_init(&nn->nfs_client_lock);
+ 	nn->boot_time = ktime_get_real();
++	memset(&nn->rpcstats, 0, sizeof(nn->rpcstats));
++	nn->rpcstats.program = &nfs_program;
+ 
+ 	nfs_netns_sysfs_setup(nn, net);
+ }
 diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
-index ebb8d60e11526..e11e9c34aa569 100644
+index e11e9c34aa569..91b4d811958a4 100644
 --- a/fs/nfs/inode.c
 +++ b/fs/nfs/inode.c
-@@ -2427,11 +2427,13 @@ EXPORT_SYMBOL_GPL(nfs_net_id);
+@@ -2426,8 +2426,10 @@ EXPORT_SYMBOL_GPL(nfs_net_id);
+ 
  static int nfs_net_init(struct net *net)
  {
++	struct nfs_net *nn = net_generic(net, nfs_net_id);
++
  	nfs_clients_init(net);
-+	rpc_proc_register(net, &nfs_rpcstat);
+-	rpc_proc_register(net, &nfs_rpcstat);
++	rpc_proc_register(net, &nn->rpcstats);
  	return nfs_fs_proc_net_init(net);
  }
  
- static void nfs_net_exit(struct net *net)
- {
-+	rpc_proc_unregister(net, "nfs");
- 	nfs_fs_proc_net_exit(net);
- 	nfs_clients_exit(net);
- }
-@@ -2486,15 +2488,12 @@ static int __init init_nfs_fs(void)
- 	if (err)
- 		goto out1;
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index e3722ce6722e2..06253695fe53f 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -449,8 +449,6 @@ int nfs_try_get_tree(struct fs_context *);
+ int nfs_get_tree_common(struct fs_context *);
+ void nfs_kill_super(struct super_block *);
  
--	rpc_proc_register(&init_net, &nfs_rpcstat);
+-extern struct rpc_stat nfs_rpcstat;
 -
- 	err = register_nfs_fs();
- 	if (err)
- 		goto out0;
+ extern int __init register_nfs_fs(void);
+ extern void __exit unregister_nfs_fs(void);
+ extern bool nfs_sb_active(struct super_block *sb);
+diff --git a/fs/nfs/netns.h b/fs/nfs/netns.h
+index c8374f74dce11..a68b21603ea9a 100644
+--- a/fs/nfs/netns.h
++++ b/fs/nfs/netns.h
+@@ -9,6 +9,7 @@
+ #include <linux/nfs4.h>
+ #include <net/net_namespace.h>
+ #include <net/netns/generic.h>
++#include <linux/sunrpc/stats.h>
  
- 	return 0;
- out0:
--	rpc_proc_unregister(&init_net, "nfs");
- 	nfs_destroy_directcache();
- out1:
- 	nfs_destroy_writepagecache();
-@@ -2524,7 +2523,6 @@ static void __exit exit_nfs_fs(void)
- 	nfs_destroy_inodecache();
- 	nfs_destroy_nfspagecache();
- 	unregister_pernet_subsys(&nfs_net_ops);
--	rpc_proc_unregister(&init_net, "nfs");
- 	unregister_nfs_fs();
- 	nfs_fs_proc_exit();
- 	nfsiod_stop();
+ struct bl_dev_msg {
+ 	int32_t status;
+@@ -34,6 +35,7 @@ struct nfs_net {
+ 	struct nfs_netns_client *nfs_client;
+ 	spinlock_t nfs_client_lock;
+ 	ktime_t boot_time;
++	struct rpc_stat rpcstats;
+ #ifdef CONFIG_PROC_FS
+ 	struct proc_dir_entry *proc_nfsfs;
+ #endif
 -- 
 2.43.0
 
