@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D899320F;
-	Tue, 14 May 2024 10:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217A1136675;
+	Tue, 14 May 2024 10:34:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682882; cv=none; b=OCaqVn4tEH7O00VCrR89U5VbohWS9RrSgnrpGpejqm+Q6BiruwkatrugiBWrA8QBoGU6XoIJ+tcfb5FhV4KvmufsZQsrB8mb5gm5EnaTrV/Vx60LjcFZVjw9mVCE69RBIBIp55JmMa/0GSFooCMaMnc27t3fzJvvaXw+pGTSF40=
+	t=1715682892; cv=none; b=N0Fmo8cDY9xkyUoP8dekxzbYl12ZTPzSBtV61T4vI0wUKt2ghdVykk2A0zLI4RtoJScM3Vv+vAk+wiVZeyPLXDUgySP7h0At2/VW+kt78OIMlpGNLP50H8143molwIsU3hWEMbnVzmJWgwJsz5FCiooB/Cv2NDiI/PjGEyy4tgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682882; c=relaxed/simple;
-	bh=p83Upf90VZ+4N3Stp69M0nT8gp6eCmvEofTbY01Cueg=;
+	s=arc-20240116; t=1715682892; c=relaxed/simple;
+	bh=wpH5qPce3Iq8XDs6DjJ5tC/D9TDanMyldgTnyi1N7dg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uWVKy4851qO54ozUd+u+zm3hXP+ikLi/TM8G6oK6Tidvalnvki7eGoHPlbNlDa/9VqabwGcJJz2ZqSWfL8j0SXFnGf/VBQeN9qqBkqlEUVUsFmyRjP7JxN5z2zgrrX7tXNUVBGMioWw8BV8EZu41pAjwfkVG0waL2JGYb5F5Z30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5iJGeQE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uQxwdyQ1C/biL4tEMtODfhUAo2zEbnYLB+AFHhz3Ja1hpw2I+yz/9abDp5+EFI+DIFLIqqQq8sfxUSW1zf0C5yP7BTJMWNCOfuaWoKQsvbzqn1LX/iYK8lCq6jy5xdxYa6b+DapYPQZWCsPFGTBFeZ8TyNFMQ305+6zNTPjeGyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=htxRSYvA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5iJGeQE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45624C2BD10;
-	Tue, 14 May 2024 10:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="htxRSYvA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17EB1C32781;
+	Tue, 14 May 2024 10:34:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682882;
-	bh=p83Upf90VZ+4N3Stp69M0nT8gp6eCmvEofTbY01Cueg=;
+	s=korg; t=1715682891;
+	bh=wpH5qPce3Iq8XDs6DjJ5tC/D9TDanMyldgTnyi1N7dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P5iJGeQEZ14GYTiXiB7RiZNdmow9zbPHDCqdI3HRhNAl50yKDSj484NugU3QNtf5J
-	 pze14DQBbWu4cLOkxijrzUmVvMYWSP9Z5UKiRxUPkXiRm5RmDtLJIuZVOgjsBYMrUU
-	 dwy4xGbv4at1B2q353Uib0sTOebBo5aFD8ArGC14=
+	b=htxRSYvAtak6xTcfAFYs89BnG9h8tmPqPqze+piHSojmVueh2PshSz1MqRVAQ0n9Q
+	 HMpPzoS3dJC/m+2nFeG8E1T6W/+QVQWiQg1p8g4SdWZsRpo1KAaI8Sqwj3T6/lxfth
+	 //8eVJ62M+aoiKSYDWZ3gOQeNvlDvy4oPCaI7+hA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Zhang Yi <zhangyi@everest-semi.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 127/336] block: fix overflow in blk_ioctl_discard()
-Date: Tue, 14 May 2024 12:15:31 +0200
-Message-ID: <20240514101043.397177143@linuxfoundation.org>
+Subject: [PATCH 6.8 128/336] ASoC: codecs: ES8326: Solve error interruption issue
+Date: Tue, 14 May 2024 12:15:32 +0200
+Message-ID: <20240514101043.434502185@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,47 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Zhang Yi <zhangyi@everest-semi.com>
 
-[ Upstream commit 22d24a544b0d49bbcbd61c8c0eaf77d3c9297155 ]
+[ Upstream commit 8a655cee6c9d4588570ad0cb099c5660f9a44a12 ]
 
-There is no check for overflow of 'start + len' in blk_ioctl_discard().
-Hung task occurs if submit an discard ioctl with the following param:
-  start = 0x80000000000ff000, len = 0x8000000000fff000;
-Add the overflow validation now.
+We got an error report about headphone type detection and button detection.
+We fixed the headphone type detection error by adjusting the debounce timer
+configuration. And we fixed the button detection error by disabling the
+button detection feature when the headphone are unplugged and enabling it
+when headphone are plugged in.
 
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20240329012319.2034550-1-linan666@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Zhang Yi <zhangyi@everest-semi.com>
+Link: https://msgid.link/r/20240402062043.20608-2-zhangyi@everest-semi.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/ioctl.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/soc/codecs/es8326.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/block/ioctl.c b/block/ioctl.c
-index 5f8c988239c68..7dbed0c1155cf 100644
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -89,7 +89,7 @@ static int blk_ioctl_discard(struct block_device *bdev, blk_mode_t mode,
- 		unsigned long arg)
- {
- 	uint64_t range[2];
--	uint64_t start, len;
-+	uint64_t start, len, end;
- 	struct inode *inode = bdev->bd_inode;
- 	int err;
- 
-@@ -110,7 +110,8 @@ static int blk_ioctl_discard(struct block_device *bdev, blk_mode_t mode,
- 	if (len & 511)
- 		return -EINVAL;
- 
--	if (start + len > bdev_nr_bytes(bdev))
-+	if (check_add_overflow(start, len, &end) ||
-+	    end > bdev_nr_bytes(bdev))
- 		return -EINVAL;
- 
- 	filemap_invalidate_lock(inode->i_mapping);
+diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
+index cbcd02ec6ba42..fd1af97412bdd 100644
+--- a/sound/soc/codecs/es8326.c
++++ b/sound/soc/codecs/es8326.c
+@@ -757,6 +757,7 @@ static void es8326_jack_detect_handler(struct work_struct *work)
+ 		regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x03, 0x01);
+ 		regmap_write(es8326->regmap, ES8326_SYS_BIAS, 0x0a);
+ 		regmap_update_bits(es8326->regmap, ES8326_HP_DRIVER_REF, 0x0f, 0x03);
++		regmap_write(es8326->regmap, ES8326_INT_SOURCE, ES8326_INT_SRC_PIN9);
+ 		/*
+ 		 * Inverted HPJACK_POL bit to trigger one IRQ to double check HP Removal event
+ 		 */
+@@ -779,6 +780,8 @@ static void es8326_jack_detect_handler(struct work_struct *work)
+ 			 * set auto-check mode, then restart jack_detect_work after 400ms.
+ 			 * Don't report jack status.
+ 			 */
++			regmap_write(es8326->regmap, ES8326_INT_SOURCE,
++					(ES8326_INT_SRC_PIN9 | ES8326_INT_SRC_BUTTON));
+ 			regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x03, 0x01);
+ 			es8326_enable_micbias(es8326->component);
+ 			usleep_range(50000, 70000);
+@@ -901,7 +904,7 @@ static int es8326_resume(struct snd_soc_component *component)
+ 	regmap_write(es8326->regmap, ES8326_VMIDSEL, 0x0E);
+ 	regmap_write(es8326->regmap, ES8326_ANA_LP, 0xf0);
+ 	usleep_range(10000, 15000);
+-	regmap_write(es8326->regmap, ES8326_HPJACK_TIMER, 0xe9);
++	regmap_write(es8326->regmap, ES8326_HPJACK_TIMER, 0xd9);
+ 	regmap_write(es8326->regmap, ES8326_ANA_MICBIAS, 0xcb);
+ 	/* set headphone default type and detect pin */
+ 	regmap_write(es8326->regmap, ES8326_HPDET_TYPE, 0x83);
+@@ -952,8 +955,7 @@ static int es8326_resume(struct snd_soc_component *component)
+ 	es8326_enable_micbias(es8326->component);
+ 	usleep_range(50000, 70000);
+ 	regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x03, 0x00);
+-	regmap_write(es8326->regmap, ES8326_INT_SOURCE,
+-		    (ES8326_INT_SRC_PIN9 | ES8326_INT_SRC_BUTTON));
++	regmap_write(es8326->regmap, ES8326_INT_SOURCE, ES8326_INT_SRC_PIN9);
+ 	regmap_write(es8326->regmap, ES8326_INTOUT_IO,
+ 		     es8326->interrupt_clk);
+ 	regmap_write(es8326->regmap, ES8326_SDINOUT1_IO,
 -- 
 2.43.0
 
