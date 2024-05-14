@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577195CDFA;
-	Tue, 14 May 2024 10:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A564A5A79B;
+	Tue, 14 May 2024 10:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683206; cv=none; b=pdYOoSGnhVGZ2pRQK6ujFXemaocvD/Fz4m0fMucoH3dfR2M0Pqtt/T7eoqXGaS5oju0qFBcTjQ7dMOGWJOWYrfq1gI+vqIMkrjPbOUSVb5w6SvFZDra+EeOeOwQj/kjUUlInztJt73PDkOdrYiLKHaBXMsWaPFIwtdG0EjUlwdQ=
+	t=1715683216; cv=none; b=rSPJZAvfBp3QJzxFgGR/IbCmY5H69Cg2s/haLOSsI8bply9WHyBwi6o38J0YBBr6NAF+WNwDtteETnroXZjMbC1Wtum/glcayPAqHIYxMQwcfN9huxn2nGfhiYIFtqdrgQZAalWiH1++548X19nmvOsU5bjWSSmyTb6fFW/Ht/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683206; c=relaxed/simple;
-	bh=+gre0mXV16wwAwIifd79U20py2TSZ3p0cdAEUNizfAA=;
+	s=arc-20240116; t=1715683216; c=relaxed/simple;
+	bh=RRRJAMH/OAnELWlmp0H7Ve2IZ8qe8GJCv1Vp7bP7Ink=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n1HAZfbUhczIjvhRmq0GNTAaGX8nZ/tgeKEBB/oVOnqTDC3Z+AAuKfmAVh8UASa48boq5y4SmIBduH6njuIDCdHGI7b/UVXhgBXt3iASsml3Bc1tRbdEFEZLx8mPSaYp/iTZo81+ZLkgTYbeu8P1fjwY4KtQXLS+0lVyfzglLG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXx8cGLF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hcocKMlRK4/Zz9+9hvBXyeJcoKRd0TUKq5leoO199Nj/oINqWc1OyxSIkUG57+dtr/TzUEfFO56c3qzfEldSHfJf8FK/R09nE8QYDLfRywuIk7Ft+8WP7Nu1CHI/6H7b0HXmjOlQUcCex91BE9l4LCvQjG+4jLGbO8f5NXdP1/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LnIfV2yV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXx8cGLF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35FA4C2BD10;
-	Tue, 14 May 2024 10:40:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LnIfV2yV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C229C2BD10;
+	Tue, 14 May 2024 10:40:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683205;
-	bh=+gre0mXV16wwAwIifd79U20py2TSZ3p0cdAEUNizfAA=;
+	s=korg; t=1715683216;
+	bh=RRRJAMH/OAnELWlmp0H7Ve2IZ8qe8GJCv1Vp7bP7Ink=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DXx8cGLFd8YG2lmaG4bd5yzkDggy+A5PozvgdN91mVfiwqdX3p9fTX0yQtTSBW25p
-	 itTMWsahn6qxO0Txz+DV90oxt8XYKWFytydYLBlSMKkgb10V8q0u5R1gmHvMds7Q/8
-	 mJIDenFdgYYcYADgydJb3aXvqh2Xp73UhW+QfRgM=
+	b=LnIfV2yV8fhYVWnGTGQlL12ZALtk4A2Rv+pIjdvR4GXFqZrkcnEtWNgf69dZoZgew
+	 dc6I6lLygWGivEiJDAUcaeLZB9L+5G3ilvMgL+i/6rjUbumFGu/bZS+Icn3fg/Xb5k
+	 2uyiTpWFmc6jJuDLNAwSGodlyThGggzeirfRswgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Joerg Roedel <jroedel@suse.de>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 176/336] iommu: mtk: fix module autoloading
-Date: Tue, 14 May 2024 12:16:20 +0200
-Message-ID: <20240514101045.247119224@linuxfoundation.org>
+Subject: [PATCH 6.8 185/336] fs/9p: remove erroneous nlink init from legacy stat2inode
+Date: Tue, 14 May 2024 12:16:29 +0200
+Message-ID: <20240514101045.586760858@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,46 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzk@kernel.org>
+From: Eric Van Hensbergen <ericvh@kernel.org>
 
-[ Upstream commit 7537e31df80cb58c27f3b6fef702534ea87a5957 ]
+[ Upstream commit 6e45a30fe5e7cf5d42ac07262a3d97644f23dc68 ]
 
-Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
-based on the alias from of_device_id table.
+In 9p2000 legacy mode, stat2inode initializes nlink to 1,
+which is redundant with what alloc_inode should have already set.
+9p2000.u overrides this with extensions if present in the stat
+structure, and 9p2000.L incorporates nlink into its stat structure.
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-Link: https://lore.kernel.org/r/20240410164109.233308-1-krzk@kernel.org
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+At the very least this probably messes with directory nlink
+accounting in legacy mode.
+
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/mtk_iommu.c    | 1 +
- drivers/iommu/mtk_iommu_v1.c | 1 +
- 2 files changed, 2 insertions(+)
+ fs/9p/vfs_inode.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-index 7abe9e85a5706..51d0eba8cbdf3 100644
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -1789,6 +1789,7 @@ static const struct of_device_id mtk_iommu_of_ids[] = {
- 	{ .compatible = "mediatek,mt8365-m4u", .data = &mt8365_data},
- 	{}
- };
-+MODULE_DEVICE_TABLE(of, mtk_iommu_of_ids);
+diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
+index 7ba7efe47b40d..0fde0ab77eff6 100644
+--- a/fs/9p/vfs_inode.c
++++ b/fs/9p/vfs_inode.c
+@@ -1152,8 +1152,6 @@ v9fs_stat2inode(struct p9_wstat *stat, struct inode *inode,
+ 	struct v9fs_session_info *v9ses = sb->s_fs_info;
+ 	struct v9fs_inode *v9inode = V9FS_I(inode);
  
- static struct platform_driver mtk_iommu_driver = {
- 	.probe	= mtk_iommu_probe,
-diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
-index 25b41222abaec..32cc8341d3726 100644
---- a/drivers/iommu/mtk_iommu_v1.c
-+++ b/drivers/iommu/mtk_iommu_v1.c
-@@ -599,6 +599,7 @@ static const struct of_device_id mtk_iommu_v1_of_ids[] = {
- 	{ .compatible = "mediatek,mt2701-m4u", },
- 	{}
- };
-+MODULE_DEVICE_TABLE(of, mtk_iommu_v1_of_ids);
- 
- static const struct component_master_ops mtk_iommu_v1_com_ops = {
- 	.bind		= mtk_iommu_v1_bind,
+-	set_nlink(inode, 1);
+-
+ 	inode_set_atime(inode, stat->atime, 0);
+ 	inode_set_mtime(inode, stat->mtime, 0);
+ 	inode_set_ctime(inode, stat->mtime, 0);
 -- 
 2.43.0
 
