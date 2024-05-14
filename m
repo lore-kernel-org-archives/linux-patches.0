@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BDB84E1D;
-	Tue, 14 May 2024 11:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB8918026;
+	Tue, 14 May 2024 11:15:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685299; cv=none; b=rUPPi9FEi97+OCXse4Yv445T41PekVA3zRIHx0rmNL3OOnEBJ/VEcLWW6JxyTyPXHkvcLpGsbgJYYyye+6df+uRI3yTVTZaHo9Rp196lKcG6lF83otEl1YGiBqsVHa9Amhpsh57+pDfNtz0QHfeZIhryYcSaKZBdB01khsIaDG4=
+	t=1715685310; cv=none; b=f6lB8+351J4LBtrdA8V5ERjJeLluCduF85h3NKWABam0jSzE95iS4uSqXZbKHnFsJ6qOOVjd368J3m+ko+Hz7UHY+gUxt0L78H1WyGDjYEEkjSOK3LrbpWCxx9SUEiZeVRPzvIm60UsTvsJbkp80I+2EjeE95CPHl+2FgpeD59Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685299; c=relaxed/simple;
-	bh=8NpsOtwUBKiQN3/zetauamaImrJ7ZWh8t9qNigQ7IDk=;
+	s=arc-20240116; t=1715685310; c=relaxed/simple;
+	bh=iOV/5lnwZO2zr8zmhe61XnvlwAhpx7Ryow6kqvedYNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oGvK9g4VwCLUEUO5aix5cIP5doBJ6EtysEl28Q58tHGwNaHyep2xOK4suW2zcDlW0cp66nzjqFLa4DatUnSIqFb5mJBKIOlEw87+EVKpCx3jA53snhUld9+sNa/qQY+w4TO+Fc3tVXb+ulT+oExCVqR/Lyab19P0iFwUvS0nSYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjTM5F2p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g0suFIg21g0UgCNK+q2uqBVawDs2NaN8gHdyjekIFLetPuofjuGwXSHPuBlkVMNM1QfpPPiTVqwX58QGDn8iO8jry/KXujqvBLUnudNW2n4TbANA+ajrNIVmExb7JFecqORAjRwa0fQWYKMM95dmzG9LZn1AWeTGy0opXVV3VsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VReROB4p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjTM5F2p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8483FC2BD10;
-	Tue, 14 May 2024 11:14:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VReROB4p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9449C2BD10;
+	Tue, 14 May 2024 11:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685299;
-	bh=8NpsOtwUBKiQN3/zetauamaImrJ7ZWh8t9qNigQ7IDk=;
+	s=korg; t=1715685310;
+	bh=iOV/5lnwZO2zr8zmhe61XnvlwAhpx7Ryow6kqvedYNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tjTM5F2p2kfpH+YuD1EKHjfN+S0+qoGRsBK5VGGsfNjlDAbBJbMKE+iizz2w8TuIL
-	 Tj/EbR2EVwcPL/POB6bgHMGZuiSELErzJ6pEw/EHu/UGR7aKPUi7HUQg04GMpINBcA
-	 CmH6omJgi9hJS0+06LiNBdARP1x4zmKegDvyBFu4=
+	b=VReROB4pXs9TGRKSU94KN4e6zb4AKSRVTEXkjM+ESf3WWBmAR8UqWiUvLdYpgQ9x2
+	 lItn8rVJnJwlSTO7gkLlmLW2l2bByr/tVH13u++CMq0/YqVp+n6vx+dhCATFqxXGmV
+	 IaPhRHnyNNEnRWhga+6OKfB2k3EF5vbU+YA72W+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 134/301] btrfs: make btrfs_clear_delalloc_extent() free delalloc reserve
-Date: Tue, 14 May 2024 12:16:45 +0200
-Message-ID: <20240514101037.314866342@linuxfoundation.org>
+Subject: [PATCH 6.6 135/301] btrfs: always clear PERTRANS metadata during commit
+Date: Tue, 14 May 2024 12:16:46 +0200
+Message-ID: <20240514101037.352187463@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -54,37 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit 3c6f0c5ecc8910d4ffb0dfe85609ebc0c91c8f34 ]
+[ Upstream commit 6e68de0bb0ed59e0554a0c15ede7308c47351e2d ]
 
-Currently, this call site in btrfs_clear_delalloc_extent() only converts
-the reservation. We are marking it not delalloc, so I don't think it
-makes sense to keep the rsv around.  This is a path where we are not
-sure to join a transaction, so it leads to incorrect free-ing during
-umount.
-
-Helps with the pass rate of generic/269 and generic/475.
+It is possible to clear a root's IN_TRANS tag from the radix tree, but
+not clear its PERTRANS, if there is some error in between. Eliminate
+that possibility by moving the free up to where we clear the tag.
 
 Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Boris Burkov <boris@bur.io>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 2 +-
+ fs/btrfs/transaction.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 33d0efa5ed794..5ddee801a8303 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -2510,7 +2510,7 @@ void btrfs_clear_delalloc_extent(struct btrfs_inode *inode,
- 		 */
- 		if (bits & EXTENT_CLEAR_META_RESV &&
- 		    root != fs_info->tree_root)
--			btrfs_delalloc_release_metadata(inode, len, false);
-+			btrfs_delalloc_release_metadata(inode, len, true);
+diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
+index 457ec7d02a9ac..0548072c642fb 100644
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -1449,6 +1449,7 @@ static noinline int commit_fs_roots(struct btrfs_trans_handle *trans)
+ 			radix_tree_tag_clear(&fs_info->fs_roots_radix,
+ 					(unsigned long)root->root_key.objectid,
+ 					BTRFS_ROOT_TRANS_TAG);
++			btrfs_qgroup_free_meta_all_pertrans(root);
+ 			spin_unlock(&fs_info->fs_roots_radix_lock);
  
- 		/* For sanity tests. */
- 		if (btrfs_is_testing(fs_info))
+ 			btrfs_free_log(trans, root);
+@@ -1473,7 +1474,6 @@ static noinline int commit_fs_roots(struct btrfs_trans_handle *trans)
+ 			if (ret2)
+ 				return ret2;
+ 			spin_lock(&fs_info->fs_roots_radix_lock);
+-			btrfs_qgroup_free_meta_all_pertrans(root);
+ 		}
+ 	}
+ 	spin_unlock(&fs_info->fs_roots_radix_lock);
 -- 
 2.43.0
 
