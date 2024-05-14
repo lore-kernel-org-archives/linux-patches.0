@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F2D12C801;
-	Tue, 14 May 2024 11:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83AB12CD8A;
+	Tue, 14 May 2024 11:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686627; cv=none; b=M44Xz268DMIP6PTImOuxei4MOzk9yYHnocGSndN4ahD6fhKeeIhICqxHhnkHzDPRysmdrLrC4iO0hDy20vb8ES8k/uuzFc1khL96e00XunkFLDD5hjkORfY9FncDbO8JjUz0UMIM+LRrp4lQdTd9FGEXgrdiWqYSgZieTGzYR2M=
+	t=1715686631; cv=none; b=V990L+vYriRtAFWGjVGmWYJu5BBWKfgscwsw5DATH+29d6j72UyakG7cGCsptHz/KPuQUTCXyfmKZorsqvSH7PZm1qZkBm7eCoYlVY2TjJ+MOJOwsKQy21qgKVU+teyJs11EPzKHDeH8sV7u5cYdOgjgIJQsG2X9xfERmkO/crI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686627; c=relaxed/simple;
-	bh=G45lCZMsTxxKsyswBlkp92XrmrEqBEIWQzwTJvbVU/0=;
+	s=arc-20240116; t=1715686631; c=relaxed/simple;
+	bh=7JDISL7m3VNFZ3ufq3I1FZBFtn5K7y5+FUAFYxIvKl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RcAQYnB5ZQknWjga0SXBuQkU6HhHMxAAw6uxWmVF99ZKCu8TWjehKqcJegl0fSaG0EfTKC+uXNjPq+PoghEid2pIw+JtykGHCUPUDktQP6Je1EmjYw8Cols4RoolpbJh3xjGt8iNFCl6ucu+Z/Z1sxwISZ/Y+PpDr2cJ75fg4B0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJI4HtPv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XVnK04q4gKSIbmvdYk8Mck8lBlX7BTslg7uIbdtnxlL+I4mJ5x26bX/CXvbeu2z0FTQPPc4kG3qHvy5KfJORML+Rjxbz5hqfvSdWmp1SCqIBURp0J52r5n60lmSPgYdbv54seBPPE6JirpFq76fxuAePh6S8X46AyWqbCJ2rPlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQfrfCJr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJI4HtPv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB61C32781;
-	Tue, 14 May 2024 11:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQfrfCJr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C150C2BD10;
+	Tue, 14 May 2024 11:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686627;
-	bh=G45lCZMsTxxKsyswBlkp92XrmrEqBEIWQzwTJvbVU/0=;
+	s=korg; t=1715686630;
+	bh=7JDISL7m3VNFZ3ufq3I1FZBFtn5K7y5+FUAFYxIvKl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yJI4HtPvlwPLMK+RKFNMEUHKRb0TaIRj/ExRnkcmwnCsPlxiYuMcU8m0vgQ8fxRiB
-	 XfKhlNOHmVbSwoffhVFoWZwe/vPjKMoxJRDJmwLMNM9jYbVcP2A1dOYcQou/sL0gQO
-	 Iy7/+kphu/3YtHa0hIwXPjdMODSSZg718JHLEKj0=
+	b=FQfrfCJr4Qna79Nof9PLkivlE/HA4KikvMk0zWm1fTYmx1yACcr4IAyXdzFyoyQub
+	 G7NdPCQ+oACYD7k7Ju80PfDp50IjzjBg8Yxv4Q1fn5aHL59ZtBEZIQm51wRGW3qtka
+	 TBfFskk/KN0p7PFV0MKxtX3inBXZ1TmR1F8TEjSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aman Dhoot <amandhoot12@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 203/236] ALSA: hda/realtek: Fix mute led of HP Laptop 15-da3001TU
-Date: Tue, 14 May 2024 12:19:25 +0200
-Message-ID: <20240514101028.070845443@linuxfoundation.org>
+	Pavel Machek <pavel@denx.de>,
+	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 204/236] btrfs: add missing mutex_unlock in btrfs_relocate_sys_chunks()
+Date: Tue, 14 May 2024 12:19:26 +0200
+Message-ID: <20240514101028.108043084@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -50,31 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aman Dhoot <amandhoot12@gmail.com>
+From: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
-commit 2d5af3ab9e6f1cf1468b2a5221b5c1f7f46c3333 upstream.
+commit 9af503d91298c3f2945e73703f0e00995be08c30 upstream.
 
-This patch simply add SND_PCI_QUIRK for HP Laptop 15-da3001TU to fixed
-mute led of laptop.
+The previous patch that replaced BUG_ON by error handling forgot to
+unlock the mutex in the error path.
 
-Signed-off-by: Aman Dhoot <amandhoot12@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/CAMTp=B+3NG65Z684xMwHqdXDJhY+DJK-kuSw4adn6xwnG+b5JA@mail.gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/all/Zh%2fHpAGFqa7YAFuM@duo.ucw.cz
+Reported-by: Pavel Machek <pavel@denx.de>
+Fixes: 7411055db5ce ("btrfs: handle chunk tree lookup error in btrfs_relocate_sys_chunks()")
+CC: stable@vger.kernel.org
+Reviewed-by: Pavel Machek <pavel@denx.de>
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
+ fs/btrfs/volumes.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9660,6 +9660,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x860f, "HP ZBook 15 G6", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x861f, "HP Elite Dragonfly G1", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x869d, "HP", ALC236_FIXUP_HP_MUTE_LED),
-+	SND_PCI_QUIRK(0x103c, 0x86c1, "HP Laptop 15-da3001TU", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
- 	SND_PCI_QUIRK(0x103c, 0x86e7, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
- 	SND_PCI_QUIRK(0x103c, 0x86e8, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -3397,6 +3397,7 @@ again:
+ 			 * alignment and size).
+ 			 */
+ 			ret = -EUCLEAN;
++			mutex_unlock(&fs_info->reclaim_bgs_lock);
+ 			goto error;
+ 		}
+ 
 
 
