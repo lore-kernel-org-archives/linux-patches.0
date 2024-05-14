@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD511D54D;
-	Tue, 14 May 2024 11:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063C66D1D7;
+	Tue, 14 May 2024 11:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685150; cv=none; b=K4x3wnnXybLE4VksuFlUTK9yViagZKDvzOQtiykTb0jduzbvwOWA62tOq5GvsRlQ5BTX5TXTOv0whDAfCQUhT17wTh4Od06OFtLCtTOXewPr61X4HR3mEI5LhKNahIeaDPmigHvyErrAwUY5asiUET7F1i44OxBV0SG/D0SBtvM=
+	t=1715685157; cv=none; b=bBJz6rJGElr2v5EWGvJdFiSLE6Sx95F46r68SQtDG6OMOHByypv58Pj/352RjBbPW3LlJRTAY9MCnhY/X73hyoq7xoybeLFZO1kN4LXVPJKrG4JDzvABckk8/eYJ+jx4miPdZZ04jpM5r6KezM3aOzTTSn0XosFQ3zQQ5h3iD9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685150; c=relaxed/simple;
-	bh=cB2Y8sYbR5jXA0lV+rjVxfv6LktE8uuJx0AgL0D9Nvg=;
+	s=arc-20240116; t=1715685157; c=relaxed/simple;
+	bh=6OhIzlhtOEusbs0jWd+ahhHGhgoOGJTmdsK/zBtMIgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PL5aEt81GwDkAfne0O1I9sYcjbz3XGJ+C3cBXzbalrA6CyKotI3rkIGr0jLB7aKkm7j9DxU2Q/TfXWDqag6oRT3AfIiwiS3NbvUHu66JNmm5oIH2g1YQ61jNSCfGIjgAUbRteVAnRui38PjkHtEz1gbaEYDdUT1nmaWcoLeY0BU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXR/19Aq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r3h5Akykt3/pNE2j75os4gtPtVN0pTvqmP3mESHozS/zUfHyoPBEB+GS9RtltBW+iDm6YB4kREhO6E7DnN2rFJvq0kpPNH7iV1RCSQJWMk16rLCciupusa0UbYtq1PFzYaTP++hMHHPUW3g4Y+XcqXy5O1IijXnPg3lDAqLNJg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDBQ61q6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXR/19Aq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CD9C2BD10;
-	Tue, 14 May 2024 11:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDBQ61q6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8393C2BD10;
+	Tue, 14 May 2024 11:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685150;
-	bh=cB2Y8sYbR5jXA0lV+rjVxfv6LktE8uuJx0AgL0D9Nvg=;
+	s=korg; t=1715685156;
+	bh=6OhIzlhtOEusbs0jWd+ahhHGhgoOGJTmdsK/zBtMIgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hXR/19AqWY2NLTHhSZLpG6d2Pmv/od5FpTMfZ480+AZhz0Dbg3SbBm11P3fFHBmHQ
-	 /NHH5/FsVANuzqK43rvywBNImc+lhpFtlNxoOlQwQq06jYM15rvQQVDW4nTf1LN3z6
-	 V3h1/uyCP2tGK8klBJau21SnC6J3gxB79SFTO/K8=
+	b=CDBQ61q6zkA/y8zFc1oUcEP12betd8ObmmooApK1FiL5IfawVLBPvQ4PpGGQWKN/7
+	 dJCVT8K4kHR3YBObHE+BRfTSLX98ETiODM9uFflXmu5uaVOUaHU2EVsYryQaUi99wZ
+	 Yk7gM1EWyKIXKZ8Hx82erIYmVwLpZ0gp/G29y1yA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Adam Goldman <adamg@pobox.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 145/301] drm/amdgpu: Refine IB schedule error logging
-Date: Tue, 14 May 2024 12:16:56 +0200
-Message-ID: <20240514101037.727688519@linuxfoundation.org>
+Subject: [PATCH 6.6 128/301] firewire: ohci: mask bus reset interrupts between ISR and bottom half
+Date: Tue, 14 May 2024 12:16:39 +0200
+Message-ID: <20240514101037.081342199@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -47,51 +45,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Adam Goldman <adamg@pobox.com>
 
-[ Upstream commit 4b18a91faf1752f9bd69a4ed3aed2c8f6e5b0528 ]
+[ Upstream commit 752e3c53de0fa3b7d817a83050b6699b8e9c6ec9 ]
 
-Downgrade to debug information when IBs are skipped. Also, use dev_* to
-identify the device.
+In the FireWire OHCI interrupt handler, if a bus reset interrupt has
+occurred, mask bus reset interrupts until bus_reset_work has serviced and
+cleared the interrupt.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Normally, we always leave bus reset interrupts masked. We infer the bus
+reset from the self-ID interrupt that happens shortly thereafter. A
+scenario where we unmask bus reset interrupts was introduced in 2008 in
+a007bb857e0b26f5d8b73c2ff90782d9c0972620: If
+OHCI_PARAM_DEBUG_BUSRESETS (8) is set in the debug parameter bitmask, we
+will unmask bus reset interrupts so we can log them.
+
+irq_handler logs the bus reset interrupt. However, we can't clear the bus
+reset event flag in irq_handler, because we won't service the event until
+later. irq_handler exits with the event flag still set. If the
+corresponding interrupt is still unmasked, the first bus reset will
+usually freeze the system due to irq_handler being called again each
+time it exits. This freeze can be reproduced by loading firewire_ohci
+with "modprobe firewire_ohci debug=-1" (to enable all debugging output).
+Apparently there are also some cases where bus_reset_work will get called
+soon enough to clear the event, and operation will continue normally.
+
+This freeze was first reported a few months after a007bb85 was committed,
+but until now it was never fixed. The debug level could safely be set
+to -1 through sysfs after the module was loaded, but this would be
+ineffectual in logging bus reset interrupts since they were only
+unmasked during initialization.
+
+irq_handler will now leave the event flag set but mask bus reset
+interrupts, so irq_handler won't be called again and there will be no
+freeze. If OHCI_PARAM_DEBUG_BUSRESETS is enabled, bus_reset_work will
+unmask the interrupt after servicing the event, so future interrupts
+will be caught as desired.
+
+As a side effect to this change, OHCI_PARAM_DEBUG_BUSRESETS can now be
+enabled through sysfs in addition to during initial module loading.
+However, when enabled through sysfs, logging of bus reset interrupts will
+be effective only starting with the second bus reset, after
+bus_reset_work has executed.
+
+Signed-off-by: Adam Goldman <adamg@pobox.com>
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_job.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/firewire/ohci.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-index 78476bc75b4e1..de9d7f3dc2336 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-@@ -300,12 +300,15 @@ static struct dma_fence *amdgpu_job_run(struct drm_sched_job *sched_job)
- 		dma_fence_set_error(finished, -ECANCELED);
+diff --git a/drivers/firewire/ohci.c b/drivers/firewire/ohci.c
+index 7bc71f4be64a0..38d19410a2be6 100644
+--- a/drivers/firewire/ohci.c
++++ b/drivers/firewire/ohci.c
+@@ -2060,6 +2060,8 @@ static void bus_reset_work(struct work_struct *work)
  
- 	if (finished->error < 0) {
--		DRM_INFO("Skip scheduling IBs!\n");
-+		dev_dbg(adev->dev, "Skip scheduling IBs in ring(%s)",
-+			ring->name);
- 	} else {
- 		r = amdgpu_ib_schedule(ring, job->num_ibs, job->ibs, job,
- 				       &fence);
- 		if (r)
--			DRM_ERROR("Error scheduling IBs (%d)\n", r);
-+			dev_err(adev->dev,
-+				"Error scheduling IBs (%d) in ring(%s)", r,
-+				ring->name);
- 	}
+ 	ohci->generation = generation;
+ 	reg_write(ohci, OHCI1394_IntEventClear, OHCI1394_busReset);
++	if (param_debug & OHCI_PARAM_DEBUG_BUSRESETS)
++		reg_write(ohci, OHCI1394_IntMaskSet, OHCI1394_busReset);
  
- 	job->job_run_counter++;
+ 	if (ohci->quirks & QUIRK_RESET_PACKET)
+ 		ohci->request_generation = generation;
+@@ -2125,12 +2127,14 @@ static irqreturn_t irq_handler(int irq, void *data)
+ 		return IRQ_NONE;
+ 
+ 	/*
+-	 * busReset and postedWriteErr must not be cleared yet
++	 * busReset and postedWriteErr events must not be cleared yet
+ 	 * (OHCI 1.1 clauses 7.2.3.2 and 13.2.8.1)
+ 	 */
+ 	reg_write(ohci, OHCI1394_IntEventClear,
+ 		  event & ~(OHCI1394_busReset | OHCI1394_postedWriteErr));
+ 	log_irqs(ohci, event);
++	if (event & OHCI1394_busReset)
++		reg_write(ohci, OHCI1394_IntMaskClear, OHCI1394_busReset);
+ 
+ 	if (event & OHCI1394_selfIDComplete)
+ 		queue_work(selfid_workqueue, &ohci->bus_reset_work);
 -- 
 2.43.0
 
