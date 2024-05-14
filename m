@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43401136651;
-	Tue, 14 May 2024 10:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D899320F;
+	Tue, 14 May 2024 10:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682877; cv=none; b=iWB8m/PojaMwrXG9zWkSiyeMuQCmRwqckiwRPef29BojYvvP8c8P65i+x06P3/eHq8hQj0WREcw9JKEH7xhD8MJJf+qlZ7unsXcQCL4BQ9va4L+s5qxad1UWpnHytgcNtbBhvCQGZYYJelqbwtGtq6GVa+j2UNvYhzsgezM3sOQ=
+	t=1715682882; cv=none; b=OCaqVn4tEH7O00VCrR89U5VbohWS9RrSgnrpGpejqm+Q6BiruwkatrugiBWrA8QBoGU6XoIJ+tcfb5FhV4KvmufsZQsrB8mb5gm5EnaTrV/Vx60LjcFZVjw9mVCE69RBIBIp55JmMa/0GSFooCMaMnc27t3fzJvvaXw+pGTSF40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682877; c=relaxed/simple;
-	bh=Sx3/MGUHMGdtohUx4V8LWCuYxx3ngp+8LiQZAYY2OBE=;
+	s=arc-20240116; t=1715682882; c=relaxed/simple;
+	bh=p83Upf90VZ+4N3Stp69M0nT8gp6eCmvEofTbY01Cueg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MzKpGpJCiP9LQxSCXnr4x1i0TAv6Q5skrMAef2wl6sHJyO7p47lQEK0ni8O2GnW8V0LdIaMmcWsmYp52+0GsE1T/KPa44+YVK/Tjd0/UqpMgBN28k/AFoT0bWN/Bx+CbZB/rYVCIdpGkmDGG9U9zxw997mEPW+3t6en7QjhW6Ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfGjsbYq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uWVKy4851qO54ozUd+u+zm3hXP+ikLi/TM8G6oK6Tidvalnvki7eGoHPlbNlDa/9VqabwGcJJz2ZqSWfL8j0SXFnGf/VBQeN9qqBkqlEUVUsFmyRjP7JxN5z2zgrrX7tXNUVBGMioWw8BV8EZu41pAjwfkVG0waL2JGYb5F5Z30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5iJGeQE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfGjsbYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99924C2BD10;
-	Tue, 14 May 2024 10:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5iJGeQE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45624C2BD10;
+	Tue, 14 May 2024 10:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682877;
-	bh=Sx3/MGUHMGdtohUx4V8LWCuYxx3ngp+8LiQZAYY2OBE=;
+	s=korg; t=1715682882;
+	bh=p83Upf90VZ+4N3Stp69M0nT8gp6eCmvEofTbY01Cueg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gfGjsbYqnSpuPfQ/OUvpijNB0J2jewBQKbfpASJdzxzfYdZGG95jlPIMLKiDk+dsb
-	 J4yTLG/30An5iGiL8U4gPh2OIO64Z7JP1cL7TrDfP06S+wH9nAYSF/JBQGBXZ7K+JD
-	 +ZHB+BxbWvCUTHEASRlGzQ2/W20UTQ3P3pIHjq5w=
+	b=P5iJGeQEZ14GYTiXiB7RiZNdmow9zbPHDCqdI3HRhNAl50yKDSj484NugU3QNtf5J
+	 pze14DQBbWu4cLOkxijrzUmVvMYWSP9Z5UKiRxUPkXiRm5RmDtLJIuZVOgjsBYMrUU
+	 dwy4xGbv4at1B2q353Uib0sTOebBo5aFD8ArGC14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Li Nan <linan122@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 109/336] wifi: iwlwifi: mvm: guard against invalid STA ID on removal
-Date: Tue, 14 May 2024 12:15:13 +0200
-Message-ID: <20240514101042.719974061@linuxfoundation.org>
+Subject: [PATCH 6.8 127/336] block: fix overflow in blk_ioctl_discard()
+Date: Tue, 14 May 2024 12:15:31 +0200
+Message-ID: <20240514101043.397177143@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,44 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 17f64517bf5c26af56b6c3566273aad6646c3c4f ]
+[ Upstream commit 22d24a544b0d49bbcbd61c8c0eaf77d3c9297155 ]
 
-Guard against invalid station IDs in iwl_mvm_mld_rm_sta_id as that would
-result in out-of-bounds array accesses. This prevents issues should the
-driver get into a bad state during error handling.
+There is no check for overflow of 'start + len' in blk_ioctl_discard().
+Hung task occurs if submit an discard ioctl with the following param:
+  start = 0x80000000000ff000, len = 0x8000000000fff000;
+Add the overflow validation now.
 
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240320232419.d523167bda9c.I1cffd86363805bf86a95d8bdfd4b438bb54baddc@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20240329012319.2034550-1-linan666@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ block/ioctl.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-index 1628bf55458fc..23e64a757cfe8 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-@@ -855,10 +855,15 @@ int iwl_mvm_mld_rm_sta(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
- 
- int iwl_mvm_mld_rm_sta_id(struct iwl_mvm *mvm, u8 sta_id)
+diff --git a/block/ioctl.c b/block/ioctl.c
+index 5f8c988239c68..7dbed0c1155cf 100644
+--- a/block/ioctl.c
++++ b/block/ioctl.c
+@@ -89,7 +89,7 @@ static int blk_ioctl_discard(struct block_device *bdev, blk_mode_t mode,
+ 		unsigned long arg)
  {
--	int ret = iwl_mvm_mld_rm_sta_from_fw(mvm, sta_id);
-+	int ret;
+ 	uint64_t range[2];
+-	uint64_t start, len;
++	uint64_t start, len, end;
+ 	struct inode *inode = bdev->bd_inode;
+ 	int err;
  
- 	lockdep_assert_held(&mvm->mutex);
+@@ -110,7 +110,8 @@ static int blk_ioctl_discard(struct block_device *bdev, blk_mode_t mode,
+ 	if (len & 511)
+ 		return -EINVAL;
  
-+	if (WARN_ON(sta_id == IWL_MVM_INVALID_STA))
-+		return 0;
-+
-+	ret = iwl_mvm_mld_rm_sta_from_fw(mvm, sta_id);
-+
- 	RCU_INIT_POINTER(mvm->fw_id_to_mac_id[sta_id], NULL);
- 	RCU_INIT_POINTER(mvm->fw_id_to_link_sta[sta_id], NULL);
- 	return ret;
+-	if (start + len > bdev_nr_bytes(bdev))
++	if (check_add_overflow(start, len, &end) ||
++	    end > bdev_nr_bytes(bdev))
+ 		return -EINVAL;
+ 
+ 	filemap_invalidate_lock(inode->i_mapping);
 -- 
 2.43.0
 
