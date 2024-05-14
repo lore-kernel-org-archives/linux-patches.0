@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D3F13D290;
-	Tue, 14 May 2024 10:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619BF5A0FE;
+	Tue, 14 May 2024 10:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683295; cv=none; b=XV0EnqkrF43RZIKU7zD4dDc4VcpA1FWMELThIIBWdhpwNIK8R9zzOBPWM0b0lsuvUAPU6B9738Nc8CPp78Hc9yphHxHTJXlktcD+Rop51MgdHtaEO5G6QNsDopf6HWF5mYv7mAZwymnnRZFQFVbGYrp5c3+b1bFGyGiIRvtPIqk=
+	t=1715683306; cv=none; b=hL1+E0TanMvJVwR+xkpsJpjUOZwhzWfgfmxG6s/fyhHKwfzPGNtpU8VjK5gD/jLjwgBdmhIJpNmKuJStW2r5eXBOwMGN6cgy3Ptrdpbbkc4LEIWvWMJQ7OLd8QAWcZ2T++/hqWs3HGHOJhsegQdssllXTUWzX1I99trmJ7aj5h0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683295; c=relaxed/simple;
-	bh=ei6Qta6Q+Fcq7sQBH26aJ5irdQWIEuZskUOkwyOhTVM=;
+	s=arc-20240116; t=1715683306; c=relaxed/simple;
+	bh=LDbpSl3okWGRT+CiGAuMynzYQEPFi8Igb8m/th5fjDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O7pEmCXtggCYNZ+oYXHBJven1T6vbMI1UzDTGBj4DpdGylZi6/SdL/gkXPHhfSbv2C9RKeBOVylJUQQ2RS4VIBsZ4oBYpUCUmpEPhoey0YB0i0Xdl4VLA1ROi+OQKhNxR+5qW19P1iyNB9mAW9A7aHT20mQayMakoC+mdLEgCzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEZtad0A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fchvmnhNtI+4MZwxHMEZUYjTXQc7b1EWUZCyewymqH+I/dTg3Ui1GixupeiI/0fT9uXZNTdkrMoEIRMjStz/eOgJ+YC7hU9dlqNigvL8aOAaSk+wF1J7YS++/pIwRQ29WaODViLD4LRLUgBYBkFj24mXhT7QLAgIrMj+wFHkzaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P4N2H2s1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEZtad0A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A350C2BD10;
-	Tue, 14 May 2024 10:41:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P4N2H2s1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D78C32782;
+	Tue, 14 May 2024 10:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683295;
-	bh=ei6Qta6Q+Fcq7sQBH26aJ5irdQWIEuZskUOkwyOhTVM=;
+	s=korg; t=1715683306;
+	bh=LDbpSl3okWGRT+CiGAuMynzYQEPFi8Igb8m/th5fjDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cEZtad0AnnAsJ9d9Nk/j+lkRW1IN3cxzPAvBi+3zlW2sfTkDkMjZ69cATxawrk4E5
-	 /j+RbGwiKu2Vp+xC76xRszn9cNyWnmaDFneFgndNU5TrbU7zl5sKq6cIpN3B7CCXHQ
-	 5Biqu5EAb7da/rj02TzMMGdYUXkzxKSkxKtLmyxI=
+	b=P4N2H2s1s2E2nx0VUoMci1lL8Og37l3/AqJHpoMnj2Y7DKupxUKx/bO1Lm+ySTkYE
+	 Zu0aJIeT96bY0R+f6LHks4CtaiWAnm5fXvmTSBMeTvoJP3Hsz4aWtlxKyrKWUZgbR/
+	 rBWN1sqsNXCeLX8ap6C6dvW43Xd0RJdKv+dS5nUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Davey <paul.davey@alliedtelesis.co.nz>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Boy Wu <boy.wu@mediatek.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 196/336] xfrm: Preserve vlan tags for transport mode software GRO
-Date: Tue, 14 May 2024 12:16:40 +0200
-Message-ID: <20240514101046.005117758@linuxfoundation.org>
+Subject: [PATCH 6.8 197/336] ARM: 9381/1: kasan: clear stale stack poison
+Date: Tue, 14 May 2024 12:16:41 +0200
+Message-ID: <20240514101046.043158374@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,151 +54,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Davey <paul.davey@alliedtelesis.co.nz>
+From: Boy.Wu <boy.wu@mediatek.com>
 
-[ Upstream commit 58fbfecab965014b6e3cc956a76b4a96265a1add ]
+[ Upstream commit c4238686f9093b98bd6245a348bcf059cdce23af ]
 
-The software GRO path for esp transport mode uses skb_mac_header_rebuild
-prior to re-injecting the packet via the xfrm_napi_dev.  This only
-copies skb->mac_len bytes of header which may not be sufficient if the
-packet contains 802.1Q tags or other VLAN tags.  Worse copying only the
-initial header will leave a packet marked as being VLAN tagged but
-without the corresponding tag leading to mangling when it is later
-untagged.
+We found below OOB crash:
 
-The VLAN tags are important when receiving the decrypted esp transport
-mode packet after GRO processing to ensure it is received on the correct
-interface.
+[   33.452494] ==================================================================
+[   33.453513] BUG: KASAN: stack-out-of-bounds in refresh_cpu_vm_stats.constprop.0+0xcc/0x2ec
+[   33.454660] Write of size 164 at addr c1d03d30 by task swapper/0/0
+[   33.455515]
+[   33.455767] CPU: 0 PID: 0 Comm: swapper/0 Tainted: G           O       6.1.25-mainline #1
+[   33.456880] Hardware name: Generic DT based system
+[   33.457555]  unwind_backtrace from show_stack+0x18/0x1c
+[   33.458326]  show_stack from dump_stack_lvl+0x40/0x4c
+[   33.459072]  dump_stack_lvl from print_report+0x158/0x4a4
+[   33.459863]  print_report from kasan_report+0x9c/0x148
+[   33.460616]  kasan_report from kasan_check_range+0x94/0x1a0
+[   33.461424]  kasan_check_range from memset+0x20/0x3c
+[   33.462157]  memset from refresh_cpu_vm_stats.constprop.0+0xcc/0x2ec
+[   33.463064]  refresh_cpu_vm_stats.constprop.0 from tick_nohz_idle_stop_tick+0x180/0x53c
+[   33.464181]  tick_nohz_idle_stop_tick from do_idle+0x264/0x354
+[   33.465029]  do_idle from cpu_startup_entry+0x20/0x24
+[   33.465769]  cpu_startup_entry from rest_init+0xf0/0xf4
+[   33.466528]  rest_init from arch_post_acpi_subsys_init+0x0/0x18
+[   33.467397]
+[   33.467644] The buggy address belongs to stack of task swapper/0/0
+[   33.468493]  and is located at offset 112 in frame:
+[   33.469172]  refresh_cpu_vm_stats.constprop.0+0x0/0x2ec
+[   33.469917]
+[   33.470165] This frame has 2 objects:
+[   33.470696]  [32, 76) 'global_zone_diff'
+[   33.470729]  [112, 276) 'global_node_diff'
+[   33.471294]
+[   33.472095] The buggy address belongs to the physical page:
+[   33.472862] page:3cd72da8 refcount:1 mapcount:0 mapping:00000000 index:0x0 pfn:0x41d03
+[   33.473944] flags: 0x1000(reserved|zone=0)
+[   33.474565] raw: 00001000 ed741470 ed741470 00000000 00000000 00000000 ffffffff 00000001
+[   33.475656] raw: 00000000
+[   33.476050] page dumped because: kasan: bad access detected
+[   33.476816]
+[   33.477061] Memory state around the buggy address:
+[   33.477732]  c1d03c00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   33.478630]  c1d03c80: 00 00 00 00 00 00 00 00 f1 f1 f1 f1 00 00 00 00
+[   33.479526] >c1d03d00: 00 04 f2 f2 f2 f2 00 00 00 00 00 00 f1 f1 f1 f1
+[   33.480415]                                                ^
+[   33.481195]  c1d03d80: 00 00 00 00 00 00 00 00 00 00 04 f3 f3 f3 f3 f3
+[   33.482088]  c1d03e00: f3 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
+[   33.482978] ==================================================================
 
-Therefore record the full mac header length in xfrm*_transport_input for
-later use in corresponding xfrm*_transport_finish to copy the entire mac
-header when rebuilding the mac header for GRO.  The skb->data pointer is
-left pointing skb->mac_header bytes after the start of the mac header as
-is expected by the network stack and network and transport header
-offsets reset to this location.
+We find the root cause of this OOB is that arm does not clear stale stack
+poison in the case of cpuidle.
 
-Fixes: 7785bba299a8 ("esp: Add a software GRO codepath")
-Signed-off-by: Paul Davey <paul.davey@alliedtelesis.co.nz>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+This patch refer to arch/arm64/kernel/sleep.S to resolve this issue.
+
+>From cited commit [1] that explain the problem
+
+Functions which the compiler has instrumented for KASAN place poison on
+the stack shadow upon entry and remove this poison prior to returning.
+
+In the case of cpuidle, CPUs exit the kernel a number of levels deep in
+C code.  Any instrumented functions on this critical path will leave
+portions of the stack shadow poisoned.
+
+If CPUs lose context and return to the kernel via a cold path, we
+restore a prior context saved in __cpu_suspend_enter are forgotten, and
+we never remove the poison they placed in the stack shadow area by
+functions calls between this and the actual exit of the kernel.
+
+Thus, (depending on stackframe layout) subsequent calls to instrumented
+functions may hit this stale poison, resulting in (spurious) KASAN
+splats to the console.
+
+To avoid this, clear any stale poison from the idle thread for a CPU
+prior to bringing a CPU online.
+
+>From cited commit [2]
+
+Extend to check for CONFIG_KASAN_STACK
+
+[1] commit 0d97e6d8024c ("arm64: kasan: clear stale stack poison")
+[2] commit d56a9ef84bd0 ("kasan, arm64: unpoison stack only with CONFIG_KASAN_STACK")
+
+Signed-off-by: Boy Wu <boy.wu@mediatek.com>
+Reviewed-by: Mark Rutland <mark.rutland@arm.com>
+Acked-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 5615f69bc209 ("ARM: 9016/2: Initialize the mapping of KASan shadow memory")
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 15 +++++++++++++++
- include/net/xfrm.h     |  3 +++
- net/ipv4/xfrm4_input.c |  6 +++++-
- net/ipv6/xfrm6_input.c |  6 +++++-
- net/xfrm/xfrm_input.c  |  8 ++++++++
- 5 files changed, 36 insertions(+), 2 deletions(-)
+ arch/arm/kernel/sleep.S | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 5bafcfe18be61..f86f9396f727b 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -2972,6 +2972,21 @@ static inline void skb_mac_header_rebuild(struct sk_buff *skb)
- 	}
- }
- 
-+/* Move the full mac header up to current network_header.
-+ * Leaves skb->data pointing at offset skb->mac_len into the mac_header.
-+ * Must be provided the complete mac header length.
-+ */
-+static inline void skb_mac_header_rebuild_full(struct sk_buff *skb, u32 full_mac_len)
-+{
-+	if (skb_mac_header_was_set(skb)) {
-+		const unsigned char *old_mac = skb_mac_header(skb);
-+
-+		skb_set_mac_header(skb, -full_mac_len);
-+		memmove(skb_mac_header(skb), old_mac, full_mac_len);
-+		__skb_push(skb, full_mac_len - skb->mac_len);
-+	}
-+}
-+
- static inline int skb_checksum_start_offset(const struct sk_buff *skb)
- {
- 	return skb->csum_start - skb_headroom(skb);
-diff --git a/include/net/xfrm.h b/include/net/xfrm.h
-index 1d107241b9018..5d0f8f40b8d16 100644
---- a/include/net/xfrm.h
-+++ b/include/net/xfrm.h
-@@ -1047,6 +1047,9 @@ struct xfrm_offload {
- #define CRYPTO_INVALID_PACKET_SYNTAX		64
- #define CRYPTO_INVALID_PROTOCOL			128
- 
-+	/* Used to keep whole l2 header for transport mode GRO */
-+	__u32			orig_mac_len;
-+
- 	__u8			proto;
- 	__u8			inner_ipproto;
- };
-diff --git a/net/ipv4/xfrm4_input.c b/net/ipv4/xfrm4_input.c
-index c54676998eb60..801404f7d6574 100644
---- a/net/ipv4/xfrm4_input.c
-+++ b/net/ipv4/xfrm4_input.c
-@@ -63,7 +63,11 @@ int xfrm4_transport_finish(struct sk_buff *skb, int async)
- 	ip_send_check(iph);
- 
- 	if (xo && (xo->flags & XFRM_GRO)) {
--		skb_mac_header_rebuild(skb);
-+		/* The full l2 header needs to be preserved so that re-injecting the packet at l2
-+		 * works correctly in the presence of vlan tags.
-+		 */
-+		skb_mac_header_rebuild_full(skb, xo->orig_mac_len);
-+		skb_reset_network_header(skb);
- 		skb_reset_transport_header(skb);
- 		return 0;
- 	}
-diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
-index 6e36e5047fbab..4e6dcefd635c8 100644
---- a/net/ipv6/xfrm6_input.c
-+++ b/net/ipv6/xfrm6_input.c
-@@ -58,7 +58,11 @@ int xfrm6_transport_finish(struct sk_buff *skb, int async)
- 	skb_postpush_rcsum(skb, skb_network_header(skb), nhlen);
- 
- 	if (xo && (xo->flags & XFRM_GRO)) {
--		skb_mac_header_rebuild(skb);
-+		/* The full l2 header needs to be preserved so that re-injecting the packet at l2
-+		 * works correctly in the presence of vlan tags.
-+		 */
-+		skb_mac_header_rebuild_full(skb, xo->orig_mac_len);
-+		skb_reset_network_header(skb);
- 		skb_reset_transport_header(skb);
- 		return 0;
- 	}
-diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
-index bd4ce21d76d75..b2f7af63b7dae 100644
---- a/net/xfrm/xfrm_input.c
-+++ b/net/xfrm/xfrm_input.c
-@@ -388,11 +388,15 @@ static int xfrm_prepare_input(struct xfrm_state *x, struct sk_buff *skb)
-  */
- static int xfrm4_transport_input(struct xfrm_state *x, struct sk_buff *skb)
- {
-+	struct xfrm_offload *xo = xfrm_offload(skb);
- 	int ihl = skb->data - skb_transport_header(skb);
- 
- 	if (skb->transport_header != skb->network_header) {
- 		memmove(skb_transport_header(skb),
- 			skb_network_header(skb), ihl);
-+		if (xo)
-+			xo->orig_mac_len =
-+				skb_mac_header_was_set(skb) ? skb_mac_header_len(skb) : 0;
- 		skb->network_header = skb->transport_header;
- 	}
- 	ip_hdr(skb)->tot_len = htons(skb->len + ihl);
-@@ -403,11 +407,15 @@ static int xfrm4_transport_input(struct xfrm_state *x, struct sk_buff *skb)
- static int xfrm6_transport_input(struct xfrm_state *x, struct sk_buff *skb)
- {
- #if IS_ENABLED(CONFIG_IPV6)
-+	struct xfrm_offload *xo = xfrm_offload(skb);
- 	int ihl = skb->data - skb_transport_header(skb);
- 
- 	if (skb->transport_header != skb->network_header) {
- 		memmove(skb_transport_header(skb),
- 			skb_network_header(skb), ihl);
-+		if (xo)
-+			xo->orig_mac_len =
-+				skb_mac_header_was_set(skb) ? skb_mac_header_len(skb) : 0;
- 		skb->network_header = skb->transport_header;
- 	}
- 	ipv6_hdr(skb)->payload_len = htons(skb->len + ihl -
+diff --git a/arch/arm/kernel/sleep.S b/arch/arm/kernel/sleep.S
+index a86a1d4f34618..93afd1005b43c 100644
+--- a/arch/arm/kernel/sleep.S
++++ b/arch/arm/kernel/sleep.S
+@@ -127,6 +127,10 @@ cpu_resume_after_mmu:
+ 	instr_sync
+ #endif
+ 	bl	cpu_init		@ restore the und/abt/irq banked regs
++#if defined(CONFIG_KASAN) && defined(CONFIG_KASAN_STACK)
++	mov	r0, sp
++	bl	kasan_unpoison_task_stack_below
++#endif
+ 	mov	r0, #0			@ return zero on success
+ 	ldmfd	sp!, {r4 - r11, pc}
+ ENDPROC(cpu_resume_after_mmu)
 -- 
 2.43.0
 
