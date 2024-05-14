@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428D0139D1C;
-	Tue, 14 May 2024 11:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284BA139D1E;
+	Tue, 14 May 2024 11:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687065; cv=none; b=WO+/dIp64majA6p+Ne2gc8RLZOdJNMDBWIghWNcazTfY8omOxtKcWzOM38z/OXHAflufey2vnk4x/yqySSYqUXQ7f9emUudaVRP0eKfMvy+mIhk4qweaNpyuGo5yQqjefbgZIcg3tkBB0jMjQPH5klM9SQhep7IAmpypM8JLRjI=
+	t=1715687068; cv=none; b=Y4GqS28ROl0JubJR2sGWWbRGKot1/AfNnlIaMPVySPywGhPFGkrVvB8Ej1LsUaD/N7Aj4VDOU+ZkTwx+pCTpSnt4d0K+uza8bKaRxZrr4+OBmPfDrA4KGxzwC2osCWzH2iuijswY/wIDd/eg/MEwdux/CGQsXlxxu6cnuIz3AZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687065; c=relaxed/simple;
-	bh=kdGvPpIJSNHypTP6YxtRWiAvWoMTZoe4/sIUpE2gEro=;
+	s=arc-20240116; t=1715687068; c=relaxed/simple;
+	bh=yYosZi+aEBC1xhJe1FjW83MsY1x8dsdAFRlzpFInz08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M2ajCH0ApCYHxgUPUAQ/i8Ys8aDa7VRDaDwNmu7mTH3peHgFhUibKCZLA8Rm6vRvOOx+UNzhvAKrwpJC2vnqmrpwO2XocqWwRvRcpOEm/V1x2CGYKwNh9jBTQwiB1F6XUCuzrU3xSjr8LlBNR/GW4bIhxzYhuz6ZbvBUxuLzB7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTCHlm+6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fkVKT68Lr/dLsoGlRNYkI23IGta2lMKTgPNFKmvC4EB3fNXcGgi5Zs6I01wI0LXYJ6uhx9QS9EeYfSd41AiSv2PSbS8pepRtA0fGnyXFY1HV7kprpA2NtajMs+Okr8SiazWR2fqNU4nn1WTt2GDcYZEpf8sPWdI1l6rcVP20NII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8WMPCse; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTCHlm+6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD82DC2BD10;
-	Tue, 14 May 2024 11:44:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8WMPCse"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1192C2BD10;
+	Tue, 14 May 2024 11:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687065;
-	bh=kdGvPpIJSNHypTP6YxtRWiAvWoMTZoe4/sIUpE2gEro=;
+	s=korg; t=1715687068;
+	bh=yYosZi+aEBC1xhJe1FjW83MsY1x8dsdAFRlzpFInz08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nTCHlm+6IvgC7nyGUsfakIudxbqvU7XUm7+NAEpGAgNe2QdF74DfRmU7PpaPFH0yd
-	 DTB+WEW7ALsCvLPyuRv3hhB/yJXWprLoJUPgbyMZdtVl//WP+jA+K/pdybK02EHEXy
-	 zG51mC6khW580fOBlXnuY8Z13uTeEiPvse045O0c=
+	b=P8WMPCsev8KWCCSsMWkhUQ2vDx0vo8xZ+a06gsAkS4ZkeVqJLOqJqHe5xYjK44J5/
+	 NNdBv5YpIgT0TtmSkVKuBEZ4QmqV2s8HLlG/QdHIjUWTAQis/+EXH4scU+3D5lVjh/
+	 KBghPXn2mHFKQcYc3/SouMIHGkjP0WV8lBR5UL0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joakim Sindholt <opensource@zhasha.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Eric Van Hensbergen <ericvh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 52/84] fs/9p: translate O_TRUNC into OTRUNC
-Date: Tue, 14 May 2024 12:20:03 +0200
-Message-ID: <20240514100953.644902852@linuxfoundation.org>
+Subject: [PATCH 5.4 53/84] 9p: explicitly deny setlease attempts
+Date: Tue, 14 May 2024 12:20:04 +0200
+Message-ID: <20240514100953.681076081@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100951.686412426@linuxfoundation.org>
 References: <20240514100951.686412426@linuxfoundation.org>
@@ -51,34 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joakim Sindholt <opensource@zhasha.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 87de39e70503e04ddb58965520b15eb9efa7eef3 ]
+[ Upstream commit 7a84602297d36617dbdadeba55a2567031e5165b ]
 
-This one hits both 9P2000 and .u as it appears v9fs has never translated
-the O_TRUNC flag.
+9p is a remote network protocol, and it doesn't support asynchronous
+notifications from the server. Ensure that we don't hand out any leases
+since we can't guarantee they'll be broken when a file's contents
+change.
 
-Signed-off-by: Joakim Sindholt <opensource@zhasha.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_inode.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/9p/vfs_file.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
-index b1107b424bf64..ffce168296bd3 100644
---- a/fs/9p/vfs_inode.c
-+++ b/fs/9p/vfs_inode.c
-@@ -177,6 +177,9 @@ int v9fs_uflags2omode(int uflags, int extended)
- 		break;
- 	}
+diff --git a/fs/9p/vfs_file.c b/fs/9p/vfs_file.c
+index ee9cabac12041..14d6cb0316212 100644
+--- a/fs/9p/vfs_file.c
++++ b/fs/9p/vfs_file.c
+@@ -676,6 +676,7 @@ const struct file_operations v9fs_file_operations = {
+ 	.lock = v9fs_file_lock,
+ 	.mmap = generic_file_readonly_mmap,
+ 	.fsync = v9fs_file_fsync,
++	.setlease = simple_nosetlease,
+ };
  
-+	if (uflags & O_TRUNC)
-+		ret |= P9_OTRUNC;
-+
- 	if (extended) {
- 		if (uflags & O_EXCL)
- 			ret |= P9_OEXCL;
+ const struct file_operations v9fs_file_operations_dotl = {
+@@ -711,4 +712,5 @@ const struct file_operations v9fs_mmap_file_operations_dotl = {
+ 	.flock = v9fs_file_flock_dotl,
+ 	.mmap = v9fs_mmap_file_mmap,
+ 	.fsync = v9fs_file_fsync_dotl,
++	.setlease = simple_nosetlease,
+ };
 -- 
 2.43.0
 
