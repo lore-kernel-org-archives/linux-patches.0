@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B7255C3B;
-	Tue, 14 May 2024 10:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5315012FF70;
+	Tue, 14 May 2024 10:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682519; cv=none; b=jNFuDKQgkF0SpfNH0OoCkLl/vkHcO9Cto4/Cql3IBuSO9sZTQf0jQnX+D/dzjvD3nOYYDigrbH+AOk7LfUvzQg33Xv8gyeVbet7a1o3/zbB0KJc2i6gVz/+eO0ujsnzvACogu0OFTPohRNtQKeBMzY1yRJ6DldbZbZ32H+z1gus=
+	t=1715682525; cv=none; b=Wl3y8+6bPT+UR0pmLcQET3tiEGPq6HGOigliSMyK+FjMBimozAB8Pegkc7zP2PD4eID8WUCPSuiEOaJjuviodR+OYga9mfrHObeUxtPBCwwbovDbtFPwc65qz1LjMFKDZA7/8xEzzl9lgm7jrQQFeM8KT1y0EBFEB9rAPtdXRD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682519; c=relaxed/simple;
-	bh=UMZvd7fWUb1HJ7vQN0J9alq6fxHRqizvCWeENAwE8iQ=;
+	s=arc-20240116; t=1715682525; c=relaxed/simple;
+	bh=lXWcNTOjWCqiZ0IklJx9REI85gdQRtZETJqG7UFqzGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hzhhJ4A7Cbalt8lY/CzjizapYqn7YjzZZzFX17uL40aDDAJS4d+0EJhgkWmhAV0r03I3zC7L1vPamnPLpOHFfRerAmPPvhHRUd7clt/sWYjdJ7NVAvHQRv0hjdlKoJDyW2FozG9G1cCDotDIgUcCEEWBx/4TJjVPgB2gvCDwz6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4kml1G2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0jD7xFr1Pz4uN7ZaEpBveGrg8eIT00wtksEkTsyY79XstZeyy2GBj7Yr+ARwXtWqrmmha+xuUPkPrX72j2BqTBNyOx2LAjzMmgN2Wk0ieWmXCLECNEJOFx7ocS3ZPsWo8PzVuLmZelJqpThXvA/hHJ3Cv/RmuHP7B1rf6bfTj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GsqH3JMf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4kml1G2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF27CC2BD10;
-	Tue, 14 May 2024 10:28:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GsqH3JMf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5ADAC2BD10;
+	Tue, 14 May 2024 10:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682518;
-	bh=UMZvd7fWUb1HJ7vQN0J9alq6fxHRqizvCWeENAwE8iQ=;
+	s=korg; t=1715682525;
+	bh=lXWcNTOjWCqiZ0IklJx9REI85gdQRtZETJqG7UFqzGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v4kml1G2Z9yxHoukiPG4mUXtPw+KzapR8VGvonBZ8nqunfmhtks0p77DzGPx5nRRa
-	 XmuBiDIEkcvXtbo8K1J/LfDPZmXS9wodJZTUf3GAVvJzsqo/ykcsH2m7V+ai4GT4e8
-	 X5d+QfgqU+gFQQMHGBtCbIiL10OOe+k8H/Kt+Ejs=
+	b=GsqH3JMfkCH96Oiu+xMzD+NY6QyjVf8+Dn3f8f3B8iXoaCACWWHnLPhS44EhIjmox
+	 nezpYJWYihE5Qwt7doWrACQUFyuPzq5j8uLI0kpb6Mv3BJsJDyg3+6dIaYp1Tw0ijL
+	 x4NjFrddmN27ItV9UKnPPLL74j6qi/pZqWheZb+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bui Quang Minh <minhquangbui99@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 044/336] bna: ensure the copied buf is NUL terminated
-Date: Tue, 14 May 2024 12:14:08 +0200
-Message-ID: <20240514101040.272244997@linuxfoundation.org>
+Subject: [PATCH 6.8 045/336] octeontx2-af: avoid off-by-one read from userspace
+Date: Tue, 14 May 2024 12:14:09 +0200
+Message-ID: <20240514101040.309464519@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -53,45 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Bui Quang Minh <minhquangbui99@gmail.com>
 
-[ Upstream commit 8c34096c7fdf272fd4c0c37fe411cd2e3ed0ee9f ]
+[ Upstream commit f299ee709fb45036454ca11e90cb2810fe771878 ]
 
-Currently, we allocate a nbytes-sized kernel buffer and copy nbytes from
-userspace to that buffer. Later, we use sscanf on this buffer but we don't
-ensure that the string is terminated inside the buffer, this can lead to
-OOB read when using sscanf. Fix this issue by using memdup_user_nul
-instead of memdup_user.
+We try to access count + 1 byte from userspace with memdup_user(buffer,
+count + 1). However, the userspace only provides buffer of count bytes and
+only these count bytes are verified to be okay to access. To ensure the
+copied buffer is NUL terminated, we use memdup_user_nul instead.
 
-Fixes: 7afc5dbde091 ("bna: Add debugfs interface.")
+Fixes: 3a2eb515d136 ("octeontx2-af: Fix an off by one in rvu_dbg_qsize_write()")
 Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
-Link: https://lore.kernel.org/r/20240424-fix-oob-read-v2-2-f1f1b53a10f4@gmail.com
+Link: https://lore.kernel.org/r/20240424-fix-oob-read-v2-6-f1f1b53a10f4@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/brocade/bna/bnad_debugfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/brocade/bna/bnad_debugfs.c b/drivers/net/ethernet/brocade/bna/bnad_debugfs.c
-index 7246e13dd559f..97291bfbeea58 100644
---- a/drivers/net/ethernet/brocade/bna/bnad_debugfs.c
-+++ b/drivers/net/ethernet/brocade/bna/bnad_debugfs.c
-@@ -312,7 +312,7 @@ bnad_debugfs_write_regrd(struct file *file, const char __user *buf,
- 	void *kern_buf;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+index e6d7914ce61c4..e7eca8141e8c7 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+@@ -999,12 +999,10 @@ static ssize_t rvu_dbg_qsize_write(struct file *filp,
+ 	u16 pcifunc;
+ 	int ret, lf;
  
- 	/* Copy the user space buf */
--	kern_buf = memdup_user(buf, nbytes);
-+	kern_buf = memdup_user_nul(buf, nbytes);
- 	if (IS_ERR(kern_buf))
- 		return PTR_ERR(kern_buf);
+-	cmd_buf = memdup_user(buffer, count + 1);
++	cmd_buf = memdup_user_nul(buffer, count);
+ 	if (IS_ERR(cmd_buf))
+ 		return -ENOMEM;
  
-@@ -372,7 +372,7 @@ bnad_debugfs_write_regwr(struct file *file, const char __user *buf,
- 	void *kern_buf;
- 
- 	/* Copy the user space buf */
--	kern_buf = memdup_user(buf, nbytes);
-+	kern_buf = memdup_user_nul(buf, nbytes);
- 	if (IS_ERR(kern_buf))
- 		return PTR_ERR(kern_buf);
- 
+-	cmd_buf[count] = '\0';
+-
+ 	cmd_buf_tmp = strchr(cmd_buf, '\n');
+ 	if (cmd_buf_tmp) {
+ 		*cmd_buf_tmp = '\0';
 -- 
 2.43.0
 
