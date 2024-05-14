@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BC418026;
-	Tue, 14 May 2024 11:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D38418026;
+	Tue, 14 May 2024 11:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686479; cv=none; b=JyHnqc7ePREgnWDG1Glvm04VQem6+RvhHBACL9TBPiQEyQ4Et0Edy+sFu0HJAQO0avoX5dIz/lo4hwV53Qvs7pCiYA+v3+K9JMJJxz6DH4QkXRavK6XWnrAmydOWcsThXT58RyynEltsAEZ1bINmNmvQQmV0lH0FqK2R117akf8=
+	t=1715686482; cv=none; b=Oa0guWLtUVXfZgy7pU/zXR023FjiQWLhkNNJWNSjTZKyiLsIPQfLn2E40JEAXXF5jVMHE+sQWfKt70j83ygQaiO0f9P0RVBOKLIQS+IfsybQu8iOkrEZsfonwe3+GRoiA5nVI3HZydwtVPM6z82YSFNFeebGrX09hxN2hPmlZ3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686479; c=relaxed/simple;
-	bh=rhl6hwYIfjiyo/lLEF6dgUbrYlIx+Ol+2/i1fCPfcG8=;
+	s=arc-20240116; t=1715686482; c=relaxed/simple;
+	bh=wubmRb/QT9XC5myQMTCHBSbXZE5xntcuvclhrbU6Xrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kx/275KA/WY8ePwR7iYqwkxnIQtrc+V1Dyxtqwulg7KwSIYZirF8AebpY0HRmUNNjW+NOhRHq5u7yBN5MlXjTSrrolPEzsPbiXLQoiUqXI05ioJZ7a38DwDJsT/yTK5LnWGMjHb5XUkFtv+QlKFSr/rpdrT1z/JZ7YqXOtgWtIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z95po9z2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bnV6e4Xg/fYnWo2XABN7uKt4Z3V1AbuLoUyxOvX/fNuLGtaS/RoEDcg6a8pmcxpI1OxxCPoOeXnQ/xwog/H0DaCmQ05WAFfGu+SsfdDBefDSSgI0AA8Q0Z6S4ow4XMOpXlsNxJ2Dw2xA9HBCiRaFATHVa7Ybfl+Fhhiz6fWSRGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXwpb97C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z95po9z2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B889C2BD10;
-	Tue, 14 May 2024 11:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXwpb97C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E961FC2BD10;
+	Tue, 14 May 2024 11:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686479;
-	bh=rhl6hwYIfjiyo/lLEF6dgUbrYlIx+Ol+2/i1fCPfcG8=;
+	s=korg; t=1715686482;
+	bh=wubmRb/QT9XC5myQMTCHBSbXZE5xntcuvclhrbU6Xrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z95po9z227fLHTZMRQ02hBgUah8KV+ed7cule8O7/Eg7Qrxr4jUr9oR/5EGhyk5UV
-	 LVhy8Z075cYYO4FCHcwop6kUVrNswK4yXxb7IcI0E/8/7r2wB/ZBkF4RkucFhTPVrZ
-	 nGTgJinu3DP2S3GZCYop8yXIeb5cOJATIOYX/EoY=
+	b=gXwpb97CJy/OdGRM/mWi/rMhQWmJ2eCH+G651fwhjlXO2TRLwUdHMFzCkbwFdmPSQ
+	 9u5RGf/rc0geuvI6Jp/GAdjZEljwAz5v4Hkj4hCwLgOns2YTb85YyJTjuIU/RBJtpX
+	 YQCXZQ8Rs5e46wLgaYmbCygu2Tvr15WTgcjU8Ap4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rik van Riel <riel@surriel.com>,
-	Tejun Heo <tj@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Doug Smythies <dsmythies@telus.net>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 121/236] blk-iocost: avoid out of bounds shift
-Date: Tue, 14 May 2024 12:18:03 +0200
-Message-ID: <20240514101024.964174979@linuxfoundation.org>
+Subject: [PATCH 6.1 112/236] tools/power turbostat: Fix added raw MSR output
+Date: Tue, 14 May 2024 12:17:54 +0200
+Message-ID: <20240514101024.624117947@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -53,72 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Doug Smythies <dsmythies@telus.net>
 
-[ Upstream commit beaa51b36012fad5a4d3c18b88a617aea7a9b96d ]
+[ Upstream commit e5f4e68eed85fa8495d78cd966eecc2b27bb9e53 ]
 
-UBSAN catches undefined behavior in blk-iocost, where sometimes
-iocg->delay is shifted right by a number that is too large,
-resulting in undefined behavior on some architectures.
+When using --Summary mode, added MSRs in raw mode always
+print zeros. Print the actual register contents.
 
-[  186.556576] ------------[ cut here ]------------
-UBSAN: shift-out-of-bounds in block/blk-iocost.c:1366:23
-shift exponent 64 is too large for 64-bit type 'u64' (aka 'unsigned long long')
-CPU: 16 PID: 0 Comm: swapper/16 Tainted: G S          E    N 6.9.0-0_fbk700_debug_rc2_kbuilder_0_gc85af715cac0 #1
-Hardware name: Quanta Twin Lakes MP/Twin Lakes Passive MP, BIOS F09_3A23 12/08/2020
-Call Trace:
- <IRQ>
- dump_stack_lvl+0x8f/0xe0
- __ubsan_handle_shift_out_of_bounds+0x22c/0x280
- iocg_kick_delay+0x30b/0x310
- ioc_timer_fn+0x2fb/0x1f80
- __run_timer_base+0x1b6/0x250
-...
+Example, with patch:
 
-Avoid that undefined behavior by simply taking the
-"delay = 0" branch if the shift is too large.
+note the added column:
+--add msr0x64f,u32,package,raw,REASON
 
-I am not sure what the symptoms of an undefined value
-delay will be, but I suspect it could be more than a
-little annoying to debug.
+Where:
 
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Josef Bacik <josef@toxicpanda.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20240404123253.0f58010f@imladris.surriel.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+0x64F is MSR_CORE_PERF_LIMIT_REASONS
+
+Busy%   Bzy_MHz PkgTmp  PkgWatt CorWatt     REASON
+0.00    4800    35      1.42    0.76    0x00000000
+0.00    4801    34      1.42    0.76    0x00000000
+80.08   4531    66      108.17  107.52  0x08000000
+98.69   4530    66      133.21  132.54  0x08000000
+99.28   4505    66      128.26  127.60  0x0c000400
+99.65   4486    68      124.91  124.25  0x0c000400
+99.63   4483    68      124.90  124.25  0x0c000400
+79.34   4481    41      99.80   99.13   0x0c000000
+0.00    4801    41      1.40    0.73    0x0c000000
+
+Where, for the test processor (i5-10600K):
+
+PKG Limit #1: 125.000 Watts, 8.000000 sec
+MSR bit 26 = log; bit 10 = status
+
+PKG Limit #2: 136.000 Watts, 0.002441 sec
+MSR bit 27 = log; bit 11 = status
+
+Example, without patch:
+
+Busy%   Bzy_MHz PkgTmp  PkgWatt CorWatt     REASON
+0.01    4800    35      1.43    0.77    0x00000000
+0.00    4801    35      1.39    0.73    0x00000000
+83.49   4531    66      112.71  112.06  0x00000000
+98.69   4530    68      133.35  132.69  0x00000000
+99.31   4500    67      127.96  127.30  0x00000000
+99.63   4483    69      124.91  124.25  0x00000000
+99.61   4481    69      124.90  124.25  0x00000000
+99.61   4481    71      124.92  124.25  0x00000000
+59.35   4479    42      75.03   74.37   0x00000000
+0.00    4800    42      1.39    0.73    0x00000000
+0.00    4801    42      1.42    0.76    0x00000000
+
+c000000
+
+[lenb: simplified patch to apply only to package scope]
+
+Signed-off-by: Doug Smythies <dsmythies@telus.net>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 7 ++++---
+ tools/power/x86/turbostat/turbostat.c | 7 ++++---
  1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index e6557024e3da8..64b594d660b79 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -1331,7 +1331,7 @@ static bool iocg_kick_delay(struct ioc_gq *iocg, struct ioc_now *now)
- {
- 	struct ioc *ioc = iocg->ioc;
- 	struct blkcg_gq *blkg = iocg_to_blkg(iocg);
--	u64 tdelta, delay, new_delay;
-+	u64 tdelta, delay, new_delay, shift;
- 	s64 vover, vover_pct;
- 	u32 hwa;
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index b113900d94879..9018e47e0bc26 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -1811,9 +1811,10 @@ int sum_counters(struct thread_data *t, struct core_data *c, struct pkg_data *p)
+ 	average.packages.rapl_dram_perf_status += p->rapl_dram_perf_status;
  
-@@ -1346,8 +1346,9 @@ static bool iocg_kick_delay(struct ioc_gq *iocg, struct ioc_now *now)
- 
- 	/* calculate the current delay in effect - 1/2 every second */
- 	tdelta = now->now - iocg->delay_at;
--	if (iocg->delay)
--		delay = iocg->delay >> div64_u64(tdelta, USEC_PER_SEC);
-+	shift = div64_u64(tdelta, USEC_PER_SEC);
-+	if (iocg->delay && shift < BITS_PER_LONG)
-+		delay = iocg->delay >> shift;
- 	else
- 		delay = 0;
- 
+ 	for (i = 0, mp = sys.pp; mp; i++, mp = mp->next) {
+-		if (mp->format == FORMAT_RAW)
+-			continue;
+-		average.packages.counter[i] += p->counter[i];
++		if ((mp->format == FORMAT_RAW) && (topo.num_packages == 0))
++			average.packages.counter[i] = p->counter[i];
++		else
++			average.packages.counter[i] += p->counter[i];
+ 	}
+ 	return 0;
+ }
 -- 
 2.43.0
 
