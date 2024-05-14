@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785D12B9AD;
-	Tue, 14 May 2024 11:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1051D54D;
+	Tue, 14 May 2024 11:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687965; cv=none; b=UvTMZwowvzdGRG//PrC/ICvDY1MuMWAKG2unJi9lXVpXZgJqFX6kelrl5zkUtnnhCTSJfCTdwYYraXs24htq/IU6KorE/5Y5n/MjmIEkeua7J6JqoWJZK1BxHfw4unYKOz+GwWht8KHdo1m03XAV6yXJA1T6wCPfJOxNfyi1dZQ=
+	t=1715687968; cv=none; b=iRP+UxpWkt4UUMiaUgXESv58q/jxPMze+xkOZFKGZVzRv9DIjMlNtJN0Cw7fA3/haMNdTKYy60ijj42W78A0ODVt366xsFhAY1+d709SYjoKyMEXBZAS3Q2eFSt6VIqObshxncT6FxmOAxa+xiEUwztcBQamBczsprsl1kqCuPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687965; c=relaxed/simple;
-	bh=Clrhdfx8Y1FyQH37RtcEsCIi9tw7Y71m/ti9v4qxRPc=;
+	s=arc-20240116; t=1715687968; c=relaxed/simple;
+	bh=HOsGvbPTz8yBJpl3494AzxP34Sk6L5Kg6jhaNS/OIDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swDzhQHDfoaEmHzKYBuKvp/+pGW8V4ehVydZZZlxumW55vcMeDhKO1EG1gAZgOgdKOdMp25vDZR2bzhyYFV3tZdbv6Ujd+yIdxe4wAVqbFi9uABuUDBRkIk8pDZcTbny7Fn1CY7fwRPkb/dvYvc2wa9pzRBxXhlPW60W1hjQUqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtHvZjd1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mji4KezILzwKEvJ806l93oZu/MwgXTdEqEhOKiQa5uLwNTwZdMHCyCPh8SLxLGuY+OlTkUNsvBI3lLmgMOXGDN2+lSOvrIo5SUs9piOJ9yR45MW3sTGivkDu2v7zBcHIbZ+al0MRuv7b+cnx4uloTEglaWsy08K/yBHKcSH1iao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jqk/73o9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtHvZjd1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85DFC2BD10;
-	Tue, 14 May 2024 11:59:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jqk/73o9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A863CC2BD10;
+	Tue, 14 May 2024 11:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687965;
-	bh=Clrhdfx8Y1FyQH37RtcEsCIi9tw7Y71m/ti9v4qxRPc=;
+	s=korg; t=1715687968;
+	bh=HOsGvbPTz8yBJpl3494AzxP34Sk6L5Kg6jhaNS/OIDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qtHvZjd1snDB1M7QUgVrg2LIAqD7CqBNkwqno8Jz9+mq1fMtSjbvc0fVy6sY2iRqh
-	 uFeipkfyHMjhqnqTsf7YjNqq4DIRJIopbtDzzx1plCBJzTmR3fv0SCFRUsnCDAeOrI
-	 V7s6/g2MYjjZkUqXXIhmf6lWjD03EGSsVYejJep0=
+	b=jqk/73o9F1Bz4sLOJVjrz57fx1VmKZwFIfOhHGr9+pz5+1CSAIuQ4cogXPmcw1Z08
+	 W46dMoksxn9tofQAxMSaNtZ1viNPDHeWTAzpAzWuj8CkU7ITxMiauJexqlUE9tcqtX
+	 0OLpvATddRPfrfQOLIGgNH6u7p4PKF9zid31kUWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Matthias Kaehlcke <mka@chromium.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 166/168] Bluetooth: qca: add missing firmware sanity checks
-Date: Tue, 14 May 2024 12:21:04 +0200
-Message-ID: <20240514101013.022822293@linuxfoundation.org>
+Subject: [PATCH 5.15 167/168] Bluetooth: qca: fix NVM configuration parsing
+Date: Tue, 14 May 2024 12:21:05 +0200
+Message-ID: <20240514101013.062216930@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -52,133 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 2e4edfa1e2bd821a317e7d006517dcf2f3fac68d upstream.
+commit a112d3c72a227f2edbb6d8094472cc6e503e52af upstream.
 
-Add the missing sanity checks when parsing the firmware files before
-downloading them to avoid accessing and corrupting memory beyond the
-vmalloced buffer.
+The NVM configuration files used by WCN3988 and WCN3990/1/8 have two
+sets of configuration tags that are enclosed by a type-length header of
+type four which the current parser fails to account for.
 
-Fixes: 83e81961ff7e ("Bluetooth: btqca: Introduce generic QCA ROME support")
-Cc: stable@vger.kernel.org	# 4.10
+Instead the driver happily parses random data as if it were valid tags,
+something which can lead to the configuration data being corrupted if it
+ever encounters the words 0x0011 or 0x001b.
+
+As is clear from commit b63882549b2b ("Bluetooth: btqca: Fix the NVM
+baudrate tag offcet for wcn3991") the intention has always been to
+process the configuration data also for WCN3991 and WCN3998 which
+encodes the baud rate at a different offset.
+
+Fix the parser so that it can handle the WCN3xxx configuration files,
+which has an enclosing type-length header of type four and two sets of
+TLV tags enclosed by a type-length header of type two and three,
+respectively.
+
+Note that only the first set, which contains the tags the driver is
+currently looking for, will be parsed for now.
+
+With the parser fixed, the software in-band sleep bit will now be set
+for WCN3991 and WCN3998 (as it is for later controllers) and the default
+baud rate 3200000 may be updated by the driver also for WCN3xxx
+controllers.
+
+Notably the deep-sleep feature bit is already set by default in all
+configuration files in linux-firmware.
+
+Fixes: 4219d4686875 ("Bluetooth: btqca: Add wcn3990 firmware download support.")
+Cc: stable@vger.kernel.org	# 4.19
+Cc: Matthias Kaehlcke <mka@chromium.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btqca.c |   38 ++++++++++++++++++++++++++++++++------
- 1 file changed, 32 insertions(+), 6 deletions(-)
+ drivers/bluetooth/btqca.c |   24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
 --- a/drivers/bluetooth/btqca.c
 +++ b/drivers/bluetooth/btqca.c
-@@ -182,9 +182,10 @@ int qca_send_pre_shutdown_cmd(struct hci
- }
- EXPORT_SYMBOL_GPL(qca_send_pre_shutdown_cmd);
+@@ -195,6 +195,7 @@ static int qca_tlv_check_data(struct hci
+ 	struct tlv_type_patch *tlv_patch;
+ 	struct tlv_type_nvm *tlv_nvm;
+ 	uint8_t nvm_baud_rate = config->user_baud_rate;
++	u8 type;
  
--static void qca_tlv_check_data(struct hci_dev *hdev,
-+static int qca_tlv_check_data(struct hci_dev *hdev,
- 			       struct qca_fw_config *config,
--		u8 *fw_data, enum qca_btsoc_type soc_type)
-+			       u8 *fw_data, size_t fw_size,
-+			       enum qca_btsoc_type soc_type)
- {
- 	const u8 *data;
- 	u32 type_len;
-@@ -200,6 +201,9 @@ static void qca_tlv_check_data(struct hc
- 
- 	switch (config->type) {
- 	case ELF_TYPE_PATCH:
-+		if (fw_size < 7)
-+			return -EINVAL;
-+
- 		config->dnld_mode = QCA_SKIP_EVT_VSE_CC;
- 		config->dnld_type = QCA_SKIP_EVT_VSE_CC;
- 
-@@ -208,6 +212,9 @@ static void qca_tlv_check_data(struct hc
- 		bt_dev_dbg(hdev, "File version      : 0x%x", fw_data[6]);
- 		break;
- 	case TLV_TYPE_PATCH:
-+		if (fw_size < sizeof(struct tlv_type_hdr) + sizeof(struct tlv_type_patch))
-+			return -EINVAL;
-+
- 		tlv = (struct tlv_type_hdr *)fw_data;
- 		type_len = le32_to_cpu(tlv->type_len);
- 		tlv_patch = (struct tlv_type_patch *)tlv->data;
-@@ -247,6 +254,9 @@ static void qca_tlv_check_data(struct hc
- 		break;
- 
- 	case TLV_TYPE_NVM:
-+		if (fw_size < sizeof(struct tlv_type_hdr))
-+			return -EINVAL;
-+
+ 	config->dnld_mode = QCA_SKIP_EVT_NONE;
+ 	config->dnld_type = QCA_SKIP_EVT_NONE;
+@@ -260,11 +261,30 @@ static int qca_tlv_check_data(struct hci
  		tlv = (struct tlv_type_hdr *)fw_data;
  
  		type_len = le32_to_cpu(tlv->type_len);
-@@ -255,17 +265,26 @@ static void qca_tlv_check_data(struct hc
- 		BT_DBG("TLV Type\t\t : 0x%x", type_len & 0x000000ff);
- 		BT_DBG("Length\t\t : %d bytes", length);
+-		length = (type_len >> 8) & 0x00ffffff;
++		length = type_len >> 8;
++		type = type_len & 0xff;
  
-+		if (fw_size < length + (tlv->data - fw_data))
-+			return -EINVAL;
-+
- 		idx = 0;
- 		data = tlv->data;
--		while (idx < length) {
-+		while (idx < length - sizeof(struct tlv_type_nvm)) {
- 			tlv_nvm = (struct tlv_type_nvm *)(data + idx);
- 
- 			tag_id = le16_to_cpu(tlv_nvm->tag_id);
- 			tag_len = le16_to_cpu(tlv_nvm->tag_len);
- 
-+			if (length < idx + sizeof(struct tlv_type_nvm) + tag_len)
+-		BT_DBG("TLV Type\t\t : 0x%x", type_len & 0x000000ff);
++		/* Some NVM files have more than one set of tags, only parse
++		 * the first set when it has type 2 for now. When there is
++		 * more than one set there is an enclosing header of type 4.
++		 */
++		if (type == 4) {
++			if (fw_size < 2 * sizeof(struct tlv_type_hdr))
 +				return -EINVAL;
 +
- 			/* Update NVM tags as needed */
- 			switch (tag_id) {
- 			case EDL_TAG_ID_HCI:
-+				if (tag_len < 3)
-+					return -EINVAL;
++			tlv++;
 +
- 				/* HCI transport layer parameters
- 				 * enabling software inband sleep
- 				 * onto controller side.
-@@ -281,6 +300,9 @@ static void qca_tlv_check_data(struct hc
- 				break;
- 
- 			case EDL_TAG_ID_DEEP_SLEEP:
-+				if (tag_len < 1)
-+					return -EINVAL;
++			type_len = le32_to_cpu(tlv->type_len);
++			length = type_len >> 8;
++			type = type_len & 0xff;
++		}
 +
- 				/* Sleep enable mask
- 				 * enabling deep sleep feature on controller.
- 				 */
-@@ -289,14 +311,16 @@ static void qca_tlv_check_data(struct hc
- 				break;
- 			}
++		BT_DBG("TLV Type\t\t : 0x%x", type);
+ 		BT_DBG("Length\t\t : %d bytes", length);
  
--			idx += (sizeof(u16) + sizeof(u16) + 8 + tag_len);
-+			idx += sizeof(struct tlv_type_nvm) + tag_len;
- 		}
- 		break;
- 
- 	default:
- 		BT_ERR("Unknown TLV type %d", config->type);
--		break;
-+		return -EINVAL;
- 	}
++		if (type != 2)
++			break;
 +
-+	return 0;
- }
+ 		if (fw_size < length + (tlv->data - fw_data))
+ 			return -EINVAL;
  
- static int qca_tlv_send_segment(struct hci_dev *hdev, int seg_size,
-@@ -446,7 +470,9 @@ static int qca_download_firmware(struct
- 	memcpy(data, fw->data, size);
- 	release_firmware(fw);
- 
--	qca_tlv_check_data(hdev, config, data, soc_type);
-+	ret = qca_tlv_check_data(hdev, config, data, size, soc_type);
-+	if (ret)
-+		return ret;
- 
- 	segment = data;
- 	remain = size;
 
 
