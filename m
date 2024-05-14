@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48F25B5D3;
-	Tue, 14 May 2024 11:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A99143759;
+	Tue, 14 May 2024 11:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686316; cv=none; b=UzF7nkUctnKUQXzQkFYm1y+RdiYjQeSyY+6GKed7luxzDKOTRm8SoGJbxs3JjUXbeWNyIQ8nYvj1hPzTFL+tcCMPpluJZ/PV/xnGRHxpf4TYu/8XxOFH68fZhF1hCrKXLonsOhTtS2sKhCgaR3gmX+Z0e6S9XiKnywTArA5uW34=
+	t=1715686318; cv=none; b=BHVolOoUaOh1ZzejoOl/VBMRF4GqznHE5VqbnaZKLALoXzjnEjVTKvz1+8MZKe8T2F0bOmcPRFuVwUR6W5Hcp59ZIaAHSVZ1uCPhPX+tJqvc66TPNQzdp3XdaiZMKmu43orcczj8hE7wdkManvsBJ+0d1n4vndPCM9Gp2LZXFk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686316; c=relaxed/simple;
-	bh=LdciBv+kl6uxNtOO/jXv925l4zLpOg2eWWOGlECN5S8=;
+	s=arc-20240116; t=1715686318; c=relaxed/simple;
+	bh=c4XKEWmD7sOXZdE8qxJNZhzEMuKDHk+fUV0DEX67uPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RvZDLK2SY0yxSnFUtyxuFZMz8feveZ1/eU8H9Ed9GPYf+sSQ+yUedyRsW2qgyoxDugsN2Kpyt+rZlbN5mWzS1YNLDnncmyCDqXQFbPBHRw5PPMmP/oRmzri6sLLEWECp2bK14KEW5eKHMAUqTuagy+5Cxzpg+8trc8gF7YiJOtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsr1Xhnc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MnvBuutxzdiaanvqdz/uuE66vyAbS1sU11zyGieok04QE3ArX22Wmd9OYZn6Db2vrcss9BUCqQsf4G7KEdhgOnZ2uGEbsZprwGrvTMPUcXZMoU4j933j5fd9dChHSxWapQAXWR9vrILiMHl5jwL5tBjpxRPBBHLKHp0dnk3pExs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xSzi17kF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsr1Xhnc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D19C2BD10;
-	Tue, 14 May 2024 11:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSzi17kF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F384C2BD10;
+	Tue, 14 May 2024 11:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686315;
-	bh=LdciBv+kl6uxNtOO/jXv925l4zLpOg2eWWOGlECN5S8=;
+	s=korg; t=1715686318;
+	bh=c4XKEWmD7sOXZdE8qxJNZhzEMuKDHk+fUV0DEX67uPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hsr1Xhnc/7kwmDh3Y8WlV4VdBpUWWsvSEJ6ZMixcImjz988mwSubZxf3rPPGPKxDb
-	 7phU6nTMkj1I1pGm9UKz7snQ9T3m7R/k/A9NQBEjc7YVwO+rSrhpf3cNnxbRcoj5ex
-	 EG1wRTkmgP2ZP9GBX3afgEeCM+eF5ziOBdpOCY4E=
+	b=xSzi17kFxLC14RKk2SsDcgbc24l4HqRwft6edNa+x/47QIve6AVbfbwqUjW9WqlQ0
+	 8sbYDd+liV1cZL+6QRxAyrp4ZQvUVZSBtOu1ebffEjdnXQAmZUHaC85jUv1VT52QDy
+	 Mo3z52H9Qk5fo36zXP4526oXfmBtu33RBEs6OiFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Andrew Price <anprice@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 096/236] scsi: lpfc: Release hbalock before calling lpfc_worker_wake_up()
-Date: Tue, 14 May 2024 12:17:38 +0200
-Message-ID: <20240514101024.016913286@linuxfoundation.org>
+Subject: [PATCH 6.1 097/236] gfs2: Fix invalid metadata access in punch_hole
+Date: Tue, 14 May 2024 12:17:39 +0200
+Message-ID: <20240514101024.054277627@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -51,127 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Andrew Price <anprice@redhat.com>
 
-[ Upstream commit ded20192dff31c91cef2a04f7e20e60e9bb887d3 ]
+[ Upstream commit c95346ac918c5badf51b9a7ac58a26d3bd5bb224 ]
 
-lpfc_worker_wake_up() calls the lpfc_work_done() routine, which takes the
-hbalock.  Thus, lpfc_worker_wake_up() should not be called while holding the
-hbalock to avoid potential deadlock.
+In punch_hole(), when the offset lies in the final block for a given
+height, there is no hole to punch, but the maximum size check fails to
+detect that.  Consequently, punch_hole() will try to punch a hole beyond
+the end of the metadata and fail.  Fix the maximum size check.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20240305200503.57317-7-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Andrew Price <anprice@redhat.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_els.c     | 20 ++++++++++----------
- drivers/scsi/lpfc/lpfc_hbadisc.c |  5 ++---
- drivers/scsi/lpfc/lpfc_sli.c     | 14 +++++++-------
- 3 files changed, 19 insertions(+), 20 deletions(-)
+ fs/gfs2/bmap.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
-index 6b5ce9869e6b4..05764008f6e70 100644
---- a/drivers/scsi/lpfc/lpfc_els.c
-+++ b/drivers/scsi/lpfc/lpfc_els.c
-@@ -4384,23 +4384,23 @@ lpfc_els_retry_delay(struct timer_list *t)
- 	unsigned long flags;
- 	struct lpfc_work_evt  *evtp = &ndlp->els_retry_evt;
+diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
+index e7537fd305dd2..9ad11e5bf14c3 100644
+--- a/fs/gfs2/bmap.c
++++ b/fs/gfs2/bmap.c
+@@ -1702,7 +1702,8 @@ static int punch_hole(struct gfs2_inode *ip, u64 offset, u64 length)
+ 	struct buffer_head *dibh, *bh;
+ 	struct gfs2_holder rd_gh;
+ 	unsigned int bsize_shift = sdp->sd_sb.sb_bsize_shift;
+-	u64 lblock = (offset + (1 << bsize_shift) - 1) >> bsize_shift;
++	unsigned int bsize = 1 << bsize_shift;
++	u64 lblock = (offset + bsize - 1) >> bsize_shift;
+ 	__u16 start_list[GFS2_MAX_META_HEIGHT];
+ 	__u16 __end_list[GFS2_MAX_META_HEIGHT], *end_list = NULL;
+ 	unsigned int start_aligned, end_aligned;
+@@ -1713,7 +1714,7 @@ static int punch_hole(struct gfs2_inode *ip, u64 offset, u64 length)
+ 	u64 prev_bnr = 0;
+ 	__be64 *start, *end;
  
-+	/* Hold a node reference for outstanding queued work */
-+	if (!lpfc_nlp_get(ndlp))
-+		return;
-+
- 	spin_lock_irqsave(&phba->hbalock, flags);
- 	if (!list_empty(&evtp->evt_listp)) {
- 		spin_unlock_irqrestore(&phba->hbalock, flags);
-+		lpfc_nlp_put(ndlp);
- 		return;
- 	}
- 
--	/* We need to hold the node by incrementing the reference
--	 * count until the queued work is done
--	 */
--	evtp->evt_arg1  = lpfc_nlp_get(ndlp);
--	if (evtp->evt_arg1) {
--		evtp->evt = LPFC_EVT_ELS_RETRY;
--		list_add_tail(&evtp->evt_listp, &phba->work_list);
--		lpfc_worker_wake_up(phba);
--	}
-+	evtp->evt_arg1 = ndlp;
-+	evtp->evt = LPFC_EVT_ELS_RETRY;
-+	list_add_tail(&evtp->evt_listp, &phba->work_list);
- 	spin_unlock_irqrestore(&phba->hbalock, flags);
--	return;
-+
-+	lpfc_worker_wake_up(phba);
- }
- 
- /**
-diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
-index 549fa7d6c0f6f..aaa98a006fdcb 100644
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -241,7 +241,9 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
- 		if (evtp->evt_arg1) {
- 			evtp->evt = LPFC_EVT_DEV_LOSS;
- 			list_add_tail(&evtp->evt_listp, &phba->work_list);
-+			spin_unlock_irqrestore(&phba->hbalock, iflags);
- 			lpfc_worker_wake_up(phba);
-+			return;
- 		}
- 		spin_unlock_irqrestore(&phba->hbalock, iflags);
- 	} else {
-@@ -259,10 +261,7 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
- 			lpfc_disc_state_machine(vport, ndlp, NULL,
- 						NLP_EVT_DEVICE_RM);
- 		}
--
- 	}
--
--	return;
- }
- 
- /**
-diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index 427a6ac803e50..47b8102a7063a 100644
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -1217,9 +1217,9 @@ lpfc_set_rrq_active(struct lpfc_hba *phba, struct lpfc_nodelist *ndlp,
- 	empty = list_empty(&phba->active_rrq_list);
- 	list_add_tail(&rrq->list, &phba->active_rrq_list);
- 	phba->hba_flag |= HBA_RRQ_ACTIVE;
-+	spin_unlock_irqrestore(&phba->hbalock, iflags);
- 	if (empty)
- 		lpfc_worker_wake_up(phba);
--	spin_unlock_irqrestore(&phba->hbalock, iflags);
- 	return 0;
- out:
- 	spin_unlock_irqrestore(&phba->hbalock, iflags);
-@@ -11361,18 +11361,18 @@ lpfc_sli_post_recovery_event(struct lpfc_hba *phba,
- 	unsigned long iflags;
- 	struct lpfc_work_evt  *evtp = &ndlp->recovery_evt;
- 
-+	/* Hold a node reference for outstanding queued work */
-+	if (!lpfc_nlp_get(ndlp))
-+		return;
-+
- 	spin_lock_irqsave(&phba->hbalock, iflags);
- 	if (!list_empty(&evtp->evt_listp)) {
- 		spin_unlock_irqrestore(&phba->hbalock, iflags);
-+		lpfc_nlp_put(ndlp);
- 		return;
- 	}
- 
--	/* Incrementing the reference count until the queued work is done. */
--	evtp->evt_arg1  = lpfc_nlp_get(ndlp);
--	if (!evtp->evt_arg1) {
--		spin_unlock_irqrestore(&phba->hbalock, iflags);
--		return;
--	}
-+	evtp->evt_arg1 = ndlp;
- 	evtp->evt = LPFC_EVT_RECOVER_PORT;
- 	list_add_tail(&evtp->evt_listp, &phba->work_list);
- 	spin_unlock_irqrestore(&phba->hbalock, iflags);
+-	if (offset >= maxsize) {
++	if (offset + bsize - 1 >= maxsize) {
+ 		/*
+ 		 * The starting point lies beyond the allocated meta-data;
+ 		 * there are no blocks do deallocate.
 -- 
 2.43.0
 
