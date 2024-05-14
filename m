@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EFC1CAA4;
-	Tue, 14 May 2024 11:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C00E4205D;
+	Tue, 14 May 2024 11:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686165; cv=none; b=WZ9xNNHauSqNJ++ZlpYPgisQm+zVnkHvr876DuHvFLvr2Zyw31PKpu31D3UVRkmFstSGkNTLZjCjv00sMtv/92BaJnAr1Gm7qujw4wLp7VkRffIVKqpbRX+6MGL3WnJhWzXi0T/JUGdRTl8TLj60qlBlEPJJ4alsGFAh3+mUtYo=
+	t=1715686168; cv=none; b=Zx2orh1vZkHMkTVyws7OB0d9UgAuGu9STpC8Nd5B8iGQ+7xybyCGpO4ZgEnL3vc09ScUpRkBymx9ShjFI50Ggczmr+iw3XfVl8rL+ubEz8KG4MmBMOyJArw+pvhEvSeuai+mYfsQ7/bO4ISRM81aCpvO5hrs4jioHLTYyI8nDHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686165; c=relaxed/simple;
-	bh=OPWwPTLCvD4xKW/aJ0ikRTSH8Y3UrEs/YhTamB0DcRg=;
+	s=arc-20240116; t=1715686168; c=relaxed/simple;
+	bh=UOQuMqCupA3uysqOe3Fvat9gGkVWW7xsjSZyrJp7aPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfsEEJDglfKoiPtbeFZRXVKzQCN9geePQvl5ZnhFIdWlHYa0os2kd3Dgy6bjB0JLAdWDwjh/Feh+l+UuQXTT1aOJxThlKDtFYgiQ+4UPCLmkRFsF7EeLl9eSkjpZfwQKFAilW9KZXZcneu5E+7VT978L8OTUHcq8ErwO0kVjSbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6LlC/Yz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W9Cx4zjsl3uWsbu+itVrxECBXO37BpCPdH47mbKX6vLujGBZxSO2Or2JwVw26dUcRW/aCeAzglYpPTnF1cYnGuKpMkDxaSUMpInhAzhCBaN6fHdJBBSmGEnq5zehVjLFe8H+o9Ex7e+x+fCl1GoCF7MCT87YEiMAwzKVJCrKoHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5xoP6Mo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6LlC/Yz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC16C2BD10;
-	Tue, 14 May 2024 11:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5xoP6Mo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6FDDC2BD10;
+	Tue, 14 May 2024 11:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686165;
-	bh=OPWwPTLCvD4xKW/aJ0ikRTSH8Y3UrEs/YhTamB0DcRg=;
+	s=korg; t=1715686168;
+	bh=UOQuMqCupA3uysqOe3Fvat9gGkVWW7xsjSZyrJp7aPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C6LlC/YzRpeaYNpOYA6VnPsaK38IZ0JU3zfIPwvavSa5N62oL2Q3Py6J+8iS7H6oO
-	 hBfYcCOxmm9jiwV7faZmGkHX3IHXEzOz3MsP5kr9bN1G6l4igXERefsUcivTXT7FaL
-	 8CuQt6HbiUxo5d60Lu8yhgdFSyeTEWGQWpCymr8Y=
+	b=D5xoP6MoMXdf1EzjAVrbeg5+BslwvkxXZeMd86RhzB5COpALDHD0rKrnINVnRwnfO
+	 /Y5Z/4RW8LFk1ZcQZGl327PhHGPyiexWjaWw+Df9Ka4/9oVcSrtcIpyqsD+1pR/zpY
+	 WF8qNcu2HfILw4cisL3XOUHbZ4DyyLGL30eSedOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Anton Protopopov <aspsk@isovalent.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 042/236] nvme: fix warn output about shared namespaces without CONFIG_NVME_MULTIPATH
-Date: Tue, 14 May 2024 12:16:44 +0200
-Message-ID: <20240514101021.940106575@linuxfoundation.org>
+Subject: [PATCH 6.1 043/236] bpf: Fix a verifier verbose message
+Date: Tue, 14 May 2024 12:16:45 +0200
+Message-ID: <20240514101021.978573208@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -52,34 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Zhang <yi.zhang@redhat.com>
+From: Anton Protopopov <aspsk@isovalent.com>
 
-[ Upstream commit 0bc2e80b9be51712b19e919db5abc97a418f8292 ]
+[ Upstream commit 37eacb9f6e89fb399a79e952bc9c78eb3e16290e ]
 
-Move the stray '.' that is currently at the end of the line after
-newline '\n' to before newline character which is the right position.
+Long ago a map file descriptor in a pseudo ldimm64 instruction could
+only be present as an immediate value insn[0].imm, and thus this value
+was used in a verbose verifier message printed when the file descriptor
+wasn't valid. Since addition of BPF_PSEUDO_MAP_IDX_VALUE/BPF_PSEUDO_MAP_IDX
+the insn[0].imm field can also contain an index pointing to the file
+descriptor in the attr.fd_array array. However, if the file descriptor
+is invalid, the verifier still prints the verbose message containing
+value of insn[0].imm. Patch the verifier message to always print the
+actual file descriptor value.
 
-Fixes: ce8d78616a6b ("nvme: warn about shared namespaces without CONFIG_NVME_MULTIPATH")
-Signed-off-by: Yi Zhang <yi.zhang@redhat.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 387544bfa291 ("bpf: Introduce fd_idx")
+Signed-off-by: Anton Protopopov <aspsk@isovalent.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20240412141100.3562942-1-aspsk@isovalent.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 20160683e8685..75b4dd8a55b03 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4284,7 +4284,7 @@ static int nvme_init_ns_head(struct nvme_ns *ns, struct nvme_ns_info *info)
- 				"Found shared namespace %d, but multipathing not supported.\n",
- 				info->nsid);
- 			dev_warn_once(ctrl->device,
--				"Support for shared namespaces without CONFIG_NVME_MULTIPATH is deprecated and will be removed in Linux 6.0\n.");
-+				"Support for shared namespaces without CONFIG_NVME_MULTIPATH is deprecated and will be removed in Linux 6.0.\n");
- 		}
- 	}
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 27cc6e3db5a86..18b3f429abe17 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -13177,8 +13177,7 @@ static int resolve_pseudo_ldimm64(struct bpf_verifier_env *env)
+ 			f = fdget(fd);
+ 			map = __bpf_map_get(f);
+ 			if (IS_ERR(map)) {
+-				verbose(env, "fd %d is not pointing to valid bpf_map\n",
+-					insn[0].imm);
++				verbose(env, "fd %d is not pointing to valid bpf_map\n", fd);
+ 				return PTR_ERR(map);
+ 			}
  
 -- 
 2.43.0
