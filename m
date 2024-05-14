@@ -1,39 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42B7135415;
-	Tue, 14 May 2024 11:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC76134CDC;
+	Tue, 14 May 2024 11:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686185; cv=none; b=dG5kAHub1rfdUnzM/rqXHFo7ZscEBtWfs4lBcCnd7HJZV3QgYzXtNed9GB/uXsTL5JYX1xfsw8JbW1inc0NP1wLsAmkYeMONTvYA2i/wxX94yp7Bva7hbqYCIMhJFprpRrajKhyC4z7Gc5OFqtJ/zFZt/7VoOrkjJ1epiIJDa4s=
+	t=1715686188; cv=none; b=BVq9z7YgWDQk4cJxSnWXgt3FKid+XfV4NJF9stCxrmxsgbhn5HSFDo1FOMndHfaPbIOwxTW5RcpgbVC9pAN6GAXBCybCN555hFTLOlzmd5IEAwzRs6TKuM3NWUfpPqcAVH9TFeBQIzMtXjvEbReIvgFQ4A7XZHBGI9IgeMpJrz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686185; c=relaxed/simple;
-	bh=/0jIIO6z8OPbVoLT8yutYhfjXD6I26xZ+o/9I8mcf/8=;
+	s=arc-20240116; t=1715686188; c=relaxed/simple;
+	bh=klL047nBJv6aR2+6nev2n7UKJAbb7yZgScXPfM5X3ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PbIjZ+/QRnmBSvMfxREwEau6LjCiNHM19QZn+yVD0yVvFQMCCNnYycXaekSvR3Cw/TBOmpukMfySRcdDM+yW/t7fi1BinsQ/937uMdOBeVii+DTDh627CZoO1BvS/CE+hK7x6ueotrPCfQlg7HAYukir3yI6SXusaMMVSJ7TTrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmNApqYq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O0RDaETK+rT9BmOv+59y1fbDncV60nJy0Drk1PkvA5z3p3EGU3NMHQhGZwGFNsIgzEw9gv6HHIlrAaEueG0kX8qAwEdjZ590GStN9LXAg0h7KVHFu7q51t7n7VprPb3Kf+X5YwS0v7ys8rJfS5Jkpy6VetN8GMLxr6wjHqR0Sz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RbqJgLe0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmNApqYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A890C2BD10;
-	Tue, 14 May 2024 11:29:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RbqJgLe0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3968C2BD10;
+	Tue, 14 May 2024 11:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686185;
-	bh=/0jIIO6z8OPbVoLT8yutYhfjXD6I26xZ+o/9I8mcf/8=;
+	s=korg; t=1715686188;
+	bh=klL047nBJv6aR2+6nev2n7UKJAbb7yZgScXPfM5X3ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jmNApqYqsuZFvhtXaCwakFHiO3YdJc3V9l0YyImBJ6RW8Ar4MG2najcRmtkzdN2H2
-	 OspoWy6WEBY6BkDd8iol0NUlYSH/VydE53QsvgR5eoM+GPzIWhSvNIPjV89/MbSXOP
-	 vQtr076xf9lJZSJ5tj3FJ7E3enJ126v92wXuKNMQ=
+	b=RbqJgLe0OFmLtk+OdSGBmTUTr7rLjK++JlYG/31SU9BRyAY6HmsQMbz5QCeZOmNdL
+	 U2jGr2x9cPSiv+b8MmJLRkJU8B2Ihk+64KjAwXrX1/hAcoBVIbu+5BZXigAESofvUT
+	 SAFJEex7MgPP1iCJRVOdPSukLigKzcemGAX8d5sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Colin Cross <ccross@google.com>,
+	David Howells <dhowells@redhat.com>,
+	"Eric W . Biederman" <ebiederm@xmission.com>,
+	Hugh Dickins <hughd@google.com>,
+	kernel test robot <lkp@intel.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Peter Xu <peterx@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	William Kucharski <william.kucharski@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 020/236] cifs: use the least loaded channel for sending requests
-Date: Tue, 14 May 2024 12:16:22 +0200
-Message-ID: <20240514101021.099519981@linuxfoundation.org>
+Subject: [PATCH 6.1 011/236] mm/hugetlb: add hugetlb_folio_subpool() helpers
+Date: Tue, 14 May 2024 12:16:13 +0200
+Message-ID: <20240514101020.758953781@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -52,82 +63,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Sidhartha Kumar <sidhartha.kumar@oracle.com>
 
-[ Upstream commit ea90708d3cf3d0d92c02afe445ad463fb3c6bf10 ]
+[ Upstream commit 149562f7509404c382c32c3fa8a6ba356135e5cf ]
 
-Till now, we've used a simple round robin approach to
-distribute the requests between the channels. This does
-not work well if the channels consume the requests at
-different speeds, even if the advertised speeds are the
-same.
+Allow hugetlbfs_migrate_folio to check and read subpool information by
+passing in a folio.
 
-This change will allow the client to pick the channel
-with least number of requests currently in-flight. This
-will disregard the link speed, and select a channel
-based on the current load of the channels.
-
-For cases when all the channels are equally loaded,
-fall back to the old round robin method.
-
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 8094a600245e ("smb3: missing lock when picking channel")
+Link: https://lkml.kernel.org/r/20220922154207.1575343-4-sidhartha.kumar@oracle.com
+Signed-off-by: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Colin Cross <ccross@google.com>
+Cc: David Howells <dhowells@redhat.com>
+Cc: "Eric W . Biederman" <ebiederm@xmission.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: kernel test robot <lkp@intel.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: William Kucharski <william.kucharski@oracle.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: b76b46902c2d ("mm/hugetlb: fix missing hugetlb_lock for resv uncharge")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/transport.c | 33 +++++++++++++++++++++++++++++----
- 1 file changed, 29 insertions(+), 4 deletions(-)
+ fs/hugetlbfs/inode.c    |  8 ++++----
+ include/linux/hugetlb.h | 15 +++++++++++++--
+ 2 files changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
-index 338b34c99b2de..da2bef3b7ac27 100644
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -1045,15 +1045,40 @@ cifs_cancelled_callback(struct mid_q_entry *mid)
- struct TCP_Server_Info *cifs_pick_channel(struct cifs_ses *ses)
+diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
+index 4fe4b3393e71c..330729445d8ab 100644
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -1108,10 +1108,10 @@ static int hugetlbfs_migrate_folio(struct address_space *mapping,
+ 	if (rc != MIGRATEPAGE_SUCCESS)
+ 		return rc;
+ 
+-	if (hugetlb_page_subpool(&src->page)) {
+-		hugetlb_set_page_subpool(&dst->page,
+-					hugetlb_page_subpool(&src->page));
+-		hugetlb_set_page_subpool(&src->page, NULL);
++	if (hugetlb_folio_subpool(src)) {
++		hugetlb_set_folio_subpool(dst,
++					hugetlb_folio_subpool(src));
++		hugetlb_set_folio_subpool(src, NULL);
+ 	}
+ 
+ 	if (mode != MIGRATE_SYNC_NO_COPY)
+diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
+index 0c5326fd3c47a..02d9a8af3704e 100644
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -754,18 +754,29 @@ extern unsigned int default_hstate_idx;
+ 
+ #define default_hstate (hstates[default_hstate_idx])
+ 
++static inline struct hugepage_subpool *hugetlb_folio_subpool(struct folio *folio)
++{
++	return (void *)folio_get_private_1(folio);
++}
++
+ /*
+  * hugetlb page subpool pointer located in hpage[1].private
+  */
+ static inline struct hugepage_subpool *hugetlb_page_subpool(struct page *hpage)
  {
- 	uint index = 0;
-+	unsigned int min_in_flight = UINT_MAX, max_in_flight = 0;
-+	struct TCP_Server_Info *server = NULL;
-+	int i;
- 
- 	if (!ses)
- 		return NULL;
- 
--	/* round robin */
--	index = (uint)atomic_inc_return(&ses->chan_seq);
--
- 	spin_lock(&ses->chan_lock);
--	index %= ses->chan_count;
-+	for (i = 0; i < ses->chan_count; i++) {
-+		server = ses->chans[i].server;
-+		if (!server)
-+			continue;
+-	return (void *)page_private(hpage + SUBPAGE_INDEX_SUBPOOL);
++	return hugetlb_folio_subpool(page_folio(hpage));
++}
 +
-+		/*
-+		 * strictly speaking, we should pick up req_lock to read
-+		 * server->in_flight. But it shouldn't matter much here if we
-+		 * race while reading this data. The worst that can happen is
-+		 * that we could use a channel that's not least loaded. Avoiding
-+		 * taking the lock could help reduce wait time, which is
-+		 * important for this function
-+		 */
-+		if (server->in_flight < min_in_flight) {
-+			min_in_flight = server->in_flight;
-+			index = i;
-+		}
-+		if (server->in_flight > max_in_flight)
-+			max_in_flight = server->in_flight;
-+	}
-+
-+	/* if all channels are equally loaded, fall back to round-robin */
-+	if (min_in_flight == max_in_flight) {
-+		index = (uint)atomic_inc_return(&ses->chan_seq);
-+		index %= ses->chan_count;
-+	}
- 	spin_unlock(&ses->chan_lock);
++static inline void hugetlb_set_folio_subpool(struct folio *folio,
++					struct hugepage_subpool *subpool)
++{
++	folio_set_private_1(folio, (unsigned long)subpool);
+ }
  
- 	return ses->chans[index].server;
+ static inline void hugetlb_set_page_subpool(struct page *hpage,
+ 					struct hugepage_subpool *subpool)
+ {
+-	set_page_private(hpage + SUBPAGE_INDEX_SUBPOOL, (unsigned long)subpool);
++	hugetlb_set_folio_subpool(page_folio(hpage), subpool);
+ }
+ 
+ static inline struct hstate *hstate_file(struct file *f)
 -- 
 2.43.0
 
