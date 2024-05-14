@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B7C12BEA5;
-	Tue, 14 May 2024 11:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31E554903;
+	Tue, 14 May 2024 11:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684668; cv=none; b=V1KyIZ4W1vzbnnWUPAPiX/AVj9KSolIyi1lARZMLgHF8lSlVJDW5wOTDzZIAJ3YQZmwKpqHb7SaqdX0XFSoRr6cwv8Apap3ZiCaeifGP8pohllG8IFTZC6WpABRAr2bbSTq/cxWzS0gDUpJb3MaxuKU3YJGgR/mBFb2qpFQtTBE=
+	t=1715684673; cv=none; b=R4yeKCJ+0Hyk9Ym+DoK243pJ5uAvAZjk9s700g55+0QgUVqZCk6kJO6XW+Cqr3bMApMIkCvPKyVp2z6+NObcIkk8OBo3zMO7+GDW9pLliHttmVxHKfjLiJdQYWJFg4CxbcEevPh5zV2l6EOPCxjs+6T8FtWB+kRz2WbiFJHYy0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684668; c=relaxed/simple;
-	bh=RNDXcPQOTQBurSoaB8PAt0lVAQAFzrl/JlZeT968BxQ=;
+	s=arc-20240116; t=1715684673; c=relaxed/simple;
+	bh=/XmU+kbw3CghCQn0TzqMN7HoJT3U6YuBep/VTkXd4/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iavzbjV3MfaS2BwogrwEIfAZw0WRphXCY16NczyZYTHB76IPd9S6FVtTfg1BxWDsQKEQSBx630/9pczASl7fV+mOxCkHvi4lI1fKnGtSS+V+gpIwPHdMsdqOW2Ka66zxTnO2IfViq2lxcSlhXjgAjYTWkAfW044Hv9vfEG/aXR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMlLl0fa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=So8i550481FJBtGIVeMpZzvAr8a3xXsUiIQkKWY7o8aRzPVOeayUhdMeREDOopzDPSqdETM1r4rQCqGj12rg4kHvTzzPuRQOkMjrUhqQdES0QoYAmu50GJ0PlwynSb77PRG71qn2TFvFk7P21zMI4PqJGAcff8LT8SFb4MF9N0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OiCDpoj1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMlLl0fa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098E2C2BD10;
-	Tue, 14 May 2024 11:04:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OiCDpoj1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F51C2BD10;
+	Tue, 14 May 2024 11:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684668;
-	bh=RNDXcPQOTQBurSoaB8PAt0lVAQAFzrl/JlZeT968BxQ=;
+	s=korg; t=1715684673;
+	bh=/XmU+kbw3CghCQn0TzqMN7HoJT3U6YuBep/VTkXd4/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jMlLl0fag5YQnGnTAaJIgeD9ao80XHV5enwWAyaoCe0//sfGTrBe4wmgyh3w6YVmS
-	 P0hVGAhdKb0ZRhXjuzNusehIiuEmu2mp2A6ZqxJPU46jG1fa0BYniUlokzTQdK1Cp1
-	 BZQIfFpZh+MxP+4BC+XigYnT9txXIA3toTCHMdLo=
+	b=OiCDpoj1sk+brVpO61mwOxV+MUf4FFen0Ui4a2hxFE0mbwmzXerbaed3T5RNhP9Zx
+	 +m3he9PY73/K6AwgUSzyv9H0bC6DEFJoHrEoLUf+xhEOGv7Rna6idDrzPenfOpadyL
+	 MIGL1plCCo17kPmt9gYL9FkjUO+wM09wUD7ezuaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christian Koenig <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Shashank Sharma <shashank.sharma@amd.com>,
+	Arvind Yadav <arvind.yadav@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/301] net: dsa: mv88e6xxx: Fix number of databases for 88E6141 / 88E6341
-Date: Tue, 14 May 2024 12:15:44 +0200
-Message-ID: <20240514101035.006841426@linuxfoundation.org>
+Subject: [PATCH 6.6 074/301] drm/amdgpu: fix doorbell regression
+Date: Tue, 14 May 2024 12:15:45 +0200
+Message-ID: <20240514101035.044863432@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -47,54 +47,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Shashank Sharma <shashank.sharma@amd.com>
 
-[ Upstream commit b9a61c20179fda7bdfe2c1210aa72451991ab81a ]
+[ Upstream commit 705d0480e6ae5a73ca3a9c04316d0678e19a46ed ]
 
-The Topaz family (88E6141 and 88E6341) only support 256 Forwarding
-Information Tables.
+This patch adds a missed handling of PL domain doorbell while
+handling VRAM faults.
 
-Fixes: a75961d0ebfd ("net: dsa: mv88e6xxx: Add support for ethernet switch 88E6341")
-Fixes: 1558727a1c1b ("net: dsa: mv88e6xxx: Add support for ethernet switch 88E6141")
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20240429133832.9547-1-kabel@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Christian Koenig <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Fixes: a6ff969fe9cb ("drm/amdgpu: fix visible VRAM handling during faults")
+Reviewed-by: Christian Koenig <christian.koenig@amd.com>
+Signed-off-by: Shashank Sharma <shashank.sharma@amd.com>
+Signed-off-by: Arvind Yadav <arvind.yadav@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 8556502f06721..db1d9df7d47fe 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -5588,7 +5588,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.prod_num = MV88E6XXX_PORT_SWITCH_ID_PROD_6141,
- 		.family = MV88E6XXX_FAMILY_6341,
- 		.name = "Marvell 88E6141",
--		.num_databases = 4096,
-+		.num_databases = 256,
- 		.num_macs = 2048,
- 		.num_ports = 6,
- 		.num_internal_phys = 5,
-@@ -6047,7 +6047,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.prod_num = MV88E6XXX_PORT_SWITCH_ID_PROD_6341,
- 		.family = MV88E6XXX_FAMILY_6341,
- 		.name = "Marvell 88E6341",
--		.num_databases = 4096,
-+		.num_databases = 256,
- 		.num_macs = 2048,
- 		.num_internal_phys = 5,
- 		.num_ports = 6,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+index d1687b5725693..b95018b1d2ae6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -424,7 +424,7 @@ bool amdgpu_res_cpu_visible(struct amdgpu_device *adev,
+ 		return false;
+ 
+ 	if (res->mem_type == TTM_PL_SYSTEM || res->mem_type == TTM_PL_TT ||
+-	    res->mem_type == AMDGPU_PL_PREEMPT)
++	    res->mem_type == AMDGPU_PL_PREEMPT || res->mem_type == AMDGPU_PL_DOORBELL)
+ 		return true;
+ 
+ 	if (res->mem_type != TTM_PL_VRAM)
 -- 
 2.43.0
 
