@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7298595F;
-	Tue, 14 May 2024 11:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633096D1A0;
+	Tue, 14 May 2024 11:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685278; cv=none; b=jDRJfRJv/9ZF6cp3mMh9OgtozVJbRHecFDyG0nkG96dA8IX+8Y1SjBMp8GkHNMcAb0kquNHa5tH2WhFSFHjYdo7YqZzGycxRkN8I0eJnkUGlogNt97XeVqL1GvATddXjkn0ZRhFsA2+73BEW7IQncwKVjvkRRRNm5K2qWiR7ACo=
+	t=1715685284; cv=none; b=eRkSp0NvdhFqEvP5WClDEfddBowcpAb60WB4CD5cNpCkiFxmXxhfMJsaqzBNiNxnSEXlUi9HBiHR941n17wobtM9tI3BkI5QLy7w9EX5y8JAbU2S6R5NIo0tXFEgP1JYtBAlAtb27NcuKVwTpFFhCpnZH6mtW1IUb+TsMeUTZFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685278; c=relaxed/simple;
-	bh=lkruGvw3axrFa0BseNMZrDwFqThqznM7ae2u+XJiDZQ=;
+	s=arc-20240116; t=1715685284; c=relaxed/simple;
+	bh=Tle048T71ZPlGZbeJghKXDDhfPAO6Pz6u9HgAbZzsDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JItyw+0BnR8YCujt12QC5oKrhz+XcmoDvmg51GoYQGxr0JcLX+HwsBeo9XhTAKMnD5oNurpbop+aT+hI47pPbay9aO7YRrM/A4ccPlKv9TG38mhPIm+aNV/OIOQHWZ8UCAfOJ6QhZsynYdgbmTK70gMSY6wR0BWGbSiv2cELWrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ozxvNMnI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dqX/WDov0eSyoNGgZryKCjHxv7BA9G/IcsNgFoCUfFAaq/hrbN1Dsmh9o4emfECbHv2ET68c9aQ0rQzLqh2j60WFKLy20O1uemV2SDAIUID9M7X2otZ70GIGObl+AKPdu7bzSxqTIk8IGt2C0bA0BQPqfuSOK65xkGnXJtHcEVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2ZAuYWb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ozxvNMnI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CA6C2BD10;
-	Tue, 14 May 2024 11:14:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2ZAuYWb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B54C2BD10;
+	Tue, 14 May 2024 11:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685278;
-	bh=lkruGvw3axrFa0BseNMZrDwFqThqznM7ae2u+XJiDZQ=;
+	s=korg; t=1715685284;
+	bh=Tle048T71ZPlGZbeJghKXDDhfPAO6Pz6u9HgAbZzsDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ozxvNMnIGWKMhEtrAOLRgFSYgTjYWWqghdCmegNpUzq5daU7dXZkUQoAJYhl7LYCx
-	 hAEaHLLAlQbW0FWA0gksqeN83DGIew3a+8m+P9SNtomfXwD9n9Dzp1sdXMHaUmnp7k
-	 Il1F47BfcFJzhaCPKAh2xR4ApbrnCwfgvunZYY+E=
+	b=U2ZAuYWb3hUD6mYyyTHlhaDDtoIMJ3gNDoi/jhzSbe8Kng7agTs8YSJvjjZTrbFos
+	 tTS63ZiM1LyeZaxv53KCwE5yGBzZVGWcCIZC6V/yfz6T7UsdbSQAMbULiTYGxqcXmw
+	 kNyUJKD4x/n5ic9vSw8HM4qNXCn1+lWZzYUWNDDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patryk Wlazlyn <patryk.wlazlyn@linux.intel.com>,
 	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 132/301] tools/power turbostat: Print ucode revision only if valid
-Date: Tue, 14 May 2024 12:16:43 +0200
-Message-ID: <20240514101037.231168561@linuxfoundation.org>
+Subject: [PATCH 6.6 133/301] tools/power turbostat: Fix warning upon failed /dev/cpu_dma_latency read
+Date: Tue, 14 May 2024 12:16:44 +0200
+Message-ID: <20240514101037.269421125@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,57 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patryk Wlazlyn <patryk.wlazlyn@linux.intel.com>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit fb5ceca046efc84f69fcf9779a013f8a0e63bbff ]
+[ Upstream commit b6fe938317eed58e8c687bd5965a956e15fb5828 ]
 
-If the MSR read were to fail, turbostat would print "microcode 0x0"
+Previously a failed read of /dev/cpu_dma_latency erroneously complained
+turbostat: capget(CAP_SYS_ADMIN) failed, try "# setcap cap_sys_admin=ep ./turbostat
 
-Signed-off-by: Patryk Wlazlyn <patryk.wlazlyn@linux.intel.com>
-Reviewed-by: Len Brown <len.brown@intel.com>
+This went unnoticed because this file is typically visible to root,
+and turbostat was typically run as root.
+
+Going forward, when a non-root user can run turbostat...
+Complain about failed read access to this file only if --debug is used.
+
 Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ tools/power/x86/turbostat/turbostat.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 5b892c53fc2c2..4dfeda4870f71 100644
+index 4dfeda4870f71..0561362301c53 100644
 --- a/tools/power/x86/turbostat/turbostat.c
 +++ b/tools/power/x86/turbostat/turbostat.c
-@@ -5518,6 +5518,7 @@ void process_cpuid()
- 	unsigned int eax, ebx, ecx, edx;
- 	unsigned int fms, family, model, stepping, ecx_flags, edx_flags;
- 	unsigned long long ucode_patch = 0;
-+	bool ucode_patch_valid = false;
+@@ -5479,7 +5479,8 @@ void print_dev_latency(void)
  
- 	eax = ebx = ecx = edx = 0;
+ 	fd = open(path, O_RDONLY);
+ 	if (fd < 0) {
+-		warnx("capget(CAP_SYS_ADMIN) failed, try \"# setcap cap_sys_admin=ep %s\"", progname);
++		if (debug)
++			warnx("Read %s failed", path);
+ 		return;
+ 	}
  
-@@ -5547,6 +5548,8 @@ void process_cpuid()
- 
- 	if (get_msr(sched_getcpu(), MSR_IA32_UCODE_REV, &ucode_patch))
- 		warnx("get_msr(UCODE)");
-+	else
-+		ucode_patch_valid = true;
- 
- 	/*
- 	 * check max extended function levels of CPUID.
-@@ -5557,9 +5560,12 @@ void process_cpuid()
- 	__cpuid(0x80000000, max_extended_level, ebx, ecx, edx);
- 
- 	if (!quiet) {
--		fprintf(outf, "CPUID(1): family:model:stepping 0x%x:%x:%x (%d:%d:%d) microcode 0x%x\n",
--			family, model, stepping, family, model, stepping,
--			(unsigned int)((ucode_patch >> 32) & 0xFFFFFFFF));
-+		fprintf(outf, "CPUID(1): family:model:stepping 0x%x:%x:%x (%d:%d:%d)",
-+			family, model, stepping, family, model, stepping);
-+		if (ucode_patch_valid)
-+			fprintf(outf, " microcode 0x%x", (unsigned int)((ucode_patch >> 32) & 0xFFFFFFFF));
-+		fputc('\n', outf);
-+
- 		fprintf(outf, "CPUID(0x80000000): max_extended_levels: 0x%x\n", max_extended_level);
- 		fprintf(outf, "CPUID(1): %s %s %s %s %s %s %s %s %s %s\n",
- 			ecx_flags & (1 << 0) ? "SSE3" : "-",
 -- 
 2.43.0
 
