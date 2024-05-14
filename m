@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EB2F9D4;
-	Tue, 14 May 2024 11:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68DCF9D4;
+	Tue, 14 May 2024 11:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687931; cv=none; b=XJs2mRmKbpCuPSqeWJ1xq2mRCyk2JXMjVgByNuYQaYZBsUSsacX4jS1yNGERf6jxi/vFL4mz3qV1L68kOI91V5wrd22Lo8BYVNfQVtGU/3upr8AdLVuITC5hdkmvJgQrtze+DKgccicqG5/2QqYEdQJKyOrMjiaTWUI/4EeO/V0=
+	t=1715687933; cv=none; b=qNVSMJqbgJL4tjUrZmAn4/eifspz6N2DxgDd87zewIy4XVGX/tR2NZaN7fm/c1fTK/GrhOavOVbD5dsEvpOqWpGiMeSCsbMSDoqpbMHBRP38C+0ESQIrz2CpPZ98ZM4Y/WduTsxdpHV9vfplwWp+o8ePzoJDhUM2TPxVdtxXkKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687931; c=relaxed/simple;
-	bh=Pa2615mYoiXlZw4vvw09KRBqxed4jJvoxGPAoO7WLrw=;
+	s=arc-20240116; t=1715687933; c=relaxed/simple;
+	bh=j3T/pnDzDNXKdv6SpYDtO2SbYRlo8T5ebPsPPzlTeB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SywNc3wzE6h/AmA9kq4pSfqaPAreDYZwBMRzeOycUP3ySWqVaZRXCmlMAppyjNEKuu5qfhtR1DDqxRqGJnbDf3lza0yDwVa3om0t8GGbA7GG4aAJBIKnwgwkpZ1/c1aP0uqbdEldXij3rJSAPBNenAwUsnjYRA0xOUWJhU2VVCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TV7C/LRn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mba1NgsSqRPOtGZ9xk8MQ3fPbjd8VyXZEadO1somFXo7V7IgwkVFmqMl3oy8pQHOAQgaXBaDKNa0/aGwDW1dMZ6w2lEtZ0laUHiMycnbI3mw2WQYB4sYy0kzQSRetgLa/tD1D3cSQy1TszPB2MfUcavxpI7k19xjHrnPETUu9BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0l6dA9/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TV7C/LRn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A683C2BD10;
-	Tue, 14 May 2024 11:58:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0l6dA9/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38002C2BD10;
+	Tue, 14 May 2024 11:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687930;
-	bh=Pa2615mYoiXlZw4vvw09KRBqxed4jJvoxGPAoO7WLrw=;
+	s=korg; t=1715687933;
+	bh=j3T/pnDzDNXKdv6SpYDtO2SbYRlo8T5ebPsPPzlTeB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TV7C/LRnXjwJVAhO2l8EP8Wfhmc4HkVb9abu06LCxlAtRKsQ2jk3B0Zo5jFZ2FYTt
-	 yrunuHwZZLUzBCO3XrTtpAUC7XUFzlBNcXAcPbWv+wYDCxoMTejLarw/rbcRQUIqJS
-	 OJy7ArmT6NeO7mq9+503HRfqIoCmMUQq6JiuPzgc=
+	b=S0l6dA9/lFGnsxmuDCctvBIvoDx7PGrG5WN75XcQVLMR/rPHan63iOVOAdBxDmb0q
+	 +sUxb0swr7nis1oAtbjON8KqVtDl81uUWzajVBTZ66YS1JrOtaO/SAMRVdHTqmKfDn
+	 Oe/HztGZ2bchSNJPBwXcJTiFTjSPANwc7b8HFe9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 5.15 155/168] tipc: fix UAF in error path
-Date: Tue, 14 May 2024 12:20:53 +0200
-Message-ID: <20240514101012.610627551@linuxfoundation.org>
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 156/168] net: bcmgenet: synchronize use of bcmgenet_set_rx_mode()
+Date: Tue, 14 May 2024 12:20:54 +0200
+Message-ID: <20240514101012.649232544@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -53,141 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Doug Berger <opendmb@gmail.com>
 
-commit 080cbb890286cd794f1ee788bbc5463e2deb7c2b upstream.
+commit 2dbe5f19368caae63b1f59f5bc2af78c7d522b3a upstream.
 
-Sam Page (sam4k) working with Trend Micro Zero Day Initiative reported
-a UAF in the tipc_buf_append() error path:
+The ndo_set_rx_mode function is synchronized with the
+netif_addr_lock spinlock and BHs disabled. Since this
+function is also invoked directly from the driver the
+same synchronization should be applied.
 
-BUG: KASAN: slab-use-after-free in kfree_skb_list_reason+0x47e/0x4c0
-linux/net/core/skbuff.c:1183
-Read of size 8 at addr ffff88804d2a7c80 by task poc/8034
-
-CPU: 1 PID: 8034 Comm: poc Not tainted 6.8.2 #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.16.0-debian-1.16.0-5 04/01/2014
-Call Trace:
- <IRQ>
- __dump_stack linux/lib/dump_stack.c:88
- dump_stack_lvl+0xd9/0x1b0 linux/lib/dump_stack.c:106
- print_address_description linux/mm/kasan/report.c:377
- print_report+0xc4/0x620 linux/mm/kasan/report.c:488
- kasan_report+0xda/0x110 linux/mm/kasan/report.c:601
- kfree_skb_list_reason+0x47e/0x4c0 linux/net/core/skbuff.c:1183
- skb_release_data+0x5af/0x880 linux/net/core/skbuff.c:1026
- skb_release_all linux/net/core/skbuff.c:1094
- __kfree_skb linux/net/core/skbuff.c:1108
- kfree_skb_reason+0x12d/0x210 linux/net/core/skbuff.c:1144
- kfree_skb linux/./include/linux/skbuff.h:1244
- tipc_buf_append+0x425/0xb50 linux/net/tipc/msg.c:186
- tipc_link_input+0x224/0x7c0 linux/net/tipc/link.c:1324
- tipc_link_rcv+0x76e/0x2d70 linux/net/tipc/link.c:1824
- tipc_rcv+0x45f/0x10f0 linux/net/tipc/node.c:2159
- tipc_udp_recv+0x73b/0x8f0 linux/net/tipc/udp_media.c:390
- udp_queue_rcv_one_skb+0xad2/0x1850 linux/net/ipv4/udp.c:2108
- udp_queue_rcv_skb+0x131/0xb00 linux/net/ipv4/udp.c:2186
- udp_unicast_rcv_skb+0x165/0x3b0 linux/net/ipv4/udp.c:2346
- __udp4_lib_rcv+0x2594/0x3400 linux/net/ipv4/udp.c:2422
- ip_protocol_deliver_rcu+0x30c/0x4e0 linux/net/ipv4/ip_input.c:205
- ip_local_deliver_finish+0x2e4/0x520 linux/net/ipv4/ip_input.c:233
- NF_HOOK linux/./include/linux/netfilter.h:314
- NF_HOOK linux/./include/linux/netfilter.h:308
- ip_local_deliver+0x18e/0x1f0 linux/net/ipv4/ip_input.c:254
- dst_input linux/./include/net/dst.h:461
- ip_rcv_finish linux/net/ipv4/ip_input.c:449
- NF_HOOK linux/./include/linux/netfilter.h:314
- NF_HOOK linux/./include/linux/netfilter.h:308
- ip_rcv+0x2c5/0x5d0 linux/net/ipv4/ip_input.c:569
- __netif_receive_skb_one_core+0x199/0x1e0 linux/net/core/dev.c:5534
- __netif_receive_skb+0x1f/0x1c0 linux/net/core/dev.c:5648
- process_backlog+0x101/0x6b0 linux/net/core/dev.c:5976
- __napi_poll.constprop.0+0xba/0x550 linux/net/core/dev.c:6576
- napi_poll linux/net/core/dev.c:6645
- net_rx_action+0x95a/0xe90 linux/net/core/dev.c:6781
- __do_softirq+0x21f/0x8e7 linux/kernel/softirq.c:553
- do_softirq linux/kernel/softirq.c:454
- do_softirq+0xb2/0xf0 linux/kernel/softirq.c:441
- </IRQ>
- <TASK>
- __local_bh_enable_ip+0x100/0x120 linux/kernel/softirq.c:381
- local_bh_enable linux/./include/linux/bottom_half.h:33
- rcu_read_unlock_bh linux/./include/linux/rcupdate.h:851
- __dev_queue_xmit+0x871/0x3ee0 linux/net/core/dev.c:4378
- dev_queue_xmit linux/./include/linux/netdevice.h:3169
- neigh_hh_output linux/./include/net/neighbour.h:526
- neigh_output linux/./include/net/neighbour.h:540
- ip_finish_output2+0x169f/0x2550 linux/net/ipv4/ip_output.c:235
- __ip_finish_output linux/net/ipv4/ip_output.c:313
- __ip_finish_output+0x49e/0x950 linux/net/ipv4/ip_output.c:295
- ip_finish_output+0x31/0x310 linux/net/ipv4/ip_output.c:323
- NF_HOOK_COND linux/./include/linux/netfilter.h:303
- ip_output+0x13b/0x2a0 linux/net/ipv4/ip_output.c:433
- dst_output linux/./include/net/dst.h:451
- ip_local_out linux/net/ipv4/ip_output.c:129
- ip_send_skb+0x3e5/0x560 linux/net/ipv4/ip_output.c:1492
- udp_send_skb+0x73f/0x1530 linux/net/ipv4/udp.c:963
- udp_sendmsg+0x1a36/0x2b40 linux/net/ipv4/udp.c:1250
- inet_sendmsg+0x105/0x140 linux/net/ipv4/af_inet.c:850
- sock_sendmsg_nosec linux/net/socket.c:730
- __sock_sendmsg linux/net/socket.c:745
- __sys_sendto+0x42c/0x4e0 linux/net/socket.c:2191
- __do_sys_sendto linux/net/socket.c:2203
- __se_sys_sendto linux/net/socket.c:2199
- __x64_sys_sendto+0xe0/0x1c0 linux/net/socket.c:2199
- do_syscall_x64 linux/arch/x86/entry/common.c:52
- do_syscall_64+0xd8/0x270 linux/arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x6f/0x77 linux/arch/x86/entry/entry_64.S:120
-RIP: 0033:0x7f3434974f29
-Code: 00 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48
-89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d
-01 f0 ff ff 73 01 c3 48 8b 0d 37 8f 0d 00 f7 d8 64 89 01 48
-RSP: 002b:00007fff9154f2b8 EFLAGS: 00000212 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f3434974f29
-RDX: 00000000000032c8 RSI: 00007fff9154f300 RDI: 0000000000000003
-RBP: 00007fff915532e0 R08: 00007fff91553360 R09: 0000000000000010
-R10: 0000000000000000 R11: 0000000000000212 R12: 000055ed86d261d0
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
- </TASK>
-
-In the critical scenario, either the relevant skb is freed or its
-ownership is transferred into a frag_lists. In both cases, the cleanup
-code must not free it again: we need to clear the skb reference earlier.
-
-Fixes: 1149557d64c9 ("tipc: eliminate unnecessary linearization of incoming buffers")
+Fixes: 72f96347628e ("net: bcmgenet: set Rx mode before starting netif")
 Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-23852
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/752f1ccf762223d109845365d07f55414058e5a3.1714484273.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Doug Berger <opendmb@gmail.com>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/msg.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/tipc/msg.c
-+++ b/net/tipc/msg.c
-@@ -156,6 +156,11 @@ int tipc_buf_append(struct sk_buff **hea
- 	if (!head)
- 		goto err;
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -2,7 +2,7 @@
+ /*
+  * Broadcom GENET (Gigabit Ethernet) controller driver
+  *
+- * Copyright (c) 2014-2020 Broadcom
++ * Copyright (c) 2014-2024 Broadcom
+  */
  
-+	/* Either the input skb ownership is transferred to headskb
-+	 * or the input skb is freed, clear the reference to avoid
-+	 * bad access on error path.
-+	 */
-+	*buf = NULL;
- 	if (skb_try_coalesce(head, frag, &headstolen, &delta)) {
- 		kfree_skb_partial(frag, headstolen);
- 	} else {
-@@ -179,7 +184,6 @@ int tipc_buf_append(struct sk_buff **hea
- 		*headbuf = NULL;
- 		return 1;
- 	}
--	*buf = NULL;
- 	return 0;
- err:
- 	kfree_skb(*buf);
+ #define pr_fmt(fmt)				"bcmgenet: " fmt
+@@ -3310,7 +3310,9 @@ static void bcmgenet_netif_start(struct
+ 	struct bcmgenet_priv *priv = netdev_priv(dev);
+ 
+ 	/* Start the network engine */
++	netif_addr_lock_bh(dev);
+ 	bcmgenet_set_rx_mode(dev);
++	netif_addr_unlock_bh(dev);
+ 	bcmgenet_enable_rx_napi(priv);
+ 
+ 	umac_enable_set(priv, CMD_TX_EN | CMD_RX_EN, true);
 
 
