@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C073E6311D;
-	Tue, 14 May 2024 11:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795C76311D;
+	Tue, 14 May 2024 11:24:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685852; cv=none; b=FTef3ZkAnFXa9Y6yznr7fS9VCZDWfNxgRKyx919rh7JqQjJi5e44sWsCMVfCVXXHIbrGXJlADAsmJmf6I0kKdDhXY8FWgelnBaFAz+oJdy4t3b9b7Nt4U0nRS0royXxRuT4fh9EvN+SEvS/Jle0qiA83SbK++XeEHCAKI9O3feE=
+	t=1715685856; cv=none; b=jFl0zHQpF4/lddC3MZjI7tveJB/WD3J6JtF1Rr04crB5YcIgYhTWsMJB0k8OtsTf98e63cHSxuZlV8MxK8am00y6YmxTCqbK9b+ErXlMOQGjgYJPPX1PwaJMm5fpt7Eb4nWcmJxUht8f2I2D1xN7pJEn/Ylr+LO1ddrRaYvc0Yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685852; c=relaxed/simple;
-	bh=ra9qOuhCmp7HBv/8DKi8Uz96o5JIDIb8QfKjkkLSzA0=;
+	s=arc-20240116; t=1715685856; c=relaxed/simple;
+	bh=UJXMJcnUXsa6jtIsXzOudxDWEVu2p73DTfr4tpC5Ens=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z0h4pZ0Xsgk5nMJQ45F83+OFNPFwRqNASWJ29JJwEL2pLGpDovbkKqz9lGYfK+onRVilKd0LBH3hqlZT49JrPuaH2H8JVG+VdmynqgNFsGTYSqzVByYNjFLNVnMJZ5ynAPzWcDRAG2nhFMcdZuspEjFPHzYJxHgClXWPJrEzyd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wdqHjWYD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SBh2LQdQTXWYa6vCZEgY/WNCfXZ3HsR7eQdBSBpm6XZM+nOzOBiB7yrBocNFVGR5zO23wImKkLsw9zDeRd7nG9xClSsGNaUHH47fRrX3qbBNCKinZqbUZpDRnWNBpyUNbGnaHJr5H2QiDy9HqDZ3DCD36i+43e51VaGTFtwcTw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YtZXvcZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wdqHjWYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA6FC2BD10;
-	Tue, 14 May 2024 11:24:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YtZXvcZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D551DC2BD10;
+	Tue, 14 May 2024 11:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685852;
-	bh=ra9qOuhCmp7HBv/8DKi8Uz96o5JIDIb8QfKjkkLSzA0=;
+	s=korg; t=1715685856;
+	bh=UJXMJcnUXsa6jtIsXzOudxDWEVu2p73DTfr4tpC5Ens=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wdqHjWYDAM1XHMioPfZVlGg96MF6MS4uyx2fBf3SpZx4HxIhWXqafC81elM8+lpOE
-	 mXRPaymepInmp8ZWNdkRi0ghXeqKTYPLxr20+GtVKKcuNWI9Q0Qg09AAYAjoi2ywpH
-	 V+Xi44FleJ2aflc/VXSC7ROMcymx4PHebzkKmV28=
+	b=0YtZXvcZ2raVaUMz5LdVduFMJTCj8IsCoHkRIKjv/EGx77TqT8TiK614G4xqEv8St
+	 zrtcML86IkQ7n6nzTDDhQ4Citk2jSSxtaqOm+pe3RogELmVvr3a9ls16oIDwqXIFYB
+	 jp1oPqZPthtrj/cDHB7NDNwpZ0UV3UYt3TRcDlMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sameer Pujar <spujar@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Joao Paulo Goncalves <joao.goncalves@toradex.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Jai Luthra <j-luthra@ti.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 259/301] ASoC: tegra: Fix DSPK 16-bit playback
-Date: Tue, 14 May 2024 12:18:50 +0200
-Message-ID: <20240514101042.035265138@linuxfoundation.org>
+Subject: [PATCH 6.6 260/301] ASoC: ti: davinci-mcasp: Fix race condition during probe
+Date: Tue, 14 May 2024 12:18:51 +0200
+Message-ID: <20240514101042.073127415@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,53 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sameer Pujar <spujar@nvidia.com>
+From: Joao Paulo Goncalves <joao.goncalves@toradex.com>
 
-commit 2e93a29b48a017c777d4fcbfcc51aba4e6a90d38 upstream.
+commit d18ca8635db2f88c17acbdf6412f26d4f6aff414 upstream.
 
-DSPK configuration is wrong for 16-bit playback and this happens because
-the client config is always fixed at 24-bit in hw_params(). Fix this by
-updating the client config to 16-bit for the respective playback.
+When using davinci-mcasp as CPU DAI with simple-card, there are some
+conditions that cause simple-card to finish registering a sound card before
+davinci-mcasp finishes registering all sound components. This creates a
+non-working sound card from userspace with no problem indication apart
+from not being able to play/record audio on a PCM stream. The issue
+arises during simultaneous probe execution of both drivers. Specifically,
+the simple-card driver, awaiting a CPU DAI, proceeds as soon as
+davinci-mcasp registers its DAI. However, this process can lead to the
+client mutex lock (client_mutex in soc-core.c) being held or davinci-mcasp
+being preempted before PCM DMA registration on davinci-mcasp finishes.
+This situation occurs when the probes of both drivers run concurrently.
+Below is the code path for this condition. To solve the issue, defer
+davinci-mcasp CPU DAI registration to the last step in the audio part of
+it. This way, simple-card CPU DAI parsing will be deferred until all
+audio components are registered.
 
-Fixes: 327ef6470266 ("ASoC: tegra: Add Tegra186 based DSPK driver")
+Fail Code Path:
+
+simple-card.c: probe starts
+simple-card.c: simple_dai_link_of: simple_parse_node(..,cpu,..) returns EPROBE_DEFER, no CPU DAI yet
+davinci-mcasp.c: probe starts
+davinci-mcasp.c: devm_snd_soc_register_component() register CPU DAI
+simple-card.c: probes again, finish CPU DAI parsing and call devm_snd_soc_register_card()
+simple-card.c: finish probe
+davinci-mcasp.c: *dma_pcm_platform_register() register PCM  DMA
+davinci-mcasp.c: probe finish
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Sameer Pujar <spujar@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://msgid.link/r/20240405104306.551036-1-spujar@nvidia.com
+Fixes: 9fbd58cf4ab0 ("ASoC: davinci-mcasp: Choose PCM driver based on configured DMA controller")
+Signed-off-by: Joao Paulo Goncalves <joao.goncalves@toradex.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Reviewed-by: Jai Luthra <j-luthra@ti.com>
+Link: https://lore.kernel.org/r/20240417184138.1104774-1-jpaulo.silvagoncalves@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/tegra/tegra186_dspk.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ sound/soc/ti/davinci-mcasp.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/sound/soc/tegra/tegra186_dspk.c
-+++ b/sound/soc/tegra/tegra186_dspk.c
-@@ -1,8 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
-+// SPDX-FileCopyrightText: Copyright (c) 2020-2024 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
- //
- // tegra186_dspk.c - Tegra186 DSPK driver
--//
--// Copyright (c) 2020 NVIDIA CORPORATION. All rights reserved.
+--- a/sound/soc/ti/davinci-mcasp.c
++++ b/sound/soc/ti/davinci-mcasp.c
+@@ -2418,12 +2418,6 @@ static int davinci_mcasp_probe(struct pl
  
- #include <linux/clk.h>
- #include <linux/device.h>
-@@ -241,14 +240,14 @@ static int tegra186_dspk_hw_params(struc
- 		return -EINVAL;
+ 	mcasp_reparent_fck(pdev);
+ 
+-	ret = devm_snd_soc_register_component(&pdev->dev, &davinci_mcasp_component,
+-					      &davinci_mcasp_dai[mcasp->op_mode], 1);
+-
+-	if (ret != 0)
+-		goto err;
+-
+ 	ret = davinci_mcasp_get_dma_type(mcasp);
+ 	switch (ret) {
+ 	case PCM_EDMA:
+@@ -2450,6 +2444,12 @@ static int davinci_mcasp_probe(struct pl
+ 		goto err;
  	}
  
--	cif_conf.client_bits = TEGRA_ACIF_BITS_24;
--
- 	switch (params_format(params)) {
- 	case SNDRV_PCM_FORMAT_S16_LE:
- 		cif_conf.audio_bits = TEGRA_ACIF_BITS_16;
-+		cif_conf.client_bits = TEGRA_ACIF_BITS_16;
- 		break;
- 	case SNDRV_PCM_FORMAT_S32_LE:
- 		cif_conf.audio_bits = TEGRA_ACIF_BITS_32;
-+		cif_conf.client_bits = TEGRA_ACIF_BITS_24;
- 		break;
- 	default:
- 		dev_err(dev, "unsupported format!\n");
++	ret = devm_snd_soc_register_component(&pdev->dev, &davinci_mcasp_component,
++					      &davinci_mcasp_dai[mcasp->op_mode], 1);
++
++	if (ret != 0)
++		goto err;
++
+ no_audio:
+ 	ret = davinci_mcasp_init_gpiochip(mcasp);
+ 	if (ret) {
 
 
