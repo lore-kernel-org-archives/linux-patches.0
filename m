@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8CD139593;
-	Tue, 14 May 2024 10:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A95A40862;
+	Tue, 14 May 2024 10:36:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682979; cv=none; b=QZWc4SLjbZgVYtYlZakn1GVLf1tZUFDasDmTZHvEds7jIN/uQZG3+5WprLf8VmOQJZqKDrFauU8DqSKbN6wiCLcpDUeuyPCILnRchCkG1fvUjHVSj6ZzlKrCDo+Ra+6PMX/2+KnZVVtmc6CUGXwsMuXFqlfh30rwlbzWcKmxsQs=
+	t=1715682984; cv=none; b=Auu4baaKj5GMFwL4UhfP9CEmAtG2MXjHPPcH0b/jleYjSQwzup47BWB7T/QzJfEm0x/p11QAEhG5cn0ZLPF+6Cwu0ELNXB1qfoyQgBN6dT19NFzMZ2fczrxXeTqaC63LUdfBDXfbr0rHwDZAP8aQgio/sopeR1XO4r0uB29eKVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682979; c=relaxed/simple;
-	bh=XlKKEZa1WCJlEQg0OGX0TLOdb+JkOga4InQvsIeVwcs=;
+	s=arc-20240116; t=1715682984; c=relaxed/simple;
+	bh=QsCA5Jg3PKIOl0K3D7jlE2tbEf9lrONGJS9Kofv6J4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hd6jYJYjA2ycaBkQ72FdRrtSLFCAB2M6mIEqO0K1FhifnY1GGFqC5JqplDiLG9/G+4R/aasXqiOYmu2+wwyz3BBUjcTqYM4aXqy2K09rgT6k7pK7DaguUSn1M1ZozkUhRQ3s7O5z1+KSIpoJFyWLu140HtRtWPnH535BTVwR3LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdYK5XlV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jukibyvmf/K/8EP9SHC1W5nGTWgYgEtq/U5o7xqGYSQY/ZoiN2CfKAQmM6tlq/txgcusZiUd8STWm0jcrhEIr6vVaJbky4Qo9HFi54AwOUMD9Ij4TsTShR58lGhZDaeAin/q7Lgxqhlg7ZupZdkcl3LUCQvFsjyLwGA87+mbDFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loAC7HZd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdYK5XlV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE47DC2BD10;
-	Tue, 14 May 2024 10:36:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loAC7HZd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54E7C2BD10;
+	Tue, 14 May 2024 10:36:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682979;
-	bh=XlKKEZa1WCJlEQg0OGX0TLOdb+JkOga4InQvsIeVwcs=;
+	s=korg; t=1715682984;
+	bh=QsCA5Jg3PKIOl0K3D7jlE2tbEf9lrONGJS9Kofv6J4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WdYK5XlVGdNky+zpfMVsXsHU0qMIPmbzJEMCChVjzPuv9gnNqqX3dNMnUV+/HkM+5
-	 GVjcLxF1eHdGE24PPOP0xbmvKyYrbzCmsVeaXzBJJ28CnT1FeLUC7dN/ZvLxIG3rBs
-	 5mdzJnelPDbIY1hM3tvm7XVrzz4G71hBzO3NTumA=
+	b=loAC7HZdwmSoeziQWFx9EqUfoOF8CODWLseeBouDLjBwOEBAn3S7i+tu5RfcDpRpU
+	 WO+raJpDi2NlCl12FZIJwp83DpUnvMVQ4LsCAi8DEdne6sdkGcm6+qd4GuK+z9UfjD
+	 KEVtLmKvyA7AiJhhunV3kKk6uGWrkVvX3gt1i7TA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangwu Zhang <guazhang@redhat.com>,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Boris Burkov <boris@bur.io>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 113/336] scsi: bnx2fc: Remove spin_lock_bh while releasing resources after upload
-Date: Tue, 14 May 2024 12:15:17 +0200
-Message-ID: <20240514101042.869931200@linuxfoundation.org>
+Subject: [PATCH 6.8 114/336] btrfs: return accurate error code on open failure in open_fs_devices()
+Date: Tue, 14 May 2024 12:15:18 +0200
+Message-ID: <20240514101042.907680969@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -47,120 +46,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Saurav Kashyap <skashyap@marvell.com>
+From: Anand Jain <anand.jain@oracle.com>
 
-[ Upstream commit c214ed2a4dda35b308b0b28eed804d7ae66401f9 ]
+[ Upstream commit 2f1aeab9fca1a5f583be1add175d1ee95c213cfa ]
 
-The session resources are used by FW and driver when session is offloaded,
-once session is uploaded these resources are not used. The lock is not
-required as these fields won't be used any longer. The offload and upload
-calls are sequential, hence lock is not required.
+When attempting to exclusive open a device which has no exclusive open
+permission, such as a physical device associated with the flakey dm
+device, the open operation will fail, resulting in a mount failure.
 
-This will suppress following BUG_ON():
+In this particular scenario, we erroneously return -EINVAL instead of the
+correct error code provided by the bdev_open_by_path() function, which is
+-EBUSY.
 
-[  449.843143] ------------[ cut here ]------------
-[  449.848302] kernel BUG at mm/vmalloc.c:2727!
-[  449.853072] invalid opcode: 0000 [#1] PREEMPT SMP PTI
-[  449.858712] CPU: 5 PID: 1996 Comm: kworker/u24:2 Not tainted 5.14.0-118.=
-el9.x86_64 #1
-Rebooting.
-[  449.867454] Hardware name: Dell Inc. PowerEdge R730/0WCJNT, BIOS 2.3.4 1=
-1/08/2016
-[  449.876966] Workqueue: fc_rport_eq fc_rport_work [libfc]
-[  449.882910] RIP: 0010:vunmap+0x2e/0x30
-[  449.887098] Code: 00 65 8b 05 14 a2 f0 4a a9 00 ff ff 00 75 1b 55 48 89 =
-fd e8 34 36 79 00 48 85 ed 74 0b 48 89 ef 31 f6 5d e9 14 fc ff ff 5d c3 <0f=
-> 0b 0f 1f 44 00 00 41 57 41 56 49 89 ce 41 55 49 89 fd 41 54 41
-[  449.908054] RSP: 0018:ffffb83d878b3d68 EFLAGS: 00010206
-[  449.913887] RAX: 0000000080000201 RBX: ffff8f4355133550 RCX: 000000000d4=
-00005
-[  449.921843] RDX: 0000000000000001 RSI: 0000000000001000 RDI: ffffb83da53=
-f5000
-[  449.929808] RBP: ffff8f4ac6675800 R08: ffffb83d878b3d30 R09: 00000000000=
-efbdf
-[  449.937774] R10: 0000000000000003 R11: ffff8f434573e000 R12: 00000000000=
-01000
-[  449.945736] R13: 0000000000001000 R14: ffffb83da53f5000 R15: ffff8f43d4e=
-a3ae0
-[  449.953701] FS:  0000000000000000(0000) GS:ffff8f529fc80000(0000) knlGS:=
-0000000000000000
-[  449.962732] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  449.969138] CR2: 00007f8cf993e150 CR3: 0000000efbe10003 CR4: 00000000003=
-706e0
-[  449.977102] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 00000000000=
-00000
-[  449.985065] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 00000000000=
-00400
-[  449.993028] Call Trace:
-[  449.995756]  __iommu_dma_free+0x96/0x100
-[  450.000139]  bnx2fc_free_session_resc+0x67/0x240 [bnx2fc]
-[  450.006171]  bnx2fc_upload_session+0xce/0x100 [bnx2fc]
-[  450.011910]  bnx2fc_rport_event_handler+0x9f/0x240 [bnx2fc]
-[  450.018136]  fc_rport_work+0x103/0x5b0 [libfc]
-[  450.023103]  process_one_work+0x1e8/0x3c0
-[  450.027581]  worker_thread+0x50/0x3b0
-[  450.031669]  ? rescuer_thread+0x370/0x370
-[  450.036143]  kthread+0x149/0x170
-[  450.039744]  ? set_kthread_struct+0x40/0x40
-[  450.044411]  ret_from_fork+0x22/0x30
-[  450.048404] Modules linked in: vfat msdos fat xfs nfs_layout_nfsv41_file=
-s rpcsec_gss_krb5 auth_rpcgss nfsv4 dns_resolver dm_service_time qedf qed c=
-rc8 bnx2fc libfcoe libfc scsi_transport_fc intel_rapl_msr intel_rapl_common=
- x86_pkg_temp_thermal intel_powerclamp dcdbas rapl intel_cstate intel_uncor=
-e mei_me pcspkr mei ipmi_ssif lpc_ich ipmi_si fuse zram ext4 mbcache jbd2 l=
-oop nfsv3 nfs_acl nfs lockd grace fscache netfs irdma ice sd_mod t10_pi sg =
-ib_uverbs ib_core 8021q garp mrp stp llc mgag200 i2c_algo_bit drm_kms_helpe=
-r syscopyarea sysfillrect sysimgblt mxm_wmi fb_sys_fops cec crct10dif_pclmu=
-l ahci crc32_pclmul bnx2x drm ghash_clmulni_intel libahci rfkill i40e libat=
-a megaraid_sas mdio wmi sunrpc lrw dm_crypt dm_round_robin dm_multipath dm_=
-snapshot dm_bufio dm_mirror dm_region_hash dm_log dm_zero dm_mod linear rai=
-d10 raid456 async_raid6_recov async_memcpy async_pq async_xor async_tx raid=
-6_pq libcrc32c crc32c_intel raid1 raid0 iscsi_ibft squashfs be2iscsi bnx2i =
-cnic uio cxgb4i cxgb4 tls
-[  450.048497]  libcxgbi libcxgb qla4xxx iscsi_boot_sysfs iscsi_tcp libiscs=
-i_tcp libiscsi scsi_transport_iscsi edd ipmi_devintf ipmi_msghandler
-[  450.159753] ---[ end trace 712de2c57c64abc8 ]---
+Fix this, by returning error code from the bdev_open_by_path() function.
+With this correction, the mount error message will align with that of
+ext4 and xfs.
 
-Reported-by: Guangwu Zhang <guazhang@redhat.com>
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240315071427.31842-1-skashyap@marvell.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Anand Jain <anand.jain@oracle.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/bnx2fc/bnx2fc_tgt.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/btrfs/volumes.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/bnx2fc/bnx2fc_tgt.c b/drivers/scsi/bnx2fc/bnx2fc_=
-tgt.c
-index 2c246e80c1c4d..d91659811eb3c 100644
---- a/drivers/scsi/bnx2fc/bnx2fc_tgt.c
-+++ b/drivers/scsi/bnx2fc/bnx2fc_tgt.c
-@@ -833,7 +833,6 @@ static void bnx2fc_free_session_resc(struct bnx2fc_hba =
-*hba,
-=20
- 	BNX2FC_TGT_DBG(tgt, "Freeing up session resources\n");
-=20
--	spin_lock_bh(&tgt->cq_lock);
- 	ctx_base_ptr =3D tgt->ctx_base;
- 	tgt->ctx_base =3D NULL;
-=20
-@@ -889,7 +888,6 @@ static void bnx2fc_free_session_resc(struct bnx2fc_hba =
-*hba,
- 				    tgt->sq, tgt->sq_dma);
- 		tgt->sq =3D NULL;
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index f3890f7c78076..cc3142d130be2 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -1182,23 +1182,30 @@ static int open_fs_devices(struct btrfs_fs_devices *fs_devices,
+ 	struct btrfs_device *device;
+ 	struct btrfs_device *latest_dev = NULL;
+ 	struct btrfs_device *tmp_device;
++	int ret = 0;
+ 
+ 	list_for_each_entry_safe(device, tmp_device, &fs_devices->devices,
+ 				 dev_list) {
+-		int ret;
++		int ret2;
+ 
+-		ret = btrfs_open_one_device(fs_devices, device, flags, holder);
+-		if (ret == 0 &&
++		ret2 = btrfs_open_one_device(fs_devices, device, flags, holder);
++		if (ret2 == 0 &&
+ 		    (!latest_dev || device->generation > latest_dev->generation)) {
+ 			latest_dev = device;
+-		} else if (ret == -ENODATA) {
++		} else if (ret2 == -ENODATA) {
+ 			fs_devices->num_devices--;
+ 			list_del(&device->dev_list);
+ 			btrfs_free_device(device);
+ 		}
++		if (ret == 0 && ret2 != 0)
++			ret = ret2;
  	}
--	spin_unlock_bh(&tgt->cq_lock);
-=20
- 	if (ctx_base_ptr)
- 		iounmap(ctx_base_ptr);
---=20
+-	if (fs_devices->open_devices == 0)
++
++	if (fs_devices->open_devices == 0) {
++		if (ret)
++			return ret;
+ 		return -EINVAL;
++	}
+ 
+ 	fs_devices->opened = 1;
+ 	fs_devices->latest_dev = latest_dev;
+-- 
 2.43.0
 
 
