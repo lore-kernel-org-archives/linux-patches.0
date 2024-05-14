@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06ED74F1E5;
-	Tue, 14 May 2024 11:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B004F1E5;
+	Tue, 14 May 2024 11:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686032; cv=none; b=gPSh+K2jpYyPnwWuK5HRlmS62b8y2+9zS9KyUNAz4f7N7hc7mP9vUDXIaZL5w3GXmRqJqhwk+bjn1XRry6wgGBMaspzXpmbGac/L1ZeeskUTHzDoZBWld+JfOlYEQqYDcFKD/XUGmUQRBZ2LYY4NE+v6vKmjBv22a4kk8AdR4Os=
+	t=1715686036; cv=none; b=kRC2xd59aqM+SBHmTcFbJSKBKOMBd9mlKz3V/v7x9G73JhpZwze2+tEKIPQcP3k7CzKaMfNZzrNOdY8UVh5iIh2rlfdVZVx8XzuUujA1nn3fj5w3LWLo+GBT+4d1sDL1AyGkuApyzO8EX0CBu4UqS2IPosy/gzBjdmqYanE489g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686032; c=relaxed/simple;
-	bh=Gc77fxOEn/Xpcbn66dOazfu4dQEVEQk2kIYjW0dXgtM=;
+	s=arc-20240116; t=1715686036; c=relaxed/simple;
+	bh=mIEpkkY3fsKb9mL8uDhkEruO5gEVn/1RwIz+PDKz3k0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZOkL9tnYL5H3911fY2uIjoJm0bRD6U6vdY6UK/GRjO4j4qUS90vD/Pni5uuPw5IbjtKAiz9v2k9KNg5HUWI/HqyDb5GiUsQcKNjWT88Zxu+1I3+wmjpcf+wafVD7RtstHN1q4l5zYqAUDSvg9sfSxS23axK0vyLQHDk0c25XcCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpGz+vCO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eXy4Y5q8/KeoDlPuSBAio/Xtu3N/pGx5OvbBVjEcaaVAJf6Glqa6WDGk8FuATtA119r3oac2XZEaLUmT69ZU4ncuKMHpreR0d8CeLAG9qzfBxeKQWcj4RRSISv20eJsHcEWZhX1HhcMGP4WFLLYnIyIV+vQ9bBupzucunqixaxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOI0X34R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpGz+vCO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66434C2BD10;
-	Tue, 14 May 2024 11:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOI0X34R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5FBC2BD10;
+	Tue, 14 May 2024 11:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686031;
-	bh=Gc77fxOEn/Xpcbn66dOazfu4dQEVEQk2kIYjW0dXgtM=;
+	s=korg; t=1715686036;
+	bh=mIEpkkY3fsKb9mL8uDhkEruO5gEVn/1RwIz+PDKz3k0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpGz+vCOZfqZ//2bUrTUyoU522hEpF2B/9sxNd5WdWkfNeugiVvtRd0qDySjkx8hj
-	 vh4vtLYA9iAbjSKv0cWZnmnofGMuMrID08fgwr9HJosdxM+nsfHzR3PAmhUJx+B37q
-	 LInurUF4faSGxz2fTfjmGMqqd9RurIIPVagn2k6U=
+	b=vOI0X34R5H43q3+flmH3LV0lZXA+IqI6FFQs4JIKTJ+uRAMtVY+6vZyHk0451NTjI
+	 WhF1rhs37v7yQUnYSIh9VK95y0vCCGOxcvplErnLHXpODw4SAjIVREpCRP0etHjt0y
+	 5E3aNFRbTTFjECUZm4Hvh2lf2yFSo2WncFfpS8L8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>
-Subject: [PATCH 6.6 270/301] drm/vmwgfx: Fix Legacy Display Unit
-Date: Tue, 14 May 2024 12:19:01 +0200
-Message-ID: <20240514101042.457825780@linuxfoundation.org>
+	Zack Rusin <zack.rusin@broadcom.com>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
+	Martin Krastev <martin.krastev@broadcom.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.6 271/301] drm/vmwgfx: Fix invalid reads in fence signaled events
+Date: Tue, 14 May 2024 12:19:02 +0200
+Message-ID: <20240514101042.497048157@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -50,40 +57,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit 782e5e7925880f737963444f141a0320a12104a5 upstream.
+commit a37ef7613c00f2d72c8fc08bd83fb6cc76926c8c upstream.
 
-Legacy DU was broken by the referenced fixes commit because the placement
-and the busy_placement no longer pointed to the same object. This was later
-fixed indirectly by commit a78a8da51b36c7a0c0c16233f91d60aac03a5a49
-("drm/ttm: replace busy placement with flags v6") in v6.9.
+Correctly set the length of the drm_event to the size of the structure
+that's actually used.
 
-Fixes: 39985eea5a6d ("drm/vmwgfx: Abstract placement selection")
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Cc: <stable@vger.kernel.org> # v6.4+
-Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
+The length of the drm_event was set to the parent structure instead of
+to the drm_vmw_event_fence which is supposed to be read. drm_read
+uses the length parameter to copy the event to the user space thus
+resuling in oob reads.
+
 Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240425200700.24403-1-ian.forbes@broadcom.com
+Fixes: 8b7de6aa8468 ("vmwgfx: Rework fence event action")
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-23566
+Cc: David Airlie <airlied@gmail.com>
+CC: Daniel Vetter <daniel@ffwll.ch>
+Cc: Zack Rusin <zack.rusin@broadcom.com>
+Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+Cc: <stable@vger.kernel.org> # v3.4+
+Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240425192748.1761522-1-zack.rusin@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_bo.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/vmwgfx/vmwgfx_fence.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
-index e5eb21a471a6..00144632c600 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
-@@ -204,6 +204,7 @@ int vmw_bo_pin_in_start_of_vram(struct vmw_private *dev_priv,
- 			     VMW_BO_DOMAIN_VRAM,
- 			     VMW_BO_DOMAIN_VRAM);
- 	buf->places[0].lpfn = PFN_UP(bo->resource->size);
-+	buf->busy_places[0].lpfn = PFN_UP(bo->resource->size);
- 	ret = ttm_bo_validate(bo, &buf->placement, &ctx);
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
+@@ -991,7 +991,7 @@ static int vmw_event_fence_action_create
+ 	}
  
- 	/* For some reason we didn't end up at the start of vram */
--- 
-2.45.0
-
+ 	event->event.base.type = DRM_VMW_EVENT_FENCE_SIGNALED;
+-	event->event.base.length = sizeof(*event);
++	event->event.base.length = sizeof(event->event);
+ 	event->event.user_data = user_data;
+ 
+ 	ret = drm_event_reserve_init(dev, file_priv, &event->base, &event->event.base);
 
 
