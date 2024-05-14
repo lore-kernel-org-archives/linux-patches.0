@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414A8200BF;
-	Tue, 14 May 2024 11:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363C3200BF;
+	Tue, 14 May 2024 11:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685618; cv=none; b=SFIxYGPrvAl0/BXGGeA3jLFAHDldSCy371HYNdITOO8zWZl7AhINc8S8QMyjKaiw/UEcLy/dxNtsszPPzfDBOUMl0CI1pS+Rt7VhWnPwDiUpTjygA202evUxhLGqj3MJu9X4a/0RieIBOHtOwrbWiIFXEnpwyFefB+ujj0NumEs=
+	t=1715685622; cv=none; b=CtvhAvRn+ji/Y+rmHb32O5+SlMPgKaHsV+iyfaMeDvCeLlDT30EzR+CYMWEiiBCAUJRywQOAtL5Z425+as50YQdESsFtps+mVAHAWWf/2/yAVICxowwffRfAK/DAUx7FCGCz+DzILT62rj3cBv04LfRfVrdC5BixeADsWaAtv0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685618; c=relaxed/simple;
-	bh=2aalL5PO078epPbrWjOcIAyLVsHJ7+ZTeyh01WPbAXM=;
+	s=arc-20240116; t=1715685622; c=relaxed/simple;
+	bh=Aera5R3XySLQQuWdWA4Hji31/txw+nulivJ8wrX0nWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OqndjrOs85Z20LDXFI0NNo3qL93di+DkM38WtpMwLlBYm9cebo3XKALRq6Wkr3oNMf+MsG6ya/Gbi7FHAO5LPqDxrcwX0gSqGFON6lMYUaHrg23aIZi9AEqIICJLtNGoKiRYLgVuCZepNWqnek3Cz4EeTM7yyhufKwBvozFp5fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/KPkE5n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KMt4hzozfDl31bM2PwMaxqG5amvJxEyzHC2rHVoGkcuDB2zLopBDlcMRFsnDK7b3Bym8qFBjh+OFT+w5PtTX015pjd0A2Yy77nXLV1csfqxt1Dux5VDR11z2u/9b4U+1a3bR4dp8yS8EBV/lsyoC8TbAC1qTRdWpjtXzICAokfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnikjTyA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/KPkE5n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CF2C2BD10;
-	Tue, 14 May 2024 11:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnikjTyA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50582C2BD10;
+	Tue, 14 May 2024 11:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685618;
-	bh=2aalL5PO078epPbrWjOcIAyLVsHJ7+ZTeyh01WPbAXM=;
+	s=korg; t=1715685621;
+	bh=Aera5R3XySLQQuWdWA4Hji31/txw+nulivJ8wrX0nWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/KPkE5nVddQOaCQkT1D7qT/+kBvM1WpL4XrPd90ZWMz7qQN7oSNHrq9bkSrE7Uyh
-	 3ee4Q11q/EPqlFtSC8Zg+2MikDqhZ514xvHOwx1qKTHjx/Sw5oHb7zSN5wOvHlppQH
-	 1fze5b/rpO6yuoSfdwlzVMvTk6UwiUybM21rCJnQ=
+	b=dnikjTyA+a7Vogs9RvZMI+yaiGY8mtmMS2Vw3v99rDIFSg7/+ZT5ysKqyGgX7z9um
+	 ONam/Yt4O1zeP2fV+GsjxFOxlPL/sH2LsU3ltGODWiYTi4BgNEkUSQ5ZyrQkrZNvmo
+	 3g51EwkKr9/lSCC5YcnoRwcHTbdutTLmoXPXKOEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <Tim.Huang@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Zhongqiu Han <quic_zhonhan@quicinc.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 215/301] dm/amd/pm: Fix problems with reboot/shutdown for some SMU 13.0.4/13.0.11 users
-Date: Tue, 14 May 2024 12:18:06 +0200
-Message-ID: <20240514101040.377447886@linuxfoundation.org>
+Subject: [PATCH 6.6 216/301] gpiolib: cdev: Fix use after free in lineinfo_changed_notify
+Date: Tue, 14 May 2024 12:18:07 +0200
+Message-ID: <20240514101040.414818396@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -52,37 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Zhongqiu Han <quic_zhonhan@quicinc.com>
 
-[ Upstream commit cd94d1b182d2986378550c9087571991bfee01d4 ]
+[ Upstream commit 02f6b0e1ec7e0e7d059dddc893645816552039da ]
 
-Limit the workaround introduced by commit 31729e8c21ec ("drm/amd/pm: fixes
-a random hang in S4 for SMU v13.0.4/11") to only run in the s4 path.
+The use-after-free issue occurs as follows: when the GPIO chip device file
+is being closed by invoking gpio_chrdev_release(), watched_lines is freed
+by bitmap_free(), but the unregistration of lineinfo_changed_nb notifier
+chain failed due to waiting write rwsem. Additionally, one of the GPIO
+chip's lines is also in the release process and holds the notifier chain's
+read rwsem. Consequently, a race condition leads to the use-after-free of
+watched_lines.
 
-Cc: Tim Huang <Tim.Huang@amd.com>
-Fixes: 31729e8c21ec ("drm/amd/pm: fixes a random hang in S4 for SMU v13.0.4/11")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3351
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Here is the typical stack when issue happened:
+
+[free]
+gpio_chrdev_release()
+  --> bitmap_free(cdev->watched_lines)                  <-- freed
+  --> blocking_notifier_chain_unregister()
+    --> down_write(&nh->rwsem)                          <-- waiting rwsem
+          --> __down_write_common()
+            --> rwsem_down_write_slowpath()
+                  --> schedule_preempt_disabled()
+                    --> schedule()
+
+[use]
+st54spi_gpio_dev_release()
+  --> gpio_free()
+    --> gpiod_free()
+      --> gpiod_free_commit()
+        --> gpiod_line_state_notify()
+          --> blocking_notifier_call_chain()
+            --> down_read(&nh->rwsem);                  <-- held rwsem
+            --> notifier_call_chain()
+              --> lineinfo_changed_notify()
+                --> test_bit(xxxx, cdev->watched_lines) <-- use after free
+
+The side effect of the use-after-free issue is that a GPIO line event is
+being generated for userspace where it shouldn't. However, since the chrdev
+is being closed, userspace won't have the chance to read that event anyway.
+
+To fix the issue, call the bitmap_free() function after the unregistration
+of lineinfo_changed_nb notifier chain.
+
+Fixes: 51c1064e82e7 ("gpiolib: add new ioctl() for monitoring changes in line info")
+Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
+Link: https://lore.kernel.org/r/20240505141156.2944912-1-quic_zhonhan@quicinc.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c | 2 +-
+ drivers/gpio/gpiolib-cdev.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
-index 1d1917e1b63f4..cd674ef5adb19 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
-@@ -226,7 +226,7 @@ static int smu_v13_0_4_system_features_control(struct smu_context *smu, bool en)
- 	struct amdgpu_device *adev = smu->adev;
- 	int ret = 0;
+diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
+index 84125e55de101..ebf5b8ef3b5dc 100644
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -2816,11 +2816,11 @@ static int gpio_chrdev_release(struct inode *inode, struct file *file)
+ 	struct gpio_chardev_data *cdev = file->private_data;
+ 	struct gpio_device *gdev = cdev->gdev;
  
--	if (!en && !adev->in_s0ix) {
-+	if (!en && adev->in_s4) {
- 		/* Adds a GFX reset as workaround just before sending the
- 		 * MP1_UNLOAD message to prevent GC/RLC/PMFW from entering
- 		 * an invalid state.
+-	bitmap_free(cdev->watched_lines);
+ 	blocking_notifier_chain_unregister(&gdev->device_notifier,
+ 					   &cdev->device_unregistered_nb);
+ 	blocking_notifier_chain_unregister(&gdev->line_state_notifier,
+ 					   &cdev->lineinfo_changed_nb);
++	bitmap_free(cdev->watched_lines);
+ 	gpio_device_put(gdev);
+ 	kfree(cdev);
+ 
 -- 
 2.43.0
 
