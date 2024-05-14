@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483D4320F;
-	Tue, 14 May 2024 10:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37D17B3E5;
+	Tue, 14 May 2024 10:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684311; cv=none; b=TVTWuh40tDSpZYjSQIANHhoQwl0Kmn7UOU2kVlp2xtAOXKMlehcz+BGC98cnoMwn8yssr8LCndj5NxyG12t7d3puUaW9V61mae19vwHiRhZr06JwXpapfbFaorRm0UwHm2624JDnF4i/liuu9+L7XSibb/B3l98YZZSJKirL0Uo=
+	t=1715684320; cv=none; b=X/ZIP31P/M8UEBf20EKBfw3XaAzSFCOeFt5Ak82lY3F6sSwkqd+RQKsTb+K924rEFcwjS7szZtFhqeEqAdBY9399zxVLI0MteyCaUUcuB6V02gSzVcNJyt0AcvfEw7nB/Rh+JlhUGzFjuvkwGFU98VQnGESXlQ0wDR2gOzkRzxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684311; c=relaxed/simple;
-	bh=eP1Nqcn31fPYr5tWlhCIARhg5nBKZivf1AUbhrVuj7E=;
+	s=arc-20240116; t=1715684320; c=relaxed/simple;
+	bh=PO3kM1xeeqlL8jrxv22/Xyn6bZc29w85Xmsu/V7kTP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aRAUefpNCzvz/DlSQiinUb+EkGhZqpQ69osVkk0njQfcFpFw4zDwmp58dbSPgiNG1GOCtPGwXyAhYgpeV6JUqNcMexJOln1VmErPlgbzb60cfdhWTo1VWUmjkCD+vlNNexZ45XkfdukEfEZtRx9+12/g6mIE3yabC7cjurtjT8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vBDVcS/a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ACdExYKjRBGytQoUCbsLC7pPv65wDSgxNR80ymvLNUkSoPYQSN+B4lDAuMeGCX44j/TM8I5pj39ZqchbDt/jD5vS08o63dadKylJ52hEDlWsrUNpKhpxS2cWCzj3tnjIflaPgWvXZXXK+qMXgJvAHZq+99ol/HTMFVWXW4i83hU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2m3tOG7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vBDVcS/a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638C5C2BD10;
-	Tue, 14 May 2024 10:58:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2m3tOG7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D921BC2BD10;
+	Tue, 14 May 2024 10:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684311;
-	bh=eP1Nqcn31fPYr5tWlhCIARhg5nBKZivf1AUbhrVuj7E=;
+	s=korg; t=1715684319;
+	bh=PO3kM1xeeqlL8jrxv22/Xyn6bZc29w85Xmsu/V7kTP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vBDVcS/a71NENT6+N+uK1eKID/wi07CHVetoElBwx2Q5REAfB7VtwBFUr6fGUH+l/
-	 K7Pfn+KfT/noeQcW8wNTLaJZtLiAuDtbpdVX50R54gZKIJzdFleQhTJBc9j8YJnRhy
-	 TvAutA9x/j4zUT/p8TkwZsf3H4q757TDRiXyGiZU=
+	b=S2m3tOG7miBfb2Hcl0yDtAh+g4OKzQrc4xBVZEKiARnCyHwaDXM/izqO60eEfC61d
+	 wY9FcJvid6xw7DVqliH1xfc4nr71DskXofty7zxtN5MEHD5InqJV7ZdwxcDv0m/mMn
+	 tp5mI7JsGtm/6syh4NQQULBF9NlVgKzmYvq6zmYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/301] power: rt9455: hide unused rt9455_boost_voltage_values
-Date: Tue, 14 May 2024 12:14:53 +0200
-Message-ID: <20240514101033.083534343@linuxfoundation.org>
+Subject: [PATCH 6.6 023/301] power: supply: mt6360_charger: Fix of_match for usb-otg-vbus regulator
+Date: Tue, 14 May 2024 12:14:54 +0200
+Message-ID: <20240514101033.120955883@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,46 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 452d8950db3e839aba1bb13bc5378f4bac11fa04 ]
+[ Upstream commit 1e0fb113646182e073539db96016b00cfeb18ecc ]
 
-The rt9455_boost_voltage_values[] array is only used when USB PHY
-support is enabled, causing a W=1 warning otherwise:
+The of_match shall correspond to the name of the regulator subnode,
+or the deprecated `regulator-compatible` property must be used:
+failing to do so, the regulator won't probe (and the driver will
+as well not probe).
 
-drivers/power/supply/rt9455_charger.c:200:18: error: 'rt9455_boost_voltage_values' defined but not used [-Werror=unused-const-variable=]
+Since the devicetree binding for this driver is actually correct
+and wants DTs to use the "usb-otg-vbus-regulator" subnode name,
+fix this driver by aligning the `of_match` string to what the DT
+binding wants.
 
-Enclose the definition in the same #ifdef as the references to it.
-
-Fixes: e86d69dd786e ("power_supply: Add support for Richtek RT9455 battery charger")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20240403080702.3509288-10-arnd@kernel.org
+Fixes: 0402e8ebb8b8 ("power: supply: mt6360_charger: add MT6360 charger support")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://lore.kernel.org/r/20240410084405.1389378-1-angelogioacchino.delregno@collabora.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/rt9455_charger.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/power/supply/mt6360_charger.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/rt9455_charger.c b/drivers/power/supply/rt9455_charger.c
-index c345a77f9f78c..e4dbacd50a437 100644
---- a/drivers/power/supply/rt9455_charger.c
-+++ b/drivers/power/supply/rt9455_charger.c
-@@ -192,6 +192,7 @@ static const int rt9455_voreg_values[] = {
- 	4450000, 4450000, 4450000, 4450000, 4450000, 4450000, 4450000, 4450000
+diff --git a/drivers/power/supply/mt6360_charger.c b/drivers/power/supply/mt6360_charger.c
+index 1305cba61edd4..aca123783efcc 100644
+--- a/drivers/power/supply/mt6360_charger.c
++++ b/drivers/power/supply/mt6360_charger.c
+@@ -588,7 +588,7 @@ static const struct regulator_ops mt6360_chg_otg_ops = {
  };
  
-+#if IS_ENABLED(CONFIG_USB_PHY)
- /*
-  * When the charger is in boost mode, REG02[7:2] represent boost output
-  * voltage.
-@@ -207,6 +208,7 @@ static const int rt9455_boost_voltage_values[] = {
- 	5600000, 5600000, 5600000, 5600000, 5600000, 5600000, 5600000, 5600000,
- 	5600000, 5600000, 5600000, 5600000, 5600000, 5600000, 5600000, 5600000,
- };
-+#endif
- 
- /* REG07[3:0] (VMREG) in uV */
- static const int rt9455_vmreg_values[] = {
+ static const struct regulator_desc mt6360_otg_rdesc = {
+-	.of_match = "usb-otg-vbus",
++	.of_match = "usb-otg-vbus-regulator",
+ 	.name = "usb-otg-vbus",
+ 	.ops = &mt6360_chg_otg_ops,
+ 	.owner = THIS_MODULE,
 -- 
 2.43.0
 
