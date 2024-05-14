@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD7153E30;
-	Tue, 14 May 2024 10:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F80553E30;
+	Tue, 14 May 2024 10:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682089; cv=none; b=p8RF9ve1lFxr+RhRkEtGxAM8OLOj4BvsW4L3QnITG3E3V/JiDQUImdh0KCueJyun0i7I1DM+mRWy/icVJPFsMadhDl6WM+8Kj0XVZ1u6QNKPXQ5ZNV36krRLHFHEbPG/M+kZgiBWsBZqwBhTODQeuM6ilB4x7FqCI8DInM9DSTQ=
+	t=1715682093; cv=none; b=tjWiTQkb28lOwChZixkP/fVv6pSqe9Bma6Let0QgFH5sMbxGsQPKej1TydCeIYcLaJo9dgGDd5N/9qNU19dnSyDrf5dc4D8vrp9ToBL2J9R327FWhYD6xAv1gHtwCyK+1zRLZeT9ya/iEfnsDFcUTnU5mq/DtNDUfU2IS6WTyzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682089; c=relaxed/simple;
-	bh=wXNXwpv0itlC/W6jxF4WpQTfl5RLEM/29kiMjM19xwc=;
+	s=arc-20240116; t=1715682093; c=relaxed/simple;
+	bh=dDkcPsTihp9v1yoQ8e/aG+6kOyS49S4xlMaMGjHs9vY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t5xRZFm4PIixoAgafSphhWNulJpsxVoApvYa3rfiTGEOy5LXkVFLZ32k238/yAwmcVCGGRb4Ah58VuubbvSyDPB5LtC4wIGPxcyHYU6YUrtkD2Ngtw/xq6U0SEE0SF4Q8UVqRDb4iJ6W1uN4gKfb8qx+5S8HrGPtuzLtWPyDywI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6YEzhBt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MMZfk/vGuHaxgXHCSIMkLg99Ll8rfpzMQTnUWseLqTegeksZh3y2q/sF+AZOuANvYKizldcp0CKSmGugS3PosSWooF3KL7qOW659z1qxQGxv/9Lar0H40glRmKeaTl7DQeds34MCdsDRA7+LkMuUXPjGma4eTYAM2oBWDUGbSiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTDRuydH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6YEzhBt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454D8C2BD10;
-	Tue, 14 May 2024 10:21:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTDRuydH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE93C2BD10;
+	Tue, 14 May 2024 10:21:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682088;
-	bh=wXNXwpv0itlC/W6jxF4WpQTfl5RLEM/29kiMjM19xwc=;
+	s=korg; t=1715682093;
+	bh=dDkcPsTihp9v1yoQ8e/aG+6kOyS49S4xlMaMGjHs9vY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H6YEzhBtvX6VuVblHncHqJZ210vFKO0ImWTz3aBDoo7ZvkuevmE7379pTzTqNXOnk
-	 akGaIiJbi/JPfMMP0a92gOCuJyBvfUrBVWzwtLAzrdzjS1zGBGmta3Gjgykam41kQN
-	 PDGbGnUs8z2DddYPjJbKX+rxBnn4tgnoDXtHC0mk=
+	b=tTDRuydHFIu2WtWU2GlaQzYKfrUlxsQ2SU1gMj+D10m1x1DX71oZ7nQPpxr6LBMuU
+	 1rdGsjTZ7JJZwAD1y75E7tIASu9VRNPgFIqjIzLSut2UQ4WrulP8zvA7JriuaCvkuV
+	 M6enuqF4BqcWUKsAc2KaUN1ayK8HqW295f8M+vwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bertschinger <tahbertschinger@gmail.com>,
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Alice Ryhl <aliceryhl@google.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Wedson Almeida Filho <walmeida@microsoft.com>,
 	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 001/336] rust: module: place generated init_module() function in .init.text
-Date: Tue, 14 May 2024 12:13:25 +0200
-Message-ID: <20240514101038.654322268@linuxfoundation.org>
+Subject: [PATCH 6.8 002/336] rust: macros: fix soundness issue in `module!` macro
+Date: Tue, 14 May 2024 12:13:26 +0200
+Message-ID: <20240514101038.691740459@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -47,78 +47,268 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Bertschinger <tahbertschinger@gmail.com>
+From: Benno Lossin <benno.lossin@proton.me>
 
-[ Upstream commit 1b6170ff7a203a5e8354f19b7839fe8b897a9c0d ]
+[ Upstream commit 7044dcff8301b29269016ebd17df27c4736140d2 ]
 
-Currently Rust kernel modules have their init code placed in the `.text`
-section of the .ko file. I don't think this causes any real problems
-for Rust modules as long as all code called during initialization lives
-in `.text`.
+The `module!` macro creates glue code that are called by C to initialize
+the Rust modules using the `Module::init` function. Part of this glue
+code are the local functions `__init` and `__exit` that are used to
+initialize/destroy the Rust module.
 
-However, if a Rust `init_module()` function (that lives in `.text`)
-calls a function marked with `__init` (in C) or
-`#[link_section = ".init.text"]` (in Rust), then a warning is
-generated by modpost because that function lives in `.init.text`.
-For example:
+These functions are safe and also visible to the Rust mod in which the
+`module!` macro is invoked. This means that they can be called by other
+safe Rust code. But since they contain `unsafe` blocks that rely on only
+being called at the right time, this is a soundness issue.
 
-WARNING: modpost: fs/bcachefs/bcachefs: section mismatch in reference: init_module+0x6 (section: .text) -> _RNvXCsj7d3tFpT5JS_15bcachefs_moduleNtB2_8BcachefsNtCsjDtqRIL3JAG_6kernel6Module4init (section: .init.text)
+Wrap these generated functions inside of two private modules, this
+guarantees that the public functions cannot be called from the outside.
+Make the safe functions `unsafe` and add SAFETY comments.
 
-I ran into this while experimenting with converting the bcachefs kernel
-module from C to Rust. The module's `init()`, written in Rust, calls C
-functions like `bch2_vfs_init()` which are placed in `.init.text`.
-
-This patch places the macro-generated `init_module()` Rust function in
-the `.init.text` section. It also marks `init_module()` as unsafe--now
-it may not be called after module initialization completes because it
-may be freed already.
-
-Note that this is not enough on its own to actually get all the module
-initialization code in that section. The module author must still add
-the `#[link_section = ".init.text"]` attribute to the Rust `init()` in
-the `impl kernel::Module` block in order to then call `__init`
-functions. However, this patch enables module authors do so, when
-previously it would not be possible (without warnings).
-
-Signed-off-by: Thomas Bertschinger <tahbertschinger@gmail.com>
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20240206153806.567055-1-tahbertschinger@gmail.com
-[ Reworded title to add prefix. ]
+Cc: stable@vger.kernel.org
+Reported-by: Björn Roy Baron <bjorn3_gh@protonmail.com>
+Closes: https://github.com/Rust-for-Linux/linux/issues/629
+Fixes: 1fbde52bde73 ("rust: add `macros` crate")
+Signed-off-by: Benno Lossin <benno.lossin@proton.me>
+Reviewed-by: Wedson Almeida Filho <walmeida@microsoft.com>
+Link: https://lore.kernel.org/r/20240401185222.12015-1-benno.lossin@proton.me
+[ Moved `THIS_MODULE` out of the private-in-private modules since it
+  should remain public, as Dirk Behme noticed [1]. Capitalized comments,
+  avoided newline in non-list SAFETY comments and reworded to add
+  Reported-by and newline. ]
+Link: https://rust-for-linux.zulipchat.com/#narrow/stream/291565-Help/topic/x/near/433512583 [1]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Stable-dep-of: 7044dcff8301 ("rust: macros: fix soundness issue in `module!` macro")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/macros/module.rs | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ rust/macros/module.rs | 190 +++++++++++++++++++++++++-----------------
+ 1 file changed, 115 insertions(+), 75 deletions(-)
 
 diff --git a/rust/macros/module.rs b/rust/macros/module.rs
-index d62d8710d77ab..27979e582e4b9 100644
+index 27979e582e4b9..acd0393b50957 100644
 --- a/rust/macros/module.rs
 +++ b/rust/macros/module.rs
-@@ -222,10 +222,15 @@ pub(crate) fn module(ts: TokenStream) -> TokenStream {
+@@ -199,17 +199,6 @@ pub(crate) fn module(ts: TokenStream) -> TokenStream {
+             /// Used by the printing macros, e.g. [`info!`].
+             const __LOG_PREFIX: &[u8] = b\"{name}\\0\";
+ 
+-            /// The \"Rust loadable module\" mark.
+-            //
+-            // This may be best done another way later on, e.g. as a new modinfo
+-            // key or a new section. For the moment, keep it simple.
+-            #[cfg(MODULE)]
+-            #[doc(hidden)]
+-            #[used]
+-            static __IS_RUST_MODULE: () = ();
+-
+-            static mut __MOD: Option<{type_}> = None;
+-
+             // SAFETY: `__this_module` is constructed by the kernel at load time and will not be
+             // freed until the module is unloaded.
+             #[cfg(MODULE)]
+@@ -221,81 +210,132 @@ pub(crate) fn module(ts: TokenStream) -> TokenStream {
+                 kernel::ThisModule::from_ptr(core::ptr::null_mut())
              }};
  
-             // Loadable modules need to export the `{{init,cleanup}}_module` identifiers.
-+            /// # Safety
-+            ///
-+            /// This function must not be called after module initialization, because it may be
-+            /// freed after that completes.
-             #[cfg(MODULE)]
-             #[doc(hidden)]
-             #[no_mangle]
--            pub extern \"C\" fn init_module() -> core::ffi::c_int {{
-+            #[link_section = \".init.text\"]
-+            pub unsafe extern \"C\" fn init_module() -> core::ffi::c_int {{
-                 __init()
-             }}
+-            // Loadable modules need to export the `{{init,cleanup}}_module` identifiers.
+-            /// # Safety
+-            ///
+-            /// This function must not be called after module initialization, because it may be
+-            /// freed after that completes.
+-            #[cfg(MODULE)]
+-            #[doc(hidden)]
+-            #[no_mangle]
+-            #[link_section = \".init.text\"]
+-            pub unsafe extern \"C\" fn init_module() -> core::ffi::c_int {{
+-                __init()
+-            }}
+-
+-            #[cfg(MODULE)]
+-            #[doc(hidden)]
+-            #[no_mangle]
+-            pub extern \"C\" fn cleanup_module() {{
+-                __exit()
+-            }}
++            // Double nested modules, since then nobody can access the public items inside.
++            mod __module_init {{
++                mod __module_init {{
++                    use super::super::{type_};
++
++                    /// The \"Rust loadable module\" mark.
++                    //
++                    // This may be best done another way later on, e.g. as a new modinfo
++                    // key or a new section. For the moment, keep it simple.
++                    #[cfg(MODULE)]
++                    #[doc(hidden)]
++                    #[used]
++                    static __IS_RUST_MODULE: () = ();
++
++                    static mut __MOD: Option<{type_}> = None;
++
++                    // Loadable modules need to export the `{{init,cleanup}}_module` identifiers.
++                    /// # Safety
++                    ///
++                    /// This function must not be called after module initialization, because it may be
++                    /// freed after that completes.
++                    #[cfg(MODULE)]
++                    #[doc(hidden)]
++                    #[no_mangle]
++                    #[link_section = \".init.text\"]
++                    pub unsafe extern \"C\" fn init_module() -> core::ffi::c_int {{
++                        // SAFETY: This function is inaccessible to the outside due to the double
++                        // module wrapping it. It is called exactly once by the C side via its
++                        // unique name.
++                        unsafe {{ __init() }}
++                    }}
  
+-            // Built-in modules are initialized through an initcall pointer
+-            // and the identifiers need to be unique.
+-            #[cfg(not(MODULE))]
+-            #[cfg(not(CONFIG_HAVE_ARCH_PREL32_RELOCATIONS))]
+-            #[doc(hidden)]
+-            #[link_section = \"{initcall_section}\"]
+-            #[used]
+-            pub static __{name}_initcall: extern \"C\" fn() -> core::ffi::c_int = __{name}_init;
++                    #[cfg(MODULE)]
++                    #[doc(hidden)]
++                    #[no_mangle]
++                    pub extern \"C\" fn cleanup_module() {{
++                        // SAFETY:
++                        // - This function is inaccessible to the outside due to the double
++                        //   module wrapping it. It is called exactly once by the C side via its
++                        //   unique name,
++                        // - furthermore it is only called after `init_module` has returned `0`
++                        //   (which delegates to `__init`).
++                        unsafe {{ __exit() }}
++                    }}
+ 
+-            #[cfg(not(MODULE))]
+-            #[cfg(CONFIG_HAVE_ARCH_PREL32_RELOCATIONS)]
+-            core::arch::global_asm!(
+-                r#\".section \"{initcall_section}\", \"a\"
+-                __{name}_initcall:
+-                    .long   __{name}_init - .
+-                    .previous
+-                \"#
+-            );
++                    // Built-in modules are initialized through an initcall pointer
++                    // and the identifiers need to be unique.
++                    #[cfg(not(MODULE))]
++                    #[cfg(not(CONFIG_HAVE_ARCH_PREL32_RELOCATIONS))]
++                    #[doc(hidden)]
++                    #[link_section = \"{initcall_section}\"]
++                    #[used]
++                    pub static __{name}_initcall: extern \"C\" fn() -> core::ffi::c_int = __{name}_init;
++
++                    #[cfg(not(MODULE))]
++                    #[cfg(CONFIG_HAVE_ARCH_PREL32_RELOCATIONS)]
++                    core::arch::global_asm!(
++                        r#\".section \"{initcall_section}\", \"a\"
++                        __{name}_initcall:
++                            .long   __{name}_init - .
++                            .previous
++                        \"#
++                    );
++
++                    #[cfg(not(MODULE))]
++                    #[doc(hidden)]
++                    #[no_mangle]
++                    pub extern \"C\" fn __{name}_init() -> core::ffi::c_int {{
++                        // SAFETY: This function is inaccessible to the outside due to the double
++                        // module wrapping it. It is called exactly once by the C side via its
++                        // placement above in the initcall section.
++                        unsafe {{ __init() }}
++                    }}
+ 
+-            #[cfg(not(MODULE))]
+-            #[doc(hidden)]
+-            #[no_mangle]
+-            pub extern \"C\" fn __{name}_init() -> core::ffi::c_int {{
+-                __init()
+-            }}
++                    #[cfg(not(MODULE))]
++                    #[doc(hidden)]
++                    #[no_mangle]
++                    pub extern \"C\" fn __{name}_exit() {{
++                        // SAFETY:
++                        // - This function is inaccessible to the outside due to the double
++                        //   module wrapping it. It is called exactly once by the C side via its
++                        //   unique name,
++                        // - furthermore it is only called after `__{name}_init` has returned `0`
++                        //   (which delegates to `__init`).
++                        unsafe {{ __exit() }}
++                    }}
+ 
+-            #[cfg(not(MODULE))]
+-            #[doc(hidden)]
+-            #[no_mangle]
+-            pub extern \"C\" fn __{name}_exit() {{
+-                __exit()
+-            }}
++                    /// # Safety
++                    ///
++                    /// This function must only be called once.
++                    unsafe fn __init() -> core::ffi::c_int {{
++                        match <{type_} as kernel::Module>::init(&super::super::THIS_MODULE) {{
++                            Ok(m) => {{
++                                // SAFETY: No data race, since `__MOD` can only be accessed by this
++                                // module and there only `__init` and `__exit` access it. These
++                                // functions are only called once and `__exit` cannot be called
++                                // before or during `__init`.
++                                unsafe {{
++                                    __MOD = Some(m);
++                                }}
++                                return 0;
++                            }}
++                            Err(e) => {{
++                                return e.to_errno();
++                            }}
++                        }}
++                    }}
+ 
+-            fn __init() -> core::ffi::c_int {{
+-                match <{type_} as kernel::Module>::init(&THIS_MODULE) {{
+-                    Ok(m) => {{
++                    /// # Safety
++                    ///
++                    /// This function must
++                    /// - only be called once,
++                    /// - be called after `__init` has been called and returned `0`.
++                    unsafe fn __exit() {{
++                        // SAFETY: No data race, since `__MOD` can only be accessed by this module
++                        // and there only `__init` and `__exit` access it. These functions are only
++                        // called once and `__init` was already called.
+                         unsafe {{
+-                            __MOD = Some(m);
++                            // Invokes `drop()` on `__MOD`, which should be used for cleanup.
++                            __MOD = None;
+                         }}
+-                        return 0;
+-                    }}
+-                    Err(e) => {{
+-                        return e.to_errno();
+                     }}
+-                }}
+-            }}
+ 
+-            fn __exit() {{
+-                unsafe {{
+-                    // Invokes `drop()` on `__MOD`, which should be used for cleanup.
+-                    __MOD = None;
++                    {modinfo}
+                 }}
+             }}
+-
+-            {modinfo}
+         ",
+         type_ = info.type_,
+         name = info.name,
 -- 
 2.43.0
 
