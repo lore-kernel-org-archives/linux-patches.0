@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C154A2D60A;
-	Tue, 14 May 2024 10:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42376135A4A;
+	Tue, 14 May 2024 10:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682847; cv=none; b=j++e+EYF+mM4fYQG0gHR47HThTNvwWxtJm2rhJ+JgVl4BxKBlNI49k7TpzoxqsjIFaeR/vZjL/kXDno561yfo3+Pn72eZve5nAKXR/T0CBFyEKTUFpU3IYjhajxrNI+lQhYDlVFPN0fGhQsPMSNYCSz9Bt81SNW1JV+Cg+JxTkk=
+	t=1715682861; cv=none; b=iMOdGMMvys+m4Y7Sic2yH6w3ed9AfwztD8VU9gZT/PRtvG6xul9fLIej0sffWVZ4gXZ03IhE7fJneqTdvphlqwcvYWhi2Tp7cdAVhgiZchae01BJ7AVaFpSr657q/YXfgSD8+HbIQS8+ACpIKD/E5xvXs6TNI+QNeflm3BOhxUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682847; c=relaxed/simple;
-	bh=Xoa5dJpMnQNe9OtzCkCaZqqqWOS/CmJFi8/q2+6O0HQ=;
+	s=arc-20240116; t=1715682861; c=relaxed/simple;
+	bh=E4u9VvzLWRs+1Vx0IMSE72Dn1WV4LRiC4DqLbT7JdS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KM0b6jyGK4OkUxxjcsth+RcsYSu9TMXworNcbSshKbWd/CjMEipaPHFReVs/Xeh+kbyzTWk8ieB/c9dDI5DOAr7QzoTxTKgvmOLQsrIFoI5dCjNqEsTfepHGeIS3nLyXl8hlGnUV4YbDNMG8kyFIU+GdR0eh1TJEDzP1uAnDmw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKIknc66; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=amDe+U9VOxYGYYK4UKd+DHijYLKQRDeuB1reOPNchJdzmXVE0c9XiS/NfbjLha0g6V42ZZ58JTGUQ8qUofkyJOOgESR4qXEhKefJXx8p1hzpPa5ZPhjCjdat1eGJFKnFV2EJkPK6d7He/KELlXv00b0uSotsKeLRr8XirBYA9fA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTxjMuDG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKIknc66"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA0FC2BD10;
-	Tue, 14 May 2024 10:34:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTxjMuDG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4690C2BD10;
+	Tue, 14 May 2024 10:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682847;
-	bh=Xoa5dJpMnQNe9OtzCkCaZqqqWOS/CmJFi8/q2+6O0HQ=;
+	s=korg; t=1715682861;
+	bh=E4u9VvzLWRs+1Vx0IMSE72Dn1WV4LRiC4DqLbT7JdS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QKIknc66Xteq2tWBxet8qfrih2atZ/q4l3ykVY9zrTMqJEHP7JLOH7Yaztxtyazdr
-	 y6tYRNKh0AhgItrMFlG30YBlH3eoLBpMcRowQvj9NXBlVMWGlOHceJ3U7QCGIpRPtZ
-	 jcml+zHP6iDK3117sW9iF2nHky5k4SoyJS8uQBuw=
+	b=fTxjMuDGHq0tr0WxeMEuDXdWDS498bKnR/Pp3TQBwwfga/2s6/5ffSdKeCJIsHsZt
+	 58f3qXqJhEtzAkA3WIZ/sdIMfDF4/U8FM4t7Biv9s1L1F52BVKZig8mPyF2ngDGacz
+	 5hrVh98SUDYSGTpW8A7qxzhYy0Qw4aExVEdqEnu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Yihang Li <liyihang9@huawei.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Jason Yan <yanaijie@huawei.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 123/336] scsi: ufs: core: WLUN suspend dev/link state error recovery
-Date: Tue, 14 May 2024 12:15:27 +0200
-Message-ID: <20240514101043.246886746@linuxfoundation.org>
+Subject: [PATCH 6.8 124/336] scsi: libsas: Align SMP request allocation to ARCH_DMA_MINALIGN
+Date: Tue, 14 May 2024 12:15:28 +0200
+Message-ID: <20240514101043.284563424@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,43 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Yihang Li <liyihang9@huawei.com>
 
-[ Upstream commit 6bc5e70b1c792b31b497e48b4668a9a2909aca0d ]
+[ Upstream commit e675a4fd6d1f8990d3bed5dada3d20edfa000423 ]
 
-When wl suspend error occurs, for example BKOP or SSU timeout, the host
-triggers an error handler and returns -EBUSY to break the wl suspend
-process.  However, it is possible for the runtime PM to enter wl suspend
-again before the error handler has finished, and return -EINVAL because the
-device is in an error state. To address this, ensure that the rumtime PM
-waits for the error handler to finish, or trigger the error handler in such
-cases, because returning -EINVAL can cause the I/O to hang.
+This series [1] reduced the kmalloc() minimum alignment on arm64 to 8 bytes
+(from 128). In libsas, this will cause SMP requests to be 8-byte aligned
+through kmalloc() allocation. However, for hisi_sas hardware, all command
+addresses must be 16-byte-aligned. Otherwise, the commands fail to be
+executed.
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20240329015036.15707-1-peter.wang@mediatek.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+ARCH_DMA_MINALIGN represents the minimum (static) alignment for safe DMA
+operations, so use ARCH_DMA_MINALIGN as the alignment for SMP request.
+
+Link: https://lkml.kernel.org/r/20230612153201.554742-1-catalin.marinas@arm.com [1]
+Signed-off-by: Yihang Li <liyihang9@huawei.com>
+Link: https://lore.kernel.org/r/20240328090626.621147-1-liyihang9@huawei.com
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/scsi/libsas/sas_expander.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 3b89c9d4aa404..14a6a100fcdb0 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -9745,7 +9745,10 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+diff --git a/drivers/scsi/libsas/sas_expander.c b/drivers/scsi/libsas/sas_expander.c
+index 5c261005b74e4..f6e6db8b8aba9 100644
+--- a/drivers/scsi/libsas/sas_expander.c
++++ b/drivers/scsi/libsas/sas_expander.c
+@@ -135,7 +135,7 @@ static int smp_execute_task(struct domain_device *dev, void *req, int req_size,
  
- 	/* UFS device & link must be active before we enter in this function */
- 	if (!ufshcd_is_ufs_dev_active(hba) || !ufshcd_is_link_active(hba)) {
--		ret = -EINVAL;
-+		/*  Wait err handler finish or trigger err recovery */
-+		if (!ufshcd_eh_in_progress(hba))
-+			ufshcd_force_error_recovery(hba);
-+		ret = -EBUSY;
- 		goto enable_scaling;
- 	}
- 
+ static inline void *alloc_smp_req(int size)
+ {
+-	u8 *p = kzalloc(size, GFP_KERNEL);
++	u8 *p = kzalloc(ALIGN(size, ARCH_DMA_MINALIGN), GFP_KERNEL);
+ 	if (p)
+ 		p[0] = SMP_REQUEST;
+ 	return p;
 -- 
 2.43.0
 
