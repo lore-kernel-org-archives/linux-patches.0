@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DC943AD7;
-	Tue, 14 May 2024 11:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6BF12BF3D;
+	Tue, 14 May 2024 11:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687276; cv=none; b=lQf/V1Pt4y+3R6Opc7tug7K8jr/LKFgrtWKSqzla57fOQ1ISbeb9iHTuaWRd51KPOH8QwJFyXTHw+fNZeH5pqm0+PyM4YF4/sSKWYOWUiCMTEjN3VR38IJcbPaFJ5MKbSe0YYpshdfcUFDq1rLznzuk1tVNnQXAiZ28uxSilIro=
+	t=1715687280; cv=none; b=hfC1xXB748+wLM2DU+PkBpNbz+49bXS6MTtmOBEZMZVpPSDPSmD5+1xt9/ZPsLpRIUN010gz/o9YrNmJWh5CThGDXrzLSkCqbNLpMriXhEdd9A7+jcLIaVGOuNcTW021ApaEFAQIbfBMdCreLBIpO8bdgSKlrx8DmlvcfymRIu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687276; c=relaxed/simple;
-	bh=JS3DDoVs6r48aYDIaeEXUanZ4u7YPeL+IwAjXeTWSZ4=;
+	s=arc-20240116; t=1715687280; c=relaxed/simple;
+	bh=95KUdqferHDA9puE8uaJ3JBME7rvHXEOd5ujeltmnfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=soORwkf9V4eScpXEH/jAKZvtvoZmGhNosbBtz+3xKPA+hpIE0ZQNINn34RkTp3xmPgidEoqhVrPWEfmwM8LrJLPz0MfUT3y0Sw54AgfoB4YeR41EaepGfcn6R9qcl5jqM8XnfGFrFjM2PYH0O5A249grJNwDkdhzD85F6a/vHrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXy4RNMh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sa11dHSuKLrzuXpXUyAXti4OGxUAQ6JkntrlSKUC6jLvduB3ANWsHVHgmIVmXZC9XzBbSrnz3GdKV5q8o182rhyEK+dr9ZKkMjzOdMpo8hQ+tplXjVRWgSD8BRMnWJrwGXEAqq6k1n+YbVahUdsFkcQ1Bf1azRxiVckuv3DB3rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgt/j3dq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXy4RNMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39131C2BD10;
-	Tue, 14 May 2024 11:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgt/j3dq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08367C2BD10;
+	Tue, 14 May 2024 11:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687276;
-	bh=JS3DDoVs6r48aYDIaeEXUanZ4u7YPeL+IwAjXeTWSZ4=;
+	s=korg; t=1715687279;
+	bh=95KUdqferHDA9puE8uaJ3JBME7rvHXEOd5ujeltmnfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FXy4RNMhOYK135ecgoc4Z+dRtAWFTQ6FdVxVhtPH3xFwVZ9QkdU7L+g4PIl/SEKlh
-	 pJMdhrYOUM9Iu664LEX4CqmMzjZGxHuUWQSNpYM/2U2cX3g6jzXFllY0930rAYd6XX
-	 2U/PhAOWDmaU5vWWY4YhNW9SlrhmYiF4LBd3yeoo=
+	b=vgt/j3dqf3aNFM2EbzW9sLDpf+tSJdUOat26YX5aYFFp6SGD+4JRvC2Lia9bugqZb
+	 CexVJB/jsGbJrr0xsORZBJ17eT2Zn+zEBNYN1bB0jsnldavbBGCsmyn9s1VTyV0VRd
+	 sKNihdcjz1O5KplaaE4chkGkyKHUBDYK1sKDFQb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Gobert <richardbgobert@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chad Wagner <wagnerch42@gmail.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 040/111] net: gro: add flush check in udp_gro_receive_segment
-Date: Tue, 14 May 2024 12:19:38 +0200
-Message-ID: <20240514100958.657915968@linuxfoundation.org>
+Subject: [PATCH 5.10 041/111] clk: sunxi-ng: h6: Reparent CPUX during PLL CPUX rate change
+Date: Tue, 14 May 2024 12:19:39 +0200
+Message-ID: <20240514100958.695786025@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -52,61 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Gobert <richardbgobert@gmail.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 5babae777c61aa8a8679d59d3cdc54165ad96d42 ]
+[ Upstream commit 7e91ed763dc07437777bd012af7a2bd4493731ff ]
 
-GRO-GSO path is supposed to be transparent and as such L3 flush checks are
-relevant to all UDP flows merging in GRO. This patch uses the same logic
-and code from tcp_gro_receive, terminating merge if flush is non zero.
+While PLL CPUX clock rate change when CPU is running from it works in
+vast majority of cases, now and then it causes instability. This leads
+to system crashes and other undefined behaviour. After a lot of testing
+(30+ hours) while also doing a lot of frequency switches, we can't
+observe any instability issues anymore when doing reparenting to stable
+clock like 24 MHz oscillator.
 
-Fixes: e20cf8d3f1f7 ("udp: implement GRO for plain UDP sockets.")
-Signed-off-by: Richard Gobert <richardbgobert@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 524353ea480b ("clk: sunxi-ng: add support for the Allwinner H6 CCU")
+Reported-by: Chad Wagner <wagnerch42@gmail.com>
+Link: https://forum.libreelec.tv/thread/27295-orange-pi-3-lts-freezes/
+Tested-by: Chad Wagner <wagnerch42@gmail.com>
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+Link: https://lore.kernel.org/r/20231013181712.2128037-1-jernej.skrabec@gmail.com
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_offload.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/clk/sunxi-ng/ccu-sun50i-h6.c |   19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
-index 445d8bc30fdd1..a0b569d0085bc 100644
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -431,6 +431,7 @@ static struct sk_buff *udp_gro_receive_segment(struct list_head *head,
- 	struct sk_buff *p;
- 	unsigned int ulen;
- 	int ret = 0;
-+	int flush;
+--- a/drivers/clk/sunxi-ng/ccu-sun50i-h6.c
++++ b/drivers/clk/sunxi-ng/ccu-sun50i-h6.c
+@@ -1181,12 +1181,19 @@ static const u32 usb2_clk_regs[] = {
+ 	SUN50I_H6_USB3_CLK_REG,
+ };
  
- 	/* requires non zero csum, for symmetry with GSO */
- 	if (!uh->check) {
-@@ -464,13 +465,22 @@ static struct sk_buff *udp_gro_receive_segment(struct list_head *head,
- 			return p;
- 		}
++static struct ccu_mux_nb sun50i_h6_cpu_nb = {
++	.common		= &cpux_clk.common,
++	.cm		= &cpux_clk.mux,
++	.delay_us       = 1,
++	.bypass_index   = 0, /* index of 24 MHz oscillator */
++};
++
+ static int sun50i_h6_ccu_probe(struct platform_device *pdev)
+ {
+ 	struct resource *res;
+ 	void __iomem *reg;
++	int i, ret;
+ 	u32 val;
+-	int i;
  
-+		flush = NAPI_GRO_CB(p)->flush;
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	reg = devm_ioremap_resource(&pdev->dev, res);
+@@ -1240,7 +1247,15 @@ static int sun50i_h6_ccu_probe(struct pl
+ 	val |= BIT(24);
+ 	writel(val, reg + SUN50I_H6_HDMI_CEC_CLK_REG);
+ 
+-	return sunxi_ccu_probe(pdev->dev.of_node, reg, &sun50i_h6_ccu_desc);
++	ret = sunxi_ccu_probe(pdev->dev.of_node, reg, &sun50i_h6_ccu_desc);
++	if (ret)
++		return ret;
 +
-+		if (NAPI_GRO_CB(p)->flush_id != 1 ||
-+		    NAPI_GRO_CB(p)->count != 1 ||
-+		    !NAPI_GRO_CB(p)->is_atomic)
-+			flush |= NAPI_GRO_CB(p)->flush_id;
-+		else
-+			NAPI_GRO_CB(p)->is_atomic = false;
++	/* Reparent CPU during PLL CPUX rate changes */
++	ccu_mux_notifier_register(pll_cpux_clk.common.hw.clk,
++				  &sun50i_h6_cpu_nb);
 +
- 		/* Terminate the flow on len mismatch or if it grow "too much".
- 		 * Under small packet flood GRO count could elsewhere grow a lot
- 		 * leading to excessive truesize values.
- 		 * On len mismatch merge the first packet shorter than gso_size,
- 		 * otherwise complete the GRO packet.
- 		 */
--		if (ulen > ntohs(uh2->len)) {
-+		if (ulen > ntohs(uh2->len) || flush) {
- 			pp = p;
- 		} else {
- 			if (NAPI_GRO_CB(skb)->is_flist) {
--- 
-2.43.0
-
++	return 0;
+ }
+ 
+ static const struct of_device_id sun50i_h6_ccu_ids[] = {
 
 
