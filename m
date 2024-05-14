@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0BA54903;
-	Tue, 14 May 2024 10:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A4354903;
+	Tue, 14 May 2024 10:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683147; cv=none; b=AHvFoWEP65v2nTxbIgn/jpjFo9Q5ornNMpCxIyXXMpI4vrQTogtleqecZvmBnkOMzc9fduGHQ1Jyn75ycKk5sc4iqMuMXAtcuyB7ClCju+mliaR2iuxkZWan8xo9PXeWWwYNd1lGbRxpe6QCDeTisuCQ/6N9VY2txFdAI9ROkVs=
+	t=1715683159; cv=none; b=t+Qiyk3TgF0tRqAeO9gi/m1fRAxk5aayQkFtvVhYunqYKjPDShU+qrxcdS5yDDTh/s5D93VGXKJcs1yH/sGVMC00NMsbEyflOoytDGHKKUpYRIdwurMwqhr2LZjZIXXFJO1cFvmrc0Cz2gXxkNtrE22LVNtWpR+ZwkQCZtzKZJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683147; c=relaxed/simple;
-	bh=PmozrRCC5Z1H/EqG8qQzNh/tTdxtaek/OkyTTJm0FxU=;
+	s=arc-20240116; t=1715683159; c=relaxed/simple;
+	bh=/47mo8Rx+iz3sUts4k9QgnQeEfOWbR0Er/bsqtlPCv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QAtQfgI81vukVTdTw3DmQ5/hVbklv7aFCbJjTxxfOTSfih6DrmEWok8n6mGMqfLXiS4dx09eyf62hNp4tjCEM3PJiK/hXBEtXA17HtnfWGjxvGUG5fEVK06TufMPeT4IbeWV8vDkS0fOFMfaBKQiZQwGjUvp/82ksBP8BaqCcJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cdxdBTtV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nuhN+xJx4ua2lYjzgQez0pRg/0RTKDv7ibV4FtsaohTRCf+PqlpxVg2209/AvrQOZlrtmCLhER5xKSmrf5A8UPaGfy8KUf1dWCbY9h2QV6mQH7Dcw+L6qlr/oOVifPW9zgkRyrn+FlclIAF4/vYJlfJJEkJ1z+BlrcTuGuWWDs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXYJPaSG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdxdBTtV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6DCC2BD10;
-	Tue, 14 May 2024 10:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXYJPaSG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E84C2BD10;
+	Tue, 14 May 2024 10:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683147;
-	bh=PmozrRCC5Z1H/EqG8qQzNh/tTdxtaek/OkyTTJm0FxU=;
+	s=korg; t=1715683158;
+	bh=/47mo8Rx+iz3sUts4k9QgnQeEfOWbR0Er/bsqtlPCv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cdxdBTtVfpG2zWHN0aBz7o81R7xCvp9qBPClWNB24bL8ucptpb4anMSuUqwZqv+YC
-	 SHzEckIKZgL7gGEZnYVM5x3WOnYYmWpaN+udEi8sObCy6eCIy7whhIZRIdJ7YoJ5kk
-	 9YcatwyBnVDt5cFYuBUUYlUFAPEmfxDJd6mEZTOo=
+	b=DXYJPaSGNUPIrF3q3bT8GC6TnKhKSESqOEyXJ0JAPXjfEcxBYpKBgLbBglpivpq90
+	 FciBeRLEBwwULfFj4PkCklWN1YrEX79ofx+jwuYyG0bC+DhnuClW+8UTZicrKNhSDJ
+	 rh8AX5NrPEU4zS5YfM2iFkeMrAkAVxZ3lYcZm5bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 173/336] drm/xe/xe_migrate: Cast to output precision before multiplying operands
-Date: Tue, 14 May 2024 12:16:17 +0200
-Message-ID: <20240514101045.134419295@linuxfoundation.org>
+Subject: [PATCH 6.8 174/336] drm/xe: Label RING_CONTEXT_CONTROL as masked
+Date: Tue, 14 May 2024 12:16:18 +0200
+Message-ID: <20240514101045.171847996@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,69 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+From: Ashutosh Dixit <ashutosh.dixit@intel.com>
 
-[ Upstream commit 9cb46b31f3d08ed3fce86349e8c12f96d7c88717 ]
+[ Upstream commit f76646c83f028c62853c23dac49204232e903597 ]
 
-Addressing potential overflow in result of  multiplication of two lower
-precision (u32) operands before widening it to higher precision
-(u64).
+RING_CONTEXT_CONTROL is a masked register.
 
--v2
-Fix commit message and description. (Rodrigo)
+v2: Also clean up setting register value (Lucas)
 
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240401175300.3823653-1-himal.prasad.ghimiray@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 34820967ae7b45411f8f4f737c2d63b0c608e0d7)
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240404161256.3852502-1-ashutosh.dixit@intel.com
+(cherry picked from commit dc30c6e7149baaae4288c742de95212b31f07438)
 Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_migrate.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/regs/xe_engine_regs.h | 2 +-
+ drivers/gpu/drm/xe/xe_lrc.c              | 5 ++---
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_migrate.c b/drivers/gpu/drm/xe/xe_migrate.c
-index 70480c3056021..7a6ad3469d748 100644
---- a/drivers/gpu/drm/xe/xe_migrate.c
-+++ b/drivers/gpu/drm/xe/xe_migrate.c
-@@ -216,7 +216,7 @@ static int xe_migrate_prepare_vm(struct xe_tile *tile, struct xe_migrate *m,
- 		if (vm->flags & XE_VM_FLAG_64K && level == 1)
- 			flags = XE_PDE_64K;
+diff --git a/drivers/gpu/drm/xe/regs/xe_engine_regs.h b/drivers/gpu/drm/xe/regs/xe_engine_regs.h
+index 5592774fc6903..81b8362e93406 100644
+--- a/drivers/gpu/drm/xe/regs/xe_engine_regs.h
++++ b/drivers/gpu/drm/xe/regs/xe_engine_regs.h
+@@ -120,7 +120,7 @@
+ #define RING_EXECLIST_STATUS_LO(base)		XE_REG((base) + 0x234)
+ #define RING_EXECLIST_STATUS_HI(base)		XE_REG((base) + 0x234 + 4)
  
--		entry = vm->pt_ops->pde_encode_bo(bo, map_ofs + (level - 1) *
-+		entry = vm->pt_ops->pde_encode_bo(bo, map_ofs + (u64)(level - 1) *
- 						  XE_PAGE_SIZE, pat_index);
- 		xe_map_wr(xe, &bo->vmap, map_ofs + XE_PAGE_SIZE * level, u64,
- 			  entry | flags);
-@@ -224,7 +224,7 @@ static int xe_migrate_prepare_vm(struct xe_tile *tile, struct xe_migrate *m,
+-#define RING_CONTEXT_CONTROL(base)		XE_REG((base) + 0x244)
++#define RING_CONTEXT_CONTROL(base)		XE_REG((base) + 0x244, XE_REG_OPTION_MASKED)
+ #define	  CTX_CTRL_INHIBIT_SYN_CTX_SWITCH	REG_BIT(3)
+ #define	  CTX_CTRL_ENGINE_CTX_RESTORE_INHIBIT	REG_BIT(0)
  
- 	/* Write PDE's that point to our BO. */
- 	for (i = 0; i < num_entries - num_level; i++) {
--		entry = vm->pt_ops->pde_encode_bo(bo, i * XE_PAGE_SIZE,
-+		entry = vm->pt_ops->pde_encode_bo(bo, (u64)i * XE_PAGE_SIZE,
- 						  pat_index);
+diff --git a/drivers/gpu/drm/xe/xe_lrc.c b/drivers/gpu/drm/xe/xe_lrc.c
+index 0aa4bcfb90d9d..72f04a656e8b1 100644
+--- a/drivers/gpu/drm/xe/xe_lrc.c
++++ b/drivers/gpu/drm/xe/xe_lrc.c
+@@ -523,9 +523,8 @@ static const u8 *reg_offsets(struct xe_device *xe, enum xe_engine_class class)
  
- 		xe_map_wr(xe, &bo->vmap, map_ofs + XE_PAGE_SIZE +
-@@ -280,7 +280,7 @@ static int xe_migrate_prepare_vm(struct xe_tile *tile, struct xe_migrate *m,
- #define VM_SA_UPDATE_UNIT_SIZE		(XE_PAGE_SIZE / NUM_VMUSA_UNIT_PER_PAGE)
- #define NUM_VMUSA_WRITES_PER_UNIT	(VM_SA_UPDATE_UNIT_SIZE / sizeof(u64))
- 	drm_suballoc_manager_init(&m->vm_update_sa,
--				  (map_ofs / XE_PAGE_SIZE - NUM_KERNEL_PDE) *
-+				  (size_t)(map_ofs / XE_PAGE_SIZE - NUM_KERNEL_PDE) *
- 				  NUM_VMUSA_UNIT_PER_PAGE, 0);
+ static void set_context_control(u32 *regs, struct xe_hw_engine *hwe)
+ {
+-	regs[CTX_CONTEXT_CONTROL] = _MASKED_BIT_ENABLE(CTX_CTRL_INHIBIT_SYN_CTX_SWITCH) |
+-				    _MASKED_BIT_DISABLE(CTX_CTRL_ENGINE_CTX_RESTORE_INHIBIT) |
+-				    CTX_CTRL_ENGINE_CTX_RESTORE_INHIBIT;
++	regs[CTX_CONTEXT_CONTROL] = _MASKED_BIT_ENABLE(CTX_CTRL_INHIBIT_SYN_CTX_SWITCH |
++						       CTX_CTRL_ENGINE_CTX_RESTORE_INHIBIT);
  
- 	m->pt_bo = bo;
-@@ -479,7 +479,7 @@ static void emit_pte(struct xe_migrate *m,
- 	struct xe_vm *vm = m->q->vm;
- 	u16 pat_index;
- 	u32 ptes;
--	u64 ofs = at_pt * XE_PAGE_SIZE;
-+	u64 ofs = (u64)at_pt * XE_PAGE_SIZE;
- 	u64 cur_ofs;
- 
- 	/* Indirect access needs compression enabled uncached PAT index */
+ 	/* TODO: Timestamp */
+ }
 -- 
 2.43.0
 
