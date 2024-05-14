@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5230912DD83;
-	Tue, 14 May 2024 11:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0400612D77B;
+	Tue, 14 May 2024 11:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686668; cv=none; b=eAyn21IYss1claZfwVfCo9Kes2npjYCFcUR1ZdFl/La/U9OmH/OAqT2aWalaVPM0J9ZbGWndJm0DHQSsbzniPd8Fp5asq8YdD33LVDHRdqOx+25jfSMjT6pDhRAfUCepbX8BECPbF+52HSpwIOa+jtsws2zAJP4mhm4NXgT9TZg=
+	t=1715686671; cv=none; b=P8Ks+LLvYvusjx72FTcQ65/QAr+yn+DVTU6k4uVd/N1oDWaHHvPna8RrPIoBDBBJEDtagESL3O6FlYmTUE1YQs/LojxiJN2l77w/SkZyvre3gfeR4WX43ibAPvk/XLCU5gCL0EtOuLp3rzm/7Gj9wJD30gUrFS6fnLwuujllqqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686668; c=relaxed/simple;
-	bh=22JlxtcNVKlSkaQtE2SWZmeko6lUYtReh9sc1oOMfvI=;
+	s=arc-20240116; t=1715686671; c=relaxed/simple;
+	bh=F7GDXgiBiSSyDL6oIvfiZ3wfoVtcrmo6rmYsU/ZMjhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VEcwYXVH83WRZGGq+ssg2CC3Jtu9MLGgeT4LlU92UghYJRNPJquUgqpIrL9oG1Rc3PB+Pv03nwYc8sNmiO0Z2djYxQ47Qz/+XH/yDNeBrt8DnJRI128fpvUn/TebSeC6ufKJ8/xpLhKQ77Hduv2kM3+Zu07rdZLQSSgV6MooJz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYDi0eBR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gU4qYy8MmkrKkNGYJq4oMCo45L0j1NyEYQuKpGQdwznGvBN4WL+oYKT9b/PrQg77klvHJfOvkNMbiNACev4kXEu9kC+Hm5P3okiKxKmhJ7mg2x/tLQo3TH3+7I14DjqqzFQ3nq44yjWMdQ6SiN2gKNNtLWPk+1FUB/9RKaxDBmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qH29T6aU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYDi0eBR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C15C2BD10;
-	Tue, 14 May 2024 11:37:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qH29T6aU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80294C2BD10;
+	Tue, 14 May 2024 11:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686668;
-	bh=22JlxtcNVKlSkaQtE2SWZmeko6lUYtReh9sc1oOMfvI=;
+	s=korg; t=1715686670;
+	bh=F7GDXgiBiSSyDL6oIvfiZ3wfoVtcrmo6rmYsU/ZMjhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WYDi0eBRaMzJ3Kxkl8fRKjH9k4Zui6PGn25rBmGD5AKW796h3EB/XVtws45LHR5Kp
-	 WxZtjb0pBKtv4ZDYiYbejw2CMLnPqoNfSKJS0Xy55s0az4Sdw2ZANH7oTV6EuT/+X3
-	 +lR4BfzHiEhOBaiFbq5thq1Qf4eSLfi8E/tvFVY8=
+	b=qH29T6aUARPbC6ri4YIpkaqSo9EGgcAn7fN4me88jKOx3XISJqf4V0g2lMVRMQDhE
+	 HH2TR4R8TxnWxsyDxFhGb0mxhfU2SkH1IA2bw8cdmjyfDvFtaz6SDUf66iNxToKo/W
+	 yFzsDeoULvaxUzObac8s8HLkRCZPkyRfEhN/dXTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Alex Constantino <dreaming.about.electric.sheep@gmail.com>,
-	Timo Lindfors <timo.lindfors@iki.fi>,
-	Dave Airlie <airlied@redhat.com>,
-	Gerd Hoffmann <kraxel@redhat.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.1 186/236] Reapply "drm/qxl: simplify qxl_fence_wait"
-Date: Tue, 14 May 2024 12:19:08 +0200
-Message-ID: <20240514101027.425823814@linuxfoundation.org>
+	Gary Guo <gary@garyguo.net>,
+	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
+	Asahi Lina <lina@asahilina.net>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.1 187/236] rust: error: Rename to_kernel_errno() -> to_errno()
+Date: Tue, 14 May 2024 12:19:09 +0200
+Message-ID: <20240514101027.463010855@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -58,126 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Asahi Lina <lina@asahilina.net>
 
-commit 3628e0383dd349f02f882e612ab6184e4bb3dc10 upstream.
+commit 46384d0990bf99ed8b597e8794ea581e2a647710 upstream.
 
-This reverts commit 07ed11afb68d94eadd4ffc082b97c2331307c5ea.
+This is kernel code, so specifying "kernel" is redundant. Let's simplify
+things and just call it to_errno().
 
-Stephen Rostedt reports:
- "I went to run my tests on my VMs and the tests hung on boot up.
-  Unfortunately, the most I ever got out was:
-
-  [   93.607888] Testing event system initcall: OK
-  [   93.667730] Running tests on all trace events:
-  [   93.669757] Testing all events: OK
-  [   95.631064] ------------[ cut here ]------------
-  Timed out after 60 seconds"
-
-and further debugging points to a possible circular locking dependency
-between the console_owner locking and the worker pool locking.
-
-Reverting the commit allows Steve's VM to boot to completion again.
-
-[ This may obviously result in the "[TTM] Buffer eviction failed"
-  messages again, which was the reason for that original revert. But at
-  this point this seems preferable to a non-booting system... ]
-
-Reported-and-bisected-by: Steven Rostedt <rostedt@goodmis.org>
-Link: https://lore.kernel.org/all/20240502081641.457aa25f@gandalf.local.home/
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Cc: Alex Constantino <dreaming.about.electric.sheep@gmail.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Timo Lindfors <timo.lindfors@iki.fi>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Signed-off-by: Asahi Lina <lina@asahilina.net>
+Link: https://lore.kernel.org/r/20230224-rust-error-v3-1-03779bddc02b@asahilina.net
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/qxl/qxl_release.c |   50 +++-----------------------------------
- include/linux/dma-fence.h         |    7 -----
- 2 files changed, 5 insertions(+), 52 deletions(-)
+ rust/kernel/error.rs  |    2 +-
+ rust/macros/module.rs |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/qxl/qxl_release.c
-+++ b/drivers/gpu/drm/qxl/qxl_release.c
-@@ -58,56 +58,16 @@ static long qxl_fence_wait(struct dma_fe
- 			   signed long timeout)
- {
- 	struct qxl_device *qdev;
--	struct qxl_release *release;
--	int count = 0, sc = 0;
--	bool have_drawable_releases;
- 	unsigned long cur, end = jiffies + timeout;
+--- a/rust/kernel/error.rs
++++ b/rust/kernel/error.rs
+@@ -25,7 +25,7 @@ pub struct Error(core::ffi::c_int);
  
- 	qdev = container_of(fence->lock, struct qxl_device, release_lock);
--	release = container_of(fence, struct qxl_release, base);
--	have_drawable_releases = release->type == QXL_RELEASE_DRAWABLE;
- 
--retry:
--	sc++;
--
--	if (dma_fence_is_signaled(fence))
--		goto signaled;
--
--	qxl_io_notify_oom(qdev);
--
--	for (count = 0; count < 11; count++) {
--		if (!qxl_queue_garbage_collect(qdev, true))
--			break;
--
--		if (dma_fence_is_signaled(fence))
--			goto signaled;
--	}
--
--	if (dma_fence_is_signaled(fence))
--		goto signaled;
--
--	if (have_drawable_releases || sc < 4) {
--		if (sc > 2)
--			/* back off */
--			usleep_range(500, 1000);
--
--		if (time_after(jiffies, end))
--			return 0;
--
--		if (have_drawable_releases && sc > 300) {
--			DMA_FENCE_WARN(fence,
--				       "failed to wait on release %llu after spincount %d\n",
--				       fence->context & ~0xf0000000, sc);
--			goto signaled;
--		}
--		goto retry;
--	}
--	/*
--	 * yeah, original sync_obj_wait gave up after 3 spins when
--	 * have_drawable_releases is not set.
--	 */
-+	if (!wait_event_timeout(qdev->release_event,
-+				(dma_fence_is_signaled(fence) ||
-+				 (qxl_io_notify_oom(qdev), 0)),
-+				timeout))
-+		return 0;
- 
--signaled:
- 	cur = jiffies;
- 	if (time_after(cur, end))
- 		return 0;
---- a/include/linux/dma-fence.h
-+++ b/include/linux/dma-fence.h
-@@ -659,11 +659,4 @@ static inline bool dma_fence_is_containe
- 	return dma_fence_is_array(fence) || dma_fence_is_chain(fence);
+ impl Error {
+     /// Returns the kernel error code.
+-    pub fn to_kernel_errno(self) -> core::ffi::c_int {
++    pub fn to_errno(self) -> core::ffi::c_int {
+         self.0
+     }
  }
- 
--#define DMA_FENCE_WARN(f, fmt, args...) \
--	do {								\
--		struct dma_fence *__ff = (f);				\
--		pr_warn("f %llu#%llu: " fmt, __ff->context, __ff->seqno,\
--			 ##args);					\
--	} while (0)
--
- #endif /* __LINUX_DMA_FENCE_H */
+--- a/rust/macros/module.rs
++++ b/rust/macros/module.rs
+@@ -258,7 +258,7 @@ pub(crate) fn module(ts: TokenStream) ->
+                         return 0;
+                     }}
+                     Err(e) => {{
+-                        return e.to_kernel_errno();
++                        return e.to_errno();
+                     }}
+                 }}
+             }}
 
 
