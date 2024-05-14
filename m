@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE83958AC4;
-	Tue, 14 May 2024 11:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE3A136648;
+	Tue, 14 May 2024 11:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686967; cv=none; b=DiatG3LTbbtz5zdhj4kBQN8nDsTHPaR+WGm6JnHLrbJCwQwCscn3BMWkTo+x+SG084IsrOs7Ps2xXcj4UFQiblBVhkm+YnopV6S8p60bmgdvv4YOfiS1p8g7qScLkB0rDUx9MvlzfC6ybsTcsB1Ty8lFySM4LJClTo2/H47+ED4=
+	t=1715686970; cv=none; b=nIIaSQSoLCIGlqgFXNIf06E3bMR9Pgk+K0mNLQhVmnWQVfHuzUbb3p+SqgRVGitYmuwjzNx63gReif5Mxz2VG96445sKvPkHTsoYA/gRdkNrLhWrb5g8ALBDfr6TMadiq7t0cqy/rX89rRgwifKgt9B+7iehfDKRhWJV5l+aGeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686967; c=relaxed/simple;
-	bh=byHs1/VNlKrIUvzAvp0j5YOBTcUQ/s3ei8Qm0U/a2Kg=;
+	s=arc-20240116; t=1715686970; c=relaxed/simple;
+	bh=IE/J9FVin4CcLoAyEONvEwPthLpn0G/hjFhibTmYpUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C13HA9gfpbChkinK09B6Czjb8ttTW3qbdN/VWFUx19t7seX/90I7ca4UTFECB35aTfkJptHjgRr2XO1L8awOuvNpXFU564+fPPA/7EOq4pqE5NYKHWffZtvp7/nRqXDSyOsclg3QqsAf6u3+69BqJrZxP0Hadc4Z/th/WhBOulU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pHFmuPNY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C2rBS8WHZUH+Q9/ks70mcgKeswibxInVZJTiqe0i8rMniBjIVzCkh6UT2Im+zD40mrcp6I/X1pZJzBXCRW8Fz0TYQUxwTc4L6niC986M1+7PSe0Xui0KhampGl4dPzDkwbyBaIbzHq1lS4wRVIpx1wttPaDLRaWK9iTMS5ESHiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5yPE6Bm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pHFmuPNY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3B3C2BD10;
-	Tue, 14 May 2024 11:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5yPE6Bm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC87C2BD10;
+	Tue, 14 May 2024 11:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686966;
-	bh=byHs1/VNlKrIUvzAvp0j5YOBTcUQ/s3ei8Qm0U/a2Kg=;
+	s=korg; t=1715686969;
+	bh=IE/J9FVin4CcLoAyEONvEwPthLpn0G/hjFhibTmYpUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pHFmuPNYq9I6LKGTmR8u+KiRCM2ccPzqCF/wpeNno7n+q5NaHn6VzjtCR+ILjFza/
-	 vSw1expnFHcGb2kJFh3eDUCx5DKkwetrPl5n1tPe2swsPT4/JqGewex1N9BqI0pAz/
-	 FK9t0XzeAR9KMu+/fbn6CaDhV3ot/DIwNgYMlZ5g=
+	b=p5yPE6BmlAXw44poRlPygS+5Tzc2ZdipQfnpNzRQD+p0N0hp5ZyiedBp28Y5gyS4u
+	 MQtkhhwOacyGqg0ADaTL9lInvexfx6k2x7Dl5WSvxJQMkngMhPqkYHbp1BXOECjnaW
+	 6R9xCz60fgFkLzo1JZ+92r4+kbQB/7mK8Y9JpEsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	karthikeyan <karthikeyan@linumiz.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 02/84] dmaengine: Revert "dmaengine: pl330: issue_pending waits until WFP state"
-Date: Tue, 14 May 2024 12:19:13 +0200
-Message-ID: <20240514100951.781540083@linuxfoundation.org>
+Subject: [PATCH 5.4 20/84] s390/mm: Fix storage key clearing for guest huge pages
+Date: Tue, 14 May 2024 12:19:31 +0200
+Message-ID: <20240514100952.454929224@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100951.686412426@linuxfoundation.org>
 References: <20240514100951.686412426@linuxfoundation.org>
@@ -51,36 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinod Koul <vkoul@kernel.org>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-[ Upstream commit afc89870ea677bd5a44516eb981f7a259b74280c ]
+[ Upstream commit 843c3280686fc1a83d89ee1e0b5599c9f6b09d0c ]
 
-This reverts commit 22a9d9585812 ("dmaengine: pl330: issue_pending waits
-until WFP state") as it seems to cause regression in pl330 driver.
-Note the issue now exists in mainline so a fix to be done.
+The function __storage_key_init_range() expects the end address to be
+the first byte outside the range to be initialized. I.e. end - start
+should be the size of the area to be initialized.
 
-Cc: stable@vger.kernel.org
-Reported-by: karthikeyan <karthikeyan@linumiz.com>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+The current code works because __storage_key_init_range() will still loop
+over every page in the range, but it is slower than using sske_frame().
+
+Fixes: 964c2c05c9f3 ("s390/mm: Clear huge page storage keys on enable_skey")
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240416114220.28489-2-imbrenda@linux.ibm.com
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/pl330.c | 3 ---
- 1 file changed, 3 deletions(-)
+ arch/s390/mm/gmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
-index d12939c25a618..1d7d4b8d810a5 100644
---- a/drivers/dma/pl330.c
-+++ b/drivers/dma/pl330.c
-@@ -1051,9 +1051,6 @@ static bool _trigger(struct pl330_thread *thrd)
+diff --git a/arch/s390/mm/gmap.c b/arch/s390/mm/gmap.c
+index 19ee8355b2a7f..5c41d1ab2a622 100644
+--- a/arch/s390/mm/gmap.c
++++ b/arch/s390/mm/gmap.c
+@@ -2610,7 +2610,7 @@ static int __s390_enable_skey_hugetlb(pte_t *pte, unsigned long addr,
+ 		return 0;
  
- 	thrd->req_running = idx;
- 
--	if (desc->rqtype == DMA_MEM_TO_DEV || desc->rqtype == DMA_DEV_TO_MEM)
--		UNTIL(thrd, PL330_STATE_WFP);
--
- 	return true;
- }
- 
+ 	start = pmd_val(*pmd) & HPAGE_MASK;
+-	end = start + HPAGE_SIZE - 1;
++	end = start + HPAGE_SIZE;
+ 	__storage_key_init_range(start, end);
+ 	set_bit(PG_arch_1, &page->flags);
+ 	cond_resched();
 -- 
 2.43.0
 
