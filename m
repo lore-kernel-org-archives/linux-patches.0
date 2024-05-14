@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B9012E1D2;
-	Tue, 14 May 2024 11:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E2712EBCA;
+	Tue, 14 May 2024 11:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685735; cv=none; b=hVCYSoEtOk+nOUMhs7SfBlQrXLtnkmhB5dn64Q9pgTNCDMNOUKbEgRM5EtpbS649cZGWDYtSi/YiOuvzpCMGXiHpnEa9I5TgTSb2XliHVkgfOC2XLjL5BUQVRcIKIHo7RK6duwPvuCuWVvAVTr6iGDYQbYhQv9RAwAwE4M3hsMA=
+	t=1715685739; cv=none; b=up/EpzOWFUo66LBedqXyf7MwCyMQCuD4dIrVOTNEuuRW8+ORJepQyKJs/OdyEkKj+5ZOxnCtTMO3tC5+UcjrNiyeyPJYbWwiba/gvWlE3WCeX6tOUK0rGcWeRCjU4pxHXntqBf7ZM79OkIPpaW2j3D63SJ69LQ37iH5TqDK+dto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685735; c=relaxed/simple;
-	bh=YrgQmlalt9Ji2asL6dfClg38tb2EngzP/qGzPn8Nqgc=;
+	s=arc-20240116; t=1715685739; c=relaxed/simple;
+	bh=4xrYzcM4bG1Gcs71cv5/mR1Xce+q2FTkBOpPVIHmz3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aUjzfTtYDQtoBN2DDePW3BGFllVi+J8GPwOqSCn2LJci2QH1uid9dkRRhojUb4GLVOH03LaQYVJBpSzfCpbjO4oLNSAbvHB9JfNwSFKvJdyxfix70fMy8ipluO41zxzRxJ4uxqOHghz/VObGdbqmbNL4wMzKeD6Pir58w928m0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8OFHlBh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QvgEBiPiEVgmKQVqIW3Dcou4GCdWLDfUMT6tuLOoldyA4j/+0aSIfGjYl4VJ8+SvFZO7tWJvNjeMMxaGzjYDo9l6Itb2Izgk7S3DkfZZ70scV0QzePcukWev2xJZYw1kU8V6QdvOOwwjsoKG4pAzP3ezkVsjJmOdjjN1yiMRa14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NH5ewGNt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8OFHlBh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9B7C32781;
-	Tue, 14 May 2024 11:22:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NH5ewGNt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9477DC32781;
+	Tue, 14 May 2024 11:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685735;
-	bh=YrgQmlalt9Ji2asL6dfClg38tb2EngzP/qGzPn8Nqgc=;
+	s=korg; t=1715685739;
+	bh=4xrYzcM4bG1Gcs71cv5/mR1Xce+q2FTkBOpPVIHmz3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O8OFHlBhaiocX7xhqp1kVWPJqGEkmR8ilVkn7+FIxkBOcdnNsaZqLCq/sixF64qf9
-	 mMMPSxyFvEGbyZ0kASnTQPfQBiN8kZzPrSmiscRmdji0oMfowANrZ7fXU/Jth5nMQx
-	 WQvD8bRoINwVtvVXT+pMjSAW9VVXpoz4+r01kDvM=
+	b=NH5ewGNt1I6Sr2jmcavEPw85B99DH6aAW24n7TYqxTfH3fVRS82H7QQjxrWOpFwtc
+	 IQmMWtJSdzhgIl+1JMAAJ7yf54Tkv/pyjH5z8i8VkDV62KTKY9wP5qrTCOok4ns5ZE
+	 yx1K13qfKOCIp4l6wVSe7H7s9zR/GyJhEEbb6s+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	xingwei lee <xrivendell7@gmail.com>,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Yue Sun <samsun1006219@gmail.com>
-Subject: [PATCH 6.6 229/301] USB: core: Fix access violation during port device removal
-Date: Tue, 14 May 2024 12:18:20 +0200
-Message-ID: <20240514101040.902686262@linuxfoundation.org>
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6.6 238/301] usb: typec: tcpm: Check for port partner validity before consuming it
+Date: Tue, 14 May 2024 12:18:29 +0200
+Message-ID: <20240514101041.240519279@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -52,69 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Badhri Jagan Sridharan <badhri@google.com>
 
-commit a4b46d450c49f32e9d4247b421e58083fde304ce upstream.
+commit ae11f04b452b5205536e1c02d31f8045eba249dd upstream.
 
-Testing with KASAN and syzkaller revealed a bug in port.c:disable_store():
-usb_hub_to_struct_hub() can return NULL if the hub that the port belongs to
-is concurrently removed, but the function does not check for this
-possibility before dereferencing the returned value.
+typec_register_partner() does not guarantee partner registration
+to always succeed. In the event of failure, port->partner is set
+to the error value or NULL. Given that port->partner validity is
+not checked, this results in the following crash:
 
-It turns out that the first dereference is unnecessary, since hub->intfdev
-is the parent of the port device, so it can be changed easily.  Adding a
-check for hub == NULL prevents further problems.
+Unable to handle kernel NULL pointer dereference at virtual address xx
+ pc : run_state_machine+0x1bc8/0x1c08
+ lr : run_state_machine+0x1b90/0x1c08
+..
+ Call trace:
+   run_state_machine+0x1bc8/0x1c08
+   tcpm_state_machine_work+0x94/0xe4
+   kthread_worker_fn+0x118/0x328
+   kthread+0x1d0/0x23c
+   ret_from_fork+0x10/0x20
 
-The same bug exists in the disable_show() routine, and it can be fixed the
-same way.
+To prevent the crash, check for port->partner validity before
+derefencing it in all the call sites.
 
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Reported-and-tested-by: Yue Sun <samsun1006219@gmail.com>
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Link: https://lore.kernel.org/linux-usb/CAEkJfYON+ry7xPx=AiLR9jzUNT+i_Va68ACajOC3HoacOfL1ig@mail.gmail.com/
-Fixes: f061f43d7418 ("usb: hub: port: add sysfs entry to switch port power")
-CC: Michael Grzeschik <m.grzeschik@pengutronix.de>
-CC: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/393aa580-15a5-44ca-ad3b-6462461cd313@rowland.harvard.edu
+Cc: stable@vger.kernel.org
+Fixes: c97cd0b4b54e ("usb: typec: tcpm: set initial svdm version based on pd revision")
+Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240427202812.3435268-1-badhri@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/port.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |   30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/core/port.c
-+++ b/drivers/usb/core/port.c
-@@ -50,13 +50,15 @@ static ssize_t disable_show(struct devic
- 	struct usb_port *port_dev = to_usb_port(dev);
- 	struct usb_device *hdev = to_usb_device(dev->parent->parent);
- 	struct usb_hub *hub = usb_hub_to_struct_hub(hdev);
--	struct usb_interface *intf = to_usb_interface(hub->intfdev);
-+	struct usb_interface *intf = to_usb_interface(dev->parent);
- 	int port1 = port_dev->portnum;
- 	u16 portstatus, unused;
- 	bool disabled;
- 	int rc;
- 	struct kernfs_node *kn;
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -1488,7 +1488,8 @@ static void svdm_consume_identity(struct
+ 	port->partner_ident.cert_stat = p[VDO_INDEX_CSTAT];
+ 	port->partner_ident.product = product;
  
-+	if (!hub)
-+		return -ENODEV;
- 	hub_get(hub);
- 	rc = usb_autopm_get_interface(intf);
- 	if (rc < 0)
-@@ -100,12 +102,14 @@ static ssize_t disable_store(struct devi
- 	struct usb_port *port_dev = to_usb_port(dev);
- 	struct usb_device *hdev = to_usb_device(dev->parent->parent);
- 	struct usb_hub *hub = usb_hub_to_struct_hub(hdev);
--	struct usb_interface *intf = to_usb_interface(hub->intfdev);
-+	struct usb_interface *intf = to_usb_interface(dev->parent);
- 	int port1 = port_dev->portnum;
- 	bool disabled;
- 	int rc;
- 	struct kernfs_node *kn;
+-	typec_partner_set_identity(port->partner);
++	if (port->partner)
++		typec_partner_set_identity(port->partner);
  
-+	if (!hub)
-+		return -ENODEV;
- 	rc = kstrtobool(buf, &disabled);
- 	if (rc)
- 		return rc;
+ 	tcpm_log(port, "Identity: %04x:%04x.%04x",
+ 		 PD_IDH_VID(vdo),
+@@ -1576,6 +1577,9 @@ static void tcpm_register_partner_altmod
+ 	struct typec_altmode *altmode;
+ 	int i;
+ 
++	if (!port->partner)
++		return;
++
+ 	for (i = 0; i < modep->altmodes; i++) {
+ 		altmode = typec_partner_register_altmode(port->partner,
+ 						&modep->altmode_desc[i]);
+@@ -3574,7 +3578,10 @@ static int tcpm_init_vconn(struct tcpm_p
+ 
+ static void tcpm_typec_connect(struct tcpm_port *port)
+ {
++	struct typec_partner *partner;
++
+ 	if (!port->connected) {
++		port->connected = true;
+ 		/* Make sure we don't report stale identity information */
+ 		memset(&port->partner_ident, 0, sizeof(port->partner_ident));
+ 		port->partner_desc.usb_pd = port->pd_capable;
+@@ -3584,9 +3591,13 @@ static void tcpm_typec_connect(struct tc
+ 			port->partner_desc.accessory = TYPEC_ACCESSORY_AUDIO;
+ 		else
+ 			port->partner_desc.accessory = TYPEC_ACCESSORY_NONE;
+-		port->partner = typec_register_partner(port->typec_port,
+-						       &port->partner_desc);
+-		port->connected = true;
++		partner = typec_register_partner(port->typec_port, &port->partner_desc);
++		if (IS_ERR(partner)) {
++			dev_err(port->dev, "Failed to register partner (%ld)\n", PTR_ERR(partner));
++			return;
++		}
++
++		port->partner = partner;
+ 		typec_partner_set_usb_power_delivery(port->partner, port->partner_pd);
+ 	}
+ }
+@@ -3656,9 +3667,11 @@ out_disable_mux:
+ static void tcpm_typec_disconnect(struct tcpm_port *port)
+ {
+ 	if (port->connected) {
+-		typec_partner_set_usb_power_delivery(port->partner, NULL);
+-		typec_unregister_partner(port->partner);
+-		port->partner = NULL;
++		if (port->partner) {
++			typec_partner_set_usb_power_delivery(port->partner, NULL);
++			typec_unregister_partner(port->partner);
++			port->partner = NULL;
++		}
+ 		port->connected = false;
+ 	}
+ }
+@@ -3874,6 +3887,9 @@ static enum typec_cc_status tcpm_pwr_opm
+ 
+ static void tcpm_set_initial_svdm_version(struct tcpm_port *port)
+ {
++	if (!port->partner)
++		return;
++
+ 	switch (port->negotiated_rev) {
+ 	case PD_REV30:
+ 		break;
 
 
