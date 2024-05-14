@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAB012BF3D;
-	Tue, 14 May 2024 10:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489C712BF3D;
+	Tue, 14 May 2024 10:28:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682483; cv=none; b=TFfvsdMmj1+Drtc6XtIizIu1sCubbeScwndTnMvbTbx48Pt24baBKUxJ1+KyvqUzKpScN1Pj8fgmd0uyemE74HEF0AQYW3WD2br7B/HiZ7OfqWGK3NctL1QlYMhcTRnxNSSeYp/tJCXWgNDy4esaANPb9aV6U90vhIQ3wrGP6GI=
+	t=1715682489; cv=none; b=tegkqXc76Uu7k2z6M417oqfa49fsERMHBEju+hXQP8kjlDh4j7XVhZR1iKeRnIuTru+5b1eb3Cl/M1z/jdZsja7U56UXHGqe/XU9qmxshPujkoOyyKNlChEt8tw8EojOPmpFJBb1EGHU+cF04yWOvYDZcehBp2zYMKNpMXRdLn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682483; c=relaxed/simple;
-	bh=cKfXZan9IgkGEu0rf4rbaY2DFqNxHjzZNCJFGSfb4Zc=;
+	s=arc-20240116; t=1715682489; c=relaxed/simple;
+	bh=FaPhXuiryfxEM7XF8vFKsJucv4YK9Zr6iMljdJ+vnhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CkaFs0nEn+NZGY5+PJhMdZwrhKdq4Hxe2SP2brKPcyUOYsCTLjmrCvKV2U+JxVhLb+a1LBUlXRebamFSe1yJVdDdrv1M4vE+leIy3bP/JgBJCLplN5I9RroU4pdU7M6JdvfYV2Jc7mXcnrPPYxQd5kjpz7lQeOojmdiowigUesc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+Evo9pw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FUq0Y1j+bmq1+taB69vF6tMhoSaxfGTy5KTlVBAfaUb5zMkwyF05swuZsGiG35o7vdFI1efzuMtiGTMiyyYWGBoAm/USpwYkg2IKZkWFtOC9a3u1aXVEtrkdUQrHy4GJh7v84J8dbMDISjpgdMXEEjLhVSBEHOqu+Xq1AZX0Nn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEa951Gn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+Evo9pw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94439C2BD10;
-	Tue, 14 May 2024 10:28:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEa951Gn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D5E6C2BD10;
+	Tue, 14 May 2024 10:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682482;
-	bh=cKfXZan9IgkGEu0rf4rbaY2DFqNxHjzZNCJFGSfb4Zc=;
+	s=korg; t=1715682489;
+	bh=FaPhXuiryfxEM7XF8vFKsJucv4YK9Zr6iMljdJ+vnhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I+Evo9pwN59MLZSyArwUhLEdRlAlQwYAxHZrVmza8IX33DMoCrV/w7mmyqOyVJQcX
-	 E2A2912Pdmd0BjydRCJAEHjM4eiL/NWPUCRfIVMtyyNWNlH415J6xjYceCJ8TFxgPJ
-	 WaFY5mNbVCEOptU4N6RdujF8Jf9I1dDJFffD1BoA=
+	b=tEa951Gn1CcvUPMwGkSXW9prty8nmmmE8shwQozQrLDwQWOxNO+XjZlBbok5+klbh
+	 XcYXXqR9MS88EWx5rb2uLRpQW0k4EuORkm3JnYHOB/vm93DLjnhqPvk7NCAoX/PS0r
+	 Zy3UaQLVtZhoyPrbIobmENFNhZUshtMaSYqfimqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Hossain, Md Iqbal" <md.iqbal.hossain@intel.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Hossain
-Subject: [PATCH 6.8 042/336] efi/unaccepted: touch soft lockup during memory accept
-Date: Tue, 14 May 2024 12:14:06 +0200
-Message-ID: <20240514101040.197513665@linuxfoundation.org>
+	Bui Quang Minh <minhquangbui99@gmail.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 069/336] s390/cio: Ensure the copied buf is NUL terminated
+Date: Tue, 14 May 2024 12:14:33 +0200
+Message-ID: <20240514101041.210610848@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -54,94 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Yu <yu.c.chen@intel.com>
+From: Bui Quang Minh <minhquangbui99@gmail.com>
 
-[ Upstream commit 1c5a1627f48105cbab81d25ec2f72232bfaa8185 ]
+[ Upstream commit da7c622cddd4fe36be69ca61e8c42e43cde94784 ]
 
-Commit 50e782a86c98 ("efi/unaccepted: Fix soft lockups caused by
-parallel memory acceptance") has released the spinlock so other CPUs can
-do memory acceptance in parallel and not triggers softlockup on other
-CPUs.
+Currently, we allocate a lbuf-sized kernel buffer and copy lbuf from
+userspace to that buffer. Later, we use scanf on this buffer but we don't
+ensure that the string is terminated inside the buffer, this can lead to
+OOB read when using scanf. Fix this issue by using memdup_user_nul instead.
 
-However the softlock up was intermittent shown up if the memory of the
-TD guest is large, and the timeout of softlockup is set to 1 second:
-
- RIP: 0010:_raw_spin_unlock_irqrestore
- Call Trace:
- ? __hrtimer_run_queues
- <IRQ>
- ? hrtimer_interrupt
- ? watchdog_timer_fn
- ? __sysvec_apic_timer_interrupt
- ? __pfx_watchdog_timer_fn
- ? sysvec_apic_timer_interrupt
- </IRQ>
- ? __hrtimer_run_queues
- <TASK>
- ? hrtimer_interrupt
- ? asm_sysvec_apic_timer_interrupt
- ? _raw_spin_unlock_irqrestore
- ? __sysvec_apic_timer_interrupt
- ? sysvec_apic_timer_interrupt
- accept_memory
- try_to_accept_memory
- do_huge_pmd_anonymous_page
- get_page_from_freelist
- __handle_mm_fault
- __alloc_pages
- __folio_alloc
- ? __tdx_hypercall
- handle_mm_fault
- vma_alloc_folio
- do_user_addr_fault
- do_huge_pmd_anonymous_page
- exc_page_fault
- ? __do_huge_pmd_anonymous_page
- asm_exc_page_fault
- __handle_mm_fault
-
-When the local irq is enabled at the end of accept_memory(), the
-softlockup detects that the watchdog on single CPU has not been fed for
-a while. That is to say, even other CPUs will not be blocked by
-spinlock, the current CPU might be stunk with local irq disabled for a
-while, which hurts not only nmi watchdog but also softlockup.
-
-Chao Gao pointed out that the memory accept could be time costly and
-there was similar report before. Thus to avoid any softlocup detection
-during this stage, give the softlockup a flag to skip the timeout check
-at the end of accept_memory(), by invoking touch_softlockup_watchdog().
-
-Reported-by: Hossain, Md Iqbal <md.iqbal.hossain@intel.com>
-Signed-off-by: Chen Yu <yu.c.chen@intel.com>
-Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Fixes: 50e782a86c98 ("efi/unaccepted: Fix soft lockups caused by parallel memory acceptance")
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: a4f17cc72671 ("s390/cio: add CRW inject functionality")
+Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240424-fix-oob-read-v2-5-f1f1b53a10f4@gmail.com
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/unaccepted_memory.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/s390/cio/cio_inject.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/efi/unaccepted_memory.c b/drivers/firmware/efi/unaccepted_memory.c
-index 5b439d04079c8..50f6503fe49f5 100644
---- a/drivers/firmware/efi/unaccepted_memory.c
-+++ b/drivers/firmware/efi/unaccepted_memory.c
-@@ -4,6 +4,7 @@
- #include <linux/memblock.h>
- #include <linux/spinlock.h>
- #include <linux/crash_dump.h>
-+#include <linux/nmi.h>
- #include <asm/unaccepted_memory.h>
- 
- /* Protects unaccepted memory bitmap and accepting_list */
-@@ -149,6 +150,9 @@ void accept_memory(phys_addr_t start, phys_addr_t end)
+diff --git a/drivers/s390/cio/cio_inject.c b/drivers/s390/cio/cio_inject.c
+index 8613fa937237b..a2e771ebae8eb 100644
+--- a/drivers/s390/cio/cio_inject.c
++++ b/drivers/s390/cio/cio_inject.c
+@@ -95,7 +95,7 @@ static ssize_t crw_inject_write(struct file *file, const char __user *buf,
+ 		return -EINVAL;
  	}
  
- 	list_del(&range.list);
-+
-+	touch_softlockup_watchdog();
-+
- 	spin_unlock_irqrestore(&unaccepted_memory_lock, flags);
- }
+-	buffer = vmemdup_user(buf, lbuf);
++	buffer = memdup_user_nul(buf, lbuf);
+ 	if (IS_ERR(buffer))
+ 		return -ENOMEM;
  
 -- 
 2.43.0
