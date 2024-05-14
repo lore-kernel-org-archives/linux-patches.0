@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28FE1386D5;
-	Tue, 14 May 2024 11:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B02E213AD16;
+	Tue, 14 May 2024 11:10:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685026; cv=none; b=duPzGYjQMSIOIev4nAO7fCBaeHxSxMFe4hy8Jp7XCDFvW+c0LpFF6WoPcJfYlW3uY/3wZyoz1LTXURGBuTxKQ4tsUof66Fq4qilFe86C9kTc8/XG/Bp+iIcHZTueMsovzvHU23zwEomLzYZHdTOrAFPf226fYkz+B/Ju2Vu3eTI=
+	t=1715685036; cv=none; b=i4X57RjW+hXiK1rSileMU+NHS3OtQp53s2R+kyczmBjygxNtDCqTRc3TDj3SEaLxp6NDllmS7l9WAjM1bg8PrdjnjYPID0puPBlgS6AI7mH1Z6K9mICXsJ0jRH8yiI9gQuaCJMo63/GsrOP+pEkQIjcCRUd7mSgNzgJBOvMo1pI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685026; c=relaxed/simple;
-	bh=+Db5LF/levAnYPM+axMwGzviG6U4cTmZafcy+m1FBwc=;
+	s=arc-20240116; t=1715685036; c=relaxed/simple;
+	bh=auhhlMzPZ13+UDSeFc0ow0lJSpxVchO8CNZleajY4A0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N4g8rGRQO5s+9/IhFphefBudagGzW4TyTl60ZhQKbblaC19Z7Mowai1eBEDW2aANpj6NuSVPYPF8iXLhM7HBOj+SmnONJBhJ8P9yu8CzSe3+aPTFFnVw8SYHK9H3vUmhGwardseWFazJn+UQ9dUcc+VTBbw5qSI+KOdNqHnckvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sprUFKtC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ntsy6yCQR3Yv5lwGzXx11dclHaLQiifU1/U21gqCHFbm4hfdt3YKxK1PX6Lxy23hHflUe6ubGBf+WGCVg2suqMlidltTcqbmreX87/Vk7mGDxhnKdxuW6GpYsQ9+UYosuGAt89GpYGSdOV/r89RYikj6tOI8y36MER6HoM45Llk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCLk4MY5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sprUFKtC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37925C2BD10;
-	Tue, 14 May 2024 11:10:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCLk4MY5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829E0C2BD10;
+	Tue, 14 May 2024 11:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685026;
-	bh=+Db5LF/levAnYPM+axMwGzviG6U4cTmZafcy+m1FBwc=;
+	s=korg; t=1715685036;
+	bh=auhhlMzPZ13+UDSeFc0ow0lJSpxVchO8CNZleajY4A0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sprUFKtCdUUYfY/mcO5fwy5k+WJeUSpsoBgTX+078AGCY/3aCZfioM0ueVR8nPCKm
-	 HnPcqW9vDp+6Kil6zkdBZHazoPpFyq5dvPgOdJKIPeoNAKq2RWtVTE2LZ04/I4Nr+Z
-	 5SwijvDQO7xqc8aLtc5lK58h/p9A7ciKLu53Jmfk=
+	b=pCLk4MY5JAFWyhTdnqlerL9nXuLdTLliy8cfQKuCve/ptSDSTvpwCdcnrnTvdMw7P
+	 OF9PbsK3MaRAF7+lc9EJD+PwaYNKlY9wyBglzUME51D8qMyuYG3ix3A7oyy2dLOYlf
+	 xxp2NsY50MMH77qjWE6+61fIq8YOng+ilrj4UpoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7fb05ccf7b3d2f9617b3@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>,
+	Li Nan <linan122@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 123/301] ALSA: line6: Zero-initialize message buffers
-Date: Tue, 14 May 2024 12:16:34 +0200
-Message-ID: <20240514101036.894707074@linuxfoundation.org>
+Subject: [PATCH 6.6 124/301] block: fix overflow in blk_ioctl_discard()
+Date: Tue, 14 May 2024 12:16:35 +0200
+Message-ID: <20240514101036.931833527@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,55 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit c4e51e424e2c772ce1836912a8b0b87cd61bc9d5 ]
+[ Upstream commit 22d24a544b0d49bbcbd61c8c0eaf77d3c9297155 ]
 
-For shutting up spurious KMSAN uninit-value warnings, just replace
-kmalloc() calls with kzalloc() for the buffers used for
-communications.  There should be no real issue with the original code,
-but it's still better to cover.
+There is no check for overflow of 'start + len' in blk_ioctl_discard().
+Hung task occurs if submit an discard ioctl with the following param:
+  start = 0x80000000000ff000, len = 0x8000000000fff000;
+Add the overflow validation now.
 
-Reported-by: syzbot+7fb05ccf7b3d2f9617b3@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/00000000000084b18706150bcca5@google.com
-Message-ID: <20240402063628.26609-1-tiwai@suse.de>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20240329012319.2034550-1-linan666@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/driver.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ block/ioctl.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/usb/line6/driver.c b/sound/usb/line6/driver.c
-index b67617b68e509..f4437015d43a7 100644
---- a/sound/usb/line6/driver.c
-+++ b/sound/usb/line6/driver.c
-@@ -202,7 +202,7 @@ int line6_send_raw_message_async(struct usb_line6 *line6, const char *buffer,
- 	struct urb *urb;
+diff --git a/block/ioctl.c b/block/ioctl.c
+index d1d8e8391279a..68265f914c27b 100644
+--- a/block/ioctl.c
++++ b/block/ioctl.c
+@@ -89,7 +89,7 @@ static int blk_ioctl_discard(struct block_device *bdev, blk_mode_t mode,
+ 		unsigned long arg)
+ {
+ 	uint64_t range[2];
+-	uint64_t start, len;
++	uint64_t start, len, end;
+ 	struct inode *inode = bdev->bd_inode;
+ 	int err;
  
- 	/* create message: */
--	msg = kmalloc(sizeof(struct message), GFP_ATOMIC);
-+	msg = kzalloc(sizeof(struct message), GFP_ATOMIC);
- 	if (msg == NULL)
- 		return -ENOMEM;
+@@ -110,7 +110,8 @@ static int blk_ioctl_discard(struct block_device *bdev, blk_mode_t mode,
+ 	if (len & 511)
+ 		return -EINVAL;
  
-@@ -688,7 +688,7 @@ static int line6_init_cap_control(struct usb_line6 *line6)
- 	int ret;
+-	if (start + len > bdev_nr_bytes(bdev))
++	if (check_add_overflow(start, len, &end) ||
++	    end > bdev_nr_bytes(bdev))
+ 		return -EINVAL;
  
- 	/* initialize USB buffers: */
--	line6->buffer_listen = kmalloc(LINE6_BUFSIZE_LISTEN, GFP_KERNEL);
-+	line6->buffer_listen = kzalloc(LINE6_BUFSIZE_LISTEN, GFP_KERNEL);
- 	if (!line6->buffer_listen)
- 		return -ENOMEM;
- 
-@@ -697,7 +697,7 @@ static int line6_init_cap_control(struct usb_line6 *line6)
- 		return -ENOMEM;
- 
- 	if (line6->properties->capabilities & LINE6_CAP_CONTROL_MIDI) {
--		line6->buffer_message = kmalloc(LINE6_MIDI_MESSAGE_MAXLEN, GFP_KERNEL);
-+		line6->buffer_message = kzalloc(LINE6_MIDI_MESSAGE_MAXLEN, GFP_KERNEL);
- 		if (!line6->buffer_message)
- 			return -ENOMEM;
- 
+ 	filemap_invalidate_lock(inode->i_mapping);
 -- 
 2.43.0
 
