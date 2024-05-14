@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943B733CC2;
-	Tue, 14 May 2024 11:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0A933CC2;
+	Tue, 14 May 2024 11:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687377; cv=none; b=OiNLWqZwBaoPJLeQVKy9jTeDoM/ieAf4vpGmc2t4N10PBrLg++oLz9v6ZDGlvU53R2Zv8P9z4HVp0SfphobczGb6z95WZT1gHT98GGoAFWtmaaTTMkSbZxhc3rc57YW2aj2R4wNa/e7rnO8vuNeKR4j74kEuEL+50wGLQq5MUQs=
+	t=1715687380; cv=none; b=QLAzmguPjGOx5RZXxvR19vtOzVWMz250/eBamePrsT6wcm4Dr98v4vtrrKRrCZUMo1daJmID7pIbVrKXQxS72vRCmKWbcW+rXVovzuHtT72VOfV2kUIQI8ClB9UpVjJKfH/9gyOqz5LdtwZcQdJd95fdRMPnxYbHcWo3CG+TZmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687377; c=relaxed/simple;
-	bh=VYOeq1dSIxmhDB4ffipucmtRM2d3GGNrD9w5/Sjnj0o=;
+	s=arc-20240116; t=1715687380; c=relaxed/simple;
+	bh=/e4ae3MFq9AwHsrF2UwTjEhCssVmS/T6TgeKQ5cvwsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BhrmPXNMd4mV9BPaOLbNKF1P2NR9+o8gSQNygXgILZ0phBT+oAYnDHxbt+cq4Vzd/MDIjciFfag0T1+L9l1LKdOaKgztF1+yQG9S3lJLrb7LKySUTeFcViBFwaHB7vDCocbKNumfwt8bGclUdljxoZ9Juks96LKtDhlu+cbWbfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fg3gk7ZC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=en66uTjMgLmMvr8kdhV81zXZjfyq6ougiTciBIntO3o7uhCTedtdkGW+ubrw1MH9t7O4d0DMblgKMMbMNPegZenyU66kPTg8grT1jiruaeNrRccZia8C8BvMLDbNBOD8jbpN3n4u4eU2m9uTVhU2LuLpxTq57yC1csMMWErMu7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EUp2ViB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fg3gk7ZC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD03C2BD10;
-	Tue, 14 May 2024 11:49:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EUp2ViB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02083C2BD10;
+	Tue, 14 May 2024 11:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687377;
-	bh=VYOeq1dSIxmhDB4ffipucmtRM2d3GGNrD9w5/Sjnj0o=;
+	s=korg; t=1715687380;
+	bh=/e4ae3MFq9AwHsrF2UwTjEhCssVmS/T6TgeKQ5cvwsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fg3gk7ZCY014GV7wUGazsr680engZ0k+l21qqF6pw791EgTn+DZEdw84Fdh3993PX
-	 IDK9pLN7Xiwc7x8HRocIjMXLdedCaUtJt+XKj6Fb5/LIZliwIbhPSIna+m/HZnfuZr
-	 I6Abqi2/XQbX1uaX+lVuft42Yu6UmdK/332tynG4=
+	b=1EUp2ViBTn4L2OjF2z6J6BHPjG2Mh5IJXOJYng8cv/cCX+c6A/Cs/JhjrcLf8Uana
+	 HvYPC2Y4fIIgUEfUoMr5yHEblU9MBG4l13oeQ+axGZz76mj8/2gfhI9BS5+Ox3FwQY
+	 B0azIQ41D6+BvEH/bNktl1Y1GOMKtFoAPuSXMri0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Davey <paul.davey@alliedtelesis.co.nz>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 075/111] xfrm: Preserve vlan tags for transport mode software GRO
-Date: Tue, 14 May 2024 12:20:13 +0200
-Message-ID: <20240514100959.982914295@linuxfoundation.org>
+Subject: [PATCH 5.10 076/111] tcp: defer shutdown(SEND_SHUTDOWN) for TCP_SYN_RECV sockets
+Date: Tue, 14 May 2024 12:20:14 +0200
+Message-ID: <20240514101000.021349179@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -51,151 +53,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Davey <paul.davey@alliedtelesis.co.nz>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 58fbfecab965014b6e3cc956a76b4a96265a1add ]
+[ Upstream commit 94062790aedb505bdda209b10bea47b294d6394f ]
 
-The software GRO path for esp transport mode uses skb_mac_header_rebuild
-prior to re-injecting the packet via the xfrm_napi_dev.  This only
-copies skb->mac_len bytes of header which may not be sufficient if the
-packet contains 802.1Q tags or other VLAN tags.  Worse copying only the
-initial header will leave a packet marked as being VLAN tagged but
-without the corresponding tag leading to mangling when it is later
-untagged.
+TCP_SYN_RECV state is really special, it is only used by
+cross-syn connections, mostly used by fuzzers.
 
-The VLAN tags are important when receiving the decrypted esp transport
-mode packet after GRO processing to ensure it is received on the correct
-interface.
+In the following crash [1], syzbot managed to trigger a divide
+by zero in tcp_rcv_space_adjust()
 
-Therefore record the full mac header length in xfrm*_transport_input for
-later use in corresponding xfrm*_transport_finish to copy the entire mac
-header when rebuilding the mac header for GRO.  The skb->data pointer is
-left pointing skb->mac_header bytes after the start of the mac header as
-is expected by the network stack and network and transport header
-offsets reset to this location.
+A socket makes the following state transitions,
+without ever calling tcp_init_transfer(),
+meaning tcp_init_buffer_space() is also not called.
 
-Fixes: 7785bba299a8 ("esp: Add a software GRO codepath")
-Signed-off-by: Paul Davey <paul.davey@alliedtelesis.co.nz>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+         TCP_CLOSE
+connect()
+         TCP_SYN_SENT
+         TCP_SYN_RECV
+shutdown() -> tcp_shutdown(sk, SEND_SHUTDOWN)
+         TCP_FIN_WAIT1
+
+To fix this issue, change tcp_shutdown() to not
+perform a TCP_SYN_RECV -> TCP_FIN_WAIT1 transition,
+which makes no sense anyway.
+
+When tcp_rcv_state_process() later changes socket state
+from TCP_SYN_RECV to TCP_ESTABLISH, then look at
+sk->sk_shutdown to finally enter TCP_FIN_WAIT1 state,
+and send a FIN packet from a sane socket state.
+
+This means tcp_send_fin() can now be called from BH
+context, and must use GFP_ATOMIC allocations.
+
+[1]
+divide error: 0000 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 1 PID: 5084 Comm: syz-executor358 Not tainted 6.9.0-rc6-syzkaller-00022-g98369dccd2f8 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+ RIP: 0010:tcp_rcv_space_adjust+0x2df/0x890 net/ipv4/tcp_input.c:767
+Code: e3 04 4c 01 eb 48 8b 44 24 38 0f b6 04 10 84 c0 49 89 d5 0f 85 a5 03 00 00 41 8b 8e c8 09 00 00 89 e8 29 c8 48 0f af c3 31 d2 <48> f7 f1 48 8d 1c 43 49 8d 96 76 08 00 00 48 89 d0 48 c1 e8 03 48
+RSP: 0018:ffffc900031ef3f0 EFLAGS: 00010246
+RAX: 0c677a10441f8f42 RBX: 000000004fb95e7e RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: 0000000027d4b11f R08: ffffffff89e535a4 R09: 1ffffffff25e6ab7
+R10: dffffc0000000000 R11: ffffffff8135e920 R12: ffff88802a9f8d30
+R13: dffffc0000000000 R14: ffff88802a9f8d00 R15: 1ffff1100553f2da
+FS:  00005555775c0380(0000) GS:ffff8880b9500000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f1155bf2304 CR3: 000000002b9f2000 CR4: 0000000000350ef0
+Call Trace:
+ <TASK>
+  tcp_recvmsg_locked+0x106d/0x25a0 net/ipv4/tcp.c:2513
+  tcp_recvmsg+0x25d/0x920 net/ipv4/tcp.c:2578
+  inet6_recvmsg+0x16a/0x730 net/ipv6/af_inet6.c:680
+  sock_recvmsg_nosec net/socket.c:1046 [inline]
+  sock_recvmsg+0x109/0x280 net/socket.c:1068
+  ____sys_recvmsg+0x1db/0x470 net/socket.c:2803
+  ___sys_recvmsg net/socket.c:2845 [inline]
+  do_recvmmsg+0x474/0xae0 net/socket.c:2939
+  __sys_recvmmsg net/socket.c:3018 [inline]
+  __do_sys_recvmmsg net/socket.c:3041 [inline]
+  __se_sys_recvmmsg net/socket.c:3034 [inline]
+  __x64_sys_recvmmsg+0x199/0x250 net/socket.c:3034
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7faeb6363db9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 c1 17 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ffcc1997168 EFLAGS: 00000246 ORIG_RAX: 000000000000012b
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007faeb6363db9
+RDX: 0000000000000001 RSI: 0000000020000bc0 RDI: 0000000000000005
+RBP: 0000000000000000 R08: 0000000000000000 R09: 000000000000001c
+R10: 0000000000000122 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000001
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Link: https://lore.kernel.org/r/20240501125448.896529-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 15 +++++++++++++++
- include/net/xfrm.h     |  3 +++
- net/ipv4/xfrm4_input.c |  6 +++++-
- net/ipv6/xfrm6_input.c |  6 +++++-
- net/xfrm/xfrm_input.c  |  8 ++++++++
- 5 files changed, 36 insertions(+), 2 deletions(-)
+ net/ipv4/tcp.c        | 4 ++--
+ net/ipv4/tcp_input.c  | 2 ++
+ net/ipv4/tcp_output.c | 4 +++-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index a210f19958621..31755d496b01d 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -2607,6 +2607,21 @@ static inline void skb_mac_header_rebuild(struct sk_buff *skb)
- 	}
- }
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index ac6cb2dc60380..4ed0d303791a1 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -2493,7 +2493,7 @@ void tcp_shutdown(struct sock *sk, int how)
+ 	/* If we've already sent a FIN, or it's a closed state, skip this. */
+ 	if ((1 << sk->sk_state) &
+ 	    (TCPF_ESTABLISHED | TCPF_SYN_SENT |
+-	     TCPF_SYN_RECV | TCPF_CLOSE_WAIT)) {
++	     TCPF_CLOSE_WAIT)) {
+ 		/* Clear out any half completed packets.  FIN if needed. */
+ 		if (tcp_close_state(sk))
+ 			tcp_send_fin(sk);
+@@ -2604,7 +2604,7 @@ void __tcp_close(struct sock *sk, long timeout)
+ 		 * machine. State transitions:
+ 		 *
+ 		 * TCP_ESTABLISHED -> TCP_FIN_WAIT1
+-		 * TCP_SYN_RECV	-> TCP_FIN_WAIT1 (forget it, it's impossible)
++		 * TCP_SYN_RECV	-> TCP_FIN_WAIT1 (it is difficult)
+ 		 * TCP_CLOSE_WAIT -> TCP_LAST_ACK
+ 		 *
+ 		 * are legal only when FIN has been sent (i.e. in window),
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 0f9fe5edad142..512f8dc051c61 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -6516,6 +6516,8 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
  
-+/* Move the full mac header up to current network_header.
-+ * Leaves skb->data pointing at offset skb->mac_len into the mac_header.
-+ * Must be provided the complete mac header length.
-+ */
-+static inline void skb_mac_header_rebuild_full(struct sk_buff *skb, u32 full_mac_len)
-+{
-+	if (skb_mac_header_was_set(skb)) {
-+		const unsigned char *old_mac = skb_mac_header(skb);
-+
-+		skb_set_mac_header(skb, -full_mac_len);
-+		memmove(skb_mac_header(skb), old_mac, full_mac_len);
-+		__skb_push(skb, full_mac_len - skb->mac_len);
-+	}
-+}
-+
- static inline int skb_checksum_start_offset(const struct sk_buff *skb)
- {
- 	return skb->csum_start - skb_headroom(skb);
-diff --git a/include/net/xfrm.h b/include/net/xfrm.h
-index 7865db2f827e6..6fbaf304648f6 100644
---- a/include/net/xfrm.h
-+++ b/include/net/xfrm.h
-@@ -1028,6 +1028,9 @@ struct xfrm_offload {
- #define CRYPTO_INVALID_PACKET_SYNTAX		64
- #define CRYPTO_INVALID_PROTOCOL			128
+ 		tcp_initialize_rcv_mss(sk);
+ 		tcp_fast_path_on(tp);
++		if (sk->sk_shutdown & SEND_SHUTDOWN)
++			tcp_shutdown(sk, SEND_SHUTDOWN);
+ 		break;
  
-+	/* Used to keep whole l2 header for transport mode GRO */
-+	__u32			orig_mac_len;
-+
- 	__u8			proto;
- };
+ 	case TCP_FIN_WAIT1: {
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index f0df14782ee01..68f1633c477ae 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3440,7 +3440,9 @@ void tcp_send_fin(struct sock *sk)
+ 			return;
+ 		}
+ 	} else {
+-		skb = alloc_skb_fclone(MAX_TCP_HEADER, sk->sk_allocation);
++		skb = alloc_skb_fclone(MAX_TCP_HEADER,
++				       sk_gfp_mask(sk, GFP_ATOMIC |
++						       __GFP_NOWARN));
+ 		if (unlikely(!skb))
+ 			return;
  
-diff --git a/net/ipv4/xfrm4_input.c b/net/ipv4/xfrm4_input.c
-index eac206a290d05..1f50517289fd9 100644
---- a/net/ipv4/xfrm4_input.c
-+++ b/net/ipv4/xfrm4_input.c
-@@ -61,7 +61,11 @@ int xfrm4_transport_finish(struct sk_buff *skb, int async)
- 	ip_send_check(iph);
- 
- 	if (xo && (xo->flags & XFRM_GRO)) {
--		skb_mac_header_rebuild(skb);
-+		/* The full l2 header needs to be preserved so that re-injecting the packet at l2
-+		 * works correctly in the presence of vlan tags.
-+		 */
-+		skb_mac_header_rebuild_full(skb, xo->orig_mac_len);
-+		skb_reset_network_header(skb);
- 		skb_reset_transport_header(skb);
- 		return 0;
- 	}
-diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
-index 4907ab241d6be..7dbefbb338ca5 100644
---- a/net/ipv6/xfrm6_input.c
-+++ b/net/ipv6/xfrm6_input.c
-@@ -56,7 +56,11 @@ int xfrm6_transport_finish(struct sk_buff *skb, int async)
- 	skb_postpush_rcsum(skb, skb_network_header(skb), nhlen);
- 
- 	if (xo && (xo->flags & XFRM_GRO)) {
--		skb_mac_header_rebuild(skb);
-+		/* The full l2 header needs to be preserved so that re-injecting the packet at l2
-+		 * works correctly in the presence of vlan tags.
-+		 */
-+		skb_mac_header_rebuild_full(skb, xo->orig_mac_len);
-+		skb_reset_network_header(skb);
- 		skb_reset_transport_header(skb);
- 		return 0;
- 	}
-diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
-index f3bccab983f05..0c3fa01ec67a7 100644
---- a/net/xfrm/xfrm_input.c
-+++ b/net/xfrm/xfrm_input.c
-@@ -399,11 +399,15 @@ static int xfrm_prepare_input(struct xfrm_state *x, struct sk_buff *skb)
-  */
- static int xfrm4_transport_input(struct xfrm_state *x, struct sk_buff *skb)
- {
-+	struct xfrm_offload *xo = xfrm_offload(skb);
- 	int ihl = skb->data - skb_transport_header(skb);
- 
- 	if (skb->transport_header != skb->network_header) {
- 		memmove(skb_transport_header(skb),
- 			skb_network_header(skb), ihl);
-+		if (xo)
-+			xo->orig_mac_len =
-+				skb_mac_header_was_set(skb) ? skb_mac_header_len(skb) : 0;
- 		skb->network_header = skb->transport_header;
- 	}
- 	ip_hdr(skb)->tot_len = htons(skb->len + ihl);
-@@ -414,11 +418,15 @@ static int xfrm4_transport_input(struct xfrm_state *x, struct sk_buff *skb)
- static int xfrm6_transport_input(struct xfrm_state *x, struct sk_buff *skb)
- {
- #if IS_ENABLED(CONFIG_IPV6)
-+	struct xfrm_offload *xo = xfrm_offload(skb);
- 	int ihl = skb->data - skb_transport_header(skb);
- 
- 	if (skb->transport_header != skb->network_header) {
- 		memmove(skb_transport_header(skb),
- 			skb_network_header(skb), ihl);
-+		if (xo)
-+			xo->orig_mac_len =
-+				skb_mac_header_was_set(skb) ? skb_mac_header_len(skb) : 0;
- 		skb->network_header = skb->transport_header;
- 	}
- 	ipv6_hdr(skb)->payload_len = htons(skb->len + ihl -
 -- 
 2.43.0
 
