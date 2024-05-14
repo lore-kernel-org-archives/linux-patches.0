@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481776311D;
-	Tue, 14 May 2024 11:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D9F6311D;
+	Tue, 14 May 2024 11:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685951; cv=none; b=slVNzosQYTDTios8v7D3iBjIue6exEVlx9C1QUr73mllSGyFTXRNsN9+2UbkCmDXooudcKTxxZ21oQNWvslyDpURT39WlyyKzh5f+AiVETaaHrLQO5tpDX+c+GdL5trxymOIcAq8TYhz5lxxivA1djoeYP4Yu5wtYMBS7+YD1b8=
+	t=1715685955; cv=none; b=Xl7M90T/kokCWs7JSLXFT1WcmudxyAto+qcac3E0eeUnxZGAIcwFaN2mKPGxACEqIbT/YmK0ZJUjr9psH8PKKvaQR+IiYoR4y/HahxI59jX8uKMgwgjcWIMm7VK3BJlIWU3aMoGvvpodeXcWK3dldCIbKQTr+0wiSjhYnM4WlNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685951; c=relaxed/simple;
-	bh=zS2meG26Tali+2y9sH/REtdzN1lAD2TQvofMmdV/BaE=;
+	s=arc-20240116; t=1715685955; c=relaxed/simple;
+	bh=DU2Vtmg92B74Y5/8TqiyuebmvGROEzOapbJ+48+VIxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/EyvglebPn86aR8GymjM3QivRHt7+DiHuiXn6fNlsV1UubcSu17yV5trUWJaA6m4hq1jhj2UE9+aq2tefzxVTNk7pXY+bqpW0ggd0S7HYnXURhwQUtuteoLeSffTbleHKykLpmRH7XDFwQQSt8xyFtWK3Wt+dd99jwnuZ0nckQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bEAiZYf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jqSl8tynIH7kVlt/J0ahSsJhUyZ3/c+2Dj7Phk8n0X6b5pnIkcCztEeUeEh+5UAT9e4+R8NVMlj9ftFa9kYBiP+SekNyc4Ic2a6J7ptXA+4ArHdS98XAFirqV3hH/AXf9lPDQsjBwbJtfjFBHY13R3sPqS6uvmwhlGK4sF+d1oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayL1h7ua; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bEAiZYf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C15C2BD10;
-	Tue, 14 May 2024 11:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayL1h7ua"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6731CC2BD10;
+	Tue, 14 May 2024 11:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685951;
-	bh=zS2meG26Tali+2y9sH/REtdzN1lAD2TQvofMmdV/BaE=;
+	s=korg; t=1715685954;
+	bh=DU2Vtmg92B74Y5/8TqiyuebmvGROEzOapbJ+48+VIxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1bEAiZYfvj8yVLxH5PYaWRbXKgjQgXZSZwWNyd1k8dBML1B8JbqOhvPus+24UMjtk
-	 u5VtfkL1CJFy+MGNPRKu56G5g/68wLUGsuO2qdXnVIqA5BCwpFVf4zPloV4kPqmHX9
-	 Bus/N9Yuq1G8K9UxtXPlgmPRUnc1Pc3FYV9lPsWw=
+	b=ayL1h7uamiR9EKlO1Plx74pIxZHgjb1uWOrO3pEiYuyqDL6Y5ZronORvCrbr8NTFk
+	 sPqdJZVKMPnfSjspraPwsaYsG8tTFZwRbSNRMpyuDH+117hJmMjuHuLKs+z9Ckk2Be
+	 XQZioAVYI+GEK4shtB/pxYkW0S4FIexg9Ke1G4r8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d8426b591c36b21c750e@syzkaller.appspotmail.com,
-	Peter Xu <peterx@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	Nadav Amit <nadav.amit@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 283/301] mm/userfaultfd: reset ptes when close() for wr-protected ones
-Date: Tue, 14 May 2024 12:19:14 +0200
-Message-ID: <20240514101042.949731308@linuxfoundation.org>
+	Sean Anderson <sean.anderson@linux.dev>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.6 284/301] nvme-pci: Add quirk for broken MSIs
+Date: Tue, 14 May 2024 12:19:15 +0200
+Message-ID: <20240514101042.986916670@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -53,54 +50,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Xu <peterx@redhat.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-commit c88033efe9a391e72ba6b5df4b01d6e628f4e734 upstream.
+commit d5887dc6b6c054d0da3cd053afc15b7be1f45ff6 upstream.
 
-Userfaultfd unregister includes a step to remove wr-protect bits from all
-the relevant pgtable entries, but that only covered an explicit
-UFFDIO_UNREGISTER ioctl, not a close() on the userfaultfd itself.  Cover
-that too.  This fixes a WARN trace.
+Sandisk SN530 NVMe drives have broken MSIs. On systems without MSI-X
+support, all commands time out resulting in the following message:
 
-The only user visible side effect is the user can observe leftover
-wr-protect bits even if the user close()ed on an userfaultfd when
-releasing the last reference of it.  However hopefully that should be
-harmless, and nothing bad should happen even if so.
+nvme nvme0: I/O tag 12 (100c) QID 0 timeout, completion polled
 
-This change is now more important after the recent page-table-check
-patch we merged in mm-unstable (446dd9ad37d0 ("mm/page_table_check:
-support userfault wr-protect entries")), as we'll do sanity check on
-uffd-wp bits without vma context.  So it's better if we can 100%
-guarantee no uffd-wp bit leftovers, to make sure each report will be
-valid.
+These timeouts cause the boot to take an excessively-long time (over 20
+minutes) while the initial command queue is flushed.
 
-Link: https://lore.kernel.org/all/000000000000ca4df20616a0fe16@google.com/
-Fixes: f369b07c8614 ("mm/uffd: reset write protection when unregister with wp-mode")
-Analyzed-by: David Hildenbrand <david@redhat.com>
-Link: https://lkml.kernel.org/r/20240422133311.2987675-1-peterx@redhat.com
-Reported-by: syzbot+d8426b591c36b21c750e@syzkaller.appspotmail.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Cc: Nadav Amit <nadav.amit@gmail.com>
+Address this by adding a quirk for drives with buggy MSIs. The lspci
+output for this device (recorded on a system with MSI-X support) is:
+
+02:00.0 Non-Volatile memory controller: Sandisk Corp Device 5008 (rev 01) (prog-if 02 [NVM Express])
+	Subsystem: Sandisk Corp Device 5008
+	Flags: bus master, fast devsel, latency 0, IRQ 16, NUMA node 0
+	Memory at f7e00000 (64-bit, non-prefetchable) [size=16K]
+	Memory at f7e04000 (64-bit, non-prefetchable) [size=256]
+	Capabilities: [80] Power Management version 3
+	Capabilities: [90] MSI: Enable- Count=1/32 Maskable- 64bit+
+	Capabilities: [b0] MSI-X: Enable+ Count=17 Masked-
+	Capabilities: [c0] Express Endpoint, MSI 00
+	Capabilities: [100] Advanced Error Reporting
+	Capabilities: [150] Device Serial Number 00-00-00-00-00-00-00-00
+	Capabilities: [1b8] Latency Tolerance Reporting
+	Capabilities: [300] Secondary PCI Express
+	Capabilities: [900] L1 PM Substates
+	Kernel driver in use: nvme
+	Kernel modules: nvme
+
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/userfaultfd.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nvme/host/nvme.h |    5 +++++
+ drivers/nvme/host/pci.c  |   14 +++++++++++---
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -921,6 +921,10 @@ static int userfaultfd_release(struct in
- 			prev = vma;
- 			continue;
- 		}
-+		/* Reset ptes for the whole vma range if wr-protected */
-+		if (userfaultfd_wp(vma))
-+			uffd_wp_range(vma, vma->vm_start,
-+				      vma->vm_end - vma->vm_start, false);
- 		new_flags = vma->vm_flags & ~__VM_UFFD_FLAGS;
- 		prev = vma_merge(&vmi, mm, prev, vma->vm_start, vma->vm_end,
- 				 new_flags, vma->anon_vma,
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -161,6 +161,11 @@ enum nvme_quirks {
+ 	 * Disables simple suspend/resume path.
+ 	 */
+ 	NVME_QUIRK_FORCE_NO_SIMPLE_SUSPEND	= (1 << 20),
++
++	/*
++	 * MSI (but not MSI-X) interrupts are broken and never fire.
++	 */
++	NVME_QUIRK_BROKEN_MSI			= (1 << 21),
+ };
+ 
+ /*
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2216,6 +2216,7 @@ static int nvme_setup_irqs(struct nvme_d
+ 		.priv		= dev,
+ 	};
+ 	unsigned int irq_queues, poll_queues;
++	unsigned int flags = PCI_IRQ_ALL_TYPES | PCI_IRQ_AFFINITY;
+ 
+ 	/*
+ 	 * Poll queues don't need interrupts, but we need at least one I/O queue
+@@ -2239,8 +2240,10 @@ static int nvme_setup_irqs(struct nvme_d
+ 	irq_queues = 1;
+ 	if (!(dev->ctrl.quirks & NVME_QUIRK_SINGLE_VECTOR))
+ 		irq_queues += (nr_io_queues - poll_queues);
+-	return pci_alloc_irq_vectors_affinity(pdev, 1, irq_queues,
+-			      PCI_IRQ_ALL_TYPES | PCI_IRQ_AFFINITY, &affd);
++	if (dev->ctrl.quirks & NVME_QUIRK_BROKEN_MSI)
++		flags &= ~PCI_IRQ_MSI;
++	return pci_alloc_irq_vectors_affinity(pdev, 1, irq_queues, flags,
++					      &affd);
+ }
+ 
+ static unsigned int nvme_max_io_queues(struct nvme_dev *dev)
+@@ -2469,6 +2472,7 @@ static int nvme_pci_enable(struct nvme_d
+ {
+ 	int result = -ENOMEM;
+ 	struct pci_dev *pdev = to_pci_dev(dev->dev);
++	unsigned int flags = PCI_IRQ_ALL_TYPES;
+ 
+ 	if (pci_enable_device_mem(pdev))
+ 		return result;
+@@ -2485,7 +2489,9 @@ static int nvme_pci_enable(struct nvme_d
+ 	 * interrupts. Pre-enable a single MSIX or MSI vec for setup. We'll
+ 	 * adjust this later.
+ 	 */
+-	result = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES);
++	if (dev->ctrl.quirks & NVME_QUIRK_BROKEN_MSI)
++		flags &= ~PCI_IRQ_MSI;
++	result = pci_alloc_irq_vectors(pdev, 1, 1, flags);
+ 	if (result < 0)
+ 		goto disable;
+ 
+@@ -3382,6 +3388,8 @@ static const struct pci_device_id nvme_i
+ 		.driver_data = NVME_QUIRK_DELAY_BEFORE_CHK_RDY |
+ 				NVME_QUIRK_DISABLE_WRITE_ZEROES|
+ 				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
++	{ PCI_DEVICE(0x15b7, 0x5008),   /* Sandisk SN530 */
++		.driver_data = NVME_QUIRK_BROKEN_MSI },
+ 	{ PCI_DEVICE(0x1987, 0x5012),	/* Phison E12 */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1987, 0x5016),	/* Phison E16 */
 
 
