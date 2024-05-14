@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D9384D3F;
-	Tue, 14 May 2024 11:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A8C7FBD3;
+	Tue, 14 May 2024 11:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686073; cv=none; b=IfFoJ2WJcF4MC1332v+uQmz/PA/IpwtpjNsHzvU9GlWkB8aXHzR46jy+XIn8w7nx/2vMisfl91C4X2oIQ5lcqHyEGnsv7811aWEP7b1MYvn5caKLRh/eEXyJoIGKxEXI8YdXsOBsyYzdGx+hnWav1ixzCOD6mclqM9FXYnJkHbA=
+	t=1715686076; cv=none; b=P/JZj31eCmzQjyUs+wP1AjNB5JS/txxmFgut/PAvzZVMIb4yyjR4SVuMVgcXUYxgqHITHkzwiDRZIFh4EsMKYFpg5i7vBNuOvjGGlzlF5l4bkfExMI8yV98Alh+Mmo5BUzH+/zDc4Hhuz/MeEcWNSQ+qxmP7IsMsesnjwGw0kOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686073; c=relaxed/simple;
-	bh=AnT3gfNH7iDwPqhMAykdrE4VrA+/Cx75Ejnu0nLzDko=;
+	s=arc-20240116; t=1715686076; c=relaxed/simple;
+	bh=cyZXUTrZAFThX5iTo1lGQEoplI1okWO3rrdCDnpPnsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L52tGSSSij30MYmhqXHJtnChk269QUkNqqOV/fbKFAML0JpYF+KJKxZuzmdfCcfaHD5Ug0QkCU9DitRM12+aYmwlOwsJBMqSrZqfOGJZ3CxwJIFnCDNuqKLGl0ZlgO7bv0C9cFHDk36LZfNyk3S9qxJUm9w4la4Qh6GOKr1gf00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kc5eDNRd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KnBSltJ2pCocaxt5wC7uTXpmRfNcCUPHVzjdcBRrq5pAjS97F4DG66urht8naBPiw76CcnxzIzkpkKX1m6xuFCGi0O3DSMpc2vzULmRKCQ63yCh8aTeh9fWgZ4a4g0HYOqdDp1EApAOBE1Hj35MZ9baH7l7vpc+sWODuJsKNSgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vF5Vapno; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kc5eDNRd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6CE7C2BD10;
-	Tue, 14 May 2024 11:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vF5Vapno"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38DCC2BD10;
+	Tue, 14 May 2024 11:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686073;
-	bh=AnT3gfNH7iDwPqhMAykdrE4VrA+/Cx75Ejnu0nLzDko=;
+	s=korg; t=1715686076;
+	bh=cyZXUTrZAFThX5iTo1lGQEoplI1okWO3rrdCDnpPnsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kc5eDNRdtMKB0u5URNN5rOS1HlRsm0vzvOIKnxd1Bs78buz9KyXZ3NgH9Jb6LVrnH
-	 p+1epnes3Drp8dqXGahySkhDj1ncY9Ilkrvh/+ePcxGwf6BLuaFyxhoa2UQLecpod5
-	 pYKyOKD5XelLiDVJWRJlEYcbxJ7DNdQW1MEOe2g4=
+	b=vF5Vapnoo89KoHADS74W1YkdnuiEV7b5zeidHstaqPlkEbAWryV8lOIHGpFQTTuLx
+	 ekFYUVxi1WpzMUpZKdXdp7YERKM5RzryuGWih1+8/7gJK17nintUKheKG/toWbF/1H
+	 hac4SJICz4g2ed2y2cEVJtFrYbxLhsC6zYzuicfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Wedson Almeida Filho <walmeida@microsoft.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/236] wifi: nl80211: dont free NULL coalescing rule
-Date: Tue, 14 May 2024 12:16:05 +0200
-Message-ID: <20240514101020.456308559@linuxfoundation.org>
+Subject: [PATCH 6.1 004/236] rust: kernel: require `Send` for `Module` implementations
+Date: Tue, 14 May 2024 12:16:06 +0200
+Message-ID: <20240514101020.493044334@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -51,35 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Wedson Almeida Filho <walmeida@microsoft.com>
 
-[ Upstream commit 801ea33ae82d6a9d954074fbcf8ea9d18f1543a7 ]
+[ Upstream commit 323617f649c0966ad5e741e47e27e06d3a680d8f ]
 
-If the parsing fails, we can dereference a NULL pointer here.
+The thread that calls the module initialisation code when a module is
+loaded is not guaranteed [in fact, it is unlikely] to be the same one
+that calls the module cleanup code on module unload, therefore, `Module`
+implementations must be `Send` to account for them moving from one
+thread to another implicitly.
 
+Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+Cc: stable@vger.kernel.org # 6.8.x: df70d04d5697: rust: phy: implement `Send` for `Registration`
 Cc: stable@vger.kernel.org
-Fixes: be29b99a9b51 ("cfg80211/nl80211: Add packet coalesce support")
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240418105220.b328f80406e7.Id75d961050deb05b3e4e354e024866f350c68103@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 247b365dc8dc ("rust: add `kernel` crate")
+Link: https://lore.kernel.org/r/20240328195457.225001-3-wedsonaf@gmail.com
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 2 ++
- 1 file changed, 2 insertions(+)
+ rust/kernel/lib.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 1a3bd554e2586..a00df7b89ca86 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -13802,6 +13802,8 @@ static int nl80211_set_coalesce(struct sk_buff *skb, struct genl_info *info)
- error:
- 	for (i = 0; i < new_coalesce.n_rules; i++) {
- 		tmp_rule = &new_coalesce.rules[i];
-+		if (!tmp_rule)
-+			continue;
- 		for (j = 0; j < tmp_rule->n_patterns; j++)
- 			kfree(tmp_rule->patterns[j].mask);
- 		kfree(tmp_rule->patterns);
+diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
+index abd46261d3855..43cf5f6bde9c2 100644
+--- a/rust/kernel/lib.rs
++++ b/rust/kernel/lib.rs
+@@ -37,7 +37,7 @@
+ /// The top level entrypoint to implementing a kernel module.
+ ///
+ /// For any teardown or cleanup operations, your type may implement [`Drop`].
+-pub trait Module: Sized + Sync {
++pub trait Module: Sized + Sync + Send {
+     /// Called at module initialization time.
+     ///
+     /// Use this method to perform whatever setup or registration your module
 -- 
 2.43.0
 
