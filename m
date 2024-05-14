@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A3153392;
-	Tue, 14 May 2024 10:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B69E53368;
+	Tue, 14 May 2024 10:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682769; cv=none; b=otnQCXd9Ks9YOBT1Cra+U/pKIjuiCfTSBYvI2TWJmpzLf/YMR9XliM1FYDG5DAGISqrYtEsBMj7Blpt8E82f7w9ZLXFdGatJA1j7bV7Mv8tVt77y2mwdcsQanQFpfvzRhmOItvM/RiJnz/DoraEmquZoOFSM5uihTqlT3cJdn+w=
+	t=1715682775; cv=none; b=UAK5QP/7xTafgjxHEFUvtvg+RP+hr+C/QRPPw1ln+433n6uyWSvNq/P2i9G0WlSXWjiiZK2dJaPq0nL4uWX7YpNW2h/9fhEW82Jh0DbedkguZF0Nrxp/UPLCbAnLQ8S7kirRJZ+7llY19z4L9O1h/LDk4QFysurqxsCeK8I24R4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682769; c=relaxed/simple;
-	bh=yOOrWfZoADmG90uvO0tE4bv1Po20yQhjWpl8Qlf1bzM=;
+	s=arc-20240116; t=1715682775; c=relaxed/simple;
+	bh=0rmpYa4QCn9F61mvWwLqDEDswzo2poh5yW1PL9x8iN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ybl7Q3rzSBDWnySxDCUPIr7OEEE8k/BdjBSriw7uG7CAguEIMxE37O1fRZam59OG/PHo8J1PnyKvUmjGnjovBQuWGVy6qAAW3icrqcG8NuaMsMaOpoYCfalNm2TZWvJfy/8weob3s9MKgJsYEkC+eQSErkdffYy6yKRIabUrTCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELPyxF4+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SkXcAsRQzQOdxxlqm+6d2D6WUm58r/TuuTtkJprmG5HN6ciZpgCcMF6Frn7um9MM9p7Vj6eNQXYYmaJtLKA0j3L1kNryE926Lka4rmqIo41OvCYY5CEA/iLvOU3nx1J8pb647hqZuAd+yWPW+oCoVK3FmrrUVBBSB9mwljEqpHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gbg44f2B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELPyxF4+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7CEC32782;
-	Tue, 14 May 2024 10:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gbg44f2B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6970FC2BD10;
+	Tue, 14 May 2024 10:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682769;
-	bh=yOOrWfZoADmG90uvO0tE4bv1Po20yQhjWpl8Qlf1bzM=;
+	s=korg; t=1715682774;
+	bh=0rmpYa4QCn9F61mvWwLqDEDswzo2poh5yW1PL9x8iN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ELPyxF4+3HttCWPKQSuTAmIAhM9M43okrAQNL/PpFd8tCxQVnQGcfz3Kzm2m5WBSy
-	 5L2676u+l+hUYxLb8DUpDUyvr5ua/FGK/ZPJ2Y2htET1yJELHwDhKvTTFC3JOJ1QRj
-	 zrbX+r/0oGhVMRom1oRVjXa+lYfAhHMmQI2hs6ts=
+	b=Gbg44f2BqFSfXxvfUIpU5sxLJArKGssw/c/JB6Pt62Ue+fLUeAl/Wpzd27zj18Ybg
+	 KRrrCwJSZwKTotVpd8o3AZZH8X5RpkTCIJrgLLjju7VaHp726mrv1zFHtg80ia0+Q5
+	 AgvM+1YAe2Klad3CrN9xRKyAzcaHwGVCLyJac5vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,10 +30,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sui Jingfeng <sui.jingfeng@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 080/336] drm/panel: ili9341: Correct use of device property APIs
-Date: Tue, 14 May 2024 12:14:44 +0200
-Message-ID: <20240514101041.626180327@linuxfoundation.org>
+Subject: [PATCH 6.8 081/336] drm/panel: ili9341: Respect deferred probe
+Date: Tue, 14 May 2024 12:14:45 +0200
+Message-ID: <20240514101041.663904325@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -54,61 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit d43cd48ef1791801c61a54fade4a88d294dedf77 ]
+[ Upstream commit 740fc1e0509be3f7e2207e89125b06119ed62943 ]
 
-It seems driver missed the point of proper use of device property APIs.
-Correct this by updating headers and calls respectively.
+GPIO controller might not be available when driver is being probed.
+There are plenty of reasons why, one of which is deferred probe.
+
+Since GPIOs are optional, return any error code we got to the upper
+layer, including deferred probe. With that in mind, use dev_err_probe()
+in order to avoid spamming the logs.
 
 Fixes: 5a04227326b0 ("drm/panel: Add ilitek ili9341 panel driver")
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20240425142706.2440113-2-andriy.shevchenko@linux.intel.com
+Reviewed-by: Sui Jingfeng <sui.jingfeng@linux.dev>
+Link: https://lore.kernel.org/r/20240425142706.2440113-3-andriy.shevchenko@linux.intel.com
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240425142706.2440113-2-andriy.shevchenko@linux.intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20240425142706.2440113-3-andriy.shevchenko@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/Kconfig                | 2 +-
- drivers/gpu/drm/panel/panel-ilitek-ili9341.c | 5 +++--
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panel/panel-ilitek-ili9341.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index 8f3783742208b..888297d0d3955 100644
---- a/drivers/gpu/drm/panel/Kconfig
-+++ b/drivers/gpu/drm/panel/Kconfig
-@@ -184,7 +184,7 @@ config DRM_PANEL_ILITEK_IL9322
- 
- config DRM_PANEL_ILITEK_ILI9341
- 	tristate "Ilitek ILI9341 240x320 QVGA panels"
--	depends on OF && SPI
-+	depends on SPI
- 	select DRM_KMS_HELPER
- 	select DRM_GEM_DMA_HELPER
- 	depends on BACKLIGHT_CLASS_DEVICE
 diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9341.c b/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
-index 3574681891e81..7584ddb0e4416 100644
+index 7584ddb0e4416..24c74c56e5648 100644
 --- a/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
 +++ b/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
-@@ -22,8 +22,9 @@
- #include <linux/bitops.h>
- #include <linux/delay.h>
- #include <linux/gpio/consumer.h>
-+#include <linux/mod_devicetable.h>
- #include <linux/module.h>
--#include <linux/of.h>
-+#include <linux/property.h>
- #include <linux/regulator/consumer.h>
- #include <linux/spi/spi.h>
+@@ -715,11 +715,11 @@ static int ili9341_probe(struct spi_device *spi)
  
-@@ -691,7 +692,7 @@ static int ili9341_dpi_probe(struct spi_device *spi, struct gpio_desc *dc,
- 	 * Every new incarnation of this display must have a unique
- 	 * data entry for the system in this driver.
- 	 */
--	ili->conf = of_device_get_match_data(dev);
-+	ili->conf = device_get_match_data(dev);
- 	if (!ili->conf) {
- 		dev_err(dev, "missing device configuration\n");
- 		return -ENODEV;
+ 	reset = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(reset))
+-		dev_err(dev, "Failed to get gpio 'reset'\n");
++		return dev_err_probe(dev, PTR_ERR(reset), "Failed to get gpio 'reset'\n");
+ 
+ 	dc = devm_gpiod_get_optional(dev, "dc", GPIOD_OUT_LOW);
+ 	if (IS_ERR(dc))
+-		dev_err(dev, "Failed to get gpio 'dc'\n");
++		return dev_err_probe(dev, PTR_ERR(dc), "Failed to get gpio 'dc'\n");
+ 
+ 	if (!strcmp(id->name, "sf-tc240t-9370-t"))
+ 		return ili9341_dpi_probe(spi, dc, reset);
 -- 
 2.43.0
 
