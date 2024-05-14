@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B792B9B3;
-	Tue, 14 May 2024 11:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA3C2B9B3;
+	Tue, 14 May 2024 11:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687158; cv=none; b=hGMOqd2ZbUTvvTctn77yn/uwrbI0w9wYBihfcXFSQxWprVPSxDf3Hdc0VcvtdyhpxPIN4ZcdDBimaZacFQKKqhGVFX5dfLbIe1cw+k+LrHcHQL05or5OA7IL+Z+r4gyCCgLXQdmD+laxdJ58M6efytW1dMdSNeWzFZLOIlaBYMs=
+	t=1715687161; cv=none; b=VqlbK3MaEmoojVm4VcVLgwhyShtrRxyssPzu8T+fyLnvMyVRXG3WjKQ9HqF01SzlCdoZ6nCNFtrl7Qt7Lj+KG6Bmy3hY9AZc3ls9xjWrfQ2mwBC9KR+CND/Y23z6NYMmdJ7YfCl+71UYgKzMkPXrZcbC9hCyh/BK/mN+t2/MIK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687158; c=relaxed/simple;
-	bh=P0Ozd7aubesMZZCoF1W7sp3YWwPWCErlp6qtzxB71sw=;
+	s=arc-20240116; t=1715687161; c=relaxed/simple;
+	bh=3QX6bM/sYHugvU1AuXwWtJnXCl1z9TsMbBC330uHmZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uZUqquFu+bcXwE/VmrEDBY1Cwtm2dysy8Cd5eFavfUn4JrvDdmwVSlaO9t4Lh14feUZKDrXWexuit7v8YkojG5B3sDiigAUL4iZ2LAYZUeH3/Ty3zGCsBRWPW+sBKvI9iVlykrmRCbw/X1z5D3euzPQS5fk5sejm0EHHFSjpo/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImdA4U3x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o/de5zotNYubFT+zlBTK9vyHIHyKL2K/1TqIGeWjkMS5sys2ByMoeqrRCVgWJoP3W+qVKQsEdOoQLRNdcuDnp7nyd3+c/LVYMLgefA26/25URPNmFFTvTVG+pAG2LpTGKltkipT36yMqwnsY72MAj002Pzmejw//g0tsfvQODjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRKlESCM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImdA4U3x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48A1C2BD10;
-	Tue, 14 May 2024 11:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRKlESCM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33C6C2BD10;
+	Tue, 14 May 2024 11:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687158;
-	bh=P0Ozd7aubesMZZCoF1W7sp3YWwPWCErlp6qtzxB71sw=;
+	s=korg; t=1715687161;
+	bh=3QX6bM/sYHugvU1AuXwWtJnXCl1z9TsMbBC330uHmZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ImdA4U3x8loL8ihwvvXG/pjyn8knBtWyOY/bxyr6VGPLPXe/IuPprHFCfVUK+uccN
-	 2j4jNI9Jp+poFXS/XvaBH9+tgMhF9QfcJcniAMIXcbfpOag3KN1kkyAq/ul9mIOIhi
-	 Rksv7OEEhB9yemxkAtucBA7SvhXJTWkblytIYOas=
+	b=hRKlESCMhtWqqoKRyTlWbrAuXgwy42VAQnySCk49OrdlhMkBvCMCmi3M3tXm/+Lzq
+	 s2XqeoDGwHfQ7EzfPY18mIJKAxoWb0lFywbz7n9rnZOfoCVdyAD/cfX91q3ffldT7e
+	 c6NCMfnA2bbzkE4n2zaPyAOkzmhSqybupHyvp87E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.4 84/84] pinctrl: mediatek: paris: Fix PIN_CONFIG_INPUT_SCHMITT_ENABLE readback
-Date: Tue, 14 May 2024 12:20:35 +0200
-Message-ID: <20240514100954.841860394@linuxfoundation.org>
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 65/84] Bluetooth: Fix use-after-free bugs caused by sco_sock_timeout
+Date: Tue, 14 May 2024 12:20:16 +0200
+Message-ID: <20240514100954.129036166@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100951.686412426@linuxfoundation.org>
 References: <20240514100951.686412426@linuxfoundation.org>
@@ -51,40 +51,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-commit 08f66a8edd08f6f7cfa769c81634b29a2b123908 upstream.
+[ Upstream commit 483bc08181827fc475643272ffb69c533007e546 ]
 
-In the generic pin config library, readback of some options are handled
-differently compared to the setting of those options: the argument value
-is used to convey enable/disable of an option in the set path, but
-success or -EINVAL is used to convey if an option is enabled or disabled
-in the debugfs readback path.
+When the sco connection is established and then, the sco socket
+is releasing, timeout_work will be scheduled to judge whether
+the sco disconnection is timeout. The sock will be deallocated
+later, but it is dereferenced again in sco_sock_timeout. As a
+result, the use-after-free bugs will happen. The root cause is
+shown below:
 
-PIN_CONFIG_INPUT_SCHMITT_ENABLE is one such option. Fix the readback of
-the option in the mediatek-paris library, so that the debugfs dump is
-not showing "input schmitt enabled" for pins that don't have it enabled.
+    Cleanup Thread               |      Worker Thread
+sco_sock_release                 |
+  sco_sock_close                 |
+    __sco_sock_close             |
+      sco_sock_set_timer         |
+        schedule_delayed_work    |
+  sco_sock_kill                  |    (wait a time)
+    sock_put(sk) //FREE          |  sco_sock_timeout
+                                 |    sock_hold(sk) //USE
 
-Fixes: 1bea6afbc842 ("pinctrl: mediatek: Refine mtk_pinconf_get()")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Message-ID: <20240327091336.3434141-2-wenst@chromium.org>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The KASAN report triggered by POC is shown below:
+
+[   95.890016] ==================================================================
+[   95.890496] BUG: KASAN: slab-use-after-free in sco_sock_timeout+0x5e/0x1c0
+[   95.890755] Write of size 4 at addr ffff88800c388080 by task kworker/0:0/7
+...
+[   95.890755] Workqueue: events sco_sock_timeout
+[   95.890755] Call Trace:
+[   95.890755]  <TASK>
+[   95.890755]  dump_stack_lvl+0x45/0x110
+[   95.890755]  print_address_description+0x78/0x390
+[   95.890755]  print_report+0x11b/0x250
+[   95.890755]  ? __virt_addr_valid+0xbe/0xf0
+[   95.890755]  ? sco_sock_timeout+0x5e/0x1c0
+[   95.890755]  kasan_report+0x139/0x170
+[   95.890755]  ? update_load_avg+0xe5/0x9f0
+[   95.890755]  ? sco_sock_timeout+0x5e/0x1c0
+[   95.890755]  kasan_check_range+0x2c3/0x2e0
+[   95.890755]  sco_sock_timeout+0x5e/0x1c0
+[   95.890755]  process_one_work+0x561/0xc50
+[   95.890755]  worker_thread+0xab2/0x13c0
+[   95.890755]  ? pr_cont_work+0x490/0x490
+[   95.890755]  kthread+0x279/0x300
+[   95.890755]  ? pr_cont_work+0x490/0x490
+[   95.890755]  ? kthread_blkcg+0xa0/0xa0
+[   95.890755]  ret_from_fork+0x34/0x60
+[   95.890755]  ? kthread_blkcg+0xa0/0xa0
+[   95.890755]  ret_from_fork_asm+0x11/0x20
+[   95.890755]  </TASK>
+[   95.890755]
+[   95.890755] Allocated by task 506:
+[   95.890755]  kasan_save_track+0x3f/0x70
+[   95.890755]  __kasan_kmalloc+0x86/0x90
+[   95.890755]  __kmalloc+0x17f/0x360
+[   95.890755]  sk_prot_alloc+0xe1/0x1a0
+[   95.890755]  sk_alloc+0x31/0x4e0
+[   95.890755]  bt_sock_alloc+0x2b/0x2a0
+[   95.890755]  sco_sock_create+0xad/0x320
+[   95.890755]  bt_sock_create+0x145/0x320
+[   95.890755]  __sock_create+0x2e1/0x650
+[   95.890755]  __sys_socket+0xd0/0x280
+[   95.890755]  __x64_sys_socket+0x75/0x80
+[   95.890755]  do_syscall_64+0xc4/0x1b0
+[   95.890755]  entry_SYSCALL_64_after_hwframe+0x67/0x6f
+[   95.890755]
+[   95.890755] Freed by task 506:
+[   95.890755]  kasan_save_track+0x3f/0x70
+[   95.890755]  kasan_save_free_info+0x40/0x50
+[   95.890755]  poison_slab_object+0x118/0x180
+[   95.890755]  __kasan_slab_free+0x12/0x30
+[   95.890755]  kfree+0xb2/0x240
+[   95.890755]  __sk_destruct+0x317/0x410
+[   95.890755]  sco_sock_release+0x232/0x280
+[   95.890755]  sock_close+0xb2/0x210
+[   95.890755]  __fput+0x37f/0x770
+[   95.890755]  task_work_run+0x1ae/0x210
+[   95.890755]  get_signal+0xe17/0xf70
+[   95.890755]  arch_do_signal_or_restart+0x3f/0x520
+[   95.890755]  syscall_exit_to_user_mode+0x55/0x120
+[   95.890755]  do_syscall_64+0xd1/0x1b0
+[   95.890755]  entry_SYSCALL_64_after_hwframe+0x67/0x6f
+[   95.890755]
+[   95.890755] The buggy address belongs to the object at ffff88800c388000
+[   95.890755]  which belongs to the cache kmalloc-1k of size 1024
+[   95.890755] The buggy address is located 128 bytes inside of
+[   95.890755]  freed 1024-byte region [ffff88800c388000, ffff88800c388400)
+[   95.890755]
+[   95.890755] The buggy address belongs to the physical page:
+[   95.890755] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88800c38a800 pfn:0xc388
+[   95.890755] head: order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+[   95.890755] anon flags: 0x100000000000840(slab|head|node=0|zone=1)
+[   95.890755] page_type: 0xffffffff()
+[   95.890755] raw: 0100000000000840 ffff888006842dc0 0000000000000000 0000000000000001
+[   95.890755] raw: ffff88800c38a800 000000000010000a 00000001ffffffff 0000000000000000
+[   95.890755] head: 0100000000000840 ffff888006842dc0 0000000000000000 0000000000000001
+[   95.890755] head: ffff88800c38a800 000000000010000a 00000001ffffffff 0000000000000000
+[   95.890755] head: 0100000000000003 ffffea000030e201 ffffea000030e248 00000000ffffffff
+[   95.890755] head: 0000000800000000 0000000000000000 00000000ffffffff 0000000000000000
+[   95.890755] page dumped because: kasan: bad access detected
+[   95.890755]
+[   95.890755] Memory state around the buggy address:
+[   95.890755]  ffff88800c387f80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   95.890755]  ffff88800c388000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   95.890755] >ffff88800c388080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   95.890755]                    ^
+[   95.890755]  ffff88800c388100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   95.890755]  ffff88800c388180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   95.890755] ==================================================================
+
+Fix this problem by adding a check protected by sco_conn_lock to judget
+whether the conn->hcon is null. Because the conn->hcon will be set to null,
+when the sock is releasing.
+
+Fixes: ba316be1b6a0 ("Bluetooth: schedule SCO timeouts with delayed_work")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-paris.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/sco.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/pinctrl/mediatek/pinctrl-paris.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
-@@ -141,6 +141,8 @@ static int mtk_pinconf_get(struct pinctr
- 		}
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index a3b15b4e176ea..4c81883ba25e3 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -82,6 +82,10 @@ static void sco_sock_timeout(struct work_struct *work)
+ 	struct sock *sk;
  
- 		err = mtk_hw_get_value(hw, desc, PINCTRL_PIN_REG_SMT, &ret);
-+		if (!ret)
-+			err = -EINVAL;
- 		break;
- 	case PIN_CONFIG_DRIVE_STRENGTH:
- 		if (!hw->soc->drive_get)
+ 	sco_conn_lock(conn);
++	if (!conn->hcon) {
++		sco_conn_unlock(conn);
++		return;
++	}
+ 	sk = conn->sk;
+ 	if (sk)
+ 		sock_hold(sk);
+-- 
+2.43.0
+
 
 
