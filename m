@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64992F9D4;
-	Tue, 14 May 2024 11:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42479F9D4;
+	Tue, 14 May 2024 11:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687919; cv=none; b=ovPXE11Q/o7Vv0RDdPekDxIOVf+svIAh3SwafG+/D7Am+2Y8/DkUJrsHPZ4IZt4XWstxQGt9624S10PHsOilbKfxymKvlPJx+WZM03R2Mw4O0wWzcPRlpDKxCSyHGCKybhWRZZJ43kgkzf6n3AvTwyoI1rZGTDgNm7CHyeq0eeM=
+	t=1715687922; cv=none; b=Y6bjUDMWEiuOlMOTwPWtItE7lf1Y7egP/17vfpTtw3nf3/4EYseCf7rl4Lm2jdZOvg+wdBrUrXu2/eWnwbp3xlO6cmJMMP6uNfp3NJJ2lRwr7Viuen5X741KXzGJkVrBQ6oWGuaW9qWc1Dg50DlJ+RUs9MS8M4fOGkXxcycD6tM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687919; c=relaxed/simple;
-	bh=tyAegohV0m6CrK9zSUrDlTz6fPzWqRK5VAoA8yPN+0A=;
+	s=arc-20240116; t=1715687922; c=relaxed/simple;
+	bh=T57ZUUwVieO+cW0PnZlpe0MtS40jH5klGzmHWSWOn78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jd7rzgFNx5BKmNb2kkkZ+TNqVb2YtfuUXH8DfLhrbkp99FIUV2kM0feQ1u4pP80ODKAGIGcy4aPiyp7ZtUwRYEnhaYTSL+bHdWdCpSaoUO846Ovt/9OuirHtawcSTcvuFel6tWh44CVORfaMiBV10y9Olo7ZznaB0sRCaN4MffI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=haDuDqSJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hAaPKpy7vYhYcWj+FOUrhVnekqGUvAcY2FxgwKK3yQM0i66aFZYzS21t7mdrfD9x/bL+o+I07j0HFcMjg6zLojBPFbNRKqc6rOGst+ALx54rpOAGbqGe4EVNYE+2Hq4aJnQ8WiNa3KJmciYp8siqaYUgQKCeOkfPp9/iIKq0G7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPmQTzQW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="haDuDqSJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F73C2BD10;
-	Tue, 14 May 2024 11:58:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPmQTzQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4999C2BD10;
+	Tue, 14 May 2024 11:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687919;
-	bh=tyAegohV0m6CrK9zSUrDlTz6fPzWqRK5VAoA8yPN+0A=;
+	s=korg; t=1715687922;
+	bh=T57ZUUwVieO+cW0PnZlpe0MtS40jH5klGzmHWSWOn78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=haDuDqSJfslg0HhwtIQB7mcEFDh9DfAXOy0mdJnr1/iQ1MgHb2XcV2rdPU3Rw3+Q2
-	 MZDNESHfxchifu/8qTpLYrM1Q5MKtD89vzuEC8axhZXRGUgSjxae9U9MIMUg2b5Sfz
-	 M8u71WtTx13/kTtMZCOAIpilKbULvEBGZNh4bAFE=
+	b=RPmQTzQWAlZS8JuqgfYDSv8YchXmXWuTRbzWUGdJUZQf5m5qc8CW1Dp+fnuSrR1w0
+	 bv/kq2NPcQz/IkdLWFMwpih8BrbhzrC+T1MvXScY/Fm04pZs81tQaVnFYzlVlhfWwu
+	 0fHRhFVFtmdaurz8e0/hGGvxegW/O/uCgAA7Z0rM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Roger Whittaker <roger.whittaker@suse.com>
-Subject: [PATCH 5.15 143/168] usb: Fix regression caused by invalid ep0 maxpacket in virtual SuperSpeed device
-Date: Tue, 14 May 2024 12:20:41 +0200
-Message-ID: <20240514101012.086266357@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 152/168] dt-bindings: iio: health: maxim,max30102: fix compatible check
+Date: Tue, 14 May 2024 12:20:50 +0200
+Message-ID: <20240514101012.498371800@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -50,46 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit c78c3644b772e356ca452ae733a3c4de0fb11dc8 upstream.
+commit 89384a2b656b9dace4c965432a209d5c9c3a2a6f upstream.
 
-A virtual SuperSpeed device in the FreeBSD BVCP package
-(https://bhyve.npulse.net/) presents an invalid ep0 maxpacket size of 256.
-It stopped working with Linux following a recent commit because now we
-check these sizes more carefully than before.
+The "maxim,green-led-current-microamp" property is only available for
+the max30105 part (it provides an extra green LED), and must be set to
+false for the max30102 part.
 
-Fix this regression by using the bMaxpacketSize0 value in the device
-descriptor for SuperSpeed or faster devices, even if it is invalid.  This
-is a very simple-minded change; we might want to check more carefully for
-values that actually make some sense (for instance, no smaller than 64).
+Instead, the max30100 part has been used for that, which is not
+supported by this binding (it has its own binding).
 
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Reported-and-tested-by: Roger Whittaker <roger.whittaker@suse.com>
-Closes: https://bugzilla.suse.com/show_bug.cgi?id=1220569
-Link: https://lore.kernel.org/linux-usb/9efbd569-7059-4575-983f-0ea30df41871@suse.com/
-Fixes: 59cf44575456 ("USB: core: Fix oversight in SuperSpeed initialization")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/4058ac05-237c-4db4-9ecc-5af42bdb4501@rowland.harvard.edu
+This error was introduced during the txt to yaml conversion.
+
+Fixes: 5a6a65b11e3a ("dt-bindings:iio:health:maxim,max30102: txt to yaml conversion")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20240316-max30102_binding_fix-v1-1-e8e58f69ef8a@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/iio/health/maxim,max30102.yaml |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -5049,9 +5049,10 @@ hub_port_init(struct usb_hub *hub, struc
- 	}
- 	if (usb_endpoint_maxp(&udev->ep0.desc) == i) {
- 		;	/* Initial ep0 maxpacket guess is right */
--	} else if ((udev->speed == USB_SPEED_FULL ||
-+	} else if (((udev->speed == USB_SPEED_FULL ||
- 				udev->speed == USB_SPEED_HIGH) &&
--			(i == 8 || i == 16 || i == 32 || i == 64)) {
-+			(i == 8 || i == 16 || i == 32 || i == 64)) ||
-+			(udev->speed >= USB_SPEED_SUPER && i > 0)) {
- 		/* Initial guess is wrong; use the descriptor's value */
- 		if (udev->speed == USB_SPEED_FULL)
- 			dev_dbg(&udev->dev, "ep0 maxpacket = %d\n", i);
+--- a/Documentation/devicetree/bindings/iio/health/maxim,max30102.yaml
++++ b/Documentation/devicetree/bindings/iio/health/maxim,max30102.yaml
+@@ -42,7 +42,7 @@ allOf:
+       properties:
+         compatible:
+           contains:
+-            const: maxim,max30100
++            const: maxim,max30102
+     then:
+       properties:
+         maxim,green-led-current-microamp: false
 
 
