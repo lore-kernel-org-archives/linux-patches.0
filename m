@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E3C13C833;
-	Tue, 14 May 2024 11:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70AC7F48C;
+	Tue, 14 May 2024 11:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686792; cv=none; b=Smn/0iDtXBDNJrqfpTtZH90vsImoBMiEY1xrf/Rqq0xq9DaBN3ggD9TVkTf7yKYLSfoAbJPo3wv7NBPgOtaxCUixzRaqwTpBGoPgP2G2P/8iGT/dtUzV6mSOSIy9AwUGfG2MB+jgzGBfofuX+hxMZM4YN+t+/YOeWVvNmE7wJaU=
+	t=1715686795; cv=none; b=c8ijuDcu2kBWiiL+1ZxxQkVsO3gZx4E0w+oh8bMkcB8rd7gaQIs/EPWsbacp/Bi7UrXxZ0Bs6zVfjRxS+75g6wFW/uBseBnujZw9kueK3elBn9w2v6RwAFekiz2S7RS8mbKDzjSNBQ2/Tg7xgaFmM/qJ8/PNpSG6Cvby46Zg618=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686792; c=relaxed/simple;
-	bh=C3Am/4bzD1PSMX0/CBZNUbzt1XAr4Jzk0HywqsHr3+A=;
+	s=arc-20240116; t=1715686795; c=relaxed/simple;
+	bh=QwlrryOvmTknbgjW87pv9+cBuQqYazLq7yQw+s3cga0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q/g9zkb9S/nHDSbi1OhCsedx1eGA6XpvSwTm4bwRJOjebz09OHYg4a1koGzJGp0QL8HxUpxAgZWb+TT7Ad7R/TPzZy1tnXYE46hGv3/sP19ynNXLXyRCm1cIWuv/SuvbGFPNobl0MTzT0nDT6QGk6QX9bbw3PQp8QJ4uIcu9jgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziF7WRPd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PqawOvXIst7wQkejHx1N0kB11SFfI/ia1TRRZR4rX/1vtoey433AQlXV6Ry29j0b1jL2hyOSS+XvB+5QCllRZj/lr32Srq68z1kD9Zh0mvklanVceH/ZYlwcU29916Z6VDcjGo8NPGQScILNjveQ2vkmHkb/LHUAw+7UmDNZ2GE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dt1RYj5a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziF7WRPd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F33EC2BD10;
-	Tue, 14 May 2024 11:39:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dt1RYj5a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBB1C2BD10;
+	Tue, 14 May 2024 11:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686791;
-	bh=C3Am/4bzD1PSMX0/CBZNUbzt1XAr4Jzk0HywqsHr3+A=;
+	s=korg; t=1715686794;
+	bh=QwlrryOvmTknbgjW87pv9+cBuQqYazLq7yQw+s3cga0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ziF7WRPdfPPOPL2gJbiZ6WphYLSjwntwfe1EjlLagTjFJ2Qvko39Z4IBVYRQ4iBme
-	 WZ8d3KRWNlhY48BYZjZmJQAVHi2d8c5HfnjJJCEoNjsjv2TEupXlERU846vxiomiP1
-	 ZO+ybKWicG+sUIheZsjIuG3OExPMoilsfaWBKoqE=
+	b=dt1RYj5abUqo3EjRS8XOjCWPjSgATME51eFLY2X6GpaIROPcoJI2B7UHA17GK0Ev/
+	 o71xHgBFVJ0nY9L/0rfuD3rrlq2QLapQmyjz1Pm7vSP+NquU1/U+kC3wnWeWa50U01
+	 hH9xXuqLDNRpwbGGk2BieuFKMvz02A153Y70061U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Chapman <jchapman@katalix.com>,
-	David Bauer <mail@david-bauer.net>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	linke li <lilinke99@qq.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 16/63] net l2tp: drop flow hash on forward
-Date: Tue, 14 May 2024 12:19:37 +0200
-Message-ID: <20240514100948.629085293@linuxfoundation.org>
+Subject: [PATCH 4.19 25/63] net: mark racy access on sk->sk_rcvbuf
+Date: Tue, 14 May 2024 12:19:46 +0200
+Message-ID: <20240514100948.968013605@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100948.010148088@linuxfoundation.org>
 References: <20240514100948.010148088@linuxfoundation.org>
@@ -53,47 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Bauer <mail@david-bauer.net>
+From: linke li <lilinke99@qq.com>
 
-[ Upstream commit 42f853b42899d9b445763b55c3c8adc72be0f0e1 ]
+[ Upstream commit c2deb2e971f5d9aca941ef13ee05566979e337a4 ]
 
-Drop the flow-hash of the skb when forwarding to the L2TP netdev.
+sk->sk_rcvbuf in __sock_queue_rcv_skb() and __sk_receive_skb() can be
+changed by other threads. Mark this as benign using READ_ONCE().
 
-This avoids the L2TP qdisc from using the flow-hash from the outer
-packet, which is identical for every flow within the tunnel.
+This patch is aimed at reducing the number of benign races reported by
+KCSAN in order to focus future debugging effort on harmful races.
 
-This does not affect every platform but is specific for the ethernet
-driver. It depends on the platform including L4 information in the
-flow-hash.
-
-One such example is the Mediatek Filogic MT798x family of networking
-processors.
-
-Fixes: d9e31d17ceba ("l2tp: Add L2TP ethernet pseudowire support")
-Acked-by: James Chapman <jchapman@katalix.com>
-Signed-off-by: David Bauer <mail@david-bauer.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240424171110.13701-1-mail@david-bauer.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: linke li <lilinke99@qq.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_eth.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/core/sock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/l2tp/l2tp_eth.c b/net/l2tp/l2tp_eth.c
-index 8aadc4f3bb9e9..b0d520c8bdfd6 100644
---- a/net/l2tp/l2tp_eth.c
-+++ b/net/l2tp/l2tp_eth.c
-@@ -154,6 +154,9 @@ static void l2tp_eth_dev_recv(struct l2tp_session *session, struct sk_buff *skb,
- 	/* checksums verified by L2TP */
- 	skb->ip_summed = CHECKSUM_NONE;
+diff --git a/net/core/sock.c b/net/core/sock.c
+index eaa6f1ca414d0..c1d60df487fc0 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -404,7 +404,7 @@ int __sock_queue_rcv_skb(struct sock *sk, struct sk_buff *skb)
+ 	unsigned long flags;
+ 	struct sk_buff_head *list = &sk->sk_receive_queue;
  
-+	/* drop outer flow-hash */
-+	skb_clear_hash(skb);
-+
- 	skb_dst_drop(skb);
- 	nf_reset(skb);
+-	if (atomic_read(&sk->sk_rmem_alloc) >= sk->sk_rcvbuf) {
++	if (atomic_read(&sk->sk_rmem_alloc) >= READ_ONCE(sk->sk_rcvbuf)) {
+ 		atomic_inc(&sk->sk_drops);
+ 		trace_sock_rcvqueue_full(sk, skb);
+ 		return -ENOMEM;
+@@ -456,7 +456,7 @@ int __sk_receive_skb(struct sock *sk, struct sk_buff *skb,
  
+ 	skb->dev = NULL;
+ 
+-	if (sk_rcvqueues_full(sk, sk->sk_rcvbuf)) {
++	if (sk_rcvqueues_full(sk, READ_ONCE(sk->sk_rcvbuf))) {
+ 		atomic_inc(&sk->sk_drops);
+ 		goto discard_and_relse;
+ 	}
 -- 
 2.43.0
 
