@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D40953E15;
-	Tue, 14 May 2024 10:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7869C12F5AE;
+	Tue, 14 May 2024 10:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682595; cv=none; b=jt4e6ng1AkQ4k7XXvxQ9rx7vfcEAwcxPEvoELPDLGR4UauIAapWTLieD1X83wVtJthbygvXnFoPGFS72ufq2E2RFksCNa/mnl0obobNiwu2kQ8IqmM4SgZeMCctE0YUZGmmg5AwPbHFkI7VeHs5y5dNtIl/GGykA470iNVxRRPg=
+	t=1715682603; cv=none; b=h9EQgps6psbjTC8kjv50rbHN0skJIREg5f+Ot/LBkf4vDbfKb711XSJ1Qu5mIQb2fCFW9nr54dQx546lyIBZEMtdmT8CtFE5ApUBLhPSovqdbRCiDa6nUvskSkBVAFGTPaYY/iKJyGF58HkJAimMGArbv1aq3c89wkjThL9lnZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682595; c=relaxed/simple;
-	bh=meU8OQ79nWiDHVFi3K84EQUSiaxjBwm3tYrjxKNq3d4=;
+	s=arc-20240116; t=1715682603; c=relaxed/simple;
+	bh=nwo62xetlF7f57keP+sHoRFx4AbOaFqST44wADBzs2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LBMQtbXpO3xmM98lePlq1fd+doLwdvD8nKnbMhtBoZyZGXSqh4WuMbK2daLC6Hc0RNaFUpNJlj1HHxlt7fLCE5mDOZT7owkJzYS0xlzE5yeYhDtZ5Dp3EZY7Jl/I28Cm8pPcgWZzKy1peIyX0nbWXkuqPM07InsR3+EsXvbneL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hr/Df5uS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fLBhqvM6LOfLlbfQNKCpFGXidRbXF1xlrFEeBJtX8ahZOHX4pRtz0P8HPmuu9+TSspUXiPxMIADEbQdDs/s7vcOGsfU8EgCOUClPqMUF5btCEEsDBXZ9cw4RaDmgz9TVUtJ0hjmMTUg9URbR0Z6G77WFKB/7ycoo4BNw7nw3FDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=psUlIsFH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hr/Df5uS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0288AC2BD10;
-	Tue, 14 May 2024 10:29:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="psUlIsFH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE161C2BD10;
+	Tue, 14 May 2024 10:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682595;
-	bh=meU8OQ79nWiDHVFi3K84EQUSiaxjBwm3tYrjxKNq3d4=;
+	s=korg; t=1715682603;
+	bh=nwo62xetlF7f57keP+sHoRFx4AbOaFqST44wADBzs2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hr/Df5uSV0bF+bw/VRkrnpJtf1oYzdNeVO2zOAv79H5oNf9aPosvASxjID65AhkSY
-	 I7/OURUiuMrDp64K5eMpYBLlSYE5ipE+PrZxzMfN/dKy4d2rvfh6/7IeF0Tz26kJnM
-	 kjHiNxu0Y+WyG9kGgTf/riL1fWv/VjMU5iJ6VvxA=
+	b=psUlIsFHDGFfYdXLUsfDNVrjt3NYjC/ea20Su1IoYrzPywTFdLXFvNG7oBRjK3Ipc
+	 QTlqP1zIcA4Ou233wx8617PvkdPyWKzzzUUguZsnp29nddCMgtGGa9yjoHJxhqgSDT
+	 uaMd95KBSsJgsQJkiSkRrHfNLYtvYREYvtRchWuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chad Wagner <wagnerch42@gmail.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Nageswara R Sastry <rnsastry@linux.ibm.com>,
+	Nayna Jain <nayna@linux.ibm.com>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 088/336] clk: sunxi-ng: h6: Reparent CPUX during PLL CPUX rate change
-Date: Tue, 14 May 2024 12:14:52 +0200
-Message-ID: <20240514101041.929291684@linuxfoundation.org>
+Subject: [PATCH 6.8 089/336] powerpc/pseries: make max polling consistent for longer H_CALLs
+Date: Tue, 14 May 2024 12:14:53 +0200
+Message-ID: <20240514101041.966716375@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,70 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Nayna Jain <nayna@linux.ibm.com>
 
-[ Upstream commit 7e91ed763dc07437777bd012af7a2bd4493731ff ]
+[ Upstream commit 784354349d2c988590c63a5a001ca37b2a6d4da1 ]
 
-While PLL CPUX clock rate change when CPU is running from it works in
-vast majority of cases, now and then it causes instability. This leads
-to system crashes and other undefined behaviour. After a lot of testing
-(30+ hours) while also doing a lot of frequency switches, we can't
-observe any instability issues anymore when doing reparenting to stable
-clock like 24 MHz oscillator.
+Currently, plpks_confirm_object_flushed() function polls for 5msec in
+total instead of 5sec.
 
-Fixes: 524353ea480b ("clk: sunxi-ng: add support for the Allwinner H6 CCU")
-Reported-by: Chad Wagner <wagnerch42@gmail.com>
-Link: https://forum.libreelec.tv/thread/27295-orange-pi-3-lts-freezes/
-Tested-by: Chad Wagner <wagnerch42@gmail.com>
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-Link: https://lore.kernel.org/r/20231013181712.2128037-1-jernej.skrabec@gmail.com
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Keep max polling time consistent for all the H_CALLs, which take longer
+than expected, to be 5sec. Also, make use of fsleep() everywhere to
+insert delay.
+
+Reported-by: Nageswara R Sastry <rnsastry@linux.ibm.com>
+Fixes: 2454a7af0f2a ("powerpc/pseries: define driver for Platform KeyStore")
+Signed-off-by: Nayna Jain <nayna@linux.ibm.com>
+Tested-by: Nageswara R Sastry <rnsastry@linux.ibm.com>
+Reviewed-by: Andrew Donnellan <ajd@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240418031230.170954-1-nayna@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun50i-h6.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ arch/powerpc/include/asm/plpks.h       |  5 ++---
+ arch/powerpc/platforms/pseries/plpks.c | 10 +++++-----
+ 2 files changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun50i-h6.c b/drivers/clk/sunxi-ng/ccu-sun50i-h6.c
-index 42568c6161814..892df807275c8 100644
---- a/drivers/clk/sunxi-ng/ccu-sun50i-h6.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun50i-h6.c
-@@ -1181,11 +1181,18 @@ static const u32 usb2_clk_regs[] = {
- 	SUN50I_H6_USB3_CLK_REG,
- };
+diff --git a/arch/powerpc/include/asm/plpks.h b/arch/powerpc/include/asm/plpks.h
+index 23b77027c9163..7a84069759b03 100644
+--- a/arch/powerpc/include/asm/plpks.h
++++ b/arch/powerpc/include/asm/plpks.h
+@@ -44,9 +44,8 @@
+ #define PLPKS_MAX_DATA_SIZE		4000
  
-+static struct ccu_mux_nb sun50i_h6_cpu_nb = {
-+	.common		= &cpux_clk.common,
-+	.cm		= &cpux_clk.mux,
-+	.delay_us       = 1,
-+	.bypass_index   = 0, /* index of 24 MHz oscillator */
-+};
+ // Timeouts for PLPKS operations
+-#define PLPKS_MAX_TIMEOUT		5000 // msec
+-#define PLPKS_FLUSH_SLEEP		10 // msec
+-#define PLPKS_FLUSH_SLEEP_RANGE		400
++#define PLPKS_MAX_TIMEOUT		(5 * USEC_PER_SEC)
++#define PLPKS_FLUSH_SLEEP		10000 // usec
+ 
+ struct plpks_var {
+ 	char *component;
+diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
+index febe18f251d0c..4a595493d28ae 100644
+--- a/arch/powerpc/platforms/pseries/plpks.c
++++ b/arch/powerpc/platforms/pseries/plpks.c
+@@ -415,8 +415,7 @@ static int plpks_confirm_object_flushed(struct label *label,
+ 			break;
+ 		}
+ 
+-		usleep_range(PLPKS_FLUSH_SLEEP,
+-			     PLPKS_FLUSH_SLEEP + PLPKS_FLUSH_SLEEP_RANGE);
++		fsleep(PLPKS_FLUSH_SLEEP);
+ 		timeout = timeout + PLPKS_FLUSH_SLEEP;
+ 	} while (timeout < PLPKS_MAX_TIMEOUT);
+ 
+@@ -464,9 +463,10 @@ int plpks_signed_update_var(struct plpks_var *var, u64 flags)
+ 
+ 		continuetoken = retbuf[0];
+ 		if (pseries_status_to_err(rc) == -EBUSY) {
+-			int delay_ms = get_longbusy_msecs(rc);
+-			mdelay(delay_ms);
+-			timeout += delay_ms;
++			int delay_us = get_longbusy_msecs(rc) * 1000;
 +
- static int sun50i_h6_ccu_probe(struct platform_device *pdev)
- {
- 	void __iomem *reg;
-+	int i, ret;
- 	u32 val;
--	int i;
- 
- 	reg = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(reg))
-@@ -1252,7 +1259,15 @@ static int sun50i_h6_ccu_probe(struct platform_device *pdev)
- 	val |= BIT(24);
- 	writel(val, reg + SUN50I_H6_HDMI_CEC_CLK_REG);
- 
--	return devm_sunxi_ccu_probe(&pdev->dev, reg, &sun50i_h6_ccu_desc);
-+	ret = devm_sunxi_ccu_probe(&pdev->dev, reg, &sun50i_h6_ccu_desc);
-+	if (ret)
-+		return ret;
-+
-+	/* Reparent CPU during PLL CPUX rate changes */
-+	ccu_mux_notifier_register(pll_cpux_clk.common.hw.clk,
-+				  &sun50i_h6_cpu_nb);
-+
-+	return 0;
- }
- 
- static const struct of_device_id sun50i_h6_ccu_ids[] = {
++			fsleep(delay_us);
++			timeout += delay_us;
+ 		}
+ 		rc = pseries_status_to_err(rc);
+ 	} while (rc == -EBUSY && timeout < PLPKS_MAX_TIMEOUT);
 -- 
 2.43.0
 
