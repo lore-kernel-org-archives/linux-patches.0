@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEF613D260;
-	Tue, 14 May 2024 10:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051D15CDFA;
+	Tue, 14 May 2024 10:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683276; cv=none; b=fO2l3A28mCgCyi9bD9rJFklfGIxK79n3tu7jWBSV0zQUv/LnuSmWUu9LcdkTbGVbCw6O9Rgmb5pElkXYsmVbaG7HpbCYOuRhnLjqPaN0fN9+kP0HSWbcXh/7Tfvn+Jt067Ks8gTkeunGVuFBC2paHRlEa9RZvRww+bfshCJSF0w=
+	t=1715683290; cv=none; b=jg0VaELE5JBYuAhIzZqhESpyJrX42gmLmZBebCEOW3+bD5F0CQYzXH1BuEqOY8hAZVwCk4h8bS5P8ltqJhCDz3IgtzIwnec6kJOAuPl1yDR4mbkswbl/KRFxl//IFqllSFFE6aWxH4J29R1HESDCYNIpv/w6IiH7kNZwHaLeYC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683276; c=relaxed/simple;
-	bh=GyZYLyziwiFVWDxj6n5QXmXEJi9GwgAsOCKsxCbOVqw=;
+	s=arc-20240116; t=1715683290; c=relaxed/simple;
+	bh=lKJf40iKQSJzVbKfMyS6hlqf86AASP0bMnKC8lHWKpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aGH6DlTY18Zl8xSXfQBvpYyJIRmWXsv6cVrDTMDJRrDJvVeIRwZ3MFqA/DzXopTNfrBFSKCfgNDv1h4zSjn4jsxQhRh/ExLMpF4hSp4Rmf7ESYYzki0MmxuHdhrjlUhQZvDjv9ltkmyFQxUndYTku4lGfbEEQfJ2OXsiiHJ7dGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dw/9ACYt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E9I90+bOeY5m+TUJfgK2gJg5EgzReuDCe5xBMFW9bK/SLpWR/TV/vcdzbHUVCCb2uebteReE9EaY8jEPRwrPKGSLuaxuYLueYScAnfANLmNkZ8qUeDaZbGmhAYK/BMzDjgFbE6YHF4Tawi//nGi6IbkXAXjWgaRxSDsghTlimIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAma9LgN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dw/9ACYt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85974C2BD10;
-	Tue, 14 May 2024 10:41:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAma9LgN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410ABC2BD10;
+	Tue, 14 May 2024 10:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683276;
-	bh=GyZYLyziwiFVWDxj6n5QXmXEJi9GwgAsOCKsxCbOVqw=;
+	s=korg; t=1715683289;
+	bh=lKJf40iKQSJzVbKfMyS6hlqf86AASP0bMnKC8lHWKpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dw/9ACYtibt6lvixL8w1l2fX/4ljMPv0M/Zk1j42SAAw9OWUzu33EHb54DcgAuUJu
-	 4JxvE6IKMjgGXOhqJqC78PsekZQQTzzAG21+4dzwGUw12FFeVpf2m/R+4LG3o5E8MV
-	 Kd8fMkgxhWqFuXu29duM/d6X6qq3HHN4bp78sZvk=
+	b=bAma9LgN6ElTul63KTmlP6ACIdj9kXmijTuEJFwSyScMTm9jQnGj21bafSLXs6Vaw
+	 FK3pVd7jDWCjgY+DaWrvEiO1P68tk5CN5INPEIMo7pD4QH6MtVBe7pQcb19tXFyN2R
+	 UWdgrEXZcaREM60QRW3w7KwTPCKf0kvqwR74KO4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joakim Sindholt <opensource@zhasha.com>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 177/336] fs/9p: only translate RWX permissions for plain 9P2000
-Date: Tue, 14 May 2024 12:16:21 +0200
-Message-ID: <20240514101045.286597641@linuxfoundation.org>
+Subject: [PATCH 6.8 195/336] qibfs: fix dentry leak
+Date: Tue, 14 May 2024 12:16:39 +0200
+Message-ID: <20240514101045.968261203@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,35 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joakim Sindholt <opensource@zhasha.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit cd25e15e57e68a6b18dc9323047fe9c68b99290b ]
+[ Upstream commit aa23317d0268b309bb3f0801ddd0d61813ff5afb ]
 
-Garbage in plain 9P2000's perm bits is allowed through, which causes it
-to be able to set (among others) the suid bit. This was presumably not
-the intent since the unix extended bits are handled explicitly and
-conditionally on .u.
+simple_recursive_removal() drops the pinning references to all positives
+in subtree.  For the cases when its argument has been kept alive by
+the pinning alone that's exactly the right thing to do, but here
+the argument comes from dcache lookup, that needs to be balanced by
+explicit dput().
 
-Signed-off-by: Joakim Sindholt <opensource@zhasha.com>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Fixes: e41d237818598 "qib_fs: switch to simple_recursive_removal()"
+Fucked-up-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/qib/qib_fs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
-index 7d42f0c6c644f..ae3623bc4ef46 100644
---- a/fs/9p/vfs_inode.c
-+++ b/fs/9p/vfs_inode.c
-@@ -83,7 +83,7 @@ static int p9mode2perm(struct v9fs_session_info *v9ses,
- 	int res;
- 	int mode = stat->mode;
+diff --git a/drivers/infiniband/hw/qib/qib_fs.c b/drivers/infiniband/hw/qib/qib_fs.c
+index 455e966eeff39..b27791029fa93 100644
+--- a/drivers/infiniband/hw/qib/qib_fs.c
++++ b/drivers/infiniband/hw/qib/qib_fs.c
+@@ -439,6 +439,7 @@ static int remove_device_files(struct super_block *sb,
+ 		return PTR_ERR(dir);
+ 	}
+ 	simple_recursive_removal(dir, NULL);
++	dput(dir);
+ 	return 0;
+ }
  
--	res = mode & S_IALLUGO;
-+	res = mode & 0777; /* S_IRWXUGO */
- 	if (v9fs_proto_dotu(v9ses)) {
- 		if ((mode & P9_DMSETUID) == P9_DMSETUID)
- 			res |= S_ISUID;
 -- 
 2.43.0
 
