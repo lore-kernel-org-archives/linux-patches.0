@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05F312F5B2;
-	Tue, 14 May 2024 10:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7230823767;
+	Tue, 14 May 2024 10:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682436; cv=none; b=WEoOdBcL7jgjkDH6vIG3/ghaR497hyyXInsFg90FN4d20O57P21Fu6tce6iQHNsbvmHlwwMgKDusjozO4OSg2Si6kRfIXQb+Ze7TMAd2Oq50rpSIYiRArB4KGgU0kCocL2aTaa23/FVB3oP1YojsO6CbeNodXORpyq5/UWP3+SM=
+	t=1715682440; cv=none; b=NB6Kw/hLcdIhvdwxORqRFah9BjRRQGSSy0cO3o9gTQ7yQ+UFyGWiDzIkG31fB0wKAiV1PpEMO6UJGx9qjRv3KJcjwF4V2MFx9bkCYMSH12pbRP9mFBwu2CVEcTS+1BWBLQiyUjexM4e8u47D+buzJL959USvyiQlCmyLutTYawE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682436; c=relaxed/simple;
-	bh=WKCppEWi+CHecmPfoEbxifFR/Xo4S4le29cHVAKStRw=;
+	s=arc-20240116; t=1715682440; c=relaxed/simple;
+	bh=VC5nncADzLiN5KH4ZYVQO34kee1DnKIT0nZicP+oK2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YGlgfMzuj4H2Ol37wl1Ap1BezSeSqPJccKazOEWPsX8M86F7jXFEz/eoSC6CRHh4ThhOrF9oZPPz5VmESFbqHWHx8tVhWwKq7kyXusfj7id8LX4OoYSo87TpRlsJ4pQ4spEiIsykhhSERQqcaetcVCP+o211nNaOd7K9LLkk010=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHeYZpgF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X5Jy11b22K3v/fO3JgEoofEuRCcMMuqbZzSSIh9s+gnMkdjnhIYIN7n2X2jTeoZJtT4Os3BpNWRrsRLA64IxYyrW+yT8yWcq8l5ectEiQMCA/pi0mKX9iKcNuqyXfcsSJJoBJzY9M2B0fDfUggcdsol0n+T5Gagh7HQlbuPIeuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhKTm96v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHeYZpgF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C74C2BD10;
-	Tue, 14 May 2024 10:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhKTm96v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3397C2BD10;
+	Tue, 14 May 2024 10:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682435;
-	bh=WKCppEWi+CHecmPfoEbxifFR/Xo4S4le29cHVAKStRw=;
+	s=korg; t=1715682440;
+	bh=VC5nncADzLiN5KH4ZYVQO34kee1DnKIT0nZicP+oK2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GHeYZpgFv2gg/NTOKBsLBkAc/avH1qx1wkUfjr+M0326+lCzeIIEkpgXcjDoxRW2S
-	 4lNdc6lmv/S/8xNno7jrDjFuwMWcDoWVgMEqzW2rNMr97IVi3EY5jmTo2+wluycIsD
-	 lQJFm9WI3CmeEPr+6ItoB+4NsfCRzGE1JocVRe7U=
+	b=ZhKTm96vlwsogL2M7+895ACeu94sae0cokBVlvRx0CGbgV+cQqKscJo1s8YDaqS3S
+	 HtTlhlxIQ0cjRqGv+Py5iMWh/bGfzBe4rklqlXDz5GT7LpsXz+/cVO8ufQkBHovYeI
+	 xCgtoecE/uj5Q13242vmy4qICPxP5fLCvvxOzCv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
-	Simon Horman <horms@kernel.org>,
+	Guillaume Nault <gnault@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 060/336] net: qede: use return from qede_parse_actions()
-Date: Tue, 14 May 2024 12:14:24 +0200
-Message-ID: <20240514101040.872198666@linuxfoundation.org>
+Subject: [PATCH 6.8 061/336] vxlan: Fix racy device stats updates.
+Date: Tue, 14 May 2024 12:14:25 +0200
+Message-ID: <20240514101040.910228741@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -46,59 +46,144 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit f26f719a36e56381a1f4230e5364e7ad4d485888 ]
+[ Upstream commit 6dee402daba4eb8677a9438ebdcd8fe90ddd4326 ]
 
-When calling qede_parse_actions() then the
-return code was only used for a non-zero check,
-and then -EINVAL was returned.
+VXLAN devices update their stats locklessly. Therefore these counters
+should either be stored in per-cpu data structures or the updates
+should be done using atomic increments.
 
-qede_parse_actions() can currently fail with:
-* -EINVAL
-* -EOPNOTSUPP
+Since the net_device_core_stats infrastructure is already used in
+vxlan_rcv(), use it for the other rx_dropped and tx_dropped counter
+updates. Update the other counters atomically using DEV_STATS_INC().
 
-This patch changes the code to use the actual
-return code, not just return -EINVAL.
-
-The blaimed commit broke the implicit assumption
-that only -EINVAL would ever be returned.
-
-Only compile tested.
-
-Fixes: 319a1d19471e ("flow_offload: check for basic action hw stats type")
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: d342894c5d2f ("vxlan: virtual extensible lan")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_filter.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qede/qede_filter.c b/drivers/net/ethernet/qlogic/qede/qede_filter.c
-index 377d661f70f78..cb6b33a228ea2 100644
---- a/drivers/net/ethernet/qlogic/qede/qede_filter.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_filter.c
-@@ -1894,10 +1894,9 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 9ec46048d361d..afca4f42c31b4 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -1766,8 +1766,8 @@ static int vxlan_rcv(struct sock *sk, struct sk_buff *skb)
+ 	skb_reset_network_header(skb);
+ 
+ 	if (!vxlan_ecn_decapsulate(vs, oiph, skb)) {
+-		++vxlan->dev->stats.rx_frame_errors;
+-		++vxlan->dev->stats.rx_errors;
++		DEV_STATS_INC(vxlan->dev, rx_frame_errors);
++		DEV_STATS_INC(vxlan->dev, rx_errors);
+ 		vxlan_vnifilter_count(vxlan, vni, vninode,
+ 				      VXLAN_VNI_STATS_RX_ERRORS, 0);
+ 		goto drop;
+@@ -1837,7 +1837,7 @@ static int arp_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
+ 		goto out;
+ 
+ 	if (!pskb_may_pull(skb, arp_hdr_len(dev))) {
+-		dev->stats.tx_dropped++;
++		dev_core_stats_tx_dropped_inc(dev);
+ 		goto out;
  	}
+ 	parp = arp_hdr(skb);
+@@ -1893,7 +1893,7 @@ static int arp_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
+ 		reply->pkt_type = PACKET_HOST;
  
- 	/* parse tc actions and get the vf_id */
--	if (qede_parse_actions(edev, &f->rule->action, f->common.extack)) {
--		rc = -EINVAL;
-+	rc = qede_parse_actions(edev, &f->rule->action, f->common.extack);
-+	if (rc)
- 		goto unlock;
--	}
+ 		if (netif_rx(reply) == NET_RX_DROP) {
+-			dev->stats.rx_dropped++;
++			dev_core_stats_rx_dropped_inc(dev);
+ 			vxlan_vnifilter_count(vxlan, vni, NULL,
+ 					      VXLAN_VNI_STATS_RX_DROPS, 0);
+ 		}
+@@ -2052,7 +2052,7 @@ static int neigh_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
+ 			goto out;
  
- 	if (qede_flow_find_fltr(edev, &t)) {
- 		rc = -EEXIST;
+ 		if (netif_rx(reply) == NET_RX_DROP) {
+-			dev->stats.rx_dropped++;
++			dev_core_stats_rx_dropped_inc(dev);
+ 			vxlan_vnifilter_count(vxlan, vni, NULL,
+ 					      VXLAN_VNI_STATS_RX_DROPS, 0);
+ 		}
+@@ -2263,7 +2263,7 @@ static void vxlan_encap_bypass(struct sk_buff *skb, struct vxlan_dev *src_vxlan,
+ 				      len);
+ 	} else {
+ drop:
+-		dev->stats.rx_dropped++;
++		dev_core_stats_rx_dropped_inc(dev);
+ 		vxlan_vnifilter_count(dst_vxlan, vni, NULL,
+ 				      VXLAN_VNI_STATS_RX_DROPS, 0);
+ 	}
+@@ -2295,7 +2295,7 @@ static int encap_bypass_if_local(struct sk_buff *skb, struct net_device *dev,
+ 					   addr_family, dst_port,
+ 					   vxlan->cfg.flags);
+ 		if (!dst_vxlan) {
+-			dev->stats.tx_errors++;
++			DEV_STATS_INC(dev, tx_errors);
+ 			vxlan_vnifilter_count(vxlan, vni, NULL,
+ 					      VXLAN_VNI_STATS_TX_ERRORS, 0);
+ 			kfree_skb(skb);
+@@ -2559,7 +2559,7 @@ void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 	return;
+ 
+ drop:
+-	dev->stats.tx_dropped++;
++	dev_core_stats_tx_dropped_inc(dev);
+ 	vxlan_vnifilter_count(vxlan, vni, NULL, VXLAN_VNI_STATS_TX_DROPS, 0);
+ 	dev_kfree_skb(skb);
+ 	return;
+@@ -2567,11 +2567,11 @@ void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ tx_error:
+ 	rcu_read_unlock();
+ 	if (err == -ELOOP)
+-		dev->stats.collisions++;
++		DEV_STATS_INC(dev, collisions);
+ 	else if (err == -ENETUNREACH)
+-		dev->stats.tx_carrier_errors++;
++		DEV_STATS_INC(dev, tx_carrier_errors);
+ 	dst_release(ndst);
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	vxlan_vnifilter_count(vxlan, vni, NULL, VXLAN_VNI_STATS_TX_ERRORS, 0);
+ 	kfree_skb(skb);
+ }
+@@ -2604,7 +2604,7 @@ static void vxlan_xmit_nh(struct sk_buff *skb, struct net_device *dev,
+ 	return;
+ 
+ drop:
+-	dev->stats.tx_dropped++;
++	dev_core_stats_tx_dropped_inc(dev);
+ 	vxlan_vnifilter_count(netdev_priv(dev), vni, NULL,
+ 			      VXLAN_VNI_STATS_TX_DROPS, 0);
+ 	dev_kfree_skb(skb);
+@@ -2642,7 +2642,7 @@ static netdev_tx_t vxlan_xmit_nhid(struct sk_buff *skb, struct net_device *dev,
+ 	return NETDEV_TX_OK;
+ 
+ drop:
+-	dev->stats.tx_dropped++;
++	dev_core_stats_tx_dropped_inc(dev);
+ 	vxlan_vnifilter_count(netdev_priv(dev), vni, NULL,
+ 			      VXLAN_VNI_STATS_TX_DROPS, 0);
+ 	dev_kfree_skb(skb);
+@@ -2739,7 +2739,7 @@ static netdev_tx_t vxlan_xmit(struct sk_buff *skb, struct net_device *dev)
+ 			    !is_multicast_ether_addr(eth->h_dest))
+ 				vxlan_fdb_miss(vxlan, eth->h_dest);
+ 
+-			dev->stats.tx_dropped++;
++			dev_core_stats_tx_dropped_inc(dev);
+ 			vxlan_vnifilter_count(vxlan, vni, NULL,
+ 					      VXLAN_VNI_STATS_TX_DROPS, 0);
+ 			kfree_skb(skb);
 -- 
 2.43.0
 
