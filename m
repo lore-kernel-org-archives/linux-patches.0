@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B2313E022;
-	Tue, 14 May 2024 11:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A252A13F442;
+	Tue, 14 May 2024 11:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685921; cv=none; b=r6L80xbLaAdeag+laFEBsKDwC2RtZdVeXWMo7yu9qhdxE5YNUP2uvIzkJYiUVYwFLKIJ1U4EIrKWAyMPQyqDQiWmorWpJ+LKhTbnJHTK0qE4zIFRK/5V6z5nFOm8GpWZxi9VShr0ClOtvg/CH0BWZEboNruzReuGNS74g1K/qiA=
+	t=1715685924; cv=none; b=T7zBTsJ66S1TMnqVYQUbkcS53qkZNzWmTQf0xt67hf5KMpAtG+WxInfdbMZx+EqG9frxVIKlFkl4x3S31ZkIb/m3VPutKAv+Me2g5S4K8srZY3mBtb2Mz9bfK+vNuQT/zDA/CgTkb7sVhH0ChsZJe633zCbNR71ibwHeniMkZmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685921; c=relaxed/simple;
-	bh=SuEkyu6ImIh3EZeVfNXKTp+eNV+zGQkhMTOcots/pAw=;
+	s=arc-20240116; t=1715685924; c=relaxed/simple;
+	bh=Ly9t1H2AFWsfe9nESvq6ON8JgfmY57Gh/ptXV1Rmtho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3Z5CzCrLJ2CK07/CXYsfsiMtwJ0Wz7Dem4GKCl5JpPH0FXVtyjsUOM+9zWq2lmAIIsinEZAllEPALivBYQ9YVuDwYArBwV/5qENlwVxyD1kEcq5RaTkkx7S/wkNFqZBAWwEZqosUybWrQems9MeiRTBH96PJPZc0kkAfmu8H2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdTuil8K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H0phdOvqf3cPHF0V6xPpp9I24mPpJ/9J1zukJ5Hl88SzbknPfYaNvJlJjx3stFL4ek8GBP8wGWKAzksRv3oLTqsXe7t1uyW/GlrTo4taI1jzeW+CfpOw4N0e8TFPKqSbZd4KnSZzpky61ybh1JGK3+jgrTp4qSEZY+3a1WNjXTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NY1nLb7+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdTuil8K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E655C2BD10;
-	Tue, 14 May 2024 11:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NY1nLb7+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0A4C2BD10;
+	Tue, 14 May 2024 11:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685920;
-	bh=SuEkyu6ImIh3EZeVfNXKTp+eNV+zGQkhMTOcots/pAw=;
+	s=korg; t=1715685924;
+	bh=Ly9t1H2AFWsfe9nESvq6ON8JgfmY57Gh/ptXV1Rmtho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CdTuil8K3RKUqUfDKjr1fok3bvD23y988IkWC+cc3wkGb/7QczqbIBP2rbSDQphX0
-	 /5udvO5xDB71XhS9irVZKjIBjPvi8dxoHD7njGATR1JJRN5mBtrqqi4pyNzHzmatBC
-	 qsEgJ9R4kL9F1loQlIwgXwoY5zjCBsK9Lf4h7bEw=
+	b=NY1nLb7+qnOzjG5vQO6di+amvfoKDUfzyF0qsb20cwfIVT42DeQ50tWb4WURFpO46
+	 XzcMuaL+hGghPIOdaHNzzf50hmmdeivYUBTt58sC5pJKdbs9qpcEOBCjOAlyPtMv1M
+	 SmWCOMJzwadys8rsmPnjvsigk3W/r8or5VwoA5MQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Volodymyr Babchuk <volodymyr_babchuk@epam.com>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 277/301] arm64: dts: qcom: sa8155p-adp: fix SDHC2 CD pin configuration
-Date: Tue, 14 May 2024 12:19:08 +0200
-Message-ID: <20240514101042.724749149@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 278/301] net: fix out-of-bounds access in ops_init
+Date: Tue, 14 May 2024 12:19:09 +0200
+Message-ID: <20240514101042.761577143@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,96 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-commit 819fe8c96a5172dfd960e5945e8f00f8fed32953 upstream.
+commit a26ff37e624d12e28077e5b24d2b264f62764ad6 upstream.
 
-There are two issues with SDHC2 configuration for SA8155P-ADP,
-which prevent use of SDHC2 and causes issues with ethernet:
+net_alloc_generic is called by net_alloc, which is called without any
+locking. It reads max_gen_ptrs, which is changed under pernet_ops_rwsem. It
+is read twice, first to allocate an array, then to set s.len, which is
+later used to limit the bounds of the array access.
 
-- Card Detect pin for SHDC2 on SA8155P-ADP is connected to gpio4 of
-  PMM8155AU_1, not to SoC itself. SoC's gpio4 is used for DWMAC
-  TX. If sdhc driver probes after dwmac driver, it reconfigures
-  gpio4 and this breaks Ethernet MAC.
+It is possible that the array is allocated and another thread is
+registering a new pernet ops, increments max_gen_ptrs, which is then used
+to set s.len with a larger than allocated length for the variable array.
 
-- pinctrl configuration mentions gpio96 as CD pin. It seems it was
-  copied from some SM8150 example, because as mentioned above,
-  correct CD pin is gpio4 on PMM8155AU_1.
+Fix it by reading max_gen_ptrs only once in net_alloc_generic. If
+max_gen_ptrs is later incremented, it will be caught in net_assign_generic.
 
-This patch fixes both mentioned issues by providing correct pin handle
-and pinctrl configuration.
-
-Fixes: 0deb2624e2d0 ("arm64: dts: qcom: sa8155p-adp: Add support for uSD card")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Fixes: 073862ba5d24 ("netns: fix net_alloc_generic()")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
-Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
-Link: https://lore.kernel.org/r/20240412190310.1647893-1-volodymyr_babchuk@epam.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20240502132006.3430840-1-cascardo@igalia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sa8155p-adp.dts |   30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ net/core/net_namespace.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-@@ -367,6 +367,16 @@
- 	};
- };
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -69,12 +69,15 @@ DEFINE_COOKIE(net_cookie);
  
-+&pmm8155au_1_gpios {
-+	pmm8155au_1_sdc2_cd: sdc2-cd-default-state {
-+		pins = "gpio4";
-+		function = "normal";
-+		input-enable;
-+		bias-pull-up;
-+		power-source = <0>;
-+	};
-+};
+ static struct net_generic *net_alloc_generic(void)
+ {
++	unsigned int gen_ptrs = READ_ONCE(max_gen_ptrs);
++	unsigned int generic_size;
+ 	struct net_generic *ng;
+-	unsigned int generic_size = offsetof(struct net_generic, ptr[max_gen_ptrs]);
 +
- &qupv3_id_1 {
- 	status = "okay";
- };
-@@ -384,10 +394,10 @@
- &sdhc_2 {
- 	status = "okay";
++	generic_size = offsetof(struct net_generic, ptr[gen_ptrs]);
  
--	cd-gpios = <&tlmm 4 GPIO_ACTIVE_LOW>;
-+	cd-gpios = <&pmm8155au_1_gpios 4 GPIO_ACTIVE_LOW>;
- 	pinctrl-names = "default", "sleep";
--	pinctrl-0 = <&sdc2_on>;
--	pinctrl-1 = <&sdc2_off>;
-+	pinctrl-0 = <&sdc2_on &pmm8155au_1_sdc2_cd>;
-+	pinctrl-1 = <&sdc2_off &pmm8155au_1_sdc2_cd>;
- 	vqmmc-supply = <&vreg_l13c_2p96>; /* IO line power */
- 	vmmc-supply = <&vreg_l17a_2p96>;  /* Card power line */
- 	bus-width = <4>;
-@@ -505,13 +515,6 @@
- 			bias-pull-up;		/* pull up */
- 			drive-strength = <16>;	/* 16 MA */
- 		};
--
--		sd-cd-pins {
--			pins = "gpio96";
--			function = "gpio";
--			bias-pull-up;		/* pull up */
--			drive-strength = <2>;	/* 2 MA */
--		};
- 	};
+ 	ng = kzalloc(generic_size, GFP_KERNEL);
+ 	if (ng)
+-		ng->s.len = max_gen_ptrs;
++		ng->s.len = gen_ptrs;
  
- 	sdc2_off: sdc2-off-state {
-@@ -532,13 +535,6 @@
- 			bias-pull-up;		/* pull up */
- 			drive-strength = <2>;	/* 2 MA */
- 		};
--
--		sd-cd-pins {
--			pins = "gpio96";
--			function = "gpio";
--			bias-pull-up;		/* pull up */
--			drive-strength = <2>;	/* 2 MA */
--		};
- 	};
- 
- 	usb2phy_ac_en1_default: usb2phy-ac-en1-default-state {
+ 	return ng;
+ }
+@@ -1229,7 +1232,11 @@ static int register_pernet_operations(st
+ 		if (error < 0)
+ 			return error;
+ 		*ops->id = error;
+-		max_gen_ptrs = max(max_gen_ptrs, *ops->id + 1);
++		/* This does not require READ_ONCE as writers already hold
++		 * pernet_ops_rwsem. But WRITE_ONCE is needed to protect
++		 * net_alloc_generic.
++		 */
++		WRITE_ONCE(max_gen_ptrs, max(max_gen_ptrs, *ops->id + 1));
+ 	}
+ 	error = __register_pernet_operations(list, ops);
+ 	if (error) {
 
 
