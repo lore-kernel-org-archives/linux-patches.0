@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDA253361;
-	Tue, 14 May 2024 11:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267E553361;
+	Tue, 14 May 2024 11:51:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687497; cv=none; b=oiW6lh4jjMwhPhTS+GfSAgwKKcuRAWkxRpMu917iiHT36LBDeqnZld6r1poI6fAH2uOv9FP5SrIhE7QX8ybbEIMQqQZta5KAt5BAV6/pDiHvz6g0HGaRa/RbHMaDITwXP/bhI8nbL8aQkxc6MSpuLFb4kHhlFHvks9gSYwxaU04=
+	t=1715687500; cv=none; b=MGXCGybqGRiiMK/FBUow+CZpzvsYUpfWNo/UKSJ/ea1WVXS52tiU3flA5jBvK6BTBlKPUNnUPRTR+Y9xye/a4NoQ8802hZ115rZtrGN5cPYpVc0T8W+UjrrYcwnigIaUz9YtaKZpDvLh+1RFof9gGDX0T5sN6KHrYsoBb6Cg/1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687497; c=relaxed/simple;
-	bh=o+MLd3iRMvsDRbYGmHfG/BehRsDDLY81kej+YF6ldDg=;
+	s=arc-20240116; t=1715687500; c=relaxed/simple;
+	bh=AF3KgWwJbARw3DYft610vHlHzeM9Q6d/4o0pNB3fv9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VrV8MqlGW0u8zS7TmA8AdmczkzXO5vZIjbExdQ+M5Vrwxc6ZRL2ZsyyvJDpCClFJhHiS7b87fgWIw1nWtTdOdh2FUFQYLVfyGb+u1/RQhkQX48JMIBZGmxgV4aG9biT0hw3qOesby0quGbA5sfmsdUVum53iGBCFqVqixHVqLc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sox3talb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IFdqW0SQhe0QxohUieDUWpiFNAfrXQRvWEji7qw2Cn9zN/3lU2icr2NrQ36o6Vl+K+vED2p1OeKZvwpnwEPMf6wz9rPILK2ECdAxIcg2vv43tfTiMmFa6AjAqSaXt1Ne+0Ul4AdWXGQRWBioQoESDcM0YC1w7TzxI6t2wa2cNZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sg+AmP6i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sox3talb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81F2C2BD10;
-	Tue, 14 May 2024 11:51:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sg+AmP6i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A433AC2BD10;
+	Tue, 14 May 2024 11:51:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687497;
-	bh=o+MLd3iRMvsDRbYGmHfG/BehRsDDLY81kej+YF6ldDg=;
+	s=korg; t=1715687500;
+	bh=AF3KgWwJbARw3DYft610vHlHzeM9Q6d/4o0pNB3fv9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sox3talbJFUUd9fg1A9R8rK0qRQYVjc+kxrDJ8VCLQmySiB/qgOIUltql4w0VsFxQ
-	 X1SZnmvMOXZaVNcdDATrSXDbdPy6zyWUWufrEAA3MV7yZjBv/qLRveXjgb7Ley8Qq1
-	 tqDEyvfknb85HqFRRgelYkvW/Zhe/AwtAvO7yBtI=
+	b=sg+AmP6i7TzLu0kyqKJQLPTfk8Zb84xuB7L6/IhfpNts+ef5Reh+/SpPmK8XRXJt1
+	 H+7senaXk0n5/53Lu7ibLZ3qBU51Xt1+rS8xavS97VjL4JzPrIBAi4jOlbnf1XAjLW
+	 xfnrSVePB8kJ7uMNGx4gEBtLUsmKGswScMG4EdZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Hoffmann <kraxel@redhat.com>,
-	David Laight <David.Laight@aculab.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.10 095/111] usb: ohci: Prevent missed ohci interrupts
-Date: Tue, 14 May 2024 12:20:33 +0200
-Message-ID: <20240514101000.740433706@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Peter Korsgaard <peter@korsgaard.com>
+Subject: [PATCH 5.10 096/111] usb: gadget: composite: fix OS descriptors w_value logic
+Date: Tue, 14 May 2024 12:20:34 +0200
+Message-ID: <20240514101000.778009955@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -52,60 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Peter Korsgaard <peter@korsgaard.com>
 
-commit fe81f354841641c7f71163b84912b25c169ed8ec upstream.
+commit ec6ce7075ef879b91a8710829016005dc8170f17 upstream.
 
-Testing ohci functionality with qemu's pci-ohci emulation often results
-in ohci interface stalls, resulting in hung task timeouts.
+The OS descriptors logic had the high/low byte of w_value inverted, causing
+the extended properties to not be accessible for interface != 0.
 
-The problem is caused by lost interrupts between the emulation and the
-Linux kernel code. Additional interrupts raised while the ohci interrupt
-handler in Linux is running and before the handler clears the interrupt
-status are not handled. The fix for a similar problem in ehci suggests
-that the problem is likely caused by edge-triggered MSI interrupts. See
-commit 0b60557230ad ("usb: ehci: Prevent missed ehci interrupts with
-edge-triggered MSI") for details.
+>From the Microsoft documentation:
+https://learn.microsoft.com/en-us/windows-hardware/drivers/usbcon/microsoft-os-1-0-descriptors-specification
 
-Ensure that the ohci interrupt code handles all pending interrupts before
-returning to solve the problem.
+OS_Desc_CompatID.doc (w_index = 0x4):
 
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: David Laight <David.Laight@aculab.com>
-Cc: stable@vger.kernel.org
-Fixes: 306c54d0edb6 ("usb: hcd: Try MSI interrupts on PCI devices")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
-Link: https://lore.kernel.org/r/20240429154010.1507366-1-linux@roeck-us.net
+- wValue:
+
+  High Byte = InterfaceNumber.  InterfaceNumber is set to the number of the
+  interface or function that is associated with the descriptor, typically
+  0x00.  Because a device can have only one extended compat ID descriptor,
+  it should ignore InterfaceNumber, regardless of the value, and simply
+  return the descriptor.
+
+  Low Byte = 0.  PageNumber is used to retrieve descriptors that are larger
+  than 64 KB.  The header section is 16 bytes, so PageNumber is set to 0 for
+  this request.
+
+We currently do not support >64KB compat ID descriptors, so verify that the
+low byte is 0.
+
+OS_Desc_Ext_Prop.doc (w_index = 0x5):
+
+- wValue:
+
+  High byte = InterfaceNumber.  The high byte of wValue is set to the number
+  of the interface or function that is associated with the descriptor.
+
+  Low byte = PageNumber.  The low byte of wValue is used to retrieve
+  descriptors that are larger than 64 KB.  The header section is 10 bytes, so
+  PageNumber is set to 0 for this request.
+
+We also don't support >64KB extended properties, so verify that the low byte
+is 0 and use the high byte for the interface number.
+
+Fixes: 37a3a533429e ("usb: gadget: OS Feature Descriptors support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Peter Korsgaard <peter@korsgaard.com>
+Link: https://lore.kernel.org/r/20240404100635.3215340-1-peter@korsgaard.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ohci-hcd.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/gadget/composite.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/host/ohci-hcd.c
-+++ b/drivers/usb/host/ohci-hcd.c
-@@ -890,6 +890,7 @@ static irqreturn_t ohci_irq (struct usb_
- 	/* Check for an all 1's result which is a typical consequence
- 	 * of dead, unclocked, or unplugged (CardBus...) devices
- 	 */
-+again:
- 	if (ints == ~(u32)0) {
- 		ohci->rh_state = OHCI_RH_HALTED;
- 		ohci_dbg (ohci, "device removed!\n");
-@@ -984,6 +985,13 @@ static irqreturn_t ohci_irq (struct usb_
- 	}
- 	spin_unlock(&ohci->lock);
- 
-+	/* repeat until all enabled interrupts are handled */
-+	if (ohci->rh_state != OHCI_RH_HALTED) {
-+		ints = ohci_readl(ohci, &regs->intrstatus);
-+		if (ints && (ints & ohci_readl(ohci, &regs->intrenable)))
-+			goto again;
-+	}
-+
- 	return IRQ_HANDLED;
- }
- 
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -1925,7 +1925,7 @@ unknown:
+ 			buf[5] = 0x01;
+ 			switch (ctrl->bRequestType & USB_RECIP_MASK) {
+ 			case USB_RECIP_DEVICE:
+-				if (w_index != 0x4 || (w_value >> 8))
++				if (w_index != 0x4 || (w_value & 0xff))
+ 					break;
+ 				buf[6] = w_index;
+ 				/* Number of ext compat interfaces */
+@@ -1941,9 +1941,9 @@ unknown:
+ 				}
+ 				break;
+ 			case USB_RECIP_INTERFACE:
+-				if (w_index != 0x5 || (w_value >> 8))
++				if (w_index != 0x5 || (w_value & 0xff))
+ 					break;
+-				interface = w_value & 0xFF;
++				interface = w_value >> 8;
+ 				if (interface >= MAX_CONFIG_INTERFACES ||
+ 				    !os_desc_cfg->interface[interface])
+ 					break;
 
 
