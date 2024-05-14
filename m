@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F96812FB21;
-	Tue, 14 May 2024 10:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2862512FB21;
+	Tue, 14 May 2024 10:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684241; cv=none; b=LUYkN2rnZryQodcaNH9MRqZUCZARxOg5rPKaV8nMfH4wZrlikTBmLytwVewuLv5LkC18pVllwRuLpw7167Y09cM92dcPytE4ETMVlx2SPNbRc/IpvTW3Cl1/YckO1SyGFW+7JiSpjNfvpGjf6VZibmHHsvKvSErWBKF+MnYN75g=
+	t=1715684245; cv=none; b=ENaxK+pV/RC6lJqUqbaxATCyl2poX1f7az0gvMt3cYLg7h5iRsn+ZNmvVSiBgUrwW4pGqTbOVsq9YVHdhGAo1LCFYKqoB0PZppj34enulfNHBMUAFJy6oxsQjC+nmxci9zlT1VuwFdXibwJKIJQD08Eisj9Tg0Wh+cdieCD5c6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684241; c=relaxed/simple;
-	bh=rz330f8OTXLWsHvU9lHqd9atb3cfDpkDYj7f8SAr+eI=;
+	s=arc-20240116; t=1715684245; c=relaxed/simple;
+	bh=LLqIEYpPf4gsgNOqQfl63N8RsBuB//dSQ+DuRztV/Sc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bggchogTnafe6gY6q8ZU6FDjAw3kkRw1gM/CQWayNBgQ0vWJHMvn7hVFa8dDWKEkG7xim247hAkOw1eZ7qyaIq0o1EJlVafP3Go4sMvp/FsqReL8aHfhCdupjNbsOmog+90IIYxHiDfcxmFkruPiSHYTQvIs7kpFIEyZa24CL94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/WqVJPt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aGVgu+ixl1m2JZhwTXpn5N9FrM5tLZ5I3cvybv1HjpBHx55pHJgLI4nqVM1dNbGEro2IXqxkZQe+I4vgv29+I+V3y2C7U+8PyDXXHN/3fmCwikfT3+dxadIgGGGpPvJKCnC2rsaiqb2IrNXSo6kj7JtIMWKGA4xSCaxL+mIfECg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMS9a3GM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/WqVJPt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480C8C2BD10;
-	Tue, 14 May 2024 10:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMS9a3GM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7BDC2BD10;
+	Tue, 14 May 2024 10:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684240;
-	bh=rz330f8OTXLWsHvU9lHqd9atb3cfDpkDYj7f8SAr+eI=;
+	s=korg; t=1715684245;
+	bh=LLqIEYpPf4gsgNOqQfl63N8RsBuB//dSQ+DuRztV/Sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/WqVJPtXP9S7tcg7uBOOmwb8LYth1y/VmsUCa5QY/eUB4duyXbKiV36aDyKGcIN/
-	 iOu114Jf312vmB6Ezj5Hlp9WvGgn5TsT9sF/S12cH42KliPu952mVHDwklMEX0o+i+
-	 1w0KfYFRe5eNJk5DAcvmAymcl6vFAqkRCUHifBeo=
+	b=cMS9a3GMXsaSE6OaZCL4ZGM/GyETrR5cXZ2fqk7U8f/BrTEpVCVL6GYVG5JN8iIMw
+	 2y0E8eEYdKbPrxAatuXOKsxGmZW3vhjUceeyH28U3zpfrba57JFb3pFiDAuZf1I0/a
+	 IuhqdbUYwa/FoetjUIINrABlPsWe6UpzOxQaTIL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Jiang <quic_tjiang@quicinc.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>,
+	Billy Tsai <billy_tsai@aspeedtech.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 011/301] Bluetooth: qca: add support for QCA2066
-Date: Tue, 14 May 2024 12:14:42 +0200
-Message-ID: <20240514101032.659832829@linuxfoundation.org>
+Subject: [PATCH 6.6 012/301] pinctrl: pinctrl-aspeed-g6: Fix register offset for pinconf of GPIOR-T
+Date: Tue, 14 May 2024 12:14:43 +0200
+Message-ID: <20240514101032.697757585@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,222 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Jiang <quic_tjiang@quicinc.com>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-[ Upstream commit a7f8dedb4be2cc930a29af24427b885405ecd15d ]
+[ Upstream commit c10cd03d69403fa0f00be8631bd4cb4690440ebd ]
 
-This patch adds support for QCA2066 firmware patch and NVM downloading.
-as the RF performance of QCA2066 SOC chip from different foundries may
-vary. Therefore we use different NVM to configure them based on board ID.
+The register offset to disable the internal pull-down of GPIOR~T is 0x630
+instead of 0x620, as specified in the Ast2600 datasheet v15
+The datasheet can download from the official Aspeed website.
 
-Changes in v2
- - optimize the function qca_generate_hsp_nvm_name
- - remove redundant debug code for function qca_read_fw_board_id
-
-Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 32868e126c78 ("Bluetooth: qca: fix invalid device address check")
+Fixes: 15711ba6ff19 ("pinctrl: aspeed-g6: Add AST2600 pinconf support")
+Reported-by: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Message-ID: <20240313092809.2596644-1-billy_tsai@aspeedtech.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c   | 68 +++++++++++++++++++++++++++++++++++++
- drivers/bluetooth/btqca.h   |  5 ++-
- drivers/bluetooth/hci_qca.c | 11 ++++++
- 3 files changed, 83 insertions(+), 1 deletion(-)
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 34 +++++++++++-----------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 5277090c6d6d7..19cfc342fc7bb 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -205,6 +205,44 @@ static int qca_send_reset(struct hci_dev *hdev)
- 	return 0;
- }
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+index 80838dc54b3ab..7938741136a2c 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+@@ -43,7 +43,7 @@
+ #define SCU614		0x614 /* Disable GPIO Internal Pull-Down #1 */
+ #define SCU618		0x618 /* Disable GPIO Internal Pull-Down #2 */
+ #define SCU61C		0x61c /* Disable GPIO Internal Pull-Down #3 */
+-#define SCU620		0x620 /* Disable GPIO Internal Pull-Down #4 */
++#define SCU630		0x630 /* Disable GPIO Internal Pull-Down #4 */
+ #define SCU634		0x634 /* Disable GPIO Internal Pull-Down #5 */
+ #define SCU638		0x638 /* Disable GPIO Internal Pull-Down #6 */
+ #define SCU690		0x690 /* Multi-function Pin Control #24 */
+@@ -2494,38 +2494,38 @@ static struct aspeed_pin_config aspeed_g6_configs[] = {
+ 	ASPEED_PULL_DOWN_PINCONF(D14, SCU61C, 0),
  
-+static int qca_read_fw_board_id(struct hci_dev *hdev, u16 *bid)
-+{
-+	u8 cmd;
-+	struct sk_buff *skb;
-+	struct edl_event_hdr *edl;
-+	int err = 0;
-+
-+	cmd = EDL_GET_BID_REQ_CMD;
-+	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CMD_LEN,
-+				&cmd, 0, HCI_INIT_TIMEOUT);
-+	if (IS_ERR(skb)) {
-+		err = PTR_ERR(skb);
-+		bt_dev_err(hdev, "Reading QCA board ID failed (%d)", err);
-+		return err;
-+	}
-+
-+	edl = skb_pull_data(skb, sizeof(*edl));
-+	if (!edl) {
-+		bt_dev_err(hdev, "QCA read board ID with no header");
-+		err = -EILSEQ;
-+		goto out;
-+	}
-+
-+	if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
-+	    edl->rtype != EDL_GET_BID_REQ_CMD) {
-+		bt_dev_err(hdev, "QCA Wrong packet: %d %d", edl->cresp, edl->rtype);
-+		err = -EIO;
-+		goto out;
-+	}
-+
-+	*bid = (edl->data[1] << 8) + edl->data[2];
-+	bt_dev_dbg(hdev, "%s: bid = %x", __func__, *bid);
-+
-+out:
-+	kfree_skb(skb);
-+	return err;
-+}
-+
- int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
- {
- 	struct sk_buff *skb;
-@@ -574,6 +612,23 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
- }
- EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
+ 	/* GPIOS7 */
+-	ASPEED_PULL_DOWN_PINCONF(T24, SCU620, 23),
++	ASPEED_PULL_DOWN_PINCONF(T24, SCU630, 23),
+ 	/* GPIOS6 */
+-	ASPEED_PULL_DOWN_PINCONF(P23, SCU620, 22),
++	ASPEED_PULL_DOWN_PINCONF(P23, SCU630, 22),
+ 	/* GPIOS5 */
+-	ASPEED_PULL_DOWN_PINCONF(P24, SCU620, 21),
++	ASPEED_PULL_DOWN_PINCONF(P24, SCU630, 21),
+ 	/* GPIOS4 */
+-	ASPEED_PULL_DOWN_PINCONF(R26, SCU620, 20),
++	ASPEED_PULL_DOWN_PINCONF(R26, SCU630, 20),
+ 	/* GPIOS3*/
+-	ASPEED_PULL_DOWN_PINCONF(R24, SCU620, 19),
++	ASPEED_PULL_DOWN_PINCONF(R24, SCU630, 19),
+ 	/* GPIOS2 */
+-	ASPEED_PULL_DOWN_PINCONF(T26, SCU620, 18),
++	ASPEED_PULL_DOWN_PINCONF(T26, SCU630, 18),
+ 	/* GPIOS1 */
+-	ASPEED_PULL_DOWN_PINCONF(T25, SCU620, 17),
++	ASPEED_PULL_DOWN_PINCONF(T25, SCU630, 17),
+ 	/* GPIOS0 */
+-	ASPEED_PULL_DOWN_PINCONF(R23, SCU620, 16),
++	ASPEED_PULL_DOWN_PINCONF(R23, SCU630, 16),
  
-+static void qca_generate_hsp_nvm_name(char *fwname, size_t max_size,
-+		struct qca_btsoc_version ver, u8 rom_ver, u16 bid)
-+{
-+	const char *variant;
-+
-+	/* hsp gf chip */
-+	if ((le32_to_cpu(ver.soc_id) & QCA_HSP_GF_SOC_MASK) == QCA_HSP_GF_SOC_ID)
-+		variant = "g";
-+	else
-+		variant = "";
-+
-+	if (bid == 0x0)
-+		snprintf(fwname, max_size, "qca/hpnv%02x%s.bin", rom_ver, variant);
-+	else
-+		snprintf(fwname, max_size, "qca/hpnv%02x%s.%x", rom_ver, variant, bid);
-+}
-+
- int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
- 		   const char *firmware_name)
-@@ -582,6 +637,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	int err;
- 	u8 rom_ver = 0;
- 	u32 soc_ver;
-+	u16 boardid = 0;
+ 	/* GPIOR7 */
+-	ASPEED_PULL_DOWN_PINCONF(U26, SCU620, 15),
++	ASPEED_PULL_DOWN_PINCONF(U26, SCU630, 15),
+ 	/* GPIOR6 */
+-	ASPEED_PULL_DOWN_PINCONF(W26, SCU620, 14),
++	ASPEED_PULL_DOWN_PINCONF(W26, SCU630, 14),
+ 	/* GPIOR5 */
+-	ASPEED_PULL_DOWN_PINCONF(T23, SCU620, 13),
++	ASPEED_PULL_DOWN_PINCONF(T23, SCU630, 13),
+ 	/* GPIOR4 */
+-	ASPEED_PULL_DOWN_PINCONF(U25, SCU620, 12),
++	ASPEED_PULL_DOWN_PINCONF(U25, SCU630, 12),
+ 	/* GPIOR3*/
+-	ASPEED_PULL_DOWN_PINCONF(V26, SCU620, 11),
++	ASPEED_PULL_DOWN_PINCONF(V26, SCU630, 11),
+ 	/* GPIOR2 */
+-	ASPEED_PULL_DOWN_PINCONF(V24, SCU620, 10),
++	ASPEED_PULL_DOWN_PINCONF(V24, SCU630, 10),
+ 	/* GPIOR1 */
+-	ASPEED_PULL_DOWN_PINCONF(U24, SCU620, 9),
++	ASPEED_PULL_DOWN_PINCONF(U24, SCU630, 9),
+ 	/* GPIOR0 */
+-	ASPEED_PULL_DOWN_PINCONF(V25, SCU620, 8),
++	ASPEED_PULL_DOWN_PINCONF(V25, SCU630, 8),
  
- 	bt_dev_dbg(hdev, "QCA setup on UART");
- 
-@@ -615,6 +671,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		snprintf(config.fwname, sizeof(config.fwname),
- 			 "qca/apbtfw%02x.tlv", rom_ver);
- 		break;
-+	case QCA_QCA2066:
-+		snprintf(config.fwname, sizeof(config.fwname),
-+			 "qca/hpbtfw%02x.tlv", rom_ver);
-+		break;
- 	case QCA_QCA6390:
- 		snprintf(config.fwname, sizeof(config.fwname),
- 			 "qca/htbtfw%02x.tlv", rom_ver);
-@@ -649,6 +709,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	/* Give the controller some time to get ready to receive the NVM */
- 	msleep(10);
- 
-+	if (soc_type == QCA_QCA2066)
-+		qca_read_fw_board_id(hdev, &boardid);
-+
- 	/* Download NVM configuration */
- 	config.type = TLV_TYPE_NVM;
- 	if (firmware_name) {
-@@ -671,6 +734,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 			snprintf(config.fwname, sizeof(config.fwname),
- 				 "qca/apnv%02x.bin", rom_ver);
- 			break;
-+		case QCA_QCA2066:
-+			qca_generate_hsp_nvm_name(config.fwname,
-+				sizeof(config.fwname), ver, rom_ver, boardid);
-+			break;
- 		case QCA_QCA6390:
- 			snprintf(config.fwname, sizeof(config.fwname),
- 				 "qca/htnv%02x.bin", rom_ver);
-@@ -702,6 +769,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 
- 	switch (soc_type) {
- 	case QCA_WCN3991:
-+	case QCA_QCA2066:
- 	case QCA_QCA6390:
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
-diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-index 03bff5c0059de..dc31984f71dc1 100644
---- a/drivers/bluetooth/btqca.h
-+++ b/drivers/bluetooth/btqca.h
-@@ -12,6 +12,7 @@
- #define EDL_PATCH_VER_REQ_CMD		(0x19)
- #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
- #define EDL_GET_BUILD_INFO_CMD		(0x20)
-+#define EDL_GET_BID_REQ_CMD			(0x23)
- #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
- #define EDL_PATCH_CONFIG_CMD		(0x28)
- #define MAX_SIZE_PER_TLV_SEGMENT	(243)
-@@ -47,7 +48,8 @@
- 	((le32_to_cpu(soc_id) << 16) | (le16_to_cpu(rom_ver)))
- 
- #define QCA_FW_BUILD_VER_LEN		255
--
-+#define QCA_HSP_GF_SOC_ID			0x1200
-+#define QCA_HSP_GF_SOC_MASK			0x0000ff00
- 
- enum qca_baudrate {
- 	QCA_BAUDRATE_115200 	= 0,
-@@ -146,6 +148,7 @@ enum qca_btsoc_type {
- 	QCA_WCN3990,
- 	QCA_WCN3998,
- 	QCA_WCN3991,
-+	QCA_QCA2066,
- 	QCA_QCA6390,
- 	QCA_WCN6750,
- 	QCA_WCN6855,
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 410f146e3f671..cb825987e7f1a 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1845,6 +1845,10 @@ static int qca_setup(struct hci_uart *hu)
- 	set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
- 
- 	switch (soc_type) {
-+	case QCA_QCA2066:
-+		soc_name = "qca2066";
-+		break;
-+
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
-@@ -2043,6 +2047,11 @@ static const struct qca_device_data qca_soc_data_wcn3998 __maybe_unused = {
- 	.num_vregs = 4,
- };
- 
-+static const struct qca_device_data qca_soc_data_qca2066 __maybe_unused = {
-+	.soc_type = QCA_QCA2066,
-+	.num_vregs = 0,
-+};
-+
- static const struct qca_device_data qca_soc_data_qca6390 __maybe_unused = {
- 	.soc_type = QCA_QCA6390,
- 	.num_vregs = 0,
-@@ -2582,6 +2591,7 @@ static SIMPLE_DEV_PM_OPS(qca_pm_ops, qca_suspend, qca_resume);
- 
- #ifdef CONFIG_OF
- static const struct of_device_id qca_bluetooth_of_match[] = {
-+	{ .compatible = "qcom,qca2066-bt", .data = &qca_soc_data_qca2066},
- 	{ .compatible = "qcom,qca6174-bt" },
- 	{ .compatible = "qcom,qca6390-bt", .data = &qca_soc_data_qca6390},
- 	{ .compatible = "qcom,qca9377-bt" },
-@@ -2599,6 +2609,7 @@ MODULE_DEVICE_TABLE(of, qca_bluetooth_of_match);
- 
- #ifdef CONFIG_ACPI
- static const struct acpi_device_id qca_bluetooth_acpi_match[] = {
-+	{ "QCOM2066", (kernel_ulong_t)&qca_soc_data_qca2066 },
- 	{ "QCOM6390", (kernel_ulong_t)&qca_soc_data_qca6390 },
- 	{ "DLA16390", (kernel_ulong_t)&qca_soc_data_qca6390 },
- 	{ "DLB16390", (kernel_ulong_t)&qca_soc_data_qca6390 },
+ 	/* GPIOX7 */
+ 	ASPEED_PULL_DOWN_PINCONF(AB10, SCU634, 31),
 -- 
 2.43.0
 
