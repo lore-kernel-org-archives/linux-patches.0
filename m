@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951BC54BFE;
-	Tue, 14 May 2024 11:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078AD54BFE;
+	Tue, 14 May 2024 11:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685372; cv=none; b=oxlrMhzMN7Cd2mOOrASvr8YpC842wzx2PyiEQu9QZrYPDf9RSrLalH1DCzXjdnl43+vyio+dJ097siElJQc47K3v0v6bFAbfMS7+xcuxMu5n4xTo8K7xug01l6Ty5N8lr6gcJzaAGpeBftlyK/wiHi5NnjTcGEFClsAxIQ82Ggc=
+	t=1715685378; cv=none; b=WnQQNw2zSeGbxNMBwXAgf342jg7OqRsrTCCw7FMW3wXEccrurHNjaUYK+GkYE0fC12sF2eZCnb+peJYPS33q4sc0q8sffB6ZyyO8XMykplAaZcwqjDw9Dwdy8hm7sI3cWscANQ2kUivLOUIpiVy+Pjr872XPAcjXpeFo0HEuFDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685372; c=relaxed/simple;
-	bh=OH7XlctKP86jfOlumD4a3tQkmyQ+cwrgMX6zagfihLw=;
+	s=arc-20240116; t=1715685378; c=relaxed/simple;
+	bh=uB1TLk71LvTfhJap37/V1FK00CSHdzNM4Cm0aQ4ty7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYfNeVr2P3P0K+taivbKiqwbB0vomsb67Uf7nZYtD5SjJx+9YWajpzlljIzLfYrM1j4QulGy/C7VCmzxNYw94vbPqcscFAPZOla4pkFqfQefTlWSruYnA2p1h+Rm2GZYNTh7RdykwGFky3Md7kCtA0UdnW1HlErCYvrQwZtvsOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQnkSvCy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KTWDIRsqCvPUzt20xVv/0Xso4f00mosaHBbnIDbqeTnW87EK7bNYdfwBWQIb58txttOIVc/JqyHDX1K9vdjyr8G/nMELWITdsXDUuiBLri736vVneALKUHIrDAZBv4o6RQOtGLSAkhnY7Y1jVSRHXIClnXrBlj+wlnG422mZniU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Co2NfRY5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQnkSvCy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0075AC2BD10;
-	Tue, 14 May 2024 11:16:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Co2NfRY5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D73C2BD10;
+	Tue, 14 May 2024 11:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685372;
-	bh=OH7XlctKP86jfOlumD4a3tQkmyQ+cwrgMX6zagfihLw=;
+	s=korg; t=1715685377;
+	bh=uB1TLk71LvTfhJap37/V1FK00CSHdzNM4Cm0aQ4ty7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FQnkSvCyeeOUr58icxw+2jJ0CMjUAaLGqFUksGYNSibqpDF90MSE3jGbks96ujBnD
-	 cX8XImordlwtb9OQaOWlIefOaLqNrhqKrU72EOL8G8+7eerqp9ml20Fsu/1L8SAbzF
-	 KKUOfgDd29LzahttHtw33RsNKV+ypYOA6GFH8lgM=
+	b=Co2NfRY5hMi+8xxBkobYGOFhYNN0jS4HukE1pJ8XfgaPnR4QJ6kd/CDSgISD0GxNV
+	 19b9h3o1p6PgGrSshUAL6/8sZtDIx7e/aHfDNAOKiqebguBVBzjaeNZpsLd8H7EK9U
+	 fyPNYtgFicLVMELkX6eAwpxJR1ZejulFdp0Ll6sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 178/301] tcp: Use refcount_inc_not_zero() in tcp_twsk_unique().
-Date: Tue, 14 May 2024 12:17:29 +0200
-Message-ID: <20240514101038.977661311@linuxfoundation.org>
+Subject: [PATCH 6.6 179/301] Bluetooth: Fix use-after-free bugs caused by sco_sock_timeout
+Date: Tue, 14 May 2024 12:17:30 +0200
+Message-ID: <20240514101039.015390460@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -53,116 +51,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit f2db7230f73a80dbb179deab78f88a7947f0ab7e ]
+[ Upstream commit 483bc08181827fc475643272ffb69c533007e546 ]
 
-Anderson Nascimento reported a use-after-free splat in tcp_twsk_unique()
-with nice analysis.
+When the sco connection is established and then, the sco socket
+is releasing, timeout_work will be scheduled to judge whether
+the sco disconnection is timeout. The sock will be deallocated
+later, but it is dereferenced again in sco_sock_timeout. As a
+result, the use-after-free bugs will happen. The root cause is
+shown below:
 
-Since commit ec94c2696f0b ("tcp/dccp: avoid one atomic operation for
-timewait hashdance"), inet_twsk_hashdance() sets TIME-WAIT socket's
-sk_refcnt after putting it into ehash and releasing the bucket lock.
+    Cleanup Thread               |      Worker Thread
+sco_sock_release                 |
+  sco_sock_close                 |
+    __sco_sock_close             |
+      sco_sock_set_timer         |
+        schedule_delayed_work    |
+  sco_sock_kill                  |    (wait a time)
+    sock_put(sk) //FREE          |  sco_sock_timeout
+                                 |    sock_hold(sk) //USE
 
-Thus, there is a small race window where other threads could try to
-reuse the port during connect() and call sock_hold() in tcp_twsk_unique()
-for the TIME-WAIT socket with zero refcnt.
+The KASAN report triggered by POC is shown below:
 
-If that happens, the refcnt taken by tcp_twsk_unique() is overwritten
-and sock_put() will cause underflow, triggering a real use-after-free
-somewhere else.
+[   95.890016] ==================================================================
+[   95.890496] BUG: KASAN: slab-use-after-free in sco_sock_timeout+0x5e/0x1c0
+[   95.890755] Write of size 4 at addr ffff88800c388080 by task kworker/0:0/7
+...
+[   95.890755] Workqueue: events sco_sock_timeout
+[   95.890755] Call Trace:
+[   95.890755]  <TASK>
+[   95.890755]  dump_stack_lvl+0x45/0x110
+[   95.890755]  print_address_description+0x78/0x390
+[   95.890755]  print_report+0x11b/0x250
+[   95.890755]  ? __virt_addr_valid+0xbe/0xf0
+[   95.890755]  ? sco_sock_timeout+0x5e/0x1c0
+[   95.890755]  kasan_report+0x139/0x170
+[   95.890755]  ? update_load_avg+0xe5/0x9f0
+[   95.890755]  ? sco_sock_timeout+0x5e/0x1c0
+[   95.890755]  kasan_check_range+0x2c3/0x2e0
+[   95.890755]  sco_sock_timeout+0x5e/0x1c0
+[   95.890755]  process_one_work+0x561/0xc50
+[   95.890755]  worker_thread+0xab2/0x13c0
+[   95.890755]  ? pr_cont_work+0x490/0x490
+[   95.890755]  kthread+0x279/0x300
+[   95.890755]  ? pr_cont_work+0x490/0x490
+[   95.890755]  ? kthread_blkcg+0xa0/0xa0
+[   95.890755]  ret_from_fork+0x34/0x60
+[   95.890755]  ? kthread_blkcg+0xa0/0xa0
+[   95.890755]  ret_from_fork_asm+0x11/0x20
+[   95.890755]  </TASK>
+[   95.890755]
+[   95.890755] Allocated by task 506:
+[   95.890755]  kasan_save_track+0x3f/0x70
+[   95.890755]  __kasan_kmalloc+0x86/0x90
+[   95.890755]  __kmalloc+0x17f/0x360
+[   95.890755]  sk_prot_alloc+0xe1/0x1a0
+[   95.890755]  sk_alloc+0x31/0x4e0
+[   95.890755]  bt_sock_alloc+0x2b/0x2a0
+[   95.890755]  sco_sock_create+0xad/0x320
+[   95.890755]  bt_sock_create+0x145/0x320
+[   95.890755]  __sock_create+0x2e1/0x650
+[   95.890755]  __sys_socket+0xd0/0x280
+[   95.890755]  __x64_sys_socket+0x75/0x80
+[   95.890755]  do_syscall_64+0xc4/0x1b0
+[   95.890755]  entry_SYSCALL_64_after_hwframe+0x67/0x6f
+[   95.890755]
+[   95.890755] Freed by task 506:
+[   95.890755]  kasan_save_track+0x3f/0x70
+[   95.890755]  kasan_save_free_info+0x40/0x50
+[   95.890755]  poison_slab_object+0x118/0x180
+[   95.890755]  __kasan_slab_free+0x12/0x30
+[   95.890755]  kfree+0xb2/0x240
+[   95.890755]  __sk_destruct+0x317/0x410
+[   95.890755]  sco_sock_release+0x232/0x280
+[   95.890755]  sock_close+0xb2/0x210
+[   95.890755]  __fput+0x37f/0x770
+[   95.890755]  task_work_run+0x1ae/0x210
+[   95.890755]  get_signal+0xe17/0xf70
+[   95.890755]  arch_do_signal_or_restart+0x3f/0x520
+[   95.890755]  syscall_exit_to_user_mode+0x55/0x120
+[   95.890755]  do_syscall_64+0xd1/0x1b0
+[   95.890755]  entry_SYSCALL_64_after_hwframe+0x67/0x6f
+[   95.890755]
+[   95.890755] The buggy address belongs to the object at ffff88800c388000
+[   95.890755]  which belongs to the cache kmalloc-1k of size 1024
+[   95.890755] The buggy address is located 128 bytes inside of
+[   95.890755]  freed 1024-byte region [ffff88800c388000, ffff88800c388400)
+[   95.890755]
+[   95.890755] The buggy address belongs to the physical page:
+[   95.890755] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88800c38a800 pfn:0xc388
+[   95.890755] head: order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+[   95.890755] anon flags: 0x100000000000840(slab|head|node=0|zone=1)
+[   95.890755] page_type: 0xffffffff()
+[   95.890755] raw: 0100000000000840 ffff888006842dc0 0000000000000000 0000000000000001
+[   95.890755] raw: ffff88800c38a800 000000000010000a 00000001ffffffff 0000000000000000
+[   95.890755] head: 0100000000000840 ffff888006842dc0 0000000000000000 0000000000000001
+[   95.890755] head: ffff88800c38a800 000000000010000a 00000001ffffffff 0000000000000000
+[   95.890755] head: 0100000000000003 ffffea000030e201 ffffea000030e248 00000000ffffffff
+[   95.890755] head: 0000000800000000 0000000000000000 00000000ffffffff 0000000000000000
+[   95.890755] page dumped because: kasan: bad access detected
+[   95.890755]
+[   95.890755] Memory state around the buggy address:
+[   95.890755]  ffff88800c387f80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   95.890755]  ffff88800c388000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   95.890755] >ffff88800c388080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   95.890755]                    ^
+[   95.890755]  ffff88800c388100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   95.890755]  ffff88800c388180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   95.890755] ==================================================================
 
-To avoid the use-after-free, we need to use refcount_inc_not_zero() in
-tcp_twsk_unique() and give up on reusing the port if it returns false.
+Fix this problem by adding a check protected by sco_conn_lock to judget
+whether the conn->hcon is null. Because the conn->hcon will be set to null,
+when the sock is releasing.
 
-[0]:
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 0 PID: 1039313 at lib/refcount.c:25 refcount_warn_saturate+0xe5/0x110
-CPU: 0 PID: 1039313 Comm: trigger Not tainted 6.8.6-200.fc39.x86_64 #1
-Hardware name: VMware, Inc. VMware20,1/440BX Desktop Reference Platform, BIOS VMW201.00V.21805430.B64.2305221830 05/22/2023
-RIP: 0010:refcount_warn_saturate+0xe5/0x110
-Code: 42 8e ff 0f 0b c3 cc cc cc cc 80 3d aa 13 ea 01 00 0f 85 5e ff ff ff 48 c7 c7 f8 8e b7 82 c6 05 96 13 ea 01 01 e8 7b 42 8e ff <0f> 0b c3 cc cc cc cc 48 c7 c7 50 8f b7 82 c6 05 7a 13 ea 01 01 e8
-RSP: 0018:ffffc90006b43b60 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: ffff888009bb3ef0 RCX: 0000000000000027
-RDX: ffff88807be218c8 RSI: 0000000000000001 RDI: ffff88807be218c0
-RBP: 0000000000069d70 R08: 0000000000000000 R09: ffffc90006b439f0
-R10: ffffc90006b439e8 R11: 0000000000000003 R12: ffff8880029ede84
-R13: 0000000000004e20 R14: ffffffff84356dc0 R15: ffff888009bb3ef0
-FS:  00007f62c10926c0(0000) GS:ffff88807be00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020ccb000 CR3: 000000004628c005 CR4: 0000000000f70ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- ? refcount_warn_saturate+0xe5/0x110
- ? __warn+0x81/0x130
- ? refcount_warn_saturate+0xe5/0x110
- ? report_bug+0x171/0x1a0
- ? refcount_warn_saturate+0xe5/0x110
- ? handle_bug+0x3c/0x80
- ? exc_invalid_op+0x17/0x70
- ? asm_exc_invalid_op+0x1a/0x20
- ? refcount_warn_saturate+0xe5/0x110
- tcp_twsk_unique+0x186/0x190
- __inet_check_established+0x176/0x2d0
- __inet_hash_connect+0x74/0x7d0
- ? __pfx___inet_check_established+0x10/0x10
- tcp_v4_connect+0x278/0x530
- __inet_stream_connect+0x10f/0x3d0
- inet_stream_connect+0x3a/0x60
- __sys_connect+0xa8/0xd0
- __x64_sys_connect+0x18/0x20
- do_syscall_64+0x83/0x170
- entry_SYSCALL_64_after_hwframe+0x78/0x80
-RIP: 0033:0x7f62c11a885d
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d a3 45 0c 00 f7 d8 64 89 01 48
-RSP: 002b:00007f62c1091e58 EFLAGS: 00000296 ORIG_RAX: 000000000000002a
-RAX: ffffffffffffffda RBX: 0000000020ccb004 RCX: 00007f62c11a885d
-RDX: 0000000000000010 RSI: 0000000020ccb000 RDI: 0000000000000003
-RBP: 00007f62c1091e90 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000296 R12: 00007f62c10926c0
-R13: ffffffffffffff88 R14: 0000000000000000 R15: 00007ffe237885b0
- </TASK>
-
-Fixes: ec94c2696f0b ("tcp/dccp: avoid one atomic operation for timewait hashdance")
-Reported-by: Anderson Nascimento <anderson@allelesecurity.com>
-Closes: https://lore.kernel.org/netdev/37a477a6-d39e-486b-9577-3463f655a6b7@allelesecurity.com/
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240501213145.62261-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ba316be1b6a0 ("Bluetooth: schedule SCO timeouts with delayed_work")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/bluetooth/sco.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index c7ffab37a34cd..c464ced7137ee 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -154,6 +154,12 @@ int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
- 	if (tcptw->tw_ts_recent_stamp &&
- 	    (!twp || (reuse && time_after32(ktime_get_seconds(),
- 					    tcptw->tw_ts_recent_stamp)))) {
-+		/* inet_twsk_hashdance() sets sk_refcnt after putting twsk
-+		 * and releasing the bucket lock.
-+		 */
-+		if (unlikely(!refcount_inc_not_zero(&sktw->sk_refcnt)))
-+			return 0;
-+
- 		/* In case of repair and re-using TIME-WAIT sockets we still
- 		 * want to be sure that it is safe as above but honor the
- 		 * sequence numbers and time stamps set as part of the repair
-@@ -174,7 +180,7 @@ int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
- 			tp->rx_opt.ts_recent	   = tcptw->tw_ts_recent;
- 			tp->rx_opt.ts_recent_stamp = tcptw->tw_ts_recent_stamp;
- 		}
--		sock_hold(sktw);
-+
- 		return 1;
- 	}
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index 3cc9fab8e8384..ede7391f3aa98 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -83,6 +83,10 @@ static void sco_sock_timeout(struct work_struct *work)
+ 	struct sock *sk;
  
+ 	sco_conn_lock(conn);
++	if (!conn->hcon) {
++		sco_conn_unlock(conn);
++		return;
++	}
+ 	sk = conn->sk;
+ 	if (sk)
+ 		sock_hold(sk);
 -- 
 2.43.0
 
