@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CFE2B9B3;
-	Tue, 14 May 2024 11:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92A847A57;
+	Tue, 14 May 2024 11:35:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686549; cv=none; b=VPM3KB44xzSWX/6c19LN242p2roUcyB1I5cERYrOmuuSsQ+ZlbaoVsXCS3+Carakyp3LY+uX2EkKc9hdVGYUT6ehK+yaxjQLxUOEYbnwD9/3LK4Oa0SVHzlaMRkwrTu6J1sYiBJ7ADiMEgeW0bT59p2t+6IbYZ4gxP8wGRkQtek=
+	t=1715686553; cv=none; b=JwWUBCxVbmqmn6UNkEUMheTyNPI2QpJ7lXuP+YP5Raoa8/gqjftniWT93JmJPs29hOYbrIOfVaI77E6Ksj5TZevF1AJc0a1jlquUpzUy4TdgJZ+8nIcXcPBqiG6QRwwTJE6ue6BHK5V8P7XW2NsvumoooN810D9dtZebvIh7lsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686549; c=relaxed/simple;
-	bh=HE4mMW1O3ZKck8aBj6gNlwXX2IeUn+SiLFo/vRJhKM0=;
+	s=arc-20240116; t=1715686553; c=relaxed/simple;
+	bh=HOUFTI+uRHVS7tUi10XoF0Uo3jRh6wr6w65jj0LyP4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cmT7iEKFIgOyFVB9QF4zmgs/SNxll/tfU2EnloVrBrdBRDg69qr/EwuXOweToODE4Mlwqjv6HRGPVFkagsDA7kzOTHp6+F811XYOGfbnI2NXswLE2s4c5DuXlUmeha9kcVLg0Pf7WhEVnCV2tWrrm4pK6VfKyS1kpagLSFJUqA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAoFD49S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j2yXHivD7idXXz8EI8EqCa/psfCu03LT4Ox9H/sJmPqI3P523NbYMJ6KA19T8H7g2SE4vgR6lDw4h5q5ntJx8TZXV1Bh7cwzComUv9utiMfLRLnu+0QvxpYpQ62QWElvkcLhT4717tu/nsLM4UmqmYmCXal5WZxjKUvP3Dwzhow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esPNdtnu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAoFD49S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E13FC2BD10;
-	Tue, 14 May 2024 11:35:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esPNdtnu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70876C2BD10;
+	Tue, 14 May 2024 11:35:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686549;
-	bh=HE4mMW1O3ZKck8aBj6gNlwXX2IeUn+SiLFo/vRJhKM0=;
+	s=korg; t=1715686552;
+	bh=HOUFTI+uRHVS7tUi10XoF0Uo3jRh6wr6w65jj0LyP4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OAoFD49S7wBQwFGAAU6sePpOfE2Vh8JoJzOCUR2SDKIcSxhjcmdxJ63fpMla6qVuU
-	 Bpgzre13cwhK3xqoYp+W0RNX8tvgVP6OWMExoLQ1MA/ordYJElixdfVf32di/GBBjX
-	 5fI+60/2fWofNq/lfNdF/+ecsGzOzJ2HbRHNMhyE=
+	b=esPNdtnuP4K8AGHBjXZTe+BlK6TAjhDp9MessUHoj4iSzw3q4LKf7bdeanz8/4+qp
+	 /yozV2fdgJoW0ioRNMAs5DdwilIOv9P+tX8HiYo5nczFgWZPWm21JdbLmdpw4Ltck6
+	 YlZjHOPADnXUh8DhGYw7p7PvcAS+jdH5uhTZKsDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Simon Ser <contact@emersion.fr>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 149/236] Bluetooth: Fix use-after-free bugs caused by sco_sock_timeout
-Date: Tue, 14 May 2024 12:18:31 +0200
-Message-ID: <20240514101026.023686204@linuxfoundation.org>
+Subject: [PATCH 6.1 176/236] drm/connector: Add \n to message about demoting connector force-probes
+Date: Tue, 14 May 2024 12:18:58 +0200
+Message-ID: <20240514101027.044159339@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -51,143 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 483bc08181827fc475643272ffb69c533007e546 ]
+[ Upstream commit 6897204ea3df808d342c8e4613135728bc538bcd ]
 
-When the sco connection is established and then, the sco socket
-is releasing, timeout_work will be scheduled to judge whether
-the sco disconnection is timeout. The sock will be deallocated
-later, but it is dereferenced again in sco_sock_timeout. As a
-result, the use-after-free bugs will happen. The root cause is
-shown below:
+The debug print clearly lacks a \n at the end. Add it.
 
-    Cleanup Thread               |      Worker Thread
-sco_sock_release                 |
-  sco_sock_close                 |
-    __sco_sock_close             |
-      sco_sock_set_timer         |
-        schedule_delayed_work    |
-  sco_sock_kill                  |    (wait a time)
-    sock_put(sk) //FREE          |  sco_sock_timeout
-                                 |    sock_hold(sk) //USE
-
-The KASAN report triggered by POC is shown below:
-
-[   95.890016] ==================================================================
-[   95.890496] BUG: KASAN: slab-use-after-free in sco_sock_timeout+0x5e/0x1c0
-[   95.890755] Write of size 4 at addr ffff88800c388080 by task kworker/0:0/7
-...
-[   95.890755] Workqueue: events sco_sock_timeout
-[   95.890755] Call Trace:
-[   95.890755]  <TASK>
-[   95.890755]  dump_stack_lvl+0x45/0x110
-[   95.890755]  print_address_description+0x78/0x390
-[   95.890755]  print_report+0x11b/0x250
-[   95.890755]  ? __virt_addr_valid+0xbe/0xf0
-[   95.890755]  ? sco_sock_timeout+0x5e/0x1c0
-[   95.890755]  kasan_report+0x139/0x170
-[   95.890755]  ? update_load_avg+0xe5/0x9f0
-[   95.890755]  ? sco_sock_timeout+0x5e/0x1c0
-[   95.890755]  kasan_check_range+0x2c3/0x2e0
-[   95.890755]  sco_sock_timeout+0x5e/0x1c0
-[   95.890755]  process_one_work+0x561/0xc50
-[   95.890755]  worker_thread+0xab2/0x13c0
-[   95.890755]  ? pr_cont_work+0x490/0x490
-[   95.890755]  kthread+0x279/0x300
-[   95.890755]  ? pr_cont_work+0x490/0x490
-[   95.890755]  ? kthread_blkcg+0xa0/0xa0
-[   95.890755]  ret_from_fork+0x34/0x60
-[   95.890755]  ? kthread_blkcg+0xa0/0xa0
-[   95.890755]  ret_from_fork_asm+0x11/0x20
-[   95.890755]  </TASK>
-[   95.890755]
-[   95.890755] Allocated by task 506:
-[   95.890755]  kasan_save_track+0x3f/0x70
-[   95.890755]  __kasan_kmalloc+0x86/0x90
-[   95.890755]  __kmalloc+0x17f/0x360
-[   95.890755]  sk_prot_alloc+0xe1/0x1a0
-[   95.890755]  sk_alloc+0x31/0x4e0
-[   95.890755]  bt_sock_alloc+0x2b/0x2a0
-[   95.890755]  sco_sock_create+0xad/0x320
-[   95.890755]  bt_sock_create+0x145/0x320
-[   95.890755]  __sock_create+0x2e1/0x650
-[   95.890755]  __sys_socket+0xd0/0x280
-[   95.890755]  __x64_sys_socket+0x75/0x80
-[   95.890755]  do_syscall_64+0xc4/0x1b0
-[   95.890755]  entry_SYSCALL_64_after_hwframe+0x67/0x6f
-[   95.890755]
-[   95.890755] Freed by task 506:
-[   95.890755]  kasan_save_track+0x3f/0x70
-[   95.890755]  kasan_save_free_info+0x40/0x50
-[   95.890755]  poison_slab_object+0x118/0x180
-[   95.890755]  __kasan_slab_free+0x12/0x30
-[   95.890755]  kfree+0xb2/0x240
-[   95.890755]  __sk_destruct+0x317/0x410
-[   95.890755]  sco_sock_release+0x232/0x280
-[   95.890755]  sock_close+0xb2/0x210
-[   95.890755]  __fput+0x37f/0x770
-[   95.890755]  task_work_run+0x1ae/0x210
-[   95.890755]  get_signal+0xe17/0xf70
-[   95.890755]  arch_do_signal_or_restart+0x3f/0x520
-[   95.890755]  syscall_exit_to_user_mode+0x55/0x120
-[   95.890755]  do_syscall_64+0xd1/0x1b0
-[   95.890755]  entry_SYSCALL_64_after_hwframe+0x67/0x6f
-[   95.890755]
-[   95.890755] The buggy address belongs to the object at ffff88800c388000
-[   95.890755]  which belongs to the cache kmalloc-1k of size 1024
-[   95.890755] The buggy address is located 128 bytes inside of
-[   95.890755]  freed 1024-byte region [ffff88800c388000, ffff88800c388400)
-[   95.890755]
-[   95.890755] The buggy address belongs to the physical page:
-[   95.890755] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88800c38a800 pfn:0xc388
-[   95.890755] head: order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-[   95.890755] anon flags: 0x100000000000840(slab|head|node=0|zone=1)
-[   95.890755] page_type: 0xffffffff()
-[   95.890755] raw: 0100000000000840 ffff888006842dc0 0000000000000000 0000000000000001
-[   95.890755] raw: ffff88800c38a800 000000000010000a 00000001ffffffff 0000000000000000
-[   95.890755] head: 0100000000000840 ffff888006842dc0 0000000000000000 0000000000000001
-[   95.890755] head: ffff88800c38a800 000000000010000a 00000001ffffffff 0000000000000000
-[   95.890755] head: 0100000000000003 ffffea000030e201 ffffea000030e248 00000000ffffffff
-[   95.890755] head: 0000000800000000 0000000000000000 00000000ffffffff 0000000000000000
-[   95.890755] page dumped because: kasan: bad access detected
-[   95.890755]
-[   95.890755] Memory state around the buggy address:
-[   95.890755]  ffff88800c387f80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[   95.890755]  ffff88800c388000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   95.890755] >ffff88800c388080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   95.890755]                    ^
-[   95.890755]  ffff88800c388100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   95.890755]  ffff88800c388180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   95.890755] ==================================================================
-
-Fix this problem by adding a check protected by sco_conn_lock to judget
-whether the conn->hcon is null. Because the conn->hcon will be set to null,
-when the sock is releasing.
-
-Fixes: ba316be1b6a0 ("Bluetooth: schedule SCO timeouts with delayed_work")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 8f86c82aba8b ("drm/connector: demote connector force-probes for non-master clients")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Simon Ser <contact@emersion.fr>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240502153234.1.I2052f01c8d209d9ae9c300b87c6e4f60bd3cc99e@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/sco.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/drm_connector.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index 4a6bf60f3e7aa..301cf802d32c4 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -84,6 +84,10 @@ static void sco_sock_timeout(struct work_struct *work)
- 	struct sock *sk;
+diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
+index 27de2a97f1d11..3d18d840ef3b6 100644
+--- a/drivers/gpu/drm/drm_connector.c
++++ b/drivers/gpu/drm/drm_connector.c
+@@ -2707,7 +2707,7 @@ int drm_mode_getconnector(struct drm_device *dev, void *data,
+ 						     dev->mode_config.max_width,
+ 						     dev->mode_config.max_height);
+ 		else
+-			drm_dbg_kms(dev, "User-space requested a forced probe on [CONNECTOR:%d:%s] but is not the DRM master, demoting to read-only probe",
++			drm_dbg_kms(dev, "User-space requested a forced probe on [CONNECTOR:%d:%s] but is not the DRM master, demoting to read-only probe\n",
+ 				    connector->base.id, connector->name);
+ 	}
  
- 	sco_conn_lock(conn);
-+	if (!conn->hcon) {
-+		sco_conn_unlock(conn);
-+		return;
-+	}
- 	sk = conn->sk;
- 	if (sk)
- 		sock_hold(sk);
 -- 
 2.43.0
 
