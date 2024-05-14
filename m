@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F1E433BE;
-	Tue, 14 May 2024 10:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F446433BE;
+	Tue, 14 May 2024 10:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682397; cv=none; b=uCXoMlqnCK1rU3TMWQ7JCTqyo8yQceT83Z0iiNOqJ01LIURrdlxJaMJ0Jy7vNg7bXWNWREGPqvZ9mh1ldPNiDPjVh2cjRhG62PmwpOmmazSAZBtZpMPCWoCyI4iQPtV6t+HSioGp7VZhoVspL0w4HPotjTeIRA2anirgFrPv2Z0=
+	t=1715682403; cv=none; b=QtLntCdFdMIGZ0p2fBbNp5eTeWRvwBZYy01qgihZYBhP5kpIK1rhyoWGJ8gzgDERT9CPBXhQDOA9h0tqxGrQFc29c/8HAU0poBmIDf9r1Elyd6+BdUDEcRPencAGyyGxDWHae5p/UVUc5UrDJLb8FoiaCLYJCdHDhebZdYg2tkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682397; c=relaxed/simple;
-	bh=V0K/10I/0PdLTj23Gn45pprWYe/ouurYUYiMwWDQmko=;
+	s=arc-20240116; t=1715682403; c=relaxed/simple;
+	bh=aL+dEN0w6DdKs2qo1WGC1J0CjjT5HtqEhUu2nra/O9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E4mm59kglDFXBA9WBArn0RqcXgQenpOCIaMdt5F861wAA1BGI5kzPgPdSoH0K1vUSs8ziYigvEZiFv6RLLFwox4tL0sOX8R0yeNbpS/HuaylRkK9FaDxMy15iyv8Pw2Cbzl83BbLuPz7WD5TvzeyXCNnkekjmu7S5vWhhyzobKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GhpjAeAY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AMVWAtBd9RTKYcvy0nTSj/G1ubKqnSNtY9MwugClSzznEy+xhOcfn/Sb7ZEX1bjYwk4UMnFcQkIj6QqMXoLQj3SLpqr22ZSWPE5PgThCN+rQgnzGQKAZ4XRXYTGsdBY4r1yIG8hEnrZwfgKiPMv6+40Y8Yk82oKtx6TIlWTP0tA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6/pNbjP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GhpjAeAY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA78CC2BD10;
-	Tue, 14 May 2024 10:26:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6/pNbjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4030C2BD10;
+	Tue, 14 May 2024 10:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682396;
-	bh=V0K/10I/0PdLTj23Gn45pprWYe/ouurYUYiMwWDQmko=;
+	s=korg; t=1715682403;
+	bh=aL+dEN0w6DdKs2qo1WGC1J0CjjT5HtqEhUu2nra/O9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GhpjAeAYl8joxiC8fem9Vsg9G2o+yRCJH1MDe3WuwP4VfeWRZbIjzGThxBiAjUuuj
-	 oLPJtN8OYDKLa7Jq9P8i52oyRlGiFvxe8N80GkXH53UAKlLxLQFLRBxlGc5CIi67+w
-	 Q8ONJpoLzNzagVtlHzUv3Kqf3jB428sL8dEP/SeA=
+	b=x6/pNbjPolskF45XmSTRm9O0xbMOVbJi/4esJcagh5viAn99drcKRFqMX6T68M93A
+	 aJdPb+rbXD7isE7tDGoeuWptyzIF4mBFXFDX7dIo2Y3hvMH7eui/ptUb/vEaB98626
+	 HwrAku+ryeqmLX5gjIUzS/A2QbUTQ9riR7Dlr8TU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 055/336] ALSA: emu10k1: move the whole GPIO event handling to the workqueue
-Date: Tue, 14 May 2024 12:14:19 +0200
-Message-ID: <20240514101040.683639093@linuxfoundation.org>
+Subject: [PATCH 6.8 056/336] ALSA: emu10k1: fix E-MU dock initialization
+Date: Tue, 14 May 2024 12:14:20 +0200
+Message-ID: <20240514101040.721394071@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -53,175 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-[ Upstream commit f848337cd801c7106a4ec0d61765771dab2a5909 ]
+[ Upstream commit e8289fd3fa65d60cf04dab6f7845eda352c04ea6 ]
 
-The actual event processing was already done by workqueue items. We can
-move the event dispatching there as well, rather than doing it already
-in the interrupt handler callback.
+A side effect of making the dock monitoring interrupt-driven was that
+we'd be very quick to program a freshly connected dock. However, for
+unclear reasons, the dock does not work when we do that - despite the
+FPGA netlist upload going just fine. We work around this by adding a
+delay before programming the dock; for safety, the value is several
+times as much as was determined empirically.
 
-This change has a rather profound "side effect" on the reliability of
-the FPGA programming: once we enter programming mode, we must not issue
-any snd_emu1010_fpga_{read,write}() calls until we're done, as these
-would badly mess up the programming protocol. But exactly that would
-happen when trying to program the dock, as that triggers GPIO interrupts
-as a side effect. This is mitigated by deferring the actual interrupt
-handling, as workqueue items are not re-entrant.
-
-To avoid scheduling the dispatcher on non-events, we now explicitly
-ignore GPIO IRQs triggered by "uninteresting" pins, which happens a lot
-as a side effect of calling snd_emu1010_fpga_{read,write}().
+Note that a badly timed dock hot-plug would have triggered the problem
+even before the referenced commit - but now it would happen 100% instead
+of about 3% of the time, thus making it impossible to work around by
+re-plugging.
 
 Fixes: fbb64eedf5a3 ("ALSA: emu10k1: make E-MU dock monitoring interrupt-driven")
 Link: https://bugzilla.kernel.org/show_bug.cgi?id=218584
 Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Message-ID: <20240428093716.3198666-4-oswald.buddenhagen@gmx.de>
+Message-ID: <20240428093716.3198666-6-oswald.buddenhagen@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/emu10k1.h          |  3 +-
- sound/pci/emu10k1/emu10k1.c      |  3 +-
- sound/pci/emu10k1/emu10k1_main.c | 56 ++++++++++++++++----------------
- 3 files changed, 30 insertions(+), 32 deletions(-)
+ sound/pci/emu10k1/emu10k1_main.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/include/sound/emu10k1.h b/include/sound/emu10k1.h
-index 1af9e68193920..9cc10fab01a8c 100644
---- a/include/sound/emu10k1.h
-+++ b/include/sound/emu10k1.h
-@@ -1684,8 +1684,7 @@ struct snd_emu1010 {
- 	unsigned int clock_fallback;
- 	unsigned int optical_in; /* 0:SPDIF, 1:ADAT */
- 	unsigned int optical_out; /* 0:SPDIF, 1:ADAT */
--	struct work_struct firmware_work;
--	struct work_struct clock_work;
-+	struct work_struct work;
- };
- 
- struct snd_emu10k1 {
-diff --git a/sound/pci/emu10k1/emu10k1.c b/sound/pci/emu10k1/emu10k1.c
-index fe72e7d772412..dadeda7758cee 100644
---- a/sound/pci/emu10k1/emu10k1.c
-+++ b/sound/pci/emu10k1/emu10k1.c
-@@ -189,8 +189,7 @@ static int snd_emu10k1_suspend(struct device *dev)
- 
- 	emu->suspend = 1;
- 
--	cancel_work_sync(&emu->emu1010.firmware_work);
--	cancel_work_sync(&emu->emu1010.clock_work);
-+	cancel_work_sync(&emu->emu1010.work);
- 
- 	snd_ac97_suspend(emu->ac97);
- 
 diff --git a/sound/pci/emu10k1/emu10k1_main.c b/sound/pci/emu10k1/emu10k1_main.c
-index 6265fc9ae2606..86eaf5963502c 100644
+index 86eaf5963502c..ade90c7ecd922 100644
 --- a/sound/pci/emu10k1/emu10k1_main.c
 +++ b/sound/pci/emu10k1/emu10k1_main.c
-@@ -765,19 +765,10 @@ static void snd_emu1010_load_dock_firmware(struct snd_emu10k1 *emu)
- 	msleep(10);
- }
+@@ -737,6 +737,12 @@ static void snd_emu1010_load_dock_firmware(struct snd_emu10k1 *emu)
+ 	u32 tmp, tmp2;
+ 	int err;
  
--static void emu1010_firmware_work(struct work_struct *work)
-+static void emu1010_dock_event(struct snd_emu10k1 *emu)
- {
--	struct snd_emu10k1 *emu;
- 	u32 reg;
- 
--	emu = container_of(work, struct snd_emu10k1,
--			   emu1010.firmware_work);
--	if (emu->card->shutdown)
--		return;
--#ifdef CONFIG_PM_SLEEP
--	if (emu->suspend)
--		return;
--#endif
- 	snd_emu1010_fpga_read(emu, EMU_HANA_OPTION_CARDS, &reg); /* OPTIONS: Which cards are attached to the EMU */
- 	if (reg & EMU_HANA_OPTION_DOCK_OFFLINE) {
- 		/* Audio Dock attached */
-@@ -792,20 +783,10 @@ static void emu1010_firmware_work(struct work_struct *work)
- 	}
- }
- 
--static void emu1010_clock_work(struct work_struct *work)
-+static void emu1010_clock_event(struct snd_emu10k1 *emu)
- {
--	struct snd_emu10k1 *emu;
- 	struct snd_ctl_elem_id id;
- 
--	emu = container_of(work, struct snd_emu10k1,
--			   emu1010.clock_work);
--	if (emu->card->shutdown)
--		return;
--#ifdef CONFIG_PM_SLEEP
--	if (emu->suspend)
--		return;
--#endif
--
- 	spin_lock_irq(&emu->reg_lock);
- 	// This is the only thing that can actually happen.
- 	emu->emu1010.clock_source = emu->emu1010.clock_fallback;
-@@ -816,19 +797,40 @@ static void emu1010_clock_work(struct work_struct *work)
- 	snd_ctl_notify(emu->card, SNDRV_CTL_EVENT_MASK_VALUE, &id);
- }
- 
--static void emu1010_interrupt(struct snd_emu10k1 *emu)
-+static void emu1010_work(struct work_struct *work)
- {
-+	struct snd_emu10k1 *emu;
- 	u32 sts;
- 
-+	emu = container_of(work, struct snd_emu10k1, emu1010.work);
-+	if (emu->card->shutdown)
-+		return;
-+#ifdef CONFIG_PM_SLEEP
-+	if (emu->suspend)
-+		return;
-+#endif
++	// The docking events clearly arrive prematurely - while the
++	// Dock's FPGA seems to be successfully programmed, the Dock
++	// fails to initialize subsequently if we don't give it some
++	// time to "warm up" here.
++	msleep(200);
 +
- 	snd_emu1010_fpga_read(emu, EMU_HANA_IRQ_STATUS, &sts);
- 
- 	// The distinction of the IRQ status bits is unreliable,
- 	// so we dispatch later based on option card status.
- 	if (sts & (EMU_HANA_IRQ_DOCK | EMU_HANA_IRQ_DOCK_LOST))
--		schedule_work(&emu->emu1010.firmware_work);
-+		emu1010_dock_event(emu);
- 
- 	if (sts & EMU_HANA_IRQ_WCLK_CHANGED)
--		schedule_work(&emu->emu1010.clock_work);
-+		emu1010_clock_event(emu);
-+}
-+
-+static void emu1010_interrupt(struct snd_emu10k1 *emu)
-+{
-+	// We get an interrupt on each GPIO input pin change, but we
-+	// care only about the ones triggered by the dedicated pin.
-+	u16 sts = inw(emu->port + A_GPIO);
-+	u16 bit = emu->card_capabilities->ca0108_chip ? 0x2000 : 0x8000;
-+	if (!(sts & bit))
-+		return;
-+
-+	schedule_work(&emu->emu1010.work);
- }
- 
- /*
-@@ -969,8 +971,7 @@ static void snd_emu10k1_free(struct snd_card *card)
- 		/* Disable 48Volt power to Audio Dock */
- 		snd_emu1010_fpga_write(emu, EMU_HANA_DOCK_PWR, 0);
- 	}
--	cancel_work_sync(&emu->emu1010.firmware_work);
--	cancel_work_sync(&emu->emu1010.clock_work);
-+	cancel_work_sync(&emu->emu1010.work);
- 	release_firmware(emu->firmware);
- 	release_firmware(emu->dock_fw);
- 	snd_util_memhdr_free(emu->memhdr);
-@@ -1549,8 +1550,7 @@ int snd_emu10k1_create(struct snd_card *card,
- 	emu->irq = -1;
- 	emu->synth = NULL;
- 	emu->get_synth_voice = NULL;
--	INIT_WORK(&emu->emu1010.firmware_work, emu1010_firmware_work);
--	INIT_WORK(&emu->emu1010.clock_work, emu1010_clock_work);
-+	INIT_WORK(&emu->emu1010.work, emu1010_work);
- 	/* read revision & serial */
- 	emu->revision = pci->revision;
- 	pci_read_config_dword(pci, PCI_SUBSYSTEM_VENDOR_ID, &emu->serial);
+ 	dev_info(emu->card->dev, "emu1010: Loading Audio Dock Firmware\n");
+ 	/* Return to Audio Dock programming mode */
+ 	snd_emu1010_fpga_write(emu, EMU_HANA_FPGA_CONFIG,
 -- 
 2.43.0
 
