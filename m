@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3422B139D1C;
-	Tue, 14 May 2024 11:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428D0139D1C;
+	Tue, 14 May 2024 11:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687062; cv=none; b=Ve2Y/GXOxnOcVFC1mgeG+GPq3+Upt5vzJzxsS4977T4EhmdGFX2cxWqWrgNny1QN2amK2aYy1n0oWtH6YVwJEWvc4GxM57nmsYHfqgOoUvg57XA+UKHhTxFUg5xoIlF3ZC7qIghEG0XgIPaR4xihW2srP2+svOLceShTTCYSnJA=
+	t=1715687065; cv=none; b=WO+/dIp64majA6p+Ne2gc8RLZOdJNMDBWIghWNcazTfY8omOxtKcWzOM38z/OXHAflufey2vnk4x/yqySSYqUXQ7f9emUudaVRP0eKfMvy+mIhk4qweaNpyuGo5yQqjefbgZIcg3tkBB0jMjQPH5klM9SQhep7IAmpypM8JLRjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687062; c=relaxed/simple;
-	bh=ClI0OR3zPoaBVn/w2zalGJX2bScj3wk5I8uDs9i4v6o=;
+	s=arc-20240116; t=1715687065; c=relaxed/simple;
+	bh=kdGvPpIJSNHypTP6YxtRWiAvWoMTZoe4/sIUpE2gEro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=taZkImJ+b6EafCpvwO/UKHpVG9IXEMVx9t7Vuft+6N0e3y/gdzi+4Uj7MXc1DGtAMfE5ClkDP7tQ2tW8f+f8WEz0124lSEeCkzY5PuBFIgIJCmVKQaFpkcq5cVCoS9cYLQ+lXxbgmvXleynFVsLrEsr2FCbRDzHTAgl0/RhGRPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyAn2sjP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M2ajCH0ApCYHxgUPUAQ/i8Ys8aDa7VRDaDwNmu7mTH3peHgFhUibKCZLA8Rm6vRvOOx+UNzhvAKrwpJC2vnqmrpwO2XocqWwRvRcpOEm/V1x2CGYKwNh9jBTQwiB1F6XUCuzrU3xSjr8LlBNR/GW4bIhxzYhuz6ZbvBUxuLzB7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTCHlm+6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyAn2sjP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD07DC2BD10;
-	Tue, 14 May 2024 11:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTCHlm+6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD82DC2BD10;
+	Tue, 14 May 2024 11:44:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687062;
-	bh=ClI0OR3zPoaBVn/w2zalGJX2bScj3wk5I8uDs9i4v6o=;
+	s=korg; t=1715687065;
+	bh=kdGvPpIJSNHypTP6YxtRWiAvWoMTZoe4/sIUpE2gEro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WyAn2sjPLGc5XC5xficeCzAUsK0Yryc6I3dvwkrhDHrHVJkbpY86W4dA8MEIBZxxI
-	 7oJPj1iJo/fmVH1qq2ieaPg5n+R+SjU8KrRX9q4U8FgPY8dofzuQuROZ185wGaKtNP
-	 FWS1PmsU0XxTMtnyvJPhGLVWs7ihma7TOo6QHuOo=
+	b=nTCHlm+6IvgC7nyGUsfakIudxbqvU7XUm7+NAEpGAgNe2QdF74DfRmU7PpaPFH0yd
+	 DTB+WEW7ALsCvLPyuRv3hhB/yJXWprLoJUPgbyMZdtVl//WP+jA+K/pdybK02EHEXy
+	 zG51mC6khW580fOBlXnuY8Z13uTeEiPvse045O0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Joakim Sindholt <opensource@zhasha.com>,
 	Eric Van Hensbergen <ericvh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 51/84] fs/9p: only translate RWX permissions for plain 9P2000
-Date: Tue, 14 May 2024 12:20:02 +0200
-Message-ID: <20240514100953.607103004@linuxfoundation.org>
+Subject: [PATCH 5.4 52/84] fs/9p: translate O_TRUNC into OTRUNC
+Date: Tue, 14 May 2024 12:20:03 +0200
+Message-ID: <20240514100953.644902852@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100951.686412426@linuxfoundation.org>
 References: <20240514100951.686412426@linuxfoundation.org>
@@ -53,33 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Joakim Sindholt <opensource@zhasha.com>
 
-[ Upstream commit cd25e15e57e68a6b18dc9323047fe9c68b99290b ]
+[ Upstream commit 87de39e70503e04ddb58965520b15eb9efa7eef3 ]
 
-Garbage in plain 9P2000's perm bits is allowed through, which causes it
-to be able to set (among others) the suid bit. This was presumably not
-the intent since the unix extended bits are handled explicitly and
-conditionally on .u.
+This one hits both 9P2000 and .u as it appears v9fs has never translated
+the O_TRUNC flag.
 
 Signed-off-by: Joakim Sindholt <opensource@zhasha.com>
 Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/9p/vfs_inode.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
-index b82423a72f685..b1107b424bf64 100644
+index b1107b424bf64..ffce168296bd3 100644
 --- a/fs/9p/vfs_inode.c
 +++ b/fs/9p/vfs_inode.c
-@@ -86,7 +86,7 @@ static int p9mode2perm(struct v9fs_session_info *v9ses,
- 	int res;
- 	int mode = stat->mode;
+@@ -177,6 +177,9 @@ int v9fs_uflags2omode(int uflags, int extended)
+ 		break;
+ 	}
  
--	res = mode & S_IALLUGO;
-+	res = mode & 0777; /* S_IRWXUGO */
- 	if (v9fs_proto_dotu(v9ses)) {
- 		if ((mode & P9_DMSETUID) == P9_DMSETUID)
- 			res |= S_ISUID;
++	if (uflags & O_TRUNC)
++		ret |= P9_OTRUNC;
++
+ 	if (extended) {
+ 		if (uflags & O_EXCL)
+ 			ret |= P9_OEXCL;
 -- 
 2.43.0
 
