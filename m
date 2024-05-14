@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255242CCA3;
-	Tue, 14 May 2024 10:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A4313DDA3;
+	Tue, 14 May 2024 10:45:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683503; cv=none; b=IRnHeHyL+dsP7ZgVtJMYv0LXrzY8Kqt//fj1ohYNpzHzbMESfJuc08Yueu0Z3jY4SSQsdX0aVHkeQEKO/D8h074SliN8vR0FbSCgc71L51vbUmKuhnte7j++pxfoaesN9tW7xk3N3wOVlM00rVPXc2dK+pr2l1jenZ6WQztTQ3k=
+	t=1715683506; cv=none; b=TmHJ9QmTv83DMhYPgam0gwqasN2vp2ZkQjcqhXxxrJN6rZLWcGripttW998K4adzAO4MC9vPp2QFOVR9dYYsLYZHZNjLAEy753JufV+A0/S/gePA43CHeaI/5XzHhPYUMpMw+TCwU6M2NNDjf6TY4Spdwvg9BK2iqtKQVb43+2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683503; c=relaxed/simple;
-	bh=12OZdOIN8pWf8HXmOIgLkLEY9Wq1xPnRQV62m3+BHi0=;
+	s=arc-20240116; t=1715683506; c=relaxed/simple;
+	bh=5CiHR4Fben+FQVYHH1UYYoD+tlNt2VyzVygZS7cPFm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QlbEMB0mx+oWwOx7tT4qXdv0GPFl8zGlP0slCswuIzyoxoVQh+N0W3nls6fup3e93Vg74tTKasXGUMP+yirvgqLTDpAWSqRJHvIDewjGcHPGzYRHM0Krf9gMqUcnYROo4eUyqWI6WUAgmFMeSchFif35t2AqbakiREhjS4lC80Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtQ8iIeS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ThDkjK7g1AVHT6bcUKBLgWgWtnYimDSmafZiw4vRPS/buai63IChegq1Kk2PPBy+/sMnDSyC+BltnoCCeKavofsAM0eg6UQXnGfGbIMXRiQcKSoMcVfDZb13tPnNebimehXizvXDwrySWJFutQ1c3pPMej8Ma8e1PuWc0zyB6i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjbulS+F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtQ8iIeS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7C1C2BD10;
-	Tue, 14 May 2024 10:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjbulS+F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A4AC2BD10;
+	Tue, 14 May 2024 10:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683502;
-	bh=12OZdOIN8pWf8HXmOIgLkLEY9Wq1xPnRQV62m3+BHi0=;
+	s=korg; t=1715683506;
+	bh=5CiHR4Fben+FQVYHH1UYYoD+tlNt2VyzVygZS7cPFm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dtQ8iIeSg9SMRTIbGkOUI6bMNIJtuWgvG383OFtaOFaBcftb38ttnW6EViVqfo1Qa
-	 f1VrHCzPhSaPysV84mMHKUukBt3ISdmyZx1YSIoARs6pM9fqPl3bC3SUYcCbVWmvTG
-	 GxYv58Fh779Sb+UsOdXKZrIz3nAYcG/E3KKGNsCg=
+	b=vjbulS+FNxF6U0s/L0vCUcPcZ4XXXpHKipTfxw6W/ANEzpjJB5HvdRCrUxU5eMjdW
+	 D77nNseoHD2+JQnykZAjeipP+SJNXvqu8xD61winuX03Odm+Ld/3oMjso+ab45xZ1H
+	 m6IGKC/YhU6yTSVs9iurImzU71lBpBihurkr1akw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donald Hunter <donald.hunter@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Peiyang Wang <wangpeiyang1@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 211/336] netlink: specs: Add missing bridge linkinfo attrs
-Date: Tue, 14 May 2024 12:16:55 +0200
-Message-ID: <20240514101046.578947660@linuxfoundation.org>
+Subject: [PATCH 6.8 229/336] net: hns3: release PTP resources if pf initialization failed
+Date: Tue, 14 May 2024 12:17:13 +0200
+Message-ID: <20240514101047.260398055@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -53,42 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donald Hunter <donald.hunter@gmail.com>
+From: Peiyang Wang <wangpeiyang1@huawei.com>
 
-[ Upstream commit 9adcac6506185dd1a727f1784b89f30cd217ef7e ]
+[ Upstream commit 950aa42399893a170d9b57eda0e4a3ff91fd8b70 ]
 
-Attributes for FDB learned entries were added to the if_link netlink api
-for bridge linkinfo but are missing from the rt_link.yaml spec. Add the
-missing attributes to the spec.
+During the PF initialization process, hclge_update_port_info may return an
+error code for some reason. At this point,  the ptp initialization has been
+completed. To void memory leaks, the resources that are applied by ptp
+should be released. Therefore, when hclge_update_port_info returns an error
+code, hclge_ptp_uninit is called to release the corresponding resources.
 
-Fixes: ddd1ad68826d ("net: bridge: Add netlink knobs for number / max learned FDB entries")
-Signed-off-by: Donald Hunter <donald.hunter@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20240503164304.87427-1-donald.hunter@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: eaf83ae59e18 ("net: hns3: add querying fec ability from firmware")
+Signed-off-by: Peiyang Wang <wangpeiyang1@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Hariprasad Kelam <hkelam@marvell.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/netlink/specs/rt_link.yaml | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/netlink/specs/rt_link.yaml b/Documentation/netlink/specs/rt_link.yaml
-index 8e4d19adee8cd..4e702ac8bf66b 100644
---- a/Documentation/netlink/specs/rt_link.yaml
-+++ b/Documentation/netlink/specs/rt_link.yaml
-@@ -1144,6 +1144,12 @@ attribute-sets:
-       -
-         name: mcast-querier-state
-         type: binary
-+      -
-+        name: fdb-n-learned
-+        type: u32
-+      -
-+        name: fdb-max-learned
-+        type: u32
-   -
-     name: linkinfo-brport-attrs
-     name-prefix: ifla-brport-
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 6b84c1313f9bd..a5e63655fd88d 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -11751,7 +11751,7 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
+ 
+ 	ret = hclge_update_port_info(hdev);
+ 	if (ret)
+-		goto err_mdiobus_unreg;
++		goto err_ptp_uninit;
+ 
+ 	INIT_KFIFO(hdev->mac_tnl_log);
+ 
+@@ -11802,6 +11802,8 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
+ 	devl_unlock(hdev->devlink);
+ 	return 0;
+ 
++err_ptp_uninit:
++	hclge_ptp_uninit(hdev);
+ err_mdiobus_unreg:
+ 	if (hdev->hw.mac.phydev)
+ 		mdiobus_unregister(hdev->hw.mac.mdio_bus);
 -- 
 2.43.0
 
