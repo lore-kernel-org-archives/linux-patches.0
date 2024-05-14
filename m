@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1652F9D4;
-	Tue, 14 May 2024 11:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9E51CAA4;
+	Tue, 14 May 2024 11:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687790; cv=none; b=JgsJOHUS60V3FnkaEacBATUgXEppTEdf2wv6tsOuD6YKPgN/2faWnaChsXEw8/sPGQPMTbTsFLmFb42+2qOY40aOj3nD43bWvUZY2gV43DdYrM3Q8A/xNwThjB8hTdaMlvKoPzcbB0frVOJrmnxc9PI1EcYGOx3pG9j+LnRZW+M=
+	t=1715687792; cv=none; b=Lzbo4Zp0OZORU9ct17jXo54rwD2rgWfJ5pL63tmVIv9b2HL+pV9ocSWaA+Dm4sLkeR3ODKQ6uXodEf3YilYPwsExkxJwHGmFTCnm2Hz0V+r69kyY4PJ2DPS3eLNOV6C6rogl4zXGmMV74uFpmb51TQ1VZrjl06yArL06/bmjzg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687790; c=relaxed/simple;
-	bh=1LhErnBW4GofNsDjFJ76evdZYR4tI4uGoPwHwhA1h30=;
+	s=arc-20240116; t=1715687792; c=relaxed/simple;
+	bh=s2oqqe9UNmqhjoxlK8sB6hwyI7ugfy0QV5BXU4uS/I8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I6CEo0t56Os3DWkWz3gwNpUVrIxr1xJu7Bwykc1QYjwDKNZExTTpHQFu5bzEidZXEg7HzViRS3DBHrpkprpTAYtdUgq10HNxj1RK7I0gXIhHSlG87M5EcnN7k87T+5RDwsK4owROTgIrwfLinCKdaUzZuxE+jhvh+7rUlSuhSeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OME/myfZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JkNmnLGpLWT6Jgu8bEgS6rh7rlDko8T/8xiv5ymG6vbShDU64wdffGQd/7kPCf2ebe2NmNkecvBnN3Jnj6oXnvNVokhDO0vKMsjRi8wh/qQTCjPmmwurgfJCOluTqv0yfCsqjDqwn01GOrpel1TMKedcU6qlLcyrQqvXQi8HGbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhTGXFeK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OME/myfZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDCAC2BD10;
-	Tue, 14 May 2024 11:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhTGXFeK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 476A0C2BD10;
+	Tue, 14 May 2024 11:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687789;
-	bh=1LhErnBW4GofNsDjFJ76evdZYR4tI4uGoPwHwhA1h30=;
+	s=korg; t=1715687792;
+	bh=s2oqqe9UNmqhjoxlK8sB6hwyI7ugfy0QV5BXU4uS/I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OME/myfZpELcCN9pKTN29AbppN4NefS3LGBD1iljMmhvzFu9iUCYPFUprjOOrZWlO
-	 RLBeG1/2xIZW3fxghtZi+m1AphZS4f4QJQ6h2X8+sG5HPzYbLMWBYum27+ekpnag6L
-	 j83kGMeav+/FFaDf/NE3UcySn9I+Q5iWKTcneNdQ=
+	b=hhTGXFeKmzWQuyw0kOCny5v17Y2Xb6IX4h5YbfyZhDgKNiBOGKqpP7V/VMk5Vnv1S
+	 v/a9C7+M09JqQKTN8gaEDOsEdghOmkulhB8LsAHvaqvBnwX8A3rKUw72kZtitNpZnP
+	 /bmxmFkImGXVBY639gNbuV/PBaBSW8T3h2obx89k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boy Wu <boy.wu@mediatek.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/168] ARM: 9381/1: kasan: clear stale stack poison
-Date: Tue, 14 May 2024 12:20:02 +0200
-Message-ID: <20240514101010.611263811@linuxfoundation.org>
+Subject: [PATCH 5.15 105/168] tcp: defer shutdown(SEND_SHUTDOWN) for TCP_SYN_RECV sockets
+Date: Tue, 14 May 2024 12:20:03 +0200
+Message-ID: <20240514101010.648841761@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -54,116 +53,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boy.Wu <boy.wu@mediatek.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c4238686f9093b98bd6245a348bcf059cdce23af ]
+[ Upstream commit 94062790aedb505bdda209b10bea47b294d6394f ]
 
-We found below OOB crash:
+TCP_SYN_RECV state is really special, it is only used by
+cross-syn connections, mostly used by fuzzers.
 
-[   33.452494] ==================================================================
-[   33.453513] BUG: KASAN: stack-out-of-bounds in refresh_cpu_vm_stats.constprop.0+0xcc/0x2ec
-[   33.454660] Write of size 164 at addr c1d03d30 by task swapper/0/0
-[   33.455515]
-[   33.455767] CPU: 0 PID: 0 Comm: swapper/0 Tainted: G           O       6.1.25-mainline #1
-[   33.456880] Hardware name: Generic DT based system
-[   33.457555]  unwind_backtrace from show_stack+0x18/0x1c
-[   33.458326]  show_stack from dump_stack_lvl+0x40/0x4c
-[   33.459072]  dump_stack_lvl from print_report+0x158/0x4a4
-[   33.459863]  print_report from kasan_report+0x9c/0x148
-[   33.460616]  kasan_report from kasan_check_range+0x94/0x1a0
-[   33.461424]  kasan_check_range from memset+0x20/0x3c
-[   33.462157]  memset from refresh_cpu_vm_stats.constprop.0+0xcc/0x2ec
-[   33.463064]  refresh_cpu_vm_stats.constprop.0 from tick_nohz_idle_stop_tick+0x180/0x53c
-[   33.464181]  tick_nohz_idle_stop_tick from do_idle+0x264/0x354
-[   33.465029]  do_idle from cpu_startup_entry+0x20/0x24
-[   33.465769]  cpu_startup_entry from rest_init+0xf0/0xf4
-[   33.466528]  rest_init from arch_post_acpi_subsys_init+0x0/0x18
-[   33.467397]
-[   33.467644] The buggy address belongs to stack of task swapper/0/0
-[   33.468493]  and is located at offset 112 in frame:
-[   33.469172]  refresh_cpu_vm_stats.constprop.0+0x0/0x2ec
-[   33.469917]
-[   33.470165] This frame has 2 objects:
-[   33.470696]  [32, 76) 'global_zone_diff'
-[   33.470729]  [112, 276) 'global_node_diff'
-[   33.471294]
-[   33.472095] The buggy address belongs to the physical page:
-[   33.472862] page:3cd72da8 refcount:1 mapcount:0 mapping:00000000 index:0x0 pfn:0x41d03
-[   33.473944] flags: 0x1000(reserved|zone=0)
-[   33.474565] raw: 00001000 ed741470 ed741470 00000000 00000000 00000000 ffffffff 00000001
-[   33.475656] raw: 00000000
-[   33.476050] page dumped because: kasan: bad access detected
-[   33.476816]
-[   33.477061] Memory state around the buggy address:
-[   33.477732]  c1d03c00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   33.478630]  c1d03c80: 00 00 00 00 00 00 00 00 f1 f1 f1 f1 00 00 00 00
-[   33.479526] >c1d03d00: 00 04 f2 f2 f2 f2 00 00 00 00 00 00 f1 f1 f1 f1
-[   33.480415]                                                ^
-[   33.481195]  c1d03d80: 00 00 00 00 00 00 00 00 00 00 04 f3 f3 f3 f3 f3
-[   33.482088]  c1d03e00: f3 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
-[   33.482978] ==================================================================
+In the following crash [1], syzbot managed to trigger a divide
+by zero in tcp_rcv_space_adjust()
 
-We find the root cause of this OOB is that arm does not clear stale stack
-poison in the case of cpuidle.
+A socket makes the following state transitions,
+without ever calling tcp_init_transfer(),
+meaning tcp_init_buffer_space() is also not called.
 
-This patch refer to arch/arm64/kernel/sleep.S to resolve this issue.
+         TCP_CLOSE
+connect()
+         TCP_SYN_SENT
+         TCP_SYN_RECV
+shutdown() -> tcp_shutdown(sk, SEND_SHUTDOWN)
+         TCP_FIN_WAIT1
 
->From cited commit [1] that explain the problem
+To fix this issue, change tcp_shutdown() to not
+perform a TCP_SYN_RECV -> TCP_FIN_WAIT1 transition,
+which makes no sense anyway.
 
-Functions which the compiler has instrumented for KASAN place poison on
-the stack shadow upon entry and remove this poison prior to returning.
+When tcp_rcv_state_process() later changes socket state
+from TCP_SYN_RECV to TCP_ESTABLISH, then look at
+sk->sk_shutdown to finally enter TCP_FIN_WAIT1 state,
+and send a FIN packet from a sane socket state.
 
-In the case of cpuidle, CPUs exit the kernel a number of levels deep in
-C code.  Any instrumented functions on this critical path will leave
-portions of the stack shadow poisoned.
+This means tcp_send_fin() can now be called from BH
+context, and must use GFP_ATOMIC allocations.
 
-If CPUs lose context and return to the kernel via a cold path, we
-restore a prior context saved in __cpu_suspend_enter are forgotten, and
-we never remove the poison they placed in the stack shadow area by
-functions calls between this and the actual exit of the kernel.
+[1]
+divide error: 0000 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 1 PID: 5084 Comm: syz-executor358 Not tainted 6.9.0-rc6-syzkaller-00022-g98369dccd2f8 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+ RIP: 0010:tcp_rcv_space_adjust+0x2df/0x890 net/ipv4/tcp_input.c:767
+Code: e3 04 4c 01 eb 48 8b 44 24 38 0f b6 04 10 84 c0 49 89 d5 0f 85 a5 03 00 00 41 8b 8e c8 09 00 00 89 e8 29 c8 48 0f af c3 31 d2 <48> f7 f1 48 8d 1c 43 49 8d 96 76 08 00 00 48 89 d0 48 c1 e8 03 48
+RSP: 0018:ffffc900031ef3f0 EFLAGS: 00010246
+RAX: 0c677a10441f8f42 RBX: 000000004fb95e7e RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: 0000000027d4b11f R08: ffffffff89e535a4 R09: 1ffffffff25e6ab7
+R10: dffffc0000000000 R11: ffffffff8135e920 R12: ffff88802a9f8d30
+R13: dffffc0000000000 R14: ffff88802a9f8d00 R15: 1ffff1100553f2da
+FS:  00005555775c0380(0000) GS:ffff8880b9500000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f1155bf2304 CR3: 000000002b9f2000 CR4: 0000000000350ef0
+Call Trace:
+ <TASK>
+  tcp_recvmsg_locked+0x106d/0x25a0 net/ipv4/tcp.c:2513
+  tcp_recvmsg+0x25d/0x920 net/ipv4/tcp.c:2578
+  inet6_recvmsg+0x16a/0x730 net/ipv6/af_inet6.c:680
+  sock_recvmsg_nosec net/socket.c:1046 [inline]
+  sock_recvmsg+0x109/0x280 net/socket.c:1068
+  ____sys_recvmsg+0x1db/0x470 net/socket.c:2803
+  ___sys_recvmsg net/socket.c:2845 [inline]
+  do_recvmmsg+0x474/0xae0 net/socket.c:2939
+  __sys_recvmmsg net/socket.c:3018 [inline]
+  __do_sys_recvmmsg net/socket.c:3041 [inline]
+  __se_sys_recvmmsg net/socket.c:3034 [inline]
+  __x64_sys_recvmmsg+0x199/0x250 net/socket.c:3034
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7faeb6363db9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 c1 17 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ffcc1997168 EFLAGS: 00000246 ORIG_RAX: 000000000000012b
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007faeb6363db9
+RDX: 0000000000000001 RSI: 0000000020000bc0 RDI: 0000000000000005
+RBP: 0000000000000000 R08: 0000000000000000 R09: 000000000000001c
+R10: 0000000000000122 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000001
 
-Thus, (depending on stackframe layout) subsequent calls to instrumented
-functions may hit this stale poison, resulting in (spurious) KASAN
-splats to the console.
-
-To avoid this, clear any stale poison from the idle thread for a CPU
-prior to bringing a CPU online.
-
->From cited commit [2]
-
-Extend to check for CONFIG_KASAN_STACK
-
-[1] commit 0d97e6d8024c ("arm64: kasan: clear stale stack poison")
-[2] commit d56a9ef84bd0 ("kasan, arm64: unpoison stack only with CONFIG_KASAN_STACK")
-
-Signed-off-by: Boy Wu <boy.wu@mediatek.com>
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Fixes: 5615f69bc209 ("ARM: 9016/2: Initialize the mapping of KASan shadow memory")
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Link: https://lore.kernel.org/r/20240501125448.896529-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/kernel/sleep.S | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv4/tcp.c        |    4 ++--
+ net/ipv4/tcp_input.c  |    2 ++
+ net/ipv4/tcp_output.c |    4 +++-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/kernel/sleep.S b/arch/arm/kernel/sleep.S
-index 43077e11dafda..2acf880fcc344 100644
---- a/arch/arm/kernel/sleep.S
-+++ b/arch/arm/kernel/sleep.S
-@@ -114,6 +114,10 @@ ENDPROC(cpu_resume_mmu)
- 	.popsection
- cpu_resume_after_mmu:
- 	bl	cpu_init		@ restore the und/abt/irq banked regs
-+#if defined(CONFIG_KASAN) && defined(CONFIG_KASAN_STACK)
-+	mov	r0, sp
-+	bl	kasan_unpoison_task_stack_below
-+#endif
- 	mov	r0, #0			@ return zero on success
- 	ldmfd	sp!, {r4 - r11, pc}
- ENDPROC(cpu_resume_after_mmu)
--- 
-2.43.0
-
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -2692,7 +2692,7 @@ void tcp_shutdown(struct sock *sk, int h
+ 	/* If we've already sent a FIN, or it's a closed state, skip this. */
+ 	if ((1 << sk->sk_state) &
+ 	    (TCPF_ESTABLISHED | TCPF_SYN_SENT |
+-	     TCPF_SYN_RECV | TCPF_CLOSE_WAIT)) {
++	     TCPF_CLOSE_WAIT)) {
+ 		/* Clear out any half completed packets.  FIN if needed. */
+ 		if (tcp_close_state(sk))
+ 			tcp_send_fin(sk);
+@@ -2803,7 +2803,7 @@ void __tcp_close(struct sock *sk, long t
+ 		 * machine. State transitions:
+ 		 *
+ 		 * TCP_ESTABLISHED -> TCP_FIN_WAIT1
+-		 * TCP_SYN_RECV	-> TCP_FIN_WAIT1 (forget it, it's impossible)
++		 * TCP_SYN_RECV	-> TCP_FIN_WAIT1 (it is difficult)
+ 		 * TCP_CLOSE_WAIT -> TCP_LAST_ACK
+ 		 *
+ 		 * are legal only when FIN has been sent (i.e. in window),
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -6543,6 +6543,8 @@ int tcp_rcv_state_process(struct sock *s
+ 
+ 		tcp_initialize_rcv_mss(sk);
+ 		tcp_fast_path_on(tp);
++		if (sk->sk_shutdown & SEND_SHUTDOWN)
++			tcp_shutdown(sk, SEND_SHUTDOWN);
+ 		break;
+ 
+ 	case TCP_FIN_WAIT1: {
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3441,7 +3441,9 @@ void tcp_send_fin(struct sock *sk)
+ 			return;
+ 		}
+ 	} else {
+-		skb = alloc_skb_fclone(MAX_TCP_HEADER, sk->sk_allocation);
++		skb = alloc_skb_fclone(MAX_TCP_HEADER,
++				       sk_gfp_mask(sk, GFP_ATOMIC |
++						       __GFP_NOWARN));
+ 		if (unlikely(!skb))
+ 			return;
+ 
 
 
