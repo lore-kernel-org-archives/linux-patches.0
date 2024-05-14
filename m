@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C7A6CDA3;
-	Tue, 14 May 2024 11:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418937F48C;
+	Tue, 14 May 2024 11:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686830; cv=none; b=bmj8oWsFhAjQdOlatS73wgpFt7tCF0Y8FAPGvKeVJhWCUNAumppaH1a/XKsB3Ud8HG9doKsg0J774mmcD9B1iNjy4mT7rM4OiucDOMS0ZVPgBThcUMfSo8cCymYIfatpqafAtirAsspyhzeNs1OGAUrghZ1EI4qeH66/gPNPDX0=
+	t=1715686833; cv=none; b=Mcx7SX/TcDbjXx2WvW0N+jkw2p7nzltWKhv5srIhbqYUYNjCm19shsFww4SOHEoLt3LkDnnFqFjlnEnFjQ6eXlR7nzL9zUQf8YwSmgbrhhWkpKEwanRq1XALuxbKY/QPU9Pz9A16QPyeWnRzdj1nxVl1I28iqxVcCoTzdOMbJZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686830; c=relaxed/simple;
-	bh=L+ofnmxiA6tAdfipsA/ceDn8MTxqGBKOU1kq05c9LEs=;
+	s=arc-20240116; t=1715686833; c=relaxed/simple;
+	bh=/r+3WtJTy6MbVhdO6Swo+TJmrfK90+5WtAHDfuhihlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8yDq8y96xsG/ZfiSxTeqdv8IJFQaiix9UbWWffvFluYm1N1hvxW1m2elBi7bX1Ilmcc8eZL1REyl4OAa9ZFDnNNOyvEGU3u/osotTZuKGVV8EBF4mSKRdIrQ1TPXDv1Oxg8Zer27bfmfy8s6uHhQlrHY9WQySGuGs7qItflKCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8Knn78X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qhk0gzXExcVqpkaaBHycfTtO3ipxMlIWnJE4Mb5FuQIkzrHWN4VIUfNoaCubgbWehpcArtRUJyIEHfxQSn12V7YamcfB29JC2oDqtl0YepNLT4ge4QJchkzATpDbLY10eoJG1yzGS25w/kIfbze+7Lolp3R3kJ3wu6i7ti5fI3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSQvrX2E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8Knn78X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6BCC2BD10;
-	Tue, 14 May 2024 11:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSQvrX2E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1935C2BD10;
+	Tue, 14 May 2024 11:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686830;
-	bh=L+ofnmxiA6tAdfipsA/ceDn8MTxqGBKOU1kq05c9LEs=;
+	s=korg; t=1715686833;
+	bh=/r+3WtJTy6MbVhdO6Swo+TJmrfK90+5WtAHDfuhihlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W8Knn78XBmaEiRe1u80sqzqAw+djhPcAPvm5IRR8b+Uy/10AGTkJXqmH1MBTNoOmF
-	 S+BtBUE8TipU3gx7E5WWKkczUtT/4k5ZsgTt9uOd13RSgZUpQV7bWZthUJbGMnl96C
-	 h1bmCBAoRT2xZN80NdT6y0CT/7yD8P82J7FxasRw=
+	b=BSQvrX2EqKcnueQWRNfFGm1Ac/TXA8c1V3tlVDWLgrG6HfEsCFVzKi61T/0WE9x3r
+	 Krmp3ws9kxURxhHSDdefdQfJ+9ScQ26nIhybciWgJnZkj//SX3FmTDG7y2hFI23jmY
+	 ptMVryUilM/XdMuh7NcfuHQAJIohEYlos9syucBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <joneslee@google.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	John Stultz <jstultz@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Joakim Sindholt <opensource@zhasha.com>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 36/63] selftests: timers: Fix valid-adjtimex signed left-shift undefined behavior
-Date: Tue, 14 May 2024 12:19:57 +0200
-Message-ID: <20240514100949.378272520@linuxfoundation.org>
+Subject: [PATCH 4.19 37/63] fs/9p: only translate RWX permissions for plain 9P2000
+Date: Tue, 14 May 2024 12:19:58 +0200
+Message-ID: <20240514100949.415069095@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100948.010148088@linuxfoundation.org>
 References: <20240514100948.010148088@linuxfoundation.org>
@@ -53,136 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Stultz <jstultz@google.com>
+From: Joakim Sindholt <opensource@zhasha.com>
 
-[ Upstream commit 076361362122a6d8a4c45f172ced5576b2d4a50d ]
+[ Upstream commit cd25e15e57e68a6b18dc9323047fe9c68b99290b ]
 
-The struct adjtimex freq field takes a signed value who's units are in
-shifted (<<16) parts-per-million.
+Garbage in plain 9P2000's perm bits is allowed through, which causes it
+to be able to set (among others) the suid bit. This was presumably not
+the intent since the unix extended bits are handled explicitly and
+conditionally on .u.
 
-Unfortunately for negative adjustments, the straightforward use of:
-
-  freq = ppm << 16 trips undefined behavior warnings with clang:
-
-valid-adjtimex.c:66:6: warning: shifting a negative signed value is undefined [-Wshift-negative-value]
-        -499<<16,
-        ~~~~^
-valid-adjtimex.c:67:6: warning: shifting a negative signed value is undefined [-Wshift-negative-value]
-        -450<<16,
-        ~~~~^
-..
-
-Fix it by using a multiply by (1 << 16) instead of shifting negative values
-in the valid-adjtimex test case. Align the values for better readability.
-
-Reported-by: Lee Jones <joneslee@google.com>
-Reported-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Link: https://lore.kernel.org/r/20240409202222.2830476-1-jstultz@google.com
-Link: https://lore.kernel.org/lkml/0c6d4f0d-2064-4444-986b-1d1ed782135f@collabora.com/
+Signed-off-by: Joakim Sindholt <opensource@zhasha.com>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/timers/valid-adjtimex.c | 73 +++++++++----------
- 1 file changed, 36 insertions(+), 37 deletions(-)
+ fs/9p/vfs_inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/timers/valid-adjtimex.c b/tools/testing/selftests/timers/valid-adjtimex.c
-index 48b9a803235a8..d13ebde203221 100644
---- a/tools/testing/selftests/timers/valid-adjtimex.c
-+++ b/tools/testing/selftests/timers/valid-adjtimex.c
-@@ -21,9 +21,6 @@
-  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  *   GNU General Public License for more details.
-  */
--
--
--
- #include <stdio.h>
- #include <stdlib.h>
- #include <time.h>
-@@ -62,45 +59,47 @@ int clear_time_state(void)
- #define NUM_FREQ_OUTOFRANGE 4
- #define NUM_FREQ_INVALID 2
+diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
+index 72b779bc09422..d1a0f36dcdd43 100644
+--- a/fs/9p/vfs_inode.c
++++ b/fs/9p/vfs_inode.c
+@@ -101,7 +101,7 @@ static int p9mode2perm(struct v9fs_session_info *v9ses,
+ 	int res;
+ 	int mode = stat->mode;
  
-+#define SHIFTED_PPM (1 << 16)
-+
- long valid_freq[NUM_FREQ_VALID] = {
--	-499<<16,
--	-450<<16,
--	-400<<16,
--	-350<<16,
--	-300<<16,
--	-250<<16,
--	-200<<16,
--	-150<<16,
--	-100<<16,
--	-75<<16,
--	-50<<16,
--	-25<<16,
--	-10<<16,
--	-5<<16,
--	-1<<16,
-+	 -499 * SHIFTED_PPM,
-+	 -450 * SHIFTED_PPM,
-+	 -400 * SHIFTED_PPM,
-+	 -350 * SHIFTED_PPM,
-+	 -300 * SHIFTED_PPM,
-+	 -250 * SHIFTED_PPM,
-+	 -200 * SHIFTED_PPM,
-+	 -150 * SHIFTED_PPM,
-+	 -100 * SHIFTED_PPM,
-+	  -75 * SHIFTED_PPM,
-+	  -50 * SHIFTED_PPM,
-+	  -25 * SHIFTED_PPM,
-+	  -10 * SHIFTED_PPM,
-+	   -5 * SHIFTED_PPM,
-+	   -1 * SHIFTED_PPM,
- 	-1000,
--	1<<16,
--	5<<16,
--	10<<16,
--	25<<16,
--	50<<16,
--	75<<16,
--	100<<16,
--	150<<16,
--	200<<16,
--	250<<16,
--	300<<16,
--	350<<16,
--	400<<16,
--	450<<16,
--	499<<16,
-+	    1 * SHIFTED_PPM,
-+	    5 * SHIFTED_PPM,
-+	   10 * SHIFTED_PPM,
-+	   25 * SHIFTED_PPM,
-+	   50 * SHIFTED_PPM,
-+	   75 * SHIFTED_PPM,
-+	  100 * SHIFTED_PPM,
-+	  150 * SHIFTED_PPM,
-+	  200 * SHIFTED_PPM,
-+	  250 * SHIFTED_PPM,
-+	  300 * SHIFTED_PPM,
-+	  350 * SHIFTED_PPM,
-+	  400 * SHIFTED_PPM,
-+	  450 * SHIFTED_PPM,
-+	  499 * SHIFTED_PPM,
- };
- 
- long outofrange_freq[NUM_FREQ_OUTOFRANGE] = {
--	-1000<<16,
--	-550<<16,
--	550<<16,
--	1000<<16,
-+	-1000 * SHIFTED_PPM,
-+	 -550 * SHIFTED_PPM,
-+	  550 * SHIFTED_PPM,
-+	 1000 * SHIFTED_PPM,
- };
- 
- #define LONG_MAX (~0UL>>1)
+-	res = mode & S_IALLUGO;
++	res = mode & 0777; /* S_IRWXUGO */
+ 	if (v9fs_proto_dotu(v9ses)) {
+ 		if ((mode & P9_DMSETUID) == P9_DMSETUID)
+ 			res |= S_ISUID;
 -- 
 2.43.0
 
