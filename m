@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40E613C684;
-	Tue, 14 May 2024 10:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAE55B5D3;
+	Tue, 14 May 2024 10:41:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683257; cv=none; b=nES8naSF7ylsgXKX9ueMfF9or+YrMhwMRgOgCGOa4m5K6U1dg07vJzMYcbkSi1lP+Nyszd/NRkfqPym7NJekqPxKXldrVH1hea3Ed6gPPjY6+6O0IoP4XO2pV+m9FfTMQNBAEdUFO+jmQDyXbiRUGLUVD082c88K7Zq+pvES7vQ=
+	t=1715683263; cv=none; b=IVEyf9AUzvVk3teQUfXcDx9iLsFZxOlcCD8mjXOwRWGJjTl+kxi7JZ197l8c91SjezXx5TRelu3wFd/tuOgqMHWImTSwX7jBknDEjGmLBDroswVHml0pLSBaSy0Si0kd8RxuJR27OfwgmND14YCg+By91dS0r/rbcOUBNTRcAqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683257; c=relaxed/simple;
-	bh=79xzwZ/QmgcafRkmjddgtcflTrVicC11Pzelx6IzppQ=;
+	s=arc-20240116; t=1715683263; c=relaxed/simple;
+	bh=4hWaWWRH6yxlc8bishBzcufO/MkJ1UM48WClKJcle/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OXzIIxmTHMDwQP7DG3kllO1wZARXVpXRPDAOIm6fjCBoDD1MNNLNCq0sN1oQLQY7r1vcc8iXOg1cNotf31wX+Gdbn0ctGqduoA8XOGjPfvl71R4JPw9YUHTai2k7NcFCO3I7sd7gxGUKnsKnu6lyOwCJBTZa1D1TLIgQGms6DUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFkpyutx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gDWbZZahbKLDvYi5AQtNSaoAY8DsShq8VT+5U/iC50k7rqG7BfAx2KqekBHR/YsS6sYaDKuBTWI8cR72NlMeMegcIlyRDz0LuwP249GlSMnPvR8zf07auOfsXEobNNMMlQku2qFgtIZpqoxLF6sH4wILKfH4WEUaWCA/PFt4ryc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13el9rbW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFkpyutx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B525C2BD10;
-	Tue, 14 May 2024 10:40:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13el9rbW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 984A6C2BD10;
+	Tue, 14 May 2024 10:41:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683256;
-	bh=79xzwZ/QmgcafRkmjddgtcflTrVicC11Pzelx6IzppQ=;
+	s=korg; t=1715683262;
+	bh=4hWaWWRH6yxlc8bishBzcufO/MkJ1UM48WClKJcle/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vFkpyutxCXQzjJEOTezMUlMB/tHvO3pthtrv4Lx1lWB4/C4xSQNV4Ke08BTkWYvNh
-	 p82fS7TE/eBcrFO9cHaXA9g2DqgCjuKc0UIlbJ2om8eNyRjjj9Ene+oHotTAhfNeDX
-	 Y482p1L1skcRu07tF0AbfcCd5Mc0skI3n34zsqAw=
+	b=13el9rbWuChYGoQ0rzMo3tlQNo2LOoAXEncV2zFm/xuTsrA8gnzHkxGEqO9WfF0Op
+	 6NrXJ2VgcmXhseSuJESu+0SRuUrTjgTD85Ue5hjoi4hVhOIKQC/eLBGmeIcVlcLca/
+	 cTCTHgGRgzPQayekvSQyQkkQH6Unl6e3LbuTuYzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-Subject: [PATCH 6.8 191/336] drm/radeon: silence UBSAN warning (v3)
-Date: Tue, 14 May 2024 12:16:35 +0200
-Message-ID: <20240514101045.814116782@linuxfoundation.org>
+	Vanillan Wang <vanillanwang@163.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 192/336] net:usb:qmi_wwan: support Rolling modules
+Date: Tue, 14 May 2024 12:16:36 +0200
+Message-ID: <20240514101045.853469370@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -47,80 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Vanillan Wang <vanillanwang@163.com>
 
-[ Upstream commit 781d41fed19caf900c8405064676813dc9921d32 ]
+[ Upstream commit d362046021ea122309da8c8e0b6850c792ca97b5 ]
 
-Convert a variable sized array from [1] to [].
+Update the qmi_wwan driver support for the Rolling
+LTE modules.
 
-v2: fix up a few more.
-v3: integrate comments from Kees.
+- VID:PID 33f8:0104, RW101-GL for laptop debug M.2 cards(with RMNET
+interface for /Linux/Chrome OS)
+0x0104: RMNET, diag, at, pipe
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Tested-by: Jeff Johnson <quic_jjohnson@quicinc.com> (v2)
-Acked-by: Christian König <christian.koenig@amd.com> (v1)
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: keescook@chromium.org
+Here are the outputs of usb-devices:
+T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=33f8 ProdID=0104 Rev=05.04
+S:  Manufacturer=Rolling Wireless S.a.r.l.
+S:  Product=Rolling Module
+S:  SerialNumber=ba2eb033
+C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
+E:  Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+
+Signed-off-by: Vanillan Wang <vanillanwang@163.com>
+Link: https://lore.kernel.org/r/20240416120713.24777-1-vanillanwang@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/pptable.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/usb/qmi_wwan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/radeon/pptable.h b/drivers/gpu/drm/radeon/pptable.h
-index 94947229888ba..b7f22597ee95e 100644
---- a/drivers/gpu/drm/radeon/pptable.h
-+++ b/drivers/gpu/drm/radeon/pptable.h
-@@ -424,7 +424,7 @@ typedef struct _ATOM_PPLIB_SUMO_CLOCK_INFO{
- typedef struct _ATOM_PPLIB_STATE_V2
- {
-       //number of valid dpm levels in this state; Driver uses it to calculate the whole 
--      //size of the state: sizeof(ATOM_PPLIB_STATE_V2) + (ucNumDPMLevels - 1) * sizeof(UCHAR)
-+      //size of the state: struct_size(ATOM_PPLIB_STATE_V2, clockInfoIndex, ucNumDPMLevels)
-       UCHAR ucNumDPMLevels;
-       
-       //a index to the array of nonClockInfos
-@@ -432,14 +432,14 @@ typedef struct _ATOM_PPLIB_STATE_V2
-       /**
-       * Driver will read the first ucNumDPMLevels in this array
-       */
--      UCHAR clockInfoIndex[1];
-+      UCHAR clockInfoIndex[] __counted_by(ucNumDPMLevels);
- } ATOM_PPLIB_STATE_V2;
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index e2e181378f412..edc34402e787f 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1431,6 +1431,7 @@ static const struct usb_device_id products[] = {
+ 	{QMI_FIXED_INTF(0x2692, 0x9025, 4)},    /* Cellient MPL200 (rebranded Qualcomm 05c6:9025) */
+ 	{QMI_QUIRK_SET_DTR(0x1546, 0x1312, 4)},	/* u-blox LARA-R6 01B */
+ 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
++	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
  
- typedef struct _StateArray{
-     //how many states we have 
-     UCHAR ucNumEntries;
-     
--    ATOM_PPLIB_STATE_V2 states[1];
-+    ATOM_PPLIB_STATE_V2 states[] __counted_by(ucNumEntries);
- }StateArray;
- 
- 
-@@ -450,7 +450,7 @@ typedef struct _ClockInfoArray{
-     //sizeof(ATOM_PPLIB_CLOCK_INFO)
-     UCHAR ucEntrySize;
-     
--    UCHAR clockInfo[1];
-+    UCHAR clockInfo[] __counted_by(ucNumEntries);
- }ClockInfoArray;
- 
- typedef struct _NonClockInfoArray{
-@@ -460,7 +460,7 @@ typedef struct _NonClockInfoArray{
-     //sizeof(ATOM_PPLIB_NONCLOCK_INFO)
-     UCHAR ucEntrySize;
-     
--    ATOM_PPLIB_NONCLOCK_INFO nonClockInfo[1];
-+    ATOM_PPLIB_NONCLOCK_INFO nonClockInfo[] __counted_by(ucNumEntries);
- }NonClockInfoArray;
- 
- typedef struct _ATOM_PPLIB_Clock_Voltage_Dependency_Record
+ 	/* 4. Gobi 1000 devices */
+ 	{QMI_GOBI1K_DEVICE(0x05c6, 0x9212)},	/* Acer Gobi Modem Device */
 -- 
 2.43.0
 
