@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF4654BFE;
-	Tue, 14 May 2024 11:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B8B129E9F;
+	Tue, 14 May 2024 11:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685383; cv=none; b=Md9eiXp9jKYK2sLgP9969qhvUZLg2rlJjGBrhjXNnUhsO/sqZFCg7TeAjXiKdaMZtNcK/9qvqbJkTcUAv9Ta9qYKyANMW9dVqqC4L984iV318ie75FtwAnr2qcP0nT5evTpvycXwxXGMEXS3lXBHm+xZqMGxetyxfOIqtZGaxqY=
+	t=1715685390; cv=none; b=HNsTRM5anTLPei3Zgqlz4C/QYCsjtdOzNv9E5viR+PQNzcnOH6lDZqsNTYo/0D5BqkML2vBMJX2gCMb5OZrNYFw7iPpOqNRWZyGZXAUfw+1gcdA7xijc9fTdgJ8hLlhBvBGj0PcsteM5X9kt+APwigfLhUi430cNdOGeG1Rz560=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685383; c=relaxed/simple;
-	bh=F3aTIZGQiwdxDX7sWyLR2X806P7vNYAdUdeI4cEN4YQ=;
+	s=arc-20240116; t=1715685390; c=relaxed/simple;
+	bh=0ciAh9vr3i38Yv+7pH/145+l7lojST7PIyi3XKSgeHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n1Q6up8loIap7YbgrcGbEmlAnv4OxKMC+9mPFuBs+u7IYBXHfHWd5C+ktEWMIHlnk74f8Zg64+Q7sLUSWBnayfmsY+dJ1v1jTqu5xeT0QTXH4lNpR1oh0wWRIioHdsQEZoxYegU6O/VRR1I3AYJwajgLnVDokRQdOozLF2g2cCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxd0tmQz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B3gvq4Spo++pULBmPg2iMtZpJ1NK39mV9ru/sT/441iw0SuEoDax8/FRQWz4wN4+XlpvAzyel8gDoUcyNvAg3nMbcDbFT/0+BSdpUUTZW99srS+tjaOdw4bTeGXoDmCB0gKDPS75gdLFWDE6uWBOVuyid0bAKja3QXy1pxwOnJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rADazS/T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxd0tmQz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05EE8C2BD10;
-	Tue, 14 May 2024 11:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rADazS/T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE89C2BD10;
+	Tue, 14 May 2024 11:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685383;
-	bh=F3aTIZGQiwdxDX7sWyLR2X806P7vNYAdUdeI4cEN4YQ=;
+	s=korg; t=1715685390;
+	bh=0ciAh9vr3i38Yv+7pH/145+l7lojST7PIyi3XKSgeHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hxd0tmQz5od93ePvc+2KHoC2yMERsdNfcE9WNPpu4ubYdKH1QAXjLTvL5j1/pz473
-	 O6H35b/cb14Va3NN/3ATFBA6u9RLV9DP44/gOmWN1K2cy32kx69EPde1zu+38I9Pi1
-	 7+W0O8glNzKvYlY4JW9QPhKXbfms5o+W9V12VRPo=
+	b=rADazS/TG0C5AkMf0NX4pJYSPgsM50aYoZg1mJzQoLOXMIJ4ngna4NFE7+f72/DiO
+	 d94oQum8HRG2MV99n8vR8TiqwJT+yPyK4136+H5RJRhk84wGC9sSEkjmTtRSK4cbVn
+	 V3S0mjYdGdPEupmpppbOnfrO1vR7TrvgR06s3YMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Sungwoo Kim <iam@sung-woo.kim>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 162/301] powerpc/crypto/chacha-p10: Fix failure on non Power10
-Date: Tue, 14 May 2024 12:17:13 +0200
-Message-ID: <20240514101038.373772040@linuxfoundation.org>
+Subject: [PATCH 6.6 180/301] Bluetooth: msft: fix slab-use-after-free in msft_do_close()
+Date: Tue, 14 May 2024 12:17:31 +0200
+Message-ID: <20240514101039.052751830@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -46,92 +45,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Sungwoo Kim <iam@sung-woo.kim>
 
-[ Upstream commit 69630926011c1f7170a465b7b5c228deb66e9372 ]
+[ Upstream commit 10f9f426ac6e752c8d87bf4346930ba347aaabac ]
 
-The chacha-p10-crypto module provides optimised chacha routines for
-Power10. It also selects CRYPTO_ARCH_HAVE_LIB_CHACHA which says it
-provides chacha_crypt_arch() to generic code.
+Tying the msft->data lifetime to hdev by freeing it in
+hci_release_dev() to fix the following case:
 
-Notably the module needs to provide chacha_crypt_arch() regardless of
-whether it is loaded on Power10 or an older CPU.
+[use]
+msft_do_close()
+  msft = hdev->msft_data;
+  if (!msft)                      ...(1) <- passed.
+    return;
+  mutex_lock(&msft->filter_lock); ...(4) <- used after freed.
 
-The implementation of chacha_crypt_arch() already has a fallback to
-chacha_crypt_generic(), however the module as a whole fails to load on
-pre-Power10, because of the use of module_cpu_feature_match().
+[free]
+msft_unregister()
+  msft = hdev->msft_data;
+  hdev->msft_data = NULL;         ...(2)
+  kfree(msft);                    ...(3) <- msft is freed.
 
-This breaks for example loading wireguard:
+==================================================================
+BUG: KASAN: slab-use-after-free in __mutex_lock_common
+kernel/locking/mutex.c:587 [inline]
+BUG: KASAN: slab-use-after-free in __mutex_lock+0x8f/0xc30
+kernel/locking/mutex.c:752
+Read of size 8 at addr ffff888106cbbca8 by task kworker/u5:2/309
 
-  jostaberry-1:~ # modprobe -v wireguard
-  insmod /lib/modules/6.8.0-lp155.8.g7e0e887-default/kernel/arch/powerpc/crypto/chacha-p10-crypto.ko.zst
-  modprobe: ERROR: could not insert 'wireguard': No such device
-
-Fix it by removing module_cpu_feature_match(), and instead check the
-CPU feature manually. If the CPU feature is not found, the module
-still loads successfully, but doesn't register the Power10 specific
-algorithms. That allows chacha_crypt_generic() to remain available for
-use, fixing the problem.
-
-  [root@fedora ~]# modprobe -v wireguard
-  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/net/ipv4/udp_tunnel.ko
-  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/net/ipv6/ip6_udp_tunnel.ko
-  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/lib/crypto/libchacha.ko
-  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/arch/powerpc/crypto/chacha-p10-crypto.ko
-  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/lib/crypto/libchacha20poly1305.ko
-  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/drivers/net/wireguard/wireguard.ko
-  [   18.910452][  T721] wireguard: allowedips self-tests: pass
-  [   18.914999][  T721] wireguard: nonce counter self-tests: pass
-  [   19.029066][  T721] wireguard: ratelimiter self-tests: pass
-  [   19.029257][  T721] wireguard: WireGuard 1.0.0 loaded. See www.wireguard.com for information.
-  [   19.029361][  T721] wireguard: Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-
-Reported-by: Michal Suchánek <msuchanek@suse.de>
-Closes: https://lore.kernel.org/all/20240315122005.GG20665@kitsune.suse.cz/
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240328130200.3041687-1-mpe@ellerman.id.au
+Fixes: bf6a4e30ffbd ("Bluetooth: disable advertisement filters during suspend")
+Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/crypto/chacha-p10-glue.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_core.c | 3 +--
+ net/bluetooth/msft.c     | 2 +-
+ net/bluetooth/msft.h     | 4 ++--
+ 3 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/arch/powerpc/crypto/chacha-p10-glue.c b/arch/powerpc/crypto/chacha-p10-glue.c
-index 74fb86b0d2097..7c728755852e1 100644
---- a/arch/powerpc/crypto/chacha-p10-glue.c
-+++ b/arch/powerpc/crypto/chacha-p10-glue.c
-@@ -197,6 +197,9 @@ static struct skcipher_alg algs[] = {
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 0592369579ab2..befe645d3f9bf 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2736,8 +2736,6 @@ void hci_unregister_dev(struct hci_dev *hdev)
  
- static int __init chacha_p10_init(void)
- {
-+	if (!cpu_has_feature(CPU_FTR_ARCH_31))
-+		return 0;
-+
- 	static_branch_enable(&have_p10);
+ 	hci_unregister_suspend_notifier(hdev);
  
- 	return crypto_register_skciphers(algs, ARRAY_SIZE(algs));
-@@ -204,10 +207,13 @@ static int __init chacha_p10_init(void)
+-	msft_unregister(hdev);
+-
+ 	hci_dev_do_close(hdev);
  
- static void __exit chacha_p10_exit(void)
- {
-+	if (!static_branch_likely(&have_p10))
-+		return;
-+
- 	crypto_unregister_skciphers(algs, ARRAY_SIZE(algs));
+ 	if (!test_bit(HCI_INIT, &hdev->flags) &&
+@@ -2791,6 +2789,7 @@ void hci_release_dev(struct hci_dev *hdev)
+ 	hci_discovery_filter_clear(hdev);
+ 	hci_blocked_keys_clear(hdev);
+ 	hci_codec_list_clear(&hdev->local_codecs);
++	msft_release(hdev);
+ 	hci_dev_unlock(hdev);
+ 
+ 	ida_destroy(&hdev->unset_handle_ida);
+diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
+index 9612c5d1b13f6..d039683d3bdd4 100644
+--- a/net/bluetooth/msft.c
++++ b/net/bluetooth/msft.c
+@@ -769,7 +769,7 @@ void msft_register(struct hci_dev *hdev)
+ 	mutex_init(&msft->filter_lock);
  }
  
--module_cpu_feature_match(PPC_MODULE_FEATURE_P10, chacha_p10_init);
-+module_init(chacha_p10_init);
- module_exit(chacha_p10_exit);
+-void msft_unregister(struct hci_dev *hdev)
++void msft_release(struct hci_dev *hdev)
+ {
+ 	struct msft_data *msft = hdev->msft_data;
  
- MODULE_DESCRIPTION("ChaCha and XChaCha stream ciphers (P10 accelerated)");
+diff --git a/net/bluetooth/msft.h b/net/bluetooth/msft.h
+index 2a63205b377b7..fe538e9c91c01 100644
+--- a/net/bluetooth/msft.h
++++ b/net/bluetooth/msft.h
+@@ -14,7 +14,7 @@
+ 
+ bool msft_monitor_supported(struct hci_dev *hdev);
+ void msft_register(struct hci_dev *hdev);
+-void msft_unregister(struct hci_dev *hdev);
++void msft_release(struct hci_dev *hdev);
+ void msft_do_open(struct hci_dev *hdev);
+ void msft_do_close(struct hci_dev *hdev);
+ void msft_vendor_evt(struct hci_dev *hdev, void *data, struct sk_buff *skb);
+@@ -35,7 +35,7 @@ static inline bool msft_monitor_supported(struct hci_dev *hdev)
+ }
+ 
+ static inline void msft_register(struct hci_dev *hdev) {}
+-static inline void msft_unregister(struct hci_dev *hdev) {}
++static inline void msft_release(struct hci_dev *hdev) {}
+ static inline void msft_do_open(struct hci_dev *hdev) {}
+ static inline void msft_do_close(struct hci_dev *hdev) {}
+ static inline void msft_vendor_evt(struct hci_dev *hdev, void *data,
 -- 
 2.43.0
 
