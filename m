@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966EE55C0A;
-	Tue, 14 May 2024 10:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C08155C0A;
+	Tue, 14 May 2024 10:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683984; cv=none; b=FoMIovMGu39xYZY5JP+LPHx0SXwZzq2D04Jp52+lDTBqoU6WR7PmlMCUTShqqcaD4CvnUa7rNZfOpOQ0m7GXRp1xf8I5FkoXcbnv+n7861XIJ77+KFHQTf08M+oe2e4TDkDZtwZG7dGx/V6HkTLLQaxF+EKemIcM0f8uaea+Fxk=
+	t=1715683988; cv=none; b=T6zj7F9R0XLOiUFjaBFRHaGWUfTYaT9+hKP8Q8DsfAbByPsj7g2gmt5jRnHunjzsX9b1m9QrSdEg07YNIOdmRdZFMqNA8Q10fw+Et97x5vRPwNeE9IrWntyUR8/SlcbpZI+G9J6KhzB9INn3rigEnwWvt05CjrFte/mMx5QcYd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683984; c=relaxed/simple;
-	bh=Zc4cjp9WGu3/Sg8waXmDWh76jEx9gEfuffjX35HP6tw=;
+	s=arc-20240116; t=1715683988; c=relaxed/simple;
+	bh=/h1uSR9tuF+sBzE8pczOcq7cIDq7uz3dk6LwvJZGDFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tqSSKEyRHKh6TDrqnBHk/dunhygqq7o3I4A6/DsqI9AYcybwDmzFc0UMh9v+G+jFQR2zEZMN/bq6Dv6SxdJ7TenU3c4NMi9VuFmYvOP875CB0gjIjQnxWiDOPjFnM+i8fMTx5qOSBiruzT5UviSPqREMzRKdBZ84XAob3P/Wf/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtEc6mah; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=buuNgzO0uo5LsjAD9TO6RfDvMVL4Mb9rs/mXGL0Z/h+Qy/q53IOsTT87K+CnLPTMld7Ggc8cGH/K3Qqw34jC2iSEIvmYiKYT84uqk652dOmmW1MpsbN8Sl5Uf+akG5YCZWassnBY9qxwEyitKOpEaHIJfSCJWdSqzOptg9CbGEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnuMAcMe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtEc6mah"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036F7C2BD10;
-	Tue, 14 May 2024 10:53:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnuMAcMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5BBC2BD10;
+	Tue, 14 May 2024 10:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683984;
-	bh=Zc4cjp9WGu3/Sg8waXmDWh76jEx9gEfuffjX35HP6tw=;
+	s=korg; t=1715683988;
+	bh=/h1uSR9tuF+sBzE8pczOcq7cIDq7uz3dk6LwvJZGDFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RtEc6mahK6qUSTlrJLsFNCRpZ10SlCN/gyCilEr4BwuWaKkfAcXQ4P/6dnAD4wBX8
-	 6WpplzhaY04bswQSfQWtA5fA2dxcLzbZ3GdrOmIpf6Qzgg8Su8hyvrctkTnBML1kFD
-	 c+6LV3dWTdWn6WEsNz7EwcH3XgMbkB5f6c/ogX9Y=
+	b=vnuMAcMeQpKbaVLiQu0WajR5YEKe2xMkgIS9zeMgti3boEraIdvTnE3Wql8mAt5CR
+	 sbcMcfNNlzWPwsA9x33OECPyvOKt7/R9ISYa6c2xGgCNbGhc8h8IYfEakKYPJ1NstJ
+	 LJ2gxvFKUiQQ/5mYZNfS4drWUsEi27KSTEHWzuEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Karthikeyan Ramasubramanian <kramasub@chromium.org>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.8 304/336] drm/i915/bios: Fix parsing backlight BDB data
-Date: Tue, 14 May 2024 12:18:28 +0200
-Message-ID: <20240514101050.097705028@linuxfoundation.org>
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	George Shen <george.shen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.8 305/336] drm/amd/display: Handle Y carry-over in VCP X.Y calculation
+Date: Tue, 14 May 2024 12:18:29 +0200
+Message-ID: <20240514101050.134991138@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -46,92 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karthikeyan Ramasubramanian <kramasub@chromium.org>
+From: George Shen <george.shen@amd.com>
 
-commit 43b26bdd2ee5cfca80939be910d5b23a50cd7f9d upstream.
+commit 719564737a9ac3d0b49c314450b56cf6f7d71358 upstream.
 
-Starting BDB version 239, hdr_dpcd_refresh_timeout is introduced to
-backlight BDB data. Commit 700034566d68 ("drm/i915/bios: Define more BDB
-contents") updated the backlight BDB data accordingly. This broke the
-parsing of backlight BDB data in VBT for versions 236 - 238 (both
-inclusive) and hence the backlight controls are not responding on units
-with the concerned BDB version.
+Theoretically rare corner case where ceil(Y) results in rounding up to
+an integer. If this happens, the 1 should be carried over to the X
+value.
 
-backlight_control information has been present in backlight BDB data
-from at least BDB version 191 onwards, if not before. Hence this patch
-extracts the backlight_control information for BDB version 191 or newer.
-Tested on Chromebooks using Jasperlake SoC (reports bdb->version = 236).
-Tested on Chromebooks using Raptorlake SoC (reports bdb->version = 251).
-
-v2: removed checking the block size of the backlight BDB data
-    [vsyrjala: this is completely safe thanks to commit e163cfb4c96d
-     ("drm/i915/bios: Make copies of VBT data blocks")]
-
-Fixes: 700034566d68 ("drm/i915/bios: Define more BDB contents")
-Cc: stable@vger.kernel.org
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Signed-off-by: Karthikeyan Ramasubramanian <kramasub@chromium.org>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240221180622.v2.1.I0690aa3e96a83a43b3fc33f50395d334b2981826@changeid
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-(cherry picked from commit c286f6a973c66c0d993ecab9f7162c790e7064c8)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+CC: stable@vger.kernel.org
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: George Shen <george.shen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_bios.c     |   19 ++++---------------
- drivers/gpu/drm/i915/display/intel_vbt_defs.h |    5 -----
- 2 files changed, 4 insertions(+), 20 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn31/dcn31_hpo_dp_link_encoder.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/i915/display/intel_bios.c
-+++ b/drivers/gpu/drm/i915/display/intel_bios.c
-@@ -1042,22 +1042,11 @@ parse_lfp_backlight(struct drm_i915_priv
- 	panel->vbt.backlight.type = INTEL_BACKLIGHT_DISPLAY_DDI;
- 	panel->vbt.backlight.controller = 0;
- 	if (i915->display.vbt.version >= 191) {
--		size_t exp_size;
-+		const struct lfp_backlight_control_method *method;
+--- a/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_hpo_dp_link_encoder.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_hpo_dp_link_encoder.c
+@@ -395,6 +395,12 @@ void dcn31_hpo_dp_link_enc_set_throttled
+ 				x),
+ 			25));
  
--		if (i915->display.vbt.version >= 236)
--			exp_size = sizeof(struct bdb_lfp_backlight_data);
--		else if (i915->display.vbt.version >= 234)
--			exp_size = EXP_BDB_LFP_BL_DATA_SIZE_REV_234;
--		else
--			exp_size = EXP_BDB_LFP_BL_DATA_SIZE_REV_191;
--
--		if (get_blocksize(backlight_data) >= exp_size) {
--			const struct lfp_backlight_control_method *method;
--
--			method = &backlight_data->backlight_control[panel_type];
--			panel->vbt.backlight.type = method->type;
--			panel->vbt.backlight.controller = method->controller;
--		}
-+		method = &backlight_data->backlight_control[panel_type];
-+		panel->vbt.backlight.type = method->type;
-+		panel->vbt.backlight.controller = method->controller;
- 	}
- 
- 	panel->vbt.backlight.pwm_freq_hz = entry->pwm_freq_hz;
---- a/drivers/gpu/drm/i915/display/intel_vbt_defs.h
-+++ b/drivers/gpu/drm/i915/display/intel_vbt_defs.h
-@@ -897,11 +897,6 @@ struct lfp_brightness_level {
- 	u16 reserved;
- } __packed;
- 
--#define EXP_BDB_LFP_BL_DATA_SIZE_REV_191 \
--	offsetof(struct bdb_lfp_backlight_data, brightness_level)
--#define EXP_BDB_LFP_BL_DATA_SIZE_REV_234 \
--	offsetof(struct bdb_lfp_backlight_data, brightness_precision_bits)
--
- struct bdb_lfp_backlight_data {
- 	u8 entry_size;
- 	struct lfp_backlight_data_entry data[16];
++	// If y rounds up to integer, carry it over to x.
++	if (y >> 25) {
++		x += 1;
++		y = 0;
++	}
++
+ 	switch (stream_encoder_inst) {
+ 	case 0:
+ 		REG_SET_2(DP_DPHY_SYM32_VC_RATE_CNTL0, 0,
 
 
