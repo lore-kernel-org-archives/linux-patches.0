@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0864918026;
-	Tue, 14 May 2024 11:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA19118026;
+	Tue, 14 May 2024 11:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686445; cv=none; b=RK6gHJBFpkeTJOrHqOL9fQDkn6hRS+5lDfiKDk6Cu0U2gOpRJk1uVSAuQogssL499sfqoUa8pFlYsDiA67xI9PdiPIHegKf8uoLtps7eYWEY2LR7eydSezOTzOy2Og9495WI2BUYEK1Moa6wMR29nvXhdn2q9OYW4pDzqST+gRU=
+	t=1715686447; cv=none; b=bCdE3di/JP87ljyFTjP6T3X3vUM6ly1G34d5xsETThEObSb+fK1/xvVY+qD7Fcv+uMP0oMozmN96crW8dszE3JK6ybr0weJBZAtM+Y6uNFgXuTBvbVxG4dYFejPCyF79456Gt9HXo2i3dMiV1+h+q2qcvgVn52yMkvO8NqksONo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686445; c=relaxed/simple;
-	bh=8CLlqijSUbz3/blQNtvw9q6bR3ecbSjnaSjNhPutpps=;
+	s=arc-20240116; t=1715686447; c=relaxed/simple;
+	bh=4PM8PaQ6eKe0ij/wX76kE/8sfffO5CDI3ruBixeyBx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HI0cEWCNe3opL1klsyrqx/YwMJnr97NswPoQcx9IqaAgbS16ss4VcYIsZGo5oTkDMl0wsasLAAyVlfeqUrkIeyyXtTqDe4yWWAGvYmw5qKDJ0DrSNV58xWhU0og/fGHC4maGBLE1rfwMF+y9gTPX8gbNNk5zC/u+CGNobrmQW4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fh+tH/ol; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rAXJWVr5aBbEoT+c4qMlAU+P5sfQPNxo9U6CkGLupGNbTNCdcm6BFZRSw4QggrO6SHamO85gRgvj7maIo5SzFAsNWV2YPUtH5/3gypo2HY6Oj5gQGW7iEAIsSECY9PwTfD2ZZMfpu7s5kTS3gvLACqxXd31Jw+1mjQ6rNSQuBo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1B4ZJmR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fh+tH/ol"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832C2C2BD10;
-	Tue, 14 May 2024 11:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1B4ZJmR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A07C2BD10;
+	Tue, 14 May 2024 11:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686444;
-	bh=8CLlqijSUbz3/blQNtvw9q6bR3ecbSjnaSjNhPutpps=;
+	s=korg; t=1715686447;
+	bh=4PM8PaQ6eKe0ij/wX76kE/8sfffO5CDI3ruBixeyBx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fh+tH/olVkhUD42BIBANxGFD9xQs5gYXTKdorl8+iJKQ5TljIeZ4OyqP1+0PIcVlR
-	 WQrPyfm7EOIX9IgCgm7wP9mVEc7ZV96gmuUoj19vaYYaEbHpSbRXM9J+SZXPi/7qBU
-	 gwqVM2D3m8ewHhefpffJtwe3QBaQbG6xew/bQ3XA=
+	b=h1B4ZJmRlMhHvbOlvzkGi884PsgOU90kk+bj5A2eIlsWw54owqzTOUZHUr0xAfj+C
+	 DL9RG9OiUYCYt/x3ZOglDNB4Qd5aJW29QbTLH2dd4rQLMsbujxW6fQhlFJguSlyRBc
+	 CKufTSSq2XkJdHKForhXf1wM9GvX2s2AuRYTxdCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Nestler <raphael.nestler@gmail.com>,
-	Andrea Righi <andrea.righi@canonical.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 140/236] kbuild: rust: avoid creating temporary files
-Date: Tue, 14 May 2024 12:18:22 +0200
-Message-ID: <20240514101025.683116475@linuxfoundation.org>
+Subject: [PATCH 6.1 141/236] spi: Merge spi_controller.{slave,target}_abort()
+Date: Tue, 14 May 2024 12:18:23 +0200
+Message-ID: <20240514101025.722108465@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -54,79 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit df01b7cfcef08bf3fdcac2909d0e1910781d6bfd ]
+[ Upstream commit 6c6871cdaef96361f6b79a3e45d451a6475df4d6 ]
 
-`rustc` outputs by default the temporary files (i.e. the ones saved
-by `-Csave-temps`, such as `*.rcgu*` files) in the current working
-directory when `-o` and `--out-dir` are not given (even if
-`--emit=x=path` is given, i.e. it does not use those for temporaries).
+Mixing SPI slave/target handlers and SPI slave/target controllers using
+legacy and modern naming does not work well: there are now two different
+callbacks for aborting a slave/target operation, of which only one is
+populated, while spi_{slave,target}_abort() check and use only one,
+which may be the unpopulated one.
 
-Since out-of-tree modules are compiled from the `linux` tree,
-`rustc` then tries to create them there, which may not be accessible.
+Fix this by merging the slave/target abort callbacks into a single
+callback using a union, like is already done for the slave/target flags.
 
-Thus pass `--out-dir` explicitly, even if it is just for the temporary
-files.
-
-Similarly, do so for Rust host programs too.
-
-Reported-by: Raphael Nestler <raphael.nestler@gmail.com>
-Closes: https://github.com/Rust-for-Linux/linux/issues/1015
-Reported-by: Andrea Righi <andrea.righi@canonical.com>
-Tested-by: Raphael Nestler <raphael.nestler@gmail.com> # non-hostprogs
-Tested-by: Andrea Righi <andrea.righi@canonical.com> # non-hostprogs
-Fixes: 295d8398c67e ("kbuild: specify output names separately for each emission type from rustc")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Tested-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: b8d3b056a78dcc94 ("spi: introduce new helpers with using modern naming")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/809c82d54b85dd87ef7ee69fc93016085be85cec.1667555967.git.geert+renesas@glider.be
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.build | 5 ++++-
- scripts/Makefile.host  | 6 +++++-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ include/linux/spi/spi.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/Makefile.build b/scripts/Makefile.build
-index 9ae02542b9389..1827bc1db1e98 100644
---- a/scripts/Makefile.build
-+++ b/scripts/Makefile.build
-@@ -277,6 +277,9 @@ $(obj)/%.lst: $(src)/%.c FORCE
+diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
+index 6edf8a2962d4a..0ce659d6fcb75 100644
+--- a/include/linux/spi/spi.h
++++ b/include/linux/spi/spi.h
+@@ -676,8 +676,10 @@ struct spi_controller {
+ 			       struct spi_message *message);
+ 	int (*unprepare_message)(struct spi_controller *ctlr,
+ 				 struct spi_message *message);
+-	int (*slave_abort)(struct spi_controller *ctlr);
+-	int (*target_abort)(struct spi_controller *ctlr);
++	union {
++		int (*slave_abort)(struct spi_controller *ctlr);
++		int (*target_abort)(struct spi_controller *ctlr);
++	};
  
- rust_allowed_features := core_ffi_c
- 
-+# `--out-dir` is required to avoid temporaries being created by `rustc` in the
-+# current working directory, which may be not accessible in the out-of-tree
-+# modules case.
- rust_common_cmd = \
- 	RUST_MODFILE=$(modfile) $(RUSTC_OR_CLIPPY) $(rust_flags) \
- 	-Zallow-features=$(rust_allowed_features) \
-@@ -285,7 +288,7 @@ rust_common_cmd = \
- 	--extern alloc --extern kernel \
- 	--crate-type rlib -L $(objtree)/rust/ \
- 	--crate-name $(basename $(notdir $@)) \
--	--emit=dep-info=$(depfile)
-+	--out-dir $(dir $@) --emit=dep-info=$(depfile)
- 
- rust_handle_depfile = \
- 	sed -i '/^\#/d' $(depfile)
-diff --git a/scripts/Makefile.host b/scripts/Makefile.host
-index d812241144d44..a447c91893de6 100644
---- a/scripts/Makefile.host
-+++ b/scripts/Makefile.host
-@@ -86,7 +86,11 @@ hostc_flags    = -Wp,-MMD,$(depfile) \
- hostcxx_flags  = -Wp,-MMD,$(depfile) \
-                  $(KBUILD_HOSTCXXFLAGS) $(HOST_EXTRACXXFLAGS) \
-                  $(HOSTCXXFLAGS_$(target-stem).o)
--hostrust_flags = --emit=dep-info=$(depfile) \
-+
-+# `--out-dir` is required to avoid temporaries being created by `rustc` in the
-+# current working directory, which may be not accessible in the out-of-tree
-+# modules case.
-+hostrust_flags = --out-dir $(dir $@) --emit=dep-info=$(depfile) \
-                  $(KBUILD_HOSTRUSTFLAGS) $(HOST_EXTRARUSTFLAGS) \
-                  $(HOSTRUSTFLAGS_$(target-stem))
- 
+ 	/*
+ 	 * These hooks are for drivers that use a generic implementation
 -- 
 2.43.0
 
