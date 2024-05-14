@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87073433BE;
-	Tue, 14 May 2024 11:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E27127B69;
+	Tue, 14 May 2024 11:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686517; cv=none; b=OYvKX2WLEhW2f3891aYc7PDJxChDYaEYVbs1XALd61ime18WxXhAJqM8Y2gNIvjUsk2h8/hSp1GuABSa+lQBcUBuYn8uoug+PXQ/eHCzmUoGbcMY+M9+YmG15ezlbnO0wypjnLj7rLF9yT26letayACq/sPpqYOfc+5RBZs4g4g=
+	t=1715686520; cv=none; b=kwCkoHgtbBRRMGj48SPrkO6i17EJGus2wN35eqKnsTjo/gvpQPoYs2WlXjxB5aERxg/xFpTFvYkM8ODkpjvAKcyVe+rJVPQTI72kstlFXw+qa9wfpuSEUrkP/Nj+OodAAsWfelZs0gVPSGE2ZGknIKLRQqqVjIWb2/9Wl7V0aB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686517; c=relaxed/simple;
-	bh=+vKmiDQ7BuYDLdh65uKj+y/YUNIC5UEpsxRVEeHXbko=;
+	s=arc-20240116; t=1715686520; c=relaxed/simple;
+	bh=YHQQV+R9UQCh6yUFfN5Nl2EFz3dI6peBcYNcoI0mCcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DsVFhfgqlWS16B0hnnFKw4iWmSWUllFDBNmXw9ci8hsUzpmTUfd4k4Q/Hw+zACRfBAs/vMySJrDBCG9O6q7sDPMlUsOlhOCQ76H0P02z0ZYwpl3M201teaxr4KGz/eEoi/s0/DBEcNUbst+32zTUuz1IaXOmg1wEygq96LyWbt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJ8xMW6m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fznnAQ9o02KwOYk3Y20Xehw+2eq/XC/g5PCFbU6UwoFJiSx02ohXz7tw7s80MtH93wKZT4x9TTy4DSTv2ctw1X4rksc898zgpwWzWRr8GO0+Uusvb0aJ7nRXIKFyKrZdTMWgsY2QW7UJq27FAIhrDtoMar9Dqj6bNYU6fYwDc5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQkp+7r2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJ8xMW6m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9F9C2BD10;
-	Tue, 14 May 2024 11:35:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQkp+7r2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E74C2BD10;
+	Tue, 14 May 2024 11:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686517;
-	bh=+vKmiDQ7BuYDLdh65uKj+y/YUNIC5UEpsxRVEeHXbko=;
+	s=korg; t=1715686520;
+	bh=YHQQV+R9UQCh6yUFfN5Nl2EFz3dI6peBcYNcoI0mCcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QJ8xMW6mnNgbhL+Nnv1bAEYmyvV7FcEVbJfGcEtaIRnqi2MY7pc1kLMH0ja3LHBPP
-	 Uu05iVkOL4hYY/iZTHJNWtq2arU9w4nUQD+U3Xwe5i86Kscrdjak1LqQfSQARXOY2l
-	 y9LWaX+9Co87DiCYQmP6luvKqBgrtDay+vANZXUw=
+	b=zQkp+7r2MGfVc1nTS2ECmfjzRXWLDKthjb6cpF7WY7Ch2mLttuaYPvG5zDszzMNu7
+	 s+6MsPkF8cdaP/dAHym0Q1S55PiAUrO59EC3B3AhCAcFw0uzM7eup7NN5nfaky6So8
+	 9LfzcedRuLhVfWlLn0Smaq0O4cJjSzRvJhVYJrik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wen Gu <guwen@linux.alibaba.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 148/236] tcp: Use refcount_inc_not_zero() in tcp_twsk_unique().
-Date: Tue, 14 May 2024 12:18:30 +0200
-Message-ID: <20240514101025.985920225@linuxfoundation.org>
+Subject: [PATCH 6.1 166/236] net/smc: fix neighbour and rtable leak in smc_ib_find_route()
+Date: Tue, 14 May 2024 12:18:48 +0200
+Message-ID: <20240514101026.660840775@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -53,116 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Wen Gu <guwen@linux.alibaba.com>
 
-[ Upstream commit f2db7230f73a80dbb179deab78f88a7947f0ab7e ]
+[ Upstream commit 2ddc0dd7fec86ee53b8928a5cca5fbddd4fc7c06 ]
 
-Anderson Nascimento reported a use-after-free splat in tcp_twsk_unique()
-with nice analysis.
+In smc_ib_find_route(), the neighbour found by neigh_lookup() and rtable
+resolved by ip_route_output_flow() are not released or put before return.
+It may cause the refcount leak, so fix it.
 
-Since commit ec94c2696f0b ("tcp/dccp: avoid one atomic operation for
-timewait hashdance"), inet_twsk_hashdance() sets TIME-WAIT socket's
-sk_refcnt after putting it into ehash and releasing the bucket lock.
-
-Thus, there is a small race window where other threads could try to
-reuse the port during connect() and call sock_hold() in tcp_twsk_unique()
-for the TIME-WAIT socket with zero refcnt.
-
-If that happens, the refcnt taken by tcp_twsk_unique() is overwritten
-and sock_put() will cause underflow, triggering a real use-after-free
-somewhere else.
-
-To avoid the use-after-free, we need to use refcount_inc_not_zero() in
-tcp_twsk_unique() and give up on reusing the port if it returns false.
-
-[0]:
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 0 PID: 1039313 at lib/refcount.c:25 refcount_warn_saturate+0xe5/0x110
-CPU: 0 PID: 1039313 Comm: trigger Not tainted 6.8.6-200.fc39.x86_64 #1
-Hardware name: VMware, Inc. VMware20,1/440BX Desktop Reference Platform, BIOS VMW201.00V.21805430.B64.2305221830 05/22/2023
-RIP: 0010:refcount_warn_saturate+0xe5/0x110
-Code: 42 8e ff 0f 0b c3 cc cc cc cc 80 3d aa 13 ea 01 00 0f 85 5e ff ff ff 48 c7 c7 f8 8e b7 82 c6 05 96 13 ea 01 01 e8 7b 42 8e ff <0f> 0b c3 cc cc cc cc 48 c7 c7 50 8f b7 82 c6 05 7a 13 ea 01 01 e8
-RSP: 0018:ffffc90006b43b60 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: ffff888009bb3ef0 RCX: 0000000000000027
-RDX: ffff88807be218c8 RSI: 0000000000000001 RDI: ffff88807be218c0
-RBP: 0000000000069d70 R08: 0000000000000000 R09: ffffc90006b439f0
-R10: ffffc90006b439e8 R11: 0000000000000003 R12: ffff8880029ede84
-R13: 0000000000004e20 R14: ffffffff84356dc0 R15: ffff888009bb3ef0
-FS:  00007f62c10926c0(0000) GS:ffff88807be00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020ccb000 CR3: 000000004628c005 CR4: 0000000000f70ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- ? refcount_warn_saturate+0xe5/0x110
- ? __warn+0x81/0x130
- ? refcount_warn_saturate+0xe5/0x110
- ? report_bug+0x171/0x1a0
- ? refcount_warn_saturate+0xe5/0x110
- ? handle_bug+0x3c/0x80
- ? exc_invalid_op+0x17/0x70
- ? asm_exc_invalid_op+0x1a/0x20
- ? refcount_warn_saturate+0xe5/0x110
- tcp_twsk_unique+0x186/0x190
- __inet_check_established+0x176/0x2d0
- __inet_hash_connect+0x74/0x7d0
- ? __pfx___inet_check_established+0x10/0x10
- tcp_v4_connect+0x278/0x530
- __inet_stream_connect+0x10f/0x3d0
- inet_stream_connect+0x3a/0x60
- __sys_connect+0xa8/0xd0
- __x64_sys_connect+0x18/0x20
- do_syscall_64+0x83/0x170
- entry_SYSCALL_64_after_hwframe+0x78/0x80
-RIP: 0033:0x7f62c11a885d
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d a3 45 0c 00 f7 d8 64 89 01 48
-RSP: 002b:00007f62c1091e58 EFLAGS: 00000296 ORIG_RAX: 000000000000002a
-RAX: ffffffffffffffda RBX: 0000000020ccb004 RCX: 00007f62c11a885d
-RDX: 0000000000000010 RSI: 0000000020ccb000 RDI: 0000000000000003
-RBP: 00007f62c1091e90 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000296 R12: 00007f62c10926c0
-R13: ffffffffffffff88 R14: 0000000000000000 R15: 00007ffe237885b0
- </TASK>
-
-Fixes: ec94c2696f0b ("tcp/dccp: avoid one atomic operation for timewait hashdance")
-Reported-by: Anderson Nascimento <anderson@allelesecurity.com>
-Closes: https://lore.kernel.org/netdev/37a477a6-d39e-486b-9577-3463f655a6b7@allelesecurity.com/
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240501213145.62261-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20240506015439.108739-1-guwen@linux.alibaba.com
+Fixes: e5c4744cfb59 ("net/smc: add SMC-Rv2 connection establishment")
+Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20240507125331.2808-1-guwen@linux.alibaba.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/smc/smc_ib.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index be2c807eed15d..5dcb969cb5e9c 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -153,6 +153,12 @@ int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
- 	if (tcptw->tw_ts_recent_stamp &&
- 	    (!twp || (reuse && time_after32(ktime_get_seconds(),
- 					    tcptw->tw_ts_recent_stamp)))) {
-+		/* inet_twsk_hashdance() sets sk_refcnt after putting twsk
-+		 * and releasing the bucket lock.
-+		 */
-+		if (unlikely(!refcount_inc_not_zero(&sktw->sk_refcnt)))
-+			return 0;
+diff --git a/net/smc/smc_ib.c b/net/smc/smc_ib.c
+index ace8611735321..6de53431629ca 100644
+--- a/net/smc/smc_ib.c
++++ b/net/smc/smc_ib.c
+@@ -209,13 +209,18 @@ int smc_ib_find_route(struct net *net, __be32 saddr, __be32 daddr,
+ 	if (IS_ERR(rt))
+ 		goto out;
+ 	if (rt->rt_uses_gateway && rt->rt_gw_family != AF_INET)
+-		goto out;
+-	neigh = rt->dst.ops->neigh_lookup(&rt->dst, NULL, &fl4.daddr);
+-	if (neigh) {
+-		memcpy(nexthop_mac, neigh->ha, ETH_ALEN);
+-		*uses_gateway = rt->rt_uses_gateway;
+-		return 0;
+-	}
++		goto out_rt;
++	neigh = dst_neigh_lookup(&rt->dst, &fl4.daddr);
++	if (!neigh)
++		goto out_rt;
++	memcpy(nexthop_mac, neigh->ha, ETH_ALEN);
++	*uses_gateway = rt->rt_uses_gateway;
++	neigh_release(neigh);
++	ip_rt_put(rt);
++	return 0;
 +
- 		/* In case of repair and re-using TIME-WAIT sockets we still
- 		 * want to be sure that it is safe as above but honor the
- 		 * sequence numbers and time stamps set as part of the repair
-@@ -173,7 +179,7 @@ int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
- 			tp->rx_opt.ts_recent	   = tcptw->tw_ts_recent;
- 			tp->rx_opt.ts_recent_stamp = tcptw->tw_ts_recent_stamp;
- 		}
--		sock_hold(sktw);
-+
- 		return 1;
- 	}
- 
++out_rt:
++	ip_rt_put(rt);
+ out:
+ 	return -ENOENT;
+ }
 -- 
 2.43.0
 
