@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C7F4F88C;
-	Tue, 14 May 2024 10:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E550D129E9C;
+	Tue, 14 May 2024 10:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683827; cv=none; b=IzDH3wDX67QIbNYT9HBQzH7rLQtwxS3ebNqSRZez2nzOSEiJWfoC4ePfJUSn+XcFJ/DVvbQtYmjsAJ2xc1dIv3+4MT0Ocs8UEG3c7bycyVEysM0VJa+UeQRjl42aEMrQilHE2owgFVx/sgukPZ5yXcA3J/uae5g8U4hw3pNjdFw=
+	t=1715683834; cv=none; b=H1hAeLztLoafArzRbhKe9+diYh+8UlM8x/frd6BCv6oYBgMSM0XuY+uxPv/rGg852hb7TEavTogjMPMuSmFwA+gvutlMWNSMwVzvagO7xodmRbyDH9j5txJq4UdcVxfViNpSS/CVILLhTHNt9QiQdcJiheThFg1aOx+ryBGsFtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683827; c=relaxed/simple;
-	bh=vrR2Yr7hT0YRNEwdDnpjHLbZUG9c2ZmwACrxhOSiJfg=;
+	s=arc-20240116; t=1715683834; c=relaxed/simple;
+	bh=YlLufRgaZmQxsB4tD9ry8yFUg9zIRCAcV0/duxZdbAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptSutDhQSuoMhH1t0SCFBzw34qcmznh20fC4Ipcts3VZJeM/oknZ2KdxVOoTCfHbhT3xsp223BSNd9Ytc9tG80Ph3yZSE1rZlPU9yyALoX4hvTPZ3RQ+5xI1uw6ZUzd6AZ6uNVlUnOlfif8TZQjzVLEj4+5zkMTTcntBXbeadcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0UiAUpoy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s2WabLTSZx0Rfz0W2FspTaC4i6tkqh5/H23TXv9eg2+AnXtz/RdcfWueUAOP6Ovg0iy3bcj16crP8XA+GitBMktIguaAHzDlkuxtB0QozhiIJjG3NmEjo+0u3vleVgZV2GuWxvS9VRYhDVf39AkjB0aSiC3SZWji8BMpETIyU3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=POwtyyP3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0UiAUpoy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A3AC2BD10;
-	Tue, 14 May 2024 10:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POwtyyP3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52779C2BD10;
+	Tue, 14 May 2024 10:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683827;
-	bh=vrR2Yr7hT0YRNEwdDnpjHLbZUG9c2ZmwACrxhOSiJfg=;
+	s=korg; t=1715683833;
+	bh=YlLufRgaZmQxsB4tD9ry8yFUg9zIRCAcV0/duxZdbAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0UiAUpoyoFTOVru+2sCUvxqyNEpj3jPEBFT4tMRjh5VZQvUtRPv0gmhjqaIXXCAfE
-	 NaDcIgcUwqLuxAQoSkX2ZjjbbiWaF7cOurA/FR32LVJ7aKHumQ6iN9bJF9fBnfLK0l
-	 tnKqYfB7hDf+eSW5nS0usxeFbOVEmJyH+M5DGVeg=
+	b=POwtyyP3xgegzOhOU40ky8nAT3QkX0p4Tc1EHY+E/GmIQVc/mC4q/MNF9KO7jmMLs
+	 2Rhcf9zqsDXH0DNLycbI+UmsJR1UYoq1+/PVwR/QBE2Izdrsl5N++JBtizP+wFNXy9
+	 mRGSUJN5Qd8XVRYWdP7J+Tpp+Np8vR6jx7B1vsSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Peter Korsgaard <peter@korsgaard.com>
-Subject: [PATCH 6.8 250/336] usb: gadget: composite: fix OS descriptors w_value logic
-Date: Tue, 14 May 2024 12:17:34 +0200
-Message-ID: <20240514101048.057497447@linuxfoundation.org>
+	Ivan Avdeev <me@provod.works>
+Subject: [PATCH 6.8 251/336] usb: gadget: uvc: use correct buffer size when parsing configfs lists
+Date: Tue, 14 May 2024 12:17:35 +0200
+Message-ID: <20240514101048.094192843@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -50,78 +49,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Korsgaard <peter@korsgaard.com>
+From: Ivan Avdeev <me@provod.works>
 
-commit ec6ce7075ef879b91a8710829016005dc8170f17 upstream.
+commit 650ae71c80749fc7cb8858c8049f532eaec64410 upstream.
 
-The OS descriptors logic had the high/low byte of w_value inverted, causing
-the extended properties to not be accessible for interface != 0.
+This commit fixes uvc gadget support on 32-bit platforms.
 
->From the Microsoft documentation:
-https://learn.microsoft.com/en-us/windows-hardware/drivers/usbcon/microsoft-os-1-0-descriptors-specification
+Commit 0df28607c5cb ("usb: gadget: uvc: Generalise helper functions for
+reuse") introduced a helper function __uvcg_iter_item_entries() to aid
+with parsing lists of items on configfs attributes stores. This function
+is a generalization of another very similar function, which used a
+stack-allocated temporary buffer of fixed size for each item in the list
+and used the sizeof() operator to check for potential buffer overruns.
+The new function was changed to allocate the now variably sized temp
+buffer on heap, but wasn't properly updated to also check for max buffer
+size using the computed size instead of sizeof() operator.
 
-OS_Desc_CompatID.doc (w_index = 0x4):
+As a result, the maximum item size was 7 (plus null terminator) on
+64-bit platforms, and 3 on 32-bit ones. While 7 is accidentally just
+barely enough, 3 is definitely too small for some of UVC configfs
+attributes. For example, dwFrameInteval, specified in 100ns units,
+usually has 6-digit item values, e.g. 166666 for 60fps.
 
-- wValue:
-
-  High Byte = InterfaceNumber.  InterfaceNumber is set to the number of the
-  interface or function that is associated with the descriptor, typically
-  0x00.  Because a device can have only one extended compat ID descriptor,
-  it should ignore InterfaceNumber, regardless of the value, and simply
-  return the descriptor.
-
-  Low Byte = 0.  PageNumber is used to retrieve descriptors that are larger
-  than 64 KB.  The header section is 16 bytes, so PageNumber is set to 0 for
-  this request.
-
-We currently do not support >64KB compat ID descriptors, so verify that the
-low byte is 0.
-
-OS_Desc_Ext_Prop.doc (w_index = 0x5):
-
-- wValue:
-
-  High byte = InterfaceNumber.  The high byte of wValue is set to the number
-  of the interface or function that is associated with the descriptor.
-
-  Low byte = PageNumber.  The low byte of wValue is used to retrieve
-  descriptors that are larger than 64 KB.  The header section is 10 bytes, so
-  PageNumber is set to 0 for this request.
-
-We also don't support >64KB extended properties, so verify that the low byte
-is 0 and use the high byte for the interface number.
-
-Fixes: 37a3a533429e ("usb: gadget: OS Feature Descriptors support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Peter Korsgaard <peter@korsgaard.com>
-Link: https://lore.kernel.org/r/20240404100635.3215340-1-peter@korsgaard.com
+Cc: stable@vger.kernel.org
+Fixes: 0df28607c5cb ("usb: gadget: uvc: Generalise helper functions for reuse")
+Signed-off-by: Ivan Avdeev <me@provod.works>
+Link: https://lore.kernel.org/r/20240413150124.1062026-1-me@provod.works
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/composite.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/function/uvc_configfs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/composite.c
-+++ b/drivers/usb/gadget/composite.c
-@@ -2112,7 +2112,7 @@ unknown:
- 			buf[5] = 0x01;
- 			switch (ctrl->bRequestType & USB_RECIP_MASK) {
- 			case USB_RECIP_DEVICE:
--				if (w_index != 0x4 || (w_value >> 8))
-+				if (w_index != 0x4 || (w_value & 0xff))
- 					break;
- 				buf[6] = w_index;
- 				/* Number of ext compat interfaces */
-@@ -2128,9 +2128,9 @@ unknown:
- 				}
- 				break;
- 			case USB_RECIP_INTERFACE:
--				if (w_index != 0x5 || (w_value >> 8))
-+				if (w_index != 0x5 || (w_value & 0xff))
- 					break;
--				interface = w_value & 0xFF;
-+				interface = w_value >> 8;
- 				if (interface >= MAX_CONFIG_INTERFACES ||
- 				    !os_desc_cfg->interface[interface])
- 					break;
+--- a/drivers/usb/gadget/function/uvc_configfs.c
++++ b/drivers/usb/gadget/function/uvc_configfs.c
+@@ -92,10 +92,10 @@ static int __uvcg_iter_item_entries(cons
+ 
+ 	while (pg - page < len) {
+ 		i = 0;
+-		while (i < sizeof(buf) && (pg - page < len) &&
++		while (i < bufsize && (pg - page < len) &&
+ 		       *pg != '\0' && *pg != '\n')
+ 			buf[i++] = *pg++;
+-		if (i == sizeof(buf)) {
++		if (i == bufsize) {
+ 			ret = -EINVAL;
+ 			goto out_free_buf;
+ 		}
 
 
