@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F1A2B9AD;
-	Tue, 14 May 2024 11:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0229F6E61F;
+	Tue, 14 May 2024 11:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687094; cv=none; b=NVpQ0xc+mubsaDNbAnMMhvgtutBL/YIVUbtkz21Jxo7aPsSuSAkM5oxYKRNOhZiAzvysca7z6Nmjjvoh/jMoJPAdN3HTuq6z1vAzZUaL7l8rpcTEZ04gG/KylCFN+G+GUW+hBMPbloyfAT1hAJe/mkavnprKNj3ltBXCH5/HKX4=
+	t=1715687097; cv=none; b=N/Zp+2MNIsvz7Yol1boQ2sn9iuHcXofC3P7zG1awKQUSzbSVTfnHMo+XLLcm0X5kVkheRQqlQ4ZwQAY+6D+SVydF7/QW0guwlXM6Eu79ZC00Ka6VNn3YMpWz23REXpHUWrn9NONCOeoZYPvzIGdks6GTEH2kzg8VMM7N+3xGzLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687094; c=relaxed/simple;
-	bh=+askBIAI4WNWzoVIz1ehACZK7Xp6ADcUjKN5FfbULaE=;
+	s=arc-20240116; t=1715687097; c=relaxed/simple;
+	bh=HeCskSFgTROokE5//YHBF8tMC5UO5zsDt83xuSWOJ64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sNNgp8Cu+2YNJcX8ExJ+6OyMAqFYo+yfsx1l2aQXUaOy41YuKuNjfgnAYckqiVWfLa0x2i0mHcuN3E/JfKLT3xR1R1artkcDShhH1nPoq9pvzpudyAJ7S3negSQ8p00p2C7BrCtjM+12NyxxoMB/tLnbX06Fs8NqLvhU4P3kyHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BdoOkzrh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kZiBs4O1Ar0w1p0pXBleV+jWwtuOxNNNdtOiPhG6iZV3pTqqdqs3BdLDsf9yKgWrS4U+vjzFSypl+BNn3xOYtQXLQMq6rZYJd3l3LkgBV5eaIK1iepDyrGfOI+GZCl6uChtK0BOH2Ax7kLzWH4lAJlJpPfd5u+fiVfoKEoNYQRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgbFXDq3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BdoOkzrh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1057C2BD10;
-	Tue, 14 May 2024 11:44:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgbFXDq3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDC9C2BD10;
+	Tue, 14 May 2024 11:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687094;
-	bh=+askBIAI4WNWzoVIz1ehACZK7Xp6ADcUjKN5FfbULaE=;
+	s=korg; t=1715687096;
+	bh=HeCskSFgTROokE5//YHBF8tMC5UO5zsDt83xuSWOJ64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BdoOkzrhj1LX61Gzv6j0njG0UBqRBmJi21l/DrJFmKKIJh40xKSV8WFDc2Dq0eBpu
-	 RlQ/EvjYLW+EKxwJX/fkeEo/KWE67UllRi466FNZBlpWdLD33H2KAjmwSiW/9HYMde
-	 wFEVbVtvbM7GzUgTf6baE8MDJsIixLoGIaQpG5bI=
+	b=VgbFXDq3x5di3EP/KAVkNpj0KtWB3CkW2lu1wYun35HgQMzeH4hVePaIoe/2w7JqK
+	 zMffQmWo7r8J+IABknNy7tYbIgpEIzwI9uzkvP20Wu3epgz+eZQ3tLm4gPtL927mz+
+	 jhN1ASK/tkvIOZ2UOxasfxJgWsDUYOaBZWmxXDzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Shmidt <dimitrysh@google.com>,
-	Neil Armstrong <narmstrong@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chad Wagner <wagnerch42@gmail.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 61/84] ASoC: meson: axg-tdm-interface: Fix formatters in trigger"
-Date: Tue, 14 May 2024 12:20:12 +0200
-Message-ID: <20240514100953.981166471@linuxfoundation.org>
+Subject: [PATCH 5.4 32/84] clk: sunxi-ng: h6: Reparent CPUX during PLL CPUX rate change
+Date: Tue, 14 May 2024 12:19:43 +0200
+Message-ID: <20240514100952.903499494@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100951.686412426@linuxfoundation.org>
 References: <20240514100951.686412426@linuxfoundation.org>
@@ -53,76 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <narmstrong@baylibre.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit c26830b6c5c534d273ce007eb33d5a2d2ad4e969 ]
+[ Upstream commit 7e91ed763dc07437777bd012af7a2bd4493731ff ]
 
-This reverts commit bf5e4887eeddb48480568466536aa08ec7f179a5 because
-the following and required commit e138233e56e9829e65b6293887063a1a3ccb2d68
-causes the following system crash when using audio:
- BUG: sleeping function called from invalid context at kernel/locking/mutex.c:282
+While PLL CPUX clock rate change when CPU is running from it works in
+vast majority of cases, now and then it causes instability. This leads
+to system crashes and other undefined behaviour. After a lot of testing
+(30+ hours) while also doing a lot of frequency switches, we can't
+observe any instability issues anymore when doing reparenting to stable
+clock like 24 MHz oscillator.
 
-Fixes: bf5e4887eeddb4848056846 ("ASoC: meson: axg-tdm-interface: manage formatters in trigger")
-Reported-by: Dmitry Shmidt <dimitrysh@google.com>
-Signed-off-by: Neil Armstrong <narmstrong@baylibre.com>
-Acked-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://lore.kernel.org/r/20220421155725.2589089-1-narmstrong@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 524353ea480b ("clk: sunxi-ng: add support for the Allwinner H6 CCU")
+Reported-by: Chad Wagner <wagnerch42@gmail.com>
+Link: https://forum.libreelec.tv/thread/27295-orange-pi-3-lts-freezes/
+Tested-by: Chad Wagner <wagnerch42@gmail.com>
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+Link: https://lore.kernel.org/r/20231013181712.2128037-1-jernej.skrabec@gmail.com
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/axg-tdm-interface.c | 26 +++++---------------------
- 1 file changed, 5 insertions(+), 21 deletions(-)
+ drivers/clk/sunxi-ng/ccu-sun50i-h6.c |   19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/meson/axg-tdm-interface.c b/sound/soc/meson/axg-tdm-interface.c
-index dc2fe9e2baadd..34aff050caf25 100644
---- a/sound/soc/meson/axg-tdm-interface.c
-+++ b/sound/soc/meson/axg-tdm-interface.c
-@@ -351,29 +351,13 @@ static int axg_tdm_iface_hw_free(struct snd_pcm_substream *substream,
- 	return 0;
- }
- 
--static int axg_tdm_iface_trigger(struct snd_pcm_substream *substream,
--				 int cmd,
-+static int axg_tdm_iface_prepare(struct snd_pcm_substream *substream,
- 				 struct snd_soc_dai *dai)
- {
--	struct axg_tdm_stream *ts =
--		snd_soc_dai_get_dma_data(dai, substream);
--
--	switch (cmd) {
--	case SNDRV_PCM_TRIGGER_START:
--	case SNDRV_PCM_TRIGGER_RESUME:
--	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
--		axg_tdm_stream_start(ts);
--		break;
--	case SNDRV_PCM_TRIGGER_SUSPEND:
--	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
--	case SNDRV_PCM_TRIGGER_STOP:
--		axg_tdm_stream_stop(ts);
--		break;
--	default:
--		return -EINVAL;
--	}
-+	struct axg_tdm_stream *ts = snd_soc_dai_get_dma_data(dai, substream);
- 
--	return 0;
-+	/* Force all attached formatters to update */
-+	return axg_tdm_stream_reset(ts);
- }
- 
- static int axg_tdm_iface_remove_dai(struct snd_soc_dai *dai)
-@@ -413,8 +397,8 @@ static const struct snd_soc_dai_ops axg_tdm_iface_ops = {
- 	.set_fmt	= axg_tdm_iface_set_fmt,
- 	.startup	= axg_tdm_iface_startup,
- 	.hw_params	= axg_tdm_iface_hw_params,
-+	.prepare	= axg_tdm_iface_prepare,
- 	.hw_free	= axg_tdm_iface_hw_free,
--	.trigger	= axg_tdm_iface_trigger,
+--- a/drivers/clk/sunxi-ng/ccu-sun50i-h6.c
++++ b/drivers/clk/sunxi-ng/ccu-sun50i-h6.c
+@@ -1172,12 +1172,19 @@ static const u32 usb2_clk_regs[] = {
+ 	SUN50I_H6_USB3_CLK_REG,
  };
  
- /* TDM Backend DAIs */
--- 
-2.43.0
-
++static struct ccu_mux_nb sun50i_h6_cpu_nb = {
++	.common		= &cpux_clk.common,
++	.cm		= &cpux_clk.mux,
++	.delay_us       = 1,
++	.bypass_index   = 0, /* index of 24 MHz oscillator */
++};
++
+ static int sun50i_h6_ccu_probe(struct platform_device *pdev)
+ {
+ 	struct resource *res;
+ 	void __iomem *reg;
++	int i, ret;
+ 	u32 val;
+-	int i;
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	reg = devm_ioremap_resource(&pdev->dev, res);
+@@ -1231,7 +1238,15 @@ static int sun50i_h6_ccu_probe(struct pl
+ 	val |= BIT(24);
+ 	writel(val, reg + SUN50I_H6_HDMI_CEC_CLK_REG);
+ 
+-	return sunxi_ccu_probe(pdev->dev.of_node, reg, &sun50i_h6_ccu_desc);
++	ret = sunxi_ccu_probe(pdev->dev.of_node, reg, &sun50i_h6_ccu_desc);
++	if (ret)
++		return ret;
++
++	/* Reparent CPU during PLL CPUX rate changes */
++	ccu_mux_notifier_register(pll_cpux_clk.common.hw.clk,
++				  &sun50i_h6_cpu_nb);
++
++	return 0;
+ }
+ 
+ static const struct of_device_id sun50i_h6_ccu_ids[] = {
 
 
