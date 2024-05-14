@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EE62B9B3;
-	Tue, 14 May 2024 11:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747FC2943F;
+	Tue, 14 May 2024 11:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687152; cv=none; b=IxVPMZzxAAuwHaW8s0LRA250nZMQqTQ6lXZWDRP1QQRZPR0aXgc6obU++Qurq5h11Q1T4pHJRtzUDS5kZaZcOyejSYp7bfp2ninLG82dOXCNC8mlaoSEqmb+NsW8RD5sZREHgUQMLrV2vRNAvv35JsSoZVgJ/c5XOtupFnFR+Js=
+	t=1715687155; cv=none; b=oiP8hJu6AXAWFv0I0gw/QtK0KtEFbYqfvWIKy7sSvX+D/7K8LaRN3VZjcHZ9TE8VBMqJRFjrnfhQ8JJOdikrJn7Csz47y9x8/Kbj261Ci48tN16w4DfYAcony/3lwnNfwrIk3w6INpBPzgFgx2gJcfJDR9XEZD7d5ilpihjr9Tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687152; c=relaxed/simple;
-	bh=iIIo3YaWZMTsTbVT2kuSfTqFZC4Y7jSZqeUdUFqkYvc=;
+	s=arc-20240116; t=1715687155; c=relaxed/simple;
+	bh=TjGh8KjOJZ1tQQm4WTLNbpZkB1dnNl/xpULIU5ShoHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sjlu3xLYy8ipdej0Mh6/Q87m+BxYNN72/8NoOXnJA70SEWX4c42/S+j6JNYDJn6ONIJ+pZboDmenh6tdlpu19Gfu7vkz0g+RqAq5Nzqk9vvXClk6+Bv/eGZ0DBo5+kxr7OIvVdTn24cgg4AuXUgatowIUjhFWsKY0tR6b6dR1A4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nYU8lL1X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dzl3ZaA863EkI9eexpUXJy0X07xB58/vOuJDd4E/cxeWbKnDzjhzF0x+Ty+4XVwJHempp7HKXUeeFuN95OBBSzeqcod4Ba0M32G6aJKkWnj8ror4dXcyspQKRKHLLfKYYA1uxl868XwW/nblQPwoYY6O2SeuY8kizKh94Isx9ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1sddIk3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nYU8lL1X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12770C2BD10;
-	Tue, 14 May 2024 11:45:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1sddIk3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C5FC2BD10;
+	Tue, 14 May 2024 11:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687152;
-	bh=iIIo3YaWZMTsTbVT2kuSfTqFZC4Y7jSZqeUdUFqkYvc=;
+	s=korg; t=1715687155;
+	bh=TjGh8KjOJZ1tQQm4WTLNbpZkB1dnNl/xpULIU5ShoHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nYU8lL1X0zEwX5IEbsQZqAJmhzMv7rMkAWNcPGa+fTPJFKAz1/1iNcB5lh2kIFsit
-	 ghaMW6AmX3SnGgygp4KWSGrC4+itINgfMF07+0nvE208LA+/Jr++E/52mvj3f0FoND
-	 r2SYBrPJn6pFNZvnxGt3Dvq+mrTIKAEacdvRbpKs=
+	b=Z1sddIk318jAawyOO9CCfHGLrOGLAsMvRANU1Z5a+OANsfpZOXgUBC+M5y+9GTB+R
+	 VYkdZ37voLxv5sDD8Y5QSDHtGaj683YuQIgrVuE/THUKKX2sVOgfnGXHEkKQpukNFk
+	 A2QpB38yIXjnGUZSs9bTO6OzwkgEH77GeZCFl7Jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
+	Hulk Robot <hulkci@huawei.com>,
+	YueHaibing <yuehaibing@huawei.com>,
 	Matthias Brugger <matthias.bgg@gmail.com>,
 	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.4 82/84] pinctrl: mediatek: Fix some off by one bugs
-Date: Tue, 14 May 2024 12:20:33 +0200
-Message-ID: <20240514100954.768127546@linuxfoundation.org>
+Subject: [PATCH 5.4 83/84] pinctrl: mediatek: remove set but not used variable e
+Date: Tue, 14 May 2024 12:20:34 +0200
+Message-ID: <20240514100954.804790361@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100951.686412426@linuxfoundation.org>
 References: <20240514100951.686412426@linuxfoundation.org>
@@ -51,70 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@oracle.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-commit 3385ab72d995fc0b876818a36203bf2429445686 upstream.
+commit 86ecb7d6853c77711c14cb6600179196f179ee2d upstream.
 
-These comparisons should be >= instead of > to prevent accessing one
-element beyond the end of the hw->soc->pins[] array.
+drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c: In function mtk_hw_pin_field_lookup:
+drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c:70:39: warning:
+ variable e set but not used [-Wunused-but-set-variable]
 
-Fixes: 3de7deefce69 ("pinctrl: mediatek: Check gpio pin number and use binary search in mtk_hw_pin_field_lookup()")
-Fixes: 184d8e13f9b1 ("pinctrl: mediatek: Add support for pin configuration dump via debugfs.")
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-Link: https://lore.kernel.org/r/20200218055247.74s2xa7veqx2do34@kili.mountain
+Since commit 3de7deefce69 ("pinctrl: mediatek: Check gpio pin
+number and use binary search in mtk_hw_pin_field_lookup()"),
+it is not used any more, so remove it, also remove redundant
+assignment to variable c, it will be assigned a new value later
+before used.
+
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
 Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/r/20200218023625.14324-1-yuehaibing@huawei.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-paris.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/pinctrl/mediatek/pinctrl-paris.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
-@@ -610,7 +610,7 @@ static int mtk_gpio_get_direction(struct
- 	const struct mtk_pin_desc *desc;
- 	int value, err;
- 
--	if (gpio > hw->soc->npins)
-+	if (gpio >= hw->soc->npins)
- 		return -EINVAL;
- 
- 	desc = (const struct mtk_pin_desc *)&hw->soc->pins[gpio];
-@@ -628,7 +628,7 @@ static int mtk_gpio_get(struct gpio_chip
- 	const struct mtk_pin_desc *desc;
- 	int value, err;
- 
--	if (gpio > hw->soc->npins)
-+	if (gpio >= hw->soc->npins)
- 		return -EINVAL;
- 
- 	desc = (const struct mtk_pin_desc *)&hw->soc->pins[gpio];
-@@ -645,7 +645,7 @@ static void mtk_gpio_set(struct gpio_chi
- 	struct mtk_pinctrl *hw = gpiochip_get_data(chip);
- 	const struct mtk_pin_desc *desc;
- 
--	if (gpio > hw->soc->npins)
-+	if (gpio >= hw->soc->npins)
- 		return;
- 
- 	desc = (const struct mtk_pin_desc *)&hw->soc->pins[gpio];
-@@ -657,7 +657,7 @@ static int mtk_gpio_direction_input(stru
+--- a/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
+@@ -67,7 +67,7 @@ static int mtk_hw_pin_field_lookup(struc
+ 				   const struct mtk_pin_desc *desc,
+ 				   int field, struct mtk_pin_field *pfd)
  {
- 	struct mtk_pinctrl *hw = gpiochip_get_data(chip);
+-	const struct mtk_pin_field_calc *c, *e;
++	const struct mtk_pin_field_calc *c;
+ 	const struct mtk_pin_reg_calc *rc;
+ 	int start = 0, end, check;
+ 	bool found = false;
+@@ -82,8 +82,6 @@ static int mtk_hw_pin_field_lookup(struc
+ 	}
  
--	if (gpio > hw->soc->npins)
-+	if (gpio >= hw->soc->npins)
- 		return -EINVAL;
+ 	end = rc->nranges - 1;
+-	c = rc->range;
+-	e = c + rc->nranges;
  
- 	return pinctrl_gpio_direction_input(chip->base + gpio);
-@@ -668,7 +668,7 @@ static int mtk_gpio_direction_output(str
- {
- 	struct mtk_pinctrl *hw = gpiochip_get_data(chip);
- 
--	if (gpio > hw->soc->npins)
-+	if (gpio >= hw->soc->npins)
- 		return -EINVAL;
- 
- 	mtk_gpio_set(chip, gpio, value);
+ 	while (start <= end) {
+ 		check = (start + end) >> 1;
 
 
