@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB5C4205D;
-	Tue, 14 May 2024 10:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E434205D;
+	Tue, 14 May 2024 10:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683065; cv=none; b=qtwrNjELWHxuDRj/ZikhtsSaEjn2mBlQCCAbtRkHPtp5LQlU55tFDZrXkETv2HqT4gztGBA0GkgwVk7YsVrvRA2eB4ou944oOati+4PrDM90gdvgQgE7SYUTIo1RpNwdL2LGhImVy+i7DFNjvCSPdrhOjfVmFNEj5D39Kyh8T+0=
+	t=1715683069; cv=none; b=g0YPbUYee7IJLhfHVM2Q4UZMrqE3mqA7hT5FYJz0JLkwrf7KdRy9dnnFIFdHDRpYrBu6W08L67mhPNQ1rOpCF48TyoAIA8DgQnrudG0CUn3ll5pAnnTKwmErXuY+I2wbT2KNsz/LM/nDFE5yD44O9ON9awCOXMNysCjFB3CAwMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683065; c=relaxed/simple;
-	bh=q2rDFaJ1IRpdxIKV08Tj15KWEzs5Nyf8s73bXzhiG8A=;
+	s=arc-20240116; t=1715683069; c=relaxed/simple;
+	bh=6pwAItDthvPIXvKBD310uiOf/xEoNrXJb8dcrI4T5rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OrGH/BhIQbrRgQZTQwfGMamFwqnVjWrGwmZCEvj3kor5mjAVAKmk6Yi+b9XjaP3oToEzlLWD4lZllfZidGG0HzxLIkbH3bM1eOmlWC7B8t5oa2S05WtTjsjbJvr284/mw8eGbHQ3GH5ckyUAuk5DrjL3yrRT3Z2WCetcncPGro8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJSHcDXw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=peyhR6a3OFB91IRfpXf3g72U2hOxhMVelVnAbl8R+NLgVhRaYxIgWr0qAcA/KdIHsSxH9SGbbJH8d9wvsiDHgvICioJdkKBiezvnpNei3pdahumx8lXvwCNVF52x2edMjZXatWK53BhZz3OH/zw9KohDewb8AzV1n7gy+zkpTXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUmfOvjQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJSHcDXw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABF5C2BD10;
-	Tue, 14 May 2024 10:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUmfOvjQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6AE1C2BD10;
+	Tue, 14 May 2024 10:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683064;
-	bh=q2rDFaJ1IRpdxIKV08Tj15KWEzs5Nyf8s73bXzhiG8A=;
+	s=korg; t=1715683069;
+	bh=6pwAItDthvPIXvKBD310uiOf/xEoNrXJb8dcrI4T5rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kJSHcDXwBYdJ9cVToaNsWQ4SxF9QuYOOR6TEF+zDg2/Ch6eJy7bGlzE3VRUOIyRrN
-	 3iNqf4Jggdx4wNCnxDQ80PkFXRba53ZcAdjF1FIOuj5X6Rz2tl6o6x+EUh7YMqTfEy
-	 Qr3IoXgAlePFD6qGBGADPIwZZlnJmXjqbT3ZEYng=
+	b=pUmfOvjQsMN1+pDYTZAgMF0HvhntNkBpkw0c7jqDB9pTULirOOXpQYG7t7JBGCxPe
+	 j/lEF76d2O/6fnfD66fjW1n2q4WDL8tZ7wXrNvtxbJqmoq+1MShijuBjokC53CQMh4
+	 XwtX3F4X40Jc21geerFTa8ErdfPhL4Mno1yANpwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Yajun Deng <yajun.deng@linux.dev>,
-	Mike Rapoport <rppt@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 143/336] memblock tests: fix undefined reference to `early_pfn_to_nid
-Date: Tue, 14 May 2024 12:15:47 +0200
-Message-ID: <20240514101043.999156108@linuxfoundation.org>
+Subject: [PATCH 6.8 161/336] drm/amdgpu: add smu 14.0.1 discovery support
+Date: Tue, 14 May 2024 12:16:05 +0200
+Message-ID: <20240514101044.682156612@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,41 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Yang <richard.weiyang@gmail.com>
+From: Yifan Zhang <yifan1.zhang@amd.com>
 
-[ Upstream commit 7d8ed162e6a92268d4b2b84d364a931216102c8e ]
+[ Upstream commit 533eefb9be76c3b23d220ee18edfda8eb56cefff ]
 
-commit 6a9531c3a880 ("memblock: fix crash when reserved memory is not
-added to memory") introduce the usage of early_pfn_to_nid, which is not
-defined in memblock tests.
+This patch to add smu 14.0.1 support
 
-The original definition of early_pfn_to_nid is defined in mm.h, so let
-add this in the corresponding mm.h.
-
-Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
-CC: Yajun Deng <yajun.deng@linux.dev>
-CC: Mike Rapoport <rppt@kernel.org>
-Link: https://lore.kernel.org/r/20240402132701.29744-2-richard.weiyang@gmail.com
-Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/linux/mm.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/include/linux/mm.h b/tools/include/linux/mm.h
-index f3c82ab5b14cd..7d73da0980473 100644
---- a/tools/include/linux/mm.h
-+++ b/tools/include/linux/mm.h
-@@ -37,4 +37,9 @@ static inline void totalram_pages_add(long count)
- {
- }
- 
-+static inline int early_pfn_to_nid(unsigned long pfn)
-+{
-+	return 0;
-+}
-+
- #endif
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+index 4f9900779ef9e..ff28265838ec0 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+@@ -1867,6 +1867,7 @@ static int amdgpu_discovery_set_smu_ip_blocks(struct amdgpu_device *adev)
+ 		amdgpu_device_ip_block_add(adev, &smu_v13_0_ip_block);
+ 		break;
+ 	case IP_VERSION(14, 0, 0):
++	case IP_VERSION(14, 0, 1):
+ 		amdgpu_device_ip_block_add(adev, &smu_v14_0_ip_block);
+ 		break;
+ 	default:
 -- 
 2.43.0
 
