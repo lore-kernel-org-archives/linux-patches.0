@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FB213665B;
-	Tue, 14 May 2024 11:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9648A84D26;
+	Tue, 14 May 2024 11:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686981; cv=none; b=giMkgjg3wl8Cr3C5ucDZCl92mjkCQjiglbwXQ6ekdK9z41N5zo6vMGL2OIi+rQcnEvji9w5Mtx9iS4Gys4gSSG5JLLYvXiQZ/8NAVh4BcSenWAL9k9OuhLXd5xzEZynvT93SyGWu434c/2Bat5LHwhrjBgjYgf3nCZOK/00P610=
+	t=1715686984; cv=none; b=F1DC6E+YLhUKqmermAAS/FTwRP45z4x/XebWBuF0URKcxR9YMxJk5fECrJ/kNJjwZUKr6GA2wWC/H7aRup4MZum+Wt8gTrX3SRZu/FzqSk0YMy7saT+GoDD+v2S7FqApC0ufe4qR7GBaLh38dNDBTbRBpIrP6w9plPmMj5U6H6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686981; c=relaxed/simple;
-	bh=rFYjyFhmS8CvPDaiu6+cn0WKEO4hnItjSBzaMLb86xc=;
+	s=arc-20240116; t=1715686984; c=relaxed/simple;
+	bh=FqPqFeH7EaqtyE2X9pV0vQtaFBrjhR2NpFALS56h9VQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nsM9/fFm6mKd0RDliFkJFDQ8cSNnqL1NlIPwg6GjmbwpUft9CBFkwgR86SU7dT47Yl7fR4whtlc3rdXwfcMsTynU2yCFUVcL8nHDxbpP/HUXTcIf0lRSw3MU5dpGkul6+XrVQumKUIY7tPa1TYRCMTWp4gjFOhku7xL6Zlj0YsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axiYHqwc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nTyMbsZJctnxh2+NQTiz/51+2+91KNvIulWBUVeSpnGouRju+homlVK2Snc2e55n9LL0gIDDb5diOqink5BzotPcDVzc64Zn8bXlOB/tfedCgrMGd3Xyam5J2+w3LA/jp1qkXVkT4Qfy8ORG4WHdbZgs6NZTzH8y6kjccpKugzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r0w/x7AK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axiYHqwc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C4BC2BD10;
-	Tue, 14 May 2024 11:43:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r0w/x7AK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18ABC2BD10;
+	Tue, 14 May 2024 11:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686981;
-	bh=rFYjyFhmS8CvPDaiu6+cn0WKEO4hnItjSBzaMLb86xc=;
+	s=korg; t=1715686984;
+	bh=FqPqFeH7EaqtyE2X9pV0vQtaFBrjhR2NpFALS56h9VQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=axiYHqwcjwqCFAHw8MuEVVvYU9r04RIeNSYw241OcpiP3QlGvswa+h195JCFn2ZLk
-	 7Qy8NqfTFSApwS2SOGZIZRoVg+zIRGYPWLxoGW2skrYeN1PmEl9+jv/XupehfYAJsm
-	 oXnqRr5R3V+FsJHyzNKKammJeXIMBzS7KtpIzSVU=
+	b=r0w/x7AKqQb/GJ96PrAh4NdCLMwmKrxiQb70p1/Q6/8VrRlBPxL/b/o1nKj5HOT1O
+	 80+uVznRzWRx0liTyInGVKsF5hCZnQfpL39fkzNsXppwlKDWHFUBeQ66D5qaxd8zKH
+	 SCTC9h/fu2G44jQVm9inWjtUSDfKXM6DHQ8BUrVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Chapman <jchapman@katalix.com>,
-	David Bauer <mail@david-bauer.net>,
+	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
 	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 24/84] net l2tp: drop flow hash on forward
-Date: Tue, 14 May 2024 12:19:35 +0200
-Message-ID: <20240514100952.604946344@linuxfoundation.org>
+Subject: [PATCH 5.4 25/84] net: qede: use return from qede_parse_flow_attr() for flow_spec
+Date: Tue, 14 May 2024 12:19:36 +0200
+Message-ID: <20240514100952.642802152@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100951.686412426@linuxfoundation.org>
 References: <20240514100951.686412426@linuxfoundation.org>
@@ -47,53 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Bauer <mail@david-bauer.net>
+From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit 42f853b42899d9b445763b55c3c8adc72be0f0e1 ]
+[ Upstream commit 27b44414a34b108c5a37cd5b4894f606061d86e7 ]
 
-Drop the flow-hash of the skb when forwarding to the L2TP netdev.
+In qede_flow_spec_to_rule(), when calling
+qede_parse_flow_attr() then the return code
+was only used for a non-zero check, and then
+-EINVAL was returned.
 
-This avoids the L2TP qdisc from using the flow-hash from the outer
-packet, which is identical for every flow within the tunnel.
+qede_parse_flow_attr() can currently fail with:
+* -EINVAL
+* -EOPNOTSUPP
+* -EPROTONOSUPPORT
 
-This does not affect every platform but is specific for the ethernet
-driver. It depends on the platform including L4 information in the
-flow-hash.
+This patch changes the code to use the actual
+return code, not just return -EINVAL.
 
-One such example is the Mediatek Filogic MT798x family of networking
-processors.
+The blaimed commit introduced qede_flow_spec_to_rule(),
+and this call to qede_parse_flow_attr(), it looks
+like it just duplicated how it was already used.
 
-Fixes: d9e31d17ceba ("l2tp: Add L2TP ethernet pseudowire support")
-Acked-by: James Chapman <jchapman@katalix.com>
-Signed-off-by: David Bauer <mail@david-bauer.net>
+Only compile tested.
+
+Fixes: 37c5d3efd7f8 ("qede: use ethtool_rx_flow_rule() to remove duplicated parser code")
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240424171110.13701-1-mail@david-bauer.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_eth.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/qlogic/qede/qede_filter.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/l2tp/l2tp_eth.c b/net/l2tp/l2tp_eth.c
-index d3b520b9b2c9d..2c5853597aa90 100644
---- a/net/l2tp/l2tp_eth.c
-+++ b/net/l2tp/l2tp_eth.c
-@@ -149,6 +149,9 @@ static void l2tp_eth_dev_recv(struct l2tp_session *session, struct sk_buff *skb,
- 	/* checksums verified by L2TP */
- 	skb->ip_summed = CHECKSUM_NONE;
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_filter.c b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+index 5041994bf03fb..31223de0c766e 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_filter.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+@@ -2079,10 +2079,9 @@ static int qede_flow_spec_to_rule(struct qede_dev *edev,
+ 	if (IS_ERR(flow))
+ 		return PTR_ERR(flow);
  
-+	/* drop outer flow-hash */
-+	skb_clear_hash(skb);
-+
- 	skb_dst_drop(skb);
- 	nf_reset_ct(skb);
+-	if (qede_parse_flow_attr(edev, proto, flow->rule, t)) {
+-		err = -EINVAL;
++	err = qede_parse_flow_attr(edev, proto, flow->rule, t);
++	if (err)
+ 		goto err_out;
+-	}
  
+ 	/* Make sure location is valid and filter isn't already set */
+ 	err = qede_flow_spec_validate(edev, &flow->rule->action, t,
 -- 
 2.43.0
 
