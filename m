@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7421D54D;
-	Tue, 14 May 2024 11:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545A71D54D;
+	Tue, 14 May 2024 11:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686410; cv=none; b=KMeRwGmXQJNKX1X2Ra5Xg1r3+GkpMb8Gx7huOicC6H9/tiZ5mc1UlT/mOmL8J9SQBw9he/iW6JkcxYQc2+XDiDffq5/6ye5zZXbfiWq9dBwGs/w3sprOE/ziNG3JkLJMuIy4CBofUOpDs8PCl4Tw3Ktrd/YXUaPRnOpPoGiluiY=
+	t=1715686413; cv=none; b=Lrtq1dn/lf6pVIn7T1Jn9JszCpy0BtZTD36WI9CDsMdLRjvCiQkOMV8W4N9OJRTL19Us7yqOyokF5/jSAy4Lw4q6DKL2k6jpLz6EoAMVZ8aatLUViP8sZcS+de5mroVRQAqJ7gKKbUcIDTTUb6CyvC1gm3goLhTFg0ROLS5FOLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686410; c=relaxed/simple;
-	bh=yx5CiT6W9asF+YvOzQmpNh9aVnZakGwKIgB++bf7jmQ=;
+	s=arc-20240116; t=1715686413; c=relaxed/simple;
+	bh=k7zkh1svK3HRUhG5aaIRomOwxUzMRQc+tEpsmpM8eMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DRcAf22Y5kfIVWW0EqISzLlcYj5HtGaxRjoWFQmiPFFbpp9UFFOzW4c4sl2OF77JMIFlChJXe0RnwilfVf1Dy0ucXrbnnQr9096D11Qfz0UZAohsTo3ejxrCE7/0EPimnaML9E23xBRf7uGn03NJtmcLzYr4ooyr69PlpwD4Q/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNkwUHkD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p/uAA5V7j8JO1x3DF+jNNAyB3uJNSu67ma4VGCj8JMbjegQgLS5/abEksq1/PPD6CzMVzCBv+8GffV1G4Kt1+Byg8zIkoTlnnBQ5NMZ2WpclFNp9m6mZvrc4k02BB68QAuLlMJ9vwigTs1Jpw5LuOj/0GPu5n9akKzBUpz/Q6O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tackMvK5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNkwUHkD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA781C2BD10;
-	Tue, 14 May 2024 11:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tackMvK5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09DBC2BD10;
+	Tue, 14 May 2024 11:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686410;
-	bh=yx5CiT6W9asF+YvOzQmpNh9aVnZakGwKIgB++bf7jmQ=;
+	s=korg; t=1715686413;
+	bh=k7zkh1svK3HRUhG5aaIRomOwxUzMRQc+tEpsmpM8eMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SNkwUHkDWqinkEAa5UMiHfHgW/+tnDzbx3CbqF3Yzu4IX+spXIeRyvmDOvt0Clk0s
-	 dvrrNKCzRs/UyrZMibvFM95obM5HOl2ct6Zy5KjhEI7kw4Jvtujahn9l49EeCEcYVx
-	 Jrn8BcPOMiSCdxwd465cYzUBIuIp0Kp3/TtDuoEY=
+	b=tackMvK5wkASU143+NmUXVlkUM0MOWaM/yMPc1PE/3IHNgc+qb+y49Ws3krqW4h/L
+	 lEq07JkHI1gVgN0KFuiMQZCmefiPf31KN12sQGnQHEQBXVTKJ8JIhFf3cLaqnpEh8r
+	 9/I7mgKllw8ZpM5LjDI/t3JXx5YZvQVZvcKsHt6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 129/236] Drivers: hv: vmbus: Dont free ring buffers that couldnt be re-encrypted
-Date: Tue, 14 May 2024 12:18:11 +0200
-Message-ID: <20240514101025.268094442@linuxfoundation.org>
+Subject: [PATCH 6.1 130/236] iommu: mtk: fix module autoloading
+Date: Tue, 14 May 2024 12:18:12 +0200
+Message-ID: <20240514101025.304916808@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -53,47 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhklinux@outlook.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 
-[ Upstream commit 30d18df6567be09c1433e81993e35e3da573ac48 ]
+[ Upstream commit 7537e31df80cb58c27f3b6fef702534ea87a5957 ]
 
-In CoCo VMs it is possible for the untrusted host to cause
-set_memory_encrypted() or set_memory_decrypted() to fail such that an
-error is returned and the resulting memory is shared. Callers need to
-take care to handle these errors to avoid returning decrypted (shared)
-memory to the page allocator, which could lead to functional or security
-issues.
+Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
+based on the alias from of_device_id table.
 
-The VMBus ring buffer code could free decrypted/shared pages if
-set_memory_decrypted() fails. Check the decrypted field in the struct
-vmbus_gpadl for the ring buffers to decide whether to free the memory.
-
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Link: https://lore.kernel.org/r/20240311161558.1310-6-mhklinux@outlook.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20240311161558.1310-6-mhklinux@outlook.com>
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://lore.kernel.org/r/20240410164109.233308-1-krzk@kernel.org
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/channel.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iommu/mtk_iommu.c    | 1 +
+ drivers/iommu/mtk_iommu_v1.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/hv/channel.c b/drivers/hv/channel.c
-index bb5abdcda18f8..47e1bd8de9fcf 100644
---- a/drivers/hv/channel.c
-+++ b/drivers/hv/channel.c
-@@ -153,7 +153,9 @@ void vmbus_free_ring(struct vmbus_channel *channel)
- 	hv_ringbuffer_cleanup(&channel->inbound);
+diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+index 0ba2a63a9538a..576163f88a4a5 100644
+--- a/drivers/iommu/mtk_iommu.c
++++ b/drivers/iommu/mtk_iommu.c
+@@ -1570,6 +1570,7 @@ static const struct of_device_id mtk_iommu_of_ids[] = {
+ 	{ .compatible = "mediatek,mt8195-iommu-vpp",   .data = &mt8195_data_vpp},
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, mtk_iommu_of_ids);
  
- 	if (channel->ringbuffer_page) {
--		__free_pages(channel->ringbuffer_page,
-+		/* In a CoCo VM leak the memory if it didn't get re-encrypted */
-+		if (!channel->ringbuffer_gpadlhandle.decrypted)
-+			__free_pages(channel->ringbuffer_page,
- 			     get_order(channel->ringbuffer_pagecount
- 				       << PAGE_SHIFT));
- 		channel->ringbuffer_page = NULL;
+ static struct platform_driver mtk_iommu_driver = {
+ 	.probe	= mtk_iommu_probe,
+diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
+index a978220eb620e..5dd06bcb507f6 100644
+--- a/drivers/iommu/mtk_iommu_v1.c
++++ b/drivers/iommu/mtk_iommu_v1.c
+@@ -602,6 +602,7 @@ static const struct of_device_id mtk_iommu_v1_of_ids[] = {
+ 	{ .compatible = "mediatek,mt2701-m4u", },
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, mtk_iommu_v1_of_ids);
+ 
+ static const struct component_master_ops mtk_iommu_v1_com_ops = {
+ 	.bind		= mtk_iommu_v1_bind,
 -- 
 2.43.0
 
