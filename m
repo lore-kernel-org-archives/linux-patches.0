@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3EFF9D4;
-	Tue, 14 May 2024 11:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CFBF9D4;
+	Tue, 14 May 2024 11:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687867; cv=none; b=itDA8h1VvC2ieGWghas9rEKO0JjFo7reGSi8Ks/xnYem6VCSqMD1/N4gJVJ9eoAkdNdWxpnbAQqLXcsCxaLj6hlWBq1VcBlxMS6mmCBysf87bHn/bMhkUczBcMn4VBBleM/7DcPyi+lwKB+RduWkdabzD/1N42/SjA7JqrooJPk=
+	t=1715687870; cv=none; b=twOsOdYyQOGDw31LfaW6BxOCbFnVlMvEDJWTYoCLlyn4s+0m3Jv715oCgT5uuW2XjEkSFjWKQ/IhOzF2H1dc5mG5ETIBdkyhgi5W0ryiZoH9WShl8ag6jTJ/t7t/VKMw7htpS0OCC8mX4/rsQ3yx2euKOjIBl1qLBRFbUt6hYUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687867; c=relaxed/simple;
-	bh=I/UFu5bG6wW616Xkvu3q/McnHOx8p4znNIJVWczuwKE=;
+	s=arc-20240116; t=1715687870; c=relaxed/simple;
+	bh=iPDtvHJeh5if4d+/JEUYkWFTChPjfttHxYCP1h5B3Ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Og8AJTJCwIG+OQGBTKq5O73BUAMY4KxP2GckbTDl8Gh23VBLrxFst4GVJuONbiov/aAUhhqx50z9qEXJyf+AUAlV/HEDVojbEFhlJ3hgA03cH9aA0TRIFTBTFGrN16JmHLuglH/rVlYOPC4jXk0S10Oe3yfVf2kiWOdep3e2O9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moMe4wL8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rIOEprByfWSsh5M51U7VGaweKC5kkS5VPxp5nkVxxPsJWWHJdIq5dT6aWdSp49ee+Lt0XhvQzLCVB+c97Zi/qcU3U+95tIEMPZR5XzD5KnJmjv1AYALVeeWCGo1vZ247/VEDLDzwbXDKpVbaU9+xNpr7dywJeey0IexlMWX4HGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vj8ihD1L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moMe4wL8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263B8C2BD10;
-	Tue, 14 May 2024 11:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vj8ihD1L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD6EC2BD10;
+	Tue, 14 May 2024 11:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687867;
-	bh=I/UFu5bG6wW616Xkvu3q/McnHOx8p4znNIJVWczuwKE=;
+	s=korg; t=1715687870;
+	bh=iPDtvHJeh5if4d+/JEUYkWFTChPjfttHxYCP1h5B3Ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=moMe4wL8vJLgmjueHP542RGlnzyAZ5LPZrDHDUqaLAJgoE+1plSNqesfOixC1k2vS
-	 YajsAU9BxgTWp3pPjGgqdekFVPejJLUYI4ZblOQvgBXWNghDa2f7Q1jvpeYgBJgkNw
-	 9S6kPZvH8cLgRtiaQ1PJBBmzf3Cq7UHGTXx0fG08=
+	b=vj8ihD1LtqaDaNl7pu1zB6qs9Womv7lDHmAXNkrVBT5fiE/uNmMMVL1BVPizwgeCS
+	 XSbsfquO+LneotZ6RM7x1C0LPJECYDqXuztiCumOKYyOS9yEEEBFai/E6Z6NKGfm6G
+	 o2Y2B7/acdv8vD4CmLR4YrUzHbLGxAmNSF8tHW9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Simon Ser <contact@emersion.fr>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Gabe Teeger <gabe.teeger@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 132/168] drm/connector: Add \n to message about demoting connector force-probes
-Date: Tue, 14 May 2024 12:20:30 +0200
-Message-ID: <20240514101011.665874600@linuxfoundation.org>
+Subject: [PATCH 5.15 133/168] drm/amd/display: Atom Integrated System Info v2_2 for DCN35
+Date: Tue, 14 May 2024 12:20:31 +0200
+Message-ID: <20240514101011.703177011@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -53,36 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Gabe Teeger <gabe.teeger@amd.com>
 
-[ Upstream commit 6897204ea3df808d342c8e4613135728bc538bcd ]
+[ Upstream commit 9a35d205f466501dcfe5625ca313d944d0ac2d60 ]
 
-The debug print clearly lacks a \n at the end. Add it.
+New request from KMD/VBIOS in order to support new UMA carveout
+model. This fixes a null dereference from accessing
+Ctx->dc_bios->integrated_info while it was NULL.
 
-Fixes: 8f86c82aba8b ("drm/connector: demote connector force-probes for non-master clients")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Simon Ser <contact@emersion.fr>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240502153234.1.I2052f01c8d209d9ae9c300b87c6e4f60bd3cc99e@changeid
+DAL parses through the BIOS and extracts the necessary
+integrated_info but was missing a case for the new BIOS
+version 2.3.
+
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Gabe Teeger <gabe.teeger@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_connector.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
-index cfe163103cfd7..1140292820bb1 100644
---- a/drivers/gpu/drm/drm_connector.c
-+++ b/drivers/gpu/drm/drm_connector.c
-@@ -2460,7 +2460,7 @@ int drm_mode_getconnector(struct drm_device *dev, void *data,
- 						     dev->mode_config.max_width,
- 						     dev->mode_config.max_height);
- 		else
--			drm_dbg_kms(dev, "User-space requested a forced probe on [CONNECTOR:%d:%s] but is not the DRM master, demoting to read-only probe",
-+			drm_dbg_kms(dev, "User-space requested a forced probe on [CONNECTOR:%d:%s] but is not the DRM master, demoting to read-only probe\n",
- 				    connector->base.id, connector->name);
- 	}
- 
+diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+index 228f098e5d88f..6bc8c6bee411e 100644
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+@@ -2303,6 +2303,7 @@ static enum bp_result construct_integrated_info(
+ 				result = get_integrated_info_v2_1(bp, info);
+ 				break;
+ 			case 2:
++			case 3:
+ 				result = get_integrated_info_v2_2(bp, info);
+ 				break;
+ 			default:
 -- 
 2.43.0
 
