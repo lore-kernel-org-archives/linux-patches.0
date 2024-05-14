@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2817E13D277;
-	Tue, 14 May 2024 11:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E71213D28D;
+	Tue, 14 May 2024 11:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686824; cv=none; b=NIAosUC6pRWCquMyMgTeO+aeEVhCbecjsPVN8amtMncbHIm1MBe2zpSMerSlANC9PnEmcrDxZhiiji629hRl7/ofaz4wV/PONysRysNCNJevFC4em2NaYKfVGO07Nx2lwnZsGcUFgqQLyS/39pTQDyo+Ba7gpWFKUhCsZfApgow=
+	t=1715686827; cv=none; b=ToJWCHR7lTlCqzd5ghdXpa0ZtOp2BmmkGZg7n4Uk8VPFrbrZ+9qyeCHho/sTCsCwdjMKCDINiZUShtnsfi6iBtBe7ZVQo7iWCiqkInkLROm36DupQutfHpLjDEhtmZs6Sn2bFAbhxufcw80ynAUV0KFGi4TwOHKlyIciACQ5a2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686824; c=relaxed/simple;
-	bh=Sb8nnKnpB+BlFpDUNGQHWxFnVAitboSnMPts2G1hcKc=;
+	s=arc-20240116; t=1715686827; c=relaxed/simple;
+	bh=zgXrxs5jirDEVQ7V3Px2uaRtKyNSmg/PYy/SrTrmB9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=liwUlvVymwGZbm81IpL6+R44Nn0ebUy60hU03+8X+dJhi0g74aD/Q5ZysQPoI8rkfQBDKN7CvYWaq59bPIhMHR94zXMNowqoaN3mlcy2j3b8Zn4dg6CSqdikethQBKwUC6Ovqdo6jglZKg8kub7b1hTiVx2kH2Ex0yWg3OubIf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpWIX93W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MAdFNru87pS982QRDfAPwKx1QQlr9cFuXQ0yD4hWdlJKutpCtVy5HFH1q/S2KYu5AaW3X3CrUJrXYT1erUjy/NJj8Mz8iw/vd533ELTW59ODjbBCTgnAWh9MDIrc3USLhKhaDRFxsu5+kbuPRJ5GVFJJ1Cgn9/nAUqu6T33aVYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHhtTqOz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpWIX93W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B59C2BD10;
-	Tue, 14 May 2024 11:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHhtTqOz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF3EC2BD10;
+	Tue, 14 May 2024 11:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686824;
-	bh=Sb8nnKnpB+BlFpDUNGQHWxFnVAitboSnMPts2G1hcKc=;
+	s=korg; t=1715686826;
+	bh=zgXrxs5jirDEVQ7V3Px2uaRtKyNSmg/PYy/SrTrmB9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CpWIX93W5RAD9vxPP/0kugpsO/RE6AF0y4worJ3qi1WXjqmYL7nhqVaa8q0XDKV6F
-	 wshyZaOEdvX8p6MKJbp2IsKWPFYElvDlFNEf3DQFuUn5jXeBn3GT/IAMlnRgNhoRm/
-	 6HNBk7OqQOiwoS0277JWmT5ZBP4MD8681HxsMUEk=
+	b=ZHhtTqOzjhrbjy6Y+Bk6dbr8srvF/6QF9aD4MB5N1aSo1OW49kFbA6CPsKUJ0mhhf
+	 YIsBVZYlMRjQrq6beBO/sxR+VXQMuV4fEEs1On/u9B/W0PG+u0ar2HVkduwt0pCXI5
+	 XQkNGy2+/xcsdERjAZvfdGIs6pvm46iwytGsw39I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 17/63] ASoC: meson: axg-tdm-interface: manage formatters in trigger
-Date: Tue, 14 May 2024 12:19:38 +0200
-Message-ID: <20240514100948.665603800@linuxfoundation.org>
+Subject: [PATCH 4.19 35/63] scsi: target: Fix SELinux error when systemd-modules loads the target module
+Date: Tue, 14 May 2024 12:19:56 +0200
+Message-ID: <20240514100949.340518891@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100948.010148088@linuxfoundation.org>
 References: <20240514100948.010148088@linuxfoundation.org>
@@ -51,81 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit bf5e4887eeddb48480568466536aa08ec7f179a5 ]
+[ Upstream commit 97a54ef596c3fd24ec2b227ba8aaf2cf5415e779 ]
 
-So far, the formatters have been reset/enabled using the .prepare()
-callback. This was done in this callback because walking the formatters use
-a mutex so it could not be done in .trigger(), which is atomic by default.
+If the systemd-modules service loads the target module, the credentials of
+that userspace process will be used to validate the access to the target db
+directory.  SELinux will prevent it, reporting an error like the following:
 
-It turns out there is a problem on capture path of the AXG series.
-The FIFO may get out of sync with the TDM decoder if the IP are not enabled
-in a specific order. The FIFO must be enabled before the formatter starts
-producing data. IOW, we must deal with FE before the BE. The .prepare()
-callback is called on the BEs before the FE so it is not OK for the AXG.
+kernel: audit: type=1400 audit(1676301082.205:4): avc: denied  { read }
+for  pid=1020 comm="systemd-modules" name="target" dev="dm-3"
+ino=4657583 scontext=system_u:system_r:systemd_modules_load_t:s0
+tcontext=system_u:object_r:targetd_etc_rw_t:s0 tclass=dir permissive=0
 
-The .trigger() callback order can be configured, and it deals with the FE
-before the BEs by default. To solve our problem, we just need to start and
-stop the formatters from the .trigger() callback. It is OK do so now that
-the links have been made 'nonatomic' in the card driver.
+Fix the error by using the kernel credentials to access the db directory
 
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://lore.kernel.org/r/20211020114217.133153-3-jbrunet@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Link: https://lore.kernel.org/r/20240215143944.847184-2-mlombard@redhat.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/axg-tdm-interface.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ drivers/target/target_core_configfs.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/sound/soc/meson/axg-tdm-interface.c b/sound/soc/meson/axg-tdm-interface.c
-index 2a7ea41fc49e5..05d63cd7ac8ba 100644
---- a/sound/soc/meson/axg-tdm-interface.c
-+++ b/sound/soc/meson/axg-tdm-interface.c
-@@ -343,13 +343,29 @@ static int axg_tdm_iface_hw_free(struct snd_pcm_substream *substream,
- 	return 0;
- }
- 
--static int axg_tdm_iface_prepare(struct snd_pcm_substream *substream,
-+static int axg_tdm_iface_trigger(struct snd_pcm_substream *substream,
-+				 int cmd,
- 				 struct snd_soc_dai *dai)
+diff --git a/drivers/target/target_core_configfs.c b/drivers/target/target_core_configfs.c
+index f6b1549f41422..10fbfa7df46ab 100644
+--- a/drivers/target/target_core_configfs.c
++++ b/drivers/target/target_core_configfs.c
+@@ -3240,6 +3240,8 @@ static int __init target_core_init_configfs(void)
  {
--	struct axg_tdm_stream *ts = snd_soc_dai_get_dma_data(dai, substream);
-+	struct axg_tdm_stream *ts =
-+		snd_soc_dai_get_dma_data(dai, substream);
-+
-+	switch (cmd) {
-+	case SNDRV_PCM_TRIGGER_START:
-+	case SNDRV_PCM_TRIGGER_RESUME:
-+	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-+		axg_tdm_stream_start(ts);
-+		break;
-+	case SNDRV_PCM_TRIGGER_SUSPEND:
-+	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-+	case SNDRV_PCM_TRIGGER_STOP:
-+		axg_tdm_stream_stop(ts);
-+		break;
-+	default:
-+		return -EINVAL;
+ 	struct configfs_subsystem *subsys = &target_core_fabrics;
+ 	struct t10_alua_lu_gp *lu_gp;
++	struct cred *kern_cred;
++	const struct cred *old_cred;
+ 	int ret;
+ 
+ 	pr_debug("TARGET_CORE[0]: Loading Generic Kernel Storage"
+@@ -3316,11 +3318,21 @@ static int __init target_core_init_configfs(void)
+ 	if (ret < 0)
+ 		goto out;
+ 
++	/* We use the kernel credentials to access the target directory */
++	kern_cred = prepare_kernel_cred(&init_task);
++	if (!kern_cred) {
++		ret = -ENOMEM;
++		goto out;
 +	}
++	old_cred = override_creds(kern_cred);
+ 	target_init_dbroot();
++	revert_creds(old_cred);
++	put_cred(kern_cred);
  
--	/* Force all attached formatters to update */
--	return axg_tdm_stream_reset(ts);
-+	return 0;
- }
+ 	return 0;
  
- static int axg_tdm_iface_remove_dai(struct snd_soc_dai *dai)
-@@ -389,8 +405,8 @@ static const struct snd_soc_dai_ops axg_tdm_iface_ops = {
- 	.set_fmt	= axg_tdm_iface_set_fmt,
- 	.startup	= axg_tdm_iface_startup,
- 	.hw_params	= axg_tdm_iface_hw_params,
--	.prepare	= axg_tdm_iface_prepare,
- 	.hw_free	= axg_tdm_iface_hw_free,
-+	.trigger	= axg_tdm_iface_trigger,
- };
- 
- /* TDM Backend DAIs */
+ out:
++	target_xcopy_release_pt();
+ 	configfs_unregister_subsystem(subsys);
+ 	core_dev_release_virtual_lun0();
+ 	rd_module_exit();
 -- 
 2.43.0
 
