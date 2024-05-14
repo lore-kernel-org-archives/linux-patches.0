@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F19139D15;
-	Tue, 14 May 2024 11:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E0A60BB6;
+	Tue, 14 May 2024 11:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684623; cv=none; b=i7zajfW5F904BAF8u6XxaqsYjp8Z0Prd6JQDwHBEd0DnFcY+NMwF9OmWpTplEqL232Gw5SzBKgUGObJfVf3h3T6gWGOzDvzSKxLN4YJX7DiZQfVGuKbXpkOGQDrHSwB7XbQMcnwnrgJs3h3q3QX6ElI+LOdLNLCXrQcIUXp3/OU=
+	t=1715684631; cv=none; b=i8Eo1PMF8r+eVBUiJWiLmfGByyyBAJRCI6BFcNkmefYFpZtZJ/1phYLArrpT5sElhumHO+0YGSc9qM7qB688xMFDNVdhL2rLb8grJSAr7OJ//vgk32JCgJYK9i9zEcBY9BC/thLTHlswZ6okeuucC5G7cED8ttMn5dXLoxpgTA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684623; c=relaxed/simple;
-	bh=B2xlL3tkl4l7QJ8YW8gY4cyT4PDFo0hnsUo1BUWr+Y0=;
+	s=arc-20240116; t=1715684631; c=relaxed/simple;
+	bh=WG7qEfSYGqyJXSmsTyijx/vYweR4YuAGL/Bc9CwpNaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YSMwKWDFmEtu0zFc1+aIGTV6uHez42k5RvVRnz4nWv+06p3kmeqzHmKb+ahioox0uJlYFBofqcIs74gve5Q5jYQS3t7erOEPyRFaJJAF8SzULBv5H32Oh7YMH0VBy+uJzRs9Gvc+XhyxJQyNnuyMUjZzpYGSvMHTJcZRCWsrPRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O9j4RLtM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RYZS69rLQLDGZIWCkRP0rm1QbTnvmXv/QAZiJ8LIX1JqORl6PFByIqsu/mInUZJxqvXSLcWSExaMtH2kjhHbooMJEnKzj1iqJVWd2Oe1B05jAqOL3QRKxXwJpBNC+e5V0CCC0n0J88F7syeQzSqC7XPZQf1Q5Vp113LDvH/Zo9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQJhJMYA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O9j4RLtM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D45C2BD10;
-	Tue, 14 May 2024 11:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQJhJMYA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5299FC32782;
+	Tue, 14 May 2024 11:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684623;
-	bh=B2xlL3tkl4l7QJ8YW8gY4cyT4PDFo0hnsUo1BUWr+Y0=;
+	s=korg; t=1715684631;
+	bh=WG7qEfSYGqyJXSmsTyijx/vYweR4YuAGL/Bc9CwpNaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O9j4RLtMKGhqe6nvUeE4IewuAgr39g1k92YXY7Aet/BD71gSRVC4cMna/OzDS2wMV
-	 d+1cfaghhJ3o9VJlIqYK61p7AalaGQmPUrXN7NdQKNAoR9T7gzIGkmIFog2V+U/xhC
-	 rb3dS68SxnNciBCEpWvQiEUb6q2ZoZtXgXOVSX8U=
+	b=YQJhJMYAhB7aFbcuQDm+DOcNoZGBnMd1UY4kCdSmGVDbZdLuEQMpjeLqag87wG4jQ
+	 oBypPsIrQtajyOjZKjREjTqZ2g/M5Ub6KoqKN5TD0GHKiZrPQ+ywh9GN6snC4k2HcZ
+	 Bef30fr8imZcOJCKHs2c8Ar7oL/5cJM2lql6nXzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Zeng Heng <zengheng4@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 024/301] pinctrl: devicetree: fix refcount leak in pinctrl_dt_to_map()
-Date: Tue, 14 May 2024 12:14:55 +0200
-Message-ID: <20240514101033.158214285@linuxfoundation.org>
+Subject: [PATCH 6.6 059/301] net: qede: sanitize rc in qede_add_tc_flower_fltr()
+Date: Tue, 14 May 2024 12:15:30 +0200
+Message-ID: <20240514101034.471839474@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -46,56 +46,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit a0cedbcc8852d6c77b00634b81e41f17f29d9404 ]
+[ Upstream commit e25714466abd9d96901b15efddf82c60a38abd86 ]
 
-If we fail to allocate propname buffer, we need to drop the reference
-count we just took. Because the pinctrl_dt_free_maps() includes the
-droping operation, here we call it directly.
+Explicitly set 'rc' (return code), before jumping to the
+unlock and return path.
 
-Fixes: 91d5c5060ee2 ("pinctrl: devicetree: fix null pointer dereferencing in pinctrl_dt_to_map")
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Message-ID: <20240415105328.3651441-1-zengheng4@huawei.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+By not having any code depend on that 'rc' remains at
+it's initial value of -EINVAL, then we can re-use 'rc' for
+the return code of function calls in subsequent patches.
+
+Only compile tested.
+
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: fcee2065a178 ("net: qede: use return from qede_parse_flow_attr() for flower")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/devicetree.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/qlogic/qede/qede_filter.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pinctrl/devicetree.c b/drivers/pinctrl/devicetree.c
-index 6e0a40962f384..5ee746cb81f59 100644
---- a/drivers/pinctrl/devicetree.c
-+++ b/drivers/pinctrl/devicetree.c
-@@ -220,14 +220,16 @@ int pinctrl_dt_to_map(struct pinctrl *p, struct pinctrl_dev *pctldev)
- 	for (state = 0; ; state++) {
- 		/* Retrieve the pinctrl-* property */
- 		propname = kasprintf(GFP_KERNEL, "pinctrl-%d", state);
--		if (!propname)
--			return -ENOMEM;
-+		if (!propname) {
-+			ret = -ENOMEM;
-+			goto err;
-+		}
- 		prop = of_find_property(np, propname, &size);
- 		kfree(propname);
- 		if (!prop) {
- 			if (state == 0) {
--				of_node_put(np);
--				return -ENODEV;
-+				ret = -ENODEV;
-+				goto err;
- 			}
- 			break;
- 		}
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_filter.c b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+index a5ac21a0ee33f..8ecdfa36a6854 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_filter.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+@@ -1868,8 +1868,8 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
+ 			    struct flow_cls_offload *f)
+ {
+ 	struct qede_arfs_fltr_node *n;
+-	int min_hlen, rc = -EINVAL;
+ 	struct qede_arfs_tuple t;
++	int min_hlen, rc;
+ 
+ 	__qede_lock(edev);
+ 
+@@ -1879,8 +1879,10 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
+ 	}
+ 
+ 	/* parse flower attribute and prepare filter */
+-	if (qede_parse_flow_attr(edev, proto, f->rule, &t))
++	if (qede_parse_flow_attr(edev, proto, f->rule, &t)) {
++		rc = -EINVAL;
+ 		goto unlock;
++	}
+ 
+ 	/* Validate profile mode and number of filters */
+ 	if ((edev->arfs->filter_count && edev->arfs->mode != t.mode) ||
+@@ -1888,12 +1890,15 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
+ 		DP_NOTICE(edev,
+ 			  "Filter configuration invalidated, filter mode=0x%x, configured mode=0x%x, filter count=0x%x\n",
+ 			  t.mode, edev->arfs->mode, edev->arfs->filter_count);
++		rc = -EINVAL;
+ 		goto unlock;
+ 	}
+ 
+ 	/* parse tc actions and get the vf_id */
+-	if (qede_parse_actions(edev, &f->rule->action, f->common.extack))
++	if (qede_parse_actions(edev, &f->rule->action, f->common.extack)) {
++		rc = -EINVAL;
+ 		goto unlock;
++	}
+ 
+ 	if (qede_flow_find_fltr(edev, &t)) {
+ 		rc = -EEXIST;
 -- 
 2.43.0
 
