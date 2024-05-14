@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509CF12DDB8;
-	Tue, 14 May 2024 11:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC7212E1C9;
+	Tue, 14 May 2024 11:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686688; cv=none; b=QEnjgjVkNAvo2V/F+cfV5L5bqrZt9FDz6vbTud13IwkD4jplG18s7uPsU1yrqbfj2+mAYDrd637hOyffgNdwnJhefB4HjPqlXX9Y8h831RKsYjLPiUy3j/PaLechDXK6+SUoK93rcQN0nuy4+bYHXUPbQyKpWXQIQuV0EMPpk9I=
+	t=1715686691; cv=none; b=oXJOqvuWQpUALQFUuljtoTzKFCvq5hPJ5xP/ASLPdi7gqHZxeIkUBbwiTiqGzIwoya35CUFiFs9w3VbfRq0T3kA56RurGZx4oMzmIIDAYvNwIZ6dguFiougzBCnMdINONuZwuyqGHCY484dir19nrMv067Fo7argYD8IAMePop4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686688; c=relaxed/simple;
-	bh=Oz/5n6+rIJKqyMHQJ0Jop2Lyh89A8W8acVreE1bjOn0=;
+	s=arc-20240116; t=1715686691; c=relaxed/simple;
+	bh=Z4P2q9wc8hYhKjp5FEFdh8y2QvYV9OuVtWAW+h/0CtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=izHQMehSSmy5/y5sUZv60qN6+CAId2yVxMf2NfknOoVAyGGwYha0SPUFo9SfSsgk9xR1yjjfRtb6OmhxPw4KtnZpJn62/K4ArTYpvf3PkOvaqO2qZSxLF7CTfDbcrGvJCdHOuah3bk9H42vN4ptjbe1aE+r02EEfBNjpurXPqdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xAkTJkta; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I1S3+wix4FDRAN4TnUxYNiYc7nTxcyaWcb3YaD/W16lSM+ScPCfiifQlRc48hPejv1eLONvxXbRLakEa3XnaWdiIwhwJsrwUVrAFj9h2jZoyYqskhd9c0yjRGPAxOfQO+egOyWl2JiH1fZpoHAe3cQQ2cRs2M1eIU9cOn7bnbPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r94IWaHa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xAkTJkta"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC8BC2BD10;
-	Tue, 14 May 2024 11:38:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r94IWaHa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3632C2BD10;
+	Tue, 14 May 2024 11:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686688;
-	bh=Oz/5n6+rIJKqyMHQJ0Jop2Lyh89A8W8acVreE1bjOn0=;
+	s=korg; t=1715686691;
+	bh=Z4P2q9wc8hYhKjp5FEFdh8y2QvYV9OuVtWAW+h/0CtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xAkTJktanSEwA5idVCKLS58ioTo1fo8WpyVVmQF7c9UgoSxH20YVEPx/TbwLvws7S
-	 Qv827W9Tpqs71Gu46vHvZtKQNxigWKG/U0tH19+Zmm7gHIhM3G7ADuyl+DYMwSoGmv
-	 327HYZichJRd0hMGGCkC0NIe74QN3RlfkXUX5Ehs=
+	b=r94IWaHaI9RkjwAZrqbTOscu2r0ouF0nnM7cjxapVtYvj6YEJYqddTH6SZRx6iNbe
+	 9uRMnkZKb8aSCRO4Y+l2WsvLVYbIK9sapjaSOn3HfFWuhl1cUxFfJ+iqBVy4TOLsEK
+	 WSyzhcJJ1dAA6FzTS9EepLMAvw1wACv+ukCk4NjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lakshmi Yadlapati <lakshmiy@us.ibm.com>,
-	Eddie James <eajames@linux.ibm.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 225/236] hwmon: (pmbus/ucd9000) Increase delay from 250 to 500us
-Date: Tue, 14 May 2024 12:19:47 +0200
-Message-ID: <20240514101028.900092602@linuxfoundation.org>
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 226/236] mm: use memalloc_nofs_save() in page_cache_ra_order()
+Date: Tue, 14 May 2024 12:19:48 +0200
+Message-ID: <20240514101028.937553122@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -51,44 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lakshmi Yadlapati <lakshmiy@us.ibm.com>
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-commit 26e8383b116d0dbe74e28f86646563ab46d66d83 upstream.
+commit 30153e4466647a17eebfced13eede5cbe4290e69 upstream.
 
-Following the failure observed with a delay of 250us, experiments were
-conducted with various delays. It was found that a delay of 350us
-effectively mitigated the issue.
+See commit f2c817bed58d ("mm: use memalloc_nofs_save in readahead path"),
+ensure that page_cache_ra_order() do not attempt to reclaim file-backed
+pages too, or it leads to a deadlock, found issue when test ext4 large
+folio.
 
-To provide a more optimal solution while still allowing a margin for
-stability, the delay is being adjusted to 500us.
+ INFO: task DataXceiver for:7494 blocked for more than 120 seconds.
+ "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+ task:DataXceiver for state:D stack:0     pid:7494  ppid:1      flags:0x00000200
+ Call trace:
+  __switch_to+0x14c/0x240
+  __schedule+0x82c/0xdd0
+  schedule+0x58/0xf0
+  io_schedule+0x24/0xa0
+  __folio_lock+0x130/0x300
+  migrate_pages_batch+0x378/0x918
+  migrate_pages+0x350/0x700
+  compact_zone+0x63c/0xb38
+  compact_zone_order+0xc0/0x118
+  try_to_compact_pages+0xb0/0x280
+  __alloc_pages_direct_compact+0x98/0x248
+  __alloc_pages+0x510/0x1110
+  alloc_pages+0x9c/0x130
+  folio_alloc+0x20/0x78
+  filemap_alloc_folio+0x8c/0x1b0
+  page_cache_ra_order+0x174/0x308
+  ondemand_readahead+0x1c8/0x2b8
+  page_cache_async_ra+0x68/0xb8
+  filemap_readahead.isra.0+0x64/0xa8
+  filemap_get_pages+0x3fc/0x5b0
+  filemap_splice_read+0xf4/0x280
+  ext4_file_splice_read+0x2c/0x48 [ext4]
+  vfs_splice_read.part.0+0xa8/0x118
+  splice_direct_to_actor+0xbc/0x288
+  do_splice_direct+0x9c/0x108
+  do_sendfile+0x328/0x468
+  __arm64_sys_sendfile64+0x8c/0x148
+  invoke_syscall+0x4c/0x118
+  el0_svc_common.constprop.0+0xc8/0xf0
+  do_el0_svc+0x24/0x38
+  el0_svc+0x4c/0x1f8
+  el0t_64_sync_handler+0xc0/0xc8
+  el0t_64_sync+0x188/0x190
 
-Signed-off-by: Lakshmi Yadlapati <lakshmiy@us.ibm.com>
-Link: https://lore.kernel.org/r/20240507194603.1305750-1-lakshmiy@us.ibm.com
-Fixes: 8d655e6523764 ("hwmon: (ucd90320) Add minimum delay between bus accesses")
-Reviewed-by: Eddie James <eajames@linux.ibm.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lkml.kernel.org/r/20240426112938.124740-1-wangkefeng.wang@huawei.com
+Fixes: 793917d997df ("mm/readahead: Add large folio readahead")
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Zhang Yi <yi.zhang@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/ucd9000.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ mm/readahead.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/hwmon/pmbus/ucd9000.c
-+++ b/drivers/hwmon/pmbus/ucd9000.c
-@@ -80,11 +80,11 @@ struct ucd9000_debugfs_entry {
-  * It has been observed that the UCD90320 randomly fails register access when
-  * doing another access right on the back of a register write. To mitigate this
-  * make sure that there is a minimum delay between a write access and the
-- * following access. The 250us is based on experimental data. At a delay of
-- * 200us the issue seems to go away. Add a bit of extra margin to allow for
-+ * following access. The 500 is based on experimental data. At a delay of
-+ * 350us the issue seems to go away. Add a bit of extra margin to allow for
-  * system to system differences.
-  */
--#define UCD90320_WAIT_DELAY_US 250
-+#define UCD90320_WAIT_DELAY_US 500
+--- a/mm/readahead.c
++++ b/mm/readahead.c
+@@ -504,6 +504,7 @@ void page_cache_ra_order(struct readahea
+ 	pgoff_t index = readahead_index(ractl);
+ 	pgoff_t limit = (i_size_read(mapping->host) - 1) >> PAGE_SHIFT;
+ 	pgoff_t mark = index + ra->size - ra->async_size;
++	unsigned int nofs;
+ 	int err = 0;
+ 	gfp_t gfp = readahead_gfp_mask(mapping);
  
- static inline void ucd90320_wait(const struct ucd9000_data *data)
- {
+@@ -520,6 +521,8 @@ void page_cache_ra_order(struct readahea
+ 			new_order--;
+ 	}
+ 
++	/* See comment in page_cache_ra_unbounded() */
++	nofs = memalloc_nofs_save();
+ 	filemap_invalidate_lock_shared(mapping);
+ 	while (index <= limit) {
+ 		unsigned int order = new_order;
+@@ -548,6 +551,7 @@ void page_cache_ra_order(struct readahea
+ 
+ 	read_pages(ractl);
+ 	filemap_invalidate_unlock_shared(mapping);
++	memalloc_nofs_restore(nofs);
+ 
+ 	/*
+ 	 * If there were already pages in the page cache, then we may have
 
 
