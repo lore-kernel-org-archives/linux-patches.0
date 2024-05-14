@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54EB134CDC;
-	Tue, 14 May 2024 10:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7DF2374E;
+	Tue, 14 May 2024 10:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684339; cv=none; b=RyDBjB71caVw8NugzL22ESccbbZiOjtzN92drmWSwLsep0kcAcjZU8pFov6NYrK/44XLVfMcYNsm/V7d034eAaywWFW0YoKKRr1BF6bXsYcEgf//MmWJVwgGNZn2yg3JBRs0dn+h+B90Ce+UMuVYFvdWtNzfPVD4CzvK6r0Eu1A=
+	t=1715684345; cv=none; b=iSODtE44BFq5YLKhE9kbgu3UdEhZGqKj6+VTS01lRlOkbb85p1Aubp2rK1SG1WbS8SqDVstuLA3xTGbuKv64DXu7iBzWTHWReRbL+gSn+YMRGVdWjLcRUcdLQRWUOoScr4wsbvFuNtH2ay6TrMSwtZPCkMG7S/QfyemdjDt8rqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684339; c=relaxed/simple;
-	bh=uhEEL5EB6w4EfWhBtwVY6STj1V1DjdswwDuO+swWgnI=;
+	s=arc-20240116; t=1715684345; c=relaxed/simple;
+	bh=TeuAfgymTVBlLISmk4RR9LlHrSnIakFG9KCUYe//KhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oL7bc/picPtRTAZPfd5LjUIpqxShGA/+Aj75jN7pFbUKxnRwX2n6rCh6vio277RZUjVxawwN4mq/DSP6t+c0HV7+tik1kikqPWKD/CQ01ZAgpnrC9LQ5xWgCx75woVH7irfIdTgoJ95oTju6VGlKS8WvvczacDNowFp9LkN/e9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2ml0ErL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jUaNyQ7P6CsXPar3y9t5Rz5iZI2kfdcFAKXE9bx6xO1IJGnE7QM9tTTVSRawRsN0B3Pz8Lrv9cV4o8pxocNGDMCWVUthsWHO+4NE6Axrq1dfz7CN4HS1yIBTlJj0Jj6/nPuGQk+7NVXqeivPh2jz4l2eiDajdao+xUziX/m4VzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PEiT0NBP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2ml0ErL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B713AC2BD10;
-	Tue, 14 May 2024 10:58:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PEiT0NBP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95E9C2BD10;
+	Tue, 14 May 2024 10:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684339;
-	bh=uhEEL5EB6w4EfWhBtwVY6STj1V1DjdswwDuO+swWgnI=;
+	s=korg; t=1715684345;
+	bh=TeuAfgymTVBlLISmk4RR9LlHrSnIakFG9KCUYe//KhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U2ml0ErLhkDEVBpz0l9i+zU2pV3tjkr7ceVvLvP9ETuZiV+mcSfjrbWh8T0bcbCjd
-	 lFeua0jEU+lGdlSrEprsA5bfWfHqFJyvvXdzUJ0byThRea81T8ij+hbe/8x78KCl45
-	 d1ZhmTsJtQaAU5JH0QM6Iyha8IB3V7pePlqeiH7s=
+	b=PEiT0NBPJJ3i8e0MScWFalqpeQiAKfNEyNTkSBD6dtPCrQk5NI9lnPR7dazC73fXZ
+	 g6bbCN9lsw8h585ZG2VwdbMxtvcipACxjoFutrGPqnzhk1kF3VJ1fIm/eOzGo3OQ1p
+	 YJWWo+7dMUjSL52fxeKLtbH+hFXSkwL1YvQ2iidI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Thomas Bertschinger <tahbertschinger@gmail.com>,
+	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/301] mtd: limit OTP NVMEM cell parse to non-NAND devices
-Date: Tue, 14 May 2024 12:14:35 +0200
-Message-ID: <20240514101032.393231007@linuxfoundation.org>
+Subject: [PATCH 6.6 005/301] rust: module: place generated init_module() function in .init.text
+Date: Tue, 14 May 2024 12:14:36 +0200
+Message-ID: <20240514101032.432772913@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,60 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Thomas Bertschinger <tahbertschinger@gmail.com>
 
-[ Upstream commit d2d73a6dd17365c43e109263841f7c26da55cfb0 ]
+[ Upstream commit 1b6170ff7a203a5e8354f19b7839fe8b897a9c0d ]
 
-MTD OTP logic is very fragile on parsing NVMEM cell and can be
-problematic with some specific kind of devices.
+Currently Rust kernel modules have their init code placed in the `.text`
+section of the .ko file. I don't think this causes any real problems
+for Rust modules as long as all code called during initialization lives
+in `.text`.
 
-The problem was discovered by e87161321a40 ("mtd: rawnand: macronix:
-OTP access for MX30LFxG18AC") where OTP support was added to a NAND
-device. With the case of NAND devices, it does require a node where ECC
-info are declared and all the fixed partitions, and this cause the OTP
-codepath to parse this node as OTP NVMEM cells, making probe fail and
-the NAND device registration fail.
+However, if a Rust `init_module()` function (that lives in `.text`)
+calls a function marked with `__init` (in C) or
+`#[link_section = ".init.text"]` (in Rust), then a warning is
+generated by modpost because that function lives in `.init.text`.
+For example:
 
-MTD OTP parsing should have been limited to always using compatible to
-prevent this error by using node with compatible "otp-user" or
-"otp-factory".
+WARNING: modpost: fs/bcachefs/bcachefs: section mismatch in reference: init_module+0x6 (section: .text) -> _RNvXCsj7d3tFpT5JS_15bcachefs_moduleNtB2_8BcachefsNtCsjDtqRIL3JAG_6kernel6Module4init (section: .init.text)
 
-NVMEM across the years had various iteration on how cells could be
-declared in DT, in some old implementation, no_of_node should have been
-enabled but now add_legacy_fixed_of_cells should be used to disable
-NVMEM to parse child node as NVMEM cell.
+I ran into this while experimenting with converting the bcachefs kernel
+module from C to Rust. The module's `init()`, written in Rust, calls C
+functions like `bch2_vfs_init()` which are placed in `.init.text`.
 
-To fix this and limit any regression with other MTD that makes use of
-declaring OTP as direct child of the dev node, disable
-add_legacy_fixed_of_cells if we detect the MTD type is Nand.
+This patch places the macro-generated `init_module()` Rust function in
+the `.init.text` section. It also marks `init_module()` as unsafe--now
+it may not be called after module initialization completes because it
+may be freed already.
 
-With the following logic, the OTP NVMEM entry is correctly created with
-no cells and the MTD Nand is correctly probed and partitions are
-correctly exposed.
+Note that this is not enough on its own to actually get all the module
+initialization code in that section. The module author must still add
+the `#[link_section = ".init.text"]` attribute to the Rust `init()` in
+the `impl kernel::Module` block in order to then call `__init`
+functions. However, this patch enables module authors do so, when
+previously it would not be possible (without warnings).
 
-Fixes: 4b361cfa8624 ("mtd: core: add OTP nvmem provider support")
-Cc: <stable@vger.kernel.org> # v6.7+
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240412105030.1598-1-ansuelsmth@gmail.com
+Signed-off-by: Thomas Bertschinger <tahbertschinger@gmail.com>
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20240206153806.567055-1-tahbertschinger@gmail.com
+[ Reworded title to add prefix. ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Stable-dep-of: 7044dcff8301 ("rust: macros: fix soundness issue in `module!` macro")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdcore.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/macros/module.rs | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index fbf60d1364f0d..5c32208b17a1d 100644
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -899,7 +899,7 @@ static struct nvmem_device *mtd_otp_nvmem_register(struct mtd_info *mtd,
- 	config.name = compatible;
- 	config.id = NVMEM_DEVID_AUTO;
- 	config.owner = THIS_MODULE;
--	config.add_legacy_fixed_of_cells = true;
-+	config.add_legacy_fixed_of_cells = !mtd_type_is_nand(mtd);
- 	config.type = NVMEM_TYPE_OTP;
- 	config.root_only = true;
- 	config.ignore_wp = true;
+diff --git a/rust/macros/module.rs b/rust/macros/module.rs
+index d62d8710d77ab..27979e582e4b9 100644
+--- a/rust/macros/module.rs
++++ b/rust/macros/module.rs
+@@ -222,10 +222,15 @@ pub(crate) fn module(ts: TokenStream) -> TokenStream {
+             }};
+ 
+             // Loadable modules need to export the `{{init,cleanup}}_module` identifiers.
++            /// # Safety
++            ///
++            /// This function must not be called after module initialization, because it may be
++            /// freed after that completes.
+             #[cfg(MODULE)]
+             #[doc(hidden)]
+             #[no_mangle]
+-            pub extern \"C\" fn init_module() -> core::ffi::c_int {{
++            #[link_section = \".init.text\"]
++            pub unsafe extern \"C\" fn init_module() -> core::ffi::c_int {{
+                 __init()
+             }}
+ 
 -- 
 2.43.0
 
