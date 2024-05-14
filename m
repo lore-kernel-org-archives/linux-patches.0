@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A255055C0A;
-	Tue, 14 May 2024 10:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966EE55C0A;
+	Tue, 14 May 2024 10:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683976; cv=none; b=fN2IRjaaRNRHEYh3bysLKTZtIMDHUeoJ7iD9ilaZcGPvhBXMmatU8BInwO2hsEejQQytoDI5CCjfG0CDYf9kqNcmVanlmEm7fSnddus6sns/a4eCDrGZS8Ea28lNuaekHT3eipSn1xbqEgkUEg2r9QRq0xMnJaiEuoDhv+YIi8g=
+	t=1715683984; cv=none; b=FoMIovMGu39xYZY5JP+LPHx0SXwZzq2D04Jp52+lDTBqoU6WR7PmlMCUTShqqcaD4CvnUa7rNZfOpOQ0m7GXRp1xf8I5FkoXcbnv+n7861XIJ77+KFHQTf08M+oe2e4TDkDZtwZG7dGx/V6HkTLLQaxF+EKemIcM0f8uaea+Fxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683976; c=relaxed/simple;
-	bh=n08AJ/Em8oQCIWYKDD9749gYXdGQHQVvalHLaUnf90Q=;
+	s=arc-20240116; t=1715683984; c=relaxed/simple;
+	bh=Zc4cjp9WGu3/Sg8waXmDWh76jEx9gEfuffjX35HP6tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kP1FH1OnX6u0SAeohIA0lh2Y7uUo/wZ4LmcDEFq3zG3Nh1AYyGrN0BS0ocri+yzNiRFBXqn4V3LUl7ns57nlLzc/JtM+J1/s2ksbTBp1yweHtyxpgBOoc1aegcpjou0iwC+uaJ/YxwgXudt+xUtYsU6jw3szsKKweK8RrvpNoAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INg3PzbP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tqSSKEyRHKh6TDrqnBHk/dunhygqq7o3I4A6/DsqI9AYcybwDmzFc0UMh9v+G+jFQR2zEZMN/bq6Dv6SxdJ7TenU3c4NMi9VuFmYvOP875CB0gjIjQnxWiDOPjFnM+i8fMTx5qOSBiruzT5UviSPqREMzRKdBZ84XAob3P/Wf/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtEc6mah; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INg3PzbP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB833C2BD10;
-	Tue, 14 May 2024 10:52:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtEc6mah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036F7C2BD10;
+	Tue, 14 May 2024 10:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683976;
-	bh=n08AJ/Em8oQCIWYKDD9749gYXdGQHQVvalHLaUnf90Q=;
+	s=korg; t=1715683984;
+	bh=Zc4cjp9WGu3/Sg8waXmDWh76jEx9gEfuffjX35HP6tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=INg3PzbP6waCIwIKW/XX0+tGsG44baCKm/GMQx7lCXZRVSaLHYv8DQEVAh3nD0TE8
-	 BFx1xTuMoumK5p8DYgPbp9L+fJJI+Q1b0Rq11a/YpqvgidLS8IDoKJ5rT7HIzPTL9E
-	 1Th2MvQxCrimnVML0dMN+e71vok2vvA6ef+qKfwg=
+	b=RtEc6mahK6qUSTlrJLsFNCRpZ10SlCN/gyCilEr4BwuWaKkfAcXQ4P/6dnAD4wBX8
+	 6WpplzhaY04bswQSfQWtA5fA2dxcLzbZ3GdrOmIpf6Qzgg8Su8hyvrctkTnBML1kFD
+	 c+6LV3dWTdWn6WEsNz7EwcH3XgMbkB5f6c/ogX9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gnattu OC <gnattuoc@me.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Chris Wilson <chris.p.wilson@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Krzysztof Gibala <krzysztof.gibala@intel.com>
-Subject: [PATCH 6.8 303/336] drm/i915/gt: Automate CCS Mode setting during engine resets
-Date: Tue, 14 May 2024 12:18:27 +0200
-Message-ID: <20240514101050.057682705@linuxfoundation.org>
+	Jani Nikula <jani.nikula@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Karthikeyan Ramasubramanian <kramasub@chromium.org>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.8 304/336] drm/i915/bios: Fix parsing backlight BDB data
+Date: Tue, 14 May 2024 12:18:28 +0200
+Message-ID: <20240514101050.097705028@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -49,104 +46,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andi Shyti <andi.shyti@linux.intel.com>
+From: Karthikeyan Ramasubramanian <kramasub@chromium.org>
 
-commit 51c1b42a232f17743cd825be6790cb64735ff98f upstream.
+commit 43b26bdd2ee5cfca80939be910d5b23a50cd7f9d upstream.
 
-We missed setting the CCS mode during resume and engine resets.
-Create a workaround to be added in the engine's workaround list.
-This workaround sets the XEHP_CCS_MODE value at every reset.
+Starting BDB version 239, hdr_dpcd_refresh_timeout is introduced to
+backlight BDB data. Commit 700034566d68 ("drm/i915/bios: Define more BDB
+contents") updated the backlight BDB data accordingly. This broke the
+parsing of backlight BDB data in VBT for versions 236 - 238 (both
+inclusive) and hence the backlight controls are not responding on units
+with the concerned BDB version.
 
-The issue can be reproduced by running:
+backlight_control information has been present in backlight BDB data
+from at least BDB version 191 onwards, if not before. Hence this patch
+extracts the backlight_control information for BDB version 191 or newer.
+Tested on Chromebooks using Jasperlake SoC (reports bdb->version = 236).
+Tested on Chromebooks using Raptorlake SoC (reports bdb->version = 251).
 
-  $ clpeak --kernel-latency
+v2: removed checking the block size of the backlight BDB data
+    [vsyrjala: this is completely safe thanks to commit e163cfb4c96d
+     ("drm/i915/bios: Make copies of VBT data blocks")]
 
-Without resetting the CCS mode, we encounter a fence timeout:
-
-  Fence expiration time out i915-0000:03:00.0:clpeak[2387]:2!
-
-Fixes: 6db31251bb26 ("drm/i915/gt: Enable only one CCS for compute workload")
-Reported-by: Gnattu OC <gnattuoc@me.com>
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/10895
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: Chris Wilson <chris.p.wilson@linux.intel.com>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: <stable@vger.kernel.org> # v6.2+
-Tested-by: Gnattu OC <gnattuoc@me.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Tested-by: Krzysztof Gibala <krzysztof.gibala@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240426000723.229296-1-andi.shyti@linux.intel.com
-(cherry picked from commit 4cfca03f76413db115c3cc18f4370debb1b81b2b)
+Fixes: 700034566d68 ("drm/i915/bios: Define more BDB contents")
+Cc: stable@vger.kernel.org
+Cc: Jani Nikula <jani.nikula@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Signed-off-by: Karthikeyan Ramasubramanian <kramasub@chromium.org>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240221180622.v2.1.I0690aa3e96a83a43b3fc33f50395d334b2981826@changeid
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+(cherry picked from commit c286f6a973c66c0d993ecab9f7162c790e7064c8)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.c |    6 +++---
- drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.h |    2 +-
- drivers/gpu/drm/i915/gt/intel_workarounds.c |    4 +++-
- 3 files changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/i915/display/intel_bios.c     |   19 ++++---------------
+ drivers/gpu/drm/i915/display/intel_vbt_defs.h |    5 -----
+ 2 files changed, 4 insertions(+), 20 deletions(-)
 
---- a/drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.c
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.c
-@@ -8,14 +8,14 @@
- #include "intel_gt_ccs_mode.h"
- #include "intel_gt_regs.h"
+--- a/drivers/gpu/drm/i915/display/intel_bios.c
++++ b/drivers/gpu/drm/i915/display/intel_bios.c
+@@ -1042,22 +1042,11 @@ parse_lfp_backlight(struct drm_i915_priv
+ 	panel->vbt.backlight.type = INTEL_BACKLIGHT_DISPLAY_DDI;
+ 	panel->vbt.backlight.controller = 0;
+ 	if (i915->display.vbt.version >= 191) {
+-		size_t exp_size;
++		const struct lfp_backlight_control_method *method;
  
--void intel_gt_apply_ccs_mode(struct intel_gt *gt)
-+unsigned int intel_gt_apply_ccs_mode(struct intel_gt *gt)
- {
- 	int cslice;
- 	u32 mode = 0;
- 	int first_ccs = __ffs(CCS_MASK(gt));
- 
- 	if (!IS_DG2(gt->i915))
--		return;
-+		return 0;
- 
- 	/* Build the value for the fixed CCS load balancing */
- 	for (cslice = 0; cslice < I915_MAX_CCS; cslice++) {
-@@ -35,5 +35,5 @@ void intel_gt_apply_ccs_mode(struct inte
- 						     XEHP_CCS_MODE_CSLICE_MASK);
+-		if (i915->display.vbt.version >= 236)
+-			exp_size = sizeof(struct bdb_lfp_backlight_data);
+-		else if (i915->display.vbt.version >= 234)
+-			exp_size = EXP_BDB_LFP_BL_DATA_SIZE_REV_234;
+-		else
+-			exp_size = EXP_BDB_LFP_BL_DATA_SIZE_REV_191;
+-
+-		if (get_blocksize(backlight_data) >= exp_size) {
+-			const struct lfp_backlight_control_method *method;
+-
+-			method = &backlight_data->backlight_control[panel_type];
+-			panel->vbt.backlight.type = method->type;
+-			panel->vbt.backlight.controller = method->controller;
+-		}
++		method = &backlight_data->backlight_control[panel_type];
++		panel->vbt.backlight.type = method->type;
++		panel->vbt.backlight.controller = method->controller;
  	}
  
--	intel_uncore_write(gt->uncore, XEHP_CCS_MODE, mode);
-+	return mode;
- }
---- a/drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.h
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.h
-@@ -8,6 +8,6 @@
+ 	panel->vbt.backlight.pwm_freq_hz = entry->pwm_freq_hz;
+--- a/drivers/gpu/drm/i915/display/intel_vbt_defs.h
++++ b/drivers/gpu/drm/i915/display/intel_vbt_defs.h
+@@ -897,11 +897,6 @@ struct lfp_brightness_level {
+ 	u16 reserved;
+ } __packed;
  
- struct intel_gt;
- 
--void intel_gt_apply_ccs_mode(struct intel_gt *gt);
-+unsigned int intel_gt_apply_ccs_mode(struct intel_gt *gt);
- 
- #endif /* __INTEL_GT_CCS_MODE_H__ */
---- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
-+++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-@@ -2855,6 +2855,7 @@ add_render_compute_tuning_settings(struc
- static void ccs_engine_wa_mode(struct intel_engine_cs *engine, struct i915_wa_list *wal)
- {
- 	struct intel_gt *gt = engine->gt;
-+	u32 mode;
- 
- 	if (!IS_DG2(gt->i915))
- 		return;
-@@ -2871,7 +2872,8 @@ static void ccs_engine_wa_mode(struct in
- 	 * After having disabled automatic load balancing we need to
- 	 * assign all slices to a single CCS. We will call it CCS mode 1
- 	 */
--	intel_gt_apply_ccs_mode(gt);
-+	mode = intel_gt_apply_ccs_mode(gt);
-+	wa_masked_en(wal, XEHP_CCS_MODE, mode);
- }
- 
- /*
+-#define EXP_BDB_LFP_BL_DATA_SIZE_REV_191 \
+-	offsetof(struct bdb_lfp_backlight_data, brightness_level)
+-#define EXP_BDB_LFP_BL_DATA_SIZE_REV_234 \
+-	offsetof(struct bdb_lfp_backlight_data, brightness_precision_bits)
+-
+ struct bdb_lfp_backlight_data {
+ 	u8 entry_size;
+ 	struct lfp_backlight_data_entry data[16];
 
 
