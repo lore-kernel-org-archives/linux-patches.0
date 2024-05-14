@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E325C6D1A1;
-	Tue, 14 May 2024 11:13:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26966D1A1;
+	Tue, 14 May 2024 11:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685235; cv=none; b=YcYFH86Q8b51rSGNEA1gXnug7++YTE4v71DHkI/Vv6Yn1FUs9Erh91ZRjwkDhCmIa16gSOJB/jtXFnNUXQ/b9JFMPcZoNGCo8y9n7JFeU5OtZwyuN8rkCTs1oESGu3APmaQDiiLpFJU/N1x5wbJ6fCrKow8pYmkRM59mc9uJ/k8=
+	t=1715685239; cv=none; b=L5Q3EkQSjlHBzjCW4OUxAhwac/cVjwjttzYlZYSpZx3lPsA7SjlNKTStdsTtXiFAArcpB1tB88Lt8oHdkxWpAA1JKYT+Awu1F68vbQnaktbfrrmJbpmHU/lwhATVssA9DD0zQZQZMB23gvjfGMK7QvCCuoW4/bL++fM+TCcV80M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685235; c=relaxed/simple;
-	bh=hu+b8m8k09YP0v1+5RfhKamhyWegKKK1EcZTkQFFzKQ=;
+	s=arc-20240116; t=1715685239; c=relaxed/simple;
+	bh=FVOqczHbeTZdsNheUYaJvj2L/cfn4+1PXDqhHwgeo84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KqI5jf2XlYlPoNVgPNo9HwrxuD+ivYD1Yu+V9g6AYQufZzNmRERINdmU9p8E3Vty3TDAb1CZrswye5fcvsSBJVBElFM7ZoNbc3CLW/FD7V7Ufa5ascpQaJu6c/qYgj/1zxA3t6iZBZhuhxkk3Qd9Y0aWghGSatwNX/8XCwqtA0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+I3iDYJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oayd+TBAWoaI8Fy/l21xbvuXE2FVXeKphBqxWsmZXMOQvzBTcudcTaLAAhhrRv0OgpGiZzlBpMKnErXFwK/qRqaOJ0NGAz5FcYv9g61isKBVUJfu0AvY9mjaxBkRv2e0hE7CZL1kwvkAmzIc3dBkDjJoibZ9/HE/jcBTXqP6vWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8KaJoEK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+I3iDYJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4F4C2BD10;
-	Tue, 14 May 2024 11:13:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8KaJoEK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CF4CC2BD10;
+	Tue, 14 May 2024 11:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685234;
-	bh=hu+b8m8k09YP0v1+5RfhKamhyWegKKK1EcZTkQFFzKQ=;
+	s=korg; t=1715685239;
+	bh=FVOqczHbeTZdsNheUYaJvj2L/cfn4+1PXDqhHwgeo84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+I3iDYJOqrrcreqky8uWxq3/4V5T5OmfRHciKuEnHiU7U5fffXrJJz4V9I+GD86X
-	 wcTDedYxnRrPagCP4NLzTx41894rlFXwFsiiYXSv8kYv3SXLwZB1+htDvcueiUijcN
-	 ALH0Ceb1smqIsU2ijkKxpigugunUlVTgJ1EDsL4c=
+	b=m8KaJoEKIc1St4fYmQ1PGAE/aHn7VfGm3Ox/Aao9kT9xBDGgjsH/O4uwcTua/cId+
+	 KYscvkoQ1sJ5KSWtZvJrJvYJwAoKqrU84ZTvNbZks80ijYWFy7HBcBm8F4Y4UKFeg7
+	 LMVH4Bx4hX9FIsBexmVPs/YrhaoV1w9js051bilY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Smythies <dsmythies@telus.net>,
-	Len Brown <len.brown@intel.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 129/301] tools/power turbostat: Fix added raw MSR output
-Date: Tue, 14 May 2024 12:16:40 +0200
-Message-ID: <20240514101037.118542562@linuxfoundation.org>
+Subject: [PATCH 6.6 156/301] smb3: fix broken reconnect when password changing on the server by allowing password rotation
+Date: Tue, 14 May 2024 12:17:07 +0200
+Message-ID: <20240514101038.146778724@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,85 +51,209 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doug Smythies <dsmythies@telus.net>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit e5f4e68eed85fa8495d78cd966eecc2b27bb9e53 ]
+[ Upstream commit 35f834265e0dc78b003aa0d1af65cafb89666b76 ]
 
-When using --Summary mode, added MSRs in raw mode always
-print zeros. Print the actual register contents.
+There are various use cases that are becoming more common in which password
+changes are scheduled on a server(s) periodically but the clients connected
+to this server need to stay connected (even in the face of brief network
+reconnects) due to mounts which can not be easily unmounted and mounted at
+will, and servers that do password rotation do not always have the ability
+to tell the clients exactly when to the new password will be effective,
+so add support for an alt password ("password2=") on mount (and also
+remount) so that we can anticipate the upcoming change to the server
+without risking breaking existing mounts.
 
-Example, with patch:
+An alternative would have been to use the kernel keyring for this but the
+processes doing the reconnect do not have access to the keyring but do
+have access to the ses structure.
 
-note the added column:
---add msr0x64f,u32,package,raw,REASON
-
-Where:
-
-0x64F is MSR_CORE_PERF_LIMIT_REASONS
-
-Busy%   Bzy_MHz PkgTmp  PkgWatt CorWatt     REASON
-0.00    4800    35      1.42    0.76    0x00000000
-0.00    4801    34      1.42    0.76    0x00000000
-80.08   4531    66      108.17  107.52  0x08000000
-98.69   4530    66      133.21  132.54  0x08000000
-99.28   4505    66      128.26  127.60  0x0c000400
-99.65   4486    68      124.91  124.25  0x0c000400
-99.63   4483    68      124.90  124.25  0x0c000400
-79.34   4481    41      99.80   99.13   0x0c000000
-0.00    4801    41      1.40    0.73    0x0c000000
-
-Where, for the test processor (i5-10600K):
-
-PKG Limit #1: 125.000 Watts, 8.000000 sec
-MSR bit 26 = log; bit 10 = status
-
-PKG Limit #2: 136.000 Watts, 0.002441 sec
-MSR bit 27 = log; bit 11 = status
-
-Example, without patch:
-
-Busy%   Bzy_MHz PkgTmp  PkgWatt CorWatt     REASON
-0.01    4800    35      1.43    0.77    0x00000000
-0.00    4801    35      1.39    0.73    0x00000000
-83.49   4531    66      112.71  112.06  0x00000000
-98.69   4530    68      133.35  132.69  0x00000000
-99.31   4500    67      127.96  127.30  0x00000000
-99.63   4483    69      124.91  124.25  0x00000000
-99.61   4481    69      124.90  124.25  0x00000000
-99.61   4481    71      124.92  124.25  0x00000000
-59.35   4479    42      75.03   74.37   0x00000000
-0.00    4800    42      1.39    0.73    0x00000000
-0.00    4801    42      1.42    0.76    0x00000000
-
-c000000
-
-[lenb: simplified patch to apply only to package scope]
-
-Signed-off-by: Doug Smythies <dsmythies@telus.net>
-Signed-off-by: Len Brown <len.brown@intel.com>
+Reviewed-by: Bharath SM <bharathsm@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/smb/client/cifsglob.h   |  1 +
+ fs/smb/client/connect.c    |  8 ++++++++
+ fs/smb/client/fs_context.c | 21 +++++++++++++++++++++
+ fs/smb/client/fs_context.h |  2 ++
+ fs/smb/client/misc.c       |  1 +
+ fs/smb/client/smb2pdu.c    | 11 +++++++++++
+ 6 files changed, 44 insertions(+)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 785de89077de0..9602a4798f383 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -1811,9 +1811,10 @@ int sum_counters(struct thread_data *t, struct core_data *c, struct pkg_data *p)
- 	average.packages.rapl_dram_perf_status += p->rapl_dram_perf_status;
- 
- 	for (i = 0, mp = sys.pp; mp; i++, mp = mp->next) {
--		if (mp->format == FORMAT_RAW)
--			continue;
--		average.packages.counter[i] += p->counter[i];
-+		if ((mp->format == FORMAT_RAW) && (topo.num_packages == 0))
-+			average.packages.counter[i] = p->counter[i];
-+		else
-+			average.packages.counter[i] += p->counter[i];
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index 12a48e1d80c3f..b598c7ed497bb 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -1049,6 +1049,7 @@ struct cifs_ses {
+ 				   and after mount option parsing we fill it */
+ 	char *domainName;
+ 	char *password;
++	char *password2; /* When key rotation used, new password may be set before it expires */
+ 	char workstation_name[CIFS_MAX_WORKSTATION_LEN];
+ 	struct session_key auth_key;
+ 	struct ntlmssp_auth *ntlmssp; /* ciphertext, flags, server challenge */
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index c5705de7f9de2..cb3bed8364e07 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -2178,6 +2178,7 @@ cifs_set_cifscreds(struct smb3_fs_context *ctx, struct cifs_ses *ses)
  	}
- 	return 0;
+ 
+ 	++delim;
++	/* BB consider adding support for password2 (Key Rotation) for multiuser in future */
+ 	ctx->password = kstrndup(delim, len, GFP_KERNEL);
+ 	if (!ctx->password) {
+ 		cifs_dbg(FYI, "Unable to allocate %zd bytes for password\n",
+@@ -2201,6 +2202,7 @@ cifs_set_cifscreds(struct smb3_fs_context *ctx, struct cifs_ses *ses)
+ 			kfree(ctx->username);
+ 			ctx->username = NULL;
+ 			kfree_sensitive(ctx->password);
++			/* no need to free ctx->password2 since not allocated in this path */
+ 			ctx->password = NULL;
+ 			goto out_key_put;
+ 		}
+@@ -2312,6 +2314,12 @@ cifs_get_smb_ses(struct TCP_Server_Info *server, struct smb3_fs_context *ctx)
+ 		if (!ses->password)
+ 			goto get_ses_fail;
+ 	}
++	/* ctx->password freed at unmount */
++	if (ctx->password2) {
++		ses->password2 = kstrdup(ctx->password2, GFP_KERNEL);
++		if (!ses->password2)
++			goto get_ses_fail;
++	}
+ 	if (ctx->domainname) {
+ 		ses->domainName = kstrdup(ctx->domainname, GFP_KERNEL);
+ 		if (!ses->domainName)
+diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
+index 103421791bb5d..4d9e57be84dbc 100644
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -161,6 +161,7 @@ const struct fs_parameter_spec smb3_fs_parameters[] = {
+ 	fsparam_string("username", Opt_user),
+ 	fsparam_string("pass", Opt_pass),
+ 	fsparam_string("password", Opt_pass),
++	fsparam_string("password2", Opt_pass2),
+ 	fsparam_string("ip", Opt_ip),
+ 	fsparam_string("addr", Opt_ip),
+ 	fsparam_string("domain", Opt_domain),
+@@ -314,6 +315,7 @@ smb3_fs_context_dup(struct smb3_fs_context *new_ctx, struct smb3_fs_context *ctx
+ 	new_ctx->nodename = NULL;
+ 	new_ctx->username = NULL;
+ 	new_ctx->password = NULL;
++	new_ctx->password2 = NULL;
+ 	new_ctx->server_hostname = NULL;
+ 	new_ctx->domainname = NULL;
+ 	new_ctx->UNC = NULL;
+@@ -326,6 +328,7 @@ smb3_fs_context_dup(struct smb3_fs_context *new_ctx, struct smb3_fs_context *ctx
+ 	DUP_CTX_STR(prepath);
+ 	DUP_CTX_STR(username);
+ 	DUP_CTX_STR(password);
++	DUP_CTX_STR(password2);
+ 	DUP_CTX_STR(server_hostname);
+ 	DUP_CTX_STR(UNC);
+ 	DUP_CTX_STR(source);
+@@ -884,6 +887,8 @@ static int smb3_reconfigure(struct fs_context *fc)
+ 	else  {
+ 		kfree_sensitive(ses->password);
+ 		ses->password = kstrdup(ctx->password, GFP_KERNEL);
++		kfree_sensitive(ses->password2);
++		ses->password2 = kstrdup(ctx->password2, GFP_KERNEL);
+ 	}
+ 	STEAL_STRING(cifs_sb, ctx, domainname);
+ 	STEAL_STRING(cifs_sb, ctx, nodename);
+@@ -1283,6 +1288,18 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
+ 			goto cifs_parse_mount_err;
+ 		}
+ 		break;
++	case Opt_pass2:
++		kfree_sensitive(ctx->password2);
++		ctx->password2 = NULL;
++		if (strlen(param->string) == 0)
++			break;
++
++		ctx->password2 = kstrdup(param->string, GFP_KERNEL);
++		if (ctx->password2 == NULL) {
++			cifs_errorf(fc, "OOM when copying password2 string\n");
++			goto cifs_parse_mount_err;
++		}
++		break;
+ 	case Opt_ip:
+ 		if (strlen(param->string) == 0) {
+ 			ctx->got_ip = false;
+@@ -1582,6 +1599,8 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
+  cifs_parse_mount_err:
+ 	kfree_sensitive(ctx->password);
+ 	ctx->password = NULL;
++	kfree_sensitive(ctx->password2);
++	ctx->password2 = NULL;
+ 	return -EINVAL;
  }
+ 
+@@ -1684,6 +1703,8 @@ smb3_cleanup_fs_context_contents(struct smb3_fs_context *ctx)
+ 	ctx->username = NULL;
+ 	kfree_sensitive(ctx->password);
+ 	ctx->password = NULL;
++	kfree_sensitive(ctx->password2);
++	ctx->password2 = NULL;
+ 	kfree(ctx->server_hostname);
+ 	ctx->server_hostname = NULL;
+ 	kfree(ctx->UNC);
+diff --git a/fs/smb/client/fs_context.h b/fs/smb/client/fs_context.h
+index 4e409238fe8f7..d7c090dbe75db 100644
+--- a/fs/smb/client/fs_context.h
++++ b/fs/smb/client/fs_context.h
+@@ -137,6 +137,7 @@ enum cifs_param {
+ 	Opt_source,
+ 	Opt_user,
+ 	Opt_pass,
++	Opt_pass2,
+ 	Opt_ip,
+ 	Opt_domain,
+ 	Opt_srcaddr,
+@@ -170,6 +171,7 @@ struct smb3_fs_context {
+ 
+ 	char *username;
+ 	char *password;
++	char *password2;
+ 	char *domainname;
+ 	char *source;
+ 	char *server_hostname;
+diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
+index 0d13db80e67c9..d56959d02e36d 100644
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -101,6 +101,7 @@ sesInfoFree(struct cifs_ses *buf_to_free)
+ 	kfree(buf_to_free->serverDomain);
+ 	kfree(buf_to_free->serverNOS);
+ 	kfree_sensitive(buf_to_free->password);
++	kfree_sensitive(buf_to_free->password2);
+ 	kfree(buf_to_free->user_name);
+ 	kfree(buf_to_free->domainName);
+ 	kfree_sensitive(buf_to_free->auth_key.response);
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index 94bd4c6d2d682..70530108b9bb9 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -367,6 +367,17 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
+ 		}
+ 
+ 		rc = cifs_setup_session(0, ses, server, nls_codepage);
++		if ((rc == -EACCES) || (rc == -EKEYEXPIRED) || (rc == -EKEYREVOKED)) {
++			/*
++			 * Try alternate password for next reconnect (key rotation
++			 * could be enabled on the server e.g.) if an alternate
++			 * password is available and the current password is expired,
++			 * but do not swap on non pwd related errors like host down
++			 */
++			if (ses->password2)
++				swap(ses->password2, ses->password);
++		}
++
+ 		if ((rc == -EACCES) && !tcon->retry) {
+ 			mutex_unlock(&ses->session_mutex);
+ 			rc = -EHOSTDOWN;
 -- 
 2.43.0
 
