@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4904584D26;
-	Tue, 14 May 2024 11:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244F984D26;
+	Tue, 14 May 2024 11:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686258; cv=none; b=nOu3lMmr0z5Eq7cimnRAseaxQiyPZHq01I+fCfGKRgMCPG+z0HQ8zdQ//V1mpfyDKUqdcHUkwxyOgqYhMfQFgP2UbuDx2oeUyGxLgpJ/3j4Wtw3ULIyEpGpKiGaEs3C7/4OFbdw+kB+HKqmhouEiFx9efV0oeM2lgpmpDOXsyOg=
+	t=1715686261; cv=none; b=airTBwt5ToI+VraR0zbam2sk790AZI0tE8dQHuMlZ5a6BPPtBoztDGji/hDKUVSAlZU2RhGxdqvTulZdaslhJ2M8KCzDdd6szh8ZpjBfkfsXVJtFIAz7o+5y08888ntpdASr9sPVPQ8R+9jAan/TZwY2udBKzsJNvpMI6ypq2Lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686258; c=relaxed/simple;
-	bh=I9GivZ4WChiVYpakNbbb1yBnQ/hoyiQ0NMwOTmP5KTc=;
+	s=arc-20240116; t=1715686261; c=relaxed/simple;
+	bh=gpSQqpvcitq/fM619TmwN80S4aE4H68JYcGUii6DnaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=amRztkqXU8VKBWgnR9jYJe3UP/RmK06dgcayEq7oizgE7t9UBNW0+V9L0T/nYcX4nOggG2zdcwuWEcziS/KIYLO4EwFzfzPkh7t86ExjBXWFQ7cs6CHVG4BKHZZ/gU9aNL483d+GPYa56arV6cTdeeBIxrsiKMbviRzKyMJQ8bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgvJfTsD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SFnPvbIqKnAT6+BY/7iMcMWdOAmORSsbb9KW5o6viBHue6fi1XLvOAjSZRQjRcQA0GjiGLnhOXTQsv+7XyQzdKsSw6FEb3hP09e0HFNEjnMDWoCbcX0cygI9M7aOhi0ftzVn8YRk/k7YeLrj9DInY4GYSYlYSkXByS9/vUnCQ6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKBUMHFH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgvJfTsD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA4ABC2BD10;
-	Tue, 14 May 2024 11:30:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKBUMHFH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1F2C2BD10;
+	Tue, 14 May 2024 11:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686258;
-	bh=I9GivZ4WChiVYpakNbbb1yBnQ/hoyiQ0NMwOTmP5KTc=;
+	s=korg; t=1715686261;
+	bh=gpSQqpvcitq/fM619TmwN80S4aE4H68JYcGUii6DnaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AgvJfTsDfjz4wUN/2s1twwggc1fJLqJQh1pCaQCrjniyDgPAqFq/RJwd1kXJpLHT9
-	 2UGj10IgkIHE6feOsSfvVWbV0fympdbCjXhS241sODHxU0zc8xW+Q+CtWGN5nK9ecF
-	 aowqnqZx/tjq6nsbakIUTFyHM41FArRWv4Bc440o=
+	b=tKBUMHFHyXi6UG4WpTHeE5kSBW51BTGmRM2iK9RrQ7ggaLhOCSECajQYvix0++WUh
+	 nex5yNXzcU5ayiaUkNQHYbPOYIIo3+uxmm8XhyejwtJOkaXF5j+9CcPOSVntrpDyWy
+	 9qh2aVTw3g1xFXOaU3lMa+DOU2jPmrEoqnGgQ3kQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"John B. Wyatt IV" <jwyatt@redhat.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/236] cxgb4: Properly lock TX queue for the selftest.
-Date: Tue, 14 May 2024 12:17:16 +0200
-Message-ID: <20240514101023.180585883@linuxfoundation.org>
+Subject: [PATCH 6.1 075/236] net: dsa: mv88e6xxx: Fix number of databases for 88E6141 / 88E6341
+Date: Tue, 14 May 2024 12:17:17 +0200
+Message-ID: <20240514101023.218400261@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -46,66 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 9067eccdd7849dd120d5495dbd5a686fa6ed2c1a ]
+[ Upstream commit b9a61c20179fda7bdfe2c1210aa72451991ab81a ]
 
-The selftest for the driver sends a dummy packet and checks if the
-packet will be received properly as it should be. The regular TX path
-and the selftest can use the same network queue so locking is required
-and was missing in the selftest path. This was addressed in the commit
-cited below.
-Unfortunately locking the TX queue requires BH to be disabled which is
-not the case in selftest path which is invoked in process context.
-Lockdep should be complaining about this.
+The Topaz family (88E6141 and 88E6341) only support 256 Forwarding
+Information Tables.
 
-Use __netif_tx_lock_bh() for TX queue locking.
-
-Fixes: c650e04898072 ("cxgb4: Fix race between loopback and normal Tx path")
-Reported-by: "John B. Wyatt IV" <jwyatt@redhat.com>
-Closes: https://lore.kernel.org/all/Zic0ot5aGgR-V4Ks@thinkpad2021/
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20240429091147.YWAaal4v@linutronix.de
+Fixes: a75961d0ebfd ("net: dsa: mv88e6xxx: Add support for ethernet switch 88E6341")
+Fixes: 1558727a1c1b ("net: dsa: mv88e6xxx: Add support for ethernet switch 88E6141")
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20240429133832.9547-1-kabel@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/chelsio/cxgb4/sge.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/chelsio/cxgb4/sge.c b/drivers/net/ethernet/chelsio/cxgb4/sge.c
-index 46809e2d94ee0..4809d9eae6ca5 100644
---- a/drivers/net/ethernet/chelsio/cxgb4/sge.c
-+++ b/drivers/net/ethernet/chelsio/cxgb4/sge.c
-@@ -2684,12 +2684,12 @@ int cxgb4_selftest_lb_pkt(struct net_device *netdev)
- 	lb->loopback = 1;
- 
- 	q = &adap->sge.ethtxq[pi->first_qset];
--	__netif_tx_lock(q->txq, smp_processor_id());
-+	__netif_tx_lock_bh(q->txq);
- 
- 	reclaim_completed_tx(adap, &q->q, -1, true);
- 	credits = txq_avail(&q->q) - ndesc;
- 	if (unlikely(credits < 0)) {
--		__netif_tx_unlock(q->txq);
-+		__netif_tx_unlock_bh(q->txq);
- 		return -ENOMEM;
- 	}
- 
-@@ -2724,7 +2724,7 @@ int cxgb4_selftest_lb_pkt(struct net_device *netdev)
- 	init_completion(&lb->completion);
- 	txq_advance(&q->q, ndesc);
- 	cxgb4_ring_tx_db(adap, &q->q, ndesc);
--	__netif_tx_unlock(q->txq);
-+	__netif_tx_unlock_bh(q->txq);
- 
- 	/* wait for the pkt to return */
- 	ret = wait_for_completion_timeout(&lb->completion, 10 * HZ);
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index ba906dfab055c..517c50d11fbce 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -5677,7 +5677,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
+ 		.prod_num = MV88E6XXX_PORT_SWITCH_ID_PROD_6141,
+ 		.family = MV88E6XXX_FAMILY_6341,
+ 		.name = "Marvell 88E6141",
+-		.num_databases = 4096,
++		.num_databases = 256,
+ 		.num_macs = 2048,
+ 		.num_ports = 6,
+ 		.num_internal_phys = 5,
+@@ -6134,7 +6134,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
+ 		.prod_num = MV88E6XXX_PORT_SWITCH_ID_PROD_6341,
+ 		.family = MV88E6XXX_FAMILY_6341,
+ 		.name = "Marvell 88E6341",
+-		.num_databases = 4096,
++		.num_databases = 256,
+ 		.num_macs = 2048,
+ 		.num_internal_phys = 5,
+ 		.num_ports = 6,
 -- 
 2.43.0
 
