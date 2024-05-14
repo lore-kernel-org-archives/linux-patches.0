@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F011E495;
-	Tue, 14 May 2024 11:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6260C13AD15;
+	Tue, 14 May 2024 11:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684883; cv=none; b=Vxp2sWQOpIS4Ind7PrcUCmZ/mA7USIb+qOfF7kvSW78GZHZhS/F5lGggzjefSlS2RL7bpz3y3YXctiBia3hN+6mOtYV9NOlzvHSdhyDTxST0/P+8N0RaP2HCdKfcXcZ2QfOREYGF2YCxgsn1Lx4CsrcsPz/boR+Rksvkd9TX6H8=
+	t=1715684890; cv=none; b=ImkzYpG7OfPUWI7kWkGVldKDnuh8CUAsG54HnrgBnQz4XeyJbEd3fKJoRcYaC6i8bYWeeX5gEjfm5OY0i9LLjbFYyycsRGhaX+LzoHIl33WIww8ZLXdOAyMjGaFhkoaCsKukT19JB8WIeWlZZotwgritkiiX4+KPVUSWrg0KPcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684883; c=relaxed/simple;
-	bh=bVpf/bpO/CP2zs/m1ZfUXvozMN/+6apCv/ZieOAlcH4=;
+	s=arc-20240116; t=1715684890; c=relaxed/simple;
+	bh=M6XZKqnxmbzuZn3kxfM2tWz/DTzdrxn9f20RCVktonM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oFqCLdCozc4dpUu3bZvl02k+EFh5mYO+ZLB9KkfX33Q8jmgeYZ6Qds/TN/8TQyNgRrMm+Ks6AwdA1CR2vEQOoO3KopVTmfWtTeMEzZAFh8M6/UmBmVXreIDJZZJbdwN3TfH6LObrAQ3GEMf+fNPX03AkdD/iIJZSsb48Xxazs+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THZ+P5qK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P8eNQ9xSuNj9DbIs89djOZ5lqN+oVWUY2l+O4tLl+nFju5rHhLB7IiFP2d7zrT9KaBXlVASODwk5HCUYDi7mvqN5poNPoawBXQiIEzXnTpBpxk7gdlNuSebtWZKJenVpQ2Q7gA24oNrLi8TOxAd1pTW76WFSk3mbxK65FEjJPr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BuVAxJE+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THZ+P5qK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE83C2BD10;
-	Tue, 14 May 2024 11:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BuVAxJE+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733E2C2BD10;
+	Tue, 14 May 2024 11:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684882;
-	bh=bVpf/bpO/CP2zs/m1ZfUXvozMN/+6apCv/ZieOAlcH4=;
+	s=korg; t=1715684890;
+	bh=M6XZKqnxmbzuZn3kxfM2tWz/DTzdrxn9f20RCVktonM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=THZ+P5qKGj/taIzUa/jzbIJL3Gvk2J3NLPsfzo9LW4ra0W+bdTHeuHIW7URt38pu7
-	 kUbc8qc/CehXUCCijToPey8jLD4BSRX/cQeL9JoWus7xFU8sqFYBF2tfdfrjJ+nHiY
-	 Z361qEgGNjJu2SmZOBQ6RmW+wt0IzS/VbgshWFpo=
+	b=BuVAxJE+cbjztv+JH1tgpH1szv4pB0dFASzKvuRNbEwgYRnBgsESkN+eklY47QqMi
+	 NP1FOivuqHDUQHVAk2mTn/WqX6ctbr9w4C9oRl9xv0UJjsw96mWKJMf749iSRgM51y
+	 FTzPhzbTUjZXSFDqc+OOz9HWnKAgMydVn/l+UPJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Price <anprice@redhat.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Simon Horman <horms@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 103/301] gfs2: Fix invalid metadata access in punch_hole
-Date: Tue, 14 May 2024 12:16:14 +0200
-Message-ID: <20240514101036.139567280@linuxfoundation.org>
+Subject: [PATCH 6.6 104/301] wifi: mac80211: fix ieee80211_bss_*_flags kernel-doc
+Date: Tue, 14 May 2024 12:16:15 +0200
+Message-ID: <20240514101036.176908662@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,45 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Price <anprice@redhat.com>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
 
-[ Upstream commit c95346ac918c5badf51b9a7ac58a26d3bd5bb224 ]
+[ Upstream commit 774f8841f55d7ac4044c79812691649da203584a ]
 
-In punch_hole(), when the offset lies in the final block for a given
-height, there is no hole to punch, but the maximum size check fails to
-detect that.  Consequently, punch_hole() will try to punch a hole beyond
-the end of the metadata and fail.  Fix the maximum size check.
+Running kernel-doc on ieee80211_i.h flagged the following:
+net/mac80211/ieee80211_i.h:145: warning: expecting prototype for enum ieee80211_corrupt_data_flags. Prototype was for enum ieee80211_bss_corrupt_data_flags instead
+net/mac80211/ieee80211_i.h:162: warning: expecting prototype for enum ieee80211_valid_data_flags. Prototype was for enum ieee80211_bss_valid_data_flags instead
 
-Signed-off-by: Andrew Price <anprice@redhat.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fix these warnings.
+
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://msgid.link/20240314-kdoc-ieee80211_i-v1-1-72b91b55b257@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/bmap.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/mac80211/ieee80211_i.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
-index ef7017fb69512..2b578615607e4 100644
---- a/fs/gfs2/bmap.c
-+++ b/fs/gfs2/bmap.c
-@@ -1715,7 +1715,8 @@ static int punch_hole(struct gfs2_inode *ip, u64 offset, u64 length)
- 	struct buffer_head *dibh, *bh;
- 	struct gfs2_holder rd_gh;
- 	unsigned int bsize_shift = sdp->sd_sb.sb_bsize_shift;
--	u64 lblock = (offset + (1 << bsize_shift) - 1) >> bsize_shift;
-+	unsigned int bsize = 1 << bsize_shift;
-+	u64 lblock = (offset + bsize - 1) >> bsize_shift;
- 	__u16 start_list[GFS2_MAX_META_HEIGHT];
- 	__u16 __end_list[GFS2_MAX_META_HEIGHT], *end_list = NULL;
- 	unsigned int start_aligned, end_aligned;
-@@ -1726,7 +1727,7 @@ static int punch_hole(struct gfs2_inode *ip, u64 offset, u64 length)
- 	u64 prev_bnr = 0;
- 	__be64 *start, *end;
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index 07beb72ddd25a..fefaa9e902a2f 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -122,7 +122,7 @@ struct ieee80211_bss {
+ };
  
--	if (offset >= maxsize) {
-+	if (offset + bsize - 1 >= maxsize) {
- 		/*
- 		 * The starting point lies beyond the allocated metadata;
- 		 * there are no blocks to deallocate.
+ /**
+- * enum ieee80211_corrupt_data_flags - BSS data corruption flags
++ * enum ieee80211_bss_corrupt_data_flags - BSS data corruption flags
+  * @IEEE80211_BSS_CORRUPT_BEACON: last beacon frame received was corrupted
+  * @IEEE80211_BSS_CORRUPT_PROBE_RESP: last probe response received was corrupted
+  *
+@@ -135,7 +135,7 @@ enum ieee80211_bss_corrupt_data_flags {
+ };
+ 
+ /**
+- * enum ieee80211_valid_data_flags - BSS valid data flags
++ * enum ieee80211_bss_valid_data_flags - BSS valid data flags
+  * @IEEE80211_BSS_VALID_WMM: WMM/UAPSD data was gathered from non-corrupt IE
+  * @IEEE80211_BSS_VALID_RATES: Supported rates were gathered from non-corrupt IE
+  * @IEEE80211_BSS_VALID_ERP: ERP flag was gathered from non-corrupt IE
 -- 
 2.43.0
 
