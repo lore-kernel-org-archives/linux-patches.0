@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5C612C54A;
-	Tue, 14 May 2024 11:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B1683CD9;
+	Tue, 14 May 2024 11:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687288; cv=none; b=hD4tvYKiVNL7auNXyC+InMjAiIGRRBBM8e8XU0X2DeqUarqxq3xtxveET7rZ6YC+CJGpHZRmxJipmvud/ZO+P6wZmpTwOy7ajJO0jkfZUANhEFJkHpwsRBorRBG4ZUYyVnvIvTL/6q7PDxhN58bXTDnYTe9C020CEvKH3O80uyM=
+	t=1715687291; cv=none; b=rdXB9xr28GVegArVjLn9WwsVM5+p6MtMoytiQcBWIn1/b4xU6/9ilUGCQhWJlE4NKCWaTFZcNLv75rO7loWJRkuqPqlwv3/ipGrEnyZLc8O4K1UlF8LNPnlde+s/rFF6DLbN1IHRyAEXsBo2KeXO5X+7Q7xT3d/tAbSs39JM5as=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687288; c=relaxed/simple;
-	bh=wkh7XVJ+4wxZeLas6Gp+tPAt9z1bjFl1Oe8u9IsGE2M=;
+	s=arc-20240116; t=1715687291; c=relaxed/simple;
+	bh=fX7ao7X9RQb0ofw6jrUlScZRwl12BdQq6VVd299YjRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+99zOdDBadXJphjFlTrY34XSPZlfnIXxo4ZE12G+MN3Q533vwBStfTDvgehrO7yD4C4K8WXncG1ooAJpjTi8bMN7CJLEI2xPtxa5sp+Kjt40yi1WXqH571pc9Eii9N3gKcKh3dpWuyIHtM/IpxN3JZXZoQ3D8uO7fe8apbgTwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJdyuizu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mJ/JGjXquGO5eYuZ7RfraipqBxvxaFY6z1W/P48vtISttyh1fkbcTc+MR1osWAmKqX18QAXoqAUb55YRVbf1tlaqsw6bPb4cXFlulRK+vz4Fl6CabE/66nQIhhQ+ER3trCTg2LP6umS2hC55hz6iRgrQAUAPnV79miFSwvjFlvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2axUXW0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJdyuizu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2C3FC2BD10;
-	Tue, 14 May 2024 11:48:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2axUXW0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FCF9C2BD10;
+	Tue, 14 May 2024 11:48:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687288;
-	bh=wkh7XVJ+4wxZeLas6Gp+tPAt9z1bjFl1Oe8u9IsGE2M=;
+	s=korg; t=1715687291;
+	bh=fX7ao7X9RQb0ofw6jrUlScZRwl12BdQq6VVd299YjRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJdyuizuiFsfE+NBUEo8eX+zeOK0FxUZId0/ZWalOvZsz4NEZtASCA7/cVFELR5jW
-	 wA2ioSpqN7g/g6WXAe2uxOAszqPALLJg+s2kRLrALlI83Hh9hQxSSdRNVoelUh2RaT
-	 yIslgsrxNmULh71xYMsCn7yw8FQ9kl1w1TtbvjAg=
+	b=i2axUXW0usXtZu76rQgIgdkcIk+ULOKTkYfuR/apzl1veJWTCgnYi0uB6wGvtrcTy
+	 E4TlAd5hSQgC6xgnfwbrtp+mfvCKQDAS/REThYEUkuUpJelpJ388eJI0QGzr7587Ed
+	 lAAPcYzDeP7RXiwqxdSYMa+uB8c9sVxU8gXScl/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Andrew Price <anprice@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 044/111] scsi: lpfc: Update lpfc_ramp_down_queue_handler() logic
-Date: Tue, 14 May 2024 12:19:42 +0200
-Message-ID: <20240514100958.809000740@linuxfoundation.org>
+Subject: [PATCH 5.10 045/111] gfs2: Fix invalid metadata access in punch_hole
+Date: Tue, 14 May 2024 12:19:43 +0200
+Message-ID: <20240514100958.846734629@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -51,90 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Andrew Price <anprice@redhat.com>
 
-[ Upstream commit bb011631435c705cdeddca68d5c85fd40a4320f9 ]
+[ Upstream commit c95346ac918c5badf51b9a7ac58a26d3bd5bb224 ]
 
-Typically when an out of resource CQE status is detected, the
-lpfc_ramp_down_queue_handler() logic is called to help reduce I/O load by
-reducing an sdev's queue_depth.
+In punch_hole(), when the offset lies in the final block for a given
+height, there is no hole to punch, but the maximum size check fails to
+detect that.  Consequently, punch_hole() will try to punch a hole beyond
+the end of the metadata and fail.  Fix the maximum size check.
 
-However, the current lpfc_rampdown_queue_depth() logic does not help reduce
-queue_depth.  num_cmd_success is never updated and is always zero, which
-means new_queue_depth will always be set to sdev->queue_depth.  So,
-new_queue_depth = sdev->queue_depth - new_queue_depth always sets
-new_queue_depth to zero.  And, scsi_change_queue_depth(sdev, 0) is
-essentially a no-op.
-
-Change the lpfc_ramp_down_queue_handler() logic to set new_queue_depth
-equal to sdev->queue_depth subtracted from number of times num_rsrc_err was
-incremented.  If num_rsrc_err is >= sdev->queue_depth, then set
-new_queue_depth equal to 1.  Eventually, the frequency of Good_Status
-frames will signal SCSI upper layer to auto increase the queue_depth back
-to the driver default of 64 via scsi_handle_queue_ramp_up().
-
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20240305200503.57317-5-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Andrew Price <anprice@redhat.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc.h      |  1 -
- drivers/scsi/lpfc/lpfc_scsi.c | 13 ++++---------
- 2 files changed, 4 insertions(+), 10 deletions(-)
+ fs/gfs2/bmap.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc.h b/drivers/scsi/lpfc/lpfc.h
-index cf69f831a7253..8f1b5b0ee8cd8 100644
---- a/drivers/scsi/lpfc/lpfc.h
-+++ b/drivers/scsi/lpfc/lpfc.h
-@@ -1065,7 +1065,6 @@ struct lpfc_hba {
- 	unsigned long bit_flags;
- #define	FABRIC_COMANDS_BLOCKED	0
- 	atomic_t num_rsrc_err;
--	atomic_t num_cmd_success;
- 	unsigned long last_rsrc_error_time;
- 	unsigned long last_ramp_down_time;
- #ifdef CONFIG_SCSI_LPFC_DEBUG_FS
-diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
-index b4b87e5d8b291..2121534838747 100644
---- a/drivers/scsi/lpfc/lpfc_scsi.c
-+++ b/drivers/scsi/lpfc/lpfc_scsi.c
-@@ -246,11 +246,10 @@ lpfc_ramp_down_queue_handler(struct lpfc_hba *phba)
- 	struct Scsi_Host  *shost;
- 	struct scsi_device *sdev;
- 	unsigned long new_queue_depth;
--	unsigned long num_rsrc_err, num_cmd_success;
-+	unsigned long num_rsrc_err;
- 	int i;
+diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
+index eaee95d2ad143..3d60ad9982c87 100644
+--- a/fs/gfs2/bmap.c
++++ b/fs/gfs2/bmap.c
+@@ -1758,7 +1758,8 @@ static int punch_hole(struct gfs2_inode *ip, u64 offset, u64 length)
+ 	struct buffer_head *dibh, *bh;
+ 	struct gfs2_holder rd_gh;
+ 	unsigned int bsize_shift = sdp->sd_sb.sb_bsize_shift;
+-	u64 lblock = (offset + (1 << bsize_shift) - 1) >> bsize_shift;
++	unsigned int bsize = 1 << bsize_shift;
++	u64 lblock = (offset + bsize - 1) >> bsize_shift;
+ 	__u16 start_list[GFS2_MAX_META_HEIGHT];
+ 	__u16 __end_list[GFS2_MAX_META_HEIGHT], *end_list = NULL;
+ 	unsigned int start_aligned, end_aligned;
+@@ -1769,7 +1770,7 @@ static int punch_hole(struct gfs2_inode *ip, u64 offset, u64 length)
+ 	u64 prev_bnr = 0;
+ 	__be64 *start, *end;
  
- 	num_rsrc_err = atomic_read(&phba->num_rsrc_err);
--	num_cmd_success = atomic_read(&phba->num_cmd_success);
- 
- 	/*
- 	 * The error and success command counters are global per
-@@ -265,20 +264,16 @@ lpfc_ramp_down_queue_handler(struct lpfc_hba *phba)
- 		for (i = 0; i <= phba->max_vports && vports[i] != NULL; i++) {
- 			shost = lpfc_shost_from_vport(vports[i]);
- 			shost_for_each_device(sdev, shost) {
--				new_queue_depth =
--					sdev->queue_depth * num_rsrc_err /
--					(num_rsrc_err + num_cmd_success);
--				if (!new_queue_depth)
--					new_queue_depth = sdev->queue_depth - 1;
-+				if (num_rsrc_err >= sdev->queue_depth)
-+					new_queue_depth = 1;
- 				else
- 					new_queue_depth = sdev->queue_depth -
--								new_queue_depth;
-+						num_rsrc_err;
- 				scsi_change_queue_depth(sdev, new_queue_depth);
- 			}
- 		}
- 	lpfc_destroy_vport_work_array(phba, vports);
- 	atomic_set(&phba->num_rsrc_err, 0);
--	atomic_set(&phba->num_cmd_success, 0);
- }
- 
- /**
+-	if (offset >= maxsize) {
++	if (offset + bsize - 1 >= maxsize) {
+ 		/*
+ 		 * The starting point lies beyond the allocated meta-data;
+ 		 * there are no blocks do deallocate.
 -- 
 2.43.0
 
