@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F9947A6C;
-	Tue, 14 May 2024 11:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB47F47A6C;
+	Tue, 14 May 2024 11:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686602; cv=none; b=PuonhqmNo2vzJi+dnoC/BAFqWOpJEuiUqbvKtuoDnOtfefSEIjFm0pmh1PdJ3aIc/NzcFTGdQsnR7WD38YitofZ6MuRqIz10dpoduRwWg3XwWDBagq2c06yldY/DEbtDhE6epCsJek8Hva0YGQ2LD7/azvFAMWwU/kA15DshjEs=
+	t=1715686604; cv=none; b=ft/hCD/h58MG0yULUWGrfGwE7P55+zHcvTKvwyYvnY7g1Xu0WMqhdzcmHdHT5BEhwngvckZ514R1PFYuARsLPRVPytENCP8/itjEmAdX4r6oREJnnWOyr9O1lgNhpIU3TR/JHwkLEA7De+6TwNd0v9qn0gGlq1x/6O0zQml43H4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686602; c=relaxed/simple;
-	bh=ggQhrOxZoVZMuScWlFvigtLcT6FjG8Thli5Q9o6QoQI=;
+	s=arc-20240116; t=1715686604; c=relaxed/simple;
+	bh=r698EBSDwpPNrK2GvYKCdsGZhNcC5rxKUI3eMEm8I/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TvrwLIESSnlZ4P4zFd4moV+qApzNLiMj8hMB2L3Gxf5b2u8MbvArPVzFY+dOGij6r9PzAUbijVlA5ZvJshN6v55PGNPgCt2I/D6P5RAPe5PBVa73Xy4SwHLl8K2WHyp50rFBj2PkoHJrUbq1bPt9J1I8RkNFej7k02pLcZVsYqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKhjleFO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g+5lu5aHuJd6xnW7ZCEkMP3ohNIICOcMjSPa8BLBeogukw8DkuF4p0WF9uDFy/lyBkoMJMi8wKTRsqylSr9WxIYLbhET/O8gqjmOKVtLc3/LPBiHlMmzHgpV4DVUy50U4ynniYa9ueZpTTvvqPXhGGX0eGIV95N+TQfeZU5L/G0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wscdWwRG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKhjleFO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE25C2BD10;
-	Tue, 14 May 2024 11:36:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wscdWwRG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54656C2BD10;
+	Tue, 14 May 2024 11:36:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686601;
-	bh=ggQhrOxZoVZMuScWlFvigtLcT6FjG8Thli5Q9o6QoQI=;
+	s=korg; t=1715686604;
+	bh=r698EBSDwpPNrK2GvYKCdsGZhNcC5rxKUI3eMEm8I/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cKhjleFOxUO+vsKwB8P4NYCiyCyZ04dq4KtpWDynBsD45+Igkyk+FJ9gE6yJeavkQ
-	 NJnsE0MfRtCGxQ2QQVCOFd3q/1Bmt9EV8tqQ6ICCOtEp2urqO2DmXTqVkSOiqKo3ZI
-	 7llK8zMslrGKpwJVdBTMs+ehFJ0upo9joxVHT/MM=
+	b=wscdWwRGxP+zRYDuzbr2z6jyIcaRxMnm0RH7SjSBOEdN1ddU7DlIU330wZQ+7R4kt
+	 JV5UiDHl2g3PyM9/tUE8qMnhEBJUGSF6Kc6bJRvmjrJJwDubKjcI0EkkJaaTeJn7bt
+	 FZNHVgq0ZKue5kooeZveFGeSxwN70/N/XTLG0hDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Hoffmann <kraxel@redhat.com>,
-	David Laight <David.Laight@aculab.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.1 195/236] usb: ohci: Prevent missed ohci interrupts
-Date: Tue, 14 May 2024 12:19:17 +0200
-Message-ID: <20240514101027.770694934@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	xingwei lee <xrivendell7@gmail.com>,
+	Michael Grzeschik <m.grzeschik@pengutronix.de>,
+	Yue Sun <samsun1006219@gmail.com>
+Subject: [PATCH 6.1 196/236] USB: core: Fix access violation during port device removal
+Date: Tue, 14 May 2024 12:19:18 +0200
+Message-ID: <20240514101027.808444862@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -52,60 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit fe81f354841641c7f71163b84912b25c169ed8ec upstream.
+commit a4b46d450c49f32e9d4247b421e58083fde304ce upstream.
 
-Testing ohci functionality with qemu's pci-ohci emulation often results
-in ohci interface stalls, resulting in hung task timeouts.
+Testing with KASAN and syzkaller revealed a bug in port.c:disable_store():
+usb_hub_to_struct_hub() can return NULL if the hub that the port belongs to
+is concurrently removed, but the function does not check for this
+possibility before dereferencing the returned value.
 
-The problem is caused by lost interrupts between the emulation and the
-Linux kernel code. Additional interrupts raised while the ohci interrupt
-handler in Linux is running and before the handler clears the interrupt
-status are not handled. The fix for a similar problem in ehci suggests
-that the problem is likely caused by edge-triggered MSI interrupts. See
-commit 0b60557230ad ("usb: ehci: Prevent missed ehci interrupts with
-edge-triggered MSI") for details.
+It turns out that the first dereference is unnecessary, since hub->intfdev
+is the parent of the port device, so it can be changed easily.  Adding a
+check for hub == NULL prevents further problems.
 
-Ensure that the ohci interrupt code handles all pending interrupts before
-returning to solve the problem.
+The same bug exists in the disable_show() routine, and it can be fixed the
+same way.
 
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: David Laight <David.Laight@aculab.com>
-Cc: stable@vger.kernel.org
-Fixes: 306c54d0edb6 ("usb: hcd: Try MSI interrupts on PCI devices")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
-Link: https://lore.kernel.org/r/20240429154010.1507366-1-linux@roeck-us.net
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Reported-and-tested-by: Yue Sun <samsun1006219@gmail.com>
+Reported-by: xingwei lee <xrivendell7@gmail.com>
+Link: https://lore.kernel.org/linux-usb/CAEkJfYON+ry7xPx=AiLR9jzUNT+i_Va68ACajOC3HoacOfL1ig@mail.gmail.com/
+Fixes: f061f43d7418 ("usb: hub: port: add sysfs entry to switch port power")
+CC: Michael Grzeschik <m.grzeschik@pengutronix.de>
+CC: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/393aa580-15a5-44ca-ad3b-6462461cd313@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ohci-hcd.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/core/port.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/host/ohci-hcd.c
-+++ b/drivers/usb/host/ohci-hcd.c
-@@ -888,6 +888,7 @@ static irqreturn_t ohci_irq (struct usb_
- 	/* Check for an all 1's result which is a typical consequence
- 	 * of dead, unclocked, or unplugged (CardBus...) devices
- 	 */
-+again:
- 	if (ints == ~(u32)0) {
- 		ohci->rh_state = OHCI_RH_HALTED;
- 		ohci_dbg (ohci, "device removed!\n");
-@@ -982,6 +983,13 @@ static irqreturn_t ohci_irq (struct usb_
- 	}
- 	spin_unlock(&ohci->lock);
+--- a/drivers/usb/core/port.c
++++ b/drivers/usb/core/port.c
+@@ -23,13 +23,15 @@ static ssize_t disable_show(struct devic
+ 	struct usb_port *port_dev = to_usb_port(dev);
+ 	struct usb_device *hdev = to_usb_device(dev->parent->parent);
+ 	struct usb_hub *hub = usb_hub_to_struct_hub(hdev);
+-	struct usb_interface *intf = to_usb_interface(hub->intfdev);
++	struct usb_interface *intf = to_usb_interface(dev->parent);
+ 	int port1 = port_dev->portnum;
+ 	u16 portstatus, unused;
+ 	bool disabled;
+ 	int rc;
+ 	struct kernfs_node *kn;
  
-+	/* repeat until all enabled interrupts are handled */
-+	if (ohci->rh_state != OHCI_RH_HALTED) {
-+		ints = ohci_readl(ohci, &regs->intrstatus);
-+		if (ints && (ints & ohci_readl(ohci, &regs->intrenable)))
-+			goto again;
-+	}
-+
- 	return IRQ_HANDLED;
- }
++	if (!hub)
++		return -ENODEV;
+ 	hub_get(hub);
+ 	rc = usb_autopm_get_interface(intf);
+ 	if (rc < 0)
+@@ -73,12 +75,14 @@ static ssize_t disable_store(struct devi
+ 	struct usb_port *port_dev = to_usb_port(dev);
+ 	struct usb_device *hdev = to_usb_device(dev->parent->parent);
+ 	struct usb_hub *hub = usb_hub_to_struct_hub(hdev);
+-	struct usb_interface *intf = to_usb_interface(hub->intfdev);
++	struct usb_interface *intf = to_usb_interface(dev->parent);
+ 	int port1 = port_dev->portnum;
+ 	bool disabled;
+ 	int rc;
+ 	struct kernfs_node *kn;
  
++	if (!hub)
++		return -ENODEV;
+ 	rc = strtobool(buf, &disabled);
+ 	if (rc)
+ 		return rc;
 
 
