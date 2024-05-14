@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D83413D280;
-	Tue, 14 May 2024 11:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2817E13D277;
+	Tue, 14 May 2024 11:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686821; cv=none; b=g4aQvPRAa6u9rpmL8l4UVNugkIol4EoWGk/fJSW0gQyvOd5DRJyESFdkTQ98Lr/b7sTbL45CtdszWGrqdUDBnVhBIKq1PSoU0DOa5WZ683aoHwY8hVPnM26QK4hghjJ9dXJOoGLlQInxjfFPi5PgjMPnybw/T9eS7DERF/s5ppQ=
+	t=1715686824; cv=none; b=NIAosUC6pRWCquMyMgTeO+aeEVhCbecjsPVN8amtMncbHIm1MBe2zpSMerSlANC9PnEmcrDxZhiiji629hRl7/ofaz4wV/PONysRysNCNJevFC4em2NaYKfVGO07Nx2lwnZsGcUFgqQLyS/39pTQDyo+Ba7gpWFKUhCsZfApgow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686821; c=relaxed/simple;
-	bh=2TsGYFaSFUd8Z77u+f2AOGtXttV8K1MFsxvTdlF6yI8=;
+	s=arc-20240116; t=1715686824; c=relaxed/simple;
+	bh=Sb8nnKnpB+BlFpDUNGQHWxFnVAitboSnMPts2G1hcKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sD/7lzZ7ni53ODLbHhcGtuq9uQaEw5T/Ju8Wj+J4eBhEUzwzh2AiCiZ2LoxxzTAy0W2GaKEdOyWIEjKViwYxTW7Htn9qe4DbfpWtxyWi7aZ90ajRP8D6GUQekwXhXacnwDsx9ZElGEUT18SFC5UGuqr9Fp+zkeqycOlmA5/JQFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C1U328J8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=liwUlvVymwGZbm81IpL6+R44Nn0ebUy60hU03+8X+dJhi0g74aD/Q5ZysQPoI8rkfQBDKN7CvYWaq59bPIhMHR94zXMNowqoaN3mlcy2j3b8Zn4dg6CSqdikethQBKwUC6Ovqdo6jglZKg8kub7b1hTiVx2kH2Ex0yWg3OubIf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpWIX93W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C1U328J8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BF7C2BD10;
-	Tue, 14 May 2024 11:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpWIX93W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B59C2BD10;
+	Tue, 14 May 2024 11:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686821;
-	bh=2TsGYFaSFUd8Z77u+f2AOGtXttV8K1MFsxvTdlF6yI8=;
+	s=korg; t=1715686824;
+	bh=Sb8nnKnpB+BlFpDUNGQHWxFnVAitboSnMPts2G1hcKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C1U328J8VYHEPXfDCbEQU9MI1t5i1ijoVFILMHgXBRfXwTQ87MJZsVr0my7X82ZlZ
-	 K3Vpfe4kXnqjDVcq35AQkHpOi0/9UAjV9fghJs0KxXPmwlgoXhWa+nnFOYvX4z2cPK
-	 gnisu0oTJUy3TO3Xv50PitfIuiJ6QnwSPTVWkFP8=
+	b=CpWIX93W5RAD9vxPP/0kugpsO/RE6AF0y4worJ3qi1WXjqmYL7nhqVaa8q0XDKV6F
+	 wshyZaOEdvX8p6MKJbp2IsKWPFYElvDlFNEf3DQFuUn5jXeBn3GT/IAMlnRgNhoRm/
+	 6HNBk7OqQOiwoS0277JWmT5ZBP4MD8681HxsMUEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 34/63] btrfs: always clear PERTRANS metadata during commit
-Date: Tue, 14 May 2024 12:19:55 +0200
-Message-ID: <20240514100949.303957715@linuxfoundation.org>
+Subject: [PATCH 4.19 17/63] ASoC: meson: axg-tdm-interface: manage formatters in trigger
+Date: Tue, 14 May 2024 12:19:38 +0200
+Message-ID: <20240514100948.665603800@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100948.010148088@linuxfoundation.org>
 References: <20240514100948.010148088@linuxfoundation.org>
@@ -52,42 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 6e68de0bb0ed59e0554a0c15ede7308c47351e2d ]
+[ Upstream commit bf5e4887eeddb48480568466536aa08ec7f179a5 ]
 
-It is possible to clear a root's IN_TRANS tag from the radix tree, but
-not clear its PERTRANS, if there is some error in between. Eliminate
-that possibility by moving the free up to where we clear the tag.
+So far, the formatters have been reset/enabled using the .prepare()
+callback. This was done in this callback because walking the formatters use
+a mutex so it could not be done in .trigger(), which is atomic by default.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+It turns out there is a problem on capture path of the AXG series.
+The FIFO may get out of sync with the TDM decoder if the IP are not enabled
+in a specific order. The FIFO must be enabled before the formatter starts
+producing data. IOW, we must deal with FE before the BE. The .prepare()
+callback is called on the BEs before the FE so it is not OK for the AXG.
+
+The .trigger() callback order can be configured, and it deals with the FE
+before the BEs by default. To solve our problem, we just need to start and
+stop the formatters from the .trigger() callback. It is OK do so now that
+the links have been made 'nonatomic' in the card driver.
+
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://lore.kernel.org/r/20211020114217.133153-3-jbrunet@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/transaction.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/meson/axg-tdm-interface.c | 26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index a34c0436ebb1d..df9b209bf1b2d 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -1271,6 +1271,7 @@ static noinline int commit_fs_roots(struct btrfs_trans_handle *trans)
- 			radix_tree_tag_clear(&fs_info->fs_roots_radix,
- 					(unsigned long)root->root_key.objectid,
- 					BTRFS_ROOT_TRANS_TAG);
-+			btrfs_qgroup_free_meta_all_pertrans(root);
- 			spin_unlock(&fs_info->fs_roots_radix_lock);
+diff --git a/sound/soc/meson/axg-tdm-interface.c b/sound/soc/meson/axg-tdm-interface.c
+index 2a7ea41fc49e5..05d63cd7ac8ba 100644
+--- a/sound/soc/meson/axg-tdm-interface.c
++++ b/sound/soc/meson/axg-tdm-interface.c
+@@ -343,13 +343,29 @@ static int axg_tdm_iface_hw_free(struct snd_pcm_substream *substream,
+ 	return 0;
+ }
  
- 			btrfs_free_log(trans, root);
-@@ -1295,7 +1296,6 @@ static noinline int commit_fs_roots(struct btrfs_trans_handle *trans)
- 			if (ret2)
- 				return ret2;
- 			spin_lock(&fs_info->fs_roots_radix_lock);
--			btrfs_qgroup_free_meta_all_pertrans(root);
- 		}
- 	}
- 	spin_unlock(&fs_info->fs_roots_radix_lock);
+-static int axg_tdm_iface_prepare(struct snd_pcm_substream *substream,
++static int axg_tdm_iface_trigger(struct snd_pcm_substream *substream,
++				 int cmd,
+ 				 struct snd_soc_dai *dai)
+ {
+-	struct axg_tdm_stream *ts = snd_soc_dai_get_dma_data(dai, substream);
++	struct axg_tdm_stream *ts =
++		snd_soc_dai_get_dma_data(dai, substream);
++
++	switch (cmd) {
++	case SNDRV_PCM_TRIGGER_START:
++	case SNDRV_PCM_TRIGGER_RESUME:
++	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
++		axg_tdm_stream_start(ts);
++		break;
++	case SNDRV_PCM_TRIGGER_SUSPEND:
++	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
++	case SNDRV_PCM_TRIGGER_STOP:
++		axg_tdm_stream_stop(ts);
++		break;
++	default:
++		return -EINVAL;
++	}
+ 
+-	/* Force all attached formatters to update */
+-	return axg_tdm_stream_reset(ts);
++	return 0;
+ }
+ 
+ static int axg_tdm_iface_remove_dai(struct snd_soc_dai *dai)
+@@ -389,8 +405,8 @@ static const struct snd_soc_dai_ops axg_tdm_iface_ops = {
+ 	.set_fmt	= axg_tdm_iface_set_fmt,
+ 	.startup	= axg_tdm_iface_startup,
+ 	.hw_params	= axg_tdm_iface_hw_params,
+-	.prepare	= axg_tdm_iface_prepare,
+ 	.hw_free	= axg_tdm_iface_hw_free,
++	.trigger	= axg_tdm_iface_trigger,
+ };
+ 
+ /* TDM Backend DAIs */
 -- 
 2.43.0
 
