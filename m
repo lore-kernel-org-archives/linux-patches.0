@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3874D12EBCE;
-	Tue, 14 May 2024 11:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF23512EBCE;
+	Tue, 14 May 2024 11:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685753; cv=none; b=PQg9cmdzL36yDYTQTOzDhGcw0zyiFj6x/fiPnTBIuf5EfWKXMef7lNttwr2m9FrqB+A3qrmR24DNXQSD0+5/fD4U79hrpzHnEyM9fm7tda4wybqqVHRr8dfUcZl05cV7MRc6rT8JTMdJmxcrVrJaBw68MxwNQCsff2RnSXIcgDY=
+	t=1715685759; cv=none; b=BZ5cTRbmz4pjim+nz193gOPOljzZTKEu6UzxeGFBp655aMoUrhkKJmGml2w5u5COnxLQZ+e2mdPDeux5v3mvAn6POqix4PO0EotFe58YjL4dwZJEbaWewFTROFAB+teAi5SspUPeMLHOlWy3UW7KqZBPqssG7LICmHD6D2gFfus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685753; c=relaxed/simple;
-	bh=//pL/qtSaBcF9ay4inLVPdHImr1LKb/bwCdRLqOZwQw=;
+	s=arc-20240116; t=1715685759; c=relaxed/simple;
+	bh=/yeEAeqlbyVB1eUHSxGPL98HsnstS70DUxioVAarWFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ruvpSLiCh8sZ+s+8u39rRUaeL1a9gPLB9QY5fpLTv12hgR4uJxTbM/5TF4uUnQu5b/rulURNadvmDP3W1TRAf+KhtEgY+kbLXa6SYaDkfyO9/DxufewjkeqzLyQAe0aT1csD2mEz0yun10S9ZvyPjrxa3QIY2tji6c2NVs0jznE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLrntfLc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XLD4D8BMoon2ElQ+N05ptXerycFRg8XgvmxJnO9ixmVNz312VrxNUn/ntkNgD55A7e1jWPEDUF5+wzAdSVLkgWuEYw7Z5gXZanqyLVE5Md8aweHQLKgkbVNh43yfx5wKQ4GwW7ylLqXZjAH0X/BvClCNCv+K0fh00KVIJAgNt9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpQ1tpCN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLrntfLc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C61C2BD10;
-	Tue, 14 May 2024 11:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpQ1tpCN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF25C2BD10;
+	Tue, 14 May 2024 11:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685752;
-	bh=//pL/qtSaBcF9ay4inLVPdHImr1LKb/bwCdRLqOZwQw=;
+	s=korg; t=1715685758;
+	bh=/yeEAeqlbyVB1eUHSxGPL98HsnstS70DUxioVAarWFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gLrntfLc/6IYWZNgm9gN5sYmXh4zumX2wc83ldeKUSQNEVfBMMtaLdimVLY+8J7is
-	 cU95IeyOl/YSQIzXlvYrYb/K8RixXNCXyZJBa4KNosCoyAhoAf6P110kjnAUqjRSvA
-	 JoL1mKV75sqqDhr/CgS6j7UO3oav9T+pv9pqld6Y=
+	b=mpQ1tpCNpATY0FFhIKoLwWTedjwamrl0cI5skT1o/Xa9E21iUMitdeGdoTmz7uThh
+	 kQEKdRrYkhEytlBOuUpgAqJy0kSZFtkAGXDsGXLEaGO2YpBgjcaLHYcT8ceIQO2HtE
+	 zzJ55H4u8LlhsMZe4oOjbEMA2CenvajVS/LuMaGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Machek <pavel@denx.de>,
-	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 241/301] btrfs: add missing mutex_unlock in btrfs_relocate_sys_chunks()
-Date: Tue, 14 May 2024 12:18:32 +0200
-Message-ID: <20240514101041.353893163@linuxfoundation.org>
+Subject: [PATCH 6.6 242/301] btrfs: set correct ram_bytes when splitting ordered extent
+Date: Tue, 14 May 2024 12:18:33 +0200
+Message-ID: <20240514101041.391256783@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,35 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <dominique.martinet@atmark-techno.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 9af503d91298c3f2945e73703f0e00995be08c30 upstream.
+commit 63a6ce5a1a6261e4c70bad2b55c4e0de8da4762e upstream.
 
-The previous patch that replaced BUG_ON by error handling forgot to
-unlock the mutex in the error path.
+[BUG]
+When running generic/287, the following file extent items can be
+generated:
 
-Link: https://lore.kernel.org/all/Zh%2fHpAGFqa7YAFuM@duo.ucw.cz
-Reported-by: Pavel Machek <pavel@denx.de>
-Fixes: 7411055db5ce ("btrfs: handle chunk tree lookup error in btrfs_relocate_sys_chunks()")
-CC: stable@vger.kernel.org
-Reviewed-by: Pavel Machek <pavel@denx.de>
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+        item 16 key (258 EXTENT_DATA 2682880) itemoff 15305 itemsize 53
+                generation 9 type 1 (regular)
+                extent data disk byte 1378414592 nr 462848
+                extent data offset 0 nr 462848 ram 2097152
+                extent compression 0 (none)
+
+Note that file extent item is not a compressed one, but its ram_bytes is
+way larger than its disk_num_bytes.
+
+According to btrfs on-disk scheme, ram_bytes should match disk_num_bytes
+if it's not a compressed one.
+
+[CAUSE]
+Since commit b73a6fd1b1ef ("btrfs: split partial dio bios before
+submit"), for partial dio writes, we would split the ordered extent.
+
+However the function btrfs_split_ordered_extent() doesn't update the
+ram_bytes even it has already shrunk the disk_num_bytes.
+
+Originally the function btrfs_split_ordered_extent() is only introduced
+for zoned devices in commit d22002fd37bd ("btrfs: zoned: split ordered
+extent when bio is sent"), but later commit b73a6fd1b1ef ("btrfs: split
+partial dio bios before submit") makes non-zoned btrfs affected.
+
+Thankfully for un-compressed file extent, we do not really utilize the
+ram_bytes member, thus it won't cause any real problem.
+
+[FIX]
+Also update btrfs_ordered_extent::ram_bytes inside
+btrfs_split_ordered_extent().
+
+Fixes: d22002fd37bd ("btrfs: zoned: split ordered extent when bio is sent")
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |    1 +
+ fs/btrfs/ordered-data.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -3368,6 +3368,7 @@ again:
- 			 * alignment and size).
- 			 */
- 			ret = -EUCLEAN;
-+			mutex_unlock(&fs_info->reclaim_bgs_lock);
- 			goto error;
- 		}
+--- a/fs/btrfs/ordered-data.c
++++ b/fs/btrfs/ordered-data.c
+@@ -1202,6 +1202,7 @@ struct btrfs_ordered_extent *btrfs_split
+ 	ordered->disk_bytenr += len;
+ 	ordered->num_bytes -= len;
+ 	ordered->disk_num_bytes -= len;
++	ordered->ram_bytes -= len;
  
+ 	if (test_bit(BTRFS_ORDERED_IO_DONE, &ordered->flags)) {
+ 		ASSERT(ordered->bytes_left == 0);
 
 
