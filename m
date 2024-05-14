@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3237CD531;
-	Tue, 14 May 2024 11:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F1F12F58D;
+	Tue, 14 May 2024 11:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686125; cv=none; b=qx2NNoRh4NWsCIIJqqyCe8LhPugB6FV1UgL79fVK6F00JZWq/5Q1eqj4K564gUA77x6YUnKpqobwXulg4ruycEXxT1MxpVOKCbUy40oJ6lGLWnziAIznc8bgWcEFZzOPTwPmvNoLOPOjgXt+rsDJquzqw1+o+L9mYIaPhg6PVy0=
+	t=1715686128; cv=none; b=NvrhEcCrOnVyi3QaxiB45ySWQIGG0I2CiZbdBnXfYUQ8huVKh83jX2TFKwmlNuj4U1Jc36M3/oTWPoOaDV0AM8E/fMIMxhGNunpMuFfj2cgDeWVosvn5RHzQW6QocboQCU/yjjT1B9Zk54cGtbNbob3MgX9WZiz8pXysz1GzwN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686125; c=relaxed/simple;
-	bh=Pt+Ll6aOJvJFBsB1EeH5dX+1bAJLBmGh75mV+Y4QDPI=;
+	s=arc-20240116; t=1715686128; c=relaxed/simple;
+	bh=W9DCH0VGzL88Ql5MF5z9C3SIISdF4VTnQH46QltHoo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FUJI8bGMUPRdbzSvMMBR4DlJaruJ+nCBpsBMMidJKx3bKWs9f0NLVHilowisX13CZfYIaWI3l/rkt1NoBKT/dWixokJJ8Uj/+V/qu2wzS/SnLNQobAhwO9FrlT+eq8jw5x5XrneFeGZTSYBD8Puz+bGWINhjkbM8hAoiaoZt6qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTZ4Vqyh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CGeL/b6ggkcAC/wcUwtBGLehH3/uTGWAmC3HcwxVwnR4Fn8Qah7GVgX5Okk3GARudJbB1j3hgI+4P/poOvmTUotN4uT+q6tguEdDOiQtNfJ7Ict/fNQpGsWQqoOS02CrChzZnbvAIH5b71LWsz9IEa2O29wNi2/s6UxG3ZSGnL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWygxilK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTZ4Vqyh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6E6C32781;
-	Tue, 14 May 2024 11:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWygxilK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FAF8C2BD10;
+	Tue, 14 May 2024 11:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686125;
-	bh=Pt+Ll6aOJvJFBsB1EeH5dX+1bAJLBmGh75mV+Y4QDPI=;
+	s=korg; t=1715686127;
+	bh=W9DCH0VGzL88Ql5MF5z9C3SIISdF4VTnQH46QltHoo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTZ4VqyhHlri1qHrf2yXNt4Esxq9GWzxeCu3fzABJdL/702lTuW57ycIVe06W85gP
-	 lT1740OeFbCin1KQ7NgTw9O9IaCDQhQgUz8MJRWC8KvG0AKGfKP3W3sr+FwI1P4jFI
-	 nPGzwbJG56DBN6zpRNvoTVZpxS9Z6mCd0D6IICIs=
+	b=UWygxilKg1iZvxyvP+p/DeMQMkqfp1WTo4N50yHPT4ZCCFJevTRx9xokn0/jr1SIm
+	 3QRVeGIuITrrppmZzuTsGkt1NgJpfAnVmaO/q5Eh93e380gdZrTuaBASXIEen0Esv6
+	 mw90iTfpizA4OKynWjuKi3OyvC2b1Bib/jlGRWd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Bui Quang Minh <minhquangbui99@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/236] nfs: Handle error of rpc_proc_register() in nfs_net_init().
-Date: Tue, 14 May 2024 12:16:32 +0200
-Message-ID: <20240514101021.484925251@linuxfoundation.org>
+Subject: [PATCH 6.1 013/236] mm/hugetlb_cgroup: convert __set_hugetlb_cgroup() to folios
+Date: Tue, 14 May 2024 12:16:15 +0200
+Message-ID: <20240514101020.835517630@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -52,102 +58,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Sidhartha Kumar <sidhartha.kumar@oracle.com>
 
-[ Upstream commit 24457f1be29f1e7042e50a7749f5c2dde8c433c8 ]
+[ Upstream commit a098c977722ca27d3b4bfeb966767af3cce45f85 ]
 
-syzkaller reported a warning [0] triggered while destroying immature
-netns.
+Patch series "convert hugetlb_cgroup helper functions to folios", v2.
 
-rpc_proc_register() was called in init_nfs_fs(), but its error
-has been ignored since at least the initial commit 1da177e4c3f4
-("Linux-2.6.12-rc2").
+This patch series continues the conversion of hugetlb code from being
+managed in pages to folios by converting many of the hugetlb_cgroup helper
+functions to use folios.  This allows the core hugetlb functions to pass
+in a folio to these helper functions.
 
-Recently, commit d47151b79e32 ("nfs: expose /proc/net/sunrpc/nfs
-in net namespaces") converted the procfs to per-netns and made
-the problem more visible.
+This patch (of 9);
 
-Even when rpc_proc_register() fails, nfs_net_init() could succeed,
-and thus nfs_net_exit() will be called while destroying the netns.
+Change __set_hugetlb_cgroup() to use folios so it is explicit that the
+function operates on a head page.
 
-Then, remove_proc_entry() will be called for non-existing proc
-directory and trigger the warning below.
-
-Let's handle the error of rpc_proc_register() properly in nfs_net_init().
-
-[0]:
-name 'nfs'
-WARNING: CPU: 1 PID: 1710 at fs/proc/generic.c:711 remove_proc_entry+0x1bb/0x2d0 fs/proc/generic.c:711
-Modules linked in:
-CPU: 1 PID: 1710 Comm: syz-executor.2 Not tainted 6.8.0-12822-gcd51db110a7e #12
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-RIP: 0010:remove_proc_entry+0x1bb/0x2d0 fs/proc/generic.c:711
-Code: 41 5d 41 5e c3 e8 85 09 b5 ff 48 c7 c7 88 58 64 86 e8 09 0e 71 02 e8 74 09 b5 ff 4c 89 e6 48 c7 c7 de 1b 80 84 e8 c5 ad 97 ff <0f> 0b eb b1 e8 5c 09 b5 ff 48 c7 c7 88 58 64 86 e8 e0 0d 71 02 eb
-RSP: 0018:ffffc9000c6d7ce0 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: ffff8880422b8b00 RCX: ffffffff8110503c
-RDX: ffff888030652f00 RSI: ffffffff81105045 RDI: 0000000000000001
-RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000001 R11: ffffffff81bb62cb R12: ffffffff84807ffc
-R13: ffff88804ad6fcc0 R14: ffffffff84807ffc R15: ffffffff85741ff8
-FS:  00007f30cfba8640(0000) GS:ffff88807dd00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ff51afe8000 CR3: 000000005a60a005 CR4: 0000000000770ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <TASK>
- rpc_proc_unregister+0x64/0x70 net/sunrpc/stats.c:310
- nfs_net_exit+0x1c/0x30 fs/nfs/inode.c:2438
- ops_exit_list+0x62/0xb0 net/core/net_namespace.c:170
- setup_net+0x46c/0x660 net/core/net_namespace.c:372
- copy_net_ns+0x244/0x590 net/core/net_namespace.c:505
- create_new_namespaces+0x2ed/0x770 kernel/nsproxy.c:110
- unshare_nsproxy_namespaces+0xae/0x160 kernel/nsproxy.c:228
- ksys_unshare+0x342/0x760 kernel/fork.c:3322
- __do_sys_unshare kernel/fork.c:3393 [inline]
- __se_sys_unshare kernel/fork.c:3391 [inline]
- __x64_sys_unshare+0x1f/0x30 kernel/fork.c:3391
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x4f/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x46/0x4e
-RIP: 0033:0x7f30d0febe5d
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 73 9f 1b 00 f7 d8 64 89 01 48
-RSP: 002b:00007f30cfba7cc8 EFLAGS: 00000246 ORIG_RAX: 0000000000000110
-RAX: ffffffffffffffda RBX: 00000000004bbf80 RCX: 00007f30d0febe5d
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 000000006c020600
-RBP: 00000000004bbf80 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000002
-R13: 000000000000000b R14: 00007f30d104c530 R15: 0000000000000000
- </TASK>
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Link: https://lkml.kernel.org/r/20221101223059.460937-1-sidhartha.kumar@oracle.com
+Link: https://lkml.kernel.org/r/20221101223059.460937-2-sidhartha.kumar@oracle.com
+Signed-off-by: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
+Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+Cc: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+Cc: Bui Quang Minh <minhquangbui99@gmail.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Mina Almasry <almasrymina@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: b76b46902c2d ("mm/hugetlb: fix missing hugetlb_lock for resv uncharge")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/inode.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/linux/hugetlb_cgroup.h | 14 +++++++-------
+ mm/hugetlb_cgroup.c            |  4 ++--
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
-index fae1e009cd6cf..cf8c3771e4bfb 100644
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -2336,7 +2336,12 @@ static int nfs_net_init(struct net *net)
- 	struct nfs_net *nn = net_generic(net, nfs_net_id);
- 
- 	nfs_clients_init(net);
--	rpc_proc_register(net, &nn->rpcstats);
-+
-+	if (!rpc_proc_register(net, &nn->rpcstats)) {
-+		nfs_clients_exit(net);
-+		return -ENOMEM;
-+	}
-+
- 	return nfs_fs_proc_net_init(net);
+diff --git a/include/linux/hugetlb_cgroup.h b/include/linux/hugetlb_cgroup.h
+index 630cd255d0cfd..7576e9ed8afe7 100644
+--- a/include/linux/hugetlb_cgroup.h
++++ b/include/linux/hugetlb_cgroup.h
+@@ -90,31 +90,31 @@ hugetlb_cgroup_from_page_rsvd(struct page *page)
+ 	return __hugetlb_cgroup_from_page(page, true);
  }
  
+-static inline void __set_hugetlb_cgroup(struct page *page,
++static inline void __set_hugetlb_cgroup(struct folio *folio,
+ 				       struct hugetlb_cgroup *h_cg, bool rsvd)
+ {
+-	VM_BUG_ON_PAGE(!PageHuge(page), page);
++	VM_BUG_ON_FOLIO(!folio_test_hugetlb(folio), folio);
+ 
+-	if (compound_order(page) < HUGETLB_CGROUP_MIN_ORDER)
++	if (folio_order(folio) < HUGETLB_CGROUP_MIN_ORDER)
+ 		return;
+ 	if (rsvd)
+-		set_page_private(page + SUBPAGE_INDEX_CGROUP_RSVD,
++		set_page_private(folio_page(folio, SUBPAGE_INDEX_CGROUP_RSVD),
+ 				 (unsigned long)h_cg);
+ 	else
+-		set_page_private(page + SUBPAGE_INDEX_CGROUP,
++		set_page_private(folio_page(folio, SUBPAGE_INDEX_CGROUP),
+ 				 (unsigned long)h_cg);
+ }
+ 
+ static inline void set_hugetlb_cgroup(struct page *page,
+ 				     struct hugetlb_cgroup *h_cg)
+ {
+-	__set_hugetlb_cgroup(page, h_cg, false);
++	__set_hugetlb_cgroup(page_folio(page), h_cg, false);
+ }
+ 
+ static inline void set_hugetlb_cgroup_rsvd(struct page *page,
+ 					  struct hugetlb_cgroup *h_cg)
+ {
+-	__set_hugetlb_cgroup(page, h_cg, true);
++	__set_hugetlb_cgroup(page_folio(page), h_cg, true);
+ }
+ 
+ static inline bool hugetlb_cgroup_disabled(void)
+diff --git a/mm/hugetlb_cgroup.c b/mm/hugetlb_cgroup.c
+index f61d132df52b3..b2316bcbf634a 100644
+--- a/mm/hugetlb_cgroup.c
++++ b/mm/hugetlb_cgroup.c
+@@ -314,7 +314,7 @@ static void __hugetlb_cgroup_commit_charge(int idx, unsigned long nr_pages,
+ 	if (hugetlb_cgroup_disabled() || !h_cg)
+ 		return;
+ 
+-	__set_hugetlb_cgroup(page, h_cg, rsvd);
++	__set_hugetlb_cgroup(page_folio(page), h_cg, rsvd);
+ 	if (!rsvd) {
+ 		unsigned long usage =
+ 			h_cg->nodeinfo[page_to_nid(page)]->usage[idx];
+@@ -356,7 +356,7 @@ static void __hugetlb_cgroup_uncharge_page(int idx, unsigned long nr_pages,
+ 	h_cg = __hugetlb_cgroup_from_page(page, rsvd);
+ 	if (unlikely(!h_cg))
+ 		return;
+-	__set_hugetlb_cgroup(page, NULL, rsvd);
++	__set_hugetlb_cgroup(page_folio(page), NULL, rsvd);
+ 
+ 	page_counter_uncharge(__hugetlb_cgroup_counter_from_cgroup(h_cg, idx,
+ 								   rsvd),
 -- 
 2.43.0
 
