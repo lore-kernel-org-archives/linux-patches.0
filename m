@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FF2D531;
-	Tue, 14 May 2024 10:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3593B7F48C;
+	Tue, 14 May 2024 10:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684183; cv=none; b=l+EEa2eE8hma2qUfkXdK1uuds/iEM1+tQg2jbjadGwTWYsM3ciuIFOUrYUbquzklAAUVex0WgCDOGc7LjKg7ejkZ8jy+INt4sJDz8dEmOsPi9ToNfchytjrD7XyEJoeqnZuCS4eM38j86nIYxXcpRgw/k1XDJrYnEmnHK4bjaX8=
+	t=1715684190; cv=none; b=iczuGUbxWEMCYZuHUlAW2SO/KiTzs94iWR1bonbesRKhyrr1/ToBH9l+YrtARM0ZB67PnJ7kaD8463zAAkohMb3/qlS+I44Eq7F70/Qjw17gRZTHkKmQjHGrOfFhYC1boWdO6o1yEfyzjqDeo1JyPQSLt9b2HOMUSGBhOaW6rJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684183; c=relaxed/simple;
-	bh=15PMqbAWaQ+AX5yWexu54No/76eCPF/VEApOkFIIp5o=;
+	s=arc-20240116; t=1715684190; c=relaxed/simple;
+	bh=2pakhCK3e0ePbOYdUJ5EEsrgZJez2uBasQ7jj/QfwAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RBfl1zNj3C25pa8f4rPLZuhhSd9k5Xj9xWY4lYQpDBtP5ukHGn4UvFE8V3kawkuRmVvZS8p7OHq0fgK825oJyZhwOjTI+u1b3kRsi5QjofoskL12wnTuxNadaRdDa+c9n1lfYcVRLnzJ7CGse3aTSz9ezw1U7CJM6urbSN6tOZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWvBo6I3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a0W7LGHZoCmAsW7wvpLLuCCxGRsacTtWoUuIzJg/2F5Y9GNSHagxGiKMJJ8Vts6LP+SVWYPaG5DmnuRXfNuNbQc+tEXxpy3CYZeaoma3upb5EyRsCNv8v9NhKwAx1i93yWoKdjtSwcnmezOIn53xNt6+Lxg6qkuqlQwXWmi3JZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtFV/b8i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWvBo6I3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B77C2BD10;
-	Tue, 14 May 2024 10:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtFV/b8i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD4FC2BD10;
+	Tue, 14 May 2024 10:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684183;
-	bh=15PMqbAWaQ+AX5yWexu54No/76eCPF/VEApOkFIIp5o=;
+	s=korg; t=1715684190;
+	bh=2pakhCK3e0ePbOYdUJ5EEsrgZJez2uBasQ7jj/QfwAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zWvBo6I3ECaFfzb4fuZLQphchxOIvstCOJzr8WocdyklrPpJgeV9R351dZwBAQu6v
-	 7xDGKrt1A7KtbYbr/w4DQ6OjrtIARNvm6pz6X7LTU63/chiMtcqZ8wBd8zvgL89ZRw
-	 dO1W8vdG8vvZylC5ZTBOgwKFf4ekbSSgdv8wjJXk=
+	b=WtFV/b8inE2n8LiONO040L1g3etAa6hTrlJw8WzVz7n1MPibYOSzFHNgBkeDU+K5j
+	 dK7CG1+0YqiOAd3YDOqT6NJyoeWEWmOcRynIMzey8mjRndR4WHurSgIdG0Sr68PBRX
+	 VU+DtHk/uQF6TAW+RzNILYmV+L/za9YcOlhWDjCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Zhang Yi <yi.zhang@huawei.com>,
+	syzbot+d8426b591c36b21c750e@syzkaller.appspotmail.com,
+	Peter Xu <peterx@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
+	Nadav Amit <nadav.amit@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.8 314/336] mm: use memalloc_nofs_save() in page_cache_ra_order()
-Date: Tue, 14 May 2024 12:18:38 +0200
-Message-ID: <20240514101050.474446694@linuxfoundation.org>
+Subject: [PATCH 6.8 315/336] mm/userfaultfd: reset ptes when close() for wr-protected ones
+Date: Tue, 14 May 2024 12:18:39 +0200
+Message-ID: <20240514101050.511648846@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,91 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kefeng Wang <wangkefeng.wang@huawei.com>
+From: Peter Xu <peterx@redhat.com>
 
-commit 30153e4466647a17eebfced13eede5cbe4290e69 upstream.
+commit c88033efe9a391e72ba6b5df4b01d6e628f4e734 upstream.
 
-See commit f2c817bed58d ("mm: use memalloc_nofs_save in readahead path"),
-ensure that page_cache_ra_order() do not attempt to reclaim file-backed
-pages too, or it leads to a deadlock, found issue when test ext4 large
-folio.
+Userfaultfd unregister includes a step to remove wr-protect bits from all
+the relevant pgtable entries, but that only covered an explicit
+UFFDIO_UNREGISTER ioctl, not a close() on the userfaultfd itself.  Cover
+that too.  This fixes a WARN trace.
 
- INFO: task DataXceiver for:7494 blocked for more than 120 seconds.
- "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
- task:DataXceiver for state:D stack:0     pid:7494  ppid:1      flags:0x00000200
- Call trace:
-  __switch_to+0x14c/0x240
-  __schedule+0x82c/0xdd0
-  schedule+0x58/0xf0
-  io_schedule+0x24/0xa0
-  __folio_lock+0x130/0x300
-  migrate_pages_batch+0x378/0x918
-  migrate_pages+0x350/0x700
-  compact_zone+0x63c/0xb38
-  compact_zone_order+0xc0/0x118
-  try_to_compact_pages+0xb0/0x280
-  __alloc_pages_direct_compact+0x98/0x248
-  __alloc_pages+0x510/0x1110
-  alloc_pages+0x9c/0x130
-  folio_alloc+0x20/0x78
-  filemap_alloc_folio+0x8c/0x1b0
-  page_cache_ra_order+0x174/0x308
-  ondemand_readahead+0x1c8/0x2b8
-  page_cache_async_ra+0x68/0xb8
-  filemap_readahead.isra.0+0x64/0xa8
-  filemap_get_pages+0x3fc/0x5b0
-  filemap_splice_read+0xf4/0x280
-  ext4_file_splice_read+0x2c/0x48 [ext4]
-  vfs_splice_read.part.0+0xa8/0x118
-  splice_direct_to_actor+0xbc/0x288
-  do_splice_direct+0x9c/0x108
-  do_sendfile+0x328/0x468
-  __arm64_sys_sendfile64+0x8c/0x148
-  invoke_syscall+0x4c/0x118
-  el0_svc_common.constprop.0+0xc8/0xf0
-  do_el0_svc+0x24/0x38
-  el0_svc+0x4c/0x1f8
-  el0t_64_sync_handler+0xc0/0xc8
-  el0t_64_sync+0x188/0x190
+The only user visible side effect is the user can observe leftover
+wr-protect bits even if the user close()ed on an userfaultfd when
+releasing the last reference of it.  However hopefully that should be
+harmless, and nothing bad should happen even if so.
 
-Link: https://lkml.kernel.org/r/20240426112938.124740-1-wangkefeng.wang@huawei.com
-Fixes: 793917d997df ("mm/readahead: Add large folio readahead")
-Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Zhang Yi <yi.zhang@huawei.com>
+This change is now more important after the recent page-table-check
+patch we merged in mm-unstable (446dd9ad37d0 ("mm/page_table_check:
+support userfault wr-protect entries")), as we'll do sanity check on
+uffd-wp bits without vma context.  So it's better if we can 100%
+guarantee no uffd-wp bit leftovers, to make sure each report will be
+valid.
+
+Link: https://lore.kernel.org/all/000000000000ca4df20616a0fe16@google.com/
+Fixes: f369b07c8614 ("mm/uffd: reset write protection when unregister with wp-mode")
+Analyzed-by: David Hildenbrand <david@redhat.com>
+Link: https://lkml.kernel.org/r/20240422133311.2987675-1-peterx@redhat.com
+Reported-by: syzbot+d8426b591c36b21c750e@syzkaller.appspotmail.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Cc: Nadav Amit <nadav.amit@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/readahead.c |    4 ++++
+ fs/userfaultfd.c |    4 ++++
  1 file changed, 4 insertions(+)
 
---- a/mm/readahead.c
-+++ b/mm/readahead.c
-@@ -490,6 +490,7 @@ void page_cache_ra_order(struct readahea
- 	pgoff_t index = readahead_index(ractl);
- 	pgoff_t limit = (i_size_read(mapping->host) - 1) >> PAGE_SHIFT;
- 	pgoff_t mark = index + ra->size - ra->async_size;
-+	unsigned int nofs;
- 	int err = 0;
- 	gfp_t gfp = readahead_gfp_mask(mapping);
- 
-@@ -506,6 +507,8 @@ void page_cache_ra_order(struct readahea
- 			new_order--;
- 	}
- 
-+	/* See comment in page_cache_ra_unbounded() */
-+	nofs = memalloc_nofs_save();
- 	filemap_invalidate_lock_shared(mapping);
- 	while (index <= limit) {
- 		unsigned int order = new_order;
-@@ -532,6 +535,7 @@ void page_cache_ra_order(struct readahea
- 
- 	read_pages(ractl);
- 	filemap_invalidate_unlock_shared(mapping);
-+	memalloc_nofs_restore(nofs);
- 
- 	/*
- 	 * If there were already pages in the page cache, then we may have
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -925,6 +925,10 @@ static int userfaultfd_release(struct in
+ 			prev = vma;
+ 			continue;
+ 		}
++		/* Reset ptes for the whole vma range if wr-protected */
++		if (userfaultfd_wp(vma))
++			uffd_wp_range(vma, vma->vm_start,
++				      vma->vm_end - vma->vm_start, false);
+ 		new_flags = vma->vm_flags & ~__VM_UFFD_FLAGS;
+ 		vma = vma_modify_flags_uffd(&vmi, prev, vma, vma->vm_start,
+ 					    vma->vm_end, new_flags,
 
 
