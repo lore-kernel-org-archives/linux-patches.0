@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D0A5FB8A;
-	Tue, 14 May 2024 10:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7E0130A47;
+	Tue, 14 May 2024 10:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682613; cv=none; b=RgGqq7800Oy/OJ1lCf9gSdPAB34di6DGlfXzCl4YX06glb7YYf6ahZnL1eh7KC4SngnTXkFbw7JxkkX4BaZmL8I49Vn5ARjsDqrovLVsWFg1c9i5tQZzr6UxzdUo2hWXZvN6ZU7DXZyfgnAY3ynTQiTvRMaZGZF9kYTHYNCGPoc=
+	t=1715682626; cv=none; b=a8rvipIrrYCaYK+peYmDH0qG48acY4TlvRkvmgPyi/3Nl2MXwAaVme4NX9lTegciXDo6vnlL/xVoFzZC/qGqAML7+zwp0g/f/3qYkfpZ+S2sYjDFTAYKvbPTX22k8F0qentZ2RZ9JCmHaa6tDJJiCVZUKU+WsFpQMf/LqVOkjYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682613; c=relaxed/simple;
-	bh=MA7FEHc6g44kMyClAdl83LBwomDESeR9V7A/F9kYq7M=;
+	s=arc-20240116; t=1715682626; c=relaxed/simple;
+	bh=3/s2i8o6Jw2YTyrBPW2yH8a4HI6r8ZuJlB/m437R1iM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+Uc64/9cEyoPxBqZPHtOUOSbzvPLBfiM7KITiCs2EOW2FBsc+SRVPoTkNqyqGq3K/b9hqA8csiJ4bpbvQH0zOXq1Rq9UlDO4CXtJnPUBmPS/QQ2AKKg5Gdc+UCgQ9gpnkGavqBI/Z3sNj9u0sbAAStJjGlzaIrAzG3pJs/2Q18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFU34o5F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dWHlztwxMmO2H5ej9RHm066xt7/cWLRu+faDJxPnFT65KBK2C3TiRwjk4DxaBbcw0LPzsiZMq5hWzHkxVZiu6uVGmbx+INiog0x2bk/Va0+RqY3QStAKOJLAVA6hbIjAhfqKTX8jCEoPhP1l/mvkykuo2PxrZnGrSocbBPUmcYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nefyon8e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFU34o5F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4CCC2BD10;
-	Tue, 14 May 2024 10:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nefyon8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F95FC2BD10;
+	Tue, 14 May 2024 10:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682613;
-	bh=MA7FEHc6g44kMyClAdl83LBwomDESeR9V7A/F9kYq7M=;
+	s=korg; t=1715682625;
+	bh=3/s2i8o6Jw2YTyrBPW2yH8a4HI6r8ZuJlB/m437R1iM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFU34o5F3IpumP0tY+Yo8qv1yeJoZTQoJMjE2GIDVCA5xBcH7DLGLDONNXSOINyF8
-	 H5sgNCN7k+vtCIfNSQW6K5g7qtCVyO5r4XCNNcWyZCRBy8l/jIByDofLH86WdwOJQT
-	 ExH5znD9mjp4UGuar2gu5hUOPfCj11O/m77etEmo=
+	b=nefyon8exRfhmJWGc6OXdBL7lpHJWGG4YQN6xpcdiEi2SCCH9KC55BJ+CGs/yY2R0
+	 btJQbzxAf+L23lfMSiDN4oBt5O0SCCuDYiGjimTlojascP/YcLVkNAuCeoAuCaOfxz
+	 SUQ752CSPkQZ8JH5byXAdGQF7JGCkIPkBvk5Y6C0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Batra <gbatra@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 090/336] powerpc/pseries/iommu: LPAR panics during boot up with a frozen PE
-Date: Tue, 14 May 2024 12:14:54 +0200
-Message-ID: <20240514101042.004710692@linuxfoundation.org>
+Subject: [PATCH 6.8 091/336] EDAC/versal: Do not log total error counts
+Date: Tue, 14 May 2024 12:14:55 +0200
+Message-ID: <20240514101042.041815204@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,81 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gaurav Batra <gbatra@linux.ibm.com>
+From: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
 
-[ Upstream commit 49a940dbdc3107fecd5e6d3063dc07128177e058 ]
+[ Upstream commit 1a24733e80771d8eef656e515306a560519856a9 ]
 
-At the time of LPAR boot up, partition firmware provides Open Firmware
-property ibm,dma-window for the PE. This property is provided on the PCI
-bus the PE is attached to.
+When logging errors, the driver currently logs the total error count.
+However, it should log the current error only. Fix it.
 
-There are execptions where the partition firmware might not provide this
-property for the PE at the time of LPAR boot up. One of the scenario is
-where the firmware has frozen the PE due to some error condition. This
-PE is frozen for 24 hours or unless the whole system is reinitialized.
+  [ bp: Rewrite text. ]
 
-Within this time frame, if the LPAR is booted, the frozen PE will be
-presented to the LPAR but ibm,dma-window property could be missing.
-
-Today, under these circumstances, the LPAR oopses with NULL pointer
-dereference, when configuring the PCI bus the PE is attached to.
-
-  BUG: Kernel NULL pointer dereference on read at 0x000000c8
-  Faulting instruction address: 0xc0000000001024c0
-  Oops: Kernel access of bad area, sig: 7 [#1]
-  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
-  Modules linked in:
-  Supported: Yes
-  CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.4.0-150600.9-default #1
-  Hardware name: IBM,9043-MRX POWER10 (raw) 0x800200 0xf000006 of:IBM,FW1060.00 (NM1060_023) hv:phyp pSeries
-  NIP:  c0000000001024c0 LR: c0000000001024b0 CTR: c000000000102450
-  REGS: c0000000037db5c0 TRAP: 0300   Not tainted  (6.4.0-150600.9-default)
-  MSR:  8000000002009033 <SF,VEC,EE,ME,IR,DR,RI,LE>  CR: 28000822  XER: 00000000
-  CFAR: c00000000010254c DAR: 00000000000000c8 DSISR: 00080000 IRQMASK: 0
-  ...
-  NIP [c0000000001024c0] pci_dma_bus_setup_pSeriesLP+0x70/0x2a0
-  LR [c0000000001024b0] pci_dma_bus_setup_pSeriesLP+0x60/0x2a0
-  Call Trace:
-    pci_dma_bus_setup_pSeriesLP+0x60/0x2a0 (unreliable)
-    pcibios_setup_bus_self+0x1c0/0x370
-    __of_scan_bus+0x2f8/0x330
-    pcibios_scan_phb+0x280/0x3d0
-    pcibios_init+0x88/0x12c
-    do_one_initcall+0x60/0x320
-    kernel_init_freeable+0x344/0x3e4
-    kernel_init+0x34/0x1d0
-    ret_from_kernel_user_thread+0x14/0x1c
-
-Fixes: b1fc44eaa9ba ("pseries/iommu/ddw: Fix kdump to work in absence of ibm,dma-window")
-Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240422205141.10662-1-gbatra@linux.ibm.com
+Fixes: 6f15b178cd63 ("EDAC/versal: Add a Xilinx Versal memory controller driver")
+Signed-off-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20240425121942.26378-4-shubhrajyoti.datta@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/iommu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/edac/versal_edac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/iommu.c b/arch/powerpc/platforms/pseries/iommu.c
-index e8c4129697b14..b1e6d275cda9e 100644
---- a/arch/powerpc/platforms/pseries/iommu.c
-+++ b/arch/powerpc/platforms/pseries/iommu.c
-@@ -786,8 +786,16 @@ static void pci_dma_bus_setup_pSeriesLP(struct pci_bus *bus)
- 	 * parent bus. During reboot, there will be ibm,dma-window property to
- 	 * define DMA window. For kdump, there will at least be default window or DDW
- 	 * or both.
-+	 * There is an exception to the above. In case the PE goes into frozen
-+	 * state, firmware may not provide ibm,dma-window property at the time
-+	 * of LPAR boot up.
- 	 */
+diff --git a/drivers/edac/versal_edac.c b/drivers/edac/versal_edac.c
+index 62caf454b5670..a840c6922e5b9 100644
+--- a/drivers/edac/versal_edac.c
++++ b/drivers/edac/versal_edac.c
+@@ -423,7 +423,7 @@ static void handle_error(struct mem_ctl_info *mci, struct ecc_status *stat)
+ 			 convert_to_physical(priv, pinf), pinf.burstpos);
  
-+	if (!pdn) {
-+		pr_debug("  no ibm,dma-window property !\n");
-+		return;
-+	}
-+
- 	ppci = PCI_DN(pdn);
+ 		edac_mc_handle_error(HW_EVENT_ERR_CORRECTED, mci,
+-				     priv->ce_cnt, 0, 0, 0, 0, 0, -1,
++				     1, 0, 0, 0, 0, 0, -1,
+ 				     priv->message, "");
+ 	}
  
- 	pr_debug("  parent is %pOF, iommu_table: 0x%p\n",
+@@ -436,7 +436,7 @@ static void handle_error(struct mem_ctl_info *mci, struct ecc_status *stat)
+ 			 convert_to_physical(priv, pinf), pinf.burstpos);
+ 
+ 		edac_mc_handle_error(HW_EVENT_ERR_UNCORRECTED, mci,
+-				     priv->ue_cnt, 0, 0, 0, 0, 0, -1,
++				     1, 0, 0, 0, 0, 0, -1,
+ 				     priv->message, "");
+ 	}
+ 
 -- 
 2.43.0
 
