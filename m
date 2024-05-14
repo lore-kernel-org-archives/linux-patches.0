@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533126CDC4;
-	Tue, 14 May 2024 10:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F98E6CDC8;
+	Tue, 14 May 2024 10:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682222; cv=none; b=X2KIRILiKsack3hmwKG/+LU2PmdVVqIKJx0rJQdPmZ59ZOui4AnRIuGw2IRAimCsWNESlvX2svai7Hypo+8pshfv1n4Mcr9nhaDtbafpwVd0w9Xr/xPnQcbCa3OZFDIcng41Gx6cvew4yAS+rZV7vOLulIpz7N+QDvFCac3VTPY=
+	t=1715682228; cv=none; b=PQpWkCEkAUSXmZN+3hHxCqwLiVBzCpMud9mrMNs980PuAYaY6/HHSBfARri3VhNgpom7wwEGj5KEBqsGm9qXwdyru/HbBGbSFR4cNetJcB/VuY9BtTRUSE4LR6OjVXURBOgKbof/RO/Dn05nrCmaaL20y3iHsTGp2WUk15y9Lq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682222; c=relaxed/simple;
-	bh=pr1Gfw8zb9UzoXGlRAH+elH2aSsrAw754UQzP8sZLtA=;
+	s=arc-20240116; t=1715682228; c=relaxed/simple;
+	bh=gJhbNBMoZqJr9H08EcH+1MgLLXnUsVXVFJRAzdgbSFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lrj+/923DzJDGm1ar5Ms8TKGQC+CN9kfNYaW1eqrZoMyr+FH1hR70EJqH3rONOqqYnkD36foykmteVJuPckyYtHuh0roBLzWfUsbPd2AE/2ife+xUB8JtZK6N4Sn7vBFC/Z1k3JfbRFuJ0JJG7kXR0auRVHKBBcPlePH7JMylpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LMa1cTIz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kjP8DVWSCNGs9S55iMZ8ma844luQw4XxLetJdoeoQqpl/BHj0gh2W+EGzekBLWHcliPORT9nscdVwGX4MVl/LPguY+gv6xtbMFkVefhgkBUEFhaCGzVZx86EzrcGKLpNq4TsQG+TQNk4DOWF8GO1vfM0/gAeKXZD9eMVJGtGTR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z89a90Yj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMa1cTIz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4AFC2BD10;
-	Tue, 14 May 2024 10:23:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z89a90Yj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EC5C2BD10;
+	Tue, 14 May 2024 10:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682222;
-	bh=pr1Gfw8zb9UzoXGlRAH+elH2aSsrAw754UQzP8sZLtA=;
+	s=korg; t=1715682227;
+	bh=gJhbNBMoZqJr9H08EcH+1MgLLXnUsVXVFJRAzdgbSFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LMa1cTIzOK9wB4Wnfjf8N4gQhiwHmkNkm5AePretcstO1bxzd19j27zTeQXf9l0Yx
-	 bBtV9MDJ1U8aZUGUP0BXcWllX5PJ+tCNr7shmj9PVmDyvCUzB3aa7pLj2Z39nugX2m
-	 rB4zfFubDBF60VPWwbFlttbgPnELxOmCZqtCiU3U=
+	b=z89a90YjeyGy1qe4gyLKmkUTJ53lNYmkvxXy6cbGfMJyKj0PlH/JwSDEZ9eeFdeSU
+	 /ODp+tXxFVxu5oj40D1JJcx64wY068qAb0V+XLEycwXV3o1znPbxVcLBp0v4q6I194
+	 hVRhxVD6Dgn7kfvCGpg90IVQkbzCfKnVr7QhcL8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Protopopov <aspsk@isovalent.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	David Lechner <dlechner@baylibre.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 030/336] bpf: Fix a verifier verbose message
-Date: Tue, 14 May 2024 12:13:54 +0200
-Message-ID: <20240514101039.744078570@linuxfoundation.org>
+Subject: [PATCH 6.8 031/336] spi: axi-spi-engine: use common AXI macros
+Date: Tue, 14 May 2024 12:13:55 +0200
+Message-ID: <20240514101039.781614450@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,43 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Protopopov <aspsk@isovalent.com>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit 37eacb9f6e89fb399a79e952bc9c78eb3e16290e ]
+[ Upstream commit 88c2b56c2690061121cad03f0f551db465287575 ]
 
-Long ago a map file descriptor in a pseudo ldimm64 instruction could
-only be present as an immediate value insn[0].imm, and thus this value
-was used in a verbose verifier message printed when the file descriptor
-wasn't valid. Since addition of BPF_PSEUDO_MAP_IDX_VALUE/BPF_PSEUDO_MAP_IDX
-the insn[0].imm field can also contain an index pointing to the file
-descriptor in the attr.fd_array array. However, if the file descriptor
-is invalid, the verifier still prints the verbose message containing
-value of insn[0].imm. Patch the verifier message to always print the
-actual file descriptor value.
+This avoid duplicating the same macros in multiple drivers by reusing
+the common AXI macros for the version register.
 
-Fixes: 387544bfa291 ("bpf: Introduce fd_idx")
-Signed-off-by: Anton Protopopov <aspsk@isovalent.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20240412141100.3562942-1-aspsk@isovalent.com
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240202213132.3863124-2-dlechner@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 0064db9ce4aa ("spi: axi-spi-engine: fix version format string")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/spi/spi-axi-spi-engine.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 19e575e6b7fe0..11bc3af33f34f 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -18040,8 +18040,7 @@ static int resolve_pseudo_ldimm64(struct bpf_verifier_env *env)
- 			f = fdget(fd);
- 			map = __bpf_map_get(f);
- 			if (IS_ERR(map)) {
--				verbose(env, "fd %d is not pointing to valid bpf_map\n",
--					insn[0].imm);
-+				verbose(env, "fd %d is not pointing to valid bpf_map\n", fd);
- 				return PTR_ERR(map);
- 			}
+diff --git a/drivers/spi/spi-axi-spi-engine.c b/drivers/spi/spi-axi-spi-engine.c
+index 9ace259d2d29d..6b0c72bf3395f 100644
+--- a/drivers/spi/spi-axi-spi-engine.c
++++ b/drivers/spi/spi-axi-spi-engine.c
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include <linux/clk.h>
++#include <linux/fpga/adi-axi-common.h>
+ #include <linux/idr.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
+@@ -15,12 +16,6 @@
+ #include <linux/spi/spi.h>
+ #include <linux/timer.h>
+ 
+-#define SPI_ENGINE_VERSION_MAJOR(x)	((x >> 16) & 0xff)
+-#define SPI_ENGINE_VERSION_MINOR(x)	((x >> 8) & 0xff)
+-#define SPI_ENGINE_VERSION_PATCH(x)	(x & 0xff)
+-
+-#define SPI_ENGINE_REG_VERSION			0x00
+-
+ #define SPI_ENGINE_REG_RESET			0x40
+ 
+ #define SPI_ENGINE_REG_INT_ENABLE		0x80
+@@ -661,12 +656,12 @@ static int spi_engine_probe(struct platform_device *pdev)
+ 	if (IS_ERR(spi_engine->base))
+ 		return PTR_ERR(spi_engine->base);
+ 
+-	version = readl(spi_engine->base + SPI_ENGINE_REG_VERSION);
+-	if (SPI_ENGINE_VERSION_MAJOR(version) != 1) {
++	version = readl(spi_engine->base + ADI_AXI_REG_VERSION);
++	if (ADI_AXI_PCORE_VER_MAJOR(version) != 1) {
+ 		dev_err(&pdev->dev, "Unsupported peripheral version %u.%u.%c\n",
+-			SPI_ENGINE_VERSION_MAJOR(version),
+-			SPI_ENGINE_VERSION_MINOR(version),
+-			SPI_ENGINE_VERSION_PATCH(version));
++			ADI_AXI_PCORE_VER_MAJOR(version),
++			ADI_AXI_PCORE_VER_MINOR(version),
++			ADI_AXI_PCORE_VER_PATCH(version));
+ 		return -ENODEV;
+ 	}
  
 -- 
 2.43.0
