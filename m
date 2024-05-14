@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071CC12AAC6;
-	Tue, 14 May 2024 11:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D401C12C554;
+	Tue, 14 May 2024 11:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686622; cv=none; b=QW2MaB4vy04+TwOwzF0swzMRQxoFh8v1sZat2RxqUpirEb9f6qteGKjj879mncKi5O367F1HqfctTpKEyMtVeryrBpiaDiRfw2MOb2AUaSKsfxrP/FbC6WeQkAs6lbT/thlOe3cJsWFyBM2qK2uu4YIqXX+nLiHvxUuw0l5SUJg=
+	t=1715686624; cv=none; b=NeVw9cAF2jSPeFQX1sWPvIyBrr4UP1EsvfXK0Afztfk5Dj4aAD65Q/Gw6b7XGjK6goqEURWMrHCzB0mbWL8pwtRfu9qZWqEW0l74R+Le/LjA2AociLB1jmoyNYtRoj2zZAihZsyOC4qjK0Zv9VSMajiaUbN8C8AB/aOv7vHiLlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686622; c=relaxed/simple;
-	bh=DXsKGd6gOe3SgDYdjhcaliY4Ai7uuqKL3a+uZM68mKQ=;
+	s=arc-20240116; t=1715686624; c=relaxed/simple;
+	bh=0hkkyDP/FVMIi+0q1jBHpseO1l8wRulLEc3NSvgPSAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0dYLaYdNGqJs+4h3ukCSUk9d9UIOEHgG9LfvcSdZAibIF9GJnN+Ezo4H653D8m6W7R0X2OsSiBOs97gZCLoKc2rW/x2OptXZEGDT4wu83gng0gQXo0f1l505/OL0JoTq/8fbGMztRS2AcsjJfIHLGkpF87k83HFAm8a2VpAefg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qb3s9A1j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oylZS/L4wjf4skRi87GaQ6CmZcXnQ+5JB6gsW/X64fcBzIzapl49ywjLm8M+3ziiLVLevqPlL1NKmQfRw9UtZce1kfRqxQjddNKmio+w5i15ILiLnB5+YPcHP/JhZFotwctVyhBTIARZDSPBYQe8ECNNWF5sdrhZJhFkeTkdsW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUOBDlxv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qb3s9A1j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FEFC2BD10;
-	Tue, 14 May 2024 11:37:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUOBDlxv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F3F6C32781;
+	Tue, 14 May 2024 11:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686621;
-	bh=DXsKGd6gOe3SgDYdjhcaliY4Ai7uuqKL3a+uZM68mKQ=;
+	s=korg; t=1715686624;
+	bh=0hkkyDP/FVMIi+0q1jBHpseO1l8wRulLEc3NSvgPSAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qb3s9A1jtySZOno5ylqwe10JtAKuaoG7DHOoT0TNujX0Sc8wgVtSbRNupc4qAyr53
-	 1eDVfhMgCPZFEumeXIvapp+4WNo6SOduZniRyRjjdKNEUtfY9ACa2AuAGd8x76WUYm
-	 e9EfCBj0CRq0aGzjm8CcKNudEB5momMXcaHnoCGU=
+	b=SUOBDlxvJHYiisYoXTEEvaeb/z4EpF5Ku44C3jzvMIn4RyBMPAb6ovfQprPNenui2
+	 E7StmkYA8aRg0S0+u3/W1bdqVfL/sZjZrypXs+C0NFPGXPyPnT6Cna37hxCZHgMTyy
+	 Ixhbx0Zlv9oKcpYbIbS6iy4YRnb64XtJSIsIhFmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Mark Brown <broonie@kernel.org>,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 201/236] usb: typec: tcpm: unregister existing source caps before re-registration
-Date: Tue, 14 May 2024 12:19:23 +0200
-Message-ID: <20240514101027.995680714@linuxfoundation.org>
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6.1 202/236] usb: typec: tcpm: Check for port partner validity before consuming it
+Date: Tue, 14 May 2024 12:19:24 +0200
+Message-ID: <20240514101028.033264353@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -53,66 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+From: Badhri Jagan Sridharan <badhri@google.com>
 
-commit 230ecdf71a644c9c73e0e6735b33173074ae3f94 upstream.
+commit ae11f04b452b5205536e1c02d31f8045eba249dd upstream.
 
-Check and unregister existing source caps in tcpm_register_source_caps
-function before registering new ones. This change fixes following
-warning when port partner resends source caps after negotiating PD contract
-for the purpose of re-negotiation.
+typec_register_partner() does not guarantee partner registration
+to always succeed. In the event of failure, port->partner is set
+to the error value or NULL. Given that port->partner validity is
+not checked, this results in the following crash:
 
-[  343.135030][  T151] sysfs: cannot create duplicate filename '/devices/virtual/usb_power_delivery/pd1/source-capabilities'
-[  343.135071][  T151] Call trace:
-[  343.135076][  T151]  dump_backtrace+0xe8/0x108
-[  343.135099][  T151]  show_stack+0x18/0x24
-[  343.135106][  T151]  dump_stack_lvl+0x50/0x6c
-[  343.135119][  T151]  dump_stack+0x18/0x24
-[  343.135126][  T151]  sysfs_create_dir_ns+0xe0/0x140
-[  343.135137][  T151]  kobject_add_internal+0x228/0x424
-[  343.135146][  T151]  kobject_add+0x94/0x10c
-[  343.135152][  T151]  device_add+0x1b0/0x4c0
-[  343.135187][  T151]  device_register+0x20/0x34
-[  343.135195][  T151]  usb_power_delivery_register_capabilities+0x90/0x20c
-[  343.135209][  T151]  tcpm_pd_rx_handler+0x9f0/0x15b8
-[  343.135216][  T151]  kthread_worker_fn+0x11c/0x260
-[  343.135227][  T151]  kthread+0x114/0x1bc
-[  343.135235][  T151]  ret_from_fork+0x10/0x20
-[  343.135265][  T151] kobject: kobject_add_internal failed for source-capabilities with -EEXIST, don't try to register things with the same name in the same directory.
+Unable to handle kernel NULL pointer dereference at virtual address xx
+ pc : run_state_machine+0x1bc8/0x1c08
+ lr : run_state_machine+0x1b90/0x1c08
+..
+ Call trace:
+   run_state_machine+0x1bc8/0x1c08
+   tcpm_state_machine_work+0x94/0xe4
+   kthread_worker_fn+0x118/0x328
+   kthread+0x1d0/0x23c
+   ret_from_fork+0x10/0x20
 
-Fixes: 8203d26905ee ("usb: typec: tcpm: Register USB Power Delivery Capabilities")
-Cc: linux-usb@vger.kernel.org
+To prevent the crash, check for port->partner validity before
+derefencing it in all the call sites.
+
 Cc: stable@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: Mark Brown <broonie@kernel.org>
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
+Fixes: c97cd0b4b54e ("usb: typec: tcpm: set initial svdm version based on pd revision")
+Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240424223227.1807844-1-amitsd@google.com
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240427202812.3435268-1-badhri@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/typec/tcpm/tcpm.c |   30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
 --- a/drivers/usb/typec/tcpm/tcpm.c
 +++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -2416,7 +2416,7 @@ static int tcpm_register_sink_caps(struc
- {
- 	struct usb_power_delivery_desc desc = { port->negotiated_rev };
- 	struct usb_power_delivery_capabilities_desc caps = { };
--	struct usb_power_delivery_capabilities *cap;
-+	struct usb_power_delivery_capabilities *cap = port->partner_source_caps;
+@@ -1479,7 +1479,8 @@ static void svdm_consume_identity(struct
+ 	port->partner_ident.cert_stat = p[VDO_INDEX_CSTAT];
+ 	port->partner_ident.product = product;
  
- 	if (!port->partner_pd)
- 		port->partner_pd = usb_power_delivery_register(NULL, &desc);
-@@ -2426,6 +2426,9 @@ static int tcpm_register_sink_caps(struc
- 	memcpy(caps.pdo, port->sink_caps, sizeof(u32) * port->nr_sink_caps);
- 	caps.role = TYPEC_SINK;
+-	typec_partner_set_identity(port->partner);
++	if (port->partner)
++		typec_partner_set_identity(port->partner);
  
-+	if (cap)
-+		usb_power_delivery_unregister_capabilities(cap);
+ 	tcpm_log(port, "Identity: %04x:%04x.%04x",
+ 		 PD_IDH_VID(vdo),
+@@ -1567,6 +1568,9 @@ static void tcpm_register_partner_altmod
+ 	struct typec_altmode *altmode;
+ 	int i;
+ 
++	if (!port->partner)
++		return;
 +
- 	cap = usb_power_delivery_register_capabilities(port->partner_pd, &caps);
- 	if (IS_ERR(cap))
- 		return PTR_ERR(cap);
+ 	for (i = 0; i < modep->altmodes; i++) {
+ 		altmode = typec_partner_register_altmode(port->partner,
+ 						&modep->altmode_desc[i]);
+@@ -3638,7 +3642,10 @@ static int tcpm_init_vconn(struct tcpm_p
+ 
+ static void tcpm_typec_connect(struct tcpm_port *port)
+ {
++	struct typec_partner *partner;
++
+ 	if (!port->connected) {
++		port->connected = true;
+ 		/* Make sure we don't report stale identity information */
+ 		memset(&port->partner_ident, 0, sizeof(port->partner_ident));
+ 		port->partner_desc.usb_pd = port->pd_capable;
+@@ -3648,9 +3655,13 @@ static void tcpm_typec_connect(struct tc
+ 			port->partner_desc.accessory = TYPEC_ACCESSORY_AUDIO;
+ 		else
+ 			port->partner_desc.accessory = TYPEC_ACCESSORY_NONE;
+-		port->partner = typec_register_partner(port->typec_port,
+-						       &port->partner_desc);
+-		port->connected = true;
++		partner = typec_register_partner(port->typec_port, &port->partner_desc);
++		if (IS_ERR(partner)) {
++			dev_err(port->dev, "Failed to register partner (%ld)\n", PTR_ERR(partner));
++			return;
++		}
++
++		port->partner = partner;
+ 		typec_partner_set_usb_power_delivery(port->partner, port->partner_pd);
+ 	}
+ }
+@@ -3720,9 +3731,11 @@ out_disable_mux:
+ static void tcpm_typec_disconnect(struct tcpm_port *port)
+ {
+ 	if (port->connected) {
+-		typec_partner_set_usb_power_delivery(port->partner, NULL);
+-		typec_unregister_partner(port->partner);
+-		port->partner = NULL;
++		if (port->partner) {
++			typec_partner_set_usb_power_delivery(port->partner, NULL);
++			typec_unregister_partner(port->partner);
++			port->partner = NULL;
++		}
+ 		port->connected = false;
+ 	}
+ }
+@@ -3938,6 +3951,9 @@ static enum typec_cc_status tcpm_pwr_opm
+ 
+ static void tcpm_set_initial_svdm_version(struct tcpm_port *port)
+ {
++	if (!port->partner)
++		return;
++
+ 	switch (port->negotiated_rev) {
+ 	case PD_REV30:
+ 		break;
 
 
