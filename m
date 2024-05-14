@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE7B12CDBF;
-	Tue, 14 May 2024 11:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBF483CD9;
+	Tue, 14 May 2024 11:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687296; cv=none; b=BkiN8cUk6UEeKzsYvKL5IyXQkqtZEgKGJZPI1Lx6W7ta2aU6l7+jmu/uKlSZga2wbY6TuGAdLzJp8moMMvDQwuuP+lF9I3veQjltq6AvWMCy0IrFt7fxlXEfwLBiYmmJ3hrj1LTzH+y/Agw6djcudvP52wi75EbzKYGk+mbbE2g=
+	t=1715687299; cv=none; b=RD9uxBmFil0lOrFStfjFlZlNDlEwDKO5qlKD2T38uO6of1jl1ql5a/Y2kbbEUXMcgQBZ/yd0mVsACwwbdBAANshMW2CGR/Yv0AyQJHVciy1oWpw2EirIHxk2nGVmMFVoEHZ3qWw3ge+zocuiFLB8WoY9X6CU4Y6MQYCqFuxkm0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687296; c=relaxed/simple;
-	bh=csIFm0mQsk6y3B+XLZ2eO1q7jMdtx11CPH+OTlz9Uio=;
+	s=arc-20240116; t=1715687299; c=relaxed/simple;
+	bh=FhaD9m55F5MKEUDatC10O7fRu5QT+bKzJwRjDcZyxYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gvLGH5P0//XCK1Q+0Zz+HpCgX7ySa4nPU3bC0tpEFR4UADyaOoiGcGGhTNkBcA0m18K0QoduYzQeRlj6hj+DJ4mquqUyBT37s81WgYnilbyeYZGyvjdxXnDi7Zr5yZbPqjZJIdRMMbh+0fukoIgnaP7+SF7p6BfWFnXQ/F+Kemk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LieipCb6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cr2W8TeTjHL5JYynJNNd+n0s1O3Kt0orySXNteT4kP+bMhVxFogwL//aSxlI3Ioxh0r6awLuSllZhN6pDmBFxiVSeUFTCfxybvMr2Di4COcUx+8iXzQD0b28QBz2s0iW1Pf1mEOFteBEYNmO3nbYf7zlfJZSrvz/+0nHyPiILwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vCprg5rY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LieipCb6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61AB1C2BD10;
-	Tue, 14 May 2024 11:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vCprg5rY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455F1C2BD10;
+	Tue, 14 May 2024 11:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687296;
-	bh=csIFm0mQsk6y3B+XLZ2eO1q7jMdtx11CPH+OTlz9Uio=;
+	s=korg; t=1715687299;
+	bh=FhaD9m55F5MKEUDatC10O7fRu5QT+bKzJwRjDcZyxYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LieipCb6TPLJk6TPHo2PeBY1vQrMJGvt+Xk1w8kY+9hj6oY5Rhkdd2upwSTnyS0zz
-	 2v9Bfz5x1WTR/zIIE/WH5w0SroNSwQ/J59oPNbzTBc1MHen+KVPWbko9fXpYD1tzUf
-	 gCVMZNO3quX0lQQjhB6KHcdvFsNrqZtmCrMhNedk=
+	b=vCprg5rYTLhFkshXF3uxI7nGTIsWNWyd6QTditvV+xWW2SoUKcdokulB7oHrU8MXc
+	 8Uu0+0zQL+HqNLYePWc3vIVnqKrelg5T8ChVhCxvR46+oiL+hFICSxyHjLcFeTov36
+	 VFTvbgIYuwlS6eQaL+tX/jjQus9Ma3UxxPTSYEe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Artemiev <Igor.A.Artemiev@mcst.ru>,
-	Johannes Berg <johannes.berg@intel.com>,
+	linke li <lilinke99@qq.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 047/111] wifi: cfg80211: fix rdev_dump_mpp() arguments order
-Date: Tue, 14 May 2024 12:19:45 +0200
-Message-ID: <20240514100958.921777209@linuxfoundation.org>
+Subject: [PATCH 5.10 048/111] net: mark racy access on sk->sk_rcvbuf
+Date: Tue, 14 May 2024 12:19:46 +0200
+Message-ID: <20240514100958.959108029@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -51,36 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
+From: linke li <lilinke99@qq.com>
 
-[ Upstream commit ec50f3114e55406a1aad24b7dfaa1c3f4336d8eb ]
+[ Upstream commit c2deb2e971f5d9aca941ef13ee05566979e337a4 ]
 
-Fix the order of arguments in the TP_ARGS macro
-for the rdev_dump_mpp tracepoint event.
+sk->sk_rcvbuf in __sock_queue_rcv_skb() and __sk_receive_skb() can be
+changed by other threads. Mark this as benign using READ_ONCE().
 
-Found by Linux Verification Center (linuxtesting.org).
+This patch is aimed at reducing the number of benign races reported by
+KCSAN in order to focus future debugging effort on harmful races.
 
-Signed-off-by: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
-Link: https://msgid.link/20240311164519.118398-1-Igor.A.Artemiev@mcst.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: linke li <lilinke99@qq.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/trace.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/sock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/trace.h b/net/wireless/trace.h
-index 6e218a0acd4e3..edc824c103e83 100644
---- a/net/wireless/trace.h
-+++ b/net/wireless/trace.h
-@@ -968,7 +968,7 @@ TRACE_EVENT(rdev_get_mpp,
- TRACE_EVENT(rdev_dump_mpp,
- 	TP_PROTO(struct wiphy *wiphy, struct net_device *netdev, int _idx,
- 		 u8 *dst, u8 *mpp),
--	TP_ARGS(wiphy, netdev, _idx, mpp, dst),
-+	TP_ARGS(wiphy, netdev, _idx, dst, mpp),
- 	TP_STRUCT__entry(
- 		WIPHY_ENTRY
- 		NETDEV_ENTRY
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 016c0b9e01b70..b4ecd0071e220 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -440,7 +440,7 @@ int __sock_queue_rcv_skb(struct sock *sk, struct sk_buff *skb)
+ 	unsigned long flags;
+ 	struct sk_buff_head *list = &sk->sk_receive_queue;
+ 
+-	if (atomic_read(&sk->sk_rmem_alloc) >= sk->sk_rcvbuf) {
++	if (atomic_read(&sk->sk_rmem_alloc) >= READ_ONCE(sk->sk_rcvbuf)) {
+ 		atomic_inc(&sk->sk_drops);
+ 		trace_sock_rcvqueue_full(sk, skb);
+ 		return -ENOMEM;
+@@ -492,7 +492,7 @@ int __sk_receive_skb(struct sock *sk, struct sk_buff *skb,
+ 
+ 	skb->dev = NULL;
+ 
+-	if (sk_rcvqueues_full(sk, sk->sk_rcvbuf)) {
++	if (sk_rcvqueues_full(sk, READ_ONCE(sk->sk_rcvbuf))) {
+ 		atomic_inc(&sk->sk_drops);
+ 		goto discard_and_relse;
+ 	}
 -- 
 2.43.0
 
