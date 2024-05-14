@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6260C13AD15;
-	Tue, 14 May 2024 11:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5596066B5E;
+	Tue, 14 May 2024 11:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684890; cv=none; b=ImkzYpG7OfPUWI7kWkGVldKDnuh8CUAsG54HnrgBnQz4XeyJbEd3fKJoRcYaC6i8bYWeeX5gEjfm5OY0i9LLjbFYyycsRGhaX+LzoHIl33WIww8ZLXdOAyMjGaFhkoaCsKukT19JB8WIeWlZZotwgritkiiX4+KPVUSWrg0KPcg=
+	t=1715684894; cv=none; b=fgUYr4hvUj0M6UyEJ68LR+2DBse53H7kZggjDmzaBBNb092x5ntv3JIN2urOas6+G11nVK/JA30QPv+fewaNitfhhLeffwz+g4ztSn0y/YLWyERek3G2XbUUe9/9d9TVpvZzUbnDa5VFahellHCrKTn8LjUP/Ny/BBRCw6jFvuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684890; c=relaxed/simple;
-	bh=M6XZKqnxmbzuZn3kxfM2tWz/DTzdrxn9f20RCVktonM=;
+	s=arc-20240116; t=1715684894; c=relaxed/simple;
+	bh=e/b1TQwGCj06uVpoiye6/km+NPuIyIXw6ui1IEr4sH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P8eNQ9xSuNj9DbIs89djOZ5lqN+oVWUY2l+O4tLl+nFju5rHhLB7IiFP2d7zrT9KaBXlVASODwk5HCUYDi7mvqN5poNPoawBXQiIEzXnTpBpxk7gdlNuSebtWZKJenVpQ2Q7gA24oNrLi8TOxAd1pTW76WFSk3mbxK65FEjJPr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BuVAxJE+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GQyCHfExy1SRxUubRje4aLAYvFD2dMbY6NV7Ptdm7hYl9DxUJP250+ySldfVNwWYBDyL5xdEdpza/dihE+jlw0hNFBrb2aDfs3KNt7nhWe6blVu92n2kvQtySndvQRkFMvbjRibqp9BOvrMIe/Anhp2KVnWwke0gQRmxx8tj3lA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCA4vbOo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BuVAxJE+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733E2C2BD10;
-	Tue, 14 May 2024 11:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCA4vbOo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27EAC2BD10;
+	Tue, 14 May 2024 11:08:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684890;
-	bh=M6XZKqnxmbzuZn3kxfM2tWz/DTzdrxn9f20RCVktonM=;
+	s=korg; t=1715684894;
+	bh=e/b1TQwGCj06uVpoiye6/km+NPuIyIXw6ui1IEr4sH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BuVAxJE+cbjztv+JH1tgpH1szv4pB0dFASzKvuRNbEwgYRnBgsESkN+eklY47QqMi
-	 NP1FOivuqHDUQHVAk2mTn/WqX6ctbr9w4C9oRl9xv0UJjsw96mWKJMf749iSRgM51y
-	 FTzPhzbTUjZXSFDqc+OOz9HWnKAgMydVn/l+UPJ0=
+	b=sCA4vbOoUdKbErMT10P/auMkTCEZiSRlwrAfI73sVbDwGLlsRwh5Zf/hTbvgtv8fx
+	 6xr38/0PGDT3+4vn/b/Qz73hKKisnkMTUAvJh76TnyHslMrqv4Pr8hpe2aJvm5Ogdj
+	 DzpTOBAKjpmxBwEjBSBXMnhVxDL4lHvdf+2W9570=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Simon Horman <horms@kernel.org>,
+	Igor Artemiev <Igor.A.Artemiev@mcst.ru>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/301] wifi: mac80211: fix ieee80211_bss_*_flags kernel-doc
-Date: Tue, 14 May 2024 12:16:15 +0200
-Message-ID: <20240514101036.176908662@linuxfoundation.org>
+Subject: [PATCH 6.6 105/301] wifi: cfg80211: fix rdev_dump_mpp() arguments order
+Date: Tue, 14 May 2024 12:16:16 +0200
+Message-ID: <20240514101036.214671311@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -52,47 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
+From: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
 
-[ Upstream commit 774f8841f55d7ac4044c79812691649da203584a ]
+[ Upstream commit ec50f3114e55406a1aad24b7dfaa1c3f4336d8eb ]
 
-Running kernel-doc on ieee80211_i.h flagged the following:
-net/mac80211/ieee80211_i.h:145: warning: expecting prototype for enum ieee80211_corrupt_data_flags. Prototype was for enum ieee80211_bss_corrupt_data_flags instead
-net/mac80211/ieee80211_i.h:162: warning: expecting prototype for enum ieee80211_valid_data_flags. Prototype was for enum ieee80211_bss_valid_data_flags instead
+Fix the order of arguments in the TP_ARGS macro
+for the rdev_dump_mpp tracepoint event.
 
-Fix these warnings.
+Found by Linux Verification Center (linuxtesting.org).
 
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://msgid.link/20240314-kdoc-ieee80211_i-v1-1-72b91b55b257@quicinc.com
+Signed-off-by: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
+Link: https://msgid.link/20240311164519.118398-1-Igor.A.Artemiev@mcst.ru
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ieee80211_i.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/wireless/trace.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 07beb72ddd25a..fefaa9e902a2f 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -122,7 +122,7 @@ struct ieee80211_bss {
- };
- 
- /**
-- * enum ieee80211_corrupt_data_flags - BSS data corruption flags
-+ * enum ieee80211_bss_corrupt_data_flags - BSS data corruption flags
-  * @IEEE80211_BSS_CORRUPT_BEACON: last beacon frame received was corrupted
-  * @IEEE80211_BSS_CORRUPT_PROBE_RESP: last probe response received was corrupted
-  *
-@@ -135,7 +135,7 @@ enum ieee80211_bss_corrupt_data_flags {
- };
- 
- /**
-- * enum ieee80211_valid_data_flags - BSS valid data flags
-+ * enum ieee80211_bss_valid_data_flags - BSS valid data flags
-  * @IEEE80211_BSS_VALID_WMM: WMM/UAPSD data was gathered from non-corrupt IE
-  * @IEEE80211_BSS_VALID_RATES: Supported rates were gathered from non-corrupt IE
-  * @IEEE80211_BSS_VALID_ERP: ERP flag was gathered from non-corrupt IE
+diff --git a/net/wireless/trace.h b/net/wireless/trace.h
+index 617c0d0dfa963..e89443173c7b4 100644
+--- a/net/wireless/trace.h
++++ b/net/wireless/trace.h
+@@ -1015,7 +1015,7 @@ TRACE_EVENT(rdev_get_mpp,
+ TRACE_EVENT(rdev_dump_mpp,
+ 	TP_PROTO(struct wiphy *wiphy, struct net_device *netdev, int _idx,
+ 		 u8 *dst, u8 *mpp),
+-	TP_ARGS(wiphy, netdev, _idx, mpp, dst),
++	TP_ARGS(wiphy, netdev, _idx, dst, mpp),
+ 	TP_STRUCT__entry(
+ 		WIPHY_ENTRY
+ 		NETDEV_ENTRY
 -- 
 2.43.0
 
