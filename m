@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70FFCF9D4;
-	Tue, 14 May 2024 11:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98326F9D4;
+	Tue, 14 May 2024 11:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687853; cv=none; b=a2Qd+rWzdGjJm/VZsp+bFD8U0+bMwx9pVUVhBT9So027PkbFws8aH7kcRYmZzUtWXjFDn97tWoFsXjW5js73VkX4UoyE0oeh16uGEB/mOxX7bYWqwVc6E7jcSmxc9ogoh7MeFkOYnzPAH9gWLcQ40INj9H39xVvBF1crQEq1CQE=
+	t=1715687856; cv=none; b=G+p19e+BlLGejbfYtOrQoRSn6iN1GkCVFPe3qjZ64BK7qKXGOUVFmsech06km9gaNBYbpRXcdBUZQYgh71tLwYch/1gaWaSGv/X88WrHxlus9m6wVFa/awemJyVkuoo/z2gcwRiSEvnr7aP0gyUWcfE5fmGlxOvS9xsnwdNriTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687853; c=relaxed/simple;
-	bh=qF3YodMJHNtoNXyVilu2cl6L6LitKz9ZoY9hbQV5NqY=;
+	s=arc-20240116; t=1715687856; c=relaxed/simple;
+	bh=E3hpyKScuW4h6hrO4TZ8eCoXmAYGWX72TX7lI4vBoHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j4rTaiV7DNQVOek2spw7y3Mw9iqYP/I2pKpHqQryPpFPLeEej0L0TpmGkCfYBcSyQZVyiyHZLesfXKWRqJc6kHhh0BubHvUkj4itX8izY3NBhh2b6sqE5sJ9kxKCvLSATY7j4ksoPOUfOIHJblpdIx2G6D+zeV2gEHZ5Q/s0J4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hA5WGt8r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J6llK8stEZnLPPFCjANcx+w94cCA3yKZloD0IaLUyKlcu+eavsCPtbBjZTIpuR0OSmlXc/8Vk9Lnc7sVVN3zMtO5jfpZWrRoKDtEq6rXOAhwqu8WqtLAn4w0/1bH0As60DgEPk6fPWOxxeoRNPo/qZLQwDNcfFTNiXuC8bjFB+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=prMcN2zw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hA5WGt8r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE25C32781;
-	Tue, 14 May 2024 11:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="prMcN2zw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0664C2BD10;
+	Tue, 14 May 2024 11:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687853;
-	bh=qF3YodMJHNtoNXyVilu2cl6L6LitKz9ZoY9hbQV5NqY=;
+	s=korg; t=1715687856;
+	bh=E3hpyKScuW4h6hrO4TZ8eCoXmAYGWX72TX7lI4vBoHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hA5WGt8rNqu5HZ6sGXdAMqXvIaGlWWj+ZaE/Pl/swu/wPI1qFd8i4GorSsM/+AxYG
-	 PQmJrQCzvfFLZLbuO+wbD8IwPzV5Tj4yFEa6Dn2F5bAB8gA6QsKWVG66EBHi1u3MiO
-	 mt2T6M92Rb1VHKFNcsKwS8r+vURzHXODU7CK/S8w=
+	b=prMcN2zwSHGvoRkQTXPG6GguzfR5vXW/rHqEJSLuNiBjcgs/UACzD4UMiSbyO6TGQ
+	 ug8muDysxwVfa4C9Sp3zsf8d03Rs+FRPs3k3LcqaBFCzUZIRd23D4eY1yWnFUR/mYj
+	 zu6/8Iz8KR6a+ORtAFHabKJo1gu5+Q/bm0FQInt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Savic <savicaleksa83@gmail.com>,
-	Marius Zachmann <mail@mariuszachmann.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jian Shen <shenjian15@huawei.com>,
+	Guangbin Huang <huangguangbin2@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 110/168] hwmon: (corsair-cpro) Use a separate buffer for sending commands
-Date: Tue, 14 May 2024 12:20:08 +0200
-Message-ID: <20240514101010.836896327@linuxfoundation.org>
+Subject: [PATCH 5.15 128/168] net: hns3: split function hclge_init_vlan_config()
+Date: Tue, 14 May 2024 12:20:26 +0200
+Message-ID: <20240514101011.515137175@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -52,76 +52,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksa Savic <savicaleksa83@gmail.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit e0cd85dc666cb08e1bd313d560cb4eff4d04219e ]
+[ Upstream commit b60f9d2ec479966383c7f2cdf3b1a3a66c25f212 ]
 
-Introduce cmd_buffer, a separate buffer for storing only
-the command that is sent to the device. Before this separation,
-the existing buffer was shared for both the command and the
-report received in ccp_raw_event(), which was copied into it.
+Currently the function hclge_init_vlan_config() is a bit long.
+Split it to several small functions, to simplify code and
+improve code readability.
 
-However, because of hidraw, the raw event parsing may be triggered
-in the middle of sending a command, resulting in outputting gibberish
-to the device. Using a separate buffer resolves this.
-
-Fixes: 40c3a4454225 ("hwmon: add Corsair Commander Pro driver")
-Signed-off-by: Aleksa Savic <savicaleksa83@gmail.com>
-Acked-by: Marius Zachmann <mail@mariuszachmann.de>
-Link: https://lore.kernel.org/r/20240504092504.24158-2-savicaleksa83@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Guangbin Huang <huangguangbin2@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: f5db7a3b65c8 ("net: hns3: fix port vlan filter not disabled issue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-cpro.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ .../hisilicon/hns3/hns3pf/hclge_main.c        | 97 +++++++++++--------
+ 1 file changed, 55 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index fa6aa4fc8b521..0a9cbb556188f 100644
---- a/drivers/hwmon/corsair-cpro.c
-+++ b/drivers/hwmon/corsair-cpro.c
-@@ -79,6 +79,7 @@ struct ccp_device {
- 	struct device *hwmon_dev;
- 	struct completion wait_input_report;
- 	struct mutex mutex; /* whenever buffer is used, lock before send_usb_cmd */
-+	u8 *cmd_buffer;
- 	u8 *buffer;
- 	int target[6];
- 	DECLARE_BITMAP(temp_cnct, NUM_TEMP_SENSORS);
-@@ -111,15 +112,15 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
- 	unsigned long t;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 4b0027a41f3cd..6a346165d5881 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -10102,67 +10102,80 @@ static int hclge_set_vlan_protocol_type(struct hclge_dev *hdev)
+ 	return status;
+ }
+ 
+-static int hclge_init_vlan_config(struct hclge_dev *hdev)
++static int hclge_init_vlan_filter(struct hclge_dev *hdev)
+ {
+-#define HCLGE_DEF_VLAN_TYPE		0x8100
+-
+-	struct hnae3_handle *handle = &hdev->vport[0].nic;
+ 	struct hclge_vport *vport;
  	int ret;
+ 	int i;
  
--	memset(ccp->buffer, 0x00, OUT_BUFFER_SIZE);
--	ccp->buffer[0] = command;
--	ccp->buffer[1] = byte1;
--	ccp->buffer[2] = byte2;
--	ccp->buffer[3] = byte3;
-+	memset(ccp->cmd_buffer, 0x00, OUT_BUFFER_SIZE);
-+	ccp->cmd_buffer[0] = command;
-+	ccp->cmd_buffer[1] = byte1;
-+	ccp->cmd_buffer[2] = byte2;
-+	ccp->cmd_buffer[3] = byte3;
+-	if (hdev->ae_dev->dev_version >= HNAE3_DEVICE_VERSION_V2) {
+-		/* for revision 0x21, vf vlan filter is per function */
+-		for (i = 0; i < hdev->num_alloc_vport; i++) {
+-			vport = &hdev->vport[i];
+-			ret = hclge_set_vlan_filter_ctrl(hdev,
+-							 HCLGE_FILTER_TYPE_VF,
+-							 HCLGE_FILTER_FE_EGRESS,
+-							 true,
+-							 vport->vport_id);
+-			if (ret)
+-				return ret;
+-			vport->cur_vlan_fltr_en = true;
+-		}
++	if (hdev->ae_dev->dev_version < HNAE3_DEVICE_VERSION_V2)
++		return hclge_set_vlan_filter_ctrl(hdev, HCLGE_FILTER_TYPE_VF,
++						  HCLGE_FILTER_FE_EGRESS_V1_B,
++						  true, 0);
  
- 	reinit_completion(&ccp->wait_input_report);
+-		ret = hclge_set_vlan_filter_ctrl(hdev, HCLGE_FILTER_TYPE_PORT,
+-						 HCLGE_FILTER_FE_INGRESS, true,
+-						 0);
+-		if (ret)
+-			return ret;
+-	} else {
++	/* for revision 0x21, vf vlan filter is per function */
++	for (i = 0; i < hdev->num_alloc_vport; i++) {
++		vport = &hdev->vport[i];
+ 		ret = hclge_set_vlan_filter_ctrl(hdev, HCLGE_FILTER_TYPE_VF,
+-						 HCLGE_FILTER_FE_EGRESS_V1_B,
+-						 true, 0);
++						 HCLGE_FILTER_FE_EGRESS, true,
++						 vport->vport_id);
+ 		if (ret)
+ 			return ret;
++		vport->cur_vlan_fltr_en = true;
+ 	}
  
--	ret = hid_hw_output_report(ccp->hdev, ccp->buffer, OUT_BUFFER_SIZE);
-+	ret = hid_hw_output_report(ccp->hdev, ccp->cmd_buffer, OUT_BUFFER_SIZE);
- 	if (ret < 0)
- 		return ret;
+-	hdev->vlan_type_cfg.rx_in_fst_vlan_type = HCLGE_DEF_VLAN_TYPE;
+-	hdev->vlan_type_cfg.rx_in_sec_vlan_type = HCLGE_DEF_VLAN_TYPE;
+-	hdev->vlan_type_cfg.rx_ot_fst_vlan_type = HCLGE_DEF_VLAN_TYPE;
+-	hdev->vlan_type_cfg.rx_ot_sec_vlan_type = HCLGE_DEF_VLAN_TYPE;
+-	hdev->vlan_type_cfg.tx_ot_vlan_type = HCLGE_DEF_VLAN_TYPE;
+-	hdev->vlan_type_cfg.tx_in_vlan_type = HCLGE_DEF_VLAN_TYPE;
++	return hclge_set_vlan_filter_ctrl(hdev, HCLGE_FILTER_TYPE_PORT,
++					  HCLGE_FILTER_FE_INGRESS, true, 0);
++}
  
-@@ -492,7 +493,11 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	if (!ccp)
- 		return -ENOMEM;
+-	ret = hclge_set_vlan_protocol_type(hdev);
+-	if (ret)
+-		return ret;
++static int hclge_init_vlan_type(struct hclge_dev *hdev)
++{
++	hdev->vlan_type_cfg.rx_in_fst_vlan_type = ETH_P_8021Q;
++	hdev->vlan_type_cfg.rx_in_sec_vlan_type = ETH_P_8021Q;
++	hdev->vlan_type_cfg.rx_ot_fst_vlan_type = ETH_P_8021Q;
++	hdev->vlan_type_cfg.rx_ot_sec_vlan_type = ETH_P_8021Q;
++	hdev->vlan_type_cfg.tx_ot_vlan_type = ETH_P_8021Q;
++	hdev->vlan_type_cfg.tx_in_vlan_type = ETH_P_8021Q;
  
--	ccp->buffer = devm_kmalloc(&hdev->dev, OUT_BUFFER_SIZE, GFP_KERNEL);
-+	ccp->cmd_buffer = devm_kmalloc(&hdev->dev, OUT_BUFFER_SIZE, GFP_KERNEL);
-+	if (!ccp->cmd_buffer)
-+		return -ENOMEM;
+-	for (i = 0; i < hdev->num_alloc_vport; i++) {
+-		u16 vlan_tag;
+-		u8 qos;
++	return hclge_set_vlan_protocol_type(hdev);
++}
+ 
++static int hclge_init_vport_vlan_offload(struct hclge_dev *hdev)
++{
++	struct hclge_port_base_vlan_config *cfg;
++	struct hclge_vport *vport;
++	int ret;
++	int i;
 +
-+	ccp->buffer = devm_kmalloc(&hdev->dev, IN_BUFFER_SIZE, GFP_KERNEL);
- 	if (!ccp->buffer)
- 		return -ENOMEM;
++	for (i = 0; i < hdev->num_alloc_vport; i++) {
+ 		vport = &hdev->vport[i];
+-		vlan_tag = vport->port_base_vlan_cfg.vlan_info.vlan_tag;
+-		qos = vport->port_base_vlan_cfg.vlan_info.qos;
++		cfg = &vport->port_base_vlan_cfg;
  
+-		ret = hclge_vlan_offload_cfg(vport,
+-					     vport->port_base_vlan_cfg.state,
+-					     vlan_tag, qos);
++		ret = hclge_vlan_offload_cfg(vport, cfg->state,
++					     cfg->vlan_info.vlan_tag,
++					     cfg->vlan_info.qos);
+ 		if (ret)
+ 			return ret;
+ 	}
++	return 0;
++}
++
++static int hclge_init_vlan_config(struct hclge_dev *hdev)
++{
++	struct hnae3_handle *handle = &hdev->vport[0].nic;
++	int ret;
++
++	ret = hclge_init_vlan_filter(hdev);
++	if (ret)
++		return ret;
++
++	ret = hclge_init_vlan_type(hdev);
++	if (ret)
++		return ret;
++
++	ret = hclge_init_vport_vlan_offload(hdev);
++	if (ret)
++		return ret;
+ 
+ 	return hclge_set_vlan_filter(handle, htons(ETH_P_8021Q), 0, false);
+ }
 -- 
 2.43.0
 
