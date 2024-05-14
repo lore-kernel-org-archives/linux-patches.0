@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FCB2B9AD;
-	Tue, 14 May 2024 10:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D371386D5;
+	Tue, 14 May 2024 10:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683559; cv=none; b=h1IviOzi4p7R549kL5b8FITVaTRSMv0x+OhIgHurqQGGvyIzh3WNaxs7f0YFk8kUillS4obXSJK4ghm/JDuPxN4TdjEH/TDg8yjH5YbCBBhAJHWRy1ue+yK2aPnbLyu3ofqd6Ihj5p+0gjx96u9BoAPgAVvwMSPIk32TNOrYtRU=
+	t=1715683563; cv=none; b=L5hjA6t0HD+nlHcKcfyGnSa/YbxXH8HYgrrt91RXGcgzBo73HTowZs728zOke1JPlP9ggfVEY1skdpMWE/khqgrR8++7GtGMrPfD83ODlIkOX5Nr4AuHPeDFEP+PTeme2fTQWRmT24kRwz+RceAPD9qCNAYEt4rdM6iQKAr1bCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683559; c=relaxed/simple;
-	bh=PW4mj89qXRM4vMx3GULJG5sZSWZbVvH5VXeQjBFSat4=;
+	s=arc-20240116; t=1715683563; c=relaxed/simple;
+	bh=sDJFqaXK8clfuV+m3mFzZL4SRuJi695ihJX6vFRYoRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K3tDmdui3721xMzAFEQzPi7vgPv8LHDpvB/zXpEIXnPC4y7cJU/aRMeY36ZkePn+E6K8f4D6nDvTT7BrZBLN6g8G+sb5TOaaTRz3kZXl6I0yzwYYqv+L02AR+GywD5n0BfWAFArnMmoWEq2vs+7uv3lLVuSNkBJMWVIGAPuWIuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auQdPycC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SYMXcoBlgc4HTFFxVGxAvVL24ne7OICIKtSn9t6udrejV18l2PBorjUY98fDRtUS/zovf+8BgYhjpr1n7iEXBrWb3ZpWe/lO+yVFU2lT86xDdbAvtIKnvrGiP825LFTH16pE6NCtma1M3JxyRiDqjvA80JUGnCST8RqCctSYp64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DS9keg+7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auQdPycC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B56C32781;
-	Tue, 14 May 2024 10:45:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DS9keg+7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A70FC2BD10;
+	Tue, 14 May 2024 10:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683559;
-	bh=PW4mj89qXRM4vMx3GULJG5sZSWZbVvH5VXeQjBFSat4=;
+	s=korg; t=1715683563;
+	bh=sDJFqaXK8clfuV+m3mFzZL4SRuJi695ihJX6vFRYoRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=auQdPycCLVDALlLFvMNmKIvH1IXEXnm7xwdPsXA7GQJg6cc5hieblILYtQ0PdaFE4
-	 cpXM/xMBs7hpkJnRpjBfMT/QJc82ddUDaDhCSpZvPeZYOhr0iRhYXKjvJlGem+PeD9
-	 HwlYLs1WUvq5A+fWlqvxjPxYdZVVcJdd8RyIz0NY=
+	b=DS9keg+75UtYq35wUfoTOweYsFNCwp91CtOGUPten3VF74bOvw6rI7wNQJ8jgH4fl
+	 EWk47qUGk8IFiW/swkVRJXJi46IgDej08pddcsXJ88cCE/saebBNpRcHsdh3aEIHqb
+	 f0sjn8S5wAmLoedK/KHiay4XEvSRi95QnryA4wUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Simon Ser <contact@emersion.fr>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 235/336] drm/meson: dw-hdmi: add bandgap setting for g12
-Date: Tue, 14 May 2024 12:17:19 +0200
-Message-ID: <20240514101047.488200834@linuxfoundation.org>
+Subject: [PATCH 6.8 236/336] drm/connector: Add \n to message about demoting connector force-probes
+Date: Tue, 14 May 2024 12:17:20 +0200
+Message-ID: <20240514101047.524932510@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,133 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 08001033121dd92b8297a5b7333636b466c30f13 ]
+[ Upstream commit 6897204ea3df808d342c8e4613135728bc538bcd ]
 
-When no mode is set, the utility pin appears to be grounded. No signal
-is getting through.
+The debug print clearly lacks a \n at the end. Add it.
 
-This is problematic because ARC and eARC use this line and may do so even
-if no display mode is set.
-
-This change enable the bandgap setting on g12 chip, which fix the problem
-with the utility pin. This is done by restoring init values on PHY init and
-disable.
-
-Fixes: 3b7c1237a72a ("drm/meson: Add G12A support for the DW-HDMI Glue")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20240426160256.3089978-3-jbrunet@baylibre.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240426160256.3089978-3-jbrunet@baylibre.com
+Fixes: 8f86c82aba8b ("drm/connector: demote connector force-probes for non-master clients")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Simon Ser <contact@emersion.fr>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240502153234.1.I2052f01c8d209d9ae9c300b87c6e4f60bd3cc99e@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_dw_hdmi.c | 43 ++++++++++++++++-----------
- 1 file changed, 26 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/drm_connector.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_dw_hdmi.c b/drivers/gpu/drm/meson/meson_dw_hdmi.c
-index a83d93078537d..5565f7777529f 100644
---- a/drivers/gpu/drm/meson/meson_dw_hdmi.c
-+++ b/drivers/gpu/drm/meson/meson_dw_hdmi.c
-@@ -106,6 +106,8 @@
- #define HHI_HDMI_CLK_CNTL	0x1cc /* 0x73 */
- #define HHI_HDMI_PHY_CNTL0	0x3a0 /* 0xe8 */
- #define HHI_HDMI_PHY_CNTL1	0x3a4 /* 0xe9 */
-+#define  PHY_CNTL1_INIT		0x03900000
-+#define  PHY_INVERT		BIT(17)
- #define HHI_HDMI_PHY_CNTL2	0x3a8 /* 0xea */
- #define HHI_HDMI_PHY_CNTL3	0x3ac /* 0xeb */
- #define HHI_HDMI_PHY_CNTL4	0x3b0 /* 0xec */
-@@ -130,6 +132,8 @@ struct meson_dw_hdmi_data {
- 				    unsigned int addr);
- 	void		(*dwc_write)(struct meson_dw_hdmi *dw_hdmi,
- 				     unsigned int addr, unsigned int data);
-+	u32 cntl0_init;
-+	u32 cntl1_init;
- };
+diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
+index b0516505f7ae9..4d2df7f64dc51 100644
+--- a/drivers/gpu/drm/drm_connector.c
++++ b/drivers/gpu/drm/drm_connector.c
+@@ -2940,7 +2940,7 @@ int drm_mode_getconnector(struct drm_device *dev, void *data,
+ 						     dev->mode_config.max_width,
+ 						     dev->mode_config.max_height);
+ 		else
+-			drm_dbg_kms(dev, "User-space requested a forced probe on [CONNECTOR:%d:%s] but is not the DRM master, demoting to read-only probe",
++			drm_dbg_kms(dev, "User-space requested a forced probe on [CONNECTOR:%d:%s] but is not the DRM master, demoting to read-only probe\n",
+ 				    connector->base.id, connector->name);
+ 	}
  
- struct meson_dw_hdmi {
-@@ -458,7 +462,9 @@ static void dw_hdmi_phy_disable(struct dw_hdmi *hdmi,
- 
- 	DRM_DEBUG_DRIVER("\n");
- 
--	regmap_write(priv->hhi, HHI_HDMI_PHY_CNTL0, 0);
-+	/* Fallback to init mode */
-+	regmap_write(priv->hhi, HHI_HDMI_PHY_CNTL1, dw_hdmi->data->cntl1_init);
-+	regmap_write(priv->hhi, HHI_HDMI_PHY_CNTL0, dw_hdmi->data->cntl0_init);
- }
- 
- static enum drm_connector_status dw_hdmi_read_hpd(struct dw_hdmi *hdmi,
-@@ -576,11 +582,22 @@ static const struct regmap_config meson_dw_hdmi_regmap_config = {
- 	.fast_io = true,
- };
- 
--static const struct meson_dw_hdmi_data meson_dw_hdmi_gx_data = {
-+static const struct meson_dw_hdmi_data meson_dw_hdmi_gxbb_data = {
- 	.top_read = dw_hdmi_top_read,
- 	.top_write = dw_hdmi_top_write,
- 	.dwc_read = dw_hdmi_dwc_read,
- 	.dwc_write = dw_hdmi_dwc_write,
-+	.cntl0_init = 0x0,
-+	.cntl1_init = PHY_CNTL1_INIT | PHY_INVERT,
-+};
-+
-+static const struct meson_dw_hdmi_data meson_dw_hdmi_gxl_data = {
-+	.top_read = dw_hdmi_top_read,
-+	.top_write = dw_hdmi_top_write,
-+	.dwc_read = dw_hdmi_dwc_read,
-+	.dwc_write = dw_hdmi_dwc_write,
-+	.cntl0_init = 0x0,
-+	.cntl1_init = PHY_CNTL1_INIT,
- };
- 
- static const struct meson_dw_hdmi_data meson_dw_hdmi_g12a_data = {
-@@ -588,6 +605,8 @@ static const struct meson_dw_hdmi_data meson_dw_hdmi_g12a_data = {
- 	.top_write = dw_hdmi_g12a_top_write,
- 	.dwc_read = dw_hdmi_g12a_dwc_read,
- 	.dwc_write = dw_hdmi_g12a_dwc_write,
-+	.cntl0_init = 0x000b4242, /* Bandgap */
-+	.cntl1_init = PHY_CNTL1_INIT,
- };
- 
- static void meson_dw_hdmi_init(struct meson_dw_hdmi *meson_dw_hdmi)
-@@ -626,18 +645,8 @@ static void meson_dw_hdmi_init(struct meson_dw_hdmi *meson_dw_hdmi)
- 	meson_dw_hdmi->data->top_write(meson_dw_hdmi, HDMITX_TOP_BIST_CNTL, BIT(12));
- 
- 	/* Setup PHY */
--	regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
--			   0xffff << 16, 0x0390 << 16);
--
--	/* BIT_INVERT */
--	if (dw_hdmi_is_compatible(meson_dw_hdmi, "amlogic,meson-gxl-dw-hdmi") ||
--	    dw_hdmi_is_compatible(meson_dw_hdmi, "amlogic,meson-gxm-dw-hdmi") ||
--	    dw_hdmi_is_compatible(meson_dw_hdmi, "amlogic,meson-g12a-dw-hdmi"))
--		regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
--				   BIT(17), 0);
--	else
--		regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
--				   BIT(17), BIT(17));
-+	regmap_write(priv->hhi, HHI_HDMI_PHY_CNTL1, meson_dw_hdmi->data->cntl1_init);
-+	regmap_write(priv->hhi, HHI_HDMI_PHY_CNTL0, meson_dw_hdmi->data->cntl0_init);
- 
- 	/* Enable HDMI-TX Interrupt */
- 	meson_dw_hdmi->data->top_write(meson_dw_hdmi, HDMITX_TOP_INTR_STAT_CLR,
-@@ -848,11 +857,11 @@ static const struct dev_pm_ops meson_dw_hdmi_pm_ops = {
- 
- static const struct of_device_id meson_dw_hdmi_of_table[] = {
- 	{ .compatible = "amlogic,meson-gxbb-dw-hdmi",
--	  .data = &meson_dw_hdmi_gx_data },
-+	  .data = &meson_dw_hdmi_gxbb_data },
- 	{ .compatible = "amlogic,meson-gxl-dw-hdmi",
--	  .data = &meson_dw_hdmi_gx_data },
-+	  .data = &meson_dw_hdmi_gxl_data },
- 	{ .compatible = "amlogic,meson-gxm-dw-hdmi",
--	  .data = &meson_dw_hdmi_gx_data },
-+	  .data = &meson_dw_hdmi_gxl_data },
- 	{ .compatible = "amlogic,meson-g12a-dw-hdmi",
- 	  .data = &meson_dw_hdmi_g12a_data },
- 	{ }
 -- 
 2.43.0
 
