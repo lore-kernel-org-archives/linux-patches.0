@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578B16CDC9;
-	Tue, 14 May 2024 10:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29FD6CDC9;
+	Tue, 14 May 2024 10:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683945; cv=none; b=kb4vmKVPHFVAUkV0PSoQORzWzK3BLXlfprfTp4n+RO3ue/S8d5y/sy3m5HHO6A9f/aVq16jo9CTllX0F0buHmO2lVIWz/kvrl/I+MezAU9NyCCmXx3JSbew3C6LPltkmlsNftLlbf/xUOzzBfCsIbT/WK7NfpG1W76YKBw1tOEg=
+	t=1715683949; cv=none; b=hNTBFpbTRWeDu/D4v4uThG5qeL7/wTLusCyMGXiQDnM7RndWWOF/31qCVBOs/oeDt0XzyQcWjaVZjRZ6oyThYDE5LbYehAIeKd50YcvBYvFd5tXt7fF5oX4GQZkRFGNFXrAtIthgRoIXAb7Sv+r1ayYDAetmaTVyT6F829Pw1oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683945; c=relaxed/simple;
-	bh=HzymojR6eANGvMHbiOBc1AW1r5RLyDAKnqpjyv7pRuY=;
+	s=arc-20240116; t=1715683949; c=relaxed/simple;
+	bh=Vhu9frgZTtzjqKefU4M0DJEKlUADe+xuppHv2RYgawc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZEoIabHc5ipf4BXmgaUxQ0zqw3xCrmaipHJNXCfWAqPngAy600wDxTG0BkpSrWEkfq2vS6NW9elYBzXHYk9Fg/mJ8EZXy19J0ZSJtsSAB8vV3wz1oPkhaunxntCeirEoQ/hMPPFy9/n5UCWgongvFSXeZpDxfQByWJYkDRQErmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dG7X0fjW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YMd5pts1ZiMkKWrC98tZ5dHvlsGkWdipM0CvlhcCZPrx7ElR7DTpNrR0Ype4qt87RIL2dpy4GihaqA7llimBZimj5ZOm6FVK8qinDKZkL8rB7DhNadWNUDHbqOyf+/d6mH4y90frvj2Ke6gNoP2lA7j88Rs5zWcHMMu95fqIP3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvFMlt8T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dG7X0fjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF74CC2BD10;
-	Tue, 14 May 2024 10:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvFMlt8T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E812C2BD10;
+	Tue, 14 May 2024 10:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683945;
-	bh=HzymojR6eANGvMHbiOBc1AW1r5RLyDAKnqpjyv7pRuY=;
+	s=korg; t=1715683948;
+	bh=Vhu9frgZTtzjqKefU4M0DJEKlUADe+xuppHv2RYgawc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dG7X0fjWLIhkKP47Q7YVpSi0iPxjnDGHPo/swQyKWkZVbB11/p03gw0KxOIBR0pYx
-	 6iawGyxnaviV5V1ok6U7F4i6T17TJw5h1WuLjVV79kYGGe/LtJzNR0EXceBigD4AGv
-	 5AF9MzCatfHEgz7Ps7vxME6QyO1YOKDu+EYpyhME=
+	b=uvFMlt8TqKsETWFtf4zmNj6pBanpDACaFfC9CjbtmihB3Fh5CpStPb4nKJJlUJrKJ
+	 GUZRku6pijK2TNN4bioQqciA7If7gj3j+DUu/wIMqnREdMOgu7MXtn+Ns8nGuzngE9
+	 QMmzmmLBFSKp5PPcr5nQbnbu956SSA4Fe1wN9Sjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Martin Krastev <martin.krastev@broadcom.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.8 298/336] drm/vmwgfx: Fix invalid reads in fence signaled events
-Date: Tue, 14 May 2024 12:18:22 +0200
-Message-ID: <20240514101049.868407347@linuxfoundation.org>
+	20240228012313.5934-1-yaolu@kylinos.cn,
+	Matt Coster <matt.coster@imgtec.com>,
+	Frank Binns <frank.binns@imgtec.com>
+Subject: [PATCH 6.8 299/336] drm/imagination: Ensure PVR_MIPS_PT_PAGE_COUNT is never zero
+Date: Tue, 14 May 2024 12:18:23 +0200
+Message-ID: <20240514101049.906771061@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -57,46 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Matt Coster <matt.coster@imgtec.com>
 
-commit a37ef7613c00f2d72c8fc08bd83fb6cc76926c8c upstream.
+commit e4236b14fe32a8d92686ec656c870a6bb1d6f50a upstream.
 
-Correctly set the length of the drm_event to the size of the structure
-that's actually used.
+When the host page size was more than 4 times larger than the FW page
+size, this macro evaluated to zero resulting in zero-sized arrays.
 
-The length of the drm_event was set to the parent structure instead of
-to the drm_vmw_event_fence which is supposed to be read. drm_read
-uses the length parameter to copy the event to the user space thus
-resuling in oob reads.
+Use DIV_ROUND_UP() to ensure the correct behavior.
 
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Fixes: 8b7de6aa8468 ("vmwgfx: Rework fence event action")
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-23566
-Cc: David Airlie <airlied@gmail.com>
-CC: Daniel Vetter <daniel@ffwll.ch>
-Cc: Zack Rusin <zack.rusin@broadcom.com>
-Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Cc: <stable@vger.kernel.org> # v3.4+
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240425192748.1761522-1-zack.rusin@broadcom.com
+Reported-by: 20240228012313.5934-1-yaolu@kylinos.cn
+Closes: https://lore.kernel.org/dri-devel/20240228012313.5934-1-yaolu@kylinos.cn
+Link: https://lore.kernel.org/dri-devel/20240228012313.5934-1-yaolu@kylinos.cn
+Fixes: 927f3e0253c1 ("drm/imagination: Implement MIPS firmware processor and MMU support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
+Reviewed-by: Frank Binns <frank.binns@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_fence.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/imagination/pvr_fw_mips.h |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-@@ -991,7 +991,7 @@ static int vmw_event_fence_action_create
- 	}
+--- a/drivers/gpu/drm/imagination/pvr_fw_mips.h
++++ b/drivers/gpu/drm/imagination/pvr_fw_mips.h
+@@ -7,13 +7,14 @@
+ #include "pvr_rogue_mips.h"
  
- 	event->event.base.type = DRM_VMW_EVENT_FENCE_SIGNALED;
--	event->event.base.length = sizeof(*event);
-+	event->event.base.length = sizeof(event->event);
- 	event->event.user_data = user_data;
+ #include <asm/page.h>
++#include <linux/math.h>
+ #include <linux/types.h>
  
- 	ret = drm_event_reserve_init(dev, file_priv, &event->base, &event->event.base);
+ /* Forward declaration from pvr_gem.h. */
+ struct pvr_gem_object;
+ 
+-#define PVR_MIPS_PT_PAGE_COUNT ((ROGUE_MIPSFW_MAX_NUM_PAGETABLE_PAGES * ROGUE_MIPSFW_PAGE_SIZE_4K) \
+-				>> PAGE_SHIFT)
++#define PVR_MIPS_PT_PAGE_COUNT DIV_ROUND_UP(ROGUE_MIPSFW_MAX_NUM_PAGETABLE_PAGES * ROGUE_MIPSFW_PAGE_SIZE_4K, PAGE_SIZE)
++
+ /**
+  * struct pvr_fw_mips_data - MIPS-specific data
+  */
 
 
