@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E87C2B9B3;
-	Tue, 14 May 2024 11:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1E22B9B3;
+	Tue, 14 May 2024 11:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686541; cv=none; b=oZqj6tLhvG+DoUMKp1UGVxrQxR3CyuACnqfIFCyukPY7Axu3w3AWzVyNgwsQ2VCMJ4bm+pNEmn29uEkhMqcdtiPrh9IH97UmiRN4UgyUO/QvqFDqZYoxzPm0hTJMq64hJorqdQCp3x9YvGeaK+urGsDDzgmrIONYGVYLgTdRxqA=
+	t=1715686544; cv=none; b=PBNTWMeFwNkFbAQ/CXH+Y4sNKmWYzamzaDkBrXx/McHME0wJd7H67rHKjrXpvnCLp71cXS9N6lfuFSoYeWNAxF8k5nVHe4SieBj2CiHueJXWQlAWHPcKXcVmg57TUF4CjGaxnbbgtRzq/wA5Lur4p3dRrP26AyXA5t3MqNPxpBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686541; c=relaxed/simple;
-	bh=rXyQDx9okTgPfQYIt28T/IfPr0zzZZYkHUUrce/LrKk=;
+	s=arc-20240116; t=1715686544; c=relaxed/simple;
+	bh=EnLy9+hjuFJwswajEe8uK3xDjgmYQBS7+ifL5+XTA2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfeU6K3EttmJ5SeZu9JA8IYQYsjQEWREOFVnHTQkxIpwwRtvPJ4Ai7/R/Uu97WRilB4jZtVGX29aGCPvdUPTZVP/jMgFx9OmB+3uAMfZFPhpp8XfgQf11A6ors6WPQ5IO305uB2nslVmvjY70hQKbuVddgnPygfockMhSu6oWjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoxY8v6K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c1Hj9R40wP9tAk3lnihkv2GocDzdgAyHOaCuw8LPU9S2TbMOep8espj6Ay/dCc99lWLp6pu27dyrxOdlrQiLDffTOQLwAuk0s3mMaeGz8SJKApoNiBqeVBP3wF1v/L9UHGe0Ncdayp/M1uicIrWU+7VTyDr5dQsthQPxRvV1nuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeRGyL7O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoxY8v6K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B816AC2BD10;
-	Tue, 14 May 2024 11:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeRGyL7O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98DAEC2BD10;
+	Tue, 14 May 2024 11:35:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686541;
-	bh=rXyQDx9okTgPfQYIt28T/IfPr0zzZZYkHUUrce/LrKk=;
+	s=korg; t=1715686544;
+	bh=EnLy9+hjuFJwswajEe8uK3xDjgmYQBS7+ifL5+XTA2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AoxY8v6KqEAmH/yxxC3VpnMXc2gU0k6NsIX+GvciwAXBa4SL+mmb9ohQ9KPUDQ8vI
-	 iy9eQjPf1/uYHBcqPqChXAsY6CPdakCxZVYbZAzFIN6QejLij7MzsTnLSCVjqhhpth
-	 ep+LbJfrxSusPP4PLr19LfMJGk/VM7JXbTY6QsLo=
+	b=aeRGyL7OqNgjrNwaydQKXDYmPO+raORMIKPdgEQ9Xl4Tc77k7iDWb4oBlsKslSy/h
+	 Qj2J3hM7KZk5m4VqgBgodiiIRm3uLV3n99xF5mABSkYgK1IdU+IHVM4irDNezHOrim
+	 tE/NhlbV/25nKGGDSfO4I7wtuL2xFaV7pHkFtTSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonglong Liu <liuyonglong@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 173/236] net: hns3: fix kernel crash when devlink reload during initialization
-Date: Tue, 14 May 2024 12:18:55 +0200
-Message-ID: <20240514101026.931533180@linuxfoundation.org>
+Subject: [PATCH 6.1 174/236] drm/meson: dw-hdmi: power up phy on device init
+Date: Tue, 14 May 2024 12:18:56 +0200
+Message-ID: <20240514101026.969232589@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -52,116 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonglong Liu <liuyonglong@huawei.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 35d92abfbad88cf947c010baf34b075e40566095 ]
+[ Upstream commit 04703bfd7f99c016a823c74712b97f8b5590ce87 ]
 
-The devlink reload process will access the hardware resources,
-but the register operation is done before the hardware is initialized.
-So, processing the devlink reload during initialization may lead to kernel
-crash.
+The phy is not in a useful state right after init. It will become useful,
+including for auxiliary function such as CEC or ARC, after the first mode
+is set. This is a problem on systems where the display is using another
+interface like DSI or CVBS.
 
-This patch fixes this by registering the devlink after
-hardware initialization.
+This change refactor the init and mode change callback to power up the PHY
+on init and leave only what is necessary for mode changes in the related
+function. This is enough to fix CEC operation when HDMI display is not
+enabled.
 
-Fixes: cd6242991d2e ("net: hns3: add support for registering devlink for VF")
-Fixes: 93305b77ffcb ("net: hns3: fix kernel crash when devlink reload during pf initialization")
-Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 3f68be7d8e96 ("drm/meson: Add support for HDMI encoder and DW-HDMI bridge + PHY")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240426160256.3089978-2-jbrunet@baylibre.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240426160256.3089978-2-jbrunet@baylibre.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 17 +++++------------
- .../hisilicon/hns3/hns3vf/hclgevf_main.c        | 10 ++++------
- 2 files changed, 9 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/meson/meson_dw_hdmi.c | 51 +++++++++------------------
+ 1 file changed, 17 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index a18dc73c69894..a2655adc764cd 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -11609,16 +11609,10 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
- 	if (ret)
- 		goto out;
+diff --git a/drivers/gpu/drm/meson/meson_dw_hdmi.c b/drivers/gpu/drm/meson/meson_dw_hdmi.c
+index 5cd2b2ebbbd33..f8dd22d6e6c62 100644
+--- a/drivers/gpu/drm/meson/meson_dw_hdmi.c
++++ b/drivers/gpu/drm/meson/meson_dw_hdmi.c
+@@ -384,26 +384,6 @@ static int dw_hdmi_phy_init(struct dw_hdmi *hdmi, void *data,
+ 	     drm_mode_is_420_also(display, mode)))
+ 		mode_is_420 = true;
  
--	ret = hclge_devlink_init(hdev);
--	if (ret)
--		goto err_pci_uninit;
+-	/* Enable clocks */
+-	regmap_update_bits(priv->hhi, HHI_HDMI_CLK_CNTL, 0xffff, 0x100);
 -
--	devl_lock(hdev->devlink);
+-	/* Bring HDMITX MEM output of power down */
+-	regmap_update_bits(priv->hhi, HHI_MEM_PD_REG0, 0xff << 8, 0);
 -
- 	/* Firmware command queue initialize */
- 	ret = hclge_comm_cmd_queue_init(hdev->pdev, &hdev->hw.hw);
- 	if (ret)
--		goto err_devlink_uninit;
-+		goto err_pci_uninit;
+-	/* Bring out of reset */
+-	dw_hdmi->data->top_write(dw_hdmi, HDMITX_TOP_SW_RESET,  0);
+-
+-	/* Enable internal pixclk, tmds_clk, spdif_clk, i2s_clk, cecclk */
+-	dw_hdmi_top_write_bits(dw_hdmi, HDMITX_TOP_CLK_CNTL,
+-			       0x3, 0x3);
+-
+-	/* Enable cec_clk and hdcp22_tmdsclk_en */
+-	dw_hdmi_top_write_bits(dw_hdmi, HDMITX_TOP_CLK_CNTL,
+-			       0x3 << 4, 0x3 << 4);
+-
+-	/* Enable normal output to PHY */
+-	dw_hdmi->data->top_write(dw_hdmi, HDMITX_TOP_BIST_CNTL, BIT(12));
+-
+ 	/* TMDS pattern setup */
+ 	if (mode->clock > 340000 && !mode_is_420) {
+ 		dw_hdmi->data->top_write(dw_hdmi, HDMITX_TOP_TMDS_CLK_PTTN_01,
+@@ -425,20 +405,6 @@ static int dw_hdmi_phy_init(struct dw_hdmi *hdmi, void *data,
+ 	/* Setup PHY parameters */
+ 	meson_hdmi_phy_setup_mode(dw_hdmi, mode, mode_is_420);
  
- 	/* Firmware command initialize */
- 	ret = hclge_comm_cmd_init(hdev->ae_dev, &hdev->hw.hw, &hdev->fw_version,
-@@ -11781,6 +11775,10 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
- 	/* Enable MISC vector(vector0) */
- 	hclge_enable_vector(&hdev->misc_vector, true);
+-	/* Setup PHY */
+-	regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
+-			   0xffff << 16, 0x0390 << 16);
+-
+-	/* BIT_INVERT */
+-	if (dw_hdmi_is_compatible(dw_hdmi, "amlogic,meson-gxl-dw-hdmi") ||
+-	    dw_hdmi_is_compatible(dw_hdmi, "amlogic,meson-gxm-dw-hdmi") ||
+-	    dw_hdmi_is_compatible(dw_hdmi, "amlogic,meson-g12a-dw-hdmi"))
+-		regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
+-				   BIT(17), 0);
+-	else
+-		regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
+-				   BIT(17), BIT(17));
+-
+ 	/* Disable clock, fifo, fifo_wr */
+ 	regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1, 0xf, 0);
  
-+	ret = hclge_devlink_init(hdev);
-+	if (ret)
-+		goto err_ptp_uninit;
+@@ -656,6 +622,23 @@ static void meson_dw_hdmi_init(struct meson_dw_hdmi *meson_dw_hdmi)
+ 	meson_dw_hdmi->data->top_write(meson_dw_hdmi,
+ 				       HDMITX_TOP_CLK_CNTL, 0xff);
+ 
++	/* Enable normal output to PHY */
++	meson_dw_hdmi->data->top_write(meson_dw_hdmi, HDMITX_TOP_BIST_CNTL, BIT(12));
 +
- 	hclge_state_init(hdev);
- 	hdev->last_reset_time = jiffies;
- 
-@@ -11788,8 +11786,6 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
- 		 HCLGE_DRIVER_NAME);
- 
- 	hclge_task_schedule(hdev, round_jiffies_relative(HZ));
--
--	devl_unlock(hdev->devlink);
- 	return 0;
- 
- err_ptp_uninit:
-@@ -11803,9 +11799,6 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
- 	pci_free_irq_vectors(pdev);
- err_cmd_uninit:
- 	hclge_comm_cmd_uninit(hdev->ae_dev, &hdev->hw.hw);
--err_devlink_uninit:
--	devl_unlock(hdev->devlink);
--	hclge_devlink_uninit(hdev);
- err_pci_uninit:
- 	pcim_iounmap(pdev, hdev->hw.hw.io_base);
- 	pci_clear_master(pdev);
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index 1ecf06345526b..1f5a27fb309aa 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -2902,10 +2902,6 @@ static int hclgevf_init_hdev(struct hclgevf_dev *hdev)
- 	if (ret)
- 		return ret;
- 
--	ret = hclgevf_devlink_init(hdev);
--	if (ret)
--		goto err_devlink_init;
--
- 	ret = hclge_comm_cmd_queue_init(hdev->pdev, &hdev->hw.hw);
- 	if (ret)
- 		goto err_cmd_queue_init;
-@@ -2998,6 +2994,10 @@ static int hclgevf_init_hdev(struct hclgevf_dev *hdev)
- 
- 	hclgevf_init_rxd_adv_layout(hdev);
- 
-+	ret = hclgevf_devlink_init(hdev);
-+	if (ret)
-+		goto err_config;
++	/* Setup PHY */
++	regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
++			   0xffff << 16, 0x0390 << 16);
 +
- 	set_bit(HCLGEVF_STATE_SERVICE_INITED, &hdev->state);
- 
- 	hdev->last_reset_time = jiffies;
-@@ -3017,8 +3017,6 @@ static int hclgevf_init_hdev(struct hclgevf_dev *hdev)
- err_cmd_init:
- 	hclge_comm_cmd_uninit(hdev->ae_dev, &hdev->hw.hw);
- err_cmd_queue_init:
--	hclgevf_devlink_uninit(hdev);
--err_devlink_init:
- 	hclgevf_pci_uninit(hdev);
- 	clear_bit(HCLGEVF_STATE_IRQ_INITED, &hdev->state);
- 	return ret;
++	/* BIT_INVERT */
++	if (dw_hdmi_is_compatible(meson_dw_hdmi, "amlogic,meson-gxl-dw-hdmi") ||
++	    dw_hdmi_is_compatible(meson_dw_hdmi, "amlogic,meson-gxm-dw-hdmi") ||
++	    dw_hdmi_is_compatible(meson_dw_hdmi, "amlogic,meson-g12a-dw-hdmi"))
++		regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
++				   BIT(17), 0);
++	else
++		regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
++				   BIT(17), BIT(17));
++
+ 	/* Enable HDMI-TX Interrupt */
+ 	meson_dw_hdmi->data->top_write(meson_dw_hdmi, HDMITX_TOP_INTR_STAT_CLR,
+ 				       HDMITX_TOP_INTR_CORE);
 -- 
 2.43.0
 
