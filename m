@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686FF12A14B;
-	Tue, 14 May 2024 11:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3973C54BFE;
+	Tue, 14 May 2024 11:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685429; cv=none; b=kr+e4j8Cou8j0cDhZVoBYYReIdIpe5aoSaLL4Tc5XXC8WGj/60wjXaPBzl6v5fTCb5b3XfIUiemgmz2LINWElpUCxFuCoPHeqeTss/7nG0QUjAZYrR2ng/FXQzYVU9+xuafv0R95EAJ2WDKgFMkMCAnps3/HosfuyjjtNn+7gPc=
+	t=1715685436; cv=none; b=HwgLEjgz4Jr66rKgkaVx94sa1E2LVbfQa78N3aEIz2W3WqllNYyb2A8hL4rgdPeBUTmQRUZ45i2K2gtOWCkNGofvTlWW3FbcA6An+nKiivAs8AdhfBD1IaTzVHu/8ys1qAjdizPHNa9zoHSHizTeIiUqS1z5btGcDb1XvOBPETM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685429; c=relaxed/simple;
-	bh=t7To3Kh/QnzfUsk4093oUd3bXJFUyuOhon2F5Ts7L6g=;
+	s=arc-20240116; t=1715685436; c=relaxed/simple;
+	bh=cQ1kG9PFK0z2eJGgZ/SIJp8C+pYqRdcEkcu5N/Qsu+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LwD70eGieZ8Qr9wtmUSTJ6ASX0ZN5xdX8NZdN1+vTVIDUDEKrEhyS7oq2FFQfIbnAdEeHRDb1BQ2nyteDu8cNtwttdXlb3pYKc4lhizhWWKviQIvagHUGvWLJLHwzT7YLXuFuvYBwg+xjfERVRFSu5rZyyIgKO4FOD005Zwtd8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tO4mtuIi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aQuU1kk+6ae+mm6ylv9q6Oz3yolKTjdjyum7tlTTXKMJPinARBgJ/9LaRlT/5KHwcJdsMPFwXe/JyZVKWW1KiWjn2B96dSR0IMaZSrYwfBLTQYn1Ljvz5n9JX4nl+b/gtvs/0ygmxYuOxSWxx3TwkHffral2h7PwKkt+FoMEp94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gh/cpdNj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tO4mtuIi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6EC4C2BD10;
-	Tue, 14 May 2024 11:17:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gh/cpdNj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67698C2BD10;
+	Tue, 14 May 2024 11:17:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685429;
-	bh=t7To3Kh/QnzfUsk4093oUd3bXJFUyuOhon2F5Ts7L6g=;
+	s=korg; t=1715685436;
+	bh=cQ1kG9PFK0z2eJGgZ/SIJp8C+pYqRdcEkcu5N/Qsu+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tO4mtuIiGetFa6EZoVTLf0wDzNjHD2kFQr+C+PVtnRRUsB32d/g6yYB2ln18cinn8
-	 y+j4EgblY+qjbeZmiwDnl0+QV31xDJ1I1kehOKbaQHEhxJWtb4oF5qQDkB4bBi+KDp
-	 6u+4bjTY6ZV1gORoD3+TH9q6MmMnl515WPWjU6sQ=
+	b=gh/cpdNjWF7k04gw6CtNONLSv6OYWa7IKv6HqaxZnvfkjd6J4WJHgQoHcWRdLE2La
+	 hqGj0Y9z6DFwIJn+aGQ5ROWgnhpt5oWxaUKCXvLFb1Uu8zzUi/d/AaVhaznvWe0Uqf
+	 KpazvNlJ4AttoPqqCkXGC1DKDlGdvDRRiVorTinU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Savic <savicaleksa83@gmail.com>,
-	Marius Zachmann <mail@mariuszachmann.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Eric Dumazet <edumazet@google.com>,
+	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <courmisch@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 187/301] hwmon: (corsair-cpro) Protect ccp->wait_input_report with a spinlock
-Date: Tue, 14 May 2024 12:17:38 +0200
-Message-ID: <20240514101039.316078865@linuxfoundation.org>
+Subject: [PATCH 6.6 188/301] phonet: fix rtm_phonet_notify() skb allocation
+Date: Tue, 14 May 2024 12:17:39 +0200
+Message-ID: <20240514101039.352896279@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -46,100 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksa Savic <savicaleksa83@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit d02abd57e79469a026213f7f5827a98d909f236a ]
+[ Upstream commit d8cac8568618dcb8a51af3db1103e8d4cc4aeea7 ]
 
-Through hidraw, userspace can cause a status report to be sent
-from the device. The parsing in ccp_raw_event() may happen in
-parallel to a send_usb_cmd() call (which resets the completion
-for tracking the report) if it's running on a different CPU where
-bottom half interrupts are not disabled.
+fill_route() stores three components in the skb:
 
-Add a spinlock around the complete_all() in ccp_raw_event() and
-reinit_completion() in send_usb_cmd() to prevent race issues.
+- struct rtmsg
+- RTA_DST (u8)
+- RTA_OIF (u32)
 
-Fixes: 40c3a4454225 ("hwmon: add Corsair Commander Pro driver")
-Signed-off-by: Aleksa Savic <savicaleksa83@gmail.com>
-Acked-by: Marius Zachmann <mail@mariuszachmann.de>
-Link: https://lore.kernel.org/r/20240504092504.24158-4-savicaleksa83@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Therefore, rtm_phonet_notify() should use
+
+NLMSG_ALIGN(sizeof(struct rtmsg)) +
+nla_total_size(1) +
+nla_total_size(4)
+
+Fixes: f062f41d0657 ("Phonet: routing table Netlink interface")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Rémi Denis-Courmont <courmisch@gmail.com>
+Link: https://lore.kernel.org/r/20240502161700.1804476-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-cpro.c | 24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ net/phonet/pn_netlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index e65e3825af974..280b90646a873 100644
---- a/drivers/hwmon/corsair-cpro.c
-+++ b/drivers/hwmon/corsair-cpro.c
-@@ -16,6 +16,7 @@
- #include <linux/module.h>
- #include <linux/mutex.h>
- #include <linux/slab.h>
-+#include <linux/spinlock.h>
- #include <linux/types.h>
+diff --git a/net/phonet/pn_netlink.c b/net/phonet/pn_netlink.c
+index 59aebe2968907..dd4c7e9a634fb 100644
+--- a/net/phonet/pn_netlink.c
++++ b/net/phonet/pn_netlink.c
+@@ -193,7 +193,7 @@ void rtm_phonet_notify(int event, struct net_device *dev, u8 dst)
+ 	struct sk_buff *skb;
+ 	int err = -ENOBUFS;
  
- #define USB_VENDOR_ID_CORSAIR			0x1b1c
-@@ -77,6 +78,8 @@
- struct ccp_device {
- 	struct hid_device *hdev;
- 	struct device *hwmon_dev;
-+	/* For reinitializing the completion below */
-+	spinlock_t wait_input_report_lock;
- 	struct completion wait_input_report;
- 	struct mutex mutex; /* whenever buffer is used, lock before send_usb_cmd */
- 	u8 *cmd_buffer;
-@@ -118,7 +121,15 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
- 	ccp->cmd_buffer[2] = byte2;
- 	ccp->cmd_buffer[3] = byte3;
- 
-+	/*
-+	 * Disable raw event parsing for a moment to safely reinitialize the
-+	 * completion. Reinit is done because hidraw could have triggered
-+	 * the raw event parsing and marked the ccp->wait_input_report
-+	 * completion as done.
-+	 */
-+	spin_lock_bh(&ccp->wait_input_report_lock);
- 	reinit_completion(&ccp->wait_input_report);
-+	spin_unlock_bh(&ccp->wait_input_report_lock);
- 
- 	ret = hid_hw_output_report(ccp->hdev, ccp->cmd_buffer, OUT_BUFFER_SIZE);
- 	if (ret < 0)
-@@ -136,11 +147,12 @@ static int ccp_raw_event(struct hid_device *hdev, struct hid_report *report, u8
- 	struct ccp_device *ccp = hid_get_drvdata(hdev);
- 
- 	/* only copy buffer when requested */
--	if (completion_done(&ccp->wait_input_report))
--		return 0;
--
--	memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
--	complete_all(&ccp->wait_input_report);
-+	spin_lock(&ccp->wait_input_report_lock);
-+	if (!completion_done(&ccp->wait_input_report)) {
-+		memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
-+		complete_all(&ccp->wait_input_report);
-+	}
-+	spin_unlock(&ccp->wait_input_report_lock);
- 
- 	return 0;
- }
-@@ -515,7 +527,9 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 
- 	ccp->hdev = hdev;
- 	hid_set_drvdata(hdev, ccp);
-+
- 	mutex_init(&ccp->mutex);
-+	spin_lock_init(&ccp->wait_input_report_lock);
- 	init_completion(&ccp->wait_input_report);
- 
- 	hid_device_io_start(hdev);
+-	skb = nlmsg_new(NLMSG_ALIGN(sizeof(struct ifaddrmsg)) +
++	skb = nlmsg_new(NLMSG_ALIGN(sizeof(struct rtmsg)) +
+ 			nla_total_size(1) + nla_total_size(4), GFP_KERNEL);
+ 	if (skb == NULL)
+ 		goto errout;
 -- 
 2.43.0
 
