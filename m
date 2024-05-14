@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608C813B284;
-	Tue, 14 May 2024 11:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7A213C67D;
+	Tue, 14 May 2024 11:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686367; cv=none; b=mS78sNidsKMDj7cFMmluJQBF1YnePxVw1RL8cIHbuMc8L92sg2YGPu5xHAPQXVYRuSmfXzAO/ZTAGqqPyrmru3bEBr7m1V59aE9HqeoJQS2Fwql2U5NOSKyDEuIJw+KjnBkIOesH2U1xTHgsC/WcGkB9K7njESBefqA/2YUTZlA=
+	t=1715686370; cv=none; b=WPklvgppeOM+PrG/rERRbQBNRkvi9nUMaSoPw2TodDVZcJwJhNwkjUrFlJeLOk56uzkOV+eAiPFrS+kfqvOoOLczjohZBO/MGj9MmrozFqA3aOg4447RqV5HGt/3VFmQdOwxX3VfpMG21ynVnnrbBaiLeRGyCzT4CXgat+uRn3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686367; c=relaxed/simple;
-	bh=ylHSxVgvTIVPvEkaG5Ce2tztpJxq08vx31/gW8vX/Pk=;
+	s=arc-20240116; t=1715686370; c=relaxed/simple;
+	bh=X+YlVgZjrsj3WY2xXDbEEwU6wcZ0sDowMbkV8/GAUIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KXIbU+w+4fVsVXeWjBST//plHAaFOhA57Qe9YIfOwnwscSYqvgCnlUMesQbOZNBs3mMTlMAuSEYi55t54EKuTV9qcdGXQah4bX+FJmPLR2i1hrqvTOJ5uv0y7tf05ihyEOqb4/uHU9eibjQI8AO5Siy8XZ66K/bsyHrMn7BAsjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxabfKdv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pQRSUmPVkAJEWn1bStOoTxM6vLg9lYClyXjDRiGRPaSCt2+PS3TXIGMStf6W+P6woF9Gr09GHkjy5NKetfkc9IeuglSMUbXqZinJ1cOYpMOu2GrRYtY/Rp+VOSsWrnzW+gas36+zJX1TwUisvMY/3V/ulCg6axwXprYPQwjkxM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkmLLBvE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxabfKdv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6C3C2BD10;
-	Tue, 14 May 2024 11:32:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkmLLBvE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6E2C2BD10;
+	Tue, 14 May 2024 11:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686367;
-	bh=ylHSxVgvTIVPvEkaG5Ce2tztpJxq08vx31/gW8vX/Pk=;
+	s=korg; t=1715686370;
+	bh=X+YlVgZjrsj3WY2xXDbEEwU6wcZ0sDowMbkV8/GAUIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gxabfKdvBhtWHsl8aJbkD2cXwTwxhKR5an4L1xH70hb8yq9BDrpdwkJe7dwkV5Ahd
-	 CvjuKs9DxHkcppXHgj+vCaoiv8rTwxIJU2oXoQR2+cD0qYDv/sSemGyU0wjHZDGMrs
-	 43JCNe+3FnkAldz/byfwnJ2D+cexrMibc+K6XYQc=
+	b=SkmLLBvEVJ+UxUguA4y8mo1NYu54hK/C0NpKWsV5eOL/rHZE/gQCZLBWBsoQiHA8w
+	 Pdhjpe52+3eXYjRTyRmX1yDEuWWeju6piAQNlr+9ZHxWvOJbHvFsVDdksNMuZiw6Gm
+	 H3R0WQytPsTg6+BGPthjwDDefNTo37/CgZqc77E8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sui Jingfeng <sui.jingfeng@linux.dev>,
+	Richard Gobert <richardbgobert@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 083/236] drm/panel: ili9341: Use predefined error codes
-Date: Tue, 14 May 2024 12:17:25 +0200
-Message-ID: <20240514101023.522041726@linuxfoundation.org>
+Subject: [PATCH 6.1 084/236] net: gro: add flush check in udp_gro_receive_segment
+Date: Tue, 14 May 2024 12:17:26 +0200
+Message-ID: <20240514101023.560232972@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -52,51 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Richard Gobert <richardbgobert@gmail.com>
 
-[ Upstream commit da85f0aaa9f21999753b01d45c0343f885a8f905 ]
+[ Upstream commit 5babae777c61aa8a8679d59d3cdc54165ad96d42 ]
 
-In one case the -1 is returned which is quite confusing code for
-the wrong device ID, in another the ret is returning instead of
-plain 0 that also confusing as readed may ask the possible meaning
-of positive codes, which are never the case there. Convert both
-to use explicit predefined error codes to make it clear what's going
-on there.
+GRO-GSO path is supposed to be transparent and as such L3 flush checks are
+relevant to all UDP flows merging in GRO. This patch uses the same logic
+and code from tcp_gro_receive, terminating merge if flush is non zero.
 
-Fixes: 5a04227326b0 ("drm/panel: Add ilitek ili9341 panel driver")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Sui Jingfeng <sui.jingfeng@linux.dev>
-Link: https://lore.kernel.org/r/20240425142706.2440113-4-andriy.shevchenko@linux.intel.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240425142706.2440113-4-andriy.shevchenko@linux.intel.com
+Fixes: e20cf8d3f1f7 ("udp: implement GRO for plain UDP sockets.")
+Signed-off-by: Richard Gobert <richardbgobert@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-ilitek-ili9341.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/udp_offload.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9341.c b/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
-index c46b5d820f5a0..285e76818d84d 100644
---- a/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
-+++ b/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
-@@ -420,7 +420,7 @@ static int ili9341_dpi_prepare(struct drm_panel *panel)
+diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
+index 84b7d6089f76c..794ea24292f62 100644
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -463,6 +463,7 @@ static struct sk_buff *udp_gro_receive_segment(struct list_head *head,
+ 	struct sk_buff *p;
+ 	unsigned int ulen;
+ 	int ret = 0;
++	int flush;
  
- 	ili9341_dpi_init(ili);
+ 	/* requires non zero csum, for symmetry with GSO */
+ 	if (!uh->check) {
+@@ -496,13 +497,22 @@ static struct sk_buff *udp_gro_receive_segment(struct list_head *head,
+ 			return p;
+ 		}
  
--	return ret;
-+	return 0;
- }
- 
- static int ili9341_dpi_enable(struct drm_panel *panel)
-@@ -728,7 +728,7 @@ static int ili9341_probe(struct spi_device *spi)
- 	else if (!strcmp(id->name, "yx240qv29"))
- 		return ili9341_dbi_probe(spi, dc, reset);
- 
--	return -1;
-+	return -ENODEV;
- }
- 
- static void ili9341_remove(struct spi_device *spi)
++		flush = NAPI_GRO_CB(p)->flush;
++
++		if (NAPI_GRO_CB(p)->flush_id != 1 ||
++		    NAPI_GRO_CB(p)->count != 1 ||
++		    !NAPI_GRO_CB(p)->is_atomic)
++			flush |= NAPI_GRO_CB(p)->flush_id;
++		else
++			NAPI_GRO_CB(p)->is_atomic = false;
++
+ 		/* Terminate the flow on len mismatch or if it grow "too much".
+ 		 * Under small packet flood GRO count could elsewhere grow a lot
+ 		 * leading to excessive truesize values.
+ 		 * On len mismatch merge the first packet shorter than gso_size,
+ 		 * otherwise complete the GRO packet.
+ 		 */
+-		if (ulen > ntohs(uh2->len)) {
++		if (ulen > ntohs(uh2->len) || flush) {
+ 			pp = p;
+ 		} else {
+ 			if (NAPI_GRO_CB(skb)->is_flist) {
 -- 
 2.43.0
 
