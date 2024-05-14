@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576062B9D7;
-	Tue, 14 May 2024 11:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3503B2B9B3;
+	Tue, 14 May 2024 11:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686535; cv=none; b=RT+pQu/cZ+rJsR33vm83obCbS+rJScdJONluf8G/TBqeoDdSoU8yl2Qzwvdb6ExLOiAPyaZZp9D0EdtIAfjZcz5s/F9efY8yfjOyWcgnW1+j1txmxgluzF3V6Ch7muwXF0ZMA6JCO3d4drKcKua359tumVLgyiIh+2m89wm0RKM=
+	t=1715686538; cv=none; b=dKPxru8AlLzYA9zFlWOOz+sS+CEip6nTeWNCmDckSSa3HzyvCUr0/P+g0iHHeiSK3VAOMQkI24gE40gnbaF/kMKGtQ+OFKoVG5lW+HJou6fRcECxRdai/whH2CrSwI+V3vp6/D3u5GNMeGZd3FifHotN0ttEUAnbvkHgdsbiuLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686535; c=relaxed/simple;
-	bh=Nzh34pnP6pnzhUh0qhGLTF8owLLFIKt6KtvUZbgpr1I=;
+	s=arc-20240116; t=1715686538; c=relaxed/simple;
+	bh=deVYBv2dFy3+MQ/XvgLbm0LTgipo2FW/REc1fjo85nk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WWna8SnoISWH00Jeo3cNeuHi/1Zt+XEMmbWVbrob6vyp6CnjRn43s6hgexQarCUouZ1G3Eil/ljUZMvoFB7JaHxZ9UUSYMNBZhSo7YP6iqgl6hv+lqK28sWNnaej+hWdHyWdR5qmv+yeocSslFDcABCa1P+BQSN9TwQB1aMjr7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Y4GewGY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fJ3ntwSI3lejzW5sYHU9+7NU6pdmfAX/rW/aPc77VPMN+HxXYGYympXUlavVHq0KQA+/dA53oYmWiNPLNJ7BepMUqZmyiDTZ47WUDWAFS8qUx41/2f9qcnl4uB2Wz8XRDMBv21jbr8cArlTD05a/+ENImP3722Gt4bcsRP27tBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3ZtdVZv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Y4GewGY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A63C2BD10;
-	Tue, 14 May 2024 11:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3ZtdVZv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10F1C2BD10;
+	Tue, 14 May 2024 11:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686535;
-	bh=Nzh34pnP6pnzhUh0qhGLTF8owLLFIKt6KtvUZbgpr1I=;
+	s=korg; t=1715686538;
+	bh=deVYBv2dFy3+MQ/XvgLbm0LTgipo2FW/REc1fjo85nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Y4GewGYzRL1xULSqkDCcyvrmaU9zqMYyQefTaTsIiZ/h79GC2k+B+Q1KPOHQgOKB
-	 lxzkyL2zslMX8LiyqDR5GVTecWK/qo5tumQzRg1gCGwOg0bczZ/0C1Yu61Y2D3MUJw
-	 DVwGtIyMfQ8u/3fSDofwbtkpDxzWPpti32eS5INc=
+	b=j3ZtdVZve/sdkekfbV8LqJ3QsyOPAY0Pj2zfTB8ZpbPnVi+vqG2c3FDR3IFP42xaJ
+	 LSJEObViBsM90/SQYM4L307keO8kWMKSee2ZueZrBc6adKS2QLiCG1djyBOjsV8ofl
+	 sBcXecgZIP41VmLsNQJmGUGi0PFTxiVU1OYlylJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peiyang Wang <wangpeiyang1@huawei.com>,
+	Yonglong Liu <liuyonglong@huawei.com>,
 	Jijie Shao <shaojijie@huawei.com>,
 	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 171/236] net: hns3: use appropriate barrier function after setting a bit value
-Date: Tue, 14 May 2024 12:18:53 +0200
-Message-ID: <20240514101026.856141233@linuxfoundation.org>
+Subject: [PATCH 6.1 172/236] net: hns3: fix port vlan filter not disabled issue
+Date: Tue, 14 May 2024 12:18:54 +0200
+Message-ID: <20240514101026.894245499@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -53,62 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peiyang Wang <wangpeiyang1@huawei.com>
+From: Yonglong Liu <liuyonglong@huawei.com>
 
-[ Upstream commit 094c281228529d333458208fd02fcac3b139d93b ]
+[ Upstream commit f5db7a3b65c84d723ca5e2bb6e83115180ab6336 ]
 
-There is a memory barrier in followed case. When set the port down,
-hclgevf_set_timmer will set DOWN in state. Meanwhile, the service task has
-different behaviour based on whether the state is DOWN. Thus, to make sure
-service task see DOWN, use smp_mb__after_atomic after calling set_bit().
+According to hardware limitation, for device support modify
+VLAN filter state but not support bypass port VLAN filter,
+it should always disable the port VLAN filter. but the driver
+enables port VLAN filter when initializing, if there is no
+VLAN(except VLAN 0) id added, the driver will disable it
+in service task. In most time, it works fine. But there is
+a time window before the service task shceduled and net device
+being registered. So if user adds VLAN at this time, the driver
+will not update the VLAN filter state,  and the port VLAN filter
+remains enabled.
 
-          CPU0                        CPU1
-========================== ===================================
-hclgevf_set_timer_task()    hclgevf_periodic_service_task()
-  set_bit(DOWN,state)         test_bit(DOWN,state)
+To fix the problem, if support modify VLAN filter state but not
+support bypass port VLAN filter, set the port vlan filter to "off".
 
-pf also has this issue.
-
-Fixes: ff200099d271 ("net: hns3: remove unnecessary work in hclgevf_main")
-Fixes: 1c6dfe6fc6f7 ("net: hns3: remove mailbox and reset work in hclge_main")
-Signed-off-by: Peiyang Wang <wangpeiyang1@huawei.com>
+Fixes: 184cd221a863 ("net: hns3: disable port VLAN filter when support function level VLAN filter control")
+Fixes: 2ba306627f59 ("net: hns3: add support for modify VLAN filter state")
+Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c   | 3 +--
- drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 3 +--
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 75472fde78f17..646546cf25264 100644
+index 646546cf25264..a18dc73c69894 100644
 --- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
 +++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -8051,8 +8051,7 @@ static void hclge_set_timer_task(struct hnae3_handle *handle, bool enable)
- 		/* Set the DOWN flag here to disable link updating */
- 		set_bit(HCLGE_STATE_DOWN, &hdev->state);
+@@ -10004,6 +10004,7 @@ static int hclge_set_vlan_protocol_type(struct hclge_dev *hdev)
+ static int hclge_init_vlan_filter(struct hclge_dev *hdev)
+ {
+ 	struct hclge_vport *vport;
++	bool enable = true;
+ 	int ret;
+ 	int i;
  
--		/* flush memory to make sure DOWN is seen by service task */
--		smp_mb__before_atomic();
-+		smp_mb__after_atomic(); /* flush memory to make sure DOWN is seen by service task */
- 		hclge_flush_link_update(hdev);
+@@ -10023,8 +10024,12 @@ static int hclge_init_vlan_filter(struct hclge_dev *hdev)
+ 		vport->cur_vlan_fltr_en = true;
  	}
- }
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index d26539daf2cba..1ecf06345526b 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -2236,8 +2236,7 @@ static void hclgevf_set_timer_task(struct hnae3_handle *handle, bool enable)
- 	} else {
- 		set_bit(HCLGEVF_STATE_DOWN, &hdev->state);
  
--		/* flush memory to make sure DOWN is seen by service task */
--		smp_mb__before_atomic();
-+		smp_mb__after_atomic(); /* flush memory to make sure DOWN is seen by service task */
- 		hclgevf_flush_link_update(hdev);
- 	}
++	if (test_bit(HNAE3_DEV_SUPPORT_VLAN_FLTR_MDF_B, hdev->ae_dev->caps) &&
++	    !test_bit(HNAE3_DEV_SUPPORT_PORT_VLAN_BYPASS_B, hdev->ae_dev->caps))
++		enable = false;
++
+ 	return hclge_set_vlan_filter_ctrl(hdev, HCLGE_FILTER_TYPE_PORT,
+-					  HCLGE_FILTER_FE_INGRESS, true, 0);
++					  HCLGE_FILTER_FE_INGRESS, enable, 0);
  }
+ 
+ static int hclge_init_vlan_type(struct hclge_dev *hdev)
 -- 
 2.43.0
 
