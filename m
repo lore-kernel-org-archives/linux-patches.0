@@ -1,130 +1,178 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DC3AD53;
-	Tue, 14 May 2024 03:35:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417AD17BD2;
+	Tue, 14 May 2024 08:22:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715657751; cv=none; b=HPO42QaS7A0t7+1/FRasS7zqC+9U+HcoudA72MBtrEF/JFMjNaJiO+mENpnsvPoI/aZAb+47RQ9GmiHuYhE1XNxdSE52yWtCSbRvQn9MY93RFsp4g5zye5DKLm/L12ZxKJOLC+Z4rhfTir/l6/Krtuw5jK05WPH1pQpWfqqdD6M=
+	t=1715674959; cv=none; b=TKVKofs61X6D2WlbnKKo8KquqrDqjOg+IY1w7V4tzQT8XZcs7WWe/a8rFakOA6x7M+10U24Ngs8pfGXvJyvrcAc6ywdE7R0OFgsrLbMtNi4Lt1W+05wdF6f5qmzH2zAbC+3Ev0v83zjeDAKmA2mwxK1MGOL4XP03O38VbeQNVc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715657751; c=relaxed/simple;
-	bh=2g51WnteVbDW6Xw9cHo8bze8u9qoK08M7PEKoTNl//U=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=i5QPuNqmTH+TZ7Nbmu5T9mEyb4i31vq4UFthc7biMNPjC/DT2LM5aGD32NFHiGEy9N9PfcySKapVH270nriVUn3qlWNlbzM8gKuPidfKwkufhHeoMkWX6TmMQkZ8cbAugOTm70nyZ+kwEXGDTikA79S+cKUajXUJ24paxRQ3M1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RWhj5WyH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1715674959; c=relaxed/simple;
+	bh=pp1cHNisj+tKz9XnjQgXLHVPUh8pqcGAdMvNqdaZNQQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=BKQ7YuHtsZkDPPOQgT4fFeOMJ9bD818R7hoCDmDzosT0SAwGMrcEaDoszbfOaAvsL9PPUb9jCliNpP3R6X8mU4VEnjKVygnO/RGYfY2Cuxl1zdLBZ7oNxnPga/w+fYU6uODYmDeTP/9ecmguC021u4wCPoXTWvfBVI+G0mmn3nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=Vv991aFK; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RWhj5WyH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4913AC2BD10;
-	Tue, 14 May 2024 03:35:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715657751;
-	bh=2g51WnteVbDW6Xw9cHo8bze8u9qoK08M7PEKoTNl//U=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=RWhj5WyH38Woqr+5eMMlmko6m4W28FqTOEvMn2vnCfh/yJHDfSelrHDdq8V296J2s
-	 ZaDecWJebiToXuNeDOHk8hkAqC0FezOcUWj3+1oEtpAevdnjdHYub5zHelCHV+44sP
-	 sY8B02t11x5Gt58+t0omv/OQ/jp/9HsU7dCOHyrLxej3fMwMunVBzZpc6m1le3F26m
-	 g027xhP7NXsTyu3Uy5iaRfbIQWnwjxHS1vTrUPnzOCbjhqtmU4cmP4ffBK3evUqzSZ
-	 p3b4TXgHAQssXm6Nx/ikd6fGoui/EKPwhF4lWm0v5bRa8FnTkj+tje5PB04f8XHZ47
-	 9b53bYw7AT5Qw==
-Message-ID: <31d4dfdf8bc4b866a2b6d45fc4de0c2d.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="Vv991aFK"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Type:MIME-Version:
+	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=i2r1tYPEIFq5ICtSDsTyOodWu9HoIuruvn+TZUTQ0y8=; b=Vv991aFKT1XN/drhhQgMf2jEtZ
+	v068ortgpU6RLM/jvJZXbhNziqOEckfDgR1S23T1VX2gDkEPDKOOtfW7fMpNoziJeNxKuhZ+9NQ6g
+	offVVLb04CTmfWs0HLStyA2EIkLsYD1eR2tesQdOLJCHuGytm7ahMhIgdxIbUf8oFIUR6qmSjn08d
+	xEv3OX9Mm3QQMq1mH3Fce6811Py/bG/h3ikPzyEEfKLNQPJXeR76u6aaI+NxU2U82Sj3JRuLF8lBo
+	wXcxJaZIEGi+PCXJDHPjtzC1rH2SyOfmrMctQuPMVr0yJ72j3h1mTC6fIH6nXLDIgJ0jD51uW8D9n
+	C/HEtH4A==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1s6nQh-0000000FLBc-2A8j;
+	Tue, 14 May 2024 08:22:35 +0000
+Date: Tue, 14 May 2024 01:22:35 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	linux-modules@vger.kernel.org, mcgrof@kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-arch@vger.kernel.org, rppt@kernel.org, song@kernel.org,
+	tglx@linutronix.de, bjorn@kernel.org, mhiramat@kernel.org,
+	rostedt@goodmis.org, philmd@linaro.org, will@kernel.org,
+	sam@ravnborg.org, alexghiti@rivosinc.com, liviu@dudau.co.uk,
+	justinstitt@google.com, elsk@google.com
+Subject: [GIT PULL] Modules changes for v6.10-rc1
+Message-ID: <ZkMfS727s_1MQWzQ@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20240422232404.213174-6-sboyd@kernel.org>
-References: <20240422232404.213174-1-sboyd@kernel.org> <20240422232404.213174-6-sboyd@kernel.org>
-Subject: Re: [PATCH v4 05/10] platform: Add test managed platform_device/driver APIs
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
-To: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Date: Mon, 13 May 2024 20:35:49 -0700
-User-Agent: alot/0.10
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Quoting Stephen Boyd (2024-04-22 16:23:58)
-> diff --git a/drivers/base/test/platform_kunit.c b/drivers/base/test/platf=
-orm_kunit.c
-> new file mode 100644
-> index 000000000000..54af6db2a6d8
-> --- /dev/null
-> +++ b/drivers/base/test/platform_kunit.c
-> @@ -0,0 +1,174 @@
-[...]
-> +struct platform_device *
-> +platform_device_alloc_kunit(struct kunit *test, const char *name, int id)
-> +{
-> +       struct platform_device *pdev;
-> +
-> +       pdev =3D platform_device_alloc(name, id);
-> +       if (!pdev)
-> +               return NULL;
-> +
-> +       if (kunit_add_action_or_reset(test, (kunit_action_t *)&platform_d=
-evice_put, pdev))
-> +               return NULL;
-> +
-> +       return pdev;
-> +}
-> +EXPORT_SYMBOL_GPL(platform_device_alloc_kunit);
-> +
-> +static void platform_device_add_kunit_exit(struct kunit_resource *res)
-> +{
-> +       struct platform_device *pdev =3D res->data;
-> +
-> +       platform_device_unregister(pdev);
-> +}
-> +
-> +static bool
-> +platform_device_alloc_kunit_match(struct kunit *test,
-> +                                 struct kunit_resource *res, void *match=
-_data)
-> +{
-> +       struct platform_device *pdev =3D match_data;
-> +
-> +       return res->data =3D=3D pdev;
-> +}
-> +
-> +/**
-> + * platform_device_add_kunit() - Register a KUnit test managed platform =
-device
-> + * @test: test context
-> + * @pdev: platform device to add
-> + *
-> + * Register a test managed platform device. The device is unregistered w=
-hen the
-> + * test completes.
-> + *
-> + * Return: 0 on success, negative errno on failure.
-> + */
-> +int platform_device_add_kunit(struct kunit *test, struct platform_device=
- *pdev)
-> +{
-> +       struct kunit_resource *res;
-> +       int ret;
-> +
-> +       ret =3D platform_device_add(pdev);
-> +       if (ret)
-> +               return ret;
-> +
-> +       res =3D kunit_find_resource(test, platform_device_alloc_kunit_mat=
-ch, pdev);
+The following changes since commit a5131c3fdf2608f1c15f3809e201cf540eb28489:
 
-This doesn't work because platform_device_alloc_kunit() used
-kunit_add_action_or_reset() which has a chained free routine and data
-pointer. I've added a test to make sure the platform device is removed
-from the bus. It's not super great though because when this code fails
-to find a match it will still remove the device by calling
-platform_device_unregister() when the test ends. It will follow that up
-with a call to platform_device_put(), which is the problem as that
-causes an underflow and operates on an already freed device.
+  Merge tag 'x86-shstk-2024-05-13' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip (2024-05-13 19:33:23 -0700)
 
-I couldn't come up with anything better than searching the platform bus.
-Maybe if there was a way to allocate the memory or redirect where
-platform_device_alloc_kunit() got memory from we could hold the device
-memory around after it should have been freed and make sure the kref for
-the device kobject is 0. That seems pretty invasive to do though so I'm
-just going to leave it for now and add this test to make sure it cleans
-up.
+are available in the Git repository at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/modules-6.10-rc1
+
+for you to fetch changes up to 2c9e5d4a008293407836d29d35dfd4353615bd2f:
+
+  bpf: remove CONFIG_BPF_JIT dependency on CONFIG_MODULES of (2024-05-14 00:36:29 -0700)
+
+----------------------------------------------------------------
+Modules changes for v6.10-rc1
+
+Finally something fun. Mike Rapoport does some cleanup to allow us to
+take out module_alloc() out of modules into a new paint shedded execmem_alloc()
+and execmem_free() so to make emphasis these helpers are actually used outside
+of modules. It starts with a no-functional changes API rename / placeholders
+to then allow architectures to define their requirements into a new shiny
+struct execmem_info with ranges, and requirements for those ranges. Archs
+now can intitialize this execmem_info as the last part of mm_core_init() if
+they have to diverge from the norm. Each range is a known type clearly
+articulated and spelled out in enum execmem_type.
+
+Although a lot of this is major cleanup and prep work for future enhancements an
+immediate clear gain is we get to enable KPROBES without MODULES now. That is
+ultimately what motiviated to pick this work up again, now with smaller goal as
+concrete stepping stone.
+
+This has been sitting on linux-next for a little less than a month, a few issues
+were found already and fixed, in particular an odd mips boot issue. Arch folks
+reviewed the code too. This is ready for wider exposure and testing.
+
+----------------------------------------------------------------
+Justin Stitt (1):
+      kallsyms: replace deprecated strncpy with strscpy
+
+Mike Rapoport (IBM) (16):
+      arm64: module: remove unneeded call to kasan_alloc_module_shadow()
+      mips: module: rename MODULE_START to MODULES_VADDR
+      nios2: define virtual address space for modules
+      sparc: simplify module_alloc()
+      module: make module_memory_{alloc,free} more self-contained
+      mm: introduce execmem_alloc() and execmem_free()
+      mm/execmem, arch: convert simple overrides of module_alloc to execmem
+      mm/execmem, arch: convert remaining overrides of module_alloc to execmem
+      riscv: extend execmem_params for generated code allocations
+      arm64: extend execmem_info for generated code allocations
+      powerpc: extend execmem_params for kprobes allocations
+      arch: make execmem setup available regardless of CONFIG_MODULES
+      x86/ftrace: enable dynamic ftrace without CONFIG_MODULES
+      powerpc: use CONFIG_EXECMEM instead of CONFIG_MODULES where appropriate
+      kprobes: remove dependency on CONFIG_MODULES
+      bpf: remove CONFIG_BPF_JIT dependency on CONFIG_MODULES of
+
+Yifan Hong (1):
+      module: allow UNUSED_KSYMS_WHITELIST to be relative against objtree.
+
+ arch/Kconfig                         |  10 ++-
+ arch/arm/kernel/module.c             |  34 ---------
+ arch/arm/mm/init.c                   |  45 +++++++++++
+ arch/arm64/Kconfig                   |   1 +
+ arch/arm64/kernel/module.c           | 126 ------------------------------
+ arch/arm64/kernel/probes/kprobes.c   |   7 --
+ arch/arm64/mm/init.c                 | 140 ++++++++++++++++++++++++++++++++++
+ arch/arm64/net/bpf_jit_comp.c        |  11 ---
+ arch/loongarch/kernel/module.c       |   6 --
+ arch/loongarch/mm/init.c             |  21 +++++
+ arch/mips/include/asm/pgtable-64.h   |   4 +-
+ arch/mips/kernel/module.c            |  10 ---
+ arch/mips/mm/fault.c                 |   4 +-
+ arch/mips/mm/init.c                  |  23 ++++++
+ arch/nios2/include/asm/pgtable.h     |   5 +-
+ arch/nios2/kernel/module.c           |  20 -----
+ arch/nios2/mm/init.c                 |  21 +++++
+ arch/parisc/kernel/module.c          |  12 ---
+ arch/parisc/mm/init.c                |  23 +++++-
+ arch/powerpc/Kconfig                 |   2 +-
+ arch/powerpc/include/asm/kasan.h     |   2 +-
+ arch/powerpc/kernel/head_8xx.S       |   4 +-
+ arch/powerpc/kernel/head_book3s_32.S |   6 +-
+ arch/powerpc/kernel/kprobes.c        |  22 +-----
+ arch/powerpc/kernel/module.c         |  38 ----------
+ arch/powerpc/lib/code-patching.c     |   2 +-
+ arch/powerpc/mm/book3s32/mmu.c       |   2 +-
+ arch/powerpc/mm/mem.c                |  64 ++++++++++++++++
+ arch/riscv/include/asm/pgtable.h     |   3 +
+ arch/riscv/kernel/module.c           |  12 ---
+ arch/riscv/kernel/probes/kprobes.c   |  10 ---
+ arch/riscv/mm/init.c                 |  35 +++++++++
+ arch/riscv/net/bpf_jit_core.c        |  13 ----
+ arch/s390/kernel/ftrace.c            |   4 +-
+ arch/s390/kernel/kprobes.c           |   4 +-
+ arch/s390/kernel/module.c            |  42 +---------
+ arch/s390/mm/init.c                  |  30 ++++++++
+ arch/sparc/include/asm/pgtable_32.h  |   2 +
+ arch/sparc/kernel/module.c           |  30 --------
+ arch/sparc/mm/Makefile               |   2 +
+ arch/sparc/mm/execmem.c              |  21 +++++
+ arch/sparc/net/bpf_jit_comp_32.c     |   8 +-
+ arch/x86/Kconfig                     |   1 +
+ arch/x86/kernel/ftrace.c             |  16 +---
+ arch/x86/kernel/kprobes/core.c       |   4 +-
+ arch/x86/kernel/module.c             |  51 -------------
+ arch/x86/mm/init.c                   |  29 +++++++
+ include/linux/execmem.h              | 132 ++++++++++++++++++++++++++++++++
+ include/linux/module.h               |   9 +++
+ include/linux/moduleloader.h         |  15 ----
+ kernel/bpf/Kconfig                   |   2 +-
+ kernel/bpf/core.c                    |   6 +-
+ kernel/kprobes.c                     |  63 +++++++++------
+ kernel/module/Kconfig                |   3 +-
+ kernel/module/kallsyms.c             |   2 +-
+ kernel/module/main.c                 | 105 ++++++++++++-------------
+ kernel/trace/trace_kprobe.c          |  20 ++++-
+ mm/Kconfig                           |   3 +
+ mm/Makefile                          |   1 +
+ mm/execmem.c                         | 143 +++++++++++++++++++++++++++++++++++
+ mm/mm_init.c                         |   2 +
+ scripts/Makefile.modpost             |   2 +-
+ 62 files changed, 906 insertions(+), 584 deletions(-)
+ create mode 100644 arch/sparc/mm/execmem.c
+ create mode 100644 include/linux/execmem.h
+ create mode 100644 mm/execmem.c
