@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BC06BFAC;
-	Tue, 14 May 2024 10:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41B96BFAC;
+	Tue, 14 May 2024 10:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683776; cv=none; b=cyuwgopAtVBuGck323gA1sBwCoKxZpxGUfquG1cm3lxWfCj89FC8AO08D61klZoWameiE2NBPDi5EmDG6ZeEOMJnpO1j7rOhi5br+2gWTExvXd7YLRTQlBvXzUodWqDGq7I6++NGX3npyyiiFX2Yy1A2/cV4tdAihIsYNzqb/uo=
+	t=1715683781; cv=none; b=Ugxgm+0e2iu6/kiIuxCo1FxyZWWVwFL09HuDH2WH6vlX4Eoerfzct/X4bm21qBgWZFi/rl4yym8rx6o4Jf/DkQGcAnblfha2BkrrTkG1SrR2g0iU8C7DAlDu5fkmEPCTzg7Zyz4wqctZkcoiVMQeRhBeVAiZPbsZiP0pzeB3q5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683776; c=relaxed/simple;
-	bh=xY9W55N6Xg0lETEK6D9S8pNO6lErS6AVDXTWx5T0TVc=;
+	s=arc-20240116; t=1715683781; c=relaxed/simple;
+	bh=ybEviFUEj+4sT90hYvmb7ifQ2VcD/wLpn78VE/2qTKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MUEnN3cdQOD1HTRcXg4QWu6Jb6qPD2C+jbb+1cXrbhDNFMFIb+xrhXKbx36a3u2m+NxycL+5ERsaWahxDS/RvKh4IWZ/C601FKgv16LsxZwk2a+mChaQ6Dg7Ww4ato2LaoJ+LZtJxp1fGqySP8mj5UWALbm141GbtvBh8E+8bv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAlYi0CD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oDFV4gJiioI7Uz+3cArKGCSpBO0M8hgYDrQhthbgUFr4aJEDl6+i4QUGt7OuDpNTS0hlgyCaeqeWxNLHuCR1f5oPfg56CDvwcE86FAuf1K+g8XG85+bLYYHX/s8MGjRHNcYS7nDfmzNeDfBNS0s8ymMYk7LqIg5EXWVofp6lL8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmT/Eurg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAlYi0CD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A750C2BD10;
-	Tue, 14 May 2024 10:49:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmT/Eurg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDACC2BD10;
+	Tue, 14 May 2024 10:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683776;
-	bh=xY9W55N6Xg0lETEK6D9S8pNO6lErS6AVDXTWx5T0TVc=;
+	s=korg; t=1715683780;
+	bh=ybEviFUEj+4sT90hYvmb7ifQ2VcD/wLpn78VE/2qTKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UAlYi0CDbctsO6BxVM5zIj2r31I91AE24xg9696YRlDF474F6TQ1tsih6dGYih2N9
-	 8erypsfniG12OAhnnmwb929vMl8pGE82q3gZhvMHeaQz5+V4T5kkNnYsrMYul7ggBt
-	 6RzIKVKgfQtyuerWpOe1R33AMP8mxWOEEfTKLda8=
+	b=RmT/EurgvPsIeb/X3OL+0IzudIjsuwwX6OHO+dINBY9nddGnm5aV7NyS2peXyDIrG
+	 EbHoQkkZyWYAY1MByZ7jihOMGy1QyPYY5POy5na7yQY3PJ4VAM69EDQBL2MlYVGH3O
+	 fPSk+UjByLyRHV3RdN5I5a2YhBVvJXVBccJV1Vmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.8 272/336] dt-bindings: iio: health: maxim,max30102: fix compatible check
-Date: Tue, 14 May 2024 12:17:56 +0200
-Message-ID: <20240514101048.891105356@linuxfoundation.org>
+	stable@kernel.org,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.8 246/336] usb: typec: ucsi: Fix connector check on init
+Date: Tue, 14 May 2024 12:17:30 +0200
+Message-ID: <20240514101047.907840995@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,40 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit 89384a2b656b9dace4c965432a209d5c9c3a2a6f upstream.
+commit ce4c8d21054ae9396cd759fe6e8157b525616dc4 upstream.
 
-The "maxim,green-led-current-microamp" property is only available for
-the max30105 part (it provides an extra green LED), and must be set to
-false for the max30102 part.
+Fix issues when initially checking for a connector change:
+- Use the correct connector number not the entire CCI.
+- Call ->read under the PPM lock.
+- Remove a bogus READ_ONCE.
 
-Instead, the max30100 part has been used for that, which is not
-supported by this binding (it has its own binding).
-
-This error was introduced during the txt to yaml conversion.
-
-Fixes: 5a6a65b11e3a ("dt-bindings:iio:health:maxim,max30102: txt to yaml conversion")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20240316-max30102_binding_fix-v1-1-e8e58f69ef8a@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 808a8b9e0b87 ("usb: typec: ucsi: Check for notifications after init")
+Cc: stable@kernel.org
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240401210515.1902048-1-lk@c--e.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/iio/health/maxim,max30102.yaml |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/Documentation/devicetree/bindings/iio/health/maxim,max30102.yaml
-+++ b/Documentation/devicetree/bindings/iio/health/maxim,max30102.yaml
-@@ -42,7 +42,7 @@ allOf:
-       properties:
-         compatible:
-           contains:
--            const: maxim,max30100
-+            const: maxim,max30102
-     then:
-       properties:
-         maxim,green-led-current-microamp: false
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1460,11 +1460,13 @@ static int ucsi_init(struct ucsi *ucsi)
+ 	ucsi->connector = connector;
+ 	ucsi->ntfy = ntfy;
+ 
++	mutex_lock(&ucsi->ppm_lock);
+ 	ret = ucsi->ops->read(ucsi, UCSI_CCI, &cci, sizeof(cci));
++	mutex_unlock(&ucsi->ppm_lock);
+ 	if (ret)
+ 		return ret;
+-	if (UCSI_CCI_CONNECTOR(READ_ONCE(cci)))
+-		ucsi_connector_change(ucsi, cci);
++	if (UCSI_CCI_CONNECTOR(cci))
++		ucsi_connector_change(ucsi, UCSI_CCI_CONNECTOR(cci));
+ 
+ 	return 0;
+ 
 
 
