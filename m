@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F6150278;
-	Tue, 14 May 2024 11:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F1B53392;
+	Tue, 14 May 2024 11:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687491; cv=none; b=NQrUdYxvMQfVar283kJPSya09OIP5j49zhapZWbYiPusNdUk35cyXR3zXV+uO2LIcGNWFP7wOVelbt416bfpEI5pxQWfKZ/JEpoVQ9U44+eqR7nNvYxC5eel8J3DDpPlbx/6wQcuEl+hLlEGFvW3PS+pcj7Ys1H1kcdtUoVkJk0=
+	t=1715687494; cv=none; b=pQtVltPOTpdXFUp01g/qnwZFOoj0UDVH9e6hN4GlISYAjfJLvw/lQBtgblhn0sHDneBcmTuhHFraDxKz1CK/3WSb9kZRJlMdUxuDAvQ3+3N82gjnai36DWGVR1pALVP0oJmjaBaaIyTPAfZhDTPHQ7pHiqds9bHtjouFLlQMBzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687491; c=relaxed/simple;
-	bh=fKMLcaIwT6tuN4w7kBKhjRaBECGxRyRXh9VnJjLMocw=;
+	s=arc-20240116; t=1715687494; c=relaxed/simple;
+	bh=pYhO0VejNLfqCAFU0Zgc6sgsgmea9GnHUh0gYcMFevk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sC6WBXC56+zwy19hdRlh+eDMSnirYAOyDV0rBIgklRG0Dxtp4gujfypTTBfLGM2r0nutW+GD5waLiUHoCTvu/kbAeM0e2dNHHLO4N6vqLil42HaWkXSpyLIQ/EC6rEkuIBB3QM0+rOq6JmBG5yJX6JCnl9IBHbgOhJuAhZB0JDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OHO9uF0i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QpNVXtE9ZxyN077bj/yQhtNEdnGy8okK3gnk/mSnJWsRnmDBkTyXcuC+IlJfc2cHUdQ1/hYlgaWGu1gzKXwlTA+8DTm2151+T27pdWbXCFiFvj/N6RXgyDOMZ6U2HC8AnGqnfr1yimWYxb+ZHzbfMM9wwNDSdOTCFtxcDmiaweQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUGRb2qA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OHO9uF0i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D947C2BD10;
-	Tue, 14 May 2024 11:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUGRb2qA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0FF2C2BD10;
+	Tue, 14 May 2024 11:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687491;
-	bh=fKMLcaIwT6tuN4w7kBKhjRaBECGxRyRXh9VnJjLMocw=;
+	s=korg; t=1715687494;
+	bh=pYhO0VejNLfqCAFU0Zgc6sgsgmea9GnHUh0gYcMFevk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OHO9uF0iwhX/hWExPAWSobTIuQxLUJkEywHMHVBNVsX+XuUj17I7fc2/Xe6QofNrV
-	 ln4HUI++xAInZh1GoNEosstqHY1sCJG2gunor+mS3ZRTTVtDQ+u10MNxbTCFBHbW1y
-	 b5iiDttFM/ood3JjFAV3L+SD0VaQUcW2zyZp7IlI=
+	b=XUGRb2qAxXLJ+cn1tSnitIBgx3E6OFEScuyysprL39H7s1mF4jSMe/vUk7J4K0a/a
+	 C9r1LPynGPtqmgSnre5HysRou0MH0oWdS1xHgkzfMnRY3CuvC53qDPlyplMzFMI8yM
+	 e1eje/0+WwjgXb/ZkLLCKJag/pQ+pGyoI+fYu4C4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.10 093/111] usb: typec: ucsi: Fix connector check on init
-Date: Tue, 14 May 2024 12:20:31 +0200
-Message-ID: <20240514101000.665583025@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Roger Whittaker <roger.whittaker@suse.com>
+Subject: [PATCH 5.10 094/111] usb: Fix regression caused by invalid ep0 maxpacket in virtual SuperSpeed device
+Date: Tue, 14 May 2024 12:20:32 +0200
+Message-ID: <20240514101000.702961975@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -51,42 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit ce4c8d21054ae9396cd759fe6e8157b525616dc4 upstream.
+commit c78c3644b772e356ca452ae733a3c4de0fb11dc8 upstream.
 
-Fix issues when initially checking for a connector change:
-- Use the correct connector number not the entire CCI.
-- Call ->read under the PPM lock.
-- Remove a bogus READ_ONCE.
+A virtual SuperSpeed device in the FreeBSD BVCP package
+(https://bhyve.npulse.net/) presents an invalid ep0 maxpacket size of 256.
+It stopped working with Linux following a recent commit because now we
+check these sizes more carefully than before.
 
-Fixes: 808a8b9e0b87 ("usb: typec: ucsi: Check for notifications after init")
-Cc: stable@kernel.org
-Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240401210515.1902048-1-lk@c--e.de
+Fix this regression by using the bMaxpacketSize0 value in the device
+descriptor for SuperSpeed or faster devices, even if it is invalid.  This
+is a very simple-minded change; we might want to check more carefully for
+values that actually make some sense (for instance, no smaller than 64).
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Reported-and-tested-by: Roger Whittaker <roger.whittaker@suse.com>
+Closes: https://bugzilla.suse.com/show_bug.cgi?id=1220569
+Link: https://lore.kernel.org/linux-usb/9efbd569-7059-4575-983f-0ea30df41871@suse.com/
+Fixes: 59cf44575456 ("USB: core: Fix oversight in SuperSpeed initialization")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/4058ac05-237c-4db4-9ecc-5af42bdb4501@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/core/hub.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1244,11 +1244,13 @@ static int ucsi_init(struct ucsi *ucsi)
- 
- 	ucsi->ntfy = ntfy;
- 
-+	mutex_lock(&ucsi->ppm_lock);
- 	ret = ucsi->ops->read(ucsi, UCSI_CCI, &cci, sizeof(cci));
-+	mutex_unlock(&ucsi->ppm_lock);
- 	if (ret)
- 		return ret;
--	if (UCSI_CCI_CONNECTOR(READ_ONCE(cci)))
--		ucsi_connector_change(ucsi, cci);
-+	if (UCSI_CCI_CONNECTOR(cci))
-+		ucsi_connector_change(ucsi, UCSI_CCI_CONNECTOR(cci));
- 
- 	return 0;
- 
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -5053,9 +5053,10 @@ hub_port_init(struct usb_hub *hub, struc
+ 	}
+ 	if (usb_endpoint_maxp(&udev->ep0.desc) == i) {
+ 		;	/* Initial ep0 maxpacket guess is right */
+-	} else if ((udev->speed == USB_SPEED_FULL ||
++	} else if (((udev->speed == USB_SPEED_FULL ||
+ 				udev->speed == USB_SPEED_HIGH) &&
+-			(i == 8 || i == 16 || i == 32 || i == 64)) {
++			(i == 8 || i == 16 || i == 32 || i == 64)) ||
++			(udev->speed >= USB_SPEED_SUPER && i > 0)) {
+ 		/* Initial guess is wrong; use the descriptor's value */
+ 		if (udev->speed == USB_SPEED_FULL)
+ 			dev_dbg(&udev->dev, "ep0 maxpacket = %d\n", i);
 
 
