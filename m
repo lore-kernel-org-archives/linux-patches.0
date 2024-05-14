@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04B813AA5C;
-	Tue, 14 May 2024 10:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E7813AA31;
+	Tue, 14 May 2024 10:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683111; cv=none; b=dBrYCGBDErCJ6Zonl8zPud4sWz9Yrqscjx5BO7T4IiY+ixFwlPhYO1fRQa8XasI3v/vffxkTLLoTi2qLscqKvXSVffDeFUCiseWdhJ/j9Z57Pkvy+zn5XbCdsIPzcmoRqZTTuWdHzmdhudWKVS+IodprTPyTioUWyJbtLxHZmzc=
+	t=1715683119; cv=none; b=gMFuaR0gpCuaiScOsn/fXqvEMoFVO5GEKeu7UFSiPw5xq+38BTWBsBTfRkrjRgVGmwdkE6Pa0kIWvKde1TuwTijIVHjjCcB1iMhUpALB31+4lTmR6MJZrYraGV0xqDq8ogW6yaflyEU1yLtjHUWR2cvjJY9GIntBdWFGYeI3Qo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683111; c=relaxed/simple;
-	bh=ySlTYPtMjBI72p+lwi9ss/L9CF+6ya+bM9GN8JEqpwU=;
+	s=arc-20240116; t=1715683119; c=relaxed/simple;
+	bh=9p7T4wE5LSkLa8nIV2nv8ApaugOE4Mtm7BnPEg/MbP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DvMI+ULc/kpHWrqoGxSwRzIvQAw7mMo56T7F3XLGg3BuqsAjeeNok+2INPwlXbVFNuE4og2j+puF9Cq2Y0B+zbbe85BDjYuXTSIow+rrgWccF1fLnufytvSFsJT0UB5crBzES9YHfmql22G1iZJjfTMh4cfJyd3Z9jvBmxK3mpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arNnj4Ql; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ClMv4B8Se+Pghp2OnXxGf/yp5F7emYE0Th50brBGMGMUC9eECuMB3q1V2okZoOiouVUI8LkjFsvaRDG4yz9rmuUckpyA0PHVkZ09LA7GakfgMYV7it8Su53RPgcGVpEQiHsCzLWz0elaxR30FNnKwwQ4BAQ/5rqDCvWifg8HTtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mj56FXyV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arNnj4Ql"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6C0C2BD10;
-	Tue, 14 May 2024 10:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mj56FXyV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB74C4AF0D;
+	Tue, 14 May 2024 10:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683110;
-	bh=ySlTYPtMjBI72p+lwi9ss/L9CF+6ya+bM9GN8JEqpwU=;
+	s=korg; t=1715683119;
+	bh=9p7T4wE5LSkLa8nIV2nv8ApaugOE4Mtm7BnPEg/MbP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=arNnj4Ql1d08XOjGCYqT5xAU9i4x5JdoRcG0QHoVtr8Z7M26aMm7YF3OWoKcrMSfw
-	 ibmpzxU6gKHyLCBuC6Pu0F8g24Z21VvfGNotUDkRGihTsCt2TQX8CxdyF4sgxSrPUW
-	 ydBpTpwvhsMtnqlgMrQFQmIaIqh90A0PwIA0lBe8=
+	b=mj56FXyVF9v5SJx+7mLwtszV7C46bBfZbp3Mak0az3A+t94wgmHkvd96FD71FNtu1
+	 MahXiry76F3z1LMubpl3P167HnvmRUj7SEzSC4ivGpd8jXGMQ6jQu2TceiA/hH0XF2
+	 3oa8Aqk6FeNik+Hgo7qV8bss3yLGawr9wi6EpG2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 168/336] Drivers: hv: vmbus: Leak pages if set_memory_encrypted() fails
-Date: Tue, 14 May 2024 12:16:12 +0200
-Message-ID: <20240514101044.946352599@linuxfoundation.org>
+Subject: [PATCH 6.8 169/336] Drivers: hv: vmbus: Track decrypted status in vmbus_gpadl
+Date: Tue, 14 May 2024 12:16:13 +0200
+Message-ID: <20240514101044.983744111@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -56,7 +56,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Rick Edgecombe <rick.p.edgecombe@intel.com>
 
-[ Upstream commit 03f5a999adba062456c8c818a683beb1b498983a ]
+[ Upstream commit 211f514ebf1ef5de37b1cf6df9d28a56cfd242ca ]
 
 In CoCo VMs it is possible for the untrusted host to cause
 set_memory_encrypted() or set_memory_decrypted() to fail such that an
@@ -65,70 +65,89 @@ take care to handle these errors to avoid returning decrypted (shared)
 memory to the page allocator, which could lead to functional or security
 issues.
 
-VMBus code could free decrypted pages if set_memory_encrypted()/decrypted()
-fails. Leak the pages if this happens.
+In order to make sure callers of vmbus_establish_gpadl() and
+vmbus_teardown_gpadl() don't return decrypted/shared pages to
+allocators, add a field in struct vmbus_gpadl to keep track of the
+decryption status of the buffers. This will allow the callers to
+know if they should free or leak the pages.
 
 Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
 Signed-off-by: Michael Kelley <mhklinux@outlook.com>
 Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Link: https://lore.kernel.org/r/20240311161558.1310-2-mhklinux@outlook.com
+Link: https://lore.kernel.org/r/20240311161558.1310-3-mhklinux@outlook.com
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20240311161558.1310-2-mhklinux@outlook.com>
+Message-ID: <20240311161558.1310-3-mhklinux@outlook.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/connection.c | 29 ++++++++++++++++++++++-------
- 1 file changed, 22 insertions(+), 7 deletions(-)
+ drivers/hv/channel.c   | 25 +++++++++++++++++++++----
+ include/linux/hyperv.h |  1 +
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hv/connection.c b/drivers/hv/connection.c
-index 3cabeeabb1cac..f001ae880e1db 100644
---- a/drivers/hv/connection.c
-+++ b/drivers/hv/connection.c
-@@ -237,8 +237,17 @@ int vmbus_connect(void)
- 				vmbus_connection.monitor_pages[0], 1);
- 	ret |= set_memory_decrypted((unsigned long)
- 				vmbus_connection.monitor_pages[1], 1);
+diff --git a/drivers/hv/channel.c b/drivers/hv/channel.c
+index adbf674355b2b..98259b4925029 100644
+--- a/drivers/hv/channel.c
++++ b/drivers/hv/channel.c
+@@ -436,9 +436,18 @@ static int __vmbus_establish_gpadl(struct vmbus_channel *channel,
+ 		(atomic_inc_return(&vmbus_connection.next_gpadl_handle) - 1);
+ 
+ 	ret = create_gpadl_header(type, kbuffer, size, send_offset, &msginfo);
 -	if (ret)
 +	if (ret) {
++		gpadl->decrypted = false;
+ 		return ret;
++	}
+ 
++	/*
++	 * Set the "decrypted" flag to true for the set_memory_decrypted()
++	 * success case. In the failure case, the encryption state of the
++	 * memory is unknown. Leave "decrypted" as true to ensure the
++	 * memory will be leaked instead of going back on the free list.
++	 */
++	gpadl->decrypted = true;
+ 	ret = set_memory_decrypted((unsigned long)kbuffer,
+ 				   PFN_UP(size));
+ 	if (ret) {
+@@ -527,9 +536,15 @@ static int __vmbus_establish_gpadl(struct vmbus_channel *channel,
+ 
+ 	kfree(msginfo);
+ 
+-	if (ret)
+-		set_memory_encrypted((unsigned long)kbuffer,
+-				     PFN_UP(size));
++	if (ret) {
 +		/*
-+		 * If set_memory_decrypted() fails, the encryption state
-+		 * of the memory is unknown. So leak the memory instead
-+		 * of risking returning decrypted memory to the free list.
-+		 * For simplicity, always handle both pages the same.
++		 * If set_memory_encrypted() fails, the decrypted flag is
++		 * left as true so the memory is leaked instead of being
++		 * put back on the free list.
 +		 */
-+		vmbus_connection.monitor_pages[0] = NULL;
-+		vmbus_connection.monitor_pages[1] = NULL;
- 		goto cleanup;
++		if (!set_memory_encrypted((unsigned long)kbuffer, PFN_UP(size)))
++			gpadl->decrypted = false;
 +	}
  
- 	/*
- 	 * Set_memory_decrypted() will change the memory contents if
-@@ -337,13 +346,19 @@ void vmbus_disconnect(void)
- 		vmbus_connection.int_page = NULL;
- 	}
- 
--	set_memory_encrypted((unsigned long)vmbus_connection.monitor_pages[0], 1);
--	set_memory_encrypted((unsigned long)vmbus_connection.monitor_pages[1], 1);
-+	if (vmbus_connection.monitor_pages[0]) {
-+		if (!set_memory_encrypted(
-+			(unsigned long)vmbus_connection.monitor_pages[0], 1))
-+			hv_free_hyperv_page(vmbus_connection.monitor_pages[0]);
-+		vmbus_connection.monitor_pages[0] = NULL;
-+	}
- 
--	hv_free_hyperv_page(vmbus_connection.monitor_pages[0]);
--	hv_free_hyperv_page(vmbus_connection.monitor_pages[1]);
--	vmbus_connection.monitor_pages[0] = NULL;
--	vmbus_connection.monitor_pages[1] = NULL;
-+	if (vmbus_connection.monitor_pages[1]) {
-+		if (!set_memory_encrypted(
-+			(unsigned long)vmbus_connection.monitor_pages[1], 1))
-+			hv_free_hyperv_page(vmbus_connection.monitor_pages[1]);
-+		vmbus_connection.monitor_pages[1] = NULL;
-+	}
+ 	return ret;
  }
+@@ -850,6 +865,8 @@ int vmbus_teardown_gpadl(struct vmbus_channel *channel, struct vmbus_gpadl *gpad
+ 	if (ret)
+ 		pr_warn("Fail to set mem host visibility in GPADL teardown %d.\n", ret);
  
- /*
++	gpadl->decrypted = ret;
++
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(vmbus_teardown_gpadl);
+diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
+index 6ef0557b4bff8..96ceb4095425e 100644
+--- a/include/linux/hyperv.h
++++ b/include/linux/hyperv.h
+@@ -832,6 +832,7 @@ struct vmbus_gpadl {
+ 	u32 gpadl_handle;
+ 	u32 size;
+ 	void *buffer;
++	bool decrypted;
+ };
+ 
+ struct vmbus_channel {
 -- 
 2.43.0
 
