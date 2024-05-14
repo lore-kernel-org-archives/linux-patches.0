@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC1F12E1F7;
-	Tue, 14 May 2024 11:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF0012E1FE;
+	Tue, 14 May 2024 11:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686711; cv=none; b=RFl4Jpw5CBv1/MCl9lskW5ul8UbAbaEmR4m6jegFSPWqC9piQpkUVIXNoZaaxHU340J5j5FxF+3RTlUyH+B3aQYj4MNI+lNChCR5qpR42JvSGzV538ZtGKG5P5NVma845LMJOQ3+E3TGwC60OSjJGYYjwl/3SVh+pQ4gnnqAAn8=
+	t=1715686714; cv=none; b=qIFVuXKiSoZ7JWRzHRJJAT+ztbcFKyYo/csBC0NtLd05H3BSlao1TvzMjh+vyHSgIRQ1ees97bRAihrSDVNu7STIVP5QkyMZizewFWHV8GYJdOyGVm0+TK25L525NatYCJLQU0xruA9HztCrNvvOsZZHqsdumIoD7uKZq7SoT6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686711; c=relaxed/simple;
-	bh=f1+9I12bUpKHpuj2dp+t2hGbsgvlVLyVhGEGHU6tqZc=;
+	s=arc-20240116; t=1715686714; c=relaxed/simple;
+	bh=hW1QH/dWmrW3DHsYkVTQyKd/t3snSIL/vI7nKhIrTvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGCrSmNP8IMhS4qTZ0IFB+Sfaxd8zAPAnWMq6qdA/73ZJJYL0WrJjV/cZrRcoB1YH5TiZCiSxrDm4XFpMqZj9FJL6/EAAfjS8bq+6hOet8bMezIzAiERO6FyfB0Pw5Qsdmv93IDreLty2Ga331wYc+FJgSDRT2Z5RbrDH+C0WDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wyrZBhar; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oOWBE/XHS3ktkrqDhlleNtsCCQ/+OVC3kQZZ4YYao1VjjuXSRDg5kU4lXhp60mQjbIdwGUHRAJ0DHdt2LpJghCbaBmzVHeaaQF5/jFmWUC+LcTbtKIF5rRZuvm9w0AhVYPXLuK1zDubgIU3Ev4hdlxZOCP9qU6b4uMeeWA8aAww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3ofiap1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wyrZBhar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087D0C2BD10;
-	Tue, 14 May 2024 11:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3ofiap1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA539C2BD10;
+	Tue, 14 May 2024 11:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686711;
-	bh=f1+9I12bUpKHpuj2dp+t2hGbsgvlVLyVhGEGHU6tqZc=;
+	s=korg; t=1715686714;
+	bh=hW1QH/dWmrW3DHsYkVTQyKd/t3snSIL/vI7nKhIrTvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wyrZBharpqGKQxlSFmcb5jYxEO+GhDvCdxgBT+HGqvJjjV+9UF4HvhC/0V7f5gAx/
-	 okNA9xuXmocxlzzEVYPWOuBmfInD7FIabpAtV46A/ZkcRHVIdQWdlSxqgTeSIF1SiB
-	 F5OPzSmT/ABAEfZzsn8VmkSNklpgoziVwhSv5wOI=
+	b=R3ofiap1/KwEytzT1QpOwMo/n8Vd1MoL1aZ1CdNRmRQDSmK1GQbt90WW0EAqSqtc7
+	 ks0NWj1rucnJRHjcFlO33VF7yHEJ/sCFFPDu8/Q40ya0STWZMLTjMDSMkRZ70sxjgO
+	 KOymvcNJUejgO4hWNpoVKBFQFfH2KzX13LTkPXUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 233/236] Bluetooth: qca: fix NVM configuration parsing
-Date: Tue, 14 May 2024 12:19:55 +0200
-Message-ID: <20240514101029.203378400@linuxfoundation.org>
+	Joao Paulo Goncalves <joao.goncalves@toradex.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 216/236] ASoC: ti: davinci-mcasp: Fix race condition during probe
+Date: Tue, 14 May 2024 12:19:38 +0200
+Message-ID: <20240514101028.558790949@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -51,91 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Joao Paulo Goncalves <joao.goncalves@toradex.com>
 
-commit a112d3c72a227f2edbb6d8094472cc6e503e52af upstream.
+commit d18ca8635db2f88c17acbdf6412f26d4f6aff414 upstream.
 
-The NVM configuration files used by WCN3988 and WCN3990/1/8 have two
-sets of configuration tags that are enclosed by a type-length header of
-type four which the current parser fails to account for.
+When using davinci-mcasp as CPU DAI with simple-card, there are some
+conditions that cause simple-card to finish registering a sound card before
+davinci-mcasp finishes registering all sound components. This creates a
+non-working sound card from userspace with no problem indication apart
+from not being able to play/record audio on a PCM stream. The issue
+arises during simultaneous probe execution of both drivers. Specifically,
+the simple-card driver, awaiting a CPU DAI, proceeds as soon as
+davinci-mcasp registers its DAI. However, this process can lead to the
+client mutex lock (client_mutex in soc-core.c) being held or davinci-mcasp
+being preempted before PCM DMA registration on davinci-mcasp finishes.
+This situation occurs when the probes of both drivers run concurrently.
+Below is the code path for this condition. To solve the issue, defer
+davinci-mcasp CPU DAI registration to the last step in the audio part of
+it. This way, simple-card CPU DAI parsing will be deferred until all
+audio components are registered.
 
-Instead the driver happily parses random data as if it were valid tags,
-something which can lead to the configuration data being corrupted if it
-ever encounters the words 0x0011 or 0x001b.
+Fail Code Path:
 
-As is clear from commit b63882549b2b ("Bluetooth: btqca: Fix the NVM
-baudrate tag offcet for wcn3991") the intention has always been to
-process the configuration data also for WCN3991 and WCN3998 which
-encodes the baud rate at a different offset.
+simple-card.c: probe starts
+simple-card.c: simple_dai_link_of: simple_parse_node(..,cpu,..) returns EPROBE_DEFER, no CPU DAI yet
+davinci-mcasp.c: probe starts
+davinci-mcasp.c: devm_snd_soc_register_component() register CPU DAI
+simple-card.c: probes again, finish CPU DAI parsing and call devm_snd_soc_register_card()
+simple-card.c: finish probe
+davinci-mcasp.c: *dma_pcm_platform_register() register PCM  DMA
+davinci-mcasp.c: probe finish
 
-Fix the parser so that it can handle the WCN3xxx configuration files,
-which has an enclosing type-length header of type four and two sets of
-TLV tags enclosed by a type-length header of type two and three,
-respectively.
-
-Note that only the first set, which contains the tags the driver is
-currently looking for, will be parsed for now.
-
-With the parser fixed, the software in-band sleep bit will now be set
-for WCN3991 and WCN3998 (as it is for later controllers) and the default
-baud rate 3200000 may be updated by the driver also for WCN3xxx
-controllers.
-
-Notably the deep-sleep feature bit is already set by default in all
-configuration files in linux-firmware.
-
-Fixes: 4219d4686875 ("Bluetooth: btqca: Add wcn3990 firmware download support.")
-Cc: stable@vger.kernel.org	# 4.19
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 9fbd58cf4ab0 ("ASoC: davinci-mcasp: Choose PCM driver based on configured DMA controller")
+Signed-off-by: Joao Paulo Goncalves <joao.goncalves@toradex.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Reviewed-by: Jai Luthra <j-luthra@ti.com>
+Link: https://lore.kernel.org/r/20240417184138.1104774-1-jpaulo.silvagoncalves@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btqca.c |   24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ sound/soc/ti/davinci-mcasp.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -278,6 +278,7 @@ static int qca_tlv_check_data(struct hci
- 	struct tlv_type_patch *tlv_patch;
- 	struct tlv_type_nvm *tlv_nvm;
- 	uint8_t nvm_baud_rate = config->user_baud_rate;
-+	u8 type;
+--- a/sound/soc/ti/davinci-mcasp.c
++++ b/sound/soc/ti/davinci-mcasp.c
+@@ -2416,12 +2416,6 @@ static int davinci_mcasp_probe(struct pl
  
- 	config->dnld_mode = QCA_SKIP_EVT_NONE;
- 	config->dnld_type = QCA_SKIP_EVT_NONE;
-@@ -343,11 +344,30 @@ static int qca_tlv_check_data(struct hci
- 		tlv = (struct tlv_type_hdr *)fw_data;
+ 	mcasp_reparent_fck(pdev);
  
- 		type_len = le32_to_cpu(tlv->type_len);
--		length = (type_len >> 8) & 0x00ffffff;
-+		length = type_len >> 8;
-+		type = type_len & 0xff;
+-	ret = devm_snd_soc_register_component(&pdev->dev, &davinci_mcasp_component,
+-					      &davinci_mcasp_dai[mcasp->op_mode], 1);
+-
+-	if (ret != 0)
+-		goto err;
+-
+ 	ret = davinci_mcasp_get_dma_type(mcasp);
+ 	switch (ret) {
+ 	case PCM_EDMA:
+@@ -2448,6 +2442,12 @@ static int davinci_mcasp_probe(struct pl
+ 		goto err;
+ 	}
  
--		BT_DBG("TLV Type\t\t : 0x%x", type_len & 0x000000ff);
-+		/* Some NVM files have more than one set of tags, only parse
-+		 * the first set when it has type 2 for now. When there is
-+		 * more than one set there is an enclosing header of type 4.
-+		 */
-+		if (type == 4) {
-+			if (fw_size < 2 * sizeof(struct tlv_type_hdr))
-+				return -EINVAL;
++	ret = devm_snd_soc_register_component(&pdev->dev, &davinci_mcasp_component,
++					      &davinci_mcasp_dai[mcasp->op_mode], 1);
 +
-+			tlv++;
++	if (ret != 0)
++		goto err;
 +
-+			type_len = le32_to_cpu(tlv->type_len);
-+			length = type_len >> 8;
-+			type = type_len & 0xff;
-+		}
-+
-+		BT_DBG("TLV Type\t\t : 0x%x", type);
- 		BT_DBG("Length\t\t : %d bytes", length);
- 
-+		if (type != 2)
-+			break;
-+
- 		if (fw_size < length + (tlv->data - fw_data))
- 			return -EINVAL;
- 
+ no_audio:
+ 	ret = davinci_mcasp_init_gpiochip(mcasp);
+ 	if (ret) {
 
 
