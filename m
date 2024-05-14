@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE973D0D1;
-	Tue, 14 May 2024 11:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D007603F;
+	Tue, 14 May 2024 11:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687474; cv=none; b=eWR0JxIOEVIvh9ADVF3krU44Jfg6Fs2chuVsFiOO64OO71W9DwMEPhMXk2F0m7z5V2NWknV/pO6Psz2qpGb06WSgLQ/ycnusHeL7FMTVbsF1m8VtczO2a/AORRF5wwHYrzk7HnjS9450Bd5d17KcgqtRM2pQN82S/917lkwliGM=
+	t=1715687477; cv=none; b=Myd7JRFGYRLN8OfIAz75ZCGGuz6dZ6SoepD+q5G1dyGoCiQ1g1f8qcRc0ZZjzKr8jxJx0ijR3enoGu39BPCrbJljQb2ShVy6bMMDEFtv2W7gl5yasHN3p0mN18WQYxZ4tJEul/0MiZxNVvXXFJulOna4mP1t9RwZ4n3YLngFMtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687474; c=relaxed/simple;
-	bh=ob9UhLXfsEKUth0Ez4ZrkYRD2T+sIk+OWpjedlJkMZM=;
+	s=arc-20240116; t=1715687477; c=relaxed/simple;
+	bh=8VZ4xr8O1m1o1uMAR1Ds6DwvrKzh8KJo5miCQ1p0hss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s6Cn5JDdnTV+xKzqZX3VGOtlQju6yUlAOOvG5dKHMyUbfff8XdU5RRhwZ3MX0dx+ETW9dHzNkU3YitTnlTTXw0VYM4vGsFdGnOw1EIO7m74ICCnLwW55ocHxC86B4OlS+oLroqLKsipgB/MEle8Zv45nt95tH8/dW5yINvEiJKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMlLDOo2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bT/ZvmfZYQXp7wOU8FOVZCBANBifLegpLNovXFn9AMdBaQyxNlAKv0fvL82MPGqgRHNgmI3hTKeRiZ/AwUOX4GtQ1wDKep/lqQr5HCjp1JQTkj9L81K8tIiYcNIoiaURnrDCb6RAxRIV8myPvkGcQgf1dhjmf+qZ6fS4kzT5dDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03LwpFdc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMlLDOo2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F36AC2BD10;
-	Tue, 14 May 2024 11:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03LwpFdc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A76AC2BD10;
+	Tue, 14 May 2024 11:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687474;
-	bh=ob9UhLXfsEKUth0Ez4ZrkYRD2T+sIk+OWpjedlJkMZM=;
+	s=korg; t=1715687476;
+	bh=8VZ4xr8O1m1o1uMAR1Ds6DwvrKzh8KJo5miCQ1p0hss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yMlLDOo2yJ+CRXhSe3U7uIGrQvnLAOrjn6MNrKtOkj/3AymEVhkVGamQuOgwlwV6x
-	 Fh4a3Y/oT1YojEDBEJ3q6lzZy8pfnwmAVYACnoAsIE/WONwCXbWq1eLenH4mUGzET3
-	 u0OSXPi0RNGdlVqaDPqNv02HeVwXraOMX1yw//ZM=
+	b=03LwpFdcuYBO2nXKAHUCt+9F6h1EMlwZHcWla+A6ZTBoeOecxpzTSiGLu7R/dWgbI
+	 XRUJ99rGWx/PRR9+O3Oh3Vl3w0EUvsa+JQP1ZRtTeNxYu6/z48P8Eb8iYTSPZrSv2X
+	 FtcwqXKtbECylDIgifOSSTgeZQLW5E23R9yhD01g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Martin Krastev <martin.krastev@broadcom.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 5.10 108/111] drm/vmwgfx: Fix invalid reads in fence signaled events
-Date: Tue, 14 May 2024 12:20:46 +0200
-Message-ID: <20240514101001.236155901@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 109/111] net: fix out-of-bounds access in ops_init
+Date: Tue, 14 May 2024 12:20:47 +0200
+Message-ID: <20240514101001.276286084@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -57,46 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-commit a37ef7613c00f2d72c8fc08bd83fb6cc76926c8c upstream.
+commit a26ff37e624d12e28077e5b24d2b264f62764ad6 upstream.
 
-Correctly set the length of the drm_event to the size of the structure
-that's actually used.
+net_alloc_generic is called by net_alloc, which is called without any
+locking. It reads max_gen_ptrs, which is changed under pernet_ops_rwsem. It
+is read twice, first to allocate an array, then to set s.len, which is
+later used to limit the bounds of the array access.
 
-The length of the drm_event was set to the parent structure instead of
-to the drm_vmw_event_fence which is supposed to be read. drm_read
-uses the length parameter to copy the event to the user space thus
-resuling in oob reads.
+It is possible that the array is allocated and another thread is
+registering a new pernet ops, increments max_gen_ptrs, which is then used
+to set s.len with a larger than allocated length for the variable array.
 
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Fixes: 8b7de6aa8468 ("vmwgfx: Rework fence event action")
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-23566
-Cc: David Airlie <airlied@gmail.com>
-CC: Daniel Vetter <daniel@ffwll.ch>
-Cc: Zack Rusin <zack.rusin@broadcom.com>
-Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Cc: <stable@vger.kernel.org> # v3.4+
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240425192748.1761522-1-zack.rusin@broadcom.com
+Fix it by reading max_gen_ptrs only once in net_alloc_generic. If
+max_gen_ptrs is later incremented, it will be caught in net_assign_generic.
+
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Fixes: 073862ba5d24 ("netns: fix net_alloc_generic()")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240502132006.3430840-1-cascardo@igalia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_fence.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/net_namespace.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-@@ -1066,7 +1066,7 @@ static int vmw_event_fence_action_create
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -86,12 +86,15 @@ u64 __net_gen_cookie(struct net *net)
+ 
+ static struct net_generic *net_alloc_generic(void)
+ {
++	unsigned int gen_ptrs = READ_ONCE(max_gen_ptrs);
++	unsigned int generic_size;
+ 	struct net_generic *ng;
+-	unsigned int generic_size = offsetof(struct net_generic, ptr[max_gen_ptrs]);
++
++	generic_size = offsetof(struct net_generic, ptr[gen_ptrs]);
+ 
+ 	ng = kzalloc(generic_size, GFP_KERNEL);
+ 	if (ng)
+-		ng->s.len = max_gen_ptrs;
++		ng->s.len = gen_ptrs;
+ 
+ 	return ng;
+ }
+@@ -1241,7 +1244,11 @@ static int register_pernet_operations(st
+ 		if (error < 0)
+ 			return error;
+ 		*ops->id = error;
+-		max_gen_ptrs = max(max_gen_ptrs, *ops->id + 1);
++		/* This does not require READ_ONCE as writers already hold
++		 * pernet_ops_rwsem. But WRITE_ONCE is needed to protect
++		 * net_alloc_generic.
++		 */
++		WRITE_ONCE(max_gen_ptrs, max(max_gen_ptrs, *ops->id + 1));
  	}
- 
- 	event->event.base.type = DRM_VMW_EVENT_FENCE_SIGNALED;
--	event->event.base.length = sizeof(*event);
-+	event->event.base.length = sizeof(event->event);
- 	event->event.user_data = user_data;
- 
- 	ret = drm_event_reserve_init(dev, file_priv, &event->base, &event->event.base);
+ 	error = __register_pernet_operations(list, ops);
+ 	if (error) {
 
 
