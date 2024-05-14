@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFBD47F4B;
-	Tue, 14 May 2024 11:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F016C2374E;
+	Tue, 14 May 2024 11:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687340; cv=none; b=MPKIukINW961qGStPyJ+b+pktRrze8UraiXs3+RgVgLzGlxNSd9Jzn/YoFxyipihZX6CEDnZgJJ7ikxgtU8rWZuD+jGMA//9vDlkpIp8R4cBNoiPE/jEWQxjAxv/IlG7zz8wduj1qqzm/GA14UnYsz5Wak3VbvvVD8kDDHfaTqc=
+	t=1715687343; cv=none; b=AlU93baWaJJgaHALPyYzFy+8Qo1S5jyBahMpiPGzLhHEsscH7LswOiopJkpFzoZf2wiTnyBfVpeHYl/2rBSZx+YIE3IHczdAdHBiztCtMEPQw5GQPnDzc50eYX4WUblPoQiOP8d5K1NSZkGwjtYXeDKHfS3QluiW55f6zww2oqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687340; c=relaxed/simple;
-	bh=CC8w3wUDzsCzQ8cGt84MsbsriwMq5HLCPYFQoxh/iIg=;
+	s=arc-20240116; t=1715687343; c=relaxed/simple;
+	bh=jw6OyIoyRCEfcv6qQPbf4bUmPBHdWdCs8QPtsUIQ/ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iAUtcg6xj2AEnO3IepkvSRWEdJuNuFnES4R1Foo5PR3/Tm1U8jdNxZ7b0DGzWmqfNX+8BrKTI7tL9JGJaKejkVb0cF1KxPiA9uAFaB/73XMYgprg288R8PBuNHA+ycgIzoWRRjuXmgXrOY+QMmQOJGKi2uy25d7Z1sl++ORZDPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKJplyBC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u1qGslZIzIeuQRXwtH4TCzs8z+giiy/DdkvW3QVj3poU06rnNZtG8l+Nl5Xa9Bn14tDKeECsZWFhgzC8+JUdufbgHMG+LI9h3G5/jSdldpzFxBONfPHkbnjbFSlvGWv0pVq1DqRDZktrCkeIfAuHOph6RX9nYTJNOvPdjNKH7zM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Py+8Okty; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKJplyBC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3CBC2BD10;
-	Tue, 14 May 2024 11:48:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Py+8Okty"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADBFC32782;
+	Tue, 14 May 2024 11:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687339;
-	bh=CC8w3wUDzsCzQ8cGt84MsbsriwMq5HLCPYFQoxh/iIg=;
+	s=korg; t=1715687342;
+	bh=jw6OyIoyRCEfcv6qQPbf4bUmPBHdWdCs8QPtsUIQ/ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKJplyBCZMcb6fAPsUfOTPMUmo2N2jWJH9fg1DKX0mMpiSv6+WR3wzNI4IU1yU5NH
-	 4Wr43c5irmxgXP8ZwEog6AS8zeENrEL/0YOgxAMx990ipCNrqxqeOmXPCwbtly0qqA
-	 otwQCip4BXUlXrFHYihUc3EkERF3S5RKXXc4i+gw=
+	b=Py+8OktyFE7JkDBOaz8idqQoRcXXkdHT2BQIS4UU4KF9P/J4/Bk74x5qBJ+7l/DEP
+	 RifcYAzhm8f3NmUh220UOwYnEdSezCEiT5oXFBtYSGwaon2RjiPbTPBSh3d/CjV/Cl
+	 UpZmqrjB1FCipUJpxpIC6s4xrkNkxIAepOKHZxqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Smythies <dsmythies@telus.net>,
-	Len Brown <len.brown@intel.com>,
+	Joakim Sindholt <opensource@zhasha.com>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 055/111] tools/power turbostat: Fix added raw MSR output
-Date: Tue, 14 May 2024 12:19:53 +0200
-Message-ID: <20240514100959.225818602@linuxfoundation.org>
+Subject: [PATCH 5.10 064/111] fs/9p: only translate RWX permissions for plain 9P2000
+Date: Tue, 14 May 2024 12:20:02 +0200
+Message-ID: <20240514100959.567758093@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -51,85 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doug Smythies <dsmythies@telus.net>
+From: Joakim Sindholt <opensource@zhasha.com>
 
-[ Upstream commit e5f4e68eed85fa8495d78cd966eecc2b27bb9e53 ]
+[ Upstream commit cd25e15e57e68a6b18dc9323047fe9c68b99290b ]
 
-When using --Summary mode, added MSRs in raw mode always
-print zeros. Print the actual register contents.
+Garbage in plain 9P2000's perm bits is allowed through, which causes it
+to be able to set (among others) the suid bit. This was presumably not
+the intent since the unix extended bits are handled explicitly and
+conditionally on .u.
 
-Example, with patch:
-
-note the added column:
---add msr0x64f,u32,package,raw,REASON
-
-Where:
-
-0x64F is MSR_CORE_PERF_LIMIT_REASONS
-
-Busy%   Bzy_MHz PkgTmp  PkgWatt CorWatt     REASON
-0.00    4800    35      1.42    0.76    0x00000000
-0.00    4801    34      1.42    0.76    0x00000000
-80.08   4531    66      108.17  107.52  0x08000000
-98.69   4530    66      133.21  132.54  0x08000000
-99.28   4505    66      128.26  127.60  0x0c000400
-99.65   4486    68      124.91  124.25  0x0c000400
-99.63   4483    68      124.90  124.25  0x0c000400
-79.34   4481    41      99.80   99.13   0x0c000000
-0.00    4801    41      1.40    0.73    0x0c000000
-
-Where, for the test processor (i5-10600K):
-
-PKG Limit #1: 125.000 Watts, 8.000000 sec
-MSR bit 26 = log; bit 10 = status
-
-PKG Limit #2: 136.000 Watts, 0.002441 sec
-MSR bit 27 = log; bit 11 = status
-
-Example, without patch:
-
-Busy%   Bzy_MHz PkgTmp  PkgWatt CorWatt     REASON
-0.01    4800    35      1.43    0.77    0x00000000
-0.00    4801    35      1.39    0.73    0x00000000
-83.49   4531    66      112.71  112.06  0x00000000
-98.69   4530    68      133.35  132.69  0x00000000
-99.31   4500    67      127.96  127.30  0x00000000
-99.63   4483    69      124.91  124.25  0x00000000
-99.61   4481    69      124.90  124.25  0x00000000
-99.61   4481    71      124.92  124.25  0x00000000
-59.35   4479    42      75.03   74.37   0x00000000
-0.00    4800    42      1.39    0.73    0x00000000
-0.00    4801    42      1.42    0.76    0x00000000
-
-c000000
-
-[lenb: simplified patch to apply only to package scope]
-
-Signed-off-by: Doug Smythies <dsmythies@telus.net>
-Signed-off-by: Len Brown <len.brown@intel.com>
+Signed-off-by: Joakim Sindholt <opensource@zhasha.com>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/9p/vfs_inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 9d4a249cc98bb..11f1b6288e123 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -1685,9 +1685,10 @@ int sum_counters(struct thread_data *t, struct core_data *c,
- 	average.packages.rapl_dram_perf_status += p->rapl_dram_perf_status;
+diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
+index 0791480bf922b..88ca5015f987e 100644
+--- a/fs/9p/vfs_inode.c
++++ b/fs/9p/vfs_inode.c
+@@ -86,7 +86,7 @@ static int p9mode2perm(struct v9fs_session_info *v9ses,
+ 	int res;
+ 	int mode = stat->mode;
  
- 	for (i = 0, mp = sys.pp; mp; i++, mp = mp->next) {
--		if (mp->format == FORMAT_RAW)
--			continue;
--		average.packages.counter[i] += p->counter[i];
-+		if ((mp->format == FORMAT_RAW) && (topo.num_packages == 0))
-+			average.packages.counter[i] = p->counter[i];
-+		else
-+			average.packages.counter[i] += p->counter[i];
- 	}
- 	return 0;
- }
+-	res = mode & S_IALLUGO;
++	res = mode & 0777; /* S_IRWXUGO */
+ 	if (v9fs_proto_dotu(v9ses)) {
+ 		if ((mode & P9_DMSETUID) == P9_DMSETUID)
+ 			res |= S_ISUID;
 -- 
 2.43.0
 
