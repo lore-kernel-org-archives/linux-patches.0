@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B3A139568;
-	Tue, 14 May 2024 10:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D84139568;
+	Tue, 14 May 2024 10:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682934; cv=none; b=kfV+1EyifCjyZQoCYGRDrkWgVZ1a3cMCIeL1+6QPc/ULs7Wuhx8gn4uz6dzFpwKUsdR3OH1ZSWfYSvSIhNAxgdZ0hci89zJlMNVzNE6xr2V/YqLY6SMox6D+rUHdwB2tmzjEjfW7omVvW6f5KlvYwlQzcnW7dKx9Z6ZWIuyG9QI=
+	t=1715682937; cv=none; b=c3PWOlia31h75xvsedU9dhfFUoc/9M8160ljg/X4/xqz0eOmyIY9g6JvJF3oKkvRieF8r60ABVZxMjghH+FZEo0GCoFu1TvVn+ZyW28v7HgfpDowwirHDpz5/qQ3WR5TK2XHaNEzVqeXrfldgX/5regZw6xQq5n7/RmoIhD9d44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682934; c=relaxed/simple;
-	bh=+lZuthWITtUxAki4VdK6SExSbTPA8FmOLIRWQv/oFNU=;
+	s=arc-20240116; t=1715682937; c=relaxed/simple;
+	bh=s0W4/atVywLXUuSz4lbQpzVK21icb4uu9m8e12wmoh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U7wY3N7vMWMIdbNl1w0rmZ+Kt5S58rE6Jn8pa3FmrOhE0ZkUgbI+GXiZWcVn+xqmAu4m02zm1WhSi8H71/GvnqQ65o4n7FWMbPPisCuBRxcil/pXSXSMO+CjfnBcFe4q3SJYktyv8XyJSFJda9mQpCxYQIGhOZd8t3iM00NGqNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jl/zZP37; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A3YJih+BrCjiaJVb86WC6oSsVxln4z+E2aNzqdrJgi9DAOy6lMD3EbwZnPfA2rx0VRmhHoNGaTMntGY+7Hw0Skt+hJrYwRMJFYsOZ1BW98QSlAo16SUKXnwrwFK58MzwVVoNht2OZkUn0F58+RzBpVsxxrSSKja14Silq2J6hgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jv3Pbrbc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jl/zZP37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D0CC2BD10;
-	Tue, 14 May 2024 10:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jv3Pbrbc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42372C2BD10;
+	Tue, 14 May 2024 10:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682934;
-	bh=+lZuthWITtUxAki4VdK6SExSbTPA8FmOLIRWQv/oFNU=;
+	s=korg; t=1715682937;
+	bh=s0W4/atVywLXUuSz4lbQpzVK21icb4uu9m8e12wmoh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jl/zZP37gDBkd0RW+G+U6YjwMOBmNTHtu0w0ujglvsLDhAwhSWMi+Mk28ANq4CHnw
-	 ru4leIw0b5loJTTu0e50xE47KO0iaQ9sj4G2UbCArAOZBDdu1joGcKQBfU6czf1AZS
-	 24l+B2frRhRZUwF1iYmK2EQVryg8Mh24x53mgzmQ=
+	b=jv3PbrbcfeAA17et+2SzE/7Y7LVrAy+dmLvax6oV+jYFfrR/erNW6ddI7/nAmbziu
+	 44IuWvu1e2JSmz07ESCHj4PgGPMJuAzD4PqBNZKF8FDbFic3lQ6ZJ6LfBCGZpp8OT5
+	 EDszwlZFtk195nuT5MeFjYi0IfLCa4wDemGHRrXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Liu <liupeng17@lenovo.com>,
-	Len Brown <len.brown@intel.com>,
+	linke li <lilinke99@qq.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 136/336] tools/power turbostat: Fix Bzy_MHz documentation typo
-Date: Tue, 14 May 2024 12:15:40 +0200
-Message-ID: <20240514101043.734502503@linuxfoundation.org>
+Subject: [PATCH 6.8 110/336] net: mark racy access on sk->sk_rcvbuf
+Date: Tue, 14 May 2024 12:15:14 +0200
+Message-ID: <20240514101042.757450610@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,33 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Liu <liupeng17@lenovo.com>
+From: linke li <lilinke99@qq.com>
 
-[ Upstream commit 0b13410b52c4636aacb6964a4253a797c0fa0d16 ]
+[ Upstream commit c2deb2e971f5d9aca941ef13ee05566979e337a4 ]
 
-The code calculates Bzy_MHz by multiplying TSC_delta * APERF_delta/MPERF_delta
-The man page erroneously showed that TSC_delta was divided.
+sk->sk_rcvbuf in __sock_queue_rcv_skb() and __sk_receive_skb() can be
+changed by other threads. Mark this as benign using READ_ONCE().
 
-Signed-off-by: Peng Liu <liupeng17@lenovo.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
+This patch is aimed at reducing the number of benign races reported by
+KCSAN in order to focus future debugging effort on harmful races.
+
+Signed-off-by: linke li <lilinke99@qq.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.8 | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/sock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.8 b/tools/power/x86/turbostat/turbostat.8
-index 8f08c3fd498d5..1ba6340d3b3da 100644
---- a/tools/power/x86/turbostat/turbostat.8
-+++ b/tools/power/x86/turbostat/turbostat.8
-@@ -370,7 +370,7 @@ below the processor's base frequency.
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 9cf404e8038a4..599f186fe3d3a 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -482,7 +482,7 @@ int __sock_queue_rcv_skb(struct sock *sk, struct sk_buff *skb)
+ 	unsigned long flags;
+ 	struct sk_buff_head *list = &sk->sk_receive_queue;
  
- Busy% = MPERF_delta/TSC_delta
+-	if (atomic_read(&sk->sk_rmem_alloc) >= sk->sk_rcvbuf) {
++	if (atomic_read(&sk->sk_rmem_alloc) >= READ_ONCE(sk->sk_rcvbuf)) {
+ 		atomic_inc(&sk->sk_drops);
+ 		trace_sock_rcvqueue_full(sk, skb);
+ 		return -ENOMEM;
+@@ -552,7 +552,7 @@ int __sk_receive_skb(struct sock *sk, struct sk_buff *skb,
  
--Bzy_MHz = TSC_delta/APERF_delta/MPERF_delta/measurement_interval
-+Bzy_MHz = TSC_delta*APERF_delta/MPERF_delta/measurement_interval
+ 	skb->dev = NULL;
  
- Note that these calculations depend on TSC_delta, so they
- are not reliable during intervals when TSC_MHz is not running at the base frequency.
+-	if (sk_rcvqueues_full(sk, sk->sk_rcvbuf)) {
++	if (sk_rcvqueues_full(sk, READ_ONCE(sk->sk_rcvbuf))) {
+ 		atomic_inc(&sk->sk_drops);
+ 		goto discard_and_relse;
+ 	}
 -- 
 2.43.0
 
