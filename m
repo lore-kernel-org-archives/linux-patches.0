@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7176311D;
-	Tue, 14 May 2024 11:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826EE6311D;
+	Tue, 14 May 2024 11:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685840; cv=none; b=PHTBDy/VtxitptDcqAh5azoYGLnkENGGjBNjXEykTq/1Gjg2npHimSH8Y9TBE7NKUiEcq0kYz/aaMksSDMfncnUqme1M9xKkgdQx+C+pG5WvWAXMpTMlm7lZEB3vBJNqogwXH1lvRGZBxYfDfZ5zgqd8IxN7QWPrvvzAUbPf520=
+	t=1715685844; cv=none; b=VCnv1gaz8miDaUNBxDvRYYmlMl31StmZ5bEnrmoJpkiAYAZ/wPtg5g+Fh9fnJ7N7Txta2VYqg6xvwy6jB4/NHgvIoRXqUzzf2F9IYaeqxklWM9VLvbQtGnVMQJWZ/mFD29Q5Ug61n63e/i7EDT82gzu6/uGHdENlqRVuKdrOGtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685840; c=relaxed/simple;
-	bh=j+pLFbfApcy6MVNLWUYYzw6I9CX3aYdauLE71ny85FI=;
+	s=arc-20240116; t=1715685844; c=relaxed/simple;
+	bh=iNDRcOmXBH4elN4vCkfwbuKZb47GIMcaG4p27c00+bg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fpN5hbaUSmS2zRii3PNK/efmJSCGMy7/VgCNCRNucH8Ikv14Bmxle4sQ3AH4KG/Qgi07ejns7ZUsqDyNnYrHL96cy9yd/Ovy64d6k7yu8OXkS1k7Mx1bRVkQWIUuxp/MZSG+qm13NX38wsRaBj6srXamRNy2NnNWb8LpBxOk+ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFKrFgrA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dbUCCKdM1rNvSMQ1JvsdPnZtQssH9pyfUaYffSS6btl90gk9kcjKYbvthmpIGNkqndV7nHkY4wyc+iuiZI825wAY+A4rRxAZ8GRVBjoR/IeokPmDvZru+/WMqEaXu45bVHoYJ7MbyZKxTJ/I74/+HY0upEEksEBdyD3jE2bQlfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukvp20/j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFKrFgrA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86FFC2BD10;
-	Tue, 14 May 2024 11:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukvp20/j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD095C2BD10;
+	Tue, 14 May 2024 11:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685840;
-	bh=j+pLFbfApcy6MVNLWUYYzw6I9CX3aYdauLE71ny85FI=;
+	s=korg; t=1715685844;
+	bh=iNDRcOmXBH4elN4vCkfwbuKZb47GIMcaG4p27c00+bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MFKrFgrA0DhJWu+3VSJQrBUkI533mYIGMty4yEP3lIbaInAX9FoL+8NlNyQJeOHQ+
-	 2wKdp0/e2ybXRz1FuwUEI6ohm4mg9JKE7KwB+uV30Gv5aBAD+RfcTKXfwYNcYFzCHY
-	 sbIz+g8A8eh6Yusqf+yJOfPAVPbTAEyxJC5NtG5U=
+	b=ukvp20/jHyPizXzl/wqnmws1TOiHsxPtj/DFvKrzZMNfqPlIyXJ/0lW+wxHoQ1mVh
+	 JATDznVAoRCMjAH1g4usBP+KIWKSgRzuMPRUU1dt5M/hx9hlG/VhVuvUSk0ULIeZrP
+	 Cor+N+PFURXbiAnOEMnsUuNZER/Q6GSvZ94g/pTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 257/301] net: bcmgenet: synchronize use of bcmgenet_set_rx_mode()
-Date: Tue, 14 May 2024 12:18:48 +0200
-Message-ID: <20240514101041.960441917@linuxfoundation.org>
+	Ivan Avdeev <me@provod.works>
+Subject: [PATCH 6.6 231/301] usb: gadget: uvc: use correct buffer size when parsing configfs lists
+Date: Tue, 14 May 2024 12:18:22 +0200
+Message-ID: <20240514101040.977039726@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,45 +49,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doug Berger <opendmb@gmail.com>
+From: Ivan Avdeev <me@provod.works>
 
-commit 2dbe5f19368caae63b1f59f5bc2af78c7d522b3a upstream.
+commit 650ae71c80749fc7cb8858c8049f532eaec64410 upstream.
 
-The ndo_set_rx_mode function is synchronized with the
-netif_addr_lock spinlock and BHs disabled. Since this
-function is also invoked directly from the driver the
-same synchronization should be applied.
+This commit fixes uvc gadget support on 32-bit platforms.
 
-Fixes: 72f96347628e ("net: bcmgenet: set Rx mode before starting netif")
+Commit 0df28607c5cb ("usb: gadget: uvc: Generalise helper functions for
+reuse") introduced a helper function __uvcg_iter_item_entries() to aid
+with parsing lists of items on configfs attributes stores. This function
+is a generalization of another very similar function, which used a
+stack-allocated temporary buffer of fixed size for each item in the list
+and used the sizeof() operator to check for potential buffer overruns.
+The new function was changed to allocate the now variably sized temp
+buffer on heap, but wasn't properly updated to also check for max buffer
+size using the computed size instead of sizeof() operator.
+
+As a result, the maximum item size was 7 (plus null terminator) on
+64-bit platforms, and 3 on 32-bit ones. While 7 is accidentally just
+barely enough, 3 is definitely too small for some of UVC configfs
+attributes. For example, dwFrameInteval, specified in 100ns units,
+usually has 6-digit item values, e.g. 166666 for 60fps.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Doug Berger <opendmb@gmail.com>
-Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 0df28607c5cb ("usb: gadget: uvc: Generalise helper functions for reuse")
+Signed-off-by: Ivan Avdeev <me@provod.works>
+Link: https://lore.kernel.org/r/20240413150124.1062026-1-me@provod.works
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/uvc_configfs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -2,7 +2,7 @@
- /*
-  * Broadcom GENET (Gigabit Ethernet) controller driver
-  *
-- * Copyright (c) 2014-2020 Broadcom
-+ * Copyright (c) 2014-2024 Broadcom
-  */
+--- a/drivers/usb/gadget/function/uvc_configfs.c
++++ b/drivers/usb/gadget/function/uvc_configfs.c
+@@ -92,10 +92,10 @@ static int __uvcg_iter_item_entries(cons
  
- #define pr_fmt(fmt)				"bcmgenet: " fmt
-@@ -3353,7 +3353,9 @@ static void bcmgenet_netif_start(struct
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
- 
- 	/* Start the network engine */
-+	netif_addr_lock_bh(dev);
- 	bcmgenet_set_rx_mode(dev);
-+	netif_addr_unlock_bh(dev);
- 	bcmgenet_enable_rx_napi(priv);
- 
- 	umac_enable_set(priv, CMD_TX_EN | CMD_RX_EN, true);
+ 	while (pg - page < len) {
+ 		i = 0;
+-		while (i < sizeof(buf) && (pg - page < len) &&
++		while (i < bufsize && (pg - page < len) &&
+ 		       *pg != '\0' && *pg != '\n')
+ 			buf[i++] = *pg++;
+-		if (i == sizeof(buf)) {
++		if (i == bufsize) {
+ 			ret = -EINVAL;
+ 			goto out_free_buf;
+ 		}
 
 
