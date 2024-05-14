@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E0A60BB6;
-	Tue, 14 May 2024 11:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887A154903;
+	Tue, 14 May 2024 11:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684631; cv=none; b=i8Eo1PMF8r+eVBUiJWiLmfGByyyBAJRCI6BFcNkmefYFpZtZJ/1phYLArrpT5sElhumHO+0YGSc9qM7qB688xMFDNVdhL2rLb8grJSAr7OJ//vgk32JCgJYK9i9zEcBY9BC/thLTHlswZ6okeuucC5G7cED8ttMn5dXLoxpgTA4=
+	t=1715684638; cv=none; b=E4HwFEhu2sJkWD0/zyWagaIfJsHqzQQH6+NMZ4ifT6sXsjStzuWn8XoJ1ZcaZtYdNzVbYG+7lb6tTzqjM6PFGZBISuiU8G0E7e0WY+1ofCb5SwKOQLGg1qUmeSILugdBjgDr5SFb1Q+JdJC3EGSdmgdZJBfANjqfoEtih2UM+BI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684631; c=relaxed/simple;
-	bh=WG7qEfSYGqyJXSmsTyijx/vYweR4YuAGL/Bc9CwpNaw=;
+	s=arc-20240116; t=1715684638; c=relaxed/simple;
+	bh=w943OfC6go48wRb8h+A9Vlq7fnB3tAAVXKCATcMe7Gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RYZS69rLQLDGZIWCkRP0rm1QbTnvmXv/QAZiJ8LIX1JqORl6PFByIqsu/mInUZJxqvXSLcWSExaMtH2kjhHbooMJEnKzj1iqJVWd2Oe1B05jAqOL3QRKxXwJpBNC+e5V0CCC0n0J88F7syeQzSqC7XPZQf1Q5Vp113LDvH/Zo9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQJhJMYA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JphRBlZqVxrdt5jF6S+lALLRa+KN/WqZrMKkYggzqrTwEwClerbkXIVXAvISqsHxx1FY/cxJW3ZU+tdn2wkNE43Qn+1BUPS8h+xFzFtknO5/NEJCQrVdN44Iy+Og7eMusezBnQ9MEdjsdtK2QqiUgdBrwzmcsje+/AjF9JE6Dz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erCkFVAV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQJhJMYA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5299FC32782;
-	Tue, 14 May 2024 11:03:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erCkFVAV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91602C2BD10;
+	Tue, 14 May 2024 11:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684631;
-	bh=WG7qEfSYGqyJXSmsTyijx/vYweR4YuAGL/Bc9CwpNaw=;
+	s=korg; t=1715684638;
+	bh=w943OfC6go48wRb8h+A9Vlq7fnB3tAAVXKCATcMe7Gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQJhJMYAhB7aFbcuQDm+DOcNoZGBnMd1UY4kCdSmGVDbZdLuEQMpjeLqag87wG4jQ
-	 oBypPsIrQtajyOjZKjREjTqZ2g/M5Ub6KoqKN5TD0GHKiZrPQ+ywh9GN6snC4k2HcZ
-	 Bef30fr8imZcOJCKHs2c8Ar7oL/5cJM2lql6nXzo=
+	b=erCkFVAVvReG+olFVO7a6ZzNz/Jyy8JCtQk9Aa8le5EQ2o7CTCwJqf+GsVXIDaLJ7
+	 TGZvil1laBJTShSgrN6/MGxUVedGRZD9qxg9mNNK4Ui3tNMOrNycF31yl4c1kyirje
+	 lz7phrdfJO2/cTR6/jsuYILa0ovncZOVvDu1/u/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 059/301] net: qede: sanitize rc in qede_add_tc_flower_fltr()
-Date: Tue, 14 May 2024 12:15:30 +0200
-Message-ID: <20240514101034.471839474@linuxfoundation.org>
+Subject: [PATCH 6.6 068/301] ASoC: meson: axg-tdm-interface: manage formatters in trigger
+Date: Tue, 14 May 2024 12:15:39 +0200
+Message-ID: <20240514101034.810204516@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -46,78 +45,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit e25714466abd9d96901b15efddf82c60a38abd86 ]
+[ Upstream commit f949ed458ad15a00d41b37c745ebadaef171aaae ]
 
-Explicitly set 'rc' (return code), before jumping to the
-unlock and return path.
+So far, the formatters have been reset/enabled using the .prepare()
+callback. This was done in this callback because walking the formatters use
+a mutex. A mutex is used because formatter handling require dealing
+possibly slow clock operation.
 
-By not having any code depend on that 'rc' remains at
-it's initial value of -EINVAL, then we can re-use 'rc' for
-the return code of function calls in subsequent patches.
+With the support of non-atomic, .trigger() callback may be used which also
+allows to properly enable and disable formatters on start but also
+pause/resume.
 
-Only compile tested.
+This solve a random shift on TDMIN as well repeated samples on for TDMOUT.
 
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: fcee2065a178 ("net: qede: use return from qede_parse_flow_attr() for flower")
+Fixes: d60e4f1e4be5 ("ASoC: meson: add tdm interface driver")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://lore.kernel.org/r/20240426152946.3078805-4-jbrunet@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_filter.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ sound/soc/meson/axg-tdm-interface.c | 34 ++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qede/qede_filter.c b/drivers/net/ethernet/qlogic/qede/qede_filter.c
-index a5ac21a0ee33f..8ecdfa36a6854 100644
---- a/drivers/net/ethernet/qlogic/qede/qede_filter.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_filter.c
-@@ -1868,8 +1868,8 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
- 			    struct flow_cls_offload *f)
+diff --git a/sound/soc/meson/axg-tdm-interface.c b/sound/soc/meson/axg-tdm-interface.c
+index 2cedbce738373..a71790908e178 100644
+--- a/sound/soc/meson/axg-tdm-interface.c
++++ b/sound/soc/meson/axg-tdm-interface.c
+@@ -349,26 +349,31 @@ static int axg_tdm_iface_hw_params(struct snd_pcm_substream *substream,
+ 	return 0;
+ }
+ 
+-static int axg_tdm_iface_hw_free(struct snd_pcm_substream *substream,
++static int axg_tdm_iface_trigger(struct snd_pcm_substream *substream,
++				 int cmd,
+ 				 struct snd_soc_dai *dai)
  {
- 	struct qede_arfs_fltr_node *n;
--	int min_hlen, rc = -EINVAL;
- 	struct qede_arfs_tuple t;
-+	int min_hlen, rc;
+-	struct axg_tdm_stream *ts = snd_soc_dai_get_dma_data(dai, substream);
++	struct axg_tdm_stream *ts =
++		snd_soc_dai_get_dma_data(dai, substream);
  
- 	__qede_lock(edev);
- 
-@@ -1879,8 +1879,10 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
- 	}
- 
- 	/* parse flower attribute and prepare filter */
--	if (qede_parse_flow_attr(edev, proto, f->rule, &t))
-+	if (qede_parse_flow_attr(edev, proto, f->rule, &t)) {
-+		rc = -EINVAL;
- 		goto unlock;
+-	/* Stop all attached formatters */
+-	axg_tdm_stream_stop(ts);
++	switch (cmd) {
++	case SNDRV_PCM_TRIGGER_START:
++	case SNDRV_PCM_TRIGGER_RESUME:
++	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
++		axg_tdm_stream_start(ts);
++		break;
++	case SNDRV_PCM_TRIGGER_SUSPEND:
++	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
++	case SNDRV_PCM_TRIGGER_STOP:
++		axg_tdm_stream_stop(ts);
++		break;
++	default:
++		return -EINVAL;
 +	}
  
- 	/* Validate profile mode and number of filters */
- 	if ((edev->arfs->filter_count && edev->arfs->mode != t.mode) ||
-@@ -1888,12 +1890,15 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
- 		DP_NOTICE(edev,
- 			  "Filter configuration invalidated, filter mode=0x%x, configured mode=0x%x, filter count=0x%x\n",
- 			  t.mode, edev->arfs->mode, edev->arfs->filter_count);
-+		rc = -EINVAL;
- 		goto unlock;
- 	}
+ 	return 0;
+ }
  
- 	/* parse tc actions and get the vf_id */
--	if (qede_parse_actions(edev, &f->rule->action, f->common.extack))
-+	if (qede_parse_actions(edev, &f->rule->action, f->common.extack)) {
-+		rc = -EINVAL;
- 		goto unlock;
-+	}
+-static int axg_tdm_iface_prepare(struct snd_pcm_substream *substream,
+-				 struct snd_soc_dai *dai)
+-{
+-	struct axg_tdm_stream *ts = snd_soc_dai_get_dma_data(dai, substream);
+-
+-	/* Force all attached formatters to update */
+-	return axg_tdm_stream_reset(ts);
+-}
+-
+ static int axg_tdm_iface_remove_dai(struct snd_soc_dai *dai)
+ {
+ 	int stream;
+@@ -412,8 +417,7 @@ static const struct snd_soc_dai_ops axg_tdm_iface_ops = {
+ 	.set_fmt	= axg_tdm_iface_set_fmt,
+ 	.startup	= axg_tdm_iface_startup,
+ 	.hw_params	= axg_tdm_iface_hw_params,
+-	.prepare	= axg_tdm_iface_prepare,
+-	.hw_free	= axg_tdm_iface_hw_free,
++	.trigger	= axg_tdm_iface_trigger,
+ };
  
- 	if (qede_flow_find_fltr(edev, &t)) {
- 		rc = -EEXIST;
+ /* TDM Backend DAIs */
 -- 
 2.43.0
 
