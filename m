@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE0584D26;
-	Tue, 14 May 2024 11:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9ADF84D26;
+	Tue, 14 May 2024 11:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686264; cv=none; b=JJZhGgTaXvYjGFwOWLEMTuB+pF/qzCaq95anNGKtn4q3KpKSzYepcVcXJ+ncD5OshESJm1EKgVLCFQFPzwCk8lqcJXX5I9s6EYAg5mrsNe+csm+86AnWR2JiL5hLTV7rwt/VVkA9gK5ag31ZXuZ6Vv8/jmlc+RwvtstMqcmEHnQ=
+	t=1715686266; cv=none; b=dFMlpsWvIEvlqZ/WK75NE1j18N5dCofJYNe7XVczi+wQn3c2+e9c0OMbHUXviJcVdDnHGM4H0Jc3C4xEMw9xFPHa2CA2NXrGA3NIBui546O5D0c0tNjPWtEzPvdZVK/iAtAgEeaPbG/0ViZqIsGHGoIt6PQJrfFDfzXO1uR6anc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686264; c=relaxed/simple;
-	bh=Pl/PnTKCJZQ3WA2ncoyumt5bBc22pyLwCKek0q/qwgI=;
+	s=arc-20240116; t=1715686266; c=relaxed/simple;
+	bh=DDyEZx+zuv4ywpVgyeg6bRX1o/zytidZozq54R/FBsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jyJd0Zy59IndmABssuYfutkt3B3y1YdHz6QnyjlOgSWdbGfqX6LnySKmvl/q2COV7MmlOcxUsIxuxxDHLy1pjM98NUQai6xFYAsULBRAyQmzQSWmRk75kqx88/vW30TevYYEoUG5qg2ce+n+7LTGnjBUvWQVi9UF0amZCBPuZjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wh6LV+vN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bGnPKmmhmWVb09U9ny3EDrubgcDURSD75vcHJlVs6cmE4iFWTwqoTGmEEShFrg1cu95hTYU16ZVXyyOtxswXFJzEBfjmSjcyQQWv6ndoA8paKoo8JxTv4oChmfljDCAICIhhPpQSJaXefGhgO+XRqCnHOfq1YD4w3u8hTP9UJks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+3Rs7ay; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wh6LV+vN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D63AC2BD10;
-	Tue, 14 May 2024 11:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+3Rs7ay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFFAC2BD10;
+	Tue, 14 May 2024 11:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686263;
-	bh=Pl/PnTKCJZQ3WA2ncoyumt5bBc22pyLwCKek0q/qwgI=;
+	s=korg; t=1715686266;
+	bh=DDyEZx+zuv4ywpVgyeg6bRX1o/zytidZozq54R/FBsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wh6LV+vNR6j6ynQHZ3mISjuCmxfD5R0HHBoBTMQUBtSUQ1B9EEAgAgRSFmNjNO9Jq
-	 HeiItCGmbhiG0eKw5XGFYFs3Ik5sVKo5TGHBRjW+dbDRitKE/KNY0ZRC2RRLhmOWGk
-	 BGp9Uqy89VNCDUAK/I2xQnDrGGqJ2Gwruqetm4gg=
+	b=u+3Rs7ayOVH+2OZwOgB110AotJ+GdyO+xv1a/ZqhFKwvdWdyzvqyYeu442u3UwgYz
+	 iEmlSsPI4IrjWbd3u5X79bFzznbryjhK2asxiJ7Iw4v3KAjKIqvnBJgV7FbedJBxWx
+	 YnEgOhXjjVcBfItvkwiwGaaGbnBdt0GRgCu8x/H4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mans Rullgard <mans@mansr.com>,
-	Mark Brown <broonie@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 076/236] spi: fix null pointer dereference within spi_sync
-Date: Tue, 14 May 2024 12:17:18 +0200
-Message-ID: <20240514101023.256095790@linuxfoundation.org>
+Subject: [PATCH 6.1 077/236] net: bridge: fix multicast-to-unicast with fraglist GSO
+Date: Tue, 14 May 2024 12:17:19 +0200
+Message-ID: <20240514101023.293465100@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -51,62 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mans Rullgard <mans@mansr.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 4756fa529b2f12b7cb8f21fe229b0f6f47190829 ]
+[ Upstream commit 59c878cbcdd80ed39315573b3511d0acfd3501b5 ]
 
-If spi_sync() is called with the non-empty queue and the same spi_message
-is then reused, the complete callback for the message remains set while
-the context is cleared, leading to a null pointer dereference when the
-callback is invoked from spi_finalize_current_message().
+Calling skb_copy on a SKB_GSO_FRAGLIST skb is not valid, since it returns
+an invalid linearized skb. This code only needs to change the ethernet
+header, so pskb_copy is the right function to call here.
 
-With function inlining disabled, the call stack might look like this:
-
-  _raw_spin_lock_irqsave from complete_with_flags+0x18/0x58
-  complete_with_flags from spi_complete+0x8/0xc
-  spi_complete from spi_finalize_current_message+0xec/0x184
-  spi_finalize_current_message from spi_transfer_one_message+0x2a8/0x474
-  spi_transfer_one_message from __spi_pump_transfer_message+0x104/0x230
-  __spi_pump_transfer_message from __spi_transfer_message_noqueue+0x30/0xc4
-  __spi_transfer_message_noqueue from __spi_sync+0x204/0x248
-  __spi_sync from spi_sync+0x24/0x3c
-  spi_sync from mcp251xfd_regmap_crc_read+0x124/0x28c [mcp251xfd]
-  mcp251xfd_regmap_crc_read [mcp251xfd] from _regmap_raw_read+0xf8/0x154
-  _regmap_raw_read from _regmap_bus_read+0x44/0x70
-  _regmap_bus_read from _regmap_read+0x60/0xd8
-  _regmap_read from regmap_read+0x3c/0x5c
-  regmap_read from mcp251xfd_alloc_can_err_skb+0x1c/0x54 [mcp251xfd]
-  mcp251xfd_alloc_can_err_skb [mcp251xfd] from mcp251xfd_irq+0x194/0xe70 [mcp251xfd]
-  mcp251xfd_irq [mcp251xfd] from irq_thread_fn+0x1c/0x78
-  irq_thread_fn from irq_thread+0x118/0x1f4
-  irq_thread from kthread+0xd8/0xf4
-  kthread from ret_from_fork+0x14/0x28
-
-Fix this by also setting message->complete to NULL when the transfer is
-complete.
-
-Fixes: ae7d2346dc89 ("spi: Don't use the message queue if possible in spi_sync")
-
-Signed-off-by: Mans Rullgard <mans@mansr.com>
-Link: https://lore.kernel.org/r/20240430182705.13019-1-mans@mansr.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 6db6f0eae605 ("bridge: multicast to unicast")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bridge/br_forward.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index 4aa2e0928de9c..1018feff468c9 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -4217,6 +4217,7 @@ static int __spi_sync(struct spi_device *spi, struct spi_message *message)
- 		wait_for_completion(&done);
- 		status = message->status;
- 	}
-+	message->complete = NULL;
- 	message->context = NULL;
+diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
+index 4e3394a7d7d45..982e7a9ccc41c 100644
+--- a/net/bridge/br_forward.c
++++ b/net/bridge/br_forward.c
+@@ -261,7 +261,7 @@ static void maybe_deliver_addr(struct net_bridge_port *p, struct sk_buff *skb,
+ 	if (skb->dev == p->dev && ether_addr_equal(src, addr))
+ 		return;
  
- 	return status;
+-	skb = skb_copy(skb, GFP_ATOMIC);
++	skb = pskb_copy(skb, GFP_ATOMIC);
+ 	if (!skb) {
+ 		DEV_STATS_INC(dev, tx_dropped);
+ 		return;
 -- 
 2.43.0
 
