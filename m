@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB9018026;
-	Tue, 14 May 2024 11:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E4B1272BF;
+	Tue, 14 May 2024 11:35:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686508; cv=none; b=KPNXY3gTQmIJi3upxJqbE2p1FfbgyErx2yH6L1U9SNRmHgTjCoaxncnGiR/twZc8bYV5jVSdJUeV8a4UkiUn9QykjIHMvyOrV4HpicqZX/tKLWqO0fa2hFFzV6iap+EXoblEUjokFI7eEzdbyuPNnvWjMFlNIsQ3OAKBTt7SksY=
+	t=1715686511; cv=none; b=KEqjEurwusy8WcxM+Lxa4fqQYBxQ1jgHBu5bNBK6DVxtjIgZDFqaovylhB8F+KgGv6HjvB89Rsq9bNYiRAovVGVPaB4eLtcRsLPGilkhzPTznxvK+OdAEYOv+evJVmA2jmohR1zIkqRmxgr1/RY6dWlPWu4P06Cm784WjbfGGQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686508; c=relaxed/simple;
-	bh=hoJT3CvfPA2bcRUNKQ3qDV7hCOL2/Tdl16aC5yawDRI=;
+	s=arc-20240116; t=1715686511; c=relaxed/simple;
+	bh=ZdTi2HM14xY66jBGvORNklvwuJDyM3b605cz+Iqw1Ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JEJCioUnUgI2RTn8SZH6mVvjCjiJ9kk6gv6VlY2lslb6WcuZf/yqhkneBb/CDzwmQ+XCcKffQWmB7Bs/wKH5YturQPqOqT4gn99u2UXdkFyIvy2+le57g0zjjaMsbnEnSDhwXsa0D7mkrI+BGoXM+WnK0R44NtT60KEfWNmTGJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jd6zt9Sx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L44+RxcITPX7QC+pRM76HoWu/7GzwGIu3gFTQN82F0sdM8ixMemKtvUzaRQQrY6NXx8dT3+JIjSer1hCEbTEadOodN7fKAg/W8m2MZFsQRyyfeTPWDn9WQZiJ2OUurOcUR8bjB7wkS9B43pezH3cHk1ZDrij+5KmeisMAE+z/8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceXINu1S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jd6zt9Sx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD392C2BD10;
-	Tue, 14 May 2024 11:35:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceXINu1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E81C2BD10;
+	Tue, 14 May 2024 11:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686508;
-	bh=hoJT3CvfPA2bcRUNKQ3qDV7hCOL2/Tdl16aC5yawDRI=;
+	s=korg; t=1715686511;
+	bh=ZdTi2HM14xY66jBGvORNklvwuJDyM3b605cz+Iqw1Ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jd6zt9Sxh03JvjUPaClkhAPdz5wiMtxEGZKFTFDEPY39EH4wceEedbfRLcriwGYJq
-	 jm4rPdyov0VJK9ii8dPk3lrGxs58zWMHaLnQ6JhjPIV9949ugGdOmTSpL0SlRss0gQ
-	 iH07FhQXupza8poZ3X4TY7rWTEMJpmVe+WHk7E6w=
+	b=ceXINu1SI4ZF4iWFnZTZECYsR2+WhT9FQyk+14Wzein+9Qhmk05bhH3X4nGZvpfCr
+	 t25u+Dvjild89mSNE7WpZWrFkh90kcSK4/vw09WFlg1a5ZxAE6amgUlvv9u8/jiU10
+	 WShGis3+tZB56QxsLMmaoHp7Z/SCOQ+3PvxNatoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Majewski <lukma@denx.de>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 163/236] hsr: Simplify code for announcing HSR nodes timer setup
-Date: Tue, 14 May 2024 12:18:45 +0200
-Message-ID: <20240514101026.547714180@linuxfoundation.org>
+Subject: [PATCH 6.1 164/236] ipv6: annotate data-races around cnf.disable_ipv6
+Date: Tue, 14 May 2024 12:18:46 +0200
+Message-ID: <20240514101026.585222479@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -52,100 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Majewski <lukma@denx.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4893b8b3ef8db2b182d1a1bebf6c7acf91405000 ]
+[ Upstream commit d289ab65b89c1d4d88417cb6c03e923f21f95fae ]
 
-Up till now the code to start HSR announce timer, which triggers sending
-supervisory frames, was assuming that hsr_netdev_notify() would be called
-at least twice for hsrX interface. This was required to have different
-values for old and current values of network device's operstate.
+disable_ipv6 is read locklessly, add appropriate READ_ONCE()
+and WRITE_ONCE() annotations.
 
-This is problematic for a case where hsrX interface is already in the
-operational state when hsr_netdev_notify() is called, so timer is not
-configured to trigger and as a result the hsrX is not sending supervisory
-frames to HSR ring.
+v2: do not preload net before rtnl_trylock() in
+    addrconf_disable_ipv6() (Jiri)
 
-This error has been discovered when hsr_ping.sh script was run. To be
-more specific - for the hsr1 and hsr2 the hsr_netdev_notify() was
-called at least twice with different IF_OPER_{LOWERDOWN|DOWN|UP} states
-assigned in hsr_check_carrier_and_operstate(hsr). As a result there was
-no issue with sending supervisory frames.
-However, with hsr3, the notify function was called only once with
-operstate set to IF_OPER_UP and timer responsible for triggering
-supervisory frames was not fired.
-
-The solution is to use netif_oper_up() and netif_running() helper
-functions to assess if network hsrX device is up.
-Only then, when the timer is not already pending, it is started.
-Otherwise it is deactivated.
-
-Fixes: f421436a591d ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
-Signed-off-by: Lukasz Majewski <lukma@denx.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240507111214.3519800-1-lukma@denx.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 4db783d68b9b ("ipv6: prevent NULL dereference in ip6_output()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_device.c | 27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+ net/ipv6/addrconf.c   | 9 +++++----
+ net/ipv6/ip6_input.c  | 4 ++--
+ net/ipv6/ip6_output.c | 2 +-
+ 3 files changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
-index 89e694f1c3bd3..ad75724b69adf 100644
---- a/net/hsr/hsr_device.c
-+++ b/net/hsr/hsr_device.c
-@@ -71,39 +71,36 @@ static bool hsr_check_carrier(struct hsr_port *master)
- 	return false;
- }
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 16a9a21f6af19..22e246ff910ee 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -4133,7 +4133,7 @@ static void addrconf_dad_work(struct work_struct *w)
+ 			if (!ipv6_generate_eui64(addr.s6_addr + 8, idev->dev) &&
+ 			    ipv6_addr_equal(&ifp->addr, &addr)) {
+ 				/* DAD failed for link-local based on MAC */
+-				idev->cnf.disable_ipv6 = 1;
++				WRITE_ONCE(idev->cnf.disable_ipv6, 1);
  
--static void hsr_check_announce(struct net_device *hsr_dev,
--			       unsigned char old_operstate)
-+static void hsr_check_announce(struct net_device *hsr_dev)
- {
- 	struct hsr_priv *hsr;
+ 				pr_info("%s: IPv6 being disabled!\n",
+ 					ifp->idev->dev->name);
+@@ -6289,7 +6289,8 @@ static void addrconf_disable_change(struct net *net, __s32 newf)
+ 		idev = __in6_dev_get(dev);
+ 		if (idev) {
+ 			int changed = (!idev->cnf.disable_ipv6) ^ (!newf);
+-			idev->cnf.disable_ipv6 = newf;
++
++			WRITE_ONCE(idev->cnf.disable_ipv6, newf);
+ 			if (changed)
+ 				dev_disable_change(idev);
+ 		}
+@@ -6306,7 +6307,7 @@ static int addrconf_disable_ipv6(struct ctl_table *table, int *p, int newf)
  
- 	hsr = netdev_priv(hsr_dev);
--
--	if (READ_ONCE(hsr_dev->operstate) == IF_OPER_UP && old_operstate != IF_OPER_UP) {
--		/* Went up */
--		hsr->announce_count = 0;
--		mod_timer(&hsr->announce_timer,
--			  jiffies + msecs_to_jiffies(HSR_ANNOUNCE_INTERVAL));
-+	if (netif_running(hsr_dev) && netif_oper_up(hsr_dev)) {
-+		/* Enable announce timer and start sending supervisory frames */
-+		if (!timer_pending(&hsr->announce_timer)) {
-+			hsr->announce_count = 0;
-+			mod_timer(&hsr->announce_timer, jiffies +
-+				  msecs_to_jiffies(HSR_ANNOUNCE_INTERVAL));
-+		}
-+	} else {
-+		/* Deactivate the announce timer  */
-+		timer_delete(&hsr->announce_timer);
+ 	net = (struct net *)table->extra2;
+ 	old = *p;
+-	*p = newf;
++	WRITE_ONCE(*p, newf);
+ 
+ 	if (p == &net->ipv6.devconf_dflt->disable_ipv6) {
+ 		rtnl_unlock();
+@@ -6314,7 +6315,7 @@ static int addrconf_disable_ipv6(struct ctl_table *table, int *p, int newf)
  	}
--
--	if (READ_ONCE(hsr_dev->operstate) != IF_OPER_UP && old_operstate == IF_OPER_UP)
--		/* Went down */
--		del_timer(&hsr->announce_timer);
- }
  
- void hsr_check_carrier_and_operstate(struct hsr_priv *hsr)
- {
- 	struct hsr_port *master;
--	unsigned char old_operstate;
- 	bool has_carrier;
+ 	if (p == &net->ipv6.devconf_all->disable_ipv6) {
+-		net->ipv6.devconf_dflt->disable_ipv6 = newf;
++		WRITE_ONCE(net->ipv6.devconf_dflt->disable_ipv6, newf);
+ 		addrconf_disable_change(net, newf);
+ 	} else if ((!newf) ^ (!old))
+ 		dev_disable_change((struct inet6_dev *)table->extra1);
+diff --git a/net/ipv6/ip6_input.c b/net/ipv6/ip6_input.c
+index b8378814532ce..1ba97933c74fb 100644
+--- a/net/ipv6/ip6_input.c
++++ b/net/ipv6/ip6_input.c
+@@ -168,9 +168,9 @@ static struct sk_buff *ip6_rcv_core(struct sk_buff *skb, struct net_device *dev,
  
- 	master = hsr_port_get_hsr(hsr, HSR_PT_MASTER);
- 	/* netif_stacked_transfer_operstate() cannot be used here since
- 	 * it doesn't set IF_OPER_LOWERLAYERDOWN (?)
- 	 */
--	old_operstate = READ_ONCE(master->dev->operstate);
- 	has_carrier = hsr_check_carrier(master);
- 	hsr_set_operstate(master, has_carrier);
--	hsr_check_announce(master->dev, old_operstate);
-+	hsr_check_announce(master->dev);
- }
+ 	SKB_DR_SET(reason, NOT_SPECIFIED);
+ 	if ((skb = skb_share_check(skb, GFP_ATOMIC)) == NULL ||
+-	    !idev || unlikely(idev->cnf.disable_ipv6)) {
++	    !idev || unlikely(READ_ONCE(idev->cnf.disable_ipv6))) {
+ 		__IP6_INC_STATS(net, idev, IPSTATS_MIB_INDISCARDS);
+-		if (idev && unlikely(idev->cnf.disable_ipv6))
++		if (idev && unlikely(READ_ONCE(idev->cnf.disable_ipv6)))
+ 			SKB_DR_SET(reason, IPV6DISABLED);
+ 		goto drop;
+ 	}
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index e9ae084d038d1..17fe401bc299a 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -224,7 +224,7 @@ int ip6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 	skb->protocol = htons(ETH_P_IPV6);
+ 	skb->dev = dev;
  
- int hsr_get_max_mtu(struct hsr_priv *hsr)
+-	if (unlikely(idev->cnf.disable_ipv6)) {
++	if (unlikely(READ_ONCE(idev->cnf.disable_ipv6))) {
+ 		IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
+ 		kfree_skb_reason(skb, SKB_DROP_REASON_IPV6DISABLED);
+ 		return 0;
 -- 
 2.43.0
 
