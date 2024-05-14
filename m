@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4110F6311D;
-	Tue, 14 May 2024 11:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFC26311D;
+	Tue, 14 May 2024 11:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685891; cv=none; b=MGKECd6ypIGxgiudMl/15c85AEuCGmBISMeOKKvnOG+dwDTj75oc88sApTtCrpi9OAGIg6vHXqDj7npE7O9ZoloGlnD/vtEXlY0FBmP+K1+7+kKPBERBDwdcPeta1MTQPIlZmIq6hy4E5fPWXcFFF8/BjbrnirDHzCxjFOQMEFo=
+	t=1715685895; cv=none; b=PNOdCGJHuBV15V2RBwH2ugJUuJZHoL31qKyXVi0iGWGocbM308xP0DtIBo9sJ4nWfPmUyH6/hPkCT10GX6/544S12jYRb9hqy0r7GAkfbDuVOtqyh1YohZJeJ66dQx269TCuCVKCrmrVMxJQ32lpRczhJl7YostTjIU63rfJH6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685891; c=relaxed/simple;
-	bh=8UZsmh77JeiaIZ38SV3UI7sTEx9VxuIo5DbBAghDiSg=;
+	s=arc-20240116; t=1715685895; c=relaxed/simple;
+	bh=UM04sP3xl+C1IpKiG7CAajNMuHBbqUFoXoINYRQP/ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=muhpdUyeS5/6H9aOlTm4PejeWTuUGGmFv7SGnQqagP2zdbdIxrnTGtUauw10Nf3lmxIMG+pdTDtsoXYmQKB30kw7EmbPaUi+Ogql7bQNOy15+XhKUaIjpsKdkvs23pNqPF6GFEGGFSzXawlxinJXx9FKs5APhE6A4PRjtRjFT4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGduknVO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bGhBgmjuUlEjOA4mXX6xrFxDgs2DJjlDjKTUESP+sLZXYsJ8VmL2aABD7SJcJxkljfpfqn2zR7bhkYEnfI5XRuJnIlTCj5FLqAWIIbOxeVYbjGdmC/jMfhrkJ4KQZwyOGBbU+kD2R6VnPINs+aLiK04QQ5jevGVLX76stA7dCrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEwEpmCK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGduknVO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0672C2BD10;
-	Tue, 14 May 2024 11:24:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEwEpmCK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB97C2BD10;
+	Tue, 14 May 2024 11:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685891;
-	bh=8UZsmh77JeiaIZ38SV3UI7sTEx9VxuIo5DbBAghDiSg=;
+	s=korg; t=1715685895;
+	bh=UM04sP3xl+C1IpKiG7CAajNMuHBbqUFoXoINYRQP/ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QGduknVO3ZxauQ0whxfLxcgAUXGsjAvnnfHuMayqQ8jrrRL038oGZUnK6Q3DGU6nz
-	 /UQPDS3kZZeV3Ox+RSgd37bSLhkL0RaD/NMJ6UE4bTtZQ+83OMPMPeeSiJvpYoaAe4
-	 DlshlIPFuSyOknYSO9cu4aB7DRsVTVGGA3nHOIJM=
+	b=YEwEpmCK6ob6eUq7k7qCDztZ8dQL7FM4y738MU+XEcFbP7/LdWbhtLoRjty8J1RMw
+	 1muSlTT7ZItXxvrWJpEg5Jd51kCTevYifERnhY46XnEI/hKMjXKzzHy1gh+gvFFTvi
+	 GtiKkucGG1GqkBy/6PnhuVC0SCRXOWRMTHL4orZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Hoffmann <kraxel@redhat.com>,
-	David Laight <David.Laight@aculab.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.6 228/301] usb: ohci: Prevent missed ohci interrupts
-Date: Tue, 14 May 2024 12:18:19 +0200
-Message-ID: <20240514101040.865230092@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Frank Oltmanns <frank@oltmanns.dev>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>
+Subject: [PATCH 6.6 263/301] clk: sunxi-ng: common: Support minimum and maximum rate
+Date: Tue, 14 May 2024 12:18:54 +0200
+Message-ID: <20240514101042.186288130@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -52,60 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Frank Oltmanns <frank@oltmanns.dev>
 
-commit fe81f354841641c7f71163b84912b25c169ed8ec upstream.
+commit b914ec33b391ec766545a41f0cfc0de3e0b388d7 upstream.
 
-Testing ohci functionality with qemu's pci-ohci emulation often results
-in ohci interface stalls, resulting in hung task timeouts.
+The Allwinner SoC's typically have an upper and lower limit for their
+clocks' rates. Up until now, support for that has been implemented
+separately for each clock type.
 
-The problem is caused by lost interrupts between the emulation and the
-Linux kernel code. Additional interrupts raised while the ohci interrupt
-handler in Linux is running and before the handler clears the interrupt
-status are not handled. The fix for a similar problem in ehci suggests
-that the problem is likely caused by edge-triggered MSI interrupts. See
-commit 0b60557230ad ("usb: ehci: Prevent missed ehci interrupts with
-edge-triggered MSI") for details.
+Implement that functionality in the sunxi-ng's common part making use of
+the CCF rate liming capabilities, so that it is available for all clock
+types.
 
-Ensure that the ohci interrupt code handles all pending interrupts before
-returning to solve the problem.
-
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: David Laight <David.Laight@aculab.com>
+Suggested-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Frank Oltmanns <frank@oltmanns.dev>
 Cc: stable@vger.kernel.org
-Fixes: 306c54d0edb6 ("usb: hcd: Try MSI interrupts on PCI devices")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
-Link: https://lore.kernel.org/r/20240429154010.1507366-1-linux@roeck-us.net
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Link: https://lore.kernel.org/r/20240310-pinephone-pll-fixes-v4-1-46fc80c83637@oltmanns.dev
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ohci-hcd.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/clk/sunxi-ng/ccu_common.c |   19 +++++++++++++++++++
+ drivers/clk/sunxi-ng/ccu_common.h |    3 +++
+ 2 files changed, 22 insertions(+)
 
---- a/drivers/usb/host/ohci-hcd.c
-+++ b/drivers/usb/host/ohci-hcd.c
-@@ -888,6 +888,7 @@ static irqreturn_t ohci_irq (struct usb_
- 	/* Check for an all 1's result which is a typical consequence
- 	 * of dead, unclocked, or unplugged (CardBus...) devices
- 	 */
-+again:
- 	if (ints == ~(u32)0) {
- 		ohci->rh_state = OHCI_RH_HALTED;
- 		ohci_dbg (ohci, "device removed!\n");
-@@ -982,6 +983,13 @@ static irqreturn_t ohci_irq (struct usb_
- 	}
- 	spin_unlock(&ohci->lock);
- 
-+	/* repeat until all enabled interrupts are handled */
-+	if (ohci->rh_state != OHCI_RH_HALTED) {
-+		ints = ohci_readl(ohci, &regs->intrstatus);
-+		if (ints && (ints & ohci_readl(ohci, &regs->intrenable)))
-+			goto again;
-+	}
+--- a/drivers/clk/sunxi-ng/ccu_common.c
++++ b/drivers/clk/sunxi-ng/ccu_common.c
+@@ -44,6 +44,16 @@ bool ccu_is_better_rate(struct ccu_commo
+ 			unsigned long current_rate,
+ 			unsigned long best_rate)
+ {
++	unsigned long min_rate, max_rate;
 +
- 	return IRQ_HANDLED;
- }
++	clk_hw_get_rate_range(&common->hw, &min_rate, &max_rate);
++
++	if (current_rate > max_rate)
++		return false;
++
++	if (current_rate < min_rate)
++		return false;
++
+ 	if (common->features & CCU_FEATURE_CLOSEST_RATE)
+ 		return abs(current_rate - target_rate) < abs(best_rate - target_rate);
  
+@@ -122,6 +132,7 @@ static int sunxi_ccu_probe(struct sunxi_
+ 
+ 	for (i = 0; i < desc->hw_clks->num ; i++) {
+ 		struct clk_hw *hw = desc->hw_clks->hws[i];
++		struct ccu_common *common = hw_to_ccu_common(hw);
+ 		const char *name;
+ 
+ 		if (!hw)
+@@ -136,6 +147,14 @@ static int sunxi_ccu_probe(struct sunxi_
+ 			pr_err("Couldn't register clock %d - %s\n", i, name);
+ 			goto err_clk_unreg;
+ 		}
++
++		if (common->max_rate)
++			clk_hw_set_rate_range(hw, common->min_rate,
++					      common->max_rate);
++		else
++			WARN(common->min_rate,
++			     "No max_rate, ignoring min_rate of clock %d - %s\n",
++			     i, name);
+ 	}
+ 
+ 	ret = of_clk_add_hw_provider(node, of_clk_hw_onecell_get,
+--- a/drivers/clk/sunxi-ng/ccu_common.h
++++ b/drivers/clk/sunxi-ng/ccu_common.h
+@@ -31,6 +31,9 @@ struct ccu_common {
+ 	u16		lock_reg;
+ 	u32		prediv;
+ 
++	unsigned long	min_rate;
++	unsigned long	max_rate;
++
+ 	unsigned long	features;
+ 	spinlock_t	*lock;
+ 	struct clk_hw	hw;
 
 
