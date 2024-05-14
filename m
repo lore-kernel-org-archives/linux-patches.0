@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4395136679;
-	Tue, 14 May 2024 10:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB01612FF64;
+	Tue, 14 May 2024 11:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684400; cv=none; b=qkCe9aJBSR3hrUf390WieArOyLGu2GZFfTYFUirlA/e5peCc9C4bLLl9fjLvc4GY3D26zDPz5DKR1YOHMOv2d6rdQifbxqeSzHKKZDrITC+7x+rJowxSC1/iZoV7RPQ82NwaMxuO07iy4EcUyP8vm8bMlEbvSZCcrCm0JpgFi1g=
+	t=1715684415; cv=none; b=TNUJUu86wAMowgI3DdMibt9dCcQHbxADjUQEyCasRFq8sZWaNXfQK9ytkuYYvYfXTPcSM+eWfjCiww6a7Ag0GkBZquXS3sVuFQ4lzduMqCJpwH1y3FTZrreShwLUOdqD0IUEXARgXJCkRarPqF0w0I+lpBkXKfzK9JFwEQuCyvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684400; c=relaxed/simple;
-	bh=hMN9kuV8Qc0+3495P5lO00390Hldd0Bx1w1PWbret+s=;
+	s=arc-20240116; t=1715684415; c=relaxed/simple;
+	bh=YVrdwDq6JP8cRcBKrSULa2aW8v6Ksw9Ps1sdG1gzPOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dxV9wiOpPHCqwD7Cl9vpja5TDzhdyrns5XZ8LitENWc71ak/gNlo2hmTLfC58NWQczP97cTc0Q4vMyS/RGnshyC7V0VruhmWDwhOTrJNQVzMPnDgdJlnIEecO8hZSRxZVdDzYhAr7bmDvR0YEuDFAGHT9IYDW++5245y9etiYd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E94wT4j9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rt32B6mOEsoN2Aw8nGtBY9y9FI0oR4lKcaNcL1lGrHYW1sdE/q3/YdG5corb4Y2eMCnVY77uJEVQ3xwWk5zA3lWyChxOqQUZZ9ceBz4AjoOu42TepzJBg3ewp32F9DZ1Ty+A9GWl8VUaE4jrxEUg6BQl5te6HM3VFfVTPcwg5yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plaePLfX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E94wT4j9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5897DC2BD10;
-	Tue, 14 May 2024 10:59:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plaePLfX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E66AC2BD10;
+	Tue, 14 May 2024 11:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684399;
-	bh=hMN9kuV8Qc0+3495P5lO00390Hldd0Bx1w1PWbret+s=;
+	s=korg; t=1715684415;
+	bh=YVrdwDq6JP8cRcBKrSULa2aW8v6Ksw9Ps1sdG1gzPOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E94wT4j9+FTfv8KuOx/aWVhv9INsoui8pbMDYGBgsRUgJqfKJBfUCPgFZmJfj6sWc
-	 0z9EnU0kzQyJjw8jBY0+UXgoSdvasJtxHR3FET1s2heV1YIT+58ryCqTj3EBfwUQZ3
-	 x+6u1vKY3EbVx2Q/DkkXDLVDo1QoYt+qB2K+qzdE=
+	b=plaePLfXKhFPu9xLRlBEMMZ1CqClgN6XXPSmkijN3YO0f1wGJ2+LRD/HpeqgzC8Xh
+	 ul0FMarixIiGHL2f9aaf618bXS9rNibrO0rwHTZAU+Z11e1JwMj95vFMZRyCeghLGm
+	 M9nwmtfDV7UNrYTHq/pTDjqvkjVNFv9O7781jf0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Lechner <dlechner@baylibre.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/301] spi: axi-spi-engine: use devm_spi_alloc_host()
-Date: Tue, 14 May 2024 12:15:08 +0200
-Message-ID: <20240514101033.646561128@linuxfoundation.org>
+Subject: [PATCH 6.6 038/301] spi: axi-spi-engine: move msg state to new struct
+Date: Tue, 14 May 2024 12:15:09 +0200
+Message-ID: <20240514101033.683840518@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -53,111 +53,349 @@ Content-Transfer-Encoding: 8bit
 
 From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit e12cd96e8e93044646fdf4b2c9a1de62cfa01e7c ]
+[ Upstream commit 7f970ecb77b6759d37ee743fc36fc0daba960e75 ]
 
-This modifies the AXI SPI Engine driver to use devm_spi_alloc_host()
-instead of spi_alloc_host() to simplify the code a bit.
+This moves the message state in the AXI SPI Engine driver to a new
+struct spi_engine_msg_state.
 
-In addition to simplifying the error paths in the probe function, we
-can also remove spi_controller_get/put() calls in the remove function
-since devm_spi_alloc_host() sets a flag to no longer decrement the
-controller reference count in the spi_unregister_controller() function.
+Previously, the driver state contained various pointers that pointed
+to memory owned by a struct spi_message. However, it did not set any of
+these pointers to NULL when a message was completed. This could lead to
+use after free bugs.
+
+Example of how this could happen:
+1. SPI core calls into spi_engine_transfer_one_message() with msg1.
+2. Assume something was misconfigured and spi_engine_tx_next() is not
+   called enough times in interrupt callbacks for msg1 such that
+   spi_engine->tx_xfer is never set to NULL before the msg1 completes.
+3. SYNC interrupt is received and spi_finalize_current_message() is
+   called for msg1. spi_engine->msg is set to NULL but no other
+   message-specific state is reset.
+4. Caller that sent msg1 is notified of the completion and frees msg1
+   and the associated xfers and tx/rx buffers.
+4. SPI core calls into spi_engine_transfer_one_message() with msg2.
+5. When spi_engine_tx_next() is called for msg2, spi_engine->tx_xfer is
+   still be pointing to an xfer from msg1, which was already freed.
+   spi_engine_xfer_next() tries to access xfer->transfer_list of one
+   of the freed xfers and we get a segfault or undefined behavior.
+
+To avoid issues like this, instead of putting per-message state in the
+driver state struct, we can make use of the struct spi_message::state
+field to store a pointer to a new struct spi_engine_msg_state. This way,
+all of the state that belongs to specific message stays with that
+message and we don't have to remember to manually reset all aspects of
+the message state when a message is completed. Rather, a new state is
+allocated for each message.
+
+Most of the changes are just renames where the state is accessed. One
+place where this wasn't straightforward was the sync_id member. This
+has been changed to use ida_alloc_range() since we needed to separate
+the per-message sync_id from the per-controller next available sync_id.
 
 Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://lore.kernel.org/r/20231117-axi-spi-engine-series-1-v1-4-cc59db999b87@baylibre.com
+Link: https://lore.kernel.org/r/20231117-axi-spi-engine-series-1-v1-9-cc59db999b87@baylibre.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 0064db9ce4aa ("spi: axi-spi-engine: fix version format string")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-axi-spi-engine.c | 31 ++++++++++---------------------
- 1 file changed, 10 insertions(+), 21 deletions(-)
+ drivers/spi/spi-axi-spi-engine.c | 150 ++++++++++++++++++++-----------
+ 1 file changed, 96 insertions(+), 54 deletions(-)
 
 diff --git a/drivers/spi/spi-axi-spi-engine.c b/drivers/spi/spi-axi-spi-engine.c
-index bdf0aa4ceb1df..77c1c115448d6 100644
+index 77c1c115448d6..9ca5b45c4b4cc 100644
 --- a/drivers/spi/spi-axi-spi-engine.c
 +++ b/drivers/spi/spi-axi-spi-engine.c
-@@ -473,7 +473,7 @@ static int spi_engine_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return irq;
+@@ -6,6 +6,7 @@
+  */
  
--	host = spi_alloc_host(&pdev->dev, sizeof(*spi_engine));
-+	host = devm_spi_alloc_host(&pdev->dev, sizeof(*spi_engine));
- 	if (!host)
- 		return -ENOMEM;
+ #include <linux/clk.h>
++#include <linux/idr.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
+ #include <linux/of.h>
+@@ -78,28 +79,42 @@ struct spi_engine_program {
+ 	uint16_t instructions[];
+ };
  
-@@ -482,22 +482,16 @@ static int spi_engine_probe(struct platform_device *pdev)
- 	spin_lock_init(&spi_engine->lock);
+-struct spi_engine {
+-	struct clk *clk;
+-	struct clk *ref_clk;
+-
+-	spinlock_t lock;
+-
+-	void __iomem *base;
+-
+-	struct spi_message *msg;
++/**
++ * struct spi_engine_message_state - SPI engine per-message state
++ */
++struct spi_engine_message_state {
++	/** Instructions for executing this message. */
+ 	struct spi_engine_program *p;
++	/** Number of elements in cmd_buf array. */
+ 	unsigned cmd_length;
++	/** Array of commands not yet written to CMD FIFO. */
+ 	const uint16_t *cmd_buf;
+-
++	/** Next xfer with tx_buf not yet fully written to TX FIFO. */
+ 	struct spi_transfer *tx_xfer;
++	/** Size of tx_buf in bytes. */
+ 	unsigned int tx_length;
++	/** Bytes not yet written to TX FIFO. */
+ 	const uint8_t *tx_buf;
+-
++	/** Next xfer with rx_buf not yet fully written to RX FIFO. */
+ 	struct spi_transfer *rx_xfer;
++	/** Size of tx_buf in bytes. */
+ 	unsigned int rx_length;
++	/** Bytes not yet written to the RX FIFO. */
+ 	uint8_t *rx_buf;
++	/** ID to correlate SYNC interrupts with this message. */
++	u8 sync_id;
++};
++
++struct spi_engine {
++	struct clk *clk;
++	struct clk *ref_clk;
  
- 	spi_engine->clk = devm_clk_get_enabled(&pdev->dev, "s_axi_aclk");
--	if (IS_ERR(spi_engine->clk)) {
--		ret = PTR_ERR(spi_engine->clk);
--		goto err_put_host;
--	}
-+	if (IS_ERR(spi_engine->clk))
-+		return PTR_ERR(spi_engine->clk);
+-	unsigned int sync_id;
++	spinlock_t lock;
++
++	void __iomem *base;
++
++	struct spi_message *msg;
++	struct ida sync_ida;
+ 	unsigned int completed_id;
  
- 	spi_engine->ref_clk = devm_clk_get_enabled(&pdev->dev, "spi_clk");
--	if (IS_ERR(spi_engine->ref_clk)) {
--		ret = PTR_ERR(spi_engine->ref_clk);
--		goto err_put_host;
--	}
-+	if (IS_ERR(spi_engine->ref_clk))
-+		return PTR_ERR(spi_engine->ref_clk);
+ 	unsigned int int_enable;
+@@ -258,100 +273,105 @@ static void spi_engine_xfer_next(struct spi_engine *spi_engine,
  
- 	spi_engine->base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(spi_engine->base)) {
--		ret = PTR_ERR(spi_engine->base);
--		goto err_put_host;
--	}
-+	if (IS_ERR(spi_engine->base))
-+		return PTR_ERR(spi_engine->base);
+ static void spi_engine_tx_next(struct spi_engine *spi_engine)
+ {
+-	struct spi_transfer *xfer = spi_engine->tx_xfer;
++	struct spi_engine_message_state *st = spi_engine->msg->state;
++	struct spi_transfer *xfer = st->tx_xfer;
  
- 	version = readl(spi_engine->base + SPI_ENGINE_REG_VERSION);
- 	if (SPI_ENGINE_VERSION_MAJOR(version) != 1) {
-@@ -505,8 +499,7 @@ static int spi_engine_probe(struct platform_device *pdev)
- 			SPI_ENGINE_VERSION_MAJOR(version),
- 			SPI_ENGINE_VERSION_MINOR(version),
- 			SPI_ENGINE_VERSION_PATCH(version));
--		ret = -ENODEV;
--		goto err_put_host;
-+		return -ENODEV;
+ 	do {
+ 		spi_engine_xfer_next(spi_engine, &xfer);
+ 	} while (xfer && !xfer->tx_buf);
+ 
+-	spi_engine->tx_xfer = xfer;
++	st->tx_xfer = xfer;
+ 	if (xfer) {
+-		spi_engine->tx_length = xfer->len;
+-		spi_engine->tx_buf = xfer->tx_buf;
++		st->tx_length = xfer->len;
++		st->tx_buf = xfer->tx_buf;
+ 	} else {
+-		spi_engine->tx_buf = NULL;
++		st->tx_buf = NULL;
  	}
- 
- 	writel_relaxed(0x00, spi_engine->base + SPI_ENGINE_REG_RESET);
-@@ -515,7 +508,7 @@ static int spi_engine_probe(struct platform_device *pdev)
- 
- 	ret = request_irq(irq, spi_engine_irq, 0, pdev->name, host);
- 	if (ret)
--		goto err_put_host;
-+		return ret;
- 
- 	host->dev.of_node = pdev->dev.of_node;
- 	host->mode_bits = SPI_CPOL | SPI_CPHA | SPI_3WIRE;
-@@ -533,14 +526,12 @@ static int spi_engine_probe(struct platform_device *pdev)
- 	return 0;
- err_free_irq:
- 	free_irq(irq, host);
--err_put_host:
--	spi_controller_put(host);
- 	return ret;
  }
  
- static void spi_engine_remove(struct platform_device *pdev)
+ static void spi_engine_rx_next(struct spi_engine *spi_engine)
  {
--	struct spi_controller *host = spi_controller_get(platform_get_drvdata(pdev));
-+	struct spi_controller *host = platform_get_drvdata(pdev);
+-	struct spi_transfer *xfer = spi_engine->rx_xfer;
++	struct spi_engine_message_state *st = spi_engine->msg->state;
++	struct spi_transfer *xfer = st->rx_xfer;
+ 
+ 	do {
+ 		spi_engine_xfer_next(spi_engine, &xfer);
+ 	} while (xfer && !xfer->rx_buf);
+ 
+-	spi_engine->rx_xfer = xfer;
++	st->rx_xfer = xfer;
+ 	if (xfer) {
+-		spi_engine->rx_length = xfer->len;
+-		spi_engine->rx_buf = xfer->rx_buf;
++		st->rx_length = xfer->len;
++		st->rx_buf = xfer->rx_buf;
+ 	} else {
+-		spi_engine->rx_buf = NULL;
++		st->rx_buf = NULL;
+ 	}
+ }
+ 
+ static bool spi_engine_write_cmd_fifo(struct spi_engine *spi_engine)
+ {
+ 	void __iomem *addr = spi_engine->base + SPI_ENGINE_REG_CMD_FIFO;
++	struct spi_engine_message_state *st = spi_engine->msg->state;
+ 	unsigned int n, m, i;
+ 	const uint16_t *buf;
+ 
+ 	n = readl_relaxed(spi_engine->base + SPI_ENGINE_REG_CMD_FIFO_ROOM);
+-	while (n && spi_engine->cmd_length) {
+-		m = min(n, spi_engine->cmd_length);
+-		buf = spi_engine->cmd_buf;
++	while (n && st->cmd_length) {
++		m = min(n, st->cmd_length);
++		buf = st->cmd_buf;
+ 		for (i = 0; i < m; i++)
+ 			writel_relaxed(buf[i], addr);
+-		spi_engine->cmd_buf += m;
+-		spi_engine->cmd_length -= m;
++		st->cmd_buf += m;
++		st->cmd_length -= m;
+ 		n -= m;
+ 	}
+ 
+-	return spi_engine->cmd_length != 0;
++	return st->cmd_length != 0;
+ }
+ 
+ static bool spi_engine_write_tx_fifo(struct spi_engine *spi_engine)
+ {
+ 	void __iomem *addr = spi_engine->base + SPI_ENGINE_REG_SDO_DATA_FIFO;
++	struct spi_engine_message_state *st = spi_engine->msg->state;
+ 	unsigned int n, m, i;
+ 	const uint8_t *buf;
+ 
+ 	n = readl_relaxed(spi_engine->base + SPI_ENGINE_REG_SDO_FIFO_ROOM);
+-	while (n && spi_engine->tx_length) {
+-		m = min(n, spi_engine->tx_length);
+-		buf = spi_engine->tx_buf;
++	while (n && st->tx_length) {
++		m = min(n, st->tx_length);
++		buf = st->tx_buf;
+ 		for (i = 0; i < m; i++)
+ 			writel_relaxed(buf[i], addr);
+-		spi_engine->tx_buf += m;
+-		spi_engine->tx_length -= m;
++		st->tx_buf += m;
++		st->tx_length -= m;
+ 		n -= m;
+-		if (spi_engine->tx_length == 0)
++		if (st->tx_length == 0)
+ 			spi_engine_tx_next(spi_engine);
+ 	}
+ 
+-	return spi_engine->tx_length != 0;
++	return st->tx_length != 0;
+ }
+ 
+ static bool spi_engine_read_rx_fifo(struct spi_engine *spi_engine)
+ {
+ 	void __iomem *addr = spi_engine->base + SPI_ENGINE_REG_SDI_DATA_FIFO;
++	struct spi_engine_message_state *st = spi_engine->msg->state;
+ 	unsigned int n, m, i;
+ 	uint8_t *buf;
+ 
+ 	n = readl_relaxed(spi_engine->base + SPI_ENGINE_REG_SDI_FIFO_LEVEL);
+-	while (n && spi_engine->rx_length) {
+-		m = min(n, spi_engine->rx_length);
+-		buf = spi_engine->rx_buf;
++	while (n && st->rx_length) {
++		m = min(n, st->rx_length);
++		buf = st->rx_buf;
+ 		for (i = 0; i < m; i++)
+ 			buf[i] = readl_relaxed(addr);
+-		spi_engine->rx_buf += m;
+-		spi_engine->rx_length -= m;
++		st->rx_buf += m;
++		st->rx_length -= m;
+ 		n -= m;
+-		if (spi_engine->rx_length == 0)
++		if (st->rx_length == 0)
+ 			spi_engine_rx_next(spi_engine);
+ 	}
+ 
+-	return spi_engine->rx_length != 0;
++	return st->rx_length != 0;
+ }
+ 
+ static irqreturn_t spi_engine_irq(int irq, void *devid)
+@@ -387,12 +407,16 @@ static irqreturn_t spi_engine_irq(int irq, void *devid)
+ 			disable_int |= SPI_ENGINE_INT_SDI_ALMOST_FULL;
+ 	}
+ 
+-	if (pending & SPI_ENGINE_INT_SYNC) {
+-		if (spi_engine->msg &&
+-		    spi_engine->completed_id == spi_engine->sync_id) {
++	if (pending & SPI_ENGINE_INT_SYNC && spi_engine->msg) {
++		struct spi_engine_message_state *st = spi_engine->msg->state;
++
++		if (spi_engine->completed_id == st->sync_id) {
+ 			struct spi_message *msg = spi_engine->msg;
++			struct spi_engine_message_state *st = msg->state;
+ 
+-			kfree(spi_engine->p);
++			ida_free(&spi_engine->sync_ida, st->sync_id);
++			kfree(st->p);
++			kfree(st);
+ 			msg->status = 0;
+ 			msg->actual_length = msg->frame_length;
+ 			spi_engine->msg = NULL;
+@@ -417,29 +441,46 @@ static int spi_engine_transfer_one_message(struct spi_controller *host,
+ {
+ 	struct spi_engine_program p_dry, *p;
  	struct spi_engine *spi_engine = spi_controller_get_devdata(host);
- 	int irq = platform_get_irq(pdev, 0);
++	struct spi_engine_message_state *st;
+ 	unsigned int int_enable = 0;
+ 	unsigned long flags;
+ 	size_t size;
++	int ret;
++
++	st = kzalloc(sizeof(*st), GFP_KERNEL);
++	if (!st)
++		return -ENOMEM;
  
-@@ -548,8 +539,6 @@ static void spi_engine_remove(struct platform_device *pdev)
+ 	p_dry.length = 0;
+ 	spi_engine_compile_message(spi_engine, msg, true, &p_dry);
  
- 	free_irq(irq, host);
+ 	size = sizeof(*p->instructions) * (p_dry.length + 1);
+ 	p = kzalloc(sizeof(*p) + size, GFP_KERNEL);
+-	if (!p)
++	if (!p) {
++		kfree(st);
+ 		return -ENOMEM;
++	}
++
++	ret = ida_alloc_range(&spi_engine->sync_ida, 0, U8_MAX, GFP_KERNEL);
++	if (ret < 0) {
++		kfree(p);
++		kfree(st);
++		return ret;
++	}
++
++	st->sync_id = ret;
++
+ 	spi_engine_compile_message(spi_engine, msg, false, p);
  
--	spi_controller_put(host);
--
- 	writel_relaxed(0xff, spi_engine->base + SPI_ENGINE_REG_INT_PENDING);
- 	writel_relaxed(0x00, spi_engine->base + SPI_ENGINE_REG_INT_ENABLE);
- 	writel_relaxed(0x01, spi_engine->base + SPI_ENGINE_REG_RESET);
+ 	spin_lock_irqsave(&spi_engine->lock, flags);
+-	spi_engine->sync_id = (spi_engine->sync_id + 1) & 0xff;
+-	spi_engine_program_add_cmd(p, false,
+-		SPI_ENGINE_CMD_SYNC(spi_engine->sync_id));
++	spi_engine_program_add_cmd(p, false, SPI_ENGINE_CMD_SYNC(st->sync_id));
+ 
++	msg->state = st;
+ 	spi_engine->msg = msg;
+-	spi_engine->p = p;
++	st->p = p;
+ 
+-	spi_engine->cmd_buf = p->instructions;
+-	spi_engine->cmd_length = p->length;
++	st->cmd_buf = p->instructions;
++	st->cmd_length = p->length;
+ 	if (spi_engine_write_cmd_fifo(spi_engine))
+ 		int_enable |= SPI_ENGINE_INT_CMD_ALMOST_EMPTY;
+ 
+@@ -448,7 +489,7 @@ static int spi_engine_transfer_one_message(struct spi_controller *host,
+ 		int_enable |= SPI_ENGINE_INT_SDO_ALMOST_EMPTY;
+ 
+ 	spi_engine_rx_next(spi_engine);
+-	if (spi_engine->rx_length != 0)
++	if (st->rx_length != 0)
+ 		int_enable |= SPI_ENGINE_INT_SDI_ALMOST_FULL;
+ 
+ 	int_enable |= SPI_ENGINE_INT_SYNC;
+@@ -480,6 +521,7 @@ static int spi_engine_probe(struct platform_device *pdev)
+ 	spi_engine = spi_controller_get_devdata(host);
+ 
+ 	spin_lock_init(&spi_engine->lock);
++	ida_init(&spi_engine->sync_ida);
+ 
+ 	spi_engine->clk = devm_clk_get_enabled(&pdev->dev, "s_axi_aclk");
+ 	if (IS_ERR(spi_engine->clk))
 -- 
 2.43.0
 
