@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8014E1C9;
-	Tue, 14 May 2024 11:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569484E1C9;
+	Tue, 14 May 2024 11:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686564; cv=none; b=c7A0WJCcIAVNxKZ/BcpIOYp58gKlVCpUfHmu7kKAZK/3HdHvN8CPELiN84jntYpinmLyB+AW+ZHnRMkaXmhmosz4bHpgsqEo4FUBwJJWbdRv11A//ew4rxRRWHQrgeOowdFV2+814a4cjtmeegDT8cFnghETSOTW59zFsaKNagQ=
+	t=1715686567; cv=none; b=jA3cW7lIYjwtWNu6VFjmPBegqVXFxWGIXJcGz+McViSZOqdlTsAjWSo2dgDyt4z2o7Uoll1myRjQ78mnQoZqCsTHi0egaS1bj3ycrxF/l76Dnz4m4hS7GmrIP2ygaFkF2GkmatrNJkomb71NgIFK3WtsiV5oEu2ChKIZ6izanxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686564; c=relaxed/simple;
-	bh=f2bkcciqEiwGm56VdYRU/ybELd4wFziwQf32h6lO5R8=;
+	s=arc-20240116; t=1715686567; c=relaxed/simple;
+	bh=7gGpXcK5X5XYrs/isL4pdrXTf1OooJWCQFq4bQ7tElQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3r4eaeqPe3TF1gd+xxP2RqUhL6Gzb6C4/gVkKbd9XAgr2tkv0o0lppTFpsvhNU+IfgQSAUExakkg6ckVONOwGcNvi3HW//8Nd95ZVyj7ouwiLTp3aV830YGb+zDqXLC5A5Y/e2bbJpjk+aM08djNvWWYgZR0CPRMN6Rz4P7arg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LIHuL1T5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZG3DHxlE/Ti35oJutJNiaM+W8/4XJFVwGaZisnNo4vS9i9m1NdNDTNKDWWybTGiT90aGXTuxacNacUVeirObDch7cUq9iBdRd5soCnSi/Dha8Fr8y4WXj0WlCALMGj2FDDsM5RYhf7xleDRuQXvTvuFW3Okuu74dk9AI0eO8iDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JY9CgamL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LIHuL1T5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDD5C2BD10;
-	Tue, 14 May 2024 11:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JY9CgamL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DF2C2BD10;
+	Tue, 14 May 2024 11:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686564;
-	bh=f2bkcciqEiwGm56VdYRU/ybELd4wFziwQf32h6lO5R8=;
+	s=korg; t=1715686567;
+	bh=7gGpXcK5X5XYrs/isL4pdrXTf1OooJWCQFq4bQ7tElQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LIHuL1T5oK1jDo+EY7si5lVFhP6Ki/+iSCyz1cnQlksJReSedgmsAzgHM+sXgnGUW
-	 oEnu1VKc8U46qhCIomeidolw3Rg4/cNOgtyQoanEYaNHGBDNdRgST51mZ7B4i8ikiD
-	 Q/Nn8tXpb8kj2B5VGGFN+IrcvTauaeZLzfyuTyg0=
+	b=JY9CgamLi1S9ACLQYddNML5COrHCpcGltuCmhkuVBGE2Vp23TRTLarIr5aqgf9OXe
+	 jWkpRuI6eHjeIXpDPliDUgpRxO9YGFVOxCrl/HUzikJI4uh5ymT52rRfTPLVaYPf5o
+	 v26azmC9oONjYbLywXQzOrmT8CJQcH/QRX7dwBpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungwoo Kim <iam@sung-woo.kim>,
+	Duoming Zhou <duoming@zju.edu.cn>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 150/236] Bluetooth: msft: fix slab-use-after-free in msft_do_close()
-Date: Tue, 14 May 2024 12:18:32 +0200
-Message-ID: <20240514101026.061138645@linuxfoundation.org>
+Subject: [PATCH 6.1 151/236] Bluetooth: l2cap: fix null-ptr-deref in l2cap_chan_timeout
+Date: Tue, 14 May 2024 12:18:33 +0200
+Message-ID: <20240514101026.099059181@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -51,99 +51,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 10f9f426ac6e752c8d87bf4346930ba347aaabac ]
+[ Upstream commit adf0398cee86643b8eacde95f17d073d022f782c ]
 
-Tying the msft->data lifetime to hdev by freeing it in
-hci_release_dev() to fix the following case:
+There is a race condition between l2cap_chan_timeout() and
+l2cap_chan_del(). When we use l2cap_chan_del() to delete the
+channel, the chan->conn will be set to null. But the conn could
+be dereferenced again in the mutex_lock() of l2cap_chan_timeout().
+As a result the null pointer dereference bug will happen. The
+KASAN report triggered by POC is shown below:
 
-[use]
-msft_do_close()
-  msft = hdev->msft_data;
-  if (!msft)                      ...(1) <- passed.
-    return;
-  mutex_lock(&msft->filter_lock); ...(4) <- used after freed.
+[  472.074580] ==================================================================
+[  472.075284] BUG: KASAN: null-ptr-deref in mutex_lock+0x68/0xc0
+[  472.075308] Write of size 8 at addr 0000000000000158 by task kworker/0:0/7
+[  472.075308]
+[  472.075308] CPU: 0 PID: 7 Comm: kworker/0:0 Not tainted 6.9.0-rc5-00356-g78c0094a146b #36
+[  472.075308] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu4
+[  472.075308] Workqueue: events l2cap_chan_timeout
+[  472.075308] Call Trace:
+[  472.075308]  <TASK>
+[  472.075308]  dump_stack_lvl+0x137/0x1a0
+[  472.075308]  print_report+0x101/0x250
+[  472.075308]  ? __virt_addr_valid+0x77/0x160
+[  472.075308]  ? mutex_lock+0x68/0xc0
+[  472.075308]  kasan_report+0x139/0x170
+[  472.075308]  ? mutex_lock+0x68/0xc0
+[  472.075308]  kasan_check_range+0x2c3/0x2e0
+[  472.075308]  mutex_lock+0x68/0xc0
+[  472.075308]  l2cap_chan_timeout+0x181/0x300
+[  472.075308]  process_one_work+0x5d2/0xe00
+[  472.075308]  worker_thread+0xe1d/0x1660
+[  472.075308]  ? pr_cont_work+0x5e0/0x5e0
+[  472.075308]  kthread+0x2b7/0x350
+[  472.075308]  ? pr_cont_work+0x5e0/0x5e0
+[  472.075308]  ? kthread_blkcg+0xd0/0xd0
+[  472.075308]  ret_from_fork+0x4d/0x80
+[  472.075308]  ? kthread_blkcg+0xd0/0xd0
+[  472.075308]  ret_from_fork_asm+0x11/0x20
+[  472.075308]  </TASK>
+[  472.075308] ==================================================================
+[  472.094860] Disabling lock debugging due to kernel taint
+[  472.096136] BUG: kernel NULL pointer dereference, address: 0000000000000158
+[  472.096136] #PF: supervisor write access in kernel mode
+[  472.096136] #PF: error_code(0x0002) - not-present page
+[  472.096136] PGD 0 P4D 0
+[  472.096136] Oops: 0002 [#1] PREEMPT SMP KASAN NOPTI
+[  472.096136] CPU: 0 PID: 7 Comm: kworker/0:0 Tainted: G    B              6.9.0-rc5-00356-g78c0094a146b #36
+[  472.096136] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu4
+[  472.096136] Workqueue: events l2cap_chan_timeout
+[  472.096136] RIP: 0010:mutex_lock+0x88/0xc0
+[  472.096136] Code: be 08 00 00 00 e8 f8 23 1f fd 4c 89 f7 be 08 00 00 00 e8 eb 23 1f fd 42 80 3c 23 00 74 08 48 88
+[  472.096136] RSP: 0018:ffff88800744fc78 EFLAGS: 00000246
+[  472.096136] RAX: 0000000000000000 RBX: 1ffff11000e89f8f RCX: ffffffff8457c865
+[  472.096136] RDX: 0000000000000001 RSI: 0000000000000008 RDI: ffff88800744fc78
+[  472.096136] RBP: 0000000000000158 R08: ffff88800744fc7f R09: 1ffff11000e89f8f
+[  472.096136] R10: dffffc0000000000 R11: ffffed1000e89f90 R12: dffffc0000000000
+[  472.096136] R13: 0000000000000158 R14: ffff88800744fc78 R15: ffff888007405a00
+[  472.096136] FS:  0000000000000000(0000) GS:ffff88806d200000(0000) knlGS:0000000000000000
+[  472.096136] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  472.096136] CR2: 0000000000000158 CR3: 000000000da32000 CR4: 00000000000006f0
+[  472.096136] Call Trace:
+[  472.096136]  <TASK>
+[  472.096136]  ? __die_body+0x8d/0xe0
+[  472.096136]  ? page_fault_oops+0x6b8/0x9a0
+[  472.096136]  ? kernelmode_fixup_or_oops+0x20c/0x2a0
+[  472.096136]  ? do_user_addr_fault+0x1027/0x1340
+[  472.096136]  ? _printk+0x7a/0xa0
+[  472.096136]  ? mutex_lock+0x68/0xc0
+[  472.096136]  ? add_taint+0x42/0xd0
+[  472.096136]  ? exc_page_fault+0x6a/0x1b0
+[  472.096136]  ? asm_exc_page_fault+0x26/0x30
+[  472.096136]  ? mutex_lock+0x75/0xc0
+[  472.096136]  ? mutex_lock+0x88/0xc0
+[  472.096136]  ? mutex_lock+0x75/0xc0
+[  472.096136]  l2cap_chan_timeout+0x181/0x300
+[  472.096136]  process_one_work+0x5d2/0xe00
+[  472.096136]  worker_thread+0xe1d/0x1660
+[  472.096136]  ? pr_cont_work+0x5e0/0x5e0
+[  472.096136]  kthread+0x2b7/0x350
+[  472.096136]  ? pr_cont_work+0x5e0/0x5e0
+[  472.096136]  ? kthread_blkcg+0xd0/0xd0
+[  472.096136]  ret_from_fork+0x4d/0x80
+[  472.096136]  ? kthread_blkcg+0xd0/0xd0
+[  472.096136]  ret_from_fork_asm+0x11/0x20
+[  472.096136]  </TASK>
+[  472.096136] Modules linked in:
+[  472.096136] CR2: 0000000000000158
+[  472.096136] ---[ end trace 0000000000000000 ]---
+[  472.096136] RIP: 0010:mutex_lock+0x88/0xc0
+[  472.096136] Code: be 08 00 00 00 e8 f8 23 1f fd 4c 89 f7 be 08 00 00 00 e8 eb 23 1f fd 42 80 3c 23 00 74 08 48 88
+[  472.096136] RSP: 0018:ffff88800744fc78 EFLAGS: 00000246
+[  472.096136] RAX: 0000000000000000 RBX: 1ffff11000e89f8f RCX: ffffffff8457c865
+[  472.096136] RDX: 0000000000000001 RSI: 0000000000000008 RDI: ffff88800744fc78
+[  472.096136] RBP: 0000000000000158 R08: ffff88800744fc7f R09: 1ffff11000e89f8f
+[  472.132932] R10: dffffc0000000000 R11: ffffed1000e89f90 R12: dffffc0000000000
+[  472.132932] R13: 0000000000000158 R14: ffff88800744fc78 R15: ffff888007405a00
+[  472.132932] FS:  0000000000000000(0000) GS:ffff88806d200000(0000) knlGS:0000000000000000
+[  472.132932] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  472.132932] CR2: 0000000000000158 CR3: 000000000da32000 CR4: 00000000000006f0
+[  472.132932] Kernel panic - not syncing: Fatal exception
+[  472.132932] Kernel Offset: disabled
+[  472.132932] ---[ end Kernel panic - not syncing: Fatal exception ]---
 
-[free]
-msft_unregister()
-  msft = hdev->msft_data;
-  hdev->msft_data = NULL;         ...(2)
-  kfree(msft);                    ...(3) <- msft is freed.
+Add a check to judge whether the conn is null in l2cap_chan_timeout()
+in order to mitigate the bug.
 
-==================================================================
-BUG: KASAN: slab-use-after-free in __mutex_lock_common
-kernel/locking/mutex.c:587 [inline]
-BUG: KASAN: slab-use-after-free in __mutex_lock+0x8f/0xc30
-kernel/locking/mutex.c:752
-Read of size 8 at addr ffff888106cbbca8 by task kworker/u5:2/309
-
-Fixes: bf6a4e30ffbd ("Bluetooth: disable advertisement filters during suspend")
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
+Fixes: 3df91ea20e74 ("Bluetooth: Revert to mutexes from RCU list")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 3 +--
- net/bluetooth/msft.c     | 2 +-
- net/bluetooth/msft.h     | 4 ++--
- 3 files changed, 4 insertions(+), 5 deletions(-)
+ net/bluetooth/l2cap_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 02e67ff05b7b4..d6be3cb86598e 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2733,8 +2733,6 @@ void hci_unregister_dev(struct hci_dev *hdev)
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index b4cba55be5ad9..c34011113d4c5 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -435,6 +435,9 @@ static void l2cap_chan_timeout(struct work_struct *work)
  
- 	hci_unregister_suspend_notifier(hdev);
+ 	BT_DBG("chan %p state %s", chan, state_to_string(chan->state));
  
--	msft_unregister(hdev);
--
- 	hci_dev_do_close(hdev);
- 
- 	if (!test_bit(HCI_INIT, &hdev->flags) &&
-@@ -2788,6 +2786,7 @@ void hci_release_dev(struct hci_dev *hdev)
- 	hci_discovery_filter_clear(hdev);
- 	hci_blocked_keys_clear(hdev);
- 	hci_codec_list_clear(&hdev->local_codecs);
-+	msft_release(hdev);
- 	hci_dev_unlock(hdev);
- 
- 	ida_simple_remove(&hci_index_ida, hdev->id);
-diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
-index bee6a4c656be4..076cf8bce4d9e 100644
---- a/net/bluetooth/msft.c
-+++ b/net/bluetooth/msft.c
-@@ -584,7 +584,7 @@ void msft_register(struct hci_dev *hdev)
- 	hdev->msft_data = msft;
- }
- 
--void msft_unregister(struct hci_dev *hdev)
-+void msft_release(struct hci_dev *hdev)
- {
- 	struct msft_data *msft = hdev->msft_data;
- 
-diff --git a/net/bluetooth/msft.h b/net/bluetooth/msft.h
-index 2a63205b377b7..fe538e9c91c01 100644
---- a/net/bluetooth/msft.h
-+++ b/net/bluetooth/msft.h
-@@ -14,7 +14,7 @@
- 
- bool msft_monitor_supported(struct hci_dev *hdev);
- void msft_register(struct hci_dev *hdev);
--void msft_unregister(struct hci_dev *hdev);
-+void msft_release(struct hci_dev *hdev);
- void msft_do_open(struct hci_dev *hdev);
- void msft_do_close(struct hci_dev *hdev);
- void msft_vendor_evt(struct hci_dev *hdev, void *data, struct sk_buff *skb);
-@@ -35,7 +35,7 @@ static inline bool msft_monitor_supported(struct hci_dev *hdev)
- }
- 
- static inline void msft_register(struct hci_dev *hdev) {}
--static inline void msft_unregister(struct hci_dev *hdev) {}
-+static inline void msft_release(struct hci_dev *hdev) {}
- static inline void msft_do_open(struct hci_dev *hdev) {}
- static inline void msft_do_close(struct hci_dev *hdev) {}
- static inline void msft_vendor_evt(struct hci_dev *hdev, void *data,
++	if (!conn)
++		return;
++
+ 	mutex_lock(&conn->chan_lock);
+ 	/* __set_chan_timer() calls l2cap_chan_hold(chan) while scheduling
+ 	 * this work. No need to call l2cap_chan_hold(chan) here again.
 -- 
 2.43.0
 
