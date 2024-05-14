@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3178B54903;
-	Tue, 14 May 2024 10:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0BA54903;
+	Tue, 14 May 2024 10:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683142; cv=none; b=guku1h414VO4oQMaZcOw+yyLbgMCct6t7ViTFGDQmohQV9769FIxnGuhvckaTqy8RS9BLVJtwPFCm8d6AFjXpzBFq0VrX9/eeiRXNbOZtxfPhzLj5aEq/FDpOkZb/1ucW6x/lSVpztxGiR3hU8FCCvJNp82QcKB8GhY+jCL4UgU=
+	t=1715683147; cv=none; b=AHvFoWEP65v2nTxbIgn/jpjFo9Q5ornNMpCxIyXXMpI4vrQTogtleqecZvmBnkOMzc9fduGHQ1Jyn75ycKk5sc4iqMuMXAtcuyB7ClCju+mliaR2iuxkZWan8xo9PXeWWwYNd1lGbRxpe6QCDeTisuCQ/6N9VY2txFdAI9ROkVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683142; c=relaxed/simple;
-	bh=t8o94IorgW5ro0uq/Z9PbUmCAzJIpf3Kp63HPDh9ZWc=;
+	s=arc-20240116; t=1715683147; c=relaxed/simple;
+	bh=PmozrRCC5Z1H/EqG8qQzNh/tTdxtaek/OkyTTJm0FxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EDonf609Kn6cnPv8EkeumHqUYFA1xAh+8Z6DmJu05nC/+GXkafrmDo8XR8m+/pyKx8tVIvOcuhs4vQ/x6Di2uV0dAy3G84CPjA5X1VO/daS89bRSClKX5jRFXAuMZE4NJGx/XW0LqCeFCbYToL7NESBa1qm12WzGRCRGBxijpjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/rCjD2S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QAtQfgI81vukVTdTw3DmQ5/hVbklv7aFCbJjTxxfOTSfih6DrmEWok8n6mGMqfLXiS4dx09eyf62hNp4tjCEM3PJiK/hXBEtXA17HtnfWGjxvGUG5fEVK06TufMPeT4IbeWV8vDkS0fOFMfaBKQiZQwGjUvp/82ksBP8BaqCcJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cdxdBTtV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/rCjD2S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B6AC2BD10;
-	Tue, 14 May 2024 10:39:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdxdBTtV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6DCC2BD10;
+	Tue, 14 May 2024 10:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683141;
-	bh=t8o94IorgW5ro0uq/Z9PbUmCAzJIpf3Kp63HPDh9ZWc=;
+	s=korg; t=1715683147;
+	bh=PmozrRCC5Z1H/EqG8qQzNh/tTdxtaek/OkyTTJm0FxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y/rCjD2Sb2J23fvdazGKYw5lo9yARtumO4xuuU9I+sL3jOHdou0jSD8lxjplIpKFb
-	 w1V0RnQM0qfe1NFqC/+6nElldwhXSHNGD9731iIKNGJmqGKptr2+P50OioxiMtJbNp
-	 aCnjKhycMpzLREg7hgJmge44YlGmXyzKfBQGu+Es=
+	b=cdxdBTtVfpG2zWHN0aBz7o81R7xCvp9qBPClWNB24bL8ucptpb4anMSuUqwZqv+YC
+	 SHzEckIKZgL7gGEZnYVM5x3WOnYYmWpaN+udEi8sObCy6eCIy7whhIZRIdJ7YoJ5kk
+	 9YcatwyBnVDt5cFYuBUUYlUFAPEmfxDJd6mEZTOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 172/336] Drivers: hv: vmbus: Dont free ring buffers that couldnt be re-encrypted
-Date: Tue, 14 May 2024 12:16:16 +0200
-Message-ID: <20240514101045.096893326@linuxfoundation.org>
+Subject: [PATCH 6.8 173/336] drm/xe/xe_migrate: Cast to output precision before multiplying operands
+Date: Tue, 14 May 2024 12:16:17 +0200
+Message-ID: <20240514101045.134419295@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -53,47 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhklinux@outlook.com>
+From: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
 
-[ Upstream commit 30d18df6567be09c1433e81993e35e3da573ac48 ]
+[ Upstream commit 9cb46b31f3d08ed3fce86349e8c12f96d7c88717 ]
 
-In CoCo VMs it is possible for the untrusted host to cause
-set_memory_encrypted() or set_memory_decrypted() to fail such that an
-error is returned and the resulting memory is shared. Callers need to
-take care to handle these errors to avoid returning decrypted (shared)
-memory to the page allocator, which could lead to functional or security
-issues.
+Addressing potential overflow in result of  multiplication of two lower
+precision (u32) operands before widening it to higher precision
+(u64).
 
-The VMBus ring buffer code could free decrypted/shared pages if
-set_memory_decrypted() fails. Check the decrypted field in the struct
-vmbus_gpadl for the ring buffers to decide whether to free the memory.
+-v2
+Fix commit message and description. (Rodrigo)
 
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Link: https://lore.kernel.org/r/20240311161558.1310-6-mhklinux@outlook.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20240311161558.1310-6-mhklinux@outlook.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240401175300.3823653-1-himal.prasad.ghimiray@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 34820967ae7b45411f8f4f737c2d63b0c608e0d7)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/channel.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_migrate.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hv/channel.c b/drivers/hv/channel.c
-index 98259b4925029..fb8cd8469328e 100644
---- a/drivers/hv/channel.c
-+++ b/drivers/hv/channel.c
-@@ -153,7 +153,9 @@ void vmbus_free_ring(struct vmbus_channel *channel)
- 	hv_ringbuffer_cleanup(&channel->inbound);
+diff --git a/drivers/gpu/drm/xe/xe_migrate.c b/drivers/gpu/drm/xe/xe_migrate.c
+index 70480c3056021..7a6ad3469d748 100644
+--- a/drivers/gpu/drm/xe/xe_migrate.c
++++ b/drivers/gpu/drm/xe/xe_migrate.c
+@@ -216,7 +216,7 @@ static int xe_migrate_prepare_vm(struct xe_tile *tile, struct xe_migrate *m,
+ 		if (vm->flags & XE_VM_FLAG_64K && level == 1)
+ 			flags = XE_PDE_64K;
  
- 	if (channel->ringbuffer_page) {
--		__free_pages(channel->ringbuffer_page,
-+		/* In a CoCo VM leak the memory if it didn't get re-encrypted */
-+		if (!channel->ringbuffer_gpadlhandle.decrypted)
-+			__free_pages(channel->ringbuffer_page,
- 			     get_order(channel->ringbuffer_pagecount
- 				       << PAGE_SHIFT));
- 		channel->ringbuffer_page = NULL;
+-		entry = vm->pt_ops->pde_encode_bo(bo, map_ofs + (level - 1) *
++		entry = vm->pt_ops->pde_encode_bo(bo, map_ofs + (u64)(level - 1) *
+ 						  XE_PAGE_SIZE, pat_index);
+ 		xe_map_wr(xe, &bo->vmap, map_ofs + XE_PAGE_SIZE * level, u64,
+ 			  entry | flags);
+@@ -224,7 +224,7 @@ static int xe_migrate_prepare_vm(struct xe_tile *tile, struct xe_migrate *m,
+ 
+ 	/* Write PDE's that point to our BO. */
+ 	for (i = 0; i < num_entries - num_level; i++) {
+-		entry = vm->pt_ops->pde_encode_bo(bo, i * XE_PAGE_SIZE,
++		entry = vm->pt_ops->pde_encode_bo(bo, (u64)i * XE_PAGE_SIZE,
+ 						  pat_index);
+ 
+ 		xe_map_wr(xe, &bo->vmap, map_ofs + XE_PAGE_SIZE +
+@@ -280,7 +280,7 @@ static int xe_migrate_prepare_vm(struct xe_tile *tile, struct xe_migrate *m,
+ #define VM_SA_UPDATE_UNIT_SIZE		(XE_PAGE_SIZE / NUM_VMUSA_UNIT_PER_PAGE)
+ #define NUM_VMUSA_WRITES_PER_UNIT	(VM_SA_UPDATE_UNIT_SIZE / sizeof(u64))
+ 	drm_suballoc_manager_init(&m->vm_update_sa,
+-				  (map_ofs / XE_PAGE_SIZE - NUM_KERNEL_PDE) *
++				  (size_t)(map_ofs / XE_PAGE_SIZE - NUM_KERNEL_PDE) *
+ 				  NUM_VMUSA_UNIT_PER_PAGE, 0);
+ 
+ 	m->pt_bo = bo;
+@@ -479,7 +479,7 @@ static void emit_pte(struct xe_migrate *m,
+ 	struct xe_vm *vm = m->q->vm;
+ 	u16 pat_index;
+ 	u32 ptes;
+-	u64 ofs = at_pt * XE_PAGE_SIZE;
++	u64 ofs = (u64)at_pt * XE_PAGE_SIZE;
+ 	u64 cur_ofs;
+ 
+ 	/* Indirect access needs compression enabled uncached PAT index */
 -- 
 2.43.0
 
