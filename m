@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A0754F87;
-	Tue, 14 May 2024 11:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855CE6CDC9;
+	Tue, 14 May 2024 11:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685513; cv=none; b=Fofqosku4RQcaenfnBwUanPno8BAh2/ZffduW1yA+AX6VjPZ0EM7xtbF/59qVVIuR+IazCgceGSBbfPxLrMvapG0C6b8YD2ewVZ7+eUAKv+M3f2aa6Ny81zJDIwi1nIT+E/gf5BAfxplIEbnnBirqg00J1x5EaB0ogpHcRP51Os=
+	t=1715685519; cv=none; b=TbA3rxzbijUyRBeHgd36ZOJmdoR1uRvdho0MBdz5sCE3tjiKip4Bs25z1SUDEvaCg43WHFoz8cFij9UkE3RemRbejgI/MKBpQNyfTOa5zP2Jz9hOp+sTimL2dEicSVHcaUtQ1IndmZ4Hc0yg5kngHvIDJyYXAtvdP+Myo5QgkJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685513; c=relaxed/simple;
-	bh=XrLxzDyI/EJljwO7/9Y2/+XWkG7zmQxJuxYa7UXrpR8=;
+	s=arc-20240116; t=1715685519; c=relaxed/simple;
+	bh=al7Sk76qkvhvJw4iG2MPeiCIHkXp4XuRokw49HsDQUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X8cXiFKY9cuWoAfDqKMazchlI1FbkmQwqVzyh4DPjPu/Hd1JrYdsMO+KEmbCoW7LOyWpuoOVrja3QnDmrZip7mwbVQPDqyyufeIu2PFmLUfYvOvZVofcpaf/hwC25llexDUoC0Lp1eTx3rGOTwfuBAKknNZn0/b4iLrqhLfLHLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Po7bsJZQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=toxyvB4zMEyleySdynjRN335QpQqLR/LkAvi1KXlSChIT8sqP33q1tLMzswaxDEDD0hIIPn06m2Crl7RB1+GDWn2V7LtminbWl8MJTjznHYCsClLanVhcdTt8JHeey/bQ6IavbYaTJkSfblfBNvnm8Emzjd2B/7ewxqemWtiA1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AT+yK2g6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Po7bsJZQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35322C2BD10;
-	Tue, 14 May 2024 11:18:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AT+yK2g6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8390C4AF09;
+	Tue, 14 May 2024 11:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685513;
-	bh=XrLxzDyI/EJljwO7/9Y2/+XWkG7zmQxJuxYa7UXrpR8=;
+	s=korg; t=1715685519;
+	bh=al7Sk76qkvhvJw4iG2MPeiCIHkXp4XuRokw49HsDQUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Po7bsJZQePpMfMG0Hejyvs9Yqs+/ArO1N+Y+2ZgNiFKtXSjkGtE9X9cApJFVrJgiy
-	 V2YQ4wIc2EeJ0X0e8rmon+mAMoQ1aVor40QMrDmd424aAtpA34VJFsrDJo+uNUre/Y
-	 VXH4MFtb8nGlJS690xdfhE6VWpMyAQ2HsZ9/Em4I=
+	b=AT+yK2g6iy/CLBagg3nx/yBw90Usio8vzdkYhsKRd4sZEmquUFkkqTcY/QeOH29cZ
+	 fThLQaD4p1nfNkZikfdC8A3Io0DUBxA47dfaJHpGsB9qiUrvXciYegjA6I6Id5hbhx
+	 WE21l8pXtKb1x47OiVA8GGkNzORIREJBJru6f/7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joakim Sindholt <opensource@zhasha.com>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 160/301] fs/9p: fix the cache always being enabled on files with qid flags
-Date: Tue, 14 May 2024 12:17:11 +0200
-Message-ID: <20240514101038.298813310@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Simon Wilkinson <sxw@auristor.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Jeffrey Altman <jaltman@auristor.commailto:jaltman@auristor.com>
+Subject: [PATCH 6.6 195/301] rxrpc: Fix congestion control algorithm
+Date: Tue, 14 May 2024 12:17:46 +0200
+Message-ID: <20240514101039.617287185@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,43 +55,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joakim Sindholt <opensource@zhasha.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 4e5d208cc9bd5fbc95d536fa223b4b14c37b8ca8 ]
+[ Upstream commit ba4e103848d3a2a28a0445e39f4a9564187efe54 ]
 
-I'm not sure why this check was ever here. After updating to 6.6 I
-suddenly found caching had been turned on by default and neither
-cache=none nor the new directio would turn it off. After walking through
-the new code very manually I realized that it's because the caching has
-to be, in effect, turned off explicitly by setting P9L_DIRECT and
-whenever a file has a flag, in my case QTAPPEND, it doesn't get set.
+Make the following fixes to the congestion control algorithm:
 
-Setting aside QTDIR which seems to ignore the new fid->mode entirely,
-the rest of these either should be subject to the same cache rules as
-every other QTFILE or perhaps very explicitly not cached in the case of
-QTAUTH.
+ (1) Don't vary the cwnd starting value by the size of RXRPC_TX_SMSS since
+     that's currently held constant - set to the size of a jumbo subpacket
+     payload so that we can create jumbo packets on the fly.  The current
+     code invariably picks 3 as the starting value.
 
-Signed-off-by: Joakim Sindholt <opensource@zhasha.com>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+     Further, the starting cwnd needs to be an even number because we ack
+     every other packet, so set it to 4.
+
+ (2) Don't cut ssthresh when we see an ACK come from the peer with a
+     receive window (rwind) less than ssthresh.  ssthresh keeps track of
+     characteristics of the connection whereas rwind may be reduced by the
+     peer for any reason - and may be reduced to 0.
+
+Fixes: 1fc4fa2ac93d ("rxrpc: Fix congestion management")
+Fixes: 0851115090a3 ("rxrpc: Reduce ssthresh to peer's receive window")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Suggested-by: Simon Wilkinson <sxw@auristor.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com <mailto:jaltman@auristor.com>>
+Link: https://lore.kernel.org/r/20240503150749.1001323-2-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/fid.h | 3 ---
- 1 file changed, 3 deletions(-)
+ net/rxrpc/ar-internal.h | 2 +-
+ net/rxrpc/call_object.c | 7 +------
+ net/rxrpc/input.c       | 3 ---
+ 3 files changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/fs/9p/fid.h b/fs/9p/fid.h
-index 29281b7c38870..0d6138bee2a3d 100644
---- a/fs/9p/fid.h
-+++ b/fs/9p/fid.h
-@@ -49,9 +49,6 @@ static inline struct p9_fid *v9fs_fid_clone(struct dentry *dentry)
- static inline void v9fs_fid_add_modes(struct p9_fid *fid, unsigned int s_flags,
- 	unsigned int s_cache, unsigned int f_flags)
- {
--	if (fid->qid.type != P9_QTFILE)
--		return;
+diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
+index bda3f6690b321..d431376bb120a 100644
+--- a/net/rxrpc/ar-internal.h
++++ b/net/rxrpc/ar-internal.h
+@@ -688,7 +688,7 @@ struct rxrpc_call {
+ 	 * packets) rather than bytes.
+ 	 */
+ #define RXRPC_TX_SMSS		RXRPC_JUMBO_DATALEN
+-#define RXRPC_MIN_CWND		(RXRPC_TX_SMSS > 2190 ? 2 : RXRPC_TX_SMSS > 1095 ? 3 : 4)
++#define RXRPC_MIN_CWND		4
+ 	u8			cong_cwnd;	/* Congestion window size */
+ 	u8			cong_extra;	/* Extra to send for congestion management */
+ 	u8			cong_ssthresh;	/* Slow-start threshold */
+diff --git a/net/rxrpc/call_object.c b/net/rxrpc/call_object.c
+index 0a50341d920af..29385908099ef 100644
+--- a/net/rxrpc/call_object.c
++++ b/net/rxrpc/call_object.c
+@@ -175,12 +175,7 @@ struct rxrpc_call *rxrpc_alloc_call(struct rxrpc_sock *rx, gfp_t gfp,
+ 	call->rx_winsize = rxrpc_rx_window_size;
+ 	call->tx_winsize = 16;
+ 
+-	if (RXRPC_TX_SMSS > 2190)
+-		call->cong_cwnd = 2;
+-	else if (RXRPC_TX_SMSS > 1095)
+-		call->cong_cwnd = 3;
+-	else
+-		call->cong_cwnd = 4;
++	call->cong_cwnd = RXRPC_MIN_CWND;
+ 	call->cong_ssthresh = RXRPC_TX_MAX_WINDOW;
+ 
+ 	call->rxnet = rxnet;
+diff --git a/net/rxrpc/input.c b/net/rxrpc/input.c
+index 718ffd184ddb6..f7304e06aadca 100644
+--- a/net/rxrpc/input.c
++++ b/net/rxrpc/input.c
+@@ -688,9 +688,6 @@ static void rxrpc_input_ack_trailer(struct rxrpc_call *call, struct sk_buff *skb
+ 		call->tx_winsize = rwind;
+ 	}
+ 
+-	if (call->cong_ssthresh > rwind)
+-		call->cong_ssthresh = rwind;
 -
- 	if ((!s_cache) ||
- 	   ((fid->qid.version == 0) && !(s_flags & V9FS_IGNORE_QV)) ||
- 	   (s_flags & V9FS_DIRECT_IO) || (f_flags & O_DIRECT)) {
+ 	mtu = min(ntohl(trailer->maxMTU), ntohl(trailer->ifMTU));
+ 
+ 	peer = call->peer;
 -- 
 2.43.0
 
