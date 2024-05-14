@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1051D54D;
-	Tue, 14 May 2024 11:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578F11E4B1;
+	Tue, 14 May 2024 11:59:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687968; cv=none; b=iRP+UxpWkt4UUMiaUgXESv58q/jxPMze+xkOZFKGZVzRv9DIjMlNtJN0Cw7fA3/haMNdTKYy60ijj42W78A0ODVt366xsFhAY1+d709SYjoKyMEXBZAS3Q2eFSt6VIqObshxncT6FxmOAxa+xiEUwztcBQamBczsprsl1kqCuPk=
+	t=1715687971; cv=none; b=kBYzGcDSJ/LM3aLPhLj2/iR8T6SmEcgKgpaqK0p9Rj+JYF2KsCY3/Oc818lgfrvY2GR1ailRTrStv+FljWeRBM4CaLptN9uMFTzaPItOjPxNVbocQHsPVD9joK7bylS1u2vWQwXvZQlkxnkwD+PgIKK8e7gt5pD1AbG8hneXHb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687968; c=relaxed/simple;
-	bh=HOsGvbPTz8yBJpl3494AzxP34Sk6L5Kg6jhaNS/OIDc=;
+	s=arc-20240116; t=1715687971; c=relaxed/simple;
+	bh=hrZ6tTG/oRwkCi7YPwVyqFVlc35DOtx+9vFJe921mfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mji4KezILzwKEvJ806l93oZu/MwgXTdEqEhOKiQa5uLwNTwZdMHCyCPh8SLxLGuY+OlTkUNsvBI3lLmgMOXGDN2+lSOvrIo5SUs9piOJ9yR45MW3sTGivkDu2v7zBcHIbZ+al0MRuv7b+cnx4uloTEglaWsy08K/yBHKcSH1iao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jqk/73o9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qv3VI5ovxYgWG7r6q05VHojsB/b7rzLxM1BSsBxAEZ8U9MZ86xJRz0PlQLpfvLehOXEcm18J4Sfr0e6baxDu+j47eaJoMYCeFSvFGxh1Z0C0Xl5w6YaGCHiN8HQdveQp2Eyi6JF1QqQpC75iFN3po7S5v2YqnoQqIHr6HAMPe3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJQdeINs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jqk/73o9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A863CC2BD10;
-	Tue, 14 May 2024 11:59:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJQdeINs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB2FC2BD10;
+	Tue, 14 May 2024 11:59:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687968;
-	bh=HOsGvbPTz8yBJpl3494AzxP34Sk6L5Kg6jhaNS/OIDc=;
+	s=korg; t=1715687970;
+	bh=hrZ6tTG/oRwkCi7YPwVyqFVlc35DOtx+9vFJe921mfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jqk/73o9F1Bz4sLOJVjrz57fx1VmKZwFIfOhHGr9+pz5+1CSAIuQ4cogXPmcw1Z08
-	 W46dMoksxn9tofQAxMSaNtZ1viNPDHeWTAzpAzWuj8CkU7ITxMiauJexqlUE9tcqtX
-	 0OLpvATddRPfrfQOLIGgNH6u7p4PKF9zid31kUWw=
+	b=UJQdeINsCaC3627d/3ULfY8wMD3HY8llhZCWW8ZFAc0rkCXudrzxAvA4ehJMaizp0
+	 Qmr0998YYgUUDDnnFx7AUBpNW+FrWVBZjg+3lR1l0TnfXMfEVhSRQ3vPAn0+ObPLOd
+	 cch8vaR2MmHvu3P3x396I5L2/YiPmmC3R6BZmUEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Kaehlcke <mka@chromium.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 167/168] Bluetooth: qca: fix NVM configuration parsing
-Date: Tue, 14 May 2024 12:21:05 +0200
-Message-ID: <20240514101013.062216930@linuxfoundation.org>
+Subject: [PATCH 5.15 168/168] Bluetooth: qca: fix firmware check error path
+Date: Tue, 14 May 2024 12:21:06 +0200
+Message-ID: <20240514101013.101113471@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -53,89 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit a112d3c72a227f2edbb6d8094472cc6e503e52af upstream.
+commit 40d442f969fb1e871da6fca73d3f8aef1f888558 upstream.
 
-The NVM configuration files used by WCN3988 and WCN3990/1/8 have two
-sets of configuration tags that are enclosed by a type-length header of
-type four which the current parser fails to account for.
+A recent commit fixed the code that parses the firmware files before
+downloading them to the controller but introduced a memory leak in case
+the sanity checks ever fail.
 
-Instead the driver happily parses random data as if it were valid tags,
-something which can lead to the configuration data being corrupted if it
-ever encounters the words 0x0011 or 0x001b.
+Make sure to free the firmware buffer before returning on errors.
 
-As is clear from commit b63882549b2b ("Bluetooth: btqca: Fix the NVM
-baudrate tag offcet for wcn3991") the intention has always been to
-process the configuration data also for WCN3991 and WCN3998 which
-encodes the baud rate at a different offset.
-
-Fix the parser so that it can handle the WCN3xxx configuration files,
-which has an enclosing type-length header of type four and two sets of
-TLV tags enclosed by a type-length header of type two and three,
-respectively.
-
-Note that only the first set, which contains the tags the driver is
-currently looking for, will be parsed for now.
-
-With the parser fixed, the software in-band sleep bit will now be set
-for WCN3991 and WCN3998 (as it is for later controllers) and the default
-baud rate 3200000 may be updated by the driver also for WCN3xxx
-controllers.
-
-Notably the deep-sleep feature bit is already set by default in all
-configuration files in linux-firmware.
-
-Fixes: 4219d4686875 ("Bluetooth: btqca: Add wcn3990 firmware download support.")
-Cc: stable@vger.kernel.org	# 4.19
-Cc: Matthias Kaehlcke <mka@chromium.org>
+Fixes: f905ae0be4b7 ("Bluetooth: qca: add missing firmware sanity checks")
+Cc: stable@vger.kernel.org      # 4.19
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btqca.c |   24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btqca.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/bluetooth/btqca.c
 +++ b/drivers/bluetooth/btqca.c
-@@ -195,6 +195,7 @@ static int qca_tlv_check_data(struct hci
- 	struct tlv_type_patch *tlv_patch;
- 	struct tlv_type_nvm *tlv_nvm;
- 	uint8_t nvm_baud_rate = config->user_baud_rate;
-+	u8 type;
+@@ -492,7 +492,7 @@ static int qca_download_firmware(struct
  
- 	config->dnld_mode = QCA_SKIP_EVT_NONE;
- 	config->dnld_type = QCA_SKIP_EVT_NONE;
-@@ -260,11 +261,30 @@ static int qca_tlv_check_data(struct hci
- 		tlv = (struct tlv_type_hdr *)fw_data;
+ 	ret = qca_tlv_check_data(hdev, config, data, size, soc_type);
+ 	if (ret)
+-		return ret;
++		goto out;
  
- 		type_len = le32_to_cpu(tlv->type_len);
--		length = (type_len >> 8) & 0x00ffffff;
-+		length = type_len >> 8;
-+		type = type_len & 0xff;
- 
--		BT_DBG("TLV Type\t\t : 0x%x", type_len & 0x000000ff);
-+		/* Some NVM files have more than one set of tags, only parse
-+		 * the first set when it has type 2 for now. When there is
-+		 * more than one set there is an enclosing header of type 4.
-+		 */
-+		if (type == 4) {
-+			if (fw_size < 2 * sizeof(struct tlv_type_hdr))
-+				return -EINVAL;
-+
-+			tlv++;
-+
-+			type_len = le32_to_cpu(tlv->type_len);
-+			length = type_len >> 8;
-+			type = type_len & 0xff;
-+		}
-+
-+		BT_DBG("TLV Type\t\t : 0x%x", type);
- 		BT_DBG("Length\t\t : %d bytes", length);
- 
-+		if (type != 2)
-+			break;
-+
- 		if (fw_size < length + (tlv->data - fw_data))
- 			return -EINVAL;
- 
+ 	segment = data;
+ 	remain = size;
 
 
