@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A270243AD7;
-	Tue, 14 May 2024 11:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D7C12BF08;
+	Tue, 14 May 2024 11:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687256; cv=none; b=KWZ8aEtDcPHX4KEjb6cZO+qUR5YihF0G4vF6uabGbI2Fi14kDHPjyr3Hd3HBt5PXe8M9xbGfqLe3PauMX6/wm5K/V7zRuxB8F1Hua7NgLLBtIwdsCcbt2PvZsBfQ3mKpxY6g0ij/DzJQ5xzwpzVsMv1pE/W+K9BsZaLn/pfLNaM=
+	t=1715687259; cv=none; b=L9hGP8Pi4UJ9c5mHwmcfkOyXzQgva7eyqzJllQzCI5OzS4F/kqpnjdvsJ40jKJmdscqxJFEqroCAMGdskrUcgUoIZGbkp1W+soH/JvllreG3w8wTE+eEcTHlWkkeASu3Y0j8nx8QJKSrZbuJ/b+JtBYMXeRs812RtuRLiFk4+qE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687256; c=relaxed/simple;
-	bh=+xBs4Sv0n4+fDXITo9sZ0x37e1z2R07ry4iwh15GOiQ=;
+	s=arc-20240116; t=1715687259; c=relaxed/simple;
+	bh=mdE2v2gzmVWIBOeTAKtiI3QbICZVI49kXQ32qsspuxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cHY1PrTSkx7bfcG+qbVy5en2p9fumi0szZt/cpgcGJmYtvSZe6l/4xQoZFQzT5qubK6AOVQJdeVwmU6I2Bvh75yBA2WL058iPLsp5/ZQ/W1wlCYcTsHwRIWn/nM1OR843DNmT0ioGIvJjRVyHwFH6WRggPuXkcoaPILIBniw/co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSYkVj9Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lyo2KcPTDNVnmvGbkgAVGlydDFErQIwYTb/dNXOyBFFx964gZzT6akJL3wem4Aq/Tx34tqxMrPIJZxx6PMLXqvQ+7Yj799OSx1HT+OorgsjtxWVa7s7KhpGY7a89dKlhhMlISVqhOHU2s+sNDgLMyaq0pK5wv1ZzsiC+15rHDH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EECiFMaK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSYkVj9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FADBC2BD10;
-	Tue, 14 May 2024 11:47:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EECiFMaK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2762C2BD10;
+	Tue, 14 May 2024 11:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687256;
-	bh=+xBs4Sv0n4+fDXITo9sZ0x37e1z2R07ry4iwh15GOiQ=;
+	s=korg; t=1715687259;
+	bh=mdE2v2gzmVWIBOeTAKtiI3QbICZVI49kXQ32qsspuxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bSYkVj9ZdgGf0Ha+F+r9wEs0SmPqU6T6dIM0v1Xxx01+YrYxV95o1jLMGgLfFey3I
-	 zObj+BdMH4EaTurBePWo1HhWveiSvW0EZXpIC+TPU3Uob52DuYfMqLHrvHjR1d56MZ
-	 hz+nzxSc9QSLztNCNnSBphzqgLXBhdQSFomneV9Q=
+	b=EECiFMaKY1AzcXX3uQ3WJK93Zsc5MwtMhRL+9GT3PkceSrScyoLfH/RsgQ03icuQ5
+	 3IYMsKh8Oc9N3YWfDplgSjQ1yBLE3FZr6VPTd6KkjaTw4RA7bMVTripXMAh5IqpfB3
+	 8L/TA8BR2TrZToqHdQHuKsCHgjPJ8l8Lkph0tAo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	"John B. Wyatt IV" <jwyatt@redhat.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 034/111] ASoC: meson: cards: select SND_DYNAMIC_MINORS
-Date: Tue, 14 May 2024 12:19:32 +0200
-Message-ID: <20240514100958.422870175@linuxfoundation.org>
+Subject: [PATCH 5.10 035/111] cxgb4: Properly lock TX queue for the selftest.
+Date: Tue, 14 May 2024 12:19:33 +0200
+Message-ID: <20240514100958.459735239@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -51,41 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 6db26f9ea4edd8a17d39ab3c20111e3ccd704aef ]
+[ Upstream commit 9067eccdd7849dd120d5495dbd5a686fa6ed2c1a ]
 
-Amlogic sound cards do create a lot of pcm interfaces, possibly more than
-8. Some pcm interfaces are internal (like DPCM backends and c2c) and not
-exposed to userspace.
+The selftest for the driver sends a dummy packet and checks if the
+packet will be received properly as it should be. The regular TX path
+and the selftest can use the same network queue so locking is required
+and was missing in the selftest path. This was addressed in the commit
+cited below.
+Unfortunately locking the TX queue requires BH to be disabled which is
+not the case in selftest path which is invoked in process context.
+Lockdep should be complaining about this.
 
-Those interfaces still increase the number passed to snd_find_free_minor(),
-which eventually exceeds 8 causing -EBUSY error on card registration if
-CONFIG_SND_DYNAMIC_MINORS=n and the interface is exposed to userspace.
+Use __netif_tx_lock_bh() for TX queue locking.
 
-select CONFIG_SND_DYNAMIC_MINORS for Amlogic cards to avoid the problem.
-
-Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://lore.kernel.org/r/20240426134150.3053741-1-jbrunet@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c650e04898072 ("cxgb4: Fix race between loopback and normal Tx path")
+Reported-by: "John B. Wyatt IV" <jwyatt@redhat.com>
+Closes: https://lore.kernel.org/all/Zic0ot5aGgR-V4Ks@thinkpad2021/
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/20240429091147.YWAaal4v@linutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/chelsio/cxgb4/sge.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/meson/Kconfig b/sound/soc/meson/Kconfig
-index b93ea33739f29..6458d5dc4902f 100644
---- a/sound/soc/meson/Kconfig
-+++ b/sound/soc/meson/Kconfig
-@@ -99,6 +99,7 @@ config SND_MESON_AXG_PDM
+diff --git a/drivers/net/ethernet/chelsio/cxgb4/sge.c b/drivers/net/ethernet/chelsio/cxgb4/sge.c
+index ccb6bd002b20d..89917dde0e223 100644
+--- a/drivers/net/ethernet/chelsio/cxgb4/sge.c
++++ b/drivers/net/ethernet/chelsio/cxgb4/sge.c
+@@ -2678,12 +2678,12 @@ int cxgb4_selftest_lb_pkt(struct net_device *netdev)
+ 	lb->loopback = 1;
  
- config SND_MESON_CARD_UTILS
- 	tristate
-+	select SND_DYNAMIC_MINORS
+ 	q = &adap->sge.ethtxq[pi->first_qset];
+-	__netif_tx_lock(q->txq, smp_processor_id());
++	__netif_tx_lock_bh(q->txq);
  
- config SND_MESON_CODEC_GLUE
- 	tristate
+ 	reclaim_completed_tx(adap, &q->q, -1, true);
+ 	credits = txq_avail(&q->q) - ndesc;
+ 	if (unlikely(credits < 0)) {
+-		__netif_tx_unlock(q->txq);
++		__netif_tx_unlock_bh(q->txq);
+ 		return -ENOMEM;
+ 	}
+ 
+@@ -2718,7 +2718,7 @@ int cxgb4_selftest_lb_pkt(struct net_device *netdev)
+ 	init_completion(&lb->completion);
+ 	txq_advance(&q->q, ndesc);
+ 	cxgb4_ring_tx_db(adap, &q->q, ndesc);
+-	__netif_tx_unlock(q->txq);
++	__netif_tx_unlock_bh(q->txq);
+ 
+ 	/* wait for the pkt to return */
+ 	ret = wait_for_completion_timeout(&lb->completion, 10 * HZ);
 -- 
 2.43.0
 
