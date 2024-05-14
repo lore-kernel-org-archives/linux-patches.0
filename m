@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBB7433BE;
-	Tue, 14 May 2024 10:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA01433BE;
+	Tue, 14 May 2024 10:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682190; cv=none; b=gfLFoZf6Q4+WGkWYmbC+asl4bynXrbMF0L36qNjrkDvAfZ0vObi2kB/XznCTuP3HlKkbPi07ztWZLdPjmD/Ich4eZIN82CTTbS6rHNTFuzudoYUhZb0bEFObCxNKPr/AG4SyeCc93EnvH3VYl0EEIMe7wU0DSfHBdEK1sDOc4tk=
+	t=1715682195; cv=none; b=r8GRbeTmNFBgbyjJ2AfIE2wfe95ZYKrNkNYs7YfIa6ooP6NEtOvyPUJIBMD0GRXc1T5T136S5x1MkYe9fXa0h6Bou/bVN2yAZHXsanVc2BxLcbTe9wsonHP9qbdTQOYhLZVEM+bRlfkSotrI8QvnkioNlnvN0Nt8KFLZ2TB0FFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682190; c=relaxed/simple;
-	bh=5eMuwqOHpa7YFbnuUbjE+GhAKy7wctRyHgsOYaslEA0=;
+	s=arc-20240116; t=1715682195; c=relaxed/simple;
+	bh=R5zqzPcmy5LVpG48ZunQDR1s0t7eSTWgpKm1tCpTPfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NOHmc47FdilK3mtTlDXEp/uB/jX2drccvMj/NftAvRb1IN6AmnOlHpheRV8GhK22cbcsHREHGt17jffj6fbydfEhuHe7OIYi/MxiLjkjfGHfDKefjb8gJXl0V58P2uKn2qAkXN+tJZjqXHtV55xUS7SEqe7ccmi2WcQ5cLiEENE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpR+Tsw6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MrT6pTu3Vbl7GJVHScXtt/AL/fUHLUw16527eARrFmQYqTVr2N+613aeOICkcljibKMBX/dwh5zJlIhG/2N0M3njQknAwGGGVhvFSHqC2ThKUdJ+6yC/XmA4voB791pLI4n3eoA9ZIPtFMjGVJXblWnKwJqRfD+2QQOKXMvK0BY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCkre9iD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpR+Tsw6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E635C2BD10;
-	Tue, 14 May 2024 10:23:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCkre9iD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0749C32786;
+	Tue, 14 May 2024 10:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682190;
-	bh=5eMuwqOHpa7YFbnuUbjE+GhAKy7wctRyHgsOYaslEA0=;
+	s=korg; t=1715682195;
+	bh=R5zqzPcmy5LVpG48ZunQDR1s0t7eSTWgpKm1tCpTPfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MpR+Tsw6rHsO9cL9NcNbpQwLJiISM9yShQazk7J29KnA55rgHuZl8APANn4+F2xFW
-	 oZGTUFRefbbkO43pepwEZK/AWRhmnJgm10tNQBT0PhvR0FTU1tfgY9C8iZLd7G7+2/
-	 NB+jCaH+xTdSm4f85chFe23F4mrfvuqRmAUsK4NM=
+	b=VCkre9iDOa9KinXFXqpP2zbSeg4JSPYunrCjQP7wbnLMrMkaFxM0ZX+cPK16jwddQ
+	 AYnM/3zLLeuxxa/5OmxBOKxhmerf0110vQ/Cxe4cqscE3iRh3GYhSgsNtt54DYKJWb
+	 IrNDgo1W0cNCpcV+mK8Psy3CGOajK2EtvN4MxkdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+aa8c8ec2538929f18f2d@syzkaller.appspotmail.com,
-	Jason Xing <kernelxing@tencent.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 026/336] bpf, skmsg: Fix NULL pointer dereference in sk_psock_skb_ingress_enqueue
-Date: Tue, 14 May 2024 12:13:50 +0200
-Message-ID: <20240514101039.592879508@linuxfoundation.org>
+Subject: [PATCH 6.8 027/336] regmap: Add regmap_read_bypassed()
+Date: Tue, 14 May 2024 12:13:51 +0200
+Message-ID: <20240514101039.630673446@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -53,117 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 6648e613226e18897231ab5e42ffc29e63fa3365 ]
+[ Upstream commit 70ee853eec5693fefd8348a2b049d9cb83362e58 ]
 
-Fix NULL pointer data-races in sk_psock_skb_ingress_enqueue() which
-syzbot reported [1].
+Add a regmap_read_bypassed() to allow reads from the hardware registers
+while the regmap is in cache-only mode.
 
-[1]
-BUG: KCSAN: data-race in sk_psock_drop / sk_psock_skb_ingress_enqueue
+A typical use for this is to keep the cache in cache-only mode until
+the hardware has reached a valid state, but one or more status registers
+must be polled to determine when this state is reached.
 
-write to 0xffff88814b3278b8 of 8 bytes by task 10724 on cpu 1:
- sk_psock_stop_verdict net/core/skmsg.c:1257 [inline]
- sk_psock_drop+0x13e/0x1f0 net/core/skmsg.c:843
- sk_psock_put include/linux/skmsg.h:459 [inline]
- sock_map_close+0x1a7/0x260 net/core/sock_map.c:1648
- unix_release+0x4b/0x80 net/unix/af_unix.c:1048
- __sock_release net/socket.c:659 [inline]
- sock_close+0x68/0x150 net/socket.c:1421
- __fput+0x2c1/0x660 fs/file_table.c:422
- __fput_sync+0x44/0x60 fs/file_table.c:507
- __do_sys_close fs/open.c:1556 [inline]
- __se_sys_close+0x101/0x1b0 fs/open.c:1541
- __x64_sys_close+0x1f/0x30 fs/open.c:1541
- do_syscall_64+0xd3/0x1d0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
+For example, firmware download on the cs35l56 can take several seconds if
+there are multiple amps sharing limited bus bandwidth. This is too long
+to block in probe() so it is done as a background task. The device must
+be soft-reset to reboot the firmware and during this time the registers are
+not accessible, so the cache should be in cache-only. But the driver must
+poll a register to detect when reboot has completed.
 
-read to 0xffff88814b3278b8 of 8 bytes by task 10713 on cpu 0:
- sk_psock_data_ready include/linux/skmsg.h:464 [inline]
- sk_psock_skb_ingress_enqueue+0x32d/0x390 net/core/skmsg.c:555
- sk_psock_skb_ingress_self+0x185/0x1e0 net/core/skmsg.c:606
- sk_psock_verdict_apply net/core/skmsg.c:1008 [inline]
- sk_psock_verdict_recv+0x3e4/0x4a0 net/core/skmsg.c:1202
- unix_read_skb net/unix/af_unix.c:2546 [inline]
- unix_stream_read_skb+0x9e/0xf0 net/unix/af_unix.c:2682
- sk_psock_verdict_data_ready+0x77/0x220 net/core/skmsg.c:1223
- unix_stream_sendmsg+0x527/0x860 net/unix/af_unix.c:2339
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg+0x140/0x180 net/socket.c:745
- ____sys_sendmsg+0x312/0x410 net/socket.c:2584
- ___sys_sendmsg net/socket.c:2638 [inline]
- __sys_sendmsg+0x1e9/0x280 net/socket.c:2667
- __do_sys_sendmsg net/socket.c:2676 [inline]
- __se_sys_sendmsg net/socket.c:2674 [inline]
- __x64_sys_sendmsg+0x46/0x50 net/socket.c:2674
- do_syscall_64+0xd3/0x1d0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-value changed: 0xffffffff83d7feb0 -> 0x0000000000000000
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 10713 Comm: syz-executor.4 Tainted: G        W          6.8.0-syzkaller-08951-gfe46a7dd189e #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/29/2024
-
-Prior to this, commit 4cd12c6065df ("bpf, sockmap: Fix NULL pointer
-dereference in sk_psock_verdict_data_ready()") fixed one NULL pointer
-similarly due to no protection of saved_data_ready. Here is another
-different caller causing the same issue because of the same reason. So
-we should protect it with sk_callback_lock read lock because the writer
-side in the sk_psock_drop() uses "write_lock_bh(&sk->sk_callback_lock);".
-
-To avoid errors that could happen in future, I move those two pairs of
-lock into the sk_psock_data_ready(), which is suggested by John Fastabend.
-
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Reported-by: syzbot+aa8c8ec2538929f18f2d@syzkaller.appspotmail.com
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=aa8c8ec2538929f18f2d
-Link: https://lore.kernel.org/all/20240329134037.92124-1-kerneljasonxing@gmail.com
-Link: https://lore.kernel.org/bpf/20240404021001.94815-1-kerneljasonxing@gmail.com
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 8a731fd37f8b ("ASoC: cs35l56: Move utility functions to shared file")
+Link: https://msgid.link/r/20240408101803.43183-2-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skmsg.h | 2 ++
- net/core/skmsg.c      | 5 +----
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ drivers/base/regmap/regmap.c | 37 ++++++++++++++++++++++++++++++++++++
+ include/linux/regmap.h       |  8 ++++++++
+ 2 files changed, 45 insertions(+)
 
-diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
-index e65ec3fd27998..a509caf823d61 100644
---- a/include/linux/skmsg.h
-+++ b/include/linux/skmsg.h
-@@ -461,10 +461,12 @@ static inline void sk_psock_put(struct sock *sk, struct sk_psock *psock)
+diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
+index 6db77d8e45f92..4ae399c30f0f2 100644
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -2836,6 +2836,43 @@ int regmap_read(struct regmap *map, unsigned int reg, unsigned int *val)
+ }
+ EXPORT_SYMBOL_GPL(regmap_read);
  
- static inline void sk_psock_data_ready(struct sock *sk, struct sk_psock *psock)
++/**
++ * regmap_read_bypassed() - Read a value from a single register direct
++ *			    from the device, bypassing the cache
++ *
++ * @map: Register map to read from
++ * @reg: Register to be read from
++ * @val: Pointer to store read value
++ *
++ * A value of zero will be returned on success, a negative errno will
++ * be returned in error cases.
++ */
++int regmap_read_bypassed(struct regmap *map, unsigned int reg, unsigned int *val)
++{
++	int ret;
++	bool bypass, cache_only;
++
++	if (!IS_ALIGNED(reg, map->reg_stride))
++		return -EINVAL;
++
++	map->lock(map->lock_arg);
++
++	bypass = map->cache_bypass;
++	cache_only = map->cache_only;
++	map->cache_bypass = true;
++	map->cache_only = false;
++
++	ret = _regmap_read(map, reg, val);
++
++	map->cache_bypass = bypass;
++	map->cache_only = cache_only;
++
++	map->unlock(map->lock_arg);
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(regmap_read_bypassed);
++
+ /**
+  * regmap_raw_read() - Read raw data from the device
+  *
+diff --git a/include/linux/regmap.h b/include/linux/regmap.h
+index c9182a47736ef..113261287af28 100644
+--- a/include/linux/regmap.h
++++ b/include/linux/regmap.h
+@@ -1225,6 +1225,7 @@ int regmap_multi_reg_write_bypassed(struct regmap *map,
+ int regmap_raw_write_async(struct regmap *map, unsigned int reg,
+ 			   const void *val, size_t val_len);
+ int regmap_read(struct regmap *map, unsigned int reg, unsigned int *val);
++int regmap_read_bypassed(struct regmap *map, unsigned int reg, unsigned int *val);
+ int regmap_raw_read(struct regmap *map, unsigned int reg,
+ 		    void *val, size_t val_len);
+ int regmap_noinc_read(struct regmap *map, unsigned int reg,
+@@ -1734,6 +1735,13 @@ static inline int regmap_read(struct regmap *map, unsigned int reg,
+ 	return -EINVAL;
+ }
+ 
++static inline int regmap_read_bypassed(struct regmap *map, unsigned int reg,
++				       unsigned int *val)
++{
++	WARN_ONCE(1, "regmap API is disabled");
++	return -EINVAL;
++}
++
+ static inline int regmap_raw_read(struct regmap *map, unsigned int reg,
+ 				  void *val, size_t val_len)
  {
-+	read_lock_bh(&sk->sk_callback_lock);
- 	if (psock->saved_data_ready)
- 		psock->saved_data_ready(sk);
- 	else
- 		sk->sk_data_ready(sk);
-+	read_unlock_bh(&sk->sk_callback_lock);
- }
- 
- static inline void psock_set_prog(struct bpf_prog **pprog,
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 4d75ef9d24bfa..fd20aae30be23 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -1226,11 +1226,8 @@ static void sk_psock_verdict_data_ready(struct sock *sk)
- 
- 		rcu_read_lock();
- 		psock = sk_psock(sk);
--		if (psock) {
--			read_lock_bh(&sk->sk_callback_lock);
-+		if (psock)
- 			sk_psock_data_ready(sk, psock);
--			read_unlock_bh(&sk->sk_callback_lock);
--		}
- 		rcu_read_unlock();
- 	}
- }
 -- 
 2.43.0
 
