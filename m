@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28D54F1E5;
-	Tue, 14 May 2024 11:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C504F1E5;
+	Tue, 14 May 2024 11:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686011; cv=none; b=R5BTvi1szfDUzq7bw3BCaAiSyc34WMTR6JIRovvmFqdDphjYgDPCfninbFtLEkvqgnoUM+d+MJCUqWoSVMSA8ZEZRZmMBXjiKSXIAC4OSZDtFZxMjOLy/Upa6Jx1EIMUAM0Mlop1FFPaXUKEk4ZSqb366cJfpO3rij91K8TpD5k=
+	t=1715686015; cv=none; b=QfcQ9kLmu5+bUoWkqyHMv7jhvaW5QmWXsFtJYhHLvzPw2lT4xLqxb1aKU7S4qRC8/NHLHCR832fBQEYFS8dqiwHw5VYssXUNeCUcI6cyU45kZhqnUG6918tIzrmvjcinFxbkQMSFL3gmWAckoirYuJV8jZa/by/YntpmWhdurOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686011; c=relaxed/simple;
-	bh=IbTzhlLPRIrl3ec2SupDyk5fKYYFtZwylKHY3TaKfVQ=;
+	s=arc-20240116; t=1715686015; c=relaxed/simple;
+	bh=ZLF9x+nuLw016kf3wa0+JqeavWou/fkKG1Ok53bI5Y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPr/N6xn8KcvVB+jPXsnoM4fcFCbfqRSAJtYhaOof8l319orkiwTJxHopa7tIB+DROvRu1hRRvnhITdG7/77c8oeos/eau8t/AK8gs8NCitGp1nwYwJEauUrzdvDPjUp1nYCM9FmkdbK2kNhcFMBbkOXG+ecjqgUJmB3+t6neow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVBAE4FB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=el4MN0GHlRz7Kg3ZlISQF8eIyZsbws0tfrCDUAs+EdtCuyVxvj7zc8EiHnJYIJct1ojDc4PZA57Ci3dhH3knWl7Eo2M0d7pb3CKE01MKzofEDZSeK5AI9i3IQ8GO8r6QEW873LO3R0byXuQnbHZffxKB8LgrijchOtJM7a8lT/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VlJt+V9A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVBAE4FB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9E3C2BD10;
-	Tue, 14 May 2024 11:26:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VlJt+V9A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01756C2BD10;
+	Tue, 14 May 2024 11:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686011;
-	bh=IbTzhlLPRIrl3ec2SupDyk5fKYYFtZwylKHY3TaKfVQ=;
+	s=korg; t=1715686015;
+	bh=ZLF9x+nuLw016kf3wa0+JqeavWou/fkKG1Ok53bI5Y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVBAE4FB5MOOgz0vAXKrdBh6XunaiGb0vtDliaQkMfoLy3iJ7V5zQKtuWksoFdXJX
-	 quwVnrc8Hw82wRp2gqQc7uNs2HnBYryVKEgNFzIF+Xft5HzRagU7HNqhRzuMv8IbGA
-	 5Ql75GBDarME09dys/OMGqZox5Kjew7A3RFG3+n4=
+	b=VlJt+V9A/dFEfXHlnmwAZEzJrXJKVhWrbjVT1cUZFzycGy51G3JsodzOUBDhkNH6W
+	 NYWBe4M+pVBICqRUUoZbiSpbSqCaESt3b+wLEUsr8hrxv3yc2minoft0cO6OyrhQZg
+	 IHYOGdaDZPw6vOXdb2gJ4gB2wqxlb/e+TNbtgMf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Anderson <dianders@chromium.org>,
-	Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 295/301] Bluetooth: qca: fix wcn3991 device address check
-Date: Tue, 14 May 2024 12:19:26 +0200
-Message-ID: <20240514101043.398893832@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	Dave Airlie <airlied@redhat.com>
+Subject: [PATCH 6.6 266/301] drm/nouveau/firmware: Fix SG_DEBUG error with nvkm_firmware_ctor()
+Date: Tue, 14 May 2024 12:18:57 +0200
+Message-ID: <20240514101042.299478756@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -52,69 +50,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Lyude Paul <lyude@redhat.com>
 
-commit 66c39332d02d65e311ec89b0051130bfcd00c9ac upstream.
+commit 52a6947bf576b97ff8e14bb0a31c5eaf2d0d96e2 upstream.
 
-Qualcomm Bluetooth controllers may not have been provisioned with a
-valid device address and instead end up using the default address
-00:00:00:00:5a:ad.
+Currently, enabling SG_DEBUG in the kernel will cause nouveau to hit a
+BUG() on startup:
 
-This address is now used to determine if a controller has a valid
-address or if one needs to be provided through devicetree or by user
-space before the controller can be used.
+  kernel BUG at include/linux/scatterlist.h:187!
+  invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 7 PID: 930 Comm: (udev-worker) Not tainted 6.9.0-rc3Lyude-Test+ #30
+  Hardware name: MSI MS-7A39/A320M GAMING PRO (MS-7A39), BIOS 1.I0 01/22/2019
+  RIP: 0010:sg_init_one+0x85/0xa0
+  Code: 69 88 32 01 83 e1 03 f6 c3 03 75 20 a8 01 75 1e 48 09 cb 41 89 54
+  24 08 49 89 1c 24 41 89 6c 24 0c 5b 5d 41 5c e9 7b b9 88 00 <0f> 0b 0f 0b
+  0f 0b 48 8b 05 5e 46 9a 01 eb b2 66 66 2e 0f 1f 84 00
+  RSP: 0018:ffffa776017bf6a0 EFLAGS: 00010246
+  RAX: 0000000000000000 RBX: ffffa77600d87000 RCX: 000000000000002b
+  RDX: 0000000000000001 RSI: 0000000000000000 RDI: ffffa77680d87000
+  RBP: 000000000000e000 R08: 0000000000000000 R09: 0000000000000000
+  R10: ffff98f4c46aa508 R11: 0000000000000000 R12: ffff98f4c46aa508
+  R13: ffff98f4c46aa008 R14: ffffa77600d4a000 R15: ffffa77600d4a018
+  FS:  00007feeb5aae980(0000) GS:ffff98f5c4dc0000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f22cb9a4520 CR3: 00000001043ba000 CR4: 00000000003506f0
+  Call Trace:
+   <TASK>
+   ? die+0x36/0x90
+   ? do_trap+0xdd/0x100
+   ? sg_init_one+0x85/0xa0
+   ? do_error_trap+0x65/0x80
+   ? sg_init_one+0x85/0xa0
+   ? exc_invalid_op+0x50/0x70
+   ? sg_init_one+0x85/0xa0
+   ? asm_exc_invalid_op+0x1a/0x20
+   ? sg_init_one+0x85/0xa0
+   nvkm_firmware_ctor+0x14a/0x250 [nouveau]
+   nvkm_falcon_fw_ctor+0x42/0x70 [nouveau]
+   ga102_gsp_booter_ctor+0xb4/0x1a0 [nouveau]
+   r535_gsp_oneinit+0xb3/0x15f0 [nouveau]
+   ? srso_return_thunk+0x5/0x5f
+   ? srso_return_thunk+0x5/0x5f
+   ? nvkm_udevice_new+0x95/0x140 [nouveau]
+   ? srso_return_thunk+0x5/0x5f
+   ? srso_return_thunk+0x5/0x5f
+   ? ktime_get+0x47/0xb0
+   ? srso_return_thunk+0x5/0x5f
+   nvkm_subdev_oneinit_+0x4f/0x120 [nouveau]
+   nvkm_subdev_init_+0x39/0x140 [nouveau]
+   ? srso_return_thunk+0x5/0x5f
+   nvkm_subdev_init+0x44/0x90 [nouveau]
+   nvkm_device_init+0x166/0x2e0 [nouveau]
+   nvkm_udevice_init+0x47/0x70 [nouveau]
+   nvkm_object_init+0x41/0x1c0 [nouveau]
+   nvkm_ioctl_new+0x16a/0x290 [nouveau]
+   ? __pfx_nvkm_client_child_new+0x10/0x10 [nouveau]
+   ? __pfx_nvkm_udevice_new+0x10/0x10 [nouveau]
+   nvkm_ioctl+0x126/0x290 [nouveau]
+   nvif_object_ctor+0x112/0x190 [nouveau]
+   nvif_device_ctor+0x23/0x60 [nouveau]
+   nouveau_cli_init+0x164/0x640 [nouveau]
+   nouveau_drm_device_init+0x97/0x9e0 [nouveau]
+   ? srso_return_thunk+0x5/0x5f
+   ? pci_update_current_state+0x72/0xb0
+   ? srso_return_thunk+0x5/0x5f
+   nouveau_drm_probe+0x12c/0x280 [nouveau]
+   ? srso_return_thunk+0x5/0x5f
+   local_pci_probe+0x45/0xa0
+   pci_device_probe+0xc7/0x270
+   really_probe+0xe6/0x3a0
+   __driver_probe_device+0x87/0x160
+   driver_probe_device+0x1f/0xc0
+   __driver_attach+0xec/0x1f0
+   ? __pfx___driver_attach+0x10/0x10
+   bus_for_each_dev+0x88/0xd0
+   bus_add_driver+0x116/0x220
+   driver_register+0x59/0x100
+   ? __pfx_nouveau_drm_init+0x10/0x10 [nouveau]
+   do_one_initcall+0x5b/0x320
+   do_init_module+0x60/0x250
+   init_module_from_file+0x86/0xc0
+   idempotent_init_module+0x120/0x2b0
+   __x64_sys_finit_module+0x5e/0xb0
+   do_syscall_64+0x83/0x160
+   ? srso_return_thunk+0x5/0x5f
+   entry_SYSCALL_64_after_hwframe+0x71/0x79
+  RIP: 0033:0x7feeb5cc20cd
+  Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89
+  f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0
+  ff ff 73 01 c3 48 8b 0d 1b cd 0c 00 f7 d8 64 89 01 48
+  RSP: 002b:00007ffcf220b2c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
+  RAX: ffffffffffffffda RBX: 000055fdd2916aa0 RCX: 00007feeb5cc20cd
+  RDX: 0000000000000000 RSI: 000055fdd29161e0 RDI: 0000000000000035
+  RBP: 00007ffcf220b380 R08: 00007feeb5d8fb20 R09: 00007ffcf220b310
+  R10: 000055fdd2909dc0 R11: 0000000000000246 R12: 000055fdd29161e0
+  R13: 0000000000020000 R14: 000055fdd29203e0 R15: 000055fdd2909d80
+   </TASK>
 
-It turns out that the WCN3991 controllers used in Chromium Trogdor
-machines use a different default address, 39:98:00:00:5a:ad, which also
-needs to be marked as invalid so that the correct address is fetched
-from the devicetree.
+We hit this when trying to initialize firmware of type
+NVKM_FIRMWARE_IMG_DMA because we allocate our memory with
+dma_alloc_coherent, and DMA allocations can't be turned back into memory
+pages - which a scatterlist needs in order to map them.
 
-Qualcomm has unfortunately not yet provided any answers as to whether
-the 39:98 encodes a hardware id and if there are other variants of the
-default address that needs to be handled by the driver.
+So, fix this by allocating the memory with vmalloc instead().
 
-For now, add the Trogdor WCN3991 default address to the device address
-check to avoid having these controllers start with the default address
-instead of their assigned addresses.
+V2:
+* Fixup explanation as the prior one was bogus
 
-Fixes: 32868e126c78 ("Bluetooth: qca: fix invalid device address check")
-Cc: stable@vger.kernel.org      # 6.5
-Cc: Doug Anderson <dianders@chromium.org>
-Cc: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Cc: stable@vger.kernel.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20240429182318.189668-1-lyude@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btqca.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nvkm/core/firmware.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 216826c31ee3..cfa71708397b 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -16,6 +16,7 @@
- #define VERSION "0.1"
+--- a/drivers/gpu/drm/nouveau/nvkm/core/firmware.c
++++ b/drivers/gpu/drm/nouveau/nvkm/core/firmware.c
+@@ -187,7 +187,9 @@ nvkm_firmware_dtor(struct nvkm_firmware
+ 		break;
+ 	case NVKM_FIRMWARE_IMG_DMA:
+ 		nvkm_memory_unref(&memory);
+-		dma_free_coherent(fw->device->dev, sg_dma_len(&fw->mem.sgl), fw->img, fw->phys);
++		dma_unmap_single(fw->device->dev, fw->phys, sg_dma_len(&fw->mem.sgl),
++				 DMA_TO_DEVICE);
++		kfree(fw->img);
+ 		break;
+ 	default:
+ 		WARN_ON(1);
+@@ -211,14 +213,17 @@ nvkm_firmware_ctor(const struct nvkm_fir
+ 		fw->img = kmemdup(src, fw->len, GFP_KERNEL);
+ 		break;
+ 	case NVKM_FIRMWARE_IMG_DMA: {
+-		dma_addr_t addr;
+-
+ 		len = ALIGN(fw->len, PAGE_SIZE);
  
- #define QCA_BDADDR_DEFAULT (&(bdaddr_t) {{ 0xad, 0x5a, 0x00, 0x00, 0x00, 0x00 }})
-+#define QCA_BDADDR_WCN3991 (&(bdaddr_t) {{ 0xad, 0x5a, 0x00, 0x00, 0x98, 0x39 }})
+-		fw->img = dma_alloc_coherent(fw->device->dev, len, &addr, GFP_KERNEL);
+-		if (fw->img) {
+-			memcpy(fw->img, src, fw->len);
+-			fw->phys = addr;
++		fw->img = kmalloc(len, GFP_KERNEL);
++		if (!fw->img)
++			return -ENOMEM;
++
++		memcpy(fw->img, src, fw->len);
++		fw->phys = dma_map_single(fw->device->dev, fw->img, len, DMA_TO_DEVICE);
++		if (dma_mapping_error(fw->device->dev, fw->phys)) {
++			kfree(fw->img);
++			return -EFAULT;
+ 		}
  
- int qca_read_soc_version(struct hci_dev *hdev, struct qca_btsoc_version *ver,
- 			 enum qca_btsoc_type soc_type)
-@@ -638,8 +639,10 @@ static int qca_check_bdaddr(struct hci_dev *hdev)
- 	}
- 
- 	bda = (struct hci_rp_read_bd_addr *)skb->data;
--	if (!bacmp(&bda->bdaddr, QCA_BDADDR_DEFAULT))
-+	if (!bacmp(&bda->bdaddr, QCA_BDADDR_DEFAULT) ||
-+	    !bacmp(&bda->bdaddr, QCA_BDADDR_WCN3991)) {
- 		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
-+	}
- 
- 	kfree_skb(skb);
- 
--- 
-2.45.0
-
+ 		sg_init_one(&fw->mem.sgl, fw->img, len);
 
 
