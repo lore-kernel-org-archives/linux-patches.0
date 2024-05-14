@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091A7433BE;
-	Tue, 14 May 2024 10:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69948433BE;
+	Tue, 14 May 2024 10:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682255; cv=none; b=WiI7JTyZ07QShVklqk2AsplwzBFBb5kIMY1ZKAgymFY2EGXZEtq6uPxArCLRf3qZ2KRYaYmh6dSrCWihxOiupW6Hx7g2ZblRgHWgL0rFLJf1ayZk4NRi5u9Jum0jiOlDvBoyFlmLQzxbIITZbxg17Szt7GEkAZeZ7cl0qEm8bNc=
+	t=1715682261; cv=none; b=u41bi0D2h7NzJGcomeZfLfTSUS/3WokcL9xd1AKPX62LOmWXN6aMEwdyK1XDoD/7A/O4Uj+/co4eCqBfaBNZ7WESAsiT4AV+nsMpfQgG7jhazpL2Hp9E823ZzfBhQDRvZkBe5XVXQaidNH/ToRpPVGIApZpb3IlLRgaUcPb1DcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682255; c=relaxed/simple;
-	bh=rhrqFmi/rxli9qjWmEgoOljrQv5NxMT7mw6UHA4gbNU=;
+	s=arc-20240116; t=1715682261; c=relaxed/simple;
+	bh=eY2EUIzjbi4NXI1vIVDy5qzM2cUs5N1h4VES+ozJRdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=edkwiHavlyx1wCItw6unbc00eMF44zJGTucW074cyXyojXRW4+LRXyyV7YL8N+6sZ3JEy20I8vapeLbmDHO3w2/KvYkD1AJD7EkaxEPND2GdlMcO8eln+hOu22pE4HYGZ8dQDmS2NYHdNEvWLydHpixo3R8gLJFVmIux+vm5SLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5FYTHte; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SFmgVekhXZM/pX4z+7Xn65MeLjOREzyH2f4jIeqe50Oj43MAXgixM0ANI8cMeFoJAp7YlmMNFNecAuMbASsQx5bhSLp+4658YNOHmPgxH7Y1dCWq3CsPjQ+1Y+/tshANesrvqZNOaXIHHb5mvTAKcrNmvLQ1CrlbCzvZ3tgtvpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXl3gp1Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5FYTHte"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B06FC2BD10;
-	Tue, 14 May 2024 10:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXl3gp1Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6325C2BD10;
+	Tue, 14 May 2024 10:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682254;
-	bh=rhrqFmi/rxli9qjWmEgoOljrQv5NxMT7mw6UHA4gbNU=;
+	s=korg; t=1715682261;
+	bh=eY2EUIzjbi4NXI1vIVDy5qzM2cUs5N1h4VES+ozJRdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5FYTHteC8L1IxNpZCQ0tdcAHu44nIunZQZmRIAY5/gotIXkY/amCPFmed+py9ofF
-	 Uw6hBwDCOQ4sHWFdk0g79LMkqnP1PCsMeGu46giVCVIm8l/KbCHplAVWhQEKg9FG/0
-	 LCmHmfV8ocRL9jnlXP0U+aiACxNizPE4MLvkdTPM=
+	b=KXl3gp1ZTzL18/WGq/lUVPQ25iPcgkgb+LneJLbN8Qp1f5j+l30+aZTD7+orgsj5+
+	 6VT9qcsSBFghKETlkQ0wVZw3n+yOrcZaWJ4d8TW3MYdq1gWcSfpRzgZ7pcg2gGj39p
+	 OxVVgRPShVq4NxqGe1AO6EGR43SOvBA+kqcpDQvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Pu Lehui <pulehui@huawei.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 035/336] riscv, bpf: Fix incorrect runtime stats
-Date: Tue, 14 May 2024 12:13:59 +0200
-Message-ID: <20240514101039.934696038@linuxfoundation.org>
+Subject: [PATCH 6.8 036/336] ASoC: Intel: avs: Set name of control as in topology
+Date: Tue, 14 May 2024 12:14:00 +0200
+Message-ID: <20240514101039.972269908@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -54,49 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
 
-[ Upstream commit 10541b374aa05c8118cc6a529a615882e53f261b ]
+[ Upstream commit 4cbb5050bffc49c716381ea2ecb07306dd46f83a ]
 
-When __bpf_prog_enter() returns zero, the s1 register is not set to zero,
-resulting in incorrect runtime stats. Fix it by setting s1 immediately upon
-the return of __bpf_prog_enter().
+When creating controls attached to widgets, there are a lot of rules if
+they get their name prefixed with widget name or not. Due to that
+controls ended up with weirdly looking names like "ssp0_fe DSP Volume",
+while topology set it to "DSP Volume".
 
-Fixes: 49b5e77ae3e2 ("riscv, bpf: Add bpf trampoline support for RV64")
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Pu Lehui <pulehui@huawei.com>
-Acked-by: Björn Töpel <bjorn@kernel.org>
-Link: https://lore.kernel.org/bpf/20240416064208.2919073-3-xukuohai@huaweicloud.com
+Fix this by setting no_wname_in_kcontrol_name to true in avs topology
+widgets which disables unwanted behaviour.
+
+Fixes: be2b81b519d7 ("ASoC: Intel: avs: Parse control tuples")
+Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20240418142621.2487478-1-amadeuszx.slawinski@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit_comp64.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/intel/avs/topology.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
-index 719a97e7edb2c..0bd747d1d00fc 100644
---- a/arch/riscv/net/bpf_jit_comp64.c
-+++ b/arch/riscv/net/bpf_jit_comp64.c
-@@ -740,6 +740,9 @@ static int invoke_bpf_prog(struct bpf_tramp_link *l, int args_off, int retval_of
- 	if (ret)
- 		return ret;
+diff --git a/sound/soc/intel/avs/topology.c b/sound/soc/intel/avs/topology.c
+index 48b3c67c91032..d8223e2b4cfe2 100644
+--- a/sound/soc/intel/avs/topology.c
++++ b/sound/soc/intel/avs/topology.c
+@@ -1458,6 +1458,8 @@ static int avs_widget_load(struct snd_soc_component *comp, int index,
+ 	if (!le32_to_cpu(dw->priv.size))
+ 		return 0;
  
-+	/* store prog start time */
-+	emit_mv(RV_REG_S1, RV_REG_A0, ctx);
++	w->no_wname_in_kcontrol_name = true;
 +
- 	/* if (__bpf_prog_enter(prog) == 0)
- 	 *	goto skip_exec_of_prog;
- 	 */
-@@ -747,9 +750,6 @@ static int invoke_bpf_prog(struct bpf_tramp_link *l, int args_off, int retval_of
- 	/* nop reserved for conditional jump */
- 	emit(rv_nop(), ctx);
- 
--	/* store prog start time */
--	emit_mv(RV_REG_S1, RV_REG_A0, ctx);
--
- 	/* arg1: &args_off */
- 	emit_addi(RV_REG_A0, RV_REG_FP, -args_off, ctx);
- 	if (!p->jited)
+ 	if (w->ignore_suspend && !AVS_S0IX_SUPPORTED) {
+ 		dev_info_once(comp->dev, "Device does not support S0IX, check BIOS settings\n");
+ 		w->ignore_suspend = false;
 -- 
 2.43.0
 
