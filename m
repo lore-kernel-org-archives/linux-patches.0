@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE3A136648;
-	Tue, 14 May 2024 11:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD840136648;
+	Tue, 14 May 2024 11:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686970; cv=none; b=nIIaSQSoLCIGlqgFXNIf06E3bMR9Pgk+K0mNLQhVmnWQVfHuzUbb3p+SqgRVGitYmuwjzNx63gReif5Mxz2VG96445sKvPkHTsoYA/gRdkNrLhWrb5g8ALBDfr6TMadiq7t0cqy/rX89rRgwifKgt9B+7iehfDKRhWJV5l+aGeo=
+	t=1715686972; cv=none; b=cDxNuiPWKsn8PmP8skKN18r4W6UyROEmDvX6w4CD+pkOxyTXA1iHDek+WPk1hpfV3VX723Ujd8NqRIScALCC92cc9Ua++FPDjnWxj7aFufVLyWH/NI0Xtz/dE6a7MVXZ6lJqmHgLl4VD6bDm+W8V4Tx3BhX0N2cPwvTzVN7eP+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686970; c=relaxed/simple;
-	bh=IE/J9FVin4CcLoAyEONvEwPthLpn0G/hjFhibTmYpUI=;
+	s=arc-20240116; t=1715686972; c=relaxed/simple;
+	bh=m6GW91DfAd6C1rwRR5bhu3roPuG5SRU2n6kzhuhPPhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2rBS8WHZUH+Q9/ks70mcgKeswibxInVZJTiqe0i8rMniBjIVzCkh6UT2Im+zD40mrcp6I/X1pZJzBXCRW8Fz0TYQUxwTc4L6niC986M1+7PSe0Xui0KhampGl4dPzDkwbyBaIbzHq1lS4wRVIpx1wttPaDLRaWK9iTMS5ESHiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5yPE6Bm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GKY8npjLWTcBEwQ3v+rGZxwwy5b18c/j637YAWyi+s6gygLukC9alYNL8lgbO5bzaIWoH8GzoHy1p/55bhgX1/3bpyJROcsdWv08UuZy8nzvHUET5kS/OxtLFOte+oxMprt7+WIfDpQG1kQ1m/2L9JXylk79rIGFztcJPwqf5nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=POByZYHa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5yPE6Bm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC87C2BD10;
-	Tue, 14 May 2024 11:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POByZYHa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357E1C2BD10;
+	Tue, 14 May 2024 11:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686969;
-	bh=IE/J9FVin4CcLoAyEONvEwPthLpn0G/hjFhibTmYpUI=;
+	s=korg; t=1715686972;
+	bh=m6GW91DfAd6C1rwRR5bhu3roPuG5SRU2n6kzhuhPPhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p5yPE6BmlAXw44poRlPygS+5Tzc2ZdipQfnpNzRQD+p0N0hp5ZyiedBp28Y5gyS4u
-	 MQtkhhwOacyGqg0ADaTL9lInvexfx6k2x7Dl5WSvxJQMkngMhPqkYHbp1BXOECjnaW
-	 6R9xCz60fgFkLzo1JZ+92r4+kbQB/7mK8Y9JpEsI=
+	b=POByZYHaU8429XnMauYVjbxcUuWNbWbbFjYRaSjzENKMXVEroF5+9OErLdBOQxs7q
+	 lNsAf/PDO0HsTIPjzcj6oPAzqz9LX7CIIXNOZvwOMs5CUcwrtarhR4/Ea7pqJZR7pX
+	 iv41FEX68qbTpx7GlP03Gxqnh8CPYxpU8NqQHtbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Claudio Imbrenda <imbrenda@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 20/84] s390/mm: Fix storage key clearing for guest huge pages
-Date: Tue, 14 May 2024 12:19:31 +0200
-Message-ID: <20240514100952.454929224@linuxfoundation.org>
+Subject: [PATCH 5.4 21/84] s390/mm: Fix clearing storage keys for huge pages
+Date: Tue, 14 May 2024 12:19:32 +0200
+Message-ID: <20240514100952.492146316@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100951.686412426@linuxfoundation.org>
 References: <20240514100951.686412426@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-[ Upstream commit 843c3280686fc1a83d89ee1e0b5599c9f6b09d0c ]
+[ Upstream commit 412050af2ea39407fe43324b0be4ab641530ce88 ]
 
 The function __storage_key_init_range() expects the end address to be
 the first byte outside the range to be initialized. I.e. end - start
@@ -63,29 +63,29 @@ should be the size of the area to be initialized.
 The current code works because __storage_key_init_range() will still loop
 over every page in the range, but it is slower than using sske_frame().
 
-Fixes: 964c2c05c9f3 ("s390/mm: Clear huge page storage keys on enable_skey")
+Fixes: 3afdfca69870 ("s390/mm: Clear skeys for newly mapped huge guest pmds")
 Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240416114220.28489-2-imbrenda@linux.ibm.com
+Link: https://lore.kernel.org/r/20240416114220.28489-3-imbrenda@linux.ibm.com
 Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/gmap.c | 2 +-
+ arch/s390/mm/hugetlbpage.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/mm/gmap.c b/arch/s390/mm/gmap.c
-index 19ee8355b2a7f..5c41d1ab2a622 100644
---- a/arch/s390/mm/gmap.c
-+++ b/arch/s390/mm/gmap.c
-@@ -2610,7 +2610,7 @@ static int __s390_enable_skey_hugetlb(pte_t *pte, unsigned long addr,
- 		return 0;
+diff --git a/arch/s390/mm/hugetlbpage.c b/arch/s390/mm/hugetlbpage.c
+index ff8234bca56cd..6b688e3498c01 100644
+--- a/arch/s390/mm/hugetlbpage.c
++++ b/arch/s390/mm/hugetlbpage.c
+@@ -146,7 +146,7 @@ static void clear_huge_pte_skeys(struct mm_struct *mm, unsigned long rste)
+ 	}
  
- 	start = pmd_val(*pmd) & HPAGE_MASK;
--	end = start + HPAGE_SIZE - 1;
-+	end = start + HPAGE_SIZE;
- 	__storage_key_init_range(start, end);
- 	set_bit(PG_arch_1, &page->flags);
- 	cond_resched();
+ 	if (!test_and_set_bit(PG_arch_1, &page->flags))
+-		__storage_key_init_range(paddr, paddr + size - 1);
++		__storage_key_init_range(paddr, paddr + size);
+ }
+ 
+ void set_huge_pte_at(struct mm_struct *mm, unsigned long addr,
 -- 
 2.43.0
 
