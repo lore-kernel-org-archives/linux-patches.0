@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705EB320F;
-	Tue, 14 May 2024 11:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035541CAA4;
+	Tue, 14 May 2024 11:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686148; cv=none; b=gs7hlKOZn6/GFj9ji4jryqwDa8CMJhVar1ygLoRLSoHWukYmRLXueQ3KrdY7TztV3t6SV1TBMlq5sQV+JN3s+zqaiYp19heW6dG/KWW5J6NZJY9WigL4PQC4qAL6r9ehP8q8o6Wdl/KGOGr7BvavN+Ksc8RtahGwA9dEZkAY9JY=
+	t=1715686151; cv=none; b=Rp0WG3ZJMUZqnNgbnT2PUyIz+sapMv1OrOSUz4fahZpRzxCxfMdsEFngmi5NH/JZNhb6gV+ccBNpc1PBCcD/uGtOgJx3LpEe4aEOscNBFeBvFabzYVSBbGBhC5MYJEBeYJxiIDT6Vr9E6nexj3yGBgiMFzwHgLx62uEnzFP26QQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686148; c=relaxed/simple;
-	bh=D6kSLbncM9mYQ7g8fVJgrhF90kPjkKaDFeqRgtTnfqs=;
+	s=arc-20240116; t=1715686151; c=relaxed/simple;
+	bh=pmBmqqtuTUTQyJ2oQRWVtZFU58a8T9mqxKGppAHVWgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LMlXvOr0C1zeqfZjnvHf6KR+HUjqgDfxFMkyRuIXLZno8Dp9JZPco0tKKUWWcDWayCS0f/7ZG0liZLr3sV4r/HwVcxJmIFscApuTcBcnGIfRL38gresy0CX+QTULlGnCnWg+Xsvqz13H7AUQFhlIZUD7ajLQ6uu82bzZWR7zyE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPdxHqRy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NP/SMTKnqVhgDAOkVx8SHTHAexP1nqZUXHn3JIAPgUMzGyWnDOj/tKxrMK/Ire5olkGWk1opjr6i+U8fMPx214wPP5ct1IpS1PWR2vjM/CkqurMeXcDgyoYnDvEDrPwtW2jo5nB4EIsAYGU3rIZZuf6J/dvICQZJK80dXRIlCuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LqyoGUGk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPdxHqRy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2E5C32782;
-	Tue, 14 May 2024 11:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LqyoGUGk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8052AC2BD10;
+	Tue, 14 May 2024 11:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686148;
-	bh=D6kSLbncM9mYQ7g8fVJgrhF90kPjkKaDFeqRgtTnfqs=;
+	s=korg; t=1715686150;
+	bh=pmBmqqtuTUTQyJ2oQRWVtZFU58a8T9mqxKGppAHVWgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sPdxHqRyFY4NrzF6UNCoLE1k8PkvqWiRwp8Tk/BRjKnthYb5OZz+/NMgmLLgnUlUO
-	 gEF0R3cMTk5hf+HZRGwBDkY7dKyRuhGvwqWdXmWxjoSGHA+jA3630aUt3P0iO2n5ZV
-	 iwIyMhkdRDsnUoE5hwnf+bY38/g0f4TP2gOUNHBg=
+	b=LqyoGUGk1ukjsyInT2watfGhCVc2dIZpEVUxl5Kc+qXA/1pD3S/cnQCy1WwKXZKVj
+	 YlTz+nBYMovhQoTJsg8xWacAZw3DRe0lqC27OOhi1hge9wRrrrwpY7/YyMKK9H2/Hf
+	 XnWmmzYJlGyZn47ISDGXw/BSpJga6fw0EuEnUdqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Aleksander Mazur <deweloper@wp.pl>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/236] regulator: mt6360: De-capitalize devicetree regulator subnodes
-Date: Tue, 14 May 2024 12:16:39 +0200
-Message-ID: <20240514101021.751312354@linuxfoundation.org>
+Subject: [PATCH 6.1 038/236] regulator: change stubbed devm_regulator_get_enable to return Ok
+Date: Tue, 14 May 2024 12:16:40 +0200
+Message-ID: <20240514101021.788814284@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -51,91 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit d3cf8a17498dd9104c04ad28eeac3ef3339f9f9f ]
+[ Upstream commit 96e20adc43c4f81e9163a5188cee75a6dd393e09 ]
 
-The MT6360 regulator binding, the example in the MT6360 mfd binding, and
-the devicetree users of those bindings are rightfully declaring MT6360
-regulator subnodes with non-capital names, and luckily without using the
-deprecated regulator-compatible property.
+The devm_regulator_get_enable() should be a 'call and forget' API,
+meaning, when it is used to enable the regulators, the API does not
+provide a handle to do any further control of the regulators. It gives
+no real benefit to return an error from the stub if CONFIG_REGULATOR is
+not set.
 
-With this driver declaring capitalized BUCKx/LDOx as of_match string for
-the node names, obviously no regulator gets probed: fix that by changing
-the MT6360_REGULATOR_DESC macro to add a "match" parameter which gets
-assigned to the of_match.
+On the contrary, returning and error is causing problems to drivers when
+hardware is such it works out just fine with no regulator control.
+Returning an error forces drivers to specifically handle the case where
+CONFIG_REGULATOR is not set, making the mere existence of the stub
+questionalble. Furthermore, the stub of the regulator_enable() seems to
+be returning Ok.
 
-Fixes: d321571d5e4c ("regulator: mt6360: Add support for MT6360 regulator")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://msgid.link/r/20240409144438.410060-1-angelogioacchino.delregno@collabora.com
+Change the stub implementation for the devm_regulator_get_enable() to
+return Ok so drivers do not separately handle the case where the
+CONFIG_REGULATOR is not set.
+
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Reported-by: Aleksander Mazur <deweloper@wp.pl>
+Suggested-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: da279e6965b3 ("regulator: Add devm helpers for get and enable")
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/ZiYF6d1V1vSPcsJS@drtxq0yyyyyyyyyyyyyby-3.rev.dnainternet.fi
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/mt6360-regulator.c | 32 +++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ include/linux/regulator/consumer.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/mt6360-regulator.c b/drivers/regulator/mt6360-regulator.c
-index 4d34be94d1663..fc464a4450dc5 100644
---- a/drivers/regulator/mt6360-regulator.c
-+++ b/drivers/regulator/mt6360-regulator.c
-@@ -319,15 +319,15 @@ static unsigned int mt6360_regulator_of_map_mode(unsigned int hw_mode)
- 	}
+diff --git a/include/linux/regulator/consumer.h b/include/linux/regulator/consumer.h
+index ee3b4a0146119..eea165685588a 100644
+--- a/include/linux/regulator/consumer.h
++++ b/include/linux/regulator/consumer.h
+@@ -361,7 +361,7 @@ devm_regulator_get_exclusive(struct device *dev, const char *id)
+ 
+ static inline int devm_regulator_get_enable(struct device *dev, const char *id)
+ {
+-	return -ENODEV;
++	return 0;
  }
  
--#define MT6360_REGULATOR_DESC(_name, _sname, ereg, emask, vreg,	vmask,	\
--			      mreg, mmask, streg, stmask, vranges,	\
--			      vcnts, offon_delay, irq_tbls)		\
-+#define MT6360_REGULATOR_DESC(match, _name, _sname, ereg, emask, vreg,	\
-+			      vmask, mreg, mmask, streg, stmask,	\
-+			      vranges, vcnts, offon_delay, irq_tbls)	\
- {									\
- 	.desc = {							\
- 		.name = #_name,						\
- 		.supply_name = #_sname,					\
- 		.id =  MT6360_REGULATOR_##_name,			\
--		.of_match = of_match_ptr(#_name),			\
-+		.of_match = of_match_ptr(match),			\
- 		.regulators_node = of_match_ptr("regulator"),		\
- 		.of_map_mode = mt6360_regulator_of_map_mode,		\
- 		.owner = THIS_MODULE,					\
-@@ -351,21 +351,29 @@ static unsigned int mt6360_regulator_of_map_mode(unsigned int hw_mode)
- }
- 
- static const struct mt6360_regulator_desc mt6360_regulator_descs[] =  {
--	MT6360_REGULATOR_DESC(BUCK1, BUCK1_VIN, 0x117, 0x40, 0x110, 0xff, 0x117, 0x30, 0x117, 0x04,
-+	MT6360_REGULATOR_DESC("buck1", BUCK1, BUCK1_VIN,
-+			      0x117, 0x40, 0x110, 0xff, 0x117, 0x30, 0x117, 0x04,
- 			      buck_vout_ranges, 256, 0, buck1_irq_tbls),
--	MT6360_REGULATOR_DESC(BUCK2, BUCK2_VIN, 0x127, 0x40, 0x120, 0xff, 0x127, 0x30, 0x127, 0x04,
-+	MT6360_REGULATOR_DESC("buck2", BUCK2, BUCK2_VIN,
-+			      0x127, 0x40, 0x120, 0xff, 0x127, 0x30, 0x127, 0x04,
- 			      buck_vout_ranges, 256, 0, buck2_irq_tbls),
--	MT6360_REGULATOR_DESC(LDO6, LDO_VIN3, 0x137, 0x40, 0x13B, 0xff, 0x137, 0x30, 0x137, 0x04,
-+	MT6360_REGULATOR_DESC("ldo6", LDO6, LDO_VIN3,
-+			      0x137, 0x40, 0x13B, 0xff, 0x137, 0x30, 0x137, 0x04,
- 			      ldo_vout_ranges1, 256, 0, ldo6_irq_tbls),
--	MT6360_REGULATOR_DESC(LDO7, LDO_VIN3, 0x131, 0x40, 0x135, 0xff, 0x131, 0x30, 0x131, 0x04,
-+	MT6360_REGULATOR_DESC("ldo7", LDO7, LDO_VIN3,
-+			      0x131, 0x40, 0x135, 0xff, 0x131, 0x30, 0x131, 0x04,
- 			      ldo_vout_ranges1, 256, 0, ldo7_irq_tbls),
--	MT6360_REGULATOR_DESC(LDO1, LDO_VIN1, 0x217, 0x40, 0x21B, 0xff, 0x217, 0x30, 0x217, 0x04,
-+	MT6360_REGULATOR_DESC("ldo1", LDO1, LDO_VIN1,
-+			      0x217, 0x40, 0x21B, 0xff, 0x217, 0x30, 0x217, 0x04,
- 			      ldo_vout_ranges2, 256, 0, ldo1_irq_tbls),
--	MT6360_REGULATOR_DESC(LDO2, LDO_VIN1, 0x211, 0x40, 0x215, 0xff, 0x211, 0x30, 0x211, 0x04,
-+	MT6360_REGULATOR_DESC("ldo2", LDO2, LDO_VIN1,
-+			      0x211, 0x40, 0x215, 0xff, 0x211, 0x30, 0x211, 0x04,
- 			      ldo_vout_ranges2, 256, 0, ldo2_irq_tbls),
--	MT6360_REGULATOR_DESC(LDO3, LDO_VIN1, 0x205, 0x40, 0x209, 0xff, 0x205, 0x30, 0x205, 0x04,
-+	MT6360_REGULATOR_DESC("ldo3", LDO3, LDO_VIN1,
-+			      0x205, 0x40, 0x209, 0xff, 0x205, 0x30, 0x205, 0x04,
- 			      ldo_vout_ranges2, 256, 100, ldo3_irq_tbls),
--	MT6360_REGULATOR_DESC(LDO5, LDO_VIN2, 0x20B, 0x40, 0x20F, 0x7f, 0x20B, 0x30, 0x20B, 0x04,
-+	MT6360_REGULATOR_DESC("ldo5", LDO5, LDO_VIN2,
-+			      0x20B, 0x40, 0x20F, 0x7f, 0x20B, 0x30, 0x20B, 0x04,
- 			      ldo_vout_ranges3, 128, 100, ldo5_irq_tbls),
- };
- 
+ static inline int devm_regulator_get_enable_optional(struct device *dev,
 -- 
 2.43.0
 
