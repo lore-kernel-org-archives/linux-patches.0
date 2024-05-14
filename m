@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8D12B9AD;
-	Tue, 14 May 2024 11:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F58A2B9AD;
+	Tue, 14 May 2024 11:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687702; cv=none; b=toKAnsD0C+EfQJd6LIyKJSMl4GNpXHlGVfoBu6Szy1lqCfhNVulhJgI5CMPtseXqLSnv8HTFTS4o+a3P4nP4cV02SQhc4VjYzfGwf+N4Elc/GzZFFXmXfzYv666SsAu7d9IBc37Bz7gUGvNc/B6OPSPpO7SNz7a84djddfWp8OY=
+	t=1715687705; cv=none; b=aYduOQWnczVUgbORpA/LR/sQ6SSE1yIGkPqnPTcH2WEyTtO3f8Gm8UwqHgEV1aGK3MJqcfiRdd5lq1NAqt0bm6BUXIgPT/eQ/PnGSMeTAIcwcavKTp++11u5+zoiKyjYre4hYgsEG/umvzKrBuYXDN4Xzq/qJt3kZqv7x5A/2hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687702; c=relaxed/simple;
-	bh=5k+XTXSxCDXONzseZJOa0vPf7vT9UMaWJEIPHewjdsQ=;
+	s=arc-20240116; t=1715687705; c=relaxed/simple;
+	bh=08a5wbcztJlErCDg//quHR0rPqZMKJIs/XhoBw9t1iw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qnUqtSFxy19exAgYTgOZaj6RNW0TvWDhu26mFltCazzaTPALYcz0dyYzU2+17gt8oqTdCX256loG+6oWgLOunnTnIpGz/t2DwXbTNKwaPLgvi+kEz/73/nGLPlhiuCjmw/P8RBJUF3Os3VsKoN157aXhgEVkKwe5LgT9Cn3JpeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BczT8j8p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O4jNEFCms8z5ZSOk13oIJymKNC44oazbhHJlASEDwRVczjrhY4POBqMHK1eOEEsuG7fQc4P9PIxn+J+w6dOaHw6mbClhgy5s8h+EEwuKEy+54UWcNPuNjtyQ6o8vdjC4ftn+WM9VqyS1YtFxa0U4iZQvwbV/TNmjp7xjPq5L1bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yc7eoD9p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BczT8j8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54A9C32781;
-	Tue, 14 May 2024 11:55:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yc7eoD9p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B781C2BD10;
+	Tue, 14 May 2024 11:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687702;
-	bh=5k+XTXSxCDXONzseZJOa0vPf7vT9UMaWJEIPHewjdsQ=;
+	s=korg; t=1715687705;
+	bh=08a5wbcztJlErCDg//quHR0rPqZMKJIs/XhoBw9t1iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BczT8j8prEVNm7BS3I4LXEB/9sIGFp5UjayaSUn6YEHzJcbzXZcoXtAfSydLPqyi5
-	 9VeFcrc4vBIHAJO7jBLsnScOuqOaG3k6cfOniYAXaYOp/mnPJ3qzFdy3PElXMAsRVu
-	 G2ijd7bRd9pkVu6nqkv7aFPy4HS1pzYdfZPx+HHk=
+	b=Yc7eoD9pXIRvy2rseDfMdyyCGj7ABpOC/XCyk9f79yOWeVAZj7CpT4I5HxnYt0Dps
+	 G2YPvRHxu6G/F8VNKsw7l9ZzEZ6AnW5urMwc2pTL5S4jezA+Kt5MyE1wmDbgatfFVa
+	 iL84EsszF3nmMNZ/8w6M53Acj8C7itLeM1xdGlYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jerome Brunet <jbrunet@baylibre.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 044/168] ASoC: meson: axg-card: make links nonatomic
-Date: Tue, 14 May 2024 12:19:02 +0200
-Message-ID: <20240514101008.356882791@linuxfoundation.org>
+Subject: [PATCH 5.15 045/168] ASoC: meson: axg-tdm-interface: manage formatters in trigger
+Date: Tue, 14 May 2024 12:19:03 +0200
+Message-ID: <20240514101008.393494517@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -53,33 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit e138233e56e9829e65b6293887063a1a3ccb2d68 ]
+[ Upstream commit bf5e4887eeddb48480568466536aa08ec7f179a5 ]
 
-Non atomic operations need to be performed in the trigger callback
-of the TDM interfaces. Those are BEs but what matters is the nonatomic
-flag of the FE in the DPCM context. Just set nonatomic for everything so,
-at least, it is clear.
+So far, the formatters have been reset/enabled using the .prepare()
+callback. This was done in this callback because walking the formatters use
+a mutex so it could not be done in .trigger(), which is atomic by default.
+
+It turns out there is a problem on capture path of the AXG series.
+The FIFO may get out of sync with the TDM decoder if the IP are not enabled
+in a specific order. The FIFO must be enabled before the formatter starts
+producing data. IOW, we must deal with FE before the BE. The .prepare()
+callback is called on the BEs before the FE so it is not OK for the AXG.
+
+The .trigger() callback order can be configured, and it deals with the FE
+before the BEs by default. To solve our problem, we just need to start and
+stop the formatters from the .trigger() callback. It is OK do so now that
+the links have been made 'nonatomic' in the card driver.
 
 Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://lore.kernel.org/r/20211020114217.133153-2-jbrunet@baylibre.com
+Link: https://lore.kernel.org/r/20211020114217.133153-3-jbrunet@baylibre.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/axg-card.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/meson/axg-tdm-interface.c | 26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/meson/axg-card.c b/sound/soc/meson/axg-card.c
-index 2b77010c2c5ce..cbbaa55d92a66 100644
---- a/sound/soc/meson/axg-card.c
-+++ b/sound/soc/meson/axg-card.c
-@@ -320,6 +320,7 @@ static int axg_card_add_link(struct snd_soc_card *card, struct device_node *np,
+diff --git a/sound/soc/meson/axg-tdm-interface.c b/sound/soc/meson/axg-tdm-interface.c
+index 60d132ab1ab78..f5145902360de 100644
+--- a/sound/soc/meson/axg-tdm-interface.c
++++ b/sound/soc/meson/axg-tdm-interface.c
+@@ -362,13 +362,29 @@ static int axg_tdm_iface_hw_free(struct snd_pcm_substream *substream,
+ 	return 0;
+ }
  
- 	dai_link->cpus = cpu;
- 	dai_link->num_cpus = 1;
-+	dai_link->nonatomic = true;
+-static int axg_tdm_iface_prepare(struct snd_pcm_substream *substream,
++static int axg_tdm_iface_trigger(struct snd_pcm_substream *substream,
++				 int cmd,
+ 				 struct snd_soc_dai *dai)
+ {
+-	struct axg_tdm_stream *ts = snd_soc_dai_get_dma_data(dai, substream);
++	struct axg_tdm_stream *ts =
++		snd_soc_dai_get_dma_data(dai, substream);
++
++	switch (cmd) {
++	case SNDRV_PCM_TRIGGER_START:
++	case SNDRV_PCM_TRIGGER_RESUME:
++	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
++		axg_tdm_stream_start(ts);
++		break;
++	case SNDRV_PCM_TRIGGER_SUSPEND:
++	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
++	case SNDRV_PCM_TRIGGER_STOP:
++		axg_tdm_stream_stop(ts);
++		break;
++	default:
++		return -EINVAL;
++	}
  
- 	ret = meson_card_parse_dai(card, np, &dai_link->cpus->of_node,
- 				   &dai_link->cpus->dai_name);
+-	/* Force all attached formatters to update */
+-	return axg_tdm_stream_reset(ts);
++	return 0;
+ }
+ 
+ static int axg_tdm_iface_remove_dai(struct snd_soc_dai *dai)
+@@ -408,8 +424,8 @@ static const struct snd_soc_dai_ops axg_tdm_iface_ops = {
+ 	.set_fmt	= axg_tdm_iface_set_fmt,
+ 	.startup	= axg_tdm_iface_startup,
+ 	.hw_params	= axg_tdm_iface_hw_params,
+-	.prepare	= axg_tdm_iface_prepare,
+ 	.hw_free	= axg_tdm_iface_hw_free,
++	.trigger	= axg_tdm_iface_trigger,
+ };
+ 
+ /* TDM Backend DAIs */
 -- 
 2.43.0
 
