@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D142F9D4;
-	Tue, 14 May 2024 11:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82094F9D4;
+	Tue, 14 May 2024 11:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687772; cv=none; b=rhAXSm9sNiKGtr0mUmJo2kSTvhHYlNRxB0I522CLHWUPq6Kr3VALbK4Zz5WwupEJ2WMCO1dYIzCAoRkh9TUKXG6WAz9M+2oAsfzMS7zK3zuFKTyb6XgaQ6/fVXgupCs/S4MSdb0jYkpDowC5AbkKgwpmxhEIIyT3NnpjJ/rQ9rI=
+	t=1715687775; cv=none; b=YUVwQ9EF+xvZ+6OacvYhpnEgFjsjAK4KjoyAYxbiqw+RWG3KGMW/gRaBaN3ohp/tc2fhY7gRCo8n4/LJk2nwWn+AYPUkht83ogWniY9EDBwltyWBXD6ucb6gBCI+tX2onXU4+D+dhJiO6bQeh7Y0FI6V5oLYjYWrpi1KbRtaySQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687772; c=relaxed/simple;
-	bh=5Kt15Vp9AHI9oKtwE4bN/5ld/B6ugx/gm1drrexM8Zg=;
+	s=arc-20240116; t=1715687775; c=relaxed/simple;
+	bh=pKBLYQkJ5jKDZO1AZ/UnchoAln9q4Jlq/V7uL+24LPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nv7jlRdW+T1VfpipyBzJZWUZZ4nrI90a5rYgFUpVHzAwi/Nj4OxEP/nWU3o2Z5XtToKXLCMQyV68PSlSkmzEzvluvDdTqcsBaQfWiC1wT0lhl5V6q1q4DL3Rz7pjnAARTdlwA2R9ISyf77WvEgzlr9vfr/SgKbBRoem1t/WkSOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gldvdVvg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KTSZjA8+ZqXYPW0rffLhFTdHCgk3BAQfzQTmFfzHsqKrq7zZfPyWT9Oz2oo2SoDZaSjO8Zz2riGAxmnz/AHtAzqmZFsgfcrd8hZgvv2va0dwDJRQkI7vPR+t33kC1bUrhDcEdo8e4GD+GD++lYDui5aQIGM6EhRdiyuAXyXJWxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxhRMhaw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gldvdVvg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2318AC32781;
-	Tue, 14 May 2024 11:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxhRMhaw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0CEC2BD10;
+	Tue, 14 May 2024 11:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687772;
-	bh=5Kt15Vp9AHI9oKtwE4bN/5ld/B6ugx/gm1drrexM8Zg=;
+	s=korg; t=1715687775;
+	bh=pKBLYQkJ5jKDZO1AZ/UnchoAln9q4Jlq/V7uL+24LPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gldvdVvgAZcb+d2gM2FEoFBmhmCEjzpdNwKsv+/DOzqaBw9VU9yL1PmTdAfdLmXGg
-	 2FDRQXqBLldMah0uoTqWiTrHoyqvez5C378WxD2ijGBp2UaXBBMdrqGSBq1cBFt6tC
-	 6sjhZcsPDJs6SKEmmBB2QsYXSaFGQ/MLFv11hhYI=
+	b=yxhRMhawqjIQfL6EW9qh2WtlD7soclQatKf60g6LP8F1fAoC8nla4UhxwsOUo9Z8Z
+	 UTbgBXYu7icRxX7zECDGX6PXW/0ym2t8kYoRrVFz+v2QVNMJ4TGaXLbKrKTZcrFIcu
+	 5sTduL2bdLTgGDO1d7iAOcvmBXVWEDoKt3FBFrdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	William Findlay <will@isovalent.com>,
+	Dmitry Shmidt <dimitrysh@google.com>,
+	Neil Armstrong <narmstrong@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 099/168] bpf, sockmap: Improved check for empty queue
-Date: Tue, 14 May 2024 12:19:57 +0200
-Message-ID: <20240514101010.426565013@linuxfoundation.org>
+Subject: [PATCH 5.15 100/168] ASoC: meson: axg-card: Fix nonatomic links
+Date: Tue, 14 May 2024 12:19:58 +0200
+Message-ID: <20240514101010.464612719@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -53,176 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Fastabend <john.fastabend@gmail.com>
+From: Neil Armstrong <narmstrong@baylibre.com>
 
-[ Upstream commit 405df89dd52cbcd69a3cd7d9a10d64de38f854b2 ]
+[ Upstream commit 0c9b152c72e53016e96593bdbb8cffe2176694b9 ]
 
-We noticed some rare sk_buffs were stepping past the queue when system was
-under memory pressure. The general theory is to skip enqueueing
-sk_buffs when its not necessary which is the normal case with a system
-that is properly provisioned for the task, no memory pressure and enough
-cpu assigned.
+This commit e138233e56e9829e65b6293887063a1a3ccb2d68 causes the
+following system crash when using audio on G12A/G12B & SM1 systems:
 
-But, if we can't allocate memory due to an ENOMEM error when enqueueing
-the sk_buff into the sockmap receive queue we push it onto a delayed
-workqueue to retry later. When a new sk_buff is received we then check
-if that queue is empty. However, there is a problem with simply checking
-the queue length. When a sk_buff is being processed from the ingress queue
-but not yet on the sockmap msg receive queue its possible to also recv
-a sk_buff through normal path. It will check the ingress queue which is
-zero and then skip ahead of the pkt being processed.
+ BUG: sleeping function called from invalid context at kernel/locking/mutex.c:282
+  in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 0, name: swapper/0
+ preempt_count: 10001, expected: 0
+ RCU nest depth: 0, expected: 0
+ Preemption disabled at:
+ schedule_preempt_disabled+0x20/0x2c
 
-Previously we used sock lock from both contexts which made the problem
-harder to hit, but not impossible.
+ mutex_lock+0x24/0x60
+ _snd_pcm_stream_lock_irqsave+0x20/0x3c
+ snd_pcm_period_elapsed+0x24/0xa4
+ axg_fifo_pcm_irq_block+0x64/0xdc
+ __handle_irq_event_percpu+0x104/0x264
+ handle_irq_event+0x48/0xb4
+ ...
+ start_kernel+0x3f0/0x484
+ __primary_switched+0xc0/0xc8
 
-To fix instead of popping the skb from the queue entirely we peek the
-skb from the queue and do the copy there. This ensures checks to the
-queue length are non-zero while skb is being processed. Then finally
-when the entire skb has been copied to user space queue or another
-socket we pop it off the queue. This way the queue length check allows
-bypassing the queue only after the list has been completely processed.
+Revert this commit until the crash is fixed.
 
-To reproduce issue we run NGINX compliance test with sockmap running and
-observe some flakes in our testing that we attributed to this issue.
-
-Fixes: 04919bed948dc ("tcp: Introduce tcp_read_skb()")
-Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Signed-off-by: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: William Findlay <will@isovalent.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/20230523025618.113937-5-john.fastabend@gmail.com
+Fixes: e138233e56e9829e65b6 ("ASoC: meson: axg-card: make links nonatomic")
+Reported-by: Dmitry Shmidt <dimitrysh@google.com>
+Signed-off-by: Neil Armstrong <narmstrong@baylibre.com>
+Acked-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://lore.kernel.org/r/20220421155725.2589089-2-narmstrong@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skmsg.h |  1 -
- net/core/skmsg.c      | 32 ++++++++------------------------
- 2 files changed, 8 insertions(+), 25 deletions(-)
+ sound/soc/meson/axg-card.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
-index 07a8e7c695373..422b391d931fe 100644
---- a/include/linux/skmsg.h
-+++ b/include/linux/skmsg.h
-@@ -73,7 +73,6 @@ struct sk_psock_link {
- };
+diff --git a/sound/soc/meson/axg-card.c b/sound/soc/meson/axg-card.c
+index cbbaa55d92a66..2b77010c2c5ce 100644
+--- a/sound/soc/meson/axg-card.c
++++ b/sound/soc/meson/axg-card.c
+@@ -320,7 +320,6 @@ static int axg_card_add_link(struct snd_soc_card *card, struct device_node *np,
  
- struct sk_psock_work_state {
--	struct sk_buff			*skb;
- 	u32				len;
- 	u32				off;
- };
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 51ab1e617d922..675fd86279d87 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -615,16 +615,12 @@ static int sk_psock_handle_skb(struct sk_psock *psock, struct sk_buff *skb,
+ 	dai_link->cpus = cpu;
+ 	dai_link->num_cpus = 1;
+-	dai_link->nonatomic = true;
  
- static void sk_psock_skb_state(struct sk_psock *psock,
- 			       struct sk_psock_work_state *state,
--			       struct sk_buff *skb,
- 			       int len, int off)
- {
- 	spin_lock_bh(&psock->ingress_lock);
- 	if (sk_psock_test_state(psock, SK_PSOCK_TX_ENABLED)) {
--		state->skb = skb;
- 		state->len = len;
- 		state->off = off;
--	} else {
--		sock_drop(psock->sk, skb);
- 	}
- 	spin_unlock_bh(&psock->ingress_lock);
- }
-@@ -635,23 +631,17 @@ static void sk_psock_backlog(struct work_struct *work)
- 	struct sk_psock *psock = container_of(dwork, struct sk_psock, work);
- 	struct sk_psock_work_state *state = &psock->work_state;
- 	struct sk_buff *skb = NULL;
-+	u32 len = 0, off = 0;
- 	bool ingress;
--	u32 len, off;
- 	int ret;
- 
- 	mutex_lock(&psock->work_mutex);
--	if (unlikely(state->skb)) {
--		spin_lock_bh(&psock->ingress_lock);
--		skb = state->skb;
-+	if (unlikely(state->len)) {
- 		len = state->len;
- 		off = state->off;
--		state->skb = NULL;
--		spin_unlock_bh(&psock->ingress_lock);
- 	}
--	if (skb)
--		goto start;
- 
--	while ((skb = skb_dequeue(&psock->ingress_skb))) {
-+	while ((skb = skb_peek(&psock->ingress_skb))) {
- 		len = skb->len;
- 		off = 0;
- 		if (skb_bpf_strparser(skb)) {
-@@ -660,7 +650,6 @@ static void sk_psock_backlog(struct work_struct *work)
- 			off = stm->offset;
- 			len = stm->full_len;
- 		}
--start:
- 		ingress = skb_bpf_ingress(skb);
- 		skb_bpf_redirect_clear(skb);
- 		do {
-@@ -670,8 +659,7 @@ static void sk_psock_backlog(struct work_struct *work)
- 							  len, ingress);
- 			if (ret <= 0) {
- 				if (ret == -EAGAIN) {
--					sk_psock_skb_state(psock, state, skb,
--							   len, off);
-+					sk_psock_skb_state(psock, state, len, off);
- 
- 					/* Delay slightly to prioritize any
- 					 * other work that might be here.
-@@ -683,15 +671,16 @@ static void sk_psock_backlog(struct work_struct *work)
- 				/* Hard errors break pipe and stop xmit. */
- 				sk_psock_report_error(psock, ret ? -ret : EPIPE);
- 				sk_psock_clear_state(psock, SK_PSOCK_TX_ENABLED);
--				sock_drop(psock->sk, skb);
- 				goto end;
- 			}
- 			off += ret;
- 			len -= ret;
- 		} while (len);
- 
--		if (!ingress)
-+		skb = skb_dequeue(&psock->ingress_skb);
-+		if (!ingress) {
- 			kfree_skb(skb);
-+		}
- 	}
- end:
- 	mutex_unlock(&psock->work_mutex);
-@@ -784,11 +773,6 @@ static void __sk_psock_zap_ingress(struct sk_psock *psock)
- 		skb_bpf_redirect_clear(skb);
- 		sock_drop(psock->sk, skb);
- 	}
--	kfree_skb(psock->work_state.skb);
--	/* We null the skb here to ensure that calls to sk_psock_backlog
--	 * do not pick up the free'd skb.
--	 */
--	psock->work_state.skb = NULL;
- 	__sk_psock_purge_ingress_msg(psock);
- }
- 
-@@ -807,7 +791,6 @@ void sk_psock_stop(struct sk_psock *psock)
- 	spin_lock_bh(&psock->ingress_lock);
- 	sk_psock_clear_state(psock, SK_PSOCK_TX_ENABLED);
- 	sk_psock_cork_free(psock);
--	__sk_psock_zap_ingress(psock);
- 	spin_unlock_bh(&psock->ingress_lock);
- }
- 
-@@ -822,6 +805,7 @@ static void sk_psock_destroy(struct work_struct *work)
- 	sk_psock_done_strp(psock);
- 
- 	cancel_delayed_work_sync(&psock->work);
-+	__sk_psock_zap_ingress(psock);
- 	mutex_destroy(&psock->work_mutex);
- 
- 	psock_progs_drop(&psock->progs);
+ 	ret = meson_card_parse_dai(card, np, &dai_link->cpus->of_node,
+ 				   &dai_link->cpus->dai_name);
 -- 
 2.43.0
 
