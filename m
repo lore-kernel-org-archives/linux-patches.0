@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D0561674;
-	Tue, 14 May 2024 11:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E021A61674;
+	Tue, 14 May 2024 11:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686353; cv=none; b=gWWKbK+dzOlYf2zJsZiQUBX32Z3zxsEWQUyrkMZOzAKsODJKUrAkrgeDVwtuxa6wg3/xTNGzKXZoJOKxe/AbOn1j3UxOHTgIeFRD1keuH5AFldFPxTlanKwfoio2JIO8sQGgHaWOgU0GD589b91V/s7k6RUnEIy0IyYgxh5RpeE=
+	t=1715686356; cv=none; b=XQozHT+55Y3SYcisSjnyjEKM1RHxRfBW97Hckzu+mqyDSQ6jmgWVZ9o3WxSQTQMyn7w0Xc6a2cqdIZ1mnpDONEMqr3MWvCV2GSvcu6xf0NxWMr/bzVi4xh18n+V0cQOzLxM2AXWySG/2vhWYP8YUJ+nMACBx/sTry0b6/xQDeyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686353; c=relaxed/simple;
-	bh=cUtVs0jvGmJIORPvDOyVrywLbFmL7Dj1aEqrT0hR5X0=;
+	s=arc-20240116; t=1715686356; c=relaxed/simple;
+	bh=9K0Qxqhg0mqmkISy610FMYzNoxCizTQV2HS7OiKEwCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShrM/ED3jHwGFJ2Dng6JpW3IZ4qLVp1bCRIziErX7xepULaTJ0LwI+WWbw09zsIhqzn/az16TSHQJHBO8W+OoYDSMVkRZWoPecsAjDU/Uv5/Ux8lSvVCwK5c85U/6tHX4O26uKs20nX0PhJ7Jz6cAlyds3duZgKieJWOi9ht21w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TdgnydLh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g8UkKUbgIUvLkQlWAzRtOqb+kO+S7Prf72Coh4ljPtBn+8PQMsJPEitDD6tTSqcNE4M4EKW9lweZPiaZ67fKSVgDOVAS7UsTc2BDhDpRLPMfRDx0cEjP4Qp3lNQXC35+Skob8Uf6hWeNV5CVDJ6LOhAY+2TlXu6QJy95GUNIaUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nba9QwIu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TdgnydLh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84112C2BD10;
-	Tue, 14 May 2024 11:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nba9QwIu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6865EC2BD10;
+	Tue, 14 May 2024 11:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686352;
-	bh=cUtVs0jvGmJIORPvDOyVrywLbFmL7Dj1aEqrT0hR5X0=;
+	s=korg; t=1715686355;
+	bh=9K0Qxqhg0mqmkISy610FMYzNoxCizTQV2HS7OiKEwCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TdgnydLhmoSEhqHJKQ15dqLIL2hVK+H+e55llhzsdvPWmdjlP7dLKhwBkg3vnMVCf
-	 aYlYG3foQZg7f+6VfjBYCQziBdzdsFBQl6ZBQiD0wCtJKjfgq2ZIu4dIoFWhCEDGp8
-	 TzDhC8Tfwa97zwDn89kBc61YRGo1yHseQAPdhpUE=
+	b=nba9QwIu/eHXczQ7Nr5qvWYXsWpBuRn+sbvqUqtPmZMZIBTNj5ZeZZ/Mj0+vbN5ZI
+	 urIfj09129/8/Hm2zMHXVqwGB7uJRiY7Ll588mtLncvps/36qAkv1lxOCLpmwt7FZz
+	 5UkUK42EjWYvQilh/wbr5Na8q5kLIVL8b7MrFz2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sui Jingfeng <sui.jingfeng@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/236] block: fix overflow in blk_ioctl_discard()
-Date: Tue, 14 May 2024 12:17:50 +0200
-Message-ID: <20240514101024.473371413@linuxfoundation.org>
+Subject: [PATCH 6.1 082/236] drm/panel: ili9341: Respect deferred probe
+Date: Tue, 14 May 2024 12:17:24 +0200
+Message-ID: <20240514101023.483648743@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -52,47 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 22d24a544b0d49bbcbd61c8c0eaf77d3c9297155 ]
+[ Upstream commit 740fc1e0509be3f7e2207e89125b06119ed62943 ]
 
-There is no check for overflow of 'start + len' in blk_ioctl_discard().
-Hung task occurs if submit an discard ioctl with the following param:
-  start = 0x80000000000ff000, len = 0x8000000000fff000;
-Add the overflow validation now.
+GPIO controller might not be available when driver is being probed.
+There are plenty of reasons why, one of which is deferred probe.
 
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20240329012319.2034550-1-linan666@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Since GPIOs are optional, return any error code we got to the upper
+layer, including deferred probe. With that in mind, use dev_err_probe()
+in order to avoid spamming the logs.
+
+Fixes: 5a04227326b0 ("drm/panel: Add ilitek ili9341 panel driver")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Sui Jingfeng <sui.jingfeng@linux.dev>
+Link: https://lore.kernel.org/r/20240425142706.2440113-3-andriy.shevchenko@linux.intel.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240425142706.2440113-3-andriy.shevchenko@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/ioctl.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-ilitek-ili9341.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/ioctl.c b/block/ioctl.c
-index 47567ba1185a6..99b8e2e448729 100644
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -89,7 +89,7 @@ static int blk_ioctl_discard(struct block_device *bdev, fmode_t mode,
- 		unsigned long arg)
- {
- 	uint64_t range[2];
--	uint64_t start, len;
-+	uint64_t start, len, end;
- 	struct inode *inode = bdev->bd_inode;
- 	int err;
+diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9341.c b/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
+index 39dc40cf681f0..c46b5d820f5a0 100644
+--- a/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
++++ b/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
+@@ -717,11 +717,11 @@ static int ili9341_probe(struct spi_device *spi)
  
-@@ -110,7 +110,8 @@ static int blk_ioctl_discard(struct block_device *bdev, fmode_t mode,
- 	if (len & 511)
- 		return -EINVAL;
+ 	reset = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(reset))
+-		dev_err(dev, "Failed to get gpio 'reset'\n");
++		return dev_err_probe(dev, PTR_ERR(reset), "Failed to get gpio 'reset'\n");
  
--	if (start + len > bdev_nr_bytes(bdev))
-+	if (check_add_overflow(start, len, &end) ||
-+	    end > bdev_nr_bytes(bdev))
- 		return -EINVAL;
+ 	dc = devm_gpiod_get_optional(dev, "dc", GPIOD_OUT_LOW);
+ 	if (IS_ERR(dc))
+-		dev_err(dev, "Failed to get gpio 'dc'\n");
++		return dev_err_probe(dev, PTR_ERR(dc), "Failed to get gpio 'dc'\n");
  
- 	filemap_invalidate_lock(inode->i_mapping);
+ 	if (!strcmp(id->name, "sf-tc240t-9370-t"))
+ 		return ili9341_dpi_probe(spi, dc, reset);
 -- 
 2.43.0
 
