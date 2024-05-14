@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CD3433BE;
-	Tue, 14 May 2024 10:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCF1433BE;
+	Tue, 14 May 2024 10:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682288; cv=none; b=hf6dv0Fk/u6pt1leEq/pPRBdWyg1uWKksKQ//NeuNDdchg+kRATOfZBoN4ZqU1HNHlIATAaZILLrF2Su6M9s2hU2N1WCsPMxDdczu5jUpqLHXvDt4Oez1R3QzALU1yjhn56Y27RolAL1yNCXOS+kqmL0CVkJBWR+ObQWg00k2rc=
+	t=1715682293; cv=none; b=g6T5XbVlg7PmbUK+kc3FyNEoxfmP/E/+lWlJO7duq6SnkHTubFEWnnuucRSwMG/A9MfgWe6YPd9OHeonORpE8dsIhe34yxZ41w5fKnDT111XqS6h7m0xIzKUyaTO6hmeksVjduH5DaiQJErejlTfmgvTNeJsxXwjbgOITib3Jw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682288; c=relaxed/simple;
-	bh=a5M/7CzBJarqnCx0woFEfZJ7Vgzscd24tWYUNKipa/Q=;
+	s=arc-20240116; t=1715682293; c=relaxed/simple;
+	bh=F7CRjN+R3/yaCxIPgk3nDLR6dbsB+ymegG0wy3QmOQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZueAWVCvn5KSTf86FuIDwLhQKf7yECtOswtsTn4g2xMLt/xCule6MAzx87o0cyb8g9/cE+sWY6S6lX51wDAgbhPcbP3gxUhSpRD6eGQ3tzJFUCXUfOqCW3/IZSFXGHYa9+FJB8Of9FPR/bN0d6eRGsOc+ESINZMWIafvemZyOpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nmwpb66l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LiwdhR2oKXZ/uxyH1ZoxgDj8hFmpdE/nb7jGV+uU8ReftiLtr+T581X7Xr7PPqdmQXG5vLFXrcSkF39HqJOcbeegq/1Wp47kaFRQlTBTV+E5g/q+ECExelesdXMkjCMvBo8Bwtzl3w+8sZe5vec4IjsmNXirZcHYo3LzotweWcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4iBb/D4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nmwpb66l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5813C2BD10;
-	Tue, 14 May 2024 10:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4iBb/D4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B437EC2BD10;
+	Tue, 14 May 2024 10:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682287;
-	bh=a5M/7CzBJarqnCx0woFEfZJ7Vgzscd24tWYUNKipa/Q=;
+	s=korg; t=1715682293;
+	bh=F7CRjN+R3/yaCxIPgk3nDLR6dbsB+ymegG0wy3QmOQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nmwpb66lR0EnUYphyT5uhRdqqo3aR0eJp3EcFsgwjNzlfoY4kEf/mqY72GJbmMzyF
-	 avcVpfEy2pwkC4aR5+mqcUQp/mgAY5Eux3vjKgIQ9OgeZ5DPXybEbsOY7wicELj0TY
-	 Q8lrYN1Zct73MMSF35RyK4kP7vfx0wGB3CFbM8uo=
+	b=m4iBb/D4m3M6lSga/mr8XZTRPkSA48V5zF+V5IPSvO9HNX9K5J50kyM9Lb+m6Ft7R
+	 9ncVd4kyAMJEhe9cThYwTkaG2KeA4xfzr2eoKYoGa3a93JEogkw7QFMlmhW7dL7AXg
+	 8sDJY9OZ7iPTcJKQI+URnKA/FEdAehQ/6eINqjfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 011/336] nfs: make the rpc_stat per net namespace
-Date: Tue, 14 May 2024 12:13:35 +0200
-Message-ID: <20240514101039.031143425@linuxfoundation.org>
+Subject: [PATCH 6.8 012/336] nfs: Handle error of rpc_proc_register() in nfs_net_init().
+Date: Tue, 14 May 2024 12:13:36 +0200
+Message-ID: <20240514101039.068866903@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,111 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 1548036ef1204df65ca5a16e8b199c858cb80075 ]
+[ Upstream commit 24457f1be29f1e7042e50a7749f5c2dde8c433c8 ]
 
-Now that we're exposing the rpc stats on a per-network namespace basis,
-move this struct into struct nfs_net and use that to make sure only the
-per-network namespace stats are exposed.
+syzkaller reported a warning [0] triggered while destroying immature
+netns.
 
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+rpc_proc_register() was called in init_nfs_fs(), but its error
+has been ignored since at least the initial commit 1da177e4c3f4
+("Linux-2.6.12-rc2").
+
+Recently, commit d47151b79e32 ("nfs: expose /proc/net/sunrpc/nfs
+in net namespaces") converted the procfs to per-netns and made
+the problem more visible.
+
+Even when rpc_proc_register() fails, nfs_net_init() could succeed,
+and thus nfs_net_exit() will be called while destroying the netns.
+
+Then, remove_proc_entry() will be called for non-existing proc
+directory and trigger the warning below.
+
+Let's handle the error of rpc_proc_register() properly in nfs_net_init().
+
+[0]:
+name 'nfs'
+WARNING: CPU: 1 PID: 1710 at fs/proc/generic.c:711 remove_proc_entry+0x1bb/0x2d0 fs/proc/generic.c:711
+Modules linked in:
+CPU: 1 PID: 1710 Comm: syz-executor.2 Not tainted 6.8.0-12822-gcd51db110a7e #12
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+RIP: 0010:remove_proc_entry+0x1bb/0x2d0 fs/proc/generic.c:711
+Code: 41 5d 41 5e c3 e8 85 09 b5 ff 48 c7 c7 88 58 64 86 e8 09 0e 71 02 e8 74 09 b5 ff 4c 89 e6 48 c7 c7 de 1b 80 84 e8 c5 ad 97 ff <0f> 0b eb b1 e8 5c 09 b5 ff 48 c7 c7 88 58 64 86 e8 e0 0d 71 02 eb
+RSP: 0018:ffffc9000c6d7ce0 EFLAGS: 00010286
+RAX: 0000000000000000 RBX: ffff8880422b8b00 RCX: ffffffff8110503c
+RDX: ffff888030652f00 RSI: ffffffff81105045 RDI: 0000000000000001
+RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: ffffffff81bb62cb R12: ffffffff84807ffc
+R13: ffff88804ad6fcc0 R14: ffffffff84807ffc R15: ffffffff85741ff8
+FS:  00007f30cfba8640(0000) GS:ffff88807dd00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007ff51afe8000 CR3: 000000005a60a005 CR4: 0000000000770ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ rpc_proc_unregister+0x64/0x70 net/sunrpc/stats.c:310
+ nfs_net_exit+0x1c/0x30 fs/nfs/inode.c:2438
+ ops_exit_list+0x62/0xb0 net/core/net_namespace.c:170
+ setup_net+0x46c/0x660 net/core/net_namespace.c:372
+ copy_net_ns+0x244/0x590 net/core/net_namespace.c:505
+ create_new_namespaces+0x2ed/0x770 kernel/nsproxy.c:110
+ unshare_nsproxy_namespaces+0xae/0x160 kernel/nsproxy.c:228
+ ksys_unshare+0x342/0x760 kernel/fork.c:3322
+ __do_sys_unshare kernel/fork.c:3393 [inline]
+ __se_sys_unshare kernel/fork.c:3391 [inline]
+ __x64_sys_unshare+0x1f/0x30 kernel/fork.c:3391
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x4f/0x110 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x46/0x4e
+RIP: 0033:0x7f30d0febe5d
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 73 9f 1b 00 f7 d8 64 89 01 48
+RSP: 002b:00007f30cfba7cc8 EFLAGS: 00000246 ORIG_RAX: 0000000000000110
+RAX: ffffffffffffffda RBX: 00000000004bbf80 RCX: 00007f30d0febe5d
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 000000006c020600
+RBP: 00000000004bbf80 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000002
+R13: 000000000000000b R14: 00007f30d104c530 R15: 0000000000000000
+ </TASK>
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Stable-dep-of: 24457f1be29f ("nfs: Handle error of rpc_proc_register() in nfs_net_init().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/client.c   | 5 ++++-
- fs/nfs/inode.c    | 4 +++-
- fs/nfs/internal.h | 2 --
- fs/nfs/netns.h    | 2 ++
- 4 files changed, 9 insertions(+), 4 deletions(-)
+ fs/nfs/inode.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/client.c b/fs/nfs/client.c
-index fbdc9ca80f714..a8fad331dff6b 100644
---- a/fs/nfs/client.c
-+++ b/fs/nfs/client.c
-@@ -73,7 +73,6 @@ const struct rpc_program nfs_program = {
- 	.number			= NFS_PROGRAM,
- 	.nrvers			= ARRAY_SIZE(nfs_version),
- 	.version		= nfs_version,
--	.stats			= &nfs_rpcstat,
- 	.pipe_dir_name		= NFS_PIPE_DIRNAME,
- };
- 
-@@ -502,6 +501,7 @@ int nfs_create_rpc_client(struct nfs_client *clp,
- 			  const struct nfs_client_initdata *cl_init,
- 			  rpc_authflavor_t flavor)
- {
-+	struct nfs_net		*nn = net_generic(clp->cl_net, nfs_net_id);
- 	struct rpc_clnt		*clnt = NULL;
- 	struct rpc_create_args args = {
- 		.net		= clp->cl_net,
-@@ -513,6 +513,7 @@ int nfs_create_rpc_client(struct nfs_client *clp,
- 		.servername	= clp->cl_hostname,
- 		.nodename	= cl_init->nodename,
- 		.program	= &nfs_program,
-+		.stats		= &nn->rpcstats,
- 		.version	= clp->rpc_ops->version,
- 		.authflavor	= flavor,
- 		.cred		= cl_init->cred,
-@@ -1182,6 +1183,8 @@ void nfs_clients_init(struct net *net)
- #endif
- 	spin_lock_init(&nn->nfs_client_lock);
- 	nn->boot_time = ktime_get_real();
-+	memset(&nn->rpcstats, 0, sizeof(nn->rpcstats));
-+	nn->rpcstats.program = &nfs_program;
- 
- 	nfs_netns_sysfs_setup(nn, net);
- }
 diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
-index e11e9c34aa569..91b4d811958a4 100644
+index 91b4d811958a4..6fe4b47c39287 100644
 --- a/fs/nfs/inode.c
 +++ b/fs/nfs/inode.c
-@@ -2426,8 +2426,10 @@ EXPORT_SYMBOL_GPL(nfs_net_id);
+@@ -2429,7 +2429,12 @@ static int nfs_net_init(struct net *net)
+ 	struct nfs_net *nn = net_generic(net, nfs_net_id);
  
- static int nfs_net_init(struct net *net)
- {
-+	struct nfs_net *nn = net_generic(net, nfs_net_id);
-+
  	nfs_clients_init(net);
--	rpc_proc_register(net, &nfs_rpcstat);
-+	rpc_proc_register(net, &nn->rpcstats);
+-	rpc_proc_register(net, &nn->rpcstats);
++
++	if (!rpc_proc_register(net, &nn->rpcstats)) {
++		nfs_clients_exit(net);
++		return -ENOMEM;
++	}
++
  	return nfs_fs_proc_net_init(net);
  }
  
-diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
-index e3722ce6722e2..06253695fe53f 100644
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -449,8 +449,6 @@ int nfs_try_get_tree(struct fs_context *);
- int nfs_get_tree_common(struct fs_context *);
- void nfs_kill_super(struct super_block *);
- 
--extern struct rpc_stat nfs_rpcstat;
--
- extern int __init register_nfs_fs(void);
- extern void __exit unregister_nfs_fs(void);
- extern bool nfs_sb_active(struct super_block *sb);
-diff --git a/fs/nfs/netns.h b/fs/nfs/netns.h
-index c8374f74dce11..a68b21603ea9a 100644
---- a/fs/nfs/netns.h
-+++ b/fs/nfs/netns.h
-@@ -9,6 +9,7 @@
- #include <linux/nfs4.h>
- #include <net/net_namespace.h>
- #include <net/netns/generic.h>
-+#include <linux/sunrpc/stats.h>
- 
- struct bl_dev_msg {
- 	int32_t status;
-@@ -34,6 +35,7 @@ struct nfs_net {
- 	struct nfs_netns_client *nfs_client;
- 	spinlock_t nfs_client_lock;
- 	ktime_t boot_time;
-+	struct rpc_stat rpcstats;
- #ifdef CONFIG_PROC_FS
- 	struct proc_dir_entry *proc_nfsfs;
- #endif
 -- 
 2.43.0
 
