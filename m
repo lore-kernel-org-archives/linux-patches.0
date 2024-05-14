@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF57C126F33;
-	Tue, 14 May 2024 11:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC186CDC9;
+	Tue, 14 May 2024 11:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685489; cv=none; b=TVZYY59yzMC9lb4Lr3VbdTjU5CdvzvGeNYIxSimFLqsJuG5ypMDswy5SP4a326TZX91dKVxwn10Cpe6UhEArrDUbJHT4CIzQV9L+zooEDhO7cU4TOxcizN7UU6+rikN0+bG6VqqwSqPXmGEcWnnuE21jlXB7lKAFXYGIVCM1lUY=
+	t=1715685498; cv=none; b=bMnWmTUBukJcAHmTygDW67Pa+7QyagFbIymRO0Kv7hHq4Jn+48oU7aShnm5VWw4vrPcE7IOJVBtlSr+2tIxHNWi1Ra6K0jdThCJmpzeCvi1yTNEB5wFBgFW3Zitc2kQkwecN3nRWb+yYzJO9+t1dddFXHhfNXocfOysqAUE1aHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685489; c=relaxed/simple;
-	bh=+MeuTgadmIvwwhqewNKSvXWBMfqlSKdXiH+FsQthy04=;
+	s=arc-20240116; t=1715685498; c=relaxed/simple;
+	bh=8I4AOGxVHqbcbPHUbBPV414UME6DIk7NbO1cp5NLUWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fuYJzpbdolUY3OJnPfJZ6zTDG9rISuY6ou+2wznWdzLyZCO2zTT9sjtXVh9zkbFS3Pxubb42X8/xojb+XJoNMBbqSRbQOpd5c3lIjUQe0xpWO5ELyjkhD9ry/kde4xQ8HH6dXEK5YY47LlEKtuSD5zpbiuDU0FOtWKRpNqvOBkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKzqgmMJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BY3jzvwKCj2FhcCF1mHxOFVkZrRnfTLAFe2Nxt5S99hHrsPA7/XZ4wOh03osUsnOIaig5NzZ2Kkn5MPoy+hkeoAvlUnVx3BxC4yU5w3PdS7/WwvhiUzHOxenJiLEwpClfKkxJY3Wz9TFPUrIycjRb++6EIRY9DjoNiHm3xw2FzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=En6Li6Fm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKzqgmMJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD80C2BD10;
-	Tue, 14 May 2024 11:18:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="En6Li6Fm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3371C2BD10;
+	Tue, 14 May 2024 11:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685489;
-	bh=+MeuTgadmIvwwhqewNKSvXWBMfqlSKdXiH+FsQthy04=;
+	s=korg; t=1715685498;
+	bh=8I4AOGxVHqbcbPHUbBPV414UME6DIk7NbO1cp5NLUWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sKzqgmMJPRtWDisSl2RqmrEQImi7RZnt/5VD2QrS9qhJNzYCrp1zzTwy2ncHsANuU
-	 BRaAtSwqAEuxbvb9qsiSqpggm6vDY6yLjYoQ9/tyg03MM15OxOZMloTsB20VKO4iQQ
-	 5m3vk2vJ0Sk5LJ401alQaE30dWPjNffKCdUfum0E=
+	b=En6Li6Fm8dXD5AhLcHJq3DFayXPwpN8b/BiQ0ideLHU4wy9nS4UfWYPmsloxOu/ZW
+	 uTiAFiVcoEG2insgD3AmffPJ37oJR8jLxrClx046YfjRTLHiZSm29ckQizZcOGNNXT
+	 DgDnDnj5fXEkAqxi/XQdWHfIXka7M4BsRkcOHbpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joakim Sindholt <opensource@zhasha.com>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 166/301] fs/9p: drop inodes immediately on non-.L too
-Date: Tue, 14 May 2024 12:17:17 +0200
-Message-ID: <20240514101038.524163927@linuxfoundation.org>
+Subject: [PATCH 6.6 167/301] gpio: lpc32xx: fix module autoloading
+Date: Tue, 14 May 2024 12:17:18 +0200
+Message-ID: <20240514101038.561703836@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,29 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joakim Sindholt <opensource@zhasha.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 
-[ Upstream commit 7fd524b9bd1be210fe79035800f4bd78a41b349f ]
+[ Upstream commit 11baa36d317321f5d54059f07d243c5a1dbbfbb2 ]
 
-Signed-off-by: Joakim Sindholt <opensource@zhasha.com>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Add MODULE_DEVICE_TABLE(), so the module could be properly autoloaded
+based on the alias from of_device_id table.
+
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_super.c | 1 +
+ drivers/gpio/gpio-lpc32xx.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/fs/9p/vfs_super.c b/fs/9p/vfs_super.c
-index 73db55c050bf1..958efc8423334 100644
---- a/fs/9p/vfs_super.c
-+++ b/fs/9p/vfs_super.c
-@@ -320,6 +320,7 @@ static const struct super_operations v9fs_super_ops = {
- 	.alloc_inode = v9fs_alloc_inode,
- 	.free_inode = v9fs_free_inode,
- 	.statfs = simple_statfs,
-+	.drop_inode = v9fs_drop_inode,
- 	.evict_inode = v9fs_evict_inode,
- 	.show_options = v9fs_show_options,
- 	.umount_begin = v9fs_umount_begin,
+diff --git a/drivers/gpio/gpio-lpc32xx.c b/drivers/gpio/gpio-lpc32xx.c
+index 5ef8af8249806..c097e310c9e84 100644
+--- a/drivers/gpio/gpio-lpc32xx.c
++++ b/drivers/gpio/gpio-lpc32xx.c
+@@ -529,6 +529,7 @@ static const struct of_device_id lpc32xx_gpio_of_match[] = {
+ 	{ .compatible = "nxp,lpc3220-gpio", },
+ 	{ },
+ };
++MODULE_DEVICE_TABLE(of, lpc32xx_gpio_of_match);
+ 
+ static struct platform_driver lpc32xx_gpio_driver = {
+ 	.driver		= {
 -- 
 2.43.0
 
