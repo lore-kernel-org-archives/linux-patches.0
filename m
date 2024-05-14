@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855CE6CDC9;
-	Tue, 14 May 2024 11:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CAC56B79;
+	Tue, 14 May 2024 11:18:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685519; cv=none; b=TbA3rxzbijUyRBeHgd36ZOJmdoR1uRvdho0MBdz5sCE3tjiKip4Bs25z1SUDEvaCg43WHFoz8cFij9UkE3RemRbejgI/MKBpQNyfTOa5zP2Jz9hOp+sTimL2dEicSVHcaUtQ1IndmZ4Hc0yg5kngHvIDJyYXAtvdP+Myo5QgkJU=
+	t=1715685528; cv=none; b=TcirBX02YafdLfiLOsgJ962I6yUT+AULhBoldAvj4DNacWHJQm1HMDTxC8I7K6sk73Xa3Ahf5XO0TuaaT8TKqBOOJTYdegCwVY5hayAMNxDIZlPVuHn27c9xQxtHd2jubGJOkPHmZiidrimb2S1hVGk/DfpVyb4nD0b1V/AyqrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685519; c=relaxed/simple;
-	bh=al7Sk76qkvhvJw4iG2MPeiCIHkXp4XuRokw49HsDQUg=;
+	s=arc-20240116; t=1715685528; c=relaxed/simple;
+	bh=Z9czJ6ui3GvzB+lmK3qBRA4/4Y7L7zklYgEWBAG0bbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=toxyvB4zMEyleySdynjRN335QpQqLR/LkAvi1KXlSChIT8sqP33q1tLMzswaxDEDD0hIIPn06m2Crl7RB1+GDWn2V7LtminbWl8MJTjznHYCsClLanVhcdTt8JHeey/bQ6IavbYaTJkSfblfBNvnm8Emzjd2B/7ewxqemWtiA1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AT+yK2g6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AaTwdi0bWWgTWz45zjyclduy+J9KWwOqGbYmynfa8/Rl3wUj0OK598lT+EBzSkdDCQFjdXvXnnjPkAGW97N+85a8kFx7xYgSR80rILlxGjJZXLDnM/2yzdtsXpJwZtc3Y5WDK2gQf/bQAQwq4VY6RY28f7mAAIFCV348S4fB4vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVPw8fci; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AT+yK2g6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8390C4AF09;
-	Tue, 14 May 2024 11:18:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVPw8fci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E879C32782;
+	Tue, 14 May 2024 11:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685519;
-	bh=al7Sk76qkvhvJw4iG2MPeiCIHkXp4XuRokw49HsDQUg=;
+	s=korg; t=1715685527;
+	bh=Z9czJ6ui3GvzB+lmK3qBRA4/4Y7L7zklYgEWBAG0bbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AT+yK2g6iy/CLBagg3nx/yBw90Usio8vzdkYhsKRd4sZEmquUFkkqTcY/QeOH29cZ
-	 fThLQaD4p1nfNkZikfdC8A3Io0DUBxA47dfaJHpGsB9qiUrvXciYegjA6I6Id5hbhx
-	 WE21l8pXtKb1x47OiVA8GGkNzORIREJBJru6f/7U=
+	b=xVPw8fciYvLK8vC8GEcAtt1nH+vr+dPVkbFxrYcNei0Ejj8kIDOxlHqzq4OG+PJlP
+	 Tf1c4z8J++Ud9yTRR69IOBg4UIejjAtAylv21TIG5GnDo4+DbMpIRnpFuAau2A2Q5r
+	 3bocEuNerBPxTgL59C3AQXIi5lI8887ywgKaYhtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Simon Wilkinson <sxw@auristor.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Jeffrey Altman <jaltman@auristor.commailto:jaltman@auristor.com>
-Subject: [PATCH 6.6 195/301] rxrpc: Fix congestion control algorithm
-Date: Tue, 14 May 2024 12:17:46 +0200
-Message-ID: <20240514101039.617287185@linuxfoundation.org>
+	Peiyang Wang <wangpeiyang1@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 204/301] net: hns3: using user configure after hardware reset
+Date: Tue, 14 May 2024 12:17:55 +0200
+Message-ID: <20240514101039.962342554@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -55,86 +54,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Peiyang Wang <wangpeiyang1@huawei.com>
 
-[ Upstream commit ba4e103848d3a2a28a0445e39f4a9564187efe54 ]
+[ Upstream commit 05eb60e9648cca0beeebdbcd263b599fb58aee48 ]
 
-Make the following fixes to the congestion control algorithm:
+When a reset occurring, it's supposed to recover user's configuration.
+Currently, the port info(speed, duplex and autoneg) is stored in hclge_mac
+and will be scheduled updated. Consider the case that reset was happened
+consecutively. During the first reset, the port info is configured with
+a temporary value cause the PHY is reset and looking for best link config.
+Second reset start and use pervious configuration which is not the user's.
+The specific process is as follows:
 
- (1) Don't vary the cwnd starting value by the size of RXRPC_TX_SMSS since
-     that's currently held constant - set to the size of a jumbo subpacket
-     payload so that we can create jumbo packets on the fly.  The current
-     code invariably picks 3 as the starting value.
++------+               +----+                +----+
+| USER |               | PF |                | HW |
++---+--+               +-+--+                +-+--+
+    |  ethtool --reset   |                     |
+    +------------------->|    reset command    |
+    |  ethtool --reset   +-------------------->|
+    +------------------->|                     +---+
+    |                    +---+                 |   |
+    |                    |   |reset currently  |   | HW RESET
+    |                    |   |and wait to do   |   |
+    |                    |<--+                 |   |
+    |                    | send pervious cfg   |<--+
+    |                    | (1000M FULL AN_ON)  |
+    |                    +-------------------->|
+    |                    | read cfg(time task) |
+    |                    | (10M HALF AN_OFF)   +---+
+    |                    |<--------------------+   | cfg take effect
+    |                    |    reset command    |<--+
+    |                    +-------------------->|
+    |                    |                     +---+
+    |                    | send pervious cfg   |   | HW RESET
+    |                    | (10M HALF AN_OFF)   |<--+
+    |                    +-------------------->|
+    |                    | read cfg(time task) |
+    |                    |  (10M HALF AN_OFF)  +---+
+    |                    |<--------------------+   | cfg take effect
+    |                    |                     |   |
+    |                    | read cfg(time task) |<--+
+    |                    |  (10M HALF AN_OFF)  |
+    |                    |<--------------------+
+    |                    |                     |
+    v                    v                     v
 
-     Further, the starting cwnd needs to be an even number because we ack
-     every other packet, so set it to 4.
+To avoid aboved situation, this patch introduced req_speed, req_duplex,
+req_autoneg to store user's configuration and it only be used after
+hardware reset and to recover user's configuration
 
- (2) Don't cut ssthresh when we see an ACK come from the peer with a
-     receive window (rwind) less than ssthresh.  ssthresh keeps track of
-     characteristics of the connection whereas rwind may be reduced by the
-     peer for any reason - and may be reduced to 0.
-
-Fixes: 1fc4fa2ac93d ("rxrpc: Fix congestion management")
-Fixes: 0851115090a3 ("rxrpc: Reduce ssthresh to peer's receive window")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Suggested-by: Simon Wilkinson <sxw@auristor.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com <mailto:jaltman@auristor.com>>
-Link: https://lore.kernel.org/r/20240503150749.1001323-2-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f5f2b3e4dcc0 ("net: hns3: add support for imp-controlled PHYs")
+Signed-off-by: Peiyang Wang <wangpeiyang1@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/ar-internal.h | 2 +-
- net/rxrpc/call_object.c | 7 +------
- net/rxrpc/input.c       | 3 ---
- 3 files changed, 2 insertions(+), 10 deletions(-)
+ .../ethernet/hisilicon/hns3/hns3pf/hclge_main.c   | 15 +++++++++------
+ .../ethernet/hisilicon/hns3/hns3pf/hclge_main.h   |  3 +++
+ 2 files changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
-index bda3f6690b321..d431376bb120a 100644
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -688,7 +688,7 @@ struct rxrpc_call {
- 	 * packets) rather than bytes.
- 	 */
- #define RXRPC_TX_SMSS		RXRPC_JUMBO_DATALEN
--#define RXRPC_MIN_CWND		(RXRPC_TX_SMSS > 2190 ? 2 : RXRPC_TX_SMSS > 1095 ? 3 : 4)
-+#define RXRPC_MIN_CWND		4
- 	u8			cong_cwnd;	/* Congestion window size */
- 	u8			cong_extra;	/* Extra to send for congestion management */
- 	u8			cong_ssthresh;	/* Slow-start threshold */
-diff --git a/net/rxrpc/call_object.c b/net/rxrpc/call_object.c
-index 0a50341d920af..29385908099ef 100644
---- a/net/rxrpc/call_object.c
-+++ b/net/rxrpc/call_object.c
-@@ -175,12 +175,7 @@ struct rxrpc_call *rxrpc_alloc_call(struct rxrpc_sock *rx, gfp_t gfp,
- 	call->rx_winsize = rxrpc_rx_window_size;
- 	call->tx_winsize = 16;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index dfd0c5f4cb9f5..4398de42c9157 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -1526,6 +1526,9 @@ static int hclge_configure(struct hclge_dev *hdev)
+ 			cfg.default_speed, ret);
+ 		return ret;
+ 	}
++	hdev->hw.mac.req_speed = hdev->hw.mac.speed;
++	hdev->hw.mac.req_autoneg = AUTONEG_ENABLE;
++	hdev->hw.mac.req_duplex = DUPLEX_FULL;
  
--	if (RXRPC_TX_SMSS > 2190)
--		call->cong_cwnd = 2;
--	else if (RXRPC_TX_SMSS > 1095)
--		call->cong_cwnd = 3;
--	else
--		call->cong_cwnd = 4;
-+	call->cong_cwnd = RXRPC_MIN_CWND;
- 	call->cong_ssthresh = RXRPC_TX_MAX_WINDOW;
+ 	hclge_parse_link_mode(hdev, cfg.speed_ability);
  
- 	call->rxnet = rxnet;
-diff --git a/net/rxrpc/input.c b/net/rxrpc/input.c
-index 718ffd184ddb6..f7304e06aadca 100644
---- a/net/rxrpc/input.c
-+++ b/net/rxrpc/input.c
-@@ -688,9 +688,6 @@ static void rxrpc_input_ack_trailer(struct rxrpc_call *call, struct sk_buff *skb
- 		call->tx_winsize = rwind;
+@@ -3331,9 +3334,9 @@ hclge_set_phy_link_ksettings(struct hnae3_handle *handle,
+ 		return ret;
  	}
  
--	if (call->cong_ssthresh > rwind)
--		call->cong_ssthresh = rwind;
--
- 	mtu = min(ntohl(trailer->maxMTU), ntohl(trailer->ifMTU));
+-	hdev->hw.mac.autoneg = cmd->base.autoneg;
+-	hdev->hw.mac.speed = cmd->base.speed;
+-	hdev->hw.mac.duplex = cmd->base.duplex;
++	hdev->hw.mac.req_autoneg = cmd->base.autoneg;
++	hdev->hw.mac.req_speed = cmd->base.speed;
++	hdev->hw.mac.req_duplex = cmd->base.duplex;
+ 	linkmode_copy(hdev->hw.mac.advertising, cmd->link_modes.advertising);
  
- 	peer = call->peer;
+ 	return 0;
+@@ -3366,9 +3369,9 @@ static int hclge_tp_port_init(struct hclge_dev *hdev)
+ 	if (!hnae3_dev_phy_imp_supported(hdev))
+ 		return 0;
+ 
+-	cmd.base.autoneg = hdev->hw.mac.autoneg;
+-	cmd.base.speed = hdev->hw.mac.speed;
+-	cmd.base.duplex = hdev->hw.mac.duplex;
++	cmd.base.autoneg = hdev->hw.mac.req_autoneg;
++	cmd.base.speed = hdev->hw.mac.req_speed;
++	cmd.base.duplex = hdev->hw.mac.req_duplex;
+ 	linkmode_copy(cmd.link_modes.advertising, hdev->hw.mac.advertising);
+ 
+ 	return hclge_set_phy_link_ksettings(&hdev->vport->nic, &cmd);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
+index 7bc2049b723da..6a6b41ef08baf 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
+@@ -263,11 +263,14 @@ struct hclge_mac {
+ 	u8 media_type;	/* port media type, e.g. fibre/copper/backplane */
+ 	u8 mac_addr[ETH_ALEN];
+ 	u8 autoneg;
++	u8 req_autoneg;
+ 	u8 duplex;
++	u8 req_duplex;
+ 	u8 support_autoneg;
+ 	u8 speed_type;	/* 0: sfp speed, 1: active speed */
+ 	u8 lane_num;
+ 	u32 speed;
++	u32 req_speed;
+ 	u32 max_speed;
+ 	u32 speed_ability; /* speed ability supported by current media */
+ 	u32 module_type; /* sub media type, e.g. kr/cr/sr/lr */
 -- 
 2.43.0
 
