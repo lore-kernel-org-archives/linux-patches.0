@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A2B4F88C;
-	Tue, 14 May 2024 10:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB514F88C;
+	Tue, 14 May 2024 10:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683873; cv=none; b=A3BnmmSgxSlUZ/FN2yCVHW96cJK3gicvpelXi7nVY8nW7EUC3kC/5EQ/RxIVuVS9oQFqqnP0Awcqcs+WKHLHZDPgsbvKe7jLCOdcxTzJf2VEmqX0rcGwhXr4o9IKsotBl7tOnBdTfWqh4ryXM8RtcZGM1/e7bXQuGp05/qo1VWU=
+	t=1715683878; cv=none; b=MKDjC09XwupK1L3vv6kxMymVlysQ81VQZhE4hk0cshd6c0vdnd9U84m4CRtiX/V6Ogx1L32MneYebGoMXCWzw1Qti0UcnOxVo61VzVrlEpbMIotBeQT585iHVux7G5S4hcI8DSpXlrIZSUQj6Nd1Kfb+f6RcAemEs358LEmji+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683873; c=relaxed/simple;
-	bh=fuVyx1cAq2VPG9iswknsiKBOhhFoHlxw5gTVwIznHp4=;
+	s=arc-20240116; t=1715683878; c=relaxed/simple;
+	bh=UFEQVNNIHgIph5B26xb4qgkXps8eboKAGAnUGtOZqH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rMjuU8vYMqcNSyLdz/+HKrsRyBIuwIQ7xxknB7MbQgrTwkG8xy0fwcbLELNzVt1CSEXGF4kAMwqTPDwbts3mjySLIsCE670ejc1kUCdVLuuqHwXwH2EFCMq4A9cUdCrdziO3mz8Qnqa8Y0Kt5sLbcgQ1c8iyrsfrBiqX/FScP0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=glLj4BeZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=itKAXdeclzzt7EGic3eS3yFA1AUFFbqzllA67Pl7u8R6RBu1h+vhG9uY2zRWDlf7TbLehJCesVqIJeUbPtwbevV/wNNCVPfKFgJlj+nnXBjeAYaH+n5iGKvISn9anyPqEGHzyTjwFAR9LNrm5QxiYmwTXgGvhhNvd445ikajmQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YoNaza7r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="glLj4BeZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82619C2BD10;
-	Tue, 14 May 2024 10:51:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YoNaza7r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8E7C2BD10;
+	Tue, 14 May 2024 10:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683873;
-	bh=fuVyx1cAq2VPG9iswknsiKBOhhFoHlxw5gTVwIznHp4=;
+	s=korg; t=1715683878;
+	bh=UFEQVNNIHgIph5B26xb4qgkXps8eboKAGAnUGtOZqH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=glLj4BeZGgE3KddBQXveKonl4ycyMpeqYljk+5GzLenElGtS0dTtXti4HGaiTyFm3
-	 gjh0tIHJ3Epu0m25rHEhHgsTq+gbjn3WGD4dskNdvUGAoE+Eyl4ZWaO5NZCVO5FbOu
-	 4JgImGngq9VKdDs0f9SrVO6j+T9jufFEOyzNFZtA=
+	b=YoNaza7rfmoEaaqB76B+0DInRqHFAOGXMJIPEC6QDpu4x6M9ncS6E5eUgDfHVCYG5
+	 CZeJE//hL5dVrInabjuCgk/1McMNWKnNVl9oq0jEs0VwBWujLVbrl+JEhIjvZiTqCP
+	 hkBA+1Cw/MwaCiG7Xi4Ldtd7jZAD8c+kqb7leTKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.8 288/336] slimbus: qcom-ngd-ctrl: Add timeout for wait operation
-Date: Tue, 14 May 2024 12:18:12 +0200
-Message-ID: <20240514101049.490320429@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.8 289/336] clk: samsung: Revert "clk: Use device_get_match_data()"
+Date: Tue, 14 May 2024 12:18:13 +0200
+Message-ID: <20240514101049.527481172@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,43 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit 98241a774db49988f25b7b3657026ce51ccec293 upstream.
+commit aacb99de1099346244d488bdf7df489a44278574 upstream.
 
-In current driver qcom_slim_ngd_up_worker() indefinitely
-waiting for ctrl->qmi_up completion object. This is
-resulting in workqueue lockup on Kthread.
+device_get_match_data() function should not be used on the device other
+than the one matched to the given driver, because it always returns the
+match_data of the matched driver. In case of exynos-clkout driver, the
+original code matches the OF IDs on the PARENT device, so replacing it
+with of_device_get_match_data() broke the driver.
 
-Added wait_for_completion_interruptible_timeout to
-allow the thread to wait for specific timeout period and
-bail out instead waiting infinitely.
+This has been already pointed once in commit 2bc5febd05ab ("clk: samsung:
+Revert "clk: samsung: exynos-clkout: Use of_device_get_match_data()"").
+To avoid further confusion, add a comment about this special case, which
+requires direct of_match_device() call to pass custom IDs array.
 
-Fixes: a899d324863a ("slimbus: qcom-ngd-ctrl: add Sub System Restart support")
-Cc: stable@vger.kernel.org
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20240430091238.35209-2-srinivas.kandagatla@linaro.org
+This partially reverts commit 409c39ec92a35e3708f5b5798c78eae78512cd71.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 409c39ec92a3 ("clk: Use device_get_match_data()")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20240425075628.838497-1-m.szyprowski@samsung.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240430184656.357805-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/clk/samsung/clk-exynos-clkout.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1451,7 +1451,11 @@ static void qcom_slim_ngd_up_worker(stru
- 	ctrl = container_of(work, struct qcom_slim_ngd_ctrl, ngd_up_work);
+diff --git a/drivers/clk/samsung/clk-exynos-clkout.c b/drivers/clk/samsung/clk-exynos-clkout.c
+index 3484e6cc80ad..503c6f5b20d5 100644
+--- a/drivers/clk/samsung/clk-exynos-clkout.c
++++ b/drivers/clk/samsung/clk-exynos-clkout.c
+@@ -13,9 +13,9 @@
+ #include <linux/io.h>
+ #include <linux/of.h>
+ #include <linux/of_address.h>
++#include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm.h>
+-#include <linux/property.h>
  
- 	/* Make sure qmi service is up before continuing */
--	wait_for_completion_interruptible(&ctrl->qmi_up);
-+	if (!wait_for_completion_interruptible_timeout(&ctrl->qmi_up,
-+						       msecs_to_jiffies(MSEC_PER_SEC))) {
-+		dev_err(ctrl->dev, "QMI wait timeout\n");
-+		return;
-+	}
+ #define EXYNOS_CLKOUT_NR_CLKS		1
+ #define EXYNOS_CLKOUT_PARENTS		32
+@@ -84,17 +84,24 @@ MODULE_DEVICE_TABLE(of, exynos_clkout_ids);
+ static int exynos_clkout_match_parent_dev(struct device *dev, u32 *mux_mask)
+ {
+ 	const struct exynos_clkout_variant *variant;
++	const struct of_device_id *match;
  
- 	mutex_lock(&ctrl->ssr_lock);
- 	qcom_slim_ngd_enable(ctrl, true);
+ 	if (!dev->parent) {
+ 		dev_err(dev, "not instantiated from MFD\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	variant = device_get_match_data(dev->parent);
+-	if (!variant) {
++	/*
++	 * 'exynos_clkout_ids' arrays is not the ids array matched by
++	 * the dev->parent driver, so of_device_get_match_data() or
++	 * device_get_match_data() cannot be used here.
++	 */
++	match = of_match_device(exynos_clkout_ids, dev->parent);
++	if (!match) {
+ 		dev_err(dev, "cannot match parent device\n");
+ 		return -EINVAL;
+ 	}
++	variant = match->data;
+ 
+ 	*mux_mask = variant->mux_mask;
+ 
+-- 
+2.45.0
+
 
 
