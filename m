@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A8813AD2A;
-	Tue, 14 May 2024 11:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A135213AD3E;
+	Tue, 14 May 2024 11:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684910; cv=none; b=HUtp/A08R0rFlYKhL5ikxURHkBBptTUQMgZspKFUWmLOT1Rqj04ZOTDs0vgenhhSMehcjIaDnDPzXWhvrJcF/Vd7p2UbjDxmffMZfiDJ+E4X9ob4SxCNAQ7q4I6hkIrrgy4060bU17JkEvDx6tG7PkDctNPrUg2wRKRvf23q4aY=
+	t=1715684918; cv=none; b=i28Gd/n3TuB8OY53pT/OYKHO0CVCfP14ypsrlLPjiAE12E/HLYUruTA3jXYipEjS2pkUsMR6+P8ppiJVfqzmdLMOjrGV591C32NZ61lIb0p5aU6+LG2F9Abg/aACgrZJzl8EwXU8onQMq0NQkmBhVsN122qvFbIABJJh215kmg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684910; c=relaxed/simple;
-	bh=/D/DiiyMPHkDJ8Jqk0H6MoYxWrFueBIRfIf+BZM71jk=;
+	s=arc-20240116; t=1715684918; c=relaxed/simple;
+	bh=vYiIY28ZzDLZ7tyqhnV4lzwmQPu6XEZDLmAwAx9baXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WUsyB7+gKRiZRHoBuiR9obrs6qerTcwTO4YPkbQG/+ayDBE5S48BFFcu7OIQCEKtPEsH38jRbcaqr7gYXf0PBM8Xl37qcbs5znW9ZzbggFMpcPUdEPDN76vXk9FkerstVsYae//K6r+32pWuur3DsAat7tEqHMxKd72s+7ZE7zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IseEooSN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q1+tUOpAWg0CnTeFaSUse3aXmT/VUp0WAheiQulAxnjAYEPVSKqFXRET9zsKWgZ7rqCbFY2hd3ZuszjHz0BkZifuRLp7J5ZrdXEKRXOF40Ymz2u+xGoRDWyeX63utsGTFuxk9dRrNHmk3qYP1UjRn2X7S4NCIM3yngUa3KdDmeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXvFyZnr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IseEooSN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB37C2BD10;
-	Tue, 14 May 2024 11:08:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXvFyZnr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3B8C2BD10;
+	Tue, 14 May 2024 11:08:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684910;
-	bh=/D/DiiyMPHkDJ8Jqk0H6MoYxWrFueBIRfIf+BZM71jk=;
+	s=korg; t=1715684918;
+	bh=vYiIY28ZzDLZ7tyqhnV4lzwmQPu6XEZDLmAwAx9baXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IseEooSNaL7Ln87d+X06oREmdVPcOJXggyOoB1PPNu4/nQYivx8SR3dg6GlMn+MZS
-	 fagu1tjvTrsaos5RDqDwDws/zwBwPPsl5Nz97X3ucM68vdaXKtbaHIDoz8Hqc0g0b4
-	 CPwFdgGbBFumyz2m2aZ0hQVEExTuy/xD+1DhMeF4=
+	b=RXvFyZnr913aF0XAGFM6mnQVYNeQuJsoatUnbhFPNQ1JIid3HQqBF+tmTr/YiIaEQ
+	 cjk3/oJ9LGiWSiUpvVkEuPLeOa1KCQCrOZ2UBUD4JIvNV885rCY9ut+3bjOHzmFyif
+	 7p4lPJpgP8sw25q7T89aODTYA0PahghByzl/WhNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 107/301] wifi: iwlwifi: read txq->read_ptr under lock
-Date: Tue, 14 May 2024 12:16:18 +0200
-Message-ID: <20240514101036.291893385@linuxfoundation.org>
+Subject: [PATCH 6.6 108/301] wifi: iwlwifi: mvm: guard against invalid STA ID on removal
+Date: Tue, 14 May 2024 12:16:19 +0200
+Message-ID: <20240514101036.328852908@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,40 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit c2ace6300600c634553657785dfe5ea0ed688ac2 ]
+[ Upstream commit 17f64517bf5c26af56b6c3566273aad6646c3c4f ]
 
-If we read txq->read_ptr without lock, we can read the same
-value twice, then obtain the lock, and reclaim from there
-to two different places, but crucially reclaim the same
-entry twice, resulting in the WARN_ONCE() a little later.
-Fix that by reading txq->read_ptr under lock.
+Guard against invalid station IDs in iwl_mvm_mld_rm_sta_id as that would
+result in out-of-bounds array accesses. This prevents issues should the
+driver get into a bad state during error handling.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240319100755.bf4c62196504.I978a7ca56c6bd6f1bf42c15aa923ba03366a840b@changeid
+Link: https://msgid.link/20240320232419.d523167bda9c.I1cffd86363805bf86a95d8bdfd4b438bb54baddc@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/queue/tx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/queue/tx.c b/drivers/net/wireless/intel/iwlwifi/queue/tx.c
-index ca74b1b63cac1..0efa304904bd3 100644
---- a/drivers/net/wireless/intel/iwlwifi/queue/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/queue/tx.c
-@@ -1588,9 +1588,9 @@ void iwl_txq_reclaim(struct iwl_trans *trans, int txq_id, int ssn,
- 		return;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
+index 1ccbe8c1eeb42..278454c116fee 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
+@@ -853,10 +853,15 @@ int iwl_mvm_mld_rm_sta(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
  
- 	tfd_num = iwl_txq_get_cmd_index(txq, ssn);
--	read_ptr = iwl_txq_get_cmd_index(txq, txq->read_ptr);
+ int iwl_mvm_mld_rm_sta_id(struct iwl_mvm *mvm, u8 sta_id)
+ {
+-	int ret = iwl_mvm_mld_rm_sta_from_fw(mvm, sta_id);
++	int ret;
  
- 	spin_lock_bh(&txq->lock);
-+	read_ptr = iwl_txq_get_cmd_index(txq, txq->read_ptr);
+ 	lockdep_assert_held(&mvm->mutex);
  
- 	if (!test_bit(txq_id, trans->txqs.queue_used)) {
- 		IWL_DEBUG_TX_QUEUES(trans, "Q %d inactive - ignoring idx %d\n",
++	if (WARN_ON(sta_id == IWL_MVM_INVALID_STA))
++		return 0;
++
++	ret = iwl_mvm_mld_rm_sta_from_fw(mvm, sta_id);
++
+ 	RCU_INIT_POINTER(mvm->fw_id_to_mac_id[sta_id], NULL);
+ 	RCU_INIT_POINTER(mvm->fw_id_to_link_sta[sta_id], NULL);
+ 	return ret;
 -- 
 2.43.0
 
