@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10AD3129A93;
-	Tue, 14 May 2024 11:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858E8129E81;
+	Tue, 14 May 2024 11:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686608; cv=none; b=tZA6DstZCg2hbTnqgAwuZ6E+M2is9HMlqW9fkKWiL5tBre7jzWs+wCyLBSQm5sbcRDJRaV/i2azYSGweSmMIjUSbY9NhbyDzH3Yb0RpjV8FCLlBYwDJo3O8mG9g2llmGKff+iqko+ZXdKBXG2kZ9tJyQnOWnIS3toby7Li6zq4M=
+	t=1715686610; cv=none; b=T3rWc73pJYNvvJcfTJU4oh9egyK+sbeoE/Iqw3gph4Yjz/w84x8UMYsTmaLKzT9lsIH5ccFWmxYOrn3+HokFL6ajCGYFubxoB8G4orI3PTlxl6QvLkTei6AUlNmf+tdrarg1B+e6RSkCOJMftVzVv2EOwnFRkMtYtcXd3o0YF78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686608; c=relaxed/simple;
-	bh=fsEKQpixybe/L3/d8nQp79IthX5CWQOpRun4hQ53sYc=;
+	s=arc-20240116; t=1715686610; c=relaxed/simple;
+	bh=WbctGedRsQiZeAJ3O9i5Mwg3rioxcFXeVrY9UXu3sUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZX3X4WUqFF0aIrE+UqBLTJi7xlX42xuSuifE0fjb26n2RoqMC0dawL7BG+BoAiJolHJU0lray0pi82rVN8fyNxjq7Dh4EgBJA0WWTrZIz/KlRGnWlRIS54SN8Ezn830SfM7z9WzIqjLB0XhdhE9cgTn60Kp8H/fR6of+BC2jf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJtO+Re1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G/OVBTJ4yFYOBJNDGnmPBb7ULc+rUVcW2ctyDsEDp5XkeGTBJcsQ63Be1f4jthwGJlOZMz12Y8gEsUsZ/zYuLt3KyCfTpeGHFqoKWqaE8jBvW4WmUn2t3Dmtyj8XLYSCTpmv7YXTxcL7skf8XZCixNHmeIirmzerFlEXvxZd708=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xf4YvdkZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJtO+Re1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C2CC2BD10;
-	Tue, 14 May 2024 11:36:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xf4YvdkZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E27DC32782;
+	Tue, 14 May 2024 11:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686607;
-	bh=fsEKQpixybe/L3/d8nQp79IthX5CWQOpRun4hQ53sYc=;
+	s=korg; t=1715686610;
+	bh=WbctGedRsQiZeAJ3O9i5Mwg3rioxcFXeVrY9UXu3sUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xJtO+Re1B3MTjg2LBzx18+JtkwTyqBvNe7k1fhqyRV+QLlVkGoJFYwQPK/hh3xf7U
-	 7rOuoUNfrCmWVu4nu4Ks0DpK3qnDSLrmjxXz7EEty1ShYpcoyJj5xL7YyP1Y7OUebR
-	 hazRjTLZJpkScfejqAuZOpT5NwKwErNwxFCpef7w=
+	b=Xf4YvdkZJoO807lG014Llmq6QdE1jGAEAjJxhVE7sAwXOnR9SOGa37EKRlWa2b7pp
+	 uVgC4mhzvrfxwDw6eI6MX8KwopAOtFH+e2xDeFvEucttN6y6h/cA5KTSWspIFA+5oL
+	 1WdVrevBX4/a22jhq7jLFt9iSZCzEoK5DcGLXeks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Peter Korsgaard <peter@korsgaard.com>
-Subject: [PATCH 6.1 197/236] usb: gadget: composite: fix OS descriptors w_value logic
-Date: Tue, 14 May 2024 12:19:19 +0200
-Message-ID: <20240514101027.846196450@linuxfoundation.org>
+	Chris Wulff <chris.wulff@biamp.com>
+Subject: [PATCH 6.1 198/236] usb: gadget: f_fs: Fix a race condition when processing setup packets.
+Date: Tue, 14 May 2024 12:19:20 +0200
+Message-ID: <20240514101027.883510592@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -50,78 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Korsgaard <peter@korsgaard.com>
+From: Chris Wulff <Chris.Wulff@biamp.com>
 
-commit ec6ce7075ef879b91a8710829016005dc8170f17 upstream.
+commit 0aea736ddb877b93f6d2dd8cf439840d6b4970a9 upstream.
 
-The OS descriptors logic had the high/low byte of w_value inverted, causing
-the extended properties to not be accessible for interface != 0.
+If the USB driver passes a pointer into the TRB buffer for creq, this
+buffer can be overwritten with the status response as soon as the event
+is queued. This can make the final check return USB_GADGET_DELAYED_STATUS
+when it shouldn't. Instead use the stored wLength.
 
->From the Microsoft documentation:
-https://learn.microsoft.com/en-us/windows-hardware/drivers/usbcon/microsoft-os-1-0-descriptors-specification
-
-OS_Desc_CompatID.doc (w_index = 0x4):
-
-- wValue:
-
-  High Byte = InterfaceNumber.  InterfaceNumber is set to the number of the
-  interface or function that is associated with the descriptor, typically
-  0x00.  Because a device can have only one extended compat ID descriptor,
-  it should ignore InterfaceNumber, regardless of the value, and simply
-  return the descriptor.
-
-  Low Byte = 0.  PageNumber is used to retrieve descriptors that are larger
-  than 64 KB.  The header section is 16 bytes, so PageNumber is set to 0 for
-  this request.
-
-We currently do not support >64KB compat ID descriptors, so verify that the
-low byte is 0.
-
-OS_Desc_Ext_Prop.doc (w_index = 0x5):
-
-- wValue:
-
-  High byte = InterfaceNumber.  The high byte of wValue is set to the number
-  of the interface or function that is associated with the descriptor.
-
-  Low byte = PageNumber.  The low byte of wValue is used to retrieve
-  descriptors that are larger than 64 KB.  The header section is 10 bytes, so
-  PageNumber is set to 0 for this request.
-
-We also don't support >64KB extended properties, so verify that the low byte
-is 0 and use the high byte for the interface number.
-
-Fixes: 37a3a533429e ("usb: gadget: OS Feature Descriptors support")
+Fixes: 4d644abf2569 ("usb: gadget: f_fs: Only return delayed status when len is 0")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Peter Korsgaard <peter@korsgaard.com>
-Link: https://lore.kernel.org/r/20240404100635.3215340-1-peter@korsgaard.com
+Signed-off-by: Chris Wulff <chris.wulff@biamp.com>
+Link: https://lore.kernel.org/r/CO1PR17MB5419BD664264A558B2395E28E1112@CO1PR17MB5419.namprd17.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/composite.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/function/f_fs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/composite.c
-+++ b/drivers/usb/gadget/composite.c
-@@ -1993,7 +1993,7 @@ unknown:
- 			buf[5] = 0x01;
- 			switch (ctrl->bRequestType & USB_RECIP_MASK) {
- 			case USB_RECIP_DEVICE:
--				if (w_index != 0x4 || (w_value >> 8))
-+				if (w_index != 0x4 || (w_value & 0xff))
- 					break;
- 				buf[6] = w_index;
- 				/* Number of ext compat interfaces */
-@@ -2009,9 +2009,9 @@ unknown:
- 				}
- 				break;
- 			case USB_RECIP_INTERFACE:
--				if (w_index != 0x5 || (w_value >> 8))
-+				if (w_index != 0x5 || (w_value & 0xff))
- 					break;
--				interface = w_value & 0xFF;
-+				interface = w_value >> 8;
- 				if (interface >= MAX_CONFIG_INTERFACES ||
- 				    !os_desc_cfg->interface[interface])
- 					break;
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -3414,7 +3414,7 @@ static int ffs_func_setup(struct usb_fun
+ 	__ffs_event_add(ffs, FUNCTIONFS_SETUP);
+ 	spin_unlock_irqrestore(&ffs->ev.waitq.lock, flags);
+ 
+-	return creq->wLength == 0 ? USB_GADGET_DELAYED_STATUS : 0;
++	return ffs->ev.setup.wLength == 0 ? USB_GADGET_DELAYED_STATUS : 0;
+ }
+ 
+ static bool ffs_func_req_match(struct usb_function *f,
 
 
