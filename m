@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1351254903;
-	Tue, 14 May 2024 10:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133E85A0FC;
+	Tue, 14 May 2024 10:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683124; cv=none; b=HQh1ccV8c+2sND/sTGsnEO6q3Objoahs0ZZVQ7dILJwqIlpV1tOVDxZK+soefbe8YYCHO/eVAmRcq6NXqmk11+rPvahAJb57wpbgDD7739/ZV60GEpcImdUFSjSnB6rHVgJaSa71GW5Oq7r+Mn4XYPR4b9isog6JQLiNOtHem9Q=
+	t=1715683130; cv=none; b=u45LCYjVMeU94zSVfUcqrIYGMcCSWGFOEB5LU+LTtQXp+/iEpOo8Eijotd6vDbKHeH4TMq/ZRGBWj7p30T6JE3nu6xBuxhULUwb9BqvRvVhVGnSazbL+IInmo1mpbfPwwmtRYChacb9+FhEcL5dtN4LGX0cn6nu2coof5D6mgMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683124; c=relaxed/simple;
-	bh=ji2txronKhWtK1uw5ez+a1oVKIzSomwP0K8zr3u6zvI=;
+	s=arc-20240116; t=1715683130; c=relaxed/simple;
+	bh=0BSCaJsiNwRj4NSMoU1Zpr+cn7ySSSPolT+ZWCtWiGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dUCWT9oxWrNQ5B7GzqzCjYvjHwYGlj8QpEOegsTVqUxn4z8pZVN/r1LK787etYpNzoqIApLVYOcDzA/KdvVabfLOyFbVY3QcAUJBsUgTn9ayyASKQU//i8GIt92yobXtD/0QAE0wLiZeSyeqGRXzAewR407e6hiWs5LhAdeWbak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fmeDZHHy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O6Sfrgh0GXq1JA5fiBEM3XB0BEb/lZTv/7vD8ZR3k8hehnAp/OteJbyCXOqMNX/Or7awLqXdUNzv5eYGzdPZMxDmaqasAQK6W56GVA57RVNHzdecw4J1ZBLc2a6ads0PjlRA4UWyWHmoprgT9lrHrpNGtjshXOeR06ZRCgClSy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYESTPl1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fmeDZHHy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB21C32781;
-	Tue, 14 May 2024 10:38:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYESTPl1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB7DC2BD10;
+	Tue, 14 May 2024 10:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683123;
-	bh=ji2txronKhWtK1uw5ez+a1oVKIzSomwP0K8zr3u6zvI=;
+	s=korg; t=1715683129;
+	bh=0BSCaJsiNwRj4NSMoU1Zpr+cn7ySSSPolT+ZWCtWiGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fmeDZHHyZ3RGiLfc4dQItwQMcPUCSTI4LnM1Lxf+ZCrsrAWVdR/MQvgTWdCpHTT/L
-	 Q1zmlURPoy/h+6t89irQG8CKrAA8gq7VFKo9WWK+mAAzGrGVa8HRbKBxUk1CnbiACD
-	 n7+sskLEgLwUvJJB0Yx7WBOn3rUptGF9ArLqvB1c=
+	b=dYESTPl1iXUBT+bBhzc2x7lQQseiKUz+QUvT+N1GHYaTsi7R1AFW8T0EeLDfYq/IV
+	 cEvZXkv5HJX7/lQcc8poKB48oG0ICnt470tW6uIQH52LzOqmF9wls+c4yMI9/WtLeN
+	 2/6vBheDm7OGFTIJUGDKUECqa9DlcrhvgdZFkueA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Song Shuai <songshuaishuai@tinylab.org>,
+	Mike Rapoport <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 170/336] hv_netvsc: Dont free decrypted memory
-Date: Tue, 14 May 2024 12:16:14 +0200
-Message-ID: <20240514101045.021202011@linuxfoundation.org>
+Subject: [PATCH 6.8 144/336] memblock tests: fix undefined reference to `panic
+Date: Tue, 14 May 2024 12:15:48 +0200
+Message-ID: <20240514101044.036356430@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -54,51 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rick Edgecombe <rick.p.edgecombe@intel.com>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-[ Upstream commit bbf9ac34677b57506a13682b31a2a718934c0e31 ]
+[ Upstream commit e0f5a8e74be88f2476e58b25d3b49a9521bdc4ec ]
 
-In CoCo VMs it is possible for the untrusted host to cause
-set_memory_encrypted() or set_memory_decrypted() to fail such that an
-error is returned and the resulting memory is shared. Callers need to
-take care to handle these errors to avoid returning decrypted (shared)
-memory to the page allocator, which could lead to functional or security
-issues.
+commit e96c6b8f212a ("memblock: report failures when memblock_can_resize
+is not set") introduced the usage of panic, which is not defined in
+memblock test.
 
-The netvsc driver could free decrypted/shared pages if
-set_memory_decrypted() fails. Check the decrypted field in the gpadl
-to decide whether to free the memory.
+Let's define it directly in panic.h to fix it.
 
-Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Link: https://lore.kernel.org/r/20240311161558.1310-4-mhklinux@outlook.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20240311161558.1310-4-mhklinux@outlook.com>
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+CC: Song Shuai <songshuaishuai@tinylab.org>
+CC: Mike Rapoport <rppt@kernel.org>
+Link: https://lore.kernel.org/r/20240402132701.29744-3-richard.weiyang@gmail.com
+Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hyperv/netvsc.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/include/linux/kernel.h |  1 +
+ tools/include/linux/panic.h  | 19 +++++++++++++++++++
+ 2 files changed, 20 insertions(+)
+ create mode 100644 tools/include/linux/panic.h
 
-diff --git a/drivers/net/hyperv/netvsc.c b/drivers/net/hyperv/netvsc.c
-index a6fcbda64ecc6..2b6ec979a62f2 100644
---- a/drivers/net/hyperv/netvsc.c
-+++ b/drivers/net/hyperv/netvsc.c
-@@ -154,8 +154,11 @@ static void free_netvsc_device(struct rcu_head *head)
- 	int i;
+diff --git a/tools/include/linux/kernel.h b/tools/include/linux/kernel.h
+index 4b0673bf52c2e..07cfad817d539 100644
+--- a/tools/include/linux/kernel.h
++++ b/tools/include/linux/kernel.h
+@@ -8,6 +8,7 @@
+ #include <linux/build_bug.h>
+ #include <linux/compiler.h>
+ #include <linux/math.h>
++#include <linux/panic.h>
+ #include <endian.h>
+ #include <byteswap.h>
  
- 	kfree(nvdev->extension);
--	vfree(nvdev->recv_buf);
--	vfree(nvdev->send_buf);
+diff --git a/tools/include/linux/panic.h b/tools/include/linux/panic.h
+new file mode 100644
+index 0000000000000..9c8f17a41ce8e
+--- /dev/null
++++ b/tools/include/linux/panic.h
+@@ -0,0 +1,19 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _TOOLS_LINUX_PANIC_H
++#define _TOOLS_LINUX_PANIC_H
 +
-+	if (!nvdev->recv_buf_gpadl_handle.decrypted)
-+		vfree(nvdev->recv_buf);
-+	if (!nvdev->send_buf_gpadl_handle.decrypted)
-+		vfree(nvdev->send_buf);
- 	bitmap_free(nvdev->send_section_map);
- 
- 	for (i = 0; i < VRSS_CHANNEL_MAX; i++) {
++#include <stdarg.h>
++#include <stdio.h>
++#include <stdlib.h>
++
++static inline void panic(const char *fmt, ...)
++{
++	va_list argp;
++
++	va_start(argp, fmt);
++	vfprintf(stderr, fmt, argp);
++	va_end(argp);
++	exit(-1);
++}
++
++#endif
 -- 
 2.43.0
 
