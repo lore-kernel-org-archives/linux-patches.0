@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE1B1CAA4;
-	Tue, 14 May 2024 11:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51ACFF9D4;
+	Tue, 14 May 2024 11:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687982; cv=none; b=rZ/Oe22Y59QVAQG6kIvRojQRD7s8BUwdLJg7cmNuZUXh9HR5wGqcJKGuTMsYQeQkJ5RLGZr2wsVsjBR9GcvEEJBLTfHiWPfN5jOIPbB/097xrXYgy1GU6oTcQUqHwGIqUuChZ8FsO6YGNAZFAa5ZARVXy/mF7vnBeXhgdTJloSg=
+	t=1715687985; cv=none; b=RUG9ocCgSk7CGVGs+WxZVko5cBoDuIM9R2r6w5WDd1HSAwso94cR9XU+kJGXWYGwU/fINrFyT1UB+xytqg+t6XR177B9mZ1zMM0IEcFScJ4OOT3NXXVye4KiVRi6pOaNCiHA8h7VLH7U6S+YnJERh1vZRwGz83ZIP0NDhfzUDqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687982; c=relaxed/simple;
-	bh=ajbFs2lWXOpFI0G2wvig/XfJ5/LIhgC61qP43NT19HI=;
+	s=arc-20240116; t=1715687985; c=relaxed/simple;
+	bh=59VMYjlddIE5XZk6Xx7Aw5spS1X773IGZdB8CiwSGc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HrFuQQAwRw5fQUitfRbdjTlA8bQQjsvCSQ5wlRHHB9KA9NtDoI5A3WJGn6aCzOCYqjSTZ9rsztMMFFQsKKnmxi5G6silW2iii6iYl/uhaGTqCdEuALuRIO2CumMqLOFvQhsvY2VCQ3Zi3bQsd2k/6O957aO1BkDiQsDehIauI5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyFLInbJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KXytePSFUfCesf7COlsRGQFo2fTB8HXwT1TU1SxjPbxFRscbKheJ6DKcQ3VTfRIOqYAnS7QldlZZT60XBB8lxnNdvIywpmMj85InP4F2aJ7TjzPriqMapfI/0BQhsMgI4/uQj72F4hwfKqyfX0NJ8R5F2nfLF8x0qfsiudMBpvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSEN16RA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyFLInbJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83D5C2BD10;
-	Tue, 14 May 2024 11:59:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSEN16RA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B4AC32781;
+	Tue, 14 May 2024 11:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687982;
-	bh=ajbFs2lWXOpFI0G2wvig/XfJ5/LIhgC61qP43NT19HI=;
+	s=korg; t=1715687985;
+	bh=59VMYjlddIE5XZk6Xx7Aw5spS1X773IGZdB8CiwSGc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kyFLInbJGR9XvV1zJ3NN8tXTQHhQlR6iBEMVUGYj2bEwmc0pH4F6h0rBjXCc9YcA1
-	 jVmmS3LYtGOHQcdT/hUMJLo/HMyVFZni380rVNdm3RKTj5cUQOS6AcarDdFudgarYP
-	 xM2UM03xdVUUIWVxqOaHeMQrLjLY6XjTLNTh5zxU=
+	b=ZSEN16RA1Sfedm7zu3QykCdlbJHUI9qJIq+XCy9uK4j1C7zXT9sn9fmoCvDqIX6ag
+	 8D9gVXn11UBavqk5kOlC0OgAV3LWdkeXiXdh3hRiCuAK43ZcZSY4rvswRK6dYAdgUU
+	 kfvAQxnTguf9kXbAZs4Oh+14bhZLoH13yoHYriKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.15 148/168] usb: dwc3: core: Prevent phy suspend during init
-Date: Tue, 14 May 2024 12:20:46 +0200
-Message-ID: <20240514101012.349665431@linuxfoundation.org>
+	Aman Dhoot <amandhoot12@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 149/168] ALSA: hda/realtek: Fix mute led of HP Laptop 15-da3001TU
+Date: Tue, 14 May 2024 12:20:47 +0200
+Message-ID: <20240514101012.386766394@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -49,262 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Aman Dhoot <amandhoot12@gmail.com>
 
-commit 6d735722063a945de56472bdc6bfcb170fd43b86 upstream.
+commit 2d5af3ab9e6f1cf1468b2a5221b5c1f7f46c3333 upstream.
 
-GUSB3PIPECTL.SUSPENDENABLE and GUSB2PHYCFG.SUSPHY should be cleared
-during initialization. Suspend during initialization can result in
-undefined behavior due to clock synchronization failure, which often
-seen as core soft reset timeout.
+This patch simply add SND_PCI_QUIRK for HP Laptop 15-da3001TU to fixed
+mute led of laptop.
 
-The programming guide recommended these bits to be cleared during
-initialization for DWC_usb3.0 version 1.94 and above (along with
-DWC_usb31 and DWC_usb32). The current check in the driver does not
-account if it's set by default setting from coreConsultant.
-
-This is especially the case for DRD when switching mode to ensure the
-phy clocks are available to change mode. Depending on the
-platforms/design, some may be affected more than others. This is noted
-in the DWC_usb3x programming guide under the above registers.
-
-Let's just disable them during driver load and mode switching. Restore
-them when the controller initialization completes.
-
-Note that some platforms workaround this issue by disabling phy suspend
-through "snps,dis_u3_susphy_quirk" and "snps,dis_u2_susphy_quirk" when
-they should not need to.
-
-Cc: stable@vger.kernel.org
-Fixes: 9ba3aca8fe82 ("usb: dwc3: Disable phy suspend after power-on reset")
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20da4e5a0c4678c9587d3da23f83bdd6d77353e9.1713394973.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Aman Dhoot <amandhoot12@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/CAMTp=B+3NG65Z684xMwHqdXDJhY+DJK-kuSw4adn6xwnG+b5JA@mail.gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c   |   90 +++++++++++++++++++---------------------------
- drivers/usb/dwc3/core.h   |    1 
- drivers/usb/dwc3/gadget.c |    2 +
- drivers/usb/dwc3/host.c   |   27 +++++++++++++
- 4 files changed, 68 insertions(+), 52 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -102,6 +102,27 @@ static int dwc3_get_dr_mode(struct dwc3
- 	return 0;
- }
- 
-+void dwc3_enable_susphy(struct dwc3 *dwc, bool enable)
-+{
-+	u32 reg;
-+
-+	reg = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0));
-+	if (enable && !dwc->dis_u3_susphy_quirk)
-+		reg |= DWC3_GUSB3PIPECTL_SUSPHY;
-+	else
-+		reg &= ~DWC3_GUSB3PIPECTL_SUSPHY;
-+
-+	dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(0), reg);
-+
-+	reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
-+	if (enable && !dwc->dis_u2_susphy_quirk)
-+		reg |= DWC3_GUSB2PHYCFG_SUSPHY;
-+	else
-+		reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
-+
-+	dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
-+}
-+
- void dwc3_set_prtcap(struct dwc3 *dwc, u32 mode)
- {
- 	u32 reg;
-@@ -593,11 +614,8 @@ static int dwc3_core_ulpi_init(struct dw
-  */
- static int dwc3_phy_setup(struct dwc3 *dwc)
- {
--	unsigned int hw_mode;
- 	u32 reg;
- 
--	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
--
- 	reg = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0));
- 
- 	/*
-@@ -607,21 +625,16 @@ static int dwc3_phy_setup(struct dwc3 *d
- 	reg &= ~DWC3_GUSB3PIPECTL_UX_EXIT_PX;
- 
- 	/*
--	 * Above 1.94a, it is recommended to set DWC3_GUSB3PIPECTL_SUSPHY
--	 * to '0' during coreConsultant configuration. So default value
--	 * will be '0' when the core is reset. Application needs to set it
--	 * to '1' after the core initialization is completed.
-+	 * Above DWC_usb3.0 1.94a, it is recommended to set
-+	 * DWC3_GUSB3PIPECTL_SUSPHY to '0' during coreConsultant configuration.
-+	 * So default value will be '0' when the core is reset. Application
-+	 * needs to set it to '1' after the core initialization is completed.
-+	 *
-+	 * Similarly for DRD controllers, GUSB3PIPECTL.SUSPENDENABLE must be
-+	 * cleared after power-on reset, and it can be set after core
-+	 * initialization.
- 	 */
--	if (!DWC3_VER_IS_WITHIN(DWC3, ANY, 194A))
--		reg |= DWC3_GUSB3PIPECTL_SUSPHY;
--
--	/*
--	 * For DRD controllers, GUSB3PIPECTL.SUSPENDENABLE must be cleared after
--	 * power-on reset, and it can be set after core initialization, which is
--	 * after device soft-reset during initialization.
--	 */
--	if (hw_mode == DWC3_GHWPARAMS0_MODE_DRD)
--		reg &= ~DWC3_GUSB3PIPECTL_SUSPHY;
-+	reg &= ~DWC3_GUSB3PIPECTL_SUSPHY;
- 
- 	if (dwc->u2ss_inp3_quirk)
- 		reg |= DWC3_GUSB3PIPECTL_U2SSINP3OK;
-@@ -647,9 +660,6 @@ static int dwc3_phy_setup(struct dwc3 *d
- 	if (dwc->tx_de_emphasis_quirk)
- 		reg |= DWC3_GUSB3PIPECTL_TX_DEEPH(dwc->tx_de_emphasis);
- 
--	if (dwc->dis_u3_susphy_quirk)
--		reg &= ~DWC3_GUSB3PIPECTL_SUSPHY;
--
- 	if (dwc->dis_del_phy_power_chg_quirk)
- 		reg &= ~DWC3_GUSB3PIPECTL_DEPOCHANGE;
- 
-@@ -697,24 +707,15 @@ static int dwc3_phy_setup(struct dwc3 *d
- 	}
- 
- 	/*
--	 * Above 1.94a, it is recommended to set DWC3_GUSB2PHYCFG_SUSPHY to
--	 * '0' during coreConsultant configuration. So default value will
--	 * be '0' when the core is reset. Application needs to set it to
--	 * '1' after the core initialization is completed.
--	 */
--	if (!DWC3_VER_IS_WITHIN(DWC3, ANY, 194A))
--		reg |= DWC3_GUSB2PHYCFG_SUSPHY;
--
--	/*
--	 * For DRD controllers, GUSB2PHYCFG.SUSPHY must be cleared after
--	 * power-on reset, and it can be set after core initialization, which is
--	 * after device soft-reset during initialization.
-+	 * Above DWC_usb3.0 1.94a, it is recommended to set
-+	 * DWC3_GUSB2PHYCFG_SUSPHY to '0' during coreConsultant configuration.
-+	 * So default value will be '0' when the core is reset. Application
-+	 * needs to set it to '1' after the core initialization is completed.
-+	 *
-+	 * Similarly for DRD controllers, GUSB2PHYCFG.SUSPHY must be cleared
-+	 * after power-on reset, and it can be set after core initialization.
- 	 */
--	if (hw_mode == DWC3_GHWPARAMS0_MODE_DRD)
--		reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
--
--	if (dwc->dis_u2_susphy_quirk)
--		reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
-+	reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
- 
- 	if (dwc->dis_enblslpm_quirk)
- 		reg &= ~DWC3_GUSB2PHYCFG_ENBLSLPM;
-@@ -996,21 +997,6 @@ static int dwc3_core_init(struct dwc3 *d
- 	if (ret)
- 		goto err1;
- 
--	if (hw_mode == DWC3_GHWPARAMS0_MODE_DRD &&
--	    !DWC3_VER_IS_WITHIN(DWC3, ANY, 194A)) {
--		if (!dwc->dis_u3_susphy_quirk) {
--			reg = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0));
--			reg |= DWC3_GUSB3PIPECTL_SUSPHY;
--			dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(0), reg);
--		}
--
--		if (!dwc->dis_u2_susphy_quirk) {
--			reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
--			reg |= DWC3_GUSB2PHYCFG_SUSPHY;
--			dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
--		}
--	}
--
- 	dwc3_core_setup_global_control(dwc);
- 	dwc3_core_num_eps(dwc);
- 
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -1517,6 +1517,7 @@ int dwc3_event_buffers_setup(struct dwc3
- void dwc3_event_buffers_cleanup(struct dwc3 *dwc);
- 
- int dwc3_core_soft_reset(struct dwc3 *dwc);
-+void dwc3_enable_susphy(struct dwc3 *dwc, bool enable);
- 
- #if IS_ENABLED(CONFIG_USB_DWC3_HOST) || IS_ENABLED(CONFIG_USB_DWC3_DUAL_ROLE)
- int dwc3_host_init(struct dwc3 *dwc);
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2775,6 +2775,7 @@ static int __dwc3_gadget_start(struct dw
- 	dwc3_ep0_out_start(dwc);
- 
- 	dwc3_gadget_enable_irq(dwc);
-+	dwc3_enable_susphy(dwc, true);
- 
- 	return 0;
- 
-@@ -4512,6 +4513,7 @@ void dwc3_gadget_exit(struct dwc3 *dwc)
- 	if (!dwc->gadget)
- 		return;
- 
-+	dwc3_enable_susphy(dwc, false);
- 	usb_del_gadget(dwc->gadget);
- 	dwc3_gadget_free_endpoints(dwc);
- 	usb_put_gadget(dwc->gadget);
---- a/drivers/usb/dwc3/host.c
-+++ b/drivers/usb/dwc3/host.c
-@@ -9,9 +9,30 @@
- 
- #include <linux/acpi.h>
- #include <linux/platform_device.h>
-+#include <linux/usb.h>
-+#include <linux/usb/hcd.h>
- 
-+#include "../host/xhci-plat.h"
- #include "core.h"
- 
-+static void dwc3_xhci_plat_start(struct usb_hcd *hcd)
-+{
-+	struct platform_device *pdev;
-+	struct dwc3 *dwc;
-+
-+	if (!usb_hcd_is_primary_hcd(hcd))
-+		return;
-+
-+	pdev = to_platform_device(hcd->self.controller);
-+	dwc = dev_get_drvdata(pdev->dev.parent);
-+
-+	dwc3_enable_susphy(dwc, true);
-+}
-+
-+static const struct xhci_plat_priv dwc3_xhci_plat_quirk = {
-+	.plat_start = dwc3_xhci_plat_start,
-+};
-+
- static int dwc3_host_get_irq(struct dwc3 *dwc)
- {
- 	struct platform_device	*dwc3_pdev = to_platform_device(dwc->dev);
-@@ -117,6 +138,11 @@ int dwc3_host_init(struct dwc3 *dwc)
- 		}
- 	}
- 
-+	ret = platform_device_add_data(xhci, &dwc3_xhci_plat_quirk,
-+				       sizeof(struct xhci_plat_priv));
-+	if (ret)
-+		goto err;
-+
- 	ret = platform_device_add(xhci);
- 	if (ret) {
- 		dev_err(dwc->dev, "failed to register xHCI device\n");
-@@ -131,6 +157,7 @@ err:
- 
- void dwc3_host_exit(struct dwc3 *dwc)
- {
-+	dwc3_enable_susphy(dwc, false);
- 	platform_device_unregister(dwc->xhci);
- 	dwc->xhci = NULL;
- }
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9131,6 +9131,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x860f, "HP ZBook 15 G6", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x861f, "HP Elite Dragonfly G1", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x869d, "HP", ALC236_FIXUP_HP_MUTE_LED),
++	SND_PCI_QUIRK(0x103c, 0x86c1, "HP Laptop 15-da3001TU", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
+ 	SND_PCI_QUIRK(0x103c, 0x86e7, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
+ 	SND_PCI_QUIRK(0x103c, 0x86e8, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
 
 
