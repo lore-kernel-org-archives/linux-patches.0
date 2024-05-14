@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3B660BB6;
-	Tue, 14 May 2024 11:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1C222094;
+	Tue, 14 May 2024 11:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686384; cv=none; b=ZbtE6Ic0BVmWNgRzUS0Oo1X/+QYtCbFXo5gt1TITj1IfJcWpsqPVL3+pjaBIJMUS/4H1lYWBt0tleJdSttNHmlCtTTcfJSPxcR2LyIdhoMYby+1a2+8H/FVJa3IagXPO1ZqQ+O5JcyrrJBpoAwEJvIf3Qos149jgKTEuR4fV7bA=
+	t=1715686387; cv=none; b=QEeXgV0UOdsqELzmv/Hb+2smpBgh7TV5T0ysv7hlGsKGjz6LntZfCpzooeThPBUnEUuI7Bcu1pSL5/KR0NVs/opFnI9vGJ5wuNfWCu8ZXaIuUArfG+53WIp3BZmtGpCHb7fZJVtn+X5zezEQaENXMzzkbDRieZtIqY3at7fyiRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686384; c=relaxed/simple;
-	bh=hXjFJSsvxPgTG2WqCk4RBqCvEjFMlQk48mTnXHpDebs=;
+	s=arc-20240116; t=1715686387; c=relaxed/simple;
+	bh=DknQsIefrZgZfTl0DWFflmCzKo3xdVrKJcE4D8Tjo+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qz1rmHncb8QDGCzAj3wfPZu9ioK4OnMCMHZ5d8agBIHW4I1gBJlt97ZBa8Y75EDmJZVi129oUNvMAzvmaC4PyKqNh1T7fE0VuOl7CRjhUR0FtNaJrCY8Fz7YDQwrEojeAVMsj3Ve0Zc5ecW9X4RcH9W8UkFh8CcQZBESx3T+lEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIVdEUVn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oYoBxf6nN3ZAZJJPS44upZs+vCbj6keG7ON4nC1eHlLu50bHGPyXVnQrXjZtJ7+pnsxzp6nv+gs6I0VtQvu1GdzFd8V9+Wu2KU/lCOCxLDaDbOMpuE2GCglNC4SWzmtuKaCfKKom+CPxb6dc/OkxCKYjwICO3bRwcTUWxFLPLIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wd3JvjQ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIVdEUVn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD37C2BD10;
-	Tue, 14 May 2024 11:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wd3JvjQ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98DDC2BD10;
+	Tue, 14 May 2024 11:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686384;
-	bh=hXjFJSsvxPgTG2WqCk4RBqCvEjFMlQk48mTnXHpDebs=;
+	s=korg; t=1715686387;
+	bh=DknQsIefrZgZfTl0DWFflmCzKo3xdVrKJcE4D8Tjo+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MIVdEUVnnLtXpnBpplzxk8zTOyyNmGrSc04ga8zeyDTv8ERgoTya1v+WHew2ChIzW
-	 rGX1mfwEbvzk+og5FWienqbmlR6JgqGiNmk/uZX1rNucOTTCzJlGMRlU+P1OzZkuK2
-	 wag8WO5VLlBIatNtpwAqE7en4MefBc8yjdLs758k=
+	b=Wd3JvjQ1WfI9cLdXed8M9vvajoAJYOXjxIHnR8UcDfMKiZ/TUUOZib0E2KpkjiuCS
+	 mmRvTR0YOLpEg1GhinkaSlLcT8O8ByLEt4ffBbnB6cuWBIbPharJMeHwhCmTO7T+nx
+	 6zgxV62wJipGwyGicRX851vOrLBuQb0fI/2PlLn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Tung Nguyen <tung.q.nguyen@dektech.com.au>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Doug Smythies <dsmythies@telus.net>,
+	Wyes Karny <wyes.karny@amd.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/236] tipc: fix a possible memleak in tipc_buf_append
-Date: Tue, 14 May 2024 12:17:21 +0200
-Message-ID: <20240514101023.370360938@linuxfoundation.org>
+Subject: [PATCH 6.1 113/236] tools/power turbostat: Increase the limit for fd opened
+Date: Tue, 14 May 2024 12:17:55 +0200
+Message-ID: <20240514101024.664348549@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -54,41 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Wyes Karny <wyes.karny@amd.com>
 
-[ Upstream commit 97bf6f81b29a8efaf5d0983251a7450e5794370d ]
+[ Upstream commit 3ac1d14d0583a2de75d49a5234d767e2590384dd ]
 
-__skb_linearize() doesn't free the skb when it fails, so move
-'*buf = NULL' after __skb_linearize(), so that the skb can be
-freed on the err path.
+When running turbostat, a system with 512 cpus reaches the limit for
+maximum number of file descriptors that can be opened. To solve this
+problem, the limit is raised to 2^15, which is a large enough number.
 
-Fixes: b7df21cf1b79 ("tipc: skb_linearize the head skb when reassembling msgs")
-Reported-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Tung Nguyen <tung.q.nguyen@dektech.com.au>
-Link: https://lore.kernel.org/r/90710748c29a1521efac4f75ea01b3b7e61414cf.1714485818.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Below data is collected from AMD server systems while running turbostat:
+
+|-----------+-------------------------------|
+| # of cpus | # of opened fds for turbostat |
+|-----------+-------------------------------|
+| 128       | 260                           |
+|-----------+-------------------------------|
+| 192       | 388                           |
+|-----------+-------------------------------|
+| 512       | 1028                          |
+|-----------+-------------------------------|
+
+So, the new max limit would be sufficient up to 2^14 cpus (but this
+also depends on how many counters are enabled).
+
+Reviewed-by: Doug Smythies <dsmythies@telus.net>
+Tested-by: Doug Smythies <dsmythies@telus.net>
+Signed-off-by: Wyes Karny <wyes.karny@amd.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/msg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/power/x86/turbostat/turbostat.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/net/tipc/msg.c b/net/tipc/msg.c
-index 5c9fd4791c4ba..c52ab423082cd 100644
---- a/net/tipc/msg.c
-+++ b/net/tipc/msg.c
-@@ -142,9 +142,9 @@ int tipc_buf_append(struct sk_buff **headbuf, struct sk_buff **buf)
- 	if (fragid == FIRST_FRAGMENT) {
- 		if (unlikely(head))
- 			goto err;
--		*buf = NULL;
- 		if (skb_has_frag_list(frag) && __skb_linearize(frag))
- 			goto err;
-+		*buf = NULL;
- 		frag = skb_unshare(frag, GFP_ATOMIC);
- 		if (unlikely(!frag))
- 			goto err;
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 9018e47e0bc26..a674500e7e63d 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -53,6 +53,8 @@
+ #define	NAME_BYTES 20
+ #define PATH_BYTES 128
+ 
++#define MAX_NOFILE 0x8000
++
+ enum counter_scope { SCOPE_CPU, SCOPE_CORE, SCOPE_PACKAGE };
+ enum counter_type { COUNTER_ITEMS, COUNTER_CYCLES, COUNTER_SECONDS, COUNTER_USEC };
+ enum counter_format { FORMAT_RAW, FORMAT_DELTA, FORMAT_PERCENT };
+@@ -6719,6 +6721,22 @@ void cmdline(int argc, char **argv)
+ 	}
+ }
+ 
++void set_rlimit(void)
++{
++	struct rlimit limit;
++
++	if (getrlimit(RLIMIT_NOFILE, &limit) < 0)
++		err(1, "Failed to get rlimit");
++
++	if (limit.rlim_max < MAX_NOFILE)
++		limit.rlim_max = MAX_NOFILE;
++	if (limit.rlim_cur < MAX_NOFILE)
++		limit.rlim_cur = MAX_NOFILE;
++
++	if (setrlimit(RLIMIT_NOFILE, &limit) < 0)
++		err(1, "Failed to set rlimit");
++}
++
+ int main(int argc, char **argv)
+ {
+ 	outf = stderr;
+@@ -6731,6 +6749,9 @@ int main(int argc, char **argv)
+ 
+ 	probe_sysfs();
+ 
++	if (!getuid())
++		set_rlimit();
++
+ 	turbostat_init();
+ 
+ 	msr_sum_record();
 -- 
 2.43.0
 
