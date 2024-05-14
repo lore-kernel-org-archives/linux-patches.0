@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B6C1D54D;
-	Tue, 14 May 2024 11:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126CC1D54D;
+	Tue, 14 May 2024 11:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686416; cv=none; b=TQz8CDBgUBzF4x8Loob6iVVoRYkidZibYS3k1TnskutJTVlK3fv3+PKL0+bPmhdgFuHsFTiResrAAofHS1TM5dx/jMbN8+Hdi2r4v2jyK3eJem81AvC/2WSekedsL3fFBxpNM6mCpShRIzeyVm4X4W7gBr5h26rv2nq0EGEYpkY=
+	t=1715686419; cv=none; b=BJlENYx0lKXOni+jnQyJqKr8KRBBqziuRjUgoe8zmKlQIomENEmY0qy29oGzY+Os3nOqgFIgLAleOrsTktkc3rKSuAdMdsqEs9Bp9FvOS3gUWwXD3pobDzTfu2AZBwCSLoCp9Szgi45rKXLHQ+jL8+Sadv2zXG0xFZs78i/rPho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686416; c=relaxed/simple;
-	bh=gcVr5uD9pRFCh9V2BlbUBo7Jzuz6q6yUF2qmKqS03l8=;
+	s=arc-20240116; t=1715686419; c=relaxed/simple;
+	bh=wH23srDi+6CgZCLkoOIAxIK3aX+GYybU7i1VLZk3q7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IllbNTTEGhQw7kpkcoBT6+Ky5z50vLKuxTzo/2755khKFGmo3F1hpVO0BsD4tbUYLFg1NqkXCSKjtfHF7643RBAASW98qS8L3V3Fx9XbRHesGdK0AS9c+zvNYbIabnhHo08aseArvXfoq5QhdsKZlYxkJ394PmCMh1ZgJQQqASI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VC1iq8HT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rHPpVR+JuuttjV3C3AHOhFr8K8WZg89ENTj63eL7S+I4AyQrw2WGJGMjjBX1efdiZPNXlhQivbxUdx5zcEuRPYVPATudpwEq7Z7EQMZRQjsal8dytuGhKqmQG/HjgmFpC2XUhcWwYXAvBJIdH4RDXVNGvgzyyCezB0PEdNZ7DYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HS0FuMpe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VC1iq8HT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1045C2BD10;
-	Tue, 14 May 2024 11:33:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HS0FuMpe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F857C2BD10;
+	Tue, 14 May 2024 11:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686416;
-	bh=gcVr5uD9pRFCh9V2BlbUBo7Jzuz6q6yUF2qmKqS03l8=;
+	s=korg; t=1715686418;
+	bh=wH23srDi+6CgZCLkoOIAxIK3aX+GYybU7i1VLZk3q7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VC1iq8HT6trC5EW+zRaTJXG8pKhp0ZQM8KIyCJ7U3+2JryDrW0UrvYQCRPbBZKOC4
-	 txOZs5xa5i51kZSEnyF0bKRmLP49gQTHMxkZtZIDFoiwXGQqmhLipqpvjiQ3K8KJbh
-	 hFaK3+71X2BVsZCfFvj8XKO9fZU7VLtXHauieqBY=
+	b=HS0FuMpeA3duzpK0teDQuoKPJEfnmHAPQ3W+8jLOwFs6qwmGRpfVESmCq1oErntND
+	 2bW7RYTg5Rdus5xbVmkixa/wMX7J0Z0y6cz5AkrN4kwnzveaE/onOgRjLFyQ5PxLnZ
+	 F8qljhrGjIZFvQVk8EZvsiFZE8pUVzem99kYmwx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joakim Sindholt <opensource@zhasha.com>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	Peng Liu <liupeng17@lenovo.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 131/236] fs/9p: only translate RWX permissions for plain 9P2000
-Date: Tue, 14 May 2024 12:18:13 +0200
-Message-ID: <20240514101025.342938704@linuxfoundation.org>
+Subject: [PATCH 6.1 114/236] tools/power turbostat: Fix Bzy_MHz documentation typo
+Date: Tue, 14 May 2024 12:17:56 +0200
+Message-ID: <20240514101024.701787940@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -51,35 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joakim Sindholt <opensource@zhasha.com>
+From: Peng Liu <liupeng17@lenovo.com>
 
-[ Upstream commit cd25e15e57e68a6b18dc9323047fe9c68b99290b ]
+[ Upstream commit 0b13410b52c4636aacb6964a4253a797c0fa0d16 ]
 
-Garbage in plain 9P2000's perm bits is allowed through, which causes it
-to be able to set (among others) the suid bit. This was presumably not
-the intent since the unix extended bits are handled explicitly and
-conditionally on .u.
+The code calculates Bzy_MHz by multiplying TSC_delta * APERF_delta/MPERF_delta
+The man page erroneously showed that TSC_delta was divided.
 
-Signed-off-by: Joakim Sindholt <opensource@zhasha.com>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Signed-off-by: Peng Liu <liupeng17@lenovo.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_inode.c | 2 +-
+ tools/power/x86/turbostat/turbostat.8 | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
-index 5e2657c1dbbe6..a0c5a372dcf62 100644
---- a/fs/9p/vfs_inode.c
-+++ b/fs/9p/vfs_inode.c
-@@ -85,7 +85,7 @@ static int p9mode2perm(struct v9fs_session_info *v9ses,
- 	int res;
- 	int mode = stat->mode;
+diff --git a/tools/power/x86/turbostat/turbostat.8 b/tools/power/x86/turbostat/turbostat.8
+index 3e1a4c4be001a..7112d4732d287 100644
+--- a/tools/power/x86/turbostat/turbostat.8
++++ b/tools/power/x86/turbostat/turbostat.8
+@@ -370,7 +370,7 @@ below the processor's base frequency.
  
--	res = mode & S_IALLUGO;
-+	res = mode & 0777; /* S_IRWXUGO */
- 	if (v9fs_proto_dotu(v9ses)) {
- 		if ((mode & P9_DMSETUID) == P9_DMSETUID)
- 			res |= S_ISUID;
+ Busy% = MPERF_delta/TSC_delta
+ 
+-Bzy_MHz = TSC_delta/APERF_delta/MPERF_delta/measurement_interval
++Bzy_MHz = TSC_delta*APERF_delta/MPERF_delta/measurement_interval
+ 
+ Note that these calculations depend on TSC_delta, so they
+ are not reliable during intervals when TSC_MHz is not running at the base frequency.
 -- 
 2.43.0
 
