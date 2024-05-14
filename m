@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF63136651;
-	Tue, 14 May 2024 10:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB5C4205D;
+	Tue, 14 May 2024 10:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683060; cv=none; b=EFOCXAf2lxex5uj5wOMsFBedsMN9F3trvIniHBOwj4IaGc1x+apu5kGB1P+gvYi53WcmwLbkiS0/pLBRaB8W73UTogFiG7o70gitJXh+VAGxqT83ageUKYXYFwSDXgEj+OUc5Ky2VIvMfqgSjbXn2mRnRY3A1zZHSuc4bPaRSnA=
+	t=1715683065; cv=none; b=qtwrNjELWHxuDRj/ZikhtsSaEjn2mBlQCCAbtRkHPtp5LQlU55tFDZrXkETv2HqT4gztGBA0GkgwVk7YsVrvRA2eB4ou944oOati+4PrDM90gdvgQgE7SYUTIo1RpNwdL2LGhImVy+i7DFNjvCSPdrhOjfVmFNEj5D39Kyh8T+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683060; c=relaxed/simple;
-	bh=fXZkLPV3T71KBlt0ObUgITgTZJdOs4NPFb7n6uH8qGY=;
+	s=arc-20240116; t=1715683065; c=relaxed/simple;
+	bh=q2rDFaJ1IRpdxIKV08Tj15KWEzs5Nyf8s73bXzhiG8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MuzeXunptnAHldwDy4728Cp5Bjel+RnCB0pOB4oGAr8tRRJ5j/nCl9cz+4SZVO5vrq+J/anYgijcaLKAeW2a0/UL94cO56a6AQc/cWpj1Ie87RWsPcF3pxnYVQtJaPThoH3fLp69j5ycEqRKGviAeYCi6oC5kuNzeW2vKpkFpGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsEzsoGR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OrGH/BhIQbrRgQZTQwfGMamFwqnVjWrGwmZCEvj3kor5mjAVAKmk6Yi+b9XjaP3oToEzlLWD4lZllfZidGG0HzxLIkbH3bM1eOmlWC7B8t5oa2S05WtTjsjbJvr284/mw8eGbHQ3GH5ckyUAuk5DrjL3yrRT3Z2WCetcncPGro8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJSHcDXw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsEzsoGR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA02C2BD10;
-	Tue, 14 May 2024 10:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJSHcDXw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABF5C2BD10;
+	Tue, 14 May 2024 10:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683060;
-	bh=fXZkLPV3T71KBlt0ObUgITgTZJdOs4NPFb7n6uH8qGY=;
+	s=korg; t=1715683064;
+	bh=q2rDFaJ1IRpdxIKV08Tj15KWEzs5Nyf8s73bXzhiG8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VsEzsoGR+v/JqqPJNPFnN1VvorpNPjhTRXkoGx2k7NwUzxpKz9AOFADNGqS49oFy8
-	 P8ggcgJmGsqc2civOXuzB/NcJG6zX5wBQkbHrtZeWgU3OBexVa6FgapUQY91JwRs05
-	 Nh1x08ZTbFkY/iVF01V568WuhDVMzfD15NalibAQ=
+	b=kJSHcDXwBYdJ9cVToaNsWQ4SxF9QuYOOR6TEF+zDg2/Ch6eJy7bGlzE3VRUOIyRrN
+	 3iNqf4Jggdx4wNCnxDQ80PkFXRba53ZcAdjF1FIOuj5X6Rz2tl6o6x+EUh7YMqTfEy
+	 Qr3IoXgAlePFD6qGBGADPIwZZlnJmXjqbT3ZEYng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Ma <li.ma@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Yajun Deng <yajun.deng@linux.dev>,
+	Mike Rapoport <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 160/336] drm/amd/display: add DCN 351 version for microcode load
-Date: Tue, 14 May 2024 12:16:04 +0200
-Message-ID: <20240514101044.643253632@linuxfoundation.org>
+Subject: [PATCH 6.8 143/336] memblock tests: fix undefined reference to `early_pfn_to_nid
+Date: Tue, 14 May 2024 12:15:47 +0200
+Message-ID: <20240514101043.999156108@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,45 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Ma <li.ma@amd.com>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-[ Upstream commit d4396924c3d44f34d0643f650e70892e07f3677f ]
+[ Upstream commit 7d8ed162e6a92268d4b2b84d364a931216102c8e ]
 
-There is a new DCN veriosn 3.5.1 need to load
+commit 6a9531c3a880 ("memblock: fix crash when reserved memory is not
+added to memory") introduce the usage of early_pfn_to_nid, which is not
+defined in memblock tests.
 
-Signed-off-by: Li Ma <li.ma@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The original definition of early_pfn_to_nid is defined in mm.h, so let
+add this in the corresponding mm.h.
+
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+CC: Yajun Deng <yajun.deng@linux.dev>
+CC: Mike Rapoport <rppt@kernel.org>
+Link: https://lore.kernel.org/r/20240402132701.29744-2-richard.weiyang@gmail.com
+Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/include/linux/mm.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 718e533ab46dd..0d3e553647993 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -147,6 +147,9 @@ MODULE_FIRMWARE(FIRMWARE_NAVI12_DMCU);
- #define FIRMWARE_DCN_35_DMUB "amdgpu/dcn_3_5_dmcub.bin"
- MODULE_FIRMWARE(FIRMWARE_DCN_35_DMUB);
+diff --git a/tools/include/linux/mm.h b/tools/include/linux/mm.h
+index f3c82ab5b14cd..7d73da0980473 100644
+--- a/tools/include/linux/mm.h
++++ b/tools/include/linux/mm.h
+@@ -37,4 +37,9 @@ static inline void totalram_pages_add(long count)
+ {
+ }
  
-+#define FIRMWARE_DCN_351_DMUB "amdgpu/dcn_3_5_1_dmcub.bin"
-+MODULE_FIRMWARE(FIRMWARE_DCN_351_DMUB);
++static inline int early_pfn_to_nid(unsigned long pfn)
++{
++	return 0;
++}
 +
- /* Number of bytes in PSP header for firmware. */
- #define PSP_HEADER_BYTES 0x100
- 
-@@ -4776,6 +4779,9 @@ static int dm_init_microcode(struct amdgpu_device *adev)
- 	case IP_VERSION(3, 5, 0):
- 		fw_name_dmub = FIRMWARE_DCN_35_DMUB;
- 		break;
-+	case IP_VERSION(3, 5, 1):
-+		fw_name_dmub = FIRMWARE_DCN_351_DMUB;
-+		break;
- 	default:
- 		/* ASIC doesn't support DMUB. */
- 		return 0;
+ #endif
 -- 
 2.43.0
 
