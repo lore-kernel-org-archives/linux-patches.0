@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDCA4E1C9;
-	Tue, 14 May 2024 11:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD64F47A6C;
+	Tue, 14 May 2024 11:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686576; cv=none; b=igFh0FKEfOWZL85J6nsoNLswCBtcpFVzE+1PYiVt8zCP9PaFiPmqcoboIGUQYVsE6WocAamvyOpMTVzP7s7Ha7jmEqrYIJ3bViSsEVPms30D9QLj62T7vYEhAtMPd7hn5I/XQS7dM4brsSDNWc8NDEYxQlQ6AP4DGF23CMcmXms=
+	t=1715686578; cv=none; b=WjedKu6Ppz/P1n1nY5xNgFUrhOTGqqWBYaUki7oMZM5YjviXHKMHzxg/F7wFYya2cdcHMAMbAMZqy2LaccK/QhQpZamtvvzTdb43q3cLgsN1l7s0sm002fg9LE9mGSJbX4booJUOq5fTLXCLTUSLJ3PFsxb46gg0B01F+kEF3Vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686576; c=relaxed/simple;
-	bh=TO/JOY8vMVSip6msMzutHXkXIYWtMdZ2BcVa4WFpFpk=;
+	s=arc-20240116; t=1715686578; c=relaxed/simple;
+	bh=a2U1cisUZyeaSROHoDeviiAqb4FG89i+nRZv2x4O0iM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i/nxsvC1J3oHjFyBPQ+fMfGvy0Qy0d/FbbcHLbkr2OUkdJgtzzO9BNt4Bn+d0wVqGU3s75BKqL40YWw+1HpvZmCKZsARAMxAheprj5/0b14+za6wnKT63ud58onAq93ESzEOGeIX0IEAU3w7YGldCYQ/D9HdlJzliFxZJ9yIako=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3W2I4rs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gvnsUW33nAxt7fTjrfXKtXY16JyAiVsKsH1Z/+09ChrlXa4AisHbM/jBNdEAD3vmuxCD5u1OAfN9PBrO4q01aHa4AKokEYqFJfOhjEnDr0Ed3JXt/7pn2FdVmKgpgBOZy30Lmbk0HskyEwH3z0P1M1uD1RG+AUIBTHIkiGPh0ZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLcTVP0L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3W2I4rs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 768ECC2BD10;
-	Tue, 14 May 2024 11:36:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLcTVP0L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55077C2BD10;
+	Tue, 14 May 2024 11:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686575;
-	bh=TO/JOY8vMVSip6msMzutHXkXIYWtMdZ2BcVa4WFpFpk=;
+	s=korg; t=1715686578;
+	bh=a2U1cisUZyeaSROHoDeviiAqb4FG89i+nRZv2x4O0iM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G3W2I4rs4rt2m+3pDJpj30Thjpy1sjtDnMwHqrrTXejJspU6cLos5+bAF4McbBOQr
-	 EcMu4HzbnhDKQnlHOorhezrf9RVV00zjauZF7mz+5Gpwt/5wDvJvhfUvXtH6ylMPKW
-	 KYIP2aN2jL10jW62ADW44F5z4KCtI9K6LGkUDIec=
+	b=SLcTVP0LRxhlkTPd9iojP7Gdy5AZtEheQvl43vawngqIDVFtzIlHr6ouFsI6akaIp
+	 Ti4PIMqQMz2Q8gQPXzxmw2YZwv3+Btos+Rc92FThoaHEOE1DCBvEqRWE7ECXDdqEm+
+	 T+sogzCY0cC5p+vOAjqR9UoplQmbVtzG26sKu4EM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Marius Zachmann <mail@mariuszachmann.de>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 154/236] hwmon: (corsair-cpro) Use a separate buffer for sending commands
-Date: Tue, 14 May 2024 12:18:36 +0200
-Message-ID: <20240514101026.211653001@linuxfoundation.org>
+Subject: [PATCH 6.1 155/236] hwmon: (corsair-cpro) Use complete_all() instead of complete() in ccp_raw_event()
+Date: Tue, 14 May 2024 12:18:37 +0200
+Message-ID: <20240514101026.249565588@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -54,74 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Aleksa Savic <savicaleksa83@gmail.com>
 
-[ Upstream commit e0cd85dc666cb08e1bd313d560cb4eff4d04219e ]
+[ Upstream commit 3a034a7b0715eb51124a5263890b1ed39978ed3a ]
 
-Introduce cmd_buffer, a separate buffer for storing only
-the command that is sent to the device. Before this separation,
-the existing buffer was shared for both the command and the
-report received in ccp_raw_event(), which was copied into it.
-
-However, because of hidraw, the raw event parsing may be triggered
-in the middle of sending a command, resulting in outputting gibberish
-to the device. Using a separate buffer resolves this.
+In ccp_raw_event(), the ccp->wait_input_report completion is
+completed once. Since we're waiting for exactly one report in
+send_usb_cmd(), use complete_all() instead of complete()
+to mark the completion as spent.
 
 Fixes: 40c3a4454225 ("hwmon: add Corsair Commander Pro driver")
 Signed-off-by: Aleksa Savic <savicaleksa83@gmail.com>
 Acked-by: Marius Zachmann <mail@mariuszachmann.de>
-Link: https://lore.kernel.org/r/20240504092504.24158-2-savicaleksa83@gmail.com
+Link: https://lore.kernel.org/r/20240504092504.24158-3-savicaleksa83@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-cpro.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/hwmon/corsair-cpro.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index fa6aa4fc8b521..0a9cbb556188f 100644
+index 0a9cbb556188f..543a741fe5473 100644
 --- a/drivers/hwmon/corsair-cpro.c
 +++ b/drivers/hwmon/corsair-cpro.c
-@@ -79,6 +79,7 @@ struct ccp_device {
- 	struct device *hwmon_dev;
- 	struct completion wait_input_report;
- 	struct mutex mutex; /* whenever buffer is used, lock before send_usb_cmd */
-+	u8 *cmd_buffer;
- 	u8 *buffer;
- 	int target[6];
- 	DECLARE_BITMAP(temp_cnct, NUM_TEMP_SENSORS);
-@@ -111,15 +112,15 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
- 	unsigned long t;
- 	int ret;
+@@ -140,7 +140,7 @@ static int ccp_raw_event(struct hid_device *hdev, struct hid_report *report, u8
+ 		return 0;
  
--	memset(ccp->buffer, 0x00, OUT_BUFFER_SIZE);
--	ccp->buffer[0] = command;
--	ccp->buffer[1] = byte1;
--	ccp->buffer[2] = byte2;
--	ccp->buffer[3] = byte3;
-+	memset(ccp->cmd_buffer, 0x00, OUT_BUFFER_SIZE);
-+	ccp->cmd_buffer[0] = command;
-+	ccp->cmd_buffer[1] = byte1;
-+	ccp->cmd_buffer[2] = byte2;
-+	ccp->cmd_buffer[3] = byte3;
+ 	memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
+-	complete(&ccp->wait_input_report);
++	complete_all(&ccp->wait_input_report);
  
- 	reinit_completion(&ccp->wait_input_report);
- 
--	ret = hid_hw_output_report(ccp->hdev, ccp->buffer, OUT_BUFFER_SIZE);
-+	ret = hid_hw_output_report(ccp->hdev, ccp->cmd_buffer, OUT_BUFFER_SIZE);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -492,7 +493,11 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	if (!ccp)
- 		return -ENOMEM;
- 
--	ccp->buffer = devm_kmalloc(&hdev->dev, OUT_BUFFER_SIZE, GFP_KERNEL);
-+	ccp->cmd_buffer = devm_kmalloc(&hdev->dev, OUT_BUFFER_SIZE, GFP_KERNEL);
-+	if (!ccp->cmd_buffer)
-+		return -ENOMEM;
-+
-+	ccp->buffer = devm_kmalloc(&hdev->dev, IN_BUFFER_SIZE, GFP_KERNEL);
- 	if (!ccp->buffer)
- 		return -ENOMEM;
- 
+ 	return 0;
+ }
 -- 
 2.43.0
 
