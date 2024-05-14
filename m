@@ -1,93 +1,97 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901932AF09
-	for <patches@lists.linux.dev>; Tue, 14 May 2024 19:47:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39224180A6C
+	for <patches@lists.linux.dev>; Tue, 14 May 2024 20:08:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715716072; cv=none; b=a/APU/CT77HwrEiayNA2kmsAy4ebtlrU+zp5jzS9/11R9AINlGxXTK7G695U1DttWyJCJXd6P+vFnOuTIHHpwtlNpaZUkaaSpJwI/T2mlupFM9ub+HVfk8Bc4fo/GzalTnboEglmPMFrg1N2P8IqYN20fcfuOMk7eI1qC+6CEuU=
+	t=1715717309; cv=none; b=GHNas3pbxX5JlVwgnfQKc9JnrtVG1eJlnY/eVGvCpLUojFxv2E+9HuVW1U8MOjLZ8+Rby9ZectUfGLUUH0LeKOL+3rgJfkay+a6UmRmYCj/59LjyCHo6D5tOMxBoBLRna94g5MY2kwQuLKbI+3exbBnSqdbUgJLvwJGFOM55a04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715716072; c=relaxed/simple;
-	bh=zvyqoR0pAOWeQw9bGL+bI2kZ/Qx3hCO4XLckJSozRHA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WRZj3tbMdXBlJmygciOfAxysBjGAONxAvGcbd/eq5Vo8TivyBdf1VtBvydWlkd4nPJTAS+wx4NQsrkkxZAV6ToVr7GYw77rKKI1Plab1PdpCUpoc7fW4U8pCQHuFPv+oRcZSk+yqc2PkZ1JminNdgVLIo91T8QiwNfH80K5d9U8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id E3C2F1C0081; Tue, 14 May 2024 21:47:48 +0200 (CEST)
-Date: Tue, 14 May 2024 21:47:48 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.8 000/336] 6.8.10-rc1 review
-Message-ID: <ZkO/5CJ0M0VfK9p8@duo.ucw.cz>
-References: <20240514101038.595152603@linuxfoundation.org>
+	s=arc-20240116; t=1715717309; c=relaxed/simple;
+	bh=cKYDeecydpzGb/O5fET85WmiV/33NCb/HD7oeJKbfRg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mTVbZe3i+wMa4Wps41Fqh03S8f+23+Pm1m2RjuUIb5AsFArfc10710HlAz84odIWd8XdplUNWckmx/7APlkGjPEbX+wQL6NQeWxKHwrgVYqoTfKaKDUdHupxNHFNg9sj3dUoGeoz/Vg12cRx1HE/EO/+detqGgCr+e3DcgG/UoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FpJnjZ8+; arc=none smtp.client-ip=209.85.221.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FpJnjZ8+"
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-4df32efa5baso2029990e0c.2
+        for <patches@lists.linux.dev>; Tue, 14 May 2024 13:08:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715717307; x=1716322107; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fvjoJ3H6892IQ+WG+yDZXENruQLJb/czhTtD/pn2XzY=;
+        b=FpJnjZ8+shm0HPKAqFkJ2gPZ/1y2Z2GIJTkUkvZaxV5rXd03DaRy3abtHp/sqN/bkR
+         mENR+f9O6Ct0Oo7MNWTH0glaxYGr4WYUlgMe8kK5KWrXalGImdrUvUraCLe+eJ3rj3+M
+         Sv8ebGmVRpgbRQ1oyWkjxdsAsbZ5k3Sj2puvsLc/SIJrUZ25vFT5T8CLQmt24gheytC2
+         eSsmKBmKefF3DY5Ajl3nelAQ31BpEnDjhgk5zty1DhijXcvezwq1Uo868CLOi9HKmhf+
+         BxvZvyuYBQE/fIGToe11U0NkSaeeU/bgqa1k4amGypBvCfqpKst0vmzIya7FmDygIemk
+         A2Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715717307; x=1716322107;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fvjoJ3H6892IQ+WG+yDZXENruQLJb/czhTtD/pn2XzY=;
+        b=lhHUAQMBnCquSq5VvSHj11NoXha3vl2O/prU4ANzjmc0J3RqgLLp9qUS2O6CyiVY/t
+         nKmM85pkjla72NZdnsZFzt/J59k0+MKK2NVcRY8EeRM77Uoh0FKRVqCy0/iZUOyTSENx
+         xZqiQzX7hQZyAzuXRhA7Bkx2VNIUtnYON2Qw2rQAJylRBwBjaahZIWc0ZfbbdrxVoazP
+         9OlNkGuuhSp+IOrDAdCGuRWKnss6IBioH8KNhhKeb/wcI/JFoF3Ett0LdxdZuEbg0aO1
+         KYW9IzUcAMAW7H0PA8yqM3MhnAwFOaR0eoWIMBYAfEIpE8a3GS6ZJr/qgEMrRNkGNXBG
+         O+eA==
+X-Forwarded-Encrypted: i=1; AJvYcCXjGfSvzBUsjxvjdJApplnrFsGk810mORYY893ZCbgdfYV3SxncPyvRTRaWaqB+dBF42t0CJs9kQ4MHZkHVyD+zipbGKIfvQw==
+X-Gm-Message-State: AOJu0Yx7Eb2cvtsk7oUGo3nydRoL8dxzJkICaHHv6XJe/KkVXL9SU/rh
+	SbeE52EDyMUpfDnvIwG4mcCzvJlnDdb9UL/GXL6MrgfUnbjuyyU4D2ZWVoj8v/ly4fC+jw7X8cG
+	w/3RWWsYhd96yv9fBEqKZM6ztDY4=
+X-Google-Smtp-Source: AGHT+IEPLqc+S8mwOzSlD9qkOiMIP3L1kSLyeSw+t3/KMw5TNbtUgeOPShHGNCog8hcDpyKJCP2QHrDpVrC0Qsd0ug4=
+X-Received: by 2002:a05:6122:d0e:b0:4d4:126b:2c8 with SMTP id
+ 71dfb90a1353d-4df882ea840mr12437198e0c.9.1715717307146; Tue, 14 May 2024
+ 13:08:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="LTTWuTFqn242T+fu"
-Content-Disposition: inline
+References: <20240514101038.595152603@linuxfoundation.org>
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
-
-
---LTTWuTFqn242T+fu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
+From: Allen <allen.lkml@gmail.com>
+Date: Tue, 14 May 2024 13:08:16 -0700
+Message-ID: <CAOMdWS+Fow2jJm9j66Pb2hQH_uyvUtHxM9+HdFwmT_eHL-Qo-g@mail.gmail.com>
+Subject: Re: [PATCH 6.8 000/336] 6.8.10-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
 > This is the start of the stable review cycle for the 6.8.10 release.
 > There are 336 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
+>
 > Responses should be made by Thu, 16 May 2024 10:09:32 +0000.
 > Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.10-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-CIP testing did not find any problems here:
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.8.y
+Tested-by: Allen Pais <apais@linux.microsoft.com>
 
-6.6, 5.15, 5.4 pass our	testing, too:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.6.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.15.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.4.y
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
-
-
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---LTTWuTFqn242T+fu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZkO/5AAKCRAw5/Bqldv6
-8gS5AKC3iAo1D6kKPjYGqd7q4EeCJL8KHQCfQAw3HSb7JiwMbnj0EO+itJQpQT8=
-=CaAI
------END PGP SIGNATURE-----
-
---LTTWuTFqn242T+fu--
+Thanks.
