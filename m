@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2336254903;
-	Tue, 14 May 2024 11:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0380213A88A;
+	Tue, 14 May 2024 11:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684768; cv=none; b=bBUqyBE3K6YvLW8Qum/9OG3CD69Cr48oed7STOw8GwZPUKGodIbbEVMwQmmsb0SpeOcvsUAZPCFNFNmseKQjEavIQ9FSk2Xh2oVG6UxIjnMGZux43G7AoPUetvbJMqSq+owXoh4zSeiC45dUbsErjob4OU/fmiNGCBUio8lLZ7o=
+	t=1715684774; cv=none; b=KRQCs3cBFNTs2KRTQeq1ZscmDDrtXXEuDhS1iBX3wiaKSiXS/Uhrq0olHpOQiyRnGaQ+wHx73Gofcrb/cbaLXQo1mmnqoeWPlMFRMZHLv8lskFnLkxg5LppVGr/FCbWsaRGSsYRO2Mjc+7Q56+iGSrdtpaah14KsIiAWQ+Pm7mI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684768; c=relaxed/simple;
-	bh=634NSwYcZv/hy4jgVvs0Y+4tNFZB1//cd3jZ8AXhIPs=;
+	s=arc-20240116; t=1715684774; c=relaxed/simple;
+	bh=0/K4dnnB4NsqsfAeX84bkNhX5aZuK/8T2I2EAvJeFFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=brld4IfwGaXiZzlGGJ7mTHvZ/sJDju46KdrEzODGzYicqPNrMqbBnE3md6Zr3QI3f4ZaIIXkOICpj6r6X5KLm6AVt20FAEOBxBQAiOUqRO4KtOEoBNpkZr+P6PItpLHIXF/F1OtwkFl4yLPLGvUN+vuLZ+7BK7/pF7O1t0+Vgrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eK2+6EXK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=u/BbNbQTigqRZIA+jOlQwTP9GQN+xoI6H+xtCXIte2AiYB5/cmU2EPZxjtOejrAtWIZ57Jfl6iPN7V1DV9puXPNUQ4o57cFOqImEeShIaokvRTVGndJyQ3HiMuUyzTJWmEij/sXWIKxuQIlyT+XBMIWaAVydwkUGFAc8MIzazIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/Xp4nEs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eK2+6EXK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78807C32781;
-	Tue, 14 May 2024 11:06:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/Xp4nEs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D26C2BD10;
+	Tue, 14 May 2024 11:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684768;
-	bh=634NSwYcZv/hy4jgVvs0Y+4tNFZB1//cd3jZ8AXhIPs=;
+	s=korg; t=1715684773;
+	bh=0/K4dnnB4NsqsfAeX84bkNhX5aZuK/8T2I2EAvJeFFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eK2+6EXKtF/7tyYtGXKEFpCcFlxycb6MxKQNhwjHs0k2WqiONl7ah744WnHs7Ilqj
-	 rlOf2wbk24jB6rZ6KwD25pwb4iCN07ALphS5Wm9WpStxWn1vkAF7QqOt8I9m+0wTus
-	 3urfxWzFDpVxrFrV2aeLvFJvxLTecWTxfDKw8Pk8=
+	b=U/Xp4nEsNHhK4G1ogIqu1ipmlrpJ5Laxixf7JHc7CPgnr0PJuyPj3c3auwlSEANhr
+	 Nf02gbx5O4frDIIB09Bp9PzWDUFjRiHy+JKySuFaRM1VCAH539mwEqaTjmuWACCVc0
+	 ddKlXNPzBSPc42hfywIWDhD3Z3j+Me3hX03amISc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Gobert <richardbgobert@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 087/301] net: gro: fix udp bad offset in socket lookup by adding {inner_}network_offset to napi_gro_cb
-Date: Tue, 14 May 2024 12:15:58 +0200
-Message-ID: <20240514101035.532319191@linuxfoundation.org>
+Subject: [PATCH 6.6 061/301] net: qede: use return from qede_parse_flow_attr() for flow_spec
+Date: Tue, 14 May 2024 12:15:32 +0200
+Message-ID: <20240514101034.547361830@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -47,218 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Gobert <richardbgobert@gmail.com>
+From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit 5ef31ea5d053a8f493a772ebad3f3ce82c35d845 ]
+[ Upstream commit 27b44414a34b108c5a37cd5b4894f606061d86e7 ]
 
-Commits a602456 ("udp: Add GRO functions to UDP socket") and 57c67ff ("udp:
-additional GRO support") introduce incorrect usage of {ip,ipv6}_hdr in the
-complete phase of gro. The functions always return skb->network_header,
-which in the case of encapsulated packets at the gro complete phase, is
-always set to the innermost L3 of the packet. That means that calling
-{ip,ipv6}_hdr for skbs which completed the GRO receive phase (both in
-gro_list and *_gro_complete) when parsing an encapsulated packet's _outer_
-L3/L4 may return an unexpected value.
+In qede_flow_spec_to_rule(), when calling
+qede_parse_flow_attr() then the return code
+was only used for a non-zero check, and then
+-EINVAL was returned.
 
-This incorrect usage leads to a bug in GRO's UDP socket lookup.
-udp{4,6}_lib_lookup_skb functions use ip_hdr/ipv6_hdr respectively. These
-*_hdr functions return network_header which will point to the innermost L3,
-resulting in the wrong offset being used in __udp{4,6}_lib_lookup with
-encapsulated packets.
+qede_parse_flow_attr() can currently fail with:
+* -EINVAL
+* -EOPNOTSUPP
+* -EPROTONOSUPPORT
 
-This patch adds network_offset and inner_network_offset to napi_gro_cb, and
-makes sure both are set correctly.
+This patch changes the code to use the actual
+return code, not just return -EINVAL.
 
-To fix the issue, network_offsets union is used inside napi_gro_cb, in
-which both the outer and the inner network offsets are saved.
+The blaimed commit introduced qede_flow_spec_to_rule(),
+and this call to qede_parse_flow_attr(), it looks
+like it just duplicated how it was already used.
 
-Reproduction example:
+Only compile tested.
 
-Endpoint configuration example (fou + local address bind)
-
-    # ip fou add port 6666 ipproto 4
-    # ip link add name tun1 type ipip remote 2.2.2.1 local 2.2.2.2 encap fou encap-dport 5555 encap-sport 6666 mode ipip
-    # ip link set tun1 up
-    # ip a add 1.1.1.2/24 dev tun1
-
-Netperf TCP_STREAM result on net-next before patch is applied:
-
-net-next main, GRO enabled:
-    $ netperf -H 1.1.1.2 -t TCP_STREAM -l 5
-    Recv   Send    Send
-    Socket Socket  Message  Elapsed
-    Size   Size    Size     Time     Throughput
-    bytes  bytes   bytes    secs.    10^6bits/sec
-
-    131072  16384  16384    5.28        2.37
-
-net-next main, GRO disabled:
-    $ netperf -H 1.1.1.2 -t TCP_STREAM -l 5
-    Recv   Send    Send
-    Socket Socket  Message  Elapsed
-    Size   Size    Size     Time     Throughput
-    bytes  bytes   bytes    secs.    10^6bits/sec
-
-    131072  16384  16384    5.01     2745.06
-
-patch applied, GRO enabled:
-    $ netperf -H 1.1.1.2 -t TCP_STREAM -l 5
-    Recv   Send    Send
-    Socket Socket  Message  Elapsed
-    Size   Size    Size     Time     Throughput
-    bytes  bytes   bytes    secs.    10^6bits/sec
-
-    131072  16384  16384    5.01     2877.38
-
-Fixes: a6024562ffd7 ("udp: Add GRO functions to UDP socket")
-Signed-off-by: Richard Gobert <richardbgobert@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 37c5d3efd7f8 ("qede: use ethtool_rx_flow_rule() to remove duplicated parser code")
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/gro.h      | 9 +++++++++
- net/8021q/vlan_core.c  | 2 ++
- net/core/gro.c         | 1 +
- net/ipv4/af_inet.c     | 1 +
- net/ipv4/udp.c         | 3 ++-
- net/ipv4/udp_offload.c | 3 ++-
- net/ipv6/ip6_offload.c | 1 +
- net/ipv6/udp.c         | 3 ++-
- net/ipv6/udp_offload.c | 3 ++-
- 9 files changed, 22 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/qlogic/qede/qede_filter.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/gro.h b/include/net/gro.h
-index 88644b3ca6600..018343254c90a 100644
---- a/include/net/gro.h
-+++ b/include/net/gro.h
-@@ -86,6 +86,15 @@ struct napi_gro_cb {
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_filter.c b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+index 25ef0f4258cb1..377d661f70f78 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_filter.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+@@ -2002,10 +2002,9 @@ static int qede_flow_spec_to_rule(struct qede_dev *edev,
+ 	if (IS_ERR(flow))
+ 		return PTR_ERR(flow);
  
- 	/* used to support CHECKSUM_COMPLETE for tunneling protocols */
- 	__wsum	csum;
-+
-+	/* L3 offsets */
-+	union {
-+		struct {
-+			u16 network_offset;
-+			u16 inner_network_offset;
-+		};
-+		u16 network_offsets[2];
-+	};
- };
+-	if (qede_parse_flow_attr(edev, proto, flow->rule, t)) {
+-		err = -EINVAL;
++	err = qede_parse_flow_attr(edev, proto, flow->rule, t);
++	if (err)
+ 		goto err_out;
+-	}
  
- #define NAPI_GRO_CB(skb) ((struct napi_gro_cb *)(skb)->cb)
-diff --git a/net/8021q/vlan_core.c b/net/8021q/vlan_core.c
-index f001582345052..9404dd551dfd2 100644
---- a/net/8021q/vlan_core.c
-+++ b/net/8021q/vlan_core.c
-@@ -478,6 +478,8 @@ static struct sk_buff *vlan_gro_receive(struct list_head *head,
- 	if (unlikely(!vhdr))
- 		goto out;
- 
-+	NAPI_GRO_CB(skb)->network_offsets[NAPI_GRO_CB(skb)->encap_mark] = hlen;
-+
- 	type = vhdr->h_vlan_encapsulated_proto;
- 
- 	ptype = gro_find_receive_by_type(type);
-diff --git a/net/core/gro.c b/net/core/gro.c
-index cefddf65f7db0..31e40f25fdf10 100644
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -373,6 +373,7 @@ static inline void skb_gro_reset_offset(struct sk_buff *skb, u32 nhoff)
- 	const struct skb_shared_info *pinfo = skb_shinfo(skb);
- 	const skb_frag_t *frag0 = &pinfo->frags[0];
- 
-+	NAPI_GRO_CB(skb)->network_offset = 0;
- 	NAPI_GRO_CB(skb)->data_offset = 0;
- 	NAPI_GRO_CB(skb)->frag0 = NULL;
- 	NAPI_GRO_CB(skb)->frag0_len = 0;
-diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
-index e59962f34caa6..b50308105551f 100644
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -1571,6 +1571,7 @@ struct sk_buff *inet_gro_receive(struct list_head *head, struct sk_buff *skb)
- 	/* The above will be needed by the transport layer if there is one
- 	 * immediately following this IP hdr.
- 	 */
-+	NAPI_GRO_CB(skb)->inner_network_offset = off;
- 
- 	/* Note : No need to call skb_gro_postpull_rcsum() here,
- 	 * as we already checked checksum over ipv4 header was 0
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 5e9219623c0a6..ca576587f6d21 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -534,7 +534,8 @@ static inline struct sock *__udp4_lib_lookup_skb(struct sk_buff *skb,
- struct sock *udp4_lib_lookup_skb(const struct sk_buff *skb,
- 				 __be16 sport, __be16 dport)
- {
--	const struct iphdr *iph = ip_hdr(skb);
-+	const u16 offset = NAPI_GRO_CB(skb)->network_offsets[skb->encapsulation];
-+	const struct iphdr *iph = (struct iphdr *)(skb->data + offset);
- 	struct net *net = dev_net(skb->dev);
- 	int iif, sdif;
- 
-diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
-index c3d67423ae189..889d4926fc0c1 100644
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -718,7 +718,8 @@ EXPORT_SYMBOL(udp_gro_complete);
- 
- INDIRECT_CALLABLE_SCOPE int udp4_gro_complete(struct sk_buff *skb, int nhoff)
- {
--	const struct iphdr *iph = ip_hdr(skb);
-+	const u16 offset = NAPI_GRO_CB(skb)->network_offsets[skb->encapsulation];
-+	const struct iphdr *iph = (struct iphdr *)(skb->data + offset);
- 	struct udphdr *uh = (struct udphdr *)(skb->data + nhoff);
- 
- 	/* do fraglist only if there is no outer UDP encap (or we already processed it) */
-diff --git a/net/ipv6/ip6_offload.c b/net/ipv6/ip6_offload.c
-index f6e5fcdf041d1..7f014a8969fb2 100644
---- a/net/ipv6/ip6_offload.c
-+++ b/net/ipv6/ip6_offload.c
-@@ -240,6 +240,7 @@ INDIRECT_CALLABLE_SCOPE struct sk_buff *ipv6_gro_receive(struct list_head *head,
- 		goto out;
- 
- 	skb_set_network_header(skb, off);
-+	NAPI_GRO_CB(skb)->inner_network_offset = off;
- 
- 	flush += ntohs(iph->payload_len) != skb->len - hlen;
- 
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index a05c83cfdde97..124cf2bb2a6d7 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -275,7 +275,8 @@ static struct sock *__udp6_lib_lookup_skb(struct sk_buff *skb,
- struct sock *udp6_lib_lookup_skb(const struct sk_buff *skb,
- 				 __be16 sport, __be16 dport)
- {
--	const struct ipv6hdr *iph = ipv6_hdr(skb);
-+	const u16 offset = NAPI_GRO_CB(skb)->network_offsets[skb->encapsulation];
-+	const struct ipv6hdr *iph = (struct ipv6hdr *)(skb->data + offset);
- 	struct net *net = dev_net(skb->dev);
- 	int iif, sdif;
- 
-diff --git a/net/ipv6/udp_offload.c b/net/ipv6/udp_offload.c
-index 626d7b362dc7b..639a4b506f9b5 100644
---- a/net/ipv6/udp_offload.c
-+++ b/net/ipv6/udp_offload.c
-@@ -164,7 +164,8 @@ struct sk_buff *udp6_gro_receive(struct list_head *head, struct sk_buff *skb)
- 
- INDIRECT_CALLABLE_SCOPE int udp6_gro_complete(struct sk_buff *skb, int nhoff)
- {
--	const struct ipv6hdr *ipv6h = ipv6_hdr(skb);
-+	const u16 offset = NAPI_GRO_CB(skb)->network_offsets[skb->encapsulation];
-+	const struct ipv6hdr *ipv6h = (struct ipv6hdr *)(skb->data + offset);
- 	struct udphdr *uh = (struct udphdr *)(skb->data + nhoff);
- 
- 	/* do fraglist only if there is no outer UDP encap (or we already processed it) */
+ 	/* Make sure location is valid and filter isn't already set */
+ 	err = qede_flow_spec_validate(edev, &flow->rule->action, t,
 -- 
 2.43.0
 
