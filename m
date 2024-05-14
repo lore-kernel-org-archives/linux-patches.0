@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7403380BE3;
-	Tue, 14 May 2024 11:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509CF12DDB8;
+	Tue, 14 May 2024 11:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686685; cv=none; b=Le0SQKwIaKqOs02oR9kx+ZHxpEoJZybvK9ubpLOvH/w8Ugd7IcdpHMrk2si0SkiqRPrvTCUMx1+yIVEF1S5HQnTh8/wb8HkZBtEd3L/1InX5if3OTZQgTr7S1aFsfpFdo2ZOH2AiAB7dwDepKW2QasLYfutPJP6UdtO5GXMpKqs=
+	t=1715686688; cv=none; b=QEnjgjVkNAvo2V/F+cfV5L5bqrZt9FDz6vbTud13IwkD4jplG18s7uPsU1yrqbfj2+mAYDrd637hOyffgNdwnJhefB4HjPqlXX9Y8h831RKsYjLPiUy3j/PaLechDXK6+SUoK93rcQN0nuy4+bYHXUPbQyKpWXQIQuV0EMPpk9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686685; c=relaxed/simple;
-	bh=+j9pXDls7pakNrT4GO32dsNezm1hMFpQNpvcrssrpNs=;
+	s=arc-20240116; t=1715686688; c=relaxed/simple;
+	bh=Oz/5n6+rIJKqyMHQJ0Jop2Lyh89A8W8acVreE1bjOn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XknjIG6ieb/pCP8DuSItJpbchJpbCrBDpPINd7FoeN54bja2q5v6jRZdTcoPEzqUv5j7x3uzKQvyshvUMgtqpDV/XS3bzVjYl0ibYwtx/St0OH6SBiOev1JshmtVsTDSmXxs51Rlt+GdgsXAuo7C//tJPT9LVIeSPj/Wwiffpng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ie3E7XOF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=izHQMehSSmy5/y5sUZv60qN6+CAId2yVxMf2NfknOoVAyGGwYha0SPUFo9SfSsgk9xR1yjjfRtb6OmhxPw4KtnZpJn62/K4ArTYpvf3PkOvaqO2qZSxLF7CTfDbcrGvJCdHOuah3bk9H42vN4ptjbe1aE+r02EEfBNjpurXPqdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xAkTJkta; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ie3E7XOF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE818C2BD10;
-	Tue, 14 May 2024 11:38:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xAkTJkta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC8BC2BD10;
+	Tue, 14 May 2024 11:38:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686685;
-	bh=+j9pXDls7pakNrT4GO32dsNezm1hMFpQNpvcrssrpNs=;
+	s=korg; t=1715686688;
+	bh=Oz/5n6+rIJKqyMHQJ0Jop2Lyh89A8W8acVreE1bjOn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ie3E7XOFpJsyeZ0Rgq2kecpucA4u4wyaJidr8jZW8UEmc5I2oA6TONeo6agugiywD
-	 wr+kqt/EufvUraczY4YfYlgy9jj62j8zx88NOgVrBzoWoAIiLh9e5oL2qebE2uUbw6
-	 Yq6HFyD/lhIx5B6ZKbAnipH84t5nX3A7d/jYoO8Q=
+	b=xAkTJktanSEwA5idVCKLS58ioTo1fo8WpyVVmQF7c9UgoSxH20YVEPx/TbwLvws7S
+	 Qv827W9Tpqs71Gu46vHvZtKQNxigWKG/U0tH19+Zmm7gHIhM3G7ADuyl+DYMwSoGmv
+	 327HYZichJRd0hMGGCkC0NIe74QN3RlfkXUX5Ehs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 224/236] net: fix out-of-bounds access in ops_init
-Date: Tue, 14 May 2024 12:19:46 +0200
-Message-ID: <20240514101028.861707359@linuxfoundation.org>
+	Lakshmi Yadlapati <lakshmiy@us.ibm.com>,
+	Eddie James <eajames@linux.ibm.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.1 225/236] hwmon: (pmbus/ucd9000) Increase delay from 250 to 500us
+Date: Tue, 14 May 2024 12:19:47 +0200
+Message-ID: <20240514101028.900092602@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -52,66 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Lakshmi Yadlapati <lakshmiy@us.ibm.com>
 
-commit a26ff37e624d12e28077e5b24d2b264f62764ad6 upstream.
+commit 26e8383b116d0dbe74e28f86646563ab46d66d83 upstream.
 
-net_alloc_generic is called by net_alloc, which is called without any
-locking. It reads max_gen_ptrs, which is changed under pernet_ops_rwsem. It
-is read twice, first to allocate an array, then to set s.len, which is
-later used to limit the bounds of the array access.
+Following the failure observed with a delay of 250us, experiments were
+conducted with various delays. It was found that a delay of 350us
+effectively mitigated the issue.
 
-It is possible that the array is allocated and another thread is
-registering a new pernet ops, increments max_gen_ptrs, which is then used
-to set s.len with a larger than allocated length for the variable array.
+To provide a more optimal solution while still allowing a margin for
+stability, the delay is being adjusted to 500us.
 
-Fix it by reading max_gen_ptrs only once in net_alloc_generic. If
-max_gen_ptrs is later incremented, it will be caught in net_assign_generic.
-
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Fixes: 073862ba5d24 ("netns: fix net_alloc_generic()")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Lakshmi Yadlapati <lakshmiy@us.ibm.com>
+Link: https://lore.kernel.org/r/20240507194603.1305750-1-lakshmiy@us.ibm.com
+Fixes: 8d655e6523764 ("hwmon: (ucd90320) Add minimum delay between bus accesses")
+Reviewed-by: Eddie James <eajames@linux.ibm.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240502132006.3430840-1-cascardo@igalia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/net_namespace.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/hwmon/pmbus/ucd9000.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/core/net_namespace.c
-+++ b/net/core/net_namespace.c
-@@ -68,12 +68,15 @@ DEFINE_COOKIE(net_cookie);
+--- a/drivers/hwmon/pmbus/ucd9000.c
++++ b/drivers/hwmon/pmbus/ucd9000.c
+@@ -80,11 +80,11 @@ struct ucd9000_debugfs_entry {
+  * It has been observed that the UCD90320 randomly fails register access when
+  * doing another access right on the back of a register write. To mitigate this
+  * make sure that there is a minimum delay between a write access and the
+- * following access. The 250us is based on experimental data. At a delay of
+- * 200us the issue seems to go away. Add a bit of extra margin to allow for
++ * following access. The 500 is based on experimental data. At a delay of
++ * 350us the issue seems to go away. Add a bit of extra margin to allow for
+  * system to system differences.
+  */
+-#define UCD90320_WAIT_DELAY_US 250
++#define UCD90320_WAIT_DELAY_US 500
  
- static struct net_generic *net_alloc_generic(void)
+ static inline void ucd90320_wait(const struct ucd9000_data *data)
  {
-+	unsigned int gen_ptrs = READ_ONCE(max_gen_ptrs);
-+	unsigned int generic_size;
- 	struct net_generic *ng;
--	unsigned int generic_size = offsetof(struct net_generic, ptr[max_gen_ptrs]);
-+
-+	generic_size = offsetof(struct net_generic, ptr[gen_ptrs]);
- 
- 	ng = kzalloc(generic_size, GFP_KERNEL);
- 	if (ng)
--		ng->s.len = max_gen_ptrs;
-+		ng->s.len = gen_ptrs;
- 
- 	return ng;
- }
-@@ -1217,7 +1220,11 @@ static int register_pernet_operations(st
- 		if (error < 0)
- 			return error;
- 		*ops->id = error;
--		max_gen_ptrs = max(max_gen_ptrs, *ops->id + 1);
-+		/* This does not require READ_ONCE as writers already hold
-+		 * pernet_ops_rwsem. But WRITE_ONCE is needed to protect
-+		 * net_alloc_generic.
-+		 */
-+		WRITE_ONCE(max_gen_ptrs, max(max_gen_ptrs, *ops->id + 1));
- 	}
- 	error = __register_pernet_operations(list, ops);
- 	if (error) {
 
 
