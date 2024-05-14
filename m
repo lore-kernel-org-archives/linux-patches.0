@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8D52B9AD;
-	Tue, 14 May 2024 11:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5AC2B9AD;
+	Tue, 14 May 2024 11:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687440; cv=none; b=Tils6iYg7hDbvsZvmQE7QYsuXy9Svd1+QDbhGDil2UqLgAdNODUbo55eG5wrhn5g9yXffm3AWmvOUrDrMcAQlJueOJ05/M9+zVNpIZgvAou90m9KC00kTZjH5T2W7S45qSdQ/6Fy9gcys7zBcCtaDLtAR2GplOQ/C2fyirJ+lzU=
+	t=1715687442; cv=none; b=ng4x6XsL6WuBnmkknwN7VXCdOlE6MObA4Y+xukY0+6IDTGroXvGf59RJ3duMQPHMhTPCRspJ9ia0s2SV7Lay3Ocfv8ukwWywFOI4Mr3ktOQSeVY5EjJ7CJAP0zI7WpI6Z/L+udl8nyhDhi8UAPxyHVbAeIvpde5npU9Eus9N+PE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687440; c=relaxed/simple;
-	bh=X73BQ/SqrrdAwB9c33BZmUhqPpFqkJ5fxffnEbc5qqg=;
+	s=arc-20240116; t=1715687442; c=relaxed/simple;
+	bh=PPmGujG/noyFZq/Vs1zCFXgOyYpMBC7343JJEM/QqYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i/bsrDVtCk8zGiMgcxXKF93nueeB2VCf7R0MViHU9T1HQ08VmGmHIAYfNJxipvNNPqTG8WnQVtWHdH2ixMAakkHqv36SJ13D+4BtUY8YqdyWrwMommVuh4VGpFVsktKZSj4rhtbRTo9qiZ4ksQwGWMEf8vYkOjrQGEmhviPd8UM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSyrDyGI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hvykV0naZj18VFhsktXi5iaU+Vee+zH9Z5UPHjBsl8EIk5e9spo0cJSmuzWmwUdZ0rArP4Fl5FUL9A6zaodm2+2lkkHfK3napo1f7ATtwwYHwJov0ymrJK1U+dGZBywREW8sOX0PCtWJHZ5yprliMaOzkcvAo5UlmsmpjBHZctc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnTRRkAy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSyrDyGI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ABF4C2BD10;
-	Tue, 14 May 2024 11:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnTRRkAy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119D8C2BD10;
+	Tue, 14 May 2024 11:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687439;
-	bh=X73BQ/SqrrdAwB9c33BZmUhqPpFqkJ5fxffnEbc5qqg=;
+	s=korg; t=1715687442;
+	bh=PPmGujG/noyFZq/Vs1zCFXgOyYpMBC7343JJEM/QqYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SSyrDyGIZOdXWTDdh/1yxk347bDrMkJipGNHIVC3zJATSWiz/bzsTCb+kQ3BT/0St
-	 Mqvrp2Be0DOxDZe3L9cE3M63l2il7mktho6Y5iTky7Z7tCKwuoBRLhvFRALhH5p8KS
-	 2DmVXQEI2BoG/tow8Vvk1t4QgnxjAW8SSdS3QPeY=
+	b=pnTRRkAyo9Zl1eM9RENuK4DoKLtd2KR2BDF38veAM9Hj0IRRdwKEY5iSPtzZU098/
+	 xpRlfigCLhtw5kSOXoSvKrfhmjYemSymd02JxpfMyT5lCxpwqUqE9q/Yh4dKWnwguT
+	 n3sAm2WeCIoh5FK0sHd78CHeYGb30y6WLAoWPd1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.10 089/111] btrfs: fix kvcalloc() arguments order in btrfs_ioctl_send()
-Date: Tue, 14 May 2024 12:20:27 +0200
-Message-ID: <20240514101000.512490395@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.10 098/111] usb: xhci-plat: Dont include xhci.h
+Date: Tue, 14 May 2024 12:20:36 +0200
+Message-ID: <20240514101000.854746514@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -50,43 +49,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 6ff09b6b8c2fb6b3edda4ffaa173153a40653067 upstream.
+commit 4a237d55446ff67655dc3eed2d4a41997536fc4c upstream.
 
-When compiling with gcc version 14.0.0 20231220 (experimental)
-and W=1, I've noticed the following warning:
+The xhci_plat.h should not need to include the entire xhci.h header.
+This can cause redefinition in dwc3 if it selectively includes some xHCI
+definitions. This is a prerequisite change for a fix to disable suspend
+during initialization for dwc3.
 
-fs/btrfs/send.c: In function 'btrfs_ioctl_send':
-fs/btrfs/send.c:8208:44: warning: 'kvcalloc' sizes specified with 'sizeof'
-in the earlier argument and not in the later argument [-Wcalloc-transposed-args]
- 8208 |         sctx->clone_roots = kvcalloc(sizeof(*sctx->clone_roots),
-      |                                            ^
-
-Since 'n' and 'size' arguments of 'kvcalloc()' are multiplied to
-calculate the final size, their actual order doesn't affect the result
-and so this is not a bug. But it's still worth to fix it.
-
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/310acfa01c957a10d9feaca3f7206269866ba2eb.1713394973.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/send.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/host/xhci-plat.h |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -7339,8 +7339,8 @@ long btrfs_ioctl_send(struct file *mnt_f
- 	sctx->waiting_dir_moves = RB_ROOT;
- 	sctx->orphan_dirs = RB_ROOT;
+--- a/drivers/usb/host/xhci-plat.h
++++ b/drivers/usb/host/xhci-plat.h
+@@ -8,7 +8,9 @@
+ #ifndef _XHCI_PLAT_H
+ #define _XHCI_PLAT_H
  
--	sctx->clone_roots = kvcalloc(sizeof(*sctx->clone_roots),
--				     arg->clone_sources_count + 1,
-+	sctx->clone_roots = kvcalloc(arg->clone_sources_count + 1,
-+				     sizeof(*sctx->clone_roots),
- 				     GFP_KERNEL);
- 	if (!sctx->clone_roots) {
- 		ret = -ENOMEM;
+-#include "xhci.h"	/* for hcd_to_xhci() */
++struct device;
++struct platform_device;
++struct usb_hcd;
+ 
+ struct xhci_plat_priv {
+ 	const char *firmware_name;
 
 
