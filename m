@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A2A5FB9C;
-	Tue, 14 May 2024 11:35:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87073433BE;
+	Tue, 14 May 2024 11:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686514; cv=none; b=S9tcjWGazZI5LF/mMoP+4XGI6SrTQv3XBROn4Krs3a3ZisY5SSs+1uS998OW5BLqxhPqWjsDpUdHHVPhIt6SI0hqEnJey+I12xzdp2DQV7o4QfuWw0I8QglAWdMPYa36sLfW+V/BaySig65MECaLitj+FJiv8PAku9leptk8zso=
+	t=1715686517; cv=none; b=OYvKX2WLEhW2f3891aYc7PDJxChDYaEYVbs1XALd61ime18WxXhAJqM8Y2gNIvjUsk2h8/hSp1GuABSa+lQBcUBuYn8uoug+PXQ/eHCzmUoGbcMY+M9+YmG15ezlbnO0wypjnLj7rLF9yT26letayACq/sPpqYOfc+5RBZs4g4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686514; c=relaxed/simple;
-	bh=C0tPZBuqU/1zQh+FXCgmI+Mrn2hkHrjicqTHceQLIxQ=;
+	s=arc-20240116; t=1715686517; c=relaxed/simple;
+	bh=+vKmiDQ7BuYDLdh65uKj+y/YUNIC5UEpsxRVEeHXbko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HSp2NSko7KsVGhZOufXwq7Iq6nVB8glta4orCKbje/Lmg5N9nh3WNGq6YxDcwkQ5vzXxwTQakpvFhFh4xHje98TVxuVmYDSH0Dj3yApBR/bXrf0Ka9ZKS1hvao6StK2/AJNiRje1aq0uSpLaY/USdi9Sk32CgBv2xJuB+ZwjBVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JcJYrs84; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DsVFhfgqlWS16B0hnnFKw4iWmSWUllFDBNmXw9ci8hsUzpmTUfd4k4Q/Hw+zACRfBAs/vMySJrDBCG9O6q7sDPMlUsOlhOCQ76H0P02z0ZYwpl3M201teaxr4KGz/eEoi/s0/DBEcNUbst+32zTUuz1IaXOmg1wEygq96LyWbt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJ8xMW6m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JcJYrs84"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFBDC2BD10;
-	Tue, 14 May 2024 11:35:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJ8xMW6m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9F9C2BD10;
+	Tue, 14 May 2024 11:35:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686513;
-	bh=C0tPZBuqU/1zQh+FXCgmI+Mrn2hkHrjicqTHceQLIxQ=;
+	s=korg; t=1715686517;
+	bh=+vKmiDQ7BuYDLdh65uKj+y/YUNIC5UEpsxRVEeHXbko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JcJYrs845bOCvxNfTuO5FF8fNW2p9omp2NkG3a6OYdSVGJoZLgjYgSW8SmRwxUtO5
-	 FEHCWYuKnv8Ku7L/6GMpecxfjQorDy5x58xRL1DgjFWHkXeEPLRgdtbhezwN8DOWZq
-	 qg1mUKd4Huat1m73h+d4HNgBk6jxEYu2mMRm6TOM=
+	b=QJ8xMW6mnNgbhL+Nnv1bAEYmyvV7FcEVbJfGcEtaIRnqi2MY7pc1kLMH0ja3LHBPP
+	 Uu05iVkOL4hYY/iZTHJNWtq2arU9w4nUQD+U3Xwe5i86Kscrdjak1LqQfSQARXOY2l
+	 y9LWaX+9Co87DiCYQmP6luvKqBgrtDay+vANZXUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
+	Anderson Nascimento <anderson@allelesecurity.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 165/236] ipv6: prevent NULL dereference in ip6_output()
-Date: Tue, 14 May 2024 12:18:47 +0200
-Message-ID: <20240514101026.622891829@linuxfoundation.org>
+Subject: [PATCH 6.1 148/236] tcp: Use refcount_inc_not_zero() in tcp_twsk_unique().
+Date: Tue, 14 May 2024 12:18:30 +0200
+Message-ID: <20240514101025.985920225@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -53,81 +53,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 4db783d68b9b39a411a96096c10828ff5dfada7a ]
+[ Upstream commit f2db7230f73a80dbb179deab78f88a7947f0ab7e ]
 
-According to syzbot, there is a chance that ip6_dst_idev()
-returns NULL in ip6_output(). Most places in IPv6 stack
-deal with a NULL idev just fine, but not here.
+Anderson Nascimento reported a use-after-free splat in tcp_twsk_unique()
+with nice analysis.
 
-syzbot reported:
+Since commit ec94c2696f0b ("tcp/dccp: avoid one atomic operation for
+timewait hashdance"), inet_twsk_hashdance() sets TIME-WAIT socket's
+sk_refcnt after putting it into ehash and releasing the bucket lock.
 
-general protection fault, probably for non-canonical address 0xdffffc00000000bc: 0000 [#1] PREEMPT SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x00000000000005e0-0x00000000000005e7]
-CPU: 0 PID: 9775 Comm: syz-executor.4 Not tainted 6.9.0-rc5-syzkaller-00157-g6a30653b604a #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
- RIP: 0010:ip6_output+0x231/0x3f0 net/ipv6/ip6_output.c:237
-Code: 3c 1e 00 49 89 df 74 08 4c 89 ef e8 19 58 db f7 48 8b 44 24 20 49 89 45 00 49 89 c5 48 8d 9d e0 05 00 00 48 89 d8 48 c1 e8 03 <42> 0f b6 04 38 84 c0 4c 8b 74 24 28 0f 85 61 01 00 00 8b 1b 31 ff
-RSP: 0018:ffffc9000927f0d8 EFLAGS: 00010202
-RAX: 00000000000000bc RBX: 00000000000005e0 RCX: 0000000000040000
-RDX: ffffc900131f9000 RSI: 0000000000004f47 RDI: 0000000000004f48
-RBP: 0000000000000000 R08: ffffffff8a1f0b9a R09: 1ffffffff1f51fad
-R10: dffffc0000000000 R11: fffffbfff1f51fae R12: ffff8880293ec8c0
-R13: ffff88805d7fc000 R14: 1ffff1100527d91a R15: dffffc0000000000
-FS:  00007f135c6856c0(0000) GS:ffff8880b9400000(0000) knlGS:0000000000000000
+Thus, there is a small race window where other threads could try to
+reuse the port during connect() and call sock_hold() in tcp_twsk_unique()
+for the TIME-WAIT socket with zero refcnt.
+
+If that happens, the refcnt taken by tcp_twsk_unique() is overwritten
+and sock_put() will cause underflow, triggering a real use-after-free
+somewhere else.
+
+To avoid the use-after-free, we need to use refcount_inc_not_zero() in
+tcp_twsk_unique() and give up on reusing the port if it returns false.
+
+[0]:
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 0 PID: 1039313 at lib/refcount.c:25 refcount_warn_saturate+0xe5/0x110
+CPU: 0 PID: 1039313 Comm: trigger Not tainted 6.8.6-200.fc39.x86_64 #1
+Hardware name: VMware, Inc. VMware20,1/440BX Desktop Reference Platform, BIOS VMW201.00V.21805430.B64.2305221830 05/22/2023
+RIP: 0010:refcount_warn_saturate+0xe5/0x110
+Code: 42 8e ff 0f 0b c3 cc cc cc cc 80 3d aa 13 ea 01 00 0f 85 5e ff ff ff 48 c7 c7 f8 8e b7 82 c6 05 96 13 ea 01 01 e8 7b 42 8e ff <0f> 0b c3 cc cc cc cc 48 c7 c7 50 8f b7 82 c6 05 7a 13 ea 01 01 e8
+RSP: 0018:ffffc90006b43b60 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: ffff888009bb3ef0 RCX: 0000000000000027
+RDX: ffff88807be218c8 RSI: 0000000000000001 RDI: ffff88807be218c0
+RBP: 0000000000069d70 R08: 0000000000000000 R09: ffffc90006b439f0
+R10: ffffc90006b439e8 R11: 0000000000000003 R12: ffff8880029ede84
+R13: 0000000000004e20 R14: ffffffff84356dc0 R15: ffff888009bb3ef0
+FS:  00007f62c10926c0(0000) GS:ffff88807be00000(0000) knlGS:0000000000000000
 CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020000080 CR3: 0000000064096000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+CR2: 0000000020ccb000 CR3: 000000004628c005 CR4: 0000000000f70ef0
+PKRU: 55555554
 Call Trace:
  <TASK>
-  NF_HOOK include/linux/netfilter.h:314 [inline]
-  ip6_xmit+0xefe/0x17f0 net/ipv6/ip6_output.c:358
-  sctp_v6_xmit+0x9f2/0x13f0 net/sctp/ipv6.c:248
-  sctp_packet_transmit+0x26ad/0x2ca0 net/sctp/output.c:653
-  sctp_packet_singleton+0x22c/0x320 net/sctp/outqueue.c:783
-  sctp_outq_flush_ctrl net/sctp/outqueue.c:914 [inline]
-  sctp_outq_flush+0x6d5/0x3e20 net/sctp/outqueue.c:1212
-  sctp_side_effects net/sctp/sm_sideeffect.c:1198 [inline]
-  sctp_do_sm+0x59cc/0x60c0 net/sctp/sm_sideeffect.c:1169
-  sctp_primitive_ASSOCIATE+0x95/0xc0 net/sctp/primitive.c:73
-  __sctp_connect+0x9cd/0xe30 net/sctp/socket.c:1234
-  sctp_connect net/sctp/socket.c:4819 [inline]
-  sctp_inet_connect+0x149/0x1f0 net/sctp/socket.c:4834
-  __sys_connect_file net/socket.c:2048 [inline]
-  __sys_connect+0x2df/0x310 net/socket.c:2065
-  __do_sys_connect net/socket.c:2075 [inline]
-  __se_sys_connect net/socket.c:2072 [inline]
-  __x64_sys_connect+0x7a/0x90 net/socket.c:2072
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ ? refcount_warn_saturate+0xe5/0x110
+ ? __warn+0x81/0x130
+ ? refcount_warn_saturate+0xe5/0x110
+ ? report_bug+0x171/0x1a0
+ ? refcount_warn_saturate+0xe5/0x110
+ ? handle_bug+0x3c/0x80
+ ? exc_invalid_op+0x17/0x70
+ ? asm_exc_invalid_op+0x1a/0x20
+ ? refcount_warn_saturate+0xe5/0x110
+ tcp_twsk_unique+0x186/0x190
+ __inet_check_established+0x176/0x2d0
+ __inet_hash_connect+0x74/0x7d0
+ ? __pfx___inet_check_established+0x10/0x10
+ tcp_v4_connect+0x278/0x530
+ __inet_stream_connect+0x10f/0x3d0
+ inet_stream_connect+0x3a/0x60
+ __sys_connect+0xa8/0xd0
+ __x64_sys_connect+0x18/0x20
+ do_syscall_64+0x83/0x170
+ entry_SYSCALL_64_after_hwframe+0x78/0x80
+RIP: 0033:0x7f62c11a885d
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d a3 45 0c 00 f7 d8 64 89 01 48
+RSP: 002b:00007f62c1091e58 EFLAGS: 00000296 ORIG_RAX: 000000000000002a
+RAX: ffffffffffffffda RBX: 0000000020ccb004 RCX: 00007f62c11a885d
+RDX: 0000000000000010 RSI: 0000000020ccb000 RDI: 0000000000000003
+RBP: 00007f62c1091e90 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000296 R12: 00007f62c10926c0
+R13: ffffffffffffff88 R14: 0000000000000000 R15: 00007ffe237885b0
+ </TASK>
 
-Fixes: 778d80be5269 ("ipv6: Add disable_ipv6 sysctl to disable IPv6 operaion on specific interface.")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Link: https://lore.kernel.org/r/20240507161842.773961-1-edumazet@google.com
+Fixes: ec94c2696f0b ("tcp/dccp: avoid one atomic operation for timewait hashdance")
+Reported-by: Anderson Nascimento <anderson@allelesecurity.com>
+Closes: https://lore.kernel.org/netdev/37a477a6-d39e-486b-9577-3463f655a6b7@allelesecurity.com/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240501213145.62261-1-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_ipv4.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 17fe401bc299a..fb26401950e7e 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -224,7 +224,7 @@ int ip6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 	skb->protocol = htons(ETH_P_IPV6);
- 	skb->dev = dev;
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index be2c807eed15d..5dcb969cb5e9c 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -153,6 +153,12 @@ int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
+ 	if (tcptw->tw_ts_recent_stamp &&
+ 	    (!twp || (reuse && time_after32(ktime_get_seconds(),
+ 					    tcptw->tw_ts_recent_stamp)))) {
++		/* inet_twsk_hashdance() sets sk_refcnt after putting twsk
++		 * and releasing the bucket lock.
++		 */
++		if (unlikely(!refcount_inc_not_zero(&sktw->sk_refcnt)))
++			return 0;
++
+ 		/* In case of repair and re-using TIME-WAIT sockets we still
+ 		 * want to be sure that it is safe as above but honor the
+ 		 * sequence numbers and time stamps set as part of the repair
+@@ -173,7 +179,7 @@ int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
+ 			tp->rx_opt.ts_recent	   = tcptw->tw_ts_recent;
+ 			tp->rx_opt.ts_recent_stamp = tcptw->tw_ts_recent_stamp;
+ 		}
+-		sock_hold(sktw);
++
+ 		return 1;
+ 	}
  
--	if (unlikely(READ_ONCE(idev->cnf.disable_ipv6))) {
-+	if (unlikely(!idev || READ_ONCE(idev->cnf.disable_ipv6))) {
- 		IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
- 		kfree_skb_reason(skb, SKB_DROP_REASON_IPV6DISABLED);
- 		return 0;
 -- 
 2.43.0
 
