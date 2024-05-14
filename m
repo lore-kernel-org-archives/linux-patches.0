@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471F3134CDC;
-	Tue, 14 May 2024 10:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A25D13665D;
+	Tue, 14 May 2024 10:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684390; cv=none; b=RyV6el3LXXaFLPeIgtqEZpzxj5IYGbisXsloWQ3K16frB6YvN/lUdkkWXKHDOogFCfyTqNBaQ4ixA8Ci140Iuu0rWcy+Stk0u4w29dTbwArxBlhWfTL3cvkJMHqWymNWBCUZH+ca++J50Pi/9DPdaoOf7i+yDG/suuBnJeWPExE=
+	t=1715684393; cv=none; b=qA88WYmzrFwzsjNHZvkjq3/DvK9h7uMr+ObrZzcF12rXpohrR53BdjhJGOgNaouvCqyaqq/BT3cDznQsGORcAqH4vZVe5dbAx5voEP44Py1Oi9u/MoITF/mAxc8NmVTVkPO+WUtUMBnXJ/z0Jz0MazN82YAAMup4d9SHPeySluk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684390; c=relaxed/simple;
-	bh=B2StPBzfm1m5MflrdBucE8x3TnMA5bsNbucPBE1KTAI=;
+	s=arc-20240116; t=1715684393; c=relaxed/simple;
+	bh=sjS28HOXZ7NVcxGw/4qiaxAZ9fpYrXGDx/RjhuXvjf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z8FPU30Pdd4Faz/unPvRTZq2hWbyLDJge/UG8WoOc5RD2yPWPNZzmfmZBem9/PaDNis87+XfzkACo4RMkFSJ8nhT1PUfJYMo5jvFsEkh6GDJq6ohRgsRL+s4vWRbw/PpBkghAjuHrFhTNKISYPTmTqPV57D7hMsU1s0IBjgfIp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TkRJGAIT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PaWuL4JOf7Sn16UNDZwnNd+uaGQjx+HFWZmFna8P4ifxhqV2bx54/FRmm6J5Knllw17dir1h/ldo0sGVCmJubbJX8r5j8wTRXJOvnTmrv3pp71geXsquLO6ij8iYN1j/08bqfPNhDfV5P7vmRWhSRffjCFSNqNibJkNJbZbhx3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pki99w5L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TkRJGAIT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409C4C2BD10;
-	Tue, 14 May 2024 10:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pki99w5L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8E4C2BD10;
+	Tue, 14 May 2024 10:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684389;
-	bh=B2StPBzfm1m5MflrdBucE8x3TnMA5bsNbucPBE1KTAI=;
+	s=korg; t=1715684393;
+	bh=sjS28HOXZ7NVcxGw/4qiaxAZ9fpYrXGDx/RjhuXvjf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TkRJGAIT/JbRA40I03O0cvuf9J2YG8bPizy2AaG892JaH/VPQTU2NoNTuzAvMQ/s1
-	 E+Gf76In7xTiz8uodhTRCEeczKJxEheJBgGKXb1KR5ratJn3k+29KzP2/IP5nRCeW4
-	 LAJn9CELPAK3uw2izDGcEEatn3GNCG5nMwn37EKI=
+	b=Pki99w5LyLzTFBOx435V8esRgEIDmOl+0gECvQTLUCR9lfEKyZsXjt6cGQHs+pdt8
+	 H/IHxNvbyAd5umRw/JpGhEQ6tHMFUtaJqQBWWoU3488p7IZKHkvDRZcY5UUDuW12UK
+	 QOIo6l2Mryc0cKWAnRaFspCOZf5gT/1kNC0Bk8Uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Li Zetao <lizetao1@huawei.com>,
+	David Lechner <dlechner@baylibre.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/301] spi: spi-axi-spi-engine: Use helper function devm_clk_get_enabled()
-Date: Tue, 14 May 2024 12:15:06 +0200
-Message-ID: <20240514101033.571965146@linuxfoundation.org>
+Subject: [PATCH 6.6 036/301] spi: axi-spi-engine: simplify driver data allocation
+Date: Tue, 14 May 2024 12:15:07 +0200
+Message-ID: <20240514101033.609118597@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -52,103 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zetao <lizetao1@huawei.com>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit a08199b309f833fd4221ab5ee2391c791fe26385 ]
+[ Upstream commit 9e4ce5220eedea2cc440f3961dec1b5122e815b2 ]
 
-Since commit 7ef9651e9792 ("clk: Provide new devm_clk helpers for prepared
-and enabled clocks"), devm_clk_get() and clk_prepare_enable() can now be
-replaced by devm_clk_get_enabled() when driver enables (and possibly
-prepares) the clocks for the whole lifetime of the device. Moreover, it is
-no longer necessary to unprepare and disable the clocks explicitly.
+This simplifies the private data allocation in the AXI SPI Engine driver
+by making use of the feature built into the spi_alloc_host() function
+instead of doing it manually.
 
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Link: https://lore.kernel.org/r/20230823133938.1359106-6-lizetao1@huawei.com
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://lore.kernel.org/r/20231117-axi-spi-engine-series-1-v1-3-cc59db999b87@baylibre.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 0064db9ce4aa ("spi: axi-spi-engine: fix version format string")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-axi-spi-engine.c | 25 +++++--------------------
- 1 file changed, 5 insertions(+), 20 deletions(-)
+ drivers/spi/spi-axi-spi-engine.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/spi/spi-axi-spi-engine.c b/drivers/spi/spi-axi-spi-engine.c
-index 0258c9a72fdcc..b96e55f59d1a9 100644
+index b96e55f59d1a9..bdf0aa4ceb1df 100644
 --- a/drivers/spi/spi-axi-spi-engine.c
 +++ b/drivers/spi/spi-axi-spi-engine.c
-@@ -485,30 +485,22 @@ static int spi_engine_probe(struct platform_device *pdev)
+@@ -473,15 +473,11 @@ static int spi_engine_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		return irq;
+ 
+-	spi_engine = devm_kzalloc(&pdev->dev, sizeof(*spi_engine), GFP_KERNEL);
+-	if (!spi_engine)
+-		return -ENOMEM;
+-
+-	host = spi_alloc_host(&pdev->dev, 0);
++	host = spi_alloc_host(&pdev->dev, sizeof(*spi_engine));
+ 	if (!host)
+ 		return -ENOMEM;
+ 
+-	spi_controller_set_devdata(host, spi_engine);
++	spi_engine = spi_controller_get_devdata(host);
  
  	spin_lock_init(&spi_engine->lock);
  
--	spi_engine->clk = devm_clk_get(&pdev->dev, "s_axi_aclk");
-+	spi_engine->clk = devm_clk_get_enabled(&pdev->dev, "s_axi_aclk");
- 	if (IS_ERR(spi_engine->clk)) {
- 		ret = PTR_ERR(spi_engine->clk);
- 		goto err_put_host;
- 	}
- 
--	spi_engine->ref_clk = devm_clk_get(&pdev->dev, "spi_clk");
-+	spi_engine->ref_clk = devm_clk_get_enabled(&pdev->dev, "spi_clk");
- 	if (IS_ERR(spi_engine->ref_clk)) {
- 		ret = PTR_ERR(spi_engine->ref_clk);
- 		goto err_put_host;
- 	}
- 
--	ret = clk_prepare_enable(spi_engine->clk);
--	if (ret)
--		goto err_put_host;
--
--	ret = clk_prepare_enable(spi_engine->ref_clk);
--	if (ret)
--		goto err_clk_disable;
--
- 	spi_engine->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(spi_engine->base)) {
- 		ret = PTR_ERR(spi_engine->base);
--		goto err_ref_clk_disable;
-+		goto err_put_host;
- 	}
- 
- 	version = readl(spi_engine->base + SPI_ENGINE_REG_VERSION);
-@@ -518,7 +510,7 @@ static int spi_engine_probe(struct platform_device *pdev)
- 			SPI_ENGINE_VERSION_MINOR(version),
- 			SPI_ENGINE_VERSION_PATCH(version));
- 		ret = -ENODEV;
--		goto err_ref_clk_disable;
-+		goto err_put_host;
- 	}
- 
- 	writel_relaxed(0x00, spi_engine->base + SPI_ENGINE_REG_RESET);
-@@ -527,7 +519,7 @@ static int spi_engine_probe(struct platform_device *pdev)
- 
- 	ret = request_irq(irq, spi_engine_irq, 0, pdev->name, host);
- 	if (ret)
--		goto err_ref_clk_disable;
-+		goto err_put_host;
- 
- 	host->dev.of_node = pdev->dev.of_node;
- 	host->mode_bits = SPI_CPOL | SPI_CPHA | SPI_3WIRE;
-@@ -545,10 +537,6 @@ static int spi_engine_probe(struct platform_device *pdev)
- 	return 0;
- err_free_irq:
- 	free_irq(irq, host);
--err_ref_clk_disable:
--	clk_disable_unprepare(spi_engine->ref_clk);
--err_clk_disable:
--	clk_disable_unprepare(spi_engine->clk);
- err_put_host:
- 	spi_controller_put(host);
- 	return ret;
-@@ -569,9 +557,6 @@ static void spi_engine_remove(struct platform_device *pdev)
- 	writel_relaxed(0xff, spi_engine->base + SPI_ENGINE_REG_INT_PENDING);
- 	writel_relaxed(0x00, spi_engine->base + SPI_ENGINE_REG_INT_ENABLE);
- 	writel_relaxed(0x01, spi_engine->base + SPI_ENGINE_REG_RESET);
--
--	clk_disable_unprepare(spi_engine->ref_clk);
--	clk_disable_unprepare(spi_engine->clk);
- }
- 
- static const struct of_device_id spi_engine_match_table[] = {
 -- 
 2.43.0
 
