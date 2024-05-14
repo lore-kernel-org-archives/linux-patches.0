@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC3513D51C;
-	Tue, 14 May 2024 11:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F766311D;
+	Tue, 14 May 2024 11:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685934; cv=none; b=d6QtJ8hJjPVaIIo8fTD1lf7BPbdib22q/8hdCp7PDZ5SH0eoBJy/msssjypkDA/CB6Ta5PAB9VPfgr9FbvxP/nBJp7CPzykmUxX5c7SIDr9fT57OVJoXI2LX3XkrDf6p/xEfpUUwCnFoYqMP5wU648RkfpidVa5sjDn8nPv7O3k=
+	t=1715685939; cv=none; b=NgDsp8Q6l9x/ZCQk8LaUjbJ+XFTRptvKvO66eAJ4AJLwvU13LUOkHuXipHoxj5qAYYBePM6xSIp+yQ3LegJKeaRguoz8X7oioTknNBi5oqaIa6i5/gGb0/WHlYZj09+fd74W+/0u2nfKisxg05xWyHOzUS+koTssaeHZ0/aa5Xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685934; c=relaxed/simple;
-	bh=IMtdshwa/wBKusNLHDHSfBYL2BbGBvdqIahMWX1Wt0k=;
+	s=arc-20240116; t=1715685939; c=relaxed/simple;
+	bh=5wyuGDZNTRf4bUDcGsthorRnKTzQ2Pxde0tqzpDxzso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u8okpeGUtOwemH4rQUI42xI4J9ydi8rPlfSon4EqYyvqk+qgaihMdfymLklCCmhRgSxjnrqoi2OBEvBDK7zLsZXM2kUT74/fjOwH+gBKhrapTxoa/3fnpLNQUDjdm//luTBUHNq4PvQLPJvwjIl6HETxlqWEbY6OdTM3VZ+qVsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNbSG8Zs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M//RWHHodSfuwlAgjai4eL7IWv/sYMVFkPPuhDxf4gX79QVlRBHBuZRaOTim6y9sDGg06AcV8vQ3d3y9JKuuaxYNHqLeq/OKRsGwV01+PdrHh13f7cXM4MkiVskrBKj2IP6LuOdxzVBONsW2dn2wpdx7tYxX8HdwkkhiUhvRs4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyam7xGH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNbSG8Zs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E2FC2BD10;
-	Tue, 14 May 2024 11:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyam7xGH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6489C2BD10;
+	Tue, 14 May 2024 11:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685933;
-	bh=IMtdshwa/wBKusNLHDHSfBYL2BbGBvdqIahMWX1Wt0k=;
+	s=korg; t=1715685938;
+	bh=5wyuGDZNTRf4bUDcGsthorRnKTzQ2Pxde0tqzpDxzso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNbSG8ZsYD4w+2sS/Q2mh5ATnakKE1X8YXC3ZEecedC20j7hs/gS5QpcrbYvMuTgc
-	 YQCjjIQTSlmE1Q3J/9DXM31TRqD6ACmjDcWYuHFoO7h+8tccSecu0XoVlbb02Q207t
-	 2CTaqs9U/VlRulBsmN/DcVwAVbvD+OmTvrQyTa7c=
+	b=hyam7xGHu7odC9Tlq5vW0xDeBJ0nzH/8cbfa8yZgSVD4lP3sPHGaJe8Xx/AJr5Vte
+	 NY47JnbD02ZuccfgVYHS9B/VBqetyvSV3dpvlDyO7Q91E9Gu26HbKOGNNXYS+GFXZM
+	 lKaWYIBPQbL/lCmpm6mmYEQDMO1YnHwrEpA4xhuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Huang <ahuang12@lenovo.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.6 280/301] x86/apic: Dont access the APIC when disabling x2APIC
-Date: Tue, 14 May 2024 12:19:11 +0200
-Message-ID: <20240514101042.836557063@linuxfoundation.org>
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Mark Brown <broonie@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 281/301] selftests/mm: fix powerpc ARCH check
+Date: Tue, 14 May 2024 12:19:12 +0200
+Message-ID: <20240514101042.874320941@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -52,92 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 720a22fd6c1cdadf691281909950c0cbc5cdf17e upstream.
+commit 7e6423441b36e3a03907e2df84b73c414c9c3763 upstream.
 
-With 'iommu=off' on the kernel command line and x2APIC enabled by the BIOS
-the code which disables the x2APIC triggers an unchecked MSR access error:
+In commit 0518dbe97fe6 ("selftests/mm: fix cross compilation with LLVM")
+the logic to detect the machine architecture in the Makefile was changed
+to use ARCH, and only fallback to uname -m if ARCH is unset.  However the
+tests of ARCH were not updated to account for the fact that ARCH is
+"powerpc" for powerpc builds, not "ppc64".
 
-  RDMSR from 0x802 at rIP: 0xffffffff94079992 (native_apic_msr_read+0x12/0x50)
+Fix it by changing the checks to look for "powerpc", and change the
+uname -m logic to convert "ppc64.*" into "powerpc".
 
-This is happens because default_acpi_madt_oem_check() selects an x2APIC
-driver before the x2APIC is disabled.
+With that fixed the following tests now build for powerpc again:
+ * protection_keys
+ * va_high_addr_switch
+ * virtual_address_range
+ * write_to_hugetlbfs
 
-When the x2APIC is disabled because interrupt remapping cannot be enabled
-due to 'iommu=off' on the command line, x2apic_disable() invokes
-apic_set_fixmap() which in turn tries to read the APIC ID. This triggers
-the MSR warning because x2APIC is disabled, but the APIC driver is still
-x2APIC based.
-
-Prevent that by adding an argument to apic_set_fixmap() which makes the
-APIC ID read out conditional and set it to false from the x2APIC disable
-path. That's correct as the APIC ID has already been read out during early
-discovery.
-
-Fixes: d10a904435fa ("x86/apic: Consolidate boot_cpu_physical_apicid initialization sites")
-Reported-by: Adrian Huang <ahuang12@lenovo.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Adrian Huang <ahuang12@lenovo.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/875xw5t6r7.ffs@tglx
+Link: https://lkml.kernel.org/r/20240506115825.66415-1-mpe@ellerman.id.au
+Fixes: 0518dbe97fe6 ("selftests/mm: fix cross compilation with LLVM")
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: <stable@vger.kernel.org>	[6.4+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/apic/apic.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ tools/testing/selftests/mm/Makefile |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kernel/apic/apic.c
-+++ b/arch/x86/kernel/apic/apic.c
-@@ -1808,7 +1808,7 @@ void x2apic_setup(void)
- 	__x2apic_enable();
- }
+--- a/tools/testing/selftests/mm/Makefile
++++ b/tools/testing/selftests/mm/Makefile
+@@ -12,7 +12,7 @@ uname_M := $(shell uname -m 2>/dev/null
+ else
+ uname_M := $(shell echo $(CROSS_COMPILE) | grep -o '^[a-z0-9]\+')
+ endif
+-ARCH ?= $(shell echo $(uname_M) | sed -e 's/aarch64.*/arm64/' -e 's/ppc64.*/ppc64/')
++ARCH ?= $(shell echo $(uname_M) | sed -e 's/aarch64.*/arm64/' -e 's/ppc64.*/powerpc/')
+ endif
  
--static __init void apic_set_fixmap(void);
-+static __init void apic_set_fixmap(bool read_apic);
+ # Without this, failed build products remain, with up-to-date timestamps,
+@@ -95,13 +95,13 @@ TEST_GEN_FILES += $(BINARIES_64)
+ endif
+ else
  
- static __init void x2apic_disable(void)
- {
-@@ -1830,7 +1830,12 @@ static __init void x2apic_disable(void)
- 	}
+-ifneq (,$(findstring $(ARCH),ppc64))
++ifneq (,$(findstring $(ARCH),powerpc))
+ TEST_GEN_FILES += protection_keys
+ endif
  
- 	__x2apic_disable();
--	apic_set_fixmap();
-+	/*
-+	 * Don't reread the APIC ID as it was already done from
-+	 * check_x2apic() and the APIC driver still is a x2APIC variant,
-+	 * which fails to do the read after x2APIC was disabled.
-+	 */
-+	apic_set_fixmap(false);
- }
+ endif
  
- static __init void x2apic_enable(void)
-@@ -2095,13 +2100,14 @@ void __init init_apic_mappings(void)
- 	}
- }
- 
--static __init void apic_set_fixmap(void)
-+static __init void apic_set_fixmap(bool read_apic)
- {
- 	set_fixmap_nocache(FIX_APIC_BASE, mp_lapic_addr);
- 	apic_mmio_base = APIC_BASE;
- 	apic_printk(APIC_VERBOSE, "mapped APIC to %16lx (%16lx)\n",
- 		    apic_mmio_base, mp_lapic_addr);
--	apic_read_boot_cpu_id(false);
-+	if (read_apic)
-+		apic_read_boot_cpu_id(false);
- }
- 
- void __init register_lapic_address(unsigned long address)
-@@ -2111,7 +2117,7 @@ void __init register_lapic_address(unsig
- 	mp_lapic_addr = address;
- 
- 	if (!x2apic_mode)
--		apic_set_fixmap();
-+		apic_set_fixmap(true);
- }
- 
- /*
+-ifneq (,$(filter $(ARCH),arm64 ia64 mips64 parisc64 ppc64 riscv64 s390x sparc64 x86_64))
++ifneq (,$(filter $(ARCH),arm64 ia64 mips64 parisc64 powerpc riscv64 s390x sparc64 x86_64))
+ TEST_GEN_FILES += va_high_addr_switch
+ TEST_GEN_FILES += virtual_address_range
+ TEST_GEN_FILES += write_to_hugetlbfs
 
 
