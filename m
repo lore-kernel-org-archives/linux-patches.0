@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E16B2D60A;
-	Tue, 14 May 2024 11:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A722D60A;
+	Tue, 14 May 2024 11:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687114; cv=none; b=TwNruvN8elN3AmQYeQCYN32xcyk8t3S7r3EISSNHhr0ZlcCZYd3eidUi8MUFYAHuTVirOnPAoAalnITRZaFOrJl7P0Dfj/kgaovaNnu0FvKG0/c2W6w5eLB0V1s5gttQCg6szmg6lAbVI59l5q3q/dS2ENC60zosLeeDyimDCU4=
+	t=1715687117; cv=none; b=YuGzVQzRvuAXAV/gredU8onmbK7K84JtCoj79rLhgSeBC8Dm3zgCJNKpfm218h6xJL1RYISiIlFZrmBJ0KfkIB7Zb3w2YhQrdcTxqXvDBDlYz1CtbXDt6sHE2RQrTUAXg9+EVR1PMkxsZ74fdgkBTXfaCZWFxV/b/+ENBXD9nn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687114; c=relaxed/simple;
-	bh=2GVZDEkK1Xvvd/+omkaAuHtgXqfh8j6iL7y2AKPXFKM=;
+	s=arc-20240116; t=1715687117; c=relaxed/simple;
+	bh=SZVY995J2m6DiN+Q2W31nr7aIebDukiWOMnyy2rlofU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W8v0VbPMFoYvqFD2GK7eLINwC4j3pUBhJP1yXHnlfXDFUHBJEsZ9AFa7DvvtWWQI4ZIfB2ZLMG64b04gnWt0laWgPkhUfwvAdn47hscxG/FU4jHFmmQr/bd69j4lLQ/N/wZN2zRXacL1Ej6Xon6p6NQEK5l8L++jaAIxCUz4jvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLZ5PcLe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z3ZXu6fYQQKNEGlnvy7D9C2w+YpC2tjdrjNMHErtdt6ubo7TDHO6FXs6QxkFEt1m+beZRoAeBO5srYDdjOTRplSvY6y2Aabpv0wgd8PCnin8XnII7enaa91WKoEuTGfx1cWry0MLbo7c6p4dTartNES0LrjhIt26CWGWpVk0L5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0psgrqi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLZ5PcLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBFFC2BD10;
-	Tue, 14 May 2024 11:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0psgrqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00ACBC32781;
+	Tue, 14 May 2024 11:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687114;
-	bh=2GVZDEkK1Xvvd/+omkaAuHtgXqfh8j6iL7y2AKPXFKM=;
+	s=korg; t=1715687117;
+	bh=SZVY995J2m6DiN+Q2W31nr7aIebDukiWOMnyy2rlofU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLZ5PcLeVbbPXnAPKN1OF6C3mT0eSerjeODFjx7tG8f4clKNcBM7jf4FW5hq2+FoP
-	 Hk+rJ+xilVJrjpjzExsWYKBJ1UmDPTgIglHTq052kO3JoftqWmQyGZSa9ixzWw6o66
-	 c+4FMisWpZjeSyGmnfymBMpJwz3l+QipgdkstLAk=
+	b=u0psgrqiSUbGNnLvRQDfm07G/q21YABkukRtKeBl/vfXNn28URLdetT/+PaE134UM
+	 5D3d1WVZEC9AXUzH7QiYAt0diP3THRbYvic+3e9f+OxogHkJwDjyB1ljYDmEz/ESFb
+	 aGcopzXKtoIes0WozCx6ziQzpyJaEvxgXmPmNA5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 28/84] net: dsa: mv88e6xxx: Add number of MACs in the ATU
-Date: Tue, 14 May 2024 12:19:39 +0200
-Message-ID: <20240514100952.756976661@linuxfoundation.org>
+Subject: [PATCH 5.4 63/84] tcp: defer shutdown(SEND_SHUTDOWN) for TCP_SYN_RECV sockets
+Date: Tue, 14 May 2024 12:20:14 +0200
+Message-ID: <20240514100954.055684314@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100951.686412426@linuxfoundation.org>
 References: <20240514100951.686412426@linuxfoundation.org>
@@ -51,252 +53,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Lunn <andrew@lunn.ch>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit d9ea56206c4df77175321874544eb4ca48c0bac8 ]
+[ Upstream commit 94062790aedb505bdda209b10bea47b294d6394f ]
 
-For each supported switch, add an entry to the info structure for the
-number of MACs which can be stored in the ATU. This will later be used
-to export the ATU as a devlink resource, and indicate its occupancy,
-how full the ATU is.
+TCP_SYN_RECV state is really special, it is only used by
+cross-syn connections, mostly used by fuzzers.
 
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: b9a61c20179f ("net: dsa: mv88e6xxx: Fix number of databases for 88E6141 / 88E6341")
+In the following crash [1], syzbot managed to trigger a divide
+by zero in tcp_rcv_space_adjust()
+
+A socket makes the following state transitions,
+without ever calling tcp_init_transfer(),
+meaning tcp_init_buffer_space() is also not called.
+
+         TCP_CLOSE
+connect()
+         TCP_SYN_SENT
+         TCP_SYN_RECV
+shutdown() -> tcp_shutdown(sk, SEND_SHUTDOWN)
+         TCP_FIN_WAIT1
+
+To fix this issue, change tcp_shutdown() to not
+perform a TCP_SYN_RECV -> TCP_FIN_WAIT1 transition,
+which makes no sense anyway.
+
+When tcp_rcv_state_process() later changes socket state
+from TCP_SYN_RECV to TCP_ESTABLISH, then look at
+sk->sk_shutdown to finally enter TCP_FIN_WAIT1 state,
+and send a FIN packet from a sane socket state.
+
+This means tcp_send_fin() can now be called from BH
+context, and must use GFP_ATOMIC allocations.
+
+[1]
+divide error: 0000 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 1 PID: 5084 Comm: syz-executor358 Not tainted 6.9.0-rc6-syzkaller-00022-g98369dccd2f8 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+ RIP: 0010:tcp_rcv_space_adjust+0x2df/0x890 net/ipv4/tcp_input.c:767
+Code: e3 04 4c 01 eb 48 8b 44 24 38 0f b6 04 10 84 c0 49 89 d5 0f 85 a5 03 00 00 41 8b 8e c8 09 00 00 89 e8 29 c8 48 0f af c3 31 d2 <48> f7 f1 48 8d 1c 43 49 8d 96 76 08 00 00 48 89 d0 48 c1 e8 03 48
+RSP: 0018:ffffc900031ef3f0 EFLAGS: 00010246
+RAX: 0c677a10441f8f42 RBX: 000000004fb95e7e RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: 0000000027d4b11f R08: ffffffff89e535a4 R09: 1ffffffff25e6ab7
+R10: dffffc0000000000 R11: ffffffff8135e920 R12: ffff88802a9f8d30
+R13: dffffc0000000000 R14: ffff88802a9f8d00 R15: 1ffff1100553f2da
+FS:  00005555775c0380(0000) GS:ffff8880b9500000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f1155bf2304 CR3: 000000002b9f2000 CR4: 0000000000350ef0
+Call Trace:
+ <TASK>
+  tcp_recvmsg_locked+0x106d/0x25a0 net/ipv4/tcp.c:2513
+  tcp_recvmsg+0x25d/0x920 net/ipv4/tcp.c:2578
+  inet6_recvmsg+0x16a/0x730 net/ipv6/af_inet6.c:680
+  sock_recvmsg_nosec net/socket.c:1046 [inline]
+  sock_recvmsg+0x109/0x280 net/socket.c:1068
+  ____sys_recvmsg+0x1db/0x470 net/socket.c:2803
+  ___sys_recvmsg net/socket.c:2845 [inline]
+  do_recvmmsg+0x474/0xae0 net/socket.c:2939
+  __sys_recvmmsg net/socket.c:3018 [inline]
+  __do_sys_recvmmsg net/socket.c:3041 [inline]
+  __se_sys_recvmmsg net/socket.c:3034 [inline]
+  __x64_sys_recvmmsg+0x199/0x250 net/socket.c:3034
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7faeb6363db9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 c1 17 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ffcc1997168 EFLAGS: 00000246 ORIG_RAX: 000000000000012b
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007faeb6363db9
+RDX: 0000000000000001 RSI: 0000000020000bc0 RDI: 0000000000000005
+RBP: 0000000000000000 R08: 0000000000000000 R09: 000000000000001c
+R10: 0000000000000122 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000001
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Link: https://lore.kernel.org/r/20240501125448.896529-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 25 +++++++++++++++++++++++++
- drivers/net/dsa/mv88e6xxx/chip.h |  6 ++++++
- 2 files changed, 31 insertions(+)
+ net/ipv4/tcp.c        | 4 ++--
+ net/ipv4/tcp_input.c  | 2 ++
+ net/ipv4/tcp_output.c | 4 +++-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index c1655e5952220..9ee144c117267 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -4200,6 +4200,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6097,
- 		.name = "Marvell 88E6085",
- 		.num_databases = 4096,
-+		.num_macs = 8192,
- 		.num_ports = 10,
- 		.num_internal_phys = 5,
- 		.max_vid = 4095,
-@@ -4222,6 +4223,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6095,
- 		.name = "Marvell 88E6095/88E6095F",
- 		.num_databases = 256,
-+		.num_macs = 8192,
- 		.num_ports = 11,
- 		.num_internal_phys = 0,
- 		.max_vid = 4095,
-@@ -4242,6 +4244,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6097,
- 		.name = "Marvell 88E6097/88E6097F",
- 		.num_databases = 4096,
-+		.num_macs = 8192,
- 		.num_ports = 11,
- 		.num_internal_phys = 8,
- 		.max_vid = 4095,
-@@ -4264,6 +4267,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6165,
- 		.name = "Marvell 88E6123",
- 		.num_databases = 4096,
-+		.num_macs = 1024,
- 		.num_ports = 3,
- 		.num_internal_phys = 5,
- 		.max_vid = 4095,
-@@ -4286,6 +4290,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6185,
- 		.name = "Marvell 88E6131",
- 		.num_databases = 256,
-+		.num_macs = 8192,
- 		.num_ports = 8,
- 		.num_internal_phys = 0,
- 		.max_vid = 4095,
-@@ -4306,6 +4311,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6341,
- 		.name = "Marvell 88E6141",
- 		.num_databases = 4096,
-+		.num_macs = 2048,
- 		.num_ports = 6,
- 		.num_internal_phys = 5,
- 		.num_gpio = 11,
-@@ -4329,6 +4335,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6165,
- 		.name = "Marvell 88E6161",
- 		.num_databases = 4096,
-+		.num_macs = 1024,
- 		.num_ports = 6,
- 		.num_internal_phys = 5,
- 		.max_vid = 4095,
-@@ -4352,6 +4359,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6165,
- 		.name = "Marvell 88E6165",
- 		.num_databases = 4096,
-+		.num_macs = 8192,
- 		.num_ports = 6,
- 		.num_internal_phys = 0,
- 		.max_vid = 4095,
-@@ -4375,6 +4383,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6351,
- 		.name = "Marvell 88E6171",
- 		.num_databases = 4096,
-+		.num_macs = 8192,
- 		.num_ports = 7,
- 		.num_internal_phys = 5,
- 		.max_vid = 4095,
-@@ -4397,6 +4406,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6352,
- 		.name = "Marvell 88E6172",
- 		.num_databases = 4096,
-+		.num_macs = 8192,
- 		.num_ports = 7,
- 		.num_internal_phys = 5,
- 		.num_gpio = 15,
-@@ -4420,6 +4430,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6351,
- 		.name = "Marvell 88E6175",
- 		.num_databases = 4096,
-+		.num_macs = 8192,
- 		.num_ports = 7,
- 		.num_internal_phys = 5,
- 		.max_vid = 4095,
-@@ -4442,6 +4453,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6352,
- 		.name = "Marvell 88E6176",
- 		.num_databases = 4096,
-+		.num_macs = 8192,
- 		.num_ports = 7,
- 		.num_internal_phys = 5,
- 		.num_gpio = 15,
-@@ -4465,6 +4477,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6185,
- 		.name = "Marvell 88E6185",
- 		.num_databases = 256,
-+		.num_macs = 8192,
- 		.num_ports = 10,
- 		.num_internal_phys = 0,
- 		.max_vid = 4095,
-@@ -4485,6 +4498,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6390,
- 		.name = "Marvell 88E6190",
- 		.num_databases = 4096,
-+		.num_macs = 16384,
- 		.num_ports = 11,	/* 10 + Z80 */
- 		.num_internal_phys = 9,
- 		.num_gpio = 16,
-@@ -4508,6 +4522,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6390,
- 		.name = "Marvell 88E6190X",
- 		.num_databases = 4096,
-+		.num_macs = 16384,
- 		.num_ports = 11,	/* 10 + Z80 */
- 		.num_internal_phys = 9,
- 		.num_gpio = 16,
-@@ -4531,6 +4546,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6390,
- 		.name = "Marvell 88E6191",
- 		.num_databases = 4096,
-+		.num_macs = 16384,
- 		.num_ports = 11,	/* 10 + Z80 */
- 		.num_internal_phys = 9,
- 		.max_vid = 8191,
-@@ -4581,6 +4597,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6352,
- 		.name = "Marvell 88E6240",
- 		.num_databases = 4096,
-+		.num_macs = 8192,
- 		.num_ports = 7,
- 		.num_internal_phys = 5,
- 		.num_gpio = 15,
-@@ -4651,6 +4668,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6320,
- 		.name = "Marvell 88E6320",
- 		.num_databases = 4096,
-+		.num_macs = 8192,
- 		.num_ports = 7,
- 		.num_internal_phys = 5,
- 		.num_gpio = 15,
-@@ -4675,6 +4693,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6320,
- 		.name = "Marvell 88E6321",
- 		.num_databases = 4096,
-+		.num_macs = 8192,
- 		.num_ports = 7,
- 		.num_internal_phys = 5,
- 		.num_gpio = 15,
-@@ -4698,6 +4717,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6341,
- 		.name = "Marvell 88E6341",
- 		.num_databases = 4096,
-+		.num_macs = 2048,
- 		.num_internal_phys = 5,
- 		.num_ports = 6,
- 		.num_gpio = 11,
-@@ -4722,6 +4742,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6351,
- 		.name = "Marvell 88E6350",
- 		.num_databases = 4096,
-+		.num_macs = 8192,
- 		.num_ports = 7,
- 		.num_internal_phys = 5,
- 		.max_vid = 4095,
-@@ -4744,6 +4765,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6351,
- 		.name = "Marvell 88E6351",
- 		.num_databases = 4096,
-+		.num_macs = 8192,
- 		.num_ports = 7,
- 		.num_internal_phys = 5,
- 		.max_vid = 4095,
-@@ -4766,6 +4788,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6352,
- 		.name = "Marvell 88E6352",
- 		.num_databases = 4096,
-+		.num_macs = 8192,
- 		.num_ports = 7,
- 		.num_internal_phys = 5,
- 		.num_gpio = 15,
-@@ -4789,6 +4812,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6390,
- 		.name = "Marvell 88E6390",
- 		.num_databases = 4096,
-+		.num_macs = 16384,
- 		.num_ports = 11,	/* 10 + Z80 */
- 		.num_internal_phys = 9,
- 		.num_gpio = 16,
-@@ -4812,6 +4836,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.family = MV88E6XXX_FAMILY_6390,
- 		.name = "Marvell 88E6390X",
- 		.num_databases = 4096,
-+		.num_macs = 16384,
- 		.num_ports = 11,	/* 10 + Z80 */
- 		.num_internal_phys = 9,
- 		.num_gpio = 16,
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.h b/drivers/net/dsa/mv88e6xxx/chip.h
-index e9b1a1ac9a8e2..24dd73be37040 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.h
-+++ b/drivers/net/dsa/mv88e6xxx/chip.h
-@@ -94,6 +94,7 @@ struct mv88e6xxx_info {
- 	u16 prod_num;
- 	const char *name;
- 	unsigned int num_databases;
-+	unsigned int num_macs;
- 	unsigned int num_ports;
- 	unsigned int num_internal_phys;
- 	unsigned int num_gpio;
-@@ -609,6 +610,11 @@ static inline unsigned int mv88e6xxx_num_databases(struct mv88e6xxx_chip *chip)
- 	return chip->info->num_databases;
- }
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index ca7863f722187..9a4a3f6d9cb06 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -2331,7 +2331,7 @@ void tcp_shutdown(struct sock *sk, int how)
+ 	/* If we've already sent a FIN, or it's a closed state, skip this. */
+ 	if ((1 << sk->sk_state) &
+ 	    (TCPF_ESTABLISHED | TCPF_SYN_SENT |
+-	     TCPF_SYN_RECV | TCPF_CLOSE_WAIT)) {
++	     TCPF_CLOSE_WAIT)) {
+ 		/* Clear out any half completed packets.  FIN if needed. */
+ 		if (tcp_close_state(sk))
+ 			tcp_send_fin(sk);
+@@ -2416,7 +2416,7 @@ void __tcp_close(struct sock *sk, long timeout)
+ 		 * machine. State transitions:
+ 		 *
+ 		 * TCP_ESTABLISHED -> TCP_FIN_WAIT1
+-		 * TCP_SYN_RECV	-> TCP_FIN_WAIT1 (forget it, it's impossible)
++		 * TCP_SYN_RECV	-> TCP_FIN_WAIT1 (it is difficult)
+ 		 * TCP_CLOSE_WAIT -> TCP_LAST_ACK
+ 		 *
+ 		 * are legal only when FIN has been sent (i.e. in window),
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 61243531a7f4c..87a10bb11eb0b 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -6342,6 +6342,8 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
  
-+static inline unsigned int mv88e6xxx_num_macs(struct  mv88e6xxx_chip *chip)
-+{
-+	return chip->info->num_macs;
-+}
-+
- static inline unsigned int mv88e6xxx_num_ports(struct mv88e6xxx_chip *chip)
- {
- 	return chip->info->num_ports;
+ 		tcp_initialize_rcv_mss(sk);
+ 		tcp_fast_path_on(tp);
++		if (sk->sk_shutdown & SEND_SHUTDOWN)
++			tcp_shutdown(sk, SEND_SHUTDOWN);
+ 		break;
+ 
+ 	case TCP_FIN_WAIT1: {
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 6d7f441c7dd76..4f203cbbc99b5 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3210,7 +3210,9 @@ void tcp_send_fin(struct sock *sk)
+ 			return;
+ 		}
+ 	} else {
+-		skb = alloc_skb_fclone(MAX_TCP_HEADER, sk->sk_allocation);
++		skb = alloc_skb_fclone(MAX_TCP_HEADER,
++				       sk_gfp_mask(sk, GFP_ATOMIC |
++						       __GFP_NOWARN));
+ 		if (unlikely(!skb))
+ 			return;
+ 
 -- 
 2.43.0
 
