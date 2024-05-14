@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFC26311D;
-	Tue, 14 May 2024 11:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797626311D;
+	Tue, 14 May 2024 11:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685895; cv=none; b=PNOdCGJHuBV15V2RBwH2ugJUuJZHoL31qKyXVi0iGWGocbM308xP0DtIBo9sJ4nWfPmUyH6/hPkCT10GX6/544S12jYRb9hqy0r7GAkfbDuVOtqyh1YohZJeJ66dQx269TCuCVKCrmrVMxJQ32lpRczhJl7YostTjIU63rfJH6E=
+	t=1715685899; cv=none; b=NnWF/hB76DuK4zAjIxYekI8qieYNx3oR/ormaRwjXEeUcD+8Uq+ihJm1jbxqWJTA9GRvzsRYow379MOERNjjTaRCnmXIKdCLNliX8VA8gA9YMREuEFQLZ3CeYwwafmGuZ04UHecz9yG+PEnnDUTLFhmdLNwokycnM0ax5B8J8vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685895; c=relaxed/simple;
-	bh=UM04sP3xl+C1IpKiG7CAajNMuHBbqUFoXoINYRQP/ls=;
+	s=arc-20240116; t=1715685899; c=relaxed/simple;
+	bh=5mM1Xuvrx/5sIOiKTzhN0LGBaRtHm6dLSUPaSBa/ZeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bGhBgmjuUlEjOA4mXX6xrFxDgs2DJjlDjKTUESP+sLZXYsJ8VmL2aABD7SJcJxkljfpfqn2zR7bhkYEnfI5XRuJnIlTCj5FLqAWIIbOxeVYbjGdmC/jMfhrkJ4KQZwyOGBbU+kD2R6VnPINs+aLiK04QQ5jevGVLX76stA7dCrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEwEpmCK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N3ARf8twUEPk8/xS8L+MZvzClrvTcP/Jei2dcyOniT/0uDVwHnryKlCOb0HkWdLMWJoy+Dc87ALmTv25I9nWuSqT3NCQE1IK/9Ra6XW1vs8P5ypKGH7vzqT9REEQZO6tvZ/l0niVns7yoaWYTnNbfEtQrqS1NRGpDjEEBUPBRbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WayXLFjl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEwEpmCK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB97C2BD10;
-	Tue, 14 May 2024 11:24:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WayXLFjl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9EABC2BD10;
+	Tue, 14 May 2024 11:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685895;
-	bh=UM04sP3xl+C1IpKiG7CAajNMuHBbqUFoXoINYRQP/ls=;
+	s=korg; t=1715685899;
+	bh=5mM1Xuvrx/5sIOiKTzhN0LGBaRtHm6dLSUPaSBa/ZeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YEwEpmCK6ob6eUq7k7qCDztZ8dQL7FM4y738MU+XEcFbP7/LdWbhtLoRjty8J1RMw
-	 1muSlTT7ZItXxvrWJpEg5Jd51kCTevYifERnhY46XnEI/hKMjXKzzHy1gh+gvFFTvi
-	 GtiKkucGG1GqkBy/6PnhuVC0SCRXOWRMTHL4orZI=
+	b=WayXLFjlOIPgg8pG9yB113yr/L/Rr5QfA9rXUdZMwxxp0DYecYogQN/RY4Xyi9Iuu
+	 zPWe2/F6aL17LOkdfQmDpXKuV2TwwBGofwhrICGi6MS8ovNZRqSJqH6EjusxLpewy9
+	 YhBtMFH2JCvBgKDRhdAGVL/LD5NNy4xoVPLuM6wE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Frank Oltmanns <frank@oltmanns.dev>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>
-Subject: [PATCH 6.6 263/301] clk: sunxi-ng: common: Support minimum and maximum rate
-Date: Tue, 14 May 2024 12:18:54 +0200
-Message-ID: <20240514101042.186288130@linuxfoundation.org>
+	Kai Vehmanen <kai.vehmanen@intel.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Uma Shankar <uma.shankar@intel.com>,
+	Animesh Manna <animesh.manna@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.6 272/301] drm/i915/audio: Fix audio time stamp programming for DP
+Date: Tue, 14 May 2024 12:19:03 +0200
+Message-ID: <20240514101042.535485731@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,84 +53,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Oltmanns <frank@oltmanns.dev>
+From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
 
-commit b914ec33b391ec766545a41f0cfc0de3e0b388d7 upstream.
+commit c66b8356273c8d22498f88e4223af47a7bf8a23c upstream.
 
-The Allwinner SoC's typically have an upper and lower limit for their
-clocks' rates. Up until now, support for that has been implemented
-separately for each clock type.
+Intel hardware is capable of programming the Maud/Naud SDPs on its
+own based on real-time clocks. While doing so, it takes care
+of any deviations from the theoretical values. Programming the registers
+explicitly with static values can interfere with this logic. Therefore,
+let the HW decide the Maud and Naud SDPs on it's own.
 
-Implement that functionality in the sunxi-ng's common part making use of
-the CCF rate liming capabilities, so that it is available for all clock
-types.
-
-Suggested-by: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: Frank Oltmanns <frank@oltmanns.dev>
-Cc: stable@vger.kernel.org
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Link: https://lore.kernel.org/r/20240310-pinephone-pll-fixes-v4-1-46fc80c83637@oltmanns.dev
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc: stable@vger.kernel.org # v5.17
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8097
+Co-developed-by: Kai Vehmanen <kai.vehmanen@intel.com>
+Signed-off-by: Kai Vehmanen <kai.vehmanen@intel.com>
+Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Animesh Manna <animesh.manna@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240430091825.733499-1-chaitanya.kumar.borah@intel.com
+(cherry picked from commit 8e056b50d92ae7f4d6895d1c97a69a2a953cf97b)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/sunxi-ng/ccu_common.c |   19 +++++++++++++++++++
- drivers/clk/sunxi-ng/ccu_common.h |    3 +++
- 2 files changed, 22 insertions(+)
+ drivers/gpu/drm/i915/display/intel_audio.c |  113 ++---------------------------
+ 1 file changed, 8 insertions(+), 105 deletions(-)
 
---- a/drivers/clk/sunxi-ng/ccu_common.c
-+++ b/drivers/clk/sunxi-ng/ccu_common.c
-@@ -44,6 +44,16 @@ bool ccu_is_better_rate(struct ccu_commo
- 			unsigned long current_rate,
- 			unsigned long best_rate)
+--- a/drivers/gpu/drm/i915/display/intel_audio.c
++++ b/drivers/gpu/drm/i915/display/intel_audio.c
+@@ -75,19 +75,6 @@ struct intel_audio_funcs {
+ 				       struct intel_crtc_state *crtc_state);
+ };
+ 
+-/* DP N/M table */
+-#define LC_810M	810000
+-#define LC_540M	540000
+-#define LC_270M	270000
+-#define LC_162M	162000
+-
+-struct dp_aud_n_m {
+-	int sample_rate;
+-	int clock;
+-	u16 m;
+-	u16 n;
+-};
+-
+ struct hdmi_aud_ncts {
+ 	int sample_rate;
+ 	int clock;
+@@ -95,60 +82,6 @@ struct hdmi_aud_ncts {
+ 	int cts;
+ };
+ 
+-/* Values according to DP 1.4 Table 2-104 */
+-static const struct dp_aud_n_m dp_aud_n_m[] = {
+-	{ 32000, LC_162M, 1024, 10125 },
+-	{ 44100, LC_162M, 784, 5625 },
+-	{ 48000, LC_162M, 512, 3375 },
+-	{ 64000, LC_162M, 2048, 10125 },
+-	{ 88200, LC_162M, 1568, 5625 },
+-	{ 96000, LC_162M, 1024, 3375 },
+-	{ 128000, LC_162M, 4096, 10125 },
+-	{ 176400, LC_162M, 3136, 5625 },
+-	{ 192000, LC_162M, 2048, 3375 },
+-	{ 32000, LC_270M, 1024, 16875 },
+-	{ 44100, LC_270M, 784, 9375 },
+-	{ 48000, LC_270M, 512, 5625 },
+-	{ 64000, LC_270M, 2048, 16875 },
+-	{ 88200, LC_270M, 1568, 9375 },
+-	{ 96000, LC_270M, 1024, 5625 },
+-	{ 128000, LC_270M, 4096, 16875 },
+-	{ 176400, LC_270M, 3136, 9375 },
+-	{ 192000, LC_270M, 2048, 5625 },
+-	{ 32000, LC_540M, 1024, 33750 },
+-	{ 44100, LC_540M, 784, 18750 },
+-	{ 48000, LC_540M, 512, 11250 },
+-	{ 64000, LC_540M, 2048, 33750 },
+-	{ 88200, LC_540M, 1568, 18750 },
+-	{ 96000, LC_540M, 1024, 11250 },
+-	{ 128000, LC_540M, 4096, 33750 },
+-	{ 176400, LC_540M, 3136, 18750 },
+-	{ 192000, LC_540M, 2048, 11250 },
+-	{ 32000, LC_810M, 1024, 50625 },
+-	{ 44100, LC_810M, 784, 28125 },
+-	{ 48000, LC_810M, 512, 16875 },
+-	{ 64000, LC_810M, 2048, 50625 },
+-	{ 88200, LC_810M, 1568, 28125 },
+-	{ 96000, LC_810M, 1024, 16875 },
+-	{ 128000, LC_810M, 4096, 50625 },
+-	{ 176400, LC_810M, 3136, 28125 },
+-	{ 192000, LC_810M, 2048, 16875 },
+-};
+-
+-static const struct dp_aud_n_m *
+-audio_config_dp_get_n_m(const struct intel_crtc_state *crtc_state, int rate)
+-{
+-	int i;
+-
+-	for (i = 0; i < ARRAY_SIZE(dp_aud_n_m); i++) {
+-		if (rate == dp_aud_n_m[i].sample_rate &&
+-		    crtc_state->port_clock == dp_aud_n_m[i].clock)
+-			return &dp_aud_n_m[i];
+-	}
+-
+-	return NULL;
+-}
+-
+ static const struct {
+ 	int clock;
+ 	u32 config;
+@@ -386,47 +319,17 @@ hsw_dp_audio_config_update(struct intel_
+ 			   const struct intel_crtc_state *crtc_state)
  {
-+	unsigned long min_rate, max_rate;
-+
-+	clk_hw_get_rate_range(&common->hw, &min_rate, &max_rate);
-+
-+	if (current_rate > max_rate)
-+		return false;
-+
-+	if (current_rate < min_rate)
-+		return false;
-+
- 	if (common->features & CCU_FEATURE_CLOSEST_RATE)
- 		return abs(current_rate - target_rate) < abs(best_rate - target_rate);
+ 	struct drm_i915_private *i915 = to_i915(encoder->base.dev);
+-	struct i915_audio_component *acomp = i915->display.audio.component;
+ 	enum transcoder cpu_transcoder = crtc_state->cpu_transcoder;
+-	enum port port = encoder->port;
+-	const struct dp_aud_n_m *nm;
+-	int rate;
+-	u32 tmp;
  
-@@ -122,6 +132,7 @@ static int sunxi_ccu_probe(struct sunxi_
+-	rate = acomp ? acomp->aud_sample_rate[port] : 0;
+-	nm = audio_config_dp_get_n_m(crtc_state, rate);
+-	if (nm)
+-		drm_dbg_kms(&i915->drm, "using Maud %u, Naud %u\n", nm->m,
+-			    nm->n);
+-	else
+-		drm_dbg_kms(&i915->drm, "using automatic Maud, Naud\n");
+-
+-	tmp = intel_de_read(i915, HSW_AUD_CFG(cpu_transcoder));
+-	tmp &= ~AUD_CONFIG_N_VALUE_INDEX;
+-	tmp &= ~AUD_CONFIG_PIXEL_CLOCK_HDMI_MASK;
+-	tmp &= ~AUD_CONFIG_N_PROG_ENABLE;
+-	tmp |= AUD_CONFIG_N_VALUE_INDEX;
+-
+-	if (nm) {
+-		tmp &= ~AUD_CONFIG_N_MASK;
+-		tmp |= AUD_CONFIG_N(nm->n);
+-		tmp |= AUD_CONFIG_N_PROG_ENABLE;
+-	}
+-
+-	intel_de_write(i915, HSW_AUD_CFG(cpu_transcoder), tmp);
+-
+-	tmp = intel_de_read(i915, HSW_AUD_M_CTS_ENABLE(cpu_transcoder));
+-	tmp &= ~AUD_CONFIG_M_MASK;
+-	tmp &= ~AUD_M_CTS_M_VALUE_INDEX;
+-	tmp &= ~AUD_M_CTS_M_PROG_ENABLE;
+-
+-	if (nm) {
+-		tmp |= nm->m;
+-		tmp |= AUD_M_CTS_M_VALUE_INDEX;
+-		tmp |= AUD_M_CTS_M_PROG_ENABLE;
+-	}
++	/* Enable time stamps. Let HW calculate Maud/Naud values */
++	intel_de_rmw(i915, HSW_AUD_CFG(cpu_transcoder),
++		     AUD_CONFIG_N_VALUE_INDEX |
++		     AUD_CONFIG_PIXEL_CLOCK_HDMI_MASK |
++		     AUD_CONFIG_UPPER_N_MASK |
++		     AUD_CONFIG_LOWER_N_MASK |
++		     AUD_CONFIG_N_PROG_ENABLE,
++		     AUD_CONFIG_N_VALUE_INDEX);
  
- 	for (i = 0; i < desc->hw_clks->num ; i++) {
- 		struct clk_hw *hw = desc->hw_clks->hws[i];
-+		struct ccu_common *common = hw_to_ccu_common(hw);
- 		const char *name;
+-	intel_de_write(i915, HSW_AUD_M_CTS_ENABLE(cpu_transcoder), tmp);
+ }
  
- 		if (!hw)
-@@ -136,6 +147,14 @@ static int sunxi_ccu_probe(struct sunxi_
- 			pr_err("Couldn't register clock %d - %s\n", i, name);
- 			goto err_clk_unreg;
- 		}
-+
-+		if (common->max_rate)
-+			clk_hw_set_rate_range(hw, common->min_rate,
-+					      common->max_rate);
-+		else
-+			WARN(common->min_rate,
-+			     "No max_rate, ignoring min_rate of clock %d - %s\n",
-+			     i, name);
- 	}
- 
- 	ret = of_clk_add_hw_provider(node, of_clk_hw_onecell_get,
---- a/drivers/clk/sunxi-ng/ccu_common.h
-+++ b/drivers/clk/sunxi-ng/ccu_common.h
-@@ -31,6 +31,9 @@ struct ccu_common {
- 	u16		lock_reg;
- 	u32		prediv;
- 
-+	unsigned long	min_rate;
-+	unsigned long	max_rate;
-+
- 	unsigned long	features;
- 	spinlock_t	*lock;
- 	struct clk_hw	hw;
+ static void
 
 
