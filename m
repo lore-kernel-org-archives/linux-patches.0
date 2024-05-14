@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E39512BEA5;
-	Tue, 14 May 2024 11:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856E712BEA5;
+	Tue, 14 May 2024 11:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684687; cv=none; b=MasI3E/aVNMOrIwzMrt/J8Op9bY8lnyN7iBkTBA0iAze6k0AysDncUYIlQVgfNz4VvYN2rua62ljyEmpbDA5hye1tJWW7sgJqKqRg+sLyJpeL9tFrbPO0GBM4TvHUgyRI2b8golfvXzsvc0tMd300ZNADw9b9AV5gH2xjZC/IHg=
+	t=1715684693; cv=none; b=EVYtT7CMVlrJlMMOjl9P76/l9t2Ob3XRRa1YHmIqE3sGM3D1uLm3FDOsQssHjteDwrhXtYF55D3HNIHgKYB1htdf0mbiA+6LCXly+qU00QfzU4LiMl9TYIyWMXjFOvhdi72GsqNWvxnJjMjaJsr6HNJO4sk9yAABWL0S8Uk1Unc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684687; c=relaxed/simple;
-	bh=f4NfT/S2k+R7NVstgKHntmdLSZdWsW9nq31DIz77TdM=;
+	s=arc-20240116; t=1715684693; c=relaxed/simple;
+	bh=noacSckRY1a96ZMhGBT54mfmE5kJY/vlD4gXD+MbZiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mAX/8cyrvimUx106sWOCks1QYrW9rnq4BvzTImUINXguNbSzMm6uw815VjW4f/9GUXPfPw5qTbjq/0eiDQ9VFxkXoMPlh/TSkBcffx4wh7/5fds0H9eogeqycjQdXq51bBJ60tXpWCenHYjZUS+jG77nFd/gfbhlLk54WyDNM34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xwe1zg40; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FphgnCqT0CTCgx+nXFDo9sJVo4Z4mQO5ttrpkT5Oqv0ufdc8WcOUeAJ29klq2V3D1KpRLx1JRdu6x8NI5Q/4GpqQiCrThfyu5ZJq2DNeIxBrzMktZwNyiiGfVNQlvEjYdJnj2F8XQqhS5W8kVp0iIQx36seVtiEZ4BsgbWebOBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Teac0xiJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xwe1zg40"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F30C2BD10;
-	Tue, 14 May 2024 11:04:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Teac0xiJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C1BC2BD10;
+	Tue, 14 May 2024 11:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684687;
-	bh=f4NfT/S2k+R7NVstgKHntmdLSZdWsW9nq31DIz77TdM=;
+	s=korg; t=1715684693;
+	bh=noacSckRY1a96ZMhGBT54mfmE5kJY/vlD4gXD+MbZiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xwe1zg40hH6yKtOzB0Kvp3HhNjbrU29Ts6Lss3MG02tSOjZaJvhqlCjIDSKkMrz9r
-	 iVqOS8QRUAV8c9qQl4fbw/5mEdLjud8EnUYeleu9JQ/CuYFOPRQXm5k73oQThPUt94
-	 Sj8UmfGQyR8IIPZAJTjc/uJeDuwzcZVpxFey1xy0=
+	b=Teac0xiJWxtP5zCG6MnHyvF6LYATVJ92hjR3aw+zXjWOHcRgrqalX7Z7erbxBkcFl
+	 sY7va0FWJzX7/ch21HVYT7Y7yZA/oElcFBrcLjvVG7VwFB7q+7QPdYILEUCryOe18d
+	 ofVMFzgvaZtr15Y54Vb/7PgAR+OOEpKUW2FULHCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 076/301] net: bridge: fix multicast-to-unicast with fraglist GSO
-Date: Tue, 14 May 2024 12:15:47 +0200
-Message-ID: <20240514101035.119114787@linuxfoundation.org>
+Subject: [PATCH 6.6 077/301] net: core: reject skb_copy(_expand) for fraglist GSO skbs
+Date: Tue, 14 May 2024 12:15:48 +0200
+Message-ID: <20240514101035.156871034@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -55,35 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 59c878cbcdd80ed39315573b3511d0acfd3501b5 ]
+[ Upstream commit d091e579b864fa790dd6a0cd537a22c383126681 ]
 
-Calling skb_copy on a SKB_GSO_FRAGLIST skb is not valid, since it returns
-an invalid linearized skb. This code only needs to change the ethernet
-header, so pskb_copy is the right function to call here.
+SKB_GSO_FRAGLIST skbs must not be linearized, otherwise they become
+invalid. Return NULL if such an skb is passed to skb_copy or
+skb_copy_expand, in order to prevent a crash on a potential later
+call to skb_gso_segment.
 
-Fixes: 6db6f0eae605 ("bridge: multicast to unicast")
+Fixes: 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_forward.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/skbuff.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
-index 7431f89e897b9..d7c35f55bd69f 100644
---- a/net/bridge/br_forward.c
-+++ b/net/bridge/br_forward.c
-@@ -266,7 +266,7 @@ static void maybe_deliver_addr(struct net_bridge_port *p, struct sk_buff *skb,
- 	if (skb->dev == p->dev && ether_addr_equal(src, addr))
- 		return;
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 60876262b3fb3..f0a9ef1aeaa29 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -1971,11 +1971,17 @@ static inline int skb_alloc_rx_flag(const struct sk_buff *skb)
  
--	skb = skb_copy(skb, GFP_ATOMIC);
-+	skb = pskb_copy(skb, GFP_ATOMIC);
- 	if (!skb) {
- 		DEV_STATS_INC(dev, tx_dropped);
- 		return;
+ struct sk_buff *skb_copy(const struct sk_buff *skb, gfp_t gfp_mask)
+ {
+-	int headerlen = skb_headroom(skb);
+-	unsigned int size = skb_end_offset(skb) + skb->data_len;
+-	struct sk_buff *n = __alloc_skb(size, gfp_mask,
+-					skb_alloc_rx_flag(skb), NUMA_NO_NODE);
++	struct sk_buff *n;
++	unsigned int size;
++	int headerlen;
++
++	if (WARN_ON_ONCE(skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST))
++		return NULL;
+ 
++	headerlen = skb_headroom(skb);
++	size = skb_end_offset(skb) + skb->data_len;
++	n = __alloc_skb(size, gfp_mask,
++			skb_alloc_rx_flag(skb), NUMA_NO_NODE);
+ 	if (!n)
+ 		return NULL;
+ 
+@@ -2303,12 +2309,17 @@ struct sk_buff *skb_copy_expand(const struct sk_buff *skb,
+ 	/*
+ 	 *	Allocate the copy buffer
+ 	 */
+-	struct sk_buff *n = __alloc_skb(newheadroom + skb->len + newtailroom,
+-					gfp_mask, skb_alloc_rx_flag(skb),
+-					NUMA_NO_NODE);
+-	int oldheadroom = skb_headroom(skb);
+ 	int head_copy_len, head_copy_off;
++	struct sk_buff *n;
++	int oldheadroom;
++
++	if (WARN_ON_ONCE(skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST))
++		return NULL;
+ 
++	oldheadroom = skb_headroom(skb);
++	n = __alloc_skb(newheadroom + skb->len + newtailroom,
++			gfp_mask, skb_alloc_rx_flag(skb),
++			NUMA_NO_NODE);
+ 	if (!n)
+ 		return NULL;
+ 
 -- 
 2.43.0
 
