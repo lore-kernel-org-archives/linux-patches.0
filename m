@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1087412E1E7;
-	Tue, 14 May 2024 11:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34E512E1DA;
+	Tue, 14 May 2024 11:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686706; cv=none; b=kNDx+qf6cruEQgCSgLxoBapkqmcOCKrkNGEbEcyYIp0A2bBgJ90iMebB0ivY3KgjZi/WByN+9Xmpzm237OxgzFE/GVYhUceIBX0mtJKxDZ2AqN2sMngdOTT0JLoB12wmKRdrWKvmDhw4T3y7j4+aOZG6I26tP77FQ0zrY7Xzq9k=
+	t=1715686708; cv=none; b=TLu/6U4g3MAgqdFfb5cYuEsxoa4PcLp/f3y0rN2brOpWO0AfmshRP2R3t0EShuiT2uevMFCKfkULfWEo4RjCh4sB9inw0C5n9M6sxkxgsxaKoJZDX4Uqjkj0451m1HcU1FRaAXp0i2g5jLUsylbMGAUBhZ9UtpIjkI9QVyiDPmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686706; c=relaxed/simple;
-	bh=Ptgi3DpB4w9hE5JCfCvbl8iIq/BbCJFTN6QWX4Gx9Qg=;
+	s=arc-20240116; t=1715686708; c=relaxed/simple;
+	bh=ivJHfgPzg1J26Dl8TxDPnerq9hp0pkSUIn8j+3WrD20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E91f44ZbxFNKyLUt+feQ+xDqXHQW8xbb69Pa7Vy4rqqQB2QAYsg8h/n8785yQJf9ES7R2Kfr/xbrtwp+jgwzLmQ6e2gnvZp0lRUSUxRTxJ0/1U7Z5qBa4YZaPoSdhLjgYTZF9178vGXyFaq9Iz4Ub9WNzgRMqhaniuNfvC7i3/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbH8FbVe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NGvoqCJIuP+leOH4Isc5Q2L/gNyECuo0i0+6SKX2x4YPZT1IlUQdcN6YPdqoWFZvmUM+9QxhCrj0O1y2DWaCQQYdh9O8by8BnP0UVrg8CSXMyQrARRLmYPq+J3IWmQj98tHiB/FR5v6Dj1rrZ3coZJheFTTuXayu6TjDCu0OUvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8Lozr5K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbH8FbVe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48DE9C2BD10;
-	Tue, 14 May 2024 11:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8Lozr5K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E86C2BD10;
+	Tue, 14 May 2024 11:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686705;
-	bh=Ptgi3DpB4w9hE5JCfCvbl8iIq/BbCJFTN6QWX4Gx9Qg=;
+	s=korg; t=1715686708;
+	bh=ivJHfgPzg1J26Dl8TxDPnerq9hp0pkSUIn8j+3WrD20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HbH8FbVemNT0aosNgC3pyUjm/5h+2Pk/C4nrCoYtSKsbK9UsCoJ+8qFn7tURtebyf
-	 CbCra8vb3KfkBmwDDaY9r8yIoAEGS97VvB6/TT7rmNbAuOkBPa62JJOfLNihSZUDYs
-	 LulZ1EmaLeQtwMagH/gXQc6Uqr8Tj24XeQO7wMt8=
+	b=q8Lozr5Kgdm89FvKoYKY0XjnxMgzNVIbp0y7NP+HCwD4X4/5/vcw5gmJUrUCIXJBy
+	 XZd7pnmxs6rwrpUY9UslYHlSATm/Mb31FSuYt7wzgnDXys5eV2OnCNzzc4wnZCIvdA
+	 xXAU8LP3Bl0FSU4nCvEYmB3zSEWvAqQLrsEUtQO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 231/236] ksmbd: do not grant v2 lease if parent lease key and epoch are not set
-Date: Tue, 14 May 2024 12:19:53 +0200
-Message-ID: <20240514101029.126620481@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 232/236] Bluetooth: qca: add missing firmware sanity checks
+Date: Tue, 14 May 2024 12:19:54 +0200
+Message-ID: <20240514101029.164446410@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -50,62 +50,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 691aae4f36f9825df6781da4399a1e718951085a upstream.
+commit 2e4edfa1e2bd821a317e7d006517dcf2f3fac68d upstream.
 
-This patch fix xfstests generic/070 test with smb2 leases = yes.
+Add the missing sanity checks when parsing the firmware files before
+downloading them to avoid accessing and corrupting memory beyond the
+vmalloced buffer.
 
-cifs.ko doesn't set parent lease key and epoch in create context v2 lease.
-ksmbd suppose that parent lease and epoch are vaild if data length is
-v2 lease context size and handle directory lease using this values.
-ksmbd should hanle it as v1 lease not v2 lease if parent lease key and
-epoch are not set in create context v2 lease.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 83e81961ff7e ("Bluetooth: btqca: Introduce generic QCA ROME support")
+Cc: stable@vger.kernel.org	# 4.10
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/oplock.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/bluetooth/btqca.c |   38 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 32 insertions(+), 6 deletions(-)
 
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -1208,7 +1208,9 @@ int smb_grant_oplock(struct ksmbd_work *
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -265,9 +265,10 @@ int qca_send_pre_shutdown_cmd(struct hci
+ }
+ EXPORT_SYMBOL_GPL(qca_send_pre_shutdown_cmd);
  
- 	/* Only v2 leases handle the directory */
- 	if (S_ISDIR(file_inode(fp->filp)->i_mode)) {
--		if (!lctx || lctx->version != 2)
-+		if (!lctx || lctx->version != 2 ||
-+		    (lctx->flags != SMB2_LEASE_FLAG_PARENT_LEASE_KEY_SET_LE &&
-+		     !lctx->epoch))
- 			return 0;
+-static void qca_tlv_check_data(struct hci_dev *hdev,
++static int qca_tlv_check_data(struct hci_dev *hdev,
+ 			       struct qca_fw_config *config,
+-		u8 *fw_data, enum qca_btsoc_type soc_type)
++			       u8 *fw_data, size_t fw_size,
++			       enum qca_btsoc_type soc_type)
+ {
+ 	const u8 *data;
+ 	u32 type_len;
+@@ -283,6 +284,9 @@ static void qca_tlv_check_data(struct hc
+ 
+ 	switch (config->type) {
+ 	case ELF_TYPE_PATCH:
++		if (fw_size < 7)
++			return -EINVAL;
++
+ 		config->dnld_mode = QCA_SKIP_EVT_VSE_CC;
+ 		config->dnld_type = QCA_SKIP_EVT_VSE_CC;
+ 
+@@ -291,6 +295,9 @@ static void qca_tlv_check_data(struct hc
+ 		bt_dev_dbg(hdev, "File version      : 0x%x", fw_data[6]);
+ 		break;
+ 	case TLV_TYPE_PATCH:
++		if (fw_size < sizeof(struct tlv_type_hdr) + sizeof(struct tlv_type_patch))
++			return -EINVAL;
++
+ 		tlv = (struct tlv_type_hdr *)fw_data;
+ 		type_len = le32_to_cpu(tlv->type_len);
+ 		tlv_patch = (struct tlv_type_patch *)tlv->data;
+@@ -330,6 +337,9 @@ static void qca_tlv_check_data(struct hc
+ 		break;
+ 
+ 	case TLV_TYPE_NVM:
++		if (fw_size < sizeof(struct tlv_type_hdr))
++			return -EINVAL;
++
+ 		tlv = (struct tlv_type_hdr *)fw_data;
+ 
+ 		type_len = le32_to_cpu(tlv->type_len);
+@@ -338,17 +348,26 @@ static void qca_tlv_check_data(struct hc
+ 		BT_DBG("TLV Type\t\t : 0x%x", type_len & 0x000000ff);
+ 		BT_DBG("Length\t\t : %d bytes", length);
+ 
++		if (fw_size < length + (tlv->data - fw_data))
++			return -EINVAL;
++
+ 		idx = 0;
+ 		data = tlv->data;
+-		while (idx < length) {
++		while (idx < length - sizeof(struct tlv_type_nvm)) {
+ 			tlv_nvm = (struct tlv_type_nvm *)(data + idx);
+ 
+ 			tag_id = le16_to_cpu(tlv_nvm->tag_id);
+ 			tag_len = le16_to_cpu(tlv_nvm->tag_len);
+ 
++			if (length < idx + sizeof(struct tlv_type_nvm) + tag_len)
++				return -EINVAL;
++
+ 			/* Update NVM tags as needed */
+ 			switch (tag_id) {
+ 			case EDL_TAG_ID_HCI:
++				if (tag_len < 3)
++					return -EINVAL;
++
+ 				/* HCI transport layer parameters
+ 				 * enabling software inband sleep
+ 				 * onto controller side.
+@@ -364,6 +383,9 @@ static void qca_tlv_check_data(struct hc
+ 				break;
+ 
+ 			case EDL_TAG_ID_DEEP_SLEEP:
++				if (tag_len < 1)
++					return -EINVAL;
++
+ 				/* Sleep enable mask
+ 				 * enabling deep sleep feature on controller.
+ 				 */
+@@ -372,14 +394,16 @@ static void qca_tlv_check_data(struct hc
+ 				break;
+ 			}
+ 
+-			idx += (sizeof(u16) + sizeof(u16) + 8 + tag_len);
++			idx += sizeof(struct tlv_type_nvm) + tag_len;
+ 		}
+ 		break;
+ 
+ 	default:
+ 		BT_ERR("Unknown TLV type %d", config->type);
+-		break;
++		return -EINVAL;
  	}
++
++	return 0;
+ }
  
-@@ -1470,8 +1472,9 @@ void create_lease_buf(u8 *rbuf, struct l
- 		buf->lcontext.LeaseFlags = lease->flags;
- 		buf->lcontext.Epoch = cpu_to_le16(lease->epoch);
- 		buf->lcontext.LeaseState = lease->state;
--		memcpy(buf->lcontext.ParentLeaseKey, lease->parent_lease_key,
--		       SMB2_LEASE_KEY_SIZE);
-+		if (lease->flags == SMB2_LEASE_FLAG_PARENT_LEASE_KEY_SET_LE)
-+			memcpy(buf->lcontext.ParentLeaseKey, lease->parent_lease_key,
-+			       SMB2_LEASE_KEY_SIZE);
- 		buf->ccontext.DataOffset = cpu_to_le16(offsetof
- 				(struct create_lease_v2, lcontext));
- 		buf->ccontext.DataLength = cpu_to_le32(sizeof(struct lease_context_v2));
-@@ -1536,8 +1539,9 @@ struct lease_ctx_info *parse_lease_state
- 		lreq->flags = lc->lcontext.LeaseFlags;
- 		lreq->epoch = lc->lcontext.Epoch;
- 		lreq->duration = lc->lcontext.LeaseDuration;
--		memcpy(lreq->parent_lease_key, lc->lcontext.ParentLeaseKey,
--				SMB2_LEASE_KEY_SIZE);
-+		if (lreq->flags == SMB2_LEASE_FLAG_PARENT_LEASE_KEY_SET_LE)
-+			memcpy(lreq->parent_lease_key, lc->lcontext.ParentLeaseKey,
-+			       SMB2_LEASE_KEY_SIZE);
- 		lreq->version = 2;
- 	} else {
- 		struct create_lease *lc = (struct create_lease *)cc;
+ static int qca_tlv_send_segment(struct hci_dev *hdev, int seg_size,
+@@ -529,7 +553,9 @@ static int qca_download_firmware(struct
+ 	memcpy(data, fw->data, size);
+ 	release_firmware(fw);
+ 
+-	qca_tlv_check_data(hdev, config, data, soc_type);
++	ret = qca_tlv_check_data(hdev, config, data, size, soc_type);
++	if (ret)
++		return ret;
+ 
+ 	segment = data;
+ 	remain = size;
 
 
