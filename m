@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6966913B287;
-	Tue, 14 May 2024 11:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC96113B287;
+	Tue, 14 May 2024 11:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684973; cv=none; b=WYnkfyyRBQI0WmnuDGkN5/cAz/6+1SwQdLXp6U7xG05LNq2VTOyEZNCrsKKhpyHLI6/ULoN9CuOqXbA6pSN8ztxkqYk1AKqxYTjB5TgOJsniW0dcx0cB9gRfaru8A1C63VePdGGd3cZGlzDX6Kf2dm9dh2qLBopfdCnT+PXXX74=
+	t=1715684979; cv=none; b=Ldm7auyCKDdrARj5AgkzoXGsHVFYvkYta+TYXUuyPraVhadBjY6PD2vX0df4HtZSt0B2W20yNJTfdE2GxDiv/xogRfvqgD0YaS3VTSlUx601NCcUBOC+0ZoWrGELTjRIamxIwVr7A18DfGe2kqBfCzPbsMdDhq1oiH7GKV0cUHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684973; c=relaxed/simple;
-	bh=4T8Lyt20n9SAQtQpiZsx8F1Jc/JxnqRPaQ7E3tUPEZg=;
+	s=arc-20240116; t=1715684979; c=relaxed/simple;
+	bh=Eb4+G+aHG2Vm3e3joQm1/LUC2P6jFfU1JpRJhMDV0UU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWFeMHPssIWr5BxE16rsl8htPK2nktv7W3HMyveMpeHPHiEwInqKW6fFTk7FWKwjBrnAut1/VURc93IWQWiI7gshn1h5ZfJG9vnKQ7CsKKTrqeFHNO5SHNaHYxtkKyPQzHrOABhRmtX97wwwidu9S35NzWH2ShurTO/EnSMMOtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfFEW5sq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jjUtHb79eAwwM2yn+8q0MehlhnHMCaxTEkWObUGnGMV3dRvae8KgIkwy7IYddiZaJb5bGYMoTpQd5gttxVLHT0/RgVllIqSFCuTmTMrJW9X9FO1llAei2ooiXpaEQcASGKJvcoUEwQbdSGunFCkLQcBt5BVFeRBc9gI3ECBIznw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBFdNruK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfFEW5sq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41DA2C32781;
-	Tue, 14 May 2024 11:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBFdNruK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E00C2BD10;
+	Tue, 14 May 2024 11:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684973;
-	bh=4T8Lyt20n9SAQtQpiZsx8F1Jc/JxnqRPaQ7E3tUPEZg=;
+	s=korg; t=1715684979;
+	bh=Eb4+G+aHG2Vm3e3joQm1/LUC2P6jFfU1JpRJhMDV0UU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sfFEW5sqmN27yLT0OxDuXfN8HICSHe3xD6IiBpFTnA9OOj3etJt2yLrmt/kGd2R+R
-	 0yGuSJKXMhEi9qztzfPKaFIu0XPAFPV5O+QntvIOr9ddGEUxabqkZrOGzS8D2cKO9x
-	 KxBb6JuJGgJhMTNneq5o7jNHc6AQomsTJ+oelwTM=
+	b=zBFdNruKfagjLlrNQIjHDwJW8akndQYTS7s2XRDE0sKBz+TH42qeTn6v/zlqqtp/n
+	 BuoGUq6cAxV4bEA8EBiZxUKT0ekM5G8k/2wZZBM+P4yiTKSUecFcC2YXMAmu5Sthip
+	 Oo3FbofbC3kT3aUxwOWhn3Pe6DpAAA9TMSX781JA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Matei <andreimatei1@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Aishwarya TCV <aishwarya.tcv@arm.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 115/301] bpf: Check bloom filter map value size
-Date: Tue, 14 May 2024 12:16:26 +0200
-Message-ID: <20240514101036.592699459@linuxfoundation.org>
+Subject: [PATCH 6.6 116/301] selftests/ftrace: Fix event filter target_func selection
+Date: Tue, 14 May 2024 12:16:27 +0200
+Message-ID: <20240514101036.629901920@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -52,83 +59,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Matei <andreimatei1@gmail.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit a8d89feba7e54e691ca7c4efc2a6264fa83f3687 ]
+[ Upstream commit 8ecab2e64572f1aecdfc5a8feae748abda6e3347 ]
 
-This patch adds a missing check to bloom filter creating, rejecting
-values above KMALLOC_MAX_SIZE. This brings the bloom map in line with
-many other map types.
+The event filter function test has been failing in our internal test
+farm:
 
-The lack of this protection can cause kernel crashes for value sizes
-that overflow int's. Such a crash was caught by syzkaller. The next
-patch adds more guard-rails at a lower level.
+| # not ok 33 event filter function - test event filtering on functions
 
-Signed-off-by: Andrei Matei <andreimatei1@gmail.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20240327024245.318299-2-andreimatei1@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Running the test in verbose mode indicates that this is because the test
+erroneously determines that kmem_cache_free() is the most common caller
+of kmem_cache_free():
+
+  # # + cut -d: -f3 trace
+  # # + sed s/call_site=([^+]*)+0x.*/1/
+  # # + sort
+  # # + uniq -c
+  # # + sort
+  # # + tail -n 1
+  # # + sed s/^[ 0-9]*//
+  # # + target_func=kmem_cache_free
+
+... and as kmem_cache_free() doesn't call itself, setting this as the
+filter function for kmem_cache_free() results in no hits, and
+consequently the test fails:
+
+  # # + grep kmem_cache_free trace
+  # # + grep kmem_cache_free
+  # # + wc -l
+  # # + hitcnt=0
+  # # + grep kmem_cache_free trace
+  # # + grep -v kmem_cache_free
+  # # + wc -l
+  # # + misscnt=0
+  # # + [ 0 -eq 0 ]
+  # # + exit_fail
+
+This seems to be because the system in question has tasks with ':' in
+their name (which a number of kernel worker threads have). These show up
+in the trace, e.g.
+
+  test:.sh-1299    [004] .....  2886.040608: kmem_cache_free: call_site=putname+0xa4/0xc8 ptr=000000000f4d22f4 name=names_cache
+
+... and so when we try to extact the call_site with:
+
+  cut -d: -f3 trace | sed 's/call_site=\([^+]*\)+0x.*/\1/'
+
+... the 'cut' command will extrace the column containing
+'kmem_cache_free' rather than the column containing 'call_site=...', and
+the 'sed' command will leave this unchanged. Consequently, the test will
+decide to use 'kmem_cache_free' as the filter function, resulting in the
+failure seen above.
+
+Fix this by matching the 'call_site=<func>' part specifically to extract
+the function name.
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reported-by: Aishwarya TCV <aishwarya.tcv@arm.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-kselftest@vger.kernel.org
+Cc: linux-trace-kernel@vger.kernel.org
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bloom_filter.c                           | 13 +++++++++++++
- .../selftests/bpf/prog_tests/bloom_filter_map.c     |  6 ++++++
- 2 files changed, 19 insertions(+)
+ .../selftests/ftrace/test.d/filter/event-filter-function.tc     | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/bloom_filter.c b/kernel/bpf/bloom_filter.c
-index addf3dd57b59b..35e1ddca74d21 100644
---- a/kernel/bpf/bloom_filter.c
-+++ b/kernel/bpf/bloom_filter.c
-@@ -80,6 +80,18 @@ static int bloom_map_get_next_key(struct bpf_map *map, void *key, void *next_key
- 	return -EOPNOTSUPP;
- }
+diff --git a/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc b/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
+index 2de7c61d1ae30..3f74c09c56b62 100644
+--- a/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
++++ b/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
+@@ -24,7 +24,7 @@ echo 0 > events/enable
+ echo "Get the most frequently calling function"
+ sample_events
  
-+/* Called from syscall */
-+static int bloom_map_alloc_check(union bpf_attr *attr)
-+{
-+	if (attr->value_size > KMALLOC_MAX_SIZE)
-+		/* if value_size is bigger, the user space won't be able to
-+		 * access the elements.
-+		 */
-+		return -E2BIG;
-+
-+	return 0;
-+}
-+
- static struct bpf_map *bloom_map_alloc(union bpf_attr *attr)
- {
- 	u32 bitset_bytes, bitset_mask, nr_hash_funcs, nr_bits;
-@@ -191,6 +203,7 @@ static u64 bloom_map_mem_usage(const struct bpf_map *map)
- BTF_ID_LIST_SINGLE(bpf_bloom_map_btf_ids, struct, bpf_bloom_filter)
- const struct bpf_map_ops bloom_filter_map_ops = {
- 	.map_meta_equal = bpf_map_meta_equal,
-+	.map_alloc_check = bloom_map_alloc_check,
- 	.map_alloc = bloom_map_alloc,
- 	.map_free = bloom_map_free,
- 	.map_get_next_key = bloom_map_get_next_key,
-diff --git a/tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c b/tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c
-index d2d9e965eba59..f79815b7e951b 100644
---- a/tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c
-+++ b/tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c
-@@ -2,6 +2,7 @@
- /* Copyright (c) 2021 Facebook */
- 
- #include <sys/syscall.h>
-+#include <limits.h>
- #include <test_progs.h>
- #include "bloom_filter_map.skel.h"
- 
-@@ -21,6 +22,11 @@ static void test_fail_cases(void)
- 	if (!ASSERT_LT(fd, 0, "bpf_map_create bloom filter invalid value size 0"))
- 		close(fd);
- 
-+	/* Invalid value size: too big */
-+	fd = bpf_map_create(BPF_MAP_TYPE_BLOOM_FILTER, NULL, 0, INT32_MAX, 100, NULL);
-+	if (!ASSERT_LT(fd, 0, "bpf_map_create bloom filter invalid value too large"))
-+		close(fd);
-+
- 	/* Invalid max entries size */
- 	fd = bpf_map_create(BPF_MAP_TYPE_BLOOM_FILTER, NULL, 0, sizeof(value), 0, NULL);
- 	if (!ASSERT_LT(fd, 0, "bpf_map_create bloom filter invalid max entries size"))
+-target_func=`cut -d: -f3 trace | sed 's/call_site=\([^+]*\)+0x.*/\1/' | sort | uniq -c | sort | tail -n 1 | sed 's/^[ 0-9]*//'`
++target_func=`cat trace | grep -o 'call_site=\([^+]*\)' | sed 's/call_site=//' | sort | uniq -c | sort | tail -n 1 | sed 's/^[ 0-9]*//'`
+ if [ -z "$target_func" ]; then
+     exit_fail
+ fi
 -- 
 2.43.0
 
