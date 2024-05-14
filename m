@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76B35028C;
-	Tue, 14 May 2024 11:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC344F1E5;
+	Tue, 14 May 2024 11:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685997; cv=none; b=E+8hc/0cPC1HBcY4T/4u6MxCcD39ramHubvTYC4RMr5dBb6meHkgbatunHwzAsIxyTpmigHuPq6HNPKig13U264j0Qb5TCgDxg+1Q1lSWdVVOOwbhzyLk1B8tgm4PWlc1rbwUuBoigsa2m9RKs8jA4ezxqL3TMt3MWFpT0U0wCk=
+	t=1715686001; cv=none; b=R+GInM6c+ULT73UoU70gewSp1DmSxsgSN9XR3b15mdUmSeOa7iIoZiXlEo3+ZnOi2NzzDx1ojfwGEswLUBhMaOeKowdpQl9le5u3ZbUp4At8YE+k6lEwnRovclkUNShEbr84VMWM1ZcMGKbfNz2QA/z/2khbsdMMBRmoEy0Tsa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685997; c=relaxed/simple;
-	bh=6epk6uQ1/B02hZMjBiS3ieyBIYhZo/BqRBDd2TY/+Gs=;
+	s=arc-20240116; t=1715686001; c=relaxed/simple;
+	bh=grnUAatkmRCOXuowGyPCTaAcCBQcUmdwZ32WJy2/qTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bbqhVQO3OL99hpOtWTQe/634yFe44nZmoFNQ2LhZNsXQ6Z8j89XvILORwU9Qtdu0SvUhMm9apiqQ5un4/gIGo2q9EOqVF4qJz5ko/s6JVfivtpQRMrYbchKcFvgSV+H0gAjJX3kvEaUiwa7A9rAuj/h+iUso0GSSksABPqZDYpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4Va3GR9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RcU+MWpZbSquE9gkrxT2gif3G92PlBjlnVfGSrPTbtyPbP/q2DQgqI5mjcQgpO6oUdqTt6FvdlFUeaXyYFJJYt7VfBgEXooox20Nig+aCfHfP1Fjf28ieAP7HQTiegAu0SALOVPELpozof0nmPJrZ4QGx6rzHRdXyci/5ya36IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xs2/dZDN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4Va3GR9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA43FC2BD10;
-	Tue, 14 May 2024 11:26:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xs2/dZDN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B23C2BD10;
+	Tue, 14 May 2024 11:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685996;
-	bh=6epk6uQ1/B02hZMjBiS3ieyBIYhZo/BqRBDd2TY/+Gs=;
+	s=korg; t=1715686001;
+	bh=grnUAatkmRCOXuowGyPCTaAcCBQcUmdwZ32WJy2/qTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b4Va3GR9lYXdqdHLRLY9+LpS093bqESWRDmG5QiL43JwxZJ7DruCa1B0nCfnwjUSm
-	 Mqmk2JMEfkxjC2/XtDrOBLzAG7Y+D4xULgqOkxNmN+LCiTdlbsgH7ZRCgi2tKBUyBb
-	 mkihVo+wfTKjqVabE8FnmoJ4YyZ+QaiDO1hqzfQs=
+	b=Xs2/dZDN97zrcmv5CCSr87Zoxh9caSKx/Kvp9zl6dSwt4GYF5nG0/leq4lNb5O2oQ
+	 4aBtPXZTkLx9Ff6f/CLoJcDZq33sarRTyFH5nC2IG6bdx/16hX/bIRA/V/X7l71tIP
+	 Y6gvldYS8gtwWq9QsYoYOaGMYqrYmZtbvHuP0lFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 292/301] eventfs: Do not differentiate the toplevel events directory
-Date: Tue, 14 May 2024 12:19:23 +0200
-Message-ID: <20240514101043.285854666@linuxfoundation.org>
+Subject: [PATCH 6.6 293/301] eventfs: Do not treat events directory different than other directories
+Date: Tue, 14 May 2024 12:19:24 +0200
+Message-ID: <20240514101043.323145487@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -55,15 +55,21 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit d53891d348ac3eceaf48f4732a1f4f5c0e0a55ce upstream.
+commit 22e61e15af731dbe46704c775d2335e56fcef4e9 upstream.
 
-The toplevel events directory is really no different than the events
-directory of instances. Having the two be different caused
-inconsistencies and made it harder to fix the permissions bugs.
+Treat the events directory the same as other directories when it comes to
+permissions. The events directory was considered different because it's
+dentry is persistent, whereas the other directory dentries are created
+when accessed. But the way tracefs now does its ownership by using the
+root dentry's permissions as the default permissions, the events directory
+can get out of sync when a remount is performed setting the group and user
+permissions.
 
-Make all events directories act the same.
+Remove the special case for the events directory on setting the
+attributes. This allows the updates caused by remount to work properly as
+well as simplifies the code.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240502200905.846448710@goodmis.org
+Link: https://lore.kernel.org/linux-trace-kernel/20240502200906.002923579@goodmis.org
 
 Cc: stable@vger.kernel.org
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
@@ -74,122 +80,33 @@ Fixes: 8186fff7ab649 ("tracefs/eventfs: Use root and instance inodes as default 
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |   29 ++++++++---------------------
- fs/tracefs/internal.h    |    7 +++----
- 2 files changed, 11 insertions(+), 25 deletions(-)
+ fs/tracefs/event_inode.c |   16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
 --- a/fs/tracefs/event_inode.c
 +++ b/fs/tracefs/event_inode.c
-@@ -57,7 +57,6 @@ enum {
- 	EVENTFS_SAVE_MODE	= BIT(16),
- 	EVENTFS_SAVE_UID	= BIT(17),
- 	EVENTFS_SAVE_GID	= BIT(18),
--	EVENTFS_TOPLEVEL	= BIT(19),
- };
+@@ -163,21 +163,7 @@ static int eventfs_set_attr(struct mnt_i
+ 	 * determined by the parent directory.
+ 	 */
+ 	if (dentry->d_inode->i_mode & S_IFDIR) {
+-		/*
+-		 * The events directory dentry is never freed, unless its
+-		 * part of an instance that is deleted. It's attr is the
+-		 * default for its child files and directories.
+-		 * Do not update it. It's not used for its own mode or ownership.
+-		 */
+-		if (ei->is_events) {
+-			/* But it still needs to know if it was modified */
+-			if (iattr->ia_valid & ATTR_UID)
+-				ei->attr.mode |= EVENTFS_SAVE_UID;
+-			if (iattr->ia_valid & ATTR_GID)
+-				ei->attr.mode |= EVENTFS_SAVE_GID;
+-		} else {
+-			update_attr(&ei->attr, iattr);
+-		}
++		update_attr(&ei->attr, iattr);
  
- #define EVENTFS_MODE_MASK	(EVENTFS_SAVE_MODE - 1)
-@@ -196,14 +195,10 @@ static int eventfs_set_attr(struct mnt_i
- 	return ret;
- }
- 
--static void update_top_events_attr(struct eventfs_inode *ei, struct super_block *sb)
-+static void update_events_attr(struct eventfs_inode *ei, struct super_block *sb)
- {
- 	struct inode *root;
- 
--	/* Only update if the "events" was on the top level */
--	if (!ei || !(ei->attr.mode & EVENTFS_TOPLEVEL))
--		return;
--
- 	/* Get the tracefs root inode. */
- 	root = d_inode(sb->s_root);
- 	ei->attr.uid = root->i_uid;
-@@ -216,10 +211,10 @@ static void set_top_events_ownership(str
- 	struct eventfs_inode *ei = ti->private;
- 
- 	/* The top events directory doesn't get automatically updated */
--	if (!ei || !ei->is_events || !(ei->attr.mode & EVENTFS_TOPLEVEL))
-+	if (!ei || !ei->is_events)
- 		return;
- 
--	update_top_events_attr(ei, inode->i_sb);
-+	update_events_attr(ei, inode->i_sb);
- 
- 	if (!(ei->attr.mode & EVENTFS_SAVE_UID))
- 		inode->i_uid = ei->attr.uid;
-@@ -248,7 +243,7 @@ static int eventfs_permission(struct mnt
- 	return generic_permission(idmap, inode, mask);
- }
- 
--static const struct inode_operations eventfs_root_dir_inode_operations = {
-+static const struct inode_operations eventfs_dir_inode_operations = {
- 	.lookup		= eventfs_root_lookup,
- 	.setattr	= eventfs_set_attr,
- 	.getattr	= eventfs_get_attr,
-@@ -316,7 +311,7 @@ static struct eventfs_inode *eventfs_fin
- 		// Walk upwards until you find the events inode
- 	} while (!ei->is_events);
- 
--	update_top_events_attr(ei, dentry->d_sb);
-+	update_events_attr(ei, dentry->d_sb);
- 
- 	return ei;
- }
-@@ -420,7 +415,7 @@ static struct dentry *lookup_dir_entry(s
- 	update_inode_attr(dentry, inode, &ei->attr,
- 			  S_IFDIR | S_IRWXU | S_IRUGO | S_IXUGO);
- 
--	inode->i_op = &eventfs_root_dir_inode_operations;
-+	inode->i_op = &eventfs_dir_inode_operations;
- 	inode->i_fop = &eventfs_file_operations;
- 
- 	/* All directories will have the same inode number */
-@@ -769,14 +764,6 @@ struct eventfs_inode *eventfs_create_eve
- 	uid = d_inode(dentry->d_parent)->i_uid;
- 	gid = d_inode(dentry->d_parent)->i_gid;
- 
--	/*
--	 * If the events directory is of the top instance, then parent
--	 * is NULL. Set the attr.mode to reflect this and its permissions will
--	 * default to the tracefs root dentry.
--	 */
--	if (!parent)
--		ei->attr.mode = EVENTFS_TOPLEVEL;
--
- 	/* This is used as the default ownership of the files and directories */
- 	ei->attr.uid = uid;
- 	ei->attr.gid = gid;
-@@ -785,13 +772,13 @@ struct eventfs_inode *eventfs_create_eve
- 	INIT_LIST_HEAD(&ei->list);
- 
- 	ti = get_tracefs(inode);
--	ti->flags |= TRACEFS_EVENT_INODE | TRACEFS_EVENT_TOP_INODE;
-+	ti->flags |= TRACEFS_EVENT_INODE;
- 	ti->private = ei;
- 
- 	inode->i_mode = S_IFDIR | S_IRWXU | S_IRUGO | S_IXUGO;
- 	inode->i_uid = uid;
- 	inode->i_gid = gid;
--	inode->i_op = &eventfs_root_dir_inode_operations;
-+	inode->i_op = &eventfs_dir_inode_operations;
- 	inode->i_fop = &eventfs_file_operations;
- 
- 	dentry->d_fsdata = get_ei(ei);
---- a/fs/tracefs/internal.h
-+++ b/fs/tracefs/internal.h
-@@ -4,10 +4,9 @@
- 
- enum {
- 	TRACEFS_EVENT_INODE		= BIT(1),
--	TRACEFS_EVENT_TOP_INODE		= BIT(2),
--	TRACEFS_GID_PERM_SET		= BIT(3),
--	TRACEFS_UID_PERM_SET		= BIT(4),
--	TRACEFS_INSTANCE_INODE		= BIT(5),
-+	TRACEFS_GID_PERM_SET		= BIT(2),
-+	TRACEFS_UID_PERM_SET		= BIT(3),
-+	TRACEFS_INSTANCE_INODE		= BIT(4),
- };
- 
- struct tracefs_inode {
+ 	} else {
+ 		name = dentry->d_name.name;
 
 
