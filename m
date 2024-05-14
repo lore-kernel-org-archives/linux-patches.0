@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E22412C49C;
-	Tue, 14 May 2024 11:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0DC12BF3D;
+	Tue, 14 May 2024 11:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687282; cv=none; b=GGFuGEQYK3+1a3zPXBWxagVp/qI67OOQuMTF7F3lc4lulWuXB+v07s+hZOCXhOBeW9kjwYuIS8USd9o5/PzOY0NUWmi1pncB5qMckQfeKuoZCZHqdSciDTKIYffY2tIUzOTo7dmrSlwotbRUt8XZe8T8LMMljgZkEoMeIUuqyzk=
+	t=1715687285; cv=none; b=M+0w2MMHGMkkMOvG7ABsFFeBq6nY77qfGKWfWxUAMn/mq4joRI2JRbMiSDVlsdoUXnmVJV6guJOlkGg4ptxk7nBb+aKHypgem5ebJy7i0rYK7MHz5OK6DI4Lw9B3yT6A9o1Y0YqZ45sQGp8pwe2CRTK9Dcb2tu1KUJBryPJQYus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687282; c=relaxed/simple;
-	bh=MurD1qCJLNAJtV0+5LZhu+7OYHohX3gHiSjAvIKklLM=;
+	s=arc-20240116; t=1715687285; c=relaxed/simple;
+	bh=0f9wb24qg5UXHIvtfOnNfZMEz5DIuLTD1qquCJ7dJo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QIkGvv8VVxrDHfxwzpMUHIeclCw8w2irL0K8WtONdAXjy+btGXFapq4TeG4ndCFETksbjgzd2bxENsb3Q/AsoQnX728g4bsIUpOp4VEDbHCFPSEDZh5WYu9zBtLFvsFAh8UqUp/sXv+QH6IjcibSYDjh8z6jX2kF2Y3k6U3UaeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZyYSM6S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h33nhFKJad8Nl+IcRJ5R8guYAophNOhcwf+HPHoHU1G3oWZWI4v/02sQr3dt3Zix9ZzwpWec3dpHTd3Lumt7Q40OTXrPU/0GCfcOTqZZQcfdVma0dOneOBK86QKDbN6AO23nUFyROsKIXF6CJvg76u+Q8a4VyJG1ENrhYhYUckk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s14aTNX6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZyYSM6S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA397C2BD10;
-	Tue, 14 May 2024 11:48:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s14aTNX6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE67FC2BD10;
+	Tue, 14 May 2024 11:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687282;
-	bh=MurD1qCJLNAJtV0+5LZhu+7OYHohX3gHiSjAvIKklLM=;
+	s=korg; t=1715687285;
+	bh=0f9wb24qg5UXHIvtfOnNfZMEz5DIuLTD1qquCJ7dJo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dZyYSM6SrDlrmQg2nVdIyKDGAu4rHnbVT+NcVAtZQT149cfYUs6a4JGHd/JJsVrZn
-	 dlSN1whTE8Zy7Vhjlx1QdhT71oty9+7tLlUFwJlcyYRFCjr8D3Yck1mB3eJGcKbr/I
-	 u9AqjImDwA1zq8IFbj6iBhS7snBR5DTCuBbVXD3E=
+	b=s14aTNX6LHiofy2i3M7S1ywTN9iHItyyQd9RemIIpEtJFmSctE9QoKI+NEaYlQxvV
+	 Yw/Avv4PhVmJshlYNAw+z+GpSJ47fLlnPeZTOFGe15zafkgq1p3oZOj73e95UNtr8q
+	 XeUa/vqEJmrughrlS7NYhbG4aADHfZRfQrwRYZUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenghui Yu <yuzenghui@huawei.com>,
+	Alexander Potapenko <glider@google.com>,
 	Marc Zyngier <maz@kernel.org>,
 	Oliver Upton <oliver.upton@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 042/111] KVM: arm64: vgic-v2: Use cpuid from userspace as vcpu_id
-Date: Tue, 14 May 2024 12:19:40 +0200
-Message-ID: <20240514100958.732560490@linuxfoundation.org>
+Subject: [PATCH 5.10 043/111] KVM: arm64: vgic-v2: Check for non-NULL vCPU in vgic_v2_parse_attr()
+Date: Tue, 14 May 2024 12:19:41 +0200
+Message-ID: <20240514100958.771075134@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -52,49 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-[ Upstream commit 4e7728c81a54b17bd33be402ac140bc11bb0c4f4 ]
+[ Upstream commit 6ddb4f372fc63210034b903d96ebbeb3c7195adb ]
 
-When parsing a GICv2 attribute that contains a cpuid, handle this
-as the vcpu_id, not a vcpu_idx, as userspace cannot really know
-the mapping between the two. For this, use kvm_get_vcpu_by_id()
-instead of kvm_get_vcpu().
+vgic_v2_parse_attr() is responsible for finding the vCPU that matches
+the user-provided CPUID, which (of course) may not be valid. If the ID
+is invalid, kvm_get_vcpu_by_id() returns NULL, which isn't handled
+gracefully.
 
-Take this opportunity to get rid of the pointless check against
-online_vcpus, which doesn't make much sense either, and switch
-to FIELD_GET as a way to extract the vcpu_id.
+Similar to the GICv3 uaccess flow, check that kvm_get_vcpu_by_id()
+actually returns something and fail the ioctl if not.
 
-Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230927090911.3355209-5-maz@kernel.org
+Cc: stable@vger.kernel.org
+Fixes: 7d450e282171 ("KVM: arm/arm64: vgic-new: Add userland access to VGIC dist registers")
+Reported-by: Alexander Potapenko <glider@google.com>
+Tested-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20240424173959.3776798-2-oliver.upton@linux.dev
 Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Stable-dep-of: 6ddb4f372fc6 ("KVM: arm64: vgic-v2: Check for non-NULL vCPU in vgic_v2_parse_attr()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-kvm-device.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ arch/arm64/kvm/vgic/vgic-kvm-device.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/arch/arm64/kvm/vgic/vgic-kvm-device.c b/arch/arm64/kvm/vgic/vgic-kvm-device.c
-index 7740995de982e..640cfa0c0f4cc 100644
+index 640cfa0c0f4cc..e80b638b78271 100644
 --- a/arch/arm64/kvm/vgic/vgic-kvm-device.c
 +++ b/arch/arm64/kvm/vgic/vgic-kvm-device.c
-@@ -286,13 +286,9 @@ int vgic_v2_parse_attr(struct kvm_device *dev, struct kvm_device_attr *attr,
+@@ -284,12 +284,12 @@ int kvm_register_vgic_device(unsigned long type)
+ int vgic_v2_parse_attr(struct kvm_device *dev, struct kvm_device_attr *attr,
+ 		       struct vgic_reg_attr *reg_attr)
  {
- 	int cpuid;
+-	int cpuid;
++	int cpuid = FIELD_GET(KVM_DEV_ARM_VGIC_CPUID_MASK, attr->attr);
  
--	cpuid = (attr->attr & KVM_DEV_ARM_VGIC_CPUID_MASK) >>
--		 KVM_DEV_ARM_VGIC_CPUID_SHIFT;
-+	cpuid = FIELD_GET(KVM_DEV_ARM_VGIC_CPUID_MASK, attr->attr);
- 
--	if (cpuid >= atomic_read(&dev->kvm->online_vcpus))
--		return -EINVAL;
+-	cpuid = FIELD_GET(KVM_DEV_ARM_VGIC_CPUID_MASK, attr->attr);
 -
--	reg_attr->vcpu = kvm_get_vcpu(dev->kvm, cpuid);
-+	reg_attr->vcpu = kvm_get_vcpu_by_id(dev->kvm, cpuid);
+-	reg_attr->vcpu = kvm_get_vcpu_by_id(dev->kvm, cpuid);
  	reg_attr->addr = attr->attr & KVM_DEV_ARM_VGIC_OFFSET_MASK;
++	reg_attr->vcpu = kvm_get_vcpu_by_id(dev->kvm, cpuid);
++	if (!reg_attr->vcpu)
++		return -EINVAL;
  
  	return 0;
+ }
 -- 
 2.43.0
 
