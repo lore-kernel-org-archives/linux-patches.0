@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FB6219E7;
-	Tue, 14 May 2024 11:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E695219E7;
+	Tue, 14 May 2024 11:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687758; cv=none; b=nGVQTzlbGXpZl3TDgjKi4hke6oyft4+L1dsn/AJi2+M+GcbqNzgepy0sxs4pN0Pz9sABKVFtBYElrQcgDloHaXOE/vMhE47qGqytATFpmBTg0T+iWQDHWF1Y1V+5udoLOQq1/yztn6aAvEiwz1P8FXc6szFZ2SsU7SnfkBlcKR8=
+	t=1715687761; cv=none; b=V0VICp7f048EVNy9BW2tFDATk8pyyCZSgNFL2F7NXmtoWJqBpYeXwfCEfQOpHTGyaZqYKtfM58JzR2l2l0B7OBou4rYEsGadfJyS/hTUYN5Bf6rfFPABZfvg0vBlhE8jbaEYcciM1oANUjqIxvSYyBTzqyemhlb867/i85crjKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687758; c=relaxed/simple;
-	bh=Q/bFmkdTIAsrx8S5kWp5DEWw/SjFf2F0CjhNv+OTsvg=;
+	s=arc-20240116; t=1715687761; c=relaxed/simple;
+	bh=mOVxdWbQMqWzPIn/juc9XiWijfzMtNMi7qvChB72KFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MlKdj9Lhtq2maIlZO5j4dNlJyzj5jj6bug/kitoAbU6rAJ0YuF1uOUL7yHXe0rsiJc3M3eJCMEvhvZA9QmEe1WbTJphJCVE3r7xYQ7Ft7tL7ZsJMtcrKXldasK65P0hk1nmwmdYU7ue3oenxcocX31sjBprpuHWE98YsxnvmRG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQoi5gR7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e1y2ZS018bx3tdYxXXOqojE7HMiJOEx1KS03zSBR4dPD7rbTRntvXvFW7uh8tpfh7IQ99EN+5QZVwgJhyggCK/H1Ks8kzPxjrHf/Xc4pxjfkZ9cwegWsR2zHYGpZ0x23aGw734r6Y3N6nz0UQLA/CmVIbGCIeO7KrD7cx4kC5lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcIGMNHF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQoi5gR7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A22C32781;
-	Tue, 14 May 2024 11:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcIGMNHF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05F3C2BD10;
+	Tue, 14 May 2024 11:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687758;
-	bh=Q/bFmkdTIAsrx8S5kWp5DEWw/SjFf2F0CjhNv+OTsvg=;
+	s=korg; t=1715687761;
+	bh=mOVxdWbQMqWzPIn/juc9XiWijfzMtNMi7qvChB72KFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQoi5gR7TqSnpWI7vzUe8Ztwc5gwcshyTWJYKI0vKhS3SmjPxLOcQWhP4pPhhcO3S
-	 6RLUo/jWLPbEIW6Pr1EVC9I05Y0HXGIS6ikFKGEXmtFCApolFSkX6dSLoW6LglifCO
-	 oNY91xXLoOxNmGrrVK0ACWG0AZ9COqsGBRyNjUO0=
+	b=GcIGMNHFTItUEh+n895wkwnNQq+BCDe+Q/5ShO54Vu/AAVxlumLqOiPnnPyuVJanB
+	 MgyRjeNHd4Mwm95tbxUXOZoSpcq+0ZTsNzlc/lD/iyNr50sF6liFrwsYC5cLrJmhbK
+	 zOaP7WpOnhKqV7fCAVCdAoLNDCEL+/xKzfg8bYdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vanillan Wang <vanillanwang@163.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/168] net:usb:qmi_wwan: support Rolling modules
-Date: Tue, 14 May 2024 12:19:52 +0200
-Message-ID: <20240514101010.239074383@linuxfoundation.org>
+Subject: [PATCH 5.15 095/168] bpf, sockmap: TCP data stall on recv before accept
+Date: Tue, 14 May 2024 12:19:53 +0200
+Message-ID: <20240514101010.276076986@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -51,68 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vanillan Wang <vanillanwang@163.com>
+From: John Fastabend <john.fastabend@gmail.com>
 
-[ Upstream commit d362046021ea122309da8c8e0b6850c792ca97b5 ]
+[ Upstream commit ea444185a6bf7da4dd0df1598ee953e4f7174858 ]
 
-Update the qmi_wwan driver support for the Rolling
-LTE modules.
+A common mechanism to put a TCP socket into the sockmap is to hook the
+BPF_SOCK_OPS_{ACTIVE_PASSIVE}_ESTABLISHED_CB event with a BPF program
+that can map the socket info to the correct BPF verdict parser. When
+the user adds the socket to the map the psock is created and the new
+ops are assigned to ensure the verdict program will 'see' the sk_buffs
+as they arrive.
 
-- VID:PID 33f8:0104, RW101-GL for laptop debug M.2 cards(with RMNET
-interface for /Linux/Chrome OS)
-0x0104: RMNET, diag, at, pipe
+Part of this process hooks the sk_data_ready op with a BPF specific
+handler to wake up the BPF verdict program when data is ready to read.
+The logic is simple enough (posted here for easy reading)
 
-Here are the outputs of usb-devices:
-T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=33f8 ProdID=0104 Rev=05.04
-S:  Manufacturer=Rolling Wireless S.a.r.l.
-S:  Product=Rolling Module
-S:  SerialNumber=ba2eb033
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-E:  Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+ static void sk_psock_verdict_data_ready(struct sock *sk)
+ {
+	struct socket *sock = sk->sk_socket;
 
-Signed-off-by: Vanillan Wang <vanillanwang@163.com>
-Link: https://lore.kernel.org/r/20240416120713.24777-1-vanillanwang@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+	if (unlikely(!sock || !sock->ops || !sock->ops->read_skb))
+		return;
+	sock->ops->read_skb(sk, sk_psock_verdict_recv);
+ }
+
+The oversight here is sk->sk_socket is not assigned until the application
+accepts() the new socket. However, its entirely ok for the peer application
+to do a connect() followed immediately by sends. The socket on the receiver
+is sitting on the backlog queue of the listening socket until its accepted
+and the data is queued up. If the peer never accepts the socket or is slow
+it will eventually hit data limits and rate limit the session. But,
+important for BPF sockmap hooks when this data is received TCP stack does
+the sk_data_ready() call but the read_skb() for this data is never called
+because sk_socket is missing. The data sits on the sk_receive_queue.
+
+Then once the socket is accepted if we never receive more data from the
+peer there will be no further sk_data_ready calls and all the data
+is still on the sk_receive_queue(). Then user calls recvmsg after accept()
+and for TCP sockets in sockmap we use the tcp_bpf_recvmsg_parser() handler.
+The handler checks for data in the sk_msg ingress queue expecting that
+the BPF program has already run from the sk_data_ready hook and enqueued
+the data as needed. So we are stuck.
+
+To fix do an unlikely check in recvmsg handler for data on the
+sk_receive_queue and if it exists wake up data_ready. We have the sock
+locked in both read_skb and recvmsg so should avoid having multiple
+runners.
+
+Fixes: 04919bed948dc ("tcp: Introduce tcp_read_skb()")
+Signed-off-by: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/20230523025618.113937-7-john.fastabend@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/tcp_bpf.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index 846ace9830d3b..89e1fac07a255 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1419,6 +1419,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_FIXED_INTF(0x0489, 0xe0b5, 0)},	/* Foxconn T77W968 LTE with eSIM support*/
- 	{QMI_FIXED_INTF(0x2692, 0x9025, 4)},    /* Cellient MPL200 (rebranded Qualcomm 05c6:9025) */
- 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
-+	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index e3a9477293ce4..89204004eeb5e 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -195,6 +195,26 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 		return tcp_recvmsg(sk, msg, len, nonblock, flags, addr_len);
  
- 	/* 4. Gobi 1000 devices */
- 	{QMI_GOBI1K_DEVICE(0x05c6, 0x9212)},	/* Acer Gobi Modem Device */
+ 	lock_sock(sk);
++
++	/* We may have received data on the sk_receive_queue pre-accept and
++	 * then we can not use read_skb in this context because we haven't
++	 * assigned a sk_socket yet so have no link to the ops. The work-around
++	 * is to check the sk_receive_queue and in these cases read skbs off
++	 * queue again. The read_skb hook is not running at this point because
++	 * of lock_sock so we avoid having multiple runners in read_skb.
++	 */
++	if (unlikely(!skb_queue_empty(&sk->sk_receive_queue))) {
++		tcp_data_ready(sk);
++		/* This handles the ENOMEM errors if we both receive data
++		 * pre accept and are already under memory pressure. At least
++		 * let user know to retry.
++		 */
++		if (unlikely(!skb_queue_empty(&sk->sk_receive_queue))) {
++			copied = -EAGAIN;
++			goto out;
++		}
++	}
++
+ msg_bytes_ready:
+ 	copied = sk_msg_recvmsg(sk, psock, msg, len, flags);
+ 	if (!copied) {
 -- 
 2.43.0
 
