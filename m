@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C3812FB03;
-	Tue, 14 May 2024 10:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D689A57CA1;
+	Tue, 14 May 2024 10:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684061; cv=none; b=ilEV4m+lGj+CgwbN9g9mgV0aG6AclU3ceQeQxmaVmJnw83OmPV3kFggETHlIVdI6dIocLMI8EKX5wjVYOiz0sSrn0UFsMx3yZot2SbIb0OYudDJkCn2YHLkA6DGp1+4bYKj20wm/d5D/H1adj7aI4+pqf6gdb8KOZnjeG7EO5Y8=
+	t=1715684066; cv=none; b=cZXvcC3E4W9uxGugJQ7nnpxx/KgqDYAHNmJkEhz1bGkqoXsRaWG/NspBMaLbDuVv1b0l7/P6/cqDwVTZnPcBssKTDRgLWspFw5bGVOhU7iOibySeSswykBgnMnYwdZfybuZd0ihJebxDMHg+cX0VEDiZtbTqxDgOOhmJvveNXMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684061; c=relaxed/simple;
-	bh=nohMFwGU9om1mJSuCwHNDkJZ9tAPCSzy7dqh5mK3E5k=;
+	s=arc-20240116; t=1715684066; c=relaxed/simple;
+	bh=eGYcu/2AycG1BrWSa9+i5nk99+ZAdAWkBbhUnV1ghks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i9LWc+8w6jPFoyJhMgGVDRZXxEYZuplYfEk0HR2gC9nwPcREFUDEDuTSZ3fSu9UCdXlS4kNzOOtauM+YsyjanLcebaq2cpvLoGgHqVJaxEqsEgo05aRIieeInuo3vPCObmzDrwBG52aWp48+yuDhzAOdG50RXkvsSBUvjRY8iaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQPi74jT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sCYYm484Xh7/xJIFrfL8Nqh3TSaYx8ZIt/icJhFlSVqIVeca+qwOpk7nwRUHi8CkrMMtNnrYDz7xn3GNgJYw+TfrQU2laEAD/LaMs/lSilkStfzjO+BN53Noi87qmbzPff4MirKVm6adNkbD6CSNBNtXyKj1+CH3rc0WMAOUC+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wk/OStMk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQPi74jT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E07C2BD10;
-	Tue, 14 May 2024 10:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wk/OStMk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9C2C32782;
+	Tue, 14 May 2024 10:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684061;
-	bh=nohMFwGU9om1mJSuCwHNDkJZ9tAPCSzy7dqh5mK3E5k=;
+	s=korg; t=1715684066;
+	bh=eGYcu/2AycG1BrWSa9+i5nk99+ZAdAWkBbhUnV1ghks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OQPi74jT985Km7Bk3TdwV/sf8cevhfy132R6kD7kEshVokUfrlAn8yekGucvbKxsr
-	 e+7xiifWvdpv2LsPel+wQVP/yTS4BjBmNb8Mq3aztl5fRSMSwagZwh2gI9rkdK0Z2g
-	 MdFK67ukrVV5BV51/37su6WRCPxf226m23ZM5v+o=
+	b=wk/OStMkNN94caxJIHPwZrmV8PY7TiQdF2On1Cy084mz8ZQ6mcYOd3UpZX/+LGWRR
+	 ME9GRPwQzlzxiv6stzHaFUgF/yetD3bL2vQIgwX76AwFDNIvvwLqRp+0ePzp0XntwL
+	 gEuCGMy92+VQx/1Sk4+bYCEpay2qI6j+jbBIjBz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joao Paulo Goncalves <joao.goncalves@toradex.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Jai Luthra <j-luthra@ti.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.8 286/336] ASoC: ti: davinci-mcasp: Fix race condition during probe
-Date: Tue, 14 May 2024 12:18:10 +0200
-Message-ID: <20240514101049.415702817@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.8 277/336] iio: accel: mxc4005: Reset chip on probe() and resume()
+Date: Tue, 14 May 2024 12:18:01 +0200
+Message-ID: <20240514101049.079404130@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,76 +51,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joao Paulo Goncalves <joao.goncalves@toradex.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit d18ca8635db2f88c17acbdf6412f26d4f6aff414 upstream.
+commit 6b8cffdc4a31e4a72f75ecd1bc13fbf0dafee390 upstream.
 
-When using davinci-mcasp as CPU DAI with simple-card, there are some
-conditions that cause simple-card to finish registering a sound card before
-davinci-mcasp finishes registering all sound components. This creates a
-non-working sound card from userspace with no problem indication apart
-from not being able to play/record audio on a PCM stream. The issue
-arises during simultaneous probe execution of both drivers. Specifically,
-the simple-card driver, awaiting a CPU DAI, proceeds as soon as
-davinci-mcasp registers its DAI. However, this process can lead to the
-client mutex lock (client_mutex in soc-core.c) being held or davinci-mcasp
-being preempted before PCM DMA registration on davinci-mcasp finishes.
-This situation occurs when the probes of both drivers run concurrently.
-Below is the code path for this condition. To solve the issue, defer
-davinci-mcasp CPU DAI registration to the last step in the audio part of
-it. This way, simple-card CPU DAI parsing will be deferred until all
-audio components are registered.
+On some designs the chip is not properly reset when powered up at boot or
+after a suspend/resume cycle.
 
-Fail Code Path:
+Use the sw-reset feature to ensure that the chip is in a clean state
+after probe() / resume() and in the case of resume() restore the settings
+(scale, trigger-enabled).
 
-simple-card.c: probe starts
-simple-card.c: simple_dai_link_of: simple_parse_node(..,cpu,..) returns EPROBE_DEFER, no CPU DAI yet
-davinci-mcasp.c: probe starts
-davinci-mcasp.c: devm_snd_soc_register_component() register CPU DAI
-simple-card.c: probes again, finish CPU DAI parsing and call devm_snd_soc_register_card()
-simple-card.c: finish probe
-davinci-mcasp.c: *dma_pcm_platform_register() register PCM  DMA
-davinci-mcasp.c: probe finish
-
-Cc: stable@vger.kernel.org
-Fixes: 9fbd58cf4ab0 ("ASoC: davinci-mcasp: Choose PCM driver based on configured DMA controller")
-Signed-off-by: Joao Paulo Goncalves <joao.goncalves@toradex.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Reviewed-by: Jai Luthra <j-luthra@ti.com>
-Link: https://lore.kernel.org/r/20240417184138.1104774-1-jpaulo.silvagoncalves@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218578
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240326113700.56725-3-hdegoede@redhat.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/ti/davinci-mcasp.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/iio/accel/mxc4005.c |   68 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
---- a/sound/soc/ti/davinci-mcasp.c
-+++ b/sound/soc/ti/davinci-mcasp.c
-@@ -2417,12 +2417,6 @@ static int davinci_mcasp_probe(struct pl
+--- a/drivers/iio/accel/mxc4005.c
++++ b/drivers/iio/accel/mxc4005.c
+@@ -5,6 +5,7 @@
+  * Copyright (c) 2014, Intel Corporation.
+  */
  
- 	mcasp_reparent_fck(pdev);
++#include <linux/delay.h>
+ #include <linux/module.h>
+ #include <linux/i2c.h>
+ #include <linux/iio/iio.h>
+@@ -36,6 +37,7 @@
  
--	ret = devm_snd_soc_register_component(&pdev->dev, &davinci_mcasp_component,
--					      &davinci_mcasp_dai[mcasp->op_mode], 1);
--
--	if (ret != 0)
--		goto err;
--
- 	ret = davinci_mcasp_get_dma_type(mcasp);
- 	switch (ret) {
- 	case PCM_EDMA:
-@@ -2449,6 +2443,12 @@ static int davinci_mcasp_probe(struct pl
- 		goto err;
+ #define MXC4005_REG_INT_CLR1		0x01
+ #define MXC4005_REG_INT_CLR1_BIT_DRDYC	0x01
++#define MXC4005_REG_INT_CLR1_SW_RST	0x10
+ 
+ #define MXC4005_REG_CONTROL		0x0D
+ #define MXC4005_REG_CONTROL_MASK_FSR	GENMASK(6, 5)
+@@ -43,6 +45,9 @@
+ 
+ #define MXC4005_REG_DEVICE_ID		0x0E
+ 
++/* Datasheet does not specify a reset time, this is a conservative guess */
++#define MXC4005_RESET_TIME_US		2000
++
+ enum mxc4005_axis {
+ 	AXIS_X,
+ 	AXIS_Y,
+@@ -66,6 +71,8 @@ struct mxc4005_data {
+ 		s64 timestamp __aligned(8);
+ 	} scan;
+ 	bool trigger_enabled;
++	unsigned int control;
++	unsigned int int_mask1;
+ };
+ 
+ /*
+@@ -349,6 +356,7 @@ static int mxc4005_set_trigger_state(str
+ 		return ret;
  	}
  
-+	ret = devm_snd_soc_register_component(&pdev->dev, &davinci_mcasp_component,
-+					      &davinci_mcasp_dai[mcasp->op_mode], 1);
++	data->int_mask1 = val;
+ 	data->trigger_enabled = state;
+ 	mutex_unlock(&data->mutex);
+ 
+@@ -384,6 +392,13 @@ static int mxc4005_chip_init(struct mxc4
+ 
+ 	dev_dbg(data->dev, "MXC4005 chip id %02x\n", reg);
+ 
++	ret = regmap_write(data->regmap, MXC4005_REG_INT_CLR1,
++			   MXC4005_REG_INT_CLR1_SW_RST);
++	if (ret < 0)
++		return dev_err_probe(data->dev, ret, "resetting chip\n");
 +
-+	if (ret != 0)
-+		goto err;
++	fsleep(MXC4005_RESET_TIME_US);
 +
- no_audio:
- 	ret = davinci_mcasp_init_gpiochip(mcasp);
- 	if (ret) {
+ 	ret = regmap_write(data->regmap, MXC4005_REG_INT_MASK0, 0);
+ 	if (ret < 0)
+ 		return dev_err_probe(data->dev, ret, "writing INT_MASK0\n");
+@@ -479,6 +494,58 @@ static int mxc4005_probe(struct i2c_clie
+ 	return devm_iio_device_register(&client->dev, indio_dev);
+ }
+ 
++static int mxc4005_suspend(struct device *dev)
++{
++	struct iio_dev *indio_dev = dev_get_drvdata(dev);
++	struct mxc4005_data *data = iio_priv(indio_dev);
++	int ret;
++
++	/* Save control to restore it on resume */
++	ret = regmap_read(data->regmap, MXC4005_REG_CONTROL, &data->control);
++	if (ret < 0)
++		dev_err(data->dev, "failed to read reg_control\n");
++
++	return ret;
++}
++
++static int mxc4005_resume(struct device *dev)
++{
++	struct iio_dev *indio_dev = dev_get_drvdata(dev);
++	struct mxc4005_data *data = iio_priv(indio_dev);
++	int ret;
++
++	ret = regmap_write(data->regmap, MXC4005_REG_INT_CLR1,
++			   MXC4005_REG_INT_CLR1_SW_RST);
++	if (ret) {
++		dev_err(data->dev, "failed to reset chip: %d\n", ret);
++		return ret;
++	}
++
++	fsleep(MXC4005_RESET_TIME_US);
++
++	ret = regmap_write(data->regmap, MXC4005_REG_CONTROL, data->control);
++	if (ret) {
++		dev_err(data->dev, "failed to restore control register\n");
++		return ret;
++	}
++
++	ret = regmap_write(data->regmap, MXC4005_REG_INT_MASK0, 0);
++	if (ret) {
++		dev_err(data->dev, "failed to restore interrupt 0 mask\n");
++		return ret;
++	}
++
++	ret = regmap_write(data->regmap, MXC4005_REG_INT_MASK1, data->int_mask1);
++	if (ret) {
++		dev_err(data->dev, "failed to restore interrupt 1 mask\n");
++		return ret;
++	}
++
++	return 0;
++}
++
++static DEFINE_SIMPLE_DEV_PM_OPS(mxc4005_pm_ops, mxc4005_suspend, mxc4005_resume);
++
+ static const struct acpi_device_id mxc4005_acpi_match[] = {
+ 	{"MXC4005",	0},
+ 	{"MXC6655",	0},
+@@ -505,6 +572,7 @@ static struct i2c_driver mxc4005_driver
+ 		.name = MXC4005_DRV_NAME,
+ 		.acpi_match_table = ACPI_PTR(mxc4005_acpi_match),
+ 		.of_match_table = mxc4005_of_match,
++		.pm = pm_sleep_ptr(&mxc4005_pm_ops),
+ 	},
+ 	.probe		= mxc4005_probe,
+ 	.id_table	= mxc4005_id,
 
 
