@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13217E77B;
-	Tue, 14 May 2024 11:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E3E2374E;
+	Tue, 14 May 2024 11:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686888; cv=none; b=Gy7iatdLzSz0k4KHwiEMYxgiGmgFz7F81yAKXduG7PtDyveyJcXH0YzPlflISFEMa72jAj/ph/3hOhbmK/fuOsDRZGX0APof6Yz9pmEP1rkickrns13xfOFhC5Ft9p18GxXsfFm6NCL42e9A0n23Y5jl7DyMrUmkeBdPt0nNJvk=
+	t=1715686891; cv=none; b=lVVdrdArAhUdELut7nU3kSs/2bBDs7JlftjfMyiVqy/ZYEZ8GGHjGOpE3EWtj1j/r8fv9FS27KJxTJ82BSNmPpvDzCK5CPKHh4pWC6lJ+6RQTN3ZDRqVsLE2O62OFO+o0l4zotMKXGFvoayR0XLm/uj5z29IXEIq7gkjr0sL3a8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686888; c=relaxed/simple;
-	bh=nmbBGwHUHpZtFiWOTD36FLcgLRsi30D6KXZEaZYCHlY=;
+	s=arc-20240116; t=1715686891; c=relaxed/simple;
+	bh=boRcSuI7WezTsK2/U0Ya7Gtgzms5JUelxdutHMQgIhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XpRkQB0Gc4e9Gh6XjZQ/Kc/QRy4bS2rBZP0lw0lap+L4nY9JV1KWmoTgJdVa4WezLGP4hIQ5wLp3pjJNL+IBWc4dK5iWfQ4D+k4LBl0ga1vTL2Xevsg2MJ5ewbA3ZFojcqZuUBqIfDFUaPsVxiuWU5+MIpkv5dg13jZnl+36CGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D69gB1Cp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MUQTukMDv/B3P98Yz7/8q/4L937MZibqH6xs3m0DnoZHYFay2wyIRYICP/c3Oqe/M6h55WHEZXlK1G2vYn/xoH7kVBCjwtUXQhrqvNSPEOrhZYZFQvD4e0q1d+vlRL7hQvXH9Qf0eoM2BcN4YGiQsd/APdqlQ53yEkgbU4z7lHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9V0qvYW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D69gB1Cp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B39C2BD10;
-	Tue, 14 May 2024 11:41:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9V0qvYW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BCF0C2BD10;
+	Tue, 14 May 2024 11:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686888;
-	bh=nmbBGwHUHpZtFiWOTD36FLcgLRsi30D6KXZEaZYCHlY=;
+	s=korg; t=1715686891;
+	bh=boRcSuI7WezTsK2/U0Ya7Gtgzms5JUelxdutHMQgIhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D69gB1CppAW3nWtYFepJsBMaG7MCpcl2Q0kBqcesEsfMj5IGaBSQ+kI2p+9RirCpT
-	 KBhriBfKedXalmzghGF2NEvNAyaMW/659M/3zxx6jsez5YbEk/f3d0HkQGF1ihdLai
-	 7bk3IU4GHiR28Dci2SKIwxGQuOesWQnTXdvpfOAU=
+	b=A9V0qvYW5DLuhhdpeLTCYPJDEUV6tXr/xPLHktbqZ7I7uhf5yj+euqeVugF4RC5kl
+	 CGOKJJPze09lguJGSMPtmzwimQaL6aH2NFH2HmmBcSl6+w1xdnmr8vdmR9LriJU5Ji
+	 x4PEJdMmEwd+wSKwniVoZlESUIxxxLvDZwiqzEso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+42a0dc856239de4de60e@syzkaller.appspotmail.com,
-	syzbot+c298c9f0e46a3c86332b@syzkaller.appspotmail.com
-Subject: [PATCH 4.19 15/63] nsh: Restore skb->{protocol,data,mac_header} for outer header in nsh_gso_segment().
-Date: Tue, 14 May 2024 12:19:36 +0200
-Message-ID: <20240514100948.590856618@linuxfoundation.org>
+	Roded Zats <rzats@paloaltonetworks.com>,
+	Donald Hunter <donald.hunter@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 50/63] rtnetlink: Correct nested IFLA_VF_VLAN_LIST attribute validation
+Date: Tue, 14 May 2024 12:20:11 +0200
+Message-ID: <20240514100949.902776564@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100948.010148088@linuxfoundation.org>
 References: <20240514100948.010148088@linuxfoundation.org>
@@ -53,178 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Roded Zats <rzats@paloaltonetworks.com>
 
-[ Upstream commit 4b911a9690d72641879ea6d13cce1de31d346d79 ]
+[ Upstream commit 1aec77b2bb2ed1db0f5efc61c4c1ca3813307489 ]
 
-syzbot triggered various splats (see [0] and links) by a crafted GSO
-packet of VIRTIO_NET_HDR_GSO_UDP layering the following protocols:
+Each attribute inside a nested IFLA_VF_VLAN_LIST is assumed to be a
+struct ifla_vf_vlan_info so the size of such attribute needs to be at least
+of sizeof(struct ifla_vf_vlan_info) which is 14 bytes.
+The current size validation in do_setvfinfo is against NLA_HDRLEN (4 bytes)
+which is less than sizeof(struct ifla_vf_vlan_info) so this validation
+is not enough and a too small attribute might be cast to a
+struct ifla_vf_vlan_info, this might result in an out of bands
+read access when accessing the saved (casted) entry in ivvl.
 
-  ETH_P_8021AD + ETH_P_NSH + ETH_P_IPV6 + IPPROTO_UDP
-
-NSH can encapsulate IPv4, IPv6, Ethernet, NSH, and MPLS.  As the inner
-protocol can be Ethernet, NSH GSO handler, nsh_gso_segment(), calls
-skb_mac_gso_segment() to invoke inner protocol GSO handlers.
-
-nsh_gso_segment() does the following for the original skb before
-calling skb_mac_gso_segment()
-
-  1. reset skb->network_header
-  2. save the original skb->{mac_heaeder,mac_len} in a local variable
-  3. pull the NSH header
-  4. resets skb->mac_header
-  5. set up skb->mac_len and skb->protocol for the inner protocol.
-
-and does the following for the segmented skb
-
-  6. set ntohs(ETH_P_NSH) to skb->protocol
-  7. push the NSH header
-  8. restore skb->mac_header
-  9. set skb->mac_header + mac_len to skb->network_header
- 10. restore skb->mac_len
-
-There are two problems in 6-7 and 8-9.
-
-  (a)
-  After 6 & 7, skb->data points to the NSH header, so the outer header
-  (ETH_P_8021AD in this case) is stripped when skb is sent out of netdev.
-
-  Also, if NSH is encapsulated by NSH + Ethernet (so NSH-Ethernet-NSH),
-  skb_pull() in the first nsh_gso_segment() will make skb->data point
-  to the middle of the outer NSH or Ethernet header because the Ethernet
-  header is not pulled by the second nsh_gso_segment().
-
-  (b)
-  While restoring skb->{mac_header,network_header} in 8 & 9,
-  nsh_gso_segment() does not assume that the data in the linear
-  buffer is shifted.
-
-  However, udp6_ufo_fragment() could shift the data and change
-  skb->mac_header accordingly as demonstrated by syzbot.
-
-  If this happens, even the restored skb->mac_header points to
-  the middle of the outer header.
-
-It seems nsh_gso_segment() has never worked with outer headers so far.
-
-At the end of nsh_gso_segment(), the outer header must be restored for
-the segmented skb, instead of the NSH header.
-
-To do that, let's calculate the outer header position relatively from
-the inner header and set skb->{data,mac_header,protocol} properly.
-
-[0]:
-BUG: KMSAN: uninit-value in ipvlan_process_outbound drivers/net/ipvlan/ipvlan_core.c:524 [inline]
-BUG: KMSAN: uninit-value in ipvlan_xmit_mode_l3 drivers/net/ipvlan/ipvlan_core.c:602 [inline]
-BUG: KMSAN: uninit-value in ipvlan_queue_xmit+0xf44/0x16b0 drivers/net/ipvlan/ipvlan_core.c:668
- ipvlan_process_outbound drivers/net/ipvlan/ipvlan_core.c:524 [inline]
- ipvlan_xmit_mode_l3 drivers/net/ipvlan/ipvlan_core.c:602 [inline]
- ipvlan_queue_xmit+0xf44/0x16b0 drivers/net/ipvlan/ipvlan_core.c:668
- ipvlan_start_xmit+0x5c/0x1a0 drivers/net/ipvlan/ipvlan_main.c:222
- __netdev_start_xmit include/linux/netdevice.h:4989 [inline]
- netdev_start_xmit include/linux/netdevice.h:5003 [inline]
- xmit_one net/core/dev.c:3547 [inline]
- dev_hard_start_xmit+0x244/0xa10 net/core/dev.c:3563
- __dev_queue_xmit+0x33ed/0x51c0 net/core/dev.c:4351
- dev_queue_xmit include/linux/netdevice.h:3171 [inline]
- packet_xmit+0x9c/0x6b0 net/packet/af_packet.c:276
- packet_snd net/packet/af_packet.c:3081 [inline]
- packet_sendmsg+0x8aef/0x9f10 net/packet/af_packet.c:3113
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg net/socket.c:745 [inline]
- __sys_sendto+0x735/0xa10 net/socket.c:2191
- __do_sys_sendto net/socket.c:2203 [inline]
- __se_sys_sendto net/socket.c:2199 [inline]
- __x64_sys_sendto+0x125/0x1c0 net/socket.c:2199
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-Uninit was created at:
- slab_post_alloc_hook mm/slub.c:3819 [inline]
- slab_alloc_node mm/slub.c:3860 [inline]
- __do_kmalloc_node mm/slub.c:3980 [inline]
- __kmalloc_node_track_caller+0x705/0x1000 mm/slub.c:4001
- kmalloc_reserve+0x249/0x4a0 net/core/skbuff.c:582
- __alloc_skb+0x352/0x790 net/core/skbuff.c:651
- skb_segment+0x20aa/0x7080 net/core/skbuff.c:4647
- udp6_ufo_fragment+0xcab/0x1150 net/ipv6/udp_offload.c:109
- ipv6_gso_segment+0x14be/0x2ca0 net/ipv6/ip6_offload.c:152
- skb_mac_gso_segment+0x3e8/0x760 net/core/gso.c:53
- nsh_gso_segment+0x6f4/0xf70 net/nsh/nsh.c:108
- skb_mac_gso_segment+0x3e8/0x760 net/core/gso.c:53
- __skb_gso_segment+0x4b0/0x730 net/core/gso.c:124
- skb_gso_segment include/net/gso.h:83 [inline]
- validate_xmit_skb+0x107f/0x1930 net/core/dev.c:3628
- __dev_queue_xmit+0x1f28/0x51c0 net/core/dev.c:4343
- dev_queue_xmit include/linux/netdevice.h:3171 [inline]
- packet_xmit+0x9c/0x6b0 net/packet/af_packet.c:276
- packet_snd net/packet/af_packet.c:3081 [inline]
- packet_sendmsg+0x8aef/0x9f10 net/packet/af_packet.c:3113
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg net/socket.c:745 [inline]
- __sys_sendto+0x735/0xa10 net/socket.c:2191
- __do_sys_sendto net/socket.c:2203 [inline]
- __se_sys_sendto net/socket.c:2199 [inline]
- __x64_sys_sendto+0x125/0x1c0 net/socket.c:2199
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-CPU: 1 PID: 5101 Comm: syz-executor421 Not tainted 6.8.0-rc5-syzkaller-00297-gf2e367d6ad3b #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/25/2024
-
-Fixes: c411ed854584 ("nsh: add GSO support")
-Reported-and-tested-by: syzbot+42a0dc856239de4de60e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=42a0dc856239de4de60e
-Reported-and-tested-by: syzbot+c298c9f0e46a3c86332b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c298c9f0e46a3c86332b
-Link: https://lore.kernel.org/netdev/20240415222041.18537-1-kuniyu@amazon.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240424023549.21862-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 79aab093a0b5 ("net: Update API for VF vlan protocol 802.1ad support")
+Signed-off-by: Roded Zats <rzats@paloaltonetworks.com>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+Link: https://lore.kernel.org/r/20240502155751.75705-1-rzats@paloaltonetworks.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nsh/nsh.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ net/core/rtnetlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/nsh/nsh.c b/net/nsh/nsh.c
-index a5fa25555d7eb..a2285b050f6aa 100644
---- a/net/nsh/nsh.c
-+++ b/net/nsh/nsh.c
-@@ -79,13 +79,15 @@ EXPORT_SYMBOL_GPL(nsh_pop);
- static struct sk_buff *nsh_gso_segment(struct sk_buff *skb,
- 				       netdev_features_t features)
- {
-+	unsigned int outer_hlen, mac_len, nsh_len;
- 	struct sk_buff *segs = ERR_PTR(-EINVAL);
- 	u16 mac_offset = skb->mac_header;
--	unsigned int nsh_len, mac_len;
--	__be16 proto;
-+	__be16 outer_proto, proto;
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index 0d3f724da78ba..9209623ab6445 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -2167,7 +2167,7 @@ static int do_setvfinfo(struct net_device *dev, struct nlattr **tb)
  
- 	skb_reset_network_header(skb);
- 
-+	outer_proto = skb->protocol;
-+	outer_hlen = skb_mac_header_len(skb);
- 	mac_len = skb->mac_len;
- 
- 	if (unlikely(!pskb_may_pull(skb, NSH_BASE_HDR_LEN)))
-@@ -115,10 +117,10 @@ static struct sk_buff *nsh_gso_segment(struct sk_buff *skb,
- 	}
- 
- 	for (skb = segs; skb; skb = skb->next) {
--		skb->protocol = htons(ETH_P_NSH);
--		__skb_push(skb, nsh_len);
--		skb->mac_header = mac_offset;
--		skb->network_header = skb->mac_header + mac_len;
-+		skb->protocol = outer_proto;
-+		__skb_push(skb, nsh_len + outer_hlen);
-+		skb_reset_mac_header(skb);
-+		skb_set_network_header(skb, outer_hlen);
- 		skb->mac_len = mac_len;
- 	}
- 
+ 		nla_for_each_nested(attr, tb[IFLA_VF_VLAN_LIST], rem) {
+ 			if (nla_type(attr) != IFLA_VF_VLAN_INFO ||
+-			    nla_len(attr) < NLA_HDRLEN) {
++			    nla_len(attr) < sizeof(struct ifla_vf_vlan_info)) {
+ 				return -EINVAL;
+ 			}
+ 			if (len >= MAX_VLAN_LIST_LEN)
 -- 
 2.43.0
 
