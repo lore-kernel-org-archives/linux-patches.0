@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16591E4B0;
-	Tue, 14 May 2024 11:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922E512F385;
+	Tue, 14 May 2024 11:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685787; cv=none; b=Qo1IlMnHU0DhtvgtfJG7xRSW8tpIrGD5STjFTPPkh38RBUOaBn76I7VlhI2q+6tG/Qw5SePVBF0u6UP3BPm8s/nJlqCsve7GcXpkJTnD6WcI8NPEZ7M5waEjOJpI4fd8sX/TlJFrvcUw+ldQ4y5cyotawm13LmqIhylpp4C9I8M=
+	t=1715685791; cv=none; b=jZaUxO0yP3PsFjosBEbt2RrC78CkJqmwUUCNLXVj29/aV5VhExVhcXBpEZtQcgun1ssja7PNr4aAfxf39ybKK2BYou9F2kk2I8QNAu3D+zhJkS6eEOX/vI9cruRs1V+ChCqtYLfy8AF3VBTkJNMpSV8Vg/hyJDf96lNBnCjWu+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685787; c=relaxed/simple;
-	bh=lAQYZUZz/q/fdGb7FzqsczfGCHJzC2sss7XS9B+FWQI=;
+	s=arc-20240116; t=1715685791; c=relaxed/simple;
+	bh=a+xj6vunKp/P0VhkqubcggaT21X72iB/AlMs0wi844c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKxHiCOIJGn5YcixiJWeCPp4v5LeYcKoi9bSfIF02Ivgm3rH9k8nIkQoQZEAqYo5ftaKGNT7B4KaAburnAIziTbIxrnunwRnuBvAAusJc2ZPywG04mJjt7wh94cx71Ro9PQB0Nxa7Al4Ty4GKXNjpnLMuiJIcaPXmKDN4kWC9wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IqpuLlKM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GstbfnnU+z77bV6aFxhJNNjIjbHZbCnG3vnMfZMnby3djeXzOdZltedtwh2EloKEEBXb7yMsQQezxLOx0JQsPkmYZ5O3jBmPfL8pxWSom1kDWahfHlkbqJmN/UzdEJesWU/sbPGr4yShuZypxOQHZHdWl4RngQN5haxsU2hlMqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6BmaeeK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IqpuLlKM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECEE9C2BD10;
-	Tue, 14 May 2024 11:23:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6BmaeeK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF08C2BD10;
+	Tue, 14 May 2024 11:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685787;
-	bh=lAQYZUZz/q/fdGb7FzqsczfGCHJzC2sss7XS9B+FWQI=;
+	s=korg; t=1715685791;
+	bh=a+xj6vunKp/P0VhkqubcggaT21X72iB/AlMs0wi844c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IqpuLlKMJs/NUu03ZpgSBhbdGNpK2VbS5H0uO5Ax7FiOKEMdcrJrxQYuuGzcZp3FS
-	 n2GqXdDPJbmMsGKpnNS6J+vgOKJJ4YnhlBKplv5/mnMSpkNy8RzJR2tJStubhzMEMG
-	 DO3q2gtZJEbdAZxkIcZPj89+NO5UlZLD81S2lSK4=
+	b=D6BmaeeK35lmln029IekkyvbTWebAYxJ4HiKGSNDySTsvmmnzJOCwVs1bUT3Ul/Q7
+	 7GkyUSwXC/iW7ZYH84DLkkpa97Q4iscRQPG9JuU2BBvQB3dpjIGnkop9TV64vW3MmW
+	 uSuZfAYrmv5BI9Otcz7MSYkLTly81lYUCvl8Svto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.6 247/301] workqueue: Fix selection of wake_cpu in kick_pool()
-Date: Tue, 14 May 2024 12:18:38 +0200
-Message-ID: <20240514101041.581732023@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Peter Korsgaard <peter@korsgaard.com>
+Subject: [PATCH 6.6 230/301] usb: gadget: composite: fix OS descriptors w_value logic
+Date: Tue, 14 May 2024 12:18:21 +0200
+Message-ID: <20240514101040.939896963@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -50,77 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Peter Korsgaard <peter@korsgaard.com>
 
-commit 57a01eafdcf78f6da34fad9ff075ed5dfdd9f420 upstream.
+commit ec6ce7075ef879b91a8710829016005dc8170f17 upstream.
 
-With cpu_possible_mask=0-63 and cpu_online_mask=0-7 the following
-kernel oops was observed:
+The OS descriptors logic had the high/low byte of w_value inverted, causing
+the extended properties to not be accessible for interface != 0.
 
-smp: Bringing up secondary CPUs ...
-smp: Brought up 1 node, 8 CPUs
-Unable to handle kernel pointer dereference in virtual kernel address space
-Failing address: 0000000000000000 TEID: 0000000000000803
-[..]
- Call Trace:
-arch_vcpu_is_preempted+0x12/0x80
-select_idle_sibling+0x42/0x560
-select_task_rq_fair+0x29a/0x3b0
-try_to_wake_up+0x38e/0x6e0
-kick_pool+0xa4/0x198
-__queue_work.part.0+0x2bc/0x3a8
-call_timer_fn+0x36/0x160
-__run_timers+0x1e2/0x328
-__run_timer_base+0x5a/0x88
-run_timer_softirq+0x40/0x78
-__do_softirq+0x118/0x388
-irq_exit_rcu+0xc0/0xd8
-do_ext_irq+0xae/0x168
-ext_int_handler+0xbe/0xf0
-psw_idle_exit+0x0/0xc
-default_idle_call+0x3c/0x110
-do_idle+0xd4/0x158
-cpu_startup_entry+0x40/0x48
-rest_init+0xc6/0xc8
-start_kernel+0x3c4/0x5e0
-startup_continue+0x3c/0x50
+>From the Microsoft documentation:
+https://learn.microsoft.com/en-us/windows-hardware/drivers/usbcon/microsoft-os-1-0-descriptors-specification
 
-The crash is caused by calling arch_vcpu_is_preempted() for an offline
-CPU. To avoid this, select the cpu with cpumask_any_and_distribute()
-to mask __pod_cpumask with cpu_online_mask. In case no cpu is left in
-the pool, skip the assignment.
+OS_Desc_CompatID.doc (w_index = 0x4):
 
-tj: This doesn't fully fix the bug as CPUs can still go down between picking
-the target CPU and the wake call. Fixing that likely requires adding
-cpu_online() test to either the sched or s390 arch code. However, regardless
-of how that is fixed, workqueue shouldn't be picking a CPU which isn't
-online as that would result in unpredictable and worse behavior.
+- wValue:
 
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Fixes: 8639ecebc9b1 ("workqueue: Implement non-strict affinity scope for unbound workqueues")
-Cc: stable@vger.kernel.org # v6.6+
-Signed-off-by: Tejun Heo <tj@kernel.org>
+  High Byte = InterfaceNumber.  InterfaceNumber is set to the number of the
+  interface or function that is associated with the descriptor, typically
+  0x00.  Because a device can have only one extended compat ID descriptor,
+  it should ignore InterfaceNumber, regardless of the value, and simply
+  return the descriptor.
+
+  Low Byte = 0.  PageNumber is used to retrieve descriptors that are larger
+  than 64 KB.  The header section is 16 bytes, so PageNumber is set to 0 for
+  this request.
+
+We currently do not support >64KB compat ID descriptors, so verify that the
+low byte is 0.
+
+OS_Desc_Ext_Prop.doc (w_index = 0x5):
+
+- wValue:
+
+  High byte = InterfaceNumber.  The high byte of wValue is set to the number
+  of the interface or function that is associated with the descriptor.
+
+  Low byte = PageNumber.  The low byte of wValue is used to retrieve
+  descriptors that are larger than 64 KB.  The header section is 10 bytes, so
+  PageNumber is set to 0 for this request.
+
+We also don't support >64KB extended properties, so verify that the low byte
+is 0 and use the high byte for the interface number.
+
+Fixes: 37a3a533429e ("usb: gadget: OS Feature Descriptors support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Peter Korsgaard <peter@korsgaard.com>
+Link: https://lore.kernel.org/r/20240404100635.3215340-1-peter@korsgaard.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/workqueue.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/composite.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -1135,8 +1135,12 @@ static bool kick_pool(struct worker_pool
- 	    !cpumask_test_cpu(p->wake_cpu, pool->attrs->__pod_cpumask)) {
- 		struct work_struct *work = list_first_entry(&pool->worklist,
- 						struct work_struct, entry);
--		p->wake_cpu = cpumask_any_distribute(pool->attrs->__pod_cpumask);
--		get_work_pwq(work)->stats[PWQ_STAT_REPATRIATED]++;
-+		int wake_cpu = cpumask_any_and_distribute(pool->attrs->__pod_cpumask,
-+							  cpu_online_mask);
-+		if (wake_cpu < nr_cpu_ids) {
-+			p->wake_cpu = wake_cpu;
-+			get_work_pwq(work)->stats[PWQ_STAT_REPATRIATED]++;
-+		}
- 	}
- #endif
- 	wake_up_process(p);
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -2112,7 +2112,7 @@ unknown:
+ 			buf[5] = 0x01;
+ 			switch (ctrl->bRequestType & USB_RECIP_MASK) {
+ 			case USB_RECIP_DEVICE:
+-				if (w_index != 0x4 || (w_value >> 8))
++				if (w_index != 0x4 || (w_value & 0xff))
+ 					break;
+ 				buf[6] = w_index;
+ 				/* Number of ext compat interfaces */
+@@ -2128,9 +2128,9 @@ unknown:
+ 				}
+ 				break;
+ 			case USB_RECIP_INTERFACE:
+-				if (w_index != 0x5 || (w_value >> 8))
++				if (w_index != 0x5 || (w_value & 0xff))
+ 					break;
+-				interface = w_value & 0xFF;
++				interface = w_value >> 8;
+ 				if (interface >= MAX_CONFIG_INTERFACES ||
+ 				    !os_desc_cfg->interface[interface])
+ 					break;
 
 
