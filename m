@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEF642A9C;
-	Tue, 14 May 2024 10:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C6453E37;
+	Tue, 14 May 2024 10:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684135; cv=none; b=fkREGTqzduvoIV2xGTZfFhAJ3x/1g2e4qCV0mp1XRS1thQ4imvI9Igp1s77XO71BgM09t6zgB0ctThPBBlxB/g3W99Qswhn/NuTqLP9VxbgsxPGkL0SikiJ9uHQeq8z2bgxd0iuAYs1nTgrhpRY27yEDjqlw+6gsOr1CqmSdxqw=
+	t=1715684140; cv=none; b=pGILOrtNcelkuPzSb8ZYskMjNhUIPgK5I+zwtJLRjDP6zDS1C8rmce64daiJrA7ry7Vt9VhpdLd0oj6txM8fq/GLHWSr1dIYB6fNwKPDc8AtLUzh1iXYDBaYZRoph8jIpuGqp+jPOtqOdjPwsFxuoM04Tv+K9lEBD9KLQbOH37s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684135; c=relaxed/simple;
-	bh=67J8LL0YcD5lh++KMtikNUWtNQRO3kWIvgX14NilzF0=;
+	s=arc-20240116; t=1715684140; c=relaxed/simple;
+	bh=UTQcy23pXuTTCedmmztoE/4xmxPRHV0Pb/8QO1yj3hU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DwpUJ8q2mPWKRCleycSXlNfY7LwfcZYb8akHmmNICzIGnAY4JrpbBa19b1pM7YehpwkIcNyK51LmMaEUWI18JJ2tAtiKwk7Ms/fEG4ohEFvh9UWRlINeLw/n7cFuZr4YGtJTNlj1MaES0RhT+rTEhp4OzALtvR7sMSzL9Ch293Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbfCM440; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JS4FLJaots3l/4t9jtfLSUxIYMQd8E3wNppNzjiS8vm1WTHOHyr6jP3Bt00naZxDnjUiFLFQVVrtmjV4pw+QBTlnyj1n9CR4nbz1wjTUgZ+MahP3N+2wbZ8deUrXBsSc8srVu4pD9tbmxipqTq99AsYvV74wJKSl7RjNcDjiC9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPRi+8y3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbfCM440"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80EE7C2BD10;
-	Tue, 14 May 2024 10:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPRi+8y3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EE0C2BD10;
+	Tue, 14 May 2024 10:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684135;
-	bh=67J8LL0YcD5lh++KMtikNUWtNQRO3kWIvgX14NilzF0=;
+	s=korg; t=1715684140;
+	bh=UTQcy23pXuTTCedmmztoE/4xmxPRHV0Pb/8QO1yj3hU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fbfCM440hEgWyghAlH+qXHO1iyLxXQreUCoaVQJYj7+xdVd4utfZILdihKSDt5f+G
-	 JWSX1A/5WuXOLgVGUMpl/2xhKn1pZ5k+m8brouKW2XjKjz9GqiiucjwSNXNzrZP4Qx
-	 XLse1Rei6pmyIyj7X/Kty3icFNbOc3JvsYUkU1Nc=
+	b=sPRi+8y353+mCluxXWalRM3iZlH2fkuVrGOALHRp5VvJzs94ljVwtGtrnxjVkaAHn
+	 Nn5/bfB/K/vJPO5+RxuDDpdcLY8CJmjUkXNOZG1Lgey5nTKnhlWek5IOMzD0phYCo/
+	 NeBI1LO0KyXGpKq/7kMoO5xDpkUlb27t1UjHuHuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Anderson <dianders@chromium.org>,
-	Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.8 330/336] Bluetooth: qca: fix wcn3991 device address check
-Date: Tue, 14 May 2024 12:18:54 +0200
-Message-ID: <20240514101051.083350843@linuxfoundation.org>
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Mark Brown <broonie@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.8 313/336] selftests/mm: fix powerpc ARCH check
+Date: Tue, 14 May 2024 12:18:37 +0200
+Message-ID: <20240514101050.435779113@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,64 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 66c39332d02d65e311ec89b0051130bfcd00c9ac upstream.
+commit 7e6423441b36e3a03907e2df84b73c414c9c3763 upstream.
 
-Qualcomm Bluetooth controllers may not have been provisioned with a
-valid device address and instead end up using the default address
-00:00:00:00:5a:ad.
+In commit 0518dbe97fe6 ("selftests/mm: fix cross compilation with LLVM")
+the logic to detect the machine architecture in the Makefile was changed
+to use ARCH, and only fallback to uname -m if ARCH is unset.  However the
+tests of ARCH were not updated to account for the fact that ARCH is
+"powerpc" for powerpc builds, not "ppc64".
 
-This address is now used to determine if a controller has a valid
-address or if one needs to be provided through devicetree or by user
-space before the controller can be used.
+Fix it by changing the checks to look for "powerpc", and change the
+uname -m logic to convert "ppc64.*" into "powerpc".
 
-It turns out that the WCN3991 controllers used in Chromium Trogdor
-machines use a different default address, 39:98:00:00:5a:ad, which also
-needs to be marked as invalid so that the correct address is fetched
-from the devicetree.
+With that fixed the following tests now build for powerpc again:
+ * protection_keys
+ * va_high_addr_switch
+ * virtual_address_range
+ * write_to_hugetlbfs
 
-Qualcomm has unfortunately not yet provided any answers as to whether
-the 39:98 encodes a hardware id and if there are other variants of the
-default address that needs to be handled by the driver.
-
-For now, add the Trogdor WCN3991 default address to the device address
-check to avoid having these controllers start with the default address
-instead of their assigned addresses.
-
-Fixes: 32868e126c78 ("Bluetooth: qca: fix invalid device address check")
-Cc: stable@vger.kernel.org      # 6.5
-Cc: Doug Anderson <dianders@chromium.org>
-Cc: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://lkml.kernel.org/r/20240506115825.66415-1-mpe@ellerman.id.au
+Fixes: 0518dbe97fe6 ("selftests/mm: fix cross compilation with LLVM")
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: <stable@vger.kernel.org>	[6.4+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btqca.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/testing/selftests/mm/Makefile |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -16,6 +16,7 @@
- #define VERSION "0.1"
+--- a/tools/testing/selftests/mm/Makefile
++++ b/tools/testing/selftests/mm/Makefile
+@@ -12,7 +12,7 @@ uname_M := $(shell uname -m 2>/dev/null
+ else
+ uname_M := $(shell echo $(CROSS_COMPILE) | grep -o '^[a-z0-9]\+')
+ endif
+-ARCH ?= $(shell echo $(uname_M) | sed -e 's/aarch64.*/arm64/' -e 's/ppc64.*/ppc64/')
++ARCH ?= $(shell echo $(uname_M) | sed -e 's/aarch64.*/arm64/' -e 's/ppc64.*/powerpc/')
+ endif
  
- #define QCA_BDADDR_DEFAULT (&(bdaddr_t) {{ 0xad, 0x5a, 0x00, 0x00, 0x00, 0x00 }})
-+#define QCA_BDADDR_WCN3991 (&(bdaddr_t) {{ 0xad, 0x5a, 0x00, 0x00, 0x98, 0x39 }})
+ # Without this, failed build products remain, with up-to-date timestamps,
+@@ -97,13 +97,13 @@ TEST_GEN_FILES += $(BINARIES_64)
+ endif
+ else
  
- int qca_read_soc_version(struct hci_dev *hdev, struct qca_btsoc_version *ver,
- 			 enum qca_btsoc_type soc_type)
-@@ -638,8 +639,10 @@ static int qca_check_bdaddr(struct hci_d
- 	}
+-ifneq (,$(findstring $(ARCH),ppc64))
++ifneq (,$(findstring $(ARCH),powerpc))
+ TEST_GEN_FILES += protection_keys
+ endif
  
- 	bda = (struct hci_rp_read_bd_addr *)skb->data;
--	if (!bacmp(&bda->bdaddr, QCA_BDADDR_DEFAULT))
-+	if (!bacmp(&bda->bdaddr, QCA_BDADDR_DEFAULT) ||
-+	    !bacmp(&bda->bdaddr, QCA_BDADDR_WCN3991)) {
- 		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
-+	}
+ endif
  
- 	kfree_skb(skb);
- 
+-ifneq (,$(filter $(ARCH),arm64 ia64 mips64 parisc64 ppc64 riscv64 s390x sparc64 x86_64))
++ifneq (,$(filter $(ARCH),arm64 ia64 mips64 parisc64 powerpc riscv64 s390x sparc64 x86_64))
+ TEST_GEN_FILES += va_high_addr_switch
+ TEST_GEN_FILES += virtual_address_range
+ TEST_GEN_FILES += write_to_hugetlbfs
 
 
