@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74F56CDC9;
-	Tue, 14 May 2024 11:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B4B6CDC9;
+	Tue, 14 May 2024 11:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685462; cv=none; b=LGf/ZH5LzIbz6N/ZW/JvXpnqgYobEmoKvpj6ruyRM51rfZ4OQPT8Nys5MvOOF8rUQQy1Zmv/POF2kUQ55RArcvGkwIpFNNvwHFT0LKfD89YRZuau4bjk8U5t2EJQLvKsxcC9kWw9kaARwctZZl85m4oJOdA+wg+pIoK8uFMBJpI=
+	t=1715685468; cv=none; b=DKICr1EMwpPSH5tVUjKWFGaeQxRBhOYEJcSZBPEw1qIIKvecm8KAxtYkEOyVlYAe5J7MyLnPmXQX10Ez/OY7K7aTsJrOHHainzy7yEbVnZCu05aC/yRhp4KROoFzleaifuOaDn6RBauG8vLZ3qf2ez75WJkuYztAVRXz839Hv6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685462; c=relaxed/simple;
-	bh=RXnoFjKvi3jB8TKbNnjDoaej0FnzvmsYR8Ld/fuHwWQ=;
+	s=arc-20240116; t=1715685468; c=relaxed/simple;
+	bh=DsRtHs0D5LF44jBz8GxTS7BIaO3CdGwNPrMmLtBgFvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g3LE8ARwqKGEzRjvlAMbbph47yOImQls4o0KYM3H13j7THhYc40Cjjgsw7tplNeJWNKMy9b4as3I1dHdnWm73cpbcF7/9rLj3Sm++XVoGLv3OVIP/fz/fqvolayh1KLBIpVj5NLc7jzjVVyS3h6tuSb8+VHxl942VuMM8ifVuXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPEa57JV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fFaui78r6Pg9luCQemDJq9aPOqOZ7LuEz+YTzjp1UQvWEAnjLjDpMoFNtO7Hl4m1gy2bra75BVb5nZsMyFN+xLhE1OJybXmKyjz+ZGkWKlM9XbV2ydoo54KA0QF55dP7gjZNDj0a+FzVc7zLxq8Pf/4EULxRKtzS4ZBevgP6FYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tC6EF3TK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPEa57JV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1FFEC2BD10;
-	Tue, 14 May 2024 11:17:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tC6EF3TK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F50C2BD10;
+	Tue, 14 May 2024 11:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685462;
-	bh=RXnoFjKvi3jB8TKbNnjDoaej0FnzvmsYR8Ld/fuHwWQ=;
+	s=korg; t=1715685468;
+	bh=DsRtHs0D5LF44jBz8GxTS7BIaO3CdGwNPrMmLtBgFvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uPEa57JVfs9s8O3u42zl6ueKZogqKvOryYvc5To2EL5fyQRbNAFWANfmMUpNaBrdw
-	 NrQCaNhF/kJxH5NkawSarDceiX2vX/Oe9fDjQ5JKolcKdQbb3ljtfLMEkAdehn4Pof
-	 D3sF1UPtkiI3n5xOBLiFlxW8O9aQ+Qf2C9pb0lZk=
+	b=tC6EF3TKE09VLncBtdFaswpmCLGUhYoSpBcCSv1iROhmhUyAoy1VHI+hWoem7NdWj
+	 5POmP3J+xG7TCXIjoZXKlr0ZgqyMqhE8o1mWEaxRGrLP9QDbo4yxXzjzSqopl33qF/
+	 bIKq7DQh+pafHcQEEgIuph08IOPTzAWWsD2zP5Rc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Ido Schimmel <idosch@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 192/301] selftests/net: convert test_bridge_neigh_suppress.sh to run it in unique namespace
-Date: Tue, 14 May 2024 12:17:43 +0200
-Message-ID: <20240514101039.503173356@linuxfoundation.org>
+Subject: [PATCH 6.6 193/301] selftests: test_bridge_neigh_suppress.sh: Fix failures due to duplicate MAC
+Date: Tue, 14 May 2024 12:17:44 +0200
+Message-ID: <20240514101039.541349712@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -53,689 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 312abe3d93a35f9c486a4703d39cab52457266f0 ]
+[ Upstream commit 9a169c267e946b0f47f67e8ccc70134708ccf3d4 ]
 
-Here is the test result after conversion.
+When creating the topology for the test, three veth pairs are created in
+the initial network namespace before being moved to one of the network
+namespaces created by the test.
 
-]# ./test_bridge_neigh_suppress.sh
+On systems where systemd-udev uses MACAddressPolicy=persistent (default
+since systemd version 242), this will result in some net devices having
+the same MAC address since they were created with the same name in the
+initial network namespace. In turn, this leads to arping / ndisc6
+failing since packets are dropped by the bridge's loopback filter.
 
-Per-port ARP suppression - VLAN 10
-----------------------------------
-TEST: arping                                                        [ OK ]
-TEST: ARP suppression                                               [ OK ]
+Fix by creating each net device in the correct network namespace instead
+of moving it there from the initial network namespace.
 
-...
-
-TEST: NS suppression (VLAN 20)                                      [ OK ]
-
-Tests passed: 148
-Tests failed:   0
-
-Acked-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 9a169c267e94 ("selftests: test_bridge_neigh_suppress.sh: Fix failures due to duplicate MAC")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/netdev/20240426074015.251854d4@kernel.org/
+Fixes: 7648ac72dcd7 ("selftests: net: Add bridge neighbor suppression test")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/20240507113033.1732534-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/test_bridge_neigh_suppress.sh         | 331 +++++++++---------
- 1 file changed, 162 insertions(+), 169 deletions(-)
+ .../selftests/net/test_bridge_neigh_suppress.sh    | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
 diff --git a/tools/testing/selftests/net/test_bridge_neigh_suppress.sh b/tools/testing/selftests/net/test_bridge_neigh_suppress.sh
-index d80f2cd87614c..8533393a4f186 100755
+index 8533393a4f186..02b986c9c247d 100755
 --- a/tools/testing/selftests/net/test_bridge_neigh_suppress.sh
 +++ b/tools/testing/selftests/net/test_bridge_neigh_suppress.sh
-@@ -45,9 +45,8 @@
- # | sw1                                | | sw2                                |
- # +------------------------------------+ +------------------------------------+
- 
-+source lib.sh
- ret=0
--# Kselftest framework requirement - SKIP code is 4.
--ksft_skip=4
- 
- # All tests in this script. Can be overridden with -t option.
- TESTS="
-@@ -140,9 +139,6 @@ setup_topo_ns()
- {
- 	local ns=$1; shift
- 
--	ip netns add $ns
--	ip -n $ns link set dev lo up
--
- 	ip netns exec $ns sysctl -qw net.ipv6.conf.all.keep_addr_on_down=1
- 	ip netns exec $ns sysctl -qw net.ipv6.conf.default.ignore_routes_with_linkdown=1
- 	ip netns exec $ns sysctl -qw net.ipv6.conf.all.accept_dad=0
-@@ -153,21 +149,22 @@ setup_topo()
- {
- 	local ns
- 
--	for ns in h1 h2 sw1 sw2; do
-+	setup_ns h1 h2 sw1 sw2
-+	for ns in $h1 $h2 $sw1 $sw2; do
+@@ -154,17 +154,9 @@ setup_topo()
  		setup_topo_ns $ns
  	done
  
- 	ip link add name veth0 type veth peer name veth1
--	ip link set dev veth0 netns h1 name eth0
--	ip link set dev veth1 netns sw1 name swp1
-+	ip link set dev veth0 netns $h1 name eth0
-+	ip link set dev veth1 netns $sw1 name swp1
- 
- 	ip link add name veth0 type veth peer name veth1
--	ip link set dev veth0 netns sw1 name veth0
--	ip link set dev veth1 netns sw2 name veth0
-+	ip link set dev veth0 netns $sw1 name veth0
-+	ip link set dev veth1 netns $sw2 name veth0
- 
- 	ip link add name veth0 type veth peer name veth1
--	ip link set dev veth0 netns h2 name eth0
--	ip link set dev veth1 netns sw2 name swp1
-+	ip link set dev veth0 netns $h2 name eth0
-+	ip link set dev veth1 netns $sw2 name swp1
+-	ip link add name veth0 type veth peer name veth1
+-	ip link set dev veth0 netns $h1 name eth0
+-	ip link set dev veth1 netns $sw1 name swp1
+-
+-	ip link add name veth0 type veth peer name veth1
+-	ip link set dev veth0 netns $sw1 name veth0
+-	ip link set dev veth1 netns $sw2 name veth0
+-
+-	ip link add name veth0 type veth peer name veth1
+-	ip link set dev veth0 netns $h2 name eth0
+-	ip link set dev veth1 netns $sw2 name swp1
++	ip -n $h1 link add name eth0 type veth peer name swp1 netns $sw1
++	ip -n $sw1 link add name veth0 type veth peer name veth0 netns $sw2
++	ip -n $h2 link add name eth0 type veth peer name swp1 netns $sw2
  }
  
  setup_host_common()
-@@ -190,7 +187,7 @@ setup_host_common()
- 
- setup_h1()
- {
--	local ns=h1
-+	local ns=$h1
- 	local v4addr1=192.0.2.1/28
- 	local v4addr2=192.0.2.17/28
- 	local v6addr1=2001:db8:1::1/64
-@@ -201,7 +198,7 @@ setup_h1()
- 
- setup_h2()
- {
--	local ns=h2
-+	local ns=$h2
- 	local v4addr1=192.0.2.2/28
- 	local v4addr2=192.0.2.18/28
- 	local v6addr1=2001:db8:1::2/64
-@@ -254,7 +251,7 @@ setup_sw_common()
- 
- setup_sw1()
- {
--	local ns=sw1
-+	local ns=$sw1
- 	local local_addr=192.0.2.33
- 	local remote_addr=192.0.2.34
- 	local veth_addr=192.0.2.49
-@@ -265,7 +262,7 @@ setup_sw1()
- 
- setup_sw2()
- {
--	local ns=sw2
-+	local ns=$sw2
- 	local local_addr=192.0.2.34
- 	local remote_addr=192.0.2.33
- 	local veth_addr=192.0.2.50
-@@ -291,11 +288,7 @@ setup()
- 
- cleanup()
- {
--	local ns
--
--	for ns in h1 h2 sw1 sw2; do
--		ip netns del $ns &> /dev/null
--	done
-+	cleanup_ns $h1 $h2 $sw1 $sw2
- }
- 
- ################################################################################
-@@ -312,80 +305,80 @@ neigh_suppress_arp_common()
- 	echo "Per-port ARP suppression - VLAN $vid"
- 	echo "----------------------------------"
- 
--	run_cmd "tc -n sw1 qdisc replace dev vx0 clsact"
--	run_cmd "tc -n sw1 filter replace dev vx0 egress pref 1 handle 101 proto 0x0806 flower indev swp1 arp_tip $tip arp_sip $sip arp_op request action pass"
-+	run_cmd "tc -n $sw1 qdisc replace dev vx0 clsact"
-+	run_cmd "tc -n $sw1 filter replace dev vx0 egress pref 1 handle 101 proto 0x0806 flower indev swp1 arp_tip $tip arp_sip $sip arp_op request action pass"
- 
- 	# Initial state - check that ARP requests are not suppressed and that
- 	# ARP replies are received.
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip -I eth0.$vid $tip"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip -I eth0.$vid $tip"
- 	log_test $? 0 "arping"
--	tc_check_packets sw1 "dev vx0 egress" 101 1
-+	tc_check_packets $sw1 "dev vx0 egress" 101 1
- 	log_test $? 0 "ARP suppression"
- 
- 	# Enable neighbor suppression and check that nothing changes compared
- 	# to the initial state.
--	run_cmd "bridge -n sw1 link set dev vx0 neigh_suppress on"
--	run_cmd "bridge -n sw1 -d link show dev vx0 | grep \"neigh_suppress on\""
-+	run_cmd "bridge -n $sw1 link set dev vx0 neigh_suppress on"
-+	run_cmd "bridge -n $sw1 -d link show dev vx0 | grep \"neigh_suppress on\""
- 	log_test $? 0 "\"neigh_suppress\" is on"
- 
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip -I eth0.$vid $tip"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip -I eth0.$vid $tip"
- 	log_test $? 0 "arping"
--	tc_check_packets sw1 "dev vx0 egress" 101 2
-+	tc_check_packets $sw1 "dev vx0 egress" 101 2
- 	log_test $? 0 "ARP suppression"
- 
- 	# Install an FDB entry for the remote host and check that nothing
- 	# changes compared to the initial state.
--	h2_mac=$(ip -n h2 -j -p link show eth0.$vid | jq -r '.[]["address"]')
--	run_cmd "bridge -n sw1 fdb replace $h2_mac dev vx0 master static vlan $vid"
-+	h2_mac=$(ip -n $h2 -j -p link show eth0.$vid | jq -r '.[]["address"]')
-+	run_cmd "bridge -n $sw1 fdb replace $h2_mac dev vx0 master static vlan $vid"
- 	log_test $? 0 "FDB entry installation"
- 
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip -I eth0.$vid $tip"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip -I eth0.$vid $tip"
- 	log_test $? 0 "arping"
--	tc_check_packets sw1 "dev vx0 egress" 101 3
-+	tc_check_packets $sw1 "dev vx0 egress" 101 3
- 	log_test $? 0 "ARP suppression"
- 
- 	# Install a neighbor on the matching SVI interface and check that ARP
- 	# requests are suppressed.
--	run_cmd "ip -n sw1 neigh replace $tip lladdr $h2_mac nud permanent dev br0.$vid"
-+	run_cmd "ip -n $sw1 neigh replace $tip lladdr $h2_mac nud permanent dev br0.$vid"
- 	log_test $? 0 "Neighbor entry installation"
- 
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip -I eth0.$vid $tip"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip -I eth0.$vid $tip"
- 	log_test $? 0 "arping"
--	tc_check_packets sw1 "dev vx0 egress" 101 3
-+	tc_check_packets $sw1 "dev vx0 egress" 101 3
- 	log_test $? 0 "ARP suppression"
- 
- 	# Take the second host down and check that ARP requests are suppressed
- 	# and that ARP replies are received.
--	run_cmd "ip -n h2 link set dev eth0.$vid down"
-+	run_cmd "ip -n $h2 link set dev eth0.$vid down"
- 	log_test $? 0 "H2 down"
- 
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip -I eth0.$vid $tip"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip -I eth0.$vid $tip"
- 	log_test $? 0 "arping"
--	tc_check_packets sw1 "dev vx0 egress" 101 3
-+	tc_check_packets $sw1 "dev vx0 egress" 101 3
- 	log_test $? 0 "ARP suppression"
- 
--	run_cmd "ip -n h2 link set dev eth0.$vid up"
-+	run_cmd "ip -n $h2 link set dev eth0.$vid up"
- 	log_test $? 0 "H2 up"
- 
- 	# Disable neighbor suppression and check that ARP requests are no
- 	# longer suppressed.
--	run_cmd "bridge -n sw1 link set dev vx0 neigh_suppress off"
--	run_cmd "bridge -n sw1 -d link show dev vx0 | grep \"neigh_suppress off\""
-+	run_cmd "bridge -n $sw1 link set dev vx0 neigh_suppress off"
-+	run_cmd "bridge -n $sw1 -d link show dev vx0 | grep \"neigh_suppress off\""
- 	log_test $? 0 "\"neigh_suppress\" is off"
- 
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip -I eth0.$vid $tip"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip -I eth0.$vid $tip"
- 	log_test $? 0 "arping"
--	tc_check_packets sw1 "dev vx0 egress" 101 4
-+	tc_check_packets $sw1 "dev vx0 egress" 101 4
- 	log_test $? 0 "ARP suppression"
- 
- 	# Take the second host down and check that ARP requests are not
- 	# suppressed and that ARP replies are not received.
--	run_cmd "ip -n h2 link set dev eth0.$vid down"
-+	run_cmd "ip -n $h2 link set dev eth0.$vid down"
- 	log_test $? 0 "H2 down"
- 
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip -I eth0.$vid $tip"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip -I eth0.$vid $tip"
- 	log_test $? 1 "arping"
--	tc_check_packets sw1 "dev vx0 egress" 101 5
-+	tc_check_packets $sw1 "dev vx0 egress" 101 5
- 	log_test $? 0 "ARP suppression"
- }
- 
-@@ -415,80 +408,80 @@ neigh_suppress_ns_common()
- 	echo "Per-port NS suppression - VLAN $vid"
- 	echo "---------------------------------"
- 
--	run_cmd "tc -n sw1 qdisc replace dev vx0 clsact"
--	run_cmd "tc -n sw1 filter replace dev vx0 egress pref 1 handle 101 proto ipv6 flower indev swp1 ip_proto icmpv6 dst_ip $maddr src_ip $saddr type 135 code 0 action pass"
-+	run_cmd "tc -n $sw1 qdisc replace dev vx0 clsact"
-+	run_cmd "tc -n $sw1 filter replace dev vx0 egress pref 1 handle 101 proto ipv6 flower indev swp1 ip_proto icmpv6 dst_ip $maddr src_ip $saddr type 135 code 0 action pass"
- 
- 	# Initial state - check that NS messages are not suppressed and that ND
- 	# messages are received.
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr -w 5000 $daddr eth0.$vid"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr -w 5000 $daddr eth0.$vid"
- 	log_test $? 0 "ndisc6"
--	tc_check_packets sw1 "dev vx0 egress" 101 1
-+	tc_check_packets $sw1 "dev vx0 egress" 101 1
- 	log_test $? 0 "NS suppression"
- 
- 	# Enable neighbor suppression and check that nothing changes compared
- 	# to the initial state.
--	run_cmd "bridge -n sw1 link set dev vx0 neigh_suppress on"
--	run_cmd "bridge -n sw1 -d link show dev vx0 | grep \"neigh_suppress on\""
-+	run_cmd "bridge -n $sw1 link set dev vx0 neigh_suppress on"
-+	run_cmd "bridge -n $sw1 -d link show dev vx0 | grep \"neigh_suppress on\""
- 	log_test $? 0 "\"neigh_suppress\" is on"
- 
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr -w 5000 $daddr eth0.$vid"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr -w 5000 $daddr eth0.$vid"
- 	log_test $? 0 "ndisc6"
--	tc_check_packets sw1 "dev vx0 egress" 101 2
-+	tc_check_packets $sw1 "dev vx0 egress" 101 2
- 	log_test $? 0 "NS suppression"
- 
- 	# Install an FDB entry for the remote host and check that nothing
- 	# changes compared to the initial state.
--	h2_mac=$(ip -n h2 -j -p link show eth0.$vid | jq -r '.[]["address"]')
--	run_cmd "bridge -n sw1 fdb replace $h2_mac dev vx0 master static vlan $vid"
-+	h2_mac=$(ip -n $h2 -j -p link show eth0.$vid | jq -r '.[]["address"]')
-+	run_cmd "bridge -n $sw1 fdb replace $h2_mac dev vx0 master static vlan $vid"
- 	log_test $? 0 "FDB entry installation"
- 
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr -w 5000 $daddr eth0.$vid"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr -w 5000 $daddr eth0.$vid"
- 	log_test $? 0 "ndisc6"
--	tc_check_packets sw1 "dev vx0 egress" 101 3
-+	tc_check_packets $sw1 "dev vx0 egress" 101 3
- 	log_test $? 0 "NS suppression"
- 
- 	# Install a neighbor on the matching SVI interface and check that NS
- 	# messages are suppressed.
--	run_cmd "ip -n sw1 neigh replace $daddr lladdr $h2_mac nud permanent dev br0.$vid"
-+	run_cmd "ip -n $sw1 neigh replace $daddr lladdr $h2_mac nud permanent dev br0.$vid"
- 	log_test $? 0 "Neighbor entry installation"
- 
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr -w 5000 $daddr eth0.$vid"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr -w 5000 $daddr eth0.$vid"
- 	log_test $? 0 "ndisc6"
--	tc_check_packets sw1 "dev vx0 egress" 101 3
-+	tc_check_packets $sw1 "dev vx0 egress" 101 3
- 	log_test $? 0 "NS suppression"
- 
- 	# Take the second host down and check that NS messages are suppressed
- 	# and that ND messages are received.
--	run_cmd "ip -n h2 link set dev eth0.$vid down"
-+	run_cmd "ip -n $h2 link set dev eth0.$vid down"
- 	log_test $? 0 "H2 down"
- 
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr -w 5000 $daddr eth0.$vid"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr -w 5000 $daddr eth0.$vid"
- 	log_test $? 0 "ndisc6"
--	tc_check_packets sw1 "dev vx0 egress" 101 3
-+	tc_check_packets $sw1 "dev vx0 egress" 101 3
- 	log_test $? 0 "NS suppression"
- 
--	run_cmd "ip -n h2 link set dev eth0.$vid up"
-+	run_cmd "ip -n $h2 link set dev eth0.$vid up"
- 	log_test $? 0 "H2 up"
- 
- 	# Disable neighbor suppression and check that NS messages are no longer
- 	# suppressed.
--	run_cmd "bridge -n sw1 link set dev vx0 neigh_suppress off"
--	run_cmd "bridge -n sw1 -d link show dev vx0 | grep \"neigh_suppress off\""
-+	run_cmd "bridge -n $sw1 link set dev vx0 neigh_suppress off"
-+	run_cmd "bridge -n $sw1 -d link show dev vx0 | grep \"neigh_suppress off\""
- 	log_test $? 0 "\"neigh_suppress\" is off"
- 
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr -w 5000 $daddr eth0.$vid"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr -w 5000 $daddr eth0.$vid"
- 	log_test $? 0 "ndisc6"
--	tc_check_packets sw1 "dev vx0 egress" 101 4
-+	tc_check_packets $sw1 "dev vx0 egress" 101 4
- 	log_test $? 0 "NS suppression"
- 
- 	# Take the second host down and check that NS messages are not
- 	# suppressed and that ND messages are not received.
--	run_cmd "ip -n h2 link set dev eth0.$vid down"
-+	run_cmd "ip -n $h2 link set dev eth0.$vid down"
- 	log_test $? 0 "H2 down"
- 
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr -w 5000 $daddr eth0.$vid"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr -w 5000 $daddr eth0.$vid"
- 	log_test $? 2 "ndisc6"
--	tc_check_packets sw1 "dev vx0 egress" 101 5
-+	tc_check_packets $sw1 "dev vx0 egress" 101 5
- 	log_test $? 0 "NS suppression"
- }
- 
-@@ -524,118 +517,118 @@ neigh_vlan_suppress_arp()
- 	echo "Per-{Port, VLAN} ARP suppression"
- 	echo "--------------------------------"
- 
--	run_cmd "tc -n sw1 qdisc replace dev vx0 clsact"
--	run_cmd "tc -n sw1 filter replace dev vx0 egress pref 1 handle 101 proto 0x0806 flower indev swp1 arp_tip $tip1 arp_sip $sip1 arp_op request action pass"
--	run_cmd "tc -n sw1 filter replace dev vx0 egress pref 1 handle 102 proto 0x0806 flower indev swp1 arp_tip $tip2 arp_sip $sip2 arp_op request action pass"
-+	run_cmd "tc -n $sw1 qdisc replace dev vx0 clsact"
-+	run_cmd "tc -n $sw1 filter replace dev vx0 egress pref 1 handle 101 proto 0x0806 flower indev swp1 arp_tip $tip1 arp_sip $sip1 arp_op request action pass"
-+	run_cmd "tc -n $sw1 filter replace dev vx0 egress pref 1 handle 102 proto 0x0806 flower indev swp1 arp_tip $tip2 arp_sip $sip2 arp_op request action pass"
- 
--	h2_mac1=$(ip -n h2 -j -p link show eth0.$vid1 | jq -r '.[]["address"]')
--	h2_mac2=$(ip -n h2 -j -p link show eth0.$vid2 | jq -r '.[]["address"]')
--	run_cmd "bridge -n sw1 fdb replace $h2_mac1 dev vx0 master static vlan $vid1"
--	run_cmd "bridge -n sw1 fdb replace $h2_mac2 dev vx0 master static vlan $vid2"
--	run_cmd "ip -n sw1 neigh replace $tip1 lladdr $h2_mac1 nud permanent dev br0.$vid1"
--	run_cmd "ip -n sw1 neigh replace $tip2 lladdr $h2_mac2 nud permanent dev br0.$vid2"
-+	h2_mac1=$(ip -n $h2 -j -p link show eth0.$vid1 | jq -r '.[]["address"]')
-+	h2_mac2=$(ip -n $h2 -j -p link show eth0.$vid2 | jq -r '.[]["address"]')
-+	run_cmd "bridge -n $sw1 fdb replace $h2_mac1 dev vx0 master static vlan $vid1"
-+	run_cmd "bridge -n $sw1 fdb replace $h2_mac2 dev vx0 master static vlan $vid2"
-+	run_cmd "ip -n $sw1 neigh replace $tip1 lladdr $h2_mac1 nud permanent dev br0.$vid1"
-+	run_cmd "ip -n $sw1 neigh replace $tip2 lladdr $h2_mac2 nud permanent dev br0.$vid2"
- 
- 	# Enable per-{Port, VLAN} neighbor suppression and check that ARP
- 	# requests are not suppressed and that ARP replies are received.
--	run_cmd "bridge -n sw1 link set dev vx0 neigh_vlan_suppress on"
--	run_cmd "bridge -n sw1 -d link show dev vx0 | grep \"neigh_vlan_suppress on\""
-+	run_cmd "bridge -n $sw1 link set dev vx0 neigh_vlan_suppress on"
-+	run_cmd "bridge -n $sw1 -d link show dev vx0 | grep \"neigh_vlan_suppress on\""
- 	log_test $? 0 "\"neigh_vlan_suppress\" is on"
- 
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip1 -I eth0.$vid1 $tip1"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip1 -I eth0.$vid1 $tip1"
- 	log_test $? 0 "arping (VLAN $vid1)"
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip2 -I eth0.$vid2 $tip2"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip2 -I eth0.$vid2 $tip2"
- 	log_test $? 0 "arping (VLAN $vid2)"
- 
--	tc_check_packets sw1 "dev vx0 egress" 101 1
-+	tc_check_packets $sw1 "dev vx0 egress" 101 1
- 	log_test $? 0 "ARP suppression (VLAN $vid1)"
--	tc_check_packets sw1 "dev vx0 egress" 102 1
-+	tc_check_packets $sw1 "dev vx0 egress" 102 1
- 	log_test $? 0 "ARP suppression (VLAN $vid2)"
- 
- 	# Enable neighbor suppression on VLAN 10 and check that only on this
- 	# VLAN ARP requests are suppressed.
--	run_cmd "bridge -n sw1 vlan set vid $vid1 dev vx0 neigh_suppress on"
--	run_cmd "bridge -n sw1 -d vlan show dev vx0 vid $vid1 | grep \"neigh_suppress on\""
-+	run_cmd "bridge -n $sw1 vlan set vid $vid1 dev vx0 neigh_suppress on"
-+	run_cmd "bridge -n $sw1 -d vlan show dev vx0 vid $vid1 | grep \"neigh_suppress on\""
- 	log_test $? 0 "\"neigh_suppress\" is on (VLAN $vid1)"
--	run_cmd "bridge -n sw1 -d vlan show dev vx0 vid $vid2 | grep \"neigh_suppress off\""
-+	run_cmd "bridge -n $sw1 -d vlan show dev vx0 vid $vid2 | grep \"neigh_suppress off\""
- 	log_test $? 0 "\"neigh_suppress\" is off (VLAN $vid2)"
- 
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip1 -I eth0.$vid1 $tip1"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip1 -I eth0.$vid1 $tip1"
- 	log_test $? 0 "arping (VLAN $vid1)"
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip2 -I eth0.$vid2 $tip2"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip2 -I eth0.$vid2 $tip2"
- 	log_test $? 0 "arping (VLAN $vid2)"
- 
--	tc_check_packets sw1 "dev vx0 egress" 101 1
-+	tc_check_packets $sw1 "dev vx0 egress" 101 1
- 	log_test $? 0 "ARP suppression (VLAN $vid1)"
--	tc_check_packets sw1 "dev vx0 egress" 102 2
-+	tc_check_packets $sw1 "dev vx0 egress" 102 2
- 	log_test $? 0 "ARP suppression (VLAN $vid2)"
- 
- 	# Enable neighbor suppression on the port and check that it has no
- 	# effect compared to previous state.
--	run_cmd "bridge -n sw1 link set dev vx0 neigh_suppress on"
--	run_cmd "bridge -n sw1 -d link show dev vx0 | grep \"neigh_suppress on\""
-+	run_cmd "bridge -n $sw1 link set dev vx0 neigh_suppress on"
-+	run_cmd "bridge -n $sw1 -d link show dev vx0 | grep \"neigh_suppress on\""
- 	log_test $? 0 "\"neigh_suppress\" is on"
- 
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip1 -I eth0.$vid1 $tip1"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip1 -I eth0.$vid1 $tip1"
- 	log_test $? 0 "arping (VLAN $vid1)"
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip2 -I eth0.$vid2 $tip2"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip2 -I eth0.$vid2 $tip2"
- 	log_test $? 0 "arping (VLAN $vid2)"
- 
--	tc_check_packets sw1 "dev vx0 egress" 101 1
-+	tc_check_packets $sw1 "dev vx0 egress" 101 1
- 	log_test $? 0 "ARP suppression (VLAN $vid1)"
--	tc_check_packets sw1 "dev vx0 egress" 102 3
-+	tc_check_packets $sw1 "dev vx0 egress" 102 3
- 	log_test $? 0 "ARP suppression (VLAN $vid2)"
- 
- 	# Disable neighbor suppression on the port and check that it has no
- 	# effect compared to previous state.
--	run_cmd "bridge -n sw1 link set dev vx0 neigh_suppress off"
--	run_cmd "bridge -n sw1 -d link show dev vx0 | grep \"neigh_suppress off\""
-+	run_cmd "bridge -n $sw1 link set dev vx0 neigh_suppress off"
-+	run_cmd "bridge -n $sw1 -d link show dev vx0 | grep \"neigh_suppress off\""
- 	log_test $? 0 "\"neigh_suppress\" is off"
- 
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip1 -I eth0.$vid1 $tip1"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip1 -I eth0.$vid1 $tip1"
- 	log_test $? 0 "arping (VLAN $vid1)"
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip2 -I eth0.$vid2 $tip2"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip2 -I eth0.$vid2 $tip2"
- 	log_test $? 0 "arping (VLAN $vid2)"
- 
--	tc_check_packets sw1 "dev vx0 egress" 101 1
-+	tc_check_packets $sw1 "dev vx0 egress" 101 1
- 	log_test $? 0 "ARP suppression (VLAN $vid1)"
--	tc_check_packets sw1 "dev vx0 egress" 102 4
-+	tc_check_packets $sw1 "dev vx0 egress" 102 4
- 	log_test $? 0 "ARP suppression (VLAN $vid2)"
- 
- 	# Disable neighbor suppression on VLAN 10 and check that ARP requests
- 	# are no longer suppressed on this VLAN.
--	run_cmd "bridge -n sw1 vlan set vid $vid1 dev vx0 neigh_suppress off"
--	run_cmd "bridge -n sw1 -d vlan show dev vx0 vid $vid1 | grep \"neigh_suppress off\""
-+	run_cmd "bridge -n $sw1 vlan set vid $vid1 dev vx0 neigh_suppress off"
-+	run_cmd "bridge -n $sw1 -d vlan show dev vx0 vid $vid1 | grep \"neigh_suppress off\""
- 	log_test $? 0 "\"neigh_suppress\" is off (VLAN $vid1)"
- 
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip1 -I eth0.$vid1 $tip1"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip1 -I eth0.$vid1 $tip1"
- 	log_test $? 0 "arping (VLAN $vid1)"
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip2 -I eth0.$vid2 $tip2"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip2 -I eth0.$vid2 $tip2"
- 	log_test $? 0 "arping (VLAN $vid2)"
- 
--	tc_check_packets sw1 "dev vx0 egress" 101 2
-+	tc_check_packets $sw1 "dev vx0 egress" 101 2
- 	log_test $? 0 "ARP suppression (VLAN $vid1)"
--	tc_check_packets sw1 "dev vx0 egress" 102 5
-+	tc_check_packets $sw1 "dev vx0 egress" 102 5
- 	log_test $? 0 "ARP suppression (VLAN $vid2)"
- 
- 	# Disable per-{Port, VLAN} neighbor suppression, enable neighbor
- 	# suppression on the port and check that on both VLANs ARP requests are
- 	# suppressed.
--	run_cmd "bridge -n sw1 link set dev vx0 neigh_vlan_suppress off"
--	run_cmd "bridge -n sw1 -d link show dev vx0 | grep \"neigh_vlan_suppress off\""
-+	run_cmd "bridge -n $sw1 link set dev vx0 neigh_vlan_suppress off"
-+	run_cmd "bridge -n $sw1 -d link show dev vx0 | grep \"neigh_vlan_suppress off\""
- 	log_test $? 0 "\"neigh_vlan_suppress\" is off"
- 
--	run_cmd "bridge -n sw1 link set dev vx0 neigh_suppress on"
--	run_cmd "bridge -n sw1 -d link show dev vx0 | grep \"neigh_suppress on\""
-+	run_cmd "bridge -n $sw1 link set dev vx0 neigh_suppress on"
-+	run_cmd "bridge -n $sw1 -d link show dev vx0 | grep \"neigh_suppress on\""
- 	log_test $? 0 "\"neigh_suppress\" is on"
- 
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip1 -I eth0.$vid1 $tip1"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip1 -I eth0.$vid1 $tip1"
- 	log_test $? 0 "arping (VLAN $vid1)"
--	run_cmd "ip netns exec h1 arping -q -b -c 1 -w 5 -s $sip2 -I eth0.$vid2 $tip2"
-+	run_cmd "ip netns exec $h1 arping -q -b -c 1 -w 5 -s $sip2 -I eth0.$vid2 $tip2"
- 	log_test $? 0 "arping (VLAN $vid2)"
- 
--	tc_check_packets sw1 "dev vx0 egress" 101 2
-+	tc_check_packets $sw1 "dev vx0 egress" 101 2
- 	log_test $? 0 "ARP suppression (VLAN $vid1)"
--	tc_check_packets sw1 "dev vx0 egress" 102 5
-+	tc_check_packets $sw1 "dev vx0 egress" 102 5
- 	log_test $? 0 "ARP suppression (VLAN $vid2)"
- }
- 
-@@ -655,118 +648,118 @@ neigh_vlan_suppress_ns()
- 	echo "Per-{Port, VLAN} NS suppression"
- 	echo "-------------------------------"
- 
--	run_cmd "tc -n sw1 qdisc replace dev vx0 clsact"
--	run_cmd "tc -n sw1 filter replace dev vx0 egress pref 1 handle 101 proto ipv6 flower indev swp1 ip_proto icmpv6 dst_ip $maddr src_ip $saddr1 type 135 code 0 action pass"
--	run_cmd "tc -n sw1 filter replace dev vx0 egress pref 1 handle 102 proto ipv6 flower indev swp1 ip_proto icmpv6 dst_ip $maddr src_ip $saddr2 type 135 code 0 action pass"
-+	run_cmd "tc -n $sw1 qdisc replace dev vx0 clsact"
-+	run_cmd "tc -n $sw1 filter replace dev vx0 egress pref 1 handle 101 proto ipv6 flower indev swp1 ip_proto icmpv6 dst_ip $maddr src_ip $saddr1 type 135 code 0 action pass"
-+	run_cmd "tc -n $sw1 filter replace dev vx0 egress pref 1 handle 102 proto ipv6 flower indev swp1 ip_proto icmpv6 dst_ip $maddr src_ip $saddr2 type 135 code 0 action pass"
- 
--	h2_mac1=$(ip -n h2 -j -p link show eth0.$vid1 | jq -r '.[]["address"]')
--	h2_mac2=$(ip -n h2 -j -p link show eth0.$vid2 | jq -r '.[]["address"]')
--	run_cmd "bridge -n sw1 fdb replace $h2_mac1 dev vx0 master static vlan $vid1"
--	run_cmd "bridge -n sw1 fdb replace $h2_mac2 dev vx0 master static vlan $vid2"
--	run_cmd "ip -n sw1 neigh replace $daddr1 lladdr $h2_mac1 nud permanent dev br0.$vid1"
--	run_cmd "ip -n sw1 neigh replace $daddr2 lladdr $h2_mac2 nud permanent dev br0.$vid2"
-+	h2_mac1=$(ip -n $h2 -j -p link show eth0.$vid1 | jq -r '.[]["address"]')
-+	h2_mac2=$(ip -n $h2 -j -p link show eth0.$vid2 | jq -r '.[]["address"]')
-+	run_cmd "bridge -n $sw1 fdb replace $h2_mac1 dev vx0 master static vlan $vid1"
-+	run_cmd "bridge -n $sw1 fdb replace $h2_mac2 dev vx0 master static vlan $vid2"
-+	run_cmd "ip -n $sw1 neigh replace $daddr1 lladdr $h2_mac1 nud permanent dev br0.$vid1"
-+	run_cmd "ip -n $sw1 neigh replace $daddr2 lladdr $h2_mac2 nud permanent dev br0.$vid2"
- 
- 	# Enable per-{Port, VLAN} neighbor suppression and check that NS
- 	# messages are not suppressed and that ND messages are received.
--	run_cmd "bridge -n sw1 link set dev vx0 neigh_vlan_suppress on"
--	run_cmd "bridge -n sw1 -d link show dev vx0 | grep \"neigh_vlan_suppress on\""
-+	run_cmd "bridge -n $sw1 link set dev vx0 neigh_vlan_suppress on"
-+	run_cmd "bridge -n $sw1 -d link show dev vx0 | grep \"neigh_vlan_suppress on\""
- 	log_test $? 0 "\"neigh_vlan_suppress\" is on"
- 
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr1 -w 5000 $daddr1 eth0.$vid1"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr1 -w 5000 $daddr1 eth0.$vid1"
- 	log_test $? 0 "ndisc6 (VLAN $vid1)"
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr2 -w 5000 $daddr2 eth0.$vid2"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr2 -w 5000 $daddr2 eth0.$vid2"
- 	log_test $? 0 "ndisc6 (VLAN $vid2)"
- 
--	tc_check_packets sw1 "dev vx0 egress" 101 1
-+	tc_check_packets $sw1 "dev vx0 egress" 101 1
- 	log_test $? 0 "NS suppression (VLAN $vid1)"
--	tc_check_packets sw1 "dev vx0 egress" 102 1
-+	tc_check_packets $sw1 "dev vx0 egress" 102 1
- 	log_test $? 0 "NS suppression (VLAN $vid2)"
- 
- 	# Enable neighbor suppression on VLAN 10 and check that only on this
- 	# VLAN NS messages are suppressed.
--	run_cmd "bridge -n sw1 vlan set vid $vid1 dev vx0 neigh_suppress on"
--	run_cmd "bridge -n sw1 -d vlan show dev vx0 vid $vid1 | grep \"neigh_suppress on\""
-+	run_cmd "bridge -n $sw1 vlan set vid $vid1 dev vx0 neigh_suppress on"
-+	run_cmd "bridge -n $sw1 -d vlan show dev vx0 vid $vid1 | grep \"neigh_suppress on\""
- 	log_test $? 0 "\"neigh_suppress\" is on (VLAN $vid1)"
--	run_cmd "bridge -n sw1 -d vlan show dev vx0 vid $vid2 | grep \"neigh_suppress off\""
-+	run_cmd "bridge -n $sw1 -d vlan show dev vx0 vid $vid2 | grep \"neigh_suppress off\""
- 	log_test $? 0 "\"neigh_suppress\" is off (VLAN $vid2)"
- 
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr1 -w 5000 $daddr1 eth0.$vid1"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr1 -w 5000 $daddr1 eth0.$vid1"
- 	log_test $? 0 "ndisc6 (VLAN $vid1)"
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr2 -w 5000 $daddr2 eth0.$vid2"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr2 -w 5000 $daddr2 eth0.$vid2"
- 	log_test $? 0 "ndisc6 (VLAN $vid2)"
- 
--	tc_check_packets sw1 "dev vx0 egress" 101 1
-+	tc_check_packets $sw1 "dev vx0 egress" 101 1
- 	log_test $? 0 "NS suppression (VLAN $vid1)"
--	tc_check_packets sw1 "dev vx0 egress" 102 2
-+	tc_check_packets $sw1 "dev vx0 egress" 102 2
- 	log_test $? 0 "NS suppression (VLAN $vid2)"
- 
- 	# Enable neighbor suppression on the port and check that it has no
- 	# effect compared to previous state.
--	run_cmd "bridge -n sw1 link set dev vx0 neigh_suppress on"
--	run_cmd "bridge -n sw1 -d link show dev vx0 | grep \"neigh_suppress on\""
-+	run_cmd "bridge -n $sw1 link set dev vx0 neigh_suppress on"
-+	run_cmd "bridge -n $sw1 -d link show dev vx0 | grep \"neigh_suppress on\""
- 	log_test $? 0 "\"neigh_suppress\" is on"
- 
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr1 -w 5000 $daddr1 eth0.$vid1"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr1 -w 5000 $daddr1 eth0.$vid1"
- 	log_test $? 0 "ndisc6 (VLAN $vid1)"
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr2 -w 5000 $daddr2 eth0.$vid2"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr2 -w 5000 $daddr2 eth0.$vid2"
- 	log_test $? 0 "ndisc6 (VLAN $vid2)"
- 
--	tc_check_packets sw1 "dev vx0 egress" 101 1
-+	tc_check_packets $sw1 "dev vx0 egress" 101 1
- 	log_test $? 0 "NS suppression (VLAN $vid1)"
--	tc_check_packets sw1 "dev vx0 egress" 102 3
-+	tc_check_packets $sw1 "dev vx0 egress" 102 3
- 	log_test $? 0 "NS suppression (VLAN $vid2)"
- 
- 	# Disable neighbor suppression on the port and check that it has no
- 	# effect compared to previous state.
--	run_cmd "bridge -n sw1 link set dev vx0 neigh_suppress off"
--	run_cmd "bridge -n sw1 -d link show dev vx0 | grep \"neigh_suppress off\""
-+	run_cmd "bridge -n $sw1 link set dev vx0 neigh_suppress off"
-+	run_cmd "bridge -n $sw1 -d link show dev vx0 | grep \"neigh_suppress off\""
- 	log_test $? 0 "\"neigh_suppress\" is off"
- 
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr1 -w 5000 $daddr1 eth0.$vid1"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr1 -w 5000 $daddr1 eth0.$vid1"
- 	log_test $? 0 "ndisc6 (VLAN $vid1)"
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr2 -w 5000 $daddr2 eth0.$vid2"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr2 -w 5000 $daddr2 eth0.$vid2"
- 	log_test $? 0 "ndisc6 (VLAN $vid2)"
- 
--	tc_check_packets sw1 "dev vx0 egress" 101 1
-+	tc_check_packets $sw1 "dev vx0 egress" 101 1
- 	log_test $? 0 "NS suppression (VLAN $vid1)"
--	tc_check_packets sw1 "dev vx0 egress" 102 4
-+	tc_check_packets $sw1 "dev vx0 egress" 102 4
- 	log_test $? 0 "NS suppression (VLAN $vid2)"
- 
- 	# Disable neighbor suppression on VLAN 10 and check that NS messages
- 	# are no longer suppressed on this VLAN.
--	run_cmd "bridge -n sw1 vlan set vid $vid1 dev vx0 neigh_suppress off"
--	run_cmd "bridge -n sw1 -d vlan show dev vx0 vid $vid1 | grep \"neigh_suppress off\""
-+	run_cmd "bridge -n $sw1 vlan set vid $vid1 dev vx0 neigh_suppress off"
-+	run_cmd "bridge -n $sw1 -d vlan show dev vx0 vid $vid1 | grep \"neigh_suppress off\""
- 	log_test $? 0 "\"neigh_suppress\" is off (VLAN $vid1)"
- 
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr1 -w 5000 $daddr1 eth0.$vid1"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr1 -w 5000 $daddr1 eth0.$vid1"
- 	log_test $? 0 "ndisc6 (VLAN $vid1)"
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr2 -w 5000 $daddr2 eth0.$vid2"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr2 -w 5000 $daddr2 eth0.$vid2"
- 	log_test $? 0 "ndisc6 (VLAN $vid2)"
- 
--	tc_check_packets sw1 "dev vx0 egress" 101 2
-+	tc_check_packets $sw1 "dev vx0 egress" 101 2
- 	log_test $? 0 "NS suppression (VLAN $vid1)"
--	tc_check_packets sw1 "dev vx0 egress" 102 5
-+	tc_check_packets $sw1 "dev vx0 egress" 102 5
- 	log_test $? 0 "NS suppression (VLAN $vid2)"
- 
- 	# Disable per-{Port, VLAN} neighbor suppression, enable neighbor
- 	# suppression on the port and check that on both VLANs NS messages are
- 	# suppressed.
--	run_cmd "bridge -n sw1 link set dev vx0 neigh_vlan_suppress off"
--	run_cmd "bridge -n sw1 -d link show dev vx0 | grep \"neigh_vlan_suppress off\""
-+	run_cmd "bridge -n $sw1 link set dev vx0 neigh_vlan_suppress off"
-+	run_cmd "bridge -n $sw1 -d link show dev vx0 | grep \"neigh_vlan_suppress off\""
- 	log_test $? 0 "\"neigh_vlan_suppress\" is off"
- 
--	run_cmd "bridge -n sw1 link set dev vx0 neigh_suppress on"
--	run_cmd "bridge -n sw1 -d link show dev vx0 | grep \"neigh_suppress on\""
-+	run_cmd "bridge -n $sw1 link set dev vx0 neigh_suppress on"
-+	run_cmd "bridge -n $sw1 -d link show dev vx0 | grep \"neigh_suppress on\""
- 	log_test $? 0 "\"neigh_suppress\" is on"
- 
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr1 -w 5000 $daddr1 eth0.$vid1"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr1 -w 5000 $daddr1 eth0.$vid1"
- 	log_test $? 0 "ndisc6 (VLAN $vid1)"
--	run_cmd "ip netns exec h1 ndisc6 -q -r 1 -s $saddr2 -w 5000 $daddr2 eth0.$vid2"
-+	run_cmd "ip netns exec $h1 ndisc6 -q -r 1 -s $saddr2 -w 5000 $daddr2 eth0.$vid2"
- 	log_test $? 0 "ndisc6 (VLAN $vid2)"
- 
--	tc_check_packets sw1 "dev vx0 egress" 101 2
-+	tc_check_packets $sw1 "dev vx0 egress" 101 2
- 	log_test $? 0 "NS suppression (VLAN $vid1)"
--	tc_check_packets sw1 "dev vx0 egress" 102 5
-+	tc_check_packets $sw1 "dev vx0 egress" 102 5
- 	log_test $? 0 "NS suppression (VLAN $vid2)"
- }
- 
 -- 
 2.43.0
 
