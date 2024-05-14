@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244784F1E5;
-	Tue, 14 May 2024 11:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A504F1E5;
+	Tue, 14 May 2024 11:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686024; cv=none; b=shZ+ptJTaS0U2PwLBHoMW3TIexq5fhx2TCXooX/F0tM8mq+654utw3rJ/yOocKROoVla4aAwwU8YVXsSzxmfURmuK27IJoi84iELxJNTZ5vLmxcnxzyPcL3uf/cOeutyQWrDtg1UnvJzOuzPr6ThDHvXaTl2v0h5XrvuC4+b4/A=
+	t=1715686028; cv=none; b=rPLi7JRnHT6iDk6eJD3Id1fksT526lpPn5ayfN53X9axNugwOF/ZGexyOWpiRnEDYfXq/VHsI0v9li0iDLzpWAFCu9oml7xP5lUATmDPGpYMtgBAzny+J0SURjrnPJCI4Fb2rlpBarqy+IQoyWP781qoMTaXssQwz+2WOr0B5YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686024; c=relaxed/simple;
-	bh=ZQEZvUgPye293LovBmjwtC/Lbgpw2RmjZL5iP06OAsk=;
+	s=arc-20240116; t=1715686028; c=relaxed/simple;
+	bh=cdWNtugju7KUp25rkynGb9SgpU4MLHejvyIE1cY3AtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EerhzfFzV+ywyLOiyDV6hmH5rQHXj6v+yzLAbLFZ23CugKpenDEV9rWdv0fVHcEjaMjJJte7tefwuce2kcq2oQPCzUOzSlojQQaBRexPdkad50R/GSvnfR/aRJfKcDu96ZEDzxA/JYg1EnD97PD1+68+h2ZPIp8NFdsD/W/lvqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UcJFa/Zx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=V8oZKM95e3jamu9InQSdsoNDlCOOvn/UNJc/kJ34JdMwc0a3f6BM1wU1d8Uc/Y3RSeyoQ2CZgywl2I2jkBOKGNtXbp3ewPuE/KjY33o3au7LBzMGTU3QFV2b51nVB5VwzN6WJF+8v6KmBLTyayOeB9tRX88OZorHlxK3xjIUptk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RT9hcJ1+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UcJFa/Zx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A78C2BD10;
-	Tue, 14 May 2024 11:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RT9hcJ1+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A364C32782;
+	Tue, 14 May 2024 11:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686024;
-	bh=ZQEZvUgPye293LovBmjwtC/Lbgpw2RmjZL5iP06OAsk=;
+	s=korg; t=1715686028;
+	bh=cdWNtugju7KUp25rkynGb9SgpU4MLHejvyIE1cY3AtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UcJFa/ZxligJsMe9P1cNijYaBA9mKT8SDeQBVC+rufOXSl9TYmNEcZqh7FVw9Jspr
-	 QG89EhZmAAB6hwRr+roXmPjmEW94mh704Ia/GqgTogLAuENooXrGe/bPeIgAqPqD8j
-	 fOGD1owbLANNAiNHlY0ujApymRnVBbkt6K4SjDnU=
+	b=RT9hcJ1+A/NV6Hw3nAp7voydPPk4pk4o4fXNvFcVYg0HcfoAbC7WfG6i2txkjU+3n
+	 bnT6PEYTcA0S94aYFsRZBjbGoDp9fGKsbFfY0cmvH9GbRAtVXCw9ejpp2KTQgc4jd/
+	 SckQzkQfqfxTY6YRUpxc+34qbmG1DbOr/2oCGUFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 268/301] drm/amdkfd: dont allow mapping the MMIO HDP page with large pages
-Date: Tue, 14 May 2024 12:18:59 +0200
-Message-ID: <20240514101042.382050175@linuxfoundation.org>
+	Zack Rusin <zack.rusin@broadcom.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 6.6 269/301] drm/ttm: Print the memory decryption status just once
+Date: Tue, 14 May 2024 12:19:00 +0200
+Message-ID: <20240514101042.419244506@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -44,61 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit be4a2a81b6b90d1a47eaeaace4cc8e2cb57b96c7 upstream.
+commit 27906e5d78248b19bcdfdae72049338c828897bb upstream.
 
-We don't get the right offset in that case.  The GPU has
-an unused 4K area of the register BAR space into which you can
-remap registers.  We remap the HDP flush registers into this
-space to allow userspace (CPU or GPU) to flush the HDP when it
-updates VRAM.  However, on systems with >4K pages, we end up
-exposing PAGE_SIZE of MMIO space.
+Stop printing the TT memory decryption status info each time tt is created
+and instead print it just once.
 
-Fixes: d8e408a82704 ("drm/amdkfd: Expose HDP registers to user space")
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Reduces the spam in the system logs when running guests with SEV enabled.
+
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Fixes: 71ce046327cf ("drm/ttm: Make sure the mapped tt pages are decrypted when needed")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+Cc: <stable@vger.kernel.org> # v5.14+
+Link: https://patchwork.freedesktop.org/patch/msgid/20240408155605.1398631-1-zack.rusin@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/ttm/ttm_tt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -1138,7 +1138,7 @@ static int kfd_ioctl_alloc_memory_of_gpu
- 			goto err_unlock;
- 		}
- 		offset = dev->adev->rmmio_remap.bus_addr;
--		if (!offset) {
-+		if (!offset || (PAGE_SIZE > 4096)) {
- 			err = -ENOMEM;
- 			goto err_unlock;
- 		}
-@@ -2307,7 +2307,7 @@ static int criu_restore_memory_of_gpu(st
- 			return -EINVAL;
- 		}
- 		offset = pdd->dev->adev->rmmio_remap.bus_addr;
--		if (!offset) {
-+		if (!offset || (PAGE_SIZE > 4096)) {
- 			pr_err("amdgpu_amdkfd_get_mmio_remap_phys_addr failed\n");
- 			return -ENOMEM;
- 		}
-@@ -3348,6 +3348,9 @@ static int kfd_mmio_mmap(struct kfd_node
- 	if (vma->vm_end - vma->vm_start != PAGE_SIZE)
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/ttm/ttm_tt.c b/drivers/gpu/drm/ttm/ttm_tt.c
+index 578a7c37f00b..d776e3f87064 100644
+--- a/drivers/gpu/drm/ttm/ttm_tt.c
++++ b/drivers/gpu/drm/ttm/ttm_tt.c
+@@ -92,7 +92,7 @@ int ttm_tt_create(struct ttm_buffer_object *bo, bool zero_alloc)
+ 	 */
+ 	if (bdev->pool.use_dma_alloc && cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT)) {
+ 		page_flags |= TTM_TT_FLAG_DECRYPTED;
+-		drm_info(ddev, "TT memory decryption enabled.");
++		drm_info_once(ddev, "TT memory decryption enabled.");
+ 	}
  
-+	if (PAGE_SIZE > 4096)
-+		return -EINVAL;
-+
- 	address = dev->adev->rmmio_remap.bus_addr;
- 
- 	vm_flags_set(vma, VM_IO | VM_DONTCOPY | VM_DONTEXPAND | VM_NORESERVE |
+ 	bo->ttm = bdev->funcs->ttm_tt_create(bo, page_flags);
+-- 
+2.45.0
+
 
 
