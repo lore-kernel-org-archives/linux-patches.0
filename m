@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37774F88C;
-	Tue, 14 May 2024 11:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8408A4F88C;
+	Tue, 14 May 2024 11:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686454; cv=none; b=S/Bvarj1ri3cYkR5yqsYIPUDNvssYsbE5OQ1KCjZYxP8A4bC7Za1oU+SabCVWC1XwCkKaiW4tSk8xSsIFvra+sAtjOnWMAcncEYNzUZ+nw4hJC3wVAh00LrkjUF5IQPhlxyFddDbmjxvdo4+/GXAR95UGx728P9QFBRQn/dqkNw=
+	t=1715686456; cv=none; b=GBhkUVJ2Ni33W6PwHZQGuxl3qGuoBzr97jagyfbmrR6MDJ5YQseWkSeDXuQHJPUTjbQ6s3LD6KQfS/LNIzmp0yirMeWQQ1GNjfOMD85kVB2UUhSqDvmdKuMhKcGhvUZbvtm7dKYPX3iJ7RV+UENpmODQq0TWW0Yz/PFR6SRZNGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686454; c=relaxed/simple;
-	bh=Q3Tll8zZ0NcKDDbN9BiG4bhdhQl9JKlytmRoB0J24eI=;
+	s=arc-20240116; t=1715686456; c=relaxed/simple;
+	bh=Zblx6eghDnCf9QVQGohdsDUlht3MqxTw2dVxrmue9Rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3CqAVgsoxQqP0byA1Zn2EbvxdOVwD4gv5hI7NPCXTryXN7ZqJHqu28ZhMhEO0e9z/HdWDjDOTZcTUO/HtzjDe1TJ48AVsOjZXLQ1hGptLk2CWfjxfLsslgm7xKvUCY0X1mJId0D5ams0PoBb1764ATVrk73Yg/d0ypZ7z6aISk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NdmGylhW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a0rn9q7Hm50Y0t9cq277vsd5iEBGopvtUjr1yCuU7owr3iViCnKLW7gduvcDsOg2Ypx5gCJkSM/whSOo9og7PvCHgQF7UyBXYWWbgi9u9xoTjk1gBYiSL9ah+uAqeZC/t+W1dRETrhz1G8d1MvECghnY69KMkpnS22iSla4mStw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlzpkYjG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdmGylhW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10E6C32781;
-	Tue, 14 May 2024 11:34:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlzpkYjG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BC7C32781;
+	Tue, 14 May 2024 11:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686453;
-	bh=Q3Tll8zZ0NcKDDbN9BiG4bhdhQl9JKlytmRoB0J24eI=;
+	s=korg; t=1715686456;
+	bh=Zblx6eghDnCf9QVQGohdsDUlht3MqxTw2dVxrmue9Rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NdmGylhW9fW2Yv856tZOlsmh7pRw0BBrLPwP4vueVZEBi/sfaZAYm+QJkBkFDJ91W
-	 yHxs4bUjJulqOjKx6HMX3kXTRH8HpwEzVGl6gPb4xU2SKemi0EBysJM/e90MGyydOo
-	 /ZY2yU08TihczDypX2CsnV0XhzCbsPsG4Wksi4mk=
+	b=zlzpkYjGsJHTVA4ah6OOLkIrzOaPxyrVrIKmw+mba6UxYkeUPCmEz/COJAwf7ZKZZ
+	 5a11lwMdPF1OnEbT4dNsprnn7Nff2Z7iHT2NFJlPkrSI86l6EHGmJpCXpnB1dUtMRB
+	 G8T7/v95BipX9hQ5Y2MI1PCaofPFScIRNhCslfkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Fangrui Song <maskray@google.com>,
+	Ian Rogers <irogers@google.com>,
 	Ingo Molnar <mingo@kernel.org>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Milian Wolff <milian.wolff@kdab.com>,
@@ -38,9 +38,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 142/236] perf unwind-libunwind: Fix base address for .eh_frame
-Date: Tue, 14 May 2024 12:18:24 +0200
-Message-ID: <20240514101025.761382034@linuxfoundation.org>
+Subject: [PATCH 6.1 143/236] perf unwind-libdw: Handle JIT-generated DSOs properly
+Date: Tue, 14 May 2024 12:18:25 +0200
+Message-ID: <20240514101025.798775104@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -61,45 +61,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 4fb54994b2360ab5029ee3a959161f6fe6bbb349 ]
+[ Upstream commit c966d23a351a33f8a977fd7efbb6f467132f7383 ]
 
-The base address of a DSO mapping should start at the start of the file.
-Usually DSOs are mapped from the pgoff 0 so it doesn't matter when it
-uses the start of the map address.
+Usually DSOs are mapped from the beginning of the file, so the base
+address of the DSO can be calculated by map->start - map->pgoff.
 
-But generated DSOs for JIT codes doesn't start from the 0 so it should
-subtract the offset to calculate the .eh_frame table offsets correctly.
+However, JIT DSOs which are generated by `perf inject -j`, are mapped
+only the code segment.  This makes unwind-libdw code confusing and
+rejects processing unwinds in the JIT DSOs.  It should use the map
+start address as base for them to fix the confusion.
 
-Fixes: dc2cf4ca866f5715 ("perf unwind: Fix segbase for ld.lld linked objects")
-Reviewed-by: Ian Rogers <irogers@google.com>
+Fixes: 1fe627da30331024 ("perf unwind: Take pgoff into account when reporting elf to libdwfl")
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Fangrui Song <maskray@google.com>
+Cc: Ian Rogers <irogers@google.com>
 Cc: Ingo Molnar <mingo@kernel.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
 Cc: Milian Wolff <milian.wolff@kdab.com>
 Cc: Pablo Galindo <pablogsal@gmail.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20231212070547.612536-4-namhyung@kernel.org
+Link: https://lore.kernel.org/r/20231212070547.612536-3-namhyung@kernel.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/unwind-libunwind-local.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/unwind-libdw.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/util/unwind-libunwind-local.c b/tools/perf/util/unwind-libunwind-local.c
-index 81b6bd6e1536a..b276e36e3fb41 100644
---- a/tools/perf/util/unwind-libunwind-local.c
-+++ b/tools/perf/util/unwind-libunwind-local.c
-@@ -327,7 +327,7 @@ static int read_unwind_spec_eh_frame(struct dso *dso, struct unwind_info *ui,
+diff --git a/tools/perf/util/unwind-libdw.c b/tools/perf/util/unwind-libdw.c
+index 94aa40f6e3482..9a7bdc0e14cc2 100644
+--- a/tools/perf/util/unwind-libdw.c
++++ b/tools/perf/util/unwind-libdw.c
+@@ -45,6 +45,7 @@ static int __report_module(struct addr_location *al, u64 ip,
+ {
+ 	Dwfl_Module *mod;
+ 	struct dso *dso = NULL;
++	Dwarf_Addr base;
+ 	/*
+ 	 * Some callers will use al->sym, so we can't just use the
+ 	 * cheaper thread__find_map() here.
+@@ -57,24 +58,36 @@ static int __report_module(struct addr_location *al, u64 ip,
+ 	if (!dso)
+ 		return 0;
  
- 	maps__for_each_entry(ui->thread->maps, map) {
- 		if (map->dso == dso && map->start < base_addr)
--			base_addr = map->start;
-+			base_addr = map->start - map->pgoff;
++	/*
++	 * The generated JIT DSO files only map the code segment without
++	 * ELF headers.  Since JIT codes used to be packed in a memory
++	 * segment, calculating the base address using pgoff falls info
++	 * a different code in another DSO.  So just use the map->start
++	 * directly to pick the correct one.
++	 */
++	if (!strncmp(dso->long_name, "/tmp/jitted-", 12))
++		base = al->map->start;
++	else
++		base = al->map->start - al->map->pgoff;
++
+ 	mod = dwfl_addrmodule(ui->dwfl, ip);
+ 	if (mod) {
+ 		Dwarf_Addr s;
+ 
+ 		dwfl_module_info(mod, NULL, &s, NULL, NULL, NULL, NULL, NULL);
+-		if (s != al->map->start - al->map->pgoff)
+-			mod = 0;
++		if (s != base)
++			mod = NULL;
  	}
- 	base_addr -= dso->data.elf_base_addr;
- 	/* Address of .eh_frame_hdr */
+ 
+ 	if (!mod)
+ 		mod = dwfl_report_elf(ui->dwfl, dso->short_name, dso->long_name, -1,
+-				      al->map->start - al->map->pgoff, false);
++				      base, false);
+ 	if (!mod) {
+ 		char filename[PATH_MAX];
+ 
+ 		if (dso__build_id_filename(dso, filename, sizeof(filename), false))
+ 			mod = dwfl_report_elf(ui->dwfl, dso->short_name, filename, -1,
+-					      al->map->start - al->map->pgoff, false);
++					      base, false);
+ 	}
+ 
+ 	if (mod) {
 -- 
 2.43.0
 
