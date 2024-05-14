@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3973C54BFE;
-	Tue, 14 May 2024 11:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF72F12AAD2;
+	Tue, 14 May 2024 11:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685436; cv=none; b=HwgLEjgz4Jr66rKgkaVx94sa1E2LVbfQa78N3aEIz2W3WqllNYyb2A8hL4rgdPeBUTmQRUZ45i2K2gtOWCkNGofvTlWW3FbcA6An+nKiivAs8AdhfBD1IaTzVHu/8ys1qAjdizPHNa9zoHSHizTeIiUqS1z5btGcDb1XvOBPETM=
+	t=1715685440; cv=none; b=MFqVr0M7MuYOXK//jvE++UD5Bh0GxCGNq+iUOKCkRGWCo52omr7+pb2j0zhF29cYKtrR+YDmdkHJ3itwSLIfxcqmAq1ooy/DeHNSuXsDVgCP+FPOAtkQT9zZtyvEiUisE45/ZPlw/1tk5rsAEEhLXm94t1v6ir3E6LvZYVXmjqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685436; c=relaxed/simple;
-	bh=cQ1kG9PFK0z2eJGgZ/SIJp8C+pYqRdcEkcu5N/Qsu+Q=;
+	s=arc-20240116; t=1715685440; c=relaxed/simple;
+	bh=9+ivXcTobe37qs7ySJicXCTC6Oq18Kr4gZaVJ5SIHCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aQuU1kk+6ae+mm6ylv9q6Oz3yolKTjdjyum7tlTTXKMJPinARBgJ/9LaRlT/5KHwcJdsMPFwXe/JyZVKWW1KiWjn2B96dSR0IMaZSrYwfBLTQYn1Ljvz5n9JX4nl+b/gtvs/0ygmxYuOxSWxx3TwkHffral2h7PwKkt+FoMEp94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gh/cpdNj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CKGzZly3EuT3cGYKgWDSiL/ny1C+NsaoXCFaEsU8wG5kFpsYiQAZuNQmoMYpZ+VP2MwNqX/ZgnQQpQAEeMznrIymdHx69P6702TL+gpgMSu88a9YuI0XhKOXi14bQcZax2A+asA1oy5hPL1d7TIMMM8N0pcHbk97MzDB3jGFzkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7S7NgHl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gh/cpdNj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67698C2BD10;
-	Tue, 14 May 2024 11:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7S7NgHl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A418C2BD10;
+	Tue, 14 May 2024 11:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685436;
-	bh=cQ1kG9PFK0z2eJGgZ/SIJp8C+pYqRdcEkcu5N/Qsu+Q=;
+	s=korg; t=1715685439;
+	bh=9+ivXcTobe37qs7ySJicXCTC6Oq18Kr4gZaVJ5SIHCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gh/cpdNjWF7k04gw6CtNONLSv6OYWa7IKv6HqaxZnvfkjd6J4WJHgQoHcWRdLE2La
-	 hqGj0Y9z6DFwIJn+aGQ5ROWgnhpt5oWxaUKCXvLFb1Uu8zzUi/d/AaVhaznvWe0Uqf
-	 KpazvNlJ4AttoPqqCkXGC1DKDlGdvDRRiVorTinU=
+	b=X7S7NgHl6QSADBK6Vc1MVeP5ch/bisguXsfxc+dGiWZDYTqWp4eOKMse9kthnZy+V
+	 ONYVNa7EYOM9FbCMi//HwvU8mtGrmhZOq0MBf/VJR6LVoMiO3EUbHoklHErciKRejw
+	 ZIJGlkNF1VbXzZfohRlkmKx3OF0Fk3ezgaI5Ky+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <courmisch@gmail.com>,
+	syzbot <syzbot+0438378d6f157baae1a2@syzkaller.appspotmail.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 188/301] phonet: fix rtm_phonet_notify() skb allocation
-Date: Tue, 14 May 2024 12:17:39 +0200
-Message-ID: <20240514101039.352896279@linuxfoundation.org>
+Subject: [PATCH 6.6 189/301] nfc: nci: Fix kcov check in nci_rx_work()
+Date: Tue, 14 May 2024 12:17:40 +0200
+Message-ID: <20240514101039.390065521@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -46,52 +48,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit d8cac8568618dcb8a51af3db1103e8d4cc4aeea7 ]
+[ Upstream commit 19e35f24750ddf860c51e51c68cf07ea181b4881 ]
 
-fill_route() stores three components in the skb:
+Commit 7e8cdc97148c ("nfc: Add KCOV annotations") added
+kcov_remote_start_common()/kcov_remote_stop() pair into nci_rx_work(),
+with an assumption that kcov_remote_stop() is called upon continue of
+the for loop. But commit d24b03535e5e ("nfc: nci: Fix uninit-value in
+nci_dev_up and nci_ntf_packet") forgot to call kcov_remote_stop() before
+break of the for loop.
 
-- struct rtmsg
-- RTA_DST (u8)
-- RTA_OIF (u32)
-
-Therefore, rtm_phonet_notify() should use
-
-NLMSG_ALIGN(sizeof(struct rtmsg)) +
-nla_total_size(1) +
-nla_total_size(4)
-
-Fixes: f062f41d0657 ("Phonet: routing table Netlink interface")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Rémi Denis-Courmont <courmisch@gmail.com>
-Link: https://lore.kernel.org/r/20240502161700.1804476-1-edumazet@google.com
+Reported-by: syzbot <syzbot+0438378d6f157baae1a2@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=0438378d6f157baae1a2
+Fixes: d24b03535e5e ("nfc: nci: Fix uninit-value in nci_dev_up and nci_ntf_packet")
+Suggested-by: Andrey Konovalov <andreyknvl@gmail.com>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/6d10f829-5a0c-405a-b39a-d7266f3a1a0b@I-love.SAKURA.ne.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/phonet/pn_netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/nfc/nci/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/phonet/pn_netlink.c b/net/phonet/pn_netlink.c
-index 59aebe2968907..dd4c7e9a634fb 100644
---- a/net/phonet/pn_netlink.c
-+++ b/net/phonet/pn_netlink.c
-@@ -193,7 +193,7 @@ void rtm_phonet_notify(int event, struct net_device *dev, u8 dst)
- 	struct sk_buff *skb;
- 	int err = -ENOBUFS;
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index 772ddb5824d9e..5d708af0fcfd3 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -1518,6 +1518,7 @@ static void nci_rx_work(struct work_struct *work)
  
--	skb = nlmsg_new(NLMSG_ALIGN(sizeof(struct ifaddrmsg)) +
-+	skb = nlmsg_new(NLMSG_ALIGN(sizeof(struct rtmsg)) +
- 			nla_total_size(1) + nla_total_size(4), GFP_KERNEL);
- 	if (skb == NULL)
- 		goto errout;
+ 		if (!nci_plen(skb->data)) {
+ 			kfree_skb(skb);
++			kcov_remote_stop();
+ 			break;
+ 		}
+ 
 -- 
 2.43.0
 
