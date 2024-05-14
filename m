@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A135213AD3E;
-	Tue, 14 May 2024 11:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB1B1E495;
+	Tue, 14 May 2024 11:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684918; cv=none; b=i28Gd/n3TuB8OY53pT/OYKHO0CVCfP14ypsrlLPjiAE12E/HLYUruTA3jXYipEjS2pkUsMR6+P8ppiJVfqzmdLMOjrGV591C32NZ61lIb0p5aU6+LG2F9Abg/aACgrZJzl8EwXU8onQMq0NQkmBhVsN122qvFbIABJJh215kmg0=
+	t=1715684924; cv=none; b=RsPuZuKABNXmmDk0Xv/lfRgV7k4a2g1i1E6PwRouYj8XYvaJPoAS8iUVjR8GQRnQfYQvzA/ieaDXy5tFQe9grH2TCf2H7KeYF4ZHj/S+VC8BfOq+jKl47r6N1XZAYyvQIFjYYHheJtkhXCDetQlEAfQReGvuqfiYiLjuZmUykDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684918; c=relaxed/simple;
-	bh=vYiIY28ZzDLZ7tyqhnV4lzwmQPu6XEZDLmAwAx9baXE=;
+	s=arc-20240116; t=1715684924; c=relaxed/simple;
+	bh=3xsdb9kKlSFjxddmgORKVwPL+1f3rzd5OnMMZvOe+b0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1+tUOpAWg0CnTeFaSUse3aXmT/VUp0WAheiQulAxnjAYEPVSKqFXRET9zsKWgZ7rqCbFY2hd3ZuszjHz0BkZifuRLp7J5ZrdXEKRXOF40Ymz2u+xGoRDWyeX63utsGTFuxk9dRrNHmk3qYP1UjRn2X7S4NCIM3yngUa3KdDmeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXvFyZnr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=queRW0FBYlYmYCzgPC7eEQCQssHyc1xiS6NWzk6eKxlP9+wRu10hV12zDkgzJDURI+CfCJD7x5JDckOs5oR7NaDMoMS7k1VxOIBbOU/7wztRGO7JWpNRbPw6gOOQELjlrCGqlNl16JwObxEnC70fhVt+B5d4P0jJE6WIsnrCpKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egeMoTgb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXvFyZnr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3B8C2BD10;
-	Tue, 14 May 2024 11:08:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egeMoTgb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5927C2BD10;
+	Tue, 14 May 2024 11:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684918;
-	bh=vYiIY28ZzDLZ7tyqhnV4lzwmQPu6XEZDLmAwAx9baXE=;
+	s=korg; t=1715684924;
+	bh=3xsdb9kKlSFjxddmgORKVwPL+1f3rzd5OnMMZvOe+b0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RXvFyZnr913aF0XAGFM6mnQVYNeQuJsoatUnbhFPNQ1JIid3HQqBF+tmTr/YiIaEQ
-	 cjk3/oJ9LGiWSiUpvVkEuPLeOa1KCQCrOZ2UBUD4JIvNV885rCY9ut+3bjOHzmFyif
-	 7p4lPJpgP8sw25q7T89aODTYA0PahghByzl/WhNQ=
+	b=egeMoTgbHvcVRmu5r/oMwjAozjVC0LI52rsd3CevuAIbrqZ19ns10n/ZQvYznDCUx
+	 cF3EI6Xg5mGh35hd2YHfQRHl8bZFlnzcqf47dSV/yZ6eHusWnRLx9Ax9vxE5pTfq1i
+	 T6HfZdR3ZAStmatMvVhlgHeZzm74GKFvYo4VfPV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	linke li <lilinke99@qq.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 108/301] wifi: iwlwifi: mvm: guard against invalid STA ID on removal
-Date: Tue, 14 May 2024 12:16:19 +0200
-Message-ID: <20240514101036.328852908@linuxfoundation.org>
+Subject: [PATCH 6.6 109/301] net: mark racy access on sk->sk_rcvbuf
+Date: Tue, 14 May 2024 12:16:20 +0200
+Message-ID: <20240514101036.366546637@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -52,44 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: linke li <lilinke99@qq.com>
 
-[ Upstream commit 17f64517bf5c26af56b6c3566273aad6646c3c4f ]
+[ Upstream commit c2deb2e971f5d9aca941ef13ee05566979e337a4 ]
 
-Guard against invalid station IDs in iwl_mvm_mld_rm_sta_id as that would
-result in out-of-bounds array accesses. This prevents issues should the
-driver get into a bad state during error handling.
+sk->sk_rcvbuf in __sock_queue_rcv_skb() and __sk_receive_skb() can be
+changed by other threads. Mark this as benign using READ_ONCE().
 
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240320232419.d523167bda9c.I1cffd86363805bf86a95d8bdfd4b438bb54baddc@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This patch is aimed at reducing the number of benign races reported by
+KCSAN in order to focus future debugging effort on harmful races.
+
+Signed-off-by: linke li <lilinke99@qq.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/core/sock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-index 1ccbe8c1eeb42..278454c116fee 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-@@ -853,10 +853,15 @@ int iwl_mvm_mld_rm_sta(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 1471c0a862b36..7f64a7b95cfb2 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -486,7 +486,7 @@ int __sock_queue_rcv_skb(struct sock *sk, struct sk_buff *skb)
+ 	unsigned long flags;
+ 	struct sk_buff_head *list = &sk->sk_receive_queue;
  
- int iwl_mvm_mld_rm_sta_id(struct iwl_mvm *mvm, u8 sta_id)
- {
--	int ret = iwl_mvm_mld_rm_sta_from_fw(mvm, sta_id);
-+	int ret;
+-	if (atomic_read(&sk->sk_rmem_alloc) >= sk->sk_rcvbuf) {
++	if (atomic_read(&sk->sk_rmem_alloc) >= READ_ONCE(sk->sk_rcvbuf)) {
+ 		atomic_inc(&sk->sk_drops);
+ 		trace_sock_rcvqueue_full(sk, skb);
+ 		return -ENOMEM;
+@@ -556,7 +556,7 @@ int __sk_receive_skb(struct sock *sk, struct sk_buff *skb,
  
- 	lockdep_assert_held(&mvm->mutex);
+ 	skb->dev = NULL;
  
-+	if (WARN_ON(sta_id == IWL_MVM_INVALID_STA))
-+		return 0;
-+
-+	ret = iwl_mvm_mld_rm_sta_from_fw(mvm, sta_id);
-+
- 	RCU_INIT_POINTER(mvm->fw_id_to_mac_id[sta_id], NULL);
- 	RCU_INIT_POINTER(mvm->fw_id_to_link_sta[sta_id], NULL);
- 	return ret;
+-	if (sk_rcvqueues_full(sk, sk->sk_rcvbuf)) {
++	if (sk_rcvqueues_full(sk, READ_ONCE(sk->sk_rcvbuf))) {
+ 		atomic_inc(&sk->sk_drops);
+ 		goto discard_and_relse;
+ 	}
 -- 
 2.43.0
 
