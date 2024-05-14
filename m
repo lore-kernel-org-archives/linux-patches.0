@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F260F2D60A;
-	Tue, 14 May 2024 11:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11562D60A;
+	Tue, 14 May 2024 11:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687142; cv=none; b=qMzpNEQShtLQ/dKiTqicdjwGUyP0jz/HYZoQOExTFbCd06eo/zUSibpZGUu08ZTe6jECNGn8p3Akz8je7KtCr11cwo5o8N48p9TQM8U0a691yhcfRbEH0kxoSnzyTZLbF8vqYppH2G2ceoSFeMmR4rQg8TYXLvBHcerQQQ/7hZw=
+	t=1715687144; cv=none; b=F1KATmeFdE2iMofOknE4HSKDT6rKM/mcmJ03NbeJeskLE4vPzKomHiRvPLqkTi4j2ONJJuQww3/TXGE7ny4B47cUXHfJqxh1cORemBWnio6sFF0x3vDdzdt5mHV1V3zuGpnQ3RkbnVMksCf4IDRyAEJ7j+65sz6a0640QncnRis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687142; c=relaxed/simple;
-	bh=xf5lhVBlD8yavVTWwpJAAj+q4rQd19W2JdPF95E+6E8=;
+	s=arc-20240116; t=1715687144; c=relaxed/simple;
+	bh=6WTL/wXB8wSOz7pXa9SwQ1PhrSR4/McqxR6UVNYYK+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mee816aeyE/aSndjKhSZ560Ap41DmSNsDbv9k6ZgrCaLFfwPIS0KX1Tre0mCxt0O/xBD+qQoellWYxofCCeQ9LjQSnN7+NAUvT4KSNHl6BkD1bOcPJKY7qCfqE3TD6kx3qvlCNLLDGcIgPDVNQhBD2ptcswg8rBQ5QYi2MatCY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzy/oMfu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k1uWbevVejXHsp69gTcWSBAIwyOXf1ytS89U2c86WB5gIBClnd9dSs9QRVMBhVJppCXkH8gZIXBpVmOcEVDvMjDm5JLlijfNpohiSiXXTWyyotB8rbNfWMCdWFP+Hbyl6r3wLldKqZElRu6XeNXQh9EMSbCRGxVqsmHr5G8chMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0J0119xr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzy/oMfu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53754C2BD10;
-	Tue, 14 May 2024 11:45:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0J0119xr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A7BC32786;
+	Tue, 14 May 2024 11:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687140;
-	bh=xf5lhVBlD8yavVTWwpJAAj+q4rQd19W2JdPF95E+6E8=;
+	s=korg; t=1715687143;
+	bh=6WTL/wXB8wSOz7pXa9SwQ1PhrSR4/McqxR6UVNYYK+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dzy/oMfuxN6c8ymwpO2jOqsCgcwe+Cw7/B3KUxmzc5lvOye56A/cZe613jv41nClw
-	 D4FGR+GaJfddn9ttyeIsXbdHV8hwsS9ZMso/AKXNV7p4uIF55uNYXRLrIHR0vjwxK9
-	 nAza59wtbvuWSj0jgoBXhEEZWP7U/xBgW8i4NT0Q=
+	b=0J0119xrzO1Otxe77b3zeexBRK3CBGJdmisNnmCqFPKdWwdbuZN39sm85L7AU1wOd
+	 swTZryU+YOgNj+7PecA05c+AH06dKcX0c2Ip+37kvfmnuz/WQXZZfPSJcu/ZCwjhc2
+	 0c52zhIfPTF6BuqA+DwYUvGQCBIkSrIW7eqdqdnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.4 79/84] net: fix out-of-bounds access in ops_init
-Date: Tue, 14 May 2024 12:20:30 +0200
-Message-ID: <20240514100954.655053349@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.4 80/84] regulator: core: fix debugfs creation regression
+Date: Tue, 14 May 2024 12:20:31 +0200
+Message-ID: <20240514100954.692503109@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100951.686412426@linuxfoundation.org>
 References: <20240514100951.686412426@linuxfoundation.org>
@@ -52,66 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit a26ff37e624d12e28077e5b24d2b264f62764ad6 upstream.
+commit 2a4b49bb58123bad6ec0e07b02845f74c23d5e04 upstream.
 
-net_alloc_generic is called by net_alloc, which is called without any
-locking. It reads max_gen_ptrs, which is changed under pernet_ops_rwsem. It
-is read twice, first to allocate an array, then to set s.len, which is
-later used to limit the bounds of the array access.
+regulator_get() may sometimes be called more than once for the same
+consumer device, something which before commit dbe954d8f163 ("regulator:
+core: Avoid debugfs: Directory ...  already present! error") resulted in
+errors being logged.
 
-It is possible that the array is allocated and another thread is
-registering a new pernet ops, increments max_gen_ptrs, which is then used
-to set s.len with a larger than allocated length for the variable array.
+A couple of recent commits broke the handling of such cases so that
+attributes are now erroneously created in the debugfs root directory the
+second time a regulator is requested and the log is filled with errors
+like:
 
-Fix it by reading max_gen_ptrs only once in net_alloc_generic. If
-max_gen_ptrs is later incremented, it will be caught in net_assign_generic.
+	debugfs: File 'uA_load' in directory '/' already present!
+	debugfs: File 'min_uV' in directory '/' already present!
+	debugfs: File 'max_uV' in directory '/' already present!
+	debugfs: File 'constraint_flags' in directory '/' already present!
 
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Fixes: 073862ba5d24 ("netns: fix net_alloc_generic()")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+on any further calls.
+
+Fixes: 2715bb11cfff ("regulator: core: Fix more error checking for debugfs_create_dir()")
+Fixes: 08880713ceec ("regulator: core: Streamline debugfs operations")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240502132006.3430840-1-cascardo@igalia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20240509133304.8883-1-johan+linaro@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/net_namespace.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/regulator/core.c |   27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
---- a/net/core/net_namespace.c
-+++ b/net/core/net_namespace.c
-@@ -71,12 +71,15 @@ static unsigned int max_gen_ptrs = INITI
- 
- static struct net_generic *net_alloc_generic(void)
- {
-+	unsigned int gen_ptrs = READ_ONCE(max_gen_ptrs);
-+	unsigned int generic_size;
- 	struct net_generic *ng;
--	unsigned int generic_size = offsetof(struct net_generic, ptr[max_gen_ptrs]);
-+
-+	generic_size = offsetof(struct net_generic, ptr[gen_ptrs]);
- 
- 	ng = kzalloc(generic_size, GFP_KERNEL);
- 	if (ng)
--		ng->s.len = max_gen_ptrs;
-+		ng->s.len = gen_ptrs;
- 
- 	return ng;
- }
-@@ -1231,7 +1234,11 @@ static int register_pernet_operations(st
- 		if (error < 0)
- 			return error;
- 		*ops->id = error;
--		max_gen_ptrs = max(max_gen_ptrs, *ops->id + 1);
-+		/* This does not require READ_ONCE as writers already hold
-+		 * pernet_ops_rwsem. But WRITE_ONCE is needed to protect
-+		 * net_alloc_generic.
-+		 */
-+		WRITE_ONCE(max_gen_ptrs, max(max_gen_ptrs, *ops->id + 1));
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1708,19 +1708,24 @@ static struct regulator *create_regulato
+ 		}
  	}
- 	error = __register_pernet_operations(list, ops);
- 	if (error) {
+ 
+-	if (err != -EEXIST)
++	if (err != -EEXIST) {
+ 		regulator->debugfs = debugfs_create_dir(supply_name, rdev->debugfs);
+-	if (IS_ERR(regulator->debugfs))
+-		rdev_dbg(rdev, "Failed to create debugfs directory\n");
++		if (IS_ERR(regulator->debugfs)) {
++			rdev_dbg(rdev, "Failed to create debugfs directory\n");
++			regulator->debugfs = NULL;
++		}
++	}
+ 
+-	debugfs_create_u32("uA_load", 0444, regulator->debugfs,
+-			   &regulator->uA_load);
+-	debugfs_create_u32("min_uV", 0444, regulator->debugfs,
+-			   &regulator->voltage[PM_SUSPEND_ON].min_uV);
+-	debugfs_create_u32("max_uV", 0444, regulator->debugfs,
+-			   &regulator->voltage[PM_SUSPEND_ON].max_uV);
+-	debugfs_create_file("constraint_flags", 0444, regulator->debugfs,
+-			    regulator, &constraint_flags_fops);
++	if (regulator->debugfs) {
++		debugfs_create_u32("uA_load", 0444, regulator->debugfs,
++				   &regulator->uA_load);
++		debugfs_create_u32("min_uV", 0444, regulator->debugfs,
++				   &regulator->voltage[PM_SUSPEND_ON].min_uV);
++		debugfs_create_u32("max_uV", 0444, regulator->debugfs,
++				   &regulator->voltage[PM_SUSPEND_ON].max_uV);
++		debugfs_create_file("constraint_flags", 0444, regulator->debugfs,
++				    regulator, &constraint_flags_fops);
++	}
+ 
+ 	/*
+ 	 * Check now if the regulator is an always on regulator - if
 
 
