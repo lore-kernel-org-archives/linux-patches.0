@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC882B9AD;
-	Tue, 14 May 2024 11:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B592C3BBF2;
+	Tue, 14 May 2024 11:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687752; cv=none; b=ncD0GBNwNNCXehdZK3C9G0cPWE8GWOip4ji5mq40ptzLCsBSG1wQeONOF8yrV6upL0TakIHzRMAlS50aFPdkALB3w5L3foYEyppX9C0ai2b0wSGdXNJr2r2a0sinc7xm4MewZNjvYTipJdFfgvHY67Q2Fj6d4fwNdC6zf6AK0wU=
+	t=1715687755; cv=none; b=ArIk2E96/72055rLQFUV5HdHHghoc/d0K1CFJk/cwErBCOO6ZU5YCC2EgYDbF3l5aJ5KZVF1F4LaWz3tD5zC9E+rEp/XQ63ShgcKacubbEZayHGNfNa36eMkcJLv3G3ISFiFfahWp/vuI99pTmhNWS+5xCmE492OH+MpHCMKMhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687752; c=relaxed/simple;
-	bh=3bi4A6U0RfV2K6QdRkkw/Eq2ekM153hRPben7N8u5Wg=;
+	s=arc-20240116; t=1715687755; c=relaxed/simple;
+	bh=GYez9fiGXqLF9lrA2coBVPIuS3laTDHsuo0rQUPbFLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Id8fX3yROq7gGRCDRlYES4QOow5JwelWkRxXRVKwMtJuuh8FBIJ9ugexJZzBEMyWmV+hZwYz+jSFtJ4DAX2T+ylZvhprlHmFBNYk2JnBs/MXYc3SCVGWaoQikquDJLt3pKkvgBaav8FMwsB+SytDm2Lmjx4gO/+8DSrTAFC3eDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwaiTFbX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GjuEArSM+Hif5xRQiUAdtxVZVxvJ2s3T3hveZZjxRxyTgoAOABBsMwatuleh8XdGVDxLhFVAsxtYw8ZruC9c8hxAGNgVXk7JNSBP3GN8KT5PZwowm4+yL+v8nPGXZcq4Quwk69wNXK0kGj2+Vok5XK/Rodsk+ftmohlA1wWDgks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1U1plQn1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwaiTFbX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D0FC2BD10;
-	Tue, 14 May 2024 11:55:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1U1plQn1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9566C2BD10;
+	Tue, 14 May 2024 11:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687752;
-	bh=3bi4A6U0RfV2K6QdRkkw/Eq2ekM153hRPben7N8u5Wg=;
+	s=korg; t=1715687755;
+	bh=GYez9fiGXqLF9lrA2coBVPIuS3laTDHsuo0rQUPbFLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PwaiTFbXHT8Ds2r5Pm6cPKWgGAFZa0j2cf5bNKJkPjg8xZML64/X2WqxxEtbg0/0c
-	 f6S61m79JbnT4quGXGBxvpYWpzLInRTisiIIfuSk25g0qU+KJ0xnLH9GuOKjohK32C
-	 kJbD0+2U1fn5Mx7SU7m/XeG9X3PzMeozEO01d2p4=
+	b=1U1plQn1YLitXZ1WtlyjuLjtiqdUNwiVEwpWeycKboFUOqTjTY8De8S+8bHSsRvlF
+	 +T3VKSJHOYXIv7z4taSqOr8QHEzjt7ZfsFVEc3BQhgQjmv1jDLKfZR+nFJUl9ZUCGa
+	 OujpRv9pAX7UxziNFIwfHcwA3xt6t7RBllulJyvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Dave Airlie <airlied@redhat.com>,
+	Doug Smythies <dsmythies@telus.net>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 093/168] drm/nouveau/dp: Dont probe eDP ports twice harder
-Date: Tue, 14 May 2024 12:19:51 +0200
-Message-ID: <20240514101010.200714969@linuxfoundation.org>
+Subject: [PATCH 5.15 076/168] tools/power turbostat: Fix added raw MSR output
+Date: Tue, 14 May 2024 12:19:34 +0200
+Message-ID: <20240514101009.564867598@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -51,55 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lyude Paul <lyude@redhat.com>
+From: Doug Smythies <dsmythies@telus.net>
 
-[ Upstream commit bf52d7f9b2067f02efe7e32697479097aba4a055 ]
+[ Upstream commit e5f4e68eed85fa8495d78cd966eecc2b27bb9e53 ]
 
-I didn't pay close enough attention the last time I tried to fix this
-problem - while we currently do correctly take care to make sure we don't
-probe a connected eDP port more then once, we don't do the same thing for
-eDP ports we found to be disconnected.
+When using --Summary mode, added MSRs in raw mode always
+print zeros. Print the actual register contents.
 
-So, fix this and make sure we only ever probe eDP ports once and then leave
-them at that connector state forever (since without HPD, it's not going to
-change on its own anyway). This should get rid of the last few GSP errors
-getting spit out during runtime suspend and resume on some machines, as we
-tried to reprobe eDP ports in response to ACPI hotplug probe events.
+Example, with patch:
 
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240404233736.7946-3-lyude@redhat.com
-(cherry picked from commit fe6660b661c3397af0867d5d098f5b26581f1290)
+note the added column:
+--add msr0x64f,u32,package,raw,REASON
+
+Where:
+
+0x64F is MSR_CORE_PERF_LIMIT_REASONS
+
+Busy%   Bzy_MHz PkgTmp  PkgWatt CorWatt     REASON
+0.00    4800    35      1.42    0.76    0x00000000
+0.00    4801    34      1.42    0.76    0x00000000
+80.08   4531    66      108.17  107.52  0x08000000
+98.69   4530    66      133.21  132.54  0x08000000
+99.28   4505    66      128.26  127.60  0x0c000400
+99.65   4486    68      124.91  124.25  0x0c000400
+99.63   4483    68      124.90  124.25  0x0c000400
+79.34   4481    41      99.80   99.13   0x0c000000
+0.00    4801    41      1.40    0.73    0x0c000000
+
+Where, for the test processor (i5-10600K):
+
+PKG Limit #1: 125.000 Watts, 8.000000 sec
+MSR bit 26 = log; bit 10 = status
+
+PKG Limit #2: 136.000 Watts, 0.002441 sec
+MSR bit 27 = log; bit 11 = status
+
+Example, without patch:
+
+Busy%   Bzy_MHz PkgTmp  PkgWatt CorWatt     REASON
+0.01    4800    35      1.43    0.77    0x00000000
+0.00    4801    35      1.39    0.73    0x00000000
+83.49   4531    66      112.71  112.06  0x00000000
+98.69   4530    68      133.35  132.69  0x00000000
+99.31   4500    67      127.96  127.30  0x00000000
+99.63   4483    69      124.91  124.25  0x00000000
+99.61   4481    69      124.90  124.25  0x00000000
+99.61   4481    71      124.92  124.25  0x00000000
+59.35   4479    42      75.03   74.37   0x00000000
+0.00    4800    42      1.39    0.73    0x00000000
+0.00    4801    42      1.42    0.76    0x00000000
+
+c000000
+
+[lenb: simplified patch to apply only to package scope]
+
+Signed-off-by: Doug Smythies <dsmythies@telus.net>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_dp.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ tools/power/x86/turbostat/turbostat.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_dp.c b/drivers/gpu/drm/nouveau/nouveau_dp.c
-index 447b7594b35ae..0107a21dc9f9b 100644
---- a/drivers/gpu/drm/nouveau/nouveau_dp.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_dp.c
-@@ -109,12 +109,15 @@ nouveau_dp_detect(struct nouveau_connector *nv_connector,
- 	u8 *dpcd = nv_encoder->dp.dpcd;
- 	int ret = NOUVEAU_DP_NONE;
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 65ada8065cfc2..0822e7dc0fd8b 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -1761,9 +1761,10 @@ int sum_counters(struct thread_data *t, struct core_data *c, struct pkg_data *p)
+ 	average.packages.rapl_dram_perf_status += p->rapl_dram_perf_status;
  
--	/* If we've already read the DPCD on an eDP device, we don't need to
--	 * reread it as it won't change
-+	/* eDP ports don't support hotplugging - so there's no point in probing eDP ports unless we
-+	 * haven't probed them once before.
- 	 */
--	if (connector->connector_type == DRM_MODE_CONNECTOR_eDP &&
--	    dpcd[DP_DPCD_REV] != 0)
--		return NOUVEAU_DP_SST;
-+	if (connector->connector_type == DRM_MODE_CONNECTOR_eDP) {
-+		if (connector->status == connector_status_connected)
-+			return NOUVEAU_DP_SST;
-+		else if (connector->status == connector_status_disconnected)
-+			return NOUVEAU_DP_NONE;
-+	}
- 
- 	mutex_lock(&nv_encoder->dp.hpd_irq_lock);
- 	if (mstm) {
+ 	for (i = 0, mp = sys.pp; mp; i++, mp = mp->next) {
+-		if (mp->format == FORMAT_RAW)
+-			continue;
+-		average.packages.counter[i] += p->counter[i];
++		if ((mp->format == FORMAT_RAW) && (topo.num_packages == 0))
++			average.packages.counter[i] = p->counter[i];
++		else
++			average.packages.counter[i] += p->counter[i];
+ 	}
+ 	return 0;
+ }
 -- 
 2.43.0
 
