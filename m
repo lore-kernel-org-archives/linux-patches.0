@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795C76311D;
-	Tue, 14 May 2024 11:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D99512F5B9;
+	Tue, 14 May 2024 11:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685856; cv=none; b=jFl0zHQpF4/lddC3MZjI7tveJB/WD3J6JtF1Rr04crB5YcIgYhTWsMJB0k8OtsTf98e63cHSxuZlV8MxK8am00y6YmxTCqbK9b+ErXlMOQGjgYJPPX1PwaJMm5fpt7Eb4nWcmJxUht8f2I2D1xN7pJEn/Ylr+LO1ddrRaYvc0Yo=
+	t=1715685860; cv=none; b=KYPSh1syA8NR/S3Z6T6wBcF+zoxqtU0kcwTOPLHFxRf0rFE2ngAeGmHVe5CyJNJLr20p/a7Ub1pOMCm2QqqANlGdgazXecgy6DxCmeawDzKSTJlWBbTfZgNPetG1iuZCDnHJgpRRiUhUrmt8Y3KlxtJlBiIl1u2txI98KLwTqIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685856; c=relaxed/simple;
-	bh=UJXMJcnUXsa6jtIsXzOudxDWEVu2p73DTfr4tpC5Ens=;
+	s=arc-20240116; t=1715685860; c=relaxed/simple;
+	bh=YZ0DBGMP9GZPTQgtwRK77ZKNevaESDRQ46ewDAc7XB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SBh2LQdQTXWYa6vCZEgY/WNCfXZ3HsR7eQdBSBpm6XZM+nOzOBiB7yrBocNFVGR5zO23wImKkLsw9zDeRd7nG9xClSsGNaUHH47fRrX3qbBNCKinZqbUZpDRnWNBpyUNbGnaHJr5H2QiDy9HqDZ3DCD36i+43e51VaGTFtwcTw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YtZXvcZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AEEYVQuMC0ibd3VwShUK0hqKo+lFV/IK0eCsxaLZne9xwGUeJ6yPjVOEGQz+K3PCY4PO7KOdZN8Wz+MVx3flc120Ti3/bd61eFY29Pnw/BJkvmydk07x90XldWU340bQW6wSoBcttluwV1rxt5zeHxRWkM1HLBU0LLgIk4n+rDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1N/JPJ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YtZXvcZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D551DC2BD10;
-	Tue, 14 May 2024 11:24:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1N/JPJ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9AAC2BD10;
+	Tue, 14 May 2024 11:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685856;
-	bh=UJXMJcnUXsa6jtIsXzOudxDWEVu2p73DTfr4tpC5Ens=;
+	s=korg; t=1715685860;
+	bh=YZ0DBGMP9GZPTQgtwRK77ZKNevaESDRQ46ewDAc7XB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0YtZXvcZ2raVaUMz5LdVduFMJTCj8IsCoHkRIKjv/EGx77TqT8TiK614G4xqEv8St
-	 zrtcML86IkQ7n6nzTDDhQ4Citk2jSSxtaqOm+pe3RogELmVvr3a9ls16oIDwqXIFYB
-	 jp1oPqZPthtrj/cDHB7NDNwpZ0UV3UYt3TRcDlMM=
+	b=E1N/JPJ3DnjXjCz9eYVWEiS5bR9k23sC5bNViwq6QnK57uW/OtRQ/aDzWrz2se8yY
+	 /Ced+RgIsSsQ+uXkFWWhFwEpcXubcoR1OMJqIwvEeN2zJ/bLRDFk4mSa1MXT+NwnzM
+	 RUhQmXSIxhUenNMmVG48XraDMwiTV9wcsVanHnVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joao Paulo Goncalves <joao.goncalves@toradex.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Jai Luthra <j-luthra@ti.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 260/301] ASoC: ti: davinci-mcasp: Fix race condition during probe
-Date: Tue, 14 May 2024 12:18:51 +0200
-Message-ID: <20240514101042.073127415@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jim Cromie <jim.cromie@gmail.com>
+Subject: [PATCH 6.6 261/301] dyndbg: fix old BUG_ON in >control parser
+Date: Tue, 14 May 2024 12:18:52 +0200
+Message-ID: <20240514101042.110526536@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -52,76 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joao Paulo Goncalves <joao.goncalves@toradex.com>
+From: Jim Cromie <jim.cromie@gmail.com>
 
-commit d18ca8635db2f88c17acbdf6412f26d4f6aff414 upstream.
+commit 00e7d3bea2ce7dac7bee1cf501fb071fd0ea8f6c upstream.
 
-When using davinci-mcasp as CPU DAI with simple-card, there are some
-conditions that cause simple-card to finish registering a sound card before
-davinci-mcasp finishes registering all sound components. This creates a
-non-working sound card from userspace with no problem indication apart
-from not being able to play/record audio on a PCM stream. The issue
-arises during simultaneous probe execution of both drivers. Specifically,
-the simple-card driver, awaiting a CPU DAI, proceeds as soon as
-davinci-mcasp registers its DAI. However, this process can lead to the
-client mutex lock (client_mutex in soc-core.c) being held or davinci-mcasp
-being preempted before PCM DMA registration on davinci-mcasp finishes.
-This situation occurs when the probes of both drivers run concurrently.
-Below is the code path for this condition. To solve the issue, defer
-davinci-mcasp CPU DAI registration to the last step in the audio part of
-it. This way, simple-card CPU DAI parsing will be deferred until all
-audio components are registered.
+Fix a BUG_ON from 2009.  Even if it looks "unreachable" (I didn't
+really look), lets make sure by removing it, doing pr_err and return
+-EINVAL instead.
 
-Fail Code Path:
-
-simple-card.c: probe starts
-simple-card.c: simple_dai_link_of: simple_parse_node(..,cpu,..) returns EPROBE_DEFER, no CPU DAI yet
-davinci-mcasp.c: probe starts
-davinci-mcasp.c: devm_snd_soc_register_component() register CPU DAI
-simple-card.c: probes again, finish CPU DAI parsing and call devm_snd_soc_register_card()
-simple-card.c: finish probe
-davinci-mcasp.c: *dma_pcm_platform_register() register PCM  DMA
-davinci-mcasp.c: probe finish
-
-Cc: stable@vger.kernel.org
-Fixes: 9fbd58cf4ab0 ("ASoC: davinci-mcasp: Choose PCM driver based on configured DMA controller")
-Signed-off-by: Joao Paulo Goncalves <joao.goncalves@toradex.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Reviewed-by: Jai Luthra <j-luthra@ti.com>
-Link: https://lore.kernel.org/r/20240417184138.1104774-1-jpaulo.silvagoncalves@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
+Link: https://lore.kernel.org/r/20240429193145.66543-2-jim.cromie@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/ti/davinci-mcasp.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ lib/dynamic_debug.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/sound/soc/ti/davinci-mcasp.c
-+++ b/sound/soc/ti/davinci-mcasp.c
-@@ -2418,12 +2418,6 @@ static int davinci_mcasp_probe(struct pl
+--- a/lib/dynamic_debug.c
++++ b/lib/dynamic_debug.c
+@@ -302,7 +302,11 @@ static int ddebug_tokenize(char *buf, ch
+ 		} else {
+ 			for (end = buf; *end && !isspace(*end); end++)
+ 				;
+-			BUG_ON(end == buf);
++			if (end == buf) {
++				pr_err("parse err after word:%d=%s\n", nwords,
++				       nwords ? words[nwords - 1] : "<none>");
++				return -EINVAL;
++			}
+ 		}
  
- 	mcasp_reparent_fck(pdev);
- 
--	ret = devm_snd_soc_register_component(&pdev->dev, &davinci_mcasp_component,
--					      &davinci_mcasp_dai[mcasp->op_mode], 1);
--
--	if (ret != 0)
--		goto err;
--
- 	ret = davinci_mcasp_get_dma_type(mcasp);
- 	switch (ret) {
- 	case PCM_EDMA:
-@@ -2450,6 +2444,12 @@ static int davinci_mcasp_probe(struct pl
- 		goto err;
- 	}
- 
-+	ret = devm_snd_soc_register_component(&pdev->dev, &davinci_mcasp_component,
-+					      &davinci_mcasp_dai[mcasp->op_mode], 1);
-+
-+	if (ret != 0)
-+		goto err;
-+
- no_audio:
- 	ret = davinci_mcasp_init_gpiochip(mcasp);
- 	if (ret) {
+ 		/* `buf' is start of word, `end' is one past its end */
 
 
