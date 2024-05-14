@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA19118026;
-	Tue, 14 May 2024 11:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE36618026;
+	Tue, 14 May 2024 11:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686447; cv=none; b=bCdE3di/JP87ljyFTjP6T3X3vUM6ly1G34d5xsETThEObSb+fK1/xvVY+qD7Fcv+uMP0oMozmN96crW8dszE3JK6ybr0weJBZAtM+Y6uNFgXuTBvbVxG4dYFejPCyF79456Gt9HXo2i3dMiV1+h+q2qcvgVn52yMkvO8NqksONo=
+	t=1715686450; cv=none; b=K4eveaF34ScdK4GGJQc/Lvzhev/FgTmN5wyK6ucgb8c01k9liogmPrTHZjAEd/nCIa1I2p7gBcx0JY7M5jGJVy565GeRsJ+j75CdTSZtBwZ+cBZAIRLdMDVhUNMvi3qBuVltIDKBGxI/BYtm2DczidD9NWd6qbTIeNBxJrNr0iA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686447; c=relaxed/simple;
-	bh=4PM8PaQ6eKe0ij/wX76kE/8sfffO5CDI3ruBixeyBx4=;
+	s=arc-20240116; t=1715686450; c=relaxed/simple;
+	bh=BG1OYkqKDKLdljQ/OO6Pc/Ad/2iWgptTN4e+YlXCEBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rAXJWVr5aBbEoT+c4qMlAU+P5sfQPNxo9U6CkGLupGNbTNCdcm6BFZRSw4QggrO6SHamO85gRgvj7maIo5SzFAsNWV2YPUtH5/3gypo2HY6Oj5gQGW7iEAIsSECY9PwTfD2ZZMfpu7s5kTS3gvLACqxXd31Jw+1mjQ6rNSQuBo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1B4ZJmR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fSzH3V0+BUk2rnFeJHQI3WmQ3WSuJ83s1mQsx0GZsKN3OLkFI6FuweD1UwhBsQ5k1xUfaEtPsxbWgD4WGEZwifHL7ICpSJKd2BMN/6bimyQVqwBoQIaPvM7kNy5iGzfoj7qq0+LnOpLRzP9yR4onRDYWIfAP4xsW3yjvkOHYFss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9yzl6qq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1B4ZJmR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A07C2BD10;
-	Tue, 14 May 2024 11:34:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9yzl6qq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43999C2BD10;
+	Tue, 14 May 2024 11:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686447;
-	bh=4PM8PaQ6eKe0ij/wX76kE/8sfffO5CDI3ruBixeyBx4=;
+	s=korg; t=1715686450;
+	bh=BG1OYkqKDKLdljQ/OO6Pc/Ad/2iWgptTN4e+YlXCEBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h1B4ZJmRlMhHvbOlvzkGi884PsgOU90kk+bj5A2eIlsWw54owqzTOUZHUr0xAfj+C
-	 DL9RG9OiUYCYt/x3ZOglDNB4Qd5aJW29QbTLH2dd4rQLMsbujxW6fQhlFJguSlyRBc
-	 CKufTSSq2XkJdHKForhXf1wM9GvX2s2AuRYTxdCk=
+	b=n9yzl6qq/JQuiJo+kXn6YQ95vYhRJKuubvHn7lqs4rqL6p+C4yqebVP3Up8dJnItJ
+	 15zN45G1W8MyVTWau5rYlGPjH3fMsCLa/+pF/roeohAxUXskhR+YW4mSkF0ZpJ7GL5
+	 zhM45nblub/Nby9Smmr6vLK9opuB1vIvYBnqMXcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 141/236] spi: Merge spi_controller.{slave,target}_abort()
-Date: Tue, 14 May 2024 12:18:23 +0200
-Message-ID: <20240514101025.722108465@linuxfoundation.org>
+Subject: [PATCH 6.1 115/236] btrfs: make btrfs_clear_delalloc_extent() free delalloc reserve
+Date: Tue, 14 May 2024 12:17:57 +0200
+Message-ID: <20240514101024.738987071@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -51,45 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit 6c6871cdaef96361f6b79a3e45d451a6475df4d6 ]
+[ Upstream commit 3c6f0c5ecc8910d4ffb0dfe85609ebc0c91c8f34 ]
 
-Mixing SPI slave/target handlers and SPI slave/target controllers using
-legacy and modern naming does not work well: there are now two different
-callbacks for aborting a slave/target operation, of which only one is
-populated, while spi_{slave,target}_abort() check and use only one,
-which may be the unpopulated one.
+Currently, this call site in btrfs_clear_delalloc_extent() only converts
+the reservation. We are marking it not delalloc, so I don't think it
+makes sense to keep the rsv around.  This is a path where we are not
+sure to join a transaction, so it leads to incorrect free-ing during
+umount.
 
-Fix this by merging the slave/target abort callbacks into a single
-callback using a union, like is already done for the slave/target flags.
+Helps with the pass rate of generic/269 and generic/475.
 
-Fixes: b8d3b056a78dcc94 ("spi: introduce new helpers with using modern naming")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/809c82d54b85dd87ef7ee69fc93016085be85cec.1667555967.git.geert+renesas@glider.be
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/spi/spi.h | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/btrfs/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
-index 6edf8a2962d4a..0ce659d6fcb75 100644
---- a/include/linux/spi/spi.h
-+++ b/include/linux/spi/spi.h
-@@ -676,8 +676,10 @@ struct spi_controller {
- 			       struct spi_message *message);
- 	int (*unprepare_message)(struct spi_controller *ctlr,
- 				 struct spi_message *message);
--	int (*slave_abort)(struct spi_controller *ctlr);
--	int (*target_abort)(struct spi_controller *ctlr);
-+	union {
-+		int (*slave_abort)(struct spi_controller *ctlr);
-+		int (*target_abort)(struct spi_controller *ctlr);
-+	};
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index f7f4bcc094642..10ded9c2be03b 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -2472,7 +2472,7 @@ void btrfs_clear_delalloc_extent(struct inode *vfs_inode,
+ 		 */
+ 		if (bits & EXTENT_CLEAR_META_RESV &&
+ 		    root != fs_info->tree_root)
+-			btrfs_delalloc_release_metadata(inode, len, false);
++			btrfs_delalloc_release_metadata(inode, len, true);
  
- 	/*
- 	 * These hooks are for drivers that use a generic implementation
+ 		/* For sanity tests. */
+ 		if (btrfs_is_testing(fs_info))
 -- 
 2.43.0
 
