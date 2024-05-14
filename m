@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7C957CA1;
-	Tue, 14 May 2024 10:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DB857CA1;
+	Tue, 14 May 2024 10:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682567; cv=none; b=iALODx1PLememF1ruL+S37q6mmxPxpm3BesLcxnn58lHTnRV2q678SFJ217JETDNkICsd4hFeDf8d6reupad4FDzuUhXmAVJgLRFIsj+PKqn8PgV4h+oQPu4lJfW/Su7X+cL2IIIoFQA3s4ckh1affXw7wM+EtUzNlvZLisrzas=
+	t=1715682574; cv=none; b=GDonI3IIJU437NxUiUBrBTT+Hm6e/JWrk2j6/1HnguDZCN1uABWfGS11HfvNTXYqVMgNuB9ydo7W6wQnbD3nGVYbMo6OtFOVOOsAgM8rKwxhMGYFLTtShBE70gJBcuSFi2/23jICxurmz8OEG5XGyMDgSs1Z04I7U1pebWaSsVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682567; c=relaxed/simple;
-	bh=FCiHoCWPuyDQhYXqjEOx8391a09Q4wQRpAZw06H9fCM=;
+	s=arc-20240116; t=1715682574; c=relaxed/simple;
+	bh=fEaJ8wbkQdXubRrK4uW/YsilSiEK4MEaOcghRbl8YKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aom7OU88D3d37unwtv5m1cHb0Gek+aoBSMy/TYiYWYoEV+k+2Wpv1yQHBVFp+BBAC+5Dj8rhYXRsx7m9yP01Wwvp1p3VZg8WJnx7qYXjPlF/lxDyXK3rXbndGRcyAGufP5g7ZsilOp+Fi5DyPN/XiMhDcFb+zz1iMGdb5quvG5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVAwUfWF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WuNtaycoURIt0HXPiTf11oJchE3BjgZp7WuxI++4QZE8sgTmZZk3cwlZEkz7n0GX7QASbUe9P3sjtPuyUo0jodldx8hbiKbzikpaRPMeQvG3fzRuRr7vbmWhJd4IpVXyJl9HbFvRRJcjhpqseTwSGVskQ8tLyvvoF0+xbvcfzTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gpkzmVH+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVAwUfWF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C696C2BD10;
-	Tue, 14 May 2024 10:29:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gpkzmVH+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2177C32786;
+	Tue, 14 May 2024 10:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682567;
-	bh=FCiHoCWPuyDQhYXqjEOx8391a09Q4wQRpAZw06H9fCM=;
+	s=korg; t=1715682574;
+	bh=fEaJ8wbkQdXubRrK4uW/YsilSiEK4MEaOcghRbl8YKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SVAwUfWFUSWdkW063Yd7TzxdBrKBZZa1dxl8dOlUwQOUayolHgyiNmKhYvuBAWwzw
-	 ujInzgSGeBB28NvcWtvQ3F1wyaJQK6xeUIdwUJHw22RuLtAevtSc+XsyN5/moFe9HU
-	 Lp/zFLIGvsYIGw5r/94TqhTGviTP+l+vKLcyzr58=
+	b=gpkzmVH+DrFwCf81vBMWhef+u9+910Lk34KtLkARwlnzGU0VB5XidYhq0mP/bLmLK
+	 d37YA/agxKKNwkCBKl9+F648gn/BzVxKPQsYfGjK5FdFW7EE4Hryh34jhpNOxLLRJ7
+	 kHBlWTbez3vYHDH0YCBONd7bJfsMcPHXNGUYUA04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Shigeru Yoshida <syoshida@redhat.com>,
+	Richard Gobert <richardbgobert@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 083/336] ipv4: Fix uninit-value access in __ip_make_skb()
-Date: Tue, 14 May 2024 12:14:47 +0200
-Message-ID: <20240514101041.740824061@linuxfoundation.org>
+Subject: [PATCH 6.8 084/336] net: gro: fix udp bad offset in socket lookup by adding {inner_}network_offset to napi_gro_cb
+Date: Tue, 14 May 2024 12:14:48 +0200
+Message-ID: <20240514101041.779010367@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,102 +53,212 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Richard Gobert <richardbgobert@gmail.com>
 
-[ Upstream commit fc1092f51567277509563800a3c56732070b6aa4 ]
+[ Upstream commit 5ef31ea5d053a8f493a772ebad3f3ce82c35d845 ]
 
-KMSAN reported uninit-value access in __ip_make_skb() [1].  __ip_make_skb()
-tests HDRINCL to know if the skb has icmphdr. However, HDRINCL can cause a
-race condition. If calling setsockopt(2) with IP_HDRINCL changes HDRINCL
-while __ip_make_skb() is running, the function will access icmphdr in the
-skb even if it is not included. This causes the issue reported by KMSAN.
+Commits a602456 ("udp: Add GRO functions to UDP socket") and 57c67ff ("udp:
+additional GRO support") introduce incorrect usage of {ip,ipv6}_hdr in the
+complete phase of gro. The functions always return skb->network_header,
+which in the case of encapsulated packets at the gro complete phase, is
+always set to the innermost L3 of the packet. That means that calling
+{ip,ipv6}_hdr for skbs which completed the GRO receive phase (both in
+gro_list and *_gro_complete) when parsing an encapsulated packet's _outer_
+L3/L4 may return an unexpected value.
 
-Check FLOWI_FLAG_KNOWN_NH on fl4->flowi4_flags instead of testing HDRINCL
-on the socket.
+This incorrect usage leads to a bug in GRO's UDP socket lookup.
+udp{4,6}_lib_lookup_skb functions use ip_hdr/ipv6_hdr respectively. These
+*_hdr functions return network_header which will point to the innermost L3,
+resulting in the wrong offset being used in __udp{4,6}_lib_lookup with
+encapsulated packets.
 
-Also, fl4->fl4_icmp_type and fl4->fl4_icmp_code are not initialized. These
-are union in struct flowi4 and are implicitly initialized by
-flowi4_init_output(), but we should not rely on specific union layout.
+This patch adds network_offset and inner_network_offset to napi_gro_cb, and
+makes sure both are set correctly.
 
-Initialize these explicitly in raw_sendmsg().
+To fix the issue, network_offsets union is used inside napi_gro_cb, in
+which both the outer and the inner network offsets are saved.
 
-[1]
-BUG: KMSAN: uninit-value in __ip_make_skb+0x2b74/0x2d20 net/ipv4/ip_output.c:1481
- __ip_make_skb+0x2b74/0x2d20 net/ipv4/ip_output.c:1481
- ip_finish_skb include/net/ip.h:243 [inline]
- ip_push_pending_frames+0x4c/0x5c0 net/ipv4/ip_output.c:1508
- raw_sendmsg+0x2381/0x2690 net/ipv4/raw.c:654
- inet_sendmsg+0x27b/0x2a0 net/ipv4/af_inet.c:851
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg+0x274/0x3c0 net/socket.c:745
- __sys_sendto+0x62c/0x7b0 net/socket.c:2191
- __do_sys_sendto net/socket.c:2203 [inline]
- __se_sys_sendto net/socket.c:2199 [inline]
- __x64_sys_sendto+0x130/0x200 net/socket.c:2199
- do_syscall_64+0xd8/0x1f0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
+Reproduction example:
 
-Uninit was created at:
- slab_post_alloc_hook mm/slub.c:3804 [inline]
- slab_alloc_node mm/slub.c:3845 [inline]
- kmem_cache_alloc_node+0x5f6/0xc50 mm/slub.c:3888
- kmalloc_reserve+0x13c/0x4a0 net/core/skbuff.c:577
- __alloc_skb+0x35a/0x7c0 net/core/skbuff.c:668
- alloc_skb include/linux/skbuff.h:1318 [inline]
- __ip_append_data+0x49ab/0x68c0 net/ipv4/ip_output.c:1128
- ip_append_data+0x1e7/0x260 net/ipv4/ip_output.c:1365
- raw_sendmsg+0x22b1/0x2690 net/ipv4/raw.c:648
- inet_sendmsg+0x27b/0x2a0 net/ipv4/af_inet.c:851
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg+0x274/0x3c0 net/socket.c:745
- __sys_sendto+0x62c/0x7b0 net/socket.c:2191
- __do_sys_sendto net/socket.c:2203 [inline]
- __se_sys_sendto net/socket.c:2199 [inline]
- __x64_sys_sendto+0x130/0x200 net/socket.c:2199
- do_syscall_64+0xd8/0x1f0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
+Endpoint configuration example (fou + local address bind)
 
-CPU: 1 PID: 15709 Comm: syz-executor.7 Not tainted 6.8.0-11567-gb3603fcb79b1 #25
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-1.fc39 04/01/2014
+    # ip fou add port 6666 ipproto 4
+    # ip link add name tun1 type ipip remote 2.2.2.1 local 2.2.2.2 encap fou encap-dport 5555 encap-sport 6666 mode ipip
+    # ip link set tun1 up
+    # ip a add 1.1.1.2/24 dev tun1
 
-Fixes: 99e5acae193e ("ipv4: Fix potential uninit variable access bug in __ip_make_skb()")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Link: https://lore.kernel.org/r/20240430123945.2057348-1-syoshida@redhat.com
+Netperf TCP_STREAM result on net-next before patch is applied:
+
+net-next main, GRO enabled:
+    $ netperf -H 1.1.1.2 -t TCP_STREAM -l 5
+    Recv   Send    Send
+    Socket Socket  Message  Elapsed
+    Size   Size    Size     Time     Throughput
+    bytes  bytes   bytes    secs.    10^6bits/sec
+
+    131072  16384  16384    5.28        2.37
+
+net-next main, GRO disabled:
+    $ netperf -H 1.1.1.2 -t TCP_STREAM -l 5
+    Recv   Send    Send
+    Socket Socket  Message  Elapsed
+    Size   Size    Size     Time     Throughput
+    bytes  bytes   bytes    secs.    10^6bits/sec
+
+    131072  16384  16384    5.01     2745.06
+
+patch applied, GRO enabled:
+    $ netperf -H 1.1.1.2 -t TCP_STREAM -l 5
+    Recv   Send    Send
+    Socket Socket  Message  Elapsed
+    Size   Size    Size     Time     Throughput
+    bytes  bytes   bytes    secs.    10^6bits/sec
+
+    131072  16384  16384    5.01     2877.38
+
+Fixes: a6024562ffd7 ("udp: Add GRO functions to UDP socket")
+Signed-off-by: Richard Gobert <richardbgobert@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_output.c | 2 +-
- net/ipv4/raw.c       | 3 +++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ include/net/gro.h      | 9 +++++++++
+ net/8021q/vlan_core.c  | 2 ++
+ net/core/gro.c         | 1 +
+ net/ipv4/af_inet.c     | 1 +
+ net/ipv4/udp.c         | 3 ++-
+ net/ipv4/udp_offload.c | 3 ++-
+ net/ipv6/ip6_offload.c | 1 +
+ net/ipv6/udp.c         | 3 ++-
+ net/ipv6/udp_offload.c | 3 ++-
+ 9 files changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index 67d846622365e..a38e63669c54a 100644
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -1473,7 +1473,7 @@ struct sk_buff *__ip_make_skb(struct sock *sk,
- 		 * by icmp_hdr(skb)->type.
- 		 */
- 		if (sk->sk_type == SOCK_RAW &&
--		    !inet_test_bit(HDRINCL, sk))
-+		    !(fl4->flowi4_flags & FLOWI_FLAG_KNOWN_NH))
- 			icmp_type = fl4->fl4_icmp_type;
- 		else
- 			icmp_type = icmp_hdr(skb)->type;
-diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
-index 288f1846b3518..a1d8218fa1a2d 100644
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -605,6 +605,9 @@ static int raw_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 			    (hdrincl ? FLOWI_FLAG_KNOWN_NH : 0),
- 			   daddr, saddr, 0, 0, sk->sk_uid);
+diff --git a/include/net/gro.h b/include/net/gro.h
+index b435f0ddbf64f..62b006f3ed184 100644
+--- a/include/net/gro.h
++++ b/include/net/gro.h
+@@ -86,6 +86,15 @@ struct napi_gro_cb {
  
-+	fl4.fl4_icmp_type = 0;
-+	fl4.fl4_icmp_code = 0;
+ 	/* used to support CHECKSUM_COMPLETE for tunneling protocols */
+ 	__wsum	csum;
 +
- 	if (!hdrincl) {
- 		rfv.msg = msg;
- 		rfv.hlen = 0;
++	/* L3 offsets */
++	union {
++		struct {
++			u16 network_offset;
++			u16 inner_network_offset;
++		};
++		u16 network_offsets[2];
++	};
+ };
+ 
+ #define NAPI_GRO_CB(skb) ((struct napi_gro_cb *)(skb)->cb)
+diff --git a/net/8021q/vlan_core.c b/net/8021q/vlan_core.c
+index f001582345052..9404dd551dfd2 100644
+--- a/net/8021q/vlan_core.c
++++ b/net/8021q/vlan_core.c
+@@ -478,6 +478,8 @@ static struct sk_buff *vlan_gro_receive(struct list_head *head,
+ 	if (unlikely(!vhdr))
+ 		goto out;
+ 
++	NAPI_GRO_CB(skb)->network_offsets[NAPI_GRO_CB(skb)->encap_mark] = hlen;
++
+ 	type = vhdr->h_vlan_encapsulated_proto;
+ 
+ 	ptype = gro_find_receive_by_type(type);
+diff --git a/net/core/gro.c b/net/core/gro.c
+index cefddf65f7db0..31e40f25fdf10 100644
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -373,6 +373,7 @@ static inline void skb_gro_reset_offset(struct sk_buff *skb, u32 nhoff)
+ 	const struct skb_shared_info *pinfo = skb_shinfo(skb);
+ 	const skb_frag_t *frag0 = &pinfo->frags[0];
+ 
++	NAPI_GRO_CB(skb)->network_offset = 0;
+ 	NAPI_GRO_CB(skb)->data_offset = 0;
+ 	NAPI_GRO_CB(skb)->frag0 = NULL;
+ 	NAPI_GRO_CB(skb)->frag0_len = 0;
+diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
+index a5a820ee20266..ce5c26cf1e2e8 100644
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -1571,6 +1571,7 @@ struct sk_buff *inet_gro_receive(struct list_head *head, struct sk_buff *skb)
+ 	/* The above will be needed by the transport layer if there is one
+ 	 * immediately following this IP hdr.
+ 	 */
++	NAPI_GRO_CB(skb)->inner_network_offset = off;
+ 
+ 	/* Note : No need to call skb_gro_postpull_rcsum() here,
+ 	 * as we already checked checksum over ipv4 header was 0
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 40282a34180ca..9120694359af4 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -534,7 +534,8 @@ static inline struct sock *__udp4_lib_lookup_skb(struct sk_buff *skb,
+ struct sock *udp4_lib_lookup_skb(const struct sk_buff *skb,
+ 				 __be16 sport, __be16 dport)
+ {
+-	const struct iphdr *iph = ip_hdr(skb);
++	const u16 offset = NAPI_GRO_CB(skb)->network_offsets[skb->encapsulation];
++	const struct iphdr *iph = (struct iphdr *)(skb->data + offset);
+ 	struct net *net = dev_net(skb->dev);
+ 	int iif, sdif;
+ 
+diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
+index c3d67423ae189..889d4926fc0c1 100644
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -718,7 +718,8 @@ EXPORT_SYMBOL(udp_gro_complete);
+ 
+ INDIRECT_CALLABLE_SCOPE int udp4_gro_complete(struct sk_buff *skb, int nhoff)
+ {
+-	const struct iphdr *iph = ip_hdr(skb);
++	const u16 offset = NAPI_GRO_CB(skb)->network_offsets[skb->encapsulation];
++	const struct iphdr *iph = (struct iphdr *)(skb->data + offset);
+ 	struct udphdr *uh = (struct udphdr *)(skb->data + nhoff);
+ 
+ 	/* do fraglist only if there is no outer UDP encap (or we already processed it) */
+diff --git a/net/ipv6/ip6_offload.c b/net/ipv6/ip6_offload.c
+index cca64c7809bee..19ae2d4cd2021 100644
+--- a/net/ipv6/ip6_offload.c
++++ b/net/ipv6/ip6_offload.c
+@@ -237,6 +237,7 @@ INDIRECT_CALLABLE_SCOPE struct sk_buff *ipv6_gro_receive(struct list_head *head,
+ 		goto out;
+ 
+ 	skb_set_network_header(skb, off);
++	NAPI_GRO_CB(skb)->inner_network_offset = off;
+ 
+ 	flush += ntohs(iph->payload_len) != skb->len - hlen;
+ 
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 8c14c4cc82ff7..785b2d076a6b3 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -275,7 +275,8 @@ static struct sock *__udp6_lib_lookup_skb(struct sk_buff *skb,
+ struct sock *udp6_lib_lookup_skb(const struct sk_buff *skb,
+ 				 __be16 sport, __be16 dport)
+ {
+-	const struct ipv6hdr *iph = ipv6_hdr(skb);
++	const u16 offset = NAPI_GRO_CB(skb)->network_offsets[skb->encapsulation];
++	const struct ipv6hdr *iph = (struct ipv6hdr *)(skb->data + offset);
+ 	struct net *net = dev_net(skb->dev);
+ 	int iif, sdif;
+ 
+diff --git a/net/ipv6/udp_offload.c b/net/ipv6/udp_offload.c
+index 626d7b362dc7b..639a4b506f9b5 100644
+--- a/net/ipv6/udp_offload.c
++++ b/net/ipv6/udp_offload.c
+@@ -164,7 +164,8 @@ struct sk_buff *udp6_gro_receive(struct list_head *head, struct sk_buff *skb)
+ 
+ INDIRECT_CALLABLE_SCOPE int udp6_gro_complete(struct sk_buff *skb, int nhoff)
+ {
+-	const struct ipv6hdr *ipv6h = ipv6_hdr(skb);
++	const u16 offset = NAPI_GRO_CB(skb)->network_offsets[skb->encapsulation];
++	const struct ipv6hdr *ipv6h = (struct ipv6hdr *)(skb->data + offset);
+ 	struct udphdr *uh = (struct udphdr *)(skb->data + nhoff);
+ 
+ 	/* do fraglist only if there is no outer UDP encap (or we already processed it) */
 -- 
 2.43.0
 
