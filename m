@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0DC12BF3D;
-	Tue, 14 May 2024 11:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5C612C54A;
+	Tue, 14 May 2024 11:48:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687285; cv=none; b=M+0w2MMHGMkkMOvG7ABsFFeBq6nY77qfGKWfWxUAMn/mq4joRI2JRbMiSDVlsdoUXnmVJV6guJOlkGg4ptxk7nBb+aKHypgem5ebJy7i0rYK7MHz5OK6DI4Lw9B3yT6A9o1Y0YqZ45sQGp8pwe2CRTK9Dcb2tu1KUJBryPJQYus=
+	t=1715687288; cv=none; b=hD4tvYKiVNL7auNXyC+InMjAiIGRRBBM8e8XU0X2DeqUarqxq3xtxveET7rZ6YC+CJGpHZRmxJipmvud/ZO+P6wZmpTwOy7ajJO0jkfZUANhEFJkHpwsRBorRBG4ZUYyVnvIvTL/6q7PDxhN58bXTDnYTe9C020CEvKH3O80uyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687285; c=relaxed/simple;
-	bh=0f9wb24qg5UXHIvtfOnNfZMEz5DIuLTD1qquCJ7dJo8=;
+	s=arc-20240116; t=1715687288; c=relaxed/simple;
+	bh=wkh7XVJ+4wxZeLas6Gp+tPAt9z1bjFl1Oe8u9IsGE2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h33nhFKJad8Nl+IcRJ5R8guYAophNOhcwf+HPHoHU1G3oWZWI4v/02sQr3dt3Zix9ZzwpWec3dpHTd3Lumt7Q40OTXrPU/0GCfcOTqZZQcfdVma0dOneOBK86QKDbN6AO23nUFyROsKIXF6CJvg76u+Q8a4VyJG1ENrhYhYUckk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s14aTNX6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h+99zOdDBadXJphjFlTrY34XSPZlfnIXxo4ZE12G+MN3Q533vwBStfTDvgehrO7yD4C4K8WXncG1ooAJpjTi8bMN7CJLEI2xPtxa5sp+Kjt40yi1WXqH571pc9Eii9N3gKcKh3dpWuyIHtM/IpxN3JZXZoQ3D8uO7fe8apbgTwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJdyuizu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s14aTNX6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE67FC2BD10;
-	Tue, 14 May 2024 11:48:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJdyuizu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2C3FC2BD10;
+	Tue, 14 May 2024 11:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687285;
-	bh=0f9wb24qg5UXHIvtfOnNfZMEz5DIuLTD1qquCJ7dJo8=;
+	s=korg; t=1715687288;
+	bh=wkh7XVJ+4wxZeLas6Gp+tPAt9z1bjFl1Oe8u9IsGE2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s14aTNX6LHiofy2i3M7S1ywTN9iHItyyQd9RemIIpEtJFmSctE9QoKI+NEaYlQxvV
-	 Yw/Avv4PhVmJshlYNAw+z+GpSJ47fLlnPeZTOFGe15zafkgq1p3oZOj73e95UNtr8q
-	 XeUa/vqEJmrughrlS7NYhbG4aADHfZRfQrwRYZUc=
+	b=uJdyuizuiFsfE+NBUEo8eX+zeOK0FxUZId0/ZWalOvZsz4NEZtASCA7/cVFELR5jW
+	 wA2ioSpqN7g/g6WXAe2uxOAszqPALLJg+s2kRLrALlI83Hh9hQxSSdRNVoelUh2RaT
+	 yIslgsrxNmULh71xYMsCn7yw8FQ9kl1w1TtbvjAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 043/111] KVM: arm64: vgic-v2: Check for non-NULL vCPU in vgic_v2_parse_attr()
-Date: Tue, 14 May 2024 12:19:41 +0200
-Message-ID: <20240514100958.771075134@linuxfoundation.org>
+Subject: [PATCH 5.10 044/111] scsi: lpfc: Update lpfc_ramp_down_queue_handler() logic
+Date: Tue, 14 May 2024 12:19:42 +0200
+Message-ID: <20240514100958.809000740@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -52,52 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Upton <oliver.upton@linux.dev>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 6ddb4f372fc63210034b903d96ebbeb3c7195adb ]
+[ Upstream commit bb011631435c705cdeddca68d5c85fd40a4320f9 ]
 
-vgic_v2_parse_attr() is responsible for finding the vCPU that matches
-the user-provided CPUID, which (of course) may not be valid. If the ID
-is invalid, kvm_get_vcpu_by_id() returns NULL, which isn't handled
-gracefully.
+Typically when an out of resource CQE status is detected, the
+lpfc_ramp_down_queue_handler() logic is called to help reduce I/O load by
+reducing an sdev's queue_depth.
 
-Similar to the GICv3 uaccess flow, check that kvm_get_vcpu_by_id()
-actually returns something and fail the ioctl if not.
+However, the current lpfc_rampdown_queue_depth() logic does not help reduce
+queue_depth.  num_cmd_success is never updated and is always zero, which
+means new_queue_depth will always be set to sdev->queue_depth.  So,
+new_queue_depth = sdev->queue_depth - new_queue_depth always sets
+new_queue_depth to zero.  And, scsi_change_queue_depth(sdev, 0) is
+essentially a no-op.
 
-Cc: stable@vger.kernel.org
-Fixes: 7d450e282171 ("KVM: arm/arm64: vgic-new: Add userland access to VGIC dist registers")
-Reported-by: Alexander Potapenko <glider@google.com>
-Tested-by: Alexander Potapenko <glider@google.com>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20240424173959.3776798-2-oliver.upton@linux.dev
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Change the lpfc_ramp_down_queue_handler() logic to set new_queue_depth
+equal to sdev->queue_depth subtracted from number of times num_rsrc_err was
+incremented.  If num_rsrc_err is >= sdev->queue_depth, then set
+new_queue_depth equal to 1.  Eventually, the frequency of Good_Status
+frames will signal SCSI upper layer to auto increase the queue_depth back
+to the driver default of 64 via scsi_handle_queue_ramp_up().
+
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20240305200503.57317-5-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-kvm-device.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/scsi/lpfc/lpfc.h      |  1 -
+ drivers/scsi/lpfc/lpfc_scsi.c | 13 ++++---------
+ 2 files changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic-kvm-device.c b/arch/arm64/kvm/vgic/vgic-kvm-device.c
-index 640cfa0c0f4cc..e80b638b78271 100644
---- a/arch/arm64/kvm/vgic/vgic-kvm-device.c
-+++ b/arch/arm64/kvm/vgic/vgic-kvm-device.c
-@@ -284,12 +284,12 @@ int kvm_register_vgic_device(unsigned long type)
- int vgic_v2_parse_attr(struct kvm_device *dev, struct kvm_device_attr *attr,
- 		       struct vgic_reg_attr *reg_attr)
- {
--	int cpuid;
-+	int cpuid = FIELD_GET(KVM_DEV_ARM_VGIC_CPUID_MASK, attr->attr);
+diff --git a/drivers/scsi/lpfc/lpfc.h b/drivers/scsi/lpfc/lpfc.h
+index cf69f831a7253..8f1b5b0ee8cd8 100644
+--- a/drivers/scsi/lpfc/lpfc.h
++++ b/drivers/scsi/lpfc/lpfc.h
+@@ -1065,7 +1065,6 @@ struct lpfc_hba {
+ 	unsigned long bit_flags;
+ #define	FABRIC_COMANDS_BLOCKED	0
+ 	atomic_t num_rsrc_err;
+-	atomic_t num_cmd_success;
+ 	unsigned long last_rsrc_error_time;
+ 	unsigned long last_ramp_down_time;
+ #ifdef CONFIG_SCSI_LPFC_DEBUG_FS
+diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
+index b4b87e5d8b291..2121534838747 100644
+--- a/drivers/scsi/lpfc/lpfc_scsi.c
++++ b/drivers/scsi/lpfc/lpfc_scsi.c
+@@ -246,11 +246,10 @@ lpfc_ramp_down_queue_handler(struct lpfc_hba *phba)
+ 	struct Scsi_Host  *shost;
+ 	struct scsi_device *sdev;
+ 	unsigned long new_queue_depth;
+-	unsigned long num_rsrc_err, num_cmd_success;
++	unsigned long num_rsrc_err;
+ 	int i;
  
--	cpuid = FIELD_GET(KVM_DEV_ARM_VGIC_CPUID_MASK, attr->attr);
--
--	reg_attr->vcpu = kvm_get_vcpu_by_id(dev->kvm, cpuid);
- 	reg_attr->addr = attr->attr & KVM_DEV_ARM_VGIC_OFFSET_MASK;
-+	reg_attr->vcpu = kvm_get_vcpu_by_id(dev->kvm, cpuid);
-+	if (!reg_attr->vcpu)
-+		return -EINVAL;
+ 	num_rsrc_err = atomic_read(&phba->num_rsrc_err);
+-	num_cmd_success = atomic_read(&phba->num_cmd_success);
  
- 	return 0;
+ 	/*
+ 	 * The error and success command counters are global per
+@@ -265,20 +264,16 @@ lpfc_ramp_down_queue_handler(struct lpfc_hba *phba)
+ 		for (i = 0; i <= phba->max_vports && vports[i] != NULL; i++) {
+ 			shost = lpfc_shost_from_vport(vports[i]);
+ 			shost_for_each_device(sdev, shost) {
+-				new_queue_depth =
+-					sdev->queue_depth * num_rsrc_err /
+-					(num_rsrc_err + num_cmd_success);
+-				if (!new_queue_depth)
+-					new_queue_depth = sdev->queue_depth - 1;
++				if (num_rsrc_err >= sdev->queue_depth)
++					new_queue_depth = 1;
+ 				else
+ 					new_queue_depth = sdev->queue_depth -
+-								new_queue_depth;
++						num_rsrc_err;
+ 				scsi_change_queue_depth(sdev, new_queue_depth);
+ 			}
+ 		}
+ 	lpfc_destroy_vport_work_array(phba, vports);
+ 	atomic_set(&phba->num_rsrc_err, 0);
+-	atomic_set(&phba->num_cmd_success, 0);
  }
+ 
+ /**
 -- 
 2.43.0
 
