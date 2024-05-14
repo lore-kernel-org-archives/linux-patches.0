@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74C712FF64;
-	Tue, 14 May 2024 11:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE5C1386CC;
+	Tue, 14 May 2024 11:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684424; cv=none; b=UNA7BJ0OExPMs8dTrvR/MzG7jV0Fb80952fzZwQN/hMJCoba9gIF7iuONbltoyHs6f+yTjX0ebNs4RdVC4ExTQA+JPRTy2DQM5ii0v0wswM9IMKAEP1YRPNH8MLR/+PRVAzH+yTKcCFFtrAyQ4YOfPEwrHDNz8Rvwf8FB+xxaF0=
+	t=1715684432; cv=none; b=Gv7uI3SKYBa914ImYx3foPy3He/FOm5P+C99xZ2HAom80dQIPG4uq5lgM/Y4wFvB8IScAA80/YXQ+383XRA04/07MCpDDgE9hi1FyxSxTGohKbVz7aSjtdVSlr8WNNrEoCWBI+s+CEeZmFc+RbIH3epoNzpBYkmhtK6DGV+x1tE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684424; c=relaxed/simple;
-	bh=gAzR9Wz+OeF+jZYER4CoGTQ4pflvRDmAesVSl4n4dOA=;
+	s=arc-20240116; t=1715684432; c=relaxed/simple;
+	bh=kxuuqiXnQtthnaXhYlElOm2RbUIpf3+Zx6d+nP590Ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nK5uoOCRjjJGUM4NQasF5/GlyyPtLvI4llbRa74v7W1SFTR92MIeu4nEjf/1PEGvdOPVA3IcjkkWJBPrjt0G+J4Huh43wNH7gCmP9aROB1bzxQMnuuYeJ4NDjnBKCUnnhbfPMemOgo2773kohoPfoTLfmGDIk9kIBndYMVifCGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pp/NcwL5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iQUYHA8sB5U0IEXElTufMpW2Tl5UwqlguOntDLFSHM2VDFeC0AaWTgJeTG25R1zQHEt3d28M5sC/pkZMT+IWlQGl/fVpogRPYiUd9m6z/CA8mRMFHd7OFtx53JCCCc5dgfaXqh+l3qOTbb6nihdMfoDJEN/a1tOh84r0YpKr1xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/IiICJV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pp/NcwL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227BBC32781;
-	Tue, 14 May 2024 11:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/IiICJV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A170AC2BD10;
+	Tue, 14 May 2024 11:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684424;
-	bh=gAzR9Wz+OeF+jZYER4CoGTQ4pflvRDmAesVSl4n4dOA=;
+	s=korg; t=1715684431;
+	bh=kxuuqiXnQtthnaXhYlElOm2RbUIpf3+Zx6d+nP590Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pp/NcwL5Y6MxkZrE6h422rJdcq+g5npkwrtvxTopjmlWyX8b/UubIFBK9EEU4iiKF
-	 ZIPRgx4HX/No5UWdYiCCrVoWSiBM0g67xqFIyE5CLvKIQ+0Fhf+CyqXUHy/3XQ7uon
-	 ROkQAd24mTmkjRq3J0UHAdeZueNE8+MQuEqP/jQo=
+	b=W/IiICJVnEXLNwsTB7x03xlT2FV0SZswzNchBigzF76ZrwMRDd5XrjKbvpJ8vp3vW
+	 7+ZdbCEE9gtlM/7c0lgtWxGvifijpI9H49yQt0JLgEkGvWCR7uBNHGX3QRuga6qHtF
+	 LYFSt6mWnxAfDkghEaf4ueY32J63L4lYNK3I2cSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
+	Devyn Liu <liudingyuan@huawei.com>,
+	Jay Fang <f.fangjian@huawei.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 040/301] spi: axi-spi-engine: fix version format string
-Date: Tue, 14 May 2024 12:15:11 +0200
-Message-ID: <20240514101033.759063488@linuxfoundation.org>
+Subject: [PATCH 6.6 041/301] spi: hisi-kunpeng: Delete the dump interface of data registers in debugfs
+Date: Tue, 14 May 2024 12:15:12 +0200
+Message-ID: <20240514101033.797449811@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,39 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Devyn Liu <liudingyuan@huawei.com>
 
-[ Upstream commit 0064db9ce4aa7cc794e6f4aed60dee0f94fc9bcf ]
+[ Upstream commit 7430764f5a85d30314aeef2d5438dff1fb0b1d68 ]
 
-The version format string in the AXI SPI Engine driver was probably
-intended to print the version number in the same format as the DT
-compatible string (e.g. 1.00.a). However, the version just uses
-semantic versioning so formatting the patch number as a character
-is not correct and would result in printing control characters for
-patch numbers less than 32.
+Due to the reading of FIFO during the dump of data registers in
+debugfs, if SPI transmission is in progress, it will be affected
+and may result in transmission failure. Therefore, the dump
+interface of data registers in debugfs is removed.
 
-Fixes: b1353d1c1d45 ("spi: Add Analog Devices AXI SPI Engine controller support")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://lore.kernel.org/r/20240412-axi-spi-engine-version-printf-v1-1-95e1e842c1a6@baylibre.com
+Fixes: 2b2142f247eb ("spi: hisi-kunpeng: Add debugfs support")
+Signed-off-by: Devyn Liu <liudingyuan@huawei.com>
+Reviewed-by: Jay Fang <f.fangjian@huawei.com>
+Link: https://lore.kernel.org/r/20240416015839.3323398-1-liudingyuan@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-axi-spi-engine.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-hisi-kunpeng.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/spi/spi-axi-spi-engine.c b/drivers/spi/spi-axi-spi-engine.c
-index 9c7b6a92417ce..9faee4fcc049a 100644
---- a/drivers/spi/spi-axi-spi-engine.c
-+++ b/drivers/spi/spi-axi-spi-engine.c
-@@ -532,7 +532,7 @@ static int spi_engine_probe(struct platform_device *pdev)
- 
- 	version = readl(spi_engine->base + ADI_AXI_REG_VERSION);
- 	if (ADI_AXI_PCORE_VER_MAJOR(version) != 1) {
--		dev_err(&pdev->dev, "Unsupported peripheral version %u.%u.%c\n",
-+		dev_err(&pdev->dev, "Unsupported peripheral version %u.%u.%u\n",
- 			ADI_AXI_PCORE_VER_MAJOR(version),
- 			ADI_AXI_PCORE_VER_MINOR(version),
- 			ADI_AXI_PCORE_VER_PATCH(version));
+diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
+index 35ef5e8e2ffd2..77e9738e42f60 100644
+--- a/drivers/spi/spi-hisi-kunpeng.c
++++ b/drivers/spi/spi-hisi-kunpeng.c
+@@ -151,8 +151,6 @@ static const struct debugfs_reg32 hisi_spi_regs[] = {
+ 	HISI_SPI_DBGFS_REG("ENR", HISI_SPI_ENR),
+ 	HISI_SPI_DBGFS_REG("FIFOC", HISI_SPI_FIFOC),
+ 	HISI_SPI_DBGFS_REG("IMR", HISI_SPI_IMR),
+-	HISI_SPI_DBGFS_REG("DIN", HISI_SPI_DIN),
+-	HISI_SPI_DBGFS_REG("DOUT", HISI_SPI_DOUT),
+ 	HISI_SPI_DBGFS_REG("SR", HISI_SPI_SR),
+ 	HISI_SPI_DBGFS_REG("RISR", HISI_SPI_RISR),
+ 	HISI_SPI_DBGFS_REG("ISR", HISI_SPI_ISR),
 -- 
 2.43.0
 
