@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0145A6E619;
-	Tue, 14 May 2024 11:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C753E2B9AD;
+	Tue, 14 May 2024 11:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685089; cv=none; b=N9XiVgAumpzPnZ2e1bX9KguAKJBk9gDUfGVayX/H8pGOHOYXKTrik6MzOm/qLVx1iQa0+Qo1ATTj0yBhh983mi/6j73D9u3S5GJge9Lw82UEpMpQAzs1upJuVaHtOpKuZMCa7ktOkgYnDLXmeMXcA+0FWFUhleuQdsDHg3XF7VA=
+	t=1715685093; cv=none; b=eMnfwoX5XniYJqKRz1UA6ZQU9p4j6aY49EE25kGI0WHaCTXxycjl2uRXIZt0SbCH0JC/+VqbUP4ibQfBRtpau2pOFTMJQlGGSwcdlAdKe40qw93AzEZIKgUK4BaCtOdZw4cFem2Gm7Mccd6fVRJBKjfUSxgwiF+u10H/yG1Yf50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685089; c=relaxed/simple;
-	bh=t1iETI7c+Gu1Lb/jMKfM1mtzxT8boiGWPpiEcx4vQsM=;
+	s=arc-20240116; t=1715685093; c=relaxed/simple;
+	bh=3NLYim+geHzSzUmGSSRxt2UTsa56VaqQFUUGayVQfUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PCblYmvRUxrPQIUsWn8e1t5VfRAiZ+LgqQm+0TAOiZyhkkJpysn+KDu4FgUdFI/XKv0DtbQJYP1gmF2rjZj9blb+3nom0a19qrzu4eYpH9VrdYKjVIUF03BinukIhLAKrrsushpApOQ680tJkuYpk4vBkTfbQkqDscZ6XeLmbDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qo4+EsJT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h0uGC+S6XjFwjoCD3kyJTBbNBm9BeCNRp4l976hQkiisk1ySpyBtpIRdkL9DWtqxEgUHzakk81nXmg1NbcWAdrVtwsxwstb/8EcvNImILV+csjFgHvIX1VdvbTmObumJ7/Ly4q2c9b0hq7HKYuUCDIf9MRiRmmypVd3UQ18KOVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDo70wEi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qo4+EsJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9734EC2BD10;
-	Tue, 14 May 2024 11:11:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDo70wEi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57EE2C4AF09;
+	Tue, 14 May 2024 11:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685088;
-	bh=t1iETI7c+Gu1Lb/jMKfM1mtzxT8boiGWPpiEcx4vQsM=;
+	s=korg; t=1715685093;
+	bh=3NLYim+geHzSzUmGSSRxt2UTsa56VaqQFUUGayVQfUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qo4+EsJTKfYwmQif7Z0jNZqOVTeZN/TnhbMRD9L+qlRdA4qiuOrozUCqi5yP2nO0I
-	 4esOs/4QfeZoOVT6MaGxrHwBbV6Fec8wdV5aUPvj+zxZ9o58fWmUnzIjjQF9U1IlCy
-	 UiCiNZ3Teg2EsObRM7yrq3mDBLWdK13XdO86coNo=
+	b=lDo70wEimYUvL4+j95Gj37VbF3M31qp52s+dyM3VQvdRjRqLd8bCJnP9tPxTpK5gE
+	 /P9o1TiUhdaFbDj/VmFqkdu3ZM2AaZ4U7USu3sg4UclHpb0cUOtWhItAgWZRoO5UXI
+	 ttu59WJIfTAghUC7n9Sqd+PZZjRIt7s4Qy39RcC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Yajun Deng <yajun.deng@linux.dev>,
+	Mike Rapoport <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 127/301] ata: sata_gemini: Check clk_enable() result
-Date: Tue, 14 May 2024 12:16:38 +0200
-Message-ID: <20240514101037.043916050@linuxfoundation.org>
+Subject: [PATCH 6.6 136/301] memblock tests: fix undefined reference to `early_pfn_to_nid
+Date: Tue, 14 May 2024 12:16:47 +0200
+Message-ID: <20240514101037.390258520@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,36 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-[ Upstream commit e85006ae7430aef780cc4f0849692e266a102ec0 ]
+[ Upstream commit 7d8ed162e6a92268d4b2b84d364a931216102c8e ]
 
-The call to clk_enable() in gemini_sata_start_bridge() can fail.
-Add a check to detect such failure.
+commit 6a9531c3a880 ("memblock: fix crash when reserved memory is not
+added to memory") introduce the usage of early_pfn_to_nid, which is not
+defined in memblock tests.
 
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+The original definition of early_pfn_to_nid is defined in mm.h, so let
+add this in the corresponding mm.h.
+
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+CC: Yajun Deng <yajun.deng@linux.dev>
+CC: Mike Rapoport <rppt@kernel.org>
+Link: https://lore.kernel.org/r/20240402132701.29744-2-richard.weiyang@gmail.com
+Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_gemini.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/include/linux/mm.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/ata/sata_gemini.c b/drivers/ata/sata_gemini.c
-index 400b22ee99c33..4c270999ba3cc 100644
---- a/drivers/ata/sata_gemini.c
-+++ b/drivers/ata/sata_gemini.c
-@@ -200,7 +200,10 @@ int gemini_sata_start_bridge(struct sata_gemini *sg, unsigned int bridge)
- 		pclk = sg->sata0_pclk;
- 	else
- 		pclk = sg->sata1_pclk;
--	clk_enable(pclk);
-+	ret = clk_enable(pclk);
-+	if (ret)
-+		return ret;
-+
- 	msleep(10);
+diff --git a/tools/include/linux/mm.h b/tools/include/linux/mm.h
+index f3c82ab5b14cd..7d73da0980473 100644
+--- a/tools/include/linux/mm.h
++++ b/tools/include/linux/mm.h
+@@ -37,4 +37,9 @@ static inline void totalram_pages_add(long count)
+ {
+ }
  
- 	/* Do not keep clocking a bridge that is not online */
++static inline int early_pfn_to_nid(unsigned long pfn)
++{
++	return 0;
++}
++
+ #endif
 -- 
 2.43.0
 
