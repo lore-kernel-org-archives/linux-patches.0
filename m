@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2352647A6C;
-	Tue, 14 May 2024 11:36:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FC747A6C;
+	Tue, 14 May 2024 11:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686585; cv=none; b=e1ewfFL7F0F+gW52B3Nwa8OGEbNXateXRjkcWBtUoJUFgeIGg5QdC+hHjHOdnmPFwa4KrqgyeYhzNjsUgexnk8p3NZ1PvglJ4+raxxQHIGNWRKsni8lTxCz1m4k+g6QmmppwXhm1gd12xWow00jrK/RZJORpUubHxgmXZ3ElAec=
+	t=1715686587; cv=none; b=qKh4ndMmnyzdK26jkHahV7tie0MpXhhItH0XUps9O0tsJF0AeHvhMolEEV1rbwCDweAcJbYexBreduDDfbO+2i/kQRPDI35cEx5aRLWtc7ao2aBhDB16E99lQvmDCD4m93fH3GetrCm2taFuA1gReWGhW5odVpW0lXhpgyYuiWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686585; c=relaxed/simple;
-	bh=vINcPJcetYMcAyEtMa4dFwq0Ki+VoDpIv7EsUMLnVlc=;
+	s=arc-20240116; t=1715686587; c=relaxed/simple;
+	bh=D77+0cb0fBWXzIDX/4qH5+CWo89SVPKd+B8i1Ap9U8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cYFdA48hCe+VUJVXLbFfe7LPLVLAePcTPlriGbQHUsH+20BOiMZmneiXZQwr8XWP8JMgJoO/HtPcMND6IsIACnem9ZFUdNqb8161V4F1/CKUdGb9wVT+JPFoUT4bE1qExNiTshjJDOodT35oB6v9XvYlIHwbOhP0IUloiPQvIcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNu2FV2f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iADAYd6WDrbIF1n0E0d7xhsgQ9be+bZXeBJ5s4jlw5byJzmSSOpc9XAramFoxai3q0GTvoXlHddI+HWoT9Yw/I6E1iLfirdeb0Ix2Mme51PyM4uV39tr9j0kGvmwNhXsp2igZMbH6N5HNVQcbOl2IeDnHTRQ51iFBXh9c7r6Xhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/wJp4+3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNu2FV2f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48027C2BD10;
-	Tue, 14 May 2024 11:36:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/wJp4+3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20102C2BD10;
+	Tue, 14 May 2024 11:36:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686584;
-	bh=vINcPJcetYMcAyEtMa4dFwq0Ki+VoDpIv7EsUMLnVlc=;
+	s=korg; t=1715686587;
+	bh=D77+0cb0fBWXzIDX/4qH5+CWo89SVPKd+B8i1Ap9U8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vNu2FV2fDV66gJ8dAWyT4LS29Ndp6JiSmm69OE6bB+MV7gfB5OIaHbbM94UJbdSpi
-	 TmH+6HtDuyAIkW6JCsmqVUXiT9d8/Uc0vE2bIPiJepo2XWZZk8zrx2I62bvzkD4Gub
-	 K7ovvNmVPmJJ4TLSMKfh+0d06PmeFmN/QYVoeivk=
+	b=P/wJp4+3Wgj7rqpl3VTfXeyeOlrev1471mTS5LSNqjstAU2RhH2ZML20vyvwxP2su
+	 o0YuF0fHyDwIkzEdVZ8mo2s2ZIv6iQ4tndvNe1xyir0+vDf4ulQI2A6md4XVN4/xDG
+	 DIR0S+YezF15fRqc5iyGtp+iaTg2FjMD8kmibmC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Gabe Teeger <gabe.teeger@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 181/236] drm/amd/display: Atom Integrated System Info v2_2 for DCN35
-Date: Tue, 14 May 2024 12:19:03 +0200
-Message-ID: <20240514101027.230927123@linuxfoundation.org>
+	Thomas Bertschinger <tahbertschinger@gmail.com>,
+	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.1 190/236] rust: module: place generated init_module() function in .init.text
+Date: Tue, 14 May 2024 12:19:12 +0200
+Message-ID: <20240514101027.575206337@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -54,42 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabe Teeger <gabe.teeger@amd.com>
+From: Thomas Bertschinger <tahbertschinger@gmail.com>
 
-[ Upstream commit 9a35d205f466501dcfe5625ca313d944d0ac2d60 ]
+commit 1b6170ff7a203a5e8354f19b7839fe8b897a9c0d upstream.
 
-New request from KMD/VBIOS in order to support new UMA carveout
-model. This fixes a null dereference from accessing
-Ctx->dc_bios->integrated_info while it was NULL.
+Currently Rust kernel modules have their init code placed in the `.text`
+section of the .ko file. I don't think this causes any real problems
+for Rust modules as long as all code called during initialization lives
+in `.text`.
 
-DAL parses through the BIOS and extracts the necessary
-integrated_info but was missing a case for the new BIOS
-version 2.3.
+However, if a Rust `init_module()` function (that lives in `.text`)
+calls a function marked with `__init` (in C) or
+`#[link_section = ".init.text"]` (in Rust), then a warning is
+generated by modpost because that function lives in `.init.text`.
+For example:
 
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Gabe Teeger <gabe.teeger@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+WARNING: modpost: fs/bcachefs/bcachefs: section mismatch in reference: init_module+0x6 (section: .text) -> _RNvXCsj7d3tFpT5JS_15bcachefs_moduleNtB2_8BcachefsNtCsjDtqRIL3JAG_6kernel6Module4init (section: .init.text)
+
+I ran into this while experimenting with converting the bcachefs kernel
+module from C to Rust. The module's `init()`, written in Rust, calls C
+functions like `bch2_vfs_init()` which are placed in `.init.text`.
+
+This patch places the macro-generated `init_module()` Rust function in
+the `.init.text` section. It also marks `init_module()` as unsafe--now
+it may not be called after module initialization completes because it
+may be freed already.
+
+Note that this is not enough on its own to actually get all the module
+initialization code in that section. The module author must still add
+the `#[link_section = ".init.text"]` attribute to the Rust `init()` in
+the `impl kernel::Module` block in order to then call `__init`
+functions. However, this patch enables module authors do so, when
+previously it would not be possible (without warnings).
+
+Signed-off-by: Thomas Bertschinger <tahbertschinger@gmail.com>
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20240206153806.567055-1-tahbertschinger@gmail.com
+[ Reworded title to add prefix. ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c | 1 +
- 1 file changed, 1 insertion(+)
+ rust/macros/module.rs |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-index 93e40e0a15087..4d2590964a204 100644
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-@@ -2962,6 +2962,7 @@ static enum bp_result construct_integrated_info(
- 				result = get_integrated_info_v2_1(bp, info);
- 				break;
- 			case 2:
-+			case 3:
- 				result = get_integrated_info_v2_2(bp, info);
- 				break;
- 			default:
--- 
-2.43.0
-
+--- a/rust/macros/module.rs
++++ b/rust/macros/module.rs
+@@ -202,10 +202,15 @@ pub(crate) fn module(ts: TokenStream) ->
+             }};
+ 
+             // Loadable modules need to export the `{{init,cleanup}}_module` identifiers.
++            /// # Safety
++            ///
++            /// This function must not be called after module initialization, because it may be
++            /// freed after that completes.
+             #[cfg(MODULE)]
+             #[doc(hidden)]
+             #[no_mangle]
+-            pub extern \"C\" fn init_module() -> core::ffi::c_int {{
++            #[link_section = \".init.text\"]
++            pub unsafe extern \"C\" fn init_module() -> core::ffi::c_int {{
+                 __init()
+             }}
+ 
 
 
