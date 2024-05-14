@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A722D60A;
-	Tue, 14 May 2024 11:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E10C2D60A;
+	Tue, 14 May 2024 11:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687117; cv=none; b=YuGzVQzRvuAXAV/gredU8onmbK7K84JtCoj79rLhgSeBC8Dm3zgCJNKpfm218h6xJL1RYISiIlFZrmBJ0KfkIB7Zb3w2YhQrdcTxqXvDBDlYz1CtbXDt6sHE2RQrTUAXg9+EVR1PMkxsZ74fdgkBTXfaCZWFxV/b/+ENBXD9nn4=
+	t=1715687120; cv=none; b=pylWKkPbAjodELJx4naku7XFMrJ93vKmmmd3zvyD/kUXjsrXSMe9r7IUZ2/Um9Ff2O+QLdFsd8pS4Lg97h9Xhv+5LqD7hPkUtNCAgHskYF/qzv+Bee9+uT8VibE88jLOdig7n8TGcZdTjgQHuqfEUgzKhHVin19pqltVCfAOdwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687117; c=relaxed/simple;
-	bh=SZVY995J2m6DiN+Q2W31nr7aIebDukiWOMnyy2rlofU=;
+	s=arc-20240116; t=1715687120; c=relaxed/simple;
+	bh=DYPQrCAncxBJz1WgZkoHl8T9kUwyGc62VDnTLb+Mo74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3ZXu6fYQQKNEGlnvy7D9C2w+YpC2tjdrjNMHErtdt6ubo7TDHO6FXs6QxkFEt1m+beZRoAeBO5srYDdjOTRplSvY6y2Aabpv0wgd8PCnin8XnII7enaa91WKoEuTGfx1cWry0MLbo7c6p4dTartNES0LrjhIt26CWGWpVk0L5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0psgrqi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bg3Kni8/zHx73UxQUBqVbJAYIQAH+x3N0pp0y6OcXra2zC1yB0OXsWS8YS2a8LDIF3+VVoP0F1SGu9igTM1zcwijtW55nYsyxNxdYSptsj/w1fS5dyaarSLdc/W/nL1OGj43bwTyjlelUUjonHpYnlZRAVvmLUEyyXvrJLsYM54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAijF4A+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0psgrqi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00ACBC32781;
-	Tue, 14 May 2024 11:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAijF4A+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FEBC2BD10;
+	Tue, 14 May 2024 11:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687117;
-	bh=SZVY995J2m6DiN+Q2W31nr7aIebDukiWOMnyy2rlofU=;
+	s=korg; t=1715687120;
+	bh=DYPQrCAncxBJz1WgZkoHl8T9kUwyGc62VDnTLb+Mo74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u0psgrqiSUbGNnLvRQDfm07G/q21YABkukRtKeBl/vfXNn28URLdetT/+PaE134UM
-	 5D3d1WVZEC9AXUzH7QiYAt0diP3THRbYvic+3e9f+OxogHkJwDjyB1ljYDmEz/ESFb
-	 aGcopzXKtoIes0WozCx6ziQzpyJaEvxgXmPmNA5Y=
+	b=IAijF4A+7yk7UwIJqZ+yA/cI3mr9ZVyT3CFbPKqzLDbO9+gkq3ht8EDLmOBUoMM8n
+	 Tn/jW1qaNyEWGhtK7UyoH/bgpOgAdaqEYaL9xOHqw53HpJsuhr+BG8Cy7GLGx83XNL
+	 a77RFfPQKXc/n/AVTJcglLGzCN1PIEYtU50ixRHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 63/84] tcp: defer shutdown(SEND_SHUTDOWN) for TCP_SYN_RECV sockets
-Date: Tue, 14 May 2024 12:20:14 +0200
-Message-ID: <20240514100954.055684314@linuxfoundation.org>
+Subject: [PATCH 5.4 72/84] net: qede: use return from qede_parse_flow_attr() for flower
+Date: Tue, 14 May 2024 12:20:23 +0200
+Message-ID: <20240514100954.390790821@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100951.686412426@linuxfoundation.org>
 References: <20240514100951.686412426@linuxfoundation.org>
@@ -47,149 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit 94062790aedb505bdda209b10bea47b294d6394f ]
+[ Upstream commit fcee2065a178f78be6fd516302830378b17dba3d ]
 
-TCP_SYN_RECV state is really special, it is only used by
-cross-syn connections, mostly used by fuzzers.
+In qede_add_tc_flower_fltr(), when calling
+qede_parse_flow_attr() then the return code
+was only used for a non-zero check, and then
+-EINVAL was returned.
 
-In the following crash [1], syzbot managed to trigger a divide
-by zero in tcp_rcv_space_adjust()
+qede_parse_flow_attr() can currently fail with:
+* -EINVAL
+* -EOPNOTSUPP
+* -EPROTONOSUPPORT
 
-A socket makes the following state transitions,
-without ever calling tcp_init_transfer(),
-meaning tcp_init_buffer_space() is also not called.
+This patch changes the code to use the actual
+return code, not just return -EINVAL.
 
-         TCP_CLOSE
-connect()
-         TCP_SYN_SENT
-         TCP_SYN_RECV
-shutdown() -> tcp_shutdown(sk, SEND_SHUTDOWN)
-         TCP_FIN_WAIT1
+The blaimed commit introduced these functions.
 
-To fix this issue, change tcp_shutdown() to not
-perform a TCP_SYN_RECV -> TCP_FIN_WAIT1 transition,
-which makes no sense anyway.
+Only compile tested.
 
-When tcp_rcv_state_process() later changes socket state
-from TCP_SYN_RECV to TCP_ESTABLISH, then look at
-sk->sk_shutdown to finally enter TCP_FIN_WAIT1 state,
-and send a FIN packet from a sane socket state.
-
-This means tcp_send_fin() can now be called from BH
-context, and must use GFP_ATOMIC allocations.
-
-[1]
-divide error: 0000 [#1] PREEMPT SMP KASAN NOPTI
-CPU: 1 PID: 5084 Comm: syz-executor358 Not tainted 6.9.0-rc6-syzkaller-00022-g98369dccd2f8 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
- RIP: 0010:tcp_rcv_space_adjust+0x2df/0x890 net/ipv4/tcp_input.c:767
-Code: e3 04 4c 01 eb 48 8b 44 24 38 0f b6 04 10 84 c0 49 89 d5 0f 85 a5 03 00 00 41 8b 8e c8 09 00 00 89 e8 29 c8 48 0f af c3 31 d2 <48> f7 f1 48 8d 1c 43 49 8d 96 76 08 00 00 48 89 d0 48 c1 e8 03 48
-RSP: 0018:ffffc900031ef3f0 EFLAGS: 00010246
-RAX: 0c677a10441f8f42 RBX: 000000004fb95e7e RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: 0000000027d4b11f R08: ffffffff89e535a4 R09: 1ffffffff25e6ab7
-R10: dffffc0000000000 R11: ffffffff8135e920 R12: ffff88802a9f8d30
-R13: dffffc0000000000 R14: ffff88802a9f8d00 R15: 1ffff1100553f2da
-FS:  00005555775c0380(0000) GS:ffff8880b9500000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f1155bf2304 CR3: 000000002b9f2000 CR4: 0000000000350ef0
-Call Trace:
- <TASK>
-  tcp_recvmsg_locked+0x106d/0x25a0 net/ipv4/tcp.c:2513
-  tcp_recvmsg+0x25d/0x920 net/ipv4/tcp.c:2578
-  inet6_recvmsg+0x16a/0x730 net/ipv6/af_inet6.c:680
-  sock_recvmsg_nosec net/socket.c:1046 [inline]
-  sock_recvmsg+0x109/0x280 net/socket.c:1068
-  ____sys_recvmsg+0x1db/0x470 net/socket.c:2803
-  ___sys_recvmsg net/socket.c:2845 [inline]
-  do_recvmmsg+0x474/0xae0 net/socket.c:2939
-  __sys_recvmmsg net/socket.c:3018 [inline]
-  __do_sys_recvmmsg net/socket.c:3041 [inline]
-  __se_sys_recvmmsg net/socket.c:3034 [inline]
-  __x64_sys_recvmmsg+0x199/0x250 net/socket.c:3034
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7faeb6363db9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 c1 17 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffcc1997168 EFLAGS: 00000246 ORIG_RAX: 000000000000012b
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007faeb6363db9
-RDX: 0000000000000001 RSI: 0000000020000bc0 RDI: 0000000000000005
-RBP: 0000000000000000 R08: 0000000000000000 R09: 000000000000001c
-R10: 0000000000000122 R11: 0000000000000246 R12: 0000000000000000
-R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000001
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Link: https://lore.kernel.org/r/20240501125448.896529-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2ce9c93eaca6 ("qede: Ingress tc flower offload (drop action) support.")
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c        | 4 ++--
- net/ipv4/tcp_input.c  | 2 ++
- net/ipv4/tcp_output.c | 4 +++-
- 3 files changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/qlogic/qede/qede_filter.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index ca7863f722187..9a4a3f6d9cb06 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -2331,7 +2331,7 @@ void tcp_shutdown(struct sock *sk, int how)
- 	/* If we've already sent a FIN, or it's a closed state, skip this. */
- 	if ((1 << sk->sk_state) &
- 	    (TCPF_ESTABLISHED | TCPF_SYN_SENT |
--	     TCPF_SYN_RECV | TCPF_CLOSE_WAIT)) {
-+	     TCPF_CLOSE_WAIT)) {
- 		/* Clear out any half completed packets.  FIN if needed. */
- 		if (tcp_close_state(sk))
- 			tcp_send_fin(sk);
-@@ -2416,7 +2416,7 @@ void __tcp_close(struct sock *sk, long timeout)
- 		 * machine. State transitions:
- 		 *
- 		 * TCP_ESTABLISHED -> TCP_FIN_WAIT1
--		 * TCP_SYN_RECV	-> TCP_FIN_WAIT1 (forget it, it's impossible)
-+		 * TCP_SYN_RECV	-> TCP_FIN_WAIT1 (it is difficult)
- 		 * TCP_CLOSE_WAIT -> TCP_LAST_ACK
- 		 *
- 		 * are legal only when FIN has been sent (i.e. in window),
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 61243531a7f4c..87a10bb11eb0b 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -6342,6 +6342,8 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_filter.c b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+index c02938002278f..3142d92a98f02 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_filter.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+@@ -1960,10 +1960,9 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
+ 	}
  
- 		tcp_initialize_rcv_mss(sk);
- 		tcp_fast_path_on(tp);
-+		if (sk->sk_shutdown & SEND_SHUTDOWN)
-+			tcp_shutdown(sk, SEND_SHUTDOWN);
- 		break;
+ 	/* parse flower attribute and prepare filter */
+-	if (qede_parse_flow_attr(edev, proto, f->rule, &t)) {
+-		rc = -EINVAL;
++	rc = qede_parse_flow_attr(edev, proto, f->rule, &t);
++	if (rc)
+ 		goto unlock;
+-	}
  
- 	case TCP_FIN_WAIT1: {
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 6d7f441c7dd76..4f203cbbc99b5 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -3210,7 +3210,9 @@ void tcp_send_fin(struct sock *sk)
- 			return;
- 		}
- 	} else {
--		skb = alloc_skb_fclone(MAX_TCP_HEADER, sk->sk_allocation);
-+		skb = alloc_skb_fclone(MAX_TCP_HEADER,
-+				       sk_gfp_mask(sk, GFP_ATOMIC |
-+						       __GFP_NOWARN));
- 		if (unlikely(!skb))
- 			return;
- 
+ 	/* Validate profile mode and number of filters */
+ 	if ((edev->arfs->filter_count && edev->arfs->mode != t.mode) ||
 -- 
 2.43.0
 
