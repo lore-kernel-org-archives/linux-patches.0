@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3A148CCC;
-	Tue, 14 May 2024 11:53:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD413D0D1;
+	Tue, 14 May 2024 11:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687633; cv=none; b=tGWDedhdZ3SZZoFyC5cJOFJBr6ZSHDkNCZEkmLYMVWCUzXFic32C3IF+o3Jwua+705e3pHWljcmJf3KpOzb3CsAVUb6b+Nd7MjptH9yZiXtlqS2qKdKaxwwQCZRGst9tQ/Jle4gityGyUcCB1Xtjb/ZQ83i6kPJU36/fxfr2R5Y=
+	t=1715687636; cv=none; b=cUH+6N+6hC3d0NSfR0XeeA7EsOHxXq9NEbRqTagRlzqIuF30JUWK/LnDgN6KsbZyj70wPfkITj4fVp4zmWzxKgS7KISB+cdTP5NtddZ7oSMKvDcZGxrH98XsUQ5Ln5VVUyMjiNBFCddv3IjZc3VDBSqX/HYFNsOnEQ6qqC2W9SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687633; c=relaxed/simple;
-	bh=kLWrf5Dpb3xMzGB3j0DsXT7eDIKhjYoFMk/PK4gvCl0=;
+	s=arc-20240116; t=1715687636; c=relaxed/simple;
+	bh=1aA82xdddhJPHYnI4MW3y1xVzCS+90gO/GPFTarhvNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gwRrrmYZDlFRSh9EJ4zR9pbPlujuwaeOjDIcQcUG0U4qzyRnUwOkLRoQvdecfFFXwoUvnzf3omZW5ImtZRUH3is2ahk1eOa8AR/OUmj+DmVqwGxq6fL73nJbchw2X1ZFGkEaRL4Gz8G98iVTMCIOnOOm+Ba9kA7+P1zgJkcQDhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAGWl1PP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u4lnQbnTADk3WPOUjb7tPZR7bSQVlJ9Em2G5z6yS2ZeCODDhzLz+e6qz3F7rbb0v0dHWcAyxeysNu7yr8LdWlKly2zupXbrbIk1NFP2BkGc+Zt7MmrAyEXx8Uro+0zm3iy8kMIvVlSsAHkcd2QnMiE8ZD2YDNVtFVCvnjnWv5T0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZn5iqNb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAGWl1PP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D59FC2BD10;
-	Tue, 14 May 2024 11:53:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZn5iqNb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774F1C2BD10;
+	Tue, 14 May 2024 11:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687632;
-	bh=kLWrf5Dpb3xMzGB3j0DsXT7eDIKhjYoFMk/PK4gvCl0=;
+	s=korg; t=1715687635;
+	bh=1aA82xdddhJPHYnI4MW3y1xVzCS+90gO/GPFTarhvNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wAGWl1PPE30iAWNWi49p/uskutiwkCN5FOYqp/oIRiEMUnK45EZc+kyaMZSBIMhxB
-	 oDPNKKMiJwLAEfnknVo5YCmZPqKZhkBXms9JIKQgdnA2SJi8lTJfq/KjeKrGIXDN1t
-	 6mtpPXry730Zzbw3ulobtfxha86NRPAHKAK8dW8U=
+	b=jZn5iqNbFZ4PQYdTiSFJAVBzjHXQyPpigS3SYDlZ1U08Ovsi8jATotJGATxVhGOhA
+	 qnQ60uRx9+ebdPZXlonSNaUzs7CGKXLlcKmpLghOdBp7jDWTKbX6O6+c0j4KTX4jyq
+	 iK2F1UYlOCHVJn9iWaxj9WK39EWKNpM84EVvXYG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	"David S. Miller" <davem@davemloft.net>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Tung Nguyen <tung.q.nguyen@dektech.com.au>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 052/168] net: core: reject skb_copy(_expand) for fraglist GSO skbs
-Date: Tue, 14 May 2024 12:19:10 +0200
-Message-ID: <20240514101008.653909281@linuxfoundation.org>
+Subject: [PATCH 5.15 053/168] tipc: fix a possible memleak in tipc_buf_append
+Date: Tue, 14 May 2024 12:19:11 +0200
+Message-ID: <20240514101008.690931534@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -51,71 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit d091e579b864fa790dd6a0cd537a22c383126681 ]
+[ Upstream commit 97bf6f81b29a8efaf5d0983251a7450e5794370d ]
 
-SKB_GSO_FRAGLIST skbs must not be linearized, otherwise they become
-invalid. Return NULL if such an skb is passed to skb_copy or
-skb_copy_expand, in order to prevent a crash on a potential later
-call to skb_gso_segment.
+__skb_linearize() doesn't free the skb when it fails, so move
+'*buf = NULL' after __skb_linearize(), so that the skb can be
+freed on the err path.
 
-Fixes: 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: b7df21cf1b79 ("tipc: skb_linearize the head skb when reassembling msgs")
+Reported-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Tung Nguyen <tung.q.nguyen@dektech.com.au>
+Link: https://lore.kernel.org/r/90710748c29a1521efac4f75ea01b3b7e61414cf.1714485818.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ net/tipc/msg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index a42431860af9a..4ec8cfd357eba 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -1583,11 +1583,17 @@ static inline int skb_alloc_rx_flag(const struct sk_buff *skb)
- 
- struct sk_buff *skb_copy(const struct sk_buff *skb, gfp_t gfp_mask)
- {
--	int headerlen = skb_headroom(skb);
--	unsigned int size = skb_end_offset(skb) + skb->data_len;
--	struct sk_buff *n = __alloc_skb(size, gfp_mask,
--					skb_alloc_rx_flag(skb), NUMA_NO_NODE);
-+	struct sk_buff *n;
-+	unsigned int size;
-+	int headerlen;
-+
-+	if (WARN_ON_ONCE(skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST))
-+		return NULL;
- 
-+	headerlen = skb_headroom(skb);
-+	size = skb_end_offset(skb) + skb->data_len;
-+	n = __alloc_skb(size, gfp_mask,
-+			skb_alloc_rx_flag(skb), NUMA_NO_NODE);
- 	if (!n)
- 		return NULL;
- 
-@@ -1899,12 +1905,17 @@ struct sk_buff *skb_copy_expand(const struct sk_buff *skb,
- 	/*
- 	 *	Allocate the copy buffer
- 	 */
--	struct sk_buff *n = __alloc_skb(newheadroom + skb->len + newtailroom,
--					gfp_mask, skb_alloc_rx_flag(skb),
--					NUMA_NO_NODE);
--	int oldheadroom = skb_headroom(skb);
- 	int head_copy_len, head_copy_off;
-+	struct sk_buff *n;
-+	int oldheadroom;
-+
-+	if (WARN_ON_ONCE(skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST))
-+		return NULL;
- 
-+	oldheadroom = skb_headroom(skb);
-+	n = __alloc_skb(newheadroom + skb->len + newtailroom,
-+			gfp_mask, skb_alloc_rx_flag(skb),
-+			NUMA_NO_NODE);
- 	if (!n)
- 		return NULL;
- 
+diff --git a/net/tipc/msg.c b/net/tipc/msg.c
+index 5c9fd4791c4ba..c52ab423082cd 100644
+--- a/net/tipc/msg.c
++++ b/net/tipc/msg.c
+@@ -142,9 +142,9 @@ int tipc_buf_append(struct sk_buff **headbuf, struct sk_buff **buf)
+ 	if (fragid == FIRST_FRAGMENT) {
+ 		if (unlikely(head))
+ 			goto err;
+-		*buf = NULL;
+ 		if (skb_has_frag_list(frag) && __skb_linearize(frag))
+ 			goto err;
++		*buf = NULL;
+ 		frag = skb_unshare(frag, GFP_ATOMIC);
+ 		if (unlikely(!frag))
+ 			goto err;
 -- 
 2.43.0
 
