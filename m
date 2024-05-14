@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41AC45B5D3;
-	Tue, 14 May 2024 10:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEF613D260;
+	Tue, 14 May 2024 10:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683272; cv=none; b=iQSQDVgDStRpKGtJT2XT0xt0P1vgJhri31bdl4bqP7JtRxTEh/oMyGkbw+RAo84P4DC0zUPQBxoWe269qVlAhTEOnczES81fEETvb4OtRBq64JOXJ18cDu3VwLOIUXbn5uCUa1zuKz/oZz3dK3WzkHXew37NXtLGczZmklbU7ok=
+	t=1715683276; cv=none; b=fO2l3A28mCgCyi9bD9rJFklfGIxK79n3tu7jWBSV0zQUv/LnuSmWUu9LcdkTbGVbCw6O9Rgmb5pElkXYsmVbaG7HpbCYOuRhnLjqPaN0fN9+kP0HSWbcXh/7Tfvn+Jt067Ks8gTkeunGVuFBC2paHRlEa9RZvRww+bfshCJSF0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683272; c=relaxed/simple;
-	bh=KXil/ClYM28IAQIABtzYzbGVy72k56EAI29OZML1WL8=;
+	s=arc-20240116; t=1715683276; c=relaxed/simple;
+	bh=GyZYLyziwiFVWDxj6n5QXmXEJi9GwgAsOCKsxCbOVqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X3MorFJRw84TO1JbI2O+ppiAYBebP3iz5o7NodBUTafrsNuO//drFV/vSNEsbb5rUqHMbHnxmATMlA2ztTo9PszjvMAdPbxSLsnycSQBGuHnKTKqYe4NpO404XnT5UfE0oEltHE08ziTB2hVHvZiA+mONMco6GSnylhim1/eAaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6NtYdJ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aGH6DlTY18Zl8xSXfQBvpYyJIRmWXsv6cVrDTMDJRrDJvVeIRwZ3MFqA/DzXopTNfrBFSKCfgNDv1h4zSjn4jsxQhRh/ExLMpF4hSp4Rmf7ESYYzki0MmxuHdhrjlUhQZvDjv9ltkmyFQxUndYTku4lGfbEEQfJ2OXsiiHJ7dGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dw/9ACYt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6NtYdJ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F32C2BD10;
-	Tue, 14 May 2024 10:41:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dw/9ACYt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85974C2BD10;
+	Tue, 14 May 2024 10:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683271;
-	bh=KXil/ClYM28IAQIABtzYzbGVy72k56EAI29OZML1WL8=;
+	s=korg; t=1715683276;
+	bh=GyZYLyziwiFVWDxj6n5QXmXEJi9GwgAsOCKsxCbOVqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a6NtYdJ7b4YwdskIrExTIv6X6J03FutsIBvYCUY1/Sp/9PWyAlf4Hkrm0MQ28J7rp
-	 aU/lkvnJjjZ1bixZzPN6eCHohcPAw/fOY0HSbr2OGcRpcQBT7LRgWguJxsD7qQagQx
-	 ZMqwdpDNwGv7CzIwK2YC+i4oUT2GPQVf33amm0AM=
+	b=Dw/9ACYtibt6lvixL8w1l2fX/4ljMPv0M/Zk1j42SAAw9OWUzu33EHb54DcgAuUJu
+	 4JxvE6IKMjgGXOhqJqC78PsekZQQTzzAG21+4dzwGUw12FFeVpf2m/R+4LG3o5E8MV
+	 Kd8fMkgxhWqFuXu29duM/d6X6qq3HHN4bp78sZvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Joakim Sindholt <opensource@zhasha.com>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 194/336] SUNRPC: add a missing rpc_stat for TCP TLS
-Date: Tue, 14 May 2024 12:16:38 +0200
-Message-ID: <20240514101045.931400280@linuxfoundation.org>
+Subject: [PATCH 6.8 177/336] fs/9p: only translate RWX permissions for plain 9P2000
+Date: Tue, 14 May 2024 12:16:21 +0200
+Message-ID: <20240514101045.286597641@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,97 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Joakim Sindholt <opensource@zhasha.com>
 
-[ Upstream commit 8e088a20dbe33919695a8082c0b32deb62d23b4a ]
+[ Upstream commit cd25e15e57e68a6b18dc9323047fe9c68b99290b ]
 
-Commit 1548036ef120 ("nfs: make the rpc_stat per net namespace") added
-functionality to specify rpc_stats function but missed adding it to the
-TCP TLS functionality. As the result, mounting with xprtsec=tls lead to
-the following kernel oops.
+Garbage in plain 9P2000's perm bits is allowed through, which causes it
+to be able to set (among others) the suid bit. This was presumably not
+the intent since the unix extended bits are handled explicitly and
+conditionally on .u.
 
-[  128.984192] Unable to handle kernel NULL pointer dereference at
-virtual address 000000000000001c
-[  128.985058] Mem abort info:
-[  128.985372]   ESR = 0x0000000096000004
-[  128.985709]   EC = 0x25: DABT (current EL), IL = 32 bits
-[  128.986176]   SET = 0, FnV = 0
-[  128.986521]   EA = 0, S1PTW = 0
-[  128.986804]   FSC = 0x04: level 0 translation fault
-[  128.987229] Data abort info:
-[  128.987597]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-[  128.988169]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[  128.988811]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[  128.989302] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000106c84000
-[  128.990048] [000000000000001c] pgd=0000000000000000, p4d=0000000000000000
-[  128.990736] Internal error: Oops: 0000000096000004 [#1] SMP
-[  128.991168] Modules linked in: nfs_layout_nfsv41_files
-rpcsec_gss_krb5 auth_rpcgss nfsv4 dns_resolver nfs lockd grace netfs
-uinput dm_mod nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib
-nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct
-nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 rfkill
-ip_set nf_tables nfnetlink qrtr vsock_loopback
-vmw_vsock_virtio_transport_common vmw_vsock_vmci_transport vsock
-sunrpc vfat fat uvcvideo videobuf2_vmalloc videobuf2_memops uvc
-videobuf2_v4l2 videodev videobuf2_common mc vmw_vmci xfs libcrc32c
-e1000e crct10dif_ce ghash_ce sha2_ce vmwgfx nvme sha256_arm64
-nvme_core sr_mod cdrom sha1_ce drm_ttm_helper ttm drm_kms_helper drm
-sg fuse
-[  128.996466] CPU: 0 PID: 179 Comm: kworker/u4:26 Kdump: loaded Not
-tainted 6.8.0-rc6+ #12
-[  128.997226] Hardware name: VMware, Inc. VMware20,1/VBSA, BIOS
-VMW201.00V.21805430.BA64.2305221830 05/22/2023
-[  128.998084] Workqueue: xprtiod xs_tcp_tls_setup_socket [sunrpc]
-[  128.998701] pstate: 81400005 (Nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-[  128.999384] pc : call_start+0x74/0x138 [sunrpc]
-[  128.999809] lr : __rpc_execute+0xb8/0x3e0 [sunrpc]
-[  129.000244] sp : ffff8000832b3a00
-[  129.000508] x29: ffff8000832b3a00 x28: ffff800081ac79c0 x27: ffff800081ac7000
-[  129.001111] x26: 0000000004248060 x25: 0000000000000000 x24: ffff800081596008
-[  129.001757] x23: ffff80007b087240 x22: ffff00009a509d30 x21: 0000000000000000
-[  129.002345] x20: ffff000090075600 x19: ffff00009a509d00 x18: ffffffffffffffff
-[  129.002912] x17: 733d4d4554535953 x16: 42555300312d746e x15: ffff8000832b3a88
-[  129.003464] x14: ffffffffffffffff x13: ffff8000832b3a7d x12: 0000000000000008
-[  129.004021] x11: 0101010101010101 x10: ffff8000150cb560 x9 : ffff80007b087c00
-[  129.004577] x8 : ffff00009a509de0 x7 : 0000000000000000 x6 : 00000000be8c4ee3
-[  129.005026] x5 : 0000000000000000 x4 : 0000000000000000 x3 : ffff000094d56680
-[  129.005425] x2 : ffff80007b0637f8 x1 : ffff000090075600 x0 : ffff00009a509d00
-[  129.005824] Call trace:
-[  129.005967]  call_start+0x74/0x138 [sunrpc]
-[  129.006233]  __rpc_execute+0xb8/0x3e0 [sunrpc]
-[  129.006506]  rpc_execute+0x160/0x1d8 [sunrpc]
-[  129.006778]  rpc_run_task+0x148/0x1f8 [sunrpc]
-[  129.007204]  tls_probe+0x80/0xd0 [sunrpc]
-[  129.007460]  rpc_ping+0x28/0x80 [sunrpc]
-[  129.007715]  rpc_create_xprt+0x134/0x1a0 [sunrpc]
-[  129.007999]  rpc_create+0x128/0x2a0 [sunrpc]
-[  129.008264]  xs_tcp_tls_setup_socket+0xdc/0x508 [sunrpc]
-[  129.008583]  process_one_work+0x174/0x3c8
-[  129.008813]  worker_thread+0x2c8/0x3e0
-[  129.009033]  kthread+0x100/0x110
-[  129.009225]  ret_from_fork+0x10/0x20
-[  129.009432] Code: f0ffffc2 911fe042 aa1403e1 aa1303e0 (b9401c83)
-
-Fixes: 1548036ef120 ("nfs: make the rpc_stat per net namespace")
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Joakim Sindholt <opensource@zhasha.com>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtsock.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/9p/vfs_inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index 58f3dc8d0d71c..004d2bd8b49ec 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -2645,6 +2645,7 @@ static void xs_tcp_tls_setup_socket(struct work_struct *work)
- 		.xprtsec	= {
- 			.policy		= RPC_XPRTSEC_NONE,
- 		},
-+		.stats		= upper_clnt->cl_stats,
- 	};
- 	unsigned int pflags = current->flags;
- 	struct rpc_clnt *lower_clnt;
+diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
+index 7d42f0c6c644f..ae3623bc4ef46 100644
+--- a/fs/9p/vfs_inode.c
++++ b/fs/9p/vfs_inode.c
+@@ -83,7 +83,7 @@ static int p9mode2perm(struct v9fs_session_info *v9ses,
+ 	int res;
+ 	int mode = stat->mode;
+ 
+-	res = mode & S_IALLUGO;
++	res = mode & 0777; /* S_IRWXUGO */
+ 	if (v9fs_proto_dotu(v9ses)) {
+ 		if ((mode & P9_DMSETUID) == P9_DMSETUID)
+ 			res |= S_ISUID;
 -- 
 2.43.0
 
