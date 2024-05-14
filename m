@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326702B9AD;
-	Tue, 14 May 2024 11:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFA12B9AD;
+	Tue, 14 May 2024 11:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685076; cv=none; b=XI5UyPwWjRSaRd20kTswm8j/B1KIgBM2Juy6O5wxb0GIpjp4HpefzeSwJlBFZqHlNYjzxWDz4qDZae+jbb0pdncnZn4j5mCa5l9vOdK2G+h1vDK+sPVpLeKp5RKK0ZTZnOCiiAHDSpja1iJvGK8GemHLGkeK5Ir+HH4zD2SlrJw=
+	t=1715685082; cv=none; b=LNAumNwJGIj1iP9BaIdGmpqQI2QizZ8t4CYw8PdEtPxvTYOfLNL4GzNyg3sqq3wLhdtFhz1LyRSO6++IKRWR6rVEBiEsDRmq+BG2sQIQqCONBVr0kqOZTzFeJEl4AbwGLtsUxF9zJK/CiQxvTsNRm/lJ+/MvLBDlz9GvfxoDZS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685076; c=relaxed/simple;
-	bh=hmyY3/7vmP497m/Ilg498ni/TksZrnrkTDyniW41NEo=;
+	s=arc-20240116; t=1715685082; c=relaxed/simple;
+	bh=W+PU0FXPC5JpgZMtPlwc68acXuhucMTvYKQ6/KJHaTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fBSta97pk18cR8Q+08qSLVrEXjmIL4mDfnL44gp5HKZU67RSaLje4ry33Lf7Z25JiGIoEE/lh+6ljP2Ss4bEtDFBCsP1UsUYGOPcYD0mXq9tLrL0l75e684/EVioIMSyGJ/1Y6/mF5IdTkRWcCkTUm7MTm0J4rgUJ1Qo+h9qayI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LA1cR4b+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=liIFsHEZnMeJI1GxIvjv9rEamKigU0Gi3z6hbOzAd3489lZba9CV/YLyKz/kIdsfapJJ7RkJQXozHN/BW5GarnbXQLU6+kP1UJk15uKvPDJeEzEhQdcG9iUEJ1zVOpu2FmS28ZnUd1YE+MttQab+Rb4BlERaf22OqdPxWIaoiSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJ86gNbx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LA1cR4b+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8767BC2BD10;
-	Tue, 14 May 2024 11:11:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJ86gNbx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F21C2BD10;
+	Tue, 14 May 2024 11:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685076;
-	bh=hmyY3/7vmP497m/Ilg498ni/TksZrnrkTDyniW41NEo=;
+	s=korg; t=1715685081;
+	bh=W+PU0FXPC5JpgZMtPlwc68acXuhucMTvYKQ6/KJHaTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LA1cR4b+X5xvYXs25hMgwAkFXTZ5RyG9/Rk15yB/2TIsgYFwrqkU6pEE5gg0OgJy3
-	 t26sOwSq2PTkPkl1WDoCOFBYy3ZFw+r1l3C+4K/m1aJKG5MJ8XPl8A8KiyTwp4MG33
-	 7XgYlYc13j8k3H+cOLgQLGD66Bg8EBbPsRT/JcaE=
+	b=YJ86gNbxD1Hm4OthlXuM4T5GvJ4izMEBoFAweQkkvSwVHZejp46M8jKfftqDKMvD7
+	 6zdOJdG+KHgwXDgorhRXfYyq1MrRMgDBKwoxITDhznzHrVWLpCcghTnfaRQqp8bBo8
+	 IbC+S7e70FpNbqFaQOKGKnhnCIWslq0/3mFXjtQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Gaurav Batra <gbatra@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 101/301] scsi: lpfc: Release hbalock before calling lpfc_worker_wake_up()
-Date: Tue, 14 May 2024 12:16:12 +0200
-Message-ID: <20240514101036.064458432@linuxfoundation.org>
+Subject: [PATCH 6.6 092/301] powerpc/pseries/iommu: LPAR panics during boot up with a frozen PE
+Date: Tue, 14 May 2024 12:16:03 +0200
+Message-ID: <20240514101035.723567536@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,127 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Gaurav Batra <gbatra@linux.ibm.com>
 
-[ Upstream commit ded20192dff31c91cef2a04f7e20e60e9bb887d3 ]
+[ Upstream commit 49a940dbdc3107fecd5e6d3063dc07128177e058 ]
 
-lpfc_worker_wake_up() calls the lpfc_work_done() routine, which takes the
-hbalock.  Thus, lpfc_worker_wake_up() should not be called while holding the
-hbalock to avoid potential deadlock.
+At the time of LPAR boot up, partition firmware provides Open Firmware
+property ibm,dma-window for the PE. This property is provided on the PCI
+bus the PE is attached to.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20240305200503.57317-7-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+There are execptions where the partition firmware might not provide this
+property for the PE at the time of LPAR boot up. One of the scenario is
+where the firmware has frozen the PE due to some error condition. This
+PE is frozen for 24 hours or unless the whole system is reinitialized.
+
+Within this time frame, if the LPAR is booted, the frozen PE will be
+presented to the LPAR but ibm,dma-window property could be missing.
+
+Today, under these circumstances, the LPAR oopses with NULL pointer
+dereference, when configuring the PCI bus the PE is attached to.
+
+  BUG: Kernel NULL pointer dereference on read at 0x000000c8
+  Faulting instruction address: 0xc0000000001024c0
+  Oops: Kernel access of bad area, sig: 7 [#1]
+  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
+  Modules linked in:
+  Supported: Yes
+  CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.4.0-150600.9-default #1
+  Hardware name: IBM,9043-MRX POWER10 (raw) 0x800200 0xf000006 of:IBM,FW1060.00 (NM1060_023) hv:phyp pSeries
+  NIP:  c0000000001024c0 LR: c0000000001024b0 CTR: c000000000102450
+  REGS: c0000000037db5c0 TRAP: 0300   Not tainted  (6.4.0-150600.9-default)
+  MSR:  8000000002009033 <SF,VEC,EE,ME,IR,DR,RI,LE>  CR: 28000822  XER: 00000000
+  CFAR: c00000000010254c DAR: 00000000000000c8 DSISR: 00080000 IRQMASK: 0
+  ...
+  NIP [c0000000001024c0] pci_dma_bus_setup_pSeriesLP+0x70/0x2a0
+  LR [c0000000001024b0] pci_dma_bus_setup_pSeriesLP+0x60/0x2a0
+  Call Trace:
+    pci_dma_bus_setup_pSeriesLP+0x60/0x2a0 (unreliable)
+    pcibios_setup_bus_self+0x1c0/0x370
+    __of_scan_bus+0x2f8/0x330
+    pcibios_scan_phb+0x280/0x3d0
+    pcibios_init+0x88/0x12c
+    do_one_initcall+0x60/0x320
+    kernel_init_freeable+0x344/0x3e4
+    kernel_init+0x34/0x1d0
+    ret_from_kernel_user_thread+0x14/0x1c
+
+Fixes: b1fc44eaa9ba ("pseries/iommu/ddw: Fix kdump to work in absence of ibm,dma-window")
+Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240422205141.10662-1-gbatra@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_els.c     | 20 ++++++++++----------
- drivers/scsi/lpfc/lpfc_hbadisc.c |  5 ++---
- drivers/scsi/lpfc/lpfc_sli.c     | 14 +++++++-------
- 3 files changed, 19 insertions(+), 20 deletions(-)
+ arch/powerpc/platforms/pseries/iommu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
-index 18b8325fd419e..44d3ada9fbbcb 100644
---- a/drivers/scsi/lpfc/lpfc_els.c
-+++ b/drivers/scsi/lpfc/lpfc_els.c
-@@ -4432,23 +4432,23 @@ lpfc_els_retry_delay(struct timer_list *t)
- 	unsigned long flags;
- 	struct lpfc_work_evt  *evtp = &ndlp->els_retry_evt;
+diff --git a/arch/powerpc/platforms/pseries/iommu.c b/arch/powerpc/platforms/pseries/iommu.c
+index e8c4129697b14..b1e6d275cda9e 100644
+--- a/arch/powerpc/platforms/pseries/iommu.c
++++ b/arch/powerpc/platforms/pseries/iommu.c
+@@ -786,8 +786,16 @@ static void pci_dma_bus_setup_pSeriesLP(struct pci_bus *bus)
+ 	 * parent bus. During reboot, there will be ibm,dma-window property to
+ 	 * define DMA window. For kdump, there will at least be default window or DDW
+ 	 * or both.
++	 * There is an exception to the above. In case the PE goes into frozen
++	 * state, firmware may not provide ibm,dma-window property at the time
++	 * of LPAR boot up.
+ 	 */
  
-+	/* Hold a node reference for outstanding queued work */
-+	if (!lpfc_nlp_get(ndlp))
++	if (!pdn) {
++		pr_debug("  no ibm,dma-window property !\n");
 +		return;
++	}
 +
- 	spin_lock_irqsave(&phba->hbalock, flags);
- 	if (!list_empty(&evtp->evt_listp)) {
- 		spin_unlock_irqrestore(&phba->hbalock, flags);
-+		lpfc_nlp_put(ndlp);
- 		return;
- 	}
+ 	ppci = PCI_DN(pdn);
  
--	/* We need to hold the node by incrementing the reference
--	 * count until the queued work is done
--	 */
--	evtp->evt_arg1  = lpfc_nlp_get(ndlp);
--	if (evtp->evt_arg1) {
--		evtp->evt = LPFC_EVT_ELS_RETRY;
--		list_add_tail(&evtp->evt_listp, &phba->work_list);
--		lpfc_worker_wake_up(phba);
--	}
-+	evtp->evt_arg1 = ndlp;
-+	evtp->evt = LPFC_EVT_ELS_RETRY;
-+	list_add_tail(&evtp->evt_listp, &phba->work_list);
- 	spin_unlock_irqrestore(&phba->hbalock, flags);
--	return;
-+
-+	lpfc_worker_wake_up(phba);
- }
- 
- /**
-diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
-index 5154eeaee0ec3..93703ab6ce037 100644
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -257,7 +257,9 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
- 		if (evtp->evt_arg1) {
- 			evtp->evt = LPFC_EVT_DEV_LOSS;
- 			list_add_tail(&evtp->evt_listp, &phba->work_list);
-+			spin_unlock_irqrestore(&phba->hbalock, iflags);
- 			lpfc_worker_wake_up(phba);
-+			return;
- 		}
- 		spin_unlock_irqrestore(&phba->hbalock, iflags);
- 	} else {
-@@ -275,10 +277,7 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
- 			lpfc_disc_state_machine(vport, ndlp, NULL,
- 						NLP_EVT_DEVICE_RM);
- 		}
--
- 	}
--
--	return;
- }
- 
- /**
-diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index 4dfadf254a727..9dab33686a931 100644
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -1217,9 +1217,9 @@ lpfc_set_rrq_active(struct lpfc_hba *phba, struct lpfc_nodelist *ndlp,
- 	empty = list_empty(&phba->active_rrq_list);
- 	list_add_tail(&rrq->list, &phba->active_rrq_list);
- 	phba->hba_flag |= HBA_RRQ_ACTIVE;
-+	spin_unlock_irqrestore(&phba->hbalock, iflags);
- 	if (empty)
- 		lpfc_worker_wake_up(phba);
--	spin_unlock_irqrestore(&phba->hbalock, iflags);
- 	return 0;
- out:
- 	spin_unlock_irqrestore(&phba->hbalock, iflags);
-@@ -11369,18 +11369,18 @@ lpfc_sli_post_recovery_event(struct lpfc_hba *phba,
- 	unsigned long iflags;
- 	struct lpfc_work_evt  *evtp = &ndlp->recovery_evt;
- 
-+	/* Hold a node reference for outstanding queued work */
-+	if (!lpfc_nlp_get(ndlp))
-+		return;
-+
- 	spin_lock_irqsave(&phba->hbalock, iflags);
- 	if (!list_empty(&evtp->evt_listp)) {
- 		spin_unlock_irqrestore(&phba->hbalock, iflags);
-+		lpfc_nlp_put(ndlp);
- 		return;
- 	}
- 
--	/* Incrementing the reference count until the queued work is done. */
--	evtp->evt_arg1  = lpfc_nlp_get(ndlp);
--	if (!evtp->evt_arg1) {
--		spin_unlock_irqrestore(&phba->hbalock, iflags);
--		return;
--	}
-+	evtp->evt_arg1 = ndlp;
- 	evtp->evt = LPFC_EVT_RECOVER_PORT;
- 	list_add_tail(&evtp->evt_listp, &phba->work_list);
- 	spin_unlock_irqrestore(&phba->hbalock, iflags);
+ 	pr_debug("  parent is %pOF, iommu_table: 0x%p\n",
 -- 
 2.43.0
 
