@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE476311D;
-	Tue, 14 May 2024 11:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4110F6311D;
+	Tue, 14 May 2024 11:24:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685887; cv=none; b=Kg5mrSPcsVmIL5IFnWo/7kMivs55IsHaZ0nEJjGeN1/6mcEyP7UMxreWIyhB+dOWLHkn8w9nW5dl6oDhm7I4srKy/aKSD1v5TLgUmLGGE1613KnJU/MMYf0uSm+r1pLw0mmdVlfqyTzyqaVtixv1TDpT/LIG/k8BMdi618H4+E8=
+	t=1715685891; cv=none; b=MGKECd6ypIGxgiudMl/15c85AEuCGmBISMeOKKvnOG+dwDTj75oc88sApTtCrpi9OAGIg6vHXqDj7npE7O9ZoloGlnD/vtEXlY0FBmP+K1+7+kKPBERBDwdcPeta1MTQPIlZmIq6hy4E5fPWXcFFF8/BjbrnirDHzCxjFOQMEFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685887; c=relaxed/simple;
-	bh=LXV+ZjnuDjyDDleo0LoYyUv1WccqMEPwcst/tiipykM=;
+	s=arc-20240116; t=1715685891; c=relaxed/simple;
+	bh=8UZsmh77JeiaIZ38SV3UI7sTEx9VxuIo5DbBAghDiSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sxRcOq7skZLep//GTP1VXR7Mt8oePyxA0IWsB88u7BkSiY1caCAIf9QcS03x6Rjk+LLl1QW5gV4gsoF/NNABj18mTFjb8kcS1iBK2VIh0WU6UG/pz2IbaaIt/Tzhn+9XYjVvdWqa8qByZmkvPrfyAO4+PcfitKwioAwFOkHVCMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A12suBtl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=muhpdUyeS5/6H9aOlTm4PejeWTuUGGmFv7SGnQqagP2zdbdIxrnTGtUauw10Nf3lmxIMG+pdTDtsoXYmQKB30kw7EmbPaUi+Ogql7bQNOy15+XhKUaIjpsKdkvs23pNqPF6GFEGGFSzXawlxinJXx9FKs5APhE6A4PRjtRjFT4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGduknVO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A12suBtl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BDEC2BD10;
-	Tue, 14 May 2024 11:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGduknVO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0672C2BD10;
+	Tue, 14 May 2024 11:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685887;
-	bh=LXV+ZjnuDjyDDleo0LoYyUv1WccqMEPwcst/tiipykM=;
+	s=korg; t=1715685891;
+	bh=8UZsmh77JeiaIZ38SV3UI7sTEx9VxuIo5DbBAghDiSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A12suBtlmZTpHrD5Azhe/DLDCkKtPsgttPoXSRecc/ZB5xfAEnZL2NCO/eXdddrXz
-	 iWTdBvQA6ulwZ07uIT01j5FkOSypdzbB8l5ZdT9Lo8FBvPATfVFXG+aYdIlxXFR8vL
-	 bZtWRnS9XqmE31pl9FX++BB2SSupZv6j4kjWF+po=
+	b=QGduknVO3ZxauQ0whxfLxcgAUXGsjAvnnfHuMayqQ8jrrRL038oGZUnK6Q3DGU6nz
+	 /UQPDS3kZZeV3Ox+RSgd37bSLhkL0RaD/NMJ6UE4bTtZQ+83OMPMPeeSiJvpYoaAe4
+	 DlshlIPFuSyOknYSO9cu4aB7DRsVTVGGA3nHOIJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Mark Brown <broonie@kernel.org>,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.6 237/301] usb: typec: tcpm: unregister existing source caps before re-registration
-Date: Tue, 14 May 2024 12:18:28 +0200
-Message-ID: <20240514101041.202661931@linuxfoundation.org>
+	Gerd Hoffmann <kraxel@redhat.com>,
+	David Laight <David.Laight@aculab.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.6 228/301] usb: ohci: Prevent missed ohci interrupts
+Date: Tue, 14 May 2024 12:18:19 +0200
+Message-ID: <20240514101040.865230092@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -53,66 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-commit 230ecdf71a644c9c73e0e6735b33173074ae3f94 upstream.
+commit fe81f354841641c7f71163b84912b25c169ed8ec upstream.
 
-Check and unregister existing source caps in tcpm_register_source_caps
-function before registering new ones. This change fixes following
-warning when port partner resends source caps after negotiating PD contract
-for the purpose of re-negotiation.
+Testing ohci functionality with qemu's pci-ohci emulation often results
+in ohci interface stalls, resulting in hung task timeouts.
 
-[  343.135030][  T151] sysfs: cannot create duplicate filename '/devices/virtual/usb_power_delivery/pd1/source-capabilities'
-[  343.135071][  T151] Call trace:
-[  343.135076][  T151]  dump_backtrace+0xe8/0x108
-[  343.135099][  T151]  show_stack+0x18/0x24
-[  343.135106][  T151]  dump_stack_lvl+0x50/0x6c
-[  343.135119][  T151]  dump_stack+0x18/0x24
-[  343.135126][  T151]  sysfs_create_dir_ns+0xe0/0x140
-[  343.135137][  T151]  kobject_add_internal+0x228/0x424
-[  343.135146][  T151]  kobject_add+0x94/0x10c
-[  343.135152][  T151]  device_add+0x1b0/0x4c0
-[  343.135187][  T151]  device_register+0x20/0x34
-[  343.135195][  T151]  usb_power_delivery_register_capabilities+0x90/0x20c
-[  343.135209][  T151]  tcpm_pd_rx_handler+0x9f0/0x15b8
-[  343.135216][  T151]  kthread_worker_fn+0x11c/0x260
-[  343.135227][  T151]  kthread+0x114/0x1bc
-[  343.135235][  T151]  ret_from_fork+0x10/0x20
-[  343.135265][  T151] kobject: kobject_add_internal failed for source-capabilities with -EEXIST, don't try to register things with the same name in the same directory.
+The problem is caused by lost interrupts between the emulation and the
+Linux kernel code. Additional interrupts raised while the ohci interrupt
+handler in Linux is running and before the handler clears the interrupt
+status are not handled. The fix for a similar problem in ehci suggests
+that the problem is likely caused by edge-triggered MSI interrupts. See
+commit 0b60557230ad ("usb: ehci: Prevent missed ehci interrupts with
+edge-triggered MSI") for details.
 
-Fixes: 8203d26905ee ("usb: typec: tcpm: Register USB Power Delivery Capabilities")
-Cc: linux-usb@vger.kernel.org
+Ensure that the ohci interrupt code handles all pending interrupts before
+returning to solve the problem.
+
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: David Laight <David.Laight@aculab.com>
 Cc: stable@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: Mark Brown <broonie@kernel.org>
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240424223227.1807844-1-amitsd@google.com
+Fixes: 306c54d0edb6 ("usb: hcd: Try MSI interrupts on PCI devices")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
+Link: https://lore.kernel.org/r/20240429154010.1507366-1-linux@roeck-us.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/host/ohci-hcd.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -2422,7 +2422,7 @@ static int tcpm_register_sink_caps(struc
- {
- 	struct usb_power_delivery_desc desc = { port->negotiated_rev };
- 	struct usb_power_delivery_capabilities_desc caps = { };
--	struct usb_power_delivery_capabilities *cap;
-+	struct usb_power_delivery_capabilities *cap = port->partner_source_caps;
+--- a/drivers/usb/host/ohci-hcd.c
++++ b/drivers/usb/host/ohci-hcd.c
+@@ -888,6 +888,7 @@ static irqreturn_t ohci_irq (struct usb_
+ 	/* Check for an all 1's result which is a typical consequence
+ 	 * of dead, unclocked, or unplugged (CardBus...) devices
+ 	 */
++again:
+ 	if (ints == ~(u32)0) {
+ 		ohci->rh_state = OHCI_RH_HALTED;
+ 		ohci_dbg (ohci, "device removed!\n");
+@@ -982,6 +983,13 @@ static irqreturn_t ohci_irq (struct usb_
+ 	}
+ 	spin_unlock(&ohci->lock);
  
- 	if (!port->partner_pd)
- 		port->partner_pd = usb_power_delivery_register(NULL, &desc);
-@@ -2432,6 +2432,9 @@ static int tcpm_register_sink_caps(struc
- 	memcpy(caps.pdo, port->sink_caps, sizeof(u32) * port->nr_sink_caps);
- 	caps.role = TYPEC_SINK;
- 
-+	if (cap)
-+		usb_power_delivery_unregister_capabilities(cap);
++	/* repeat until all enabled interrupts are handled */
++	if (ohci->rh_state != OHCI_RH_HALTED) {
++		ints = ohci_readl(ohci, &regs->intrstatus);
++		if (ints && (ints & ohci_readl(ohci, &regs->intrenable)))
++			goto again;
++	}
 +
- 	cap = usb_power_delivery_register_capabilities(port->partner_pd, &caps);
- 	if (IS_ERR(cap))
- 		return PTR_ERR(cap);
+ 	return IRQ_HANDLED;
+ }
+ 
 
 
