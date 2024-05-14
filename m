@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4F62B9AD;
-	Tue, 14 May 2024 11:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB652B9AD;
+	Tue, 14 May 2024 11:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687711; cv=none; b=RLxiwdq/dIEl1WzPnrntoIGCYqy50qNJ/r9OfAYjYq1waXgQ8xO/EjLg13+I/R/9Dllr7b7I77qEug8YF/CgUoEI10s+HLlOsiNU86wds3b/y9xSYgizOvTBEH0aVID89rlv94mB76hwQSat46vkB3+39kCqDaQVRKpLr20pH1s=
+	t=1715687713; cv=none; b=htt2aOW+IP9ijB2nJg07tuz/0Mo8NeTy0GJcbjHN6e80CkmIYKXi/D17ricAz02Zdd7O2xWj4rE2dEUGd3QzT567W/bttjhqjVLreEp62w1HFKFWm6rBkFPs6xJC45FwmW15B01WBgA7a2+nMyUqmGcWbjZF+fPBm22A8n0V49A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687711; c=relaxed/simple;
-	bh=cHv1FC6yt5yTOHY9urG06SEWB7WJsAqaC4HU218Zkxw=;
+	s=arc-20240116; t=1715687713; c=relaxed/simple;
+	bh=jbWvV2DQXHKGse8wCTZSgkZaLfJ1p+zOvJksHaGjHsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dvjYE/q5337iJrw5UGg1yauHn2oAy+7tcPIwzdXaCmSs23stIYsCl9mSFRYJlpLd/4RvUAl/MU7iXV4W2hvcbZMkp9xt7Ey7CPAJRQOFCpY0Pn3l/oCojtCNmAIQY6qUycJfk9TejnCxbJjCF0UlfEq5dA5ZCkwLZlhfAjMtfmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xa1SMpHI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=of+11ceH13tVd6JzyArdnS3rPiE1Kqzhu3ayw1Un3zv8kvcUrlXPwZ7Z49fHiYAkof6FmBzB/QzrbQOWOHc+5RS29nGZix7I0bPrVUz5mwsvpC7rsxk+kKNIx061fWLq3A2CshHACVhKNEn74SHF8CFh+61brqtqrVuV6ry7iAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+zdl3DA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xa1SMpHI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A10C2BD10;
-	Tue, 14 May 2024 11:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+zdl3DA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CF3C2BD10;
+	Tue, 14 May 2024 11:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687710;
-	bh=cHv1FC6yt5yTOHY9urG06SEWB7WJsAqaC4HU218Zkxw=;
+	s=korg; t=1715687713;
+	bh=jbWvV2DQXHKGse8wCTZSgkZaLfJ1p+zOvJksHaGjHsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xa1SMpHIkERg6Wx4jR2JS+3JmHCXs+j9QPpOswL3RNimUg7a9XBJYxAMUWUSmKgTR
-	 EMHEwED52G5i9hqxVGg1nENG6mgIWhBljS/Lfh9Iv5RlD2wfFLkjOMkmBFZm65MKDe
-	 +c2ck5gvHDVYsIi63cokDJohWp+zyM7wI3sgXj7Q=
+	b=h+zdl3DAGOloF3VMGrLoHIRR9slNJGWfmPdpP52T87u42XRbW8BMQm1faI5gxbIrd
+	 yKTEBKZF6Ih/bvVXDzSKwpAMr9jkuZwTqhfRYohYkjrsbOXfOcw8GI7kEqDmTEyQr6
+	 gbpaAHWv5sCkAWgZUbi1A2ku6zCTRR5Ubn/zdM5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Bui Quang Minh <minhquangbui99@gmail.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 047/168] ALSA: hda: intel-sdw-acpi: fix usage of device_get_named_child_node()
-Date: Tue, 14 May 2024 12:19:05 +0200
-Message-ID: <20240514101008.468037250@linuxfoundation.org>
+Subject: [PATCH 5.15 048/168] s390/cio: Ensure the copied buf is NUL terminated
+Date: Tue, 14 May 2024 12:19:06 +0200
+Message-ID: <20240514101008.505184903@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -51,41 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Bui Quang Minh <minhquangbui99@gmail.com>
 
-[ Upstream commit c158cf914713efc3bcdc25680c7156c48c12ef6a ]
+[ Upstream commit da7c622cddd4fe36be69ca61e8c42e43cde94784 ]
 
-The documentation for device_get_named_child_node() mentions this
-important point:
+Currently, we allocate a lbuf-sized kernel buffer and copy lbuf from
+userspace to that buffer. Later, we use scanf on this buffer but we don't
+ensure that the string is terminated inside the buffer, this can lead to
+OOB read when using scanf. Fix this issue by using memdup_user_nul instead.
 
-"
-The caller is responsible for calling fwnode_handle_put() on the
-returned fwnode pointer.
-"
-
-Add fwnode_handle_put() to avoid a leaked reference.
-
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Fixes: 08c2a4bc9f2a ("ALSA: hda: move Intel SoundWire ACPI scan to dedicated module")
-Message-ID: <20240426152731.38420-1-pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: a4f17cc72671 ("s390/cio: add CRW inject functionality")
+Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240424-fix-oob-read-v2-5-f1f1b53a10f4@gmail.com
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/intel-sdw-acpi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/s390/cio/cio_inject.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/hda/intel-sdw-acpi.c b/sound/hda/intel-sdw-acpi.c
-index b7758dbe23714..7c1e47aa4e7a7 100644
---- a/sound/hda/intel-sdw-acpi.c
-+++ b/sound/hda/intel-sdw-acpi.c
-@@ -41,6 +41,8 @@ static bool is_link_enabled(struct fwnode_handle *fw_node, int i)
- 				 "intel-quirk-mask",
- 				 &quirk_mask);
+diff --git a/drivers/s390/cio/cio_inject.c b/drivers/s390/cio/cio_inject.c
+index 8613fa937237b..a2e771ebae8eb 100644
+--- a/drivers/s390/cio/cio_inject.c
++++ b/drivers/s390/cio/cio_inject.c
+@@ -95,7 +95,7 @@ static ssize_t crw_inject_write(struct file *file, const char __user *buf,
+ 		return -EINVAL;
+ 	}
  
-+	fwnode_handle_put(link);
-+
- 	if (quirk_mask & SDW_INTEL_QUIRK_MASK_BUS_DISABLE)
- 		return false;
+-	buffer = vmemdup_user(buf, lbuf);
++	buffer = memdup_user_nul(buf, lbuf);
+ 	if (IS_ERR(buffer))
+ 		return -ENOMEM;
  
 -- 
 2.43.0
