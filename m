@@ -1,38 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0710B7F490;
-	Tue, 14 May 2024 11:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26E31CAA4;
+	Tue, 14 May 2024 11:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686088; cv=none; b=muGROkMmYiafMvqBIC7LhRqS2OKTZZZ0rJPIcaPwjGIl3gNV99RsVPL4+7Ujra6ea7jjTHSPMx82us5P6NiyJUDePBHoy32wKfH/b2lTOExI7QNFtn1tByqrRW+vTmNSsiF8PBkD093wBbbfiS3p6HDtj8I5xNWaE5thTYWIalE=
+	t=1715686091; cv=none; b=NOIYTi/122DoPKMUsbg3AEPTTG/N+zZuet6nfM4/ldVbVsmKgi0j8iUvcA1BczUYNZ/FO6c1krG8YIIdGXNWWxxoMHMB+E0p9o20sPSagDPGbmhAK0k+KM/A40/A0n66aQC1drMaRJbhLbd16pZV4wb704xkkx6NViyMYqDIVnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686088; c=relaxed/simple;
-	bh=mW9vlfmC1bqQBUwVX0HQa3s0hXPFA3POUu0FdUrm3Mg=;
+	s=arc-20240116; t=1715686091; c=relaxed/simple;
+	bh=uSd9t5ljvbxf4kMubkv9vCyrVBIekMY5A2vXTIrLqOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FzB/QGKpSk/siTAFSILrHkQfFAvu9zDYVELl6FLavCRV1xXkcZxdpt1k4FDuBwMsulZ9pTjYAImZkFBXvfgMfdN5wCWI/VQJrEI+HU3IFxUI6HzjKN8W9Yi8Ygkj6bGVnOFGLCIijFinDfkrUI+27P6qXyhpcIJo82BvAUFVG0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5PCqyX1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AlZEXRlgObPdszD3fT2tzkWbkbxVDWZBWn75KqCVCk3CDPSWLBYDeuRm7fXSH4HxO+9OkmweiS6jUacPDXZyEn3TOg/HT6qJVYz0EKEJ3se36BrwDUbZfqJ7WR0cSsHheqBJZT5dJCzhj5KFaQ176WYTa0ImWn0qF+nVvE+l+jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpIDYvuB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5PCqyX1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A166C2BD10;
-	Tue, 14 May 2024 11:28:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpIDYvuB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB27AC2BD10;
+	Tue, 14 May 2024 11:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686087;
-	bh=mW9vlfmC1bqQBUwVX0HQa3s0hXPFA3POUu0FdUrm3Mg=;
+	s=korg; t=1715686090;
+	bh=uSd9t5ljvbxf4kMubkv9vCyrVBIekMY5A2vXTIrLqOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J5PCqyX1if9YOKDToWFz4bca5I3msnvTMml0ARSr/KK2aAAxASamRqe/Pb4RDGDo/
-	 oAy50K6VkEm+fm9wtisjy8zfOGH39K10Obu2ioBSBFx5iSsY648END4hn1SMVSCxqs
-	 ZtkN6dLwulwM7TCwIeSmNsiviI1mjR5M2Cbsdp3s=
+	b=KpIDYvuB/aTXZzGkTMGvkhvr/mVy9FMqqREr48YP5eq4NcGx2s2KuLSDD7x565+CT
+	 E28UPVyDuKr/V2p4ol/V09CNCl1CuvyFHbhzHvzrfVZD9i/SE9BCbvu9ilRJAwESem
+	 8c8pgPuNoQnZKFK3daaXnDeCR3p2jkgMayHwMnfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Jiang <quic_tjiang@quicinc.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Colin Cross <ccross@google.com>,
+	David Howells <dhowells@redhat.com>,
+	"Eric W . Biederman" <ebiederm@xmission.com>,
+	Hugh Dickins <hughd@google.com>,
+	kernel test robot <lkp@intel.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Peter Xu <peterx@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	William Kucharski <william.kucharski@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/236] Bluetooth: qca: add support for QCA2066
-Date: Tue, 14 May 2024 12:16:10 +0200
-Message-ID: <20240514101020.644785203@linuxfoundation.org>
+Subject: [PATCH 6.1 009/236] mm/hugetlb: add folio support to hugetlb specific flag macros
+Date: Tue, 14 May 2024 12:16:11 +0200
+Message-ID: <20240514101020.683087227@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -51,222 +63,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Jiang <quic_tjiang@quicinc.com>
+From: Sidhartha Kumar <sidhartha.kumar@oracle.com>
 
-[ Upstream commit a7f8dedb4be2cc930a29af24427b885405ecd15d ]
+[ Upstream commit d03c376d9066532551dc56837c7c5490e4fcbbfe ]
 
-This patch adds support for QCA2066 firmware patch and NVM downloading.
-as the RF performance of QCA2066 SOC chip from different foundries may
-vary. Therefore we use different NVM to configure them based on board ID.
+Patch series "begin converting hugetlb code to folios", v4.
 
-Changes in v2
- - optimize the function qca_generate_hsp_nvm_name
- - remove redundant debug code for function qca_read_fw_board_id
+This patch series starts the conversion of the hugetlb code to operate on
+struct folios rather than struct pages.  This removes the ambiguitiy of
+whether functions are operating on head pages, tail pages of compound
+pages, or base pages.
 
-Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 32868e126c78 ("Bluetooth: qca: fix invalid device address check")
+This series passes the linux test project hugetlb test cases.
+
+Patch 1 adds hugeltb specific page macros that can operate on folios.
+
+Patch 2 adds the private field of the first tail page to struct page.  For
+32-bit, _private_1 alinging with page[1].private was confirmed by using
+pahole.
+
+Patch 3 introduces hugetlb subpool helper functions which operate on
+struct folios. These patches were tested using the hugepage-mmap.c
+selftest along with the migratepages command.
+
+Patch 4 converts hugetlb_delete_from_page_cache() to use folios.
+
+Patch 5 adds a folio_hstate() function to get hstate information from a
+folio and adds a user of folio_hstate().
+
+Bpftrace was used to track time spent in the free_huge_pages function
+during the ltp test cases as it is a caller of the hugetlb subpool
+functions. From the histogram, the performance is similar before and
+after the patch series.
+
+Time spent in 'free_huge_page'
+
+6.0.0-rc2.master.20220823
+@nsecs:
+[256, 512)         14770 |@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			 |@@@@@@@@@@@@@@@@@@@@@@@@@			      |
+[512, 1K)            155 |                                                    |
+[1K, 2K)             169 |                                                    |
+[2K, 4K)              50 |                                                    |
+[4K, 8K)              14 |                                                    |
+[8K, 16K)              3 |                                                    |
+[16K, 32K)             3 |                                                    |
+
+6.0.0-rc2.master.20220823 + patch series
+@nsecs:
+[256, 512)         13678 |@@@@@@@@@@@@@@@@@@@@@@@@@@@			      |
+			 |@@@@@@@@@@@@@@@@@@@@@@@@@			      |
+[512, 1K)            142 |                                                    |
+[1K, 2K)             199 |                                                    |
+[2K, 4K)              44 |                                                    |
+[4K, 8K)              13 |                                                    |
+[8K, 16K)              4 |                                                    |
+[16K, 32K)             1 |                                                    |
+
+This patch (of 5):
+
+Allow the macros which test, set, and clear hugetlb specific page flags to
+take a hugetlb folio as an input.  The macrros are generated as
+folio_{test, set, clear}_hugetlb_{restore_reserve, migratable, temporary,
+freed, vmemmap_optimized, raw_hwp_unreliable}.
+
+Link: https://lkml.kernel.org/r/20220922154207.1575343-1-sidhartha.kumar@oracle.com
+Link: https://lkml.kernel.org/r/20220922154207.1575343-2-sidhartha.kumar@oracle.com
+Signed-off-by: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
+Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Colin Cross <ccross@google.com>
+Cc: David Howells <dhowells@redhat.com>
+Cc: "Eric W . Biederman" <ebiederm@xmission.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: kernel test robot <lkp@intel.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: William Kucharski <william.kucharski@oracle.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: b76b46902c2d ("mm/hugetlb: fix missing hugetlb_lock for resv uncharge")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c   | 68 +++++++++++++++++++++++++++++++++++++
- drivers/bluetooth/btqca.h   |  5 ++-
- drivers/bluetooth/hci_qca.c | 11 ++++++
- 3 files changed, 83 insertions(+), 1 deletion(-)
+ include/linux/hugetlb.h | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 5277090c6d6d7..19cfc342fc7bb 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -205,6 +205,44 @@ static int qca_send_reset(struct hci_dev *hdev)
- 	return 0;
- }
+diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
+index 1c6f35ba1604f..0c5326fd3c47a 100644
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -625,26 +625,50 @@ enum hugetlb_page_flags {
+  */
+ #ifdef CONFIG_HUGETLB_PAGE
+ #define TESTHPAGEFLAG(uname, flname)				\
++static __always_inline						\
++bool folio_test_hugetlb_##flname(struct folio *folio)		\
++	{	void *private = &folio->private;		\
++		return test_bit(HPG_##flname, private);		\
++	}							\
+ static inline int HPage##uname(struct page *page)		\
+ 	{ return test_bit(HPG_##flname, &(page->private)); }
  
-+static int qca_read_fw_board_id(struct hci_dev *hdev, u16 *bid)
-+{
-+	u8 cmd;
-+	struct sk_buff *skb;
-+	struct edl_event_hdr *edl;
-+	int err = 0;
-+
-+	cmd = EDL_GET_BID_REQ_CMD;
-+	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CMD_LEN,
-+				&cmd, 0, HCI_INIT_TIMEOUT);
-+	if (IS_ERR(skb)) {
-+		err = PTR_ERR(skb);
-+		bt_dev_err(hdev, "Reading QCA board ID failed (%d)", err);
-+		return err;
-+	}
-+
-+	edl = skb_pull_data(skb, sizeof(*edl));
-+	if (!edl) {
-+		bt_dev_err(hdev, "QCA read board ID with no header");
-+		err = -EILSEQ;
-+		goto out;
-+	}
-+
-+	if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
-+	    edl->rtype != EDL_GET_BID_REQ_CMD) {
-+		bt_dev_err(hdev, "QCA Wrong packet: %d %d", edl->cresp, edl->rtype);
-+		err = -EIO;
-+		goto out;
-+	}
-+
-+	*bid = (edl->data[1] << 8) + edl->data[2];
-+	bt_dev_dbg(hdev, "%s: bid = %x", __func__, *bid);
-+
-+out:
-+	kfree_skb(skb);
-+	return err;
-+}
-+
- int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
- {
- 	struct sk_buff *skb;
-@@ -574,6 +612,23 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
- }
- EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
+ #define SETHPAGEFLAG(uname, flname)				\
++static __always_inline						\
++void folio_set_hugetlb_##flname(struct folio *folio)		\
++	{	void *private = &folio->private;		\
++		set_bit(HPG_##flname, private);			\
++	}							\
+ static inline void SetHPage##uname(struct page *page)		\
+ 	{ set_bit(HPG_##flname, &(page->private)); }
  
-+static void qca_generate_hsp_nvm_name(char *fwname, size_t max_size,
-+		struct qca_btsoc_version ver, u8 rom_ver, u16 bid)
-+{
-+	const char *variant;
-+
-+	/* hsp gf chip */
-+	if ((le32_to_cpu(ver.soc_id) & QCA_HSP_GF_SOC_MASK) == QCA_HSP_GF_SOC_ID)
-+		variant = "g";
-+	else
-+		variant = "";
-+
-+	if (bid == 0x0)
-+		snprintf(fwname, max_size, "qca/hpnv%02x%s.bin", rom_ver, variant);
-+	else
-+		snprintf(fwname, max_size, "qca/hpnv%02x%s.%x", rom_ver, variant, bid);
-+}
-+
- int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
- 		   const char *firmware_name)
-@@ -582,6 +637,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	int err;
- 	u8 rom_ver = 0;
- 	u32 soc_ver;
-+	u16 boardid = 0;
+ #define CLEARHPAGEFLAG(uname, flname)				\
++static __always_inline						\
++void folio_clear_hugetlb_##flname(struct folio *folio)		\
++	{	void *private = &folio->private;		\
++		clear_bit(HPG_##flname, private);		\
++	}							\
+ static inline void ClearHPage##uname(struct page *page)		\
+ 	{ clear_bit(HPG_##flname, &(page->private)); }
+ #else
+ #define TESTHPAGEFLAG(uname, flname)				\
++static inline bool						\
++folio_test_hugetlb_##flname(struct folio *folio)		\
++	{ return 0; }						\
+ static inline int HPage##uname(struct page *page)		\
+ 	{ return 0; }
  
- 	bt_dev_dbg(hdev, "QCA setup on UART");
+ #define SETHPAGEFLAG(uname, flname)				\
++static inline void						\
++folio_set_hugetlb_##flname(struct folio *folio) 		\
++	{ }							\
+ static inline void SetHPage##uname(struct page *page)		\
+ 	{ }
  
-@@ -615,6 +671,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		snprintf(config.fwname, sizeof(config.fwname),
- 			 "qca/apbtfw%02x.tlv", rom_ver);
- 		break;
-+	case QCA_QCA2066:
-+		snprintf(config.fwname, sizeof(config.fwname),
-+			 "qca/hpbtfw%02x.tlv", rom_ver);
-+		break;
- 	case QCA_QCA6390:
- 		snprintf(config.fwname, sizeof(config.fwname),
- 			 "qca/htbtfw%02x.tlv", rom_ver);
-@@ -649,6 +709,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	/* Give the controller some time to get ready to receive the NVM */
- 	msleep(10);
- 
-+	if (soc_type == QCA_QCA2066)
-+		qca_read_fw_board_id(hdev, &boardid);
-+
- 	/* Download NVM configuration */
- 	config.type = TLV_TYPE_NVM;
- 	if (firmware_name) {
-@@ -671,6 +734,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 			snprintf(config.fwname, sizeof(config.fwname),
- 				 "qca/apnv%02x.bin", rom_ver);
- 			break;
-+		case QCA_QCA2066:
-+			qca_generate_hsp_nvm_name(config.fwname,
-+				sizeof(config.fwname), ver, rom_ver, boardid);
-+			break;
- 		case QCA_QCA6390:
- 			snprintf(config.fwname, sizeof(config.fwname),
- 				 "qca/htnv%02x.bin", rom_ver);
-@@ -702,6 +769,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 
- 	switch (soc_type) {
- 	case QCA_WCN3991:
-+	case QCA_QCA2066:
- 	case QCA_QCA6390:
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
-diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-index 03bff5c0059de..dc31984f71dc1 100644
---- a/drivers/bluetooth/btqca.h
-+++ b/drivers/bluetooth/btqca.h
-@@ -12,6 +12,7 @@
- #define EDL_PATCH_VER_REQ_CMD		(0x19)
- #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
- #define EDL_GET_BUILD_INFO_CMD		(0x20)
-+#define EDL_GET_BID_REQ_CMD			(0x23)
- #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
- #define EDL_PATCH_CONFIG_CMD		(0x28)
- #define MAX_SIZE_PER_TLV_SEGMENT	(243)
-@@ -47,7 +48,8 @@
- 	((le32_to_cpu(soc_id) << 16) | (le16_to_cpu(rom_ver)))
- 
- #define QCA_FW_BUILD_VER_LEN		255
--
-+#define QCA_HSP_GF_SOC_ID			0x1200
-+#define QCA_HSP_GF_SOC_MASK			0x0000ff00
- 
- enum qca_baudrate {
- 	QCA_BAUDRATE_115200 	= 0,
-@@ -146,6 +148,7 @@ enum qca_btsoc_type {
- 	QCA_WCN3990,
- 	QCA_WCN3998,
- 	QCA_WCN3991,
-+	QCA_QCA2066,
- 	QCA_QCA6390,
- 	QCA_WCN6750,
- 	QCA_WCN6855,
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 179278b801eb3..a0e2b5d992695 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1808,6 +1808,10 @@ static int qca_setup(struct hci_uart *hu)
- 	set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
- 
- 	switch (soc_type) {
-+	case QCA_QCA2066:
-+		soc_name = "qca2066";
-+		break;
-+
- 	case QCA_WCN3988:
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
-@@ -2000,6 +2004,11 @@ static const struct qca_device_data qca_soc_data_wcn3998 __maybe_unused = {
- 	.num_vregs = 4,
- };
- 
-+static const struct qca_device_data qca_soc_data_qca2066 __maybe_unused = {
-+	.soc_type = QCA_QCA2066,
-+	.num_vregs = 0,
-+};
-+
- static const struct qca_device_data qca_soc_data_qca6390 __maybe_unused = {
- 	.soc_type = QCA_QCA6390,
- 	.num_vregs = 0,
-@@ -2539,6 +2548,7 @@ static SIMPLE_DEV_PM_OPS(qca_pm_ops, qca_suspend, qca_resume);
- 
- #ifdef CONFIG_OF
- static const struct of_device_id qca_bluetooth_of_match[] = {
-+	{ .compatible = "qcom,qca2066-bt", .data = &qca_soc_data_qca2066},
- 	{ .compatible = "qcom,qca6174-bt" },
- 	{ .compatible = "qcom,qca6390-bt", .data = &qca_soc_data_qca6390},
- 	{ .compatible = "qcom,qca9377-bt" },
-@@ -2556,6 +2566,7 @@ MODULE_DEVICE_TABLE(of, qca_bluetooth_of_match);
- 
- #ifdef CONFIG_ACPI
- static const struct acpi_device_id qca_bluetooth_acpi_match[] = {
-+	{ "QCOM2066", (kernel_ulong_t)&qca_soc_data_qca2066 },
- 	{ "QCOM6390", (kernel_ulong_t)&qca_soc_data_qca6390 },
- 	{ "DLA16390", (kernel_ulong_t)&qca_soc_data_qca6390 },
- 	{ "DLB16390", (kernel_ulong_t)&qca_soc_data_qca6390 },
+ #define CLEARHPAGEFLAG(uname, flname)				\
++static inline void						\
++folio_clear_hugetlb_##flname(struct folio *folio)		\
++	{ }							\
+ static inline void ClearHPage##uname(struct page *page)		\
+ 	{ }
+ #endif
 -- 
 2.43.0
 
