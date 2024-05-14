@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF505762C1;
-	Tue, 14 May 2024 11:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEAF76033;
+	Tue, 14 May 2024 11:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686424; cv=none; b=aJmtuY0/TvLp7TUwZLbmgH5y3wImqJG9F92RyyNh67IGhqM82TdVpEz/yp5Rt0cdCrdMeNhcj63Ekw3VCW4OwEEggAWHPOwMVfSl4ymBLeHNFZOjDtR/qQbAc2SYDnJ/PfqohdptMAQPZx/ZSe0giaRLbwv3UIDHkdgKH9H4J1Q=
+	t=1715686427; cv=none; b=i8jLYxeJcuG7lY9FoxBScVDLS2/7bmb0+kJf+LXBV5qNZpAjuSIQmnTbWSd9SxOWdX8NDHHh/VSflTDu800u44t/u7SQPhicSppa9RpbE/62fjl9OAM9Ay4Vz7gyAgRFj3JsrareGHhhlHrBlHBy5MX5aSv8r9/vKW0ucmiTzJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686424; c=relaxed/simple;
-	bh=jLdsQjFvEj4CVB+QLs6xKhZGfrkjMSV7pf31Pa2VK8w=;
+	s=arc-20240116; t=1715686427; c=relaxed/simple;
+	bh=Jv9E4ybrUBDAKFjxDqWUlK8HmJzPpzIYDoMk6VMnZCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ur5ZRoBpOXOIwiBPAEZbR4FM5qV4TYSz15nA101qRMYVM62m3lg3ktUePNYSH4Bh4lTosGuYShB3r6MdMVQc9JKDV15GK/1XcHOuwhkILZg2d+0jCOPjkPqh7Y+qSkAFWZVjeJtA5ExLCm1wf8ZDVVirD+o8AB7fYlkJo2QTK/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTMs7XTC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shAMjOMGdeQn8wZt6xPqNOWob09TDOT14dFtDYk7jY2h6WRebck2mouHAkyAWsdYg0bG9EGyrIQ9P4UX602TUXjo+dN9x5fhjy+MkMUEJapBs818pWDkJbbCW8QIMzO10I52i8Qjw3FmcSw57UsayWN1OXXEV6zhCh0TNpiLpKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bt6zGJ1/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTMs7XTC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552F3C2BD10;
-	Tue, 14 May 2024 11:33:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bt6zGJ1/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365CBC2BD10;
+	Tue, 14 May 2024 11:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686424;
-	bh=jLdsQjFvEj4CVB+QLs6xKhZGfrkjMSV7pf31Pa2VK8w=;
+	s=korg; t=1715686427;
+	bh=Jv9E4ybrUBDAKFjxDqWUlK8HmJzPpzIYDoMk6VMnZCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dTMs7XTCdKSdaSb1QJhEcHg7gD+slsS6v1NbVqpaNkkQrvdf6KzUQ68VGkDtlaDiq
-	 Bzegeqkjyel/nW9kpUZa4fei/c8v0nJzaZXdDBDXz9MKGei3eV0zR+Jj04zeenT6Vg
-	 0lcd5EFfKVBonruWHSK/OW26+tBaGn8mJsbqZfg8=
+	b=Bt6zGJ1/GdzeLg1F1ILn9IieJhyicqpiU3h49bZgkv0yv47YFPLR2s2kEs7AtCJfZ
+	 L8A+3uqux2u2Wh1tME17Lx57DIrjPyoc4SXeYXnP6fZP/zO3sY8L5NYSM/c4wIWI5G
+	 iD5gMji0c+2LrQMAtOuEwwh0quXSSXG3Kxks44Wg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 133/236] 9p: explicitly deny setlease attempts
-Date: Tue, 14 May 2024 12:18:15 +0200
-Message-ID: <20240514101025.419432294@linuxfoundation.org>
+Subject: [PATCH 6.1 134/236] gpio: wcove: Use -ENOTSUPP consistently
+Date: Tue, 14 May 2024 12:18:16 +0200
+Message-ID: <20240514101025.456945213@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -51,40 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 7a84602297d36617dbdadeba55a2567031e5165b ]
+[ Upstream commit 0c3b532ad3fbf82884a2e7e83e37c7dcdd4d1d99 ]
 
-9p is a remote network protocol, and it doesn't support asynchronous
-notifications from the server. Ensure that we don't hand out any leases
-since we can't guarantee they'll be broken when a file's contents
-change.
+The GPIO library expects the drivers to return -ENOTSUPP in some
+cases and not using analogue POSIX code. Make the driver to follow
+this.
 
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_file.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpio/gpio-wcove.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/9p/vfs_file.c b/fs/9p/vfs_file.c
-index aec43ba837992..87222067fe5de 100644
---- a/fs/9p/vfs_file.c
-+++ b/fs/9p/vfs_file.c
-@@ -667,6 +667,7 @@ const struct file_operations v9fs_file_operations = {
- 	.splice_read = generic_file_splice_read,
- 	.splice_write = iter_file_splice_write,
- 	.fsync = v9fs_file_fsync,
-+	.setlease = simple_nosetlease,
- };
+diff --git a/drivers/gpio/gpio-wcove.c b/drivers/gpio/gpio-wcove.c
+index c18b6b47384f1..94ca9d03c0949 100644
+--- a/drivers/gpio/gpio-wcove.c
++++ b/drivers/gpio/gpio-wcove.c
+@@ -104,7 +104,7 @@ static inline int to_reg(int gpio, enum ctrl_register type)
+ 	unsigned int reg = type == CTRL_IN ? GPIO_IN_CTRL_BASE : GPIO_OUT_CTRL_BASE;
  
- const struct file_operations v9fs_file_operations_dotl = {
-@@ -708,4 +709,5 @@ const struct file_operations v9fs_mmap_file_operations_dotl = {
- 	.splice_read = generic_file_splice_read,
- 	.splice_write = iter_file_splice_write,
- 	.fsync = v9fs_file_fsync_dotl,
-+	.setlease = simple_nosetlease,
- };
+ 	if (gpio >= WCOVE_GPIO_NUM)
+-		return -EOPNOTSUPP;
++		return -ENOTSUPP;
+ 
+ 	return reg + gpio;
+ }
 -- 
 2.43.0
 
