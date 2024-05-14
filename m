@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CDE1E495;
-	Tue, 14 May 2024 11:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEFD1E495;
+	Tue, 14 May 2024 11:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687085; cv=none; b=E8xlWizOf01yeBLAFo4d0LVXlz2wh8OPZRlOCwq6qbXmEPZgvgycWrU3FfXE9DrdPi5ZeO3DaZZmm8VeWfqjvjxpNBPR+HEEC/bhFgEr/uTZ6aYfnNRooLurz5sWu+C7dVo9pByrhj94ZR79AmkXboMkEG5sTOXqmnDTKmqnuR4=
+	t=1715687088; cv=none; b=WYdaeBbjPeJpOClGA0y9/dPhgs+lohAOtyhf5x/7liBRcbxyO37zeTjkh5NfKLTnwEGCqpYcQw2PgnGUCgOxLmr2ml9QZrf9LDSpj0q5LnxEVL5PYJ/xehiDtg2tz3O6gyVW7hrJ8MJ3y8/nqvQ9x3dSKpc4oX+PydwUe7oRJAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687085; c=relaxed/simple;
-	bh=kZgdsAEEibozgRPT+KZ38M81AjaBk86RDD2j0F8JhO8=;
+	s=arc-20240116; t=1715687088; c=relaxed/simple;
+	bh=mIlNwmqxm029vz2M5KUue75BszwG+gtYHtoneyYsOR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JQAAMbmXE+TZtTzJ3VFFLDRKmL5vyilnwxNeJa0txc/C/MWVe6iD5uPB+7A4DrUpagcc0WGFVO2Q/QOrc17XanUGZEaKpZFQ/kc8INZI8XmxkKygFwOiNsV2+nQtWQRmwt7QKoXb6tKB6OBGCzOWcACuyuxYP1KoFcELYYirZY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hFVX5E06; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fkD2+FLClNf+O2wmVB+0E6D6h+jJqZxg2lkaYYaG/vTrwgUbWIyzLXC7+kn06QMop2aLI0PgChBR7EcwrZL+5pw8anc96QZDdi1xnSCk98SyDU8uLex9K/KX5i1RGBaX042/FsF4Ppf6RHN0Knob9tPdiBakUv66gRlIYfBb4l4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=To5nXFxS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hFVX5E06"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 041B9C2BD10;
-	Tue, 14 May 2024 11:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="To5nXFxS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4EA7C2BD10;
+	Tue, 14 May 2024 11:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687085;
-	bh=kZgdsAEEibozgRPT+KZ38M81AjaBk86RDD2j0F8JhO8=;
+	s=korg; t=1715687088;
+	bh=mIlNwmqxm029vz2M5KUue75BszwG+gtYHtoneyYsOR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hFVX5E06Fg65xgGbb6rqot0iVLS21zAV9vC2CNqFhUyhLKkQz+spPgfAcryqghKvU
-	 67YjeNHFDXPAaa3rXjq8PS5B24RjpEEP7XtORlYl/oLM6a9t0nIvhRCfBmnKaeTieR
-	 1xLP8Z681UyAWpbbuCjKbpIkBcbMpIuqfJXn9wYk=
+	b=To5nXFxSIqKfHcZzusHiGiIs8CGvikmFU/FblqnybVhQ9/Ys7/X3DnbSG3sSQbsGU
+	 orMbRFZBZSmW32Q4+usOZw0+yrFPLDmLa4MyVykRXFPoV2Ztsj6mLNWiUxhwYKRrMl
+	 a3i3mLV6VVN+6dLT3pp8gCLG9GeveRnrxhoBKzPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vanillan Wang <vanillanwang@163.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Sean Wang <sean.wang@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 58/84] net:usb:qmi_wwan: support Rolling modules
-Date: Tue, 14 May 2024 12:20:09 +0200
-Message-ID: <20240514100953.868969579@linuxfoundation.org>
+Subject: [PATCH 5.4 59/84] pinctrl: mediatek: Fix fallback call path
+Date: Tue, 14 May 2024 12:20:10 +0200
+Message-ID: <20240514100953.906547249@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100951.686412426@linuxfoundation.org>
 References: <20240514100951.686412426@linuxfoundation.org>
@@ -51,68 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vanillan Wang <vanillanwang@163.com>
+From: Hsin-Yi Wang <hsinyi@chromium.org>
 
-[ Upstream commit d362046021ea122309da8c8e0b6850c792ca97b5 ]
+[ Upstream commit 81bd1579b43e0e285cba667399f1b063f1ce7672 ]
 
-Update the qmi_wwan driver support for the Rolling
-LTE modules.
+Some SoCs, eg. mt8183, are using a pinconfig operation bias_set_combo.
+The fallback path in mtk_pinconf_adv_pull_set() should also try this
+operation.
 
-- VID:PID 33f8:0104, RW101-GL for laptop debug M.2 cards(with RMNET
-interface for /Linux/Chrome OS)
-0x0104: RMNET, diag, at, pipe
-
-Here are the outputs of usb-devices:
-T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=33f8 ProdID=0104 Rev=05.04
-S:  Manufacturer=Rolling Wireless S.a.r.l.
-S:  Product=Rolling Module
-S:  SerialNumber=ba2eb033
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-E:  Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-
-Signed-off-by: Vanillan Wang <vanillanwang@163.com>
-Link: https://lore.kernel.org/r/20240416120713.24777-1-vanillanwang@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: cafe19db7751 ("pinctrl: mediatek: Backward compatible to previous Mediatek's bias-pull usage")
+Signed-off-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Acked-by: Sean Wang <sean.wang@kernel.org>
+Link: https://lore.kernel.org/r/20201228090425.2130569-1-hsinyi@chromium.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index c2bd4abce6de5..1c48d3d9522ba 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1380,6 +1380,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_FIXED_INTF(0x0489, 0xe0b5, 0)},	/* Foxconn T77W968 LTE with eSIM support*/
- 	{QMI_FIXED_INTF(0x2692, 0x9025, 4)},    /* Cellient MPL200 (rebranded Qualcomm 05c6:9025) */
- 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
-+	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
- 
- 	/* 4. Gobi 1000 devices */
- 	{QMI_GOBI1K_DEVICE(0x05c6, 0x9212)},	/* Acer Gobi Modem Device */
+diff --git a/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c b/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
+index 634d652aed671..5ef372e702709 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
+@@ -877,6 +877,10 @@ int mtk_pinconf_adv_pull_set(struct mtk_pinctrl *hw,
+ 			err = hw->soc->bias_set(hw, desc, pullup);
+ 			if (err)
+ 				return err;
++		} else if (hw->soc->bias_set_combo) {
++			err = hw->soc->bias_set_combo(hw, desc, pullup, arg);
++			if (err)
++				return err;
+ 		} else {
+ 			return -ENOTSUPP;
+ 		}
 -- 
 2.43.0
 
