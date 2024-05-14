@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A168A200BF;
-	Tue, 14 May 2024 11:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7D8200BF;
+	Tue, 14 May 2024 11:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685635; cv=none; b=OSrfmAOp9RNbOuUeoaE7yuGWR2QwDE+bURK5GoxtFVrbhbwbohqggq8H8T3pJUuSv20Dur4znUmVm/U4B5EHWuXyeg/wWYQij0B/+lsRxCH5Akbn73ts0FuQXe6AFOLNV3ish0rW6QIhc1931+DuueIB+vL1Gey5kjCQxQW9+54=
+	t=1715685642; cv=none; b=NlCZQuO3Rj7OHJdoLytpN61HNh4Xo2KxDXEbVyvL5318+l7Wt6dNBL2FLTpEkVshpIK1XIhA5WSeN6sKlc7W7ku4hub4oM94TmPFiAI1xvMVfmrbxX3gm2bhpyL2aV290tjOpTbguMBs10V0wM2u4QS9y4pwxXEJXw6gMkUChxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685635; c=relaxed/simple;
-	bh=qt7IUO2q1JqS5PXhjNHoqAavAyCsj7PF2HFjTBHKMmA=;
+	s=arc-20240116; t=1715685642; c=relaxed/simple;
+	bh=/BPfDOjSsmQJV1pgll8WJJ9DaX0UwBssix0JmYg0lNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BlwkAhSCQIKNwP2zzR/+xYBKaX3auFLPFflhYegYsFHcV6abPIxBgp/ubUy1+6cgbbM+DY8BU1jjE7q/BEL5y4LPNZv4/wYzNjUjtdfH6R0i1i+2BwitDV+hTRqZTNDpuYq+k1ioktMrCJi9yI2UoWdxt+FlQ/qRdrS+OR34veA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPkzoMoD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kCHeu16lu8/f0f9abOmPbegHgzIs4G0NFFqY5/23jJSp9mNcm1Xavn4zOIEjdP4qzJwG9zn6N8k3DK4vq8ySYHrYPJqt0HS/O50I3wYkrtMK3jKT7ukvhiebJ24nQUBT+QlTNl9opnUj2nQmR4148yvZwKOh6Od7zHZUiPsN1Ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrX1QEup; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPkzoMoD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C296BC4AF09;
-	Tue, 14 May 2024 11:20:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrX1QEup"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE6EC2BD10;
+	Tue, 14 May 2024 11:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685635;
-	bh=qt7IUO2q1JqS5PXhjNHoqAavAyCsj7PF2HFjTBHKMmA=;
+	s=korg; t=1715685641;
+	bh=/BPfDOjSsmQJV1pgll8WJJ9DaX0UwBssix0JmYg0lNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PPkzoMoD3TiD3pf93duvtNAz/gMwP7Yz+SWpUg8/3/8lEE3+uUqqs6TmzurVCGgxf
-	 BlsRRhBK4U0soYB0soAcMJGaTKBDM2wkunLRn6/BsttbrTgdltl2oblBu/FQlAxEVE
-	 yESez2pJfgmkPJ74iTsFjJwKmBy94mbbAdzbcWtM=
+	b=LrX1QEuplyMbcRj3sq+lL0sApv+LdivKKm5Uwma7Q4wr1Y5q1zvMOUyBVvOs/Fya3
+	 uMccOW5F2t0L9hYN2sQRAY3uSGc5dBBIG91u2A5KxIBNCJO+ItWAyLB/PiViXp930y
+	 UBCBtLgYR8Mxthjm5ybG6m6Ebs6RHByHRitGLsxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Gibson <warthog618@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Gabe Teeger <gabe.teeger@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 218/301] gpiolib: cdev: fix uninitialised kfifo
-Date: Tue, 14 May 2024 12:18:09 +0200
-Message-ID: <20240514101040.489812495@linuxfoundation.org>
+Subject: [PATCH 6.6 219/301] drm/amd/display: Atom Integrated System Info v2_2 for DCN35
+Date: Tue, 14 May 2024 12:18:10 +0200
+Message-ID: <20240514101040.526629230@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,60 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kent Gibson <warthog618@gmail.com>
+From: Gabe Teeger <gabe.teeger@amd.com>
 
-[ Upstream commit ee0166b637a5e376118e9659e5b4148080f1d27e ]
+[ Upstream commit 9a35d205f466501dcfe5625ca313d944d0ac2d60 ]
 
-If a line is requested with debounce, and that results in debouncing
-in software, and the line is subsequently reconfigured to enable edge
-detection then the allocation of the kfifo to contain edge events is
-overlooked.  This results in events being written to and read from an
-uninitialised kfifo.  Read events are returned to userspace.
+New request from KMD/VBIOS in order to support new UMA carveout
+model. This fixes a null dereference from accessing
+Ctx->dc_bios->integrated_info while it was NULL.
 
-Initialise the kfifo in the case where the software debounce is
-already active.
+DAL parses through the BIOS and extracts the necessary
+integrated_info but was missing a case for the new BIOS
+version 2.3.
 
-Fixes: 65cff7046406 ("gpiolib: cdev: support setting debounce")
-Signed-off-by: Kent Gibson <warthog618@gmail.com>
-Link: https://lore.kernel.org/r/20240510065342.36191-1-warthog618@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Gabe Teeger <gabe.teeger@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index 7037dc47ca0e0..b4b71e68b90de 100644
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -1243,6 +1243,8 @@ static int edge_detector_update(struct line *line,
- 				struct gpio_v2_line_config *lc,
- 				unsigned int line_idx, u64 edflags)
- {
-+	u64 eflags;
-+	int ret;
- 	u64 active_edflags = READ_ONCE(line->edflags);
- 	unsigned int debounce_period_us =
- 			gpio_v2_line_config_debounce_period(lc, line_idx);
-@@ -1254,6 +1256,18 @@ static int edge_detector_update(struct line *line,
- 	/* sw debounced and still will be...*/
- 	if (debounce_period_us && READ_ONCE(line->sw_debounced)) {
- 		line_set_debounce_period(line, debounce_period_us);
-+		/*
-+		 * ensure event fifo is initialised if edge detection
-+		 * is now enabled.
-+		 */
-+		eflags = edflags & GPIO_V2_LINE_EDGE_FLAGS;
-+		if (eflags && !kfifo_initialized(&line->req->events)) {
-+			ret = kfifo_alloc(&line->req->events,
-+					  line->req->event_buffer_size,
-+					  GFP_KERNEL);
-+			if (ret)
-+				return ret;
-+		}
- 		return 0;
- 	}
- 
+diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+index 4c3c4c8de1cfc..93720cf069d7c 100644
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+@@ -2961,6 +2961,7 @@ static enum bp_result construct_integrated_info(
+ 				result = get_integrated_info_v2_1(bp, info);
+ 				break;
+ 			case 2:
++			case 3:
+ 				result = get_integrated_info_v2_2(bp, info);
+ 				break;
+ 			default:
 -- 
 2.43.0
 
