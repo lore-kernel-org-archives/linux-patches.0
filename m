@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489C712BF3D;
-	Tue, 14 May 2024 10:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3654155C3B;
+	Tue, 14 May 2024 10:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682489; cv=none; b=tegkqXc76Uu7k2z6M417oqfa49fsERMHBEju+hXQP8kjlDh4j7XVhZR1iKeRnIuTru+5b1eb3Cl/M1z/jdZsja7U56UXHGqe/XU9qmxshPujkoOyyKNlChEt8tw8EojOPmpFJBb1EGHU+cF04yWOvYDZcehBp2zYMKNpMXRdLn0=
+	t=1715682496; cv=none; b=BfuK2nQXSEzkQWSj8jppYjsE7n410ygW2iqcyyNz/A703tgI6QIkJbp7IwtZabPmDnhaLQ2zhnKySoUI0D94CW1YCuikPHEnVacxqN70zOisKnXuOWg2z5v1C9GXssviDhCT3t+2aFsU3NJhUE1SdiHStTgwNn4V4gShUIyIm1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682489; c=relaxed/simple;
-	bh=FaPhXuiryfxEM7XF8vFKsJucv4YK9Zr6iMljdJ+vnhA=;
+	s=arc-20240116; t=1715682496; c=relaxed/simple;
+	bh=K7e2srPiwuF4HM+jUVqtHzznBFarNnTxrRGsEv8BRYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FUq0Y1j+bmq1+taB69vF6tMhoSaxfGTy5KTlVBAfaUb5zMkwyF05swuZsGiG35o7vdFI1efzuMtiGTMiyyYWGBoAm/USpwYkg2IKZkWFtOC9a3u1aXVEtrkdUQrHy4GJh7v84J8dbMDISjpgdMXEEjLhVSBEHOqu+Xq1AZX0Nn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEa951Gn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ntbl8G86uSg6ObR798DPJEAG4cMtEd4t7iEsmISUzB5DCFjMja4Q7Ifwpna7OL4oFkMhghfPAsZAhQXHRiZUOkW51OrbuCCSyyd+5ZaFlM9/g5oGdE/l4hVUrLr7Pygk/89XW0ZXFaptmO6PK3F8LH+zDVWF2p44oNWqY1ae0Go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQ3PfQNL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEa951Gn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D5E6C2BD10;
-	Tue, 14 May 2024 10:28:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQ3PfQNL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56183C2BD10;
+	Tue, 14 May 2024 10:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682489;
-	bh=FaPhXuiryfxEM7XF8vFKsJucv4YK9Zr6iMljdJ+vnhA=;
+	s=korg; t=1715682496;
+	bh=K7e2srPiwuF4HM+jUVqtHzznBFarNnTxrRGsEv8BRYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tEa951Gn1CcvUPMwGkSXW9prty8nmmmE8shwQozQrLDwQWOxNO+XjZlBbok5+klbh
-	 XcYXXqR9MS88EWx5rb2uLRpQW0k4EuORkm3JnYHOB/vm93DLjnhqPvk7NCAoX/PS0r
-	 Zy3UaQLVtZhoyPrbIobmENFNhZUshtMaSYqfimqU=
+	b=cQ3PfQNLxqNYF+7xueAYZ0aPcqsF+TkmxY48HTsHO1MEZdYAuq723r5uSDJpTmUSy
+	 iYRNjVOGYrMgHdj/lDUrRMmJLG2iZ9f5yo2xiDGspP7x4L2nQQkHgPChEUpJNp8SjM
+	 72f+3RGr1q9r5RthcesMlPB1TchHROH+h8JKi0aQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bui Quang Minh <minhquangbui99@gmail.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	"John B. Wyatt IV" <jwyatt@redhat.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 069/336] s390/cio: Ensure the copied buf is NUL terminated
-Date: Tue, 14 May 2024 12:14:33 +0200
-Message-ID: <20240514101041.210610848@linuxfoundation.org>
+Subject: [PATCH 6.8 070/336] cxgb4: Properly lock TX queue for the selftest.
+Date: Tue, 14 May 2024 12:14:34 +0200
+Message-ID: <20240514101041.248355716@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,38 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bui Quang Minh <minhquangbui99@gmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit da7c622cddd4fe36be69ca61e8c42e43cde94784 ]
+[ Upstream commit 9067eccdd7849dd120d5495dbd5a686fa6ed2c1a ]
 
-Currently, we allocate a lbuf-sized kernel buffer and copy lbuf from
-userspace to that buffer. Later, we use scanf on this buffer but we don't
-ensure that the string is terminated inside the buffer, this can lead to
-OOB read when using scanf. Fix this issue by using memdup_user_nul instead.
+The selftest for the driver sends a dummy packet and checks if the
+packet will be received properly as it should be. The regular TX path
+and the selftest can use the same network queue so locking is required
+and was missing in the selftest path. This was addressed in the commit
+cited below.
+Unfortunately locking the TX queue requires BH to be disabled which is
+not the case in selftest path which is invoked in process context.
+Lockdep should be complaining about this.
 
-Fixes: a4f17cc72671 ("s390/cio: add CRW inject functionality")
-Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240424-fix-oob-read-v2-5-f1f1b53a10f4@gmail.com
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Use __netif_tx_lock_bh() for TX queue locking.
+
+Fixes: c650e04898072 ("cxgb4: Fix race between loopback and normal Tx path")
+Reported-by: "John B. Wyatt IV" <jwyatt@redhat.com>
+Closes: https://lore.kernel.org/all/Zic0ot5aGgR-V4Ks@thinkpad2021/
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/20240429091147.YWAaal4v@linutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/cio_inject.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/chelsio/cxgb4/sge.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/s390/cio/cio_inject.c b/drivers/s390/cio/cio_inject.c
-index 8613fa937237b..a2e771ebae8eb 100644
---- a/drivers/s390/cio/cio_inject.c
-+++ b/drivers/s390/cio/cio_inject.c
-@@ -95,7 +95,7 @@ static ssize_t crw_inject_write(struct file *file, const char __user *buf,
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/chelsio/cxgb4/sge.c b/drivers/net/ethernet/chelsio/cxgb4/sge.c
+index b5ff2e1a9975f..2285f2e87e689 100644
+--- a/drivers/net/ethernet/chelsio/cxgb4/sge.c
++++ b/drivers/net/ethernet/chelsio/cxgb4/sge.c
+@@ -2684,12 +2684,12 @@ int cxgb4_selftest_lb_pkt(struct net_device *netdev)
+ 	lb->loopback = 1;
+ 
+ 	q = &adap->sge.ethtxq[pi->first_qset];
+-	__netif_tx_lock(q->txq, smp_processor_id());
++	__netif_tx_lock_bh(q->txq);
+ 
+ 	reclaim_completed_tx(adap, &q->q, -1, true);
+ 	credits = txq_avail(&q->q) - ndesc;
+ 	if (unlikely(credits < 0)) {
+-		__netif_tx_unlock(q->txq);
++		__netif_tx_unlock_bh(q->txq);
+ 		return -ENOMEM;
  	}
  
--	buffer = vmemdup_user(buf, lbuf);
-+	buffer = memdup_user_nul(buf, lbuf);
- 	if (IS_ERR(buffer))
- 		return -ENOMEM;
+@@ -2724,7 +2724,7 @@ int cxgb4_selftest_lb_pkt(struct net_device *netdev)
+ 	init_completion(&lb->completion);
+ 	txq_advance(&q->q, ndesc);
+ 	cxgb4_ring_tx_db(adap, &q->q, ndesc);
+-	__netif_tx_unlock(q->txq);
++	__netif_tx_unlock_bh(q->txq);
  
+ 	/* wait for the pkt to return */
+ 	ret = wait_for_completion_timeout(&lb->completion, 10 * HZ);
 -- 
 2.43.0
 
