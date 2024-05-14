@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E65412D20E;
-	Tue, 14 May 2024 10:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0171E12DD91;
+	Tue, 14 May 2024 10:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683954; cv=none; b=brTPXM4vczf8PZhP3XOUrveBZX9tzVGwSjUIMYC7m2eH0WXMU6TGsUmiLdpKL0j7emW8OUAnNwSj2zn36eUhP2x2ezrUxHi8jOUHFrPdUvInifRs7FdikOO+lov9g2LV5kN9jyplstrwTNLg55Y4ODAgd8g4nW1rMJGbMkPWLVU=
+	t=1715683958; cv=none; b=g4H0V9vWU1Pc9AbsmRHuyHV8kbA3Hm1ifA8UQoUo709Xj6Z59Fiow893fvDBrcyhkmwQb/G7/ulTPcwkVEHbVWeUAe2rqMoFSWWhXg7SuNXZHe9zp10xWbQPuemeuZlmjcXFX5SwSGW+jTgAs6T7GVJQ6f9ZliySRao1B20pYzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683954; c=relaxed/simple;
-	bh=ZcuYPJoLXSnuy/YSfTsNQms+qcpYatv/tO4GYXLfPpU=;
+	s=arc-20240116; t=1715683958; c=relaxed/simple;
+	bh=CW2l/B6vRc358Xh0bbAWhL4uJcOdyijyPUDmqmLgWCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eBuBIfXGEWL06IGQc0dtyko5nDFQ9tOOx+NBx7xMvVnq61iNwiKb70nZWnfYAA/J1bsMc3fx34unnA7lfK4z/VeN4sI/BALF7pbMY0U3gu5P2pAw785/Ylj0bpprxkLOMsAXGrF2MgEjWxd60ZYBkWKHDgD4kEfMdwNnukcw8eI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3+JwbMk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o9HmAOcZIZab/4j2AgYUbP2F9cSZnMCdUSW1f4AW8GO1lD1pvp685C7eTBXzhm6+Ha5kroIgO/kR3AtY2bk1nHKXbeBvQJ4dCgfnqFG5dItYLFv4VxmybscwESQD5HoZLsQtlPeIT6PQiT1rpQvZk3SNQd7Kntcw21vAUIzLDhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vD174nBb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3+JwbMk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744D4C2BD10;
-	Tue, 14 May 2024 10:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vD174nBb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63582C2BD10;
+	Tue, 14 May 2024 10:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683954;
-	bh=ZcuYPJoLXSnuy/YSfTsNQms+qcpYatv/tO4GYXLfPpU=;
+	s=korg; t=1715683957;
+	bh=CW2l/B6vRc358Xh0bbAWhL4uJcOdyijyPUDmqmLgWCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3+JwbMkslyOizHFMpYxzTVksap6ZKdTo8SAsAhAhjpGqJcPnwzJLINHp3YvQfHJq
-	 kMA7okzYjw3y/4tJH2styGyOps8XsFMO2qcFvunjq/a9A1z/ZGxP8X4NSTR7QNKlK1
-	 /mb3+S9SSzNeQGX2xFsYKuSHM3aMacmHzi57TsC4=
+	b=vD174nBbf3S/Ek6zS92C3n9khPh5qgdw6HmyaEKyOMtM4e1ZWCqjUVOvA6uIa8vCa
+	 eYc+KnVOEeDfUKWIFlVrabjWIqJIYmjhvzNUJkBacQdYtY/5j9Cs0tac+cbaXPiDxY
+	 1hlXlAZWsq9V/kjl3Zmxz4RXPoeaoB2Ez/iDjolc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.8 300/336] drm/amd/display: Fix idle optimization checks for multi-display and dual eDP
-Date: Tue, 14 May 2024 12:18:24 +0200
-Message-ID: <20240514101049.944481109@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	Ben Skeggs <bskeggs@nvidia.com>
+Subject: [PATCH 6.8 301/336] drm/nouveau/gsp: Use the sg allocator for level 2 of radix3
+Date: Tue, 14 May 2024 12:18:25 +0200
+Message-ID: <20240514101049.982000890@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -54,83 +50,210 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Lyude Paul <lyude@redhat.com>
 
-commit b436f1cbed9c59d89ce63bd3b81b0e603c29d466 upstream.
+commit 6f572a80545773833f00c9a65e9242ab6fedb192 upstream.
 
-[Why]
-Idle optimizations are blocked if there's more than one eDP connector
-on the board - blocking S0i3 and IPS2 for static screen.
+Currently we allocate all 3 levels of radix3 page tables using
+nvkm_gsp_mem_ctor(), which uses dma_alloc_coherent() for allocating all of
+the relevant memory. This can end up failing in scenarios where the system
+has very high memory fragmentation, and we can't find enough contiguous
+memory to allocate level 2 of the page table.
 
-[How]
-Fix the checks to correctly detect number of active eDP.
-Also restrict the eDP support to panels that have correct feature
-support.
+Currently, this can result in runtime PM issues on systems where memory
+fragmentation is high - as we'll fail to allocate the page table for our
+suspend/resume buffer:
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
+  kworker/10:2: page allocation failure: order:7, mode:0xcc0(GFP_KERNEL),
+  nodemask=(null),cpuset=/,mems_allowed=0
+  CPU: 10 PID: 479809 Comm: kworker/10:2 Not tainted
+  6.8.6-201.ChopperV6.fc39.x86_64 #1
+  Hardware name: SLIMBOOK Executive/Executive, BIOS N.1.10GRU06 02/02/2024
+  Workqueue: pm pm_runtime_work
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x64/0x80
+   warn_alloc+0x165/0x1e0
+   ? __alloc_pages_direct_compact+0xb3/0x2b0
+   __alloc_pages_slowpath.constprop.0+0xd7d/0xde0
+   __alloc_pages+0x32d/0x350
+   __dma_direct_alloc_pages.isra.0+0x16a/0x2b0
+   dma_direct_alloc+0x70/0x270
+   nvkm_gsp_radix3_sg+0x5e/0x130 [nouveau]
+   r535_gsp_fini+0x1d4/0x350 [nouveau]
+   nvkm_subdev_fini+0x67/0x150 [nouveau]
+   nvkm_device_fini+0x95/0x1e0 [nouveau]
+   nvkm_udevice_fini+0x53/0x70 [nouveau]
+   nvkm_object_fini+0xb9/0x240 [nouveau]
+   nvkm_object_fini+0x75/0x240 [nouveau]
+   nouveau_do_suspend+0xf5/0x280 [nouveau]
+   nouveau_pmops_runtime_suspend+0x3e/0xb0 [nouveau]
+   pci_pm_runtime_suspend+0x67/0x1e0
+   ? __pfx_pci_pm_runtime_suspend+0x10/0x10
+   __rpm_callback+0x41/0x170
+   ? __pfx_pci_pm_runtime_suspend+0x10/0x10
+   rpm_callback+0x5d/0x70
+   ? __pfx_pci_pm_runtime_suspend+0x10/0x10
+   rpm_suspend+0x120/0x6a0
+   pm_runtime_work+0x98/0xb0
+   process_one_work+0x171/0x340
+   worker_thread+0x27b/0x3a0
+   ? __pfx_worker_thread+0x10/0x10
+   kthread+0xe5/0x120
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork+0x31/0x50
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork_asm+0x1b/0x30
+
+Luckily, we don't actually need to allocate coherent memory for the page
+table thanks to being able to pass the GPU a radix3 page table for
+suspend/resume data. So, let's rewrite nvkm_gsp_radix3_sg() to use the sg
+allocator for level 2. We continue using coherent allocations for lvl0 and
+1, since they only take a single page.
+
+V2:
+* Don't forget to actually jump to the next scatterlist when we reach the
+  end of the scatterlist we're currently on when writing out the page table
+  for level 2
+
+Signed-off-by: Lyude Paul <lyude@redhat.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240429182318.189668-2-lyude@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c |   33 +++++++++++++---
- 1 file changed, 27 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/nouveau/include/nvkm/subdev/gsp.h |    4 -
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c    |   79 ++++++++++++++--------
+ 2 files changed, 55 insertions(+), 28 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-@@ -638,22 +638,43 @@ void dcn35_power_down_on_boot(struct dc
+--- a/drivers/gpu/drm/nouveau/include/nvkm/subdev/gsp.h
++++ b/drivers/gpu/drm/nouveau/include/nvkm/subdev/gsp.h
+@@ -15,7 +15,9 @@ struct nvkm_gsp_mem {
+ };
  
- bool dcn35_apply_idle_power_optimizations(struct dc *dc, bool enable)
+ struct nvkm_gsp_radix3 {
+-	struct nvkm_gsp_mem mem[3];
++	struct nvkm_gsp_mem lvl0;
++	struct nvkm_gsp_mem lvl1;
++	struct sg_table lvl2;
+ };
+ 
+ int nvkm_gsp_sg(struct nvkm_device *, u64 size, struct sg_table *);
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
+@@ -1620,7 +1620,7 @@ r535_gsp_wpr_meta_init(struct nvkm_gsp *
+ 	meta->magic = GSP_FW_WPR_META_MAGIC;
+ 	meta->revision = GSP_FW_WPR_META_REVISION;
+ 
+-	meta->sysmemAddrOfRadix3Elf = gsp->radix3.mem[0].addr;
++	meta->sysmemAddrOfRadix3Elf = gsp->radix3.lvl0.addr;
+ 	meta->sizeOfRadix3Elf = gsp->fb.wpr2.elf.size;
+ 
+ 	meta->sysmemAddrOfBootloader = gsp->boot.fw.addr;
+@@ -1914,8 +1914,9 @@ nvkm_gsp_sg(struct nvkm_device *device,
+ static void
+ nvkm_gsp_radix3_dtor(struct nvkm_gsp *gsp, struct nvkm_gsp_radix3 *rx3)
  {
--	struct dc_link *edp_links[MAX_NUM_EDP];
--	int i, edp_num;
- 	if (dc->debug.dmcub_emulation)
- 		return true;
+-	for (int i = ARRAY_SIZE(rx3->mem) - 1; i >= 0; i--)
+-		nvkm_gsp_mem_dtor(gsp, &rx3->mem[i]);
++	nvkm_gsp_sg_free(gsp->subdev.device, &rx3->lvl2);
++	nvkm_gsp_mem_dtor(gsp, &rx3->lvl1);
++	nvkm_gsp_mem_dtor(gsp, &rx3->lvl0);
+ }
  
- 	if (enable) {
--		dc_get_edp_links(dc, edp_links, &edp_num);
--		if (edp_num == 0 || edp_num > 1)
--			return false;
-+		uint32_t num_active_edp = 0;
-+		int i;
+ /**
+@@ -1951,36 +1952,60 @@ static int
+ nvkm_gsp_radix3_sg(struct nvkm_gsp *gsp, struct sg_table *sgt, u64 size,
+ 		   struct nvkm_gsp_radix3 *rx3)
+ {
+-	u64 addr;
++	struct sg_dma_page_iter sg_dma_iter;
++	struct scatterlist *sg;
++	size_t bufsize;
++	u64 *pte;
++	int ret, i, page_idx = 0;
  
- 		for (i = 0; i < dc->current_state->stream_count; ++i) {
- 			struct dc_stream_state *stream = dc->current_state->streams[i];
-+			struct dc_link *link = stream->link;
-+			bool is_psr = link && !link->panel_config.psr.disable_psr &&
-+				      (link->psr_settings.psr_version == DC_PSR_VERSION_1 ||
-+				       link->psr_settings.psr_version == DC_PSR_VERSION_SU_1);
-+			bool is_replay = link && link->replay_settings.replay_feature_enabled;
-+
-+			/* Ignore streams that disabled. */
-+			if (stream->dpms_off)
-+				continue;
+-	for (int i = ARRAY_SIZE(rx3->mem) - 1; i >= 0; i--) {
+-		u64 *ptes;
+-		size_t bufsize;
+-		int ret, idx;
++	ret = nvkm_gsp_mem_ctor(gsp, GSP_PAGE_SIZE, &rx3->lvl0);
++	if (ret)
++		return ret;
  
--			if (!stream->dpms_off && !dc_is_embedded_signal(stream->signal))
-+			/* Active external displays block idle optimizations. */
-+			if (!dc_is_embedded_signal(stream->signal))
- 				return false;
+-		bufsize = ALIGN((size / GSP_PAGE_SIZE) * sizeof(u64), GSP_PAGE_SIZE);
+-		ret = nvkm_gsp_mem_ctor(gsp, bufsize, &rx3->mem[i]);
+-		if (ret)
+-			return ret;
++	ret = nvkm_gsp_mem_ctor(gsp, GSP_PAGE_SIZE, &rx3->lvl1);
++	if (ret)
++		goto lvl1_fail;
+ 
+-		ptes = rx3->mem[i].data;
+-		if (i == 2) {
+-			struct scatterlist *sgl;
+-
+-			for_each_sgtable_dma_sg(sgt, sgl, idx) {
+-				for (int j = 0; j < sg_dma_len(sgl) / GSP_PAGE_SIZE; j++)
+-					*ptes++ = sg_dma_address(sgl) + (GSP_PAGE_SIZE * j);
+-			}
+-		} else {
+-			for (int j = 0; j < size / GSP_PAGE_SIZE; j++)
+-				*ptes++ = addr + GSP_PAGE_SIZE * j;
++	// Allocate level 2
++	bufsize = ALIGN((size / GSP_PAGE_SIZE) * sizeof(u64), GSP_PAGE_SIZE);
++	ret = nvkm_gsp_sg(gsp->subdev.device, bufsize, &rx3->lvl2);
++	if (ret)
++		goto lvl2_fail;
 +
-+			/* If not PWRSEQ0 can't enter idle optimizations */
-+			if (link && link->link_index != 0)
-+				return false;
++	// Write the bus address of level 1 to level 0
++	pte = rx3->lvl0.data;
++	*pte = rx3->lvl1.addr;
 +
-+			/* Check for panel power features required for idle optimizations. */
-+			if (!is_psr && !is_replay)
-+				return false;
++	// Write the bus address of each page in level 2 to level 1
++	pte = rx3->lvl1.data;
++	for_each_sgtable_dma_page(&rx3->lvl2, &sg_dma_iter, 0)
++		*pte++ = sg_page_iter_dma_address(&sg_dma_iter);
 +
-+			num_active_edp += 1;
++	// Finally, write the bus address of each page in sgt to level 2
++	for_each_sgtable_sg(&rx3->lvl2, sg, i) {
++		void *sgl_end;
++
++		pte = sg_virt(sg);
++		sgl_end = (void *)pte + sg->length;
++
++		for_each_sgtable_dma_page(sgt, &sg_dma_iter, page_idx) {
++			*pte++ = sg_page_iter_dma_address(&sg_dma_iter);
++			page_idx++;
++
++			// Go to the next scatterlist for level 2 if we've reached the end
++			if ((void *)pte >= sgl_end)
++				break;
  		}
-+
-+		/* If more than one active eDP then disallow. */
-+		if (num_active_edp > 1)
-+			return false;
++	}
+ 
+-		size = rx3->mem[i].size;
+-		addr = rx3->mem[i].addr;
++	if (ret) {
++lvl2_fail:
++		nvkm_gsp_mem_dtor(gsp, &rx3->lvl1);
++lvl1_fail:
++		nvkm_gsp_mem_dtor(gsp, &rx3->lvl0);
  	}
  
- 	// TODO: review other cases when idle optimization is allowed
+-	return 0;
++	return ret;
+ }
+ 
+ int
+@@ -2012,7 +2037,7 @@ r535_gsp_fini(struct nvkm_gsp *gsp, bool
+ 		sr = gsp->sr.meta.data;
+ 		sr->magic = GSP_FW_SR_META_MAGIC;
+ 		sr->revision = GSP_FW_SR_META_REVISION;
+-		sr->sysmemAddrOfSuspendResumeData = gsp->sr.radix3.mem[0].addr;
++		sr->sysmemAddrOfSuspendResumeData = gsp->sr.radix3.lvl0.addr;
+ 		sr->sizeOfSuspendResumeData = len;
+ 
+ 		mbox0 = lower_32_bits(gsp->sr.meta.addr);
 
 
