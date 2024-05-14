@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571BE13B287;
-	Tue, 14 May 2024 11:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B850113AD16;
+	Tue, 14 May 2024 11:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685005; cv=none; b=h+wLXblBugB7Nmj4coozIYHcrAqcl+0xG0KJRy2qirhj2zZ7st2zQylaFRJjNoXkHPwIzdnK20roeexYwnahgK86uTJ2/Qc5dykyVpMIv62Qy8/QoIYbHhGjnt8gRY7pz5QRhprPX0dheiCDQlXuJW6NEJZY81OBh+OZrlVnlt0=
+	t=1715685012; cv=none; b=WevKHwGFWKbsskkWDD86buaEp/+YN1mZiMV7uf3Mpvn2jgOlMsI8BHjSZ6exj4kP2fiuHReCU6Al7ml3HG7aYlni6adLIiOrCBdHnVj0B0mL+lAHDXxWAEXZUBqbrisJ8EM0OlcaiHnBXd2uoyPPibWxmSJnVrdseaQ3y/7QvjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685005; c=relaxed/simple;
-	bh=Dqhl5k86+5zDDBujd8WbKh+oeoYhHVCQHbOhPkhAS8g=;
+	s=arc-20240116; t=1715685012; c=relaxed/simple;
+	bh=l0HYPLDk1vgqY0u5y7csCZdLjkcG9UgqWKSd9lG3R/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jf9ZEUGFCRNhdIj/qbHjYozsiIh+QvzD2Jk3gQOZ1+cnNCII48KI03NuaxunlS7KDtYPv3UMKVFo0OCd7JV9SiEZFBmzT1lXPPOp5hktByxhFztn7h3QK+/6CU2aF/Y7x26NMuhjyNdFI/L/uAKVHqIX+mZTdoeZ4Iim7ZKFpxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGo7nkNf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GMU6ZN/YLzwS364SF/HZbgAisT0lU7aqa/ue+ce4+TDk9OCSqUDNbhiSW/288KsouLI+dqWgBP2uc756HylX2tSjx7TEZAkzoFKreOyQiGS5kJ5uRWJJWbWJx1yzKthqbMwYhORLscoNcej4yK9F2ktxR7jU2NthPSczHXXuLiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xhzs5hCW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGo7nkNf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6A9C2BD10;
-	Tue, 14 May 2024 11:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xhzs5hCW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F871C2BD10;
+	Tue, 14 May 2024 11:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685005;
-	bh=Dqhl5k86+5zDDBujd8WbKh+oeoYhHVCQHbOhPkhAS8g=;
+	s=korg; t=1715685012;
+	bh=l0HYPLDk1vgqY0u5y7csCZdLjkcG9UgqWKSd9lG3R/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QGo7nkNfdRmaBI1BIXazNUcFh7/MVjYbGNhqQslkr/PiaiiQ3wYWxBWGgs7NDpJ0w
-	 ryWLSqmXJrqUydNf8iBWRabp54bKOCeUEiXJ9U0+0mQ73exDUCxJOSpLICaMVd8K98
-	 eWXX5R259D9w08Vc9QHv3KX+2pthb5YCr9ES1mWc=
+	b=Xhzs5hCWl+bDxqcEhEVHFhSe7JQTxXfWVhcKRHCtI0rff1+j4EuaqrPYdDrmi0Thh
+	 v65xWwp7Zgh69aCg7RXRVysfjpDnOV9ptroCtw0y/AFAajoXNdclIYf4++xJ/s+x17
+	 WQHcBoHd22mSpH5MtDIBW2XPGQcWt0AFbE1LIkQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihang Li <liyihang9@huawei.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Alexander Potapenko <glider@google.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 121/301] scsi: libsas: Align SMP request allocation to ARCH_DMA_MINALIGN
-Date: Tue, 14 May 2024 12:16:32 +0200
-Message-ID: <20240514101036.818584832@linuxfoundation.org>
+Subject: [PATCH 6.6 095/301] KVM: arm64: vgic-v2: Check for non-NULL vCPU in vgic_v2_parse_attr()
+Date: Tue, 14 May 2024 12:16:06 +0200
+Message-ID: <20240514101035.838899746@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -54,44 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yihang Li <liyihang9@huawei.com>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-[ Upstream commit e675a4fd6d1f8990d3bed5dada3d20edfa000423 ]
+[ Upstream commit 6ddb4f372fc63210034b903d96ebbeb3c7195adb ]
 
-This series [1] reduced the kmalloc() minimum alignment on arm64 to 8 bytes
-(from 128). In libsas, this will cause SMP requests to be 8-byte aligned
-through kmalloc() allocation. However, for hisi_sas hardware, all command
-addresses must be 16-byte-aligned. Otherwise, the commands fail to be
-executed.
+vgic_v2_parse_attr() is responsible for finding the vCPU that matches
+the user-provided CPUID, which (of course) may not be valid. If the ID
+is invalid, kvm_get_vcpu_by_id() returns NULL, which isn't handled
+gracefully.
 
-ARCH_DMA_MINALIGN represents the minimum (static) alignment for safe DMA
-operations, so use ARCH_DMA_MINALIGN as the alignment for SMP request.
+Similar to the GICv3 uaccess flow, check that kvm_get_vcpu_by_id()
+actually returns something and fail the ioctl if not.
 
-Link: https://lkml.kernel.org/r/20230612153201.554742-1-catalin.marinas@arm.com [1]
-Signed-off-by: Yihang Li <liyihang9@huawei.com>
-Link: https://lore.kernel.org/r/20240328090626.621147-1-liyihang9@huawei.com
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: stable@vger.kernel.org
+Fixes: 7d450e282171 ("KVM: arm/arm64: vgic-new: Add userland access to VGIC dist registers")
+Reported-by: Alexander Potapenko <glider@google.com>
+Tested-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20240424173959.3776798-2-oliver.upton@linux.dev
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libsas/sas_expander.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/vgic/vgic-kvm-device.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/libsas/sas_expander.c b/drivers/scsi/libsas/sas_expander.c
-index 5c261005b74e4..f6e6db8b8aba9 100644
---- a/drivers/scsi/libsas/sas_expander.c
-+++ b/drivers/scsi/libsas/sas_expander.c
-@@ -135,7 +135,7 @@ static int smp_execute_task(struct domain_device *dev, void *req, int req_size,
- 
- static inline void *alloc_smp_req(int size)
+diff --git a/arch/arm64/kvm/vgic/vgic-kvm-device.c b/arch/arm64/kvm/vgic/vgic-kvm-device.c
+index c11962f901e0c..2f9e8c611f642 100644
+--- a/arch/arm64/kvm/vgic/vgic-kvm-device.c
++++ b/arch/arm64/kvm/vgic/vgic-kvm-device.c
+@@ -337,12 +337,12 @@ int kvm_register_vgic_device(unsigned long type)
+ int vgic_v2_parse_attr(struct kvm_device *dev, struct kvm_device_attr *attr,
+ 		       struct vgic_reg_attr *reg_attr)
  {
--	u8 *p = kzalloc(size, GFP_KERNEL);
-+	u8 *p = kzalloc(ALIGN(size, ARCH_DMA_MINALIGN), GFP_KERNEL);
- 	if (p)
- 		p[0] = SMP_REQUEST;
- 	return p;
+-	int cpuid;
++	int cpuid = FIELD_GET(KVM_DEV_ARM_VGIC_CPUID_MASK, attr->attr);
+ 
+-	cpuid = FIELD_GET(KVM_DEV_ARM_VGIC_CPUID_MASK, attr->attr);
+-
+-	reg_attr->vcpu = kvm_get_vcpu_by_id(dev->kvm, cpuid);
+ 	reg_attr->addr = attr->attr & KVM_DEV_ARM_VGIC_OFFSET_MASK;
++	reg_attr->vcpu = kvm_get_vcpu_by_id(dev->kvm, cpuid);
++	if (!reg_attr->vcpu)
++		return -EINVAL;
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
