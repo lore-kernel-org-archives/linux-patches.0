@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F167822EF3;
-	Tue, 14 May 2024 10:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048AE22EF3;
+	Tue, 14 May 2024 10:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682704; cv=none; b=F7elFdjuoAJLgFzDAl6vT0+WJssWTP+sgxqdm2vrMWTIWZcWg5GePsAeZ/QZIfsT+GwgMm0fywYWCu4+JRBlA66hjO9ZioY/xl1Cu1KwYb+b+EAY82abdJccc1TrEFNZAzfX3/shUMMb2gYQwVjlpw3aPX5Zre5ktX0qOvmf5/Q=
+	t=1715682709; cv=none; b=ZfLuhOatSXDraaqAcwp/3Oce61P/5lNHQo9AWFuD9/otb06xvvFFVI9zqT+ANmVYSjE9pk5374gSwRYiqRczC2FeR6vi6GEIGBpuAtKZHEHzfGJkcJQ4aJBY/EQs1xlNXbn8afpNUjm7lXQmBopulwl5s2YSXxJ63pjP3CgxNLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682704; c=relaxed/simple;
-	bh=A5XIB1YpcDMqyKBHgPybvlBtGh4DxKBkKP7OONWY9tA=;
+	s=arc-20240116; t=1715682709; c=relaxed/simple;
+	bh=48atUdwAU2O1CiIlVS41X3/PbPiApiJ5Ou3eZZNBAyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fQ0f3P5lwoBRoMQ2ip3HtU2/MIQ+vVvoVCySkdlOb9r1IJGeOsmIgE+YPBzSOIePn8kkdvBzbY5xqKBg+lGLsBUBsgQj6VGbe3T1Vv7+pqdrdO8wrDEZOvwO4L8T+aixey4X7GGEZttwWxuNHUqa88BwmWsYqBWLDA4+cTCm9ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zf9AL2Ou; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F+14xozS9mJZLDWwJdug7o2X/daKSyz5FFUUex7mlgSoC59NF92xH1BAIy44bfcxwDasm/u+d+710XVtxTxRlrH76eNITxmhCVsmrWbY4OZq3/D4dcAdIp/eoyrzWdVKGyUInYI8VZ+HccM5Z9zCfrkyClMjNHrfqj/T+KVJNDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iiQurkGv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zf9AL2Ou"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0EDC2BD10;
-	Tue, 14 May 2024 10:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiQurkGv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1920C2BD10;
+	Tue, 14 May 2024 10:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682703;
-	bh=A5XIB1YpcDMqyKBHgPybvlBtGh4DxKBkKP7OONWY9tA=;
+	s=korg; t=1715682708;
+	bh=48atUdwAU2O1CiIlVS41X3/PbPiApiJ5Ou3eZZNBAyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zf9AL2Oud8GnTAcQEof9QiQ3PjpwEWZTfy8GGt/9D2upj+VH/YZNyWIpCslXNl6Ss
-	 lHLTnf5BNwTiYLF9EbFeABc2NkSY5lNhakU4T2t5Ae8UKKw1cCPufe8PKlvjADvP2f
-	 0nmrv7RaZ8mEH0SBZrXfHlMHJg//hRsEJoObvBUE=
+	b=iiQurkGv+7j/7ez/dw2IwYfnn+FaPchFHeANDw4HyOM1MjyChYz5i7/clAj7wDNuu
+	 yXMvIUwC/AEIwk6xtEwcsxNIpkYcKrgSHbFaeurqLUElqrcwLqtfiXrT9pShm6aUE7
+	 d9Y2HFYJ8paKq7rdWNPUzOQqcAmStFkLR1S5E0I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Justin Tee <justin.tee@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 101/336] scsi: lpfc: Release hbalock before calling lpfc_worker_wake_up()
-Date: Tue, 14 May 2024 12:15:05 +0200
-Message-ID: <20240514101042.419370476@linuxfoundation.org>
+Subject: [PATCH 6.8 102/336] scsi: lpfc: Use a dedicated lock for ras_fwlog state
+Date: Tue, 14 May 2024 12:15:06 +0200
+Message-ID: <20240514101042.457268073@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -53,125 +53,233 @@ Content-Transfer-Encoding: 8bit
 
 From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit ded20192dff31c91cef2a04f7e20e60e9bb887d3 ]
+[ Upstream commit f733a76ea0a9a84aee4ac41b81fad4d610ecbd8e ]
 
-lpfc_worker_wake_up() calls the lpfc_work_done() routine, which takes the
-hbalock.  Thus, lpfc_worker_wake_up() should not be called while holding the
-hbalock to avoid potential deadlock.
+To reduce usage of and contention for hbalock, a separate dedicated lock is
+used to protect ras_fwlog state.
 
 Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20240305200503.57317-7-justintee8345@gmail.com
+Link: https://lore.kernel.org/r/20240305200503.57317-8-justintee8345@gmail.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_els.c     | 20 ++++++++++----------
- drivers/scsi/lpfc/lpfc_hbadisc.c |  5 ++---
- drivers/scsi/lpfc/lpfc_sli.c     | 14 +++++++-------
- 3 files changed, 19 insertions(+), 20 deletions(-)
+ drivers/scsi/lpfc/lpfc.h         |  1 +
+ drivers/scsi/lpfc/lpfc_attr.c    |  4 ++--
+ drivers/scsi/lpfc/lpfc_bsg.c     | 20 ++++++++++----------
+ drivers/scsi/lpfc/lpfc_debugfs.c | 12 ++++++------
+ drivers/scsi/lpfc/lpfc_init.c    |  3 +++
+ drivers/scsi/lpfc/lpfc_sli.c     | 20 ++++++++++----------
+ 6 files changed, 32 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
-index 4d723200690a4..26736122bda17 100644
---- a/drivers/scsi/lpfc/lpfc_els.c
-+++ b/drivers/scsi/lpfc/lpfc_els.c
-@@ -4462,23 +4462,23 @@ lpfc_els_retry_delay(struct timer_list *t)
- 	unsigned long flags;
- 	struct lpfc_work_evt  *evtp = &ndlp->els_retry_evt;
+diff --git a/drivers/scsi/lpfc/lpfc.h b/drivers/scsi/lpfc/lpfc.h
+index be016732ab2ea..9670cb2bf198e 100644
+--- a/drivers/scsi/lpfc/lpfc.h
++++ b/drivers/scsi/lpfc/lpfc.h
+@@ -1429,6 +1429,7 @@ struct lpfc_hba {
+ 	struct timer_list inactive_vmid_poll;
  
-+	/* Hold a node reference for outstanding queued work */
-+	if (!lpfc_nlp_get(ndlp))
-+		return;
-+
- 	spin_lock_irqsave(&phba->hbalock, flags);
- 	if (!list_empty(&evtp->evt_listp)) {
- 		spin_unlock_irqrestore(&phba->hbalock, flags);
-+		lpfc_nlp_put(ndlp);
- 		return;
- 	}
+ 	/* RAS Support */
++	spinlock_t ras_fwlog_lock; /* do not take while holding another lock */
+ 	struct lpfc_ras_fwlog ras_fwlog;
  
--	/* We need to hold the node by incrementing the reference
--	 * count until the queued work is done
--	 */
--	evtp->evt_arg1  = lpfc_nlp_get(ndlp);
--	if (evtp->evt_arg1) {
--		evtp->evt = LPFC_EVT_ELS_RETRY;
--		list_add_tail(&evtp->evt_listp, &phba->work_list);
--		lpfc_worker_wake_up(phba);
--	}
-+	evtp->evt_arg1 = ndlp;
-+	evtp->evt = LPFC_EVT_ELS_RETRY;
-+	list_add_tail(&evtp->evt_listp, &phba->work_list);
- 	spin_unlock_irqrestore(&phba->hbalock, flags);
--	return;
-+
-+	lpfc_worker_wake_up(phba);
- }
+ 	uint32_t iocb_cnt;
+diff --git a/drivers/scsi/lpfc/lpfc_attr.c b/drivers/scsi/lpfc/lpfc_attr.c
+index d3a5d6ecdf7d2..6f97a04171c44 100644
+--- a/drivers/scsi/lpfc/lpfc_attr.c
++++ b/drivers/scsi/lpfc/lpfc_attr.c
+@@ -5864,9 +5864,9 @@ lpfc_ras_fwlog_buffsize_set(struct lpfc_hba  *phba, uint val)
+ 	if (phba->cfg_ras_fwlog_func != PCI_FUNC(phba->pcidev->devfn))
+ 		return -EINVAL;
  
- /**
-diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
-index f80bbc315f4ca..da3aee0f63237 100644
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -257,7 +257,9 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
- 		if (evtp->evt_arg1) {
- 			evtp->evt = LPFC_EVT_DEV_LOSS;
- 			list_add_tail(&evtp->evt_listp, &phba->work_list);
-+			spin_unlock_irqrestore(&phba->hbalock, iflags);
- 			lpfc_worker_wake_up(phba);
-+			return;
+-	spin_lock_irq(&phba->hbalock);
++	spin_lock_irq(&phba->ras_fwlog_lock);
+ 	state = phba->ras_fwlog.state;
+-	spin_unlock_irq(&phba->hbalock);
++	spin_unlock_irq(&phba->ras_fwlog_lock);
+ 
+ 	if (state == REG_INPROGRESS) {
+ 		lpfc_printf_log(phba, KERN_ERR, LOG_SLI, "6147 RAS Logging "
+diff --git a/drivers/scsi/lpfc/lpfc_bsg.c b/drivers/scsi/lpfc/lpfc_bsg.c
+index 2919579fa0846..c305d16cfae9a 100644
+--- a/drivers/scsi/lpfc/lpfc_bsg.c
++++ b/drivers/scsi/lpfc/lpfc_bsg.c
+@@ -5070,12 +5070,12 @@ lpfc_bsg_get_ras_config(struct bsg_job *job)
+ 		bsg_reply->reply_data.vendor_reply.vendor_rsp;
+ 
+ 	/* Current logging state */
+-	spin_lock_irq(&phba->hbalock);
++	spin_lock_irq(&phba->ras_fwlog_lock);
+ 	if (ras_fwlog->state == ACTIVE)
+ 		ras_reply->state = LPFC_RASLOG_STATE_RUNNING;
+ 	else
+ 		ras_reply->state = LPFC_RASLOG_STATE_STOPPED;
+-	spin_unlock_irq(&phba->hbalock);
++	spin_unlock_irq(&phba->ras_fwlog_lock);
+ 
+ 	ras_reply->log_level = phba->ras_fwlog.fw_loglevel;
+ 	ras_reply->log_buff_sz = phba->cfg_ras_fwlog_buffsize;
+@@ -5132,13 +5132,13 @@ lpfc_bsg_set_ras_config(struct bsg_job *job)
+ 
+ 	if (action == LPFC_RASACTION_STOP_LOGGING) {
+ 		/* Check if already disabled */
+-		spin_lock_irq(&phba->hbalock);
++		spin_lock_irq(&phba->ras_fwlog_lock);
+ 		if (ras_fwlog->state != ACTIVE) {
+-			spin_unlock_irq(&phba->hbalock);
++			spin_unlock_irq(&phba->ras_fwlog_lock);
+ 			rc = -ESRCH;
+ 			goto ras_job_error;
  		}
- 		spin_unlock_irqrestore(&phba->hbalock, iflags);
- 	} else {
-@@ -275,10 +277,7 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
- 			lpfc_disc_state_machine(vport, ndlp, NULL,
- 						NLP_EVT_DEVICE_RM);
- 		}
--
- 	}
--
--	return;
- }
+-		spin_unlock_irq(&phba->hbalock);
++		spin_unlock_irq(&phba->ras_fwlog_lock);
  
- /**
+ 		/* Disable logging */
+ 		lpfc_ras_stop_fwlog(phba);
+@@ -5149,10 +5149,10 @@ lpfc_bsg_set_ras_config(struct bsg_job *job)
+ 		 * FW-logging with new log-level. Return status
+ 		 * "Logging already Running" to caller.
+ 		 **/
+-		spin_lock_irq(&phba->hbalock);
++		spin_lock_irq(&phba->ras_fwlog_lock);
+ 		if (ras_fwlog->state != INACTIVE)
+ 			action_status = -EINPROGRESS;
+-		spin_unlock_irq(&phba->hbalock);
++		spin_unlock_irq(&phba->ras_fwlog_lock);
+ 
+ 		/* Enable logging */
+ 		rc = lpfc_sli4_ras_fwlog_init(phba, log_level,
+@@ -5268,13 +5268,13 @@ lpfc_bsg_get_ras_fwlog(struct bsg_job *job)
+ 		goto ras_job_error;
+ 
+ 	/* Logging to be stopped before reading */
+-	spin_lock_irq(&phba->hbalock);
++	spin_lock_irq(&phba->ras_fwlog_lock);
+ 	if (ras_fwlog->state == ACTIVE) {
+-		spin_unlock_irq(&phba->hbalock);
++		spin_unlock_irq(&phba->ras_fwlog_lock);
+ 		rc = -EINPROGRESS;
+ 		goto ras_job_error;
+ 	}
+-	spin_unlock_irq(&phba->hbalock);
++	spin_unlock_irq(&phba->ras_fwlog_lock);
+ 
+ 	if (job->request_len <
+ 	    sizeof(struct fc_bsg_request) +
+diff --git a/drivers/scsi/lpfc/lpfc_debugfs.c b/drivers/scsi/lpfc/lpfc_debugfs.c
+index ea9b42225e629..20662b4f339eb 100644
+--- a/drivers/scsi/lpfc/lpfc_debugfs.c
++++ b/drivers/scsi/lpfc/lpfc_debugfs.c
+@@ -2196,12 +2196,12 @@ static int lpfc_debugfs_ras_log_data(struct lpfc_hba *phba,
+ 
+ 	memset(buffer, 0, size);
+ 
+-	spin_lock_irq(&phba->hbalock);
++	spin_lock_irq(&phba->ras_fwlog_lock);
+ 	if (phba->ras_fwlog.state != ACTIVE) {
+-		spin_unlock_irq(&phba->hbalock);
++		spin_unlock_irq(&phba->ras_fwlog_lock);
+ 		return -EINVAL;
+ 	}
+-	spin_unlock_irq(&phba->hbalock);
++	spin_unlock_irq(&phba->ras_fwlog_lock);
+ 
+ 	list_for_each_entry_safe(dmabuf, next,
+ 				 &phba->ras_fwlog.fwlog_buff_list, list) {
+@@ -2252,13 +2252,13 @@ lpfc_debugfs_ras_log_open(struct inode *inode, struct file *file)
+ 	int size;
+ 	int rc = -ENOMEM;
+ 
+-	spin_lock_irq(&phba->hbalock);
++	spin_lock_irq(&phba->ras_fwlog_lock);
+ 	if (phba->ras_fwlog.state != ACTIVE) {
+-		spin_unlock_irq(&phba->hbalock);
++		spin_unlock_irq(&phba->ras_fwlog_lock);
+ 		rc = -EINVAL;
+ 		goto out;
+ 	}
+-	spin_unlock_irq(&phba->hbalock);
++	spin_unlock_irq(&phba->ras_fwlog_lock);
+ 
+ 	if (check_mul_overflow(LPFC_RAS_MIN_BUFF_POST_SIZE,
+ 			       phba->cfg_ras_fwlog_buffsize, &size))
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index 7820a1a7aa6d1..858ca395c0bf0 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -7698,6 +7698,9 @@ lpfc_setup_driver_resource_phase1(struct lpfc_hba *phba)
+ 				"NVME" : " "),
+ 			(phba->nvmet_support ? "NVMET" : " "));
+ 
++	/* ras_fwlog state */
++	spin_lock_init(&phba->ras_fwlog_lock);
++
+ 	/* Initialize the IO buffer list used by driver for SLI3 SCSI */
+ 	spin_lock_init(&phba->scsi_buf_list_get_lock);
+ 	INIT_LIST_HEAD(&phba->lpfc_scsi_buf_list_get);
 diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index 706985358c6a0..c00b945947b1d 100644
+index c00b945947b1d..e1821072552a5 100644
 --- a/drivers/scsi/lpfc/lpfc_sli.c
 +++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -1217,9 +1217,9 @@ lpfc_set_rrq_active(struct lpfc_hba *phba, struct lpfc_nodelist *ndlp,
- 	empty = list_empty(&phba->active_rrq_list);
- 	list_add_tail(&rrq->list, &phba->active_rrq_list);
- 	phba->hba_flag |= HBA_RRQ_ACTIVE;
-+	spin_unlock_irqrestore(&phba->hbalock, iflags);
- 	if (empty)
- 		lpfc_worker_wake_up(phba);
--	spin_unlock_irqrestore(&phba->hbalock, iflags);
- 	return 0;
- out:
- 	spin_unlock_irqrestore(&phba->hbalock, iflags);
-@@ -11373,18 +11373,18 @@ lpfc_sli_post_recovery_event(struct lpfc_hba *phba,
- 	unsigned long iflags;
- 	struct lpfc_work_evt  *evtp = &ndlp->recovery_evt;
+@@ -6849,9 +6849,9 @@ lpfc_ras_stop_fwlog(struct lpfc_hba *phba)
+ {
+ 	struct lpfc_ras_fwlog *ras_fwlog = &phba->ras_fwlog;
  
-+	/* Hold a node reference for outstanding queued work */
-+	if (!lpfc_nlp_get(ndlp))
-+		return;
-+
- 	spin_lock_irqsave(&phba->hbalock, iflags);
- 	if (!list_empty(&evtp->evt_listp)) {
- 		spin_unlock_irqrestore(&phba->hbalock, iflags);
-+		lpfc_nlp_put(ndlp);
- 		return;
+-	spin_lock_irq(&phba->hbalock);
++	spin_lock_irq(&phba->ras_fwlog_lock);
+ 	ras_fwlog->state = INACTIVE;
+-	spin_unlock_irq(&phba->hbalock);
++	spin_unlock_irq(&phba->ras_fwlog_lock);
+ 
+ 	/* Disable FW logging to host memory */
+ 	writel(LPFC_CTL_PDEV_CTL_DDL_RAS,
+@@ -6894,9 +6894,9 @@ lpfc_sli4_ras_dma_free(struct lpfc_hba *phba)
+ 		ras_fwlog->lwpd.virt = NULL;
  	}
  
--	/* Incrementing the reference count until the queued work is done. */
--	evtp->evt_arg1  = lpfc_nlp_get(ndlp);
--	if (!evtp->evt_arg1) {
--		spin_unlock_irqrestore(&phba->hbalock, iflags);
--		return;
--	}
-+	evtp->evt_arg1 = ndlp;
- 	evtp->evt = LPFC_EVT_RECOVER_PORT;
- 	list_add_tail(&evtp->evt_listp, &phba->work_list);
- 	spin_unlock_irqrestore(&phba->hbalock, iflags);
+-	spin_lock_irq(&phba->hbalock);
++	spin_lock_irq(&phba->ras_fwlog_lock);
+ 	ras_fwlog->state = INACTIVE;
+-	spin_unlock_irq(&phba->hbalock);
++	spin_unlock_irq(&phba->ras_fwlog_lock);
+ }
+ 
+ /**
+@@ -6998,9 +6998,9 @@ lpfc_sli4_ras_mbox_cmpl(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmb)
+ 		goto disable_ras;
+ 	}
+ 
+-	spin_lock_irq(&phba->hbalock);
++	spin_lock_irq(&phba->ras_fwlog_lock);
+ 	ras_fwlog->state = ACTIVE;
+-	spin_unlock_irq(&phba->hbalock);
++	spin_unlock_irq(&phba->ras_fwlog_lock);
+ 	mempool_free(pmb, phba->mbox_mem_pool);
+ 
+ 	return;
+@@ -7032,9 +7032,9 @@ lpfc_sli4_ras_fwlog_init(struct lpfc_hba *phba,
+ 	uint32_t len = 0, fwlog_buffsize, fwlog_entry_count;
+ 	int rc = 0;
+ 
+-	spin_lock_irq(&phba->hbalock);
++	spin_lock_irq(&phba->ras_fwlog_lock);
+ 	ras_fwlog->state = INACTIVE;
+-	spin_unlock_irq(&phba->hbalock);
++	spin_unlock_irq(&phba->ras_fwlog_lock);
+ 
+ 	fwlog_buffsize = (LPFC_RAS_MIN_BUFF_POST_SIZE *
+ 			  phba->cfg_ras_fwlog_buffsize);
+@@ -7095,9 +7095,9 @@ lpfc_sli4_ras_fwlog_init(struct lpfc_hba *phba,
+ 	mbx_fwlog->u.request.lwpd.addr_lo = putPaddrLow(ras_fwlog->lwpd.phys);
+ 	mbx_fwlog->u.request.lwpd.addr_hi = putPaddrHigh(ras_fwlog->lwpd.phys);
+ 
+-	spin_lock_irq(&phba->hbalock);
++	spin_lock_irq(&phba->ras_fwlog_lock);
+ 	ras_fwlog->state = REG_INPROGRESS;
+-	spin_unlock_irq(&phba->hbalock);
++	spin_unlock_irq(&phba->ras_fwlog_lock);
+ 	mbox->vport = phba->pport;
+ 	mbox->mbox_cmpl = lpfc_sli4_ras_mbox_cmpl;
+ 
 -- 
 2.43.0
 
