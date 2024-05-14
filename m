@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824B255C0A;
-	Tue, 14 May 2024 10:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B788112880A;
+	Tue, 14 May 2024 10:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684020; cv=none; b=j0y30qECf3vOCI9RCGSk6i2Q/Ecqnx09YXQgnNDDAweSGLaL6VEx9BiRukAAwXwNDTRJj/1JDr1omfQPYsl8FINx0+yg0zJv5oSAmuUFIMCDfBNU4IKGbJ8JC2wCzf/5UdbWHjY4vhOzo3ihuBPNRR5/PfMqXj6rnDGoHOXLNxA=
+	t=1715684024; cv=none; b=clM3o0sFEeUi9b2zlUNHfKVeu7U2koHWp1FzDQpRnuq1ZpisZihQQZrWKCHQDLfKVGRHkNxQKhvoyXoQq9AoH1TyTPBllBULAScCtU71000PCnxFByZBGMRVb1O3oK9AINpxcWxPzNnyzMme7eAhKMi/uL8z4QqTtlCJTlECWf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684020; c=relaxed/simple;
-	bh=0aMJrJ7BMwgZflmJIHkx2GYxb41znff0C2ew35TyDWU=;
+	s=arc-20240116; t=1715684024; c=relaxed/simple;
+	bh=r3h1Ni6qDiut4kpEBJ7sKO+7g3HEW+4YuFgobmfQu8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mtrS/HNnQoWuD1WYlW2xVrc5LDHyE5P7RemYvpP5bCzqy3MPN7o/UqrFS8JSfP/QH4p3N1RTjX/jUtAWuuR2Tg0p2ISRGkocQ3k5Yg52XQ4rjtQb/2MBkp5XsnzF6k8Eu4QyEqv+Y7bmZ5gyOOVGtIubifHGf81w+jinL8Tk1mE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BySue374; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qMQa1V+4ajGg05FoQssljkFuSYAw7mAHDYJ0KoGEBXVlqO532M1Z6AHQcdY0kJb1m6IDIhEvM3HSvUOXfrB9iDfPpwNmLd1khf5ZrhVWiKaQyTP7Ch+hq59OV34/IqJK35p7TlpJb0irQAKGzSScwK4Qw8JwBOXYdTQqXut8qIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cfsmZGEb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BySue374"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEBCFC32781;
-	Tue, 14 May 2024 10:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfsmZGEb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B03DC2BD10;
+	Tue, 14 May 2024 10:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684020;
-	bh=0aMJrJ7BMwgZflmJIHkx2GYxb41znff0C2ew35TyDWU=;
+	s=korg; t=1715684024;
+	bh=r3h1Ni6qDiut4kpEBJ7sKO+7g3HEW+4YuFgobmfQu8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BySue374enkaBHxkLXVhchV4QUI8QvT5egm/y6ANl2xScyFWZBRLaOgYWF4sgkfM8
-	 6IQEB6GTu125ItbbQkbo9otkAWSAc6ReEmPf4nMbw09euXhqrCSrzOJT71vobEb78S
-	 31MJpqyZOReMANkTGKYlCn21ZCJK6+PIfbYLscZw=
+	b=cfsmZGEbCLV25CdEfvaaSnhYQOJMbSxgTior+wuLuxuFOXMG1RuXLDBe8HU6Gpr15
+	 wi9Sks+nA+dCU4sO5BD2v1JUSIicHBvxsXazQC55DyAkcaofSJwo/mpwvYkkeOdJOy
+	 UdQLayx/iE75qg/AAWf8kQITYFdy9JYkPZnnQlI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Volodymyr Babchuk <volodymyr_babchuk@epam.com>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.8 307/336] arm64: dts: qcom: sa8155p-adp: fix SDHC2 CD pin configuration
-Date: Tue, 14 May 2024 12:18:31 +0200
-Message-ID: <20240514101050.209536931@linuxfoundation.org>
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 6.8 308/336] iommu/arm-smmu: Use the correct type in nvidia_smmu_context_fault()
+Date: Tue, 14 May 2024 12:18:32 +0200
+Message-ID: <20240514101050.247264460@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,96 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 819fe8c96a5172dfd960e5945e8f00f8fed32953 upstream.
+commit 65ade5653f5ab5a21635e51d0c65e95f490f5b6f upstream.
 
-There are two issues with SDHC2 configuration for SA8155P-ADP,
-which prevent use of SDHC2 and causes issues with ethernet:
+This was missed because of the function pointer indirection.
 
-- Card Detect pin for SHDC2 on SA8155P-ADP is connected to gpio4 of
-  PMM8155AU_1, not to SoC itself. SoC's gpio4 is used for DWMAC
-  TX. If sdhc driver probes after dwmac driver, it reconfigures
-  gpio4 and this breaks Ethernet MAC.
+nvidia_smmu_context_fault() is also installed as a irq function, and the
+'void *' was changed to a struct arm_smmu_domain. Since the iommu_domain
+is embedded at a non-zero offset this causes nvidia_smmu_context_fault()
+to miscompute the offset. Fixup the types.
 
-- pinctrl configuration mentions gpio96 as CD pin. It seems it was
-  copied from some SM8150 example, because as mentioned above,
-  correct CD pin is gpio4 on PMM8155AU_1.
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000120
+  Mem abort info:
+    ESR = 0x0000000096000004
+    EC = 0x25: DABT (current EL), IL = 32 bits
+    SET = 0, FnV = 0
+    EA = 0, S1PTW = 0
+    FSC = 0x04: level 0 translation fault
+  Data abort info:
+    ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+    CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+    GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+  user pgtable: 4k pages, 48-bit VAs, pgdp=0000000107c9f000
+  [0000000000000120] pgd=0000000000000000, p4d=0000000000000000
+  Internal error: Oops: 0000000096000004 [#1] SMP
+  Modules linked in:
+  CPU: 1 PID: 47 Comm: kworker/u25:0 Not tainted 6.9.0-0.rc7.58.eln136.aarch64 #1
+  Hardware name: Unknown NVIDIA Jetson Orin NX/NVIDIA Jetson Orin NX, BIOS 3.1-32827747 03/19/2023
+  Workqueue: events_unbound deferred_probe_work_func
+  pstate: 604000c9 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  pc : nvidia_smmu_context_fault+0x1c/0x158
+  lr : __free_irq+0x1d4/0x2e8
+  sp : ffff80008044b6f0
+  x29: ffff80008044b6f0 x28: ffff000080a60b18 x27: ffffd32b5172e970
+  x26: 0000000000000000 x25: ffff0000802f5aac x24: ffff0000802f5a30
+  x23: ffff0000802f5b60 x22: 0000000000000057 x21: 0000000000000000
+  x20: ffff0000802f5a00 x19: ffff000087d4cd80 x18: ffffffffffffffff
+  x17: 6234362066666666 x16: 6630303078302d30 x15: ffff00008156d888
+  x14: 0000000000000000 x13: ffff0000801db910 x12: ffff00008156d6d0
+  x11: 0000000000000003 x10: ffff0000801db918 x9 : ffffd32b50f94d9c
+  x8 : 1fffe0001032fda1 x7 : ffff00008197ed00 x6 : 000000000000000f
+  x5 : 000000000000010e x4 : 000000000000010e x3 : 0000000000000000
+  x2 : ffffd32b51720cd8 x1 : ffff000087e6f700 x0 : 0000000000000057
+  Call trace:
+   nvidia_smmu_context_fault+0x1c/0x158
+   __free_irq+0x1d4/0x2e8
+   free_irq+0x3c/0x80
+   devm_free_irq+0x64/0xa8
+   arm_smmu_domain_free+0xc4/0x158
+   iommu_domain_free+0x44/0xa0
+   iommu_deinit_device+0xd0/0xf8
+   __iommu_group_remove_device+0xcc/0xe0
+   iommu_bus_notifier+0x64/0xa8
+   notifier_call_chain+0x78/0x148
+   blocking_notifier_call_chain+0x4c/0x90
+   bus_notify+0x44/0x70
+   device_del+0x264/0x3e8
+   pci_remove_bus_device+0x84/0x120
+   pci_remove_root_bus+0x5c/0xc0
+   dw_pcie_host_deinit+0x38/0xe0
+   tegra_pcie_config_rp+0xc0/0x1f0
+   tegra_pcie_dw_probe+0x34c/0x700
+   platform_probe+0x70/0xe8
+   really_probe+0xc8/0x3a0
+   __driver_probe_device+0x84/0x160
+   driver_probe_device+0x44/0x130
+   __device_attach_driver+0xc4/0x170
+   bus_for_each_drv+0x90/0x100
+   __device_attach+0xa8/0x1c8
+   device_initial_probe+0x1c/0x30
+   bus_probe_device+0xb0/0xc0
+   deferred_probe_work_func+0xbc/0x120
+   process_one_work+0x194/0x490
+   worker_thread+0x284/0x3b0
+   kthread+0xf4/0x108
+   ret_from_fork+0x10/0x20
+  Code: a9b97bfd 910003fd a9025bf5 f85a0035 (b94122a1)
 
-This patch fixes both mentioned issues by providing correct pin handle
-and pinctrl configuration.
-
-Fixes: 0deb2624e2d0 ("arm64: dts: qcom: sa8155p-adp: Add support for uSD card")
 Cc: stable@vger.kernel.org
-Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
-Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
-Link: https://lore.kernel.org/r/20240412190310.1647893-1-volodymyr_babchuk@epam.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: e0976331ad11 ("iommu/arm-smmu: Pass arm_smmu_domain to internal functions")
+Reported-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Closes: https://lore.kernel.org/all/jto5e3ili4auk6sbzpnojdvhppgwuegir7mpd755anfhwcbkfz@2u5gh7bxb4iv
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Tested-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Acked-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Link: https://lore.kernel.org/r/0-v1-24ce064de41f+4ac-nvidia_smmu_fault_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sa8155p-adp.dts |   30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-nvidia.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-@@ -367,6 +367,16 @@
- 	};
- };
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-nvidia.c b/drivers/iommu/arm/arm-smmu/arm-smmu-nvidia.c
+index 87bf522b9d2e..957d988b6d83 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-nvidia.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-nvidia.c
+@@ -221,11 +221,9 @@ static irqreturn_t nvidia_smmu_context_fault(int irq, void *dev)
+ 	unsigned int inst;
+ 	irqreturn_t ret = IRQ_NONE;
+ 	struct arm_smmu_device *smmu;
+-	struct iommu_domain *domain = dev;
+-	struct arm_smmu_domain *smmu_domain;
++	struct arm_smmu_domain *smmu_domain = dev;
+ 	struct nvidia_smmu *nvidia;
  
-+&pmm8155au_1_gpios {
-+	pmm8155au_1_sdc2_cd: sdc2-cd-default-state {
-+		pins = "gpio4";
-+		function = "normal";
-+		input-enable;
-+		bias-pull-up;
-+		power-source = <0>;
-+	};
-+};
-+
- &qupv3_id_1 {
- 	status = "okay";
- };
-@@ -384,10 +394,10 @@
- &sdhc_2 {
- 	status = "okay";
+-	smmu_domain = container_of(domain, struct arm_smmu_domain, domain);
+ 	smmu = smmu_domain->smmu;
+ 	nvidia = to_nvidia_smmu(smmu);
  
--	cd-gpios = <&tlmm 4 GPIO_ACTIVE_LOW>;
-+	cd-gpios = <&pmm8155au_1_gpios 4 GPIO_ACTIVE_LOW>;
- 	pinctrl-names = "default", "sleep";
--	pinctrl-0 = <&sdc2_on>;
--	pinctrl-1 = <&sdc2_off>;
-+	pinctrl-0 = <&sdc2_on &pmm8155au_1_sdc2_cd>;
-+	pinctrl-1 = <&sdc2_off &pmm8155au_1_sdc2_cd>;
- 	vqmmc-supply = <&vreg_l13c_2p96>; /* IO line power */
- 	vmmc-supply = <&vreg_l17a_2p96>;  /* Card power line */
- 	bus-width = <4>;
-@@ -505,13 +515,6 @@
- 			bias-pull-up;		/* pull up */
- 			drive-strength = <16>;	/* 16 MA */
- 		};
--
--		sd-cd-pins {
--			pins = "gpio96";
--			function = "gpio";
--			bias-pull-up;		/* pull up */
--			drive-strength = <2>;	/* 2 MA */
--		};
- 	};
- 
- 	sdc2_off: sdc2-off-state {
-@@ -532,13 +535,6 @@
- 			bias-pull-up;		/* pull up */
- 			drive-strength = <2>;	/* 2 MA */
- 		};
--
--		sd-cd-pins {
--			pins = "gpio96";
--			function = "gpio";
--			bias-pull-up;		/* pull up */
--			drive-strength = <2>;	/* 2 MA */
--		};
- 	};
- 
- 	usb2phy_ac_en1_default: usb2phy-ac-en1-default-state {
+-- 
+2.45.0
+
 
 
