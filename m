@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0209A54903;
-	Tue, 14 May 2024 11:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265B354903;
+	Tue, 14 May 2024 11:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687427; cv=none; b=Y50WHetAIcKbuERsy1kpfsjcp0cBW4l16Y9nEmamDoqUewXp/aLgKYxR0l96ViTmC/DkUAjppDAIRPw/6ImBwONDcpyEZa4bTJI3p8fb95LHQ7jlYieKTmcJd94B5s3Eqamo/nvIzEqiOkKMvUYV6h275HLTSkdQrCOS6FPGJns=
+	t=1715687430; cv=none; b=kJN1AsrqzJOImlMcfbXROwuGfpDnZhUzsuFQKKvF1CelEIQRK0zTuEgRdv5cT2Z4Ueih1AnaJmAXHuV/PWeoTTTIb4E60L/56u2n1HWWDAZYjohpxrJ/IrAl78qsq1lVBUWtSAfpkFfMg+nYXhPFnuJ8OR0sfN+n5TNHBnxIy3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687427; c=relaxed/simple;
-	bh=d02LYnzHPeMyuCePOUnaNFoZ2OV0QeGnh+86FwJZlig=;
+	s=arc-20240116; t=1715687430; c=relaxed/simple;
+	bh=ELw69LJeHDkUDVkU45/VgKSyo8L+ZyTzywQkQxf/E8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hk25VnzhEiqILvrhv4x0XrdACkURPYvrDgXNJtNvUS/1VsZlRIF6+IV83KmVPu+zpdvfcZGeQgjPJzwjrJUkGGaNXfFJnjdIiaqxqDF3zS6t8URUI+6BA58ToRzui58ZEUCzu/pKX95O9rcTLCLC3qBc/FX4ImBuuZrrgShL5R0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8QRZIMo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nhe5HGwNgEmiqB0ZQD4lm7PZqpNOrqFI1kp6qZKYL1JqPUxpCT7V6ql3bpnxA6VY76qy6PgobMeUnTlzNvaGibvx+CP71lQyw4jKNPCuku8+Nt6k5iKXkykODsUmCbbyHc13y4G0jLHywxO/4gHWnJUKFKyeC6rWbougWKYBdU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WAptGto+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8QRZIMo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3F8C2BD10;
-	Tue, 14 May 2024 11:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WAptGto+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A301FC2BD10;
+	Tue, 14 May 2024 11:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687426;
-	bh=d02LYnzHPeMyuCePOUnaNFoZ2OV0QeGnh+86FwJZlig=;
+	s=korg; t=1715687430;
+	bh=ELw69LJeHDkUDVkU45/VgKSyo8L+ZyTzywQkQxf/E8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g8QRZIMoW8l/Z+oDeqJvdtws+jh3odp2arW44663uUDYiIdv8yvPOZ58d3Asm6b0R
-	 iZntTo9m3B0s/C2j2xU2dUHLsdN0p+9lTDFYVvEBjQOnpX0mwWU5eGSsSUEd0xlNkS
-	 q4z/PhX2kFGtskuwNvW0IgT8fZwgdR3Ik5D33wBQ=
+	b=WAptGto+JyJ6CQQH6hCMHf5v7tS22jYEbfZqZLUiz/5eMVUv1mRDmYpoTOZuVDbcF
+	 XgGHAwtZ2RQNczEC2UHRehVVLVRS+MluQjjPNA8BDcQmW2acxa0VQoOT/c3Mr/J3ev
+	 x3bCuTglzMsco2nEym5mXAZ/SR3hDaiSpFyXaQSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 061/111] gpu: host1x: Do not setup DMA for virtual devices
-Date: Tue, 14 May 2024 12:19:59 +0200
-Message-ID: <20240514100959.453640384@linuxfoundation.org>
+Subject: [PATCH 5.10 062/111] MIPS: scall: Save thread_info.syscall unconditionally on entry
+Date: Tue, 14 May 2024 12:20:00 +0200
+Message-ID: <20240514100959.491162743@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -51,58 +52,252 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thierry Reding <treding@nvidia.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-[ Upstream commit 8ab58f6841b19423231c5db3378691ec80c778f8 ]
+[ Upstream commit 4370b673ccf240bf7587b0cb8e6726a5ccaf1f17 ]
 
-The host1x devices are virtual compound devices and do not perform DMA
-accesses themselves, so they do not need to be set up for DMA.
+thread_info.syscall is used by syscall_get_nr to supply syscall nr
+over a thread stack frame.
 
-Ideally we would also not need to set up DMA masks for the virtual
-devices, but we currently still need those for legacy support on old
-hardware.
+Previously, thread_info.syscall is only saved at syscall_trace_enter
+when syscall tracing is enabled. However rest of the kernel code do
+expect syscall_get_nr to be available without syscall tracing. The
+previous design breaks collect_syscall.
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240314154943.2487549-1-thierry.reding@gmail.com
+Move saving process to syscall entry to fix it.
+
+Reported-by: Xi Ruoyao <xry111@xry111.site>
+Link: https://github.com/util-linux/util-linux/issues/2867
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/bus.c | 8 --------
- 1 file changed, 8 deletions(-)
+ arch/mips/include/asm/ptrace.h |  2 +-
+ arch/mips/kernel/asm-offsets.c |  1 +
+ arch/mips/kernel/ptrace.c      | 15 ++++++---------
+ arch/mips/kernel/scall32-o32.S | 23 +++++++++++++----------
+ arch/mips/kernel/scall64-n32.S |  3 ++-
+ arch/mips/kernel/scall64-n64.S |  3 ++-
+ arch/mips/kernel/scall64-o32.S | 33 +++++++++++++++++----------------
+ 7 files changed, 42 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/gpu/host1x/bus.c b/drivers/gpu/host1x/bus.c
-index 6e3b49d0de66d..b113c8e0acd02 100644
---- a/drivers/gpu/host1x/bus.c
-+++ b/drivers/gpu/host1x/bus.c
-@@ -335,11 +335,6 @@ static int host1x_device_uevent(struct device *dev,
- 	return 0;
+diff --git a/arch/mips/include/asm/ptrace.h b/arch/mips/include/asm/ptrace.h
+index 2849a9b65a055..ae578860f7295 100644
+--- a/arch/mips/include/asm/ptrace.h
++++ b/arch/mips/include/asm/ptrace.h
+@@ -157,7 +157,7 @@ static inline long regs_return_value(struct pt_regs *regs)
+ #define instruction_pointer(regs) ((regs)->cp0_epc)
+ #define profile_pc(regs) instruction_pointer(regs)
+ 
+-extern asmlinkage long syscall_trace_enter(struct pt_regs *regs, long syscall);
++extern asmlinkage long syscall_trace_enter(struct pt_regs *regs);
+ extern asmlinkage void syscall_trace_leave(struct pt_regs *regs);
+ 
+ extern void die(const char *, struct pt_regs *) __noreturn;
+diff --git a/arch/mips/kernel/asm-offsets.c b/arch/mips/kernel/asm-offsets.c
+index aebfda81120a1..6c5269d3aacba 100644
+--- a/arch/mips/kernel/asm-offsets.c
++++ b/arch/mips/kernel/asm-offsets.c
+@@ -100,6 +100,7 @@ void output_thread_info_defines(void)
+ 	OFFSET(TI_PRE_COUNT, thread_info, preempt_count);
+ 	OFFSET(TI_ADDR_LIMIT, thread_info, addr_limit);
+ 	OFFSET(TI_REGS, thread_info, regs);
++	OFFSET(TI_SYSCALL, thread_info, syscall);
+ 	DEFINE(_THREAD_SIZE, THREAD_SIZE);
+ 	DEFINE(_THREAD_MASK, THREAD_MASK);
+ 	DEFINE(_IRQ_STACK_SIZE, IRQ_STACK_SIZE);
+diff --git a/arch/mips/kernel/ptrace.c b/arch/mips/kernel/ptrace.c
+index db7c5be1d4a35..dd454b429ff73 100644
+--- a/arch/mips/kernel/ptrace.c
++++ b/arch/mips/kernel/ptrace.c
+@@ -1310,16 +1310,13 @@ long arch_ptrace(struct task_struct *child, long request,
+  * Notification of system call entry/exit
+  * - triggered by current->work.syscall_trace
+  */
+-asmlinkage long syscall_trace_enter(struct pt_regs *regs, long syscall)
++asmlinkage long syscall_trace_enter(struct pt_regs *regs)
+ {
+ 	user_exit();
+ 
+-	current_thread_info()->syscall = syscall;
+-
+ 	if (test_thread_flag(TIF_SYSCALL_TRACE)) {
+ 		if (tracehook_report_syscall_entry(regs))
+ 			return -1;
+-		syscall = current_thread_info()->syscall;
+ 	}
+ 
+ #ifdef CONFIG_SECCOMP
+@@ -1328,7 +1325,7 @@ asmlinkage long syscall_trace_enter(struct pt_regs *regs, long syscall)
+ 		struct seccomp_data sd;
+ 		unsigned long args[6];
+ 
+-		sd.nr = syscall;
++		sd.nr = current_thread_info()->syscall;
+ 		sd.arch = syscall_get_arch(current);
+ 		syscall_get_arguments(current, regs, args);
+ 		for (i = 0; i < 6; i++)
+@@ -1338,23 +1335,23 @@ asmlinkage long syscall_trace_enter(struct pt_regs *regs, long syscall)
+ 		ret = __secure_computing(&sd);
+ 		if (ret == -1)
+ 			return ret;
+-		syscall = current_thread_info()->syscall;
+ 	}
+ #endif
+ 
+ 	if (unlikely(test_thread_flag(TIF_SYSCALL_TRACEPOINT)))
+ 		trace_sys_enter(regs, regs->regs[2]);
+ 
+-	audit_syscall_entry(syscall, regs->regs[4], regs->regs[5],
++	audit_syscall_entry(current_thread_info()->syscall,
++			    regs->regs[4], regs->regs[5],
+ 			    regs->regs[6], regs->regs[7]);
+ 
+ 	/*
+ 	 * Negative syscall numbers are mistaken for rejected syscalls, but
+ 	 * won't have had the return value set appropriately, so we do so now.
+ 	 */
+-	if (syscall < 0)
++	if (current_thread_info()->syscall < 0)
+ 		syscall_set_return_value(current, regs, -ENOSYS, 0);
+-	return syscall;
++	return current_thread_info()->syscall;
  }
  
--static int host1x_dma_configure(struct device *dev)
--{
--	return of_dma_configure(dev, dev->of_node, true);
--}
--
- static const struct dev_pm_ops host1x_device_pm_ops = {
- 	.suspend = pm_generic_suspend,
- 	.resume = pm_generic_resume,
-@@ -353,7 +348,6 @@ struct bus_type host1x_bus_type = {
- 	.name = "host1x",
- 	.match = host1x_device_match,
- 	.uevent = host1x_device_uevent,
--	.dma_configure = host1x_dma_configure,
- 	.pm = &host1x_device_pm_ops,
- };
+ /*
+diff --git a/arch/mips/kernel/scall32-o32.S b/arch/mips/kernel/scall32-o32.S
+index b449b68662a9a..80747719a35ca 100644
+--- a/arch/mips/kernel/scall32-o32.S
++++ b/arch/mips/kernel/scall32-o32.S
+@@ -80,6 +80,18 @@ loads_done:
+ 	PTR	load_a7, bad_stack_a7
+ 	.previous
  
-@@ -442,8 +436,6 @@ static int host1x_device_add(struct host1x *host1x,
- 	device->dev.bus = &host1x_bus_type;
- 	device->dev.parent = host1x->dev;
++	/*
++	 * syscall number is in v0 unless we called syscall(__NR_###)
++	 * where the real syscall number is in a0
++	 */
++	subu	t2, v0,  __NR_O32_Linux
++	bnez	t2, 1f /* __NR_syscall at offset 0 */
++	LONG_S	a0, TI_SYSCALL($28)	# Save a0 as syscall number
++	b	2f
++1:
++	LONG_S	v0, TI_SYSCALL($28)	# Save v0 as syscall number
++2:
++
+ 	lw	t0, TI_FLAGS($28)	# syscall tracing enabled?
+ 	li	t1, _TIF_WORK_SYSCALL_ENTRY
+ 	and	t0, t1
+@@ -117,16 +129,7 @@ syscall_trace_entry:
+ 	SAVE_STATIC
+ 	move	a0, sp
  
--	of_dma_configure(&device->dev, host1x->dev->of_node, true);
+-	/*
+-	 * syscall number is in v0 unless we called syscall(__NR_###)
+-	 * where the real syscall number is in a0
+-	 */
+-	move	a1, v0
+-	subu	t2, v0,  __NR_O32_Linux
+-	bnez	t2, 1f /* __NR_syscall at offset 0 */
+-	lw	a1, PT_R4(sp)
 -
- 	device->dev.dma_parms = &device->dma_parms;
- 	dma_set_max_seg_size(&device->dev, UINT_MAX);
+-1:	jal	syscall_trace_enter
++	jal	syscall_trace_enter
+ 
+ 	bltz	v0, 1f			# seccomp failed? Skip syscall
+ 
+diff --git a/arch/mips/kernel/scall64-n32.S b/arch/mips/kernel/scall64-n32.S
+index 35d8c86b160ea..a8679e34c95e3 100644
+--- a/arch/mips/kernel/scall64-n32.S
++++ b/arch/mips/kernel/scall64-n32.S
+@@ -44,6 +44,8 @@ NESTED(handle_sysn32, PT_SIZE, sp)
+ 
+ 	sd	a3, PT_R26(sp)		# save a3 for syscall restarting
+ 
++	LONG_S	v0, TI_SYSCALL($28)     # Store syscall number
++
+ 	li	t1, _TIF_WORK_SYSCALL_ENTRY
+ 	LONG_L	t0, TI_FLAGS($28)	# syscall tracing enabled?
+ 	and	t0, t1, t0
+@@ -72,7 +74,6 @@ syscall_common:
+ n32_syscall_trace_entry:
+ 	SAVE_STATIC
+ 	move	a0, sp
+-	move	a1, v0
+ 	jal	syscall_trace_enter
+ 
+ 	bltz	v0, 1f			# seccomp failed? Skip syscall
+diff --git a/arch/mips/kernel/scall64-n64.S b/arch/mips/kernel/scall64-n64.S
+index 23b2e2b1609cf..a3b5ab509b412 100644
+--- a/arch/mips/kernel/scall64-n64.S
++++ b/arch/mips/kernel/scall64-n64.S
+@@ -47,6 +47,8 @@ NESTED(handle_sys64, PT_SIZE, sp)
+ 
+ 	sd	a3, PT_R26(sp)		# save a3 for syscall restarting
+ 
++	LONG_S	v0, TI_SYSCALL($28)     # Store syscall number
++
+ 	li	t1, _TIF_WORK_SYSCALL_ENTRY
+ 	LONG_L	t0, TI_FLAGS($28)	# syscall tracing enabled?
+ 	and	t0, t1, t0
+@@ -83,7 +85,6 @@ n64_syscall_exit:
+ syscall_trace_entry:
+ 	SAVE_STATIC
+ 	move	a0, sp
+-	move	a1, v0
+ 	jal	syscall_trace_enter
+ 
+ 	bltz	v0, 1f			# seccomp failed? Skip syscall
+diff --git a/arch/mips/kernel/scall64-o32.S b/arch/mips/kernel/scall64-o32.S
+index 50c9a57e0d3ad..6757368e9c940 100644
+--- a/arch/mips/kernel/scall64-o32.S
++++ b/arch/mips/kernel/scall64-o32.S
+@@ -79,6 +79,22 @@ loads_done:
+ 	PTR	load_a7, bad_stack_a7
+ 	.previous
+ 
++	/*
++	 * absolute syscall number is in v0 unless we called syscall(__NR_###)
++	 * where the real syscall number is in a0
++	 * note: NR_syscall is the first O32 syscall but the macro is
++	 * only defined when compiling with -mabi=32 (CONFIG_32BIT)
++	 * therefore __NR_O32_Linux is used (4000)
++	 */
++
++	subu	t2, v0,  __NR_O32_Linux
++	bnez	t2, 1f /* __NR_syscall at offset 0 */
++	LONG_S	a0, TI_SYSCALL($28)	# Save a0 as syscall number
++	b	2f
++1:
++	LONG_S	v0, TI_SYSCALL($28)	# Save v0 as syscall number
++2:
++
+ 	li	t1, _TIF_WORK_SYSCALL_ENTRY
+ 	LONG_L	t0, TI_FLAGS($28)	# syscall tracing enabled?
+ 	and	t0, t1, t0
+@@ -113,22 +129,7 @@ trace_a_syscall:
+ 	sd	a7, PT_R11(sp)		# For indirect syscalls
+ 
+ 	move	a0, sp
+-	/*
+-	 * absolute syscall number is in v0 unless we called syscall(__NR_###)
+-	 * where the real syscall number is in a0
+-	 * note: NR_syscall is the first O32 syscall but the macro is
+-	 * only defined when compiling with -mabi=32 (CONFIG_32BIT)
+-	 * therefore __NR_O32_Linux is used (4000)
+-	 */
+-	.set	push
+-	.set	reorder
+-	subu	t1, v0,  __NR_O32_Linux
+-	move	a1, v0
+-	bnez	t1, 1f /* __NR_syscall at offset 0 */
+-	ld	a1, PT_R4(sp) /* Arg1 for __NR_syscall case */
+-	.set	pop
+-
+-1:	jal	syscall_trace_enter
++	jal	syscall_trace_enter
+ 
+ 	bltz	v0, 1f			# seccomp failed? Skip syscall
  
 -- 
 2.43.0
