@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2508A12AAC6;
-	Tue, 14 May 2024 11:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071CC12AAC6;
+	Tue, 14 May 2024 11:37:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686619; cv=none; b=ZlCuXOu2l7P11WlPtxyHciOeKWsP9sk6+EV2ukF6l5Rm7bZZJf5rcAN9DsZhogPeFlAAfPiBxMw5En/fJED7ZxQay+MmCagX7je0qefshbe4IZ8vn/0r8iWWAH80TAqKeuZ4txEGdxnh7spzoYiPi4gM7vyAhDGXCB78e5gdpZc=
+	t=1715686622; cv=none; b=QW2MaB4vy04+TwOwzF0swzMRQxoFh8v1sZat2RxqUpirEb9f6qteGKjj879mncKi5O367F1HqfctTpKEyMtVeryrBpiaDiRfw2MOb2AUaSKsfxrP/FbC6WeQkAs6lbT/thlOe3cJsWFyBM2qK2uu4YIqXX+nLiHvxUuw0l5SUJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686619; c=relaxed/simple;
-	bh=Tx/+rJ/GjFGQTvznpM1U7P5+xecK7UYuit2QIiMiNxk=;
+	s=arc-20240116; t=1715686622; c=relaxed/simple;
+	bh=DXsKGd6gOe3SgDYdjhcaliY4Ai7uuqKL3a+uZM68mKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TAN/AYRxiD+2h1S6+SR6BK4/wJEYYCdP5lBRZdsmCWfc0skM4WxBSIngX47zP4qICZrUCyXvFyoA8O+MZgS9m11bcVLmH/aI0/2+mKo2foWGjufC+vAlVGTACksUlcfQWxQqt/EZLNf5A2hdd6+UvI7s6QoD9NKnvBLwOVssOjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQPgrPL3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t0dYLaYdNGqJs+4h3ukCSUk9d9UIOEHgG9LfvcSdZAibIF9GJnN+Ezo4H653D8m6W7R0X2OsSiBOs97gZCLoKc2rW/x2OptXZEGDT4wu83gng0gQXo0f1l505/OL0JoTq/8fbGMztRS2AcsjJfIHLGkpF87k83HFAm8a2VpAefg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qb3s9A1j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQPgrPL3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2082C2BD10;
-	Tue, 14 May 2024 11:36:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qb3s9A1j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FEFC2BD10;
+	Tue, 14 May 2024 11:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686619;
-	bh=Tx/+rJ/GjFGQTvznpM1U7P5+xecK7UYuit2QIiMiNxk=;
+	s=korg; t=1715686621;
+	bh=DXsKGd6gOe3SgDYdjhcaliY4Ai7uuqKL3a+uZM68mKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aQPgrPL3NayoKxe6oHFSfKyxxy9DiLfMNlLbHNyHx6pmhJmtTAXyxUwnZV1g+Clnn
-	 Loj98+SwefNbbIZ6jQFWxwvQzj5SNtwCG0ByXwuAaFkhauqUz1LHBtnQKSdazv8OYu
-	 cbpTwinPiFBx4mBy3UXGXc8686i5fyIzlDMC9e9Q=
+	b=Qb3s9A1jtySZOno5ylqwe10JtAKuaoG7DHOoT0TNujX0Sc8wgVtSbRNupc4qAyr53
+	 1eDVfhMgCPZFEumeXIvapp+4WNo6SOduZniRyRjjdKNEUtfY9ACa2AuAGd8x76WUYm
+	 e9EfCBj0CRq0aGzjm8CcKNudEB5momMXcaHnoCGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.1 200/236] usb: dwc3: core: Prevent phy suspend during init
-Date: Tue, 14 May 2024 12:19:22 +0200
-Message-ID: <20240514101027.958154174@linuxfoundation.org>
+	linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Mark Brown <broonie@kernel.org>,
+	Amit Sunil Dhamne <amitsd@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 201/236] usb: typec: tcpm: unregister existing source caps before re-registration
+Date: Tue, 14 May 2024 12:19:23 +0200
+Message-ID: <20240514101027.995680714@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -49,262 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Amit Sunil Dhamne <amitsd@google.com>
 
-commit 6d735722063a945de56472bdc6bfcb170fd43b86 upstream.
+commit 230ecdf71a644c9c73e0e6735b33173074ae3f94 upstream.
 
-GUSB3PIPECTL.SUSPENDENABLE and GUSB2PHYCFG.SUSPHY should be cleared
-during initialization. Suspend during initialization can result in
-undefined behavior due to clock synchronization failure, which often
-seen as core soft reset timeout.
+Check and unregister existing source caps in tcpm_register_source_caps
+function before registering new ones. This change fixes following
+warning when port partner resends source caps after negotiating PD contract
+for the purpose of re-negotiation.
 
-The programming guide recommended these bits to be cleared during
-initialization for DWC_usb3.0 version 1.94 and above (along with
-DWC_usb31 and DWC_usb32). The current check in the driver does not
-account if it's set by default setting from coreConsultant.
+[  343.135030][  T151] sysfs: cannot create duplicate filename '/devices/virtual/usb_power_delivery/pd1/source-capabilities'
+[  343.135071][  T151] Call trace:
+[  343.135076][  T151]  dump_backtrace+0xe8/0x108
+[  343.135099][  T151]  show_stack+0x18/0x24
+[  343.135106][  T151]  dump_stack_lvl+0x50/0x6c
+[  343.135119][  T151]  dump_stack+0x18/0x24
+[  343.135126][  T151]  sysfs_create_dir_ns+0xe0/0x140
+[  343.135137][  T151]  kobject_add_internal+0x228/0x424
+[  343.135146][  T151]  kobject_add+0x94/0x10c
+[  343.135152][  T151]  device_add+0x1b0/0x4c0
+[  343.135187][  T151]  device_register+0x20/0x34
+[  343.135195][  T151]  usb_power_delivery_register_capabilities+0x90/0x20c
+[  343.135209][  T151]  tcpm_pd_rx_handler+0x9f0/0x15b8
+[  343.135216][  T151]  kthread_worker_fn+0x11c/0x260
+[  343.135227][  T151]  kthread+0x114/0x1bc
+[  343.135235][  T151]  ret_from_fork+0x10/0x20
+[  343.135265][  T151] kobject: kobject_add_internal failed for source-capabilities with -EEXIST, don't try to register things with the same name in the same directory.
 
-This is especially the case for DRD when switching mode to ensure the
-phy clocks are available to change mode. Depending on the
-platforms/design, some may be affected more than others. This is noted
-in the DWC_usb3x programming guide under the above registers.
-
-Let's just disable them during driver load and mode switching. Restore
-them when the controller initialization completes.
-
-Note that some platforms workaround this issue by disabling phy suspend
-through "snps,dis_u3_susphy_quirk" and "snps,dis_u2_susphy_quirk" when
-they should not need to.
-
+Fixes: 8203d26905ee ("usb: typec: tcpm: Register USB Power Delivery Capabilities")
+Cc: linux-usb@vger.kernel.org
 Cc: stable@vger.kernel.org
-Fixes: 9ba3aca8fe82 ("usb: dwc3: Disable phy suspend after power-on reset")
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20da4e5a0c4678c9587d3da23f83bdd6d77353e9.1713394973.git.Thinh.Nguyen@synopsys.com
+Cc: linux-kernel@vger.kernel.org
+Cc: Mark Brown <broonie@kernel.org>
+Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240424223227.1807844-1-amitsd@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c   |   90 +++++++++++++++++++---------------------------
- drivers/usb/dwc3/core.h   |    1 
- drivers/usb/dwc3/gadget.c |    2 +
- drivers/usb/dwc3/host.c   |   27 +++++++++++++
- 4 files changed, 68 insertions(+), 52 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -104,6 +104,27 @@ static int dwc3_get_dr_mode(struct dwc3
- 	return 0;
- }
- 
-+void dwc3_enable_susphy(struct dwc3 *dwc, bool enable)
-+{
-+	u32 reg;
-+
-+	reg = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0));
-+	if (enable && !dwc->dis_u3_susphy_quirk)
-+		reg |= DWC3_GUSB3PIPECTL_SUSPHY;
-+	else
-+		reg &= ~DWC3_GUSB3PIPECTL_SUSPHY;
-+
-+	dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(0), reg);
-+
-+	reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
-+	if (enable && !dwc->dis_u2_susphy_quirk)
-+		reg |= DWC3_GUSB2PHYCFG_SUSPHY;
-+	else
-+		reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
-+
-+	dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
-+}
-+
- void dwc3_set_prtcap(struct dwc3 *dwc, u32 mode)
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -2416,7 +2416,7 @@ static int tcpm_register_sink_caps(struc
  {
- 	u32 reg;
-@@ -669,11 +690,8 @@ static int dwc3_core_ulpi_init(struct dw
-  */
- static int dwc3_phy_setup(struct dwc3 *dwc)
- {
--	unsigned int hw_mode;
- 	u32 reg;
+ 	struct usb_power_delivery_desc desc = { port->negotiated_rev };
+ 	struct usb_power_delivery_capabilities_desc caps = { };
+-	struct usb_power_delivery_capabilities *cap;
++	struct usb_power_delivery_capabilities *cap = port->partner_source_caps;
  
--	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
--
- 	reg = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0));
+ 	if (!port->partner_pd)
+ 		port->partner_pd = usb_power_delivery_register(NULL, &desc);
+@@ -2426,6 +2426,9 @@ static int tcpm_register_sink_caps(struc
+ 	memcpy(caps.pdo, port->sink_caps, sizeof(u32) * port->nr_sink_caps);
+ 	caps.role = TYPEC_SINK;
  
- 	/*
-@@ -683,21 +701,16 @@ static int dwc3_phy_setup(struct dwc3 *d
- 	reg &= ~DWC3_GUSB3PIPECTL_UX_EXIT_PX;
- 
- 	/*
--	 * Above 1.94a, it is recommended to set DWC3_GUSB3PIPECTL_SUSPHY
--	 * to '0' during coreConsultant configuration. So default value
--	 * will be '0' when the core is reset. Application needs to set it
--	 * to '1' after the core initialization is completed.
--	 */
--	if (!DWC3_VER_IS_WITHIN(DWC3, ANY, 194A))
--		reg |= DWC3_GUSB3PIPECTL_SUSPHY;
--
--	/*
--	 * For DRD controllers, GUSB3PIPECTL.SUSPENDENABLE must be cleared after
--	 * power-on reset, and it can be set after core initialization, which is
--	 * after device soft-reset during initialization.
-+	 * Above DWC_usb3.0 1.94a, it is recommended to set
-+	 * DWC3_GUSB3PIPECTL_SUSPHY to '0' during coreConsultant configuration.
-+	 * So default value will be '0' when the core is reset. Application
-+	 * needs to set it to '1' after the core initialization is completed.
-+	 *
-+	 * Similarly for DRD controllers, GUSB3PIPECTL.SUSPENDENABLE must be
-+	 * cleared after power-on reset, and it can be set after core
-+	 * initialization.
- 	 */
--	if (hw_mode == DWC3_GHWPARAMS0_MODE_DRD)
--		reg &= ~DWC3_GUSB3PIPECTL_SUSPHY;
-+	reg &= ~DWC3_GUSB3PIPECTL_SUSPHY;
- 
- 	if (dwc->u2ss_inp3_quirk)
- 		reg |= DWC3_GUSB3PIPECTL_U2SSINP3OK;
-@@ -723,9 +736,6 @@ static int dwc3_phy_setup(struct dwc3 *d
- 	if (dwc->tx_de_emphasis_quirk)
- 		reg |= DWC3_GUSB3PIPECTL_TX_DEEPH(dwc->tx_de_emphasis);
- 
--	if (dwc->dis_u3_susphy_quirk)
--		reg &= ~DWC3_GUSB3PIPECTL_SUSPHY;
--
- 	if (dwc->dis_del_phy_power_chg_quirk)
- 		reg &= ~DWC3_GUSB3PIPECTL_DEPOCHANGE;
- 
-@@ -773,24 +783,15 @@ static int dwc3_phy_setup(struct dwc3 *d
- 	}
- 
- 	/*
--	 * Above 1.94a, it is recommended to set DWC3_GUSB2PHYCFG_SUSPHY to
--	 * '0' during coreConsultant configuration. So default value will
--	 * be '0' when the core is reset. Application needs to set it to
--	 * '1' after the core initialization is completed.
--	 */
--	if (!DWC3_VER_IS_WITHIN(DWC3, ANY, 194A))
--		reg |= DWC3_GUSB2PHYCFG_SUSPHY;
--
--	/*
--	 * For DRD controllers, GUSB2PHYCFG.SUSPHY must be cleared after
--	 * power-on reset, and it can be set after core initialization, which is
--	 * after device soft-reset during initialization.
-+	 * Above DWC_usb3.0 1.94a, it is recommended to set
-+	 * DWC3_GUSB2PHYCFG_SUSPHY to '0' during coreConsultant configuration.
-+	 * So default value will be '0' when the core is reset. Application
-+	 * needs to set it to '1' after the core initialization is completed.
-+	 *
-+	 * Similarly for DRD controllers, GUSB2PHYCFG.SUSPHY must be cleared
-+	 * after power-on reset, and it can be set after core initialization.
- 	 */
--	if (hw_mode == DWC3_GHWPARAMS0_MODE_DRD)
--		reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
--
--	if (dwc->dis_u2_susphy_quirk)
--		reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
-+	reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
- 
- 	if (dwc->dis_enblslpm_quirk)
- 		reg &= ~DWC3_GUSB2PHYCFG_ENBLSLPM;
-@@ -1238,21 +1239,6 @@ static int dwc3_core_init(struct dwc3 *d
- 	if (ret)
- 		goto err1;
- 
--	if (hw_mode == DWC3_GHWPARAMS0_MODE_DRD &&
--	    !DWC3_VER_IS_WITHIN(DWC3, ANY, 194A)) {
--		if (!dwc->dis_u3_susphy_quirk) {
--			reg = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0));
--			reg |= DWC3_GUSB3PIPECTL_SUSPHY;
--			dwc3_writel(dwc->regs, DWC3_GUSB3PIPECTL(0), reg);
--		}
--
--		if (!dwc->dis_u2_susphy_quirk) {
--			reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
--			reg |= DWC3_GUSB2PHYCFG_SUSPHY;
--			dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
--		}
--	}
--
- 	dwc3_core_setup_global_control(dwc);
- 	dwc3_core_num_eps(dwc);
- 
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -1558,6 +1558,7 @@ int dwc3_event_buffers_setup(struct dwc3
- void dwc3_event_buffers_cleanup(struct dwc3 *dwc);
- 
- int dwc3_core_soft_reset(struct dwc3 *dwc);
-+void dwc3_enable_susphy(struct dwc3 *dwc, bool enable);
- 
- #if IS_ENABLED(CONFIG_USB_DWC3_HOST) || IS_ENABLED(CONFIG_USB_DWC3_DUAL_ROLE)
- int dwc3_host_init(struct dwc3 *dwc);
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2831,6 +2831,7 @@ static int __dwc3_gadget_start(struct dw
- 	dwc3_ep0_out_start(dwc);
- 
- 	dwc3_gadget_enable_irq(dwc);
-+	dwc3_enable_susphy(dwc, true);
- 
- 	return 0;
- 
-@@ -4573,6 +4574,7 @@ void dwc3_gadget_exit(struct dwc3 *dwc)
- 	if (!dwc->gadget)
- 		return;
- 
-+	dwc3_enable_susphy(dwc, false);
- 	usb_del_gadget(dwc->gadget);
- 	dwc3_gadget_free_endpoints(dwc);
- 	usb_put_gadget(dwc->gadget);
---- a/drivers/usb/dwc3/host.c
-+++ b/drivers/usb/dwc3/host.c
-@@ -10,9 +10,30 @@
- #include <linux/irq.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
-+#include <linux/usb.h>
-+#include <linux/usb/hcd.h>
- 
-+#include "../host/xhci-plat.h"
- #include "core.h"
- 
-+static void dwc3_xhci_plat_start(struct usb_hcd *hcd)
-+{
-+	struct platform_device *pdev;
-+	struct dwc3 *dwc;
++	if (cap)
++		usb_power_delivery_unregister_capabilities(cap);
 +
-+	if (!usb_hcd_is_primary_hcd(hcd))
-+		return;
-+
-+	pdev = to_platform_device(hcd->self.controller);
-+	dwc = dev_get_drvdata(pdev->dev.parent);
-+
-+	dwc3_enable_susphy(dwc, true);
-+}
-+
-+static const struct xhci_plat_priv dwc3_xhci_plat_quirk = {
-+	.plat_start = dwc3_xhci_plat_start,
-+};
-+
- static void dwc3_host_fill_xhci_irq_res(struct dwc3 *dwc,
- 					int irq, char *name)
- {
-@@ -122,6 +143,11 @@ int dwc3_host_init(struct dwc3 *dwc)
- 		}
- 	}
- 
-+	ret = platform_device_add_data(xhci, &dwc3_xhci_plat_quirk,
-+				       sizeof(struct xhci_plat_priv));
-+	if (ret)
-+		goto err;
-+
- 	ret = platform_device_add(xhci);
- 	if (ret) {
- 		dev_err(dwc->dev, "failed to register xHCI device\n");
-@@ -136,6 +162,7 @@ err:
- 
- void dwc3_host_exit(struct dwc3 *dwc)
- {
-+	dwc3_enable_susphy(dwc, false);
- 	platform_device_unregister(dwc->xhci);
- 	dwc->xhci = NULL;
- }
+ 	cap = usb_power_delivery_register_capabilities(port->partner_pd, &caps);
+ 	if (IS_ERR(cap))
+ 		return PTR_ERR(cap);
 
 
