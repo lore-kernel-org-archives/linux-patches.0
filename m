@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16E0F9D4;
-	Tue, 14 May 2024 11:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C2BF9D4;
+	Tue, 14 May 2024 11:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687913; cv=none; b=Pz64OtGDi3mw3IgCYIWeG5zoK/Ev75WybKUFVJ/mumzE6si0LwsT+5wBt/r4wzBGVSGi/eJKQZt3Kqrx0HY1Co6x2z+GB06XuOHWcMhfdvem6X7QzgAqCZHle4oJpqMr38vAqarUAW0FaYBSk7T1DFFgAV3nBakY8doyxMAooqo=
+	t=1715687916; cv=none; b=npXnQrjtLRNQNJaedO9H7rr8nt/YQQGbedaG5I7wJS3DfhRGapuXx9FSYaIgKicnXZFN+KKjdbOrdhqSeBeeEnZ9pdeJUp1apdDoVGMEYzwQEG/U+eWp99Pqa1yQ/9le19RMp9Sye+0g+y7l4D80USrf0YLM1N9C6h2mp4I0OcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687913; c=relaxed/simple;
-	bh=fRxdtUG4HpxCMSxIJ36XgbK8vGypXmu1oOYrERiq4Mo=;
+	s=arc-20240116; t=1715687916; c=relaxed/simple;
+	bh=7yrmttvWE0Mn2TT20OJdFojuWJ7Ow4qotFDHrb1N39I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SUZYxmh5dI0DHi1jEm0hHWZGA5XVdAuPtaayAd0OUAkU+DLcEii9xAeK5Lji/sgVEnVDvnyu47cenIsm7CIEwcU4eRh6A8ROm7cRkjCPBoTmRTcuyoB9P0EJTDe2PuJsmpJqvxwxnuRD7BlBvlNrTaWHheRQ9yQyJhsweZ1sP5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxODZJus; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oteAoC5v5HQnUJDtE8efnFslJdeM0EBOoOrGNpPOTw0iX6XdzXCs5PZgw0D4WSagLC7ecDv4EDe2cK0WJylxWsqsQN973shY2KJ+UZD0vFGV1LzfJjmmxPTGoJ7ZZJBPAbaaHoOMw/Oj002O7bbNM8JHW01PoTTNCNE6sgo1Ekc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLHOysFU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxODZJus"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE45C2BD10;
-	Tue, 14 May 2024 11:58:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLHOysFU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082BAC32782;
+	Tue, 14 May 2024 11:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687913;
-	bh=fRxdtUG4HpxCMSxIJ36XgbK8vGypXmu1oOYrERiq4Mo=;
+	s=korg; t=1715687916;
+	bh=7yrmttvWE0Mn2TT20OJdFojuWJ7Ow4qotFDHrb1N39I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UxODZJusi3fasN3VIRwW/xMWkRX9ORRGbRR56U+6rUmelJIh1M9vknmF2ccePc9hV
-	 Vq41F2JZL28REEXeSrOuhdPub8aq8pduKnLlFYugmTcdZciWTEW64d/A8RegK4koNe
-	 G0Ea2ObM+ugu6Kw2PpirwSQH5frD5vRTzb7uvfOk=
+	b=TLHOysFUCyd/AOwX19owbc2xYL+I8P0cRh6mWIu9vwTPsub345ow1qX9I7XySLG/K
+	 Dr0rFqYDWy25UG8PphPTRMqBhGuaipYxUtLvoVaW7HTRz/BoW7VF2duNyZbiuOhxte
+	 B2vkSMeMKsVu7GjD7flc/7lMyBSqtyolsbEBx8Kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peiyang Wang <wangpeiyang1@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 117/168] net: hns3: using user configure after hardware reset
-Date: Tue, 14 May 2024 12:20:15 +0200
-Message-ID: <20240514101011.101005927@linuxfoundation.org>
+Subject: [PATCH 5.15 108/168] Bluetooth: l2cap: fix null-ptr-deref in l2cap_chan_timeout
+Date: Tue, 14 May 2024 12:20:06 +0200
+Message-ID: <20240514101010.762392864@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -54,125 +51,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peiyang Wang <wangpeiyang1@huawei.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 05eb60e9648cca0beeebdbcd263b599fb58aee48 ]
+[ Upstream commit adf0398cee86643b8eacde95f17d073d022f782c ]
 
-When a reset occurring, it's supposed to recover user's configuration.
-Currently, the port info(speed, duplex and autoneg) is stored in hclge_mac
-and will be scheduled updated. Consider the case that reset was happened
-consecutively. During the first reset, the port info is configured with
-a temporary value cause the PHY is reset and looking for best link config.
-Second reset start and use pervious configuration which is not the user's.
-The specific process is as follows:
+There is a race condition between l2cap_chan_timeout() and
+l2cap_chan_del(). When we use l2cap_chan_del() to delete the
+channel, the chan->conn will be set to null. But the conn could
+be dereferenced again in the mutex_lock() of l2cap_chan_timeout().
+As a result the null pointer dereference bug will happen. The
+KASAN report triggered by POC is shown below:
 
-+------+               +----+                +----+
-| USER |               | PF |                | HW |
-+---+--+               +-+--+                +-+--+
-    |  ethtool --reset   |                     |
-    +------------------->|    reset command    |
-    |  ethtool --reset   +-------------------->|
-    +------------------->|                     +---+
-    |                    +---+                 |   |
-    |                    |   |reset currently  |   | HW RESET
-    |                    |   |and wait to do   |   |
-    |                    |<--+                 |   |
-    |                    | send pervious cfg   |<--+
-    |                    | (1000M FULL AN_ON)  |
-    |                    +-------------------->|
-    |                    | read cfg(time task) |
-    |                    | (10M HALF AN_OFF)   +---+
-    |                    |<--------------------+   | cfg take effect
-    |                    |    reset command    |<--+
-    |                    +-------------------->|
-    |                    |                     +---+
-    |                    | send pervious cfg   |   | HW RESET
-    |                    | (10M HALF AN_OFF)   |<--+
-    |                    +-------------------->|
-    |                    | read cfg(time task) |
-    |                    |  (10M HALF AN_OFF)  +---+
-    |                    |<--------------------+   | cfg take effect
-    |                    |                     |   |
-    |                    | read cfg(time task) |<--+
-    |                    |  (10M HALF AN_OFF)  |
-    |                    |<--------------------+
-    |                    |                     |
-    v                    v                     v
+[  472.074580] ==================================================================
+[  472.075284] BUG: KASAN: null-ptr-deref in mutex_lock+0x68/0xc0
+[  472.075308] Write of size 8 at addr 0000000000000158 by task kworker/0:0/7
+[  472.075308]
+[  472.075308] CPU: 0 PID: 7 Comm: kworker/0:0 Not tainted 6.9.0-rc5-00356-g78c0094a146b #36
+[  472.075308] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu4
+[  472.075308] Workqueue: events l2cap_chan_timeout
+[  472.075308] Call Trace:
+[  472.075308]  <TASK>
+[  472.075308]  dump_stack_lvl+0x137/0x1a0
+[  472.075308]  print_report+0x101/0x250
+[  472.075308]  ? __virt_addr_valid+0x77/0x160
+[  472.075308]  ? mutex_lock+0x68/0xc0
+[  472.075308]  kasan_report+0x139/0x170
+[  472.075308]  ? mutex_lock+0x68/0xc0
+[  472.075308]  kasan_check_range+0x2c3/0x2e0
+[  472.075308]  mutex_lock+0x68/0xc0
+[  472.075308]  l2cap_chan_timeout+0x181/0x300
+[  472.075308]  process_one_work+0x5d2/0xe00
+[  472.075308]  worker_thread+0xe1d/0x1660
+[  472.075308]  ? pr_cont_work+0x5e0/0x5e0
+[  472.075308]  kthread+0x2b7/0x350
+[  472.075308]  ? pr_cont_work+0x5e0/0x5e0
+[  472.075308]  ? kthread_blkcg+0xd0/0xd0
+[  472.075308]  ret_from_fork+0x4d/0x80
+[  472.075308]  ? kthread_blkcg+0xd0/0xd0
+[  472.075308]  ret_from_fork_asm+0x11/0x20
+[  472.075308]  </TASK>
+[  472.075308] ==================================================================
+[  472.094860] Disabling lock debugging due to kernel taint
+[  472.096136] BUG: kernel NULL pointer dereference, address: 0000000000000158
+[  472.096136] #PF: supervisor write access in kernel mode
+[  472.096136] #PF: error_code(0x0002) - not-present page
+[  472.096136] PGD 0 P4D 0
+[  472.096136] Oops: 0002 [#1] PREEMPT SMP KASAN NOPTI
+[  472.096136] CPU: 0 PID: 7 Comm: kworker/0:0 Tainted: G    B              6.9.0-rc5-00356-g78c0094a146b #36
+[  472.096136] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu4
+[  472.096136] Workqueue: events l2cap_chan_timeout
+[  472.096136] RIP: 0010:mutex_lock+0x88/0xc0
+[  472.096136] Code: be 08 00 00 00 e8 f8 23 1f fd 4c 89 f7 be 08 00 00 00 e8 eb 23 1f fd 42 80 3c 23 00 74 08 48 88
+[  472.096136] RSP: 0018:ffff88800744fc78 EFLAGS: 00000246
+[  472.096136] RAX: 0000000000000000 RBX: 1ffff11000e89f8f RCX: ffffffff8457c865
+[  472.096136] RDX: 0000000000000001 RSI: 0000000000000008 RDI: ffff88800744fc78
+[  472.096136] RBP: 0000000000000158 R08: ffff88800744fc7f R09: 1ffff11000e89f8f
+[  472.096136] R10: dffffc0000000000 R11: ffffed1000e89f90 R12: dffffc0000000000
+[  472.096136] R13: 0000000000000158 R14: ffff88800744fc78 R15: ffff888007405a00
+[  472.096136] FS:  0000000000000000(0000) GS:ffff88806d200000(0000) knlGS:0000000000000000
+[  472.096136] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  472.096136] CR2: 0000000000000158 CR3: 000000000da32000 CR4: 00000000000006f0
+[  472.096136] Call Trace:
+[  472.096136]  <TASK>
+[  472.096136]  ? __die_body+0x8d/0xe0
+[  472.096136]  ? page_fault_oops+0x6b8/0x9a0
+[  472.096136]  ? kernelmode_fixup_or_oops+0x20c/0x2a0
+[  472.096136]  ? do_user_addr_fault+0x1027/0x1340
+[  472.096136]  ? _printk+0x7a/0xa0
+[  472.096136]  ? mutex_lock+0x68/0xc0
+[  472.096136]  ? add_taint+0x42/0xd0
+[  472.096136]  ? exc_page_fault+0x6a/0x1b0
+[  472.096136]  ? asm_exc_page_fault+0x26/0x30
+[  472.096136]  ? mutex_lock+0x75/0xc0
+[  472.096136]  ? mutex_lock+0x88/0xc0
+[  472.096136]  ? mutex_lock+0x75/0xc0
+[  472.096136]  l2cap_chan_timeout+0x181/0x300
+[  472.096136]  process_one_work+0x5d2/0xe00
+[  472.096136]  worker_thread+0xe1d/0x1660
+[  472.096136]  ? pr_cont_work+0x5e0/0x5e0
+[  472.096136]  kthread+0x2b7/0x350
+[  472.096136]  ? pr_cont_work+0x5e0/0x5e0
+[  472.096136]  ? kthread_blkcg+0xd0/0xd0
+[  472.096136]  ret_from_fork+0x4d/0x80
+[  472.096136]  ? kthread_blkcg+0xd0/0xd0
+[  472.096136]  ret_from_fork_asm+0x11/0x20
+[  472.096136]  </TASK>
+[  472.096136] Modules linked in:
+[  472.096136] CR2: 0000000000000158
+[  472.096136] ---[ end trace 0000000000000000 ]---
+[  472.096136] RIP: 0010:mutex_lock+0x88/0xc0
+[  472.096136] Code: be 08 00 00 00 e8 f8 23 1f fd 4c 89 f7 be 08 00 00 00 e8 eb 23 1f fd 42 80 3c 23 00 74 08 48 88
+[  472.096136] RSP: 0018:ffff88800744fc78 EFLAGS: 00000246
+[  472.096136] RAX: 0000000000000000 RBX: 1ffff11000e89f8f RCX: ffffffff8457c865
+[  472.096136] RDX: 0000000000000001 RSI: 0000000000000008 RDI: ffff88800744fc78
+[  472.096136] RBP: 0000000000000158 R08: ffff88800744fc7f R09: 1ffff11000e89f8f
+[  472.132932] R10: dffffc0000000000 R11: ffffed1000e89f90 R12: dffffc0000000000
+[  472.132932] R13: 0000000000000158 R14: ffff88800744fc78 R15: ffff888007405a00
+[  472.132932] FS:  0000000000000000(0000) GS:ffff88806d200000(0000) knlGS:0000000000000000
+[  472.132932] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  472.132932] CR2: 0000000000000158 CR3: 000000000da32000 CR4: 00000000000006f0
+[  472.132932] Kernel panic - not syncing: Fatal exception
+[  472.132932] Kernel Offset: disabled
+[  472.132932] ---[ end Kernel panic - not syncing: Fatal exception ]---
 
-To avoid aboved situation, this patch introduced req_speed, req_duplex,
-req_autoneg to store user's configuration and it only be used after
-hardware reset and to recover user's configuration
+Add a check to judge whether the conn is null in l2cap_chan_timeout()
+in order to mitigate the bug.
 
-Fixes: f5f2b3e4dcc0 ("net: hns3: add support for imp-controlled PHYs")
-Signed-off-by: Peiyang Wang <wangpeiyang1@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 3df91ea20e74 ("Bluetooth: Revert to mutexes from RCU list")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/hisilicon/hns3/hns3pf/hclge_main.c   | 15 +++++++++------
- .../ethernet/hisilicon/hns3/hns3pf/hclge_main.h   |  3 +++
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ net/bluetooth/l2cap_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 3423b8e278e3a..71b498aa327bb 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -1572,6 +1572,9 @@ static int hclge_configure(struct hclge_dev *hdev)
- 			cfg.default_speed, ret);
- 		return ret;
- 	}
-+	hdev->hw.mac.req_speed = hdev->hw.mac.speed;
-+	hdev->hw.mac.req_autoneg = AUTONEG_ENABLE;
-+	hdev->hw.mac.req_duplex = DUPLEX_FULL;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 11bfc8737e6ce..900b352975856 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -435,6 +435,9 @@ static void l2cap_chan_timeout(struct work_struct *work)
  
- 	hclge_parse_link_mode(hdev, cfg.speed_ability);
+ 	BT_DBG("chan %p state %s", chan, state_to_string(chan->state));
  
-@@ -3163,9 +3166,9 @@ hclge_set_phy_link_ksettings(struct hnae3_handle *handle,
- 		return ret;
- 	}
- 
--	hdev->hw.mac.autoneg = cmd->base.autoneg;
--	hdev->hw.mac.speed = cmd->base.speed;
--	hdev->hw.mac.duplex = cmd->base.duplex;
-+	hdev->hw.mac.req_autoneg = cmd->base.autoneg;
-+	hdev->hw.mac.req_speed = cmd->base.speed;
-+	hdev->hw.mac.req_duplex = cmd->base.duplex;
- 	linkmode_copy(hdev->hw.mac.advertising, cmd->link_modes.advertising);
- 
- 	return 0;
-@@ -3198,9 +3201,9 @@ static int hclge_tp_port_init(struct hclge_dev *hdev)
- 	if (!hnae3_dev_phy_imp_supported(hdev))
- 		return 0;
- 
--	cmd.base.autoneg = hdev->hw.mac.autoneg;
--	cmd.base.speed = hdev->hw.mac.speed;
--	cmd.base.duplex = hdev->hw.mac.duplex;
-+	cmd.base.autoneg = hdev->hw.mac.req_autoneg;
-+	cmd.base.speed = hdev->hw.mac.req_speed;
-+	cmd.base.duplex = hdev->hw.mac.req_duplex;
- 	linkmode_copy(cmd.link_modes.advertising, hdev->hw.mac.advertising);
- 
- 	return hclge_set_phy_link_ksettings(&hdev->vport->nic, &cmd);
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
-index a716027df0ed1..ba0d41091b1da 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
-@@ -275,10 +275,13 @@ struct hclge_mac {
- 	u8 media_type;	/* port media type, e.g. fibre/copper/backplane */
- 	u8 mac_addr[ETH_ALEN];
- 	u8 autoneg;
-+	u8 req_autoneg;
- 	u8 duplex;
-+	u8 req_duplex;
- 	u8 support_autoneg;
- 	u8 speed_type;	/* 0: sfp speed, 1: active speed */
- 	u32 speed;
-+	u32 req_speed;
- 	u32 max_speed;
- 	u32 speed_ability; /* speed ability supported by current media */
- 	u32 module_type; /* sub media type, e.g. kr/cr/sr/lr */
++	if (!conn)
++		return;
++
+ 	mutex_lock(&conn->chan_lock);
+ 	/* __set_chan_timer() calls l2cap_chan_hold(chan) while scheduling
+ 	 * this work. No need to call l2cap_chan_hold(chan) here again.
 -- 
 2.43.0
 
