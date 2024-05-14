@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7080B5FDD2;
-	Tue, 14 May 2024 11:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8679E12F394;
+	Tue, 14 May 2024 11:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686874; cv=none; b=VlkCXWYTF6MuI4oeeFsx3NwKXZ5zj5yPs2Ch3bhI49U/xyjFw8J43ItADH50fNH/o5pQ2qiRLtOzZbXJf0tLmcU2xwgUHswmEjaKzhtIhiJ80HSLfkVSeX2zQi9ypeC3grX23/0a2wm85fHdLuk9iY95tcIH7xlBKhhPc2QQ1mk=
+	t=1715686877; cv=none; b=eL/UmQqiTxgcWBumhR4URu91xnFYPnMgsLwm3tz2SZS8+brwZ9xT0c2/FdHWTAx6y2B5KR+1078gQjq4qnDgP0HKlnXK+fWKEZYsdpyDuE+RPERvOL71+8oTBkcasqQcO1kyGDtq5ein6ht04plvtWZsiWe6J9AevQEMTiOz02U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686874; c=relaxed/simple;
-	bh=7ToX8QbRouw9PCR7FDs8TgSMEU7E+DJcL7o4/bpj0qw=;
+	s=arc-20240116; t=1715686877; c=relaxed/simple;
+	bh=mTvrySSx2p1lo9n2V+N1MKuBkrQBs+RiVm92ukYAjwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zh1oSv0rdhlWdFw5E7a+Kyge1ypcm3Vj2C+gQJsuY5B06FBYHAPM/41gCbvjkMELODU7JzkYCHrRNtsjLK832CWAM39Hl5yybodTmoCJnu4oaanaCYasDCLtJCz0vei+xyZTCjqa+XFPZXE+DEvFjYHl8hhxu031m/JuyEj0UOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkVT23Ex; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WGZeeS06ZqHxLylQdUI4AqOf+678Z6UsKmZVk/qGTvmuZ0Q9d16R2GeG1smCU+PdLq/E1Jav8E4sirjif7fdVSFWeAsoL3K25Uwe+OwOf2C3YzRIoiZ/jrnehHPeAJtIpjUZBLoOMI3RDn6WZ3Kx21lr3iasCmUn9ttmn3tfbVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jev0X4wY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkVT23Ex"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1BDC2BD10;
-	Tue, 14 May 2024 11:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jev0X4wY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAFADC2BD10;
+	Tue, 14 May 2024 11:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686874;
-	bh=7ToX8QbRouw9PCR7FDs8TgSMEU7E+DJcL7o4/bpj0qw=;
+	s=korg; t=1715686877;
+	bh=mTvrySSx2p1lo9n2V+N1MKuBkrQBs+RiVm92ukYAjwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dkVT23ExSic60dnXTC8RC82pl7YJzqqM4+GqTdHjKO/WgTHS8aaH8DzSIjZd5YRyo
-	 Bqlmn8rlrcWNjbcKTCUvWrPGkNiqlX3W9XO/dsW4ai5o3set044RsjPTx9PYClCFmU
-	 HXsSKmTYatfLOVizOsQPfzwaUuNNVQ/iLO1DfcQg=
+	b=Jev0X4wYcHQP9HiuNdINh8BzGmtzTHdvIdWo+vkCkTEu85HvtK0iLUVr+13X6fC2I
+	 wTtHeWofA/bLqhjBKoLPeexm/fcNgae3GbPTAE+ABx9PPvKuHs9GE8get5dxKRwUmq
+	 mGlw3efVJ8oELQGK3eE4uAqp6YQ1swm4JCM125Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
 	Paolo Abeni <pabeni@redhat.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Xin Long <lucien.xin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Tung Nguyen <tung.q.nguyen@dektech.com.au>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 20/63] net: bridge: fix multicast-to-unicast with fraglist GSO
-Date: Tue, 14 May 2024 12:19:41 +0200
-Message-ID: <20240514100948.779612200@linuxfoundation.org>
+Subject: [PATCH 4.19 21/63] tipc: fix a possible memleak in tipc_buf_append
+Date: Tue, 14 May 2024 12:19:42 +0200
+Message-ID: <20240514100948.816808192@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100948.010148088@linuxfoundation.org>
 References: <20240514100948.010148088@linuxfoundation.org>
@@ -53,37 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 59c878cbcdd80ed39315573b3511d0acfd3501b5 ]
+[ Upstream commit 97bf6f81b29a8efaf5d0983251a7450e5794370d ]
 
-Calling skb_copy on a SKB_GSO_FRAGLIST skb is not valid, since it returns
-an invalid linearized skb. This code only needs to change the ethernet
-header, so pskb_copy is the right function to call here.
+__skb_linearize() doesn't free the skb when it fails, so move
+'*buf = NULL' after __skb_linearize(), so that the skb can be
+freed on the err path.
 
-Fixes: 6db6f0eae605 ("bridge: multicast to unicast")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: b7df21cf1b79 ("tipc: skb_linearize the head skb when reassembling msgs")
+Reported-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Tung Nguyen <tung.q.nguyen@dektech.com.au>
+Link: https://lore.kernel.org/r/90710748c29a1521efac4f75ea01b3b7e61414cf.1714485818.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_forward.c | 2 +-
+ net/tipc/msg.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
-index c07a47d65c398..fc2ebd732098f 100644
---- a/net/bridge/br_forward.c
-+++ b/net/bridge/br_forward.c
-@@ -259,7 +259,7 @@ static void maybe_deliver_addr(struct net_bridge_port *p, struct sk_buff *skb,
- 	if (skb->dev == p->dev && ether_addr_equal(src, addr))
- 		return;
- 
--	skb = skb_copy(skb, GFP_ATOMIC);
-+	skb = pskb_copy(skb, GFP_ATOMIC);
- 	if (!skb) {
- 		DEV_STATS_INC(dev, tx_dropped);
- 		return;
+diff --git a/net/tipc/msg.c b/net/tipc/msg.c
+index 0ac2704449744..911b8f4319851 100644
+--- a/net/tipc/msg.c
++++ b/net/tipc/msg.c
+@@ -140,9 +140,9 @@ int tipc_buf_append(struct sk_buff **headbuf, struct sk_buff **buf)
+ 	if (fragid == FIRST_FRAGMENT) {
+ 		if (unlikely(head))
+ 			goto err;
+-		*buf = NULL;
+ 		if (skb_has_frag_list(frag) && __skb_linearize(frag))
+ 			goto err;
++		*buf = NULL;
+ 		frag = skb_unshare(frag, GFP_ATOMIC);
+ 		if (unlikely(!frag))
+ 			goto err;
 -- 
 2.43.0
 
