@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D115012E1E2;
-	Tue, 14 May 2024 11:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E6B12E1E2;
+	Tue, 14 May 2024 11:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686725; cv=none; b=b3DYlkT5ynxwAIiSaaVVfeCYYQNq40IzG8MZAS2KLrPb+SQroN/RvflSsi8gwOf3rAYWmCwURTm6+5UTl2B9wsiz1HkQLjaKH64aLpXBzH6OsOk7wFjJAEQUkqlN33w3Y8VebbHjX/sJNDPoaY5u5LLlMDK3xXry2Zt0nvEGjFQ=
+	t=1715686728; cv=none; b=QYnZczPOBDZHdzDRwgoiB3M0A4Pev1PjlCONr+M3rTzC7eJWUaaDFE3zdpYMAqb4ai2i1gFYdAaCtZuS/Vchzb7M+SC2Ot1WoAYk8GcYa0iqn9vBDM9QceJ/a7ANTSb1sKMA0LllFP9I0xNoZoJ6Kn2xkAk2/sK0tsJVX434qDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686725; c=relaxed/simple;
-	bh=nh0FtlXWh8jzGSfxTdQfOrHrgdSJHSDoWa2xkBnGXvg=;
+	s=arc-20240116; t=1715686728; c=relaxed/simple;
+	bh=xljTn7UfEC4jy8Aa/E4M/F8lA0M5IEwGwC8AFZaC1Ck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIqmTF5P/Ug/M6q/v59yu3FqSDGo5j62+O9f9imXOUUDI+FCn4KNPFVqhqGB3agg/Y50qZ0NuIf526hwHJGbO/qf4W6LGQQsJoJe5pfU1qmlUR1tnEMsktzio/ktSEguA7H0WB+vp99TcWudBP5VNjBdHkSU/TioQpkEm1sEc64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDQSb3ba; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PcYhcQCV81kxmwgDI7W/iWQ7QFGIgWr1747LP+iR9/YaRahvR7r3swzkW9Rpdq3/fp+Uira88tw2ggZW7Okr/W3sFRlCbxJeKAE0qezUYXSmRMjSXj4hzNh/HzkTUJCJCMP8y4RcZbMqjeKS/iWs6QUpn7kFEk7N/gR/UuVL/1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NeZesl5O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDQSb3ba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5958CC2BD10;
-	Tue, 14 May 2024 11:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NeZesl5O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1D7C2BD10;
+	Tue, 14 May 2024 11:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686725;
-	bh=nh0FtlXWh8jzGSfxTdQfOrHrgdSJHSDoWa2xkBnGXvg=;
+	s=korg; t=1715686728;
+	bh=xljTn7UfEC4jy8Aa/E4M/F8lA0M5IEwGwC8AFZaC1Ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CDQSb3ba3GtTtp2S7u3TmjF9fLDPT6KYrj91c3dlpbz/gK4XmirbRyQ+Nl1BjN1BH
-	 epactkmyI+0eswGHGnwfte/i1rH8QV9Wppd9b6HkpPtywLMbW3VlZ94K5AmNwtekpx
-	 HjxeKFsEgYVNlXeB4HibXZDEmaMD4xwoI+lQbIcI=
+	b=NeZesl5Oqs4QecUNr28IgaK6y74DefUteiRBrgo2AiFtKnQ346ubA4ZHjNrdkCuNs
+	 5Ya9D0idN0X3fI1TCXXJYX2COJC0y8wKuL3nQJZUKhNfozoW+XoLphSsHj5LXi0Bd3
+	 zZv8DCqILP2KyXJ46HKqqzLJs49qrAyHGPNQEOrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jim Cromie <jim.cromie@gmail.com>
-Subject: [PATCH 6.1 217/236] dyndbg: fix old BUG_ON in >control parser
-Date: Tue, 14 May 2024 12:19:39 +0200
-Message-ID: <20240514101028.596335008@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.1 218/236] slimbus: qcom-ngd-ctrl: Add timeout for wait operation
+Date: Tue, 14 May 2024 12:19:40 +0200
+Message-ID: <20240514101028.633502330@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -50,36 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jim Cromie <jim.cromie@gmail.com>
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
 
-commit 00e7d3bea2ce7dac7bee1cf501fb071fd0ea8f6c upstream.
+commit 98241a774db49988f25b7b3657026ce51ccec293 upstream.
 
-Fix a BUG_ON from 2009.  Even if it looks "unreachable" (I didn't
-really look), lets make sure by removing it, doing pr_err and return
--EINVAL instead.
+In current driver qcom_slim_ngd_up_worker() indefinitely
+waiting for ctrl->qmi_up completion object. This is
+resulting in workqueue lockup on Kthread.
 
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
-Link: https://lore.kernel.org/r/20240429193145.66543-2-jim.cromie@gmail.com
+Added wait_for_completion_interruptible_timeout to
+allow the thread to wait for specific timeout period and
+bail out instead waiting infinitely.
+
+Fixes: a899d324863a ("slimbus: qcom-ngd-ctrl: add Sub System Restart support")
+Cc: stable@vger.kernel.org
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20240430091238.35209-2-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/dynamic_debug.c |    6 +++++-
+ drivers/slimbus/qcom-ngd-ctrl.c |    6 +++++-
  1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/lib/dynamic_debug.c
-+++ b/lib/dynamic_debug.c
-@@ -301,7 +301,11 @@ static int ddebug_tokenize(char *buf, ch
- 		} else {
- 			for (end = buf; *end && !isspace(*end); end++)
- 				;
--			BUG_ON(end == buf);
-+			if (end == buf) {
-+				pr_err("parse err after word:%d=%s\n", nwords,
-+				       nwords ? words[nwords - 1] : "<none>");
-+				return -EINVAL;
-+			}
- 		}
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1376,7 +1376,11 @@ static void qcom_slim_ngd_up_worker(stru
+ 	ctrl = container_of(work, struct qcom_slim_ngd_ctrl, ngd_up_work);
  
- 		/* `buf' is start of word, `end' is one past its end */
+ 	/* Make sure qmi service is up before continuing */
+-	wait_for_completion_interruptible(&ctrl->qmi_up);
++	if (!wait_for_completion_interruptible_timeout(&ctrl->qmi_up,
++						       msecs_to_jiffies(MSEC_PER_SEC))) {
++		dev_err(ctrl->dev, "QMI wait timeout\n");
++		return;
++	}
+ 
+ 	mutex_lock(&ctrl->ssr_lock);
+ 	qcom_slim_ngd_enable(ctrl, true);
 
 
