@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4640512D77B;
-	Tue, 14 May 2024 11:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5230912DD83;
+	Tue, 14 May 2024 11:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686665; cv=none; b=ONL6ssju2woXVzOC0Fyx7ur9eAlqu2JUjTCCEsBz3h48l7wYIWHDFzVC0qaz5tNLw12WRgp4gnm28u8yiq0T1nD+hujvrHxLMG4Eifzic1N4tvqWrcHPP5VBYn2x061ITUFfnTtrQqgeYWMAlVb4mnKR7NfjkquPfqrUaak17vw=
+	t=1715686668; cv=none; b=eAyn21IYss1claZfwVfCo9Kes2npjYCFcUR1ZdFl/La/U9OmH/OAqT2aWalaVPM0J9ZbGWndJm0DHQSsbzniPd8Fp5asq8YdD33LVDHRdqOx+25jfSMjT6pDhRAfUCepbX8BECPbF+52HSpwIOa+jtsws2zAJP4mhm4NXgT9TZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686665; c=relaxed/simple;
-	bh=iCSPZZI7HOA9Srf5GiHCkgRag9VyjcJ/Fel2OdlJYAo=;
+	s=arc-20240116; t=1715686668; c=relaxed/simple;
+	bh=22JlxtcNVKlSkaQtE2SWZmeko6lUYtReh9sc1oOMfvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZ39MXfO3sGNQaaKlOfCBnbIy2jaocM9YZlEoyKIhTnIDBSabIg00nU3FE1IrRpavb6eh5GeVq3X8H4Kt+0xJ90JmaXlHGRmMTVyPUERU1gWZ1Vy97cssf0pawFSp4CEypOKnkU7gvWDMWyzYjs1nY0nNyEBTN2gWFgYdQvbWQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xNX+HkLe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VEcwYXVH83WRZGGq+ssg2CC3Jtu9MLGgeT4LlU92UghYJRNPJquUgqpIrL9oG1Rc3PB+Pv03nwYc8sNmiO0Z2djYxQ47Qz/+XH/yDNeBrt8DnJRI128fpvUn/TebSeC6ufKJ8/xpLhKQ77Hduv2kM3+Zu07rdZLQSSgV6MooJz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYDi0eBR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xNX+HkLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3AFDC2BD10;
-	Tue, 14 May 2024 11:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYDi0eBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C15C2BD10;
+	Tue, 14 May 2024 11:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686665;
-	bh=iCSPZZI7HOA9Srf5GiHCkgRag9VyjcJ/Fel2OdlJYAo=;
+	s=korg; t=1715686668;
+	bh=22JlxtcNVKlSkaQtE2SWZmeko6lUYtReh9sc1oOMfvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xNX+HkLeXky38PEaGYZPOESWdp7tCASq1vrBLyuTF58rl4OTTJPg6NCGW8EBmFpvM
-	 F6RklqnDTOVj+7NAqgACyzTi6rAviPn1XsU2r6d7DMMFQOUIxVGutUeGxz/v8GxkaS
-	 mMA6eqcluuUlHS8zoaQfDfmlrMQabZDfXqh+qm9Q=
+	b=WYDi0eBRaMzJ3Kxkl8fRKjH9k4Zui6PGn25rBmGD5AKW796h3EB/XVtws45LHR5Kp
+	 WxZtjb0pBKtv4ZDYiYbejw2CMLnPqoNfSKJS0Xy55s0az4Sdw2ZANH7oTV6EuT/+X3
+	 +lR4BfzHiEhOBaiFbq5thq1Qf4eSLfi8E/tvFVY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thanassis Avgerinos <thanassis.avgerinos@gmail.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Subject: [PATCH 6.1 185/236] firewire: nosy: ensure user_length is taken into account when fetching packet contents
-Date: Tue, 14 May 2024 12:19:07 +0200
-Message-ID: <20240514101027.388173215@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Alex Constantino <dreaming.about.electric.sheep@gmail.com>,
+	Timo Lindfors <timo.lindfors@iki.fi>,
+	Dave Airlie <airlied@redhat.com>,
+	Gerd Hoffmann <kraxel@redhat.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.1 186/236] Reapply "drm/qxl: simplify qxl_fence_wait"
+Date: Tue, 14 May 2024 12:19:08 +0200
+Message-ID: <20240514101027.425823814@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -50,38 +58,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thanassis Avgerinos <thanassis.avgerinos@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 38762a0763c10c24a4915feee722d7aa6e73eb98 upstream.
+commit 3628e0383dd349f02f882e612ab6184e4bb3dc10 upstream.
 
-Ensure that packet_buffer_get respects the user_length provided. If
-the length of the head packet exceeds the user_length, packet_buffer_get
-will now return 0 to signify to the user that no data were read
-and a larger buffer size is required. Helps prevent user space overflows.
+This reverts commit 07ed11afb68d94eadd4ffc082b97c2331307c5ea.
 
-Signed-off-by: Thanassis Avgerinos <thanassis.avgerinos@gmail.com>
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Stephen Rostedt reports:
+ "I went to run my tests on my VMs and the tests hung on boot up.
+  Unfortunately, the most I ever got out was:
+
+  [   93.607888] Testing event system initcall: OK
+  [   93.667730] Running tests on all trace events:
+  [   93.669757] Testing all events: OK
+  [   95.631064] ------------[ cut here ]------------
+  Timed out after 60 seconds"
+
+and further debugging points to a possible circular locking dependency
+between the console_owner locking and the worker pool locking.
+
+Reverting the commit allows Steve's VM to boot to completion again.
+
+[ This may obviously result in the "[TTM] Buffer eviction failed"
+  messages again, which was the reason for that original revert. But at
+  this point this seems preferable to a non-booting system... ]
+
+Reported-and-bisected-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://lore.kernel.org/all/20240502081641.457aa25f@gandalf.local.home/
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Cc: Alex Constantino <dreaming.about.electric.sheep@gmail.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Timo Lindfors <timo.lindfors@iki.fi>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firewire/nosy.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/qxl/qxl_release.c |   50 +++-----------------------------------
+ include/linux/dma-fence.h         |    7 -----
+ 2 files changed, 5 insertions(+), 52 deletions(-)
 
---- a/drivers/firewire/nosy.c
-+++ b/drivers/firewire/nosy.c
-@@ -148,10 +148,12 @@ packet_buffer_get(struct client *client,
- 	if (atomic_read(&buffer->size) == 0)
- 		return -ENODEV;
+--- a/drivers/gpu/drm/qxl/qxl_release.c
++++ b/drivers/gpu/drm/qxl/qxl_release.c
+@@ -58,56 +58,16 @@ static long qxl_fence_wait(struct dma_fe
+ 			   signed long timeout)
+ {
+ 	struct qxl_device *qdev;
+-	struct qxl_release *release;
+-	int count = 0, sc = 0;
+-	bool have_drawable_releases;
+ 	unsigned long cur, end = jiffies + timeout;
  
--	/* FIXME: Check length <= user_length. */
-+	length = buffer->head->length;
-+
-+	if (length > user_length)
+ 	qdev = container_of(fence->lock, struct qxl_device, release_lock);
+-	release = container_of(fence, struct qxl_release, base);
+-	have_drawable_releases = release->type == QXL_RELEASE_DRAWABLE;
+ 
+-retry:
+-	sc++;
+-
+-	if (dma_fence_is_signaled(fence))
+-		goto signaled;
+-
+-	qxl_io_notify_oom(qdev);
+-
+-	for (count = 0; count < 11; count++) {
+-		if (!qxl_queue_garbage_collect(qdev, true))
+-			break;
+-
+-		if (dma_fence_is_signaled(fence))
+-			goto signaled;
+-	}
+-
+-	if (dma_fence_is_signaled(fence))
+-		goto signaled;
+-
+-	if (have_drawable_releases || sc < 4) {
+-		if (sc > 2)
+-			/* back off */
+-			usleep_range(500, 1000);
+-
+-		if (time_after(jiffies, end))
+-			return 0;
+-
+-		if (have_drawable_releases && sc > 300) {
+-			DMA_FENCE_WARN(fence,
+-				       "failed to wait on release %llu after spincount %d\n",
+-				       fence->context & ~0xf0000000, sc);
+-			goto signaled;
+-		}
+-		goto retry;
+-	}
+-	/*
+-	 * yeah, original sync_obj_wait gave up after 3 spins when
+-	 * have_drawable_releases is not set.
+-	 */
++	if (!wait_event_timeout(qdev->release_event,
++				(dma_fence_is_signaled(fence) ||
++				 (qxl_io_notify_oom(qdev), 0)),
++				timeout))
 +		return 0;
  
- 	end = buffer->data + buffer->capacity;
--	length = buffer->head->length;
+-signaled:
+ 	cur = jiffies;
+ 	if (time_after(cur, end))
+ 		return 0;
+--- a/include/linux/dma-fence.h
++++ b/include/linux/dma-fence.h
+@@ -659,11 +659,4 @@ static inline bool dma_fence_is_containe
+ 	return dma_fence_is_array(fence) || dma_fence_is_chain(fence);
+ }
  
- 	if (&buffer->head->data[length] < end) {
- 		if (copy_to_user(data, buffer->head->data, length))
+-#define DMA_FENCE_WARN(f, fmt, args...) \
+-	do {								\
+-		struct dma_fence *__ff = (f);				\
+-		pr_warn("f %llu#%llu: " fmt, __ff->context, __ff->seqno,\
+-			 ##args);					\
+-	} while (0)
+-
+ #endif /* __LINUX_DMA_FENCE_H */
 
 
