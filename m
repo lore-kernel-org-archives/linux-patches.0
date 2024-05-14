@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAF42B9AD;
-	Tue, 14 May 2024 11:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4F62B9AD;
+	Tue, 14 May 2024 11:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687708; cv=none; b=ZkQCW6P9MWySk8gL0zaFkmJ4NCej7AWut0nFtpaTsRSc3CMUh1/t7Lcmwdit1LleMeBp+qkZJaB1grQ3kdt5zIQzTlRqvLyF7EX1lQszzjw8QYyoafNGqMjRH4Kv2tdTiB4eGm59/Ev2941kt463h/aP3JGmb6YGpL+PqGFVgyQ=
+	t=1715687711; cv=none; b=RLxiwdq/dIEl1WzPnrntoIGCYqy50qNJ/r9OfAYjYq1waXgQ8xO/EjLg13+I/R/9Dllr7b7I77qEug8YF/CgUoEI10s+HLlOsiNU86wds3b/y9xSYgizOvTBEH0aVID89rlv94mB76hwQSat46vkB3+39kCqDaQVRKpLr20pH1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687708; c=relaxed/simple;
-	bh=ceJ0tzOvKTdWtiFfp3GeQq/eX2eX5AN93Rd95s5gHag=;
+	s=arc-20240116; t=1715687711; c=relaxed/simple;
+	bh=cHv1FC6yt5yTOHY9urG06SEWB7WJsAqaC4HU218Zkxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kyIIB/tWeGOePdSaTHLw4e3NoRdth0yUypHTWiHLxOHpRhtbNLi5afDb5Lsvoq/poGG2rjWHUt7VV6UYKq673LZhCS5R5SiooNFwRPdkOYBZ9hqBRkza6pAlI/gmpdg1vKiQpbSR0IBs0hIKQyn/hKQHYI3I1I326IPClcgHJXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDdfuOGn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dvjYE/q5337iJrw5UGg1yauHn2oAy+7tcPIwzdXaCmSs23stIYsCl9mSFRYJlpLd/4RvUAl/MU7iXV4W2hvcbZMkp9xt7Ey7CPAJRQOFCpY0Pn3l/oCojtCNmAIQY6qUycJfk9TejnCxbJjCF0UlfEq5dA5ZCkwLZlhfAjMtfmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xa1SMpHI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDdfuOGn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72D27C2BD10;
-	Tue, 14 May 2024 11:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xa1SMpHI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A10C2BD10;
+	Tue, 14 May 2024 11:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687707;
-	bh=ceJ0tzOvKTdWtiFfp3GeQq/eX2eX5AN93Rd95s5gHag=;
+	s=korg; t=1715687710;
+	bh=cHv1FC6yt5yTOHY9urG06SEWB7WJsAqaC4HU218Zkxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mDdfuOGneaMVuNEyFBALEWjVn7ClduLeckEg9pJi5rZcrWCd1CoczQu31mNJf12l/
-	 A2JKS8PxJsaH8pBNJyO3XHc1kCYmhngOyRIuMwhpAoSMWZnT3dLpOz7ojdm9AyprHp
-	 I+G2J0sJJGLyOMWJxq+0HqLbFQ5ZOTVLypCV5OdI=
+	b=Xa1SMpHIkERg6Wx4jR2JS+3JmHCXs+j9QPpOswL3RNimUg7a9XBJYxAMUWUSmKgTR
+	 EMHEwED52G5i9hqxVGg1nENG6mgIWhBljS/Lfh9Iv5RlD2wfFLkjOMkmBFZm65MKDe
+	 +c2ck5gvHDVYsIi63cokDJohWp+zyM7wI3sgXj7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 046/168] ASoC: meson: cards: select SND_DYNAMIC_MINORS
-Date: Tue, 14 May 2024 12:19:04 +0200
-Message-ID: <20240514101008.430729008@linuxfoundation.org>
+Subject: [PATCH 5.15 047/168] ALSA: hda: intel-sdw-acpi: fix usage of device_get_named_child_node()
+Date: Tue, 14 May 2024 12:19:05 +0200
+Message-ID: <20240514101008.468037250@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -51,41 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 6db26f9ea4edd8a17d39ab3c20111e3ccd704aef ]
+[ Upstream commit c158cf914713efc3bcdc25680c7156c48c12ef6a ]
 
-Amlogic sound cards do create a lot of pcm interfaces, possibly more than
-8. Some pcm interfaces are internal (like DPCM backends and c2c) and not
-exposed to userspace.
+The documentation for device_get_named_child_node() mentions this
+important point:
 
-Those interfaces still increase the number passed to snd_find_free_minor(),
-which eventually exceeds 8 causing -EBUSY error on card registration if
-CONFIG_SND_DYNAMIC_MINORS=n and the interface is exposed to userspace.
+"
+The caller is responsible for calling fwnode_handle_put() on the
+returned fwnode pointer.
+"
 
-select CONFIG_SND_DYNAMIC_MINORS for Amlogic cards to avoid the problem.
+Add fwnode_handle_put() to avoid a leaked reference.
 
-Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://lore.kernel.org/r/20240426134150.3053741-1-jbrunet@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Fixes: 08c2a4bc9f2a ("ALSA: hda: move Intel SoundWire ACPI scan to dedicated module")
+Message-ID: <20240426152731.38420-1-pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ sound/hda/intel-sdw-acpi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/meson/Kconfig b/sound/soc/meson/Kconfig
-index b93ea33739f29..6458d5dc4902f 100644
---- a/sound/soc/meson/Kconfig
-+++ b/sound/soc/meson/Kconfig
-@@ -99,6 +99,7 @@ config SND_MESON_AXG_PDM
+diff --git a/sound/hda/intel-sdw-acpi.c b/sound/hda/intel-sdw-acpi.c
+index b7758dbe23714..7c1e47aa4e7a7 100644
+--- a/sound/hda/intel-sdw-acpi.c
++++ b/sound/hda/intel-sdw-acpi.c
+@@ -41,6 +41,8 @@ static bool is_link_enabled(struct fwnode_handle *fw_node, int i)
+ 				 "intel-quirk-mask",
+ 				 &quirk_mask);
  
- config SND_MESON_CARD_UTILS
- 	tristate
-+	select SND_DYNAMIC_MINORS
++	fwnode_handle_put(link);
++
+ 	if (quirk_mask & SDW_INTEL_QUIRK_MASK_BUS_DISABLE)
+ 		return false;
  
- config SND_MESON_CODEC_GLUE
- 	tristate
 -- 
 2.43.0
 
