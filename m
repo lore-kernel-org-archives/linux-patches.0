@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16322F9D4;
-	Tue, 14 May 2024 11:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D8BF9D4;
+	Tue, 14 May 2024 11:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687948; cv=none; b=qpfI0yWcuqUSrKofdyvop5SjYZc5v8fRoppx79nX187Mo11FRHgy7S+LlHr0V8vzG2Ev0RkwEr22vUReu4Zk2mEEges1TN1mmPxF2gwrace476pAxiqFtYr/YtZ5RMMO10Llrqq7WbvXMIzPDycHgXN8ZT1/CWPtbYclSWUSeY0=
+	t=1715687951; cv=none; b=Qqzgj6JO/fyDfoEcm866zpIp9NmdYXDJ3+E3tUayYTj2wo7NHOsmumFv0BZCvU5i6EMPkkgMQavPWMwHSopB/TAav7tH0TlOOUlvzra2URYP7HXp+E9f7SoJTK6jQYjEf3RW6UWkCQoe2BISk1Do8SMSh6k6LZxpwv6Jn51301c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687948; c=relaxed/simple;
-	bh=PzYECumVNweACoihCkiR5HseUw6jIP+J3+t2i7iMXlE=;
+	s=arc-20240116; t=1715687951; c=relaxed/simple;
+	bh=V43g8m99+Z6Rd0cqsjUJylSbIxuk0ifGXFz5pSopK4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oK+yfdWa8qSKx60j3MnB4LABpbVvWVTj1OoquiVXDFgSpXrCdDPtli0GZdQFlIpiOfm/SU+MWG20ieK1Sz01ByW2PMwnwh9J7QFX7vP7ZFPME/L0THlmDdY+aGkR436Luto0I3DdQldc1EVWaJMirl09VdRTVciOlzWZjU1sj+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KmGDXWU5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mk5Ccdt8TiSGbrjwtuKH0Or4NBGMHc8Q55WxvyoAZl+hWkQrAhDw1mXFZHnmQt65WkUcsP1aiVAotvCXLXYzdar5cw1eHf4/D+zD7zLuNqPJXUG+AXZd8qJ94JjU/ZS90FUkmx+bEw+X/WQlbf71loV8/Ev5lELUTUO3drBtTno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYR+lJyd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KmGDXWU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882D5C2BD10;
-	Tue, 14 May 2024 11:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYR+lJyd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B9A5C2BD10;
+	Tue, 14 May 2024 11:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687947;
-	bh=PzYECumVNweACoihCkiR5HseUw6jIP+J3+t2i7iMXlE=;
+	s=korg; t=1715687950;
+	bh=V43g8m99+Z6Rd0cqsjUJylSbIxuk0ifGXFz5pSopK4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KmGDXWU5Fumqq1H8XSRUl2OQc8el7HuP+R47KXTXlJbz4eI4FSGZMj9kBfU+WKttp
-	 rKZKGIqACgow1YUEr/JnOWYqKjbj/eZ0Vudq8aLhLb9dp0KVNe/VtzL5yaGobWe63G
-	 Yjga/jDsdLpoFOfezi9j9Ed92T/Mqhg3dQkLEVog=
+	b=jYR+lJydagacS0RfcNIpWfDkQjk1sPYSPR5vNG0VLjvKhpEH3Kt6Gc/jFy9bevcWG
+	 wOuK5qeDFcpMbu6INzD7KeDeHejNMrz5DfEZZlhOeXiPBcjbVyb1J6gA4jjw8SNE6M
+	 dhmRKBYC6ygNTH+Gn2AXujqHvkSEp1m3UuPbXoPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Tomas Winkler <tomas.winkler@intel.com>
-Subject: [PATCH 5.15 161/168] mei: me: add lunar lake point M DID
-Date: Tue, 14 May 2024 12:20:59 +0200
-Message-ID: <20240514101012.835845569@linuxfoundation.org>
+	Gerd Hoffmann <kraxel@redhat.com>,
+	David Laight <David.Laight@aculab.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.15 144/168] usb: ohci: Prevent missed ohci interrupts
+Date: Tue, 14 May 2024 12:20:42 +0200
+Message-ID: <20240514101012.202838980@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -50,43 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-commit 4108a30f1097eead0f6bd5d885e6bf093b4d460f upstream.
+commit fe81f354841641c7f71163b84912b25c169ed8ec upstream.
 
-Add Lunar (Point) Lake M device id.
+Testing ohci functionality with qemu's pci-ohci emulation often results
+in ohci interface stalls, resulting in hung task timeouts.
 
+The problem is caused by lost interrupts between the emulation and the
+Linux kernel code. Additional interrupts raised while the ohci interrupt
+handler in Linux is running and before the handler clears the interrupt
+status are not handled. The fix for a similar problem in ehci suggests
+that the problem is likely caused by edge-triggered MSI interrupts. See
+commit 0b60557230ad ("usb: ehci: Prevent missed ehci interrupts with
+edge-triggered MSI") for details.
+
+Ensure that the ohci interrupt code handles all pending interrupts before
+returning to solve the problem.
+
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: David Laight <David.Laight@aculab.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20240421135631.223362-1-tomas.winkler@intel.com
+Fixes: 306c54d0edb6 ("usb: hcd: Try MSI interrupts on PCI devices")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
+Link: https://lore.kernel.org/r/20240429154010.1507366-1-linux@roeck-us.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    2 ++
- drivers/misc/mei/pci-me.c     |    2 ++
- 2 files changed, 4 insertions(+)
+ drivers/usb/host/ohci-hcd.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -115,6 +115,8 @@
- #define MEI_DEV_ID_ARL_S      0x7F68  /* Arrow Lake Point S */
- #define MEI_DEV_ID_ARL_H      0x7770  /* Arrow Lake Point H */
+--- a/drivers/usb/host/ohci-hcd.c
++++ b/drivers/usb/host/ohci-hcd.c
+@@ -890,6 +890,7 @@ static irqreturn_t ohci_irq (struct usb_
+ 	/* Check for an all 1's result which is a typical consequence
+ 	 * of dead, unclocked, or unplugged (CardBus...) devices
+ 	 */
++again:
+ 	if (ints == ~(u32)0) {
+ 		ohci->rh_state = OHCI_RH_HALTED;
+ 		ohci_dbg (ohci, "device removed!\n");
+@@ -984,6 +985,13 @@ static irqreturn_t ohci_irq (struct usb_
+ 	}
+ 	spin_unlock(&ohci->lock);
  
-+#define MEI_DEV_ID_LNL_M      0xA870  /* Lunar Lake Point M */
++	/* repeat until all enabled interrupts are handled */
++	if (ohci->rh_state != OHCI_RH_HALTED) {
++		ints = ohci_readl(ohci, &regs->intrstatus);
++		if (ints && (ints & ohci_readl(ohci, &regs->intrenable)))
++			goto again;
++	}
 +
- /*
-  * MEI HW Section
-  */
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -121,6 +121,8 @@ static const struct pci_device_id mei_me
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_S, MEI_ME_PCH15_CFG)},
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_H, MEI_ME_PCH15_CFG)},
+ 	return IRQ_HANDLED;
+ }
  
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_LNL_M, MEI_ME_PCH15_CFG)},
-+
- 	/* required last entry */
- 	{0, }
- };
 
 
