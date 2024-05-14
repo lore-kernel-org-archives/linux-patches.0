@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BF42D60A;
-	Tue, 14 May 2024 10:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BD9134CFE;
+	Tue, 14 May 2024 10:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682836; cv=none; b=tWfB7/pQ/iGIm6R5oUmSmSJjRC8ql+ZLPPIPJYqw1HHZ8yoIlUaCUkAsXszC/+3dPhYXKQzAegoSPiGhvl0jJ0GtlNJxhlV8qOgyOgY7NJlfZry0EcI+4sQSeZyUgcLk/CfXhmUtRNrhE0VCFerdDwI+I6XSETjQmoIKMaRLWng=
+	t=1715682843; cv=none; b=gW6XnKYuONE5dIRcAeh1xX/WAoQc5+gfRCU78FNxBEKdqTXS/PV9+4YAoa6GCLsjoUQNuPXzjF7A85MxknT1GY/JtuMKH1kVCMyCuDwzSibzolBws0i+JsYitL4lP+Oryhq15n/lD23DliOwqfsyOIaZj+t0h8XhAxVWs7Ze2aY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682836; c=relaxed/simple;
-	bh=+OFs2eWCdI29s5dq2kPIky8xhAQxoBqLkqZU39Zyq7U=;
+	s=arc-20240116; t=1715682843; c=relaxed/simple;
+	bh=GUvPvIkehTaR0y10DDzxJe6VoI0B/3gbsAEMaLkan5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ctQrUogu5y/WwElAsPdhIuYp5YDe0eLpWDgYxC3LyLFfbJa+GN+W+d5EGT/nGb5nKWBYpT7E3Js9A71smrzy8ElJhCB6xi7FFgyjt+hm48AM9ZU0xCqPg8o4ZoF+JeAVA7mvpyvcqAJq/NJmUpfw3bK8w37YuEI821X9jFVED9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZVZelqg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Prhi0ilfYg6xwtF3mpinZG6oTW+W5BHRLji6LyaO8o45hmhgGMu5pgToJVrA5gXAdVOf/mOUmz26tS1FDyCBb2zq88DgZW8EmkMDkMAaUZ5A1rOlZL7fese4xCeyPMAe5y2Uxv9FTB9D0kAF4u/EiYZ9s2AXWdkrIN/2wDI92SY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHIdAgBw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZVZelqg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43204C2BD10;
-	Tue, 14 May 2024 10:33:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHIdAgBw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5497C2BD10;
+	Tue, 14 May 2024 10:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682836;
-	bh=+OFs2eWCdI29s5dq2kPIky8xhAQxoBqLkqZU39Zyq7U=;
+	s=korg; t=1715682843;
+	bh=GUvPvIkehTaR0y10DDzxJe6VoI0B/3gbsAEMaLkan5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QZVZelqgmD8dbjiMWcQ2hPAwz5EGfG9B8cA2k9nWcQp8c0Pqr+YcTt+IsjsFRLWHM
-	 FYhtJJSqZ0hvZdRqqpV0Zl2loh9jULjnRr3hZMlyM1BoxIpSVAwn9BZ06GUPJHGThj
-	 KrrQ+1PT1g9rIW9VepSwrKybOJqUx5DZTlG9l9lg=
+	b=CHIdAgBwfPrFzMcHBSZ2GWSwpljtvfHL9G9S/Fm2XcJ/mKu7SL/VsY70XyPTCoZxJ
+	 hyUA2a8ZofWgWLuZ/LeQalRnzQ5o7fxwFca/pD3EC9IEhTrjUQWZWYAecru6dAleJa
+	 FqXpwIkGf21qEkP8MQC4mhO6hN2nStvzPdcxlzUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 121/336] regulator: tps65132: Add of_match table
-Date: Tue, 14 May 2024 12:15:25 +0200
-Message-ID: <20240514101043.172718531@linuxfoundation.org>
+Subject: [PATCH 6.8 122/336] OSS: dmasound/paula: Mark driver struct with __refdata to prevent section mismatch
+Date: Tue, 14 May 2024 12:15:26 +0200
+Message-ID: <20240514101043.209573344@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,44 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: André Apitzsch <git@apitzsch.eu>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit a469158eaf8f4b10263b417856d923dfa38ae96d ]
+[ Upstream commit 755795cd3da053b0565085d9950c44d7b6cba5c4 ]
 
-Add of_match table for "ti,tps65132" compatible string.
-This fixes automatic driver loading when using device-tree,
-and if built as a module like major linux distributions do.
+As described in the added code comment, a reference to .exit.text is ok
+for drivers registered via module_platform_driver_probe(). Make this
+explicit to prevent the following section mismatch warning
 
-Signed-off-by: André Apitzsch <git@apitzsch.eu>
-Link: https://msgid.link/r/20240325-of_tps65132-v1-1-86a5f7ef4ede@apitzsch.eu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+	WARNING: modpost: sound/oss/dmasound/dmasound_paula: section mismatch in reference: amiga_audio_driver+0x8 (section: .data) -> amiga_audio_remove (section: .exit.text)
+
+that triggers on an allmodconfig W=1 build.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Message-ID: <c216a129aa88f3af5c56fe6612a472f7a882f048.1711748999.git.u.kleine-koenig@pengutronix.de>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/tps65132-regulator.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/oss/dmasound/dmasound_paula.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/tps65132-regulator.c b/drivers/regulator/tps65132-regulator.c
-index a06f5f2d79329..9c2f0dd42613d 100644
---- a/drivers/regulator/tps65132-regulator.c
-+++ b/drivers/regulator/tps65132-regulator.c
-@@ -267,10 +267,17 @@ static const struct i2c_device_id tps65132_id[] = {
- };
- MODULE_DEVICE_TABLE(i2c, tps65132_id);
+diff --git a/sound/oss/dmasound/dmasound_paula.c b/sound/oss/dmasound/dmasound_paula.c
+index 0ba8f0c4cd99a..3a593da09280d 100644
+--- a/sound/oss/dmasound/dmasound_paula.c
++++ b/sound/oss/dmasound/dmasound_paula.c
+@@ -725,7 +725,13 @@ static void __exit amiga_audio_remove(struct platform_device *pdev)
+ 	dmasound_deinit();
+ }
  
-+static const struct of_device_id __maybe_unused tps65132_of_match[] = {
-+	{ .compatible = "ti,tps65132" },
-+	{},
-+};
-+MODULE_DEVICE_TABLE(of, tps65132_of_match);
-+
- static struct i2c_driver tps65132_i2c_driver = {
+-static struct platform_driver amiga_audio_driver = {
++/*
++ * amiga_audio_remove() lives in .exit.text. For drivers registered via
++ * module_platform_driver_probe() this is ok because they cannot get unbound at
++ * runtime. So mark the driver struct with __refdata to prevent modpost
++ * triggering a section mismatch warning.
++ */
++static struct platform_driver amiga_audio_driver __refdata = {
+ 	.remove_new = __exit_p(amiga_audio_remove),
  	.driver = {
- 		.name = "tps65132",
- 		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
-+		.of_match_table = of_match_ptr(tps65132_of_match),
- 	},
- 	.probe = tps65132_probe,
- 	.id_table = tps65132_id,
+ 		.name	= "amiga-audio",
 -- 
 2.43.0
 
