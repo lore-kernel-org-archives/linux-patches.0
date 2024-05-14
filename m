@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0786513A3F4;
-	Tue, 14 May 2024 11:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD80213AA5F;
+	Tue, 14 May 2024 11:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686307; cv=none; b=NTy3CuRGuh93Z2VfLK2AlQiN0UTHXURQyHx+wVURyC8vCYVJRAVk6rcY4VDa+7LQtEQWdoLK4NckxQwVVndMGeuVhwMH9wbxRqT6ARmlrLyg8QQdyA0AH1sscTNuFK4XTIXkBhey5O6pI+ZPjlyhXzlrlZ2iBKSFrKTGkYLKuDU=
+	t=1715686310; cv=none; b=LqPhNz4xqrqOGlzkl4gk/xyPBGa4VeZb9BBsZjp4AWsiVbyVTpZpLVsJJ6lSTBpUQH+/Pux1ecd2iS8q7RBcDbHJ73HhfLx8Ax7OXPBPrxEDrVI2ccgWbg+2tpN2NLEzDqQEVB2wjr6GO2fpNj4h27OyZDRdKmwcC7kjnTj4zyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686307; c=relaxed/simple;
-	bh=SQUwkpZNbvmJhz5FwSED+OvJIQiQnWNuVsVMvZUkTzM=;
+	s=arc-20240116; t=1715686310; c=relaxed/simple;
+	bh=veic3/KKTZlKzrxiMoCoDTSXVffV84ZbgLndlqcdn+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ua4ecOzTnRESehYTWxYk0Y3Cin2UmzpDrgZnVsFnkyk3Zcr70lAZSideYs2V7GQYdbD3dBNEEqi9k6pCoJvcuOdB2TyQKJUgTty4mwPKYV3lgFp0LDw3pGJr3vR3JyS5O7dHS85LwjaZpaEbf2RN+CLmId5FC/5vzfpSqX+C0AI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/oy0s9k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J2iMf7BoFhTW2yDJugkujgU8UYH7LCoIWQL7GsJKPjunaayUapKJW8YUKWBD0xB6B+AMIkebweGoazK9cnmq6DuB7ZT0D5sZv1yq1QWgiNfjfJ2M/Orh1zeH0/QgpCImetpDRlBnvwJTFSjrOiSRuSRmHCLJVJy8TMYkPMX+wXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Rnh6vCL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/oy0s9k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84346C2BD10;
-	Tue, 14 May 2024 11:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Rnh6vCL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1E4C2BD10;
+	Tue, 14 May 2024 11:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686306;
-	bh=SQUwkpZNbvmJhz5FwSED+OvJIQiQnWNuVsVMvZUkTzM=;
+	s=korg; t=1715686309;
+	bh=veic3/KKTZlKzrxiMoCoDTSXVffV84ZbgLndlqcdn+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V/oy0s9kd3If+mPuoEqATCw3KAymOFOIT/oaysrjbjrqpk0eC8CIU7lmoJE6MLtGi
-	 fN8pS+oqdeuyTDsUUjP8e3afd8+gx36dr2P3NqwGPDBw/e1lhqJ3DfO2FSFJBzmNuT
-	 1qCAh2sKyuIlEJcW08YYyLJYdbQL2GSis2G7BHbo=
+	b=0Rnh6vCLlanhm4RzrpIleytZV+N7D4zHFzMoGfrECJpFq4RZYMsA9ilj/vI8HBHKP
+	 AYGdOBh2amgfJBs34Br92hgXauYfcMBN+bKZrwFku/DjBdyptFI5/PUmzUCPjN23Xg
+	 CSwfDB3MUNxrWAoPFWK8GeIdr/k0T4A6QtI3cFnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Justin Tee <justin.tee@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/236] scsi: lpfc: Move NPIVs transport unregistration to after resource clean up
-Date: Tue, 14 May 2024 12:17:35 +0200
-Message-ID: <20240514101023.902295561@linuxfoundation.org>
+Subject: [PATCH 6.1 094/236] scsi: lpfc: Update lpfc_ramp_down_queue_handler() logic
+Date: Tue, 14 May 2024 12:17:36 +0200
+Message-ID: <20240514101023.941001253@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -53,55 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 4ddf01f2f1504fa08b766e8cfeec558e9f8eef6c ]
+[ Upstream commit bb011631435c705cdeddca68d5c85fd40a4320f9 ]
 
-There are cases after NPIV deletion where the fabric switch still believes
-the NPIV is logged into the fabric.  This occurs when a vport is
-unregistered before the Remove All DA_ID CT and LOGO ELS are sent to the
-fabric.
+Typically when an out of resource CQE status is detected, the
+lpfc_ramp_down_queue_handler() logic is called to help reduce I/O load by
+reducing an sdev's queue_depth.
 
-Currently fc_remove_host(), which calls dev_loss_tmo for all D_IDs including
-the fabric D_ID, removes the last ndlp reference and frees the ndlp rport
-object.  This sometimes causes the race condition where the final DA_ID and
-LOGO are skipped from being sent to the fabric switch.
+However, the current lpfc_rampdown_queue_depth() logic does not help reduce
+queue_depth.  num_cmd_success is never updated and is always zero, which
+means new_queue_depth will always be set to sdev->queue_depth.  So,
+new_queue_depth = sdev->queue_depth - new_queue_depth always sets
+new_queue_depth to zero.  And, scsi_change_queue_depth(sdev, 0) is
+essentially a no-op.
 
-Fix by moving the fc_remove_host() and scsi_remove_host() calls after DA_ID
-and LOGO are sent.
+Change the lpfc_ramp_down_queue_handler() logic to set new_queue_depth
+equal to sdev->queue_depth subtracted from number of times num_rsrc_err was
+incremented.  If num_rsrc_err is >= sdev->queue_depth, then set
+new_queue_depth equal to 1.  Eventually, the frequency of Good_Status
+frames will signal SCSI upper layer to auto increase the queue_depth back
+to the driver default of 64 via scsi_handle_queue_ramp_up().
 
 Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20240305200503.57317-3-justintee8345@gmail.com
+Link: https://lore.kernel.org/r/20240305200503.57317-5-justintee8345@gmail.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_vport.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/scsi/lpfc/lpfc.h      |  1 -
+ drivers/scsi/lpfc/lpfc_scsi.c | 13 ++++---------
+ 2 files changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_vport.c b/drivers/scsi/lpfc/lpfc_vport.c
-index 4d171f5c213f7..6b4259894584f 100644
---- a/drivers/scsi/lpfc/lpfc_vport.c
-+++ b/drivers/scsi/lpfc/lpfc_vport.c
-@@ -693,10 +693,6 @@ lpfc_vport_delete(struct fc_vport *fc_vport)
- 	lpfc_free_sysfs_attr(vport);
- 	lpfc_debugfs_terminate(vport);
+diff --git a/drivers/scsi/lpfc/lpfc.h b/drivers/scsi/lpfc/lpfc.h
+index dc5ac3cc70f6d..6f08fbe103cb9 100644
+--- a/drivers/scsi/lpfc/lpfc.h
++++ b/drivers/scsi/lpfc/lpfc.h
+@@ -1355,7 +1355,6 @@ struct lpfc_hba {
+ 	struct timer_list fabric_block_timer;
+ 	unsigned long bit_flags;
+ 	atomic_t num_rsrc_err;
+-	atomic_t num_cmd_success;
+ 	unsigned long last_rsrc_error_time;
+ 	unsigned long last_ramp_down_time;
+ #ifdef CONFIG_SCSI_LPFC_DEBUG_FS
+diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
+index 0bb7e164b525f..2a81a42de5c14 100644
+--- a/drivers/scsi/lpfc/lpfc_scsi.c
++++ b/drivers/scsi/lpfc/lpfc_scsi.c
+@@ -167,11 +167,10 @@ lpfc_ramp_down_queue_handler(struct lpfc_hba *phba)
+ 	struct Scsi_Host  *shost;
+ 	struct scsi_device *sdev;
+ 	unsigned long new_queue_depth;
+-	unsigned long num_rsrc_err, num_cmd_success;
++	unsigned long num_rsrc_err;
+ 	int i;
  
--	/* Remove FC host to break driver binding. */
--	fc_remove_host(shost);
--	scsi_remove_host(shost);
--
- 	/* Send the DA_ID and Fabric LOGO to cleanup Nameserver entries. */
- 	ndlp = lpfc_findnode_did(vport, Fabric_DID);
- 	if (!ndlp)
-@@ -740,6 +736,10 @@ lpfc_vport_delete(struct fc_vport *fc_vport)
+ 	num_rsrc_err = atomic_read(&phba->num_rsrc_err);
+-	num_cmd_success = atomic_read(&phba->num_cmd_success);
  
- skip_logo:
+ 	/*
+ 	 * The error and success command counters are global per
+@@ -186,20 +185,16 @@ lpfc_ramp_down_queue_handler(struct lpfc_hba *phba)
+ 		for (i = 0; i <= phba->max_vports && vports[i] != NULL; i++) {
+ 			shost = lpfc_shost_from_vport(vports[i]);
+ 			shost_for_each_device(sdev, shost) {
+-				new_queue_depth =
+-					sdev->queue_depth * num_rsrc_err /
+-					(num_rsrc_err + num_cmd_success);
+-				if (!new_queue_depth)
+-					new_queue_depth = sdev->queue_depth - 1;
++				if (num_rsrc_err >= sdev->queue_depth)
++					new_queue_depth = 1;
+ 				else
+ 					new_queue_depth = sdev->queue_depth -
+-								new_queue_depth;
++						num_rsrc_err;
+ 				scsi_change_queue_depth(sdev, new_queue_depth);
+ 			}
+ 		}
+ 	lpfc_destroy_vport_work_array(phba, vports);
+ 	atomic_set(&phba->num_rsrc_err, 0);
+-	atomic_set(&phba->num_cmd_success, 0);
+ }
  
-+	/* Remove FC host to break driver binding. */
-+	fc_remove_host(shost);
-+	scsi_remove_host(shost);
-+
- 	lpfc_cleanup(vport);
- 
- 	/* Remove scsi host now.  The nodes are cleaned up. */
+ /**
 -- 
 2.43.0
 
