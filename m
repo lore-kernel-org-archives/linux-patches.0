@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5216947A57;
-	Tue, 14 May 2024 11:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33AA685956;
+	Tue, 14 May 2024 11:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687311; cv=none; b=NYRwOJkokQQZf43J+FBiaGE3nqYnxhgqR10YAikBqeVWiabKSt3bCPrG1KElF+moSfq/1wTmUoYdlTumRm1o3tqIQCoHsptN6VekAXDTio3ne/vCOcNguAsd1aa+VfF60F2FsF4aDnKrzpH4R1XvcTanvv/fjxckErb/LcXxCtg=
+	t=1715687314; cv=none; b=UDzRyxmEhZWvdBXhueaxFFDVUpa7MnC6CRTELbLQKYDR7n7CBQTWdz1HOOBEsmynXPnk6HU9q5v2ydveP0V6zHe5wqhOZVPJ5FiUw27r4eydtyLZ2wL1c+5TeKDbk09hgUfps2xc8EElYoSbbxkrwsU3blNgVtfVI4lIJIo+ZRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687311; c=relaxed/simple;
-	bh=XyaNF08O0NiusxhzrQOYum0GtzXQvLqah2wGGU9HR5k=;
+	s=arc-20240116; t=1715687314; c=relaxed/simple;
+	bh=hKHD2iiXACbWu5zDxYy4Luqfjq0YvDkoXNRMubrXBxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W3ijjDaB9YxmzmyaXAsbH/mOarSPK1/YLHn07JBXV4rXiWtC+w8geBS0qFJArLxBqJcwmar6+R0HdEGfEqv0j4jFegbiVoVnQK0LjTg9saTAzXxvYLEddewyChbZJXWjJMemv8KJXo0ygVJ3gYDJ/KhacSZiKQqY97X8/SKioek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGC9J/SH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JGX4KHy0jpd9gKQNJbGM5oCRrbJRkcxJFxt/Wm6Tcn3N2FddJ3eYyobYYdYkCFuD72prs5rukbafRAOz9EfbxQ2nDR/eK4n8u7JFHPaUIVdgdws/4PvE1wIl1/csd3Q1wEkb2V3RRepFefkFk8yLLmtJmrDWSPxAIuMPdM9J/Ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtSzhgg3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGC9J/SH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB95C2BD10;
-	Tue, 14 May 2024 11:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtSzhgg3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEFD5C2BD10;
+	Tue, 14 May 2024 11:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687311;
-	bh=XyaNF08O0NiusxhzrQOYum0GtzXQvLqah2wGGU9HR5k=;
+	s=korg; t=1715687314;
+	bh=hKHD2iiXACbWu5zDxYy4Luqfjq0YvDkoXNRMubrXBxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LGC9J/SHO3VHAUxi4UZmMN9iZMIqKcXXwR/5qr2/Idl5COi8EBw7XXGR5W/6gVxxl
-	 4/KaIe0zNoHvM/00FcOHuNtZ/q7RWFf6dBEo9gsElY16y56dtgto4i/chUvNxl6f0P
-	 M7/1zhEQPRD9AcOviD0vSEeWyqa8mKun+Wucs3FA=
+	b=VtSzhgg3cC1wAZ7BGnPFGpSLsPrbV7bx2WjM6m86/v8fkxfEoR0Zo8R65BWnJwszg
+	 HITZ5ebKmgUvD+KnvOUfB9+DOCfmYvcAxxyF4D9MKdv4/hIkfLlupiUEQrPIovO78y
+	 b13fxiarpaynTopQABsg55EVU08F8MK7zPsVpVyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7fb05ccf7b3d2f9617b3@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>,
+	Phil Elwell <phil@raspberrypi.com>,
+	Maarten Vanraes <maarten@rmail.be>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 051/111] ALSA: line6: Zero-initialize message buffers
-Date: Tue, 14 May 2024 12:19:49 +0200
-Message-ID: <20240514100959.073061401@linuxfoundation.org>
+Subject: [PATCH 5.10 052/111] net: bcmgenet: Reset RBUF on first open
+Date: Tue, 14 May 2024 12:19:50 +0200
+Message-ID: <20240514100959.111227476@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -51,55 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Phil Elwell <phil@raspberrypi.com>
 
-[ Upstream commit c4e51e424e2c772ce1836912a8b0b87cd61bc9d5 ]
+[ Upstream commit 0a6380cb4c6b5c1d6dad226ba3130f9090f0ccea ]
 
-For shutting up spurious KMSAN uninit-value warnings, just replace
-kmalloc() calls with kzalloc() for the buffers used for
-communications.  There should be no real issue with the original code,
-but it's still better to cover.
+If the RBUF logic is not reset when the kernel starts then there
+may be some data left over from any network boot loader. If the
+64-byte packet headers are enabled then this can be fatal.
 
-Reported-by: syzbot+7fb05ccf7b3d2f9617b3@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/00000000000084b18706150bcca5@google.com
-Message-ID: <20240402063628.26609-1-tiwai@suse.de>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Extend bcmgenet_dma_disable to do perform the reset, but not when
+called from bcmgenet_resume in order to preserve a wake packet.
+
+N.B. This different handling of resume is just based on a hunch -
+why else wouldn't one reset the RBUF as well as the TBUF? If this
+isn't the case then it's easy to change the patch to make the RBUF
+reset unconditional.
+
+See: https://github.com/raspberrypi/linux/issues/3850
+See: https://github.com/raspberrypi/firmware/issues/1882
+
+Signed-off-by: Phil Elwell <phil@raspberrypi.com>
+Signed-off-by: Maarten Vanraes <maarten@rmail.be>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/driver.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/sound/usb/line6/driver.c b/sound/usb/line6/driver.c
-index b67617b68e509..f4437015d43a7 100644
---- a/sound/usb/line6/driver.c
-+++ b/sound/usb/line6/driver.c
-@@ -202,7 +202,7 @@ int line6_send_raw_message_async(struct usb_line6 *line6, const char *buffer,
- 	struct urb *urb;
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index ed0589a1a00d8..b2309d2fbc2df 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -3252,7 +3252,7 @@ static void bcmgenet_get_hw_addr(struct bcmgenet_priv *priv,
+ }
  
- 	/* create message: */
--	msg = kmalloc(sizeof(struct message), GFP_ATOMIC);
-+	msg = kzalloc(sizeof(struct message), GFP_ATOMIC);
- 	if (msg == NULL)
- 		return -ENOMEM;
+ /* Returns a reusable dma control register value */
+-static u32 bcmgenet_dma_disable(struct bcmgenet_priv *priv)
++static u32 bcmgenet_dma_disable(struct bcmgenet_priv *priv, bool flush_rx)
+ {
+ 	unsigned int i;
+ 	u32 reg;
+@@ -3277,6 +3277,14 @@ static u32 bcmgenet_dma_disable(struct bcmgenet_priv *priv)
+ 	udelay(10);
+ 	bcmgenet_umac_writel(priv, 0, UMAC_TX_FLUSH);
  
-@@ -688,7 +688,7 @@ static int line6_init_cap_control(struct usb_line6 *line6)
- 	int ret;
++	if (flush_rx) {
++		reg = bcmgenet_rbuf_ctrl_get(priv);
++		bcmgenet_rbuf_ctrl_set(priv, reg | BIT(0));
++		udelay(10);
++		bcmgenet_rbuf_ctrl_set(priv, reg);
++		udelay(10);
++	}
++
+ 	return dma_ctrl;
+ }
  
- 	/* initialize USB buffers: */
--	line6->buffer_listen = kmalloc(LINE6_BUFSIZE_LISTEN, GFP_KERNEL);
-+	line6->buffer_listen = kzalloc(LINE6_BUFSIZE_LISTEN, GFP_KERNEL);
- 	if (!line6->buffer_listen)
- 		return -ENOMEM;
+@@ -3340,8 +3348,8 @@ static int bcmgenet_open(struct net_device *dev)
  
-@@ -697,7 +697,7 @@ static int line6_init_cap_control(struct usb_line6 *line6)
- 		return -ENOMEM;
+ 	bcmgenet_set_hw_addr(priv, dev->dev_addr);
  
- 	if (line6->properties->capabilities & LINE6_CAP_CONTROL_MIDI) {
--		line6->buffer_message = kmalloc(LINE6_MIDI_MESSAGE_MAXLEN, GFP_KERNEL);
-+		line6->buffer_message = kzalloc(LINE6_MIDI_MESSAGE_MAXLEN, GFP_KERNEL);
- 		if (!line6->buffer_message)
- 			return -ENOMEM;
+-	/* Disable RX/TX DMA and flush TX queues */
+-	dma_ctrl = bcmgenet_dma_disable(priv);
++	/* Disable RX/TX DMA and flush TX and RX queues */
++	dma_ctrl = bcmgenet_dma_disable(priv, true);
  
+ 	/* Reinitialize TDMA and RDMA and SW housekeeping */
+ 	ret = bcmgenet_init_dma(priv);
+@@ -4199,7 +4207,7 @@ static int bcmgenet_resume(struct device *d)
+ 			bcmgenet_hfb_create_rxnfc_filter(priv, rule);
+ 
+ 	/* Disable RX/TX DMA and flush TX queues */
+-	dma_ctrl = bcmgenet_dma_disable(priv);
++	dma_ctrl = bcmgenet_dma_disable(priv, false);
+ 
+ 	/* Reinitialize TDMA and RDMA and SW housekeeping */
+ 	ret = bcmgenet_init_dma(priv);
 -- 
 2.43.0
 
