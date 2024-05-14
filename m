@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133E85A0FC;
-	Tue, 14 May 2024 10:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C64754903;
+	Tue, 14 May 2024 10:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683130; cv=none; b=u45LCYjVMeU94zSVfUcqrIYGMcCSWGFOEB5LU+LTtQXp+/iEpOo8Eijotd6vDbKHeH4TMq/ZRGBWj7p30T6JE3nu6xBuxhULUwb9BqvRvVhVGnSazbL+IInmo1mpbfPwwmtRYChacb9+FhEcL5dtN4LGX0cn6nu2coof5D6mgMk=
+	t=1715683133; cv=none; b=lWS3xX/rCdXDLuhqh61Xpbz3sh6II9Tv+faKXwUkgZ8Y9PHVztqzBCrLLlZNR+Yy52Yg6pR5b5nilWVWM+pi3pAE6H8p/6RiGa9OEciRt383a9FWxWbkG/KeLGcxl1sHSyekbyI+qqwTtWbvXa1YexpGD+3frekJqE2sHf8mgzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683130; c=relaxed/simple;
-	bh=0BSCaJsiNwRj4NSMoU1Zpr+cn7ySSSPolT+ZWCtWiGE=;
+	s=arc-20240116; t=1715683133; c=relaxed/simple;
+	bh=mVlLpRDyR9p/953mgVFGVsjmYZ96HpUu+vG34tGSbnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O6Sfrgh0GXq1JA5fiBEM3XB0BEb/lZTv/7vD8ZR3k8hehnAp/OteJbyCXOqMNX/Or7awLqXdUNzv5eYGzdPZMxDmaqasAQK6W56GVA57RVNHzdecw4J1ZBLc2a6ads0PjlRA4UWyWHmoprgT9lrHrpNGtjshXOeR06ZRCgClSy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYESTPl1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j/PhjErSY6c7MwXWTn+GrKQ+zWgBJpIjjkJ+qD0AVvSFUwFo+CrzPyA99uR7EsjrGcL8fR8Qf9gFzRA2m32izT4Xq1JMxPv/mqMJbhMcHa0soUQTYA8pVx5JJ0mTORa28IlnUQ601CrbSmw1RqJkCKJRvJ8y+d1BG9H6ShDMQo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLUFB8pf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYESTPl1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB7DC2BD10;
-	Tue, 14 May 2024 10:38:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLUFB8pf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C50C2BD10;
+	Tue, 14 May 2024 10:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683129;
-	bh=0BSCaJsiNwRj4NSMoU1Zpr+cn7ySSSPolT+ZWCtWiGE=;
+	s=korg; t=1715683133;
+	bh=mVlLpRDyR9p/953mgVFGVsjmYZ96HpUu+vG34tGSbnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dYESTPl1iXUBT+bBhzc2x7lQQseiKUz+QUvT+N1GHYaTsi7R1AFW8T0EeLDfYq/IV
-	 cEvZXkv5HJX7/lQcc8poKB48oG0ICnt470tW6uIQH52LzOqmF9wls+c4yMI9/WtLeN
-	 2/6vBheDm7OGFTIJUGDKUECqa9DlcrhvgdZFkueA=
+	b=OLUFB8pfdoi10qgllOke8NKNEKixegCip+BeTeklI7q8Joy2HR3IVSY+wMLdb1qjM
+	 z1Nxrs4kDC+ewwzoVmkj+bIpJdBuaxPBOoh83Lcyy8zCGABiUWwhy+LBDMuHGyU4E3
+	 ecq4g1wd/8vVQn+rHSKmhY+VhTu71rXHolYFY0HQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Song Shuai <songshuaishuai@tinylab.org>,
-	Mike Rapoport <rppt@kernel.org>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 144/336] memblock tests: fix undefined reference to `panic
-Date: Tue, 14 May 2024 12:15:48 +0200
-Message-ID: <20240514101044.036356430@linuxfoundation.org>
+Subject: [PATCH 6.8 171/336] uio_hv_generic: Dont free decrypted memory
+Date: Tue, 14 May 2024 12:16:15 +0200
+Message-ID: <20240514101045.059399686@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,65 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Yang <richard.weiyang@gmail.com>
+From: Rick Edgecombe <rick.p.edgecombe@intel.com>
 
-[ Upstream commit e0f5a8e74be88f2476e58b25d3b49a9521bdc4ec ]
+[ Upstream commit 3d788b2fbe6a1a1a9e3db09742b90809d51638b7 ]
 
-commit e96c6b8f212a ("memblock: report failures when memblock_can_resize
-is not set") introduced the usage of panic, which is not defined in
-memblock test.
+In CoCo VMs it is possible for the untrusted host to cause
+set_memory_encrypted() or set_memory_decrypted() to fail such that an
+error is returned and the resulting memory is shared. Callers need to
+take care to handle these errors to avoid returning decrypted (shared)
+memory to the page allocator, which could lead to functional or security
+issues.
 
-Let's define it directly in panic.h to fix it.
+The VMBus device UIO driver could free decrypted/shared pages if
+set_memory_decrypted() fails. Check the decrypted field in the gpadl
+to decide whether to free the memory.
 
-Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
-CC: Song Shuai <songshuaishuai@tinylab.org>
-CC: Mike Rapoport <rppt@kernel.org>
-Link: https://lore.kernel.org/r/20240402132701.29744-3-richard.weiyang@gmail.com
-Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Link: https://lore.kernel.org/r/20240311161558.1310-5-mhklinux@outlook.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20240311161558.1310-5-mhklinux@outlook.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/linux/kernel.h |  1 +
- tools/include/linux/panic.h  | 19 +++++++++++++++++++
- 2 files changed, 20 insertions(+)
- create mode 100644 tools/include/linux/panic.h
+ drivers/uio/uio_hv_generic.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/tools/include/linux/kernel.h b/tools/include/linux/kernel.h
-index 4b0673bf52c2e..07cfad817d539 100644
---- a/tools/include/linux/kernel.h
-+++ b/tools/include/linux/kernel.h
-@@ -8,6 +8,7 @@
- #include <linux/build_bug.h>
- #include <linux/compiler.h>
- #include <linux/math.h>
-+#include <linux/panic.h>
- #include <endian.h>
- #include <byteswap.h>
+diff --git a/drivers/uio/uio_hv_generic.c b/drivers/uio/uio_hv_generic.c
+index 20d9762331bd7..6be3462b109ff 100644
+--- a/drivers/uio/uio_hv_generic.c
++++ b/drivers/uio/uio_hv_generic.c
+@@ -181,12 +181,14 @@ hv_uio_cleanup(struct hv_device *dev, struct hv_uio_private_data *pdata)
+ {
+ 	if (pdata->send_gpadl.gpadl_handle) {
+ 		vmbus_teardown_gpadl(dev->channel, &pdata->send_gpadl);
+-		vfree(pdata->send_buf);
++		if (!pdata->send_gpadl.decrypted)
++			vfree(pdata->send_buf);
+ 	}
  
-diff --git a/tools/include/linux/panic.h b/tools/include/linux/panic.h
-new file mode 100644
-index 0000000000000..9c8f17a41ce8e
---- /dev/null
-+++ b/tools/include/linux/panic.h
-@@ -0,0 +1,19 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef _TOOLS_LINUX_PANIC_H
-+#define _TOOLS_LINUX_PANIC_H
-+
-+#include <stdarg.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+
-+static inline void panic(const char *fmt, ...)
-+{
-+	va_list argp;
-+
-+	va_start(argp, fmt);
-+	vfprintf(stderr, fmt, argp);
-+	va_end(argp);
-+	exit(-1);
-+}
-+
-+#endif
+ 	if (pdata->recv_gpadl.gpadl_handle) {
+ 		vmbus_teardown_gpadl(dev->channel, &pdata->recv_gpadl);
+-		vfree(pdata->recv_buf);
++		if (!pdata->recv_gpadl.decrypted)
++			vfree(pdata->recv_buf);
+ 	}
+ }
+ 
+@@ -295,7 +297,8 @@ hv_uio_probe(struct hv_device *dev,
+ 	ret = vmbus_establish_gpadl(channel, pdata->recv_buf,
+ 				    RECV_BUFFER_SIZE, &pdata->recv_gpadl);
+ 	if (ret) {
+-		vfree(pdata->recv_buf);
++		if (!pdata->recv_gpadl.decrypted)
++			vfree(pdata->recv_buf);
+ 		goto fail_close;
+ 	}
+ 
+@@ -317,7 +320,8 @@ hv_uio_probe(struct hv_device *dev,
+ 	ret = vmbus_establish_gpadl(channel, pdata->send_buf,
+ 				    SEND_BUFFER_SIZE, &pdata->send_gpadl);
+ 	if (ret) {
+-		vfree(pdata->send_buf);
++		if (!pdata->send_gpadl.decrypted)
++			vfree(pdata->send_buf);
+ 		goto fail_close;
+ 	}
+ 
 -- 
 2.43.0
 
