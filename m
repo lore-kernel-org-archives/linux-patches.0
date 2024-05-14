@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BC16CDBD;
-	Tue, 14 May 2024 11:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0864918026;
+	Tue, 14 May 2024 11:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686442; cv=none; b=qbcp3bJGygtM2OeKQiO/Ms44EpmNdLWxe9EWKtYvyP5vAGRpIkH2BXyZUsHzSHz5gSHetolQP3qxVI/L5sM0SQhSbB9//MZK4IevNAKh44iIvsHNWwcdHQuwjR9lm7oXWjCRfyhVn5NnbD22YmkGjO3JILdZLQVqb3ue+X3lOHE=
+	t=1715686445; cv=none; b=RK6gHJBFpkeTJOrHqOL9fQDkn6hRS+5lDfiKDk6Cu0U2gOpRJk1uVSAuQogssL499sfqoUa8pFlYsDiA67xI9PdiPIHegKf8uoLtps7eYWEY2LR7eydSezOTzOy2Og9495WI2BUYEK1Moa6wMR29nvXhdn2q9OYW4pDzqST+gRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686442; c=relaxed/simple;
-	bh=LzqZGrZuz7jYr1Z+/KYb8FBrdqWNUR0dGJ64L3yLN7U=;
+	s=arc-20240116; t=1715686445; c=relaxed/simple;
+	bh=8CLlqijSUbz3/blQNtvw9q6bR3ecbSjnaSjNhPutpps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BzQbHNMv4zICL/oA3NM4xVwcCfw7FMlNxULn85v8ATIXuHif3uMGdwhuv4WJQ4s9tW0Y71tIEAWPgx9QjHh1LYTf0+fDRcTM+L8dUeECZAl+u+OEgYndaAKr5U2VpXIzOo2FZk+UZ3BnR9+xn/7Q9E2j93HJsbSHDwV4gaSa9Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejot0cB1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HI0cEWCNe3opL1klsyrqx/YwMJnr97NswPoQcx9IqaAgbS16ss4VcYIsZGo5oTkDMl0wsasLAAyVlfeqUrkIeyyXtTqDe4yWWAGvYmw5qKDJ0DrSNV58xWhU0og/fGHC4maGBLE1rfwMF+y9gTPX8gbNNk5zC/u+CGNobrmQW4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fh+tH/ol; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejot0cB1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1942C2BD10;
-	Tue, 14 May 2024 11:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fh+tH/ol"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832C2C2BD10;
+	Tue, 14 May 2024 11:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686442;
-	bh=LzqZGrZuz7jYr1Z+/KYb8FBrdqWNUR0dGJ64L3yLN7U=;
+	s=korg; t=1715686444;
+	bh=8CLlqijSUbz3/blQNtvw9q6bR3ecbSjnaSjNhPutpps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ejot0cB19grpIp5kykBSdMv1YPFLhpDVA125Lwv1UMDzemMJ6oIWkNrsD+C4Aa62K
-	 sDLMLlS2rN8PRKI+spfMTXnYur5bPGCNR/yZQ0MEzsJn+do5+IEt/DBIcYBXcjb2eP
-	 RCuQxH661bvf3sKqE8YFZOYvU3XuBhjWlThenwHw=
+	b=fh+tH/olVkhUD42BIBANxGFD9xQs5gYXTKdorl8+iJKQ5TljIeZ4OyqP1+0PIcVlR
+	 WQrPyfm7EOIX9IgCgm7wP9mVEc7ZV96gmuUoj19vaYYaEbHpSbRXM9J+SZXPi/7qBU
+	 gwqVM2D3m8ewHhefpffJtwe3QBaQbG6xew/bQ3XA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vanillan Wang <vanillanwang@163.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Raphael Nestler <raphael.nestler@gmail.com>,
+	Andrea Righi <andrea.righi@canonical.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 139/236] net:usb:qmi_wwan: support Rolling modules
-Date: Tue, 14 May 2024 12:18:21 +0200
-Message-ID: <20240514101025.645611756@linuxfoundation.org>
+Subject: [PATCH 6.1 140/236] kbuild: rust: avoid creating temporary files
+Date: Tue, 14 May 2024 12:18:22 +0200
+Message-ID: <20240514101025.683116475@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -51,68 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vanillan Wang <vanillanwang@163.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit d362046021ea122309da8c8e0b6850c792ca97b5 ]
+[ Upstream commit df01b7cfcef08bf3fdcac2909d0e1910781d6bfd ]
 
-Update the qmi_wwan driver support for the Rolling
-LTE modules.
+`rustc` outputs by default the temporary files (i.e. the ones saved
+by `-Csave-temps`, such as `*.rcgu*` files) in the current working
+directory when `-o` and `--out-dir` are not given (even if
+`--emit=x=path` is given, i.e. it does not use those for temporaries).
 
-- VID:PID 33f8:0104, RW101-GL for laptop debug M.2 cards(with RMNET
-interface for /Linux/Chrome OS)
-0x0104: RMNET, diag, at, pipe
+Since out-of-tree modules are compiled from the `linux` tree,
+`rustc` then tries to create them there, which may not be accessible.
 
-Here are the outputs of usb-devices:
-T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=33f8 ProdID=0104 Rev=05.04
-S:  Manufacturer=Rolling Wireless S.a.r.l.
-S:  Product=Rolling Module
-S:  SerialNumber=ba2eb033
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-E:  Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+Thus pass `--out-dir` explicitly, even if it is just for the temporary
+files.
 
-Signed-off-by: Vanillan Wang <vanillanwang@163.com>
-Link: https://lore.kernel.org/r/20240416120713.24777-1-vanillanwang@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Similarly, do so for Rust host programs too.
+
+Reported-by: Raphael Nestler <raphael.nestler@gmail.com>
+Closes: https://github.com/Rust-for-Linux/linux/issues/1015
+Reported-by: Andrea Righi <andrea.righi@canonical.com>
+Tested-by: Raphael Nestler <raphael.nestler@gmail.com> # non-hostprogs
+Tested-by: Andrea Righi <andrea.righi@canonical.com> # non-hostprogs
+Fixes: 295d8398c67e ("kbuild: specify output names separately for each emission type from rustc")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Tested-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ scripts/Makefile.build | 5 ++++-
+ scripts/Makefile.host  | 6 +++++-
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index 2d82481d34e6b..45a542659a814 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1429,6 +1429,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_FIXED_INTF(0x0489, 0xe0b5, 0)},	/* Foxconn T77W968 LTE with eSIM support*/
- 	{QMI_FIXED_INTF(0x2692, 0x9025, 4)},    /* Cellient MPL200 (rebranded Qualcomm 05c6:9025) */
- 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
-+	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
+diff --git a/scripts/Makefile.build b/scripts/Makefile.build
+index 9ae02542b9389..1827bc1db1e98 100644
+--- a/scripts/Makefile.build
++++ b/scripts/Makefile.build
+@@ -277,6 +277,9 @@ $(obj)/%.lst: $(src)/%.c FORCE
  
- 	/* 4. Gobi 1000 devices */
- 	{QMI_GOBI1K_DEVICE(0x05c6, 0x9212)},	/* Acer Gobi Modem Device */
+ rust_allowed_features := core_ffi_c
+ 
++# `--out-dir` is required to avoid temporaries being created by `rustc` in the
++# current working directory, which may be not accessible in the out-of-tree
++# modules case.
+ rust_common_cmd = \
+ 	RUST_MODFILE=$(modfile) $(RUSTC_OR_CLIPPY) $(rust_flags) \
+ 	-Zallow-features=$(rust_allowed_features) \
+@@ -285,7 +288,7 @@ rust_common_cmd = \
+ 	--extern alloc --extern kernel \
+ 	--crate-type rlib -L $(objtree)/rust/ \
+ 	--crate-name $(basename $(notdir $@)) \
+-	--emit=dep-info=$(depfile)
++	--out-dir $(dir $@) --emit=dep-info=$(depfile)
+ 
+ rust_handle_depfile = \
+ 	sed -i '/^\#/d' $(depfile)
+diff --git a/scripts/Makefile.host b/scripts/Makefile.host
+index d812241144d44..a447c91893de6 100644
+--- a/scripts/Makefile.host
++++ b/scripts/Makefile.host
+@@ -86,7 +86,11 @@ hostc_flags    = -Wp,-MMD,$(depfile) \
+ hostcxx_flags  = -Wp,-MMD,$(depfile) \
+                  $(KBUILD_HOSTCXXFLAGS) $(HOST_EXTRACXXFLAGS) \
+                  $(HOSTCXXFLAGS_$(target-stem).o)
+-hostrust_flags = --emit=dep-info=$(depfile) \
++
++# `--out-dir` is required to avoid temporaries being created by `rustc` in the
++# current working directory, which may be not accessible in the out-of-tree
++# modules case.
++hostrust_flags = --out-dir $(dir $@) --emit=dep-info=$(depfile) \
+                  $(KBUILD_HOSTRUSTFLAGS) $(HOST_EXTRARUSTFLAGS) \
+                  $(HOSTRUSTFLAGS_$(target-stem))
+ 
 -- 
 2.43.0
 
