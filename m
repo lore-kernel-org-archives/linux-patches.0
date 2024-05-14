@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA05D6CDC8;
-	Tue, 14 May 2024 10:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB2812DDBC;
+	Tue, 14 May 2024 10:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682246; cv=none; b=PRmf4uVCV7f2DIcPaI5qCxo8pxn9tACcC7Y0RfU/ZOdazbU6RLw/KSTKEWFnykdTkfzVxR5M6tvgo6CfhfA453I5D6b1dyTBrNzJ+kC2gdNsS0N8PwNDuXF9lvBfCLF6c8TXCHoq6cD9gMbkEnPfh0RxYTyetPkFXK8M1MdFqSU=
+	t=1715682250; cv=none; b=dnhrnUiQVZLdmmt/2VkmbfaNwDjUVSJGTN+aqV8ySuXFKy5SVuf5IdcEaOEOVM4AkxUCAUdkqltJ14+2J7nFmWVkSTCRJSWzeI8EhLgs03aVkNhx7Kwk07YSVDAVd/dPJFQ3OU6eDHuA1txBAmjVb/1GcVu+I9V97Awg45wkEBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682246; c=relaxed/simple;
-	bh=W8qzj4IWabhjkzIq2nzMtWkk12ECyp4dSxZJjoK6oo8=;
+	s=arc-20240116; t=1715682250; c=relaxed/simple;
+	bh=MeZJxAmv+GxEMrb3/T3BG6ERYqlmXdQhhRtXmPbvwjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DA5lhY51MTgo+6/LVmLa3rulGbXVEBFIe7PDXRStBVPHcWCjSjNvYLITl9g8NvMlYNoTNxNuR1kgTwVDAKa4kjPf56LSgieF8Y9jRSst3Q/1O1Mi66ImQRSQ2IIj3uCIwRAS7zO18GQFpTfdbcNEcS5cO/jTDZRUfn6RQlNuEvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xILRIDii; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VJKUkOWKbPIatP00Q90iwq3XVh0GP3VEtZPFpglUkFBLHs5p78h72M0zEhSCKaeO3t3yX9eASod/KdQpmRK4a7F6K2VTpmjshiXbKG/Mq4DX3QdLqZXdLzKIV12m6qMwqjCcceh9rjaZlyGWVOLD2mhN6wxJuGGvChLzRHCKDOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zf1kM1Gh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xILRIDii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25493C2BD10;
-	Tue, 14 May 2024 10:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zf1kM1Gh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B0DC2BD10;
+	Tue, 14 May 2024 10:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682246;
-	bh=W8qzj4IWabhjkzIq2nzMtWkk12ECyp4dSxZJjoK6oo8=;
+	s=korg; t=1715682250;
+	bh=MeZJxAmv+GxEMrb3/T3BG6ERYqlmXdQhhRtXmPbvwjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xILRIDiilRWgvHh6164E7NGyymLIsm16QDHNlX1iI8e2ZNiYB/37anCoAsqGclRvU
-	 7SXyZu78M0ALpZ9kmeG5PHSfl5GpZEVDIzo9ctfO3GGGVXN45r+8FaJobz3cSjke3d
-	 k+mUYctDrer8Z3Dqn4YnvXuYwRKhfTWhF+zteReY=
+	b=zf1kM1Ghb++Vj2Jir0o0bVJY2RAthR1A7SCSGZIyVCkMXQe4QioDx4/0+5j5goXnA
+	 OfXNjhuqKzao5aNeSUIhb6O98Hzfbc5ptbnH2cL/S1taHsmWhaUFAuD/JeBHdXkQDf
+	 2mlB0s4SgVPhRT6vGOUJTZORHx8OL7edfxUBoZxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Babrou <ivan@cloudflare.com>,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 034/336] bpf, arm64: Fix incorrect runtime stats
-Date: Tue, 14 May 2024 12:13:58 +0200
-Message-ID: <20240514101039.897719766@linuxfoundation.org>
+Subject: [PATCH 6.8 008/336] pinctrl: mediatek: paris: Rework support for PIN_CONFIG_{INPUT,OUTPUT}_ENABLE
+Date: Tue, 14 May 2024 12:13:32 +0200
+Message-ID: <20240514101038.919422820@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,51 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit dc7d7447b56bcc9cf79a9c22e4edad200a298e4c ]
+[ Upstream commit c5d3b64c568a344e998830e0e94a7c04e372f89b ]
 
-When __bpf_prog_enter() returns zero, the arm64 register x20 that stores
-prog start time is not assigned to zero, causing incorrect runtime stats.
+There is a misinterpretation of some of the PIN_CONFIG_* options in this
+driver library. PIN_CONFIG_OUTPUT_ENABLE should refer to a buffer or
+switch in the output direction of the electrical path. The MediaTek
+hardware does not have such a thing. The driver incorrectly maps this
+option to the GPIO function's direction.
 
-To fix it, assign the return value of bpf_prog_enter() to x20 register
-immediately upon its return.
+Likewise, PIN_CONFIG_INPUT_ENABLE should refer to a buffer or switch in
+the input direction. The hardware does have such a mechanism, and is
+mapped to the IES bit. The driver however sets the direction in addition
+to the IES bit, which is incorrect. On readback, the IES bit isn't even
+considered.
 
-Fixes: efc9909fdce0 ("bpf, arm64: Add bpf trampoline for arm64")
-Reported-by: Ivan Babrou <ivan@cloudflare.com>
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Ivan Babrou <ivan@cloudflare.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20240416064208.2919073-2-xukuohai@huaweicloud.com
+Ironically, the driver does not support readback for PIN_CONFIG_OUTPUT,
+while its readback of PIN_CONFIG_{INPUT,OUTPUT}_ENABLE is what it should
+be doing for PIN_CONFIG_OUTPUT.
+
+Rework support for these three options, so that PIN_CONFIG_OUTPUT_ENABLE
+is completely removed, PIN_CONFIG_INPUT_ENABLE is only linked to the IES
+bit, and PIN_CONFIG_OUTPUT is linked to the GPIO function's direction
+and output level.
+
+Fixes: 805250982bb5 ("pinctrl: mediatek: add pinctrl-paris that implements the vendor dt-bindings")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Message-ID: <20240327091336.3434141-3-wenst@chromium.org>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-paris.c | 38 +++++++-----------------
+ 1 file changed, 11 insertions(+), 27 deletions(-)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index 00217d8d034b7..ceed77c29fe6b 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -1738,15 +1738,15 @@ static void invoke_bpf_prog(struct jit_ctx *ctx, struct bpf_tramp_link *l,
+diff --git a/drivers/pinctrl/mediatek/pinctrl-paris.c b/drivers/pinctrl/mediatek/pinctrl-paris.c
+index 9353f78a52f05..b19bc391705ee 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-paris.c
++++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
+@@ -165,20 +165,21 @@ static int mtk_pinconf_get(struct pinctrl_dev *pctldev,
+ 		err = mtk_hw_get_value(hw, desc, PINCTRL_PIN_REG_SR, &ret);
+ 		break;
+ 	case PIN_CONFIG_INPUT_ENABLE:
+-	case PIN_CONFIG_OUTPUT_ENABLE:
++		err = mtk_hw_get_value(hw, desc, PINCTRL_PIN_REG_IES, &ret);
++		if (!ret)
++			err = -EINVAL;
++		break;
++	case PIN_CONFIG_OUTPUT:
+ 		err = mtk_hw_get_value(hw, desc, PINCTRL_PIN_REG_DIR, &ret);
+ 		if (err)
+ 			break;
+-		/*     CONFIG     Current direction return value
+-		 * -------------  ----------------- ----------------------
+-		 * OUTPUT_ENABLE       output       1 (= HW value)
+-		 *                     input        0 (= HW value)
+-		 * INPUT_ENABLE        output       0 (= reverse HW value)
+-		 *                     input        1 (= reverse HW value)
+-		 */
+-		if (param == PIN_CONFIG_INPUT_ENABLE)
+-			ret = !ret;
  
- 	emit_call(enter_prog, ctx);
- 
-+	/* save return value to callee saved register x20 */
-+	emit(A64_MOV(1, A64_R(20), A64_R(0)), ctx);
++		if (!ret) {
++			err = -EINVAL;
++			break;
++		}
 +
- 	/* if (__bpf_prog_enter(prog) == 0)
- 	 *         goto skip_exec_of_prog;
- 	 */
- 	branch = ctx->image + ctx->idx;
- 	emit(A64_NOP, ctx);
- 
--	/* save return value to callee saved register x20 */
--	emit(A64_MOV(1, A64_R(20), A64_R(0)), ctx);
++		err = mtk_hw_get_value(hw, desc, PINCTRL_PIN_REG_DO, &ret);
+ 		break;
+ 	case PIN_CONFIG_INPUT_SCHMITT_ENABLE:
+ 		err = mtk_hw_get_value(hw, desc, PINCTRL_PIN_REG_DIR, &ret);
+@@ -283,26 +284,9 @@ static int mtk_pinconf_set(struct pinctrl_dev *pctldev, unsigned int pin,
+ 			break;
+ 		err = hw->soc->bias_set_combo(hw, desc, 0, arg);
+ 		break;
+-	case PIN_CONFIG_OUTPUT_ENABLE:
+-		err = mtk_hw_set_value(hw, desc, PINCTRL_PIN_REG_SMT,
+-				       MTK_DISABLE);
+-		/* Keep set direction to consider the case that a GPIO pin
+-		 *  does not have SMT control
+-		 */
+-		if (err != -ENOTSUPP)
+-			break;
 -
- 	emit(A64_ADD_I(1, A64_R(0), A64_SP, args_off), ctx);
- 	if (!p->jited)
- 		emit_addr_mov_i64(A64_R(1), (const u64)p->insnsi, ctx);
+-		err = mtk_hw_set_value(hw, desc, PINCTRL_PIN_REG_DIR,
+-				       MTK_OUTPUT);
+-		break;
+ 	case PIN_CONFIG_INPUT_ENABLE:
+ 		/* regard all non-zero value as enable */
+ 		err = mtk_hw_set_value(hw, desc, PINCTRL_PIN_REG_IES, !!arg);
+-		if (err)
+-			break;
+-
+-		err = mtk_hw_set_value(hw, desc, PINCTRL_PIN_REG_DIR,
+-				       MTK_INPUT);
+ 		break;
+ 	case PIN_CONFIG_SLEW_RATE:
+ 		/* regard all non-zero value as enable */
 -- 
 2.43.0
 
