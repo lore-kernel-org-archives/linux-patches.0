@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D747812FF89;
-	Tue, 14 May 2024 11:30:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A986C84D26;
+	Tue, 14 May 2024 11:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686243; cv=none; b=eSixlVBbp2DCewYjGP2EsUS4l3lBnHyMoFFBA5oy3oIWlnJyD6DEuiojz9gufsK222Xesft9dvaF4hMK20fCJ4t3Qft3Y7qnQsTdybUcgnCH8T8+DIo+gtausRaAW/uR/4Z+D/hKGCTCAyKvmeeGIxCkvsbvJkwrRq+zcyG5g2c=
+	t=1715686246; cv=none; b=vBz0G8mtcQ+mh0wNEUXIueqTpUrFvU/lbrDkbi0ayXbKiaPOEZQlX8VVvF9n9+fLhQYu2wEaKezD3IEY8wwqZ/PdTFtPS12K1FcltWOOyjR6m3m2g6JhRcFWZmr1clrhw8m47VwJum34qLpTcQ7ixDV85mjU5jCHI3tHclNSzZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686243; c=relaxed/simple;
-	bh=UKAYI3dofMfiTECmLTBhrFZl05DU6PSZU2Z/e2Vsl5w=;
+	s=arc-20240116; t=1715686246; c=relaxed/simple;
+	bh=QR/5oZjAWio5zv1TydfH9gE9jrAosc4A+PJOvPeYNpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zf8I5dZKbwxUCrLLW3EXokLUY+6C7SEs2fVgBfbM53r7IeWUTvMSdKtxYj9eInwuAjtHi5tb1pYxM4DS1YAuQJlPKdr+oHutmMOlUteB/oZxFtoXZRY1VHn1zppPi6dd+SY5g23FeaI6bWXxagLoT0OBjDswW02o5eu8epZCsOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NR80UcY5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L7rjAKkt/hO5E2LKcq53gp0RZSXVFLqf0mvA+gggJ4WhxaNtVsO5wrmxyAdRca6xIHDkDz2mDqpr+Ajm3B5WOi0VR5jSty3JyPO6xh20OZkHbruOi8ZPvYDQVaAYcwM75t+xaXg+z1Akpv9EMe6UG8ac+cAPexxYrurulrjyNYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JWl300zp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NR80UcY5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D9AC32782;
-	Tue, 14 May 2024 11:30:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JWl300zp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CAFC2BD10;
+	Tue, 14 May 2024 11:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686243;
-	bh=UKAYI3dofMfiTECmLTBhrFZl05DU6PSZU2Z/e2Vsl5w=;
+	s=korg; t=1715686246;
+	bh=QR/5oZjAWio5zv1TydfH9gE9jrAosc4A+PJOvPeYNpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NR80UcY5eDs/WxX6bAguD7dw5PgCjF4Xn8HaouFVxtd9VHZKEesn500rctqJQpGIh
-	 EKFmj1L26UIHxLNkawB6WyGdq8BXtWJFVNFEHL4PGosJZuPMMDmd7+HJpGQzvovrmt
-	 fkxZfgXj+/usEAESEezV3xpp1EAK1qLOroK1+0PA=
+	b=JWl300zpBp1oDLl3NKqrPrGAU21w9ia4Piy2wijv4WppmBfce3U6AgQs8YsCOlo8f
+	 03rHrFXx8GpjrG5bangVkLCjKYQDlfCAkm0/5I6vBYFLwrgjI9aXX/U3JwICpyxjr0
+	 +3zV5P3LheieKIzexQQltrWFBOlTtOqZwHFvbGu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jerome Brunet <jbrunet@baylibre.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 070/236] ASoC: meson: axg-tdm-interface: manage formatters in trigger
-Date: Tue, 14 May 2024 12:17:12 +0200
-Message-ID: <20240514101023.029274642@linuxfoundation.org>
+Subject: [PATCH 6.1 071/236] ASoC: meson: cards: select SND_DYNAMIC_MINORS
+Date: Tue, 14 May 2024 12:17:13 +0200
+Message-ID: <20240514101023.066798401@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -53,87 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit f949ed458ad15a00d41b37c745ebadaef171aaae ]
+[ Upstream commit 6db26f9ea4edd8a17d39ab3c20111e3ccd704aef ]
 
-So far, the formatters have been reset/enabled using the .prepare()
-callback. This was done in this callback because walking the formatters use
-a mutex. A mutex is used because formatter handling require dealing
-possibly slow clock operation.
+Amlogic sound cards do create a lot of pcm interfaces, possibly more than
+8. Some pcm interfaces are internal (like DPCM backends and c2c) and not
+exposed to userspace.
 
-With the support of non-atomic, .trigger() callback may be used which also
-allows to properly enable and disable formatters on start but also
-pause/resume.
+Those interfaces still increase the number passed to snd_find_free_minor(),
+which eventually exceeds 8 causing -EBUSY error on card registration if
+CONFIG_SND_DYNAMIC_MINORS=n and the interface is exposed to userspace.
 
-This solve a random shift on TDMIN as well repeated samples on for TDMOUT.
+select CONFIG_SND_DYNAMIC_MINORS for Amlogic cards to avoid the problem.
 
-Fixes: d60e4f1e4be5 ("ASoC: meson: add tdm interface driver")
+Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
 Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://lore.kernel.org/r/20240426152946.3078805-4-jbrunet@baylibre.com
+Link: https://lore.kernel.org/r/20240426134150.3053741-1-jbrunet@baylibre.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/axg-tdm-interface.c | 34 ++++++++++++++++-------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ sound/soc/meson/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/meson/axg-tdm-interface.c b/sound/soc/meson/axg-tdm-interface.c
-index 028383f949efd..272c3d2d68cb7 100644
---- a/sound/soc/meson/axg-tdm-interface.c
-+++ b/sound/soc/meson/axg-tdm-interface.c
-@@ -351,26 +351,31 @@ static int axg_tdm_iface_hw_params(struct snd_pcm_substream *substream,
- 	return 0;
- }
+diff --git a/sound/soc/meson/Kconfig b/sound/soc/meson/Kconfig
+index b93ea33739f29..6458d5dc4902f 100644
+--- a/sound/soc/meson/Kconfig
++++ b/sound/soc/meson/Kconfig
+@@ -99,6 +99,7 @@ config SND_MESON_AXG_PDM
  
--static int axg_tdm_iface_hw_free(struct snd_pcm_substream *substream,
-+static int axg_tdm_iface_trigger(struct snd_pcm_substream *substream,
-+				 int cmd,
- 				 struct snd_soc_dai *dai)
- {
--	struct axg_tdm_stream *ts = snd_soc_dai_get_dma_data(dai, substream);
-+	struct axg_tdm_stream *ts =
-+		snd_soc_dai_get_dma_data(dai, substream);
+ config SND_MESON_CARD_UTILS
+ 	tristate
++	select SND_DYNAMIC_MINORS
  
--	/* Stop all attached formatters */
--	axg_tdm_stream_stop(ts);
-+	switch (cmd) {
-+	case SNDRV_PCM_TRIGGER_START:
-+	case SNDRV_PCM_TRIGGER_RESUME:
-+	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-+		axg_tdm_stream_start(ts);
-+		break;
-+	case SNDRV_PCM_TRIGGER_SUSPEND:
-+	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-+	case SNDRV_PCM_TRIGGER_STOP:
-+		axg_tdm_stream_stop(ts);
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
- 
- 	return 0;
- }
- 
--static int axg_tdm_iface_prepare(struct snd_pcm_substream *substream,
--				 struct snd_soc_dai *dai)
--{
--	struct axg_tdm_stream *ts = snd_soc_dai_get_dma_data(dai, substream);
--
--	/* Force all attached formatters to update */
--	return axg_tdm_stream_reset(ts);
--}
--
- static int axg_tdm_iface_remove_dai(struct snd_soc_dai *dai)
- {
- 	if (dai->capture_dma_data)
-@@ -408,8 +413,7 @@ static const struct snd_soc_dai_ops axg_tdm_iface_ops = {
- 	.set_fmt	= axg_tdm_iface_set_fmt,
- 	.startup	= axg_tdm_iface_startup,
- 	.hw_params	= axg_tdm_iface_hw_params,
--	.prepare	= axg_tdm_iface_prepare,
--	.hw_free	= axg_tdm_iface_hw_free,
-+	.trigger	= axg_tdm_iface_trigger,
- };
- 
- /* TDM Backend DAIs */
+ config SND_MESON_CODEC_GLUE
+ 	tristate
 -- 
 2.43.0
 
