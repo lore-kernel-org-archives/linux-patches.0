@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D9F6311D;
-	Tue, 14 May 2024 11:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8949E6311D;
+	Tue, 14 May 2024 11:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685955; cv=none; b=Xl7M90T/kokCWs7JSLXFT1WcmudxyAto+qcac3E0eeUnxZGAIcwFaN2mKPGxACEqIbT/YmK0ZJUjr9psH8PKKvaQR+IiYoR4y/HahxI59jX8uKMgwgjcWIMm7VK3BJlIWU3aMoGvvpodeXcWK3dldCIbKQTr+0wiSjhYnM4WlNY=
+	t=1715685959; cv=none; b=TqacExw8ijhUDGbBJaoAia4BkBpcTQmNX9JLceRMohJqTTjp89033OnNUmDshNW48wJVPTtG7/Jgzgxl+3AtvedACc7Se8INfimcgpCenvjteGNejwDflVya70KD5PVMuDvsBVsM6yu36f0AUKqtONcnAoHQaln+yKV3U1RAFi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685955; c=relaxed/simple;
-	bh=DU2Vtmg92B74Y5/8TqiyuebmvGROEzOapbJ+48+VIxs=;
+	s=arc-20240116; t=1715685959; c=relaxed/simple;
+	bh=wjK4kWxHpkZEfjx9Fm12atado57H8Cn8ALvJyJBNk7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jqSl8tynIH7kVlt/J0ahSsJhUyZ3/c+2Dj7Phk8n0X6b5pnIkcCztEeUeEh+5UAT9e4+R8NVMlj9ftFa9kYBiP+SekNyc4Ic2a6J7ptXA+4ArHdS98XAFirqV3hH/AXf9lPDQsjBwbJtfjFBHY13R3sPqS6uvmwhlGK4sF+d1oI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayL1h7ua; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sFI+7uQQVruUS+xU23P4nobvdDx/Nqg6Cw09oUZL7AnVHBm178Y3O3JRY4gsGVlXEW9YS8WSJcMuOe5wv46/C06mLI8as9XYznXT/6mT5o/6TLwxIabZMHQJoLOAsgZgGeu4kWIOO8t/+WGGwSRMs97BaAcI1rr48uzCpI+O4bM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phN/NNzF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayL1h7ua"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6731CC2BD10;
-	Tue, 14 May 2024 11:25:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phN/NNzF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13FFC2BD10;
+	Tue, 14 May 2024 11:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685954;
-	bh=DU2Vtmg92B74Y5/8TqiyuebmvGROEzOapbJ+48+VIxs=;
+	s=korg; t=1715685959;
+	bh=wjK4kWxHpkZEfjx9Fm12atado57H8Cn8ALvJyJBNk7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ayL1h7uamiR9EKlO1Plx74pIxZHgjb1uWOrO3pEiYuyqDL6Y5ZronORvCrbr8NTFk
-	 sPqdJZVKMPnfSjspraPwsaYsG8tTFZwRbSNRMpyuDH+117hJmMjuHuLKs+z9Ckk2Be
-	 XQZioAVYI+GEK4shtB/pxYkW0S4FIexg9Ke1G4r8=
+	b=phN/NNzFy447VCZgLoRrlKf1F2Brnzc9fRbmOie1ZX45MyVmfozeZilFCkYqM2U2p
+	 ta8rKiqMOertSLBqMeS418fDlzMhnpX6eYDJFPT+W71ldDa1/pouBPv+rMY6hp4fFv
+	 jJWdAsumYrx7xtIzAzH10DL1PPIltPG+NNrt/FdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 6.6 284/301] nvme-pci: Add quirk for broken MSIs
-Date: Tue, 14 May 2024 12:19:15 +0200
-Message-ID: <20240514101042.986916670@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 285/301] regulator: core: fix debugfs creation regression
+Date: Tue, 14 May 2024 12:19:16 +0200
+Message-ID: <20240514101043.024072273@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -50,111 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit d5887dc6b6c054d0da3cd053afc15b7be1f45ff6 upstream.
+commit 2a4b49bb58123bad6ec0e07b02845f74c23d5e04 upstream.
 
-Sandisk SN530 NVMe drives have broken MSIs. On systems without MSI-X
-support, all commands time out resulting in the following message:
+regulator_get() may sometimes be called more than once for the same
+consumer device, something which before commit dbe954d8f163 ("regulator:
+core: Avoid debugfs: Directory ...  already present! error") resulted in
+errors being logged.
 
-nvme nvme0: I/O tag 12 (100c) QID 0 timeout, completion polled
+A couple of recent commits broke the handling of such cases so that
+attributes are now erroneously created in the debugfs root directory the
+second time a regulator is requested and the log is filled with errors
+like:
 
-These timeouts cause the boot to take an excessively-long time (over 20
-minutes) while the initial command queue is flushed.
+	debugfs: File 'uA_load' in directory '/' already present!
+	debugfs: File 'min_uV' in directory '/' already present!
+	debugfs: File 'max_uV' in directory '/' already present!
+	debugfs: File 'constraint_flags' in directory '/' already present!
 
-Address this by adding a quirk for drives with buggy MSIs. The lspci
-output for this device (recorded on a system with MSI-X support) is:
+on any further calls.
 
-02:00.0 Non-Volatile memory controller: Sandisk Corp Device 5008 (rev 01) (prog-if 02 [NVM Express])
-	Subsystem: Sandisk Corp Device 5008
-	Flags: bus master, fast devsel, latency 0, IRQ 16, NUMA node 0
-	Memory at f7e00000 (64-bit, non-prefetchable) [size=16K]
-	Memory at f7e04000 (64-bit, non-prefetchable) [size=256]
-	Capabilities: [80] Power Management version 3
-	Capabilities: [90] MSI: Enable- Count=1/32 Maskable- 64bit+
-	Capabilities: [b0] MSI-X: Enable+ Count=17 Masked-
-	Capabilities: [c0] Express Endpoint, MSI 00
-	Capabilities: [100] Advanced Error Reporting
-	Capabilities: [150] Device Serial Number 00-00-00-00-00-00-00-00
-	Capabilities: [1b8] Latency Tolerance Reporting
-	Capabilities: [300] Secondary PCI Express
-	Capabilities: [900] L1 PM Substates
-	Kernel driver in use: nvme
-	Kernel modules: nvme
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Fixes: 2715bb11cfff ("regulator: core: Fix more error checking for debugfs_create_dir()")
+Fixes: 08880713ceec ("regulator: core: Streamline debugfs operations")
+Cc: stable@vger.kernel.org
+Cc: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20240509133304.8883-1-johan+linaro@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/nvme.h |    5 +++++
- drivers/nvme/host/pci.c  |   14 +++++++++++---
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/regulator/core.c |   27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -161,6 +161,11 @@ enum nvme_quirks {
- 	 * Disables simple suspend/resume path.
- 	 */
- 	NVME_QUIRK_FORCE_NO_SIMPLE_SUSPEND	= (1 << 20),
-+
-+	/*
-+	 * MSI (but not MSI-X) interrupts are broken and never fire.
-+	 */
-+	NVME_QUIRK_BROKEN_MSI			= (1 << 21),
- };
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1909,19 +1909,24 @@ static struct regulator *create_regulato
+ 		}
+ 	}
  
- /*
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -2216,6 +2216,7 @@ static int nvme_setup_irqs(struct nvme_d
- 		.priv		= dev,
- 	};
- 	unsigned int irq_queues, poll_queues;
-+	unsigned int flags = PCI_IRQ_ALL_TYPES | PCI_IRQ_AFFINITY;
+-	if (err != -EEXIST)
++	if (err != -EEXIST) {
+ 		regulator->debugfs = debugfs_create_dir(supply_name, rdev->debugfs);
+-	if (IS_ERR(regulator->debugfs))
+-		rdev_dbg(rdev, "Failed to create debugfs directory\n");
++		if (IS_ERR(regulator->debugfs)) {
++			rdev_dbg(rdev, "Failed to create debugfs directory\n");
++			regulator->debugfs = NULL;
++		}
++	}
+ 
+-	debugfs_create_u32("uA_load", 0444, regulator->debugfs,
+-			   &regulator->uA_load);
+-	debugfs_create_u32("min_uV", 0444, regulator->debugfs,
+-			   &regulator->voltage[PM_SUSPEND_ON].min_uV);
+-	debugfs_create_u32("max_uV", 0444, regulator->debugfs,
+-			   &regulator->voltage[PM_SUSPEND_ON].max_uV);
+-	debugfs_create_file("constraint_flags", 0444, regulator->debugfs,
+-			    regulator, &constraint_flags_fops);
++	if (regulator->debugfs) {
++		debugfs_create_u32("uA_load", 0444, regulator->debugfs,
++				   &regulator->uA_load);
++		debugfs_create_u32("min_uV", 0444, regulator->debugfs,
++				   &regulator->voltage[PM_SUSPEND_ON].min_uV);
++		debugfs_create_u32("max_uV", 0444, regulator->debugfs,
++				   &regulator->voltage[PM_SUSPEND_ON].max_uV);
++		debugfs_create_file("constraint_flags", 0444, regulator->debugfs,
++				    regulator, &constraint_flags_fops);
++	}
  
  	/*
- 	 * Poll queues don't need interrupts, but we need at least one I/O queue
-@@ -2239,8 +2240,10 @@ static int nvme_setup_irqs(struct nvme_d
- 	irq_queues = 1;
- 	if (!(dev->ctrl.quirks & NVME_QUIRK_SINGLE_VECTOR))
- 		irq_queues += (nr_io_queues - poll_queues);
--	return pci_alloc_irq_vectors_affinity(pdev, 1, irq_queues,
--			      PCI_IRQ_ALL_TYPES | PCI_IRQ_AFFINITY, &affd);
-+	if (dev->ctrl.quirks & NVME_QUIRK_BROKEN_MSI)
-+		flags &= ~PCI_IRQ_MSI;
-+	return pci_alloc_irq_vectors_affinity(pdev, 1, irq_queues, flags,
-+					      &affd);
- }
- 
- static unsigned int nvme_max_io_queues(struct nvme_dev *dev)
-@@ -2469,6 +2472,7 @@ static int nvme_pci_enable(struct nvme_d
- {
- 	int result = -ENOMEM;
- 	struct pci_dev *pdev = to_pci_dev(dev->dev);
-+	unsigned int flags = PCI_IRQ_ALL_TYPES;
- 
- 	if (pci_enable_device_mem(pdev))
- 		return result;
-@@ -2485,7 +2489,9 @@ static int nvme_pci_enable(struct nvme_d
- 	 * interrupts. Pre-enable a single MSIX or MSI vec for setup. We'll
- 	 * adjust this later.
- 	 */
--	result = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES);
-+	if (dev->ctrl.quirks & NVME_QUIRK_BROKEN_MSI)
-+		flags &= ~PCI_IRQ_MSI;
-+	result = pci_alloc_irq_vectors(pdev, 1, 1, flags);
- 	if (result < 0)
- 		goto disable;
- 
-@@ -3382,6 +3388,8 @@ static const struct pci_device_id nvme_i
- 		.driver_data = NVME_QUIRK_DELAY_BEFORE_CHK_RDY |
- 				NVME_QUIRK_DISABLE_WRITE_ZEROES|
- 				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
-+	{ PCI_DEVICE(0x15b7, 0x5008),   /* Sandisk SN530 */
-+		.driver_data = NVME_QUIRK_BROKEN_MSI },
- 	{ PCI_DEVICE(0x1987, 0x5012),	/* Phison E12 */
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_DEVICE(0x1987, 0x5016),	/* Phison E16 */
+ 	 * Check now if the regulator is an always on regulator - if
 
 
