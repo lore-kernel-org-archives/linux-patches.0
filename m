@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6720412FB36;
-	Tue, 14 May 2024 10:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F96812FB21;
+	Tue, 14 May 2024 10:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684236; cv=none; b=r/WbJZ/qNs8EVGRsy3sPAkhD9wRzKM1S1xNAOPTnU8NcGFSdkmequF9Q3filrxFi7e8pjYD8muCQi1KZ3BGCLB4AKYL0xGS4eORDwXfh7kzkG2rIs9zw4qgPFuVVRZKR+llDsyamIZAyNkn3Js1dLK0qJrYtobZsd2Wq/8a+0Pw=
+	t=1715684241; cv=none; b=LUYkN2rnZryQodcaNH9MRqZUCZARxOg5rPKaV8nMfH4wZrlikTBmLytwVewuLv5LkC18pVllwRuLpw7167Y09cM92dcPytE4ETMVlx2SPNbRc/IpvTW3Cl1/YckO1SyGFW+7JiSpjNfvpGjf6VZibmHHsvKvSErWBKF+MnYN75g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684236; c=relaxed/simple;
-	bh=0Fj+HVlWtbCkmgeIIEalBCdCeHTC9mOe4PDCEX7dbDA=;
+	s=arc-20240116; t=1715684241; c=relaxed/simple;
+	bh=rz330f8OTXLWsHvU9lHqd9atb3cfDpkDYj7f8SAr+eI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qP/e7LMUVbmwDxI8SCcgvcyFpVCD86dF3Ab+4OVAYtReOuDRFdspO758GxPEEQi7Zu3yvx/BavS3T8bPQyOxFYEpQ1QrBu5uK0BhibP2GaoyEUdsddV7iJtlBVCdoljtNgHQ6uo+S95sZ078DHafap7Y/VZSPgSfJdWEmJzZ124=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylCSLhy+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bggchogTnafe6gY6q8ZU6FDjAw3kkRw1gM/CQWayNBgQ0vWJHMvn7hVFa8dDWKEkG7xim247hAkOw1eZ7qyaIq0o1EJlVafP3Go4sMvp/FsqReL8aHfhCdupjNbsOmog+90IIYxHiDfcxmFkruPiSHYTQvIs7kpFIEyZa24CL94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/WqVJPt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylCSLhy+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4553CC2BD10;
-	Tue, 14 May 2024 10:57:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/WqVJPt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480C8C2BD10;
+	Tue, 14 May 2024 10:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684236;
-	bh=0Fj+HVlWtbCkmgeIIEalBCdCeHTC9mOe4PDCEX7dbDA=;
+	s=korg; t=1715684240;
+	bh=rz330f8OTXLWsHvU9lHqd9atb3cfDpkDYj7f8SAr+eI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylCSLhy+98ZxtHGB3u+xewnw0h6oLqbDFJ3iIJIzZiDNpNSOLN2YlgMj8fhOTFc6t
-	 T6zSD9YHi72qxkokKbdOCKuh17cj8shQ6a5SYmOrnCHpFgR1+sf38QmAHyaVTR+7Bv
-	 BT8EUaEMMz4ltd7Ok30yQOGNWR19JC19lU8Ls1po=
+	b=z/WqVJPtXP9S7tcg7uBOOmwb8LYth1y/VmsUCa5QY/eUB4duyXbKiV36aDyKGcIN/
+	 iOu114Jf312vmB6Ezj5Hlp9WvGgn5TsT9sF/S12cH42KliPu952mVHDwklMEX0o+i+
+	 1w0KfYFRe5eNJk5DAcvmAymcl6vFAqkRCUHifBeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Okazaki <dtokazaki@google.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Tim Jiang <quic_tjiang@quicinc.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 010/301] eeprom: at24: fix memory corruption race condition
-Date: Tue, 14 May 2024 12:14:41 +0200
-Message-ID: <20240514101032.621915542@linuxfoundation.org>
+Subject: [PATCH 6.6 011/301] Bluetooth: qca: add support for QCA2066
+Date: Tue, 14 May 2024 12:14:42 +0200
+Message-ID: <20240514101032.659832829@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,63 +51,222 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Okazaki <dtokazaki@google.com>
+From: Tim Jiang <quic_tjiang@quicinc.com>
 
-[ Upstream commit f42c97027fb75776e2e9358d16bf4a99aeb04cf2 ]
+[ Upstream commit a7f8dedb4be2cc930a29af24427b885405ecd15d ]
 
-If the eeprom is not accessible, an nvmem device will be registered, the
-read will fail, and the device will be torn down. If another driver
-accesses the nvmem device after the teardown, it will reference
-invalid memory.
+This patch adds support for QCA2066 firmware patch and NVM downloading.
+as the RF performance of QCA2066 SOC chip from different foundries may
+vary. Therefore we use different NVM to configure them based on board ID.
 
-Move the failure point before registering the nvmem device.
+Changes in v2
+ - optimize the function qca_generate_hsp_nvm_name
+ - remove redundant debug code for function qca_read_fw_board_id
 
-Signed-off-by: Daniel Okazaki <dtokazaki@google.com>
-Fixes: b20eb4c1f026 ("eeprom: at24: drop unnecessary label")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240422174337.2487142-1-dtokazaki@google.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 32868e126c78 ("Bluetooth: qca: fix invalid device address check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/eeprom/at24.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/bluetooth/btqca.c   | 68 +++++++++++++++++++++++++++++++++++++
+ drivers/bluetooth/btqca.h   |  5 ++-
+ drivers/bluetooth/hci_qca.c | 11 ++++++
+ 3 files changed, 83 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/misc/eeprom/at24.c b/drivers/misc/eeprom/at24.c
-index e6d688817b106..c290e849b2ed8 100644
---- a/drivers/misc/eeprom/at24.c
-+++ b/drivers/misc/eeprom/at24.c
-@@ -781,15 +781,6 @@ static int at24_probe(struct i2c_client *client)
- 	}
- 	pm_runtime_enable(dev);
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index 5277090c6d6d7..19cfc342fc7bb 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -205,6 +205,44 @@ static int qca_send_reset(struct hci_dev *hdev)
+ 	return 0;
+ }
  
--	at24->nvmem = devm_nvmem_register(dev, &nvmem_config);
--	if (IS_ERR(at24->nvmem)) {
--		pm_runtime_disable(dev);
--		if (!pm_runtime_status_suspended(dev))
--			regulator_disable(at24->vcc_reg);
--		return dev_err_probe(dev, PTR_ERR(at24->nvmem),
--				     "failed to register nvmem\n");
--	}
--
- 	/*
- 	 * Perform a one-byte test read to verify that the chip is functional,
- 	 * unless powering on the device is to be avoided during probe (i.e.
-@@ -805,6 +796,15 @@ static int at24_probe(struct i2c_client *client)
- 		}
- 	}
- 
-+	at24->nvmem = devm_nvmem_register(dev, &nvmem_config);
-+	if (IS_ERR(at24->nvmem)) {
-+		pm_runtime_disable(dev);
-+		if (!pm_runtime_status_suspended(dev))
-+			regulator_disable(at24->vcc_reg);
-+		return dev_err_probe(dev, PTR_ERR(at24->nvmem),
-+				     "failed to register nvmem\n");
++static int qca_read_fw_board_id(struct hci_dev *hdev, u16 *bid)
++{
++	u8 cmd;
++	struct sk_buff *skb;
++	struct edl_event_hdr *edl;
++	int err = 0;
++
++	cmd = EDL_GET_BID_REQ_CMD;
++	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CMD_LEN,
++				&cmd, 0, HCI_INIT_TIMEOUT);
++	if (IS_ERR(skb)) {
++		err = PTR_ERR(skb);
++		bt_dev_err(hdev, "Reading QCA board ID failed (%d)", err);
++		return err;
 +	}
 +
- 	/* If this a SPD EEPROM, probe for DDR3 thermal sensor */
- 	if (cdata == &at24_data_spd)
- 		at24_probe_temp_sensor(client);
++	edl = skb_pull_data(skb, sizeof(*edl));
++	if (!edl) {
++		bt_dev_err(hdev, "QCA read board ID with no header");
++		err = -EILSEQ;
++		goto out;
++	}
++
++	if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
++	    edl->rtype != EDL_GET_BID_REQ_CMD) {
++		bt_dev_err(hdev, "QCA Wrong packet: %d %d", edl->cresp, edl->rtype);
++		err = -EIO;
++		goto out;
++	}
++
++	*bid = (edl->data[1] << 8) + edl->data[2];
++	bt_dev_dbg(hdev, "%s: bid = %x", __func__, *bid);
++
++out:
++	kfree_skb(skb);
++	return err;
++}
++
+ int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
+ {
+ 	struct sk_buff *skb;
+@@ -574,6 +612,23 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
+ }
+ EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
+ 
++static void qca_generate_hsp_nvm_name(char *fwname, size_t max_size,
++		struct qca_btsoc_version ver, u8 rom_ver, u16 bid)
++{
++	const char *variant;
++
++	/* hsp gf chip */
++	if ((le32_to_cpu(ver.soc_id) & QCA_HSP_GF_SOC_MASK) == QCA_HSP_GF_SOC_ID)
++		variant = "g";
++	else
++		variant = "";
++
++	if (bid == 0x0)
++		snprintf(fwname, max_size, "qca/hpnv%02x%s.bin", rom_ver, variant);
++	else
++		snprintf(fwname, max_size, "qca/hpnv%02x%s.%x", rom_ver, variant, bid);
++}
++
+ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
+ 		   const char *firmware_name)
+@@ -582,6 +637,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 	int err;
+ 	u8 rom_ver = 0;
+ 	u32 soc_ver;
++	u16 boardid = 0;
+ 
+ 	bt_dev_dbg(hdev, "QCA setup on UART");
+ 
+@@ -615,6 +671,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 		snprintf(config.fwname, sizeof(config.fwname),
+ 			 "qca/apbtfw%02x.tlv", rom_ver);
+ 		break;
++	case QCA_QCA2066:
++		snprintf(config.fwname, sizeof(config.fwname),
++			 "qca/hpbtfw%02x.tlv", rom_ver);
++		break;
+ 	case QCA_QCA6390:
+ 		snprintf(config.fwname, sizeof(config.fwname),
+ 			 "qca/htbtfw%02x.tlv", rom_ver);
+@@ -649,6 +709,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 	/* Give the controller some time to get ready to receive the NVM */
+ 	msleep(10);
+ 
++	if (soc_type == QCA_QCA2066)
++		qca_read_fw_board_id(hdev, &boardid);
++
+ 	/* Download NVM configuration */
+ 	config.type = TLV_TYPE_NVM;
+ 	if (firmware_name) {
+@@ -671,6 +734,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 			snprintf(config.fwname, sizeof(config.fwname),
+ 				 "qca/apnv%02x.bin", rom_ver);
+ 			break;
++		case QCA_QCA2066:
++			qca_generate_hsp_nvm_name(config.fwname,
++				sizeof(config.fwname), ver, rom_ver, boardid);
++			break;
+ 		case QCA_QCA6390:
+ 			snprintf(config.fwname, sizeof(config.fwname),
+ 				 "qca/htnv%02x.bin", rom_ver);
+@@ -702,6 +769,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 
+ 	switch (soc_type) {
+ 	case QCA_WCN3991:
++	case QCA_QCA2066:
+ 	case QCA_QCA6390:
+ 	case QCA_WCN6750:
+ 	case QCA_WCN6855:
+diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
+index 03bff5c0059de..dc31984f71dc1 100644
+--- a/drivers/bluetooth/btqca.h
++++ b/drivers/bluetooth/btqca.h
+@@ -12,6 +12,7 @@
+ #define EDL_PATCH_VER_REQ_CMD		(0x19)
+ #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
+ #define EDL_GET_BUILD_INFO_CMD		(0x20)
++#define EDL_GET_BID_REQ_CMD			(0x23)
+ #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
+ #define EDL_PATCH_CONFIG_CMD		(0x28)
+ #define MAX_SIZE_PER_TLV_SEGMENT	(243)
+@@ -47,7 +48,8 @@
+ 	((le32_to_cpu(soc_id) << 16) | (le16_to_cpu(rom_ver)))
+ 
+ #define QCA_FW_BUILD_VER_LEN		255
+-
++#define QCA_HSP_GF_SOC_ID			0x1200
++#define QCA_HSP_GF_SOC_MASK			0x0000ff00
+ 
+ enum qca_baudrate {
+ 	QCA_BAUDRATE_115200 	= 0,
+@@ -146,6 +148,7 @@ enum qca_btsoc_type {
+ 	QCA_WCN3990,
+ 	QCA_WCN3998,
+ 	QCA_WCN3991,
++	QCA_QCA2066,
+ 	QCA_QCA6390,
+ 	QCA_WCN6750,
+ 	QCA_WCN6855,
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 410f146e3f671..cb825987e7f1a 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1845,6 +1845,10 @@ static int qca_setup(struct hci_uart *hu)
+ 	set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
+ 
+ 	switch (soc_type) {
++	case QCA_QCA2066:
++		soc_name = "qca2066";
++		break;
++
+ 	case QCA_WCN3988:
+ 	case QCA_WCN3990:
+ 	case QCA_WCN3991:
+@@ -2043,6 +2047,11 @@ static const struct qca_device_data qca_soc_data_wcn3998 __maybe_unused = {
+ 	.num_vregs = 4,
+ };
+ 
++static const struct qca_device_data qca_soc_data_qca2066 __maybe_unused = {
++	.soc_type = QCA_QCA2066,
++	.num_vregs = 0,
++};
++
+ static const struct qca_device_data qca_soc_data_qca6390 __maybe_unused = {
+ 	.soc_type = QCA_QCA6390,
+ 	.num_vregs = 0,
+@@ -2582,6 +2591,7 @@ static SIMPLE_DEV_PM_OPS(qca_pm_ops, qca_suspend, qca_resume);
+ 
+ #ifdef CONFIG_OF
+ static const struct of_device_id qca_bluetooth_of_match[] = {
++	{ .compatible = "qcom,qca2066-bt", .data = &qca_soc_data_qca2066},
+ 	{ .compatible = "qcom,qca6174-bt" },
+ 	{ .compatible = "qcom,qca6390-bt", .data = &qca_soc_data_qca6390},
+ 	{ .compatible = "qcom,qca9377-bt" },
+@@ -2599,6 +2609,7 @@ MODULE_DEVICE_TABLE(of, qca_bluetooth_of_match);
+ 
+ #ifdef CONFIG_ACPI
+ static const struct acpi_device_id qca_bluetooth_acpi_match[] = {
++	{ "QCOM2066", (kernel_ulong_t)&qca_soc_data_qca2066 },
+ 	{ "QCOM6390", (kernel_ulong_t)&qca_soc_data_qca6390 },
+ 	{ "DLA16390", (kernel_ulong_t)&qca_soc_data_qca6390 },
+ 	{ "DLB16390", (kernel_ulong_t)&qca_soc_data_qca6390 },
 -- 
 2.43.0
 
