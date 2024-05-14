@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832BC6311D;
-	Tue, 14 May 2024 11:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760B26311D;
+	Tue, 14 May 2024 11:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685809; cv=none; b=juuKIx0uJQGngakhrEafGrvwjb9jq8nO+8qxoCYaRHMB3vWdFQbjA42NtPM7LIMajb/dsTu3qklbivP79et8/ixoExn7NB1qWBXnW1+iIgzVQJZdsvSZ/bLWqhFfMw2sQXAoOMNRbGt9LWXXFXsxzUPJ8+9bZ0JIBx9wYlFvtXE=
+	t=1715685813; cv=none; b=bUufsOJdGa8csenTxv/wKaBjiM9328IUQmyCZXXIXAFTZ1sbDPA6YNw8CEv44yaPpb52PV/8DazkAGDPEwvj9LWPd1M3wnsMeVJcOM5h2iOhEnCHbCHNnZPkx77AX3KtO5YJOQbDAR0csdeuZ3dh0MYDLd/sJAq3ucdYy5F0zis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685809; c=relaxed/simple;
-	bh=7HlWov6TmsN81XALdpCoHZj+y2Q2bhdYyax8hobOAhg=;
+	s=arc-20240116; t=1715685813; c=relaxed/simple;
+	bh=HgciT3FTJZIhAKhPirME02yFWU2ZYAsq5wlc+QmP9L4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eC3wWl318v/k7tioOuOD07yVOq8x+6tM/4Lp+C+BadRx2iinc7aY6rwj54IkPNhvNVrY7urm5mxR+7vsZL7r04VHcx664sngJNmx6hNTsKCyXYPZAr5/RluIRHb8XNXN/boZ8GdgtmNB6ntyD0cw6uMktP1PEcY2y5lW3d64KXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOhzuNLq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q6F/KdicijqHFxug7dl3Jr+m9HAsBP6IpGoaae5B084Q6xS4l3YR7QZqz2IZttW3gIqUW3H9EaRZw2R49/nUKxGsEZqpC4yCZUwVwYR4jqW7UJ1Edcazfmxx2wj62HdDrrSZFQLSJnN4TXQkRnw6Az7/cP5Js3dieGzON8cZ2yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zaEnyLs0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOhzuNLq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE82C2BD10;
-	Tue, 14 May 2024 11:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaEnyLs0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D221CC2BD10;
+	Tue, 14 May 2024 11:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685809;
-	bh=7HlWov6TmsN81XALdpCoHZj+y2Q2bhdYyax8hobOAhg=;
+	s=korg; t=1715685813;
+	bh=HgciT3FTJZIhAKhPirME02yFWU2ZYAsq5wlc+QmP9L4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uOhzuNLqFVLgT47/lB5puNYmcjTNYCOyV4wTSDpGgzlD8eT2vsydYBhhUhkZXYXCj
-	 ViFlLpY/WTr5LhQ+kGs5ux+zLUIU79hbsW9Ae33kty1EYEk/BIPYHkUDWbf6N5PAzE
-	 XOjUnbmox/EdgInolnjKVzgCPdUArPc/uEZYnhbE=
+	b=zaEnyLs0pzgJmW67puKEc+lF3xNYltk5aCyyzXcpP0eoSER/3TrfDzuXhWzN3i1gU
+	 cbWIQfHLd39v9ey9hd3IlDuSx2ESNifWXoQhOmI/wYQ7xt3Z5Mb64Mw641DEoaixhx
+	 lHJCVDR5MY5Bz3GWjo6ug34x8FQovams2Yz8Q2vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 251/301] iio: accel: mxc4005: Interrupt handling fixes
-Date: Tue, 14 May 2024 12:18:42 +0200
-Message-ID: <20240514101041.733094583@linuxfoundation.org>
+	Alexander Potapenko <glider@google.com>,
+	syzbot+355c5bb8c1445c871ee8@syzkaller.appspotmail.com,
+	Marco Elver <elver@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 252/301] kmsan: compiler_types: declare __no_sanitize_or_inline
+Date: Tue, 14 May 2024 12:18:43 +0200
+Message-ID: <20240514101041.771789675@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,103 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Alexander Potapenko <glider@google.com>
 
-commit 57a1592784d622ecee0b71940c65429173996b33 upstream.
+commit 90d1f14cbb9ddbfc532e2da13bf6e0ed8320e792 upstream.
 
-There are 2 issues with interrupt handling in the mxc4005 driver:
+It turned out that KMSAN instruments READ_ONCE_NOCHECK(), resulting in
+false positive reports, because __no_sanitize_or_inline enforced inlining.
 
-1. mxc4005_set_trigger_state() writes MXC4005_REG_INT_MASK1_BIT_DRDYE
-(0x01) to INT_MASK1 to enable the interrupt, but to disable the interrupt
-it writes ~MXC4005_REG_INT_MASK1_BIT_DRDYE which is 0xfe, so it enables
-all other interrupt sources in the INT_SRC1 register. On the MXC4005 this
-is not an issue because only bit 0 of the register is used. On the MXC6655
-OTOH this is a problem since bit7 is used as TC (Temperature Compensation)
-disable bit and writing 1 to this disables Temperature Compensation which
-should only be done when running self-tests on the chip.
+Properly declare __no_sanitize_or_inline under __SANITIZE_MEMORY__, so
+that it does not __always_inline the annotated function.
 
-Write 0 instead of ~MXC4005_REG_INT_MASK1_BIT_DRDYE to disable
-the interrupts to fix this.
-
-2. The datasheets for the MXC4005 / MXC6655 do not state what the reset
-value for the INT_MASK0 and INT_MASK1 registers is and since these are
-write only we also cannot learn this from the hw. Presumably the reset
-value for both is all 0, which means all interrupts disabled.
-
-Explicitly set both registers to 0 from mxc4005_chip_init() to ensure
-both masks are actually set to 0.
-
-Fixes: 79846e33aac1 ("iio: accel: mxc4005: add support for mxc6655")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240326113700.56725-2-hdegoede@redhat.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lkml.kernel.org/r/20240426091622.3846771-1-glider@google.com
+Fixes: 5de0ce85f5a4 ("kmsan: mark noinstr as __no_sanitize_memory")
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Reported-by: syzbot+355c5bb8c1445c871ee8@syzkaller.appspotmail.com
+Link: https://lkml.kernel.org/r/000000000000826ac1061675b0e3@google.com
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Marco Elver <elver@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/mxc4005.c |   24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ include/linux/compiler_types.h |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/iio/accel/mxc4005.c
-+++ b/drivers/iio/accel/mxc4005.c
-@@ -27,9 +27,13 @@
- #define MXC4005_REG_ZOUT_UPPER		0x07
- #define MXC4005_REG_ZOUT_LOWER		0x08
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -280,6 +280,17 @@ struct ftrace_likely_data {
+ # define __no_kcsan
+ #endif
  
-+#define MXC4005_REG_INT_MASK0		0x0A
++#ifdef __SANITIZE_MEMORY__
++/*
++ * Similarly to KASAN and KCSAN, KMSAN loses function attributes of inlined
++ * functions, therefore disabling KMSAN checks also requires disabling inlining.
++ *
++ * __no_sanitize_or_inline effectively prevents KMSAN from reporting errors
++ * within the function and marks all its outputs as initialized.
++ */
++# define __no_sanitize_or_inline __no_kmsan_checks notrace __maybe_unused
++#endif
 +
- #define MXC4005_REG_INT_MASK1		0x0B
- #define MXC4005_REG_INT_MASK1_BIT_DRDYE	0x01
- 
-+#define MXC4005_REG_INT_CLR0		0x00
-+
- #define MXC4005_REG_INT_CLR1		0x01
- #define MXC4005_REG_INT_CLR1_BIT_DRDYC	0x01
- 
-@@ -113,7 +117,9 @@ static bool mxc4005_is_readable_reg(stru
- static bool mxc4005_is_writeable_reg(struct device *dev, unsigned int reg)
- {
- 	switch (reg) {
-+	case MXC4005_REG_INT_CLR0:
- 	case MXC4005_REG_INT_CLR1:
-+	case MXC4005_REG_INT_MASK0:
- 	case MXC4005_REG_INT_MASK1:
- 	case MXC4005_REG_CONTROL:
- 		return true;
-@@ -330,17 +336,13 @@ static int mxc4005_set_trigger_state(str
- {
- 	struct iio_dev *indio_dev = iio_trigger_get_drvdata(trig);
- 	struct mxc4005_data *data = iio_priv(indio_dev);
-+	unsigned int val;
- 	int ret;
- 
- 	mutex_lock(&data->mutex);
--	if (state) {
--		ret = regmap_write(data->regmap, MXC4005_REG_INT_MASK1,
--				   MXC4005_REG_INT_MASK1_BIT_DRDYE);
--	} else {
--		ret = regmap_write(data->regmap, MXC4005_REG_INT_MASK1,
--				   ~MXC4005_REG_INT_MASK1_BIT_DRDYE);
--	}
- 
-+	val = state ? MXC4005_REG_INT_MASK1_BIT_DRDYE : 0;
-+	ret = regmap_write(data->regmap, MXC4005_REG_INT_MASK1, val);
- 	if (ret < 0) {
- 		mutex_unlock(&data->mutex);
- 		dev_err(data->dev, "failed to update reg_int_mask1");
-@@ -382,6 +384,14 @@ static int mxc4005_chip_init(struct mxc4
- 
- 	dev_dbg(data->dev, "MXC4005 chip id %02x\n", reg);
- 
-+	ret = regmap_write(data->regmap, MXC4005_REG_INT_MASK0, 0);
-+	if (ret < 0)
-+		return dev_err_probe(data->dev, ret, "writing INT_MASK0\n");
-+
-+	ret = regmap_write(data->regmap, MXC4005_REG_INT_MASK1, 0);
-+	if (ret < 0)
-+		return dev_err_probe(data->dev, ret, "writing INT_MASK1\n");
-+
- 	return 0;
- }
- 
+ #ifndef __no_sanitize_or_inline
+ #define __no_sanitize_or_inline __always_inline
+ #endif
 
 
