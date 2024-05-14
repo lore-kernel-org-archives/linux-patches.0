@@ -1,46 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8408A4F88C;
-	Tue, 14 May 2024 11:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6218218026;
+	Tue, 14 May 2024 11:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686456; cv=none; b=GBhkUVJ2Ni33W6PwHZQGuxl3qGuoBzr97jagyfbmrR6MDJ5YQseWkSeDXuQHJPUTjbQ6s3LD6KQfS/LNIzmp0yirMeWQQ1GNjfOMD85kVB2UUhSqDvmdKuMhKcGhvUZbvtm7dKYPX3iJ7RV+UENpmODQq0TWW0Yz/PFR6SRZNGs=
+	t=1715686459; cv=none; b=UZtF/1O3GM915+KqitQocKu9x4bw6h+h6uF9OEMIPUJ6E0YkTVTWC2Yh5FGdcxjOyfRkhQb0vaIzlYMXWuLki7/vTEaETFEIBeE0JxX2nutHQ4uB9qNJgQqtymGwZu76di5X4ZNzyJqAetCk5ec9Aieowzw7rBgZnCz+FomDNDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686456; c=relaxed/simple;
-	bh=Zblx6eghDnCf9QVQGohdsDUlht3MqxTw2dVxrmue9Rg=;
+	s=arc-20240116; t=1715686459; c=relaxed/simple;
+	bh=uMAJLqwMijo/1MQBWUAZH8l6Z3QGX40Hdxgvd9rNuEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0rn9q7Hm50Y0t9cq277vsd5iEBGopvtUjr1yCuU7owr3iViCnKLW7gduvcDsOg2Ypx5gCJkSM/whSOo9og7PvCHgQF7UyBXYWWbgi9u9xoTjk1gBYiSL9ah+uAqeZC/t+W1dRETrhz1G8d1MvECghnY69KMkpnS22iSla4mStw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlzpkYjG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KwtSMeY1RZoOO1LTlOqZH265lVgZv2s9cDpHs/loQ2dKK1+uyIle5kKIRNIDPJ4yMozafYJbNFpR2Xq+V+yQd780GEll2XsQh4Vk0h4m/VbHlj9Zzoowb/U40SNjzQJr4D9r8FhC6+jaEthBs3DAlCsToiz371ODYa4Rt5F2p5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EupyhC0E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlzpkYjG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BC7C32781;
-	Tue, 14 May 2024 11:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EupyhC0E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB371C32782;
+	Tue, 14 May 2024 11:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686456;
-	bh=Zblx6eghDnCf9QVQGohdsDUlht3MqxTw2dVxrmue9Rg=;
+	s=korg; t=1715686459;
+	bh=uMAJLqwMijo/1MQBWUAZH8l6Z3QGX40Hdxgvd9rNuEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zlzpkYjGsJHTVA4ah6OOLkIrzOaPxyrVrIKmw+mba6UxYkeUPCmEz/COJAwf7ZKZZ
-	 5a11lwMdPF1OnEbT4dNsprnn7Nff2Z7iHT2NFJlPkrSI86l6EHGmJpCXpnB1dUtMRB
-	 G8T7/v95BipX9hQ5Y2MI1PCaofPFScIRNhCslfkw=
+	b=EupyhC0EFEcVztxvxQbKjr6kKpSAyjtHdXfaWIOPDlaCaGYh043SlIlZMXe5bacmX
+	 gDE6l/Eyg5GlWKmisMOB8SqTp0G1hxkqmKv5gh/HsLIvg2LJi44NrKTtK7QxBG3kZT
+	 8wapDd+5cymhObYP2JygTe8LpgFzwiLv89i2xOOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Fangrui Song <maskray@google.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Milian Wolff <milian.wolff@kdab.com>,
-	Pablo Galindo <pablogsal@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 143/236] perf unwind-libdw: Handle JIT-generated DSOs properly
-Date: Tue, 14 May 2024 12:18:25 +0200
-Message-ID: <20240514101025.798775104@linuxfoundation.org>
+Subject: [PATCH 6.1 144/236] qibfs: fix dentry leak
+Date: Tue, 14 May 2024 12:18:26 +0200
+Message-ID: <20240514101025.835836967@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -59,88 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit c966d23a351a33f8a977fd7efbb6f467132f7383 ]
+[ Upstream commit aa23317d0268b309bb3f0801ddd0d61813ff5afb ]
 
-Usually DSOs are mapped from the beginning of the file, so the base
-address of the DSO can be calculated by map->start - map->pgoff.
+simple_recursive_removal() drops the pinning references to all positives
+in subtree.  For the cases when its argument has been kept alive by
+the pinning alone that's exactly the right thing to do, but here
+the argument comes from dcache lookup, that needs to be balanced by
+explicit dput().
 
-However, JIT DSOs which are generated by `perf inject -j`, are mapped
-only the code segment.  This makes unwind-libdw code confusing and
-rejects processing unwinds in the JIT DSOs.  It should use the map
-start address as base for them to fix the confusion.
-
-Fixes: 1fe627da30331024 ("perf unwind: Take pgoff into account when reporting elf to libdwfl")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Fangrui Song <maskray@google.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Milian Wolff <milian.wolff@kdab.com>
-Cc: Pablo Galindo <pablogsal@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20231212070547.612536-3-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: e41d237818598 "qib_fs: switch to simple_recursive_removal()"
+Fucked-up-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/unwind-libdw.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/qib/qib_fs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/unwind-libdw.c b/tools/perf/util/unwind-libdw.c
-index 94aa40f6e3482..9a7bdc0e14cc2 100644
---- a/tools/perf/util/unwind-libdw.c
-+++ b/tools/perf/util/unwind-libdw.c
-@@ -45,6 +45,7 @@ static int __report_module(struct addr_location *al, u64 ip,
- {
- 	Dwfl_Module *mod;
- 	struct dso *dso = NULL;
-+	Dwarf_Addr base;
- 	/*
- 	 * Some callers will use al->sym, so we can't just use the
- 	 * cheaper thread__find_map() here.
-@@ -57,24 +58,36 @@ static int __report_module(struct addr_location *al, u64 ip,
- 	if (!dso)
- 		return 0;
- 
-+	/*
-+	 * The generated JIT DSO files only map the code segment without
-+	 * ELF headers.  Since JIT codes used to be packed in a memory
-+	 * segment, calculating the base address using pgoff falls info
-+	 * a different code in another DSO.  So just use the map->start
-+	 * directly to pick the correct one.
-+	 */
-+	if (!strncmp(dso->long_name, "/tmp/jitted-", 12))
-+		base = al->map->start;
-+	else
-+		base = al->map->start - al->map->pgoff;
-+
- 	mod = dwfl_addrmodule(ui->dwfl, ip);
- 	if (mod) {
- 		Dwarf_Addr s;
- 
- 		dwfl_module_info(mod, NULL, &s, NULL, NULL, NULL, NULL, NULL);
--		if (s != al->map->start - al->map->pgoff)
--			mod = 0;
-+		if (s != base)
-+			mod = NULL;
+diff --git a/drivers/infiniband/hw/qib/qib_fs.c b/drivers/infiniband/hw/qib/qib_fs.c
+index a973905afd132..182a89bb24ef4 100644
+--- a/drivers/infiniband/hw/qib/qib_fs.c
++++ b/drivers/infiniband/hw/qib/qib_fs.c
+@@ -440,6 +440,7 @@ static int remove_device_files(struct super_block *sb,
+ 		return PTR_ERR(dir);
  	}
+ 	simple_recursive_removal(dir, NULL);
++	dput(dir);
+ 	return 0;
+ }
  
- 	if (!mod)
- 		mod = dwfl_report_elf(ui->dwfl, dso->short_name, dso->long_name, -1,
--				      al->map->start - al->map->pgoff, false);
-+				      base, false);
- 	if (!mod) {
- 		char filename[PATH_MAX];
- 
- 		if (dso__build_id_filename(dso, filename, sizeof(filename), false))
- 			mod = dwfl_report_elf(ui->dwfl, dso->short_name, filename, -1,
--					      al->map->start - al->map->pgoff, false);
-+					      base, false);
- 	}
- 
- 	if (mod) {
 -- 
 2.43.0
 
