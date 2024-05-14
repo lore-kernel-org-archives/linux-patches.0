@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B13A12EBD4;
-	Tue, 14 May 2024 11:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E437D54903;
+	Tue, 14 May 2024 11:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687418; cv=none; b=I9I/OAO78rrKhAysIK+duDQYUSOIsL2T1Rn1Ck6MEEzgZ7Wwae+KeZrPa64AsU0X1fCj8ckTyUEDOz94aqKlSzDheTQjfZ4DVYSHFZ/wkuiwv1kERTvapw9lJy0PPDsASPSbua1cgXjbkhMewyGosbr9JPJUF+G8J1yKrzkJxS8=
+	t=1715687421; cv=none; b=ZpgSeTww30+XPfekoJ8F1BPnBO6Y3awAtP+sn8uCYCqoa4WTRnCKy2o8Z0AhZT8b+e4wCnh0+zep3Qdexq5E1vBdcT0VNL8JkEwL2cgzi0KOPM79xas06hbiR9w+En36Tyc66TxnhUI2tPVkNc9GKxRCpaJ1xliv9Hw2efdCzFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687418; c=relaxed/simple;
-	bh=q/1cHAlpIuG27qe1RzhTVIiXD2pjUFIZXcmq3fLeknM=;
+	s=arc-20240116; t=1715687421; c=relaxed/simple;
+	bh=g2pffUxSpgHvdhHHLd+tWPwJHA1sNACxpBY+BTM1O68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lT15qM3Pc2QGztv24m44FlTQOP3cUZYN9g+yElE02qyObveE+pkeXtbdzDPwlO0HaBGr2SLxQWWuyCeGU8rLI5yVQNPS8/dwNKue2yWZyDwsBeRNWlZeEj/hqFZvCZtTWwNrvISnxsxAMcS/Oy/5VJoE6M5dHv2bQl99c2iPYe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsZAFHcb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N9Zqan63FM7NAS4frIZ0YfCPWaIw1D2o78dtx9byRKHk6W3zUGzAb18I0leNAqnVbCaUno1syFN0OdVeu0Jws9Y34aWG0Cjf1+n5yEQAvnzRDhM6RvGQSRVgsz/oKs0nQ6t1ovivmV5m6LAMiP6/Td+JHFWfpfFuvZFQGEStV7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vj/48+vd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsZAFHcb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85700C2BD10;
-	Tue, 14 May 2024 11:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vj/48+vd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D887C2BD10;
+	Tue, 14 May 2024 11:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687417;
-	bh=q/1cHAlpIuG27qe1RzhTVIiXD2pjUFIZXcmq3fLeknM=;
+	s=korg; t=1715687420;
+	bh=g2pffUxSpgHvdhHHLd+tWPwJHA1sNACxpBY+BTM1O68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SsZAFHcblZmOLJmLA1riCIInTA8jrJdn7aMXhxYL2M6LcTIxFk2RsYR7CNlelhHm+
-	 KCPjfERaR48OcKzLZgrP4FBdZ7z5n6n6mjExSE9ITP7JVYSqO6yc9Tv+yPIEDGywZr
-	 Oj7/Id3WxpsHXTX0r3+O3/0Sya5NCObbDHjgEB2s=
+	b=Vj/48+vd914tgglrGg2+G4z4ahJeFUZypQUZVDf03HEUY31oLm1UQt+C4wAsERgQN
+	 peQ6GkYuTjhmSFwjCAqfbTxC/UeD6kU7Ml+hT/R75fiID76lb9FMjQz/ov+qQM1dXc
+	 H0LGU8s/HUX3Y2EVnFZm4GovHMWkElX98mYR5KYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 058/111] btrfs: always clear PERTRANS metadata during commit
-Date: Tue, 14 May 2024 12:19:56 +0200
-Message-ID: <20240514100959.337718046@linuxfoundation.org>
+Subject: [PATCH 5.10 059/111] scsi: target: Fix SELinux error when systemd-modules loads the target module
+Date: Tue, 14 May 2024 12:19:57 +0200
+Message-ID: <20240514100959.375723053@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -52,42 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 6e68de0bb0ed59e0554a0c15ede7308c47351e2d ]
+[ Upstream commit 97a54ef596c3fd24ec2b227ba8aaf2cf5415e779 ]
 
-It is possible to clear a root's IN_TRANS tag from the radix tree, but
-not clear its PERTRANS, if there is some error in between. Eliminate
-that possibility by moving the free up to where we clear the tag.
+If the systemd-modules service loads the target module, the credentials of
+that userspace process will be used to validate the access to the target db
+directory.  SELinux will prevent it, reporting an error like the following:
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+kernel: audit: type=1400 audit(1676301082.205:4): avc: denied  { read }
+for  pid=1020 comm="systemd-modules" name="target" dev="dm-3"
+ino=4657583 scontext=system_u:system_r:systemd_modules_load_t:s0
+tcontext=system_u:object_r:targetd_etc_rw_t:s0 tclass=dir permissive=0
+
+Fix the error by using the kernel credentials to access the db directory
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Link: https://lore.kernel.org/r/20240215143944.847184-2-mlombard@redhat.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/transaction.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/target/target_core_configfs.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index d23047b23005c..8cefe11c57dbc 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -1343,6 +1343,7 @@ static noinline int commit_fs_roots(struct btrfs_trans_handle *trans)
- 			radix_tree_tag_clear(&fs_info->fs_roots_radix,
- 					(unsigned long)root->root_key.objectid,
- 					BTRFS_ROOT_TRANS_TAG);
-+			btrfs_qgroup_free_meta_all_pertrans(root);
- 			spin_unlock(&fs_info->fs_roots_radix_lock);
+diff --git a/drivers/target/target_core_configfs.c b/drivers/target/target_core_configfs.c
+index 56ae882fb7b39..4d2fbe1429b69 100644
+--- a/drivers/target/target_core_configfs.c
++++ b/drivers/target/target_core_configfs.c
+@@ -3532,6 +3532,8 @@ static int __init target_core_init_configfs(void)
+ {
+ 	struct configfs_subsystem *subsys = &target_core_fabrics;
+ 	struct t10_alua_lu_gp *lu_gp;
++	struct cred *kern_cred;
++	const struct cred *old_cred;
+ 	int ret;
  
- 			btrfs_free_log(trans, root);
-@@ -1367,7 +1368,6 @@ static noinline int commit_fs_roots(struct btrfs_trans_handle *trans)
- 			if (ret2)
- 				return ret2;
- 			spin_lock(&fs_info->fs_roots_radix_lock);
--			btrfs_qgroup_free_meta_all_pertrans(root);
- 		}
- 	}
- 	spin_unlock(&fs_info->fs_roots_radix_lock);
+ 	pr_debug("TARGET_CORE[0]: Loading Generic Kernel Storage"
+@@ -3608,11 +3610,21 @@ static int __init target_core_init_configfs(void)
+ 	if (ret < 0)
+ 		goto out;
+ 
++	/* We use the kernel credentials to access the target directory */
++	kern_cred = prepare_kernel_cred(&init_task);
++	if (!kern_cred) {
++		ret = -ENOMEM;
++		goto out;
++	}
++	old_cred = override_creds(kern_cred);
+ 	target_init_dbroot();
++	revert_creds(old_cred);
++	put_cred(kern_cred);
+ 
+ 	return 0;
+ 
+ out:
++	target_xcopy_release_pt();
+ 	configfs_unregister_subsystem(subsys);
+ 	core_dev_release_virtual_lun0();
+ 	rd_module_exit();
 -- 
 2.43.0
 
