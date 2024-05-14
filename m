@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20F554903;
-	Tue, 14 May 2024 11:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F90554903;
+	Tue, 14 May 2024 11:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684601; cv=none; b=Ks7ppGpP2Ud+FOyU//Uo4+NJPq0UGw9nYYw4/+gmo4ScHT7tG1wHbX15ppQWYdV6SYcyYVH+Gqi5AvTt5fDq08/DwhRuxblL638FZDRPFKyBw6wiw0Q5zgxHjvxT/WfYDZTsUiUia7BTyhEZfbDR8YwHDc1jPGfZaCzl/BeS8cE=
+	t=1715684606; cv=none; b=j4otSMVBWeOd2ImR3/tQLzpfD9tyh/R1gQoXUQ07B6XomjFu8WowYR9LFVrePyHEbY/q8GL1E41o2a4Jreql8hht96skcSCyqcHAy8g1MJ8bz09pi/+Nndp83lTxyv3NvDhykJJ+2NAykyc3Pj4xb44SxQ/kfO5hNWyaRF+/CI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684601; c=relaxed/simple;
-	bh=AFFOUQkc56urMx9pIznOwSjs/B1NeA94AQY0tsRepNM=;
+	s=arc-20240116; t=1715684606; c=relaxed/simple;
+	bh=m23gEuw4VWWoBhThmQzq1fvfG7nuXmLROn1swzXW4L4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CDtbkKfrgddNlN+HbCFoRnzWx+osOugfxq3kyzFOygB6tgZGJhsOYedSILHPlu8rv4CSt9DcFHoyXRavwY3z5UXTetD9YOHa7ySFyhKyxcz2fbB+dG3y0drHo+No1qTcNQK6St55COxbE+cYuHeHBgyLzmodCTO55XQ9xSQdTWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgNvAEZV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nlqQGaiLNd02WC+r1wtZfDCKjwFKJEOP2ZHbMYj3iPik5MMl1d9lPnTf852r2HCBPReVFSciRby0lxP3otUNUTZeoNrPTdub/+1XSWBdL/zR5ttg51zaXboEh4ZwSXNki0rlsa4/GMwe2d8+B031xvD02FKNfrs4nheQuUkM2Sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJDCdTRb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgNvAEZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E14C2BD10;
-	Tue, 14 May 2024 11:03:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJDCdTRb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1849C2BD10;
+	Tue, 14 May 2024 11:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684601;
-	bh=AFFOUQkc56urMx9pIznOwSjs/B1NeA94AQY0tsRepNM=;
+	s=korg; t=1715684606;
+	bh=m23gEuw4VWWoBhThmQzq1fvfG7nuXmLROn1swzXW4L4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OgNvAEZVcXuYtgkxQVJ34gQrhgdB2UHUDSVhN22mF5x1ZgM36FnolhLMmpg6F6apa
-	 bfkDG08ABJQ6aEg3a42KEyWdMv4vNIBxT4OcV81dxdO9HYkMNJN18v1QG8fspSLMMV
-	 d/WTnRfgknhV37Gto5+AftyqItOdcbG1DAOM8JKA=
+	b=UJDCdTRbtPTBka773KaCy8p9r4y7uAd6RYK9/wNl1uC97oog/JWKaS4V5/6O5OsC7
+	 Xh0RcG2bX9IQOZ990iFibIobykKh9TT616DOtRqIbKEC68hLFnD8HpnEDchHVLeiXI
+	 FpjketDJ1FSYw0cguvbAtOnzSFNBzQ9Z8apUWVXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Rander Wang <rander.wang@intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/301] regmap: Add regmap_read_bypassed()
-Date: Tue, 14 May 2024 12:15:01 +0200
-Message-ID: <20240514101033.384057809@linuxfoundation.org>
+Subject: [PATCH 6.6 031/301] ASoC: SOF: Introduce generic names for IPC types
+Date: Tue, 14 May 2024 12:15:02 +0200
+Message-ID: <20240514101033.422193214@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,108 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 70ee853eec5693fefd8348a2b049d9cb83362e58 ]
+[ Upstream commit 6974f2cd2fa94fef663133af23722cf607853e22 ]
 
-Add a regmap_read_bypassed() to allow reads from the hardware registers
-while the regmap is in cache-only mode.
+Change the enum names for the IPC types to be more descriptive and drop
+tying the IPC4 to Intel SoCs.
 
-A typical use for this is to keep the cache in cache-only mode until
-the hardware has reached a valid state, but one or more status registers
-must be polled to determine when this state is reached.
+Add defines to avoid build breakage while the related code is
+modified to use the new enum names.
 
-For example, firmware download on the cs35l56 can take several seconds if
-there are multiple amps sharing limited bus bandwidth. This is too long
-to block in probe() so it is done as a background task. The device must
-be soft-reset to reboot the firmware and during this time the registers are
-not accessible, so the cache should be in cache-only. But the driver must
-poll a register to detect when reboot has completed.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 8a731fd37f8b ("ASoC: cs35l56: Move utility functions to shared file")
-Link: https://msgid.link/r/20240408101803.43183-2-rf@opensource.cirrus.com
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Reviewed-by: Rander Wang <rander.wang@intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20230919104226.32239-2-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 305539a25a1c ("ASoC: SOF: Intel: add default firmware library path for LNL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap.c | 37 ++++++++++++++++++++++++++++++++++++
- include/linux/regmap.h       |  8 ++++++++
- 2 files changed, 45 insertions(+)
+ include/sound/sof.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
-index ea61577471994..c5b5241891a5a 100644
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -2836,6 +2836,43 @@ int regmap_read(struct regmap *map, unsigned int reg, unsigned int *val)
- }
- EXPORT_SYMBOL_GPL(regmap_read);
+diff --git a/include/sound/sof.h b/include/sound/sof.h
+index 51294f2ba302c..31121c6df0272 100644
+--- a/include/sound/sof.h
++++ b/include/sound/sof.h
+@@ -52,11 +52,14 @@ enum sof_dsp_power_states {
  
-+/**
-+ * regmap_read_bypassed() - Read a value from a single register direct
-+ *			    from the device, bypassing the cache
-+ *
-+ * @map: Register map to read from
-+ * @reg: Register to be read from
-+ * @val: Pointer to store read value
-+ *
-+ * A value of zero will be returned on success, a negative errno will
-+ * be returned in error cases.
-+ */
-+int regmap_read_bypassed(struct regmap *map, unsigned int reg, unsigned int *val)
-+{
-+	int ret;
-+	bool bypass, cache_only;
-+
-+	if (!IS_ALIGNED(reg, map->reg_stride))
-+		return -EINVAL;
-+
-+	map->lock(map->lock_arg);
-+
-+	bypass = map->cache_bypass;
-+	cache_only = map->cache_only;
-+	map->cache_bypass = true;
-+	map->cache_only = false;
-+
-+	ret = _regmap_read(map, reg, val);
-+
-+	map->cache_bypass = bypass;
-+	map->cache_only = cache_only;
-+
-+	map->unlock(map->lock_arg);
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(regmap_read_bypassed);
-+
- /**
-  * regmap_raw_read() - Read raw data from the device
-  *
-diff --git a/include/linux/regmap.h b/include/linux/regmap.h
-index c9182a47736ef..113261287af28 100644
---- a/include/linux/regmap.h
-+++ b/include/linux/regmap.h
-@@ -1225,6 +1225,7 @@ int regmap_multi_reg_write_bypassed(struct regmap *map,
- int regmap_raw_write_async(struct regmap *map, unsigned int reg,
- 			   const void *val, size_t val_len);
- int regmap_read(struct regmap *map, unsigned int reg, unsigned int *val);
-+int regmap_read_bypassed(struct regmap *map, unsigned int reg, unsigned int *val);
- int regmap_raw_read(struct regmap *map, unsigned int reg,
- 		    void *val, size_t val_len);
- int regmap_noinc_read(struct regmap *map, unsigned int reg,
-@@ -1734,6 +1735,13 @@ static inline int regmap_read(struct regmap *map, unsigned int reg,
- 	return -EINVAL;
- }
+ /* Definitions for multiple IPCs */
+ enum sof_ipc_type {
+-	SOF_IPC,
+-	SOF_INTEL_IPC4,
++	SOF_IPC_TYPE_3,
++	SOF_IPC_TYPE_4,
+ 	SOF_IPC_TYPE_COUNT
+ };
  
-+static inline int regmap_read_bypassed(struct regmap *map, unsigned int reg,
-+				       unsigned int *val)
-+{
-+	WARN_ONCE(1, "regmap API is disabled");
-+	return -EINVAL;
-+}
++#define SOF_IPC		SOF_IPC_TYPE_3
++#define SOF_INTEL_IPC4	SOF_IPC_TYPE_4
 +
- static inline int regmap_raw_read(struct regmap *map, unsigned int reg,
- 				  void *val, size_t val_len)
- {
+ /*
+  * SOF Platform data.
+  */
 -- 
 2.43.0
 
