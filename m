@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D03320F;
-	Tue, 14 May 2024 10:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB23C320F;
+	Tue, 14 May 2024 10:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684296; cv=none; b=tCzB5vdVb0yXJQDtZafdGvYqTQFEZEtUcu6NvARTIL1Rs2I4ueOu8UJ1MTYPKIAc6E/TaMM1jvg2EHwHCDKZpQWTkJ5fH382lZOuK39hqMw94G2J22sAuDgU4uTFq9HD7LnknzGWINm4NAAfjzaR9q2DbWCkgLE6g1HI7stwAQQ=
+	t=1715684303; cv=none; b=izU8T+UyTacf6qqzANP9db/pHBvNR11nWfBJkDnf9CNv/jne3um+knPcyd9YeKLyA75Hch/aQ5u75VYQN8rOROnFvoc+X3VatY6t97x79/9rKdI1cYsrvt4t/1Z2sezXCfGyg3y73cT/KoC2IK6FyW7GfjxjVKladJBHxnEtIrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684296; c=relaxed/simple;
-	bh=l6IEM0/Bu6x78Crk1EHg6CR2GCTte7/9W3pojfsKTGI=;
+	s=arc-20240116; t=1715684303; c=relaxed/simple;
+	bh=RsiLqhRW+XExOL9koNbQWOYC/0AVe31q+luIV+a3UI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gLYReOwgTDooaIeOngPZkXGafz7mpuwiZP9QoLfIQ8fGZzSRoCAPnR0Yoqq1h7quVxvbsI7ggib+XjuuRWuN3vE3XqIh5pZvil6VrA6Xtft21kRVwRHtLOM/r/1Nv/Kjpykb6z1mSxrbosLE+fVCcv0i88GGbkDkymDd/TGKy2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSSrtUaK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AfkzPIW6MxPjvNb4/JNawHE47tR+pKidh0rQ/Kbe3q5tTZwfU/an8FwgJO3FEeiRcTyFQJaviyROyHUq0+nwmNAJT5Qd+AF05DQVimLSpOYrRAnuJGXnGyDoIhvah+a3c6mNy2gWftV1byZiZXxKesspCl5TiYdlKBZTzv2fYa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLGQWIYC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSSrtUaK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F35C2BD10;
-	Tue, 14 May 2024 10:58:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLGQWIYC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7636DC2BD10;
+	Tue, 14 May 2024 10:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684296;
-	bh=l6IEM0/Bu6x78Crk1EHg6CR2GCTte7/9W3pojfsKTGI=;
+	s=korg; t=1715684303;
+	bh=RsiLqhRW+XExOL9koNbQWOYC/0AVe31q+luIV+a3UI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zSSrtUaKUtH7BK59BjYHY11lkVmy0AhxQ2Z7tT6y7x+AauEDl04md/IbssKzrSy+7
-	 9RYGbeytKlhgRukL5EXQJN4ZHSvu4WxF9AGS2jbTQ3y38NgVYAwMcna630uUlfiaNp
-	 uRG7gkVVFx9Ipre6p3n5Ijtz3O9dZAdag6Hz1/bA=
+	b=rLGQWIYCCTaFvOK/SW5vq/QUKFdpNhy8nutdnDRuU4ZaPfNAadUZHcgET6zmv75ik
+	 0ZxPz3t/DespopYDGWAkkDyfUJ42an4zM+SCDEVl/D0w5yFtERRPIUHi1wbhYhN1pd
+	 vvlTnJw8TRFA4LvFzguuN0KwGZCvo0aZYXApirFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/301] nfs: Handle error of rpc_proc_register() in nfs_net_init().
-Date: Tue, 14 May 2024 12:14:51 +0200
-Message-ID: <20240514101033.007788758@linuxfoundation.org>
+Subject: [PATCH 6.6 021/301] pinctrl: baytrail: Fix selecting gpio pinctrl state
+Date: Tue, 14 May 2024 12:14:52 +0200
+Message-ID: <20240514101033.045445736@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -52,102 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 24457f1be29f1e7042e50a7749f5c2dde8c433c8 ]
+[ Upstream commit fed6d9a8e6a60ecf6506d0ea004040fbaa109927 ]
 
-syzkaller reported a warning [0] triggered while destroying immature
-netns.
+For all the "score" pin-groups all the intel_pingroup-s to select
+the non GPIO function are re-used for byt_score_gpio_groups[].
 
-rpc_proc_register() was called in init_nfs_fs(), but its error
-has been ignored since at least the initial commit 1da177e4c3f4
-("Linux-2.6.12-rc2").
+But this is incorrect since a pin-group includes the mode setting,
+which for the non GPIO functions generally is 1, where as to select
+the GPIO function mode must be set to 0.
 
-Recently, commit d47151b79e32 ("nfs: expose /proc/net/sunrpc/nfs
-in net namespaces") converted the procfs to per-netns and made
-the problem more visible.
+So the GPIO function needs separate intel_pingroup-s with their own mode
+value of 0.
 
-Even when rpc_proc_register() fails, nfs_net_init() could succeed,
-and thus nfs_net_exit() will be called while destroying the netns.
+Add a new PIN_GROUP_GPIO macro which adds a foo_gpio entry to each
+pin-group defined this way and update byt_score_gpio_groups[] to point
+to the new foo_gpio entries.
 
-Then, remove_proc_entry() will be called for non-existing proc
-directory and trigger the warning below.
+The "sus" usb_oc_grp usb_ulpi_grp and pcu_spi_grp pin-groups are special
+because these have a non 0 mode value to select the GPIO functions and
+these already have matching foo_gpio pin-groups, leave these are unchanged.
 
-Let's handle the error of rpc_proc_register() properly in nfs_net_init().
+The pmu_clk "sus" groups added in commit 2f46d7f7e959 ("pinctrl: baytrail:
+Add pinconf group + function for the pmu_clk") do need to use the new
+PIN_GROUP_GPIO macro.
 
-[0]:
-name 'nfs'
-WARNING: CPU: 1 PID: 1710 at fs/proc/generic.c:711 remove_proc_entry+0x1bb/0x2d0 fs/proc/generic.c:711
-Modules linked in:
-CPU: 1 PID: 1710 Comm: syz-executor.2 Not tainted 6.8.0-12822-gcd51db110a7e #12
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-RIP: 0010:remove_proc_entry+0x1bb/0x2d0 fs/proc/generic.c:711
-Code: 41 5d 41 5e c3 e8 85 09 b5 ff 48 c7 c7 88 58 64 86 e8 09 0e 71 02 e8 74 09 b5 ff 4c 89 e6 48 c7 c7 de 1b 80 84 e8 c5 ad 97 ff <0f> 0b eb b1 e8 5c 09 b5 ff 48 c7 c7 88 58 64 86 e8 e0 0d 71 02 eb
-RSP: 0018:ffffc9000c6d7ce0 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: ffff8880422b8b00 RCX: ffffffff8110503c
-RDX: ffff888030652f00 RSI: ffffffff81105045 RDI: 0000000000000001
-RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000001 R11: ffffffff81bb62cb R12: ffffffff84807ffc
-R13: ffff88804ad6fcc0 R14: ffffffff84807ffc R15: ffffffff85741ff8
-FS:  00007f30cfba8640(0000) GS:ffff88807dd00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ff51afe8000 CR3: 000000005a60a005 CR4: 0000000000770ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <TASK>
- rpc_proc_unregister+0x64/0x70 net/sunrpc/stats.c:310
- nfs_net_exit+0x1c/0x30 fs/nfs/inode.c:2438
- ops_exit_list+0x62/0xb0 net/core/net_namespace.c:170
- setup_net+0x46c/0x660 net/core/net_namespace.c:372
- copy_net_ns+0x244/0x590 net/core/net_namespace.c:505
- create_new_namespaces+0x2ed/0x770 kernel/nsproxy.c:110
- unshare_nsproxy_namespaces+0xae/0x160 kernel/nsproxy.c:228
- ksys_unshare+0x342/0x760 kernel/fork.c:3322
- __do_sys_unshare kernel/fork.c:3393 [inline]
- __se_sys_unshare kernel/fork.c:3391 [inline]
- __x64_sys_unshare+0x1f/0x30 kernel/fork.c:3391
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x4f/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x46/0x4e
-RIP: 0033:0x7f30d0febe5d
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 73 9f 1b 00 f7 d8 64 89 01 48
-RSP: 002b:00007f30cfba7cc8 EFLAGS: 00000246 ORIG_RAX: 0000000000000110
-RAX: ffffffffffffffda RBX: 00000000004bbf80 RCX: 00007f30d0febe5d
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 000000006c020600
-RBP: 00000000004bbf80 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000002
-R13: 000000000000000b R14: 00007f30d104c530 R15: 0000000000000000
- </TASK>
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 2f46d7f7e959 ("pinctrl: baytrail: Add pinconf group + function for the pmu_clk")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/inode.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/pinctrl/intel/pinctrl-baytrail.c | 74 ++++++++++++------------
+ drivers/pinctrl/intel/pinctrl-intel.h    |  4 ++
+ 2 files changed, 42 insertions(+), 36 deletions(-)
 
-diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
-index e26d892ff4f2d..ca76b0b51b779 100644
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -2429,7 +2429,12 @@ static int nfs_net_init(struct net *net)
- 	struct nfs_net *nn = net_generic(net, nfs_net_id);
+diff --git a/drivers/pinctrl/intel/pinctrl-baytrail.c b/drivers/pinctrl/intel/pinctrl-baytrail.c
+index 95a8a3a22b2b4..0aaeb54a64765 100644
+--- a/drivers/pinctrl/intel/pinctrl-baytrail.c
++++ b/drivers/pinctrl/intel/pinctrl-baytrail.c
+@@ -277,33 +277,33 @@ static const unsigned int byt_score_plt_clk5_pins[] = { 101 };
+ static const unsigned int byt_score_smbus_pins[] = { 51, 52, 53 };
  
- 	nfs_clients_init(net);
--	rpc_proc_register(net, &nn->rpcstats);
-+
-+	if (!rpc_proc_register(net, &nn->rpcstats)) {
-+		nfs_clients_exit(net);
-+		return -ENOMEM;
-+	}
-+
- 	return nfs_fs_proc_net_init(net);
- }
+ static const struct intel_pingroup byt_score_groups[] = {
+-	PIN_GROUP("uart1_grp", byt_score_uart1_pins, 1),
+-	PIN_GROUP("uart2_grp", byt_score_uart2_pins, 1),
+-	PIN_GROUP("pwm0_grp", byt_score_pwm0_pins, 1),
+-	PIN_GROUP("pwm1_grp", byt_score_pwm1_pins, 1),
+-	PIN_GROUP("ssp2_grp", byt_score_ssp2_pins, 1),
+-	PIN_GROUP("sio_spi_grp", byt_score_sio_spi_pins, 1),
+-	PIN_GROUP("i2c5_grp", byt_score_i2c5_pins, 1),
+-	PIN_GROUP("i2c6_grp", byt_score_i2c6_pins, 1),
+-	PIN_GROUP("i2c4_grp", byt_score_i2c4_pins, 1),
+-	PIN_GROUP("i2c3_grp", byt_score_i2c3_pins, 1),
+-	PIN_GROUP("i2c2_grp", byt_score_i2c2_pins, 1),
+-	PIN_GROUP("i2c1_grp", byt_score_i2c1_pins, 1),
+-	PIN_GROUP("i2c0_grp", byt_score_i2c0_pins, 1),
+-	PIN_GROUP("ssp0_grp", byt_score_ssp0_pins, 1),
+-	PIN_GROUP("ssp1_grp", byt_score_ssp1_pins, 1),
+-	PIN_GROUP("sdcard_grp", byt_score_sdcard_pins, byt_score_sdcard_mux_values),
+-	PIN_GROUP("sdio_grp", byt_score_sdio_pins, 1),
+-	PIN_GROUP("emmc_grp", byt_score_emmc_pins, 1),
+-	PIN_GROUP("lpc_grp", byt_score_ilb_lpc_pins, 1),
+-	PIN_GROUP("sata_grp", byt_score_sata_pins, 1),
+-	PIN_GROUP("plt_clk0_grp", byt_score_plt_clk0_pins, 1),
+-	PIN_GROUP("plt_clk1_grp", byt_score_plt_clk1_pins, 1),
+-	PIN_GROUP("plt_clk2_grp", byt_score_plt_clk2_pins, 1),
+-	PIN_GROUP("plt_clk3_grp", byt_score_plt_clk3_pins, 1),
+-	PIN_GROUP("plt_clk4_grp", byt_score_plt_clk4_pins, 1),
+-	PIN_GROUP("plt_clk5_grp", byt_score_plt_clk5_pins, 1),
+-	PIN_GROUP("smbus_grp", byt_score_smbus_pins, 1),
++	PIN_GROUP_GPIO("uart1_grp", byt_score_uart1_pins, 1),
++	PIN_GROUP_GPIO("uart2_grp", byt_score_uart2_pins, 1),
++	PIN_GROUP_GPIO("pwm0_grp", byt_score_pwm0_pins, 1),
++	PIN_GROUP_GPIO("pwm1_grp", byt_score_pwm1_pins, 1),
++	PIN_GROUP_GPIO("ssp2_grp", byt_score_ssp2_pins, 1),
++	PIN_GROUP_GPIO("sio_spi_grp", byt_score_sio_spi_pins, 1),
++	PIN_GROUP_GPIO("i2c5_grp", byt_score_i2c5_pins, 1),
++	PIN_GROUP_GPIO("i2c6_grp", byt_score_i2c6_pins, 1),
++	PIN_GROUP_GPIO("i2c4_grp", byt_score_i2c4_pins, 1),
++	PIN_GROUP_GPIO("i2c3_grp", byt_score_i2c3_pins, 1),
++	PIN_GROUP_GPIO("i2c2_grp", byt_score_i2c2_pins, 1),
++	PIN_GROUP_GPIO("i2c1_grp", byt_score_i2c1_pins, 1),
++	PIN_GROUP_GPIO("i2c0_grp", byt_score_i2c0_pins, 1),
++	PIN_GROUP_GPIO("ssp0_grp", byt_score_ssp0_pins, 1),
++	PIN_GROUP_GPIO("ssp1_grp", byt_score_ssp1_pins, 1),
++	PIN_GROUP_GPIO("sdcard_grp", byt_score_sdcard_pins, byt_score_sdcard_mux_values),
++	PIN_GROUP_GPIO("sdio_grp", byt_score_sdio_pins, 1),
++	PIN_GROUP_GPIO("emmc_grp", byt_score_emmc_pins, 1),
++	PIN_GROUP_GPIO("lpc_grp", byt_score_ilb_lpc_pins, 1),
++	PIN_GROUP_GPIO("sata_grp", byt_score_sata_pins, 1),
++	PIN_GROUP_GPIO("plt_clk0_grp", byt_score_plt_clk0_pins, 1),
++	PIN_GROUP_GPIO("plt_clk1_grp", byt_score_plt_clk1_pins, 1),
++	PIN_GROUP_GPIO("plt_clk2_grp", byt_score_plt_clk2_pins, 1),
++	PIN_GROUP_GPIO("plt_clk3_grp", byt_score_plt_clk3_pins, 1),
++	PIN_GROUP_GPIO("plt_clk4_grp", byt_score_plt_clk4_pins, 1),
++	PIN_GROUP_GPIO("plt_clk5_grp", byt_score_plt_clk5_pins, 1),
++	PIN_GROUP_GPIO("smbus_grp", byt_score_smbus_pins, 1),
+ };
  
+ static const char * const byt_score_uart_groups[] = {
+@@ -331,12 +331,14 @@ static const char * const byt_score_plt_clk_groups[] = {
+ };
+ static const char * const byt_score_smbus_groups[] = { "smbus_grp" };
+ static const char * const byt_score_gpio_groups[] = {
+-	"uart1_grp", "uart2_grp", "pwm0_grp", "pwm1_grp", "ssp0_grp",
+-	"ssp1_grp", "ssp2_grp", "sio_spi_grp", "i2c0_grp", "i2c1_grp",
+-	"i2c2_grp", "i2c3_grp", "i2c4_grp", "i2c5_grp", "i2c6_grp",
+-	"sdcard_grp", "sdio_grp", "emmc_grp", "lpc_grp", "sata_grp",
+-	"plt_clk0_grp", "plt_clk1_grp", "plt_clk2_grp", "plt_clk3_grp",
+-	"plt_clk4_grp", "plt_clk5_grp", "smbus_grp",
++	"uart1_grp_gpio", "uart2_grp_gpio", "pwm0_grp_gpio",
++	"pwm1_grp_gpio", "ssp0_grp_gpio", "ssp1_grp_gpio", "ssp2_grp_gpio",
++	"sio_spi_grp_gpio", "i2c0_grp_gpio", "i2c1_grp_gpio", "i2c2_grp_gpio",
++	"i2c3_grp_gpio", "i2c4_grp_gpio", "i2c5_grp_gpio", "i2c6_grp_gpio",
++	"sdcard_grp_gpio", "sdio_grp_gpio", "emmc_grp_gpio", "lpc_grp_gpio",
++	"sata_grp_gpio", "plt_clk0_grp_gpio", "plt_clk1_grp_gpio",
++	"plt_clk2_grp_gpio", "plt_clk3_grp_gpio", "plt_clk4_grp_gpio",
++	"plt_clk5_grp_gpio", "smbus_grp_gpio",
+ };
+ 
+ static const struct intel_function byt_score_functions[] = {
+@@ -455,8 +457,8 @@ static const struct intel_pingroup byt_sus_groups[] = {
+ 	PIN_GROUP("usb_oc_grp_gpio", byt_sus_usb_over_current_pins, byt_sus_usb_over_current_gpio_mode_values),
+ 	PIN_GROUP("usb_ulpi_grp_gpio", byt_sus_usb_ulpi_pins, byt_sus_usb_ulpi_gpio_mode_values),
+ 	PIN_GROUP("pcu_spi_grp_gpio", byt_sus_pcu_spi_pins, byt_sus_pcu_spi_gpio_mode_values),
+-	PIN_GROUP("pmu_clk1_grp", byt_sus_pmu_clk1_pins, 1),
+-	PIN_GROUP("pmu_clk2_grp", byt_sus_pmu_clk2_pins, 1),
++	PIN_GROUP_GPIO("pmu_clk1_grp", byt_sus_pmu_clk1_pins, 1),
++	PIN_GROUP_GPIO("pmu_clk2_grp", byt_sus_pmu_clk2_pins, 1),
+ };
+ 
+ static const char * const byt_sus_usb_groups[] = {
+@@ -468,7 +470,7 @@ static const char * const byt_sus_pmu_clk_groups[] = {
+ };
+ static const char * const byt_sus_gpio_groups[] = {
+ 	"usb_oc_grp_gpio", "usb_ulpi_grp_gpio", "pcu_spi_grp_gpio",
+-	"pmu_clk1_grp", "pmu_clk2_grp",
++	"pmu_clk1_grp_gpio", "pmu_clk2_grp_gpio",
+ };
+ 
+ static const struct intel_function byt_sus_functions[] = {
+diff --git a/drivers/pinctrl/intel/pinctrl-intel.h b/drivers/pinctrl/intel/pinctrl-intel.h
+index cee512f97b566..45216b9e852dc 100644
+--- a/drivers/pinctrl/intel/pinctrl-intel.h
++++ b/drivers/pinctrl/intel/pinctrl-intel.h
+@@ -179,6 +179,10 @@ struct intel_community {
+ 		.modes = __builtin_choose_expr(__builtin_constant_p((m)), NULL, (m)),	\
+ 	}
+ 
++#define PIN_GROUP_GPIO(n, p, m)						\
++	 PIN_GROUP(n, p, m),						\
++	 PIN_GROUP(n "_gpio", p, 0)
++
+ #define FUNCTION(n, g)							\
+ 	{								\
+ 		.func = PINCTRL_PINFUNCTION((n), (g), ARRAY_SIZE(g)),	\
 -- 
 2.43.0
 
