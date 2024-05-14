@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856E712BEA5;
-	Tue, 14 May 2024 11:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9527A54903;
+	Tue, 14 May 2024 11:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684693; cv=none; b=EVYtT7CMVlrJlMMOjl9P76/l9t2Ob3XRRa1YHmIqE3sGM3D1uLm3FDOsQssHjteDwrhXtYF55D3HNIHgKYB1htdf0mbiA+6LCXly+qU00QfzU4LiMl9TYIyWMXjFOvhdi72GsqNWvxnJjMjaJsr6HNJO4sk9yAABWL0S8Uk1Unc=
+	t=1715684699; cv=none; b=kJMxOfoxYyj/JoTciU/+mtoA4bAIdj61tDltWLVXtU3+jp/5v1rrBf+s0h9vPFaHQx0PL1OgmEe+ZL89aE55/tomt7aJV0bNcoJAAwa82WPRFyYqoKM9lBceXXPcDLDj05hOenWN1IVWiVSyAzMCapU1JrDR/BfYjPFwPTiaQeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684693; c=relaxed/simple;
-	bh=noacSckRY1a96ZMhGBT54mfmE5kJY/vlD4gXD+MbZiY=;
+	s=arc-20240116; t=1715684699; c=relaxed/simple;
+	bh=QPxKfoTMiNVwPH37o8gDLaXOmtnq0p8gBWCBZycebCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FphgnCqT0CTCgx+nXFDo9sJVo4Z4mQO5ttrpkT5Oqv0ufdc8WcOUeAJ29klq2V3D1KpRLx1JRdu6x8NI5Q/4GpqQiCrThfyu5ZJq2DNeIxBrzMktZwNyiiGfVNQlvEjYdJnj2F8XQqhS5W8kVp0iIQx36seVtiEZ4BsgbWebOBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Teac0xiJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Bg1LgPCt2ibSTY5MFJzhpmc9GVRDgTaGNk2Rsj0PMd09F3CgkKxKdNfkwk12JDxYS3+oeijQc7aQT6rY9TF8kX3r8BZDqgBVCJ23OYoDxaLd/lKPFDH6ak7Yn89T/pc8UY9XRK7WrFLPxBOPIFfxVNF4Naf26lPxrD0n5mvKiOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+jMk5M6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Teac0xiJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C1BC2BD10;
-	Tue, 14 May 2024 11:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+jMk5M6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1D1C2BD10;
+	Tue, 14 May 2024 11:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684693;
-	bh=noacSckRY1a96ZMhGBT54mfmE5kJY/vlD4gXD+MbZiY=;
+	s=korg; t=1715684699;
+	bh=QPxKfoTMiNVwPH37o8gDLaXOmtnq0p8gBWCBZycebCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Teac0xiJWxtP5zCG6MnHyvF6LYATVJ92hjR3aw+zXjWOHcRgrqalX7Z7erbxBkcFl
-	 sY7va0FWJzX7/ch21HVYT7Y7yZA/oElcFBrcLjvVG7VwFB7q+7QPdYILEUCryOe18d
-	 ofVMFzgvaZtr15Y54Vb/7PgAR+OOEpKUW2FULHCo=
+	b=q+jMk5M6CEkOSKfFUC1SqzV8v7/Le+vWArjkaNhtarpRBL3hZkOJHIdwpKjStWLgW
+	 1TIamxuR637mbTvmFdmUW1+cy1YtxT5qAEVxTt2GZQ792wD9nTXDcFPCFWIhGVszB5
+	 63HYVGziSf/vycOTlZPa/HwZubTUrbiql6jIyy2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/301] net: core: reject skb_copy(_expand) for fraglist GSO skbs
-Date: Tue, 14 May 2024 12:15:48 +0200
-Message-ID: <20240514101035.156871034@linuxfoundation.org>
+Subject: [PATCH 6.6 060/301] net: qede: use return from qede_parse_flow_attr() for flower
+Date: Tue, 14 May 2024 12:15:31 +0200
+Message-ID: <20240514101034.509689541@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -45,77 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit d091e579b864fa790dd6a0cd537a22c383126681 ]
+[ Upstream commit fcee2065a178f78be6fd516302830378b17dba3d ]
 
-SKB_GSO_FRAGLIST skbs must not be linearized, otherwise they become
-invalid. Return NULL if such an skb is passed to skb_copy or
-skb_copy_expand, in order to prevent a crash on a potential later
-call to skb_gso_segment.
+In qede_add_tc_flower_fltr(), when calling
+qede_parse_flow_attr() then the return code
+was only used for a non-zero check, and then
+-EINVAL was returned.
 
-Fixes: 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+qede_parse_flow_attr() can currently fail with:
+* -EINVAL
+* -EOPNOTSUPP
+* -EPROTONOSUPPORT
+
+This patch changes the code to use the actual
+return code, not just return -EINVAL.
+
+The blaimed commit introduced these functions.
+
+Only compile tested.
+
+Fixes: 2ce9c93eaca6 ("qede: Ingress tc flower offload (drop action) support.")
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/qlogic/qede/qede_filter.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 60876262b3fb3..f0a9ef1aeaa29 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -1971,11 +1971,17 @@ static inline int skb_alloc_rx_flag(const struct sk_buff *skb)
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_filter.c b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+index 8ecdfa36a6854..25ef0f4258cb1 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_filter.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+@@ -1879,10 +1879,9 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
+ 	}
  
- struct sk_buff *skb_copy(const struct sk_buff *skb, gfp_t gfp_mask)
- {
--	int headerlen = skb_headroom(skb);
--	unsigned int size = skb_end_offset(skb) + skb->data_len;
--	struct sk_buff *n = __alloc_skb(size, gfp_mask,
--					skb_alloc_rx_flag(skb), NUMA_NO_NODE);
-+	struct sk_buff *n;
-+	unsigned int size;
-+	int headerlen;
-+
-+	if (WARN_ON_ONCE(skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST))
-+		return NULL;
+ 	/* parse flower attribute and prepare filter */
+-	if (qede_parse_flow_attr(edev, proto, f->rule, &t)) {
+-		rc = -EINVAL;
++	rc = qede_parse_flow_attr(edev, proto, f->rule, &t);
++	if (rc)
+ 		goto unlock;
+-	}
  
-+	headerlen = skb_headroom(skb);
-+	size = skb_end_offset(skb) + skb->data_len;
-+	n = __alloc_skb(size, gfp_mask,
-+			skb_alloc_rx_flag(skb), NUMA_NO_NODE);
- 	if (!n)
- 		return NULL;
- 
-@@ -2303,12 +2309,17 @@ struct sk_buff *skb_copy_expand(const struct sk_buff *skb,
- 	/*
- 	 *	Allocate the copy buffer
- 	 */
--	struct sk_buff *n = __alloc_skb(newheadroom + skb->len + newtailroom,
--					gfp_mask, skb_alloc_rx_flag(skb),
--					NUMA_NO_NODE);
--	int oldheadroom = skb_headroom(skb);
- 	int head_copy_len, head_copy_off;
-+	struct sk_buff *n;
-+	int oldheadroom;
-+
-+	if (WARN_ON_ONCE(skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST))
-+		return NULL;
- 
-+	oldheadroom = skb_headroom(skb);
-+	n = __alloc_skb(newheadroom + skb->len + newtailroom,
-+			gfp_mask, skb_alloc_rx_flag(skb),
-+			NUMA_NO_NODE);
- 	if (!n)
- 		return NULL;
- 
+ 	/* Validate profile mode and number of filters */
+ 	if ((edev->arfs->filter_count && edev->arfs->mode != t.mode) ||
 -- 
 2.43.0
 
