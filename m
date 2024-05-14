@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0171E12DD91;
-	Tue, 14 May 2024 10:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B7E12D76E;
+	Tue, 14 May 2024 10:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683958; cv=none; b=g4H0V9vWU1Pc9AbsmRHuyHV8kbA3Hm1ifA8UQoUo709Xj6Z59Fiow893fvDBrcyhkmwQb/G7/ulTPcwkVEHbVWeUAe2rqMoFSWWhXg7SuNXZHe9zp10xWbQPuemeuZlmjcXFX5SwSGW+jTgAs6T7GVJQ6f9ZliySRao1B20pYzg=
+	t=1715683965; cv=none; b=M5yXpp7eqWoLpD7XT5ZdaA1zft6WPNQqC9UQtUHvxr5Wyc3dxCiXmUPG/AkjxcdRM+GM9kB7j4HvUvLFN9NYtj7z+yn/pIN2nzENqHDSnYcHVz3G2tUsEVyi7KUyiOWEUV0qUIWxgWtHeoHfiypS8zeTILAG7fyknqruXS9H36A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683958; c=relaxed/simple;
-	bh=CW2l/B6vRc358Xh0bbAWhL4uJcOdyijyPUDmqmLgWCQ=;
+	s=arc-20240116; t=1715683965; c=relaxed/simple;
+	bh=whDZ0iYLuebg+OWHdOyFGXx3Bx8GMNSK76XK1O7pxC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o9HmAOcZIZab/4j2AgYUbP2F9cSZnMCdUSW1f4AW8GO1lD1pvp685C7eTBXzhm6+Ha5kroIgO/kR3AtY2bk1nHKXbeBvQJ4dCgfnqFG5dItYLFv4VxmybscwESQD5HoZLsQtlPeIT6PQiT1rpQvZk3SNQd7Kntcw21vAUIzLDhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vD174nBb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GOVh0ix2n9/TCti3aNj9hm/Ciw5hozsaWUkU2upmwF97giouwzkDOJfVTURL+OsxMmx+agPrSZJcvnsyKEy+a0jWKVGcWwkpWnALGoARhyVbO08YKRCWPvjkBBpufttkoPaS9VYElDUp8weaD5TIIi7DVBuXsX9oWdEk+EsdV58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1zw+eXd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vD174nBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63582C2BD10;
-	Tue, 14 May 2024 10:52:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1zw+eXd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15636C2BD10;
+	Tue, 14 May 2024 10:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683957;
-	bh=CW2l/B6vRc358Xh0bbAWhL4uJcOdyijyPUDmqmLgWCQ=;
+	s=korg; t=1715683965;
+	bh=whDZ0iYLuebg+OWHdOyFGXx3Bx8GMNSK76XK1O7pxC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vD174nBbf3S/Ek6zS92C3n9khPh5qgdw6HmyaEKyOMtM4e1ZWCqjUVOvA6uIa8vCa
-	 eYc+KnVOEeDfUKWIFlVrabjWIqJIYmjhvzNUJkBacQdYtY/5j9Cs0tac+cbaXPiDxY
-	 1hlXlAZWsq9V/kjl3Zmxz4RXPoeaoB2Ez/iDjolc=
+	b=P1zw+eXdTRI7LO3Q1gwpFz4zuW5V9cTNAX2xiLofV+AWAH7o+iWOKgddCBVDg2GBq
+	 ZRVskv1qBE4wZg/rppFW/LADv1vZ4y2q1G9EZpFcZHeaaALNnjvkXQqgdq3Op+9P4I
+	 NSeX7AMNafOEkuEMmqAvMUp6BX4JCHwYvSGGu+Qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Ben Skeggs <bskeggs@nvidia.com>
-Subject: [PATCH 6.8 301/336] drm/nouveau/gsp: Use the sg allocator for level 2 of radix3
-Date: Tue, 14 May 2024 12:18:25 +0200
-Message-ID: <20240514101049.982000890@linuxfoundation.org>
+	Kai Vehmanen <kai.vehmanen@intel.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Uma Shankar <uma.shankar@intel.com>,
+	Animesh Manna <animesh.manna@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.8 302/336] drm/i915/audio: Fix audio time stamp programming for DP
+Date: Tue, 14 May 2024 12:18:26 +0200
+Message-ID: <20240514101050.019280700@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -50,210 +53,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lyude Paul <lyude@redhat.com>
+From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
 
-commit 6f572a80545773833f00c9a65e9242ab6fedb192 upstream.
+commit c66b8356273c8d22498f88e4223af47a7bf8a23c upstream.
 
-Currently we allocate all 3 levels of radix3 page tables using
-nvkm_gsp_mem_ctor(), which uses dma_alloc_coherent() for allocating all of
-the relevant memory. This can end up failing in scenarios where the system
-has very high memory fragmentation, and we can't find enough contiguous
-memory to allocate level 2 of the page table.
+Intel hardware is capable of programming the Maud/Naud SDPs on its
+own based on real-time clocks. While doing so, it takes care
+of any deviations from the theoretical values. Programming the registers
+explicitly with static values can interfere with this logic. Therefore,
+let the HW decide the Maud and Naud SDPs on it's own.
 
-Currently, this can result in runtime PM issues on systems where memory
-fragmentation is high - as we'll fail to allocate the page table for our
-suspend/resume buffer:
-
-  kworker/10:2: page allocation failure: order:7, mode:0xcc0(GFP_KERNEL),
-  nodemask=(null),cpuset=/,mems_allowed=0
-  CPU: 10 PID: 479809 Comm: kworker/10:2 Not tainted
-  6.8.6-201.ChopperV6.fc39.x86_64 #1
-  Hardware name: SLIMBOOK Executive/Executive, BIOS N.1.10GRU06 02/02/2024
-  Workqueue: pm pm_runtime_work
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x64/0x80
-   warn_alloc+0x165/0x1e0
-   ? __alloc_pages_direct_compact+0xb3/0x2b0
-   __alloc_pages_slowpath.constprop.0+0xd7d/0xde0
-   __alloc_pages+0x32d/0x350
-   __dma_direct_alloc_pages.isra.0+0x16a/0x2b0
-   dma_direct_alloc+0x70/0x270
-   nvkm_gsp_radix3_sg+0x5e/0x130 [nouveau]
-   r535_gsp_fini+0x1d4/0x350 [nouveau]
-   nvkm_subdev_fini+0x67/0x150 [nouveau]
-   nvkm_device_fini+0x95/0x1e0 [nouveau]
-   nvkm_udevice_fini+0x53/0x70 [nouveau]
-   nvkm_object_fini+0xb9/0x240 [nouveau]
-   nvkm_object_fini+0x75/0x240 [nouveau]
-   nouveau_do_suspend+0xf5/0x280 [nouveau]
-   nouveau_pmops_runtime_suspend+0x3e/0xb0 [nouveau]
-   pci_pm_runtime_suspend+0x67/0x1e0
-   ? __pfx_pci_pm_runtime_suspend+0x10/0x10
-   __rpm_callback+0x41/0x170
-   ? __pfx_pci_pm_runtime_suspend+0x10/0x10
-   rpm_callback+0x5d/0x70
-   ? __pfx_pci_pm_runtime_suspend+0x10/0x10
-   rpm_suspend+0x120/0x6a0
-   pm_runtime_work+0x98/0xb0
-   process_one_work+0x171/0x340
-   worker_thread+0x27b/0x3a0
-   ? __pfx_worker_thread+0x10/0x10
-   kthread+0xe5/0x120
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork+0x31/0x50
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork_asm+0x1b/0x30
-
-Luckily, we don't actually need to allocate coherent memory for the page
-table thanks to being able to pass the GPU a radix3 page table for
-suspend/resume data. So, let's rewrite nvkm_gsp_radix3_sg() to use the sg
-allocator for level 2. We continue using coherent allocations for lvl0 and
-1, since they only take a single page.
-
-V2:
-* Don't forget to actually jump to the next scatterlist when we reach the
-  end of the scatterlist we're currently on when writing out the page table
-  for level 2
-
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240429182318.189668-2-lyude@redhat.com
+Cc: stable@vger.kernel.org # v5.17
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8097
+Co-developed-by: Kai Vehmanen <kai.vehmanen@intel.com>
+Signed-off-by: Kai Vehmanen <kai.vehmanen@intel.com>
+Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Animesh Manna <animesh.manna@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240430091825.733499-1-chaitanya.kumar.borah@intel.com
+(cherry picked from commit 8e056b50d92ae7f4d6895d1c97a69a2a953cf97b)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/include/nvkm/subdev/gsp.h |    4 -
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c    |   79 ++++++++++++++--------
- 2 files changed, 55 insertions(+), 28 deletions(-)
+ drivers/gpu/drm/i915/display/intel_audio.c |  113 ++---------------------------
+ 1 file changed, 8 insertions(+), 105 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/include/nvkm/subdev/gsp.h
-+++ b/drivers/gpu/drm/nouveau/include/nvkm/subdev/gsp.h
-@@ -15,7 +15,9 @@ struct nvkm_gsp_mem {
+--- a/drivers/gpu/drm/i915/display/intel_audio.c
++++ b/drivers/gpu/drm/i915/display/intel_audio.c
+@@ -76,19 +76,6 @@ struct intel_audio_funcs {
+ 				       struct intel_crtc_state *crtc_state);
  };
  
- struct nvkm_gsp_radix3 {
--	struct nvkm_gsp_mem mem[3];
-+	struct nvkm_gsp_mem lvl0;
-+	struct nvkm_gsp_mem lvl1;
-+	struct sg_table lvl2;
- };
- 
- int nvkm_gsp_sg(struct nvkm_device *, u64 size, struct sg_table *);
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-@@ -1620,7 +1620,7 @@ r535_gsp_wpr_meta_init(struct nvkm_gsp *
- 	meta->magic = GSP_FW_WPR_META_MAGIC;
- 	meta->revision = GSP_FW_WPR_META_REVISION;
- 
--	meta->sysmemAddrOfRadix3Elf = gsp->radix3.mem[0].addr;
-+	meta->sysmemAddrOfRadix3Elf = gsp->radix3.lvl0.addr;
- 	meta->sizeOfRadix3Elf = gsp->fb.wpr2.elf.size;
- 
- 	meta->sysmemAddrOfBootloader = gsp->boot.fw.addr;
-@@ -1914,8 +1914,9 @@ nvkm_gsp_sg(struct nvkm_device *device,
- static void
- nvkm_gsp_radix3_dtor(struct nvkm_gsp *gsp, struct nvkm_gsp_radix3 *rx3)
- {
--	for (int i = ARRAY_SIZE(rx3->mem) - 1; i >= 0; i--)
--		nvkm_gsp_mem_dtor(gsp, &rx3->mem[i]);
-+	nvkm_gsp_sg_free(gsp->subdev.device, &rx3->lvl2);
-+	nvkm_gsp_mem_dtor(gsp, &rx3->lvl1);
-+	nvkm_gsp_mem_dtor(gsp, &rx3->lvl0);
- }
- 
- /**
-@@ -1951,36 +1952,60 @@ static int
- nvkm_gsp_radix3_sg(struct nvkm_gsp *gsp, struct sg_table *sgt, u64 size,
- 		   struct nvkm_gsp_radix3 *rx3)
- {
--	u64 addr;
-+	struct sg_dma_page_iter sg_dma_iter;
-+	struct scatterlist *sg;
-+	size_t bufsize;
-+	u64 *pte;
-+	int ret, i, page_idx = 0;
- 
--	for (int i = ARRAY_SIZE(rx3->mem) - 1; i >= 0; i--) {
--		u64 *ptes;
--		size_t bufsize;
--		int ret, idx;
-+	ret = nvkm_gsp_mem_ctor(gsp, GSP_PAGE_SIZE, &rx3->lvl0);
-+	if (ret)
-+		return ret;
- 
--		bufsize = ALIGN((size / GSP_PAGE_SIZE) * sizeof(u64), GSP_PAGE_SIZE);
--		ret = nvkm_gsp_mem_ctor(gsp, bufsize, &rx3->mem[i]);
--		if (ret)
--			return ret;
-+	ret = nvkm_gsp_mem_ctor(gsp, GSP_PAGE_SIZE, &rx3->lvl1);
-+	if (ret)
-+		goto lvl1_fail;
- 
--		ptes = rx3->mem[i].data;
--		if (i == 2) {
--			struct scatterlist *sgl;
+-/* DP N/M table */
+-#define LC_810M	810000
+-#define LC_540M	540000
+-#define LC_270M	270000
+-#define LC_162M	162000
 -
--			for_each_sgtable_dma_sg(sgt, sgl, idx) {
--				for (int j = 0; j < sg_dma_len(sgl) / GSP_PAGE_SIZE; j++)
--					*ptes++ = sg_dma_address(sgl) + (GSP_PAGE_SIZE * j);
--			}
--		} else {
--			for (int j = 0; j < size / GSP_PAGE_SIZE; j++)
--				*ptes++ = addr + GSP_PAGE_SIZE * j;
-+	// Allocate level 2
-+	bufsize = ALIGN((size / GSP_PAGE_SIZE) * sizeof(u64), GSP_PAGE_SIZE);
-+	ret = nvkm_gsp_sg(gsp->subdev.device, bufsize, &rx3->lvl2);
-+	if (ret)
-+		goto lvl2_fail;
-+
-+	// Write the bus address of level 1 to level 0
-+	pte = rx3->lvl0.data;
-+	*pte = rx3->lvl1.addr;
-+
-+	// Write the bus address of each page in level 2 to level 1
-+	pte = rx3->lvl1.data;
-+	for_each_sgtable_dma_page(&rx3->lvl2, &sg_dma_iter, 0)
-+		*pte++ = sg_page_iter_dma_address(&sg_dma_iter);
-+
-+	// Finally, write the bus address of each page in sgt to level 2
-+	for_each_sgtable_sg(&rx3->lvl2, sg, i) {
-+		void *sgl_end;
-+
-+		pte = sg_virt(sg);
-+		sgl_end = (void *)pte + sg->length;
-+
-+		for_each_sgtable_dma_page(sgt, &sg_dma_iter, page_idx) {
-+			*pte++ = sg_page_iter_dma_address(&sg_dma_iter);
-+			page_idx++;
-+
-+			// Go to the next scatterlist for level 2 if we've reached the end
-+			if ((void *)pte >= sgl_end)
-+				break;
- 		}
-+	}
+-struct dp_aud_n_m {
+-	int sample_rate;
+-	int clock;
+-	u16 m;
+-	u16 n;
+-};
+-
+ struct hdmi_aud_ncts {
+ 	int sample_rate;
+ 	int clock;
+@@ -96,60 +83,6 @@ struct hdmi_aud_ncts {
+ 	int cts;
+ };
  
--		size = rx3->mem[i].size;
--		addr = rx3->mem[i].addr;
-+	if (ret) {
-+lvl2_fail:
-+		nvkm_gsp_mem_dtor(gsp, &rx3->lvl1);
-+lvl1_fail:
-+		nvkm_gsp_mem_dtor(gsp, &rx3->lvl0);
- 	}
+-/* Values according to DP 1.4 Table 2-104 */
+-static const struct dp_aud_n_m dp_aud_n_m[] = {
+-	{ 32000, LC_162M, 1024, 10125 },
+-	{ 44100, LC_162M, 784, 5625 },
+-	{ 48000, LC_162M, 512, 3375 },
+-	{ 64000, LC_162M, 2048, 10125 },
+-	{ 88200, LC_162M, 1568, 5625 },
+-	{ 96000, LC_162M, 1024, 3375 },
+-	{ 128000, LC_162M, 4096, 10125 },
+-	{ 176400, LC_162M, 3136, 5625 },
+-	{ 192000, LC_162M, 2048, 3375 },
+-	{ 32000, LC_270M, 1024, 16875 },
+-	{ 44100, LC_270M, 784, 9375 },
+-	{ 48000, LC_270M, 512, 5625 },
+-	{ 64000, LC_270M, 2048, 16875 },
+-	{ 88200, LC_270M, 1568, 9375 },
+-	{ 96000, LC_270M, 1024, 5625 },
+-	{ 128000, LC_270M, 4096, 16875 },
+-	{ 176400, LC_270M, 3136, 9375 },
+-	{ 192000, LC_270M, 2048, 5625 },
+-	{ 32000, LC_540M, 1024, 33750 },
+-	{ 44100, LC_540M, 784, 18750 },
+-	{ 48000, LC_540M, 512, 11250 },
+-	{ 64000, LC_540M, 2048, 33750 },
+-	{ 88200, LC_540M, 1568, 18750 },
+-	{ 96000, LC_540M, 1024, 11250 },
+-	{ 128000, LC_540M, 4096, 33750 },
+-	{ 176400, LC_540M, 3136, 18750 },
+-	{ 192000, LC_540M, 2048, 11250 },
+-	{ 32000, LC_810M, 1024, 50625 },
+-	{ 44100, LC_810M, 784, 28125 },
+-	{ 48000, LC_810M, 512, 16875 },
+-	{ 64000, LC_810M, 2048, 50625 },
+-	{ 88200, LC_810M, 1568, 28125 },
+-	{ 96000, LC_810M, 1024, 16875 },
+-	{ 128000, LC_810M, 4096, 50625 },
+-	{ 176400, LC_810M, 3136, 28125 },
+-	{ 192000, LC_810M, 2048, 16875 },
+-};
+-
+-static const struct dp_aud_n_m *
+-audio_config_dp_get_n_m(const struct intel_crtc_state *crtc_state, int rate)
+-{
+-	int i;
+-
+-	for (i = 0; i < ARRAY_SIZE(dp_aud_n_m); i++) {
+-		if (rate == dp_aud_n_m[i].sample_rate &&
+-		    crtc_state->port_clock == dp_aud_n_m[i].clock)
+-			return &dp_aud_n_m[i];
+-	}
+-
+-	return NULL;
+-}
+-
+ static const struct {
+ 	int clock;
+ 	u32 config;
+@@ -387,47 +320,17 @@ hsw_dp_audio_config_update(struct intel_
+ 			   const struct intel_crtc_state *crtc_state)
+ {
+ 	struct drm_i915_private *i915 = to_i915(encoder->base.dev);
+-	struct i915_audio_component *acomp = i915->display.audio.component;
+ 	enum transcoder cpu_transcoder = crtc_state->cpu_transcoder;
+-	enum port port = encoder->port;
+-	const struct dp_aud_n_m *nm;
+-	int rate;
+-	u32 tmp;
  
--	return 0;
-+	return ret;
+-	rate = acomp ? acomp->aud_sample_rate[port] : 0;
+-	nm = audio_config_dp_get_n_m(crtc_state, rate);
+-	if (nm)
+-		drm_dbg_kms(&i915->drm, "using Maud %u, Naud %u\n", nm->m,
+-			    nm->n);
+-	else
+-		drm_dbg_kms(&i915->drm, "using automatic Maud, Naud\n");
+-
+-	tmp = intel_de_read(i915, HSW_AUD_CFG(cpu_transcoder));
+-	tmp &= ~AUD_CONFIG_N_VALUE_INDEX;
+-	tmp &= ~AUD_CONFIG_PIXEL_CLOCK_HDMI_MASK;
+-	tmp &= ~AUD_CONFIG_N_PROG_ENABLE;
+-	tmp |= AUD_CONFIG_N_VALUE_INDEX;
+-
+-	if (nm) {
+-		tmp &= ~AUD_CONFIG_N_MASK;
+-		tmp |= AUD_CONFIG_N(nm->n);
+-		tmp |= AUD_CONFIG_N_PROG_ENABLE;
+-	}
+-
+-	intel_de_write(i915, HSW_AUD_CFG(cpu_transcoder), tmp);
+-
+-	tmp = intel_de_read(i915, HSW_AUD_M_CTS_ENABLE(cpu_transcoder));
+-	tmp &= ~AUD_CONFIG_M_MASK;
+-	tmp &= ~AUD_M_CTS_M_VALUE_INDEX;
+-	tmp &= ~AUD_M_CTS_M_PROG_ENABLE;
+-
+-	if (nm) {
+-		tmp |= nm->m;
+-		tmp |= AUD_M_CTS_M_VALUE_INDEX;
+-		tmp |= AUD_M_CTS_M_PROG_ENABLE;
+-	}
++	/* Enable time stamps. Let HW calculate Maud/Naud values */
++	intel_de_rmw(i915, HSW_AUD_CFG(cpu_transcoder),
++		     AUD_CONFIG_N_VALUE_INDEX |
++		     AUD_CONFIG_PIXEL_CLOCK_HDMI_MASK |
++		     AUD_CONFIG_UPPER_N_MASK |
++		     AUD_CONFIG_LOWER_N_MASK |
++		     AUD_CONFIG_N_PROG_ENABLE,
++		     AUD_CONFIG_N_VALUE_INDEX);
+ 
+-	intel_de_write(i915, HSW_AUD_M_CTS_ENABLE(cpu_transcoder), tmp);
  }
  
- int
-@@ -2012,7 +2037,7 @@ r535_gsp_fini(struct nvkm_gsp *gsp, bool
- 		sr = gsp->sr.meta.data;
- 		sr->magic = GSP_FW_SR_META_MAGIC;
- 		sr->revision = GSP_FW_SR_META_REVISION;
--		sr->sysmemAddrOfSuspendResumeData = gsp->sr.radix3.mem[0].addr;
-+		sr->sysmemAddrOfSuspendResumeData = gsp->sr.radix3.lvl0.addr;
- 		sr->sizeOfSuspendResumeData = len;
- 
- 		mbox0 = lower_32_bits(gsp->sr.meta.addr);
+ static void
 
 
