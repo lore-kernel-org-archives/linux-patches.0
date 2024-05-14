@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5B112EBE7;
-	Tue, 14 May 2024 10:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D51433BE;
+	Tue, 14 May 2024 10:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682347; cv=none; b=L32VYhbiuUTbbX3FUJPSuAZbOkCiWrB/VOpHLnVXnWWQNYeaGYSFjD2onRBuny+qxwWjwHCmtK+/wekopIa5hDAWsLRoepwdVIoh12Gep+CWNd/s8utZgMpo521AQpks3JjJNqIAGnc0hzi/1STVHRxkT6CRkNViHGgX4UO0oQ8=
+	t=1715682374; cv=none; b=J78EAaAiH8Ug72aHhCtO00Mr75yFbXYj2UTzgHtACtPATH45HPdobj6dk80aL0hbHGTzGXNFWfhK4gBT/yBujWa9V3nc+xlcGuwKk/k69zBXMhAbF6GsEqGpPznUr0la5HR2IkdPlNhO9mSjfpqmlX960SZLKU6aT9KwgxN+twM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682347; c=relaxed/simple;
-	bh=zNgxGxkJqBNtOy6HCh3vqu7e07T7gH2E+Om2ntnVuHc=;
+	s=arc-20240116; t=1715682374; c=relaxed/simple;
+	bh=FETMME7ZVBDtrB4Fsj6bwJhoDbYgSLpOzGLKYpjIVMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAKuEHf41p08GgBOiSiJsTdos2Wv8CezHY+f/MmKq3RUEbqoc0ZqhywqIx7/qdHdlCTaEpdWhxN2uuRWY/QkMP53Ypy13gY5dp0PTGe8ro3biOrhcEdcjdAvvyn5zPpG8Zb/WFk5BhpnwlxpSfK1zxNQN6P0COiNiWG6GVx47so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fI1Fu8ld; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VzHuyecH5A4TrhwfdWnuH8Pg3e/FMPPmk8/EIr1UFT9fiEKkFJvZW3ecMT4Vz9NPuXXIvhnwteXtW6IPGFFo9dN4lzep+t4ak0P90ORHqaWi5DXkNsBKnR4HVm2LLbTJwYKJCIRHY096dvUrkrMU8WlT7W65oCQK5V9Zmu5k0ZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+bMdI7j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fI1Fu8ld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAADC2BD10;
-	Tue, 14 May 2024 10:25:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+bMdI7j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4962C2BD10;
+	Tue, 14 May 2024 10:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682347;
-	bh=zNgxGxkJqBNtOy6HCh3vqu7e07T7gH2E+Om2ntnVuHc=;
+	s=korg; t=1715682374;
+	bh=FETMME7ZVBDtrB4Fsj6bwJhoDbYgSLpOzGLKYpjIVMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fI1Fu8ldUT06NdNI8vBARrDqZ+Tg+OEeKBPkuDVcvd4NQIEVnaLWK+fERQm7ALHzN
-	 XzEorEUkYjNxqvM130Z9RbIfxwgOX+ueygfr+XEfZyzc5fFUw+hzTa6MC9UAdUP+iP
-	 927V3+0Jyw1zpfSGgprgjAo01LMY5oS0TYmNf1Vc=
+	b=B+bMdI7j2X/QtCxAUzIDJP9qAVXm/Ou9cpxTz+eHg9u5K0fNf+iYzoiHTwyx7xZEy
+	 xT3s9jUfyEMxP+EE2KvBnYuYM/j6mZbrVIK0S+smxPkicJ/zJ1hyRVjv4Ymn1FNdDV
+	 Hy69kPusIku6NBpZDxleUMabUlRs+/vY4LUXTcv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Chapman <jchapman@katalix.com>,
-	David Bauer <mail@david-bauer.net>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 049/336] net l2tp: drop flow hash on forward
-Date: Tue, 14 May 2024 12:14:13 +0200
-Message-ID: <20240514101040.458450995@linuxfoundation.org>
+Subject: [PATCH 6.8 050/336] thermal/debugfs: Prevent use-after-free from occurring after cdev removal
+Date: Tue, 14 May 2024 12:14:14 +0200
+Message-ID: <20240514101040.495860586@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -53,46 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Bauer <mail@david-bauer.net>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 42f853b42899d9b445763b55c3c8adc72be0f0e1 ]
+[ Upstream commit d351eb0ab04c3e8109895fc33250cebbce9c11da ]
 
-Drop the flow-hash of the skb when forwarding to the L2TP netdev.
+Since thermal_debug_cdev_remove() does not run under cdev->lock, it can
+run in parallel with thermal_debug_cdev_state_update() and it may free
+the struct thermal_debugfs object used by the latter after it has been
+checked against NULL.
 
-This avoids the L2TP qdisc from using the flow-hash from the outer
-packet, which is identical for every flow within the tunnel.
+If that happens, thermal_debug_cdev_state_update() will access memory
+that has been freed already causing the kernel to crash.
 
-This does not affect every platform but is specific for the ethernet
-driver. It depends on the platform including L4 information in the
-flow-hash.
+Address this by using cdev->lock in thermal_debug_cdev_remove() around
+the cdev->debugfs value check (in case the same cdev is removed at the
+same time in two different threads) and its reset to NULL.
 
-One such example is the Mediatek Filogic MT798x family of networking
-processors.
-
-Fixes: d9e31d17ceba ("l2tp: Add L2TP ethernet pseudowire support")
-Acked-by: James Chapman <jchapman@katalix.com>
-Signed-off-by: David Bauer <mail@david-bauer.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240424171110.13701-1-mail@david-bauer.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 755113d76786 ("thermal/debugfs: Add thermal cooling device debugfs information")
+Cc :6.8+ <stable@vger.kernel.org> # 6.8+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_eth.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/thermal/thermal_debugfs.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/net/l2tp/l2tp_eth.c b/net/l2tp/l2tp_eth.c
-index 25ca89f804145..9dacfa91acc78 100644
---- a/net/l2tp/l2tp_eth.c
-+++ b/net/l2tp/l2tp_eth.c
-@@ -127,6 +127,9 @@ static void l2tp_eth_dev_recv(struct l2tp_session *session, struct sk_buff *skb,
- 	/* checksums verified by L2TP */
- 	skb->ip_summed = CHECKSUM_NONE;
+diff --git a/drivers/thermal/thermal_debugfs.c b/drivers/thermal/thermal_debugfs.c
+index 1fe2914a8853b..5693cc8b231aa 100644
+--- a/drivers/thermal/thermal_debugfs.c
++++ b/drivers/thermal/thermal_debugfs.c
+@@ -505,15 +505,23 @@ void thermal_debug_cdev_add(struct thermal_cooling_device *cdev)
+  */
+ void thermal_debug_cdev_remove(struct thermal_cooling_device *cdev)
+ {
+-	struct thermal_debugfs *thermal_dbg = cdev->debugfs;
++	struct thermal_debugfs *thermal_dbg;
  
-+	/* drop outer flow-hash */
-+	skb_clear_hash(skb);
+-	if (!thermal_dbg)
++	mutex_lock(&cdev->lock);
 +
- 	skb_dst_drop(skb);
- 	nf_reset_ct(skb);
++	thermal_dbg = cdev->debugfs;
++	if (!thermal_dbg) {
++		mutex_unlock(&cdev->lock);
+ 		return;
++	}
++
++	cdev->debugfs = NULL;
++
++	mutex_unlock(&cdev->lock);
+ 
+ 	mutex_lock(&thermal_dbg->lock);
+ 
+ 	thermal_debugfs_cdev_clear(&thermal_dbg->cdev_dbg);
+-	cdev->debugfs = NULL;
+ 
+ 	mutex_unlock(&thermal_dbg->lock);
  
 -- 
 2.43.0
