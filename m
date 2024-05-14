@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07A61D54D;
-	Tue, 14 May 2024 11:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3011D54D;
+	Tue, 14 May 2024 11:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685176; cv=none; b=cYs8SGEwMWewgxEo/9e5ePMKVZVr1qceUsL6Yxa5q+sCHOEVwkPz4vGvFg2aBB0Y1JPqISm0MFrpU6y0h/Q5069cwAt+eZJbSNNA2nf3hrGsB9Q/9xk+u34TQcmB0xJTcldOOPcFt8gVMxEMtEpxblWM7JQs569CjAyXtdR6/x4=
+	t=1715685182; cv=none; b=Z+t1Ltyn8pbMtMm1oM5lnIVzNWIBarTEMwtfbmgWIPwBJvLVmE6s1XmYyS9EUx5NJt+NokwRQTSNmOBOebIZP8Coeh3p0boX3/XHURrB3UbiBT+q9sw6nDokQnre51aWxai1BspYhNf/PIe64a0IsHiNGPygya2WGxBEslKwIzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685176; c=relaxed/simple;
-	bh=dKSky5piraQyAMdF2CGw6Hug7QyVYt96LnGHeRxjU5k=;
+	s=arc-20240116; t=1715685182; c=relaxed/simple;
+	bh=MI8dpcWsv7srrMEA9nzg+9POV4y/2UfvDr2qOMPe2QA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E9XCbsRuVQr4EgA613dnpG129PxX6sC2cY6jsHFRDX3mbTFnijvPMgPjEt9KBju8/NqeWfK9fqfzScqcBFKNTF0Url5g+ucVTM81l+Rbu3zZY1uE0mG3bcCUFy8R/oBVXrAAnxu4vwiLJUGAMlnYvapXN13GlvJHzvmF2SGKpmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SxCCpVXR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aZ+8m0GIIVV/AywL41OydBzkiDTAGBzDzHQ/Jt+eTmig90mGVOl8jTvESXz68VdjTIxmt6WWmm5zyl8Efaa7rpZK6fMmMBAPerwnryCT9zXM1dhijQK2/meUohWoikebgjjIhViGlHDez07atSKSgl+850rbKNwJGhhR1VxZ6tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ozOEzlMr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SxCCpVXR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A80C32786;
-	Tue, 14 May 2024 11:12:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ozOEzlMr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57724C2BD10;
+	Tue, 14 May 2024 11:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685176;
-	bh=dKSky5piraQyAMdF2CGw6Hug7QyVYt96LnGHeRxjU5k=;
+	s=korg; t=1715685181;
+	bh=MI8dpcWsv7srrMEA9nzg+9POV4y/2UfvDr2qOMPe2QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SxCCpVXRQcq2ded9XJLnYh5ORdExhAzton+c/JSQhpwHwg0iM6ehQsha33tPYvFB3
-	 OtXziLS5bakTYP/i/FUfVsy9SSNaO59AomtN4ZrHalPalzipr3SuWEEUXotCOpFDUL
-	 yWw5VRvvv++GGPTiwsNQVWHRbnA8RhUWL68htuDM=
+	b=ozOEzlMrAhDBInq0qBPB8skx2NAY0BGhXEVZyQX3IVISylfMejvIOMS6RyeGVT6Vg
+	 7MsUyux9//gIgo7fUCVl2jwIGI8x1owEz0ptBpCOWGnuoPBISl4QPe4TxJ4Lw/+LjJ
+	 IT32qzG7LKM6NNetpTV9S8a3fiC9fZMIiR+ZjdJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	James Zhu <James.Zhu@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 147/301] drm/amd/display: Skip on writeback when its not applicable
-Date: Tue, 14 May 2024 12:16:58 +0200
-Message-ID: <20240514101037.806054946@linuxfoundation.org>
+Subject: [PATCH 6.6 148/301] drm/amdgpu: Fix VCN allocation in CPX partition
+Date: Tue, 14 May 2024 12:16:59 +0200
+Message-ID: <20240514101037.843810664@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -54,64 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit ecedd99a9369fb5cde601ae9abd58bca2739f1ae ]
+[ Upstream commit f7e232de51bb1b45646e5b7dc4ebcf13510f2630 ]
 
-[WHY]
-dynamic memory safety error detector (KASAN) catches and generates error
-messages "BUG: KASAN: slab-out-of-bounds" as writeback connector does not
-support certain features which are not initialized.
+VCN need not be shared in CPX mode always for all GFX 9.4.3 SOC SKUs. In
+certain configs, VCN instance can be exclusively allocated to a
+partition even under CPX mode.
 
-[HOW]
-Skip them when connector type is DRM_MODE_CONNECTOR_WRITEBACK.
-
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3199
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Acked-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: James Zhu <James.Zhu@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 3442e08f47876..98dd07e3726af 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2974,6 +2974,10 @@ static int dm_resume(void *handle)
- 	/* Do mst topology probing after resuming cached state*/
- 	drm_connector_list_iter_begin(ddev, &iter);
- 	drm_for_each_connector_iter(connector, &iter) {
-+
-+		if (connector->connector_type == DRM_MODE_CONNECTOR_WRITEBACK)
-+			continue;
-+
- 		aconnector = to_amdgpu_dm_connector(connector);
- 		if (aconnector->dc_link->type != dc_connection_mst_branch ||
- 		    aconnector->mst_root)
-@@ -5756,6 +5760,9 @@ get_highest_refresh_rate_mode(struct amdgpu_dm_connector *aconnector,
- 		&aconnector->base.probed_modes :
- 		&aconnector->base.modes;
+diff --git a/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c b/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
+index d0fc62784e821..0284c9198a04a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
++++ b/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
+@@ -61,6 +61,11 @@ void aqua_vanjaram_doorbell_index_init(struct amdgpu_device *adev)
+ 	adev->doorbell_index.max_assignment = AMDGPU_DOORBELL_LAYOUT1_MAX_ASSIGNMENT << 1;
+ }
  
-+	if (aconnector->base.connector_type == DRM_MODE_CONNECTOR_WRITEBACK)
-+		return NULL;
++static bool aqua_vanjaram_xcp_vcn_shared(struct amdgpu_device *adev)
++{
++	return (adev->xcp_mgr->num_xcps > adev->vcn.num_vcn_inst);
++}
 +
- 	if (aconnector->freesync_vid_base.clock != 0)
- 		return &aconnector->freesync_vid_base;
+ static void aqua_vanjaram_set_xcp_id(struct amdgpu_device *adev,
+ 			     uint32_t inst_idx, struct amdgpu_ring *ring)
+ {
+@@ -86,7 +91,7 @@ static void aqua_vanjaram_set_xcp_id(struct amdgpu_device *adev,
+ 	case AMDGPU_RING_TYPE_VCN_ENC:
+ 	case AMDGPU_RING_TYPE_VCN_JPEG:
+ 		ip_blk = AMDGPU_XCP_VCN;
+-		if (adev->xcp_mgr->mode == AMDGPU_CPX_PARTITION_MODE)
++		if (aqua_vanjaram_xcp_vcn_shared(adev))
+ 			inst_mask = 1 << (inst_idx * 2);
+ 		break;
+ 	default:
+@@ -139,10 +144,12 @@ static int aqua_vanjaram_xcp_sched_list_update(
  
-@@ -8445,6 +8452,9 @@ static void amdgpu_dm_commit_audio(struct drm_device *dev,
- 			continue;
+ 		aqua_vanjaram_xcp_gpu_sched_update(adev, ring, ring->xcp_id);
  
- notify:
-+		if (connector->connector_type == DRM_MODE_CONNECTOR_WRITEBACK)
-+			continue;
-+
- 		aconnector = to_amdgpu_dm_connector(connector);
+-		/* VCN is shared by two partitions under CPX MODE */
++		/* VCN may be shared by two partitions under CPX MODE in certain
++		 * configs.
++		 */
+ 		if ((ring->funcs->type == AMDGPU_RING_TYPE_VCN_ENC ||
+-			ring->funcs->type == AMDGPU_RING_TYPE_VCN_JPEG) &&
+-			adev->xcp_mgr->mode == AMDGPU_CPX_PARTITION_MODE)
++		     ring->funcs->type == AMDGPU_RING_TYPE_VCN_JPEG) &&
++		    aqua_vanjaram_xcp_vcn_shared(adev))
+ 			aqua_vanjaram_xcp_gpu_sched_update(adev, ring, ring->xcp_id + 1);
+ 	}
  
- 		mutex_lock(&adev->dm.audio_lock);
 -- 
 2.43.0
 
