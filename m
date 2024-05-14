@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4529D13C3CA;
-	Tue, 14 May 2024 11:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22147139D15;
+	Tue, 14 May 2024 11:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686347; cv=none; b=C2XhMzOthqDwUu/F6jeF5u61RbM+yZEHLo0u3i10dMGNCty4YsUxSBCUuApgoUnwjHYUMYIMJTM0V7Ah0XoDrVZHnK0IId6AY4/mCur08z6xDghGp3NLYvDn32q3Fb2N+M9xcu5OSneIOXReADwWmr839UPwLWRWQlzRseQwfJo=
+	t=1715686350; cv=none; b=kWEpnZo7ns7IEJCaZMriJyxRqzBDW3VcZ7JGBOI2/K0EWyTdW7SvIuZDXlTd/tlh/ISymkVBF72UXe0HHw9qtIAwbhORM3xs7SjWiBZ12dRsh+gB3G7KJ8tfCfNZXoiCD+01aHtz9t/ESN5lLfuDh/rGkSZh385adBLrdD2XK9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686347; c=relaxed/simple;
-	bh=lX3a6QUs8vuIundfGs39xASM30AmBRnyJtjWd1MzHdY=;
+	s=arc-20240116; t=1715686350; c=relaxed/simple;
+	bh=ik8q0WF6J3RkOBZGDfiv7KOcY/SF+znuPRqUP65OkE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QMyccrpkOVmmUaSW20EMzDaWfesy22OcG3qs/7l7cB8nnJckEHqtzVuSEES/DTdlsJ59KZHlNo8O5TXkU5QC0GXR+jQlIss00Uz2yOP2pF0GX1ft+cXs/tsVl1P6duCzYItrxcQ5vmYPemRdfYYEEwvNKBs+6lsARnxDoQJqI+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pS7N//Hu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HyQU8M8hSlqhNseqPBMl28FadHcyc/7CnB6UpHEJqK9+RWGj319zVW2MHumiJU7SZQy8CmjmqaQXOhXfYs+BWddtrd9iLVk5cWPTLonGF64Z56BuhxPigVneSXF3oQIhfmLApcuksuf8Rf2O51TI2jK1afiE5GVt2I215OEvP8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQcf8IMG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pS7N//Hu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00EAC2BD10;
-	Tue, 14 May 2024 11:32:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQcf8IMG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC4BC2BD10;
+	Tue, 14 May 2024 11:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686347;
-	bh=lX3a6QUs8vuIundfGs39xASM30AmBRnyJtjWd1MzHdY=;
+	s=korg; t=1715686350;
+	bh=ik8q0WF6J3RkOBZGDfiv7KOcY/SF+znuPRqUP65OkE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pS7N//HuRi2JW27s2vpwFwWxU2zVvcV5T2IxqYFmwcIzNvuNdpVy31C9Hx7sht8J8
-	 j/4J21mDAPiTf2zrR2Q3nZx+KVJ9jLyBljPWCUpZNsm//vkBmyCw1nt4nlH+3OzJQE
-	 /V3oXw96TtR1u22+TcAAiBxVOxpxQRPWkJhHQaFU=
+	b=bQcf8IMGuyjAXilETE1xNin9guD4vkk1RxWikNoQyOnzJEQ5EOsMVIBGtHqFlh+LJ
+	 l2QHWQqob+QKHr7vI1M9BMyA5emYk391uSF5kRtNSXJTOaUzfK2/o2KcUkGAXW3U21
+	 f4YNzVGNelkQqpj4s3f8a3i8cFEcUVDSS/mtRsvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+7fb05ccf7b3d2f9617b3@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/236] scsi: ufs: core: WLUN suspend dev/link state error recovery
-Date: Tue, 14 May 2024 12:17:48 +0200
-Message-ID: <20240514101024.394991825@linuxfoundation.org>
+Subject: [PATCH 6.1 107/236] ALSA: line6: Zero-initialize message buffers
+Date: Tue, 14 May 2024 12:17:49 +0200
+Message-ID: <20240514101024.434189054@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -52,42 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 6bc5e70b1c792b31b497e48b4668a9a2909aca0d ]
+[ Upstream commit c4e51e424e2c772ce1836912a8b0b87cd61bc9d5 ]
 
-When wl suspend error occurs, for example BKOP or SSU timeout, the host
-triggers an error handler and returns -EBUSY to break the wl suspend
-process.  However, it is possible for the runtime PM to enter wl suspend
-again before the error handler has finished, and return -EINVAL because the
-device is in an error state. To address this, ensure that the rumtime PM
-waits for the error handler to finish, or trigger the error handler in such
-cases, because returning -EINVAL can cause the I/O to hang.
+For shutting up spurious KMSAN uninit-value warnings, just replace
+kmalloc() calls with kzalloc() for the buffers used for
+communications.  There should be no real issue with the original code,
+but it's still better to cover.
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20240329015036.15707-1-peter.wang@mediatek.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: syzbot+7fb05ccf7b3d2f9617b3@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/00000000000084b18706150bcca5@google.com
+Message-ID: <20240402063628.26609-1-tiwai@suse.de>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/usb/line6/driver.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index f3c25467e571f..948449a13247c 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -9044,7 +9044,10 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+diff --git a/sound/usb/line6/driver.c b/sound/usb/line6/driver.c
+index b67617b68e509..f4437015d43a7 100644
+--- a/sound/usb/line6/driver.c
++++ b/sound/usb/line6/driver.c
+@@ -202,7 +202,7 @@ int line6_send_raw_message_async(struct usb_line6 *line6, const char *buffer,
+ 	struct urb *urb;
  
- 	/* UFS device & link must be active before we enter in this function */
- 	if (!ufshcd_is_ufs_dev_active(hba) || !ufshcd_is_link_active(hba)) {
--		ret = -EINVAL;
-+		/*  Wait err handler finish or trigger err recovery */
-+		if (!ufshcd_eh_in_progress(hba))
-+			ufshcd_force_error_recovery(hba);
-+		ret = -EBUSY;
- 		goto enable_scaling;
- 	}
+ 	/* create message: */
+-	msg = kmalloc(sizeof(struct message), GFP_ATOMIC);
++	msg = kzalloc(sizeof(struct message), GFP_ATOMIC);
+ 	if (msg == NULL)
+ 		return -ENOMEM;
+ 
+@@ -688,7 +688,7 @@ static int line6_init_cap_control(struct usb_line6 *line6)
+ 	int ret;
+ 
+ 	/* initialize USB buffers: */
+-	line6->buffer_listen = kmalloc(LINE6_BUFSIZE_LISTEN, GFP_KERNEL);
++	line6->buffer_listen = kzalloc(LINE6_BUFSIZE_LISTEN, GFP_KERNEL);
+ 	if (!line6->buffer_listen)
+ 		return -ENOMEM;
+ 
+@@ -697,7 +697,7 @@ static int line6_init_cap_control(struct usb_line6 *line6)
+ 		return -ENOMEM;
+ 
+ 	if (line6->properties->capabilities & LINE6_CAP_CONTROL_MIDI) {
+-		line6->buffer_message = kmalloc(LINE6_MIDI_MESSAGE_MAXLEN, GFP_KERNEL);
++		line6->buffer_message = kzalloc(LINE6_MIDI_MESSAGE_MAXLEN, GFP_KERNEL);
+ 		if (!line6->buffer_message)
+ 			return -ENOMEM;
  
 -- 
 2.43.0
