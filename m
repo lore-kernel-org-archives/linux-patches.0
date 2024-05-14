@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0380213A88A;
-	Tue, 14 May 2024 11:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A4333CC2;
+	Tue, 14 May 2024 11:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684774; cv=none; b=KRQCs3cBFNTs2KRTQeq1ZscmDDrtXXEuDhS1iBX3wiaKSiXS/Uhrq0olHpOQiyRnGaQ+wHx73Gofcrb/cbaLXQo1mmnqoeWPlMFRMZHLv8lskFnLkxg5LppVGr/FCbWsaRGSsYRO2Mjc+7Q56+iGSrdtpaah14KsIiAWQ+Pm7mI=
+	t=1715684782; cv=none; b=ayTPlY9HXrnULLR4Kzv/xw6qAdW9qqrAOPVBajv43G0syjswGGvs/Fi8YxUx5qaT1mAbfAjM0gvqqEUSjKIOow8dDKEqDH3C2pkzU4xumbYEfMca9+pTTKJdFonjUFPqbI3n/Q50utVODTSR2EccxWSqXMMcZBMfjFRGXJAVVWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684774; c=relaxed/simple;
-	bh=0/K4dnnB4NsqsfAeX84bkNhX5aZuK/8T2I2EAvJeFFs=;
+	s=arc-20240116; t=1715684782; c=relaxed/simple;
+	bh=5Gdq0exmeB3opSp9dVVlm/MiufVJ7BBXLXQ9LHAm7Q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u/BbNbQTigqRZIA+jOlQwTP9GQN+xoI6H+xtCXIte2AiYB5/cmU2EPZxjtOejrAtWIZ57Jfl6iPN7V1DV9puXPNUQ4o57cFOqImEeShIaokvRTVGndJyQ3HiMuUyzTJWmEij/sXWIKxuQIlyT+XBMIWaAVydwkUGFAc8MIzazIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/Xp4nEs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gvEudVkDbXcCpggTlayv+BNOpHUG0zS4dLAxOqoyKCOlpd9uf1L6oifgkbedECDnHWH6L5He25MOsYjt3JsOaWg0gcVlv4iZL6Pk9wFC1hqJVWUM4kWj4UcUNK/Y30KvjHGQW14dOw1GuuqrwB4VIvWxickNLnVADkHVni6s94I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=syPnntJr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/Xp4nEs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D26C2BD10;
-	Tue, 14 May 2024 11:06:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="syPnntJr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE65C2BD10;
+	Tue, 14 May 2024 11:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684773;
-	bh=0/K4dnnB4NsqsfAeX84bkNhX5aZuK/8T2I2EAvJeFFs=;
+	s=korg; t=1715684782;
+	bh=5Gdq0exmeB3opSp9dVVlm/MiufVJ7BBXLXQ9LHAm7Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/Xp4nEsNHhK4G1ogIqu1ipmlrpJ5Laxixf7JHc7CPgnr0PJuyPj3c3auwlSEANhr
-	 Nf02gbx5O4frDIIB09Bp9PzWDUFjRiHy+JKySuFaRM1VCAH539mwEqaTjmuWACCVc0
-	 ddKlXNPzBSPc42hfywIWDhD3Z3j+Me3hX03amISc=
+	b=syPnntJr+OocHx2Rf74j5SZz9LrirX8q8N6PgcJceuXQhJhNVeaRkl1BpI+evxPGf
+	 pAlbkSjvc9HCfn36M+Q0iFpv+SLyJ8k6fddx6euZi9OyeBA7aa+nbVvhLeCjNRpxJc
+	 6ORtoIOFaR1+sE/G/Ld9YmFzXBjOcZNbxnvzTu1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Richard Gobert <richardbgobert@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 061/301] net: qede: use return from qede_parse_flow_attr() for flow_spec
-Date: Tue, 14 May 2024 12:15:32 +0200
-Message-ID: <20240514101034.547361830@linuxfoundation.org>
+Subject: [PATCH 6.6 088/301] net: gro: add flush check in udp_gro_receive_segment
+Date: Tue, 14 May 2024 12:15:59 +0200
+Message-ID: <20240514101035.570327927@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -46,62 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+From: Richard Gobert <richardbgobert@gmail.com>
 
-[ Upstream commit 27b44414a34b108c5a37cd5b4894f606061d86e7 ]
+[ Upstream commit 5babae777c61aa8a8679d59d3cdc54165ad96d42 ]
 
-In qede_flow_spec_to_rule(), when calling
-qede_parse_flow_attr() then the return code
-was only used for a non-zero check, and then
--EINVAL was returned.
+GRO-GSO path is supposed to be transparent and as such L3 flush checks are
+relevant to all UDP flows merging in GRO. This patch uses the same logic
+and code from tcp_gro_receive, terminating merge if flush is non zero.
 
-qede_parse_flow_attr() can currently fail with:
-* -EINVAL
-* -EOPNOTSUPP
-* -EPROTONOSUPPORT
-
-This patch changes the code to use the actual
-return code, not just return -EINVAL.
-
-The blaimed commit introduced qede_flow_spec_to_rule(),
-and this call to qede_parse_flow_attr(), it looks
-like it just duplicated how it was already used.
-
-Only compile tested.
-
-Fixes: 37c5d3efd7f8 ("qede: use ethtool_rx_flow_rule() to remove duplicated parser code")
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e20cf8d3f1f7 ("udp: implement GRO for plain UDP sockets.")
+Signed-off-by: Richard Gobert <richardbgobert@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_filter.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/ipv4/udp_offload.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qede/qede_filter.c b/drivers/net/ethernet/qlogic/qede/qede_filter.c
-index 25ef0f4258cb1..377d661f70f78 100644
---- a/drivers/net/ethernet/qlogic/qede/qede_filter.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_filter.c
-@@ -2002,10 +2002,9 @@ static int qede_flow_spec_to_rule(struct qede_dev *edev,
- 	if (IS_ERR(flow))
- 		return PTR_ERR(flow);
+diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
+index 889d4926fc0c1..e5971890d637d 100644
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -471,6 +471,7 @@ static struct sk_buff *udp_gro_receive_segment(struct list_head *head,
+ 	struct sk_buff *p;
+ 	unsigned int ulen;
+ 	int ret = 0;
++	int flush;
  
--	if (qede_parse_flow_attr(edev, proto, flow->rule, t)) {
--		err = -EINVAL;
-+	err = qede_parse_flow_attr(edev, proto, flow->rule, t);
-+	if (err)
- 		goto err_out;
--	}
+ 	/* requires non zero csum, for symmetry with GSO */
+ 	if (!uh->check) {
+@@ -504,13 +505,22 @@ static struct sk_buff *udp_gro_receive_segment(struct list_head *head,
+ 			return p;
+ 		}
  
- 	/* Make sure location is valid and filter isn't already set */
- 	err = qede_flow_spec_validate(edev, &flow->rule->action, t,
++		flush = NAPI_GRO_CB(p)->flush;
++
++		if (NAPI_GRO_CB(p)->flush_id != 1 ||
++		    NAPI_GRO_CB(p)->count != 1 ||
++		    !NAPI_GRO_CB(p)->is_atomic)
++			flush |= NAPI_GRO_CB(p)->flush_id;
++		else
++			NAPI_GRO_CB(p)->is_atomic = false;
++
+ 		/* Terminate the flow on len mismatch or if it grow "too much".
+ 		 * Under small packet flood GRO count could elsewhere grow a lot
+ 		 * leading to excessive truesize values.
+ 		 * On len mismatch merge the first packet shorter than gso_size,
+ 		 * otherwise complete the GRO packet.
+ 		 */
+-		if (ulen > ntohs(uh2->len)) {
++		if (ulen > ntohs(uh2->len) || flush) {
+ 			pp = p;
+ 		} else {
+ 			if (NAPI_GRO_CB(skb)->is_flist) {
 -- 
 2.43.0
 
