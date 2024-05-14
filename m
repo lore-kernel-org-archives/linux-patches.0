@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C753E2B9AD;
-	Tue, 14 May 2024 11:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D926EB4E;
+	Tue, 14 May 2024 11:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685093; cv=none; b=eMnfwoX5XniYJqKRz1UA6ZQU9p4j6aY49EE25kGI0WHaCTXxycjl2uRXIZt0SbCH0JC/+VqbUP4ibQfBRtpau2pOFTMJQlGGSwcdlAdKe40qw93AzEZIKgUK4BaCtOdZw4cFem2Gm7Mccd6fVRJBKjfUSxgwiF+u10H/yG1Yf50=
+	t=1715685098; cv=none; b=ZMEPES/KUTkWBzVdc0TMJM3gUfrcLQOa2iA3jW6w3X/mC11nj/eC6ZDeyD7bPMhTYO0Mmt74x1KbLTofQRF1dbq/PHlWguUhPyFQi6StgfKuDaUu3dQFXvmyB+lAmPx4XZUInyAVrjvyoRJm2MP4QK8JR6SyKzaa7DU1WK96WF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685093; c=relaxed/simple;
-	bh=3NLYim+geHzSzUmGSSRxt2UTsa56VaqQFUUGayVQfUY=;
+	s=arc-20240116; t=1715685098; c=relaxed/simple;
+	bh=kmzKppDw83iLOABxIaeiYWuCjjC9Tex4uaJkHdzC99E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0uGC+S6XjFwjoCD3kyJTBbNBm9BeCNRp4l976hQkiisk1ySpyBtpIRdkL9DWtqxEgUHzakk81nXmg1NbcWAdrVtwsxwstb/8EcvNImILV+csjFgHvIX1VdvbTmObumJ7/Ly4q2c9b0hq7HKYuUCDIf9MRiRmmypVd3UQ18KOVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDo70wEi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ysj6t+FUrto1YwTdJ/dBaLe2ZqmUpFjSVpKfW0BP6ztju+EcLb0bhO5W575BX5y7xx5Nz7tGgzvwdvXBJfZO8D2Cpr2S2UxNcbvS5OxI4Vnc9Is6kPXVvKmYP74NInwWCBsiJhM3oEjmdgoyweewdAgSzFMHkrUrwbQQ7HQqbJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrzmuU37; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDo70wEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57EE2C4AF09;
-	Tue, 14 May 2024 11:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrzmuU37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44680C32781;
+	Tue, 14 May 2024 11:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685093;
-	bh=3NLYim+geHzSzUmGSSRxt2UTsa56VaqQFUUGayVQfUY=;
+	s=korg; t=1715685097;
+	bh=kmzKppDw83iLOABxIaeiYWuCjjC9Tex4uaJkHdzC99E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lDo70wEimYUvL4+j95Gj37VbF3M31qp52s+dyM3VQvdRjRqLd8bCJnP9tPxTpK5gE
-	 /P9o1TiUhdaFbDj/VmFqkdu3ZM2AaZ4U7USu3sg4UclHpb0cUOtWhItAgWZRoO5UXI
-	 ttu59WJIfTAghUC7n9Sqd+PZZjRIt7s4Qy39RcC0=
+	b=zrzmuU37P+Fg7rdJTp9JYY4jMq5GIBNJrnfSg9XGvQz5QCzgApMqte4kOl/8DzD37
+	 EPaOVG4MRAWxAx/mZ8u3PfRNe3F5Vj7je+UUYatP53UirMM/pHPdwkNLIAhQx5s7Y1
+	 MwHz5NT8W3uEqJqk6HfYO6MroLTmx0QoAXVzCFlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wei Yang <richard.weiyang@gmail.com>,
-	Yajun Deng <yajun.deng@linux.dev>,
+	Song Shuai <songshuaishuai@tinylab.org>,
 	Mike Rapoport <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 136/301] memblock tests: fix undefined reference to `early_pfn_to_nid
-Date: Tue, 14 May 2024 12:16:47 +0200
-Message-ID: <20240514101037.390258520@linuxfoundation.org>
+Subject: [PATCH 6.6 137/301] memblock tests: fix undefined reference to `panic
+Date: Tue, 14 May 2024 12:16:48 +0200
+Message-ID: <20240514101037.427415471@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -54,39 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Yang <richard.weiyang@gmail.com>
 
-[ Upstream commit 7d8ed162e6a92268d4b2b84d364a931216102c8e ]
+[ Upstream commit e0f5a8e74be88f2476e58b25d3b49a9521bdc4ec ]
 
-commit 6a9531c3a880 ("memblock: fix crash when reserved memory is not
-added to memory") introduce the usage of early_pfn_to_nid, which is not
-defined in memblock tests.
+commit e96c6b8f212a ("memblock: report failures when memblock_can_resize
+is not set") introduced the usage of panic, which is not defined in
+memblock test.
 
-The original definition of early_pfn_to_nid is defined in mm.h, so let
-add this in the corresponding mm.h.
+Let's define it directly in panic.h to fix it.
 
 Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
-CC: Yajun Deng <yajun.deng@linux.dev>
+CC: Song Shuai <songshuaishuai@tinylab.org>
 CC: Mike Rapoport <rppt@kernel.org>
-Link: https://lore.kernel.org/r/20240402132701.29744-2-richard.weiyang@gmail.com
+Link: https://lore.kernel.org/r/20240402132701.29744-3-richard.weiyang@gmail.com
 Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/linux/mm.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/include/linux/kernel.h |  1 +
+ tools/include/linux/panic.h  | 19 +++++++++++++++++++
+ 2 files changed, 20 insertions(+)
+ create mode 100644 tools/include/linux/panic.h
 
-diff --git a/tools/include/linux/mm.h b/tools/include/linux/mm.h
-index f3c82ab5b14cd..7d73da0980473 100644
---- a/tools/include/linux/mm.h
-+++ b/tools/include/linux/mm.h
-@@ -37,4 +37,9 @@ static inline void totalram_pages_add(long count)
- {
- }
+diff --git a/tools/include/linux/kernel.h b/tools/include/linux/kernel.h
+index 4b0673bf52c2e..07cfad817d539 100644
+--- a/tools/include/linux/kernel.h
++++ b/tools/include/linux/kernel.h
+@@ -8,6 +8,7 @@
+ #include <linux/build_bug.h>
+ #include <linux/compiler.h>
+ #include <linux/math.h>
++#include <linux/panic.h>
+ #include <endian.h>
+ #include <byteswap.h>
  
-+static inline int early_pfn_to_nid(unsigned long pfn)
+diff --git a/tools/include/linux/panic.h b/tools/include/linux/panic.h
+new file mode 100644
+index 0000000000000..9c8f17a41ce8e
+--- /dev/null
++++ b/tools/include/linux/panic.h
+@@ -0,0 +1,19 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _TOOLS_LINUX_PANIC_H
++#define _TOOLS_LINUX_PANIC_H
++
++#include <stdarg.h>
++#include <stdio.h>
++#include <stdlib.h>
++
++static inline void panic(const char *fmt, ...)
 +{
-+	return 0;
++	va_list argp;
++
++	va_start(argp, fmt);
++	vfprintf(stderr, fmt, argp);
++	va_end(argp);
++	exit(-1);
 +}
 +
- #endif
++#endif
 -- 
 2.43.0
 
