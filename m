@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B98266B5E;
-	Tue, 14 May 2024 11:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB45766B5E;
+	Tue, 14 May 2024 11:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687403; cv=none; b=ltFh12k2S51IE1vxFkymccWIGECJz1Pj2SC9EU0ggix5/YGaT+8K0hWuBbJAOmiSwLztNmJOvcsQyF4csjZLxgNGo1qG6oGkT5JQ70SMB1bI2gLtMtpKuXsetaDHucPQy0Y1VFCY4nEHof7mmovV8RClGnikT4XFE1DDQiqdLXE=
+	t=1715687406; cv=none; b=Ek6b2f4EP8Nl07W9KKqV43iYPc1gs2iH/dr0x5bjFoBllPa7hi/4xe+RGv+fnVNSua+Bmj7KDU/3acpSJ62JgMv0sCzLorYzFlr3egep4kJlrue9fJiB2rqOTgQV0YDOfQyz498RnUI3X+NXTyMAQ59fZmNxbsZNvwwS61VkuHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687403; c=relaxed/simple;
-	bh=4NiFA5iYhx917NnDre4gTckDvFML6mlt6uE+zRO97mo=;
+	s=arc-20240116; t=1715687406; c=relaxed/simple;
+	bh=OFYqIHXnZFPSfPkiupzXQTAyIYHJBkbIZajHE42CIJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sB4dYkLsVgUqsd5kCDpQnEOz+7R/wVI/gwU2WyTfWdB4wizGbJP2CYZz9ozEDGdLvFHYRpF0aUuNdBjgNFTrieck3EDpoLGjLcpTfo85vlVM2erVzDMmMxdOBeex09uN4Onbl5VMxqwaIaSH88Ugf5QwG2j6aypOwPUB63E6jlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4o9GLfg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NxHxLOTi9ITJXTrIteLQ8bxN2zGjN8qew+BUtO+Ih9at/sGW0pFf2+RG86qninokyUblSIHYq7YrakvxEgmuiKCtOwfQrbYfgqLtjV/jWNl+2pjscdHB9ulVsv1BtPIr2LEmzD8jsgHgiAYaL54hrwm7ANt6RwvdB9cKcI2T874=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XGGBIq75; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4o9GLfg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25258C2BD10;
-	Tue, 14 May 2024 11:50:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGGBIq75"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D803C2BD10;
+	Tue, 14 May 2024 11:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687403;
-	bh=4NiFA5iYhx917NnDre4gTckDvFML6mlt6uE+zRO97mo=;
+	s=korg; t=1715687406;
+	bh=OFYqIHXnZFPSfPkiupzXQTAyIYHJBkbIZajHE42CIJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L4o9GLfgQyq3lGWOpZA+svzHrr9VAiFiLL3p/loYTVcpV+d9mnEADKzJ9iVbyFEZh
-	 0EXYxdCV2nniDzM8Xeo7caTvd6A+Iy87vVS2dBBOcATLEmNLBvSVrTwcsxLXQsWrJ4
-	 z0hyOMswlGO84neACGto9qLCc2zDrkYIGERdZ0BE=
+	b=XGGBIq75FUee4Bc3/ZszE0ntGvHrv6EvydXjSc/cRefyLPELsF8R1jq2Qe4BObhRo
+	 H/TSmkPal68iK0g7KD6f/01Ogwqg7YNKxKXs0atAGTWCVRl0NwqE/Ij/AB1wp0GS4y
+	 lhzEyZwymziPS7avaiiRRKnxGJgdDuk89ki5+9Io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	Eric Dumazet <edumazet@google.com>,
+	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <courmisch@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 057/111] btrfs: make btrfs_clear_delalloc_extent() free delalloc reserve
-Date: Tue, 14 May 2024 12:19:55 +0200
-Message-ID: <20240514100959.300482845@linuxfoundation.org>
+Subject: [PATCH 5.10 084/111] phonet: fix rtm_phonet_notify() skb allocation
+Date: Tue, 14 May 2024 12:20:22 +0200
+Message-ID: <20240514101000.323977372@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -46,45 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3c6f0c5ecc8910d4ffb0dfe85609ebc0c91c8f34 ]
+[ Upstream commit d8cac8568618dcb8a51af3db1103e8d4cc4aeea7 ]
 
-Currently, this call site in btrfs_clear_delalloc_extent() only converts
-the reservation. We are marking it not delalloc, so I don't think it
-makes sense to keep the rsv around.  This is a path where we are not
-sure to join a transaction, so it leads to incorrect free-ing during
-umount.
+fill_route() stores three components in the skb:
 
-Helps with the pass rate of generic/269 and generic/475.
+- struct rtmsg
+- RTA_DST (u8)
+- RTA_OIF (u32)
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Therefore, rtm_phonet_notify() should use
+
+NLMSG_ALIGN(sizeof(struct rtmsg)) +
+nla_total_size(1) +
+nla_total_size(4)
+
+Fixes: f062f41d0657 ("Phonet: routing table Netlink interface")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Rémi Denis-Courmont <courmisch@gmail.com>
+Link: https://lore.kernel.org/r/20240502161700.1804476-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 2 +-
+ net/phonet/pn_netlink.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 591caac2bf814..1f99d7dced17a 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -2070,7 +2070,7 @@ void btrfs_clear_delalloc_extent(struct inode *vfs_inode,
- 		 */
- 		if (*bits & EXTENT_CLEAR_META_RESV &&
- 		    root != fs_info->tree_root)
--			btrfs_delalloc_release_metadata(inode, len, false);
-+			btrfs_delalloc_release_metadata(inode, len, true);
+diff --git a/net/phonet/pn_netlink.c b/net/phonet/pn_netlink.c
+index 59aebe2968907..dd4c7e9a634fb 100644
+--- a/net/phonet/pn_netlink.c
++++ b/net/phonet/pn_netlink.c
+@@ -193,7 +193,7 @@ void rtm_phonet_notify(int event, struct net_device *dev, u8 dst)
+ 	struct sk_buff *skb;
+ 	int err = -ENOBUFS;
  
- 		/* For sanity tests. */
- 		if (btrfs_is_testing(fs_info))
+-	skb = nlmsg_new(NLMSG_ALIGN(sizeof(struct ifaddrmsg)) +
++	skb = nlmsg_new(NLMSG_ALIGN(sizeof(struct rtmsg)) +
+ 			nla_total_size(1) + nla_total_size(4), GFP_KERNEL);
+ 	if (skb == NULL)
+ 		goto errout;
 -- 
 2.43.0
 
