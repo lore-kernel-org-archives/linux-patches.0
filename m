@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078AD54BFE;
-	Tue, 14 May 2024 11:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF4654BFE;
+	Tue, 14 May 2024 11:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685378; cv=none; b=WnQQNw2zSeGbxNMBwXAgf342jg7OqRsrTCCw7FMW3wXEccrurHNjaUYK+GkYE0fC12sF2eZCnb+peJYPS33q4sc0q8sffB6ZyyO8XMykplAaZcwqjDw9Dwdy8hm7sI3cWscANQ2kUivLOUIpiVy+Pjr872XPAcjXpeFo0HEuFDw=
+	t=1715685383; cv=none; b=Md9eiXp9jKYK2sLgP9969qhvUZLg2rlJjGBrhjXNnUhsO/sqZFCg7TeAjXiKdaMZtNcK/9qvqbJkTcUAv9Ta9qYKyANMW9dVqqC4L984iV318ie75FtwAnr2qcP0nT5evTpvycXwxXGMEXS3lXBHm+xZqMGxetyxfOIqtZGaxqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685378; c=relaxed/simple;
-	bh=uB1TLk71LvTfhJap37/V1FK00CSHdzNM4Cm0aQ4ty7E=;
+	s=arc-20240116; t=1715685383; c=relaxed/simple;
+	bh=F3aTIZGQiwdxDX7sWyLR2X806P7vNYAdUdeI4cEN4YQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KTWDIRsqCvPUzt20xVv/0Xso4f00mosaHBbnIDbqeTnW87EK7bNYdfwBWQIb58txttOIVc/JqyHDX1K9vdjyr8G/nMELWITdsXDUuiBLri736vVneALKUHIrDAZBv4o6RQOtGLSAkhnY7Y1jVSRHXIClnXrBlj+wlnG422mZniU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Co2NfRY5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=n1Q6up8loIap7YbgrcGbEmlAnv4OxKMC+9mPFuBs+u7IYBXHfHWd5C+ktEWMIHlnk74f8Zg64+Q7sLUSWBnayfmsY+dJ1v1jTqu5xeT0QTXH4lNpR1oh0wWRIioHdsQEZoxYegU6O/VRR1I3AYJwajgLnVDokRQdOozLF2g2cCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxd0tmQz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Co2NfRY5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D73C2BD10;
-	Tue, 14 May 2024 11:16:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxd0tmQz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05EE8C2BD10;
+	Tue, 14 May 2024 11:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685377;
-	bh=uB1TLk71LvTfhJap37/V1FK00CSHdzNM4Cm0aQ4ty7E=;
+	s=korg; t=1715685383;
+	bh=F3aTIZGQiwdxDX7sWyLR2X806P7vNYAdUdeI4cEN4YQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Co2NfRY5hMi+8xxBkobYGOFhYNN0jS4HukE1pJ8XfgaPnR4QJ6kd/CDSgISD0GxNV
-	 19b9h3o1p6PgGrSshUAL6/8sZtDIx7e/aHfDNAOKiqebguBVBzjaeNZpsLd8H7EK9U
-	 fyPNYtgFicLVMELkX6eAwpxJR1ZejulFdp0Ll6sQ=
+	b=hxd0tmQz5od93ePvc+2KHoC2yMERsdNfcE9WNPpu4ubYdKH1QAXjLTvL5j1/pz473
+	 O6H35b/cb14Va3NN/3ATFBA6u9RLV9DP44/gOmWN1K2cy32kx69EPde1zu+38I9Pi1
+	 7+W0O8glNzKvYlY4JW9QPhKXbfms5o+W9V12VRPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 179/301] Bluetooth: Fix use-after-free bugs caused by sco_sock_timeout
-Date: Tue, 14 May 2024 12:17:30 +0200
-Message-ID: <20240514101039.015390460@linuxfoundation.org>
+Subject: [PATCH 6.6 162/301] powerpc/crypto/chacha-p10: Fix failure on non Power10
+Date: Tue, 14 May 2024 12:17:13 +0200
+Message-ID: <20240514101038.373772040@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -45,149 +46,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 483bc08181827fc475643272ffb69c533007e546 ]
+[ Upstream commit 69630926011c1f7170a465b7b5c228deb66e9372 ]
 
-When the sco connection is established and then, the sco socket
-is releasing, timeout_work will be scheduled to judge whether
-the sco disconnection is timeout. The sock will be deallocated
-later, but it is dereferenced again in sco_sock_timeout. As a
-result, the use-after-free bugs will happen. The root cause is
-shown below:
+The chacha-p10-crypto module provides optimised chacha routines for
+Power10. It also selects CRYPTO_ARCH_HAVE_LIB_CHACHA which says it
+provides chacha_crypt_arch() to generic code.
 
-    Cleanup Thread               |      Worker Thread
-sco_sock_release                 |
-  sco_sock_close                 |
-    __sco_sock_close             |
-      sco_sock_set_timer         |
-        schedule_delayed_work    |
-  sco_sock_kill                  |    (wait a time)
-    sock_put(sk) //FREE          |  sco_sock_timeout
-                                 |    sock_hold(sk) //USE
+Notably the module needs to provide chacha_crypt_arch() regardless of
+whether it is loaded on Power10 or an older CPU.
 
-The KASAN report triggered by POC is shown below:
+The implementation of chacha_crypt_arch() already has a fallback to
+chacha_crypt_generic(), however the module as a whole fails to load on
+pre-Power10, because of the use of module_cpu_feature_match().
 
-[   95.890016] ==================================================================
-[   95.890496] BUG: KASAN: slab-use-after-free in sco_sock_timeout+0x5e/0x1c0
-[   95.890755] Write of size 4 at addr ffff88800c388080 by task kworker/0:0/7
-...
-[   95.890755] Workqueue: events sco_sock_timeout
-[   95.890755] Call Trace:
-[   95.890755]  <TASK>
-[   95.890755]  dump_stack_lvl+0x45/0x110
-[   95.890755]  print_address_description+0x78/0x390
-[   95.890755]  print_report+0x11b/0x250
-[   95.890755]  ? __virt_addr_valid+0xbe/0xf0
-[   95.890755]  ? sco_sock_timeout+0x5e/0x1c0
-[   95.890755]  kasan_report+0x139/0x170
-[   95.890755]  ? update_load_avg+0xe5/0x9f0
-[   95.890755]  ? sco_sock_timeout+0x5e/0x1c0
-[   95.890755]  kasan_check_range+0x2c3/0x2e0
-[   95.890755]  sco_sock_timeout+0x5e/0x1c0
-[   95.890755]  process_one_work+0x561/0xc50
-[   95.890755]  worker_thread+0xab2/0x13c0
-[   95.890755]  ? pr_cont_work+0x490/0x490
-[   95.890755]  kthread+0x279/0x300
-[   95.890755]  ? pr_cont_work+0x490/0x490
-[   95.890755]  ? kthread_blkcg+0xa0/0xa0
-[   95.890755]  ret_from_fork+0x34/0x60
-[   95.890755]  ? kthread_blkcg+0xa0/0xa0
-[   95.890755]  ret_from_fork_asm+0x11/0x20
-[   95.890755]  </TASK>
-[   95.890755]
-[   95.890755] Allocated by task 506:
-[   95.890755]  kasan_save_track+0x3f/0x70
-[   95.890755]  __kasan_kmalloc+0x86/0x90
-[   95.890755]  __kmalloc+0x17f/0x360
-[   95.890755]  sk_prot_alloc+0xe1/0x1a0
-[   95.890755]  sk_alloc+0x31/0x4e0
-[   95.890755]  bt_sock_alloc+0x2b/0x2a0
-[   95.890755]  sco_sock_create+0xad/0x320
-[   95.890755]  bt_sock_create+0x145/0x320
-[   95.890755]  __sock_create+0x2e1/0x650
-[   95.890755]  __sys_socket+0xd0/0x280
-[   95.890755]  __x64_sys_socket+0x75/0x80
-[   95.890755]  do_syscall_64+0xc4/0x1b0
-[   95.890755]  entry_SYSCALL_64_after_hwframe+0x67/0x6f
-[   95.890755]
-[   95.890755] Freed by task 506:
-[   95.890755]  kasan_save_track+0x3f/0x70
-[   95.890755]  kasan_save_free_info+0x40/0x50
-[   95.890755]  poison_slab_object+0x118/0x180
-[   95.890755]  __kasan_slab_free+0x12/0x30
-[   95.890755]  kfree+0xb2/0x240
-[   95.890755]  __sk_destruct+0x317/0x410
-[   95.890755]  sco_sock_release+0x232/0x280
-[   95.890755]  sock_close+0xb2/0x210
-[   95.890755]  __fput+0x37f/0x770
-[   95.890755]  task_work_run+0x1ae/0x210
-[   95.890755]  get_signal+0xe17/0xf70
-[   95.890755]  arch_do_signal_or_restart+0x3f/0x520
-[   95.890755]  syscall_exit_to_user_mode+0x55/0x120
-[   95.890755]  do_syscall_64+0xd1/0x1b0
-[   95.890755]  entry_SYSCALL_64_after_hwframe+0x67/0x6f
-[   95.890755]
-[   95.890755] The buggy address belongs to the object at ffff88800c388000
-[   95.890755]  which belongs to the cache kmalloc-1k of size 1024
-[   95.890755] The buggy address is located 128 bytes inside of
-[   95.890755]  freed 1024-byte region [ffff88800c388000, ffff88800c388400)
-[   95.890755]
-[   95.890755] The buggy address belongs to the physical page:
-[   95.890755] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88800c38a800 pfn:0xc388
-[   95.890755] head: order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-[   95.890755] anon flags: 0x100000000000840(slab|head|node=0|zone=1)
-[   95.890755] page_type: 0xffffffff()
-[   95.890755] raw: 0100000000000840 ffff888006842dc0 0000000000000000 0000000000000001
-[   95.890755] raw: ffff88800c38a800 000000000010000a 00000001ffffffff 0000000000000000
-[   95.890755] head: 0100000000000840 ffff888006842dc0 0000000000000000 0000000000000001
-[   95.890755] head: ffff88800c38a800 000000000010000a 00000001ffffffff 0000000000000000
-[   95.890755] head: 0100000000000003 ffffea000030e201 ffffea000030e248 00000000ffffffff
-[   95.890755] head: 0000000800000000 0000000000000000 00000000ffffffff 0000000000000000
-[   95.890755] page dumped because: kasan: bad access detected
-[   95.890755]
-[   95.890755] Memory state around the buggy address:
-[   95.890755]  ffff88800c387f80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[   95.890755]  ffff88800c388000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   95.890755] >ffff88800c388080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   95.890755]                    ^
-[   95.890755]  ffff88800c388100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   95.890755]  ffff88800c388180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   95.890755] ==================================================================
+This breaks for example loading wireguard:
 
-Fix this problem by adding a check protected by sco_conn_lock to judget
-whether the conn->hcon is null. Because the conn->hcon will be set to null,
-when the sock is releasing.
+  jostaberry-1:~ # modprobe -v wireguard
+  insmod /lib/modules/6.8.0-lp155.8.g7e0e887-default/kernel/arch/powerpc/crypto/chacha-p10-crypto.ko.zst
+  modprobe: ERROR: could not insert 'wireguard': No such device
 
-Fixes: ba316be1b6a0 ("Bluetooth: schedule SCO timeouts with delayed_work")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fix it by removing module_cpu_feature_match(), and instead check the
+CPU feature manually. If the CPU feature is not found, the module
+still loads successfully, but doesn't register the Power10 specific
+algorithms. That allows chacha_crypt_generic() to remain available for
+use, fixing the problem.
+
+  [root@fedora ~]# modprobe -v wireguard
+  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/net/ipv4/udp_tunnel.ko
+  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/net/ipv6/ip6_udp_tunnel.ko
+  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/lib/crypto/libchacha.ko
+  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/arch/powerpc/crypto/chacha-p10-crypto.ko
+  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/lib/crypto/libchacha20poly1305.ko
+  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/drivers/net/wireguard/wireguard.ko
+  [   18.910452][  T721] wireguard: allowedips self-tests: pass
+  [   18.914999][  T721] wireguard: nonce counter self-tests: pass
+  [   19.029066][  T721] wireguard: ratelimiter self-tests: pass
+  [   19.029257][  T721] wireguard: WireGuard 1.0.0 loaded. See www.wireguard.com for information.
+  [   19.029361][  T721] wireguard: Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
+
+Reported-by: Michal Suchánek <msuchanek@suse.de>
+Closes: https://lore.kernel.org/all/20240315122005.GG20665@kitsune.suse.cz/
+Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240328130200.3041687-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/sco.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/powerpc/crypto/chacha-p10-glue.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index 3cc9fab8e8384..ede7391f3aa98 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -83,6 +83,10 @@ static void sco_sock_timeout(struct work_struct *work)
- 	struct sock *sk;
+diff --git a/arch/powerpc/crypto/chacha-p10-glue.c b/arch/powerpc/crypto/chacha-p10-glue.c
+index 74fb86b0d2097..7c728755852e1 100644
+--- a/arch/powerpc/crypto/chacha-p10-glue.c
++++ b/arch/powerpc/crypto/chacha-p10-glue.c
+@@ -197,6 +197,9 @@ static struct skcipher_alg algs[] = {
  
- 	sco_conn_lock(conn);
-+	if (!conn->hcon) {
-+		sco_conn_unlock(conn);
+ static int __init chacha_p10_init(void)
+ {
++	if (!cpu_has_feature(CPU_FTR_ARCH_31))
++		return 0;
++
+ 	static_branch_enable(&have_p10);
+ 
+ 	return crypto_register_skciphers(algs, ARRAY_SIZE(algs));
+@@ -204,10 +207,13 @@ static int __init chacha_p10_init(void)
+ 
+ static void __exit chacha_p10_exit(void)
+ {
++	if (!static_branch_likely(&have_p10))
 +		return;
-+	}
- 	sk = conn->sk;
- 	if (sk)
- 		sock_hold(sk);
++
+ 	crypto_unregister_skciphers(algs, ARRAY_SIZE(algs));
+ }
+ 
+-module_cpu_feature_match(PPC_MODULE_FEATURE_P10, chacha_p10_init);
++module_init(chacha_p10_init);
+ module_exit(chacha_p10_exit);
+ 
+ MODULE_DESCRIPTION("ChaCha and XChaCha stream ciphers (P10 accelerated)");
 -- 
 2.43.0
 
