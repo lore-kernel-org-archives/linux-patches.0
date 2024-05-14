@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5032ED531;
-	Tue, 14 May 2024 10:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CAFD12FB12;
+	Tue, 14 May 2024 10:57:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684219; cv=none; b=U8rHwUUXJskp5xVgELkfWPQLg9MhQ0P1p9SKwqEYCj8VaP6MPBSxXDdw6FpmomZoWyEP3hkbvVt6KfBqlkxeJZvbSHiE0RJHSMowrflWX7mAdm2ivRbgqgbwrCbY6Sp7h5EivanObjakXNXdC1sE7HJx+f3cAMvnnWG2hRFkgnw=
+	t=1715684223; cv=none; b=NP/mpYQjRgxoPxctUzYsSm37rvoqgjowzczgr31N2NWY+1DuQQ4GKzc8qXekfVzA26EQkAyT7AxqPb+7yiGfhy8u5gFhXTow4PHhAlR1buJf38bV/+f2AlhUrrQKDAnkVhRSb1GEplSaBj66UCOLzywl1FQwxu5XdBHeYwdl/xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684219; c=relaxed/simple;
-	bh=CU+ujsvZGOxKMup0M6CkuXXNMFnbtflcsH789eE7ySA=;
+	s=arc-20240116; t=1715684223; c=relaxed/simple;
+	bh=v0hT5kLsmmtM1LnIN9vVCh9r5+7NCos8OkiD6uBqVps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nhvw/iErAJH00krYQwc6fMXGN7qb6LBW85g5Y2/thn1h0WW6am0b8If7OfxuUcR004gDiLuemcRpa3w4Z04ybIgP8Fv9X9sfJArNRkPwwIaNcLQnnCwZk6wKNR3TkhHjas4olFEcGz8ozCTfMbHNGVbIvvqtAFv3xyvJjRZzDXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FU7lSZv6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SZgC7Fk3LU9rtgOYx1UoLXvhnAVCfNtVieulo0az5U+V5u6+E4vegel+6u39HjXZ10J3T/Huhmpr7yFgT6wy5yY0y5lJyPD0/PkSEM8BzqK+Pzgsn7WKeKO3uVK3UZIKJj6AwXgwMtnrjRXY9lJqr07VVZHwVQVNh2X7ixI8048=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q6xkJ148; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FU7lSZv6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F29C2BD10;
-	Tue, 14 May 2024 10:56:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q6xkJ148"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB2DFC2BD10;
+	Tue, 14 May 2024 10:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684218;
-	bh=CU+ujsvZGOxKMup0M6CkuXXNMFnbtflcsH789eE7ySA=;
+	s=korg; t=1715684223;
+	bh=v0hT5kLsmmtM1LnIN9vVCh9r5+7NCos8OkiD6uBqVps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FU7lSZv6DrPzG0uSscarswWezUjn8llNnY6m8kni6YtIZ43vSB6ipHuIOjPpiVnyi
-	 rvpe/UEdUli4/JLbpy7FVpBUb4MALiOJ5sd9kS2aH47v4Ep4Aop64gPejzrkTjDEbG
-	 pqld4/iE1Ch3jKqN693N/EQ1D004Wofi21SThsT0=
+	b=q6xkJ148VoEaYfHSZ6FE3RX6GK5L7uz6gL7iNVYExqMHa4JoaOAvbnxW7IOwMohNr
+	 s55LLopT/vSZ5LEvs1NkOPcDWhnoThBKowt4PWcLypZhdlEjbU3wk4V/JEHOATVxiA
+	 48YMTcucTFMTcjTeOTuy4o/sars3Pmxk+jtV5VzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.8 320/336] regulator: core: fix debugfs creation regression
-Date: Tue, 14 May 2024 12:18:44 +0200
-Message-ID: <20240514101050.703839524@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>
+Subject: [PATCH 6.8 311/336] misc/pvpanic-pci: register attributes via pci_driver
+Date: Tue, 14 May 2024 12:18:35 +0200
+Message-ID: <20240514101050.359236673@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -45,82 +43,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-commit 2a4b49bb58123bad6ec0e07b02845f74c23d5e04 upstream.
+commit ee59be35d7a8be7fcaa2d61fb89734ab5c25e4ee upstream.
 
-regulator_get() may sometimes be called more than once for the same
-consumer device, something which before commit dbe954d8f163 ("regulator:
-core: Avoid debugfs: Directory ...  already present! error") resulted in
-errors being logged.
+In __pci_register_driver(), the pci core overwrites the dev_groups field of
+the embedded struct device_driver with the dev_groups from the outer
+struct pci_driver unconditionally.
 
-A couple of recent commits broke the handling of such cases so that
-attributes are now erroneously created in the debugfs root directory the
-second time a regulator is requested and the log is filled with errors
-like:
+Set dev_groups in the pci_driver to make sure it is used.
 
-	debugfs: File 'uA_load' in directory '/' already present!
-	debugfs: File 'min_uV' in directory '/' already present!
-	debugfs: File 'max_uV' in directory '/' already present!
-	debugfs: File 'constraint_flags' in directory '/' already present!
+This was broken since the introduction of pvpanic-pci.
 
-on any further calls.
-
-Fixes: 2715bb11cfff ("regulator: core: Fix more error checking for debugfs_create_dir()")
-Fixes: 08880713ceec ("regulator: core: Streamline debugfs operations")
+Fixes: db3a4f0abefd ("misc/pvpanic: add PCI driver")
 Cc: stable@vger.kernel.org
-Cc: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240509133304.8883-1-johan+linaro@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Fixes: ded13b9cfd59 ("PCI: Add support for dev_groups to struct pci_driver")
+Link: https://lore.kernel.org/r/20240411-pvpanic-pci-dev-groups-v1-1-db8cb69f1b09@weissschuh.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/core.c |   27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ drivers/misc/pvpanic/pvpanic-pci.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1911,19 +1911,24 @@ static struct regulator *create_regulato
- 		}
- 	}
- 
--	if (err != -EEXIST)
-+	if (err != -EEXIST) {
- 		regulator->debugfs = debugfs_create_dir(supply_name, rdev->debugfs);
--	if (IS_ERR(regulator->debugfs))
--		rdev_dbg(rdev, "Failed to create debugfs directory\n");
-+		if (IS_ERR(regulator->debugfs)) {
-+			rdev_dbg(rdev, "Failed to create debugfs directory\n");
-+			regulator->debugfs = NULL;
-+		}
-+	}
- 
--	debugfs_create_u32("uA_load", 0444, regulator->debugfs,
--			   &regulator->uA_load);
--	debugfs_create_u32("min_uV", 0444, regulator->debugfs,
--			   &regulator->voltage[PM_SUSPEND_ON].min_uV);
--	debugfs_create_u32("max_uV", 0444, regulator->debugfs,
--			   &regulator->voltage[PM_SUSPEND_ON].max_uV);
--	debugfs_create_file("constraint_flags", 0444, regulator->debugfs,
--			    regulator, &constraint_flags_fops);
-+	if (regulator->debugfs) {
-+		debugfs_create_u32("uA_load", 0444, regulator->debugfs,
-+				   &regulator->uA_load);
-+		debugfs_create_u32("min_uV", 0444, regulator->debugfs,
-+				   &regulator->voltage[PM_SUSPEND_ON].min_uV);
-+		debugfs_create_u32("max_uV", 0444, regulator->debugfs,
-+				   &regulator->voltage[PM_SUSPEND_ON].max_uV);
-+		debugfs_create_file("constraint_flags", 0444, regulator->debugfs,
-+				    regulator, &constraint_flags_fops);
-+	}
- 
- 	/*
- 	 * Check now if the regulator is an always on regulator - if
+--- a/drivers/misc/pvpanic/pvpanic-pci.c
++++ b/drivers/misc/pvpanic/pvpanic-pci.c
+@@ -44,8 +44,6 @@ static struct pci_driver pvpanic_pci_dri
+ 	.name =         "pvpanic-pci",
+ 	.id_table =     pvpanic_pci_id_tbl,
+ 	.probe =        pvpanic_pci_probe,
+-	.driver = {
+-		.dev_groups = pvpanic_dev_groups,
+-	},
++	.dev_groups =   pvpanic_dev_groups,
+ };
+ module_pci_driver(pvpanic_pci_driver);
 
 
