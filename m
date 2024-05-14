@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B216200BF;
-	Tue, 14 May 2024 10:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4E138FA3;
+	Tue, 14 May 2024 10:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682666; cv=none; b=fu1vGFrdBYKaWGp/GEwTEitRjvs2FVAJkexDl9jzFMDvi1LRpPNyc0SJIFacGiwAcmg8bf8jdd7W0pQb71vBKhgG9o9O+1pPoGnzDPMZqfEu3t19Q+CBRHV5IxGLEa/Z/ZzTB+TcrTbe+uzV8zY9ayRpt+KbLeKowz0otcwcBl8=
+	t=1715682677; cv=none; b=qqcwXmZjbUIsCYlJZzieZ5rSbK3EZOivMNQ5q5xjJZB2Fd/jpi8FMJPUvNi5ujFOXDFANhca5TRc3HwQM2Z3LXrlZeqEpV9jmV0FzJkqZzpQh7KJX0fShvaV37akf/uD/E5qZeR3fej1VqppCc4TIWG0HY/kGKafovAFwsZK2Eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682666; c=relaxed/simple;
-	bh=0r16vcivetjBVnNTfuXtLwicfaZreaeNAnzNixTW7A8=;
+	s=arc-20240116; t=1715682677; c=relaxed/simple;
+	bh=6D13qjhVCI3xL6BWtKCpA3v5DRl192vJV1MAGJI6OIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ICqeXG3N38p7uRNxTFM3+w3EaR2b6u8ALb47dD9A2qBouMqqpqepIV8A5e/xw7u35KFMmpunYVC1p4RwvjOtJsbAYNaDCxWN2KFqw2SuIQdDv8Sc/vqtMZ7voNQPHSWqvVqTDkjbUwse8DdCff7LU3DTS+gXxsNXpvM846RcjPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Bvuz1hg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sn361zikfLDaljC+Gqt5Us5Sfn8nO5LUwF+NRRKS2Aa6hnotnAdntkR5widcEx3TDOAAOSbdhSFYhGL4uDKXnenVbpAoAMsavSIqNiwEgW4k9Zs+CjjMDGVr2ERtZXDC8isCJq0e3AgjdAn2uGJNS9Z0VYPTWndBcW94ezLBkZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvmYVl7e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Bvuz1hg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6F4C2BD10;
-	Tue, 14 May 2024 10:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvmYVl7e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A4EC2BD10;
+	Tue, 14 May 2024 10:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682666;
-	bh=0r16vcivetjBVnNTfuXtLwicfaZreaeNAnzNixTW7A8=;
+	s=korg; t=1715682677;
+	bh=6D13qjhVCI3xL6BWtKCpA3v5DRl192vJV1MAGJI6OIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Bvuz1hg9/0NLpOc6KkktE+Le2Qpj/omh/M2Jn7GmPB4xw9DRuDsScIggjGVhCEGw
-	 jBU7t4TaHGUpaAT4vBn6zlULZ/YIuHOk1Y3GMxmBm0qNGbhZzY59QlB5mDB19brsRL
-	 o1jp13Mc/IoAAOa1ti2HHrZ8hw3Ag4qWf6qdVesg=
+	b=TvmYVl7eYkE7TsXUtDecb5ftotqhCMGk6M3tUZPHaInG7zcY6wohqkiQ3Es2Fz/9z
+	 E7lqw9MOMWR4BZx5HcChJDAqCyMDCg17/UMt9kaT5QrHNFpYlY+hbitJ05MyM2I2ie
+	 J/6ZbMoGZa7dd0cAr9qgFkLbViixYKQmxH02aFMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Rohit Ner <rohitner@google.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Can Guo <quic_cang@quicinc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 095/336] firmware: microchip: dont unconditionally print validation success
-Date: Tue, 14 May 2024 12:14:59 +0200
-Message-ID: <20240514101042.191989462@linuxfoundation.org>
+Subject: [PATCH 6.8 096/336] scsi: ufs: core: Fix MCQ MAC configuration
+Date: Tue, 14 May 2024 12:15:00 +0200
+Message-ID: <20240514101042.229840630@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -50,37 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Rohit Ner <rohitner@google.com>
 
-[ Upstream commit 6e3b7e862ea4e4ff1be1d153ae07dfe150ed8896 ]
+[ Upstream commit 767712f91de76abd22a45184e6e3440120b8bfce ]
 
-If validation fails, both prints are made. Skip the success one in the
-failure case.
+As per JEDEC Standard No. 223E Section 5.9.2, the max # active commands
+value programmed by the host sw in MCQConfig.MAC should be one less than
+the actual value.
 
-Fixes: ec5b0f1193ad ("firmware: microchip: add PolarFire SoC Auto Update support")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Rohit Ner <rohitner@google.com>
+Link: https://lore.kernel.org/r/20240220095637.2900067-1-rohitner@google.com
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Can Guo <quic_cang@quicinc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/microchip/mpfs-auto-update.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/ufs/core/ufs-mcq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/microchip/mpfs-auto-update.c b/drivers/firmware/microchip/mpfs-auto-update.c
-index fbeeaee4ac856..23134ffc4dfc6 100644
---- a/drivers/firmware/microchip/mpfs-auto-update.c
-+++ b/drivers/firmware/microchip/mpfs-auto-update.c
-@@ -206,10 +206,12 @@ static int mpfs_auto_update_verify_image(struct fw_upload *fw_uploader)
- 	if (ret | response->resp_status) {
- 		dev_warn(priv->dev, "Verification of Upgrade Image failed!\n");
- 		ret = ret ? ret : -EBADMSG;
-+		goto free_message;
- 	}
+diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
+index 0787456c2b892..c873fd8239427 100644
+--- a/drivers/ufs/core/ufs-mcq.c
++++ b/drivers/ufs/core/ufs-mcq.c
+@@ -94,7 +94,7 @@ void ufshcd_mcq_config_mac(struct ufs_hba *hba, u32 max_active_cmds)
  
- 	dev_info(priv->dev, "Verification of Upgrade Image passed!\n");
- 
-+free_message:
- 	devm_kfree(priv->dev, message);
- free_response:
- 	devm_kfree(priv->dev, response);
+ 	val = ufshcd_readl(hba, REG_UFS_MCQ_CFG);
+ 	val &= ~MCQ_CFG_MAC_MASK;
+-	val |= FIELD_PREP(MCQ_CFG_MAC_MASK, max_active_cmds);
++	val |= FIELD_PREP(MCQ_CFG_MAC_MASK, max_active_cmds - 1);
+ 	ufshcd_writel(hba, val, REG_UFS_MCQ_CFG);
+ }
+ EXPORT_SYMBOL_GPL(ufshcd_mcq_config_mac);
 -- 
 2.43.0
 
