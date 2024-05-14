@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5596066B5E;
-	Tue, 14 May 2024 11:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D7913AD1F;
+	Tue, 14 May 2024 11:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684894; cv=none; b=fgUYr4hvUj0M6UyEJ68LR+2DBse53H7kZggjDmzaBBNb092x5ntv3JIN2urOas6+G11nVK/JA30QPv+fewaNitfhhLeffwz+g4ztSn0y/YLWyERek3G2XbUUe9/9d9TVpvZzUbnDa5VFahellHCrKTn8LjUP/Ny/BBRCw6jFvuc=
+	t=1715684899; cv=none; b=kuEKQ9TaWVLylvVqanVEWJSSOHTWAZimzEwQDyK12DAT/gwDUj+Etp1fc1E6Z2/SqrWF16TrcQATSqB9VhYKR0KO2W8RtwurdoWrcxW5nZX17pOXB3m5g5XoKELGBovFYEOFQkq3yw0Yu+jC+DJWu+IO0pMTRmYIiWcVMKCST3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684894; c=relaxed/simple;
-	bh=e/b1TQwGCj06uVpoiye6/km+NPuIyIXw6ui1IEr4sH0=;
+	s=arc-20240116; t=1715684899; c=relaxed/simple;
+	bh=CMZfMhiE6S/H2o+b9RR7SAnTqhXZty5YWR1OGf4e+/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GQyCHfExy1SRxUubRje4aLAYvFD2dMbY6NV7Ptdm7hYl9DxUJP250+ySldfVNwWYBDyL5xdEdpza/dihE+jlw0hNFBrb2aDfs3KNt7nhWe6blVu92n2kvQtySndvQRkFMvbjRibqp9BOvrMIe/Anhp2KVnWwke0gQRmxx8tj3lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCA4vbOo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y/EZStJChvkHGYcvgXlIefsFxtL8COeWQgfWr57omhFFFmD1tN23vWx/AU0U+qc7h7ZNVyFNZxu4DEj4f7oyTIYOggoYdF80Vs4oHwaQ+3xywltSoMVm8oqc3JPed0zghFm38RFQpyZdl30xIJnBAmEpx0N7wq+HT38Po6Iu6aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsyjdqlC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCA4vbOo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27EAC2BD10;
-	Tue, 14 May 2024 11:08:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsyjdqlC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F46CC2BD10;
+	Tue, 14 May 2024 11:08:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684894;
-	bh=e/b1TQwGCj06uVpoiye6/km+NPuIyIXw6ui1IEr4sH0=;
+	s=korg; t=1715684898;
+	bh=CMZfMhiE6S/H2o+b9RR7SAnTqhXZty5YWR1OGf4e+/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sCA4vbOoUdKbErMT10P/auMkTCEZiSRlwrAfI73sVbDwGLlsRwh5Zf/hTbvgtv8fx
-	 6xr38/0PGDT3+4vn/b/Qz73hKKisnkMTUAvJh76TnyHslMrqv4Pr8hpe2aJvm5Ogdj
-	 DzpTOBAKjpmxBwEjBSBXMnhVxDL4lHvdf+2W9570=
+	b=nsyjdqlCAix5W4Zha8JDbrkg7SmwZnaf1E45d1YtLA7Fj69BW00nHIKZ11uaYESIj
+	 wINBnAnE7TBJQMu8i5A8AcGwG26EixmkRndOECQClzGUzaJ2zWdxBImncbdcOVZLrt
+	 AJIDR3oZA4dflrUcSqAfTUpOM+rAHbtxabZXEiT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Artemiev <Igor.A.Artemiev@mcst.ru>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/301] wifi: cfg80211: fix rdev_dump_mpp() arguments order
-Date: Tue, 14 May 2024 12:16:16 +0200
-Message-ID: <20240514101036.214671311@linuxfoundation.org>
+Subject: [PATCH 6.6 106/301] wifi: mac80211: fix prep_connection error path
+Date: Tue, 14 May 2024 12:16:17 +0200
+Message-ID: <20240514101036.252303329@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,36 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit ec50f3114e55406a1aad24b7dfaa1c3f4336d8eb ]
+[ Upstream commit 2e6bd24339a6ff04413b2e49c0f2672d6f0edfa5 ]
 
-Fix the order of arguments in the TP_ARGS macro
-for the rdev_dump_mpp tracepoint event.
+If prep_channel fails in prep_connection, the code releases
+the deflink's chanctx, which is wrong since we may be using
+a different link. It's already wrong to even do that always
+though, since we might still have the station. Remove it
+only if prep_channel succeeded and later updates fail.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Signed-off-by: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
-Link: https://msgid.link/20240311164519.118398-1-Igor.A.Artemiev@mcst.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240318184907.2780c1f08c3d.I033c9b15483933088f32a2c0789612a33dd33d82@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/trace.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/mlme.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/trace.h b/net/wireless/trace.h
-index 617c0d0dfa963..e89443173c7b4 100644
---- a/net/wireless/trace.h
-+++ b/net/wireless/trace.h
-@@ -1015,7 +1015,7 @@ TRACE_EVENT(rdev_get_mpp,
- TRACE_EVENT(rdev_dump_mpp,
- 	TP_PROTO(struct wiphy *wiphy, struct net_device *netdev, int _idx,
- 		 u8 *dst, u8 *mpp),
--	TP_ARGS(wiphy, netdev, _idx, mpp, dst),
-+	TP_ARGS(wiphy, netdev, _idx, dst, mpp),
- 	TP_STRUCT__entry(
- 		WIPHY_ENTRY
- 		NETDEV_ENTRY
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 6e574e2adc22e..cf01f1f298a3b 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -7080,7 +7080,7 @@ static int ieee80211_prep_connection(struct ieee80211_sub_if_data *sdata,
+ 			sdata_info(sdata,
+ 				   "failed to insert STA entry for the AP (error %d)\n",
+ 				   err);
+-			goto out_err;
++			goto out_release_chan;
+ 		}
+ 	} else
+ 		WARN_ON_ONCE(!ether_addr_equal(link->u.mgd.bssid, cbss->bssid));
+@@ -7091,8 +7091,9 @@ static int ieee80211_prep_connection(struct ieee80211_sub_if_data *sdata,
+ 
+ 	return 0;
+ 
++out_release_chan:
++	ieee80211_link_release_channel(link);
+ out_err:
+-	ieee80211_link_release_channel(&sdata->deflink);
+ 	ieee80211_vif_set_links(sdata, 0, 0);
+ 	return err;
+ }
 -- 
 2.43.0
 
