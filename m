@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A4354903;
-	Tue, 14 May 2024 10:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098C357CBC;
+	Tue, 14 May 2024 10:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683159; cv=none; b=t+Qiyk3TgF0tRqAeO9gi/m1fRAxk5aayQkFtvVhYunqYKjPDShU+qrxcdS5yDDTh/s5D93VGXKJcs1yH/sGVMC00NMsbEyflOoytDGHKKUpYRIdwurMwqhr2LZjZIXXFJO1cFvmrc0Cz2gXxkNtrE22LVNtWpR+ZwkQCZtzKZJU=
+	t=1715683165; cv=none; b=eLu/qawcCSh6ib8gbOsy3pQHKsn7u7de967VbHGGXQoKXgv05HfohW4xHfp3RC+YLN7oygHlVd7sl7+uX8ZNQpiX2rcbyUR5mW8dslLnev9QNnKWztVWYILAYuT5oVwFMqhl2dmJ+gjpr9YE659ubK0TKY7Ocgfc4sVejEMOQ7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683159; c=relaxed/simple;
-	bh=/47mo8Rx+iz3sUts4k9QgnQeEfOWbR0Er/bsqtlPCv0=;
+	s=arc-20240116; t=1715683165; c=relaxed/simple;
+	bh=OXebOZYgVt5/rhhBk3HKlJBZwqdrKCtU2aA9RaLq+x4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nuhN+xJx4ua2lYjzgQez0pRg/0RTKDv7ibV4FtsaohTRCf+PqlpxVg2209/AvrQOZlrtmCLhER5xKSmrf5A8UPaGfy8KUf1dWCbY9h2QV6mQH7Dcw+L6qlr/oOVifPW9zgkRyrn+FlclIAF4/vYJlfJJEkJ1z+BlrcTuGuWWDs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXYJPaSG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l5BDpY1zKH+5L5GbV8wVuBP0HvQ8Md7fBmMlZ6/Lu+Rj6AUT14h6KYnZ3cGr1rMnm10Cg+YitGWfoIaOlgjqg7IHaql4RtnOwgI3a6Kdys/opXyzeHlPVKx5ul2mdrVPgX6LeHNKFdrAMXUKK7Ishq01JVI/UQgmXDUGYJk7GZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wYCBI5Lo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXYJPaSG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E84C2BD10;
-	Tue, 14 May 2024 10:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wYCBI5Lo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A06C2BD10;
+	Tue, 14 May 2024 10:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683158;
-	bh=/47mo8Rx+iz3sUts4k9QgnQeEfOWbR0Er/bsqtlPCv0=;
+	s=korg; t=1715683164;
+	bh=OXebOZYgVt5/rhhBk3HKlJBZwqdrKCtU2aA9RaLq+x4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DXYJPaSGNUPIrF3q3bT8GC6TnKhKSESqOEyXJ0JAPXjfEcxBYpKBgLbBglpivpq90
-	 FciBeRLEBwwULfFj4PkCklWN1YrEX79ofx+jwuYyG0bC+DhnuClW+8UTZicrKNhSDJ
-	 rh8AX5NrPEU4zS5YfM2iFkeMrAkAVxZ3lYcZm5bc=
+	b=wYCBI5LooyFx0eqB35A/+LogNjojk7P2tmBKkxKKHNaveOD02ggwxrbIOCjwr/6WL
+	 3gjWE15rhXm3ZhquuwifHjFqBHb65svdofmubAFCZH1Tjzrouk3wFSOulsgqoyUOQR
+	 mRd8RkwYj8hbbFVsjjQFGYESu1fO/Rv3uetQFisE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 174/336] drm/xe: Label RING_CONTEXT_CONTROL as masked
-Date: Tue, 14 May 2024 12:16:18 +0200
-Message-ID: <20240514101045.171847996@linuxfoundation.org>
+Subject: [PATCH 6.8 145/336] memblock tests: fix undefined reference to `BIT
+Date: Tue, 14 May 2024 12:15:49 +0200
+Message-ID: <20240514101044.073562442@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,55 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Dixit <ashutosh.dixit@intel.com>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-[ Upstream commit f76646c83f028c62853c23dac49204232e903597 ]
+[ Upstream commit 592447f6cb3c20d606d6c5d8e6af68e99707b786 ]
 
-RING_CONTEXT_CONTROL is a masked register.
+commit 772dd0342727 ("mm: enumerate all gfp flags") define gfp flags
+with the help of BIT, while gfp_types.h doesn't include header file for
+the definition. This through an error on building memblock tests.
 
-v2: Also clean up setting register value (Lucas)
+Let's include linux/bits.h to fix it.
 
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240404161256.3852502-1-ashutosh.dixit@intel.com
-(cherry picked from commit dc30c6e7149baaae4288c742de95212b31f07438)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+CC: Suren Baghdasaryan <surenb@google.com>
+CC: Michal Hocko <mhocko@suse.com>
+Link: https://lore.kernel.org/r/20240402132701.29744-4-richard.weiyang@gmail.com
+Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/regs/xe_engine_regs.h | 2 +-
- drivers/gpu/drm/xe/xe_lrc.c              | 5 ++---
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ include/linux/gfp_types.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/regs/xe_engine_regs.h b/drivers/gpu/drm/xe/regs/xe_engine_regs.h
-index 5592774fc6903..81b8362e93406 100644
---- a/drivers/gpu/drm/xe/regs/xe_engine_regs.h
-+++ b/drivers/gpu/drm/xe/regs/xe_engine_regs.h
-@@ -120,7 +120,7 @@
- #define RING_EXECLIST_STATUS_LO(base)		XE_REG((base) + 0x234)
- #define RING_EXECLIST_STATUS_HI(base)		XE_REG((base) + 0x234 + 4)
+diff --git a/include/linux/gfp_types.h b/include/linux/gfp_types.h
+index 1b6053da8754e..495ebf5f2cb6d 100644
+--- a/include/linux/gfp_types.h
++++ b/include/linux/gfp_types.h
+@@ -2,6 +2,8 @@
+ #ifndef __LINUX_GFP_TYPES_H
+ #define __LINUX_GFP_TYPES_H
  
--#define RING_CONTEXT_CONTROL(base)		XE_REG((base) + 0x244)
-+#define RING_CONTEXT_CONTROL(base)		XE_REG((base) + 0x244, XE_REG_OPTION_MASKED)
- #define	  CTX_CTRL_INHIBIT_SYN_CTX_SWITCH	REG_BIT(3)
- #define	  CTX_CTRL_ENGINE_CTX_RESTORE_INHIBIT	REG_BIT(0)
- 
-diff --git a/drivers/gpu/drm/xe/xe_lrc.c b/drivers/gpu/drm/xe/xe_lrc.c
-index 0aa4bcfb90d9d..72f04a656e8b1 100644
---- a/drivers/gpu/drm/xe/xe_lrc.c
-+++ b/drivers/gpu/drm/xe/xe_lrc.c
-@@ -523,9 +523,8 @@ static const u8 *reg_offsets(struct xe_device *xe, enum xe_engine_class class)
- 
- static void set_context_control(u32 *regs, struct xe_hw_engine *hwe)
- {
--	regs[CTX_CONTEXT_CONTROL] = _MASKED_BIT_ENABLE(CTX_CTRL_INHIBIT_SYN_CTX_SWITCH) |
--				    _MASKED_BIT_DISABLE(CTX_CTRL_ENGINE_CTX_RESTORE_INHIBIT) |
--				    CTX_CTRL_ENGINE_CTX_RESTORE_INHIBIT;
-+	regs[CTX_CONTEXT_CONTROL] = _MASKED_BIT_ENABLE(CTX_CTRL_INHIBIT_SYN_CTX_SWITCH |
-+						       CTX_CTRL_ENGINE_CTX_RESTORE_INHIBIT);
- 
- 	/* TODO: Timestamp */
- }
++#include <linux/bits.h>
++
+ /* The typedef is in types.h but we want the documentation here */
+ #if 0
+ /**
 -- 
 2.43.0
 
