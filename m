@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B004F1E5;
-	Tue, 14 May 2024 11:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DEB1420D7;
+	Tue, 14 May 2024 11:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686036; cv=none; b=kRC2xd59aqM+SBHmTcFbJSKBKOMBd9mlKz3V/v7x9G73JhpZwze2+tEKIPQcP3k7CzKaMfNZzrNOdY8UVh5iIh2rlfdVZVx8XzuUujA1nn3fj5w3LWLo+GBT+4d1sDL1AyGkuApyzO8EX0CBu4UqS2IPosy/gzBjdmqYanE489g=
+	t=1715686041; cv=none; b=V2qnyWWStwms+oIgjmqd5/YUFqbm6bBMnSj+uYCn+g4fLjBuwQN4Njmg5YfE6fgofJaESW1ANMw/D59MhsNEmcGv/GdHAQ02AaunfdoCduNUdfOJ3tdWxYRPSvuNz8qiPIvdIiHOSDLc7wUy7H4FAEMJwPX7YpUHnfhzELd8rfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686036; c=relaxed/simple;
-	bh=mIEpkkY3fsKb9mL8uDhkEruO5gEVn/1RwIz+PDKz3k0=;
+	s=arc-20240116; t=1715686041; c=relaxed/simple;
+	bh=8DY8qudAWLsFddiKmKLgFJDlgtYloitTdnGQSepdwr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eXy4Y5q8/KeoDlPuSBAio/Xtu3N/pGx5OvbBVjEcaaVAJf6Glqa6WDGk8FuATtA119r3oac2XZEaLUmT69ZU4ncuKMHpreR0d8CeLAG9qzfBxeKQWcj4RRSISv20eJsHcEWZhX1HhcMGP4WFLLYnIyIV+vQ9bBupzucunqixaxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOI0X34R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u06pE1mtqfjZCtcBr43xciErQkSyKN6RS38JxbUiES7a+up1XcTAfv1f2ZFvzS0TBaETiCjxSRZLIOizBvqkrTa3ttZiGOsRzRS/26HPZt7ys9fGfqD4FBdHd1H07u7hV4sNyj2KgMag/9UEFLoMIypo8XRxMAOiieIrpRykj7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrLYikn+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOI0X34R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5FBC2BD10;
-	Tue, 14 May 2024 11:27:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrLYikn+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA68BC2BD10;
+	Tue, 14 May 2024 11:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686036;
-	bh=mIEpkkY3fsKb9mL8uDhkEruO5gEVn/1RwIz+PDKz3k0=;
+	s=korg; t=1715686041;
+	bh=8DY8qudAWLsFddiKmKLgFJDlgtYloitTdnGQSepdwr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vOI0X34R5H43q3+flmH3LV0lZXA+IqI6FFQs4JIKTJ+uRAMtVY+6vZyHk0451NTjI
-	 WhF1rhs37v7yQUnYSIh9VK95y0vCCGOxcvplErnLHXpODw4SAjIVREpCRP0etHjt0y
-	 5E3aNFRbTTFjECUZm4Hvh2lf2yFSo2WncFfpS8L8=
+	b=RrLYikn+plZvK1DWE9oPT0qSUOMNLzsEBdiMz2rJqPa+va4UTdflzIET0PeB/Ab3G
+	 Tq/p8WCzbM3S2ojiu5s4cKw23/C7Sd/Nd7OgOciCQuSns6Rib5KfLndiEu4YWKP+Wl
+	 kxTms3bf2f4iwSRnmbSsVAvP/25BXZJPl4PSwdec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Martin Krastev <martin.krastev@broadcom.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.6 271/301] drm/vmwgfx: Fix invalid reads in fence signaled events
-Date: Tue, 14 May 2024 12:19:02 +0200
-Message-ID: <20240514101042.497048157@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.6 262/301] slimbus: qcom-ngd-ctrl: Add timeout for wait operation
+Date: Tue, 14 May 2024 12:18:53 +0200
+Message-ID: <20240514101042.148473832@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -57,46 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
 
-commit a37ef7613c00f2d72c8fc08bd83fb6cc76926c8c upstream.
+commit 98241a774db49988f25b7b3657026ce51ccec293 upstream.
 
-Correctly set the length of the drm_event to the size of the structure
-that's actually used.
+In current driver qcom_slim_ngd_up_worker() indefinitely
+waiting for ctrl->qmi_up completion object. This is
+resulting in workqueue lockup on Kthread.
 
-The length of the drm_event was set to the parent structure instead of
-to the drm_vmw_event_fence which is supposed to be read. drm_read
-uses the length parameter to copy the event to the user space thus
-resuling in oob reads.
+Added wait_for_completion_interruptible_timeout to
+allow the thread to wait for specific timeout period and
+bail out instead waiting infinitely.
 
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Fixes: 8b7de6aa8468 ("vmwgfx: Rework fence event action")
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-23566
-Cc: David Airlie <airlied@gmail.com>
-CC: Daniel Vetter <daniel@ffwll.ch>
-Cc: Zack Rusin <zack.rusin@broadcom.com>
-Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Cc: <stable@vger.kernel.org> # v3.4+
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240425192748.1761522-1-zack.rusin@broadcom.com
+Fixes: a899d324863a ("slimbus: qcom-ngd-ctrl: add Sub System Restart support")
+Cc: stable@vger.kernel.org
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20240430091238.35209-2-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_fence.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/slimbus/qcom-ngd-ctrl.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-@@ -991,7 +991,7 @@ static int vmw_event_fence_action_create
- 	}
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1451,7 +1451,11 @@ static void qcom_slim_ngd_up_worker(stru
+ 	ctrl = container_of(work, struct qcom_slim_ngd_ctrl, ngd_up_work);
  
- 	event->event.base.type = DRM_VMW_EVENT_FENCE_SIGNALED;
--	event->event.base.length = sizeof(*event);
-+	event->event.base.length = sizeof(event->event);
- 	event->event.user_data = user_data;
+ 	/* Make sure qmi service is up before continuing */
+-	wait_for_completion_interruptible(&ctrl->qmi_up);
++	if (!wait_for_completion_interruptible_timeout(&ctrl->qmi_up,
++						       msecs_to_jiffies(MSEC_PER_SEC))) {
++		dev_err(ctrl->dev, "QMI wait timeout\n");
++		return;
++	}
  
- 	ret = drm_event_reserve_init(dev, file_priv, &event->base, &event->event.base);
+ 	mutex_lock(&ctrl->ssr_lock);
+ 	qcom_slim_ngd_enable(ctrl, true);
 
 
