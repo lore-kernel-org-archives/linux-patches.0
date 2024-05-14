@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5B41272AE;
-	Tue, 14 May 2024 11:46:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDEE01272AE;
+	Tue, 14 May 2024 11:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687208; cv=none; b=c4L4xGwwRes6iDCm8nhd9+Ei5E8YRn1P3Kcs/jLDXwU16EZcBK/AcIcsL9d6wbSTGOFFGNEY1uq08I3gBIdAIKO/hT0X1VvRyPG3O2C9mh9OkINcomXl5GqXStDJhD4ArnRktiEOpdc4E5sb9+0gHu5b99EuNN6U8oMC3gHYVLA=
+	t=1715687210; cv=none; b=YypkTl4ka/dedpJyi8SbqgOZs4LjP2BvW6KqqARt371BdsUI2K/uSYmU1ObL/B5rUqD15tn3BYJtYoauwY25afVc2OwuLblcbRyrvTGGGJzgo8hYleiq7QoSWii7xYMoq27ZIf2QV+8cz+zob2sg5wN1f+9pefDA+3G8Cf/ZRL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687208; c=relaxed/simple;
-	bh=4fAPRVUhIEvJT5DQnM2ciObMepP7b+xnWIgmCxtroc8=;
+	s=arc-20240116; t=1715687210; c=relaxed/simple;
+	bh=efyBg3beaq7YAM9C3VTgbqy1ckFJr9mFXwOgmebLi7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uYcubQDuITEPOUinE9sFwwKhpoW/ewxOiW4+ZOLGVGSOrl2YGrIIJuk1axwjsjhETTvpGStHwoSZ9H6IYCTfpz36sRp34AA4VgcEn2pskqGerIv/DOTz8ZCgzQ1uON9VAbVmk6/H94VbwsbL3UvSA6O4FuI1s+Kh5YTUMlh9TkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xF7t4tXR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NXs0d5hk6yGpCzkuLsOPagFSdqn+xDehtcLiuV64zGkYUmK5n4pBiE8hKhZGu9TNDs4Fa89JzpRNS/0NLurgn30gT9L9JZQPBOC3bzXGcZs3PO1bZlBFd6pM2KJP1dDyO8uOHg65tR6czhToiuKhapKUmfdy+44CquVF21xW1TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLT5lvVF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xF7t4tXR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AB3C2BD10;
-	Tue, 14 May 2024 11:46:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLT5lvVF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2BFC32786;
+	Tue, 14 May 2024 11:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687207;
-	bh=4fAPRVUhIEvJT5DQnM2ciObMepP7b+xnWIgmCxtroc8=;
+	s=korg; t=1715687210;
+	bh=efyBg3beaq7YAM9C3VTgbqy1ckFJr9mFXwOgmebLi7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xF7t4tXR9kRKLhof9VxpxduqZspYIuy/sxwIKPI5pb8/UeGKZioQznhxWX3VAMGNm
-	 /tNnjU3rK1/6BB0LXqDTtlqS6e9K+PYHj1ZKbuBjDxSjP2LERHaea3pd+s3V5ZZ5Kq
-	 MNPBGFp8czFODhykZ2JHixoCgYCIJDmOtuD8YWRw=
+	b=NLT5lvVFKFQGRRYlKmMJCOdbqclTEdJGDxJuDuDE0JtcyU+TKLtl4hTtakWxCSzJa
+	 mGK/BnzWHUYzojl8AgBpN7xdbrtUHur1OROxptS11NW05TGnMjr6nsMuTh9ogqyTXd
+	 lHjO+UnFRT6bKhVtUQrW8kIAIVvBG4ZU5l7eKkfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Zeng Heng <zengheng4@huawei.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 017/111] power: rt9455: hide unused rt9455_boost_voltage_values
-Date: Tue, 14 May 2024 12:19:15 +0200
-Message-ID: <20240514100957.780261698@linuxfoundation.org>
+Subject: [PATCH 5.10 018/111] pinctrl: devicetree: fix refcount leak in pinctrl_dt_to_map()
+Date: Tue, 14 May 2024 12:19:16 +0200
+Message-ID: <20240514100957.818330385@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -51,46 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit 452d8950db3e839aba1bb13bc5378f4bac11fa04 ]
+[ Upstream commit a0cedbcc8852d6c77b00634b81e41f17f29d9404 ]
 
-The rt9455_boost_voltage_values[] array is only used when USB PHY
-support is enabled, causing a W=1 warning otherwise:
+If we fail to allocate propname buffer, we need to drop the reference
+count we just took. Because the pinctrl_dt_free_maps() includes the
+droping operation, here we call it directly.
 
-drivers/power/supply/rt9455_charger.c:200:18: error: 'rt9455_boost_voltage_values' defined but not used [-Werror=unused-const-variable=]
-
-Enclose the definition in the same #ifdef as the references to it.
-
-Fixes: e86d69dd786e ("power_supply: Add support for Richtek RT9455 battery charger")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20240403080702.3509288-10-arnd@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 91d5c5060ee2 ("pinctrl: devicetree: fix null pointer dereferencing in pinctrl_dt_to_map")
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Message-ID: <20240415105328.3651441-1-zengheng4@huawei.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/rt9455_charger.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pinctrl/devicetree.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/power/supply/rt9455_charger.c b/drivers/power/supply/rt9455_charger.c
-index 594bb3b8a4d1e..a84afccd509f1 100644
---- a/drivers/power/supply/rt9455_charger.c
-+++ b/drivers/power/supply/rt9455_charger.c
-@@ -193,6 +193,7 @@ static const int rt9455_voreg_values[] = {
- 	4450000, 4450000, 4450000, 4450000, 4450000, 4450000, 4450000, 4450000
- };
- 
-+#if IS_ENABLED(CONFIG_USB_PHY)
- /*
-  * When the charger is in boost mode, REG02[7:2] represent boost output
-  * voltage.
-@@ -208,6 +209,7 @@ static const int rt9455_boost_voltage_values[] = {
- 	5600000, 5600000, 5600000, 5600000, 5600000, 5600000, 5600000, 5600000,
- 	5600000, 5600000, 5600000, 5600000, 5600000, 5600000, 5600000, 5600000,
- };
-+#endif
- 
- /* REG07[3:0] (VMREG) in uV */
- static const int rt9455_vmreg_values[] = {
+diff --git a/drivers/pinctrl/devicetree.c b/drivers/pinctrl/devicetree.c
+index eac55fee5281c..0220228c50404 100644
+--- a/drivers/pinctrl/devicetree.c
++++ b/drivers/pinctrl/devicetree.c
+@@ -220,14 +220,16 @@ int pinctrl_dt_to_map(struct pinctrl *p, struct pinctrl_dev *pctldev)
+ 	for (state = 0; ; state++) {
+ 		/* Retrieve the pinctrl-* property */
+ 		propname = kasprintf(GFP_KERNEL, "pinctrl-%d", state);
+-		if (!propname)
+-			return -ENOMEM;
++		if (!propname) {
++			ret = -ENOMEM;
++			goto err;
++		}
+ 		prop = of_find_property(np, propname, &size);
+ 		kfree(propname);
+ 		if (!prop) {
+ 			if (state == 0) {
+-				of_node_put(np);
+-				return -ENODEV;
++				ret = -ENODEV;
++				goto err;
+ 			}
+ 			break;
+ 		}
 -- 
 2.43.0
 
