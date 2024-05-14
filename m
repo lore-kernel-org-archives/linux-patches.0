@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528D580C04;
-	Tue, 14 May 2024 11:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875EB12E1DC;
+	Tue, 14 May 2024 11:38:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686694; cv=none; b=bsQiDgHEkwhPceQL8xQl0C7aoeDtTsr8X2J7saa5a109jfwm0hfomBl/Um5b4ZZ+NynvHGXBWaBjZ5XxmK2gTBX7QsWhvpyVpqmGvrlYsAwF8+HRwsh1A760AwhUegssxGGC8lOaNZxMUl/cCntU1oxi72eo7yeex0jYuxAIMi4=
+	t=1715686697; cv=none; b=jlI6EO2JRPGxaZExYeUzTfC7WBvseSsnAnFJ/SpQIP4KoJHEzgmR6y1zP0Grk4B2Nu6QBIuiHZCv1knB1scLxNkSLLXXoieT+kO8C9YOkWcnpEvRAguz70eqhV7KewPgbxrCjJQ8ifp89XEbJ1AKI5EWE+0r8R3dcoIGFVFxyog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686694; c=relaxed/simple;
-	bh=+CUIkPdL/NdKxH4JLOjtZXZ2FTrgt0+uf39SvOIbffM=;
+	s=arc-20240116; t=1715686697; c=relaxed/simple;
+	bh=rKlTy7KMoAXhL7PRSEy0H80MqIaBq+4JLy6eW+YLoDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jStIUvkOWK02lOLaC3KyPE+eE967EaYym0Nbp5Rk3Ir4eQnUDXX/lk0XV7pq4l1C/31rLMmDf2cij97OEn2ALDj6EKHOBLY4RDZicoeGjpk6QNOEee6aoREpJ+Q7amm7SsedpgexCXv2ScmI8vT3pVbaYUwIQ3m2dn/wxRTlwtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pK0owB6B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n7r3YTadaffvLDh77lqxislPjFTjCrBeMiWBT+9OQ0DBHNwTqXgLajQHPbdpDRXPKax6SwjWFO5k168aEhpy3BSnBETi/yzF0hD62alu7KCjE6c+hBOqZLEZgiCxfUH+O/1192keYb+vkSKR6dZOKExMvk6ye5c+4j9anTIdq/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=giU3uUed; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pK0owB6B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A420C2BD10;
-	Tue, 14 May 2024 11:38:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="giU3uUed"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B766EC2BD10;
+	Tue, 14 May 2024 11:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686694;
-	bh=+CUIkPdL/NdKxH4JLOjtZXZ2FTrgt0+uf39SvOIbffM=;
+	s=korg; t=1715686697;
+	bh=rKlTy7KMoAXhL7PRSEy0H80MqIaBq+4JLy6eW+YLoDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pK0owB6BBJC5DDG25ooMXhpF2QneGXG05n4jru1D8BmmMEx+9iOAMzcduXokoSZXg
-	 mLqjsNpS84ZNcz0KjYuqMvgkY1T8qTmozwH5w7fwx4lpRHYRBlASxfTPE4WqOfiSP5
-	 4ygZVYCa5XbvOiJ9p63NvRJ6jjoag0O971kYDDv8=
+	b=giU3uUedUgyuyxZ7dj8TalCRGdcJL+RCmS1abLLiBGW3TSSYCHXcEiUr91fvxyrLG
+	 0fjHxoMZTkPjqupLA8ajzHz7bUV4s5W+q9F1n0rOfnGrQFBPwtBI0z11twvEqQOACq
+	 VIZbWG1qvAWb0TxwJKoG9QbzZb3jkOeB+KVJfsis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Johan Hovold <johan+linaro@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 227/236] regulator: core: fix debugfs creation regression
-Date: Tue, 14 May 2024 12:19:49 +0200
-Message-ID: <20240514101028.974711145@linuxfoundation.org>
+Subject: [PATCH 6.1 228/236] spi: microchip-core-qspi: fix setting spi bus clock rate
+Date: Tue, 14 May 2024 12:19:50 +0200
+Message-ID: <20240514101029.013661174@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -51,76 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-commit 2a4b49bb58123bad6ec0e07b02845f74c23d5e04 upstream.
+commit ef13561d2b163ac0ae6befa53bca58a26dc3320b upstream.
 
-regulator_get() may sometimes be called more than once for the same
-consumer device, something which before commit dbe954d8f163 ("regulator:
-core: Avoid debugfs: Directory ...  already present! error") resulted in
-errors being logged.
+Before ORing the new clock rate with the control register value read
+from the hardware, the existing clock rate needs to be masked off as
+otherwise the existing value will interfere with the new one.
 
-A couple of recent commits broke the handling of such cases so that
-attributes are now erroneously created in the debugfs root directory the
-second time a regulator is requested and the log is filled with errors
-like:
-
-	debugfs: File 'uA_load' in directory '/' already present!
-	debugfs: File 'min_uV' in directory '/' already present!
-	debugfs: File 'max_uV' in directory '/' already present!
-	debugfs: File 'constraint_flags' in directory '/' already present!
-
-on any further calls.
-
-Fixes: 2715bb11cfff ("regulator: core: Fix more error checking for debugfs_create_dir()")
-Fixes: 08880713ceec ("regulator: core: Streamline debugfs operations")
-Cc: stable@vger.kernel.org
-Cc: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240509133304.8883-1-johan+linaro@kernel.org
+CC: stable@vger.kernel.org
+Fixes: 8596124c4c1b ("spi: microchip-core-qspi: Add support for microchip fpga qspi controllers")
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/r/20240508-fox-unpiloted-b97e1535627b@spud
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/core.c |   27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ drivers/spi/spi-microchip-core-qspi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1916,19 +1916,24 @@ static struct regulator *create_regulato
- 		}
+diff --git a/drivers/spi/spi-microchip-core-qspi.c b/drivers/spi/spi-microchip-core-qspi.c
+index 03d125a71fd9..09f16471c537 100644
+--- a/drivers/spi/spi-microchip-core-qspi.c
++++ b/drivers/spi/spi-microchip-core-qspi.c
+@@ -283,6 +283,7 @@ static int mchp_coreqspi_setup_clock(struct mchp_coreqspi *qspi, struct spi_devi
  	}
  
--	if (err != -EEXIST)
-+	if (err != -EEXIST) {
- 		regulator->debugfs = debugfs_create_dir(supply_name, rdev->debugfs);
--	if (IS_ERR(regulator->debugfs))
--		rdev_dbg(rdev, "Failed to create debugfs directory\n");
-+		if (IS_ERR(regulator->debugfs)) {
-+			rdev_dbg(rdev, "Failed to create debugfs directory\n");
-+			regulator->debugfs = NULL;
-+		}
-+	}
- 
--	debugfs_create_u32("uA_load", 0444, regulator->debugfs,
--			   &regulator->uA_load);
--	debugfs_create_u32("min_uV", 0444, regulator->debugfs,
--			   &regulator->voltage[PM_SUSPEND_ON].min_uV);
--	debugfs_create_u32("max_uV", 0444, regulator->debugfs,
--			   &regulator->voltage[PM_SUSPEND_ON].max_uV);
--	debugfs_create_file("constraint_flags", 0444, regulator->debugfs,
--			    regulator, &constraint_flags_fops);
-+	if (regulator->debugfs) {
-+		debugfs_create_u32("uA_load", 0444, regulator->debugfs,
-+				   &regulator->uA_load);
-+		debugfs_create_u32("min_uV", 0444, regulator->debugfs,
-+				   &regulator->voltage[PM_SUSPEND_ON].min_uV);
-+		debugfs_create_u32("max_uV", 0444, regulator->debugfs,
-+				   &regulator->voltage[PM_SUSPEND_ON].max_uV);
-+		debugfs_create_file("constraint_flags", 0444, regulator->debugfs,
-+				    regulator, &constraint_flags_fops);
-+	}
- 
- 	/*
- 	 * Check now if the regulator is an always on regulator - if
+ 	control = readl_relaxed(qspi->regs + REG_CONTROL);
++	control &= ~CONTROL_CLKRATE_MASK;
+ 	control |= baud_rate_val << CONTROL_CLKRATE_SHIFT;
+ 	writel_relaxed(control, qspi->regs + REG_CONTROL);
+ 	control = readl_relaxed(qspi->regs + REG_CONTROL);
+-- 
+2.45.0
+
 
 
