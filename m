@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4C213B284;
-	Tue, 14 May 2024 11:32:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF3C143C59;
+	Tue, 14 May 2024 11:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686330; cv=none; b=eMlUBVcjTqmS6MC7mttWu51MTDyLunoVVQJvpiYfUfwu9Prtjd5dfHB09ykxTxcTt1yGUJN8Km7tRH6Gv9NhvNxBKCXbXec9aEASNSRmqAzWKjNnjaYs0NOxJ95DWtIlirXZrfz3oVCm5j+KrJFit4K7LyCYZrDZ3UulhZ57G7k=
+	t=1715686333; cv=none; b=MIcYKdTRItaABvh4VdtaAXOjwKIAsWJ0JQSz/Kqx9WtUls3CV3DcH7RiF3f7XLxuEXanmMlo0wJnDFyZ6txXyUhMs2zFoImMoXE+d7M2G+GKwc9tKgrkHi7qjdt3LWDNQp+I5lr4AQLIUFZETaoiAjyBxeyEJcVxr2lmdVTZ+dU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686330; c=relaxed/simple;
-	bh=bBVVUMqPuq9VasLlhOvV0FAejTBB0pCbYvkLcDxiwEc=;
+	s=arc-20240116; t=1715686333; c=relaxed/simple;
+	bh=kWC/dmKd5o70egMQb8wSMmmjDYEP+exfQjhK/IzYg4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7AUNkz1s+LGuwdn91cP24eVOZKjvr6Di44q0F7uxBnlDmALoYGvsdPsT/qHxVouVbP6iX1e+WBPt125c2wFhNknVhV6vpzYHewmwoqttE2K9R4EXA5qangSXv2EIihZ4xXwwdIE66AIvzBz/0u/GBX/B9f6YQOJsq6eMNOhUiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYnRM1Cj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lrFNdNNCOkEz5d4QKEhYRygf1r9B1p92D/I2pmqjSD7AlODDsYFhA/litSsROW2UKuaoS01H7MeGVpXQm3g1J0TTvRbEP/SHNUndPohr/b327FlkT1fCtFbf4YEc9RFUs/g5puJ+T+5ZYqtO5JymuZwzKUyhTKW5KmPEnx/ec6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKQoUho/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYnRM1Cj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857F2C2BD10;
-	Tue, 14 May 2024 11:32:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKQoUho/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B9CC2BD10;
+	Tue, 14 May 2024 11:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686329;
-	bh=bBVVUMqPuq9VasLlhOvV0FAejTBB0pCbYvkLcDxiwEc=;
+	s=korg; t=1715686332;
+	bh=kWC/dmKd5o70egMQb8wSMmmjDYEP+exfQjhK/IzYg4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WYnRM1CjY2IukHSn0yUkjVzMjB+Bi9dOiVAmVKJadiJOqaJnHWeo4e0fibmNuLnJ+
-	 /Lo5ZzrnqQ3UFFd09UcnTgx9W59hx0+DGSPlRrnf5D0wUTSWZbPcZ6S0GKSUiAdVNJ
-	 hExhgW1qkw1VD0GUbn+DJLw/zsKCLqHCFZ9MzKr8=
+	b=vKQoUho/2jXVysWy6cCbOlE0VZEhI3yyPqaP4eEsCTlelsP/k4J4j2SPlxGTQ8uBd
+	 CVvLOXzS3gmsO1YQvmk68rh8ut46MuLBJsmMPyRfqdUIOAvPr5lZr2u/pegJMGzv4I
+	 dY0V4aW+3NgaxW42oBJt69yAsV1OXSpOVh1FsnIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linke li <lilinke99@qq.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 100/236] net: mark racy access on sk->sk_rcvbuf
-Date: Tue, 14 May 2024 12:17:42 +0200
-Message-ID: <20240514101024.166817366@linuxfoundation.org>
+Subject: [PATCH 6.1 101/236] scsi: mpi3mr: Avoid memcpy field-spanning write WARNING
+Date: Tue, 14 May 2024 12:17:43 +0200
+Message-ID: <20240514101024.205349920@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -52,46 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: linke li <lilinke99@qq.com>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-[ Upstream commit c2deb2e971f5d9aca941ef13ee05566979e337a4 ]
+[ Upstream commit 429846b4b6ce9853e0d803a2357bb2e55083adf0 ]
 
-sk->sk_rcvbuf in __sock_queue_rcv_skb() and __sk_receive_skb() can be
-changed by other threads. Mark this as benign using READ_ONCE().
+When the "storcli2 show" command is executed for eHBA-9600, mpi3mr driver
+prints this WARNING message:
 
-This patch is aimed at reducing the number of benign races reported by
-KCSAN in order to focus future debugging effort on harmful races.
+  memcpy: detected field-spanning write (size 128) of single field "bsg_reply_buf->reply_buf" at drivers/scsi/mpi3mr/mpi3mr_app.c:1658 (size 1)
+  WARNING: CPU: 0 PID: 12760 at drivers/scsi/mpi3mr/mpi3mr_app.c:1658 mpi3mr_bsg_request+0x6b12/0x7f10 [mpi3mr]
 
-Signed-off-by: linke li <lilinke99@qq.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The cause of the WARN is 128 bytes memcpy to the 1 byte size array "__u8
+replay_buf[1]" in the struct mpi3mr_bsg_in_reply_buf. The array is intended
+to be a flexible length array, so the WARN is a false positive.
+
+To suppress the WARN, remove the constant number '1' from the array
+declaration and clarify that it has flexible length. Also, adjust the
+memory allocation size to match the change.
+
+Suggested-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Link: https://lore.kernel.org/r/20240323084155.166835-1-shinichiro.kawasaki@wdc.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_app.c    | 2 +-
+ include/uapi/scsi/scsi_bsg_mpi3mr.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 550af616f5359..48199e6e8f161 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -482,7 +482,7 @@ int __sock_queue_rcv_skb(struct sock *sk, struct sk_buff *skb)
- 	unsigned long flags;
- 	struct sk_buff_head *list = &sk->sk_receive_queue;
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
+index 8c662d08706f1..42600e5c457a1 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_app.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
+@@ -1344,7 +1344,7 @@ static long mpi3mr_bsg_process_mpt_cmds(struct bsg_job *job, unsigned int *reply
+ 	if ((mpirep_offset != 0xFF) &&
+ 	    drv_bufs[mpirep_offset].bsg_buf_len) {
+ 		drv_buf_iter = &drv_bufs[mpirep_offset];
+-		drv_buf_iter->kern_buf_len = (sizeof(*bsg_reply_buf) - 1 +
++		drv_buf_iter->kern_buf_len = (sizeof(*bsg_reply_buf) +
+ 					   mrioc->reply_sz);
+ 		bsg_reply_buf = kzalloc(drv_buf_iter->kern_buf_len, GFP_KERNEL);
  
--	if (atomic_read(&sk->sk_rmem_alloc) >= sk->sk_rcvbuf) {
-+	if (atomic_read(&sk->sk_rmem_alloc) >= READ_ONCE(sk->sk_rcvbuf)) {
- 		atomic_inc(&sk->sk_drops);
- 		trace_sock_rcvqueue_full(sk, skb);
- 		return -ENOMEM;
-@@ -552,7 +552,7 @@ int __sk_receive_skb(struct sock *sk, struct sk_buff *skb,
+diff --git a/include/uapi/scsi/scsi_bsg_mpi3mr.h b/include/uapi/scsi/scsi_bsg_mpi3mr.h
+index fdc3517f9e199..c48c5d08c0fa0 100644
+--- a/include/uapi/scsi/scsi_bsg_mpi3mr.h
++++ b/include/uapi/scsi/scsi_bsg_mpi3mr.h
+@@ -382,7 +382,7 @@ struct mpi3mr_bsg_in_reply_buf {
+ 	__u8	mpi_reply_type;
+ 	__u8	rsvd1;
+ 	__u16	rsvd2;
+-	__u8	reply_buf[1];
++	__u8	reply_buf[];
+ };
  
- 	skb->dev = NULL;
- 
--	if (sk_rcvqueues_full(sk, sk->sk_rcvbuf)) {
-+	if (sk_rcvqueues_full(sk, READ_ONCE(sk->sk_rcvbuf))) {
- 		atomic_inc(&sk->sk_drops);
- 		goto discard_and_relse;
- 	}
+ /**
 -- 
 2.43.0
 
