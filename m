@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C7812E1DA;
-	Tue, 14 May 2024 11:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7736912EBEF;
+	Tue, 14 May 2024 11:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686734; cv=none; b=PrB0n9Kl4BvMLm/RnSTlpBZ/SJs+Jr7xlfkiC9XrRwFTuCHq0h+rEda4etIGbVpXoSwWLgI8RQumbzaXlkgHcNykLYQkwcSN/ilPj1KFvqTkf3lhT39BD16q/ngulpt6ibuivRffJVPLwF3STFf9nIRRVGu4Clr9Ps96BLd1YbI=
+	t=1715686737; cv=none; b=RQFnVZ+5D1F2vDlpElnTKRkgIHuR7TXVLPVUL5FjipPw/CNHASIpRxfxne41k3aoT+S4Qq+PUQ/+ELpOpFRRZa6oZk37ZJA6zVofxQ08BkLsAclMcLgNu9WHNO1MBgAT2XpslRVKhh0F/VkGK/Cjnfre5KREVszuMLXrJIKgAW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686734; c=relaxed/simple;
-	bh=AI6C4XACa46aMitUWRusQ7aVS15SmNokgEzUEBV21Uw=;
+	s=arc-20240116; t=1715686737; c=relaxed/simple;
+	bh=U5OyByZKNL7fmEp2KCPZqURBDg9PnrSPfafRZIFyhWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hPNO2dohMIk1dNxIAKT1vA/vCOn3V2d3B/5QL9K1z2yz18B4M5yqlDN5WKNIumYm2dT8baAXb20DZghTargV0qnFd2bzjUF9yea+xaZfn0ECq6wxZtNhc4quUBTVUdfm52ehOLmtwf6RPgvd2oBtylssGOSzijaDDhUkSUZpYUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9Zn3Hte; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CpZWsLzzpMbroQb7jnOMFak7gM0eW+RpYboG7oqTF2Mov+Znm9TpQ1AqKg9xBZTq1x8imhk4s49QwnL8Or8rmeEaLZZDLW14aUKr05cn/fiXojCmdrIbeon9yK4L6wJOGFwCIViWO62z3JOFczI4Hb6nAtAkdVnRjAx8Y19+B+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gDVtmwi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9Zn3Hte"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6CAC2BD10;
-	Tue, 14 May 2024 11:38:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gDVtmwi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8613C2BD10;
+	Tue, 14 May 2024 11:38:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686734;
-	bh=AI6C4XACa46aMitUWRusQ7aVS15SmNokgEzUEBV21Uw=;
+	s=korg; t=1715686737;
+	bh=U5OyByZKNL7fmEp2KCPZqURBDg9PnrSPfafRZIFyhWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w9Zn3HteTVKQs7ni4pgvJh/EUZL+z+49qyO/CwikTEjmaDO7+891nBpxcZj2MaLak
-	 OJfCkId6Fk2H+kZKwRbbYGE9yzFqUjvYZ8ORfaOgGH56J7YphGtlkabMFaA1Fp84Wn
-	 cJ/DKfTl3b3oX6ZBGuMpEUwoCJxEkm3bAlM+zfMM=
+	b=0gDVtmwi3txH9ZKaGa1gehe8/HYZMueYQ7F1V3Oc+8bO4DtK4ZNTecHqO5vvfy/4u
+	 c62H/gHfgh3+p8Cni115KS5NDbjp2zbIaaYVnco3yWdI6UlSy3jjajGWPqcFlw5X1A
+	 7DIPkmYtiYY32Thaba2Gsjt/aCe2E+yv4nf6nX6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 220/236] drm/amdkfd: dont allow mapping the MMIO HDP page with large pages
-Date: Tue, 14 May 2024 12:19:42 +0200
-Message-ID: <20240514101028.708058293@linuxfoundation.org>
+	Zack Rusin <zack.rusin@broadcom.com>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
+	Martin Krastev <martin.krastev@broadcom.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.1 221/236] drm/vmwgfx: Fix invalid reads in fence signaled events
+Date: Tue, 14 May 2024 12:19:43 +0200
+Message-ID: <20240514101028.746271769@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -50,55 +57,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit be4a2a81b6b90d1a47eaeaace4cc8e2cb57b96c7 upstream.
+commit a37ef7613c00f2d72c8fc08bd83fb6cc76926c8c upstream.
 
-We don't get the right offset in that case.  The GPU has
-an unused 4K area of the register BAR space into which you can
-remap registers.  We remap the HDP flush registers into this
-space to allow userspace (CPU or GPU) to flush the HDP when it
-updates VRAM.  However, on systems with >4K pages, we end up
-exposing PAGE_SIZE of MMIO space.
+Correctly set the length of the drm_event to the size of the structure
+that's actually used.
 
-Fixes: d8e408a82704 ("drm/amdkfd: Expose HDP registers to user space")
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+The length of the drm_event was set to the parent structure instead of
+to the drm_vmw_event_fence which is supposed to be read. drm_read
+uses the length parameter to copy the event to the user space thus
+resuling in oob reads.
+
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Fixes: 8b7de6aa8468 ("vmwgfx: Rework fence event action")
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-23566
+Cc: David Airlie <airlied@gmail.com>
+CC: Daniel Vetter <daniel@ffwll.ch>
+Cc: Zack Rusin <zack.rusin@broadcom.com>
+Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+Cc: <stable@vger.kernel.org> # v3.4+
+Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240425192748.1761522-1-zack.rusin@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_fence.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -1106,7 +1106,7 @@ static int kfd_ioctl_alloc_memory_of_gpu
- 			goto err_unlock;
- 		}
- 		offset = dev->adev->rmmio_remap.bus_addr;
--		if (!offset) {
-+		if (!offset || (PAGE_SIZE > 4096)) {
- 			err = -ENOMEM;
- 			goto err_unlock;
- 		}
-@@ -2215,7 +2215,7 @@ static int criu_restore_memory_of_gpu(st
- 			return -EINVAL;
- 		}
- 		offset = pdd->dev->adev->rmmio_remap.bus_addr;
--		if (!offset) {
-+		if (!offset || (PAGE_SIZE > 4096)) {
- 			pr_err("amdgpu_amdkfd_get_mmio_remap_phys_addr failed\n");
- 			return -ENOMEM;
- 		}
-@@ -2886,6 +2886,9 @@ static int kfd_mmio_mmap(struct kfd_dev
- 	if (vma->vm_end - vma->vm_start != PAGE_SIZE)
- 		return -EINVAL;
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
+@@ -991,7 +991,7 @@ static int vmw_event_fence_action_create
+ 	}
  
-+	if (PAGE_SIZE > 4096)
-+		return -EINVAL;
-+
- 	address = dev->adev->rmmio_remap.bus_addr;
+ 	event->event.base.type = DRM_VMW_EVENT_FENCE_SIGNALED;
+-	event->event.base.length = sizeof(*event);
++	event->event.base.length = sizeof(event->event);
+ 	event->event.user_data = user_data;
  
- 	vma->vm_flags |= VM_IO | VM_DONTCOPY | VM_DONTEXPAND | VM_NORESERVE |
+ 	ret = drm_event_reserve_init(dev, file_priv, &event->base, &event->event.base);
 
 
