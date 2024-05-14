@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B6F26AC5;
-	Tue, 14 May 2024 10:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB02C26AC5;
+	Tue, 14 May 2024 10:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684253; cv=none; b=e1PGJrhftdLI5PLmi2xVc2m9gKa1YNlhCxo90S6vwBVW8sar39ZPKIrYuHERYTNtTNiQYay7hUCqUsGfhISpm2QXEIgSfyN2yIclpWPIIMBxJq2qTeEpff3A/Ey1yQwsPxrj7HKjUA7x/yF9HH2e8BgLKcsreK+3hmlHLdbOI8Y=
+	t=1715684259; cv=none; b=aKp8i4g6Gf6NGNqxANIDqOzlcpVNo/T7Vu7T945V/qlC9hgWQcOYYr/U24vqoH70Byd806VPy6eczv1kkWmFdKqZdDGbVfjDAxDAkFXWG1beAbKDuu0w6YaXzBwLNC74wCrXmbQeXIQFGhISgtpWlqIvwB/EwamOmA8ANfiUyTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684253; c=relaxed/simple;
-	bh=KnuWkvQDk5yaEcSVpgqkwHrIIBgPbw0hqGKWlHrFxYo=;
+	s=arc-20240116; t=1715684259; c=relaxed/simple;
+	bh=YYW+If0QfUqpKD3tNnF6gW9ok0HtNGyWD6JRw8vw8Ow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f62d7BeAYbsA46zzxizutT04P15plbxLJBvGZGV8tbmU+5YYtKvbxfuNlE/iQtqrFJTYuJc6V2paD+1jWy98WvzN3dLvsXuMNGZ9QT7wnQrMLQoHcCJ8DgJ82HjiTcGDl79/NGaFZPSYaWb5AY4VCoywoADCMMdOwIdXyJBXFgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZrzW0JtD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZMfnQhdB7Fy6cqY3Iq1qc8o7bX9vAiQG5y7f+AiDpzKJNIgm5YYYXKrbr2Q1ysXO5JlMB9RnxGtiul26oRDyAc5AHBiUH1WOEBU7OitZ3yIGbvV+6KyRwojso47UACSWNV0V+UhjJVDXCbZOsApYHDfw8CHQBZpX969rPOOYVbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgZkgghO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZrzW0JtD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DECC2BD10;
-	Tue, 14 May 2024 10:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgZkgghO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E68C2BD10;
+	Tue, 14 May 2024 10:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684253;
-	bh=KnuWkvQDk5yaEcSVpgqkwHrIIBgPbw0hqGKWlHrFxYo=;
+	s=korg; t=1715684259;
+	bh=YYW+If0QfUqpKD3tNnF6gW9ok0HtNGyWD6JRw8vw8Ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZrzW0JtDhT36fca9zHzRsSDBtLT/+z26iUM1+O/CZw2LHKS2iZ+96pqX3RNHR/fM/
-	 RfWCXwUmhkauZK9UFqohDNhTU6rWucQO6Qjn/y5IXxsrFE+oIhbK253hCV39txlv9R
-	 o/gXbbnKMUmwv9KTywRIMt4d+7VKtHUc9Z59fvyo=
+	b=KgZkgghOS5CmzrUvVoVSgwtT3Nk5o6i5LK8fNpGC4EcV5toREMYUDnHA4wuN9yz75
+	 Nr6H/gK5Y5dZu0BZUsfPgG7HyYd8RDLlXXtZCvoSygIeusQ+SWNtF+WMtFbSyBhmhI
+	 FKmk3bThcN8/JG/kHApVFlDIg2zgfHeSiLG1UznY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 014/301] pinctrl: core: delete incorrect free in pinctrl_enable()
-Date: Tue, 14 May 2024 12:14:45 +0200
-Message-ID: <20240514101032.773905527@linuxfoundation.org>
+Subject: [PATCH 6.6 015/301] pinctrl: mediatek: paris: Fix PIN_CONFIG_INPUT_SCHMITT_ENABLE readback
+Date: Tue, 14 May 2024 12:14:46 +0200
+Message-ID: <20240514101032.818799708@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,45 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 5038a66dad0199de60e5671603ea6623eb9e5c79 ]
+[ Upstream commit 08f66a8edd08f6f7cfa769c81634b29a2b123908 ]
 
-The "pctldev" struct is allocated in devm_pinctrl_register_and_init().
-It's a devm_ managed pointer that is freed by devm_pinctrl_dev_release(),
-so freeing it in pinctrl_enable() will lead to a double free.
+In the generic pin config library, readback of some options are handled
+differently compared to the setting of those options: the argument value
+is used to convey enable/disable of an option in the set path, but
+success or -EINVAL is used to convey if an option is enabled or disabled
+in the debugfs readback path.
 
-The devm_pinctrl_dev_release() function frees the pindescs and destroys
-the mutex as well.
+PIN_CONFIG_INPUT_SCHMITT_ENABLE is one such option. Fix the readback of
+the option in the mediatek-paris library, so that the debugfs dump is
+not showing "input schmitt enabled" for pins that don't have it enabled.
 
-Fixes: 6118714275f0 ("pinctrl: core: Fix pinctrl_register_and_init() with pinctrl_enable()")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Message-ID: <578fbe56-44e9-487c-ae95-29b695650f7c@moroto.mountain>
+Fixes: 1bea6afbc842 ("pinctrl: mediatek: Refine mtk_pinconf_get()")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Message-ID: <20240327091336.3434141-2-wenst@chromium.org>
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/core.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-paris.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
-index 184ec92241ca8..9e7b3e6c79cb1 100644
---- a/drivers/pinctrl/core.c
-+++ b/drivers/pinctrl/core.c
-@@ -2116,13 +2116,7 @@ int pinctrl_enable(struct pinctrl_dev *pctldev)
+diff --git a/drivers/pinctrl/mediatek/pinctrl-paris.c b/drivers/pinctrl/mediatek/pinctrl-paris.c
+index 33d6c3fb79080..ea60de040e0a0 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-paris.c
++++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
+@@ -193,6 +193,8 @@ static int mtk_pinconf_get(struct pinctrl_dev *pctldev,
+ 		}
  
- 	error = pinctrl_claim_hogs(pctldev);
- 	if (error) {
--		dev_err(pctldev->dev, "could not claim hogs: %i\n",
--			error);
--		pinctrl_free_pindescs(pctldev, pctldev->desc->pins,
--				      pctldev->desc->npins);
--		mutex_destroy(&pctldev->mutex);
--		kfree(pctldev);
--
-+		dev_err(pctldev->dev, "could not claim hogs: %i\n", error);
- 		return error;
- 	}
- 
+ 		err = mtk_hw_get_value(hw, desc, PINCTRL_PIN_REG_SMT, &ret);
++		if (!ret)
++			err = -EINVAL;
+ 		break;
+ 	case PIN_CONFIG_DRIVE_STRENGTH:
+ 		if (!hw->soc->drive_get)
 -- 
 2.43.0
 
