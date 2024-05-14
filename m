@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D51433BE;
-	Tue, 14 May 2024 10:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C099B433BE;
+	Tue, 14 May 2024 10:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682374; cv=none; b=J78EAaAiH8Ug72aHhCtO00Mr75yFbXYj2UTzgHtACtPATH45HPdobj6dk80aL0hbHGTzGXNFWfhK4gBT/yBujWa9V3nc+xlcGuwKk/k69zBXMhAbF6GsEqGpPznUr0la5HR2IkdPlNhO9mSjfpqmlX960SZLKU6aT9KwgxN+twM=
+	t=1715682378; cv=none; b=Gj0P4VNpeu4hTZY2audgegC557Mqqb2jY1H+eTHWgOAWeMioVIyqVljEdxHsWEJtMnm+Fbp2COtZ6+w/mxKYqMD+2eMrAXndoKipwwuvUfyRtB+PFOes579mlGsNbheKm8Uy1/wUmMCCgnoU9nezHiTPLgwpMMDW1PHtEDJwkrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682374; c=relaxed/simple;
-	bh=FETMME7ZVBDtrB4Fsj6bwJhoDbYgSLpOzGLKYpjIVMk=;
+	s=arc-20240116; t=1715682378; c=relaxed/simple;
+	bh=Q4rwUbnN1VbGLNdTqydLlzNlwLy9ZYT5783x9Zo5Gds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VzHuyecH5A4TrhwfdWnuH8Pg3e/FMPPmk8/EIr1UFT9fiEKkFJvZW3ecMT4Vz9NPuXXIvhnwteXtW6IPGFFo9dN4lzep+t4ak0P90ORHqaWi5DXkNsBKnR4HVm2LLbTJwYKJCIRHY096dvUrkrMU8WlT7W65oCQK5V9Zmu5k0ZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+bMdI7j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e/Z1/IZdVHbejDiHNXHJCP9HIhmraT9Zq1uN8gtikcosYHy+VsPKIIM/mkADlieiTPNasZtH/qzABslAZrvxKkh1aVxqRVwXRCKDQ7Ae8SFHKFkDgiLC9pTYfRkhcccIP/zYSRBO1FWsM/OzsUA+m9uPBNv+H7NLxhL/m8y1vDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ed5hwT5T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+bMdI7j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4962C2BD10;
-	Tue, 14 May 2024 10:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ed5hwT5T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C54CC2BD10;
+	Tue, 14 May 2024 10:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682374;
-	bh=FETMME7ZVBDtrB4Fsj6bwJhoDbYgSLpOzGLKYpjIVMk=;
+	s=korg; t=1715682378;
+	bh=Q4rwUbnN1VbGLNdTqydLlzNlwLy9ZYT5783x9Zo5Gds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+bMdI7j2X/QtCxAUzIDJP9qAVXm/Ou9cpxTz+eHg9u5K0fNf+iYzoiHTwyx7xZEy
-	 xT3s9jUfyEMxP+EE2KvBnYuYM/j6mZbrVIK0S+smxPkicJ/zJ1hyRVjv4Ymn1FNdDV
-	 Hy69kPusIku6NBpZDxleUMabUlRs+/vY4LUXTcv0=
+	b=ed5hwT5TBrHneaxLweO4VQbUGZoencFlnnAMr7taGwXTUTBK7xStiQ9aerzfiF0bK
+	 gLDjf1DxTjF4YvMo35+icvWCpyOcr6b7YllWn3FlEgCaaMrCI8p9nxb6NcKHbihQFY
+	 74YTTCVh+3eSHcAwa9qilqrMDsCdLmC/5aLVg070=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
+	Jens Remus <jremus@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 050/336] thermal/debugfs: Prevent use-after-free from occurring after cdev removal
-Date: Tue, 14 May 2024 12:14:14 +0200
-Message-ID: <20240514101040.495860586@linuxfoundation.org>
+Subject: [PATCH 6.8 051/336] s390/vdso: Add CFI for RA register to asm macro vdso_func
+Date: Tue, 14 May 2024 12:14:15 +0200
+Message-ID: <20240514101040.533112057@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,62 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Jens Remus <jremus@linux.ibm.com>
 
-[ Upstream commit d351eb0ab04c3e8109895fc33250cebbce9c11da ]
+[ Upstream commit b961ec10b9f9719987470236feb50c967db5a652 ]
 
-Since thermal_debug_cdev_remove() does not run under cdev->lock, it can
-run in parallel with thermal_debug_cdev_state_update() and it may free
-the struct thermal_debugfs object used by the latter after it has been
-checked against NULL.
+The return-address (RA) register r14 is specified as volatile in the
+s390x ELF ABI [1]. Nevertheless proper CFI directives must be provided
+for an unwinder to restore the return address, if the RA register
+value is changed from its value at function entry, as it is the case.
 
-If that happens, thermal_debug_cdev_state_update() will access memory
-that has been freed already causing the kernel to crash.
+[1]: s390x ELF ABI, https://github.com/IBM/s390x-abi/releases
 
-Address this by using cdev->lock in thermal_debug_cdev_remove() around
-the cdev->debugfs value check (in case the same cdev is removed at the
-same time in two different threads) and its reset to NULL.
-
-Fixes: 755113d76786 ("thermal/debugfs: Add thermal cooling device debugfs information")
-Cc :6.8+ <stable@vger.kernel.org> # 6.8+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Fixes: 4bff8cb54502 ("s390: convert to GENERIC_VDSO")
+Signed-off-by: Jens Remus <jremus@linux.ibm.com>
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_debugfs.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ arch/s390/include/asm/dwarf.h               | 1 +
+ arch/s390/kernel/vdso64/vdso_user_wrapper.S | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/thermal/thermal_debugfs.c b/drivers/thermal/thermal_debugfs.c
-index 1fe2914a8853b..5693cc8b231aa 100644
---- a/drivers/thermal/thermal_debugfs.c
-+++ b/drivers/thermal/thermal_debugfs.c
-@@ -505,15 +505,23 @@ void thermal_debug_cdev_add(struct thermal_cooling_device *cdev)
-  */
- void thermal_debug_cdev_remove(struct thermal_cooling_device *cdev)
- {
--	struct thermal_debugfs *thermal_dbg = cdev->debugfs;
-+	struct thermal_debugfs *thermal_dbg;
+diff --git a/arch/s390/include/asm/dwarf.h b/arch/s390/include/asm/dwarf.h
+index 4f21ae561e4dd..390906b8e386e 100644
+--- a/arch/s390/include/asm/dwarf.h
++++ b/arch/s390/include/asm/dwarf.h
+@@ -9,6 +9,7 @@
+ #define CFI_DEF_CFA_OFFSET	.cfi_def_cfa_offset
+ #define CFI_ADJUST_CFA_OFFSET	.cfi_adjust_cfa_offset
+ #define CFI_RESTORE		.cfi_restore
++#define CFI_REL_OFFSET		.cfi_rel_offset
  
--	if (!thermal_dbg)
-+	mutex_lock(&cdev->lock);
-+
-+	thermal_dbg = cdev->debugfs;
-+	if (!thermal_dbg) {
-+		mutex_unlock(&cdev->lock);
- 		return;
-+	}
-+
-+	cdev->debugfs = NULL;
-+
-+	mutex_unlock(&cdev->lock);
- 
- 	mutex_lock(&thermal_dbg->lock);
- 
- 	thermal_debugfs_cdev_clear(&thermal_dbg->cdev_dbg);
--	cdev->debugfs = NULL;
- 
- 	mutex_unlock(&thermal_dbg->lock);
- 
+ #ifdef CONFIG_AS_CFI_VAL_OFFSET
+ #define CFI_VAL_OFFSET		.cfi_val_offset
+diff --git a/arch/s390/kernel/vdso64/vdso_user_wrapper.S b/arch/s390/kernel/vdso64/vdso_user_wrapper.S
+index 57f62596e53b9..85247ef5a41b8 100644
+--- a/arch/s390/kernel/vdso64/vdso_user_wrapper.S
++++ b/arch/s390/kernel/vdso64/vdso_user_wrapper.S
+@@ -24,8 +24,10 @@ __kernel_\func:
+ 	CFI_DEF_CFA_OFFSET (STACK_FRAME_OVERHEAD + WRAPPER_FRAME_SIZE)
+ 	CFI_VAL_OFFSET 15, -STACK_FRAME_OVERHEAD
+ 	stg	%r14,STACK_FRAME_OVERHEAD(%r15)
++	CFI_REL_OFFSET 14, STACK_FRAME_OVERHEAD
+ 	brasl	%r14,__s390_vdso_\func
+ 	lg	%r14,STACK_FRAME_OVERHEAD(%r15)
++	CFI_RESTORE 14
+ 	aghi	%r15,WRAPPER_FRAME_SIZE
+ 	CFI_DEF_CFA_OFFSET STACK_FRAME_OVERHEAD
+ 	CFI_RESTORE 15
 -- 
 2.43.0
 
