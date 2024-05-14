@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB514F88C;
-	Tue, 14 May 2024 10:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784734F88C;
+	Tue, 14 May 2024 10:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683878; cv=none; b=MKDjC09XwupK1L3vv6kxMymVlysQ81VQZhE4hk0cshd6c0vdnd9U84m4CRtiX/V6Ogx1L32MneYebGoMXCWzw1Qti0UcnOxVo61VzVrlEpbMIotBeQT585iHVux7G5S4hcI8DSpXlrIZSUQj6Nd1Kfb+f6RcAemEs358LEmji+U=
+	t=1715683885; cv=none; b=UCiWsT+Dvbjpyz6yQNmFTQkONErJIljhif+9lMYGc/SjHlvAtVj4ezV/BSxNBBGzxpQIeOGVyq5rmJHYQNHzbb3tgywQF+uUNA6gOK7Jcz34H4jo/GtyFBUp9nP57rMzFzpAwHmAt528S3RBX5K740qe1semtKPxC39Sem9sVl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683878; c=relaxed/simple;
-	bh=UFEQVNNIHgIph5B26xb4qgkXps8eboKAGAnUGtOZqH4=;
+	s=arc-20240116; t=1715683885; c=relaxed/simple;
+	bh=RwLa6B3ijzOSCskSXZ8RCcfKOE3ulnK+V6elcBb4ap4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=itKAXdeclzzt7EGic3eS3yFA1AUFFbqzllA67Pl7u8R6RBu1h+vhG9uY2zRWDlf7TbLehJCesVqIJeUbPtwbevV/wNNCVPfKFgJlj+nnXBjeAYaH+n5iGKvISn9anyPqEGHzyTjwFAR9LNrm5QxiYmwTXgGvhhNvd445ikajmQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YoNaza7r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bEW3+NqfAY5cexX+daS+/rzV285+Tc2k4uCFCo04L/Kc+E8dKabm8wd8Uvm1ThqjYiq9aUThsa+HwbyadnTEnrbPsoc80fqVnR0Nmw3EAQJCfclUViewKcbKeWuwCUPpP+f7I33zMJDkjJ4kr2m6CkLxlwkRZ/UfoE3NJUZvsIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEkBstDG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YoNaza7r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8E7C2BD10;
-	Tue, 14 May 2024 10:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEkBstDG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA97DC2BD10;
+	Tue, 14 May 2024 10:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683878;
-	bh=UFEQVNNIHgIph5B26xb4qgkXps8eboKAGAnUGtOZqH4=;
+	s=korg; t=1715683885;
+	bh=RwLa6B3ijzOSCskSXZ8RCcfKOE3ulnK+V6elcBb4ap4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YoNaza7rfmoEaaqB76B+0DInRqHFAOGXMJIPEC6QDpu4x6M9ncS6E5eUgDfHVCYG5
-	 CZeJE//hL5dVrInabjuCgk/1McMNWKnNVl9oq0jEs0VwBWujLVbrl+JEhIjvZiTqCP
-	 hkBA+1Cw/MwaCiG7Xi4Ldtd7jZAD8c+kqb7leTKA=
+	b=tEkBstDGQP1HFIMR1QI2HniPYLyQkiTSIq93vgvwqAM5Q2CcvGhZAi8zPuEQ0Fpb7
+	 x8WvWau01Mhmea2TOGa3QNd2135EIMyhdrng1pzOVomyWK4U3PszYXz0/g3T5rJJkR
+	 zJSDltem+9rHiv7KPMYk1JE+juVCz8LYPDiOwYkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.8 289/336] clk: samsung: Revert "clk: Use device_get_match_data()"
-Date: Tue, 14 May 2024 12:18:13 +0200
-Message-ID: <20240514101049.527481172@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Frank Oltmanns <frank@oltmanns.dev>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>
+Subject: [PATCH 6.8 290/336] clk: sunxi-ng: common: Support minimum and maximum rate
+Date: Tue, 14 May 2024 12:18:14 +0200
+Message-ID: <20240514101049.564827132@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,79 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Frank Oltmanns <frank@oltmanns.dev>
 
-commit aacb99de1099346244d488bdf7df489a44278574 upstream.
+commit b914ec33b391ec766545a41f0cfc0de3e0b388d7 upstream.
 
-device_get_match_data() function should not be used on the device other
-than the one matched to the given driver, because it always returns the
-match_data of the matched driver. In case of exynos-clkout driver, the
-original code matches the OF IDs on the PARENT device, so replacing it
-with of_device_get_match_data() broke the driver.
+The Allwinner SoC's typically have an upper and lower limit for their
+clocks' rates. Up until now, support for that has been implemented
+separately for each clock type.
 
-This has been already pointed once in commit 2bc5febd05ab ("clk: samsung:
-Revert "clk: samsung: exynos-clkout: Use of_device_get_match_data()"").
-To avoid further confusion, add a comment about this special case, which
-requires direct of_match_device() call to pass custom IDs array.
+Implement that functionality in the sunxi-ng's common part making use of
+the CCF rate liming capabilities, so that it is available for all clock
+types.
 
-This partially reverts commit 409c39ec92a35e3708f5b5798c78eae78512cd71.
-
-Cc: <stable@vger.kernel.org>
-Fixes: 409c39ec92a3 ("clk: Use device_get_match_data()")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20240425075628.838497-1-m.szyprowski@samsung.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240430184656.357805-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Suggested-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Frank Oltmanns <frank@oltmanns.dev>
+Cc: stable@vger.kernel.org
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Link: https://lore.kernel.org/r/20240310-pinephone-pll-fixes-v4-1-46fc80c83637@oltmanns.dev
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/samsung/clk-exynos-clkout.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/clk/sunxi-ng/ccu_common.c |   19 +++++++++++++++++++
+ drivers/clk/sunxi-ng/ccu_common.h |    3 +++
+ 2 files changed, 22 insertions(+)
 
-diff --git a/drivers/clk/samsung/clk-exynos-clkout.c b/drivers/clk/samsung/clk-exynos-clkout.c
-index 3484e6cc80ad..503c6f5b20d5 100644
---- a/drivers/clk/samsung/clk-exynos-clkout.c
-+++ b/drivers/clk/samsung/clk-exynos-clkout.c
-@@ -13,9 +13,9 @@
- #include <linux/io.h>
- #include <linux/of.h>
- #include <linux/of_address.h>
-+#include <linux/of_device.h>
- #include <linux/platform_device.h>
- #include <linux/pm.h>
--#include <linux/property.h>
- 
- #define EXYNOS_CLKOUT_NR_CLKS		1
- #define EXYNOS_CLKOUT_PARENTS		32
-@@ -84,17 +84,24 @@ MODULE_DEVICE_TABLE(of, exynos_clkout_ids);
- static int exynos_clkout_match_parent_dev(struct device *dev, u32 *mux_mask)
+--- a/drivers/clk/sunxi-ng/ccu_common.c
++++ b/drivers/clk/sunxi-ng/ccu_common.c
+@@ -44,6 +44,16 @@ bool ccu_is_better_rate(struct ccu_commo
+ 			unsigned long current_rate,
+ 			unsigned long best_rate)
  {
- 	const struct exynos_clkout_variant *variant;
-+	const struct of_device_id *match;
++	unsigned long min_rate, max_rate;
++
++	clk_hw_get_rate_range(&common->hw, &min_rate, &max_rate);
++
++	if (current_rate > max_rate)
++		return false;
++
++	if (current_rate < min_rate)
++		return false;
++
+ 	if (common->features & CCU_FEATURE_CLOSEST_RATE)
+ 		return abs(current_rate - target_rate) < abs(best_rate - target_rate);
  
- 	if (!dev->parent) {
- 		dev_err(dev, "not instantiated from MFD\n");
- 		return -EINVAL;
+@@ -122,6 +132,7 @@ static int sunxi_ccu_probe(struct sunxi_
+ 
+ 	for (i = 0; i < desc->hw_clks->num ; i++) {
+ 		struct clk_hw *hw = desc->hw_clks->hws[i];
++		struct ccu_common *common = hw_to_ccu_common(hw);
+ 		const char *name;
+ 
+ 		if (!hw)
+@@ -136,6 +147,14 @@ static int sunxi_ccu_probe(struct sunxi_
+ 			pr_err("Couldn't register clock %d - %s\n", i, name);
+ 			goto err_clk_unreg;
+ 		}
++
++		if (common->max_rate)
++			clk_hw_set_rate_range(hw, common->min_rate,
++					      common->max_rate);
++		else
++			WARN(common->min_rate,
++			     "No max_rate, ignoring min_rate of clock %d - %s\n",
++			     i, name);
  	}
  
--	variant = device_get_match_data(dev->parent);
--	if (!variant) {
-+	/*
-+	 * 'exynos_clkout_ids' arrays is not the ids array matched by
-+	 * the dev->parent driver, so of_device_get_match_data() or
-+	 * device_get_match_data() cannot be used here.
-+	 */
-+	match = of_match_device(exynos_clkout_ids, dev->parent);
-+	if (!match) {
- 		dev_err(dev, "cannot match parent device\n");
- 		return -EINVAL;
- 	}
-+	variant = match->data;
+ 	ret = of_clk_add_hw_provider(node, of_clk_hw_onecell_get,
+--- a/drivers/clk/sunxi-ng/ccu_common.h
++++ b/drivers/clk/sunxi-ng/ccu_common.h
+@@ -31,6 +31,9 @@ struct ccu_common {
+ 	u16		lock_reg;
+ 	u32		prediv;
  
- 	*mux_mask = variant->mux_mask;
- 
--- 
-2.45.0
-
++	unsigned long	min_rate;
++	unsigned long	max_rate;
++
+ 	unsigned long	features;
+ 	spinlock_t	*lock;
+ 	struct clk_hw	hw;
 
 
