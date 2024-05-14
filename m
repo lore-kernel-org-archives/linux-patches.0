@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857241386D9;
-	Tue, 14 May 2024 10:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09607320F;
+	Tue, 14 May 2024 10:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682901; cv=none; b=VzGV7wZBW59M7SEznrTMEhv2d8jeAg0MTntt/dxlk5fkZGVsWo174K1SVrE9QqKO92jFcsnN/ORQZjDEZXwigx9KWbXiwqFUptCKGKQHGXIE0HjrpuQlAJq/hDo/1x6ynIbTN/e5Y04VjTDwQl1K/ZPaHHESGoBem5BLuEueogs=
+	t=1715682906; cv=none; b=FUadf7Pq1mGiP1ME9H8m0Me8wWwU762af+HktXa797v5m5oJnZ7FWq9qv9XpuEaEG3qs5IASXvm8wjwwkA0mplmwQP4fv5sUVoAiCZd+xZubRdUJHcYLCeKUY2QcZfLdinU7WC9oCeeRVIegPp7WMHo+DeUG4chvx6XtinAGk+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682901; c=relaxed/simple;
-	bh=AYMUr7g/h67JDny9rO49i3c2F93o1aNFgmFmgPV39TU=;
+	s=arc-20240116; t=1715682906; c=relaxed/simple;
+	bh=dCO1+fnqbs6SJCrfV/XdJRB7IG5ojEz3ffm8ehJkn24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aXgi3knVfnZCnfbRXuwZlh7D/EQy3piLHZfnJjRuMKiWc3lja6luFb/qHq51kovkW/aI3gPgQtFqtN7g7CjJrCUDP+bsg/uy2wSVxfzxLQwT7Ofmzj+9zg4KdW2Q/BHBcvfdg248Am2izMsGoV1Qk3frVEQQeLYcVUiP9/SNzZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfeRHYJK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tI+cxp3GiQCM11S2FuxZWFfsUbiD/fbF9bQPyoNAIt2YaY3xD3atX03/t1I7ec+d3F0ghdp9bRH/UYRe/jfe7nxcACMR+9xC3k5Wa9DZZ9gSYX2TZPFplNRRWECpHUu7IUCoe6pQAysvHZoc2ZF6qHfUhjLoPv1ySWgYURfxO6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ibv9qm6i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfeRHYJK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E69CDC2BD10;
-	Tue, 14 May 2024 10:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ibv9qm6i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25C68C2BD10;
+	Tue, 14 May 2024 10:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682901;
-	bh=AYMUr7g/h67JDny9rO49i3c2F93o1aNFgmFmgPV39TU=;
+	s=korg; t=1715682905;
+	bh=dCO1+fnqbs6SJCrfV/XdJRB7IG5ojEz3ffm8ehJkn24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NfeRHYJKwPg7qbyjyZxNaqs2WpvwnAm8bWlfLeiKFvP8G55OF5sRwp1YW1wFqdeVY
-	 Gl2w0zyoULhc9T6+C6tsyMEEfez2TRnSXnwbu+bher/1WCI7GIRUhpPJhd6PGsdJ5L
-	 KO+3bdbdZYUWd41lRY3krHmS7vmONuOqK88fg2b8=
+	b=ibv9qm6icxWURAzoaB0QRN3WQw5KpT+vRsKQ7JcNQsXZFhK1gy7cOU3sdx0Pl+ZuE
+	 h0uG8mWBAuH59EXAjcaeHSPGANOQNeRmyJg3dWeWQ63TmEEzA2/CjA4gkKeqbAjc3R
+	 PLxFnOK7PXStph4GDv45BUBxk9XFvb6ofifFEzBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Elwell <phil@raspberrypi.com>,
-	Maarten Vanraes <maarten@rmail.be>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jeff Layton <jlayton@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 130/336] net: bcmgenet: Reset RBUF on first open
-Date: Tue, 14 May 2024 12:15:34 +0200
-Message-ID: <20240514101043.509616984@linuxfoundation.org>
+Subject: [PATCH 6.8 131/336] vboxsf: explicitly deny setlease attempts
+Date: Tue, 14 May 2024 12:15:35 +0200
+Message-ID: <20240514101043.547328961@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,81 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Elwell <phil@raspberrypi.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 0a6380cb4c6b5c1d6dad226ba3130f9090f0ccea ]
+[ Upstream commit 1ece2c43b88660ddbdf8ecb772e9c41ed9cda3dd ]
 
-If the RBUF logic is not reset when the kernel starts then there
-may be some data left over from any network boot loader. If the
-64-byte packet headers are enabled then this can be fatal.
+vboxsf does not break leases on its own, so it can't properly handle the
+case where the hypervisor changes the data. Don't allow file leases on
+vboxsf.
 
-Extend bcmgenet_dma_disable to do perform the reset, but not when
-called from bcmgenet_resume in order to preserve a wake packet.
-
-N.B. This different handling of resume is just based on a hunch -
-why else wouldn't one reset the RBUF as well as the TBUF? If this
-isn't the case then it's easy to change the patch to make the RBUF
-reset unconditional.
-
-See: https://github.com/raspberrypi/linux/issues/3850
-See: https://github.com/raspberrypi/firmware/issues/1882
-
-Signed-off-by: Phil Elwell <phil@raspberrypi.com>
-Signed-off-by: Maarten Vanraes <maarten@rmail.be>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/r/20240319-setlease-v1-1-5997d67e04b3@kernel.org
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ fs/vboxsf/file.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 2d7ae71287b14..855cbe349236b 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -3282,7 +3282,7 @@ static void bcmgenet_get_hw_addr(struct bcmgenet_priv *priv,
- }
+diff --git a/fs/vboxsf/file.c b/fs/vboxsf/file.c
+index 2307f8037efc3..118dedef8ebe8 100644
+--- a/fs/vboxsf/file.c
++++ b/fs/vboxsf/file.c
+@@ -218,6 +218,7 @@ const struct file_operations vboxsf_reg_fops = {
+ 	.release = vboxsf_file_release,
+ 	.fsync = noop_fsync,
+ 	.splice_read = filemap_splice_read,
++	.setlease = simple_nosetlease,
+ };
  
- /* Returns a reusable dma control register value */
--static u32 bcmgenet_dma_disable(struct bcmgenet_priv *priv)
-+static u32 bcmgenet_dma_disable(struct bcmgenet_priv *priv, bool flush_rx)
- {
- 	unsigned int i;
- 	u32 reg;
-@@ -3307,6 +3307,14 @@ static u32 bcmgenet_dma_disable(struct bcmgenet_priv *priv)
- 	udelay(10);
- 	bcmgenet_umac_writel(priv, 0, UMAC_TX_FLUSH);
- 
-+	if (flush_rx) {
-+		reg = bcmgenet_rbuf_ctrl_get(priv);
-+		bcmgenet_rbuf_ctrl_set(priv, reg | BIT(0));
-+		udelay(10);
-+		bcmgenet_rbuf_ctrl_set(priv, reg);
-+		udelay(10);
-+	}
-+
- 	return dma_ctrl;
- }
- 
-@@ -3370,8 +3378,8 @@ static int bcmgenet_open(struct net_device *dev)
- 
- 	bcmgenet_set_hw_addr(priv, dev->dev_addr);
- 
--	/* Disable RX/TX DMA and flush TX queues */
--	dma_ctrl = bcmgenet_dma_disable(priv);
-+	/* Disable RX/TX DMA and flush TX and RX queues */
-+	dma_ctrl = bcmgenet_dma_disable(priv, true);
- 
- 	/* Reinitialize TDMA and RDMA and SW housekeeping */
- 	ret = bcmgenet_init_dma(priv);
-@@ -4237,7 +4245,7 @@ static int bcmgenet_resume(struct device *d)
- 			bcmgenet_hfb_create_rxnfc_filter(priv, rule);
- 
- 	/* Disable RX/TX DMA and flush TX queues */
--	dma_ctrl = bcmgenet_dma_disable(priv);
-+	dma_ctrl = bcmgenet_dma_disable(priv, false);
- 
- 	/* Reinitialize TDMA and RDMA and SW housekeeping */
- 	ret = bcmgenet_init_dma(priv);
+ const struct inode_operations vboxsf_reg_iops = {
 -- 
 2.43.0
 
