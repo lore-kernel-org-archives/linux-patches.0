@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5ADA13E050;
-	Tue, 14 May 2024 10:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2AF13E050;
+	Tue, 14 May 2024 10:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683543; cv=none; b=refyOAXgG6YNvz8sF8y97QC6jOcJ3jtiDnJeyBxvf/VG85z310udkyKT4Rutx3swf3aGL0eAKf+zqtimw6emfrJBeZ/AJTMyqepxnhlrhe7VdyjO3w9rVxw4/wrcLi7YlcYv6a18QGKuXO2BDl9/XC71ovbRrc4LO90b30/sUpI=
+	t=1715683550; cv=none; b=cX513vnNlpQhvON5oRRDfh+GyywzOiPi0xUXYYitG+a/aq0hURje/BAHej5LRWa/zRVj7hWQjIm4ex9uSNfyFVWXgwh8PJT5IdCINuzCoO/c6eCZuzgjOoyZTcDJwBtCrVecZWics45HZawnmBd3UzahwmbolTB4xrvnm9eXzdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683543; c=relaxed/simple;
-	bh=Qwh65TR070YMNjSKWTKj6qQhe7McrCo0SMx858fMqW0=;
+	s=arc-20240116; t=1715683550; c=relaxed/simple;
+	bh=BtChmRdmrPMDORxlSvAm9peUdURfzRQo1AxJvn+KgWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IBr/gPUASpeuOkIPwvaxk3OZ8MnQMGuEQv73Ntrv40pNRiyqpM63G10RBsXixJPi8n1IJsc0id7Ltf9CNyHVvTSFPjqdXiFj+Xay4bFwHWzmZ7c1mGQKtTg+WyR6NiuhKSBaBveDDDJcHi8znKoaxiNDCeNAp5HVBVsXv2BlW+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O5Bh6sV7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IWLbVTQOEHtpIWgaFcnLuV8+d5zB4/TW7Ci78EN2xc5Bmdt3aPJ94+ya4oBhoEvGO725wwDvdar5FP6tf3CII2ofiOCUBpSTXOY4cWHjye5kY9OheAC9J5r3OiLeMBYQMfrzVdue0tkXA/MmGyhINoJun7VoMVtv8wL5/F124N0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZubY0DiJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O5Bh6sV7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8238CC2BD10;
-	Tue, 14 May 2024 10:45:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZubY0DiJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D37BC2BD10;
+	Tue, 14 May 2024 10:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683543;
-	bh=Qwh65TR070YMNjSKWTKj6qQhe7McrCo0SMx858fMqW0=;
+	s=korg; t=1715683550;
+	bh=BtChmRdmrPMDORxlSvAm9peUdURfzRQo1AxJvn+KgWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O5Bh6sV74kxLNXR0s4hlhWAB0/dQHKTOfOJl1MytexzpaMnMiiX/bPPdrnSZsOvVF
-	 88Fk01tQYMEaKJt8WDYapqwrzpPzAfP+ZPJe4pVMGuaumvhWofFxYC/3+lOsZ0MO8F
-	 PgovVlPE2BuoKpYn6qK+Y1TPbBFgN2adDZTP4MTM=
+	b=ZubY0DiJfraWwfBhvSHtnHpkEAv3Kc6hfqIaZTRq3SCGiQ8Cs6dVZN6qaQ6WlZycQ
+	 qWFHLvIkRYRoYe/aAisW8YhjiIVflVQP2dInZlSWQr4hsY3aQ3N8jE1bxs9wy3MvNs
+	 xtamQRVMR3yWVk0j94S+8W/Rpu+wplw33ChXKBMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Steffen=20B=C3=A4tz?= <steffen@innosonix.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Fabio Estevam <festevam@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 233/336] net: dsa: mv88e6xxx: add phylink_get_caps for the mv88e6320/21 family
-Date: Tue, 14 May 2024 12:17:17 +0200
-Message-ID: <20240514101047.412107062@linuxfoundation.org>
+Subject: [PATCH 6.8 234/336] drm/meson: dw-hdmi: power up phy on device init
+Date: Tue, 14 May 2024 12:17:18 +0200
+Message-ID: <20240514101047.449778131@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -47,84 +45,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steffen Bätz <steffen@innosonix.de>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit f39bf3cf08a49e7d20c44bc8bc8e390fea69959a ]
+[ Upstream commit 04703bfd7f99c016a823c74712b97f8b5590ce87 ]
 
-As of commit de5c9bf40c45 ("net: phylink: require supported_interfaces to
-be filled")
-Marvell 88e6320/21 switches fail to be probed:
+The phy is not in a useful state right after init. It will become useful,
+including for auxiliary function such as CEC or ARC, after the first mode
+is set. This is a problem on systems where the display is using another
+interface like DSI or CVBS.
 
-...
-mv88e6085 30be0000.ethernet-1:00: phylink: error: empty supported_interfaces
-error creating PHYLINK: -22
-...
+This change refactor the init and mode change callback to power up the PHY
+on init and leave only what is necessary for mode changes in the related
+function. This is enough to fix CEC operation when HDMI display is not
+enabled.
 
-The problem stems from the use of mv88e6185_phylink_get_caps() to get
-the device capabilities.
-Since there are serdes only ports 0/1 included, create a new dedicated
-phylink_get_caps for the 6320 and 6321 to properly support their
-set of capabilities.
-
-Fixes: de5c9bf40c45 ("net: phylink: require supported_interfaces to be filled")
-Signed-off-by: Steffen Bätz <steffen@innosonix.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Link: https://lore.kernel.org/r/20240508072944.54880-2-steffen@innosonix.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 3f68be7d8e96 ("drm/meson: Add support for HDMI encoder and DW-HDMI bridge + PHY")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240426160256.3089978-2-jbrunet@baylibre.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240426160256.3089978-2-jbrunet@baylibre.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/meson/meson_dw_hdmi.c | 51 +++++++++------------------
+ 1 file changed, 17 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index bb0552469ae84..967d9136313f4 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -697,6 +697,18 @@ static void mv88e6352_phylink_get_caps(struct mv88e6xxx_chip *chip, int port,
- 	}
- }
+diff --git a/drivers/gpu/drm/meson/meson_dw_hdmi.c b/drivers/gpu/drm/meson/meson_dw_hdmi.c
+index 5a9538bc0e26f..a83d93078537d 100644
+--- a/drivers/gpu/drm/meson/meson_dw_hdmi.c
++++ b/drivers/gpu/drm/meson/meson_dw_hdmi.c
+@@ -384,26 +384,6 @@ static int dw_hdmi_phy_init(struct dw_hdmi *hdmi, void *data,
+ 	    dw_hdmi_bus_fmt_is_420(hdmi))
+ 		mode_is_420 = true;
  
-+static void mv88e632x_phylink_get_caps(struct mv88e6xxx_chip *chip, int port,
-+				       struct phylink_config *config)
-+{
-+	unsigned long *supported = config->supported_interfaces;
-+
-+	/* Translate the default cmode */
-+	mv88e6xxx_translate_cmode(chip->ports[port].cmode, supported);
-+
-+	config->mac_capabilities = MAC_SYM_PAUSE | MAC_10 | MAC_100 |
-+				   MAC_1000FD;
-+}
-+
- static void mv88e6341_phylink_get_caps(struct mv88e6xxx_chip *chip, int port,
- 				       struct phylink_config *config)
- {
-@@ -5090,7 +5102,7 @@ static const struct mv88e6xxx_ops mv88e6320_ops = {
- 	.gpio_ops = &mv88e6352_gpio_ops,
- 	.avb_ops = &mv88e6352_avb_ops,
- 	.ptp_ops = &mv88e6352_ptp_ops,
--	.phylink_get_caps = mv88e6185_phylink_get_caps,
-+	.phylink_get_caps = mv88e632x_phylink_get_caps,
- };
+-	/* Enable clocks */
+-	regmap_update_bits(priv->hhi, HHI_HDMI_CLK_CNTL, 0xffff, 0x100);
+-
+-	/* Bring HDMITX MEM output of power down */
+-	regmap_update_bits(priv->hhi, HHI_MEM_PD_REG0, 0xff << 8, 0);
+-
+-	/* Bring out of reset */
+-	dw_hdmi->data->top_write(dw_hdmi, HDMITX_TOP_SW_RESET,  0);
+-
+-	/* Enable internal pixclk, tmds_clk, spdif_clk, i2s_clk, cecclk */
+-	dw_hdmi_top_write_bits(dw_hdmi, HDMITX_TOP_CLK_CNTL,
+-			       0x3, 0x3);
+-
+-	/* Enable cec_clk and hdcp22_tmdsclk_en */
+-	dw_hdmi_top_write_bits(dw_hdmi, HDMITX_TOP_CLK_CNTL,
+-			       0x3 << 4, 0x3 << 4);
+-
+-	/* Enable normal output to PHY */
+-	dw_hdmi->data->top_write(dw_hdmi, HDMITX_TOP_BIST_CNTL, BIT(12));
+-
+ 	/* TMDS pattern setup */
+ 	if (mode->clock > 340000 && !mode_is_420) {
+ 		dw_hdmi->data->top_write(dw_hdmi, HDMITX_TOP_TMDS_CLK_PTTN_01,
+@@ -425,20 +405,6 @@ static int dw_hdmi_phy_init(struct dw_hdmi *hdmi, void *data,
+ 	/* Setup PHY parameters */
+ 	meson_hdmi_phy_setup_mode(dw_hdmi, mode, mode_is_420);
  
- static const struct mv88e6xxx_ops mv88e6321_ops = {
-@@ -5136,7 +5148,7 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
- 	.gpio_ops = &mv88e6352_gpio_ops,
- 	.avb_ops = &mv88e6352_avb_ops,
- 	.ptp_ops = &mv88e6352_ptp_ops,
--	.phylink_get_caps = mv88e6185_phylink_get_caps,
-+	.phylink_get_caps = mv88e632x_phylink_get_caps,
- };
+-	/* Setup PHY */
+-	regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
+-			   0xffff << 16, 0x0390 << 16);
+-
+-	/* BIT_INVERT */
+-	if (dw_hdmi_is_compatible(dw_hdmi, "amlogic,meson-gxl-dw-hdmi") ||
+-	    dw_hdmi_is_compatible(dw_hdmi, "amlogic,meson-gxm-dw-hdmi") ||
+-	    dw_hdmi_is_compatible(dw_hdmi, "amlogic,meson-g12a-dw-hdmi"))
+-		regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
+-				   BIT(17), 0);
+-	else
+-		regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
+-				   BIT(17), BIT(17));
+-
+ 	/* Disable clock, fifo, fifo_wr */
+ 	regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1, 0xf, 0);
  
- static const struct mv88e6xxx_ops mv88e6341_ops = {
+@@ -656,6 +622,23 @@ static void meson_dw_hdmi_init(struct meson_dw_hdmi *meson_dw_hdmi)
+ 	meson_dw_hdmi->data->top_write(meson_dw_hdmi,
+ 				       HDMITX_TOP_CLK_CNTL, 0xff);
+ 
++	/* Enable normal output to PHY */
++	meson_dw_hdmi->data->top_write(meson_dw_hdmi, HDMITX_TOP_BIST_CNTL, BIT(12));
++
++	/* Setup PHY */
++	regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
++			   0xffff << 16, 0x0390 << 16);
++
++	/* BIT_INVERT */
++	if (dw_hdmi_is_compatible(meson_dw_hdmi, "amlogic,meson-gxl-dw-hdmi") ||
++	    dw_hdmi_is_compatible(meson_dw_hdmi, "amlogic,meson-gxm-dw-hdmi") ||
++	    dw_hdmi_is_compatible(meson_dw_hdmi, "amlogic,meson-g12a-dw-hdmi"))
++		regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
++				   BIT(17), 0);
++	else
++		regmap_update_bits(priv->hhi, HHI_HDMI_PHY_CNTL1,
++				   BIT(17), BIT(17));
++
+ 	/* Enable HDMI-TX Interrupt */
+ 	meson_dw_hdmi->data->top_write(meson_dw_hdmi, HDMITX_TOP_INTR_STAT_CLR,
+ 				       HDMITX_TOP_INTR_CORE);
 -- 
 2.43.0
 
