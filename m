@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C099B433BE;
-	Tue, 14 May 2024 10:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1CE12F379;
+	Tue, 14 May 2024 10:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682378; cv=none; b=Gj0P4VNpeu4hTZY2audgegC557Mqqb2jY1H+eTHWgOAWeMioVIyqVljEdxHsWEJtMnm+Fbp2COtZ6+w/mxKYqMD+2eMrAXndoKipwwuvUfyRtB+PFOes579mlGsNbheKm8Uy1/wUmMCCgnoU9nezHiTPLgwpMMDW1PHtEDJwkrY=
+	t=1715682384; cv=none; b=gZmZWUjviVJHJbeyAh7uuNLYo78YEMh+EocPfXzbDRoPIskhpKnoBuFphJwgcipnyErKcXY98VcKpr9N/WUF7fw6wIKCY8KpkVvVrrTeDnNhO7y86PVNYFMvl0DCR9KttIivSacE44RIuyks4XInB9ROz9NHEmLo/s7r2tsH0IA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682378; c=relaxed/simple;
-	bh=Q4rwUbnN1VbGLNdTqydLlzNlwLy9ZYT5783x9Zo5Gds=;
+	s=arc-20240116; t=1715682384; c=relaxed/simple;
+	bh=ZhE8GSioVYy/DZMI9leWLF7F8LlVQ8nvpEpnSmfsHsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e/Z1/IZdVHbejDiHNXHJCP9HIhmraT9Zq1uN8gtikcosYHy+VsPKIIM/mkADlieiTPNasZtH/qzABslAZrvxKkh1aVxqRVwXRCKDQ7Ae8SFHKFkDgiLC9pTYfRkhcccIP/zYSRBO1FWsM/OzsUA+m9uPBNv+H7NLxhL/m8y1vDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ed5hwT5T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uozlL8ozzgo9AkWmklIomRlWyKKbmtTPt2xDa3/3dpvq16hEcRbnVoUNjZ0eA17WZRjG1do3Q0e2o/UJKfeLFtzGl/lc+XcPqhWRVGD7gAe9RUdaFAhATIV9UMBIQFw6mUonACUpfPd64pRRLpXuCHWUqNXLKf0h/jQ12BMdrbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNtb2h6e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ed5hwT5T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C54CC2BD10;
-	Tue, 14 May 2024 10:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNtb2h6e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4806C2BD10;
+	Tue, 14 May 2024 10:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682378;
-	bh=Q4rwUbnN1VbGLNdTqydLlzNlwLy9ZYT5783x9Zo5Gds=;
+	s=korg; t=1715682384;
+	bh=ZhE8GSioVYy/DZMI9leWLF7F8LlVQ8nvpEpnSmfsHsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ed5hwT5TBrHneaxLweO4VQbUGZoencFlnnAMr7taGwXTUTBK7xStiQ9aerzfiF0bK
-	 gLDjf1DxTjF4YvMo35+icvWCpyOcr6b7YllWn3FlEgCaaMrCI8p9nxb6NcKHbihQFY
-	 74YTTCVh+3eSHcAwa9qilqrMDsCdLmC/5aLVg070=
+	b=aNtb2h6edMHxQtVfORQwR14VIqgLe5grCK2eIJlmTXHIuTkaZrKJ+R6sD7F1dMnTX
+	 tMXZGdFPRmljS4g2hMLsUBzQ6CpOwNfpyVZXJNndXRvCZouUmrl9ZOGxx8RrINWr8q
+	 +CLxMEC3oQ9n0+bcNknWxngnUdSh4OB2gdcchpQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Remus <jremus@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	David Howells <dhowells@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Steve French <sfrench@samba.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	netfs@lists.linux.dev,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 051/336] s390/vdso: Add CFI for RA register to asm macro vdso_func
-Date: Tue, 14 May 2024 12:14:15 +0200
-Message-ID: <20240514101040.533112057@linuxfoundation.org>
+Subject: [PATCH 6.8 052/336] Fix a potential infinite loop in extract_user_to_sg()
+Date: Tue, 14 May 2024 12:14:16 +0200
+Message-ID: <20240514101040.570567087@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,54 +55,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Remus <jremus@linux.ibm.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit b961ec10b9f9719987470236feb50c967db5a652 ]
+[ Upstream commit 6a30653b604aaad1bf0f2e74b068ceb8b6fc7aea ]
 
-The return-address (RA) register r14 is specified as volatile in the
-s390x ELF ABI [1]. Nevertheless proper CFI directives must be provided
-for an unwinder to restore the return address, if the RA register
-value is changed from its value at function entry, as it is the case.
+Fix extract_user_to_sg() so that it will break out of the loop if
+iov_iter_extract_pages() returns 0 rather than looping around forever.
 
-[1]: s390x ELF ABI, https://github.com/IBM/s390x-abi/releases
+[Note that I've included two fixes lines as the function got moved to a
+different file and renamed]
 
-Fixes: 4bff8cb54502 ("s390: convert to GENERIC_VDSO")
-Signed-off-by: Jens Remus <jremus@linux.ibm.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: 85dd2c8ff368 ("netfs: Add a function to extract a UBUF or IOVEC into a BVEC iterator")
+Fixes: f5f82cd18732 ("Move netfs_extract_iter_to_sg() to lib/scatterlist.c")
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Jeff Layton <jlayton@kernel.org>
+cc: Steve French <sfrench@samba.org>
+cc: Herbert Xu <herbert@gondor.apana.org.au>
+cc: netfs@lists.linux.dev
+Link: https://lore.kernel.org/r/1967121.1714034372@warthog.procyon.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/dwarf.h               | 1 +
- arch/s390/kernel/vdso64/vdso_user_wrapper.S | 2 ++
- 2 files changed, 3 insertions(+)
+ lib/scatterlist.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/include/asm/dwarf.h b/arch/s390/include/asm/dwarf.h
-index 4f21ae561e4dd..390906b8e386e 100644
---- a/arch/s390/include/asm/dwarf.h
-+++ b/arch/s390/include/asm/dwarf.h
-@@ -9,6 +9,7 @@
- #define CFI_DEF_CFA_OFFSET	.cfi_def_cfa_offset
- #define CFI_ADJUST_CFA_OFFSET	.cfi_adjust_cfa_offset
- #define CFI_RESTORE		.cfi_restore
-+#define CFI_REL_OFFSET		.cfi_rel_offset
+diff --git a/lib/scatterlist.c b/lib/scatterlist.c
+index 68b45c82c37a6..7bc2220fea805 100644
+--- a/lib/scatterlist.c
++++ b/lib/scatterlist.c
+@@ -1124,7 +1124,7 @@ static ssize_t extract_user_to_sg(struct iov_iter *iter,
+ 	do {
+ 		res = iov_iter_extract_pages(iter, &pages, maxsize, sg_max,
+ 					     extraction_flags, &off);
+-		if (res < 0)
++		if (res <= 0)
+ 			goto failed;
  
- #ifdef CONFIG_AS_CFI_VAL_OFFSET
- #define CFI_VAL_OFFSET		.cfi_val_offset
-diff --git a/arch/s390/kernel/vdso64/vdso_user_wrapper.S b/arch/s390/kernel/vdso64/vdso_user_wrapper.S
-index 57f62596e53b9..85247ef5a41b8 100644
---- a/arch/s390/kernel/vdso64/vdso_user_wrapper.S
-+++ b/arch/s390/kernel/vdso64/vdso_user_wrapper.S
-@@ -24,8 +24,10 @@ __kernel_\func:
- 	CFI_DEF_CFA_OFFSET (STACK_FRAME_OVERHEAD + WRAPPER_FRAME_SIZE)
- 	CFI_VAL_OFFSET 15, -STACK_FRAME_OVERHEAD
- 	stg	%r14,STACK_FRAME_OVERHEAD(%r15)
-+	CFI_REL_OFFSET 14, STACK_FRAME_OVERHEAD
- 	brasl	%r14,__s390_vdso_\func
- 	lg	%r14,STACK_FRAME_OVERHEAD(%r15)
-+	CFI_RESTORE 14
- 	aghi	%r15,WRAPPER_FRAME_SIZE
- 	CFI_DEF_CFA_OFFSET STACK_FRAME_OVERHEAD
- 	CFI_RESTORE 15
+ 		len = res;
 -- 
 2.43.0
 
