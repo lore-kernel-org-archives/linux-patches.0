@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8CF12FB07;
-	Tue, 14 May 2024 10:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A2C12FB07;
+	Tue, 14 May 2024 10:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682452; cv=none; b=mJZzze9pvCzRfLZjvtNX+upAVwe3vyaz6te6jVFl7j1a7Hc7RPjHaqBhkTSbVZMENniJaqWoxOX/twLW+MLc5rIK1B808abk+rb5W9BRlsLeF2x34xh/fxtVzVeqHL0nyYm6qCk1Mx+z+SIdl4hI5H/xyWHiITc0zqG/xRKKjQQ=
+	t=1715682457; cv=none; b=hGw2PnxbXGatMEqeDuYqoW8/Pto/Fx65bAsMy0a+LYRzVBRAO1WzaCUNpgOhDB3uL7hgqh2askGLAd2mtRlziToPWIEMpU8cUuZugx/vWuB8aFIsiQ+OswobpWvqxh8X8YuyZvQyHb6A47pvW0xGJ15LM/Zd2VEV9KU7z7WgmkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682452; c=relaxed/simple;
-	bh=HxnV6j7nsgKWPYz07ZhaB7uDnmvMJZO/2dFAvjY/SpY=;
+	s=arc-20240116; t=1715682457; c=relaxed/simple;
+	bh=ApHTYFFXa5qWupdztm1MX9eyDwCJCWSHeCpTzNhq/9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QmhI04p196+zkpkcMZFYjZG5+/MTL+JcTbu8NWqHSgXXVYlcP3LVejCdQ9FbWol6Mf77EltylEsWm7/JFxr1qpSIS9iUm9Bqz58aWawCIa5JXI5lu0mmoCX6iP/IJPvVuVrcGpEEG8WzKIg7W/WdSbju9phENnCwT0sTgWianYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hvv3Zvvw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AOyNXmA3GbFj+DMhCrK9JirC+dXYsKn8HLCoqZWhOqUa9H58fg3z1XxW+YsBTym0ahJw1isD9odNRL7/QOZ7WQyd9a5RnwAgVG62B/dfctZsJOpjJ3gPTuqbwCBibAnuWbTyK+rdSvaL82CfPrd91ulrsXELIY1XZHZ9prVyPTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEYtcXoQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hvv3Zvvw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F256AC32786;
-	Tue, 14 May 2024 10:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEYtcXoQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9BEFC2BD10;
+	Tue, 14 May 2024 10:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682452;
-	bh=HxnV6j7nsgKWPYz07ZhaB7uDnmvMJZO/2dFAvjY/SpY=;
+	s=korg; t=1715682456;
+	bh=ApHTYFFXa5qWupdztm1MX9eyDwCJCWSHeCpTzNhq/9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hvv3ZvvwVAUoX++mJiDUI1wknpvX4UH8EVx14LTruXK7DNxvwCvUxlGGenSSHHTi7
-	 8lJyv82WRUO8aL1aKRh2rssrIiGv8qkWPPb4d+vatraFg0+gI4B2yW2GPmOdBc9Rdv
-	 KQEmH+uCyALlWTztKkM+aLGMDn527HbTpgoPjN90=
+	b=KEYtcXoQC7vsdwlGrJhYKXhFaEPw4oCCXYIvFROWJuRLXi0HLlwtIb3rkqEgVEl7i
+	 kZAl4yo20NpuJPd++gFSsfZZPYGd24m/m99vP4r3dpWRF8tmBT0MzCutFDUzDL81wl
+	 01DS3VS0M9N7MhzyGiBG5W4nZ8kYb6GKK5y/eexE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jerome Brunet <jbrunet@baylibre.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 063/336] ASoC: meson: axg-fifo: use FIELD helpers
-Date: Tue, 14 May 2024 12:14:27 +0200
-Message-ID: <20240514101040.985335791@linuxfoundation.org>
+Subject: [PATCH 6.8 064/336] ASoC: meson: axg-fifo: use threaded irq to check periods
+Date: Tue, 14 May 2024 12:14:28 +0200
+Message-ID: <20240514101041.023521886@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -53,204 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 9e6f39535c794adea6ba802a52c722d193c28124 ]
+[ Upstream commit b11d26660dff8d7430892008616452dc8e5fb0f3 ]
 
-Use FIELD_GET() and FIELD_PREP() helpers instead of doing it manually.
+With the AXG audio subsystem, there is a possible random channel shift on
+TDM capture, when the slot number per lane is more than 2, and there is
+more than one lane used.
 
+The problem has been there since the introduction of the axg audio support
+but such scenario is pretty uncommon. This is why there is no loud
+complains about the problem.
+
+Solving the problem require to make the links non-atomic and use the
+trigger() callback to start FEs and BEs in the appropriate order.
+
+This was tried in the past and reverted because it caused the block irq to
+sleep while atomic. However, instead of reverting, the solution is to call
+snd_pcm_period_elapsed() in a non atomic context.
+
+Use the bottom half of a threaded IRQ to do so.
+
+Fixes: 6dc4fa179fb8 ("ASoC: meson: add axg fifo base driver")
 Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://msgid.link/r/20240227150826.573581-1-jbrunet@baylibre.com
+Link: https://lore.kernel.org/r/20240426152946.3078805-2-jbrunet@baylibre.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: b11d26660dff ("ASoC: meson: axg-fifo: use threaded irq to check periods")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/axg-fifo.c  | 25 +++++++++++++------------
- sound/soc/meson/axg-fifo.h  | 12 +++++-------
- sound/soc/meson/axg-frddr.c |  5 +++--
- sound/soc/meson/axg-toddr.c | 22 ++++++++++------------
- 4 files changed, 31 insertions(+), 33 deletions(-)
+ sound/soc/meson/axg-fifo.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
 diff --git a/sound/soc/meson/axg-fifo.c b/sound/soc/meson/axg-fifo.c
-index 65541fdb0038a..bebee0ca8e388 100644
+index bebee0ca8e388..ecb3eb7a9723d 100644
 --- a/sound/soc/meson/axg-fifo.c
 +++ b/sound/soc/meson/axg-fifo.c
-@@ -3,6 +3,7 @@
- // Copyright (c) 2018 BayLibre, SAS.
- // Author: Jerome Brunet <jbrunet@baylibre.com>
- 
-+#include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/of_irq.h>
- #include <linux/of_platform.h>
-@@ -145,8 +146,8 @@ int axg_fifo_pcm_hw_params(struct snd_soc_component *component,
- 	/* Enable irq if necessary  */
- 	irq_en = runtime->no_period_wakeup ? 0 : FIFO_INT_COUNT_REPEAT;
- 	regmap_update_bits(fifo->map, FIFO_CTRL0,
--			   CTRL0_INT_EN(FIFO_INT_COUNT_REPEAT),
--			   CTRL0_INT_EN(irq_en));
-+			   CTRL0_INT_EN,
-+			   FIELD_PREP(CTRL0_INT_EN, irq_en));
- 
- 	return 0;
- }
-@@ -176,9 +177,9 @@ int axg_fifo_pcm_hw_free(struct snd_soc_component *component,
- {
- 	struct axg_fifo *fifo = axg_fifo_data(ss);
- 
--	/* Disable the block count irq */
-+	/* Disable irqs */
- 	regmap_update_bits(fifo->map, FIFO_CTRL0,
--			   CTRL0_INT_EN(FIFO_INT_COUNT_REPEAT), 0);
-+			   CTRL0_INT_EN, 0);
- 
- 	return 0;
- }
-@@ -187,13 +188,13 @@ EXPORT_SYMBOL_GPL(axg_fifo_pcm_hw_free);
- static void axg_fifo_ack_irq(struct axg_fifo *fifo, u8 mask)
- {
- 	regmap_update_bits(fifo->map, FIFO_CTRL1,
--			   CTRL1_INT_CLR(FIFO_INT_MASK),
--			   CTRL1_INT_CLR(mask));
-+			   CTRL1_INT_CLR,
-+			   FIELD_PREP(CTRL1_INT_CLR, mask));
- 
- 	/* Clear must also be cleared */
- 	regmap_update_bits(fifo->map, FIFO_CTRL1,
--			   CTRL1_INT_CLR(FIFO_INT_MASK),
--			   0);
-+			   CTRL1_INT_CLR,
-+			   FIELD_PREP(CTRL1_INT_CLR, 0));
- }
- 
- static irqreturn_t axg_fifo_pcm_irq_block(int irq, void *dev_id)
-@@ -204,7 +205,7 @@ static irqreturn_t axg_fifo_pcm_irq_block(int irq, void *dev_id)
+@@ -204,18 +204,26 @@ static irqreturn_t axg_fifo_pcm_irq_block(int irq, void *dev_id)
+ 	unsigned int status;
  
  	regmap_read(fifo->map, FIFO_STATUS1, &status);
- 
--	status = STATUS1_INT_STS(status) & FIFO_INT_MASK;
-+	status = FIELD_GET(STATUS1_INT_STS, status);
+-
+ 	status = FIELD_GET(STATUS1_INT_STS, status);
++	axg_fifo_ack_irq(fifo, status);
++
++	/* Use the thread to call period elapsed on nonatomic links */
  	if (status & FIFO_INT_COUNT_REPEAT)
- 		snd_pcm_period_elapsed(ss);
- 	else
-@@ -254,15 +255,15 @@ int axg_fifo_pcm_open(struct snd_soc_component *component,
+-		snd_pcm_period_elapsed(ss);
+-	else
+-		dev_dbg(axg_fifo_dev(ss), "unexpected irq - STS 0x%02x\n",
+-			status);
++		return IRQ_WAKE_THREAD;
  
- 	/* Setup status2 so it reports the memory pointer */
- 	regmap_update_bits(fifo->map, FIFO_CTRL1,
--			   CTRL1_STATUS2_SEL_MASK,
--			   CTRL1_STATUS2_SEL(STATUS2_SEL_DDR_READ));
-+			   CTRL1_STATUS2_SEL,
-+			   FIELD_PREP(CTRL1_STATUS2_SEL, STATUS2_SEL_DDR_READ));
+-	/* Ack irqs */
+-	axg_fifo_ack_irq(fifo, status);
++	dev_dbg(axg_fifo_dev(ss), "unexpected irq - STS 0x%02x\n",
++		status);
++
++	return IRQ_NONE;
++}
++
++static irqreturn_t axg_fifo_pcm_irq_block_thread(int irq, void *dev_id)
++{
++	struct snd_pcm_substream *ss = dev_id;
++
++	snd_pcm_period_elapsed(ss);
  
- 	/* Make sure the dma is initially disabled */
- 	__dma_enable(fifo, false);
- 
- 	/* Disable irqs until params are ready */
- 	regmap_update_bits(fifo->map, FIFO_CTRL0,
--			   CTRL0_INT_EN(FIFO_INT_MASK), 0);
-+			   CTRL0_INT_EN, 0);
- 
- 	/* Clear any pending interrupt */
- 	axg_fifo_ack_irq(fifo, FIFO_INT_MASK);
-diff --git a/sound/soc/meson/axg-fifo.h b/sound/soc/meson/axg-fifo.h
-index df528e8cb7c91..84a2664139905 100644
---- a/sound/soc/meson/axg-fifo.h
-+++ b/sound/soc/meson/axg-fifo.h
-@@ -42,21 +42,19 @@ struct snd_soc_pcm_runtime;
- 
- #define FIFO_CTRL0			0x00
- #define  CTRL0_DMA_EN			BIT(31)
--#define  CTRL0_INT_EN(x)		((x) << 16)
-+#define  CTRL0_INT_EN			GENMASK(23, 16)
- #define  CTRL0_SEL_MASK			GENMASK(2, 0)
- #define  CTRL0_SEL_SHIFT		0
- #define FIFO_CTRL1			0x04
--#define  CTRL1_INT_CLR(x)		((x) << 0)
--#define  CTRL1_STATUS2_SEL_MASK		GENMASK(11, 8)
--#define  CTRL1_STATUS2_SEL(x)		((x) << 8)
-+#define  CTRL1_INT_CLR			GENMASK(7, 0)
-+#define  CTRL1_STATUS2_SEL		GENMASK(11, 8)
- #define   STATUS2_SEL_DDR_READ		0
--#define  CTRL1_FRDDR_DEPTH_MASK		GENMASK(31, 24)
--#define  CTRL1_FRDDR_DEPTH(x)		((x) << 24)
-+#define  CTRL1_FRDDR_DEPTH		GENMASK(31, 24)
- #define FIFO_START_ADDR			0x08
- #define FIFO_FINISH_ADDR		0x0c
- #define FIFO_INT_ADDR			0x10
- #define FIFO_STATUS1			0x14
--#define  STATUS1_INT_STS(x)		((x) << 0)
-+#define  STATUS1_INT_STS		GENMASK(7, 0)
- #define FIFO_STATUS2			0x18
- #define FIFO_INIT_ADDR			0x24
- #define FIFO_CTRL2			0x28
-diff --git a/sound/soc/meson/axg-frddr.c b/sound/soc/meson/axg-frddr.c
-index 8c166a5f338ce..747a900c0bb22 100644
---- a/sound/soc/meson/axg-frddr.c
-+++ b/sound/soc/meson/axg-frddr.c
-@@ -7,6 +7,7 @@
-  * This driver implements the frontend playback DAI of AXG and G12A based SoCs
-  */
- 
-+#include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/regmap.h>
- #include <linux/module.h>
-@@ -59,8 +60,8 @@ static int axg_frddr_dai_hw_params(struct snd_pcm_substream *substream,
- 	/* Trim the FIFO depth if the period is small to improve latency */
- 	depth = min(period, fifo->depth);
- 	val = (depth / AXG_FIFO_BURST) - 1;
--	regmap_update_bits(fifo->map, FIFO_CTRL1, CTRL1_FRDDR_DEPTH_MASK,
--			   CTRL1_FRDDR_DEPTH(val));
-+	regmap_update_bits(fifo->map, FIFO_CTRL1, CTRL1_FRDDR_DEPTH,
-+			   FIELD_PREP(CTRL1_FRDDR_DEPTH, val));
- 
- 	return 0;
+-	return IRQ_RETVAL(status);
++	return IRQ_HANDLED;
  }
-diff --git a/sound/soc/meson/axg-toddr.c b/sound/soc/meson/axg-toddr.c
-index 1a0be177b8fe7..972ad99f31be2 100644
---- a/sound/soc/meson/axg-toddr.c
-+++ b/sound/soc/meson/axg-toddr.c
-@@ -5,6 +5,7 @@
  
- /* This driver implements the frontend capture DAI of AXG based SoCs */
+ int axg_fifo_pcm_open(struct snd_soc_component *component,
+@@ -243,8 +251,9 @@ int axg_fifo_pcm_open(struct snd_soc_component *component,
+ 	if (ret)
+ 		return ret;
  
-+#include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/regmap.h>
- #include <linux/module.h>
-@@ -19,12 +20,9 @@
- #define CTRL0_TODDR_EXT_SIGNED		BIT(29)
- #define CTRL0_TODDR_PP_MODE		BIT(28)
- #define CTRL0_TODDR_SYNC_CH		BIT(27)
--#define CTRL0_TODDR_TYPE_MASK		GENMASK(15, 13)
--#define CTRL0_TODDR_TYPE(x)		((x) << 13)
--#define CTRL0_TODDR_MSB_POS_MASK	GENMASK(12, 8)
--#define CTRL0_TODDR_MSB_POS(x)		((x) << 8)
--#define CTRL0_TODDR_LSB_POS_MASK	GENMASK(7, 3)
--#define CTRL0_TODDR_LSB_POS(x)		((x) << 3)
-+#define CTRL0_TODDR_TYPE		GENMASK(15, 13)
-+#define CTRL0_TODDR_MSB_POS		GENMASK(12, 8)
-+#define CTRL0_TODDR_LSB_POS		GENMASK(7, 3)
- #define CTRL1_TODDR_FORCE_FINISH	BIT(25)
- #define CTRL1_SEL_SHIFT			28
+-	ret = request_irq(fifo->irq, axg_fifo_pcm_irq_block, 0,
+-			  dev_name(dev), ss);
++	ret = request_threaded_irq(fifo->irq, axg_fifo_pcm_irq_block,
++				   axg_fifo_pcm_irq_block_thread,
++				   IRQF_ONESHOT, dev_name(dev), ss);
+ 	if (ret)
+ 		return ret;
  
-@@ -76,12 +74,12 @@ static int axg_toddr_dai_hw_params(struct snd_pcm_substream *substream,
- 	width = params_width(params);
- 
- 	regmap_update_bits(fifo->map, FIFO_CTRL0,
--			   CTRL0_TODDR_TYPE_MASK |
--			   CTRL0_TODDR_MSB_POS_MASK |
--			   CTRL0_TODDR_LSB_POS_MASK,
--			   CTRL0_TODDR_TYPE(type) |
--			   CTRL0_TODDR_MSB_POS(TODDR_MSB_POS) |
--			   CTRL0_TODDR_LSB_POS(TODDR_MSB_POS - (width - 1)));
-+			   CTRL0_TODDR_TYPE |
-+			   CTRL0_TODDR_MSB_POS |
-+			   CTRL0_TODDR_LSB_POS,
-+			   FIELD_PREP(CTRL0_TODDR_TYPE, type) |
-+			   FIELD_PREP(CTRL0_TODDR_MSB_POS, TODDR_MSB_POS) |
-+			   FIELD_PREP(CTRL0_TODDR_LSB_POS, TODDR_MSB_POS - (width - 1)));
- 
- 	return 0;
- }
 -- 
 2.43.0
 
