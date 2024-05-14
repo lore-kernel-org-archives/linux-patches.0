@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786F86D1AF;
-	Tue, 14 May 2024 10:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D280D6D1AF;
+	Tue, 14 May 2024 10:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683621; cv=none; b=fdHHs8Ahd31zvP31WBTTdL8SToq7qCv0zFI+90/p2TRfOmCx/D6TH7dgHMnQG/bEIHTg15bxG4aKLb8FfyuepUXXyTIMlur0XBgwPsLS3x/jO2CHWSLrvVrmHLDPRsI/Uvj0M/poOjzXtjPossJTn1lfHIdmhVmC1fG2xK4efeA=
+	t=1715683627; cv=none; b=fylsk0Z8OROIE93b2iWHodUtspUqkPRJDJuvVECKy6fpRF4y4AvJmZydAH9GA6TFoEc+KfimTt5jtxJW9vG89rPzchMjlUpxkDYR22tb/jl+FgXvRAzMqobLaWTHXQNUpN6UvlKXrXCuKm7gyF24+GuaSPMYtZeDCVlkmpBq7ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683621; c=relaxed/simple;
-	bh=3o7T35DWSFV0jtEyRE7oZvSegAlllO8014/AQAsfXuk=;
+	s=arc-20240116; t=1715683627; c=relaxed/simple;
+	bh=RR1F6YoXbkKmZkgavLydd7d8P86qyNpuzYRh3U6vbpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJDdtCpfMCuA4CKxk/bmIVrVIQdwzQgHd6ymt5Qp04rzC5aYvcIFIPwIOHcryT9i4Q3q34pGZGJyXTtw0o7vdY9/7tvyRF2IgsvHFsFByTyIk4Gu+gInKGDZyVjSjwsQrLBmRHIjsv7DvCWtxOkCMjkY/+VeiaS0prQFpWmyt60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t3/ckcpy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GnaHHqB2VmeyjamGmt5cXgcir8KKysDu8KgNjJ2NVF/88JMZOT0s8d80wBuyJCBTbftI93YV66DQjE5IpdpP0pittN3YXllwcKeaS72UHoOsq3Yrnklr+9jpAHvXrodCgDMlr/40Qr1usv/UuiM7aXF56dtddin9XLeVrXtVhDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWX1We/v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3/ckcpy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A650C32782;
-	Tue, 14 May 2024 10:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWX1We/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28FC7C2BD10;
+	Tue, 14 May 2024 10:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683621;
-	bh=3o7T35DWSFV0jtEyRE7oZvSegAlllO8014/AQAsfXuk=;
+	s=korg; t=1715683627;
+	bh=RR1F6YoXbkKmZkgavLydd7d8P86qyNpuzYRh3U6vbpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t3/ckcpyA3PLV1Tut4Hd6vpHVyHFslSIjR0Gv0BZwy7VEjLg1bBX2Tp2jUNprqqY8
-	 Ubekysu+e+on8l6mPk1CHwp5+NcKdDvW/roK1MU5ODET/QBQliTQXq2mgsda/tK9OC
-	 Sll8pndfAe/clNw8aEZWrSeIlzH6VqCCokDPfxzE=
+	b=kWX1We/vYxc+4Zz97xLKSH4yoFH7ZiwWDzkdPQyiqjRMOiuL1jm9JDUX6YpZBu/nS
+	 +KqFiIxO9Kk/IQx5ZvbxRUoAS0qMUytlIQlcbYqeBW770z7If9ulhuuni0T7kbTxXG
+	 3DZOwePTp1bhBjlXjvhm+eh3c92QwgSfuo7nNou8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 214/336] ipv6: Fix potential uninit-value access in __ip6_make_skb()
-Date: Tue, 14 May 2024 12:16:58 +0200
-Message-ID: <20240514101046.691534069@linuxfoundation.org>
+Subject: [PATCH 6.8 215/336] selftests: test_bridge_neigh_suppress.sh: Fix failures due to duplicate MAC
+Date: Tue, 14 May 2024 12:16:59 +0200
+Message-ID: <20240514101046.729128698@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,36 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 4e13d3a9c25b7080f8a619f961e943fe08c2672c ]
+[ Upstream commit 9a169c267e946b0f47f67e8ccc70134708ccf3d4 ]
 
-As it was done in commit fc1092f51567 ("ipv4: Fix uninit-value access in
-__ip_make_skb()") for IPv4, check FLOWI_FLAG_KNOWN_NH on fl6->flowi6_flags
-instead of testing HDRINCL on the socket to avoid a race condition which
-causes uninit-value access.
+When creating the topology for the test, three veth pairs are created in
+the initial network namespace before being moved to one of the network
+namespaces created by the test.
 
-Fixes: ea30388baebc ("ipv6: Fix an uninit variable access bug in __ip6_make_skb()")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+On systems where systemd-udev uses MACAddressPolicy=persistent (default
+since systemd version 242), this will result in some net devices having
+the same MAC address since they were created with the same name in the
+initial network namespace. In turn, this leads to arping / ndisc6
+failing since packets are dropped by the bridge's loopback filter.
+
+Fix by creating each net device in the correct network namespace instead
+of moving it there from the initial network namespace.
+
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/netdev/20240426074015.251854d4@kernel.org/
+Fixes: 7648ac72dcd7 ("selftests: net: Add bridge neighbor suppression test")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/20240507113033.1732534-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../selftests/net/test_bridge_neigh_suppress.sh    | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 31b86fe661aa6..568065a015c41 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1933,7 +1933,7 @@ struct sk_buff *__ip6_make_skb(struct sock *sk,
- 		u8 icmp6_type;
+diff --git a/tools/testing/selftests/net/test_bridge_neigh_suppress.sh b/tools/testing/selftests/net/test_bridge_neigh_suppress.sh
+index 8533393a4f186..02b986c9c247d 100755
+--- a/tools/testing/selftests/net/test_bridge_neigh_suppress.sh
++++ b/tools/testing/selftests/net/test_bridge_neigh_suppress.sh
+@@ -154,17 +154,9 @@ setup_topo()
+ 		setup_topo_ns $ns
+ 	done
  
- 		if (sk->sk_socket->type == SOCK_RAW &&
--		   !inet_test_bit(HDRINCL, sk))
-+		   !(fl6->flowi6_flags & FLOWI_FLAG_KNOWN_NH))
- 			icmp6_type = fl6->fl6_icmp_type;
- 		else
- 			icmp6_type = icmp6_hdr(skb)->icmp6_type;
+-	ip link add name veth0 type veth peer name veth1
+-	ip link set dev veth0 netns $h1 name eth0
+-	ip link set dev veth1 netns $sw1 name swp1
+-
+-	ip link add name veth0 type veth peer name veth1
+-	ip link set dev veth0 netns $sw1 name veth0
+-	ip link set dev veth1 netns $sw2 name veth0
+-
+-	ip link add name veth0 type veth peer name veth1
+-	ip link set dev veth0 netns $h2 name eth0
+-	ip link set dev veth1 netns $sw2 name swp1
++	ip -n $h1 link add name eth0 type veth peer name swp1 netns $sw1
++	ip -n $sw1 link add name veth0 type veth peer name veth0 netns $sw2
++	ip -n $h2 link add name eth0 type veth peer name swp1 netns $sw2
+ }
+ 
+ setup_host_common()
 -- 
 2.43.0
 
