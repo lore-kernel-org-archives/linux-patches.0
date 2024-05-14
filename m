@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CEED7710A;
-	Tue, 14 May 2024 11:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414A8200BF;
+	Tue, 14 May 2024 11:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685610; cv=none; b=VakMzOXXWzfUE7WXRXYrTBvR/uG5woGou2OWlhEg45wecjOaDUAu8h/JokxYcl1Dhiwujv8HcWzaw4BIaCJGnYYtJNiNi7v1nQphO8luGxR8We4F8hryUo/HRGshPahdjqkxr6MTwpFXVAj9eV2WHcol3zLDg3x/yXKVAhmlIJc=
+	t=1715685618; cv=none; b=SFIxYGPrvAl0/BXGGeA3jLFAHDldSCy371HYNdITOO8zWZl7AhINc8S8QMyjKaiw/UEcLy/dxNtsszPPzfDBOUMl0CI1pS+Rt7VhWnPwDiUpTjygA202evUxhLGqj3MJu9X4a/0RieIBOHtOwrbWiIFXEnpwyFefB+ujj0NumEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685610; c=relaxed/simple;
-	bh=YHSz928glg8TQG7PpCtDVWUPwjU/RgUpOLhgMLDxaVE=;
+	s=arc-20240116; t=1715685618; c=relaxed/simple;
+	bh=2aalL5PO078epPbrWjOcIAyLVsHJ7+ZTeyh01WPbAXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DnzEdWsPdx7CGLA8/2QB50NpLcIde+tOtRkFIh1JxFQ5fSzRLKkX4cyOe7+/VN+OkZ8a9lJ22FTkmX0257KPsZPTLNXMNVAoiPnGjEGqu2oAbnipm322jPRVz7yw3RyK3dIB8BBu2x12obA5rtPg6vVSylER03e+tGV33tvKre0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfJghu8a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OqndjrOs85Z20LDXFI0NNo3qL93di+DkM38WtpMwLlBYm9cebo3XKALRq6Wkr3oNMf+MsG6ya/Gbi7FHAO5LPqDxrcwX0gSqGFON6lMYUaHrg23aIZi9AEqIICJLtNGoKiRYLgVuCZepNWqnek3Cz4EeTM7yyhufKwBvozFp5fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/KPkE5n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfJghu8a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E562C2BD10;
-	Tue, 14 May 2024 11:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/KPkE5n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CF2C2BD10;
+	Tue, 14 May 2024 11:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685609;
-	bh=YHSz928glg8TQG7PpCtDVWUPwjU/RgUpOLhgMLDxaVE=;
+	s=korg; t=1715685618;
+	bh=2aalL5PO078epPbrWjOcIAyLVsHJ7+ZTeyh01WPbAXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gfJghu8aTmQdcr+nYK9NW0zGHxdJlFQMEC9e3YkJWVW8X/okQWykkF+n9KZNiquRK
-	 j3zAxELOzogQW62K+Z3nOg1kEUxrJyw+dBDctr8SISAJ6mH2M3t6Z0/f70c2/50pws
-	 UxjKTqOERwfFuN68W4cuonkBPD3Qn8GNOwtKw190=
+	b=P/KPkE5nVddQOaCQkT1D7qT/+kBvM1WpL4XrPd90ZWMz7qQN7oSNHrq9bkSrE7Uyh
+	 3ee4Q11q/EPqlFtSC8Zg+2MikDqhZ514xvHOwx1qKTHjx/Sw5oHb7zSN5wOvHlppQH
+	 1fze5b/rpO6yuoSfdwlzVMvTk6UwiUybM21rCJnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Simon Ser <contact@emersion.fr>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
+	Tim Huang <Tim.Huang@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 214/301] drm/connector: Add \n to message about demoting connector force-probes
-Date: Tue, 14 May 2024 12:18:05 +0200
-Message-ID: <20240514101040.340314953@linuxfoundation.org>
+Subject: [PATCH 6.6 215/301] dm/amd/pm: Fix problems with reboot/shutdown for some SMU 13.0.4/13.0.11 users
+Date: Tue, 14 May 2024 12:18:06 +0200
+Message-ID: <20240514101040.377447886@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -53,36 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 6897204ea3df808d342c8e4613135728bc538bcd ]
+[ Upstream commit cd94d1b182d2986378550c9087571991bfee01d4 ]
 
-The debug print clearly lacks a \n at the end. Add it.
+Limit the workaround introduced by commit 31729e8c21ec ("drm/amd/pm: fixes
+a random hang in S4 for SMU v13.0.4/11") to only run in the s4 path.
 
-Fixes: 8f86c82aba8b ("drm/connector: demote connector force-probes for non-master clients")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Simon Ser <contact@emersion.fr>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240502153234.1.I2052f01c8d209d9ae9c300b87c6e4f60bd3cc99e@changeid
+Cc: Tim Huang <Tim.Huang@amd.com>
+Fixes: 31729e8c21ec ("drm/amd/pm: fixes a random hang in S4 for SMU v13.0.4/11")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3351
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_connector.c | 2 +-
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
-index c44d5bcf12847..309aad5f0c808 100644
---- a/drivers/gpu/drm/drm_connector.c
-+++ b/drivers/gpu/drm/drm_connector.c
-@@ -2925,7 +2925,7 @@ int drm_mode_getconnector(struct drm_device *dev, void *data,
- 						     dev->mode_config.max_width,
- 						     dev->mode_config.max_height);
- 		else
--			drm_dbg_kms(dev, "User-space requested a forced probe on [CONNECTOR:%d:%s] but is not the DRM master, demoting to read-only probe",
-+			drm_dbg_kms(dev, "User-space requested a forced probe on [CONNECTOR:%d:%s] but is not the DRM master, demoting to read-only probe\n",
- 				    connector->base.id, connector->name);
- 	}
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
+index 1d1917e1b63f4..cd674ef5adb19 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
+@@ -226,7 +226,7 @@ static int smu_v13_0_4_system_features_control(struct smu_context *smu, bool en)
+ 	struct amdgpu_device *adev = smu->adev;
+ 	int ret = 0;
  
+-	if (!en && !adev->in_s0ix) {
++	if (!en && adev->in_s4) {
+ 		/* Adds a GFX reset as workaround just before sending the
+ 		 * MP1_UNLOAD message to prevent GC/RLC/PMFW from entering
+ 		 * an invalid state.
 -- 
 2.43.0
 
