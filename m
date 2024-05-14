@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9625250288;
-	Tue, 14 May 2024 10:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6BD50288;
+	Tue, 14 May 2024 10:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682779; cv=none; b=rcj4PTjafqM+WVYCBFcMMqYpO66EFXmInqHdQTfRp4NX7my1pMdHzzsPFQcwWO3YCSWWRoDlsxc3uHxV0kFcdgfN3KVjrXXPqfXeYAEbd2KgPlurnM4Pyzn2cNOmwhD0dxaEoNkXQjifSgrIApBD+loF50qUctIovJV+P+nVbJU=
+	t=1715682790; cv=none; b=EWtMesVh29zbOf6w4f9o29TwiZJNedkjLixUNDnokXTdgQZwowqyFerw6EMfFKWmZJgZ0fSmHYteBqd5oVTMNMfiIQpCK3uUtuganhfeEQzZaZgW6VvEv5jWd92mlJjlf6wETJiWxHEVJhbPdK+K5fkareDAUpHj0tHwJ9vd3Mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682779; c=relaxed/simple;
-	bh=sCu4YhbqpS58BlPKfgrl0QfDFk0Lb9ioFRTW4eVK8mM=;
+	s=arc-20240116; t=1715682790; c=relaxed/simple;
+	bh=K+OXurEL2OykBRZWG8Riv4y5KjoEe8GXEGxJwdKgx5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ar8vQ4FRbGjcuhXHTh611w2Fb/GvcBOqqPFO7IXVozUzAthzik0k5+ki20eTCVE9KyLO4VaX0j3thGStwk5BVSW9iOOdZSUst9IvD2ra0IrEWOXAsbdBJtJtuweAWgEWP/BkOdeR84XZ5HfIf/EGxTccC64jf9CeeBE3Yqr/oik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJCiTrnl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cBIDwdtpj27D9Vw53ddyrSGWZ/RNiGJCrQmm4am71+U2gcNoBQ6lzcEjrn5exsRux87shY8Oh1X2Kp/4r4btgXNnDT5iL0mNu+12mOL1BSqNChZQJoaCKJMz6IiG/7IPzz1AFKgh5Hzzd4QIFBUFA5pwO3b0E+kP682JoMxMJ8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKTBuX/A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJCiTrnl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22631C2BD10;
-	Tue, 14 May 2024 10:32:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKTBuX/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D38C2BD10;
+	Tue, 14 May 2024 10:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682779;
-	bh=sCu4YhbqpS58BlPKfgrl0QfDFk0Lb9ioFRTW4eVK8mM=;
+	s=korg; t=1715682790;
+	bh=K+OXurEL2OykBRZWG8Riv4y5KjoEe8GXEGxJwdKgx5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJCiTrnlcluueugMiz3wstk9NVUackQfthNhUt8Jn2AAh8EAlV/E2E8Y59m59mg9L
-	 bTt5gklI2Vj4A85LaIhl4SXeTYiG5kIUQKOoIoXFbP+PfDhuvN3y/U6iTT+6inKJDF
-	 xkURfI1O7harqTtBdE1BSSJ3v1caiWymLZD4fF/I=
+	b=tKTBuX/A3aiBXIRnVJ98Vz/o3Avb04GnnR1rW0de28S7+Obex0fctqGZ0TVzYdWah
+	 J4GhhyEcO8+ERHMBWezclfVhZ45HA/jyR4mcRgRgjMVwi67okG43isEMfMLcI2++K4
+	 Cs7IRnKZfaaQ0k9lHg8lbVTCIENysem/8hfE7evg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sui Jingfeng <sui.jingfeng@linux.dev>,
+	Mans Rullgard <mans@mansr.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 082/336] drm/panel: ili9341: Use predefined error codes
-Date: Tue, 14 May 2024 12:14:46 +0200
-Message-ID: <20240514101041.702683886@linuxfoundation.org>
+Subject: [PATCH 6.8 073/336] spi: fix null pointer dereference within spi_sync
+Date: Tue, 14 May 2024 12:14:37 +0200
+Message-ID: <20240514101041.362629364@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,51 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Mans Rullgard <mans@mansr.com>
 
-[ Upstream commit da85f0aaa9f21999753b01d45c0343f885a8f905 ]
+[ Upstream commit 4756fa529b2f12b7cb8f21fe229b0f6f47190829 ]
 
-In one case the -1 is returned which is quite confusing code for
-the wrong device ID, in another the ret is returning instead of
-plain 0 that also confusing as readed may ask the possible meaning
-of positive codes, which are never the case there. Convert both
-to use explicit predefined error codes to make it clear what's going
-on there.
+If spi_sync() is called with the non-empty queue and the same spi_message
+is then reused, the complete callback for the message remains set while
+the context is cleared, leading to a null pointer dereference when the
+callback is invoked from spi_finalize_current_message().
 
-Fixes: 5a04227326b0 ("drm/panel: Add ilitek ili9341 panel driver")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Sui Jingfeng <sui.jingfeng@linux.dev>
-Link: https://lore.kernel.org/r/20240425142706.2440113-4-andriy.shevchenko@linux.intel.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240425142706.2440113-4-andriy.shevchenko@linux.intel.com
+With function inlining disabled, the call stack might look like this:
+
+  _raw_spin_lock_irqsave from complete_with_flags+0x18/0x58
+  complete_with_flags from spi_complete+0x8/0xc
+  spi_complete from spi_finalize_current_message+0xec/0x184
+  spi_finalize_current_message from spi_transfer_one_message+0x2a8/0x474
+  spi_transfer_one_message from __spi_pump_transfer_message+0x104/0x230
+  __spi_pump_transfer_message from __spi_transfer_message_noqueue+0x30/0xc4
+  __spi_transfer_message_noqueue from __spi_sync+0x204/0x248
+  __spi_sync from spi_sync+0x24/0x3c
+  spi_sync from mcp251xfd_regmap_crc_read+0x124/0x28c [mcp251xfd]
+  mcp251xfd_regmap_crc_read [mcp251xfd] from _regmap_raw_read+0xf8/0x154
+  _regmap_raw_read from _regmap_bus_read+0x44/0x70
+  _regmap_bus_read from _regmap_read+0x60/0xd8
+  _regmap_read from regmap_read+0x3c/0x5c
+  regmap_read from mcp251xfd_alloc_can_err_skb+0x1c/0x54 [mcp251xfd]
+  mcp251xfd_alloc_can_err_skb [mcp251xfd] from mcp251xfd_irq+0x194/0xe70 [mcp251xfd]
+  mcp251xfd_irq [mcp251xfd] from irq_thread_fn+0x1c/0x78
+  irq_thread_fn from irq_thread+0x118/0x1f4
+  irq_thread from kthread+0xd8/0xf4
+  kthread from ret_from_fork+0x14/0x28
+
+Fix this by also setting message->complete to NULL when the transfer is
+complete.
+
+Fixes: ae7d2346dc89 ("spi: Don't use the message queue if possible in spi_sync")
+
+Signed-off-by: Mans Rullgard <mans@mansr.com>
+Link: https://lore.kernel.org/r/20240430182705.13019-1-mans@mansr.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-ilitek-ili9341.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9341.c b/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
-index 24c74c56e5648..b933380b7eb78 100644
---- a/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
-+++ b/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
-@@ -422,7 +422,7 @@ static int ili9341_dpi_prepare(struct drm_panel *panel)
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 46f1535487608..a7194f29c2007 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -4431,6 +4431,7 @@ static int __spi_sync(struct spi_device *spi, struct spi_message *message)
+ 		wait_for_completion(&done);
+ 		status = message->status;
+ 	}
++	message->complete = NULL;
+ 	message->context = NULL;
  
- 	ili9341_dpi_init(ili);
- 
--	return ret;
-+	return 0;
- }
- 
- static int ili9341_dpi_enable(struct drm_panel *panel)
-@@ -726,7 +726,7 @@ static int ili9341_probe(struct spi_device *spi)
- 	else if (!strcmp(id->name, "yx240qv29"))
- 		return ili9341_dbi_probe(spi, dc, reset);
- 
--	return -1;
-+	return -ENODEV;
- }
- 
- static void ili9341_remove(struct spi_device *spi)
+ 	return status;
 -- 
 2.43.0
 
