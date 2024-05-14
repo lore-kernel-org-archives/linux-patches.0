@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0B04CB55;
-	Tue, 14 May 2024 10:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E5C4F1F8;
+	Tue, 14 May 2024 10:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682745; cv=none; b=MELFZSktqg2x2DKsfCjROpBQTu8ZnzvcbqMAtZJ5AriZQE19a/tqcitPn4v2E+tOr69pjBhPFAc7CVkt95yBWfs5ni+87xp4ODn9pH9seqnrDlSzdzFDsxw4DFAITbNV1L8QkufyjDC0ilReeg2X6kHJDY77fSuJG+lFGWWxDLI=
+	t=1715682755; cv=none; b=llW2YrdqkT8oM/iFV50ZZt5KfkXNeKptpzu6WZp5wvNIj5chYZ5HaW8O8RI317YdP00nWsl2demVLFGx1uce4ECwfCSkExD7nvf3l+oxsiUUEmdVtD3603MJxXXRGDgPUAbVAVepl2Kfyy2apfcV5fMYwyRnFMTENGAJeJvASyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682745; c=relaxed/simple;
-	bh=h59eZkDsPZYKN/TqPrmu3pc9PzoVoF6YIRJm8tO7p3I=;
+	s=arc-20240116; t=1715682755; c=relaxed/simple;
+	bh=CZB3SOiZRwIMrhsM4AP8ppPpZxL+IvIaxRkOWZG+t6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RI9BiccBXXWT4SI80miO1ScZibtdA/e0VFpKP1WLWyhUdmEKrd27+oEONH79e+XZErpOzWNq60bpCa+nLeGvdxRRB/tqLWvPTTfBNmYopCc+9uML/psnnn8NE6pJAbg69GJH3A2pec/9t3F62Qvr+L0ZSn/zIcFSTDlJmd4bd6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOx/ECOx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hT6LLUZ5PTGH5FSFev04riFa5yC+9kECrZacfoXgBtNfq16hl2qosY8Xag+g7csNt1EBJT2A19acDuTmbABhSqF/J5LWp2RfkAPThmRIsYsrkxitoMO49Oesq++R4byH70Gm2U/H6UFd3nI1FdnhUDtsQ7DoQhVns9KRP4R1ZPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b65beGx/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOx/ECOx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11588C2BD10;
-	Tue, 14 May 2024 10:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b65beGx/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13C0C2BD10;
+	Tue, 14 May 2024 10:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682745;
-	bh=h59eZkDsPZYKN/TqPrmu3pc9PzoVoF6YIRJm8tO7p3I=;
+	s=korg; t=1715682755;
+	bh=CZB3SOiZRwIMrhsM4AP8ppPpZxL+IvIaxRkOWZG+t6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nOx/ECOxeY/zSC1AW8oXgmxxSn8/s+1h7MQmTZTi2MnGeaFpw37O9/ZkShJhBC58O
-	 VpGXotE/H0Y0vEBjaFaGi5o2Jg8YwVemgGEgDFkD6kXhvLY3N0TszbkAvv42hwBnBj
-	 fzCE+sj6LTXWWcyCqAMqYnQowRGYfTKJF3C9cIhk=
+	b=b65beGx/Lr0FSDizT0UAWCms7CW7Ans8qRRR0+5eLUaUBwHVAgWb9L6hDWjbEZgNs
+	 dcEpbaigX+uE1z8wr5D23BKVRXieIJPNS0LwDEsAlJLKJddbpBs7NGNxrQfnd8VO4K
+	 cTwhglLlIHwVVsijHxaa8fDbyXV/mnHkJl1xtNkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Artemiev <Igor.A.Artemiev@mcst.ru>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Tung Nguyen <tung.q.nguyen@dektech.com.au>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 106/336] wifi: cfg80211: fix rdev_dump_mpp() arguments order
-Date: Tue, 14 May 2024 12:15:10 +0200
-Message-ID: <20240514101042.608085257@linuxfoundation.org>
+Subject: [PATCH 6.8 077/336] tipc: fix a possible memleak in tipc_buf_append
+Date: Tue, 14 May 2024 12:14:41 +0200
+Message-ID: <20240514101041.512770903@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,36 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit ec50f3114e55406a1aad24b7dfaa1c3f4336d8eb ]
+[ Upstream commit 97bf6f81b29a8efaf5d0983251a7450e5794370d ]
 
-Fix the order of arguments in the TP_ARGS macro
-for the rdev_dump_mpp tracepoint event.
+__skb_linearize() doesn't free the skb when it fails, so move
+'*buf = NULL' after __skb_linearize(), so that the skb can be
+freed on the err path.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Signed-off-by: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
-Link: https://msgid.link/20240311164519.118398-1-Igor.A.Artemiev@mcst.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: b7df21cf1b79 ("tipc: skb_linearize the head skb when reassembling msgs")
+Reported-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Tung Nguyen <tung.q.nguyen@dektech.com.au>
+Link: https://lore.kernel.org/r/90710748c29a1521efac4f75ea01b3b7e61414cf.1714485818.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/trace.h | 2 +-
+ net/tipc/msg.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/trace.h b/net/wireless/trace.h
-index 1f374c8a17a50..cc3fd4177bcee 100644
---- a/net/wireless/trace.h
-+++ b/net/wireless/trace.h
-@@ -1013,7 +1013,7 @@ TRACE_EVENT(rdev_get_mpp,
- TRACE_EVENT(rdev_dump_mpp,
- 	TP_PROTO(struct wiphy *wiphy, struct net_device *netdev, int _idx,
- 		 u8 *dst, u8 *mpp),
--	TP_ARGS(wiphy, netdev, _idx, mpp, dst),
-+	TP_ARGS(wiphy, netdev, _idx, dst, mpp),
- 	TP_STRUCT__entry(
- 		WIPHY_ENTRY
- 		NETDEV_ENTRY
+diff --git a/net/tipc/msg.c b/net/tipc/msg.c
+index 5c9fd4791c4ba..c52ab423082cd 100644
+--- a/net/tipc/msg.c
++++ b/net/tipc/msg.c
+@@ -142,9 +142,9 @@ int tipc_buf_append(struct sk_buff **headbuf, struct sk_buff **buf)
+ 	if (fragid == FIRST_FRAGMENT) {
+ 		if (unlikely(head))
+ 			goto err;
+-		*buf = NULL;
+ 		if (skb_has_frag_list(frag) && __skb_linearize(frag))
+ 			goto err;
++		*buf = NULL;
+ 		frag = skb_unshare(frag, GFP_ATOMIC);
+ 		if (unlikely(!frag))
+ 			goto err;
 -- 
 2.43.0
 
