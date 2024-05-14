@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC344F1E5;
-	Tue, 14 May 2024 11:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184F14F1E5;
+	Tue, 14 May 2024 11:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686001; cv=none; b=R+GInM6c+ULT73UoU70gewSp1DmSxsgSN9XR3b15mdUmSeOa7iIoZiXlEo3+ZnOi2NzzDx1ojfwGEswLUBhMaOeKowdpQl9le5u3ZbUp4At8YE+k6lEwnRovclkUNShEbr84VMWM1ZcMGKbfNz2QA/z/2khbsdMMBRmoEy0Tsa0=
+	t=1715686007; cv=none; b=nk1z/bclCbIlkv58NQhRgrqDxEV6mhUyoLiwsrAJpvv/tVQXVFxmO0Q1AlbdVC8vn3AjNaYyraijhODXPPsT1nV58JVunht9mPlrXNzjg/ju7/UjmnJoUAqcz/rztreoih9rf4yYTNVMEoDb4Z/5jYlK8lQLj96vHfTF0B5IZZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686001; c=relaxed/simple;
-	bh=grnUAatkmRCOXuowGyPCTaAcCBQcUmdwZ32WJy2/qTU=;
+	s=arc-20240116; t=1715686007; c=relaxed/simple;
+	bh=EH5is5JlqCv2YHOfrd5H5a8lcDvq61rubKsb0NrCHVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RcU+MWpZbSquE9gkrxT2gif3G92PlBjlnVfGSrPTbtyPbP/q2DQgqI5mjcQgpO6oUdqTt6FvdlFUeaXyYFJJYt7VfBgEXooox20Nig+aCfHfP1Fjf28ieAP7HQTiegAu0SALOVPELpozof0nmPJrZ4QGx6rzHRdXyci/5ya36IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xs2/dZDN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DGiZKTQklbAi9+WVB8Ead59s8jXgP1b5zGCiUp57D/PYsCgeZJnuNjk2uzcFKzFwnenQo2RK+YKndN+GPK+Q73L9cft0zUKyvl5OdHXEhjxviY3CVzdGcg+PtUcAjLsgDnbskwW3GTRMa5re1Gun0KKRGLT8f8/e4xAACEfs/Do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lklNW/2w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xs2/dZDN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B23C2BD10;
-	Tue, 14 May 2024 11:26:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lklNW/2w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E768AC2BD10;
+	Tue, 14 May 2024 11:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686001;
-	bh=grnUAatkmRCOXuowGyPCTaAcCBQcUmdwZ32WJy2/qTU=;
+	s=korg; t=1715686007;
+	bh=EH5is5JlqCv2YHOfrd5H5a8lcDvq61rubKsb0NrCHVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xs2/dZDN97zrcmv5CCSr87Zoxh9caSKx/Kvp9zl6dSwt4GYF5nG0/leq4lNb5O2oQ
-	 4aBtPXZTkLx9Ff6f/CLoJcDZq33sarRTyFH5nC2IG6bdx/16hX/bIRA/V/X7l71tIP
-	 Y6gvldYS8gtwWq9QsYoYOaGMYqrYmZtbvHuP0lFg=
+	b=lklNW/2wXZWq7E6EfYrSOaIIo90/Z9CU2efuha9g4Qnw/5xeg4pjA2YKgv6N3bH2C
+	 bgPiJsouOdeE96OnOvLoIMrK0BR2htEIGmTs+5KjK8+Yu9Zs8dJTsE1kzWmrXAtF+0
+	 3s+lzbL5ygSR2KlGYMZ+C26LHZYERBMVDeKDtjx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 293/301] eventfs: Do not treat events directory different than other directories
-Date: Tue, 14 May 2024 12:19:24 +0200
-Message-ID: <20240514101043.323145487@linuxfoundation.org>
+	Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
+	Matthias Kaehlcke <mka@chromium.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 294/301] Bluetooth: qca: fix invalid device address check
+Date: Tue, 14 May 2024 12:19:25 +0200
+Message-ID: <20240514101043.360352750@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -53,60 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 22e61e15af731dbe46704c775d2335e56fcef4e9 upstream.
+commit 32868e126c78876a8a5ddfcb6ac8cb2fffcf4d27 upstream.
 
-Treat the events directory the same as other directories when it comes to
-permissions. The events directory was considered different because it's
-dentry is persistent, whereas the other directory dentries are created
-when accessed. But the way tracefs now does its ownership by using the
-root dentry's permissions as the default permissions, the events directory
-can get out of sync when a remount is performed setting the group and user
-permissions.
+Qualcomm Bluetooth controllers may not have been provisioned with a
+valid device address and instead end up using the default address
+00:00:00:00:5a:ad.
 
-Remove the special case for the events directory on setting the
-attributes. This allows the updates caused by remount to work properly as
-well as simplifies the code.
+This was previously believed to be due to lack of persistent storage for
+the address but it may also be due to integrators opting to not use the
+on-chip OTP memory and instead store the address elsewhere (e.g. in
+storage managed by secure world firmware).
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240502200906.002923579@goodmis.org
+According to Qualcomm, at least WCN6750, WCN6855 and WCN7850 have
+on-chip OTP storage for the address.
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Fixes: 8186fff7ab649 ("tracefs/eventfs: Use root and instance inodes as default ownership")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+As the device type alone cannot be used to determine when the address is
+valid, instead read back the address during setup() and only set the
+HCI_QUIRK_USE_BDADDR_PROPERTY flag when needed.
+
+This specifically makes sure that controllers that have been provisioned
+with an address do not start as unconfigured.
+
+Reported-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+Link: https://lore.kernel.org/r/124a7d54-5a18-4be7-9a76-a12017f6cce5@quicinc.com/
+Fixes: 5971752de44c ("Bluetooth: hci_qca: Set HCI_QUIRK_USE_BDADDR_PROPERTY for wcn3990")
+Fixes: e668eb1e1578 ("Bluetooth: hci_core: Don't stop BT if the BD address missing in dts")
+Fixes: 6945795bc81a ("Bluetooth: fix use-bdaddr-property quirk")
+Cc: stable@vger.kernel.org	# 6.5
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reported-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |   16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+ drivers/bluetooth/btqca.c   |   38 ++++++++++++++++++++++++++++++++++++++
+ drivers/bluetooth/hci_qca.c |    2 --
+ 2 files changed, 38 insertions(+), 2 deletions(-)
 
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -163,21 +163,7 @@ static int eventfs_set_attr(struct mnt_i
- 	 * determined by the parent directory.
- 	 */
- 	if (dentry->d_inode->i_mode & S_IFDIR) {
--		/*
--		 * The events directory dentry is never freed, unless its
--		 * part of an instance that is deleted. It's attr is the
--		 * default for its child files and directories.
--		 * Do not update it. It's not used for its own mode or ownership.
--		 */
--		if (ei->is_events) {
--			/* But it still needs to know if it was modified */
--			if (iattr->ia_valid & ATTR_UID)
--				ei->attr.mode |= EVENTFS_SAVE_UID;
--			if (iattr->ia_valid & ATTR_GID)
--				ei->attr.mode |= EVENTFS_SAVE_GID;
--		} else {
--			update_attr(&ei->attr, iattr);
--		}
-+		update_attr(&ei->attr, iattr);
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -15,6 +15,8 @@
  
- 	} else {
- 		name = dentry->d_name.name;
+ #define VERSION "0.1"
+ 
++#define QCA_BDADDR_DEFAULT (&(bdaddr_t) {{ 0xad, 0x5a, 0x00, 0x00, 0x00, 0x00 }})
++
+ int qca_read_soc_version(struct hci_dev *hdev, struct qca_btsoc_version *ver,
+ 			 enum qca_btsoc_type soc_type)
+ {
+@@ -612,6 +614,38 @@ int qca_set_bdaddr_rome(struct hci_dev *
+ }
+ EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
+ 
++static int qca_check_bdaddr(struct hci_dev *hdev)
++{
++	struct hci_rp_read_bd_addr *bda;
++	struct sk_buff *skb;
++	int err;
++
++	if (bacmp(&hdev->public_addr, BDADDR_ANY))
++		return 0;
++
++	skb = __hci_cmd_sync(hdev, HCI_OP_READ_BD_ADDR, 0, NULL,
++			     HCI_INIT_TIMEOUT);
++	if (IS_ERR(skb)) {
++		err = PTR_ERR(skb);
++		bt_dev_err(hdev, "Failed to read device address (%d)", err);
++		return err;
++	}
++
++	if (skb->len != sizeof(*bda)) {
++		bt_dev_err(hdev, "Device address length mismatch");
++		kfree_skb(skb);
++		return -EIO;
++	}
++
++	bda = (struct hci_rp_read_bd_addr *)skb->data;
++	if (!bacmp(&bda->bdaddr, QCA_BDADDR_DEFAULT))
++		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
++
++	kfree_skb(skb);
++
++	return 0;
++}
++
+ static void qca_generate_hsp_nvm_name(char *fwname, size_t max_size,
+ 		struct qca_btsoc_version ver, u8 rom_ver, u16 bid)
+ {
+@@ -818,6 +852,10 @@ int qca_uart_setup(struct hci_dev *hdev,
+ 		break;
+ 	}
+ 
++	err = qca_check_bdaddr(hdev);
++	if (err)
++		return err;
++
+ 	bt_dev_info(hdev, "QCA setup on UART is completed");
+ 
+ 	return 0;
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1890,8 +1890,6 @@ retry:
+ 	case QCA_WCN6750:
+ 	case QCA_WCN6855:
+ 	case QCA_WCN7850:
+-		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
+-
+ 		qcadev = serdev_device_get_drvdata(hu->serdev);
+ 		if (qcadev->bdaddr_property_broken)
+ 			set_bit(HCI_QUIRK_BDADDR_PROPERTY_BROKEN, &hdev->quirks);
 
 
