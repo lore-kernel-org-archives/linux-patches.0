@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20D02D60A;
-	Tue, 14 May 2024 11:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EE62B9B3;
+	Tue, 14 May 2024 11:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687150; cv=none; b=uAq0KPwCxNbBQlZoiIae7RTrpm44ycfByQNVl1y79OYi0iy3kj7ZKlI3Y2sgYZUBDEgMUG0F14BIv6UdzHmke78qWfFYm6HkXyu7uY5uGEXrR8CH6QV6pR1c/xWeXM563F6CW8MlCPPlffB1GgT3saGnxw+tG1wlPlgj7ZtXvTk=
+	t=1715687152; cv=none; b=IxVPMZzxAAuwHaW8s0LRA250nZMQqTQ6lXZWDRP1QQRZPR0aXgc6obU++Qurq5h11Q1T4pHJRtzUDS5kZaZcOyejSYp7bfp2ninLG82dOXCNC8mlaoSEqmb+NsW8RD5sZREHgUQMLrV2vRNAvv35JsSoZVgJ/c5XOtupFnFR+Js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687150; c=relaxed/simple;
-	bh=edxI5XU7WIYox9TZWEcRiYzisBigXiWkOIMFwWHR2Zs=;
+	s=arc-20240116; t=1715687152; c=relaxed/simple;
+	bh=iIIo3YaWZMTsTbVT2kuSfTqFZC4Y7jSZqeUdUFqkYvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AEoeRU9hSaYEfSpghEhCLFWAWdYpRJQtzik9aQqwg9nri84nW6ZkhDT+nwXRQAHFXOBEzne0wAXFX2tyIFl+cBYpq+wLIN7hkEKlvmXlb3MnsOdtsjpssg2Pgm2p2j+gi4VZ0yuBhUZ/P1zNkW0Kha83qwR6ThjbV+Z64EFjNe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4EENS4e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sjlu3xLYy8ipdej0Mh6/Q87m+BxYNN72/8NoOXnJA70SEWX4c42/S+j6JNYDJn6ONIJ+pZboDmenh6tdlpu19Gfu7vkz0g+RqAq5Nzqk9vvXClk6+Bv/eGZ0DBo5+kxr7OIvVdTn24cgg4AuXUgatowIUjhFWsKY0tR6b6dR1A4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nYU8lL1X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4EENS4e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5F3C2BD10;
-	Tue, 14 May 2024 11:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nYU8lL1X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12770C2BD10;
+	Tue, 14 May 2024 11:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687149;
-	bh=edxI5XU7WIYox9TZWEcRiYzisBigXiWkOIMFwWHR2Zs=;
+	s=korg; t=1715687152;
+	bh=iIIo3YaWZMTsTbVT2kuSfTqFZC4Y7jSZqeUdUFqkYvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V4EENS4eOgI8NUFVc26ZUTkHavX3IZ208c1uamRipxRqJLLQGvYycUyrsz3vLAB2N
-	 hG2sG/fX/dhGG0YBVneZo4+JwpeDilp64Ghl71O8ObL1SrHDmd6XCc+uZ3W82Yyh26
-	 GFnCpsMHEQSrsNSjEWdtVRJcjfuWLC89xuAGU0jg=
+	b=nYU8lL1X0zEwX5IEbsQZqAJmhzMv7rMkAWNcPGa+fTPJFKAz1/1iNcB5lh2kIFsit
+	 ghaMW6AmX3SnGgygp4KWSGrC4+itINgfMF07+0nvE208LA+/Jr++E/52mvj3f0FoND
+	 r2SYBrPJn6pFNZvnxGt3Dvq+mrTIKAEacdvRbpKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 64/84] tcp: Use refcount_inc_not_zero() in tcp_twsk_unique().
-Date: Tue, 14 May 2024 12:20:15 +0200
-Message-ID: <20240514100954.091778234@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 5.4 82/84] pinctrl: mediatek: Fix some off by one bugs
+Date: Tue, 14 May 2024 12:20:33 +0200
+Message-ID: <20240514100954.768127546@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100951.686412426@linuxfoundation.org>
 References: <20240514100951.686412426@linuxfoundation.org>
@@ -53,118 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-[ Upstream commit f2db7230f73a80dbb179deab78f88a7947f0ab7e ]
+commit 3385ab72d995fc0b876818a36203bf2429445686 upstream.
 
-Anderson Nascimento reported a use-after-free splat in tcp_twsk_unique()
-with nice analysis.
+These comparisons should be >= instead of > to prevent accessing one
+element beyond the end of the hw->soc->pins[] array.
 
-Since commit ec94c2696f0b ("tcp/dccp: avoid one atomic operation for
-timewait hashdance"), inet_twsk_hashdance() sets TIME-WAIT socket's
-sk_refcnt after putting it into ehash and releasing the bucket lock.
-
-Thus, there is a small race window where other threads could try to
-reuse the port during connect() and call sock_hold() in tcp_twsk_unique()
-for the TIME-WAIT socket with zero refcnt.
-
-If that happens, the refcnt taken by tcp_twsk_unique() is overwritten
-and sock_put() will cause underflow, triggering a real use-after-free
-somewhere else.
-
-To avoid the use-after-free, we need to use refcount_inc_not_zero() in
-tcp_twsk_unique() and give up on reusing the port if it returns false.
-
-[0]:
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 0 PID: 1039313 at lib/refcount.c:25 refcount_warn_saturate+0xe5/0x110
-CPU: 0 PID: 1039313 Comm: trigger Not tainted 6.8.6-200.fc39.x86_64 #1
-Hardware name: VMware, Inc. VMware20,1/440BX Desktop Reference Platform, BIOS VMW201.00V.21805430.B64.2305221830 05/22/2023
-RIP: 0010:refcount_warn_saturate+0xe5/0x110
-Code: 42 8e ff 0f 0b c3 cc cc cc cc 80 3d aa 13 ea 01 00 0f 85 5e ff ff ff 48 c7 c7 f8 8e b7 82 c6 05 96 13 ea 01 01 e8 7b 42 8e ff <0f> 0b c3 cc cc cc cc 48 c7 c7 50 8f b7 82 c6 05 7a 13 ea 01 01 e8
-RSP: 0018:ffffc90006b43b60 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: ffff888009bb3ef0 RCX: 0000000000000027
-RDX: ffff88807be218c8 RSI: 0000000000000001 RDI: ffff88807be218c0
-RBP: 0000000000069d70 R08: 0000000000000000 R09: ffffc90006b439f0
-R10: ffffc90006b439e8 R11: 0000000000000003 R12: ffff8880029ede84
-R13: 0000000000004e20 R14: ffffffff84356dc0 R15: ffff888009bb3ef0
-FS:  00007f62c10926c0(0000) GS:ffff88807be00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020ccb000 CR3: 000000004628c005 CR4: 0000000000f70ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- ? refcount_warn_saturate+0xe5/0x110
- ? __warn+0x81/0x130
- ? refcount_warn_saturate+0xe5/0x110
- ? report_bug+0x171/0x1a0
- ? refcount_warn_saturate+0xe5/0x110
- ? handle_bug+0x3c/0x80
- ? exc_invalid_op+0x17/0x70
- ? asm_exc_invalid_op+0x1a/0x20
- ? refcount_warn_saturate+0xe5/0x110
- tcp_twsk_unique+0x186/0x190
- __inet_check_established+0x176/0x2d0
- __inet_hash_connect+0x74/0x7d0
- ? __pfx___inet_check_established+0x10/0x10
- tcp_v4_connect+0x278/0x530
- __inet_stream_connect+0x10f/0x3d0
- inet_stream_connect+0x3a/0x60
- __sys_connect+0xa8/0xd0
- __x64_sys_connect+0x18/0x20
- do_syscall_64+0x83/0x170
- entry_SYSCALL_64_after_hwframe+0x78/0x80
-RIP: 0033:0x7f62c11a885d
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d a3 45 0c 00 f7 d8 64 89 01 48
-RSP: 002b:00007f62c1091e58 EFLAGS: 00000296 ORIG_RAX: 000000000000002a
-RAX: ffffffffffffffda RBX: 0000000020ccb004 RCX: 00007f62c11a885d
-RDX: 0000000000000010 RSI: 0000000020ccb000 RDI: 0000000000000003
-RBP: 00007f62c1091e90 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000296 R12: 00007f62c10926c0
-R13: ffffffffffffff88 R14: 0000000000000000 R15: 00007ffe237885b0
- </TASK>
-
-Fixes: ec94c2696f0b ("tcp/dccp: avoid one atomic operation for timewait hashdance")
-Reported-by: Anderson Nascimento <anderson@allelesecurity.com>
-Closes: https://lore.kernel.org/netdev/37a477a6-d39e-486b-9577-3463f655a6b7@allelesecurity.com/
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240501213145.62261-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3de7deefce69 ("pinctrl: mediatek: Check gpio pin number and use binary search in mtk_hw_pin_field_lookup()")
+Fixes: 184d8e13f9b1 ("pinctrl: mediatek: Add support for pin configuration dump via debugfs.")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Link: https://lore.kernel.org/r/20200218055247.74s2xa7veqx2do34@kili.mountain
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_ipv4.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/pinctrl/mediatek/pinctrl-paris.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index a54505c29a5c2..0dd917c5a7da6 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -152,6 +152,12 @@ int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
- 	if (tcptw->tw_ts_recent_stamp &&
- 	    (!twp || (reuse && time_after32(ktime_get_seconds(),
- 					    tcptw->tw_ts_recent_stamp)))) {
-+		/* inet_twsk_hashdance() sets sk_refcnt after putting twsk
-+		 * and releasing the bucket lock.
-+		 */
-+		if (unlikely(!refcount_inc_not_zero(&sktw->sk_refcnt)))
-+			return 0;
-+
- 		/* In case of repair and re-using TIME-WAIT sockets we still
- 		 * want to be sure that it is safe as above but honor the
- 		 * sequence numbers and time stamps set as part of the repair
-@@ -172,7 +178,7 @@ int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
- 			tp->rx_opt.ts_recent	   = tcptw->tw_ts_recent;
- 			tp->rx_opt.ts_recent_stamp = tcptw->tw_ts_recent_stamp;
- 		}
--		sock_hold(sktw);
-+
- 		return 1;
- 	}
+--- a/drivers/pinctrl/mediatek/pinctrl-paris.c
++++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
+@@ -610,7 +610,7 @@ static int mtk_gpio_get_direction(struct
+ 	const struct mtk_pin_desc *desc;
+ 	int value, err;
  
--- 
-2.43.0
-
+-	if (gpio > hw->soc->npins)
++	if (gpio >= hw->soc->npins)
+ 		return -EINVAL;
+ 
+ 	desc = (const struct mtk_pin_desc *)&hw->soc->pins[gpio];
+@@ -628,7 +628,7 @@ static int mtk_gpio_get(struct gpio_chip
+ 	const struct mtk_pin_desc *desc;
+ 	int value, err;
+ 
+-	if (gpio > hw->soc->npins)
++	if (gpio >= hw->soc->npins)
+ 		return -EINVAL;
+ 
+ 	desc = (const struct mtk_pin_desc *)&hw->soc->pins[gpio];
+@@ -645,7 +645,7 @@ static void mtk_gpio_set(struct gpio_chi
+ 	struct mtk_pinctrl *hw = gpiochip_get_data(chip);
+ 	const struct mtk_pin_desc *desc;
+ 
+-	if (gpio > hw->soc->npins)
++	if (gpio >= hw->soc->npins)
+ 		return;
+ 
+ 	desc = (const struct mtk_pin_desc *)&hw->soc->pins[gpio];
+@@ -657,7 +657,7 @@ static int mtk_gpio_direction_input(stru
+ {
+ 	struct mtk_pinctrl *hw = gpiochip_get_data(chip);
+ 
+-	if (gpio > hw->soc->npins)
++	if (gpio >= hw->soc->npins)
+ 		return -EINVAL;
+ 
+ 	return pinctrl_gpio_direction_input(chip->base + gpio);
+@@ -668,7 +668,7 @@ static int mtk_gpio_direction_output(str
+ {
+ 	struct mtk_pinctrl *hw = gpiochip_get_data(chip);
+ 
+-	if (gpio > hw->soc->npins)
++	if (gpio >= hw->soc->npins)
+ 		return -EINVAL;
+ 
+ 	mtk_gpio_set(chip, gpio, value);
 
 
