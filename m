@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF23512EBCE;
-	Tue, 14 May 2024 11:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BE653370;
+	Tue, 14 May 2024 11:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685759; cv=none; b=BZ5cTRbmz4pjim+nz193gOPOljzZTKEu6UzxeGFBp655aMoUrhkKJmGml2w5u5COnxLQZ+e2mdPDeux5v3mvAn6POqix4PO0EotFe58YjL4dwZJEbaWewFTROFAB+teAi5SspUPeMLHOlWy3UW7KqZBPqssG7LICmHD6D2gFfus=
+	t=1715685764; cv=none; b=g2rs4VWvKaldcAWs3IF82ZXFncB5ag5cAd6CbLbiRTcHmW1OF/WBAmwHsqz1sCzpdMXpZuPgFAW1G13EdgrrxDDAErwKU9ghifvTVJfiu8luhRcdmEVfjfyplFYOoa3YA6jN/x5bbvKDwxiWvibvxD6VNCwminbCe9auhI/ljL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685759; c=relaxed/simple;
-	bh=/yeEAeqlbyVB1eUHSxGPL98HsnstS70DUxioVAarWFg=;
+	s=arc-20240116; t=1715685764; c=relaxed/simple;
+	bh=xnga8GuKmJbHQfqHIjPoumh5MewSleWbqsdijOCZl1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XLD4D8BMoon2ElQ+N05ptXerycFRg8XgvmxJnO9ixmVNz312VrxNUn/ntkNgD55A7e1jWPEDUF5+wzAdSVLkgWuEYw7Z5gXZanqyLVE5Md8aweHQLKgkbVNh43yfx5wKQ4GwW7ylLqXZjAH0X/BvClCNCv+K0fh00KVIJAgNt9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpQ1tpCN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=plA5SoHrexAUA/fcka4/zkFMxKxHBFVIR6/8/rzNtXZ646YBrqP020zrs3lTTrvaj84Nvyz/XdPVzn5+1FeEY9qdIhGJFR7LDFhvnrY6BcRYVyBTqk02dG684GEUIy+ruC1nmRk/hU68o9it84eIm3PDPiJNqsm87bqnsMK8H/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ECpHCahn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpQ1tpCN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF25C2BD10;
-	Tue, 14 May 2024 11:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ECpHCahn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C151C2BD10;
+	Tue, 14 May 2024 11:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685758;
-	bh=/yeEAeqlbyVB1eUHSxGPL98HsnstS70DUxioVAarWFg=;
+	s=korg; t=1715685763;
+	bh=xnga8GuKmJbHQfqHIjPoumh5MewSleWbqsdijOCZl1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mpQ1tpCNpATY0FFhIKoLwWTedjwamrl0cI5skT1o/Xa9E21iUMitdeGdoTmz7uThh
-	 kQEKdRrYkhEytlBOuUpgAqJy0kSZFtkAGXDsGXLEaGO2YpBgjcaLHYcT8ceIQO2HtE
-	 zzJ55H4u8LlhsMZe4oOjbEMA2CenvajVS/LuMaGI=
+	b=ECpHCahnCZgVJ2xupwuj8s1RJ7qBonUNo6JkRoWnj4c7Ucjr1jWDI1aQmLv7e8nLH
+	 SeDPeLkg9loiU1MlSXwAR/qq+yF4lOAOad8oRFteBQJTPP58480rBnoAMmjVokKAq9
+	 XWy/ezP9CZnZzzYTxHYLF2KwtNQNj5FI+Rn6vsOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 242/301] btrfs: set correct ram_bytes when splitting ordered extent
-Date: Tue, 14 May 2024 12:18:33 +0200
-Message-ID: <20240514101041.391256783@linuxfoundation.org>
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Marius Fleischer <fleischermarius@gmail.com>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 243/301] maple_tree: fix mas_empty_area_rev() null pointer dereference
+Date: Tue, 14 May 2024 12:18:34 +0200
+Message-ID: <20240514101041.430145574@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -51,65 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Liam R. Howlett <Liam.Howlett@oracle.com>
 
-commit 63a6ce5a1a6261e4c70bad2b55c4e0de8da4762e upstream.
+commit 955a923d2809803980ff574270f81510112be9cf upstream.
 
-[BUG]
-When running generic/287, the following file extent items can be
-generated:
+Currently the code calls mas_start() followed by mas_data_end() if the
+maple state is MA_START, but mas_start() may return with the maple state
+node == NULL.  This will lead to a null pointer dereference when checking
+information in the NULL node, which is done in mas_data_end().
 
-        item 16 key (258 EXTENT_DATA 2682880) itemoff 15305 itemsize 53
-                generation 9 type 1 (regular)
-                extent data disk byte 1378414592 nr 462848
-                extent data offset 0 nr 462848 ram 2097152
-                extent compression 0 (none)
+Avoid setting the offset if there is no node by waiting until after the
+maple state is checked for an empty or single entry state.
 
-Note that file extent item is not a compressed one, but its ram_bytes is
-way larger than its disk_num_bytes.
+A user could trigger the events to cause a kernel oops by unmapping all
+vmas to produce an empty maple tree, then mapping a vma that would cause
+the scenario described above.
 
-According to btrfs on-disk scheme, ram_bytes should match disk_num_bytes
-if it's not a compressed one.
-
-[CAUSE]
-Since commit b73a6fd1b1ef ("btrfs: split partial dio bios before
-submit"), for partial dio writes, we would split the ordered extent.
-
-However the function btrfs_split_ordered_extent() doesn't update the
-ram_bytes even it has already shrunk the disk_num_bytes.
-
-Originally the function btrfs_split_ordered_extent() is only introduced
-for zoned devices in commit d22002fd37bd ("btrfs: zoned: split ordered
-extent when bio is sent"), but later commit b73a6fd1b1ef ("btrfs: split
-partial dio bios before submit") makes non-zoned btrfs affected.
-
-Thankfully for un-compressed file extent, we do not really utilize the
-ram_bytes member, thus it won't cause any real problem.
-
-[FIX]
-Also update btrfs_ordered_extent::ram_bytes inside
-btrfs_split_ordered_extent().
-
-Fixes: d22002fd37bd ("btrfs: zoned: split ordered extent when bio is sent")
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://lkml.kernel.org/r/20240422203349.2418465-1-Liam.Howlett@oracle.com
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reported-by: Marius Fleischer <fleischermarius@gmail.com>
+Closes: https://lore.kernel.org/lkml/CAJg=8jyuSxDL6XvqEXY_66M20psRK2J53oBTP+fjV5xpW2-R6w@mail.gmail.com/
+Link: https://lore.kernel.org/lkml/CAJg=8jyuSxDL6XvqEXY_66M20psRK2J53oBTP+fjV5xpW2-R6w@mail.gmail.com/
+Tested-by: Marius Fleischer <fleischermarius@gmail.com>
+Tested-by: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ordered-data.c |    1 +
- 1 file changed, 1 insertion(+)
+ lib/maple_tree.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/fs/btrfs/ordered-data.c
-+++ b/fs/btrfs/ordered-data.c
-@@ -1202,6 +1202,7 @@ struct btrfs_ordered_extent *btrfs_split
- 	ordered->disk_bytenr += len;
- 	ordered->num_bytes -= len;
- 	ordered->disk_num_bytes -= len;
-+	ordered->ram_bytes -= len;
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -5085,18 +5085,18 @@ int mas_empty_area_rev(struct ma_state *
+ 	if (size == 0 || max - min < size - 1)
+ 		return -EINVAL;
  
- 	if (test_bit(BTRFS_ORDERED_IO_DONE, &ordered->flags)) {
- 		ASSERT(ordered->bytes_left == 0);
+-	if (mas_is_start(mas)) {
++	if (mas_is_start(mas))
+ 		mas_start(mas);
+-		mas->offset = mas_data_end(mas);
+-	} else if (mas->offset >= 2) {
+-		mas->offset -= 2;
+-	} else if (!mas_rewind_node(mas)) {
++	else if ((mas->offset < 2) && (!mas_rewind_node(mas)))
+ 		return -EBUSY;
+-	}
+ 
+-	/* Empty set. */
+-	if (mas_is_none(mas) || mas_is_ptr(mas))
++	if (unlikely(mas_is_none(mas) || mas_is_ptr(mas)))
+ 		return mas_sparse_area(mas, min, max, size, false);
++	else if (mas->offset >= 2)
++		mas->offset -= 2;
++	else
++		mas->offset = mas_data_end(mas);
++
+ 
+ 	/* The start of the window can only be within these values. */
+ 	mas->index = min;
 
 
