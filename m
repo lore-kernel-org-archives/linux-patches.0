@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58732B9AD;
-	Tue, 14 May 2024 11:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872D22B9AD;
+	Tue, 14 May 2024 11:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687716; cv=none; b=mtLUC7afoqIapMOR+BGmIYhVAzPdhXgn3bic88oUfy1hz5yGkipJwrqlR92xpg9ziJlAtAIQ7KCO6hvtIL05U6wLFXSa6YrpTFi17Nk4YOBRcDVGR+nIqpiZ8F4sgCVrxheaqmLnX6lwhIBBuVGd1IlKO6iqKadaP7ZA/HRmZME=
+	t=1715687719; cv=none; b=slCnB8A0vFCtxlnAqTZTEy3qptIcZkQ8gIfuypmKf6gDkaTncxv6hgl2YlGDhaHSa0v2kmgTpi5QGyYsLeMmC/BB6a9CATctr7YE5M5GJ41aApCsNaapI41Zj7gJKIqlhhMhbQPNqbaDqpSaPgJQxshzbZUrmCUnjWg718w92iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687716; c=relaxed/simple;
-	bh=xvOvpOdDpsdLPgfXd9oxOODId01mAYqWWmTLfx8Gui4=;
+	s=arc-20240116; t=1715687719; c=relaxed/simple;
+	bh=/w90sZYYV6jP5QbXfUU/PXFgvDklHQFeG92Wu/Js8RM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fFfuIlWZOfo0pio9RzT+phnD9PvbX+nQXw7UrS11eOqUVx3G07UdxrTigkwyigk3p58g78ISL7NMipqaK0Wf2rcChKFMDgriA2Ny9iqr/eEw9RdKcsTfIZTkVAeRcGpOjUwNnJHjFROInb53DevLBy0qCoL4eFTh9k7f2xY0XFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4B0XlYS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IStKQ7Nb3DTIWtpm0QmsiHOty8PKG3rqvXWFLxX43+PM1q6kdIdj+HAhFLbHSaVukfYqLl9/eoyBP6oNyw9b5YwcRCc7CoQB/En/Ly2lHWpbP/Ct4D9rRFAdV7iOBULB1VEaUTNqkY+nsS0KMQrGuCsjfDRpbKGbukOQJCRCnTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zY8RY7V9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4B0XlYS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B740C32781;
-	Tue, 14 May 2024 11:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zY8RY7V9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1080AC2BD10;
+	Tue, 14 May 2024 11:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687716;
-	bh=xvOvpOdDpsdLPgfXd9oxOODId01mAYqWWmTLfx8Gui4=;
+	s=korg; t=1715687719;
+	bh=/w90sZYYV6jP5QbXfUU/PXFgvDklHQFeG92Wu/Js8RM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r4B0XlYS5AwGFEJ5KYuuz2fnBv/OXNvICz+Q41TYAijwYTk43QJo/tWCPv2ZIloj1
-	 p+f5sp9C8PSK0dUx0LJY2wS5M7Y2iUkM+2XVjvpKb/uC1KMi1oExsI9vdYJm+BrxJo
-	 oi9udGWe2qnhQ7MpPfFexKbH8NR/HWcPQc0LTs7o=
+	b=zY8RY7V9ePiHMYdVafVz5o5e2q0uW4kEl1KcEVc5XShjs9ahIIzVRLEIEcsG+R6/d
+	 vxfASt1faCwfQ9a+Ay1399aJYo5PgTVE+S08zVq0aLc3hJQcGrDzoqL5BXdQqod6bn
+	 KivtmM2bhr6V7oEWprBf51sh0L5AmnBFKgl2I5Yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"John B. Wyatt IV" <jwyatt@redhat.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 049/168] cxgb4: Properly lock TX queue for the selftest.
-Date: Tue, 14 May 2024 12:19:07 +0200
-Message-ID: <20240514101008.542561453@linuxfoundation.org>
+Subject: [PATCH 5.15 040/168] net: qede: use return from qede_parse_flow_attr() for flow_spec
+Date: Tue, 14 May 2024 12:18:58 +0200
+Message-ID: <20240514101008.204474267@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -46,66 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit 9067eccdd7849dd120d5495dbd5a686fa6ed2c1a ]
+[ Upstream commit 27b44414a34b108c5a37cd5b4894f606061d86e7 ]
 
-The selftest for the driver sends a dummy packet and checks if the
-packet will be received properly as it should be. The regular TX path
-and the selftest can use the same network queue so locking is required
-and was missing in the selftest path. This was addressed in the commit
-cited below.
-Unfortunately locking the TX queue requires BH to be disabled which is
-not the case in selftest path which is invoked in process context.
-Lockdep should be complaining about this.
+In qede_flow_spec_to_rule(), when calling
+qede_parse_flow_attr() then the return code
+was only used for a non-zero check, and then
+-EINVAL was returned.
 
-Use __netif_tx_lock_bh() for TX queue locking.
+qede_parse_flow_attr() can currently fail with:
+* -EINVAL
+* -EOPNOTSUPP
+* -EPROTONOSUPPORT
 
-Fixes: c650e04898072 ("cxgb4: Fix race between loopback and normal Tx path")
-Reported-by: "John B. Wyatt IV" <jwyatt@redhat.com>
-Closes: https://lore.kernel.org/all/Zic0ot5aGgR-V4Ks@thinkpad2021/
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20240429091147.YWAaal4v@linutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This patch changes the code to use the actual
+return code, not just return -EINVAL.
+
+The blaimed commit introduced qede_flow_spec_to_rule(),
+and this call to qede_parse_flow_attr(), it looks
+like it just duplicated how it was already used.
+
+Only compile tested.
+
+Fixes: 37c5d3efd7f8 ("qede: use ethtool_rx_flow_rule() to remove duplicated parser code")
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/chelsio/cxgb4/sge.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/qlogic/qede/qede_filter.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/chelsio/cxgb4/sge.c b/drivers/net/ethernet/chelsio/cxgb4/sge.c
-index fa5b596ff23a1..a074e9d44277f 100644
---- a/drivers/net/ethernet/chelsio/cxgb4/sge.c
-+++ b/drivers/net/ethernet/chelsio/cxgb4/sge.c
-@@ -2682,12 +2682,12 @@ int cxgb4_selftest_lb_pkt(struct net_device *netdev)
- 	lb->loopback = 1;
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_filter.c b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+index aedb98713bbf2..aeff091cdfaee 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_filter.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+@@ -2002,10 +2002,9 @@ static int qede_flow_spec_to_rule(struct qede_dev *edev,
+ 	if (IS_ERR(flow))
+ 		return PTR_ERR(flow);
  
- 	q = &adap->sge.ethtxq[pi->first_qset];
--	__netif_tx_lock(q->txq, smp_processor_id());
-+	__netif_tx_lock_bh(q->txq);
+-	if (qede_parse_flow_attr(edev, proto, flow->rule, t)) {
+-		err = -EINVAL;
++	err = qede_parse_flow_attr(edev, proto, flow->rule, t);
++	if (err)
+ 		goto err_out;
+-	}
  
- 	reclaim_completed_tx(adap, &q->q, -1, true);
- 	credits = txq_avail(&q->q) - ndesc;
- 	if (unlikely(credits < 0)) {
--		__netif_tx_unlock(q->txq);
-+		__netif_tx_unlock_bh(q->txq);
- 		return -ENOMEM;
- 	}
- 
-@@ -2722,7 +2722,7 @@ int cxgb4_selftest_lb_pkt(struct net_device *netdev)
- 	init_completion(&lb->completion);
- 	txq_advance(&q->q, ndesc);
- 	cxgb4_ring_tx_db(adap, &q->q, ndesc);
--	__netif_tx_unlock(q->txq);
-+	__netif_tx_unlock_bh(q->txq);
- 
- 	/* wait for the pkt to return */
- 	ret = wait_for_completion_timeout(&lb->completion, 10 * HZ);
+ 	/* Make sure location is valid and filter isn't already set */
+ 	err = qede_flow_spec_validate(edev, &flow->rule->action, t,
 -- 
 2.43.0
 
