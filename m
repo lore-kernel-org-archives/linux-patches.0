@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59EF87581F;
-	Tue, 14 May 2024 10:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2EB6DD1D;
+	Tue, 14 May 2024 10:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683650; cv=none; b=pLh1rruXRtph2UIxhbFneCVX3Gt8imVPXqoVn4r9u3hmt6BKP6P+aWu7auvcry5dV0eZIA5jhoBJcmMhpe4OB92goNNE3EAW7x52w2Mpu3N7DVCZpxtiYPlpzfxgBT75RNT+ymoSwPM7uNt2Jfl0jF+mhkciO/2O61w1/rQSX7k=
+	t=1715683655; cv=none; b=PKCA/r3VCJnrru5S9ImwRWzm9mX84ldh5oYnto6uL8Ko5ofeJ/X/hMTvJ426e4SxznwfLW6sWclQzRxLHV4DuzeQGAGbu4ZhoEkZ8RCpD6vVIEG07C5z7sx2Au+rurbNAtlQJat/gwInpBqWUWO4+AFAU8lKvZdt3pkIkNd6VwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683650; c=relaxed/simple;
-	bh=6KdfiAlszUxhDiQcYCc9Xw+ruhxg6dHvgLhwOo843Pk=;
+	s=arc-20240116; t=1715683655; c=relaxed/simple;
+	bh=m52KnLi0ZdeAL0t5UN0lh9zpHE/Y5CObrP31hQ4s8lU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxSCq3UQlbNDPkZySy+fBvVRnpbWgzaV/FufY1x3niujJzuJ/pGwxkYuhxdmU9ax8MlFhlichZBbwfVjcVXV7h0TT7CF7rarSNV5Ziyo0kYtpXYNNwW9dN++VKfXFdTdNRO+8amMG3V44fVKZtgt2DySlchpvb23tEfN7ojBOlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELd5s+ZB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l/+xcNMqITv93bsFg/D2OSX34g4OKjrynSum/0HCMpiLuRM+Ylxl4pxec8aMFJNVTN/M2UUizcjhenaGBKw3g2Laj8ajOlFT+6gfywtPNPbjMgpDzzaXGSAbSwxnWX4asYWVZWt2pa7U8Nu4qb7D2PU9E8z9OENdmoYEWvlHsBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZRHRuoG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELd5s+ZB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF6AC2BD10;
-	Tue, 14 May 2024 10:47:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZRHRuoG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F115BC2BD10;
+	Tue, 14 May 2024 10:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683650;
-	bh=6KdfiAlszUxhDiQcYCc9Xw+ruhxg6dHvgLhwOo843Pk=;
+	s=korg; t=1715683654;
+	bh=m52KnLi0ZdeAL0t5UN0lh9zpHE/Y5CObrP31hQ4s8lU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ELd5s+ZBmkn9qKi8i48qYAPnBluObTLdW9twtFhsKLFAHvXvP03apXHVL/BwH5xSW
-	 PtTDKhfUKOT1uEk7PZaL5axNt4M8PblVGh4GPPOawL6ovK7B9zyOBun5YmHrvAb6Lp
-	 PMuYSxV5UGLD6UDcP9op/eQmeg35R27YepLJptDY=
+	b=kZRHRuoG8ZJueI+zHOWlhS4r//V93+j7PMpPpIrBs/a/AESHslhKg1JHfsPhIXDsc
+	 8RjvxZZBU0OWIdB8L5nTIceNVKPCWe4qY3NpXOKKghAylODutg+Fs7n8hZkhHDDfSa
+	 vo7bytYrkwQzQNJceCBX97mQ8/K8rTreruxWTxmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Savic <savicaleksa83@gmail.com>,
-	Marius Zachmann <mail@mariuszachmann.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 209/336] hwmon: (corsair-cpro) Protect ccp->wait_input_report with a spinlock
-Date: Tue, 14 May 2024 12:16:53 +0200
-Message-ID: <20240514101046.504341727@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Alex Constantino <dreaming.about.electric.sheep@gmail.com>,
+	Timo Lindfors <timo.lindfors@iki.fi>,
+	Dave Airlie <airlied@redhat.com>,
+	Gerd Hoffmann <kraxel@redhat.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.8 244/336] Reapply "drm/qxl: simplify qxl_fence_wait"
+Date: Tue, 14 May 2024 12:17:28 +0200
+Message-ID: <20240514101047.831949132@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -52,96 +58,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksa Savic <savicaleksa83@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit d02abd57e79469a026213f7f5827a98d909f236a ]
+commit 3628e0383dd349f02f882e612ab6184e4bb3dc10 upstream.
 
-Through hidraw, userspace can cause a status report to be sent
-from the device. The parsing in ccp_raw_event() may happen in
-parallel to a send_usb_cmd() call (which resets the completion
-for tracking the report) if it's running on a different CPU where
-bottom half interrupts are not disabled.
+This reverts commit 07ed11afb68d94eadd4ffc082b97c2331307c5ea.
 
-Add a spinlock around the complete_all() in ccp_raw_event() and
-reinit_completion() in send_usb_cmd() to prevent race issues.
+Stephen Rostedt reports:
+ "I went to run my tests on my VMs and the tests hung on boot up.
+  Unfortunately, the most I ever got out was:
 
-Fixes: 40c3a4454225 ("hwmon: add Corsair Commander Pro driver")
-Signed-off-by: Aleksa Savic <savicaleksa83@gmail.com>
-Acked-by: Marius Zachmann <mail@mariuszachmann.de>
-Link: https://lore.kernel.org/r/20240504092504.24158-4-savicaleksa83@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  [   93.607888] Testing event system initcall: OK
+  [   93.667730] Running tests on all trace events:
+  [   93.669757] Testing all events: OK
+  [   95.631064] ------------[ cut here ]------------
+  Timed out after 60 seconds"
+
+and further debugging points to a possible circular locking dependency
+between the console_owner locking and the worker pool locking.
+
+Reverting the commit allows Steve's VM to boot to completion again.
+
+[ This may obviously result in the "[TTM] Buffer eviction failed"
+  messages again, which was the reason for that original revert. But at
+  this point this seems preferable to a non-booting system... ]
+
+Reported-and-bisected-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://lore.kernel.org/all/20240502081641.457aa25f@gandalf.local.home/
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Cc: Alex Constantino <dreaming.about.electric.sheep@gmail.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Timo Lindfors <timo.lindfors@iki.fi>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/corsair-cpro.c | 24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/qxl/qxl_release.c |   50 +++-----------------------------------
+ include/linux/dma-fence.h         |    7 -----
+ 2 files changed, 5 insertions(+), 52 deletions(-)
 
-diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index 6ab4d2478b1fd..3e63666a61bd6 100644
---- a/drivers/hwmon/corsair-cpro.c
-+++ b/drivers/hwmon/corsair-cpro.c
-@@ -16,6 +16,7 @@
- #include <linux/module.h>
- #include <linux/mutex.h>
- #include <linux/slab.h>
-+#include <linux/spinlock.h>
- #include <linux/types.h>
+--- a/drivers/gpu/drm/qxl/qxl_release.c
++++ b/drivers/gpu/drm/qxl/qxl_release.c
+@@ -58,56 +58,16 @@ static long qxl_fence_wait(struct dma_fe
+ 			   signed long timeout)
+ {
+ 	struct qxl_device *qdev;
+-	struct qxl_release *release;
+-	int count = 0, sc = 0;
+-	bool have_drawable_releases;
+ 	unsigned long cur, end = jiffies + timeout;
  
- #define USB_VENDOR_ID_CORSAIR			0x1b1c
-@@ -77,6 +78,8 @@
- struct ccp_device {
- 	struct hid_device *hdev;
- 	struct device *hwmon_dev;
-+	/* For reinitializing the completion below */
-+	spinlock_t wait_input_report_lock;
- 	struct completion wait_input_report;
- 	struct mutex mutex; /* whenever buffer is used, lock before send_usb_cmd */
- 	u8 *cmd_buffer;
-@@ -118,7 +121,15 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
- 	ccp->cmd_buffer[2] = byte2;
- 	ccp->cmd_buffer[3] = byte3;
+ 	qdev = container_of(fence->lock, struct qxl_device, release_lock);
+-	release = container_of(fence, struct qxl_release, base);
+-	have_drawable_releases = release->type == QXL_RELEASE_DRAWABLE;
  
-+	/*
-+	 * Disable raw event parsing for a moment to safely reinitialize the
-+	 * completion. Reinit is done because hidraw could have triggered
-+	 * the raw event parsing and marked the ccp->wait_input_report
-+	 * completion as done.
-+	 */
-+	spin_lock_bh(&ccp->wait_input_report_lock);
- 	reinit_completion(&ccp->wait_input_report);
-+	spin_unlock_bh(&ccp->wait_input_report_lock);
- 
- 	ret = hid_hw_output_report(ccp->hdev, ccp->cmd_buffer, OUT_BUFFER_SIZE);
- 	if (ret < 0)
-@@ -136,11 +147,12 @@ static int ccp_raw_event(struct hid_device *hdev, struct hid_report *report, u8
- 	struct ccp_device *ccp = hid_get_drvdata(hdev);
- 
- 	/* only copy buffer when requested */
--	if (completion_done(&ccp->wait_input_report))
--		return 0;
+-retry:
+-	sc++;
 -
--	memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
--	complete_all(&ccp->wait_input_report);
-+	spin_lock(&ccp->wait_input_report_lock);
-+	if (!completion_done(&ccp->wait_input_report)) {
-+		memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
-+		complete_all(&ccp->wait_input_report);
-+	}
-+	spin_unlock(&ccp->wait_input_report_lock);
+-	if (dma_fence_is_signaled(fence))
+-		goto signaled;
+-
+-	qxl_io_notify_oom(qdev);
+-
+-	for (count = 0; count < 11; count++) {
+-		if (!qxl_queue_garbage_collect(qdev, true))
+-			break;
+-
+-		if (dma_fence_is_signaled(fence))
+-			goto signaled;
+-	}
+-
+-	if (dma_fence_is_signaled(fence))
+-		goto signaled;
+-
+-	if (have_drawable_releases || sc < 4) {
+-		if (sc > 2)
+-			/* back off */
+-			usleep_range(500, 1000);
+-
+-		if (time_after(jiffies, end))
+-			return 0;
+-
+-		if (have_drawable_releases && sc > 300) {
+-			DMA_FENCE_WARN(fence,
+-				       "failed to wait on release %llu after spincount %d\n",
+-				       fence->context & ~0xf0000000, sc);
+-			goto signaled;
+-		}
+-		goto retry;
+-	}
+-	/*
+-	 * yeah, original sync_obj_wait gave up after 3 spins when
+-	 * have_drawable_releases is not set.
+-	 */
++	if (!wait_event_timeout(qdev->release_event,
++				(dma_fence_is_signaled(fence) ||
++				 (qxl_io_notify_oom(qdev), 0)),
++				timeout))
++		return 0;
  
- 	return 0;
+-signaled:
+ 	cur = jiffies;
+ 	if (time_after(cur, end))
+ 		return 0;
+--- a/include/linux/dma-fence.h
++++ b/include/linux/dma-fence.h
+@@ -682,11 +682,4 @@ static inline bool dma_fence_is_containe
+ 	return dma_fence_is_array(fence) || dma_fence_is_chain(fence);
  }
-@@ -515,7 +527,9 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
  
- 	ccp->hdev = hdev;
- 	hid_set_drvdata(hdev, ccp);
-+
- 	mutex_init(&ccp->mutex);
-+	spin_lock_init(&ccp->wait_input_report_lock);
- 	init_completion(&ccp->wait_input_report);
- 
- 	hid_device_io_start(hdev);
--- 
-2.43.0
-
+-#define DMA_FENCE_WARN(f, fmt, args...) \
+-	do {								\
+-		struct dma_fence *__ff = (f);				\
+-		pr_warn("f %llu#%llu: " fmt, __ff->context, __ff->seqno,\
+-			 ##args);					\
+-	} while (0)
+-
+ #endif /* __LINUX_DMA_FENCE_H */
 
 
