@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D655FDD2;
-	Tue, 14 May 2024 11:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9138D5FDD2;
+	Tue, 14 May 2024 11:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687325; cv=none; b=OUhK2jyEqeEIYrBfSVSWtToZXgkjs2l6FwfLb/VWoovzfn4cq+OUrevjn5La7hNZB95hNGCKwiOU3jjj8I8+jeI0fBXqZHFpbRQyMFE+wBMp/lVWy9BT1MPZywRDH7LU8bO9sTC0kfJrPVAtSXnXnA3mdM3hbA21lfVfXqJA6IE=
+	t=1715687328; cv=none; b=YfmceMMCEblJA16JoV8ik9BWyhT8YzF4slhoFOzkAJlr6bOfo3lLj8F1v3r9sE/m8TTVRkFTZgsvOsNTex0uTJK14Hf7YxRiBPwcLNQlbcdS0i9W66RIODanCBaWUXImkZXJq097MU1JLmIC2Kmnd9ZvNleur7oCSWk8cHBGU/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687325; c=relaxed/simple;
-	bh=YnMwKSdPV0XsGrYpWnUsM6oEfKImjGjP8RoNpAwQKwE=;
+	s=arc-20240116; t=1715687328; c=relaxed/simple;
+	bh=qaP1Fvvi0+mco6InLr3csJJI428G+po4Rft6lMyGAo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tmQVcVnN87TjmwwfajFH2JZhYQPY98+gChzBKFL+XkMCZFv73iomdrvAZl9qPd5dPRPjl7fa+yqI4Us0QCe9ZqhadFTgxgZSvV/9AqKROBY3Pj+egx2X2w1RhA3tpdKUbb7JNeCUS0GtypnGkuMS/SxpNijqVrALX1t/wHYlxGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GV1aIIDg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tYlqY2qxxEMW4ZLUDxhChjoO71HPlJQtbg72qAdFFKZhlXyeT6jDaJ8VI5wzuKLb2q/2HajVmuBsE9YOYQP5xc1O99EDLfzj8j4srF16qXY7ySz7DF+u6zVa+z3+yUQt1Qc6a7LYKCfbFbPki3s1YbNTqdjoNKNWH+h3F26FFAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6UJauTz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GV1aIIDg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 387CAC2BD10;
-	Tue, 14 May 2024 11:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6UJauTz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A2AC2BD10;
+	Tue, 14 May 2024 11:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687325;
-	bh=YnMwKSdPV0XsGrYpWnUsM6oEfKImjGjP8RoNpAwQKwE=;
+	s=korg; t=1715687328;
+	bh=qaP1Fvvi0+mco6InLr3csJJI428G+po4Rft6lMyGAo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GV1aIIDgeSGQqLy44bk/0sQyIAgIYJQIUpzyh6uB2cA2eKZKWmJpqJD63zjAyd9pY
-	 ir/iiVrv7/5wO9wXmFJc5LWGAOvTU45yMiih7dZduqSQHpBT/s6DXsY28ruQasgakd
-	 RULKv1+vORsc7kJ1SYvuAdTWzltpE2qH8UuhisAE=
+	b=E6UJauTzrySogCxKFGF5g8wkfKDinIoEayamnGJTJ9uxndW6mnw9p544T0UTXMNOb
+	 pEHjkr0U6F2tCSnfCWKR7Bm9Iq+UGZ2BXEsM7sQXDD6V78skdYXUd5lylzpHkNsC9W
+	 43NrXB0Z2Ca67PPWlw0LPGsBUPA86FqbScptBkMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Remus <jremus@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 026/111] s390/vdso: Add CFI for RA register to asm macro vdso_func
-Date: Tue, 14 May 2024 12:19:24 +0200
-Message-ID: <20240514100958.120959007@linuxfoundation.org>
+Subject: [PATCH 5.10 027/111] net: qede: sanitize rc in qede_add_tc_flower_fltr()
+Date: Tue, 14 May 2024 12:19:25 +0200
+Message-ID: <20240514100958.158094129@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
 References: <20240514100957.114746054@linuxfoundation.org>
@@ -46,60 +46,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jens Remus <jremus@linux.ibm.com>
+From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit b961ec10b9f9719987470236feb50c967db5a652 ]
+[ Upstream commit e25714466abd9d96901b15efddf82c60a38abd86 ]
 
-The return-address (RA) register r14 is specified as volatile in the
-s390x ELF ABI [1]. Nevertheless proper CFI directives must be provided
-for an unwinder to restore the return address, if the RA register
-value is changed from its value at function entry, as it is the case.
+Explicitly set 'rc' (return code), before jumping to the
+unlock and return path.
 
-[1]: s390x ELF ABI, https://github.com/IBM/s390x-abi/releases
+By not having any code depend on that 'rc' remains at
+it's initial value of -EINVAL, then we can re-use 'rc' for
+the return code of function calls in subsequent patches.
 
-Fixes: 4bff8cb54502 ("s390: convert to GENERIC_VDSO")
-Signed-off-by: Jens Remus <jremus@linux.ibm.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Only compile tested.
+
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: fcee2065a178 ("net: qede: use return from qede_parse_flow_attr() for flower")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/dwarf.h               | 1 +
- arch/s390/kernel/vdso64/vdso_user_wrapper.S | 2 ++
- 2 files changed, 3 insertions(+)
+ drivers/net/ethernet/qlogic/qede/qede_filter.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/arch/s390/include/asm/dwarf.h b/arch/s390/include/asm/dwarf.h
-index 4f21ae561e4dd..390906b8e386e 100644
---- a/arch/s390/include/asm/dwarf.h
-+++ b/arch/s390/include/asm/dwarf.h
-@@ -9,6 +9,7 @@
- #define CFI_DEF_CFA_OFFSET	.cfi_def_cfa_offset
- #define CFI_ADJUST_CFA_OFFSET	.cfi_adjust_cfa_offset
- #define CFI_RESTORE		.cfi_restore
-+#define CFI_REL_OFFSET		.cfi_rel_offset
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_filter.c b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+index a2e4dfb5cb44e..ba28381c26bbf 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_filter.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_filter.c
+@@ -1877,8 +1877,8 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
+ 			    struct flow_cls_offload *f)
+ {
+ 	struct qede_arfs_fltr_node *n;
+-	int min_hlen, rc = -EINVAL;
+ 	struct qede_arfs_tuple t;
++	int min_hlen, rc;
  
- #ifdef CONFIG_AS_CFI_VAL_OFFSET
- #define CFI_VAL_OFFSET		.cfi_val_offset
-diff --git a/arch/s390/kernel/vdso64/vdso_user_wrapper.S b/arch/s390/kernel/vdso64/vdso_user_wrapper.S
-index a775d7e528728..2183b8f64d574 100644
---- a/arch/s390/kernel/vdso64/vdso_user_wrapper.S
-+++ b/arch/s390/kernel/vdso64/vdso_user_wrapper.S
-@@ -23,8 +23,10 @@ __kernel_\func:
- 	CFI_DEF_CFA_OFFSET (STACK_FRAME_OVERHEAD + WRAPPER_FRAME_SIZE)
- 	CFI_VAL_OFFSET 15, -STACK_FRAME_OVERHEAD
- 	stg	%r14,STACK_FRAME_OVERHEAD(%r15)
-+	CFI_REL_OFFSET 14, STACK_FRAME_OVERHEAD
- 	brasl	%r14,__s390_vdso_\func
- 	lg	%r14,STACK_FRAME_OVERHEAD(%r15)
-+	CFI_RESTORE 14
- 	aghi	%r15,WRAPPER_FRAME_SIZE
- 	CFI_DEF_CFA_OFFSET STACK_FRAME_OVERHEAD
- 	CFI_RESTORE 15
+ 	__qede_lock(edev);
+ 
+@@ -1888,8 +1888,10 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
+ 	}
+ 
+ 	/* parse flower attribute and prepare filter */
+-	if (qede_parse_flow_attr(edev, proto, f->rule, &t))
++	if (qede_parse_flow_attr(edev, proto, f->rule, &t)) {
++		rc = -EINVAL;
+ 		goto unlock;
++	}
+ 
+ 	/* Validate profile mode and number of filters */
+ 	if ((edev->arfs->filter_count && edev->arfs->mode != t.mode) ||
+@@ -1897,12 +1899,15 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
+ 		DP_NOTICE(edev,
+ 			  "Filter configuration invalidated, filter mode=0x%x, configured mode=0x%x, filter count=0x%x\n",
+ 			  t.mode, edev->arfs->mode, edev->arfs->filter_count);
++		rc = -EINVAL;
+ 		goto unlock;
+ 	}
+ 
+ 	/* parse tc actions and get the vf_id */
+-	if (qede_parse_actions(edev, &f->rule->action, f->common.extack))
++	if (qede_parse_actions(edev, &f->rule->action, f->common.extack)) {
++		rc = -EINVAL;
+ 		goto unlock;
++	}
+ 
+ 	if (qede_flow_find_fltr(edev, &t)) {
+ 		rc = -EEXIST;
 -- 
 2.43.0
 
