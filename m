@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026C013D275;
-	Tue, 14 May 2024 11:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B1F53E37;
+	Tue, 14 May 2024 11:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686815; cv=none; b=dPKDbgWjuH+Z6+aS+INRfop3TLD7o8qZmoi+Lk1dLpvIt9kyGoG92zCTu4wr56plZ4QIrTJQZj/TA8F7uTmQmNozo4sXkQ13qr1kr1uD30M+HS2K0VBLEnXVsagxdpkCKKjfZkwNZN/nfs7kwUIcEsU0Ea2zcDNMilrccRThhGc=
+	t=1715686818; cv=none; b=r1TI4qAhrUuw09GY1wjfPoFZp0njPqBy5m0kA1AVpIjeBnOakRjkn6HuiCOs5D1ej2YKpM/XJTh6SCeMqI9JM+V4WqbpkFqiFM20xZDEb3Mj82psHzRrwuguhHAp2RdTVX+K2yv7r1bxcoAsmJTppfC4S6soXkctqBUp+Lh3ies=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686815; c=relaxed/simple;
-	bh=HDXYNlxWi390Dg5rALdY6LI0TpevcSKP+p+hVpX1w+0=;
+	s=arc-20240116; t=1715686818; c=relaxed/simple;
+	bh=mZdSFv+GbbPliUMYXmzO/nXjhv+/BU7S0Isc92vQeng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i1StA9RBGe5iB254dyC9Ec81MjOl0/mE7HHG3ZeSKsTOX6x7WmN5gxAOuM6qMiJXkuF45DdTQFVDxijdoodnk3GonJgD3wTbyO/kQohOs0Qjw1ncueEuGjEkyT9wmj0qryDXXrSpTKLjd1brpDxNrIhGcG7GYl9tzf+G5qQusTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3nvAiEz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kc9qY5hQF2BqBl/MZ5LXDaoLYCurkvzaeps0u0sDn+7celEb1blEe/wCpV1HBzjhX8tOYPu4e2WljDHhlo04Yx8aHbQp0XFgPaA+MtEO6XKeI1KC691P7iB99gDD1H+8gRDrgGqpeAM0L6F8eOe/8c9IEE3Vtau6Y23FEatGyvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hN4DjqIl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3nvAiEz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE8BC2BD10;
-	Tue, 14 May 2024 11:40:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hN4DjqIl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C76AC2BD10;
+	Tue, 14 May 2024 11:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686814;
-	bh=HDXYNlxWi390Dg5rALdY6LI0TpevcSKP+p+hVpX1w+0=;
+	s=korg; t=1715686818;
+	bh=mZdSFv+GbbPliUMYXmzO/nXjhv+/BU7S0Isc92vQeng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T3nvAiEz8svL5Hx5ckDxWrkpCTQDRN+wVkhvU/QWaUw/4soGjeni3qkbVsmKqu/Um
-	 Xj6zQdU3FQbTSTeWMfkq8Xr1kenxnTmNc0mcSG59ykL2/ZQFzmbpMBideYSrcRnarX
-	 n+p1++gCgzPUa8mWxghR6t7BIpZHeMCsMRZZkyeQ=
+	b=hN4DjqIlTiMO1ncvfumQJq90WruV3s/Jg+i/6iBOzuav4Kffz7ylMCCu1yO4EAqvS
+	 RnOSV6LkRGjP2a+wKU2SYtNXsW6zqpYj0PUfTTEPo4VeZbJ1vlz6CGmjdO+OKH7BwD
+	 6QiPB82MfgoATQ3B/8HW1SMxFP1GUqFvM4Elh7MY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Liu <liupeng17@lenovo.com>,
-	Len Brown <len.brown@intel.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 32/63] tools/power turbostat: Fix Bzy_MHz documentation typo
-Date: Tue, 14 May 2024 12:19:53 +0200
-Message-ID: <20240514100949.230298867@linuxfoundation.org>
+Subject: [PATCH 4.19 33/63] btrfs: make btrfs_clear_delalloc_extent() free delalloc reserve
+Date: Tue, 14 May 2024 12:19:54 +0200
+Message-ID: <20240514100949.266731883@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100948.010148088@linuxfoundation.org>
 References: <20240514100948.010148088@linuxfoundation.org>
@@ -51,33 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Liu <liupeng17@lenovo.com>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit 0b13410b52c4636aacb6964a4253a797c0fa0d16 ]
+[ Upstream commit 3c6f0c5ecc8910d4ffb0dfe85609ebc0c91c8f34 ]
 
-The code calculates Bzy_MHz by multiplying TSC_delta * APERF_delta/MPERF_delta
-The man page erroneously showed that TSC_delta was divided.
+Currently, this call site in btrfs_clear_delalloc_extent() only converts
+the reservation. We are marking it not delalloc, so I don't think it
+makes sense to keep the rsv around.  This is a path where we are not
+sure to join a transaction, so it leads to incorrect free-ing during
+umount.
 
-Signed-off-by: Peng Liu <liupeng17@lenovo.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
+Helps with the pass rate of generic/269 and generic/475.
+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.8 | 2 +-
+ fs/btrfs/inode.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.8 b/tools/power/x86/turbostat/turbostat.8
-index a6db83a88e852..25a560c41321d 100644
---- a/tools/power/x86/turbostat/turbostat.8
-+++ b/tools/power/x86/turbostat/turbostat.8
-@@ -318,7 +318,7 @@ below the processor's base frequency.
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index e4a4074ef33da..7f675862ffb0e 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -1906,7 +1906,7 @@ static void btrfs_clear_bit_hook(void *private_data,
+ 		 */
+ 		if (*bits & EXTENT_CLEAR_META_RESV &&
+ 		    root != fs_info->tree_root)
+-			btrfs_delalloc_release_metadata(inode, len, false);
++			btrfs_delalloc_release_metadata(inode, len, true);
  
- Busy% = MPERF_delta/TSC_delta
- 
--Bzy_MHz = TSC_delta/APERF_delta/MPERF_delta/measurement_interval
-+Bzy_MHz = TSC_delta*APERF_delta/MPERF_delta/measurement_interval
- 
- Note that these calculations depend on TSC_delta, so they
- are not reliable during intervals when TSC_MHz is not running at the base frequency.
+ 		/* For sanity tests. */
+ 		if (btrfs_is_testing(fs_info))
 -- 
 2.43.0
 
