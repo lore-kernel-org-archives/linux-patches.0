@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A859A5FDD2;
-	Tue, 14 May 2024 11:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9643E5FDD2;
+	Tue, 14 May 2024 11:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686868; cv=none; b=i781wKVgjfeoCoffcKdgLkKi9MEJhGbFf5s+/S1wJHw6LsOjGwTh/TcszIxI+ch8jrdFSmF/nvFJvHSM5BEnk4BimssR1dztEpg8HmCnrpfv3+s6EIDha4uqGG7wHogPjrL3wsWzaNCR+bxPjnhvcfi6DFEfR2kT6TToOnu2edI=
+	t=1715686871; cv=none; b=LuWJlDEze9UUWB83EUGaIUYXt26399EHOy8h/1b3iYT+7RIbC/AEpLJKA0yaalCaKMephLodRLrNIw3LERsDKTPtvyKQHtIXiR2RoeNWxwwrRVzpsg6+cY3rX5Cfn2KBnyFGXPMq2Ev/QRE+qYEhiH/MZbeM8IVqZDHFEcl4PVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686868; c=relaxed/simple;
-	bh=cg8BQAb6jEH/Sxi0rVSz9dhApdHjYCFuGn6acmHddHw=;
+	s=arc-20240116; t=1715686871; c=relaxed/simple;
+	bh=tAFVUFmyMklFM5BcGb6ryyxzYPYKgjoKkGlc853qW/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aL9zhviB10ckrO0CbaWaVSQ9EoqsiOW5ODkm+LLeCGlt5gcFIXJ0fhSWlGLFw8M0Taz+CF1QF6LWOzoSgE88R/69orpmZkIzWOkEDhxssZwJZsLreli2AnTerv4Iz+fk3WeD0pBt4ibXRgcFRblxXuvv7tiqfOxez9UI/Fckq8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKmN5JYP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uULYmwrL0WR1E/G7z3WYxkVKXobA99OlHaxSCF4G48/iPvUZHM6A+atQ/TURfPg8QghPAhUrzByqZbVDF/p6oyVIH0ErDU95yV1TOlCrxJDVHxz0vuV+wvdRgocCu9+AXJSEJSpxGB9NuSHs0ilUTSa0UqxHI/NxGBl2irtSvgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FhWmUxjJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKmN5JYP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E8E1C32781;
-	Tue, 14 May 2024 11:41:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FhWmUxjJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B11AC2BD10;
+	Tue, 14 May 2024 11:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686868;
-	bh=cg8BQAb6jEH/Sxi0rVSz9dhApdHjYCFuGn6acmHddHw=;
+	s=korg; t=1715686871;
+	bh=tAFVUFmyMklFM5BcGb6ryyxzYPYKgjoKkGlc853qW/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UKmN5JYPJBv1HqaI7gbtbvweeKawvx4Hx2DySTsGuPd90HCTWn8GzIopZ2G/peEmQ
-	 0cWv4ZoTxVmZoMOwlrj/pd5UW1qwLGSQddsfMVI6+Z8R76Il9LocYaYm7p9nZ3fte+
-	 jDSuZldkR5kQh2vESfi8y+xOyyl0CroixH5HwMOI=
+	b=FhWmUxjJDpuiEqW3FlmtvdykDF1qq4swBWoBKL4YUXn37KmWjiixGDRen/KZhRXX6
+	 YsXw4FvpduShX7OQyuEnAUqOr5UTD+9iL/g4cHQhfU4K1p8bKTKZc+QjcnGfdwDotR
+	 Xicthw0wRi24ifuxbpd2TMVZhWsV8JuIp9Qe/lAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 48/63] Bluetooth: Fix use-after-free bugs caused by sco_sock_timeout
-Date: Tue, 14 May 2024 12:20:09 +0200
-Message-ID: <20240514100949.827387247@linuxfoundation.org>
+Subject: [PATCH 4.19 19/63] net: dsa: mv88e6xxx: Fix number of databases for 88E6141 / 88E6341
+Date: Tue, 14 May 2024 12:19:40 +0200
+Message-ID: <20240514100948.741207276@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514100948.010148088@linuxfoundation.org>
 References: <20240514100948.010148088@linuxfoundation.org>
@@ -45,149 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 483bc08181827fc475643272ffb69c533007e546 ]
+[ Upstream commit b9a61c20179fda7bdfe2c1210aa72451991ab81a ]
 
-When the sco connection is established and then, the sco socket
-is releasing, timeout_work will be scheduled to judge whether
-the sco disconnection is timeout. The sock will be deallocated
-later, but it is dereferenced again in sco_sock_timeout. As a
-result, the use-after-free bugs will happen. The root cause is
-shown below:
+The Topaz family (88E6141 and 88E6341) only support 256 Forwarding
+Information Tables.
 
-    Cleanup Thread               |      Worker Thread
-sco_sock_release                 |
-  sco_sock_close                 |
-    __sco_sock_close             |
-      sco_sock_set_timer         |
-        schedule_delayed_work    |
-  sco_sock_kill                  |    (wait a time)
-    sock_put(sk) //FREE          |  sco_sock_timeout
-                                 |    sock_hold(sk) //USE
-
-The KASAN report triggered by POC is shown below:
-
-[   95.890016] ==================================================================
-[   95.890496] BUG: KASAN: slab-use-after-free in sco_sock_timeout+0x5e/0x1c0
-[   95.890755] Write of size 4 at addr ffff88800c388080 by task kworker/0:0/7
-...
-[   95.890755] Workqueue: events sco_sock_timeout
-[   95.890755] Call Trace:
-[   95.890755]  <TASK>
-[   95.890755]  dump_stack_lvl+0x45/0x110
-[   95.890755]  print_address_description+0x78/0x390
-[   95.890755]  print_report+0x11b/0x250
-[   95.890755]  ? __virt_addr_valid+0xbe/0xf0
-[   95.890755]  ? sco_sock_timeout+0x5e/0x1c0
-[   95.890755]  kasan_report+0x139/0x170
-[   95.890755]  ? update_load_avg+0xe5/0x9f0
-[   95.890755]  ? sco_sock_timeout+0x5e/0x1c0
-[   95.890755]  kasan_check_range+0x2c3/0x2e0
-[   95.890755]  sco_sock_timeout+0x5e/0x1c0
-[   95.890755]  process_one_work+0x561/0xc50
-[   95.890755]  worker_thread+0xab2/0x13c0
-[   95.890755]  ? pr_cont_work+0x490/0x490
-[   95.890755]  kthread+0x279/0x300
-[   95.890755]  ? pr_cont_work+0x490/0x490
-[   95.890755]  ? kthread_blkcg+0xa0/0xa0
-[   95.890755]  ret_from_fork+0x34/0x60
-[   95.890755]  ? kthread_blkcg+0xa0/0xa0
-[   95.890755]  ret_from_fork_asm+0x11/0x20
-[   95.890755]  </TASK>
-[   95.890755]
-[   95.890755] Allocated by task 506:
-[   95.890755]  kasan_save_track+0x3f/0x70
-[   95.890755]  __kasan_kmalloc+0x86/0x90
-[   95.890755]  __kmalloc+0x17f/0x360
-[   95.890755]  sk_prot_alloc+0xe1/0x1a0
-[   95.890755]  sk_alloc+0x31/0x4e0
-[   95.890755]  bt_sock_alloc+0x2b/0x2a0
-[   95.890755]  sco_sock_create+0xad/0x320
-[   95.890755]  bt_sock_create+0x145/0x320
-[   95.890755]  __sock_create+0x2e1/0x650
-[   95.890755]  __sys_socket+0xd0/0x280
-[   95.890755]  __x64_sys_socket+0x75/0x80
-[   95.890755]  do_syscall_64+0xc4/0x1b0
-[   95.890755]  entry_SYSCALL_64_after_hwframe+0x67/0x6f
-[   95.890755]
-[   95.890755] Freed by task 506:
-[   95.890755]  kasan_save_track+0x3f/0x70
-[   95.890755]  kasan_save_free_info+0x40/0x50
-[   95.890755]  poison_slab_object+0x118/0x180
-[   95.890755]  __kasan_slab_free+0x12/0x30
-[   95.890755]  kfree+0xb2/0x240
-[   95.890755]  __sk_destruct+0x317/0x410
-[   95.890755]  sco_sock_release+0x232/0x280
-[   95.890755]  sock_close+0xb2/0x210
-[   95.890755]  __fput+0x37f/0x770
-[   95.890755]  task_work_run+0x1ae/0x210
-[   95.890755]  get_signal+0xe17/0xf70
-[   95.890755]  arch_do_signal_or_restart+0x3f/0x520
-[   95.890755]  syscall_exit_to_user_mode+0x55/0x120
-[   95.890755]  do_syscall_64+0xd1/0x1b0
-[   95.890755]  entry_SYSCALL_64_after_hwframe+0x67/0x6f
-[   95.890755]
-[   95.890755] The buggy address belongs to the object at ffff88800c388000
-[   95.890755]  which belongs to the cache kmalloc-1k of size 1024
-[   95.890755] The buggy address is located 128 bytes inside of
-[   95.890755]  freed 1024-byte region [ffff88800c388000, ffff88800c388400)
-[   95.890755]
-[   95.890755] The buggy address belongs to the physical page:
-[   95.890755] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88800c38a800 pfn:0xc388
-[   95.890755] head: order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-[   95.890755] anon flags: 0x100000000000840(slab|head|node=0|zone=1)
-[   95.890755] page_type: 0xffffffff()
-[   95.890755] raw: 0100000000000840 ffff888006842dc0 0000000000000000 0000000000000001
-[   95.890755] raw: ffff88800c38a800 000000000010000a 00000001ffffffff 0000000000000000
-[   95.890755] head: 0100000000000840 ffff888006842dc0 0000000000000000 0000000000000001
-[   95.890755] head: ffff88800c38a800 000000000010000a 00000001ffffffff 0000000000000000
-[   95.890755] head: 0100000000000003 ffffea000030e201 ffffea000030e248 00000000ffffffff
-[   95.890755] head: 0000000800000000 0000000000000000 00000000ffffffff 0000000000000000
-[   95.890755] page dumped because: kasan: bad access detected
-[   95.890755]
-[   95.890755] Memory state around the buggy address:
-[   95.890755]  ffff88800c387f80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[   95.890755]  ffff88800c388000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   95.890755] >ffff88800c388080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   95.890755]                    ^
-[   95.890755]  ffff88800c388100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   95.890755]  ffff88800c388180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   95.890755] ==================================================================
-
-Fix this problem by adding a check protected by sco_conn_lock to judget
-whether the conn->hcon is null. Because the conn->hcon will be set to null,
-when the sock is releasing.
-
-Fixes: ba316be1b6a0 ("Bluetooth: schedule SCO timeouts with delayed_work")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: a75961d0ebfd ("net: dsa: mv88e6xxx: Add support for ethernet switch 88E6341")
+Fixes: 1558727a1c1b ("net: dsa: mv88e6xxx: Add support for ethernet switch 88E6141")
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20240429133832.9547-1-kabel@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/sco.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/dsa/mv88e6xxx/chip.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index d8726327bc05e..42b5d56d85a56 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -82,6 +82,10 @@ static void sco_sock_timeout(struct work_struct *work)
- 	struct sock *sk;
- 
- 	sco_conn_lock(conn);
-+	if (!conn->hcon) {
-+		sco_conn_unlock(conn);
-+		return;
-+	}
- 	sk = conn->sk;
- 	if (sk)
- 		sock_hold(sk);
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index a562ffd627191..c401ee34159ad 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -4043,7 +4043,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
+ 		.prod_num = MV88E6XXX_PORT_SWITCH_ID_PROD_6141,
+ 		.family = MV88E6XXX_FAMILY_6341,
+ 		.name = "Marvell 88E6141",
+-		.num_databases = 4096,
++		.num_databases = 256,
+ 		.num_macs = 2048,
+ 		.num_ports = 6,
+ 		.num_internal_phys = 5,
+@@ -4400,7 +4400,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
+ 		.prod_num = MV88E6XXX_PORT_SWITCH_ID_PROD_6341,
+ 		.family = MV88E6XXX_FAMILY_6341,
+ 		.name = "Marvell 88E6341",
+-		.num_databases = 4096,
++		.num_databases = 256,
+ 		.num_macs = 2048,
+ 		.num_internal_phys = 5,
+ 		.num_ports = 6,
 -- 
 2.43.0
 
