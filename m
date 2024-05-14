@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865C8139CE4;
-	Tue, 14 May 2024 10:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510C21386D5;
+	Tue, 14 May 2024 10:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715683044; cv=none; b=GViPyKzYT/e4DC2IZcra5DeCJlY23bYyxtQLIfMD2/tUjn97F+mN5KqdCXeexwCZ+G1uiR7Dbue1gTQAoGnHNfFgPI8l0Gp1NcB62gA4OAodcf+MG14VwxaxddlvPuEDBuWK56JNRVK+Sr6GAdqqNV9t8SLssSCeXmxasLwJ4wU=
+	t=1715683049; cv=none; b=X9I6YCXt/k0+D9Lg327BV2babHOPu0P9ZI9iPCYnImKzYiwno2VdNlGx84ITO1AQITG9YGnnqvfGsYRaA5UQJFaxRjq0HxN/AB+RZBt4dyHzz+lz/BBIQRC3gdCng8yd3hbuni3EynqOl5KE2KXPw2SoIT2CcF14ru6f9dkzKvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715683044; c=relaxed/simple;
-	bh=wBtC3lwWXy4lNeXMjMd+oWR6yG1tzvee/D1af1tVzxo=;
+	s=arc-20240116; t=1715683049; c=relaxed/simple;
+	bh=5WQEMFit5RSKZwJV0r5IN6rwcudOVZbfE3Su6QbCKFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V7wP8fCqF9iw54gxw56x9AjNCcDw0dzRSrN8Qj1fL3ZTt/dwJQ+SlHkECuIRIDv8ADXo7oI4YSzhWIP2jrCp69YfeUXnFCLsa/fSvvZGbtbAgMyOnAYcVh8LH4Xa4oV0LtkGt5AqD3T0diLonNZFrM390FvjzMYeIFldSx//qEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4LF3iYd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i/0UeLpNpOyu0Kfd4JHnWeyNmHXCp7l60RH5Mq/POZWvPHcPUNKrm6utv5SZNsDb6aIS4ZRgSM5MI4gKTezvPAsKsrPEvbXLuB1eO+1sgXDptu7u/HUc0VEW2bCet/LY47tcU4xUM7rGWtfexF/QMBQ4iMKFBgHO8jmYFPSIUdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MELlfpXQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4LF3iYd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDC2C2BD10;
-	Tue, 14 May 2024 10:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MELlfpXQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C33AC2BD10;
+	Tue, 14 May 2024 10:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715683044;
-	bh=wBtC3lwWXy4lNeXMjMd+oWR6yG1tzvee/D1af1tVzxo=;
+	s=korg; t=1715683049;
+	bh=5WQEMFit5RSKZwJV0r5IN6rwcudOVZbfE3Su6QbCKFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R4LF3iYdcQwpobnswpNAm49RRHfvtmyDqrHTU99rZXgvOrdi9CTv9nG+q62Kicvnz
-	 6fug9LiGkaRcn97+YhNbTkYZtZKcotpmi0VinXvcyUPrEZ5jABnNMwcpnmwR7mFgX8
-	 qCuZUSSV2KwdTrqYHHr0VgZMLfndWePXHdSoTFPU=
+	b=MELlfpXQdJSzniNH7bjPB0mWwkVCSmbDGjGqzh/C+MnXmDqbl9+SPSPMnMPZ0P/9Z
+	 L+zxRN1j7CCTiMU0Izv6662kGPmQUsn5hMEDQ2uQ2vVupNAr8htqduibLysGcH45Li
+	 23Iszivjs7LNM2BjlhWHWFofUdHvdaQTfUtu8mnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 157/336] net: add copy_safe_from_sockptr() helper
-Date: Tue, 14 May 2024 12:16:01 +0200
-Message-ID: <20240514101044.531949964@linuxfoundation.org>
+Subject: [PATCH 6.8 158/336] nfc: llcp: fix nfc_llcp_setsockopt() unsafe copies
+Date: Tue, 14 May 2024 12:16:02 +0200
+Message-ID: <20240514101044.568808418@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -53,81 +55,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6309863b31dd80317cd7d6824820b44e254e2a9c ]
+[ Upstream commit 7a87441c9651ba37842f4809224aca13a554a26f ]
 
-copy_from_sockptr() helper is unsafe, unless callers
-did the prior check against user provided optlen.
+syzbot reported unsafe calls to copy_from_sockptr() [1]
 
-Too many callers get this wrong, lets add a helper to
-fix them and avoid future copy/paste bugs.
+Use copy_safe_from_sockptr() instead.
 
-Instead of :
+[1]
 
-   if (optlen < sizeof(opt)) {
-       err = -EINVAL;
-       break;
-   }
-   if (copy_from_sockptr(&opt, optval, sizeof(opt)) {
-       err = -EFAULT;
-       break;
-   }
+BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
+ BUG: KASAN: slab-out-of-bounds in copy_from_sockptr include/linux/sockptr.h:55 [inline]
+ BUG: KASAN: slab-out-of-bounds in nfc_llcp_setsockopt+0x6c2/0x850 net/nfc/llcp_sock.c:255
+Read of size 4 at addr ffff88801caa1ec3 by task syz-executor459/5078
 
-Use :
-
-   err = copy_safe_from_sockptr(&opt, sizeof(opt),
-                                optval, optlen);
-   if (err)
-       break;
+CPU: 0 PID: 5078 Comm: syz-executor459 Not tainted 6.8.0-syzkaller-08951-gfe46a7dd189e #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+Call Trace:
+ <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
+  print_address_description mm/kasan/report.c:377 [inline]
+  print_report+0x169/0x550 mm/kasan/report.c:488
+  kasan_report+0x143/0x180 mm/kasan/report.c:601
+  copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
+  copy_from_sockptr include/linux/sockptr.h:55 [inline]
+  nfc_llcp_setsockopt+0x6c2/0x850 net/nfc/llcp_sock.c:255
+  do_sock_setsockopt+0x3b1/0x720 net/socket.c:2311
+  __sys_setsockopt+0x1ae/0x250 net/socket.c:2334
+  __do_sys_setsockopt net/socket.c:2343 [inline]
+  __se_sys_setsockopt net/socket.c:2340 [inline]
+  __x64_sys_setsockopt+0xb5/0xd0 net/socket.c:2340
+ do_syscall_64+0xfd/0x240
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+RIP: 0033:0x7f7fac07fd89
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 91 18 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fff660eb788 EFLAGS: 00000246 ORIG_RAX: 0000000000000036
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007f7fac07fd89
+RDX: 0000000000000000 RSI: 0000000000000118 RDI: 0000000000000004
+RBP: 0000000000000000 R08: 0000000000000002 R09: 0000000000000000
+R10: 0000000020000a80 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
 
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240408082845.3957374-2-edumazet@google.com
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240408082845.3957374-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sockptr.h | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ net/nfc/llcp_sock.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/sockptr.h b/include/linux/sockptr.h
-index 307961b41541a..317200cd3a603 100644
---- a/include/linux/sockptr.h
-+++ b/include/linux/sockptr.h
-@@ -50,11 +50,36 @@ static inline int copy_from_sockptr_offset(void *dst, sockptr_t src,
- 	return 0;
- }
+diff --git a/net/nfc/llcp_sock.c b/net/nfc/llcp_sock.c
+index 819157bbb5a2c..d5344563e525c 100644
+--- a/net/nfc/llcp_sock.c
++++ b/net/nfc/llcp_sock.c
+@@ -252,10 +252,10 @@ static int nfc_llcp_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
  
-+/* Deprecated.
-+ * This is unsafe, unless caller checked user provided optlen.
-+ * Prefer copy_safe_from_sockptr() instead.
-+ */
- static inline int copy_from_sockptr(void *dst, sockptr_t src, size_t size)
- {
- 	return copy_from_sockptr_offset(dst, src, 0, size);
- }
+-		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
+-			err = -EFAULT;
++		err = copy_safe_from_sockptr(&opt, sizeof(opt),
++					     optval, optlen);
++		if (err)
+ 			break;
+-		}
  
-+/**
-+ * copy_safe_from_sockptr: copy a struct from sockptr
-+ * @dst:   Destination address, in kernel space. This buffer must be @ksize
-+ *         bytes long.
-+ * @ksize: Size of @dst struct.
-+ * @optval: Source address. (in user or kernel space)
-+ * @optlen: Size of @optval data.
-+ *
-+ * Returns:
-+ *  * -EINVAL: @optlen < @ksize
-+ *  * -EFAULT: access to userspace failed.
-+ *  * 0 : @ksize bytes were copied
-+ */
-+static inline int copy_safe_from_sockptr(void *dst, size_t ksize,
-+					 sockptr_t optval, unsigned int optlen)
-+{
-+	if (optlen < ksize)
-+		return -EINVAL;
-+	return copy_from_sockptr(dst, optval, ksize);
-+}
-+
- static inline int copy_struct_from_sockptr(void *dst, size_t ksize,
- 		sockptr_t src, size_t usize)
- {
+ 		if (opt > LLCP_MAX_RW) {
+ 			err = -EINVAL;
+@@ -274,10 +274,10 @@ static int nfc_llcp_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
+-		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
+-			err = -EFAULT;
++		err = copy_safe_from_sockptr(&opt, sizeof(opt),
++					     optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (opt > LLCP_MAX_MIUX) {
+ 			err = -EINVAL;
 -- 
 2.43.0
 
