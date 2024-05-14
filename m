@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B530556B79;
-	Tue, 14 May 2024 10:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05F312F5B2;
+	Tue, 14 May 2024 10:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682431; cv=none; b=cyZEDHBc0lD/iAf8+xlHkDf3g9dl+yFSPaykw6p6LESnbTFx91txQjMwVulZx5z1lWYhmGSkh3myifoJ/ctHGAVd+UvheDq09s3UZctgmeDxSXuoJdvYBNuRgPIObcCltXE/S/Ao7tjta39WQLIa+Bmt2jS+ZmoYUZ21c5T9JKI=
+	t=1715682436; cv=none; b=WEoOdBcL7jgjkDH6vIG3/ghaR497hyyXInsFg90FN4d20O57P21Fu6tce6iQHNsbvmHlwwMgKDusjozO4OSg2Si6kRfIXQb+Ze7TMAd2Oq50rpSIYiRArB4KGgU0kCocL2aTaa23/FVB3oP1YojsO6CbeNodXORpyq5/UWP3+SM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682431; c=relaxed/simple;
-	bh=IoPjZmcxLIiHqQ8R1G85Dhfo6K0cgGSOPb1lG+h5S0w=;
+	s=arc-20240116; t=1715682436; c=relaxed/simple;
+	bh=WKCppEWi+CHecmPfoEbxifFR/Xo4S4le29cHVAKStRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sOGGFoXuRBfkQpilz/+0kCFo6oAh2kPYWEPTbl/sLKnJkUlTkdramroMyFVK2omQ3txomtzC1hN4GTkDuua+cw+9qOg2RH2K062InOuBaOZzQbpNxlq4odIdY7h1ancU0PFpXzozRqpaadzGz8iLzgFSR7XKGZ3YssfjOtqijy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdHuEFTk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YGlgfMzuj4H2Ol37wl1Ap1BezSeSqPJccKazOEWPsX8M86F7jXFEz/eoSC6CRHh4ThhOrF9oZPPz5VmESFbqHWHx8tVhWwKq7kyXusfj7id8LX4OoYSo87TpRlsJ4pQ4spEiIsykhhSERQqcaetcVCP+o211nNaOd7K9LLkk010=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHeYZpgF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdHuEFTk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92991C2BD10;
-	Tue, 14 May 2024 10:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHeYZpgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C74C2BD10;
+	Tue, 14 May 2024 10:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682431;
-	bh=IoPjZmcxLIiHqQ8R1G85Dhfo6K0cgGSOPb1lG+h5S0w=;
+	s=korg; t=1715682435;
+	bh=WKCppEWi+CHecmPfoEbxifFR/Xo4S4le29cHVAKStRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdHuEFTkx6xTqtooliEC9+1hPkdMmjKA21WT7wukRrI72/QrRKRcwNoc5Sd6BfAkl
-	 uuEUj5c6Y/axQr9p4W+bKXZwt/QxIfF37QR7tr2+7FSMcNtQx5ngjox/gHXTZkoNcx
-	 NebVPoKxUncxETWfiTxTHkBif4QJx0TLEjcfWlAU=
+	b=GHeYZpgFv2gg/NTOKBsLBkAc/avH1qx1wkUfjr+M0326+lCzeIIEkpgXcjDoxRW2S
+	 4lNdc6lmv/S/8xNno7jrDjFuwMWcDoWVgMEqzW2rNMr97IVi3EY5jmTo2+wluycIsD
+	 lQJFm9WI3CmeEPr+6ItoB+4NsfCRzGE1JocVRe7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 059/336] net: qede: use return from qede_parse_flow_attr() for flow_spec
-Date: Tue, 14 May 2024 12:14:23 +0200
-Message-ID: <20240514101040.834602746@linuxfoundation.org>
+Subject: [PATCH 6.8 060/336] net: qede: use return from qede_parse_actions()
+Date: Tue, 14 May 2024 12:14:24 +0200
+Message-ID: <20240514101040.872198666@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -55,28 +55,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit 27b44414a34b108c5a37cd5b4894f606061d86e7 ]
+[ Upstream commit f26f719a36e56381a1f4230e5364e7ad4d485888 ]
 
-In qede_flow_spec_to_rule(), when calling
-qede_parse_flow_attr() then the return code
-was only used for a non-zero check, and then
--EINVAL was returned.
+When calling qede_parse_actions() then the
+return code was only used for a non-zero check,
+and then -EINVAL was returned.
 
-qede_parse_flow_attr() can currently fail with:
+qede_parse_actions() can currently fail with:
 * -EINVAL
 * -EOPNOTSUPP
-* -EPROTONOSUPPORT
 
 This patch changes the code to use the actual
 return code, not just return -EINVAL.
 
-The blaimed commit introduced qede_flow_spec_to_rule(),
-and this call to qede_parse_flow_attr(), it looks
-like it just duplicated how it was already used.
+The blaimed commit broke the implicit assumption
+that only -EINVAL would ever be returned.
 
 Only compile tested.
 
-Fixes: 37c5d3efd7f8 ("qede: use ethtool_rx_flow_rule() to remove duplicated parser code")
+Fixes: 319a1d19471e ("flow_offload: check for basic action hw stats type")
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
@@ -86,22 +83,22 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/ethernet/qlogic/qede/qede_filter.c b/drivers/net/ethernet/qlogic/qede/qede_filter.c
-index 25ef0f4258cb1..377d661f70f78 100644
+index 377d661f70f78..cb6b33a228ea2 100644
 --- a/drivers/net/ethernet/qlogic/qede/qede_filter.c
 +++ b/drivers/net/ethernet/qlogic/qede/qede_filter.c
-@@ -2002,10 +2002,9 @@ static int qede_flow_spec_to_rule(struct qede_dev *edev,
- 	if (IS_ERR(flow))
- 		return PTR_ERR(flow);
+@@ -1894,10 +1894,9 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
+ 	}
  
--	if (qede_parse_flow_attr(edev, proto, flow->rule, t)) {
--		err = -EINVAL;
-+	err = qede_parse_flow_attr(edev, proto, flow->rule, t);
-+	if (err)
- 		goto err_out;
+ 	/* parse tc actions and get the vf_id */
+-	if (qede_parse_actions(edev, &f->rule->action, f->common.extack)) {
+-		rc = -EINVAL;
++	rc = qede_parse_actions(edev, &f->rule->action, f->common.extack);
++	if (rc)
+ 		goto unlock;
 -	}
  
- 	/* Make sure location is valid and filter isn't already set */
- 	err = qede_flow_spec_validate(edev, &flow->rule->action, t,
+ 	if (qede_flow_find_fltr(edev, &t)) {
+ 		rc = -EEXIST;
 -- 
 2.43.0
 
