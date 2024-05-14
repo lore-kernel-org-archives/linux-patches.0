@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FF113A3F4;
-	Tue, 14 May 2024 11:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0C313A275;
+	Tue, 14 May 2024 11:05:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715684724; cv=none; b=facuuXLQqDkHQdU3cCfurxVwak0DY7ZzZkpH4JBxGfauOtTEH+wS7vV4oSc4N1nCU/OMEEpg7aqyOKGURLuRhhdnySj9rxEzMyKlkPsVGtzTCwj2Vj51tiKcBBiWG3tyzqDc7WGZaOK1jOK2uKE8zDqkDhBzyRl9rtOCbQdaJV4=
+	t=1715684732; cv=none; b=CVtkU3PmxO6Bn/KhXJyqDvOwBIS/l0/uhTUW3ZZjw+1rtwnoNCW4dqLYq0G3hnjgTpGo3x1HA3/gQjIXJfgm6e2ZgEqubBYCmGp7erxh3Y5rwXVtqeVi+d4VaKziyfc7wd20s46nf0HFm6z0DO9vmGdCykvEOc84OuFqnhAQh6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715684724; c=relaxed/simple;
-	bh=IM4ev+PBHIgZ7KOrNBqiuoogtG9PcURraCSCUWqYydc=;
+	s=arc-20240116; t=1715684732; c=relaxed/simple;
+	bh=iuwN6bJ6neyeUklXkHjXEK5mjHWNUHoHbtQaH3WSrgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ByUsEm//Y+iuyW5ltXyKOAB8DHJtRKjWhsWnv0WLZ1PSIf3fJtuF13h5PdZYquxvQRmQL+yhsc94ZQUCsopelKqEZhukIM1zxUmGzJuAxNgzU2EnaBE1DGwfIptnM3cVOXMsWy4eA1pW7z0qGBKRyuYKbd744pTYqw6kk08i8TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZTmgcvCN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n3s7mohJoP8QTfmDOwXbHc9Z8tIk22GyCFG9boivrYwxIYYpBCCssWJfY0jjhHrUapStJ4labtiKWeuT0tAz0BeRyIlGnhmd8BDursezsGGVnKQdPiLb3I6eB6Xx3sAjaJ0kyh78aygtX+1zMo1QyNcvgrKgMZlBp2vjSHauJ6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXDT850U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTmgcvCN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99D8C32782;
-	Tue, 14 May 2024 11:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXDT850U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEBEC2BD10;
+	Tue, 14 May 2024 11:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715684723;
-	bh=IM4ev+PBHIgZ7KOrNBqiuoogtG9PcURraCSCUWqYydc=;
+	s=korg; t=1715684731;
+	bh=iuwN6bJ6neyeUklXkHjXEK5mjHWNUHoHbtQaH3WSrgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZTmgcvCNkNHFTZ+scla7/p0p7vMomuw0Ck1gPwCBQ85+0thyrEOnG0JCSBIzbm74O
-	 5VEfgK4gfP4LoWkowKmpjxd2t8pAYAp2MuNoOyhRAOrUrJpFmJ+ugT1PHauduIfrZ2
-	 cAIuid+HhXQcsAh3jsu82vHTiFMkQ2p2MjKhOZOg=
+	b=ZXDT850UjXCh71yPq6hN+huvEkx43PB402MKO2rCDxrbbz4MaSfAJ0OeEtYMOla+2
+	 NOt/bCxm5l0KypmkBtuDbh1bTJqPpsDMJXWtUC/ovcU/HvXm+xInpoBDKGF+fAEkpv
+	 06DDJakQtf5TPA9TQX//M/11GYvKAzz23DJ0O+Xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/301] s390/qeth: Fix kernel panic after setting hsuid
-Date: Tue, 14 May 2024 12:15:52 +0200
-Message-ID: <20240514101035.306627057@linuxfoundation.org>
+Subject: [PATCH 6.6 082/301] drm/panel: ili9341: Correct use of device property APIs
+Date: Tue, 14 May 2024 12:15:53 +0200
+Message-ID: <20240514101035.344421824@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -52,228 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 8a2e4d37afb8500b276e5ee903dee06f50ab0494 ]
+[ Upstream commit d43cd48ef1791801c61a54fade4a88d294dedf77 ]
 
-Symptom:
-When the hsuid attribute is set for the first time on an IQD Layer3
-device while the corresponding network interface is already UP,
-the kernel will try to execute a napi function pointer that is NULL.
+It seems driver missed the point of proper use of device property APIs.
+Correct this by updating headers and calls respectively.
 
-Example:
----------------------------------------------------------------------------
-[ 2057.572696] illegal operation: 0001 ilc:1 [#1] SMP
-[ 2057.572702] Modules linked in: af_iucv qeth_l3 zfcp scsi_transport_fc sunrpc nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib nft_reject_inet nf_reject_ipv4 nf_reject_ipv6
-nft_reject nft_ct nf_tables_set nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 ip_set nf_tables libcrc32c nfnetlink ghash_s390 prng xts aes_s390 des_s390 de
-s_generic sha3_512_s390 sha3_256_s390 sha512_s390 vfio_ccw vfio_mdev mdev vfio_iommu_type1 eadm_sch vfio ext4 mbcache jbd2 qeth_l2 bridge stp llc dasd_eckd_mod qeth dasd_mod
- qdio ccwgroup pkey zcrypt
-[ 2057.572739] CPU: 6 PID: 60182 Comm: stress_client Kdump: loaded Not tainted 4.18.0-541.el8.s390x #1
-[ 2057.572742] Hardware name: IBM 3931 A01 704 (LPAR)
-[ 2057.572744] Krnl PSW : 0704f00180000000 0000000000000002 (0x2)
-[ 2057.572748]            R:0 T:1 IO:1 EX:1 Key:0 M:1 W:0 P:0 AS:3 CC:3 PM:0 RI:0 EA:3
-[ 2057.572751] Krnl GPRS: 0000000000000004 0000000000000000 00000000a3b008d8 0000000000000000
-[ 2057.572754]            00000000a3b008d8 cb923a29c779abc5 0000000000000000 00000000814cfd80
-[ 2057.572756]            000000000000012c 0000000000000000 00000000a3b008d8 00000000a3b008d8
-[ 2057.572758]            00000000bab6d500 00000000814cfd80 0000000091317e46 00000000814cfc68
-[ 2057.572762] Krnl Code:#0000000000000000: 0000                illegal
-                         >0000000000000002: 0000                illegal
-                          0000000000000004: 0000                illegal
-                          0000000000000006: 0000                illegal
-                          0000000000000008: 0000                illegal
-                          000000000000000a: 0000                illegal
-                          000000000000000c: 0000                illegal
-                          000000000000000e: 0000                illegal
-[ 2057.572800] Call Trace:
-[ 2057.572801] ([<00000000ec639700>] 0xec639700)
-[ 2057.572803]  [<00000000913183e2>] net_rx_action+0x2ba/0x398
-[ 2057.572809]  [<0000000091515f76>] __do_softirq+0x11e/0x3a0
-[ 2057.572813]  [<0000000090ce160c>] do_softirq_own_stack+0x3c/0x58
-[ 2057.572817] ([<0000000090d2cbd6>] do_softirq.part.1+0x56/0x60)
-[ 2057.572822]  [<0000000090d2cc60>] __local_bh_enable_ip+0x80/0x98
-[ 2057.572825]  [<0000000091314706>] __dev_queue_xmit+0x2be/0xd70
-[ 2057.572827]  [<000003ff803dd6d6>] afiucv_hs_send+0x24e/0x300 [af_iucv]
-[ 2057.572830]  [<000003ff803dd88a>] iucv_send_ctrl+0x102/0x138 [af_iucv]
-[ 2057.572833]  [<000003ff803de72a>] iucv_sock_connect+0x37a/0x468 [af_iucv]
-[ 2057.572835]  [<00000000912e7e90>] __sys_connect+0xa0/0xd8
-[ 2057.572839]  [<00000000912e9580>] sys_socketcall+0x228/0x348
-[ 2057.572841]  [<0000000091514e1a>] system_call+0x2a6/0x2c8
-[ 2057.572843] Last Breaking-Event-Address:
-[ 2057.572844]  [<0000000091317e44>] __napi_poll+0x4c/0x1d8
-[ 2057.572846]
-[ 2057.572847] Kernel panic - not syncing: Fatal exception in interrupt
--------------------------------------------------------------------------------------------
-
-Analysis:
-There is one napi structure per out_q: card->qdio.out_qs[i].napi
-The napi.poll functions are set during qeth_open().
-
-Since
-commit 1cfef80d4c2b ("s390/qeth: Don't call dev_close/dev_open (DOWN/UP)")
-qeth_set_offline()/qeth_set_online() no longer call dev_close()/
-dev_open(). So if qeth_free_qdio_queues() cleared
-card->qdio.out_qs[i].napi.poll while the network interface was UP and the
-card was offline, they are not set again.
-
-Reproduction:
-chzdev -e $devno layer2=0
-ip link set dev $network_interface up
-echo 0 > /sys/bus/ccwgroup/devices/0.0.$devno/online
-echo foo > /sys/bus/ccwgroup/devices/0.0.$devno/hsuid
-echo 1 > /sys/bus/ccwgroup/devices/0.0.$devno/online
--> Crash (can be enforced e.g. by af_iucv connect(), ip link down/up, ...)
-
-Note that a Completion Queue (CQ) is only enabled or disabled, when hsuid
-is set for the first time or when it is removed.
-
-Workarounds:
-- Set hsuid before setting the device online for the first time
-or
-- Use chzdev -d $devno; chzdev $devno hsuid=xxx; chzdev -e $devno;
-to set hsuid on an existing device. (this will remove and recreate the
-network interface)
-
-Fix:
-There is no need to free the output queues when a completion queue is
-added or removed.
-card->qdio.state now indicates whether the inbound buffer pool and the
-outbound queues are allocated.
-card->qdio.c_q indicates whether a CQ is allocated.
-
-Fixes: 1cfef80d4c2b ("s390/qeth: Don't call dev_close/dev_open (DOWN/UP)")
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240430091004.2265683-1-wintera@linux.ibm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 5a04227326b0 ("drm/panel: Add ilitek ili9341 panel driver")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240425142706.2440113-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240425142706.2440113-2-andriy.shevchenko@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/qeth_core_main.c | 61 ++++++++++++++-----------------
- 1 file changed, 27 insertions(+), 34 deletions(-)
+ drivers/gpu/drm/panel/Kconfig                | 2 +-
+ drivers/gpu/drm/panel/panel-ilitek-ili9341.c | 5 +++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/s390/net/qeth_core_main.c b/drivers/s390/net/qeth_core_main.c
-index 1148b4ecabdde..f0f3b6272d5b8 100644
---- a/drivers/s390/net/qeth_core_main.c
-+++ b/drivers/s390/net/qeth_core_main.c
-@@ -364,30 +364,33 @@ static int qeth_cq_init(struct qeth_card *card)
- 	return rc;
- }
+diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+index 869e535faefa3..3a2f4a9f1d466 100644
+--- a/drivers/gpu/drm/panel/Kconfig
++++ b/drivers/gpu/drm/panel/Kconfig
+@@ -184,7 +184,7 @@ config DRM_PANEL_ILITEK_IL9322
  
-+static void qeth_free_cq(struct qeth_card *card)
-+{
-+	if (card->qdio.c_q) {
-+		qeth_free_qdio_queue(card->qdio.c_q);
-+		card->qdio.c_q = NULL;
-+	}
-+}
-+
- static int qeth_alloc_cq(struct qeth_card *card)
- {
- 	if (card->options.cq == QETH_CQ_ENABLED) {
- 		QETH_CARD_TEXT(card, 2, "cqon");
--		card->qdio.c_q = qeth_alloc_qdio_queue();
- 		if (!card->qdio.c_q) {
--			dev_err(&card->gdev->dev, "Failed to create completion queue\n");
--			return -ENOMEM;
-+			card->qdio.c_q = qeth_alloc_qdio_queue();
-+			if (!card->qdio.c_q) {
-+				dev_err(&card->gdev->dev,
-+					"Failed to create completion queue\n");
-+				return -ENOMEM;
-+			}
- 		}
- 	} else {
- 		QETH_CARD_TEXT(card, 2, "nocq");
--		card->qdio.c_q = NULL;
-+		qeth_free_cq(card);
- 	}
- 	return 0;
- }
+ config DRM_PANEL_ILITEK_ILI9341
+ 	tristate "Ilitek ILI9341 240x320 QVGA panels"
+-	depends on OF && SPI
++	depends on SPI
+ 	select DRM_KMS_HELPER
+ 	select DRM_GEM_DMA_HELPER
+ 	depends on BACKLIGHT_CLASS_DEVICE
+diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9341.c b/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
+index 3574681891e81..7584ddb0e4416 100644
+--- a/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
++++ b/drivers/gpu/drm/panel/panel-ilitek-ili9341.c
+@@ -22,8 +22,9 @@
+ #include <linux/bitops.h>
+ #include <linux/delay.h>
+ #include <linux/gpio/consumer.h>
++#include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+-#include <linux/of.h>
++#include <linux/property.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/spi/spi.h>
  
--static void qeth_free_cq(struct qeth_card *card)
--{
--	if (card->qdio.c_q) {
--		qeth_free_qdio_queue(card->qdio.c_q);
--		card->qdio.c_q = NULL;
--	}
--}
--
- static enum iucv_tx_notify qeth_compute_cq_notification(int sbalf15,
- 							int delayed)
- {
-@@ -2628,6 +2631,10 @@ static int qeth_alloc_qdio_queues(struct qeth_card *card)
- 
- 	QETH_CARD_TEXT(card, 2, "allcqdbf");
- 
-+	/* completion */
-+	if (qeth_alloc_cq(card))
-+		goto out_err;
-+
- 	if (atomic_cmpxchg(&card->qdio.state, QETH_QDIO_UNINITIALIZED,
- 		QETH_QDIO_ALLOCATED) != QETH_QDIO_UNINITIALIZED)
- 		return 0;
-@@ -2663,10 +2670,6 @@ static int qeth_alloc_qdio_queues(struct qeth_card *card)
- 		queue->priority = QETH_QIB_PQUE_PRIO_DEFAULT;
- 	}
- 
--	/* completion */
--	if (qeth_alloc_cq(card))
--		goto out_freeoutq;
--
- 	return 0;
- 
- out_freeoutq:
-@@ -2677,6 +2680,8 @@ static int qeth_alloc_qdio_queues(struct qeth_card *card)
- 	qeth_free_buffer_pool(card);
- out_buffer_pool:
- 	atomic_set(&card->qdio.state, QETH_QDIO_UNINITIALIZED);
-+	qeth_free_cq(card);
-+out_err:
- 	return -ENOMEM;
- }
- 
-@@ -2684,11 +2689,12 @@ static void qeth_free_qdio_queues(struct qeth_card *card)
- {
- 	int i, j;
- 
-+	qeth_free_cq(card);
-+
- 	if (atomic_xchg(&card->qdio.state, QETH_QDIO_UNINITIALIZED) ==
- 		QETH_QDIO_UNINITIALIZED)
- 		return;
- 
--	qeth_free_cq(card);
- 	for (j = 0; j < QDIO_MAX_BUFFERS_PER_Q; ++j) {
- 		if (card->qdio.in_q->bufs[j].rx_skb) {
- 			consume_skb(card->qdio.in_q->bufs[j].rx_skb);
-@@ -3742,24 +3748,11 @@ static void qeth_qdio_poll(struct ccw_device *cdev, unsigned long card_ptr)
- 
- int qeth_configure_cq(struct qeth_card *card, enum qeth_cq cq)
- {
--	int rc;
--
--	if (card->options.cq ==  QETH_CQ_NOTAVAILABLE) {
--		rc = -1;
--		goto out;
--	} else {
--		if (card->options.cq == cq) {
--			rc = 0;
--			goto out;
--		}
--
--		qeth_free_qdio_queues(card);
--		card->options.cq = cq;
--		rc = 0;
--	}
--out:
--	return rc;
-+	if (card->options.cq == QETH_CQ_NOTAVAILABLE)
-+		return -1;
- 
-+	card->options.cq = cq;
-+	return 0;
- }
- EXPORT_SYMBOL_GPL(qeth_configure_cq);
- 
+@@ -691,7 +692,7 @@ static int ili9341_dpi_probe(struct spi_device *spi, struct gpio_desc *dc,
+ 	 * Every new incarnation of this display must have a unique
+ 	 * data entry for the system in this driver.
+ 	 */
+-	ili->conf = of_device_get_match_data(dev);
++	ili->conf = device_get_match_data(dev);
+ 	if (!ili->conf) {
+ 		dev_err(dev, "missing device configuration\n");
+ 		return -ENODEV;
 -- 
 2.43.0
 
