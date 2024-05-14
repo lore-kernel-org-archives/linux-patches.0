@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13AA43AD7;
-	Tue, 14 May 2024 11:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B802943F;
+	Tue, 14 May 2024 11:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685672; cv=none; b=uWQ8lV59TSr/Lic130/6MWld7KD8+r7JF5Z8CYv3P73PUHCj3n0ZoqCKEhwtZXeGxjP8aPzCuyOdkFWTBLDgvHuWRbbX3EWW2t+du2Z2DH2ZEdvlUFINrQFeDElPkJkJlpE1WOTRqju95BmEOK1YDxpZJysElMMbeoDfnkH4UdU=
+	t=1715685679; cv=none; b=SUZLT8Gq+A6IOJhkSoJhajIxmAjFq0VPA653WbcCX8cL4BqcY995PtSWn/HQqTTZSP5gZA8HVI6lnxld+PXnhx14TPgHO8nspKe/a42TCVjPHyCfnMffuIIfalkgEn5RYkNmbV62/sfzGSz6ikG1YeSeA9mHyXtY/2JBQCJDhtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685672; c=relaxed/simple;
-	bh=z6jNuJgSFGOKPjv/ZkHgRPhDkvEHLn4LosCHuirIEL8=;
+	s=arc-20240116; t=1715685679; c=relaxed/simple;
+	bh=0D10LbiPErsVbgCAb0GoNsaHTnf5eorfCwyEp8y484c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E1Zqr++h/53UATDxbpUFK07cKzdgDvWNjtNvGPMj8nOJJTHwPksobaJBT3/h9jZb4pwFYfMMIKGq6KRVrmqLefUIsVsD604qcm+6L4RENkdKql1Poifqw8qIKHpLJvgaavMyoUD7kXy+xS2AbCjJnZu9lwPdI0BeXxVcUwpiWXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6UKDfiU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gypEgTIKYH58xp9DGyI245xy2JE7JrarEsdXFmAb5PvRuZWdmNnr+x7+zrPILcodryygj7Z5zyjrcemyo8rl2huGqqaaWCF9dcAgaxy9T4x33hpKsxEVNwYI1RtSCdTbtGex1NBX5pL5qgtAdDRz156y/SAzXpMzM2U3o5lix0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tjxgr57e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6UKDfiU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19718C2BD10;
-	Tue, 14 May 2024 11:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tjxgr57e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF69C2BD10;
+	Tue, 14 May 2024 11:21:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685672;
-	bh=z6jNuJgSFGOKPjv/ZkHgRPhDkvEHLn4LosCHuirIEL8=;
+	s=korg; t=1715685679;
+	bh=0D10LbiPErsVbgCAb0GoNsaHTnf5eorfCwyEp8y484c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z6UKDfiUUa74D98TKPjiOXo+MQD1g5FK9h4u96AwGQoP2DfGff8PVirU5jIk33IHJ
-	 wlVdPHpt++I1DY8qKK/acMrONGpxVXWu7cBUriggp0JsTVQVhjGdMqVcYINuyG0fFI
-	 0qgFy8xrBB/97I2vXqYrA0PbA5CJljBObldLLD9o=
+	b=Tjxgr57eydfiwKWxAroie0n2tjAjng5hvJHotJ0jV2kuRRs3zn+51ckLIzvQBgRsS
+	 05u63kauislM20bsqEid+3ig5il5RS0IQ76glwCOxUDcUEzoMzrDnPK3fd1a/BPA9p
+	 gUiUUv/2vi+fJzPO9mGSYP+sv6Y7M0zxXcr4oDfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 197/301] dt-bindings: net: mediatek: remove wrongly added clocks and SerDes
-Date: Tue, 14 May 2024 12:17:48 +0200
-Message-ID: <20240514101039.698099767@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Alex Constantino <dreaming.about.electric.sheep@gmail.com>,
+	Timo Lindfors <timo.lindfors@iki.fi>,
+	Dave Airlie <airlied@redhat.com>,
+	Gerd Hoffmann <kraxel@redhat.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.6 224/301] Reapply "drm/qxl: simplify qxl_fence_wait"
+Date: Tue, 14 May 2024 12:18:15 +0200
+Message-ID: <20240514101040.713851532@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -52,88 +58,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit cc349b0771dccebf0fa9f5e1822ac444aef11448 ]
+commit 3628e0383dd349f02f882e612ab6184e4bb3dc10 upstream.
 
-Several clocks as well as both sgmiisys phandles were added by mistake
-to the Ethernet bindings for MT7988. Also, the total number of clocks
-didn't match with the actual number of items listed.
+This reverts commit 07ed11afb68d94eadd4ffc082b97c2331307c5ea.
 
-This happened because the vendor driver which served as a reference uses
-a high number of syscon phandles to access various parts of the SoC
-which wasn't acceptable upstream. Hence several parts which have never
-previously been supported (such SerDes PHY and USXGMII PCS) are going to
-be implemented by separate drivers. As a result the device tree will
-look much more sane.
+Stephen Rostedt reports:
+ "I went to run my tests on my VMs and the tests hung on boot up.
+  Unfortunately, the most I ever got out was:
 
-Quickly align the bindings with the upcoming reality of the drivers
-actually adding support for the remaining Ethernet-related features of
-the MT7988 SoC.
+  [   93.607888] Testing event system initcall: OK
+  [   93.667730] Running tests on all trace events:
+  [   93.669757] Testing all events: OK
+  [   95.631064] ------------[ cut here ]------------
+  Timed out after 60 seconds"
 
-Fixes: c94a9aabec36 ("dt-bindings: net: mediatek,net: add mt7988-eth binding")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/1569290b21cc787a424469ed74456a7e976b102d.1715084326.git.daniel@makrotopia.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+and further debugging points to a possible circular locking dependency
+between the console_owner locking and the worker pool locking.
+
+Reverting the commit allows Steve's VM to boot to completion again.
+
+[ This may obviously result in the "[TTM] Buffer eviction failed"
+  messages again, which was the reason for that original revert. But at
+  this point this seems preferable to a non-booting system... ]
+
+Reported-and-bisected-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://lore.kernel.org/all/20240502081641.457aa25f@gandalf.local.home/
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Cc: Alex Constantino <dreaming.about.electric.sheep@gmail.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Timo Lindfors <timo.lindfors@iki.fi>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../devicetree/bindings/net/mediatek,net.yaml | 22 ++-----------------
- 1 file changed, 2 insertions(+), 20 deletions(-)
+ drivers/gpu/drm/qxl/qxl_release.c |   50 +++-----------------------------------
+ include/linux/dma-fence.h         |    7 -----
+ 2 files changed, 5 insertions(+), 52 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/net/mediatek,net.yaml b/Documentation/devicetree/bindings/net/mediatek,net.yaml
-index e74502a0afe86..3202dc7967c5b 100644
---- a/Documentation/devicetree/bindings/net/mediatek,net.yaml
-+++ b/Documentation/devicetree/bindings/net/mediatek,net.yaml
-@@ -337,8 +337,8 @@ allOf:
-           minItems: 4
+--- a/drivers/gpu/drm/qxl/qxl_release.c
++++ b/drivers/gpu/drm/qxl/qxl_release.c
+@@ -58,56 +58,16 @@ static long qxl_fence_wait(struct dma_fe
+ 			   signed long timeout)
+ {
+ 	struct qxl_device *qdev;
+-	struct qxl_release *release;
+-	int count = 0, sc = 0;
+-	bool have_drawable_releases;
+ 	unsigned long cur, end = jiffies + timeout;
  
-         clocks:
--          minItems: 34
--          maxItems: 34
-+          minItems: 24
-+          maxItems: 24
+ 	qdev = container_of(fence->lock, struct qxl_device, release_lock);
+-	release = container_of(fence, struct qxl_release, base);
+-	have_drawable_releases = release->type == QXL_RELEASE_DRAWABLE;
  
-         clock-names:
-           items:
-@@ -351,18 +351,6 @@ allOf:
-             - const: ethwarp_wocpu1
-             - const: ethwarp_wocpu0
-             - const: esw
--            - const: netsys0
--            - const: netsys1
--            - const: sgmii_tx250m
--            - const: sgmii_rx250m
--            - const: sgmii2_tx250m
--            - const: sgmii2_rx250m
--            - const: top_usxgmii0_sel
--            - const: top_usxgmii1_sel
--            - const: top_sgm0_sel
--            - const: top_sgm1_sel
--            - const: top_xfi_phy0_xtal_sel
--            - const: top_xfi_phy1_xtal_sel
-             - const: top_eth_gmii_sel
-             - const: top_eth_refck_50m_sel
-             - const: top_eth_sys_200m_sel
-@@ -375,16 +363,10 @@ allOf:
-             - const: top_netsys_sync_250m_sel
-             - const: top_netsys_ppefb_250m_sel
-             - const: top_netsys_warp_sel
--            - const: wocpu1
--            - const: wocpu0
-             - const: xgp1
-             - const: xgp2
-             - const: xgp3
- 
--        mediatek,sgmiisys:
--          minItems: 2
--          maxItems: 2
+-retry:
+-	sc++;
 -
- patternProperties:
-   "^mac@[0-1]$":
-     type: object
--- 
-2.43.0
-
+-	if (dma_fence_is_signaled(fence))
+-		goto signaled;
+-
+-	qxl_io_notify_oom(qdev);
+-
+-	for (count = 0; count < 11; count++) {
+-		if (!qxl_queue_garbage_collect(qdev, true))
+-			break;
+-
+-		if (dma_fence_is_signaled(fence))
+-			goto signaled;
+-	}
+-
+-	if (dma_fence_is_signaled(fence))
+-		goto signaled;
+-
+-	if (have_drawable_releases || sc < 4) {
+-		if (sc > 2)
+-			/* back off */
+-			usleep_range(500, 1000);
+-
+-		if (time_after(jiffies, end))
+-			return 0;
+-
+-		if (have_drawable_releases && sc > 300) {
+-			DMA_FENCE_WARN(fence,
+-				       "failed to wait on release %llu after spincount %d\n",
+-				       fence->context & ~0xf0000000, sc);
+-			goto signaled;
+-		}
+-		goto retry;
+-	}
+-	/*
+-	 * yeah, original sync_obj_wait gave up after 3 spins when
+-	 * have_drawable_releases is not set.
+-	 */
++	if (!wait_event_timeout(qdev->release_event,
++				(dma_fence_is_signaled(fence) ||
++				 (qxl_io_notify_oom(qdev), 0)),
++				timeout))
++		return 0;
+ 
+-signaled:
+ 	cur = jiffies;
+ 	if (time_after(cur, end))
+ 		return 0;
+--- a/include/linux/dma-fence.h
++++ b/include/linux/dma-fence.h
+@@ -681,11 +681,4 @@ static inline bool dma_fence_is_containe
+ 	return dma_fence_is_array(fence) || dma_fence_is_chain(fence);
+ }
+ 
+-#define DMA_FENCE_WARN(f, fmt, args...) \
+-	do {								\
+-		struct dma_fence *__ff = (f);				\
+-		pr_warn("f %llu#%llu: " fmt, __ff->context, __ff->seqno,\
+-			 ##args);					\
+-	} while (0)
+-
+ #endif /* __LINUX_DMA_FENCE_H */
 
 
