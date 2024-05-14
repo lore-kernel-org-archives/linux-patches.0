@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB8918026;
-	Tue, 14 May 2024 11:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4259518026;
+	Tue, 14 May 2024 11:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685310; cv=none; b=f6lB8+351J4LBtrdA8V5ERjJeLluCduF85h3NKWABam0jSzE95iS4uSqXZbKHnFsJ6qOOVjd368J3m+ko+Hz7UHY+gUxt0L78H1WyGDjYEEkjSOK3LrbpWCxx9SUEiZeVRPzvIm60UsTvsJbkp80I+2EjeE95CPHl+2FgpeD59Q=
+	t=1715685315; cv=none; b=qE/E51OZ/BOk1b4gNLXaqpSHpz95JBN9eTEM9hup3oTFdnYozZz2onYD1hEjE/xcydNvu+IgogEPsuC/aOAwL53w4SlsWe43Xj/J2fPwDbiWV11xp/0hHohXPYe2X6PGN+wfLJa3q1/ce+8bJGEhaynzepO8YTs4JFBOJSqBcK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685310; c=relaxed/simple;
-	bh=iOV/5lnwZO2zr8zmhe61XnvlwAhpx7Ryow6kqvedYNs=;
+	s=arc-20240116; t=1715685315; c=relaxed/simple;
+	bh=98EhZK/YkPw8fyonihg13fIt12BVzEDsQOsTBgwmKSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g0suFIg21g0UgCNK+q2uqBVawDs2NaN8gHdyjekIFLetPuofjuGwXSHPuBlkVMNM1QfpPPiTVqwX58QGDn8iO8jry/KXujqvBLUnudNW2n4TbANA+ajrNIVmExb7JFecqORAjRwa0fQWYKMM95dmzG9LZn1AWeTGy0opXVV3VsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VReROB4p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IAyCyojYIzYY1p8hlKK2WLfkKKbkIgpcasaDPMtYx+JmM8W9BbtDqUcja1UWjCiVyT3ztu0wY5NtggSOPJLsFqx15B8RplI0Gy0jt/ud/AcvakVIhN8LlqfmmrShno6n++I22hy0px9Gji4iE+TX2TIV7jAcJObMq4HNDWp1FgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BgijDRYm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VReROB4p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9449C2BD10;
-	Tue, 14 May 2024 11:15:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BgijDRYm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62626C2BD10;
+	Tue, 14 May 2024 11:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685310;
-	bh=iOV/5lnwZO2zr8zmhe61XnvlwAhpx7Ryow6kqvedYNs=;
+	s=korg; t=1715685315;
+	bh=98EhZK/YkPw8fyonihg13fIt12BVzEDsQOsTBgwmKSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VReROB4pXs9TGRKSU94KN4e6zb4AKSRVTEXkjM+ESf3WWBmAR8UqWiUvLdYpgQ9x2
-	 lItn8rVJnJwlSTO7gkLlmLW2l2bByr/tVH13u++CMq0/YqVp+n6vx+dhCATFqxXGmV
-	 IaPhRHnyNNEnRWhga+6OKfB2k3EF5vbU+YA72W+8=
+	b=BgijDRYmz44+lFYWU/aPdvRA2lXDxX8TqMk/lKznWYyFPN6Mdo4rdWPsspBcMpIHp
+	 NtOR06vBpEDSQR3u20iMJrXG1lKGKYlzJy7jwGEKQRsadTE6rp4CsXX/zfrMAIezPT
+	 olmiZn7EaPC9UHV1JB3WUtBIAOe2r5kMZGO17K9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 135/301] btrfs: always clear PERTRANS metadata during commit
-Date: Tue, 14 May 2024 12:16:46 +0200
-Message-ID: <20240514101037.352187463@linuxfoundation.org>
+Subject: [PATCH 6.6 126/301] vboxsf: explicitly deny setlease attempts
+Date: Tue, 14 May 2024 12:16:37 +0200
+Message-ID: <20240514101037.006851566@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -52,42 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 6e68de0bb0ed59e0554a0c15ede7308c47351e2d ]
+[ Upstream commit 1ece2c43b88660ddbdf8ecb772e9c41ed9cda3dd ]
 
-It is possible to clear a root's IN_TRANS tag from the radix tree, but
-not clear its PERTRANS, if there is some error in between. Eliminate
-that possibility by moving the free up to where we clear the tag.
+vboxsf does not break leases on its own, so it can't properly handle the
+case where the hypervisor changes the data. Don't allow file leases on
+vboxsf.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/r/20240319-setlease-v1-1-5997d67e04b3@kernel.org
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/transaction.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/vboxsf/file.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index 457ec7d02a9ac..0548072c642fb 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -1449,6 +1449,7 @@ static noinline int commit_fs_roots(struct btrfs_trans_handle *trans)
- 			radix_tree_tag_clear(&fs_info->fs_roots_radix,
- 					(unsigned long)root->root_key.objectid,
- 					BTRFS_ROOT_TRANS_TAG);
-+			btrfs_qgroup_free_meta_all_pertrans(root);
- 			spin_unlock(&fs_info->fs_roots_radix_lock);
+diff --git a/fs/vboxsf/file.c b/fs/vboxsf/file.c
+index 2307f8037efc3..118dedef8ebe8 100644
+--- a/fs/vboxsf/file.c
++++ b/fs/vboxsf/file.c
+@@ -218,6 +218,7 @@ const struct file_operations vboxsf_reg_fops = {
+ 	.release = vboxsf_file_release,
+ 	.fsync = noop_fsync,
+ 	.splice_read = filemap_splice_read,
++	.setlease = simple_nosetlease,
+ };
  
- 			btrfs_free_log(trans, root);
-@@ -1473,7 +1474,6 @@ static noinline int commit_fs_roots(struct btrfs_trans_handle *trans)
- 			if (ret2)
- 				return ret2;
- 			spin_lock(&fs_info->fs_roots_radix_lock);
--			btrfs_qgroup_free_meta_all_pertrans(root);
- 		}
- 	}
- 	spin_unlock(&fs_info->fs_roots_radix_lock);
+ const struct inode_operations vboxsf_reg_iops = {
 -- 
 2.43.0
 
