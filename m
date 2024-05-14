@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9999139D1E;
-	Tue, 14 May 2024 11:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C910E139D1E;
+	Tue, 14 May 2024 11:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715686292; cv=none; b=MUBxPvDSyGsekBgsXeELTDtT8VtN98carqnd4RFWkETH69g1HY3e7mG6MmTdsXhvLmCxf4kJsYY9EjIZlB52mEGlUcR/I86O2lhhtZlkbF85p8vHKmnq2T5+Z+OgodGhb1K/2dyeeHu7Dua3G1zOdmgsoNHPwy62/QSAvn1GST4=
+	t=1715686295; cv=none; b=j88Iq0guuoaZ0rEbVVKjwec5tvXLYyGKslv+z8LTGaWu/RejZkZXbLq3NLYA+GwoswvLqxdxf7mh1qSMuY6XQq1fqAERyOgsT0Ipva17eNOD0j4/hsAWgtaAiiRYv/UjepLbI4fqJKKIoeWvih/rEKEpMaQonShSt2kuvcIoM+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715686292; c=relaxed/simple;
-	bh=D1VprFPC9wYKFgOYxyOB3qoaiCB6sJdv+9UY7r2qhoY=;
+	s=arc-20240116; t=1715686295; c=relaxed/simple;
+	bh=EMdXdT7sRAkDGkv2UFjuwiz4NzQYa7FYq3f5PbXYB5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KF6kmYxTzXNWghhG3J0slBsZA0ZUPbAzZFR7Sx214VtYJkgg4QwJG0araye615CEpq5N398hYQ6rkmY0kiSEVpbA9lUPaM//tZgurX4IfhDM+bXvU36Z5s17livQ5n8UESe0B34+AQcXh/sglGwfZbxtAv/G3fFEY20RHMv5O3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0j1kXaj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TShAAqKbzKgHiAvWufZ2ovqgQo5tueXKoO0j4i4lefzUYlyMkLF5+Q9w9bYKqtUPxF17XE4/PKTJ3kReT2+zqrEgn8xiqVANOQ7fM1PZn9cOpmYtgRY13EYzsA1p3Q2a+Us4kTIY/QhCWpuWvD2XUwgnt462f+k0SDoZR4q+Ucs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SwajEyjf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0j1kXaj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B873C2BD10;
-	Tue, 14 May 2024 11:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SwajEyjf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1096FC32781;
+	Tue, 14 May 2024 11:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715686292;
-	bh=D1VprFPC9wYKFgOYxyOB3qoaiCB6sJdv+9UY7r2qhoY=;
+	s=korg; t=1715686295;
+	bh=EMdXdT7sRAkDGkv2UFjuwiz4NzQYa7FYq3f5PbXYB5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f0j1kXajDplZO9oWEeWppm+SNuhTKtHr2wHoArNtBl++nYq3Hl8ea1ngVHkxI7CgO
-	 FbPG+VsmHTvBw/okpN94sW70e2VmAnFgdICXUmMzYODarkkPGyUGEFkSH1Mf3j+6A5
-	 pK+QgHjJaZNTv4tctcL1c4EoQXMmWQDXRjwvAe+4=
+	b=SwajEyjfyhPyyRec/AWSLPGQ/FweArsWZWDfvwWuokB8b83EekTgBRr2bfBuYZD36
+	 TnBz0FLQPv3GSC3nQZ0zNdIKW2pJ+z7Idy15yHXnfIiQaTEbShfQnxzeJvQZbGrQXQ
+	 D0qOGsqNYAM3i11QBXrzoBGmTW/VSvyF6tkBCm08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nageswara R Sastry <rnsastry@linux.ibm.com>,
+	Nayna Jain <nayna@linux.ibm.com>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/236] vxlan: Pull inner IP header in vxlan_rcv().
-Date: Tue, 14 May 2024 12:17:22 +0200
-Message-ID: <20240514101023.407725848@linuxfoundation.org>
+Subject: [PATCH 6.1 089/236] powerpc/pseries: make max polling consistent for longer H_CALLs
+Date: Tue, 14 May 2024 12:17:31 +0200
+Message-ID: <20240514101023.748734284@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101020.320785513@linuxfoundation.org>
 References: <20240514101020.320785513@linuxfoundation.org>
@@ -55,72 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Nayna Jain <nayna@linux.ibm.com>
 
-[ Upstream commit f7789419137b18e3847d0cc41afd788c3c00663d ]
+[ Upstream commit 784354349d2c988590c63a5a001ca37b2a6d4da1 ]
 
-Ensure the inner IP header is part of skb's linear data before reading
-its ECN bits. Otherwise we might read garbage.
-One symptom is the system erroneously logging errors like
-"vxlan: non-ECT from xxx.xxx.xxx.xxx with TOS=xxxx".
+Currently, plpks_confirm_object_flushed() function polls for 5msec in
+total instead of 5sec.
 
-Similar bugs have been fixed in geneve, ip_tunnel and ip6_tunnel (see
-commit 1ca1ba465e55 ("geneve: make sure to pull inner header in
-geneve_rx()") for example). So let's reuse the same code structure for
-consistency. Maybe we'll can add a common helper in the future.
+Keep max polling time consistent for all the H_CALLs, which take longer
+than expected, to be 5sec. Also, make use of fsleep() everywhere to
+insert delay.
 
-Fixes: d342894c5d2f ("vxlan: virtual extensible lan")
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://lore.kernel.org/r/1239c8db54efec341dd6455c77e0380f58923a3c.1714495737.git.gnault@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Nageswara R Sastry <rnsastry@linux.ibm.com>
+Fixes: 2454a7af0f2a ("powerpc/pseries: define driver for Platform KeyStore")
+Signed-off-by: Nayna Jain <nayna@linux.ibm.com>
+Tested-by: Nageswara R Sastry <rnsastry@linux.ibm.com>
+Reviewed-by: Andrew Donnellan <ajd@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240418031230.170954-1-nayna@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/plpks.c | 10 +++++-----
+ arch/powerpc/platforms/pseries/plpks.h |  5 ++---
+ 2 files changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index fbd36dff9ec27..01ce289f4abf0 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -1721,6 +1721,7 @@ static int vxlan_rcv(struct sock *sk, struct sk_buff *skb)
- 	bool raw_proto = false;
- 	void *oiph;
- 	__be32 vni = 0;
-+	int nh;
+diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
+index 3efbfd25d35d0..453c3cdd81fb8 100644
+--- a/arch/powerpc/platforms/pseries/plpks.c
++++ b/arch/powerpc/platforms/pseries/plpks.c
+@@ -263,8 +263,7 @@ static int plpks_confirm_object_flushed(struct label *label,
+ 		if (!rc && status == 1)
+ 			break;
  
- 	/* Need UDP and VXLAN header to be present */
- 	if (!pskb_may_pull(skb, VXLAN_HLEN))
-@@ -1809,9 +1810,25 @@ static int vxlan_rcv(struct sock *sk, struct sk_buff *skb)
- 		skb->pkt_type = PACKET_HOST;
- 	}
+-		usleep_range(PLPKS_FLUSH_SLEEP,
+-			     PLPKS_FLUSH_SLEEP + PLPKS_FLUSH_SLEEP_RANGE);
++		fsleep(PLPKS_FLUSH_SLEEP);
+ 		timeout = timeout + PLPKS_FLUSH_SLEEP;
+ 	} while (timeout < PLPKS_MAX_TIMEOUT);
  
--	oiph = skb_network_header(skb);
-+	/* Save offset of outer header relative to skb->head,
-+	 * because we are going to reset the network header to the inner header
-+	 * and might change skb->head.
-+	 */
-+	nh = skb_network_header(skb) - skb->head;
-+
- 	skb_reset_network_header(skb);
+@@ -311,9 +310,10 @@ int plpks_signed_update_var(struct plpks_var *var, u64 flags)
  
-+	if (!pskb_inet_may_pull(skb)) {
-+		DEV_STATS_INC(vxlan->dev, rx_length_errors);
-+		DEV_STATS_INC(vxlan->dev, rx_errors);
-+		vxlan_vnifilter_count(vxlan, vni, vninode,
-+				      VXLAN_VNI_STATS_RX_ERRORS, 0);
-+		goto drop;
-+	}
+ 		continuetoken = retbuf[0];
+ 		if (pseries_status_to_err(rc) == -EBUSY) {
+-			int delay_ms = get_longbusy_msecs(rc);
+-			mdelay(delay_ms);
+-			timeout += delay_ms;
++			int delay_us = get_longbusy_msecs(rc) * 1000;
 +
-+	/* Get the outer header. */
-+	oiph = skb->head + nh;
-+
- 	if (!vxlan_ecn_decapsulate(vs, oiph, skb)) {
- 		++vxlan->dev->stats.rx_frame_errors;
- 		++vxlan->dev->stats.rx_errors;
++			fsleep(delay_us);
++			timeout += delay_us;
+ 		}
+ 		rc = pseries_status_to_err(rc);
+ 	} while (rc == -EBUSY && timeout < PLPKS_MAX_TIMEOUT);
+diff --git a/arch/powerpc/platforms/pseries/plpks.h b/arch/powerpc/platforms/pseries/plpks.h
+index ccbec26fcbd8b..b3c3538b229c6 100644
+--- a/arch/powerpc/platforms/pseries/plpks.h
++++ b/arch/powerpc/platforms/pseries/plpks.h
+@@ -42,9 +42,8 @@
+ #define PLPKS_MAX_DATA_SIZE		4000
+ 
+ // Timeouts for PLPKS operations
+-#define PLPKS_MAX_TIMEOUT		5000 // msec
+-#define PLPKS_FLUSH_SLEEP		10 // msec
+-#define PLPKS_FLUSH_SLEEP_RANGE		400
++#define PLPKS_MAX_TIMEOUT		(5 * USEC_PER_SEC)
++#define PLPKS_FLUSH_SLEEP		10000 // usec
+ 
+ struct plpks_var {
+ 	char *component;
 -- 
 2.43.0
 
