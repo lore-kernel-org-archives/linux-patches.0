@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5315012FF70;
-	Tue, 14 May 2024 10:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB99D55C3B;
+	Tue, 14 May 2024 10:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682525; cv=none; b=Wl3y8+6bPT+UR0pmLcQET3tiEGPq6HGOigliSMyK+FjMBimozAB8Pegkc7zP2PD4eID8WUCPSuiEOaJjuviodR+OYga9mfrHObeUxtPBCwwbovDbtFPwc65qz1LjMFKDZA7/8xEzzl9lgm7jrQQFeM8KT1y0EBFEB9rAPtdXRD0=
+	t=1715682529; cv=none; b=NmoXMJ9MW37oQUEg1vQ1nNr6zrnZ5pyJHHwxARXsQnLMqerdlCosSTfWQjJPMH9845Y7pGPCWN8VMJEVe02HuGAt/RgHRK6qeMwn1BlzzpnnQsYbDvtrCiTc41vzu3mnUNXZm3QgkXKP48T7UXOKdGp9w+ZhXqmsHB319PiKYjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682525; c=relaxed/simple;
-	bh=lXWcNTOjWCqiZ0IklJx9REI85gdQRtZETJqG7UFqzGs=;
+	s=arc-20240116; t=1715682529; c=relaxed/simple;
+	bh=JHsmsxzJXtD/7GQqbw+jsaOTiKH+vO1eGxxdd69wNaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q0jD7xFr1Pz4uN7ZaEpBveGrg8eIT00wtksEkTsyY79XstZeyy2GBj7Yr+ARwXtWqrmmha+xuUPkPrX72j2BqTBNyOx2LAjzMmgN2Wk0ieWmXCLECNEJOFx7ocS3ZPsWo8PzVuLmZelJqpThXvA/hHJ3Cv/RmuHP7B1rf6bfTj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GsqH3JMf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eQOLbJiNBSetuMa5jug9UQSTW+qvcu7P/KKlJ37V4RpElPsyzxaloOCX/1jNJLkdr+JPNKVk+lLYTLzqSxLear15rhtNSQYHeojS3EswojITrgEzGRM3xD4Uwz67qxzsvQEfQsifzsaORZlwuHi2/jxgyP1CZvkzU1u8zmMcfZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6tFSQTq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GsqH3JMf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5ADAC2BD10;
-	Tue, 14 May 2024 10:28:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6tFSQTq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2CEC2BD10;
+	Tue, 14 May 2024 10:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682525;
-	bh=lXWcNTOjWCqiZ0IklJx9REI85gdQRtZETJqG7UFqzGs=;
+	s=korg; t=1715682529;
+	bh=JHsmsxzJXtD/7GQqbw+jsaOTiKH+vO1eGxxdd69wNaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GsqH3JMfkCH96Oiu+xMzD+NY6QyjVf8+Dn3f8f3B8iXoaCACWWHnLPhS44EhIjmox
-	 nezpYJWYihE5Qwt7doWrACQUFyuPzq5j8uLI0kpb6Mv3BJsJDyg3+6dIaYp1Tw0ijL
-	 x4NjFrddmN27ItV9UKnPPLL74j6qi/pZqWheZb+0=
+	b=d6tFSQTqTqebRsvByAase9pHnw0UnmXwEACnS+T4NPtTEGNBID7ouOAHuqqwJDa/k
+	 v1rs85+dxdEniIfvrMWAOg7lmBZkDeFvzr2A+06u5b8qwRVqYrZCoZUnJCWJT3NQ0D
+	 g0Pw43PAL4TFPnCMXZCW7MzbxsB0732eKRxxWOXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bui Quang Minh <minhquangbui99@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 045/336] octeontx2-af: avoid off-by-one read from userspace
-Date: Tue, 14 May 2024 12:14:09 +0200
-Message-ID: <20240514101040.309464519@linuxfoundation.org>
+Subject: [PATCH 6.8 046/336] thermal/debugfs: Free all thermal zone debug memory on zone removal
+Date: Tue, 14 May 2024 12:14:10 +0200
+Message-ID: <20240514101040.346382403@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,42 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bui Quang Minh <minhquangbui99@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit f299ee709fb45036454ca11e90cb2810fe771878 ]
+[ Upstream commit 72c1afffa4c645fe0e0f1c03e5f34395ed65b5f4 ]
 
-We try to access count + 1 byte from userspace with memdup_user(buffer,
-count + 1). However, the userspace only provides buffer of count bytes and
-only these count bytes are verified to be okay to access. To ensure the
-copied buffer is NUL terminated, we use memdup_user_nul instead.
+Because thermal_debug_tz_remove() does not free all memory allocated for
+thermal zone diagnostics, some of that memory becomes unreachable after
+freeing the thermal zone's struct thermal_debugfs object.
 
-Fixes: 3a2eb515d136 ("octeontx2-af: Fix an off by one in rvu_dbg_qsize_write()")
-Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
-Link: https://lore.kernel.org/r/20240424-fix-oob-read-v2-6-f1f1b53a10f4@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Address this by making thermal_debug_tz_remove() free all of the memory
+in question.
+
+Fixes: 7ef01f228c9f ("thermal/debugfs: Add thermal debugfs information for mitigation episodes")
+Cc :6.8+ <stable@vger.kernel.org> # 6.8+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/thermal/thermal_debugfs.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-index e6d7914ce61c4..e7eca8141e8c7 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-@@ -999,12 +999,10 @@ static ssize_t rvu_dbg_qsize_write(struct file *filp,
- 	u16 pcifunc;
- 	int ret, lf;
+diff --git a/drivers/thermal/thermal_debugfs.c b/drivers/thermal/thermal_debugfs.c
+index d78d54ae2605e..8d66b3a96be1a 100644
+--- a/drivers/thermal/thermal_debugfs.c
++++ b/drivers/thermal/thermal_debugfs.c
+@@ -826,15 +826,28 @@ void thermal_debug_tz_add(struct thermal_zone_device *tz)
+ void thermal_debug_tz_remove(struct thermal_zone_device *tz)
+ {
+ 	struct thermal_debugfs *thermal_dbg = tz->debugfs;
++	struct tz_episode *tze, *tmp;
++	struct tz_debugfs *tz_dbg;
++	int *trips_crossed;
  
--	cmd_buf = memdup_user(buffer, count + 1);
-+	cmd_buf = memdup_user_nul(buffer, count);
- 	if (IS_ERR(cmd_buf))
- 		return -ENOMEM;
+ 	if (!thermal_dbg)
+ 		return;
  
--	cmd_buf[count] = '\0';
--
- 	cmd_buf_tmp = strchr(cmd_buf, '\n');
- 	if (cmd_buf_tmp) {
- 		*cmd_buf_tmp = '\0';
++	tz_dbg = &thermal_dbg->tz_dbg;
++
+ 	mutex_lock(&thermal_dbg->lock);
+ 
++	trips_crossed = tz_dbg->trips_crossed;
++
++	list_for_each_entry_safe(tze, tmp, &tz_dbg->tz_episodes, node) {
++		list_del(&tze->node);
++		kfree(tze);
++	}
++
+ 	tz->debugfs = NULL;
+ 
+ 	mutex_unlock(&thermal_dbg->lock);
+ 
+ 	thermal_debugfs_remove_id(thermal_dbg);
++	kfree(trips_crossed);
+ }
 -- 
 2.43.0
 
