@@ -1,182 +1,118 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADD813FD78
-	for <patches@lists.linux.dev>; Tue, 14 May 2024 13:00:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAE73EA66
+	for <patches@lists.linux.dev>; Tue, 14 May 2024 14:48:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715691655; cv=none; b=cXVm9/6AQuuoGa5u8cIRjaBnOeMjsppqU19KjVgh1I7aOqguIvGgfZ1tS7JFQs9ggHefDkjcOeUAUciilCKa4wpuj2g2X9JL/z2+XD+Y12aeQB6lN6KhBPRyqQ7X4CSCJdRCfA7+qf9D0yhjenMFX6UeOHUnaJeTiQHdrLTdJ/g=
+	t=1715698100; cv=none; b=sDxT1mShnEyTIG8HUIlUGNEr7HFEItWHYJmZGqamhDmrGlXPb+f0C+Vp1OZPlizieDk2kqYRs58ey2A/c1OX5pb/dJB+RbPIwt2SeKPRyIBBAMKK9MFea2yx1SEDthmzBGObpe/WgjxX9/+A0fIDTRyvV8kWDKW9OGcz1OTRuyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715691655; c=relaxed/simple;
-	bh=d8ShiMrXR3emIyflcfbffRIzJLRaSStiK2f67HCN7WU=;
-	h=References:From:To:Cc:Subject:Date:In-reply-to:Message-ID:
-	 MIME-Version:Content-Type; b=SJXeaxsNaAaK1Hblyzgh8wQR1+apSI0Fs+zB6+w/D3QOBB/JSxZun/ZXsTZ+xbyO3sa6pkfOW/VdWoLXkiRUFUiobYoD961HgwzDvQPjh9fx0VHk1lClLqEs7oNMKN58wgbXzgUUO5WxyXB8VGui3MZsFzXaUkHv8BHl8b9T2Zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=yjJbfuVJ; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1715698100; c=relaxed/simple;
+	bh=v5cKs+69XP5Np4L0qIMo+yZTTs38YWffGnAEMsOYqxU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FFwKTncnjyQQVNW1uFSwxAiOLwsskdCnN4cRk927aXLiPhbfsvnoaZ7r2ZniQQYT1vt8WZkYiRTiG8ADOqDBoQLOL0aueNglc/OxWJVu1i9Jcz2bB7HedzBMKBBIU0ihV+vU6YU3MMzFb2fsMM2s89vA+Awafz2svnijUTGbezg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=Czwq/DQC; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="yjJbfuVJ"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-420180b58c3so14186135e9.2
-        for <patches@lists.linux.dev>; Tue, 14 May 2024 06:00:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="Czwq/DQC"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-6f4472561f1so5164660b3a.0
+        for <patches@lists.linux.dev>; Tue, 14 May 2024 07:48:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1715691652; x=1716296452; darn=lists.linux.dev;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=DsS116Yyx1MUvHVpDg7nSKFadAoyOcppPeidrMbDBz0=;
-        b=yjJbfuVJWeqmiPzOZaJZFIi3Oly7pm0bHS7c/eQopytdIP7QKWGsj8T4A6wH7j+/Sc
-         9td4TmKFfP9vqx8cC4WHxJ7Ae35moZoJqeGAJG3YJVM6Y7JdbJN45FYBU6VCioRyDzc4
-         GqRdMSMeZvIuHBdKXL5weGfA+lDPio18VG5U4+r0CQ8Erwpx5sdBaobjqtGH1NuUfJEU
-         HWuaWx0GHtnB0IhcEIK71tH0WJFc02MFFFktTI/sHYaiPxluCVhhjNPtV+rNBIZ/zraA
-         M7zYA0nD5WMootI0UYJIFvg9/Wtg7zuYfVCvFLeosvk4BKYNtD2FXXJmvAoWpxzi6vr7
-         dZug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715691652; x=1716296452;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
+        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1715698098; x=1716302898; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DsS116Yyx1MUvHVpDg7nSKFadAoyOcppPeidrMbDBz0=;
-        b=vcaIuTCyxYBnjPzkEoaDRJ5fpJdd2wq0MwRaPcKJrCRkN0+JTJtQnSA3jJStIZECmh
-         y8eVPAbmcwPicxxCFhYlFjaQ5ytOtJ7Qkam3I/VMr/8/TVVUOHCRpHG4g6EvqpahEYMO
-         TvsftGsZko/n8hb4dLhoC1F+uPFWm/CJRm5e5gvqiOUzAmUTgikFszzbG/E+nbJ/Gg1G
-         IiuVC24g8Zzqs3EOC6ssp+kMIQgGXhWuma6wfXURrpeiFh3481ZUilWiPw8H7LisLAko
-         VVcKpovI4YuQ+ZT7MY2bayYr8YWIyVLg5pvCnXn2Rutf8RqkSKTLTHlvewIiGVp47NIy
-         XuTg==
-X-Forwarded-Encrypted: i=1; AJvYcCX+T22gtvjNH0nIrjcud8JAzAmXigxF/gepqS7QX1WVTqC/CAZwVFRNbA0icksp0HKNuW2LHUKY+n7FzGi186/0R/OKEtMVhg==
-X-Gm-Message-State: AOJu0YwKJUjd+CqKLJG1qiME8megbElAeyM3z/mfuthxR8wWH6jhlTT/
-	Nxt4EYSRu/0wRMjHPPGMZmwlxSvIdmIbiPbmp6oWS1XuQwpti1Rxf8Qnnhd57s1Cc4M9lhJWIm6
-	U
-X-Google-Smtp-Source: AGHT+IF/kooVLPziGy/T8RjYW2nok5uQj3lsw4aJLqNMyq5n94FloOztr3X9LnFp6kooH/E3rnpuGg==
-X-Received: by 2002:a05:600c:1f83:b0:41a:b961:9495 with SMTP id 5b1f17b1804b1-41feac49164mr93979525e9.25.1715691652011;
-        Tue, 14 May 2024 06:00:52 -0700 (PDT)
-Received: from localhost ([2a01:e0a:3c5:5fb1:3f47:f219:de13:38a7])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42016b88f99sm67585325e9.10.2024.05.14.06.00.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 May 2024 06:00:51 -0700 (PDT)
-References: <20240514101006.678521560@linuxfoundation.org>
- <20240514101010.464612719@linuxfoundation.org>
- <1j34qkzh7w.fsf@starbuckisacylon.baylibre.com>
-User-agent: mu4e 1.10.8; emacs 29.2
-From: Jerome Brunet <jbrunet@baylibre.com>
-To: Jerome Brunet <jbrunet@baylibre.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, Dmitry Shmidt <dimitrysh@google.com>, Neil
- Armstrong <narmstrong@baylibre.com>, Mark Brown <broonie@kernel.org>,
- Sasha  Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 100/168] ASoC: meson: axg-card: Fix nonatomic links
-Date: Tue, 14 May 2024 14:59:52 +0200
-In-reply-to: <1j34qkzh7w.fsf@starbuckisacylon.baylibre.com>
-Message-ID: <1jy18cy2d9.fsf@starbuckisacylon.baylibre.com>
+        bh=KZk3CwTUVB475tkoToAu9QenbV4AhIaVymB/BlnOoyw=;
+        b=Czwq/DQCpNyDXmvNbi3QHwTCQyB8CRgqu1X7ZW7xUSIezwiBVGa1aJUw/iTeAzJbDi
+         m0iiWhTaThiXZL+Qk7awWUgF4/qlMyEvkhLAPgShO1sDMRD81ZtcLT2LXRK2OTYoSGnN
+         ILJW9FELiOSo/Pxm90Go1e0O8xSNmUv1eo/cRDHo5Lv+xC6VAz4gm/EFSc4vWiq/1pxD
+         HrganTqYKWBbrjp5Hn/NI7Pp21ATZw+P5HsK+C6//RX0TufzcdRgcVrUsVaYGTQh4dL/
+         53dUU37s2GSnryZxibkI+vsLDIslNl94DTTyZDM8+YiyvK/OmpdnmVYd5RzsMT4QVb9/
+         1pqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715698098; x=1716302898;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KZk3CwTUVB475tkoToAu9QenbV4AhIaVymB/BlnOoyw=;
+        b=CAmZb2op0muTmATiP8GQ2RDKiDY+1Va0btVVrAFdPIDQd2VHXRWrXJFlDiM9B3xbtq
+         XfTMSWe01buobmp+ormWvgOr3gL7IvfftyJBUrvLti/1XiyAa1SeAPg3FRcogpCNC4My
+         HwbrF7mK+HFuJUCsKCcpg0+Fw2SIA3fPBgQMkqJ9cX8a77+y4urBM9yeHRSRNqwO37Fa
+         Isdc2cXmwRuAdhhac7F6mZnOgCIY0WWNdwWNkttPz+kS3st1wDFjXSv+Bv6biA45CFM5
+         SEByO7/FiCdc1k/D38jHYQDN7xFaRqsswvclcRkQaKMDznzVWBLiv7HEJGjP8MoD/TZP
+         0iNw==
+X-Forwarded-Encrypted: i=1; AJvYcCXNgF5FVbX1pcr6xkiFhSlSToM4DBB4UwhczqXQ7Uj5Qtf+oikT7f+MwRmUiN5WunvAsM++JuLnM70j8gGeBty5eR9hNoM0mg==
+X-Gm-Message-State: AOJu0YzHQS7ejTYunsrdTYotKGDjfpn46laaRcmKdHhMgMJ0pMMHMwkE
+	l0d3gg3Gqm6yMo+a9vdQ4hSm1Vbd5QCRum7rUYTWiLe8scuSIO64DlO3tStFKhgei2bKqR1XimG
+	/hqmYB6Hab4+lnR3cOEdfBFN4QTphv/MEnAN4tw==
+X-Google-Smtp-Source: AGHT+IEMDE14BQJ7hwbgCihLMNzbQ80px+rakB3WXBnAWf/pBUQIv0Chn06Qv5WDJjyyU8qAjhHS3Rmz0+zRhzvLJo0=
+X-Received: by 2002:a05:6a20:748f:b0:1af:acf5:f9e5 with SMTP id
+ adf61e73a8af0-1afde0b7309mr20033005637.23.1715698098122; Tue, 14 May 2024
+ 07:48:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20240514101032.219857983@linuxfoundation.org>
+In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Tue, 14 May 2024 23:48:06 +0900
+Message-ID: <CAKL4bV4=MjQAWTEvvp9pJ4JD4ZbC=7hjhbc2S=Ri_uPMvRG6Eg@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/301] 6.6.31-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi Greg
 
-On Tue 14 May 2024 at 14:26, Jerome Brunet <jbrunet@baylibre.com> wrote:
+On Tue, May 14, 2024 at 8:29=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.6.31 release.
+> There are 301 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 16 May 2024 10:09:32 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.31-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-> On Tue 14 May 2024 at 12:19, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
->> 5.15-stable review patch.  If anyone has any objections, please let me know.
->>
->
-> Patch #100 and #101 should not be applied on v5.15.
->
-> A bit of history:
-> * 3y ago patches #44 and #45 have been applied to fix a problem in AML
->   audio, but it caused a regression.
-> * No solution was found at the time, so the patches were reverted by
->   change #100 and #101
-> * Recently I came up with change #43 which fixes the regression from 3y
->   ago, so the fixes for original problem could be applied again (with a
->   different sha1 of course)
->
-> The situation was detailed in the cover letter of the related series:
-> https://lore.kernel.org/linux-amlogic/20240426152946.3078805-1-jbrunet@baylibre.com
->
-> From what I can see the backport is fine on 6.8, 6.6 and 6.1.
-> Things starts to be problematic on 5.15.
->
-> In general, if upstream commit b11d26660dff is backported, it is fine to
-> apply upstream commits:
->  * dcba52ace7d4 ("ASoC: meson: axg-card: make links nonatomic")
->  * f949ed458ad1 ("ASoC: meson: axg-tdm-interface: manage formatters in trigger")
-> And the following commits (which are reverts for the 2 above) should not be applied:
->  * 0c9b152c72e5 ("ASoC: meson: axg-card: Fix nonatomic links")
->  * c26830b6c5c5 ("ASoC: meson: axg-tdm-interface: Fix formatters in trigger"")
->
-> If b11d26660dff is not backported, the 2 first change should be
-> backported, or reverted if they have already been.
+6.6.31-rc1 tested.
 
-If b11d26660dff is not backported, the 2 first change should *NOT* be
-backported, or reverted if they have already been.
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-Sorry for the confusing typo
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
 
->
-> * v5.15: just dropping change #100 and #101 should be fine
-> * v5.10: I suppose this is where the backport starts to be problematic
->          Best would be to drop #31, #32, #73 and #74 for now
-> * v5.4: Same drop #26, #27, #60 and #61
-> * v4.19: drop #17 and #44
->
-> Regards
-> Jerome
->
->> ------------------
->>
->> From: Neil Armstrong <narmstrong@baylibre.com>
->>
->> [ Upstream commit 0c9b152c72e53016e96593bdbb8cffe2176694b9 ]
->>
->> This commit e138233e56e9829e65b6293887063a1a3ccb2d68 causes the
->> following system crash when using audio on G12A/G12B & SM1 systems:
->>
->>  BUG: sleeping function called from invalid context at kernel/locking/mutex.c:282
->>   in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 0, name: swapper/0
->>  preempt_count: 10001, expected: 0
->>  RCU nest depth: 0, expected: 0
->>  Preemption disabled at:
->>  schedule_preempt_disabled+0x20/0x2c
->>
->>  mutex_lock+0x24/0x60
->>  _snd_pcm_stream_lock_irqsave+0x20/0x3c
->>  snd_pcm_period_elapsed+0x24/0xa4
->>  axg_fifo_pcm_irq_block+0x64/0xdc
->>  __handle_irq_event_percpu+0x104/0x264
->>  handle_irq_event+0x48/0xb4
->>  ...
->>  start_kernel+0x3f0/0x484
->>  __primary_switched+0xc0/0xc8
->>
->> Revert this commit until the crash is fixed.
->>
->> Fixes: e138233e56e9829e65b6 ("ASoC: meson: axg-card: make links nonatomic")
->> Reported-by: Dmitry Shmidt <dimitrysh@google.com>
->> Signed-off-by: Neil Armstrong <narmstrong@baylibre.com>
->> Acked-by: Jerome Brunet <jbrunet@baylibre.com>
->> Link: https://lore.kernel.org/r/20220421155725.2589089-2-narmstrong@baylibre.com
->> Signed-off-by: Mark Brown <broonie@kernel.org>
->> Signed-off-by: Sasha Levin <sashal@kernel.org>
->> ---
->>  sound/soc/meson/axg-card.c | 1 -
->>  1 file changed, 1 deletion(-)
->>
->> diff --git a/sound/soc/meson/axg-card.c b/sound/soc/meson/axg-card.c
->> index cbbaa55d92a66..2b77010c2c5ce 100644
->> --- a/sound/soc/meson/axg-card.c
->> +++ b/sound/soc/meson/axg-card.c
->> @@ -320,7 +320,6 @@ static int axg_card_add_link(struct snd_soc_card *card, struct device_node *np,
->>  
->>  	dai_link->cpus = cpu;
->>  	dai_link->num_cpus = 1;
->> -	dai_link->nonatomic = true;
->>  
->>  	ret = meson_card_parse_dai(card, np, &dai_link->cpus->of_node,
->>  				   &dai_link->cpus->dai_name);
+[    0.000000] Linux version 6.6.31-rc1rv
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.1.1 20240507, GNU ld (GNU
+Binutils) 2.42.0) #1 SMP PREEMPT_DYNAMIC Tue May 14 23:21:48 JST 2024
 
+Thanks
 
--- 
-Jerome
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
