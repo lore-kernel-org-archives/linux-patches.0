@@ -1,104 +1,136 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6E812B7F;
-	Tue, 14 May 2024 20:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CC9180A6A;
+	Tue, 14 May 2024 21:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715719654; cv=none; b=bUR6d40SoIp0eY9BO1+CXSsRxgYRF3LK01I2vycT1BagWXOrQFM0BsLvOVvq7OxiUF/NaRirQ+fkXK5zWN/3bNdfSXnFN/91K2H2A27wAr26iEmlkX1kEpThLYszmVWSolDBbPvhy/3dbI8ohEgDhT9or3DWIAL8snf7FPH8ZD8=
+	t=1715722183; cv=none; b=EAZb45ibjzurI2tf70q7Ybmr7rjtwxZMjMmItfBcdervkkBaU7BRPnhp7ZAZMN/XlHCYOXpcS9hpTl6axMuRFz6OYfFydHfoeccT2nkkLeyMJhBuUMcUdfeGgrjSa04XD+k+Ay4V5DbRKF8WAyQ0AsaA5hxUIit7/yBAyguJuv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715719654; c=relaxed/simple;
-	bh=XIYIRgTKMWvDrepXjj3ow7MQPvkmKFHnWDqkpydm6Gg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=t8r5vdXsyPe4FSZ5xamNimdF8tS5cJcG2hTfutuFZCrR5SJ83Ih2lcq6kCmNze4wcCzdf5VmTFSh0y5rnzVlLqA3zcJyaTNvtdjq6HfA1iaJn8NTUMFS+j2A+v3LNXeiT+IVJjnBTbTLLzeMaGIxEzFodmfCG7W4wvUgy6nxPFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IETY9aFu; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1715722183; c=relaxed/simple;
+	bh=Y+m1nbd28r9a7918tO34Pw+7ZflDLT2x0sc9gLxM79Q=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=U8ovaJsXiIrFjqHxdEHP3xb/J6e+CRy+1FloTgVoZxdfzJZbmBiUuaS0BD80TgvM0Ru7VGTrsRDDvqr3oxnkSW0QQwd+ynJL+9Z36LWmc3ishgCbdh1fy2X9qzE67lmeilJd7SxNGPNHTkvlEYbdeouPg5wDIOcKZihquDCIDTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tj7qo6Oq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IETY9aFu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1893C2BD10;
-	Tue, 14 May 2024 20:47:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tj7qo6Oq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47491C2BD10;
+	Tue, 14 May 2024 21:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715719653;
-	bh=XIYIRgTKMWvDrepXjj3ow7MQPvkmKFHnWDqkpydm6Gg=;
-	h=From:Date:Subject:To:Cc:From;
-	b=IETY9aFuWY6YYkcbHqowsnfo5iNwnOWCV1gox1nkRPgx7XrcGYoK2xhGiO7BxAUUT
-	 +oaoyLQlR0ZWnzDb4XTBF2apUIDfSCW+yQ4jePehZgQDc9aNWGdG3IQ4G6tZ0w5Qyn
-	 YAoqidJYkZqynamyq8bbiEskJCPlZnUi74KpYWRw/2B3DAffw+Otx37Zijlr1aM/2o
-	 LNS6Uue8Ua6B1fIcxiAhSScw7Uc4M2fgSH00jCrXlyI1qEUlT6vIAifiHYr29Ldsfv
-	 TDi6RbKrOTB/MgrBNCpyj+VcvM/aCD8V5YHyf7w3XV9fWKYlit6LBa8PReYcL1A57B
-	 zunLLZv/oExwQ==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 14 May 2024 13:47:23 -0700
-Subject: [PATCH] scsi: mpi3mr: Use proper format specifier in
- mpi3mr_sas_port_add()
+	s=k20201202; t=1715722182;
+	bh=Y+m1nbd28r9a7918tO34Pw+7ZflDLT2x0sc9gLxM79Q=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=tj7qo6OqQuXFdOdFZ1bi12ZdMFQ36pNjyngiRyzkjtqgMTgrAPBfYYo9cn1g0GmCq
+	 Ojop1qK+lr5KWo1zePIYi343Vr7czqA8sBS/DTXRsy2ZQxTKk8+UlQ+4ggwg2w6lQq
+	 tOHzWCvnQewAUise+RwW/gpoqKA/KHNDKqVD3f7UI7IWF9vnrlak3WhHoyGIZhpxOV
+	 l4j0P79xvLU5JLeKZ8HU+Bu7YuVqVT6dUV/C/AGi5Qe0I48zQzt7VQogogY96yp8Pq
+	 Kt4NqAFWtSGsT1r0u24xApI8REWXUrbC5s8FgZXOtHb3PgZzzWpeYqOKKkjgS75l8s
+	 F9lSpEr0HqWTA==
+Message-ID: <5c919f0d3d72fe1592a11c45545e8a60.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240514-mpi3mr-fix-wformat-v1-1-f1ad49217e5e@kernel.org>
-X-B4-Tracking: v=1; b=H4sIANrNQ2YC/x2MQQ5AMBAAv9Ls2SaqRPmKOKCLPZRmK0jE3zWOk
- 8nMA5GEKUKrHhA6OfK+JdCZgmkdtoWQXWIo8qLMK12iD2y84Mw3XvMufjjQOqvd2NjakIEUBqG
- k/2nXv+8HIAKJEmQAAAA=
-To: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>, 
- Kashyap Desai <kashyap.desai@broadcom.com>, 
- Sumit Saxena <sumit.saxena@broadcom.com>, 
- Sreekanth Reddy <sreekanth.reddy@broadcom.com>, 
- "James E.J. Bottomley" <jejb@linux.ibm.com>, 
- "Martin K. Petersen" <martin.petersen@oracle.com>, 
- Tomas Henzl <thenzl@redhat.com>
-Cc: mpi3mr-linuxdrv.pdl@broadcom.com, linux-scsi@vger.kernel.org, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1854; i=nathan@kernel.org;
- h=from:subject:message-id; bh=XIYIRgTKMWvDrepXjj3ow7MQPvkmKFHnWDqkpydm6Gg=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGnOZ5/c+L/cX7G/wXhJTXD1S/9nCZMDah9WKzDnaAbM8
- XA7ZZXbUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACYSfZDhf+SX1NIdp5/6pcub
- f/jz2sZrhUPec3Gxswma8k+Nsha4rWT4K5HBKTVBu1NZ9/YUIZs1l/q7Dh+VTjM67dosclFJlKO
- ZBQA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <b822c6a5488c4098059b6d3c35eecbbd.sboyd@kernel.org>
+References: <20240422232404.213174-1-sboyd@kernel.org> <CABVgOSmgUJp3FijpYGCphi1OzRUNvmYQmPDdL6mN59YnbkR2iQ@mail.gmail.com> <b822c6a5488c4098059b6d3c35eecbbd.sboyd@kernel.org>
+Subject: Re: [PATCH v4 00/10] clk: Add kunit tests for fixed rate and parent data
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
+To: David Gow <davidgow@google.com>, Rob Herring <robh@kernel.org>
+Date: Tue, 14 May 2024 14:29:40 -0700
+User-Agent: alot/0.10
 
-When building for a 32-bit platform such as ARM or i386, for which
-size_t is unsigned int, there is a warning due to using an unsigned long
-format specifier:
+Quoting Stephen Boyd (2024-05-02 18:27:42)
+> Quoting David Gow (2024-05-01 01:08:11)
+> >=20
+> > The other thing I've noted so far is that the
+> > of_apply_kunit_platform_device and of_overlay_apply_kunit_cleanup
+> > tests fail (and BUG() with a NULL pointer) on powerpc:
+> > > [15:18:51]     # of_overlay_apply_kunit_platform_device: EXPECTATION =
+FAILED at drivers/of/overlay_test.c:47
+> > > [15:18:51]     Expected pdev is not null, but is
+> > > [15:18:51] BUG: Kernel NULL pointer dereference at 0x0000004c
+>=20
+> This seems to be because pdev is NULL and we call put_device(&pdev->dev)
+> on it. We could be nicer and have an 'if (pdev)' check there. I wonder
+> if that fixes the other two below?
+>=20
+> ---8<---
+> diff --git a/drivers/of/overlay_test.c b/drivers/of/overlay_test.c
+> index 223e5a5c23c5..85cfbe6bb132 100644
+> --- a/drivers/of/overlay_test.c
+> +++ b/drivers/of/overlay_test.c
+> @@ -91,7 +92,8 @@ static void of_overlay_apply_kunit_cleanup(struct kunit=
+ *test)
+>         dev =3D bus_find_device(&platform_bus_type, NULL, kunit_compatibl=
+e,
+>                               of_overlay_bus_match_compatible);
+>         KUNIT_EXPECT_PTR_EQ(test, NULL, dev);
+> -       put_device(dev);
+> +       if (dev)
+> +               put_device(dev);
+>  }
 
-  drivers/scsi/mpi3mr/mpi3mr_transport.c:1370:11: error: format specifies type 'unsigned long' but the argument has type 'unsigned int' [-Werror,-Wformat]
-   1369 |                         ioc_warn(mrioc, "skipping port %u, max allowed value is %lu\n",
-        |                                                                                 ~~~
-        |                                                                                 %u
-   1370 |                             i, sizeof(mr_sas_port->phy_mask) * 8);
-        |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This last hunk isn't needed.
 
-Use the proper format specifier for size_t, %zu, to resolve the warning
-for all platforms.
+> =20
+>  static struct kunit_case of_overlay_apply_kunit_test_cases[] =3D {
+>=20
+> > > [15:18:51]     # of_overlay_apply_kunit_platform_device: try faulted:=
+ last line seen lib/kunit/resource.c:99
+> > > [15:18:51]     # of_overlay_apply_kunit_platform_device: internal err=
+or occurred preventing test case from running: -4
+> > > [15:18:51] [FAILED] of_overlay_apply_kunit_platform_device
+> >=20
+> > > [15:18:51] BUG: Kernel NULL pointer dereference at 0x0000004c
+> > > [15:18:51] note: kunit_try_catch[698] exited with irqs disabled
+> > > [15:18:51]     # of_overlay_apply_kunit_cleanup: try faulted: last li=
+ne seen drivers/of/overlay_test.c:77
+> > > [15:18:51]     # of_overlay_apply_kunit_cleanup: internal error occur=
+red preventing test case from running: -4
+> > > [15:18:51] [FAILED] of_overlay_apply_kunit_cleanup
+> >=20
+> > I've not had a chance to dig into it any further, yet, but it appears
+> > to work on all of the other architectures I tried.
+>=20
+> Cool. I don't know why powerpc doesn't make devices. Maybe it has a
+> similar design to sparc to create resources. I'll check it out.
+>=20
 
-Fixes: 3668651def2c ("scsi: mpi3mr: Sanitise num_phys")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/scsi/mpi3mr/mpi3mr_transport.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+powerpc doesn't mark the root node with OF_POPULATED_BUS. If I set that
+in of_platform_default_populate_init() then the overlays can be applied.
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-index 7ca9a7c2709c..5d261c2f2d20 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-@@ -1366,7 +1366,7 @@ static struct mpi3mr_sas_port *mpi3mr_sas_port_add(struct mpi3mr_ioc *mrioc,
- 			continue;
- 
- 		if (i > sizeof(mr_sas_port->phy_mask) * 8) {
--			ioc_warn(mrioc, "skipping port %u, max allowed value is %lu\n",
-+			ioc_warn(mrioc, "skipping port %u, max allowed value is %zu\n",
- 			    i, sizeof(mr_sas_port->phy_mask) * 8);
- 			goto out_fail;
+---8<----
+diff --git a/drivers/of/platform.c b/drivers/of/platform.c
+index 389d4ea6bfc1..fa7b439e9402 100644
+--- a/drivers/of/platform.c
++++ b/drivers/of/platform.c
+@@ -565,6 +565,10 @@ static int __init of_platform_default_populate_init(vo=
+id)
+ 				of_platform_device_create(node, buf, NULL);
  		}
+=20
++		node =3D of_find_node_by_path("/");
++		if (node)
++			of_node_set_flag(node, OF_POPULATED_BUS);
++		of_node_put(node);
+ 	} else {
+ 		/*
+ 		 * Handle certain compatibles explicitly, since we don't want to create
 
----
-base-commit: 3668651def2c1622904e58b0280ee93121f2b10b
-change-id: 20240514-mpi3mr-fix-wformat-8d81db9873e3
+I'm guessing this is wrong though, because I see bunch of powerpc specific =
+code
+calling of_platform_bus_probe() which will set the flag on the actual platf=
+orm
+bus nodes. Maybe we should just allow overlays to create devices at the root
+node regardless? Of course, the flag doc says "platform bus created for
+children" and if we never populated the root then that isn't entirely accur=
+ate.
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Rob, can you point me in the right direction? Do we need to use simple-bus =
+in
+the test overlays and teach overlay code to populate that bus?
